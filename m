@@ -1,20 +1,17 @@
-Return-Path: list@eworm.de
-Received: from mx.mylinuxtime.de (mx.mylinuxtime.de [148.251.109.235])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c36dde2e
+Return-Path: tiernan@tiernanotoole.net
+Received: from EUR01-VE1-obe.outbound.protection.outlook.com
+ (mail-ve1eur01on0054.outbound.protection.outlook.com [104.47.1.54])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d00dbeeb
  for <wireguard@lists.zx2c4.com>;
- Tue, 28 Jun 2016 20:48:03 +0000 (UTC)
-Date: Tue, 28 Jun 2016 22:50:30 +0200
-From: Christian Hesse <list@eworm.de>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Message-ID: <20160628225030.31cc7e2a@leda.localdomain>
-In-Reply-To: <CAHmME9okkkwQD_zd90UBJ31ughmTSAbmhfVnr_5abtfA6+qyvw@mail.gmail.com>
-References: <20160628200215.14423-1-list@eworm.de>
- <CAHmME9okkkwQD_zd90UBJ31ughmTSAbmhfVnr_5abtfA6+qyvw@mail.gmail.com>
+ Tue, 28 Jun 2016 21:31:08 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- boundary="Sig_/XFD/n9YQZsWflZWh=ICcVhh"; protocol="application/pgp-signature"
-Cc: wireguard@lists.zx2c4.com
-Subject: Re: [WireGuard] [PATCH 1/1] add DKMS configuration file
+Date: Tue, 28 Jun 2016 21:33:33 +0000
+From: <tiernan@tiernanotoole.net>
+To: <WireGuard@lists.zx2c4.com>
+Message-ID: <34EBEFA02A9AAB1F.1117239f-f3e4-4320-907d-9a9edbb083c6@mail.outlook.com>
+Content-Type: multipart/mixed; boundary="=_9afc21f00cc1f75185e9b71f580b0b32"
+Return-Path: tiernan@tiernanotoole.net
+Subject: [WireGuard] Single client connecting to server multiple times
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -24,59 +21,65 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---Sig_/XFD/n9YQZsWflZWh=ICcVhh
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+--=_9afc21f00cc1f75185e9b71f580b0b32
+Content-Type: multipart/alternative;
+	boundary="=_5d196b3829f17769c103a811333bca5e"
 
-"Jason A. Donenfeld" <Jason@zx2c4.com> on Tue, 2016/06/28 22:16:
-> Hey Christian,
->=20
-> Good to see you in this neck of the lists.zx2c4.com woods! :P
+--=_5d196b3829f17769c103a811333bca5e
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="utf-8"
 
-:-P
+CgpHb29kIG1vcm5pbmcuCgoKRm91bmQgdGhpcyB2aWEgaGFja2VyIG5ld3Mg
+YW5kIHZlcnkgaW50ZXJlc3RlZC4uLiBJIGhhdmUgYWxyZWFkeSBpbnN0YWxs
+ZWQgaXQgb24gdHdvIG1hY2hpbmVzIGFuZCBub3cgaGF2ZSBhIHF1ZXN0aW9u
+Li4uIEkgaGF2ZSBub3QgdHJpZWQgdGhpcyB5ZXQgbXlzZWxmLCBzbyBpdCBt
+aWdodCBhbHJlYWR5IGJlIHBvc3NpYmxlLi4uIEkgaGF2ZSBhIG1hY2hpbmUg
+aW4gaG91c2UgYW5kIG9uZSBpbiBhIGRhdGEgY2VudGVyLiBUaGUgbWFjaGlu
+ZSBpbiBob3VzZSBoYXMgdHdvIHdhbiBsaW5rcyBhbmQgYSBsYW4gY29ubmVj
+dGlvbi4gQ3VycmVudGx5IEkgaGF2ZSB0d28gcDJwIG9wZW4gVlBOIGNvbm5l
+Y3Rpb25zIGJldHdlZW4gdGhlIGhvdXNlIGFuZCB0aGUgZGMsIHRoZW4gdXNp
+bmcgdGhlIG1hZ2ljIG9mIHF1YWdnYSwgdGhleSBhcmUgbG9hZCBiYWxhbmNl
+ZC4uLgoKCk5vdyB0aGUgcm91dGluZyBpcyBhbHJlYWR5IHdvcmtpbmcsIHNv
+IGp1c3QgdGhpbmtpbmcgb2YgcmVwbGFjaW5nIHRoZSBsMyB3aXRoIHdpcmVn
+dWFyZC4gSXMgaXQgcG9zc2libGU/IEFnYWluLCBoYWQgYW4gaG91ciB0byB0
+cnkgdGhpcyBlYXJsaWVyIGFuZCBqdXN0IHRyaWVzIGdldHRpbmcgdGhlIGJh
+cmUgbWluaW11bSBjb25uZWN0aW9uIHdvcmtpbmcuIEhvcGVmdWxseSB0b21v
+cnJvdyBJIHdpbGwgaGF2ZSBtb3JlIHRpbWUgdG8gcGxheSEKCgpLZWVwIHVw
+IHRoZSBnb29kIHdvcmshCgoKLS1UaWVybmFuCgoKR2V0IE91dGxvb2sgZm9y
+IEFuZHJvaWQKCgoNCgoKLS0KVGhpcyBtZXNzYWdlIGhhcyBiZWVuIHNjYW5u
+ZWQgYnkgRS5GLkEuIFByb2plY3QgYW5kIGlzIGJlbGlldmVkIHRvIGJlIGNs
+ZWFuLgoKCg==
 
-> I see you saw my call for DKMS in the roadmap page?
+--=_5d196b3829f17769c103a811333bca5e
+Content-Transfer-Encoding: base64
+Content-Type: text/html; charset="utf-8"
 
-No, I did not... DKMS is my preferred way of packaging external kernel
-modules. I cloned, ran make and created dkms.conf for packaging. ;)
+PHAgZGlyPSJhdXRvIj5Hb29kIG1vcm5pbmcuPC9wPgo8cCBkaXI9ImF1dG8i
+PkZvdW5kIHRoaXMgdmlhIGhhY2tlciBuZXdzIGFuZCB2ZXJ5IGludGVyZXN0
+ZWQuLi4gSSBoYXZlIGFscmVhZHkgaW5zdGFsbGVkIGl0IG9uIHR3byBtYWNo
+aW5lcyBhbmQgbm93IGhhdmUgYSBxdWVzdGlvbi4uLiBJIGhhdmUgbm90IHRy
+aWVkIHRoaXMgeWV0IG15c2VsZiwgc28gaXQgbWlnaHQgYWxyZWFkeSBiZSBw
+b3NzaWJsZS4uLiBJIGhhdmUgYSBtYWNoaW5lIGluIGhvdXNlIGFuZCBvbmUg
+aW4gYSBkYXRhIGNlbnRlci4gVGhlIG1hY2hpbmUgaW4gaG91c2UgaGFzIHR3
+byB3YW4gbGlua3MgYW5kIGEgbGFuIGNvbm5lY3Rpb24uIEN1cnJlbnRseSBJ
+IGhhdmUgdHdvIHAycCBvcGVuIFZQTiBjb25uZWN0aW9ucyBiZXR3ZWVuIHRo
+ZSBob3VzZSBhbmQgdGhlIGRjLCB0aGVuIHVzaW5nIHRoZSBtYWdpYyBvZiBx
+dWFnZ2EsIHRoZXkgYXJlIGxvYWQgYmFsYW5jZWQuLi48L3A+CjxwIGRpcj0i
+YXV0byI+Tm93IHRoZSByb3V0aW5nIGlzIGFscmVhZHkgd29ya2luZywgc28g
+anVzdCB0aGlua2luZyBvZiByZXBsYWNpbmcgdGhlIGwzIHdpdGggd2lyZWd1
+YXJkLiBJcyBpdCBwb3NzaWJsZT8gQWdhaW4sIGhhZCBhbiBob3VyIHRvIHRy
+eSB0aGlzIGVhcmxpZXIgYW5kIGp1c3QgdHJpZXMgZ2V0dGluZyB0aGUgYmFy
+ZSBtaW5pbXVtIGNvbm5lY3Rpb24gd29ya2luZy4gSG9wZWZ1bGx5IHRvbW9y
+cm93IEkgd2lsbCBoYXZlIG1vcmUgdGltZSB0byBwbGF5ITwvcD4KPHAgZGly
+PSJhdXRvIj5LZWVwIHVwIHRoZSBnb29kIHdvcmshPC9wPgo8cCBkaXI9ImF1
+dG8iPi0tVGllcm5hbjwvcD4KPHAgZGlyPSJhdXRvIj5HZXQgPGEgaHJlZj0i
+aHR0cHM6Ly9ha2EubXMvZ2hlaTM2Ij5PdXRsb29rIGZvciBBbmRyb2lkPC9h
+Pjxicj4KPC9wPgoNCjxiciAvPi0tIAo8YnIgLz5UaGlzIG1lc3NhZ2UgaGFz
+IGJlZW4gc2Nhbm5lZCBmb3IgdmlydXNlcyBhbmQgZGFuZ2Vyb3VzIGNvbnRl
+bnQgYnkgPGJyIC8+CjxhIGhyZWY9Imh0dHA6Ly93d3cuZWZhLXByb2plY3Qu
+b3JnIj48Yj5FLkYuQS4gUHJvamVjdDwvYj48L2E+LCBhbmQgaXMgYmVsaWV2
+ZWQgdG8gYmUgY2xlYW4uCgo=
 
-BTW, and Arch people here? Give it at try:
-https://aur.archlinux.org/packages/wireguard-git/
+--=_5d196b3829f17769c103a811333bca5e--
 
-> I haven't looked into the innerworkings of DKMS yet, but is this
-> essentially how it works? We put this file in src/, and then
-> everything is taken care of? Are their other flags and switches and
-> variables to take into account? Or is this pretty much it?
-
-Basically that's all we need. Put everything (dkms.conf, Makefile, *.c,
-*.h, crypto/) into /usr/src/wireguard-$version, run
-
-$ dkms install -m wireguard -v $version -k $kernelversion
-
-and load the module.
-
-We could add version handling and install target to the Makefile, but that's
-optional. I will look into that the next days.
---=20
-main(a){char*c=3D/*    Schoene Gruesse                         */"B?IJj;MEH"
-"CX:;",b;for(a/*    Best regards             my address:    */=3D0;b=3Dc[a+=
-+];)
-putchar(b-1/(/*    Chris            cc -ox -xc - && ./x    */b/42*2-3)*42);}
-
---Sig_/XFD/n9YQZsWflZWh=ICcVhh
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQEcBAEBCAAGBQJXcuMWAAoJEIlFIdfMgPR28kAH/28G9FewthICLCJgoHdk5uc0
-QYhbwW5aWBx7AaRvWUY78ir7ma729cr8NoN6PJieLd0xy1Q9zKXDgI5FqIKXlbyj
-AVeDiz+AGZtPadm0bnV40rMcDpxHJver6DZuMIAi+J63x2CbMYi19x3eHdpa6w55
-sN6ggU2Fg4KrmrIKq91vmdvuMu2a/tVvMcx0L6YjnKYYGBWaKEK5n2OQj5jdvhRd
-PopMvIpiHPi0nb3Sl7Bo+gK2tY2lxlhjO3Tu5hEHHqLwotC8pKGPooSkvuEBMAwj
-nNaALttwQhOY4q2yvavAoZgmmjyg+yPFfyH6yJRqLm3Ix25T/1cqZEQmzWn3mg8=
-=TXdI
------END PGP SIGNATURE-----
-
---Sig_/XFD/n9YQZsWflZWh=ICcVhh--
+--=_9afc21f00cc1f75185e9b71f580b0b32--
