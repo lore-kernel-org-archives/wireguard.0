@@ -1,17 +1,21 @@
-Return-Path: tiernan@tiernanotoole.net
-Received: from EUR01-VE1-obe.outbound.protection.outlook.com
- (mail-ve1eur01on0054.outbound.protection.outlook.com [104.47.1.54])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d00dbeeb
+Return-Path: trevp@trevp.net
+Received: from mail-ob0-f180.google.com (mail-ob0-f180.google.com
+ [209.85.214.180])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2c3e744a
  for <wireguard@lists.zx2c4.com>;
- Tue, 28 Jun 2016 21:31:08 +0000 (UTC)
+ Tue, 28 Jun 2016 23:09:39 +0000 (UTC)
+Received: by mail-ob0-f180.google.com with SMTP id c3so2112645obc.2
+ for <wireguard@lists.zx2c4.com>; Tue, 28 Jun 2016 16:12:17 -0700 (PDT)
 MIME-Version: 1.0
-Date: Tue, 28 Jun 2016 21:33:33 +0000
-From: <tiernan@tiernanotoole.net>
-To: <WireGuard@lists.zx2c4.com>
-Message-ID: <34EBEFA02A9AAB1F.1117239f-f3e4-4320-907d-9a9edbb083c6@mail.outlook.com>
-Content-Type: multipart/mixed; boundary="=_9afc21f00cc1f75185e9b71f580b0b32"
-Return-Path: tiernan@tiernanotoole.net
-Subject: [WireGuard] Single client connecting to server multiple times
+In-Reply-To: <CAHmME9rWDZs5o0QSe-UE=0zB6-QBq0w_EVZ8S14bT-bxG-i0Pg@mail.gmail.com>
+References: <CAHmME9rWDZs5o0QSe-UE=0zB6-QBq0w_EVZ8S14bT-bxG-i0Pg@mail.gmail.com>
+From: Trevor Perrin <trevp@trevp.net>
+Date: Tue, 28 Jun 2016 16:12:13 -0700
+Message-ID: <CAGZ8ZG13p6bSvFm1D_m3_uSQ-5XDmMwJ-og8wU_Q8UjTtP-y6Q@mail.gmail.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: noise <noise@moderncrypto.org>, wireguard@lists.zx2c4.com
+Subject: Re: [WireGuard] [noise] [ANNOUNCE] WireGuard Launched!
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -21,65 +25,30 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---=_9afc21f00cc1f75185e9b71f580b0b32
-Content-Type: multipart/alternative;
-	boundary="=_5d196b3829f17769c103a811333bca5e"
+On Tue, Jun 28, 2016 at 7:46 AM, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+>
+> At long last, the WireGuard project is launched! It's been a very long
+> road, but at this point I feel confident enough in the general design
+> and protocol that it's time to open this up for more widespread
+> testing and feedback.
 
---=_5d196b3829f17769c103a811333bca5e
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset="utf-8"
+Very cool, that's a lot of good work, and nice docs.
 
-CgpHb29kIG1vcm5pbmcuCgoKRm91bmQgdGhpcyB2aWEgaGFja2VyIG5ld3Mg
-YW5kIHZlcnkgaW50ZXJlc3RlZC4uLiBJIGhhdmUgYWxyZWFkeSBpbnN0YWxs
-ZWQgaXQgb24gdHdvIG1hY2hpbmVzIGFuZCBub3cgaGF2ZSBhIHF1ZXN0aW9u
-Li4uIEkgaGF2ZSBub3QgdHJpZWQgdGhpcyB5ZXQgbXlzZWxmLCBzbyBpdCBt
-aWdodCBhbHJlYWR5IGJlIHBvc3NpYmxlLi4uIEkgaGF2ZSBhIG1hY2hpbmUg
-aW4gaG91c2UgYW5kIG9uZSBpbiBhIGRhdGEgY2VudGVyLiBUaGUgbWFjaGlu
-ZSBpbiBob3VzZSBoYXMgdHdvIHdhbiBsaW5rcyBhbmQgYSBsYW4gY29ubmVj
-dGlvbi4gQ3VycmVudGx5IEkgaGF2ZSB0d28gcDJwIG9wZW4gVlBOIGNvbm5l
-Y3Rpb25zIGJldHdlZW4gdGhlIGhvdXNlIGFuZCB0aGUgZGMsIHRoZW4gdXNp
-bmcgdGhlIG1hZ2ljIG9mIHF1YWdnYSwgdGhleSBhcmUgbG9hZCBiYWxhbmNl
-ZC4uLgoKCk5vdyB0aGUgcm91dGluZyBpcyBhbHJlYWR5IHdvcmtpbmcsIHNv
-IGp1c3QgdGhpbmtpbmcgb2YgcmVwbGFjaW5nIHRoZSBsMyB3aXRoIHdpcmVn
-dWFyZC4gSXMgaXQgcG9zc2libGU/IEFnYWluLCBoYWQgYW4gaG91ciB0byB0
-cnkgdGhpcyBlYXJsaWVyIGFuZCBqdXN0IHRyaWVzIGdldHRpbmcgdGhlIGJh
-cmUgbWluaW11bSBjb25uZWN0aW9uIHdvcmtpbmcuIEhvcGVmdWxseSB0b21v
-cnJvdyBJIHdpbGwgaGF2ZSBtb3JlIHRpbWUgdG8gcGxheSEKCgpLZWVwIHVw
-IHRoZSBnb29kIHdvcmshCgoKLS1UaWVybmFuCgoKR2V0IE91dGxvb2sgZm9y
-IEFuZHJvaWQKCgoNCgoKLS0KVGhpcyBtZXNzYWdlIGhhcyBiZWVuIHNjYW5u
-ZWQgYnkgRS5GLkEuIFByb2plY3QgYW5kIGlzIGJlbGlldmVkIHRvIGJlIGNs
-ZWFuLgoKCg==
+Are you finding it easy(er) to justify HKDF, yet, instead of something
+more custom? :-)
 
---=_5d196b3829f17769c103a811333bca5e
-Content-Transfer-Encoding: base64
-Content-Type: text/html; charset="utf-8"
 
-PHAgZGlyPSJhdXRvIj5Hb29kIG1vcm5pbmcuPC9wPgo8cCBkaXI9ImF1dG8i
-PkZvdW5kIHRoaXMgdmlhIGhhY2tlciBuZXdzIGFuZCB2ZXJ5IGludGVyZXN0
-ZWQuLi4gSSBoYXZlIGFscmVhZHkgaW5zdGFsbGVkIGl0IG9uIHR3byBtYWNo
-aW5lcyBhbmQgbm93IGhhdmUgYSBxdWVzdGlvbi4uLiBJIGhhdmUgbm90IHRy
-aWVkIHRoaXMgeWV0IG15c2VsZiwgc28gaXQgbWlnaHQgYWxyZWFkeSBiZSBw
-b3NzaWJsZS4uLiBJIGhhdmUgYSBtYWNoaW5lIGluIGhvdXNlIGFuZCBvbmUg
-aW4gYSBkYXRhIGNlbnRlci4gVGhlIG1hY2hpbmUgaW4gaG91c2UgaGFzIHR3
-byB3YW4gbGlua3MgYW5kIGEgbGFuIGNvbm5lY3Rpb24uIEN1cnJlbnRseSBJ
-IGhhdmUgdHdvIHAycCBvcGVuIFZQTiBjb25uZWN0aW9ucyBiZXR3ZWVuIHRo
-ZSBob3VzZSBhbmQgdGhlIGRjLCB0aGVuIHVzaW5nIHRoZSBtYWdpYyBvZiBx
-dWFnZ2EsIHRoZXkgYXJlIGxvYWQgYmFsYW5jZWQuLi48L3A+CjxwIGRpcj0i
-YXV0byI+Tm93IHRoZSByb3V0aW5nIGlzIGFscmVhZHkgd29ya2luZywgc28g
-anVzdCB0aGlua2luZyBvZiByZXBsYWNpbmcgdGhlIGwzIHdpdGggd2lyZWd1
-YXJkLiBJcyBpdCBwb3NzaWJsZT8gQWdhaW4sIGhhZCBhbiBob3VyIHRvIHRy
-eSB0aGlzIGVhcmxpZXIgYW5kIGp1c3QgdHJpZXMgZ2V0dGluZyB0aGUgYmFy
-ZSBtaW5pbXVtIGNvbm5lY3Rpb24gd29ya2luZy4gSG9wZWZ1bGx5IHRvbW9y
-cm93IEkgd2lsbCBoYXZlIG1vcmUgdGltZSB0byBwbGF5ITwvcD4KPHAgZGly
-PSJhdXRvIj5LZWVwIHVwIHRoZSBnb29kIHdvcmshPC9wPgo8cCBkaXI9ImF1
-dG8iPi0tVGllcm5hbjwvcD4KPHAgZGlyPSJhdXRvIj5HZXQgPGEgaHJlZj0i
-aHR0cHM6Ly9ha2EubXMvZ2hlaTM2Ij5PdXRsb29rIGZvciBBbmRyb2lkPC9h
-Pjxicj4KPC9wPgoNCjxiciAvPi0tIAo8YnIgLz5UaGlzIG1lc3NhZ2UgaGFz
-IGJlZW4gc2Nhbm5lZCBmb3IgdmlydXNlcyBhbmQgZGFuZ2Vyb3VzIGNvbnRl
-bnQgYnkgPGJyIC8+CjxhIGhyZWY9Imh0dHA6Ly93d3cuZWZhLXByb2plY3Qu
-b3JnIj48Yj5FLkYuQS4gUHJvamVjdDwvYj48L2E+LCBhbmQgaXMgYmVsaWV2
-ZWQgdG8gYmUgY2xlYW4uCgo=
+A few editorial things (https://www.wireguard.io/protocol/)
 
---=_5d196b3829f17769c103a811333bca5e--
+ * You should link the Noise website (which has nicer PDF/HTML specs)
+instead of the Github source (the markdown was written for Pandoc
+instead of Github flavor, so has some glitches in Github view).
 
---=_9afc21f00cc1f75185e9b71f580b0b32--
+ * You could omit the first "initiator.key = HMAC" call in processing
+the initial message with PSK, as that key isn't used.
+
+ * You could omit the first two "responder.key = HMAC" calls in
+processing the response message, as that key isn't used.
+
+
+Trevor
