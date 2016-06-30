@@ -1,27 +1,29 @@
-Return-Path: Jason@zx2c4.com
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6381e90d
+Return-Path: zx2c4@gentoo.org
+Received: from smtp.gentoo.org (smtp.gentoo.org [140.211.166.183])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6a590abf
  for <wireguard@lists.zx2c4.com>;
- Thu, 30 Jun 2016 19:42:14 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 88ece122
- for <wireguard@lists.zx2c4.com>;
- Thu, 30 Jun 2016 19:42:14 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 28df019f
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Thu, 30 Jun 2016 19:42:13 +0000 (UTC)
-Received: by mail-lf0-f47.google.com with SMTP id h129so62891061lfh.1
- for <wireguard@lists.zx2c4.com>; Thu, 30 Jun 2016 12:45:04 -0700 (PDT)
+ Thu, 30 Jun 2016 18:39:50 +0000 (UTC)
+Received: from mail-lf0-f45.google.com (mail-lf0-f45.google.com
+ [209.85.215.45])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested) (Authenticated sender: zx2c4)
+ by smtp.gentoo.org (Postfix) with ESMTPSA id 1F1E2340E2C
+ for <wireguard@lists.zx2c4.com>; Thu, 30 Jun 2016 18:42:40 +0000 (UTC)
+Received: by mail-lf0-f45.google.com with SMTP id f6so61780548lfg.0
+ for <wireguard@lists.zx2c4.com>; Thu, 30 Jun 2016 11:42:40 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <87mvm21o0z.fsf@alice.fifthhorseman.net>
-References: <87mvm21o0z.fsf@alice.fifthhorseman.net>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 30 Jun 2016 21:45:00 +0200
-Message-ID: <CAHmME9rocoQvv8mdVgK-Qyj0yufQW=foat_0SfM7osm1r8te2w@mail.gmail.com>
-To: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+In-Reply-To: <CAHmME9roK0U62hwXq2rHOtGEkoxKx92Xg9Ay2HOnKuL4CtoQgA@mail.gmail.com>
+References: <CAHmME9oiTG6Hfps0ZqJFJ13UxappXk3TyoLWWu0AZ_G_A65bxQ@mail.gmail.com>
+ <CAHmME9roK0U62hwXq2rHOtGEkoxKx92Xg9Ay2HOnKuL4CtoQgA@mail.gmail.com>
+From: "Jason A. Donenfeld" <zx2c4@gentoo.org>
+Date: Thu, 30 Jun 2016 20:42:35 +0200
+Message-ID: <CAHmME9roU-yTqUjJH3Peqd6YADn47-2uNF11G10C7bxLDRtAcw@mail.gmail.com>
+To: zorun@bitsofnetworks.org, Christian Hesse <mail@eworm.de>,
+ Daniel Kahn Gillmor <dkg@fifthhorseman.net>,
+ Christophe Fergeau <cfergeau@gmail.com>, zx2c4@gentoo.org
 Content-Type: text/plain; charset=UTF-8
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: [WireGuard] README.md refers to doc/protocol.md
+Cc: wireguard@lists.zx2c4.com
+Subject: Re: [WireGuard] The Distro Package Maintainers Thread
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -31,16 +33,6 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hey dkg,
+Et voila:
 
-Thanks for finding that. Indeed I initially had all the docs in docs/
-and moved it to wireguard.io for the public release. They still live
-in markdown format and the site is built from that. Right now I have
-no plans of moving the documentation back into the repo. In any case,
-I've got a good system for keeping the docs in wireguard.io up to date
-with the wireguard src repository; they're both versioned in git, and
-perhaps I'll open up the repo for the site markdown documentation.
-
-Good feedback, thanks.
-
-Jason
+https://gitweb.gentoo.org/repo/gentoo.git/tree/net-misc/wireguard/wireguard-0.0.20160630.ebuild
