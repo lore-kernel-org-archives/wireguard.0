@@ -1,20 +1,19 @@
-Return-Path: dkg@fifthhorseman.net
-Received: from che.mayfirst.org (che.mayfirst.org [162.247.75.118])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 38ca04dd
+Return-Path: baptiste@bitsofnetworks.org
+Received: from mails.bitsofnetworks.org (rezine.polyno.me [193.33.56.138])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5dc3060b
  for <wireguard@lists.zx2c4.com>;
- Thu, 30 Jun 2016 15:00:32 +0000 (UTC)
-From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>, zorun@bitsofnetworks.org,
- Christian Hesse <mail@eworm.de>, Christophe Fergeau <cfergeau@gmail.com>,
- zx2c4@gentoo.org
-In-Reply-To: <CAHmME9oiTG6Hfps0ZqJFJ13UxappXk3TyoLWWu0AZ_G_A65bxQ@mail.gmail.com>
+ Thu, 30 Jun 2016 15:28:19 +0000 (UTC)
+Date: Thu, 30 Jun 2016 17:30:58 +0200
+From: Baptiste Jonglez <baptiste@bitsofnetworks.org>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Message-ID: <20160630153058.GC4073@lud.polynome.dn42>
 References: <CAHmME9oiTG6Hfps0ZqJFJ13UxappXk3TyoLWWu0AZ_G_A65bxQ@mail.gmail.com>
-Date: Thu, 30 Jun 2016 11:03:12 -0400
-Message-ID: <87furu3ej3.fsf@alice.fifthhorseman.net>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Cc: wireguard@lists.zx2c4.com
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="sHrvAb52M6C8blB9"
+In-Reply-To: <CAHmME9oiTG6Hfps0ZqJFJ13UxappXk3TyoLWWu0AZ_G_A65bxQ@mail.gmail.com>
+Cc: Christian Hesse <mail@eworm.de>, zx2c4@gentoo.org,
+ wireguard@lists.zx2c4.com
 Subject: Re: [WireGuard] The Distro Package Maintainers Thread
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
@@ -25,117 +24,130 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---=-=-=
-Content-Type: text/plain
 
-On Thu 2016-06-30 08:52:04 -0400, Jason A. Donenfeld wrote:
-> So it looks like we're the distro people downstream of WireGuard:
+--sHrvAb52M6C8blB9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-hi all!
-
+On Thu, Jun 30, 2016 at 02:52:04PM +0200, Jason A. Donenfeld wrote:
+> =3D=3D=3D 1. Package Names =3D=3D=3D
+> Probably for the purposes of consistency and ease of use, we should
+> standardize our package names. So what about restricting naming to
+> either of these two naming options:
+>=20
 > Option a) monolithic:
 >     Package name: wireguard
->
+>=20
 > Option b) split:
 >     Tools package name: wireguard-tools
 >     Module package name: wireguard _or_ wireguard-${SUFFIX},
 >        where SUFFIX is modules, or dkms, or whatever the convention in
 > your OS is
 
-I prefer option (b)
+On OpenWRT, the packages are necessarily split, and the kernel package is
+called kmod-wireguard.  For now I have named the tools package "wireguard",
+but there's no problem changing that to "wireguard-tools".
 
+> =3D=3D=3D 2. Experimental Status =3D=3D=3D
+>=20
+> WireGuard isn't meant for prime time. It's still under development,
+> and there won't be CVEs or responsible announcements made for various
+> issues. The purpose of this phase now is to get it out to interested
+> testers and experimenters for working out various issues. Debian is
+> very well suited for this configuration, with its experimental tree,
+> which is where the package will live until we release the first "0.1"
+> or "1.0" version that we stand behind. Arch has a similar place. I
+> think OpenWRT has a good slot for this too?
+
+All third-party OpenWRT packages go to https://github.com/openwrt/packages.
+There is no notion of "experimental" repositories as this is third-party
+anyway.  There are also special branches for stable releases, where
+package versions are mostly "frozen":
+
+  https://github.com/openwrt/packages/blob/master/CONTRIBUTING.md#release-b=
+ranches
+
+> =3D=3D=3D 3. Versioning =3D=3D=3D
+>=20
+> As mentioned prior, we're not at 1.0 or even 0.1. Many packagers can
+> deal with building straight from the git master with a live checkout.
+> But other packagers can't, and this isn't very nice for testing users
+> anyway, since they don't get version bumps for updating. So, it seems
+> wise for us to formalize a snapshot versioning scheme. First, there
+> are two ways of doing this:
+>=20
+> a) I can tag snapshot releases.
+> b) You can select snapshot commit IDs.
+>=20
+> I think between these two options (a) is clearly superior, since then
+> I can be sure to tag commits that at least build.
+
+Agreed, you are the most suited person.  It's tedious to have to guess
+when upstream changes are either significant or likely to break things.
+
+> With the actual version numbers itself, I think at least it should be
+> based on the big endian date stamp:
+>=20
+>     0.0.20160701
+>=20
 > Zero dot zero. But it'd be nice to further specify that these are
 > pre-release or experimental:
->
+>=20
 >     0.0.20160701_pre
 >     0.0.20160701_experimental
 >     0.0.20160701_killskittens
->
+>=20
 > Any preference on pre vs experimental vs killskittens vs something
 > else? I'm open to anything here.
->
+>=20
 > The _suffix notation works well with how Gentoo does package versions.
 > What about the rest of you? For example, I think this might pose
 > problems:
->
+>=20
 >     0.0.20160701.pre
 >     0.0.20160701.experimental
 >     0.0.20160701.killskittens
->
+>=20
 > Or, if anyone has another idea for injecting a label like this into
 > the snapshot revision, speak up.
->
+>=20
 > Overall, at the moment I'm leaning toward  0.0.20160701_experimental.
 > But I'll wait for responses before deciding anything.
 
-debian can't include an underscore (_) in the version number:
+There does not seem to be any restriction for OpenWRT regarding allowed
+characters.  Personally, I'd like to keep the label short for readability
+("exp", "pre", "alpha"...).
 
- https://www.debian.org/doc/debian-policy/ch-controlfields.html#s-f-Version
+> Have I left anything out? How does that all sound to you guys?
 
-and while debian policy suggests that in some circumstances hyphen (-)
-and colon (:) are OK, they really shouldn't be used either, so i'd
-prefer the dot (.) or plus (+) as a delimiter.
+How often do you plan to tag new snapshot releases?  For OpenWRT, I don't
+plan to update the package more often than once every few weeks anyway.
 
-For release candidates: on debian, we can use the ~ character to mean
-"just before" -- so if you want a pre-release version (say "release
-candidate 1 for 0.1") i'd normally declare the upstream version as
-0.1~rc1, which will sort as "earlier" than 0.1 itself.
+Also, do you plan to have an infrastructure producing a tarball every time
+you tag a release?
 
-anyway, i won't lose much sleep over it -- i can translate whatever you
-decide makes sense as an upstream version to whatever fits in debian,
-with as minimal a change as possible.
+Baptiste
 
-One question though: how will the release version relate to
-PACKAGE_VERSION in src/dkms.conf?  do we expect those to track each
-other or are they separable?
-
-> Regarding the topic of building infrastructure, it seems like with the
-> exception of OpenWRT and Gentoo, everyone else is converging on DKMS?
-> Is this right? If so, it appears that Christian's dkms.conf file is a
-> good start for this, and I'll consider putting it directly in the repo
-> at some point. Is anybody here well versed with DKMS? Does it have a
-> way of expressing and warning about dependencies?
-
-DKMS works fine for me; i'm sorting out some minimalist debian
-packaging, and will start with Christian's dkms.conf, though i'm curious
-how other folks would approach the module versioning, as i mentioned
-above.
-
-> === 5. Current Status ===
->
-> In public repositories there are currently these:
->   https://aur.archlinux.org/cgit/aur.git/tree/?h=wireguard-git
->   https://gitweb.gentoo.org/repo/gentoo.git/tree/net-misc/wireguard/
-
-I'm going to be publishing debian packaging at:
-
-  https://anonscm.debian.org/git/collab-maint/wireguard.git
-
-I don't have anything to show there yet, but hopefully later today i'll
-have something.
-
-     --dkg
-
---=-=-=
+--sHrvAb52M6C8blB9
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2
 
-iQJ8BAEBCgBmBQJXdTSwXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25zLm9w
-ZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXRFREIyRTc0RjU2RkNGMkI2NzI5N0I3MzUy
-NEVDRkY1QUZGNjgzNzBBAAoJECTs/1r/aDcKkKwQAI3PfAyen1aAB2NsB9ZsgQQB
-/hu0xNHJmlPNU2IopZ0LJ7ucZbwtoJOhfjqkGgsYoaxtYFeWgBmO+45HX5PQsO6s
-nlAydwWaJyiWqGToxj4J8bAcbDkcYnENtCxEKXPK5PC3oSQuTthNpqQw5MI3U8yD
-HkzHdBzBWbP7G2yQpT9wCGp/jZb1qB7JXE7mzRX5S+dDWM7gAnblLWV6pEoZHP5h
-qQzGx7JTqIbl1agbl7NzPy2e2t7JbJjUnQgbl4jwk32KGECRPdBwyRyLDWNoXTCz
-pU4+trEx8aF85vU/hMzBzbT6i9E2GXiMk9qkh5yE55RUvNtB8ltbw5K+94l2zMkA
-+n4iA03ROHTf1H3X8fyF8de3BzTFiiB4ydkzOQlFaQQBA3dZ9VDT7hSD6DaxLAV9
-x27rkroeqMtKYQszZDPTTERnS2u9V6yuGXLPLmjO+L8BT+LSWzGjv+PQIaCJDtl1
-bKsYLWwzdiRE3/QYZqX1MsuLr8ASzC3O11YANoTPAXhCPqkZglbITuhIlwbn2pOi
-/IXqEDmip8doKFeuDUj1TuwsfokGJw8NbqKOyOA/og3Nn6HJAS0YfQ6aT31y6cOX
-1IyprOyBA+oYp/Ig584TkBay9pjhWDUCRC3q38Pl4Du43c00SGt7KpyOEj9bBHXk
-XZTlt3yzThecGe93CI5A
-=Zemn
+iQIcBAEBCAAGBQJXdTstAAoJEL4B7CKgTi5GYW0P/iR4uIveGPJrZSE98yZg8P2x
+QkFKflHMYXugrD4E9Topq+pnFqryFxFPUGmFdTNIY2BJ6cJwh0H9X6TxmNOeiP/J
+CgzXA5UAGOtI1C2ZBWN0zUlCU9oVa3tBn0kWeWrikpS2tsb9tdhgEp3fGRjGD2pr
+qDL0foyp5coNHH5CeGipM2aXCE0+pyCi70WAJzr4mlWtS2z+YI6YyOVpeoxVsKOq
+r1KwwG+u+7N1A9MzAtQyeKN1qXBO01DTfVgHc4+ZLrW9LTUBlwgR3v7Rit+B1IR6
+/8LIA9VvloKuC6Kq0oi2thCtj7PMhQTmOSFi8vqOke+1H3w7c6UwEIk7QE8BRJCO
+MHBFs04ODcDLdK6YICwWsSzM1rfKCkkrB2x9yQL2kM5U5b8YyLdohVcBtf/9XVs2
+PBYm9Oqw2ySylHAplHs3bIrWjUzhbKzqIa4JyoavW+AQDMr8LhnF+GKYaA16RDqq
+WcAJ0BePjH4biEi4R6Dt/uZodSqHzB/uLI/c4CWO7fNclGGyvCDz2cruzlKnIB8g
+xXD51rQZ8O+4Q+q1H8MRkcRGpTdZ07CfNji4xBWRKBsXMrEklFw+XqPTOkrwUQtu
+ZMJBjhhSTbJ3gjJhai3yah+EiU3O/AhykZzGRxB0FtqpM5KbZFkVfhCdyx+kxsBy
+ZQkiYT3yZayMJgQmfQdG
+=XxeA
 -----END PGP SIGNATURE-----
---=-=-=--
+
+--sHrvAb52M6C8blB9--
