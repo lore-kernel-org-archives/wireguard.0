@@ -1,20 +1,22 @@
-Return-Path: baptiste@bitsofnetworks.org
-Received: from mails.bitsofnetworks.org (rezine.polyno.me [193.33.56.138])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5dc3060b
+Return-Path: guus@tinc-vpn.org
+Received: from arianus.sliepen.org (arianus.sliepen.org [92.243.30.131])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1c7d16b3
  for <wireguard@lists.zx2c4.com>;
- Thu, 30 Jun 2016 15:28:19 +0000 (UTC)
-Date: Thu, 30 Jun 2016 17:30:58 +0200
-From: Baptiste Jonglez <baptiste@bitsofnetworks.org>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Message-ID: <20160630153058.GC4073@lud.polynome.dn42>
-References: <CAHmME9oiTG6Hfps0ZqJFJ13UxappXk3TyoLWWu0AZ_G_A65bxQ@mail.gmail.com>
+ Thu, 30 Jun 2016 16:29:39 +0000 (UTC)
+Received: from sliepen.org (unknown [IPv6:fec0::1:204:76ff:fe14:6e86])
+ by arianus.sliepen.org (Postfix) with ESMTP id 3BC9026504
+ for <wireguard@lists.zx2c4.com>; Thu, 30 Jun 2016 18:32:27 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by sliepen.org (Postfix) with ESMTP id DC2522200E7
+ for <wireguard@lists.zx2c4.com>; Thu, 30 Jun 2016 18:32:26 +0200 (CEST)
+Date: Thu, 30 Jun 2016 18:32:26 +0200
+From: Guus Sliepen <guus@tinc-vpn.org>
+To: wireguard@lists.zx2c4.com
+Message-ID: <20160630163226.GJ3952@sliepen.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="sHrvAb52M6C8blB9"
-In-Reply-To: <CAHmME9oiTG6Hfps0ZqJFJ13UxappXk3TyoLWWu0AZ_G_A65bxQ@mail.gmail.com>
-Cc: Christian Hesse <mail@eworm.de>, zx2c4@gentoo.org,
- wireguard@lists.zx2c4.com
-Subject: Re: [WireGuard] The Distro Package Maintainers Thread
+ protocol="application/pgp-signature"; boundary="82evfD9Ogz2JrdWZ"
+Subject: [WireGuard] Allowing out-of-band communication with peers
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -25,129 +27,52 @@ List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
 
---sHrvAb52M6C8blB9
+--82evfD9Ogz2JrdWZ
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jun 30, 2016 at 02:52:04PM +0200, Jason A. Donenfeld wrote:
-> =3D=3D=3D 1. Package Names =3D=3D=3D
-> Probably for the purposes of consistency and ease of use, we should
-> standardize our package names. So what about restricting naming to
-> either of these two naming options:
->=20
-> Option a) monolithic:
->     Package name: wireguard
->=20
-> Option b) split:
->     Tools package name: wireguard-tools
->     Module package name: wireguard _or_ wireguard-${SUFFIX},
->        where SUFFIX is modules, or dkms, or whatever the convention in
-> your OS is
+Hello,
 
-On OpenWRT, the packages are necessarily split, and the kernel package is
-called kmod-wireguard.  For now I have named the tools package "wireguard",
-but there's no problem changing that to "wireguard-tools".
+Wireguard looks very interesting! I'm the author of tinc, another VPN
+project. With wireguard, even if you have a single interface to connect
+to multiple peers, you still end up managing which peers to connect to.
+If you want to set up a mesh VPN with a large number of nodes, this can
+become problematic. With tinc, you normally configure only connections
+to a small number of nodes, and let it discover the rest of the VPN
+automatically.
 
-> =3D=3D=3D 2. Experimental Status =3D=3D=3D
->=20
-> WireGuard isn't meant for prime time. It's still under development,
-> and there won't be CVEs or responsible announcements made for various
-> issues. The purpose of this phase now is to get it out to interested
-> testers and experimenters for working out various issues. Debian is
-> very well suited for this configuration, with its experimental tree,
-> which is where the package will live until we release the first "0.1"
-> or "1.0" version that we stand behind. Arch has a similar place. I
-> think OpenWRT has a good slot for this too?
+I believe it should be possible to have a userspace daemon manage a
+wireguard interface. However, for discovering other nodes this daemon
+would need to exchange information with peers. It would be very useful
+if there was a designated packet type for this (0x5?), and that the
+netlink interface could be used to receive and send these packets from
+userspace, as well as some way to get notified of peers (dis)connecting.
 
-All third-party OpenWRT packages go to https://github.com/openwrt/packages.
-There is no notion of "experimental" repositories as this is third-party
-anyway.  There are also special branches for stable releases, where
-package versions are mostly "frozen":
+--=20
+Met vriendelijke groet / with kind regards,
+     Guus Sliepen <guus@tinc-vpn.org>
 
-  https://github.com/openwrt/packages/blob/master/CONTRIBUTING.md#release-b=
-ranches
-
-> =3D=3D=3D 3. Versioning =3D=3D=3D
->=20
-> As mentioned prior, we're not at 1.0 or even 0.1. Many packagers can
-> deal with building straight from the git master with a live checkout.
-> But other packagers can't, and this isn't very nice for testing users
-> anyway, since they don't get version bumps for updating. So, it seems
-> wise for us to formalize a snapshot versioning scheme. First, there
-> are two ways of doing this:
->=20
-> a) I can tag snapshot releases.
-> b) You can select snapshot commit IDs.
->=20
-> I think between these two options (a) is clearly superior, since then
-> I can be sure to tag commits that at least build.
-
-Agreed, you are the most suited person.  It's tedious to have to guess
-when upstream changes are either significant or likely to break things.
-
-> With the actual version numbers itself, I think at least it should be
-> based on the big endian date stamp:
->=20
->     0.0.20160701
->=20
-> Zero dot zero. But it'd be nice to further specify that these are
-> pre-release or experimental:
->=20
->     0.0.20160701_pre
->     0.0.20160701_experimental
->     0.0.20160701_killskittens
->=20
-> Any preference on pre vs experimental vs killskittens vs something
-> else? I'm open to anything here.
->=20
-> The _suffix notation works well with how Gentoo does package versions.
-> What about the rest of you? For example, I think this might pose
-> problems:
->=20
->     0.0.20160701.pre
->     0.0.20160701.experimental
->     0.0.20160701.killskittens
->=20
-> Or, if anyone has another idea for injecting a label like this into
-> the snapshot revision, speak up.
->=20
-> Overall, at the moment I'm leaning toward  0.0.20160701_experimental.
-> But I'll wait for responses before deciding anything.
-
-There does not seem to be any restriction for OpenWRT regarding allowed
-characters.  Personally, I'd like to keep the label short for readability
-("exp", "pre", "alpha"...).
-
-> Have I left anything out? How does that all sound to you guys?
-
-How often do you plan to tag new snapshot releases?  For OpenWRT, I don't
-plan to update the package more often than once every few weeks anyway.
-
-Also, do you plan to have an infrastructure producing a tarball every time
-you tag a release?
-
-Baptiste
-
---sHrvAb52M6C8blB9
+--82evfD9Ogz2JrdWZ
 Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXdTstAAoJEL4B7CKgTi5GYW0P/iR4uIveGPJrZSE98yZg8P2x
-QkFKflHMYXugrD4E9Topq+pnFqryFxFPUGmFdTNIY2BJ6cJwh0H9X6TxmNOeiP/J
-CgzXA5UAGOtI1C2ZBWN0zUlCU9oVa3tBn0kWeWrikpS2tsb9tdhgEp3fGRjGD2pr
-qDL0foyp5coNHH5CeGipM2aXCE0+pyCi70WAJzr4mlWtS2z+YI6YyOVpeoxVsKOq
-r1KwwG+u+7N1A9MzAtQyeKN1qXBO01DTfVgHc4+ZLrW9LTUBlwgR3v7Rit+B1IR6
-/8LIA9VvloKuC6Kq0oi2thCtj7PMhQTmOSFi8vqOke+1H3w7c6UwEIk7QE8BRJCO
-MHBFs04ODcDLdK6YICwWsSzM1rfKCkkrB2x9yQL2kM5U5b8YyLdohVcBtf/9XVs2
-PBYm9Oqw2ySylHAplHs3bIrWjUzhbKzqIa4JyoavW+AQDMr8LhnF+GKYaA16RDqq
-WcAJ0BePjH4biEi4R6Dt/uZodSqHzB/uLI/c4CWO7fNclGGyvCDz2cruzlKnIB8g
-xXD51rQZ8O+4Q+q1H8MRkcRGpTdZ07CfNji4xBWRKBsXMrEklFw+XqPTOkrwUQtu
-ZMJBjhhSTbJ3gjJhai3yah+EiU3O/AhykZzGRxB0FtqpM5KbZFkVfhCdyx+kxsBy
-ZQkiYT3yZayMJgQmfQdG
-=XxeA
+iQIcBAEBCAAGBQJXdUmaAAoJED9JDeuHHvn6soAP/0/wjjzVDSqlTnUXZA8qi+r8
+zFwLR45AqlVfl4tYIV93W1d4MdFbe9s/tbpFkmFpWSqS36M10UUazjfz1ZeXP3zR
++lKGq3vPV8g3RnPlkzd144ywJtg1r1Rjt7qVzLOEHM3XI3AOtIpFxQYGNZWAy7gr
++Bke8Tk4rhEdIIO9I2DpARhCnNAHcZFF/W9fW77Mi7vW3mG71W/F/nl7JemrVRk4
+Tn1sQu2rAtcEC4Vr1BLKzvXgm/H8xIKGFiK8gO2KyDNS9W7NJLVU8+aJKeva8MCs
+orutxvtD3kK27MOCpwHrsTF4wn40y9uyCT1ti1mGCJQN68BYIjpMA4VNGJI3EZxa
+alK/rOS2NL8rpKi8bcYJOVwJ97n5rKKD8s7eFp8FsufzTZQOKndlVKS9TJTOF96W
+/sOu9hKsX31zjjp+tyHhGPP0KOH58uO+0iF+g6Q5/6kqVhiypM2KrgSNQ0sZ+4ml
+N+fEv19ey2etJbLQENMYqTrnr6/6mBw95ACPQ7G4cb6sOpP4+HHsoufHUl4iATy0
+PgxMCdpuqHSD7Ir1A+Y1/l4VSXR1oXJdD8qF9hs/jINAwbljFOTLGmqY/ysFwAYD
+I3KpYxV8KVR2crlNHJ34VBydEl55jaBfjww7MQAPx0QRDFdEuk4Use9sfdr2RxfF
+aEc4bmfLlGUXsoMYUTm6
+=DAUz
 -----END PGP SIGNATURE-----
 
---sHrvAb52M6C8blB9--
+--82evfD9Ogz2JrdWZ--
