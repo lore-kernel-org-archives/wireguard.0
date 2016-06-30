@@ -1,27 +1,19 @@
-Return-Path: Jason@zx2c4.com
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9c0e5316
+Return-Path: dkg@fifthhorseman.net
+Received: from che.mayfirst.org (che.mayfirst.org [162.247.75.118])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 17d313c0
  for <wireguard@lists.zx2c4.com>;
- Thu, 30 Jun 2016 18:45:53 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 70d6c264
- for <wireguard@lists.zx2c4.com>;
- Thu, 30 Jun 2016 18:45:53 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 614748c4
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Thu, 30 Jun 2016 18:45:52 +0000 (UTC)
-Received: by mail-lf0-f46.google.com with SMTP id l188so61895444lfe.2
- for <wireguard@lists.zx2c4.com>; Thu, 30 Jun 2016 11:48:43 -0700 (PDT)
+ Thu, 30 Jun 2016 19:18:12 +0000 (UTC)
+Received: from fifthhorseman.net (unknown [38.109.115.130])
+ by che.mayfirst.org (Postfix) with ESMTPSA id C0C18F997
+ for <wireguard@lists.zx2c4.com>; Thu, 30 Jun 2016 15:21:03 -0400 (EDT)
+From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+To: wireguard@lists.zx2c4.com
+Date: Thu, 30 Jun 2016 15:21:00 -0400
+Message-ID: <87mvm21o0z.fsf@alice.fifthhorseman.net>
 MIME-Version: 1.0
-In-Reply-To: <1467312429-26883-1-git-send-email-dkg@fifthhorseman.net>
-References: <1467312429-26883-1-git-send-email-dkg@fifthhorseman.net>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 30 Jun 2016 20:48:35 +0200
-Message-ID: <CAHmME9od32ucRy6ePPdhXyhPAnJJFZG5gFjG2u55hwMSdt9urQ@mail.gmail.com>
-To: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-Content-Type: text/plain; charset=UTF-8
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: [WireGuard] [PATCH] use https instead of http
+Content-Type: multipart/signed; boundary="=-=-=";
+ micalg=pgp-sha512; protocol="application/pgp-signature"
+Subject: [WireGuard] README.md refers to doc/protocol.md
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -31,4 +23,49 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Thanks, applied.
+--=-=-=
+Content-Type: text/plain
+
+hi Jason and other wireguard folks--
+
+README.md refers to doc/protocol.md, but there is no doc/ directory that
+i can see.  This is presumably because the git repo has been curated and
+the doc directory got moved to some other repo.  Should README.md get
+cleaned-up to remove the reference, or to point to some public URL like
+https://www.wireguard.io/protocol/ ?
+
+In general, i'd be happy to see documentation like the stuff at
+https://www.wireguard.io/protocol/ stored directly in the code repo,
+because then technical documentation and code can be cleanly
+synchronized (an old version of the code might be different than
+whatever's on the website at the moment someone reads it).
+
+I do recognize that you wouldn't want to put the entire website in the
+source repository, though, and i'm not sure what the best way would be
+to keep the website and the latest tip of the source repo in sync.
+
+        --dkg
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQJ8BAEBCgBmBQJXdXEcXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25zLm9w
+ZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXRFREIyRTc0RjU2RkNGMkI2NzI5N0I3MzUy
+NEVDRkY1QUZGNjgzNzBBAAoJECTs/1r/aDcK924P/1MIJhFouDYiq8jdmWKGpZ3v
+QMrBEqv2wt1bQJGNCz/V5mUqrgXILa5WOfJD72R8U2USm1Fj40XIsqpe5VIFPIAx
+u6J1JoGviJ6o0dH+hPXB4VwGiwll2i1MuljT6gxp/q2UpmcROFbzQxxjW1/q9rQ9
+c1CKp0Ukz6xmMyjm2OPJLy+p9cGgBlxJ2v8xyLfVjM6GMyCPFUT97px6ovOljwhT
+uW1ZkvJFWppvJyvNulk+qs2blquEN45nR3dh4UoC6/gPYzGJeZWQBhdCE+Jc3C6R
+TGAa4JKFHgiGSelJaMQmc/GguRGGak+hR3cFTal6BNlgQz52trwG9VaVFdhAj4Cr
+8rH1OYKgZiIuiNxnZktdWAxLJ00S/rh4Y4EVTQ/lbOoydoIeMoTUo92fEFAwjW95
+zeFIfJq/X2VeU3DTIe3oba7TlCMutyhkjrZK0xhIzR3IJcGBABn+e30AZRu2AZ9z
+pGYpOODB6YEA8Ba2jhBd+y48Sbkhe5ltlrn1Ej3+vwHlJXHrohQafcoGp8Wk9add
+q6rEUUN7uLz+ZM/l9bAEJEnBIu8US+bJ4eJmd6f0P6ErNPb1hBHIKvgdQ+zHKcqq
+3xr66yuLpAyK0PH9wUUWuhFA/rP25D0XZFKrzWnPmPJZWKaI8zOCeglFya+DjeGP
+UJoUlAF/knyF+DF3gXHx
+=kpyk
+-----END PGP SIGNATURE-----
+--=-=-=--
