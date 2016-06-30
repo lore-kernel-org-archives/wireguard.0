@@ -1,18 +1,18 @@
-Return-Path: list@eworm.de
-Received: from mx.mylinuxtime.de (mx.mylinuxtime.de [148.251.109.235])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 949e91a0
+Return-Path: bruno@wolff.to
+Received: from wolff.to (wolff.to [98.103.208.27])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with SMTP id 1f3f72c1
  for <wireguard@lists.zx2c4.com>;
- Thu, 30 Jun 2016 13:25:45 +0000 (UTC)
-Date: Thu, 30 Jun 2016 15:28:25 +0200
-From: Christian Hesse <list@eworm.de>
+ Thu, 30 Jun 2016 14:44:52 +0000 (UTC)
+Date: Thu, 30 Jun 2016 09:45:58 -0500
+From: Bruno Wolff III <bruno@wolff.to>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Message-ID: <20160630152825.695863a4@leda.localdomain>
-In-Reply-To: <CAHmME9oiTG6Hfps0ZqJFJ13UxappXk3TyoLWWu0AZ_G_A65bxQ@mail.gmail.com>
+Message-ID: <20160630144558.GA5133@wolff.to>
 References: <CAHmME9oiTG6Hfps0ZqJFJ13UxappXk3TyoLWWu0AZ_G_A65bxQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- boundary="Sig_/kzF4u/+azdBXD6nA1aHF2GR"; protocol="application/pgp-signature"
-Cc: wireguard@lists.zx2c4.com, zx2c4@gentoo.org, zorun@bitsofnetworks.org
+Content-Type: text/plain; charset=us-ascii; format=flowed
+In-Reply-To: <CAHmME9oiTG6Hfps0ZqJFJ13UxappXk3TyoLWWu0AZ_G_A65bxQ@mail.gmail.com>
+Cc: zorun@bitsofnetworks.org, Christian Hesse <mail@eworm.de>, zx2c4@gentoo.org,
+ wireguard@lists.zx2c4.com
 Subject: Re: [WireGuard] The Distro Package Maintainers Thread
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
@@ -23,60 +23,33 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---Sig_/kzF4u/+azdBXD6nA1aHF2GR
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+On Thu, Jun 30, 2016 at 14:52:04 +0200,
+  "Jason A. Donenfeld" <Jason@zx2c4.com> wrote:
+>Christophe: Fedora (which will then travel downstream to RHEL?) He
+>doesn't have time for this now, but including him in the thread
+>anyway, and hopefully he'll kindly forward this email onto someone
+>else he knows at Redhat
 
-"Jason A. Donenfeld" <Jason@zx2c4.com> on Thu, 2016/06/30 14:52:
-> Christian is doing something a bit confusing and calling it
-> "wireguard-dkms" (for the module) and "wireguard" (for the tools),
-> when I think I'd rather prefer the latter be wireguard-tools if it's
-> always split.
+Fedora people can publish EPEL packages, but I'm don't know Red Hat's 
+stance on kernel module packages.
 
-The package base name is "wireguard", not sure what happens when no split
-package name matches the package base name. I will give it a try...
+For Fedora, not having it in the upstream kernel will make it very difficult 
+to get in Fedora proper, and doing COPRs may be a pain since kernel builds 
+happen a lot for Fedora.
 
-> Option b) split:
->     Tools package name: wireguard-tools
->     Module package name: wireguard _or_ wireguard-${SUFFIX},
->        where SUFFIX is modules, or dkms, or whatever the convention in
-> your OS is
+When it is actually in Fedora there won't be a package for the kernel module 
+(as it will be part of the kernel-modules or kernel-modules-extra packages).
 
-For AUR I will prepare dkms package only, that is named wireguard-dkms.
-If this ever goes to an official repository we will have wireguard-arch (for
-linux), wireguard-zen (for linux-zen), ...
+If it does get accepted for say 4.8, then getting a backported version into 
+previously released Fedora's that may be running older kernels may be 
+possible.
 
-> =3D=3D=3D 3. Versioning =3D=3D=3D
+>=== 3. Versioning ===
+>
+>    0.0.20160701
 
-I uploaded a git package to AUR, that will build from git HEAD and set the
-version string accordingly. Currently we have "0.r9.g0624787-1" (no tag, 9
-commits, most recent commit 0624787).
-
-If you tag "0.0.20160701_experimental" the string changes to
-"0.0.20160701_experimental.r0.g0624787-1" or similar. I can define what
-happens in pkgver function.
-
-I can upload a non-cvs version when first tag appears.
---=20
-main(a){char*c=3D/*    Schoene Gruesse                         */"B?IJj;MEH"
-"CX:;",b;for(a/*    Best regards             my address:    */=3D0;b=3Dc[a+=
-+];)
-putchar(b-1/(/*    Chris            cc -ox -xc - && ./x    */b/42*2-3)*42);}
-
---Sig_/kzF4u/+azdBXD6nA1aHF2GR
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQEcBAEBCAAGBQJXdR55AAoJEIlFIdfMgPR2mC0IAOxlDSoNhB5hH6v8IKRihsxe
-Fp8+E+tCRinQGfo3PGVKjZgTc1dN6WOiVKAPUvqx1mUC+mrzjNzq8BWg5yTrNDP6
-4p7e/ZtxfkOVZOeAwlM4AH/SXvnMrYzdvoVRh4NSy+0JSpnsA6pLFcDlkc+tbNCb
-MFfn8WYz5r1rw/FJHHchL4sgCCYUyYGrwIict0DOe2YibTY4A7ZIFKMGCHU73UMt
-NyJUEMXxqRV5l2xn91xgQbGIxJFn1nbdRCiO0d4Yl7/QzUjEJ0dgToXg/DE3Q5mR
-raXLXJbLZql/iWpuo1r7qzh32AUVRkhI5KCJhDg4gVCF9QuKzcaisdXTQy7tWIM=
-=1kSF
------END PGP SIGNATURE-----
-
---Sig_/kzF4u/+azdBXD6nA1aHF2GR--
+Fedora splits the version into two pieces. The first part is the version 
+and would be something like 0.0. As a prerelease the release should be 
+0.x.dateandorcommit, where x is an integer that gets bumped every release 
+and the rest can be a mix of date, tag or commit ID.
+So the final version might look like 0.0-0.1.20160701 .
