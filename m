@@ -1,19 +1,21 @@
-Return-Path: baptiste@bitsofnetworks.org
-Date: Fri, 1 Jul 2016 11:37:51 +0200
-From: Baptiste Jonglez <baptiste@bitsofnetworks.org>
-To: tiernan@tiernanotoole.net
-Message-ID: <20160701093751.GA28109@lud.polynome.dn42>
-References: <34EBEFA02A9AAB1F.1117239f-f3e4-4320-907d-9a9edbb083c6@mail.outlook.com>
- <CAHmME9rL4jdWQV66hGOSbY5yymVXatq67bMjEJwVBFTxNRB-uA@mail.gmail.com>
- <045201d1d2b3$3eaa6b70$bbff4250$@tiernanotoole.net>
- <CAHmME9oa+k0h9s62ts5DpqqWiSnf6zQRfCZyeOCXNsObOHyVDA@mail.gmail.com>
- <FE551DD9-28B0-4B3D-89F3-EB0F142AB48B@tiernanotoole.net>
+Return-Path: dkg@fifthhorseman.net
+Received: from che.mayfirst.org (che.mayfirst.org [162.247.75.118])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 39299b6d
+ for <wireguard@lists.zx2c4.com>; Fri, 1 Jul 2016 12:10:39 +0000 (UTC)
+From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+In-Reply-To: <CAHmME9p79wUVkdUX30dgrJ28rMkX13ywAi-4OBg+agiZdEijQQ@mail.gmail.com>
+References: <1467327323-8532-1-git-send-email-dkg@fifthhorseman.net>
+ <1467327323-8532-3-git-send-email-dkg@fifthhorseman.net>
+ <CAHmME9p79wUVkdUX30dgrJ28rMkX13ywAi-4OBg+agiZdEijQQ@mail.gmail.com>
+Date: Fri, 01 Jul 2016 08:13:26 -0400
+Message-ID: <87d1mx1rq1.fsf@alice.fifthhorseman.net>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="rwEMma7ioTxnRzrJ"
-In-Reply-To: <FE551DD9-28B0-4B3D-89F3-EB0F142AB48B@tiernanotoole.net>
-Cc: WireGuard@lists.zx2c4.com
-Subject: Re: [WireGuard] Single client connecting to server multiple times
+Content-Type: multipart/signed; boundary="=-=-=";
+ micalg=pgp-sha512; protocol="application/pgp-signature"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Subject: Re: [WireGuard] [PATCH 3/4] Explain the optional nature of
+	Peer.EndPoint more clearly
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -23,56 +25,80 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-
---rwEMma7ioTxnRzrJ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--=-=-=
+Content-Type: text/plain
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jul 01, 2016 at 10:15:14AM +0100, tiernan@tiernanotoole.net wrote:
-> So, I tried installing it, and managed to get it to work, but have not
-> managed to get much performance increases from it, compared to
-> OpenVPN... Are there tweaks that need to be made? On both machines, I am
-> listening on a dedicated port, and on the local machine it has its local
-> ip set to the public IP of the given Network adapter (both public
-> IPs). The upstream server uses the same IP, but listens on different
-> ports...
+On Thu 2016-06-30 22:08:08 -0400, Jason A. Donenfeld wrote:
+> I'm merging a commit with some of these suggested changes for 1,2,4.
+> Thanks for those.
 
-> I seem to be maxing out (using iperf) at about 1mb/s, but if I move to
-> OpenVPN, I am getting a lot more (10-20 in some cases, other times over
-> 300... the link is a 360/36mb cable modem).
+Thanks for the update, and for your improvements to my text.
 
-That seems really, really low, given your hardware.  Are you testing with
-wireguard + the quagga load-balancing magic on top, or are you just
-testing each wireguard tunnel separately as a first step?
+> But the changes here are simply not correct.
+>
+> The endpoint is simply the initial endpoint used to contact the peer.
+> If the peer sends legit traffic from a different endpoint, it will be
+> updated to that new endpoint. So, specifying an endpoint doesn't bind
+> traffic to that endpoint. It's simply an initial specifier of it.
 
-> Cpu info is at http://termbin.com/0z24
-> Version is at http://termbin.com/yux0
->=20
-> There is no config or config.gz in my proc folder... Which seems weird...=
- Will send on the others now.
+Great, thanks for this explanation!
 
-On Debian, the kernel config is available at /boot/config-$(uname -r)
+> Otherwise, how does traffic get started flowing?
 
---rwEMma7ioTxnRzrJ
+Well, the traffic could get flowing because the peer initiates it,
+right?  A novice admin who is trying to understand whether they should
+put an "Endpoint" field in their config needs to know how to make that
+decision.
+
+What do you think of the following update:
+
+diff --git a/src/tools/wg.8 b/src/tools/wg.8
+index 67b4cf7..3f255e7 100644
+=2D-- a/src/tools/wg.8
++++ b/src/tools/wg.8
+@@ -130,8 +130,12 @@ to which outgoing traffic for this peer is directed. T=
+he catch-all
+ \fI0.0.0.0/0\fP may be specified for matching all IPv4 addresses, and
+ \fI::/0\fP may be specified for matching all IPv6 addresses. Required.
+ .IP \(bu
+=2DEndpoint \(em an endpoint IP or hostname, followed by a colon, and then a
+=2Dport number. Optional.
++Endpoint \(em an endpoint IP or hostname, followed by a colon, and
++then a port number.  This is necessary to know where to direct
++outbound traffic if no inbound traffic has been received from the
++peer.  If the peer sends authenticated traffic from a different remote
++address and/or port, it will be updated to that new information
++automatically.  Optional.
+=20
+ .SH CONFIGURATION FILE FORMAT EXAMPLE
+ This example may be used as a model for writing configuration files.
+
+
+
+
+      --dkg
+
+--=-=-=
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2
 
-iQIcBAEBCAAGBQJXdjnqAAoJEL4B7CKgTi5Gg50P/1BMHhscBA/44rUHZMlo5IyI
-/KX4FT85GltbdR5HfQa/ghzeKtzHHgNkOq1WzwIBaUC6s3OmbTIhw9KYnopIu4HA
-Zx5cyJZDvye24iuJyFxWHhb7oElCv5gU0gUObQV6i92+Km/VGwtan4B1Lzn69pGg
-TxwXv5gZbaQmOTUBalWo0CanCZIciJIqsEk61NHZI9TYN819RX/wbQgAsyt+NAGf
-WVgyENAyizYceTPOoikFnk+EuWBc8r4pBfWDU0xVXdQwarrsMn8N6+QidZaRcO3F
-4z7Xt+eBRTfbWynqwa1t1tbwAFdeGj4WM4IGJ4sXAZTRmAMh8UhmZKBli96to3kT
-5OECIBEk5PBGipdcE+Vj6DYNAP4QmQdAKLTF8wnkbn169/ahZ8z0U43p99/bc33p
-gtsLGhAqpFmpmHsQx6zS4BVvXVyf7VMJC8yyaZJVtMCuwhQjihaSmRbV1z8Jy/Bx
-wws/ddZ5SC5T1s4a8+eBqTnsOVljKNs0DUXmutN2GJQIs6Groc67U1koqBepHhrK
-sE8DcXiYDMbZyG4Mu6ZJU0BC6U3CvL3o64B0O1I85nvmNFtlqORwXe4MuBWd3V72
-a3uGza149edmzJmfQdtZ/Z570YgCgAnUlYpw0MoyqyaxJF+ELi0KYbW4u6SyTsJH
-OB5y/TZk+DVluTQ4hveg
-=ojqT
+iQJ8BAEBCgBmBQJXdl5mXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25zLm9w
+ZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXRFREIyRTc0RjU2RkNGMkI2NzI5N0I3MzUy
+NEVDRkY1QUZGNjgzNzBBAAoJECTs/1r/aDcKdVAQAL4a5x06QBUmI+FDrd58PT8S
+AvXnKVCbosttuq8DW4IGkTiT85aFoq/DvCjn4Ox+ZwORMQ6ATbc56kbQpI32+QJ3
+3SeXpxCicT6QRgnJBmtgfXnLuF3RMIwF6JMedigB4z2cwWesY7avuWFdyCL9s1md
+g88IPxds40YBTlK1nt2HR8qQK1BkyiCMLmnwWSxTaO1mpsmHRARL7k+dW/7ljvmR
+w1pBtEQ8WUFduuHxIOqr55yo3XnkRbHlM5cTJuECONrD7jMOO9cLg74Gkt3B/vhc
+GHmQc2lIK5YdabfdMEhOlnCTrhfplRGQw0arE9aMn8/hJF78MN0iPA9p02qMvA5k
+lVbPRjApupNrhGFbsO67crY2uPsQnfYk8+kB5nnZgcID74Y4rGnxoXBQbN2z9qfh
+8mj9O9xr/4DtHT2AKTloX4Lz88cv7ozvgN3iA+4+v4wGx4N7rVR674yraAimftgG
+Cnoq+2FojVj9lSHMKF95tn1hhbMA/BPwbpUPytRqJwoWIg/avbBEMeMfqRsI83c1
+9vvdsf/P6bp2kdJDZ130EkAgZoPvCjQj7RGBt9OTwTsOtkp4b3FrhmCmlS9uIoIE
+DRt6EJMxCpTDZj40bp32d8iz+gYAJKtVH+Igr2T/wNpxh8zgzGumCsFzB609znXp
+LX5codjLbNWguB9UT26R
+=Zp+N
 -----END PGP SIGNATURE-----
-
---rwEMma7ioTxnRzrJ--
+--=-=-=--
