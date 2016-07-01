@@ -1,23 +1,27 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: zx2c4@gentoo.org
+Received: from smtp.gentoo.org (smtp.gentoo.org [140.211.166.183])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5d0797f3
+ for <wireguard@lists.zx2c4.com>; Fri, 1 Jul 2016 21:25:34 +0000 (UTC)
+Received: from mail-lf0-f52.google.com (mail-lf0-f52.google.com
+ [209.85.215.52])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested) (Authenticated sender: zx2c4)
+ by smtp.gentoo.org (Postfix) with ESMTPSA id 27B4A340EE4
+ for <wireguard@lists.zx2c4.com>; Fri,  1 Jul 2016 21:28:33 +0000 (UTC)
+Received: by mail-lf0-f52.google.com with SMTP id f6so84859791lfg.0
+ for <wireguard@lists.zx2c4.com>; Fri, 01 Jul 2016 14:28:33 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <0bbe01d1d3dd$544d4bc0$fce7e340$@tiernanotoole.net>
-References: <34EBEFA02A9AAB1F.1117239f-f3e4-4320-907d-9a9edbb083c6@mail.outlook.com>
- <CAHmME9rL4jdWQV66hGOSbY5yymVXatq67bMjEJwVBFTxNRB-uA@mail.gmail.com>
- <045201d1d2b3$3eaa6b70$bbff4250$@tiernanotoole.net>
- <CAHmME9oa+k0h9s62ts5DpqqWiSnf6zQRfCZyeOCXNsObOHyVDA@mail.gmail.com>
- <FE551DD9-28B0-4B3D-89F3-EB0F142AB48B@tiernanotoole.net>
- <20160701093751.GA28109@lud.polynome.dn42>
- <CAHmME9oAU2GBjTw8Aschv=-ey1nvCbcoof5C+Hdchx+cvJitQw@mail.gmail.com>
- <0bb801d1d3da$bf361960$3da24c20$@tiernanotoole.net>
- <CAHmME9rzfr38ek74v4Giz1HaBPOAS=qMTwkHoOr3cQKV-jgncw@mail.gmail.com>
- <0bbe01d1d3dd$544d4bc0$fce7e340$@tiernanotoole.net>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 1 Jul 2016 23:18:29 +0200
-Message-ID: <CAHmME9qojwH-Ehc_fh3D68dMKF4jdBRTVqVb09RyW-tEgZbU8A@mail.gmail.com>
-To: Tiernan OToole <tiernan@tiernanotoole.net>
+In-Reply-To: <CAHmME9oiTG6Hfps0ZqJFJ13UxappXk3TyoLWWu0AZ_G_A65bxQ@mail.gmail.com>
+References: <CAHmME9oiTG6Hfps0ZqJFJ13UxappXk3TyoLWWu0AZ_G_A65bxQ@mail.gmail.com>
+From: "Jason A. Donenfeld" <zx2c4@gentoo.org>
+Date: Fri, 1 Jul 2016 23:28:28 +0200
+Message-ID: <CAHmME9o5kcR5wStmB-Ku+2eDrrtbdvNLwG0AvaDdeuKuRtdaAA@mail.gmail.com>
+To: zorun@bitsofnetworks.org, Christian Hesse <mail@eworm.de>,
+ Daniel Kahn Gillmor <dkg@fifthhorseman.net>,
+ Christophe Fergeau <cfergeau@gmail.com>, zx2c4@gentoo.org
 Content-Type: text/plain; charset=UTF-8
-Cc: WireGuard mailing list <WireGuard@lists.zx2c4.com>
-Subject: Re: [WireGuard] Single client connecting to server multiple times
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Subject: Re: [WireGuard] The Distro Package Maintainers Thread
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -27,6 +31,16 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Just to clarify: does ECMP *without wireguard* work for you on 4.6?
+Are these instructions correct?
 
-In other words, is this a wireguard problem, or a 4.6 problem?
+Arch [AUR]:
+    yaourt -S wireguard-dkms wireguard-tools
+
+Debian [experimental]:
+     apt-get install wireguard-dkms wireguard-tools
+
+OpenWRT [trunk? 15.05?]:
+    opkg install kmod-wireguard wireguard-tools
+
+Gentoo [~arch]
+    emerge wireguard
