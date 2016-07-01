@@ -1,29 +1,22 @@
-Return-Path: zx2c4@gentoo.org
-Received: from smtp.gentoo.org (smtp.gentoo.org [140.211.166.183])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 21401884
- for <wireguard@lists.zx2c4.com>; Fri, 1 Jul 2016 02:38:58 +0000 (UTC)
-Received: from mail-lf0-f41.google.com (mail-lf0-f41.google.com
- [209.85.215.41])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested) (Authenticated sender: zx2c4)
- by smtp.gentoo.org (Postfix) with ESMTPSA id F2A03340F0B
- for <wireguard@lists.zx2c4.com>; Fri,  1 Jul 2016 02:41:50 +0000 (UTC)
-Received: by mail-lf0-f41.google.com with SMTP id l188so68078512lfe.2
- for <wireguard@lists.zx2c4.com>; Thu, 30 Jun 2016 19:41:50 -0700 (PDT)
+Return-Path: tiernan@tiernanotoole.net
+Received: from EUR03-VE1-obe.outbound.protection.outlook.com
+ (mail-eopbgr50040.outbound.protection.outlook.com [40.107.5.40])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 419c1425
+ for <wireguard@lists.zx2c4.com>; Fri, 1 Jul 2016 09:12:28 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9pvaUDq0FO9O=Qj9C=MCYs63D-Rco6pM8Xgp1NssEGh4A@mail.gmail.com>
-References: <CAHmME9oiTG6Hfps0ZqJFJ13UxappXk3TyoLWWu0AZ_G_A65bxQ@mail.gmail.com>
- <CAHmME9roK0U62hwXq2rHOtGEkoxKx92Xg9Ay2HOnKuL4CtoQgA@mail.gmail.com>
- <20160630212727.6c1c9f16@leda.localdomain>
- <CAHmME9pvaUDq0FO9O=Qj9C=MCYs63D-Rco6pM8Xgp1NssEGh4A@mail.gmail.com>
-From: "Jason A. Donenfeld" <zx2c4@gentoo.org>
-Date: Fri, 1 Jul 2016 04:41:46 +0200
-Message-ID: <CAHmME9pU8JuX=F=ume=h9xg2HC6VXutFkkmf3VGya2k8BHZJyw@mail.gmail.com>
-To: Christian Hesse <mail@eworm.de>
-Content-Type: text/plain; charset=UTF-8
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
- zorun@bitsofnetworks.org
-Subject: Re: [WireGuard] The Distro Package Maintainers Thread
+From: <tiernan@tiernanotoole.net>
+Message-ID: <FE551DD9-28B0-4B3D-89F3-EB0F142AB48B@tiernanotoole.net>
+Date: Fri, 1 Jul 2016 10:15:14 +0100
+References: <34EBEFA02A9AAB1F.1117239f-f3e4-4320-907d-9a9edbb083c6@mail.outlook.com>
+ <CAHmME9rL4jdWQV66hGOSbY5yymVXatq67bMjEJwVBFTxNRB-uA@mail.gmail.com>
+ <045201d1d2b3$3eaa6b70$bbff4250$@tiernanotoole.net>
+ <CAHmME9oa+k0h9s62ts5DpqqWiSnf6zQRfCZyeOCXNsObOHyVDA@mail.gmail.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+In-Reply-To: <CAHmME9oa+k0h9s62ts5DpqqWiSnf6zQRfCZyeOCXNsObOHyVDA@mail.gmail.com>
+Content-Type: multipart/mixed; boundary="=_392e0928323c6a6dc3d9802d801b23e5"
+Return-Path: tiernan@tiernanotoole.net
+Cc: WireGuard@lists.zx2c4.com
+Subject: Re: [WireGuard] Single client connecting to server multiple times
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -33,11 +26,27 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Investigating the / in the tag name a bit more, it seems git has all
-sorts of problems with that. I'll get to addressing those in their
-respective projects in due time, but for WireGuard, the experimental
-snapshots will have a simpler naming scheme. Here's the new URL:
+--=_392e0928323c6a6dc3d9802d801b23e5
+Content-Type: multipart/alternative;
+	boundary="=_e94ccd0bd20ef9536a7c8a8ec94baa5c"
 
-https://git.zx2c4.com/WireGuard/snapshot/WireGuard-experimental-0.0.20160630.tar.xz
+--=_e94ccd0bd20ef9536a7c8a8ec94baa5c
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="utf-8"
 
-Sorry for the churn. This should now be solid.
+Q3B1IGluZm8gaXMgYXQgaHR0cDovL3Rlcm1iaW4uY29tLzB6MjQNClZlcnNpb24gaXMgYXQgaHR0
+cDovL3Rlcm1iaW4uY29tL3l1eDANCg0KVGhlcmUgaXMgbm8gY29uZmlnIG9yIGNvbmZpZy5neiBp
+biBteSBwcm9jIGZvbGRlci4uLiBXaGljaCBzZWVtcyB3ZWlyZC4uLiBXaWxsIHNlbmQgb24gdGhl
+IG90aGVycyBub3cuDQoNClRoYW5rcy4NCg0KLS1UaWVybmFuDQoNCg0KU2VudCBmcm9tIG15IGlQ
+aG9uZQ0KDQo+IE9uIEp1biAzMCwgMjAxNiwgYXQgMTE6NTEgQU0sIEphc29uIEEuIERvbmVuZmVs
+ZCA8SmFzb25AengyYzQuY29tPiB3cm90ZToNCj4gDQo+IEhpIFRpZXJuYW4sDQo+IA0KPiBUaGF0
+IHNlZW1zLi4uLiBub3QgcmlnaHQuIENvdWxkIHlvdSBzZW5kIHlvdXIgL3Byb2MvY3B1aW5mbywN
+Cj4gL3Byb2MvY29uZmlnIG9yIC9wcm9jL2NvbmZpZy5neiwgYW5kIC9wcm9jL3ZlcnNpb24sIGFu
+ZCB0aGVuIHNlbmQNCj4gZGlyZWN0bHkgdG8gbWUgKG5vdCB0byB0aGUgbGlzdCksIHlvdXIgd2ly
+ZWd1YXJkLmtvIGFuZCBiekltYWdlPyBUaGF0DQo+IHdheSBJIGNhbiB0YWtlIGEgbG9vayBhdCB3
+aGF0J3MgaGFwcGVuaW5nIGFuZCB3aHkgdGhpcyBtaWdodCBiZS4gQWxzbywNCj4gYW55IG90aGVy
+IGNvbmZpZ3VyYXRpb24gZGV0YWlscyB5b3UgdXNlZCBmb3Igc2V0dGluZ3MgdGhpbmdzIG1pZ2h0
+DQo+IGhlbHAgaWxsdW1pbmF0ZSB0aGUgYnVnLg0KPiANCj4gVGhhbmtzLA0KPiBKYXNvbg0K
+--=_e94ccd0bd20ef9536a7c8a8ec94baa5c--
+
+--=_392e0928323c6a6dc3d9802d801b23e5--
