@@ -1,17 +1,26 @@
-Return-Path: dkg@fifthhorseman.net
-Received: from che.mayfirst.org (che.mayfirst.org [162.247.75.118])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0e1ee160
- for <wireguard@lists.zx2c4.com>;
- Thu, 30 Jun 2016 22:52:31 +0000 (UTC)
-Received: from fifthhorseman.net (unknown [38.109.115.130])
- by che.mayfirst.org (Postfix) with ESMTPSA id B4940F98B
- for <wireguard@lists.zx2c4.com>; Thu, 30 Jun 2016 18:55:23 -0400 (EDT)
-From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Date: Thu, 30 Jun 2016 18:55:20 -0400
-Message-Id: <1467327323-8532-1-git-send-email-dkg@fifthhorseman.net>
-Subject: [WireGuard] [PATCH 1/4] address:port separation uses colon,
-	not comma
+Return-Path: Jason@zx2c4.com
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e3d3cb6e
+ for <wireguard@lists.zx2c4.com>; Fri, 1 Jul 2016 02:05:18 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7df7f635
+ for <wireguard@lists.zx2c4.com>; Fri, 1 Jul 2016 02:05:17 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 66fb8885
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>; Fri, 1 Jul 2016 02:05:17 +0000 (UTC)
+Received: by mail-lf0-f46.google.com with SMTP id h129so67796251lfh.1
+ for <wireguard@lists.zx2c4.com>; Thu, 30 Jun 2016 19:08:10 -0700 (PDT)
+MIME-Version: 1.0
+In-Reply-To: <1467327323-8532-3-git-send-email-dkg@fifthhorseman.net>
+References: <1467327323-8532-1-git-send-email-dkg@fifthhorseman.net>
+ <1467327323-8532-3-git-send-email-dkg@fifthhorseman.net>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Fri, 1 Jul 2016 04:08:08 +0200
+Message-ID: <CAHmME9p79wUVkdUX30dgrJ28rMkX13ywAi-4OBg+agiZdEijQQ@mail.gmail.com>
+To: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+Content-Type: text/plain; charset=UTF-8
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Subject: Re: [WireGuard] [PATCH 3/4] Explain the optional nature of
+ Peer.EndPoint more clearly
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -21,23 +30,11 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-This is a minor fixup to the wg(8) manpage.
----
- src/tools/wg.8 | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I'm merging a commit with some of these suggested changes for 1,2,4.
+Thanks for those. But the changes here are simply not correct.
 
-diff --git a/src/tools/wg.8 b/src/tools/wg.8
-index c9401f0..bffe58b 100644
---- a/src/tools/wg.8
-+++ b/src/tools/wg.8
-@@ -128,7 +128,7 @@ CIDR masks. The catch-all \fI0.0.0.0/0\fP may be specified for matching
- all IPv4 addresses, and \fI::/0\fP may be specified for matching all
- IPv6 addresses. Required.
- .IP \(bu
--Endpoint \(em an endpoint IP or hostname, followed by a comma, and then a
-+Endpoint \(em an endpoint IP or hostname, followed by a colon, and then a
- port number. Optional.
- 
- .SH CONFIGURATION FILE FORMAT EXAMPLE
--- 
-2.8.1
+The endpoint is simply the initial endpoint used to contact the peer.
+If the peer sends legit traffic from a different endpoint, it will be
+updated to that new endpoint. So, specifying an endpoint doesn't bind
+traffic to that endpoint. It's simply an initial specifier of it.
+Otherwise, how does traffic get started flowing?
