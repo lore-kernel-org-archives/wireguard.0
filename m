@@ -1,26 +1,29 @@
-Return-Path: Jason@zx2c4.com
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e3d3cb6e
- for <wireguard@lists.zx2c4.com>; Fri, 1 Jul 2016 02:05:18 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7df7f635
- for <wireguard@lists.zx2c4.com>; Fri, 1 Jul 2016 02:05:17 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 66fb8885
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>; Fri, 1 Jul 2016 02:05:17 +0000 (UTC)
-Received: by mail-lf0-f46.google.com with SMTP id h129so67796251lfh.1
- for <wireguard@lists.zx2c4.com>; Thu, 30 Jun 2016 19:08:10 -0700 (PDT)
+Return-Path: zx2c4@gentoo.org
+Received: from smtp.gentoo.org (smtp.gentoo.org [140.211.166.183])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 21401884
+ for <wireguard@lists.zx2c4.com>; Fri, 1 Jul 2016 02:38:58 +0000 (UTC)
+Received: from mail-lf0-f41.google.com (mail-lf0-f41.google.com
+ [209.85.215.41])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested) (Authenticated sender: zx2c4)
+ by smtp.gentoo.org (Postfix) with ESMTPSA id F2A03340F0B
+ for <wireguard@lists.zx2c4.com>; Fri,  1 Jul 2016 02:41:50 +0000 (UTC)
+Received: by mail-lf0-f41.google.com with SMTP id l188so68078512lfe.2
+ for <wireguard@lists.zx2c4.com>; Thu, 30 Jun 2016 19:41:50 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <1467327323-8532-3-git-send-email-dkg@fifthhorseman.net>
-References: <1467327323-8532-1-git-send-email-dkg@fifthhorseman.net>
- <1467327323-8532-3-git-send-email-dkg@fifthhorseman.net>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 1 Jul 2016 04:08:08 +0200
-Message-ID: <CAHmME9p79wUVkdUX30dgrJ28rMkX13ywAi-4OBg+agiZdEijQQ@mail.gmail.com>
-To: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+In-Reply-To: <CAHmME9pvaUDq0FO9O=Qj9C=MCYs63D-Rco6pM8Xgp1NssEGh4A@mail.gmail.com>
+References: <CAHmME9oiTG6Hfps0ZqJFJ13UxappXk3TyoLWWu0AZ_G_A65bxQ@mail.gmail.com>
+ <CAHmME9roK0U62hwXq2rHOtGEkoxKx92Xg9Ay2HOnKuL4CtoQgA@mail.gmail.com>
+ <20160630212727.6c1c9f16@leda.localdomain>
+ <CAHmME9pvaUDq0FO9O=Qj9C=MCYs63D-Rco6pM8Xgp1NssEGh4A@mail.gmail.com>
+From: "Jason A. Donenfeld" <zx2c4@gentoo.org>
+Date: Fri, 1 Jul 2016 04:41:46 +0200
+Message-ID: <CAHmME9pU8JuX=F=ume=h9xg2HC6VXutFkkmf3VGya2k8BHZJyw@mail.gmail.com>
+To: Christian Hesse <mail@eworm.de>
 Content-Type: text/plain; charset=UTF-8
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: [WireGuard] [PATCH 3/4] Explain the optional nature of
- Peer.EndPoint more clearly
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ zorun@bitsofnetworks.org
+Subject: Re: [WireGuard] The Distro Package Maintainers Thread
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -30,11 +33,11 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-I'm merging a commit with some of these suggested changes for 1,2,4.
-Thanks for those. But the changes here are simply not correct.
+Investigating the / in the tag name a bit more, it seems git has all
+sorts of problems with that. I'll get to addressing those in their
+respective projects in due time, but for WireGuard, the experimental
+snapshots will have a simpler naming scheme. Here's the new URL:
 
-The endpoint is simply the initial endpoint used to contact the peer.
-If the peer sends legit traffic from a different endpoint, it will be
-updated to that new endpoint. So, specifying an endpoint doesn't bind
-traffic to that endpoint. It's simply an initial specifier of it.
-Otherwise, how does traffic get started flowing?
+https://git.zx2c4.com/WireGuard/snapshot/WireGuard-experimental-0.0.20160630.tar.xz
+
+Sorry for the churn. This should now be solid.
