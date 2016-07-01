@@ -1,28 +1,26 @@
-Return-Path: Jason@zx2c4.com
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d4e75705
- for <wireguard@lists.zx2c4.com>; Fri, 1 Jul 2016 20:51:34 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a31cd781
- for <wireguard@lists.zx2c4.com>; Fri, 1 Jul 2016 20:51:34 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 77a41d9e
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>; Fri, 1 Jul 2016 20:51:34 +0000 (UTC)
-Received: by mail-lf0-f52.google.com with SMTP id q132so84439978lfe.3
- for <wireguard@lists.zx2c4.com>; Fri, 01 Jul 2016 13:54:33 -0700 (PDT)
+Return-Path: tiernan@tiernanotoole.net
+Received: from EUR01-VE1-obe.outbound.protection.outlook.com
+ (mail-ve1eur01on0049.outbound.protection.outlook.com [104.47.1.49])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fe141ef0
+ for <wireguard@lists.zx2c4.com>; Fri, 1 Jul 2016 20:55:50 +0000 (UTC)
+From: Tiernan OToole <tiernan@tiernanotoole.net>
+To: "'Jason A. Donenfeld'" <Jason@zx2c4.com>, 'Baptiste Jonglez'
+ <baptiste@bitsofnetworks.org>
+References: <34EBEFA02A9AAB1F.1117239f-f3e4-4320-907d-9a9edbb083c6@mail.outlook.com>
+ <CAHmME9rL4jdWQV66hGOSbY5yymVXatq67bMjEJwVBFTxNRB-uA@mail.gmail.com>
+ <045201d1d2b3$3eaa6b70$bbff4250$@tiernanotoole.net>
+ <CAHmME9oa+k0h9s62ts5DpqqWiSnf6zQRfCZyeOCXNsObOHyVDA@mail.gmail.com>
+ <FE551DD9-28B0-4B3D-89F3-EB0F142AB48B@tiernanotoole.net>
+ <20160701093751.GA28109@lud.polynome.dn42>
+ <CAHmME9oAU2GBjTw8Aschv=-ey1nvCbcoof5C+Hdchx+cvJitQw@mail.gmail.com>
+In-Reply-To: <CAHmME9oAU2GBjTw8Aschv=-ey1nvCbcoof5C+Hdchx+cvJitQw@mail.gmail.com>
+Date: Fri, 1 Jul 2016 21:54:23 +0100
+Message-ID: <0bb801d1d3da$bf361960$3da24c20$@tiernanotoole.net>
 MIME-Version: 1.0
-In-Reply-To: <87d1mx1rq1.fsf@alice.fifthhorseman.net>
-References: <1467327323-8532-1-git-send-email-dkg@fifthhorseman.net>
- <1467327323-8532-3-git-send-email-dkg@fifthhorseman.net>
- <CAHmME9p79wUVkdUX30dgrJ28rMkX13ywAi-4OBg+agiZdEijQQ@mail.gmail.com>
- <87d1mx1rq1.fsf@alice.fifthhorseman.net>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 1 Jul 2016 22:54:30 +0200
-Message-ID: <CAHmME9qiNhJ3WViMwfp+MMYr6DZOZdG4oV8KzZxF3Pc8JTR6=w@mail.gmail.com>
-To: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-Content-Type: text/plain; charset=UTF-8
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: [WireGuard] [PATCH 3/4] Explain the optional nature of
- Peer.EndPoint more clearly
+Content-Type: text/plain; charset="utf-8"
+Return-Path: tiernan@tiernanotoole.net
+Cc: 'WireGuard mailing list' <WireGuard@lists.zx2c4.com>
+Subject: Re: [WireGuard] Single client connecting to server multiple times
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -32,4 +30,27 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Sure, I'll try to fix that description a bit. Thanks for the suggestion.
+Reuploaded wireguard.ko and it's at =
+https://transfer.sh/W7xo9/wireguard.ko.=20
+
+As for the question, its (or was) ECMP (Equal Cost, Multi Path). When I =
+was using the older (default) Debian 8 Kernel (3.16), there was a "bug" =
+where ECMP actually worked to my advantage (2 routes to 2 different IPs, =
+but traffic was split between them). In V4.6, which I installed to get =
+wireguard working, it's not working as planned... still testing mind =
+you...
+
+--Tiernan
+
+-----Original Message-----
+From: Jason A. Donenfeld [mailto:Jason@zx2c4.com]=20
+Sent: 01 July 2016 21:45
+To: Baptiste Jonglez <baptiste@bitsofnetworks.org>
+Cc: Tiernan OToole <tiernan@tiernanotoole.net>; WireGuard mailing list =
+<WireGuard@lists.zx2c4.com>
+Subject: Re: [WireGuard] Single client connecting to server multiple =
+times
+
+I have the same exact question as Baptiste. Is this with load-balancing, =
+or is it vanilla? Also -- in your email with wireguard.ko, the link said =
+"not found".
