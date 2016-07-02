@@ -1,22 +1,37 @@
-Return-Path: dkg@fifthhorseman.net
-Received: from che.mayfirst.org (che.mayfirst.org [162.247.75.118])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1c7c9229
- for <wireguard@lists.zx2c4.com>; Sat, 2 Jul 2016 15:52:10 +0000 (UTC)
-From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-To: "Jason A. Donenfeld" <zx2c4@gentoo.org>, zorun@bitsofnetworks.org,
- Christian Hesse <mail@eworm.de>, Christophe Fergeau <cfergeau@gmail.com>,
- zx2c4@gentoo.org
-In-Reply-To: <87eg7cz01b.fsf@alice.fifthhorseman.net>
-References: <CAHmME9oiTG6Hfps0ZqJFJ13UxappXk3TyoLWWu0AZ_G_A65bxQ@mail.gmail.com>
- <CAHmME9o5kcR5wStmB-Ku+2eDrrtbdvNLwG0AvaDdeuKuRtdaAA@mail.gmail.com>
- <87eg7cz01b.fsf@alice.fifthhorseman.net>
-Date: Sat, 02 Jul 2016 11:55:10 -0400
-Message-ID: <878txkyqzl.fsf@alice.fifthhorseman.net>
+Return-Path: Jason@zx2c4.com
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cac1bc52
+ for <wireguard@lists.zx2c4.com>; Sat, 2 Jul 2016 16:35:28 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7b6d0003
+ for <wireguard@lists.zx2c4.com>; Sat, 2 Jul 2016 16:35:28 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 8e2d583f
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>; Sat, 2 Jul 2016 16:35:27 +0000 (UTC)
+Received: by mail-lf0-f41.google.com with SMTP id l188so94551944lfe.2
+ for <wireguard@lists.zx2c4.com>; Sat, 02 Jul 2016 09:38:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: [WireGuard] The Distro Package Maintainers Thread
+In-Reply-To: <6C4F7C30-175F-49DF-9E35-761B8D0FBCD1@tiernanotoole.net>
+References: <34EBEFA02A9AAB1F.1117239f-f3e4-4320-907d-9a9edbb083c6@mail.outlook.com>
+ <CAHmME9rL4jdWQV66hGOSbY5yymVXatq67bMjEJwVBFTxNRB-uA@mail.gmail.com>
+ <045201d1d2b3$3eaa6b70$bbff4250$@tiernanotoole.net>
+ <CAHmME9oa+k0h9s62ts5DpqqWiSnf6zQRfCZyeOCXNsObOHyVDA@mail.gmail.com>
+ <FE551DD9-28B0-4B3D-89F3-EB0F142AB48B@tiernanotoole.net>
+ <20160701093751.GA28109@lud.polynome.dn42>
+ <CAHmME9oAU2GBjTw8Aschv=-ey1nvCbcoof5C+Hdchx+cvJitQw@mail.gmail.com>
+ <0bb801d1d3da$bf361960$3da24c20$@tiernanotoole.net>
+ <CAHmME9rzfr38ek74v4Giz1HaBPOAS=qMTwkHoOr3cQKV-jgncw@mail.gmail.com>
+ <0bbe01d1d3dd$544d4bc0$fce7e340$@tiernanotoole.net>
+ <CAHmME9qojwH-Ehc_fh3D68dMKF4jdBRTVqVb09RyW-tEgZbU8A@mail.gmail.com>
+ <34EBEFA02A9AAB1F.D01CDA37-F08A-44BF-802A-5DBAB6BF3EC1@mail.outlook.com>
+ <CAHmME9on6aFzYRu9HPK_DG12w-z+w5m33BaGrqTsfE_qHLDojA@mail.gmail.com>
+ <6C4F7C30-175F-49DF-9E35-761B8D0FBCD1@tiernanotoole.net>
+Date: Sat, 2 Jul 2016 18:38:27 +0200
+Message-ID: <CAHmME9pdSkTbLJGymfG7hbE=QNjPSuWd8QQnbGaM=Dv2QRc7+A@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: tiernan@tiernanotoole.net
+Content-Type: multipart/alternative; boundary=001a113db060bae6880536a9bb91
+Cc: wireguard@lists.zx2c4.com
+Subject: Re: [WireGuard] Single client connecting to server multiple times
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,66 +41,105 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---=-=-=
-Content-Type: text/plain
+--001a113db060bae6880536a9bb91
+Content-Type: text/plain; charset=UTF-8
 
-On Sat 2016-07-02 08:39:44 -0400, Daniel Kahn Gillmor wrote:
-> On Fri 2016-07-01 17:28:28 -0400, Jason A. Donenfeld wrote:
->> Are these instructions correct?
->  [...]
->> Debian [experimental]:
->>      apt-get install wireguard-dkms wireguard-tools
+Probably the best thing to do at this point would be to send over your
+config and some commands for setting it up, so I can replicate your setup
+myself and debug it til perfection. Seems like you could have a use case
+worth optimizing for.
+On Jul 2, 2016 5:53 PM, <tiernan@tiernanotoole.net> wrote:
+
+> It shouldn't be, but will double check... I did generate two new keys, but
+> will check again.
 >
-> I'd just use:
+> --Tiernan
 >
->       apt install wireguard-dkms wireguard-tools
+> Sent from my iPhone
+>
+> On Jul 2, 2016, at 12:43 PM, Jason A. Donenfeld <jason.donenfeld@gmail.com>
+> wrote:
+>
+> Is it possible that you're using the same private key for two wireguard
+> devices connecting to the same peer? This misusage could explain the ~0
+> performance.
+> On Jul 2, 2016 1:13 PM, <tiernan@tiernanotoole.net> wrote:
+>
+>> Its not wireguard thats the problem... Only the performance issue is
+>> wireguard...
+>> --Tiernan
+>>
+>> Get Outlook for iOS
+>>
+>>
+>>
+>>
+>> On Fri, Jul 1, 2016 at 10:18 PM +0100, "Jason A. Donenfeld" <
+>> Jason@zx2c4.com> wrote:
+>>
+>>
+>>
+>>
+>>
+>>
+>> >
+>> > Just to clarify: does ECMP *without wireguard* work for you on 4.6?
+>> >
+>> > In other words, is this a wireguard problem, or a 4.6 problem?
+>> >
+>
+>
 
-on second thought, it's possible that people running with
+--001a113db060bae6880536a9bb91
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-   APT::Install-Recommends "0";
+<p dir=3D"ltr">Probably the best thing to do at this point would be to send=
+ over your config and some commands for setting it up, so I can replicate y=
+our setup myself and debug it til perfection. Seems like you could have a u=
+se case worth optimizing for.</p>
+<div class=3D"gmail_quote">On Jul 2, 2016 5:53 PM,  &lt;<a href=3D"mailto:t=
+iernan@tiernanotoole.net">tiernan@tiernanotoole.net</a>&gt; wrote:<br type=
+=3D"attribution"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8=
+ex;border-left:1px #ccc solid;padding-left:1ex"><div dir=3D"auto"><div>It s=
+houldn&#39;t be, but will double check... I did generate two new keys, but =
+will check again.</div><div><br></div><div>--Tiernan<br><br>Sent from my iP=
+hone</div><div><br>On Jul 2, 2016, at 12:43 PM, Jason A. Donenfeld &lt;<a h=
+ref=3D"mailto:jason.donenfeld@gmail.com" target=3D"_blank">jason.donenfeld@=
+gmail.com</a>&gt; wrote:<br><br></div><blockquote type=3D"cite"><div><p dir=
+=3D"ltr">Is it possible that you&#39;re using the same private key for two =
+wireguard devices connecting to the same peer? This misusage could explain =
+the ~0 performance.</p>
+<div class=3D"gmail_quote">On Jul 2, 2016 1:13 PM,  &lt;<a href=3D"mailto:t=
+iernan@tiernanotoole.net" target=3D"_blank">tiernan@tiernanotoole.net</a>&g=
+t; wrote:<br type=3D"attribution"><blockquote class=3D"gmail_quote" style=
+=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">Its not =
+wireguard thats the problem... Only the performance issue is wireguard...<b=
+r>
+--Tiernan<br>
+<br>
+Get Outlook for iOS<br>
+<br>
+<br>
+<br>
+<br>
+On Fri, Jul 1, 2016 at 10:18 PM +0100, &quot;Jason A. Donenfeld&quot; &lt;<=
+a href=3D"mailto:Jason@zx2c4.com" target=3D"_blank">Jason@zx2c4.com</a>&gt;=
+ wrote:<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+&gt;<br>
+&gt; Just to clarify: does ECMP *without wireguard* work for you on 4.6?<br=
+>
+&gt;<br>
+&gt; In other words, is this a wireguard problem, or a 4.6 problem?<br>
+&gt; </blockquote></div>
 
-Or who are running a kernel which doesn't match the locally-installed
-headers won't end up with the kernel module installed, because they
-might not have the headers available for their running kernel.  On a
-normal system where the admin hasn't done anything unusual, the headers
-would be automatically installed because of the chain of
-Depends/Recommends:
+</div></blockquote></div>
+</blockquote></div>
 
-  wireguard-dkms Depends: dkms
-  dkms Recommends: linux-headers-686-pae | linux-headers-amd64 | linux-headers-generic | linux-headers
-
-If you want to be certain that they end up with a functional
-wireguard.ko for their current kernel, it should be:
-
-  apt install linux-headers-$(uname -r) wireguard-dkms wireguard-tools
-
-I've updated /usr/share/doc/wireguard-tools/README.Debian to suggest
-pulling in the headers as well.
-
-hope this is useful,
-
-     --dkg
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQJ8BAEBCgBmBQJXd+PeXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25zLm9w
-ZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXRFREIyRTc0RjU2RkNGMkI2NzI5N0I3MzUy
-NEVDRkY1QUZGNjgzNzBBAAoJECTs/1r/aDcKVlgQAJssT6g97I9BtpYRRV9JjqG3
-M+ZMI7YTIShkq/I8UG4KIgfYRKRcKfwn8J9+h5usxlzlHKR3cfiFN9b5zy5unfWH
-dYBAmbfrQH5d460SNniF/gJWOasLDsu9uakgk/03BZnKynt9C5nYs+HmMusz+94b
-4t3D5vC2HUrJmc9rCRB/opvmvBZT9243djyiZXI5SQSd66Ko8xLArrxib9cVd8dn
-LyOJPgj1EyMj8OLMAWEPFdrDV0bZLHB596NluI8fflu0lIY1HAI9uS5aUgxHCjm2
-xHBI3GJWrFuuhtD4lrL3kn0JO4sReVTCYYjC6B83Sns8EFUJq33kR2U5Rar59xX6
-9TkQWEtkKXr4UFnplBq3yaAF5Ld1klogqR3Qyub0jIeJ+Zlh+dekLVwaJMyCFNse
-CXf6IQbmPu8YIuJcd+crWON5QyPhW1nbGJDAST4yVFy0qNcEtq4pG5dakpKnqn4n
-pr7hQxz55R2cOCmgFUU+jvaV47HC9rRyl4MLRIRJe4WXh/lOfc0jsSF0G9EmrjRc
-b8ITUEbNkZeFZQVT8mQm5pBKRNcePaEvpbAbnexoP7SmdN5Ax/frLMx85JkDF5yC
-ti8jGj9o/OPe4VSzBfGmjqVJv3V7jezmd9fS4rfGJSEYi9aMd8vw1wXeBkBdGZM0
-bsiqaGt5ORXz/YKSPlcS
-=vQBl
------END PGP SIGNATURE-----
---=-=-=--
+--001a113db060bae6880536a9bb91--
