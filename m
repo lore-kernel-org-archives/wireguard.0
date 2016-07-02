@@ -1,17 +1,16 @@
-Return-Path: baptiste@bitsofnetworks.org
-Received: from mails.bitsofnetworks.org (rezine.polyno.me [193.33.56.138])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d8057f77
- for <wireguard@lists.zx2c4.com>; Sat, 2 Jul 2016 13:17:19 +0000 (UTC)
-Date: Sat, 2 Jul 2016 15:20:19 +0200
-From: Baptiste Jonglez <baptiste@bitsofnetworks.org>
-To: lede-dev@lists.infradead.org
-Message-ID: <20160702132018.GH12181@lud.polynome.dn42>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="jRdC2OsRnuV8iIl8"
-Cc: wireguard@lists.zx2c4.com
-Subject: [WireGuard] Kernel symbol dependencies and KCONFIG usage for kernel
-	packages
+Return-Path: dkg@fifthhorseman.net
+Received: from che.mayfirst.org (che.mayfirst.org [162.247.75.118])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 084f4b8d
+ for <wireguard@lists.zx2c4.com>; Sat, 2 Jul 2016 14:15:52 +0000 (UTC)
+Received: from fifthhorseman.net (c-174-62-194-216.hsd1.ct.comcast.net
+ [174.62.194.216])
+ by che.mayfirst.org (Postfix) with ESMTPSA id EB171F98B
+ for <wireguard@lists.zx2c4.com>; Sat,  2 Jul 2016 10:18:56 -0400 (EDT)
+From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Date: Sat,  2 Jul 2016 10:18:55 -0400
+Message-Id: <1467469135-30518-1-git-send-email-dkg@fifthhorseman.net>
+Subject: [WireGuard] [PATCH] "wg help" cleanup and normalization
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -21,62 +20,245 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
+The "help" subcommand should return success and print to stdout, not
+stderr.  It should also make it easy to consistently display the usage
+of other subcommands.
 
---jRdC2OsRnuV8iIl8
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+This changeset collects the usage instructions of every subcommand
+into wg.c for easier re-use.
+---
+ src/tools/set.c         |  2 +-
+ src/tools/setconf.c     |  2 +-
+ src/tools/show.c        |  3 +-
+ src/tools/showconf.c    |  4 +--
+ src/tools/subcommands.h |  9 +++++
+ src/tools/wg.8          |  4 +--
+ src/tools/wg.c          | 89 ++++++++++++++++++++++++++++++++++---------------
+ 7 files changed, 79 insertions(+), 34 deletions(-)
 
-Hi,
-
-I am packaging a new kernel module (wireguard), the package is currently here [1].
-
-However, I have some trouble understanding what KCONFIG does.  Wireguard
-needs a few kernel options, so I thought that KCONFIG was the place to
-declare such dependencies:
-
-  https://github.com/zorun/packages-1/blob/wireguard/net/wireguard/Makefile#L90
-
-However, it does not seem to enable these options.  The module compiles
-fine, it installs fine [2], but then it fails to load at runtime:
-
-Sat Jul  2 10:04:50 2016 kern.warn kernel: [   95.015838] wireguard: Unknown symbol udp_sock_create4 (err 0)
-Sat Jul  2 10:04:50 2016 kern.warn kernel: [   95.022021] wireguard: Unknown symbol udp_tunnel6_xmit_skb (err 0)
-Sat Jul  2 10:04:50 2016 kern.warn kernel: [   95.028767] wireguard: Unknown symbol udp_tunnel_sock_release (err 0)
-Sat Jul  2 10:04:50 2016 kern.warn kernel: [   95.035570] wireguard: Unknown symbol setup_udp_tunnel_sock (err 0)
-Sat Jul  2 10:04:50 2016 kern.warn kernel: [   95.042136] wireguard: Unknown symbol udp_sock_create6 (err 0)
-Sat Jul  2 10:04:50 2016 kern.warn kernel: [   95.048297] wireguard: Unknown symbol udp_tunnel_xmit_skb (err 0)
-
-It works when selecting the needed options manually in kernel_menuconfig,
-but it's a huge pain.
-
-Is there a way to get the needed kernel options automatically?  Maybe this
-only happens for packages that are part of the core Lede distribution?
-
-Thanks,
-Baptiste
-
-[1] https://github.com/zorun/packages-1/blob/wireguard/net/wireguard/Makefile
-[2] http://paste.aliens-lyon.fr/CBI
-
---jRdC2OsRnuV8iIl8
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCAAGBQJXd7+OAAoJEL4B7CKgTi5GlfEP/3cdNGV8UvqSSQbRfASjHLhT
-jiX1/BlSxz17laPEAH8SPLfHqyJC8jFIuaCcAeVtJPO6upDMS8lBvAUZtM4Y2pwL
-ef6oOQDe2Xa1+UirfSeyj3VKBZzW5VjJsv9jA4Cns+obmiBgKDIBqJsJkDrfT8b2
-XzEZK7zVQbwGfItxLIYth6DETlvo6GYNcxlCXU7zFgn+wPIDZoaMDFnUDTD8q1hm
-yFvC0OjCHfvP62rEN3lKEbP5NwdFck6GhaqVBVbUjWmbIYrPLnJJ+rRvCy0a3HyB
-I/osSw1MiNgIlRxRd9zn3lf7XZA9QH7BapW2MaPBcpIMYnm+EuCJ/gKKHSiglLHd
-2RyZakKFdsCr+F7S2WRXe40VrgIOk+61Ik0Q66At6o+DPcgOy5KzUGrV9LqqXtlZ
-i4t43SQTmzOhe8SDksQbp+cHIPRwrzr0eO9564leM4v42c0ixkNBi7SsSf6Ovqc6
-d0V/mKIaPbelMdW7/ylkhSjPmzrSent2QW3p6mbnQWz4koYmnGfYRoYyXi93lMkX
-yJCCJZ+Qa8zqflIidT6GFBEmJytJqJQ/jC0vJgZ+v/N+fU3hOF08qHLgpV/r6Yn4
-P/RVHzvpdekZfjoVm8IQLUViadY2vXjXn9RzYDLy4RCvxos/NNmnasxImQ7u15X/
-vnxCSJLGoXWkKT8MSZyL
-=XDHa
------END PGP SIGNATURE-----
-
---jRdC2OsRnuV8iIl8--
+diff --git a/src/tools/set.c b/src/tools/set.c
+index f85162d..1cac342 100644
+--- a/src/tools/set.c
++++ b/src/tools/set.c
+@@ -13,7 +13,7 @@ int set_main(int argc, char *argv[])
+ 	int ret = 1;
+ 
+ 	if (argc < 3) {
+-		fprintf(stderr, "Usage: %s %s <interface> [listen-port <port>] [private-key <file path>] [peer <base64 public key> [remove] [endpoint <ip>:<port>] [allowed-ips <ip1>/<cidr1>[,<ip2>/<cidr2>]...] ]...\n", PROG_NAME, argv[0]);
++		fprintf(stderr, "Usage: %s %s %s\n", PROG_NAME, argv[0], get_subcommand_desc(argv[0])->usage);
+ 		return 1;
+ 	}
+ 
+diff --git a/src/tools/setconf.c b/src/tools/setconf.c
+index 81faa64..9d0fae7 100644
+--- a/src/tools/setconf.c
++++ b/src/tools/setconf.c
+@@ -19,7 +19,7 @@ int setconf_main(int argc, char *argv[])
+ 	int ret = 1;
+ 
+ 	if (argc != 3) {
+-		fprintf(stderr, "Usage: %s %s <interface> <configuration filename>\n", PROG_NAME, argv[0]);
++		fprintf(stderr, "Usage: %s %s %s\n", PROG_NAME, argv[0], get_subcommand_desc(argv[0])->usage);
+ 		return 1;
+ 	}
+ 
+diff --git a/src/tools/show.c b/src/tools/show.c
+index 1662751..d8574d3 100644
+--- a/src/tools/show.c
++++ b/src/tools/show.c
+@@ -176,7 +176,7 @@ static char *bytes(uint64_t b)
+ static const char *COMMAND_NAME = NULL;
+ static void show_usage(void)
+ {
+-	fprintf(stderr, "Usage: %s %s { <interface> | all | interfaces } [public-key | private-key | preshared-key | listen-port | peers | endpoints | allowed-ips | latest-handshake | bandwidth]\n", PROG_NAME, COMMAND_NAME);
++	fprintf(stderr, "Usage: %s %s %s\n", PROG_NAME, COMMAND_NAME, get_subcommand_desc(COMMAND_NAME)->usage);
+ }
+ 
+ static void pretty_print(struct wgdevice *device)
+@@ -329,6 +329,7 @@ int show_main(int argc, char *argv[])
+ 	} else if (!strcmp(argv[1], "interfaces")) {
+ 		char *interfaces, *interface;
+ 		if (argc > 2) {
++			fprintf(stderr, "`%s %s %s` takes no additional arguments\n", PROG_NAME, argv[0], argv[1]);
+ 			show_usage();
+ 			return 1;
+ 		}
+diff --git a/src/tools/showconf.c b/src/tools/showconf.c
+index faf2482..54f9ca0 100644
+--- a/src/tools/showconf.c
++++ b/src/tools/showconf.c
+@@ -27,13 +27,13 @@ int showconf_main(int argc, char *argv[])
+ 	int ret = 1;
+ 
+ 	if (argc != 2) {
+-		fprintf(stderr, "Usage: %s %s <interface>\n", PROG_NAME, argv[0]);
++		fprintf(stderr, "Usage: %s %s %s\n", PROG_NAME, argv[0], get_subcommand_desc(argv[0])->usage);
+ 		return 1;
+ 	}
+ 
+ 	if (!kernel_has_wireguard_interface(argv[1])) {
+ 		fprintf(stderr, "`%s` is not a valid WireGuard interface\n", argv[1]);
+-		fprintf(stderr, "Usage: %s %s <interface>\n", PROG_NAME, argv[0]);
++		fprintf(stderr, "Usage: %s %s %s\n", PROG_NAME, argv[0], get_subcommand_desc(argv[0])->usage);
+ 		return 1;
+ 	}
+ 
+diff --git a/src/tools/subcommands.h b/src/tools/subcommands.h
+index 8351f8f..1072f8a 100644
+--- a/src/tools/subcommands.h
++++ b/src/tools/subcommands.h
+@@ -10,5 +10,14 @@ int set_main(int argc, char *argv[]);
+ int setconf_main(int argc, char *argv[]);
+ int genkey_main(int argc, char *argv[]);
+ int pubkey_main(int argc, char *argv[]);
++int help_main(int argc, char *argv[]);
++
++struct subcommand_desc {
++	const char *subcommand;
++	int (*function)(int, char**);
++	const char *description;
++	const char *usage;
++};
++const struct subcommand_desc* get_subcommand_desc(const char *subcommand);
+ 
+ #endif
+diff --git a/src/tools/wg.8 b/src/tools/wg.8
+index eee6d7b..d15bead 100644
+--- a/src/tools/wg.8
++++ b/src/tools/wg.8
+@@ -97,8 +97,8 @@ A private key and a corresponding public key may be generated at once by calling
+ .br
+     $ wg genkey | tee private.key | wg pubkey > public.key
+ .TP
+-\fBhelp\fP
+-Show usage message.
++\fBhelp [\fI<subcommand>\fP...]\fP
++Show usage message or info about specific subcommands.
+ 
+ .SH CONFIGURATION FILE FORMAT
+ The configuration file format is based on \fIINI\fP. There are two top level sections
+diff --git a/src/tools/wg.c b/src/tools/wg.c
+index d4d2965..d834c18 100644
+--- a/src/tools/wg.c
++++ b/src/tools/wg.c
+@@ -8,49 +8,84 @@
+ 
+ const char *PROG_NAME;
+ 
+-static const struct {
+-	const char *subcommand;
+-	int (*function)(int, char**);
+-	const char *description;
+-} subcommands[] = {
+-	{ "show", show_main, "Shows the current configuration and device information" },
+-	{ "showconf", showconf_main, "Shows the current configuration of a given WireGuard interface, for use with `setconf`" },
+-	{ "set", set_main, "Change the current configuration, add peers, remove peers, or change peers" },
+-	{ "setconf", setconf_main, "Applies a configuration file to a WireGuard interface" },
+-	{ "addconf", setconf_main, "Appends a configuration file to a WireGuard interface" },
+-	{ "genkey", genkey_main, "Generates a new private key and writes it to stdout" },
+-	{ "genpsk", genkey_main, "Generates a new pre-shared key and writes it to stdout" },
+-	{ "pubkey", pubkey_main, "Reads a private key from stdin and writes a public key to stdout" }
++static const struct subcommand_desc
++subcommands[] = {
++	{ "show", show_main, "Shows the current configuration and device information",
++	  "{ <interface> | all | interfaces } [public-key | private-key | preshared-key | listen-port | peers | endpoints | allowed-ips | latest-handshake | bandwidth]" },
++	{ "showconf", showconf_main, "Shows the current configuration of a given WireGuard interface, for use with `setconf`",
++	  "<interface>" },
++	{ "set", set_main, "Change the current configuration, add peers, remove peers, or change peers",
++	  "<interface> [listen-port <port>] [private-key <file path>] [peer <base64 public key> [remove] [endpoint <ip>:<port>] [allowed-ips <ip1>/<cidr1>[,<ip2>/<cidr2>]...] ]..." },
++	{ "setconf", setconf_main, "Applies a configuration file to a WireGuard interface",
++	  "<interface> <configuration filename>" },
++	{ "addconf", setconf_main, "Appends a configuration file to a WireGuard interface",
++	  "<interface> <configuration filename>" },
++	{ "genkey", genkey_main, "Generates a new private key and writes it to stdout",
++	  "" },
++	{ "genpsk", genkey_main, "Generates a new pre-shared key and writes it to stdout",
++	  "" },
++	{ "pubkey", pubkey_main, "Reads a private key from stdin and writes a public key to stdout",
++	  "" },
++	{ "help", help_main, "Show this usage message or info about another subcommand",
++	  "[<subcommand>...]" }
+ };
+ 
+-static void show_usage(void)
++const struct subcommand_desc* get_subcommand_desc(const char *subcommand)
+ {
+-	fprintf(stderr, "Usage: %s <cmd> [<args>]\n\n", PROG_NAME);
+-	fprintf(stderr, "Available subcommands:\n");
+ 	for (size_t i = 0; i < sizeof(subcommands) / sizeof(subcommands[0]); ++i)
+-		fprintf(stderr, "  %s: %s\n", subcommands[i].subcommand, subcommands[i].description);
++		if (!strcmp(subcommand, subcommands[i].subcommand))
++			return &subcommands[i];
++	return NULL;
++}
++
++static void show_usage(FILE* stream)
++{
++	fprintf(stream, "Usage: %s <subcommand> [<args>]\n\n", PROG_NAME);
++	fprintf(stream, "Available subcommands:\n\n");
++	for (size_t i = 0; i < sizeof(subcommands) / sizeof(subcommands[0]); ++i)
++		fprintf(stream, "  %-10s %s\n", subcommands[i].subcommand, subcommands[i].description);
++	fprintf(stream, "\nFor info about a specific subcommand:  %s help <subcommand>\n", PROG_NAME);
++}
++
++int help_main(int argc, char *argv[])
++{
++	int ret = 0, once = 0;
++	if (argc <= 1)
++		show_usage(stdout);
++	for (int i = 1; i < argc; ++i) {
++		const struct subcommand_desc *desc = get_subcommand_desc(argv[i]);
++		if (desc) {
++			if (once)
++				fprintf(stdout, "\n");
++			fprintf(stdout, "Help for %s %s\n    %s\n", PROG_NAME, desc->subcommand, desc->description);
++			fprintf(stdout, "Usage: %s %s%s%s\n", PROG_NAME, desc->subcommand, (desc->usage[0] ? " " : ""), desc->usage);
++			once = 1;
++		} else {
++			fprintf(stderr, "%s: no such subcommand: %s\n", PROG_NAME, argv[i]);
++			ret = 1;
++		}
++	}
++	return ret;
+ }
+ 
+ int main(int argc, char *argv[])
+ {
+ 	char *tmp = NULL;
++	const struct subcommand_desc *subcommand;
+ 	PROG_NAME = argv[0];
+ 
+-	if (argc == 2 && (!strcmp(argv[1], "-h") || !strcmp(argv[1], "--help") || !strcmp(argv[1], "help"))) {
+-		show_usage();
+-		return 1;
+-	}
+-
+ 	if (argc == 1) {
+ 		char *new_argv[] = { "show", NULL };
+ 		return show_main(1, new_argv);
+ 	}
+ 
++	if (!strcmp(argv[1], "-h") || !strcmp(argv[1], "--help"))
++		argv[1] = "help";
++
+ findsubcommand:
+-	for (size_t i = 0; i < sizeof(subcommands) / sizeof(subcommands[0]); ++i) {
+-		if (!strcmp(argv[1], subcommands[i].subcommand))
+-			return subcommands[i].function(argc - 1, argv + 1);
+-	}
++	subcommand = get_subcommand_desc(argv[1]);
++	if (subcommand)
++		return subcommand->function(argc - 1, argv + 1);
+ 
+ 	/* Crude way of supporting "wg wg0 show..." */
+ 	if (!tmp && argc >= 3) {
+@@ -61,6 +96,6 @@ findsubcommand:
+ 	}
+ 
+ 	fprintf(stderr, "Invalid subcommand: `%s`\n", argv[1]);
+-	show_usage();
++	show_usage(stderr);
+ 	return 1;
+ }
+-- 
+2.8.1
