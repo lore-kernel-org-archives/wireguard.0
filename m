@@ -1,31 +1,22 @@
-Return-Path: tiernan@tiernanotoole.net
-Received: from EUR01-VE1-obe.outbound.protection.outlook.com
- (mail-ve1eur01on0042.outbound.protection.outlook.com [104.47.1.42])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7c9f2ae6
- for <wireguard@lists.zx2c4.com>; Sat, 2 Jul 2016 15:50:44 +0000 (UTC)
+Return-Path: dkg@fifthhorseman.net
+Received: from che.mayfirst.org (che.mayfirst.org [162.247.75.118])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1c7c9229
+ for <wireguard@lists.zx2c4.com>; Sat, 2 Jul 2016 15:52:10 +0000 (UTC)
+From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+To: "Jason A. Donenfeld" <zx2c4@gentoo.org>, zorun@bitsofnetworks.org,
+ Christian Hesse <mail@eworm.de>, Christophe Fergeau <cfergeau@gmail.com>,
+ zx2c4@gentoo.org
+In-Reply-To: <87eg7cz01b.fsf@alice.fifthhorseman.net>
+References: <CAHmME9oiTG6Hfps0ZqJFJ13UxappXk3TyoLWWu0AZ_G_A65bxQ@mail.gmail.com>
+ <CAHmME9o5kcR5wStmB-Ku+2eDrrtbdvNLwG0AvaDdeuKuRtdaAA@mail.gmail.com>
+ <87eg7cz01b.fsf@alice.fifthhorseman.net>
+Date: Sat, 02 Jul 2016 11:55:10 -0400
+Message-ID: <878txkyqzl.fsf@alice.fifthhorseman.net>
 MIME-Version: 1.0
-From: <tiernan@tiernanotoole.net>
-Message-ID: <6C4F7C30-175F-49DF-9E35-761B8D0FBCD1@tiernanotoole.net>
-Date: Sat, 2 Jul 2016 16:53:38 +0100
-References: <34EBEFA02A9AAB1F.1117239f-f3e4-4320-907d-9a9edbb083c6@mail.outlook.com>
- <CAHmME9rL4jdWQV66hGOSbY5yymVXatq67bMjEJwVBFTxNRB-uA@mail.gmail.com>
- <045201d1d2b3$3eaa6b70$bbff4250$@tiernanotoole.net>
- <CAHmME9oa+k0h9s62ts5DpqqWiSnf6zQRfCZyeOCXNsObOHyVDA@mail.gmail.com>
- <FE551DD9-28B0-4B3D-89F3-EB0F142AB48B@tiernanotoole.net>
- <20160701093751.GA28109@lud.polynome.dn42>
- <CAHmME9oAU2GBjTw8Aschv=-ey1nvCbcoof5C+Hdchx+cvJitQw@mail.gmail.com>
- <0bb801d1d3da$bf361960$3da24c20$@tiernanotoole.net>
- <CAHmME9rzfr38ek74v4Giz1HaBPOAS=qMTwkHoOr3cQKV-jgncw@mail.gmail.com>
- <0bbe01d1d3dd$544d4bc0$fce7e340$@tiernanotoole.net>
- <CAHmME9qojwH-Ehc_fh3D68dMKF4jdBRTVqVb09RyW-tEgZbU8A@mail.gmail.com>
- <34EBEFA02A9AAB1F.D01CDA37-F08A-44BF-802A-5DBAB6BF3EC1@mail.outlook.com>
- <CAHmME9on6aFzYRu9HPK_DG12w-z+w5m33BaGrqTsfE_qHLDojA@mail.gmail.com>
-To: <Jason@zx2c4.com>
-In-Reply-To: <CAHmME9on6aFzYRu9HPK_DG12w-z+w5m33BaGrqTsfE_qHLDojA@mail.gmail.com>
-Content-Type: multipart/mixed; boundary="=_67c0ebe918c42463bbc590ba5e3578cf"
-Return-Path: tiernan@tiernanotoole.net
-Cc: wireguard@lists.zx2c4.com
-Subject: Re: [WireGuard] Single client connecting to server multiple times
+Content-Type: multipart/signed; boundary="=-=-=";
+ micalg=pgp-sha512; protocol="application/pgp-signature"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Subject: Re: [WireGuard] The Distro Package Maintainers Thread
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -35,61 +26,66 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---=_67c0ebe918c42463bbc590ba5e3578cf
-Content-Type: multipart/alternative;
-	boundary="=_9d7786a03b8606b102a80b03e12eafe8"
+--=-=-=
+Content-Type: text/plain
 
---=_9d7786a03b8606b102a80b03e12eafe8
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset="utf-8"
+On Sat 2016-07-02 08:39:44 -0400, Daniel Kahn Gillmor wrote:
+> On Fri 2016-07-01 17:28:28 -0400, Jason A. Donenfeld wrote:
+>> Are these instructions correct?
+>  [...]
+>> Debian [experimental]:
+>>      apt-get install wireguard-dkms wireguard-tools
+>
+> I'd just use:
+>
+>       apt install wireguard-dkms wireguard-tools
 
-SXQgc2hvdWxkbid0IGJlLCBidXQgd2lsbCBkb3VibGUgY2hlY2suLi4gSSBkaWQgZ2VuZXJhdGUg
-dHdvIG5ldyBrZXlzLCBidXQgd2lsbCBjaGVjayBhZ2Fpbi4NCg0KLS1UaWVybmFuDQoNClNlbnQg
-ZnJvbSBteSBpUGhvbmUNCg0KPiBPbiBKdWwgMiwgMjAxNiwgYXQgMTI6NDMgUE0sIEphc29uIEEu
-IERvbmVuZmVsZCA8amFzb24uZG9uZW5mZWxkQGdtYWlsLmNvbT4gd3JvdGU6DQo+IA0KPiBJcyBp
-dCBwb3NzaWJsZSB0aGF0IHlvdSdyZSB1c2luZyB0aGUgc2FtZSBwcml2YXRlIGtleSBmb3IgdHdv
-IHdpcmVndWFyZCBkZXZpY2VzIGNvbm5lY3RpbmcgdG8gdGhlIHNhbWUgcGVlcj8gVGhpcyBtaXN1
-c2FnZSBjb3VsZCBleHBsYWluIHRoZSB+MCBwZXJmb3JtYW5jZS4NCj4gDQo+PiBPbiBKdWwgMiwg
-MjAxNiAxOjEzIFBNLCA8dGllcm5hbkB0aWVybmFub3Rvb2xlLm5ldD4gd3JvdGU6DQo+PiBJdHMg
-bm90IHdpcmVndWFyZCB0aGF0cyB0aGUgcHJvYmxlbS4uLiBPbmx5IHRoZSBwZXJmb3JtYW5jZSBp
-c3N1ZSBpcyB3aXJlZ3VhcmQuLi4NCj4+IC0tVGllcm5hbg0KPj4gDQo+PiBHZXQgT3V0bG9vayBm
-b3IgaU9TDQo+PiANCj4+IA0KPj4gDQo+PiANCj4+IE9uIEZyaSwgSnVsIDEsIDIwMTYgYXQgMTA6
-MTggUE0gKzAxMDAsICJKYXNvbiBBLiBEb25lbmZlbGQiIDxKYXNvbkB6eDJjNC5jb20+IHdyb3Rl
-Og0KPj4gDQo+PiANCj4+IA0KPj4gDQo+PiANCj4+IA0KPj4gPg0KPj4gPiBKdXN0IHRvIGNsYXJp
-Znk6IGRvZXMgRUNNUCAqd2l0aG91dCB3aXJlZ3VhcmQqIHdvcmsgZm9yIHlvdSBvbiA0LjY/DQo+
-PiA+DQo+PiA+IEluIG90aGVyIHdvcmRzLCBpcyB0aGlzIGEgd2lyZWd1YXJkIHByb2JsZW0sIG9y
-IGEgNC42IHByb2JsZW0/DQo+PiA+DQoNCg==
---=_9d7786a03b8606b102a80b03e12eafe8
-Content-Transfer-Encoding: base64
-Content-Type: text/html; charset="utf-8"
+on second thought, it's possible that people running with
 
-PGh0bWw+PGhlYWQ+PG1ldGEgaHR0cC1lcXVpdj0iY29udGVudC10eXBlIiBjb250ZW50PSJ0ZXh0
-L2h0bWw7IGNoYXJzZXQ9dXRmLTgiPjwvaGVhZD48Ym9keSBkaXI9ImF1dG8iPjxkaXY+SXQgc2hv
-dWxkbid0IGJlLCBidXQgd2lsbCBkb3VibGUgY2hlY2suLi4gSSBkaWQgZ2VuZXJhdGUgdHdvIG5l
-dyBrZXlzLCBidXQgd2lsbCBjaGVjayBhZ2Fpbi48L2Rpdj48ZGl2IGlkPSJBcHBsZU1haWxTaWdu
-YXR1cmUiPjxicj48L2Rpdj48ZGl2IGlkPSJBcHBsZU1haWxTaWduYXR1cmUiPi0tVGllcm5hbjxi
-cj48YnI+U2VudCBmcm9tIG15IGlQaG9uZTwvZGl2PjxkaXY+PGJyPk9uIEp1bCAyLCAyMDE2LCBh
-dCAxMjo0MyBQTSwgSmFzb24gQS4gRG9uZW5mZWxkICZsdDs8YSBocmVmPSJtYWlsdG86amFzb24u
-ZG9uZW5mZWxkQGdtYWlsLmNvbSI+amFzb24uZG9uZW5mZWxkQGdtYWlsLmNvbTwvYT4mZ3Q7IHdy
-b3RlOjxicj48YnI+PC9kaXY+PGJsb2NrcXVvdGUgdHlwZT0iY2l0ZSI+PGRpdj48cCBkaXI9Imx0
-ciI+SXMgaXQgcG9zc2libGUgdGhhdCB5b3UncmUgdXNpbmcgdGhlIHNhbWUgcHJpdmF0ZSBrZXkg
-Zm9yIHR3byB3aXJlZ3VhcmQgZGV2aWNlcyBjb25uZWN0aW5nIHRvIHRoZSBzYW1lIHBlZXI/IFRo
-aXMgbWlzdXNhZ2UgY291bGQgZXhwbGFpbiB0aGUgfjAgcGVyZm9ybWFuY2UuPC9wPg0KPGRpdiBj
-bGFzcz0iZ21haWxfcXVvdGUiPk9uIEp1bCAyLCAyMDE2IDE6MTMgUE0sICAmbHQ7PGEgaHJlZj0i
-bWFpbHRvOnRpZXJuYW5AdGllcm5hbm90b29sZS5uZXQiPnRpZXJuYW5AdGllcm5hbm90b29sZS5u
-ZXQ8L2E+Jmd0OyB3cm90ZTo8YnIgdHlwZT0iYXR0cmlidXRpb24iPjxibG9ja3F1b3RlIGNsYXNz
-PSJnbWFpbF9xdW90ZSIgc3R5bGU9Im1hcmdpbjowIDAgMCAuOGV4O2JvcmRlci1sZWZ0OjFweCAj
-Y2NjIHNvbGlkO3BhZGRpbmctbGVmdDoxZXgiPkl0cyBub3Qgd2lyZWd1YXJkIHRoYXRzIHRoZSBw
-cm9ibGVtLi4uIE9ubHkgdGhlIHBlcmZvcm1hbmNlIGlzc3VlIGlzIHdpcmVndWFyZC4uLjxicj4N
-Ci0tVGllcm5hbjxicj4NCjxicj4NCkdldCBPdXRsb29rIGZvciBpT1M8YnI+DQo8YnI+DQo8YnI+
-DQo8YnI+DQo8YnI+DQpPbiBGcmksIEp1bCAxLCAyMDE2IGF0IDEwOjE4IFBNICswMTAwLCAiSmFz
-b24gQS4gRG9uZW5mZWxkIiAmbHQ7PGEgaHJlZj0ibWFpbHRvOkphc29uQHp4MmM0LmNvbSI+SmFz
-b25AengyYzQuY29tPC9hPiZndDsgd3JvdGU6PGJyPg0KPGJyPg0KPGJyPg0KPGJyPg0KPGJyPg0K
-PGJyPg0KPGJyPg0KJmd0Ozxicj4NCiZndDsgSnVzdCB0byBjbGFyaWZ5OiBkb2VzIEVDTVAgKndp
-dGhvdXQgd2lyZWd1YXJkKiB3b3JrIGZvciB5b3Ugb24gNC42Pzxicj4NCiZndDs8YnI+DQomZ3Q7
-IEluIG90aGVyIHdvcmRzLCBpcyB0aGlzIGEgd2lyZWd1YXJkIHByb2JsZW0sIG9yIGEgNC42IHBy
-b2JsZW0/PGJyPg0KJmd0OyA8L2Jsb2NrcXVvdGU+PC9kaXY+DQoNCjwvZGl2PjwvYmxvY2txdW90
-ZT48L2JvZHk+PC9odG1sPg0K
---=_9d7786a03b8606b102a80b03e12eafe8--
+   APT::Install-Recommends "0";
 
---=_67c0ebe918c42463bbc590ba5e3578cf--
+Or who are running a kernel which doesn't match the locally-installed
+headers won't end up with the kernel module installed, because they
+might not have the headers available for their running kernel.  On a
+normal system where the admin hasn't done anything unusual, the headers
+would be automatically installed because of the chain of
+Depends/Recommends:
+
+  wireguard-dkms Depends: dkms
+  dkms Recommends: linux-headers-686-pae | linux-headers-amd64 | linux-headers-generic | linux-headers
+
+If you want to be certain that they end up with a functional
+wireguard.ko for their current kernel, it should be:
+
+  apt install linux-headers-$(uname -r) wireguard-dkms wireguard-tools
+
+I've updated /usr/share/doc/wireguard-tools/README.Debian to suggest
+pulling in the headers as well.
+
+hope this is useful,
+
+     --dkg
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQJ8BAEBCgBmBQJXd+PeXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25zLm9w
+ZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXRFREIyRTc0RjU2RkNGMkI2NzI5N0I3MzUy
+NEVDRkY1QUZGNjgzNzBBAAoJECTs/1r/aDcKVlgQAJssT6g97I9BtpYRRV9JjqG3
+M+ZMI7YTIShkq/I8UG4KIgfYRKRcKfwn8J9+h5usxlzlHKR3cfiFN9b5zy5unfWH
+dYBAmbfrQH5d460SNniF/gJWOasLDsu9uakgk/03BZnKynt9C5nYs+HmMusz+94b
+4t3D5vC2HUrJmc9rCRB/opvmvBZT9243djyiZXI5SQSd66Ko8xLArrxib9cVd8dn
+LyOJPgj1EyMj8OLMAWEPFdrDV0bZLHB596NluI8fflu0lIY1HAI9uS5aUgxHCjm2
+xHBI3GJWrFuuhtD4lrL3kn0JO4sReVTCYYjC6B83Sns8EFUJq33kR2U5Rar59xX6
+9TkQWEtkKXr4UFnplBq3yaAF5Ld1klogqR3Qyub0jIeJ+Zlh+dekLVwaJMyCFNse
+CXf6IQbmPu8YIuJcd+crWON5QyPhW1nbGJDAST4yVFy0qNcEtq4pG5dakpKnqn4n
+pr7hQxz55R2cOCmgFUU+jvaV47HC9rRyl4MLRIRJe4WXh/lOfc0jsSF0G9EmrjRc
+b8ITUEbNkZeFZQVT8mQm5pBKRNcePaEvpbAbnexoP7SmdN5Ax/frLMx85JkDF5yC
+ti8jGj9o/OPe4VSzBfGmjqVJv3V7jezmd9fS4rfGJSEYi9aMd8vw1wXeBkBdGZM0
+bsiqaGt5ORXz/YKSPlcS
+=vQBl
+-----END PGP SIGNATURE-----
+--=-=-=--
