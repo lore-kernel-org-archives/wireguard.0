@@ -1,13 +1,13 @@
 Return-Path: john@phrozen.org
 Received: from nbd.name (nbd.name [46.4.11.11])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ea8dbbec
- for <wireguard@lists.zx2c4.com>; Sat, 2 Jul 2016 13:41:31 +0000 (UTC)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c7a98acc
+ for <wireguard@lists.zx2c4.com>; Sat, 2 Jul 2016 13:42:55 +0000 (UTC)
 To: Baptiste Jonglez <baptiste@bitsofnetworks.org>,
  lede-dev@lists.infradead.org
 References: <20160702132018.GH12181@lud.polynome.dn42>
 From: John Crispin <john@phrozen.org>
-Message-ID: <5ad48f17-1fbb-74ca-4b41-33bcfa0c46c4@phrozen.org>
-Date: Sat, 2 Jul 2016 15:44:28 +0200
+Message-ID: <36e1daf1-9156-05b4-c488-0961bf3740b0@phrozen.org>
+Date: Sat, 2 Jul 2016 15:45:58 +0200
 MIME-Version: 1.0
 In-Reply-To: <20160702132018.GH12181@lud.polynome.dn42>
 Content-Type: text/plain; charset=windows-1252
@@ -59,6 +59,14 @@ On 02/07/2016 15:20, Baptiste Jonglez wrote:
 > [2] http://paste.aliens-lyon.fr/CBI
 > 
 > 
+> 
+> _______________________________________________
+> Lede-dev mailing list
+> Lede-dev@lists.infradead.org
+> http://lists.infradead.org/mailman/listinfo/lede-dev
+> 
+
+>
 
 Hi,
 
@@ -70,10 +78,3 @@ has udp_tunnel6_xmit_skb inside it.
 once all of these are packaged you can make wireguard depend on them.
 
 	John
-
-> 
-> _______________________________________________
-> Lede-dev mailing list
-> Lede-dev@lists.infradead.org
-> http://lists.infradead.org/mailman/listinfo/lede-dev
-> 
