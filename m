@@ -1,22 +1,20 @@
 Return-Path: baptiste@bitsofnetworks.org
 Received: from mails.bitsofnetworks.org (rezine.polyno.me [193.33.56.138])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 04ddcbb9
- for <wireguard@lists.zx2c4.com>; Sat, 2 Jul 2016 10:24:55 +0000 (UTC)
-Received: from rev-140-155.legacytubes.illyse.net ([89.234.140.155]
- helo=lud.polynome.dn42) by mails.bitsofnetworks.org with esmtps
- (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.84_2)
- (envelope-from <baptiste@bitsofnetworks.org>) id 1bJI9V-00015C-0t
- for wireguard@lists.zx2c4.com; Sat, 02 Jul 2016 12:27:57 +0200
-Date: Sat, 2 Jul 2016 12:27:54 +0200
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0ee70119
+ for <wireguard@lists.zx2c4.com>; Sat, 2 Jul 2016 10:40:45 +0000 (UTC)
+Date: Sat, 2 Jul 2016 12:43:45 +0200
 From: Baptiste Jonglez <baptiste@bitsofnetworks.org>
-To: wireguard@lists.zx2c4.com
-Message-ID: <20160702102754.GD12181@lud.polynome.dn42>
+To: lede-dev@lists.infradead.org
+Message-ID: <20160702104345.GE12181@lud.polynome.dn42>
 References: <20160629112423.GC31514@lud.polynome.dn42>
+ <20160702102754.GD12181@lud.polynome.dn42>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="vni90+aGYgRvsTuO"
-In-Reply-To: <20160629112423.GC31514@lud.polynome.dn42>
-Subject: Re: [WireGuard] OpenWRT package for wireguard
+ protocol="application/pgp-signature"; boundary="ey/N+yb7u/X9mFhi"
+In-Reply-To: <20160702102754.GD12181@lud.polynome.dn42>
+Cc: wireguard@lists.zx2c4.com
+Subject: [WireGuard] Kernel symbol dependencies and KCONFIG usage for kernel
+	packages
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -27,61 +25,61 @@ List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
 
---vni90+aGYgRvsTuO
+--ey/N+yb7u/X9mFhi
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jun 29, 2016 at 01:24:23PM +0200, Baptiste Jonglez wrote:
-> Hi there,
->=20
-> I am working on an OpenWRT/LEDE package for wireguard.  It's mostly done,
-> but I want to test it before pushing it to the repositories.  Hopefully, I
-> will be able to do that this week-end.
+Hi,
 
-Here is a working version:
+I am packaging a new kernel module (wireguard), it is currently at [1].
 
-  https://github.com/zorun/packages-1/blob/wireguard/net/wireguard/Makefile
+However, I have some trouble understanding what KCONFIG does.  Wireguard
+needs a few kernel options, so I thought that KCONFIG was the place to
+declare such dependencies:
 
-However, you have to manually select needed kernel symbols in `make
-kernel_menuconfig`, which is very annoying.  If you want to give it a try,
-look for these symbols:
+  https://github.com/zorun/packages-1/blob/wireguard/net/wireguard/Makefile#L90
 
-    +CONFIG_IP6_NF_IPTABLES=3Dm
-    +CONFIG_IPV6=3Dy
-    +CONFIG_NETFILTER=3Dy
-    +CONFIG_NETFILTER_ADVANCED=3Dy
-    +CONFIG_NETFILTER_XTABLES=3Dm
-    +CONFIG_NETFILTER_XT_MATCH_HASHLIMIT=3Dm
-    +CONFIG_NET_FOU=3Dm
-    +CONFIG_NET_IP_TUNNEL=3Dm
-    +CONFIG_NET_UDP_TUNNEL=3Dm
+However, it does not seem to enable these options.  The module compiles
+fine, it installs fine [2], but then it fails to load at runtime:
 
-I guess that's the price to pay for being out-of-tree.  I will have a look
-at how to improve this situation (maybe integrating the kernel module
-directly in Lede/OpenWRT?).
+Sat Jul  2 10:04:50 2016 kern.warn kernel: [   95.015838] wireguard: Unknown symbol udp_sock_create4 (err 0)
+Sat Jul  2 10:04:50 2016 kern.warn kernel: [   95.022021] wireguard: Unknown symbol udp_tunnel6_xmit_skb (err 0)
+Sat Jul  2 10:04:50 2016 kern.warn kernel: [   95.028767] wireguard: Unknown symbol udp_tunnel_sock_release (err 0)
+Sat Jul  2 10:04:50 2016 kern.warn kernel: [   95.035570] wireguard: Unknown symbol setup_udp_tunnel_sock (err 0)
+Sat Jul  2 10:04:50 2016 kern.warn kernel: [   95.042136] wireguard: Unknown symbol udp_sock_create6 (err 0)
+Sat Jul  2 10:04:50 2016 kern.warn kernel: [   95.048297] wireguard: Unknown symbol udp_tunnel_xmit_skb (err 0)
 
+It works when selecting the needed options manually in kernel_menuconfig,
+but it's a huge pain.
+
+Is there a way to get the needed kernel options automatically?  Maybe this
+only happens for packages that are part of the core Lede distribution?
+
+Thanks,
 Baptiste
 
---vni90+aGYgRvsTuO
+[1] https://github.com/zorun/packages-1/blob/wireguard/net/wireguard/Makefile
+[2] http://paste.aliens-lyon.fr/CBI
+
+--ey/N+yb7u/X9mFhi
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2
 
-iQIcBAEBCAAGBQJXd5cmAAoJEL4B7CKgTi5G1DQP/i4gpEvLbR2SQ9bxUH30Prws
-Ry62gWRUbH4V6+y43Wpx/gSdjURWJ/mpryey3eLGtGFITMH6y/DTqLlMgTwzWcN5
-SDC5UdlxIV4S6yxm9BiGzCEIZJhfVwSzzFlZmURI8Ltt7rvXTw/ffMRxQjav7Z8G
-IEU2t+LUAfVMDy0dh/7W2ohg3ZgQUVhU79d+MirsSnjVvH2e85/hb9yMdIqVPTVe
-zTd0cYdWbD9PdqrtO2H6vM8QjDQXG0NPhKoPD2swc2asnl86uzDaAhOhG6mQO5Ev
-aHTPTT2u3d2i4jf9uBsz1YNJcX8QeQSoFRN2P7u51Sd2gbbrWmm1bo/M5Hcyu/l0
-wzh/s22+9A602H0TmAdlcjSs3nzjSSQg3MqMXRkxieRG3CWcSYik6JSaiKKMx5Y/
-uPT873I/o8nkVTEXHQqrPxFLeUVvgQAXmGnvL4WSjIj5cCH/Pj5ceDuHaVB0Rl94
-bcyLO0Mw4lOcRECFNV9dH6WsRhod88uluHj+2SR8td23ladL3hEW2yV8wBB5cMxE
-NrXDyABv4Wlj/Q5Pvm4k4VAdn2XkSwo0Y1eevDNeT53jj0thCenm5FEPyuKhZnVC
-ot2SURyt3ytmgq/voxJlO8ZHlF0F118nT1amYcbEOXX9bjFnB37NasYOBkyPAGYI
-/JcPMHL58Qeif9zP9gHG
-=okwv
+iQIcBAEBCAAGBQJXd5rcAAoJEL4B7CKgTi5GpEoQAIweOwSrJ0+kqacpsg2TNHzU
+orYKqcu0xWj1Cf5vtgkrLWjD3Op+IFv3cgsKgc9WUEkWNIcqrbn5ezjcQ9p9LoBr
+RYVmbNOyjk+/RgYhXcOzfbEovJ1l2njG8CXGNh72YYf1GodkdEHPNqvxSgYW7pYa
+yWhOvrrNz0U9QzTNCPKgFvhzXr+JdLRLnxdydIDMC2KBXCpSg904vcEFAWDVt2lX
+oN8l2wsZ50MkiFZBMTliAsKTSauGJ9E92GKZanDmAOibrXStlqEg5eU04hun3ReV
+A84EyFcEvp6OT7P8T+bUFhjqnOfDHjdCTvblD8HmLSvJ2/rU82f6zZKMH4Ofte9X
++TPlyuwu4SWUQVUib6k2qLfcZEBPL9c8qHGGRBNWudAyanLqlP2DLAf4kPmJE+jp
+3rb4jKKtDCCN9KuhX3NSweqjjUTUZvXEs3v04FfqQU3mQEhOtSWiZvsvG4vmlHk6
+wghNxDQP9d5YbD1SVIlSfG54nyH1mw/hMAKIPvPoXvhuNMPZVn0v1vvDUKeE4JFK
+Qoi+hdKQ94umzbdKB43BAuPW3ENsD2z7XF7WQmM7uAJAoVF81tjQFYSCGQf/Z9+v
+/0fdHZVhI/xsYQfa2fIppZv30j1y7BLJ55W+ojts0EqkKNTOrpP90b7kwkxLizgw
+tz/gLeQbiPrgOPD8fBn3
+=wxVd
 -----END PGP SIGNATURE-----
 
---vni90+aGYgRvsTuO--
+--ey/N+yb7u/X9mFhi--
