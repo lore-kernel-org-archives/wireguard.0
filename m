@@ -1,22 +1,29 @@
-Return-Path: jason.donenfeld@gmail.com
-Received: from mail-lf0-f65.google.com (mail-lf0-f65.google.com
- [209.85.215.65])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dac8b4d5
- for <wireguard@lists.zx2c4.com>; Sat, 2 Jul 2016 10:51:26 +0000 (UTC)
-Received: by mail-lf0-f65.google.com with SMTP id w130so13402078lfd.2
- for <wireguard@lists.zx2c4.com>; Sat, 02 Jul 2016 03:54:29 -0700 (PDT)
+Return-Path: tiernan@tiernanotoole.net
+Received: from EUR01-VE1-obe.outbound.protection.outlook.com
+ (mail-ve1eur01on0040.outbound.protection.outlook.com [104.47.1.40])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b3ee9d89
+ for <wireguard@lists.zx2c4.com>; Sat, 2 Jul 2016 11:10:03 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <20160702102754.GD12181@lud.polynome.dn42>
-References: <20160629112423.GC31514@lud.polynome.dn42>
- <20160702102754.GD12181@lud.polynome.dn42>
-Date: Sat, 2 Jul 2016 12:54:27 +0200
-Message-ID: <CAHmME9pVO_UeRDkAYYHdhsSN3q+BmaRoh6pHkL7S0H=8u6-Y-A@mail.gmail.com>
-From: "Jason A. Donenfeld" <jason.donenfeld@gmail.com>
-To: Baptiste Jonglez <baptiste@bitsofnetworks.org>
-Content-Type: multipart/alternative; boundary=001a1140d2be5c23520536a4ed30
-Cc: wireguard@lists.zx2c4.com
-Subject: Re: [WireGuard] OpenWRT package for wireguard
-Reply-To: Jason@zx2c4.com
+Date: Sat, 2 Jul 2016 11:12:35 +0000
+From: <tiernan@tiernanotoole.net>
+To: "Jason A. Donenfeld" <jason@zx2c4.com>
+Message-ID: <34EBEFA02A9AAB1F.D01CDA37-F08A-44BF-802A-5DBAB6BF3EC1@mail.outlook.com>
+In-Reply-To: <CAHmME9qojwH-Ehc_fh3D68dMKF4jdBRTVqVb09RyW-tEgZbU8A@mail.gmail.com>
+References: <34EBEFA02A9AAB1F.1117239f-f3e4-4320-907d-9a9edbb083c6@mail.outlook.com>
+ <CAHmME9rL4jdWQV66hGOSbY5yymVXatq67bMjEJwVBFTxNRB-uA@mail.gmail.com>
+ <045201d1d2b3$3eaa6b70$bbff4250$@tiernanotoole.net>
+ <CAHmME9oa+k0h9s62ts5DpqqWiSnf6zQRfCZyeOCXNsObOHyVDA@mail.gmail.com>
+ <FE551DD9-28B0-4B3D-89F3-EB0F142AB48B@tiernanotoole.net>
+ <20160701093751.GA28109@lud.polynome.dn42>
+ <CAHmME9oAU2GBjTw8Aschv=-ey1nvCbcoof5C+Hdchx+cvJitQw@mail.gmail.com>
+ <0bb801d1d3da$bf361960$3da24c20$@tiernanotoole.net>
+ <CAHmME9rzfr38ek74v4Giz1HaBPOAS=qMTwkHoOr3cQKV-jgncw@mail.gmail.com>
+ <0bbe01d1d3dd$544d4bc0$fce7e340$@tiernanotoole.net>
+ <CAHmME9qojwH-Ehc_fh3D68dMKF4jdBRTVqVb09RyW-tEgZbU8A@mail.gmail.com>
+Content-Type: multipart/mixed; boundary="=_722f70e298414d291bef1fa345da87b9"
+Return-Path: tiernan@tiernanotoole.net
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Subject: Re: [WireGuard] Single client connecting to server multiple times
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,54 +33,37 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---001a1140d2be5c23520536a4ed30
-Content-Type: text/plain; charset=UTF-8
+--=_722f70e298414d291bef1fa345da87b9
+Content-Type: multipart/alternative;
+	boundary="=_e01fa00a38f067c76363311ecfd77c56"
 
-On Jul 2, 2016 12:28 PM, "Baptiste Jonglez" <baptiste@bitsofnetworks.org>
-wrote:
-> However, you have to manually select needed kernel symbols in `make
-> kernel_menuconfig`, which is very annoying.  If you want to give it a try,
-> look for these symbols:
->
->     +CONFIG_IP6_NF_IPTABLES=m
->     +CONFIG_IPV6=y
->     +CONFIG_NETFILTER=y
->     +CONFIG_NETFILTER_ADVANCED=y
->     +CONFIG_NETFILTER_XTABLES=m
->     +CONFIG_NETFILTER_XT_MATCH_HASHLIMIT=m
->     +CONFIG_NET_FOU=m
->     +CONFIG_NET_IP_TUNNEL=m
->     +CONFIG_NET_UDP_TUNNEL=m
+--=_e01fa00a38f067c76363311ecfd77c56
+Content-Transfer-Encoding: base64
+Content-Type: text/html; charset="utf-8"
 
-On SMP systems, wireguard will benefit from CONFIG_PADATA which is
-selectable by the parallel crypto engine option in the crypto API menu of
-menuconfig.
+PGh0bWw+PGhlYWQ+PC9oZWFkPjxib2R5PjxkaXY+SXRzIG5vdCB3aXJlZ3VhcmQgdGhhdHMgdGhl
+IHByb2JsZW0uLi4gT25seSB0aGUgcGVyZm9ybWFuY2UgaXNzdWUgaXMgd2lyZWd1YXJkLi4uPC9k
+aXY+PGRpdj48YnI+PC9kaXY+PGRpdj4tLVRpZXJuYW48YnI+PGJyPjxkaXYgY2xhc3M9ImFjb21w
+bGlfc2lnbmF0dXJlIj5HZXQgPGEgaHJlZj0iaHR0cHM6Ly9ha2EubXMvbzB1a2VmIj5PdXRsb29r
+IGZvciBpT1M8L2E+PC9kaXY+PGJyPjwvZGl2Pjxicj48YnI+PGJyPgo8ZGl2IGNsYXNzPSJnbWFp
+bF9xdW90ZSI+T24gRnJpLCBKdWwgMSwgMjAxNiBhdCAxMDoxOCBQTSArMDEwMCwgIkphc29uIEEu
+IERvbmVuZmVsZCIgPHNwYW4gZGlyPSJsdHIiPiZsdDs8YSBocmVmPSJtYWlsdG86SmFzb25Aengy
+YzQuY29tIiB0YXJnZXQ9Il9ibGFuayI+SmFzb25AengyYzQuY29tPC9hPiZndDs8L3NwYW4+IHdy
+b3RlOjxicj4KPGJyPgoKPC9kaXY+CjwvYm9keT48L2h0bWw+DQo8YmxvY2txdW90ZT48cD5KdXN0
+IHRvIGNsYXJpZnk6IGRvZXMgRUNNUCAqd2l0aG91dCB3aXJlZ3VhcmQqIHdvcmsgZm9yIHlvdSBv
+biA0LjY/DQoNCkluIG90aGVyIHdvcmRzLCBpcyB0aGlzIGEgd2lyZWd1YXJkIHByb2JsZW0sIG9y
+IGEgNC42IHByb2JsZW0/DQo8L3A+PC9ibG9ja3F1b3RlPjwvYm9keT48L2h0bWw+
+--=_e01fa00a38f067c76363311ecfd77c56
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="utf-8"
 
---001a1140d2be5c23520536a4ed30
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+SXRzIG5vdCB3aXJlZ3VhcmQgdGhhdHMgdGhlIHByb2JsZW0uLi4gT25seSB0aGUgcGVyZm9ybWFu
+Y2UgaXNzdWUgaXMgd2lyZWd1YXJkLi4uCi0tVGllcm5hbgoKR2V0IE91dGxvb2sgZm9yIGlPUwoK
+CgoKT24gRnJpLCBKdWwgMSwgMjAxNiBhdCAxMDoxOCBQTSArMDEwMCwgIkphc29uIEEuIERvbmVu
+ZmVsZCIgPEphc29uQHp4MmM0LmNvbT4gd3JvdGU6CgoKCgoKDQo+DQo+IEp1c3QgdG8gY2xhcmlm
+eTogZG9lcyBFQ01QICp3aXRob3V0IHdpcmVndWFyZCogd29yayBmb3IgeW91IG9uIDQuNj8NCj4g
+DQo+IEluIG90aGVyIHdvcmRzLCBpcyB0aGlzIGEgd2lyZWd1YXJkIHByb2JsZW0sIG9yIGEgNC42
+IHByb2JsZW0/DQo+IA==
+--=_e01fa00a38f067c76363311ecfd77c56--
 
-<p dir=3D"ltr"><br>
-On Jul 2, 2016 12:28 PM, &quot;Baptiste Jonglez&quot; &lt;<a href=3D"mailto=
-:baptiste@bitsofnetworks.org">baptiste@bitsofnetworks.org</a>&gt; wrote:<br=
->
-&gt; However, you have to manually select needed kernel symbols in `make<br=
->
-&gt; kernel_menuconfig`, which is very annoying.=C2=A0 If you want to give =
-it a try,<br>
-&gt; look for these symbols:<br>
-&gt;<br>
-&gt; =C2=A0 =C2=A0 +CONFIG_IP6_NF_IPTABLES=3Dm<br>
-&gt; =C2=A0 =C2=A0 +CONFIG_IPV6=3Dy<br>
-&gt; =C2=A0 =C2=A0 +CONFIG_NETFILTER=3Dy<br>
-&gt; =C2=A0 =C2=A0 +CONFIG_NETFILTER_ADVANCED=3Dy<br>
-&gt; =C2=A0 =C2=A0 +CONFIG_NETFILTER_XTABLES=3Dm<br>
-&gt; =C2=A0 =C2=A0 +CONFIG_NETFILTER_XT_MATCH_HASHLIMIT=3Dm<br>
-&gt; =C2=A0 =C2=A0 +CONFIG_NET_FOU=3Dm<br>
-&gt; =C2=A0 =C2=A0 +CONFIG_NET_IP_TUNNEL=3Dm<br>
-&gt; =C2=A0 =C2=A0 +CONFIG_NET_UDP_TUNNEL=3Dm</p>
-<p dir=3D"ltr">On SMP systems, wireguard will benefit from CONFIG_PADATA wh=
-ich is selectable by the parallel crypto engine option in the crypto API me=
-nu of menuconfig.</p>
-
---001a1140d2be5c23520536a4ed30--
+--=_722f70e298414d291bef1fa345da87b9--
