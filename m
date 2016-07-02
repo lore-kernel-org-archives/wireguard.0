@@ -1,16 +1,31 @@
-Return-Path: dkg@fifthhorseman.net
-Received: from che.mayfirst.org (che.mayfirst.org [162.247.75.118])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 892acd08
- for <wireguard@lists.zx2c4.com>; Sat, 2 Jul 2016 15:31:13 +0000 (UTC)
-Received: from fifthhorseman.net (c-174-62-194-216.hsd1.ct.comcast.net
- [174.62.194.216])
- by che.mayfirst.org (Postfix) with ESMTPSA id 3EEA1F98B
- for <wireguard@lists.zx2c4.com>; Sat,  2 Jul 2016 11:34:18 -0400 (EDT)
-From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Date: Sat,  2 Jul 2016 11:34:17 -0400
-Message-Id: <1467473657-10023-1-git-send-email-dkg@fifthhorseman.net>
-Subject: [WireGuard] [PATCH] use runtime check for getrandom syscall
+Return-Path: tiernan@tiernanotoole.net
+Received: from EUR01-VE1-obe.outbound.protection.outlook.com
+ (mail-ve1eur01on0042.outbound.protection.outlook.com [104.47.1.42])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7c9f2ae6
+ for <wireguard@lists.zx2c4.com>; Sat, 2 Jul 2016 15:50:44 +0000 (UTC)
+MIME-Version: 1.0
+From: <tiernan@tiernanotoole.net>
+Message-ID: <6C4F7C30-175F-49DF-9E35-761B8D0FBCD1@tiernanotoole.net>
+Date: Sat, 2 Jul 2016 16:53:38 +0100
+References: <34EBEFA02A9AAB1F.1117239f-f3e4-4320-907d-9a9edbb083c6@mail.outlook.com>
+ <CAHmME9rL4jdWQV66hGOSbY5yymVXatq67bMjEJwVBFTxNRB-uA@mail.gmail.com>
+ <045201d1d2b3$3eaa6b70$bbff4250$@tiernanotoole.net>
+ <CAHmME9oa+k0h9s62ts5DpqqWiSnf6zQRfCZyeOCXNsObOHyVDA@mail.gmail.com>
+ <FE551DD9-28B0-4B3D-89F3-EB0F142AB48B@tiernanotoole.net>
+ <20160701093751.GA28109@lud.polynome.dn42>
+ <CAHmME9oAU2GBjTw8Aschv=-ey1nvCbcoof5C+Hdchx+cvJitQw@mail.gmail.com>
+ <0bb801d1d3da$bf361960$3da24c20$@tiernanotoole.net>
+ <CAHmME9rzfr38ek74v4Giz1HaBPOAS=qMTwkHoOr3cQKV-jgncw@mail.gmail.com>
+ <0bbe01d1d3dd$544d4bc0$fce7e340$@tiernanotoole.net>
+ <CAHmME9qojwH-Ehc_fh3D68dMKF4jdBRTVqVb09RyW-tEgZbU8A@mail.gmail.com>
+ <34EBEFA02A9AAB1F.D01CDA37-F08A-44BF-802A-5DBAB6BF3EC1@mail.outlook.com>
+ <CAHmME9on6aFzYRu9HPK_DG12w-z+w5m33BaGrqTsfE_qHLDojA@mail.gmail.com>
+To: <Jason@zx2c4.com>
+In-Reply-To: <CAHmME9on6aFzYRu9HPK_DG12w-z+w5m33BaGrqTsfE_qHLDojA@mail.gmail.com>
+Content-Type: multipart/mixed; boundary="=_67c0ebe918c42463bbc590ba5e3578cf"
+Return-Path: tiernan@tiernanotoole.net
+Cc: wireguard@lists.zx2c4.com
+Subject: Re: [WireGuard] Single client connecting to server multiple times
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -20,67 +35,61 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-wg(8) used a compile-time check for the getrandom syscall.  This means
-it's possible to build wg against a kernel that knows about getrandom,
-but then move it to another system that doesn't and have it fail to
-execute with:
+--=_67c0ebe918c42463bbc590ba5e3578cf
+Content-Type: multipart/alternative;
+	boundary="=_9d7786a03b8606b102a80b03e12eafe8"
 
-    getrandom: Function not implemented
+--=_9d7786a03b8606b102a80b03e12eafe8
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="utf-8"
 
-This changeset makes the check at runtime instead of compile time.
+SXQgc2hvdWxkbid0IGJlLCBidXQgd2lsbCBkb3VibGUgY2hlY2suLi4gSSBkaWQgZ2VuZXJhdGUg
+dHdvIG5ldyBrZXlzLCBidXQgd2lsbCBjaGVjayBhZ2Fpbi4NCg0KLS1UaWVybmFuDQoNClNlbnQg
+ZnJvbSBteSBpUGhvbmUNCg0KPiBPbiBKdWwgMiwgMjAxNiwgYXQgMTI6NDMgUE0sIEphc29uIEEu
+IERvbmVuZmVsZCA8amFzb24uZG9uZW5mZWxkQGdtYWlsLmNvbT4gd3JvdGU6DQo+IA0KPiBJcyBp
+dCBwb3NzaWJsZSB0aGF0IHlvdSdyZSB1c2luZyB0aGUgc2FtZSBwcml2YXRlIGtleSBmb3IgdHdv
+IHdpcmVndWFyZCBkZXZpY2VzIGNvbm5lY3RpbmcgdG8gdGhlIHNhbWUgcGVlcj8gVGhpcyBtaXN1
+c2FnZSBjb3VsZCBleHBsYWluIHRoZSB+MCBwZXJmb3JtYW5jZS4NCj4gDQo+PiBPbiBKdWwgMiwg
+MjAxNiAxOjEzIFBNLCA8dGllcm5hbkB0aWVybmFub3Rvb2xlLm5ldD4gd3JvdGU6DQo+PiBJdHMg
+bm90IHdpcmVndWFyZCB0aGF0cyB0aGUgcHJvYmxlbS4uLiBPbmx5IHRoZSBwZXJmb3JtYW5jZSBp
+c3N1ZSBpcyB3aXJlZ3VhcmQuLi4NCj4+IC0tVGllcm5hbg0KPj4gDQo+PiBHZXQgT3V0bG9vayBm
+b3IgaU9TDQo+PiANCj4+IA0KPj4gDQo+PiANCj4+IE9uIEZyaSwgSnVsIDEsIDIwMTYgYXQgMTA6
+MTggUE0gKzAxMDAsICJKYXNvbiBBLiBEb25lbmZlbGQiIDxKYXNvbkB6eDJjNC5jb20+IHdyb3Rl
+Og0KPj4gDQo+PiANCj4+IA0KPj4gDQo+PiANCj4+IA0KPj4gPg0KPj4gPiBKdXN0IHRvIGNsYXJp
+Znk6IGRvZXMgRUNNUCAqd2l0aG91dCB3aXJlZ3VhcmQqIHdvcmsgZm9yIHlvdSBvbiA0LjY/DQo+
+PiA+DQo+PiA+IEluIG90aGVyIHdvcmRzLCBpcyB0aGlzIGEgd2lyZWd1YXJkIHByb2JsZW0sIG9y
+IGEgNC42IHByb2JsZW0/DQo+PiA+DQoNCg==
+--=_9d7786a03b8606b102a80b03e12eafe8
+Content-Transfer-Encoding: base64
+Content-Type: text/html; charset="utf-8"
 
---
+PGh0bWw+PGhlYWQ+PG1ldGEgaHR0cC1lcXVpdj0iY29udGVudC10eXBlIiBjb250ZW50PSJ0ZXh0
+L2h0bWw7IGNoYXJzZXQ9dXRmLTgiPjwvaGVhZD48Ym9keSBkaXI9ImF1dG8iPjxkaXY+SXQgc2hv
+dWxkbid0IGJlLCBidXQgd2lsbCBkb3VibGUgY2hlY2suLi4gSSBkaWQgZ2VuZXJhdGUgdHdvIG5l
+dyBrZXlzLCBidXQgd2lsbCBjaGVjayBhZ2Fpbi48L2Rpdj48ZGl2IGlkPSJBcHBsZU1haWxTaWdu
+YXR1cmUiPjxicj48L2Rpdj48ZGl2IGlkPSJBcHBsZU1haWxTaWduYXR1cmUiPi0tVGllcm5hbjxi
+cj48YnI+U2VudCBmcm9tIG15IGlQaG9uZTwvZGl2PjxkaXY+PGJyPk9uIEp1bCAyLCAyMDE2LCBh
+dCAxMjo0MyBQTSwgSmFzb24gQS4gRG9uZW5mZWxkICZsdDs8YSBocmVmPSJtYWlsdG86amFzb24u
+ZG9uZW5mZWxkQGdtYWlsLmNvbSI+amFzb24uZG9uZW5mZWxkQGdtYWlsLmNvbTwvYT4mZ3Q7IHdy
+b3RlOjxicj48YnI+PC9kaXY+PGJsb2NrcXVvdGUgdHlwZT0iY2l0ZSI+PGRpdj48cCBkaXI9Imx0
+ciI+SXMgaXQgcG9zc2libGUgdGhhdCB5b3UncmUgdXNpbmcgdGhlIHNhbWUgcHJpdmF0ZSBrZXkg
+Zm9yIHR3byB3aXJlZ3VhcmQgZGV2aWNlcyBjb25uZWN0aW5nIHRvIHRoZSBzYW1lIHBlZXI/IFRo
+aXMgbWlzdXNhZ2UgY291bGQgZXhwbGFpbiB0aGUgfjAgcGVyZm9ybWFuY2UuPC9wPg0KPGRpdiBj
+bGFzcz0iZ21haWxfcXVvdGUiPk9uIEp1bCAyLCAyMDE2IDE6MTMgUE0sICAmbHQ7PGEgaHJlZj0i
+bWFpbHRvOnRpZXJuYW5AdGllcm5hbm90b29sZS5uZXQiPnRpZXJuYW5AdGllcm5hbm90b29sZS5u
+ZXQ8L2E+Jmd0OyB3cm90ZTo8YnIgdHlwZT0iYXR0cmlidXRpb24iPjxibG9ja3F1b3RlIGNsYXNz
+PSJnbWFpbF9xdW90ZSIgc3R5bGU9Im1hcmdpbjowIDAgMCAuOGV4O2JvcmRlci1sZWZ0OjFweCAj
+Y2NjIHNvbGlkO3BhZGRpbmctbGVmdDoxZXgiPkl0cyBub3Qgd2lyZWd1YXJkIHRoYXRzIHRoZSBw
+cm9ibGVtLi4uIE9ubHkgdGhlIHBlcmZvcm1hbmNlIGlzc3VlIGlzIHdpcmVndWFyZC4uLjxicj4N
+Ci0tVGllcm5hbjxicj4NCjxicj4NCkdldCBPdXRsb29rIGZvciBpT1M8YnI+DQo8YnI+DQo8YnI+
+DQo8YnI+DQo8YnI+DQpPbiBGcmksIEp1bCAxLCAyMDE2IGF0IDEwOjE4IFBNICswMTAwLCAiSmFz
+b24gQS4gRG9uZW5mZWxkIiAmbHQ7PGEgaHJlZj0ibWFpbHRvOkphc29uQHp4MmM0LmNvbSI+SmFz
+b25AengyYzQuY29tPC9hPiZndDsgd3JvdGU6PGJyPg0KPGJyPg0KPGJyPg0KPGJyPg0KPGJyPg0K
+PGJyPg0KPGJyPg0KJmd0Ozxicj4NCiZndDsgSnVzdCB0byBjbGFyaWZ5OiBkb2VzIEVDTVAgKndp
+dGhvdXQgd2lyZWd1YXJkKiB3b3JrIGZvciB5b3Ugb24gNC42Pzxicj4NCiZndDs8YnI+DQomZ3Q7
+IEluIG90aGVyIHdvcmRzLCBpcyB0aGlzIGEgd2lyZWd1YXJkIHByb2JsZW0sIG9yIGEgNC42IHBy
+b2JsZW0/PGJyPg0KJmd0OyA8L2Jsb2NrcXVvdGU+PC9kaXY+DQoNCjwvZGl2PjwvYmxvY2txdW90
+ZT48L2JvZHk+PC9odG1sPg0K
+--=_9d7786a03b8606b102a80b03e12eafe8--
 
-Out of curiosity: any reason to not use getrandom(2) explicitly
-instead of using the syscall(2) interface?
----
- src/tools/genkey.c | 22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
-
-diff --git a/src/tools/genkey.c b/src/tools/genkey.c
-index 1602ae1..d260f6b 100644
---- a/src/tools/genkey.c
-+++ b/src/tools/genkey.c
-@@ -8,18 +8,12 @@
- #include <syscall.h>
- #include <unistd.h>
- #include <string.h>
-+#include <fcntl.h>
- 
- #include "curve25519.h"
- #include "base64.h"
- 
--#ifdef __NR_getrandom
--static inline ssize_t get_random_bytes(uint8_t *out, size_t len)
--{
--	return syscall(__NR_getrandom, out, len, 0);
--}
--#else
--#include <fcntl.h>
--static inline ssize_t get_random_bytes(uint8_t *out, size_t len)
-+static inline ssize_t get_urandom_bytes(uint8_t *out, size_t len)
- {
- 	ssize_t ret;
- 	int fd = open("/dev/urandom", O_RDONLY);
-@@ -29,7 +23,19 @@ static inline ssize_t get_random_bytes(uint8_t *out, size_t len)
- 	close(fd);
- 	return ret;
- }
-+
-+
-+static inline ssize_t get_random_bytes(uint8_t *out, size_t len)
-+{
-+	long sysret = -1, local_errno = ENOSYS;
-+#ifdef __NR_getrandom
-+	 sysret = syscall(__NR_getrandom, out, len, 0);
-+	 local_errno = errno;
- #endif
-+	 if (sysret == -1 && local_errno == ENOSYS)
-+		 return get_urandom_bytes(out, len);
-+	 return sysret;
-+}
- 
- int genkey_main(int argc, char *argv[])
- {
--- 
-2.8.1
+--=_67c0ebe918c42463bbc590ba5e3578cf--
