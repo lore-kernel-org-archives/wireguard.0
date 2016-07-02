@@ -1,21 +1,17 @@
-Return-Path: dkg@fifthhorseman.net
-Received: from che.mayfirst.org (che.mayfirst.org [162.247.75.118])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5b866377
- for <wireguard@lists.zx2c4.com>; Sat, 2 Jul 2016 12:36:47 +0000 (UTC)
-From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-To: "Jason A. Donenfeld" <zx2c4@gentoo.org>, zorun@bitsofnetworks.org,
- Christian Hesse <mail@eworm.de>, Christophe Fergeau <cfergeau@gmail.com>,
- zx2c4@gentoo.org
-In-Reply-To: <CAHmME9o5kcR5wStmB-Ku+2eDrrtbdvNLwG0AvaDdeuKuRtdaAA@mail.gmail.com>
-References: <CAHmME9oiTG6Hfps0ZqJFJ13UxappXk3TyoLWWu0AZ_G_A65bxQ@mail.gmail.com>
- <CAHmME9o5kcR5wStmB-Ku+2eDrrtbdvNLwG0AvaDdeuKuRtdaAA@mail.gmail.com>
-Date: Sat, 02 Jul 2016 08:39:44 -0400
-Message-ID: <87eg7cz01b.fsf@alice.fifthhorseman.net>
+Return-Path: baptiste@bitsofnetworks.org
+Received: from mails.bitsofnetworks.org (rezine.polyno.me [193.33.56.138])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d8057f77
+ for <wireguard@lists.zx2c4.com>; Sat, 2 Jul 2016 13:17:19 +0000 (UTC)
+Date: Sat, 2 Jul 2016 15:20:19 +0200
+From: Baptiste Jonglez <baptiste@bitsofnetworks.org>
+To: lede-dev@lists.infradead.org
+Message-ID: <20160702132018.GH12181@lud.polynome.dn42>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: [WireGuard] The Distro Package Maintainers Thread
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="jRdC2OsRnuV8iIl8"
+Cc: wireguard@lists.zx2c4.com
+Subject: [WireGuard] Kernel symbol dependencies and KCONFIG usage for kernel
+	packages
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -25,43 +21,62 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---=-=-=
-Content-Type: text/plain
 
-On Fri 2016-07-01 17:28:28 -0400, Jason A. Donenfeld wrote:
-> Are these instructions correct?
- [...]
-> Debian [experimental]:
->      apt-get install wireguard-dkms wireguard-tools
+--jRdC2OsRnuV8iIl8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-I'd just use:
+Hi,
 
-      apt install wireguard-dkms wireguard-tools
+I am packaging a new kernel module (wireguard), the package is currently here [1].
 
-thanks,
+However, I have some trouble understanding what KCONFIG does.  Wireguard
+needs a few kernel options, so I thought that KCONFIG was the place to
+declare such dependencies:
 
-      --dkg
+  https://github.com/zorun/packages-1/blob/wireguard/net/wireguard/Makefile#L90
 
---=-=-=
+However, it does not seem to enable these options.  The module compiles
+fine, it installs fine [2], but then it fails to load at runtime:
+
+Sat Jul  2 10:04:50 2016 kern.warn kernel: [   95.015838] wireguard: Unknown symbol udp_sock_create4 (err 0)
+Sat Jul  2 10:04:50 2016 kern.warn kernel: [   95.022021] wireguard: Unknown symbol udp_tunnel6_xmit_skb (err 0)
+Sat Jul  2 10:04:50 2016 kern.warn kernel: [   95.028767] wireguard: Unknown symbol udp_tunnel_sock_release (err 0)
+Sat Jul  2 10:04:50 2016 kern.warn kernel: [   95.035570] wireguard: Unknown symbol setup_udp_tunnel_sock (err 0)
+Sat Jul  2 10:04:50 2016 kern.warn kernel: [   95.042136] wireguard: Unknown symbol udp_sock_create6 (err 0)
+Sat Jul  2 10:04:50 2016 kern.warn kernel: [   95.048297] wireguard: Unknown symbol udp_tunnel_xmit_skb (err 0)
+
+It works when selecting the needed options manually in kernel_menuconfig,
+but it's a huge pain.
+
+Is there a way to get the needed kernel options automatically?  Maybe this
+only happens for packages that are part of the core Lede distribution?
+
+Thanks,
+Baptiste
+
+[1] https://github.com/zorun/packages-1/blob/wireguard/net/wireguard/Makefile
+[2] http://paste.aliens-lyon.fr/CBI
+
+--jRdC2OsRnuV8iIl8
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2
 
-iQJ8BAEBCgBmBQJXd7YRXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25zLm9w
-ZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXRFREIyRTc0RjU2RkNGMkI2NzI5N0I3MzUy
-NEVDRkY1QUZGNjgzNzBBAAoJECTs/1r/aDcKy40P/iujIRpPTGBVvh+x6tGn3bot
-a8VTsEKbyTePhkkFYWUFdClQKQshtxF9lyEtH/i/lqMNJ42Q/8BD7b+2E8E4xTqr
-kx6G/N1gjwo/3dl031zWW5buJjSlYC2sBCacLQBFdWevEmBNFgl2V21sT8YEybHc
-lGzLigaGfUIBgEHmKxWKDgl1J8ZbMNok6dCLlrtshBzQhM2fN4aIvteZLUVd+/v0
-6XZQXhPMSEW8VpPy6xEOLKySdrvgmxZ4KVt0OUjtHSr/B+Z7Zj395tFRBdUcMlmn
-3fxNzDQYxPezcZDX+bp4eiIcVI8LuVgQFONaoZIfdCzRAzc/X2NzkaqPOcQ91IAN
-AYipDQ+LRwCb4/0x/KBkBDqZ1U7ccv6ic0VaJz6tutHkYdBA0i0Ea3eSFxI36mVR
-YdQZAumwYzTnK+BMOtIT8Qo0ZJH7hn0+F1nf7WdqDNdqcE2gwhP/f3hPyeIAxZgX
-R6cdErRq7xhiDCNN3RQyD6qZze3guq3v4IULk2x8sr+9BuSHiqpR1RdQD8oWATYC
-jmOlaFN8TQykI1ruQXvCB/074di5zprLqxrBeHYM3M3c5u/PTQuvfwnXGOjL8Dpx
-PKccu7Ln14AJGCIp3jZMTA0N26auwdJW+8YxmEK3GBbGh2F2yPzAQwiKRQTF1k2Q
-JPGBpIfCRN52ineCUbVN
-=JA5v
+iQIcBAEBCAAGBQJXd7+OAAoJEL4B7CKgTi5GlfEP/3cdNGV8UvqSSQbRfASjHLhT
+jiX1/BlSxz17laPEAH8SPLfHqyJC8jFIuaCcAeVtJPO6upDMS8lBvAUZtM4Y2pwL
+ef6oOQDe2Xa1+UirfSeyj3VKBZzW5VjJsv9jA4Cns+obmiBgKDIBqJsJkDrfT8b2
+XzEZK7zVQbwGfItxLIYth6DETlvo6GYNcxlCXU7zFgn+wPIDZoaMDFnUDTD8q1hm
+yFvC0OjCHfvP62rEN3lKEbP5NwdFck6GhaqVBVbUjWmbIYrPLnJJ+rRvCy0a3HyB
+I/osSw1MiNgIlRxRd9zn3lf7XZA9QH7BapW2MaPBcpIMYnm+EuCJ/gKKHSiglLHd
+2RyZakKFdsCr+F7S2WRXe40VrgIOk+61Ik0Q66At6o+DPcgOy5KzUGrV9LqqXtlZ
+i4t43SQTmzOhe8SDksQbp+cHIPRwrzr0eO9564leM4v42c0ixkNBi7SsSf6Ovqc6
+d0V/mKIaPbelMdW7/ylkhSjPmzrSent2QW3p6mbnQWz4koYmnGfYRoYyXi93lMkX
+yJCCJZ+Qa8zqflIidT6GFBEmJytJqJQ/jC0vJgZ+v/N+fU3hOF08qHLgpV/r6Yn4
+P/RVHzvpdekZfjoVm8IQLUViadY2vXjXn9RzYDLy4RCvxos/NNmnasxImQ7u15X/
+vnxCSJLGoXWkKT8MSZyL
+=XDHa
 -----END PGP SIGNATURE-----
---=-=-=--
+
+--jRdC2OsRnuV8iIl8--
