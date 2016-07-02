@@ -1,23 +1,21 @@
 Return-Path: dkg@fifthhorseman.net
 Received: from che.mayfirst.org (che.mayfirst.org [162.247.75.118])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 41afaed3
- for <wireguard@lists.zx2c4.com>; Sat, 2 Jul 2016 12:35:43 +0000 (UTC)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5b866377
+ for <wireguard@lists.zx2c4.com>; Sat, 2 Jul 2016 12:36:47 +0000 (UTC)
 From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-In-Reply-To: <CAHmME9r1ru8LHLGYfPsax65J9-_+FFuqwDDi3c9fRsmR2KFCfw@mail.gmail.com>
+To: "Jason A. Donenfeld" <zx2c4@gentoo.org>, zorun@bitsofnetworks.org,
+ Christian Hesse <mail@eworm.de>, Christophe Fergeau <cfergeau@gmail.com>,
+ zx2c4@gentoo.org
+In-Reply-To: <CAHmME9o5kcR5wStmB-Ku+2eDrrtbdvNLwG0AvaDdeuKuRtdaAA@mail.gmail.com>
 References: <CAHmME9oiTG6Hfps0ZqJFJ13UxappXk3TyoLWWu0AZ_G_A65bxQ@mail.gmail.com>
- <87furu3ej3.fsf@alice.fifthhorseman.net>
- <87shvtz50f.fsf@alice.fifthhorseman.net>
- <CAHmME9pZ1oQKk5=cTMxP8mBperNE0t-dCanepU8PKDvU-ak2bw@mail.gmail.com>
- <CAHmME9r1ru8LHLGYfPsax65J9-_+FFuqwDDi3c9fRsmR2KFCfw@mail.gmail.com>
-Date: Sat, 02 Jul 2016 08:38:43 -0400
-Message-ID: <87h9c8z030.fsf@alice.fifthhorseman.net>
+ <CAHmME9o5kcR5wStmB-Ku+2eDrrtbdvNLwG0AvaDdeuKuRtdaAA@mail.gmail.com>
+Date: Sat, 02 Jul 2016 08:39:44 -0400
+Message-ID: <87eg7cz01b.fsf@alice.fifthhorseman.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-Cc: Christian Hesse <mail@eworm.de>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>, zorun@bitsofnetworks.org
-Subject: Re: [WireGuard] debian packaging [was: Re: The Distro Package
-	Maintainers Thread]
+Content-Type: multipart/signed; boundary="=-=-=";
+ micalg=pgp-sha512; protocol="application/pgp-signature"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Subject: Re: [WireGuard] The Distro Package Maintainers Thread
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -27,36 +25,43 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Fri 2016-07-01 17:11:26 -0400, Jason A. Donenfeld wrote:
->> drwxr-xr-x root/root         0 2016-07-01 16:32 ./usr/share/doc/wireguard-tools/examples/client-server-example/
->> -rwxr-xr-x root/root      1015 2016-07-01 16:32 ./usr/share/doc/wireguard-tools/examples/client-server-example/client.sh
->> -rwxr-xr-x root/root       779 2016-06-28 16:32 ./usr/share/doc/wireguard-tools/examples/client-server-example/server.sh
->> drwxr-xr-x root/root         0 2016-07-01 16:32 ./usr/share/doc/wireguard-tools/examples/stress-testing/
->> -rw-r--r-- root/root       580 2016-06-28 16:32 ./usr/share/doc/wireguard-tools/examples/stress-testing/badpacket.c
->> -rw-r--r-- root/root      1296 2016-06-28 16:32 ./usr/share/doc/wireguard-tools/examples/stress-testing/peg.c
->> -rwxr-xr-x root/root      1013 2016-07-01 16:32 ./usr/share/doc/wireguard-tools/examples/stress-testing/self-send.sh
->> -rwxr-xr-x root/root       909 2016-06-28 16:32 ./usr/share/doc/wireguard-tools/examples/stress-testing/threewayiperf.sh
->> -rw-r--r-- root/root       541 2016-06-28 16:32 ./usr/share/doc/wireguard-tools/examples/wgserver.service
->
-> These are not examples that are worth distributing. wgserver.service
-> is somewhat useful, but stress-testing/* is definitely NOT
-> APPROPRIATE, and I probably should remove those from the public repo.
-> client-server is a parlor trick, but if anybody actually uses them or
-> anything like them in production, they'll completely undermine the
-> security of wireguard, so these scripts shouldn't be used either.
-> They've been nice for my own development, but I definitely don't want
-> these on people's machines. If you want one example, maybe the
-> .service file is okay. But please ditch the others.
+--=-=-=
+Content-Type: text/plain
 
-I was distributing them as part of the experimental package to encourage
-people to experiment with the tool.  I thought maybe it'd be useful to
-get stress-testing reports from (for example) people running powerpc64
-platforms or whatever.  The "parlor trick" is quite neat: clearly not
-secure, but a nice quick way for people to be able to say "hey, this
-things works on my platform" without needing to set up two ends of a
-tunnel themselves.
+On Fri 2016-07-01 17:28:28 -0400, Jason A. Donenfeld wrote:
+> Are these instructions correct?
+ [...]
+> Debian [experimental]:
+>      apt-get install wireguard-dkms wireguard-tools
 
-i'm fine with removing them though, if you don't want them distributed.
-They'll be gone in the next revision.
+I'd just use:
 
-        --dkg
+      apt install wireguard-dkms wireguard-tools
+
+thanks,
+
+      --dkg
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQJ8BAEBCgBmBQJXd7YRXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25zLm9w
+ZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXRFREIyRTc0RjU2RkNGMkI2NzI5N0I3MzUy
+NEVDRkY1QUZGNjgzNzBBAAoJECTs/1r/aDcKy40P/iujIRpPTGBVvh+x6tGn3bot
+a8VTsEKbyTePhkkFYWUFdClQKQshtxF9lyEtH/i/lqMNJ42Q/8BD7b+2E8E4xTqr
+kx6G/N1gjwo/3dl031zWW5buJjSlYC2sBCacLQBFdWevEmBNFgl2V21sT8YEybHc
+lGzLigaGfUIBgEHmKxWKDgl1J8ZbMNok6dCLlrtshBzQhM2fN4aIvteZLUVd+/v0
+6XZQXhPMSEW8VpPy6xEOLKySdrvgmxZ4KVt0OUjtHSr/B+Z7Zj395tFRBdUcMlmn
+3fxNzDQYxPezcZDX+bp4eiIcVI8LuVgQFONaoZIfdCzRAzc/X2NzkaqPOcQ91IAN
+AYipDQ+LRwCb4/0x/KBkBDqZ1U7ccv6ic0VaJz6tutHkYdBA0i0Ea3eSFxI36mVR
+YdQZAumwYzTnK+BMOtIT8Qo0ZJH7hn0+F1nf7WdqDNdqcE2gwhP/f3hPyeIAxZgX
+R6cdErRq7xhiDCNN3RQyD6qZze3guq3v4IULk2x8sr+9BuSHiqpR1RdQD8oWATYC
+jmOlaFN8TQykI1ruQXvCB/074di5zprLqxrBeHYM3M3c5u/PTQuvfwnXGOjL8Dpx
+PKccu7Ln14AJGCIp3jZMTA0N26auwdJW+8YxmEK3GBbGh2F2yPzAQwiKRQTF1k2Q
+JPGBpIfCRN52ineCUbVN
+=JA5v
+-----END PGP SIGNATURE-----
+--=-=-=--
