@@ -1,16 +1,25 @@
-Return-Path: jens@viisauksena.de
-Received: from viisauksena.de (v32412.1blu.de [178.254.39.111])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 71a328c5
- for <wireguard@lists.zx2c4.com>; Fri, 1 Jul 2016 23:14:05 +0000 (UTC)
-To: wireguard@lists.zx2c4.com
-From: jens <jens@viisauksena.de>
-Message-ID: <abcdfe33-f758-fa4d-b886-596373480187@viisauksena.de>
-Date: Sat, 2 Jul 2016 01:14:54 +0200
+Return-Path: Jason@zx2c4.com
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3a7c833e
+ for <wireguard@lists.zx2c4.com>; Sat, 2 Jul 2016 00:56:35 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1483091e
+ for <wireguard@lists.zx2c4.com>; Sat, 2 Jul 2016 00:56:35 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 075072d4
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>; Sat, 2 Jul 2016 00:56:35 +0000 (UTC)
+Received: by mail-lf0-f51.google.com with SMTP id q132so86750759lfe.3
+ for <wireguard@lists.zx2c4.com>; Fri, 01 Jul 2016 17:59:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="------------6B63E37BE900546BEF7F8936"
-Cc: team@wireguard.io, kontakt <kontakt@freiburg.freifunk.net>
-Subject: [WireGuard] fastd comparison wireguard ?
+In-Reply-To: <abcdfe33-f758-fa4d-b886-596373480187@viisauksena.de>
+References: <abcdfe33-f758-fa4d-b886-596373480187@viisauksena.de>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Sat, 2 Jul 2016 02:59:33 +0200
+Message-ID: <CAHmME9qcE165HNmAmTeMTx7dRNrhgzRmkXV_9qPrYVHQLN5VaQ@mail.gmail.com>
+To: jens <jens@viisauksena.de>
+Content-Type: text/plain; charset=UTF-8
+Cc: kontakt <kontakt@freiburg.freifunk.net>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
+Subject: Re: [WireGuard] fastd comparison wireguard ?
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -20,92 +29,30 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-This is a multi-part message in MIME format.
---------------6B63E37BE900546BEF7F8936
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Hi Jens,
 
-somebody post a hint of your project in Freifunk Forum
-(https://forum.freifunk.net/t/wireguard-als-zukuenftige-vpn-loesung/12858=
- )
+I have read fastd, and I think it's a neat project. I thought it was
+cool to see it using FHMQV-C; WireGuard is based on Noise, which in
+turn was heavily influenced by the [F]HMQV family. Fastd is a lot more
+complex than WireGuard, and does a lot more -- cipher agility, layer 2
+-- things that WireGuard has deliberately left out. Fastd has also
+been around longer, and they actually have a release >= 1.0 (18!),
+whereas WireGuard is still in an unreleased experimental phase.
+Generally fastd looks cool. I haven't audited their code thoroughly,
+so I can't speak to the code quality, implementation security status,
+or crypto particulars.
 
-There a many Communities that actually run l2tp or fastd for many
-nodes2server tunnel. Maybe you know something about Freifunk and its
-infrastructure.
+WireGuard will definitely be faster, by virtue of being in kernel
+space and possibly other general performance improvements, and I think
+you might benefit from the simplicity of WireGuard too. If you're
+using OpenWRT, I think a package for there is in the works, and the
+package maintainer will probably inform the list when it's ready. Keep
+in mind that WireGuard is experimental, but if you would like to try
+it out, I'd be very interested to learn your experience with it --
+what worked, what didn't, the performance characteristics, and so
+forth. We're a new project here, so feedback like that is very useful
+for shaping our direction.
 
-However, what is my interest here:
+Keep me posted!
 
-do you know fastd ? do you know how fastd compares to wireguard?
-
-on of the downsides of fastd is that it runs in userspace, not
-kernelspace - so there is big overhead on network/crypto while switching
-between kernel/userspace.
-
-For example, in Freiburg we are using encrypted fastd tunnel to connect
-to our gateway servers. Around 300 Nodes. And we are really interested
-in more performant ways of encrypted tunnel connections even for small
-nodes (TP Link 841 - 4 MB Flash, 32 MB Ram, Openwrt) - there we reach
-with salsa2012+umac something between 12 and 20 Mbit (only).
-
-thanks for hints and suggestions,
-
-fuzzle/ Freifunk Freiburg
-
-https://www.wireguard.io/
-http://fastd.readthedocs.io/en/v18/devel/protocol.html
-http://gluon.readthedocs.io/en/v2016.1.5/
-https://cccfr.de/git/viisauksena/firmware
-https://forum.freifunk.net/t/wireguard-als-zukuenftige-vpn-loesung/12858
-
---=20
-make the world nicer, please use PGP encryption
-
-
---------------6B63E37BE900546BEF7F8936
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: 8bit
-
-<html>
-  <head>
-
-    <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  </head>
-  <body text="#000000" bgcolor="#FFFFFF">
-    <p>somebody post a hint of your project in Freifunk Forum
-(<a class="moz-txt-link-freetext" href="https://forum.freifunk.net/t/wireguard-als-zukuenftige-vpn-loesung/12858">https://forum.freifunk.net/t/wireguard-als-zukuenftige-vpn-loesung/12858</a>
-      )<br>
-    </p>
-    <p>There a many Communities that actually run l2tp or fastd for many
-      nodes2server tunnel. Maybe you know something about Freifunk and
-      its infrastructure.</p>
-    <p>However, what is my interest here: <br>
-    </p>
-    <p>do you know fastd ? do you know how fastd compares to wireguard?
-      <br>
-    </p>
-    <p>on of the downsides of fastd is that it runs in userspace, not
-      kernelspace - so there is big overhead on network/crypto while
-      switching between kernel/userspace. <br>
-    </p>
-    <p>For example, in Freiburg we are using encrypted fastd tunnel to
-      connect to our gateway servers. Around 300 Nodes. And we are
-      really interested in more performant ways of encrypted tunnel
-      connections even for small nodes (TP Link 841 - 4 MB Flash, 32 MB
-      Ram, Openwrt) - there we reach with salsa2012+umac something
-      between 12 and 20 Mbit (only).<br>
-    </p>
-    <p>thanks for hints and suggestions,<br>
-    </p>
-    <p>fuzzle/ Freifunk Freiburg</p>
-    <p><a class="moz-txt-link-freetext" href="https://www.wireguard.io/">https://www.wireguard.io/</a><br>
-      <a class="moz-txt-link-freetext" href="http://fastd.readthedocs.io/en/v18/devel/protocol.html">http://fastd.readthedocs.io/en/v18/devel/protocol.html</a><br>
-      <a class="moz-txt-link-freetext" href="http://gluon.readthedocs.io/en/v2016.1.5/">http://gluon.readthedocs.io/en/v2016.1.5/</a><br>
-      <a class="moz-txt-link-freetext" href="https://cccfr.de/git/viisauksena/firmware">https://cccfr.de/git/viisauksena/firmware</a><br>
-<a class="moz-txt-link-freetext" href="https://forum.freifunk.net/t/wireguard-als-zukuenftige-vpn-loesung/12858">https://forum.freifunk.net/t/wireguard-als-zukuenftige-vpn-loesung/12858</a><br>
-    </p>
-    <pre class="moz-signature" cols="72">-- 
-make the world nicer, please use PGP encryption</pre>
-  </body>
-</html>
-
---------------6B63E37BE900546BEF7F8936--
+Jason
