@@ -1,32 +1,23 @@
-Return-Path: jason.donenfeld@gmail.com
-Received: from mail-lf0-f47.google.com (mail-lf0-f47.google.com
- [209.85.215.47])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 618f6e3e
- for <wireguard@lists.zx2c4.com>; Sat, 2 Jul 2016 11:40:58 +0000 (UTC)
-Received: by mail-lf0-f47.google.com with SMTP id h129so91981750lfh.1
- for <wireguard@lists.zx2c4.com>; Sat, 02 Jul 2016 04:44:02 -0700 (PDT)
+Return-Path: dkg@fifthhorseman.net
+Received: from che.mayfirst.org (che.mayfirst.org [162.247.75.118])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 41afaed3
+ for <wireguard@lists.zx2c4.com>; Sat, 2 Jul 2016 12:35:43 +0000 (UTC)
+From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+In-Reply-To: <CAHmME9r1ru8LHLGYfPsax65J9-_+FFuqwDDi3c9fRsmR2KFCfw@mail.gmail.com>
+References: <CAHmME9oiTG6Hfps0ZqJFJ13UxappXk3TyoLWWu0AZ_G_A65bxQ@mail.gmail.com>
+ <87furu3ej3.fsf@alice.fifthhorseman.net>
+ <87shvtz50f.fsf@alice.fifthhorseman.net>
+ <CAHmME9pZ1oQKk5=cTMxP8mBperNE0t-dCanepU8PKDvU-ak2bw@mail.gmail.com>
+ <CAHmME9r1ru8LHLGYfPsax65J9-_+FFuqwDDi3c9fRsmR2KFCfw@mail.gmail.com>
+Date: Sat, 02 Jul 2016 08:38:43 -0400
+Message-ID: <87h9c8z030.fsf@alice.fifthhorseman.net>
 MIME-Version: 1.0
-In-Reply-To: <34EBEFA02A9AAB1F.D01CDA37-F08A-44BF-802A-5DBAB6BF3EC1@mail.outlook.com>
-References: <34EBEFA02A9AAB1F.1117239f-f3e4-4320-907d-9a9edbb083c6@mail.outlook.com>
- <CAHmME9rL4jdWQV66hGOSbY5yymVXatq67bMjEJwVBFTxNRB-uA@mail.gmail.com>
- <045201d1d2b3$3eaa6b70$bbff4250$@tiernanotoole.net>
- <CAHmME9oa+k0h9s62ts5DpqqWiSnf6zQRfCZyeOCXNsObOHyVDA@mail.gmail.com>
- <FE551DD9-28B0-4B3D-89F3-EB0F142AB48B@tiernanotoole.net>
- <20160701093751.GA28109@lud.polynome.dn42>
- <CAHmME9oAU2GBjTw8Aschv=-ey1nvCbcoof5C+Hdchx+cvJitQw@mail.gmail.com>
- <0bb801d1d3da$bf361960$3da24c20$@tiernanotoole.net>
- <CAHmME9rzfr38ek74v4Giz1HaBPOAS=qMTwkHoOr3cQKV-jgncw@mail.gmail.com>
- <0bbe01d1d3dd$544d4bc0$fce7e340$@tiernanotoole.net>
- <CAHmME9qojwH-Ehc_fh3D68dMKF4jdBRTVqVb09RyW-tEgZbU8A@mail.gmail.com>
- <34EBEFA02A9AAB1F.D01CDA37-F08A-44BF-802A-5DBAB6BF3EC1@mail.outlook.com>
-Date: Sat, 2 Jul 2016 13:43:59 +0200
-Message-ID: <CAHmME9on6aFzYRu9HPK_DG12w-z+w5m33BaGrqTsfE_qHLDojA@mail.gmail.com>
-From: "Jason A. Donenfeld" <jason.donenfeld@gmail.com>
-To: tiernan@tiernanotoole.net
-Content-Type: multipart/alternative; boundary=001a1142c1269342130536a59eea
-Cc: wireguard@lists.zx2c4.com
-Subject: Re: [WireGuard] Single client connecting to server multiple times
-Reply-To: Jason@zx2c4.com
+Content-Type: text/plain
+Cc: Christian Hesse <mail@eworm.de>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>, zorun@bitsofnetworks.org
+Subject: Re: [WireGuard] debian packaging [was: Re: The Distro Package
+	Maintainers Thread]
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -36,69 +27,36 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---001a1142c1269342130536a59eea
-Content-Type: text/plain; charset=UTF-8
+On Fri 2016-07-01 17:11:26 -0400, Jason A. Donenfeld wrote:
+>> drwxr-xr-x root/root         0 2016-07-01 16:32 ./usr/share/doc/wireguard-tools/examples/client-server-example/
+>> -rwxr-xr-x root/root      1015 2016-07-01 16:32 ./usr/share/doc/wireguard-tools/examples/client-server-example/client.sh
+>> -rwxr-xr-x root/root       779 2016-06-28 16:32 ./usr/share/doc/wireguard-tools/examples/client-server-example/server.sh
+>> drwxr-xr-x root/root         0 2016-07-01 16:32 ./usr/share/doc/wireguard-tools/examples/stress-testing/
+>> -rw-r--r-- root/root       580 2016-06-28 16:32 ./usr/share/doc/wireguard-tools/examples/stress-testing/badpacket.c
+>> -rw-r--r-- root/root      1296 2016-06-28 16:32 ./usr/share/doc/wireguard-tools/examples/stress-testing/peg.c
+>> -rwxr-xr-x root/root      1013 2016-07-01 16:32 ./usr/share/doc/wireguard-tools/examples/stress-testing/self-send.sh
+>> -rwxr-xr-x root/root       909 2016-06-28 16:32 ./usr/share/doc/wireguard-tools/examples/stress-testing/threewayiperf.sh
+>> -rw-r--r-- root/root       541 2016-06-28 16:32 ./usr/share/doc/wireguard-tools/examples/wgserver.service
+>
+> These are not examples that are worth distributing. wgserver.service
+> is somewhat useful, but stress-testing/* is definitely NOT
+> APPROPRIATE, and I probably should remove those from the public repo.
+> client-server is a parlor trick, but if anybody actually uses them or
+> anything like them in production, they'll completely undermine the
+> security of wireguard, so these scripts shouldn't be used either.
+> They've been nice for my own development, but I definitely don't want
+> these on people's machines. If you want one example, maybe the
+> .service file is okay. But please ditch the others.
 
-Is it possible that you're using the same private key for two wireguard
-devices connecting to the same peer? This misusage could explain the ~0
-performance.
-On Jul 2, 2016 1:13 PM, <tiernan@tiernanotoole.net> wrote:
+I was distributing them as part of the experimental package to encourage
+people to experiment with the tool.  I thought maybe it'd be useful to
+get stress-testing reports from (for example) people running powerpc64
+platforms or whatever.  The "parlor trick" is quite neat: clearly not
+secure, but a nice quick way for people to be able to say "hey, this
+things works on my platform" without needing to set up two ends of a
+tunnel themselves.
 
-> Its not wireguard thats the problem... Only the performance issue is
-> wireguard...
-> --Tiernan
->
-> Get Outlook for iOS
->
->
->
->
-> On Fri, Jul 1, 2016 at 10:18 PM +0100, "Jason A. Donenfeld" <
-> Jason@zx2c4.com> wrote:
->
->
->
->
->
->
-> >
-> > Just to clarify: does ECMP *without wireguard* work for you on 4.6?
-> >
-> > In other words, is this a wireguard problem, or a 4.6 problem?
-> >
+i'm fine with removing them though, if you don't want them distributed.
+They'll be gone in the next revision.
 
---001a1142c1269342130536a59eea
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-<p dir=3D"ltr">Is it possible that you&#39;re using the same private key fo=
-r two wireguard devices connecting to the same peer? This misusage could ex=
-plain the ~0 performance.</p>
-<div class=3D"gmail_quote">On Jul 2, 2016 1:13 PM,  &lt;<a href=3D"mailto:t=
-iernan@tiernanotoole.net">tiernan@tiernanotoole.net</a>&gt; wrote:<br type=
-=3D"attribution"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8=
-ex;border-left:1px #ccc solid;padding-left:1ex">Its not wireguard thats the=
- problem... Only the performance issue is wireguard...<br>
---Tiernan<br>
-<br>
-Get Outlook for iOS<br>
-<br>
-<br>
-<br>
-<br>
-On Fri, Jul 1, 2016 at 10:18 PM +0100, &quot;Jason A. Donenfeld&quot; &lt;<=
-a href=3D"mailto:Jason@zx2c4.com">Jason@zx2c4.com</a>&gt; wrote:<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-&gt;<br>
-&gt; Just to clarify: does ECMP *without wireguard* work for you on 4.6?<br=
->
-&gt;<br>
-&gt; In other words, is this a wireguard problem, or a 4.6 problem?<br>
-&gt; </blockquote></div>
-
---001a1142c1269342130536a59eea--
+        --dkg
