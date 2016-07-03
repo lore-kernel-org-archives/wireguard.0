@@ -1,20 +1,20 @@
 Return-Path: Jason@zx2c4.com
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 089e1105
- for <wireguard@lists.zx2c4.com>; Sun, 3 Jul 2016 17:44:12 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 13b73d3e
- for <wireguard@lists.zx2c4.com>; Sun, 3 Jul 2016 17:44:11 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 9f56a080
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f164d0e8
+ for <wireguard@lists.zx2c4.com>; Sun, 3 Jul 2016 17:45:42 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e4b7e516
+ for <wireguard@lists.zx2c4.com>; Sun, 3 Jul 2016 17:45:42 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id eed1948c
  (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>; Sun, 3 Jul 2016 17:44:11 +0000 (UTC)
-Received: by mail-lf0-f49.google.com with SMTP id h129so104997606lfh.1
- for <wireguard@lists.zx2c4.com>; Sun, 03 Jul 2016 10:47:23 -0700 (PDT)
+ for <wireguard@lists.zx2c4.com>; Sun, 3 Jul 2016 17:45:42 +0000 (UTC)
+Received: by mail-lf0-f53.google.com with SMTP id l188so104902410lfe.2
+ for <wireguard@lists.zx2c4.com>; Sun, 03 Jul 2016 10:48:54 -0700 (PDT)
 MIME-Version: 1.0
 In-Reply-To: <8760snzxk6.fsf@alice.fifthhorseman.net>
 References: <8760snzxk6.fsf@alice.fifthhorseman.net>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sun, 3 Jul 2016 19:47:22 +0200
-Message-ID: <CAHmME9oGh=CPJ_ik1dL4exDnBRaEK-Ft5+tRy-5VVNqTRaFs-g@mail.gmail.com>
+Date: Sun, 3 Jul 2016 19:48:52 +0200
+Message-ID: <CAHmME9of+yaYna73cd+H-Mr+6q8c6QT_+mg==M4VGHX6ESckwQ@mail.gmail.com>
 To: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
 Content-Type: text/plain; charset=UTF-8
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
@@ -28,14 +28,13 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hey Daniel,
+> + memcpy(private_key_normalized, private_key, sizeof(private_key_normalized));
+> + curve25519_normalize_secret(private_key_normalized);
+> + if (memcmp(private_key_normalized, private_key, sizeof(private_key_normalized))) {
+> + fprintf(stderr, "%s %s: private key was not in normalized form\n", PROG_NAME, argv[0]);
+> + return 1;
+> + }
 
-You can always post massive patch sets to the list, so long as you do
-it with git-send-email so that the threading works correctly.
-Sometimes it's nice to be able to comment on patches via inline
-replies. The lists.zx2c4.com projects generally operate the same way
-as LKML. Alterntively (or additionally) you can use git-request-pull,
-which is often easier for actually merging the commits. Anyway, I'll
-review stricter-inputs shortly.
 
-Jason
+Do you have a justification for requiring normalized form?
+curve25519-donna doesn't care either way.
