@@ -1,25 +1,22 @@
-Return-Path: Jason@zx2c4.com
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 359ed808
- for <wireguard@lists.zx2c4.com>; Sun, 3 Jul 2016 19:22:10 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 60ad750b
- for <wireguard@lists.zx2c4.com>; Sun, 3 Jul 2016 19:22:10 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id c2cafca7
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>; Sun, 3 Jul 2016 19:22:09 +0000 (UTC)
-Received: by mail-lf0-f52.google.com with SMTP id f6so105624854lfg.0
- for <wireguard@lists.zx2c4.com>; Sun, 03 Jul 2016 12:25:22 -0700 (PDT)
+Return-Path: baptiste@bitsofnetworks.org
+Received: from mails.bitsofnetworks.org (rezine.polyno.me [193.33.56.138])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id eb92bcbd
+ for <wireguard@lists.zx2c4.com>; Mon, 4 Jul 2016 07:45:24 +0000 (UTC)
+Received: from rev-140-155.legacytubes.illyse.net ([89.234.140.155]
+ helo=lud.polynome.dn42) by mails.bitsofnetworks.org with esmtps
+ (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.84_2)
+ (envelope-from <baptiste@bitsofnetworks.org>) id 1bJycS-00039N-4H
+ for wireguard@lists.zx2c4.com; Mon, 04 Jul 2016 09:48:40 +0200
+Date: Mon, 4 Jul 2016 09:48:38 +0200
+From: Baptiste Jonglez <baptiste@bitsofnetworks.org>
+To: wireguard@lists.zx2c4.com
+Message-ID: <20160704074837.GA24805@lud.polynome.dn42>
+References: <20160629112423.GC31514@lud.polynome.dn42>
 MIME-Version: 1.0
-In-Reply-To: <8737nrzx74.fsf@alice.fifthhorseman.net>
-References: <8737nrzx74.fsf@alice.fifthhorseman.net>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sun, 3 Jul 2016 21:25:19 +0200
-Message-ID: <CAHmME9omxD7gZY1TKkkd6XakvommZLxMNFsX8NS56=9n+Uz_wg@mail.gmail.com>
-To: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-Content-Type: text/plain; charset=UTF-8
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: [WireGuard] continuous integration/testing across multiple
-	kernels
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="UlVJffcvxoiEqYs2"
+In-Reply-To: <20160629112423.GC31514@lud.polynome.dn42>
+Subject: Re: [WireGuard] OpenWRT package for wireguard
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -29,18 +26,69 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-As unit tests are a development building block, insecure hacks like
-client.sh should not be used. You could easily repurpose client.sh to
-invoke openssl-s_client or some similarly disgusting TLS hack, I
-guess. In any case, though, it's not even needed. Check out what I did
-with contrib/external-tests and src/debug.mk. There are just hard
-coded public/private keys in there, which are more than sufficient for
-unit testing. If you'd like, you can experiment with using those same
-public/private keys and test.wireguard.io (NOT demo.wireguard.io), for
-constructing an automated testing framework.
 
-However, perhaps a better and more robust way of doing this would be
-to use network namespaces. See src/netns.sh for an example of how this
-works. This way there can be several wireguard instances and different
-networking configurations all within the same machine, enabling
-offline reliable unit tests.
+--UlVJffcvxoiEqYs2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Wed, Jun 29, 2016 at 01:24:23PM +0200, Baptiste Jonglez wrote:
+> Hi there,
+>=20
+> I am working on an OpenWRT/LEDE package for wireguard.  It's mostly done,
+> but I want to test it before pushing it to the repositories.  Hopefully, I
+> will be able to do that this week-end.
+
+Here is the package finally:
+
+  https://github.com/openwrt/packages/blob/master/net/wireguard/Makefile
+
+The built packages should be available in the snapshots quite soon, e.g.:
+
+- wireguard-tools: https://downloads.lede-project.org/snapshots/packages/mi=
+ps_34kc/packages/
+- kmod-wireguard: https://downloads.lede-project.org/snapshots/targets/ar71=
+xx/generic/packages/
+
+If you are running a recent snapshot version of Lede, this should be
+enough if you have a compatible kernel:
+
+  opkg install wireguard-tools kmod-wireguard
+
+If you want build it yourself, you need this patch for proper dependency
+handling, it has been included in Lede two days ago:
+
+  https://git.lede-project.org/?p=3Dsource.git;a=3Dcommit;h=3D1d15a96b29dcd=
+0947690951a7c36aead79a27129
+
+One final note: there is no "multi-threaded" support for now, sorry Jason.
+So, if you run this on your super modern 128-cores router, don't expect
+exceptional performance :)  Well, you could always hack your kernel config
+to enable CONFIG_PADATA and CONFIG_SMP before building wireguard.
+
+Other than that, feedback on the packages is welcome!
+
+Baptiste
+
+--UlVJffcvxoiEqYs2
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCAAGBQJXehTVAAoJEL4B7CKgTi5GRvIQAIrOiTDdC5U1XHRfUa01M7bo
+2AMs6uhCI4ivJqycLNcEnirzhrpPPUrJZ5pTmeEQI9B8ERd6TEMqyHUgLiVRW2/A
+Wh8Gf9yMpgTDYQTVX1pflrq0XMl0cMkVBrHdbUlTWrTjhD7FX+gqbhQdBvqWl+GR
+V2lX1XgxdADylhsMfTRcZKOZZIDCx7wr6gkRQgf91W0ozJoQbbJsn3FYlvZX7GtD
++t6z93XCk7hCpJhKbaSpgczVi4lNf7XP877Llo6KMHaZ28PsOFsjSDTlvktKLtao
+OEqLIoY/GhHAy7ITEuJkNykHEtMgelHsUft0MH5XgwnFFWscUtzt5dtl6AwQiRpm
+I0UzAP65dRLT/hZAB3OiL9FZwFz6PPfQ0FHkQRyyAbvX9snLjm/RgkUxEO3arZ/7
+eTLYmgyqsrnTHn7VkP9+tPiUrrMmaE70ztJGqxGHsOIIX2rgs9gk1650nKlAy5D9
+qRtC4GiF67Cwx+VjWl0XF8gnqJUDyfgcrh/niEUNh2AvW+1rCslARnSdrzTczHha
+QbD4Hxy4RgdkG7NObQJPG0cThv3Suy+DkzzyrcU1Lgt74689J+hIsTBnx+alH9NZ
+FzfpOZMmeFOIL1nXzevo1tjeE4lbqZF9ojqu+VeH59atEQFyuphYHwMcXOWRctAT
+5i5RgxG6+FOJjvIeeOYl
+=rKt6
+-----END PGP SIGNATURE-----
+
+--UlVJffcvxoiEqYs2--
