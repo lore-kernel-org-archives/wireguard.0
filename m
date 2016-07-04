@@ -1,23 +1,24 @@
-Return-Path: artyom.h31@gmail.com
-Received: from mail-lf0-f49.google.com (mail-lf0-f49.google.com
- [209.85.215.49])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cf79b0ef
- for <wireguard@lists.zx2c4.com>; Mon, 4 Jul 2016 21:48:14 +0000 (UTC)
-Received: by mail-lf0-f49.google.com with SMTP id f6so123692474lfg.0
- for <wireguard@lists.zx2c4.com>; Mon, 04 Jul 2016 14:51:35 -0700 (PDT)
-Return-Path: <artyom.h31@gmail.com>
-Received: from [192.168.1.103] ([176.53.224.13])
- by smtp.gmail.com with ESMTPSA id 78sm3784275lfs.29.2016.07.04.14.51.32
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 04 Jul 2016 14:51:32 -0700 (PDT)
-Date: Tue, 05 Jul 2016 00:51:31 +0300
-From: Artyom Aleksyuk <artyom.h31@gmail.com>
-To: wireguard@lists.zx2c4.com
-Message-Id: <1467669091.3196.0@smtp.gmail.com>
+Return-Path: Jason@zx2c4.com
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f69b494b
+ for <wireguard@lists.zx2c4.com>; Mon, 4 Jul 2016 22:07:32 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id abc3bb46
+ for <wireguard@lists.zx2c4.com>; Mon, 4 Jul 2016 22:07:32 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 089bc9da
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>; Mon, 4 Jul 2016 22:07:32 +0000 (UTC)
+Received: by mail-lf0-f51.google.com with SMTP id h129so123985799lfh.1
+ for <wireguard@lists.zx2c4.com>; Mon, 04 Jul 2016 15:10:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Subject: [WireGuard] Can WireGuard be adopted for older kernels?
+In-Reply-To: <1467669091.3196.0@smtp.gmail.com>
+References: <1467669091.3196.0@smtp.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Tue, 5 Jul 2016 00:10:51 +0200
+Message-ID: <CAHmME9rBTuQ7d3qmbzx3J47NUF7xNXMP5tO8o3UU5G7AiGM=JQ@mail.gmail.com>
+To: Artyom Aleksyuk <artyom.h31@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Subject: Re: [WireGuard] Can WireGuard be adopted for older kernels?
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -27,12 +28,25 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi!
-I'm currently using IPsec to make a virtual network between two private 
-computers, and I'm searching for a simpler and faster alternative. 
-Looks like WireGuard is a tool which perfectly suits my needs. However 
-I'm forced to use an old kernel version (3.10) because it's the only 
-version available for my device. Do you have any plans to adopt 
-WireGuard for older kernels? I think that there's a lot of Linux 
-machines which use an old kernel and which won't be updated in the 
-foreseeable future.
+Hey Artyom,
+
+I face the same problem as you. I have an Edge Router Lite, and I'd
+really love to run WireGuard on it, but their proprietary kernel is
+stuck at 3.10. Major bummer.
+
+The current plan is to write a userspace version in Rust, that will be
+cross platform and work well on old kernels. No timeline on that
+though.
+
+However, I did at one point run wireguard on really old kernels during
+testing. That was before I started using the very nice udp_tunnel_*
+library inside newer kernels, which then forced the dependency. But
+when I did do this, it worked. Maybe I'll dust off the ugly old code
+and hack something horrible together to work on old kernels. On the
+other hand, this might not really be a great use of time... I don't
+know.
+
+What system are you trying to run it on? Maybe if it's the same as me,
+we can both poke Ubnt together to upgrade their kernel...
+
+Jason
