@@ -1,29 +1,23 @@
-Return-Path: Jason@zx2c4.com
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 27342718
- for <wireguard@lists.zx2c4.com>; Mon, 4 Jul 2016 23:48:54 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 489231e9
- for <wireguard@lists.zx2c4.com>; Mon, 4 Jul 2016 23:48:54 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 720107db
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 4 Jul 2016 23:48:53 +0000 (UTC)
-Received: by mail-lf0-f53.google.com with SMTP id f6so124668099lfg.0
- for <wireguard@lists.zx2c4.com>; Mon, 04 Jul 2016 16:52:15 -0700 (PDT)
+Return-Path: viisauksena@posteo.de
+Received: from mout01.posteo.de (mout01.posteo.de [185.67.36.65])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5847b891
+ for <wireguard@lists.zx2c4.com>; Mon, 4 Jul 2016 23:49:32 +0000 (UTC)
+Received: from dovecot03.posteo.de (dovecot03.posteo.de [172.16.0.13])
+ by mout01.posteo.de (Postfix) with ESMTPS id D91D420925
+ for <wireguard@lists.zx2c4.com>; Tue,  5 Jul 2016 01:52:51 +0200 (CEST)
+Received: from mail.posteo.de (localhost [127.0.0.1])
+ by dovecot03.posteo.de (Postfix) with ESMTPSA id 3rk3jZ653qz5vMK
+ for <wireguard@lists.zx2c4.com>; Tue,  5 Jul 2016 01:52:50 +0200 (CEST)
+References: <20160704225300.GC9424@c3po>
+ <CAHmME9r33BJHwbx2G-ANf02+ED4TJOs_Go+Ad3xoCX9L8DJY0g@mail.gmail.com>
+From: Jens Viisauksena <viisauksena@posteo.de>
+To: wireguard@lists.zx2c4.com
+Message-ID: <829db05d-422d-4573-a7f5-d1beff657160@posteo.de>
+Date: Tue, 5 Jul 2016 01:50:34 +0200
 MIME-Version: 1.0
-In-Reply-To: <CA+1cUOJLSz3HnOo6UxeO8cuTmagpf=uuAh9_AX4VAVuD58BruQ@mail.gmail.com>
-References: <1467669091.3196.0@smtp.gmail.com>
- <CAHmME9rBTuQ7d3qmbzx3J47NUF7xNXMP5tO8o3UU5G7AiGM=JQ@mail.gmail.com>
- <1467672361.2339.0@smtp.gmail.com> <1467672796.2967.0@smtp.gmail.com>
- <CAHmME9rKcz4TX1LizTr1pQvLxUeFP7ijS0BpiY4biRtimWTMbA@mail.gmail.com>
- <CAHmME9r7QKWwbKAo-9OXcLV4Ywv6C8NtvAHrhKM4Z8W2LxZ5dA@mail.gmail.com>
- <CA+1cUOJLSz3HnOo6UxeO8cuTmagpf=uuAh9_AX4VAVuD58BruQ@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 5 Jul 2016 01:52:13 +0200
-Message-ID: <CAHmME9oF-5QHras_G26Q8q5R1BuncCrJ15knMbsosgS+tKrQiA@mail.gmail.com>
-To: Artyom Aleksyuk <artyom.h31@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: [WireGuard] Can WireGuard be adopted for older kernels?
+In-Reply-To: <CAHmME9r33BJHwbx2G-ANf02+ED4TJOs_Go+Ad3xoCX9L8DJY0g@mail.gmail.com>
+Content-Type: text/plain; charset=windows-1252
+Subject: Re: [WireGuard] wireguard on gentoo (4.6.3)
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -33,6 +27,22 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Please send me the bug report you've filed. If I'm able to reproduce
-the behavior I'll unban you. Otherwise I'll assume you're another
-malicious impersonator. (There are a lot of those...)
+On 05.07.2016 01:45, Jason A. Donenfeld wrote:
+> Your kernel is missing CONFIG_NET_UDP_TUNNEL. For instructions on how
+
+i was sitting right next to him - while i installed it on debian 4.4.6
+kernel quiet easy.
+
+we have done all the stuff mentioned, but with his 4.6.3 kernel some of
+the namespaces changes slightly - thats what we guessed.
+we tryd to build it as module and to build it fix inside kernel -
+everytime with reboot - just in case.
+
+the ebuild (ebuild net-misc/wireguard-0.0.20160630 ) runs smoothly with
+all the hints from install page, so building was successfull but a
+modprobe failed.
+
+maybe he describe this in a deeper way way tomorrow , but if you have a
+hint beyond that, that would be awesome
+
+thx, greetz - jens
