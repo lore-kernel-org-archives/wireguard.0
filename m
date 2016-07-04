@@ -1,22 +1,21 @@
-Return-Path: artyom.h31@gmail.com
-Received: from mail-lf0-f67.google.com (mail-lf0-f67.google.com
- [209.85.215.67])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c54c52fe
- for <wireguard@lists.zx2c4.com>; Mon, 4 Jul 2016 22:42:45 +0000 (UTC)
-Received: by mail-lf0-f67.google.com with SMTP id w130so18216970lfd.2
- for <wireguard@lists.zx2c4.com>; Mon, 04 Jul 2016 15:46:06 -0700 (PDT)
-Return-Path: <artyom.h31@gmail.com>
-From: "Jason A. Donenfeld" <artyom.h31@gmail.com>
-Date: Tue, 05 Jul 2016 01:46:01 +0300
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Message-Id: <1467672361.2339.0@smtp.gmail.com>
-In-Reply-To: <CAHmME9rBTuQ7d3qmbzx3J47NUF7xNXMP5tO8o3UU5G7AiGM=JQ@mail.gmail.com>
-References: <1467669091.3196.0@smtp.gmail.com>
- <CAHmME9rBTuQ7d3qmbzx3J47NUF7xNXMP5tO8o3UU5G7AiGM=JQ@mail.gmail.com>
+Return-Path: n3ph@terminal21.de
+Received: from smtprelay03.ispgateway.de (smtprelay03.ispgateway.de
+ [80.67.31.26])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 506576cf
+ for <wireguard@lists.zx2c4.com>; Mon, 4 Jul 2016 22:50:09 +0000 (UTC)
+Received: from [92.74.240.146] (helo=c3po)
+ by smtprelay03.ispgateway.de with esmtpsa
+ (TLSv1.2:DHE-RSA-AES256-GCM-SHA384:256) (Exim 4.84)
+ (envelope-from <n3ph@terminal21.de>) id 1bKCk3-000811-Uv
+ for wireguard@lists.zx2c4.com; Tue, 05 Jul 2016 00:53:28 +0200
+Date: Tue, 5 Jul 2016 00:53:01 +0200
+From: Michael Gerlach <n3ph@terminal21.de>
+To: wireguard@lists.zx2c4.com
+Message-ID: <20160704225300.GC9424@c3po>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: [WireGuard] Can WireGuard be adopted for older kernels?
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="KdquIMZPjGJQvRdI"
+Subject: [WireGuard] wireguard on gentoo (4.6.3)
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,42 +25,61 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-I'm trying to run WireGuard on a single board computer (ODROID C1).=20
-It's not a problem to modify a board's kernel code, however the chip=20
-manufacturer (Amlogic) is focused on Android and will very unlikely=20
-release a newer kernel for this board.
 
-A userspace version is not an option because of a huge performance=20
-penalty of userspace tunnels. It will certainly be slower than IPsec,=20
-and performance is especially important for embedded devices.
+--KdquIMZPjGJQvRdI
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-A small offtopic: why have you chosen to use Rust for a userspace=20
-version and not C or C++? In the latter case you have an option to=20
-reuse some code from the kernel version.
+Hey guys!
 
-=D0=92 =D0=92=D1=82=D0=BE=D1=80=D0=BD=D0=B8=D0=BA, 5 =D0=B8=D1=8E=D0=BB. 20=
-16 =D0=B2 1:10 , Jason A. Donenfeld=20
-<Jason@zx2c4.com> =D0=BD=D0=B0=D0=BF=D0=B8=D1=81=D0=B0=D0=BB:
-> Hey Artyom,
->=20
-> I face the same problem as you. I have an Edge Router Lite, and I'd
-> really love to run WireGuard on it, but their proprietary kernel is
-> stuck at 3.10. Major bummer.
->=20
-> The current plan is to write a userspace version in Rust, that will be
-> cross platform and work well on old kernels. No timeline on that
-> though.
->=20
-> However, I did at one point run wireguard on really old kernels during
-> testing. That was before I started using the very nice udp_tunnel_*
-> library inside newer kernels, which then forced the dependency. But
-> when I did do this, it worked. Maybe I'll dust off the ugly old code
-> and hack something horrible together to work on old kernels. On the
-> other hand, this might not really be a great use of time... I don't
-> know.
->=20
-> What system are you trying to run it on? Maybe if it's the same as me,
-> we can both poke Ubnt together to upgrade their kernel...
->=20
-> Jason
-=
+I tried to test wireguard on my gentoo machine running on kernel 4.6.3.
+I followed the instructions on https://www.wireguard.io/install/ and
+used the ebuild net-misc/wireguard-0.0.20160630.
+
+I am not able to load the module - in dmesg this shows up:
+
+[  126.576087] wireguard: no symbol version for udp_sock_create4
+[  126.576092] wireguard: Unknown symbol udp_sock_create4 (err -22)
+[  126.576113] wireguard: no symbol version for udp_tunnel6_xmit_skb
+[  126.576115] wireguard: Unknown symbol udp_tunnel6_xmit_skb (err -22)
+[  126.576170] wireguard: no symbol version for xt_request_find_match
+[  126.576172] wireguard: Unknown symbol xt_request_find_match (err -22)
+[  126.576282] wireguard: no symbol version for udp_tunnel_sock_release
+[  126.576284] wireguard: Unknown symbol udp_tunnel_sock_release (err
+-22)
+[  126.576302] wireguard: no symbol version for setup_udp_tunnel_sock
+[  126.576304] wireguard: Unknown symbol setup_udp_tunnel_sock (err -22)
+[  126.576308] wireguard: no symbol version for udp_sock_create6
+[  126.576310] wireguard: Unknown symbol udp_sock_create6 (err -22)
+[  126.576340] wireguard: no symbol version for udp_tunnel_xmit_skb
+[  126.576342] wireguard: Unknown symbol udp_tunnel_xmit_skb (err -22)
+
+Any hints to get further on this?
+
+best regards,
+
+
+n3ph
+
+--=20
+Please use PGP - https://en.wikipedia.org/wiki/Pretty_Good_Privacy
+
+
+--KdquIMZPjGJQvRdI
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQEcBAEBCAAGBQJXeujMAAoJEE1l5S41evqaZHgH/iqJj4m/94OvtcNwhliCbOQQ
+Rh5Mda2suJN8e2FHfFb/52xURIdY1L2f2/V0WtWSGtsaagIU6FYrpeAfqH6I3s9w
+qGvLXJomA0joB/nhXzh7MdaA6sOGagAB6/kDkVXNwdN2L/uWDTr9/Y7mB7n0UlO6
+YdmDvXmq7IgjlfhJqCYb8B1tHZDVkSloBgWhvw/WhgSVOkndTQKDlUZWycn6p9pa
+WM0GS1cL/0Vj8PDlMKVAupR+UAf46niBVJ9jOdrPD5iJbM0B3SzmRbxOrQG8DuNE
+dHG6nELNvTNj2+TLVcvei0wcvoy829tpD+4Q8BXzKhaK4bHolwRcEboQG84xRps=
+=BDem
+-----END PGP SIGNATURE-----
+
+--KdquIMZPjGJQvRdI--
