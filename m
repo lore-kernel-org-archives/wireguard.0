@@ -1,26 +1,23 @@
-Return-Path: artyom.h31@gmail.com
-Received: from mail-wm0-f54.google.com (mail-wm0-f54.google.com [74.125.82.54])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 394dad20
- for <wireguard@lists.zx2c4.com>; Mon, 4 Jul 2016 23:51:28 +0000 (UTC)
-Received: by mail-wm0-f54.google.com with SMTP id f126so118373248wma.1
- for <wireguard@lists.zx2c4.com>; Mon, 04 Jul 2016 16:54:50 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <CAHmME9oF-5QHras_G26Q8q5R1BuncCrJ15knMbsosgS+tKrQiA@mail.gmail.com>
-References: <1467669091.3196.0@smtp.gmail.com>
- <CAHmME9rBTuQ7d3qmbzx3J47NUF7xNXMP5tO8o3UU5G7AiGM=JQ@mail.gmail.com>
- <1467672361.2339.0@smtp.gmail.com>
- <1467672796.2967.0@smtp.gmail.com>
- <CAHmME9rKcz4TX1LizTr1pQvLxUeFP7ijS0BpiY4biRtimWTMbA@mail.gmail.com>
- <CAHmME9r7QKWwbKAo-9OXcLV4Ywv6C8NtvAHrhKM4Z8W2LxZ5dA@mail.gmail.com>
- <CA+1cUOJLSz3HnOo6UxeO8cuTmagpf=uuAh9_AX4VAVuD58BruQ@mail.gmail.com>
- <CAHmME9oF-5QHras_G26Q8q5R1BuncCrJ15knMbsosgS+tKrQiA@mail.gmail.com>
-Date: Tue, 5 Jul 2016 02:54:49 +0300
-Message-ID: <CA+1cUOJpc_niQem-v8dLciMb8JQiQ0VGxaCdhmJGjiyw4bqWTw@mail.gmail.com>
-From: Artyom Aleksyuk <artyom.h31@gmail.com>
+Return-Path: n3ph@terminal21.de
+Received: from smtprelay03.ispgateway.de (smtprelay03.ispgateway.de
+ [80.67.29.28])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 013b21de
+ for <wireguard@lists.zx2c4.com>; Tue, 5 Jul 2016 00:04:05 +0000 (UTC)
+Date: Tue, 5 Jul 2016 02:06:58 +0200
+From: Michael Gerlach <n3ph@terminal21.de>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Content-Type: multipart/alternative; boundary=047d7bb04a90cf5c230536d80fa6
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: [WireGuard] Can WireGuard be adopted for older kernels?
+Message-ID: <20160705000658.GA6619@c3po>
+References: <20160704225300.GC9424@c3po>
+ <CAHmME9r33BJHwbx2G-ANf02+ED4TJOs_Go+Ad3xoCX9L8DJY0g@mail.gmail.com>
+ <829db05d-422d-4573-a7f5-d1beff657160@posteo.de>
+ <CAHmME9ruAPJsRjvsm_+iPUBzD+z85N+4pdw25KhM9FpG0ygMCA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="x+6KMIRAuhnl3hBn"
+In-Reply-To: <CAHmME9ruAPJsRjvsm_+iPUBzD+z85N+4pdw25KhM9FpG0ygMCA@mail.gmail.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ Jens Viisauksena <viisauksena@posteo.de>
+Subject: Re: [WireGuard] wireguard on gentoo (4.6.3)
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -30,39 +27,81 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---047d7bb04a90cf5c230536d80fa6
-Content-Type: text/plain; charset=UTF-8
+
+--x+6KMIRAuhnl3hBn
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Here is it:
-https://bugzilla.gnome.org/show_bug.cgi?id=3D768419
-5 =D0=B8=D1=8E=D0=BB=D1=8F 2016 =D0=B3. 2:52 AM =D0=BF=D0=BE=D0=BB=D1=8C=D0=
-=B7=D0=BE=D0=B2=D0=B0=D1=82=D0=B5=D0=BB=D1=8C "Jason A. Donenfeld" <Jason@z=
-x2c4.com>
-=D0=BD=D0=B0=D0=BF=D0=B8=D1=81=D0=B0=D0=BB:
+Ah! I wasn't looking closely enough to the headers.. The maillist is in CC.=
+=2E I always
+use List-Reply, which wasn't working so i guessed you already wrote
+offlist so i replied directly.. :)=20
 
-> Please send me the bug report you've filed. If I'm able to reproduce
-> the behavior I'll unban you. Otherwise I'll assume you're another
-> malicious impersonator. (There are a lot of those...)
->
+I already tried to disable CONFIG_MODVERSIONS - which turned out to make
+things get weired since mykernel was not starting anymore...  But I will
+give it a try and have a look at it again.
 
---047d7bb04a90cf5c230536d80fa6
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Just for the details:
 
-<p dir=3D"ltr">Here is it:<br>
-<a href=3D"https://bugzilla.gnome.org/show_bug.cgi?id=3D768419">https://bug=
-zilla.gnome.org/show_bug.cgi?id=3D768419</a></p>
-<div class=3D"gmail_quote">5 =D0=B8=D1=8E=D0=BB=D1=8F 2016 =D0=B3. 2:52 AM =
-=D0=BF=D0=BE=D0=BB=D1=8C=D0=B7=D0=BE=D0=B2=D0=B0=D1=82=D0=B5=D0=BB=D1=8C &q=
-uot;Jason A. Donenfeld&quot; &lt;<a href=3D"mailto:Jason@zx2c4.com">Jason@z=
-x2c4.com</a>&gt; =D0=BD=D0=B0=D0=BF=D0=B8=D1=81=D0=B0=D0=BB:<br type=3D"att=
-ribution"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;bord=
-er-left:1px #ccc solid;padding-left:1ex">Please send me the bug report you&=
-#39;ve filed. If I&#39;m able to reproduce<br>
-the behavior I&#39;ll unban you. Otherwise I&#39;ll assume you&#39;re anoth=
-er<br>
-malicious impersonator. (There are a lot of those...)<br>
-</blockquote></div>
+[01:50:36][n3ph@c3po:~][master]# zcat /proc/config.gz | grep -e
+CONFIG_NET_UDP_TUNNEL -e CONFIG_IPV6 -e
+CONFIG_NETFILTER_XT_MATCH_HASHLIMIT -e CONFIG_PADATA
+CONFIG_PADATA=3Dy
+CONFIG_NET_UDP_TUNNEL=3Dy
+CONFIG_IPV6=3Dy
+CONFIG_IPV6_ROUTER_PREF=3Dy
+# CONFIG_IPV6_ROUTE_INFO is not set
+# CONFIG_IPV6_OPTIMISTIC_DAD is not set
+# CONFIG_IPV6_MIP6 is not set
+# CONFIG_IPV6_ILA is not set
+# CONFIG_IPV6_VTI is not set
+CONFIG_IPV6_SIT=3Dm
+# CONFIG_IPV6_SIT_6RD is not set
+CONFIG_IPV6_NDISC_NODETYPE=3Dy
+CONFIG_IPV6_TUNNEL=3Dm
+# CONFIG_IPV6_GRE is not set
+# CONFIG_IPV6_MULTIPLE_TABLES is not set
+# CONFIG_IPV6_MROUTE is not set
+CONFIG_NETFILTER_XT_MATCH_HASHLIMIT=3Dy
+[01:50:37][n3ph@c3po:~][master]#
 
---047d7bb04a90cf5c230536d80fa6--
+best regards,
+
+n3ph
+
+
+On Tue, Jul 05, 2016 at 01:54:13AM +0200, Jason A. Donenfeld wrote:
+> Hey Jens,
+>=20
+> He sent me another message offlist, so I replied offlist. I suspect,
+> from the dmesg he sent, that it actually might be an issue with
+> CONFIG_MODVERSIONS, so I suggested disabling this option, as a test.
+>=20
+> Jason
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> http://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--=20
+Please use PGP - https://en.wikipedia.org/wiki/Pretty_Good_Privacy
+
+
+--x+6KMIRAuhnl3hBn
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQEcBAEBCAAGBQJXevoiAAoJEE1l5S41evqa6JcIAMQN7zaav1DKj937cnxF5IBn
+4+eIpTncJqoDdp1ur2yrcg3ZE8h3yO+qJL+VhEgkpL+dWmMvv7YJKi0s35CWG4kQ
+xtRCiWwsvwH1vGFcT/ccedOyqaiXvTrr9TYq0sDpaaPokIQoZtFq22CcPHrarMzu
+e9X+eUFf8wG8BajgmDK+/1OmJaUUasgJdI5YqTsijFBf3dIE5wC0i3/igY5gwfNs
+8W+2Cw6i5uIOfzwxdn9cmCJrk9gmGNCAEQWVWwaViZIuEh4+3olF5Vl+QFU8lRSo
+Z8kCgFckzR0f2l/o3P8uA5w0AB9xxReCoqTLj2rtfadR5ANoG3F/V9K2PJjJ1Tw=
+=Pvb8
+-----END PGP SIGNATURE-----
+
+--x+6KMIRAuhnl3hBn--
