@@ -1,25 +1,14 @@
 Return-Path: Jason@zx2c4.com
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3ea2f2f9
- for <wireguard@lists.zx2c4.com>; Wed, 6 Jul 2016 14:28:01 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bc01f751
- for <wireguard@lists.zx2c4.com>; Wed, 6 Jul 2016 14:28:01 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id b5893150
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 6 Jul 2016 14:28:00 +0000 (UTC)
-Received: by mail-lf0-f52.google.com with SMTP id f6so155777762lfg.0
- for <wireguard@lists.zx2c4.com>; Wed, 06 Jul 2016 07:28:05 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <577cfed2.c1bd370a.78cba.ffff9b3eSMTPIN_ADDED_BROKEN@mx.google.com>
-References: <577cfed2.c1bd370a.78cba.ffff9b3eSMTPIN_ADDED_BROKEN@mx.google.com>
+In-Reply-To: <20160706120410.GA765@wolff.to>
+References: <20160706120410.GA765@wolff.to>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 6 Jul 2016 16:28:02 +0200
-Message-ID: <CAHmME9rqC2gbixm6DT7mdW4sYPHSPJv8P1fF6M+x8Z-9HvdF3A@mail.gmail.com>
-To: =?UTF-8?Q?Fr=C3=A9d=C3=A9ric_Gloannec?= <frederic.gloannec@thegreenbow.com>
+Date: Wed, 6 Jul 2016 16:33:02 +0200
+Message-ID: <CAHmME9qs42O4KQtsuZDdPGPKEkyxGhHEGxB3crkrgrAaLDKh3w@mail.gmail.com>
+To: Bruno Wolff III <bruno@wolff.to>
 Content-Type: text/plain; charset=UTF-8
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: [WireGuard] Which protocol to get network configuration from
- gateway to clients.
+Cc: WireGuard mailing list <WireGuard@lists.zx2c4.com>
+Subject: Re: [WireGuard] Comments on wgserver.service
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -29,44 +18,53 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Fr=C3=A9d=C3=A9ric,
+Hi Bruno,
 
-The beauty is: you can use whatever protocol you want. Use
-TLS/HTTP/REST/JSON if that's your style. Use SSH if it suits your
-fancy. Hand code preshared substitution tables onto carrier pigeon
-parchment, if you're feeling ancient. Slip Senator Vandenberg your
-public key and desired IP on microfilm during a secret senate floor
-handshake too subtle for early film cameras to catch. You can do a
-million different things to integrate it directly into your
-infrastructure and how you like doing things.
+Thanks for your feedback on this. That's a good idea to call ip-link
+del first. I get that the - will make the error non-fatal, but will it
+also suppress writing the error message into journald?
 
-After WireGuard gets stabilized, I have some plans of my own for
-making upper layer tools for that. But I sort of suspect others will
-make things like that before I get to it, and you shouldn't hesitate
-to integrate it into your infrastructure how you like.
-
-There's also the out-of-band extension idea from this thread [1], that
-could at some point grow into something interesting.
-
-Of course, if you can, it's probably superior to use more static
-configuration, leaving distribution of that to your ordinary
-configuration management system. For example, while you're at it
-having puppet/ansiable/chef/whatever push the ordinary networking
-config and pre-verified SSH host keys, have it push your wireguard
-configuration too. Or maybe this isn't your cup of tea.
-
-By leaving these concerns out of wireguard directly, we aim to make
-the core of the project a lot more usable and integratable. I manage
-quite a few systems myself, so I'm happy to put on my
-sysadmin/devops/sre hat and help you come up with something that fits
-your environment. And I'm sure others on this list have their set of
-opinions and advice too.
-
-So, what's your environment like? What do you want to do? Let's
-theorize potential solutions for you. And maybe in the exercise of
-doing that, we'll figure out new ways to both use WireGuard and
-improve it to be more robust and fitting for your environment.
+Please feel free to make wgserver.service into a more robust unit file
+and send patches (git-send-email), or make a few different unit files
+show casing different types of configurations. I'm not a huge systemd
+guy, so I just sort of threw that together haphazardly. It'd be nice
+also to see this integrated into systemd-networkd and the .network
+units. Are you involved with upstream at all? Interested in taking
+this integration work on?
 
 Jason
 
-[1] https://lists.zx2c4.com/pipermail/wireguard/2016-June/000038.html
+On Wed, Jul 6, 2016 at 2:04 PM, Bruno Wolff III <bruno@wolff.to> wrote:
+> While wgserver.service is going to need some customization for each
+> instance, there are a couple of things you might want to change in the
+> example.
+>
+> If for whatever reason wgserver is left setup, starting and restarting the
+> service will fail until the device is manually removed.
+> Adding the following as the first ExecStart will help:
+> ExecStart=-/bin/ip link del dev wgserver
+> That will attempt to clean up any left over device as part of the startup
+> process. Which will keep:
+> ExecStartPre=/usr/sbin/ip link add dev wg0 type wireguard
+> from failing (exit status 2 if the device already exists) and aborting the
+> service startup.
+>
+> Also according to the systemd documentation, ExecStopPost commands are
+> supposed to be run when starting fails. It doesn't seem to actually work
+> this way on Fedora and I have filed a bug about it. But it may still be
+> better to change:
+> ExecStop=/bin/ip link del dev wgserver
+> To:
+> ExecStopPost=/bin/ip link del dev wgserver
+>
+> Another note, that I'm not sure there is a standard fix for, but might be
+> worth throwing in something for, is that if your config has a host name in
+> it, you need functioning DNS when the service starts. And hence one may want
+> to add Requires= and After= for a DNS service in some cases.
+>
+> The example was helpful to me in figuring out the service files I am
+> actually using on my two endpoints.
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> http://lists.zx2c4.com/mailman/listinfo/wireguard
