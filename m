@@ -1,31 +1,17 @@
-Return-Path: Jason@zx2c4.com
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d2c0b9d9
- for <wireguard@lists.zx2c4.com>; Wed, 6 Jul 2016 18:08:30 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e9156a1b
- for <wireguard@lists.zx2c4.com>; Wed, 6 Jul 2016 18:08:30 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id ca456a78
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 6 Jul 2016 18:08:29 +0000 (UTC)
-Received: by mail-lf0-f50.google.com with SMTP id l188so159764922lfe.2
- for <wireguard@lists.zx2c4.com>; Wed, 06 Jul 2016 11:08:35 -0700 (PDT)
+Return-Path: mardnh@gmx.de
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b0c3068d
+ for <wireguard@lists.zx2c4.com>; Wed, 6 Jul 2016 20:43:47 +0000 (UTC)
+Received: from [192.168.200.2] ([62.156.62.22]) by mail.gmx.com (mrgmx102)
+ with ESMTPSA (Nemesis) id 0LyB6P-1bNy4T3FeX-015cbe for
+ <wireguard@lists.zx2c4.com>; Wed, 06 Jul 2016 22:43:52 +0200
+To: wireguard@lists.zx2c4.com
+From: Martin Hauke <mardnh@gmx.de>
+Message-ID: <577D6D87.7000807@gmx.de>
+Date: Wed, 6 Jul 2016 22:43:51 +0200
 MIME-Version: 1.0
-In-Reply-To: <CA+1cUOJpc_niQem-v8dLciMb8JQiQ0VGxaCdhmJGjiyw4bqWTw@mail.gmail.com>
-References: <1467669091.3196.0@smtp.gmail.com>
- <CAHmME9rBTuQ7d3qmbzx3J47NUF7xNXMP5tO8o3UU5G7AiGM=JQ@mail.gmail.com>
- <1467672361.2339.0@smtp.gmail.com> <1467672796.2967.0@smtp.gmail.com>
- <CAHmME9rKcz4TX1LizTr1pQvLxUeFP7ijS0BpiY4biRtimWTMbA@mail.gmail.com>
- <CAHmME9r7QKWwbKAo-9OXcLV4Ywv6C8NtvAHrhKM4Z8W2LxZ5dA@mail.gmail.com>
- <CA+1cUOJLSz3HnOo6UxeO8cuTmagpf=uuAh9_AX4VAVuD58BruQ@mail.gmail.com>
- <CAHmME9oF-5QHras_G26Q8q5R1BuncCrJ15knMbsosgS+tKrQiA@mail.gmail.com>
- <CA+1cUOJpc_niQem-v8dLciMb8JQiQ0VGxaCdhmJGjiyw4bqWTw@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 6 Jul 2016 20:08:33 +0200
-Message-ID: <CAHmME9rTKw2AiLqvDTYoxYsk_kBCP7XUu4WOsWVop-kWrem_Bw@mail.gmail.com>
-To: Artyom Aleksyuk <artyom.h31@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: [WireGuard] Can WireGuard be adopted for older kernels?
+Content-Type: text/plain; charset=utf-8
+Subject: [WireGuard] openSUSE package for WireGuard
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -35,11 +21,30 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Artyom,
+Hi there,
 
-It looks like you were the victim of a horrible bug after all:
-https://bugzilla.gnome.org/review?bug=768419&attachment=330932
+i've done some initial packaging work for openSUSE (Leap 42.1,
+Tubmleweed and Factory) on OBS.
 
-Welcome back to the list.
+You can find those packages in my OBS home repository:
+http://download.opensuse.org/repositories/home:/mnhauke:/wireguard/
 
-Jason
+At the moment the package is split in two parts
+1) wireguard             (wg userspace-tool)
+2) wireguard-kmp-default (kernel module; the "-default" suffix is the
+default kernel flavor)
+
+While it builds fine on the mentioned openSUSE versions I did all my
+functional tests only with openSUSE Leap 42.1 x86_64
+
+Here's an example for installing the packages on openSUSE Leap 42.1 x86_64:
+----
+sudo zypper addrepo
+http://download.opensuse.org/repositories/home:/mnhauke:/wireguard/openSUSE_Leap_42.1/home:mnhauke:wireguard.repo
+sudo zypper install wireguard wireguard-kmp-default
+----
+
+Feedback and suggestions are welcome.
+
+best regards,
+Martin
