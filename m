@@ -1,23 +1,25 @@
-Return-Path: frederic.gloannec@thegreenbow.com
-Received: from key.keymeetingpoint.net (key.keymeetingpoint.net
- [198.57.135.29])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9f907ee0
- for <wireguard@lists.zx2c4.com>; Wed, 6 Jul 2016 12:51:23 +0000 (UTC)
-Received: from lfbn-1-366-221.w86-242.abo.wanadoo.fr ([86.242.60.221]:49012
- helo=FG) by key.keymeetingpoint.net with esmtp (Exim 4.87)
- (envelope-from <frederic.gloannec@thegreenbow.com>)
- id 1bKmIZ-0001Rm-JF
- for wireguard@lists.zx2c4.com; Wed, 06 Jul 2016 14:51:27 +0200
-From: =?iso-8859-1?Q?Fr=E9d=E9ric_Gloannec?=
- <frederic.gloannec@thegreenbow.com>
-To: <wireguard@lists.zx2c4.com>
-Date: Wed, 6 Jul 2016 14:51:28 +0200
-Message-ID: <005d01d1d785$1d6733e0$58359ba0$@gloannec@thegreenbow.com>
+Return-Path: Jason@zx2c4.com
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3ea2f2f9
+ for <wireguard@lists.zx2c4.com>; Wed, 6 Jul 2016 14:28:01 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bc01f751
+ for <wireguard@lists.zx2c4.com>; Wed, 6 Jul 2016 14:28:01 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id b5893150
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>; Wed, 6 Jul 2016 14:28:00 +0000 (UTC)
+Received: by mail-lf0-f52.google.com with SMTP id f6so155777762lfg.0
+ for <wireguard@lists.zx2c4.com>; Wed, 06 Jul 2016 07:28:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="----=_NextPart_000_005E_01D1D795.E0F003E0"
-Subject: [WireGuard] Which protocol to get network configuration from
-	gateway to clients.
+In-Reply-To: <577cfed2.c1bd370a.78cba.ffff9b3eSMTPIN_ADDED_BROKEN@mx.google.com>
+References: <577cfed2.c1bd370a.78cba.ffff9b3eSMTPIN_ADDED_BROKEN@mx.google.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 6 Jul 2016 16:28:02 +0200
+Message-ID: <CAHmME9rqC2gbixm6DT7mdW4sYPHSPJv8P1fF6M+x8Z-9HvdF3A@mail.gmail.com>
+To: =?UTF-8?Q?Fr=C3=A9d=C3=A9ric_Gloannec?= <frederic.gloannec@thegreenbow.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Subject: Re: [WireGuard] Which protocol to get network configuration from
+ gateway to clients.
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -27,106 +29,44 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-This is a multi-part message in MIME format.
+Hi Fr=C3=A9d=C3=A9ric,
 
-------=_NextPart_000_005E_01D1D795.E0F003E0
-Content-Type: text/plain;
-	charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+The beauty is: you can use whatever protocol you want. Use
+TLS/HTTP/REST/JSON if that's your style. Use SSH if it suits your
+fancy. Hand code preshared substitution tables onto carrier pigeon
+parchment, if you're feeling ancient. Slip Senator Vandenberg your
+public key and desired IP on microfilm during a secret senate floor
+handshake too subtle for early film cameras to catch. You can do a
+million different things to integrate it directly into your
+infrastructure and how you like doing things.
 
-Hi Jason,
+After WireGuard gets stabilized, I have some plans of my own for
+making upper layer tools for that. But I sort of suspect others will
+make things like that before I get to it, and you shouldn't hesitate
+to integrate it into your infrastructure how you like.
 
- 
+There's also the out-of-band extension idea from this thread [1], that
+could at some point grow into something interesting.
 
-I understand that Wireguard protocol is similar to what Phase 2 in IkeV1 or
-Child SA in IkeV2 provide.
+Of course, if you can, it's probably superior to use more static
+configuration, leaving distribution of that to your ordinary
+configuration management system. For example, while you're at it
+having puppet/ansiable/chef/whatever push the ordinary networking
+config and pre-verified SSH host keys, have it push your wireguard
+configuration too. Or maybe this isn't your cup of tea.
 
- 
+By leaving these concerns out of wireguard directly, we aim to make
+the core of the project a lot more usable and integratable. I manage
+quite a few systems myself, so I'm happy to put on my
+sysadmin/devops/sre hat and help you come up with something that fits
+your environment. And I'm sure others on this list have their set of
+opinions and advice too.
 
-What would be the protocol we could use prior to create the WireGuard tunnel
-in order to get Virtual IP address, Remote Network Address, DNS, DNS
-Suffix... from the Gateway ?
+So, what's your environment like? What do you want to do? Let's
+theorize potential solutions for you. And maybe in the exercise of
+doing that, we'll figure out new ways to both use WireGuard and
+improve it to be more robust and fitting for your environment.
 
-This would be similar to what we get with ModeConfig in IkeV1 and
-Configuration Payload in IkeV2. Also OpenVPN protocol contains this facility
-through the PUSH_REPLY message.
+Jason
 
- 
-
-Thanks,
-
- 
-
-F.Gloannec.
-
-
-------=_NextPart_000_005E_01D1D795.E0F003E0
-Content-Type: text/html;
-	charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" =
-xmlns:o=3D"urn:schemas-microsoft-com:office:office" =
-xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" =
-xmlns=3D"http://www.w3.org/TR/REC-html40"><head><meta =
-http-equiv=3DContent-Type content=3D"text/html; =
-charset=3Diso-8859-1"><meta name=3DGenerator content=3D"Microsoft Word =
-12 (filtered medium)"><style><!--
-/* Font Definitions */
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0cm;
-	margin-bottom:.0001pt;
-	font-size:11.0pt;
-	font-family:"Calibri","sans-serif";}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:blue;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:purple;
-	text-decoration:underline;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:"Calibri","sans-serif";
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;}
-@page WordSection1
-	{size:612.0pt 792.0pt;
-	margin:70.85pt 70.85pt 70.85pt 70.85pt;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]--></head><body lang=3DFR link=3Dblue =
-vlink=3Dpurple><div class=3DWordSection1><p class=3DMsoNormal><span =
-lang=3DEN-US>Hi Jason,<o:p></o:p></span></p><p class=3DMsoNormal><span =
-lang=3DEN-US><o:p>&nbsp;</o:p></span></p><p class=3DMsoNormal><span =
-lang=3DEN-US>I understand that Wireguard protocol is similar to what =
-Phase 2 in IkeV1 or Child SA in IkeV2 provide.<o:p></o:p></span></p><p =
-class=3DMsoNormal><span lang=3DEN-US><o:p>&nbsp;</o:p></span></p><p =
-class=3DMsoNormal><span lang=3DEN-US>What would be the protocol we could =
-use prior to create the WireGuard tunnel in order to get Virtual IP =
-address, Remote Network Address, DNS, DNS Suffix... from the Gateway =
-?<o:p></o:p></span></p><p class=3DMsoNormal><span lang=3DEN-US>This =
-would be similar to what we get with ModeConfig in IkeV1 and =
-Configuration Payload in IkeV2. Also OpenVPN protocol contains this =
-facility through the PUSH_REPLY message.<o:p></o:p></span></p><p =
-class=3DMsoNormal><span lang=3DEN-US><o:p>&nbsp;</o:p></span></p><p =
-class=3DMsoNormal><span lang=3DEN-US>Thanks,<o:p></o:p></span></p><p =
-class=3DMsoNormal><span lang=3DEN-US><o:p>&nbsp;</o:p></span></p><p =
-class=3DMsoNormal><span =
-lang=3DEN-US>F.Gloannec.<o:p></o:p></span></p></div></body></html>
-------=_NextPart_000_005E_01D1D795.E0F003E0--
+[1] https://lists.zx2c4.com/pipermail/wireguard/2016-June/000038.html
