@@ -1,22 +1,28 @@
 Return-Path: baptiste@bitsofnetworks.org
 Received: from mails.bitsofnetworks.org (rezine.polyno.me [193.33.56.138])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5efaf71f
- for <wireguard@lists.zx2c4.com>; Thu, 7 Jul 2016 15:06:13 +0000 (UTC)
-Date: Thu, 7 Jul 2016 17:06:21 +0200
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2cd3ad24
+ for <wireguard@lists.zx2c4.com>; Thu, 7 Jul 2016 15:25:14 +0000 (UTC)
+Received: from rev-140-155.legacytubes.illyse.net ([89.234.140.155]
+ helo=lud.polynome.dn42) by mails.bitsofnetworks.org with esmtps
+ (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.84_2)
+ (envelope-from <baptiste@bitsofnetworks.org>) id 1bLBB8-0006Zm-Cv
+ for wireguard@lists.zx2c4.com; Thu, 07 Jul 2016 17:25:26 +0200
+Date: Thu, 7 Jul 2016 17:25:24 +0200
 From: Baptiste Jonglez <baptiste@bitsofnetworks.org>
-To: Jan De Landtsheer <jan@incubaid.com>
-Message-ID: <20160707150621.GC18014@lud.polynome.dn42>
+To: wireguard@lists.zx2c4.com
+Message-ID: <20160707152524.GE18014@lud.polynome.dn42>
 References: <CAA5ikozfeQAFGx8Yi9d=1r5gkHNnq6e0yHFVLXHdVYD_V_Wwfg@mail.gmail.com>
  <CAHmME9oN9NU8fHTjfW6ougLf4u9ZfUHJ11MxDf3RhbC5n64g3g@mail.gmail.com>
  <CAA5ikozn+uj+FPG1eLAR9uS+Lxqiab4+dMUhmBmyg9oBiWFQEg@mail.gmail.com>
  <20160707131324.GA18014@lud.polynome.dn42>
  <CAA5ikoypGoMip+DS=Ud-dNRZOf-8m+MDtV5JobLr1MBmAdRS=A@mail.gmail.com>
+ <20160707150621.GC18014@lud.polynome.dn42>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="5G06lTa6Jq83wMTw"
-In-Reply-To: <CAA5ikoypGoMip+DS=Ud-dNRZOf-8m+MDtV5JobLr1MBmAdRS=A@mail.gmail.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: [WireGuard] Client changes endpoint port, why?
+ protocol="application/pgp-signature"; boundary="IU5/I01NYhRvwH70"
+In-Reply-To: <20160707150621.GC18014@lud.polynome.dn42>
+Subject: [WireGuard] Wireguard behind NAT (Was: Client changes endpoint port,
+	why?)
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -27,70 +33,60 @@ List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
 
---5G06lTa6Jq83wMTw
+--IU5/I01NYhRvwH70
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jul 07, 2016 at 02:45:22PM +0000, Jan De Landtsheer wrote:
-> On Thu, Jul 7, 2016 at 3:13 PM Baptiste Jonglez <baptiste@bitsofnetworks.=
-org>
-> wrote:
+On Thu, Jul 07, 2016 at 05:06:21PM +0200, Baptiste Jonglez wrote:
+> On Thu, Jul 07, 2016 at 02:45:22PM +0000, Jan De Landtsheer wrote:
+> > BTW, can a client run behind NAT ? (I assume not, as AFAICT both need to
+> > listen on a port)
 >=20
-> > On Thu, Jul 07, 2016 at 12:53:24PM +0000, Jan De Landtsheer wrote:
-> > >   - about changing ports:
-> > > hmmm. can't really say...
-> > > What I noticed: I could ping yesterday, without doing anything, I
-> > couldn't
-> > > this morning. that's when I saw the difference.
-> > > I had something like it yesterday, and thinking I did something wrong=
-, I
-> > > set it in stone in a config file. applied it, had my ping, kept the
-> > > terminal session on the server open (had also an openvpn to the remot=
-e).
-> > > This morning, from the remote , there was no ping. Verified why. And
-> > then I
-> > > sent this mail ;-)
-> >
-> > Could there be a NAT or stateful firewall on your network, messing up t=
-he
-> > UDP source port of packets received from the server?
-> >
->=20
-> nope, Start with basics, use pub ip to pub ip
+> Yes, you can run behind a NAT (well, maybe not if *both* peers are behind
+> a NAT).  Wireguard uses its local "listening port" as source UDP port when
+> sending packets, so this will create a mapping in a NAT or stateful
+> firewall.
 
-Hmm, that's really strange then.  Any weird firewall rules on any of the
-hosts?
+Well, thinking about it, you should be able to make wireguard work even if
+both peers are behind a stateful firewall or NAT :)
 
-> BTW, can a client run behind NAT ? (I assume not, as AFAICT both need to
-> listen on a port)
+You just have to specify endpoints on *both* peers to point at the public
+IP address of the other peer.
 
-Yes, you can run behind a NAT (well, maybe not if *both* peers are behind
-a NAT).  Wireguard uses its local "listening port" as source UDP port when
-sending packets, so this will create a mapping in a NAT or stateful
-firewall.
+For instance:
 
-Baptiste
+- Peer A listens on port 4444 and is behind a NAT with public IP address X
+- Peer B listens on port 5555 and is behind a NAT with public IP address Y
+- Peer A does this: wg set wg0 peer B endpoint Y:5555
+- Peer B does this: wg set wg0 peer A endpoint X:4444
 
---5G06lTa6Jq83wMTw
+Once both peers have sent messages, this trick should create a mapping in
+both NATs.
+
+It might not work for NAT that also rewrite the source port, though
+(I never understood the terminology, but this might be called a symmetric
+NAT?).
+
+--IU5/I01NYhRvwH70
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2
 
-iQIcBAEBCAAGBQJXfm/tAAoJEL4B7CKgTi5G2TsP/3isCJDJf6mIS0aTs+jVDwyW
-5dEdYxRkr96HGN9vQ9y+C9afTaSzh55njlZU+4yK5kSJMow2qS87xNtNSd17Fd4u
-AcwPcgWU8r2L10opoT0LYHT8EIdoNWbzkGfvsdXBTfIsihoQc34YXSLSi4uPD8/v
-qmo3cX91R5DiWRgPqqrynec9Ubyf159RFkHUSwv84XYyBjtTbZqlpoqsoMEky+V/
-imT9oeEPb76uOZo5kAaec/IcK1gkqqvQGz35SO8nwb/mWj3vgI2IO0k5j+fLY069
-JdLFt1cw49yt8pFCn43KHrdnMNm7nPqy2Tr2jbqK2GfMowXHdaAl+1Z5PnbNP1L8
-D/k+Jqi0L3GckwGuKC2zlj2U7Fy3aQkeEyv7wFeI7WfXdgd0KHOV2zX7aVp7AQmC
-BREdoWyfiP2qvUYNNFdo6Qo0p1beb+jMrkm2fzpkjWHkYjvCpOSiMw6aZ2RcM3Im
-H1zQvED5MGOz9QIrbVahPH7n4Us4DGWT27HjAdqJN4S3fXa7h+YdiZJuf9IlQqHO
-AeZU1EoC5wLjkATCMeaEI8UOyQR5NZWftoa9SI+uHUov3D1DbmjA/CLPhp8u7IiX
-zj7C/Y0ftmHrcbILdXKMNgd/nOoV2FnlzOFOTZOaM4v6cxv/5gKoThEAFm+Glax4
-Nl4fGmNrOoJlkTYG0clY
-=tViZ
+iQIcBAEBCAAGBQJXfnRfAAoJEL4B7CKgTi5GhXwP/AwFuNuqtnTzPk2u9qad6z5D
+ssX20gDoJk1ORMWkmYC32xmhiy5cnkz0+0Woc37fxPAhpftGJVPrLD0WzKKdbW30
+o9BmmsPg+aZLE7D7w1OOHW4d2WUqb2oJ+ATZ9cD72uF30+c2i+mJERXzciAt4z9/
+C9MLumiHlIVAZ0WgBNfOXbzWU2yBC5ohApXTdo1E7ssRiuWci93yt3hg+PyjLbzT
+BQVgXPypU1za43M2kcncsXzB46oq1+XEbH7g/jUpkdEZV373F6eyuxRd61eYEfnw
+sBMJzJSHB4hb5lZOSZNzIIbfxnXtRksqq1Pvq83txNPZ/G2vsJYdq7zNf6n9ZZdm
+KKrdVmCv8BtvFT/TtO1gxOoSHhh8dL1oMMPsGaJKf7yvVD/N066wQm4o/7HE6WxV
+/lUqBcKgDKkHzgePwMBKEZcrJvGOD6d+b0pXFe42rB3HwzrI3MumZX1F5QvtJzcN
+8OGqP4ur8soqWcmlG064eqadt2fa0QbFuZVk4HM/cHOSgXUMNZtaCQe21E4b3xMS
+gnBuBKrN2G8aOwKsO+nKrGudXXcgp/3FiuieCnQ61NM5M1VgLBXHOdFjS7JokOmU
+5FYF6R4KyUP4jiDQiMFHJ7uzWKpzU84F9mXlzpT1TmD4FsVe5HPfjUg5A6oJRovV
+rdKE0zggMH3NDjv0W7ys
+=Mq97
 -----END PGP SIGNATURE-----
 
---5G06lTa6Jq83wMTw--
+--IU5/I01NYhRvwH70--
