@@ -1,15 +1,26 @@
-Return-Path: jonathan@titanous.com
-Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com
- [66.111.4.27])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b8b2238b
- for <wireguard@lists.zx2c4.com>; Thu, 7 Jul 2016 11:58:34 +0000 (UTC)
-From: Jonathan Rudenberg <jonathan@titanous.com>
-To: wireguard@lists.zx2c4.com
-Date: Thu,  7 Jul 2016 07:58:30 -0400
-Message-Id: <20160707115830.97535-1-jonathan@titanous.com>
-In-Reply-To: <CAHmME9rgoaw=MzbfgXkDCWFt6sXzD_FKQka9V6JkpqaY1AH4iw@mail.gmail.com>
+Return-Path: Jason@zx2c4.com
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3757dc87
+ for <wireguard@lists.zx2c4.com>; Thu, 7 Jul 2016 11:59:43 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 102a40a1
+ for <wireguard@lists.zx2c4.com>; Thu, 7 Jul 2016 11:59:43 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id a03ae336
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>; Thu, 7 Jul 2016 11:59:43 +0000 (UTC)
+Received: by mail-lf0-f42.google.com with SMTP id q132so9748960lfe.3
+ for <wireguard@lists.zx2c4.com>; Thu, 07 Jul 2016 04:59:54 -0700 (PDT)
+MIME-Version: 1.0
+In-Reply-To: <20160707115830.97535-1-jonathan@titanous.com>
 References: <CAHmME9rgoaw=MzbfgXkDCWFt6sXzD_FKQka9V6JkpqaY1AH4iw@mail.gmail.com>
-Subject: [WireGuard] [PATCH] go test: don't rely on undefined append behavior
+ <20160707115830.97535-1-jonathan@titanous.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 7 Jul 2016 13:59:52 +0200
+Message-ID: <CAHmME9r4tsANyPJCK+2nsPVpum2=fN91yTNFgUStkan-+9gTug@mail.gmail.com>
+To: Jonathan Rudenberg <jonathan@titanous.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Subject: Re: [WireGuard] [PATCH] go test: don't rely on undefined append
+	behavior
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -19,32 +30,10 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
----
- contrib/external-tests/go/main.go | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+Hi Jonathan,
 
-diff --git a/contrib/external-tests/go/main.go b/contrib/external-tests/go/main.go
-index 8e3c195..c1aa293 100644
---- a/contrib/external-tests/go/main.go
-+++ b/contrib/external-tests/go/main.go
-@@ -118,15 +118,13 @@ func main() {
- 		Dst:      net.IPv4(10, 189, 129, 1),
- 	}).Marshal()
- 	binary.BigEndian.PutUint16(pingHeader[2:], uint16(ipv4.HeaderLen+len(pingMessage))) // fix the length endianness on BSDs
--	binary.BigEndian.PutUint16(pingHeader[10:], ipChecksum(append(pingHeader, pingMessage...)))
--	if err != nil {
--		panic(err)
--	}
-+	pingData := append(pingHeader, pingMessage...)
-+	binary.BigEndian.PutUint16(pingData[10:], ipChecksum(pingData))
- 	pingPacket := make([]byte, 13)
- 	pingPacket[0] = 4 // Type: Data
- 	binary.LittleEndian.PutUint32(pingPacket[1:], theirIndex)
- 	binary.LittleEndian.PutUint64(pingPacket[5:], 0) // Nonce
--	pingPacket = sendCipher.Encrypt(pingPacket, nil, append(pingHeader, pingMessage...))
-+	pingPacket = sendCipher.Encrypt(pingPacket, nil, pingData)
- 	if _, err := conn.Write(pingPacket); err != nil {
- 		log.Fatalf("error writing ping message: %s", err)
- 	}
--- 
-2.9.0
+I was wondering about this...
+
+Merged, thanks.
+
+Jason
