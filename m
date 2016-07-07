@@ -1,17 +1,22 @@
-Return-Path: jan@incubaid.com
-Received: from mail-lf0-f46.google.com (mail-lf0-f46.google.com
- [209.85.215.46])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8fbd6736
- for <wireguard@lists.zx2c4.com>; Thu, 7 Jul 2016 08:27:31 +0000 (UTC)
-Received: by mail-lf0-f46.google.com with SMTP id l188so6541576lfe.2
- for <wireguard@lists.zx2c4.com>; Thu, 07 Jul 2016 01:27:42 -0700 (PDT)
+Return-Path: frederic.gloannec@thegreenbow.com
+Received: from key.keymeetingpoint.net (key.keymeetingpoint.net
+ [198.57.135.29])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b967647d
+ for <wireguard@lists.zx2c4.com>; Thu, 7 Jul 2016 09:16:07 +0000 (UTC)
+From: =?utf-8?Q?Fr=C3=A9d=C3=A9ric_Gloannec?=
+ <frederic.gloannec@thegreenbow.com>
+To: "'Jason A. Donenfeld'" <Jason@zx2c4.com>
+References: <577cfed2.c1bd370a.78cba.ffff9b3eSMTPIN_ADDED_BROKEN@mx.google.com>
+ <CAHmME9rqC2gbixm6DT7mdW4sYPHSPJv8P1fF6M+x8Z-9HvdF3A@mail.gmail.com>
+In-Reply-To: <CAHmME9rqC2gbixm6DT7mdW4sYPHSPJv8P1fF6M+x8Z-9HvdF3A@mail.gmail.com>
+Date: Thu, 7 Jul 2016 11:16:19 +0200
+Message-ID: <00f401d1d830$399a5320$accef960$@gloannec@thegreenbow.com>
 MIME-Version: 1.0
-From: Jan De Landtsheer <jan@incubaid.com>
-Date: Thu, 07 Jul 2016 08:27:31 +0000
-Message-ID: <CAA5ikozfeQAFGx8Yi9d=1r5gkHNnq6e0yHFVLXHdVYD_V_Wwfg@mail.gmail.com>
-To: wireguard@lists.zx2c4.com
-Content-Type: multipart/alternative; boundary=001a113fc2f69babec053707757f
-Subject: [WireGuard] Client changes endpoint port, why?
+Content-Type: text/plain;
+	charset="utf-8"
+Cc: 'WireGuard mailing list' <wireguard@lists.zx2c4.com>
+Subject: Re: [WireGuard] Which protocol to get network configuration from
+	gateway to clients.
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -21,287 +26,73 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---001a113fc2f69babec053707757f
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Hi Jason,
 
-Testing out this little thingie ; looks Grrrr-eat!
-I dont understand why the client setup changes it=E2=80=99s port after a wh=
-ile:
+Thanks for your reply.
 
-[delandtj@rt01 ~]$ sudo wg
-interface: wg0
-  public key: fppppppppppppppppppppppppppppppppp=3D
-  private key: Iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii=
-iiiiiiiiiiE=3D
-  listening port: 23123
+We are not looking for a VPN solution, we are actually editing VPN =
+Clients Software.
+So, at this time, we are just interested to know how mature the =
+WireGuard technology is.
+If it becomes a standard and embedded in VPN Gateways, for sure we will =
+adapt our VPN Clients to support it.
 
-peer: RnPeeerrreeeerrrk=3D
-  endpoint: xxx.xxx.xxx.126:51820
-  allowed ips: 192.168.251.1/32
-  latest handshake: 2 minutes, 14 seconds ago
-  bandwidth: 658 B received, 944 B sent
-[delandtj@rt01 ~]$ ping 192.168.251.1
-PING 192.168.251.1 (192.168.251.1) 56(84) bytes of data.
-64 bytes from 192.168.251.1: icmp_seq=3D1 ttl=3D64 time=3D10.5 ms
-^C
---- 192.168.251.1 ping statistics ---
-1 packets transmitted, 1 received, 0% packet loss, time 0ms
-rtt min/avg/max/mdev =3D 10.544/10.544/10.544/0.000 ms
+>From our customer experience, we think it's important to have this upper =
+layer. Large companies use Mode Config/CP to ease the deployment (the =
+VPN Client configuration is the same for all machines, network =
+infrastructure changes impact only the Gateway...).
 
-Yay! now wait a few minutes
+Yes, out-of-band extension could be a solution too (like OpenVPN).
 
-[delandtj@rt01 ~]$ ping 192.168.251.1
-PING 192.168.251.1 (192.168.251.1) 56(84) bytes of data.
-^C
---- 192.168.251.1 ping statistics ---
-5 packets transmitted, 0 received, 100% packet loss, time 4009ms
+Regards,
 
-[delandtj@rt01 ~]$ sudo wg
-interface: wg0
-  public key: ppppppppppppppppppppppppppppppppppppc=3D
-  private key: Iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii3=
-my0E=3D
-  listening port: 23123
+F.Gloannec.
 
-peer: RPeeerrrreeerrrrrpppppppppppppppk=3D
-  endpoint: xxx.xxx.xxx.126:17409
-  allowed ips: 192.168.251.1/32
-  latest handshake: 13 minutes, 55 seconds ago
-  bandwidth: 4.23 KiB received, 6.42 KiB sent
+-----Message d'origine-----
+De : Jason A. Donenfeld [mailto:Jason@zx2c4.com]=20
+Envoy=C3=A9 : mercredi 6 juillet 2016 16:28
+=C3=80 : Fr=C3=A9d=C3=A9ric Gloannec
+Cc : WireGuard mailing list
+Objet : Re: [WireGuard] Which protocol to get network configuration from =
+gateway to clients.
 
-Ugh=E2=80=A6 endpoint port changed ? why ?
-Let=E2=80=99s set it back
+Hi Fr=C3=A9d=C3=A9ric,
 
-[delandtj@rt01 ~]$ sudo wg setconf wg0 wg/conf
-[delandtj@rt01 ~]$ sudo wg
-interface: wg0
-  public key: frILpppppppppppppppppppppppppppppppppppppppppppp/Qc=3D
-  private key: IJiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii=
-iiiiiiiiiiiiiiiiiiiiiiiiiiii=3D
-  listening port: 23123
+The beauty is: you can use whatever protocol you want. Use =
+TLS/HTTP/REST/JSON if that's your style. Use SSH if it suits your fancy. =
+Hand code preshared substitution tables onto carrier pigeon parchment, =
+if you're feeling ancient. Slip Senator Vandenberg your public key and =
+desired IP on microfilm during a secret senate floor handshake too =
+subtle for early film cameras to catch. You can do a million different =
+things to integrate it directly into your infrastructure and how you =
+like doing things.
 
-peer: RnOKNCpBs2Wf2dQP9Gedd+jCVkcOJOQ0m5FK+3WFGmk=3D
-  endpoint: xxx.xxx.xxx.126:51820
-  allowed ips: 192.168.251.1/32
-[delandtj@rt01 ~]$ ping 192.168.251.1
-PING 192.168.251.1 (192.168.251.1) 56(84) bytes of data.
-64 bytes from 192.168.251.1: icmp_seq=3D1 ttl=3D64 time=3D25.0 ms
-^C
---- 192.168.251.1 ping statistics ---
-2 packets transmitted, 1 received, 50% packet loss, time 1000ms
-rtt min/avg/max/mdev =3D 25.066/25.066/25.066/0.000 ms
+After WireGuard gets stabilized, I have some plans of my own for making =
+upper layer tools for that. But I sort of suspect others will make =
+things like that before I get to it, and you shouldn't hesitate to =
+integrate it into your infrastructure how you like.
 
-So=E2=80=A6 am I missing something ?
+There's also the out-of-band extension idea from this thread [1], that =
+could at some point grow into something interesting.
 
-Jan
-=E2=80=8B
+Of course, if you can, it's probably superior to use more static =
+configuration, leaving distribution of that to your ordinary =
+configuration management system. For example, while you're at it having =
+puppet/ansiable/chef/whatever push the ordinary networking config and =
+pre-verified SSH host keys, have it push your wireguard configuration =
+too. Or maybe this isn't your cup of tea.
 
---001a113fc2f69babec053707757f
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+By leaving these concerns out of wireguard directly, we aim to make the =
+core of the project a lot more usable and integratable. I manage quite a =
+few systems myself, so I'm happy to put on my sysadmin/devops/sre hat =
+and help you come up with something that fits your environment. And I'm =
+sure others on this list have their set of opinions and advice too.
 
-<div dir=3D"ltr"><div class=3D"markdown-here-wrapper" style=3D""><p style=
-=3D"margin:0px 0px 1.2em!important">Testing out this little thingie ; looks=
- Grrrr-eat!<br>I dont understand why the client setup changes it=E2=80=99s =
-port after a while:</p>
-<pre style=3D"font-size:0.85em;font-family:Consolas,Inconsolata,Courier,mon=
-ospace;font-size:1em;line-height:1.2em;margin:1.2em 0px"><code style=3D"fon=
-t-size:0.85em;font-family:Consolas,Inconsolata,Courier,monospace;margin:0px=
- 0.15em;padding:0px 0.3em;white-space:pre-wrap;border:1px solid rgb(234,234=
-,234);border-radius:3px;display:inline;background-color:rgb(248,248,248);wh=
-ite-space:pre;overflow:auto;border-radius:3px;border:1px solid rgb(204,204,=
-204);padding:0.5em 0.7em;display:block!important">[delandtj@rt01 ~]$ sudo w=
-g
-interface: wg0
-  public key: fppppppppppppppppppppppppppppppppp=3D
-  private key: Iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii=
-iiiiiiiiiiE=3D
-  listening port: 23123
+So, what's your environment like? What do you want to do? Let's theorize =
+potential solutions for you. And maybe in the exercise of doing that, =
+we'll figure out new ways to both use WireGuard and improve it to be =
+more robust and fitting for your environment.
 
-peer: RnPeeerrreeeerrrk=3D
-  endpoint: xxx.xxx.xxx.126:51820
-  allowed ips: <a href=3D"http://192.168.251.1/32">192.168.251.1/32</a>
-  latest handshake: 2 minutes, 14 seconds ago
-  bandwidth: 658 B received, 944 B sent
-[delandtj@rt01 ~]$ ping 192.168.251.1
-PING 192.168.251.1 (192.168.251.1) 56(84) bytes of data.
-64 bytes from <a href=3D"http://192.168.251.1">192.168.251.1</a>: icmp_seq=
-=3D1 ttl=3D64 time=3D10.5 ms
-^C
---- 192.168.251.1 ping statistics ---
-1 packets transmitted, 1 received, 0% packet loss, time 0ms
-rtt min/avg/max/mdev =3D 10.544/10.544/10.544/0.000 ms
-</code></pre><p style=3D"margin:0px 0px 1.2em!important">Yay! now wait a fe=
-w minutes</p>
-<pre style=3D"font-size:0.85em;font-family:Consolas,Inconsolata,Courier,mon=
-ospace;font-size:1em;line-height:1.2em;margin:1.2em 0px"><code style=3D"fon=
-t-size:0.85em;font-family:Consolas,Inconsolata,Courier,monospace;margin:0px=
- 0.15em;padding:0px 0.3em;white-space:pre-wrap;border:1px solid rgb(234,234=
-,234);border-radius:3px;display:inline;background-color:rgb(248,248,248);wh=
-ite-space:pre;overflow:auto;border-radius:3px;border:1px solid rgb(204,204,=
-204);padding:0.5em 0.7em;display:block!important">[delandtj@rt01 ~]$ ping 1=
-92.168.251.1
-PING 192.168.251.1 (192.168.251.1) 56(84) bytes of data.
-^C
---- 192.168.251.1 ping statistics ---
-5 packets transmitted, 0 received, 100% packet loss, time 4009ms
+Jason
 
-[delandtj@rt01 ~]$ sudo wg
-interface: wg0
-  public key: ppppppppppppppppppppppppppppppppppppc=3D
-  private key: Iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii3=
-my0E=3D
-  listening port: 23123
-
-peer: RPeeerrrreeerrrrrpppppppppppppppk=3D
-  endpoint: xxx.xxx.xxx.126:17409
-  allowed ips: <a href=3D"http://192.168.251.1/32">192.168.251.1/32</a>
-  latest handshake: 13 minutes, 55 seconds ago
-  bandwidth: 4.23 KiB received, 6.42 KiB sent
-</code></pre><p style=3D"margin:0px 0px 1.2em!important">Ugh=E2=80=A6 endpo=
-int port changed ? why ?<br>Let=E2=80=99s set it back</p>
-<pre style=3D"font-size:0.85em;font-family:Consolas,Inconsolata,Courier,mon=
-ospace;font-size:1em;line-height:1.2em;margin:1.2em 0px"><code style=3D"fon=
-t-size:0.85em;font-family:Consolas,Inconsolata,Courier,monospace;margin:0px=
- 0.15em;padding:0px 0.3em;white-space:pre-wrap;border:1px solid rgb(234,234=
-,234);border-radius:3px;display:inline;background-color:rgb(248,248,248);wh=
-ite-space:pre;overflow:auto;border-radius:3px;border:1px solid rgb(204,204,=
-204);padding:0.5em 0.7em;display:block!important">[delandtj@rt01 ~]$ sudo w=
-g setconf wg0 wg/conf=20
-[delandtj@rt01 ~]$ sudo wg
-interface: wg0
-  public key: frILpppppppppppppppppppppppppppppppppppppppppppp/Qc=3D
-  private key: IJiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii=
-iiiiiiiiiiiiiiiiiiiiiiiiiiii=3D
-  listening port: 23123
-
-peer: RnOKNCpBs2Wf2dQP9Gedd+jCVkcOJOQ0m5FK+3WFGmk=3D
-  endpoint: xxx.xxx.xxx.126:51820
-  allowed ips: <a href=3D"http://192.168.251.1/32">192.168.251.1/32</a>
-[delandtj@rt01 ~]$ ping 192.168.251.1
-PING 192.168.251.1 (192.168.251.1) 56(84) bytes of data.
-64 bytes from <a href=3D"http://192.168.251.1">192.168.251.1</a>: icmp_seq=
-=3D1 ttl=3D64 time=3D25.0 ms
-^C
---- 192.168.251.1 ping statistics ---
-2 packets transmitted, 1 received, 50% packet loss, time 1000ms
-rtt min/avg/max/mdev =3D 25.066/25.066/25.066/0.000 ms
-</code></pre><p style=3D"margin:0px 0px 1.2em!important">So=E2=80=A6 am I m=
-issing something ?</p>
-<p style=3D"margin:0px 0px 1.2em!important">Jan</p>
-<div title=3D"MDH:VGVzdGluZyBvdXQgdGhpcyBsaXR0bGUgdGhpbmdpZSA7IGxvb2tzIEdyc=
-nJyLWVhdCE8ZGl2Pkkg
-ZG9udCB1bmRlcnN0YW5kIHdoeSB0aGUgY2xpZW50IHNldHVwIGNoYW5nZXMgaXQncyBwb3J0IGF=
-m
-dGVyIGEgd2hpbGU6PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5gYGA8L2Rpdj48ZGl2PltkZWx=
-h
-bmR0akBydDAxIH5dJCBzdWRvIHdnPGJyPjwvZGl2PjxkaXY+PGRpdj5pbnRlcmZhY2U6IHdnMDw=
-v
-ZGl2PjxkaXY+Jm5ic3A7IHB1YmxpYyBrZXk6IGZwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHB=
-w
-cHBwcHA9PC9kaXY+PGRpdj4mbmJzcDsgcHJpdmF0ZSBrZXk6IElpaWlpaWlpaWlpaWlpaWlpaWl=
-p
-aWlpaWlpaWlpaWlpaWlpaWlpaWlpaWlpaWlpaWlpaWlpaWlpaWlpaWlpaWlpaWlpaWlFPTwvZGl=
-2
-PjxkaXY+Jm5ic3A7IGxpc3RlbmluZyBwb3J0OiAyMzEyMzwvZGl2PjxkaXY+PGJyPjwvZGl2Pjx=
-k
-aXY+cGVlcjogUm5QZWVlcnJyZWVlZXJycms9PC9kaXY+PGRpdj4mbmJzcDsgZW5kcG9pbnQ6IHh=
-4
-eC54eHgueHh4LjEyNjo1MTgyMDwvZGl2PjxkaXY+Jm5ic3A7IGFsbG93ZWQgaXBzOiAxOTIuMTY=
-4
-LjI1MS4xLzMyPC9kaXY+PGRpdj4mbmJzcDsgbGF0ZXN0IGhhbmRzaGFrZTogMiBtaW51dGVzLCA=
-x
-NCBzZWNvbmRzIGFnbzwvZGl2PjxkaXY+Jm5ic3A7IGJhbmR3aWR0aDogNjU4IEIgcmVjZWl2ZWQ=
-s
-IDk0NCBCIHNlbnQ8L2Rpdj48ZGl2PltkZWxhbmR0akBydDAxIH5dJCBwaW5nIDE5Mi4xNjguMjU=
-x
-LjE8L2Rpdj48ZGl2PlBJTkcgMTkyLjE2OC4yNTEuMSAoMTkyLjE2OC4yNTEuMSkgNTYoODQpIGJ=
-5
-dGVzIG9mIGRhdGEuPC9kaXY+PGRpdj42NCBieXRlcyBmcm9tIDE5Mi4xNjguMjUxLjE6IGljbXB=
-f
-c2VxPTEgdHRsPTY0IHRpbWU9MTAuNSBtczwvZGl2PjxkaXY+XkM8L2Rpdj48ZGl2Pi0tLSAxOTI=
-u
-MTY4LjI1MS4xIHBpbmcgc3RhdGlzdGljcyAtLS08L2Rpdj48ZGl2PjEgcGFja2V0cyB0cmFuc21=
-p
-dHRlZCwgMSByZWNlaXZlZCwgMCUgcGFja2V0IGxvc3MsIHRpbWUgMG1zPC9kaXY+PGRpdj5ydHQ=
-g
-bWluL2F2Zy9tYXgvbWRldiA9IDEwLjU0NC8xMC41NDQvMTAuNTQ0LzAuMDAwIG1zPC9kaXY+PGR=
-p
-dj5gYGA8L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PllheSEgbm93IHdhaXQgYSBmZXcgbWludXR=
-l
-czwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+YGBgPC9kaXY+PGRpdj5bZGVsYW5kdGpAcnQwMSB=
-+
-XSQgcGluZyAxOTIuMTY4LjI1MS4xPC9kaXY+PGRpdj5QSU5HIDE5Mi4xNjguMjUxLjEgKDE5Mi4=
-x
-NjguMjUxLjEpIDU2KDg0KSBieXRlcyBvZiBkYXRhLjwvZGl2PjxkaXY+XkM8L2Rpdj48ZGl2Pi0=
-t
-LSAxOTIuMTY4LjI1MS4xIHBpbmcgc3RhdGlzdGljcyAtLS08L2Rpdj48ZGl2PjUgcGFja2V0cyB=
-0
-cmFuc21pdHRlZCwgMCByZWNlaXZlZCwgMTAwJSBwYWNrZXQgbG9zcywgdGltZSA0MDA5bXM8L2R=
-p
-dj48ZGl2Pjxicj48L2Rpdj48ZGl2PltkZWxhbmR0akBydDAxIH5dJCBzdWRvIHdnPC9kaXY+PGR=
-p
-dj5pbnRlcmZhY2U6IHdnMDwvZGl2PjxkaXY+Jm5ic3A7IHB1YmxpYyBrZXk6IHBwcHBwcHBwcHB=
-w
-cHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcGM9PC9kaXY+PGRpdj4mbmJzcDsgcHJpdmF0ZSBrZXk=
-6
-IElpaWlpaWlpaWlpaWlpaWlpaWlpaWlpaWlpaWlpaWlpaWlpaWlpaWlpaWlpaWlpaWlpaWlpaWl=
-p
-aWlpM215MEU9PC9kaXY+PGRpdj4mbmJzcDsgbGlzdGVuaW5nIHBvcnQ6IDIzMTIzPC9kaXY+PGR=
-p
-dj48YnI+PC9kaXY+PGRpdj5wZWVyOiBSUGVlZXJycnJlZWVycnJycnBwcHBwcHBwcHBwcHBwcGs=
-9
-PC9kaXY+PGRpdj4mbmJzcDsgZW5kcG9pbnQ6IHh4eC54eHgueHh4LjEyNjoxNzQwOTwvZGl2Pjx=
-k
-aXY+Jm5ic3A7IGFsbG93ZWQgaXBzOiAxOTIuMTY4LjI1MS4xLzMyPC9kaXY+PGRpdj4mbmJzcDs=
-g
-bGF0ZXN0IGhhbmRzaGFrZTogMTMgbWludXRlcywgNTUgc2Vjb25kcyBhZ288L2Rpdj48ZGl2PiZ=
-u
-YnNwOyBiYW5kd2lkdGg6IDQuMjMgS2lCIHJlY2VpdmVkLCA2LjQyIEtpQiBzZW50PC9kaXY+PGR=
-p
-dj5gYGA8L2Rpdj48ZGl2PlVnaC4uLiBlbmRwb2ludCBwb3J0IGNoYW5nZWQgPyB3aHkgPzwvZGl=
-2
-PjxkaXY+TGV0J3Mgc2V0IGl0IGJhY2s8L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PmBgYDwvZGl=
-2
-PjxkaXY+W2RlbGFuZHRqQHJ0MDEgfl0kIHN1ZG8gd2cgc2V0Y29uZiB3ZzAgd2cvY29uZiZuYnN=
-w
-OzwvZGl2PjxkaXY+W2RlbGFuZHRqQHJ0MDEgfl0kIHN1ZG8gd2c8L2Rpdj48ZGl2PmludGVyZmF=
-j
-ZTogd2cwPC9kaXY+PGRpdj4mbmJzcDsgcHVibGljIGtleTogZnJJTHBwcHBwcHBwcHBwcHBwcHB=
-w
-cHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwL1FjPTwvZGl2PjxkaXY+Jm5ic3A7IHByaXZhdGU=
-g
-a2V5OiBJSmlpaWlpaWlpaWlpaWlpaWlpaWlpaWlpaWlpaWlpaWlpaWlpaWlpaWlpaWlpaWlpaWl=
-p
-aWlpaWlpaWlpaWlpaWlpaWlpaWlpaWlpaWlpaWlpaWlpaWlpPTwvZGl2PjxkaXY+Jm5ic3A7IGx=
-p
-c3RlbmluZyBwb3J0OiAyMzEyMzwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+cGVlcjogUm5PS05=
-D
-cEJzMldmMmRRUDlHZWRkK2pDVmtjT0pPUTBtNUZLKzNXRkdtaz08L2Rpdj48ZGl2PiZuYnNwOyB=
-l
-bmRwb2ludDogeHh4Lnh4eC54eHguMTI2OjUxODIwPC9kaXY+PGRpdj4mbmJzcDsgYWxsb3dlZCB=
-p
-cHM6IDE5Mi4xNjguMjUxLjEvMzI8L2Rpdj48ZGl2PltkZWxhbmR0akBydDAxIH5dJCBwaW5nIDE=
-5
-Mi4xNjguMjUxLjE8L2Rpdj48ZGl2PlBJTkcgMTkyLjE2OC4yNTEuMSAoMTkyLjE2OC4yNTEuMSk=
-g
-NTYoODQpIGJ5dGVzIG9mIGRhdGEuPC9kaXY+PGRpdj42NCBieXRlcyBmcm9tIDE5Mi4xNjguMjU=
-x
-LjE6IGljbXBfc2VxPTEgdHRsPTY0IHRpbWU9MjUuMCBtczwvZGl2PjxkaXY+XkM8L2Rpdj48ZGl=
-2
-Pi0tLSAxOTIuMTY4LjI1MS4xIHBpbmcgc3RhdGlzdGljcyAtLS08L2Rpdj48ZGl2PjIgcGFja2V=
-0
-cyB0cmFuc21pdHRlZCwgMSByZWNlaXZlZCwgNTAlIHBhY2tldCBsb3NzLCB0aW1lIDEwMDBtczw=
-v
-ZGl2PjxkaXY+cnR0IG1pbi9hdmcvbWF4L21kZXYgPSAyNS4wNjYvMjUuMDY2LzI1LjA2Ni8wLjA=
-w
-MCBtczwvZGl2PjxkaXY+PGJyPjwvZGl2PjwvZGl2PjxkaXY+YGBgPC9kaXY+PGRpdj48YnI+PC9=
-k
-aXY+PGRpdj5Tby4uLiBhbSBJIG1pc3Npbmcgc29tZXRoaW5nID88L2Rpdj48ZGl2Pjxicj48L2R=
-p
-dj48ZGl2Pjxicj48L2Rpdj48ZGl2PkphbjwvZGl2Pg=3D=3D" style=3D"height:0;width:0=
-;max-height:0;max-width:0;overflow:hidden;font-size:0em;padding:0;margin:0"=
->=E2=80=8B</div></div></div>
-
---001a113fc2f69babec053707757f--
+[1] https://lists.zx2c4.com/pipermail/wireguard/2016-June/000038.html
