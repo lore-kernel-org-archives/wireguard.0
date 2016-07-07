@@ -1,25 +1,15 @@
-Return-Path: Jason@zx2c4.com
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7c1db526
- for <wireguard@lists.zx2c4.com>; Thu, 7 Jul 2016 17:44:35 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e03f2a3c
- for <wireguard@lists.zx2c4.com>; Thu, 7 Jul 2016 17:44:34 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 62988124
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>; Thu, 7 Jul 2016 17:44:34 +0000 (UTC)
-Received: by mail-lf0-f43.google.com with SMTP id q132so16186740lfe.3
- for <wireguard@lists.zx2c4.com>; Thu, 07 Jul 2016 10:44:48 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <20160707134301.37496d8f.alex_y_xu@yahoo.ca>
+Return-Path: bruno@wolff.to
+Received: from wolff.to (wolff.to [98.103.208.27])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with SMTP id 831f3a96
+ for <wireguard@lists.zx2c4.com>; Thu, 7 Jul 2016 17:57:57 +0000 (UTC)
+Date: Thu, 7 Jul 2016 12:57:22 -0500
+From: Bruno Wolff III <bruno@wolff.to>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Message-ID: <20160707175722.GB13834@wolff.to>
 References: <CAHmME9piH4WkMpJ3p0rzFmtA=ozkfa-+rGbAH0T2OjQ+5AJkJg@mail.gmail.com>
- <20160707165840.GG18014@lud.polynome.dn42>
- <CAHmME9pa1fUAwaE9-FsnmfRYrGRrjXAcv2pDYwO-CG9_vO9f7A@mail.gmail.com>
- <20160707134301.37496d8f.alex_y_xu@yahoo.ca>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 7 Jul 2016 19:44:45 +0200
-Message-ID: <CAHmME9p8sds4-ao0WyEo82SCY4kT3WBE58v9DG3tvCL7rGeXFg@mail.gmail.com>
-To: Alex Xu <alex_y_xu@yahoo.ca>
-Content-Type: text/plain; charset=UTF-8
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; format=flowed
+In-Reply-To: <CAHmME9piH4WkMpJ3p0rzFmtA=ozkfa-+rGbAH0T2OjQ+5AJkJg@mail.gmail.com>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Subject: Re: [WireGuard] NAT-T Keepalives
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
@@ -31,10 +21,29 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-I was just reading that actually.
+On Thu, Jul 07, 2016 at 18:33:11 +0200,
+  "Jason A. Donenfeld" <Jason@zx2c4.com> wrote:
+>
+>The most bootleg solution for this is to just run "ping $server" from
+>userspace. What a disgusting fix.
 
-https://tools.ietf.org/html/rfc4787
-http://www.dcs.gla.ac.uk/publications/PAPERS/9347/2010-hgw-study.pdf
-https://www.ietf.org/proceedings/78/slides/behave-8.pdf
+This also forces encrypted traffic, which your solution would avoid.
 
-Trying to get a good sampling of various real world routers.
+>1. What should the payload be? Should it be a single fixed byte? Or
+>should it be a zero length UDP packet?
+
+The packet doesn't even need to make it to the endpoint, just through 
+the NAT or firewall. So you don't want something that would get blocked 
+by those. I don't know of anything that would be likely to. Otherwise 
+you probably want minimum resources expended by the end points producing 
+and receiving the packet.
+
+>5. Is there a good resource for real world NAT mapping timings found
+>in the wild?
+
+Our NAT defaults to one minute for random UDP ports. So 30 seconds seems 
+like a reasonable time if there isn't much packet loss.
+
+>What are your thoughts?
+
+It sounds like a nice improvement.
