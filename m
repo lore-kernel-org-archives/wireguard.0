@@ -1,18 +1,24 @@
-Return-Path: bjin@ctrl-d.org
-Received: from mail-lf0-f66.google.com (mail-lf0-f66.google.com
- [209.85.215.66])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0d784b79
- for <wireguard@lists.zx2c4.com>; Fri, 8 Jul 2016 06:56:57 +0000 (UTC)
-Received: by mail-lf0-f66.google.com with SMTP id w130so3849696lfd.2
- for <wireguard@lists.zx2c4.com>; Thu, 07 Jul 2016 23:57:15 -0700 (PDT)
+Return-Path: Jason@zx2c4.com
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6d59f02f
+ for <wireguard@lists.zx2c4.com>; Fri, 8 Jul 2016 10:26:40 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7acabd22
+ for <wireguard@lists.zx2c4.com>; Fri, 8 Jul 2016 10:26:40 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 4238c7d0
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>; Fri, 8 Jul 2016 10:26:40 +0000 (UTC)
+Received: by mail-lf0-f45.google.com with SMTP id q132so26764459lfe.3
+ for <wireguard@lists.zx2c4.com>; Fri, 08 Jul 2016 03:26:58 -0700 (PDT)
 MIME-Version: 1.0
-From: Bin Jin <bjin@ctrl-d.org>
-Date: Fri, 8 Jul 2016 08:56:53 +0200
-Message-ID: <CAHQn_MAD4WvhueAEVR255SarPnJtfvYjREA7MFdsaJrz97EEBw@mail.gmail.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+In-Reply-To: <CAHQn_MAD4WvhueAEVR255SarPnJtfvYjREA7MFdsaJrz97EEBw@mail.gmail.com>
+References: <CAHQn_MAD4WvhueAEVR255SarPnJtfvYjREA7MFdsaJrz97EEBw@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Fri, 8 Jul 2016 12:26:56 +0200
+Message-ID: <CAHmME9pc0JgTgCTQ6FT5ChvB+0mv8nDLA57iis9c2FA7MPSV-g@mail.gmail.com>
+To: Bin Jin <bjin@ctrl-d.org>
 Content-Type: text/plain; charset=UTF-8
-Cc: wireguard@lists.zx2c4.com
-Subject: [WireGuard] Options to obfuscate WireGuard traffic?
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Subject: Re: [WireGuard] Options to obfuscate WireGuard traffic?
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -22,54 +28,70 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hello Jason,
+Hi Bin,
 
-Thanks for your work on WireGuard. I tried it and also read the
-whitepaper. It looks really promising. Congratulations!
+This is something I've thought about quite a bit. As a security
+researcher I've done some research on network exfiltration from
+rootkits, so here the indistinguishability attribute is interesting
+too.
 
-The reason I'm writing this email, is to learn how would WireGuard
-work against traffic censorship from authority (particularly the
-so-called deep packet inspection). Is it a goal or non-goal for
-WireGuard to obfuscate the traffics and make them "indistinguishable"
-from raw encrypted traffic?
+Generally speaking, WireGuard does _not_ aim to evade DPS,
+unfortunately. There are several things that prevent this from
+occurring:
 
-Some background. Chinese government was doing disgusting things
-against VPN (and other tunnelling protocols). OpenVPN and "ssh -D"
-tunneling will easily be detected (by the their traffic pattern) and
-interrupted (with server IP blocked for several hours). There are also
-rumors saying that they are deploying machine learning techniques to
-perform deep packet inspection for new protocols. The current most
-widely used tunnelling program, Shadowsocks[1], relies sorely on
-pre-shared key (and pre-agreed encryption method), and encrypt every TCP
-and UDP packet with randomly generated IV (You can see [2]
-for details). In this extreme way, it somehow works.
+a) The first byte, which is a fixed `type` value.
+b) The fact that `mac2` is most often all zeros.
+c) The fixed length of handshake messages.
+d) The unencrypted ephemeral public key.
 
-After reading the whitepaper, it's really a good signal to learn that
-WireGuard is almost stateless, with state of the art authentication
-and encryption. But I'm little worried that it's probably not enough
-to work against really aggressive deep packet inspection:
+> The sender/receiver index,
+> timestamp and counter fields also have obvious pattern.
 
-1. The packet format is highly distinguishable. Particularly the
-message type is limited to "0x01..04". The sender/receiver index,
-timestamp and counter fields also have obvious pattern.
+These are not actually problems. The sender/receiver indices are
+random 32-bit numbers and cannot be predicted. The timestamp is not
+sent in the clear, but rather is encrypted and therefore requires the
+private key of the receiver to see that it's a timestamp.
 
-2. The handshake always happens first for once. But I understand it's
-by design and we probably couldn't do anything about it.
 
-I understand that it's not flexible to make major changes to the
-protocol at this moment, as it's approaching to be finalized. Not
-mention that such change will most likely hurt the performance badly.
-I just want to know if it's flexible to extend the protocol in the
-future. For example, add an option (disabled by default) to use
-another pre-shared key to symmetrically encrypt the whole packet? It's
-probably also necessary to make the size of the first three packet
-types variable, but appending random number of random bytes to those
-packets.
+Let's go through one by one with these problems. The easiest one, (b),
+could be fixed by just filling `mac2` with random data when not in
+use. The hardest one, (d), is not a problem, I don't think, because
+these public keys are still uniformly distributed. The amount of
+public keys that would have to be collected in order to not rule out
+false positives is way too big, I suspect. So, not a problem in the
+end.
 
-Thanks!
+(a) and (c) are the tricky ones. There are a few ways to fix this. The
+first is: live with (c), get rid of (a), and then make transport
+messages larger, so that the type can be inferred from the length.
+This might not work well with sophisticated DPS though. Alternatively,
+(a) could be removed, (c) could be made random, and a different
+(random) UDP port could be used. Here, though, a sophisticated DPS
+could observe timings between different UDP ports on the same host.
+Another approach would be moving to only PSK, and eschewing the
+handshake; this seems to be what Shadowsocks chose to do. What else
+could be done for (a) and (c)? Interesting discussion to be had about
+these...
+
+
+> widely used tunnelling program, Shadowsocks[1],
+
+Looking at this briefly, it looks like authentication was added on as
+an afterthought to Shadowsocks, and unfortunately uses HMAC-SHA1. It's
+too bad they didn't use an AEAD from the start.
+
+> I understand that it's not flexible to make major changes to the
+> protocol at this moment, as it's approaching to be finalized. Not
+> mention that such change will most likely hurt the performance badly.
+> I just want to know if it's flexible to extend the protocol in the
+> future. For example, add an option (disabled by default) to use
+> another pre-shared key to symmetrically encrypt the whole packet?
+
+Actually there's already a PSK mode. I suppose it's possible to
+leverage this to add an obfuscation layer. This is likely the most
+robust way of doing things, in fact. I'll give this some more thought,
+but it's kind of unlikely that I'll incorporate this into the
+codebase.
 
 Regards,
-Bin
-
-[1]: https://shadowsocks.org
-[2]: https://shadowsocks.org/en/spec/protocol.html
+Jason
