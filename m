@@ -1,21 +1,31 @@
-Return-Path: dkg@fifthhorseman.net
-Received: from che.mayfirst.org (che.mayfirst.org [162.247.75.118])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 48f2a025
- for <wireguard@lists.zx2c4.com>; Fri, 8 Jul 2016 21:20:15 +0000 (UTC)
-From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-In-Reply-To: <CAHmME9q=QKAGo3MBeMXcT_FWRUG3O=qsmTJSeX7UB7Z_gfMO9A@mail.gmail.com>
-References: <CAHmME9oiTG6Hfps0ZqJFJ13UxappXk3TyoLWWu0AZ_G_A65bxQ@mail.gmail.com>
- <87furu3ej3.fsf@alice.fifthhorseman.net>
- <87shvtz50f.fsf@alice.fifthhorseman.net>
- <CAHmME9q=QKAGo3MBeMXcT_FWRUG3O=qsmTJSeX7UB7Z_gfMO9A@mail.gmail.com>
-Date: Fri, 08 Jul 2016 23:20:36 +0200
-Message-ID: <87shvjvnbv.fsf@alice.fifthhorseman.net>
+Return-Path: Jason@zx2c4.com
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9e974102
+ for <wireguard@lists.zx2c4.com>; Fri, 8 Jul 2016 21:44:46 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 099c389b
+ for <wireguard@lists.zx2c4.com>; Fri, 8 Jul 2016 21:44:46 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 69abe3e2
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>; Fri, 8 Jul 2016 21:44:46 +0000 (UTC)
+Received: by mail-lf0-f45.google.com with SMTP id q132so35687126lfe.3
+ for <wireguard@lists.zx2c4.com>; Fri, 08 Jul 2016 14:45:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <20160708205451.GA5959@wolff.to>
+References: <278721635a23c243@frisell.zx2c4.com>
+ <20160708162337.GA5566@wolff.to>
+ <CAHmME9r4WXY3_OM5O9jH5QONDaaGyKA08ypwQw+d=gBnn2BwuQ@mail.gmail.com>
+ <CAHmME9o0RrpbUBB7nBQ319d_0pragpf94jFX0ZCGdMX9W8T1ug@mail.gmail.com>
+ <20160708195507.GA1990@wolff.to>
+ <CAHmME9ogt0izYi9_+3DqdEZAofLRE98fXdo1u7B581B0MknYUw@mail.gmail.com>
+ <20160708205451.GA5959@wolff.to>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Fri, 8 Jul 2016 23:45:06 +0200
+Message-ID: <CAHmME9q-Q1wHJjU=sYKref7xXp=kcp0GOo2KJ7n1ozV9dauTCA@mail.gmail.com>
+To: Bruno Wolff III <bruno@wolff.to>
+Content-Type: text/plain; charset=UTF-8
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: [WireGuard] debian packaging [was: Re: The Distro Package
-	Maintainers Thread]
+Subject: Re: [WireGuard] [ANNOUNCE] Snapshot `experimental-0.0.20160708.1`
+	Available
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -25,23 +35,20 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Thu 2016-07-07 00:34:50 +0200, "Jason A. Donenfeld" <Jason@zx2c4.com> wrote:
-> There's this page here:
-> https://www.wireguard.io/install/#option-b-compiling-from-source
+Hey Bruno,
+
+On Fri, Jul 8, 2016 at 10:54 PM, Bruno Wolff III <bruno@wolff.to> wrote:
+> Yep, that was it. It allowed a remote connection at start up without having
+> to manually send traffic out locally first. So it looks like it is working
+> as expected.
 >
-> In the "Option B)" section, what command line would you like me to
-> specify for Debian?
+> Right now I am testing through a stateful firewall that blocks the inbound
+> connection unless it is related to an already established connection. That
+> isn't exactly the same as nat, but should work similarly for testing
+> purposes.
 
-something like this should work fine:
+Excellent to hear! Hopefully it continues to work well. If so, I'll
+merge next week and roll a new snapshot.
 
-    # apt install pkg-config libmnl-dev build-essential linux-headers-$(uname -r)
-
-Or, if they have the experimental apt repo installed they should just be
-able to do:
-
-    # apt-get build-dep wireguard
-
-
-hth,
-
-        --dkg
+Regards,
+Jason
