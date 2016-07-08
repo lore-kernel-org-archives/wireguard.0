@@ -1,11 +1,11 @@
 Return-Path: bruno@wolff.to
 Received: from wolff.to (wolff.to [98.103.208.27])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with SMTP id daf76fe5
- for <wireguard@lists.zx2c4.com>; Fri, 8 Jul 2016 20:44:51 +0000 (UTC)
-Date: Fri, 8 Jul 2016 15:44:13 -0500
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with SMTP id d6fd58ed
+ for <wireguard@lists.zx2c4.com>; Fri, 8 Jul 2016 20:55:30 +0000 (UTC)
+Date: Fri, 8 Jul 2016 15:54:51 -0500
 From: Bruno Wolff III <bruno@wolff.to>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Message-ID: <20160708204413.GA5502@wolff.to>
+Message-ID: <20160708205451.GA5959@wolff.to>
 References: <278721635a23c243@frisell.zx2c4.com>
  <20160708162337.GA5566@wolff.to>
  <CAHmME9r4WXY3_OM5O9jH5QONDaaGyKA08ypwQw+d=gBnn2BwuQ@mail.gmail.com>
@@ -38,4 +38,11 @@ On Fri, Jul 08, 2016 at 22:21:09 +0200,
 >branch. There are no 0 length udp packets sent anywhere in this
 >branch's code paths.
 
-Thanks. I'll retest.
+Yep, that was it. It allowed a remote connection at start up without 
+having to manually send traffic out locally first. So it looks like 
+it is working as expected.
+
+Right now I am testing through a stateful firewall that blocks the 
+inbound connection unless it is related to an already established 
+connection. That isn't exactly the same as nat, but should work similarly 
+for testing purposes.
