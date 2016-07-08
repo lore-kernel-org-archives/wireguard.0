@@ -1,18 +1,18 @@
-Return-Path: bruno@wolff.to
-Received: from wolff.to (wolff.to [98.103.208.27])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with SMTP id bdd3d00b
- for <wireguard@lists.zx2c4.com>; Fri, 8 Jul 2016 16:24:15 +0000 (UTC)
-Date: Fri, 8 Jul 2016 11:23:37 -0500
-From: Bruno Wolff III <bruno@wolff.to>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Message-ID: <20160708162337.GA5566@wolff.to>
-References: <278721635a23c243@frisell.zx2c4.com>
+Return-Path: jens@viisauksena.de
+Received: from viisauksena.de (v32412.1blu.de [178.254.39.111])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 23d63eaa
+ for <wireguard@lists.zx2c4.com>; Fri, 8 Jul 2016 16:41:48 +0000 (UTC)
+Received: from [192.168.0.38] (p5B20FDAF.dip0.t-ipconnect.de [91.32.253.175])
+ by openfreiburg.de (Postfix) with ESMTPSA id DE4E810F23929
+ for <wireguard@lists.zx2c4.com>; Fri,  8 Jul 2016 18:42:06 +0200 (CEST)
+To: wireguard@lists.zx2c4.com
+From: jens <jens@viisauksena.de>
+Message-ID: <3b339d53-2fa0-6ed6-575b-7239c91e6a36@viisauksena.de>
+Date: Fri, 8 Jul 2016 18:39:38 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-In-Reply-To: <278721635a23c243@frisell.zx2c4.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: [WireGuard] [ANNOUNCE] Snapshot `experimental-0.0.20160708.1`
- Available
+Content-Type: multipart/alternative;
+ boundary="------------85E525C27FF285E80F1AED0E"
+Subject: [WireGuard] openwrt package - kernel >4.1 vs freifunk gluon
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -22,25 +22,71 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Fri, Jul 08, 2016 at 16:37:23 +0200,
-  "Jason A. Donenfeld" <Jason@zx2c4.com> wrote:
->
->== Changes ==
->
->  * persistent keepalive: start sending immediately -- the previously released
->    feature was not useful without this extra commit. So, getting this in here
->    now so that people can actually test this out. Sorry for the churn. Don't
->    bother packaging the previous snapshot.
+This is a multi-part message in MIME format.
+--------------85E525C27FF285E80F1AED0E
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-I tried this an noticed a problem. The keep alive packets don't set the 
-reply IP address and port for the endpoint. (Which makes sense since they 
-aren't authenticated.) So in the case of nat, where you won't know what 
-the port is (and in some cases the IP address as well) you still can't 
-connect to the end point behind the nat until there is some authenticated 
-data sent from the end point.
+in Freifunk gluon there is actually the kernel 3.18.29 used,
+(Freifunk . in case you dont know is a loosly very bog free wifi
+community in germany with something around 35000 TP Link routers which
+connect to master servers with different technology (like fastd l2tp ..)
 
-So if nat changes the port at some point, in order to reestablish a path, 
-you need to send authenticated data. I am not thinking of an obvious way 
-to tell when you just need to hold the port mapping via nat open versus 
-when you need to send authenticated data to rebuild a connection after 
-a port or IP address change from nat.
+if i want to build the package i got this obvious error ... kernel 4.1
+or higher needed.
+
+Now i am wondering if its better to wait for newer freifunk-gluon
+packages with latest kernel
+
+(which could be some time) or go hacky steps towards patching the kernel.=
+
+
+in gluon are actually 120+- patches for the actual kernel, many of them
+would be obsolete then i think, but it seems like a heck of work todo
+
+any suggestion ?
+https://forum.freifunk.net/t/wireguard-als-zukuenftige-vpn-loesung/12858/=
+13?u=3Dfuzzle
+https://github.com/freifunk-gluon/gluon/issues/816
+
+--=20
+make the world nicer, please use PGP encryption
+
+
+--------------85E525C27FF285E80F1AED0E
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 8bit
+
+<html>
+  <head>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  </head>
+  <body text="#000000" bgcolor="#FFFFFF">
+    <p>in Freifunk gluon there is actually the kernel 3.18.29 used,<br>
+      (Freifunk . in case you dont know is a loosly very bog free wifi
+      community in germany with something around 35000 TP Link routers
+      which connect to master servers with different technology (like
+      fastd l2tp ..)<br>
+    </p>
+    <p>if i want to build the package i got this obvious error ...
+      kernel 4.1 or higher needed.</p>
+    <p>Now i am wondering if its better to wait for newer freifunk-gluon
+      packages with latest kernel <br>
+    </p>
+    <p>(which could be some time) or go hacky steps towards patching the
+      kernel. <br>
+    </p>
+    <p>in gluon are actually 120+- patches for the actual kernel, many
+      of them would be obsolete then i think, but it seems like a heck
+      of work todo</p>
+    <p>any suggestion ?<br>
+<a class="moz-txt-link-freetext" href="https://forum.freifunk.net/t/wireguard-als-zukuenftige-vpn-loesung/12858/13?u=fuzzle">https://forum.freifunk.net/t/wireguard-als-zukuenftige-vpn-loesung/12858/13?u=fuzzle</a><br>
+      <a class="moz-txt-link-freetext" href="https://github.com/freifunk-gluon/gluon/issues/816">https://github.com/freifunk-gluon/gluon/issues/816</a><br>
+    </p>
+    <pre class="moz-signature" cols="72">-- 
+make the world nicer, please use PGP encryption</pre>
+  </body>
+</html>
+
+--------------85E525C27FF285E80F1AED0E--
