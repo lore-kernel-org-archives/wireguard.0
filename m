@@ -1,33 +1,18 @@
-Return-Path: Jason@zx2c4.com
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fa2e3c77
- for <wireguard@lists.zx2c4.com>; Sat, 9 Jul 2016 14:46:44 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ee1b672c
- for <wireguard@lists.zx2c4.com>; Sat, 9 Jul 2016 14:46:44 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 814f1c0e
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>; Sat, 9 Jul 2016 14:46:44 +0000 (UTC)
-Received: by mail-lf0-f44.google.com with SMTP id f6so44457271lfg.0
- for <wireguard@lists.zx2c4.com>; Sat, 09 Jul 2016 07:47:11 -0700 (PDT)
+Return-Path: bruno@wolff.to
+Received: from wolff.to (wolff.to [98.103.208.27])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with SMTP id 97a5c1de
+ for <wireguard@lists.zx2c4.com>; Sat, 9 Jul 2016 15:50:27 +0000 (UTC)
+Date: Sat, 9 Jul 2016 10:49:47 -0500
+From: Bruno Wolff III <bruno@wolff.to>
+To: wireguard@lists.zx2c4.com
+Message-ID: <20160709154947.GA30670@wolff.to>
+References: <CAHQn_MAD4WvhueAEVR255SarPnJtfvYjREA7MFdsaJrz97EEBw@mail.gmail.com>
+ <CAHmME9pc0JgTgCTQ6FT5ChvB+0mv8nDLA57iis9c2FA7MPSV-g@mail.gmail.com>
+ <CAHQn_MC1S4X_TYaGi2XtwWXZuu3erEWK6fXvB-ja9GFnJfR5RQ@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CAA5ikoya6SSKbzncBf4_uHP17Rt-D=d-B5opBxniFX_MupoHRQ@mail.gmail.com>
-References: <CAA5ikozfeQAFGx8Yi9d=1r5gkHNnq6e0yHFVLXHdVYD_V_Wwfg@mail.gmail.com>
- <CAHmME9oN9NU8fHTjfW6ougLf4u9ZfUHJ11MxDf3RhbC5n64g3g@mail.gmail.com>
- <CAA5ikozn+uj+FPG1eLAR9uS+Lxqiab4+dMUhmBmyg9oBiWFQEg@mail.gmail.com>
- <20160707131324.GA18014@lud.polynome.dn42>
- <CAA5ikoypGoMip+DS=Ud-dNRZOf-8m+MDtV5JobLr1MBmAdRS=A@mail.gmail.com>
- <20160707150059.GA679@wolff.to>
- <CAHmME9pcKkjmYgdgH6i3vGbd8iFxOaJDUsbczCU068sZk_pTuQ@mail.gmail.com>
- <CAA5ikozCC91ZtVPyh5Z7tEc6pZ+AktguYc9qTn6bnZPSqEpK0A@mail.gmail.com>
- <CAHmME9oy5OqRFF4b2uRtTf3JLTD-3Y6pG7hTKDpouSyVdJDfzw@mail.gmail.com>
- <CAA5ikoya6SSKbzncBf4_uHP17Rt-D=d-B5opBxniFX_MupoHRQ@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sat, 9 Jul 2016 16:46:58 +0200
-Message-ID: <CAHmME9omS1O=oTpm8Pq9D_i0XUj+sW+VU8jLur78tREYzBk__A@mail.gmail.com>
-To: Jan De Landtsheer <jan@incubaid.com>
-Content-Type: text/plain; charset=UTF-8
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: [WireGuard] Client changes endpoint port, why?
+Content-Type: text/plain; charset=us-ascii; format=flowed
+In-Reply-To: <CAHQn_MC1S4X_TYaGi2XtwWXZuu3erEWK6fXvB-ja9GFnJfR5RQ@mail.gmail.com>
+Subject: Re: [WireGuard] Options to obfuscate WireGuard traffic?
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -37,10 +22,32 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Sat, Jul 9, 2016 at 4:36 PM, Jan De Landtsheer <jan@incubaid.com> wrote:
-> I'll check it out. I'm traveling now, will check tomorrow.
-> Jan
+On Fri, Jul 08, 2016 at 21:13:02 +0200,
+  Bin Jin <bjin@ctrl-d.org> wrote:
+>> Actually there's already a PSK mode. I suppose it's possible to
+>> leverage this to add an obfuscation layer. This is likely the most
+>> robust way of doing things, in fact. I'll give this some more thought,
+>> but it's kind of unlikely that I'll incorporate this into the
+>> codebase.
+>
+>I see. It's a bit pity to learn that, but I understand it's kind of
+>ugly and probably still not enough (due to fixed packet length for
+>first two types). Thanks for explaining every details.
 
-No problem. There are further improvements to that right now in the
-authenticated-persistent-keepalive branch. If you wait til next week,
-I'll have an even better snapshot then.
+I'm not sure it makes sense to combine the hiding of traffic with the 
+secure tunneling of traffic. There are going to be different efficiency 
+trades and there are going to be different traffic patterns available 
+to try to blend into. So different people are going to want to use 
+significantly different solutions to that problem. Given the design goals 
+of wireguard, I don't think it is something that would be particularly 
+good to combine with steganography.
+
+I think for normal people this is more of a political problem then a 
+technical problem. We need real net neutrality, with ISPs not allowed 
+to block traffic based on content. (e.g being prohibited from charging 
+people extra to allow the use of VPNs.) We need governments not passing 
+laws to make people compromise their own security (e.g. RIP in the UK), 
+nor should they prevent companies from providing applications or services 
+where the end user can guaranty their security (as some people are trying 
+to do in the US). Using strong unbreakable encryption when communicating, 
+should be the norm, not something you need to hide.
