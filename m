@@ -1,18 +1,24 @@
-Return-Path: bruno@wolff.to
-Received: from wolff.to (wolff.to [98.103.208.27])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with SMTP id 97a5c1de
- for <wireguard@lists.zx2c4.com>; Sat, 9 Jul 2016 15:50:27 +0000 (UTC)
-Date: Sat, 9 Jul 2016 10:49:47 -0500
-From: Bruno Wolff III <bruno@wolff.to>
-To: wireguard@lists.zx2c4.com
-Message-ID: <20160709154947.GA30670@wolff.to>
-References: <CAHQn_MAD4WvhueAEVR255SarPnJtfvYjREA7MFdsaJrz97EEBw@mail.gmail.com>
- <CAHmME9pc0JgTgCTQ6FT5ChvB+0mv8nDLA57iis9c2FA7MPSV-g@mail.gmail.com>
- <CAHQn_MC1S4X_TYaGi2XtwWXZuu3erEWK6fXvB-ja9GFnJfR5RQ@mail.gmail.com>
+Return-Path: baptiste@bitsofnetworks.org
+Received: from mails.bitsofnetworks.org (rezine.polyno.me [193.33.56.138])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fac32a00
+ for <wireguard@lists.zx2c4.com>;
+ Sun, 10 Jul 2016 17:20:34 +0000 (UTC)
+Date: Sun, 10 Jul 2016 19:21:05 +0200
+From: Baptiste Jonglez <baptiste@bitsofnetworks.org>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Message-ID: <20160710172105.GD5844@lud.polynome.dn42>
+References: <20160629112423.GC31514@lud.polynome.dn42>
+ <20160704074837.GA24805@lud.polynome.dn42>
+ <20160705220336.GA18854@lud.polynome.dn42>
+ <CAHmME9rOUu4CBAgaSg684F45VT2Od9QHExNT=ftqn46EdpTxeQ@mail.gmail.com>
+ <CAHmME9paKdCr_-W5_PJ1nxnNqCLdbuJ04T+PUp2NaMZZV+K2Tg@mail.gmail.com>
+ <CAHmME9of2XeH-7mJF-Avq_n1SPQwesH-zkk-0Nx8ff1ef3f5jA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-In-Reply-To: <CAHQn_MC1S4X_TYaGi2XtwWXZuu3erEWK6fXvB-ja9GFnJfR5RQ@mail.gmail.com>
-Subject: Re: [WireGuard] Options to obfuscate WireGuard traffic?
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="FFoLq8A0u+X9iRU8"
+In-Reply-To: <CAHmME9of2XeH-7mJF-Avq_n1SPQwesH-zkk-0Nx8ff1ef3f5jA@mail.gmail.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Subject: Re: [WireGuard] OpenWRT package for wireguard
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -22,32 +28,42 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Fri, Jul 08, 2016 at 21:13:02 +0200,
-  Bin Jin <bjin@ctrl-d.org> wrote:
->> Actually there's already a PSK mode. I suppose it's possible to
->> leverage this to add an obfuscation layer. This is likely the most
->> robust way of doing things, in fact. I'll give this some more thought,
->> but it's kind of unlikely that I'll incorporate this into the
->> codebase.
->
->I see. It's a bit pity to learn that, but I understand it's kind of
->ugly and probably still not enough (due to fixed packet length for
->first two types). Thanks for explaining every details.
 
-I'm not sure it makes sense to combine the hiding of traffic with the 
-secure tunneling of traffic. There are going to be different efficiency 
-trades and there are going to be different traffic patterns available 
-to try to blend into. So different people are going to want to use 
-significantly different solutions to that problem. Given the design goals 
-of wireguard, I don't think it is something that would be particularly 
-good to combine with steganography.
+--FFoLq8A0u+X9iRU8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I think for normal people this is more of a political problem then a 
-technical problem. We need real net neutrality, with ISPs not allowed 
-to block traffic based on content. (e.g being prohibited from charging 
-people extra to allow the use of VPNs.) We need governments not passing 
-laws to make people compromise their own security (e.g. RIP in the UK), 
-nor should they prevent companies from providing applications or services 
-where the end user can guaranty their security (as some people are trying 
-to do in the US). Using strong unbreakable encryption when communicating, 
-should be the norm, not something you need to hide.
+On Wed, Jul 06, 2016 at 04:54:46PM +0200, Jason A. Donenfeld wrote:
+> I don't have a MIPS toolchain on this computer to test this at the
+> moment, but maybe this will shave off a little bit from the .ko...
+>=20
+> strip $(nm --defined-only wireguard.ko | grep -Ev '(^0+ | __)' | cut
+> -d ' ' -f 3 | xargs -n 1 echo -N) wireguard.ko
+
+Doesn't seem very effective: http://paste.aliens-lyon.fr/HDg
+
+The size of the module has not changed.
+
+--FFoLq8A0u+X9iRU8
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCAAGBQJXgoP9AAoJEL4B7CKgTi5Gc1QP/1+LDbd+rGIGYEvtn2tzUM6R
+3xiqmDBAEELSM8DXg0kLfHs/pwgKIcUPEKdiolvUTLYW1wvQcHSECGlGH2CiOFXr
+eQnvvWDNCIG2vUNCCVKSnN3Thn2n0IncVcsL8X605kveinsCVTBlHM7I545YR8ic
+DqMCP6VHces8kxE2mSFz+pSSlh/civ4V35uYF2xV2ZF5ZxC9xbH3tk2dRKvgjiYn
+fJ3zGHSckiu5/ylaMS9LNaa8OAmh6W3OwVzpzy4gkbl2bUol8/fsd3NTS+K1cyV7
+Deq8n221LbI0dJkGDOLpmtJ55RNPQsyKsoSjxf7kq4a8uueddgR4Lp1rSNaVRqDu
+5gJ6hf3Ancni5fKYrArT/cC5loPBs6X03PIZuv0tEA0yZkYfDHuAy/psfQAs/2Vg
+Qz55FxRhHs7vc5fBA31KhKKTpTl7gOPglk+Lkf9pupdI2iXANIhqG5oeazj6RzP3
+k5xHGPSD0bXFF/5U3Aq/acktTrdIyIhSREoi+5UEPYHeVzeDtzu0rUw+JLZaKiqw
+kxXMKq/JzGaZWocFn1rm1cBcI/mX/AYHPUBSpPbKZGMVahRbaUXqVc4ReBu7WnTq
+PGHphbIbg8WQ98+OsLdL7brtRXMTwDuBcX9v6zi0UPAFRwMGvqlAW1pyQtG4UZkx
+tYLbuVyOjNl0Av4U+80Z
+=gztt
+-----END PGP SIGNATURE-----
+
+--FFoLq8A0u+X9iRU8--
