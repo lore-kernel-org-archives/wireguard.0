@@ -1,26 +1,18 @@
-Return-Path: baptiste@bitsofnetworks.org
-Received: from mails.bitsofnetworks.org (rezine.polyno.me [193.33.56.138])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c5448770
+Return-Path: quanzhou822@gmail.com
+Received: from mail-yw0-f182.google.com (mail-yw0-f182.google.com
+ [209.85.161.182])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 82540a1f
  for <wireguard@lists.zx2c4.com>;
- Sun, 10 Jul 2016 17:55:53 +0000 (UTC)
-Date: Sun, 10 Jul 2016 19:56:25 +0200
-From: Baptiste Jonglez <baptiste@bitsofnetworks.org>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Message-ID: <20160710175625.GE5844@lud.polynome.dn42>
-References: <20160629112423.GC31514@lud.polynome.dn42>
- <20160704074837.GA24805@lud.polynome.dn42>
- <20160705220336.GA18854@lud.polynome.dn42>
- <CAHmME9rOUu4CBAgaSg684F45VT2Od9QHExNT=ftqn46EdpTxeQ@mail.gmail.com>
- <CAHmME9paKdCr_-W5_PJ1nxnNqCLdbuJ04T+PUp2NaMZZV+K2Tg@mail.gmail.com>
- <CAHmME9of2XeH-7mJF-Avq_n1SPQwesH-zkk-0Nx8ff1ef3f5jA@mail.gmail.com>
- <20160710172105.GD5844@lud.polynome.dn42>
- <CAHmME9o1H==cE9ykCifLuLNZN5bprdQjGND3+T_PzPWsz6pQQA@mail.gmail.com>
+ Mon, 11 Jul 2016 02:41:13 +0000 (UTC)
+Received: by mail-yw0-f182.google.com with SMTP id l125so81164188ywb.2
+ for <wireguard@lists.zx2c4.com>; Sun, 10 Jul 2016 19:41:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="0QFb0wBpEddLcDHQ"
-In-Reply-To: <CAHmME9o1H==cE9ykCifLuLNZN5bprdQjGND3+T_PzPWsz6pQQA@mail.gmail.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: [WireGuard] OpenWRT package for wireguard
+From: Quan Zhou <quanzhou822@gmail.com>
+Date: Mon, 11 Jul 2016 10:41:31 +0800
+Message-ID: <CAMRLKH8cAu+sD0Pss=GGVbqGUiZxvE3HT1sVgTsRFyKiQGpOog@mail.gmail.com>
+To: wireguard@lists.zx2c4.com
+Content-Type: multipart/alternative; boundary=001a114dd12a2f479405375318cb
+Subject: [WireGuard] Troubleshooting with WireGuard
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -30,38 +22,57 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
+--001a114dd12a2f479405375318cb
+Content-Type: text/plain; charset=UTF-8
 
---0QFb0wBpEddLcDHQ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Hello,
 
-On Sun, Jul 10, 2016 at 07:52:51PM +0200, Jason A. Donenfeld wrote:
-> Ahh, position independence, right. Okay, I'll look into getting LTO
-> working, which will certainly have good results.
+I'm new to WireGuard and it look very much different from the tools I used
+before, one thing that is, there aren't much log in /var/log/syslog
+(Debian). There was something went wrong on my network and now I have no
+idea where to look at. Did I missed something?
 
-Note that at this point, reducing the size is not really necessary, it
-would just be nice.  But if LTO reduces the code size *and* improves
-performance, that's the way to go!
+-- 
+Regards,
 
---0QFb0wBpEddLcDHQ
-Content-Type: application/pgp-signature; name="signature.asc"
+Quan Zhou
++------------------------+
+|pub [expires 2019-05-04]|
+|2C0C 4D88 E631 4C73 4C44|
+|CDE0 C0E 5470 1D2D 3F3EE|
++------------------------+
+|pub [revoked 2016-04-16]|
+|44D2 0307 1643 E80F 2E31|
+|F081 FAFA 6643 7F9F D46F|
++------------------------+
+|quanzhou822@gmail.com   |
+|https://keybase.io/qzhou|
++------------------------+
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+--001a114dd12a2f479405375318cb
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-iQIcBAEBCAAGBQJXgoxFAAoJEL4B7CKgTi5G9PwP+wVU4THsD2h+4kq4V9XK8tZ2
-PEp3nJIxMqfxiFzil0OGPRslc1NuOU+ZmSTQDmC9pDjEYdjv7Snuu6JjssWEIWLV
-q/S8orOsdes4V4oqM62GD4F5bWoD98unbrAp+T2PfWiku8YCSiSgmwWeaQikGY/k
-77wZN1G8Bgj51jCjm4q5gMcOEIt90xWlZ3JcKTNLfE6s99bWtYZLncit0T3v/I8w
-n5VqXOq/sYd//JyBDbPzsBh59o0ETpgfoDYAGnAs0NnUHcLwx0EicMuvoSk7OPBt
-yZsoYekjVE8s4csIJwa2PdK2a0sCRNrbXW4mm6yh7MkZ7+GyDyAdR+i6TlNJlwi0
-xd6at7jkCWCn/+5LdxSWno4TebBuS46+P6R0c8NgM6+kZ5uqg5Mx3XnvpbZWQ7kv
-2LpT0SWBVrxsq/auj8P7zUzrjaHPShJbfbJjDAFFBw7umFGXFClmajdJTWjyvZXU
-xC1kugBZVf0+anw1EJGAvF+rf27dhBpqoPosSzlQ717v/jL/IZRiLrs+xcOiw7OR
-mrAjkF1JBcDpBxCBfTYvZX2HeBFk34w4vjShvh41o4l+EuAlMMIcgcwVQGKsvTDQ
-OyzvGAMprpnRVoFjWg8UKbShwEIsVOIuZAAY8btpzTb4chHxGIOFf1Qv/Y/od7bV
-CqguFJghTAcH3hSbQjba
-=43ua
------END PGP SIGNATURE-----
+<div dir=3D"ltr">Hello,<div><br></div><div>I&#39;m new to WireGuard and it =
+look very much different from the tools I used before, one thing that is, t=
+here aren&#39;t much log in /var/log/syslog (Debian). There was something w=
+ent wrong on my network and now I have no idea where to look at. Did I miss=
+ed something?</div><div><br></div><div>-- <br><div class=3D"gmail_signature=
+" data-smartmail=3D"gmail_signature"><div dir=3D"ltr"><div><div dir=3D"ltr"=
+><div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div d=
+ir=3D"ltr"><font face=3D"monospace, monospace">Regards,<br><br>Quan Zhou<br=
+></font><span style=3D"font-family:monospace,monospace;font-size:12.8px">+-=
+-----------------------+</span></div><div dir=3D"ltr"><font face=3D"monospa=
+ce, monospace">|pub [expires 2019-05-04]|</font><br style=3D"font-family:mo=
+nospace,monospace;font-size:12.8px"><font face=3D"monospace, monospace">|2C=
+0C 4D88 E631 4C73 4C44|<br>|CDE0 C0E 5470 1D2D 3F3EE|</font></div><div dir=
+=3D"ltr"><font face=3D"monospace, monospace">+------------------------+<br>=
+|pub [revoked 2016-04-16]|<br>|44D2 0307 1643 E80F 2E31|<br>|F081 FAFA 6643=
+ 7F9F D46F|<br>+------------------------+<br>|<a href=3D"mailto:quanzhou822=
+@gmail.com" target=3D"_blank">quanzhou822@gmail.com</a>=C2=A0 =C2=A0|<br>|<=
+a href=3D"https://keybase.io/qzhou" target=3D"_blank">https://keybase.io/qz=
+hou</a>|<br>+------------------------+</font></div></div></div></div></div>=
+</div></div></div></div>
+</div></div>
 
---0QFb0wBpEddLcDHQ--
+--001a114dd12a2f479405375318cb--
