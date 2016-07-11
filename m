@@ -1,17 +1,27 @@
-Return-Path: dkg@fifthhorseman.net
-Received: from che.mayfirst.org (che.mayfirst.org [162.247.75.118])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id abbd8e0c
+Return-Path: Jason@zx2c4.com
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a86ea425
  for <wireguard@lists.zx2c4.com>;
- Mon, 11 Jul 2016 18:58:50 +0000 (UTC)
-From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>, Quan Zhou <quanzhou822@gmail.com>
-In-Reply-To: <CAHmME9pueP4YvQ4GJAhq7D06_MdDYq024vR5RSEj7cL1zx4qiQ@mail.gmail.com>
+ Mon, 11 Jul 2016 19:14:10 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e9c6a68c
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 11 Jul 2016 19:14:10 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 593fcd01
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 11 Jul 2016 19:14:09 +0000 (UTC)
+Received: by mail-lf0-f48.google.com with SMTP id q132so80572481lfe.3
+ for <wireguard@lists.zx2c4.com>; Mon, 11 Jul 2016 12:14:52 -0700 (PDT)
+MIME-Version: 1.0
+In-Reply-To: <87d1mktd41.fsf@alice.fifthhorseman.net>
 References: <CAMRLKH8cAu+sD0Pss=GGVbqGUiZxvE3HT1sVgTsRFyKiQGpOog@mail.gmail.com>
  <CAHmME9pueP4YvQ4GJAhq7D06_MdDYq024vR5RSEj7cL1zx4qiQ@mail.gmail.com>
-Date: Mon, 11 Jul 2016 17:21:02 +0200
-Message-ID: <87d1mktd41.fsf@alice.fifthhorseman.net>
-MIME-Version: 1.0
-Content-Type: text/plain
+ <87d1mktd41.fsf@alice.fifthhorseman.net>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Mon, 11 Jul 2016 21:14:49 +0200
+Message-ID: <CAHmME9pBhzR49+_NcL4MYKsduR0duTExEZZm9ThzXAig2uyLwg@mail.gmail.com>
+To: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+Content-Type: text/plain; charset=UTF-8
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Subject: Re: [WireGuard] Troubleshooting with WireGuard
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
@@ -23,23 +33,30 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Jason--
+On Mon, Jul 11, 2016 at 5:21 PM, Daniel Kahn Gillmor
+<dkg@fifthhorseman.net> wrote:
+> Would it be possible to log more when the kernel is in a more vebose
+> mode, or to have a module parameter that increases the logging?  Not
+> having to rebuild make it simpler for people experimenting with
+> pre-packaged (or dkms-built) modules to just "enable debugging", which
+> might produce more verbose problem reports.
+>
+> Or does anyone know of the simplest way to encourage dkms to build a
+> specific module in debug mode?  If so, i could try to ship a
+> wireguard-dkms-debug package (which Conflicts: wireguard-dkms and
+> Provides: wireguard-dkms) as an alternate option for people who don't
+> want to do the build themselves.
 
-On Mon 2016-07-11 12:18:43 +0200, Jason A. Donenfeld wrote:
+I'd prefer that early experimenters not get used to having too much
+log output from WireGuard. It's supposed to appear "stateless" to the
+user, and I'm afraid that this sort of thing might encourage bad
+patterns with regards to it.
 
-> You can build the module with "make debug", and then you'll get lots
-> of helpful debugging information in your dmesg.
+I'd rather learn precisely what issues the user is facing, and see if
+we can debug it from there. Maybe that approach will prove impossible,
+and in the end we'll need some logging, but I think it's worth at
+least trying without logs.
 
-Would it be possible to log more when the kernel is in a more vebose
-mode, or to have a module parameter that increases the logging?  Not
-having to rebuild make it simpler for people experimenting with
-pre-packaged (or dkms-built) modules to just "enable debugging", which
-might produce more verbose problem reports.
-
-Or does anyone know of the simplest way to encourage dkms to build a
-specific module in debug mode?  If so, i could try to ship a
-wireguard-dkms-debug package (which Conflicts: wireguard-dkms and
-Provides: wireguard-dkms) as an alternate option for people who don't
-want to do the build themselves.
-
-        --dkg
+That said, if you intend to help with the /development/ of wireguard,
+the debug logs are quite helpful, but in that situation you'll already
+be building the module yourself.
