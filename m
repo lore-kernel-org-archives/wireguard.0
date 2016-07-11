@@ -1,18 +1,23 @@
-Return-Path: quanzhou822@gmail.com
-Received: from mail-yw0-f182.google.com (mail-yw0-f182.google.com
- [209.85.161.182])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 82540a1f
+Return-Path: Jason@zx2c4.com
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 76584048
  for <wireguard@lists.zx2c4.com>;
- Mon, 11 Jul 2016 02:41:13 +0000 (UTC)
-Received: by mail-yw0-f182.google.com with SMTP id l125so81164188ywb.2
- for <wireguard@lists.zx2c4.com>; Sun, 10 Jul 2016 19:41:51 -0700 (PDT)
+ Mon, 11 Jul 2016 10:15:19 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b90520c4
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 11 Jul 2016 10:15:19 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id e10e5487
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 11 Jul 2016 10:15:19 +0000 (UTC)
+Date: Mon, 11 Jul 2016 12:15:58 +0200
+To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
 MIME-Version: 1.0
-From: Quan Zhou <quanzhou822@gmail.com>
-Date: Mon, 11 Jul 2016 10:41:31 +0800
-Message-ID: <CAMRLKH8cAu+sD0Pss=GGVbqGUiZxvE3HT1sVgTsRFyKiQGpOog@mail.gmail.com>
-To: wireguard@lists.zx2c4.com
-Content-Type: multipart/alternative; boundary=001a114dd12a2f479405375318cb
-Subject: [WireGuard] Troubleshooting with WireGuard
+Content-Type: text/plain; charset=UTF-8
+Message-Id: <ffffffffb2da099a@frisell.zx2c4.com>
+Subject: [WireGuard] [ANNOUNCE] Snapshot `experimental-0.0.20160711`
+	Available
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -22,57 +27,72 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---001a114dd12a2f479405375318cb
-Content-Type: text/plain; charset=UTF-8
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
 Hello,
 
-I'm new to WireGuard and it look very much different from the tools I used
-before, one thing that is, there aren't much log in /var/log/syslog
-(Debian). There was something went wrong on my network and now I have no
-idea where to look at. Did I missed something?
+A new experimental snapshot, `experimental-0.0.20160711`, has been tagged in
+the git repository.
 
--- 
-Regards,
+Please note that this snapshot is, like the rest of the project at this point
+in time, experimental, and does not consitute a real release that would be
+considered secure and bug-free. However, if you'd like to test this snapshot
+out, there are a few relevent changes.
 
-Quan Zhou
-+------------------------+
-|pub [expires 2019-05-04]|
-|2C0C 4D88 E631 4C73 4C44|
-|CDE0 C0E 5470 1D2D 3F3EE|
-+------------------------+
-|pub [revoked 2016-04-16]|
-|44D2 0307 1643 E80F 2E31|
-|F081 FAFA 6643 7F9F D46F|
-+------------------------+
-|quanzhou822@gmail.com   |
-|https://keybase.io/qzhou|
-+------------------------+
+== Changes ==
 
---001a114dd12a2f479405375318cb
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+  * persistent keepalive: use authenticated keepalives
+    This is by far the biggest and most important change of this snapshot, and
+    indeed is the entire reason why we're releasing another one for folks to
+    test out. It was pointed out on the mailing list that if keepalives aren't
+    authenticated, it's impossible for the receiver to update the source IP/port
+    of the sender. So, we make them authenticated, which means turning on the
+    "persistent-keepalive" feature is basically saying "always hold an active
+    session open". WireGuard is by default non-chatty -- there won't be an active
+    session if you're not sending anything. So, if this is a problem with
+    wanting to receive connections while idle and behind NAT, then you can use
+    this feature for always maintaining an active session.
+  * timers: rename *authorized* functions to *authenticated*
+  * timers: do not consider keepalives to be data sent
+  * examples: update ncat-client-server readme
+  * keepalives: only queue keepalive when queue is empty
+  * persistent keepalive: use unsigned long to avoid multiplication in hotpath
+  * timers: document conditions for calling
+  * timers: move timer calls out of hot loop
+  * timers: apply slack to hotpath timers
+  * receive: no need to test for !len
+  * receive: assume we usually succeed with userspace
 
-<div dir=3D"ltr">Hello,<div><br></div><div>I&#39;m new to WireGuard and it =
-look very much different from the tools I used before, one thing that is, t=
-here aren&#39;t much log in /var/log/syslog (Debian). There was something w=
-ent wrong on my network and now I have no idea where to look at. Did I miss=
-ed something?</div><div><br></div><div>-- <br><div class=3D"gmail_signature=
-" data-smartmail=3D"gmail_signature"><div dir=3D"ltr"><div><div dir=3D"ltr"=
-><div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div d=
-ir=3D"ltr"><font face=3D"monospace, monospace">Regards,<br><br>Quan Zhou<br=
-></font><span style=3D"font-family:monospace,monospace;font-size:12.8px">+-=
------------------------+</span></div><div dir=3D"ltr"><font face=3D"monospa=
-ce, monospace">|pub [expires 2019-05-04]|</font><br style=3D"font-family:mo=
-nospace,monospace;font-size:12.8px"><font face=3D"monospace, monospace">|2C=
-0C 4D88 E631 4C73 4C44|<br>|CDE0 C0E 5470 1D2D 3F3EE|</font></div><div dir=
-=3D"ltr"><font face=3D"monospace, monospace">+------------------------+<br>=
-|pub [revoked 2016-04-16]|<br>|44D2 0307 1643 E80F 2E31|<br>|F081 FAFA 6643=
- 7F9F D46F|<br>+------------------------+<br>|<a href=3D"mailto:quanzhou822=
-@gmail.com" target=3D"_blank">quanzhou822@gmail.com</a>=C2=A0 =C2=A0|<br>|<=
-a href=3D"https://keybase.io/qzhou" target=3D"_blank">https://keybase.io/qz=
-hou</a>|<br>+------------------------+</font></div></div></div></div></div>=
-</div></div></div></div>
-</div></div>
+As always, the source is available at https://git.zx2c4.com/WireGuard/ and
+information about the project is available at https://www.wireguard.io/ .
 
---001a114dd12a2f479405375318cb--
+This snapshot is available in tarball form here:
+  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-experimental-0.0.20160711.tar.xz
+  SHA256: 4ab876642236abcac416f7b75cf5e9e28b8581d5b7741d36a437af08c42d8081
+
+If you're a snapshot package maintainer, please bump your package version. If
+you're a user, the WireGuard team welcomes any and all feedback on this latest
+snapshot.
+
+Thank you,
+Jason Donenfeld
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQItBAEBCAAXBQJXg3GkEBxqYXNvbkB6eDJjNC5jb20ACgkQSfxwEqXeA668dg/+
+KJ53e4rRJfTolpDf10U8vRtPdcxRUH7j1+quPl+HpRlrW7CD0YGTB8POVL1FDRty
+lc+UNtOvGgwcgLaZiMQ9WdOp+8fDawtG5O8OukadxPN3TGO0+AMzeRy85bfz3SAa
+6HvytJ0aGfRFanb6NgNYChILNLL4shjidut3KhzPkP/MzzeGm8FPbkZkvlT4meWv
+XA4OWmCTww3u3kZIFyAANagxArjSmcNeUK4tJyCAIQIena0wMg1Nz268rPPbnZMk
+pjgcJRipJlHrVeN60IUC75bymgLGsQefNYanARL67EQo/Ya5lxzWdahXB5NnD0//
+ko0vWh4gp+QmFUN0z1K73bC1kz61iEfIyBLh1hj/syDmfM6qLdva0xuBNZvR0USe
+OGbqJgqIEYqqwQcVFaGfWmm7+VaMuiy79hZ/uuYDpnILr1HDsNF1EtMs7cYg3Q3D
+k5ino/2eEztkXe7xszNKUXNvIKyNB+fczo26HzuNbUlxwamFwRly8RjrxUZ6HGC7
+XwOdOZBV/Xy4ydxrYdeGOWHzEr/MWGyZkJ3E/kO1SWrXXw3xVmuET6EuseK5+gms
+E59uTFgiaSdpZfq2KYW5CG1LSbBNqr0yUAGRkjxrSwdlD+Lq0pgy1ufU65Q1qmsc
+AsQDN2c0vLJvsDZrQZ1aTUUdPjBFa+MLToIyOoZ3+Vw=
+=8x+l
+-----END PGP SIGNATURE-----
