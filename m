@@ -1,27 +1,26 @@
-Return-Path: baptiste@bitsofnetworks.org
-Received: from mails.bitsofnetworks.org (rezine.polyno.me [193.33.56.138])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 31a79067
+Return-Path: nwf@cs.jhu.edu
+Received: from blaze.cs.jhu.edu (blaze.cs.jhu.edu [128.220.13.50])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a388c2eb
  for <wireguard@lists.zx2c4.com>;
- Tue, 12 Jul 2016 21:52:19 +0000 (UTC)
-Date: Tue, 12 Jul 2016 23:53:04 +0200
-From: Baptiste Jonglez <baptiste@bitsofnetworks.org>
-To: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-Message-ID: <20160712215303.GA4315@lud.polynome.dn42>
-References: <CAMRLKH8cAu+sD0Pss=GGVbqGUiZxvE3HT1sVgTsRFyKiQGpOog@mail.gmail.com>
- <CAHmME9pueP4YvQ4GJAhq7D06_MdDYq024vR5RSEj7cL1zx4qiQ@mail.gmail.com>
- <CAMRLKH_Ve7cnhYP9ZtBT868m298fhxKYvRAEHhkdCVfmpVZbSQ@mail.gmail.com>
- <CAHmME9qw1Ymrjyfhkmh7YOBgBuKGP5r=VdurAR1KLpaoFzqCyQ@mail.gmail.com>
- <CAMRLKH8Dh6dKbCZBDM2OeSpJ4PAO-K=KORQR+6rmttONP8eWhQ@mail.gmail.com>
- <20160712155857.GA1368@lud.polynome.dn42>
- <87vb0asqa5.fsf@alice.fifthhorseman.net>
- <CAHmME9rvBu0XC=0_SsrR_vLMud1QJQtDmZzGyWoVHCmK5SFwqA@mail.gmail.com>
- <87bn22sj4t.fsf@alice.fifthhorseman.net>
+ Tue, 12 Jul 2016 23:13:48 +0000 (UTC)
+Received: from gradx.cs.jhu.edu (gradx.cs.jhu.edu [128.220.35.100])
+ by blaze.cs.jhu.edu (8.14.4/8.14.4) with ESMTP id u6CNEcXT042136
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO)
+ for <wireguard@lists.zx2c4.com>; Tue, 12 Jul 2016 19:14:38 -0400
+Received: from gradx.cs.jhu.edu (localhost [127.0.0.1])
+ by gradx.cs.jhu.edu (8.15.2/8.14.5) with ESMTP id u6CNEcPA032057
+ for <wireguard@lists.zx2c4.com>; Tue, 12 Jul 2016 19:14:38 -0400
+Received: (from nwf@localhost)
+ by gradx.cs.jhu.edu (8.15.2/8.15.2/Submit) id u6CNEcmg032056
+ for wireguard@lists.zx2c4.com; Tue, 12 Jul 2016 19:14:38 -0400
+Date: Tue, 12 Jul 2016 19:14:38 -0400
+From: Nathaniel W Filardo <nwf@cs.jhu.edu>
+To: wireguard@lists.zx2c4.com
+Message-ID: <20160712231438.GF5136@gradx.cs.jhu.edu>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="fdj2RfSjLxBAspz7"
-In-Reply-To: <87bn22sj4t.fsf@alice.fifthhorseman.net>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: [WireGuard] Troubleshooting with WireGuard
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature"; boundary="VuQYccsttdhdIfIP"
+Subject: [WireGuard] WireGuard key lifetime / keys in smartcard?
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -32,43 +31,40 @@ List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
 
---fdj2RfSjLxBAspz7
+--VuQYccsttdhdIfIP
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jul 12, 2016 at 10:20:50PM +0200, Daniel Kahn Gillmor wrote:
-> On Tue 2016-07-12 19:55:50 +0200, Jason A. Donenfeld wrote:
-> > Endpoint is a good name.
-> > AllowedIPs is a horrible name. But I'm not sure what else to call it.
-> > I'm open to all suggestions.
->=20
-> AllowedTunnelledIPs ?
-> TunnelledCIDRs ?
+I am sure this is a completely ignorant question, but: I'd love to have a
+wireguard host without direct access to its long-term identity keys to raise
+the difficulty of silently spoofing/cloning a tunnel endpoint after host
+compromise.  I can see two possible ways forward, though I'm sure there are
+others!
 
-VPNSubnets ?
-PeerVPNSubnets ?
-InternalIPs ?
+1. Long-lived identity keys giving rise to shorter-lived keys.  Wireguard
+   would, as part of the handshake, include the signature that attested the
+   short-term key as a legitimate product of the long-term key.
 
---fdj2RfSjLxBAspz7
+2. Long-lived keys not in host memory (e.g. in a smartcard).  I don't know
+   if the kernel has an existing mechanism for upcalling to userland to
+   request a cryptographic transform, but it seems like a plausible thing to
+   want.  (I'm aware of the request-key mechanism, but that doesn't seem
+   like what'd be wanted here.)  Handshakes would be slow (limited by crypto
+   processor and upcall overhead) but otherwise the WireGuard protocol would
+   not change.
+
+Thanks for a lovely piece of technology!
+--nwf;
+
+--VuQYccsttdhdIfIP
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXhWa7AAoJEL4B7CKgTi5GrKEP/3yf3ClDGPHsTotXoKwotM8Y
-06xMCUoddICJwYgkipDyldBP4japybpAfCsd9P6jFDFu7k63KeIvH2HBNJhKMpL7
-AE0iLI9rSdv6EcQFTMLrEu+k0rjEBZkgRm1O4ARQ1Fslo8pXPZEDZr1mpbdY3Jvx
-cj6ZdO5bBJHgDIunrmNWV8N05rnpn9F22rUf5saNI510E+/nZX9C1MN4Y+jvv4KO
-YAKPwGdWx5lTSIAQtz+40lN8rF8kkpjbw9fJlgWkuE91LPvqskMDAB9RRZay03eJ
-hfpD70Bns3tpBcJaqxDNnCBz6vFhaIuOz/6wt8TqLYIKhakbMznpMA0eY8e4ryci
-Gtux0Sf+eWCm/uZch0CAiKf0ks0ebakgYC4+fbWzYbABgl8D2/Up229TZwqKQzQ2
-8bcP8F7b7YjLeR9IHBOtVB2ZZDN6DXU7xrsEyt6FmKmbQs2g6kFdFEv5aIzLBjk6
-NHLIJZowetT1AT4h89OGzVh8BT9YGnTEi66rJKEq+jxIHiiyAei0ztlU3dKVRT0j
-6qlcTHBdlWfxJXSH4QoW/hOZO8Me4KMXHksOCfLkXxEAPdUVGQIPiD3IV4GrkgSR
-uvr62wKrBJ7V2YZWG+wr6NosLZ8tU3LmEm5ggRX7lAq/v0GVtkKHSl2+JY1+7Nv7
-htspfBgqT0Dtu9Dv5tHW
-=zWMK
+iEYEARECAAYFAleFed4ACgkQTeQabvr9Tc/CvACdFmF3Sbq7Kj3c5YU91Dtnzp5V
+/2YAn0q3nNDsyA2HSp8bJWqELQNDxtIB
+=Hbwp
 -----END PGP SIGNATURE-----
 
---fdj2RfSjLxBAspz7--
+--VuQYccsttdhdIfIP--
