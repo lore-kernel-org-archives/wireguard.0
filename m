@@ -1,13 +1,22 @@
-Return-Path: baptiste@bitsofnetworks.org
-Received: from mails.bitsofnetworks.org (rezine.polyno.me [193.33.56.138])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c477c8b2
+Return-Path: Jason@zx2c4.com
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5f0f505e
  for <wireguard@lists.zx2c4.com>;
- Wed, 13 Jul 2016 17:51:03 +0000 (UTC)
-Date: Wed, 13 Jul 2016 19:51:56 +0200
-From: Baptiste Jonglez <baptiste@bitsofnetworks.org>
-To: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-Message-ID: <20160713175156.GA28141@lud.polynome.dn42>
-References: <CAMRLKH8Dh6dKbCZBDM2OeSpJ4PAO-K=KORQR+6rmttONP8eWhQ@mail.gmail.com>
+ Wed, 13 Jul 2016 17:51:46 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ccfb5554
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 13 Jul 2016 17:51:46 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 90c6ecbc
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 13 Jul 2016 17:51:46 +0000 (UTC)
+Received: by mail-lf0-f44.google.com with SMTP id h129so45035030lfh.1
+ for <wireguard@lists.zx2c4.com>; Wed, 13 Jul 2016 10:52:43 -0700 (PDT)
+MIME-Version: 1.0
+In-Reply-To: <8737ndo2t2.fsf@alice.fifthhorseman.net>
+References: <CAMRLKH_Ve7cnhYP9ZtBT868m298fhxKYvRAEHhkdCVfmpVZbSQ@mail.gmail.com>
+ <CAHmME9qw1Ymrjyfhkmh7YOBgBuKGP5r=VdurAR1KLpaoFzqCyQ@mail.gmail.com>
+ <CAMRLKH8Dh6dKbCZBDM2OeSpJ4PAO-K=KORQR+6rmttONP8eWhQ@mail.gmail.com>
  <20160712155857.GA1368@lud.polynome.dn42>
  <87vb0asqa5.fsf@alice.fifthhorseman.net>
  <CAHmME9rvBu0XC=0_SsrR_vLMud1QJQtDmZzGyWoVHCmK5SFwqA@mail.gmail.com>
@@ -17,11 +26,12 @@ References: <CAMRLKH8Dh6dKbCZBDM2OeSpJ4PAO-K=KORQR+6rmttONP8eWhQ@mail.gmail.com>
  <20160713083633.4c3c07f9.alex_y_xu@yahoo.ca>
  <20160713165745.GB25457@lud.polynome.dn42>
  <8737ndo2t2.fsf@alice.fifthhorseman.net>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="dDRMvlgZJXvWKvBx"
-In-Reply-To: <8737ndo2t2.fsf@alice.fifthhorseman.net>
-Cc: wireguard@lists.zx2c4.com
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 13 Jul 2016 19:52:41 +0200
+Message-ID: <CAHmME9q2RPmjmJQLAgLRtaXEt3Wot57aC+Mw6Kn2xk0q-6pGAg@mail.gmail.com>
+To: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+Content-Type: text/plain; charset=UTF-8
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Subject: Re: [WireGuard] Troubleshooting with WireGuard
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
@@ -32,54 +42,54 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-
---dDRMvlgZJXvWKvBx
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, Jul 13, 2016 at 07:39:21PM +0200, Daniel Kahn Gillmor wrote:
 > On Wed 2016-07-13 18:57:45 +0200, Baptiste Jonglez wrote:
-> > Actually, it does !  This dual usage brings more confusion.  Despite the
-> > name, "AllowedIPs" controls both:
-> >
-> > 1) packets that are *received* from a peer (by looking at the source IP
-> >    address after decrypting an incoming packet, and only allowing the
-> >    packet if it matches an AllowedIPs rule for this peer)
-> >
-> > 2) packets that are *sent* through a wireguard interface, where the rig=
-ht
-> >    peer is found by looking for a matching AllowedIPs entry (using the
-> >    destination IP address of the packet, this time).  That's the
-> >    "cryptokey routing" part.
->=20
+>> Actually, it does !  This dual usage brings more confusion.  Despite the
+>> name, "AllowedIPs" controls both:
+>>
+>> 1) packets that are *received* from a peer (by looking at the source IP
+>>    address after decrypting an incoming packet, and only allowing the
+>>    packet if it matches an AllowedIPs rule for this peer)
+>>
+>> 2) packets that are *sent* through a wireguard interface, where the right
+>>    peer is found by looking for a matching AllowedIPs entry (using the
+>>    destination IP address of the packet, this time).  That's the
+>>    "cryptokey routing" part.
+>
+
+Baptiste is exactly right here. It's a routing table on the way out
+and an ACL on the way in.
+Now, theoretically, these don't actually have to be the same list.
+About a year ago I was experimenting with keeping these separate, but
+opted to keep them the same because... which leads me to Daniel's
+remark.
+
+
+On Wed, Jul 13, 2016 at 7:39 PM, Daniel Kahn Gillmor
+<dkg@fifthhorseman.net> wrote:
 > so if a given interface has two peers, their AllowedIPs (or whatever we
-> end up calling it) are not permitted to overlap?
+> end up calling it) are not permitted to overlap?  That constraint should
+> probably be better documented as well.  It makes sense now that you
+> describe it, but it wasn't obvious from the current docs.
 
-It's a longest-prefix-match on the destination IP address.  So, the
-"AllowedIPs" for two peers can overlap, but then the most specific prefix
-will win.  If two peers have the exact same AllowedIPs entry, then I'm not
-sure what happens.
+If the AllowedIPs overlap, on the way out, it functions in the exact
+same way as a routing table: the most specific route is the one that's
+chosen.
+On the way in, for checking the ACL, the way it works is NOT by (A)
+checking to see if that peer has an AllowedIPs that matches the
+incoming packet's src. RATHER, (B) it consults the entire cryptokey
+routing table, globally, to see to whom this packet would be routed on
+the way out, and if that peer matches the receiving peer, then it's
+allowed. By making AllowedIPs cover both, we get this nice property of
+(B). Namely, with (B) we have a stronger variant of reverse-path
+filtering that ties packets to keys. (B) then enables userspace to be
+completely sure that the peer they're talking to is necessarily the
+one single peer who has a particular public key and specific
+AllowedIPs entry. The stronger crypto reverse-path filtering (B) is
+actually something that mitigates real vulnerabilities with certain
+misconfgured IPsec boxes I've owned (as part of my day job) in the
+wild.
 
---dDRMvlgZJXvWKvBx
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCAAGBQJXhn+wAAoJEL4B7CKgTi5GzcwP/108Q4wgL0Eei3A+8uG0BCE0
-aEoY3NmDcVdA+nfYftO71q73o1dlMn1kxGecsc8rPuJm4lBHlhV+/COaHYUYrjGS
-ASTZhFleSyHcHBdofd8gy0erTUaS6nbxRrhsgPw8Wu110WUP0JGchfcnG3D+u9Vz
-Tp90E13/JWpsR/31Dp04j0JRUXNLgXI8H2B7/tK3W81IOLNDuujeUP4O9UIoJckF
-JzrkQ9zfoWvQGlMcwV+0ixvhikFIsIiFgxMTvrSjoNt1jxQXhbxijcfzhuVr4PbU
-h66A6sF+4EqTMbMx7fNStf1O7I5tGTqtesa6Em28aA3Omx6EKA8b7Sc4dzZqwBw2
-RHeL2daeG65muQWH/VVlc6TsoXmoQwgNTQsLH7j+iADRCzEHWCIvXiRWqxU/uVlb
-SX4IU0VkhnLeqetx71jpLHUZmjjXm/YIL1sa3o/f/NaqmUwsM84K/6+NtHz7aFji
-w9hSXB0RcdQ8xU3C118z/2hlIgjzwQZsZoNARL3wlX3cuUkLvgJQ8vHekxLSI4ac
-1UyX65dPu1ifQ0mVwQmdqfQ2CF1hXr5FGVLPFQ8KpyhjcQHFCH0wEweQEhfLZpNq
-DtEBOPYoXRvcUWZzSQGoBtSG+18GuIZSppl4K/CCcGex+JbN5DBA6lYyQ4/MD50Y
-dPUyxmDsf+TXy1UhpHV6
-=d+Ai
------END PGP SIGNATURE-----
-
---dDRMvlgZJXvWKvBx--
+You're right -- I should document this. There's a lot of thought that
+went into all these little components, and at the time of
+documentation-writing, it was hard to enumerate what they all were.
+It's good that things are surfacing organically now.
