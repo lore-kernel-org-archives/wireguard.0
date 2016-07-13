@@ -1,32 +1,33 @@
 Return-Path: Jason@zx2c4.com
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0771cda9
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 41ea2f59
  for <wireguard@lists.zx2c4.com>;
- Wed, 13 Jul 2016 16:35:10 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ba65c5db
+ Wed, 13 Jul 2016 16:42:04 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 30e864bb
  for <wireguard@lists.zx2c4.com>;
- Wed, 13 Jul 2016 16:35:07 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 1fd287be
+ Wed, 13 Jul 2016 16:42:04 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 4758d492
  (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 13 Jul 2016 16:35:06 +0000 (UTC)
-Received: by mail-lf0-f49.google.com with SMTP id h129so43591179lfh.1
- for <wireguard@lists.zx2c4.com>; Wed, 13 Jul 2016 09:36:03 -0700 (PDT)
+ Wed, 13 Jul 2016 16:42:02 +0000 (UTC)
+Received: by mail-lf0-f54.google.com with SMTP id b199so43786438lfe.0
+ for <wireguard@lists.zx2c4.com>; Wed, 13 Jul 2016 09:43:00 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9q2Mv7D-wRLGih0r4JHp+ePLQPpgGV-WEcn6sFu9Ewu0Q@mail.gmail.com>
+In-Reply-To: <CAHmME9qQ=46ZyPLPAw8sDb1bhwWGdEcxoFpof3meV+WUKHrMfg@mail.gmail.com>
 References: <CAHmME9oiTG6Hfps0ZqJFJ13UxappXk3TyoLWWu0AZ_G_A65bxQ@mail.gmail.com>
  <CAHmME9qvbXDENXbTYhcf58FR+1vGQfpABXKNRk04+GFM7dt0YA@mail.gmail.com>
  <871t2zt93w.fsf@alice.fifthhorseman.net>
  <CAHmME9qVThvKJpCiDjYZJTWAU+xiVSXXRpWvxY0Vy+-+_X3hzQ@mail.gmail.com>
  <CAHmME9q2Mv7D-wRLGih0r4JHp+ePLQPpgGV-WEcn6sFu9Ewu0Q@mail.gmail.com>
+ <CAHmME9pkr5T3fhrEo6kdLvjU9OmPr8qFLvbxrjmwZgFmvjH00A@mail.gmail.com>
+ <CAHmME9qQ=46ZyPLPAw8sDb1bhwWGdEcxoFpof3meV+WUKHrMfg@mail.gmail.com>
+Date: Wed, 13 Jul 2016 18:42:57 +0200
+Message-ID: <CAHmME9rF+cYmwEMcrW9DitPSBtQ=NSVbMWvhiBajwV4FtCwRpQ@mail.gmail.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 13 Jul 2016 18:35:57 +0200
-Message-ID: <CAHmME9pkr5T3fhrEo6kdLvjU9OmPr8qFLvbxrjmwZgFmvjH00A@mail.gmail.com>
 To: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-Content-Type: text/plain; charset=UTF-8
-Cc: zorun@bitsofnetworks.org,
- WireGuard mailing list <wireguard@lists.zx2c4.com>,
- Christian Hesse <mail@eworm.de>
+Content-Type: multipart/alternative; boundary=001a11410200f301b205378713bd
+Cc: Christian Hesse <mail@eworm.de>, zorun@bitsofnetworks.org,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
 Subject: Re: [WireGuard] The Distro Package Maintainers Thread
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
@@ -37,38 +38,30 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Wed, Jul 13, 2016 at 4:29 PM, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+--001a11410200f301b205378713bd
+Content-Type: text/plain; charset=UTF-8
+
+On Jul 13, 2016 6:35 PM, "Jason A. Donenfeld" <Jason@zx2c4.com> wrote:
+> I did it!
 >
-> However, it might be easiest to simply use network namespaces and run all
-> this locally. I'm about to take an airplane; I'll create a 'make test' that
-> does this. Then you could just incorporate calling that into your build
-> system; would that work for you?
+> $ make test
+>
+> Will now execute src/test.sh.
 
-I did it!
+If it turns out the test phase of the debian package build process isn't
+permitted to do these things, we can always experiment with running this in
+qemu or UML... the tests are entirely self-contained.
 
-$ make test
+--001a11410200f301b205378713bd
+Content-Type: text/html; charset=UTF-8
 
-Will now execute src/test.sh.
+<p dir="ltr"><br>
+On Jul 13, 2016 6:35 PM, &quot;Jason A. Donenfeld&quot; &lt;<a href="mailto:Jason@zx2c4.com">Jason@zx2c4.com</a>&gt; wrote:<br>
+&gt; I did it!<br>
+&gt;<br>
+&gt; $ make test<br>
+&gt;<br>
+&gt; Will now execute src/test.sh.</p>
+<p dir="ltr">If it turns out the test phase of the debian package build process isn&#39;t permitted to do these things, we can always experiment with running this in qemu or UML... the tests are entirely self-contained.</p>
 
-This script tries several things:
-
-- Module insertion, which, in debug mode, does internal kernel tests
-of algorithms.
-- ICMP in v4 over v4
-- ICMP in v4 over v6
-- ICMP in v6 over v4
-- ICMP in v6 over v6
-- TCP in v4 over v4
-- TCP in v4 over v6
-- TCP in v6 over v4
-- TCP in v6 over v6
-- UDP in v4 over v4
-- UDP in v4 over v6
-- UDP in v6 over v4
-- UDP in v6 over v6
-
-It uses network namespaces and seems to work quite well. If the exit
-status is 0, tests were successful. It is still quite basic, but will
-be gradually expanded over time. I welcome patches for it.
-
-https://git.zx2c4.com/WireGuard/tree/src/test.sh
+--001a11410200f301b205378713bd--
