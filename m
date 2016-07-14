@@ -1,24 +1,36 @@
-Return-Path: guus@tinc-vpn.org
-Received: from arianus.sliepen.org (arianus.sliepen.org [92.243.30.131])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4ec7fd46
+Return-Path: Jason@zx2c4.com
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9258390b
  for <wireguard@lists.zx2c4.com>;
- Thu, 14 Jul 2016 10:54:00 +0000 (UTC)
-Received: from sliepen.org (unknown [10.1.1.1])
- by arianus.sliepen.org (Postfix) with ESMTP id 953F326547
- for <wireguard@lists.zx2c4.com>; Thu, 14 Jul 2016 12:55:00 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by sliepen.org (Postfix) with ESMTP id 3DB4A22017E
- for <wireguard@lists.zx2c4.com>; Thu, 14 Jul 2016 12:55:00 +0200 (CEST)
-Date: Thu, 14 Jul 2016 12:55:00 +0200
-From: Guus Sliepen <guus@tinc-vpn.org>
-To: wireguard@lists.zx2c4.com
-Message-ID: <20160714105500.GT3952@sliepen.org>
-References: <CAHmME9piH4WkMpJ3p0rzFmtA=ozkfa-+rGbAH0T2OjQ+5AJkJg@mail.gmail.com>
+ Thu, 14 Jul 2016 14:26:57 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 57290412
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 14 Jul 2016 14:26:56 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 6a962935
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 14 Jul 2016 14:26:55 +0000 (UTC)
+Received: by mail-lf0-f41.google.com with SMTP id b199so65550953lfe.0
+ for <wireguard@lists.zx2c4.com>; Thu, 14 Jul 2016 07:27:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="kK1uqZGE6pgsGNyR"
-In-Reply-To: <CAHmME9piH4WkMpJ3p0rzFmtA=ozkfa-+rGbAH0T2OjQ+5AJkJg@mail.gmail.com>
-Subject: Re: [WireGuard] NAT-T Keepalives
+In-Reply-To: <87ziplmcaj.fsf@alice.fifthhorseman.net>
+References: <CAHmME9oiTG6Hfps0ZqJFJ13UxappXk3TyoLWWu0AZ_G_A65bxQ@mail.gmail.com>
+ <CAHmME9qvbXDENXbTYhcf58FR+1vGQfpABXKNRk04+GFM7dt0YA@mail.gmail.com>
+ <871t2zt93w.fsf@alice.fifthhorseman.net>
+ <CAHmME9qVThvKJpCiDjYZJTWAU+xiVSXXRpWvxY0Vy+-+_X3hzQ@mail.gmail.com>
+ <CAHmME9q2Mv7D-wRLGih0r4JHp+ePLQPpgGV-WEcn6sFu9Ewu0Q@mail.gmail.com>
+ <CAHmME9pkr5T3fhrEo6kdLvjU9OmPr8qFLvbxrjmwZgFmvjH00A@mail.gmail.com>
+ <CAHmME9qQ=46ZyPLPAw8sDb1bhwWGdEcxoFpof3meV+WUKHrMfg@mail.gmail.com>
+ <CAHmME9rF+cYmwEMcrW9DitPSBtQ=NSVbMWvhiBajwV4FtCwRpQ@mail.gmail.com>
+ <87ziplmcaj.fsf@alice.fifthhorseman.net>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 14 Jul 2016 16:27:50 +0200
+Message-ID: <CAHmME9p2b_XqCYSs=Yz7jD6roviA2CaAY+sMBtZgivo-Au8RaA@mail.gmail.com>
+To: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+Content-Type: text/plain; charset=UTF-8
+Cc: Christian Hesse <mail@eworm.de>, zorun@bitsofnetworks.org,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
+Subject: Re: [WireGuard] The Distro Package Maintainers Thread
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -28,79 +40,22 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
+Hey,
 
---kK1uqZGE6pgsGNyR
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+So I made a disgusting harness that uses QEMU and doesn't require
+root. It compiles a kernel and then makes a little testing filesystem
+for the VM, pulling down tarballs from random places and compiling
+them.
 
-Some insights learned from tinc:
+It is arguably one of the grossest scripts I've ever made. But it
+works very well. And I'm hoping the mere existence of it will
+encourage you guys to send [PATCH]es that make it not as awful.
 
-On Thu, Jul 07, 2016 at 06:33:11PM +0200, Jason A. Donenfeld wrote:
+Here's a video of it in action: https://data.zx2c4.com/wireguard-qemu-test.mp4
+And here's the script:
+https://git.zx2c4.com/WireGuard/tree/src/tests/qemu.sh and
+https://git.zx2c4.com/WireGuard/tree/src/tests/guest-init.sh
 
-> a) The persistent keepalive does not need an active session and does
-> not need to send any encrypted data. It simply is a UDP packet to the
-> endpoint. The payload doesn't matter for the purpose of just keeping
-> the NAT mapping alive.
+Interested to see what becomes of this...
 
-Indeed.
-
-> 1. What should the payload be? Should it be a single fixed byte? Or
-> should it be a zero length UDP packet?
-
-A zero-length UDP packet should be fine, although it might upset some
-OSes or firewalls.
-
-Another issue that tinc deals with is path MTU discovery. It combines
-this with the heartbeat packets. While a zero-length UDP packets is
-enough to keep a NAT mapping alive, the actual path between two peers
-might change, and that also changes the path MTU. AFAIK WireGuard
-doesn't care about this, but in case you (start to) do, you want to send
-packets with the discovered MTU and perhaps a slightly bigger one too,
-once in a while, to check whether the PMTU changed.
-
-Discovering the PMTU between two peers and enforcing this inside the
-tunnel helps prevent fragmentation of the outer UDP packets. This
-improves performance and sometimes it's just necessary because there are
-firewalls out there that block fragments.
-
-> 2. What is an acceptable minimum interval? Every 5 seconds?
-> 3. What is an acceptable maximum interval? 3600 seconds?
-> 4. What is a good interval to show in documentation examples that will
-> work for most people?
-
-If you want to keep alive a NAT mapping, then experience tells me 10
-seconds is something that works for virtually all NAT devices. Once you
-start to go over 10 seconds, you will find there are those that will
-drop the mappings. There are RFCs which tell you how a NAT device should
-behave (RFC 4787 and 7857), but it's hard to find devices that follow
-all these requirements. The recommended timeout for NAT devices is 5
-minutes. I'm quite sure a 3600 second interval is useless in practice.
-
---=20
-Met vriendelijke groet / with kind regards,
-     Guus Sliepen <guus@tinc-vpn.org>
-
---kK1uqZGE6pgsGNyR
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXh2+DAAoJED9JDeuHHvn65QoQAJJ4VbK0UyzigVCiTR+piACt
-GWkvZosxCTSrwXZPAHumF+DtWOajLWr2y+MetZhojTIJy5wGiJ/thdJbMAjvxX0g
-UmPuMNAV2WXtVAO3+rwP/Nsr7xCNvzxocIKQ37MYpGuIDkSoidcLYiThIb0bjVFH
-lFtBbxWCUs5jef1KKHV0FvlOGuBlfaiuj+16+Ri/HdUUs1nv9q7yGO2EKeIjPT0r
-LThSCKExUz3198qZYO6Eb43HpqcoESpoWz6T6RgtxK8S8QI/k5J1/kwG1MlNbnEI
-t+ZPnVmRSXANqGrDwAQYt09i5YZi7F7YhxQ54f7WWE0Mtns/cdXLZbfkidNYxDXy
-8HU77l5cUFnWH2thEaPa82O43W2xwpwUIniiy6i9Im0h/OqPIlHOEVTediJonvrd
-6OjpGNcUuwcs12dRiwJ1vpu8t6n9FHThKRApTcGh+f84QKJXULuZkttqdvJ7IBRJ
-fXAd693b0TP8hrE/NQJogw1jr3QSihDb7MOjmbhQbpcTiZSCWy8GZS326UZ/kUxk
-2uTNi9S9TCQEolFHngPNbKX75K+XuiotqaEUbQTb+xoYCzc1M1sc54MZmK2YDe+d
-1V5EXNS5cbIT3/xv+xPioU5LHpDwsyqERccqV1CN47p06nty/unzMIYYJd4vkqll
-ts8sWhFsNkBp1t/c2FTe
-=zs/G
------END PGP SIGNATURE-----
-
---kK1uqZGE6pgsGNyR--
+Jason
