@@ -1,28 +1,30 @@
 Return-Path: Jason@zx2c4.com
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0b8cd6c0
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7f18e0dc
  for <wireguard@lists.zx2c4.com>;
- Fri, 15 Jul 2016 12:06:46 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 108991ad
+ Fri, 15 Jul 2016 12:11:06 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cedea041
  for <wireguard@lists.zx2c4.com>;
- Fri, 15 Jul 2016 12:06:46 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 1edbf26d
+ Fri, 15 Jul 2016 12:11:06 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id a31bb6bb
  (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 15 Jul 2016 12:06:46 +0000 (UTC)
-Received: by mail-lf0-f52.google.com with SMTP id l69so30005515lfg.1
- for <wireguard@lists.zx2c4.com>; Fri, 15 Jul 2016 05:07:56 -0700 (PDT)
+ Fri, 15 Jul 2016 12:11:05 +0000 (UTC)
+Received: by mail-lf0-f44.google.com with SMTP id l69so30086566lfg.1
+ for <wireguard@lists.zx2c4.com>; Fri, 15 Jul 2016 05:12:15 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20160714105500.GT3952@sliepen.org>
-References: <CAHmME9piH4WkMpJ3p0rzFmtA=ozkfa-+rGbAH0T2OjQ+5AJkJg@mail.gmail.com>
- <20160714105500.GT3952@sliepen.org>
+In-Reply-To: <87inw9q5d1.fsf@alice.fifthhorseman.net>
+References: <20160712231438.GF5136@gradx.cs.jhu.edu>
+ <CAHmME9qvXU0GDfjT+4PrvPK3XTUU7LFz8S0b_n_XtJw3wrT7Dw@mail.gmail.com>
+ <87inw9q5d1.fsf@alice.fifthhorseman.net>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 15 Jul 2016 14:07:54 +0200
-Message-ID: <CAHmME9pVwcxZS1NaH2=7c=hpiUqbSWDC6rZL0iLLyr50+TZQyw@mail.gmail.com>
-To: Guus Sliepen <guus@tinc-vpn.org>
+Date: Fri, 15 Jul 2016 14:12:13 +0200
+Message-ID: <CAHmME9qqZoyOqmPW=g_Lnp7R0-X_9q4+nXpUwoKKrS6UXxDDmQ@mail.gmail.com>
+To: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
 Content-Type: text/plain; charset=UTF-8
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: [WireGuard] NAT-T Keepalives
+Cc: Nathaniel W Filardo <nwf@cs.jhu.edu>, NIIBE Yutaka <gniibe@fsij.org>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
+Subject: Re: [WireGuard] WireGuard key lifetime / keys in smartcard?
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -32,66 +34,59 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hey Guus,
+Hey Daniel,
 
-On Thu, Jul 14, 2016 at 12:55 PM, Guus Sliepen <guus@tinc-vpn.org> wrote:
-> Some insights learned from tinc:
+Thanks for the pointer.
 
-Thanks very much for these!
+Gniibe -- pleased to meet you. What's programming these things like?
+How much effort do you suppose it would take me to produce a very
+stripped-down firmware for one of these that has these simple USB
+operations:
 
+- load key from host input
+- multiply loaded key by host input
+- erase key
+
+What's the X25519 implementation in general like? Any architecture
+specific tricks required to avoid sidechannel attacks and such?
+
+Regards,
+Jason
+
+On Wed, Jul 13, 2016 at 11:01 AM, Daniel Kahn Gillmor
+<dkg@fifthhorseman.net> wrote:
+> On Wed 2016-07-13 10:21:43 +0200, Jason A. Donenfeld wrote:
+>> The kernel's crypto API has all sorts of async methods of getting
+>> things done, and I'm pretty sure this was built with smartcards and
+>> HSMs in mind. In our case, we wouldn't be asking for a signature but
+>> rather an X25519 multiplication from the device. I assume there's some
+>> ugly code out there for javacard, but I'm not sure if there's any real
+>> HSM for 25519. Something to look into... Using hardware to prevent key
+>> heists strikes me as generally the most robust solution.
 >
-> On Thu, Jul 07, 2016 at 06:33:11PM +0200, Jason A. Donenfeld wrote:
+> it's not labeled officially an "HSM", but Gnuk is a USB hardware token
+> capable of X25519 and guarded storage of secret key material:
 >
->> a) The persistent keepalive does not need an active session and does
->> not need to send any encrypted data. It simply is a UDP packet to the
->> endpoint. The payload doesn't matter for the purpose of just keeping
->> the NAT mapping alive.
+>   http://www.fsij.org/doc-gnuk/
+>   https://anonscm.debian.org/git/gnuk/gnuk/gnuk.git/tree/README
+>   https://lists.alioth.debian.org/mailman/listinfo/gnuk-users
 >
-> Indeed.
+> It has an open hardware design (the small FST-01 [0]) and also targets
+> the low-cost Olimex STM32-H103 [1].  It has a fully-free software stack
+> for those who might want to hack it to be more wireguard-friendly.
 >
->> 1. What should the payload be? Should it be a single fixed byte? Or
->> should it be a zero length UDP packet?
+> Access to the gnuk is usually routed through GnuPG, but it's clearly not
+> limited to that.
 >
-> A zero-length UDP packet should be fine, although it might upset some
-> OSes or firewalls.
-
-In fact, we wound up switching to an encrypted keepalive, so that it
-would work nicely with roaming and endpoint discovery. Now, setting
-persistent-keepalive mode on will ensure that wireguard remains
-"connected", while its default is to "go to sleep".
-
-
+> The author, Gniibe (cc'ed here), is helpful and responsive.  I'm sure if
+> anyone tried to get the gnuk working with wireguard he would be happy to
+> give pointers.
 >
-> Another issue that tinc deals with is path MTU discovery. It combines
-> this with the heartbeat packets. While a zero-length UDP packets is
-> enough to keep a NAT mapping alive, the actual path between two peers
-> might change, and that also changes the path MTU. AFAIK WireGuard
-> doesn't care about this, but in case you (start to) do, you want to send
-> packets with the discovered MTU and perhaps a slightly bigger one too,
-> once in a while, to check whether the PMTU changed.
+>     --dkg
 >
-> Discovering the PMTU between two peers and enforcing this inside the
-> tunnel helps prevent fragmentation of the outer UDP packets. This
-> improves performance and sometimes it's just necessary because there are
-> firewalls out there that block fragments.
-
-Doesn't the Linux kernel already support PMTU discovery with the usual
-ICMP notifications, unless you turn it off with the sysctl nob? Have
-you experimented at all with how this discovery trickles down to tinc?
-I wonder if, since I'm inside the kernel, I'd have an even closer way
-of integrating with the already existing mechanisms.
-
-
-> If you want to keep alive a NAT mapping, then experience tells me 10
-> seconds is something that works for virtually all NAT devices. Once you
-> start to go over 10 seconds, you will find there are those that will
-> drop the mappings. There are RFCs which tell you how a NAT device should
-> behave (RFC 4787 and 7857), but it's hard to find devices that follow
-> all these requirements. The recommended timeout for NAT devices is 5
-> minutes. I'm quite sure a 3600 second interval is useless in practice.
-
-Yea, I read those RFCs and then promptly found out nobody follows
-them. What a disappointment.
-
-In practice, have you seen any devices that are worse than 30 seconds?
-That's about the lowest I saw.
+> [0] http://www.seeedstudio.com/wiki/FST-01
+>     https://shop.fsf.org/storage-devices/neug-usb-true-random-number-generator
+>     https://www.seeedstudio.com/item_detail.html?p_id=1277
+>     https://www.seeedstudio.com/item_detail.html?p_id=1276
+>
+> [1] https://www.olimex.com/Products/ARM/ST/STM32-H103/
