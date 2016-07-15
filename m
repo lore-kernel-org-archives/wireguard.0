@@ -1,25 +1,40 @@
 Return-Path: Jason@zx2c4.com
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 95833ee5
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 26345a9a
  for <wireguard@lists.zx2c4.com>;
- Fri, 15 Jul 2016 11:46:58 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a3d78b91
+ Fri, 15 Jul 2016 11:50:09 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 93513a3c
  for <wireguard@lists.zx2c4.com>;
- Fri, 15 Jul 2016 11:46:57 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id c7ba4cd8
+ Fri, 15 Jul 2016 11:50:09 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id abbf737c
  (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 15 Jul 2016 11:46:56 +0000 (UTC)
-Received: by mail-lf0-f48.google.com with SMTP id l69so29654261lfg.1
- for <wireguard@lists.zx2c4.com>; Fri, 15 Jul 2016 04:48:07 -0700 (PDT)
+ Fri, 15 Jul 2016 11:50:09 +0000 (UTC)
+Received: by mail-lf0-f52.google.com with SMTP id l69so29708246lfg.1
+ for <wireguard@lists.zx2c4.com>; Fri, 15 Jul 2016 04:51:20 -0700 (PDT)
 MIME-Version: 1.0
+In-Reply-To: <CANQAqMX0ywXN0vTxmeZXLYL7kuB0By-18yN9Kj4=_sHGRuSooA@mail.gmail.com>
+References: <CAHmME9rXYm3yV0j5pW3yH59j-C9S=6X8-6OY+b=dkuRq7Vpzvw@mail.gmail.com>
+ <CANQAqMX8Bf9taS+VgRYnGwuOoJcG3PL8PNmyOK66O3pHjP6VBw@mail.gmail.com>
+ <CAHmME9rRHgEtsJ8F-4UrzZMwOs43T24Jq+mUHO91-oimQXXjwg@mail.gmail.com>
+ <CANQAqMV=QeCG9BPvPpaCAu56a+mNi_7sNvhDL=_i4N7WFY1=Ng@mail.gmail.com>
+ <CAHmME9qr2H=4Qdzx9Kz4=op-O-yzum0+hJWvazHZ_K7ex05ncQ@mail.gmail.com>
+ <CANQAqMVT1UkM3uNQbHUKKysHv-tix-Ds9+KaRw62HVHUK5XC+Q@mail.gmail.com>
+ <CAHmME9rh8wCLV3jaqyDBm8ZDuVUC__XZOuzbX1haonO2C_ZCEQ@mail.gmail.com>
+ <CANQAqMWY=8WRbz9+bw11oUO2OAi-SFnHv=f+z5jQ0F1MYf5Ruw@mail.gmail.com>
+ <CAHmME9pFhJoW+kFmJE7-acmb2q4=EqN+U+dJQ8GDEvBzN_=dRg@mail.gmail.com>
+ <CANQAqMX-1MrYW+Yfn6g7BGPwn2qCDWOCoMWkLyM5W9KZgm52tQ@mail.gmail.com>
+ <20160706154834.GH2040@lud.polynome.dn42>
+ <CANQAqMW6=tBgOL67UHkjt79xUUcRzx51weE3Lj+8RpX6MkEK+g@mail.gmail.com>
+ <CAHmME9oo1WJqt=RKxOWwko2nZ3o-BWooL3P9abcCV8hMENLZgQ@mail.gmail.com>
+ <CANQAqMX0ywXN0vTxmeZXLYL7kuB0By-18yN9Kj4=_sHGRuSooA@mail.gmail.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 15 Jul 2016 13:48:04 +0200
-Message-ID: <CAHmME9rzLfAs+rX_a7sH4Mu44FC4=uS=snHL0gr_mfkT1ahoNg@mail.gmail.com>
-To: codl <codl@codl.fr>
+Date: Fri, 15 Jul 2016 13:51:17 +0200
+Message-ID: <CAHmME9py-ZGquBVCRckCJfy0gQLD1hNGx9fqQ57XGJSHu8Ns5Q@mail.gmail.com>
+To: Norman Shulman <norman.shulman@n-dimension.com>
 Content-Type: text/plain; charset=UTF-8
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: [WireGuard] WireGuard link detection
+Subject: Re: [WireGuard] WireGuard cryptokey routing
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -29,59 +44,15 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hey Codl,
+On Thu, Jul 14, 2016 at 11:16 PM, Norman Shulman
+<norman.shulman@n-dimension.com> wrote:
+> Sorry if this sounds too theoretical. I'm just trying to understand the
+> cryptokey routing well enough to determine if it's suitable for our use. The
+> main problem I have is understanding how you can base routing on
+> non-routable addresses, which are not unique.
 
-CCing the mailing list on this.
-
-On Fri, Jul 15, 2016 at 9:46 AM, codl <codl@codl.fr> wrote:
-> Hi Jason,
->
-> On Fri, 2016-07-15 at 03:01 +0200, Jason A. Donenfeld wrote:
->> What do you mean exactly by the tunnel going up and down? Like "ip
->> link set wg0 up"? Or something else?
->
-> I suppose a better way to put it would be the health of the tunnel: is
-> it functional, are packets going through?
->
-> My use case is a tunnel initiated from a laptop that's roaming between
-> different networks. Some of those networks may have strict firewalls
-> that block UDP entirely. In those cases I'd like to automatically
-> change some routes and route some things over the public internet
-> instead.
->
-> I do realise that WireGuard's protocol is very light and that as a
-> result there aren't a lot of ways it can tell if a tunnel is healthy,
-> but perhaps if a number of handshake attempts have failed a tunnel
-> could be considered unhealthy (and wg could run a user-defined
-> command), and healthy again on the first successful handshake after
-> that (again, running a user-defined command)
->
-> --
-> codl
-
-In fact, WireGuard internally monitors the handshake, but by default
-goes silent when no packets are being sent. However, if the
-persistent-keepalive option is used, a session is kept alive always,
-with WireGuard aware when it's having difficulty establishing one.
-
-However, as you mentioned, this information isn't communicated to
-userspace. Maybe communication of this information is something that
-could be exported over NF_LOG? But most likely, it's not really
-correct to export it like that.
-
-Traditionally pathological network people invent new protocols to
-handle failover like this, such a VRRP. I really doubt you want that
-kind of complexity though.
-
-Two things you could do in bash instead is either:
-    - Ping every X seconds, and adjust your routing if a ping changes.
-    - Use 'ip monitor route' to learn when routes go up and down, and
-do a ping at that point.
-
-It's likely you'll need something like the latter, anyway, for
-roaming, if you're forwarding all your traffic. I use a script like
-this -- https://gist.github.com/zx2c4/1ad796372619ad76cf9526cbf9938973
-. Adding ping capabilities to it would be an okay place to start.
-
-Hope this helps,
-Jason
+I don't think it's productive for either of us for me to continue
+answering questions posed in this form. How about instead you write
+down an example network layout ("Subnet A is 10.2.3.0/24, Subnet B
+is...") and then present a problem you'd like to solve with WireGuard
+but are having trouble figuring out how.
