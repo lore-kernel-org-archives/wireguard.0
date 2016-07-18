@@ -1,19 +1,23 @@
-Return-Path: quanzhou822@gmail.com
-Received: from mail-yw0-f180.google.com (mail-yw0-f180.google.com
- [209.85.161.180])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d1f56b0a
+Return-Path: pete@port.direct
+Received: from mail-wm0-f52.google.com (mail-wm0-f52.google.com [74.125.82.52])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3705b02a
  for <wireguard@lists.zx2c4.com>;
- Mon, 18 Jul 2016 13:15:49 +0000 (UTC)
-Received: by mail-yw0-f180.google.com with SMTP id l125so158869212ywb.2
- for <wireguard@lists.zx2c4.com>; Mon, 18 Jul 2016 06:17:23 -0700 (PDT)
+ Mon, 18 Jul 2016 13:56:19 +0000 (UTC)
+Received: by mail-wm0-f52.google.com with SMTP id i5so118116460wmg.0
+ for <wireguard@lists.zx2c4.com>; Mon, 18 Jul 2016 06:57:52 -0700 (PDT)
+Return-Path: <pete@port.direct>
+Received: from [192.168.125.52] ([87.246.78.46])
+ by smtp.gmail.com with ESMTPSA id a2sm16914800wma.2.2016.07.18.06.57.50
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+ Mon, 18 Jul 2016 06:57:50 -0700 (PDT)
+Date: Mon, 18 Jul 2016 14:57:49 +0100
+From: Pete Birley <pete@port.direct>
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Message-Id: <1468850269.6953.2@smtp.gmail.com>
 MIME-Version: 1.0
-From: Quan Zhou <quanzhou822@gmail.com>
-Date: Mon, 18 Jul 2016 21:17:02 +0800
-Message-ID: <CAMRLKH_CB2oKmYnyBX3ntyqyLHUCZh_m5Wk-bWdYd_tkm-FxGA@mail.gmail.com>
-To: wireguard@lists.zx2c4.com
-Content-Type: multipart/alternative; boundary=001a1140fd9cd0902a0537e8c9dd
-Subject: [WireGuard] 0.0.0.0/0 in AllowedIPs for multiple peer on the same
-	interface.
+Content-Type: multipart/alternative; boundary="=-qYu3yWrG64Qbr6kpeTLi"
+Subject: [WireGuard] Kubernetes/Neutron support
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -23,107 +27,63 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---001a1140fd9cd0902a0537e8c9dd
-Content-Type: text/plain; charset=UTF-8
+--=-qYu3yWrG64Qbr6kpeTLi
+Content-Type: text/plain; charset=utf-8; format=flowed
 
 Hi,
 
-I'm having a problem with multiple peers on the same interface, here's my
-config:
+I'm investigating using Wireguard to provide a network solution for 
+Kubernetes via a CNI or exec network driver - has anyone done anything 
+on this already?
 
-wg0.conf:
-[Peer]
-PublicKey = YuIUz2kuf5mtTt9Ya0BM6GifbJK7YJQEcXf/2euRT1s=
-AllowedIPs = 0.0.0.0/0, ::0/0
+We currently have about 500 pods, on 30 nodes, in our production 
+cluster (though plan to scale to about 20-30 times this), and use a 
+combination of OpenvSwitch (gre+IPsec tunnels between hosts) and 
+Flannel (Each host has a sub-net on a standard Linux bridge) to provide 
+connectivity. Though need to both improve availability and east-west 
+traffic distribution, especially when pods may be located is different 
+geographic regions, and are migrating to a solution based on OpenStack 
+Neutron with Dragonflow as the SDN layer.
 
-[Peer]
-PublicKey = /i1OM+/kfFukFjA4Kd35YH/TWc3+jjW0ldxZp5xNDkY=
-AllowedIPs = 0.0.0.0/0, ::0/0
-Endpoint = [SNIPPED]:41414
-
-[Peer]
-PublicKey = 3o0xu/E/iGRibhrE2ehvxyBMqgqBW7oY2kjsbYsR3E8=
-AllowedIPs = 0.0.0.0/0, ::0/0
-Endpoint = [SNIPPED]:41414
-
-The output:
-
-/*****/
-peer: /i1OM+/kfFukFjA4Kd35YH/TWc3+jjW0ldxZp5xNDkY=
-  endpoint: [SNIPPED]:41414
-  allowed ips: (none)
-  latest handshake: 4 minutes, 34 seconds ago
-  bandwidth: 145 B received, 89 B sent
-
-peer: YuIUz2kuf5mtTt9Ya0BM6GifbJK7YJQEcXf/2euRT1s=
-  allowed ips: (none)
-
-peer: 3o0xu/E/iGRibhrE2ehvxyBMqgqBW7oY2kjsbYsR3E8=
-  endpoint: [SNIPPED]:41414
-  allowed ips: 0.0.0.0/0, ::/0
-/*****/
-
-Results that only two out of three peers is pingable within each interface.
+Does anyone have any advice on the best way to implement such a 
+solution? We plan to implement a reasonably 'intelligent' strategy 
+where by our Neutron plugin identifies the most appropriate link for 
+each compute node, and so expect WireGuard to only be utilized for 
+inter-dc connections. In particular any input on the number of 
+connections a single node can take (ie full-mesh style topology), 
+before dedicated network nodes and a hub and spoke topology makes 
+sense? Any advice would be appreciated, and if we find that Wireguard 
+fits our needs then I'd love to get involved in the project.
 
 
--- 
-Regards,
+Cheers
 
-Quan Zhou
-+------------------------+
-|pub [expires 2019-05-04]|
-|2C0C 4D88 E631 4C73 4C44|
-|CDE0 C0E 5470 1D2D 3F3EE|
-+------------------------+
-|pub [revoked 2016-04-16]|
-|44D2 0307 1643 E80F 2E31|
-|F081 FAFA 6643 7F9F D46F|
-+------------------------+
-|quanzhou822@gmail.com   |
-|https://keybase.io/qzhou|
-+------------------------+
 
---001a1140fd9cd0902a0537e8c9dd
-Content-Type: text/html; charset=UTF-8
+Pete Birley
+
+--=-qYu3yWrG64Qbr6kpeTLi
+Content-Type: text/html; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">Hi,<div><br></div><div>I&#39;m having a problem with multi=
-ple peers on the same interface, here&#39;s my config:</div><div><br></div>=
-<div>wg0.conf:</div><div><div>[Peer]</div><div>PublicKey =3D YuIUz2kuf5mtTt=
-9Ya0BM6GifbJK7YJQEcXf/2euRT1s=3D</div><div>AllowedIPs =3D <a href=3D"http:/=
-/0.0.0.0/0">0.0.0.0/0</a>, ::0/0</div><div><br></div><div>[Peer]</div><div>=
-PublicKey =3D /i1OM+/kfFukFjA4Kd35YH/TWc3+jjW0ldxZp5xNDkY=3D</div><div>Allo=
-wedIPs =3D <a href=3D"http://0.0.0.0/0">0.0.0.0/0</a>, ::0/0</div><div>Endp=
-oint =3D [SNIPPED]:41414</div><div><br></div><div>[Peer]</div><div>PublicKe=
-y =3D 3o0xu/E/iGRibhrE2ehvxyBMqgqBW7oY2kjsbYsR3E8=3D</div><div>AllowedIPs =
-=3D <a href=3D"http://0.0.0.0/0">0.0.0.0/0</a>, ::0/0</div><div>Endpoint =
-=3D [SNIPPED]:41414</div></div><div><br></div><div>The output:</div><div><b=
-r></div><div>/*****/</div><div><div>peer: /i1OM+/kfFukFjA4Kd35YH/TWc3+jjW0l=
-dxZp5xNDkY=3D</div><div>=C2=A0 endpoint: [SNIPPED]:41414</div><div>=C2=A0 a=
-llowed ips: (none)</div><div>=C2=A0 latest handshake: 4 minutes, 34 seconds=
- ago</div><div>=C2=A0 bandwidth: 145 B received, 89 B sent</div><div><br></=
-div><div>peer: YuIUz2kuf5mtTt9Ya0BM6GifbJK7YJQEcXf/2euRT1s=3D</div><div>=C2=
-=A0 allowed ips: (none)</div><div><br></div><div>peer: 3o0xu/E/iGRibhrE2ehv=
-xyBMqgqBW7oY2kjsbYsR3E8=3D</div><div>=C2=A0 endpoint: [SNIPPED]:41414</div>=
-<div>=C2=A0 allowed ips: <a href=3D"http://0.0.0.0/0">0.0.0.0/0</a>, ::/0</=
-div></div><div>/*****/<br></div><div><br></div><div>Results that only two o=
-ut of three peers is pingable within each interface.</div><div><br></div><d=
-iv><div><br></div>-- <br><div class=3D"gmail_signature" data-smartmail=3D"g=
-mail_signature"><div dir=3D"ltr"><div><div dir=3D"ltr"><div dir=3D"ltr"><di=
-v dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><font face=
-=3D"monospace, monospace">Regards,<br><br>Quan Zhou<br></font><span style=
-=3D"font-family:monospace,monospace;font-size:12.8px">+--------------------=
-----+</span></div><div dir=3D"ltr"><font face=3D"monospace, monospace">|pub=
- [expires 2019-05-04]|</font><br style=3D"font-family:monospace,monospace;f=
-ont-size:12.8px"><font face=3D"monospace, monospace">|2C0C 4D88 E631 4C73 4=
-C44|<br>|CDE0 C0E 5470 1D2D 3F3EE|</font></div><div dir=3D"ltr"><font face=
-=3D"monospace, monospace">+------------------------+<br>|pub [revoked 2016-=
-04-16]|<br>|44D2 0307 1643 E80F 2E31|<br>|F081 FAFA 6643 7F9F D46F|<br>+---=
----------------------+<br>|<a href=3D"mailto:quanzhou822@gmail.com" target=
-=3D"_blank">quanzhou822@gmail.com</a>=C2=A0 =C2=A0|<br>|<a href=3D"https://=
-keybase.io/qzhou" target=3D"_blank">https://keybase.io/qzhou</a>|<br>+-----=
--------------------+</font></div></div></div></div></div></div></div></div>=
-</div>
-</div></div>
+Hi,<div><br></div><div>I'm investigating using Wireguard to provide a netwo=
+rk solution for Kubernetes via a CNI or exec network driver - has anyone do=
+ne anything on this already?</div><div><br></div><div>We currently have abo=
+ut 500 pods, on 30 nodes, in our production cluster (though plan to scale t=
+o about 20-30 times this), and use a combination of OpenvSwitch (gre+IPsec =
+tunnels between hosts) and Flannel (Each host has a sub-net on a standard L=
+inux bridge) to provide connectivity. Though need to both improve availabil=
+ity and east-west traffic distribution, especially when pods may be located=
+ is different geographic regions, and are migrating to a solution based on =
+OpenStack Neutron with Dragonflow as the SDN layer.</div><div><br></div><di=
+v>Does anyone have any advice on the best way to implement such a solution?=
+ We plan to implement a reasonably 'intelligent' strategy where by our Neut=
+ron plugin identifies the most appropriate link for each compute node, and =
+so expect WireGuard to only be utilized for inter-dc connections. In partic=
+ular any input on the number of connections a single node can take (ie full=
+-mesh style topology), before dedicated network nodes and a hub and spoke t=
+opology makes sense? Any advice would be appreciated, and if we find that W=
+ireguard fits our needs then I'd love to get involved in the project.</div>=
+<div><br></div><div><br></div><div>Cheers</div><div><br></div><div><br></di=
+v><div>Pete Birley</div>=
 
---001a1140fd9cd0902a0537e8c9dd--
+--=-qYu3yWrG64Qbr6kpeTLi--
