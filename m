@@ -1,18 +1,22 @@
-Return-Path: labawi-wg@matrix-dream.net
-Received: from matrix-dream.net (matrix2.matrix-dream.net [84.200.73.251])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f1a5c8e6
+Return-Path: konstantin.menyaev@gmail.com
+Received: from mail-oi0-f51.google.com (mail-oi0-f51.google.com
+ [209.85.218.51])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0e3d8848
  for <wireguard@lists.zx2c4.com>;
- Mon, 18 Jul 2016 21:35:49 +0000 (UTC)
-Received: from ivan by matrix-dream.net with local (Exim 4.87)
- (envelope-from <labawi-wg@matrix-dream.net>) id 1bPGE8-0003aJ-5p
- for wireguard@lists.zx2c4.com; Mon, 18 Jul 2016 22:37:24 +0100
-Date: Mon, 18 Jul 2016 22:37:24 +0100
-From: Ivan =?iso-8859-1?Q?Lab=E1th?= <labawi-wg@matrix-dream.net>
-To: wireguard@lists.zx2c4.com
-Message-ID: <20160718213724.GA13759@matrix-dream.net>
+ Mon, 18 Jul 2016 21:55:37 +0000 (UTC)
+Received: by mail-oi0-f51.google.com with SMTP id w18so87962oiw.3
+ for <wireguard@lists.zx2c4.com>; Mon, 18 Jul 2016 14:57:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Subject: [WireGuard] WireGuard module requires CONFIG_IP6_NF_IPTABLES
+In-Reply-To: <CAKS1Xx4zoX67uY9pY-OGGanpE31ENb3yEE2KsQoUrhTZe6QAKQ@mail.gmail.com>
+References: <CAKS1Xx7FuQ6AkPjA3NMzF-iiEcn+EJf_Wo4MHfzO+65W25=bJw@mail.gmail.com>
+ <CAHmME9p5K_rs1T_qHMvxWxtKkeRap5yORd9tcuk1gU8hQVR_KQ@mail.gmail.com>
+ <CAKS1Xx4zoX67uY9pY-OGGanpE31ENb3yEE2KsQoUrhTZe6QAKQ@mail.gmail.com>
+From: Konstantin Menyaev <konstantin.menyaev@gmail.com>
+Date: Tue, 19 Jul 2016 00:57:12 +0300
+Message-ID: <CAKS1Xx4CZ13-4KmiENiiGm8ZAvnz3jK9s6UR--mycZBQeFr6jw@mail.gmail.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>, wireguard@lists.zx2c4.com
+Content-Type: multipart/alternative; boundary=94eb2c044352fddca30537f00c14
+Subject: [WireGuard] Fwd: Android client
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -22,38 +26,47 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hello,
+--94eb2c044352fddca30537f00c14
+Content-Type: text/plain; charset=UTF-8
 
-WireGuard seems like a nice simple tool. Much better than
-IPsec (at least on linux). Thank you all who help develop it.
+---------- Forwarded message ----------
+From: Konstantin Menyaev <konstantin.menyaev@gmail.com>
+Date: 2016-07-19 0:56 GMT+03:00
+Subject: Re: Android client
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
 
 
-I have been trying to use WireGuard, unsuccessfully as it kept failing
-to create a net device.
+sure.
+https://github.com/vvviperrr/Android-WireGuard
 
-After a while I have traced it to the following line in ratelimiter.c:
+as i mentioned, its just a prototype, which needs userspace library :)
 
->        ratelimiter->v6_match = xt_request_find_match(NFPROTO_IPV6, "hashlimit", 1);
->        if (IS_ERR(ratelimiter->v6_match)) {
->                pr_err("The xt_hashlimit module is required");
->                module_put(ratelimiter->v4_match->me);
->                return PTR_ERR(ratelimiter->v6_match);
->        }
+2016-07-18 15:54 GMT+03:00 Jason A. Donenfeld <Jason@zx2c4.com>:
 
-Long story short, xt_hashlimit only builds the IPV6 version
-if CONFIG_IP6_NF_IPTABLES is enabled (either module or builtin),
-as in:
-> #if IS_ENABLED(CONFIG_IP6_NF_IPTABLES)
-and I didn't have it enabled. I didn't have it enabled as I used
-nftables.
+> Sounds cool. Got a link to what you've done so far?
+>
 
-I would suggest changing the above pr_err to something like:
-> pr_err("The xt_hashlimit module with CONFIG_IP6_NF_IPTABLES=[ym] is required");
-At this point in execution, xt_haslimit module is present as the IPv4 version succeeded.
+--94eb2c044352fddca30537f00c14
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Also, it would be appropriate to include it here
-https://www.wireguard.io/install/#kernel-requirements
-and possibly test for it in packages.
+<div dir=3D"ltr"><br><div class=3D"gmail_quote">---------- Forwarded messag=
+e ----------<br>From: <b class=3D"gmail_sendername">Konstantin Menyaev</b> =
+<span dir=3D"ltr">&lt;<a href=3D"mailto:konstantin.menyaev@gmail.com">konst=
+antin.menyaev@gmail.com</a>&gt;</span><br>Date: 2016-07-19 0:56 GMT+03:00<b=
+r>Subject: Re: Android client<br>To: &quot;Jason A. Donenfeld&quot; &lt;<a =
+href=3D"mailto:Jason@zx2c4.com">Jason@zx2c4.com</a>&gt;<br><br><br><div dir=
+=3D"ltr">sure.<div><a href=3D"https://github.com/vvviperrr/Android-WireGuar=
+d" target=3D"_blank">https://github.com/vvviperrr/Android-WireGuard</a><br>=
+</div><div><br></div><div>as i mentioned, its just a prototype, which needs=
+ userspace library :)</div></div><div class=3D"HOEnZb"><div class=3D"h5"><d=
+iv class=3D"gmail_extra"><br><div class=3D"gmail_quote">2016-07-18 15:54 GM=
+T+03:00 Jason A. Donenfeld <span dir=3D"ltr">&lt;<a href=3D"mailto:Jason@zx=
+2c4.com" target=3D"_blank">Jason@zx2c4.com</a>&gt;</span>:<br><blockquote c=
+lass=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;=
+padding-left:1ex">Sounds cool. Got a link to what you&#39;ve done so far?<b=
+r>
+</blockquote></div><br></div>
+</div></div></div><br></div>
 
-Regards,
-Ivan Labáth
+--94eb2c044352fddca30537f00c14--
