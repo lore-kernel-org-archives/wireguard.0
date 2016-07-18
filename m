@@ -1,22 +1,23 @@
-Return-Path: konstantin.menyaev@gmail.com
-Received: from mail-oi0-f51.google.com (mail-oi0-f51.google.com
- [209.85.218.51])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0e3d8848
+Return-Path: quanzhou822@gmail.com
+Received: from mail-yw0-f181.google.com (mail-yw0-f181.google.com
+ [209.85.161.181])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 78d9d123
  for <wireguard@lists.zx2c4.com>;
- Mon, 18 Jul 2016 21:55:37 +0000 (UTC)
-Received: by mail-oi0-f51.google.com with SMTP id w18so87962oiw.3
- for <wireguard@lists.zx2c4.com>; Mon, 18 Jul 2016 14:57:13 -0700 (PDT)
+ Mon, 18 Jul 2016 22:00:01 +0000 (UTC)
+Received: by mail-yw0-f181.google.com with SMTP id c124so113324ywd.3
+ for <wireguard@lists.zx2c4.com>; Mon, 18 Jul 2016 15:01:37 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAKS1Xx4zoX67uY9pY-OGGanpE31ENb3yEE2KsQoUrhTZe6QAKQ@mail.gmail.com>
-References: <CAKS1Xx7FuQ6AkPjA3NMzF-iiEcn+EJf_Wo4MHfzO+65W25=bJw@mail.gmail.com>
- <CAHmME9p5K_rs1T_qHMvxWxtKkeRap5yORd9tcuk1gU8hQVR_KQ@mail.gmail.com>
- <CAKS1Xx4zoX67uY9pY-OGGanpE31ENb3yEE2KsQoUrhTZe6QAKQ@mail.gmail.com>
-From: Konstantin Menyaev <konstantin.menyaev@gmail.com>
-Date: Tue, 19 Jul 2016 00:57:12 +0300
-Message-ID: <CAKS1Xx4CZ13-4KmiENiiGm8ZAvnz3jK9s6UR--mycZBQeFr6jw@mail.gmail.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>, wireguard@lists.zx2c4.com
-Content-Type: multipart/alternative; boundary=94eb2c044352fddca30537f00c14
-Subject: [WireGuard] Fwd: Android client
+References: <CAMRLKH_CB2oKmYnyBX3ntyqyLHUCZh_m5Wk-bWdYd_tkm-FxGA@mail.gmail.com>
+ <CAHmME9rR586Z-ijdgDLbJj3HCckTkP+NV=MeHVSemOW+AL9TkA@mail.gmail.com>
+In-Reply-To: <CAHmME9rR586Z-ijdgDLbJj3HCckTkP+NV=MeHVSemOW+AL9TkA@mail.gmail.com>
+From: Quan Zhou <quanzhou822@gmail.com>
+Date: Mon, 18 Jul 2016 22:01:27 +0000
+Message-ID: <CAMRLKH9DrPEA1wM5uWQYAr+gkK=X_BWfzGd3-wWuLBm_7Xc7mA@mail.gmail.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Content-Type: multipart/alternative; boundary=001a114f221ab68df00537f01c49
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Subject: Re: [WireGuard] 0.0.0.0/0 in AllowedIPs for multiple peer on the
+	same interface.
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,47 +27,29 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---94eb2c044352fddca30537f00c14
+--001a114f221ab68df00537f01c49
 Content-Type: text/plain; charset=UTF-8
 
----------- Forwarded message ----------
-From: Konstantin Menyaev <konstantin.menyaev@gmail.com>
-Date: 2016-07-19 0:56 GMT+03:00
-Subject: Re: Android client
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+I'm using bird to do the routing stuff, assuming wg0 is an ptmp tunnel, so
+traffic were sent by 'via' directives.
+On Mon, Jul 18, 2016 at 10:45 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
 
-
-sure.
-https://github.com/vvviperrr/Android-WireGuard
-
-as i mentioned, its just a prototype, which needs userspace library :)
-
-2016-07-18 15:54 GMT+03:00 Jason A. Donenfeld <Jason@zx2c4.com>:
-
-> Sounds cool. Got a link to what you've done so far?
+> You cannot have 0/0 for multiple peers. Otherwise, how will WireGuard
+> know where to send traffic?
 >
 
---94eb2c044352fddca30537f00c14
+--001a114f221ab68df00537f01c49
 Content-Type: text/html; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><br><div class=3D"gmail_quote">---------- Forwarded messag=
-e ----------<br>From: <b class=3D"gmail_sendername">Konstantin Menyaev</b> =
-<span dir=3D"ltr">&lt;<a href=3D"mailto:konstantin.menyaev@gmail.com">konst=
-antin.menyaev@gmail.com</a>&gt;</span><br>Date: 2016-07-19 0:56 GMT+03:00<b=
-r>Subject: Re: Android client<br>To: &quot;Jason A. Donenfeld&quot; &lt;<a =
-href=3D"mailto:Jason@zx2c4.com">Jason@zx2c4.com</a>&gt;<br><br><br><div dir=
-=3D"ltr">sure.<div><a href=3D"https://github.com/vvviperrr/Android-WireGuar=
-d" target=3D"_blank">https://github.com/vvviperrr/Android-WireGuard</a><br>=
-</div><div><br></div><div>as i mentioned, its just a prototype, which needs=
- userspace library :)</div></div><div class=3D"HOEnZb"><div class=3D"h5"><d=
-iv class=3D"gmail_extra"><br><div class=3D"gmail_quote">2016-07-18 15:54 GM=
-T+03:00 Jason A. Donenfeld <span dir=3D"ltr">&lt;<a href=3D"mailto:Jason@zx=
-2c4.com" target=3D"_blank">Jason@zx2c4.com</a>&gt;</span>:<br><blockquote c=
-lass=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;=
-padding-left:1ex">Sounds cool. Got a link to what you&#39;ve done so far?<b=
-r>
-</blockquote></div><br></div>
-</div></div></div><br></div>
+I&#39;m using bird to do the routing stuff, assuming wg0 is an ptmp tunnel,=
+ so traffic were sent by &#39;via&#39; directives. <br><div class=3D"gmail_=
+quote"><div dir=3D"ltr">On Mon, Jul 18, 2016 at 10:45 PM Jason A. Donenfeld=
+ &lt;<a href=3D"mailto:Jason@zx2c4.com">Jason@zx2c4.com</a>&gt; wrote:<br><=
+/div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-le=
+ft:1px #ccc solid;padding-left:1ex">You cannot have 0/0 for multiple peers.=
+ Otherwise, how will WireGuard<br>
+know where to send traffic?<br>
+</blockquote></div>
 
---94eb2c044352fddca30537f00c14--
+--001a114f221ab68df00537f01c49--
