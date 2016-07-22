@@ -1,23 +1,19 @@
-Return-Path: Jason@zx2c4.com
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9cd9ef1e
+Return-Path: dkg@fifthhorseman.net
+Received: from che.mayfirst.org (che.mayfirst.org [162.247.75.118])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 824772c2
  for <wireguard@lists.zx2c4.com>;
- Fri, 22 Jul 2016 19:17:37 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id af4c0f0a
- for <wireguard@lists.zx2c4.com>;
- Fri, 22 Jul 2016 19:17:36 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 8cf8e5f3
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Fri, 22 Jul 2016 19:17:36 +0000 (UTC)
-Date: Fri, 22 Jul 2016 21:19:39 +0200
-To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+ Fri, 22 Jul 2016 21:57:20 +0000 (UTC)
+Received: from fifthhorseman.net (unknown [108.58.6.98])
+ by che.mayfirst.org (Postfix) with ESMTPSA id BE151F99C
+ for <wireguard@lists.zx2c4.com>; Fri, 22 Jul 2016 17:59:25 -0400 (EDT)
+From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Date: Fri, 22 Jul 2016 17:51:45 -0400
+Message-ID: <87bn1pmjda.fsf@alice.fifthhorseman.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Message-Id: <ffffffff98b5bdef@frisell.zx2c4.com>
-Subject: [WireGuard] [ANNOUNCE] Snapshot `experimental-0.0.20160722`
-	Available
+Content-Type: multipart/signed; boundary="=-=-=";
+ micalg=pgp-sha512; protocol="application/pgp-signature"
+Subject: [WireGuard] new build process doesn't work with debian's dkms
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -27,89 +23,70 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--=-=-=
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-Hello,
+hi there--
 
-A new experimental snapshot, `experimental-0.0.20160722`, has been tagged in
-the git repository.
+i'm trying to package wireguard experimental-0.0.20160722 for debian, and i=
+t looks
+like the new Kconfig/Kbuild/Makefile revamp from
+3106d632de4235f8c6d63d602fe2fa9e0175d690 causes the version of dkms to
+not be able to build it automagically.
 
-Please note that this snapshot is, like the rest of the project at this point
-in time, experimental, and does not consitute a real release that would be
-considered secure and bug-free. However, if you'd like to test this snapshot
-out, there are a few relevent changes.
+In particular:
 
-== Changes ==
+=2D---------
+0 root@sid:~# dkms build wireguard/0.0.20160722
 
-  Sorry about the second release in two days. I don't like to release at this
-  velocity, but the changes in the cross-platform interface were important to
-  get out there, so that folks working on userspace implementations have
-  something to work with.
-  
-  * tools: abstract sockets are dangerous
-  * tools: Use seqpacket instead of dgram
-  * tools: use stream instead of seqpacket* tools: propagate set errno
-  
-  This is annoying. First we realized that abstract sockets aren't a good idea
-  for bidirectional communication. Then this lead to greater reflections that in
-  fact we need something connection oriented but still packet based: seqpacket.
-  While this was supported in FreeBSD and Linux, it wasn't in OS X. So we moved
-  to an ordinary Unix stream, and now this is what we're using for the
-  cross-platform interface. It has the added advantage of mapping well to
-  Windows named pipes, when we add Windows support.
-  
-  * tools: add default cflag
-  * tools: add -MP to makefile
-  
-  Some build system enhancements.
-  
-  * socket: simpler debug message
-  * socket: reset IPv4 socket to NULL after free
-  * socket: fix compat for 4.1 v6 sockets
-  
-  Though we already work around the immature UDP tunnel API in 4.1 and 4.2
-  kernels, it turns out that 4.1 had really broken behavior with regards to
-  namespace sysctl nobs. So, we work around this borked behavior. Fortunately
-  this cruft will be removed when WireGuard is merged upstream. But for now it's
-  important so that folks still on 4.1 can use WireGuard.
-  
-  * cookie: do not expose csprng directly
-  * index hashtable: run random indices through siphash
-  
-  These patches ensure that we never put information from /dev/urandom directly
-  on the wire, in the case of a NOBUS backdoor. It's a bit overkill and
-  paranoid, but still nice to do.
+Kernel preparation unnecessary for this kernel.  Skipping...
 
-As always, the source is available at https://git.zx2c4.com/WireGuard/ and
-information about the project is available at https://www.wireguard.io/ .
+Building module:
+cleaning build area....
+make -j1 KERNELRELEASE=3D4.6.0-1-amd64 -C /lib/modules/4.6.0-1-amd64/build =
+M=3D/var/lib/dkms/wireguard/0.0.20160722/build....
+Error!  Build of wireguard.ko failed for: 4.6.0-1-amd64 (x86_64)
+Consult the make.log in the build directory
+/var/lib/dkms/wireguard/0.0.20160722/build/ for more information.
+7 root@sid:~# cat /var/lib/dkms/wireguard/0.0.20160722/build/make.log=20
+DKMS make.log for wireguard-0.0.20160722 for kernel 4.6.0-1-amd64 (x86_64)
+Fri Jul 22 17:49:41 EDT 2016
+make: Entering directory '/usr/src/linux-headers-4.6.0-1-amd64'
+  Building modules, stage 2.
+  MODPOST 0 modules
+make: Leaving directory '/usr/src/linux-headers-4.6.0-1-amd64'
+0 root@sid:~#=20
+=2D---------
 
-This snapshot is available in tarball form here:
-  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-experimental-0.0.20160722.tar.xz
-  SHA256: 0dcda97b6bb4e962f731a863df9b4291c1c453b01f4faba78be4aaa13a594242
+I probably need to grok the new build system a bit more when i have some
+time, but if anyone has any pointers for integrating it with dkms, i'd
+be happy to hear what you thought was necessary.
 
-If you're a snapshot package maintainer, please bump your package version. If
-you're a user, the WireGuard team welcomes any and all feedback on this latest
-snapshot.
+just wanted to report why this isn't already uploaded to debian yet.
 
-Thank you,
-Jason Donenfeld
+     --dkg
 
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2
 
-iQItBAEBCAAXBQJXknGwEBxqYXNvbkB6eDJjNC5jb20ACgkQSfxwEqXeA67SWQ//
-VSjgM1/loGmN3ZcABFB6bcJWiDgrcF31HLdBgmBsk97Qweqwovuo8iPjMEdsmOR5
-NF9iT9X3I2W3dSUreYwjvTKsUBWGJA0BqT/L3bsMnbrCz8cbPPIUKg3bHR6mOmKs
-r4u/lyglb1j8L3ooqoXNNW3T4EKNOZRU55Wq5PWklXbK2S3+/CaE2r2mT+hZuIbc
-abVZQQujwqXFOI/wkF/m/qP5HboynN5w427bGYcRdJb7T6w8UY+k61cJvbfQwL/w
-D5DkmUGYa3Waz8P19fcpwTqbqQ0sncVwFRB9hFmgqY8yQ1ZkUxforgw6sjI9TjKw
-2r0+h0m7Mf/TK2+ILmn7Ibqr95NnpEM4T2YoKi+sS5mAgdr2cctKUOPGHZWpd3Os
-cifgfHQu1L+CASC0Cx7hwImi3vHoq+3Ds4nrDgBY02qFDqMe0PdbDZbmGD2Td0iQ
-/wg5kyNV0zaXBQ9IAJ2jNxP7XRhkaxmB9ajFDNur7g4mLp0RfLc+DuwZUITPyh3Q
-y7TMcANnYY72AUseiwWOFvQq6oXdzY6ykw5wmnqTa3aozu4xaEqbsdbpUgTTokWG
-NzdolAKu+xv2eG4WLjzLItllsLHmQ/bB99XkH/SMbHqEUkIcGAvjNevJ6iUfIbEX
-JqetcHgCyYLwKsOhdEfzF2t5Sg4nICYGIKI9JrXBbeI=
-=Mq3+
+iQJ8BAEBCgBmBQJXkpVxXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25zLm9w
+ZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXRFREIyRTc0RjU2RkNGMkI2NzI5N0I3MzUy
+NEVDRkY1QUZGNjgzNzBBAAoJECTs/1r/aDcKbkwQAJntHmoRTN6MIQnJzouI3QKT
+rMlzg6iGsxvlZaBKJQQIuw5tq+r6Qq458iRtABY7yXcdESd8CFMHX5+4y5otn/yJ
+M2+0OCe5Cc/YrH22sdUOVDNwSDLRPt5VLju2pgkaeKPyYQrJmL82Rz9/1nu+3y28
+4LughrsPS01aFkX1LY/Ubxuw83t81nG/g8e8ach1IZbeUfUUQrOEfBG6AGmJIAZc
+I1TswvJuqNv2vgLYt/RDvF1NwT2BOO0W+8ISzlbUfbIych4I1J1mzt201EZfHH26
+y0FxEgPsvXX3ts7/rIjkXflxk8sAoqZGhTd10jLFK+bEyamF+1KWC7B7oMjpkT4V
+7d9gPwmTIuYB8jEEBt0WzDpemzPr6dhs0cCrEbwvcKTNlaUK6l6bgYidBXVXsbDQ
+bwIqEjQLTk8xvrDc+/VJtPePm5Nooe2y52WPOJFkliAyHNBi2oTzLdce/rCZDnic
+6ynwNYxc05LgwcDak3BqzSwzIEU6U7w9IYs8aWx6zfRnA/ffGAfyFzT7+S/gB4+9
+maSmVbaqvqIxjmVD8NPqDEwDneQuYD5CxijZ8QXlfGWEJk/NcTO1VscxbHRy8WSI
+TnevxuVcCYluFjGN42b25cOOaR+ulXvZGUajgabIISPi0XtwAP4fbHykvEw/aV1C
+ZuZQPS74/z7ff6dWpt6R
+=x9EO
 -----END PGP SIGNATURE-----
+--=-=-=--
