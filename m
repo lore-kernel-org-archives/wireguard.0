@@ -1,19 +1,19 @@
-Return-Path: jens@viisauksena.de
-Received: from viisauksena.de (v32412.1blu.de [178.254.39.111])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b8cb9fdc
+Return-Path: bjin@ctrl-d.org
+Received: from mail-lf0-f50.google.com (mail-lf0-f50.google.com
+ [209.85.215.50])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6e1f9d37
  for <wireguard@lists.zx2c4.com>;
- Tue, 26 Jul 2016 19:43:15 +0000 (UTC)
-Received: from [10.60.12.138] (unknown [185.66.194.30])
- by openfreiburg.de (Postfix) with ESMTPSA id 6C79410F23C38
- for <wireguard@lists.zx2c4.com>; Tue, 26 Jul 2016 21:45:49 +0200 (CEST)
-To: wireguard@lists.zx2c4.com
-From: jens <jens@viisauksena.de>
-Message-ID: <62f0dc7c-4eb4-523a-c548-ee2b2a6ec038@viisauksena.de>
-Date: Tue, 26 Jul 2016 21:42:41 +0200
+ Tue, 26 Jul 2016 20:49:44 +0000 (UTC)
+Received: by mail-lf0-f50.google.com with SMTP id l69so13575779lfg.1
+ for <wireguard@lists.zx2c4.com>; Tue, 26 Jul 2016 13:52:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="------------66D1E712E391DEEF34EB5B2B"
-Subject: [WireGuard] Header / MTU sizes for Wireguard
+From: Bin Jin <bjin@ctrl-d.org>
+Date: Tue, 26 Jul 2016 22:51:56 +0200
+Message-ID: <CAHQn_MD74m-mHQLCbK7UG72BnCdbVbdUpiD0jF4Jk1NFuJMLAw@mail.gmail.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Subject: [WireGuard] Suggestion: Hide private key by default with wg tool
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -23,64 +23,26 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-This is a multi-part message in MIME format.
---------------66D1E712E391DEEF34EB5B2B
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Hello Jason,
 
-hi,
+I think there is a potential security issue regarding the use of "wg"
+tool. By default "wg" will print the private keys in plain text to the
+console. This isn't going to be a big issue in general, but if I was
+showing my friend how to use wireguard, or using my computer in public
+places with surveillance camera, without a option to hide private keys
+I would very likely get my private keys compromised. IIUC, compromise
+of private key won't have security impact assuming a passive attacker,
+and an active attacker needs to have private keys from both side to
+perform a MitM attack. But nonetheless, I think this could be fixed
+very easily, to avoid actual potential security compromise.
 
-we are succesfully built an alternative for our tincd backbone with
-wireguard (and on top l2tpv3/batv15).
+Considering that most people would probably type "wg" without any
+further options that explicitly hide all private keys (either without
+the knowledge of the option, or by accident). I would suggest to hide
+the private key by default (showing some text like "(private key
+hidden by default)" instead), and add an option to allow user to
+explicitly showing the private key like "--show-private-keys".
 
-with iperf we get up to 500Mbs on l2tpv3 level.. (upto 700 on pure
-wireguard)
+Thanks!
 
-for optimization we need to know more and better about the used header,
-the possible data-size per packet-header to increase throuhput with all
-the other layers.
-
-Do you know your headersize, or some more easy details in
-headersize/packetsize...
-
-where does the default mtu of 1423 come from
-
-thx jens
-
-
---=20
-make the world nicer, please use PGP encryption=09
-
-
---------------66D1E712E391DEEF34EB5B2B
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: 8bit
-
-<html>
-  <head>
-
-    <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  </head>
-  <body text="#000000" bgcolor="#FFFFFF">
-    <p>hi,</p>
-    <p>we are succesfully built an alternative for our tincd backbone
-      with wireguard (and on top l2tpv3/batv15).</p>
-    <p>with iperf we get up to 500Mbs on l2tpv3 level.. (upto 700 on
-      pure wireguard)</p>
-    <p>for optimization we need to know more and better about the used
-      header, the possible data-size per packet-header to increase
-      throuhput with all the other layers. <br>
-    </p>
-    <p>Do you know your headersize, or some more easy details in
-      headersize/packetsize...</p>
-    <p>where does the default mtu of 1423 come from<br>
-    </p>
-    <p>thx jens</p>
-    <p><br>
-    </p>
-    <pre class="moz-signature" cols="72">-- 
-make the world nicer, please use PGP encryption	</pre>
-  </body>
-</html>
-
---------------66D1E712E391DEEF34EB5B2B--
+Bin
