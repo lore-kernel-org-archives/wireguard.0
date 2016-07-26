@@ -1,20 +1,19 @@
-Return-Path: yx12@qwcqp.net
-Received: from a.qwcqp.net (103.214.141.235 [103.214.141.235])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f9a42097
+Return-Path: jens@viisauksena.de
+Received: from viisauksena.de (v32412.1blu.de [178.254.39.111])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b8cb9fdc
  for <wireguard@lists.zx2c4.com>;
- Tue, 26 Jul 2016 15:32:46 +0000 (UTC)
-Received: from zabcdeefh (unknown [219.136.10.251])
- by a.qwcqp.net (Postfix) with ESMTPA id C65FB212E7
- for <wireguard@lists.zx2c4.com>; Tue, 26 Jul 2016 23:34:36 +0800 (CST)
-Date: Tue, 26 Jul 2016 23:35:13 +0800
-From: "yx12@qwcqp.net" <yx12@qwcqp.net>
-To: "wireguard" <wireguard@lists.zx2c4.com>
-Message-ID: <201607262335130237788@qwcqp.net>
+ Tue, 26 Jul 2016 19:43:15 +0000 (UTC)
+Received: from [10.60.12.138] (unknown [185.66.194.30])
+ by openfreiburg.de (Postfix) with ESMTPSA id 6C79410F23C38
+ for <wireguard@lists.zx2c4.com>; Tue, 26 Jul 2016 21:45:49 +0200 (CEST)
+To: wireguard@lists.zx2c4.com
+From: jens <jens@viisauksena.de>
+Message-ID: <62f0dc7c-4eb4-523a-c548-ee2b2a6ec038@viisauksena.de>
+Date: Tue, 26 Jul 2016 21:42:41 +0200
 MIME-Version: 1.0
-Content-Type: text/html;
-	charset="GB2312"
-Subject: [WireGuard] =?gb2312?b?yrXP1sr009rX1Ly6tcTSu7bU0ru439bKwb/Rr8XM?=
-Reply-To: q173561765@sina.com
+Content-Type: multipart/alternative;
+ boundary="------------66D1E712E391DEEF34EB5B2B"
+Subject: [WireGuard] Header / MTU sizes for Wireguard
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -24,78 +23,64 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-PGh0bWw+DQogIDxoZWFkPg0KICAgIDx0aXRsZT48L3RpdGxlPg0KICAgIDxtZXRhIGNvbnRlbnQ9
-InRleHQvaHRtbDsgY2hhcnNldD1nYjIzMTIiIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIgLz4N
-CiAgPC9oZWFkPg0KICA8Ym9keT4NCiAgICA8ZGl2PjxiciAvPiYjMjQ3NDQ7JiMyMjkwOTs8L2Rp
-dj4NCiAgICA8ZGl2PiZuYnNwOzwvZGl2Pg0KICAgIDxkaXY+JiMyOTYxNjsmIzIyMzEyOzxmb250
-IGNvbG9yPSIjODAwMDAwIj4mIzIyODA2OyYjMzYxNTI7PC9mb250PiYjMzQ4OTI7JiMxOTk5NDsm
-IzI0MzIwOyYjMjE0NTc7JiMyMzQ1ODsmIzI1MTQzOywmIzIzNjM3OyYjMjAyNTA7JiMzNjE1Mzsm
-IzI5OTkyOyYjMzk2NDA7JiM2NTI5MjsmIzMzNTM5OyYjMjIyNjA7JiMyMzU2NzsmIzY1MjkyOyYj
-MjE2MDg7JiMyNjM5OTsmIzMwNzAxOyYjNjUzMDc7QjJCJiMzMTQ1NDsmIzIwMTA1OyYjMjg2MDg7
-JiMyODg3MjsmIzY1MjkyOyYjMzU4MTA7JiMzMDQyNDsmIzM2MjM0OyYjMjY0Njk7JiMzNjIzNDsm
-IzIzNTY5OyZndDsmIzIwMjE1OyYjMjc2MDQ7JiMyMDIxNTsmIzI0NDcxOyYjMjEzODU7JiMyMzQ3
-NTsmIzY1MjkyOyYjMjUyMTQ7JiMyMTA0MDsmIzIwMjQ4OyYjMzYxMzY7JiMyMzQ1ODsmIzI1MTQz
-OyYjMjQ0NTY7JiMyMjI1NjsmIzM4NTkwOyYjMTIyOTA7PGJyIC8+JiMyNTEwNTsmIzIwMjA0OyYj
-MjYxNTk7JiMyMDU3MDsmIzIyODA2OyYjMzYxNTI7JiMyMzQ1ODsmIzI1MTQzOyYjMjQzMjA7JiMy
-MTQ1NzsmIzMxOTk1OyYjMzI0Nzk7JiMzMDM0MDsmIzY1MjkyOyYjMzg1OTg7JiMyNTEwNDsmIzI2
-Mzc3Ozxmb250IGNvbG9yPSIjODAwMGZmIj4yMDAmIzIwMDEwOzwvZm9udD4mIzIyMjY5OyYjMjM0
-Nzg7JiMxOTk3OTsmIzMwMzQwOzxmb250IGNvbG9yPSIjODAwMGZmIj43MDAmIzIyODEwOyYjMjAw
-MTA7PC9mb250PiYjMjQ0MDM7JiMyMjMyMDsmIzMwMzQwOyYjMzU4MjE7JiMzNTMyODsmIzI1NjI4
-OyYjMzIwMzQ7JiMyNDM0MTsmIzI1ODA2OyYjMzMwMjE7JiMyMjgxNTsmIzI0MTEwOyYjMjQ3NDQ7
-JiMyMDAyNzsmIzIxMTYwOyYjMjQzMjA7JiMyMTQ1NzsmIzIwODQwOyYjMjk2OTk7JiMyMDIxOTsm
-IzI0ODQ3OyYjMjAxMzU7JiMyMTY5NzsmIzMwMzQwOyYjMzA0NDY7JiMyNjYzMTsmIzIwMDgwOyYj
-MjM0Nzg7JiMzMDM0MDsmIzMyODUyOyYjMzE5OTU7JiMyNjA0MTsmIzI0MzM1OyYjNjUyOTI7JiMz
-MzcxOTsmIzI0NDcxOyYjMzAzNDA7JiMzNTgxMDsmIzMwNDI0OyYjMjYxNTk7JiMyNTEwNTsmIzIw
-MjA0OyYjMzY4OTA7JiMzNjgwNzsmIzM5NjQwOyYjMjU5Mjg7JiMyNTYyODsmIzMyMDM0OyYjMjAw
-Mjc7JiMyMTE2MDsmIzMyODUyOyYjMzE5OTU7JiMyMzQ1ODsmIzI1MTQzOyYjNjUyOTI7JiMyODk4
-MjsmIzIxNTE4OyYjMjM0NTg7JiMyNTE0MzsmIzE5OTg3OyYjMzgzNzY7JiMyMjIzODsmIzIyNzk3
-OyYjMzI0NzM7JiMyNTEwNTsmIzIwMjA0OyYjMzAzNDA7JiMzNTgxMDsmIzMwNDI0OyYjNjUyOTI7
-JiMyNjE1OTsmIzE5OTY4OyYjMjM1NDU7JiMxOTk2ODsmIzI5NDIwOyYjMjAxMzk7JiMzNTgxMDsm
-IzMwNDI0OyYjNjUyOTI7JiMzNjgyNTsmIzI2Njc5OyYjMjM0NTg7JiMyNTE0MzsmIzI0ODQ3OyYj
-MjE1MjE7JiMyNDYxNTsmIzM2ODkwOyYjMjQxMjA7JiMyNDQ1NjsmIzM5NjQwOyYjNjUyOTI7JiMy
-NTEwNDsmIzIwMTMyOyYjMjk1NzU7JiMyMDA2MzsmIzIwMjUwOyYjMjc2MDQ7JiMzNjczOTsmIzM5
-NjQwOyYjMTIyOTA7PGJyIC8+Jmd0OzEmIzEyMjg5OyYjMjUyMDk7JiMzNzMyNzsmIzMwMzQwOyYj
-MjU2Mjg7JiMzMjAzNDsmIzIzNDU4OyYjMjUxNDM7JiMzMjU5MzsmIzMxNDQ5OyYjNjUyOTI7JiMz
-NTc1Mzs8c3BhbiBzdHlsZT0id2hpdGUtc3BhY2U6IG5vcm1hbDsgd29yZC1zcGFjaW5nOiAwcHg7
-IHRleHQtdHJhbnNmb3JtOiBub25lOyBmbG9hdDogbm9uZTsgY29sb3I6IHJnYig1MSw1MSw1MSk7
-IGZvbnQ6IDEzcHgvMjZweCBhcmlhbDsgZGlzcGxheTogaW5saW5lICFpbXBvcnRhbnQ7IGxldHRl
-ci1zcGFjaW5nOiBub3JtYWw7IGJhY2tncm91bmQtY29sb3I6IHJnYigyNTUsMjU1LDI1NSk7IHRl
-eHQtaW5kZW50OiAwcHg7IC13ZWJraXQtdGV4dC1zdHJva2Utd2lkdGg6IDBweCI+c29mdHdhcmU8
-L3NwYW4+JiMyNDE3ODsmIzIxMzIyOyYjMjM1Njc7JiMyNjEwMjsmIzIwNTcwOyYjMzAzNDA7JiMy
-MDEwNzsmIzM5MDMwOyYjMjQ0NzE7JiMxOTk3ODsmIzE5OTY4OyYjMjAwMTA7JiMxOTk5NDsmIzIx
-MTUzOyYjMjE1OTI7JiMyMTMyMjsmIzIwMDEwOyYjMjYzNzY7JiMyNTE2MzsmIzI0MDM3OyYjMjA1
-NzA7JiMzMDM0MDsmIzIwMTA3OyYjNjUzMDc7PGJyIC8+Jmd0OzImIzEyMjg5OyYjMjUyODk7JiMy
-MTQ2MjsmIzIzNDU4OyYjMjUxNDM7JiMzNzAzODsmIzMxNjY1OyYjNjUyOTI7JiMxOTk4MTsmIzM4
-NjU2OyYjMzUyMDE7JiMxOTk2ODsmIzIwMDEwOyYjMTk5Njg7JiMyMDAxMDsmIzMyNTkzOyYjMzE0
-NDk7JiMyNTE3MTsmIzI0MzIwOyYjMjI3OTc7JiMyMTA0NjsmIzMyODUyOyYjMzE5OTU7JiMyNjA0
-MTsmIzI0MzM1OyYjNjUzMDc7PGJyIC8+Jmd0OzMmIzEyMjg5Ozxmb250IGNvbG9yPSIjODAwMGZm
-Ij43MDA8L2ZvbnQ+JiMyMjgxMDsmIzIwMDEwOyYjMjA4NDA7JiMyOTY5OTsmIzM2ODkwOyYjMjk5
-OTI7JiMyMTY0NDsmIzIyMjY5OyYjMjM0Nzg7JiMyMTMwNjsmIzIyNDk1OyYjMjU2Mjg7JiMzMjAz
-NDsmIzI0MzQxOyYjMjU4MDY7JiMyMTY0NDs3NiYjMjI4MTA7JiMzMTE4MTsmIzM1ODIxOyYjMzUz
-Mjg7JiMyNTYyODsmIzMyMDM0OyYjMjE2NDQ7JiMyMjgyMzsmIzM3MzI3OyYjMjA4Njk7JiMzMjYy
-MjsmIzMwMzQwOyYjMzQ4OTI7JiMxOTk5NDsmIzI1OTY4OyYjMjU0NTQ7JiMyNDIxMTsmIzY1Mjky
-OyYjMzU3NTM7JiMyMDQ0OTsmIzI0Njg3OyYjMjgzMDQ7JiMyMjgxMDsmIzIxMDQwOyYjMjYwODA7
-JiMyNzg2MTsmIzI0ODE5OyYjMzU5Mzc7JiM2NTI5MjsmIzI1MTkzOyYjMjI4MjM7JiMyNTYyODsm
-IzMyMDM0OyYjMzM1Mzk7JiMyMjI2MDsmIzY1MjkyOyYjMjYzNTY7JiMzOTY0MDsmIzMwMzQwOyYj
-MjA0NDk7JiMyNDY4NzsmIzM3MzI3OyYjNjUzMDc7PGJyIC8+Jmd0OzQmIzEyMjg5OyYjMjAxMTY7
-JiMzNzMyNTsmIzM2ODA3OyYjMjgzODg7JiMyNjQ2NTsmIzIwMjE0OyYjMzU3NzQ7JiMzMjYyMjsm
-IzM1NzUzOyYjMjU2Mjg7JiMzMjAzNDsmIzI2MzU2OyYjMzE5MzQ7JiMyMDkzNDsmIzY1MjkyOyYj
-MzA0NjU7JiMyMTQzNTsmIzI1MTYzOyYjMjQwMzc7JiMxOTk2ODsmIzIwMDEwOyYjMTk5Njg7JiMy
-MDAxMDsmIzI1NDkwOyYjMjY1OTc7JiM2NTMwNzs8YnIgLz4mZ3Q7NSYjMTIyODk7JiMyNjM3Nzsm
-IzI0MjA3OyYjMjEyNzA7JiMzMTY0OTsmIzI5NzAyOyYjMzI0Njc7JiMyNjUyNDsmIzEyMjkwOzwv
-ZGl2Pg0KICAgIDxkaXY+Jmd0OzYmIzEyMjg5OyYjMjE0ODc7JiMzODU0MzsmIzI2MTAyOyYjMjM1
-NDg7JiMyMDk4NjsmIzIzNDU4OyYjMjUxNDM7JiMyMDQ0OTsmIzI0Njg3OyYjMzYxNjQ7JiMyNjAw
-OTsmIzY1MjkyOyYjMjA4Njk7JiMzMjYyMjsmIzM3MDM4OyYjMjAyMTQ7JiMzMzgyOTsmIzM4MTQ0
-OyYjMjcxNjk7JiMyMjM1OTsmIzEyMjkwOzwvZGl2Pg0KICAgIDxkaXY+Jm5ic3A7PC9kaXY+DQog
-ICAgPGRpdj4mIzI2Mzc3OyYjMjA4NTI7JiMzNjI1OTsmIzIwMTAyOyYjMzUyOTk7JiMyNTEwNTsm
-IzIxNDk2OyYjMzU4MTQ7JiMzMjQ1NDsmIzM1ODMxOyYjMjE2NzI7JiMzNTgxMDsmIzIwMTk3OyYj
-MTk5Nzk7JiMyNTE4NzsmIzI1MTg3OzwvZGl2Pg0KICAgIDxkaXY+PGJyIC8+JiMyNjM1NjsmIzIy
-ODEwOyYjMzU4MTQ7JiMyNDc3MzsgJiMyMTY3MjsmIzM1ODEwOzxmb250IGNvbG9yPSIjZmYwMDAw
-Ij5xcSZuYnNwOyZuYnNwOyAxNzM1NjE3NjU8L2ZvbnQ+JiMyMTMwNjsmIzIwODA4OyYjMjk5ODM7
-PC9kaXY+DQogICAgPGRpdj4mIzEyMzA0OyYjMjI4MDY7JiMzNjE1MjsmIzIzNDU4OyYjMjUxNDM7
-JiMyNDMyMDsmIzIxNDU3OyYjMjYxNTk7JiMxOTk2ODsmIzIwMDEwOyYjMzg2NTY7JiMzNTIwMTsm
-IzM1MjY4OyYjMjEwMTA7JiMzMDM0MDsmIzMxOTk1OyYjMzI0Nzk7JiMyNDAzNzsmIzMxMjQzOyYj
-NjUyOTI7JiMyNDg5NTsmIzI1NjU4OyYjMjUxNjM7JiMyMDg0OTsmIzM2ODI3OyYjNjUyOTI7JiMy
-MDg0OTsmIzIxMDE5OyYjMjY0MTA7JiMyNjQ2OTsmIzY1MjgxOyYjNjUyODE7JiMxMjMwNTsgPC9k
-aXY+DQogICAgPGRpdj4mbmJzcDs8L2Rpdj4NCiAgICA8ZGl2PjxiciAvPjwvZGl2Pg0KICA8L2Jv
-ZHk+DQo8L2h0bWw+
+This is a multi-part message in MIME format.
+--------------66D1E712E391DEEF34EB5B2B
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+hi,
+
+we are succesfully built an alternative for our tincd backbone with
+wireguard (and on top l2tpv3/batv15).
+
+with iperf we get up to 500Mbs on l2tpv3 level.. (upto 700 on pure
+wireguard)
+
+for optimization we need to know more and better about the used header,
+the possible data-size per packet-header to increase throuhput with all
+the other layers.
+
+Do you know your headersize, or some more easy details in
+headersize/packetsize...
+
+where does the default mtu of 1423 come from
+
+thx jens
+
+
+--=20
+make the world nicer, please use PGP encryption=09
+
+
+--------------66D1E712E391DEEF34EB5B2B
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 8bit
+
+<html>
+  <head>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  </head>
+  <body text="#000000" bgcolor="#FFFFFF">
+    <p>hi,</p>
+    <p>we are succesfully built an alternative for our tincd backbone
+      with wireguard (and on top l2tpv3/batv15).</p>
+    <p>with iperf we get up to 500Mbs on l2tpv3 level.. (upto 700 on
+      pure wireguard)</p>
+    <p>for optimization we need to know more and better about the used
+      header, the possible data-size per packet-header to increase
+      throuhput with all the other layers. <br>
+    </p>
+    <p>Do you know your headersize, or some more easy details in
+      headersize/packetsize...</p>
+    <p>where does the default mtu of 1423 come from<br>
+    </p>
+    <p>thx jens</p>
+    <p><br>
+    </p>
+    <pre class="moz-signature" cols="72">-- 
+make the world nicer, please use PGP encryption	</pre>
+  </body>
+</html>
+
+--------------66D1E712E391DEEF34EB5B2B--
