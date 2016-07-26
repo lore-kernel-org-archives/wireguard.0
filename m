@@ -1,19 +1,27 @@
-Return-Path: bjin@ctrl-d.org
-Received: from mail-lf0-f50.google.com (mail-lf0-f50.google.com
- [209.85.215.50])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6e1f9d37
+Return-Path: Jason@zx2c4.com
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2dfe3ed7
  for <wireguard@lists.zx2c4.com>;
- Tue, 26 Jul 2016 20:49:44 +0000 (UTC)
-Received: by mail-lf0-f50.google.com with SMTP id l69so13575779lfg.1
- for <wireguard@lists.zx2c4.com>; Tue, 26 Jul 2016 13:52:18 -0700 (PDT)
+ Tue, 26 Jul 2016 23:39:15 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4bba6c07
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 26 Jul 2016 23:39:15 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 5d1f24c8
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 26 Jul 2016 23:39:15 +0000 (UTC)
+Received: by mail-lf0-f52.google.com with SMTP id l69so15752833lfg.1
+ for <wireguard@lists.zx2c4.com>; Tue, 26 Jul 2016 16:41:50 -0700 (PDT)
 MIME-Version: 1.0
-From: Bin Jin <bjin@ctrl-d.org>
-Date: Tue, 26 Jul 2016 22:51:56 +0200
-Message-ID: <CAHQn_MD74m-mHQLCbK7UG72BnCdbVbdUpiD0jF4Jk1NFuJMLAw@mail.gmail.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+In-Reply-To: <62f0dc7c-4eb4-523a-c548-ee2b2a6ec038@viisauksena.de>
+References: <62f0dc7c-4eb4-523a-c548-ee2b2a6ec038@viisauksena.de>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 27 Jul 2016 01:41:48 +0200
+Message-ID: <CAHmME9owfe25ER4kS_jEOgMZO+eD5CZJnUqx1dz73k_z8VYYDg@mail.gmail.com>
+To: jens <jens@viisauksena.de>
 Content-Type: text/plain; charset=UTF-8
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: [WireGuard] Suggestion: Hide private key by default with wg tool
+Subject: Re: [WireGuard] Header / MTU sizes for Wireguard
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -23,26 +31,27 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hello Jason,
+Hi Jens,
 
-I think there is a potential security issue regarding the use of "wg"
-tool. By default "wg" will print the private keys in plain text to the
-console. This isn't going to be a big issue in general, but if I was
-showing my friend how to use wireguard, or using my computer in public
-places with surveillance camera, without a option to hide private keys
-I would very likely get my private keys compromised. IIUC, compromise
-of private key won't have security impact assuming a passive attacker,
-and an active attacker needs to have private keys from both side to
-perform a MitM attack. But nonetheless, I think this could be fixed
-very easily, to avoid actual potential security compromise.
+I assume it was you asking in the IRC channel about this same thing
+before signing out? Sorry I wasn't there when you were; I only just
+now arrived home.
 
-Considering that most people would probably type "wg" without any
-further options that explicitly hide all private keys (either without
-the knowledge of the option, or by accident). I would suggest to hide
-the private key by default (showing some text like "(private key
-hidden by default)" instead), and add an option to allow user to
-explicitly showing the private key like "--show-private-keys".
+There actually is some optimization potential for you with regards to
+the MTU. The overhead of WireGuard breaks down as follows:
 
-Thanks!
+- 20 byte IPv4 header or 40 byte IPv6 header
+- 8 byte UDP header
+- 1 byte type
+- 4 byte key index
+- 8 byte nonce
+- N byte encrypted data
+- 16 byte poly1305 authentication tag
 
-Bin
+So, if you assume 1500 byte ethernet frames, the worst case (IPv6)
+winds up being 1500-(40+8+1+4+8+16), leaving N=1423 bytes. However, if
+you know ahead of time that you're going to be using IPv4 exclusively,
+then you could get away with 1443 bytes.
+
+Hope that helps,
+Jason
