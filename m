@@ -1,34 +1,27 @@
 Return-Path: Jason@zx2c4.com
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a4289a1f
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4fcdf749
  for <wireguard@lists.zx2c4.com>;
- Thu, 28 Jul 2016 11:45:56 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fee95f59
+ Thu, 28 Jul 2016 11:58:39 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4e42692b
  for <wireguard@lists.zx2c4.com>;
- Thu, 28 Jul 2016 11:45:55 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 7da2fa52
+ Thu, 28 Jul 2016 11:58:38 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 61f91913
  (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 28 Jul 2016 11:45:55 +0000 (UTC)
-Received: by mail-lf0-f45.google.com with SMTP id f93so47660833lfi.2
- for <wireguard@lists.zx2c4.com>; Thu, 28 Jul 2016 04:48:42 -0700 (PDT)
+ Thu, 28 Jul 2016 11:58:38 +0000 (UTC)
+Received: by mail-lf0-f54.google.com with SMTP id l69so47836466lfg.1
+ for <wireguard@lists.zx2c4.com>; Thu, 28 Jul 2016 05:01:25 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20160727150219.fdyg2smhmffmfxxl@c3po>
-References: <7a999008-9396-c82d-1764-d658873af7fc@viisauksena.de>
- <CAHmME9rCmhkegmUnS8EBoSmb8BEHo=bv7fxOQNdCwu1CaB+L-A@mail.gmail.com>
- <CCE0C17C-29C4-4E58-A853-590802C58589@viisauksena.de>
- <CAHmME9qqv3kC=6Y_JTO-P++4jpfTjw8qUGtGTQhsdmCujvU4sw@mail.gmail.com>
- <DEB54C8F-1159-48AD-B2A3-CB2B4E05C896@viisauksena.de>
- <CAHmME9oveH4hLUzEjwWnZ8Nj8U63LEuVezgivsxVxgpZKL_PwQ@mail.gmail.com>
- <20160727150219.fdyg2smhmffmfxxl@c3po>
+In-Reply-To: <CAHQn_MD74m-mHQLCbK7UG72BnCdbVbdUpiD0jF4Jk1NFuJMLAw@mail.gmail.com>
+References: <CAHQn_MD74m-mHQLCbK7UG72BnCdbVbdUpiD0jF4Jk1NFuJMLAw@mail.gmail.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 28 Jul 2016 13:48:39 +0200
-Message-ID: <CAHmME9ogcB=7T8-0Qe+FuH11g7nAtA-xo0Q9CXnkB3SjhwNDkw@mail.gmail.com>
-To: Michael Gerlach <n3ph@terminal21.de>
+Date: Thu, 28 Jul 2016 14:01:23 +0200
+Message-ID: <CAHmME9qF=jWLXfoO0Y7Vt04SyqvYUKEgr-JhG1iMC=oc84=FCg@mail.gmail.com>
+To: Bin Jin <bjin@ctrl-d.org>
 Content-Type: text/plain; charset=UTF-8
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: [WireGuard] LEDE / OpenWrt test - on TP-Link841Nv11 - 15MBs and
-	crash
+Subject: Re: [WireGuard] Suggestion: Hide private key by default with wg tool
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -38,9 +31,16 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hey,
+Hi Bin,
 
-Do you guys have a good way of running your setup inside Qemu? I'd
-like to debug this issue a bit...
+I think I'll just get rid of it completely in `show` but not in the
+more explicit views. So,
 
+  - # wg show wg0  -- no private key
+  - # wg show wg0 private-key -- yes private key
+  - # wg showconf wg0 -- yes private key
+
+What would you think of this?
+
+Regards,
 Jason
