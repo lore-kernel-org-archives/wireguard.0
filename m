@@ -1,19 +1,26 @@
-Return-Path: bjin@ctrl-d.org
-Received: from mail-lf0-f42.google.com (mail-lf0-f42.google.com
- [209.85.215.42])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 472ec974
+Return-Path: Jason@zx2c4.com
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cd4f7235
  for <wireguard@lists.zx2c4.com>;
- Thu, 28 Jul 2016 13:06:38 +0000 (UTC)
-Received: by mail-lf0-f42.google.com with SMTP id b199so49262932lfe.0
- for <wireguard@lists.zx2c4.com>; Thu, 28 Jul 2016 06:09:25 -0700 (PDT)
+ Thu, 28 Jul 2016 15:17:06 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d7913945
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 28 Jul 2016 15:17:05 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id d251521b
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 28 Jul 2016 15:17:04 +0000 (UTC)
+Received: by mail-lf0-f46.google.com with SMTP id l69so51986753lfg.1
+ for <wireguard@lists.zx2c4.com>; Thu, 28 Jul 2016 08:19:52 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9qF=jWLXfoO0Y7Vt04SyqvYUKEgr-JhG1iMC=oc84=FCg@mail.gmail.com>
+In-Reply-To: <CAHQn_MAQUR4x5Tn0bRNi1yrnhjihxCRO7pGiJe56ONwiTS8CXA@mail.gmail.com>
 References: <CAHQn_MD74m-mHQLCbK7UG72BnCdbVbdUpiD0jF4Jk1NFuJMLAw@mail.gmail.com>
  <CAHmME9qF=jWLXfoO0Y7Vt04SyqvYUKEgr-JhG1iMC=oc84=FCg@mail.gmail.com>
-From: Bin Jin <bjin@ctrl-d.org>
-Date: Thu, 28 Jul 2016 15:09:04 +0200
-Message-ID: <CAHQn_MAQUR4x5Tn0bRNi1yrnhjihxCRO7pGiJe56ONwiTS8CXA@mail.gmail.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+ <CAHQn_MAQUR4x5Tn0bRNi1yrnhjihxCRO7pGiJe56ONwiTS8CXA@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 28 Jul 2016 17:19:49 +0200
+Message-ID: <CAHmME9orEwEfg_ohUriOngHczQ3VZAdAMya2=-obTSA4EHTkiQ@mail.gmail.com>
+To: Bin Jin <bjin@ctrl-d.org>
 Content-Type: text/plain; charset=UTF-8
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Subject: Re: [WireGuard] Suggestion: Hide private key by default with wg tool
@@ -26,21 +33,6 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Yes, that looks great. Thanks!
+https://git.zx2c4.com/WireGuard/commit/?id=ded0e645cfa45130e42c4d5bfba8f7d54e1855a9
 
-Bin
-
-On Thu, Jul 28, 2016 at 2:01 PM, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
-> Hi Bin,
->
-> I think I'll just get rid of it completely in `show` but not in the
-> more explicit views. So,
->
->   - # wg show wg0  -- no private key
->   - # wg show wg0 private-key -- yes private key
->   - # wg showconf wg0 -- yes private key
->
-> What would you think of this?
->
-> Regards,
-> Jason
+Set WG_HIDE_KEYS=never to see the keys. Otherwise they're hidden.
