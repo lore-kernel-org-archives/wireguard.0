@@ -1,13 +1,13 @@
 Return-Path: n3ph@terminal21.de
-Received: from smtprelay01.ispgateway.de (smtprelay01.ispgateway.de
- [80.67.18.43])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a2abd05b
+Received: from smtprelay04.ispgateway.de (smtprelay04.ispgateway.de
+ [80.67.31.31])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b4db22fd
  for <wireguard@lists.zx2c4.com>;
- Thu, 28 Jul 2016 19:14:42 +0000 (UTC)
-Date: Thu, 28 Jul 2016 21:16:50 +0200
+ Fri, 29 Jul 2016 11:06:07 +0000 (UTC)
+Date: Fri, 29 Jul 2016 13:08:21 +0200
 From: Michael Gerlach <n3ph@terminal21.de>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Message-ID: <20160728191650.e2i6onnnji6uis75@c3po>
+Message-ID: <20160729110821.khbc7w6z4rv4nphg@c3po>
 References: <7a999008-9396-c82d-1764-d658873af7fc@viisauksena.de>
  <CAHmME9rCmhkegmUnS8EBoSmb8BEHo=bv7fxOQNdCwu1CaB+L-A@mail.gmail.com>
  <CCE0C17C-29C4-4E58-A853-590802C58589@viisauksena.de>
@@ -18,7 +18,7 @@ References: <7a999008-9396-c82d-1764-d658873af7fc@viisauksena.de>
  <CAHmME9ogcB=7T8-0Qe+FuH11g7nAtA-xo0Q9CXnkB3SjhwNDkw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="i6gxxbittmeejr7k"
+ protocol="application/pgp-signature"; boundary="arwz5jerahuhcbae"
 In-Reply-To: <CAHmME9ogcB=7T8-0Qe+FuH11g7nAtA-xo0Q9CXnkB3SjhwNDkw@mail.gmail.com>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Subject: Re: [WireGuard] LEDE / OpenWrt test - on TP-Link841Nv11 - 15MBs and
@@ -33,23 +33,36 @@ List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
 
---i6gxxbittmeejr7k
+--arwz5jerahuhcbae
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hey Jason!
 
-I didn't run openwrt ar71xx targets in qemu yet.. ATM i am recompiling
-my qemu to be able to run mips on it, but i don't know if this will work
-anyway..=20
+Hi Jason!
 
-I will have a look at it and come back if i have something to work with.
+I figured out how to run openwrt on qemu.. It seems it is just possible
+to run the malta target on mipsel - discribed here:
+http://aleph0.info/software/lisp-forth-openwrt/openwrt-on-qemu.html
+
+I tried ar71xx but had no luck to get things work..=20
+
+So i just got the images from
+https://downloads.lede-project.org/snapshots/targets/malta/le/
+
+and execute qemu by
+
+qemu-system-mipsel -kernel lede-malta-le-vmlinux-initramfs.elf
+-nographic -m 256 -append "console=3DttyS0"
+
+Hope thats helps..=20
+
+
 
 best regards,
 
-
 n3ph
+
 
 
 
@@ -65,20 +78,20 @@ On Thu, Jul 28, 2016 at 01:48:39PM +0200, Jason A. Donenfeld wrote:
 Please use PGP - https://en.wikipedia.org/wiki/Pretty_Good_Privacy
 
 
---i6gxxbittmeejr7k
+--arwz5jerahuhcbae
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: Digital signature
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2
 
-iQEcBAEBCAAGBQJXmloiAAoJEE1l5S41evqaFOsIALIZpaa/Me/lnd65oie2D4+u
-RoqEkl2rxDf96TD/Os+hHLVKy7TqhuReCdDp7hdQvxX3Fybl/9+4ZG6u9C1Etley
-/CTSUqA0DUqskE2WZyX1iqfg+VPn0RoFgy8Ed/hkvGhpD/3r7p4ALXlVZ4P0SeSF
-coYEbBKggf2dlMucJoTxE4f28wbYIgZcRvrxi4ncBV5vfK/OgzxS+tMmPkCzFUJA
-QAKEt2Rjs4B3AQYo3ddIF74eDel7Dfk/RKbnQuuNRLPl/qtKrR8qjTUVv07p2/qK
-tGF58PQVrvR3OYUjc/bLK70wh44c9BPAjdA5N/UU5JNxh89UDnEGXwbavpU3wc4=
-=sLPa
+iQEcBAEBCAAGBQJXmzklAAoJEE1l5S41evqakqIIANvltNOnlbKZ/ntfi80lFo1k
+na4DhguIjq5UNKiPRLacXmUnkhjSA891GNcSjX4n7jpgLaCfHZwUlsWvCPu9i4vC
+2QuToAJ0rgnlzDTXbgoAmQrqjQ+PvDY+xwNgstWGI1RQTA9ZVVmUDV1u1PhCzSiF
+YMbhkWDi6y75Y2Zr19rssCHP6cKDjGNmRctSmJEfkC0qWO3j1vz0FHp1XlKXvXGO
+fTe6mN7snu8YC0VneEsGI2wdcdqX1plTjcttkTjvK7UVprdQvjqOGxXZLGro4xrJ
+aiVL7+snmAV+ubZHXmpUOy4p2HGQVxZMOvTiaQV+x3cQ8v35cADUntr8NfYh/1c=
+=fnwB
 -----END PGP SIGNATURE-----
 
---i6gxxbittmeejr7k--
+--arwz5jerahuhcbae--
