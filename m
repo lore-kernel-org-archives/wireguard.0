@@ -1,16 +1,20 @@
-Return-Path: Jason@zx2c4.com
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4230d0fd
- for <wireguard@lists.zx2c4.com>; Wed, 3 Aug 2016 01:10:58 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0c28d6ae
- for <wireguard@lists.zx2c4.com>; Wed, 3 Aug 2016 01:10:57 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 6a9461fb
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 3 Aug 2016 01:10:56 +0000 (UTC)
-Received: by mail-lf0-f50.google.com with SMTP id l69so150258809lfg.1
- for <wireguard@lists.zx2c4.com>; Tue, 02 Aug 2016 18:14:24 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <8eebb32d-b302-5975-726b-874a9ad12a84@viisauksena.de>
+Return-Path: opensource@vdorst.com
+Received: from smtp02.bhosted.nl (smtp02.bhosted.nl [94.124.121.13])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4383b00f
+ for <wireguard@lists.zx2c4.com>; Wed, 3 Aug 2016 06:45:06 +0000 (UTC)
+Received: from server3.bhosted.nl (unknown [94.124.120.17])
+ by mx02.bhosted.nl (Halon Mail Gateway) with SMTP
+ for <wireguard@lists.zx2c4.com>; Wed,  3 Aug 2016 08:48:34 +0200 (CEST)
+Received: from www.lan.vdorst.com (www.lan.vdorst.com
+ [IPv6:2a02:a441:63ae:0:5054:ff:feca:c4e1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.vdorst.com (Postfix) with ESMTPSA id C341A73DDA
+ for <wireguard@lists.zx2c4.com>; Wed,  3 Aug 2016 08:48:33 +0200 (CEST)
+Date: Wed, 03 Aug 2016 06:48:53 +0000
+Message-ID: <20160803064853.Horde.ZExiUp0by8SskYUmZW7CFq4@www.vdorst.com>
+From: =?utf-8?b?UmVuw6k=?= van Dorst <opensource@vdorst.com>
+To: wireguard@lists.zx2c4.com
 References: <7a999008-9396-c82d-1764-d658873af7fc@viisauksena.de>
  <CAHmME9rCmhkegmUnS8EBoSmb8BEHo=bv7fxOQNdCwu1CaB+L-A@mail.gmail.com>
  <CCE0C17C-29C4-4E58-A853-590802C58589@viisauksena.de>
@@ -18,14 +22,11 @@ References: <7a999008-9396-c82d-1764-d658873af7fc@viisauksena.de>
  <DEB54C8F-1159-48AD-B2A3-CB2B4E05C896@viisauksena.de>
  <CAHmME9oveH4hLUzEjwWnZ8Nj8U63LEuVezgivsxVxgpZKL_PwQ@mail.gmail.com>
  <8eebb32d-b302-5975-726b-874a9ad12a84@viisauksena.de>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 3 Aug 2016 03:14:21 +0200
-Message-ID: <CAHmME9qtbQEiERrzxVwmmb55Xbh=B=02tSZGjjzW9=tjhtguMQ@mail.gmail.com>
-To: jens <jens@viisauksena.de>
-Content-Type: text/plain; charset=UTF-8
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+In-Reply-To: <8eebb32d-b302-5975-726b-874a9ad12a84@viisauksena.de>
+Content-Type: text/plain; charset=utf-8; format=flowed; DelSp=Yes
+MIME-Version: 1.0
 Subject: Re: [WireGuard] LEDE / OpenWrt test - on TP-Link841Nv11 - 15MBs and
-	crash
+ crash
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -37,25 +38,29 @@ List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
 
 Hi Jens,
 
-Thanks for the feedback.
+I would like to share my results on a MIPS cpu.
 
-On Wed, Aug 3, 2016 at 1:39 AM, jens <jens@viisauksena.de> wrote:
-> and with wireguard source from 27.7. also including your suggestions.
+I also tested wireguard on a router. TP-Link WR1043ND v1.08 with a  
+Atheros AR9132 400MHz cpu.
+Running LEDE 28-july-2016, wireguard & iperf3 via packagemanager.
+For my test I run wireguard and iperf3 on the same device on both sides.
+Other side is a AMD A6-5400 with debian unstable running inside KVM.
+Both connected to a gigabit switch.
 
-Okay, so I interpret this as you saying "I removed the sk_set_memalloc
-line, but that didn't fix the problem."
+My results iperf:
+- Plain ~100MBits
+- WG ~24Mbits (TCP test)
 
-Next test: remove the line "sock->sk->sk_sndbuf = INT_MAX;" Does that
-then fix the problem?
+Greats,
 
-I'll continue to investigate this too.
+René van Dorst.
 
-Jason
+Quoting jens <jens@viisauksena.de>:
 
-On Wed, Aug 3, 2016 at 1:39 AM, jens <jens@viisauksena.de> wrote:
 > On 27.07.2016 13:05, Jason A. Donenfeld wrote:
 >
->> On Wed, Jul 27, 2016 at 12:26 PM, Jens Viisauksena <jens@viisauksena.de> wrote:
+>> On Wed, Jul 27, 2016 at 12:26 PM, Jens Viisauksena  
+>> <jens@viisauksena.de> wrote:
 >>> It should however not lead to netifd outofmemory, load of 2.6 and the
 >>> oomkiller berserking around at all... even if its not directly wg fault.
 >> One thing to try would be removing these lines from src/socket.c:
@@ -364,14 +369,7 @@ On Wed, Aug 3, 2016 at 1:39 AM, jens <jens@viisauksena.de> wrote:
 > anon-rss:40kB, file-rss:4kB
 > root@lede:/tmp# Connection to 192.168.1.1 closed.
 >
-
-
-
--- 
-Jason A. Donenfeld
-Deep Space Explorer
-fr: +33 6 51 90 82 66
-us: +1 513 476 1200
-www.jasondonenfeld.com
-www.zx2c4.com
-zx2c4.com/keys/AB9942E6D4A4CFC3412620A749FC7012A5DE03AE.asc
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> http://lists.zx2c4.com/mailman/listinfo/wireguard
