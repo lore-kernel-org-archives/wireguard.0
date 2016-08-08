@@ -1,23 +1,24 @@
-Return-Path: opensource@vdorst.com
-Received: from smtp01.bhosted.nl (smtp01.bhosted.nl [94.124.121.11])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ab9f3d21
- for <wireguard@lists.zx2c4.com>; Mon, 8 Aug 2016 13:18:56 +0000 (UTC)
-Received: from server3.bhosted.nl (unknown [94.124.120.17])
- by mx01.bhosted.nl (Halon Mail Gateway) with SMTP
- for <wireguard@lists.zx2c4.com>; Mon,  8 Aug 2016 15:23:02 +0200 (CEST)
-Received: from www.lan.vdorst.com (www.lan.vdorst.com
- [IPv6:2a02:a441:63ae:0:5054:ff:feca:c4e1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.vdorst.com (Postfix) with ESMTPSA id 60D907EAE0
- for <wireguard@lists.zx2c4.com>; Mon,  8 Aug 2016 15:23:02 +0200 (CEST)
-Date: Mon, 08 Aug 2016 13:23:09 +0000
-Message-ID: <20160808132309.Horde.PpRcvoBjgmDh9S0lYDhy7Au@www.vdorst.com>
-From: =?utf-8?b?UmVuw6k=?= van Dorst <opensource@vdorst.com>
-To: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset=utf-8; format=flowed; DelSp=Yes
+Return-Path: Jason@zx2c4.com
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 223ef2c4
+ for <wireguard@lists.zx2c4.com>; Mon, 8 Aug 2016 14:25:04 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 189cc7ba
+ for <wireguard@lists.zx2c4.com>; Mon, 8 Aug 2016 14:25:03 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 742c143c
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>; Mon, 8 Aug 2016 14:25:03 +0000 (UTC)
+Received: by mail-wm0-f50.google.com with SMTP id o80so143013554wme.1
+ for <wireguard@lists.zx2c4.com>; Mon, 08 Aug 2016 07:29:13 -0700 (PDT)
 MIME-Version: 1.0
-Subject: [WireGuard] News about MIPS and ARM optimized code?
+In-Reply-To: <20160808132309.Horde.PpRcvoBjgmDh9S0lYDhy7Au@www.vdorst.com>
+References: <20160808132309.Horde.PpRcvoBjgmDh9S0lYDhy7Au@www.vdorst.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Mon, 8 Aug 2016 16:29:11 +0200
+Message-ID: <CAHmME9o+QqPR0qo8uadYVZDMw=Z-uxCwuBgggOeYNdE8FDLXpQ@mail.gmail.com>
+To: =?UTF-8?Q?Ren=C3=A9_van_Dorst?= <opensource@vdorst.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Subject: Re: [WireGuard] News about MIPS and ARM optimized code?
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -27,9 +28,4 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-
-News about MIPS and ARM optimized code?
-
-Greats,
-
-René van Dorst.
+Would you like to write it?
