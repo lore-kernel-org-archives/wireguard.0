@@ -1,20 +1,32 @@
-Return-Path: Jason@zx2c4.com
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4ba98121
- for <wireguard@lists.zx2c4.com>; Mon, 8 Aug 2016 15:53:00 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 68fef2be
- for <wireguard@lists.zx2c4.com>; Mon, 8 Aug 2016 15:53:00 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id ad829eb1
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 8 Aug 2016 15:53:00 +0000 (UTC)
-Date: Mon, 08 Aug 2016 17:57:16 +0200
-To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Return-Path: jens@viisauksena.de
+Received: from viisauksena.de (v32412.1blu.de [178.254.39.111])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e387e7f8
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 10 Aug 2016 01:36:13 +0000 (UTC)
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+References: <7a999008-9396-c82d-1764-d658873af7fc@viisauksena.de>
+ <CAHmME9rCmhkegmUnS8EBoSmb8BEHo=bv7fxOQNdCwu1CaB+L-A@mail.gmail.com>
+ <CCE0C17C-29C4-4E58-A853-590802C58589@viisauksena.de>
+ <CAHmME9qqv3kC=6Y_JTO-P++4jpfTjw8qUGtGTQhsdmCujvU4sw@mail.gmail.com>
+ <DEB54C8F-1159-48AD-B2A3-CB2B4E05C896@viisauksena.de>
+ <CAHmME9oveH4hLUzEjwWnZ8Nj8U63LEuVezgivsxVxgpZKL_PwQ@mail.gmail.com>
+ <8eebb32d-b302-5975-726b-874a9ad12a84@viisauksena.de>
+ <20160803064853.Horde.ZExiUp0by8SskYUmZW7CFq4@www.vdorst.com>
+ <ce094d6d-2314-8bfe-72e1-879b88ec7141@viisauksena.de>
+ <20160803201014.Horde.RctXDT7A7Fi6hFbWMcqDmJs@www.vdorst.com>
+ <923cdc92-aa01-758a-5741-99a3f6009dc5@viisauksena.de>
+ <CAHmME9oNd9o6rzqPU-Lh69E09oWb8_gHApxuD5+asAdQbgAcwA@mail.gmail.com>
+ <b1788ba6-edc5-98d9-2f49-8321e6c3e7b1@viisauksena.de>
+From: jens <jens@viisauksena.de>
+Message-ID: <90a667ed-4f48-a0cc-1e93-472fcc5ef67f@viisauksena.de>
+Date: Wed, 10 Aug 2016 03:37:00 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Message-Id: <8fe252f543fb81be@frisell.zx2c4.com>
-Subject: [WireGuard] [ANNOUNCE] Snapshot `experimental-0.0.20160808`
-	Available
+In-Reply-To: <b1788ba6-edc5-98d9-2f49-8321e6c3e7b1@viisauksena.de>
+Content-Type: multipart/alternative;
+ boundary="------------F04F4078619B3ED3C105AD7F"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Subject: Re: [WireGuard] LEDE / OpenWrt test - on TP-Link841Nv11 - 15MBs and
+ crash
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -24,86 +36,107 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+This is a multi-part message in MIME format.
+--------------F04F4078619B3ED3C105AD7F
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Hello,
+On 04.08.2016 13:34, jens wrote:
+> [ X  ] I have tried removing "sk_clear_memalloc(sock);" and
+> "sk_set_memalloc(sock->sk);" from socket.c, and the problem still
+> continued.
+> [  ] I have tried removing "sock->sk->sk_sndbuf =3D INT_MAX;" from
+> socket.c, and the problem still continued.
 
-A new experimental snapshot, `experimental-0.0.20160808`, has been tagged in
-the git repository.
+we just want to inform you that we want to run some more tests in the
+next days, including your suggestions and compare all with fastd (which
+we also test), and everything also on a different router - we write to
+the list as soon we have some results on this.
 
-Please note that this snapshot is, like the rest of the project at this point
-in time, experimental, and does not consitute a real release that would be
-considered secure and bug-free. However, if you'd like to test this snapshot
-out, there are a few relevent changes.
+Testsetup will stay the same: (see first post for details)
+laptop (iperf3) > tp841v11 <- WireGuard -> tp841v11 < laptop (iperf3)
 
-== Changes ==
+we will test
+    fastd,
+    default lede Wireguard(20160630),
+    latest wireguard(20160808),
+    latest wireguard without memalloc(step1) ,
+    latest wireguard without sndbuf =3D INT_MAX (step2)
 
-  * timers: upstream removed the slack concept
-  We now group timers ourselves, this time with the ability to round down. This
-  ensures that we don't wind up rescheduling timers for every packet, but
-  instead keeping things within a quarter second window.
-  
-  * c: specify static array size in function params
-  See https://hamberg.no/erlend/posts/2013-02-18-static-array-indices.html
-  
-  * contrib: move patchers to contrib/kernel-tree
-  There are now two patchers:
-    - contrib/kernel-tree/create-patch.sh This patcher simply spits out a patch
-      for use with `patch(1)` to stdout.
-    - contrib/kernel-tree/jerry-rig.sh This is the old hack that patches into
-      the kernel tree a reference to the WireGuard tree.
-  
-  * tools: do not show private keys in pretty output
-  The `WG_HIDE_KEYS` environment variable now determines whether or not keys are
-  shown in the pretty `wg show` output.
-  
-  * persistent-keepalive: change range to [1,65535]
-  Linux connection tracking is granular to 1 second, so it's important that we
-  do the same.
-  
-  * selftest: move to subfolder
-  * Kbuild: move module deps out of tests/
-  * tests: use makefile and expand greatly
-  This is a big one. The entire testing subsystem has been entirely expanded.
-  With the help of Alex Xu and Naveen Nathan, the test suite is now hugely
-  expanded, and even does NAT testing with the persistent-keepalive feature. Not
-  only that, but the QEMU runner now builds from a Makefile and is much more
-  robust. We now build and run 7 kernels for every single commit, with the test
-  results published on https://www.wireguard.io/build-status/
-  
-  * ratelimiter: do not require IPv6
-  CONFIG_IPV6 is no longer required at all for WireGuard.
+we will also compare the setup to a similar router : TPLink cpe210 ,
+with 64MB ram and 8 mb flash with similar cpu (maybe not with all tests
+so far)
 
-As always, the source is available at https://git.zx2c4.com/WireGuard/ and
-information about the project is available at https://www.wireguard.io/ .
+the ready to use builded packages (Firmware and ipk) are already laying
+here http://openfreiburg.de/freifunk/firmware/
+if some want to play around with them.
 
-This snapshot is available in tarball form here:
-  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-experimental-0.0.20160808.tar.xz
-  SHA256: 1cf6eb537432c8282b97da1c53bab015acaea07054c513a79575fe86624f3a7d
+if there are any suggestions and ideas we could/should add, we are happy
+to hear from you
+(its all about hunting the out of memory issue on heavy udp traffic
+through wireguard tunnel)
 
-If you're a snapshot package maintainer, please bump your package version. If
-you're a user, the WireGuard team welcomes any and all feedback on this latest
-snapshot.
+greetz
 
-Thank you,
-Jason Donenfeld
+--=20
+make the world nicer, please use PGP encryption
 
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+--------------F04F4078619B3ED3C105AD7F
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-iQItBAEBCAAXBQJXqKvJEBxqYXNvbkB6eDJjNC5jb20ACgkQSfxwEqXeA676MQ//
-UUGD5990FO+4XFONmhW+4rTfmbq+4zvgNYU+FBC5QuQVBvC5u9C8eeDf4bF4Rktr
-HYEG3r/PDnEHvyUK+lCnlpYUAFafooSfW/wRjVM9S13+PBxTQpW7aOvUn97U3pYG
-kgiY+4aYw8zQEOEE5uk/xqyCtSr9T9KoKmXePVi+YFfSye+Fn3TIgp1IhcuVuHVU
-RY6mO5OUBjqWWdWlJ6o8KlGX5BvZs8PVHYdJzMF3X212tpiMhGHEHrhCH1ezRItL
-i5ffiRdYm/2yhYckaUYm7cKJeY1XvjrNZzByFwATLflMCNGXYdNKFzhoiMMdiIYp
-MDIzv/DOjv5YKZwWrnOJkG7UfQr2RkafWwiwOhNwluJ2smRM6DC3Rfrq/jayxVlV
-MKMnRZHf0eJV0IVKaJjP2mdalTpHiTmsXrGbt7veCO087mEjzfpwmUZHNgLp+41A
-eQ6/nPgCTY1CC6lAuYNPJJDHJgNzymUjUNHf0/wS+89j34Z58k5IZMyKrie8gTIS
-RiSX0xFzLZ4xd9C2ltJ63JsifTZYjeqAjOWxYgtmbV++jZRnOovv62JAX3rtw825
-31klNEQGKJpzzAf74zTbOGLJAXX06O5h7w/CUgVQasQVy3BQbm4JFZtTnbMlghVs
-GHWOcGNR9+clVybz3OWZPHfLeQdAWagPniInxEiuDwA=
-=+4tL
------END PGP SIGNATURE-----
+<html>
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+  </head>
+  <body text="#000000" bgcolor="#FFFFFF">
+    On 04.08.2016 13:34, jens wrote:<br>
+    <blockquote
+      cite="mid:b1788ba6-edc5-98d9-2f49-8321e6c3e7b1@viisauksena.de"
+      type="cite">
+      <div>[ X  ] I have tried removing "<span style="font-size:12.8px">sk_clear_memalloc(sock);"
+          and "</span><span style="font-size:12.8px">sk_set_memalloc(sock-&gt;sk);"
+          from socket.c, and the problem still continued.</span></div>
+      <div><span style="font-size:12.8px">[  ] I have tried removing "</span><span
+          style="font-size:12.8px">sock-&gt;sk-&gt;sk_sndbuf = INT_MAX;"
+          from socket.c, and the problem still continued.</span></div>
+    </blockquote>
+    <p>we just want to inform you that we want to run some more tests in
+      the next days, including your suggestions and compare all with
+      fastd (which we also test), and everything also on a different
+      router - we write to the list as soon we have some results on
+      this.<br>
+      <br>
+      Testsetup will stay the same: (see first post for details)<br>
+      laptop (iperf3) &gt; tp841v11 &lt;- WireGuard -&gt; tp841v11 &lt;
+      laptop (iperf3) <br>
+    </p>
+    <p>
+      we will test <br>
+          fastd, <br>
+          default lede Wireguard(20160630), <br>
+          latest wireguard(20160808), <br>
+          latest wireguard without memalloc(step1) , <br>
+          latest wireguard without sndbuf = INT_MAX (step2)</p>
+    <p>
+      we will also compare the setup to a similar router : TPLink cpe210
+      , with 64MB ram and 8 mb flash with similar cpu (maybe not with
+      all tests so far)<br>
+    </p>
+    <p>the ready to use builded packages (Firmware and ipk) are already
+      laying here <a class="moz-txt-link-freetext" href="http://openfreiburg.de/freifunk/firmware/">http://openfreiburg.de/freifunk/firmware/</a> <br>
+      if some want to play around with them.<br>
+    </p>
+    <p>if there are any suggestions and ideas we could/should add, we
+      are happy to hear from you<br>
+      (its all about hunting the out of memory issue on heavy udp
+      traffic through wireguard tunnel)<br>
+    </p>
+    <p>greetz </p>
+    <pre class="moz-signature" cols="72">-- 
+make the world nicer, please use PGP encryption</pre>
+  </body>
+</html>
+
+--------------F04F4078619B3ED3C105AD7F--
