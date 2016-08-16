@@ -1,31 +1,19 @@
-Return-Path: Jason@zx2c4.com
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d825d420
+Return-Path: jens@viisauksena.de
+Received: from viisauksena.de (v32412.1blu.de [178.254.39.111])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 765d1c5b
  for <wireguard@lists.zx2c4.com>;
- Tue, 16 Aug 2016 12:12:14 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id aba2df05
- for <wireguard@lists.zx2c4.com>;
- Tue, 16 Aug 2016 12:12:14 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id d0846d34
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Tue, 16 Aug 2016 12:12:13 +0000 (UTC)
-Received: by mail-wm0-f44.google.com with SMTP id i5so163476573wmg.0
- for <wireguard@lists.zx2c4.com>; Tue, 16 Aug 2016 05:17:22 -0700 (PDT)
+ Tue, 16 Aug 2016 12:40:03 +0000 (UTC)
+Received: from [10.60.23.184] (unknown [77.87.49.62])
+ by openfreiburg.de (Postfix) with ESMTPSA id 27B1910F23A02
+ for <wireguard@lists.zx2c4.com>; Tue, 16 Aug 2016 14:45:12 +0200 (CEST)
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: jens <jens@viisauksena.de>
+Message-ID: <42a6d603-1f2a-7e59-a4cb-a02935a70606@viisauksena.de>
+Date: Tue, 16 Aug 2016 14:41:16 +0200
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9oi=gbw67aVhW-UXNe0uBpth1EG9ekoKv9M9GTke4UaFw@mail.gmail.com>
-References: <101056cc-e944-a049-f194-c61567a1dcf1@viisauksena.de>
- <CAHmME9qaxVFdhNXtkPHgLPqR1_F_+DLsmircQX5O7OAG5YWcJg@mail.gmail.com>
- <382aed3a-349c-d518-16ae-3fdd8b1127f8@viisauksena.de>
- <CAHmME9oi=gbw67aVhW-UXNe0uBpth1EG9ekoKv9M9GTke4UaFw@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 16 Aug 2016 14:17:19 +0200
-Message-ID: <CAHmME9ooEnf4ZsyciTQShzN2S6+0btpnW61FBTQzfJHZjCVLcw@mail.gmail.com>
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>,
- Matthias Schiffer <mschiffer@universe-factory.net>, n3ph <n3ph@terminal21.de>,
- jens <jens@viisauksena.de>
-Content-Type: text/plain; charset=UTF-8
-Subject: Re: [WireGuard] wireguard comparing to fastd - tests
+Content-Type: multipart/alternative;
+ boundary="------------03E432964392B7495CA68A52"
+Subject: [WireGuard] suggestion - wg version
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -35,17 +23,52 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-> ---------- Forwarded message ----------
-> From: jens <jens@viisauksena.de>
->
-> thx, thats true ... we were mostly interested in comparing speed in
-> similar setups that we would deploy.
-> But you ' re right - reducing workload from 20 to 12 in cypher make
-> them not directly comparable
+This is a multi-part message in MIME format.
+--------------03E432964392B7495CA68A52
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+wireguard does not output any buildversion , not on wg command or on
+dmesg while loading,
+this is low hanging fruit and make it particular easy to figure out
+which version youre talking about,
+and if i really have version 20160808 now, or still stuck on 20160722
+(yes sorry, all my build experiments drive me crazy and confuse me a bit =
+:)
+(yes i know that ipk file , opkg mechanism tells me something about
+version by its given name)
+
+greetz jens
+
+--=20
+make the world nicer, please use PGP encryption
 
 
-Alternatively, you could pretty easily tweak wireguard to use
-chacha20/12 by changing "for (i = 0; i < 20; i += 2) {" to "for (i =
-0; i < 12; i += 2) {" in src/crypto/chacha20poly1305.c.
+--------------03E432964392B7495CA68A52
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Would be interested in fair side-by-side benchmarks of the two.
+<html>
+  <head>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  </head>
+  <body text="#000000" bgcolor="#FFFFFF">
+    <p>wireguard does not output any buildversion , not on wg command or
+      on dmesg while loading, <br>
+      this is low hanging fruit and make it particular easy to figure
+      out which version youre talking about, <br>
+      and if i really have version 20160808 now, or still stuck on
+      20160722 <br>
+      (yes sorry, all my build experiments drive me crazy and confuse me
+      a bit :)<br>
+      (yes i know that ipk file , opkg mechanism tells me something
+      about version by its given name)<br>
+    </p>
+    greetz jens<br>
+    <pre class="moz-signature" cols="72">-- 
+make the world nicer, please use PGP encryption</pre>
+  </body>
+</html>
+
+--------------03E432964392B7495CA68A52--
