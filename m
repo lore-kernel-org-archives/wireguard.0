@@ -1,28 +1,20 @@
-Return-Path: Jason@zx2c4.com
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 56a672c3
+Return-Path: joe@solidadmin.com
+Received: from conquer.yellowcord.com (conquer.yellowcord.com [45.55.224.114])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a44b72a5
  for <wireguard@lists.zx2c4.com>;
- Wed, 17 Aug 2016 01:37:12 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d2c12e4c
- for <wireguard@lists.zx2c4.com>;
- Wed, 17 Aug 2016 01:37:12 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 26616431
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Wed, 17 Aug 2016 01:37:12 +0000 (UTC)
-Received: by mail-wm0-f47.google.com with SMTP id f65so171789645wmi.0
- for <wireguard@lists.zx2c4.com>; Tue, 16 Aug 2016 18:42:25 -0700 (PDT)
+ Wed, 17 Aug 2016 03:18:47 +0000 (UTC)
+Received: from d4-50-47-134.col.wideopenwest.com ([50.4.134.47]:45411
+ helo=sts1.inf7.net)
+ by conquer.yellowcord.com with esmtpsa (TLSv1.2:DHE-RSA-AES128-SHA:128)
+ (Exim 4.85) (envelope-from <joe@solidadmin.com>) id 1bZrSS-0006J6-D8
+ for wireguard@lists.zx2c4.com; Tue, 16 Aug 2016 22:24:00 -0500
+To: wireguard@lists.zx2c4.com
+From: Joe Doss <joe@solidadmin.com>
+Message-ID: <919f5c60-4f1e-0f12-012b-021bce9aca5d@solidadmin.com>
+Date: Tue, 16 Aug 2016 22:24:00 -0500
 MIME-Version: 1.0
-In-Reply-To: <CAKAE9iRw0wWvGScx_c+6E-5D+VvfNg28X2c0A5rEC69XqqtmrA@mail.gmail.com>
-References: <CAHmME9ojjGjoBq78Vem4gG3gya_=xRP+fr7+0DBzvuot5OAJPg@mail.gmail.com>
- <CAKAE9iRw0wWvGScx_c+6E-5D+VvfNg28X2c0A5rEC69XqqtmrA@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 17 Aug 2016 03:42:23 +0200
-Message-ID: <CAHmME9q4f7g6uEVsQcn9y0PNH2Te2=ZgNG1EPya+Ji72cJ-PYw@mail.gmail.com>
-To: Phillip Smith <fukawi2@gmail.com>
-Content-Type: multipart/alternative; boundary=001a11418d6cb7e720053a3a93f9
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: [WireGuard] The Bikeshed Thread: Replacing AllowedIPs
+Content-Type: text/plain; charset=utf-8; format=flowed
+Subject: [WireGuard] Fedora WireGuard RPMs
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -32,38 +24,30 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---001a11418d6cb7e720053a3a93f9
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Hey there!
 
-On Wed, Aug 17, 2016 at 3:41 AM, Phillip Smith <fukawi2@gmail.com> wrote:
->
-> =E2=80=8B
-> Perhaps include "source" to highlight it's the addresses allowed from the
-> other end of the tunnel, which also splits the lowercase l (and the lower
-> "d") next to capital I
->
+I saw the project was missing packages for Fedora, so I wrote some specs 
+for RPMs to install the kernel module via DKMS and one for WireGuard 
+tools. They are up on my Copr.
 
-Except it's not just source. It checks src when receiving and consults dst
-when sending.
+https://copr.fedorainfracloud.org/coprs/jdoss/wireguard/
 
---001a11418d6cb7e720053a3a93f9
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Which can be enabled with:
 
-<div dir=3D"ltr"><br><div class=3D"gmail_extra"><br><div class=3D"gmail_quo=
-te">On Wed, Aug 17, 2016 at 3:41 AM, Phillip Smith <span dir=3D"ltr">&lt;<a=
- href=3D"mailto:fukawi2@gmail.com" target=3D"_blank">fukawi2@gmail.com</a>&=
-gt;</span> wrote:<blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8=
-ex;border-left:1px #ccc solid;padding-left:1ex"><div dir=3D"ltr"><div class=
-=3D"gmail_extra"><div class=3D"gmail_quote"><div style=3D"font-family:verda=
-na,sans-serif;display:inline">=E2=80=8B</div><span style=3D"font-family:ver=
-dana,sans-serif">Perhaps include &quot;source&quot; to highlight it&#39;s t=
-he addresses allowed from the other end of the tunnel, which also splits th=
-e lowercase l (and the lower &quot;d&quot;) next to capital I<br></span></d=
-iv></div></div></blockquote><div><br></div><div>Except it&#39;s not just so=
-urce. It checks src when receiving and consults dst when sending.=C2=A0</di=
-v></div>
-</div></div>
+sudo dnf copr enable jdoss/wireguard
 
---001a11418d6cb7e720053a3a93f9--
+and the packages installed with:
+
+sudo dnf install wireguard-dkms wireguard-tools
+
+I haven't tested them other than making sure the kernel module loads on 
+Fedora 24 and doing the first parts of the quick start. Let me know what 
+you think and feedback for improvements on the specs is welcome.
+
+Thanks!
+Joe
+
+
+-- 
+Joe Doss
+joe@solidadmin.com
