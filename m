@@ -1,25 +1,19 @@
-Return-Path: Jason@zx2c4.com
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 18bfc7fc
+Return-Path: BATV+094e2db53fa3eeadaabe+4742+infradead.org+dwmw2@bombadil.srs.infradead.org
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.9])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5322f347
  for <wireguard@lists.zx2c4.com>;
- Wed, 17 Aug 2016 14:33:05 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ebea2f23
- for <wireguard@lists.zx2c4.com>;
- Wed, 17 Aug 2016 14:33:05 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id a4b4051a
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Wed, 17 Aug 2016 14:33:05 +0000 (UTC)
-Received: by mail-wm0-f48.google.com with SMTP id q128so202713158wma.1
- for <wireguard@lists.zx2c4.com>; Wed, 17 Aug 2016 07:38:22 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <919f5c60-4f1e-0f12-012b-021bce9aca5d@solidadmin.com>
+ Wed, 17 Aug 2016 14:39:40 +0000 (UTC)
+Message-ID: <1471445090.61594.362.camel@infradead.org>
+From: David Woodhouse <dwmw2@infradead.org>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>, Joe Doss <joe@solidadmin.com>
+Date: Wed, 17 Aug 2016 15:44:50 +0100
+In-Reply-To: <CAHmME9oA9CeFr30WJwkEgamrFJrWX-rT3-NSsDLwcyybM7JbMw@mail.gmail.com>
 References: <919f5c60-4f1e-0f12-012b-021bce9aca5d@solidadmin.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 17 Aug 2016 16:38:20 +0200
-Message-ID: <CAHmME9oA9CeFr30WJwkEgamrFJrWX-rT3-NSsDLwcyybM7JbMw@mail.gmail.com>
-To: Joe Doss <joe@solidadmin.com>
-Content-Type: text/plain; charset=UTF-8
+ <CAHmME9oA9CeFr30WJwkEgamrFJrWX-rT3-NSsDLwcyybM7JbMw@mail.gmail.com>
+Content-Type: multipart/signed; micalg="sha-256";
+ protocol="application/x-pkcs7-signature";
+ boundary="=-UY1yNUzVlinQcLQzC+Tr"
+Mime-Version: 1.0
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Subject: Re: [WireGuard] Fedora WireGuard RPMs
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
@@ -31,91 +25,136 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hey Joe,
 
-This is great news! Thanks for doing that. Are you a Fedora developer
-per chance?
+--=-UY1yNUzVlinQcLQzC+Tr
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-A few notes for fixing this:
+On Wed, 2016-08-17 at 16:38 +0200, Jason A. Donenfeld wrote:
+>=20
+> a)
+> > BuildRequires:=C2=A0 libmnl-devel, kernel-devel, systemd
+> > Requires:=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 wireguard-dkms, systemd
+>=20
+> Remove the systemd requirement.
 
-1) http://copr-dist-git.fedorainfracloud.org/cgit/jdoss/wireguard/wireguard-tools.git/tree/wireguard-tools.spec
+The BR should also be for 'pkgconfig(libmnl)', not 'libmnl-devel',
+shouldn't it?
 
-a)
-> BuildRequires:  libmnl-devel, kernel-devel, systemd
-> Requires:       wireguard-dkms, systemd
-
-Remove the systemd requirement.
-
-b)
-> install -p -D -m 0644 %{_builddir}/WireGuard-experimental-%{version}/contrib/examples/systemd/wgserver.service \
->    %{buildroot}%{_unitdir}/wgserver.service
-> %attr(0644, root, root) %{_unitdir}/wgserver.service
-
-Remove these lines. Do not install this systemd unit. It's in the
-examples directory; thus it is an EXAMPLE. It is not meant to be
-installed. When we write a unit that's meant to be installed, `make
-install` will do it automatically.
-
-Instead, copy all of contrib/examples to /usr/share/{pkg}/examples or
-wherever the default Fedora examples directory is.
-
-c)
-> BuildRequires:  libmnl-devel, kernel-devel, systemd
-
-Are you sure that the tools package requires kernel-devel? Did you
-double check this?
-
-d)
-> install -Z -s -m 0755 -v %{_builddir}/WireGuard-experimental-%{version}/src/tools/wg \
->    %{buildroot}%{_bindir}/wg
-> install -p -D -m 0644 %{_builddir}/WireGuard-experimental-%{version}/contrib/examples/systemd/wgserver.service \
->    %{buildroot}%{_unitdir}/wgserver.service
-> install -p -D -m 0644 %{_builddir}/WireGuard-experimental-%{version}/src/tools/wg.8 \
->    %{buildroot}%{_mandir}/man8/wg.8
-> %defattr(-,root,root,-)
-> %attr(0755, root, root) %{_bindir}/wg
-> %attr(0644, root, root) %{_unitdir}/wgserver.service
-> %attr(0644, root, root) %{_mandir}/man8/wg.8*
-
-All of this is garbage. Instead, use `make install` and set the
-environment variables appropriately. By default they are:
-PREFIX ?= /usr
-DESTDIR ?=
-BINDIR ?= $(PREFIX)/bin
-LIBDIR ?= $(PREFIX)/lib
-MANDIR ?= $(PREFIX)/share/man
-RUNSTATEDIR ?= /var/run
-
-I imagine here you'll want to roll with something like:
-
-DESTDIR=%{buildroot} BINDIR=%{_bindir} MANDIR=%{_mandir}
-RUNSTATEDIR=/run make install
+Unless WireGuard isn't actually using pkgconfig to find the library?
+In which case WireGuard should be fixed and *then* the BR should be for
+'pkgconfig(libmnl)' :)
 
 
-2) http://copr-dist-git.fedorainfracloud.org/cgit/jdoss/wireguard/wireguard-dkms.git/tree/wireguard-dkms.conf
+--=20
+dwmw2
+--=-UY1yNUzVlinQcLQzC+Tr
+Content-Type: application/x-pkcs7-signature; name="smime.p7s"
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Transfer-Encoding: base64
 
-I recommend you use Debian's as a starting point:
-https://anonscm.debian.org/git/collab-maint/wireguard.git/tree/debian/wireguard-dkms.dkms
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCEeAw
+ggXiMIIDyqADAgECAhBrp4p9CteI1lEK+Vnk57ThMA0GCSqGSIb3DQEBCwUAMH0xCzAJBgNVBAYT
+AklMMRYwFAYDVQQKEw1TdGFydENvbSBMdGQuMSswKQYDVQQLEyJTZWN1cmUgRGlnaXRhbCBDZXJ0
+aWZpY2F0ZSBTaWduaW5nMSkwJwYDVQQDEyBTdGFydENvbSBDZXJ0aWZpY2F0aW9uIEF1dGhvcml0
+eTAeFw0xNTEyMTYwMTAwMDVaFw0zMDEyMTYwMTAwMDVaMHUxCzAJBgNVBAYTAklMMRYwFAYDVQQK
+Ew1TdGFydENvbSBMdGQuMSkwJwYDVQQLEyBTdGFydENvbSBDZXJ0aWZpY2F0aW9uIEF1dGhvcml0
+eTEjMCEGA1UEAxMaU3RhcnRDb20gQ2xhc3MgMSBDbGllbnQgQ0EwggEiMA0GCSqGSIb3DQEBAQUA
+A4IBDwAwggEKAoIBAQC9fdr3w6J9g/Zbgv3bW1+uHht1wLUZr5gkrLtXedg17AkefMyUGwrQdvwO
+bhajcVmnKVxhrUwkZPXRAwZZosRHfEIi5FH7x6SV/8Sp5lZEuiMnvMFG2MzLA84J6Ws5T4NfXZ0q
+n4TPgnr3X2vPVS51M7Ua9nIJgn8jvTra4eyyQzxvuA/GZwKg7VQfDCmCS+kICslYYWgXOMt2xlsS
+slxLce0CGWRsT8EpMyt1iDflSjXZIsE7m1uTyHaKZspMLyIyz6mySu8j8BWWHpChNNeTrFuhVfrO
+AyDPFJVUvKZCLKBhibTLloyy+LatoWELrjdI4a8StZY8+dIR9t4APXGzAgMBAAGjggFkMIIBYDAO
+BgNVHQ8BAf8EBAMCAQYwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMEMBIGA1UdEwEB/wQI
+MAYBAf8CAQAwMgYDVR0fBCswKTAnoCWgI4YhaHR0cDovL2NybC5zdGFydHNzbC5jb20vc2ZzY2Eu
+Y3JsMGYGCCsGAQUFBwEBBFowWDAkBggrBgEFBQcwAYYYaHR0cDovL29jc3Auc3RhcnRzc2wuY29t
+MDAGCCsGAQUFBzAChiRodHRwOi8vYWlhLnN0YXJ0c3NsLmNvbS9jZXJ0cy9jYS5jcnQwHQYDVR0O
+BBYEFCSBbDlhvkkPj7cbRivJKLUnSG1oMB8GA1UdIwQYMBaAFE4L7xqkQFulF2mHMMo0aEPQQa7y
+MD8GA1UdIAQ4MDYwNAYEVR0gADAsMCoGCCsGAQUFBwIBFh5odHRwOi8vd3d3LnN0YXJ0c3NsLmNv
+bS9wb2xpY3kwDQYJKoZIhvcNAQELBQADggIBAIvj94fsAYuErQ8BAluc4SMnIwS9NPBwAm5SH9uh
+2NCXTq7im61g7F1LIiNI/+wq37fUuaMbz4g7VarKQTgf8ubs0p7NZWcIe7Bvem2AWaXBsxsaRTYw
+5kG3DN8pd1hSEUuFoTa7DmNeFe8tiK1BrL3rbA/m48jp4AiFXgvxprJrW7izsyetOrRHPbkW4Y07
+v29MdhaPv3u1JELyszXqOzjIYo4sWlC8iDQXwgSW/ntvWy2n4LuiaozlCfXl149tKeqvwlvrla2Y
+klue/quWp9j9ou4T/OY0CXMuY+B8wNK0ohd2D4ShgFlMSjzAFRoHGKF81snTr2d1A7Ew02oF6UQy
+CkC2aNNsK5cWOojBar5c7HplX9aHYUCZouxIeU28SONJAxnATgR4cJ2jrpmYSz/kliUJ46S6UpVD
+o/ebn9c6PaM/XtDYCCaM/7XX6wc3s++sbQ7CtCn1Ax7df6ufQbwyO0V+oFa9H0KAsjHMzcwk3EV2
+B2NLatidKE/m7G+rB9m+FlVgIiSp0mGlg43QO9Kh1+JqvTCIzv2bJJkmPMLQJNuKKwHNL8F4GGp6
+jbAV+WL+LDeGfVcq8DHS3LrD+xyYEXQBiqZEdiPVOMxLDSUCXsDO0uCWpaNQ8j6y6S9p0xE/Ga0p
+eVLadVHhqf9nXqKaxnr358VgfrxzUIrvOaOjMIIF+TCCBOGgAwIBAgIQaRjuleoVgt0XsPAUByve
+JDANBgkqhkiG9w0BAQsFADB1MQswCQYDVQQGEwJJTDEWMBQGA1UEChMNU3RhcnRDb20gTHRkLjEp
+MCcGA1UECxMgU3RhcnRDb20gQ2VydGlmaWNhdGlvbiBBdXRob3JpdHkxIzAhBgNVBAMTGlN0YXJ0
+Q29tIENsYXNzIDEgQ2xpZW50IENBMB4XDTE2MDMxMjE2MjEyNVoXDTE3MDMxMjE2MjEyNVowQjEc
+MBoGA1UEAwwTZHdtdzJAaW5mcmFkZWFkLm9yZzEiMCAGCSqGSIb3DQEJARYTZHdtdzJAaW5mcmFk
+ZWFkLm9yZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBANBDAiGnoeOIQJ/Aolutct4z
+x6Yt3dOUI5d0YnydAMNOiyVLXzHuuuVjUpk/6nRxg1FN3e0i3TWe5MjSTD98760qWoAuF2g5BGU+
+tN/GUsyws26ZWOt82w7xhn4dcI8EhmASUtwDTZs5ZXPQzSkuNs6uX5SY0eKPlBNHkAtMf39hNc4m
+liy6WRDKApZxA1vCbiHsJQZdNEBYO35022bu8PZBe6LSAFKoncoGMHl1xNEkN6kfOJFYnLqBYeXO
+2mDA8KZ4h15EnQyyHGSghN92OUTc9stAWEt9a+q6TCtyW5zNgYTaaOtE41t5x2xDAgsnNU7sVM8f
+wSR3tYeW9IqTgU6eDUllb1a9FK7es3+j9UDg7OxNv9rnXIda6TdXlGWYfFltujF7FMwTofq3UG7t
+w68Ugk0MMfpZadhPhjYLI/qXiEDgQi8Xr+eWSo5P0ygaLvAz8OPcWAt8RG5Y8Id9hpb5neW1HTAR
+Q+k8lbpkx2wDPHZEft0ITROOupf76f9CNF4jYcyCKZNnjSsKeJv69VX1TsVaeqT1LJUEudXLa/BK
+FSb7x5M1KF4z46yImJrnagI19Nk/ufWn1usBXqXh8pY8cVN/I7C+TDPBY5SqIceTq7DaHZp19JQU
+IIWlyRsm2d4UoVcgIdTjX57Odap4Pjzrfp2RmC6hvkW2hQ5EreIPAgMBAAGjggG2MIIBsjAOBgNV
+HQ8BAf8EBAMCBLAwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMEMAkGA1UdEwQCMAAwHQYD
+VR0OBBYEFBDmK2IjZJ7MKmBK0A7J/tKaSIdoMB8GA1UdIwQYMBaAFCSBbDlhvkkPj7cbRivJKLUn
+SG1oMG8GCCsGAQUFBwEBBGMwYTAkBggrBgEFBQcwAYYYaHR0cDovL29jc3Auc3RhcnRzc2wuY29t
+MDkGCCsGAQUFBzAChi1odHRwOi8vYWlhLnN0YXJ0c3NsLmNvbS9jZXJ0cy9zY2EuY2xpZW50MS5j
+cnQwOAYDVR0fBDEwLzAtoCugKYYnaHR0cDovL2NybC5zdGFydHNzbC5jb20vc2NhLWNsaWVudDEu
+Y3JsMB4GA1UdEQQXMBWBE2R3bXcyQGluZnJhZGVhZC5vcmcwIwYDVR0SBBwwGoYYaHR0cDovL3d3
+dy5zdGFydHNzbC5jb20vMEYGA1UdIAQ/MD0wOwYLKwYBBAGBtTcBAgQwLDAqBggrBgEFBQcCARYe
+aHR0cDovL3d3dy5zdGFydHNzbC5jb20vcG9saWN5MA0GCSqGSIb3DQEBCwUAA4IBAQAn5wvdgC0V
+kS226sFKAbqPnmVhc9jgrbsiXUcpdtYEzv6EZonARIeRC1UlIzK7jzZFRe95W5y4/qlcPQDoAeZL
+cSsbpW3AYPFFWdRgVp/eIR3iy9C5KEcAbkJES2lRUZWyRqAceW1Gur9kfvjM5H0kM6BBwJfCtoqo
+WragTXfsIXGNsF0F+60mUYYsKFPZzPmyz9J0Dr0xx9Lcp4fbD6UckDWCNJt2AJAiEPt/vPiiBzU8
+edaRzkYhzxd9f3pZAzhlzIf2CgTrGtKSL2X1bS/b3siREjQLhVrlGw4qxqllqER3APrDzyijLFuc
+CWpS8hxjTmYcNZSibv+3Oy6uU+wqMIIF+TCCBOGgAwIBAgIQaRjuleoVgt0XsPAUByveJDANBgkq
+hkiG9w0BAQsFADB1MQswCQYDVQQGEwJJTDEWMBQGA1UEChMNU3RhcnRDb20gTHRkLjEpMCcGA1UE
+CxMgU3RhcnRDb20gQ2VydGlmaWNhdGlvbiBBdXRob3JpdHkxIzAhBgNVBAMTGlN0YXJ0Q29tIENs
+YXNzIDEgQ2xpZW50IENBMB4XDTE2MDMxMjE2MjEyNVoXDTE3MDMxMjE2MjEyNVowQjEcMBoGA1UE
+AwwTZHdtdzJAaW5mcmFkZWFkLm9yZzEiMCAGCSqGSIb3DQEJARYTZHdtdzJAaW5mcmFkZWFkLm9y
+ZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBANBDAiGnoeOIQJ/Aolutct4zx6Yt3dOU
+I5d0YnydAMNOiyVLXzHuuuVjUpk/6nRxg1FN3e0i3TWe5MjSTD98760qWoAuF2g5BGU+tN/GUsyw
+s26ZWOt82w7xhn4dcI8EhmASUtwDTZs5ZXPQzSkuNs6uX5SY0eKPlBNHkAtMf39hNc4mliy6WRDK
+ApZxA1vCbiHsJQZdNEBYO35022bu8PZBe6LSAFKoncoGMHl1xNEkN6kfOJFYnLqBYeXO2mDA8KZ4
+h15EnQyyHGSghN92OUTc9stAWEt9a+q6TCtyW5zNgYTaaOtE41t5x2xDAgsnNU7sVM8fwSR3tYeW
+9IqTgU6eDUllb1a9FK7es3+j9UDg7OxNv9rnXIda6TdXlGWYfFltujF7FMwTofq3UG7tw68Ugk0M
+MfpZadhPhjYLI/qXiEDgQi8Xr+eWSo5P0ygaLvAz8OPcWAt8RG5Y8Id9hpb5neW1HTARQ+k8lbpk
+x2wDPHZEft0ITROOupf76f9CNF4jYcyCKZNnjSsKeJv69VX1TsVaeqT1LJUEudXLa/BKFSb7x5M1
+KF4z46yImJrnagI19Nk/ufWn1usBXqXh8pY8cVN/I7C+TDPBY5SqIceTq7DaHZp19JQUIIWlyRsm
+2d4UoVcgIdTjX57Odap4Pjzrfp2RmC6hvkW2hQ5EreIPAgMBAAGjggG2MIIBsjAOBgNVHQ8BAf8E
+BAMCBLAwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMEMAkGA1UdEwQCMAAwHQYDVR0OBBYE
+FBDmK2IjZJ7MKmBK0A7J/tKaSIdoMB8GA1UdIwQYMBaAFCSBbDlhvkkPj7cbRivJKLUnSG1oMG8G
+CCsGAQUFBwEBBGMwYTAkBggrBgEFBQcwAYYYaHR0cDovL29jc3Auc3RhcnRzc2wuY29tMDkGCCsG
+AQUFBzAChi1odHRwOi8vYWlhLnN0YXJ0c3NsLmNvbS9jZXJ0cy9zY2EuY2xpZW50MS5jcnQwOAYD
+VR0fBDEwLzAtoCugKYYnaHR0cDovL2NybC5zdGFydHNzbC5jb20vc2NhLWNsaWVudDEuY3JsMB4G
+A1UdEQQXMBWBE2R3bXcyQGluZnJhZGVhZC5vcmcwIwYDVR0SBBwwGoYYaHR0cDovL3d3dy5zdGFy
+dHNzbC5jb20vMEYGA1UdIAQ/MD0wOwYLKwYBBAGBtTcBAgQwLDAqBggrBgEFBQcCARYeaHR0cDov
+L3d3dy5zdGFydHNzbC5jb20vcG9saWN5MA0GCSqGSIb3DQEBCwUAA4IBAQAn5wvdgC0VkS226sFK
+AbqPnmVhc9jgrbsiXUcpdtYEzv6EZonARIeRC1UlIzK7jzZFRe95W5y4/qlcPQDoAeZLcSsbpW3A
+YPFFWdRgVp/eIR3iy9C5KEcAbkJES2lRUZWyRqAceW1Gur9kfvjM5H0kM6BBwJfCtoqoWragTXfs
+IXGNsF0F+60mUYYsKFPZzPmyz9J0Dr0xx9Lcp4fbD6UckDWCNJt2AJAiEPt/vPiiBzU8edaRzkYh
+zxd9f3pZAzhlzIf2CgTrGtKSL2X1bS/b3siREjQLhVrlGw4qxqllqER3APrDzyijLFucCWpS8hxj
+TmYcNZSibv+3Oy6uU+wqMYIEXjCCBFoCAQEwgYkwdTELMAkGA1UEBhMCSUwxFjAUBgNVBAoTDVN0
+YXJ0Q29tIEx0ZC4xKTAnBgNVBAsTIFN0YXJ0Q29tIENlcnRpZmljYXRpb24gQXV0aG9yaXR5MSMw
+IQYDVQQDExpTdGFydENvbSBDbGFzcyAxIENsaWVudCBDQQIQaRjuleoVgt0XsPAUByveJDANBglg
+hkgBZQMEAgEFAKCCAaUwGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcN
+MTYwODE3MTQ0NDUwWjAvBgkqhkiG9w0BCQQxIgQgB2K+5J6jcHy4vfi/r/fMQsaPvBCebWYxXXm8
+5pV2ZsEwgZoGCSsGAQQBgjcQBDGBjDCBiTB1MQswCQYDVQQGEwJJTDEWMBQGA1UEChMNU3RhcnRD
+b20gTHRkLjEpMCcGA1UECxMgU3RhcnRDb20gQ2VydGlmaWNhdGlvbiBBdXRob3JpdHkxIzAhBgNV
+BAMTGlN0YXJ0Q29tIENsYXNzIDEgQ2xpZW50IENBAhBpGO6V6hWC3Rew8BQHK94kMIGcBgsqhkiG
+9w0BCRACCzGBjKCBiTB1MQswCQYDVQQGEwJJTDEWMBQGA1UEChMNU3RhcnRDb20gTHRkLjEpMCcG
+A1UECxMgU3RhcnRDb20gQ2VydGlmaWNhdGlvbiBBdXRob3JpdHkxIzAhBgNVBAMTGlN0YXJ0Q29t
+IENsYXNzIDEgQ2xpZW50IENBAhBpGO6V6hWC3Rew8BQHK94kMA0GCSqGSIb3DQEBAQUABIICAEbD
+nMnqtdFM2e9gmXZo9YIfM/ulPJmn4UZAB8EYviJjSG6uAcl5StUrAAMdBp6eWf7xbpiIGqwTbnxj
+mP5/WItbIR1SynnLMLUbeKsZh3WlG5j8qfBlmZTQkMPDa7TmJV4+g/xghYuSQk4gf1krG8ESr1hB
+MJ10Q/la9nyeeUKGVfHcMuP6lVB0kcpBNihtaQB8LBUQYlBLkONGUaUAc4NLwWWkrD/dASOoZYwN
+6BzoXKQ56aCkdGbyKz5t58n1raNTRt+59gIQh3f31uLl9gyHyeM8SY/9cx5/yNGBpZsSVkjeYjPP
+PPGyBANZMmeifJsZ4PRbDRdetnP6XFnuBQVy5fgXofgDMwNIJrgrOU81mt78uWontiwQ7hoxFi5x
+P+qkWxTxV4+FOJPFqrG6qCMvB7LMYLxg5HA6WGQsM5TNSDjImWfEnhzN+xwJUl1VG8spGcZSrdiR
+MX0+JWbR01ZWO0BgNnd+61rGuxh6S7/qwAJqyi7bjcf2ybkXZS2hF+YXGUF8uWMVDcYd/Tc4MRcU
+Mzp/7MOiq9FaBtpBEm7bwKQsXI6eMrjztgrkDjbo4qPvMRNdS/xwLWMjM5eqVW4fS+q4ctg1HAsr
+ij4J93PDLen+r7slph4YUvj61u+xfWlxeZZUxp8eLcBSp3AaOUzTzfpdDuygV4/PtqYvmV11AAAA
+AAAA
 
-In particular DEST_MODULE_LOCATION="/kernel/net" and
-BUILD_EXCLUSIVE_KERNEL="^(4\.[^0]|[5-9])".
 
-3) http://copr-dist-git.fedorainfracloud.org/cgit/jdoss/wireguard/wireguard-dkms.git/tree/wireguard-dkms.spec
-
-a)
-> BuildRequires:  libmnl-devel, kernel-devel, sed
-
-The kernel module does not require libmnl-devel.
-
-b)
-> cp -fr %{_builddir}/WireGuard-experimental-%{version}/* %{buildroot}%{_usrsrc}/%{dkms_name}-%{version}/
-
-You might consider instead only copying src/.
-
-
-Please let me know when you've addressed 1a, 1b, 1c, 1d, 2, 3a, and
-3b, and then I'll add your instructions to the wireguard.io website.
-
-Thanks for your hard work on this. Much appreciated.
-
-Jason
+--=-UY1yNUzVlinQcLQzC+Tr--
