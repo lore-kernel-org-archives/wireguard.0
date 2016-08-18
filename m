@@ -1,18 +1,27 @@
-Return-Path: bruno@wolff.to
-Received: from wolff.to (wolff.to [98.103.208.27])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with SMTP id 1d811b32
+Return-Path: Jason@zx2c4.com
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fc6611c1
  for <wireguard@lists.zx2c4.com>;
- Wed, 17 Aug 2016 20:17:34 +0000 (UTC)
-Date: Wed, 17 Aug 2016 15:17:27 -0500
-From: Bruno Wolff III <bruno@wolff.to>
-To: Joe Doss <joe@solidadmin.com>
-Message-ID: <20160817201727.GA3094@wolff.to>
+ Thu, 18 Aug 2016 00:08:05 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d2a74d1b
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 18 Aug 2016 00:08:05 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 96ac69df
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 18 Aug 2016 00:08:05 +0000 (UTC)
+Received: by mail-lf0-f51.google.com with SMTP id f93so1930812lfi.2
+ for <wireguard@lists.zx2c4.com>; Wed, 17 Aug 2016 17:13:25 -0700 (PDT)
+MIME-Version: 1.0
+In-Reply-To: <1a66128e-2cb6-8f93-3769-d8011bf6a464@solidadmin.com>
 References: <919f5c60-4f1e-0f12-012b-021bce9aca5d@solidadmin.com>
  <CAHmME9oA9CeFr30WJwkEgamrFJrWX-rT3-NSsDLwcyybM7JbMw@mail.gmail.com>
  <1a66128e-2cb6-8f93-3769-d8011bf6a464@solidadmin.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-In-Reply-To: <1a66128e-2cb6-8f93-3769-d8011bf6a464@solidadmin.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 18 Aug 2016 02:13:23 +0200
+Message-ID: <CAHmME9pk-sKHN10-rwUbw8fPUctQbKevdvbEi82FEs9QcgwF6g@mail.gmail.com>
+To: Joe Doss <joe@solidadmin.com>
+Content-Type: text/plain; charset=UTF-8
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Subject: Re: [WireGuard] Fedora WireGuard RPMs
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
@@ -24,15 +33,14 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Wed, Aug 17, 2016 at 14:39:16 -0500,
-  Joe Doss <joe@solidadmin.com> wrote:
->
->Also, SELinux is set enforcing by default on Fedora. I am not sure if 
->that is going to cause any issues either.
+Hey Joe,
 
-Users run unconfined (technically there are confined by a policy that lets 
-them do almost anything) so generally there won't be a problem for stuff 
-they run manually. However I did hit issues running stuff in a service. 
-I didn't try to figure out what the correct fix was and kust added an 
-allow rule. I suspect there was a better solution using labelling, but I 
-didn't think it was worth worrying about.
+Terrific! We're all set now:
+https://www.wireguard.io/install/
+
+I've put the instructions on there.
+
+Thanks so much for doing this. I really appreciate it.
+
+Regards,
+Jason
