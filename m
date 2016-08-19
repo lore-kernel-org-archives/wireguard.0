@@ -1,23 +1,24 @@
 Return-Path: Jason@zx2c4.com
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ee924827
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 72e4be26
  for <wireguard@lists.zx2c4.com>;
- Fri, 19 Aug 2016 12:44:36 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 803e2b85
+ Fri, 19 Aug 2016 12:48:55 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cd24b110
  for <wireguard@lists.zx2c4.com>;
- Fri, 19 Aug 2016 12:44:35 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id b6d9d541
+ Fri, 19 Aug 2016 12:48:54 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id f875ed2f
  (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 19 Aug 2016 12:44:35 +0000 (UTC)
-Received: by mail-lf0-f48.google.com with SMTP id g62so32116171lfe.3
- for <wireguard@lists.zx2c4.com>; Fri, 19 Aug 2016 05:50:07 -0700 (PDT)
+ Fri, 19 Aug 2016 12:48:54 +0000 (UTC)
+Received: by mail-lf0-f43.google.com with SMTP id b199so32325115lfe.0
+ for <wireguard@lists.zx2c4.com>; Fri, 19 Aug 2016 05:54:26 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <acb454d0c202fc330d0a349aeee29256@mail.inwebse.com>
+In-Reply-To: <CAHmME9ozzYBLJ-0xMocFbWuHWCDsONuVqS_hQpVtWJtMKspd5g@mail.gmail.com>
 References: <acb454d0c202fc330d0a349aeee29256@mail.inwebse.com>
+ <CAHmME9ozzYBLJ-0xMocFbWuHWCDsONuVqS_hQpVtWJtMKspd5g@mail.gmail.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 19 Aug 2016 14:50:04 +0200
-Message-ID: <CAHmME9ozzYBLJ-0xMocFbWuHWCDsONuVqS_hQpVtWJtMKspd5g@mail.gmail.com>
+Date: Fri, 19 Aug 2016 14:54:24 +0200
+Message-ID: <CAHmME9pZmAi9tjOzZL178f3tM1MYCQZFR-VFR-bJd0S1FFMruA@mail.gmail.com>
 To: sorcus@inwebse.com
 Content-Type: text/plain; charset=UTF-8
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
@@ -32,25 +33,24 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Next time ask on the mailing list and not on stack overflow. Also
-please use better subject lines in future emails. I'm going to paste
-your stack overflow entry here, and then respond to that:
+>> $ cat /etc/wireguard/client.conf
+>> [Interface]
+>> PrivateKey = OAT5r6E1hid***iVBnY=
 
-> Subject: Required key not available
-> Content:
-> i try to configure network with VPN (using WireGuard) and Network Namespace. Original instruction - www.wireguard.io/netns/
-> I have a client (notebook) on ArchLinux and server (VPS) on ArchLinux. Client has IPv6-only network, server has dual-stack (IPv4 + IPv6) network.
-> Client configs and output of some commands: http://pastebin.com/3Qy3PMrp
-> Server: http://pastebin.com/CUizE4LS
-> When netns.service started, i can ping fc00::10 (VPS, wg0 interface). But if i try ping any other resource (for example ping -6 -c 1 2a00:1450:4010:c01::8a (ipv6.google.com) ) i get an error:
-> 'ping: sendmsg: Required key not available'
-> Other commands (drill, tracepath6, traceroute, etc.) get the same error.
-> I don't know how to fix it. Help please to solve this problem.
-> $ cat /etc/wireguard/client.conf
-> [Interface]
-> PrivateKey = OAT5r6E1hid***iVBnY=
-> ListenPort = 52345
-> [Peer]
-> PublicKey = aMC3f6kw***UDQVwo=
-> EndPoint = [2a01:4f8:***:***::5]:40111
-> AllowedIPs = fc00::10/7
+Never post any part of your private key to the internet. I advise you
+to change your keys now.
+
+
+>> ListenPort = 52345
+>> [Peer]
+>> PublicKey = aMC3f6kw***UDQVwo=
+>> EndPoint = [2a01:4f8:***:***::5]:40111
+>> AllowedIPs = fc00::10/7
+
+Here's where you go wrong. On the _client_ you want:
+    AllowedIPs=::/0,0.0.0.0/0
+In other words, the client trusts the server to send data as any IP,
+and the client will send any IP data to the server.
+
+The AllowedIPs you use on the server should most likely be a /128 and
+a /32, however.
