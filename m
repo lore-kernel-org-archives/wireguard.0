@@ -1,32 +1,25 @@
 Return-Path: Jason@zx2c4.com
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 30645d9e
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a3c0265a
  for <wireguard@lists.zx2c4.com>;
- Fri, 19 Aug 2016 19:14:20 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3375e48a
+ Tue, 23 Aug 2016 11:56:24 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 902419ad
  for <wireguard@lists.zx2c4.com>;
- Fri, 19 Aug 2016 19:14:20 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 173a5c0a
+ Tue, 23 Aug 2016 11:56:23 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id df9e659c
  (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 19 Aug 2016 19:14:20 +0000 (UTC)
-Received: by mail-lf0-f53.google.com with SMTP id f93so39487552lfi.2
- for <wireguard@lists.zx2c4.com>; Fri, 19 Aug 2016 12:19:54 -0700 (PDT)
+ Tue, 23 Aug 2016 11:56:23 +0000 (UTC)
+Received: by mail-lf0-f42.google.com with SMTP id b199so99219594lfe.0
+ for <wireguard@lists.zx2c4.com>; Tue, 23 Aug 2016 05:02:24 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <890b834ba4e320e55889f2bcae74a020@mail.inwebse.com>
-References: <CAHmME9pZmAi9tjOzZL178f3tM1MYCQZFR-VFR-bJd0S1FFMruA@mail.gmail.com>
- <acb454d0c202fc330d0a349aeee29256@mail.inwebse.com>
- <CAHmME9ozzYBLJ-0xMocFbWuHWCDsONuVqS_hQpVtWJtMKspd5g@mail.gmail.com>
- <2c13c33b73f45d3bbdeee59b60d736de@mail.inwebse.com>
- <890b834ba4e320e55889f2bcae74a020@mail.inwebse.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 19 Aug 2016 21:19:51 +0200
-Message-ID: <CAHmME9o=tAMikWRsEn6Gv-_V=cgBMhLcpSv4XXboHAtk5Rj9OA@mail.gmail.com>
-To: sorcus@inwebse.com
+Date: Tue, 23 Aug 2016 14:02:22 +0200
+Message-ID: <CAHmME9oj_YLqFV=2O5iVRL5=HtGQMPs+aaO5+4aXM27eCUtWSA@mail.gmail.com>
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset=UTF-8
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: [WireGuard] WireGuard doesn't work with network namespace on
-	ArchLinux
+Cc: Eric Sagnes <eric.sagnes@gmail.com>
+Subject: [WireGuard] NixOS WireGuard Integration
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -36,7 +29,22 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-You need ip forwarding enabled on the server, of course. I suspect
-that's not the issue you're facing though. Instead, I imagine that UDP
-port isn't open on the server, or the keys are not configured
-correctly.
+Hey folks,
+
+Eric, CC'd, is working on getting WireGuard integrated into the NixOS
+declarative configuration. He's making a configuration module, which
+is currently a work in progress here [1]. I did an initial read
+through and left several comments within the source.
+
+One important issue that's come up is -- what's the best way to use
+systemd for this? I know there are some folks on this list who have
+lots of ideas in this department, so I'd encourage you to chime in on
+[1] if you're interested in steering the direction of the NixOS
+integration.
+
+Regards,
+Jason
+
+
+
+[1] https://github.com/NixOS/nixpkgs/pull/17933
