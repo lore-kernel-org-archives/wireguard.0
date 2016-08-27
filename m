@@ -1,26 +1,18 @@
-Return-Path: Jason@zx2c4.com
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d6af8281
+Return-Path: dave.taht@gmail.com
+Received: from mail-it0-f49.google.com (mail-it0-f49.google.com
+ [209.85.214.49])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bb24b1ad
  for <wireguard@lists.zx2c4.com>;
- Wed, 24 Aug 2016 22:45:09 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ad6a80a9
- for <wireguard@lists.zx2c4.com>;
- Wed, 24 Aug 2016 22:45:09 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 07d83315
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Wed, 24 Aug 2016 22:45:09 +0000 (UTC)
-Received: by mail-lf0-f43.google.com with SMTP id l89so22405925lfi.1
- for <wireguard@lists.zx2c4.com>; Wed, 24 Aug 2016 15:51:21 -0700 (PDT)
+ Sat, 27 Aug 2016 20:57:23 +0000 (UTC)
+Received: by mail-it0-f49.google.com with SMTP id x131so48199159ite.0
+ for <wireguard@lists.zx2c4.com>; Sat, 27 Aug 2016 14:03:58 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9oHC47++nLGkFXjtoRgAkoOVfE_4EgQXiBsXmqsq1kTXQ@mail.gmail.com>
-References: <CAHmME9oHC47++nLGkFXjtoRgAkoOVfE_4EgQXiBsXmqsq1kTXQ@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 25 Aug 2016 00:51:19 +0200
-Message-ID: <CAHmME9rUNtW9Swj-MHhjhVJh78UXPZP4aWzrr2HV1x0dtgUYdA@mail.gmail.com>
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: Dave Taht <dave.taht@gmail.com>
+Date: Sat, 27 Aug 2016 14:03:56 -0700
+Message-ID: <CAA93jw5so3XtG71hPj=LnDm2Opgk7b9q_ziYfMRmOKsmrzBssg@mail.gmail.com>
+To: wireguard@lists.zx2c4.com
 Content-Type: text/plain; charset=UTF-8
-Subject: Re: [WireGuard] Session Key Extraction & Request for Dissector
+Subject: [WireGuard] fq, ecn, etc with wireguard
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -30,23 +22,76 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Thu, Aug 25, 2016 at 12:40 AM, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
-> The first value is the index, which should...
+I have been running a set of tinc based vpns for a long time now, and
+based on the complexity of the codebase, and some general flakyness
+and slowness, I am considering fiddling with wireguard for a
+replacement of it. The review of it over on
+https://plus.google.com/+gregkroahhartman/posts/NoGTVYbBtiP?hl=3Den was
+pretty inspiring.
 
-Small improvement:
+My principal work is on queueing algorithms (like fq_codel, and cake),
+and what I'm working on now is primarily adding these algos to wifi,
+but I do need a working vpn, and have longed to improve latency and
+loss recovery on vpns for quite some time now.
 
-# ./extract-keys wg0
-0xe25d9516 IHHXzJVLOm2fw6J4dGsVDNUH4l6plYw70b0IozmH8KQ=
-0xd29e7538 D7ZiiRXaVA+UXNT3FBoAiKCu+3eSrp/fHCz0KisxaVk=
-0x90c99abb EI33BYVaI0rziFUxvLBsVM8z6glhW7tLWR7+MTAe43s=
-0x9540a866 yAjjnONW6TGrZm/tdrg7KIAZ2ipxn/YqWSba4lh377U=
+A) does wireguard handle ecn encapsulation/decapsulation?
 
-The first field is the index. The second field is the key. If you see
-a packet with the index, decrypt it with the key. Plain and simple.
-This actually amounts to printing out:
+https://tools.ietf.org/html/draft-ietf-tsvwg-ecn-encap-guidelines-07
 
-    REMOTE_KEY_ID SENDING_KEY
-    LOCAL_KEY_ID RECEIVING_KEY
+Doing ecn "right" through vpn with a bottleneck router with a fq_codel
+enabled qdisc allows for zero induced packet loss and good congestion
+control.
 
-But from the point of view of a dissector it doesn't really matter.
-See a packet, match the index, decrypt the payload.
+B) I see that "noqueue" is the default qdisc for wireguard. What is
+the maximum outstanding queue depth held internally? How is it
+configured? I imagine it is a strict fifo queue, and that wireguard
+bottlenecks on the crypto step and drops on reads... eventually.
+Managing the queue length looks to be helpful especially in the
+openwrt/lede case.
+
+(we have managed to successfully apply something fq_codel-like within
+the mac80211 layer, see various blog entries of mine and the ongoing
+work on the make-wifi-fast mailing list)
+
+So managing the inbound queue for wireguard well, to hold induced
+latencies down to bare minimums when going from 1Gbit to XMbit, and
+it's bottlenecked on wireguard, rather than an external router, is on
+my mind. Got a pretty nice hammer in the fq_codel code, not sure why
+you have noqueue as the default.
+
+C) One flaw of fq_codel , is that multiplexing multiple outbound flows
+over a single connection endpoint degrades that aggregate flow to
+codel's behavior, and the vpn "flow" competes evenly with all other
+flows. A classic pure aqm solution would be more fair to vpn
+encapsulated flows than fq_codel is.
+
+An answer to that would be to expose "fq" properties to the underlying
+vpn protocol. For example, being able to specify an endpoint
+identifier of 2001:db8:1234::1/118:udp_port would allow for a one to
+one mapping for external fq_codel queues to internal vpn queues, and
+thus vpn traffic would compete equally with non-vpn traffic at the
+router. While this does expose more per flow information, the
+corresponding decrease for e2e latency under load, especially for
+"sparse" flows, like voip and dns, strikes me as a potential major win
+(and one way to use up a bunch of ipv6 addresses in a good cause).
+Doing that "right" however probably involves negotiating perfect
+forward secrecy for a ton of mostly idle channels (with a separate
+seqno base for each), (but I could live with merely having a /123 on
+the task)
+
+C1) (does the current codebase work with ipv6?)
+
+D) my end goal would be to somehow replicate the meshy characteristics
+of tinc, and choosing good paths through multiple potential
+connections, leveraging source specific routing and another layer 3
+routing protocol like babel, but I do grok that doing that right would
+take a ton more work...
+
+Anyway, I'll go off and read some more docs and code to see if I can
+answer a few of these questions myself. I am impressed by what little
+I understand so far.
+
+--=20
+Dave T=C3=A4ht
+Let's go make home routers and wifi faster! With better software!
+http://blog.cerowrt.org
