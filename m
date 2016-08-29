@@ -1,25 +1,20 @@
-Return-Path: Jason@zx2c4.com
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9e994a5f
+Return-Path: dave.taht@gmail.com
+Received: from mail-it0-f49.google.com (mail-it0-f49.google.com
+ [209.85.214.49])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1f3699a6
  for <wireguard@lists.zx2c4.com>;
- Mon, 29 Aug 2016 19:17:13 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f10ee666
- for <wireguard@lists.zx2c4.com>;
- Mon, 29 Aug 2016 19:17:13 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id b546ae15
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Mon, 29 Aug 2016 19:17:12 +0000 (UTC)
-Received: by mail-lf0-f48.google.com with SMTP id l89so108046542lfi.1
- for <wireguard@lists.zx2c4.com>; Mon, 29 Aug 2016 12:24:01 -0700 (PDT)
+ Mon, 29 Aug 2016 19:43:28 +0000 (UTC)
+Received: by mail-it0-f49.google.com with SMTP id g62so2540581ith.1
+ for <wireguard@lists.zx2c4.com>; Mon, 29 Aug 2016 12:50:18 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9pLBK44L1VzBA2tPsYKsu4YWXNvtXyZBWDDfp+F7qcYuA@mail.gmail.com>
+In-Reply-To: <CAHmME9qhEyd4+=XcZbMAn9EXLX5ey0Ry8-pg7Rr4UVOZZfUXEw@mail.gmail.com>
 References: <CAA93jw5so3XtG71hPj=LnDm2Opgk7b9q_ziYfMRmOKsmrzBssg@mail.gmail.com>
  <CAHmME9pLBK44L1VzBA2tPsYKsu4YWXNvtXyZBWDDfp+F7qcYuA@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 29 Aug 2016 21:23:57 +0200
-Message-ID: <CAHmME9qhEyd4+=XcZbMAn9EXLX5ey0Ry8-pg7Rr4UVOZZfUXEw@mail.gmail.com>
-To: Dave Taht <dave.taht@gmail.com>
+ <CAHmME9qhEyd4+=XcZbMAn9EXLX5ey0Ry8-pg7Rr4UVOZZfUXEw@mail.gmail.com>
+From: Dave Taht <dave.taht@gmail.com>
+Date: Mon, 29 Aug 2016 12:50:16 -0700
+Message-ID: <CAA93jw6Nzjftn_H2gwq_i+bkWpnH8FoUqeJN4vEzKAR_VLM5GQ@mail.gmail.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
 Content-Type: text/plain; charset=UTF-8
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Subject: Re: [WireGuard] fq, ecn, etc with wireguard
@@ -32,62 +27,24 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi again,
+Nice to see you so quickly being productive. I am still constructing a
+reply to your previous message.
 
-So I implemented a first stab of this, which I intend to refine with
-your feedback:
+Rather than try to expand your macros, my mental model on encode is
 
-    https://git.zx2c4.com/WireGuard/commit/?id=a2dfc902e942cce8d5da4a42d6aa384413e7fc81
+if(inner_dscp & 3) outer_dscp = (outer_dscp & 3) | (inner_dscp & 3);
 
+decode is different. A bad actor could, for example, flip the outer
+ecn bits from ect(1) to ect(0) (which have different meanings in the
+l4s effort in the ietf),  or set the outer to CE (one evil ISP did
+this until the worldwide test by apple last year for ecn capability
+got them to fix it), when the inner is not ECN capable at all.
 
-On the way out, the ECN is set to:
+if(itos = inner_dscp & 3) if (otos = outer_dscp & 3)  if(otos == 3)
+itos = itos | 3;
 
-outgoing_skb->tos = encap_ecn(0, inner_skb->tos);
+I see you are using the cb to temporarily store these bits. If we end
+up sneaking fq_codel into there, you'll also need space for a
+timestamp and another field.....
 
-where encap_ecn is defined as:
-
-u8 encap_ecn(u8 outer, u8 inner)
-{
-        outer &= ~INET_ECN_MASK;
-        outer |= !INET_ECN_is_ce(inner) ? (inner & INET_ECN_MASK) :
-                                          INET_ECN_ECT_0;
-        return outer;
-}
-
-Since outer goes in as 0, this function can be reduced to simply:
-
-outgoing_skb->tos = !INET_ECN_is_ce(inner_skb->tos) ? (inner_skb->tos
-& INET_ECN_MASK) : INET_ECN_ECT_0;
-
-QUESTION A: is 0 a good value to use here as outer? Or, in fact,
-should I use the tos value that comes from the routing table for the
-outer route?
-
-
-On the way in, the ECN is set to:
-
-if (INET_ECN_is_ce(outer_skb->tos))
-        IP_ECN_set_ce(inner_skb->tos)
-
-I do NOT compute the following:
-
-        if (INET_ECN_is_not_ect(inner)) {
-                switch (outer & INET_ECN_MASK) {
-                case INET_ECN_NOT_ECT:
-                        return EVERYTHING_IS_OKAY;
-                case INET_ECN_ECT_0:
-                case INET_ECN_ECT_1:
-                        return BROKEN_SO_LOG_PACKET;
-                case INET_ECN_CE:
-                        return BROKEN_SO_DROP_PACKET;
-                }
-        }
-
-QUESTION B: is it okay that I do not compute the above checks? Or is
-this potentially very problematic?
-
-
-I await your answer on questions A and B.
-
-Thanks,
-Jason
+I didn't even know ip_tunnel_get_dsfield() even existed!
