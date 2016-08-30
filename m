@@ -1,29 +1,19 @@
-Return-Path: Jason@zx2c4.com
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7f14dcd6
+Return-Path: dave.taht@gmail.com
+Received: from mail-it0-f44.google.com (mail-it0-f44.google.com
+ [209.85.214.44])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 63d06823
  for <wireguard@lists.zx2c4.com>;
- Mon, 29 Aug 2016 23:50:48 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 18cab21f
- for <wireguard@lists.zx2c4.com>;
- Mon, 29 Aug 2016 23:50:48 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id f2ad478c
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Mon, 29 Aug 2016 23:50:47 +0000 (UTC)
-Received: by mail-lf0-f42.google.com with SMTP id f93so1998986lfi.2
- for <wireguard@lists.zx2c4.com>; Mon, 29 Aug 2016 16:57:37 -0700 (PDT)
+ Tue, 30 Aug 2016 00:18:06 +0000 (UTC)
+Received: by mail-it0-f44.google.com with SMTP id n75so12564298ith.0
+ for <wireguard@lists.zx2c4.com>; Mon, 29 Aug 2016 17:24:56 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAA93jw64Uo+pV+ZoS3W4m8rx4+WOrjdnCtiTYr37dU54bHyhBg@mail.gmail.com>
+In-Reply-To: <CAHmME9pLBK44L1VzBA2tPsYKsu4YWXNvtXyZBWDDfp+F7qcYuA@mail.gmail.com>
 References: <CAA93jw5so3XtG71hPj=LnDm2Opgk7b9q_ziYfMRmOKsmrzBssg@mail.gmail.com>
  <CAHmME9pLBK44L1VzBA2tPsYKsu4YWXNvtXyZBWDDfp+F7qcYuA@mail.gmail.com>
- <CAHmME9qhEyd4+=XcZbMAn9EXLX5ey0Ry8-pg7Rr4UVOZZfUXEw@mail.gmail.com>
- <CAA93jw77n=zkgyney+=hJZDs-56YAeA7bZvfeoh7eedB=zw0ag@mail.gmail.com>
- <CAHmME9qE0FAq5=8rOoYDS+89gOPJo4Us76+e9sndU1LLrqu__A@mail.gmail.com>
- <CAA93jw64Uo+pV+ZoS3W4m8rx4+WOrjdnCtiTYr37dU54bHyhBg@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 30 Aug 2016 01:57:33 +0200
-Message-ID: <CAHmME9qKRd3KsECmY90ciHEUxgkFmQJ-zWy9W2t4Maor42M-8Q@mail.gmail.com>
-To: Dave Taht <dave.taht@gmail.com>
+From: Dave Taht <dave.taht@gmail.com>
+Date: Mon, 29 Aug 2016 17:24:54 -0700
+Message-ID: <CAA93jw6rgkNB6ieGE6cmH4=2d3frSgEj=-SQYdahoJUeHK59zQ@mail.gmail.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
 Content-Type: text/plain; charset=UTF-8
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Subject: Re: [WireGuard] fq, ecn, etc with wireguard
@@ -36,118 +26,367 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-> well, you should see ect(3) if you pound the network interface. Things
-> like tcp small queues get in the way so you won't see it with a simple
-> single flow test against cake/codel/etc.
+:whew:
+
+On Mon, Aug 29, 2016 at 10:16 AM, Jason A. Donenfeld <Jason@zx2c4.com> wrot=
+e:
+> Hey Dave,
 >
-> something like 4 netperfs will do it.
+> You're exactly the sort of person I've been hoping would appear during th=
+e
+> last several months.
 
-It works!
+The bufferbloat project has had a lot of people randomly show up at
+the party to make a contribution, getting a little PR in the right
+places always helps. Glad to have shown up,
+am sorry to be so scattered today and not reviewing detailed code.
 
-01:40:57.962131 IP (tos 0x3,CE, ttl 64, id 51647, offset 0, flags
-[none], proto UDP (17), length 1480)
+>> A) does wireguard handle ecn encapsulation/decapsulation?
+>>
+>> https://tools.ietf.org/html/draft-ietf-tsvwg-ecn-encap-guidelines-07
+>>
+>> Doing ecn "right" through vpn with a bottleneck router with a fq_codel
+>> enabled qdisc allows for zero induced packet loss and good congestion
+>> control.
+>
+> At the moment I don't do anything special with DSCP or ECN. I set a high
+> priority DSCP for the handshake messages, but for the actual transport
+> packets, I leave it at zero:
+>
+> https://git.zx2c4.com/WireGuard/tree/src/send.c#n137
+>
+> This has been a TODO item for quite some time; it's on wireguard.io/roadm=
+ap
+> too. The reason I've left it at zero, thus far, is that I didn't want to
+> infoleak anything about the underlying data. Is there a case to be made,
+> however, that ECN doesn't leak data like DSCP does, and so I'd be okay ju=
+st
+> copying those top bits? I'll read the IETF draft you sent and see if I ca=
+n
+> come up with something. It does have an important utility; you're right.
 
-I made this happen by giving `-P 50 -N -w 500M ` to iperf3.
+The ietf consensus was that a 2 bit covert channel wasn't useful and
+that being able to expose congestion control information was ok.
 
-> sudo apt-get install python-matplotlib python-qt4 netperf fping # some
-> git clone https://github.com/tohojo/flent.git
-> cd flent; sudo make install
-> flent-gui *.gz
-> I am a big fan of flent to generate tests with, and tcptrace -G on the
-> capture of the decrypted interface and looking at the output via
-> xplot.org (not xplot). Looking at the resulting capture on one end,
-> you will see the CE going out, on the other you will see just the CWR
-> and little dots showing the acks acknowledging the CE has been heard
-> and acted upon.
+>> B) I see that "noqueue" is the default qdisc for wireguard. What is
+>> the maximum outstanding queue depth held internally? How is it
+>> configured? I imagine it is a strict fifo queue, and that wireguard
+>> bottlenecks on the crypto step and drops on reads... eventually.
+>> Managing the queue length looks to be helpful especially in the
+>> openwrt/lede case.
+>>
+>> (we have managed to successfully apply something fq_codel-like within
+>> the mac80211 layer, see various blog entries of mine and the ongoing
+>> work on the make-wifi-fast mailing list)
+>>
+>> So managing the inbound queue for wireguard well, to hold induced
+>> latencies down to bare minimums when going from 1Gbit to XMbit, and
+>> it's bottlenecked on wireguard, rather than an external router, is on
+>> my mind. Got a pretty nice hammer in the fq_codel code, not sure why
+>> you have noqueue as the default.
+>
+> There are a couple reasons. Originally I used multiqueue and had a separa=
+te
+> subqueue for each peer. I then abused starting and stopping these subqueu=
+es as
+> the various peers negotiated handshakes. This worked, but it was quite
+> limiting for a number of reasons, leading me to ultimately switch to noqu=
+eue.
+>
+> Using noqueue gives me a couple benefits. First, packet transmission call=
+s my
+> xmit function directly, which means I can trivially check for routing loo=
+ps
+> using dev_recursion_level(). Second, it allows me to return things like
+> `-ENOKEY` from the xmit function, which gets directly passed up to usersp=
+ace,
+> giving more interesting error messages than ICMP handles (though I also
+> support ICMP). But the main reason is because it fits the current queuing
+> design of WireGuard. I'll explain:
+>
+> A WireGuard device has multiple peers. Either there's an active session f=
+or a
+> peer, in which case the packet can be encrypted and sent, or there isn't,=
+ in
+> which case it's queued up until a session is established. If a peer doesn=
+'t
+> have a session, after queuing up that packet, the session handshake occur=
+s,
+> and immediately following, the queue is released and the packet is sent. =
+This
+> has the effect of making WireGuard appear "stateless" to userspace. The
+> administrator set up all the peer details, and then typed `ping peer`, an=
+d
+> then it just worked. Where did the connection happen? That's what happens
+> behind scenes in WireGuard. So each peer has its own queue. I limit each =
+queue
+> to 1024 packets, somewhat arbitrarily. As the queue exceeds 1024, the old=
+est
+> packets are dropped first.
 
+OK, well, 1024 packets is quite a lot. Assuming TSO is in use, running
+at  10Mbit for the sake of example, that's a worst case latency of ~85
+*seconds* at that speed, and 98,304,000 bytes of buffering.
 
-Excellent, thanks for the suggestions on testing tools. I've been using iperf3
-nearly exclusively, and indeed it seems like netperf and others are
-substantially more powerful. I've also got a directory of horrible .c programs
-generating packets for stress testing printing out text for me to pop into
-Mathematica... Clearly my homebrewed rig isn't going to be useful for much
-longer. I'll look into getting these setup.
+Even 1024 packets is a lot at a gbit, when TSO/GRO are in use, 850ms.
+Devices that use soft GRO can also accumulate up to 64K packets,
+although the spec is 24k, several devices violate it.
 
-> # Anyway, I'll join you in irc to look over what you doing.....
+Thankfully TSO and GRO are not always invoked and that our use of fq,
+tends to start reducing the maximally sized burst at the endpoints to
+reasonable values - like 2 superpackets.
 
-Sorry -- when you messaged me in there, I was just getting off a big 14 hour
-international flight. I've got a long layover now, and probably I'll be in IRC
-again if you want to pop in there. Though, I'm quite exhausted and might
-collapse on some airport benches...
+But, even if you only have 1024 normal sized packets, that's a worst
+case delay of 1.5 seconds...
 
-> Then by all means follow the existing latest code.
+Now, there is no "right number" for buffering, but various rules of
+thumb. What we like about the new AQM designs (codel and pie) is that
+they try to establish a minimal "standing queue", measured in time
+(which is a proxy for bytes), not packets - 5ms in the case of codel,
+16 in the case of pie.
 
-Well that was my question. Should I follow (A) or (B)? IPsec does (B);
-everything else does (A). Does IPsec have a security reason for doing (B)? Is
-there some denial of service attack that can be mounted, or some information
-disclosure, or some sort of oracle attack? Or is (A) pretty much clearly
-better and more robust under abuse, and IPsec is just behind the times?
-Probably I shoul djust read the ECN RFCs to actually understand what all this
-is doing and make up my mind.
+and they do it dynamically, based on induced latency. A typical figure
+for codel's standing queue at 10 mbit is *2* full size packets,
+moderated a bit by whatever BQL sets, which is 2-3k bytes.
 
-> Postel is long dead, and the internet is a far more hostile place.
-> so did cake manage to successfully ratelimit the output to 10Mbit's in
-> this configuration?
+There's several great papers/presentations on codel in acm queue, and
+I'm pretty fond of Van's, my and stephen hemmingers talks on the
+subject, linked to off of here:
 
-It did. With I rate limited the actual link to 10mbps, and iperf3 got around
-9mbps over TCP, which seems about right considering TCP and considering the
-packet encapsulation overhead.
+https://www.bufferbloat.net/projects/cerowrt/wiki/Bloat-videos/
+
+Anyway, having a shared queue for  all peers would more more sensible,
+and limiting it by bytes
+rather than packets (as cake does), helpful. Trying to come up with a
+better initial estimate for how big the queue should be based on what
+outgoing interfaces are available (e.g. is a gigE interface available?
+10GigE), and then be moderated by the aqm.
 
 >
-> cake's stats also show marks and drops. (tc -s qdisc show dev lo)
+> There's another hitch: Linux supports "super packets" for GSO. Essentiall=
+y,
+> the kernel will hand off a massive TCP packet -- 65k -- to the device dri=
+ver,
+> if requested, expecting the device driver to then segment this into MTU-s=
+ized
+> bites. This was designed for hardware that has built-in TCP segmentation =
+and
+> such. I found it was very performant to do the same with WireGuard. The r=
+eason
+> is that everytime a final encrypted packet is transmitted, it has to trav=
+erse
+> the big complicated Linux networking stack. In order to reduce cache miss=
+es, I
+> prefer to transmit a bunch of packets at once.
 
-Seems to work:
+Well, we also break up superpackets in cake, but we do it with the
+express intent of allowing other flows through. Staying with my 10Mbit
+example, a single 64k superpacket would 54ms to transmit, which blows
+the jitter budget on a competing voip call.
 
-    qdisc cake 8008: root refcnt 2 bandwidth 10Mbit diffserv4 flows
-rtt 100.0ms raw
-     Sent 82329355 bytes 95473 pkt (dropped 5295, overlimits 195966 requeues 0)
-     backlog 137124b 150p requeues 0
-    memory used: 502566b of 500000b
-    capacity estimate: 10Mbit
-                 Tin 0       Tin 1       Tin 2       Tin 3
-      thresh      10Mbit    9375Kbit    7500Kbit    2500Kbit
-      target      78.7ms      83.9ms     104.9ms     314.6ms
-    interval     173.7ms     178.9ms     209.8ms     629.3ms
-    Pk-delay         0us      93.9ms         0us         0us
-    Av-delay         0us      91.2ms         0us         0us
-    Sp-delay         0us      83.8ms         0us         0us
-      pkts             0      100916           2           0
-      bytes            0    84254676         318           0
-    way-inds           0           0           0           0
-    way-miss           0           1           1           0
-    way-cols           0           0           0           0
-      drops            0        5295           0           0
-      marks            0        4660           0           0
-    Sp-flows           0           0           0           0
-    Bk-flows           0           1           0           0
-    last-len       65536           0           0           0
-    max-len            0        1494         187           0
+I'm painfully aware that this costs cpu, but having shorter queues in
+the first place helps, and we have experimented with breaking up
+superpackets less based on the workload and bandwidth, in cake, but
+haven't settled on a scheme to do so.
 
-> acks do not get ECN marks.
-
-I'll need to think carefully about the infoleak aspects of allowing ECN. It
-seems nearly as bad as the DSCP infoleak. Is this information that's okay to
-be sent in the clear? I'm not quite sure yet.
-
-> (I note that mosh is also ecn enabled, last I looked)
-
-Cool. I recall when they added the DSCP priority, but I don't recall ECN. I'll
-try that out. I'm a big Mosh user -- and the roaming feature of WireGuard was
-inspired by it.
-
-> I will. I got very busy today getting a "final" version of the
-> fq_codel code for ath9k wifi tested. It's lovely. :) If you are into
-> openwrt, we've got builds available at:
+> Please read this LKML post
+> where I detail this a bit more (Ctrl+F for "It makes use of a few tricks"=
+),
+> and then return to this email:
 >
-> https://lists.bufferbloat.net/pipermail/make-wifi-fast/2016-August/000940.html
+> http://lkml.iu.edu/hypermail/linux/kernel/1606.3/02833.html
 >
-> and patches due out tomorrow. It would be great fun to also start
-> fiddling with wireguard with this new stuff. I think the right thing -
-> now that you've found it - is to ape what the newer protocols do...
-> (and someone shoul fix linux ipsec)
+> The next thing is that I support parallel encryption, which means encrypt=
+ing
+> these bundles of packets is asynchronous.
 
-Excellent. I've just arrived in the mountains for a week and a half with my
-family, so I have limited access to hardware, but I am very interested in
-OpenWRT and WireGuard performance. Baptiste, a OpenWRT developer, hangs out on
-this mailing list and got a WireGuard package in LEDE which is quite cool.
-That's excellent about a faster ath9k driver.
+All packets in the broken up superpacket are handed to be encrypted in
+parallel? cool.
+
+Can I encourage you to try the rrul test and think about encrypting
+different flows in parallel also? :)
+
+real network traffic, particularly over a network to network oriented
+vpn is *never* a single bulk flow.
+
+> All these requirements would lead you to think that this is all super
+> complicated and horrible, but I actually managed to put this together in =
+a
+> decently simple way. There's the queuing algorithm all together:
+> https://git.zx2c4.com/WireGuard/tree/src/device.c#n101
+>
+> 1. user sends a packet. xmit() in device.c is called.
+> 2. look up to which peer we're sending this packet.
+> 3. if we have >1024 packets in that peer's queue, remove the oldest ones.
+
+More than 200 is really a crazy number for a fixed length fifo at 1gbit or =
+less.
+
+> 4. segment the super packet into normal MTU-sized packets, and queue thos=
+e
+>    up. note that this may allow the queue to temporarily exceed 1024 pack=
+ets,
+>    which is fine.
+> 5. try to encrypt&send the entire queue.
+>
+> There's what step 5 looks like, found in packet_send_queue() in send.c:
+> https://git.zx2c4.com/WireGuard/tree/src/send.c#n159
+>
+> 1. immediately empty the entire queue, putting it into a local temp queue=
+.
+> 2. if the queue is empty, return. if the queue only has one packet that's
+>    less than or equal to 256 bytes, don't parallelize it.
+> 3. for each packet in the queue, send it off to the asynchronous encrypti=
+on
+>    a. if that returns '-ENOKEY', it means we don't have a valid session, =
+so
+>       we should initiate one, and then do (b) too.
+>    b. if that returns '-ENOKEY' or '-EBUSY' (workqueue is at kernel limit=
+),
+>       we put that packet and all the ones after it from the local queue b=
+ack
+>       into the peer's queue.
+>    c. if we fail for any other reason, we drop that packet, and then keep
+>       processing the rest of the queue.
+> 4. we tell userspace "ok! sent!"
+> 5. when the packets that were successfully submitted finish encrypting
+>    (asynchronously), we transmit the encrypted packets in a tight loop
+>    to reduce cache misses in the networking stack.
+>
+> That's it! It's pretty basic. I do wonder if this has some problems, and =
+if
+> you have some suggestions on how to improve it, or what to replace it wit=
+h.
+> I'm open to all suggestions here.
+
+Well the idea of fq_codel is to break things up into 1024 different
+flows. The code base is now generalized so that it can be used by the
+fq_codel qdisc and the new stuff for mac80211.
+
+But! The concept of those flows is still serialized in the end in this
+codebase, you need to keep pulling stuff out of it until you are
+done... using merely the idea of fq_codel and explicitly parallizing
+enqueuing would let you defer nexthop lookup and handle multiple flows
+in parallel on multiple cpus.
+
+> One thing, for example, that I haven't yet worked out is better schedulin=
+g for
+> submitting packets to different threads for encryption. Right now I just =
+evenly
+> distribute them, one by one, and then wait until they're finished. Clearl=
+y
+> better performance could be achieved by chunking them somehow.
+
+Better crypto performance, not network performance. :) The war between
+bulking up stuff to save cpu and breaking things back down again into
+packets so packet theory actually works, is ongoing.
+
+>> C) One flaw of fq_codel , is that multiplexing multiple outbound flows
+>> over a single connection endpoint degrades that aggregate flow to
+>> codel's behavior, and the vpn "flow" competes evenly with all other
+>> flows. A classic pure aqm solution would be more fair to vpn
+>> encapsulated flows than fq_codel is.
+>>
+>> An answer to that would be to expose "fq" properties to the underlying
+>> vpn protocol. For example, being able to specify an endpoint
+>> identifier of 2001:db8:1234::1/118:udp_port would allow for a one to
+>> one mapping for external fq_codel queues to internal vpn queues, and
+>> thus vpn traffic would compete equally with non-vpn traffic at the
+>> router. While this does expose more per flow information, the
+>> corresponding decrease for e2e latency under load, especially for
+>> "sparse" flows, like voip and dns, strikes me as a potential major win
+>> (and one way to use up a bunch of ipv6 addresses in a good cause).
+>> Doing that "right" however probably involves negotiating perfect
+>> forward secrecy for a ton of mostly idle channels (with a separate
+>> seqno base for each), (but I could live with merely having a /123 on
+>> the task)
+>
+> Do you mean to suggest that there be a separate wireguard session for eac=
+h
+> 4-tuple?
+
+Sorta. Instead, you can share a IV seqno among these these queues so
+long as your replay protection buffer is big enough relative to the
+buffering and RTT, no need to negotiate a separate connection for
+each. Then you are semi-serializing the seqno access/increment, but
+that's not a big issue.
+
+There are issues with hole punching on this, regardless, and I wasn't
+suggesting even trying for ipv4! But we have a deployment window for
+ipv6 where we could have fun using up tons of addresses for a noble
+purpose (0 latency for sparse flows!), and routing a set of 1024
+addresses into a vpn's endpoint design is possible with your
+architecture. Linode gives me a 4096 to play with - comcast, a /60 or
+/56....
+
+Have you seen the mosh-multipath paper?, which sort of ties into your
+design as well, except that as you are creating a routable device,
+makes listening on a ton of ip addresses a snap....
+
+https://arxiv.org/pdf/1502.02402.pdf
+
+>> C1) (does the current codebase work with ipv6?)
+>
+> Yes, very well, out of the box, from day 1. You can do v6-in-v6, v4-in-v4=
+,
+> v4-in-v6, and v6-in-v4.
+
+I tried to get it going yesterday, ipv6 to ipv6, but failed with 4 tx
+errors on one side and 3 on the other, reported by ifconfig, no error
+messages. I'll try harder once I come down from fixing up the fq_codel
+wifi code....
+
+>> D) my end goal would be to somehow replicate the meshy characteristics
+>> of tinc, and choosing good paths through multiple potential
+>> connections, leveraging source specific routing and another layer 3
+>> routing protocol like babel, but I do grok that doing that right would
+>> take a ton more work...
+>
+> That'd be great. I'm trying to find a chance to sit down with the fella b=
+ehind
+> Babel one of these days. I'd love to get these working well together.
+
+Juliusz hangs out on #babel on freenode, paris time.
+
+batman-adv is also a good choice, and bmx7 has some nice
+characteristics. I'm mostly familiar with babel - can you carry ipv6
+link layer multicast? (if not, we've been nagging julius to add a
+unicast only mode)
+
+One common use case for babel IS to manage a set of gre tunnels, for
+which wireguard could be a drop in replacement for. You set up 30
+tunnels to everywhere that can all route to everywhere, and let babel
+figure out the right one. It should be reasonably robust in the face
+of nuclear holocost, a zombie invasion, or the upcoming US election.
+
+https://tools.ietf.org/html/draft-jonglez-babel-rtt-extension-01
+
+BTW:
+
+To what extent would source specific routing help solve your oif issue?
+
+https://arxiv.org/pdf/1403.0445.pdf
+
+we use that extensively to do things that we used to do with policy
+routing, and it's a snap to use... and nearly all device's we've
+played with are built with IPv6 subtrees.
+
+but it's an ipv6 only feature, getting that into ipv4 would be nice.
+
+>
+>> Anyway, I'll go off and read some more docs and code to see if I can
+>> answer a few of these questions myself. I am impressed by what little
+>> I understand so far.
+>
+> Great! Let me know what you find. Feel free to find me in IRC (zx2c4 in
+> #wireguard on freenode) if you'd like to chat about this all in realtime.
+>
+> Regards,
+> Jason
+
+
+
+--=20
+Dave T=C3=A4ht
+Let's go make home routers and wifi faster! With better software!
+http://blog.cerowrt.org
