@@ -1,17 +1,23 @@
-Return-Path: dave.taht@gmail.com
-Received: from mail-qt0-f178.google.com (mail-qt0-f178.google.com
- [209.85.216.178])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fda780b6
- for <wireguard@lists.zx2c4.com>; Sat, 3 Sep 2016 18:13:13 +0000 (UTC)
-Received: by mail-qt0-f178.google.com with SMTP id 93so76617264qtg.2
- for <wireguard@lists.zx2c4.com>; Sat, 03 Sep 2016 11:20:39 -0700 (PDT)
+Return-Path: opensource@vdorst.com
+Received: from smtp21.bhosted.nl (smtp21.bhosted.nl [94.124.121.33])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d6addead
+ for <wireguard@lists.zx2c4.com>; Thu, 8 Sep 2016 11:49:50 +0000 (UTC)
+Received: from www.lan.vdorst.com (www.lan.vdorst.com
+ [IPv6:2a02:a441:63ae:0:5054:ff:feca:c4e1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.vdorst.com (Postfix) with ESMTPSA id 4BCA031CFD0
+ for <wireguard@lists.zx2c4.com>; Thu,  8 Sep 2016 13:57:49 +0200 (CEST)
+Date: Thu, 08 Sep 2016 11:57:53 +0000
+Message-ID: <20160908115753.Horde.dla9pNo2jSEeBF-QW8dWlO-@www.vdorst.com>
+From: =?utf-8?b?UmVuw6k=?= van Dorst <opensource@vdorst.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+References: <20160808132309.Horde.PpRcvoBjgmDh9S0lYDhy7Au@www.vdorst.com>
+ <CAHmME9o+QqPR0qo8uadYVZDMw=Z-uxCwuBgggOeYNdE8FDLXpQ@mail.gmail.com>
+In-Reply-To: <CAHmME9o+QqPR0qo8uadYVZDMw=Z-uxCwuBgggOeYNdE8FDLXpQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed; DelSp=Yes
 MIME-Version: 1.0
-From: Dave Taht <dave.taht@gmail.com>
-Date: Sat, 3 Sep 2016 11:20:38 -0700
-Message-ID: <CAA93jw6SH71OUuunJVmsN8muL_-TC1UbAGw0=2NfX4nX1+q9zA@mail.gmail.com>
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset=UTF-8
-Subject: [WireGuard] blog post 1 of 3 on wireguard
+Subject: Re: [WireGuard] News about MIPS and ARM optimized code?
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -21,8 +27,41 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-haven't finished 2 or 3 yet, but...
+I did try to write some MIPS32r2 code.
+I wrote the chacha20_keysetup, chacha20_generic_block and  
+poly1305_generic_blocks in assembly.
+Tried to load all needed variables in the registers. Which should  
+reduce the memory overhead.
+But it is very difficult for me to do code profiling and/or isolate  
+the code and make some benchmark programs like supercop.
+So testing was simple. Crosscompile the code. Copy and load the module  
+on the target. Run setup script and iperf.
 
-http://blog.cerowrt.org/post/wireguard/
+#ifdef CONFIG_CPU_MIPS32_R2
+asmlinkage void chacha20_keysetup(struct chacha20_ctx *ctx, const u8  
+key[static 32], const u8 nonce[static 8]);
+asmlinkage void chacha20_generic_block(struct chacha20_ctx *ctx);
+asmlinkage unsigned int poly1305_generic_blocks(struct poly1305_ctx  
+*ctx, const u8 *src, unsigned int srclen, u32 hibit);
+#endif
 
-have a nice weekend!
+But the speed is equal or less on my TP WR1043ND device which is a  
+MIPS32r2 24kc big endian.
+So GCC does a good job. Also 24kc has no special CoProcessors or FPU.
+
+Most improvement what I had it to change the buildroot default  
+optimization -Os to -O2.
+This gives around 1-3% speed improvement.
+
+ideas:
+- remove the little endian parts on the MIPS.
+   Offcourse do it also on the other side.
+   On this device I can't switch endian.
+   But I did not see any improvements. Need 2 instruction for swapping  
+32bit register.
+   After a quick calculation it could save around 0.4% which is  
+~0.1MBit/s on this device.
+
+Greats,
+
+René van Dorst.
