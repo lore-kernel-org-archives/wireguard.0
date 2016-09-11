@@ -1,22 +1,22 @@
 Return-Path: opensource@vdorst.com
-Received: from smtp21.bhosted.nl (smtp21.bhosted.nl [94.124.121.33])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4dca181a
+Received: from smtp02.bhosted.nl (smtp02.bhosted.nl [94.124.121.13])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1675cb10
  for <wireguard@lists.zx2c4.com>;
- Sat, 10 Sep 2016 12:49:37 +0000 (UTC)
+ Sun, 11 Sep 2016 11:57:46 +0000 (UTC)
 Received: from www.lan.vdorst.com (www.lan.vdorst.com
  [IPv6:2a02:a441:63ae:0:5054:ff:feca:c4e1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.vdorst.com (Postfix) with ESMTPSA id 92D5932219C
- for <wireguard@lists.zx2c4.com>; Sat, 10 Sep 2016 14:57:51 +0200 (CEST)
-Date: Sat, 10 Sep 2016 12:57:59 +0000
-Message-ID: <20160910125759.Horde.uLsfX93SDx7Rhgcn5fCwYvP@www.vdorst.com>
+ by mail.vdorst.com (Postfix) with ESMTPSA id AC4BF323F3E
+ for <wireguard@lists.zx2c4.com>; Sun, 11 Sep 2016 14:06:02 +0200 (CEST)
+Date: Sun, 11 Sep 2016 12:06:11 +0000
+Message-ID: <20160911120611.Horde.MpIrXgeYy6b-xAXfCHOkOXJ@www.vdorst.com>
 From: =?utf-8?b?UmVuw6k=?= van Dorst <opensource@vdorst.com>
 To: wireguard@lists.zx2c4.com
 In-Reply-To: <20160910125025.Horde.1oXPxRzlX1oP4By8Ppdyv2N@www.vdorst.com>
 Content-Type: text/plain; charset=utf-8; format=flowed; DelSp=Yes
 MIME-Version: 1.0
-Subject: [WireGuard] [PATCH] Add support for platforms which has no
+Subject: Re: [WireGuard] [PATCHv2] Add support for platforms which has no
  efficient unaligned memory access
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
@@ -27,7 +27,10 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
- From 35cef72b38756e111a6bf7a04641bd0f8d5eef61 Mon Sep 17 00:00:00 2001
+Typo HAVE_EFFICIENT_UNALIGNED_ACCESS -->  
+CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS.
+
+ From 13fae657624aac6b9c1f411aa6472a91aae7fcc3 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Ren=C3=A9=20van=20Dorst?= <opensource@vdorst.com>
 Date: Sat, 10 Sep 2016 10:58:58 +0200
 Subject: [PATCH] Add support for platforms which has no efficient unaligned
@@ -82,12 +85,9 @@ Lost/Total Datagrams
 ---
   src/crypto/chacha20poly1305.c | 31 +++++++++++++++++++++++++++++++
   1 file changed, 31 insertions(+)
-  mode change 100644 => 100755 src/crypto/chacha20poly1305.c
 
 diff --git a/src/crypto/chacha20poly1305.c b/src/crypto/chacha20poly1305.c
-old mode 100644
-new mode 100755
-index 5190894..f4ef356
+index 5190894..294cbf6 100644
 --- a/src/crypto/chacha20poly1305.c
 +++ b/src/crypto/chacha20poly1305.c
 @@ -248,13 +248,29 @@ struct poly1305_ctx {
@@ -95,13 +95,13 @@ index 5190894..f4ef356
   static void poly1305_init(struct poly1305_ctx *ctx, const u8  
 key[static POLY1305_KEY_SIZE])
   {
-+#ifndef HAVE_EFFICIENT_UNALIGNED_ACCESS
++#ifndef CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS
 +       u32 t0, t1, t2, t3;
 +#endif
 +
          memset(ctx, 0, sizeof(struct poly1305_ctx));
          /* r &= 0xffffffc0ffffffc0ffffffc0fffffff */
-+#ifdef HAVE_EFFICIENT_UNALIGNED_ACCESS
++#ifdef CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS
          ctx->r[0] = (le32_to_cpuvp(key +  0) >> 0) & 0x3ffffff;
          ctx->r[1] = (le32_to_cpuvp(key +  3) >> 2) & 0x3ffff03;
          ctx->r[2] = (le32_to_cpuvp(key +  6) >> 4) & 0x3ffc0ff;
@@ -126,7 +126,7 @@ poly1305_ctx *ctx, const u8 *
          u32 s1, s2, s3, s4;
          u32 h0, h1, h2, h3, h4;
          u64 d0, d1, d2, d3, d4;
-+#ifndef HAVE_EFFICIENT_UNALIGNED_ACCESS
++#ifndef CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS
 +       u32 t0, t1, t2, t3;
 +#endif
 
@@ -137,7 +137,7 @@ poly1305_generic_blocks(struct poly1305_ctx *ctx, const u8 *
 
          while (likely(srclen >= POLY1305_BLOCK_SIZE)) {
                  /* h += m[i] */
-+#ifdef HAVE_EFFICIENT_UNALIGNED_ACCESS
++#ifdef CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS
                  h0 += (le32_to_cpuvp(src +  0) >> 0) & 0x3ffffff;
                  h1 += (le32_to_cpuvp(src +  3) >> 2) & 0x3ffffff;
                  h2 += (le32_to_cpuvp(src +  6) >> 4) & 0x3ffffff;
