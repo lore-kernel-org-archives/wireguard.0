@@ -1,18 +1,25 @@
-Return-Path: dave.taht@gmail.com
-Received: from mail-qk0-f176.google.com (mail-qk0-f176.google.com
- [209.85.220.176])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 143c6926
+Return-Path: Jason@zx2c4.com
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9e2e492b
  for <wireguard@lists.zx2c4.com>;
- Thu, 29 Sep 2016 18:09:15 +0000 (UTC)
-Received: by mail-qk0-f176.google.com with SMTP id n189so12329306qke.0
- for <wireguard@lists.zx2c4.com>; Thu, 29 Sep 2016 11:19:53 -0700 (PDT)
+ Thu, 29 Sep 2016 18:49:05 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fa7a83cd
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 29 Sep 2016 18:49:04 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id ca8d66d5
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 29 Sep 2016 18:49:04 +0000 (UTC)
+Received: by mail-lf0-f51.google.com with SMTP id l131so88860181lfl.2
+ for <wireguard@lists.zx2c4.com>; Thu, 29 Sep 2016 11:59:42 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9p7LbqwSxSXgyjcam5f1cS0yM3E4WuLKnk8Ffm1QhQ4=A@mail.gmail.com>
+In-Reply-To: <CAA93jw5Uv3bjXSvOnx0fcPYPjPVeVuHehYr4oHeHX+ED7c-2Ng@mail.gmail.com>
 References: <CAHmME9p7LbqwSxSXgyjcam5f1cS0yM3E4WuLKnk8Ffm1QhQ4=A@mail.gmail.com>
-From: Dave Taht <dave.taht@gmail.com>
-Date: Thu, 29 Sep 2016 11:19:52 -0700
-Message-ID: <CAA93jw5Uv3bjXSvOnx0fcPYPjPVeVuHehYr4oHeHX+ED7c-2Ng@mail.gmail.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+ <CAA93jw5Uv3bjXSvOnx0fcPYPjPVeVuHehYr4oHeHX+ED7c-2Ng@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 29 Sep 2016 20:59:39 +0200
+Message-ID: <CAHmME9ps9AacMTk15+6NNZQ9dYi1jMw0Gm_S51PraEni=3Ki1A@mail.gmail.com>
+To: Dave Taht <dave.taht@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Subject: Re: [WireGuard] WireGuard ECN Implementation
@@ -25,53 +32,46 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Thu, Sep 29, 2016 at 10:50 AM, Jason A. Donenfeld <Jason@zx2c4.com> wrot=
-e:
-> Hey Dave,
->
-> I'm back! Catching up on the backlog now. You wrote in your blog post:
+On Thu, Sep 29, 2016 at 8:19 PM, Dave Taht <dave.taht@gmail.com> wrote:
+> I think the correct behavior here is to only set ce on the inner
+> packet if the inner packet is marked as ecn capable.
 
-Welcome back!
+IP_ECN_set_ce already does this. It exits early if it isn't already
+ECT(1) or ECT(0):
 
-I got distracted also. See "TCP BBR".
+static inline int IP_ECN_set_ce(struct iphdr *iph)
+{
+       u32 check = (__force u32)iph->check;
+       u32 ecn = (iph->tos + 1) & INET_ECN_MASK;
 
-I have no idea how sch_fq + pacing fits into your design, either.
+       /*
+        * After the last operation we have (in binary):
+        * INET_ECN_NOT_ECT => 01
+        * INET_ECN_ECT_1   => 10
+        * INET_ECN_ECT_0   => 11
+        * INET_ECN_CE      => 00
+        */
+       if (!(ecn & 2))
+               return !ecn;
 
->> In a day, the author (while on a plane!) tossed off an ecn encapsulation
->> implementation (it worked! but it=E2=80=99s not currently as modern RFC =
-compliant as it should be),
->
-> What part of it deviates from the RFC precisely? Here's a short
-> summary of the implementation:
->
-> - When a packet is transmitted:
->
->     outer_packet->ds =3D
->             ip_tunnel_ecn_encap(0, ip_hdr(inner_packet), inner_packet);
->
-> - When a packet is received:
->
->     var =3D ip_tunnel_get_dsfield(ip_hdr(outer_packet), outer_packet);
->     if (INET_ECN_is_ce(var))
->         IP_ECN_set_ce(ip_hdr(inner_packet));
+       /*
+        * The following gives us:
+        * INET_ECN_ECT_1 => check += htons(0xFFFD)
+        * INET_ECN_ECT_0 => check += htons(0xFFFE)
+        */
+       check += (__force u16)htons(0xFFFB) + (__force u16)htons(ecn);
 
-I think the correct behavior here is to only set ce on the inner
-packet if the inner packet is marked as ecn capable.
+       iph->check = (__force __sum16)(check + (check>=0xFFFF));
+       iph->tos |= INET_ECN_CE;
+       return 1;
+}
 
-> What specifically is wrong with this? Where does it deviate from the
-> RFC? I'd like to be as "correct" as possible.
-
-It looked to as tho leveraging the other newer ecn capable codebases
-in the kernel was sane also.
 
 
 >
-> Talk soon,
-> Jason
+> It looked to as tho leveraging the other newer ecn capable codebases
+> in the kernel was sane also.
 
-
-
---=20
-Dave T=C3=A4ht
-Let's go make home routers and wifi faster! With better software!
-http://blog.cerowrt.org
+I tried to copy already existing code in the kernel for this. Is there
+a certain driver that you think does it particularly well that I
+should copy?
