@@ -1,29 +1,26 @@
 Return-Path: Jason@zx2c4.com
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 83327f33
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1759ecc5
  for <wireguard@lists.zx2c4.com>;
- Fri, 30 Sep 2016 20:02:14 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6cef0388
+ Fri, 30 Sep 2016 23:10:21 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c02bdded
  for <wireguard@lists.zx2c4.com>;
- Fri, 30 Sep 2016 20:02:14 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 6f13e27e
+ Fri, 30 Sep 2016 23:10:21 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id c4e36c1b
  (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 30 Sep 2016 20:02:14 +0000 (UTC)
-Received: by mail-lf0-f50.google.com with SMTP id g62so115515681lfe.3
- for <wireguard@lists.zx2c4.com>; Fri, 30 Sep 2016 13:13:00 -0700 (PDT)
+ Fri, 30 Sep 2016 23:10:20 +0000 (UTC)
+Received: by mail-lf0-f47.google.com with SMTP id g62so117912148lfe.3
+ for <wireguard@lists.zx2c4.com>; Fri, 30 Sep 2016 16:21:07 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAA93jw4BXgjTgEAUyBnDE05PgdsNp0FOUNxvi3sUhM5F-6KRdQ@mail.gmail.com>
-References: <CAHmME9pT3wYc=zCm7XcBcgnsT2pDrNWQZpS95+d=GoPPQLa5VQ@mail.gmail.com>
- <CAA93jw4BXgjTgEAUyBnDE05PgdsNp0FOUNxvi3sUhM5F-6KRdQ@mail.gmail.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 30 Sep 2016 22:12:58 +0200
-Message-ID: <CAHmME9pyrW=wRUmXLJhnyO=_Fp=s_oxeJuqcHgQPse=tY0_BjQ@mail.gmail.com>
-To: Dave Taht <dave.taht@gmail.com>
+Date: Sat, 1 Oct 2016 01:21:04 +0200
+Message-ID: <CAHmME9oevqa0+pPhSVjNqGFOSZkwctUB2U=19xvebRrxscJFaQ@mail.gmail.com>
+To: cake@lists.bufferbloat.net, make-wifi-fast@lists.bufferbloat.net,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ Dave Taht <dave.taht@gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Cc: cake@lists.bufferbloat.net, make-wifi-fast@lists.bufferbloat.net,
- WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: [WireGuard] WireGuard Queuing, Bufferbloat, Performance, Latency,
+Subject: [WireGuard] WireGuard Queuing, Bufferbloat, Performance, Latency,
 	and related issues
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
