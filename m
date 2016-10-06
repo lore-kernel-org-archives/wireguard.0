@@ -1,22 +1,26 @@
-Return-Path: jehan@altheamesh.com
-Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com
- [66.111.4.27])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ab47ab7f
- for <wireguard@lists.zx2c4.com>; Thu, 6 Oct 2016 19:22:41 +0000 (UTC)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
- by mailout.nyi.internal (Postfix) with ESMTP id 4B68A20B95
- for <wireguard@lists.zx2c4.com>; Thu,  6 Oct 2016 15:34:10 -0400 (EDT)
-Message-Id: <1475782450.3353184.748070729.059CB89D@webmail.messagingengine.com>
-From: Jehan Tremback <jehan@altheamesh.com>
-To: wireguard@lists.zx2c4.com
+Return-Path: Jason@zx2c4.com
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d25829ff
+ for <wireguard@lists.zx2c4.com>; Thu, 6 Oct 2016 20:31:55 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fdfb8cda
+ for <wireguard@lists.zx2c4.com>; Thu, 6 Oct 2016 20:31:55 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 4155228b
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>; Thu, 6 Oct 2016 20:31:54 +0000 (UTC)
+Received: by mail-lf0-f49.google.com with SMTP id b81so26434054lfe.1
+ for <wireguard@lists.zx2c4.com>; Thu, 06 Oct 2016 13:43:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-Date: Thu, 06 Oct 2016 12:34:10 -0700
-In-Reply-To: <20161006134247.347b1040@alex-archsus>
+In-Reply-To: <20161006192743.GA12972@wolff.to>
 References: <1475719977.650386.747317105.1837502D@webmail.messagingengine.com>
  <20161006150310.GB30704@wolff.to>
- <1475771658.1684011.747950545.01B63CCC@webmail.messagingengine.com>
- <20161006134247.347b1040@alex-archsus>
+ <CAHmME9qj9AARx7S6RsyCnWYN4fJizeHfgeqW4zmFtGahLs--pg@mail.gmail.com>
+ <20161006192743.GA12972@wolff.to>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 6 Oct 2016 22:43:19 +0200
+Message-ID: <CAHmME9q5-rvV73WFhMDvYvs7q2DKaOuZj8xZCvEbk-K_WARGdw@mail.gmail.com>
+To: Bruno Wolff III <bruno@wolff.to>
+Content-Type: multipart/alternative; boundary=94eb2c1a1a8637f888053e3858f7
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Subject: Re: [WireGuard] auth-only wireguard
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
@@ -27,60 +31,38 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-> And encryption keeps various neighbors traffic hidden from passive
-> eavesdroppers. Do your customers a service; encrypt their traffic
-> wherever possible.
+--94eb2c1a1a8637f888053e3858f7
+Content-Type: text/plain; charset=UTF-8
 
-> So... now everybody can spy on each other's traffic instead of
-> also spoofing it. That doesn't seem like a huge improvement to me.
+Hi Bruno,
 
-Just to elaborate on why I don't want encryption for the specific tunnel
-I describe: This is to be used between physical neighbors, to prevent
-spoofing IP addresses to steal bandwidth. For example, let's say that
-Alice and Bob are both connected to Charlie. Charlie has a connection to
-the internet, and has made a contract with Bob to sell him a certain
-amount of data (or a certain connection duration at a specified
-bandwidth). Without authentication, Alice could spoof Bob's IP or MAC
-address to use up his quota, or his bandwidth. This authentication is
-happening at every hop, so it would be good to keep the overhead down.
+On Oct 6, 2016 9:29 PM, "Bruno Wolff III" <bruno@wolff.to> wrote:
+> Someone able to watch and modify traffic can wait for authentication to
+occur and then take over the connection. So you don't know you are still
+communicating with the party that did the authentication. You need
+something protecting message integrity which is normally based on
+encryption, but I think there might be ways to do that with just hashing.
 
-There is typically another tunnel used on mesh networks, between exit
-servers (which perform NAT and deal with legal complaints) and the end
-user nodes. This would be encrypted, and I believe this is what the
-network in Germany is looking at WireGuard for. Having two layers of
-encryption within the network, in addition to whatever e2e the user may
-be using, seems excessive.
+You're misunderstanding terminology, I think. Rather than polluting this
+thread here, I'd be happy to explain to you on IRC -- I'm zx2c4 on freenode.
 
-Also, Bob doesn't necessarily trust Charlie. He is just providing a
-service. Encryption between Bob and Charlie provides little benefit. The
-NSA could join the mesh group, set up a cheaper uplink, get Bob to buy
-some bandwidth, and see Bob's packets that way. The encryption is
-provided by the tunnel to the exit server, and more importantly, the
-user's e2e.
+Jason
 
--- 
-  Jehan Tremback
-  jehan@altheamesh.com
+--94eb2c1a1a8637f888053e3858f7
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Oct 6, 2016, at 10:42 AM, Alex Xu wrote:
-> On Thu, 06 Oct 2016 09:34:18 -0700
-> Jehan Tremback <jehan@altheamesh.com> wrote:
-> 
-> > Let me be more specific about my application. I'm trying to create a
-> > system where routers in a "mesh" network (mixed ad-hoc wifi and
-> > ethernet) pay their neighbors, or are paid by their neighbors for
-> > bandwidth. To make this happen, I've got to be able to identify
-> > traffic from specific neighbors with something less spoofable than MAC
-> > addresses. Creating tunnels between neighbors fits the bill for now,
-> > and gives me a good handle to apply traffic shaping to different
-> > neighbors. The encapsulating tunnel packet will have the source IP
-> > address of the previous hop neighbor, and will be sent to the next
-> > hop neighbor, and can be prioritized . Authentication keeps anyone
-> > from spoofing addresses and stealing bandwidth.
-> 
-> So... now everybody can spy on each other's traffic instead of
-> also spoofing it. That doesn't seem like a huge improvement to me.
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> http://lists.zx2c4.com/mailman/listinfo/wireguard
+<p dir=3D"ltr">Hi Bruno,</p>
+<p dir=3D"ltr">On Oct 6, 2016 9:29 PM, &quot;Bruno Wolff III&quot; &lt;<a h=
+ref=3D"mailto:bruno@wolff.to">bruno@wolff.to</a>&gt; wrote:<br>
+&gt; Someone able to watch and modify traffic can wait for authentication t=
+o occur and then take over the connection. So you don&#39;t know you are st=
+ill communicating with the party that did the authentication. You need some=
+thing protecting message integrity which is normally based on encryption, b=
+ut I think there might be ways to do that with just hashing.</p>
+<p dir=3D"ltr">You&#39;re misunderstanding terminology, I think. Rather tha=
+n polluting this thread here, I&#39;d be happy to explain to you on IRC -- =
+I&#39;m zx2c4 on freenode.</p>
+<p dir=3D"ltr">Jason</p>
+
+--94eb2c1a1a8637f888053e3858f7--
