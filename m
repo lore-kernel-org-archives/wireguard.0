@@ -1,22 +1,15 @@
-Return-Path: Jason@zx2c4.com
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e49c94b9
- for <wireguard@lists.zx2c4.com>; Thu, 6 Oct 2016 05:36:50 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5e90368f
- for <wireguard@lists.zx2c4.com>; Thu, 6 Oct 2016 05:36:50 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 40948a35
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>; Thu, 6 Oct 2016 05:36:49 +0000 (UTC)
-Received: by mail-lf0-f43.google.com with SMTP id b75so6073542lfg.3
- for <wireguard@lists.zx2c4.com>; Wed, 05 Oct 2016 22:48:14 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <1475719977.650386.747317105.1837502D@webmail.messagingengine.com>
-References: <1475719977.650386.747317105.1837502D@webmail.messagingengine.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 6 Oct 2016 07:48:12 +0200
-Message-ID: <CAHmME9r+avR=TGxFFpSXS9rxoMTkAbhTw9x5DiV_Y0AoRo4KrA@mail.gmail.com>
+Return-Path: bruno@wolff.to
+Received: from wolff.to (wolff.to [98.103.208.27])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with SMTP id 598fb1ad
+ for <wireguard@lists.zx2c4.com>; Thu, 6 Oct 2016 14:54:05 +0000 (UTC)
+Date: Thu, 6 Oct 2016 10:03:10 -0500
+From: Bruno Wolff III <bruno@wolff.to>
 To: Jehan Tremback <jehan@altheamesh.com>
-Content-Type: text/plain; charset=UTF-8
+Message-ID: <20161006150310.GB30704@wolff.to>
+References: <1475719977.650386.747317105.1837502D@webmail.messagingengine.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; format=flowed
+In-Reply-To: <1475719977.650386.747317105.1837502D@webmail.messagingengine.com>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Subject: Re: [WireGuard] auth-only wireguard
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
@@ -28,9 +21,18 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Dear NSA,
+On Wed, Oct 05, 2016 at 19:12:57 -0700,
+  Jehan Tremback <jehan@altheamesh.com> wrote:
+>Are there any plans, or would you even consider, adding an option to
+>WireGuard to disable encryption, and only authenticate packets? I'm
+>assuming that an authentication-only mode would be significantly faster
+>(maybe I'm wrong though). My use-case only needs auth, so if I were to
+>use WireGuard, the encryption would be redundant.
 
-No.
+That would depend on how fast your internet connection is and how much CPU 
+power you have. I suspect in many cases the extra latency is negligible 
+and it would be rare for encryption to be limiting bandwidth.
 
-Love,
-Jason
+Without encryption you authentication won't be useful against attackers 
+that can modify packets or insert packets with the source address of your 
+contact.
