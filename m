@@ -1,18 +1,27 @@
-Return-Path: toke@toke.dk
-Received: from mail2.tohojo.dk (mail2.tohojo.dk [77.235.48.147])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1e29c9bb
+Return-Path: Jason@zx2c4.com
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0687ebf1
  for <wireguard@lists.zx2c4.com>;
- Wed, 19 Oct 2016 16:06:45 +0000 (UTC)
-From: =?utf-8?Q?Toke_H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>
-To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
-References: <87mvi0jxsb.fsf@toke.dk> <87a8e0jucl.fsf@toke.dk>
-Date: Wed, 19 Oct 2016 18:07:37 +0200
-In-Reply-To: <87a8e0jucl.fsf@toke.dk> ("Toke =?utf-8?Q?H=C3=B8iland-J?=
- =?utf-8?Q?=C3=B8rgensen=22's?= message of
- "Wed, 19 Oct 2016 16:18:02 +0200")
-Message-ID: <87zim0wcdy.fsf@toke.dk>
+ Wed, 19 Oct 2016 22:34:14 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b1308e9d
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 19 Oct 2016 22:34:14 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id c9452816
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 19 Oct 2016 22:34:13 +0000 (UTC)
+Received: by mail-lf0-f53.google.com with SMTP id l131so44497348lfl.2
+ for <wireguard@lists.zx2c4.com>; Wed, 19 Oct 2016 15:35:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <87zim0wcdy.fsf@toke.dk>
+References: <87mvi0jxsb.fsf@toke.dk> <87a8e0jucl.fsf@toke.dk>
+ <87zim0wcdy.fsf@toke.dk>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 20 Oct 2016 07:35:04 +0900
+Message-ID: <CAHmME9rSDy91q6iToHiQxrrTVtV_xEB2VSb9gF26=Z6=j94aAA@mail.gmail.com>
+To: =?UTF-8?B?VG9rZSBIw7hpbGFuZC1Kw7hyZ2Vuc2Vu?= <toke@toke.dk>
+Content-Type: text/plain; charset=UTF-8
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Subject: Re: [WireGuard] Error building against grsec-enabled kernel
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
@@ -23,44 +32,16 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Toke H=C3=B8iland-J=C3=B8rgensen <toke@toke.dk> writes:
+Hey Toke,
 
-> Toke H=C3=B8iland-J=C3=B8rgensen <toke@toke.dk> writes:
->
->> I'm getting build errors when building WireGuard against a grsec-enabled
->> kernel (on Arch linux):
->>
->> DKMS make.log for wireguard-0.0.20161014 for kernel 4.7.8.201610161720-1=
--grsec (x86_64)
->> Wed 19 Oct 14:59:25 CEST 2016
->> make: Entering directory '/usr/lib/modules/4.7.8.201610161720-1-grsec/bu=
-ild'
->>   LD      /var/lib/dkms/wireguard/0.0.20161014/build/built-in.o
->>   CC [M]  /var/lib/dkms/wireguard/0.0.20161014/build/main.o
->> /var/lib/dkms/wireguard/0.0.20161014/build/main.o: warning: objtool: mod=
-_exit(): can't find starting instruction
->>   CC [M]  /var/lib/dkms/wireguard/0.0.20161014/build/noise.o
->>   CC [M]  /var/lib/dkms/wireguard/0.0.20161014/build/device.o
->> /var/lib/dkms/wireguard/0.0.20161014/build/device.c:330:29: error: const=
-ified variable =E2=80=98link_ops=E2=80=99 placed into writable section ".da=
-ta..read_mostly"
->>  static struct rtnl_link_ops link_ops __read_mostly =3D {
->>                              ^~~~~~~~
->> make[1]: *** [scripts/Makefile.build:290: /var/lib/dkms/wireguard/0.0.20=
-161014/build/device.o] Error 1
->> make: *** [Makefile:1465: _module_/var/lib/dkms/wireguard/0.0.20161014/b=
-uild] Error 2
->> make: Leaving directory '/usr/lib/modules/4.7.8.201610161720-1-grsec/bui=
-ld'
->>
->> Any idea how to fix this?
->
-> OK, so turns out just getting rid of the __read_mostly fixes things.
-> This could conceivably be conditioned on CONSTIFY_PLUGIN in the upstream
-> source? :)
+Good to see you in this neck of the woods!
 
-... but though I managed to get it to build, there's an overflow
-somewhere in the RX path with causes PAX to kill the interrupt handler
-(and thus crash the kernel). Don't have a backtrace, sorry :(
+Yes -- the __read_mostly annotation needs to go away for grsec. I had
+this building and running a few months ago on there. I'll revive that
+work. I'm at a conference right now (codeblue.jp) giving a talk on
+WireGuard, but I'll dig up my grsec build system ASAP and get back to
+you. In the mean time, if you can muster a backtrace, this of course
+would be excellent.
 
--Toke
+Talk soon,
+Jason
