@@ -1,18 +1,27 @@
-Return-Path: joerg@higgsboson.tk
-Received: from mail.higgsboson.tk (mail.higgsboson.tk [148.251.132.243])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0f7453be
+Return-Path: Jason@zx2c4.com
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 50d5ce50
  for <wireguard@lists.zx2c4.com>;
- Fri, 21 Oct 2016 17:30:53 +0000 (UTC)
-Received: from [192.168.42.25] (ip-2-201-3-34.web.vodafone.de [2.201.3.34])
- by mail.higgsboson.tk (Postfix) with ESMTPSA id 443CB2F3EC
- for <wireguard@lists.zx2c4.com>; Fri, 21 Oct 2016 17:31:58 +0000 (UTC)
-From: =?UTF-8?Q?J=c3=b6rg_Thalheim?= <joerg@higgsboson.tk>
-To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
-Message-ID: <2a3c259f-6479-8f22-c426-bec54635bd8d@higgsboson.tk>
-Date: Fri, 21 Oct 2016 19:31:56 +0200
+ Sat, 22 Oct 2016 07:45:04 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1a80de19
+ for <wireguard@lists.zx2c4.com>;
+ Sat, 22 Oct 2016 07:45:04 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id cb9e614b
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Sat, 22 Oct 2016 07:45:03 +0000 (UTC)
+Received: by mail-lf0-f49.google.com with SMTP id l131so155765931lfl.2
+ for <wireguard@lists.zx2c4.com>; Sat, 22 Oct 2016 00:46:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="------------22FB28246EA68774E461EEA4"
-Subject: [WireGuard] [PATCH] uapi.h: public_key field is a getter
+In-Reply-To: <2a3c259f-6479-8f22-c426-bec54635bd8d@higgsboson.tk>
+References: <2a3c259f-6479-8f22-c426-bec54635bd8d@higgsboson.tk>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Sat, 22 Oct 2016 16:46:12 +0900
+Message-ID: <CAHmME9oraZB47ZZDbbM7MoYn8gysCMQapMWVDWzGiP2OPeLj6g@mail.gmail.com>
+To: =?UTF-8?Q?J=C3=B6rg_Thalheim?= <joerg@higgsboson.tk>
+Content-Type: text/plain; charset=UTF-8
+Cc: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+Subject: Re: [WireGuard] [PATCH] uapi.h: public_key field is a getter
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -22,38 +31,4 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-This is a multi-part message in MIME format.
---------------22FB28246EA68774E461EEA4
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-
-Signed-off-by: Jörg Thalheim <joerg@higgsboson.tk>
----
- src/uapi.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-
-
---------------22FB28246EA68774E461EEA4
-Content-Type: text/x-patch;
- name="0001-uapi.h-public_key-field-is-a-getter.patch"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
- filename="0001-uapi.h-public_key-field-is-a-getter.patch"
-
-diff --git a/src/uapi.h b/src/uapi.h
-index 6c6971e..69dfee3 100644
---- a/src/uapi.h
-+++ b/src/uapi.h
-@@ -113,7 +113,7 @@ struct wgpeer {
- struct wgdevice {
- 	char interface[IFNAMSIZ]; /* Get */
- 
--	__u8 public_key[WG_KEY_LEN]; /* Get/Set */
-+	__u8 public_key[WG_KEY_LEN]; /* Get */
- 	__u8 private_key[WG_KEY_LEN]; /* Get/Set */
- 	__u8 preshared_key[WG_KEY_LEN]; /* Get/Set */
- 
-
-
---------------22FB28246EA68774E461EEA4--
+Thanks. Applied.
