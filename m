@@ -1,20 +1,31 @@
 Return-Path: Jason@zx2c4.com
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 862475f0
- for <wireguard@lists.zx2c4.com>; Thu, 3 Nov 2016 20:38:55 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fc070338
- for <wireguard@lists.zx2c4.com>; Thu, 3 Nov 2016 20:38:55 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id d9fee18f
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Thu, 3 Nov 2016 20:38:55 +0000 (UTC)
-Date: Thu, 03 Nov 2016 21:40:07 +0100
-To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1355fb83
+ for <wireguard@lists.zx2c4.com>; Thu, 3 Nov 2016 22:18:53 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 249d699c
+ for <wireguard@lists.zx2c4.com>; Thu, 3 Nov 2016 22:18:53 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id ba2583f3
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>; Thu, 3 Nov 2016 22:18:53 +0000 (UTC)
+Received: by mail-lf0-f50.google.com with SMTP id b81so50672305lfe.1
+ for <wireguard@lists.zx2c4.com>; Thu, 03 Nov 2016 15:20:10 -0700 (PDT)
 MIME-Version: 1.0
+In-Reply-To: <20161103.130852.1456848512897088071.davem@davemloft.net>
+References: <CAHmME9ogYTGFaNDt1CD0FxEHxDzVhNX=AN3_PH3t=0zREGgYPA@mail.gmail.com>
+ <20161103004934.GA30775@gondor.apana.org.au>
+ <CAHmME9oL-pOWWXXFhJz1vSm5ftnSfmYrquGbH0acapgEL=c4Ew@mail.gmail.com>
+ <20161103.130852.1456848512897088071.davem@davemloft.net>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 3 Nov 2016 23:20:08 +0100
+Message-ID: <CAHmME9pm4DHuBsE+hoFxnm1B5OWAZ+OyKXzeKDxHtisZpw4ebg@mail.gmail.com>
+To: David Miller <davem@davemloft.net>
 Content-Type: text/plain; charset=UTF-8
-Message-Id: <cec0846106212af3@frisell.zx2c4.com>
-Subject: [WireGuard] [ANNOUNCE] Snapshot `experimental-0.0.20161103`
-	Available
+Cc: Herbert Xu <herbert@gondor.apana.org.au>,
+ Martin Willi <martin@strongswan.org>, LKML <linux-kernel@vger.kernel.org>,
+ linux-crypto@vger.kernel.org,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
+Subject: Re: [WireGuard] [PATCH] poly1305: generic C can be faster on chips
+ with slow unaligned access
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -24,65 +35,52 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi David,
 
-Hello,
+On Thu, Nov 3, 2016 at 6:08 PM, David Miller <davem@davemloft.net> wrote:
+> In any event no piece of code should be doing 32-bit word reads from
+> addresses like "x + 3" without, at a very minimum, going through the
+> kernel unaligned access handlers.
 
-A new experimental snapshot, `experimental-0.0.20161103`, has been tagged in
-the git repository.
+Excellent point. In otherwords,
 
-Please note that this snapshot is, like the rest of the project at this point
-in time, experimental, and does not consitute a real release that would be
-considered secure and bug-free. However, if you'd like to test this snapshot
-out, there are a few relevent changes.
+    ctx->r[0] =3D (le32_to_cpuvp(key +  0) >> 0) & 0x3ffffff;
+    ctx->r[1] =3D (le32_to_cpuvp(key +  3) >> 2) & 0x3ffff03;
+    ctx->r[2] =3D (le32_to_cpuvp(key +  6) >> 4) & 0x3ffc0ff;
+    ctx->r[3] =3D (le32_to_cpuvp(key +  9) >> 6) & 0x3f03fff;
+    ctx->r[4] =3D (le32_to_cpuvp(key + 12) >> 8) & 0x00fffff;
 
-== Changes ==
+should change to:
 
-  * timers: take reference like a lookup table
-  * qemu: newer default kernel
-  
-  Small improvements as usual.
-  
-  * device: use ARPHDR_VOID instead of ARPHDR_NONE
-  
-  We now avoid auto-assigning randomly generated IPv6 addresses to interfaces,
-  since this doesn't make sense in the context of cryptokey routing. This should
-  prevent those pesky log messages about trying to send to unrouted RA IPs.
-  
-  * chacha20poly1305: src is different from dst on last piece
-  
-  This is a critical patch and the reason why this snapshot is being cut so soon
-  after the previous. PACKAGERS: bump your packages.
+    ctx->r[0] =3D (le32_to_cpuvp(key +  0) >> 0) & 0x3ffffff;
+    ctx->r[1] =3D (get_unaligned_le32(key +  3) >> 2) & 0x3ffff03;
+    ctx->r[2] =3D (get_unaligned_le32(key +  6) >> 4) & 0x3ffc0ff;
+    ctx->r[3] =3D (get_unaligned_le32(key +  9) >> 6) & 0x3f03fff;
+    ctx->r[4] =3D (le32_to_cpuvp(key + 12) >> 8) & 0x00fffff;
 
-As always, the source is available at https://git.zx2c4.com/WireGuard/ and
-information about the project is available at https://www.wireguard.io/ .
+> We know explicitly that these offsets will not be 32-bit aligned, so
+> it is required that we use the helpers, or alternatively do things to
+> avoid these unaligned accesses such as using temporary storage when
+> the HAVE_EFFICIENT_UNALIGNED_ACCESS kconfig value is not set.
 
-This snapshot is available in tarball form here:
-  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-experimental-0.0.20161103.tar.xz
-  SHA256: e9d6a97002e0b63bb9572bf42037a7f5b67ccad421fec3afac684e4fc5e931ac
+So the question is: is the clever avoidance of unaligned accesses of
+the original patch faster or slower than changing the unaligned
+accesses to use the helper function?
 
-If you're a snapshot package maintainer, please bump your package version. If
-you're a user, the WireGuard team welcomes any and all feedback on this latest
-snapshot.
+I've put a little test harness together for playing with this:
 
-Thank you,
-Jason Donenfeld
+    $ git clone git://git.zx2c4.com/polybench
+    $ cd polybench
+    $ make run
 
+To test with one method, do as normal. To test with the other, remove
+"#define USE_FIRST_METHOD" from the source code.
 
------BEGIN PGP SIGNATURE-----
+@Ren=C3=A9: do you think you could retest on your MIPS32r2 hardware and
+report back which is faster?
 
-iQItBAEBCAAXBQJYG6CZEBxqYXNvbkB6eDJjNC5jb20ACgkQSfxwEqXeA65KjxAA
-vgbpjtlkffoD7KcSCg2AaHoyrzFohVYM73iEoVANLluswiQYtkHLjqwIkZDmDn/Q
-1quDuu4aCXYkryCskvyy080qlbLCnLxm5jaYmuIF1SLZRa7W559SKY7hOYGWpWMs
-PamszbJkvvo4ctlqnL2XT10yIWP4fRotqb3PxDJrFPem6vygOxCVJ7Hz8NLHBbpK
-HjqjOb7ErZlz7Bm8BVzx7oYYkhpPRw4Q1WySnY3n4/8sPQMjI29YR/24p7cJ7MNA
-Vq5K8sstXIWs6VebJ5xKzBBDnB70v49ABFwn1vhyGDSgqT6TEWtZ8AYESdge6voU
-nvH3xg0LuQ78qeSwFmmsdosWoXqym7WIQbTbtNbbLBABNiGR1u1NHWwYp0UHXwiT
-xsNftb8fB6N3f4ve98Ki9J0bMzJAWGptWkOzh65/9aCtcdc6m+1bD/xZIEuNisIa
-wrl1D7eGKTXWVq0Ih6LOCk5szbb4O0hBUMH42L5Dp3aH84GxpeHh3ltrLYdtMYTU
-hdwQJbec/1lhpcIOtszLnSjZ3eCKZD2JOrpG920xWncfWq4NTTmAyxKgnYt+VJH+
-RdHQVzWX7l2KYNA5eApKxFStpTl/82NEsicIvPp+wcJx7IMtlpbhfJoZaCYiTgSx
-eA4ttflLdrYeymjjj+LQTcj5J/Bk9POayePlQrq7bmI=
-=Rs9c
------END PGP SIGNATURE-----
+And if anybody else has other hardware and would like to try, this
+could be nice.
+
+Regards,
+Jason
