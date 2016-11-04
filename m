@@ -1,31 +1,19 @@
-Return-Path: Jason@zx2c4.com
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1355fb83
- for <wireguard@lists.zx2c4.com>; Thu, 3 Nov 2016 22:18:53 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 249d699c
- for <wireguard@lists.zx2c4.com>; Thu, 3 Nov 2016 22:18:53 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id ba2583f3
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>; Thu, 3 Nov 2016 22:18:53 +0000 (UTC)
-Received: by mail-lf0-f50.google.com with SMTP id b81so50672305lfe.1
- for <wireguard@lists.zx2c4.com>; Thu, 03 Nov 2016 15:20:10 -0700 (PDT)
+Return-Path: toke@toke.dk
+Received: from mail.toke.dk (mail.toke.dk [52.28.52.200])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f3863fb5
+ for <wireguard@lists.zx2c4.com>; Fri, 4 Nov 2016 11:52:01 +0000 (UTC)
+From: =?utf-8?Q?Toke_H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+References: <CAHmME9qQiho_9vsuCxyV32Oy3hvkf1FL+Lpqq+yMtHPpN=_sNQ@mail.gmail.com>
+Date: Fri, 04 Nov 2016 12:53:19 +0100
+In-Reply-To: <CAHmME9qQiho_9vsuCxyV32Oy3hvkf1FL+Lpqq+yMtHPpN=_sNQ@mail.gmail.com>
+ (Jason A. Donenfeld's message of "Thu, 3 Nov 2016 16:13:07 +0100")
+Message-ID: <87shr7cvgw.fsf@toke.dk>
 MIME-Version: 1.0
-In-Reply-To: <20161103.130852.1456848512897088071.davem@davemloft.net>
-References: <CAHmME9ogYTGFaNDt1CD0FxEHxDzVhNX=AN3_PH3t=0zREGgYPA@mail.gmail.com>
- <20161103004934.GA30775@gondor.apana.org.au>
- <CAHmME9oL-pOWWXXFhJz1vSm5ftnSfmYrquGbH0acapgEL=c4Ew@mail.gmail.com>
- <20161103.130852.1456848512897088071.davem@davemloft.net>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 3 Nov 2016 23:20:08 +0100
-Message-ID: <CAHmME9pm4DHuBsE+hoFxnm1B5OWAZ+OyKXzeKDxHtisZpw4ebg@mail.gmail.com>
-To: David Miller <davem@davemloft.net>
-Content-Type: text/plain; charset=UTF-8
-Cc: Herbert Xu <herbert@gondor.apana.org.au>,
- Martin Willi <martin@strongswan.org>, LKML <linux-kernel@vger.kernel.org>,
- linux-crypto@vger.kernel.org,
- WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: [WireGuard] [PATCH] poly1305: generic C can be faster on chips
- with slow unaligned access
+Content-Type: text/plain; charset=utf-8
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Subject: Re: [WireGuard] Requeuing Race Condition [Was: Re: [Cake] WireGuard
+	Queuing, Bufferbloat, Performance, Latency, and related issues]
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -35,52 +23,58 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi David,
+"Jason A. Donenfeld" <Jason@zx2c4.com> writes:
 
-On Thu, Nov 3, 2016 at 6:08 PM, David Miller <davem@davemloft.net> wrote:
-> In any event no piece of code should be doing 32-bit word reads from
-> addresses like "x + 3" without, at a very minimum, going through the
-> kernel unaligned access handlers.
+> Hey Toke,
+>
+> On Wed, Oct 5, 2016 at 3:59 PM, Toke H=C3=B8iland-J=C3=B8rgensen <toke@to=
+ke.dk> wrote:
+>>> On Sun, Oct 2, 2016 at 1:31 PM, Toke H=C3=B8iland-J=C3=B8rgensen <toke@=
+toke.dk> wrote:
+>>>> You don't need a timer. You already have a signal for when more queue
+>>>> space is available in the encryption step: When a packet finishes
+>>>> encryption. All you need to do is try to enqueue another one at this
+>>>> point.
+>>>
+>>> Oh, silly me. Yes of course. Voila:
+>>> https://git.zx2c4.com/WireGuard/commit/?id=3Da0ad61c1a0e25a376e145f07ca=
+27c605d3852bc4
+>>
+>> Yup, that seems like the way to go about it :)
+>
+> There's a small problem with this approach:
+>
+> Thread 1                            |  Thread 2
+> ----------------------------------  |  ----------------------------------=
+--
+> Queue it up? Nope, queue is full.   |
+>                                     |  I just finished encrypting my last
+>                                     |  packet. My queue is now empty. Has
+>                                     |  thread 1 set need_resend_queue? No=
+pe,
+>                                     |  so I'll go to sleep.
+> Set need_resend_queue =3D true and    |
+> wait for thread 2 to requeue it.    |
+>                                     |
+> Nothing happens.                    |
+>                                     | Nothing happens.
+> Nothing happens.                    |
+>                                     | Nothing happens.
+> Nothing happens.                    |
+>                                     | Nothing happens.
+>
+> One way of fixing this would be to add a spin lock that synchronizes the
+> submission of jobs in thread 1 and the completion of jobs in thread 2. Th=
+at
+> looks like this:
+>
+> https://git.zx2c4.com/WireGuard/commit/?h=3Djd/ugly-sync
+>
+> I have no intention of actually merging this approach, as it's really too
+> awful. But perhaps you have a better race-free and lock-free approach.
 
-Excellent point. In otherwords,
+Ah yes, an unprotected flag will be problematic. Do you really need the
+flag, though? Can't you just inspect the queue length? Presumably you're
+already doing that in a way that is multithreading-safe?
 
-    ctx->r[0] =3D (le32_to_cpuvp(key +  0) >> 0) & 0x3ffffff;
-    ctx->r[1] =3D (le32_to_cpuvp(key +  3) >> 2) & 0x3ffff03;
-    ctx->r[2] =3D (le32_to_cpuvp(key +  6) >> 4) & 0x3ffc0ff;
-    ctx->r[3] =3D (le32_to_cpuvp(key +  9) >> 6) & 0x3f03fff;
-    ctx->r[4] =3D (le32_to_cpuvp(key + 12) >> 8) & 0x00fffff;
-
-should change to:
-
-    ctx->r[0] =3D (le32_to_cpuvp(key +  0) >> 0) & 0x3ffffff;
-    ctx->r[1] =3D (get_unaligned_le32(key +  3) >> 2) & 0x3ffff03;
-    ctx->r[2] =3D (get_unaligned_le32(key +  6) >> 4) & 0x3ffc0ff;
-    ctx->r[3] =3D (get_unaligned_le32(key +  9) >> 6) & 0x3f03fff;
-    ctx->r[4] =3D (le32_to_cpuvp(key + 12) >> 8) & 0x00fffff;
-
-> We know explicitly that these offsets will not be 32-bit aligned, so
-> it is required that we use the helpers, or alternatively do things to
-> avoid these unaligned accesses such as using temporary storage when
-> the HAVE_EFFICIENT_UNALIGNED_ACCESS kconfig value is not set.
-
-So the question is: is the clever avoidance of unaligned accesses of
-the original patch faster or slower than changing the unaligned
-accesses to use the helper function?
-
-I've put a little test harness together for playing with this:
-
-    $ git clone git://git.zx2c4.com/polybench
-    $ cd polybench
-    $ make run
-
-To test with one method, do as normal. To test with the other, remove
-"#define USE_FIRST_METHOD" from the source code.
-
-@Ren=C3=A9: do you think you could retest on your MIPS32r2 hardware and
-report back which is faster?
-
-And if anybody else has other hardware and would like to try, this
-could be nice.
-
-Regards,
-Jason
+-Toke
