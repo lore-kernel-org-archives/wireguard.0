@@ -1,29 +1,20 @@
-Return-Path: ebiggers@google.com
-Received: from mail-pf0-f171.google.com (mail-pf0-f171.google.com
- [209.85.192.171])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 427b5b80
- for <wireguard@lists.zx2c4.com>; Fri, 4 Nov 2016 17:36:05 +0000 (UTC)
-Received: by mail-pf0-f171.google.com with SMTP id 189so55286199pfz.3
- for <wireguard@lists.zx2c4.com>; Fri, 04 Nov 2016 10:37:28 -0700 (PDT)
-Return-Path: <ebiggers@google.com>
-Date: Fri, 4 Nov 2016 10:37:23 -0700
-From: Eric Biggers <ebiggers@google.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Message-ID: <20161104173723.GB34176@google.com>
-References: <CAHmME9ogYTGFaNDt1CD0FxEHxDzVhNX=AN3_PH3t=0zREGgYPA@mail.gmail.com>
- <20161103004934.GA30775@gondor.apana.org.au>
- <CAHmME9oL-pOWWXXFhJz1vSm5ftnSfmYrquGbH0acapgEL=c4Ew@mail.gmail.com>
- <20161103.130852.1456848512897088071.davem@davemloft.net>
- <CAHmME9pm4DHuBsE+hoFxnm1B5OWAZ+OyKXzeKDxHtisZpw4ebg@mail.gmail.com>
+Return-Path: Jason@zx2c4.com
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 989fc12d
+ for <wireguard@lists.zx2c4.com>; Sun, 6 Nov 2016 01:56:54 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 953c98cd
+ for <wireguard@lists.zx2c4.com>; Sun, 6 Nov 2016 01:56:54 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id e8d7da8c
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Sun, 6 Nov 2016 01:56:54 +0000 (UTC)
+Date: Sun, 06 Nov 2016 02:58:25 +0100
+To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-In-Reply-To: <CAHmME9pm4DHuBsE+hoFxnm1B5OWAZ+OyKXzeKDxHtisZpw4ebg@mail.gmail.com>
-Cc: Herbert Xu <herbert@gondor.apana.org.au>,
- Martin Willi <martin@strongswan.org>, LKML <linux-kernel@vger.kernel.org>,
- linux-crypto@vger.kernel.org, David Miller <davem@davemloft.net>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: [WireGuard] [PATCH] poly1305: generic C can be faster on chips
- with slow unaligned access
+Content-Type: text/plain; charset=UTF-8
+Message-Id: <cec1bfc60050d97f@frisell.zx2c4.com>
+Subject: [WireGuard] [ANNOUNCE] Snapshot `experimental-0.0.20161105`
+	Available
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -33,43 +24,92 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Thu, Nov 03, 2016 at 11:20:08PM +0100, Jason A. Donenfeld wrote:
-> Hi David,
-> 
-> On Thu, Nov 3, 2016 at 6:08 PM, David Miller <davem@davemloft.net> wrote:
-> > In any event no piece of code should be doing 32-bit word reads from
-> > addresses like "x + 3" without, at a very minimum, going through the
-> > kernel unaligned access handlers.
-> 
-> Excellent point. In otherwords,
-> 
->     ctx->r[0] = (le32_to_cpuvp(key +  0) >> 0) & 0x3ffffff;
->     ctx->r[1] = (le32_to_cpuvp(key +  3) >> 2) & 0x3ffff03;
->     ctx->r[2] = (le32_to_cpuvp(key +  6) >> 4) & 0x3ffc0ff;
->     ctx->r[3] = (le32_to_cpuvp(key +  9) >> 6) & 0x3f03fff;
->     ctx->r[4] = (le32_to_cpuvp(key + 12) >> 8) & 0x00fffff;
-> 
-> should change to:
-> 
->     ctx->r[0] = (le32_to_cpuvp(key +  0) >> 0) & 0x3ffffff;
->     ctx->r[1] = (get_unaligned_le32(key +  3) >> 2) & 0x3ffff03;
->     ctx->r[2] = (get_unaligned_le32(key +  6) >> 4) & 0x3ffc0ff;
->     ctx->r[3] = (get_unaligned_le32(key +  9) >> 6) & 0x3f03fff;
->     ctx->r[4] = (le32_to_cpuvp(key + 12) >> 8) & 0x00fffff;
-> 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I agree, and the current code is wrong; but do note that this proposal is
-correct for poly1305_setrkey() but not for poly1305_setskey() and
-poly1305_blocks().  In the latter two cases, 4-byte alignment of the source
-buffer is *not* guaranteed.  Although crypto_poly1305_update() will be called
-with a 4-byte aligned buffer due to the alignmask set on poly1305_alg, the
-algorithm operates on 16-byte blocks and therefore has to buffer partial blocks.
-If some number of bytes that is not 0 mod 4 is buffered, then the buffer will
-fall out of alignment on the next update call.  Hence, get_unaligned_le32() is
-actually needed on all the loads, since the buffer will, in general, be of
-unknown alignment.
+Hello,
 
-Note: some other shash algorithms have this problem too and do not handle it
-correctly.  It seems to be a common mistake.
+A new experimental snapshot, `experimental-0.0.20161105`, has been tagged in
+the git repository.
 
-Eric
+Please note that this snapshot is, like the rest of the project at this point
+in time, experimental, and does not consitute a real release that would be
+considered secure and bug-free. However, if you'd like to test this snapshot
+out, there are a few relevent changes.
+
+== Changes ==
+
+  * socket: use dst_cache instead of handrolled cache
+  * compat: stub out dst_cache for old kernels
+  * socket: route() returns an error pointer, not NULL on failure
+  * socket: big refactoring
+  
+  Rather than our hand rolled routing cache, we now use the kernel's own
+  dst_cache, which was added to the kernel after 4.5 and wasn't available when
+  wireguard was first developed. The performance is on par with ours, but this
+  way we reduce complexity.
+  
+  * data: take reference to peer
+  * data: use smaller types
+  * send: queue bundles on same CPU
+  * data: keep FPU on when possible
+  * data: use a memory cache for parallel ctx
+  * compat: fix variable assumptions
+  
+  This series of optimizations is huge, resulting in *doubled throughput* on my
+  development laptop. This is a major performance win, achieved by batching up
+  sequential packets on the same processor core, with the observation that
+  waiting for cores to synchronize takes time and defeats multi-core
+  improvements. Wireguard should now scale better to systems with tons of cores. 
+  
+  * compat: some grsec have get_random_long; others do not
+  
+  Wireguard now builds with the stable release of grsec that used to be testing.
+  In otherwords, distro stable grsec packages that are out of date and
+  unmaintained can now use wireguard without modification.
+  
+  * qemu: move build outside of kernel dir to avoid kernel's make clean
+  * qemu: work around termio race condition
+  * qemu: move marker to top and flush
+  * qemu: fail if module selftests fail
+  
+  The qemu test suite received more stability improvements and a workaround for
+  a virtio bug.
+  
+  * tools: chill modern gcc out
+  * c89: the static keyword is okay in c99, but not in c89
+  * chacha20poly1305: cleanup magic constants
+  
+  General code and compiler fixes.
+
+As always, the source is available at https://git.zx2c4.com/WireGuard/ and
+information about the project is available at https://www.wireguard.io/ .
+
+This snapshot is available in tarball form here:
+  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-experimental-0.0.20161105.tar.xz
+  SHA256: 3e98535184a9e00e739c8f2b6cc9b20aea876157e36d72726ca7662c9b5556b5
+
+If you're a snapshot package maintainer, please bump your package version. If
+you're a user, the WireGuard team welcomes any and all feedback on this latest
+snapshot.
+
+Thank you,
+Jason Donenfeld
+
+
+-----BEGIN PGP SIGNATURE-----
+
+iQItBAEBCAAXBQJYHo4wEBxqYXNvbkB6eDJjNC5jb20ACgkQSfxwEqXeA658oQ/7
+BchfQ5jwcCwLJwsnrwA91pv9iZN/pbQoBbX1gp5GyvkOl2WwIc0IUxv4R5kwTybn
+aMR+j6zUwGihJRehjprgDU33gpG3ipUdSSb8ltcuJ7NmBvpN5HBXSZgk2BOTLUHL
+dr0c1CzuKTQ/BJRnRb+v3RSPG9t8t7vjIAh9NWQYg4eaihnaUgQxkLlNYQOpBiBH
+Gy+Rggxxb/YUT5gZNCzDvv+nBr9V/TCU3UQqdMlztoNLV5OroFWR5BSYNZPDAWEA
+8v3CIkdzs6iuaIGul3ov/wZ8tMPIxi+w+Mk01RbU6MF7dX1mgveRF77s7OyQ6WJt
+gyl6uDFNF3UBJhJVeiOL4v/X95J0sE0ZFTLp+MbP+PjcY/KUG1V8XUHCTZwlVZDy
+amg+clhHBwypoPTWMYXnGx1HCTwXuw2mFkDHyeQQSt00QSi9Xqw+20GO4M4Vzbgr
+vAMzu98VlZEcz5FhKDuz7AsRiPQCplc3v2lyju43oUyM/C+SuPdbu5giEsSSmDxu
+lpmDKN8bD8nSiKjtibY0oZVa58hFaXbIb/oAnwok8C4VVTX8jx0C7wL1k9bY+02F
+H42aZDRIOhU7CImbsjvICj8Q8xW0VCgAQzhiLahL6WcAPvXeELrGWeDnqIEJag+U
+WwdbCU/MepSvYhVT9y2uBg0afnwkG5TPD9/YmQJ3HZ8=
+=8AA1
+-----END PGP SIGNATURE-----
