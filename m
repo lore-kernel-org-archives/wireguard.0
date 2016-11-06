@@ -1,24 +1,21 @@
 Return-Path: Jason@zx2c4.com
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f389dc60
- for <wireguard@lists.zx2c4.com>; Sun, 6 Nov 2016 12:15:12 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f146179a
- for <wireguard@lists.zx2c4.com>; Sun, 6 Nov 2016 12:15:12 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id b696b2b2
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a8334dab
+ for <wireguard@lists.zx2c4.com>; Sun, 6 Nov 2016 12:21:14 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c099e833
+ for <wireguard@lists.zx2c4.com>; Sun, 6 Nov 2016 12:21:13 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 06201888
  (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>; Sun, 6 Nov 2016 12:15:12 +0000 (UTC)
-Received: by mail-lf0-f53.google.com with SMTP id t196so94607660lff.3
- for <wireguard@lists.zx2c4.com>; Sun, 06 Nov 2016 04:16:48 -0800 (PST)
+ for <wireguard@lists.zx2c4.com>; Sun, 6 Nov 2016 12:21:12 +0000 (UTC)
+Received: by mail-lf0-f46.google.com with SMTP id t196so94662703lff.3
+ for <wireguard@lists.zx2c4.com>; Sun, 06 Nov 2016 04:22:48 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9oc=_cX3XPo0VBYx70HF-9D85TLivFWU4jdadKcfzTgmA@mail.gmail.com>
+In-Reply-To: <1289478110.20161106110707@vodka.home.kg>
 References: <25241985.20161106100258@vodka.home.kg>
  <1289478110.20161106110707@vodka.home.kg>
- <CAHmME9pytc2aVj5gDXwX0zBbQt5nqNsaeXFxz9XCXMwzgiFauw@mail.gmail.com>
- <CAHmME9odjXbgoTFfPzu-1rtTxrT-kEucYeevHgHHzJnd-NTCyQ@mail.gmail.com>
- <CAHmME9oc=_cX3XPo0VBYx70HF-9D85TLivFWU4jdadKcfzTgmA@mail.gmail.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sun, 6 Nov 2016 13:16:46 +0100
-Message-ID: <CAHmME9oJ6mPEx=4_udNba_3CwB3Gd1gtT+=1SbW9C4kX8X=QXg@mail.gmail.com>
+Date: Sun, 6 Nov 2016 13:22:46 +0100
+Message-ID: <CAHmME9ov5HKEJuA2_oXgmgWKmYQJBdF7tx18hKa-Czpxyt3gFw@mail.gmail.com>
 To: k@vodka.home.kg
 Content-Type: text/plain; charset=UTF-8
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
@@ -32,7 +29,12 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-> Wireguard ver 20161103, 20161105
+On Sun, Nov 6, 2016 at 9:07 AM,  <k@vodka.home.kg> wrote:
+>> <4>[13905.634933] Process  (pid: 41189632, threadinfo=82bca000, task=810000ce, tls=8100cea5)
+>
+>> Likely caused by memory corruption.
+>
+> Look  at  pid  value.  Its defenitly not valid pid. Task structure was
+> corrupted.
 
-If I understand this right, the one that's crashing is on 1105? In
-which case, could you tell me if 1103 crashes, or if it's only 1105?
+Indeed. In hex, the bottom part is 0x8100, which is an address...
