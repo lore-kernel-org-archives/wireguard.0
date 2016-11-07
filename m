@@ -1,26 +1,33 @@
 Return-Path: Jason@zx2c4.com
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e9a68c1c
- for <wireguard@lists.zx2c4.com>; Mon, 7 Nov 2016 13:42:06 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 74b53b2a
- for <wireguard@lists.zx2c4.com>; Mon, 7 Nov 2016 13:42:06 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id c142f499
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b4ea799f
+ for <wireguard@lists.zx2c4.com>; Mon, 7 Nov 2016 18:06:40 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9dd8fd84
+ for <wireguard@lists.zx2c4.com>; Mon, 7 Nov 2016 18:06:40 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id dee3acd7
  (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 7 Nov 2016 13:42:06 +0000 (UTC)
-Received: by mail-lf0-f51.google.com with SMTP id o141so41536129lff.1
- for <wireguard@lists.zx2c4.com>; Mon, 07 Nov 2016 05:43:50 -0800 (PST)
+ for <wireguard@lists.zx2c4.com>; Mon, 7 Nov 2016 18:06:40 +0000 (UTC)
+Received: by mail-lf0-f46.google.com with SMTP id b14so120406973lfg.2
+ for <wireguard@lists.zx2c4.com>; Mon, 07 Nov 2016 10:08:25 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CAKXLc7cZpjSjUG5X78c6qSGtyrL4g4nRojFug5KNutZD+nBPzA@mail.gmail.com>
-References: <CAKXLc7eZ3pPZ2WKtCGQGt2KtpBhZsJdD6jY0D_TBycUxN392Hw@mail.gmail.com>
- <CAHmME9p_mKFupsSLSTW-Tt7embNUTBYtRWudVrj9zFzvgbAzDg@mail.gmail.com>
- <CAKXLc7cZpjSjUG5X78c6qSGtyrL4g4nRojFug5KNutZD+nBPzA@mail.gmail.com>
+In-Reply-To: <20161104173723.GB34176@google.com>
+References: <CAHmME9ogYTGFaNDt1CD0FxEHxDzVhNX=AN3_PH3t=0zREGgYPA@mail.gmail.com>
+ <20161103004934.GA30775@gondor.apana.org.au>
+ <CAHmME9oL-pOWWXXFhJz1vSm5ftnSfmYrquGbH0acapgEL=c4Ew@mail.gmail.com>
+ <20161103.130852.1456848512897088071.davem@davemloft.net>
+ <CAHmME9pm4DHuBsE+hoFxnm1B5OWAZ+OyKXzeKDxHtisZpw4ebg@mail.gmail.com>
+ <20161104173723.GB34176@google.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 7 Nov 2016 14:43:48 +0100
-Message-ID: <CAHmME9pPERRJUsEXG0+KZD_GBA6PodK3=8OLXsDw-UMr9BjoTw@mail.gmail.com>
-To: Kalin KOZHUHAROV <me.kalin@gmail.com>
+Date: Mon, 7 Nov 2016 19:08:22 +0100
+Message-ID: <CAHmME9oejs+USiGJX2P0TgvnR6XRzV1HYZPrq=c-CjGzq59=NQ@mail.gmail.com>
+To: Eric Biggers <ebiggers@google.com>
 Content-Type: text/plain; charset=UTF-8
-Cc: kernel@gentoo.org, WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: [WireGuard] emerge failed once :-|
+Cc: Herbert Xu <herbert@gondor.apana.org.au>,
+ Martin Willi <martin@strongswan.org>, LKML <linux-kernel@vger.kernel.org>,
+ linux-crypto@vger.kernel.org, David Miller <davem@davemloft.net>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
+Subject: Re: [WireGuard] [PATCH] poly1305: generic C can be faster on chips
+ with slow unaligned access
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -30,8 +37,51 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
->> I could override this in the ebuild, which I guess I'll do.
+Hi Eric,
 
-https://gitweb.gentoo.org/repo/gentoo.git/commit/?id=70367ea5bdc56fc0ed9ce5f51d7f37459c874a79
+On Fri, Nov 4, 2016 at 6:37 PM, Eric Biggers <ebiggers@google.com> wrote:
+> I agree, and the current code is wrong; but do note that this proposal is
+> correct for poly1305_setrkey() but not for poly1305_setskey() and
+> poly1305_blocks().  In the latter two cases, 4-byte alignment of the source
+> buffer is *not* guaranteed.  Although crypto_poly1305_update() will be called
+> with a 4-byte aligned buffer due to the alignmask set on poly1305_alg, the
+> algorithm operates on 16-byte blocks and therefore has to buffer partial blocks.
+> If some number of bytes that is not 0 mod 4 is buffered, then the buffer will
+> fall out of alignment on the next update call.  Hence, get_unaligned_le32() is
+> actually needed on all the loads, since the buffer will, in general, be of
+> unknown alignment.
 
-Voila.
+Hmm... The general data flow that strikes me as most pertinent is
+something like:
+
+struct sk_buff *skb = get_it_from_somewhere();
+skb = skb_share_check(skb, GFP_ATOMIC);
+num_frags = skb_cow_data(skb, ..., ...);
+struct scatterlist sg[num_frags];
+sg_init_table(sg, num_frags);
+skb_to_sgvec(skb, sg, ..., ...);
+blkcipher_walk_init(&walk, sg, sg, len);
+blkcipher_walk_virt_block(&desc, &walk, BLOCK_SIZE);
+while (walk.nbytes >= BLOCK_SIZE) {
+    size_t chunk_len = rounddown(walk.nbytes, BLOCK_SIZE);
+    poly1305_update(&poly1305_state, walk.src.virt.addr, chunk_len);
+    blkcipher_walk_done(&desc, &walk, walk.nbytes % BLOCK_SIZE);
+}
+if (walk.nbytes) {
+    poly1305_update(&poly1305_state, walk.src.virt.addr, walk.nbytes);
+    blkcipher_walk_done(&desc, &walk, 0);
+}
+
+Is your suggestion that that in the final if block, walk.src.virt.addr
+might be unaligned? Like in the case of the last fragment being 67
+bytes long?
+
+If so, what a hassle. I hope the performance overhead isn't too
+awful... I'll resubmit taking into account your suggestions.
+
+By the way -- offlist benchmarks sent to me concluded that using the
+unaligned load helpers like David suggested is just as fast as that
+handrolled bit magic in the v1.
+
+Regards,
+Jason
