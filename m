@@ -1,23 +1,23 @@
 Return-Path: Jason@zx2c4.com
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f629d1b7
- for <wireguard@lists.zx2c4.com>; Mon, 7 Nov 2016 10:25:03 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 79e00dd5
- for <wireguard@lists.zx2c4.com>; Mon, 7 Nov 2016 10:25:03 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 19887ffd
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 48620f5b
+ for <wireguard@lists.zx2c4.com>; Mon, 7 Nov 2016 10:28:31 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1800009d
+ for <wireguard@lists.zx2c4.com>; Mon, 7 Nov 2016 10:28:31 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 3cb995d8
  (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 7 Nov 2016 10:25:03 +0000 (UTC)
-Received: by mail-lf0-f45.google.com with SMTP id t196so109721870lff.3
- for <wireguard@lists.zx2c4.com>; Mon, 07 Nov 2016 02:26:45 -0800 (PST)
+ for <wireguard@lists.zx2c4.com>; Mon, 7 Nov 2016 10:28:31 +0000 (UTC)
+Received: by mail-lf0-f54.google.com with SMTP id o141so37458134lff.1
+ for <wireguard@lists.zx2c4.com>; Mon, 07 Nov 2016 02:30:13 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <7365258.20161107095446@vodka.home.kg>
+In-Reply-To: <1522436030.20161107130256@vodka.home.kg>
 References: <25241985.20161106100258@vodka.home.kg>
  <1289478110.20161106110707@vodka.home.kg>
  <CAHmME9rjEeuodHMM4Quo1NVXT2A2DYUj=3FPgep-f4hNXeCh5g@mail.gmail.com>
- <7365258.20161107095446@vodka.home.kg>
+ <1522436030.20161107130256@vodka.home.kg>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 7 Nov 2016 11:26:43 +0100
-Message-ID: <CAHmME9rm1dYZGsOZ1bfZnzZt2LXohgM=7oFmLrH6=faJPJd8cQ@mail.gmail.com>
+Date: Mon, 7 Nov 2016 11:30:11 +0100
+Message-ID: <CAHmME9r4PirMW2ASZSdxrHkJu2bMbbNGbR7ba+DpA1_JeN+Dug@mail.gmail.com>
 To: k@vodka.home.kg
 Content-Type: text/plain; charset=UTF-8
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
@@ -33,24 +33,24 @@ List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
 
 Hey k,
 
-Excellent work!
+> So , guys, I found where shit lies !
+> Crash happens only when l2tp is involved.
+> I reproduced crash in the following scenario :
+>
+> Windows ETH -> ETH Dlink ETH L2TP WG -> WG L2TP ETH Ubuntu
 
-My MIPS VM is still alive. :)
+Brilliant!
 
-On Mon, Nov 7, 2016 at 7:54 AM,  <k@vodka.home.kg> wrote:
-> After 10 hours of testing it crashed but another way.
-> I did mistake. It did not shutdown arm<>mips connection. It was almost
-> idle but still on.
+Are you able to trigger this with ordinary iperf? Or just CIFS?
 
-Do you mean to indicate that this crash is the result of the same
-issue as before? Or of a different one?
+Are you able to trigger this with just host-host l2tp, or do you need
+to be forwarding packets?
 
-> <4>[56173.377275] Unhandled kernel unaligned access[#1]:
-> <4>[56173.377970] [<80241948>] add_interrupt_randomness+0xa8/0x208
+Can you reproduce this on an x86 kernel running KASAN and the various
+debug options in:
+https://git.zx2c4.com/WireGuard/tree/src/tests/qemu/debug.config
 
-Either memory corruption resulted in add_interrupt_randomness getting
-a bad pointer from irq_randomness, which was unaligned, or there's
-more sinister misgivings in Linux itself... Let's just assume the
-former, rather than the latter.
+Thanks for triaging this so far. It's coming along well...
 
+Talk soon,
 Jason
