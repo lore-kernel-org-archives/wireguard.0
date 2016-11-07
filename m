@@ -1,21 +1,21 @@
 Return-Path: Jason@zx2c4.com
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a8334dab
- for <wireguard@lists.zx2c4.com>; Sun, 6 Nov 2016 12:21:14 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c099e833
- for <wireguard@lists.zx2c4.com>; Sun, 6 Nov 2016 12:21:13 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 06201888
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7643aa9b
+ for <wireguard@lists.zx2c4.com>; Mon, 7 Nov 2016 02:04:24 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 95079c60
+ for <wireguard@lists.zx2c4.com>; Mon, 7 Nov 2016 02:04:24 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id b7429db7
  (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>; Sun, 6 Nov 2016 12:21:12 +0000 (UTC)
-Received: by mail-lf0-f46.google.com with SMTP id t196so94662703lff.3
- for <wireguard@lists.zx2c4.com>; Sun, 06 Nov 2016 04:22:48 -0800 (PST)
+ for <wireguard@lists.zx2c4.com>; Mon, 7 Nov 2016 02:04:24 +0000 (UTC)
+Received: by mail-lf0-f46.google.com with SMTP id o141so30308245lff.1
+ for <wireguard@lists.zx2c4.com>; Sun, 06 Nov 2016 18:06:04 -0800 (PST)
 MIME-Version: 1.0
 In-Reply-To: <1289478110.20161106110707@vodka.home.kg>
 References: <25241985.20161106100258@vodka.home.kg>
  <1289478110.20161106110707@vodka.home.kg>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sun, 6 Nov 2016 13:22:46 +0100
-Message-ID: <CAHmME9ov5HKEJuA2_oXgmgWKmYQJBdF7tx18hKa-Czpxyt3gFw@mail.gmail.com>
+Date: Mon, 7 Nov 2016 03:06:02 +0100
+Message-ID: <CAHmME9rjEeuodHMM4Quo1NVXT2A2DYUj=3FPgep-f4hNXeCh5g@mail.gmail.com>
 To: k@vodka.home.kg
 Content-Type: text/plain; charset=UTF-8
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
@@ -29,12 +29,8 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Sun, Nov 6, 2016 at 9:07 AM,  <k@vodka.home.kg> wrote:
->> <4>[13905.634933] Process  (pid: 41189632, threadinfo=82bca000, task=810000ce, tls=8100cea5)
->
->> Likely caused by memory corruption.
->
-> Look  at  pid  value.  Its defenitly not valid pid. Task structure was
-> corrupted.
-
-Indeed. In hex, the bottom part is 0x8100, which is an address...
+Not a lot of participation from the LEDE package maintainer, so I just
+ordered a TL-WR841N for =E2=82=AC10, which should arrive on Tuesday, and th=
+en
+I'll try to reproduce on actual hardware, and in general keep things
+rolling well on this platform.
