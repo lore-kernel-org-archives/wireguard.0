@@ -1,15 +1,23 @@
-Return-Path: tglx@linutronix.de
-Received: from Galois.linutronix.de (Galois.linutronix.de [146.0.238.70])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f5b85bda
- for <wireguard@lists.zx2c4.com>; Wed, 9 Nov 2016 21:41:00 +0000 (UTC)
-Date: Wed, 9 Nov 2016 22:40:24 +0100 (CET)
-From: Thomas Gleixner <tglx@linutronix.de>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-In-Reply-To: <CAHmME9oSUcAXVMhpLt0bqa9DKHE8rd3u+3JDb_wgviZnOpP7JA@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1611092227200.3501@nanos>
-References: <CAHmME9oSUcAXVMhpLt0bqa9DKHE8rd3u+3JDb_wgviZnOpP7JA@mail.gmail.com>
+Return-Path: Jason@zx2c4.com
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b9a2a97a
+ for <wireguard@lists.zx2c4.com>; Wed, 9 Nov 2016 23:32:56 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 68c49ccc
+ for <wireguard@lists.zx2c4.com>; Wed, 9 Nov 2016 23:32:56 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 2a0c4db0
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>; Wed, 9 Nov 2016 23:32:55 +0000 (UTC)
+Received: by mail-lf0-f41.google.com with SMTP id c13so176509081lfg.0
+ for <wireguard@lists.zx2c4.com>; Wed, 09 Nov 2016 15:34:56 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+In-Reply-To: <alpine.DEB.2.20.1611092227200.3501@nanos>
+References: <CAHmME9oSUcAXVMhpLt0bqa9DKHE8rd3u+3JDb_wgviZnOpP7JA@mail.gmail.com>
+ <alpine.DEB.2.20.1611092227200.3501@nanos>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 10 Nov 2016 00:34:54 +0100
+Message-ID: <CAHmME9pGoRogjHSSy-G-sB4-cHMGcjCeW9PSrNw1h5FsKzfWAw@mail.gmail.com>
+To: Thomas Gleixner <tglx@linutronix.de>
+Content-Type: text/plain; charset=UTF-8
 Cc: linux-mips@linux-mips.org, LKML <linux-kernel@vger.kernel.org>,
  WireGuard mailing list <wireguard@lists.zx2c4.com>, linux-mm@kvack.org
 Subject: Re: [WireGuard] Proposal: HAVE_SEPARATE_IRQ_STACK?
@@ -22,34 +30,27 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Wed, 9 Nov 2016, Jason A. Donenfeld wrote:
-> But for the remaining platforms, such as MIPS, this is still a
-> problem. In an effort to work around this in my code, rather than
-> having to invoke kmalloc for what should be stack-based variables, I
-> was thinking I'd just disable preemption for those functions that use
-> a lot of stack, so that stack-hungry softirq handlers don't crush it.
-> This is generally unsatisfactory, so I don't want to do this
-> unconditionally. Instead, I'd like to do some cludge such as:
-> 
->     #ifndef CONFIG_HAVE_SEPARATE_IRQ_STACK
->     preempt_disable();
+Hey Thomas,
 
-That preempt_disable() prevents merily preemption as the name says, but it
-wont prevent softirq handlers from running on return from interrupt. So
-what's the point?
+On Wed, Nov 9, 2016 at 10:40 PM, Thomas Gleixner <tglx@linutronix.de> wrote:
+> That preempt_disable() prevents merily preemption as the name says, but it
+> wont prevent softirq handlers from running on return from interrupt. So
+> what's the point?
 
-> However, for this to work, I actual need that config variable. Would
-> you accept a patch that adds this config variable to the relavent
-> platforms?
+Oh, interesting. Okay, then in that case the proposed define wouldn't
+be useful for my purposes. What clever tricks do I have at my
+disposal, then?
 
-It might have been a good idea, to cc all relevant arch maintainers on
-that ...
+>> If not, do you have a better solution for me (which doesn't
+>> involve using kmalloc or choosing a different crypto primitive)?
+>
+> What's wrong with using kmalloc?
 
-> If not, do you have a better solution for me (which doesn't
-> involve using kmalloc or choosing a different crypto primitive)?
+It's cumbersome and potentially slow. This is crypto code, where speed
+matters a lot. Avoiding allocations is usually the lowest hanging
+fruit among optimizations. To give you some idea, here's a somewhat
+horrible solution using kmalloc I hacked together: [1]. I'm not to
+happy with what it looks like, code-wise, and there's around a 16%
+slowdown, which isn't nice either.
 
-What's wrong with using kmalloc?
-
-Thanks,
-
-	tglx
+[1] https://git.zx2c4.com/WireGuard/commit/?h=jd/curve25519-kmalloc
