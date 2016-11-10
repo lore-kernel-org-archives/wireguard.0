@@ -1,25 +1,21 @@
-Return-Path: Jason@zx2c4.com
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b9a2a97a
- for <wireguard@lists.zx2c4.com>; Wed, 9 Nov 2016 23:32:56 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 68c49ccc
- for <wireguard@lists.zx2c4.com>; Wed, 9 Nov 2016 23:32:56 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 2a0c4db0
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 9 Nov 2016 23:32:55 +0000 (UTC)
-Received: by mail-lf0-f41.google.com with SMTP id c13so176509081lfg.0
- for <wireguard@lists.zx2c4.com>; Wed, 09 Nov 2016 15:34:56 -0800 (PST)
+Return-Path: David.Daney@cavium.com
+Received: from NAM02-SN1-obe.outbound.protection.outlook.com
+ (mail-sn1nam02on0074.outbound.protection.outlook.com [104.47.36.74])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dbf11578
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 10 Nov 2016 00:15:42 +0000 (UTC)
+Message-ID: <5823BCA3.2020202@caviumnetworks.com>
+Date: Wed, 9 Nov 2016 16:17:39 -0800
+From: David Daney <ddaney@caviumnetworks.com>
 MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.20.1611092227200.3501@nanos>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
 References: <CAHmME9oSUcAXVMhpLt0bqa9DKHE8rd3u+3JDb_wgviZnOpP7JA@mail.gmail.com>
- <alpine.DEB.2.20.1611092227200.3501@nanos>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 10 Nov 2016 00:34:54 +0100
-Message-ID: <CAHmME9pGoRogjHSSy-G-sB4-cHMGcjCeW9PSrNw1h5FsKzfWAw@mail.gmail.com>
-To: Thomas Gleixner <tglx@linutronix.de>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <CAHmME9oSUcAXVMhpLt0bqa9DKHE8rd3u+3JDb_wgviZnOpP7JA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Return-Path: ddaney@caviumnetworks.com
 Cc: linux-mips@linux-mips.org, LKML <linux-kernel@vger.kernel.org>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>, linux-mm@kvack.org
+ linux-mm@kvack.org, Thomas Gleixner <tglx@linutronix.de>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
 Subject: Re: [WireGuard] Proposal: HAVE_SEPARATE_IRQ_STACK?
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
@@ -30,27 +26,64 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hey Thomas,
-
-On Wed, Nov 9, 2016 at 10:40 PM, Thomas Gleixner <tglx@linutronix.de> wrote:
-> That preempt_disable() prevents merily preemption as the name says, but it
-> wont prevent softirq handlers from running on return from interrupt. So
-> what's the point?
-
-Oh, interesting. Okay, then in that case the proposed define wouldn't
-be useful for my purposes. What clever tricks do I have at my
-disposal, then?
-
->> If not, do you have a better solution for me (which doesn't
->> involve using kmalloc or choosing a different crypto primitive)?
+On 11/09/2016 01:27 PM, Jason A. Donenfeld wrote:
+> Hi folks,
 >
-> What's wrong with using kmalloc?
+> I do some ECC crypto in a kthread. A fast 32bit implementation usually
+> uses around 2k - 3k bytes of stack. Since kernel threads get 8k, I
+> figured this would be okay. And for the most part, it is. However,
+> everything falls apart on architectures like MIPS, which do not use a
+> separate irq stack.
 
-It's cumbersome and potentially slow. This is crypto code, where speed
-matters a lot. Avoiding allocations is usually the lowest hanging
-fruit among optimizations. To give you some idea, here's a somewhat
-horrible solution using kmalloc I hacked together: [1]. I'm not to
-happy with what it looks like, code-wise, and there's around a 16%
-slowdown, which isn't nice either.
+Easiest thing to do would be to select 16K page size in your .config, I 
+think that will give you a similar sized stack.
 
-[1] https://git.zx2c4.com/WireGuard/commit/?h=jd/curve25519-kmalloc
+>
+>>From what I can tell, on MIPS, the irq handler uses whichever stack
+> was in current at the time of interruption. At the end of the irq
+> handler, softirqs trigger if preemption hasn't been disabled. When the
+> softirq handler runs, it will still use the same interrupted stack. So
+> let's take some pathological case of huge softirq stack usage: wifi
+> driver inside of l2tp inside of gre inside of ppp. Now, my ECC crypto
+> is humming along happily in its kthread, when all of the sudden, a
+> wifi packet arrives, triggering the interrupt. Or, perhaps instead,
+> TCP sends an ack packet on softirq, using my kthread's stack. The
+> interrupt is serviced, and at the end of it, softirq is serviced,
+> using my kthread's stack, which was already half full. When this
+> softirq is serviced, it goes through our 4 layers of network device
+> drivers. Since we started with a half full stack, we very quickly blow
+> it up, and everything explodes, and users write angry mailing list
+> posts.
+>
+> It seems to me x86, ARM, SPARC, SH, ParisC, PPC, Metag, and UML all
+> concluded that letting the interrupt handler use current's stack was a
+> terrible idea, and instead have a per-cpu irq stack that gets used
+> when the handler is service. Whew!
+>
+> But for the remaining platforms, such as MIPS, this is still a
+> problem. In an effort to work around this in my code, rather than
+> having to invoke kmalloc for what should be stack-based variables, I
+> was thinking I'd just disable preemption for those functions that use
+> a lot of stack, so that stack-hungry softirq handlers don't crush it.
+> This is generally unsatisfactory, so I don't want to do this
+> unconditionally. Instead, I'd like to do some cludge such as:
+>
+>      #ifndef CONFIG_HAVE_SEPARATE_IRQ_STACK
+>      preempt_disable();
+>      #endif
+>
+>      some_func_that_uses_lots_of_stack();
+>
+>      #ifndef CONFIG_HAVE_SEPARATE_IRQ_STACK
+>      preempt_enable();
+>      #endif
+>
+> However, for this to work, I actual need that config variable. Would
+> you accept a patch that adds this config variable to the relavent
+> platforms? If not, do you have a better solution for me (which doesn't
+> involve using kmalloc or choosing a different crypto primitive)?
+>
+> Thanks,
+> Jason
+>
+>
