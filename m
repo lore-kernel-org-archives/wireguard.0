@@ -1,23 +1,33 @@
-Return-Path: Matt.Redfearn@imgtec.com
-Received: from mailapp01.imgtec.com (mailapp01.imgtec.com [195.59.15.196])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2ff40974
+Return-Path: Jason@zx2c4.com
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3f625368
  for <wireguard@lists.zx2c4.com>;
- Thu, 10 Nov 2016 16:34:06 +0000 (UTC)
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>, Thomas Gleixner
- <tglx@linutronix.de>
+ Thu, 10 Nov 2016 17:35:07 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d4fcab8e
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 10 Nov 2016 17:35:07 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 9513547b
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 10 Nov 2016 17:35:06 +0000 (UTC)
+Received: by mail-lf0-f48.google.com with SMTP id t196so196158273lff.3
+ for <wireguard@lists.zx2c4.com>; Thu, 10 Nov 2016 09:37:13 -0800 (PST)
+MIME-Version: 1.0
+In-Reply-To: <db056fb5-82b3-c17e-46ce-263872ef7334@imgtec.com>
 References: <CAHmME9oSUcAXVMhpLt0bqa9DKHE8rd3u+3JDb_wgviZnOpP7JA@mail.gmail.com>
  <alpine.DEB.2.20.1611092227200.3501@nanos>
  <CAHmME9pGoRogjHSSy-G-sB4-cHMGcjCeW9PSrNw1h5FsKzfWAw@mail.gmail.com>
  <alpine.DEB.2.20.1611100959040.3501@nanos>
  <CAHmME9pHYA82M3iDNfDtDE96gFaZORSsEAn_KnePd3rhFioqHQ@mail.gmail.com>
-From: Matt Redfearn <matt.redfearn@imgtec.com>
-Message-ID: <db056fb5-82b3-c17e-46ce-263872ef7334@imgtec.com>
-Date: Thu, 10 Nov 2016 16:36:10 +0000
-MIME-Version: 1.0
-In-Reply-To: <CAHmME9pHYA82M3iDNfDtDE96gFaZORSsEAn_KnePd3rhFioqHQ@mail.gmail.com>
-Content-Type: text/plain; charset="utf-8"; format=flowed
+ <db056fb5-82b3-c17e-46ce-263872ef7334@imgtec.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 10 Nov 2016 18:37:10 +0100
+Message-ID: <CAHmME9ooeH2Qdu3zVS-_i_9_3AR0bDrEe_8+D3FS7E7NvMLG-Q@mail.gmail.com>
+To: Matt Redfearn <matt.redfearn@imgtec.com>
+Content-Type: text/plain; charset=UTF-8
 Cc: linux-mips@linux-mips.org, LKML <linux-kernel@vger.kernel.org>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>, linux-mm@kvack.org
+ linux-mm@kvack.org, Thomas Gleixner <tglx@linutronix.de>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
 Subject: Re: [WireGuard] Proposal: HAVE_SEPARATE_IRQ_STACK?
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
@@ -28,41 +38,14 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Jason,
+Hi Matt,
 
-
-On 10/11/16 11:41, Jason A. Donenfeld wrote:
-> On Thu, Nov 10, 2016 at 10:03 AM, Thomas Gleixner <tglx@linutronix.de> wrote:
->> If you want to go with that config, then you need
->> local_bh_disable()/enable() to fend softirqs off, which disables also
->> preemption.
-> Thanks. Indeed this is what I want.
+On Thu, Nov 10, 2016 at 5:36 PM, Matt Redfearn <matt.redfearn@imgtec.com> wrote:
 >
->>> What clever tricks do I have at my disposal, then?
->> Make MIPS use interrupt stacks.
-> Yea, maybe I'll just implement this. It clearly is the most correct solution.
-> @MIPS maintainers: would you merge something like this if done well?
-> Are there reasons other than man-power why it isn't currently that
-> way?
+> I don't see a reason not to do this - I'm taking a look into it.
 
-I don't see a reason not to do this - I'm taking a look into it.
+Great thanks! This is good to hear. If you go into the arch/ directory
+and simply grep for "irq_stack", you can pretty easily base your
+implementation on a variety of other architectures' implementations.
 
-Thanks,
-Matt
-
->> Does the slowdown come from the kmalloc overhead or mostly from the less
->> efficient code?
->>
->> If it's mainly kmalloc, then you can preallocate the buffer once for the
->> kthread you're running in and be done with it. If it's the code, then bad
->> luck.
-> I fear both. GCC can optimize stack variables in ways that it cannot
-> optimize various memory reads and writes.
->
-> Strangely, the solution that appeals to me most at the moment is to
-> kmalloc (or vmalloc?) a new stack, copy over thread_info, and fiddle
-> with the stack registers. I don't see any APIs, however, for a
-> platform independent way of doing this. And maybe this is a horrible
-> idea. But at least it'd allow me to keep my stack-based code the
-> same...
->
+Jason
