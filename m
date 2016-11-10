@@ -1,14 +1,16 @@
 Return-Path: Jason@zx2c4.com
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5a0f0076
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1b63fb9b
  for <wireguard@lists.zx2c4.com>;
- Thu, 10 Nov 2016 03:05:54 +0000 (UTC)
+ Thu, 10 Nov 2016 03:06:18 +0000 (UTC)
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
 To: openwrt@bitsofnetworks.org, lede-dev@lists.infradead.org,
  wireguard@lists.zx2c4.com
-Date: Thu, 10 Nov 2016 04:07:44 +0100
-Message-Id: <20161110030744.6402-1-Jason@zx2c4.com>
-Subject: [WireGuard] [PATCH] kernel: expose configuration for padata
+Date: Thu, 10 Nov 2016 04:08:15 +0100
+Message-Id: <20161110030815.6531-1-Jason@zx2c4.com>
+In-Reply-To: <20161110030744.6402-1-Jason@zx2c4.com>
+References: <20161110030744.6402-1-Jason@zx2c4.com>
+Subject: [WireGuard] [PATCH] wireguard: select parallel encryption engine
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -18,31 +20,27 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-The padata API is a powerful framework for doing parallel jobs inside
-the kernel, on which various modules in the package feed can depend,
-such as WireGuard. There is no item text, so that it does not show up
-in menuconfig, as this is only supposed to be an option selected as a
-dependency. There as already precedent for this behavior, with
-CONFIG_KERNEL_RELAY, on which several packages depend.
+On non SMP systems, this doesn't wind up doing anything or adding any
+code at all. On SMP systems, this adds a little bit of code, and makes
+encryption use all cores.
 
 Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
 ---
- config/Config-kernel.in | 3 +++
- 1 file changed, 3 insertions(+)
+ net/wireguard/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/config/Config-kernel.in b/config/Config-kernel.in
-index d8ca76c..9aca2a0 100644
---- a/config/Config-kernel.in
-+++ b/config/Config-kernel.in
-@@ -224,6 +224,9 @@ config KERNEL_PROC_PAGE_MONITOR
- config KERNEL_RELAY
- 	bool
- 
-+config KERNEL_CRYPTO_PCRYPT
-+	bool
-+
- config KERNEL_KEXEC
- 	bool "Enable kexec support"
- 
+diff --git a/net/wireguard/Makefile b/net/wireguard/Makefile
+index 7387673..c5c014c 100644
+--- a/net/wireguard/Makefile
++++ b/net/wireguard/Makefile
+@@ -89,7 +89,7 @@ define KernelPackage/wireguard
+   CATEGORY:=Kernel modules
+   SUBMENU:=Network Support
+   TITLE:=Wireguard kernel module
+-  DEPENDS:=@IPV6 +kmod-udptunnel4 +kmod-udptunnel6 +kmod-ipt-hashlimit
++  DEPENDS:=@IPV6 +@KERNEL_CRYPTO_PCRYPT +kmod-udptunnel4 +kmod-udptunnel6 +kmod-ipt-hashlimit
+   FILES:= $(PKG_BUILD_DIR)/src/wireguard.$(LINUX_KMOD_SUFFIX)
+   AUTOLOAD:=$(call AutoLoad,33,wireguard)
+ endef
 -- 
 2.10.2
