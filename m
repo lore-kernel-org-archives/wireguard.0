@@ -1,23 +1,29 @@
-Return-Path: dsa@cumulusnetworks.com
-Received: from mail-it0-f50.google.com (mail-it0-f50.google.com
- [209.85.214.50])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 26e62cf8
+Return-Path: Jason@zx2c4.com
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 690d481e
  for <wireguard@lists.zx2c4.com>;
- Sat, 12 Nov 2016 18:11:53 +0000 (UTC)
-Received: by mail-it0-f50.google.com with SMTP id q124so36383109itd.1
- for <wireguard@lists.zx2c4.com>; Sat, 12 Nov 2016 10:14:15 -0800 (PST)
-Return-Path: <dsa@cumulusnetworks.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+ Sat, 12 Nov 2016 19:06:07 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id efc443ec
+ for <wireguard@lists.zx2c4.com>;
+ Sat, 12 Nov 2016 19:06:06 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id ce1f3a48
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Sat, 12 Nov 2016 19:06:04 +0000 (UTC)
+Received: by mail-lf0-f51.google.com with SMTP id c13so33448117lfg.0
+ for <wireguard@lists.zx2c4.com>; Sat, 12 Nov 2016 11:08:26 -0800 (PST)
+MIME-Version: 1.0
+In-Reply-To: <0dbf5deb-bffb-4878-a268-1adb17c47676@cumulusnetworks.com>
 References: <CAHmME9qi7_C7c=wsZg=EwBg3jzFzVmW1eiFGGXgcX8fCcOOZcA@mail.gmail.com>
  <31e050e2-0499-a77e-f698-86e58ad2fa6b@cumulusnetworks.com>
  <CAHmME9o_AM1Lms6CJSpbjfAgcyGuRx8yqwSaNWEbSnY7gGnt6w@mail.gmail.com>
  <CAHmME9oeAuBQJguTFivYsYw4fMoc4+sgxcdS4MArN474m7NjTQ@mail.gmail.com>
-From: David Ahern <dsa@cumulusnetworks.com>
-Message-ID: <0dbf5deb-bffb-4878-a268-1adb17c47676@cumulusnetworks.com>
-Date: Sat, 12 Nov 2016 11:14:01 -0700
-MIME-Version: 1.0
-In-Reply-To: <CAHmME9oeAuBQJguTFivYsYw4fMoc4+sgxcdS4MArN474m7NjTQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
+ <0dbf5deb-bffb-4878-a268-1adb17c47676@cumulusnetworks.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Sat, 12 Nov 2016 20:08:24 +0100
+Message-ID: <CAHmME9owJNvMfF9jHGW7i_jPMaxwPhxQE5W6cxjw14nL0HK0eQ@mail.gmail.com>
+To: David Ahern <dsa@cumulusnetworks.com>
+Content-Type: text/plain; charset=UTF-8
 Cc: Netdev <netdev@vger.kernel.org>,
  Hannes Frederic Sowa <hannes@stressinduktion.org>,
  LKML <linux-kernel@vger.kernel.org>,
@@ -33,73 +39,33 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On 11/12/16 8:40 AM, Jason A. Donenfeld wrote:
-> Hi again,
-> 
-> I've done some pretty in depth debugging now to determine exactly what
-> the behavior of ipv6_stub->ipv6_dst_lookup is. First I'll start with
-> ip_route_output_flow, which I believe to be well behaved, and then
-> I'll show ipv6_stub->ipv6_dst_lookup, which seems ill-behaved:
-> 
-> Userspace:
->     ip addr add 192.168.1.2/24 dev eth0
-> Kernelspace:
->     struct flowi4 fl = {
->        .saddr = 192.168.1.2,
->        .daddr = 192.168.1.99,
->     };
->     rt = ip_route_output_flow(sock_net(sock), &fl, sock);
->     // rt returns valid rt for routing to 192.168.1.99 from
-> 192.168.1.2 using eth0
-> Userspace:
->     ip addr add 192.168.1.3/24 dev eth0
->     ip addr del 192.168.1.2/24 dev eth0
-> Kernelspace:
->     struct flowi4 fl = {
->        .saddr = 192.168.1.2,
->        .daddr = 192.168.1.99,
->     };
->     rt = ip_route_output_flow(sock_net(sock), &fl, sock);
->     // PTR_ERR(rt) == -EINVAL
+Hi David,
 
-I believe that is coming from __ip_route_output_key_hash(), line 2232 with __ip_dev_find not finding a device with that address. 
+On Sat, Nov 12, 2016 at 7:14 PM, David Ahern <dsa@cumulusnetworks.com> wrote:
+> I believe that is coming from __ip_route_output_key_hash(), line 2232 with __ip_dev_find not finding a device with that address.
 
-Not applicable for your use case, but __ip_dev_find does not have any checks on which L3 domain the device belongs to so the check does not handle VRF for example. I'll take a look at fixing this next week.
+It's possible we simply are looking at different source trees, but I
+have the -EINVAL return in 4.8 route.c sources happening due to the
+assignment on line 2175 and the jump on line 2220.
 
-> 
-> This seems correct behavior to me, since no interface has 192.168.1.2
-> as a source address.
-> 
-> Now for the incorrect IPv6 behavior:
-> 
-> Userspace:
->     ip -6 addr add abcd::2/96 dev eth0
-> Kernelspace:
->     struct flowi6 fl = {
->        .saddr = abcd::2,
->        .daddr = abcd::99,
->     };
->     ret = ipv6_stub->ipv6_dst_lookup(sock_net(sock), sock, &dst, &fl);
->     // ret is 0, and dst is a non-null dst routing to abcd::99 from
-> abcd::2 using eth0
-> Userspace:
->     ip -6 addr add abcd::3/96 dev eth0
->     ip -6 addr del abcd::2/96 dev eth0
-> Kernelspace:
->     struct flowi6 fl = {
->        .saddr = abcd::2,
->        .daddr = abcd::99,
->     };
->     ret = ipv6_stub->ipv6_dst_lookup(sock_net(sock), sock, &dst, &fl);
->     // ret is 0, and dst is a non-null dst routing to abcd::99 from
-> abcd::2 using eth0 **INCORRECT BEHAVIOR!**
-> 
-> This seems *INCORRECT* behavior to me, since no interface has abcd::2
-> as a source address.
+> Not applicable for your use case, but __ip_dev_find does not have any checks on which L3 domain the device belongs to so the check does not handle VRF for example. I'll take a look at fixing this next week.
 
-Gotcha. I don't see any checks that the saddr is valid similar to what IPv4 does.
+Interesting.
 
-I think the right place to add a check is in ip6_dst_lookup_tail():
-    if (!ipv6_addr_any(&fl6->saddr)) {
-        // saddr is valid for L3 domain
-    }
+>
+> Gotcha. I don't see any checks that the saddr is valid similar to what IPv4 does.
+>
+> I think the right place to add a check is in ip6_dst_lookup_tail():
+>     if (!ipv6_addr_any(&fl6->saddr)) {
+>         // saddr is valid for L3 domain
+>     }
+
+Right. It should probably do the check here, and return
+ERR_PTR(-EINVAL), the same as the v4 version, so that ret codes can be
+checked consistently.
+
+Thanks for looking into this. If you're backed up and would like me to
+submit a patch, just let me know, and I'll give it my best shot.
+
+Regards,
+Jason
