@@ -1,21 +1,27 @@
-Return-Path: dsa@cumulusnetworks.com
-Received: from mail-pf0-f180.google.com (mail-pf0-f180.google.com
- [209.85.192.180])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d8b111f4
+Return-Path: Jason@zx2c4.com
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 34431524
  for <wireguard@lists.zx2c4.com>;
- Fri, 11 Nov 2016 22:12:38 +0000 (UTC)
-Received: by mail-pf0-f180.google.com with SMTP id c4so1738847pfb.1
- for <wireguard@lists.zx2c4.com>; Fri, 11 Nov 2016 14:14:54 -0800 (PST)
-Return-Path: <dsa@cumulusnetworks.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>, Netdev <netdev@vger.kernel.org>
-References: <CAHmME9qi7_C7c=wsZg=EwBg3jzFzVmW1eiFGGXgcX8fCcOOZcA@mail.gmail.com>
-From: David Ahern <dsa@cumulusnetworks.com>
-Message-ID: <31e050e2-0499-a77e-f698-86e58ad2fa6b@cumulusnetworks.com>
-Date: Fri, 11 Nov 2016 15:14:52 -0700
+ Sat, 12 Nov 2016 02:16:18 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e94c0758
+ for <wireguard@lists.zx2c4.com>;
+ Sat, 12 Nov 2016 02:16:18 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id ee28b886
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Sat, 12 Nov 2016 02:16:17 +0000 (UTC)
+Received: by mail-lf0-f49.google.com with SMTP id o141so24236822lff.1
+ for <wireguard@lists.zx2c4.com>; Fri, 11 Nov 2016 18:18:34 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9qi7_C7c=wsZg=EwBg3jzFzVmW1eiFGGXgcX8fCcOOZcA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Cc: LKML <linux-kernel@vger.kernel.org>,
+In-Reply-To: <31e050e2-0499-a77e-f698-86e58ad2fa6b@cumulusnetworks.com>
+References: <CAHmME9qi7_C7c=wsZg=EwBg3jzFzVmW1eiFGGXgcX8fCcOOZcA@mail.gmail.com>
+ <31e050e2-0499-a77e-f698-86e58ad2fa6b@cumulusnetworks.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Sat, 12 Nov 2016 03:18:31 +0100
+Message-ID: <CAHmME9o_AM1Lms6CJSpbjfAgcyGuRx8yqwSaNWEbSnY7gGnt6w@mail.gmail.com>
+To: David Ahern <dsa@cumulusnetworks.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: Netdev <netdev@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
  WireGuard mailing list <wireguard@lists.zx2c4.com>
 Subject: Re: [WireGuard] Source address fib invalidation on IPv6
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
@@ -27,91 +33,18 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On 11/11/16 12:29 PM, Jason A. Donenfeld wrote:
-> Hi folks,
-> 
-> If I'm replying to a UDP packet, I generally want to use a source
-> address that's the same as the destination address of the packet to
-> which I'm replying. For example:
-> 
-> Peer A sends packet: src = 10.0.0.1,  dst = 10.0.0.3
-> Peer B replies with: src = 10.0.0.3, dst = 10.0.0.1
-> 
-> But let's complicate things. Let's say Peer B has multiple IPs on an
-> interface: 10.0.0.2, 10.0.0.3. The default route uses 10.0.0.2. In
-> this case what do you think should happen?
-> 
-> Case 1:
-> Peer A sends packet: src = 10.0.0.1,  dst = 10.0.0.3
-> Peer B replies with: src = 10.0.0.2, dst = 10.0.0.1
-> 
-> Case 2:
-> Peer A sends packet: src = 10.0.0.1,  dst = 10.0.0.3
-> Peer B replies with: src = 10.0.0.3, dst = 10.0.0.1
-> 
-> Intuition tells me the answer is "Case 2". If you agree, keep reading.
-> If you disagree, stop reading here, and instead correct my poor
-> intuition.
-> 
-> So, assuming "Case 2", when Peer B receives the first packet, he notes
-> that packet's destination address, so that he can use it as a source
-> address next. When replying, Peer B sets the stored source address and
-> calls the routing function:
-> 
->     struct flowi4 fl = {
->        .saddr = from_daddr_of_previous_packet,
->        .daddr = from_saddr_of_previous_packet,
->     };
->     rt = ip_route_output_flow(sock_net(sock), &fl, sock);
-> 
-> What if, however, by the time Peer B chooses to reply, his interface
-> no longer has that source address? No problem, because
-> ip_route_output_flow will return -EINVAL in that case. So, we can do
-> this:
-> 
->     struct flowi4 fl = {
->        .saddr = from_daddr_of_previous_packet,
->        .daddr = from_saddr_of_previous_packet,
->     };
->     rt = ip_route_output_flow(sock_net(sock), &fl, sock);
->     if (unlikely(IS_ERR(rt))) {
->         fl.saddr = 0;
->         rt = ip_route_output_flow(sock_net(sock), &fl, sock);
->     }
-> 
-> And then all is good in the neighborhood. This solution works. Done.
-> 
-> But what about IPv6? That's where we get into trouble:
-> 
->     struct flowi6 fl = {
->        .saddr = from_daddr_of_previous_packet,
->        .daddr = from_saddr_of_previous_packet,
->     };
->     ret = ipv6_stub->ipv6_dst_lookup(sock_net(sock), sock, &dst, &fl);
-> 
-> In this case, IPv6 returns a valid dst, when no interface has the
-> source address anymore! So, there's no way to know whether or not the
-> source address for replying has gone stale. We don't have a means of
-> falling back to inaddr_any for the source address.
+Hi David,
 
-What do you mean by 'valid dst'? ipv6 returns net->ipv6.ip6_null_entry on lookup failures so yes dst is non-NULL but that does not mean the lookup succeeded.
+On Fri, Nov 11, 2016 at 11:14 PM, David Ahern <dsa@cumulusnetworks.com> wrote:
+> What do you mean by 'valid dst'? ipv6 returns net->ipv6.ip6_null_entry on lookup failures so yes dst is non-NULL but that does not mean the lookup succeeded.
 
-For example take a look at ip6_dst_lookup_tail():
-        if (!*dst)
-                *dst = ip6_route_output_flags(net, sk, fl6, flags);
+What I mean is that it returns an ordinary dst, as if that souce
+address _hadn't_ been removed from the interface, even though I just
+removed it. Is this buggy behavior? If so, let me know and I'll try to
+track it down. The expected behavior, as far as I can see, would be
+the same that ip_route_output_flow has -- returning -EINVAL when the
+saddr isn't valid. At the moment, when the saddr is invalid,
+ipv6_stub->ipv6_dst_lookup returns 0 and &dst contains a real entry.
 
-        err = (*dst)->error;
-        if (err)
-                goto out_err_release;
-
-
-perhaps I should add dst->error to the fib tracepoints ...
-
-> 
-> Primary question: is this behavior a bug? Or is this some consequence
-> of a fundamental IPv6 difference with v4? Or is something else
-> happening here?
-> 
-> Thanks,
-> Jason
-> 
+Regards,
+Jason
