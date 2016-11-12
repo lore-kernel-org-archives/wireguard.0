@@ -1,29 +1,30 @@
 Return-Path: Jason@zx2c4.com
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a7b29223
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 32534097
  for <wireguard@lists.zx2c4.com>;
- Sat, 12 Nov 2016 14:34:42 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id db79e544
+ Sat, 12 Nov 2016 15:38:12 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 20aedc9e
  for <wireguard@lists.zx2c4.com>;
- Sat, 12 Nov 2016 14:34:42 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 6ba92ba5
+ Sat, 12 Nov 2016 15:38:12 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 8d9c0cca
  (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
  for <wireguard@lists.zx2c4.com>;
- Sat, 12 Nov 2016 14:34:41 +0000 (UTC)
-Received: by mail-lf0-f45.google.com with SMTP id o141so30807789lff.1
- for <wireguard@lists.zx2c4.com>; Sat, 12 Nov 2016 06:37:02 -0800 (PST)
+ Sat, 12 Nov 2016 15:38:11 +0000 (UTC)
+Received: by mail-lf0-f50.google.com with SMTP id t196so31483136lff.3
+ for <wireguard@lists.zx2c4.com>; Sat, 12 Nov 2016 07:40:32 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9p08K4M-+qvRO1kJiTScj66QDmFofu6d6nNK6eANTnYZA@mail.gmail.com>
-References: <CAHmME9qr1v2pt6Ct8gy8vmQ4=z_yDyQQim0SJCnXRYT0SHNQUw@mail.gmail.com>
- <20161111070445.GB10286@c3po>
- <CAHmME9p08K4M-+qvRO1kJiTScj66QDmFofu6d6nNK6eANTnYZA@mail.gmail.com>
+In-Reply-To: <CAHmME9o_AM1Lms6CJSpbjfAgcyGuRx8yqwSaNWEbSnY7gGnt6w@mail.gmail.com>
+References: <CAHmME9qi7_C7c=wsZg=EwBg3jzFzVmW1eiFGGXgcX8fCcOOZcA@mail.gmail.com>
+ <31e050e2-0499-a77e-f698-86e58ad2fa6b@cumulusnetworks.com>
+ <CAHmME9o_AM1Lms6CJSpbjfAgcyGuRx8yqwSaNWEbSnY7gGnt6w@mail.gmail.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sat, 12 Nov 2016 15:36:59 +0100
-Message-ID: <CAHmME9rdAOep+EUQDoK3nxBaM6VqrU99=v=LvrBhy5m46oOw6w@mail.gmail.com>
-To: n3ph <n3ph@terminal21.de>
+Date: Sat, 12 Nov 2016 16:40:29 +0100
+Message-ID: <CAHmME9oeAuBQJguTFivYsYw4fMoc4+sgxcdS4MArN474m7NjTQ@mail.gmail.com>
+To: David Ahern <dsa@cumulusnetworks.com>
 Content-Type: text/plain; charset=UTF-8
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: [WireGuard] OpenWRT/MIPS Improvements
+Cc: Netdev <netdev@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
+Subject: Re: [WireGuard] Source address fib invalidation on IPv6
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -33,19 +34,69 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hey folks,
+Hi again,
 
-Small update on the OOM issue. With LEDE devices that only have
-32megs, if you run iperf3 on the device itself, eventually iperf3 will
-use tons of memory in trying to use different sized buffers, that the
-device will OOM and kill init. However, if you use packet forwarding
-and put iperf3 on a different device -- more closely resembling the
-actual workload of a router -- there is no OOM, and memory usage stays
-stable overtime, indicating there isn't a memory leak or anything of
-that nature in WireGuard. So, I think at this point WireGuard is quite
-stable on LEDE.
+I've done some pretty in depth debugging now to determine exactly what
+the behavior of ipv6_stub->ipv6_dst_lookup is. First I'll start with
+ip_route_output_flow, which I believe to be well behaved, and then
+I'll show ipv6_stub->ipv6_dst_lookup, which seems ill-behaved:
 
-Looking forward to hearing your feedback on the matter.
+Userspace:
+    ip addr add 192.168.1.2/24 dev eth0
+Kernelspace:
+    struct flowi4 fl = {
+       .saddr = 192.168.1.2,
+       .daddr = 192.168.1.99,
+    };
+    rt = ip_route_output_flow(sock_net(sock), &fl, sock);
+    // rt returns valid rt for routing to 192.168.1.99 from
+192.168.1.2 using eth0
+Userspace:
+    ip addr add 192.168.1.3/24 dev eth0
+    ip addr del 192.168.1.2/24 dev eth0
+Kernelspace:
+    struct flowi4 fl = {
+       .saddr = 192.168.1.2,
+       .daddr = 192.168.1.99,
+    };
+    rt = ip_route_output_flow(sock_net(sock), &fl, sock);
+    // PTR_ERR(rt) == -EINVAL
+
+This seems correct behavior to me, since no interface has 192.168.1.2
+as a source address.
+
+Now for the incorrect IPv6 behavior:
+
+Userspace:
+    ip -6 addr add abcd::2/96 dev eth0
+Kernelspace:
+    struct flowi6 fl = {
+       .saddr = abcd::2,
+       .daddr = abcd::99,
+    };
+    ret = ipv6_stub->ipv6_dst_lookup(sock_net(sock), sock, &dst, &fl);
+    // ret is 0, and dst is a non-null dst routing to abcd::99 from
+abcd::2 using eth0
+Userspace:
+    ip -6 addr add abcd::3/96 dev eth0
+    ip -6 addr del abcd::2/96 dev eth0
+Kernelspace:
+    struct flowi6 fl = {
+       .saddr = abcd::2,
+       .daddr = abcd::99,
+    };
+    ret = ipv6_stub->ipv6_dst_lookup(sock_net(sock), sock, &dst, &fl);
+    // ret is 0, and dst is a non-null dst routing to abcd::99 from
+abcd::2 using eth0 **INCORRECT BEHAVIOR!**
+
+This seems *INCORRECT* behavior to me, since no interface has abcd::2
+as a source address.
+
+So, to summarize, the problem is that ipv6_dst_lookup will happily
+return a dst even though the source IP has been removed from the
+interface.
+
+I hope this clarifies things. I await your response.
 
 Regards,
 Jason
