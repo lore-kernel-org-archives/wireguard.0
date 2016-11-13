@@ -1,15 +1,18 @@
-Return-Path: hannes@stressinduktion.org
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
- [66.111.4.28])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 692a9933
+Return-Path: Jason@zx2c4.com
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cc3d2f48
  for <wireguard@lists.zx2c4.com>;
- Sun, 13 Nov 2016 00:48:48 +0000 (UTC)
-Message-Id: <1478998272.2299343.785875225.19237693@webmail.messagingengine.com>
-From: Hannes Frederic Sowa <hannes@stressinduktion.org>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
- David Ahern <dsa@cumulusnetworks.com>
+ Sun, 13 Nov 2016 00:49:01 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7c1173ff
+ for <wireguard@lists.zx2c4.com>;
+ Sun, 13 Nov 2016 00:49:00 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 2d0b4607
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Sun, 13 Nov 2016 00:48:59 +0000 (UTC)
+Received: by mail-lf0-f47.google.com with SMTP id b14so36035369lfg.2
+ for <wireguard@lists.zx2c4.com>; Sat, 12 Nov 2016 16:51:22 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
 In-Reply-To: <CAHmME9pMzcwjveOoa08-fVCnZTkaoMz8y9DEc7f6b-4PeWu4xQ@mail.gmail.com>
 References: <CAHmME9qi7_C7c=wsZg=EwBg3jzFzVmW1eiFGGXgcX8fCcOOZcA@mail.gmail.com>
  <31e050e2-0499-a77e-f698-86e58ad2fa6b@cumulusnetworks.com>
@@ -18,8 +21,14 @@ References: <CAHmME9qi7_C7c=wsZg=EwBg3jzFzVmW1eiFGGXgcX8fCcOOZcA@mail.gmail.com>
  <0dbf5deb-bffb-4878-a268-1adb17c47676@cumulusnetworks.com>
  <CAHmME9owJNvMfF9jHGW7i_jPMaxwPhxQE5W6cxjw14nL0HK0eQ@mail.gmail.com>
  <CAHmME9pMzcwjveOoa08-fVCnZTkaoMz8y9DEc7f6b-4PeWu4xQ@mail.gmail.com>
-Date: Sun, 13 Nov 2016 01:51:12 +0100
-Cc: Netdev <netdev@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Sun, 13 Nov 2016 01:51:20 +0100
+Message-ID: <CAHmME9qpWCBCHfmjDOL1-7=FJPiqhzh=vg+5dh-hvbbAXnskNQ@mail.gmail.com>
+To: David Ahern <dsa@cumulusnetworks.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: Netdev <netdev@vger.kernel.org>,
+ Hannes Frederic Sowa <hannes@stressinduktion.org>,
+ LKML <linux-kernel@vger.kernel.org>,
  WireGuard mailing list <wireguard@lists.zx2c4.com>,
  YOSHIFUJI Hideaki <hideaki.yoshifuji@miraclelinux.com>
 Subject: Re: [WireGuard] Source address fib invalidation on IPv6
@@ -32,29 +41,51 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Sun, Nov 13, 2016, at 01:43, Jason A. Donenfeld wrote:
-> On Sat, Nov 12, 2016 at 8:08 PM, Jason A. Donenfeld <Jason@zx2c4.com>
-> wrote:
-> >> Gotcha. I don't see any checks that the saddr is valid similar to what IPv4 does.
-> >>
-> >> I think the right place to add a check is in ip6_dst_lookup_tail():
-> >>     if (!ipv6_addr_any(&fl6->saddr)) {
-> >>         // saddr is valid for L3 domain
-> >>     }
-> >
-> > Right. It should probably do the check here, and return
-> > ERR_PTR(-EINVAL), the same as the v4 version, so that ret codes can be
-> > checked consistently.
-> >
-> > Thanks for looking into this. If you're backed up and would like me to
-> > submit a patch, just let me know, and I'll give it my best shot.
-> 
+On Sun, Nov 13, 2016 at 1:43 AM, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
 > In perusing through the v6 FIB code, I don't even see an analog of
 > __ip_dev_find... Hm?
 
-You probably need some combination of ipv6_chk_addr and/or
-ipv6_check_addr_and_flags (where dev can also be NULL). Be careful if a
-IFA_HOST or IFA_LINK address switches from one interface to another.
+Of all places, the iscsi code actually has a nice side-by-side
+comparison. So far as I can see, the other protocols just omit this
+check in the v6 case, which I believe to be errant behavior. For
+example, grep for ip_dev_find in the sctp v4 code. The equivalent v6
+code is missing the dev check. Ugly! Here's the block I found in
+cxgbit_cm.c:
 
-Bye,
-Hannes
+static struct net_device *cxgbit_ipv4_netdev(__be32 saddr)
+{
+       struct net_device *ndev;
+
+       ndev = __ip_dev_find(&init_net, saddr, false);
+       if (!ndev)
+               return NULL;
+
+       return cxgbit_get_real_dev(ndev);
+}
+
+static struct net_device *cxgbit_ipv6_netdev(struct in6_addr *addr6)
+{
+       struct net_device *ndev = NULL;
+       bool found = false;
+
+       if (IS_ENABLED(CONFIG_IPV6)) {
+               for_each_netdev_rcu(&init_net, ndev)
+                       if (ipv6_chk_addr(&init_net, addr6, ndev, 1)) {
+                               found = true;
+                               break;
+                       }
+       }
+       if (!found)
+               return NULL;
+       return cxgbit_get_real_dev(ndev);
+}
+
+It seems like __ip6_dev_find could be made out of that inner loop.
+Then existing uses like that iscsi code can be replaced with that
+helper function, and the existing ip6 route tail function can be
+augmented in the manner you recommended. Seem like a decent
+implementation strategy?
+
+I might submit some patches, unless you beat me to it.
+
+Jason
