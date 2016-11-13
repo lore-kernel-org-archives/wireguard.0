@@ -1,19 +1,33 @@
 Return-Path: Jason@zx2c4.com
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1dfff3c7
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6f331ac3
  for <wireguard@lists.zx2c4.com>;
- Sun, 13 Nov 2016 19:00:40 +0000 (UTC)
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: David Ahern <dsa@cumulusnetworks.com>, Netdev <netdev@vger.kernel.org>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>,
- LKML <linux-kernel@vger.kernel.org>,
- YOSHIFUJI Hideaki <hideaki.yoshifuji@miraclelinux.com>,
- Hannes Frederic Sowa <hannes@stressinduktion.org>
-Date: Sun, 13 Nov 2016 20:02:51 +0100
-Message-Id: <20161113190251.1027-1-Jason@zx2c4.com>
+ Sun, 13 Nov 2016 20:17:22 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 84c372a6
+ for <wireguard@lists.zx2c4.com>;
+ Sun, 13 Nov 2016 20:17:22 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id d1c11009
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Sun, 13 Nov 2016 20:17:20 +0000 (UTC)
+Received: by mail-lf0-f50.google.com with SMTP id b14so45252112lfg.2
+ for <wireguard@lists.zx2c4.com>; Sun, 13 Nov 2016 12:19:50 -0800 (PST)
+MIME-Version: 1.0
 In-Reply-To: <405b2e79-854d-4c30-07b0-bd524137d2f6@cumulusnetworks.com>
-References: <405b2e79-854d-4c30-07b0-bd524137d2f6@cumulusnetworks.com>
-Subject: [WireGuard] [PATCH v2] ip6_output: ensure flow saddr actually
+References: <CAHmME9qYYU-p5BhR0ReNSB+__wysuDK+eEk1SisCoyf4=2woxg@mail.gmail.com>
+ <20161113132347.17907-1-Jason@zx2c4.com>
+ <405b2e79-854d-4c30-07b0-bd524137d2f6@cumulusnetworks.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Sun, 13 Nov 2016 21:19:47 +0100
+Message-ID: <CAHmME9rV_Qqj_QNKOARav6vOyyF-__E07saChPYo9MF6wED83A@mail.gmail.com>
+To: David Ahern <dsa@cumulusnetworks.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: Netdev <netdev@vger.kernel.org>,
+ Hannes Frederic Sowa <hannes@stressinduktion.org>,
+ LKML <linux-kernel@vger.kernel.org>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ YOSHIFUJI Hideaki <hideaki.yoshifuji@miraclelinux.com>
+Subject: Re: [WireGuard] [PATCH] ip6_output: ensure flow saddr actually
 	belongs to device
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
@@ -24,83 +38,15 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-This puts the IPv6 routing functions in parity with the IPv4 routing
-functions. Namely, we now check in v6 that if a flowi6 requests an
-saddr, the returned dst actually corresponds to a net device that has
-that saddr. This mirrors the v4 logic with __ip_dev_find in
-__ip_route_output_key_hash. In the event that the returned dst is not
-for a dst with a dev that has the saddr, we return -EINVAL, just like
-v4; this makes it easy to use the same error handlers for both cases.
+Hi David,
 
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Cc: David Ahern <dsa@cumulusnetworks.com>
----
-Changes from v1:
-   This moves the check to the top and now sees if it's a valid address
-   on _any_ device, not just the one in dst.
+On Sun, Nov 13, 2016 at 5:30 PM, David Ahern <dsa@cumulusnetworks.com> wrote:
+> You can't require the address to be on the dst device. e.g., it can be an address from the loopback/vrf device.
+>
+> This block needs to be done at function entry, and pass dev as NULL to mean is the address assigned to any interface. That gets you the equivalency of the IPv4 check.
 
- include/net/ipv6.h    |  2 ++
- net/ipv6/ip6_output.c | 28 ++++++++++++++++++++++++++++
- 2 files changed, 30 insertions(+)
+I gave v2 my best shot. Hopefully it's adequate, but I have a feeling
+it might be best for you to just code up what you have in mind.
 
-diff --git a/include/net/ipv6.h b/include/net/ipv6.h
-index 8fed1cd..e5dc14f 100644
---- a/include/net/ipv6.h
-+++ b/include/net/ipv6.h
-@@ -914,6 +914,8 @@ struct dst_entry *ip6_sk_dst_lookup_flow(struct sock *sk, struct flowi6 *fl6,
- 					 const struct in6_addr *final_dst);
- struct dst_entry *ip6_blackhole_route(struct net *net,
- 				      struct dst_entry *orig_dst);
-+struct net_device *__ip6_dev_find(struct net *net, struct in6_addr *addr,
-+				  bool devref);
- 
- /*
-  *	skb processing functions
-diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
-index 6001e78..371170b 100644
---- a/net/ipv6/ip6_output.c
-+++ b/net/ipv6/ip6_output.c
-@@ -916,6 +916,30 @@ static struct dst_entry *ip6_sk_dst_check(struct sock *sk,
- 	return dst;
- }
- 
-+/**
-+ * __ip6_dev_find - find the first device with a given source address.
-+ * @net: the net namespace
-+ * @addr: the source address
-+ * @devref: if true, take a reference on the found device
-+ *
-+ * If a caller uses devref=false, it should be protected by RCU, or RTNL
-+ */
-+struct net_device *__ip6_dev_find(struct net *net, struct in6_addr *addr, bool devref)
-+{
-+	struct net_device *result;
-+
-+	rcu_read_lock();
-+	for_each_netdev_rcu(net, result) {
-+		if (ipv6_chk_addr(net, addr, result, 1))
-+			break;
-+	}
-+	if (result && devref)
-+		dev_hold(result);
-+	rcu_read_unlock();
-+	return result;
-+}
-+EXPORT_SYMBOL(__ip6_dev_find);
-+
- static int ip6_dst_lookup_tail(struct net *net, const struct sock *sk,
- 			       struct dst_entry **dst, struct flowi6 *fl6)
- {
-@@ -926,6 +950,10 @@ static int ip6_dst_lookup_tail(struct net *net, const struct sock *sk,
- 	int err;
- 	int flags = 0;
- 
-+	if (!ipv6_addr_any(&fl6->saddr) &&
-+	    !__ip6_dev_find(net, &fl6->saddr, false))
-+		return -EINVAL;
-+
- 	/* The correct way to handle this would be to do
- 	 * ip6_route_get_saddr, and then ip6_route_output; however,
- 	 * the route-specific preferred source forces the
--- 
-2.10.2
+Regards,
+Jason
