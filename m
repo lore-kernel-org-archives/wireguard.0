@@ -1,38 +1,20 @@
 Return-Path: Jason@zx2c4.com
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ad24e395
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 42179e73
  for <wireguard@lists.zx2c4.com>;
- Sun, 13 Nov 2016 00:58:16 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6361bb49
- for <wireguard@lists.zx2c4.com>;
- Sun, 13 Nov 2016 00:58:16 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id ce255077
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Sun, 13 Nov 2016 00:58:16 +0000 (UTC)
-Received: by mail-lf0-f54.google.com with SMTP id c13so36141977lfg.0
- for <wireguard@lists.zx2c4.com>; Sat, 12 Nov 2016 17:00:40 -0800 (PST)
-MIME-Version: 1.0
-In-Reply-To: <1478998272.2299343.785875225.19237693@webmail.messagingengine.com>
-References: <CAHmME9qi7_C7c=wsZg=EwBg3jzFzVmW1eiFGGXgcX8fCcOOZcA@mail.gmail.com>
- <31e050e2-0499-a77e-f698-86e58ad2fa6b@cumulusnetworks.com>
- <CAHmME9o_AM1Lms6CJSpbjfAgcyGuRx8yqwSaNWEbSnY7gGnt6w@mail.gmail.com>
- <CAHmME9oeAuBQJguTFivYsYw4fMoc4+sgxcdS4MArN474m7NjTQ@mail.gmail.com>
- <0dbf5deb-bffb-4878-a268-1adb17c47676@cumulusnetworks.com>
- <CAHmME9owJNvMfF9jHGW7i_jPMaxwPhxQE5W6cxjw14nL0HK0eQ@mail.gmail.com>
- <CAHmME9pMzcwjveOoa08-fVCnZTkaoMz8y9DEc7f6b-4PeWu4xQ@mail.gmail.com>
- <1478998272.2299343.785875225.19237693@webmail.messagingengine.com>
+ Sun, 13 Nov 2016 13:22:03 +0000 (UTC)
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sun, 13 Nov 2016 02:00:38 +0100
-Message-ID: <CAHmME9qYYU-p5BhR0ReNSB+__wysuDK+eEk1SisCoyf4=2woxg@mail.gmail.com>
-To: Hannes Frederic Sowa <hannes@stressinduktion.org>
-Content-Type: text/plain; charset=UTF-8
-Cc: David Ahern <dsa@cumulusnetworks.com>,
- YOSHIFUJI Hideaki <hideaki.yoshifuji@miraclelinux.com>,
- LKML <linux-kernel@vger.kernel.org>,
+To: David Ahern <dsa@cumulusnetworks.com>, Netdev <netdev@vger.kernel.org>,
  WireGuard mailing list <wireguard@lists.zx2c4.com>,
- Netdev <netdev@vger.kernel.org>
-Subject: Re: [WireGuard] Source address fib invalidation on IPv6
+ LKML <linux-kernel@vger.kernel.org>,
+ YOSHIFUJI Hideaki <hideaki.yoshifuji@miraclelinux.com>,
+ Hannes Frederic Sowa <hannes@stressinduktion.org>
+Date: Sun, 13 Nov 2016 14:23:47 +0100
+Message-Id: <20161113132347.17907-1-Jason@zx2c4.com>
+In-Reply-To: <CAHmME9qYYU-p5BhR0ReNSB+__wysuDK+eEk1SisCoyf4=2woxg@mail.gmail.com>
+References: <CAHmME9qYYU-p5BhR0ReNSB+__wysuDK+eEk1SisCoyf4=2woxg@mail.gmail.com>
+Subject: [WireGuard] [PATCH] ip6_output: ensure flow saddr actually belongs
+	to device
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -42,19 +24,35 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Hannes,
+This puts the IPv6 routing functions in parity with the IPv4 routing
+functions. Namely, we now check in v6 that if a flowi6 requests an
+saddr, the returned dst actually corresponds to a net device that has
+that saddr. This mirrors the v4 logic with __ip_dev_find in
+__ip_route_output_key_hash. In the event that the returned dst is not
+for a dst with a dev that has the saddr, we return -EINVAL, just like
+v4; this makes it easy to use the same error handlers for both cases.
 
-On Sun, Nov 13, 2016 at 1:51 AM, Hannes Frederic Sowa
-<hannes@stressinduktion.org> wrote:
-> You probably need some combination of ipv6_chk_addr and/or
-> ipv6_check_addr_and_flags (where dev can also be NULL). Be careful if a
-> IFA_HOST or IFA_LINK address switches from one interface to another.
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Cc: David Ahern <dsa@cumulusnetworks.com>
+---
+ net/ipv6/ip6_output.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-I can confirm this trick works beautifully:
-https://git.zx2c4.com/WireGuard/commit/?id=eb65810fc6350c50b42abedd1291b12337d3dc3d
-
-I'll see if I can fold this into the routing function so that it
-behaves the same as v4, unless David gets there first.
-
-Regards,
-Jason
+diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
+index 6001e78..a834129 100644
+--- a/net/ipv6/ip6_output.c
++++ b/net/ipv6/ip6_output.c
+@@ -1011,6 +1011,11 @@ static int ip6_dst_lookup_tail(struct net *net, const struct sock *sk,
+ 		}
+ 	}
+ #endif
++	if (!ipv6_addr_any(&fl6->saddr) &&
++	    !ipv6_chk_addr(net, &fl6->saddr, (*dst)->dev, 1)) {
++		err = -EINVAL;
++		goto out_err_release;
++	}
+ 
+ 	return 0;
+ 
+-- 
+2.10.2
