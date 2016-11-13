@@ -1,20 +1,27 @@
-Return-Path: Jason@zx2c4.com
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 42179e73
+Return-Path: dsa@cumulusnetworks.com
+Received: from mail-it0-f49.google.com (mail-it0-f49.google.com
+ [209.85.214.49])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 218880ec
  for <wireguard@lists.zx2c4.com>;
- Sun, 13 Nov 2016 13:22:03 +0000 (UTC)
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: David Ahern <dsa@cumulusnetworks.com>, Netdev <netdev@vger.kernel.org>,
+ Sun, 13 Nov 2016 16:27:49 +0000 (UTC)
+Received: by mail-it0-f49.google.com with SMTP id q124so56193221itd.1
+ for <wireguard@lists.zx2c4.com>; Sun, 13 Nov 2016 08:30:18 -0800 (PST)
+Return-Path: <dsa@cumulusnetworks.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>, Netdev <netdev@vger.kernel.org>,
  WireGuard mailing list <wireguard@lists.zx2c4.com>,
  LKML <linux-kernel@vger.kernel.org>,
  YOSHIFUJI Hideaki <hideaki.yoshifuji@miraclelinux.com>,
  Hannes Frederic Sowa <hannes@stressinduktion.org>
-Date: Sun, 13 Nov 2016 14:23:47 +0100
-Message-Id: <20161113132347.17907-1-Jason@zx2c4.com>
-In-Reply-To: <CAHmME9qYYU-p5BhR0ReNSB+__wysuDK+eEk1SisCoyf4=2woxg@mail.gmail.com>
 References: <CAHmME9qYYU-p5BhR0ReNSB+__wysuDK+eEk1SisCoyf4=2woxg@mail.gmail.com>
-Subject: [WireGuard] [PATCH] ip6_output: ensure flow saddr actually belongs
-	to device
+ <20161113132347.17907-1-Jason@zx2c4.com>
+From: David Ahern <dsa@cumulusnetworks.com>
+Message-ID: <405b2e79-854d-4c30-07b0-bd524137d2f6@cumulusnetworks.com>
+Date: Sun, 13 Nov 2016 09:30:15 -0700
+MIME-Version: 1.0
+In-Reply-To: <20161113132347.17907-1-Jason@zx2c4.com>
+Content-Type: text/plain; charset=windows-1252
+Subject: Re: [WireGuard] [PATCH] ip6_output: ensure flow saddr actually
+	belongs to device
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -24,35 +31,37 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-This puts the IPv6 routing functions in parity with the IPv4 routing
-functions. Namely, we now check in v6 that if a flowi6 requests an
-saddr, the returned dst actually corresponds to a net device that has
-that saddr. This mirrors the v4 logic with __ip_dev_find in
-__ip_route_output_key_hash. In the event that the returned dst is not
-for a dst with a dev that has the saddr, we return -EINVAL, just like
-v4; this makes it easy to use the same error handlers for both cases.
+On 11/13/16 6:23 AM, Jason A. Donenfeld wrote:
+> This puts the IPv6 routing functions in parity with the IPv4 routing
+> functions. Namely, we now check in v6 that if a flowi6 requests an
+> saddr, the returned dst actually corresponds to a net device that has
+> that saddr. This mirrors the v4 logic with __ip_dev_find in
+> __ip_route_output_key_hash. In the event that the returned dst is not
+> for a dst with a dev that has the saddr, we return -EINVAL, just like
+> v4; this makes it easy to use the same error handlers for both cases.
+> 
+> Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+> Cc: David Ahern <dsa@cumulusnetworks.com>
+> ---
+>  net/ipv6/ip6_output.c | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
+> diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
+> index 6001e78..a834129 100644
+> --- a/net/ipv6/ip6_output.c
+> +++ b/net/ipv6/ip6_output.c
+> @@ -1011,6 +1011,11 @@ static int ip6_dst_lookup_tail(struct net *net, const struct sock *sk,
+>  		}
+>  	}
+>  #endif
+> +	if (!ipv6_addr_any(&fl6->saddr) &&
+> +	    !ipv6_chk_addr(net, &fl6->saddr, (*dst)->dev, 1)) {
+> +		err = -EINVAL;
+> +		goto out_err_release;
+> +	}
+>  
+>  	return 0;
 
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Cc: David Ahern <dsa@cumulusnetworks.com>
----
- net/ipv6/ip6_output.c | 5 +++++
- 1 file changed, 5 insertions(+)
+You can't require the address to be on the dst device. e.g., it can be an address from the loopback/vrf device.
 
-diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
-index 6001e78..a834129 100644
---- a/net/ipv6/ip6_output.c
-+++ b/net/ipv6/ip6_output.c
-@@ -1011,6 +1011,11 @@ static int ip6_dst_lookup_tail(struct net *net, const struct sock *sk,
- 		}
- 	}
- #endif
-+	if (!ipv6_addr_any(&fl6->saddr) &&
-+	    !ipv6_chk_addr(net, &fl6->saddr, (*dst)->dev, 1)) {
-+		err = -EINVAL;
-+		goto out_err_release;
-+	}
- 
- 	return 0;
- 
--- 
-2.10.2
+This block needs to be done at function entry, and pass dev as NULL to mean is the address assigned to any interface. That gets you the equivalency of the IPv4 check.
