@@ -1,20 +1,27 @@
-Return-Path: Jason@zx2c4.com
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d5628343
+Return-Path: john@mib-infotech.co.nz
+Received: from mail-pf0-f176.google.com (mail-pf0-f176.google.com
+ [209.85.192.176])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f4fbc9c0
  for <wireguard@lists.zx2c4.com>;
- Sun, 13 Nov 2016 23:26:02 +0000 (UTC)
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: David Ahern <dsa@cumulusnetworks.com>, Netdev <netdev@vger.kernel.org>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>,
- LKML <linux-kernel@vger.kernel.org>,
- YOSHIFUJI Hideaki <hideaki.yoshifuji@miraclelinux.com>,
- Hannes Frederic Sowa <hannes@stressinduktion.org>
-Date: Mon, 14 Nov 2016 00:28:13 +0100
-Message-Id: <20161113232813.28926-1-Jason@zx2c4.com>
-In-Reply-To: <27cccef1-06d9-74b3-5b8a-912850119a76@cumulusnetworks.com>
+ Mon, 14 Nov 2016 01:34:28 +0000 (UTC)
+Received: by mail-pf0-f176.google.com with SMTP id 189so25846564pfz.3
+ for <wireguard@lists.zx2c4.com>; Sun, 13 Nov 2016 17:36:59 -0800 (PST)
+Return-Path: <john@mib-infotech.co.nz>
+Received: from [10.16.226.44] ([103.247.155.34])
+ by smtp.googlemail.com with ESMTPSA id f14sm17468113pfk.5.2016.11.13.17.36.56
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Sun, 13 Nov 2016 17:36:57 -0800 (PST)
+To: wireguard@lists.zx2c4.com
 References: <27cccef1-06d9-74b3-5b8a-912850119a76@cumulusnetworks.com>
-Subject: [WireGuard] [PATCH v3] ip6_output: ensure flow saddr actually
-	belongs to device
+ <20161113232813.28926-1-Jason@zx2c4.com>
+From: John Huttley <john@mib-infotech.co.nz>
+Message-ID: <bcc61a59-1fbf-adb6-aa82-2e53821f215d@mib-infotech.co.nz>
+Date: Mon, 14 Nov 2016 14:36:53 +1300
+MIME-Version: 1.0
+In-Reply-To: <20161113232813.28926-1-Jason@zx2c4.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Subject: [WireGuard] Debugging AllowedIps
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -24,38 +31,11 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-This puts the IPv6 routing functions in parity with the IPv4 routing
-functions. Namely, we now check in v6 that if a flowi6 requests an
-saddr, the returned dst actually corresponds to a net device that has
-that saddr. This mirrors the v4 logic with __ip_dev_find in
-__ip_route_output_key_hash. In the event that the returned dst is not
-for a dst with a dev that has the saddr, we return -EINVAL, just like
-v4; this makes it easy to use the same error handlers for both cases.
+Hi Team,
+I've had success with AllowedIPs = 0.0.0.0/0
+but not otherwise.
 
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Cc: David Ahern <dsa@cumulusnetworks.com>
----
-Changes from v2:
-    It turns out ipv6_chk_addr already has the device enumeration
-    logic that we need by simply passing NULL.
+Is there a way of get some debug output on this?
 
- net/ipv6/ip6_output.c | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
-index 6001e78..b3b5cb6 100644
---- a/net/ipv6/ip6_output.c
-+++ b/net/ipv6/ip6_output.c
-@@ -926,6 +926,10 @@ static int ip6_dst_lookup_tail(struct net *net, const struct sock *sk,
- 	int err;
- 	int flags = 0;
- 
-+	if (!ipv6_addr_any(&fl6->saddr) &&
-+	    !ipv6_chk_addr(net, &fl6->saddr, NULL, 1))
-+		return -EINVAL;
-+
- 	/* The correct way to handle this would be to do
- 	 * ip6_route_get_saddr, and then ip6_route_output; however,
- 	 * the route-specific preferred source forces the
--- 
-2.10.2
+Regards,
+John
