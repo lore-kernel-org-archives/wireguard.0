@@ -1,18 +1,19 @@
-Return-Path: hannes@stressinduktion.org
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
- [66.111.4.28])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b50c6225
+Return-Path: Jason@zx2c4.com
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fad48c67
  for <wireguard@lists.zx2c4.com>;
- Mon, 14 Nov 2016 18:30:29 +0000 (UTC)
-Message-Id: <1479148385.3747043.787432273.5FCC2F4F@webmail.messagingengine.com>
-From: Hannes Frederic Sowa <hannes@stressinduktion.org>
-To: David Ahern <dsa@cumulusnetworks.com>,
- "Jason A. Donenfeld" <Jason@zx2c4.com>, Netdev <netdev@vger.kernel.org>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>,
- LKML <linux-kernel@vger.kernel.org>,
- YOSHIFUJI Hideaki <hideaki.yoshifuji@miraclelinux.com>
+ Tue, 15 Nov 2016 00:42:39 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a9578697
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 15 Nov 2016 00:42:39 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 82150c6f
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 15 Nov 2016 00:42:39 +0000 (UTC)
+Received: by mail-wm0-f49.google.com with SMTP id f82so134016445wmf.1
+ for <wireguard@lists.zx2c4.com>; Mon, 14 Nov 2016 16:45:18 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <1479148385.3747043.787432273.5FCC2F4F@webmail.messagingengine.com>
 References: <27cccef1-06d9-74b3-5b8a-912850119a76@cumulusnetworks.com>
  <20161113232813.28926-1-Jason@zx2c4.com>
  <1479141867.3723362.787321689.4A3DCFD6@webmail.messagingengine.com>
@@ -21,8 +22,17 @@ References: <27cccef1-06d9-74b3-5b8a-912850119a76@cumulusnetworks.com>
  <c75290bd-7ea2-0bf8-7ac0-fc5a3c81e312@cumulusnetworks.com>
  <7779da88-08dc-0adb-42dd-8e00502693df@stressinduktion.org>
  <0214eaf8-70c6-5a37-cddd-faa1c4268871@cumulusnetworks.com>
-Date: Mon, 14 Nov 2016 19:33:05 +0100
-In-Reply-To: <0214eaf8-70c6-5a37-cddd-faa1c4268871@cumulusnetworks.com>
+ <1479148385.3747043.787432273.5FCC2F4F@webmail.messagingengine.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Tue, 15 Nov 2016 01:45:14 +0100
+Message-ID: <CAHmME9ppx01YR9Db1oPpm6FJ+BmpqSxvjQ2S+GT0DXO09_M4oQ@mail.gmail.com>
+To: Hannes Frederic Sowa <hannes@stressinduktion.org>
+Content-Type: text/plain; charset=UTF-8
+Cc: David Ahern <dsa@cumulusnetworks.com>,
+ YOSHIFUJI Hideaki <hideaki.yoshifuji@miraclelinux.com>,
+ LKML <linux-kernel@vger.kernel.org>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ Netdev <netdev@vger.kernel.org>
 Subject: Re: [WireGuard] [PATCH v3] ip6_output: ensure flow saddr actually
 	belongs to device
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
@@ -34,55 +44,92 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Mon, Nov 14, 2016, at 18:48, David Ahern wrote:
-> On 11/14/16 10:33 AM, Hannes Frederic Sowa wrote:
-> >>>>> I just also quickly read up on the history (sorry was travelling last
-> >>>>> week) and wonder if you ever saw a user space facing bug or if this is
-> >>>>> basically some difference you saw while writing out of tree code?
-> >>>>
-> >>>> I checked the userspace API this morning. bind and cmsg for example check that the address is valid with calls to ipv6_chk_addr.
-> >>>
-> >>> Hmm, so it fixes no real bug.
-> >>>
-> >>> Because of translations of flowi6_oif we actually can't do a correct
-> >>> check of source address for cases like the one I outlined above? Hmm,
-> >>> maybe we should simply depend on user space checks.
-> >>
-> >> I believe Jason's case is forwarding path and the ipv6_stub->ipv6_dst_lookup API.
-> > 
-> > It is not a kernel API, because we don't support something like that for
-> > external kernel modules. We basically exported ipv6_dst_lookup to allow
-> > some IPv4 code to do ipv6 stunts when the IPv6 module is loaded. ;)
-> 
-> ???
-> 
-> ipv6_stub is exported for modules (EXPORT_SYMBOL_GPL(ipv6_stub)).
-> 
-> ipv6_stub->ipv6_dst_lookup is used by several modules -- geneve, tipc,
-> vxlan, mpls -- for IPv6 lookups, not IPv4 code do IPv6 stunts.
-> 
-> So how do you say that is not an exported kernel API?
+Hey Hannes, David,
 
-Sorry, yes, I noticed I wrote it in a confusing way.
+On Mon, Nov 14, 2016 at 7:33 PM, Hannes Frederic Sowa
+<hannes@stressinduktion.org> wrote:
+> I meant to say, we don't require the IPv6 "API" to behave in a similar
+> way like the IPv4 one. We do this function pointer trick to allow
+> _in-kernel_ tree modules to use the function dynamically, even the
+> kernel ipv6 module would be available but is not loaded but don't
+> guarante any "API like IPv4" to outside tree modules.
 
-I meant to say, we don't require the IPv6 "API" to behave in a similar
-way like the IPv4 one. We do this function pointer trick to allow
-_in-kernel_ tree modules to use the function dynamically, even the
-kernel ipv6 module would be available but is not loaded but don't
-guarante any "API like IPv4" to outside tree modules.
+Ultimately I intend to submit my own use case for mainline inclusion.
+I have no intention of maintaining my work as exclusively out of tree
+and would be very pleased to see this well integrated. Hopefully I'll
+meet some of you in person at upcoming conferences and events for
+discussion about this.
 
-I tried to make the point, that it is still something internal to the
-kernel if compared to out-of-tree function users. And that different
-behavior by itself doesn't count as a bug.
+Were I only concerned about out of tree status, I'd have no hesitation
+about just including these particular checks in my own code and
+leaving the current in tree code to rot. However, with my final
+intentions in mind, it's certainly in my interest to "do things
+right", hence this thread. When I noticed that the ipv6_stub routing
+function was insufficient for my own project, I examined its usage in
+a few other places. And indeed vxlan and geneve seem to also benefit
+from this patch. I'd be happy to audit the small handful of other
+cases in the kernel that use this API; I suspect they'll also be
+improved in a positive way.
 
-We could as well require the users of this function to check for the
-source address before or require to check the source address after the
-ipv6_dst_lookup call.
+> I tried to make the point, that it is still something internal to the
+> kernel if compared to out-of-tree function users. And that different
+> behavior by itself doesn't count as a bug.
 
-vxlan currently seems wrong and would impacted by this patch in a better
-way, so I am all in for such a change, but I think we need to check if
-we are also correct scope-wise and not just match for the address on its
-own.
+To the extent that other in-tree code uses this function and doesn't
+get the saddr check, it seems like a bug. To the extent that this
+function becomes more correct, it seems like an improvement. But
+whether a bug or a mere improvement, it seems like a net positive.
 
-Thanks,
-Hannes
+> We could as well require the users of this function to check for the
+> source address before or require to check the source address after the
+> ipv6_dst_lookup call.
+
+As said above, I have no qualms about doing this check in my own code.
+I was thinking, though, that a handful of other places in the kernel
+that use this function would benefit from adding that check too. In
+this case, it's usually common practice to move the check into the
+shared function, rather than require a flurry of copy-and-paste.
+
+> vxlan currently seems wrong and would impacted by this patch in a better
+> way, so I am all in for such a change, but I think we need to check if
+> we are also correct scope-wise and not just match for the address on its
+> own.
+
+I'll have a better look at this. Perhaps this should be modeled on
+what we currently do for userspace, which might amount to something
+more or less like:
+
+
+diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
+index 6001e78..0721915 100644
+--- a/net/ipv6/ip6_output.c
++++ b/net/ipv6/ip6_output.c
+@@ -925,6 +925,7 @@ static int ip6_dst_lookup_tail(struct net *net,
+const struct sock *sk,
+ #endif
+         int err;
+         int flags = 0;
++        int addr_type, bind_to_dev;
+
+         /* The correct way to handle this would be to do
+          * ip6_route_get_saddr, and then ip6_route_output; however,
+@@ -1012,6 +1013,16 @@ static int ip6_dst_lookup_tail(struct net *net,
+const struct sock *sk,
+         }
+ #endif
+
++        addr_type = ipv6_addr_type(&fl6->saddr);
++        if (addr_type == IPv6_ADDR_ANY)
++                return 0;
++
++        err = -EINVAL;
++        bind_to_dev = __ipv6_addr_src_scope(addr_type) <=
+IPV6_ADDR_SCOPE_LINKLOCAL;
++        if (!ipv6_chk_addr(net, &fl6->saddr, bind_to_dev ?
+(*dst)->dev : NULL, 0) &&
++            !ipv6_chk_acast_addr_src(net, (*dst)->dev, &fl6->saddr))
++                goto out_err_release;
++
+         return 0;
+
+ out_err_release:
