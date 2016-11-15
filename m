@@ -1,36 +1,23 @@
-Return-Path: dsa@cumulusnetworks.com
-Received: from mail-pf0-f177.google.com (mail-pf0-f177.google.com
- [209.85.192.177])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5019b665
+Return-Path: mail@danrl.com
+Received: from mx.sealand.io (mx.sealand.io [193.160.39.68])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 229d8fd5
  for <wireguard@lists.zx2c4.com>;
- Tue, 15 Nov 2016 15:24:01 +0000 (UTC)
-Received: by mail-pf0-f177.google.com with SMTP id c4so24905533pfb.1
- for <wireguard@lists.zx2c4.com>; Tue, 15 Nov 2016 07:26:44 -0800 (PST)
-Return-Path: <dsa@cumulusnetworks.com>
-To: Hannes Frederic Sowa <hannes@stressinduktion.org>,
- "Jason A. Donenfeld" <Jason@zx2c4.com>
-References: <27cccef1-06d9-74b3-5b8a-912850119a76@cumulusnetworks.com>
- <20161113232813.28926-1-Jason@zx2c4.com>
- <1479141867.3723362.787321689.4A3DCFD6@webmail.messagingengine.com>
- <fd1c804d-3e44-0321-8a3e-67d6ff7357fa@cumulusnetworks.com>
- <7d8c0210-9132-c755-9053-6ec19409e343@stressinduktion.org>
- <c75290bd-7ea2-0bf8-7ac0-fc5a3c81e312@cumulusnetworks.com>
- <7779da88-08dc-0adb-42dd-8e00502693df@stressinduktion.org>
- <0214eaf8-70c6-5a37-cddd-faa1c4268871@cumulusnetworks.com>
- <1479148385.3747043.787432273.5FCC2F4F@webmail.messagingengine.com>
- <CAHmME9ppx01YR9Db1oPpm6FJ+BmpqSxvjQ2S+GT0DXO09_M4oQ@mail.gmail.com>
- <7543fa0f-a053-8387-1862-d78ffadba688@stressinduktion.org>
-From: David Ahern <dsa@cumulusnetworks.com>
-Message-ID: <4285324b-c396-dfc1-caad-c961a6564e94@cumulusnetworks.com>
-Date: Tue, 15 Nov 2016 08:26:42 -0700
-MIME-Version: 1.0
-In-Reply-To: <7543fa0f-a053-8387-1862-d78ffadba688@stressinduktion.org>
+ Tue, 15 Nov 2016 15:56:10 +0000 (UTC)
+Received: from [172.20.10.2] (x2f7f779.dyn.telefonica.de [2.247.247.121])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mx.sealand.io (Postfix) with ESMTPSA id 557CE560045
+ for <wireguard@lists.zx2c4.com>; Tue, 15 Nov 2016 16:58:48 +0100 (CET)
+From: =?utf-8?Q?Dan_L=C3=BCdtke?= <mail@danrl.com>
 Content-Type: text/plain; charset=utf-8
-Cc: Netdev <netdev@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>,
- YOSHIFUJI Hideaki <hideaki.yoshifuji@miraclelinux.com>
-Subject: Re: [WireGuard] [PATCH v3] ip6_output: ensure flow saddr actually
- belongs to device
+Mime-Version: 1.0 (Mac OS X Mail 10.1 \(3251\))
+Date: Tue, 15 Nov 2016 17:01:14 +0100
+References: <A124E9F5-B1CF-4904-A849-EEAAD788030C@danrl.com>
+ <55998A34-BCEC-4693-ABC4-48AC108F7A64@danrl.com>
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+In-Reply-To: <55998A34-BCEC-4693-ABC4-48AC108F7A64@danrl.com>
+Message-Id: <39B38656-DD06-43E8-BC20-BAF5BC622EBA@danrl.com>
+Subject: Re: [WireGuard] Wireguard in OpenWRT/LEDE: FYI: Pull Request
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -40,31 +27,58 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On 11/15/16 7:45 AM, Hannes Frederic Sowa wrote:
+Hi,
 
->> @@ -1012,6 +1013,16 @@ static int ip6_dst_lookup_tail(struct net *net,
->> const struct sock *sk,
->>          }
->>  #endif
->>
->> +        addr_type = ipv6_addr_type(&fl6->saddr);
->> +        if (addr_type == IPv6_ADDR_ANY)
->> +                return 0;
->> +
->> +        err = -EINVAL;
->> +        bind_to_dev = __ipv6_addr_src_scope(addr_type) <=
->> IPV6_ADDR_SCOPE_LINKLOCAL;
->> +        if (!ipv6_chk_addr(net, &fl6->saddr, bind_to_dev ?
->> (*dst)->dev : NULL, 0) &&
->> +            !ipv6_chk_acast_addr_src(net, (*dst)->dev, &fl6->saddr))
->> +                goto out_err_release;
->> +
->>          return 0;
->>
->>  out_err_release:
->>
-> 
-> We should not use (*dst)->dev, as this is the resulting device after the
-> lookup and not necessarily corresponds to the device the user asked for.
+thanks for the various feedback, guys! Here is the next round:
 
-To be consistent with IPv4 the saddr check is done before the lookup and dst and flow oif should not be used. Handling LL addresses are trickier and perhaps this is not the right place to enforce that check since it requires a specific device which is only really known after lookup. Why not add the if saddr is LL verification as part of the route selection? e.g, add something like rt6_device_match to ip6_pol_route (the device match call is only used for ip6_pol_route_lookup and not ip6_pol_route - why is that?).
+https://github.com/openwrt/packages/pull/3514
+and
+https://github.com/openwrt/luci/pull/852
+
+Cheers,
+
+Dan
+
+> On 13 Nov 2016, at 23:52, Dan L=C3=BCdtke <mail@danrl.com> wrote:
+>=20
+> Hi again,
+>=20
+> here is the pull request for LuCi:
+> https://github.com/openwrt/luci/pull/848
+>=20
+> Please support this pull request as well.
+>=20
+> Thanks for all the beta testers and also to Jason and Baptiste for =
+their help.
+>=20
+> It was a great pleasure supporting this project.
+>=20
+> Cheers,
+>=20
+> Dan
+>=20
+>=20
+>> On 13 Nov 2016, at 23:35, Dan L=C3=BCdtke <mail@danrl.com> wrote:
+>>=20
+>> Hi all,
+>>=20
+>> first step of OpenWRT/LEDE integration is making sure the helper =
+script for configuring the interface is installed. The corresponding =
+pull request can be found here:
+>> https://github.com/openwrt/packages/pull/3512
+>>=20
+>> Please support this pull request.
+>> Once it is accepted, the GUI (luci) will follow.
+>>=20
+>> Thanks,
+>>=20
+>> Dan
+>> _______________________________________________
+>> WireGuard mailing list
+>> WireGuard@lists.zx2c4.com
+>> http://lists.zx2c4.com/mailman/listinfo/wireguard
+>=20
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> http://lists.zx2c4.com/mailman/listinfo/wireguard
