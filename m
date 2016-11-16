@@ -1,19 +1,22 @@
-Return-Path: baptiste@bitsofnetworks.org
-Received: from mails.bitsofnetworks.org (rezine.polyno.me [193.33.56.138])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 42fe1b4c
+Return-Path: me.kalin@gmail.com
+Received: from mail-yw0-f195.google.com (mail-yw0-f195.google.com
+ [209.85.161.195])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4f01c89d
  for <wireguard@lists.zx2c4.com>;
- Wed, 16 Nov 2016 08:12:41 +0000 (UTC)
-Date: Wed, 16 Nov 2016 09:15:27 +0100
-From: Baptiste Jonglez <baptiste@bitsofnetworks.org>
-To: Dan =?iso-8859-1?Q?L=FCdtke?= <mail@danrl.com>
-Message-ID: <20161116081527.GB14469@tuxmachine.polynome.dn42>
+ Wed, 16 Nov 2016 08:46:26 +0000 (UTC)
+Received: by mail-yw0-f195.google.com with SMTP id s68so14342439ywg.0
+ for <wireguard@lists.zx2c4.com>; Wed, 16 Nov 2016 00:49:15 -0800 (PST)
+MIME-Version: 1.0
+In-Reply-To: <20161116081527.GB14469@tuxmachine.polynome.dn42>
 References: <A124E9F5-B1CF-4904-A849-EEAAD788030C@danrl.com>
  <55998A34-BCEC-4693-ABC4-48AC108F7A64@danrl.com>
  <39B38656-DD06-43E8-BC20-BAF5BC622EBA@danrl.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="eJnRUKwClWJh1Khz"
-In-Reply-To: <39B38656-DD06-43E8-BC20-BAF5BC622EBA@danrl.com>
+ <20161116081527.GB14469@tuxmachine.polynome.dn42>
+From: Kalin KOZHUHAROV <me.kalin@gmail.com>
+Date: Wed, 16 Nov 2016 17:48:54 +0900
+Message-ID: <CAKXLc7cHjdUZdFfKrq8ynfo24AoD6W8otj2fNqbfnKef5Bm2=w@mail.gmail.com>
+To: Baptiste Jonglez <baptiste@bitsofnetworks.org>
+Content-Type: text/plain; charset=UTF-8
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Subject: Re: [WireGuard] Wireguard in OpenWRT/LEDE: FYI: Pull Request
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
@@ -25,96 +28,114 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
+On Wed, Nov 16, 2016 at 5:15 PM, Baptiste Jonglez
+<baptiste@bitsofnetworks.org> wrote:
+> On Tue, Nov 15, 2016 at 05:01:14PM +0100, Dan L=C3=BCdtke wrote:
+>> thanks for the various feedback, guys! Here is the next round:
+>>
+>> https://github.com/openwrt/packages/pull/3514
+>
+> This one is now merged, thanks for the work Dan!
+>
 
---eJnRUKwClWJh1Khz
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Hmm, something is iffy... I updated my buildroot (./scripts/feeds
+update -a) and got the new versions, but it fails to build...
 
-On Tue, Nov 15, 2016 at 05:01:14PM +0100, Dan L=FCdtke wrote:
-> thanks for the various feedback, guys! Here is the next round:
->=20
-> https://github.com/openwrt/packages/pull/3514
+Here is the relevant log (from `make -j1 V=3Ds`) :
+...
+make[3]: Leaving directory '/srv/OpenWRT/openwrt/package/libs/libmnl'
+make[3]: Entering directory
+'/srv/OpenWRT/openwrt/package/network/utils/resolveip'
+rm -rf /srv/OpenWRT/openwrt/staging_dir/target-mips_34kc_musl-1.1.15/root-a=
+r71xx/tmp-resolveip
+mkdir -p /srv/OpenWRT/openwrt/staging_dir/target-mips_34kc_musl-1.1.15/root=
+-ar71xx/stamp
+/srv/OpenWRT/openwrt/staging_dir/target-mips_34kc_musl-1.1.15/root-ar71xx/t=
+mp-resolveip
+install -d -m0755
+/srv/OpenWRT/openwrt/staging_dir/target-mips_34kc_musl-1.1.15/root-ar71xx/t=
+mp-resolveip/usr/bin
+install -m0755 /srv/OpenWRT/openwrt/build_dir/target-mips_34kc_musl-1.1.15/=
+resolveip/resolveip
+/srv/OpenWRT/openwrt/staging_dir/target-mips_34kc_musl-1.1.15/root-ar71xx/t=
+mp-resolveip/usr/bin/
+SHELL=3D flock /srv/OpenWRT/openwrt/tmp/.root-copy.flock -c 'cp -fpR
+/srv/OpenWRT/openwrt/staging_dir/target-mips_34kc_musl-1.1.15/root-ar71xx/t=
+mp-resolveip/.
+/srv/OpenWRT/openwrt/staging_dir/target-mips_34kc_musl-1.1.15/root-ar71xx/'
+rm -rf /srv/OpenWRT/openwrt/staging_dir/target-mips_34kc_musl-1.1.15/root-a=
+r71xx/tmp-resolveip
+touch /srv/OpenWRT/openwrt/staging_dir/target-mips_34kc_musl-1.1.15/root-ar=
+71xx/stamp/.resolveip_installed
+if [ -f /srv/OpenWRT/openwrt/staging_dir/target-mips_34kc_musl-1.1.15/pkgin=
+fo/resolveip.default.install.clean
+]; then rm -f /srv/OpenWRT/openwrt/staging_dir/target-mips_34kc_musl-1.1.15=
+/pkginfo/resolveip.default.install
+/srv/OpenWRT/openwrt/staging_dir/target-mips_34kc_musl-1.1.15/pkginfo/resol=
+veip.default.install.clean;
+fi; echo "resolveip" >>
+/srv/OpenWRT/openwrt/staging_dir/target-mips_34kc_musl-1.1.15/pkginfo/resol=
+veip.default.install
+make[3]: Leaving directory
+'/srv/OpenWRT/openwrt/package/network/utils/resolveip'
+make[3]: Entering directory '/srv/OpenWRT/openwrt/feeds/packages/net/wiregu=
+ard'
+mkdir -p /srv/OpenWRT/openwrt/bin/ar71xx/packages
+/srv/OpenWRT/openwrt/build_dir/target-mips_34kc_musl-1.1.15/WireGuard-exper=
+imental-0.0.20161110/ipkg-ar71xx/wireguard-tools/CONTROL
+/srv/OpenWRT/openwrt/staging_dir/target-mips_34kc_musl-1.1.15/pkginfo
+install -d -m0755
+/srv/OpenWRT/openwrt/build_dir/target-mips_34kc_musl-1.1.15/WireGuard-exper=
+imental-0.0.20161110/ipkg-ar71xx/wireguard-tools/usr/bin/
+install -m0755 /srv/OpenWRT/openwrt/build_dir/target-mips_34kc_musl-1.1.15/=
+WireGuard-experimental-0.0.20161110/src/tools/wg
+/srv/OpenWRT/openwrt/build_dir/target-mips_34kc_musl-1.1.15/WireGuard-exper=
+imental-0.0.20161110/ipkg-ar71xx/wireguard-tools/usr/bin/
+install -m0755 ./files/wireguard.sh
+/srv/OpenWRT/openwrt/build_dir/target-mips_34kc_musl-1.1.15/WireGuard-exper=
+imental-0.0.20161110/ipkg-ar71xx/wireguard-tools/lib/netifd/proto/
+install: target
+'/srv/OpenWRT/openwrt/build_dir/target-mips_34kc_musl-1.1.15/WireGuard-expe=
+rimental-0.0.20161110/ipkg-ar71xx/wireguard-tools/lib/netifd/proto/'
+is not a directory: No such file or directory
+Makefile:106: recipe for target
+'/srv/OpenWRT/openwrt/bin/ar71xx/packages/packages/wireguard-tools_0.0.2016=
+1110-2_ar71xx.ipk'
+failed
+make[3]: *** [/srv/OpenWRT/openwrt/bin/ar71xx/packages/packages/wireguard-t=
+ools_0.0.20161110-2_ar71xx.ipk]
+Error 1
+make[3]: Leaving directory '/srv/OpenWRT/openwrt/feeds/packages/net/wiregua=
+rd'
+package/Makefile:196: recipe for target
+'package/feeds/packages/wireguard/compile' failed
+make[2]: *** [package/feeds/packages/wireguard/compile] Error 2
+make[2]: Leaving directory '/srv/OpenWRT/openwrt'
+package/Makefile:193: recipe for target
+'/srv/OpenWRT/openwrt/staging_dir/target-mips_34kc_musl-1.1.15/stamp/.packa=
+ge_compile'
+failed
+make[1]: *** [/srv/OpenWRT/openwrt/staging_dir/target-mips_34kc_musl-1.1.15=
+/stamp/.package_compile]
+Error 2
+make[1]: Leaving directory '/srv/OpenWRT/openwrt'
+/srv/OpenWRT/openwrt/include/toplevel.mk:192: recipe for target 'world' fai=
+led
+make: *** [world] Error 2
 
-This one is now merged, thanks for the work Dan!
+$ ll /srv/OpenWRT/openwrt/build_dir/target-mips_34kc_musl-1.1.15/WireGuard-=
+experimental-0.0.20161110/ipkg-ar71xx/wireguard-tools/
+total 8
+4 drwxr-xr-x 2 kalin users 4096 Nov 16 17:26 CONTROL
+4 drwxr-xr-x 3 kalin users 4096 Nov 16 17:26 usr
 
-I have documented the various options here:
+Hmm, "No such file or directory" ? Somewhere mkdir -p is needed?
 
-  https://wiki.lede-project.org/docs/user-guide/tunneling_interface_protoco=
-ls#protocol_wireguard_wireguard_vpn
 
-If somebody has time, it would be good to include one or two examples at
-the end of the page (otherwise I'll do it at some point).
+It used to work 4 days ago, I successfully built/tested/still running:
+kmod-wireguard 4.4.14+0.0.20161105-1
+wireguard-tools 0.0.20161105-1
 
-Baptiste
+I'll try a clean recompile of everything now...
 
-> > On 13 Nov 2016, at 23:52, Dan L=FCdtke <mail@danrl.com> wrote:
-> >=20
-> > Hi again,
-> >=20
-> > here is the pull request for LuCi:
-> > https://github.com/openwrt/luci/pull/848
-> >=20
-> > Please support this pull request as well.
-> >=20
-> > Thanks for all the beta testers and also to Jason and Baptiste for thei=
-r help.
-> >=20
-> > It was a great pleasure supporting this project.
-> >=20
-> > Cheers,
-> >=20
-> > Dan
-> >=20
-> >=20
-> >> On 13 Nov 2016, at 23:35, Dan L=FCdtke <mail@danrl.com> wrote:
-> >>=20
-> >> Hi all,
-> >>=20
-> >> first step of OpenWRT/LEDE integration is making sure the helper scrip=
-t for configuring the interface is installed. The corresponding pull reques=
-t can be found here:
-> >> https://github.com/openwrt/packages/pull/3512
-> >>=20
-> >> Please support this pull request.
-> >> Once it is accepted, the GUI (luci) will follow.
-> >>=20
-> >> Thanks,
-> >>=20
-> >> Dan
-> >> _______________________________________________
-> >> WireGuard mailing list
-> >> WireGuard@lists.zx2c4.com
-> >> http://lists.zx2c4.com/mailman/listinfo/wireguard
-> >=20
-> > _______________________________________________
-> > WireGuard mailing list
-> > WireGuard@lists.zx2c4.com
-> > http://lists.zx2c4.com/mailman/listinfo/wireguard
->=20
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> http://lists.zx2c4.com/mailman/listinfo/wireguard
-
---eJnRUKwClWJh1Khz
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIcBAEBCAAGBQJYLBWfAAoJEL4B7CKgTi5GTToQAJT2Wuf7cUhO4z9AtNwStBeW
-LErtNPzHtOpc9+zOBVuMpaiho7rS1TL0FM5/wVE2aeHY8dWoOWJiX1waMu0BLypf
-I4z5XBYq0Ma518buze54aPAwj0MPczl2M470/pjHd0WwM4aWT9hybrX3TJJMYCUr
-GGKxwX/QtjE/QgwHJHXzakfGtxgiugnmxTWLrBv9KsTpmYzq6Zl1elCdYw16zAAF
-GuJVB6jJ7Vwp0qy3xaOIQAoc5RqJijgrWNmaqQ+7eHGn0HwqF/GW6ys7oA2enswP
-S9Fjnm3rCPgOBBf1fluAqsUagSV4TxNhL+BhSznmnlmzwh+llRPgyVQSXgCiGvjq
-SfCXxwSxuQGT2LtB58e9R4yUVTceBKjpHOLvb3VMMTIZJY2ftlnv0KuJ8XZVhTSf
-rb00PKAQ4bCufqGwfjDuHLM0cZsJrKRW6inZcHtXAH4BHYt+EImazedZzVXwMHdH
-g7xfmEbOeAFjhculB1FH45SrmkJOr09CM9uRO/F1GPNTLQzurf9fm7UA45mmzqmj
-/IN7cUGRQRroF37jzpX6TTH7W+NxDuwo2hWiPZo8Y/9HGucp6aEgPbkvodUiqqpg
-pKsrpoljwxAgek9kxMeYLYVgZ/oofYZbRqcUHGC8j8ARddhCgtHdiW0aigwJVzn9
-tvwMGBCdx3HzPMJhZ6/p
-=xvGk
------END PGP SIGNATURE-----
-
---eJnRUKwClWJh1Khz--
+Kalin.
