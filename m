@@ -1,27 +1,25 @@
-Return-Path: Jason@zx2c4.com
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cdc1eee8
+Return-Path: egbert@eggiecode.org
+Received: from mail01.eggieservers.nl (mail01.eggieservers.nl
+ [149.210.159.147])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0c842718
  for <wireguard@lists.zx2c4.com>;
- Wed, 16 Nov 2016 14:15:16 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 70dc957a
- for <wireguard@lists.zx2c4.com>;
- Wed, 16 Nov 2016 14:15:16 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 0ec9e213
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Wed, 16 Nov 2016 14:15:16 +0000 (UTC)
-Received: by mail-qt0-f175.google.com with SMTP id p16so101939412qta.0
- for <wireguard@lists.zx2c4.com>; Wed, 16 Nov 2016 06:18:06 -0800 (PST)
+ Wed, 16 Nov 2016 14:20:08 +0000 (UTC)
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+References: <CAHmME9r24tV2RmNYQfxvdF_0L_egYFek0xeqNZS5UNuZjN5N4Q@mail.gmail.com>
+ <454ad249-3313-9423-c2d4-7602d56849fc@eggiecode.org>
+ <CAHmME9p6mTNPuRgwqdzEx=emjtvh-R3R5HdSOB=E68_tQxdP5Q@mail.gmail.com>
+ <82c49c47-1779-2c6c-8797-9f02f138fb6e@eggiecode.org>
+ <CAHmME9rUEA7ZXjZj5Th45X-tHEZfTQB134M+ym0sqyK3a4a4og@mail.gmail.com>
+ <67b97701-8286-039e-31bb-b7275ab338e8@eggiecode.org>
+ <CAHmME9rPPxnKWDXYv7r=GjrAoSaMqPRhdALmGxHbRV9v5uC48A@mail.gmail.com>
+From: Egbert Verhage <egbert@eggiecode.org>
+Message-ID: <4e177774-c6b1-b291-0139-0375c96175f2@eggiecode.org>
+Date: Wed, 16 Nov 2016 15:22:45 +0100
 MIME-Version: 1.0
-In-Reply-To: <A7E34EE0-F8F0-4F88-AA94-58434D0DF2BA@danrl.com>
-References: <A7E34EE0-F8F0-4F88-AA94-58434D0DF2BA@danrl.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 16 Nov 2016 15:18:03 +0100
-Message-ID: <CAHmME9r0tdR8=nnC4yPLJoOE8yU_7iJi0qEpx9POyM3OBZ3otQ@mail.gmail.com>
-To: =?UTF-8?Q?Dan_L=C3=BCdtke?= <mail@danrl.com>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <CAHmME9rPPxnKWDXYv7r=GjrAoSaMqPRhdALmGxHbRV9v5uC48A@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: [WireGuard] Demo Server: Dual stack?
+Subject: Re: [WireGuard] Seeking Ubuntu PPA Maintainer
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -31,28 +29,36 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Dan,
+Hey Jason,
 
-I guess I could provide IPv6 connectivity, but.... why? It's a demo.
-If you're using it as an access point to the Internet with intentions
-beyond simply trying out WireGuard, then you're abusing my service.
-
-I'm happy to consider this, but I'll need to be convinced that this
-actually matters.
-
-Jason
-
-On Wed, Nov 16, 2016 at 12:39 PM, Dan L=C3=BCdtke <mail@danrl.com> wrote:
-> Jason,
+On 2016-11-16 15:04, Jason A. Donenfeld wrote:
+> Can you loop these other PPA people in on this thread. Let's all
+> consolidate around Egbert's one PPA. He can decide to allow
+> co-maintainers if he wants.
 >
-> do you plan on adding IPv6 compatibility to the demo server? If not, do y=
-ou mind if I set one up? How difficult is it to run the demo server. It jus=
-t accepts every key, right?
+Yes. If some one wants to co-maintain with me, send me an email.
+
+On 2016-11-16 15:09, Jason A. Donenfeld wrote:
+> On Wed, Nov 16, 2016 at 11:03 AM, Egbert Verhage <egbert@eggiecode.org> wrote:
+>> Going to update the PPA to remove my disable of AVX2.
+> Good. Can you remove this garbage immediately:
+> https://git.launchpad.net/wireguard/tree/debian/patches/update-hard-disable-patch-to-upstream
+> https://git.launchpad.net/wireguard/tree/debian/patches/0001-disable-hard-avx2
+Done: 
+https://git.launchpad.net/wireguard/commit/?id=f69e7e6f6eb9c34d7fcd364c10f5a792fc63e3b2 
+
+> There are two principles I would like to see adamantly applied before
+> I'll endorse this PPA:
 >
-> Cheers,
+> 1. Stay as close to vanilla upstream snapshots as possible. Do not
+> have patches that differ from Debian's too much. If you need changes,
+> consult the very active and very willing upstream instead.
+Ofc. Source (wireguard-src in git) is a submodule of the last taged 
+experimental
+> 2. Only package snapshots. Do not choose your own git commits.
 >
-> Dan
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> http://lists.zx2c4.com/mailman/listinfo/wireguard
+> Are these two things you're willing to do?
+Yes!
+
+Greetz,
+Egbert
