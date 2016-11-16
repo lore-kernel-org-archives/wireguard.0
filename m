@@ -1,26 +1,23 @@
-Return-Path: me.kalin@gmail.com
-Received: from mail-yw0-f181.google.com (mail-yw0-f181.google.com
- [209.85.161.181])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dd030a2b
+Return-Path: egbert@eggiecode.org
+Received: from mail01.eggieservers.nl (mail01.eggieservers.nl
+ [149.210.159.147])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c21c3b05
  for <wireguard@lists.zx2c4.com>;
- Wed, 16 Nov 2016 09:48:24 +0000 (UTC)
-Received: by mail-yw0-f181.google.com with SMTP id r204so120461849ywb.0
- for <wireguard@lists.zx2c4.com>; Wed, 16 Nov 2016 01:51:13 -0800 (PST)
+ Wed, 16 Nov 2016 10:00:29 +0000 (UTC)
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+References: <CAHmME9r24tV2RmNYQfxvdF_0L_egYFek0xeqNZS5UNuZjN5N4Q@mail.gmail.com>
+ <454ad249-3313-9423-c2d4-7602d56849fc@eggiecode.org>
+ <CAHmME9p6mTNPuRgwqdzEx=emjtvh-R3R5HdSOB=E68_tQxdP5Q@mail.gmail.com>
+ <82c49c47-1779-2c6c-8797-9f02f138fb6e@eggiecode.org>
+ <CAHmME9rUEA7ZXjZj5Th45X-tHEZfTQB134M+ym0sqyK3a4a4og@mail.gmail.com>
+From: Egbert Verhage <egbert@eggiecode.org>
+Message-ID: <67b97701-8286-039e-31bb-b7275ab338e8@eggiecode.org>
+Date: Wed, 16 Nov 2016 11:03:06 +0100
 MIME-Version: 1.0
-In-Reply-To: <FE60D347-65AB-49AC-8ECC-8B5DD199DA53@danrl.com>
-References: <A124E9F5-B1CF-4904-A849-EEAAD788030C@danrl.com>
- <55998A34-BCEC-4693-ABC4-48AC108F7A64@danrl.com>
- <39B38656-DD06-43E8-BC20-BAF5BC622EBA@danrl.com>
- <20161116081527.GB14469@tuxmachine.polynome.dn42>
- <CAKXLc7cHjdUZdFfKrq8ynfo24AoD6W8otj2fNqbfnKef5Bm2=w@mail.gmail.com>
- <FE60D347-65AB-49AC-8ECC-8B5DD199DA53@danrl.com>
-From: Kalin KOZHUHAROV <me.kalin@gmail.com>
-Date: Wed, 16 Nov 2016 18:50:52 +0900
-Message-ID: <CAKXLc7fFctm__qAQ8N5Vzms_MLFXJe0hf1-A6GH8QMD8B+3zSA@mail.gmail.com>
-To: Dan Luedtke <mail@danrl.com>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <CAHmME9rUEA7ZXjZj5Th45X-tHEZfTQB134M+ym0sqyK3a4a4og@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: [WireGuard] Wireguard in OpenWRT/LEDE: FYI: Pull Request
+Subject: Re: [WireGuard] Seeking Ubuntu PPA Maintainer
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -30,52 +27,35 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Wed, Nov 16, 2016 at 6:34 PM, Dan Luedtke <mail@danrl.com> wrote:
-> Hmm, could it be missing a line like
+Hey Jason,
+
+The kernel module worked for my. ([1020751.674357] AVX2 disabler loaded:
+1 -> 0)
+Going to update the PPA to remove my disable of AVX2.
+
+The problem is that the hosting company hides the cpuuid, but from the
+call with the sysadmin it is a XEON E5-2??? v3.
+
+Greetz,
+Egbert
+
+
+On 2016-11-16 02:31, Jason A. Donenfeld wrote:
+> Hey Egbert,
 >
-> $(INSTALL_DIR) $(1)/lib/netifd/proto/
+> On Wed, Nov 16, 2016 at 1:34 AM, Egbert Verhage <egbert@eggiecode.org> wrote:
+>> I mailed/called with one of the sys admins and discussed with him about the
+>> problem in the AVX2 extention.
+>> I think I'm going to mail/call the hosting company again.
+> It seems like the crux of the issue is that if they disable AVX2
+> instructions, they need to make this known in the CPUID. Otherwise the
+> operating system will assume it's there when it isn't.
 >
-> In the Makefile? Not sure why we would need to create it, shouldn't it be=
- there?
+>> Can give you a vps if you want to. Just 3 euro the month.
+> See the attached tarball. Compile the kernel module in there and load
+> it BEFORE WireGuard. You might have to manually unload wireguard for
+> this to work: "rmmod wireguard && insmod ./avx2disabler.ko && modprobe
+> wireguard", for example. It should disable avx2 inside the kernel,
+> solving the issue.
 >
-> Kalin, could you try again with the installdir line?
->
-Currently the Makefile had this in:
-
-define Package/wireguard-tools/install
-    $(INSTALL_DIR) $(1)/usr/bin/
-    $(INSTALL_BIN) $(PKG_BUILD_DIR)/src/tools/wg $(1)/usr/bin/
-    $(INSTALL_BIN) ./files/wireguard.sh $(1)/lib/netifd/proto/
-endef
-
-I patched it:
---- a/srv/OpenWRT/openwrt/feeds/packages/net/wireguard/Makefile
-2016-11-16 18:45:57.733060093 +0900
-+++ b/srv/OpenWRT/openwrt/feeds/packages/net/wireguard/Makefile
-2016-11-16 18:46:07.716948224 +0900
-@@ -83,6 +83,7 @@
- define Package/wireguard-tools/install
-     $(INSTALL_DIR) $(1)/usr/bin/
-     $(INSTALL_BIN) $(PKG_BUILD_DIR)/src/tools/wg $(1)/usr/bin/
-+    $(INSTALL_DIR) $(1)/lib/netifd/proto/
-     $(INSTALL_BIN) ./files/wireguard.sh $(1)/lib/netifd/proto/
- endef
-
-And it seems to work now. I guess this looks as expected:
-./build_dir/target-mips_34kc_musl-1.1.15/WireGuard-experimental-0.0.2016111=
-0/ipkg-ar71xx/wireguard-tools/
-=E2=94=9C=E2=94=80=E2=94=80 CONTROL
-=E2=94=82   =E2=94=9C=E2=94=80=E2=94=80 control
-=E2=94=82   =E2=94=9C=E2=94=80=E2=94=80 postinst
-=E2=94=82   =E2=94=94=E2=94=80=E2=94=80 prerm
-=E2=94=9C=E2=94=80=E2=94=80 lib
-=E2=94=82   =E2=94=94=E2=94=80=E2=94=80 netifd
-=E2=94=82       =E2=94=94=E2=94=80=E2=94=80 proto
-=E2=94=82           =E2=94=94=E2=94=80=E2=94=80 wireguard.sh
-=E2=94=94=E2=94=80=E2=94=80 usr
-    =E2=94=94=E2=94=80=E2=94=80 bin
-        =E2=94=94=E2=94=80=E2=94=80 wg
-
-(still compiling the rest)
-
-Kalin.
+> Jason
