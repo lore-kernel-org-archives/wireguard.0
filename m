@@ -1,21 +1,28 @@
-Return-Path: mail@danrl.com
-Received: from mx.sealand.io (mx.sealand.io [193.160.39.68])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c79d6b1a
+Return-Path: Jason@zx2c4.com
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fa6612ff
  for <wireguard@lists.zx2c4.com>;
- Wed, 16 Nov 2016 14:49:29 +0000 (UTC)
-Content-Type: text/plain; charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 10.1 \(3251\))
-From: =?utf-8?Q?Dan_L=C3=BCdtke?= <mail@danrl.com>
-In-Reply-To: <CAHmME9qTLVPVrCnrusb3W32EtGYvLuKyyiGz+TWrXTxneVSrCA@mail.gmail.com>
-Date: Wed, 16 Nov 2016 15:54:49 +0100
-Message-Id: <7FCCB728-BB7E-4A4F-ABAC-7D16FA6A1382@danrl.com>
-References: <A7E34EE0-F8F0-4F88-AA94-58434D0DF2BA@danrl.com>
- <CAHmME9r0tdR8=nnC4yPLJoOE8yU_7iJi0qEpx9POyM3OBZ3otQ@mail.gmail.com>
- <44DAF4D4-00A8-4903-8003-EB0215635B61@danrl.com>
- <CAHmME9qTLVPVrCnrusb3W32EtGYvLuKyyiGz+TWrXTxneVSrCA@mail.gmail.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: [WireGuard] Demo Server: Dual stack?
+ Wed, 16 Nov 2016 14:57:20 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ef96ed10
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 16 Nov 2016 14:57:20 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 07f5fc8f
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 16 Nov 2016 14:57:20 +0000 (UTC)
+Received: by mail-qt0-f179.google.com with SMTP id n6so104573278qtd.1
+ for <wireguard@lists.zx2c4.com>; Wed, 16 Nov 2016 07:00:10 -0800 (PST)
+MIME-Version: 1.0
+In-Reply-To: <1586d91cadd.12007ba4a910.7227905130772903531@hda.me>
+References: <1586d91cadd.12007ba4a910.7227905130772903531@hda.me>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 16 Nov 2016 16:00:09 +0100
+Message-ID: <CAHmME9qXeKA=8txs+AgtpA7N1HHefCbLGanNc6P=b7KXo3mkxQ@mail.gmail.com>
+To: Anonymous Anonymous <admin@hda.me>
+Content-Type: text/plain; charset=UTF-8
+Cc: Egbert Verhage <egbert@eggiecode.org>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
+Subject: Re: [WireGuard] Seeking Ubuntu PPA Maintainer
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -25,33 +32,9 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Thanks Jason!
+On Wed, Nov 16, 2016 at 3:37 PM, Anonymous Anonymous <admin@hda.me> wrote:
+> Btw, as for jabber Jason, seems like I need to search for new tor gateway,
+> thats why I disconnected.
 
-No hurry, though.
-
-Is the script open source as well? Maybe I can tinker with it, so you =
-don't waste your precious development time on supporting infrastructure.
-
-> On 16 Nov 2016, at 15:49, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
->=20
-> Hey Dan,
->=20
-> On Wed, Nov 16, 2016 at 3:38 PM, Dan L=C3=BCdtke <mail@danrl.com> =
-wrote:
->> Hi Jason,
->>=20
->>> I guess I could provide IPv6 connectivity, but.... why? It's a demo.
->>=20
->> Because it is a demo of a brand new protocol, showing how it can be =
-used with legacy versions payload and transport protocol. I find that =
-odd, but as I understand we have contradicting point of views on IP =
-protocols.
->=20
-> I see what you mean. That's a fair point. We might as well give people
-> an opportunity for trying things out, indeed.
->=20
-> Currently the scripts on the server don't support that, so I'll have
-> to write a small bit of code, but it shouldn't be too bad. I'll circle
-> back in a few weeks.
->=20
-> Jason
+Sounds sketchy. Egbert - take the lead, you're the boss, no obligation
+to work with sketchorama if you find this weird too.
