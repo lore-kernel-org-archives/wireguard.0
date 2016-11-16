@@ -1,24 +1,27 @@
-Return-Path: mail@danrl.com
-Received: from mx.sealand.io (mx.sealand.io [193.160.39.68])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2b1ca637
+Return-Path: Jason@zx2c4.com
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 522977d8
  for <wireguard@lists.zx2c4.com>;
- Wed, 16 Nov 2016 16:59:21 +0000 (UTC)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 10.1 \(3251\))
-From: =?utf-8?Q?Dan_L=C3=BCdtke?= <mail@danrl.com>
-In-Reply-To: <CAHmME9pX8iG67Mz_0zN-biOTyGXtm2DjRtQQwJTw9UTxz3ar4w@mail.gmail.com>
-Date: Wed, 16 Nov 2016 18:04:38 +0100
-Message-Id: <1F78626C-0102-4833-8E86-AEC1403507BF@danrl.com>
-References: <A124E9F5-B1CF-4904-A849-EEAAD788030C@danrl.com>
- <55998A34-BCEC-4693-ABC4-48AC108F7A64@danrl.com>
- <39B38656-DD06-43E8-BC20-BAF5BC622EBA@danrl.com>
- <20161116081527.GB14469@tuxmachine.polynome.dn42>
- <E0BFF696-C9B9-45BC-98E5-E736C1AE11EF@danrl.com>
- <CAHmME9ph6MXEkwTdSgQ5MBRAimOv512zNjipxAo+qXSbLDpscg@mail.gmail.com>
- <CAHmME9pX8iG67Mz_0zN-biOTyGXtm2DjRtQQwJTw9UTxz3ar4w@mail.gmail.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+ Wed, 16 Nov 2016 17:36:56 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 01765e34
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 16 Nov 2016 17:36:56 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 44278f44
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 16 Nov 2016 17:36:56 +0000 (UTC)
+Received: by mail-wm0-f52.google.com with SMTP id t79so88032132wmt.0
+ for <wireguard@lists.zx2c4.com>; Wed, 16 Nov 2016 09:39:47 -0800 (PST)
+MIME-Version: 1.0
+In-Reply-To: <CAKXLc7fZYEejEu0FmATWX6_8aAPRUxkPL429UK-39TGsFF4aUA@mail.gmail.com>
+References: <CAKXLc7fZYEejEu0FmATWX6_8aAPRUxkPL429UK-39TGsFF4aUA@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 16 Nov 2016 18:39:45 +0100
+Message-ID: <CAHmME9ordFZD8ESpTr9BEsedocoFDWjBwkWf43ke4X-m-bvibQ@mail.gmail.com>
+To: Kalin KOZHUHAROV <me.kalin@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: [WireGuard] Wireguard in OpenWRT/LEDE: FYI: Pull Request
+Subject: Re: [WireGuard] RFE: A notion of VERSION (was: Debugging AllowedIps)
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -28,53 +31,10 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
+The best I could come with:
 
-> The config value has to be the same to correlate them. In that case,
-> you should show an example with multiple peers, so that it's clear
-> what's happening.
+> WIREGUARD_VERSION := $(shell parent_name=$$(readlink -f .. | sed -n 's:.*/[wW]ire[Gg]uard[a-z-]*-\([0-9.]\+\)$$:\1:p');  if [ -d ../.git ]; then echo "git-$$(git rev-parse --shor
+t HEAD)"; elif [ -n $parent_name ]; then echo "$$parent_name"; else
+echo "unknown"; fi)
 
-It says "Peer configurations are managed via one or more =
-wireguard_<ifname> sections." to introduce the example. However, won't =
-hurt to add another peer for clarification.
-
-Consider it done :)
-
-DUMP:
-
-Create a WireGuard tunnel interface named ''foo'' that connects to one =
-peer (VPN server at vpn.example.com) and allows another peer (e.g. road =
-warrior) to connect.
-Peer configurations are managed via one or more ''wireguard_<ifname>'' =
-sections.
-
-<code>
-config interface 'foo'
-	option proto 'wireguard'
-	option private_key =
-'qLvQnx5CpXPDo6oplzdIvXLNqkbgpXip3Yv4ouHWZ0Q=3D'
-	option preshared_key =
-'M1IbkkDVwXsQbFbURiMXiVe/iUCjC5TKHCmemVs+oLQ=3D'
-
-config wireguard_foo
-	option public_key '9mD+mTiOp7SGIkB4t3ZfWAcfp5iA/WwQRdVypKKwrjY=3D'=
-
-	option route_allowed_ips '1'
-	list allowed_ips 'fd00:13:37::/48'
-	option endpoint_host 'vpn.example.com'
-	option persistent_keepalive '25'
-
-config wireguard_foo
-	option public_key '4mLeSytW6/y4UcOT6rNorw1Ae9nXSxhXUjxsdzMWkUA=3D'=
-
-	list allowed_ips 'fd00:13:37:ffff::23'
-</code>
-
-To use static addresses on a WireGuard interface, create a static =
-address configuration on top of the interface.
-
-<code>
-config interface 'bar'
-	option proto 'static'
-	option ifname 'foo'
-	option ip6addr 'fd00:13:37::2/64'
-</code>=
+Is this reliable, or is this garbage?
