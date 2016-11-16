@@ -1,19 +1,27 @@
-Return-Path: egbert@eggiecode.org
-Received: from mail01.eggieservers.nl (mail01.eggieservers.nl
- [149.210.159.147])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c5af1cd0
+Return-Path: Jason@zx2c4.com
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 587f7c24
  for <wireguard@lists.zx2c4.com>;
- Tue, 15 Nov 2016 23:38:50 +0000 (UTC)
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>
-References: <CAHmME9r24tV2RmNYQfxvdF_0L_egYFek0xeqNZS5UNuZjN5N4Q@mail.gmail.com>
-From: Egbert Verhage <egbert@eggiecode.org>
-Message-ID: <7a9a422b-ad5e-f6a2-7078-26930f2177f5@eggiecode.org>
-Date: Wed, 16 Nov 2016 00:41:25 +0100
+ Wed, 16 Nov 2016 00:09:22 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cf451bee
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 16 Nov 2016 00:09:22 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id e4592716
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 16 Nov 2016 00:09:22 +0000 (UTC)
+Received: by mail-wm0-f51.google.com with SMTP id f82so35773376wmf.1
+ for <wireguard@lists.zx2c4.com>; Tue, 15 Nov 2016 16:12:07 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9r24tV2RmNYQfxvdF_0L_egYFek0xeqNZS5UNuZjN5N4Q@mail.gmail.com>
-Content-Type: multipart/alternative;
- boundary="------------36131C1A6A8CC2C53F14FDCB"
+In-Reply-To: <454ad249-3313-9423-c2d4-7602d56849fc@eggiecode.org>
+References: <CAHmME9r24tV2RmNYQfxvdF_0L_egYFek0xeqNZS5UNuZjN5N4Q@mail.gmail.com>
+ <454ad249-3313-9423-c2d4-7602d56849fc@eggiecode.org>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 16 Nov 2016 01:12:05 +0100
+Message-ID: <CAHmME9p6mTNPuRgwqdzEx=emjtvh-R3R5HdSOB=E68_tQxdP5Q@mail.gmail.com>
+To: Egbert Verhage <egbert@eggiecode.org>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset=UTF-8
 Subject: Re: [WireGuard] Seeking Ubuntu PPA Maintainer
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
@@ -24,145 +32,47 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-This is a multi-part message in MIME format.
---------------36131C1A6A8CC2C53F14FDCB
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
+Hey Egbert,
 
-On 2016-11-15 21:44, Jason A. Donenfeld wrote:
-> Hey folks,
->
-> Looks like there are various Ubuntu PPAs for WireGuard floating
-> around. I'd like to officially endorse one on the install section of
-> the website. Is anybody interested in being the Ubuntu downstream for
-> WireGuard?
->
-> Thanks,
-> Jason
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> http://lists.zx2c4.com/mailman/listinfo/wireguard
-
-Hey Jason,
-
-I'm trying to maintain one now, but it is my first one and trying to
-keep it up to date.
-https://launchpad.net/~eggiecode/+archive/ubuntu/wireguard
-
-Testing it constantly on 4 of my servers and works it great!
-Even added a patch for ifupdown to setup WireGuard in
-/etc/network/interfaces
-
-The only downside is that I disabled AVX2 cpu extention in the code,
-because of kernel panics on VPS's by a hosting company
-(https://eggiecode.org/wg-kernel-panic.png).
-
-Greetz,
-Egbert Verhage
-
-Below example config of wireguard in network/interfaces
-
-iface wg0 inet wireguard
-        netmask 255.255.255.0
-        address 192.168.2.254
-        wg_config /etc/network/wg0.ini
-
-        up ip -4 route add 10.20.1.0/24 dev wg0
-        pre-down ip -4 route del 10.20.1.0/24 dev wg0
-        up ip -4 route add 10.20.3.0/24 dev wg0
-        pre-down ip -4 route del 10.20.3.0/24 dev wg0
-        up ip -4 route add 10.20.2.0/24 dev wg0
-        pre-down ip -4 route del 10.20.2.0/24 dev wg0
-
-iface wg0 inet6 wireguard
-        netmask 64
-        address fd4a:2831:fc20:f528:fe::1
-
-        up ip -6 route add 2001:41d0:2:5c39::/64 dev wg0
-        pre-down ip -6 route del 2001:41d0:2:5c39::/64 dev wg0
-        up ip -6 route add 2a00:f10:700:5f::/60 dev wg0
-        pre-down ip -6 route del 2a00:f10:700:5f::/60 dev wg0
-        up ip -6 route add 2001:41d0:d:2a83::/64 dev wg0
-        pre-down ip -6 route del 2001:41d0:d:2a83::/64 dev wg0
-
-(Forgot to send it to the mailinglist.)
+Great to see! How much does this deviate from debian's? As far as I
+can tell, you should be able to keep things basically the same.
 
 
---------------36131C1A6A8CC2C53F14FDCB
-Content-Type: text/html; charset=windows-1252
-Content-Transfer-Encoding: 7bit
+> Testing it constantly on 4 of my servers and works it great!
+Happy to hear that.
 
-<html>
-  <head>
-    <meta content="text/html; charset=windows-1252"
-      http-equiv="Content-Type">
-  </head>
-  <body bgcolor="#FFFFFF" text="#000000">
-    On 2016-11-15 21:44, Jason A. Donenfeld wrote:<br>
-    <blockquote
-cite="mid:CAHmME9r24tV2RmNYQfxvdF_0L_egYFek0xeqNZS5UNuZjN5N4Q@mail.gmail.com"
-      type="cite">
-      <pre wrap="">Hey folks,
+> Even added a patch for ifupdown to setup WireGuard in
+> /etc/network/interfaces
+Cool!
 
-Looks like there are various Ubuntu PPAs for WireGuard floating
-around. I'd like to officially endorse one on the install section of
-the website. Is anybody interested in being the Ubuntu downstream for
-WireGuard?
 
-Thanks,
+> The only downside is that I disabled AVX2 cpu extention in the code,
+> because of kernel panics on VPS's by a hosting company
+> (https://eggiecode.org/wg-kernel-panic.png).
+
+This isn't okay. Downstream packages really shouldn't be applying
+patches like that. If you revert that, I can list this as the primary
+PPA for WireGuard. With that said, let's actually try to fix this
+issue for good...
+
+AVX2 is advertised through CPUID. Is it possible that your VPS passes
+through the CPUID from the host while not supporting all instructions?
+Or perhaps, rather, fakes a CPUID that isn't the host's, while only
+supporting instructions of the host? Very mysterious. What hosting
+company is this? Is there a chance I can poke around at this setup? Do
+you know if it's KVM or Xen or VMWare or something else?
+
+If it turns out that your VPS host just does something horrible, I'll
+look for a way to globally disable kernel usage of AVX2, without
+having to patch WireGuard like that. If it's particular to the host,
+perhaps we can come up with either a particular kernel module to do
+the disabling, or some ungodly hack to /dev/kmem... Are you compiling
+your own kernel for this system, or just using stock Ubuntu kernel?
+
+I'm pretty sure, by the way, that we're using the right detection
+function within WireGuard, seeing as every other place in the tree
+uses the same thing: https://paste.kde.org/pdljfawf7/79eh62 .
+
+Thanks a bunch for helping out.
+
 Jason
-_______________________________________________
-WireGuard mailing list
-<a class="moz-txt-link-abbreviated" href="mailto:WireGuard@lists.zx2c4.com">WireGuard@lists.zx2c4.com</a>
-<a class="moz-txt-link-freetext" href="http://lists.zx2c4.com/mailman/listinfo/wireguard">http://lists.zx2c4.com/mailman/listinfo/wireguard</a>
-</pre>
-    </blockquote>
-    <br>
-    <pre wrap="">Hey Jason,
-
-I'm trying to maintain one now, but it is my first one and trying to
-keep it up to date.
-<a class="moz-txt-link-freetext" href="https://launchpad.net/%7Eeggiecode/+archive/ubuntu/wireguard">https://launchpad.net/~eggiecode/+archive/ubuntu/wireguard</a>
-
-Testing it constantly on 4 of my servers and works it great!
-Even added a patch for ifupdown to setup WireGuard in
-/etc/network/interfaces
-
-The only downside is that I disabled AVX2 cpu extention in the code,
-because of kernel panics on VPS's by a hosting company
-(<a class="moz-txt-link-freetext" href="https://eggiecode.org/wg-kernel-panic.png">https://eggiecode.org/wg-kernel-panic.png</a>).
-
-Greetz,
-Egbert Verhage
-
-Below example config of wireguard in network/interfaces
-
-iface wg0 inet wireguard
-        netmask 255.255.255.0
-        address 192.168.2.254
-        wg_config /etc/network/wg0.ini
-
-        up ip -4 route add 10.20.1.0/24 dev wg0
-        pre-down ip -4 route del 10.20.1.0/24 dev wg0
-        up ip -4 route add 10.20.3.0/24 dev wg0
-        pre-down ip -4 route del 10.20.3.0/24 dev wg0
-        up ip -4 route add 10.20.2.0/24 dev wg0
-        pre-down ip -4 route del 10.20.2.0/24 dev wg0
-
-iface wg0 inet6 wireguard
-        netmask 64
-        address fd4a:2831:fc20:f528:fe::1
-
-        up ip -6 route add 2001:41d0:2:5c39::/64 dev wg0
-        pre-down ip -6 route del 2001:41d0:2:5c39::/64 dev wg0
-        up ip -6 route add 2a00:f10:700:5f::/60 dev wg0
-        pre-down ip -6 route del 2a00:f10:700:5f::/60 dev wg0
-        up ip -6 route add 2001:41d0:d:2a83::/64 dev wg0
-        pre-down ip -6 route del 2001:41d0:d:2a83::/64 dev wg0
-
-(Forgot to send it to the mailinglist.)</pre>
-  </body>
-</html>
-
---------------36131C1A6A8CC2C53F14FDCB--
