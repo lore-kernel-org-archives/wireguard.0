@@ -1,23 +1,21 @@
-Return-Path: dkg@fifthhorseman.net
-Received: from che.mayfirst.org (che.mayfirst.org [162.247.75.118])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 98dfbfea
+Return-Path: baptiste@bitsofnetworks.org
+Received: from mails.bitsofnetworks.org (rezine.polyno.me [193.33.56.138])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 42fe1b4c
  for <wireguard@lists.zx2c4.com>;
- Wed, 16 Nov 2016 07:29:04 +0000 (UTC)
-From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-To: Egbert Verhage <egbert@eggiecode.org>,
- "Jason A. Donenfeld" <Jason@zx2c4.com>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>
-In-Reply-To: <82c49c47-1779-2c6c-8797-9f02f138fb6e@eggiecode.org>
-References: <CAHmME9r24tV2RmNYQfxvdF_0L_egYFek0xeqNZS5UNuZjN5N4Q@mail.gmail.com>
- <454ad249-3313-9423-c2d4-7602d56849fc@eggiecode.org>
- <CAHmME9p6mTNPuRgwqdzEx=emjtvh-R3R5HdSOB=E68_tQxdP5Q@mail.gmail.com>
- <82c49c47-1779-2c6c-8797-9f02f138fb6e@eggiecode.org>
-Date: Wed, 16 Nov 2016 15:45:16 +0900
-Message-ID: <87lgwj9b43.fsf@alice.fifthhorseman.net>
+ Wed, 16 Nov 2016 08:12:41 +0000 (UTC)
+Date: Wed, 16 Nov 2016 09:15:27 +0100
+From: Baptiste Jonglez <baptiste@bitsofnetworks.org>
+To: Dan =?iso-8859-1?Q?L=FCdtke?= <mail@danrl.com>
+Message-ID: <20161116081527.GB14469@tuxmachine.polynome.dn42>
+References: <A124E9F5-B1CF-4904-A849-EEAAD788030C@danrl.com>
+ <55998A34-BCEC-4693-ABC4-48AC108F7A64@danrl.com>
+ <39B38656-DD06-43E8-BC20-BAF5BC622EBA@danrl.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Subject: Re: [WireGuard] Seeking Ubuntu PPA Maintainer
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="eJnRUKwClWJh1Khz"
+In-Reply-To: <39B38656-DD06-43E8-BC20-BAF5BC622EBA@danrl.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Subject: Re: [WireGuard] Wireguard in OpenWRT/LEDE: FYI: Pull Request
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -27,51 +25,96 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---=-=-=
-Content-Type: text/plain
 
-Hi Egbert--
+--eJnRUKwClWJh1Khz
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Wed 2016-11-16 09:34:12 +0900, Egbert Verhage wrote:
-> I just copyed the debian folder of the experimental package of the
-> debian repo.
+On Tue, Nov 15, 2016 at 05:01:14PM +0100, Dan L=FCdtke wrote:
+> thanks for the various feedback, guys! Here is the next round:
+>=20
+> https://github.com/openwrt/packages/pull/3514
 
-I'm the package maintainer in debian.  Glad to hear that my packaging
-work has been useful for you.
+This one is now merged, thanks for the work Dan!
 
-If you're tracking the debian packaging, you might also be interested in
-the revision control history of it:
+I have documented the various options here:
 
-    git clone https://anonscm.debian.org/git/collab-maint/wireguard.git
+  https://wiki.lede-project.org/docs/user-guide/tunneling_interface_protoco=
+ls#protocol_wireguard_wireguard_vpn
 
-If you find that there are specific changes to the debian packaging that
-you find useful when packaging for ubuntu, i'd be happy to hear about
-them.  Also, if you run into packaging difficulties and want someone to
-brainstorm with, feel free to reach out.
+If somebody has time, it would be good to include one or two examples at
+the end of the page (otherwise I'll do it at some point).
 
-Regards,
+Baptiste
 
-        --dkg
+> > On 13 Nov 2016, at 23:52, Dan L=FCdtke <mail@danrl.com> wrote:
+> >=20
+> > Hi again,
+> >=20
+> > here is the pull request for LuCi:
+> > https://github.com/openwrt/luci/pull/848
+> >=20
+> > Please support this pull request as well.
+> >=20
+> > Thanks for all the beta testers and also to Jason and Baptiste for thei=
+r help.
+> >=20
+> > It was a great pleasure supporting this project.
+> >=20
+> > Cheers,
+> >=20
+> > Dan
+> >=20
+> >=20
+> >> On 13 Nov 2016, at 23:35, Dan L=FCdtke <mail@danrl.com> wrote:
+> >>=20
+> >> Hi all,
+> >>=20
+> >> first step of OpenWRT/LEDE integration is making sure the helper scrip=
+t for configuring the interface is installed. The corresponding pull reques=
+t can be found here:
+> >> https://github.com/openwrt/packages/pull/3512
+> >>=20
+> >> Please support this pull request.
+> >> Once it is accepted, the GUI (luci) will follow.
+> >>=20
+> >> Thanks,
+> >>=20
+> >> Dan
+> >> _______________________________________________
+> >> WireGuard mailing list
+> >> WireGuard@lists.zx2c4.com
+> >> http://lists.zx2c4.com/mailman/listinfo/wireguard
+> >=20
+> > _______________________________________________
+> > WireGuard mailing list
+> > WireGuard@lists.zx2c4.com
+> > http://lists.zx2c4.com/mailman/listinfo/wireguard
+>=20
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> http://lists.zx2c4.com/mailman/listinfo/wireguard
 
---=-=-=
+--eJnRUKwClWJh1Khz
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQKTBAEBCgB9FiEE7bLnT1b88rZyl7c1JOz/Wv9oNwoFAlgsAHxfFIAAAAAALgAo
-aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldEVE
-QjJFNzRGNTZGQ0YyQjY3Mjk3QjczNTI0RUNGRjVBRkY2ODM3MEEACgkQJOz/Wv9o
-NwrSjQ//SEqfcZFFMlg9EaI4CH/mJbPUrkOOr118BM26sZr9dROK47RHpxRpkO4g
-6sRwBQFpANzOoBjNWigK7bsFz8KOGg0tDaNbqjAn9OcC6bbhcp8hF1vs6nR1Jb53
-QwL00FrQRVLh2fTOh+DU5LHW5nhbfY8NnDW5Xx+rEynDcAEGG4xusvczJU140wam
-zCVkqPVYr+WVsBFeeuq1gyP4WMd1a5ahOg1G6loifrCr9uYp45bPwz3Qqf2UPjLY
-VO+cHah2zEvvnq0rZvGlOFaw5RepWFx17n5RFMPXWT7Vc3yypX+cetNE+j18iZsO
-J29tqAX8cRJGL8+884ZH/BKvr+6P2m9PdRGuXK1Ob6OdoYFi5XV31RCpWnsa6xwb
-IgPFF1ED9xf6QwoHotk4X2VQtvbTFADTLj9rwWiSfkHd6gAvxXVZTkBH5CiRf0MD
-QixMmrpEMO1vPN2s6BwifNqBHCYFiyURqCGAubpMiSISr3epZMYqbTS9ABmvbe/n
-RU+NontiHE2hjvoWVnJwAq1tSV/d59LYKmhqnGLXPiu1S3W5yg6f/ef7f+MPK1qj
-ehYUFStsfYSXuxG+DDGd53qO20lsfW7Sq+dTrMlJAlLN2NRbpWg+HhqjJldITVrH
-YvjlhTBeu5nHkF512ln483s9w9wAA6FO4AQnSQZUUI+I816M3dM=
-=4D+A
+iQIcBAEBCAAGBQJYLBWfAAoJEL4B7CKgTi5GTToQAJT2Wuf7cUhO4z9AtNwStBeW
+LErtNPzHtOpc9+zOBVuMpaiho7rS1TL0FM5/wVE2aeHY8dWoOWJiX1waMu0BLypf
+I4z5XBYq0Ma518buze54aPAwj0MPczl2M470/pjHd0WwM4aWT9hybrX3TJJMYCUr
+GGKxwX/QtjE/QgwHJHXzakfGtxgiugnmxTWLrBv9KsTpmYzq6Zl1elCdYw16zAAF
+GuJVB6jJ7Vwp0qy3xaOIQAoc5RqJijgrWNmaqQ+7eHGn0HwqF/GW6ys7oA2enswP
+S9Fjnm3rCPgOBBf1fluAqsUagSV4TxNhL+BhSznmnlmzwh+llRPgyVQSXgCiGvjq
+SfCXxwSxuQGT2LtB58e9R4yUVTceBKjpHOLvb3VMMTIZJY2ftlnv0KuJ8XZVhTSf
+rb00PKAQ4bCufqGwfjDuHLM0cZsJrKRW6inZcHtXAH4BHYt+EImazedZzVXwMHdH
+g7xfmEbOeAFjhculB1FH45SrmkJOr09CM9uRO/F1GPNTLQzurf9fm7UA45mmzqmj
+/IN7cUGRQRroF37jzpX6TTH7W+NxDuwo2hWiPZo8Y/9HGucp6aEgPbkvodUiqqpg
+pKsrpoljwxAgek9kxMeYLYVgZ/oofYZbRqcUHGC8j8ARddhCgtHdiW0aigwJVzn9
+tvwMGBCdx3HzPMJhZ6/p
+=xvGk
 -----END PGP SIGNATURE-----
---=-=-=--
+
+--eJnRUKwClWJh1Khz--
