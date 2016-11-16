@@ -1,19 +1,18 @@
-Return-Path: mail@danrl.com
-Received: from mx.sealand.io (mx.sealand.io [193.160.39.68])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7b58476f
+Return-Path: admin@hda.me
+Received: from sender163-mail.zoho.com (sender163-mail.zoho.com
+ [74.201.84.163])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7a874dca
  for <wireguard@lists.zx2c4.com>;
- Wed, 16 Nov 2016 14:32:46 +0000 (UTC)
-Content-Type: text/plain; charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 10.1 \(3251\))
-From: =?utf-8?Q?Dan_L=C3=BCdtke?= <mail@danrl.com>
-In-Reply-To: <CAHmME9r0tdR8=nnC4yPLJoOE8yU_7iJi0qEpx9POyM3OBZ3otQ@mail.gmail.com>
-Date: Wed, 16 Nov 2016 15:38:05 +0100
-Message-Id: <44DAF4D4-00A8-4903-8003-EB0215635B61@danrl.com>
-References: <A7E34EE0-F8F0-4F88-AA94-58434D0DF2BA@danrl.com>
- <CAHmME9r0tdR8=nnC4yPLJoOE8yU_7iJi0qEpx9POyM3OBZ3otQ@mail.gmail.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: [WireGuard] Demo Server: Dual stack?
+ Wed, 16 Nov 2016 14:34:19 +0000 (UTC)
+Date: Wed, 16 Nov 2016 15:37:01 +0100
+From: Anonymous Anonymous <admin@hda.me>
+To: <wireguard@lists.zx2c4.com>,  <egbert@eggiecode.org>
+Message-Id: <1586d91cadd.12007ba4a910.7227905130772903531@hda.me>
+In-Reply-To: 
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="----=_Part_2170_343889853.1479307021023"
+Subject: Re: [WireGuard] Seeking Ubuntu PPA Maintainer
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -23,64 +22,21 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Jason,
+------=_Part_2170_343889853.1479307021023
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-> I guess I could provide IPv6 connectivity, but.... why? It's a demo.
-
-Because it is a demo of a brand new protocol, showing how it can be used =
-with legacy versions payload and transport protocol. I find that odd, =
-but as I understand we have contradicting point of views on IP =
-protocols.
-
-> If you're using it as an access point to the Internet with intentions
-> beyond simply trying out WireGuard, then you're abusing my service.
-
-I am not using it at all. But it would be useful for howtos and blog =
-posts to reference it. I don't use vintage IP in my posts, so I can't =
-refer to the official demo server.
-
-Since many potential peers are behind NATs using RFC1918 legacy IP =
-addresses AND have global unicast IP addresses (which are easier to =
-whitelist in a firewall than maintaining port forwarding in networks =
-using a dynamic configuration protocol) I expect WireGuard to be =
-especially useful using IPv6 as transport.
-
-BTW, I don't see any reason why the demo server should forward to the =
-Internet at all. Connectivity between peers/server and accessing the =
-hidden website would be enough for my usecase (howtos/blog posts), which =
-may be a different one than what you intended when you setup the server.=20=
+&gt;You too both maintain Ubuntu PPAs. Could you decide some way of &gt;consolidating your efforts? Egbert heeded to the call for help first, &gt;so if it comes down to choosing a repository, choosing his would be &gt;most fair. But you can work it out amongst yourselves.
+I could join Egbert. We could create group on launchpad, I can give publishing permission to current hda PPA, or join Egbert's. Not a big difference for me.
+Egbert pls contact me privately about that, basically I need to know you idea about PPA. Do we need group on launchpad? What PPA you want us to use and etc.
+Btw, as for jabber Jason, seems like I need to search for new tor gateway, thats why I disconnected.
 
 
-> I'm happy to consider this, but I'll need to be convinced that this
-> actually matters.
 
-Unfortunately :) I, for one, need to be convinced why I should create =
-lasting documentation using an EOL IP protocol. Why does IPv4 matter =
-more than IPv6? Usually, latency is better when using IPv6. Latency is =
-probably the first thing demo users test (ping through the tunnel).
 
-However, if you like to share some information how to set up one myself, =
-I am happy to host a IPv6 demo server. Currently I am wondering how to =
-accept *any* public key in the [Peer] config.
+------=_Part_2170_343889853.1479307021023
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-Cheers,
-
-Dan
-
-> Jason
->=20
-> On Wed, Nov 16, 2016 at 12:39 PM, Dan L=C3=BCdtke <mail@danrl.com> =
-wrote:
->> Jason,
->>=20
->> do you plan on adding IPv6 compatibility to the demo server? If not, =
-do you mind if I set one up? How difficult is it to run the demo server. =
-It just accepts every key, right?
->>=20
->> Cheers,
->>=20
->> Dan
->> _______________________________________________
->> WireGuard mailing list
->> WireGuard@lists.zx2c4.com
->> http://lists.zx2c4.com/mailman/listinfo/wireguard
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html><head><meta content="text/html;charset=UTF-8" http-equiv="Content-Type"></head><body ><div style='font-size:10pt;font-family:Verdana,Arial,Helvetica,sans-serif;'><pre>&gt;You too both maintain Ubuntu PPAs. Could you decide some way of &gt;consolidating your efforts? Egbert heeded to the call for help first, &gt;so if it comes down to choosing a repository, choosing his would be &gt;most fair. But you can work it out amongst yourselves.<br>I could join Egbert. We could create group on launchpad, I can give publishing permission to current hda PPA, or join Egbert's. Not a big difference for me.<br>Egbert pls contact me privately about that, basically I need to know you idea about PPA. Do we need group on launchpad? What PPA you want us to use and etc.<br>Btw, as for jabber Jason, seems like I need to search for new tor gateway, thats why I disconnected.<br></pre><br><br></div></body></html>
+------=_Part_2170_343889853.1479307021023--
