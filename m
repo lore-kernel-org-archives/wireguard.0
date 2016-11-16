@@ -1,22 +1,20 @@
 Return-Path: egbert@eggiecode.org
 Received: from mail01.eggieservers.nl (mail01.eggieservers.nl
  [149.210.159.147])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4cdc3d78
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a9e0ab96
  for <wireguard@lists.zx2c4.com>;
- Wed, 16 Nov 2016 15:05:26 +0000 (UTC)
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-References: <CAHmME9pWgcg3L9p1m8SPvy1NurLrPeG2E4km-9oEZAgPktZSRg@mail.gmail.com>
- <36857d90-99e4-ddff-3c21-49bde6f8d349@eggiecode.org>
- <CAHmME9oZf4mWMg_5eqs7E=75BPz8cUcUO9iYb2NGCLuWCxMecg@mail.gmail.com>
+ Wed, 16 Nov 2016 15:06:04 +0000 (UTC)
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>, Anonymous Anonymous <admin@hda.me>
+References: <1586d91cadd.12007ba4a910.7227905130772903531@hda.me>
+ <CAHmME9qXeKA=8txs+AgtpA7N1HHefCbLGanNc6P=b7KXo3mkxQ@mail.gmail.com>
 From: Egbert Verhage <egbert@eggiecode.org>
-Message-ID: <b0c94902-6ba4-1a3a-94da-6fba3ec00588@eggiecode.org>
-Date: Wed, 16 Nov 2016 16:08:12 +0100
+Message-ID: <cd838e68-5c43-ec01-4d8b-73f4bf313ceb@eggiecode.org>
+Date: Wed, 16 Nov 2016 16:08:50 +0100
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9oZf4mWMg_5eqs7E=75BPz8cUcUO9iYb2NGCLuWCxMecg@mail.gmail.com>
+In-Reply-To: <CAHmME9qXeKA=8txs+AgtpA7N1HHefCbLGanNc6P=b7KXo3mkxQ@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: [WireGuard] Hosting Companies with Dishonest CPUID [Was: Re:
- Seeking Ubuntu PPA Maintainer]
+Subject: Re: [WireGuard] Seeking Ubuntu PPA Maintainer
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,10 +24,14 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-:D. That is great solution, thank you!
-
-
-On 2016-11-16 16:05, Jason A. Donenfeld wrote:
-> https://git.zx2c4.com/WireGuard/commit/?id=34df71964861e7ea5f542bac0225c8b82bb8d9b2
->
-> This commit should work around things.
+On 2016-11-16 16:00, Jason A. Donenfeld wrote:
+> On Wed, Nov 16, 2016 at 3:37 PM, Anonymous Anonymous <admin@hda.me> wrote:
+>> Btw, as for jabber Jason, seems like I need to search for new tor gateway,
+>> thats why I disconnected.
+> Sounds sketchy. Egbert - take the lead, you're the boss, no obligation
+> to work with sketchorama if you find this weird too.
+Ok, can get that.
+PPA under the group wireguard: 
+https://launchpad.net/~wireguard/+archive/ubuntu/wireguard
+Or my one: https://launchpad.net/~eggiecode/+archive/ubuntu/wireguard
+GIT: https://code.launchpad.net/~eggiecode/wireguard/+git/wireguard
