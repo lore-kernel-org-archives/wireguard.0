@@ -1,35 +1,31 @@
 Return-Path: Jason@zx2c4.com
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 28c3a62d
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 747d6931
  for <wireguard@lists.zx2c4.com>;
- Wed, 16 Nov 2016 22:49:47 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 27a0c58b
+ Fri, 18 Nov 2016 04:57:49 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 53073f08
  for <wireguard@lists.zx2c4.com>;
- Wed, 16 Nov 2016 22:49:47 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 14f45053
+ Fri, 18 Nov 2016 04:57:49 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 4a30212c
  (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 16 Nov 2016 22:49:46 +0000 (UTC)
-Received: by mail-wm0-f50.google.com with SMTP id g23so272769414wme.1
- for <wireguard@lists.zx2c4.com>; Wed, 16 Nov 2016 14:52:38 -0800 (PST)
+ Fri, 18 Nov 2016 04:57:48 +0000 (UTC)
+Received: by mail-wm0-f43.google.com with SMTP id a197so14291939wmd.0
+ for <wireguard@lists.zx2c4.com>; Thu, 17 Nov 2016 21:00:50 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <87bmxf6pe8.fsf@alice.fifthhorseman.net>
-References: <CAHmME9r24tV2RmNYQfxvdF_0L_egYFek0xeqNZS5UNuZjN5N4Q@mail.gmail.com>
- <454ad249-3313-9423-c2d4-7602d56849fc@eggiecode.org>
- <CAHmME9p6mTNPuRgwqdzEx=emjtvh-R3R5HdSOB=E68_tQxdP5Q@mail.gmail.com>
- <82c49c47-1779-2c6c-8797-9f02f138fb6e@eggiecode.org>
- <87lgwj9b43.fsf@alice.fifthhorseman.net>
- <c5b6cb19-32b8-7f7c-f3f0-ac542579917a@eggiecode.org>
- <CAHmME9q7GX2CzYDxQC-W7nmjAeRkht+1hQxFRr22be5E244J+Q@mail.gmail.com>
- <87bmxf6pe8.fsf@alice.fifthhorseman.net>
+In-Reply-To: <CAHmME9oPuqAaQe1VKjjoy_VBwBe70TiKW_NJPs46HpBZyKj2RA@mail.gmail.com>
+References: <CAKXLc7fZYEejEu0FmATWX6_8aAPRUxkPL429UK-39TGsFF4aUA@mail.gmail.com>
+ <CAHmME9ordFZD8ESpTr9BEsedocoFDWjBwkWf43ke4X-m-bvibQ@mail.gmail.com>
+ <CAHmME9oDp1R87utxJaL6hHimDedC66RVr+Hj_DXp07wc-jRynQ@mail.gmail.com>
+ <87shqr6sw1.fsf@alice.fifthhorseman.net>
+ <CAHmME9oPuqAaQe1VKjjoy_VBwBe70TiKW_NJPs46HpBZyKj2RA@mail.gmail.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 16 Nov 2016 23:52:36 +0100
-Message-ID: <CAHmME9r9+mKobBpTCEXtShaCGg_3q5bc0g5QUFKD0MtFwrqn0A@mail.gmail.com>
+Date: Fri, 18 Nov 2016 06:00:48 +0100
+Message-ID: <CAHmME9qWoStPA8evwkjH7OPGioGHsVoOsiie2ognTmmBo1c9WQ@mail.gmail.com>
 To: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
 Content-Type: text/plain; charset=UTF-8
-Cc: Egbert Verhage <egbert@eggiecode.org>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: [WireGuard] Seeking Ubuntu PPA Maintainer
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Subject: Re: [WireGuard] RFE: A notion of VERSION (was: Debugging AllowedIps)
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -39,15 +35,19 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hey Daniel,
+https://git.zx2c4.com/WireGuard/commit/?id=258d0b33a5087558447b319273c37c89445d3ae0
 
-On Wed, Nov 16, 2016 at 11:17 PM, Daniel Kahn Gillmor
-<dkg@fifthhorseman.net> wrote:
->    https://qa.debian.org/madison.php?package=wireguard
+There we go. My release script looks like this:
 
-Perfect, thanks. I wound up using:
-https://qa.debian.org/madison.php?package=wireguard&table=debian&a=&c=&g=on&s=&text=on
-And then I just match on the capture group in:
-    >= ([0-9.]+)-experimental[0-9]+
-
-Jason
+zx2c4@thinkpad ~/Projects/WireGuard $ cat maint/release.sh
+#!/bin/sh
+set -ex
+cd "$(dirname "$(readlink -f "$0")")/.."
+date="$(date +%Y%m%d)"
+tag="experimental-0.0.$date"
+git reset --hard
+sed -i "s/\".*\"/\"$tag\"/" src/version.h
+git update-index --no-assume-unchanged src/version.h
+git add src/version.h
+git commit -m "version: bump snapshot"
+git tag "$tag" --sign -m "Experimental snapshot $date"
