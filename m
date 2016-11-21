@@ -1,16 +1,18 @@
-Return-Path: f4136414.dNq.dMV.2g.oxNfmO+wireguard=lists.zx2c4.com@bnc.mailjet.com
-Received: from o119.p4.mailjet.com (o119.p4.mailjet.com [178.33.221.119])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 79ceefab
+Return-Path: a63dbd90.dNq.dMV.H.oxNDgt+wireguard=lists.zx2c4.com@bnc.mailjet.com
+Received: from o22.p4.mailjet.com (o22.p4.mailjet.com [178.33.221.22])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ceef50c3
  for <wireguard@lists.zx2c4.com>;
- Mon, 21 Nov 2016 13:51:44 +0000 (UTC)
-Message-Id: <f4136414.dNq.dMV.2g.oxNfmO@mailjet.com>
+ Mon, 21 Nov 2016 14:03:28 +0000 (UTC)
+Message-Id: <a63dbd90.dNq.dMV.H.oxNDgt@mailjet.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8; format=flowed
 From: Joakim Sindholt <opensource@zhasha.com>
 To: Kalin KOZHUHAROV <me.kalin@gmail.com>
-Date: Mon, 21 Nov 2016 14:55:06 +0100
-In-Reply-To: <CAKXLc7fAG5xErC_vU40qOwxKxWbLAavKmomNwjOiRP=Fh+0tGg@mail.gmail.com>
+Date: Mon, 21 Nov 2016 15:06:53 +0100
+In-Reply-To: <CAKXLc7fQmf=LVrkJ3C5XAYRdimjxNT=xGey9W+qivqLpV+XO7A@mail.gmail.com>
 References: <CAKXLc7fAG5xErC_vU40qOwxKxWbLAavKmomNwjOiRP=Fh+0tGg@mail.gmail.com>
+ <CAHmME9rfB709DCnqiXG2L7kMwCx0bgiSXi2C2LwYR=bX-trNzw@mail.gmail.com>
+ <CAKXLc7fQmf=LVrkJ3C5XAYRdimjxNT=xGey9W+qivqLpV+XO7A@mail.gmail.com>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Subject: Re: [WireGuard] What is a good way to ingrate (as of now) wireguard
  into openrc in Gentoo?
@@ -23,56 +25,54 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Fri, Nov 18, 2016 at 12:42 PM, Kalin KOZHUHAROV <me.kalin@gmail.com> 
+On Mon, Nov 21, 2016 at 6:15 AM, Kalin KOZHUHAROV <me.kalin@gmail.com> 
 wrote:
-> Hello,
+> config_wg0="192.168.13.12/24"
+> wireguard_wg0="/etc/wireguard/wg0.conf"
 > 
-> I have been testing a few things between Gentoo and few OpenWRT 
-> boxen, so far so good. Just saw that Luci config landed, recompiling 
-> now.
+> Finally, symlink to net.lo:
 > 
-> This brings me to "What is a good way to ingrate (as of now) 
-> wireguard into openrc in Gentoo?" question.
+>   ln -nfs net.lo /etc/init.d/net.wg0
 > 
-> I have my scripts, I just found out about 
-> /lib64/netifrc/net/wireguard.sh but I couldn't find a way to edit 
-> /etc/conf.d/net so that I can integrate it.
-> 
-> Since Jason is a Gentoo user/dev I thought that is already solved :-D
+> Then `/etc/init.d/net.wg0 start` and `/etc/init.d/net.wg0 stop` work
+> as expected.
 
-I'm the idiot who wrote it, not Jason - direct your frustration towards 
-me :)
+Yep, that's how it's supposed to be used
 
-The idea is that the wireguard_$if variable is passed to 'wg set' or 
-'wg setconf',
-depending on whether or not it's a single argument and a file.
-You join this with config_$if which is passed to 'ip address', and 
-optionally
-routes_$if to create custom routes and 'rules_$if' which is passed to 
-'ip rule'.
+> EDIT: Add this to /etc/rc.conf to make things run smoothly:
+> rc_hotplug="!net.wg?"
 
-There are a couple of problems with this - the number I've experienced 
-being that
-dhcpcd has no respect for network config it didn't create and so it 
-will happily
-nuke the ip rules every time it renews the dhcp lease.
+I have not experienced any issues like this.
 
-> An example static config for the simple case of
+> However `/etc/init.d/net.wg0 restart` sometimes fails silently...
+> I am trying to reproduce it, but cannot get the pattern of failures.
+> It outputs all fine to the console, but there is no actual interface 
+> created...
 > 
-> host_A:wg0<----->wg0:host_B
+> [...]
 > 
-> and
+> I tried to debug a few things and my observation is that "sometimes",
+> interface is reappearing after `ip link delete dev wg0`...
+> Any ideas? I thought am not running any automagic daemons (systemd,
+> networkmanager, etc.).
+> But... there is some systemd code lurking may be.
+> Anyway, I added it to be NOT hotplugged:
+> $ grep wg /etc/rc.conf
+> rc_hotplug="pcscd !net.wg?"
 > 
->               /-->wg0:host_B
-> host_A:wg0<--||
->               \-->wg0:host_C
-> 
-> (say where A,B,C share some private subnet) will be appreciated.
+> And it seems to work! Otherwise the interface gets marked as
+> hotpluggable and is being recreated/killed (see the first number  on
+> `ip link show dev wg0` constantly growing)
 
-You can directly follow the terminal examples from eg. the quickstart 
-page.
-Interface creation is automatic so you just need a 
-config_wg0=ip-addr-line and
-wireguard_wg0=wg-set-line and you're golden.
-
-> Any good "default" way to store config files? Private keys?
+Interesting. I've had problems with other programs interfering in the 
+past,
+most notably dhcpcd which would nuke my routing rules, but never this.
+The script is basically just a whittled down version of the pppd.sh 
+script
+and should work in much the same way. I just hacked it up rather quickly
+so it's very possible that I missed something really important.
+I'm running an otherwise bog-standard clean gentoo install with pretty 
+much
+nothing installed and this issue hasn't presented itself so far.
+It's being updated today so I'll get on it if I can reproduce it.
+Pretty weird though...
