@@ -1,29 +1,22 @@
-Return-Path: Jason@zx2c4.com
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 49ced5c8
+Return-Path: baptiste@bitsofnetworks.org
+Received: from mails.bitsofnetworks.org (rezine.polyno.me [193.33.56.138])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2591dbbb
  for <wireguard@lists.zx2c4.com>;
- Mon, 21 Nov 2016 16:57:11 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1df2f512
- for <wireguard@lists.zx2c4.com>;
- Mon, 21 Nov 2016 16:57:10 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id abfb9f9b
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Mon, 21 Nov 2016 16:57:09 +0000 (UTC)
-Received: by mail-wm0-f48.google.com with SMTP id g23so158407299wme.1
- for <wireguard@lists.zx2c4.com>; Mon, 21 Nov 2016 09:00:36 -0800 (PST)
+ Tue, 22 Nov 2016 12:14:17 +0000 (UTC)
+Received: from phare.polynome.dn42 ([172.23.184.97]
+ helo=tuxmachine.polynome.dn42)
+ by mails.bitsofnetworks.org with esmtps
+ (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.84_2)
+ (envelope-from <baptiste@bitsofnetworks.org>) id 1c9A1F-0002Sl-RF
+ for wireguard@lists.zx2c4.com; Tue, 22 Nov 2016 13:17:49 +0100
+Date: Tue, 22 Nov 2016 13:17:48 +0100
+From: Baptiste Jonglez <baptiste@bitsofnetworks.org>
+To: wireguard@lists.zx2c4.com
+Message-ID: <20161122121748.GF20343@tuxmachine.polynome.dn42>
 MIME-Version: 1.0
-In-Reply-To: <f4136414.dNq.dMV.2g.oxNfmO@mailjet.com>
-References: <CAKXLc7fAG5xErC_vU40qOwxKxWbLAavKmomNwjOiRP=Fh+0tGg@mail.gmail.com>
- <f4136414.dNq.dMV.2g.oxNfmO@mailjet.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 21 Nov 2016 18:00:34 +0100
-Message-ID: <CAHmME9or-d8X5Nd-y+WTPxp6TuRWafOSZ97qu6FFFAQ2W5=zkA@mail.gmail.com>
-To: Joakim Sindholt <opensource@zhasha.com>
-Content-Type: text/plain; charset=UTF-8
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: [WireGuard] What is a good way to ingrate (as of now) wireguard
- into openrc in Gentoo?
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="Il7n/DHsA0sMLmDu"
+Subject: [WireGuard] Is nf_conntrack really needed?
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -33,11 +26,48 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Mon, Nov 21, 2016 at 2:55 PM, Joakim Sindholt <opensource@zhasha.com> wrote:
-> There are a couple of problems with this - the number I've experienced being
-> that
-> dhcpcd has no respect for network config it didn't create and so it will
-> happily
-> nuke the ip rules every time it renews the dhcp lease.
 
-Add 'wg*' to denyinterfaces in dhcpcd.conf.
+--Il7n/DHsA0sMLmDu
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+
+Hi,
+
+I stumbled upon a build error on LEDE, which was caused by a missing
+dependency to nf-conntrack (and possibly nf-conntrack6).
+
+I see that NF_CONNTRACK is used only at one place in device.c, and it is
+inconditionally required since 3106d632de ("build system: revamp building
+and configuration").
+
+Is the inconditional dependency really needed?  nf-conntrack{,6}
+introduces another 50 KB of dependencies on LEDE, which means a ~50%
+increase in the amount of flash needed.
+
+By the way, nf-conntrack is already required to do NAT, so this discussion
+is only relevant for (hypothetical) people building their own LEDE images
+without NAT support.
+
+Baptiste
+
+--Il7n/DHsA0sMLmDu
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIcBAEBCAAGBQJYNDdkAAoJEL4B7CKgTi5G+SgP/A+YZaPBJdz6ucarb9m+uLA1
+wIpV6gd8Di2F+6k7ZIziRZ3/BhY6IQlrYnBZdRCyyeEnr1UUdw1fqKdIq4dyQ4cg
+/kbClbG0Iezpz8e3HvvICW3bnefx75iXw6qtI5NWXJsc1dYnBWTayYtJUhkud4As
+OtAqF693kYeZp9y3HKnkVI87y/DNJ5pxpM+7febKBR1WcounAKVbQGYArG4ZmViS
+orvqZ7pMdst8WR8O/sOnIXcraPa/T2dsbQk9Q9nunklhoyQTkStvTOhmmBTlZMCl
+DevLe1oqquQj7XHencSRafvuORAxiDId0k4aSVjcPeE9Yo5WBabhwT/ZKdSmwa1Q
+i6NJ9kgNJVkWGJZHq+FUkPrMB/UuRcCoxg77/sUozjRAutgchIHzN+Q3jbxL/CRI
+lpS9RX7oDr+l6ytltyp+Af8nV6gy5jJ6AvwDYsRWiV8ibJHf/gqEtV8OI898opQp
+jIW3KjMiZt7gdYof3oYxpi29sGPIciq9hThXI5UE/PVzjjKcB7zdKn6j64JA1jwQ
+WmqDmpEPKf/2R+WAkvWH0JsfeC3F3wrZcwcv+v6CHHXXFPW7YlrvzEmv4J1ghGF1
+xlSYxKHP+T7MqEGU6QrdqIEZ1lRZwbQ4Ac2h/24A6o4bkwaADdrYqD9PT5WQo78N
+P6whrk1Yny6/so20VKLt
+=ZdIn
+-----END PGP SIGNATURE-----
+
+--Il7n/DHsA0sMLmDu--
