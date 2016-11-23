@@ -1,27 +1,25 @@
 Return-Path: Jason@zx2c4.com
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e1934b58
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2a1e54c8
  for <wireguard@lists.zx2c4.com>;
- Tue, 22 Nov 2016 16:28:08 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3bc47435
+ Wed, 23 Nov 2016 05:47:49 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b0268f5e
  for <wireguard@lists.zx2c4.com>;
- Tue, 22 Nov 2016 16:28:08 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id b9610192
+ Wed, 23 Nov 2016 05:47:49 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 41fe69dd
  (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 22 Nov 2016 16:28:07 +0000 (UTC)
-Received: by mail-wm0-f46.google.com with SMTP id f82so34110580wmf.1
- for <wireguard@lists.zx2c4.com>; Tue, 22 Nov 2016 08:31:42 -0800 (PST)
+ Wed, 23 Nov 2016 05:47:49 +0000 (UTC)
+Received: by mail-wm0-f44.google.com with SMTP id t79so6044955wmt.0
+ for <wireguard@lists.zx2c4.com>; Tue, 22 Nov 2016 21:51:28 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20161122130805.GG20343@tuxmachine.polynome.dn42>
-References: <20161122130805.GG20343@tuxmachine.polynome.dn42>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 22 Nov 2016 17:31:41 +0100
-Message-ID: <CAHmME9pMMpmS5BNEeAeRNDLF6ZdDOVkbLVTaUTBM3Yk=u1mGAw@mail.gmail.com>
-To: Baptiste Jonglez <baptiste@bitsofnetworks.org>
+Date: Wed, 23 Nov 2016 06:51:26 +0100
+Message-ID: <CAHmME9qHaQDuFW+HNZFip-Ba7q3aXoCpHUNz06hnFezGwXbjug@mail.gmail.com>
+Subject: Qt Creator for Linux Kernel Development
+To: qt-creator@qt-project.org
 Content-Type: text/plain; charset=UTF-8
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: [WireGuard] Pull-based peer configuration
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <http://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -31,34 +29,85 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hey,
+Hello Eike & Qt Creator mailing list,
 
-I've thought about the same sort of thing, too. Indeed this would be
-different from an IKE daemon, because it would just be a datastructure
-provider, rather than a crypto protocol situation.
+I'm insane and decided to try using an IDE for Linux kernel
+development. Much to my delight, it actually works well. (Everybody on
+the mailing list to which this message is cross-posted just vomited a
+little bit in their mouth and swallowed, but fear not: I'm a competent
+VIM user too. It's just that sometimes clickity clicking around Qt
+Creator is buttery nice. Here's a screenshot [2].)
 
-I envision two uses of a pull model: "please compute this ECDH
-multiplication using some daemon-controlled private key" and "do you
-recognize this public key? if so, please tell me the allowed-ips for
-it." The former would allow easy integration into userspace smartcard
-daemons. The latter would allow easy integration into database
-systems.
+I'm working on a small kernel module [1], and for it I made a very
+minimal .pro file to import its files into Qt Creator. I even hooked
+the build/run commands up to my qemu testing rig. Seems to work pretty
+well. Here's the .pro I use:
 
-All and all, this isn't that hard to do. All things that have to do
-with public key crypto are already strictly ratelimited and running in
-a relatively friendly and safe kthread, which can do things like sleep
-and yield to userspace processes. It's just a matter of adding the
-machinery and exposing the APIs. I can do this.
+CONFIG -= qt
+INCLUDEPATH = /usr/src/linux/arch/x86/include
+/usr/src/linux/arch/x86/include/generated/uapi /usr/src/linux/
+arch/x86/include/generated /usr/src/linux/include
+/usr/src/linux/arch/x86/include/uapi /usr/src/linux/arch/x
+86/include/generated/uapi /usr/src/linux/include/uapi
+/usr/src/linux/include/generated/uapi
+DEFINES = __KERNEL__ DEBUG MODULE
+SOURCES = $$system(find -L . -type f -iname $$system_quote(*.c) -and
+-not -path $$system_quote(./tests/*)) $
+$system(find -L . -type f -iname $$system_quote(*.S) -and -not -path
+$$system_quote(./tests/*))
+HEADERS = $$system(find -L . -type f -iname $$system_quote(*.h) -and
+-not -path $$system_quote(./tests/*))
 
-But it does add _just a tiny little bit_ of extra complexity, which
-can quickly snowball into something dreadful. My general plan for
-these more enterprise-centric features is to wait until after the
-initial codebase is merged into mainline. I'd like to do the best job
-we can do on the core principles and components, and once we have a
-solid foundation, consider the best ways of building up. (IPsec did
-the opposite -- a massive set of committees designed the whole thing,
-and oy gevalt...)
+As you can see, it's a real hack.
 
-What do you think of this approach to that?
+I also do development on the main Linux kernel tree, and similarly for
+that, I have a .pro file that works well:
 
+CONFIG -= qt
+INCLUDEPATH = $$system(find -L include/ -type d)
+SOURCES = $$system(find -L . -type f -iname \'*.c\')
+HEADERS = $$system(find -L . -type f -iname \'*.h\')
+INCLUDEPATH = include/ arch/x86/include
+
+Download the linux sources, put that in the tree, and load it up in Qt
+Creator. It works. Amazing!
+
+But don't get too excited. Unfortunately, there are two issues that
+make things unbearable:
+
+(A) Qt Creator doesn't seem to parse the C correctly. Things like
+designated initializers and a few other C features here and there just
+don't get parsed correctly, and the IDE stops being useful. I suspect
+this is because things are actually being parsed in C++ mode. Bummer.
+Developers: any interest in improving C support in Qt Creator?
+
+(B) There is no way to tell Qt Creator that a particular header file
+is included in every file -- that is, that gcc's "-include" is in use.
+There is a way of messing with the "C++ Code Model" on a file-by-file
+basis, for the duration of the time that the file is open, but no way
+to automatically have it included in every file of the project. This
+is a major hindrance. It means that every ifdef for every kconfig
+option is a grayed out unclickable region, rendering most things
+useless. Developers: any interest in fixing this? I spoke to a few of
+you in IRC several months ago about this, and there was interest, but
+it seems to have evaporated.
+
+So, anyway, if you think it would be cool to be able to say, "Qt
+Creator is used for Linux Kernel Development!", then maybe we can work
+together to actually get things working properly. It's already 85%
+there, and the remaining chunk seems well within reach.
+
+Not only that, but if Qt Creator becomes generally usable for ordinary
+C projects, it would most likely become a regular tool during my
+professional activities, namely, auditing large code bases for
+vulnerabilities and improving the security of systems.
+
+Let me know if you are interested in assisting with this.
+
+Thanks,
 Jason
+
+
+
+[1] https://www.wireguard.io/
+[2] https://data.zx2c4.com/qt-creator-wireguard-development.png
