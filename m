@@ -1,19 +1,18 @@
-Return-Path: orgads@gmail.com
-Received: from mail-wm0-f68.google.com (mail-wm0-f68.google.com [74.125.82.68])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 656c6ac8
+Return-Path: Eike.Ziller@qt.io
+Received: from EUR01-HE1-obe.outbound.protection.outlook.com
+ (mail-he1eur01on0128.outbound.protection.outlook.com [104.47.0.128])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8a266eae
  for <wireguard@lists.zx2c4.com>;
- Wed, 23 Nov 2016 07:54:48 +0000 (UTC)
-Received: by mail-wm0-f68.google.com with SMTP id g23so963768wme.1
- for <wireguard@lists.zx2c4.com>; Tue, 22 Nov 2016 23:58:27 -0800 (PST)
-MIME-Version: 1.0
-In-Reply-To: <CAHmME9qHaQDuFW+HNZFip-Ba7q3aXoCpHUNz06hnFezGwXbjug@mail.gmail.com>
-References: <CAHmME9qHaQDuFW+HNZFip-Ba7q3aXoCpHUNz06hnFezGwXbjug@mail.gmail.com>
-From: Orgad Shaneh <orgads@gmail.com>
-Date: Wed, 23 Nov 2016 09:58:26 +0200
-Message-ID: <CAGHpTBJPXR08EMaHLtEawuQHRHOUF8MXsv1i_Kp_XTsWacdKqw@mail.gmail.com>
-Subject: Re: [Qt-creator] Qt Creator for Linux Kernel Development
+ Wed, 23 Nov 2016 09:18:19 +0000 (UTC)
+From: Eike Ziller <Eike.Ziller@qt.io>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Content-Type: multipart/alternative; boundary=001a114b9e0805427e0541f341b2
+Subject: Re: [Qt-creator] Qt Creator for Linux Kernel Development
+Date: Wed, 23 Nov 2016 09:21:56 +0000
+Message-ID: <6EACC807-77D6-4459-8FDE-DBC4278352E7@qt.io>
+References: <CAHmME9qHaQDuFW+HNZFip-Ba7q3aXoCpHUNz06hnFezGwXbjug@mail.gmail.com>
+In-Reply-To: <CAHmME9qHaQDuFW+HNZFip-Ba7q3aXoCpHUNz06hnFezGwXbjug@mail.gmail.com>
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
  "qt-creator@qt-project.org" <qt-creator@qt-project.org>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
@@ -25,76 +24,97 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <http://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---001a114b9e0805427e0541f341b2
-Content-Type: text/plain; charset=UTF-8
-
-On Wed, Nov 23, 2016 at 7:51 AM, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
-
-> (A) Qt Creator doesn't seem to parse the C correctly. Things like
-> designated initializers and a few other C features here and there just
-> don't get parsed correctly, and the IDE stops being useful. I suspect
-> this is because things are actually being parsed in C++ mode. Bummer.
-> Developers: any interest in improving C support in Qt Creator?
->
-
-Which version do you use? Designated initializers support was added in 3.2 (
-c56b999ffff249d4cb7dc7e8026a3297b63ff56d).
-
-I now see that the members are not detected correctly (for e.g. Find
-Usages), but parsing looks ok.
-
-(B) There is no way to tell Qt Creator that a particular header file
-> is included in every file -- that is, that gcc's "-include" is in use.
-> There is a way of messing with the "C++ Code Model" on a file-by-file
-> basis, for the duration of the time that the file is open, but no way
-> to automatically have it included in every file of the project. This
-> is a major hindrance. It means that every ifdef for every kconfig
-> option is a grayed out unclickable region, rendering most things
-> useless. Developers: any interest in fixing this? I spoke to a few of
-> you in IRC several months ago about this, and there was interest, but
-> it seems to have evaporated.
->
-
-You can set PRECOMPILED_HEADER = header.h in your pro file. It should be
-applied to all sources.
-
-- Orgad
-
---001a114b9e0805427e0541f341b2
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div class=3D"gmail_extra"><div class=3D"gmail_quote">On W=
-ed, Nov 23, 2016 at 7:51 AM, Jason A. Donenfeld <span dir=3D"ltr">&lt;<a hr=
-ef=3D"mailto:Jason@zx2c4.com" target=3D"_blank">Jason@zx2c4.com</a>&gt;</sp=
-an> wrote:<br><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px=
- 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">(A) Qt Crea=
-tor doesn&#39;t seem to parse the C correctly. Things like<br>
-designated initializers and a few other C features here and there just<br>
-don&#39;t get parsed correctly, and the IDE stops being useful. I suspect<b=
-r>
-this is because things are actually being parsed in C++ mode. Bummer.<br>
-Developers: any interest in improving C support in Qt Creator?<br></blockqu=
-ote><div><br></div><div>Which version do you use? Designated initializers s=
-upport was added in 3.2 (<wbr>c56b999ffff249d4cb7dc7e8026a32<wbr>97b63ff56d=
-).</div><div><br></div><div>I now see that the members are not detected cor=
-rectly (for e.g. Find Usages), but parsing looks ok.</div><div><br></div><b=
-lockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-le=
-ft:1px solid rgb(204,204,204);padding-left:1ex">(B) There is no way to tell=
- Qt Creator that a particular header file<br>
-is included in every file -- that is, that gcc&#39;s &quot;-include&quot; i=
-s in use.<br>
-There is a way of messing with the &quot;C++ Code Model&quot; on a file-by-=
-file<br>
-basis, for the duration of the time that the file is open, but no way<br>
-to automatically have it included in every file of the project. This<br>
-is a major hindrance. It means that every ifdef for every kconfig<br>
-option is a grayed out unclickable region, rendering most things<br>
-useless. Developers: any interest in fixing this? I spoke to a few of<br>
-you in IRC several months ago about this, and there was interest, but<br>
-it seems to have evaporated.<br></blockquote><div><br></div><div>You can se=
-t PRECOMPILED_HEADER =3D header.h in your pro file. It should be applied to=
- all sources.</div><div><br></div><div>- Orgad=C2=A0</div></div><br></div><=
-/div>
-
---001a114b9e0805427e0541f341b2--
+DQo+IE9uIE5vdiAyMywgMjAxNiwgYXQgNjo1MSBBTSwgSmFzb24gQS4gRG9uZW5mZWxkIDxKYXNv
+bkB6eDJjNC5jb20+IHdyb3RlOg0KPiANCj4gSGVsbG8gRWlrZSAmIFF0IENyZWF0b3IgbWFpbGlu
+ZyBsaXN0LA0KPiANCj4gSSdtIGluc2FuZSBhbmQgZGVjaWRlZCB0byB0cnkgdXNpbmcgYW4gSURF
+IGZvciBMaW51eCBrZXJuZWwNCj4gZGV2ZWxvcG1lbnQuIE11Y2ggdG8gbXkgZGVsaWdodCwgaXQg
+YWN0dWFsbHkgd29ya3Mgd2VsbC4gKEV2ZXJ5Ym9keSBvbg0KPiB0aGUgbWFpbGluZyBsaXN0IHRv
+IHdoaWNoIHRoaXMgbWVzc2FnZSBpcyBjcm9zcy1wb3N0ZWQganVzdCB2b21pdGVkIGENCj4gbGl0
+dGxlIGJpdCBpbiB0aGVpciBtb3V0aCBhbmQgc3dhbGxvd2VkLCBidXQgZmVhciBub3Q6IEknbSBh
+IGNvbXBldGVudA0KPiBWSU0gdXNlciB0b28uIEl0J3MganVzdCB0aGF0IHNvbWV0aW1lcyBjbGlj
+a2l0eSBjbGlja2luZyBhcm91bmQgUXQNCj4gQ3JlYXRvciBpcyBidXR0ZXJ5IG5pY2UuIEhlcmUn
+cyBhIHNjcmVlbnNob3QgWzJdLikNCj4gDQo+IEknbSB3b3JraW5nIG9uIGEgc21hbGwga2VybmVs
+IG1vZHVsZSBbMV0sIGFuZCBmb3IgaXQgSSBtYWRlIGEgdmVyeQ0KPiBtaW5pbWFsIC5wcm8gZmls
+ZSB0byBpbXBvcnQgaXRzIGZpbGVzIGludG8gUXQgQ3JlYXRvci4gSSBldmVuIGhvb2tlZA0KPiB0
+aGUgYnVpbGQvcnVuIGNvbW1hbmRzIHVwIHRvIG15IHFlbXUgdGVzdGluZyByaWcuIFNlZW1zIHRv
+IHdvcmsgcHJldHR5DQo+IHdlbGwuIEhlcmUncyB0aGUgLnBybyBJIHVzZToNCj4gDQo+IENPTkZJ
+RyAtPSBxdA0KPiBJTkNMVURFUEFUSCA9IC91c3Ivc3JjL2xpbnV4L2FyY2gveDg2L2luY2x1ZGUN
+Cj4gL3Vzci9zcmMvbGludXgvYXJjaC94ODYvaW5jbHVkZS9nZW5lcmF0ZWQvdWFwaSAvdXNyL3Ny
+Yy9saW51eC8NCj4gYXJjaC94ODYvaW5jbHVkZS9nZW5lcmF0ZWQgL3Vzci9zcmMvbGludXgvaW5j
+bHVkZQ0KPiAvdXNyL3NyYy9saW51eC9hcmNoL3g4Ni9pbmNsdWRlL3VhcGkgL3Vzci9zcmMvbGlu
+dXgvYXJjaC94DQo+IDg2L2luY2x1ZGUvZ2VuZXJhdGVkL3VhcGkgL3Vzci9zcmMvbGludXgvaW5j
+bHVkZS91YXBpDQo+IC91c3Ivc3JjL2xpbnV4L2luY2x1ZGUvZ2VuZXJhdGVkL3VhcGkNCj4gREVG
+SU5FUyA9IF9fS0VSTkVMX18gREVCVUcgTU9EVUxFDQo+IFNPVVJDRVMgPSAkJHN5c3RlbShmaW5k
+IC1MIC4gLXR5cGUgZiAtaW5hbWUgJCRzeXN0ZW1fcXVvdGUoKi5jKSAtYW5kDQo+IC1ub3QgLXBh
+dGggJCRzeXN0ZW1fcXVvdGUoLi90ZXN0cy8qKSkgJA0KPiAkc3lzdGVtKGZpbmQgLUwgLiAtdHlw
+ZSBmIC1pbmFtZSAkJHN5c3RlbV9xdW90ZSgqLlMpIC1hbmQgLW5vdCAtcGF0aA0KPiAkJHN5c3Rl
+bV9xdW90ZSguL3Rlc3RzLyopKQ0KPiBIRUFERVJTID0gJCRzeXN0ZW0oZmluZCAtTCAuIC10eXBl
+IGYgLWluYW1lICQkc3lzdGVtX3F1b3RlKCouaCkgLWFuZA0KPiAtbm90IC1wYXRoICQkc3lzdGVt
+X3F1b3RlKC4vdGVzdHMvKikpDQo+IA0KPiBBcyB5b3UgY2FuIHNlZSwgaXQncyBhIHJlYWwgaGFj
+ay4NCj4gDQo+IEkgYWxzbyBkbyBkZXZlbG9wbWVudCBvbiB0aGUgbWFpbiBMaW51eCBrZXJuZWwg
+dHJlZSwgYW5kIHNpbWlsYXJseSBmb3INCj4gdGhhdCwgSSBoYXZlIGEgLnBybyBmaWxlIHRoYXQg
+d29ya3Mgd2VsbDoNCj4gDQo+IENPTkZJRyAtPSBxdA0KPiBJTkNMVURFUEFUSCA9ICQkc3lzdGVt
+KGZpbmQgLUwgaW5jbHVkZS8gLXR5cGUgZCkNCj4gU09VUkNFUyA9ICQkc3lzdGVtKGZpbmQgLUwg
+LiAtdHlwZSBmIC1pbmFtZSBcJyouY1wnKQ0KPiBIRUFERVJTID0gJCRzeXN0ZW0oZmluZCAtTCAu
+IC10eXBlIGYgLWluYW1lIFwnKi5oXCcpDQo+IElOQ0xVREVQQVRIID0gaW5jbHVkZS8gYXJjaC94
+ODYvaW5jbHVkZQ0KPiANCj4gRG93bmxvYWQgdGhlIGxpbnV4IHNvdXJjZXMsIHB1dCB0aGF0IGlu
+IHRoZSB0cmVlLCBhbmQgbG9hZCBpdCB1cCBpbiBRdA0KPiBDcmVhdG9yLiBJdCB3b3Jrcy4gQW1h
+emluZyENCj4gDQo+IEJ1dCBkb24ndCBnZXQgdG9vIGV4Y2l0ZWQuIFVuZm9ydHVuYXRlbHksIHRo
+ZXJlIGFyZSB0d28gaXNzdWVzIHRoYXQNCj4gbWFrZSB0aGluZ3MgdW5iZWFyYWJsZToNCj4gDQo+
+IChBKSBRdCBDcmVhdG9yIGRvZXNuJ3Qgc2VlbSB0byBwYXJzZSB0aGUgQyBjb3JyZWN0bHkuIFRo
+aW5ncyBsaWtlDQo+IGRlc2lnbmF0ZWQgaW5pdGlhbGl6ZXJzIGFuZCBhIGZldyBvdGhlciBDIGZl
+YXR1cmVzIGhlcmUgYW5kIHRoZXJlIGp1c3QNCj4gZG9uJ3QgZ2V0IHBhcnNlZCBjb3JyZWN0bHks
+IGFuZCB0aGUgSURFIHN0b3BzIGJlaW5nIHVzZWZ1bC4gSSBzdXNwZWN0DQo+IHRoaXMgaXMgYmVj
+YXVzZSB0aGluZ3MgYXJlIGFjdHVhbGx5IGJlaW5nIHBhcnNlZCBpbiBDKysgbW9kZS4gQnVtbWVy
+Lg0KPiBEZXZlbG9wZXJzOiBhbnkgaW50ZXJlc3QgaW4gaW1wcm92aW5nIEMgc3VwcG9ydCBpbiBR
+dCBDcmVhdG9yPw0KDQpBcmUgeW91IHVzaW5nIHRoZSBDbGFuZ0NvZGVNb2RlbCBwbHVnaW4/IElm
+IG5vdCwgeW91IHByb2JhYmx5IHNob3VsZC4NCkl0IGRvZXMgbm90IGhlbHAgZm9yIHRoaW5ncyBs
+aWtlIGZpbmQgdXNhZ2VzIGFuZCBsb2NhdG9yLCBzaW5jZSBmb3IgdGhpcyB3ZSBzdGlsbCB1c2Ug
+dGhlIGJ1aWx0LWluIG1vZGVsLA0KYW5kIGZpeGVzIGZvciB0aGUgYnVpbHQtaW4gbW9kZWwgd2ls
+bCBiZSB2ZXJ5IGxpbWl0ZWQuDQpCdXQgZm9yIHdvcmtpbmcgd2l0aCB0aGUgaW5kaXZpZHVhbCBf
+c291cmNlXyBmaWxlIGl0IHNob3VsZCBhdCBsZWFzdCBoZWxwLg0KSSBjYW4gZXZlbiBvcGVuIE9i
+amVjdGl2ZS1DKysgZmlsZXMgYW5kIGdldCBkZWNlbnQgaGlnaGxpZ2h0aW5nIGFuZCBldmVuDQpn
+ZXQgc29tZSBjb21wbGV0aW9uIGZvciBPYmplY3RpdmUtQyA7KQ0KDQpPbmUgb3RoZXIgaXNzdWUg
+YXJlIGhlYWRlciBmaWxlcyAtIHRoZXJlIGlzIG5vIHdheSBRdCBDcmVhdG9yIGNhbiBhdXRvbWF0
+aWNhbGx5IHRlbGwgaWYgYSANCi5oIGZpbGUgaXMgc3VwcG9zZWQgdG8gYmUgQywgQysrLCBPYmpl
+Y3RpdmUtQywgT2JqZWN0aXZlLUMrKywgLi4uLg0KT25lIGhhY2sgd29ya2Fyb3VuZCBmb3IgQyBt
+aWdodCBiZSB0byByZW1vdmUgKi5oIGZyb20gdGhlIHRleHQveC1jKytoZHIgbWltZSB0eXBlIGlu
+IE9wdGlvbnMgPiBFbnZpcm9ubWVudCA+IE1pbWUgVHlwZXMsDQpidXQgdGhhdCB3b3VsZCBiZSBh
+IGJpZyBhbmQgZ2xvYmFsIGhhY2sgKGlmIGl0IHdvcmtlZCkgOykNCldlIGNvdWxkIHByb2JhYmx5
+IHByb3ZpZGUgYSBwcm9qZWN0IHNldHRpbmcgZm9yIGEg4oCcZGVmYXVsdOKAnSBsYW5ndWFnZSB0
+byB1c2UgdGhvdWdoLCB3aGljaCB3b3VsZCB0aGVuIGFsc28gYmUgc2hhcmFibGUgd2l0aCBhbGwg
+aW4gdGhlIHByb2plY3Qgc291cmNlcyB3aXRoIGEgLnNoYXJlZCBmaWxlLg0KDQpCciwgRWlrZQ0K
+DQo+IChCKSBUaGVyZSBpcyBubyB3YXkgdG8gdGVsbCBRdCBDcmVhdG9yIHRoYXQgYSBwYXJ0aWN1
+bGFyIGhlYWRlciBmaWxlDQo+IGlzIGluY2x1ZGVkIGluIGV2ZXJ5IGZpbGUgLS0gdGhhdCBpcywg
+dGhhdCBnY2MncyAiLWluY2x1ZGUiIGlzIGluIHVzZS4NCj4gVGhlcmUgaXMgYSB3YXkgb2YgbWVz
+c2luZyB3aXRoIHRoZSAiQysrIENvZGUgTW9kZWwiIG9uIGEgZmlsZS1ieS1maWxlDQo+IGJhc2lz
+LCBmb3IgdGhlIGR1cmF0aW9uIG9mIHRoZSB0aW1lIHRoYXQgdGhlIGZpbGUgaXMgb3BlbiwgYnV0
+IG5vIHdheQ0KPiB0byBhdXRvbWF0aWNhbGx5IGhhdmUgaXQgaW5jbHVkZWQgaW4gZXZlcnkgZmls
+ZSBvZiB0aGUgcHJvamVjdC4gVGhpcw0KPiBpcyBhIG1ham9yIGhpbmRyYW5jZS4gSXQgbWVhbnMg
+dGhhdCBldmVyeSBpZmRlZiBmb3IgZXZlcnkga2NvbmZpZw0KPiBvcHRpb24gaXMgYSBncmF5ZWQg
+b3V0IHVuY2xpY2thYmxlIHJlZ2lvbiwgcmVuZGVyaW5nIG1vc3QgdGhpbmdzDQo+IHVzZWxlc3Mu
+IERldmVsb3BlcnM6IGFueSBpbnRlcmVzdCBpbiBmaXhpbmcgdGhpcz8gSSBzcG9rZSB0byBhIGZl
+dyBvZg0KPiB5b3UgaW4gSVJDIHNldmVyYWwgbW9udGhzIGFnbyBhYm91dCB0aGlzLCBhbmQgdGhl
+cmUgd2FzIGludGVyZXN0LCBidXQNCj4gaXQgc2VlbXMgdG8gaGF2ZSBldmFwb3JhdGVkLg0KPiAN
+Cj4gU28sIGFueXdheSwgaWYgeW91IHRoaW5rIGl0IHdvdWxkIGJlIGNvb2wgdG8gYmUgYWJsZSB0
+byBzYXksICJRdA0KPiBDcmVhdG9yIGlzIHVzZWQgZm9yIExpbnV4IEtlcm5lbCBEZXZlbG9wbWVu
+dCEiLCB0aGVuIG1heWJlIHdlIGNhbiB3b3JrDQo+IHRvZ2V0aGVyIHRvIGFjdHVhbGx5IGdldCB0
+aGluZ3Mgd29ya2luZyBwcm9wZXJseS4gSXQncyBhbHJlYWR5IDg1JQ0KPiB0aGVyZSwgYW5kIHRo
+ZSByZW1haW5pbmcgY2h1bmsgc2VlbXMgd2VsbCB3aXRoaW4gcmVhY2guDQo+IA0KPiBOb3Qgb25s
+eSB0aGF0LCBidXQgaWYgUXQgQ3JlYXRvciBiZWNvbWVzIGdlbmVyYWxseSB1c2FibGUgZm9yIG9y
+ZGluYXJ5DQo+IEMgcHJvamVjdHMsIGl0IHdvdWxkIG1vc3QgbGlrZWx5IGJlY29tZSBhIHJlZ3Vs
+YXIgdG9vbCBkdXJpbmcgbXkNCj4gcHJvZmVzc2lvbmFsIGFjdGl2aXRpZXMsIG5hbWVseSwgYXVk
+aXRpbmcgbGFyZ2UgY29kZSBiYXNlcyBmb3INCj4gdnVsbmVyYWJpbGl0aWVzIGFuZCBpbXByb3Zp
+bmcgdGhlIHNlY3VyaXR5IG9mIHN5c3RlbXMuDQo+IA0KPiBMZXQgbWUga25vdyBpZiB5b3UgYXJl
+IGludGVyZXN0ZWQgaW4gYXNzaXN0aW5nIHdpdGggdGhpcy4NCj4gDQo+IFRoYW5rcywNCj4gSmFz
+b24NCj4gDQo+IA0KPiANCj4gWzFdIGh0dHBzOi8vd3d3LndpcmVndWFyZC5pby8NCj4gWzJdIGh0
+dHBzOi8vZGF0YS56eDJjNC5jb20vcXQtY3JlYXRvci13aXJlZ3VhcmQtZGV2ZWxvcG1lbnQucG5n
+DQo+IF9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fDQo+IFF0
+LWNyZWF0b3IgbWFpbGluZyBsaXN0DQo+IFF0LWNyZWF0b3JAcXQtcHJvamVjdC5vcmcNCj4gaHR0
+cDovL2xpc3RzLnF0LXByb2plY3Qub3JnL21haWxtYW4vbGlzdGluZm8vcXQtY3JlYXRvcg0KDQot
+LSANCkVpa2UgWmlsbGVyDQpQcmluY2lwYWwgU29mdHdhcmUgRW5naW5lZXINCg0KVGhlIFF0IENv
+bXBhbnkgR21iSA0KUnVkb3dlciBDaGF1c3NlZSAxMw0KRC0xMjQ4OSBCZXJsaW4NCmVpa2Uuemls
+bGVyQHF0LmlvDQpodHRwOi8vcXQuaW8NCkdlc2Now6RmdHNmw7xocmVyOiBNaWthIFDDpGxzaSwg
+SnVoYSBWYXJlbGl1cywgVHV1bGEgSGFhdGFqYQ0KU2l0eiBkZXIgR2VzZWxsc2NoYWZ0OiBCZXJs
+aW4sIFJlZ2lzdGVyZ2VyaWNodDogQW10c2dlcmljaHQgQ2hhcmxvdHRlbmJ1cmcsIEhSQiAxNDQz
+MzEgQg0KDQoNCg0KDQo=
