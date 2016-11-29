@@ -1,31 +1,22 @@
 Return-Path: Jason@zx2c4.com
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 51413824
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9e23be7a
  for <wireguard@lists.zx2c4.com>;
- Tue, 29 Nov 2016 19:18:42 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1400c634
+ Tue, 29 Nov 2016 22:13:24 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c45aa199
  for <wireguard@lists.zx2c4.com>;
- Tue, 29 Nov 2016 19:18:42 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 9c948995
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ Tue, 29 Nov 2016 22:13:23 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 3a5b2759
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 29 Nov 2016 19:18:40 +0000 (UTC)
-Received: by mail-lf0-f42.google.com with SMTP id b14so129501001lfg.2
- for <wireguard@lists.zx2c4.com>; Tue, 29 Nov 2016 11:23:08 -0800 (PST)
-MIME-Version: 1.0
-In-Reply-To: <736bee70-7a99-8681-a976-f6fdb4e524a0@qt.io>
-References: <CAHmME9qHaQDuFW+HNZFip-Ba7q3aXoCpHUNz06hnFezGwXbjug@mail.gmail.com>
- <1566601479887120@web23m.yandex.ru>
- <CAHmME9qbUuRHAMOrd82BOnr3KC9zJqGCpkN9PY1brwkR5gM84w@mail.gmail.com>
- <736bee70-7a99-8681-a976-f6fdb4e524a0@qt.io>
+ Tue, 29 Nov 2016 22:13:23 +0000 (UTC)
+Date: Tue, 29 Nov 2016 23:17:50 +0100
+To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 29 Nov 2016 20:23:06 +0100
-Message-ID: <CAHmME9pRtf+qxzhxUs88JB3A-NeQNwQBNRsB0BzvWYvUEQnbjA@mail.gmail.com>
-Subject: Re: [Qt-creator] Qt Creator for Linux Kernel Development
-To: Nikolai Kosjar <nikolai.kosjar@qt.io>
+Subject: [ANNOUNCE] Snapshot `experimental-0.0.20161129` Available
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
- "qt-creator@qt-project.org" <qt-creator@qt-project.org>
+Message-Id: <ffffffffe4df954a@frisell.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -35,21 +26,84 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Nikolai,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Tue, Nov 29, 2016 at 9:55 AM, Nikolai Kosjar <nikolai.kosjar@qt.io> wrote:
-> Should work with the Clang Code Model, Qt Creator from the current 4.2
-> branch.
->
-> The corresponding report was
-> https://bugreports.qt.io/browse/QTCREATORBUG-15590.
+Hello,
+
+A new experimental snapshot, `experimental-0.0.20161129`, has been tagged in
+the git repository.
+
+Please note that this snapshot is, like the rest of the project at this point
+in time, experimental, and does not consitute a real release that would be
+considered secure and bug-free. However, if you'd like to test this snapshot
+out, there are a few relevent changes.
+
+== Changes ==
+
+  * send: send packet initiation only after requeuing to prevent race
+  * tests: be sure we get all messages
+  * tests: veth does not come up immediately
+  
+  We've made the internal testing suite a bit more reliable.
+  
+  * main: add version to dmesg
+  
+  The module insertion message now shows the snapshot build date or the git
+  revision, depending, which will help with more easily determining what's
+  happening from people's logs. Too many incompetent bug reporters have
+  inexplicably neglected to mention the version or commit being used when
+  reporting a bug. This commit works around this human error, requested by
+  Kalin Kozhuharov and others.
+  
+  * device: conntrack is optional
+  
+  WireGuard can now run on machines that do not have connection tracking,
+  requested by Willy Tarreau and Baptiste Jonglez.
+  
+  * ratelimiter: load hashlimit at modinsert time
+  
+  Alex Xu pointed out an interesting deadlock, and we were able to trace it to
+  internal kernel infrastructure locking things in opposing orders. To work
+  around these bugs, WireGuard now loads the hashlimit module at insertion time
+  rather than at interface creation time.
+  
+  * tools: warn about clock going backward
+  
+  In the event that some script on your system is making the clock go wild
+  backward, the tools should probably indicate that the "last handshake
+  completed" date can't be correct, and that subsequent connections might fail.
+  This was reported by W. Kennington.
+
+As always, the source is available at https://git.zx2c4.com/WireGuard/ and
+information about the project is available at https://www.wireguard.io/ .
+
+This snapshot is available in tarball form here:
+  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-experimental-0.0.20161129.tar.xz
+  SHA256: 7bdce3e56aaae91b195b8bbf7afc8d07f68632c997aa702c1ab84745c099d1b7
+
+If you're a snapshot package maintainer, please bump your package version. If
+you're a user, the WireGuard team welcomes any and all feedback on this latest
+snapshot.
+
+Thank you,
+Jason Donenfeld
 
 
-Okay, in that case, I'll wait until 4.2 for it. One question:
-PRECOMPILED_HEADER -- will this take a list, or only a single value?
+-----BEGIN PGP SIGNATURE-----
 
-By the way, I figured out an alternative workaround in the meantime. I
-add to "clang code model warnings" box the string "-include
-/path/to/header.h".
-
-Jason
+iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAlg9/nEQHGphc29uQHp4
+MmM0LmNvbQAKCRBJ/HASpd4Drm3IEADIgOLo+qJWnwVVQ5E9oRzqBI+qd/2FCeyi
++vR7D0SogSKckwcIV1rXocmz3emGgFJQnUcLmJNC6Nm0QirPE2dsdmNRBMrNmvFh
+XeelxPyqH3UmLLS1iSs8p6mCz1Q3kqVXtqzbw+0wz827ViW3DilQ3jy/h/4uuuCI
+6moXfCO+rw+ATP+hlL74amuR5sLQJ/XkhTcWA1ycSAMVyfnf0jK7SOe3ZcmrNQkO
+p6AN8GsQin7oXX2mt3jXOV1poQe6m5HUZGJ6VfLTYkfz6+aTZzyAIU//2lziQU2d
+0LE2QJvWfPKTjqvAR86zs2BjABw/w6TKIO9Pey+r6vj24Jiwu5Lmds4/hzz7Rvtd
+YVluuUoRwzMgdBH73ZSXMA6pKvsoD8Gew8SinXyH6RHrookqhjZS1IUyEpq3DClT
+1fRZC6slWaMk0Ur4evkd7hJYLT9OK9cLH4WRpTNeJPIK0eHaY8BEyKI+AVudltJ1
+879HFVMvyk9zHe/pNyfHXHnSDCq+H8wFCspK6OyHdYdL8Sk6vn9fC3OnB5niILYn
+/4CRcNVPq4eelgJ9g1WoG2LWAeqdKIDadh/fJhObv8ggQlMTAMzU6pEo7W/flYP9
+HvLwPgGQBFV13NuP3xusv7V2Qss4hsUOcVh1e5qNhx5rdk4NAbKNeBDAfqWzs3uP
+DHQTz79OtA==
+=uNdL
+-----END PGP SIGNATURE-----
