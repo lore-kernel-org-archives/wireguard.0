@@ -1,22 +1,31 @@
-Return-Path: Nikolai.Kosjar@qt.io
-Received: from EUR01-HE1-obe.outbound.protection.outlook.com
- (mail-he1eur01on0124.outbound.protection.outlook.com [104.47.0.124])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0a624e9e
+Return-Path: Jason@zx2c4.com
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fcd71a22
  for <wireguard@lists.zx2c4.com>;
- Tue, 29 Nov 2016 08:51:42 +0000 (UTC)
-Subject: Re: [Qt-creator] Qt Creator for Linux Kernel Development
-To: Konstantin Tokarev <annulen@yandex.ru>, "Jason A. Donenfeld"
- <jason@zx2c4.com>, "qt-creator@qt-project.org" <qt-creator@qt-project.org>
+ Tue, 29 Nov 2016 19:16:37 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5b5ffe63
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 29 Nov 2016 19:16:37 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 5b68a4e8
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 29 Nov 2016 19:16:36 +0000 (UTC)
+Received: by mail-lf0-f45.google.com with SMTP id t196so129734629lff.3
+ for <wireguard@lists.zx2c4.com>; Tue, 29 Nov 2016 11:21:03 -0800 (PST)
+MIME-Version: 1.0
+In-Reply-To: <HE1PR02MB16597D89414EB2F7E6265BA2F08A0@HE1PR02MB1659.eurprd02.prod.outlook.com>
 References: <CAHmME9qHaQDuFW+HNZFip-Ba7q3aXoCpHUNz06hnFezGwXbjug@mail.gmail.com>
  <1566601479887120@web23m.yandex.ru>
-From: Nikolai Kosjar <nikolai.kosjar@qt.io>
-Message-ID: <07fd30ec-41fc-6dc4-fb12-14b591ef1b0c@qt.io>
-Date: Tue, 29 Nov 2016 09:56:00 +0100
-MIME-Version: 1.0
-In-Reply-To: <1566601479887120@web23m.yandex.ru>
-Content-Type: text/plain; charset="windows-1252"; format=flowed
-Return-Path: nikolai.kosjar@qt.io
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+ <CAHmME9qbUuRHAMOrd82BOnr3KC9zJqGCpkN9PY1brwkR5gM84w@mail.gmail.com>
+ <HE1PR02MB16597D89414EB2F7E6265BA2F08A0@HE1PR02MB1659.eurprd02.prod.outlook.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Tue, 29 Nov 2016 20:21:01 +0100
+Message-ID: <CAHmME9rLoJbKda+i9z2AA2jpqfZ96XG_ZEVurKbHbZ2TfPqdRQ@mail.gmail.com>
+Subject: Re: [Qt-creator] Qt Creator for Linux Kernel Development
+To: Marco Bubke <Marco.Bubke@qt.io>
+Content-Type: text/plain; charset=UTF-8
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ "qt-creator@qt-project.org" <qt-creator@qt-project.org>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,73 +35,19 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On 11/23/2016 08:45 AM, Konstantin Tokarev wrote:
-> 23.11.2016, 08:51, "Jason A. Donenfeld" <jason@zx2c4.com>:
->> Hello Eike & Qt Creator mailing list,
->>
->> I'm insane and decided to try using an IDE for Linux kernel
->> development. Much to my delight, it actually works well. (Everybody on
->> the mailing list to which this message is cross-posted just vomited a
->> little bit in their mouth and swallowed, but fear not: I'm a competent
->> VIM user too. It's just that sometimes clickity clicking around Qt
->> Creator is buttery nice. Here's a screenshot [2].)
->>
->> I'm working on a small kernel module [1], and for it I made a very
->> minimal .pro file to import its files into Qt Creator. I even hooked
->> the build/run commands up to my qemu testing rig. Seems to work pretty
->> well. Here's the .pro I use:
->>
->> CONFIG -= qt
->> INCLUDEPATH = /usr/src/linux/arch/x86/include
->> /usr/src/linux/arch/x86/include/generated/uapi /usr/src/linux/
->> arch/x86/include/generated /usr/src/linux/include
->> /usr/src/linux/arch/x86/include/uapi /usr/src/linux/arch/x
->> 86/include/generated/uapi /usr/src/linux/include/uapi
->> /usr/src/linux/include/generated/uapi
->> DEFINES = __KERNEL__ DEBUG MODULE
->> SOURCES = $$system(find -L . -type f -iname $$system_quote(*.c) -and
->> -not -path $$system_quote(./tests/*)) $
->> $system(find -L . -type f -iname $$system_quote(*.S) -and -not -path
->> $$system_quote(./tests/*))
->> HEADERS = $$system(find -L . -type f -iname $$system_quote(*.h) -and
->> -not -path $$system_quote(./tests/*))
->>
->> As you can see, it's a real hack.
->>
->> I also do development on the main Linux kernel tree, and similarly for
->> that, I have a .pro file that works well:
->>
->> CONFIG -= qt
->> INCLUDEPATH = $$system(find -L include/ -type d)
->> SOURCES = $$system(find -L . -type f -iname \'*.c\')
->> HEADERS = $$system(find -L . -type f -iname \'*.h\')
->> INCLUDEPATH = include/ arch/x86/include
->>
->> Download the linux sources, put that in the tree, and load it up in Qt
->> Creator. It works. Amazing!
->>
->> But don't get too excited. Unfortunately, there are two issues that
->> make things unbearable:
->>
->> (A) Qt Creator doesn't seem to parse the C correctly. Things like
->> designated initializers and a few other C features here and there just
->> don't get parsed correctly, and the IDE stops being useful. I suspect
->> this is because things are actually being parsed in C++ mode. Bummer.
->> Developers: any interest in improving C support in Qt Creator?
->>
->> (B) There is no way to tell Qt Creator that a particular header file
->> is included in every file -- that is, that gcc's "-include" is in use.
->> There is a way of messing with the "C++ Code Model" on a file-by-file
->> basis, for the duration of the time that the file is open, but no way
->> to automatically have it included in every file of the project. This
->> is a major hindrance. It means that every ifdef for every kconfig
->> option is a grayed out unclickable region, rendering most things
->> useless.
->
-> BTW, I'm facing similar issue with QtWebKit: config.h is included into all
-> source files, but never in headers, so all #if's in headers are disabled
-> and code model does not function properly.
+Hi Marco,
 
-Could you provide a report for this with a minimal example?
+I'll start compiling a list for you, so that I can give you something
+more useful than my last message. For starters, here's one bug found
+within seconds:
 
-Nikolai
+1. Open a file in the project. All seems fine.
+2. Ctrl click on a function that points to somewhere in the Linux
+kernel headers.
+3. Close that file. Now there are all sorts of non-nonsensical clang
+errors in the original file.
+
+Here's a video to demonstrate:
+https://data.zx2c4.com/qt-creator-clang-model-bug-ff94c572-d8ff-4c54-a5ac-3aa6485251a9.mp4
+
+Jason
