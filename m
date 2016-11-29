@@ -1,21 +1,23 @@
-Return-Path: apoenitz@t-online.de
-Received: from mailout06.t-online.de (mailout06.t-online.de [194.25.134.19])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 03ada9d8
+Return-Path: Nikolai.Kosjar@qt.io
+Received: from EUR03-AM5-obe.outbound.protection.outlook.com
+ (mail-eopbgr30106.outbound.protection.outlook.com [40.107.3.106])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a432481c
  for <wireguard@lists.zx2c4.com>;
- Mon, 28 Nov 2016 20:21:02 +0000 (UTC)
-Date: Mon, 28 Nov 2016 22:34:39 +0100
-From: =?iso-8859-1?Q?Andr=E9_P=F6nitz?= <apoenitz@t-online.de>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+ Tue, 29 Nov 2016 08:51:13 +0000 (UTC)
 Subject: Re: [Qt-creator] Qt Creator for Linux Kernel Development
-Message-ID: <20161128213439.GD2309@klara.mpi.htwm.de>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>, "qt-creator@qt-project.org"
+ <qt-creator@qt-project.org>
 References: <CAHmME9qHaQDuFW+HNZFip-Ba7q3aXoCpHUNz06hnFezGwXbjug@mail.gmail.com>
  <1566601479887120@web23m.yandex.ru>
  <CAHmME9qbUuRHAMOrd82BOnr3KC9zJqGCpkN9PY1brwkR5gM84w@mail.gmail.com>
+From: Nikolai Kosjar <nikolai.kosjar@qt.io>
+Message-ID: <736bee70-7a99-8681-a976-f6fdb4e524a0@qt.io>
+Date: Tue, 29 Nov 2016 09:55:31 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
 In-Reply-To: <CAHmME9qbUuRHAMOrd82BOnr3KC9zJqGCpkN9PY1brwkR5gM84w@mail.gmail.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
- "qt-creator@qt-project.org" <qt-creator@qt-project.org>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Return-Path: nikolai.kosjar@qt.io
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -25,17 +27,17 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Mon, Nov 28, 2016 at 07:03:39PM +0100, Jason A. Donenfeld wrote:
-> Hello All,
-> 
-> Responses to each of you are inline below.
-> 
-> Sounds to me like there's a lot of work to be done, still, and I
-> haven't received any enthusiastic responses from the Qt team of, "yes!
-> we'd love to work on this and make Qt Creator suitable for kernel
-> development!"
+On 11/28/2016 07:03 PM, Jason A. Donenfeld wrote:
+> On Wed, Nov 23, 2016 at 8:45 AM, Konstantin Tokarev <annulen@yandex.ru> wrote:
+>> You can set PRECOMPILED_HEADER = header.h in your pro file. It should be
+>> applied to all sources.
+>
+> Nope, that's certainly not what that field does.
 
-I didn't know the Qt Creator team was supposed to be in the cheer-leading
-business. 
+Should work with the Clang Code Model, Qt Creator from the current 4.2 
+branch.
 
-Andre'
+The corresponding report was 
+https://bugreports.qt.io/browse/QTCREATORBUG-15590.
+
+Nikolai
