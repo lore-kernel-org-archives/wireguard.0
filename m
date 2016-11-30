@@ -1,17 +1,25 @@
-Return-Path: root@web9.webkontrol.doruk.net.tr
-Received: from web9.webkontrol.doruk.net.tr (rev.113.3.58.212.doruk.net.tr
- [212.58.3.113])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6e52343e
+Return-Path: Nikolai.Kosjar@qt.io
+Received: from EUR03-VE1-obe.outbound.protection.outlook.com
+ (mail-eopbgr50113.outbound.protection.outlook.com [40.107.5.113])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f76e7f7b
  for <wireguard@lists.zx2c4.com>;
- Wed, 30 Nov 2016 06:37:04 +0000 (UTC)
-To: wireguard@lists.zx2c4.com
-Subject: Problem with parcel shipping, ID:00586415
-Date: Tue, 29 Nov 2016 14:51:03 +0200
-From: "FedEx Ground" <tommy.stover@interomega.com.tr>
-Message-ID: <13a70af81a0836a60d6547bf3860418a@interomega.com.tr>
+ Wed, 30 Nov 2016 08:36:42 +0000 (UTC)
+Subject: Re: [Qt-creator] Qt Creator for Linux Kernel Development
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+References: <CAHmME9qHaQDuFW+HNZFip-Ba7q3aXoCpHUNz06hnFezGwXbjug@mail.gmail.com>
+ <1566601479887120@web23m.yandex.ru>
+ <CAHmME9qbUuRHAMOrd82BOnr3KC9zJqGCpkN9PY1brwkR5gM84w@mail.gmail.com>
+ <736bee70-7a99-8681-a976-f6fdb4e524a0@qt.io>
+ <CAHmME9pRtf+qxzhxUs88JB3A-NeQNwQBNRsB0BzvWYvUEQnbjA@mail.gmail.com>
+From: Nikolai Kosjar <nikolai.kosjar@qt.io>
+Message-ID: <02dd2507-2627-e8a5-e4ef-cfdbf9925611@qt.io>
+Date: Wed, 30 Nov 2016 09:41:08 +0100
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="b1_ca3092039694ff5760cbff6dfd3e91da"
-Reply-To: FedEx Ground <tommy.stover@interomega.com.tr>
+In-Reply-To: <CAHmME9pRtf+qxzhxUs88JB3A-NeQNwQBNRsB0BzvWYvUEQnbjA@mail.gmail.com>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Return-Path: nikolai.kosjar@qt.io
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ "qt-creator@qt-project.org" <qt-creator@qt-project.org>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -21,77 +29,20 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
+On 11/29/2016 08:23 PM, Jason A. Donenfeld wrote:
+> Hi Nikolai,
+>
+> On Tue, Nov 29, 2016 at 9:55 AM, Nikolai Kosjar <nikolai.kosjar@qt.io> wrote:
+>> Should work with the Clang Code Model, Qt Creator from the current 4.2
+>> branch.
+>>
+>> The corresponding report was
+>> https://bugreports.qt.io/browse/QTCREATORBUG-15590.
+>
+>
+> Okay, in that case, I'll wait until 4.2 for it. One question:
+> PRECOMPILED_HEADER -- will this take a list, or only a single value?
 
---b1_ca3092039694ff5760cbff6dfd3e91da
-Content-Type: text/plain; charset=us-ascii
+Providing a list, the code model gets a list :)
 
-Dear Customer,
-
-Courier was unable to deliver the parcel to you.
-Please, open email attachment to print shipment label.
-
-Thank you for choosing FedEx,
-Tommy Stover,
-FedEx Delivery Agent.
-
-
---b1_ca3092039694ff5760cbff6dfd3e91da
-Content-Type: application/zip; name="Label_00586415.zip"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename=Label_00586415.zip
-
-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
-
-
---b1_ca3092039694ff5760cbff6dfd3e91da--
+Nikolai
