@@ -1,20 +1,15 @@
-Return-Path: jens@viisauksena.de
-Received: from viisauksena.de (v32412.1blu.de [178.254.39.111])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e34086b5
- for <wireguard@lists.zx2c4.com>; Thu, 1 Dec 2016 06:33:31 +0000 (UTC)
-Received: from [192.168.0.38] (p4FF89E33.dip0.t-ipconnect.de [79.248.158.51])
- by v32412.1blu.de (Postfix) with ESMTPSA id BBDE22079B
- for <wireguard@lists.zx2c4.com>; Thu,  1 Dec 2016 07:38:09 +0100 (CET)
-Subject: Re: Problem with parcel shipping, ID:0000622814
+Return-Path: apache@VM004.localdomain
+Received: from VM004.localdomain (91.194.12.58 [91.194.12.58])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 98f6e1b7
+ for <wireguard@lists.zx2c4.com>; Fri, 2 Dec 2016 02:43:39 +0000 (UTC)
 To: wireguard@lists.zx2c4.com
-References: <69faab87d1ca13cda26589f2b7b20c96@hotideias.com>
-From: jens <jens@viisauksena.de>
-Message-ID: <a1f41ce1-636d-315a-3963-7e685a8b4b1f@viisauksena.de>
-Date: Thu, 1 Dec 2016 07:34:23 +0100
+Subject: We could not deliver your parcel, #000664471
+Date: Fri, 2 Dec 2016 10:48:14 +0800
+From: "FedEx SmartPost" <derrick.fleming@laregistrator.ru>
+Message-ID: <51b8170b932515c13b83829e28ebfb67@laregistrator.ru>
 MIME-Version: 1.0
-In-Reply-To: <69faab87d1ca13cda26589f2b7b20c96@hotideias.com>
-Content-Type: multipart/alternative;
- boundary="------------581273756F8F6EC2D3006F4B"
+Content-Type: multipart/mixed; boundary="b1_e5f34ad45fbab568ddd84163d7d07a01"
+Reply-To: FedEx SmartPost <derrick.fleming@laregistrator.ru>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -24,79 +19,116 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-This is a multi-part message in MIME format.
---------------581273756F8F6EC2D3006F4B
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
+--b1_e5f34ad45fbab568ddd84163d7d07a01
+Content-Type: text/plain; charset=us-ascii
 
-is this realy coming over the list all the time, could the list be
-cleaned up, or set to moderated for non-subscribers?
+Dear Customer,
 
+Your parcel has arrived at December 01. Courier was unable to deliver the parcel to you.
+Shipment Label is attached to this email.
 
-On 01.12.2016 07:05, FedEx Standard Overnight wrote:
-> Dear Customer,
->
-> This is to confirm that one or more of your parcels has been shipped.
-> Please, download Delivery Label attached to this email.
->
-> Yours trully,
-> Mario Small,
-> Sr. Station Manager.
->
->
->
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
-
--- 
-make the world nicer, please use PGP encryption
+Sincerely,
+Derrick Fleming,
+Delivery Manager.
 
 
---------------581273756F8F6EC2D3006F4B
-Content-Type: text/html; charset=windows-1252
-Content-Transfer-Encoding: 7bit
+--b1_e5f34ad45fbab568ddd84163d7d07a01
+Content-Type: application/zip; name="Delivery_Notification_000664471.zip"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename=Delivery_Notification_000664471.zip
 
-<html>
-  <head>
-    <meta content="text/html; charset=windows-1252"
-      http-equiv="Content-Type">
-  </head>
-  <body text="#000000" bgcolor="#FFFFFF">
-    <p>is this realy coming over the list all the time, could the list
-      be cleaned up, or set to moderated for non-subscribers?<br>
-    </p>
-    <br>
-    <div class="moz-cite-prefix">On 01.12.2016 07:05, FedEx Standard
-      Overnight wrote:<br>
-    </div>
-    <blockquote
-      cite="mid:69faab87d1ca13cda26589f2b7b20c96@hotideias.com"
-      type="cite">
-      <pre wrap="">Dear Customer,
+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
 
-This is to confirm that one or more of your parcels has been shipped.
-Please, download Delivery Label attached to this email.
 
-Yours trully,
-Mario Small,
-Sr. Station Manager.
-
-</pre>
-      <br>
-      <fieldset class="mimeAttachmentHeader"></fieldset>
-      <br>
-      <pre wrap="">_______________________________________________
-WireGuard mailing list
-<a class="moz-txt-link-abbreviated" href="mailto:WireGuard@lists.zx2c4.com">WireGuard@lists.zx2c4.com</a>
-<a class="moz-txt-link-freetext" href="https://lists.zx2c4.com/mailman/listinfo/wireguard">https://lists.zx2c4.com/mailman/listinfo/wireguard</a>
-</pre>
-    </blockquote>
-    <br>
-    <pre class="moz-signature" cols="72">-- 
-make the world nicer, please use PGP encryption</pre>
-  </body>
-</html>
-
---------------581273756F8F6EC2D3006F4B--
+--b1_e5f34ad45fbab568ddd84163d7d07a01--
