@@ -1,12 +1,14 @@
 Return-Path: eworm@leda.eworm.de
 Received: from mx.mylinuxtime.de (mx.mylinuxtime.de [148.251.109.235])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 593aa69b
- for <wireguard@lists.zx2c4.com>; Sat, 3 Dec 2016 12:26:01 +0000 (UTC)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 32d58592
+ for <wireguard@lists.zx2c4.com>; Sat, 3 Dec 2016 12:37:47 +0000 (UTC)
 From: Christian Hesse <list@eworm.de>
 To: wireguard@lists.zx2c4.com
-Subject: [PATCH 1/1] add dkms configuration file dkms.conf
-Date: Sat,  3 Dec 2016 13:30:44 +0100
-Message-Id: <20161203123044.25848-1-list@eworm.de>
+Subject: [PATCH v2 1/1] add dkms configuration file dkms.conf
+Date: Sat,  3 Dec 2016 13:42:33 +0100
+Message-Id: <20161203124233.27891-1-list@eworm.de>
+In-Reply-To: <20161203123044.25848-1-list@eworm.de>
+References: <20161203123044.25848-1-list@eworm.de>
 Cc: Christian Hesse <mail@eworm.de>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -42,7 +44,7 @@ index 20947ac..f5ab275 100644
 -	echo "$$ver" > version.h && \
 +	ver="$$(git describe --dirty 2>/dev/null)" && \
 +	[ "$$(cut -d\" -f2 version.h 2>/dev/null)" != "$$ver" ] && \
-+	echo "#define WIREGUARD_VERSION \"$$ver\"" && \
++	echo "#define WIREGUARD_VERSION \"$$ver\"" > version.h && \
  	git update-index --assume-unchanged version.h || true
  
 +dkms.conf:
