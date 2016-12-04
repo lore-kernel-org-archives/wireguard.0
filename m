@@ -1,15 +1,22 @@
-Return-Path: duifro43@s027.systemsunit.com
-Received: from axigen.systemsunit.com (a.mx.mail.hostway.ro [89.36.25.93])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ed2862ee
- for <wireguard@lists.zx2c4.com>; Sun, 4 Dec 2016 04:21:27 +0000 (UTC)
-To: wireguard@lists.zx2c4.com
-Subject: Delivery Notification, ID 000905700
-Date: Sun, 4 Dec 2016 04:26:09 +0200
-From: "FedEx International Ground" <juan.hooper@sorantis.ro>
-Message-ID: <99279b0920ce8eda9a2ef1670c27ab47@sorantis.ro>
+Return-Path: john@mib-infotech.co.nz
+Received: from mail-pf0-f176.google.com (mail-pf0-f176.google.com
+ [209.85.192.176])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6b6b2cab
+ for <wireguard@lists.zx2c4.com>; Sun, 4 Dec 2016 05:54:20 +0000 (UTC)
+Received: by mail-pf0-f176.google.com with SMTP id c4so58368268pfb.1
+ for <wireguard@lists.zx2c4.com>; Sat, 03 Dec 2016 21:59:21 -0800 (PST)
+Return-Path: <john@mib-infotech.co.nz>
+From: John Huttley <john@mib-infotech.co.nz>
+Subject: Re: DMVPM appreciation
+To: John Huttley <john@mib-infotech.co.nz>
+References: <20161203115342.20950-1-list@eworm.de>
+ <e1085a46-e38f-c13c-86f5-de312b3a5c05@mib-infotech.co.nz>
+Message-ID: <689268d1-473f-6df6-61ba-989f8aed9928@mib-infotech.co.nz>
+Date: Sun, 4 Dec 2016 18:57:04 +1300
 MIME-Version: 1.0
-Content-Type: multipart/mixed;	boundary="b1_1fb8be50dd9ea26cf35026ec424066c7"
-Reply-To: FedEx International Ground <juan.hooper@sorantis.ro>
+In-Reply-To: <e1085a46-e38f-c13c-86f5-de312b3a5c05@mib-infotech.co.nz>
+Content-Type: text/plain; charset=utf-8
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -19,122 +26,86 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---b1_1fb8be50dd9ea26cf35026ec424066c7
-Content-Type: text/plain; charset=us-ascii
-
-Dear Customer,
-
-We could not deliver your item.
-Shipment Label is attached to email.
-
-Warm regards,
-Juan Hooper,
-FedEx Delivery Manager.
+Hmm...
+Really good high level theory ...
 
 
---b1_1fb8be50dd9ea26cf35026ec424066c7
-Content-Type: application/zip; name="FedEx_000905700.zip"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename=FedEx_000905700.zip
+> Don't forget we need two more things:
+> * A --> C (over UDP)
+> * C --> A (over UDP)
 
-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
-AAIAhAAAAAwVAAAAAA==
+>Throw a few weird NAT/PAT and other ACLs in between and try again.
+
+In one direction there is no need, because that's how we established the
+tunnel. See below, we could make exposed endpoints a requirement.
 
 
---b1_1fb8be50dd9ea26cf35026ec424066c7--
+
+
+>> First. A can talk to C just fine on the VPN. Thats all the
+>> authentication required.
+>>
+>Yes, but in the background A only talks to B over UDP... and B to C
+>over UDP.
+
+Sorry I don't get what you mean. Anyone /could/ talk to anyone,
+firewalls permitting.
+
+
+>I think there may be cases where such situation is possible and highly
+>desirable.
+>The logic being, try to talk directly (using the protocol described
+>above), if it doesn't work, continue talking via B.
+>Reminds me of STUN and friends.
+
+Actually we can simplify it further. Just make it a requirement of
+overlaying that you have a valid listener. Then no UDP magic. Overly
+works or it doesn't.
+
+>And an alternative will be centralized database/service advertising
+>public keys and endpoints (think PGP keyserver).
+>And then comes the WoT and then... Jason will shoot us for bringing
+>the complexity he is so fond of avoiding (and I am supporting him) :-D
+
+Agreed. I don't think Jason will be more than mildly interested and it
+shouldn't be a part of Wireguard itself.
+
+>Since this functionality can be implemented outside of Wireguard, as a
+>simple script (I guess 5 lines of Bash, but will leave the challenge
+>open), it is all a matter of convenience.
+>Nothing can be gained by "building it in", may be except tiny >convenience.
+>If you try to script it, then provide clean documentation/test cases,
+>I am sure it can be included in
+>https://git.zx2c4.com/WireGuard/plain/contrib/examples/
+
+Agreed.
+
+>Also consider the trust model you are changing, because security DOES
+>matter :-)
+>As an example, think buying on Amazon from 3rd party, vs. talking to
+>them directly:
+>(1st -> 2nd case may be possible, 2nd ->1st is highly improbable)
+
+If you are on the VPN, you are by definition, trusted as much as anyone is.
+
+"Improbable" is a policy decision. Overlaying might not even be of
+benefit. If C is on bad, slow connection, an overlay to C isn't going to
+help. Policy needs to figure that out.
+
+
+
+>* 1st case is more secure, but more expensive
+>* 1st provides a way to find your party, plus it provides some
+>mediatior/trust relationship (at cost)
+>* How often did you buy something via Amazon an then went directly to
+>the seller to buy more?
+
+This isn't the use case I'm considering. I'm not quite sure what you mean.
+
+>It is all about balancing security/cost and convenience of setup a
+>transaction, within some (implicit) trust/insurance model.
+
+Definitely don't know what you mean.
+
+Regards
+-Dad
