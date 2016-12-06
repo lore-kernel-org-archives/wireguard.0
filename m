@@ -1,30 +1,24 @@
 Return-Path: Jason@zx2c4.com
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6fcf02cb
- for <wireguard@lists.zx2c4.com>; Tue, 6 Dec 2016 21:26:27 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 909af085
- for <wireguard@lists.zx2c4.com>; Tue, 6 Dec 2016 21:26:26 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id c8da5636
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7ed35bae
+ for <wireguard@lists.zx2c4.com>; Tue, 6 Dec 2016 21:38:38 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7372fc40
+ for <wireguard@lists.zx2c4.com>; Tue, 6 Dec 2016 21:38:38 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id ce50a00c
  (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>; Tue, 6 Dec 2016 21:26:26 +0000 (UTC)
-Received: by mail-wm0-f49.google.com with SMTP id c184so29912049wmd.0
- for <wireguard@lists.zx2c4.com>; Tue, 06 Dec 2016 13:31:46 -0800 (PST)
+ for <wireguard@lists.zx2c4.com>; Tue, 6 Dec 2016 21:38:38 +0000 (UTC)
+Received: by mail-wj0-f178.google.com with SMTP id xy5so338712454wjc.0
+ for <wireguard@lists.zx2c4.com>; Tue, 06 Dec 2016 13:43:58 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20161206211547.1e3dd9a5@leda>
-References: <20161203123044.25848-1-list@eworm.de>
- <20161203124233.27891-1-list@eworm.de>
- <CAHmME9pAz1e2keE0vH-cWORP7pRmhfoivFt0_=_4xEH9xUjLDA@mail.gmail.com>
- <20161206103551.038a3d3e@leda>
- <CAHmME9rxy-tzWdOYontRYDkxwWAgyx6jPURej1Qh2brMcrDEjw@mail.gmail.com>
- <20161206211547.1e3dd9a5@leda>
+In-Reply-To: <CAJSP0QUDhKYC41j0WxJQEX06-szCr8oPWsP3BK75LNvSYviXHA@mail.gmail.com>
+References: <CAJSP0QUDhKYC41j0WxJQEX06-szCr8oPWsP3BK75LNvSYviXHA@mail.gmail.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 6 Dec 2016 22:31:44 +0100
-Message-ID: <CAHmME9p+H+=KY4Wqhs4Hins1w8M0x_LVXnma61rGb+xNognuZA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] add dkms configuration file dkms.conf
-To: Christian Hesse <list@eworm.de>
+Date: Tue, 6 Dec 2016 22:43:56 +0100
+Message-ID: <CAHmME9qE_jSXaUvCw8dCpz4zK8ukEdOVvc=9HhPmxTDTTeLk2A@mail.gmail.com>
+Subject: Re: [WireGuard] Wireguard disk image for QEMU Advent Calendar 2016?
+To: Stefan Hajnoczi <stefanha@gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Cc: Christian Hesse <mail@eworm.de>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -34,6 +28,17 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Great -- good to hear it works well with the Arch package.
+Hi Stefan,
 
-Daniel -- is this something you'll find similarly useful for the Debian package?
+Sorry for the late reply. Your message went into my spam folder, as
+the contents of the message seems slightly spamy upon first glance...
+
+I'm not sure I exactly understand what you're proposing. If you're
+interested in the intersection between QEMU and WireGuard, you might
+enjoy checking out our test harness [1]. For every commit, it compiles
+a new kernel and userland, for each kernel version >= 4.1, and runs a
+large dedicated test suite in QEMU.
+
+Jason
+
+[1] https://www.wireguard.io/build-status/
