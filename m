@@ -1,28 +1,21 @@
 Return-Path: Jason@zx2c4.com
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c00d8e66
- for <wireguard@lists.zx2c4.com>; Wed, 7 Dec 2016 10:32:42 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4c90686c
- for <wireguard@lists.zx2c4.com>; Wed, 7 Dec 2016 10:32:42 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 2b6d6f97
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8f8e5547
+ for <wireguard@lists.zx2c4.com>; Wed, 7 Dec 2016 18:05:53 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4e87d31e
+ for <wireguard@lists.zx2c4.com>; Wed, 7 Dec 2016 18:05:53 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id a597b699
  (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 7 Dec 2016 10:32:40 +0000 (UTC)
-Received: by mail-wm0-f46.google.com with SMTP id c184so33642989wmd.0
- for <wireguard@lists.zx2c4.com>; Wed, 07 Dec 2016 02:38:04 -0800 (PST)
+ for <wireguard@lists.zx2c4.com>; Wed, 7 Dec 2016 18:05:53 +0000 (UTC)
+Received: by mail-wm0-f41.google.com with SMTP id f82so179996579wmf.1
+ for <wireguard@lists.zx2c4.com>; Wed, 07 Dec 2016 10:11:19 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <58475B7C.14182.19D586@pageexec.freemail.hu>
-References: <e15d1fea-8761-fde9-6802-cb483340ebb4@sholland.org>
- <CAHmME9qBAt84jOvJhnSOybekbOFQb1RH+7mmfGK=bc2i9bxADg@mail.gmail.com>
- <CAHmME9q+oEAo+HuSRf8WJoGv+jbsA46c3GHXCUT4QvX8a+k23w@mail.gmail.com>
- <58475B7C.14182.19D586@pageexec.freemail.hu>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 7 Dec 2016 11:38:02 +0100
-Message-ID: <CAHmME9rHB20Ywi_ZkFGq5WioqeDApUvaTwaOP1HB1WBpYRVCag@mail.gmail.com>
-Subject: Re: Kernel Panic
-To: pageexec@freemail.hu
+Date: Wed, 7 Dec 2016 19:11:17 +0100
+Message-ID: <CAHmME9q_HCBTx9K47LQxQcS8qCSfecudG=haMeuBAzJDvoOOEg@mail.gmail.com>
+Subject: Odd length headers and alignment
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset=UTF-8
-Cc: Brad Spengler <spender@grsecurity.net>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -32,56 +25,28 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hey Spender, Pipacs,
+Hey guys,
 
-On Wed, Dec 7, 2016 at 1:44 AM, PaX Team <pageexec@freemail.hu> wrote:
-> that's is your problem, DMA is forbidden to/from the stack in linux,
-> Documentation/DMA-API-HOWTO.txt says this:
+Wireguard data packets have a 1 byte type, a 4 byte index, an 8 byte
+nonce, the ciphertext, and then a 16 byte auth tag. Having 13 bytes in
+the beginning means that when we do in-place decryption, the plaintext
+winds up starting at an odd-byte, transferring misalignment down to
+the rest of the stack.
 
-I realize that you shouldn't shove stack addresses inside
-scattergather lists and do DMA with them. I certainly don't do this.
-I've read the various parts of the kernel that erroneously do, and
-I've looked at the million little grsec patches that replace these
-with kmalloc everywhere. That's not what's going on here, however.
+Now, in my testing on alignment-sensitive MIPS boxes, I've only had
+alignment exceptions with this regarding the first byte, which is the
+version number of the IP header. Since this is just a single byte, the
+alignment doesn't actually matter. But in practice, the compiler
+generates a 16-bit load instead of an 8-bit load, which sucks. I may
+be able to work around this though. Beyond that, I haven't actually
+observed exceptions from elsewhere in the stack regarding
+misalignment.
 
-In this case, I'm hitting the bug with scatterwalk_map_and_copy, a
-function designed to copy bytes out of a DMA region to put them into
-any address, even a stack one, for CPU manipulation. The
-implementation maps the DMA region, and then essentially calls memcpy
-between that region and my stack buffer. This kind of usage certainly
-must be permitted.
+So, how much of a problem do you suppose this is? Would it be
+worthwhile to stick an _extra byte_ in the header, just to get even
+alignment? Or an extra three bytes to get 16-byte alignment? Or do you
+suppose this isn't really worth the bloat and MTU loss?
 
-The place where kstackoverflow gets involved in
-scatterwalk_map_and_copy is a small optimization in which the function
-exits early if the destination regioin is the same as the source
-region. It compares these values by calling virt_to_page and checking
-those, and then calling offset_in_page and checking those. But this
-doesn't mean anybody is DMAing with the stack.
-
-Grepping the whole tree for other uses of scatterwalk_map_and_copy
-indicate that it is widely used as a means of copying stack data to
-and from DMA regions with this safe memcpy. For example,
-arch/arm64/crypto/aes-ce-ccm-glue.c:
-
-        /* copy authtag to end of dst */
-       scatterwalk_map_and_copy(mac, dst, req->cryptlen,
-crypto_aead_authsize(aead), 1);
-
-        /* compare calculated auth tag with the stored one */
-        scatterwalk_map_and_copy(buf, src, req->cryptlen - authsize,
-authsize, 0);
-        if (crypto_memneq(mac, buf, authsize))
-
-
-Not only is `mac` a stack buffer, but it's being used for the same
-functional purpose as me -- copying the authtag to/from the stack for
-checking or adding.
-
-Looking at the grsec sources for these uses of
-scatterwalk_map_and_copy, it doesn't appear that the usual kmalloc
-fixup is being applied, which likely indicates you didn't think it was
-a problem either.
-
-So -- I think this might be a grsec bug. Or am I still mistaken?
+Just something to think about...
 
 Jason
