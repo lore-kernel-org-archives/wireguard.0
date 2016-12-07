@@ -1,24 +1,29 @@
-Return-Path: davem@davemloft.net
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f0f5219c
- for <wireguard@lists.zx2c4.com>; Wed, 7 Dec 2016 19:47:18 +0000 (UTC)
-Received: from shards.monkeyblade.net (shards.monkeyblade.net
- [184.105.139.130])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4c5daa64
- for <wireguard@lists.zx2c4.com>; Wed, 7 Dec 2016 19:47:18 +0000 (UTC)
-Date: Wed, 07 Dec 2016 14:52:40 -0500 (EST)
-Message-Id: <20161207.145240.1636297838792223189.davem@davemloft.net>
-To: Jason@zx2c4.com
-Subject: Re: Misalignment, MIPS, and ip_hdr(skb)->version
-From: David Miller <davem@davemloft.net>
-In-Reply-To: <CAHmME9oLgjDA2F0gkFzHU2Es8-XCxQHRABS18OKF0EnZgt1=LQ@mail.gmail.com>
-References: <CAA93jw7hcmkcyD=t4VRrQFfHk+n+EkSVgY6KFDq0_-DGpMADYw@mail.gmail.com>
- <20161207.135127.789629809982860453.davem@davemloft.net>
- <CAHmME9oLgjDA2F0gkFzHU2Es8-XCxQHRABS18OKF0EnZgt1=LQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: Text/Plain; charset=us-ascii
-Cc: netdev@vger.kernel.org, wireguard@lists.zx2c4.com,
- linux-kernel@vger.kernel.org, linux-mips@linux-mips.org
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7475b23b
+ for <wireguard@lists.zx2c4.com>; Wed, 7 Dec 2016 20:09:35 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c202eb67
+ for <wireguard@lists.zx2c4.com>; Wed, 7 Dec 2016 20:09:35 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4426dbd0
+ for <wireguard@lists.zx2c4.com>; Wed, 7 Dec 2016 20:09:35 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 2b484794
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>; Wed, 7 Dec 2016 20:09:35 +0000 (UTC)
+Received: by mail-wm0-f53.google.com with SMTP id a197so185453091wmd.0
+ for <wireguard@lists.zx2c4.com>; Wed, 07 Dec 2016 12:15:02 -0800 (PST)
+MIME-Version: 1.0
+In-Reply-To: <CAHmME9oLLFV-u7fYJGa8_5E2JJOu9bFfgcTiMJT+125W6jo-LQ@mail.gmail.com>
+References: <69faab87d1ca13cda26589f2b7b20c96@hotideias.com>
+ <a1f41ce1-636d-315a-3963-7e685a8b4b1f@viisauksena.de>
+ <CAHmME9oLLFV-u7fYJGa8_5E2JJOu9bFfgcTiMJT+125W6jo-LQ@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 7 Dec 2016 21:14:59 +0100
+Message-ID: <CAHmME9o=_tyQH0_kT7pi5SqVS4UrHomxuXexm2g9jVZTOsLidQ@mail.gmail.com>
+Subject: Re: Problem with parcel shipping, ID:0000622814
+To: jens <jens@viisauksena.de>
+Content-Type: text/plain; charset=UTF-8
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -28,24 +33,5 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 7 Dec 2016 19:54:12 +0100
-
-> On Wed, Dec 7, 2016 at 7:51 PM, David Miller <davem@davemloft.net> wrote:
->> It's so much better to analyze properly where the misalignment comes from
->> and address it at the source, as we have for various cases that trip up
->> Sparc too.
-> 
-> That's sort of my attitude too, hence starting this thread. Any
-> pointers you have about this would be most welcome, so as not to
-> perpetuate what already seems like an issue in other parts of the
-> stack.
-
-The only truly difficult case to handle is GRE encapsulation.  Is
-that the situation you are running into?
-
-If not, please figure out what the header configuration looks like
-in the case that hits for you, and what the originating device is
-just in case it is a device driver issue.
-
-Thanks.
+Alright I've got some filtering in place now. This spam should go
+away. Thanks for bringing it to my attention.
