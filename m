@@ -1,21 +1,28 @@
-Return-Path: list@eworm.de
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e6269388
- for <wireguard@lists.zx2c4.com>; Thu, 8 Dec 2016 11:28:18 +0000 (UTC)
-Received: from mx.mylinuxtime.de (mx.mylinuxtime.de [148.251.109.235])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d896b0c9
- for <wireguard@lists.zx2c4.com>; Thu, 8 Dec 2016 11:28:17 +0000 (UTC)
-Date: Thu, 8 Dec 2016 12:33:43 +0100
-From: Christian Hesse <list@eworm.de>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: Re: [PATCH 1/1] make the systemd unit example more general
-Message-ID: <20161208123343.54f162d7@leda>
-In-Reply-To: <CAHmME9qc02xGhyiXp3J3ugFyCKkWbYY0Fj_q9C1euv1gAYa9qg@mail.gmail.com>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7e13af7d
+ for <wireguard@lists.zx2c4.com>; Thu, 8 Dec 2016 12:42:43 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c89891b0
+ for <wireguard@lists.zx2c4.com>; Thu, 8 Dec 2016 12:42:43 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1274f127
+ for <wireguard@lists.zx2c4.com>; Thu, 8 Dec 2016 12:42:43 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 3f39a73b
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>; Thu, 8 Dec 2016 12:42:43 +0000 (UTC)
+Received: by mail-wm0-f44.google.com with SMTP id a197so215290113wmd.0
+ for <wireguard@lists.zx2c4.com>; Thu, 08 Dec 2016 04:48:15 -0800 (PST)
+MIME-Version: 1.0
+In-Reply-To: <20161208123343.54f162d7@leda>
 References: <20161208091214.15449-1-list@eworm.de>
  <CAHmME9qc02xGhyiXp3J3ugFyCKkWbYY0Fj_q9C1euv1gAYa9qg@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- boundary="Sig_/w_aTyC42GpaP7qI5IXTG8e5"; protocol="application/pgp-signature"
+ <20161208123343.54f162d7@leda>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 8 Dec 2016 13:48:13 +0100
+Message-ID: <CAHmME9pXPHPZwFy4JLQZLbOjinFnPJ+JcP1mPR=+PvAMLYmoLA@mail.gmail.com>
+Subject: Re: [PATCH 1/1] make the systemd unit example more general
+To: Christian Hesse <list@eworm.de>
+Content-Type: text/plain; charset=UTF-8
 Cc: Christian Hesse <mail@eworm.de>,
  WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
@@ -27,51 +34,44 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---Sig_/w_aTyC42GpaP7qI5IXTG8e5
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+On Thu, Dec 8, 2016 at 12:33 PM, Christian Hesse <list@eworm.de> wrote:
+> "Jason A. Donenfeld" <Jason@zx2c4.com> on Thu, 2016/12/08 12:18:
+>> I like this, but two questions.
+>>
+>> 1. Why did you get rid of the ExecStop config saving line?
+>
+> I do not like units altering configuration. If you want to save configuration
+> on stop create a second unit with correct dependencies an ordering that
+> writes the configuration.
 
-"Jason A. Donenfeld" <Jason@zx2c4.com> on Thu, 2016/12/08 12:18:
-> I like this, but two questions.
->=20
-> 1. Why did you get rid of the ExecStop config saving line?
+That's fair. Want to submit a v2, then, with a shutdown unit too?
+(By the way, please prefix the commit message with "contrib: ".)
 
-I do not like units altering configuration. If you want to save configurati=
-on
-on stop create a second unit with correct dependencies an ordering that
-writes the configuration.
+> Not sure about that. :-p At least I left it in examples directory. ;)
+>
+> In first place this is a RFC. Nevertheless we should polish things a bit and
+> provide a usable systemd unit.
 
-> 2. You're not planning to actually package this unit file, are you?
+Alright then. By the way, there's some work upstream with systemd to
+include this in systemd-networkd, which would probably be the "more
+correct" way of doing it. But I guess a unit would nonetheless be
+useful for folks who don't use systemd-networkd.
 
-Not sure about that. :-p At least I left it in examples directory. ;)
+>
+> I still do not like to have two files that hold the settings... But no idea
+> how to get rid of that in a clean way. Having shell code in a systemd unit is
+> even worse...
 
-In first place this is a RFC. Nevertheless we should polish things a bit and
-provide a usable systemd unit.
+Yea, it's not nice. There's some additional logic: adding allowed-ips
+to routes for the device, if the allowed-ips aren't already included
+in the device's address prefix route.
 
-I still do not like to have two files that hold the settings... But no idea
-how to get rid of that in a clean way. Having shell code in a systemd unit =
-is
-even worse...
---=20
-main(a){char*c=3D/*    Schoene Gruesse                         */"B?IJj;MEH"
-"CX:;",b;for(a/*    Best regards             my address:    */=3D0;b=3Dc[a+=
-+];)
-putchar(b-1/(/*    Chris            cc -ox -xc - && ./x    */b/42*2-3)*42);}
-
---Sig_/w_aTyC42GpaP7qI5IXTG8e5
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEXHmveYAHrRp+prOviUUh18yA9HYFAlhJRRcACgkQiUUh18yA
-9HayTQgA5swyGpYd+MJ/L08h2o6Xlwht7KpQRAy9/wZFLZynRA+pad3rVvSzInGP
-QgYmENxDCrB+CXF7bEFcosuXW1DE7jvL4RDnI3azTGaBrCnDOGcmNE2jRr060xHU
-5W1oh6j7UDXovoUs5opGZzQ7QfBWBRAvDMkozAV9kEYcNbZsh/rl7dMc1vDWrzAU
-DxKivb0BP5jymlvAfjyAE+lIKXINgfb9IgFWVFiJO8LIl4qnFXon7YHyv5t2vPMs
-js1BVemn5vd/IC1h3k+N3xA/LI3Z4CUjTupJuEmgjiMTBRLM13fPMOIRqUU2nT0z
-wHI85lot6x1JcfYMdalFWNZmqw4x3w==
-=DKGR
------END PGP SIGNATURE-----
-
---Sig_/w_aTyC42GpaP7qI5IXTG8e5--
+I've thought about just adding this to `wg(8)` itself, and letting it
+be specified in the config file. This would indeed be _nice_, but it
+still seems like the wrong place to be doing these things. Maybe it'd
+be useful to have an extra shell-script in contrib called wg-config.sh
+that takes a device name, a `wg(8)`, config file, a list of IPs given
+by --address=, a list of additional routes given by --route=, and the
+ability to disable auto-route-from-allowed-ips-adding via
+--no-auto-routes. Maybe I'll code this up myself -- it should only
+take a few minutes to do...
