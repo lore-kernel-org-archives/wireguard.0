@@ -1,32 +1,23 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: hannes@stressinduktion.org
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 18eede21
- for <wireguard@lists.zx2c4.com>; Thu, 8 Dec 2016 00:24:17 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ef418b99
- for <wireguard@lists.zx2c4.com>; Thu, 8 Dec 2016 00:24:17 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4301b566
- for <wireguard@lists.zx2c4.com>; Thu, 8 Dec 2016 00:24:17 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 4fe7474c
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>; Thu, 8 Dec 2016 00:24:16 +0000 (UTC)
-Received: by mail-wm0-f46.google.com with SMTP id t79so779727wmt.0
- for <wireguard@lists.zx2c4.com>; Wed, 07 Dec 2016 16:29:44 -0800 (PST)
-MIME-Version: 1.0
-In-Reply-To: <20161207.145240.1636297838792223189.davem@davemloft.net>
-References: <CAA93jw7hcmkcyD=t4VRrQFfHk+n+EkSVgY6KFDq0_-DGpMADYw@mail.gmail.com>
- <20161207.135127.789629809982860453.davem@davemloft.net>
- <CAHmME9oLgjDA2F0gkFzHU2Es8-XCxQHRABS18OKF0EnZgt1=LQ@mail.gmail.com>
- <20161207.145240.1636297838792223189.davem@davemloft.net>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 8 Dec 2016 01:29:42 +0100
-Message-ID: <CAHmME9qxz6wcOZuurqahXeY6QSF=zz0gH7gY4RZujLAJPNSWBA@mail.gmail.com>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 70abda78
+ for <wireguard@lists.zx2c4.com>; Thu, 8 Dec 2016 00:25:09 +0000 (UTC)
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
+ [66.111.4.28])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5194b0fe
+ for <wireguard@lists.zx2c4.com>; Thu, 8 Dec 2016 00:25:09 +0000 (UTC)
 Subject: Re: Misalignment, MIPS, and ip_hdr(skb)->version
-To: David Miller <davem@davemloft.net>
-Content-Type: text/plain; charset=UTF-8
-Cc: Netdev <netdev@vger.kernel.org>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>,
- LKML <linux-kernel@vger.kernel.org>, linux-mips@linux-mips.org
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>, Netdev <netdev@vger.kernel.org>,
+ linux-mips@linux-mips.org
+References: <CAHmME9o_eCNXpVztOZKW55kpRtE+1KSEQTQOjUBVn68Y2+or2g@mail.gmail.com>
+From: Hannes Frederic Sowa <hannes@stressinduktion.org>
+Message-ID: <095cac5b-b757-6f4a-e699-8eedf9ed7221@stressinduktion.org>
+Date: Thu, 8 Dec 2016 01:30:34 +0100
+MIME-Version: 1.0
+In-Reply-To: <CAHmME9o_eCNXpVztOZKW55kpRtE+1KSEQTQOjUBVn68Y2+or2g@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Cc: LKML <linux-kernel@vger.kernel.org>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -36,19 +27,46 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Wed, Dec 7, 2016 at 8:52 PM, David Miller <davem@davemloft.net> wrote:
-> The only truly difficult case to handle is GRE encapsulation.  Is
-> that the situation you are running into?
->
-> If not, please figure out what the header configuration looks like
-> in the case that hits for you, and what the originating device is
-> just in case it is a device driver issue.
+Hi Jason,
 
-My case is my own driver and my own protocol, which uses a 13 byte
-header. I can, if absolutely necessary, change the protocol to add
-another byte of padding. Or I can choose not to decrypt in place but
-rather use a different trick, like overwriting the header during
-decryption, though this removes some of the scatterwalk optimizations
-when src and dst are the same. Or something else. I wrote the top
-email of this thread inquiring about just exactly how bad it is to
-call netif_rx(skb) when skb->data is unaligned.
+On 07.12.2016 19:35, Jason A. Donenfeld wrote:
+> I receive encrypted packets with a 13 byte header. I decrypt the
+> ciphertext in place, and then discard the header. I then pass the
+> plaintext to the rest of the networking stack. The plaintext is an IP
+> packet. Due to the 13 byte header that was discarded, the plaintext
+> possibly begins at an unaligned location (depending on whether
+> dev->needed_headroom was respected).
+> 
+> Does this matter? Is this bad? Will there be a necessary performance hit?
+
+Your custom protocol should be designed in a way you get an aligned ip
+header. Most protocols of the IETF follow this mantra and it is always
+possible to e.g. pad options so you end up on aligned boundaries for the
+next header.
+
+GRE-TEB for example needs skb_copy_bits to extract the header so it can
+access them in an aligned way.
+
+> In order to find out, I instrumented the MIPS unaligned access
+> exception handler to see where I was actually in trouble.
+> Surprisingly, the only part of the stack that seemed to be upset was
+> on calls to ip_hdr(skb)->version.
+> 
+> Two things disturb me about this. First, this seems too good to be
+> true. Does it seem reasonable to you that this is actually the only
+> place that would be problematic? Or was my testing methodology wrong
+> to arrive at such an optimistic conclusion?
+> 
+> Secondly, why should a call to ip_hdr(skb)->version cause an unaligned
+> access anyway? This struct member is simply the second half of a
+> single byte in a bit field. I'd expect for the compiler to generate a
+> single byte load, followed by a bitshift or a mask. Instead, the
+> compiler appears to generate a double byte load, hence the exception.
+> What's up with this? Stupid compiler that should be fixed? Some odd
+> optimization? What to do?
+
+I don't see an issue with that at all. Why do you think it could be a
+problem?
+
+Bye,
+Hannes
