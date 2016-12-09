@@ -1,24 +1,20 @@
-Return-Path: davem@davemloft.net
+Return-Path: admin@hda.me
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 338da647
- for <wireguard@lists.zx2c4.com>; Thu, 8 Dec 2016 23:09:22 +0000 (UTC)
-Received: from shards.monkeyblade.net (shards.monkeyblade.net
- [184.105.139.130])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 221929c1
- for <wireguard@lists.zx2c4.com>; Thu, 8 Dec 2016 23:09:22 +0000 (UTC)
-Date: Thu, 08 Dec 2016 18:14:53 -0500 (EST)
-Message-Id: <20161208.181453.1681964885150767592.davem@davemloft.net>
-To: Jason@zx2c4.com
-Subject: Re: Misalignment, MIPS, and ip_hdr(skb)->version
-From: David Miller <davem@davemloft.net>
-In-Reply-To: <CAHmME9qGoPGEFyqe0jBaZD5R51wHTEgAYb9edj+nu9nNPWSYCA@mail.gmail.com>
-References: <CAHmME9qxz6wcOZuurqahXeY6QSF=zz0gH7gY4RZujLAJPNSWBA@mail.gmail.com>
- <20161207.193716.50344961208535056.davem@davemloft.net>
- <CAHmME9qGoPGEFyqe0jBaZD5R51wHTEgAYb9edj+nu9nNPWSYCA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: Text/Plain; charset=us-ascii
-Cc: netdev@vger.kernel.org, wireguard@lists.zx2c4.com,
- linux-kernel@vger.kernel.org, linux-mips@linux-mips.org
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 916077f2
+ for <wireguard@lists.zx2c4.com>; Fri, 9 Dec 2016 07:23:53 +0000 (UTC)
+Received: from sender163-mail.zoho.com (sender163-mail.zoho.com
+ [74.201.84.163])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 69a2d3f3
+ for <wireguard@lists.zx2c4.com>; Fri, 9 Dec 2016 07:23:53 +0000 (UTC)
+Date: Fri, 09 Dec 2016 08:29:27 +0100
+From: Anonymous Anonymous <admin@hda.me>
+To: "wireguard" <wireguard@lists.zx2c4.com>, "Jason" <jason@zx2c4.com>
+Message-Id: <158e27c9da7.122ca5a7e30441.7068723817806019547@hda.me>
+In-Reply-To: 
+Subject: Re: New contrib/ Utility: wg-config
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="----=_Part_71158_807621822.1481268567465"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -28,21 +24,38 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 8 Dec 2016 23:20:04 +0100
+------=_Part_71158_807621822.1481268567465
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-> Hi David,
-> 
-> On Thu, Dec 8, 2016 at 1:37 AM, David Miller <davem@davemloft.net> wrote:
->> You really have to land the IP header on a proper 4 byte boundary.
->>
->> I would suggest pushing 3 dummy garbage bytes of padding at the front
->> or the end of your header.
-> 
-> Are you sure 3 bytes to get 4 byte alignment is really the best? I was
-> thinking that adding 1 byte to get 2 byte alignment might be better,
-> since it would then ensure that the subsequent TCP header winds up
-> being 4 byte aligned. Or is this in fact not the desired trade off,
-> and so I should stick with the 3 bytes you suggested?
+Anyway to have env variables in the single config file (without wg wgconf blaming), but not in two files per connection? For ex. make wg wgconf redirect variables from . config file to wg-config to deal with.
+Using two files will make wireguard configuration even harder to understand, and this means it presume you need to ask someone who will use your vpn to copy two files instead single configuration file (ovpn style)
+I addressed this partly there: https://lists.zx2c4.com/pipermail/wireguard/2016-December/000731.html (just started, without routing)
+I can't even imagine machine with 50 connections, thats 100 configuration files (including variables files) and thats will be kind of crazy. And this not the worst example.
+I really like idea of single config per connection. And this also will make config easier to import in other software (for example you can import ovpn or config file will openvpn setup in networkmanager).
 
-If the IP header is 4 byte aligned, the TCP header will be as well.
+
+
+
+------=_Part_71158_807621822.1481268567465
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html><head>=
+<meta content=3D"text/html;charset=3DUTF-8" http-equiv=3D"Content-Type"></h=
+ead><body ><div style=3D'font-size:10pt;font-family:Verdana,Arial,Helvetica=
+,sans-serif;'>Anyway to have env variables in the single config file (witho=
+ut wg wgconf blaming), but not in two files per connection? For ex. make wg=
+ wgconf redirect variables from . config file to wg-config to deal with.<br=
+>Using two files will make wireguard configuration even harder to understan=
+d, and this means it presume you need to ask someone who will use your vpn =
+to copy two files instead single configuration file (ovpn style)<br>I addre=
+ssed this partly there: https://lists.zx2c4.com/pipermail/wireguard/2016-De=
+cember/000731.html (just started, without routing)<br>I can't even imagine =
+machine with 50 connections, thats 100 configuration files (including varia=
+bles files) and thats will be kind of crazy. And this not the worst example=
+.<br>I really like idea of single config per connection. And this also will=
+ make config easier to import in other software (for example you can import=
+ ovpn or config file will openvpn setup in networkmanager).<br><br><br></di=
+v></body></html>
+------=_Part_71158_807621822.1481268567465--
