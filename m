@@ -1,20 +1,27 @@
-Return-Path: admin@hda.me
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 916077f2
- for <wireguard@lists.zx2c4.com>; Fri, 9 Dec 2016 07:23:53 +0000 (UTC)
-Received: from sender163-mail.zoho.com (sender163-mail.zoho.com
- [74.201.84.163])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 69a2d3f3
- for <wireguard@lists.zx2c4.com>; Fri, 9 Dec 2016 07:23:53 +0000 (UTC)
-Date: Fri, 09 Dec 2016 08:29:27 +0100
-From: Anonymous Anonymous <admin@hda.me>
-To: "wireguard" <wireguard@lists.zx2c4.com>, "Jason" <jason@zx2c4.com>
-Message-Id: <158e27c9da7.122ca5a7e30441.7068723817806019547@hda.me>
-In-Reply-To: 
-Subject: Re: New contrib/ Utility: wg-config
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2bb0e815
+ for <wireguard@lists.zx2c4.com>; Fri, 9 Dec 2016 10:40:49 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c0050784
+ for <wireguard@lists.zx2c4.com>; Fri, 9 Dec 2016 10:40:49 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9c01ad0b
+ for <wireguard@lists.zx2c4.com>; Fri, 9 Dec 2016 10:40:49 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 3cf75791
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>; Fri, 9 Dec 2016 10:40:49 +0000 (UTC)
+Received: by mail-wm0-f46.google.com with SMTP id g23so20697551wme.1
+ for <wireguard@lists.zx2c4.com>; Fri, 09 Dec 2016 02:46:28 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="----=_Part_71158_807621822.1481268567465"
+In-Reply-To: <158e27c9da7.122ca5a7e30441.7068723817806019547@hda.me>
+References: <158e27c9da7.122ca5a7e30441.7068723817806019547@hda.me>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Fri, 9 Dec 2016 11:46:26 +0100
+Message-ID: <CAHmME9pXcgRY6-kQgwoSm8-Jni8WnmJx71F7ZL7zHGvYku8LxA@mail.gmail.com>
+Subject: Re: New contrib/ Utility: wg-config
+To: Anonymous Anonymous <admin@hda.me>
+Content-Type: text/plain; charset=UTF-8
+Cc: wireguard <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -24,38 +31,40 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-------=_Part_71158_807621822.1481268567465
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+I guess. But keep in mind that wg-config is an _example_, not
+something meant to be standardized. It's a tiny bash script! I'd hate
+for my terrible bash script to become some kind of "standard". It's
+meant mostly as inspiration for people who want to build real tools,
+which is why it's in the examples directory. (I added the makefile
+install target specifically for Christian, I suppose, since he seems
+to have some wild ideas of his own...)
 
-Anyway to have env variables in the single config file (without wg wgconf blaming), but not in two files per connection? For ex. make wg wgconf redirect variables from . config file to wg-config to deal with.
-Using two files will make wireguard configuration even harder to understand, and this means it presume you need to ask someone who will use your vpn to copy two files instead single configuration file (ovpn style)
-I addressed this partly there: https://lists.zx2c4.com/pipermail/wireguard/2016-December/000731.html (just started, without routing)
-I can't even imagine machine with 50 connections, thats 100 configuration files (including variables files) and thats will be kind of crazy. And this not the worst example.
-I really like idea of single config per connection. And this also will make config easier to import in other software (for example you can import ovpn or config file will openvpn setup in networkmanager).
+But here, I added CONFIG_FILE_CONTENTS, so you don't need an extra
+file. What a hack. But it actually works pretty cleanly.
 
+/etc/wireguard/wg-vpn-gateway.env:
 
+       CONFIG_FILE_CONTENTS="
+       [Interface]
+       PrivateKey = 6JiA3fa+NG+x5m6aq7+lxlVaVqVf1mxK6/pDOZdNuXc=
 
+       [Peer]
+       PublicKey = 6NagfTu+s8+TkEKpxX7pNjJuTf4zYtoJme7iQFYIw0A=
+       AllowedIPs = 0.0.0.0/0
+       Endpoint = demo.wireguard.io:29912
+       "
 
-------=_Part_71158_807621822.1481268567465
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+       ADDRESSES=( 10.200.100.2/32 )
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html><head>=
-<meta content=3D"text/html;charset=3DUTF-8" http-equiv=3D"Content-Type"></h=
-ead><body ><div style=3D'font-size:10pt;font-family:Verdana,Arial,Helvetica=
-,sans-serif;'>Anyway to have env variables in the single config file (witho=
-ut wg wgconf blaming), but not in two files per connection? For ex. make wg=
- wgconf redirect variables from . config file to wg-config to deal with.<br=
->Using two files will make wireguard configuration even harder to understan=
-d, and this means it presume you need to ask someone who will use your vpn =
-to copy two files instead single configuration file (ovpn style)<br>I addre=
-ssed this partly there: https://lists.zx2c4.com/pipermail/wireguard/2016-De=
-cember/000731.html (just started, without routing)<br>I can't even imagine =
-machine with 50 connections, thats 100 configuration files (including varia=
-bles files) and thats will be kind of crazy. And this not the worst example=
-.<br>I really like idea of single config per connection. And this also will=
- make config easier to import in other software (for example you can import=
- ovpn or config file will openvpn setup in networkmanager).<br><br><br></di=
-v></body></html>
-------=_Part_71158_807621822.1481268567465--
+       post_add() {
+               printf 'nameserver 10.200.100.1' | cmd resolvconf -a
+"$INTERFACE" -m 0
+       }
+       post_del() {
+               cmd resolvconf -d "$INTERFACE"
+       }
+
+Run to flip on the VPN:
+# wg-config add wgvpn0 --env-file=/etc/wireguard/wg-vpn-gateway.env
+Run to flip off the VPN:
+# wg-config del wgvpn0 --env-file=/etc/wireguard/wg-vpn-gateway.env
