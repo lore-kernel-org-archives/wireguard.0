@@ -1,27 +1,29 @@
-Return-Path: nbd@nbd.name
+Return-Path: mans@mansr.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 63e3f306
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2d8a59df
  for <wireguard@lists.zx2c4.com>;
- Sat, 10 Dec 2016 12:19:24 +0000 (UTC)
-Received: from nbd.name (nbd.name [46.4.11.11])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 83eaff8d
+ Sat, 10 Dec 2016 13:19:34 +0000 (UTC)
+Received: from unicorn.mansr.com (unicorn.mansr.com [81.2.72.234])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2207d658
  for <wireguard@lists.zx2c4.com>;
- Sat, 10 Dec 2016 12:19:24 +0000 (UTC)
+ Sat, 10 Dec 2016 13:19:34 +0000 (UTC)
+From: =?iso-8859-1?Q?M=E5ns_Rullg=E5rd?= <mans@mansr.com>
+To: Felix Fietkau <nbd@nbd.name>
 Subject: Re: Misalignment, MIPS, and ip_hdr(skb)->version
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>, David Miller <davem@davemloft.net>
 References: <CAHmME9o_eCNXpVztOZKW55kpRtE+1KSEQTQOjUBVn68Y2+or2g@mail.gmail.com>
  <CAA93jw7hcmkcyD=t4VRrQFfHk+n+EkSVgY6KFDq0_-DGpMADYw@mail.gmail.com>
  <20161207.135127.789629809982860453.davem@davemloft.net>
  <CAHmME9oLgjDA2F0gkFzHU2Es8-XCxQHRABS18OKF0EnZgt1=LQ@mail.gmail.com>
-From: Felix Fietkau <nbd@nbd.name>
-Message-ID: <040bcdb2-2725-c8de-11d9-a4f77b75d9d8@nbd.name>
-Date: Sat, 10 Dec 2016 13:25:07 +0100
+ <040bcdb2-2725-c8de-11d9-a4f77b75d9d8@nbd.name>
+Date: Sat, 10 Dec 2016 13:25:19 +0000
+In-Reply-To: <040bcdb2-2725-c8de-11d9-a4f77b75d9d8@nbd.name> (Felix Fietkau's
+ message of "Sat, 10 Dec 2016 13:25:07 +0100")
+Message-ID: <yw1x37hvykzk.fsf@unicorn.mansr.com>
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9oLgjDA2F0gkFzHU2Es8-XCxQHRABS18OKF0EnZgt1=LQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Cc: Netdev <netdev@vger.kernel.org>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>,
- LKML <linux-kernel@vger.kernel.org>, linux-mips@linux-mips.org
+Content-Type: text/plain; charset=iso-8859-1
+Cc: linux-mips@linux-mips.org, Netdev <netdev@vger.kernel.org>,
+ LKML <linux-kernel@vger.kernel.org>, David Miller <davem@davemloft.net>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -31,48 +33,39 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On 2016-12-07 19:54, Jason A. Donenfeld wrote:
-> On Wed, Dec 7, 2016 at 7:51 PM, David Miller <davem@davemloft.net> wrote:
->> It's so much better to analyze properly where the misalignment comes from
->> and address it at the source, as we have for various cases that trip up
->> Sparc too.
-> 
-> That's sort of my attitude too, hence starting this thread. Any
-> pointers you have about this would be most welcome, so as not to
-> perpetuate what already seems like an issue in other parts of the
-> stack.
-Hi Jason,
+Felix Fietkau <nbd@nbd.name> writes:
 
-I'm the author of that hackish LEDE/OpenWrt patch that works around the
-misalignment issues. Here's some context regarding that patch:
+> On 2016-12-07 19:54, Jason A. Donenfeld wrote:
+>> On Wed, Dec 7, 2016 at 7:51 PM, David Miller <davem@davemloft.net> wrote:
+>>> It's so much better to analyze properly where the misalignment comes fr=
+om
+>>> and address it at the source, as we have for various cases that trip up
+>>> Sparc too.
+>>=20
+>> That's sort of my attitude too, hence starting this thread. Any
+>> pointers you have about this would be most welcome, so as not to
+>> perpetuate what already seems like an issue in other parts of the
+>> stack.
+> Hi Jason,
+>
+> I'm the author of that hackish LEDE/OpenWrt patch that works around the
+> misalignment issues. Here's some context regarding that patch:
+>
+> I intentionally put it in the target specific patches for only one of
+> our MIPS targets. There are a few ar71xx devices where the misalignment
+> cannot be fixed, because the Ethernet MAC has a 4-byte DMA alignment
+> requirement, and does not support inserting 2 bytes of padding to
+> correct the IP header misalignment.
+>
+> With these limitations the choice was between this ugly network stack
+> patch or inserting a very expensive memmove in the data path (which is
+> better than taking the mis-alignment traps, but still hurts routing
+> performance significantly).
 
-I intentionally put it in the target specific patches for only one of
-our MIPS targets. There are a few ar71xx devices where the misalignment
-cannot be fixed, because the Ethernet MAC has a 4-byte DMA alignment
-requirement, and does not support inserting 2 bytes of padding to
-correct the IP header misalignment.
+I solved this problem in an Ethernet driver by copying the initial part
+of the packet to an aligned skb and appending the remainder using
+skb_add_rx_frag().  The kernel network stack only cares about the
+headers, so the alignment of the packet payload doesn't matter.
 
-With these limitations the choice was between this ugly network stack
-patch or inserting a very expensive memmove in the data path (which is
-better than taking the mis-alignment traps, but still hurts routing
-performance significantly).
-
-There are a lot of places in the network stack that assume full 32 bit
-alignment, and you only get to see those once you start using more of
-netfilter, play with various tunnel encapsulations, etc.
-
-I think you have 3 options to deal with this properly:
-1. add 3 bytes of padding
-2. allocate a separate skb for decryption (might be more expensive)
-3. save the header and decrypt to the start of the packet data
-(overwriting the misaligned header).
-
-I'm not sure what the performance impact of 2 and 3 is, so it's probably
-best to stick with the padding.
-
-I've taken a quick look at the wireguard message headers, and my
-recommendation would be to insert the 3-byte padding in struct
-message_header and remove __packed from your structs.
-This will also remove misaligment of your own protocol fields.
-
-- Felix
+--=20
+M=E5ns Rullg=E5rd
