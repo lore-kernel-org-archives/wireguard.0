@@ -1,30 +1,26 @@
-Return-Path: nbd@nbd.name
+Return-Path: mail@danrl.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id efc1023f
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 92d7dced
  for <wireguard@lists.zx2c4.com>;
- Sat, 10 Dec 2016 20:30:45 +0000 (UTC)
-Received: from nbd.name (nbd.name [46.4.11.11])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 65f09594
+ Sat, 10 Dec 2016 22:09:08 +0000 (UTC)
+Received: from mx.sealand.io (mx.sealand.io [193.160.39.68])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 036b1ba4
  for <wireguard@lists.zx2c4.com>;
- Sat, 10 Dec 2016 20:30:45 +0000 (UTC)
+ Sat, 10 Dec 2016 22:09:08 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 10.1 \(3251\))
 Subject: Re: Misalignment, MIPS, and ip_hdr(skb)->version
-To: =?UTF-8?B?TcOlbnMgUnVsbGfDpXJk?= <mans@mansr.com>
+From: =?utf-8?Q?Dan_L=C3=BCdtke?= <mail@danrl.com>
+In-Reply-To: <87vauvhwdu.fsf@alice.fifthhorseman.net>
+Date: Sat, 10 Dec 2016 23:18:14 +0100
+Message-Id: <CE942916-BF45-44CC-A5F5-3838CF9C93BC@danrl.com>
 References: <CAHmME9o_eCNXpVztOZKW55kpRtE+1KSEQTQOjUBVn68Y2+or2g@mail.gmail.com>
- <CAA93jw7hcmkcyD=t4VRrQFfHk+n+EkSVgY6KFDq0_-DGpMADYw@mail.gmail.com>
- <20161207.135127.789629809982860453.davem@davemloft.net>
- <CAHmME9oLgjDA2F0gkFzHU2Es8-XCxQHRABS18OKF0EnZgt1=LQ@mail.gmail.com>
- <040bcdb2-2725-c8de-11d9-a4f77b75d9d8@nbd.name>
- <yw1x37hvykzk.fsf@unicorn.mansr.com>
- <7f8ba817-73ef-e1e1-4fdf-b9178e922008@nbd.name>
- <yw1xy3znwmmr.fsf@unicorn.mansr.com>
-From: Felix Fietkau <nbd@nbd.name>
-Message-ID: <07ae38aa-ffb5-f450-fbbb-001e91d4454d@nbd.name>
-Date: Sat, 10 Dec 2016 21:36:32 +0100
-MIME-Version: 1.0
-In-Reply-To: <yw1xy3znwmmr.fsf@unicorn.mansr.com>
-Content-Type: text/plain; charset=utf-8
+ <095cac5b-b757-6f4a-e699-8eedf9ed7221@stressinduktion.org>
+ <87vauvhwdu.fsf@alice.fifthhorseman.net>
+To: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
 Cc: linux-mips@linux-mips.org, Netdev <netdev@vger.kernel.org>,
- LKML <linux-kernel@vger.kernel.org>, David Miller <davem@davemloft.net>,
+ LKML <linux-kernel@vger.kernel.org>,
+ Hannes Frederic Sowa <hannes@stressinduktion.org>,
  WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -35,53 +31,33 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On 2016-12-10 21:32, Måns Rullgård wrote:
-> Felix Fietkau <nbd@nbd.name> writes:
-> 
->> On 2016-12-10 14:25, Måns Rullgård wrote:
->>> Felix Fietkau <nbd@nbd.name> writes:
->>> 
->>>> On 2016-12-07 19:54, Jason A. Donenfeld wrote:
->>>>> On Wed, Dec 7, 2016 at 7:51 PM, David Miller <davem@davemloft.net> wrote:
->>>>>> It's so much better to analyze properly where the misalignment comes from
->>>>>> and address it at the source, as we have for various cases that trip up
->>>>>> Sparc too.
->>>>> 
->>>>> That's sort of my attitude too, hence starting this thread. Any
->>>>> pointers you have about this would be most welcome, so as not to
->>>>> perpetuate what already seems like an issue in other parts of the
->>>>> stack.
->>>> Hi Jason,
->>>>
->>>> I'm the author of that hackish LEDE/OpenWrt patch that works around the
->>>> misalignment issues. Here's some context regarding that patch:
->>>>
->>>> I intentionally put it in the target specific patches for only one of
->>>> our MIPS targets. There are a few ar71xx devices where the misalignment
->>>> cannot be fixed, because the Ethernet MAC has a 4-byte DMA alignment
->>>> requirement, and does not support inserting 2 bytes of padding to
->>>> correct the IP header misalignment.
->>>>
->>>> With these limitations the choice was between this ugly network stack
->>>> patch or inserting a very expensive memmove in the data path (which is
->>>> better than taking the mis-alignment traps, but still hurts routing
->>>> performance significantly).
->>> 
->>> I solved this problem in an Ethernet driver by copying the initial part
->>> of the packet to an aligned skb and appending the remainder using
->>> skb_add_rx_frag().  The kernel network stack only cares about the
->>> headers, so the alignment of the packet payload doesn't matter.
->>
->> I considered that as well, but it's bad for routing performance if the
->> ethernet MAC does not support scatter/gather for xmit.
->> Unfortunately that limitation is quite common on embedded hardware.
-> 
-> Yes, I can see that being an issue.  However, if you're doing zero-copy
-> routing, the header part of the original buffer should still be there,
-> unused, so you could presumably copy the header of the outgoing packet
-> there and then do dma as usual.  Maybe there's something in the network
-> stack that makes this impossible though.
-That still puts more pressure on the ridiculously small dcache sizes
-that are typical for embedded MIPS routers.
 
-- Felix
+> On 8 Dec 2016, at 05:34, Daniel Kahn Gillmor <dkg@fifthhorseman.net> =
+wrote:
+>=20
+> On Wed 2016-12-07 19:30:34 -0500, Hannes Frederic Sowa wrote:
+>> Your custom protocol should be designed in a way you get an aligned =
+ip
+>> header. Most protocols of the IETF follow this mantra and it is =
+always
+>> possible to e.g. pad options so you end up on aligned boundaries for =
+the
+>> next header.
+>=20
+> fwiw, i'm not convinced that "most protocols of the IETF follow this
+> mantra".  we've had multiple discussions in different protocol groups
+> about shaving or bloating by a few bytes here or there in different
+> protocols, and i don't think anyone has brought up memory alignment as
+> an argument in any of the discussions i've followed.
+>=20
+
+If the trade-off is between 1 padding byte and 2 byte alignment versus 3 =
+padding bytes and 4 byte alignment I would definitely opt for 3 padding =
+bytes. I know how that waste feels like to a protocol designer, but I =
+think it is worth it. Maybe the padding/reserved will be useful some day =
+for an additional feature.
+
+I remember alignment being discussed and taken very seriously in 6man a =
+couple of times. Often, though, protocol designers did align without =
+much discussion. Implementing unaligned protocols is a pain I've =
+experienced first hand.=
