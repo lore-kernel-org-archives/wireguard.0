@@ -1,27 +1,31 @@
-Return-Path: mail@danrl.com
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 92d7dced
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5f366365
  for <wireguard@lists.zx2c4.com>;
- Sat, 10 Dec 2016 22:09:08 +0000 (UTC)
-Received: from mx.sealand.io (mx.sealand.io [193.160.39.68])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 036b1ba4
+ Sun, 11 Dec 2016 01:41:00 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b8c913b6
  for <wireguard@lists.zx2c4.com>;
- Sat, 10 Dec 2016 22:09:08 +0000 (UTC)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 10.1 \(3251\))
-Subject: Re: Misalignment, MIPS, and ip_hdr(skb)->version
-From: =?utf-8?Q?Dan_L=C3=BCdtke?= <mail@danrl.com>
-In-Reply-To: <87vauvhwdu.fsf@alice.fifthhorseman.net>
-Date: Sat, 10 Dec 2016 23:18:14 +0100
-Message-Id: <CE942916-BF45-44CC-A5F5-3838CF9C93BC@danrl.com>
-References: <CAHmME9o_eCNXpVztOZKW55kpRtE+1KSEQTQOjUBVn68Y2+or2g@mail.gmail.com>
- <095cac5b-b757-6f4a-e699-8eedf9ed7221@stressinduktion.org>
- <87vauvhwdu.fsf@alice.fifthhorseman.net>
-To: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-Cc: linux-mips@linux-mips.org, Netdev <netdev@vger.kernel.org>,
- LKML <linux-kernel@vger.kernel.org>,
- Hannes Frederic Sowa <hannes@stressinduktion.org>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>
+ Sun, 11 Dec 2016 01:41:00 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 82d1b044
+ for <wireguard@lists.zx2c4.com>;
+ Sun, 11 Dec 2016 01:40:59 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 8a568530
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Sun, 11 Dec 2016 01:40:59 +0000 (UTC)
+Received: by mail-lf0-f41.google.com with SMTP id t196so24007702lff.3
+ for <wireguard@lists.zx2c4.com>; Sat, 10 Dec 2016 17:46:49 -0800 (PST)
+MIME-Version: 1.0
+In-Reply-To: <201612101631.uBAGV8fe049290@mail.vittgam.net>
+References: <201612101631.uBAGV8fe049290@mail.vittgam.net>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Sun, 11 Dec 2016 02:46:47 +0100
+Message-ID: <CAHmME9orxv2MJYNr+7fop8SXwXfgayEswB2-t1yBnBKJiPHEQg@mail.gmail.com>
+Subject: Re: [PATCH] contrib: Set addrgenmode to none for WireGuard interfaces.
+To: "Vittorio Gambaletta (VittGam)" <linux-wireguard@vittgam.net>
+Content-Type: text/plain; charset=UTF-8
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -31,33 +35,17 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
+Hey Vittorio,
 
-> On 8 Dec 2016, at 05:34, Daniel Kahn Gillmor <dkg@fifthhorseman.net> =
-wrote:
->=20
-> On Wed 2016-12-07 19:30:34 -0500, Hannes Frederic Sowa wrote:
->> Your custom protocol should be designed in a way you get an aligned =
-ip
->> header. Most protocols of the IETF follow this mantra and it is =
-always
->> possible to e.g. pad options so you end up on aligned boundaries for =
-the
->> next header.
->=20
-> fwiw, i'm not convinced that "most protocols of the IETF follow this
-> mantra".  we've had multiple discussions in different protocol groups
-> about shaving or bloating by a few bytes here or there in different
-> protocols, and i don't think anyone has brought up memory alignment as
-> an argument in any of the discussions i've followed.
->=20
+Thanks for bringing my attention to addrgenmode. At first I tried
+fixing this with [1], but this broke tcpdump, so I reverted it with
+[2]. Now, thanks to you, we have [3], which hopefully is the correct
+way to do things and will be part of the next snapshot if it survives
+testing.
 
-If the trade-off is between 1 padding byte and 2 byte alignment versus 3 =
-padding bytes and 4 byte alignment I would definitely opt for 3 padding =
-bytes. I know how that waste feels like to a protocol designer, but I =
-think it is worth it. Maybe the padding/reserved will be useful some day =
-for an additional feature.
+Regards,
+Jason
 
-I remember alignment being discussed and taken very seriously in 6man a =
-couple of times. Often, though, protocol designers did align without =
-much discussion. Implementing unaligned protocols is a pain I've =
-experienced first hand.=
+[1] https://git.zx2c4.com/WireGuard/commit/?id=9f0db72ffcae21a2c6e965f084873a64fea82958
+[2] https://git.zx2c4.com/WireGuard/commit/?id=0311d78316a0544b35705468de1021ff48335142
+[3] https://git.zx2c4.com/WireGuard/commit/?id=40b0e8d5b1669cd4be32965a1a60cbb63562512c
