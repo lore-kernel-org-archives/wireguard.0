@@ -1,22 +1,31 @@
-Return-Path: kofec@wp.pl
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 38780e40
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cd6e3766
  for <wireguard@lists.zx2c4.com>;
- Mon, 12 Dec 2016 11:57:37 +0000 (UTC)
-Received: from mx4.wp.pl (mx4.wp.pl [212.77.101.11])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9f190c1a
+ Mon, 12 Dec 2016 13:21:22 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b76f3009
  for <wireguard@lists.zx2c4.com>;
- Mon, 12 Dec 2016 11:57:37 +0000 (UTC)
-Received: from out.poczta.wp.pl ([212.77.101.240])
- (envelope-sender <kofec@wp.pl>) by smtp.wp.pl (WP-SMTPD) with SMTP
- for <wireguard@lists.zx2c4.com>; 12 Dec 2016 13:03:18 +0100
-Date: Mon, 12 Dec 2016 13:03:18 +0100
-From: "Michal Kowalski" <kofec@wp.pl>
-To: wireguard@lists.zx2c4.com
-Subject: Re: [WireGuard] Wireguard in OpenWRT/LEDE: FYI: Pull Request
-Message-ID: <584e92066303c9.06462330@wp.pl>
+ Mon, 12 Dec 2016 13:21:22 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2dcd98f0
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 12 Dec 2016 13:21:22 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 14abdadb
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 12 Dec 2016 13:21:22 +0000 (UTC)
+Received: by mail-wm0-f42.google.com with SMTP id a197so61632524wmd.0
+ for <wireguard@lists.zx2c4.com>; Mon, 12 Dec 2016 05:27:24 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
+In-Reply-To: <584e92066303c9.06462330@wp.pl>
+References: <584e92066303c9.06462330@wp.pl>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Mon, 12 Dec 2016 14:27:21 +0100
+Message-ID: <CAHmME9oKrtYQJ0i4arFg33+027L4e3ctQS=OdW_Vu0NCShThgQ@mail.gmail.com>
+Subject: Re: [WireGuard] Wireguard in OpenWRT/LEDE: FYI: Pull Request
+To: Michal Kowalski <kofec@wp.pl>
+Content-Type: text/plain; charset=UTF-8
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,9 +35,9 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi,
+On Mon, Dec 12, 2016 at 1:03 PM, Michal Kowalski <kofec@wp.pl> wrote:
+> Is possible to add/modify version to support IPv4 only ? I would like to disable IPv6 and compile LEDE but than wireguard disappear. It is because of flash size 4MB.
 
-Is possible to add/modify version to support IPv4 only ? I would like to disable IPv6 and compile LEDE but than wireguard disappear. It is because of flash size 4MB.
-
-Thanks,
-Michal 
+Yes. WireGuard supports this already. You just need to remove the v6
+deps from the LEDE wireguard makefile. Not sure why the dependency is
+hard coded like this; it shouldn't be.
