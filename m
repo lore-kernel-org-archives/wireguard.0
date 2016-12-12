@@ -1,32 +1,33 @@
-Return-Path: David.Laight@ACULAB.COM
+Return-Path: mans@mansr.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 21f79cd0
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 855a85a6
  for <wireguard@lists.zx2c4.com>;
- Mon, 12 Dec 2016 16:13:21 +0000 (UTC)
-Received: from smtp-out6.electric.net (smtp-out6.electric.net
- [192.162.217.191])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 53d6642c
+ Mon, 12 Dec 2016 16:25:46 +0000 (UTC)
+Received: from unicorn.mansr.com (unicorn.mansr.com [81.2.72.234])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 811db2bb
  for <wireguard@lists.zx2c4.com>;
- Mon, 12 Dec 2016 16:13:21 +0000 (UTC)
-From: David Laight <David.Laight@ACULAB.COM>
-To: =?Windows-1252?B?J03lbnMgUnVsbGflcmQn?= <mans@mansr.com>, Felix Fietkau
- <nbd@nbd.name>
-Subject: RE: Misalignment, MIPS, and ip_hdr(skb)->version
-Date: Mon, 12 Dec 2016 16:19:17 +0000
-Message-ID: <063D6719AE5E284EB5DD2968C1650D6DB023BF78@AcuExch.aculab.com>
+ Mon, 12 Dec 2016 16:25:46 +0000 (UTC)
+From: =?iso-8859-1?Q?M=E5ns_Rullg=E5rd?= <mans@mansr.com>
+To: David Laight <David.Laight@ACULAB.COM>
+Subject: Re: Misalignment, MIPS, and ip_hdr(skb)->version
 References: <CAHmME9o_eCNXpVztOZKW55kpRtE+1KSEQTQOjUBVn68Y2+or2g@mail.gmail.com>
  <CAA93jw7hcmkcyD=t4VRrQFfHk+n+EkSVgY6KFDq0_-DGpMADYw@mail.gmail.com>
  <20161207.135127.789629809982860453.davem@davemloft.net>
  <CAHmME9oLgjDA2F0gkFzHU2Es8-XCxQHRABS18OKF0EnZgt1=LQ@mail.gmail.com>
  <040bcdb2-2725-c8de-11d9-a4f77b75d9d8@nbd.name>
  <yw1x37hvykzk.fsf@unicorn.mansr.com>
-In-Reply-To: <yw1x37hvykzk.fsf@unicorn.mansr.com>
-Content-Type: text/plain; charset="Windows-1252"
+ <063D6719AE5E284EB5DD2968C1650D6DB023BF78@AcuExch.aculab.com>
+Date: Mon, 12 Dec 2016 16:31:47 +0000
+In-Reply-To: <063D6719AE5E284EB5DD2968C1650D6DB023BF78@AcuExch.aculab.com>
+ (David Laight's message of "Mon, 12 Dec 2016 16:19:17 +0000")
+Message-ID: <yw1xd1gxw1l8.fsf@unicorn.mansr.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
 Cc: "linux-mips@linux-mips.org" <linux-mips@linux-mips.org>,
  Netdev <netdev@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
- David Miller <davem@davemloft.net>, WireGuard mailing
- list <wireguard@lists.zx2c4.com>
+ David Miller <davem@davemloft.net>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ Felix Fietkau <nbd@nbd.name>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -36,25 +37,28 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-From: M=E5ns Rullg=E5rd
-> Sent: 10 December 2016 13:25
-...
-> I solved this problem in an Ethernet driver by copying the initial part
-> of the packet to an aligned skb and appending the remainder using
-> skb_add_rx_frag().  The kernel network stack only cares about the
-> headers, so the alignment of the packet payload doesn't matter.
+David Laight <David.Laight@ACULAB.COM> writes:
 
-That rather depends on where the packet payload ends up.
-It is likely that it will be copied to userspace (or maybe
-into some aligned kernel buffer).
-In which case you get an expensive misaligned copy.
+> From: M=E5ns Rullg=E5rd
+>> Sent: 10 December 2016 13:25
+> ...
+>> I solved this problem in an Ethernet driver by copying the initial part
+>> of the packet to an aligned skb and appending the remainder using
+>> skb_add_rx_frag().  The kernel network stack only cares about the
+>> headers, so the alignment of the packet payload doesn't matter.
+>
+> That rather depends on where the packet payload ends up.
+> It is likely that it will be copied to userspace (or maybe
+> into some aligned kernel buffer).
+> In which case you get an expensive misaligned copy.
 
-Encapsulation protocols not using headers that are multiples
-of 4 bytes is as stupid as ethernet hardware that can't place
-the mac address on a 4n+2 boundary.
-The latter is particularly stupid when it happens on embedded
-silicon with a processor that can only do aligned memory accesses.
-What do the hardware engineers think the ethernet interface will
-be used for!
+There's not much to be done about that.  The only other option is to
+bypass DMA entirely, and that's sure to be even worse.
 
-	David
+> What do the hardware engineers think the ethernet interface will
+> be used for!
+
+Ticking boxes in marketing material.
+
+--=20
+M=E5ns Rullg=E5rd
