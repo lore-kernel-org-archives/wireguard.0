@@ -1,21 +1,24 @@
-Return-Path: site1@bestcon.ru
+Return-Path: mail@danrl.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f1856e7f
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ad7ba81e
  for <wireguard@lists.zx2c4.com>;
- Wed, 14 Dec 2016 01:52:44 +0000 (UTC)
-Received: from bestcon.ru (static.151.118.76.144.clients.your-server.de
- [144.76.118.151])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 891ccf21
+ Wed, 14 Dec 2016 19:38:38 +0000 (UTC)
+Received: from mx.sealand.io (mx.sealand.io [193.160.39.68])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2a447b82
  for <wireguard@lists.zx2c4.com>;
- Wed, 14 Dec 2016 01:52:44 +0000 (UTC)
-To: wireguard@lists.zx2c4.com
-Subject: USPS parcel #001132997 delivery problem
-Date: Wed, 14 Dec 2016 04:58:56 +0300
-MIME-Version: 1.0
-Message-ID: <68327754cdddb2265058cce143c6d616@bestdsgn.ru>
-From: "USPS Delivery" <roberto.stevenson@bestdsgn.ru>
-Content-Type: multipart/mixed; boundary="b1_457892ff59e48c28840078c15e01ce92"
-Reply-To: USPS Delivery <roberto.stevenson@bestdsgn.ru>
+ Wed, 14 Dec 2016 19:38:37 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 10.2 \(3259\))
+Subject: Re: [WireGuard] Wireguard in OpenWRT/LEDE: FYI: Pull Request
+From: =?utf-8?Q?Dan_L=C3=BCdtke?= <mail@danrl.com>
+In-Reply-To: <CAHmME9oKrtYQJ0i4arFg33+027L4e3ctQS=OdW_Vu0NCShThgQ@mail.gmail.com>
+Date: Wed, 14 Dec 2016 20:48:22 +0100
+Message-Id: <B993D7DB-7B6A-40B1-8B53-4F27942A4BA0@danrl.com>
+References: <584e92066303c9.06462330@wp.pl>
+ <CAHmME9oKrtYQJ0i4arFg33+027L4e3ctQS=OdW_Vu0NCShThgQ@mail.gmail.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ Michal Kowalski <kofec@wp.pl>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -25,82 +28,13 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---b1_457892ff59e48c28840078c15e01ce92
-Content-Type: text/plain; charset=us-ascii
 
-Dear Customer,
+> Not sure why the dependency is
+> hard coded like this; it shouldn't be.
 
-This is to confirm that your item has been shipped at December 11.
+Even if it wasn't hardcoded, it would be introduced by +kmod-udptunnel6 =
+anyway.
 
-Please check delivery label attached!
-
-Respectfully,
-Roberto Stevenson,
-USPS Chief Station Manager.
-
-
---b1_457892ff59e48c28840078c15e01ce92
-Content-Type: application/zip; name="Ground-Label-001132997.zip"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename=Ground-Label-001132997.zip
-
-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
-
-
---b1_457892ff59e48c28840078c15e01ce92--
+Remove both manually if you really need to throw away IP and want to =
+compile legacyIP only. It should work with both, @IP6 and =
+kmod-udptunnel6 removed.=20=
