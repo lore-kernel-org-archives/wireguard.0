@@ -1,22 +1,32 @@
-Return-Path: mail@danrl.com
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6e42d837
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f7ffa5e3
  for <wireguard@lists.zx2c4.com>;
- Wed, 14 Dec 2016 21:06:46 +0000 (UTC)
-Received: from mx.sealand.io (mx.sealand.io [193.160.39.68])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3a6302e0
+ Wed, 14 Dec 2016 21:08:51 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2d68308b
  for <wireguard@lists.zx2c4.com>;
- Wed, 14 Dec 2016 21:06:46 +0000 (UTC)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 10.2 \(3259\))
-Subject: Re: Structure(d) output of wg?
-From: =?utf-8?Q?Dan_L=C3=BCdtke?= <mail@danrl.com>
-In-Reply-To: <CAHmME9pePj0thgb_NDVr_iN9rcvdwQMz=4_zRtP_57g=QO4_ow@mail.gmail.com>
-Date: Wed, 14 Dec 2016 22:16:32 +0100
-Message-Id: <AE381473-7783-4828-9297-874E831F3244@danrl.com>
+ Wed, 14 Dec 2016 21:08:51 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bbc71802
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 14 Dec 2016 21:08:50 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id e295b424
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 14 Dec 2016 21:08:50 +0000 (UTC)
+Received: by mail-wm0-f49.google.com with SMTP id a197so133300298wmd.0
+ for <wireguard@lists.zx2c4.com>; Wed, 14 Dec 2016 13:15:10 -0800 (PST)
+MIME-Version: 1.0
+In-Reply-To: <AE381473-7783-4828-9297-874E831F3244@danrl.com>
 References: <AD79A695-30E3-425D-9D7F-51AE2A25384D@danrl.com>
  <CAHmME9pePj0thgb_NDVr_iN9rcvdwQMz=4_zRtP_57g=QO4_ow@mail.gmail.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+ <AE381473-7783-4828-9297-874E831F3244@danrl.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 14 Dec 2016 22:15:08 +0100
+Message-ID: <CAHmME9rFn_ntXsG8O5bkvrPvqkY=-5+WEHppQ_tgdLX6RNsuxg@mail.gmail.com>
+Subject: Re: Structure(d) output of wg?
+To: =?UTF-8?Q?Dan_L=C3=BCdtke?= <mail@danrl.com>
+Content-Type: text/plain; charset=UTF-8
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -27,39 +37,17 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi,
+Hey Dan,
 
-that would mean multiple calls to `wg` to get the desired structure =
-filled, one for each [CATEGORY]. I can live with that, but was looking =
-for a more efficient solution.
+Yea, but that's usually the case with command line tools and shell
+processing. If you're in a position to be calling json, then why not
+just also call the ioctl directly? I guess json might be easier for
+some consumers? Hmm...
 
-Cheers,
+> Nice bandwidth, though :)
 
-Dan
+That's just the first ten too...
+[zx2c4@demo ~]$ sudo wg show wg0 peers | wc -l
+232
 
-Nice bandwidth, though :)
-=20
-> On 14 Dec 2016, at 22:09, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
->=20
-> Hi Dan,
->=20
-> This already exists. While `wg show wg0` gives some hipster colorized
-> output, `wg show wg0 [CATEGORY]` gives very structured output meant
-> for parsing with bash or grep or sed or cut or whatever you want. For
-> example:
->=20
-> [zx2c4@demo ~]$ sudo wg show wg0 bandwidth | tail
-> l8gKhi5rvJChhDWHl+C7Ubj8hSHfW0HbkOOA9GQPL3Y=3D    13272   43056
-> CpX3sUNoLSofE6V6X+uHnFqF5+g/fXwJeY6ploPbgV0=3D    9425    5785
-> NkUUqbqhh+VV2IZYdAuVIdjpx0UopRRgO7hZju7+DW0=3D    145     89
-> S3/UokM7yvoKCYOvGdyi0IiiqvrUWXsIX8FTSFl0i2E=3D    46101   152415
-> FPqY/W8Z6LTgZLu69CqF1WtIPwUoG52pNNno4BRDtR0=3D    145     89
-> ULFNzzUznzXzMrjRvWUlz9dQsIzEAtIG7o3s9oHRJHk=3D    145     89
-> qbTrp7yhdqrvLnMg9kZNxNTd7FQRvV6jMr18G63zDhA=3D    13299   28787
-> p0rDK1UEx7siGp061hekJFYkjTs3qY08TBaTfSk86TM=3D    5075    3434
-> NZSZ7/JTraQ6eOseLIMQBo38cfQL8SXarfO/g99xYUI=3D    0       0
-> pX7cS/weolOD5GKHhrNqtqKT4nZto50ZXczacQ5iklM=3D    95210   58850
->=20
-> (Quit hoggin my bandwidth, yall ;-) )
->=20
-> Jason
+Jason
