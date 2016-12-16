@@ -1,36 +1,28 @@
 Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6e3565c2
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7661bc64
  for <wireguard@lists.zx2c4.com>;
- Fri, 16 Dec 2016 17:39:16 +0000 (UTC)
+ Fri, 16 Dec 2016 19:19:01 +0000 (UTC)
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ede66067
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 57ad00f8
  for <wireguard@lists.zx2c4.com>;
- Fri, 16 Dec 2016 17:39:16 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0a5437ab
+ Fri, 16 Dec 2016 19:19:01 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2198a8ae
  for <wireguard@lists.zx2c4.com>;
- Fri, 16 Dec 2016 17:39:16 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 9fb8dd14
+ Fri, 16 Dec 2016 19:19:01 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id a881b9c8
  (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 16 Dec 2016 17:39:15 +0000 (UTC)
-Received: by mail-oi0-f49.google.com with SMTP id v84so84852692oie.3
- for <wireguard@lists.zx2c4.com>; Fri, 16 Dec 2016 09:45:49 -0800 (PST)
+ Fri, 16 Dec 2016 19:19:01 +0000 (UTC)
+Received: by mail-oi0-f51.google.com with SMTP id v84so87606730oie.3
+ for <wireguard@lists.zx2c4.com>; Fri, 16 Dec 2016 11:25:35 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9pJq2WR-YhFOEwCCkoKgOafkKoiAn_U_Abks-x8aAO1Kw@mail.gmail.com>
-References: <584e92066303c9.06462330@wp.pl>
- <CAHmME9oKrtYQJ0i4arFg33+027L4e3ctQS=OdW_Vu0NCShThgQ@mail.gmail.com>
- <B993D7DB-7B6A-40B1-8B53-4F27942A4BA0@danrl.com>
- <CAHmME9pJq2WR-YhFOEwCCkoKgOafkKoiAn_U_Abks-x8aAO1Kw@mail.gmail.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 16 Dec 2016 18:45:47 +0100
-Message-ID: <CAHmME9qLbf2qmcwfRR9tCbj4T3u_h5Ff6gbSJFL5PAVe_BjQUw@mail.gmail.com>
-Subject: Re: [WireGuard] Wireguard in OpenWRT/LEDE: FYI: Pull Request
-To: =?UTF-8?Q?Dan_L=C3=BCdtke?= <mail@danrl.com>,
- Baptiste Jonglez <baptiste@bitsofnetworks.org>
+Date: Fri, 16 Dec 2016 20:25:34 +0100
+Message-ID: <CAHmME9qKNucOvp=aEN_F3g+W7RktjtBoq76iSztLRtZeiQ57iA@mail.gmail.com>
+Subject: awesome mips performance
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset=UTF-8
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
- Michal Kowalski <kofec@wp.pl>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -40,9 +32,17 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hey Dan,
+Hey guys,
 
-I just submitted a pull request to bump the package and add this
-conditional: https://github.com/openwrt/packages/pull/3664
+The latest snapshot is broken on big endian. This commit [1] fixes it,
+and will be released in the next snapshot shortly. Sorry about that.
+Lots of churn with the siphash implementation.
+
+With the recent changes to add alignment in the headers, I now get 60
+megabits per second on a super crappy TL-WR841N board (QCA9533)
+transmitting over the internet. This is awesome performance -- a good
+milestone for little CPUs.
 
 Jason
+
+[1] https://git.zx2c4.com/WireGuard/commit/?id=094e95e736723075d586d7a006c5525f2e3a74d4
