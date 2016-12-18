@@ -1,26 +1,32 @@
 Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2b248b54
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d03d60f2
  for <wireguard@lists.zx2c4.com>;
- Sun, 18 Dec 2016 17:28:50 +0000 (UTC)
+ Sun, 18 Dec 2016 17:57:52 +0000 (UTC)
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id af708535
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8d2abaa8
  for <wireguard@lists.zx2c4.com>;
- Sun, 18 Dec 2016 17:28:50 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d3a37e43
+ Sun, 18 Dec 2016 17:57:51 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 61f9b78c
  for <wireguard@lists.zx2c4.com>;
- Sun, 18 Dec 2016 17:28:50 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 1f2c25e1
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ Sun, 18 Dec 2016 17:57:51 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 185553a8
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 18 Dec 2016 17:28:50 +0000 (UTC)
-Date: Sun, 18 Dec 2016 18:35:32 +0100
-To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: [ANNOUNCE] Snapshot `0.0.20161218` Available
+ Sun, 18 Dec 2016 17:57:51 +0000 (UTC)
+Received: by mail-oi0-f49.google.com with SMTP id y198so125775867oia.1
+ for <wireguard@lists.zx2c4.com>; Sun, 18 Dec 2016 10:04:40 -0800 (PST)
 MIME-Version: 1.0
+In-Reply-To: <1d684ee8-9f6c-a9f0-4cec-df0116cb97b7@mib-infotech.co.nz>
+References: <CAHmME9o_BzZRj2HVpQMUxE7t1DS_NcHJWXe8zsvndNbwu+j+Qg@mail.gmail.com>
+ <1d684ee8-9f6c-a9f0-4cec-df0116cb97b7@mib-infotech.co.nz>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Sun, 18 Dec 2016 19:04:39 +0100
+Message-ID: <CAHmME9oZmH5mRyCySGRssQ0ytDuaUUe-Qo5ycnMHkL9stVwYAA@mail.gmail.com>
+Subject: Re: MTU
+To: John Huttley <john@mib-infotech.co.nz>
 Content-Type: text/plain; charset=UTF-8
-Message-Id: <ced87b072b0ab199@frisell.zx2c4.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -30,59 +36,26 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hey John,
 
-Hello,
+The old WireGuard gave you a default MTU of 1423. The new one gives
+you a default MTU of 1420. That's your minus 3. From your email, it
+looks like you subtracted twice!
 
-A new snapshot, `0.0.20161218`, has been tagged in the git repository.
+If you're not using IPv6 as the outer endpoint IP address, then you
+can make this 1440. The breakdown of the wireguard packet is:
 
-Please note that this snapshot is, like the rest of the project at this point
-in time, experimental, and does not consitute a real release that would be
-considered secure and bug-free. WireGuard is generally thought to be fairly
-stable, and most likely will not crash your computer (though it may).
-However, as this is a pre-release snapshot, it comes with no guarantees, and
-its security is not yet to be depended on; it is not applicable for CVEs.
+20 byte IPv4 header or 40 byte IPv6 header
+8 byte UDP header
+1 byte type
+3 byte reserved
+4 byte index
+8 byte nonce
+CIPHERTEXT
+16 byte authtag
 
-With all that said, if you'd like to test this snapshot out, there are a
-few relevent changes.
+So either you wind up with 20+8+1+3+4+8+16 bytes of overhead, or you
+wind up with 40+8+1+3+4+8+16 bytes of overhead.
 
-== Changes ==
-
-  This is a quick snapshot to fix an error with the last one on big endian
-  systems. Probably only OpenWRT cares about this, and everybody else can
-  happily wait for the next more substantial snapshot.
-
-As always, the source is available at https://git.zx2c4.com/WireGuard/ and
-information about the project is available at https://www.wireguard.io/ .
-
-This snapshot is available in tarball form here:
-  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-0.0.20161218.tar.xz
-  SHA2-256: d805035d3e99768e69d8cdeb8fb5250a59b994ce127fceb71a078582c30f5597
-  BLAKE2b-256: 6623c8a26d378d4107e7302a52a96ee8aa27f83a01f29e9d0ee913516b2941d6
-
-If you're a snapshot package maintainer, please bump your package version. If
-you're a user, the WireGuard team welcomes any and all feedback on this latest
-snapshot.
-
-Thank you,
-Jason Donenfeld
-
-
------BEGIN PGP SIGNATURE-----
-
-iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAlhWyN4QHGphc29uQHp4
-MmM0LmNvbQAKCRBJ/HASpd4Drlc+D/4jRG+Xw23W2mNfRIrwa7GQzxeYKImTcJv7
-Shk6S3meBlPHhU6PV40JDkIKAF2InStnuQ+LNxHey8Hd5NCDCeH73Jg9V+TdxOFn
-dHRPOR4/dkGA2wocv0dLfeOw79Tv24xmmXko2mhLtwKbpaVc4EU/lmbpHfY/IJIK
-abQLxpkd0LNLT1cMjzam7PiHvIsgTn1kXdKaZxNZc/pCVw8FOPIt5fZFF0lZp4YD
-eH7wt7TVN+AXVYBaYU0zKUGTbaOV5LI6XD04IeRADbd7ilXuiWMirQRMvqT9RRvH
-+Y2EyZzN0IA+uvXbXzcZOZ7lui4Z4lFevy9MlaEk1+mA3ueEfoxh9QvaCycV7JSI
-D44BFMKdx+9TuOHeaocvdmUqwqVfYNMVyC106JzUJFV8c2t40Sc9khkPZzWfuOqu
-4vSaCXFd0e6KssSIJ3Zh15L85GjwiwN189IYe0MSO9Ku3BpfpR2A3hV9ppwiGzhd
-elt95uygINHiTrEjYofBg4UUWLrkXhDb2kQ+jZIkOpNQ+UdANNsDUvuxhwgAqeIv
-4Du8z00RYfBpNBEaT4pR+4VpdB0zxkccpasvr9mEpiUN1ke/eCMVNf0XDYHWdQoi
-8R9rGjL44FcVzbMIznxMiY7yfv1iL2IzXXcrYWb0Wnhg/BEvfr5K4s3+fI5WP4zg
-HrvuDaqjDw==
-=TR5b
------END PGP SIGNATURE-----
+Regards,
+Jason
