@@ -1,28 +1,22 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: joe@solidadmin.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 81e84a91
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 82c81a79
  for <wireguard@lists.zx2c4.com>;
- Mon, 19 Dec 2016 00:06:58 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 378f8786
+ Mon, 19 Dec 2016 00:09:49 +0000 (UTC)
+Received: from conquer.yellowcord.com (conquer.yellowcord.com [45.55.224.114])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ff98cb76
  for <wireguard@lists.zx2c4.com>;
- Mon, 19 Dec 2016 00:06:58 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 839a468f
- for <wireguard@lists.zx2c4.com>;
- Mon, 19 Dec 2016 00:06:58 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 3f6f3645
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Mon, 19 Dec 2016 00:06:58 +0000 (UTC)
-Received: by mail-oi0-f54.google.com with SMTP id v84so130015594oie.3
- for <wireguard@lists.zx2c4.com>; Sun, 18 Dec 2016 16:13:49 -0800 (PST)
+ Mon, 19 Dec 2016 00:09:49 +0000 (UTC)
+From: Joe Doss <joe@solidadmin.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
+Date: Sun, 18 Dec 2016 18:16:36 -0600
+Message-ID: <159146feaa0.2768.fd5e59abeac6319e4fe4e8192ea7d08d@solidadmin.com>
+In-Reply-To: <CAHmME9rCZpSjs-a5MbSXZ4APJxnjmd5oSLqcUaGZZChvAqJ38A@mail.gmail.com>
+References: <CAHmME9rCZpSjs-a5MbSXZ4APJxnjmd5oSLqcUaGZZChvAqJ38A@mail.gmail.com>
+Subject: Re: Seeking Fedora Maintainer
 MIME-Version: 1.0
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 19 Dec 2016 01:13:48 +0100
-Message-ID: <CAHmME9rCZpSjs-a5MbSXZ4APJxnjmd5oSLqcUaGZZChvAqJ38A@mail.gmail.com>
-Subject: Seeking Fedora Maintainer
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; format=flowed; charset="us-ascii"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -32,11 +26,22 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi guys,
+I will get the packages up to date this week. Just had my second kid two 
+months ago and life is kicking my ass. :)
 
-Joe, the current maintainer of the Fedora package, has been MIA. Are
-there any other Fedora users on this list who might want to help him
-out with package maintenance?
+I will see about setting up some sort of automatic build from git as well 
+so this doesn't lag behind again.
 
-Thanks,
-Jason
+Joe
+
+
+On December 18, 2016 6:13:59 PM "Jason A. Donenfeld" <Jason@zx2c4.com> wrote:
+
+> Hi guys,
+>
+> Joe, the current maintainer of the Fedora package, has been MIA. Are
+> there any other Fedora users on this list who might want to help him
+> out with package maintenance?
+>
+> Thanks,
+> Jason
