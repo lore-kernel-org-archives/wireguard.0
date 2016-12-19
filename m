@@ -1,36 +1,23 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: me@prok.pw
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8e510dd2
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 43dcffc5
  for <wireguard@lists.zx2c4.com>;
- Mon, 19 Dec 2016 13:14:06 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ec08e427
+ Mon, 19 Dec 2016 21:42:03 +0000 (UTC)
+Received: from mail.aur.rocks (mail.aur.rocks [164.132.51.92])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8e084023
  for <wireguard@lists.zx2c4.com>;
- Mon, 19 Dec 2016 13:14:06 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9a49db92
- for <wireguard@lists.zx2c4.com>;
- Mon, 19 Dec 2016 13:14:06 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 7014a57f
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Mon, 19 Dec 2016 13:14:05 +0000 (UTC)
-Received: by mail-oi0-f46.google.com with SMTP id b126so144538733oia.2
- for <wireguard@lists.zx2c4.com>; Mon, 19 Dec 2016 05:21:01 -0800 (PST)
+ Mon, 19 Dec 2016 21:42:03 +0000 (UTC)
+Received: from [77.106.104.40] (helo=[10.0.0.5])
+ by mail.aur.rocks with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+ (Exim 4.87) (envelope-from <me@prok.pw>) id 1cJ5nj-0006BT-QE
+ for wireguard@lists.zx2c4.com; Tue, 20 Dec 2016 04:48:56 +0700
+Date: Tue, 20 Dec 2016 04:48:51 +0700
+From: Sergey <me@prok.pw>
+Subject: WireGuard network perfomance
+To: wireguard@lists.zx2c4.com
+Message-Id: <1482184131.1467.9@mail.aur.rocks>
 MIME-Version: 1.0
-In-Reply-To: <20161219131953.GB12378@tuxmachine.polynome.dn42>
-References: <CAHmME9q+aZNDDH5Nsnn1O7+4RxFm489f08oOmyGpWsVx1pLxwg@mail.gmail.com>
- <232dbabb-d3f0-6f84-bd21-a6c6abab2441@higgsboson.tk>
- <CAHmME9rqtmYntL046vCOTVHwcdk2ThTwqMFqFj4kBKtKxixo4A@mail.gmail.com>
- <20161219130602.GA12378@tuxmachine.polynome.dn42>
- <CAHmME9qEg6iBwWpwgT_oPPGymfccuOdAyHv1e4+n5c-O8n9=4g@mail.gmail.com>
- <20161219131953.GB12378@tuxmachine.polynome.dn42>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 19 Dec 2016 14:21:00 +0100
-Message-ID: <CAHmME9ra07hNWJ6iigH3ZtT0oX2h9C+J2DVtvTOnEqFdTT-HWw@mail.gmail.com>
-Subject: Re: openwrt route_allowed_ips is inprecise
-To: Baptiste Jonglez <baptiste@bitsofnetworks.org>
-Content-Type: text/plain; charset=UTF-8
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset=us-ascii; format=flowed
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -40,9 +27,42 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Mon, Dec 19, 2016 at 2:19 PM, Baptiste Jonglez
-<baptiste@bitsofnetworks.org> wrote:
-> spending the time to test and
-> maintain this.
+Hello guys.
 
-Can't argue with that, I guess.
+First of all thanks for the WireGuard project: it really simple & 
+powerful and no more headaches with openvpn :)
+
+My question about network perfomance, I tested network speed with 
+iperf3 and got these results:
+
+Raw test (no WireGuard):
+
+$ iperf3 -c PUBLIC_IP
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bandwidth       Retr
+[  4]   0.00-10.00  sec  98.1 MBytes  82.3 Mbits/sec   25             
+sender
+[  4]   0.00-10.00  sec  93.6 MBytes  78.5 Mbits/sec                  
+receiver
+
+So I got ~80 Mbits/sec
+
+And WireGuard test:
+
+$ iperf3 -c PRIVATE_IP
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bandwidth       Retr
+[  4]   0.00-10.00  sec  53.2 MBytes  44.7 Mbits/sec  1863             
+sender
+[  4]   0.00-10.00  sec  46.1 MBytes  38.7 Mbits/sec                  
+receiver
+
+And there is ~40 Mbits/sec, so half of original.
+
+I missed something? Probably I need to configure something /etc?
+btw what is "Retr" column in iperf? Why it so big with WireGuard?
+
+Anyway that's good result for me, as openvpn can only give me something 
+~15 Mbits/sec.
+
+Best regards, Sergey.
