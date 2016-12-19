@@ -1,23 +1,31 @@
-Return-Path: me@prok.pw
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 43dcffc5
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 056f6543
  for <wireguard@lists.zx2c4.com>;
- Mon, 19 Dec 2016 21:42:03 +0000 (UTC)
-Received: from mail.aur.rocks (mail.aur.rocks [164.132.51.92])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8e084023
+ Mon, 19 Dec 2016 22:02:48 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4dbe6ee5
  for <wireguard@lists.zx2c4.com>;
- Mon, 19 Dec 2016 21:42:03 +0000 (UTC)
-Received: from [77.106.104.40] (helo=[10.0.0.5])
- by mail.aur.rocks with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
- (Exim 4.87) (envelope-from <me@prok.pw>) id 1cJ5nj-0006BT-QE
- for wireguard@lists.zx2c4.com; Tue, 20 Dec 2016 04:48:56 +0700
-Date: Tue, 20 Dec 2016 04:48:51 +0700
-From: Sergey <me@prok.pw>
-Subject: WireGuard network perfomance
-To: wireguard@lists.zx2c4.com
-Message-Id: <1482184131.1467.9@mail.aur.rocks>
+ Mon, 19 Dec 2016 22:02:47 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7b4f35e9
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 19 Dec 2016 22:02:47 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 5c587f50
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 19 Dec 2016 22:02:47 +0000 (UTC)
+Received: by mail-oi0-f48.google.com with SMTP id b126so159864876oia.2
+ for <wireguard@lists.zx2c4.com>; Mon, 19 Dec 2016 14:09:46 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+In-Reply-To: <1482184131.1467.9@mail.aur.rocks>
+References: <1482184131.1467.9@mail.aur.rocks>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Mon, 19 Dec 2016 23:09:45 +0100
+Message-ID: <CAHmME9pPiDwQiHLN4=Cmy22VPmwyf-f7tGmzZJGjzcFd0cvzBw@mail.gmail.com>
+Subject: Re: WireGuard network perfomance
+To: Sergey <me@prok.pw>
+Content-Type: text/plain; charset=UTF-8
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -27,42 +35,8 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hello guys.
+Hi Sergey,
 
-First of all thanks for the WireGuard project: it really simple & 
-powerful and no more headaches with openvpn :)
+What hardware are you running?
 
-My question about network perfomance, I tested network speed with 
-iperf3 and got these results:
-
-Raw test (no WireGuard):
-
-$ iperf3 -c PUBLIC_IP
-- - - - - - - - - - - - - - - - - - - - - - - - -
-[ ID] Interval           Transfer     Bandwidth       Retr
-[  4]   0.00-10.00  sec  98.1 MBytes  82.3 Mbits/sec   25             
-sender
-[  4]   0.00-10.00  sec  93.6 MBytes  78.5 Mbits/sec                  
-receiver
-
-So I got ~80 Mbits/sec
-
-And WireGuard test:
-
-$ iperf3 -c PRIVATE_IP
-- - - - - - - - - - - - - - - - - - - - - - - - -
-[ ID] Interval           Transfer     Bandwidth       Retr
-[  4]   0.00-10.00  sec  53.2 MBytes  44.7 Mbits/sec  1863             
-sender
-[  4]   0.00-10.00  sec  46.1 MBytes  38.7 Mbits/sec                  
-receiver
-
-And there is ~40 Mbits/sec, so half of original.
-
-I missed something? Probably I need to configure something /etc?
-btw what is "Retr" column in iperf? Why it so big with WireGuard?
-
-Anyway that's good result for me, as openvpn can only give me something 
-~15 Mbits/sec.
-
-Best regards, Sergey.
+Jason
