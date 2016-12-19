@@ -1,22 +1,32 @@
-Return-Path: joe@solidadmin.com
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 82c81a79
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3425ce0e
  for <wireguard@lists.zx2c4.com>;
- Mon, 19 Dec 2016 00:09:49 +0000 (UTC)
-Received: from conquer.yellowcord.com (conquer.yellowcord.com [45.55.224.114])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ff98cb76
+ Mon, 19 Dec 2016 00:14:30 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4ea02d3a
  for <wireguard@lists.zx2c4.com>;
- Mon, 19 Dec 2016 00:09:49 +0000 (UTC)
-From: Joe Doss <joe@solidadmin.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>
-Date: Sun, 18 Dec 2016 18:16:36 -0600
-Message-ID: <159146feaa0.2768.fd5e59abeac6319e4fe4e8192ea7d08d@solidadmin.com>
-In-Reply-To: <CAHmME9rCZpSjs-a5MbSXZ4APJxnjmd5oSLqcUaGZZChvAqJ38A@mail.gmail.com>
-References: <CAHmME9rCZpSjs-a5MbSXZ4APJxnjmd5oSLqcUaGZZChvAqJ38A@mail.gmail.com>
-Subject: Re: Seeking Fedora Maintainer
+ Mon, 19 Dec 2016 00:14:30 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0b179ea9
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 19 Dec 2016 00:14:30 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 66be220e
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 19 Dec 2016 00:14:30 +0000 (UTC)
+Received: by mail-oi0-f53.google.com with SMTP id b126so130577801oia.2
+ for <wireguard@lists.zx2c4.com>; Sun, 18 Dec 2016 16:21:21 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset="us-ascii"
+In-Reply-To: <159146feaa0.2768.fd5e59abeac6319e4fe4e8192ea7d08d@solidadmin.com>
+References: <CAHmME9rCZpSjs-a5MbSXZ4APJxnjmd5oSLqcUaGZZChvAqJ38A@mail.gmail.com>
+ <159146feaa0.2768.fd5e59abeac6319e4fe4e8192ea7d08d@solidadmin.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Mon, 19 Dec 2016 01:21:20 +0100
+Message-ID: <CAHmME9qvC4DGkU0v3c87R9SDwyqViO4J6QBHmJux9yusU18=wg@mail.gmail.com>
+Subject: Re: Seeking Fedora Maintainer
+To: Joe Doss <joe@solidadmin.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,22 +36,22 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-I will get the packages up to date this week. Just had my second kid two 
-months ago and life is kicking my ass. :)
+Hey Joe,
 
-I will see about setting up some sort of automatic build from git as well 
-so this doesn't lag behind again.
+Nice to hear you're still out there, and huge congratulations on your
+new kid! This is the best possible reply we could receive.
 
-Joe
+If you do automate the git build, be sure to build just based on newly
+released tags, not on every commit. Also, since you last updated, the
+tags have lost their `experimental-` prefix, which will slightly
+change the URL. As well, for DKIM, there's now the `make dkim-install`
+target, so that you don't have to manage which files are necessary
+yourself. Check out what the Arch build does --
+https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=wireguard --
+and if you look in the Makefile, you'll find quite a few paths that
+you can override with environment variables, to match your liking.
 
+Finally, please don't hesitate to get help in the maintenance burden
+from potential others who might be around who could help.
 
-On December 18, 2016 6:13:59 PM "Jason A. Donenfeld" <Jason@zx2c4.com> wrote:
-
-> Hi guys,
->
-> Joe, the current maintainer of the Fedora package, has been MIA. Are
-> there any other Fedora users on this list who might want to help him
-> out with package maintenance?
->
-> Thanks,
-> Jason
+Jason
