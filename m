@@ -1,30 +1,22 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: me@prok.pw
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 056f6543
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bbde3451
  for <wireguard@lists.zx2c4.com>;
- Mon, 19 Dec 2016 22:02:48 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4dbe6ee5
+ Mon, 19 Dec 2016 22:04:54 +0000 (UTC)
+Received: from mail.aur.rocks (mail.aur.rocks [164.132.51.92])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d6e77795
  for <wireguard@lists.zx2c4.com>;
- Mon, 19 Dec 2016 22:02:47 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7b4f35e9
- for <wireguard@lists.zx2c4.com>;
- Mon, 19 Dec 2016 22:02:47 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 5c587f50
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Mon, 19 Dec 2016 22:02:47 +0000 (UTC)
-Received: by mail-oi0-f48.google.com with SMTP id b126so159864876oia.2
- for <wireguard@lists.zx2c4.com>; Mon, 19 Dec 2016 14:09:46 -0800 (PST)
-MIME-Version: 1.0
-In-Reply-To: <1482184131.1467.9@mail.aur.rocks>
-References: <1482184131.1467.9@mail.aur.rocks>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 19 Dec 2016 23:09:45 +0100
-Message-ID: <CAHmME9pPiDwQiHLN4=Cmy22VPmwyf-f7tGmzZJGjzcFd0cvzBw@mail.gmail.com>
+ Mon, 19 Dec 2016 22:04:53 +0000 (UTC)
+Date: Tue, 20 Dec 2016 05:11:42 +0700
+From: Sergey <me@prok.pw>
 Subject: Re: WireGuard network perfomance
-To: Sergey <me@prok.pw>
-Content-Type: text/plain; charset=UTF-8
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Message-Id: <1482185502.1467.10@mail.aur.rocks>
+In-Reply-To: <CAHmME9pPiDwQiHLN4=Cmy22VPmwyf-f7tGmzZJGjzcFd0cvzBw@mail.gmail.com>
+References: <1482184131.1467.9@mail.aur.rocks>
+ <CAHmME9pPiDwQiHLN4=Cmy22VPmwyf-f7tGmzZJGjzcFd0cvzBw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -35,8 +27,4 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Sergey,
-
-What hardware are you running?
-
-Jason
+Just two regulars x86 boxes with intel cpu. No ARM/MIPS/something else.
