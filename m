@@ -1,23 +1,25 @@
-Return-Path: toke@toke.dk
+Return-Path: joerg@higgsboson.tk
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id eb3d45d3
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 23b21a4a
  for <wireguard@lists.zx2c4.com>;
- Tue, 20 Dec 2016 18:48:18 +0000 (UTC)
-Received: from mail.toke.dk (mail.toke.dk [52.28.52.200])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b63181b7
+ Wed, 21 Dec 2016 17:25:21 +0000 (UTC)
+Received: from mail.higgsboson.tk (mail.higgsboson.tk [188.68.39.17])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4dca5a56
  for <wireguard@lists.zx2c4.com>;
- Tue, 20 Dec 2016 18:48:18 +0000 (UTC)
-In-Reply-To: <CAHmME9oOJozBq-+UbYiZzF9uBpjMQ=saNPOeXnb2mPYNiKs0iw@mail.gmail.com>
-References: <CAHmME9oOJozBq-+UbYiZzF9uBpjMQ=saNPOeXnb2mPYNiKs0iw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
+ Wed, 21 Dec 2016 17:25:20 +0000 (UTC)
+Received: from [IPv6:2001:470:1f0b:f8d:5e51:4fff:fe58:e70b] (unknown
+ [IPv6:2001:470:1f0b:f8d:5e51:4fff:fe58:e70b])
+ by mail.higgsboson.tk (Postfix) with ESMTPSA id DFEA94ECA9
+ for <wireguard@lists.zx2c4.com>; Wed, 21 Dec 2016 17:32:30 +0000 (UTC)
 Subject: Re: Multicast over a wireguard link?
-From: =?ISO-8859-1?Q?Toke_H=F8iland-J=F8rgensen?= <toke@toke.dk>
-Date: Tue, 20 Dec 2016 19:55:18 +0100
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Message-ID: <2FDC4297-6948-436F-B1A4-03EE711E1AD5@toke.dk>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+To: wireguard@lists.zx2c4.com
+References: <87fuli7itj.fsf@toke.dk>
+From: =?UTF-8?Q?J=c3=b6rg_Thalheim?= <joerg@higgsboson.tk>
+Message-ID: <c86e8f14-da18-6cfe-c923-57e9d118b6a7@higgsboson.tk>
+Date: Wed, 21 Dec 2016 18:32:30 +0100
+MIME-Version: 1.0
+In-Reply-To: <87fuli7itj.fsf@toke.dk>
+Content-Type: text/plain; charset=windows-1252
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -27,27 +29,25 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
+I currently use OSPF with one interface per peering with link-local ipv4/=
+ipv6 addresses (AllowedIPs=3D0.0.0.0/0,::/0, ipv4 =3D> 169.254.0.0/16 + l=
+ifetime 0)
 
+This works fine.
 
-On 20 December 2016 19:43:15 CET, "Jason A. Donenfeld" <Jason@zx2c4.com> wrote:
->On Tue, Dec 20, 2016 at 7:40 PM, Toke Høiland-Jørgensen <toke@toke.dk>
->wrote:
->> Right, but that means that even if multicast is added, a routing
->> protocol won't be terribly useful, since it can't tell wireguard
->which
->> subnets lives behind which peers. What I would need is to be able to
->> assign /32s (or IPv6 lladdrs) to the interface for each peer, and
->have
->> the kernel routing table determine which subnets should go to each of
->> those. My hope was that wireguard could then figure out where to send
->> the packet from the /32s (which would be in the wireguard config,
->> presumably).
+On 2016-12-20 15:53, Toke H=F8iland-J=F8rgensen wrote:
+> Does Wireguard has a notion of multicast? I would like to eventually
+> replace my current VPN setup with wireguard. I currently run Tinc in
+> switch (layer 2) mode, and run the Babel routing protocol on top.
 >
->Ahh, I see. In this case, the routing protocol needs to update
->WireGuard, not the kernel's routing table. This forces you to
->re-envision your routing protocol in terms of "which public key should
->get which routes?" which strikes me as an authenticity improvement.
-
-Hmm, longer term carrying public keys in the routing protocol might be viable, but getting to there is not trivial. 
-
-However a netlink interface that says, essentially, "add traffic going to subnet A to the same peer that has address X". That would turn wireguard into a normal routing table (conceptually, at least). If the same netlink interface could be used, it wouldn't even be necessary to modify the routing daemon...
+> Babel announces itself via link-local multicast to everyone on the link=
+=2E
+> Does this work with wireguard? I guess the equivalent semantics would b=
+e
+> "send this packet to all known peers"...
+>
+> -Toke
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
