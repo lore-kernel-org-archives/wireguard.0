@@ -1,20 +1,28 @@
-Return-Path: gamesfleadh-ie@gamesfleadh.ie
+Return-Path: baptiste@bitsofnetworks.org
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5a8e1abf
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5f9c743a
  for <wireguard@lists.zx2c4.com>;
- Sun, 25 Dec 2016 19:50:01 +0000 (UTC)
-Received: from plesk3.heanet.ie (shang.heanet.ie [193.1.193.205])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 659152a4
+ Sun, 25 Dec 2016 22:34:46 +0000 (UTC)
+Received: from mails.bitsofnetworks.org (rezine.polyno.me [193.33.56.138])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8a6c51f6
  for <wireguard@lists.zx2c4.com>;
- Sun, 25 Dec 2016 19:50:01 +0000 (UTC)
+ Sun, 25 Dec 2016 22:34:46 +0000 (UTC)
+Received: from rev-140-155.legacytubes.illyse.net ([89.234.140.155]
+ helo=lud.home) by mails.bitsofnetworks.org with esmtps
+ (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.84_2)
+ (envelope-from <baptiste@bitsofnetworks.org>) id 1cLHUr-0006iI-Gu
+ for wireguard@lists.zx2c4.com; Sun, 25 Dec 2016 23:42:29 +0100
+Date: Sun, 25 Dec 2016 23:42:25 +0100
+From: Baptiste Jonglez <baptiste@bitsofnetworks.org>
 To: wireguard@lists.zx2c4.com
-Subject: Notification status of your delivery (USPS 001619551)
-Date: Sun, 25 Dec 2016 19:57:42 +0000
+Subject: Introduction of XChaCha20Poly1305 (Was: [ANNOUNCE] Snapshot
+ `0.0.20161223` Available)
+Message-ID: <20161225224225.GA5081@lud.home>
+References: <ffffffffac503169@frisell.zx2c4.com>
 MIME-Version: 1.0
-Message-ID: <02344d84f719b748b7b0a8ca1195096a@gamesfleadh.ie>
-From: "USPS Ground" <joe.hendrix@gamesfleadh.ie>
-Content-Type: multipart/mixed; boundary="b1_992a4554dca4ec3bf89c0e6b31dbd82a"
-Reply-To: USPS Ground <joe.hendrix@gamesfleadh.ie>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="a8Wt8u1KmwUX3Y2C"
+In-Reply-To: <ffffffffac503169@frisell.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -24,82 +32,52 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---b1_992a4554dca4ec3bf89c0e6b31dbd82a
+
+--a8Wt8u1KmwUX3Y2C
 Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Dear Customer,
+Hi,
 
-We can not deliver your parcel arrived at December 24.
+On Fri, Dec 23, 2016 at 09:15:28PM +0100, Jason A. Donenfeld wrote:
+>   * cookies: use xchacha20poly1305 instead of chacha20poly1305
+>  =20
+>   This is a big change. To simplify the security analysis, improve speed,=
+ and
+>   simplify the code, we now use XChaChaPoly1305 with a random 24-byte non=
+ce,
+>   instead of using a random 32-byte salt.
 
-You can download the shipment label attached!
+- Is this backwards compatible?
 
-Thanks and best regards,
-Joe Hendrix,
-USPS Senior Station Manager.
+- Could you provide references describing XChaCha20Poly1305 and the
+  differences with ChaCha20Poly1305?
 
+- What part of the protocol does this change?  Is it just the initial key
+  exchange?
 
---b1_992a4554dca4ec3bf89c0e6b31dbd82a
-Content-Type: application/zip; name="Delivery-Receipt-001619551.zip"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename=Delivery-Receipt-001619551.zip
+Thanks,
+Baptiste
 
-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
+--a8Wt8u1KmwUX3Y2C
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
 
---b1_992a4554dca4ec3bf89c0e6b31dbd82a--
+iQIzBAEBCAAdFiEEjVflzZuxNlVFbt5QvgHsIqBOLkYFAlhgS00ACgkQvgHsIqBO
+LkbSvhAAsskQvQ+1BIZ7RzuVJvxaZSXDsemXl56SOybKXobhIJcRuEV6rd4RBf+/
+p8iE/yCHJ1AIrOygF/Pt682YPgTvsIN0WyqEw6zf1Be0YZ6ujAEv8eUs4azt6z1P
+ouOHgMnzOnBjDI+cS1Kw6aVAIGT4VYHruKJ8bachDd+zO2EMLiHDPGK/BuG+o3UY
+33R1DCDG/s/1KsjNKK0/mvxEj/EwshotGrVNTscK96jHmKsoXoROHEhk2lamSTNw
+lLpUIWSMQFv71Ob9rbCHUBYKAHLHKRVuz4FWbjLZkDmERa0FL2AgrBZ54kwehIaX
+VZLKrgE24I/Cf5YvA/C3s6wuH+y+FB7dVaxGXRgdQiFGRDmaCTUlROHrn4My4e4t
+cdLDJWk0+tHUSN2BA1j/RlEPC6QFRiL6B5jKwHWdwu0LN23ZDImYTh2nuuQSasS2
+v0A5Eo+LGMrjf+TzHGqMDHgmzvnDpF/x8tjOUQJQWM/XF3mPwlLPkJsK7gTlB9jp
+T34IlWNgFWb8WJH10PGLNVbB5CycGpJPWqLtkWGRKWZtxA/5nm+RhrmcPKhictqJ
+0Bt7FY2PTzk3ArOGvp05EkRzGHWF5kgm33dP9TsoDUhCQV413tGLi7RDz+bzkMX4
+F8Rjb7g+8RZDqWvp8+4hw17JsPpNLQCzl6BzzobbKop8K0eqNdQ=
+=MM+U
+-----END PGP SIGNATURE-----
+
+--a8Wt8u1KmwUX3Y2C--
