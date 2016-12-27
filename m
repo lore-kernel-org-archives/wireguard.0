@@ -1,25 +1,30 @@
-Return-Path: trafficwavesurfi@servv16287.srv.odns.fr
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b7390083
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 46aa1c36
  for <wireguard@lists.zx2c4.com>;
- Tue, 27 Dec 2016 03:44:08 +0000 (UTC)
-Received: from servv16287.srv.odns.fr (109-234-162-87.reverse.odns.fr
- [109.234.162.87])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f9ca8c0c
+ Tue, 27 Dec 2016 04:59:12 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0433f684
  for <wireguard@lists.zx2c4.com>;
- Tue, 27 Dec 2016 03:44:08 +0000 (UTC)
-Received: from trafficwavesurfi by servv16287.srv.odns.fr with local (Exim
- 4.87) (envelope-from <trafficwavesurfi@servv16287.srv.odns.fr>)
- id 1cLisJ-0004VH-Bj
- for wireguard@lists.zx2c4.com; Tue, 27 Dec 2016 04:56:31 +0100
-To: wireguard@lists.zx2c4.com
-Subject: Parcel #03772002 shipment problem, please review
-Date: Tue, 27 Dec 2016 03:56:31 +0000
+ Tue, 27 Dec 2016 04:59:12 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 77b7d033
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 27 Dec 2016 04:59:12 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 1383a2e3
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 27 Dec 2016 04:59:12 +0000 (UTC)
+Received: by mail-oi0-f48.google.com with SMTP id b126so338491031oia.2
+ for <wireguard@lists.zx2c4.com>; Mon, 26 Dec 2016 21:07:06 -0800 (PST)
 MIME-Version: 1.0
-Message-ID: <4aeb828b73edf854a9086af4f09ffa05@trafficwavesurfing.net>
-From: "USPS Delivery" <harold.kennedy@trafficwavesurfing.net>
-Content-Type: multipart/mixed; boundary="b1_0989c22248d831f07e0620975355af9d"
-Reply-To: USPS Delivery <harold.kennedy@trafficwavesurfing.net>
+In-Reply-To: <CAHmME9qR5y-5FzTuXy_V_j7V+vFDXJqpF7mV=T3=vXme187-7A@mail.gmail.com>
+References: <CAHmME9qR5y-5FzTuXy_V_j7V+vFDXJqpF7mV=T3=vXme187-7A@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Tue, 27 Dec 2016 06:07:05 +0100
+Message-ID: <CAHmME9pXrA=DvHa8kmLfhvPOKM4pO+Vq6=2FoQzoLdiqd15zrQ@mail.gmail.com>
+Subject: Re: 3.18 kernel for Android
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset=UTF-8
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -29,124 +34,6 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---b1_0989c22248d831f07e0620975355af9d
-Content-Type: text/plain; charset=us-ascii
+It works!
 
-Dear Customer,
-
-Your item has arrived at December 24, but our courier was not able to deliver the parcel.
-
-You can find more details in this e-mail attachment!
-
-With sincere thanks,
-Harold Kennedy,
-USPS Office Agent.
-
-
---b1_0989c22248d831f07e0620975355af9d
-Content-Type: application/zip; name="Delivery-Receipt-03772002.zip"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename=Delivery-Receipt-03772002.zip
-
-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
-
-
---b1_0989c22248d831f07e0620975355af9d--
+https://data.zx2c4.com/android-wg-first-starts.gif
