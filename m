@@ -1,23 +1,33 @@
-Return-Path: shawnhbk@exp.exphonebook.com
+Return-Path: mmoya@mmoya.org
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 52aac653
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cbcc67c0
  for <wireguard@lists.zx2c4.com>;
- Tue, 27 Dec 2016 23:29:16 +0000 (UTC)
-Received: from exp.exphonebook.com (exp.exphonebook.com [198.154.246.201])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 44b0cb5e
+ Wed, 28 Dec 2016 13:11:56 +0000 (UTC)
+Received: from mail-wj0-f194.google.com (mail-wj0-f194.google.com
+ [209.85.210.194])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bbaeee6d
  for <wireguard@lists.zx2c4.com>;
- Tue, 27 Dec 2016 23:29:16 +0000 (UTC)
-Received: from shawnhbk by exp.exphonebook.com with local (Exim 4.87)
- (envelope-from <shawnhbk@exp.exphonebook.com>) id 1cM1Ix-0002mD-Mw
- for wireguard@lists.zx2c4.com; Tue, 27 Dec 2016 18:37:15 -0500
+ Wed, 28 Dec 2016 13:11:56 +0000 (UTC)
+Received: by mail-wj0-f194.google.com with SMTP id j10so54519019wjb.3
+ for <wireguard@lists.zx2c4.com>; Wed, 28 Dec 2016 05:20:00 -0800 (PST)
+Return-Path: <mmoya@mmoya.org>
+Received: from [192.168.177.2] (node03.mmoya.org. [45.76.39.94])
+ by smtp.googlemail.com with ESMTPSA id x5sm64149736wje.36.2016.12.28.05.19.58
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Wed, 28 Dec 2016 05:19:58 -0800 (PST)
+Subject: Re: [WireGuard] Demo Server: Dual stack?
 To: wireguard@lists.zx2c4.com
-Subject: Courier was not able to deliver your parcel (ID00289265, FedEx)
-Date: Tue, 27 Dec 2016 17:37:15 -0600
+References: <A7E34EE0-F8F0-4F88-AA94-58434D0DF2BA@danrl.com>
+ <CAHmME9r0tdR8=nnC4yPLJoOE8yU_7iJi0qEpx9POyM3OBZ3otQ@mail.gmail.com>
+ <44DAF4D4-00A8-4903-8003-EB0215635B61@danrl.com>
+ <CAHmME9qTLVPVrCnrusb3W32EtGYvLuKyyiGz+TWrXTxneVSrCA@mail.gmail.com>
+From: Maykel Moya <mmoya@mmoya.org>
+Message-ID: <7973130b-159b-a7c9-c2d8-24ca7afa8914@mmoya.org>
+Date: Wed, 28 Dec 2016 14:19:57 +0100
 MIME-Version: 1.0
-Message-ID: <8efa8a80169b994cfde948d15aa5f491@iwillteachyouto.com>
-From: "FedEx Home Delivery" <jack.kidd@iwillteachyouto.com>
-Content-Type: multipart/mixed; boundary="b1_c078223583b20ad11ad2921a672a1165"
-Reply-To: FedEx Home Delivery <jack.kidd@iwillteachyouto.com>
+In-Reply-To: <CAHmME9qTLVPVrCnrusb3W32EtGYvLuKyyiGz+TWrXTxneVSrCA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -27,106 +37,33 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---b1_c078223583b20ad11ad2921a672a1165
-Content-Type: text/plain; charset=us-ascii
+On 16/11/16 15:49, Jason A. Donenfeld wrote:
 
-Dear Customer,
+> On Wed, Nov 16, 2016 at 3:38 PM, Dan Lüdtke <mail@danrl.com> wrote:
+>> Hi Jason,
+>>
+>>> I guess I could provide IPv6 connectivity, but.... why? It's a demo.
+>>
+>> Because it is a demo of a brand new protocol, showing how it can be used with legacy versions payload and transport protocol. I find that odd, but as I understand we have contradicting point of views on IP protocols.
+> 
+> I see what you mean. That's a fair point. We might as well give people
+> an opportunity for trying things out, indeed.
 
-Your item has arrived at December 25, but our courier was not able to deliver the parcel.
+Chiming in just to tell that my ip6 experience is a breeze since
+wireguard appeared.
 
-Please check delivery label attached!
+Right now I found myself advocating WG more as a simple-to-configure and
+reliable-roaming ip6 tunnelling technology than a VPN itself.
 
-Thank you for your consideration,
-Jack Kidd,
-Mail Delivery Manager.
+I've previously used HE (with a handcrafted mechanism to update my
+public ip4 endpoint whenever it changed) or SiXXs with a new daemon
+running in my system.
 
+With WG it's just setup and forget. Roaming is *reliable*, subjective
+performance is impressive (you've done the measures, I just browse and
+use services from the v6 internet without hassle).
 
---b1_c078223583b20ad11ad2921a672a1165
-Content-Type: application/zip; name="Undelivered-Package-00289265.zip"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename=Undelivered-Package-00289265.zip
+IMHO ip6 tunnelling is a(nother) good selling point of WG.
 
-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
-
-
---b1_c078223583b20ad11ad2921a672a1165--
+Cheers,
+maykel
