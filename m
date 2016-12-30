@@ -1,24 +1,25 @@
-Return-Path: webmaster@tehnogerm.ru
+Return-Path: jehan@altheamesh.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 14f6f55c
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 14aabd0f
  for <wireguard@lists.zx2c4.com>;
- Thu, 29 Dec 2016 18:33:31 +0000 (UTC)
-Received: from isp2016.alt-idea.ru (77-222-54-170.vps-ptr.clients.spaceweb.ru
- [77.222.54.170])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1022dd5e
+ Fri, 30 Dec 2016 01:15:51 +0000 (UTC)
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
+ [66.111.4.25])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d229dfd8
  for <wireguard@lists.zx2c4.com>;
- Thu, 29 Dec 2016 18:33:30 +0000 (UTC)
-Received: from apache by isp2016.alt-idea.ru with local (Exim 4.84_2)
- (envelope-from <webmaster@tehnogerm.ru>) id 1cMfe0-0004CH-2S
- for wireguard@lists.zx2c4.com; Thu, 29 Dec 2016 21:41:40 +0300
-To: wireguard@lists.zx2c4.com
-Subject: Parcel 0000459236 delivery notification, FedEx
-Date: Thu, 29 Dec 2016 21:41:40 +0300
+ Fri, 30 Dec 2016 01:15:51 +0000 (UTC)
+Message-Id: <1483061047.444229.832649505.0712D346@webmail.messagingengine.com>
+From: Jehan Tremback <jehan@altheamesh.com>
+To: jens <jens@viisauksena.de>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
 MIME-Version: 1.0
-Message-ID: <7b641eb1e6ffe203536782ede1875b56@tehnogerm.ru>
-From: "FedEx Parcels Delivery" <shane.dye@tehnogerm.ru>
-Content-Type: multipart/mixed; boundary="b1_cbe993c8d4c85752d1bb1cc58d1801f8"
-Reply-To: FedEx Parcels Delivery <shane.dye@tehnogerm.ru>
+Content-Type: text/plain; charset="utf-8"
+Subject: Re: [fyi] test in the wild (wg + gretap + batman-adv) on tplink842
+In-Reply-To: <1439626e-1f99-83fb-aab5-6a316346801e@viisauksena.de>
+References: <b9daea6b-caa1-6778-7236-02efb2288b99@viisauksena.de>
+ <1482597351.888073.828789001.771C92C9@webmail.messagingengine.com>
+ <1439626e-1f99-83fb-aab5-6a316346801e@viisauksena.de>
+Date: Thu, 29 Dec 2016 17:24:07 -0800
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -28,108 +29,45 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---b1_cbe993c8d4c85752d1bb1cc58d1801f8
-Content-Type: text/plain; charset=us-ascii
+Got it, thanks.
 
-Dear Customer,
+-- 
+  Jehan Tremback
+  jehan@altheamesh.com
 
-We can not deliver your parcel arrived at December 25.
-
-Please check delivery label attached!
-
-With anticipation,
-Shane Dye,
-Senior Support Manager.
-
-
---b1_cbe993c8d4c85752d1bb1cc58d1801f8
-Content-Type: application/zip; name="Delivery-Details-0000459236.zip"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename=Delivery-Details-0000459236.zip
-
-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
-Yy53c2ZQSwUGAAAAAAIAAgCRAAAAthEAAAAA
-
-
---b1_cbe993c8d4c85752d1bb1cc58d1801f8--
+On Sat, Dec 24, 2016, at 08:14 PM, jens wrote:
+> On 24.12.2016 17:35, Jehan Tremback wrote:
+> > Maybe I'm missing something obvious, but why would batman-adv affect the
+> > speed?
+> 
+> not directly,
+> 
+> or i don't understand where your conclusion came from. batman-adv means
+> a lot of little batman-mesh-protocoll packets (namely ogm packets,
+> protocoll traffic is around 300 kbits in our network. which also will
+> travel over gretap/wireguard)
+> 
+> this scenario is equivalent to our free wifi network with 300++ nodes
+> and +-1000 users.
+> We use batman-adv as mesh protocol. While wireguard is layer 3 we need
+> to have layer2 over this tunnel.
+> so i tested wireguard + gretap + batman-adv   successfully.
+> 
+> compared to a other known layer2 crypted tunnel protocol (fastd) this is
+> 3 times faster, which is mainly due to wireguard is a kernel-module and
+> fastd lay in userspace. (-> context switche)
+> 
+> i testet on weak devices, because this is what is deployed in big
+> numbers in our (and many other) Freifunk community.
+> also there are plenty of packets and stuff - so this explain the
+> relative low throughput. At least compared with clean linked test-setups.
+> 
+> hope this explain my motivation and the reason why i test this in this
+> special scenario.
+> 
+> Jens/fuzzle
+> 
+> -- 
+> make the world nicer, please use PGP encryption
+> 
+> 
