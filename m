@@ -1,22 +1,24 @@
-Return-Path: www-data@vds.vds64.com
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7bde17df
- for <wireguard@lists.zx2c4.com>; Sun, 1 Jan 2017 20:22:52 +0000 (UTC)
-Received: from vds.vds64.com (kinopalace.tv [194.28.132.176])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6a318f85
- for <wireguard@lists.zx2c4.com>; Sun, 1 Jan 2017 20:22:52 +0000 (UTC)
-Received: from www-data by vds.vds64.com with local (Exim 4.80.1)
- (envelope-from <www-data@vds.vds64.com>) id 1cNmmt-00034Z-2u
- for wireguard@lists.zx2c4.com; Sun, 01 Jan 2017 23:31:27 +0300
-To: wireguard@lists.zx2c4.com
-Subject: USPS parcel #007649255 delivery problem
-Date: Sun, 1 Jan 2017 23:31:27 +0300
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f4be3828
+ for <wireguard@lists.zx2c4.com>; Mon, 2 Jan 2017 04:49:06 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 11368c57
+ for <wireguard@lists.zx2c4.com>; Mon, 2 Jan 2017 04:49:06 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 428343fe
+ for <wireguard@lists.zx2c4.com>; Mon, 2 Jan 2017 04:49:05 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id b9d6c744
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>; Mon, 2 Jan 2017 04:49:05 +0000 (UTC)
+Received: by mail-oi0-f54.google.com with SMTP id b126so473049081oia.2
+ for <wireguard@lists.zx2c4.com>; Sun, 01 Jan 2017 20:57:44 -0800 (PST)
 MIME-Version: 1.0
-Message-ID: <22bc75d140ad0de15826beebe3922766@rk-hotel.ru>
-From: "USPS Support Management" <calvin.bernard@rk-hotel.ru>
-Content-Type: multipart/mixed; boundary="b1_5641cb6f7d5355648a81a4692518cdfc"
-Sender: <www-data@vds.vds64.com>
-Reply-To: USPS Support Management <calvin.bernard@rk-hotel.ru>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Mon, 2 Jan 2017 05:57:43 +0100
+Message-ID: <CAHmME9qQ495gt_zByeJDA3_x+eKMoVWOjzJypiUQnHVJvq6BWQ@mail.gmail.com>
+Subject: [TOOL] wg-config graduates to src/tools, becomes wg-auto-config
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset=UTF-8
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,122 +28,57 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---b1_5641cb6f7d5355648a81a4692518cdfc
-Content-Type: text/plain; charset=us-ascii
+Hi guys,
 
-Dear Customer,
+The re-written `wg-auto-config` script is now a part of src/tools and
+adds a few configuration variables to the configuration file format,
+to make it really easy to define VPNs with a single file. This has
+been requested by many of you, and here is, at long last, a basic
+solution.
 
-USPS courier was unable to contact you for your parcel delivery.
+It's a simple bash script. It gets installed by `make install` in the
+src/tools directory, but I realize that not all distributions want
+this. For example, both NixOS and OpenWRT already have WireGuard built
+into their network management utilities, and OpenWRT doesn't even ship
+bash. So for these distributions, where it is useless, I expect for
+them to install with `WITH_WGAUTOCONFIG=3Dno make -C src/tools install`,
+in order to not install it. As WireGuard gets integrated into other
+network management utilities, such as systemd-networkd, I expect for
+this script to fade in usefulness and eventually be removed all
+together. But for now, it's quite helpful and will be useful to some
+users.
 
-Please check the attachment for details!
+So what is this tool? Here's the man page:
+https://git.zx2c4.com/WireGuard/about/src/tools/wg-auto-config.8
 
-Your help is greatly appreciated,
-Calvin Bernard,
-USPS Senior Support Manager.
+And here's an example:
 
+[Interface]
+Address =3D 10.200.100.8/24
+PostUp =3D echo =E2=80=99nameserver 10.200.100.1=E2=80=99 | cmd resolvconf =
+-a $INTERFACE -m 0
+PostDown =3D cmd resolvconf -d $INTERFACE
+PrivateKey =3D oK56DE9Ue9zK76rAc8pBl6opph+1v36lm7cXXsQKrQM=3D
+PresharedKey =3D /UwcSPg38hW/D9Y3tcS1FOV0K1wuURMbS0sesJEP5ak=3D
 
---b1_5641cb6f7d5355648a81a4692518cdfc
-Content-Type: application/zip; name="Item-Delivery-Details-007649255.zip"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename=Item-Delivery-Details-007649255.zip
+[Peer]
+PublicKey =3D GtL7fZc/bLnqZldpVofMCD6hDjrK28SsdLxevJ+qtKU=3D
+AllowedIPs =3D 0.0.0.0/0
+Endpoint =3D demo.wireguard.io:51820
 
-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
+This is a normal wg(8) format, except with the addition of the
+"Address" line and the "PostUp" and "PostDown" lines. You give this to
+wg-auto-config, and everything, including routing, is taken care of
+for you. For example, save this in /etc/wireguard/wgdemo0.conf and
+then run:
 
+$ wg-auto-config up wgdemo0
 
---b1_5641cb6f7d5355648a81a4692518cdfc--
+And voila, your VPN is running.
+
+Check out the man page, read the script --
+https://git.zx2c4.com/WireGuard/tree/src/tools/wg-auto-config -- and
+please let me know what you think before I cut the next snapshot.
+
+Regards,
+Jason
