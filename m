@@ -1,17 +1,20 @@
-Return-Path: eworm@leda.eworm.de
+Return-Path: dkg@fifthhorseman.net
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1f590a31
- for <wireguard@lists.zx2c4.com>; Wed, 4 Jan 2017 20:05:27 +0000 (UTC)
-Received: from mx.mylinuxtime.de (mx.mylinuxtime.de [148.251.109.235])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bbcff8ba
- for <wireguard@lists.zx2c4.com>; Wed, 4 Jan 2017 20:05:27 +0000 (UTC)
-From: Christian Hesse <list@eworm.de>
-To: wireguard@lists.zx2c4.com
-Subject: [PATCH 1/1] tools: remove DESTDIR for autodetection
-Date: Wed,  4 Jan 2017 21:14:16 +0100
-Message-Id: <20170104201416.25893-1-list@eworm.de>
-In-Reply-To: <CAHmME9qEs=oHr=r=dfAeiL=QGXxOeNmuFUkrnbv7L4MBbHb+tw@mail.gmail.com>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0a859283
+ for <wireguard@lists.zx2c4.com>; Wed, 4 Jan 2017 20:54:04 +0000 (UTC)
+Received: from che.mayfirst.org (che.mayfirst.org [162.247.75.118])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 19ea8df7
+ for <wireguard@lists.zx2c4.com>; Wed, 4 Jan 2017 20:54:04 +0000 (UTC)
+From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+To: Christian Hesse <list@eworm.de>, wireguard@lists.zx2c4.com
+Subject: Re: [PATCH 1/1] tools: remove DESTDIR for autodetection
+In-Reply-To: <20170104201416.25893-1-list@eworm.de>
 References: <CAHmME9qEs=oHr=r=dfAeiL=QGXxOeNmuFUkrnbv7L4MBbHb+tw@mail.gmail.com>
+ <20170104201416.25893-1-list@eworm.de>
+Date: Wed, 04 Jan 2017 16:02:44 -0500
+Message-ID: <87a8b6k07f.fsf@alice.fifthhorseman.net>
+MIME-Version: 1.0
+Content-Type: text/plain
 Cc: Christian Hesse <mail@eworm.de>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -22,43 +25,14 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-From: Christian Hesse <mail@eworm.de>
+On Wed 2017-01-04 15:14:16 -0500, Christian Hesse wrote:
+> From: Christian Hesse <mail@eworm.de>
+>
+> DESTDIR is always empty, no need to check anything there. Check the main
+> system instead.
 
-DESTDIR is always empty, no need to check anything there. Check the main
-system instead.
+why are we checking either place?  It's entirely possible that my
+dedicated build farm doesn't have any bash completion mechanisms
+installed, even if my development system does.
 
-Signed-off-by: Christian Hesse <mail@eworm.de>
----
- src/tools/Makefile | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/src/tools/Makefile b/src/tools/Makefile
-index fe483b9..8160cc9 100644
---- a/src/tools/Makefile
-+++ b/src/tools/Makefile
-@@ -12,12 +12,12 @@ WITH_WGQUICK ?=
- WITH_SYSTEMDUNITS ?=
- 
- ifeq ($(WITH_BASHCOMPLETION),)
--ifneq ($(strip $(wildcard $(DESTDIR)$(BASHCOMPDIR))),)
-+ifneq ($(strip $(wildcard $(BASHCOMPDIR))),)
- WITH_BASHCOMPLETION := yes
- endif
- endif
- ifeq ($(WITH_WGQUICK),)
--ifneq ($(strip $(wildcard $(DESTDIR)$(BINDIR)/bash)),)
-+ifneq ($(strip $(wildcard $(BINDIR)/bash)),)
- WITH_WGQUICK := yes
- endif
- ifneq ($(strip $(wildcard $(DESTDIR)/bin/bash)),)
-@@ -25,7 +25,7 @@ WITH_WGQUICK := yes
- endif
- endif
- ifeq ($(WITH_SYSTEMDUNITS),)
--ifneq ($(strip $(wildcard $(DESTDIR)$(SYSTEMDUNITDIR))),)
-+ifneq ($(strip $(wildcard $(SYSTEMDUNITDIR))),)
- WITH_SYSTEMDUNITS := yes
- endif
- endif
--- 
-2.11.0
+           --dkg
