@@ -1,18 +1,22 @@
-Return-Path: www-data@panel.top20remedies.com
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 75731d6d
- for <wireguard@lists.zx2c4.com>; Thu, 5 Jan 2017 02:21:57 +0000 (UTC)
-Received: from panel.top20remedies.com (rand01.ngtech.eu [81.4.126.119])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3b98e672
- for <wireguard@lists.zx2c4.com>; Thu, 5 Jan 2017 02:21:56 +0000 (UTC)
-To: wireguard@lists.zx2c4.com
-Subject: Parcel #0000908565 shipment problem, please review
-Date: Thu, 5 Jan 2017 11:30:52 +0900
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3de4b987
+ for <wireguard@lists.zx2c4.com>; Thu, 5 Jan 2017 02:41:20 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d43bf73d
+ for <wireguard@lists.zx2c4.com>; Thu, 5 Jan 2017 02:41:20 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dfcdbd61
+ for <wireguard@lists.zx2c4.com>; Thu, 5 Jan 2017 02:41:20 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 74ecbcf7
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Thu, 5 Jan 2017 02:41:20 +0000 (UTC)
+Date: Thu, 05 Jan 2017 03:50:21 +0100
+To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: [ANNOUNCE] Snapshot `0.0.20170105` Available
 MIME-Version: 1.0
-Message-ID: <09c1616e3eab781d4db049d230933b20@arabwalk.com>
-From: "FedEx Priority Delivery" <craig.day@arabwalk.com>
-Content-Type: multipart/mixed; boundary="b1_48356f9230369177b01a248547190f0c"
-Reply-To: FedEx Priority Delivery <craig.day@arabwalk.com>
+Content-Type: text/plain; charset=UTF-8
+Message-Id: <79cef0703bec324a@frisell.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -22,82 +26,64 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---b1_48356f9230369177b01a248547190f0c
-Content-Type: text/plain; charset=us-ascii
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Dear Customer,
+Hello,
 
-We can not deliver your parcel arrived at January 04.
+A new snapshot, `0.0.20170105`, has been tagged in the git repository.
 
-You can download the shipment label attached!
+Please note that this snapshot is, like the rest of the project at this point
+in time, experimental, and does not consitute a real release that would be
+considered secure and bug-free. WireGuard is generally thought to be fairly
+stable, and most likely will not crash your computer (though it may).
+However, as this is a pre-release snapshot, it comes with no guarantees, and
+its security is not yet to be depended on; it is not applicable for CVEs.
 
-Kind thanks,
-Craig Day,
-Parcels Operation Manager.
+With all that said, if you'd like to test this snapshot out, there are a
+few relevent changes.
 
+== Changes ==
 
---b1_48356f9230369177b01a248547190f0c
-Content-Type: application/zip; name="Undelivered-Parcel-ID-0000908565.zip"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename=Undelivered-Parcel-ID-0000908565.zip
+  * tools: add bash completion for wg(8)
+  * tools: add wg-quick
+  * tools: add makefile instructions
+  * tools: add systemd unit and auto-detection
+  
+  This is an all-tools release. The new wg-quick tool
+  could use some testing and exposure, so we're posting
+  this snapshot a bit early to solicit feedback.
 
-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
+As always, the source is available at https://git.zx2c4.com/WireGuard/ and
+information about the project is available at https://www.wireguard.io/ .
+
+This snapshot is available in tarball form here:
+  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-0.0.20170105.tar.xz
+  SHA2-256: 1bd990eeae6fbf599ccddde81caa92770f58623ad9705f875bcfab8254583896
+  BLAKE2b-256: f379135a162e37e1b76a6510396ae9ceeae1f9f6d7b1b1cc198942447b7f5382
+
+If you're a snapshot package maintainer, please bump your package version. If
+you're a user, the WireGuard team welcomes any and all feedback on this latest
+snapshot.
+
+Thank you,
+Jason Donenfeld
 
 
---b1_48356f9230369177b01a248547190f0c--
+-----BEGIN PGP SIGNATURE-----
+
+iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAlhttEwQHGphc29uQHp4
+MmM0LmNvbQAKCRBJ/HASpd4Drg7iEACrwA/2KuVUi5dxzkrq6Lss1GkNIqpy2ecg
+nXH9A2IhnKv4uuf8oENdmQCEC/1P1kJaWXpV8GitbPAimAYLMfKciqX/Vag9h3XO
+u61pPO+BrqHFjEiZTe8RAA4GAW1Szd8L2JcpCtXqjuau+KcbQKiPXwJaYMX7NH3R
+GqQep+S5fzI4yAVJgf8Lfj0/1CfXtZ7Wgf2hMGagnPN6ihSBWyZCbQHDiSECDoKG
+cSMZRAsEl62c7w+C0qFZYRgTwfIynw3KaiZPyF6dnZ9FtyU9xTBHN5hOjOtVEaDA
+C0NpedM2CvvVx0/tZrNm+ktdBwPbgTM55bPV1gimggmWCrHsb1+EJ63KaHZHhAGn
+dQPkJaqiZ6QB5M/zbUoLS5LyJ6pBSEsdOXZFIXdJ4u2aLFDT4z4vwncUAqWbivdY
+Q9+Xs2aY5YgSD1c/bvifUKWvA/bDd6RLtT3XeV1zlkvV1BCk0gpXwzM0SF86Ce9z
+cA6ov4V6rBKrKt7alQ5yY0Atrb9STkRbldHmUs/iUBFCgV7y1mSqfKBUxdI/0hgO
+4W8NjYR7r13whkk/d19ErrzPZQIq9M8PH149+MlPHJd1E/vL+h0la3g2M+Tj43P7
+Zw2nq7wdUd/heOMJZf7a5TWa6BhfKNqMVYb5JfGqutisJO/ct3zvwhKBJWLgmKxe
+Ig1Ie8kkGg==
+=35v5
+-----END PGP SIGNATURE-----
