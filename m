@@ -1,31 +1,22 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: mailing-porcus@porcus.ch
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 40545e2d
- for <wireguard@lists.zx2c4.com>; Thu, 5 Jan 2017 20:23:56 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4c133813
- for <wireguard@lists.zx2c4.com>; Thu, 5 Jan 2017 20:23:56 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4910ae9a
- for <wireguard@lists.zx2c4.com>; Thu, 5 Jan 2017 20:23:56 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 35e81c17
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>; Thu, 5 Jan 2017 20:23:56 +0000 (UTC)
-Received: by mail-oi0-f49.google.com with SMTP id b126so594072417oia.2
- for <wireguard@lists.zx2c4.com>; Thu, 05 Jan 2017 12:33:04 -0800 (PST)
-MIME-Version: 1.0
-In-Reply-To: <CANA3KFWZP9XmCyWNnb19ywGRa8q57OUNt=42G1yjqkvLYc1kPw@mail.gmail.com>
-References: <CANA3KFU0THGCkVhCsEC4CMfoj394XetYZ_TebyFGTwYiDZ9cBg@mail.gmail.com>
- <CAHmME9qS7ptMcCuvxcobi12hgfYdd4yYcOW5+D_uL6uOGq2f2A@mail.gmail.com>
- <CANA3KFWZP9XmCyWNnb19ywGRa8q57OUNt=42G1yjqkvLYc1kPw@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 5 Jan 2017 21:33:03 +0100
-Message-ID: <CAHmME9qG4KnuFOCVi6w8fUJ9DVDL9_XjZnWxWPQGQaaPz6UTQw@mail.gmail.com>
-Subject: Re: Built-in Roaming is limited due to a design fault adding STUN and
- TURN support would be good and make wire-guard connections more
- durable.
-To: Peter Dolding <oiaohm@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id aab2fc84
+ for <wireguard@lists.zx2c4.com>; Thu, 5 Jan 2017 22:40:02 +0000 (UTC)
+Received: from mel.porcus.ch (mel.porcus.ch [46.20.250.35])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a4e6805a
+ for <wireguard@lists.zx2c4.com>; Thu, 5 Jan 2017 22:40:02 +0000 (UTC)
+Received: from [172.16.4.13] (85-195-240-19.fiber7.init7.net [85.195.240.19])
+ by mel.porcus.ch (Postfix) with ESMTPSA id 476D61A2AAF
+ for <wireguard@lists.zx2c4.com>; Thu,  5 Jan 2017 23:56:17 +0100 (CET)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: Maximum number of interfaces + Debug 
+From: Will van Gulik <mailing-porcus@porcus.ch>
+In-Reply-To: <698F0489-3376-4D52-A48E-A4C9F344D817@porcus.ch>
+Date: Thu, 5 Jan 2017 23:49:03 +0100
+Message-Id: <9F550D1D-A374-48D6-881E-D626BB250E8F@porcus.ch>
+References: <698F0489-3376-4D52-A48E-A4C9F344D817@porcus.ch>
+To: wireguard@lists.zx2c4.com
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -35,118 +26,43 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Peter,
+Hi Everyone,
 
-On Thu, Jan 5, 2017 at 12:08 PM, Peter Dolding <oiaohm@gmail.com> wrote:
->> 1. Dynamic IPs.
->> 2. Both peers behind NAT.
-> That misses one completely
-> 3. Server and Peers both behind NAT.   Yes there is a usage case for this one.
+I went a bit further and did compile the module with debug rather than =
+using the repo's version, and I get a :
+wireguard: Invalid packet from xxxx:yyy
+in my dmesg. I would have hoped to get something more clear, but would a =
+module version mismatch be an issue or does this mostly looks like a key =
+issue ? I would be strange because I reissued them several times.
 
-WireGuard has no concept of client/server. There are only peers. So,
-when I wrote "both peers behind NAT", I most certainly had in mind
-what you refer to as "server and peer". Please reread my answer in
-light of this new understanding.
+Any clue, ideas, else ?
 
-> Dynamic DNS has it weaknesses.   Transparent DNS caching and DNS
-> access restrictions in some networks mess with the solution you
-> describe.
->
-> https://tools.ietf.org/html/rfc3489
->
-> For Voip STUN was developed for many reasons three key reasons.
-> 1. you can username and password protect a STUN server so restricting
-> the users who can find out about the service.
-> 2 . It does support TLS so encrypted.
-> 3. Information on a STUN server is not replaced to other servers like
-> lots of dynamic DNS are so in case of attack there are limited sources
-> of information.
->
-> Dynamic DNS option really using a hack that was not suitable for voip
-> yet for some reason people think it suitable to use for VPN.   Dynamic
-> DNS is not designed for punching though NAT solutions for the server
-> address like STUN is or designed to limit access to the address
-> information like STUN is.
+Cheers,
 
-So, as I already wrote in my previous email, implement a STUN tool for
-setting up initial WireGuard communications. The example code I linked
-to already provides a framework on how this might be done. Just
-replace my homebaked hooks with whatever STUN library tickles your
-fancy.
+Will
 
-> This example the WireGuard server has a public IP address.   The case
-> I am mentioning Wireguard server may not have a public IP address.
-
-Um, no. Did you even read the example? Both WireGuard peers have
-private IP addresses. Only the NAT-helper server has a public IP
-address. This is the same model as STUN. Spend some time actually
-reading and studying the work already done on this before wasting more
-time with long emails.
-
-> Now STUN will attempt hole punching in the case you don't have a
-> public IP address for the WireGuard server if the NAT in use are
-> cooperative.   Of course if you read STUN rfc they state the case
-> where STUN cannot be used to create a link between server and client
-> both behind NATs as long as the STUN server is in the open.
-
-The example code I linked to presents the same model.
-
-> Jason the issue here to be able to use STUN/TURN combination in all
-> cases I need Wireguard to be able to be directed to use TURN.
-
-Great. I already outlined how this could be done, and I provided
-example code. Plug your STUN or TURN library into that, and you'll be
-all set.
-
-No, I'm not going to write it for you. You got a NAT-punching example
-from me. You can get a STUN/TURN library from somebody else. All
-that's left for you is putting them together.
-
-> Current model is
-> [Client]-[Server]
-> What is needed is
-> [Client]-[Relay]-[Server] with [Client]-[Server] to cover all usage
-> cases.   Of course the relay being something standard and common
-> reduces the number of servers that have to be publicly deployed and
-> maintained.
-
-Yes, I'm aware. And this is exactly what the example code demonstrates
-is possible.
-
-> This is a fault in a lot of VPN designs no relay option because is
-> always presumed that you can get a public IP the clients can access
-> for the server and the location where you can get the public IP
-> address is suitable to house the encryption keys that is not always
-> the case.   With a TURN server relay option packets passing though the
-> TURN relay server will remain encoded at the relay server this does
-> solve the issue where the encryption keys due to privacy acts have to
-> remain inside a particular country or department.    The only part
-> that requires a public address when using a TURN is the TURN relay
-> server.    This is just not reinventing the wheel protocol that is
-> fairly widely deployed being TURN can provide Relay option.    A VPN
-> that can run with TURN relays means servers and peers containing
-> encryption keys don't have to be on the internet exposed IP addresses.
-
-Great, so plug your TURN library into some resembling the example I
-wrote, and you'll be all set.
-
-> Jason I don't code that much I work on deployments.    I have run into
-> issues where I don't have a public IP address to use.   I have used
-> solutions containing libnice  to get me around problems.  Libnice is
-> not my project.
-
-Then integrate libnice into my example code, and you'll have what you want.
-
-> Please do note needing TURN/Relay comes important even when attempt to
-> link up clients by IRC, Xmmp or other resolve methods where it may
-> turn out that both ends are sitting behind NAT where direct
-> connectivity is impossible.
-
-Yes, I'm aware. Again, see example code. Replace the homebrewed
-structures with a STUN/TURN library.
-
-Please do not write again until you've read the example code and taken
-the time to understand what it does.
-
-Regards,
-Jason
+> On 03 Jan 2017, at 09:52, Will van Gulik <mailing-porcus@porcus.ch> =
+wrote:
+>=20
+> Hi,
+>=20
+> I'm trying to use multiple wireguard tunnel in one VM at the same =
+time, but it seems that only the first two I configured are working. I'm =
+currently trying with 5 interfaces, I see the incoming packet in tcpdump =
+but no reaction of the destination host with all the wg interfaces.
+>=20
+> I'm not sure there is a limitation on that, I could totally have =
+missed that. Should I use 1 interface with multiple peers rather than =
+multiple interface ?
+>=20
+> I'm testing that on a Debian with 4.8.7-1, running on a KVM host.
+>=20
+> Any insight ?
+>=20
+> Kind regards,
+>=20
+> Will
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
