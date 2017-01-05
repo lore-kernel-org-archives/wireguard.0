@@ -1,19 +1,21 @@
-Return-Path: pavel@xn--54-mlcm2am0b.xn--p1ai
+Return-Path: mail@danrl.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5f1c42b1
- for <wireguard@lists.zx2c4.com>; Fri, 6 Jan 2017 15:58:47 +0000 (UTC)
-Received: from the-rocket.ru (node-62-213-75-4.it-virtualization.ru
- [62.213.75.4])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e96a045c
- for <wireguard@lists.zx2c4.com>; Fri, 6 Jan 2017 15:58:46 +0000 (UTC)
-To: wireguard@lists.zx2c4.com
-Subject: Parcel #5957612 shipment problem, please review
-Date: Tue, 3 Jan 2017 05:34:24 +0300
-MIME-Version: 1.0
-Message-ID: <babf5f1e52d326da5702b02ff9c3bcae@xn--54-mlcm2am0b.xn--p1ai>
-From: "USPS Priority Parcels" <kyle.jenkins@xn--54-mlcm2am0b.xn--p1ai>
-Content-Type: multipart/mixed; boundary="b1_a609694d2ffbe87d7e1559fe85c8873a"
-Reply-To: USPS Priority Parcels <kyle.jenkins@xn--54-mlcm2am0b.xn--p1ai>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 69679967
+ for <wireguard@lists.zx2c4.com>; Fri, 6 Jan 2017 22:34:56 +0000 (UTC)
+Received: from mx.cakelie.net (mx.cakelie.net [45.76.39.236])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 230c60b7
+ for <wireguard@lists.zx2c4.com>; Fri, 6 Jan 2017 22:34:56 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 10.2 \(3259\))
+Subject: Re: distro packaging, makefiles, deps, systemd, new tools
+From: =?utf-8?Q?Dan_L=C3=BCdtke?= <mail@danrl.com>
+In-Reply-To: <CAHmME9qEs=oHr=r=dfAeiL=QGXxOeNmuFUkrnbv7L4MBbHb+tw@mail.gmail.com>
+Date: Thu, 5 Jan 2017 15:02:13 +0100
+Message-Id: <9FF22623-C2E8-4342-BEFC-C8B2C44FEF25@danrl.com>
+References: <CAHmME9qEs=oHr=r=dfAeiL=QGXxOeNmuFUkrnbv7L4MBbHb+tw@mail.gmail.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: Christian Hesse <mail@eworm.de>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -23,101 +25,13 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---b1_a609694d2ffbe87d7e1559fe85c8873a
-Content-Type: text/plain; charset=us-ascii
 
-Dear Customer,
+> On 4 Jan 2017, at 19:50, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+>=20
+> OpenWRT should _not_ ship this. =08=0D
 
-Your item has arrived at January 02, but our courier was not able to deliver the parcel.
+Agreed.
 
-Please check delivery label attached!
+Everything else looks good to me. Just had a brief look at it.
 
-Kind thoughts,
-Kyle Jenkins,
-USPS Operation Manager.
-
-
---b1_a609694d2ffbe87d7e1559fe85c8873a
-Content-Type: application/zip; name="Delivery-Details-5957612.zip"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename=Delivery-Details-5957612.zip
-
-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
-d3NmUEsFBgAAAAACAAIAiAAAAC4QAAAAAA==
-
-
---b1_a609694d2ffbe87d7e1559fe85c8873a--
+Let's see what buildbot says. Should all run smoothly!
