@@ -1,19 +1,19 @@
 Return-Path: jftucker@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9e92b072
- for <wireguard@lists.zx2c4.com>; Sun, 8 Jan 2017 19:28:38 +0000 (UTC)
-Received: from mail-pf0-f195.google.com (mail-pf0-f195.google.com
- [209.85.192.195])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id efd1e12f
- for <wireguard@lists.zx2c4.com>; Sun, 8 Jan 2017 19:28:38 +0000 (UTC)
-Received: by mail-pf0-f195.google.com with SMTP id y143so1975122pfb.1
- for <wireguard@lists.zx2c4.com>; Sun, 08 Jan 2017 11:38:08 -0800 (PST)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 05732681
+ for <wireguard@lists.zx2c4.com>; Sun, 8 Jan 2017 19:43:28 +0000 (UTC)
+Received: from mail-pf0-f194.google.com (mail-pf0-f194.google.com
+ [209.85.192.194])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 95cd77f4
+ for <wireguard@lists.zx2c4.com>; Sun, 8 Jan 2017 19:43:28 +0000 (UTC)
+Received: by mail-pf0-f194.google.com with SMTP id f144so4153831pfa.2
+ for <wireguard@lists.zx2c4.com>; Sun, 08 Jan 2017 11:52:58 -0800 (PST)
 Return-Path: <jftucker@gmail.com>
 From: James Tucker <jftucker@gmail.com>
 To: wireguard@lists.zx2c4.com
 Subject: [PATCH] uapi.h: add missing userspace headers
-Date: Sun,  8 Jan 2017 11:37:42 -0800
-Message-Id: <20170108193742.27679-1-jftucker@gmail.com>
+Date: Sun,  8 Jan 2017 11:52:21 -0800
+Message-Id: <20170108195221.28068-1-jftucker@gmail.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -23,6 +23,7 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
+Signed-off-by: James Tucker <jftucker@gmail.com>
 ---
  src/uapi.h | 2 ++
  1 file changed, 2 insertions(+)
