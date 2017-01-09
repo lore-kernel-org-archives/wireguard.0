@@ -1,21 +1,27 @@
 Return-Path: baptiste@bitsofnetworks.org
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c0957162
- for <wireguard@lists.zx2c4.com>; Mon, 9 Jan 2017 09:37:34 +0000 (UTC)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3583a00d
+ for <wireguard@lists.zx2c4.com>; Mon, 9 Jan 2017 11:26:12 +0000 (UTC)
 Received: from mails.bitsofnetworks.org (rezine.polyno.me [193.33.56.138])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 235234d2
- for <wireguard@lists.zx2c4.com>; Mon, 9 Jan 2017 09:37:33 +0000 (UTC)
-Date: Mon, 9 Jan 2017 10:47:07 +0100
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 294e78f4
+ for <wireguard@lists.zx2c4.com>; Mon, 9 Jan 2017 11:26:11 +0000 (UTC)
+Date: Mon, 9 Jan 2017 12:35:44 +0100
 From: Baptiste Jonglez <baptiste@bitsofnetworks.org>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: Re: [RFC] Handling multiple endpoints for a single peer
-Message-ID: <20170109094706.GA1315@lud.polynome.dn42>
-References: <20170108224117.GB9445@tuxmachine.polynome.dn42>
- <CAHmME9pZLDieAabMhjDQHxpj_TDd5OLjNEUpQrraFvXA0g7gmA@mail.gmail.com>
+Subject: Varying source address and stateful firewalls (Was: Multiple
+ Endpoints)
+Message-ID: <20170109113544.GB4526@lud.polynome.dn42>
+References: <6d000312-635f-a361-200a-936da7ce7e17@web.de>
+ <CAHmME9p4WOB96v6P1E2yGZcpEXdRfG7e=vK1nUwCE953tx1SSA@mail.gmail.com>
+ <89477ad4-b015-d0a1-1c05-ea6600b2f464@web.de>
+ <20170108141216.GB6421@tuxmachine.polynome.dn42>
+ <CAHmME9p0wV=cVME+3vQ5tenWOBc5SQWicKevXOwf2N7O2R225Q@mail.gmail.com>
+ <20170108225732.GC9445@tuxmachine.polynome.dn42>
+ <CAHmME9pSJ3gsAUdNhk_Lt-QzOf6+eS=cay_Chq8YpdcaZJbCsA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="pWyiEgJYm5f9v55/"
-In-Reply-To: <CAHmME9pZLDieAabMhjDQHxpj_TDd5OLjNEUpQrraFvXA0g7gmA@mail.gmail.com>
+ protocol="application/pgp-signature"; boundary="1UWUbFP1cBYEclgG"
+In-Reply-To: <CAHmME9pSJ3gsAUdNhk_Lt-QzOf6+eS=cay_Chq8YpdcaZJbCsA@mail.gmail.com>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -27,95 +33,89 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
 
---pWyiEgJYm5f9v55/
+--1UWUbFP1cBYEclgG
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, Jan 08, 2017 at 11:49:18PM +0100, Jason A. Donenfeld wrote:
-> But if it is in the kernel, the decision logic boils down essentially
-> to: there's a list of endpoints in a given order. Based on differing
-> metrics of success at differing points in time, the list gets
-> reordered, and packets are always sent to the top of the list.
+On Mon, Jan 09, 2017 at 12:00:17AM +0100, Jason A. Donenfeld wrote:
+> > I merely pointed out that a stateful firewall is similar to a symmetric
+> > NAT, that is, both would cause issue with peer roaming.
+>=20
+> Are you sure about this for UDP? I did a bunch of tests several months
+> ago, and was able to punch holes in a variety of stateful firewalls
+> with changing remote IPs.
 
-This is not what I proposed.  Endpoints do not need to be ordered, and you
-do not need to keep statistics about the past.  This path is precarious
-because you will always have to balance between being overly conservative
-(which means you won't react fast enough to new situations) and being
-overly enthusiastic (which means that you will react to the slightest
-insignificant change of your metric, impacting stability).
+I must admit I had never tested :)
 
-What I proposed is based on happy eyeballs, see an excerpt of my first
-mail below:
+I just did, though, and yes, the stateful firewall from Linux does block
+UDP traffic from unrelated source IP addresses.  So I guess your hole
+punching was based on some other property.
 
-On Sun, Jan 08, 2017 at 11:41:17PM +0100, Baptiste Jonglez wrote:
-> ## Select new endpoint during each handshake
->=20
-> This is perhaps the most clean and simple trade-off, and exploits the fact
-> that Wireguard regularly performs a new handshake with a peer:
->=20
-> - during the handshake, select the "best" endpoint
-> - while the symmetric key is in use (a few minutes), keep the same endpoi=
-nt
-> - the roaming functionality can still update the current endpoint between=
- two handshakes
-> - during the next handshake, repeat the procedure, potentially selecting =
-a new endpoint
->=20
-> Selection of the "best" endpoint can be quite simple: send a handshake
-> packets to all endpoints simultaneously, and select the endpoint for which
-> the answer arrives the first.  This would select the endpoint with the
-> lowest RTT at this point in time.  To avoid switching endpoint too often,
-> the current endpoint can be given a slight advantage, similarly to happy
-> eyeballs: first send the handshake packet to the current endpoint, wait
-> e.g. 10 ms, and then send the handshake packet to all other endpoints.
-> This way, we switch to a new endpoint only if that would improve the RTT
-> by 10 ms.
->=20
-> It looks quite simple, but I am sure there would be a lot of
-> implementation difficulties:
->=20
-> - What if the remote peer always performs key exchange just before us?  We
->   would never be able to try other endpoints.
->=20
-> - What should be the behaviour of the peer when it receives several
->   handshake packets?  Should it reply to all of them? (probably, because
->   of asymmetric RTT on Internet paths).  How would the peer select its own
->   endpoint towards us?
->=20
->=20
-> Since Wireguard performs handshakes at relatively short intervals, this
-> method provides some amount of liveliness: if connectivity with the
-> current endpoint breaks (blackhole), it will be detected and corrected
-> within a few minutes.
->=20
-> Of course, there can be optimisations for cases with obvious lack of
-> connectivity.  For instance, if the current endpoint is an IPv6 address
-> and we are moving to a network with no IPv6 connectivity, trying to send
-> an IPv6 packet will result in an immediate error.  In this case, we would
-> immediately initiate a new handshake and use the IPv4 endpoint.
-> Similarly, if sending an encrypted packet elicits an ICMP error in
-> response (host or port unreachable), then we can initiate a new handshake
-> to test other endpoints.
+Here is the setup with 3 computers A, B, C.  There is a stateful firewall
+on A, and A opens a UDP connection towards B.  C then tries to pretend to
+be B and contacts A with the same src/dest port.
 
---pWyiEgJYm5f9v55/
+    A# iptables -F INPUT
+    A# iptables -A INPUT -p udp -m conntrack --ctstate ESTABLISHED -j LOG -=
+-log-prefix=3D"established: "
+    A# iptables -A INPUT -p udp -m conntrack --ctstate RELATED -j LOG --log=
+-prefix=3D"related: "
+    A# iptables -A INPUT -p udp -m conntrack --ctstate RELATED,ESTABLISHED =
+-j ACCEPT
+    A# iptables -A INPUT -p udp -j LOG --log-prefix=3D"drop: "
+    A# iptables -A INPUT -p udp -j DROP
+
+A and B communicate normally:
+
+    B# nc -l -u -p 5001
+    A# nc -u -p 60000 $IP_B 5001
+    A# #type something
+    B# #type something else
+
+At this point, there is an entry in the conntrack table of A:
+
+    A# conntrack -L | grep $IP_B
+    udp      17 22 src=3D$IP_A dst=3D$IP_B sport=3D60000 dport=3D5001 src=
+=3D$IP_B dst=3D$IP_A sport=3D5001 dport=3D60000 mark=3D0 use=3D1
+
+Also, the packet from B to A has been logged by our firewall rules:
+
+    kernel: established: IN=3Dwlan0 OUT=3D SRC=3D$IP_B DST=3D$IP_A LEN=3D33=
+ TOS=3D0x00 PREC=3D0x00 TTL=3D62 ID=3D43432 DF PROTO=3DUDP SPT=3D5001 DPT=
+=3D60000 LEN=3D13
+
+Now C tries to chime in, contacting A and pretending to be B:
+
+    C# nc -u -p 5001 $IP_A 60000
+
+The result:
+
+    kernel: drop: IN=3Dwlan0 OUT=3D SRC=3D$IP_C DST=3D$IP_A LEN=3D34 TOS=3D=
+0x00 PREC=3D0x00 TTL=3D64 ID=3D43124 DF PROTO=3DUDP SPT=3D5001 DPT=3D60000 =
+LEN=3D14
+
+So, the packet from C is dropped, even though it has the same source port
+and destination port as the ones from B.
+
+--1UWUbFP1cBYEclgG
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCAAdFiEEjVflzZuxNlVFbt5QvgHsIqBOLkYFAlhzXAsACgkQvgHsIqBO
-LkblJw/+IezLm6NKF9fQcKqQq8PU6ozRfZVLyS4tVFJqo2MsCjHtREkyYVOpDwZ9
-c09l7Lxt5dzg12S6jUpeN8KdXVasyzTdi/xD7XdfizldYMDQdWi6QQiiVW3i2T7v
-hGpbQNB9TEKNx6CFwe9S8+iq+3brn8n9G5P80b5Y6eJDFUiR5Eho+ZnNdy0mJlac
-7jtwi1lCbJSk8lMH1EKKeg6gpf/TizJLzCYzvnI08SoSEj/3MFT+FV1XaI2Gi9M1
-Tpx6j6hwCRG3Yp0SV1eHMHZQ9hnms/qaqpue7iAVu1lO7Y1PHp64e9UpXTuQ1M7q
-d3avrnb/p/GENdXhxhvQ11KQj4OaZ7Hy9d2czKBxppWwb+1NgGK16uzOPCGrIxrE
-KiLR39REHaanLO98lOjJp/WsXHDBtFqTxt5llwxkaj+5p8P8SJIJnzd7FPX/rDfk
-Eylinbbn5VjJUYBaiP64/FTVwQO7VSXB7J6gO2l2iBjRe6i5FOw93hqxoUsY1WkY
-4XnCCWblBuTPE50X1ZaCIFzClE5mGpi9nMSs9wtwWJBqSkljwB2YZoVAPLEA5pdz
-1kKmwqoy+P0E9RbLOIJkbpqhXwRrXfS6RKqXMzwW4TFs1bFcJEArfMoKt6RIQJpn
-vnm4LAQEnts4h8jxLNswWXA9jxgnSsm19fIO1ipM87F/qLmNOvA=
-=xpKb
+iQIzBAEBCAAdFiEEjVflzZuxNlVFbt5QvgHsIqBOLkYFAlhzdYcACgkQvgHsIqBO
+Lkbh2xAAu+T2s0pldMiuZLizBWYp6ttFCU+d8XG3rrvg9DFxo/7NjZRZNbsc9Zuc
+TOAUv531RSiDzby0qHKTN+sgO8X68DOu/6P49T4gvsfM/QbGbqiHHO0B6Fa5lXF/
+hTnp0YUfQHAs3NvuA2FpC5rVoflNAI9zYInf42pzFTV0/Go07Jz9n2ku9MGn3O5q
++lkqz6cKEZCC924af4EZLElnjgOTMq0GvwZChljbF2WEmcvkdkFdPMi2PeD+FsBd
+e0kRf6aNhmaZBDhsQUDEUv73yHiqT6AjL663gYm8o/+lYKrl7qW4x4AU/LLloJ8L
+d2IwMYnYVOr0NDw4etGfZf0m5ZLYSE5W/5V8No6WaRGfYkkQm4lS4kA/EhuHBXp9
+eLyz8VMI2E1CLv/B9JnZOqK5LWhkNc/vhQyJpTZR45VMNlCHJhh0a1mmEW+HhMcD
+6kfbiNinDwim2L6Rd7DLGbl0IJg0g48qbyh/JoHzyePiNBZUHsiWIEEokHeFJ/fH
+dXxMF6Gvyf4g2u78g1Agb9+wRCYyPevGLMbg2uMDDu5W6qPEz4TY7LECaGQQzFmI
+BHZm5BMonaxpK1PzUSR/qGU4EtCKY8mC8WIeA6pU0+K13yZAfTE2inbBtpPM4MtX
+/0GtYpEJTa7q0KNXnMCRp+EzsxyKNKQSCvhqywVfi4l6EMQLvOM=
+=vqXS
 -----END PGP SIGNATURE-----
 
---pWyiEgJYm5f9v55/--
+--1UWUbFP1cBYEclgG--
