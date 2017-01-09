@@ -1,22 +1,23 @@
-Return-Path: samuel@sholland.org
+Return-Path: dave.taht@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e32af7ce
- for <wireguard@lists.zx2c4.com>; Mon, 9 Jan 2017 02:28:24 +0000 (UTC)
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
- [66.111.4.25])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8bbab6d6
- for <wireguard@lists.zx2c4.com>; Mon, 9 Jan 2017 02:28:24 +0000 (UTC)
-Subject: Re: [RFC] Handling multiple endpoints for a single peer
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
- Baptiste Jonglez <baptiste@bitsofnetworks.org>
-References: <20170108224117.GB9445@tuxmachine.polynome.dn42>
- <CAHmME9pZLDieAabMhjDQHxpj_TDd5OLjNEUpQrraFvXA0g7gmA@mail.gmail.com>
-From: Samuel Holland <samuel@sholland.org>
-Message-ID: <9129c738-3c36-ebf7-5ce0-c8efbc570835@sholland.org>
-Date: Sun, 8 Jan 2017 20:37:55 -0600
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f1a928b5
+ for <wireguard@lists.zx2c4.com>; Mon, 9 Jan 2017 06:51:22 +0000 (UTC)
+Received: from mail-qk0-f170.google.com (mail-qk0-f170.google.com
+ [209.85.220.170])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2b6808ac
+ for <wireguard@lists.zx2c4.com>; Mon, 9 Jan 2017 06:51:22 +0000 (UTC)
+Received: by mail-qk0-f170.google.com with SMTP id u25so516122801qki.2
+ for <wireguard@lists.zx2c4.com>; Sun, 08 Jan 2017 23:00:56 -0800 (PST)
 MIME-Version: 1.0
 In-Reply-To: <CAHmME9pZLDieAabMhjDQHxpj_TDd5OLjNEUpQrraFvXA0g7gmA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+References: <20170108224117.GB9445@tuxmachine.polynome.dn42>
+ <CAHmME9pZLDieAabMhjDQHxpj_TDd5OLjNEUpQrraFvXA0g7gmA@mail.gmail.com>
+From: Dave Taht <dave.taht@gmail.com>
+Date: Sun, 8 Jan 2017 23:00:55 -0800
+Message-ID: <CAA93jw7X7ha87T-VH4FRkB7wM3gw4d4JgPuZLF1yjFm0iSpP+w@mail.gmail.com>
+Subject: Re: [RFC] Handling multiple endpoints for a single peer
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Content-Type: text/plain; charset=UTF-8
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -27,61 +28,49 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hello,
+As I mentioned on an earlier thread, a daydream of mine is to use up extra
+ipv6 /64s to improve "fair queued" latency and eliminate head of line
+blocking for individual flows.
 
-On 01/08/17 16:49, Jason A. Donenfeld wrote:
+So being able to dedicate an entire /64 as an endpoint
+
+Endpoint=3Dmyserver.tld/64:4242
+
+would lead to a major advance over conventional vpn technologies.
+
+
+
+On Sun, Jan 8, 2017 at 2:49 PM, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+> Thanks for the proposal. Obviously the easiest solution is a userspace
+> decoupled one, but this might not necessarily be the most desirable.
+> However, it's possible the upcoming userspace event notification fd
+> support (epoll on an fd to learn when handshakes happen) and userspace
+> peer-message support (send an encrypted out of band non-IP packet
+> directly to a peer, for things like autoconfig) could play a nice role
+> in this.
+>
+> But if it is in the kernel, the decision logic boils down essentially
+> to: there's a list of endpoints in a given order. Based on differing
+> metrics of success at differing points in time, the list gets
+> reordered, and packets are always sent to the top of the list. For
+> example, the list could be rotated or permutated on every handshake
+> retry. Or the various other RTT or routing metrics you mentioned
+> earlier.
+>
 > However, this doesn't shine any light on the hardest problem: how to
 > update the list of addresses in a memory-bounded fashion. Right now,
 > if you receive an encrypted packet, the endpoint of that peer is
-> updated to the src address of that packet. With multi-endpoint,
-> which endpoint is updated? Is it simply appended to an ever-growing
-> list of recent endpoints? How to keep this clean and manageable?
-
-I think there should be a distinction between endpoint addresses
-provided in explicit configuration and those discovered through roaming.
-Presumably, users put those addresses in the configuration file because
-they expect them to be relatively stable. So I think those endpoints
-should always be remembered.
-
-As for addresses learned from roaming, a simple solution is some form of
-aging. If the endpoint is changing because the machine is physically
-moving (e.g. to a different wireless network), it's not likely that
-previous address:port combinations will work again in the future, except
-for a few common locations (home, work). So there's not much reason to
-remember more than the last few. On the other hand, consider a
-fixed-location user whose IP only changes when the router reboots every
-few months. In that case, there's no chance of even the last one or two
-endpoints being reused. So a time-based aging seems more appropriate.
-Assuming (for illustration) you pick an endpoint every handshake, then
-"this endpoint hasn't been chosen in the last 50 handshakes" means it's
-okay to forget about.
-
-So: 1) always keep manually added endpoints, and 2) only keep a few
-roaming endpoints, and drop them when they are unused for a while.
+> updated to the src address of that packet. With multi-endpoint, which
+> endpoint is updated? Is it simply appended to an ever-growing list of
+> recent endpoints? How to keep this clean and manageable?
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
 
 
-As a separate point, I have a use case that I haven't seen discussed
-yet. I have a WireGuard peer at Site A with a public IP. I have two
-peers, a desktop and a laptop, at Site B, both behind NAT. Both of them
-are configured with the machine at Site A as their only peer. Often I
-take the laptop offsite, and then traffic between the desktop and laptop
-goes through Site A. Good. However, when I have them on the same local
-network, I'd like them to communicate directly (avoiding the round trip
-to Site A).
 
-The problem is that, if I add the desktop and laptop as peers to each
-other, they stop sending traffic through Site A at all. Thus, when they
-are _not_ on the same network (so behind two different NATs, as opposed
-to no NAT) they cannot communicate at all.
-
-It would be nice to get the desktop and laptop able to directly
-communicate (which is what we're discussing mostly in this thread), but,
-as a fallback, it would be nice to be able to say "if you can't
-handshake with the peer for this internal IP, send their traffic through
-the peer with the next larger enclosing subnet of allowed IPs. Then the
-peer with the public IP and the allowed IPs of 0.0.0.0/0 could act as a
-hub for peers behind stricter NATs.
-
-
-Thanks,
-Samuel
+--=20
+Dave T=C3=A4ht
+Let's go make home routers and wifi faster! With better software!
+http://blog.cerowrt.org
