@@ -1,23 +1,21 @@
-Return-Path: em12345@web.de
+Return-Path: jftucker@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 668bfcd3
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1155b417
  for <wireguard@lists.zx2c4.com>;
- Tue, 10 Jan 2017 00:23:52 +0000 (UTC)
-Received: from mout.web.de (mout.web.de [212.227.15.3])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 37e36bd7
+ Tue, 10 Jan 2017 03:37:59 +0000 (UTC)
+Received: from mail-pf0-f195.google.com (mail-pf0-f195.google.com
+ [209.85.192.195])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 57929cf7
  for <wireguard@lists.zx2c4.com>;
- Tue, 10 Jan 2017 00:23:52 +0000 (UTC)
-Received: from [192.168.244.69] ([84.168.73.228]) by smtp.web.de (mrweb003
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LeLWP-1coEdD3nXJ-00q9Wi for
- <wireguard@lists.zx2c4.com>; Tue, 10 Jan 2017 01:33:30 +0100
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-From: em12345 <em12345@web.de>
-Subject: Re: Varying source address and stateful firewalls (Was: Multiple
- Endpoints)
-Message-ID: <33fed77c-4367-2411-0666-5c75148d1608@web.de>
-Date: Tue, 10 Jan 2017 01:33:29 +0100
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+ Tue, 10 Jan 2017 03:37:59 +0000 (UTC)
+Received: by mail-pf0-f195.google.com with SMTP id y143so5535603pfb.1
+ for <wireguard@lists.zx2c4.com>; Mon, 09 Jan 2017 19:47:39 -0800 (PST)
+Return-Path: <jftucker@gmail.com>
+From: James Tucker <jftucker@gmail.com>
+To: wireguard@lists.zx2c4.com
+Subject: [PATCH] uapi: add bit-field padding for field alignment
+Date: Mon,  9 Jan 2017 19:47:29 -0800
+Message-Id: <20170110034729.40733-1-jftucker@gmail.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -27,38 +25,42 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Baptiste,
+The C language does not specify the layout behavior of bit-fields. As a
+consequence, compilers are free to do interesting things with these
+fields, including reorder, split, pick size, etc. In this case, it was
+observed that on x64, gcc and clang were using only two bytes between
+tx_bytes and num_ipmasks in wgpeer, causing interoperability issues.
 
-after seeing
+While non-native clients (i.e. wireguard-go) could be fixed, the problem
+will keep on giving, as the layouts can be changed by compiler flags and
+architectures, which will make portability for all non-C implementations
+extremely difficult. Compilers also do not document their behavior well
+in this regard.
 
-    https://wiki.asterisk.org/wiki/display/TOP/NAT+Traversal+Testing
+Signed-off-by: James Tucker <jftucker@gmail.com>
+---
+ src/uapi.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-I realized that the connection tracking with its state calculation and
-the SNAT port mapping are two different things which don't have to
-follow the same rules related to src/dst IP and ports.
-
-This could be an explanation why Jason tested the NATed whole punching
-successful with different src IPs, while your example failed.
-
-The iptables connection tracking really does include src and dst IP
-according to:
-
-     http://www.iptables.info/en/connection-state.html
-
-So iptables ESTABLISHED filter rules require the src,dst and both ports.
-
-But may be the iptables NAT port mapping does not require this. The
-iptables man page is vague on MASQUERADE and SNAT target.
-
-
-Anyway, only packets with an existing port mapping (however this is
-determined) will make it into the FORWARD chain from WAN to LAN interface.
-Therefore it would not really be necessary to check for ESTABLISHED in
-the FORWARD chain for those WAN-to-LAN packets. Assuming that there are
-really showing up such NEW packets.
-
-However in your example which is only using the INPUT chain, one of
-course has to filter out the NEW packets here.
-
-
-Emmanuel
+diff --git a/src/uapi.h b/src/uapi.h
+index cd4b86b..bf38f48 100644
+--- a/src/uapi.h
++++ b/src/uapi.h
+@@ -107,6 +107,7 @@ struct wgpeer {
+ 
+ 	__u32 remove_me : 1; /* Set */
+ 	__u32 replace_ipmasks : 1; /* Set */
++	__u32 : 32-2; /* pad to force portable field size */
+ 
+ 	__u16 num_ipmasks; /* Get/Set */
+ 	__u16 persistent_keepalive_interval; /* Get/Set -- 0 = off, 0xffff = unset */
+@@ -124,6 +125,7 @@ struct wgdevice {
+ 	__u32 replace_peer_list : 1; /* Set */
+ 	__u32 remove_private_key : 1; /* Set */
+ 	__u32 remove_preshared_key : 1; /* Set */
++	__u32 : 32-3; /* pad to force portable field size */
+ 
+ 	union {
+ 		__u16 num_peers; /* Get/Set */
+-- 
+2.11.0
