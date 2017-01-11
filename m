@@ -1,26 +1,24 @@
-Return-Path: jftucker@gmail.com
+Return-Path: baptiste@bitsofnetworks.org
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1f4c3937
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7467e523
  for <wireguard@lists.zx2c4.com>;
- Tue, 10 Jan 2017 04:24:02 +0000 (UTC)
-Received: from mail-io0-f175.google.com (mail-io0-f175.google.com
- [209.85.223.175])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 98404288
+ Wed, 11 Jan 2017 09:48:50 +0000 (UTC)
+Received: from mails.bitsofnetworks.org (rezine.polyno.me [193.33.56.138])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a77a030e
  for <wireguard@lists.zx2c4.com>;
- Tue, 10 Jan 2017 04:24:02 +0000 (UTC)
-Received: by mail-io0-f175.google.com with SMTP id f103so98740696ioi.1
- for <wireguard@lists.zx2c4.com>; Mon, 09 Jan 2017 20:33:43 -0800 (PST)
+ Wed, 11 Jan 2017 09:48:50 +0000 (UTC)
+Date: Wed, 11 Jan 2017 10:58:37 +0100
+From: Baptiste Jonglez <baptiste@bitsofnetworks.org>
+To: Will van Gulik <mailing-porcus@porcus.ch>
+Subject: Re: Maximum number of interfaces + Debug
+Message-ID: <20170111095837.GB11399@tuxmachine.polynome.dn42>
+References: <698F0489-3376-4D52-A48E-A4C9F344D817@porcus.ch>
+ <9F550D1D-A374-48D6-881E-D626BB250E8F@porcus.ch>
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9or-Xd+w8Hu2+7yC8bFY2fcvrsU_EKAOj6ftPJP-nf3kQ@mail.gmail.com>
-References: <20170110034729.40733-1-jftucker@gmail.com>
- <CAHmME9or-Xd+w8Hu2+7yC8bFY2fcvrsU_EKAOj6ftPJP-nf3kQ@mail.gmail.com>
-From: James Tucker <jftucker@gmail.com>
-Date: Mon, 9 Jan 2017 20:33:42 -0800
-Message-ID: <CABGa_T_RnVtNukW=3z_wJ3Uf2nri1SFddoPpDkEve0bu3vhEbQ@mail.gmail.com>
-Subject: Re: [PATCH] uapi: add bit-field padding for field alignment
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Content-Type: multipart/alternative; boundary=001a113f99ac3b5c1e0545b5fd4f
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="NDin8bjvE/0mNLFQ"
+In-Reply-To: <9F550D1D-A374-48D6-881E-D626BB250E8F@porcus.ch>
+Cc: wireguard@lists.zx2c4.com
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -30,36 +28,82 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---001a113f99ac3b5c1e0545b5fd4f
-Content-Type: text/plain; charset=UTF-8
 
-Thanks Jason!
-
-On Mon, Jan 9, 2017 at 8:22 PM, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
-
-> I think I'm going to roll with a flags fix instead, like this:
-> https://git.zx2c4.com/WireGuard/commit/?id=45bd499f15debb0e2443b15f7ff1d0
-> ef93950acc
->
-> This should eliminate all portability issues.
->
-
---001a113f99ac3b5c1e0545b5fd4f
-Content-Type: text/html; charset=UTF-8
+--NDin8bjvE/0mNLFQ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">Thanks Jason!<div class=3D"gmail_extra"><br><div class=3D"=
-gmail_quote">On Mon, Jan 9, 2017 at 8:22 PM, Jason A. Donenfeld <span dir=
-=3D"ltr">&lt;<a href=3D"mailto:Jason@zx2c4.com" target=3D"_blank">Jason@zx2=
-c4.com</a>&gt;</span> wrote:<br><blockquote class=3D"gmail_quote" style=3D"=
-margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">I think I&#3=
-9;m going to roll with a flags fix instead, like this:<br>
-<a href=3D"https://git.zx2c4.com/WireGuard/commit/?id=3D45bd499f15debb0e244=
-3b15f7ff1d0ef93950acc" rel=3D"noreferrer" target=3D"_blank">https://git.zx2=
-c4.com/<wbr>WireGuard/commit/?id=3D<wbr>45bd499f15debb0e2443b15f7ff1d0<wbr>=
-ef93950acc</a><br>
-<br>
-This should eliminate all portability issues.<br>
-</blockquote></div><br></div></div>
+Hi Will,
 
---001a113f99ac3b5c1e0545b5fd4f--
+On Thu, Jan 05, 2017 at 11:49:03PM +0100, Will van Gulik wrote:
+> Hi Everyone,
+>=20
+> I went a bit further and did compile the module with debug rather than us=
+ing the repo's version, and I get a :
+> wireguard: Invalid packet from xxxx:yyy
+> in my dmesg. I would have hoped to get something more clear, but would a =
+module version mismatch be an issue or does this mostly looks like a key is=
+sue ? I would be strange because I reissued them several times.
+
+There have been backwards-incompatible changes recently: can you make sure
+that you use the exact same wireguard version on all peers?
+
+> Any clue, ideas, else ?
+>=20
+> Cheers,
+>=20
+> Will
+>=20
+> > On 03 Jan 2017, at 09:52, Will van Gulik <mailing-porcus@porcus.ch> wro=
+te:
+> >=20
+> > Hi,
+> >=20
+> > I'm trying to use multiple wireguard tunnel in one VM at the same time,=
+ but it seems that only the first two I configured are working. I'm current=
+ly trying with 5 interfaces, I see the incoming packet in tcpdump but no re=
+action of the destination host with all the wg interfaces.
+> >=20
+> > I'm not sure there is a limitation on that, I could totally have missed=
+ that. Should I use 1 interface with multiple peers rather than multiple in=
+terface ?
+> >=20
+> > I'm testing that on a Debian with 4.8.7-1, running on a KVM host.
+> >=20
+> > Any insight ?
+> >=20
+> > Kind regards,
+> >=20
+> > Will
+> > _______________________________________________
+> > WireGuard mailing list
+> > WireGuard@lists.zx2c4.com
+> > https://lists.zx2c4.com/mailman/listinfo/wireguard
+>=20
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--NDin8bjvE/0mNLFQ
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEjVflzZuxNlVFbt5QvgHsIqBOLkYFAlh2AckACgkQvgHsIqBO
+Lkb7sxAAtFv82ShDyr2R/K8V6GOdFciosH24xuEKOMbZFzFsqTKmtIdnh7/YpFEI
+pSoTMG2ZlwUJ2Rz0DyzP6+wiLH+MHjGv11LIN4ge1ORF1EoiPGMWOBNutiu66c6x
++/L06j66cR/m/iaNsCdojov1pGUksH78sH6ncHsJupO4QUK6U9pAxqMYJ6b9Diqq
+BgcZEqjB3Hfc1ECvqeFuSB3uC9pa+o7/3M9/GT/W7C6J7llZsnR6/BXPGTh2LwEq
+iuHvH0wLPJy9UG6qeKseL4QSKo1a6knRDcGFRVPVm4bocLJXOJqTn8yR0ruyJdjt
+e2cLRIVA3ZIKvi8Il3kJiAWORp0r1RaJWo2+4i8SXiw6nNLmYX4faklbI5NsMStY
+7yoACNbsJOLSHEEKikk9B5O7r+voYEPFiIiwuqBVd43ye/h6I6Q6tA+Psuvnsukq
+Lj4M8+8uvYPH84FPbQAkZn2xh5qRWDBzO77gqLKrASFTR49X3woGLrNWEsDs6UHZ
+TlcBbBF8sGxC5ICfyG7DPlojtv7HA5bLp6MiMTVylTCVgWAmvPY1k9qwssnObNHa
+OuBzdqcgq1ReE2MKRa8MzBzKGoHcxzR1AHEILgLeyWBn8s0m4fbzPTuBEResXomv
+x9SClUdfMcXtlOqNRhUW7v1iImCr0zjrLUYY7FGw+YuRheYb7+g=
+=+vJr
+-----END PGP SIGNATURE-----
+
+--NDin8bjvE/0mNLFQ--
