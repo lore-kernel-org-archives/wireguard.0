@@ -1,24 +1,21 @@
-Return-Path: mailing-porcus@porcus.ch
+Return-Path: wasabee18@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a6ef8d72
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 30186357
  for <wireguard@lists.zx2c4.com>;
- Thu, 12 Jan 2017 08:02:00 +0000 (UTC)
-Received: from mel.porcus.ch (mel.porcus.ch [46.20.250.35])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2f44426d
+ Sat, 14 Jan 2017 19:00:56 +0000 (UTC)
+Received: from mail-wm0-f52.google.com (mail-wm0-f52.google.com [74.125.82.52])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9fe3147a
  for <wireguard@lists.zx2c4.com>;
- Thu, 12 Jan 2017 08:02:00 +0000 (UTC)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: Maximum number of interfaces + Debug 
-From: Will van Gulik <mailing-porcus@porcus.ch>
-In-Reply-To: <CAHmME9oPxhY=f129iFHRN9OUrSBkHb_zHgiHeUz+acu0CPAUBA@mail.gmail.com>
-Date: Thu, 12 Jan 2017 09:11:52 +0100
-Message-Id: <4A22C0CE-900C-4EF4-A356-3EDAA472E7D4@porcus.ch>
-References: <698F0489-3376-4D52-A48E-A4C9F344D817@porcus.ch>
- <9F550D1D-A374-48D6-881E-D626BB250E8F@porcus.ch>
- <CAHmME9oPxhY=f129iFHRN9OUrSBkHb_zHgiHeUz+acu0CPAUBA@mail.gmail.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+ Sat, 14 Jan 2017 19:00:56 +0000 (UTC)
+Received: by mail-wm0-f52.google.com with SMTP id r126so107780566wmr.0
+ for <wireguard@lists.zx2c4.com>; Sat, 14 Jan 2017 11:11:12 -0800 (PST)
+MIME-Version: 1.0
+From: Wasa Bee <wasabee18@gmail.com>
+Date: Sat, 14 Jan 2017 19:11:07 +0000
+Message-ID: <CAOnWvx_BCaSO3i=319vCUjKuXG6E+8ReGsFGFFVgJLsdyb4RGg@mail.gmail.com>
+Subject: limitations
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: multipart/alternative; boundary=94eb2c065e60790789054612b68f
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -28,10 +25,44 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-I'll do my tests again with kernel modules and will do pcaps too ;)
+--94eb2c065e60790789054612b68f
+Content-Type: text/plain; charset=UTF-8
 
-Thanks !
+Hi
 
-> On 12 Jan 2017, at 00:59, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
-> 
-> Send pcaps!
+i've got 2 simple questions about WireGuard, correct me if I'm wrong:
+
+- it is only over UDP. If so, is there ever going to be a TCP version? A
+lot of applications that could benefit from WG use TCP. It does not seem
+wise to expect programmers to implement a TCP-like layer (eg
+retransmission, ack, etc) in userspace, is it? This would increase
+complexity unnecessarily and would lead to vuln in practice...
+
+- WG is implemented as a patch to the kernel or a kernel module? The reason
+I ask is that when an update is available for WG, it would be good not to
+have to replace the whole kernel, but only reload a patched WG module.
+Also: if there are ongoing sessions with some clients, how would sessions
+be re-established (afaik, the current design is to simply ignore irrelevant
+messages)?
+
+Thanks
+
+--94eb2c065e60790789054612b68f
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hi<div><br></div><div>i&#39;ve got 2 simple questions abou=
+t WireGuard, correct me if I&#39;m wrong:</div><div><br></div><div>- it is =
+only over UDP. If so, is there ever going to be a TCP version? A lot of app=
+lications that could benefit from WG use TCP. It does not seem wise to expe=
+ct programmers to implement a TCP-like layer (eg retransmission, ack, etc) =
+in userspace, is it? This would increase complexity unnecessarily and would=
+ lead to vuln in practice...</div><div><br></div><div>- WG is implemented a=
+s a patch to the kernel or a kernel module? The reason I ask is that when a=
+n update is available for WG, it would be good not to have to replace the w=
+hole kernel, but only reload a patched WG module. Also: if there are ongoin=
+g sessions with some clients, how would sessions be re-established (afaik, =
+the current design is to simply ignore irrelevant messages)?</div><div><br>=
+</div><div>Thanks</div></div>
+
+--94eb2c065e60790789054612b68f--
