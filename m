@@ -1,39 +1,25 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: wasabee18@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8b6009de
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c319b602
  for <wireguard@lists.zx2c4.com>;
- Sun, 15 Jan 2017 10:44:56 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f40259f4
+ Sun, 15 Jan 2017 11:19:11 +0000 (UTC)
+Received: from mail-wm0-f53.google.com (mail-wm0-f53.google.com [74.125.82.53])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c8a108fd
  for <wireguard@lists.zx2c4.com>;
- Sun, 15 Jan 2017 10:44:56 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2a464b4d
- for <wireguard@lists.zx2c4.com>;
- Sun, 15 Jan 2017 10:44:56 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 2fc96b1b
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Sun, 15 Jan 2017 10:44:56 +0000 (UTC)
-Received: by mail-oi0-f53.google.com with SMTP id u143so86415601oif.3
- for <wireguard@lists.zx2c4.com>; Sun, 15 Jan 2017 02:55:17 -0800 (PST)
+ Sun, 15 Jan 2017 11:19:11 +0000 (UTC)
+Received: by mail-wm0-f53.google.com with SMTP id d140so5429787wmd.0
+ for <wireguard@lists.zx2c4.com>; Sun, 15 Jan 2017 03:29:32 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <F343B5F3-4A99-4F0D-B5BE-DBDC0CDECE09@danrl.com>
-References: <CANA3KFU0THGCkVhCsEC4CMfoj394XetYZ_TebyFGTwYiDZ9cBg@mail.gmail.com>
- <CAHmME9qS7ptMcCuvxcobi12hgfYdd4yYcOW5+D_uL6uOGq2f2A@mail.gmail.com>
- <CANA3KFWZP9XmCyWNnb19ywGRa8q57OUNt=42G1yjqkvLYc1kPw@mail.gmail.com>
- <CAHmME9qG4KnuFOCVi6w8fUJ9DVDL9_XjZnWxWPQGQaaPz6UTQw@mail.gmail.com>
- <CANA3KFUyf6NP9hu5i0rWfaKq7a27NQhWg4z-LE2SnTHTrbKM9g@mail.gmail.com>
- <F343B5F3-4A99-4F0D-B5BE-DBDC0CDECE09@danrl.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sun, 15 Jan 2017 11:55:16 +0100
-Message-ID: <CAHmME9rzi6W0m7_aLx4jTDCW2hFhEtkdWiMOQ6SNenrc8uEVyA@mail.gmail.com>
-Subject: Re: Built-in Roaming is limited due to a design fault adding STUN and
- TURN support would be good and make wire-guard connections more
- durable.
-To: =?UTF-8?Q?Dan_L=C3=BCdtke?= <mail@danrl.com>
-Content-Type: text/plain; charset=UTF-8
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
- Peter Dolding <oiaohm@gmail.com>
+In-Reply-To: <CAHmME9pr9jEdaPuLfperB3qtTbuAL-cB8c8vRHu+09EC+-Q7uw@mail.gmail.com>
+References: <CAOnWvx_BCaSO3i=319vCUjKuXG6E+8ReGsFGFFVgJLsdyb4RGg@mail.gmail.com>
+ <CAHmME9pr9jEdaPuLfperB3qtTbuAL-cB8c8vRHu+09EC+-Q7uw@mail.gmail.com>
+From: Wasa Bee <wasabee18@gmail.com>
+Date: Sun, 15 Jan 2017 11:29:31 +0000
+Message-ID: <CAOnWvx_MFs5LS0q3ZSv-cV9Y-JoCPrSHn3zazjhKrBiY40_zaA@mail.gmail.com>
+Subject: Re: limitations
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Content-Type: multipart/alternative; boundary=001a1147d75a7a37610546206126
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -43,41 +29,50 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Sun, Jan 15, 2017 at 9:39 AM, Dan L=C3=BCdtke <mail@danrl.com> wrote:
-> Although I see the problem and ran into it myself, I would like to see a =
-solution outside the
-> wireguard code. Like the one Jason proposed or even a new approach. I am =
-afraid that
-> network layers problems (legacy IP and especially NAT) are about to uglif=
-y yet another
-> beautiful protocol.
+--001a1147d75a7a37610546206126
+Content-Type: text/plain; charset=UTF-8
 
-Yea -- worry not. I'm not going to add big cludges into core
-WireGuard. I would like to provide some useful facilities for people
-to do interesting composable solutions to disgusting networking
-problems. But I think this solution space is more in the realm of
-"API" than "protocol".
+thanks for the answers, it all makes sense now :)
 
-I could also imagine people making "wireguard UDP proxy daemons" --
-little programs that listen on 127.0.0.1:xxxxx and then forward
-packets to some dynamically learned MySQL-connected ASN1-parsed IP
-while doing things like "if multiple packets that start with a 0x1 and
-are 148 bytes long are sent in a row, the server has probably changed
-IPs and we should get STUNed again".
+On Sat, Jan 14, 2017 at 8:58 PM, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
 
-Or, maybe this kind of proxy is objectionable and people would prefer
-to use netlink notification for connectivity events instead.
+> On Sat, Jan 14, 2017 at 8:11 PM, Wasa Bee <wasabee18@gmail.com> wrote:
+> > Also:
+> > if there are ongoing sessions with some clients, how would sessions be
+> > re-established (afaik, the current design is to simply ignore irrelevant
+> > messages)?
+>
+> Sorry, missed this last question before.
+>
+> The session will be dropped when you unload the module, but a peer
+> will quickly figure out that something is amiss and reinitiate the
+> session. Downtime is fairly minimal.
+>
 
-Either way, there's plenty of room for building terrible things _on
-top of_, rather than inside of, wireguard.
+--001a1147d75a7a37610546206126
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> My concerns expressed and all that said, I would love to see some code or=
- PoC. Code and pcaps are king :)
+<div dir=3D"ltr">thanks for the answers, it all makes sense now :)</div><di=
+v class=3D"gmail_extra"><br><div class=3D"gmail_quote">On Sat, Jan 14, 2017=
+ at 8:58 PM, Jason A. Donenfeld <span dir=3D"ltr">&lt;<a href=3D"mailto:Jas=
+on@zx2c4.com" target=3D"_blank">Jason@zx2c4.com</a>&gt;</span> wrote:<br><b=
+lockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px =
+#ccc solid;padding-left:1ex"><span class=3D"">On Sat, Jan 14, 2017 at 8:11 =
+PM, Wasa Bee &lt;<a href=3D"mailto:wasabee18@gmail.com">wasabee18@gmail.com=
+</a>&gt; wrote:<br>
+</span><span class=3D"">&gt; Also:<br>
+&gt; if there are ongoing sessions with some clients, how would sessions be=
+<br>
+&gt; re-established (afaik, the current design is to simply ignore irreleva=
+nt<br>
+&gt; messages)?<br>
+<br>
+</span>Sorry, missed this last question before.<br>
+<br>
+The session will be dropped when you unload the module, but a peer<br>
+will quickly figure out that something is amiss and reinitiate the<br>
+session. Downtime is fairly minimal.<br>
+</blockquote></div><br></div>
 
-:) As the Reverend Doctor Pastor says, PoC||GTFO.
-
-> Wireguards roaming feature tool care of the sites where even the ipv6 pre=
-fix changes from time to time.
-
-Or when your laptop or cellphone is moving around between IP addresses
-frequently.
+--001a1147d75a7a37610546206126--
