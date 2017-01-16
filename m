@@ -1,34 +1,22 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: mail@danrl.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d3c5902b
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0abf773a
  for <wireguard@lists.zx2c4.com>;
- Mon, 16 Jan 2017 13:24:11 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3affe3e8
+ Mon, 16 Jan 2017 14:51:27 +0000 (UTC)
+Received: from mx.cakelie.net (mx.cakelie.net [45.76.39.236])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 35fa8a1a
  for <wireguard@lists.zx2c4.com>;
- Mon, 16 Jan 2017 13:24:11 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bd3f5926
- for <wireguard@lists.zx2c4.com>;
- Mon, 16 Jan 2017 13:24:11 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id b4df78b2
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Mon, 16 Jan 2017 13:24:10 +0000 (UTC)
-Received: by mail-ot0-f171.google.com with SMTP id 73so44477448otj.0
- for <wireguard@lists.zx2c4.com>; Mon, 16 Jan 2017 05:34:40 -0800 (PST)
-MIME-Version: 1.0
-In-Reply-To: <20170116143356.561bf7cb@leda>
-References: <af514aab-0c3a-1a10-17a8-4a538464651f@hamburg.freifunk.net>
- <a24740cf-1d98-8e63-1b20-1424fcb45724@higgsboson.tk>
- <7db96582-c381-9149-8e27-967618a40c92@hamburg.freifunk.net>
- <CAHmME9rS7+kRyWtOwZMtxzmfrk_vqx2+iGFsNTuO8usrpBfOHA@mail.gmail.com>
- <20170116143356.561bf7cb@leda>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 16 Jan 2017 14:34:39 +0100
-Message-ID: <CAHmME9pA7S0ccaQ4GcOCLgUPSEyDrRgbMJwrOogPgd2q_Bz42A@mail.gmail.com>
-Subject: Re: FAQ and quickstart
-To: Christian Hesse <list@eworm.de>
-Content-Type: text/plain; charset=UTF-8
+ Mon, 16 Jan 2017 14:51:27 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 10.2 \(3259\))
+Subject: Re: [RFC] Handling multiple endpoints for a single peer
+From: =?utf-8?Q?Dan_L=C3=BCdtke?= <mail@danrl.com>
+In-Reply-To: <CAHmME9pZLDieAabMhjDQHxpj_TDd5OLjNEUpQrraFvXA0g7gmA@mail.gmail.com>
+Date: Mon, 16 Jan 2017 16:01:55 +0100
+Message-Id: <B39E551B-33E0-45BA-91C1-68E3D438B816@danrl.com>
+References: <20170108224117.GB9445@tuxmachine.polynome.dn42>
+ <CAHmME9pZLDieAabMhjDQHxpj_TDd5OLjNEUpQrraFvXA0g7gmA@mail.gmail.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -39,4 +27,33 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Makes sense!
+Hi,
+
+
+> On 8 Jan 2017, at 23:49, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+>=20
+> (send an encrypted out of band non-IP packet
+> directly to a peer, for things like autoconfig) could play a nice role
+> in this.
+
+
+This is highly interesting! I should undust my gcc probably.
+
+
+> One thing that comes to mind is how to detect when the local LAN peer
+> comes back online there. Should wireguard just be trying to initiate a
+> new handshake _always_, and eventually it will succeed and promote the
+> cryptokey routing table entry to "active"?
+
+Something like RetryTimeout=3DX comes to mind. And immediately raises =
+the question how it is different from PersistentKeepalive? The latter =
+one is misused to achieve exactly this sometimes.
+
+The concrete problem Samuel described is one that could be solved by =
+scoped addressing. This may be too theoretical for the actual scenario =
+and circumstances.
+
+
+Cheers,
+
+Dan=
