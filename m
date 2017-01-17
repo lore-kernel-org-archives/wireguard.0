@@ -1,27 +1,28 @@
 Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 99e45275
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 95541dd8
  for <wireguard@lists.zx2c4.com>;
- Tue, 17 Jan 2017 09:58:35 +0000 (UTC)
+ Tue, 17 Jan 2017 10:00:49 +0000 (UTC)
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2c5a573a
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 33822e88
  for <wireguard@lists.zx2c4.com>;
- Tue, 17 Jan 2017 09:58:35 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id acc37580
+ Tue, 17 Jan 2017 10:00:49 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c3b1555b
  for <wireguard@lists.zx2c4.com>;
- Tue, 17 Jan 2017 09:58:35 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 0a2bcf12
+ Tue, 17 Jan 2017 10:00:49 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id b4da2df7
  (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 17 Jan 2017 09:58:35 +0000 (UTC)
-Received: by mail-ot0-f172.google.com with SMTP id f9so60178628otd.1
- for <wireguard@lists.zx2c4.com>; Tue, 17 Jan 2017 02:09:12 -0800 (PST)
+ Tue, 17 Jan 2017 10:00:49 +0000 (UTC)
+Received: by mail-ot0-f182.google.com with SMTP id 65so60207287otq.2
+ for <wireguard@lists.zx2c4.com>; Tue, 17 Jan 2017 02:11:25 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <03b53159-927e-fa41-8fcd-544e914c7441@hamburg.freifunk.net>
+In-Reply-To: <CAHmME9rxvcmwPN=d+QGAneK7coc36wkmwVbUhcqc6_Zw66Ze9Q@mail.gmail.com>
 References: <03b53159-927e-fa41-8fcd-544e914c7441@hamburg.freifunk.net>
+ <CAHmME9rxvcmwPN=d+QGAneK7coc36wkmwVbUhcqc6_Zw66Ze9Q@mail.gmail.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 17 Jan 2017 11:09:10 +0100
-Message-ID: <CAHmME9rxvcmwPN=d+QGAneK7coc36wkmwVbUhcqc6_Zw66Ze9Q@mail.gmail.com>
+Date: Tue, 17 Jan 2017 11:11:24 +0100
+Message-ID: <CAHmME9pwxcRwh6VdMop_O5PqzLXws=j9A08djNFwOoHKnY+QeA@mail.gmail.com>
 Subject: Re: Similar Problem with ArchARM
 To: lennart <lennart@hamburg.freifunk.net>
 Content-Type: text/plain; charset=UTF-8
@@ -35,7 +36,6 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Can you send the output of:
+Actually, even more reliable, send the output of:
 
-for i in vmlinuz-linux kernel.img Image zImage uImage; do [[ -f
-/boot/$i ]] && pacman -Qo /boot/$i; done
+pacman -Qo /lib/modules/$(uname -r)
