@@ -1,23 +1,23 @@
-Return-Path: mail@danrl.com
+Return-Path: lennart@hamburg.freifunk.net
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0abf773a
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id eecff2cc
  for <wireguard@lists.zx2c4.com>;
- Mon, 16 Jan 2017 14:51:27 +0000 (UTC)
-Received: from mx.cakelie.net (mx.cakelie.net [45.76.39.236])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 35fa8a1a
+ Tue, 17 Jan 2017 09:12:23 +0000 (UTC)
+Received: from srv01.hamburg.freifunk.net (srv01.hamburg.freifunk.net
+ [212.12.51.134])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9c29659a
  for <wireguard@lists.zx2c4.com>;
- Mon, 16 Jan 2017 14:51:27 +0000 (UTC)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 10.2 \(3259\))
-Subject: Re: [RFC] Handling multiple endpoints for a single peer
-From: =?utf-8?Q?Dan_L=C3=BCdtke?= <mail@danrl.com>
-In-Reply-To: <CAHmME9pZLDieAabMhjDQHxpj_TDd5OLjNEUpQrraFvXA0g7gmA@mail.gmail.com>
-Date: Mon, 16 Jan 2017 16:01:55 +0100
-Message-Id: <B39E551B-33E0-45BA-91C1-68E3D438B816@danrl.com>
-References: <20170108224117.GB9445@tuxmachine.polynome.dn42>
- <CAHmME9pZLDieAabMhjDQHxpj_TDd5OLjNEUpQrraFvXA0g7gmA@mail.gmail.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+ Tue, 17 Jan 2017 09:12:23 +0000 (UTC)
+Received: from [10.5.0.2] (no1x.mullvad.net [31.169.51.155])
+ by srv01.hamburg.freifunk.net (Postfix) with ESMTPSA id 557C324C
+ for <wireguard@lists.zx2c4.com>; Tue, 17 Jan 2017 10:23:02 +0100 (CET)
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: lennart <lennart@hamburg.freifunk.net>
+Subject: Similar Problem with ArchARM
+Message-ID: <03b53159-927e-fa41-8fcd-544e914c7441@hamburg.freifunk.net>
+Date: Tue, 17 Jan 2017 10:22:53 +0100
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -27,33 +27,18 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi,
+Hi again,
 
+I'm now trying to get wireguard running on my raspberry pi with archARM
+[0]. I installed wireguard-dkms, wireguard-tools and
+linux-raspberrypi-headers and now get:
 
-> On 8 Jan 2017, at 23:49, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
->=20
-> (send an encrypted out of band non-IP packet
-> directly to a peer, for things like autoconfig) could play a nice role
-> in this.
+alarm@alarmpi ~/wireguard ❯❯❯ sudo modprobe wireguard
+modprobe: FATAL: Module wireguard not found in directory
+/lib/modules/4.1.20-1-ARCH
 
+Any idea what could solve this problem?
 
-This is highly interesting! I should undust my gcc probably.
+[0] https://archlinuxarm.org/
 
-
-> One thing that comes to mind is how to detect when the local LAN peer
-> comes back online there. Should wireguard just be trying to initiate a
-> new handshake _always_, and eventually it will succeed and promote the
-> cryptokey routing table entry to "active"?
-
-Something like RetryTimeout=3DX comes to mind. And immediately raises =
-the question how it is different from PersistentKeepalive? The latter =
-one is misused to achieve exactly this sometimes.
-
-The concrete problem Samuel described is one that could be solved by =
-scoped addressing. This may be too theoretical for the actual scenario =
-and circumstances.
-
-
-Cheers,
-
-Dan=
+Thanks again!
