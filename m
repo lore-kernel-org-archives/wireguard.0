@@ -1,31 +1,22 @@
-Return-Path: mail@danrl.com
+Return-Path: list@eworm.de
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 684206a6
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b3a006ae
  for <wireguard@lists.zx2c4.com>;
- Wed, 18 Jan 2017 11:57:25 +0000 (UTC)
-Received: from mx.cakelie.net (mx.cakelie.net [45.76.39.236])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7bbaf60c
+ Wed, 18 Jan 2017 12:21:48 +0000 (UTC)
+Received: from mx.mylinuxtime.de (mx.mylinuxtime.de [148.251.109.235])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2f93e38a
  for <wireguard@lists.zx2c4.com>;
- Wed, 18 Jan 2017 11:57:25 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (1.0)
-Subject: Re: Built-in Roaming is limited due to a design fault adding STUN and
- TURN support would be good and make wire-guard connections more durable.
-From: =?utf-8?Q?Dan_L=C3=BCdtke?= <mail@danrl.com>
-In-Reply-To: <CANA3KFWy1k7L=-FFegh0_3ujw5fx6JSDS15LTbvaKg=a4_gpqQ@mail.gmail.com>
-Date: Wed, 18 Jan 2017 13:07:56 +0100
-Message-Id: <9157BE7F-FAC4-4826-8493-E29F1C3D75AB@danrl.com>
-References: <CANA3KFU0THGCkVhCsEC4CMfoj394XetYZ_TebyFGTwYiDZ9cBg@mail.gmail.com>
- <CAHmME9qS7ptMcCuvxcobi12hgfYdd4yYcOW5+D_uL6uOGq2f2A@mail.gmail.com>
- <CANA3KFWZP9XmCyWNnb19ywGRa8q57OUNt=42G1yjqkvLYc1kPw@mail.gmail.com>
- <CAHmME9qG4KnuFOCVi6w8fUJ9DVDL9_XjZnWxWPQGQaaPz6UTQw@mail.gmail.com>
- <CANA3KFUyf6NP9hu5i0rWfaKq7a27NQhWg4z-LE2SnTHTrbKM9g@mail.gmail.com>
- <F343B5F3-4A99-4F0D-B5BE-DBDC0CDECE09@danrl.com>
- <CANA3KFWHVtdDTRPqrbOfqJmHU=oh=ZDHitHmjBRO=xv+LnjYJg@mail.gmail.com>
- <1CF3351B-5760-45D6-9D54-4D0A4FC92036@danrl.com>
- <CANA3KFWy1k7L=-FFegh0_3ujw5fx6JSDS15LTbvaKg=a4_gpqQ@mail.gmail.com>
-To: Peter Dolding <oiaohm@gmail.com>
+ Wed, 18 Jan 2017 12:21:48 +0000 (UTC)
+Date: Wed, 18 Jan 2017 13:32:19 +0100
+From: Christian Hesse <list@eworm.de>
+To: lennart <lennart@hamburg.freifunk.net>
+Subject: Re: Similar Problem with ArchARM
+Message-ID: <20170118133219.4e4c4625@leda>
+In-Reply-To: <03b53159-927e-fa41-8fcd-544e914c7441@hamburg.freifunk.net>
+References: <03b53159-927e-fa41-8fcd-544e914c7441@hamburg.freifunk.net>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ boundary="Sig_/eR85GI1R433hAKaqCYfCsvE"; protocol="application/pgp-signature"
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -36,126 +27,56 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-I don't see a bug here. And no patches. And still no code. Only plenty of tl=
-;dr. I think the only thing we can do is to agree to disagree.
+--Sig_/eR85GI1R433hAKaqCYfCsvE
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> On 18 Jan 2017, at 12:21, Peter Dolding <oiaohm@gmail.com> wrote:
+lennart <lennart@hamburg.freifunk.net> on Tue, 2017/01/17 10:22:
+> Hi again,
 >=20
->> On Wed, Jan 18, 2017 at 4:11 PM, Dan L=C3=BCdtke <mail@danrl.com> wrote:
->> Two things I have not seen so far:
->> - government regulations that enforce NAT
->> - ISPs (let alone carriers) "upgrading" their networks to ipv6 nat (i mys=
-elf have run both, isp + carrier networks, and i call BS on your future outl=
-ook regarding nat ipv6)
->> - code from you in this thread
->>=20
-> https://en.wikipedia.org/wiki/Internet_censorship
-> When you start looking into countries that are red in the "World map
-> showing the status of YouTube blocking"  you will find some of those
-> its mandatory to have a NAT between ISP and open internet even for
-> IPv6.  Yes the area of infect users is currently small.  But when you
-> look a countries implementing more regulations we cannot be sure how
-> small this will remain.
+> I'm now trying to get wireguard running on my raspberry pi with archARM
+> [0]. I installed wireguard-dkms, wireguard-tools and
+> linux-raspberrypi-headers and now get:
 >=20
-> I would say your outlook is wishful thinking that is willing to ignore
-> about 10 percent of the users on the internet who don't have well
-> behaved Carriers or Governments.
+> alarm@alarmpi ~/wireguard =E2=9D=AF=E2=9D=AF=E2=9D=AF sudo modprobe wireg=
+uard
+> modprobe: FATAL: Module wireguard not found in directory
+> /lib/modules/4.1.20-1-ARCH
 >=20
-> So Dan you are doing a works for me arguement what is the most invalid
-> arguement to-do in many cases.   Its lets sweep a bug under a carpet
-> and not consider it.
+> Any idea what could solve this problem?
 >=20
-> The problem is the type of NAT used.
-> https://en.wikipedia.org/wiki/Network_address_translation#Symmetric_NAT
->=20
-> Symmetric NAT  this nicely randomises what address users behind it are
-> coming from.    Usage of Symmetric NAT does not have to have anything
-> to-do with reducing the number of IP addresses in usage.   Symmetric
-> NAT can have equal number of users to internet address.
->=20
-> Symmetric NAT is the brick wall from hell to hole punching.    The
-> main objective of a Symmetric NAT is that something in the internet
-> that has not had a packet from something behind the Symmetric NAT
-> blocked by default.   Add in symmetric NAT randomising IP to IP
-> mapping.     So after IPv4 disappears what Symmetric NAT still has a
-> usage in IPv6.
->=20
-> Teredo that is IPv6 over IPv4 fails if both ends are behind Symmetric
-> NAT.    Normal STUN for NAT punching falls over if both ends are
-> behind Symmetric NAT this does not matter if it IPv4 or iPv6.
-> Symmetric NAT randomising ip to ip mapping bring hell.   So you opened
-> up a connection after so much time the Symmetric NAT forgets and you
-> attempt to send another packet to a end and it picks out a new IP
-> address at random to use.
->=20
-> The three types cone style NAT will stay in usage by client routers by
-> different Carriers even after IPv6 is dominate everywhere as it make
-> sense at that point so being able to punch though those at times will
-> still be required.
->=20
-> So the 4 types of common NAT are not going anywhere were they were
-> used for common sense reasons.   The Carrier NAT attempting to push
-> massive numbers of users though limited addresses will hopefully
-> disappear due to IPv6.
->=20
-> Basically Dan is about time you step back look at NAT how it used and
-> where is used and why.    The change to IPv6 is only really getting
-> rid of one form of NAT  being the carrier nat that were non Symmetric
-> NAT based on Symmetric NAT ideas that at times had massive problems
-> like completely running out of ports due to not enough address because
-> attempting to push too many clients out too few of addresses.
->=20
-> If somewhere has a pure Symmetric NAT where the number of external
-> address match the number of internal address for IPv4 for security
-> reasons doing the same thing on IPv6 has the same logical reasons.
-> So logically sane placed Symmetric NAT will remain and when you have
-> to get though them the same problems will remain.
->=20
-> The reality is the 4 common types of NAT can be deployed sanely
-> without massive over-stacking.   Under IPv6 the worse we should see is
-> hopefully only 2 NAT deep.     Possible 3 mode cone NAT in router and
-> Carrier with a Symmetric NAT between you and the internet. as long as
-> what ever is design can get though this worse case all cases will be
-> covered.   .  Why hopefully only 2 nat deep It is possible to have
-> like ADSL router NAT + a WIFI router doing NAT and Carrier doing
-> Symmetric NAT but the wifi NAT level is kinda self inflicted by user
-> on self not forced on user by carrier this is an improvement over the
-> 3 to 4 deep in nat by carrier in some places..
->=20
-> Dan attempting to code when the required interfaces to make it work
-> don't exist and have not been debated does not make much sense.   Also
-> attempting to tell boss time this will need roughly to give something
-> functional also not be guessed when you are in the location that there
-> is a framework problem.
->=20
-> IPv6 is improving something things.   But IPv6 is not a magic bullet
-> to cure all the issues of having at times to get through NAT.
->=20
-> Basically it is BS the that existence of NAT can be ignored because
-> IPv6 fixes everything.   IPv6 pure once fully deployed by all carriers
-> should reduce the number of NAT you have to cross on the internet.
-> The big elephant in the room is that IPv6 is only going to reduce the
-> number of NAT in the internet not remove them all.
->=20
-> So working out how to handle the case that end user has found
-> themselves on the wrong side of deployed NATs applies to IPv4 and IPv6
-> with IPv6 hopefully being less glitch due to lower numbers of NAT in
-> the mix.
->=20
-> Think if a company can use an accounts that is behind a Symmetric NAT
-> without having to pay extra or do extra government regulation  for a
-> static public internet IP address might reduce their costs of doing
-> business.    Also consider the ones most commonly going to be stuck
-> behind Symmetric NAT are also the places that will have massive
-> amounts of government regulation that can forbid having private keys
-> on overseas servers and and using overseas vpn servers.   Using a
-> Relay/TURN server is hair splitting as it not a overseas VPN server
-> its only an overseas relay at worst.
->=20
-> Reality Dan look out side your small conner of the earth.   New
-> standards does not change how messed up world internet regulations by
-> different governments are or different carriers stunts to make more
-> money.
->=20
-> .
-> Peter Dolding
+> [0] https://archlinuxarm.org/
+
+Works out of the box for me:
+
+$ pacman -S wireguard-tools linux-raspberrypi-headers
+[...]
+(1/3) Install DKMS modules
+=3D=3D> dkms install wireguard/0.0.20170115 -k 4.4.43-1-ARCH
+[...]
+
+Have you booted the kernel that is actually installed? Version 4.1.20-1 is
+pretty old in terms of Arch...
+--=20
+main(a){char*c=3D/*    Schoene Gruesse                         */"B?IJj;MEH"
+"CX:;",b;for(a/*    Best regards             my address:    */=3D0;b=3Dc[a+=
++];)
+putchar(b-1/(/*    Chris            cc -ox -xc - && ./x    */b/42*2-3)*42);}
+
+--Sig_/eR85GI1R433hAKaqCYfCsvE
+Content-Type: application/pgp-signature
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEXHmveYAHrRp+prOviUUh18yA9HYFAlh/YFMACgkQiUUh18yA
+9HbXqwf/R88S/o1MZthRf8jmkObwTdIryZiWlBfNy/gV3lBJq9sQHAf1O06tgWL2
+VpXaKWtVG56XA+1XlPZmgmaGx1ihsvMJCow3L3jAJctls6IJFVxS77cHYzWeOKp2
+qYnKKQG3AN0QTUTnkme91vMiosv0zHDw5cILdmuLMM2+gq5n2OBcVFyTyudHeKhF
+YuB8hLEfnN+sbUGYXx+8qmcYNyaPrn8UtrZXWEj7aKGu53Hmd4VakSNvh52drccy
+gMqrCXBrICs76J886pwYB5ErB/1SlngAj973Eol00FlkE9lHg9VqRn7HJjk/DnIc
+NWHLTisVooYgLwVk8DM0TmgxWtvLFw==
+=1ZZY
+-----END PGP SIGNATURE-----
+
+--Sig_/eR85GI1R433hAKaqCYfCsvE--
