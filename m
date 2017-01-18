@@ -1,30 +1,32 @@
 Return-Path: oiaohm@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id de0343a5
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ee32265b
  for <wireguard@lists.zx2c4.com>;
- Wed, 18 Jan 2017 07:27:22 +0000 (UTC)
-Received: from mail-yw0-f172.google.com (mail-yw0-f172.google.com
- [209.85.161.172])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id afba4338
+ Wed, 18 Jan 2017 11:10:34 +0000 (UTC)
+Received: from mail-yw0-f182.google.com (mail-yw0-f182.google.com
+ [209.85.161.182])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2f3cd78d
  for <wireguard@lists.zx2c4.com>;
- Wed, 18 Jan 2017 07:27:22 +0000 (UTC)
-Received: by mail-yw0-f172.google.com with SMTP id l75so3056815ywb.0
- for <wireguard@lists.zx2c4.com>; Tue, 17 Jan 2017 23:38:06 -0800 (PST)
+ Wed, 18 Jan 2017 11:10:34 +0000 (UTC)
+Received: by mail-yw0-f182.google.com with SMTP id l75so5803543ywb.0
+ for <wireguard@lists.zx2c4.com>; Wed, 18 Jan 2017 03:21:18 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9prbSxXRK+MvZvfmF4EnzMST0o7gRtc6UqMUn+ZTJk2xg@mail.gmail.com>
+In-Reply-To: <1CF3351B-5760-45D6-9D54-4D0A4FC92036@danrl.com>
 References: <CANA3KFU0THGCkVhCsEC4CMfoj394XetYZ_TebyFGTwYiDZ9cBg@mail.gmail.com>
  <CAHmME9qS7ptMcCuvxcobi12hgfYdd4yYcOW5+D_uL6uOGq2f2A@mail.gmail.com>
  <CANA3KFWZP9XmCyWNnb19ywGRa8q57OUNt=42G1yjqkvLYc1kPw@mail.gmail.com>
  <CAHmME9qG4KnuFOCVi6w8fUJ9DVDL9_XjZnWxWPQGQaaPz6UTQw@mail.gmail.com>
  <CANA3KFUyf6NP9hu5i0rWfaKq7a27NQhWg4z-LE2SnTHTrbKM9g@mail.gmail.com>
- <CAHmME9prbSxXRK+MvZvfmF4EnzMST0o7gRtc6UqMUn+ZTJk2xg@mail.gmail.com>
+ <F343B5F3-4A99-4F0D-B5BE-DBDC0CDECE09@danrl.com>
+ <CANA3KFWHVtdDTRPqrbOfqJmHU=oh=ZDHitHmjBRO=xv+LnjYJg@mail.gmail.com>
+ <1CF3351B-5760-45D6-9D54-4D0A4FC92036@danrl.com>
 From: Peter Dolding <oiaohm@gmail.com>
-Date: Wed, 18 Jan 2017 17:38:04 +1000
-Message-ID: <CANA3KFVxY3+A00642qCi8YxV=-fYi7C+mU1VzMDDOZrptj=3dw@mail.gmail.com>
+Date: Wed, 18 Jan 2017 21:21:16 +1000
+Message-ID: <CANA3KFWy1k7L=-FFegh0_3ujw5fx6JSDS15LTbvaKg=a4_gpqQ@mail.gmail.com>
 Subject: Re: Built-in Roaming is limited due to a design fault adding STUN and
  TURN support would be good and make wire-guard connections more
  durable.
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: =?UTF-8?Q?Dan_L=C3=BCdtke?= <mail@danrl.com>
 Content-Type: text/plain; charset=UTF-8
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
@@ -36,184 +38,121 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Sun, Jan 15, 2017 at 8:40 PM, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
-> Hi Peter,
+On Wed, Jan 18, 2017 at 4:11 PM, Dan L=C3=BCdtke <mail@danrl.com> wrote:
+> Two things I have not seen so far:
+> - government regulations that enforce NAT
+> - ISPs (let alone carriers) "upgrading" their networks to ipv6 nat (i mys=
+elf have run both, isp + carrier networks, and i call BS on your future out=
+look regarding nat ipv6)
+> - code from you in this thread
 >
-> On Mon, Jan 9, 2017 at 2:43 PM, Peter Dolding <oiaohm@gmail.com> wrote:
->> You example gets you a connection.   You example does not cope with IP
->> change as that happens in NAT environments.
->
-> Yes, example only code.
->
->> VPN detects connection lost triggers resolve again to check if the IP
->> address/port it is using is still current and correct.
->
-> As mentioned elsewhere, at some point there will be userspace
-> notification for these sorts of events. I agree it's necessary for
-> this kind of detection.
->
->> if you put a Wireguard Server behind a nat with a
->> dynamic IP your example code completely fails.
->
-> Yea. This was similarly discussed in the other thread from Emmanuel.
-> That discussion veered toward a multiendpoint-like solution. What
-> you're suggesting, here, is a STUN-based solution, which depends on
-> userspace connectivity notification. Your suggestion indeed is
-> interesting to me.
->
->> The reality is you cannot run resolve just once you are operating in
->> dynamic IP address with NAT.
->
-> If the server is behind a dynamic IP firewalled situation, right.
+https://en.wikipedia.org/wiki/Internet_censorship
+When you start looking into countries that are red in the "World map
+showing the status of YouTube blocking"  you will find some of those
+its mandatory to have a NAT between ISP and open internet even for
+IPv6.  Yes the area of infect users is currently small.  But when you
+look a countries implementing more regulations we cannot be sure how
+small this will remain.
 
-Firewall or NAT.   IPv6 has NATs not seen in large numbers these don't
-have to be officially called firewalls.   Just like IPv4 NAT they go
-has the source address be contacted by someone behind the NAT if no
-drop packet.
+I would say your outlook is wishful thinking that is willing to ignore
+about 10 percent of the users on the internet who don't have well
+behaved Carriers or Governments.
 
-Yes a dynamic firewall could be configured to have the same behaviour
-as a IPv6 nat.   Routers provided by ISPs will most likely still have
-a IPv6 nat in time so ISP can allocate 1 ipv6 address per customer for
-simple accounting.
+So Dan you are doing a works for me arguement what is the most invalid
+arguement to-do in many cases.   Its lets sweep a bug under a carpet
+and not consider it.
 
-So mutable machines behind 1 address is still in ipv6 world.    Ipv6
-address change could be local ipv6 address change by router and the
-router being stupid.   Routers being buggy I don't see that
-disappearing any time soon either.
->
->> Relay is not exactly possible to performing with existing code.   From
->> what I have seen of wireguard I cannot tell it to use a standard
->> socket file.  Like /var/lib/mysql/mysql.sock with mysql.   Because
->> when you are going to be relaying all packets you don't need a IP
->> addressed port.   Ok now we have extra performance overhead and over
->> expanded packet attempting to get into TURN effecting every packet
->> sent by current Wireguard design.
->
-> I think you could set the WireGuard endpoint to be localhost pointing
-> to some TURN daemon to do it in userspace?
->
-> By the way, would that kind of hack be an acceptable way to go about
-> STUN for you? A userspace daemon that forwards packets to a
-> dynamically changing IP? Maybe that's simpler to implement than the
-> userspace state notification stuff I mentioned before.
+The problem is the type of NAT used.
+https://en.wikipedia.org/wiki/Network_address_translation#Symmetric_NAT
 
-The issue for a socket is when you use a file socket you can skip
-putting the IP packet  and UDP information on the data to be sent.
-So that the system sending the data out by TURN or some other protocol
-is not having to strip ip and UDP information put on by Wireguard
-before adding the ip/tcp/udp information the relay server wants to
-keep packet as compact as possible.   Of course the relay sever header
-size is not going to match the Wireguards packet in current design so
-you cannot edit the already allocated packet memory to make the packet
-being sent on to relay..
+Symmetric NAT  this nicely randomises what address users behind it are
+coming from.    Usage of Symmetric NAT does not have to have anything
+to-do with reducing the number of IP addresses in usage.   Symmetric
+NAT can have equal number of users to internet address.
 
-Using localhost means calculating checksums and creating real packets
-  This means wireguard would be calculating checksum on every packet
-TURN relay got from localhost then TURN relay would have to be
-calculating a checksum for every packet it sends to wireguard what are
-both really wasting CPU time if the UDP checksum is not important to
-wireguard.    If that checksum
+Symmetric NAT is the brick wall from hell to hole punching.    The
+main objective of a Symmetric NAT is that something in the internet
+that has not had a packet from something behind the Symmetric NAT
+blocked by default.   Add in symmetric NAT randomising IP to IP
+mapping.     So after IPv4 disappears what Symmetric NAT still has a
+usage in IPv6.
 
-File Socket you would have a process per connection.    So for TURN if
-it not going to be in kernel is a wireguard support file socket mode
-without IP/UDP information as anything relaying will be straight up
-junking this information and putting the information on the relay
-protocol needs.   Wireguard would be able to tell what connection its
-meant to be by the process..
+Teredo that is IPv6 over IPv4 fails if both ends are behind Symmetric
+NAT.    Normal STUN for NAT punching falls over if both ends are
+behind Symmetric NAT this does not matter if it IPv4 or iPv6.
+Symmetric NAT randomising ip to ip mapping bring hell.   So you opened
+up a connection after so much time the Symmetric NAT forgets and you
+attempt to send another packet to a end and it picks out a new IP
+address at random to use.
 
-In fact wireguard for supporting Relay solution asking for so much
-blank space/ignore space.   So a relay solution knows is need x number
-of bytes for its ip/nat/relayid and is able to tell wireguard to send
-to packets with that free.  Of course wireguard could also process
-packets with the relay solutions ip/udp/relayid on by knowing how far
-to skip forwards so avoiding reworking memory.
+The three types cone style NAT will stay in usage by client routers by
+different Carriers even after IPv6 is dominate everywhere as it make
+sense at that point so being able to punch though those at times will
+still be required.
 
-Using STUN without TURN it only need to be informed when connection
-has disappeared to NAT punch the connection back open.   Otherwise a
-successful NAT punching works exactly like a normal connection.
+So the 4 types of common NAT are not going anywhere were they were
+used for common sense reasons.   The Carrier NAT attempting to push
+massive numbers of users though limited addresses will hopefully
+disappear due to IPv6.
 
-Even so providing a file socket method would allow STUN in the middle
-to be fully dynamic.   By fully dynamic I mean changing from direct
-connection to NAT punching to TURN all without having to stop the VPN.
+ Basically Dan is about time you step back look at NAT how it used and
+where is used and why.    The change to IPv6 is only really getting
+rid of one form of NAT  being the carrier nat that were non Symmetric
+NAT based on Symmetric NAT ideas that at times had massive problems
+like completely running out of ports due to not enough address because
+attempting to push too many clients out too few of addresses.
 
-Now if for some reason Wiregaurd was being used between containers
-split by network namespace could be sharing a file namespace and use a
-socket this is also where local address fails.
+ If somewhere has a pure Symmetric NAT where the number of external
+address match the number of internal address for IPv4 for security
+reasons doing the same thing on IPv6 has the same logical reasons.
+So logically sane placed Symmetric NAT will remain and when you have
+to get though them the same problems will remain.
 
->
->> So current design would be rewriting all the packet headers to send
->> wireguard to TURN.   This is why with TURN it would be way better
->> built into the base design.
->
-> There's zero chance I'm going to incorporate TURN into the wireguard
-> core protocol, but I am amenable to discussing ways in which it could
-> be built on top in some nice composable fashion.
+The reality is the 4 common types of NAT can be deployed sanely
+without massive over-stacking.   Under IPv6 the worse we should see is
+hopefully only 2 NAT deep.     Possible 3 mode cone NAT in router and
+Carrier with a Symmetric NAT between you and the internet. as long as
+what ever is design can get though this worse case all cases will be
+covered.   .  Why hopefully only 2 nat deep It is possible to have
+like ADSL router NAT + a WIFI router doing NAT and Carrier doing
+Symmetric NAT but the wifi NAT level is kinda self inflicted by user
+on self not forced on user by carrier this is an improvement over the
+3 to 4 deep in nat by carrier in some places..
 
-I should be more correct built into the base design.  I include this
-as supporting file sockets so you can cleanly be used by something
-relay like TURN without items a Relaying program really does not need.
+Dan attempting to code when the required interfaces to make it work
+don't exist and have not been debated does not make much sense.   Also
+attempting to tell boss time this will need roughly to give something
+functional also not be guessed when you are in the location that there
+is a framework problem.
 
-So when you draw a a diagram of how wireguard works there is a relay
-interfaces go here box this  could be in userspace would be still
-being part of the base design in my eyes.
+IPv6 is improving something things.   But IPv6 is not a magic bullet
+to cure all the issues of having at times to get through NAT.
 
-TURN protocol is just a good standard relay protocol that shows what
-is needed and what is not.     So going though the process of
-implementing TURN with the least modifications to wireguard at the
-best performance will cover fairly much every case.
+Basically it is BS the that existence of NAT can be ignored because
+IPv6 fixes everything.   IPv6 pure once fully deployed by all carriers
+should reduce the number of NAT you have to cross on the internet.
+The big elephant in the room is that IPv6 is only going to reduce the
+number of NAT in the internet not remove them all.
 
-Going though a relay and not having excess cpu usage or memory
-allocations takes serous thinking.   Its really easy to end up having
-to duplicate memory to modify packets to add the information relay
-server needs or waste time calculating checksums that are not
-important when attempting to relay that could have be not generated in
-the first place.
+So working out how to handle the case that end user has found
+themselves on the wrong side of deployed NATs applies to IPv4 and IPv6
+with IPv6 hopefully being less glitch due to lower numbers of NAT in
+the mix.
 
-Issue is going relay is not the same as going direct.   Its a
-different problem because no matter the relay there is always extra
-information need at the start after the either TCP/UDP header to tell
-the relay what end point to relay the data to.   So a relay packet
-always bigger than standard packet.   Relays don't always accept
-fragmented packets either.
+ Think if a company can use an accounts that is behind a Symmetric NAT
+without having to pay extra or do extra government regulation  for a
+static public internet IP address might reduce their costs of doing
+business.    Also consider the ones most commonly going to be stuck
+behind Symmetric NAT are also the places that will have massive
+amounts of government regulation that can forbid having private keys
+on overseas servers and and using overseas vpn servers.   Using a
+Relay/TURN server is hair splitting as it not a overseas VPN server
+its only an overseas relay at worst.
 
-Supporting a relay be it turn or any other relay solution is in fact
-different to direct connections.   It is really easy to end up round
-peg square hole.  vpn set-up for direct connection attempting to be
-sent by relay can have time out issues due to overhead of relay and
-userspace relay program needing to break up packets then have assembly
-problems
+Reality Dan look out side your small conner of the earth.   New
+standards does not change how messed up world internet regulations by
+different governments are or different carriers stunts to make more
+money.
 
-
-If wireguard design include a design for doing something like TURN
-without massive pain possible.    Now if the design like it current
-does does not include anything for doing relay.
-
->
->> STUN rfc goes and documents all the ways a resolve sever solution with
->> NAT will hit brick walls.   So you want to design something for
->> punching holes in NAT read the STUN rfc completely.
->>  https://tools.ietf.org/html/rfc5389
->
-> Yes, I know what STUN is; I know what TURN is; I've read your linked RFC.
->
->> Basically you have been doing NIH syndrome.
->
-> No I haven't. I made some quick example code as a PoC in a hundred
-> lines of C, so that somebody wanting to incorporate STUN later on
-> would have something concrete to visualize the design. Maybe that
-> person is you? Perhaps you'll be the one to contribute something
-> useful.
->
->> My step one is somehow have wireguard support calling/registering with
->> a userspace resolve program for when connection fails.
->
-> I'll work on this and give some thought about the cleanest solution.
->
->> I am not going to write something that I know end users are going to
->> have trouble with.   Both STUN/TURN mandates that resolve interface to
->> be workable.
->
-I am not sure if I will implement code.   But with the problems I have
-in different places I may end up doing so.
-
+.
 Peter Dolding
