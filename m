@@ -1,43 +1,20 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: j0eblack@teknik.io
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id eb85fd2e
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4df2715c
  for <wireguard@lists.zx2c4.com>;
- Sun, 22 Jan 2017 23:18:41 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8ad4ec6a
+ Fri, 27 Jan 2017 10:53:30 +0000 (UTC)
+Received: from mail.teknik.io (mail.teknik.io [50.247.95.113])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3d48c80c
  for <wireguard@lists.zx2c4.com>;
- Sun, 22 Jan 2017 23:18:41 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 67b377b0
- for <wireguard@lists.zx2c4.com>;
- Sun, 22 Jan 2017 23:18:40 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 99e7c19f
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Sun, 22 Jan 2017 23:18:39 +0000 (UTC)
-Received: by mail-ot0-f172.google.com with SMTP id 73so91595028otj.0
- for <wireguard@lists.zx2c4.com>; Sun, 22 Jan 2017 15:29:59 -0800 (PST)
-MIME-Version: 1.0
-In-Reply-To: <CANA3KFX+nR2=g0MkKu3rzwxD3FQ+A7DyWCp-D8+x5xA-cbi9BA@mail.gmail.com>
-References: <CANA3KFU0THGCkVhCsEC4CMfoj394XetYZ_TebyFGTwYiDZ9cBg@mail.gmail.com>
- <CAHmME9qS7ptMcCuvxcobi12hgfYdd4yYcOW5+D_uL6uOGq2f2A@mail.gmail.com>
- <CANA3KFWZP9XmCyWNnb19ywGRa8q57OUNt=42G1yjqkvLYc1kPw@mail.gmail.com>
- <CAHmME9qG4KnuFOCVi6w8fUJ9DVDL9_XjZnWxWPQGQaaPz6UTQw@mail.gmail.com>
- <CANA3KFUyf6NP9hu5i0rWfaKq7a27NQhWg4z-LE2SnTHTrbKM9g@mail.gmail.com>
- <F343B5F3-4A99-4F0D-B5BE-DBDC0CDECE09@danrl.com>
- <CANA3KFWHVtdDTRPqrbOfqJmHU=oh=ZDHitHmjBRO=xv+LnjYJg@mail.gmail.com>
- <1CF3351B-5760-45D6-9D54-4D0A4FC92036@danrl.com>
- <CANA3KFWy1k7L=-FFegh0_3ujw5fx6JSDS15LTbvaKg=a4_gpqQ@mail.gmail.com>
- <9157BE7F-FAC4-4826-8493-E29F1C3D75AB@danrl.com>
- <CANA3KFX+nR2=g0MkKu3rzwxD3FQ+A7DyWCp-D8+x5xA-cbi9BA@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 23 Jan 2017 00:29:57 +0100
-Message-ID: <CAHmME9rK2t3u9puEnhOm=XgDWqni6tkxni60iTBwJJyHm9fYdA@mail.gmail.com>
-Subject: Re: Built-in Roaming is limited due to a design fault adding STUN and
- TURN support would be good and make wire-guard connections more
- durable.
-To: Peter Dolding <oiaohm@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+ Fri, 27 Jan 2017 10:53:30 +0000 (UTC)
+Mime-Version: 1.0
+Date: Fri, 27 Jan 2017 11:05:21 +0000
+Content-Type: multipart/alternative;
+ boundary="--=_RainLoop_734_543737792.1485515121"
+Message-ID: <91e1990891fb763b8090a2eed1321744@mail.teknik.io>
+From: j0eblack@teknik.io
+Subject: WIreGuard on embedded devices and traffic shaping question.
+To: wireguard@lists.zx2c4.com
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -47,38 +24,64 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hello,
 
-You raise interesting points. Symmetric NAT hole punching requires
-lots of notification hooks to implement. Seeing as these types of
-hooks and expanded userspace API are already something useful for
-other things people have been talking about, I expect to expand the
-userspace API. I imagine on top of those expansions, you'll be able to
-implement performant STUN punching or TURN relaying. I thought I had
-made these points clear much earlier, and asked whether you'd be
-willing to implement some code.
+----=_RainLoop_734_543737792.1485515121
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-In short, if you're interesting in writing code, you'll have what you
-want, and you'll have a partner in me writing APIs for the kernel side
-of things.
+Greetings people and robots,=0A=0AI'm sending this email with a positive =
+feed-back of my experience with WireGuard and the embedded device that I =
+used with it, also I want to thank the WireGruard dev team for the awesom=
+e free software!=0A=0AWireGuard is running on a Olimex Lime A-10 board wi=
+th Debian Jessie on it:=0A=0Alsb_release -a=0ANo LSB modules are availabl=
+e.=0ADistributor ID: Debian=0ADescription: Debian GNU/Linux 8.6 (jessie)=
+=0ARelease: 8.6=0ACodename: jessie=0A=0Auname -a=0ALinux lime-a10 4.8.4-s=
+unxi #6 SMP Sun Oct 23 15:55:47 CEST 2016 armv7l GNU/Linux=0A=0AThe WireG=
+uard packages were installed from the sid repo, everything went smoothly =
+without any manual intervention for the setup.=0A=0AMy initial idea was t=
+o use WireGuard as a open-vpn-type server-client setup.=0A=0AAfter readin=
+g some of the mails from this list I was able to get two peers to talk to=
+ each other and after that is was a matter of iptables rules to get one o=
+f the peers to act as a 'exit server' and the other connected peers to it=
+ as 'clients'.=0A=0AIf anyone is interested in this set-up I can write a =
+short guide how you can achieve that and other people can point if any mi=
+stakes were made during the setup.=0A=0ASomething that I want to do, and =
+I was not able to find information about it in the mailing list or the do=
+cs on the website is, can bandwidth (traffic shaping) limits be applied b=
+etween connected peers?=0A=0AI have done this in the past with open-vpn a=
+nd tc (per IP address shaping) and I am really curious if this can be don=
+e inside WireGuard or not?=0A=0AWith regards,=0Aj0eblack
 
-However, if it's going to be more extremely long rambling emails,
-which are borderline offensive at times, that's not really going to
-work.
+----=_RainLoop_734_543737792.1485515121
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-It's now gotten to the point where people have been writing to me,
-"hey you have a great mailing list and project, and now this guy is
-really burdensome to read, what's the deal?" And indeed, a simple
-google search reveals a history of odd trolling.
+<!DOCTYPE html><html><head><meta http-equiv=3D"Content-Type" content=3D"t=
+ext/html; charset=3Dutf-8" /></head><body><html><body><div><div data-html=
+-editor-font-wrapper=3D"true" style=3D"font-family: arial, sans-serif; fo=
+nt-size: 13px;"> <signature></signature>Greetings people and robots,<br><=
+br>I'm sending this email with a positive feed-back of my experience with=
+ WireGuard and the embedded device that I used with it, also I want to th=
+ank the WireGruard dev team for the awesome free software!<br><br>WireGua=
+rd is running on a Olimex Lime A-10 board with Debian Jessie on it:<br><b=
+r>lsb_release -a<br>No LSB modules are available.<br>Distributor ID: Debi=
+an<br>Description: Debian GNU/Linux 8.6 (jessie)<br>Release: 8.6<br>Coden=
+ame: jessie<br><br>uname -a<br>Linux lime-a10 4.8.4-sunxi #6 SMP Sun Oct =
+23 15:55:47 CEST 2016 armv7l GNU/Linux<br><br>The WireGuard packages were=
+ installed from the sid repo, everything went smoothly without any manual=
+ intervention for the setup.<br><br>My initial idea was to use WireGuard =
+as a open-vpn-type server-client setup.<br><br>After reading some of the =
+mails from this list I was able to get two peers to talk to each other an=
+d after that is was a matter of iptables rules to get one of the peers to=
+ act as a 'exit server' and the other connected peers to it as 'clients'.=
+<br><br>If anyone is interested in this set-up I can write a short guide =
+how you can achieve that and other people can point if any mistakes were =
+made during the setup.<br><br>Something that I want to do, and I was not =
+able to find information about it in the mailing list or the docs on the =
+website is, can bandwidth (traffic shaping) limits be applied between con=
+nected peers?<br><br>I have done this in the past with open-vpn and tc (p=
+er IP address shaping) and I am really curious if this can be done inside=
+ WireGuard or not?<br><br>With regards,<br>j0eblack</div></div></body></h=
+tml></body></html>
 
-Therefore, I ask you to keep subsequent replies on this thread short
-and efficient. If you'd like to write some interesting network code,
-let's do it. Otherwise, at the very least I certainly do thank you for
-your suggestion. You've made more clear in my mind exactly what the
-challenges of symmetric NAT are. I'm quite confident we'll get to the
-point where these network concerns can be addressed, and where
-wireguard has the right notification mechanisms to enable this to
-happen.
-
-Regards,
-Jason
+----=_RainLoop_734_543737792.1485515121--
