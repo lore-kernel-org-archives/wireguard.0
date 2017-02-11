@@ -1,30 +1,25 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: dave@natulte.net
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7463d547
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1b380df1
  for <wireguard@lists.zx2c4.com>;
- Sat, 11 Feb 2017 09:06:21 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 247a66b8
+ Sat, 11 Feb 2017 09:36:08 +0000 (UTC)
+Received: from mail-ua0-f180.google.com (mail-ua0-f180.google.com
+ [209.85.217.180])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7897c0b8
  for <wireguard@lists.zx2c4.com>;
- Sat, 11 Feb 2017 09:06:21 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 331248e4
- for <wireguard@lists.zx2c4.com>;
- Sat, 11 Feb 2017 09:06:21 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 7cebe5f4
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Sat, 11 Feb 2017 09:06:21 +0000 (UTC)
-Received: by mail-oi0-f45.google.com with SMTP id s203so32602708oie.1
- for <wireguard@lists.zx2c4.com>; Sat, 11 Feb 2017 01:20:10 -0800 (PST)
+ Sat, 11 Feb 2017 09:36:08 +0000 (UTC)
+Received: by mail-ua0-f180.google.com with SMTP id 96so43621166uaq.3
+ for <wireguard@lists.zx2c4.com>; Sat, 11 Feb 2017 01:49:57 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <91e1990891fb763b8090a2eed1321744@mail.teknik.io>
-References: <91e1990891fb763b8090a2eed1321744@mail.teknik.io>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sat, 11 Feb 2017 10:20:08 +0100
-Message-ID: <CAHmME9pyHASJVx0ZC1GNLgddgF_Dja7bqRxGoML8hCuWLaPbzg@mail.gmail.com>
-Subject: Re: WIreGuard on embedded devices and traffic shaping question.
-To: j0eblack@teknik.io
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <CAHmME9q8+D7y0Hz4xOJv1MiVsq0=bUf3TgENseGEWWF2BEpx4Q@mail.gmail.com>
+References: <CAMx+r7WsvfJ6j7JT9+Z5mNe=FEFwehTVNgX+7-8vnQMa5FxORg@mail.gmail.com>
+ <CAHmME9q8+D7y0Hz4xOJv1MiVsq0=bUf3TgENseGEWWF2BEpx4Q@mail.gmail.com>
+From: David Anderson <dave@natulte.net>
+Date: Sat, 11 Feb 2017 01:49:36 -0800
+Message-ID: <CAMx+r7VgJ0xDAy46d28Qv_Vv7vM8JO0yRbYEh6AHVWT55LEVAw@mail.gmail.com>
+Subject: Re: (Unofficial) wireguard packages for Debian Stretch (testing)
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Content-Type: multipart/alternative; boundary=001a113cff4407a31b05483e238f
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -35,32 +30,100 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hey Joe,
+--001a113cff4407a31b05483e238f
+Content-Type: text/plain; charset=UTF-8
 
-Sorry for the late reply. There was a conference and then a small trip
-after, and now I'm catching up on the backlog.
+On Sat, Feb 11, 2017 at 1:03 AM, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
 
-On Fri, Jan 27, 2017 at 12:05 PM,  <j0eblack@teknik.io> wrote:
-> If anyone is interested in this set-up I can write a short guide how you can
-> achieve that and other people can point if any mistakes were made during the
-> setup.
+> Mellow yellow,
+>
+> That's a great idea. Do you intend to track dkg's sid package more or
+> less faithfully?
 
-I'd certainly be interested in some sort of blog write-up. The more
-documentation and tutorials, the better, IMHO.
 
-> Something that I want to do, and I was not able to find information about it
-> in the mailing list or the docs on the website is, can bandwidth (traffic
-> shaping) limits be applied between connected peers?
+In that package repository, I intend to track the sid package exactly. If I
+ever take up hacking on wireguard, I'll use a separate repository for any
+modified versions.
 
-The traffic shaping with WireGuard is the same trafic shaping found in
-the rest of the Linux kernel -- the qdisc and tc subsystem. I think
-you can use the usual techniques there for applying shaping to the
-entire interface or selectively to certain flows.
+If so, I'd be happy to advertise this on the
+> wireguard.io/install/ page, since I'm sure a lot of people (including
+> myself!) would benefit immensely from that.
+>
 
-> I have done this in the past with open-vpn and tc (per IP address shaping)
-> and I am really curious if this can be done inside WireGuard or not?
+Cool! I'll see about setting up debian stable as well.
 
-I believe it can be using exactly that idea.
 
-Regards,
-Jason
+> Could you send some bulletproof instructions -- 3 or 4 lines of
+> commands like what's there currently -- and I'll put it on the site?
+>
+
+The instructions you have on there now are fine if you're okay with
+packagecloud's shell script. Manual instructions that work are:
+
+sudo apt-get install -y apt-transport-https linux-headers-amd64 curl
+curl -L https://packagecloud.io/danderson/wireguard/gpgkey | sudo apt-key
+add -
+echo "deb https://packagecloud.io/danderson/wireguard/debian/ stretch main"
+| sudo tee /etc/apt/sources.list.d/wireguard.list
+sudo apt-get update
+sudo apt-get install -y wireguard-dkms wireguard-tools
+
+Note that right now, only amd64 packages are available. If you think
+there's demand for Debian on 32-bit x86, I can set up i386 builders as well.
+
+- Dave
+
+
+> Thanks,
+> Jason
+>
+
+--001a113cff4407a31b05483e238f
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div class=3D"gmail_extra"><div class=3D"gmail_quote">On S=
+at, Feb 11, 2017 at 1:03 AM, Jason A. Donenfeld <span dir=3D"ltr">&lt;<a hr=
+ef=3D"mailto:Jason@zx2c4.com" target=3D"_blank">Jason@zx2c4.com</a>&gt;</sp=
+an> wrote:<br><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px=
+ 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Mellow yell=
+ow,<br>
+<br>
+That&#39;s a great idea. Do you intend to track dkg&#39;s sid package more =
+or<br>
+less faithfully?</blockquote><div><br></div><div>In that package repository=
+, I intend to track the sid package exactly. If I ever take up hacking on w=
+ireguard, I&#39;ll use a separate repository for any modified versions.</di=
+v><div><br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px =
+0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">If so, I=
+&#39;d be happy to advertise this on the<br>
+<a href=3D"http://wireguard.io/install/" rel=3D"noreferrer" target=3D"_blan=
+k">wireguard.io/install/</a> page, since I&#39;m sure a lot of people (incl=
+uding<br>
+myself!) would benefit immensely from that.<br></blockquote><div><br></div>=
+<div>Cool! I&#39;ll see about setting up debian stable as well.</div><div>=
+=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0=
+.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Could you sen=
+d some bulletproof instructions -- 3 or 4 lines of<br>
+commands like what&#39;s there currently -- and I&#39;ll put it on the site=
+?<br></blockquote><div><br></div><div>The instructions you have on there no=
+w are fine if you&#39;re okay with packagecloud&#39;s shell script. Manual =
+instructions that work are:</div><div><br></div><div>sudo apt-get install -=
+y apt-transport-https linux-headers-amd64 curl</div><div>curl -L <a href=3D=
+"https://packagecloud.io/danderson/wireguard/gpgkey">https://packagecloud.i=
+o/danderson/wireguard/gpgkey</a> | sudo apt-key add -</div><div>echo &quot;=
+deb <a href=3D"https://packagecloud.io/danderson/wireguard/debian/">https:/=
+/packagecloud.io/danderson/wireguard/debian/</a> stretch main&quot; | sudo =
+tee /etc/apt/sources.list.d/wireguard.list</div><div>sudo apt-get update</d=
+iv><div>sudo apt-get install -y wireguard-dkms wireguard-tools</div><div><b=
+r></div><div>Note that right now, only amd64 packages are available. If you=
+ think there&#39;s demand for Debian on 32-bit x86, I can set up i386 build=
+ers as well.</div><div><br></div><div>- Dave</div><div><br></div><blockquot=
+e class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px s=
+olid rgb(204,204,204);padding-left:1ex">
+<br>
+Thanks,<br>
+Jason<br>
+</blockquote></div><br></div></div>
+
+--001a113cff4407a31b05483e238f--
