@@ -1,20 +1,22 @@
-Return-Path: dbelleisle@gmail.com
+Return-Path: dave@natulte.net
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bbf0abc4
- for <wireguard@lists.zx2c4.com>; Thu, 9 Feb 2017 17:30:21 +0000 (UTC)
-Received: from mail-ua0-f179.google.com (mail-ua0-f179.google.com
- [209.85.217.179])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0dfed221
- for <wireguard@lists.zx2c4.com>; Thu, 9 Feb 2017 17:30:21 +0000 (UTC)
-Received: by mail-ua0-f179.google.com with SMTP id y9so8841715uae.2
- for <wireguard@lists.zx2c4.com>; Thu, 09 Feb 2017 09:43:57 -0800 (PST)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9adf0b6d
+ for <wireguard@lists.zx2c4.com>;
+ Sat, 11 Feb 2017 00:10:28 +0000 (UTC)
+Received: from mail-vk0-f45.google.com (mail-vk0-f45.google.com
+ [209.85.213.45])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a6044a3c
+ for <wireguard@lists.zx2c4.com>;
+ Sat, 11 Feb 2017 00:10:27 +0000 (UTC)
+Received: by mail-vk0-f45.google.com with SMTP id t8so36796700vke.3
+ for <wireguard@lists.zx2c4.com>; Fri, 10 Feb 2017 16:24:13 -0800 (PST)
 MIME-Version: 1.0
-From: David Belle-Isle <dbelleisle@gmail.com>
-Date: Thu, 9 Feb 2017 12:43:35 -0500
-Message-ID: <CAN56nowzGbFmFG7hv+i7+K60oteXW1Po1cecDDAU+8bV=wKchw@mail.gmail.com>
-Subject: FreeBSD
+From: David Anderson <dave@natulte.net>
+Date: Fri, 10 Feb 2017 16:23:50 -0800
+Message-ID: <CAMx+r7WsvfJ6j7JT9+Z5mNe=FEFwehTVNgX+7-8vnQMa5FxORg@mail.gmail.com>
+Subject: (Unofficial) wireguard packages for Debian Stretch (testing)
 To: wireguard@lists.zx2c4.com
-Content-Type: multipart/alternative; boundary=94eb2c04721077bd3105481c8636
+Content-Type: multipart/alternative; boundary=001a11415e88b6df330548363b05
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -24,21 +26,51 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---94eb2c04721077bd3105481c8636
+--001a11415e88b6df330548363b05
 Content-Type: text/plain; charset=UTF-8
 
-Hi,
+Mellow greetings,
 
-I would like to know if any work has been done to port to FreeBSD? (Kernel
-or Userland/TUN port)
+In case it's of use to anyone, I've built wireguard packages for Debian
+testing. I wanted to play with wireguard on my Debian Stretch systems, but
+wireguard is currently locked to Sid only until 1.0 brings API stability
+guarantees.
 
-Thanks,
+So, I set up a cronjob that rebuilds the Sid source package on a Stretch
+system, and the result is wireguard packages that track the latest release,
+but don't pull in unstable versions of libc and whatnot when you try to
+install them, as would happen if you tried to install via package pinning.
 
-David
+Naturally, you have only my word that the packages are unmodified rebuilds
+of Debian's original package, and you're trusting packagecloud to not
+tamper with the packages (it's their signing keys, not mine) so caveat
+emptor. It works for me, it might work for you as well.
 
---94eb2c04721077bd3105481c8636
+With the warnings and disclaimers out of the way, here's the repo:
+https://packagecloud.io/danderson/wireguard?filter=debs
+
+- Dave
+
+--001a11415e88b6df330548363b05
 Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-<div dir="ltr"><div><div><div>Hi,<br><br></div>I would like to know if any work has been done to port to FreeBSD? (Kernel or Userland/TUN port)<br><br></div>Thanks,<br><br></div>David<br></div>
+<div dir=3D"ltr"><div>Mellow greetings,</div><div><br></div><div>In case it=
+&#39;s of use to anyone, I&#39;ve built wireguard packages for Debian testi=
+ng. I wanted to play with wireguard on my Debian Stretch systems, but wireg=
+uard is currently locked to Sid only until 1.0 brings API stability guarant=
+ees.</div><div><br></div><div>So, I set up a cronjob that rebuilds the Sid =
+source package on a Stretch system, and the result is wireguard packages th=
+at track the latest release, but don&#39;t pull in unstable versions of lib=
+c and whatnot when you try to install them, as would happen if you tried to=
+ install via package pinning.</div><div><br></div><div>Naturally, you have =
+only my word that the packages are unmodified rebuilds of Debian&#39;s orig=
+inal package, and you&#39;re trusting packagecloud to not tamper with the p=
+ackages (it&#39;s their signing keys, not mine) so caveat emptor. It works =
+for me, it might work for you as well.</div><div><br></div><div>With the wa=
+rnings and disclaimers out of the way, here&#39;s the repo:=C2=A0<a href=3D=
+"https://packagecloud.io/danderson/wireguard?filter=3Ddebs">https://package=
+cloud.io/danderson/wireguard?filter=3Ddebs</a></div><div><br></div><div>- D=
+ave</div></div>
 
---94eb2c04721077bd3105481c8636--
+--001a11415e88b6df330548363b05--
