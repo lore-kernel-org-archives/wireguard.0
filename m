@@ -1,33 +1,22 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: dave.taht@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6d1bc400
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3ce97efd
  for <wireguard@lists.zx2c4.com>;
- Sat, 11 Feb 2017 14:35:53 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 33cc23ec
+ Sat, 11 Feb 2017 15:54:45 +0000 (UTC)
+Received: from mail-qk0-f170.google.com (mail-qk0-f170.google.com
+ [209.85.220.170])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e3875c25
  for <wireguard@lists.zx2c4.com>;
- Sat, 11 Feb 2017 14:35:53 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d506305a
- for <wireguard@lists.zx2c4.com>;
- Sat, 11 Feb 2017 14:35:53 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 59b76b6f
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Sat, 11 Feb 2017 14:35:53 +0000 (UTC)
-Received: by mail-oi0-f54.google.com with SMTP id w204so34045121oiw.0
- for <wireguard@lists.zx2c4.com>; Sat, 11 Feb 2017 06:49:43 -0800 (PST)
+ Sat, 11 Feb 2017 15:54:45 +0000 (UTC)
+Received: by mail-qk0-f170.google.com with SMTP id s186so65283655qkb.1
+ for <wireguard@lists.zx2c4.com>; Sat, 11 Feb 2017 08:08:36 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <fce676c6-2710-5def-15ed-e71919b39489@viisauksena.de>
-References: <20161122130805.GG20343@tuxmachine.polynome.dn42>
- <CAHmME9pMMpmS5BNEeAeRNDLF6ZdDOVkbLVTaUTBM3Yk=u1mGAw@mail.gmail.com>
- <fce676c6-2710-5def-15ed-e71919b39489@viisauksena.de>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sat, 11 Feb 2017 15:49:42 +0100
-Message-ID: <CAHmME9qfwFY2hUMJs4aCa06udCU0mWsrMxLayduUcn2SfrrA3g@mail.gmail.com>
-Subject: Re: [WireGuard] Pull-based peer configuration
-To: jens <jens@viisauksena.de>
+From: Dave Taht <dave.taht@gmail.com>
+Date: Sat, 11 Feb 2017 08:08:35 -0800
+Message-ID: <CAA93jw5eSCUvTzF1Xk15b1ZG=CnsoM3TEXeSeE=9gW-TowfQjw@mail.gmail.com>
+Subject: udp auth/encryption in userspace
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset=UTF-8
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -37,8 +26,16 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hey Jens,
+I am curious if any pre-existing code exists for using wireguard like
+methods over udp in userspace? Most of the examples for libsodium, etc
+are all tcp based. A daemon I'm trying to spec need to run at early
+boot (where the clock is wrong and might be slewed forward at any
+time), and can't hang. Bonus points if the libs required are small...
 
-This work is in progress. Standby.
+(It would be kind of neat if there was a way to push all the needed
+crypto into kernelspace and just hand the daemon the decoded packet)
 
-Jason
+--=20
+Dave T=C3=A4ht
+Let's go make home routers and wifi faster! With better software!
+http://blog.cerowrt.org
