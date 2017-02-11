@@ -1,25 +1,33 @@
-Return-Path: jens@viisauksena.de
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 35955bf0
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5150742f
  for <wireguard@lists.zx2c4.com>;
- Sat, 11 Feb 2017 12:05:12 +0000 (UTC)
-Received: from viisauksena.de (v32412.1blu.de [178.254.39.111])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9c7b6a82
+ Sat, 11 Feb 2017 12:18:22 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 74d8b87f
  for <wireguard@lists.zx2c4.com>;
- Sat, 11 Feb 2017 12:05:12 +0000 (UTC)
-Received: from [192.168.0.147] (p579A7586.dip0.t-ipconnect.de [87.154.117.134])
- by v32412.1blu.de (Postfix) with ESMTPSA id 238362070B
- for <wireguard@lists.zx2c4.com>; Sat, 11 Feb 2017 13:19:01 +0100 (CET)
-Subject: Re: [WireGuard] Pull-based peer configuration
-References: <20161122130805.GG20343@tuxmachine.polynome.dn42>
- <CAHmME9pMMpmS5BNEeAeRNDLF6ZdDOVkbLVTaUTBM3Yk=u1mGAw@mail.gmail.com>
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-From: jens <jens@viisauksena.de>
-Message-ID: <fce676c6-2710-5def-15ed-e71919b39489@viisauksena.de>
-Date: Sat, 11 Feb 2017 13:18:16 +0100
+ Sat, 11 Feb 2017 12:18:22 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6c25dac2
+ for <wireguard@lists.zx2c4.com>;
+ Sat, 11 Feb 2017 12:18:22 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id ca75f6ff
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Sat, 11 Feb 2017 12:18:22 +0000 (UTC)
+Received: by mail-ot0-f174.google.com with SMTP id 32so45413171oth.3
+ for <wireguard@lists.zx2c4.com>; Sat, 11 Feb 2017 04:32:11 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9pMMpmS5BNEeAeRNDLF6ZdDOVkbLVTaUTBM3Yk=u1mGAw@mail.gmail.com>
-Content-Type: text/plain; charset=windows-1252
+In-Reply-To: <CAMx+r7VgJ0xDAy46d28Qv_Vv7vM8JO0yRbYEh6AHVWT55LEVAw@mail.gmail.com>
+References: <CAMx+r7WsvfJ6j7JT9+Z5mNe=FEFwehTVNgX+7-8vnQMa5FxORg@mail.gmail.com>
+ <CAHmME9q8+D7y0Hz4xOJv1MiVsq0=bUf3TgENseGEWWF2BEpx4Q@mail.gmail.com>
+ <CAMx+r7VgJ0xDAy46d28Qv_Vv7vM8JO0yRbYEh6AHVWT55LEVAw@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Sat, 11 Feb 2017 13:32:10 +0100
+Message-ID: <CAHmME9otoumBPt4VvdM2s4FEpzO_wK86aiRjVOCpUpGam+P64Q@mail.gmail.com>
+Subject: Re: (Unofficial) wireguard packages for Debian Stretch (testing)
+To: David Anderson <dave@natulte.net>
+Content-Type: text/plain; charset=UTF-8
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -29,19 +37,13 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
+Hey Dave,
 
+On Sat, Feb 11, 2017 at 10:49 AM, David Anderson <dave@natulte.net> wrote:
+> Note that right now, only amd64 packages are available. If you think there's
+> demand for Debian on 32-bit x86, I can set up i386 builders as well.
 
-On 22.11.2016 17:31, Jason A. Donenfeld wrote:
-> But it does add _just a tiny little bit_ of extra complexity, which
-> can quickly snowball into something dreadful. My general plan for
-> these more enterprise-centric features is to wait until after the
-> initial codebase is merged into mainline. 
+I doubt anybody cares about i386, but likely armv{6,7} and arm64 are
+in demand somewhat, at the very least due to Rasberrian users.
 
-just a small comment, freifunk a like we would love to see something
-like this, but are also happy to wait a while - because we are used to
-prefilled lists/configs with valid keys.
-this would make things a lot easier. ;)
-thx
--- 
-
-make the world nicer, please use PGP encryption
+Jason
