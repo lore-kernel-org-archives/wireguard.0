@@ -1,35 +1,31 @@
 Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1c15a5c5
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6d1bc400
  for <wireguard@lists.zx2c4.com>;
- Sat, 11 Feb 2017 13:15:00 +0000 (UTC)
+ Sat, 11 Feb 2017 14:35:53 +0000 (UTC)
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6b54b4e6
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 33cc23ec
  for <wireguard@lists.zx2c4.com>;
- Sat, 11 Feb 2017 13:15:00 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0d7f6401
+ Sat, 11 Feb 2017 14:35:53 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d506305a
  for <wireguard@lists.zx2c4.com>;
- Sat, 11 Feb 2017 13:15:00 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id e5708011
+ Sat, 11 Feb 2017 14:35:53 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 59b76b6f
  (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
  for <wireguard@lists.zx2c4.com>;
- Sat, 11 Feb 2017 13:14:59 +0000 (UTC)
-Received: by mail-oi0-f53.google.com with SMTP id w204so33609236oiw.0
- for <wireguard@lists.zx2c4.com>; Sat, 11 Feb 2017 05:28:49 -0800 (PST)
+ Sat, 11 Feb 2017 14:35:53 +0000 (UTC)
+Received: by mail-oi0-f54.google.com with SMTP id w204so34045121oiw.0
+ for <wireguard@lists.zx2c4.com>; Sat, 11 Feb 2017 06:49:43 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CAMx+r7WLJ5S-Op_9dq4AY9BNmk6u7xMOwqwVoAis=_pqJX1_-g@mail.gmail.com>
-References: <CAMx+r7WsvfJ6j7JT9+Z5mNe=FEFwehTVNgX+7-8vnQMa5FxORg@mail.gmail.com>
- <CAHmME9q8+D7y0Hz4xOJv1MiVsq0=bUf3TgENseGEWWF2BEpx4Q@mail.gmail.com>
- <CAMx+r7VgJ0xDAy46d28Qv_Vv7vM8JO0yRbYEh6AHVWT55LEVAw@mail.gmail.com>
- <CAHmME9rumLr0V6yD=zoHk-GSN2-bCiGe644WHtt4EJvKrhtLoA@mail.gmail.com>
- <CAMx+r7VkgtkFdqkKVbeX_Pv=T1TO6KaTY-+T1iM2OphS-L8mWA@mail.gmail.com>
- <CAHmME9qkRgySY61Cqm76Lqs_f3U3V3p5YF1G0kE1CCPd9u398Q@mail.gmail.com>
- <CAMx+r7WLJ5S-Op_9dq4AY9BNmk6u7xMOwqwVoAis=_pqJX1_-g@mail.gmail.com>
+In-Reply-To: <fce676c6-2710-5def-15ed-e71919b39489@viisauksena.de>
+References: <20161122130805.GG20343@tuxmachine.polynome.dn42>
+ <CAHmME9pMMpmS5BNEeAeRNDLF6ZdDOVkbLVTaUTBM3Yk=u1mGAw@mail.gmail.com>
+ <fce676c6-2710-5def-15ed-e71919b39489@viisauksena.de>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sat, 11 Feb 2017 14:28:47 +0100
-Message-ID: <CAHmME9qmfSQ2=Bcdxzx=41vcF2NPkXBhDBVbrjCizkrDsB3KSA@mail.gmail.com>
-Subject: Re: (Unofficial) wireguard packages for Debian Stretch (testing)
-To: David Anderson <dave@natulte.net>
+Date: Sat, 11 Feb 2017 15:49:42 +0100
+Message-ID: <CAHmME9qfwFY2hUMJs4aCa06udCU0mWsrMxLayduUcn2SfrrA3g@mail.gmail.com>
+Subject: Re: [WireGuard] Pull-based peer configuration
+To: jens <jens@viisauksena.de>
 Content-Type: text/plain; charset=UTF-8
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
@@ -41,17 +37,8 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hey David,
+Hey Jens,
 
-On Sat, Feb 11, 2017 at 12:48 PM, David Anderson <dave@natulte.net> wrote:
-> Okay, I've set up a Debian stable builder as well... However, Debian stable
-> has a 3.16 kernel, and wireguard-dkms requires >=3.18, so installation
-> fails. Assuming 3.18 is a hard lower-bound on kernel versions, it looks like
-> jessie will never run in-kernel wireguard. Fortunately it'll be moot in a
-> few months when stretch becomes the new stable.
-
-I probably could backport to 3.16... It's a bit of a PITA but still
-possible if there's sufficient demand. I'll wait to see if people pipe
-up.
+This work is in progress. Standby.
 
 Jason
