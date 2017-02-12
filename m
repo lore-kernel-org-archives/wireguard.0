@@ -1,36 +1,20 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: info@florianb.space
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5c7f326d
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 768c0cb4
  for <wireguard@lists.zx2c4.com>;
- Sun, 12 Feb 2017 13:28:22 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 987d60f0
+ Sun, 12 Feb 2017 20:53:33 +0000 (UTC)
+Received: from mailserver.fbnw.eu.org (27.0.233.37 [27.0.233.37])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7522fc3d
  for <wireguard@lists.zx2c4.com>;
- Sun, 12 Feb 2017 13:28:22 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 51f7d7c7
- for <wireguard@lists.zx2c4.com>;
- Sun, 12 Feb 2017 13:28:22 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 21abae9e
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Sun, 12 Feb 2017 13:28:22 +0000 (UTC)
-Received: by mail-ot0-f175.google.com with SMTP id 32so53987139oth.3
- for <wireguard@lists.zx2c4.com>; Sun, 12 Feb 2017 05:42:20 -0800 (PST)
+ Sun, 12 Feb 2017 20:53:31 +0000 (UTC)
+Date: Sun, 12 Feb 2017 21:07:36 +0000
+Subject: VXLAN
+Message-ID: <d6qpul2kg1fyp0sdshfmv137.1486933562582@email.android.com>
+From: info <info@florianb.space>
+To: wireguard@lists.zx2c4.com
 MIME-Version: 1.0
-In-Reply-To: <CAMx+r7Xk+vVwLq++8gnn1GfSA=jvYr=nM0EaLUjdvHXbjWD1kQ@mail.gmail.com>
-References: <CAMx+r7WsvfJ6j7JT9+Z5mNe=FEFwehTVNgX+7-8vnQMa5FxORg@mail.gmail.com>
- <CAHmME9q8+D7y0Hz4xOJv1MiVsq0=bUf3TgENseGEWWF2BEpx4Q@mail.gmail.com>
- <CAMx+r7VgJ0xDAy46d28Qv_Vv7vM8JO0yRbYEh6AHVWT55LEVAw@mail.gmail.com>
- <CAHmME9otoumBPt4VvdM2s4FEpzO_wK86aiRjVOCpUpGam+P64Q@mail.gmail.com>
- <CAMx+r7WMmcGxDLE7Dt2w6S5xj0tx3U22T-HQBhss1SzV0pgbiQ@mail.gmail.com>
- <CAMx+r7Xk+vVwLq++8gnn1GfSA=jvYr=nM0EaLUjdvHXbjWD1kQ@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sun, 12 Feb 2017 14:42:18 +0100
-Message-ID: <CAHmME9rkFc+SKRUepfOsMR=aAP_QGJv0YQrKkxpa0hvPrZbvfg@mail.gmail.com>
-Subject: Re: (Unofficial) wireguard packages for Debian Stretch (testing)
-To: David Anderson <dave@natulte.net>
-Content-Type: text/plain; charset=UTF-8
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: multipart/alternative;
+ boundary="--_com.samsung.android.email_2402347799339770"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -40,14 +24,63 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Sun, Feb 12, 2017 at 3:40 AM, David Anderson <dave@natulte.net> wrote:
->
-> I'm failing at setting up arm builds, raspbian/rpi emulation is not in a =
-great shape these days. In the meantime, debian stable for amd64 is up. Upd=
-ated instructions for both debian versions are at https://packagecloud.io/d=
-anderson/wireguard#readme-scrollto . In particular, the jessie install requ=
-ires first installing a backported kernel. I'll keep poking at arm builds f=
-or a bit, but I don't promise anything.
+----_com.samsung.android.email_2402347799339770
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: base64
 
+SGVsbG8sCkkgd291bGQgbG92ZSB0byB1c2UgVlhMQU5zIGZvciBteSBuZXR3b3JrIHRvIHNlcGFy
+YXRlIHN0dWZmLCBhbHRob3VnaCBJJ20gYSBiaXQgc3RydWdnbGluZy4gTXkgdG9wb2xvZ3kgbG9v
+a3MgbGlrZSB0aGlzOgpWTSBBIC0tPiBBTVNURVJEQU0gLT4gRlJBTktGVVJUIC0+IFZJRU5OQSAt
+LT4gVk0gQgonLT4nIGluZGljYXRlcyBhIFdpcmVndWFyZCB0dW5uZWwnLS0+JyBpcyBhIHBoeXNp
+Y2FsIGxpbmsKQWN0dWFsbHkgSSdtIGNvbmZpZ3VyaW5nIGEgVlhMQU4gSW50ZXJmYWNlIGluIEFN
+U1RFUkRBTSBhbmQgVklFTk5BLCB3aXRoIHRoZSB0dW5uZWwgSVBzIGFzIHJlbW90ZS9sb2NhbC4K
+QW55d2F5LCBzb21laG93IEknbSBmYWNpbmcgYSBzdHJhbmdlIGlzc3VlIGhlcmUuIFZNIEEgYW5k
+IFZNIEIgY2FuIHBpbmcgZWFjaCBvdGhlciBhbHJlYWR5LCBhbHRob3VnaCBub3RoaW5nIGVsc2Ug
+d29ya3MuIEkgY2Fubm90IGRvIGN1cmwvd2dldCBiZXR3ZWVuIHRoZSBWTXMgbm9yIGlwZXJmLCBl
+dGMuCkRvIHlvdSBrbm93IGlmIG15IHRvcG9sb2d5IGFib3ZlIHNob3VsZCB3b3JrPyBWTSBBIGNh
+biByZWFjaCBWTSBCIHdpdGhvdXQgVlhMQU4ganVzdCBmaW5lIG92ZXIgdGhlIG90aGVyIGhvcHMs
+IGFzIHdlbGwgQU1TVEVSREFNIGFuZCBWSUVOTkEgY2FuIHJlYWNoIGVhY2ggb3RoZXIgZnVsbHku
+Ck5vIGZpcmV3YWxsIGVuYWJsZWQgbm9yIGFueXRoaW5nIGVsc2UuIEFsbG93ZWQtSVBzIGlzIDAu
+MC4wLjAvMCw6Oi8wIG9uIGFsbCB0dW5uZWxzLgpNeSBndWVzcyB3YXMgdGhhdCB0aGlzIGlzIHNv
+bWV3aGF0IE1UVSByZWxhdGVkLCB0cmllZCAxMjAwIG9uIHRoZSBWWExBTiBpbnRlcmZhY2VzIC0g
+bm8gZGlmZmVyZW5jZS4=
 
-Good idea. I'll link to that instead.
+----_com.samsung.android.email_2402347799339770
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: base64
+
+PGh0bWw+PGhlYWQ+PG1ldGEgaHR0cC1lcXVpdj0iQ29udGVudC1UeXBlIiBjb250ZW50PSJ0ZXh0
+L2h0bWw7IGNoYXJzZXQ9VVRGLTgiPjwvaGVhZD48Ym9keT48ZGl2IG9yaWdpbmFsX2ZvbnRfYXR0
+cj0iLTEiIG9yaWdpbmFsX2xpbmVfaGVpZ2h0X2F0dHI9IiI+SGVsbG8sPC9kaXY+PGRpdiBvcmln
+aW5hbF9mb250X2F0dHI9Ii0xIiBvcmlnaW5hbF9saW5lX2hlaWdodF9hdHRyPSIiPjxicj48L2Rp
+dj48ZGl2IG9yaWdpbmFsX2ZvbnRfYXR0cj0iLTEiIG9yaWdpbmFsX2xpbmVfaGVpZ2h0X2F0dHI9
+IiI+SSB3b3VsZCBsb3ZlIHRvIHVzZSBWWExBTnMgZm9yIG15IG5ldHdvcmsgdG8gc2VwYXJhdGUg
+c3R1ZmYsIGFsdGhvdWdoIEknbSBhIGJpdCBzdHJ1Z2dsaW5nLiBNeSB0b3BvbG9neSBsb29rcyBs
+aWtlIHRoaXM6PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdiBvcmlnaW5hbF9mb250X2F0dHI9Ii0x
+IiBvcmlnaW5hbF9saW5lX2hlaWdodF9hdHRyPSIiPlZNIEEgLS0mZ3Q7IEFNU1RFUkRBTSAtJmd0
+OyBGUkFOS0ZVUlQgLSZndDsgVklFTk5BIC0tJmd0OyBWTSBCPC9kaXY+PGRpdj48YnI+PC9kaXY+
+PGRpdiBvcmlnaW5hbF9mb250X2F0dHI9Ii0xIiBvcmlnaW5hbF9saW5lX2hlaWdodF9hdHRyPSIi
+PictJmd0OycgaW5kaWNhdGVzIGEgV2lyZWd1YXJkIHR1bm5lbDwvZGl2PjxkaXYgb3JpZ2luYWxf
+Zm9udF9hdHRyPSItMSIgb3JpZ2luYWxfbGluZV9oZWlnaHRfYXR0cj0iIj4nLS0mZ3Q7JyBpcyBh
+IHBoeXNpY2FsIGxpbms8L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2IG9yaWdpbmFsX2ZvbnRfYXR0
+cj0iLTEiIG9yaWdpbmFsX2xpbmVfaGVpZ2h0X2F0dHI9IiI+QWN0dWFsbHkgSSdtIGNvbmZpZ3Vy
+aW5nIGEgVlhMQU4gSW50ZXJmYWNlIGluIEFNU1RFUkRBTSBhbmQgVklFTk5BLCB3aXRoIHRoZSB0
+dW5uZWwgSVBzIGFzIHJlbW90ZS9sb2NhbC48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2IG9yaWdp
+bmFsX2ZvbnRfYXR0cj0iLTEiIG9yaWdpbmFsX2xpbmVfaGVpZ2h0X2F0dHI9IiI+QW55d2F5LCBz
+b21laG93IEknbSBmYWNpbmcgYSBzdHJhbmdlIGlzc3VlIGhlcmUuIFZNIEEgYW5kIFZNIEIgY2Fu
+IHBpbmcgZWFjaCBvdGhlciBhbHJlYWR5LCBhbHRob3VnaCBub3RoaW5nIGVsc2Ugd29ya3MuIEkg
+Y2Fubm90IGRvIGN1cmwvd2dldCBiZXR3ZWVuIHRoZSBWTXMgbm9yIGlwZXJmLCBldGMuPC9kaXY+
+PGRpdj48YnI+PC9kaXY+PGRpdiBvcmlnaW5hbF9mb250X2F0dHI9Ii0xIiBvcmlnaW5hbF9saW5l
+X2hlaWdodF9hdHRyPSIiPkRvIHlvdSBrbm93IGlmIG15IHRvcG9sb2d5IGFib3ZlIHNob3VsZCB3
+b3JrPyBWTSBBIGNhbiByZWFjaCBWTSBCIHdpdGhvdXQgVlhMQU4ganVzdCBmaW5lIG92ZXIgdGhl
+IG90aGVyIGhvcHMsIGFzIHdlbGwgQU1TVEVSREFNIGFuZCBWSUVOTkEgY2FuIHJlYWNoIGVhY2gg
+b3RoZXIgZnVsbHkuPC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdiBvcmlnaW5hbF9mb250X2F0dHI9
+Ii0xIiBvcmlnaW5hbF9saW5lX2hlaWdodF9hdHRyPSIiPk5vIGZpcmV3YWxsIGVuYWJsZWQgbm9y
+IGFueXRoaW5nIGVsc2UuIEFsbG93ZWQtSVBzIGlzIDAuMC4wLjAvMCw6Oi8wIG9uIGFsbCB0dW5u
+ZWxzLjwvZGl2PjxkaXYgb3JpZ2luYWxfZm9udF9hdHRyPSItMSIgb3JpZ2luYWxfbGluZV9oZWln
+aHRfYXR0cj0iIj48YnI+PC9kaXY+PGRpdiBvcmlnaW5hbF9mb250X2F0dHI9Ii0xIiBvcmlnaW5h
+bF9saW5lX2hlaWdodF9hdHRyPSIiPk15IGd1ZXNzIHdhcyB0aGF0IHRoaXMgaXMgc29tZXdoYXQg
+TVRVIHJlbGF0ZWQsIHRyaWVkIDEyMDAgb24gdGhlIFZYTEFOIGludGVyZmFjZXMgLSBubyBkaWZm
+ZXJlbmNlLjwvZGl2PjwvYm9keT48L2h0bWw+
+
+----_com.samsung.android.email_2402347799339770--
