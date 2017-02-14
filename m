@@ -1,26 +1,21 @@
-Return-Path: dave@natulte.net
+Return-Path: jason.dusek@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 32893f63
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id accc5a63
  for <wireguard@lists.zx2c4.com>;
- Tue, 14 Feb 2017 04:41:58 +0000 (UTC)
-Received: from mail-vk0-f44.google.com (mail-vk0-f44.google.com
- [209.85.213.44])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0b364e54
+ Tue, 14 Feb 2017 04:55:51 +0000 (UTC)
+Received: from mail-wm0-f50.google.com (mail-wm0-f50.google.com [74.125.82.50])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 56ee7222
  for <wireguard@lists.zx2c4.com>;
- Tue, 14 Feb 2017 04:41:58 +0000 (UTC)
-Received: by mail-vk0-f44.google.com with SMTP id k127so73718565vke.0
- for <wireguard@lists.zx2c4.com>; Mon, 13 Feb 2017 20:56:07 -0800 (PST)
+ Tue, 14 Feb 2017 04:55:51 +0000 (UTC)
+Received: by mail-wm0-f50.google.com with SMTP id v186so8851979wmd.0
+ for <wireguard@lists.zx2c4.com>; Mon, 13 Feb 2017 21:10:00 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <874lzzqai9.fsf@alice.fifthhorseman.net>
-References: <CAMx+r7WsvfJ6j7JT9+Z5mNe=FEFwehTVNgX+7-8vnQMa5FxORg@mail.gmail.com>
- <874lzzqai9.fsf@alice.fifthhorseman.net>
-From: David Anderson <dave@natulte.net>
-Date: Mon, 13 Feb 2017 20:55:45 -0800
-Message-ID: <CAMx+r7XsHgrxy+1T4ndqzSebA6Ds4XTjQrD9VmoCWAtJkLygHw@mail.gmail.com>
-Subject: Re: (Unofficial) wireguard packages for Debian Stretch (testing)
-To: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-Content-Type: multipart/alternative; boundary=001a11415e88b491660548766155
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: Jason Dusek <jason.dusek@gmail.com>
+Date: Tue, 14 Feb 2017 05:09:47 +0000
+Message-ID: <CAO3NbwO_Wh_h9UgGdBRz_BZn4Pp8G=CxMJCSsjZpDZ-ampPTYw@mail.gmail.com>
+Subject: [PATCH] Handle (a) changes in Screech and (b) borrow issue
+To: wireguard@lists.zx2c4.com
+Content-Type: multipart/mixed; boundary=001a11452e4c63bad50548769327
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -30,197 +25,133 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---001a11415e88b491660548766155
+--001a11452e4c63bad50548769327
+Content-Type: multipart/alternative; boundary=001a11452e4c63bad10548769325
+
+--001a11452e4c63bad10548769325
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, Feb 12, 2017 at 3:01 PM, Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-wrote:
+Tried submitting this with git send-email but it doesn=E2=80=99t seem to ha=
+ve shown
+up yet.
+=E2=80=8B
 
-> On Fri 2017-02-10 19:23:50 -0500, David Anderson wrote:
-> > In case it's of use to anyone, I've built wireguard packages for Debian
-> > testing. I wanted to play with wireguard on my Debian Stretch systems,
-> but
-> > wireguard is currently locked to Sid only until 1.0 brings API stability
-> > guarantees.
-> >
-> > So, I set up a cronjob that rebuilds the Sid source package on a Stretch
-> > system, and the result is wireguard packages that track the latest
-> release,
-> > but don't pull in unstable versions of libc and whatnot when you try to
-> > install them, as would happen if you tried to install via package
-> pinning.
-> >
-> > Naturally, you have only my word that the packages are unmodified
-> rebuilds
-> > of Debian's original package, and you're trusting packagecloud to not
-> > tamper with the packages (it's their signing keys, not mine) so caveat
-> > emptor. It works for me, it might work for you as well.
-> >
-> > With the warnings and disclaimers out of the way, here's the repo:
-> > https://packagecloud.io/danderson/wireguard?filter=debs
->
-> I appreciate your interest in getting wider distribution for wireguard,
-> David, but i'm not convinced this approach makes much sense.
->
-> It seems like a lot of extra work compared to just putting wireguard
-> into stretch-backports once stretch is released.
->
-
-"Once stretch is released" could be a few months still, right? It's only
-just gone into final freeze. I agree that once it's released, backports is
-definitely the right way to distribute.
-
-
-> Until stretch releases, people running testing should be able to just
-> add the unstable repository and pin it to be lower priority than testing
-> (see apt_preferences(5)).
->
-
-So, I'd initially tried doing this, by adding the unstable repository at a
-negative priority. What turned me off is that even with that low
-preference, attempting to install the wireguard packages seemed to pull in
-some core system libraries (libc and such) from unstable as well. And while
-I'm excited about wireguard, I'm not "install unstable base libraries"
-excited :).
-
-That said, it's quite possible I was just not using the preference system
-correctly. If it's possible to express "Install *only* wireguard-* from
-unstable, never anything else", then I agree, that's definitely the way to
-go.
-
-
->
-> Using this standard approach, users won't need to:
->
->  a) add a new key to their apt configuration, which increases the attack
->     surface for all installed packages (btw, the proposed shell pipe
->     into "apt-key add -" is deprecated, see for example commentary at
->     https://bugs.debian.org/853858)
->
->  b) be dependent on some alternate suite of build daemons -- if debian
->     supports your build environment, the buildds will have the wireguard
->     packages.
->
-> So I don't see much to recommend the proposed approach by comparison,
-> and i don't think that it should be documented as a recommended approach
-> upstream, unless there are clearer benefits that i'm missing here.  In
-> that case, i'd like to know what those benefits are :)
->
-
-Fair enough, I defer to your greater experience with Debian packaging.
-Fortunately, packagecloud's stats say that there were no installs from my
-repository, so assuming I can get pinning to work properly, the only
-systems that need cleanup are my own.
-
-Cheers,
-- Dave
-
-
->
->          --dkg
->
-
---001a11415e88b491660548766155
+--001a11452e4c63bad10548769325
 Content-Type: text/html; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div class=3D"gmail_extra"><div class=3D"gmail_quote">On S=
-un, Feb 12, 2017 at 3:01 PM, Daniel Kahn Gillmor <span dir=3D"ltr">&lt;<a h=
-ref=3D"mailto:dkg@fifthhorseman.net" target=3D"_blank">dkg@fifthhorseman.ne=
-t</a>&gt;</span> wrote:<br><blockquote class=3D"gmail_quote" style=3D"margi=
-n:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex"><span class=3D"">=
-On Fri 2017-02-10 19:23:50 -0500, David Anderson wrote:<br>
-&gt; In case it&#39;s of use to anyone, I&#39;ve built wireguard packages f=
-or Debian<br>
-&gt; testing. I wanted to play with wireguard on my Debian Stretch systems,=
- but<br>
-&gt; wireguard is currently locked to Sid only until 1.0 brings API stabili=
-ty<br>
-&gt; guarantees.<br>
-&gt;<br>
-&gt; So, I set up a cronjob that rebuilds the Sid source package on a Stret=
-ch<br>
-&gt; system, and the result is wireguard packages that track the latest rel=
-ease,<br>
-&gt; but don&#39;t pull in unstable versions of libc and whatnot when you t=
-ry to<br>
-&gt; install them, as would happen if you tried to install via package pinn=
-ing.<br>
-&gt;<br>
-&gt; Naturally, you have only my word that the packages are unmodified rebu=
-ilds<br>
-&gt; of Debian&#39;s original package, and you&#39;re trusting packagecloud=
- to not<br>
-&gt; tamper with the packages (it&#39;s their signing keys, not mine) so ca=
-veat<br>
-&gt; emptor. It works for me, it might work for you as well.<br>
-&gt;<br>
-&gt; With the warnings and disclaimers out of the way, here&#39;s the repo:=
-<br>
-&gt; <a href=3D"https://packagecloud.io/danderson/wireguard?filter=3Ddebs" =
-rel=3D"noreferrer" target=3D"_blank">https://packagecloud.io/<wbr>danderson=
-/wireguard?filter=3D<wbr>debs</a><br>
-<br>
-</span>I appreciate your interest in getting wider distribution for wiregua=
-rd,<br>
-David, but i&#39;m not convinced this approach makes much sense.<br>
-<br>
-It seems like a lot of extra work compared to just putting wireguard<br>
-into stretch-backports once stretch is released.<br></blockquote><div><br><=
-/div><div>&quot;Once stretch is released&quot; could be a few months still,=
- right? It&#39;s only just gone into final freeze. I agree that once it&#39=
-;s released, backports is definitely the right way to distribute.</div><div=
->=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;b=
-order-left:1px #ccc solid;padding-left:1ex">Until stretch releases, people =
-running testing should be able to just<br>
-add the unstable repository and pin it to be lower priority than testing<br=
+<div dir=3D"ltr"><div class=3D"markdown-here-wrapper" style=3D""><p style=
+=3D"margin:1.2em 0px!important">Tried submitting this with <code style=3D"f=
+ont-size:0.85em;font-family:Consolas,Inconsolata,Courier,monospace;margin:0=
+px 0.15em;padding:0px 0.3em;white-space:pre-wrap;border:1px solid rgb(234,2=
+34,234);background-color:rgb(248,248,248);border-radius:3px;display:inline"=
+>git send-email</code> but it doesn=E2=80=99t seem to have shown up yet.</p=
 >
-(see apt_preferences(5)).<br></blockquote><div><br></div><div>So, I&#39;d i=
-nitially tried doing this, by adding the unstable repository at a negative =
-priority. What turned me off is that even with that low preference, attempt=
-ing to install the wireguard packages seemed to pull in some core system li=
-braries (libc and such) from unstable as well. And while I&#39;m excited ab=
-out wireguard, I&#39;m not &quot;install unstable base libraries&quot; exci=
-ted :).</div><div><br></div><div>That said, it&#39;s quite possible I was j=
-ust not using the preference system correctly. If it&#39;s possible to expr=
-ess &quot;Install *only* wireguard-* from unstable, never anything else&quo=
-t;, then I agree, that&#39;s definitely the way to go.</div><div>=C2=A0</di=
-v><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:=
-1px #ccc solid;padding-left:1ex">
-<br>
-Using this standard approach, users won&#39;t need to:<br>
-<br>
-=C2=A0a) add a new key to their apt configuration, which increases the atta=
-ck<br>
-=C2=A0 =C2=A0 surface for all installed packages (btw, the proposed shell p=
-ipe<br>
-=C2=A0 =C2=A0 into &quot;apt-key add -&quot; is deprecated, see for example=
- commentary at<br>
-=C2=A0 =C2=A0 <a href=3D"https://bugs.debian.org/853858" rel=3D"noreferrer"=
- target=3D"_blank">https://bugs.debian.org/853858</a><wbr>)<br>
-<br>
-=C2=A0b) be dependent on some alternate suite of build daemons -- if debian=
-<br>
-=C2=A0 =C2=A0 supports your build environment, the buildds will have the wi=
-reguard<br>
-=C2=A0 =C2=A0 packages.<br>
-<br>
-So I don&#39;t see much to recommend the proposed approach by comparison,<b=
-r>
-and i don&#39;t think that it should be documented as a recommended approac=
-h<br>
-upstream, unless there are clearer benefits that i&#39;m missing here.=C2=
-=A0 In<br>
-that case, i&#39;d like to know what those benefits are :)<br></blockquote>=
-<div><br></div><div>Fair enough, I defer to your greater experience with De=
-bian packaging. Fortunately, packagecloud&#39;s stats say that there were n=
-o installs from my repository, so assuming I can get pinning to work proper=
-ly, the only systems that need cleanup are my own.</div><div><br></div><div=
->Cheers,</div><div>- Dave</div><div>=C2=A0</div><blockquote class=3D"gmail_=
-quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1=
-ex">
-<span class=3D"HOEnZb"><font color=3D"#888888"><br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0--dkg<br>
-</font></span></blockquote></div><br></div></div>
+<div title=3D"MDH:VHJpZWQgc3VibWl0dGluZyB0aGlzIHdpdGggYGdpdCBzZW5kLWVtYWlsY=
+CBidXQgaXQgZG9lc24n
+dCBzZWVtIHRvIGhhdmUgc2hvd24gdXAgeWV0Lg=3D=3D" style=3D"height:0;width:0;max=
+-height:0;max-width:0;overflow:hidden;font-size:0em;padding:0;margin:0">=E2=
+=80=8B</div></div></div>
 
---001a11415e88b491660548766155--
+--001a11452e4c63bad10548769325--
+
+--001a11452e4c63bad50548769327
+Content-Type: application/octet-stream;
+	name="0001-Handle-a-changes-in-Screech-and-b-borrow-issue.patch"
+Content-Disposition: attachment;
+	filename="0001-Handle-a-changes-in-Screech-and-b-borrow-issue.patch"
+Content-Transfer-Encoding: base64
+Content-ID: <15a3ab71d768be4d55b1>
+X-Attachment-Id: 15a3ab71d768be4d55b1
+
+RnJvbSAxYjIxNmRiZWJkMjhjNzc2MTQ3MTRiYzA4MjkzZmVkNjVjZjBmYjRmIE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBKYXNvbiBEdXNlayA8amFzb24uZHVzZWtAZ21haWwuY29tPgpE
+YXRlOiBNb24sIDEzIEZlYiAyMDE3IDE5OjE2OjAxIC0wODAwClN1YmplY3Q6IFtQQVRDSF0gSGFu
+ZGxlIChhKSBjaGFuZ2VzIGluIFNjcmVlY2ggYW5kIChiKSBib3Jyb3cgaXNzdWUKCi0tLQogY29u
+dHJpYi9leHRlcm5hbC10ZXN0cy9ydXN0L0NhcmdvLnRvbWwgIHwgIDIgKy0KIGNvbnRyaWIvZXh0
+ZXJuYWwtdGVzdHMvcnVzdC9zcmMvbWFpbi5ycyB8IDY2ICsrKysrKysrKysrKysrKysrLS0tLS0t
+LS0tLS0tLS0tLQogMiBmaWxlcyBjaGFuZ2VkLCAzNiBpbnNlcnRpb25zKCspLCAzMiBkZWxldGlv
+bnMoLSkKCmRpZmYgLS1naXQgYS9jb250cmliL2V4dGVybmFsLXRlc3RzL3J1c3QvQ2FyZ28udG9t
+bCBiL2NvbnRyaWIvZXh0ZXJuYWwtdGVzdHMvcnVzdC9DYXJnby50b21sCmluZGV4IGMwNjQ5MDUu
+LjMyNDk5ZTUgMTAwNjQ0Ci0tLSBhL2NvbnRyaWIvZXh0ZXJuYWwtdGVzdHMvcnVzdC9DYXJnby50
+b21sCisrKyBiL2NvbnRyaWIvZXh0ZXJuYWwtdGVzdHMvcnVzdC9DYXJnby50b21sCkBAIC0zLDcg
+KzMsNyBAQCBuYW1lID0gIndpcmVndWFyZC1rZWVwYWxpdmUiCiB2ZXJzaW9uID0gIjAuMS4wIgog
+YXV0aG9ycyA9IFsiamFzb25AengyYzQuY29tIl0KIFtkZXBlbmRlbmNpZXNdCi1zY3JlZWNoID0g
+eyBnaXQgPSAiaHR0cHM6Ly9naXRodWIuY29tL3RyZXZwL3NjcmVlY2giIH0KK3NjcmVlY2ggPSB7
+IGdpdCA9ICJodHRwczovL2dpdGh1Yi5jb20vc29saWRzbmFjay9zY3JlZWNoIiwgYnJhbmNoID0g
+IndnIiB9CiBydXN0LWNyeXB0byA9ICIqIgogYnl0ZW9yZGVyID0gIioiCiBydXN0Yy1zZXJpYWxp
+emUgPSAiKiIKZGlmZiAtLWdpdCBhL2NvbnRyaWIvZXh0ZXJuYWwtdGVzdHMvcnVzdC9zcmMvbWFp
+bi5ycyBiL2NvbnRyaWIvZXh0ZXJuYWwtdGVzdHMvcnVzdC9zcmMvbWFpbi5ycwppbmRleCAyMzIz
+NzVjLi42NWJhZjQ3IDEwMDY0NAotLS0gYS9jb250cmliL2V4dGVybmFsLXRlc3RzL3J1c3Qvc3Jj
+L21haW4ucnMKKysrIGIvY29udHJpYi9leHRlcm5hbC10ZXN0cy9ydXN0L3NyYy9tYWluLnJzCkBA
+IC0zOCwzOSArMzgsNDMgQEAgZm4gbWFpbigpIHsKIAlvd25lci5zZXRfcyhteV9rZXlwYWlyKTsK
+IAlvd25lci5zZXRfcnMoJnRoZWlyX3B1YmxpYyk7CiAJbGV0IG11dCBjaXBoZXJzdGF0ZTEgOiBD
+aXBoZXJTdGF0ZTxDaXBoZXJDaGFDaGFQb2x5PiA9IERlZmF1bHQ6OmRlZmF1bHQoKTsKLSAgICAg
+ICAgbGV0IG11dCBjaXBoZXJzdGF0ZTIgOiBDaXBoZXJTdGF0ZTxDaXBoZXJDaGFDaGFQb2x5PiA9
+IERlZmF1bHQ6OmRlZmF1bHQoKTsKLQlsZXQgbXV0IGhhbmRzaGFrZSA9IEhhbmRzaGFrZVN0YXRl
+OjpuZXdfZnJvbV9vd25lcigmbXV0IG93bmVyLCB0cnVlLCBIYW5kc2hha2VQYXR0ZXJuOjpJSywg
+IldpcmVHdWFyZCB2MCB6eDJjNCBKYXNvbkB6eDJjNC5jb20iLmFzX2J5dGVzKCksIFNvbWUoJm15
+X3ByZXNoYXJlZFsuLl0pLCAmbXV0IGNpcGhlcnN0YXRlMSwgJm11dCBjaXBoZXJzdGF0ZTIpOwor
+CWxldCBtdXQgY2lwaGVyc3RhdGUyIDogQ2lwaGVyU3RhdGU8Q2lwaGVyQ2hhQ2hhUG9seT4gPSBE
+ZWZhdWx0OjpkZWZhdWx0KCk7CiAKLQlsZXQgbm93ID0gdGltZTo6Z2V0X3RpbWUoKTsKLQlsZXQg
+bXV0IHRhaTY0biA9IFswOyAxMl07Ci0JQmlnRW5kaWFuOjp3cml0ZV9pNjQoJm11dCB0YWk2NG5b
+MC4uXSwgNDYxMTY4NjAxODQyNzM4NzkxNFVMTCArIG5vdy5zZWMpOwotCUJpZ0VuZGlhbjo6d3Jp
+dGVfaTMyKCZtdXQgdGFpNjRuWzguLl0sIG5vdy5uc2VjKTsKLQlsZXQgbXV0IGluaXRpYXRpb25f
+cGFja2V0ID0gWzA7IDE0OF07Ci0JaW5pdGlhdGlvbl9wYWNrZXRbMF0gPSAxOyAvKiBUeXBlOiBJ
+bml0aWF0aW9uICovCi0JaW5pdGlhdGlvbl9wYWNrZXRbMV0gPSAwOyAvKiBSZXNlcnZlZCAqLwot
+CWluaXRpYXRpb25fcGFja2V0WzJdID0gMDsgLyogUmVzZXJ2ZWQgKi8KLQlpbml0aWF0aW9uX3Bh
+Y2tldFszXSA9IDA7IC8qIFJlc2VydmVkICovCi0JTGl0dGxlRW5kaWFuOjp3cml0ZV91MzIoJm11
+dCBpbml0aWF0aW9uX3BhY2tldFs0Li5dLCAyOCk7IC8qIFNlbmRlciBpbmRleDogMjggKGFyYml0
+cmFyeSkgKi8KLQloYW5kc2hha2Uud3JpdGVfbWVzc2FnZSgmdGFpNjRuLCAmbXV0IGluaXRpYXRp
+b25fcGFja2V0WzguLl0pOwotCWxldCBtdXQgbWFjX21hdGVyaWFsID0gWzA7IDE0OF07Ci0JbWVt
+Y3B5KCZtdXQgbWFjX21hdGVyaWFsLCAmdGhlaXJfcHVibGljKTsKLQltZW1jcHkoJm11dCBtYWNf
+bWF0ZXJpYWxbMzIuLl0sICZpbml0aWF0aW9uX3BhY2tldFswLi4xMTZdKTsKLQlsZXQgbXV0IG1h
+YyA9IFswOyAxNl07Ci0JQmxha2Uyczo6Ymxha2UycygmbXV0IG1hYywgJm1hY19tYXRlcmlhbCwg
+Jm15X3ByZXNoYXJlZCk7Ci0JbWVtY3B5KCZtdXQgaW5pdGlhdGlvbl9wYWNrZXRbMTE2Li5dLCAm
+bWFjKTsKLQlzb2NrZXQuc2VuZF90bygmaW5pdGlhdGlvbl9wYWNrZXQsICZzZW5kX2FkZHIpLnVu
+d3JhcCgpOworCWxldCB0aGVpcl9pbmRleCA9IHsKKwkJbGV0IG11dCBoYW5kc2hha2UgPSBIYW5k
+c2hha2VTdGF0ZTo6bmV3X2Zyb21fb3duZXIoJm11dCBvd25lciwgdHJ1ZSwgSGFuZHNoYWtlUGF0
+dGVybjo6SUssICJXaXJlR3VhcmQgdjAgengyYzQgSmFzb25AengyYzQuY29tIi5hc19ieXRlcygp
+LCBTb21lKCZteV9wcmVzaGFyZWRbLi5dKSwgJm11dCBjaXBoZXJzdGF0ZTEsICZtdXQgY2lwaGVy
+c3RhdGUyKTsKIAotCWxldCBtdXQgcmVzcG9uc2VfcGFja2V0ID0gWzA7IDkyXTsKLQlzb2NrZXQu
+cmVjdl9mcm9tKCZtdXQgcmVzcG9uc2VfcGFja2V0KS51bndyYXAoKTsKLQlhc3NlcnQhKHJlc3Bv
+bnNlX3BhY2tldFswXSA9PSAyIC8qIFR5cGU6IFJlc3BvbnNlICovKTsKLQlhc3NlcnQhKHJlc3Bv
+bnNlX3BhY2tldFsxXSA9PSAwIC8qIFJlc2VydmVkICovKTsKLQlhc3NlcnQhKHJlc3BvbnNlX3Bh
+Y2tldFsyXSA9PSAwIC8qIFJlc2VydmVkICovKTsKLQlhc3NlcnQhKHJlc3BvbnNlX3BhY2tldFsz
+XSA9PSAwIC8qIFJlc2VydmVkICovKTsKLQlsZXQgdGhlaXJfaW5kZXggPSBMaXR0bGVFbmRpYW46
+OnJlYWRfdTMyKCZyZXNwb25zZV9wYWNrZXRbNC4uXSk7Ci0JbGV0IG91cl9pbmRleCA9IExpdHRs
+ZUVuZGlhbjo6cmVhZF91MzIoJnJlc3BvbnNlX3BhY2tldFs4Li5dKTsKLQlhc3NlcnQhKG91cl9p
+bmRleCA9PSAyOCk7Ci0JbGV0IChwYXlsb2FkX2xlbiwgbGFzdCkgPSBoYW5kc2hha2UucmVhZF9t
+ZXNzYWdlKCZyZXNwb25zZV9wYWNrZXRbMTIuLjYwXSwgJm11dCBlbXB0eV9wYXlsb2FkKS51bndy
+YXAoKTsKLQlhc3NlcnQhKHBheWxvYWRfbGVuID09IDAgJiYgbGFzdCk7CisJCWxldCBub3cgPSB0
+aW1lOjpnZXRfdGltZSgpOworCQlsZXQgbXV0IHRhaTY0biA9IFswOyAxMl07CisJCUJpZ0VuZGlh
+bjo6d3JpdGVfaTY0KCZtdXQgdGFpNjRuWzAuLl0sIDQ2MTE2ODYwMTg0MjczODc5MTQgKyBub3cu
+c2VjKTsKKwkJQmlnRW5kaWFuOjp3cml0ZV9pMzIoJm11dCB0YWk2NG5bOC4uXSwgbm93Lm5zZWMp
+OworCQlsZXQgbXV0IGluaXRpYXRpb25fcGFja2V0ID0gWzA7IDE0OF07CisJCWluaXRpYXRpb25f
+cGFja2V0WzBdID0gMTsgLyogVHlwZTogSW5pdGlhdGlvbiAqLworCQlpbml0aWF0aW9uX3BhY2tl
+dFsxXSA9IDA7IC8qIFJlc2VydmVkICovCisJCWluaXRpYXRpb25fcGFja2V0WzJdID0gMDsgLyog
+UmVzZXJ2ZWQgKi8KKwkJaW5pdGlhdGlvbl9wYWNrZXRbM10gPSAwOyAvKiBSZXNlcnZlZCAqLwor
+CQlMaXR0bGVFbmRpYW46OndyaXRlX3UzMigmbXV0IGluaXRpYXRpb25fcGFja2V0WzQuLl0sIDI4
+KTsgLyogU2VuZGVyIGluZGV4OiAyOCAoYXJiaXRyYXJ5KSAqLworCQloYW5kc2hha2Uud3JpdGVf
+bWVzc2FnZSgmdGFpNjRuLCAmbXV0IGluaXRpYXRpb25fcGFja2V0WzguLl0pOworCQlsZXQgbXV0
+IG1hY19tYXRlcmlhbCA9IFswOyAxNDhdOworCQltZW1jcHkoJm11dCBtYWNfbWF0ZXJpYWwsICZ0
+aGVpcl9wdWJsaWMpOworCQltZW1jcHkoJm11dCBtYWNfbWF0ZXJpYWxbMzIuLl0sICZpbml0aWF0
+aW9uX3BhY2tldFswLi4xMTZdKTsKKwkJbGV0IG11dCBtYWMgPSBbMDsgMTZdOworCQlCbGFrZTJz
+OjpibGFrZTJzKCZtdXQgbWFjLCAmbWFjX21hdGVyaWFsLCAmbXlfcHJlc2hhcmVkKTsKKwkJbWVt
+Y3B5KCZtdXQgaW5pdGlhdGlvbl9wYWNrZXRbMTE2Li5dLCAmbWFjKTsKKwkJc29ja2V0LnNlbmRf
+dG8oJmluaXRpYXRpb25fcGFja2V0LCAmc2VuZF9hZGRyKS51bndyYXAoKTsKKworCQlsZXQgbXV0
+IHJlc3BvbnNlX3BhY2tldCA9IFswOyA5Ml07CisJCXNvY2tldC5yZWN2X2Zyb20oJm11dCByZXNw
+b25zZV9wYWNrZXQpLnVud3JhcCgpOworCQlhc3NlcnQhKHJlc3BvbnNlX3BhY2tldFswXSA9PSAy
+IC8qIFR5cGU6IFJlc3BvbnNlICovKTsKKwkJYXNzZXJ0IShyZXNwb25zZV9wYWNrZXRbMV0gPT0g
+MCAvKiBSZXNlcnZlZCAqLyk7CisJCWFzc2VydCEocmVzcG9uc2VfcGFja2V0WzJdID09IDAgLyog
+UmVzZXJ2ZWQgKi8pOworCQlhc3NlcnQhKHJlc3BvbnNlX3BhY2tldFszXSA9PSAwIC8qIFJlc2Vy
+dmVkICovKTsKKwkJbGV0IHRoZWlyX2luZGV4ID0gTGl0dGxlRW5kaWFuOjpyZWFkX3UzMigmcmVz
+cG9uc2VfcGFja2V0WzQuLl0pOworCQlsZXQgb3VyX2luZGV4ID0gTGl0dGxlRW5kaWFuOjpyZWFk
+X3UzMigmcmVzcG9uc2VfcGFja2V0WzguLl0pOworCQlhc3NlcnQhKG91cl9pbmRleCA9PSAyOCk7
+CisJCWxldCAocGF5bG9hZF9sZW4sIGxhc3QpID0gaGFuZHNoYWtlLnJlYWRfbWVzc2FnZSgmcmVz
+cG9uc2VfcGFja2V0WzEyLi42MF0sICZtdXQgZW1wdHlfcGF5bG9hZCkudW53cmFwKCk7CisJCWFz
+c2VydCEocGF5bG9hZF9sZW4gPT0gMCAmJiBsYXN0KTsKKwkJdGhlaXJfaW5kZXgKKwl9OwogCiAJ
+bGV0IG11dCBrZWVwYWxpdmVfcGFja2V0ID0gWzA7IDMyXTsKIAlrZWVwYWxpdmVfcGFja2V0WzBd
+ID0gNDsgLyogVHlwZTogRGF0YSAqLwotLSAKMi4xMC4wCgo=
+--001a11452e4c63bad50548769327--
