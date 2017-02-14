@@ -1,26 +1,26 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: dave@natulte.net
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7d086ac6
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 32893f63
  for <wireguard@lists.zx2c4.com>;
- Mon, 13 Feb 2017 20:53:08 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 24287455
+ Tue, 14 Feb 2017 04:41:58 +0000 (UTC)
+Received: from mail-vk0-f44.google.com (mail-vk0-f44.google.com
+ [209.85.213.44])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0b364e54
  for <wireguard@lists.zx2c4.com>;
- Mon, 13 Feb 2017 20:53:08 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 160f9576
- for <wireguard@lists.zx2c4.com>;
- Mon, 13 Feb 2017 20:53:06 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 5fdd63f1
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Mon, 13 Feb 2017 20:53:06 +0000 (UTC)
-Date: Mon, 13 Feb 2017 22:07:11 +0100
-To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: [ANNOUNCE] WireGuard Snapshot `0.0.20170213` Available
+ Tue, 14 Feb 2017 04:41:58 +0000 (UTC)
+Received: by mail-vk0-f44.google.com with SMTP id k127so73718565vke.0
+ for <wireguard@lists.zx2c4.com>; Mon, 13 Feb 2017 20:56:07 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Message-Id: <ffffffff8c5087c5@frisell.zx2c4.com>
+In-Reply-To: <874lzzqai9.fsf@alice.fifthhorseman.net>
+References: <CAMx+r7WsvfJ6j7JT9+Z5mNe=FEFwehTVNgX+7-8vnQMa5FxORg@mail.gmail.com>
+ <874lzzqai9.fsf@alice.fifthhorseman.net>
+From: David Anderson <dave@natulte.net>
+Date: Mon, 13 Feb 2017 20:55:45 -0800
+Message-ID: <CAMx+r7XsHgrxy+1T4ndqzSebA6Ds4XTjQrD9VmoCWAtJkLygHw@mail.gmail.com>
+Subject: Re: (Unofficial) wireguard packages for Debian Stretch (testing)
+To: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+Content-Type: multipart/alternative; boundary=001a11415e88b491660548766155
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -30,103 +30,197 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--001a11415e88b491660548766155
+Content-Type: text/plain; charset=UTF-8
 
-Hello,
+On Sun, Feb 12, 2017 at 3:01 PM, Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+wrote:
 
-A new snapshot, `0.0.20170213`, has been tagged in the git repository.
+> On Fri 2017-02-10 19:23:50 -0500, David Anderson wrote:
+> > In case it's of use to anyone, I've built wireguard packages for Debian
+> > testing. I wanted to play with wireguard on my Debian Stretch systems,
+> but
+> > wireguard is currently locked to Sid only until 1.0 brings API stability
+> > guarantees.
+> >
+> > So, I set up a cronjob that rebuilds the Sid source package on a Stretch
+> > system, and the result is wireguard packages that track the latest
+> release,
+> > but don't pull in unstable versions of libc and whatnot when you try to
+> > install them, as would happen if you tried to install via package
+> pinning.
+> >
+> > Naturally, you have only my word that the packages are unmodified
+> rebuilds
+> > of Debian's original package, and you're trusting packagecloud to not
+> > tamper with the packages (it's their signing keys, not mine) so caveat
+> > emptor. It works for me, it might work for you as well.
+> >
+> > With the warnings and disclaimers out of the way, here's the repo:
+> > https://packagecloud.io/danderson/wireguard?filter=debs
+>
+> I appreciate your interest in getting wider distribution for wireguard,
+> David, but i'm not convinced this approach makes much sense.
+>
+> It seems like a lot of extra work compared to just putting wireguard
+> into stretch-backports once stretch is released.
+>
 
-Please note that this snapshot is, like the rest of the project at this point
-in time, experimental, and does not consitute a real release that would be
-considered secure and bug-free. WireGuard is generally thought to be fairly
-stable, and most likely will not crash your computer (though it may).
-However, as this is a pre-release snapshot, it comes with no guarantees, and
-its security is not yet to be depended on; it is not applicable for CVEs.
-
-With all that said, if you'd like to test this snapshot out, there are a
-few relevent changes.
-
-== Changes ==
-
-  * curve25519: do everything on the stack
-  
-  Now that OpenWRT ships the MIPS SoftIRQ stack patch, and it's also made it
-  upstream, we no longer need to do the mallocing, which should improve
-  performance.
-  
-  * tools: man: recommend correct port
-  
-  Before we used 41414 in the documentation, which we should be suggesting the
-  use of 51820.
-  
-  * tools: wg-quick: recommend using resolvconf in exclusive mode
-  
-  -x prevents DNS leakage.
-  
-  * timers: use setup_timer macro helper
-  * timers: use simpler uninit sync technique
-  
-  Simplifies code a bit.
-  
-  * socket: synchronize net on socket tear down
-  * device: shorter workqueue names to fit in ps
-  * main: add `wg` type alias
-  
-  * socket: general ephemeral ports instead of name-based ports
-  
-  If no port is specified, a port is selected ephemerally, instead of trying to
-  be overly clever with the interface name.
-  
-  * socket: enable setting of fwmark
-  
-  This is a nice new feature which enables policy-based routing on fwmarks, used
-  by Android and wg-quick.
-  
-  * tools: setconf should remove existing psk
-  * tools: remove key for any empty file
-  * tools: wg-quick: support v6 dual stack
-  * tools: wg-quick: set LC_ALL for consistent regex
-  
-  * Kconfig: can be a module
-  * create-patch: be sure it's actually after NETFILTER
-  
-  * compat: backport siphash & dst_cache from mainline
-  
-  Since siphash is upstream now, we use the mainline implementation. While we're
-  at it with reorganizing compat, we also backport dst_cache, so older kernels
-  can benefit from it.
-
-As always, the source is available at https://git.zx2c4.com/WireGuard/ and
-information about the project is available at https://www.wireguard.io/ .
-
-This snapshot is available in tarball form here:
-  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-0.0.20170213.tar.xz
-  SHA2-256: 256a7d41cf228f2a88e1b03b3911746dc827fe7be5b982c60080e7f81998cc6d
-  BLAKE2b-256: 0c63e065c1754c78b9586b24186ccf6bb7513d962fa1f15364a03f4901fa10fc
-
-If you're a snapshot package maintainer, please bump your package version. If
-you're a user, the WireGuard team welcomes any and all feedback on this latest
-snapshot.
-
-Thank you,
-Jason Donenfeld
+"Once stretch is released" could be a few months still, right? It's only
+just gone into final freeze. I agree that once it's released, backports is
+definitely the right way to distribute.
 
 
------BEGIN PGP SIGNATURE-----
+> Until stretch releases, people running testing should be able to just
+> add the unstable repository and pin it to be lower priority than testing
+> (see apt_preferences(5)).
+>
 
-iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAliiH/QQHGphc29uQHp4
-MmM0LmNvbQAKCRBJ/HASpd4Drt4QEACd93zEsAU+LRJ3WHsRPBXGuIkSuyWzzM4v
-+YC4YyXVJzc5c7sfQzmJNg3r25yk3Hj/P7QTty0OqacsT3nerOGSbg4YFUs4z347
-s60inL44vrUF6JGlwaQj+VQ+v8hNwQMtMd0PJ5+lNxIcc01ZFDGQVHrTI2LbsL6t
-Ho3G0jrGpAkFFyOPpqVVKu81ZWZuqPmnnW2Few6e0/7TuTc0fE62nmb22qhObC8Q
-pZn6w0MbwCx2Uyzz//k1XgGaKg9RXYossmnoSnQf4LB1Na4x437vr696hkuQYu43
-kcDOBHOmH7bSEZY7/b7Zf3YlTRSwnjYc1yuU4Xw3YKLPXGwQz/GAntVSvqnmEusa
-nvE+dgMK/jMGdNW7zFJh6Y5JL7dAHsEYDCcWTunXYsjGUTmFpW61JB9YuI9nfPeS
-hrTVWnImiSQL22lnXhuxv6VA0FokFjvFeyO3dZaZZIwnUwXDdtNi8UHvFw6ych1U
-Bi+Cw1jVFwM/grqnfkEF/VVVbYYKXzRI/hzsuK7n4rHbe34TOOPPy2/X0AoZUcvZ
-dwKWhXFyAqIqmIUYsvfMXS1OYOk+ahdA/TXoH9oTc2/Ppy/tmSzXaf2CPj5mCGeR
-dOHvysgyvEVb757C+PYk7lAMDXWSXDNKCVSHHStaXYvPvx0jHe1wuWUvdOqHYDLY
-jCa+86zQGg==
-=FUCB
------END PGP SIGNATURE-----
+So, I'd initially tried doing this, by adding the unstable repository at a
+negative priority. What turned me off is that even with that low
+preference, attempting to install the wireguard packages seemed to pull in
+some core system libraries (libc and such) from unstable as well. And while
+I'm excited about wireguard, I'm not "install unstable base libraries"
+excited :).
+
+That said, it's quite possible I was just not using the preference system
+correctly. If it's possible to express "Install *only* wireguard-* from
+unstable, never anything else", then I agree, that's definitely the way to
+go.
+
+
+>
+> Using this standard approach, users won't need to:
+>
+>  a) add a new key to their apt configuration, which increases the attack
+>     surface for all installed packages (btw, the proposed shell pipe
+>     into "apt-key add -" is deprecated, see for example commentary at
+>     https://bugs.debian.org/853858)
+>
+>  b) be dependent on some alternate suite of build daemons -- if debian
+>     supports your build environment, the buildds will have the wireguard
+>     packages.
+>
+> So I don't see much to recommend the proposed approach by comparison,
+> and i don't think that it should be documented as a recommended approach
+> upstream, unless there are clearer benefits that i'm missing here.  In
+> that case, i'd like to know what those benefits are :)
+>
+
+Fair enough, I defer to your greater experience with Debian packaging.
+Fortunately, packagecloud's stats say that there were no installs from my
+repository, so assuming I can get pinning to work properly, the only
+systems that need cleanup are my own.
+
+Cheers,
+- Dave
+
+
+>
+>          --dkg
+>
+
+--001a11415e88b491660548766155
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div class=3D"gmail_extra"><div class=3D"gmail_quote">On S=
+un, Feb 12, 2017 at 3:01 PM, Daniel Kahn Gillmor <span dir=3D"ltr">&lt;<a h=
+ref=3D"mailto:dkg@fifthhorseman.net" target=3D"_blank">dkg@fifthhorseman.ne=
+t</a>&gt;</span> wrote:<br><blockquote class=3D"gmail_quote" style=3D"margi=
+n:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex"><span class=3D"">=
+On Fri 2017-02-10 19:23:50 -0500, David Anderson wrote:<br>
+&gt; In case it&#39;s of use to anyone, I&#39;ve built wireguard packages f=
+or Debian<br>
+&gt; testing. I wanted to play with wireguard on my Debian Stretch systems,=
+ but<br>
+&gt; wireguard is currently locked to Sid only until 1.0 brings API stabili=
+ty<br>
+&gt; guarantees.<br>
+&gt;<br>
+&gt; So, I set up a cronjob that rebuilds the Sid source package on a Stret=
+ch<br>
+&gt; system, and the result is wireguard packages that track the latest rel=
+ease,<br>
+&gt; but don&#39;t pull in unstable versions of libc and whatnot when you t=
+ry to<br>
+&gt; install them, as would happen if you tried to install via package pinn=
+ing.<br>
+&gt;<br>
+&gt; Naturally, you have only my word that the packages are unmodified rebu=
+ilds<br>
+&gt; of Debian&#39;s original package, and you&#39;re trusting packagecloud=
+ to not<br>
+&gt; tamper with the packages (it&#39;s their signing keys, not mine) so ca=
+veat<br>
+&gt; emptor. It works for me, it might work for you as well.<br>
+&gt;<br>
+&gt; With the warnings and disclaimers out of the way, here&#39;s the repo:=
+<br>
+&gt; <a href=3D"https://packagecloud.io/danderson/wireguard?filter=3Ddebs" =
+rel=3D"noreferrer" target=3D"_blank">https://packagecloud.io/<wbr>danderson=
+/wireguard?filter=3D<wbr>debs</a><br>
+<br>
+</span>I appreciate your interest in getting wider distribution for wiregua=
+rd,<br>
+David, but i&#39;m not convinced this approach makes much sense.<br>
+<br>
+It seems like a lot of extra work compared to just putting wireguard<br>
+into stretch-backports once stretch is released.<br></blockquote><div><br><=
+/div><div>&quot;Once stretch is released&quot; could be a few months still,=
+ right? It&#39;s only just gone into final freeze. I agree that once it&#39=
+;s released, backports is definitely the right way to distribute.</div><div=
+>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;b=
+order-left:1px #ccc solid;padding-left:1ex">Until stretch releases, people =
+running testing should be able to just<br>
+add the unstable repository and pin it to be lower priority than testing<br=
+>
+(see apt_preferences(5)).<br></blockquote><div><br></div><div>So, I&#39;d i=
+nitially tried doing this, by adding the unstable repository at a negative =
+priority. What turned me off is that even with that low preference, attempt=
+ing to install the wireguard packages seemed to pull in some core system li=
+braries (libc and such) from unstable as well. And while I&#39;m excited ab=
+out wireguard, I&#39;m not &quot;install unstable base libraries&quot; exci=
+ted :).</div><div><br></div><div>That said, it&#39;s quite possible I was j=
+ust not using the preference system correctly. If it&#39;s possible to expr=
+ess &quot;Install *only* wireguard-* from unstable, never anything else&quo=
+t;, then I agree, that&#39;s definitely the way to go.</div><div>=C2=A0</di=
+v><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:=
+1px #ccc solid;padding-left:1ex">
+<br>
+Using this standard approach, users won&#39;t need to:<br>
+<br>
+=C2=A0a) add a new key to their apt configuration, which increases the atta=
+ck<br>
+=C2=A0 =C2=A0 surface for all installed packages (btw, the proposed shell p=
+ipe<br>
+=C2=A0 =C2=A0 into &quot;apt-key add -&quot; is deprecated, see for example=
+ commentary at<br>
+=C2=A0 =C2=A0 <a href=3D"https://bugs.debian.org/853858" rel=3D"noreferrer"=
+ target=3D"_blank">https://bugs.debian.org/853858</a><wbr>)<br>
+<br>
+=C2=A0b) be dependent on some alternate suite of build daemons -- if debian=
+<br>
+=C2=A0 =C2=A0 supports your build environment, the buildds will have the wi=
+reguard<br>
+=C2=A0 =C2=A0 packages.<br>
+<br>
+So I don&#39;t see much to recommend the proposed approach by comparison,<b=
+r>
+and i don&#39;t think that it should be documented as a recommended approac=
+h<br>
+upstream, unless there are clearer benefits that i&#39;m missing here.=C2=
+=A0 In<br>
+that case, i&#39;d like to know what those benefits are :)<br></blockquote>=
+<div><br></div><div>Fair enough, I defer to your greater experience with De=
+bian packaging. Fortunately, packagecloud&#39;s stats say that there were n=
+o installs from my repository, so assuming I can get pinning to work proper=
+ly, the only systems that need cleanup are my own.</div><div><br></div><div=
+>Cheers,</div><div>- Dave</div><div>=C2=A0</div><blockquote class=3D"gmail_=
+quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1=
+ex">
+<span class=3D"HOEnZb"><font color=3D"#888888"><br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0--dkg<br>
+</font></span></blockquote></div><br></div></div>
+
+--001a11415e88b491660548766155--
