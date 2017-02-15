@@ -1,24 +1,29 @@
-Return-Path: jugs@protonmail.ch
+Return-Path: saschagrunert@icloud.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cf5f4fc3
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4a7414e9
  for <wireguard@lists.zx2c4.com>;
- Wed, 15 Feb 2017 16:39:46 +0000 (UTC)
-Received: from mail3.protonmail.ch (mail3.protonmail.ch [185.70.40.25])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b06261af
+ Wed, 15 Feb 2017 17:47:34 +0000 (UTC)
+Received: from st11p01im-asmtp002.me.com (st11p01im-asmtp002.me.com
+ [17.172.204.152])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d8744954
  for <wireguard@lists.zx2c4.com>;
- Wed, 15 Feb 2017 16:39:46 +0000 (UTC)
-Date: Wed, 15 Feb 2017 11:39:43 -0500
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-From: jugs <jugs@protonmail.ch>
-Subject: Re: Wanted: Novice Guides
-Message-ID: <bx41a5uVlOYC3yecLX-rCzS_0W-KisjXdfGGtq_hz4EDVsoh1lEpi7RMUweFPFUWWR845dlgsTvJTh9JzoHAKw==@protonmail.ch>
-In-Reply-To: <CAHmME9pjv8xWoShiD4WhijExsBq3Q4ovCwbLfkOo7xOJ85+qRw@mail.gmail.com>
-References: <CAHmME9pjv8xWoShiD4WhijExsBq3Q4ovCwbLfkOo7xOJ85+qRw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="b1_4143e3b182e672de6fb19c8bcf8d4aba"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Reply-To: jugs <jugs@protonmail.ch>
+ Wed, 15 Feb 2017 17:47:34 +0000 (UTC)
+Received: from process-dkim-sign-daemon.st11p01im-asmtp002.me.com by
+ st11p01im-asmtp002.me.com
+ (Oracle Communications Messaging Server 7.0.5.38.0 64bit (built Feb 26 2016))
+ id <0OLF00000G04LP00@st11p01im-asmtp002.me.com> for wireguard@lists.zx2c4.com;
+ Wed, 15 Feb 2017 17:47:40 +0000 (GMT)
+Received: from icloud.com ([127.0.0.1]) by st11p01im-asmtp002.me.com
+ (Oracle Communications Messaging Server 7.0.5.38.0 64bit (built Feb 26 2016))
+ with ESMTPSA id <0OLF00H3UG3D4R20@st11p01im-asmtp002.me.com> for
+ wireguard@lists.zx2c4.com; Wed, 15 Feb 2017 17:47:40 +0000 (GMT)
+Content-type: text/plain; charset=us-ascii
+From: Sascha Grunert <saschagrunert@icloud.com>
+MIME-version: 1.0 (1.0)
+Date: Wed, 15 Feb 2017 18:47:36 +0100
+Subject: Rust Version
+Message-id: <3937BCFE-F4EB-4E95-A46E-A87ECA8D9414@icloud.com>
+To: wireguard@lists.zx2c4.com
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -28,58 +33,16 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-This is a multi-part message in MIME format.
+Hey WireGuard developers,
 
---b1_4143e3b182e672de6fb19c8bcf8d4aba
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+I just wanted to know what the current status of the cross platform version o=
+f wireguard is and would vote for a Rust implementation.
 
-U2hvdWxkIHdlIHB1dCB0aGVtIG9uIGEgYmxvZyBvciB0aGUgd2lyZWd1YXJkIHNpdGU/CgoKCi1q
-dWdzCgoKCi0tLS0tLS0tIE9yaWdpbmFsIE1lc3NhZ2UgLS0tLS0tLS0KU3ViamVjdDogV2FudGVk
-OiBOb3ZpY2UgR3VpZGVzCkxvY2FsIFRpbWU6IEZlYnJ1YXJ5IDE1LCAyMDE3IDk6MDUgQU0KVVRD
-IFRpbWU6IEZlYnJ1YXJ5IDE1LCAyMDE3IDI6MDUgUE0KRnJvbTogSmFzb25AengyYzQuY29tClRv
-OiBXaXJlR3VhcmQgbWFpbGluZyBsaXN0IDx3aXJlZ3VhcmRAbGlzdHMuengyYzQuY29tPgoKSGV5
-IGd1eXMsCgpBcyBXaXJlR3VhcmQgZ2V0cyBtb3JlIGFuZCBtb3JlIHBvcHVsYXIsIEkgaGF2ZSBt
-b3JlIHBlb3BsZSBjb250YWN0aW5nCm1lIGFib3V0IG5vdmljZSBndWlkZXMgYW5kIGJsb2cgZW50
-cmllcyBhbmQgc3RlcCBieSBzdGVwIHRoaW5ncy4gSWYKYW55Ym9keSB3b3VsZCBiZSB1cCBmb3Ig
-d3JpdGluZyB0aGVzZSBvciBhc3Npc3Rpbmcgd2l0aCBpdCwgaXQgd291bGQKYmUgbXVjaCBhcHBy
-ZWNpYXRlZC4gUHJvYmFibHkgYmV0dGVyIHRvIHRhY2tsZSB0aGlzIGJlZm9yZSBob3JyaWJseQp3
-cml0dGVuIGd1aWRlcyB3aXRoIGJhZCBhZHZpY2UgZmlsbCB0aGUgdm9pZCBpbnN0ZWFkLgoKSmFz
-b24KX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18KV2lyZUd1
-YXJkIG1haWxpbmcgbGlzdApXaXJlR3VhcmRAbGlzdHMuengyYzQuY29tCmh0dHBzOi8vbGlzdHMu
-engyYzQuY29tL21haWxtYW4vbGlzdGluZm8vd2lyZWd1YXJk
+I am willing to support the development since I have network programming bac=
+kground and know Rust.
 
+Further it would be cool to add obfuscation support to the protocol to make i=
+t Deep Packet Inspection (DPI) safe.=20
 
---b1_4143e3b182e672de6fb19c8bcf8d4aba
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: base64
-
-PGRpdj5TaG91bGQgd2UgcHV0IHRoZW0gb24gYSBibG9nIG9yIHRoZSB3aXJlZ3VhcmQgc2l0ZT88
-L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2IGNsYXNzPSJwcm90b25tYWlsX3NpZ25hdHVyZV9ibG9j
-ayAiPjxkaXYgY2xhc3M9InByb3Rvbm1haWxfc2lnbmF0dXJlX2Jsb2NrLXVzZXIgIj48ZGl2Pi1q
-dWdzPGJyPjwvZGl2PjwvZGl2PjxkaXYgY2xhc3M9InByb3Rvbm1haWxfc2lnbmF0dXJlX2Jsb2Nr
-LXByb3RvbiBwcm90b25tYWlsX3NpZ25hdHVyZV9ibG9jay1lbXB0eSI+PGJyPjwvZGl2PjwvZGl2
-PjxkaXY+PGJyPjwvZGl2PjxibG9ja3F1b3RlIGNsYXNzPSJwcm90b25tYWlsX3F1b3RlIiB0eXBl
-PSJjaXRlIj48ZGl2Pi0tLS0tLS0tIE9yaWdpbmFsIE1lc3NhZ2UgLS0tLS0tLS08YnI+PC9kaXY+
-PGRpdj5TdWJqZWN0OiBXYW50ZWQ6IE5vdmljZSBHdWlkZXM8YnI+PC9kaXY+PGRpdj5Mb2NhbCBU
-aW1lOiBGZWJydWFyeSAxNSwgMjAxNyA5OjA1IEFNPGJyPjwvZGl2PjxkaXY+VVRDIFRpbWU6IEZl
-YnJ1YXJ5IDE1LCAyMDE3IDI6MDUgUE08YnI+PC9kaXY+PGRpdj5Gcm9tOiBKYXNvbkB6eDJjNC5j
-b208YnI+PC9kaXY+PGRpdj5UbzogV2lyZUd1YXJkIG1haWxpbmcgbGlzdCAmbHQ7d2lyZWd1YXJk
-QGxpc3RzLnp4MmM0LmNvbSZndDs8YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5IZXkgZ3V5
-cyw8YnI+PC9kaXY+PGRpdj4gPGJyPjwvZGl2PjxkaXY+IEFzIFdpcmVHdWFyZCBnZXRzIG1vcmUg
-YW5kIG1vcmUgcG9wdWxhciwgSSBoYXZlIG1vcmUgcGVvcGxlIGNvbnRhY3Rpbmc8YnI+PC9kaXY+
-PGRpdj4gbWUgYWJvdXQgbm92aWNlIGd1aWRlcyBhbmQgYmxvZyBlbnRyaWVzIGFuZCBzdGVwIGJ5
-IHN0ZXAgdGhpbmdzLiBJZjxicj48L2Rpdj48ZGl2PiBhbnlib2R5IHdvdWxkIGJlIHVwIGZvciB3
-cml0aW5nIHRoZXNlIG9yIGFzc2lzdGluZyB3aXRoIGl0LCBpdCB3b3VsZDxicj48L2Rpdj48ZGl2
-PiBiZSBtdWNoIGFwcHJlY2lhdGVkLiBQcm9iYWJseSBiZXR0ZXIgdG8gdGFja2xlIHRoaXMgYmVm
-b3JlIGhvcnJpYmx5PGJyPjwvZGl2PjxkaXY+IHdyaXR0ZW4gZ3VpZGVzIHdpdGggYmFkIGFkdmlj
-ZSBmaWxsIHRoZSB2b2lkIGluc3RlYWQuPGJyPjwvZGl2PjxkaXY+IDxicj48L2Rpdj48ZGl2PiBK
-YXNvbjxicj48L2Rpdj48ZGl2PiBfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fXzxicj48L2Rpdj48ZGl2PiBXaXJlR3VhcmQgbWFpbGluZyBsaXN0PGJyPjwvZGl2
-PjxkaXY+IFdpcmVHdWFyZEBsaXN0cy56eDJjNC5jb208YnI+PC9kaXY+PGRpdj4gaHR0cHM6Ly9s
-aXN0cy56eDJjNC5jb20vbWFpbG1hbi9saXN0aW5mby93aXJlZ3VhcmQ8YnI+PC9kaXY+PC9ibG9j
-a3F1b3RlPjxkaXY+PGJyPjwvZGl2Pg==
-
-
-
---b1_4143e3b182e672de6fb19c8bcf8d4aba--
+Best regards,
+Sascha=
