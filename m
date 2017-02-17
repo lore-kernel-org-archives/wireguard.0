@@ -1,26 +1,27 @@
 Return-Path: dkg@fifthhorseman.net
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d0b201db
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a59a6f2b
  for <wireguard@lists.zx2c4.com>;
- Thu, 16 Feb 2017 18:44:36 +0000 (UTC)
+ Fri, 17 Feb 2017 02:48:59 +0000 (UTC)
 Received: from che.mayfirst.org (che.mayfirst.org [162.247.75.118])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2d9cf801
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cba94a63
  for <wireguard@lists.zx2c4.com>;
- Thu, 16 Feb 2017 18:44:36 +0000 (UTC)
+ Fri, 17 Feb 2017 02:48:59 +0000 (UTC)
 From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-To: Sascha Grunert <saschagrunert@icloud.com>,
- Michael Gerlach <n3ph@terminal21.de>
-Subject: Re: Rust Version
-In-Reply-To: <94F76D79-1813-49E1-AA25-0CE27B3A460D@icloud.com>
-References: <3937BCFE-F4EB-4E95-A46E-A87ECA8D9414@icloud.com>
- <20170215182515.GA9852@c3po>
- <94F76D79-1813-49E1-AA25-0CE27B3A460D@icloud.com>
-Date: Wed, 15 Feb 2017 16:40:05 -0500
-Message-ID: <87bmu3jfpm.fsf@alice.fifthhorseman.net>
+To: Baptiste Jonglez <baptiste@bitsofnetworks.org>
+Subject: Re: (Unofficial) wireguard packages for Debian Stretch (testing)
+In-Reply-To: <20170215213153.GC16102@tuxmachine.polynome.dn42>
+References: <CAMx+r7WsvfJ6j7JT9+Z5mNe=FEFwehTVNgX+7-8vnQMa5FxORg@mail.gmail.com>
+ <874lzzqai9.fsf@alice.fifthhorseman.net>
+ <CAMx+r7XsHgrxy+1T4ndqzSebA6Ds4XTjQrD9VmoCWAtJkLygHw@mail.gmail.com>
+ <87o9y4n555.fsf@alice.fifthhorseman.net>
+ <20170215213153.GC16102@tuxmachine.polynome.dn42>
+Date: Thu, 16 Feb 2017 21:46:15 -0500
+Message-ID: <87y3x5h6vc.fsf@alice.fifthhorseman.net>
 MIME-Version: 1.0
 Content-Type: multipart/signed; boundary="=-=-=";
  micalg=pgp-sha512; protocol="application/pgp-signature"
-Cc: wireguard@lists.zx2c4.com
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -31,41 +32,60 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
 --=-=-=
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Wed 2017-02-15 13:29:55 -0500, Sascha Grunert wrote:
+Hi Baptiste--
 
-> The DPI could do a simple classification of the stream which could
-> others use within network blocking scenarios. The content should be
-> safe, but with obfuscation or maybe tor support it would be even
-> =E2=80=9EWhisle blower safe=E2=80=9C.
+On Wed 2017-02-15 16:31:54 -0500, Baptiste Jonglez wrote:
+> On jessie, it worked exactly the same with the 4.9 kernel from
+> jessie-backports:
+>
+> # cat /etc/apt/sources.list
+> deb http://httpredir.debian.org/debian jessie main
+> deb http://httpredir.debian.org/debian jessie-backports main
+> deb http://httpredir.debian.org/debian unstable main
+> # cat /etc/apt/preferences.d/limit-unstable
+> Package: *
+> Pin: release a=unstable
+> Pin-Priority: 200
+> # apt update
+> # apt install -t jessie-backports linux-image-amd64 linux-base
+> # reboot
+> # apt install wireguard-dkms wireguard-tools
+> # ./client.sh
+> # ping 192.168.4.1
+> PING 192.168.4.1 (192.168.4.1) 56(84) bytes of data.
+> 64 bytes from 192.168.4.1: icmp_seq=1 ttl=64 time=15.1 ms
 
-Hm, Tor is TCP-only, and WireGuard uses UDP.  These systems aren't going
-to mix well.
+interesting, thanks for testing and reporting back!
 
-WireGuard cannot and will not obscure the source or destination
-addresses of the packets that flow over it.
+are you sure that with this installation on jessie, the wireguard
+packages are the only things that got pulled in from unstable?
 
-   --dkg
+If you have apt-show-versions installed, you might try grepping through
+its output to make sure.
+
+Regards,
+
+       --dkg
 
 --=-=-=
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEOCdgUepHf6PklTkyFJitxsGSMjcFAlikyrUACgkQFJitxsGS
-Mjc1ug/+JkadgV6slMJm2PgmsJVGi2/d4o8ZaBN6fmU2X5rVLEqnIcCspRZIF7qX
-lJPoCF97+o1AUcXpo1BiqUL6jwwcOyI2eS1cZL5zEkEmzBMeOzNwA43QVy7VL0Q1
-/Lg3HtnFDEenIf5drjBuKr8MO0koYTGTkmshgHcj8Qol7hUdaq2d3PRSCtKBf+ju
-39kTW26lDzDKgvW1RpMcvmaColXve5yDV0yuaBfS6Ti+cytW2NXDq2NR5k7UBzxl
-C+iI90HjQP0yTv/l7HAnXr03fn1soykaZpAuT8WH5hjAvT3MdjubiQeShYQPlmc5
-yYTYM4cHUGOCoX++U3Hefe4z+Rw625hHqkclGYoVPlR+jlsS9lzSVJcdx5rh1bCz
-Tecgpp1thX7i0XSEjyLF2ramC3s+TX4ULaF0D6l9qgJNV5hBbzyqzZoUf1C8Twvg
-rvbwayFT7B2YyVleiEF815AKRdl7MyNbos+8SpWl+ipqu9cB4fEHFaThoGZOkWlc
-2a5wKEAZ5kbC56ZnZ9VC0ZH93QwyCJ7rGS4B+YxKx/ZYfnxaOUKWVEJtzoChp1FI
-Qrm7NNDVlpcWxGNrINND1AAnsxDlBcGMbT5n5EfxUaGaaNv/oUJ7WC4//yY1o1I9
-MWjNutvVArJQY5xMgT/abEF88TEazU9jm/5rS13a16srSlcET4w=
-=R1BI
+iQIzBAEBCgAdFiEEOCdgUepHf6PklTkyFJitxsGSMjcFAlimY/gACgkQFJitxsGS
+MjcDXhAAuglhvs6IIVaHw1bB1epHkM7YoOQZ4FSaJ7mu+J6u4i17mEnl2MmehSbE
+K4+aLQzERDbUAJl5M5iZFBY9EWVORT/bSjrJFIZgDRkmGiuNK9poc+newK/ZCeFa
+1l0R2wDkroRhuSje5i4iOhW33LL3wX55eMTjGpygrNP2JNbulcRdJTfJEAGhsgjQ
+MWsanQudLjdkhren7NDQvTsPZu4QF6LamNzKhoBuuyJcpFR/4UKn8NmII0GFXWts
+EK/qsEYgcW6diaN43RHD7BeK4C4qZtgj1E0bb/gkgT09RdMMyiNdSEr9o4H5OsgH
+Nmxs5w8WUgY6h9aadKRRdyAVe0R+/MZ9bHrDy+aTPxYT+qC8RAIRdxgo2Mfvb9Qj
+YWAQpzouHk+zsR9qOQewHt9zKF+I7CnILTh/1ENsxNkCfgKOpuTvJ4aXZpbI65TG
+aG2L5/QfuEqTZu2oXY95sCJIBu9unU7HPxNwVNDfol7x/ErI68GMPW24WBgT/eiB
+iC/0Xh/TsXDsLRD0Wf1gvh41R0QHdmYhYKvwRGHVn7OsZqwqRHiwxk++vWAHq/oc
+BnGsnd/OIIU5p13HK8MYovunDWeE6vZY3RA9rhiRT/R1huDOnXOv7aNmX477WYLS
+++ot+8gXeAkhWatvGf304W7j+R+xvbEhCTMoZ93LGWu4o9vzVIQ=
+=DmIa
 -----END PGP SIGNATURE-----
 --=-=-=--
