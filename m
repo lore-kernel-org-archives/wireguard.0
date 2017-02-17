@@ -1,30 +1,35 @@
 Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2004edb5
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c5238f5d
  for <wireguard@lists.zx2c4.com>;
- Fri, 17 Feb 2017 13:29:40 +0000 (UTC)
+ Fri, 17 Feb 2017 13:32:37 +0000 (UTC)
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7e9988b8
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fcb2ceb5
  for <wireguard@lists.zx2c4.com>;
- Fri, 17 Feb 2017 13:29:40 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2057555f
+ Fri, 17 Feb 2017 13:32:37 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2b6b6c96
  for <wireguard@lists.zx2c4.com>;
- Fri, 17 Feb 2017 13:29:40 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 657eff71
+ Fri, 17 Feb 2017 13:32:37 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id f326d078
  (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 17 Feb 2017 13:29:39 +0000 (UTC)
-Received: by mail-oi0-f43.google.com with SMTP id 62so10728490oih.2
- for <wireguard@lists.zx2c4.com>; Fri, 17 Feb 2017 05:29:59 -0800 (PST)
+ Fri, 17 Feb 2017 13:32:37 +0000 (UTC)
+Received: by mail-ot0-f179.google.com with SMTP id 32so31387782oth.3
+ for <wireguard@lists.zx2c4.com>; Fri, 17 Feb 2017 05:32:57 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <427618D1-5371-4D9E-81B3-2992CE84300C@danrl.com>
-References: <CADdae-jTbEV27UJMTV8aABg7K0C1pCBhSejUc8yrBpNxwJ5ePw@mail.gmail.com>
- <427618D1-5371-4D9E-81B3-2992CE84300C@danrl.com>
+In-Reply-To: <20170217081532.GA20080@lud.polynome.dn42>
+References: <CAMx+r7WsvfJ6j7JT9+Z5mNe=FEFwehTVNgX+7-8vnQMa5FxORg@mail.gmail.com>
+ <874lzzqai9.fsf@alice.fifthhorseman.net>
+ <CAMx+r7XsHgrxy+1T4ndqzSebA6Ds4XTjQrD9VmoCWAtJkLygHw@mail.gmail.com>
+ <87o9y4n555.fsf@alice.fifthhorseman.net>
+ <20170215213153.GC16102@tuxmachine.polynome.dn42>
+ <87y3x5h6vc.fsf@alice.fifthhorseman.net>
+ <20170217081532.GA20080@lud.polynome.dn42>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 17 Feb 2017 14:29:58 +0100
-Message-ID: <CAHmME9piVNm-P5bUXti4pkJaGQ6fdM8-0+VvNPBrokmrKMdUYA@mail.gmail.com>
-Subject: Re: [wireguard-devel] : wg output format
-To: =?UTF-8?Q?Dan_L=C3=BCdtke?= <mail@danrl.com>
+Date: Fri, 17 Feb 2017 14:32:56 +0100
+Message-ID: <CAHmME9oYw=qdkgHdSpbjiM=isJopRi8rmFNwrwPt49By+NXG-g@mail.gmail.com>
+Subject: Re: (Unofficial) wireguard packages for Debian Stretch (testing)
+To: Baptiste Jonglez <baptiste@bitsofnetworks.org>
 Content-Type: text/plain; charset=UTF-8
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
@@ -38,8 +43,9 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 
 Hey guys,
 
-Seems like this isn't the first request for such a thing. I'll
-investigate better means of generating bulk output, and might
-eventually converge on JSON for that. Will keep you posted.
+Very nice investigation. I think adding some simple instructions on
+this to the WireGuard website makes sense. If you've got a one or two
+or three or four line command to magically add these files and sync
+the repos, could you send it along? Then I'll include it on the page.
 
 Jason
