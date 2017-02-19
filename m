@@ -1,27 +1,19 @@
-Return-Path: dkg@fifthhorseman.net
+Return-Path: alx@dd19.de
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e066739e
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1670930c
  for <wireguard@lists.zx2c4.com>;
- Fri, 17 Feb 2017 19:49:33 +0000 (UTC)
-Received: from che.mayfirst.org (che.mayfirst.org [162.247.75.118])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d6e7f5d3
+ Sun, 19 Feb 2017 01:13:38 +0000 (UTC)
+Received: from mail.dd19.de (mail.dd19.de [217.197.86.197])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e14489ca
  for <wireguard@lists.zx2c4.com>;
- Fri, 17 Feb 2017 19:49:33 +0000 (UTC)
-From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-To: David Anderson <dave@natulte.net>
-Subject: Re: (Unofficial) wireguard packages for Debian Stretch (testing)
-In-Reply-To: <CAMx+r7X9ZLqqRf8YC8juk0+V1Y3SR6GzPDK7dLqBF0nfEWqg2w@mail.gmail.com>
-References: <CAMx+r7WsvfJ6j7JT9+Z5mNe=FEFwehTVNgX+7-8vnQMa5FxORg@mail.gmail.com>
- <874lzzqai9.fsf@alice.fifthhorseman.net>
- <CAMx+r7XsHgrxy+1T4ndqzSebA6Ds4XTjQrD9VmoCWAtJkLygHw@mail.gmail.com>
- <87o9y4n555.fsf@alice.fifthhorseman.net>
- <CAMx+r7X9ZLqqRf8YC8juk0+V1Y3SR6GzPDK7dLqBF0nfEWqg2w@mail.gmail.com>
-Date: Fri, 17 Feb 2017 14:49:13 -0500
-Message-ID: <87efywha2u.fsf@alice.fifthhorseman.net>
-MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+ Sun, 19 Feb 2017 01:13:38 +0000 (UTC)
+From: Alexander Morlang <alx@dd19.de>
+Content-Type: text/plain; charset=us-ascii
+Date: Sun, 19 Feb 2017 02:14:06 +0100
+Subject: wg binary in armhf deb from ppa missing
+To: wireguard@lists.zx2c4.com
+Message-Id: <EF6AB0BF-E341-41C1-8744-7CA8A5A778D0@dd19.de>
+Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2104\))
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -31,40 +23,17 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---=-=-=
-Content-Type: text/plain
+Hi,
+used the launchpad ppa in xenial on armhf (Banana Pro).=20
+The wireguard-tools packet installed only /usr/share/doc
 
-On Thu 2017-02-16 22:14:11 -0500, David Anderson wrote:
-> The transcript below still shows one additional package being pulled from
-> sid/main, the dkms package. I find this strange: wireguard-dkms depends on
-> dkms >=2.1.0.0, stretch has dkms 2.3-2, and sid has dkms 2.3-3. Despite the
-> negative priority for unstable, apt picks 2.3-3 from sid, even though the
-> dependency could be satisfied out of stretch. What am I missing?
+Is this a known problem?
 
-That is indeed weird.  what does "apt-cache policy dkms" show you?
+I downloaded the
+=
+https://launchpad.net/~wireguard/+archive/ubuntu/wireguard/+files/wireguar=
+d-tools_0.0.20170214-wg1~xenial_armhf.deb
+and hat a look with dpkg -c <file>, getting the same result of no binary =
+in the packet.
 
-what if you "apt install dkms" on its own first, which version do you
-get?
-
-        --dkg
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEOCdgUepHf6PklTkyFJitxsGSMjcFAlinU7kACgkQFJitxsGS
-Mjd7tRAAwYdbCeqgbTuVmVSRypbSHsoaz2YwqfLDbwRaJC53wgY5X8eOczZp1QGn
-15JzquQjIRsEe/D7/2359mTXdD8JHsspSGlFkizmqES5JdrES4gEK9L78YzvB4uB
-yrkcy73+aRz7bPEpyGIgdZs8UNgbXxpxEm/mK3zClvPjxYobYHgAM0srwgkq+EAe
-drxfYn+AYrOQr1DwgY5cowKlctpPQDFMxD8sF0brn/h9EQFAZwWxL8q19WJQOjRw
-AbzSeFkLs/pBZ1f95sorUsH55wRZKZqif8TBNqaw01RsPOtNXOkQcSx8f4q4n2c7
-Vq+s+28XzFVVjB+A32W2oAiLhTIJl6geP60jQfNlnto5yujL6UPQeTOpsupES7FY
-SOjhLAM2kfKY1eTo6kqjK8HZkw+iFCU70Qr6May56oqHHAiU/+ibjGJ/C8mcitve
-EaRF2JOuDhzvT6Ct4jXjl+gAWRsZtuWywcZ5X+hcAMgjFZaAm7GmZ8YeeCFIqpGa
-M0LJ9NaFzKuIbCOK/71+hhVnm5uaDfIJtS3ESD2pzIfcsDn3xxpu/oJRPX6+sh6o
-G+6ID421xWg3enXHno9Wi/tp1vSIGTbEZScRxVEarp3lbx503A7fKSPfOVYmULda
-pLtI2pA4/MoUJ/raxPkpgiowpmHu5xxWEcDEruSmGbt4madHmS4=
-=iklP
------END PGP SIGNATURE-----
---=-=-=--
+regards, Alex=
