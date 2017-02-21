@@ -1,32 +1,29 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: saschagrunert@icloud.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9110dfdc
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1f1ab09d
  for <wireguard@lists.zx2c4.com>;
- Tue, 21 Feb 2017 11:13:56 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4c573b25
+ Tue, 21 Feb 2017 11:47:49 +0000 (UTC)
+Received: from st11p01im-asmtp002.me.com (st11p01im-asmtp002.me.com
+ [17.172.204.152])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9df70743
  for <wireguard@lists.zx2c4.com>;
- Tue, 21 Feb 2017 11:13:56 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 089a7679
- for <wireguard@lists.zx2c4.com>;
- Tue, 21 Feb 2017 11:13:55 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id d6897016
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Tue, 21 Feb 2017 11:13:54 +0000 (UTC)
-Received: by mail-ot0-f173.google.com with SMTP id k4so65965183otc.0
- for <wireguard@lists.zx2c4.com>; Tue, 21 Feb 2017 03:14:43 -0800 (PST)
-MIME-Version: 1.0
-In-Reply-To: <2A1F92D5-90A4-4105-A764-897ADFF15D1D@icloud.com>
-References: <15a5f481984.f050e1c666041.7938484243662330654@mysterious.site>
- <2A1F92D5-90A4-4105-A764-897ADFF15D1D@icloud.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 21 Feb 2017 12:14:42 +0100
-Message-ID: <CAHmME9oTCuOV+EB-aCjnKBBZ0sKzU55LndxkVBPr2CTnJ7PqYg@mail.gmail.com>
-Subject: Re: Working on a Rust implementation, and request for test vectors
-To: Sascha Grunert <saschagrunert@icloud.com>, sopium@mysterious.site
-Content-Type: text/plain; charset=UTF-8
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+ Tue, 21 Feb 2017 11:47:49 +0000 (UTC)
+Received: from process-dkim-sign-daemon.st11p01im-asmtp002.me.com by
+ st11p01im-asmtp002.me.com
+ (Oracle Communications Messaging Server 7.0.5.38.0 64bit (built Feb 26 2016))
+ id <0OLQ00V0039K8800@st11p01im-asmtp002.me.com> for wireguard@lists.zx2c4.com;
+ Tue, 21 Feb 2017 11:48:31 +0000 (GMT)
+Received: from icloud.com ([127.0.0.1]) by st11p01im-asmtp002.me.com
+ (Oracle Communications Messaging Server 7.0.5.38.0 64bit (built Feb 26 2016))
+ with ESMTPSA id <0OLQ00GET3GR5410@st11p01im-asmtp002.me.com> for
+ wireguard@lists.zx2c4.com; Tue, 21 Feb 2017 11:48:29 +0000 (GMT)
+From: Sascha Grunert <saschagrunert@icloud.com>
+Content-type: text/plain; charset=us-ascii
+MIME-version: 1.0 (Mac OS X Mail 10.2 \(3259\))
+Subject: [ANNOUNCE] WireGuard in Rust development started
+Message-id: <EC598EA9-99F4-4355-BD47-E4BB88E77251@icloud.com>
+Date: Tue, 21 Feb 2017 12:48:26 +0100
+To: wireguard@lists.zx2c4.com
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -36,13 +33,37 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hey Sopium,
+Hey folks,
 
-Sascha and I are all set up. Let me know if you'd like to get in on
-the effort too. As well, if you'd like to have a NoiseIK-specific
-library or something of that sort, I'd be happy to host that on the
-same infra/organization all together. Let me know what you'd like to
-do.
+It is great to hear that we can start with the development of the Rust =
+version of WireGuard!
 
-Regards,
-Jason
+The repository can be found here: https://git.zx2c4.com/wireguard-rs/
+A GitHub mirror does also exist: =
+https://github.com/WireGuard/wireguard-rs
+
+I suggest do use the mailing list and the GitHub features for issue =
+handling and discussions.
+
+What do we have for now: I added some initial implementation example =
+which uses tokio.rs
+(https://tokio.rs) and a custom device handling. You can try it out by =
+doing:
+
+```
+$ cargo test
+$ nc -u 127.0.0.1 8080
+Hello world
+```
+
+For testing purposes it creates a dummy interface in /tmp where the =
+incoming traffic will be
+redirected to this interface. Incoming traffic from this interface =
+should be sent to the client.
+
+As next steps we can make the server working and add device handling for =
+other platforms as
+well. :)
+
+Best regards,
+Sascha
