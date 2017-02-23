@@ -1,22 +1,22 @@
-Return-Path: nicolas.prochazka@gmail.com
+Return-Path: mail@danrl.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cb263b93
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d751c2f3
  for <wireguard@lists.zx2c4.com>;
- Thu, 23 Feb 2017 13:02:34 +0000 (UTC)
-Received: from mail-lf0-f53.google.com (mail-lf0-f53.google.com
- [209.85.215.53])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f5d58d60
+ Thu, 23 Feb 2017 13:40:43 +0000 (UTC)
+Received: from mx.cakelie.net (mx.cakelie.net [45.76.39.236])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a6c9750b
  for <wireguard@lists.zx2c4.com>;
- Thu, 23 Feb 2017 13:02:34 +0000 (UTC)
-Received: by mail-lf0-f53.google.com with SMTP id l12so15933378lfe.0
- for <wireguard@lists.zx2c4.com>; Thu, 23 Feb 2017 05:03:39 -0800 (PST)
-MIME-Version: 1.0
-From: Nicolas Prochazka <nicolas.prochazka@gmail.com>
-Date: Thu, 23 Feb 2017 14:03:37 +0100
-Message-ID: <CADdae-h1pmyzn5aTsnBG5nBaKCuLk03eu0wtQ0E1V0j+nBZsiA@mail.gmail.com>
-Subject: [ wireguard-dev ] About configuring allowedip
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: multipart/alternative; boundary=94eb2c1cb94ad24c090549323dd1
+ Thu, 23 Feb 2017 13:40:43 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 10.2 \(3259\))
+Subject: Re: [ wireguard-dev ] About configuring allowedip
+From: =?utf-8?Q?Dan_L=C3=BCdtke?= <mail@danrl.com>
+In-Reply-To: <CADdae-h1pmyzn5aTsnBG5nBaKCuLk03eu0wtQ0E1V0j+nBZsiA@mail.gmail.com>
+Date: Thu, 23 Feb 2017 14:41:47 +0100
+Message-Id: <241066D3-A3AD-4E76-B7E0-9C0DC26713D6@danrl.com>
+References: <CADdae-h1pmyzn5aTsnBG5nBaKCuLk03eu0wtQ0E1V0j+nBZsiA@mail.gmail.com>
+To: Nicolas Prochazka <nicolas.prochazka@gmail.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,43 +26,37 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---94eb2c1cb94ad24c090549323dd1
-Content-Type: text/plain; charset=UTF-8
+Nicolas: Could you provide the configuration files? Because from your =
+little graphic or schema I can not even derive what you are configuring. =
+I guess there is something overlapping prefixes maybe?
 
-Hello, i'm trying to do this with wireguard, withtout success :
+Jason: I think we are approaching the point in time when there will be a =
+-dev and a -users ML :)
 
-peer1 ---> peer2   : config ok , works
-peer3 ---> peer1  : config ok , works
-peer3 --->peer1 ---> peer2  : not ok .
 
-I suspect allowed-ip configuration, but all my tests does not works.
-perhaps I must create two wireguard interface on peer 1 and do
-forwarding/routing ?
-i'm using ipv6 as internal ip.
-
-so my question is :
-- two interface ?
-- specifiq magic allowedip ?
-( allowed ip is confusing for, it is using for routing and for evicting
-paquet ? )
-
-Regards,
-Nicolas
-
---94eb2c1cb94ad24c090549323dd1
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div><div><div><div><div><div>Hello, i&#39;m trying to do =
-this with wireguard, withtout success : <br><br></div>peer1 ---&gt; peer2=
-=C2=A0=C2=A0 : config ok , works<br></div>peer3 ---&gt; peer1=C2=A0 : confi=
-g ok , works <br></div>peer3 ---&gt;peer1 ---&gt; peer2=C2=A0 : not ok .<br=
-><br></div>I suspect allowed-ip configuration, but all my tests does not wo=
-rks.<br></div>perhaps I must create two wireguard interface on peer 1 and d=
-o forwarding/routing ? <br></div><div>i&#39;m using ipv6 as internal ip.<br=
-><br></div><div>so my question is : <br></div><div>- two interface ?<br></d=
-iv><div>- specifiq magic allowedip ?<br></div><div>( allowed ip is confusin=
-g for, it is using for routing and for evicting paquet ? )<br></div><div><b=
-r></div><div>Regards, <br></div><div>Nicolas <br></div></div>
-
---94eb2c1cb94ad24c090549323dd1--
+> On 23 Feb 2017, at 14:03, Nicolas Prochazka =
+<nicolas.prochazka@gmail.com> wrote:
+>=20
+> Hello, i'm trying to do this with wireguard, withtout success :=20
+>=20
+> peer1 ---> peer2   : config ok , works
+> peer3 ---> peer1  : config ok , works=20
+> peer3 --->peer1 ---> peer2  : not ok .
+>=20
+> I suspect allowed-ip configuration, but all my tests does not works.
+> perhaps I must create two wireguard interface on peer 1 and do =
+forwarding/routing ?=20
+> i'm using ipv6 as internal ip.
+>=20
+> so my question is :=20
+> - two interface ?
+> - specifiq magic allowedip ?
+> ( allowed ip is confusing for, it is using for routing and for =
+evicting paquet ? )
+>=20
+> Regards,=20
+> Nicolas=20
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
