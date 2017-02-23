@@ -1,25 +1,22 @@
-Return-Path: nicolas.prochazka@gmail.com
+Return-Path: baptiste@bitsofnetworks.org
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c29169ec
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 66c101bb
  for <wireguard@lists.zx2c4.com>;
- Thu, 23 Feb 2017 18:33:31 +0000 (UTC)
-Received: from mail-lf0-f46.google.com (mail-lf0-f46.google.com
- [209.85.215.46])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2811bc81
+ Thu, 23 Feb 2017 21:15:54 +0000 (UTC)
+Received: from mails.bitsofnetworks.org (rezine.polyno.me [193.33.56.138])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ff60214d
  for <wireguard@lists.zx2c4.com>;
- Thu, 23 Feb 2017 18:33:31 +0000 (UTC)
-Received: by mail-lf0-f46.google.com with SMTP id g134so20216711lfe.1
- for <wireguard@lists.zx2c4.com>; Thu, 23 Feb 2017 10:34:38 -0800 (PST)
+ Thu, 23 Feb 2017 21:15:54 +0000 (UTC)
+Date: Thu, 23 Feb 2017 22:16:57 +0100
+From: Baptiste Jonglez <baptiste@bitsofnetworks.org>
+To: Nicolas Prochazka <nicolas.prochazka@gmail.com>
+Subject: Re: [ wireguard-dev ] About configuring allowedip
+Message-ID: <20170223211657.GE6317@tuxmachine.polynome.dn42>
+References: <CADdae-h1pmyzn5aTsnBG5nBaKCuLk03eu0wtQ0E1V0j+nBZsiA@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9qvYSmw0gjhnL81WCT7s2BSj7+TNf0F1zJ6CQxOSgp_mw@mail.gmail.com>
-References: <CADdae-jjwxrBSw0e5nJNGUQv6Bf=JuiRoKfj5qVS351ExaHtoA@mail.gmail.com>
- <CAHmME9qvYSmw0gjhnL81WCT7s2BSj7+TNf0F1zJ6CQxOSgp_mw@mail.gmail.com>
-From: Nicolas Prochazka <nicolas.prochazka@gmail.com>
-Date: Thu, 23 Feb 2017 19:34:36 +0100
-Message-ID: <CADdae-h1+ixAGJW=qAk8Jx2anu=X2o7-vB0_vTx0KyPNLeWCYA@mail.gmail.com>
-Subject: Re: [ wireguard-dev ] dmesg when using ipv6
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Content-Type: multipart/alternative; boundary=94eb2c1cb94a818557054936dd7a
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="8TaQrIeukR7mmbKf"
+In-Reply-To: <CADdae-h1pmyzn5aTsnBG5nBaKCuLk03eu0wtQ0E1V0j+nBZsiA@mail.gmail.com>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -30,70 +27,62 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---94eb2c1cb94a818557054936dd7a
-Content-Type: text/plain; charset=UTF-8
 
-you are right, sorry.
-I do a lot of tests  and sometime it seems  wireguard is in  a "strange"
-state, I'm trying to reproduce.
-
-A question :
-When I've the dmesg, "could not create ipv4 socket", i cannot rmmod
-wireguard from kernel.
-I'm trying
-ip link del dev wg0  ,
-rmmod wireguard
-there's no wireguard interface, however, i cannot remove wireguard module,
-system tells module is used.
-
-When wireguard works well, i can remove module without problem.
-
-Regards,
-Nicolas
-
-
-
-
-
-
-2017-02-23 18:32 GMT+01:00 Jason A. Donenfeld <Jason@zx2c4.com>:
-
-> Hello,
->
-> For the second time today, please provide more debugging information
-> than that. Full dmesg output, full configs, exactly what you're doing.
-> Otherwise nobody can help you.
->
-> Jason
->
-
---94eb2c1cb94a818557054936dd7a
-Content-Type: text/html; charset=UTF-8
+--8TaQrIeukR7mmbKf
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div><div>you are right, sorry.</div></div><div>I do a lot=
- of tests =C2=A0and sometime it seems =C2=A0wireguard is in =C2=A0a &quot;s=
-trange&quot; state, I&#39;m trying to reproduce.</div><div><br></div><div>A=
- question :=C2=A0</div><div>When I&#39;ve the dmesg, &quot;could not create=
- ipv4 socket&quot;, i cannot rmmod wireguard from kernel.</div><div>I&#39;m=
- trying=C2=A0</div><div>ip link del dev wg0 =C2=A0,</div><div>rmmod wiregua=
-rd=C2=A0</div><div>there&#39;s no wireguard interface, however, i cannot re=
-move wireguard module, system tells module is used.</div><div><br></div><di=
-v>When wireguard works well, i can remove module without problem.</div><div=
-><br></div><div>Regards,=C2=A0</div><div>Nicolas</div><div>=C2=A0</div><div=
-><br></div><div><br></div><div><br></div><div><br></div></div><div class=3D=
-"gmail_extra"><br><div class=3D"gmail_quote">2017-02-23 18:32 GMT+01:00 Jas=
-on A. Donenfeld <span dir=3D"ltr">&lt;<a href=3D"mailto:Jason@zx2c4.com" ta=
-rget=3D"_blank">Jason@zx2c4.com</a>&gt;</span>:<br><blockquote class=3D"gma=
-il_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-lef=
-t:1ex">Hello,<br>
-<br>
-For the second time today, please provide more debugging information<br>
-than that. Full dmesg output, full configs, exactly what you&#39;re doing.<=
-br>
-Otherwise nobody can help you.<br>
-<span class=3D"HOEnZb"><font color=3D"#888888"><br>
-Jason<br>
-</font></span></blockquote></div><br></div>
+On Thu, Feb 23, 2017 at 02:03:37PM +0100, Nicolas Prochazka wrote:
+> Hello, i'm trying to do this with wireguard, withtout success :
+>=20
+> peer1 ---> peer2   : config ok , works
+> peer3 ---> peer1  : config ok , works
+> peer3 --->peer1 ---> peer2  : not ok .
+>=20
+> I suspect allowed-ip configuration, but all my tests does not works.
+> perhaps I must create two wireguard interface on peer 1 and do
+> forwarding/routing ?
+> i'm using ipv6 as internal ip.
 
---94eb2c1cb94a818557054936dd7a--
+It should work with a single interface for both peers, but you need to
+activate forwarding in the kernel:
+
+    # sysctl net.ipv6.conf.default.forwarding=3D1
+
+> so my question is :
+> - two interface ?
+> - specifiq magic allowedip ?
+> ( allowed ip is confusing for, it is using for routing and for evicting
+> paquet ? )
+>=20
+> Regards,
+> Nicolas
+
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+
+--8TaQrIeukR7mmbKf
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEjVflzZuxNlVFbt5QvgHsIqBOLkYFAlivUUAACgkQvgHsIqBO
+LkYXJw/+LzYAJ4UBBHYJVAcLoqKYDQQmm1zPy6LVfvyGCwRRsQfYWmr8J+hpmFlB
+7ep/PuXy0hurmn9X3SeMcAfAP0dHr+NGWytgEaP8IMP1W27ll8Vi+YZw+7kxkVrm
+2pbmT6opkmp408ivevyzfnNE97f4NpgwKInQiSjiBJhExhrJYicmpIumekV0vCpw
+ngNIAEhxZDE1Vyf6gryA1uJJNmC1CLlgPXdP59U1/KQ8TGfDb1n0cRo29dBA5Ina
+DsvHgaWuvUGh/6lBB58JBdlp1VvvsyAGdlrAaMY5dK/GsBlz2M7HDMVAY/aNX1LW
+bq8gCO8Zb0B1fJtZURYnFYacKsS/pWbBTqHOhhTCMtEX4XTGJ3+0MfrLgG+WwJMg
+7xh9xQhILqhhJtU3xmWQJbMi35PBKnHY836fJH0LxD+fHR8PwTGe4jy+H2e8jL4N
+9DIyua0ztRhTDjY1EI94a2AmStBmBVUH1rBSLi7Q6sjEyng5RY64aaU8k9xZSvSW
+0DGljRlojiNI2S4YOpafetqwvKOyJ7wa7uxIA8eb0E4goWc2P9khquild7k19eg8
+ui+gQ73iZP5kG5dYB80yVsWck6Q9c/JZj3Tb1fpBDyrw49Epka+hFh/v3bAQk6Zi
+iYPe3O5eNDuoMzWJ1sLjxoPGHhLolpfa13qCXhwH9UwJtBOoM+4=
+=FgQP
+-----END PGP SIGNATURE-----
+
+--8TaQrIeukR7mmbKf--
