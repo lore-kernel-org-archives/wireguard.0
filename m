@@ -1,24 +1,22 @@
-Return-Path: stromberg@mullvad.net
+Return-Path: mail@danrl.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 01ab5fb8
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a0ffe1d1
  for <wireguard@lists.zx2c4.com>;
- Sat, 25 Feb 2017 15:23:57 +0000 (UTC)
-Received: from mail-wm0-f41.google.com (mail-wm0-f41.google.com [74.125.82.41])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a023f17b
+ Sat, 25 Feb 2017 20:24:25 +0000 (UTC)
+Received: from mx.cakelie.net (mx.cakelie.net [45.76.39.236])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0edc3209
  for <wireguard@lists.zx2c4.com>;
- Sat, 25 Feb 2017 15:23:56 +0000 (UTC)
-Received: by mail-wm0-f41.google.com with SMTP id r141so33996058wmg.1
- for <wireguard@lists.zx2c4.com>; Sat, 25 Feb 2017 07:25:17 -0800 (PST)
-MIME-Version: 1.0
-In-Reply-To: <CAHmME9pL8U9=-BWZJvwjeoDMqhSR6u5V8zhgf4bAa2p56GV6ig@mail.gmail.com>
-References: <CAHmME9pL8U9=-BWZJvwjeoDMqhSR6u5V8zhgf4bAa2p56GV6ig@mail.gmail.com>
-From: =?UTF-8?Q?Fredrik_Str=C3=B6mberg?= <stromberg@mullvad.net>
-Date: Sat, 25 Feb 2017 16:25:16 +0100
-Message-ID: <CANTUoeeZ5pEA9kNAd47GmnfCzbFw-n+1y+c+6E76cWqB+HDSUQ@mail.gmail.com>
-Subject: Re: Mullvad public WireGuard server for testing
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Content-Type: text/plain; charset=UTF-8
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+ Sat, 25 Feb 2017 20:24:25 +0000 (UTC)
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 10.2 \(3259\))
+Subject: Re: Announcement: Public Wireguard server for testing
+From: =?utf-8?Q?Dan_L=C3=BCdtke?= <mail@danrl.com>
+In-Reply-To: <CANTUoecoSxQD33M1YbQBqMGPCiLdKwzDkB6p6of=Zo_edgu40Q@mail.gmail.com>
+Date: Sat, 25 Feb 2017 21:25:46 +0100
+Message-Id: <A77A9955-73A2-486A-8BDE-77D82064EFFE@danrl.com>
+References: <CANTUoecoSxQD33M1YbQBqMGPCiLdKwzDkB6p6of=Zo_edgu40Q@mail.gmail.com>
+To: =?utf-8?Q?Fredrik_Str=C3=B6mberg?= <stromberg@mullvad.net>
+Cc: wireguard@lists.zx2c4.com
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -28,22 +26,42 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Sat, Feb 25, 2017 at 3:31 PM, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
-> Those instructions are very thorough, but they're not as simple as
-> they could be. Instead, I'd recommend you use wg-quick, which takes
-> care of setting up all the addressing and routing table stuff.
->
+Hi Frederik,
 
-Thanks for the tip!
+this is a very generous offer and I think I speak for all of us: Thank =
+you for participating.
 
-> PS: Since Mullvad is a commercial organization and doesn't represent
-> the official direction of the WireGuard open source project, please
-> include "Mullvad" in your subject lines, rather than "Announcement" or
-> "[ANNOUNCE]" which are often treated a bit more officially.
-
-OK. Sorry about that. I didn't use caps and brackets for that reason,
-but also wanted to convey that it was an offer rather than a request
-for a public server. I'll keep that in mind in the future.
+I sent you a private mail regarding test keys.
 
 Cheers,
-Fredrik
+
+Dan
+
+
+> On 25 Feb 2017, at 14:28, Fredrik Str=C3=B6mberg =
+<stromberg@mullvad.net> wrote:
+>=20
+> Hi all,
+>=20
+> I'm one of the co-founders of Mullvad, as well as a long time lurker
+> of this list. I guess I haven't engaged in public discussion until now
+> though.
+>=20
+> Mullvad is trying out Wireguard, and in that spirit we've set up a
+> server for public use. Just follow the instructions at the link below
+> and email your pubkey to support@mullvad.net.
+>=20
+> https://mullvad.net/guides/wireguard-and-mullvad-vpn/
+>=20
+> We're doing this so that people might try Wireguard more easily, as
+> well as for us so that we can learn. We're supporting it on a purely
+> experimental basis, so no guarantees on uptime or anything. Sometime
+> soon we'll install a 10 Gbit card to see where things break first.
+> Enjoy :)
+>=20
+> Cheers,
+> Fredrik Str=C3=B6mberg
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
