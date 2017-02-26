@@ -1,24 +1,30 @@
-Return-Path: joerg@thalheim.io
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 28e9439b
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b8d2c646
  for <wireguard@lists.zx2c4.com>;
- Sun, 26 Feb 2017 18:23:39 +0000 (UTC)
-Received: from mail.thalheim.io (mail.thalheim.io [188.68.39.17])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d6779e4d
+ Sun, 26 Feb 2017 18:27:14 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 59529271
  for <wireguard@lists.zx2c4.com>;
- Sun, 26 Feb 2017 18:23:39 +0000 (UTC)
-Received: from [10.99.0.12] (unknown [193.138.219.62])
- by mail.thalheim.io (Postfix) with ESMTPSA id 2CAE43299D
- for <wireguard@lists.zx2c4.com>; Sun, 26 Feb 2017 18:25:05 +0000 (UTC)
-Subject: Re: Announcement: Public Wireguard server for testing
-To: wireguard@lists.zx2c4.com
-References: <CANTUoecoSxQD33M1YbQBqMGPCiLdKwzDkB6p6of=Zo_edgu40Q@mail.gmail.com>
-From: =?UTF-8?Q?J=c3=b6rg_Thalheim?= <joerg@thalheim.io>
-Message-ID: <404f1b9a-9321-edbe-6981-f98c3649e712@thalheim.io>
-Date: Sun, 26 Feb 2017 19:25:02 +0100
+ Sun, 26 Feb 2017 18:27:14 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ce2e315f
+ for <wireguard@lists.zx2c4.com>;
+ Sun, 26 Feb 2017 18:27:14 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 14b35d52
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Sun, 26 Feb 2017 18:27:13 +0000 (UTC)
+Received: by mail-oi0-f43.google.com with SMTP id 62so30006350oih.2
+ for <wireguard@lists.zx2c4.com>; Sun, 26 Feb 2017 10:28:42 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CANTUoecoSxQD33M1YbQBqMGPCiLdKwzDkB6p6of=Zo_edgu40Q@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Sun, 26 Feb 2017 19:28:41 +0100
+Message-ID: <CAHmME9q1-uOmHHCQZR3WcS77MuehH8dLmbMCJKtMrw_mh+im_Q@mail.gmail.com>
+Subject: wg-quick rule bypasses [Was: Re: Announcement: Public Wireguard
+ server for testing]
+To: =?UTF-8?Q?J=C3=B6rg_Thalheim?= <joerg@thalheim.io>
+Content-Type: text/plain; charset=UTF-8
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -28,56 +34,41 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-In this context, I found the following rules useful to bypass the vpn for=
+Hey Jorg,
+
+Moving this to a new thread.
+
+On Sun, Feb 26, 2017 at 7:25 PM, J=C3=B6rg Thalheim <joerg@thalheim.io> wro=
+te:
+> In this context, I found the following rules useful to bypass the vpn for=
  some routes:
-
-#!/usr/bin/env bash
-# /etc/wireguard/<profile>.sh
-
-if [ "${1:-down}" =3D "up" ]; then
-  action=3D"add"
-else
-  action=3D"del"
-fi
-
-ip rule $action priority 32763 to 192.168.0.0/16 lookup main
-ip rule $action priority 32763 to 172.16.0.0/12 lookup main
-ip rule $action priority 32763 to 10.0.0.0/8 lookup main
-ip -6 rule $action priority 32763 to fd::/8 lookup main
-ip -6 rule $action priority 32763 to 2000::/3 unreachable
-
-#/etc/wireguard/<profile>.conf
-
-[Interface]
-
-#....
-
-PostUp=3D/etc/wireguard/<profile>.sh up
-PostDown=3D/etc/wireguard/<profile>.sh down
-
-
-On 2017-02-25 14:28, Fredrik Str=C3=B6mberg wrote:
-> Hi all,
 >
-> I'm one of the co-founders of Mullvad, as well as a long time lurker
-> of this list. I guess I haven't engaged in public discussion until now
-> though.
+> #!/usr/bin/env bash
+> # /etc/wireguard/<profile>.sh
 >
-> Mullvad is trying out Wireguard, and in that spirit we've set up a
-> server for public use. Just follow the instructions at the link below
-> and email your pubkey to support@mullvad.net.
+> if [ "${1:-down}" =3D "up" ]; then
+>   action=3D"add"
+> else
+>   action=3D"del"
+> fi
 >
-> https://mullvad.net/guides/wireguard-and-mullvad-vpn/
+> ip rule $action priority 32763 to 192.168.0.0/16 lookup main
+> ip rule $action priority 32763 to 172.16.0.0/12 lookup main
+> ip rule $action priority 32763 to 10.0.0.0/8 lookup main
+> ip -6 rule $action priority 32763 to fd::/8 lookup main
+> ip -6 rule $action priority 32763 to 2000::/3 unreachable
 >
-> We're doing this so that people might try Wireguard more easily, as
-> well as for us so that we can learn. We're supporting it on a purely
-> experimental basis, so no guarantees on uptime or anything. Sometime
-> soon we'll install a 10 Gbit card to see where things break first.
-> Enjoy :)
+> #/etc/wireguard/<profile>.conf
 >
-> Cheers,
-> Fredrik Str=C3=B6mberg
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
+> [Interface]
+>
+> #....
+>
+> PostUp=3D/etc/wireguard/<profile>.sh up
+> PostDown=3D/etc/wireguard/<profile>.sh down
+
+If any of those routes are already explicitly listed on the main
+routing table (more specific than a /0 match), then this will already
+happen. This is due to wg-quick's use of suppress_prefix 0.
+
+Jaosn
