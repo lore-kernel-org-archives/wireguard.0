@@ -1,36 +1,27 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: pageexec@freemail.hu
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 94e0c6a5
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id faf8618b
  for <wireguard@lists.zx2c4.com>;
- Mon, 27 Feb 2017 23:02:09 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1d604ac3
+ Mon, 27 Feb 2017 23:34:57 +0000 (UTC)
+Received: from r00tworld.com (r00tworld.com [212.85.137.150])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ffbe7aeb
  for <wireguard@lists.zx2c4.com>;
- Mon, 27 Feb 2017 23:02:09 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7881e6dd
- for <wireguard@lists.zx2c4.com>;
- Mon, 27 Feb 2017 23:02:09 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id bf87d6c6
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Mon, 27 Feb 2017 23:02:09 +0000 (UTC)
-Received: by mail-ot0-f180.google.com with SMTP id x10so62271413otb.1
- for <wireguard@lists.zx2c4.com>; Mon, 27 Feb 2017 15:03:46 -0800 (PST)
+ Mon, 27 Feb 2017 23:34:57 +0000 (UTC)
+From: "PaX Team" <pageexec@freemail.hu>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Tue, 28 Feb 2017 00:36:19 +0100
 MIME-Version: 1.0
-In-Reply-To: <20170227223751.GA13376@wolff.to>
-References: <20170227180434.GA5702@wolff.to>
- <CAHmME9o+dDEtxdgByOZzpWAsE2_t2QF+qDoFYt+NdqXJRXSz=w@mail.gmail.com>
- <20170227202205.GA9124@wolff.to> <20170227203727.GA9565@wolff.to>
- <CAHmME9ryT7LWjs+-D4VJpd3DBSQeBa0hUtDUcJ3gBt46xUobiA@mail.gmail.com>
- <20170227221444.GA11938@wolff.to> <20170227223751.GA13376@wolff.to>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 27 Feb 2017 15:03:45 -0800
-Message-ID: <CAHmME9oWA82Gre1ZDRQCYbOakWsEG-+YCA4jykBybp0tKunrww@mail.gmail.com>
-Subject: Re: Kernel commit d35a00b8e33dab7385f724e713ae71c8be0a49f4 breaks
- wireguard
-To: Bruno Wolff III <bruno@wolff.to>
-Content-Type: text/plain; charset=UTF-8
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Subject: Re: kernel warning with 0.0.20170223: entered softirq 3 NET_RX
+ net_rx_action+0x0/0x760 with preempt_count 00000101, exited with
+Message-ID: <58B4B7F3.6576.1579035@pageexec.freemail.hu>
+In-reply-to: <CAHmME9ppn7wonfYTjOu9V-mmuRnF-S6v+1aoLneq4zLeoEShGg@mail.gmail.com>
+References: <5e4ad220-6009-7ec9-95eb-ddccb994bb9e@gmail.com>,
+ <CAApVa_kyD=KZYN3ABZU5yZGExNhC-34ryF+JZAPZ0JAKgmdJLw@mail.gmail.com>,
+ <CAHmME9ppn7wonfYTjOu9V-mmuRnF-S6v+1aoLneq4zLeoEShGg@mail.gmail.com>
+Content-type: text/plain; charset=US-ASCII
+Cc: Brad Spengler <spender@grsecurity.net>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
+Reply-To: pageexec@freemail.hu
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -40,4 +31,46 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Fixed!
+On 27 Feb 2017 at 4:22, Jason A. Donenfeld wrote:
+
+> void __used pax_check_alloca(unsigned long size)
+> {
+>  ...
+>        case STACK_TYPE_IRQ:
+>                stack_left = sp & (IRQ_STACK_SIZE - 1);
+>                put_cpu();
+>                break;
+>  ...
+> }
+> 
+> Do you see the bug? Looks like somebody snuck in a "put_cpu()" there,
+> where it really does not belong. "put_cpu()" basically just jiggers
+> the preempt_count. I can confirm that removing the erroneous call to
+> "put_cpu()" fixes the bug.
+> 
+> So, either this is by design, and there's some odd subtlety I'm
+> missing, or this is a bug that should be fixed in grsec/PaX.
+
+as spender explained it, it's a bug. what happened was that 4.9 introduced
+get_stack_info that i then made use of in pax_check_alloca (instead of keeping
+my own stack classifier). this old code of mine had to lock the cpu which is
+why i had get/put_cpu calls in there and i managed to forget about one of the
+latter.
+
+> In the case of the latter, I believe this introduces a security
+> vulnerability, since it opens up a whole host of interesting race
+> conditions that can be exploited.
+
+now this is the interesting part, isn't it ;). first, the conditions needed to
+trigger the bug are that you need an amd64 config with STACKLEAK and PREEMPT
+enabled. second, you need functions with big enough stack frames (including
+controllable dynamically sized local variables) that get instrumented by STACKLEAK
+and executed in IRQ context (on a IRQ stack). once you have these conditions
+under control, you can overdecrement the preempt count on a given CPU each time
+such a function is executed. note that if this happens under __do_softirq then
+the overdecrement will be fixed up (and get logged), so you probably need another
+path for abuse. what i don't know (and have no time to figure out) is how many
+of these functions there are and how you get something useful out of abusing them.
+
+thanks & cheers,
+ PaX Team
