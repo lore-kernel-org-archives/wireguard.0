@@ -1,11 +1,31 @@
-Return-Path: williclarkam@gmail.com
+Return-Path: Jason@zx2c4.com
+Received: from krantz.zx2c4.com (localhost [127.0.0.1])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 04d1962e
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 28 Feb 2017 16:27:13 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9d61bc67
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 28 Feb 2017 16:27:13 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cb734625
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 28 Feb 2017 16:27:12 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 88e3d8d0
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 28 Feb 2017 16:27:12 +0000 (UTC)
+Received: by mail-oi0-f53.google.com with SMTP id 62so8481820oih.2
+ for <wireguard@lists.zx2c4.com>; Tue, 28 Feb 2017 08:28:55 -0800 (PST)
 MIME-Version: 1.0
-From: William Clark <williclarkam@gmail.com>
-Date: Tue, 28 Feb 2017 19:38:22 +0330
-Message-ID: <CAPtYZXijvKABYy35SjHTGNrC4fFkP+9xwyUR8RyUOjMB=mB2WQ@mail.gmail.com>
-Subject: RTNETLINK answers: Operation not supported
-To: WireGuard@lists.zx2c4.com
-Content-Type: multipart/alternative; boundary=94eb2c046ada0f02f1054999690a
+In-Reply-To: <CAHmME9ojj_d=xogzU-Mu=+PHe=wHomJz1eq95t_PjGmkHYkuXA@mail.gmail.com>
+References: <CAHmME9rCZpSjs-a5MbSXZ4APJxnjmd5oSLqcUaGZZChvAqJ38A@mail.gmail.com>
+ <CAHmME9ojj_d=xogzU-Mu=+PHe=wHomJz1eq95t_PjGmkHYkuXA@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Tue, 28 Feb 2017 08:28:54 -0800
+Message-ID: <CAHmME9rRbxPbpYMYDUYx8P9uXSuDyw=0TQO=W1pQVNu5utt=ag@mail.gmail.com>
+Subject: Re: Seeking Fedora Maintainer
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: multipart/alternative; boundary=001a113d3d14303050054999b16c
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -15,60 +35,35 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---94eb2c046ada0f02f1054999690a
+--001a113d3d14303050054999b16c
 Content-Type: text/plain; charset=UTF-8
 
-Hello,
+Version bump?
 
-So I wanted to try WireGuard but unfortunately I can't get pas this part:
-ip link add dev wg0 type wireguard.
+On Dec 22, 2016 19:57, "Jason A. Donenfeld" <Jason@zx2c4.com> wrote:
 
-When ever I run the command "ip link add dev wg0 type wireguard"
-I get the output:
-RTNETLINK answers: Operation not supported
+> Hi all,
+>
+> A quick update. Joe is back in action! Fedora users should have a nice
+> update now.
+>
+> Jason
+>
 
-This both happens on CentOS 7 and Fedora 25 and Ubuntu 16.04.
-
-CentOS 7 Kernel:
-Linux hostname 3.10.0-514.6.2.el7.x86_64 #1 SMP Thu Feb 23 03:04:39 UTC
-2017 x86_64 x86_64 x86_64 GNU/Linux
-Fedora 25 Kernel:
-Linux hostname 4.9.7-x86_64-X #2 SMP Thu Feb 2 15:43:55 EST 2017 x86_64
-x86_64 x86_64 GNU/Linux
-
-I've tried installing Linux headers too, but no luck and I've rebooted
-after the upgrade too, and still no luck.
-
-Thanks a lot.
-
---94eb2c046ada0f02f1054999690a
+--001a113d3d14303050054999b16c
 Content-Type: text/html; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><font face=3D"monospace, monospace">Hello,</font><div><fon=
-t face=3D"monospace, monospace"><br></font></div><div><font face=3D"monospa=
-ce, monospace">So I wanted to try WireGuard but unfortunately I can&#39;t g=
-et pas this part:</font></div><div><font face=3D"monospace, monospace">ip l=
-ink add dev wg0 type wireguard.<br></font></div><div><font face=3D"monospac=
-e, monospace"><br></font></div><div><div><font face=3D"monospace, monospace=
-">When ever I run the command &quot;ip link add dev wg0 type wireguard&quot=
-;<br></font></div></div><div><font face=3D"monospace, monospace">I get the =
-output:</font></div><div><div><font face=3D"monospace, monospace">RTNETLINK=
- answers: Operation not supported</font></div></div><div><font face=3D"mono=
-space, monospace"><br></font></div><div><font face=3D"monospace, monospace"=
->This both happens on CentOS 7 and Fedora 25 and Ubuntu 16.04.</font></div>=
-<div><font face=3D"monospace, monospace"><br></font></div><div><font face=
-=3D"monospace, monospace">CentOS 7 Kernel:</font></div><div><div><font face=
-=3D"monospace, monospace">Linux hostname 3.10.0-514.6.2.el7.x86_64 #1 SMP T=
-hu Feb 23 03:04:39 UTC 2017 x86_64 x86_64 x86_64 GNU/Linux</font></div></di=
-v><div><font face=3D"monospace, monospace">Fedora 25 Kernel:</font></div><d=
-iv><div><font face=3D"monospace, monospace">Linux hostname 4.9.7-x86_64-X #=
-2 SMP Thu Feb 2 15:43:55 EST 2017 x86_64 x86_64 x86_64 GNU/Linux</font></di=
-v></div><div><font face=3D"monospace, monospace"><br></font></div><div><fon=
-t face=3D"monospace, monospace">I&#39;ve tried installing Linux=C2=A0header=
-s too, but no luck and I&#39;ve rebooted after the upgrade too, and still n=
-o luck.</font></div><div><font face=3D"monospace, monospace"><br></font></d=
-iv><div><font face=3D"monospace, monospace">Thanks a lot.</font></div></div=
->
+<div dir=3D"auto">Version bump?</div><div class=3D"gmail_extra"><br><div cl=
+ass=3D"gmail_quote">On Dec 22, 2016 19:57, &quot;Jason A. Donenfeld&quot; &=
+lt;<a href=3D"mailto:Jason@zx2c4.com">Jason@zx2c4.com</a>&gt; wrote:<br typ=
+e=3D"attribution"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .=
+8ex;border-left:1px #ccc solid;padding-left:1ex">Hi all,<br>
+<br>
+A quick update. Joe is back in action! Fedora users should have a nice<br>
+update now.<br>
+<br>
+Jason<br>
+</blockquote></div></div>
 
---94eb2c046ada0f02f1054999690a--
+--001a113d3d14303050054999b16c--
