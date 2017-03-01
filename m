@@ -1,22 +1,20 @@
-Return-Path: joerg@higgsboson.tk
+Return-Path: nicolas.prochazka@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 17bf9bb8
- for <wireguard@lists.zx2c4.com>; Wed, 1 Mar 2017 08:12:55 +0000 (UTC)
-Received: from mail.thalheim.io (mail.thalheim.io [188.68.39.17])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 48f5ab52
- for <wireguard@lists.zx2c4.com>; Wed, 1 Mar 2017 08:12:54 +0000 (UTC)
-Received: from [10.100.45.200] (wj0732.dip.tu-dresden.de [141.76.98.220])
- by mail.thalheim.io (Postfix) with ESMTPSA id 14FB935A37
- for <wireguard@lists.zx2c4.com>; Wed,  1 Mar 2017 08:14:41 +0000 (UTC)
-Subject: Re: RTNETLINK answers: Operation not supported
-To: wireguard@lists.zx2c4.com
-References: <CAPtYZXijvKABYy35SjHTGNrC4fFkP+9xwyUR8RyUOjMB=mB2WQ@mail.gmail.com>
-From: =?UTF-8?Q?J=c3=b6rg_Thalheim?= <joerg@higgsboson.tk>
-Message-ID: <b0f40ee5-0683-3a59-39b0-dc5b7fef3b12@higgsboson.tk>
-Date: Wed, 1 Mar 2017 09:14:40 +0100
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2b91825d
+ for <wireguard@lists.zx2c4.com>; Wed, 1 Mar 2017 13:45:44 +0000 (UTC)
+Received: from mail-lf0-f49.google.com (mail-lf0-f49.google.com
+ [209.85.215.49])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 29cc9a2e
+ for <wireguard@lists.zx2c4.com>; Wed, 1 Mar 2017 13:45:44 +0000 (UTC)
+Received: by mail-lf0-f49.google.com with SMTP id a6so19646022lfa.0
+ for <wireguard@lists.zx2c4.com>; Wed, 01 Mar 2017 05:47:33 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CAPtYZXijvKABYy35SjHTGNrC4fFkP+9xwyUR8RyUOjMB=mB2WQ@mail.gmail.com>
-Content-Type: text/plain; charset=windows-1252
+From: Nicolas Prochazka <nicolas.prochazka@gmail.com>
+Date: Wed, 1 Mar 2017 14:47:31 +0100
+Message-ID: <CADdae-jn7qKK=sg7QdP-UeepBrZyUswV4LkABCXsrpzexymk3g@mail.gmail.com>
+Subject: [ wireguard-devel] Purge old peer
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: multipart/alternative; boundary=001a114b1a30e592b60549ab8d8f
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,34 +24,30 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
+--001a114b1a30e592b60549ab8d8f
+Content-Type: text/plain; charset=UTF-8
 
-On 2017-02-28 17:08, William Clark wrote:
-> Hello,
->
-> So I wanted to try WireGuard but unfortunately I can't get pas this part:
-> ip link add dev wg0 type wireguard.
->
-> When ever I run the command "ip link add dev wg0 type wireguard"
-> I get the output:
-> RTNETLINK answers: Operation not supported
->
-> This both happens on CentOS 7 and Fedora 25 and Ubuntu 16.04.
->
-> CentOS 7 Kernel:
-> Linux hostname 3.10.0-514.6.2.el7.x86_64 #1 SMP Thu Feb 23 03:04:39 UTC 2017 x86_64 x86_64 x86_64 GNU/Linux
-> Fedora 25 Kernel:
-> Linux hostname 4.9.7-x86_64-X #2 SMP Thu Feb 2 15:43:55 EST 2017 x86_64 x86_64 x86_64 GNU/Linux
->
-> I've tried installing Linux headers too, but no luck and I've rebooted after the upgrade too, and still no luck.
->
-> Thanks a lot.
+Hello,
+we hare using wireguard with a lot of client, with a lot of dynamically
+generated peer key.
+So we have, server side, a lot of peers that are become obsoletes
+At this time, we delete peer , based on latest handshake > delta time ,
+with wg command.
+Is the best thing to do ? is it possible to implement an auto purge of old
+peer ?
 
-If the following commands do not succeed, the wireguard kernel module was not installed correctly:
+Regards,
+Nicolas Prochazka.
 
-$ modprobe wireguard
-$ lsmod | grep wireguard
-wireguard             126976  0
-x_tables               28672  2 xt_hashlimit,wireguard
-ip6_udp_tunnel         16384  1 wireguard
-udp_tunnel             16384  1 wireguard
-ipv6                  401408  162 nf_conntrack_ipv6,nf_defrag_ipv6,wireguard,bridge
+--001a114b1a30e592b60549ab8d8f
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div><div>Hello,<br>we hare using wireguard with a lot of =
+client, with a lot of dynamically generated peer key.<br>So we have, server=
+ side, a lot of peers that are become obsoletes<br>At this time, we delete =
+peer , based on latest handshake &gt; delta time , with wg command.<br>Is t=
+he best thing to do ? is it possible to implement an auto purge of old peer=
+ ? <br><br></div>Regards, <br></div>Nicolas Prochazka.<br></div>
+
+--001a114b1a30e592b60549ab8d8f--
