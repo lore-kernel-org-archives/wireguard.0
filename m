@@ -1,26 +1,21 @@
-Return-Path: joe@solidadmin.com
+Return-Path: peter@lekensteyn.nl
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 96bd3429
- for <wireguard@lists.zx2c4.com>; Fri, 3 Mar 2017 03:56:18 +0000 (UTC)
-Received: from conquer.yellowcord.com (conquer.yellowcord.com [45.55.224.114])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ca298a0e
- for <wireguard@lists.zx2c4.com>; Fri, 3 Mar 2017 03:56:18 +0000 (UTC)
-Received: from d53-64-244-190.nap.wideopenwest.com ([64.53.190.244]:27769
- helo=sts135.kennasecurity.com)
- by conquer.yellowcord.com with esmtpsa (TLSv1.2:DHE-RSA-AES128-SHA:128)
- (Exim 4.85) (envelope-from <joe@solidadmin.com>) id 1cjeME-0005tT-CY
- for wireguard@lists.zx2c4.com; Thu, 02 Mar 2017 21:58:18 -0600
-Subject: Re: Seeking Fedora Maintainer
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 422eae03
+ for <wireguard@lists.zx2c4.com>; Fri, 3 Mar 2017 16:06:50 +0000 (UTC)
+Received: from lekensteyn.nl (lekensteyn.nl [178.21.112.251])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f0a9298b
+ for <wireguard@lists.zx2c4.com>; Fri, 3 Mar 2017 16:06:50 +0000 (UTC)
+Received: by lekensteyn.nl with esmtpsa
+ (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.84_2)
+ (envelope-from <peter@lekensteyn.nl>) id 1cjplC-0007au-5k
+ for wireguard@lists.zx2c4.com; Fri, 03 Mar 2017 17:08:54 +0100
+Date: Fri, 3 Mar 2017 17:08:45 +0100
+From: Peter Wu <peter@lekensteyn.nl>
 To: wireguard@lists.zx2c4.com
-References: <CAHmME9rCZpSjs-a5MbSXZ4APJxnjmd5oSLqcUaGZZChvAqJ38A@mail.gmail.com>
- <CAHmME9ojj_d=xogzU-Mu=+PHe=wHomJz1eq95t_PjGmkHYkuXA@mail.gmail.com>
- <CAHmME9rRbxPbpYMYDUYx8P9uXSuDyw=0TQO=W1pQVNu5utt=ag@mail.gmail.com>
-From: Joe Doss <joe@solidadmin.com>
-Message-ID: <d4dc6924-8501-2d75-2393-cbae3399ed89@solidadmin.com>
-Date: Thu, 2 Mar 2017 21:58:18 -0600
+Subject: Release of Wireshark dissector with decryption support
+Message-ID: <20170303160845.GA29450@al>
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9rRbxPbpYMYDUYx8P9uXSuDyw=0TQO=W1pQVNu5utt=ag@mail.gmail.com>
-Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Type: text/plain; charset=us-ascii
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -30,11 +25,24 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On 02/28/2017 10:28 AM, Jason A. Donenfeld wrote:
-> Version bump?
+Hi all!
 
-Sorry for the delays. It's building on copr now.
+I have been working on a WireGuard dissector for Wireshark with
+decryption support for both Transport data and handshake messages.
 
---
-Joe Doss
-joe@solidadmin.com
+Since the extract-keys utility included with WG is quite limited (needs
+CONFIG_DEVKMEM=y and cannot obtain handshake secrets), I took a
+different approach using kprobes and am able to obtain the three
+handshake secrets too. (Future work includes obtaining just the
+ephemeral keys and then deriving the keys from that.)
+
+For code, documentation, screenshots and sample captures, see
+https://github.com/Lekensteyn/wireguard-dissector
+
+Dissection is functionally complete. The main remaining tasks include
+adding expert info when the protocol is not being followed and
+verification/decryption of Cookie Replies.
+-- 
+Kind regards,
+Peter Wu
+https://lekensteyn.nl
