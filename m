@@ -1,27 +1,21 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: yvonndaniels@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a1c19c00
- for <wireguard@lists.zx2c4.com>; Fri, 3 Mar 2017 17:35:33 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 778f297a
- for <wireguard@lists.zx2c4.com>; Fri, 3 Mar 2017 17:35:33 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id effdaf67
- for <wireguard@lists.zx2c4.com>; Fri, 3 Mar 2017 17:35:33 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 8c36ecf6
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>; Fri, 3 Mar 2017 17:35:33 +0000 (UTC)
-Received: by mail-oi0-f52.google.com with SMTP id 126so7580732oig.3
- for <wireguard@lists.zx2c4.com>; Fri, 03 Mar 2017 09:37:38 -0800 (PST)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e8105530
+ for <wireguard@lists.zx2c4.com>; Fri, 3 Mar 2017 18:15:01 +0000 (UTC)
+Received: from mail-lf0-f45.google.com (mail-lf0-f45.google.com
+ [209.85.215.45])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ea319271
+ for <wireguard@lists.zx2c4.com>; Fri, 3 Mar 2017 18:15:00 +0000 (UTC)
+Received: by mail-lf0-f45.google.com with SMTP id y193so50805127lfd.3
+ for <wireguard@lists.zx2c4.com>; Fri, 03 Mar 2017 10:17:06 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20170303160845.GA29450@al>
-References: <20170303160845.GA29450@al>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 3 Mar 2017 09:37:37 -0800
-Message-ID: <CAHmME9pTFC39=+eUa4P7WXiZH1dSc26b8RpfJ6kYRxSgaxL43g@mail.gmail.com>
-Subject: Re: Release of Wireshark dissector with decryption support
-To: Peter Wu <peter@lekensteyn.nl>
-Content-Type: text/plain; charset=UTF-8
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: Yvonne daniels <yvonndaniels@gmail.com>
+Date: Fri, 3 Mar 2017 13:17:04 -0500
+Message-ID: <CAD+P=Q0PDzP9rt4nQXR8Ox6NXp3Vo1rco9DetxajkFdXhyQ2Yg@mail.gmail.com>
+Subject: What size my rights should I keep in my stamp and what size you use
+ for 49-29 stranded wire
+To: wireguard@lists.zx2c4.com
+Content-Type: multipart/alternative; boundary=001a11410bd68f1dcb0549d78de2
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -31,13 +25,14 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hey Peter,
+--001a11410bd68f1dcb0549d78de2
+Content-Type: text/plain; charset=UTF-8
 
-This is wonderful news! Congrats on the release.
+What size wire to use
 
-I look forward to a simplified version that merely extracts ephemerals
-and derives all the rest, so that intermediate values can be
-decrypted.
+--001a11410bd68f1dcb0549d78de2
+Content-Type: text/html; charset=UTF-8
 
-Regards,
-Jason
+<div dir="auto">What size wire to use</div>
+
+--001a11410bd68f1dcb0549d78de2--
