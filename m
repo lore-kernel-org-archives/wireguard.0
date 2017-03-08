@@ -1,11 +1,11 @@
 Return-Path: developer@it-offshore.co.uk
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a900b1c4
- for <wireguard@lists.zx2c4.com>; Wed, 8 Mar 2017 17:11:23 +0000 (UTC)
-Received: from blue.oak.relay.mailchannels.net
- (blue.oak.relay.mailchannels.net [23.83.215.20])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5e94674e
- for <wireguard@lists.zx2c4.com>; Wed, 8 Mar 2017 17:11:22 +0000 (UTC)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9ced342d
+ for <wireguard@lists.zx2c4.com>; Wed, 8 Mar 2017 18:04:31 +0000 (UTC)
+Received: from buffalo.ash.relay.mailchannels.net
+ (buffalo.ash.relay.mailchannels.net [23.83.222.24])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id aea41716
+ for <wireguard@lists.zx2c4.com>; Wed, 8 Mar 2017 18:04:30 +0000 (UTC)
 Subject: Re: Release monitoring (Was: Wireguard added to Alpine Linux)
 References: <6b590394-3134-b725-a063-0993b32a51c4@it-offshore.co.uk>
  <CAHmME9ow_=3muSufX_--6JRG0Fz9qfyEPKi_=rc3tJUGr_CaAQ@mail.gmail.com>
@@ -13,12 +13,12 @@ References: <6b590394-3134-b725-a063-0993b32a51c4@it-offshore.co.uk>
  <20170308160529.GB21799@tuxmachine.polynome.dn42>
 To: Baptiste Jonglez <baptiste@bitsofnetworks.org>
 From: Stuart Cardall <developer@it-offshore.co.uk>
-Message-ID: <12a6f6bf-7285-4d73-1518-c1feb0fc2539@it-offshore.co.uk>
-Date: Wed, 8 Mar 2017 17:12:12 +0000
+Message-ID: <ff987f41-176f-be5c-fe15-4eb4ba9b8792@it-offshore.co.uk>
+Date: Wed, 8 Mar 2017 18:05:16 +0000
 MIME-Version: 1.0
 In-Reply-To: <20170308160529.GB21799@tuxmachine.polynome.dn42>
 Content-Type: multipart/alternative;
- boundary="------------51C1ACD7316AC3C370AF2765"
+ boundary="------------9F4B3C459A28A2A7137ED1D9"
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Reply-To: developer@it-offshore.co.uk
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
@@ -31,25 +31,27 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
 This is a multi-part message in MIME format.
---------------51C1ACD7316AC3C370AF2765
+--------------9F4B3C459A28A2A7137ED1D9
 Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: quoted-printable
 
 Hi Baptiste,
 
-Many thanks for your message - I will add a distribution mapping for
-Alpine Linux once Wireguard has moved out of testing.
+This was very helpful thank you - I've added email / irc notifications @
+https://apps.fedoraproject.org/notifications for wireguard. I found the
+easiest way to get a login was to use
+https://admin.fedoraproject.org/accounts/user/new
 
-In Alpine we monitor releases directly with http://fedmsg.com - when a
-new notification with an Alpine mapping is received, it creates a flag
-in the Aports application. The package maintainer then receives an email
-about the outdated package from Aports, in the same way as when someone
-manually flags the pkg as outdated on https://pkgs.alpinelinux.org/packag=
-es
+To get notifications choose the following filter from the Anitya section:=
+
+
+[[ Anything regarding a particular "upstream project"  ]]
+
+& just enter wireguard as the project name.
 
 Kind Regards,
 
-Stuart
+Stuart.
 
 
 On 03/08/2017 04:05 PM, Baptiste Jonglez wrote:
@@ -77,7 +79,7 @@ xz"
 > [1] https://release-monitoring.org/project/13481/
 
 
---------------51C1ACD7316AC3C370AF2765
+--------------9F4B3C459A28A2A7137ED1D9
 Content-Type: text/html; charset=windows-1252
 Content-Transfer-Encoding: quoted-printable
 
@@ -89,24 +91,28 @@ Content-Transfer-Encoding: quoted-printable
   <body bgcolor=3D"#FFFFFF" text=3D"#000099">
     <p><font face=3D"Helvetica, Arial, sans-serif">Hi Baptiste,</font></p=
 >
-    <p><font face=3D"Helvetica, Arial, sans-serif">Many thanks for your
-        message - I will add a distribution mapping for Alpine Linux
-        once Wireguard has moved out of testing.</font></p>
-    <p><font face=3D"Helvetica, Arial, sans-serif">In Alpine we monitor
-        releases directly with <a href=3D"http://fedmsg.com">http://fedms=
-g.com</a>
-        - when a new notification with an Alpine mapping is received, it
-        creates a flag in the Aports application. The package maintainer
-        then receives an email about the outdated package from Aports,
-        in the same way as when someone manually flags the pkg as
-        outdated on <a href=3D"https://pkgs.alpinelinux.org/packages">htt=
-ps://pkgs.alpinelinux.org/packages</a><br>
+    <p><font face=3D"Helvetica, Arial, sans-serif">This was very helpful
+        thank you - I've added email / irc notifications @ <a
+          href=3D"https://apps.fedoraproject.org/notifications">https://a=
+pps.fedoraproject.org/notifications</a>
+        for wireguard. I found the easiest way to get a login was to use
+        <a href=3D"https://admin.fedoraproject.org/accounts/user/new">htt=
+ps://admin.fedoraproject.org/accounts/user/new</a><br>
       </font></p>
+    <p><font face=3D"Helvetica, Arial, sans-serif">To get notifications
+        choose the following filter from the Anitya section:<br>
+      </font></p>
+    <p><font face=3D"Helvetica, Arial, sans-serif">[[ Anything regarding =
+a
+        particular "upstream project"=A0 ]]<br>
+      </font></p>
+    <p><font face=3D"Helvetica, Arial, sans-serif">&amp; just enter
+        wireguard as the project name.</font></p>
     <p><font face=3D"Helvetica, Arial, sans-serif">Kind Regards,</font></=
 p>
-    <p><font face=3D"Helvetica, Arial, sans-serif">Stuart</font></p>
-    <p><font face=3D"Helvetica, Arial, sans-serif"><br>
-      </font></p>
+    <p><font face=3D"Helvetica, Arial, sans-serif">Stuart.</font><br>
+    </p>
+    <br>
     <div class=3D"moz-cite-prefix">On 03/08/2017 04:05 PM, Baptiste
       Jonglez wrote:<br>
     </div>
@@ -149,4 +155,4 @@ Baptiste
   </body>
 </html>
 
---------------51C1ACD7316AC3C370AF2765--
+--------------9F4B3C459A28A2A7137ED1D9--
