@@ -1,29 +1,22 @@
-Return-Path: dpx.infinity@gmail.com
+Return-Path: ygh@mysterious.site
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 02f1abb7
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 020ec0c6
  for <wireguard@lists.zx2c4.com>;
- Sun, 12 Mar 2017 23:06:48 +0000 (UTC)
-Received: from mail-lf0-f50.google.com (mail-lf0-f50.google.com
- [209.85.215.50])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ad8d7902
+ Mon, 13 Mar 2017 07:01:32 +0000 (UTC)
+Received: from sender-of-o52.zoho.com (sender-of-o52.zoho.com [135.84.80.217])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 788cd48f
  for <wireguard@lists.zx2c4.com>;
- Sun, 12 Mar 2017 23:06:48 +0000 (UTC)
-Received: by mail-lf0-f50.google.com with SMTP id j90so57498771lfk.2
- for <wireguard@lists.zx2c4.com>; Sun, 12 Mar 2017 16:10:03 -0700 (PDT)
-Return-Path: <dpx.infinity@gmail.com>
-Received: from diamond.local ([176.15.113.42])
- by smtp.googlemail.com with ESMTPSA id h140sm3261589lfg.39.2017.03.12.16.10.00
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
- Sun, 12 Mar 2017 16:10:01 -0700 (PDT)
-Message-ID: <1489360183.27524.3.camel@gmail.com>
-Subject: Re: Rust implementation status
-From: Vladimir Matveev <dpx.infinity@gmail.com>
-To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
-Date: Mon, 13 Mar 2017 03:09:43 +0400
+ Mon, 13 Mar 2017 07:01:32 +0000 (UTC)
+Date: Mon, 13 Mar 2017 16:04:44 +0900
+From: sopium <sopium@mysterious.site>
+To: "Sascha Grunert" <saschagrunert@icloud.com>
+Message-ID: <15ac67bc30c.105593191200671.3458978345094445007@mysterious.site>
 In-Reply-To: <E63B612D-BFAA-48FE-A352-25B4C11B8E05@icloud.com>
+References: <E63B612D-BFAA-48FE-A352-25B4C11B8E05@icloud.com>
+Subject: Re: Rust implementation status
+MIME-Version: 1.0
 Content-Type: text/plain; charset="UTF-8"
-Mime-Version: 1.0
+Cc: wireguard@lists.zx2c4.com
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -33,61 +26,41 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi, Sascha,
+Hi,
 
-I'm a Rust programmer, and I really like that there is now a Rust
-implementation of the Wireguard daemon!
+2017-03-05 20:42 GMT+09:00 Sascha Grunert <saschagrunert@icloud.com>:
+> Hey folks,
+>
+> I want to call for participation of the Rust userspace implementation of =
+WireGuard. The template for the initial implementation was this: https://ww=
+w.wireguard.io/xplatform/ and can be found here: https://git.zx2c4.com/wire=
+guard-rs/.
+>
+> [......]
 
-I have a few question and suggestions.
+I have got an initial working prototype of the WireGuard protocol in
+Rust.
 
-1. Instead of hand-rolling your own error management implementation,
-consider using the error-chain[1] crate. It seems that many popular
-crates now depend on it[2]. It would make the Wireguard crate more
-interoperable and more readable for those who is already accustomed
-with error-chain. On the first glance, your custom implementation
-resembles error-chain very much.
+The code is at the `wg` branch of `TiTun`[1].
 
-2. Consider publishing the project on some hosting service like Github
-or Gitlab or something else, which would allow easier community
-participation. I would very much like to help with its development, but
-I never participated in any mailing-list based projects and I
-personally find it very inconvenient, and I think that the pull
-requests mechanics is greatly superior. Also, almost all Rust ecosystem
-lives on Github, so lots of Rust developers are quite accustomed to it,
-and you will most certainly attract more contributors that way.
+1. https://github.com/sopium/titun/tree/wg
 
-3. On a related note, consider publishing a link to this project in the
-Rust community, in particular, in the Rust subreddit[3] and maybe on
-The Rust Programming Language Forum[4]. I think that many people there
-will be very interested in a project like this, because it is network-
-related, it is pretty low level, and it will probably depend on the
-current "hot" crates in the Rust community, like tokio.
+Most of the essential aspects of the WireGuard protocol is
+implemented. The missing parts should not be too hard to add.
 
-4. I think it would be quite idiomatic to split the interface to WG
-into a separate library crate, which the main binary would depend on.
+Only Linux is supported, for the moment.
 
-5. I wonder, is it really necessary to perform daemonization manually?
-As far as I understand the current situation in the daemon writing and
-init systems, it is expected that daemons won't fork themselves and
-will continue working in foreground when started, while service
-management systems like systemd or launchd will take care of keeping
-them alive, collecting logs, starting, restarting, etc. Daemonizing
-also seems quite unidiomatic on Windows. I also personally think that
-avoiding manual daemonization will make the code and architecture
-simpler and more manageable.
+The implementation is quite fast =F0=9F=9A=80, although I haven't spent a l=
+ot of
+effort in optimization yet. It uses a fixed number of threads to
+process packets from UDP socket or TUN device (similar to the other
+Haskell impl, nara), and uses fine-grained locking to exploit
+parallelism. I get 600Mbps+ to 800Mbps+ throughput and about 0.5ms
+latency, between my Haswell Xeon-E3 desktop and a local KVM
+instance. It should be able to get even faster with SO_REUSEPORT
+sockets and multi-queue TUN devices.
 
-6. Have you decided which cryptographic libraries you are going to use?
-Or are you planning to implement the necessary primitives in this
-project?
+Please review and test.
 
-I'm really looking forward to the further development of this project,
-and I'm willing to participate in it if you're looking for
-contributors.
-
-Best regards,
-Vladimir
-
-  [1]: https://crates.io/crates/error-chain
-  [2]: https://crates.io/crates/error-chain/reverse_dependencies
-  [3]: https://www.reddit.com/r/rust/
-  [4]: https://users.rust-lang.org/
+Regards,
+Sopium
