@@ -1,31 +1,28 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: dpx.infinity@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dd2e8946
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id af1dbd9f
  for <wireguard@lists.zx2c4.com>;
- Wed, 15 Mar 2017 16:31:13 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a18fad4e
+ Wed, 15 Mar 2017 16:48:09 +0000 (UTC)
+Received: from mail-lf0-f50.google.com (mail-lf0-f50.google.com
+ [209.85.215.50])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 090434d2
  for <wireguard@lists.zx2c4.com>;
- Wed, 15 Mar 2017 16:31:13 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7cd38310
- for <wireguard@lists.zx2c4.com>;
- Wed, 15 Mar 2017 16:31:13 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 50f37a2c
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Wed, 15 Mar 2017 16:31:12 +0000 (UTC)
-Received: by mail-ot0-f182.google.com with SMTP id 19so24907659oti.0
- for <wireguard@lists.zx2c4.com>; Wed, 15 Mar 2017 09:34:47 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <15acfffc263.e11103bb85901.2506936173902453879@mysterious.site>
-References: <15acfffc263.e11103bb85901.2506936173902453879@mysterious.site>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 15 Mar 2017 09:34:45 -0700
-Message-ID: <CAHmME9p8kMshYw0A0v7ibY_jeNbMDLX5TE1+r0e02j+28kk8Dg@mail.gmail.com>
-Subject: Re: Some questions about the protocol
-To: sopium <sopium@mysterious.site>
-Content-Type: text/plain; charset=UTF-8
-Cc: wireguard <wireguard@lists.zx2c4.com>
+ Wed, 15 Mar 2017 16:48:09 +0000 (UTC)
+Received: by mail-lf0-f50.google.com with SMTP id z15so9526403lfd.1
+ for <wireguard@lists.zx2c4.com>; Wed, 15 Mar 2017 09:51:43 -0700 (PDT)
+Return-Path: <dpx.infinity@gmail.com>
+Message-ID: <1489596675.18476.2.camel@gmail.com>
+Subject: Re: Rust implementation status
+From: Vladimir Matveev <dpx.infinity@gmail.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 15 Mar 2017 20:51:15 +0400
+In-Reply-To: <CAHmME9oaJA6xTwATpc0q=h9NO_F=ae-NveccSQpw-M4i-cF5Sw@mail.gmail.com>
+References: <80387df1-3237-43a0-adaa-09ffeebbef01@me.com>
+ <1489486302.24652.2.camel@gmail.com>
+ <CAHmME9oaJA6xTwATpc0q=h9NO_F=ae-NveccSQpw-M4i-cF5Sw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -35,112 +32,83 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hey,
+В Ср, 15/03/2017 в 08:59 -0700, Jason A. Donenfeld пишет:
+> On Tue, Mar 14, 2017 at 3:11 AM, Vladimir Matveev
+> <dpx.infinity@gmail.com> wrote:
+> > I see. I think that joining efforts would be nice, but, if I
+> > understand
+> > it correctly, that project is intended to provide a different
+> > interface, using WG as an underlying protocol. I personally think
+> > that
+> > it would be better to separate these layers, providing the
+> > connectivity
+> > daemon and higher-level features separately. I may be wrong though,
+> > it
+> > is quite possible that the combined approach will be more useful.
+> 
+> The objective of all wireguard implementations is to provide a simple
+> and uniform interface. Unity is very important. I have no interest
+> debating that point further. It is a stated project goal and a core
+> design consideration that drives discussion on this list forward.
 
-Good questions.
+Sorry, I don't understand what exactly wrong with my statement here; if
+anything, I do agree with the goal of making Wireguard implementations
+as slim as possible (i.e. following the guideline on https://www.wiregu
+ard.io/xplatform/). My thoughts in this paragraph were about the
+implementation here: https://github.com/sopium/titun, which, on the
+first glance (and I may be wrong here, too) appeared to provide a much
+more complex interface than the one declared in https://www.wireguard.i
+o/xplatform/. And my point was that it is probably better to have
+something simpler, on top of which a more complex interface could be
+built by someone else. This was not even related to the way the
+*official* Wireguard implementation should be done.
 
-Firstly, I've augmented the timers section on wireguard.io/protocol/ a
-little bit, and I'll continue adding detail to this.
+> 
+> > This is understandable, I think. But still, maybe doing development
+> > on
+> > Github and publishing the contents of the repository there to the
+> > main
+> > repository is possible? I believe that taking advantage of the
+> > issue
+> > tracker and the pull requests system there would be very useful and
+> > convenient.
+> 
+> The main repository is on git.zx2c4.com, but if people want to use
+> PRs
+> and issues, and Sascha wants to review those, then that's of course
+> fine. Use whatever tools necessary. The important aspect is that the
+> canonical location for all WireGuard projects remains the same.
 
-Secondly, I hope work is coming along nicely with you and Sascha for
-merging your efforts. With Sascha's approval, I can set you up with
-commit access to wireguard-rs, if you'd like.
+Yes, I do agree with this, and I saw your answer on Github already and
+I'm really glad that you are not against this approach.
 
-Now, onto your questions:
+> 
+> > I'm pretty sure that when WG get popuar, differences in behavior
+> > will
+> > be unavoidable.
+> 
+> You are so very wrong. If you start with this stupidity, sure, you'll
+> get brokenness. But if you actually attempt to carry out something
+> worthwhile, then each and every such difference will be squashed and
+> unified. I certainly intend to toil away to achieve this goal.
 
+If you mean official implementations, sure, I totally agree, and I
+agree that it is right. I was talking about unofficial implementations
+- I don't believe it is possible to force someone not to create a
+Wireguard implementation with a different interface, if they do decide
+to do so.
 
-On Tue, Mar 14, 2017 at 8:25 PM, sopium <sopium@mysterious.site> wrote:
-> * Do we send cookie reply messages in response to handshake
->   _response_ messages? My guess is YES? The figure in 5.4.1 only
->   shows the case that the responder chooses to reply with a
->   cookie message.
+> 
+> By the way, are you actually intending to contribute anything here,
+> or
+> are you just on this list to bikeshed about procedural issues?
 
-Yes. Cookie reply messages are sent when:
-- mac1 is valid; and
-- mac2 is invalid; and
-- the machine is under load
-This applies to all messages that have mac1&&mac2, which means both
-the handshake initiation and handshake response messages.
-
-> * Shall we start handshake in case the _previous_ session is not
->   alive, or too old? My guess is NO?
-
-I'm not sure I understand your question. Could you rephrase? Here's
-some text that might clarify things possibly:
-
-- A handshake initiation is retried after REKEY_TIMEOUT ms, if a
-response has not been received.
-- If we have sent a packet to a given peer but have not received a
-packet (or a keepalive) after from that peer for (KEEPALIVE +
-REKEY_TIMEOUT) ms, we initiate a new handshake.
-- After sending a packet, if the number of packets sent using that key
-exceed REKEY_AFTER_MESSAGES, we initiate a new handshake.
-- After sending a packet, if the sender was the original initiator of
-the handshake and if the current session key is REKEY_AFTER_TIME ms
-old, we initiate a new handshake. If the sender was the original
-responder of the handshake, it does not reinitiate a new handshake
-after REKEY_AFTER_TIME ms like the original initiator does.
-- After a handshake is completed, with a message from initiator to
-responder and then responder back to initiator, the initiator may then
-send encrypted session packets, but the responder cannot. The
-responder must wait to use the new session until it has recieved one
-encrypted session packet from the initiator, in order to provide key
-confirmation. Thus, until the responder receives that first packet
-using the newly established session, it must either queue up packets
-to be sent later, or use the previous session, if one exists and is
-valid. Therefore, after the initiator receives the response from the
-responder, if it has no data packets immediately queued up to send, it
-should send en empty packet, so as to provide this confirmation.
-
-> * When padding packets, how to avoid getting larger than MTU,
->   because we don't seem to know the MTU?
-
-You know the MTU of the WireGuard interface, and so you pad packets to
-fit into that. You can query this from the TUN device.
-
-WireGuard currently doesn't do per-peer-endpoint PMTU, but I'm working
-on this, and I'll update you when this is worked out.
-
-> * When we receive a valid handshake init message, a secure
->   transport is session is created. Do we start sending with this
->   session immediately, in case there is still a valid previous
->   session? Because if the handshake response we send is lost, the
->   peer won't be able to decrypt our transport messages. The
->   problem should eventually go away, but the peer may experience
->   a brief blackout.
-
-The initiator begins using the newly created session immediately after
-receiving the response from the responder.
-The responder keeps using the previously created session, until it has
-received the first encrypted message from the initiator, at which
-point it starts using the new session. This is to ensure "key
-confirmation" and also has the nice effect of avoiding race conditions
-and blackouts.
-In total, you need to have "previous session", "current session", and
-"next session", and cycle these as needed.
-
-In case that explanation above isn't clear:
-add_new_keypair is called immediately after computing the session keys
-(the combination of initiation message + response message):
-https://git.zx2c4.com/WireGuard/tree/src/noise.c#n122
-noise_received_with_keypair is called whenever a symmetrically
-encrypted&authenticated packet is received.
-
->   So, shall we wait until successfully receiving a transport
->   message with the new session, before start sending with
->   it? (When the previous session is still valid, of course.)
-
-Yes.
-
->
-> * And, do we set peer endpoint when receiving an authenticated
->   cookie reply message? No?
-
-Your intuition is correct: no, you shouldn't do this.
-
-Great questions. Let me know if you have more, or if it'd be helpful
-to talk through this stuff on video chat or telephone instead of
-email.
-
-Regards,
-Jason
+I'm very sorry if I said something which made you think so. I totally
+do not intend to discuss any procedural issues, I do not have a right
+to do so and I don't think I'm really competent. If I recall correctly,
+the only thing I said about procedures is that doing development on
+Github (in the sense of accepting PRs and tracking issues there) would
+be benefitting for the Rust implementation of Wireguard. I really like
+Wireguard, and I also like Rust, so I do want to participate in the
+development of the Rust implementation of it to the best of my ability
+to do so. Again, I'm sorry if I made a wrong impression here.
