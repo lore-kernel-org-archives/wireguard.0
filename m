@@ -1,26 +1,30 @@
-Return-Path: joeblew99@gmail.com
+Return-Path: saschagrunert@icloud.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7fb7b3d8
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 542fe57c
  for <wireguard@lists.zx2c4.com>;
- Fri, 17 Mar 2017 13:49:27 +0000 (UTC)
-Received: from mail-ot0-f177.google.com (mail-ot0-f177.google.com
- [74.125.82.177])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7d4ca307
+ Sat, 18 Mar 2017 10:47:13 +0000 (UTC)
+Received: from st11p01im-asmtp002.me.com (st11p01im-asmtp002.me.com
+ [17.172.204.152])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3a5b907f
  for <wireguard@lists.zx2c4.com>;
- Fri, 17 Mar 2017 13:49:27 +0000 (UTC)
-Received: by mail-ot0-f177.google.com with SMTP id o24so91217271otb.1
- for <wireguard@lists.zx2c4.com>; Fri, 17 Mar 2017 06:53:16 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAGhajTJG2gkyUjs8xmV=zYj_=tPjefHJ70mhnn9RALeC_bXY1w@mail.gmail.com>
- <CAHmME9qGc8+Qhch+ykUa5XN=dCOk55fFV8mNZ=GsjHPhznvmew@mail.gmail.com>
-In-Reply-To: <CAHmME9qGc8+Qhch+ykUa5XN=dCOk55fFV8mNZ=GsjHPhznvmew@mail.gmail.com>
-From: Joe Blue <joeblew99@gmail.com>
-Date: Fri, 17 Mar 2017 13:53:05 +0000
-Message-ID: <CAGhajTLcijc+gt7C=Bzx=SHF2MS_aQ_khYBxtULvzMWZUaCHPQ@mail.gmail.com>
-Subject: Re: golang implemenation
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>, James Tucker <jftucker@gmail.com>
-Content-Type: multipart/alternative; boundary=001a113e53e6d6cd52054aed7f63
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+ Sat, 18 Mar 2017 10:47:12 +0000 (UTC)
+Received: from process-dkim-sign-daemon.st11p01im-asmtp002.me.com by
+ st11p01im-asmtp002.me.com
+ (Oracle Communications Messaging Server 7.0.5.38.0 64bit (built Feb 26 2016))
+ id <0ON000L00BFWCG00@st11p01im-asmtp002.me.com> for wireguard@lists.zx2c4.com;
+ Sat, 18 Mar 2017 10:51:07 +0000 (GMT)
+Content-type: text/plain; charset=utf-8
+MIME-version: 1.0 (Mac OS X Mail 10.2 \(3259\))
+Subject: Re: Rust implementation status
+From: Sascha Grunert <saschagrunert@icloud.com>
+In-reply-to: <8726b4ef-f654-4be5-8025-865a55187c77@Spark>
+Date: Sat, 18 Mar 2017 11:51:00 +0100
+Message-id: <6D082187-55EF-49E0-AF0D-71B648984B14@icloud.com>
+References: <E63B612D-BFAA-48FE-A352-25B4C11B8E05@icloud.com>
+ <15acda6e9bc.b852f6478142.4195445703657110954@mysterious.site>
+ <8726b4ef-f654-4be5-8025-865a55187c77@Spark>
+To: sopium <sopium@mysterious.site>
+Cc: wireguard@lists.zx2c4.com
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -30,50 +34,83 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---001a113e53e6d6cd52054aed7f63
-Content-Type: text/plain; charset=UTF-8
+Hey Folks,
 
-Thanks.
+To make it clear for now: If you want to contribute, simply use GitHub =
+issues and pull requests. I will take care of the synchronisation of the =
+repositories for now.
 
-Seems this is the git endpojnt: https://git.zx2c4.com/wireguard-go/about/
+It would be really cool if we can focus on merging our efforts and =
+planning the next steps via GitHub issues. Discussions via the mailing =
+list are very welcome as well.
 
-In the toDO there is a fair bit there. Is it ready for me to be able to
-work on anything or still very bare bones ?
+I merged the first pull request for now. Thank you very much and have a =
+nice weekend!
+
+Best regards,
+Sascha
 
 
-
-
-
-On Fri, Mar 17, 2017 at 1:34 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
-
-> Hello Joe,
->
-> I defer to James Tucker, CCd, to describe the status of his implementation.
->
-> Regards,
-> Jason
->
-
---001a113e53e6d6cd52054aed7f63
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Thanks.<div><br></div><div>Seems this is the git endpojnt:=
-=C2=A0<a href=3D"https://git.zx2c4.com/wireguard-go/about/">https://git.zx2=
-c4.com/wireguard-go/about/</a></div><div><br></div><div>In the toDO there i=
-s a fair bit there. Is it ready for me to be able to work on anything or st=
-ill very bare bones ?</div><div><br></div><div><br><div><br></div><div><br>=
-</div></div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr">On Fri, M=
-ar 17, 2017 at 1:34 PM Jason A. Donenfeld &lt;<a href=3D"mailto:Jason@zx2c4=
-.com">Jason@zx2c4.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_qu=
-ote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex=
-">Hello Joe,<br class=3D"gmail_msg">
-<br class=3D"gmail_msg">
-I defer to James Tucker, CCd, to describe the status of his implementation.=
-<br class=3D"gmail_msg">
-<br class=3D"gmail_msg">
-Regards,<br class=3D"gmail_msg">
-Jason<br class=3D"gmail_msg">
-</blockquote></div>
-
---001a113e53e6d6cd52054aed7f63--
+> Am 14.03.2017 um 19:49 schrieb Sascha Grunert =
+<saschagrunert@icloud.com>:
+>=20
+> Hey guys,
+>=20
+> I would really like to do that. For the main development I would throw =
+this into discussion: =
+https://github.com/WireGuard/wireguard-rs/issues/1#issuecomment-286521908
+>=20
+> I guess it would be more visible to the Rust community if we allow =
+maintaining it via the GitHub repository.
+>=20
+> @Jason, what do you think?
+>=20
+> Best regards,
+> Sascha
+>=20
+> Am 14. M=C3=A4rz 2017, 17:29 +0100 schrieb sopium =
+<sopium@mysterious.site>:
+>> Hi Sascha and folks,
+>>=20
+>> ---- On Sun, 05 Mar 2017 20:42:00 +0900 Sascha Grunert =
+<saschagrunert@icloud.com> wrote ----
+>>> Hey folks,
+>>>=20
+>>> I want to call for participation of the Rust userspace =
+implementation of WireGuard. The template for the initial implementation =
+was this: https://www.wireguard.io/xplatform/ and can be found here: =
+https://git.zx2c4.com/wireguard-rs/.
+>>>=20
+>>> What works for now:
+>>>=20
+>>> - A main working executable (`cargo run -- -h`) which parses the =
+command line parameters via the `clap` crate
+>>> - General debug and tracing support via the `log` crate
+>>> - Daemonizing support
+>>> - The wireguard library which creates a local socket and waits for =
+incoming connections (reference implementation)
+>>>=20
+>>> [...]
+>>=20
+>> I have kept an eye on this. It seems that you were mostly working
+>> on the `xplatform` stuff, and haven't started on the actual
+>> implementation of the protocol yet. My code has (partly)
+>> implemented the protocol, but lacks the `xplatform` ui. So it
+>> seems like a perfect time to merge efforts. What do you think?
+>>=20
+>> And to all who are interested in userspace WG impls, in
+>> particular Rust impls, I have adjusted the goal of my project to
+>> =E2=80=9Cto write a secure, compatible, cross-platform and reasonably
+>> fast user-space implementation of WireGuard in Rust=E2=80=9D. I am =
+also
+>> committed to finishing and maintaining it. There is a big TODO
+>> list, and contribution is welcome!
+>>=20
+>> For those not closely following this thread, the project is at:
+>>=20
+>> https://github.com/sopium/titun/tree/wg
+>>=20
+>> Regards,
+>> Sopium
+>>=20
+>>=20
