@@ -1,24 +1,32 @@
-Return-Path: jens@viisauksena.de
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b9cd8721
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b12aca7f
  for <wireguard@lists.zx2c4.com>;
- Sun, 19 Mar 2017 11:46:07 +0000 (UTC)
-Received: from viisauksena.de (v32412.1blu.de [178.254.39.111])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 64ebeaee
+ Sun, 19 Mar 2017 11:48:58 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 60a934a5
  for <wireguard@lists.zx2c4.com>;
- Sun, 19 Mar 2017 11:46:06 +0000 (UTC)
-Received: from [10.60.27.174] (unknown [185.66.194.30])
- by v32412.1blu.de (Postfix) with ESMTPSA id E2F54201D8
- for <wireguard@lists.zx2c4.com>; Sun, 19 Mar 2017 12:50:08 +0100 (CET)
-Subject: Re: [Question] Is it posible layer 2 interface on wireguard
-To: wireguard@lists.zx2c4.com
-References: <97c5005a-78f0-0064-0d14-9062827b908e@gmail.com>
-From: jens <jens@viisauksena.de>
-Message-ID: <961f639e-5f37-00cc-c94d-4ca1c7e6d90a@viisauksena.de>
-Date: Sun, 19 Mar 2017 12:47:14 +0100
+ Sun, 19 Mar 2017 11:48:58 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3fccb963
+ for <wireguard@lists.zx2c4.com>;
+ Sun, 19 Mar 2017 11:48:58 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 4d7c5e61
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Sun, 19 Mar 2017 11:48:58 +0000 (UTC)
+Received: by mail-ot0-f180.google.com with SMTP id i1so118522616ota.3
+ for <wireguard@lists.zx2c4.com>; Sun, 19 Mar 2017 04:53:01 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <97c5005a-78f0-0064-0d14-9062827b908e@gmail.com>
-Content-Type: text/plain; charset=windows-1252
+In-Reply-To: <961f639e-5f37-00cc-c94d-4ca1c7e6d90a@viisauksena.de>
+References: <97c5005a-78f0-0064-0d14-9062827b908e@gmail.com>
+ <961f639e-5f37-00cc-c94d-4ca1c7e6d90a@viisauksena.de>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Sun, 19 Mar 2017 12:53:00 +0100
+Message-ID: <CAHmME9q_UGtoY08H=tq30P=v9EYS3R2NQEHHbBD7xddo2jS11w@mail.gmail.com>
+Subject: Re: [Question] Is it posible layer 2 interface on wireguard
+To: jens <jens@viisauksena.de>
+Content-Type: text/plain; charset=UTF-8
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -28,37 +36,9 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-you may want to look into one of these
-https://forum.freifunk.net/t/lede-wireguard-gretap-ergebnisse-unter-livebedingungen/14057
-https://forum.freifunk.net/t/wireguard-0-0-20161230-linuxkernel-3-18-gluon-v2016-2-2/14122
+On Sun, Mar 19, 2017 at 12:47 PM, jens <jens@viisauksena.de> wrote:
+> you need to establish connection, which means you may want to ping the
+> inner wireguard ip in regular time intervalls
 
-gretap is possible inside wireguard and so batman-adv on top (for this
-example)
-
-you need to establish connection, which means you may want to ping the
-inner wireguard ip in regular time intervalls
-
-greetz
-
-j
-
-
-On 19.03.2017 12:27, Fatih USTA wrote:
-> Hi List,
->
-> Is it posible layer 2 interface on wireguard
-> for Bridge interface ( like GRETAP or L2TPv3 Ethernet pseudowires
-> (vlan supported ) )
-> and Active-Active Bond(802.3ad) Interface ( like EoIP )
->
-> Bridge: https://wiki.mikrotik.com/wiki/Manual:Interface/EoIP
-> Bond: https://wiki.mikrotik.com/wiki/Manual:Bonding_Examples
-> Source: https://github.com/bbonev/eoip
->
->
-> Thanks.
->
->
-
--- 
-make the world nicer, please use PGP encryption
+WireGuard has a "persistent-keepalive" feature for this. Check out the
+manpage for wg(8).
