@@ -1,25 +1,28 @@
-Return-Path: Steffen.Klassert@secunet.com
+Return-Path: developer@it-offshore.co.uk
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b5e7e518
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ab4ee098
  for <wireguard@lists.zx2c4.com>;
- Thu, 23 Mar 2017 08:35:57 +0000 (UTC)
-Received: from a.mx.secunet.com (a.mx.secunet.com [62.96.220.36])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cba6ff6e
+ Thu, 23 Mar 2017 19:35:13 +0000 (UTC)
+Received: from earwig.birch.relay.mailchannels.net
+ (earwig.birch.relay.mailchannels.net [23.83.209.54])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ee7f9d59
  for <wireguard@lists.zx2c4.com>;
- Thu, 23 Mar 2017 08:35:56 +0000 (UTC)
-Date: Thu, 23 Mar 2017 09:40:26 +0100
-From: Steffen Klassert <steffen.klassert@secunet.com>
+ Thu, 23 Mar 2017 19:35:12 +0000 (UTC)
+Subject: Re: Wireguard added to Alpine Linux
+References: <6b590394-3134-b725-a063-0993b32a51c4@it-offshore.co.uk>
+ <CAHmME9ow_=3muSufX_--6JRG0Fz9qfyEPKi_=rc3tJUGr_CaAQ@mail.gmail.com>
+ <02a8fddb-7246-984c-c51c-cd8fe3925694@it-offshore.co.uk>
+ <CAHmME9pSB59MBqxRa0Hm-EwrnARAvT42wHsYjdZO=7MFrhjb+A@mail.gmail.com>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: Re: race condition in kernel/padata.c
-Message-ID: <20170323084026.GA32453@secunet.com>
-References: <CAHmME9oLWiprOyZXo7zvGm7xq+1Kchw9ybLS_TM-9xDyHF0mxQ@mail.gmail.com>
+From: Stuart Cardall <developer@it-offshore.co.uk>
+Message-ID: <f1c734b1-74a7-9535-aa90-c272bfc82dba@it-offshore.co.uk>
+Date: Thu, 23 Mar 2017 19:39:37 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-In-Reply-To: <CAHmME9oLWiprOyZXo7zvGm7xq+1Kchw9ybLS_TM-9xDyHF0mxQ@mail.gmail.com>
-Cc: Netdev <netdev@vger.kernel.org>,
- Linux Crypto Mailing List <linux-crypto@vger.kernel.org>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>,
- LKML <linux-kernel@vger.kernel.org>
+In-Reply-To: <CAHmME9pSB59MBqxRa0Hm-EwrnARAvT42wHsYjdZO=7MFrhjb+A@mail.gmail.com>
+Content-Type: multipart/alternative;
+ boundary="------------C9AC5070FEE595E020370B22"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Reply-To: developer@it-offshore.co.uk
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -29,67 +32,42 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Thu, Mar 23, 2017 at 12:03:43AM +0100, Jason A. Donenfeld wrote:
-> Hey Steffen,
-> 
-> WireGuard makes really heavy use of padata, feeding it units of work
-> from different cores in different contexts all at the same time. For
-> the most part, everything has been fine, but one particular user has
-> consistently run into mysterious bugs. He's using a rather old dual
-> core CPU, which have a tendency to bring out race conditions
-> sometimes. After struggling with getting a good backtrace, we finally
-> managed to extract this from list debugging:
-> 
-> [87487.298728] WARNING: CPU: 1 PID: 882 at lib/list_debug.c:33
-> __list_add+0xae/0x130
-> [87487.301868] list_add corruption. prev->next should be next
-> (ffffb17abfc043d0), but was ffff8dba70872c80. (prev=ffff8dba70872b00).
-> [87487.339011]  [<ffffffff9a53d075>] dump_stack+0x68/0xa3
-> [87487.342198]  [<ffffffff99e119a1>] ? console_unlock+0x281/0x6d0
-> [87487.345364]  [<ffffffff99d6b91f>] __warn+0xff/0x140
-> [87487.348513]  [<ffffffff99d6b9aa>] warn_slowpath_fmt+0x4a/0x50
-> [87487.351659]  [<ffffffff9a58b5de>] __list_add+0xae/0x130
-> [87487.354772]  [<ffffffff9add5094>] ? _raw_spin_lock+0x64/0x70
-> [87487.357915]  [<ffffffff99eefd66>] padata_reorder+0x1e6/0x420
-> [87487.361084]  [<ffffffff99ef0055>] padata_do_serial+0xa5/0x120
-> 
-> padata_reorder calls list_add_tail with the list to which its adding
-> locked, which seems correct:
-> 
-> spin_lock(&squeue->serial.lock);
-> list_add_tail(&padata->list, &squeue->serial.list);
-> spin_unlock(&squeue->serial.lock);
-> 
-> This therefore leaves only place where such inconsistency could occur:
-> if padata->list is added at the same time on two different threads.
-> This pdata pointer comes from the function call to
-> padata_get_next(pd), which has in it the following block:
-> 
-> next_queue = per_cpu_ptr(pd->pqueue, cpu);
-> padata = NULL;
-> reorder = &next_queue->reorder;
-> if (!list_empty(&reorder->list)) {
->        padata = list_entry(reorder->list.next,
->                            struct padata_priv, list);
->        spin_lock(&reorder->lock);
->        list_del_init(&padata->list);
->        atomic_dec(&pd->reorder_objects);
->        spin_unlock(&reorder->lock);
-> 
->        pd->processed++;
-> 
->        goto out;
-> }
-> out:
-> return padata;
-> 
-> I strongly suspect that the problem here is that two threads can race
-> on reorder list. Even though the deletion is locked, call to
-> list_entry is not locked, which means it's feasible that two threads
-> pick up the same padata object and subsequently call list_add_tail on
-> them at the same time. The fix would thus be to hoist that lock
-> outside of that block.
+This is a multi-part message in MIME format.
+--------------C9AC5070FEE595E020370B22
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 
-Yes, looks like we should lock the whole list handling block here.
+Hi Jason,
 
-Thanks!
+When you have a spare moment could you take a look at a build issue with
+wireguard on aarch64 please ?
+
+https://github.com/alpinelinux/aports/pull/1055#issuecomment-288835268
+
+Kind Regards,
+
+Stuart.
+
+
+--------------C9AC5070FEE595E020370B22
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+<html>
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+  </head>
+  <body bgcolor="#FFFFFF" text="#000099">
+    <p><font face="Helvetica, Arial, sans-serif">Hi Jason,</font></p>
+    <p><font face="Helvetica, Arial, sans-serif">When you have a spare
+        moment could you take a look at a build issue with wireguard on
+        aarch64 please ?</font></p>
+    <p><font face="Helvetica, Arial, sans-serif"><a
+href="https://github.com/alpinelinux/aports/pull/1055#issuecomment-288835268">https://github.com/alpinelinux/aports/pull/1055#issuecomment-288835268</a><br>
+      </font></p>
+    <p><font face="Helvetica, Arial, sans-serif">Kind Regards,</font></p>
+    <p><font face="Helvetica, Arial, sans-serif">Stuart.</font></p>
+  </body>
+</html>
+
+--------------C9AC5070FEE595E020370B22--
