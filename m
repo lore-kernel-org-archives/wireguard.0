@@ -1,22 +1,18 @@
-Return-Path: kongkhemara0@outlook.com
+Return-Path: stefan@agner.ch
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3d7fa348
- for <wireguard@lists.zx2c4.com>;
- Fri, 31 Mar 2017 07:26:12 +0000 (UTC)
-Received: from APC01-HK2-obe.outbound.protection.outlook.com
- (mail-oln040092255012.outbound.protection.outlook.com [40.92.255.12])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2b503fd1
- for <wireguard@lists.zx2c4.com>;
- Fri, 31 Mar 2017 07:26:12 +0000 (UTC)
-From: Kong Khemara <kongkhemara0@outlook.com>
-To: wireguard <wireguard@lists.zx2c4.com>
-Subject: !!!! Greetings !!!!
-Date: Fri, 31 Mar 2017 07:31:40 +0000
-Message-ID: <HKXPR02MB1861B84746014DF1AEC268A098370@HKXPR02MB1861.apcprd02.prod.outlook.com>
-Content-Type: multipart/alternative;
- boundary="_000_HKXPR02MB1861B84746014DF1AEC268A098370HKXPR02MB1861apcp_"
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7f14e27b
+ for <wireguard@lists.zx2c4.com>; Mon, 3 Apr 2017 07:02:17 +0000 (UTC)
+Received: from mail.kmu-office.ch (mail.kmu-office.ch [178.209.48.109])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 22512484
+ for <wireguard@lists.zx2c4.com>; Mon, 3 Apr 2017 07:02:17 +0000 (UTC)
 MIME-Version: 1.0
-Reply-To: "Mr. Kong Khemara" <kongkhemara@asia.com>
+Content-Type: text/plain; charset=US-ASCII
+Date: Mon, 03 Apr 2017 00:07:56 -0700
+From: Stefan Agner <stefan@agner.ch>
+To: Jason@zx2c4.com
+Subject: WireGuard recipes for OpenEmbedded
+Message-ID: <a994fb2505af736da73a956fdee94128@agner.ch>
+Cc: wireguard@lists.zx2c4.com
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,69 +22,18 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---_000_HKXPR02MB1861B84746014DF1AEC268A098370HKXPR02MB1861apcp_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Hi Jason,
 
-SGVsbG8sDQpJIGFtIEJhcnIgS29uZyBLaGVtYXJhLCBJIGh1bWJseSBhc2sgaWYgeW91IGFyZSBy
-ZWxhdGVkIHRvIG15IGNsaWVudCB3aG8gZGllZCBjb3VwbGUgb2YNCnllYXJzIGFnbyBpbiBhIGNh
-ciBhY2NpZGVudCBoZXJlIGluIG15IGNvdW50cnkgQ2FtYm9kaWEuIEkgd2lzaCB0byBhbHNvIGlu
-cXVpcmUgaWYNCml0IGlzIHBvc3NpYmxlIHRvIGhhdmUgZGlmZmVyZW50IGZhbWlsaWVzIHdpdGgg
-dGhlIHNhbWUgbGFzdCBuYW1lIGFzIHlvdXJzIGJ5IGNvaW5jaWRlbmNlDQp3aG8gZG8gbm90IHNo
-YXJlIHRoZSBzYW1lIGNvbW1vbiByb290cz8gS2luZGx5IGdldCBiYWNrIHRvIG1lIGlmIHlvdXIg
-ZW1haWwgaXMgc3RpbGwNClZhbGlkIHRvIGVuYWJsZSBtZSBnaXZlIHlvdSB0aGUgZGV0YWlscyBv
-ZiBteSBtZXNzYWdlIG9yIG1ha2UgaGVhZHdheSBpbiBteSBzZWFyY2guDQpSZWdhcmRzLA0KS29u
-ZyBLaGVtYXJhDQo=
+Just posted two recipes which allow building WireGuard using
+OpenEmbedded:
+http://lists.openembedded.org/pipermail/openembedded-devel/2017-April/112075.html
 
---_000_HKXPR02MB1861B84746014DF1AEC268A098370HKXPR02MB1861apcp_
-Content-Type: text/html; charset="utf-8"
-Content-ID: <367180F0733E8B4B90AC53DDB7B1F481@apcprd02.prod.outlook.com>
-Content-Transfer-Encoding: base64
+OE makes it easy to build WireGuard for all sorts of platforms. I
+created a quick test VPN between an ARM and 64-bit MIPS machine, seems
+to work fine, see
+https://blog.printk.io/2017/04/openembedded-recipes-for-wireguard-vpn/
 
-PGh0bWw+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIgY29udGVudD0i
-dGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjwvaGVhZD4NCjxib2R5Pg0KPGRpdiBpZD0ieWl2
-MjA0NjE0MTU2Mnl1aV8zXzE2XzBfeW0xOV8xXzE0ODc4MjQ2ODYzMzRfMzUwNCIgc3R5bGU9IkZP
-TlQtU0laRTogMTNweDsgRk9OVC1GQU1JTFk6IEhlbHZldGljYU5ldWUsICZxdW90O0hlbHZldGlj
-YSBOZXVlJnF1b3Q7LCBIZWx2ZXRpY2EsIEFyaWFsLCAmcXVvdDtMdWNpZGEgR3JhbmRlJnF1b3Q7
-LCBzYW5zLXNlcmlmOyBXSURUSDogNzY5cHg7IFdISVRFLVNQQUNFOiBub3JtYWw7IFdPUkQtU1BB
-Q0lORzogMHB4OyBURVhULVRSQU5TRk9STTogbm9uZTsgRk9OVC1XRUlHSFQ6IG5vcm1hbDsgQ09M
-T1I6IHJnYigwLDAsMCk7IE9VVExJTkUtV0lEVEg6IDBweDsgRk9OVC1TVFlMRTogbm9ybWFsOyBQ
-QURESU5HLVRPUDogMTJweDsgT1VUTElORS1TVFlMRTogbm9uZTsgUEFERElORy1MRUZUOiAwcHg7
-IE9SUEhBTlM6IDI7IFdJRE9XUzogMjsgRElTUExBWTogdGFibGU7IExFVFRFUi1TUEFDSU5HOiBu
-b3JtYWw7IE9VVExJTkUtQ09MT1I6IGludmVydDsgVEVYVC1JTkRFTlQ6IDBweDsgLXdlYmtpdC1w
-YWRkaW5nLXN0YXJ0OiAwcHg7IGZvbnQtdmFyaWFudC1saWdhdHVyZXM6IG5vcm1hbDsgZm9udC12
-YXJpYW50LWNhcHM6IG5vcm1hbDsgLXdlYmtpdC10ZXh0LXN0cm9rZS13aWR0aDogMHB4OyB0ZXh0
-LWRlY29yYXRpb24tc3R5bGU6IGluaXRpYWw7IHRleHQtZGVjb3JhdGlvbi1jb2xvcjogaW5pdGlh
-bCI+DQo8ZGl2IGlkPSJ5aXYyMDQ2MTQxNTYyeXVpXzNfMTZfMF95bTE5XzFfMTQ4NzgyNDY4NjMz
-NF8zNTA1IiBzdHlsZT0iV09SRC1XUkFQOiBicmVhay13b3JkOyBXSURUSDogYXV0bzsgRElTUExB
-WTogdGFibGUtY2VsbDsgLXdlYmtpdC1wYWRkaW5nLXN0YXJ0OiAwcHgiPg0KPGRpdiBpZD0ieWl2
-MjA0NjE0MTU2Mnl1aV8zXzE2XzBfeW0xOV8xXzE0ODc4MjQ2ODYzMzRfMzUwNiIgc3R5bGU9Ii13
-ZWJraXQtcGFkZGluZy1zdGFydDogMHB4Ij4NCjxkaXYgaWQ9InlpdjIwNDYxNDE1NjJ5dWlfM18x
-Nl8wX3ltMTlfMV8xNDg3ODI0Njg2MzM0XzM1MDciIHN0eWxlPSItd2Via2l0LXBhZGRpbmctc3Rh
-cnQ6IDBweCIgZGlyPSJsdHIiPg0KPGRpdiBpZD0ieWl2MjA0NjE0MTU2Mnl1aV8zXzE2XzBfeW0x
-OV8xXzE0ODc4MjQ2ODYzMzRfMzUwOCIgc3R5bGU9Ii13ZWJraXQtcGFkZGluZy1zdGFydDogMHB4
-Ij4NCkhlbGxvLDwvZGl2Pg0KPGRpdiBpZD0ieWl2MjA0NjE0MTU2Mnl1aV8zXzE2XzBfeW0xOV8x
-XzE0ODc4MjQ2ODYzMzRfMzUwOSIgc3R5bGU9Ii13ZWJraXQtcGFkZGluZy1zdGFydDogMHB4Ij4N
-CkkgYW0gQmFyciBLb25nIEtoZW1hcmEsIEkgaHVtYmx5IGFzayBpZiB5b3UgYXJlIHJlbGF0ZWQg
-dG8gbXkgY2xpZW50IHdobyBkaWVkIGNvdXBsZSBvZiZuYnNwOzwvZGl2Pg0KPGRpdiBpZD0ieWl2
-MjA0NjE0MTU2Mnl1aV8zXzE2XzBfeW0xOV8xXzE0ODc4MjQ2ODYzMzRfMzUwOSIgc3R5bGU9Ii13
-ZWJraXQtcGFkZGluZy1zdGFydDogMHB4Ij4NCnllYXJzIGFnbyBpbiBhIGNhciBhY2NpZGVudCBo
-ZXJlIGluIG15IGNvdW50cnkgQ2FtYm9kaWEuIEkgd2lzaCB0byBhbHNvIGlucXVpcmUgaWYmbmJz
-cDs8L2Rpdj4NCjxkaXYgaWQ9InlpdjIwNDYxNDE1NjJ5dWlfM18xNl8wX3ltMTlfMV8xNDg3ODI0
-Njg2MzM0XzM1MDkiIHN0eWxlPSItd2Via2l0LXBhZGRpbmctc3RhcnQ6IDBweCI+DQppdCBpcyBw
-b3NzaWJsZSB0byBoYXZlIGRpZmZlcmVudCBmYW1pbGllcyB3aXRoIHRoZSBzYW1lIGxhc3QgbmFt
-ZSBhcyB5b3VycyBieSBjb2luY2lkZW5jZSZuYnNwOzwvZGl2Pg0KPGRpdiBpZD0ieWl2MjA0NjE0
-MTU2Mnl1aV8zXzE2XzBfeW0xOV8xXzE0ODc4MjQ2ODYzMzRfMzUwOSIgc3R5bGU9Ii13ZWJraXQt
-cGFkZGluZy1zdGFydDogMHB4Ij4NCndobyBkbyBub3Qgc2hhcmUgdGhlIHNhbWUgY29tbW9uIHJv
-b3RzPyBLaW5kbHkgZ2V0IGJhY2sgdG8gbWUgaWYgeW91ciBlbWFpbCBpcyBzdGlsbCZuYnNwOzwv
-ZGl2Pg0KPGRpdiBpZD0ieWl2MjA0NjE0MTU2Mnl1aV8zXzE2XzBfeW0xOV8xXzE0ODc4MjQ2ODYz
-MzRfMzUwOSIgc3R5bGU9Ii13ZWJraXQtcGFkZGluZy1zdGFydDogMHB4Ij4NClZhbGlkIHRvIGVu
-YWJsZSBtZSBnaXZlIHlvdSB0aGUgZGV0YWlscyBvZiBteSBtZXNzYWdlIG9yIG1ha2UgaGVhZHdh
-eSBpbiBteSBzZWFyY2guPC9kaXY+DQo8ZGl2IGlkPSJ5aXYyMDQ2MTQxNTYyeXVpXzNfMTZfMF95
-bTE5XzFfMTQ4NzgyNDY4NjMzNF8zNTEwIiBzdHlsZT0iLXdlYmtpdC1wYWRkaW5nLXN0YXJ0OiAw
-cHgiPg0KUmVnYXJkcyw8L2Rpdj4NCjxkaXYgaWQ9InlpdjIwNDYxNDE1NjJ5dWlfM18xNl8wX3lt
-MTlfMV8xNDg3ODI0Njg2MzM0XzM1MTEiIHN0eWxlPSItd2Via2l0LXBhZGRpbmctc3RhcnQ6IDBw
-eCIgZGlyPSJsdHIiPg0KS29uZyBLaGVtYXJhPC9kaXY+DQo8L2Rpdj4NCjwvZGl2Pg0KPC9kaXY+
-DQo8L2Rpdj4NCjwvYm9keT4NCjwvaHRtbD4NCg==
+Keep the amazing work, looking forward to see WireGuard upstream :-)
 
---_000_HKXPR02MB1861B84746014DF1AEC268A098370HKXPR02MB1861apcp_--
+--
+Stefan
