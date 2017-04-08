@@ -1,22 +1,25 @@
-Return-Path: mail@danrl.com
+Return-Path: toke@toke.dk
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0daffa1d
- for <wireguard@lists.zx2c4.com>; Sat, 8 Apr 2017 09:33:27 +0000 (UTC)
-Received: from mx.cakelie.net (mx.cakelie.net [45.76.39.236])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e6490050
- for <wireguard@lists.zx2c4.com>; Sat, 8 Apr 2017 09:33:27 +0000 (UTC)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
-Subject: Re: [RFC] Multicast and IPv6 Link Local Addresses
-From: =?utf-8?Q?Dan_L=C3=BCdtke?= <mail@danrl.com>
-In-Reply-To: <CAHmME9poZPFbYhitnK8UvDB-32hLRcTFc4vAwaUPwGEz0wY+Yg@mail.gmail.com>
-Date: Sat, 8 Apr 2017 11:39:54 +0200
-Message-Id: <E60CF446-DDB2-4C66-B221-FBDCA346E461@danrl.com>
-References: <CAHmME9poZPFbYhitnK8UvDB-32hLRcTFc4vAwaUPwGEz0wY+Yg@mail.gmail.com>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9d885e2f
+ for <wireguard@lists.zx2c4.com>; Sat, 8 Apr 2017 12:37:30 +0000 (UTC)
+Received: from mail.toke.dk (mail.toke.dk [52.28.52.200])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2bfb5283
+ for <wireguard@lists.zx2c4.com>; Sat, 8 Apr 2017 12:37:30 +0000 (UTC)
+From: =?utf-8?Q?Toke_H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: Juliusz Chroboczek <jch@irif.fr>,
- =?utf-8?Q?Toke_H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
- =?utf-8?Q?Dave_T=C3=A4ht?= <dave@taht.net>,
+Subject: Re: [RFC] Multicast and IPv6 Link Local Addresses
+References: <CAHmME9poZPFbYhitnK8UvDB-32hLRcTFc4vAwaUPwGEz0wY+Yg@mail.gmail.com>
+ <CAHmME9ouagoSmxUy2R0YAhhUhX7PVRpJuP6S6PC+AxHKHtb+BA@mail.gmail.com>
+ <03B23E99-75C4-4598-AC0A-3C65F346675F@gmail.com>
+ <CAHmME9oxt=x3tJ5wHitGGjD1yLGweQ4ed3aNv+0Cv9bvPUXDDg@mail.gmail.com>
+Date: Sat, 08 Apr 2017 14:43:56 +0200
+In-Reply-To: <CAHmME9oxt=x3tJ5wHitGGjD1yLGweQ4ed3aNv+0Cv9bvPUXDDg@mail.gmail.com>
+ (Jason A. Donenfeld's message of "Fri, 7 Apr 2017 22:42:22 +0200")
+Message-ID: <87wpavt6gj.fsf@alrua-karlstad>
+MIME-Version: 1.0
+Content-Type: text/plain
+Cc: Dave =?utf-8?Q?T=C3=A4ht?= <dave@taht.net>,
+ Juliusz Chroboczek <jch@irif.fr>,
  WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -27,38 +30,22 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi everyone,
+"Jason A. Donenfeld" <Jason@zx2c4.com> writes:
 
-I am very excited that we have this discussion, as I am one of those =
-IPv6-first/IPv6-only guys who like poking the topic.
-I try to keep it short:
+> Hey George,
+>
+> More excellent feedback, thanks. Be sure to CC the list next time though.
+>
+> If I understand correctly, your suggestion is to not clutter
+> everything with a horrible "multi:" prefix, but instead allow
+> multicast addressees, which are well defined, to be added to multiple
+> peers, and only allow unicast addresses to be added to one peer at a
+> time keeping the current behavior. I find that a very nice UI
+> solution. Wonderful.
 
-- Scalability: I agree with what George said. Broadcast does not scale =
-nicely, and IPv6 multicast is intended to help scaling things by =
-reaching exactly the node that need to get a copy of a particular =
-packet. Downgrading IPv6 multicast to broadcast hurts scalability and I =
-for one, would rather not see multicast in WireGuard if it does not =
-scale. I am afraid it would be counterproductive to the goal of having a =
-widely accepted and used protocol.
+I'd be fine with this, as long as it's on the subnet level (which I
+believe is the case, just making sure). I.e., if I want behaviour
+corresponding to full link-local multicast, I can just add fe02::/16 to
+every peer in my config and be done with it.
 
-- Multicast is not the everyday use case, so if multicast requires an =
-extra knob or an extra option, that would be fine I guess. I am in favor =
-of intentionally enabling multicast. I am still wrapping my head around =
-static vs. dynamic (read: magic) configuration of multicast addresses =
-and groups. Will let you know once I end up with something worth =
-sharing. In the meantime, I think "solicited node multicast =
-addresses/groups" are the one thing that comes with the least amount of =
-trouble. Especially if IPv6 LL addressing is also there.
-
-- IPv6 link-local addressing: For me it is a perfect example for "the =
-right amount of magic". It would make (at least my) life so much easier. =
-Filling the neighbor cache would require WireGuard to provide (simulated =
-or real) solicited node multicast addresses routing, right? Or is it =
-feasible to fill the neighbor cache based on the peer configuration? The =
-last thing sounds wrong to me.
-
-So much for my first thoughts.
-
-Cheers,
-
-Dan=
+-Toke
