@@ -1,22 +1,30 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: jonathon.fernyhough@york.ac.uk
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dac254b9
- for <wireguard@lists.zx2c4.com>; Sun, 9 Apr 2017 13:26:42 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id adf185e7
- for <wireguard@lists.zx2c4.com>; Sun, 9 Apr 2017 13:26:42 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 652f8ad9
- for <wireguard@lists.zx2c4.com>; Sun, 9 Apr 2017 13:26:42 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id a704d308
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sun, 9 Apr 2017 13:26:42 +0000 (UTC)
-Date: Sun, 09 Apr 2017 15:33:20 +0200
-To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: [ANNOUNCE] WireGuard Snapshot `0.0.20170409` Available
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7a70ebe5
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 11 Apr 2017 11:06:12 +0000 (UTC)
+Received: from mail-wr0-f173.google.com (mail-wr0-f173.google.com
+ [209.85.128.173])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 939289be
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 11 Apr 2017 11:06:12 +0000 (UTC)
+Received: by mail-wr0-f173.google.com with SMTP id c55so92922368wrc.3
+ for <wireguard@lists.zx2c4.com>; Tue, 11 Apr 2017 04:13:06 -0700 (PDT)
+Return-Path: <jonathon.fernyhough@york.ac.uk>
+Received: from [10.10.10.230] (uk.webcrumb.net. [176.126.241.16])
+ by smtp.gmail.com with ESMTPSA id r5sm21135322wra.50.2017.04.11.04.13.03
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Tue, 11 Apr 2017 04:13:04 -0700 (PDT)
+To: wireguard@lists.zx2c4.com
+From: Jonathon Fernyhough <jonathon.fernyhough@york.ac.uk>
+Subject: DKMS build failure on kernel 3.13 (Ubuntu 14.04)
+Message-ID: <bb963757-98ea-a107-b402-a4c659d9e0b0@york.ac.uk>
+Date: Tue, 11 Apr 2017 12:12:58 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Message-Id: <ffffffffa645e925@frisell.zx2c4.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="E0GM1QS94RlxlueP0TOtanN4rx3FekQlv"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,90 +34,72 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--E0GM1QS94RlxlueP0TOtanN4rx3FekQlv
+Content-Type: multipart/mixed; boundary="2EulB9hDi7CVOc7xL6DIHuHcp1w41CxUO";
+ protected-headers="v1"
+From: Jonathon Fernyhough <jonathon.fernyhough@york.ac.uk>
+To: wireguard@lists.zx2c4.com
+Message-ID: <bb963757-98ea-a107-b402-a4c659d9e0b0@york.ac.uk>
+Subject: DKMS build failure on kernel 3.13 (Ubuntu 14.04)
 
-Hello,
+--2EulB9hDi7CVOc7xL6DIHuHcp1w41CxUO
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
 
-A new snapshot, `0.0.20170409`, has been tagged in the git repository.
+Hi!
 
-Please note that this snapshot is, like the rest of the project at this point
-in time, experimental, and does not consitute a real release that would be
-considered secure and bug-free. WireGuard is generally thought to be fairly
-stable, and most likely will not crash your computer (though it may).
-However, as this is a pre-release snapshot, it comes with no guarantees, and
-its security is not yet to be depended on; it is not applicable for CVEs.
+In testing out the new kernel<4.1 support I've hit a build failure:
 
-With all that said, if you'd like to test this snapshot out, there are a
-few relevent changes.
+> In file included from include/net/ip_tunnels.h:5:0,
+>                  from /var/lib/dkms/wireguard/0.0.20170409-1~14.04.york=
+0.1/build/compat/compat.h:62,
+>                  from <command-line>:0:
+> include/linux/netdevice.h:1890:43: error: macro "dev_recursion_level" p=
+assed 1 arguments, but takes just 0
+>  static inline int dev_recursion_level(void)
+>                                            ^
+> include/linux/netdevice.h:1891:1: error: expected =E2=80=98=3D=E2=80=99=
+, =E2=80=98,=E2=80=99, =E2=80=98;=E2=80=99, =E2=80=98asm=E2=80=99 or =E2=80=
+=98__attribute__=E2=80=99 before =E2=80=98{=E2=80=99 token
+>  {
+>  ^
 
-== Changes ==
+This looks to be related to lines 43-48 of src/compat/compat.h where
+there's `#define dev_recursion_level() 0`. I'm not yet sure whether
+Ubuntu have tweaked or backported something, or whether the 1-arity
+function exists in mainline kernel 3.13.
 
-  * compat: allow create-patch to work on debian-based builds
-  * main: add /sys/module/wireguard/version
-  * tools: do not use addrconfig with port in gai
-  
-  * config: do not allow peers with public keys the same as the interface
-  * curve25519: protect against potential invalid point attacks
-  * chacha20poly1305: enforce authtag checking with compiler
-  
-  While Noise is resilliant to invalid point attacks, it's still better to check
-  explicitly for NULLs from 25519. While we're at it, we make the compile warn
-  if we don't check the return value of sensitive crypto functions.
-  
-  * locking: always use _bh
-  * chacha20poly1305: check return values of sgops
-  * data: simplify flow
-  * data: cleanup parallel workqueue and use two max_active
-  * data: alloca is actually as dangerous as they say
-  
-  These should improve stability in certain cases, though this involved
-  some potentially big rewrites, so I'll keep an eye on incoming bug
-  reports.
-  
-  * compat: support 3.16
-  * compat: support 3.14
-  * compat: support 3.12
-  * compat: support 3.10
-  * compat: careful with destructors
-  * compat: warn on < 4.1
-  
-  We now experimentally support kernels going back to 3.10. This means
-  that WireGuard should run on nearly all Android devices, the Ubiquiti
-  EdgeRouter, and probably most other random Linux devices that you can
-  find. I'm looking forward to seeing the community pick up the work
-  producing pre-compiled modules for various things.
+(If there's an issue/bug tracker I've missed let me know)
 
-As always, the source is available at https://git.zx2c4.com/WireGuard/ and
-information about the project is available at https://www.wireguard.io/ .
+Regards,
 
-This snapshot is available in tarball form here:
-  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-0.0.20170409.tar.xz
-  SHA2-256: 31473b4d14178f82d6ff46df019d57982c210c03d1a985d54db35bdd76efbb18
-  BLAKE2b-256: 29b6f2414c913809c793e9cc4616773dea7b74dc17f622204b9ffc282f5997bd
+Jonathon
 
-If you're a snapshot package maintainer, please bump your package version. If
-you're a user, the WireGuard team welcomes any and all feedback on this latest
-snapshot.
 
-Thank you,
-Jason Donenfeld
+--2EulB9hDi7CVOc7xL6DIHuHcp1w41CxUO--
 
+--E0GM1QS94RlxlueP0TOtanN4rx3FekQlv
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAljqN9oQHGphc29uQHp4
-MmM0LmNvbQAKCRBJ/HASpd4DrjkjD/4u34M5ujEOKutTf30zdsZarOzrCwyICvDl
-/kERtPfRCPcvt7AwfnlOIGEiMYBJ8TqxgubR4gVsrb/hYyV/Lh3EtYZLaYWkIzVo
-ezULyiwx9knBt1HVDlEgu2BU3+cLYjAOX+SYMjrPRMr0BW/okkYfNrMsY3YTFzz5
-wXtgrFbWndLdvJggZt0tZgloXfLuAlG4q3sBWMWMxFErUDusMyZS9l5Dn36sVST3
-9W4QcSdQKrAQ3VeNuZgdiTQuZFN+1ROgrcl4Z/uTsrCrh8DA+2LfdOsKTr21UTfK
-WLiDKqIjIqX7sKKyK+B12QjkvabFdtwIyAKoUk6n/1Q/6bJ9Kvet3UjA7V0uP495
-EiTO1X5dQiTvqUP6RLLHNBvbrYjP11/88EM6YLj3+0G56rthiMMQOLum1mxKa0+v
-itYwOm1XqGqWaO8d9bOVyPADDlhmVqffz+XYd9DriUm5VCt8U+5BZmW2/M2J+A/f
-2yqTrNlCGk5+SzD8CsYRDC80KIVav1WFK71lPTpp8g3cCJ17rH+y8DaSjdKt25KC
-LuIXpOi6YKVeJa7HjiRpLRwGMp+M4xdbjmSTy7b/mnhNhGLnlC3FHZ+k1kc0JQS8
-lOLH5i7t/+CkL7gvxvtZ4D8q8F1XomhS2I6zxADXV95x/ZBj5zI6rvyFBvhkTpd8
-Q2lpTr72ZQ==
-=ofIG
+iQIzBAEBCAAdFiEEUzSNjhumunvu6bYD4DBDgow/9LsFAljsujoACgkQ4DBDgow/
+9LuWAQ//QY//le0ZxbbINMcYA2YhpYl3JEedhnPsTyGLrh5KbMwy3Rh7AhitnHoy
+YdhxT9Q8j7PQCxK53JpqkE3Rmb9ZiOcN2A/KoHIq/Xcg4zYVxata9MabY379yoiA
+flXdDkUQJDUjys/IuU1ZV4t0IDoUoysCEjFWJtBswfNyZ5msra6MWXB1/KFImFEp
+5i2pKXwG0EOykz+ZaPM4iJoXlEpBXAPSnojhZKcc4ZWd/mm3cKeQBs80xN0Nycsm
+1D8AL+hl/EUhIco7OBBLpHnzz4SZO8LHIYfAPcXdIl3dXuZXOs+ST6i+0/vFkOaT
+r2c7KJnN6eWAUCWJc/b32alwSz12GmFMikucGHiZ/HRiYtrKP8xJ0TRERbZcuCry
+ehcrvWXoqmf+2yqgkvoLcB3s+bH297n/jV255s0/OwzGdmRYjw93AZrcemCf3dm0
++FTXZVMjHeBxDCBCyGsyJFfy2ug+HiqYiMKJzfZ9vcUcKJGqKzAtWmv4Bo4TmJqy
+MdeyxybnStoBMW7xGvPObzih23w+GmPbjdBUOsFzSX02XJjz7FsdhWhsvVRQIm8e
+x6N/fI0ajWRRaH3/H2wTQJNdHU91/JJWyRb2iDyhjac5vMdmnuKnqhTimpxL94PD
+IGSn6EwCe5Ps7oEh4osm7V79cukEKEya0aaZ1wy0Nmw12IzkU5I=
+=2atH
 -----END PGP SIGNATURE-----
+
+--E0GM1QS94RlxlueP0TOtanN4rx3FekQlv--
