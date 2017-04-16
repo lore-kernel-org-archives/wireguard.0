@@ -1,24 +1,33 @@
-Return-Path: egbert@eggiecode.org
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dde76ad5
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9384d8bc
  for <wireguard@lists.zx2c4.com>;
- Sun, 16 Apr 2017 15:40:05 +0000 (UTC)
-Received: from mail01.eggieservers.nl (mail01.eggieservers.nl
- [149.210.159.147])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 77eac573
+ Sun, 16 Apr 2017 15:43:21 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5f0c80b0
  for <wireguard@lists.zx2c4.com>;
- Sun, 16 Apr 2017 15:40:05 +0000 (UTC)
-Message-ID: <1492357636.1445.6.camel@eggiecode.org>
-Subject: Re: wireguard-tools Ubuntu package missing the binaries
-From: Egbert Verhage <egbert@eggiecode.org>
-To: Jonathon Fernyhough <jonathon.fernyhough@york.ac.uk>,
- wireguard@lists.zx2c4.com
-Date: Sun, 16 Apr 2017 17:47:16 +0200
-In-Reply-To: <b58aaa20-6b03-5501-3cad-f791cfd2319a@york.ac.uk>
+ Sun, 16 Apr 2017 15:43:21 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5d62e3fa
+ for <wireguard@lists.zx2c4.com>;
+ Sun, 16 Apr 2017 15:43:21 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 3e8953fa
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Sun, 16 Apr 2017 15:43:21 +0000 (UTC)
+Received: by mail-oi0-f43.google.com with SMTP id r203so124505656oib.3
+ for <wireguard@lists.zx2c4.com>; Sun, 16 Apr 2017 08:50:54 -0700 (PDT)
+MIME-Version: 1.0
+In-Reply-To: <1492357636.1445.6.camel@eggiecode.org>
 References: <b36d8e7f-e2a4-379b-1c02-6269766288d4@gmail.com>
  <b58aaa20-6b03-5501-3cad-f791cfd2319a@york.ac.uk>
-Content-Type: text/plain; charset="UTF-8"
-Mime-Version: 1.0
+ <1492357636.1445.6.camel@eggiecode.org>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Sun, 16 Apr 2017 17:50:53 +0200
+Message-ID: <CAHmME9pc6jFnb5NMYt=yi+voWjsg4dS=NC+X1tY2qY4xbo1oVA@mail.gmail.com>
+Subject: Re: wireguard-tools Ubuntu package missing the binaries
+To: Egbert Verhage <egbert@eggiecode.org>
+Content-Type: text/plain; charset=UTF-8
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -28,77 +37,10 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hey Jonathon and Ryan,
+Hello Egbert,
 
-This problem got previously with my RaspPi. That tools binaries build
-are not in de build of armv6 and think that is the same with i386.
+I did not comprehend your message. Is the problem fixed and are
+packages that actually work available now on Launchpad?
 
-This was a old item in the mailing list about arm packages in ubuntu
-repo: https://lists.zx2c4.com/pipermail/wireguard/2017-February/001050.
-html
-Coud not figer out what the problem was.
-
-And a great time to add ubuntu 17.04 (zesty) and test it on my pi.
-
-hda (cryptofuture) is testing it now on his own ppa, see here the
-github issue: https://github.com/EggieCode/wireguard-ppa/issues/13 and
-the fix https://github.com/EggieCode/wireguard-ppa/pull/14
-
-Greetz,
-Egbert
-
-On Sun, 2017-04-16 at 12:24 +0100, Jonathon Fernyhough wrote:
-> On 16/04/17 12:06, Ryan Riley wrote:
-> > The i386 wireguard-tools package on the PPA for Ubuntu Xenial
-> > doesn't
-> > actually contain any of the binaries, just documentation.
-> 
-> It's not just i386 - each of the arm and ppc64 packages are also
-> missing
-> binaries.
-> 
-> Debian's packages (and my testing backports based on those) don't
-> have
-> that issue - might be time to check a diff or do a merge. :)
-> 
-> Looks like it's down to `make install`ing the tools during install-
-> indep
-> rather than install-arch.
-> 
-> 
-> Working (Debian use a different flags setup, that's not the important
-> bit):
-> 
-> > override_dh_auto_install-indep:
-> > 	$(MAKE) -C src DESTDIR=../debian/wireguard-dkms
-> > DKMSDIR=/usr/src/wireguard-$(DEB_VERSION)/ dkms-install
-> > 
-> > override_dh_auto_build-arch:
-> > 	$(MAKE) -C src/tools $(WIREGUARD_ARGS)
-> > 
-> > override_dh_auto_install-arch:
-> > 	$(MAKE) -C src/tools DESTDIR=../../debian/wireguard-tools
-> > $(WIREGUARD_ARGS) install
-> 
-> 
-> Non-working:
-> 
-> > override_dh_auto_install-indep:
-> > 	$(MAKE) -C wireguard-src/src
-> > DESTDIR=$(CURDIR)/debian/wireguard-dkms DKMSDIR=/usr/src/wireguard-
-> > $(DEB_VERSION_UPSTREAM)/ dkms-install
-> > 	$(MAKE) -C wireguard-src/src/tools
-> > DESTDIR=$(CURDIR)/debian/wireguard-tools WITH_SYSTEMDUNITS=yes
-> > WITH_WGQUICK=yes WITH_BASHCOMPLETION=yes install
-> > 
-> > override_dh_auto_build-arch:
-> >  	$(MAKE) -C wireguard-src/src/tools
-> 
-> 
-> 
-> J
-> 
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
+Regards,
+Jason
