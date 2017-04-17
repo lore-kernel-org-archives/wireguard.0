@@ -1,25 +1,21 @@
-Return-Path: toke@toke.dk
+Return-Path: j.e.aten@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bca45074
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a17f803d
  for <wireguard@lists.zx2c4.com>;
- Mon, 17 Apr 2017 16:48:18 +0000 (UTC)
-Received: from mail.toke.dk (mail.toke.dk [52.28.52.200])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 790b2218
+ Mon, 17 Apr 2017 17:38:12 +0000 (UTC)
+Received: from mail-wm0-f45.google.com (mail-wm0-f45.google.com [74.125.82.45])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3d3e3dca
  for <wireguard@lists.zx2c4.com>;
- Mon, 17 Apr 2017 16:48:17 +0000 (UTC)
-From: =?utf-8?Q?Toke_H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>
-To: Baptiste Jonglez <baptiste@bitsofnetworks.org>
-Subject: Re: [RFC] Multicast and IPv6 Link Local Addresses
-In-Reply-To: <20170417141107.GA10609@tuxmachine.polynome.dn42> (Baptiste
- Jonglez's message of "Mon, 17 Apr 2017 16:11:07 +0200")
-References: <CAHmME9poZPFbYhitnK8UvDB-32hLRcTFc4vAwaUPwGEz0wY+Yg@mail.gmail.com>
- <20170417141107.GA10609@tuxmachine.polynome.dn42>
-Date: Mon, 17 Apr 2017 18:55:46 +0200
-Message-ID: <87r30r3re5.fsf@alrua-x1>
+ Mon, 17 Apr 2017 17:38:11 +0000 (UTC)
+Received: by mail-wm0-f45.google.com with SMTP id o81so38512177wmb.1
+ for <wireguard@lists.zx2c4.com>; Mon, 17 Apr 2017 10:45:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-Cc: Juliusz Chroboczek <jch@irif.fr>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: "Jason E. Aten" <j.e.aten@gmail.com>
+Date: Mon, 17 Apr 2017 12:45:51 -0500
+Message-ID: <CAPNEFAaG3cQQJSyAuGxdHQHMm6+RzrQVt9ZrzTxrVNKm01z2dA@mail.gmail.com>
+Subject: nat traversal / userspace impl
+To: wireguard@lists.zx2c4.com
+Content-Type: multipart/alternative; boundary=001a114a0e6cc9fd47054d605c35
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -29,43 +25,70 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Baptiste Jonglez <baptiste@bitsofnetworks.org> writes:
+--001a114a0e6cc9fd47054d605c35
+Content-Type: text/plain; charset=UTF-8
 
-> Hi Jason,
->
-> On Fri, Apr 07, 2017 at 04:02:49PM +0200, Jason A. Donenfeld wrote:
->> Various networking people have been poking and prodding about
->> supporting IPv6 Link Local addresses and about supporting special
->> multicast addresses. *I MAY VERY WELL NEVER CHOOSE TO IMPLEMENT THIS*
->> but in case I do, I wanted to start spec'ing out what this might look
->> like in order to think about it better. There are a lot of odd
->> concerns to take into account, so I doubt that the below will wind up
->> as a final solution.
->
-> This is good news!  I can't wait to see Babel running on a wireguard
-> interface with several peers, or even what OSPF would look like on such a
-> network.
->
-> That being said, for the purpose of a routing protocol like Babel, I think
-> it still makes more sense to use only *point-to-point* wireguard links.
-> Link-local and multicast communication solves the problem of discovering
-> remote routing daemon, but the AllowedIPs list is still static, which does
-> not make sense for a routing protocol.  With point-to-point links, you can
-> bypass this limitation by simply setting AllowedIPs to ::/0.  Of course,
-> once we have dynamic AllowedIPs, this will change :)
+New to Wireguard, it looks super interesting... quick questions:
 
-Yeah, for the use case I'm envisioning, I would teach the routing daemon
-to update wireguard's route tables...
+1. If it uses UDP only, how does NAT traversal (firewall punch through)
+work?
 
-> There is just the minor issue of subnets that encompass both unicast and
-> multicast addresses, the simplest one being ::/0.  Such subnets could be
-> automatically split by wireguard, or just have the "moving" semantic of
-> unicast subnets.  With this last option, a user would have to explicitly
-> add a subnet which is *within* a multicast prefix to trigger the "cloning"
-> semantic.
+2. are there userspace implementations available...?
 
-I agree that the least confusing would be to only treat prefixes
-entirely contained in the known multicast prefixes as having "cloning"
-semantics.
+Experience thus far: The src packages that are in repos for centos 7 were
+insufficient to compile. I downloaded full wireguard source and tried to
+compile the wireguard kernel module on centos 7.3 with kernel 3.10, no
+luck, lots of compile time header issues. I upgraded to kernel 4.10 and
+could compile the wireguard module under kernel 4.10, but then got stuck on
+how to compile the dependent modules;hey aren't specific to wireguard, but
+rather generic modules that just weren't in the default 4.10 kernel and I'm
+not sure how to build them.
 
--Toke
+[root@k0 src]# insmod ./wireguard.ko
+insmod: ERROR: could not insert module ./wireguard.ko: Unknown symbol in
+module
+[root@k0 src]# dmesg
+...
+[77292.707469] wireguard: Unknown symbol udp_sock_create4 (err 0)
+[77292.711122] wireguard: Unknown symbol udp_tunnel6_xmit_skb (err 0)
+[77292.714899] wireguard: Unknown symbol udp_tunnel_sock_release (err 0)
+[77292.718642] wireguard: Unknown symbol setup_udp_tunnel_sock (err 0)
+[77292.722699] wireguard: Unknown symbol udp_sock_create6 (err 0)
+[77292.726007] wireguard: Unknown symbol udp_tunnel_xmit_skb (err 0)
+[root@k0 src]#
+
+Anywho, a userland implementation would be easier to play with. Are such
+out there?
+
+Thanks!
+
+Jason
+
+--001a114a0e6cc9fd47054d605c35
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>New to Wireguard, it looks super interesting... quick=
+ questions:<br><br></div>1. If it uses UDP only, how does NAT traversal (fi=
+rewall punch through) work?<br><div><br></div><div>2. are there userspace i=
+mplementations available...?<br><br>Experience thus far: The src packages t=
+hat are in repos for centos 7 were insufficient to compile. I downloaded fu=
+ll wireguard source and tried to compile the wireguard kernel module on cen=
+tos 7.3 with kernel 3.10, no luck, lots of compile time header issues. I up=
+graded to kernel 4.10 and could compile the wireguard module under kernel 4=
+.10, but then got stuck on how to compile the dependent modules;hey aren&#3=
+9;t specific to wireguard, but rather generic modules that just weren&#39;t=
+ in the default 4.10 kernel and I&#39;m not sure how to build them.<br></di=
+v><div><br>[root@k0 src]# insmod ./wireguard.ko<br>insmod: ERROR: could not=
+ insert module ./wireguard.ko: Unknown symbol in module<br>[root@k0 src]# d=
+mesg<br>...<br>[77292.707469] wireguard: Unknown symbol udp_sock_create4 (e=
+rr 0)<br>[77292.711122] wireguard: Unknown symbol udp_tunnel6_xmit_skb (err=
+ 0)<br>[77292.714899] wireguard: Unknown symbol udp_tunnel_sock_release (er=
+r 0)<br>[77292.718642] wireguard: Unknown symbol setup_udp_tunnel_sock (err=
+ 0)<br>[77292.722699] wireguard: Unknown symbol udp_sock_create6 (err 0)<br=
+>[77292.726007] wireguard: Unknown symbol udp_tunnel_xmit_skb (err 0)<br>[r=
+oot@k0 src]# <br><br></div><div>Anywho, a userland implementation would be =
+easier to play with. Are such out there?<br><br></div><div>Thanks!<br><br><=
+/div><div>Jason<br></div></div>
+
+--001a114a0e6cc9fd47054d605c35--
