@@ -1,27 +1,25 @@
-Return-Path: rriley.cs@gmail.com
+Return-Path: baptiste@bitsofnetworks.org
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1bf88d1e
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 492ec629
  for <wireguard@lists.zx2c4.com>;
- Mon, 17 Apr 2017 06:12:03 +0000 (UTC)
-Received: from mail-wm0-f65.google.com (mail-wm0-f65.google.com [74.125.82.65])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e718179d
+ Mon, 17 Apr 2017 14:03:21 +0000 (UTC)
+Received: from mails.bitsofnetworks.org (rezine.polyno.me [193.33.56.138])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f6c97345
  for <wireguard@lists.zx2c4.com>;
- Mon, 17 Apr 2017 06:12:02 +0000 (UTC)
-Received: by mail-wm0-f65.google.com with SMTP id d79so7334669wmi.2
- for <wireguard@lists.zx2c4.com>; Sun, 16 Apr 2017 23:19:40 -0700 (PDT)
-Return-Path: <rriley.cs@gmail.com>
-Subject: Re: wireguard-tools Ubuntu package missing the binaries; Fixed
-To: Egbert Verhage <egbert@eggiecode.org>
-References: <b36d8e7f-e2a4-379b-1c02-6269766288d4@gmail.com>
- <b58aaa20-6b03-5501-3cad-f791cfd2319a@york.ac.uk>
- <1492365022.1445.15.camel@eggiecode.org>
-From: Ryan Riley <rriley.cs@gmail.com>
-Message-ID: <d9db7d6f-bb4b-86cf-3648-2abb4106404c@gmail.com>
-Date: Mon, 17 Apr 2017 09:19:34 +0300
+ Mon, 17 Apr 2017 14:03:21 +0000 (UTC)
+Date: Mon, 17 Apr 2017 16:11:07 +0200
+From: Baptiste Jonglez <baptiste@bitsofnetworks.org>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: Re: [RFC] Multicast and IPv6 Link Local Addresses
+Message-ID: <20170417141107.GA10609@tuxmachine.polynome.dn42>
+References: <CAHmME9poZPFbYhitnK8UvDB-32hLRcTFc4vAwaUPwGEz0wY+Yg@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <1492365022.1445.15.camel@eggiecode.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Cc: wireguard@lists.zx2c4.com
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="RnlQjJ0d97Da+TV1"
+In-Reply-To: <CAHmME9poZPFbYhitnK8UvDB-32hLRcTFc4vAwaUPwGEz0wY+Yg@mail.gmail.com>
+Cc: Juliusz Chroboczek <jch@irif.fr>,
+ Toke =?iso-8859-1?Q?H=F8iland-J=F8rgensen?= <toke@toke.dk>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -31,74 +29,98 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Works great.  Thanks a lot!
 
-Thanks
-Ryan
+--RnlQjJ0d97Da+TV1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On 04/16/2017 08:50 PM, Egbert Verhage wrote:
-> Hey Ryan,
->
-> Fixed it. New build (0.0.20170409-wg2~xenial, 0.0.20170409-
-> wg2~yakkety,) is live on the PPA.
->
-> Can you test this for me?
->
-> Thanks Jonathon, for that solution.
->
-> Greetz,
-> Egbert
->
->
-> On Sun, 2017-04-16 at 12:24 +0100, Jonathon Fernyhough wrote:
->> On 16/04/17 12:06, Ryan Riley wrote:
->>> The i386 wireguard-tools package on the PPA for Ubuntu Xenial
->>> doesn't
->>> actually contain any of the binaries, just documentation.
->> It's not just i386 - each of the arm and ppc64 packages are also
->> missing
->> binaries.
->>
->> Debian's packages (and my testing backports based on those) don't
->> have
->> that issue - might be time to check a diff or do a merge. :)
->>
->> Looks like it's down to `make install`ing the tools during install-
->> indep
->> rather than install-arch.
->>
->>
->> Working (Debian use a different flags setup, that's not the important
->> bit):
->>
->>> override_dh_auto_install-indep:
->>> 	$(MAKE) -C src DESTDIR=../debian/wireguard-dkms
->>> DKMSDIR=/usr/src/wireguard-$(DEB_VERSION)/ dkms-install
->>>
->>> override_dh_auto_build-arch:
->>> 	$(MAKE) -C src/tools $(WIREGUARD_ARGS)
->>>
->>> override_dh_auto_install-arch:
->>> 	$(MAKE) -C src/tools DESTDIR=../../debian/wireguard-tools
->>> $(WIREGUARD_ARGS) install
->>
->> Non-working:
->>
->>> override_dh_auto_install-indep:
->>> 	$(MAKE) -C wireguard-src/src
->>> DESTDIR=$(CURDIR)/debian/wireguard-dkms DKMSDIR=/usr/src/wireguard-
->>> $(DEB_VERSION_UPSTREAM)/ dkms-install
->>> 	$(MAKE) -C wireguard-src/src/tools
->>> DESTDIR=$(CURDIR)/debian/wireguard-tools WITH_SYSTEMDUNITS=yes
->>> WITH_WGQUICK=yes WITH_BASHCOMPLETION=yes install
->>>
->>> override_dh_auto_build-arch:
->>>   	$(MAKE) -C wireguard-src/src/tools
->>
->>
->> J
->>
->> _______________________________________________
->> WireGuard mailing list
->> WireGuard@lists.zx2c4.com
->> https://lists.zx2c4.com/mailman/listinfo/wireguard
+Hi Jason,
+
+On Fri, Apr 07, 2017 at 04:02:49PM +0200, Jason A. Donenfeld wrote:
+> Various networking people have been poking and prodding about
+> supporting IPv6 Link Local addresses and about supporting special
+> multicast addresses. *I MAY VERY WELL NEVER CHOOSE TO IMPLEMENT THIS*
+> but in case I do, I wanted to start spec'ing out what this might look
+> like in order to think about it better. There are a lot of odd
+> concerns to take into account, so I doubt that the below will wind up
+> as a final solution.
+
+This is good news!  I can't wait to see Babel running on a wireguard
+interface with several peers, or even what OSPF would look like on such a
+network.
+
+That being said, for the purpose of a routing protocol like Babel, I think
+it still makes more sense to use only *point-to-point* wireguard links.
+Link-local and multicast communication solves the problem of discovering
+remote routing daemon, but the AllowedIPs list is still static, which does
+not make sense for a routing protocol.  With point-to-point links, you can
+bypass this limitation by simply setting AllowedIPs to ::/0.  Of course,
+once we have dynamic AllowedIPs, this will change :)
+
+Regarding the current consensus about link-local and multicast:
+
+1) link-local:
+
+> This command fails and returns -ENOTUNIQ if two existing peers have
+> the same value of hash(pubkey). When this command succeeds:, the wg0
+> interface receives an automatically assigned IP address of
+> fe80::hash(interfacepubkey)/64. Every peer has
+> fe80::hash(peerpubkey)/128 implicitly added to their allowed-ips. When
+> adding a new peer, if hash(pubkey) is the same value of an existing
+> peer, the command fails and returns -ENOTUNIQ.
+
+This looks like a very good idea, and I think it should be enabled by
+default.  What would be the cost of doing this, except for the risk of
+collision?  If I'm not mistaken, you would have a high chance of collision
+starting with around 2**32 peers (see [1]).
+
+2) multicast:
+
+I agree that George's solution (no implicit multicast AllowedIPs, and
+AllowedIPs in a multicast range have a "cloning" semantic instead of the
+usual "moving" semantic) is clean.
+
+There is just the minor issue of subnets that encompass both unicast and
+multicast addresses, the simplest one being ::/0.  Such subnets could be
+automatically split by wireguard, or just have the "moving" semantic of
+unicast subnets.  With this last option, a user would have to explicitly
+add a subnet which is *within* a multicast prefix to trigger the "cloning"
+semantic.
+
+Another idea could be to add ff02::1/128 (the all-nodes multicast address)
+by default to every peer.  This would allow to nicely discover the
+link-local address and RTT of neighbouring peers by simply running:
+
+  $ ping -6 -L -I wg0 ff02::1
+  PING ff02::1(ff02::1) from fe80::XXX%wg0 wg0: 56 data bytes
+  64 bytes from fe80::YYY%wg0: icmp_seq=1 ttl=64 time=0.459 ms
+  64 bytes from fe80::ZZZ%wg0: icmp_seq=1 ttl=64 time=0.692 ms (DUP!)
+
+However, it would be another special case in Wireguard, and some people
+might want to disable this behaviour if it's enabled by default.
+
+Baptiste
+
+[1] https://en.wikipedia.org/wiki/Birthday_problem#Probability_table
+
+--RnlQjJ0d97Da+TV1
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEjVflzZuxNlVFbt5QvgHsIqBOLkYFAlj0zO4ACgkQvgHsIqBO
+LkYLsg//fp+KPOZ/QSxOVDnCzCD85ptkP/1f2Abg85CnRun6tq+swxxEKEE9/YjZ
+aq/fxVwqckss5XsbkFBVoArdxjgXPwH0Ii+RXlME2DU1mvp6xYZNBfuGeoPWapH5
+QfD6La/I+0JNZ54Aima6mCr318hmbCpRJzJEX2Mkk1bhg8hMIL9Bxck8WTmL8jGF
+Y2g4Ri58BGCOGUOWg/pkR6yJcTdbTnBlzZx3sy4XHFtkUGKXqSZpQDJ8gOUnPklY
+blRWK++GrQn1cBalu0UVMeqQaaUIee0wHwGkFv4s5STUn+xY1FaUgWrj5DhdbVzU
+LJbjxINtDKWwAO1F0tg1jNrBj3QPPUD+GXj1yDhcJYcJU2lsXo7x286wpX5n+cpU
+HZ8FxOwTxQRrZA+R7k1xYxjiF0xEyK+JtqesYCeGaHbC2MpNlyCGE/Q+hb5DA/Vb
+EnxjgsiCrjLhZ1DjygKhEj6AR32G4M6UZxMsSM50lrd9Nokl00uj6ca+qV7ceguK
+DAu32ZoBPTPmAJ48S1DP8ilQ8qUQG92F5qNB66powSUN+IKtFgpuS+2oi6edxkJe
+xIeBMfF8WmGwgSEV7PJDv05wCxqNfVxccGtzCoBchPx66UlD+5tDoeiD3w1Gtogp
+VGnyI8dk0CKVWTLlTSh7sU0e0Z63qeeYFuHOTDnq4vIT5bfhUPQ=
+=p+sA
+-----END PGP SIGNATURE-----
+
+--RnlQjJ0d97Da+TV1--
