@@ -1,20 +1,31 @@
-Return-Path: cmarker@inspeednetworks.com
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2123627f
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a16a53e1
  for <wireguard@lists.zx2c4.com>;
- Thu, 20 Apr 2017 18:15:05 +0000 (UTC)
-Received: from NAM02-BL2-obe.outbound.protection.outlook.com
- (mail-bl2nam02on0085.outbound.protection.outlook.com [104.47.38.85])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d8464150
+ Thu, 20 Apr 2017 19:46:49 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f5335759
  for <wireguard@lists.zx2c4.com>;
- Thu, 20 Apr 2017 18:15:05 +0000 (UTC)
-From: Craig Marker <cmarker@inspeednetworks.com>
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Installing and 'quick starting' on CentOS 7
-Date: Thu, 20 Apr 2017 18:23:07 +0000
-Message-ID: <86D45CDF-9845-42E0-B89B-C51DE9E3A4BE@inspeednetworks.com>
-Content-Type: text/plain; charset="utf-8"
+ Thu, 20 Apr 2017 19:46:49 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dff79b1f
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 20 Apr 2017 19:46:49 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 55c50929
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 20 Apr 2017 19:46:49 +0000 (UTC)
+Received: by mail-oi0-f44.google.com with SMTP id x184so65947246oia.1
+ for <wireguard@lists.zx2c4.com>; Thu, 20 Apr 2017 12:54:54 -0700 (PDT)
 MIME-Version: 1.0
+In-Reply-To: <86D45CDF-9845-42E0-B89B-C51DE9E3A4BE@inspeednetworks.com>
+References: <86D45CDF-9845-42E0-B89B-C51DE9E3A4BE@inspeednetworks.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 20 Apr 2017 21:54:52 +0200
+Message-ID: <CAHmME9qkARe7O_ERjKGe26v08CE7zTTdN8nodmf=8f3TSEbGWg@mail.gmail.com>
+Subject: Re: Installing and 'quick starting' on CentOS 7
+To: Craig Marker <cmarker@inspeednetworks.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -24,46 +35,10 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-SGV5IGFsbCENCg0KSeKAmXZlIGJlZW4gZm9sbG93aW5nIFdpcmVHdWFyZCBmb3Igc29tZXRpbWUg
-YW5kIHdhcyBleGNpdGVkIHRvIHNlZSB0aGF0IGl0IG5vdyBydW5zIG9uIHRoZSAzLjEwIGtlcm5l
-bCEgSSB0cmllZCBnZXR0aW5nIGl0IHJ1bm5pbmcgdGhpcyBtb3JuaW5nLCBhbmQgaGF2ZSBydW4g
-aW50byBhIGhhbmRmdWwgb2YgcHJvYmxlbS4gSeKAmW0gd29uZGVyaW5nIGlmIGFueW9uZSBlbHNl
-IGhhcyBydW4gaW50byBvciBpcyBydW5uaW5nIGludG8gc2ltaWxhciBwcm9ibGVtcy4NCg0KRm9s
-bG93aW5nIHRoZSBpbnN0YWxsYXRpb24gaW5zdHJ1Y3Rpb25zLCBvcHRpb24gQSBmYWlscywgdGhv
-dWdoIHRoaXMgYXBwZWFycyB0byBiZSBhIGtub3duIGlzc3VlOiBodHRwczovL2J1Z3ppbGxhLnJl
-ZGhhdC5jb20vc2hvd19idWcuY2dpP2lkPTEzMDIxNjkNCg0KY21hcmtlckBodzIgc3JjXSQgc3Vk
-byBkbmYgY29wciBlbmFibGUgamRvc3Mvd2lyZWd1YXJkDQpObyBzdWNoIGNvbW1hbmQ6IGNvcHIu
-IFBsZWFzZSB1c2UgL2Jpbi9kbmYgLS1oZWxwDQpJdCBjb3VsZCBiZSBhIERORiBwbHVnaW4gY29t
-bWFuZC4NCg0KSSB0cmllZCBwb2tpbmcgYXJvdW5kIG9uIG15IGNvbXB1dGVyIGFuZCBvbmxpbmUg
-YW5kIGRpZG7igJl0IGZpbmQgYW55dGhpbmcgdGhhdCBoZWxwZWQgbWFrZSBvcHRpb24gQSB3b3Jr
-Lg0KDQpUaGUgbmV4dCB0aGluZyBJIHRyaWVkIHdhcyBzbmFnZ2luZyB0aGUgcnBtcyBmcm9tIG9u
-bGluZSBhbmQgaW5zdGFsbGluZyB0aGVtIGRpcmVjdGx5LiBJIGZvdW5kIHRoZW0gaGVyZTogaHR0
-cHM6Ly9jb3ByLWJlLmNsb3VkLmZlZG9yYXByb2plY3Qub3JnL3Jlc3VsdHMvamRvc3Mvd2lyZWd1
-YXJkL2VwZWwtNy14ODZfNjQvLCBidXQgdXNpbmcgZG5mIHRvIGluc3RhbGwgd2lyZWd1YXJkLXRv
-b2xzIGFuZCB3aXJlZ3VhcmQtZGttcyBsZWZ0IG1lIHdpdGhvdXQgYSBwcm9wZXIgaW5zdGFsbGF0
-aW9uIChuYW1lbHkgbHNtb2QgfCBncmVwIHdpcmVndWFyZCByZXR1cm5lZCBub3RoaW5nKS4NCg0K
-SSB0aGVuIHRyaWVkIHRvIGNvbXBpbGluZyBmcm9tIHNvdXJjZS4gZ2NjIHZlcnNpb246IGdjYyAo
-R0NDKSA0LjguNSAyMDE1MDYyMyAoUmVkIEhhdCA0LjguNS0xMSkuIEkgaGF2ZSBsaWJtbmwoLWRl
-dmVsKSBpbnN0YWxsZWQgYXMgd2VsbDogbGlibW5sLTEuMC4zLTcuZWw3Lng4Nl82NCwgbGlibW5s
-LWRldmVsLTEuMC4zLTcuZWw3Lng4Nl82NC4gSSByYW4gdGhlIGRuZiBpbnN0YWxsIGNvbW1hbmQ6
-IHN1ZG8gZG5mIGluc3RhbGwgbGlibW5sLWRldmVsIGtlcm5lbC1kZXZlbCBAZGV2ZWxvcG1lbnQt
-dG9vbHMgcGtnLWNvbmZpZywgd2hpY2ggZGlkbuKAmXQgaW5zdGFsbCBhbnl0aGluZyBuZXcgZm9y
-IG1lIOKAlCBpbiBmYWN0LCBpdCBzYWlkIOKAnE5vIHBhY2thZ2UgcGtnLWNvbmZpZyBhdmFpbGFi
-bGUu4oCdDQoNCkkgZ3JhYmJlZCB0aGUgY29kZSwgdW50YXLigJlkIGl0LCBhbmQgY2TigJlkIHRv
-IHNvdXJjZSBhbmQgcmFuIG1ha2UuIEl0IHJldHVybmVkIGEgd2hvbGUgaG9zdCBvZiBlcnJvcnMu
-IElmIHRob3NlIGFyZSBpbnRlcmVzdGluZywgSSBjYW4gYy9wOyBpdCB3YXMgbXVsdGlwbGUgc2Ny
-ZWVucyBmdWxsLg0KDQpPZiBub3RlLCBJIGFtIHJ1bm5pbmcgb24gMy4xMC4wLTUxNC4xNi4xLmVs
-Ny54ODZfNjQga2VybmVsLCB3aGljaCBpcyB0aGUgbW9zdCByZWNlbnQgQ2VudE9TIDcga2VybmVs
-IHJlbGVhc2VkLiBJbiB0ZXJtcyBvZiB0aGUgbmVjZXNzYXJ5IGtlcm5lbCBjb25maWd1cmF0aW9u
-IG9wdGlvbnMsIHNvbWUgb2YgdGhlbSB3ZXJlIHN0YXRpY2FsbHkgbG9hZGVkLCBvdGhlcnMgd2Vy
-ZW7igJl0LiBUaGUgb25lcyB0aGF0IHdlcmVu4oCZdCBJIGF0dGVtcHRlZCB0byByZW1lZHkgYnkg
-bG9hZGluZyB0aGUgYXNzb2NpYXRlZCBrZXJuZWwgbW9kdWxlLiBMZXQgbWUga25vdyBpZiB0aGF0
-IGlzIG5vdCB0aGUgc3VwcG9ydGVkIHdheSB0byBhcHByb2FjaCB0aGlzLg0KDQoJ4oCiIENPTkZJ
-R19ORVQ9eQ0KCeKAoiBDT05GSUdfSU5FVD15DQoJ4oCiIENPTkZJR19ORVRfVURQX1RVTk5FTD1t
-IChsb2FkZWQgdmlhIG1vZHByb2JlIHVkcF90dW5uZWwpDQoJ4oCiIENPTkZJR19ORl9DT05OVFJB
-Q0s9bSAobG9hZGVkIHZpYSBtb2Rwcm9iZSBuZl9jb25udHJhY2spDQoJ4oCiIENPTkZJR19ORVRG
-SUxURVJfWFRfTUFUQ0hfSEFTSExJTUlUPW0gKGxvYWRlZCB2aWEgbW9kcHJvYmUgeHRfaGFzaGxp
-bWl0KQ0KCeKAoiBDT05GSUdfSVA2X05GX0lQVEFCTEVTPW0gKGxvYWRlZCB2aWEgbW9kcHJvYmUg
-aXA2X3RhYmxlcykNCgnigKIgQ09ORklHX0NSWVBUT19CTEtDSVBIRVI9eQ0KCeKAoiBDT05GSUdf
-UEFEQVRBPXkNCg0KDQpMZXQgbWUga25vdyBpZiBtb3JlIGluZm9ybWF0aW9uIGlzIG5lZWRlZC4g
-QW55IGFkdmljZSBpcyBhcHByZWNpYXRlZCENCg0KLS0NCmNtDQoNCg==
+CentOS 7 doesn't actually use a real 3.10 kernel. They've backported
+tons of things. I almost got it to compile by fooling the compat
+codebase into thinking I was "3.18.100", which sort of worked, until
+it got to the udp_tunnel maze. If you want to work through it and come
+up with a patch, maybe you can convince the maintainer of the centos
+package for wireguard to ship that patch. You're probably best off,
+though, using a non weird kernel.
