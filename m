@@ -1,24 +1,20 @@
-Return-Path: crasm@wireguard.1.email.vczf.io
+Return-Path: cmarker@inspeednetworks.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e0ae8b3d
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2123627f
  for <wireguard@lists.zx2c4.com>;
- Wed, 19 Apr 2017 15:59:04 +0000 (UTC)
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
- [66.111.4.25])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c5f54e82
+ Thu, 20 Apr 2017 18:15:05 +0000 (UTC)
+Received: from NAM02-BL2-obe.outbound.protection.outlook.com
+ (mail-bl2nam02on0085.outbound.protection.outlook.com [104.47.38.85])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d8464150
  for <wireguard@lists.zx2c4.com>;
- Wed, 19 Apr 2017 15:59:04 +0000 (UTC)
-Message-Id: <1492618019.116821.949489032.63283A29@webmail.messagingengine.com>
-From: crasm@wireguard.1.email.vczf.io
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-MIME-Version: 1.0
+ Thu, 20 Apr 2017 18:15:05 +0000 (UTC)
+From: Craig Marker <cmarker@inspeednetworks.com>
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Subject: Installing and 'quick starting' on CentOS 7
+Date: Thu, 20 Apr 2017 18:23:07 +0000
+Message-ID: <86D45CDF-9845-42E0-B89B-C51DE9E3A4BE@inspeednetworks.com>
 Content-Type: text/plain; charset="utf-8"
-In-Reply-To: <CAHmME9oX6x2NKTqqTNZVKz2y2h0cSVkYeXUqL0MTSB8Tc1-T3A@mail.gmail.com>
-Date: Wed, 19 Apr 2017 12:06:59 -0400
-References: <1492479545.1458773.947454608.1D3BD4D5@webmail.messagingengine.com>
- <CAHmME9oX6x2NKTqqTNZVKz2y2h0cSVkYeXUqL0MTSB8Tc1-T3A@mail.gmail.com>
-Subject: Re: Java userspace test (contrib/external-tests/java)
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+MIME-Version: 1.0
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -28,24 +24,46 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-I did replace it, but I'm still having the same problem.
-
-https://github.com/crasm/noise-java/blob/wireguard-contrib-external-tests/src/main/java/com/southernstorm/noise/crypto/Blake2sMessageDigest.java
-https://github.com/crasm/WireGuard/blob/master/contrib/external-tests/java/src/main/java/wireguard/Main.java
-
-If anyone can help, it would be appreciated, but I'll continue debugging
-on my own as well.
-
-On Mon, Apr 17, 2017, at 09:54 PM, Jason A. Donenfeld wrote:
-> From your code:
-> 
-> Blake2sMessageDigest blake2s = new Blake2sMessageDigest(preshared);
-> blake2s.update(theirPublic);
-> blake2s.update(buf.array(), 0, buf.position());
-> // Note: Blake2s returns 32 bytes, but we only use the first 16.
-> buf.put(blake2s.digest(), 0, 16);
-> 
-> The final length needs to be passed to Blake2sMessageDigest in the
-> constructor, because Blake2 encodes the final length into the initial
-> block. The implementation from here might work better:
-> https://github.com/Geal/android-wireguard/blob/master/app/src/main/java/com/southernstorm/noise/crypto/Blake2sMessageDigest.java
+SGV5IGFsbCENCg0KSeKAmXZlIGJlZW4gZm9sbG93aW5nIFdpcmVHdWFyZCBmb3Igc29tZXRpbWUg
+YW5kIHdhcyBleGNpdGVkIHRvIHNlZSB0aGF0IGl0IG5vdyBydW5zIG9uIHRoZSAzLjEwIGtlcm5l
+bCEgSSB0cmllZCBnZXR0aW5nIGl0IHJ1bm5pbmcgdGhpcyBtb3JuaW5nLCBhbmQgaGF2ZSBydW4g
+aW50byBhIGhhbmRmdWwgb2YgcHJvYmxlbS4gSeKAmW0gd29uZGVyaW5nIGlmIGFueW9uZSBlbHNl
+IGhhcyBydW4gaW50byBvciBpcyBydW5uaW5nIGludG8gc2ltaWxhciBwcm9ibGVtcy4NCg0KRm9s
+bG93aW5nIHRoZSBpbnN0YWxsYXRpb24gaW5zdHJ1Y3Rpb25zLCBvcHRpb24gQSBmYWlscywgdGhv
+dWdoIHRoaXMgYXBwZWFycyB0byBiZSBhIGtub3duIGlzc3VlOiBodHRwczovL2J1Z3ppbGxhLnJl
+ZGhhdC5jb20vc2hvd19idWcuY2dpP2lkPTEzMDIxNjkNCg0KY21hcmtlckBodzIgc3JjXSQgc3Vk
+byBkbmYgY29wciBlbmFibGUgamRvc3Mvd2lyZWd1YXJkDQpObyBzdWNoIGNvbW1hbmQ6IGNvcHIu
+IFBsZWFzZSB1c2UgL2Jpbi9kbmYgLS1oZWxwDQpJdCBjb3VsZCBiZSBhIERORiBwbHVnaW4gY29t
+bWFuZC4NCg0KSSB0cmllZCBwb2tpbmcgYXJvdW5kIG9uIG15IGNvbXB1dGVyIGFuZCBvbmxpbmUg
+YW5kIGRpZG7igJl0IGZpbmQgYW55dGhpbmcgdGhhdCBoZWxwZWQgbWFrZSBvcHRpb24gQSB3b3Jr
+Lg0KDQpUaGUgbmV4dCB0aGluZyBJIHRyaWVkIHdhcyBzbmFnZ2luZyB0aGUgcnBtcyBmcm9tIG9u
+bGluZSBhbmQgaW5zdGFsbGluZyB0aGVtIGRpcmVjdGx5LiBJIGZvdW5kIHRoZW0gaGVyZTogaHR0
+cHM6Ly9jb3ByLWJlLmNsb3VkLmZlZG9yYXByb2plY3Qub3JnL3Jlc3VsdHMvamRvc3Mvd2lyZWd1
+YXJkL2VwZWwtNy14ODZfNjQvLCBidXQgdXNpbmcgZG5mIHRvIGluc3RhbGwgd2lyZWd1YXJkLXRv
+b2xzIGFuZCB3aXJlZ3VhcmQtZGttcyBsZWZ0IG1lIHdpdGhvdXQgYSBwcm9wZXIgaW5zdGFsbGF0
+aW9uIChuYW1lbHkgbHNtb2QgfCBncmVwIHdpcmVndWFyZCByZXR1cm5lZCBub3RoaW5nKS4NCg0K
+SSB0aGVuIHRyaWVkIHRvIGNvbXBpbGluZyBmcm9tIHNvdXJjZS4gZ2NjIHZlcnNpb246IGdjYyAo
+R0NDKSA0LjguNSAyMDE1MDYyMyAoUmVkIEhhdCA0LjguNS0xMSkuIEkgaGF2ZSBsaWJtbmwoLWRl
+dmVsKSBpbnN0YWxsZWQgYXMgd2VsbDogbGlibW5sLTEuMC4zLTcuZWw3Lng4Nl82NCwgbGlibW5s
+LWRldmVsLTEuMC4zLTcuZWw3Lng4Nl82NC4gSSByYW4gdGhlIGRuZiBpbnN0YWxsIGNvbW1hbmQ6
+IHN1ZG8gZG5mIGluc3RhbGwgbGlibW5sLWRldmVsIGtlcm5lbC1kZXZlbCBAZGV2ZWxvcG1lbnQt
+dG9vbHMgcGtnLWNvbmZpZywgd2hpY2ggZGlkbuKAmXQgaW5zdGFsbCBhbnl0aGluZyBuZXcgZm9y
+IG1lIOKAlCBpbiBmYWN0LCBpdCBzYWlkIOKAnE5vIHBhY2thZ2UgcGtnLWNvbmZpZyBhdmFpbGFi
+bGUu4oCdDQoNCkkgZ3JhYmJlZCB0aGUgY29kZSwgdW50YXLigJlkIGl0LCBhbmQgY2TigJlkIHRv
+IHNvdXJjZSBhbmQgcmFuIG1ha2UuIEl0IHJldHVybmVkIGEgd2hvbGUgaG9zdCBvZiBlcnJvcnMu
+IElmIHRob3NlIGFyZSBpbnRlcmVzdGluZywgSSBjYW4gYy9wOyBpdCB3YXMgbXVsdGlwbGUgc2Ny
+ZWVucyBmdWxsLg0KDQpPZiBub3RlLCBJIGFtIHJ1bm5pbmcgb24gMy4xMC4wLTUxNC4xNi4xLmVs
+Ny54ODZfNjQga2VybmVsLCB3aGljaCBpcyB0aGUgbW9zdCByZWNlbnQgQ2VudE9TIDcga2VybmVs
+IHJlbGVhc2VkLiBJbiB0ZXJtcyBvZiB0aGUgbmVjZXNzYXJ5IGtlcm5lbCBjb25maWd1cmF0aW9u
+IG9wdGlvbnMsIHNvbWUgb2YgdGhlbSB3ZXJlIHN0YXRpY2FsbHkgbG9hZGVkLCBvdGhlcnMgd2Vy
+ZW7igJl0LiBUaGUgb25lcyB0aGF0IHdlcmVu4oCZdCBJIGF0dGVtcHRlZCB0byByZW1lZHkgYnkg
+bG9hZGluZyB0aGUgYXNzb2NpYXRlZCBrZXJuZWwgbW9kdWxlLiBMZXQgbWUga25vdyBpZiB0aGF0
+IGlzIG5vdCB0aGUgc3VwcG9ydGVkIHdheSB0byBhcHByb2FjaCB0aGlzLg0KDQoJ4oCiIENPTkZJ
+R19ORVQ9eQ0KCeKAoiBDT05GSUdfSU5FVD15DQoJ4oCiIENPTkZJR19ORVRfVURQX1RVTk5FTD1t
+IChsb2FkZWQgdmlhIG1vZHByb2JlIHVkcF90dW5uZWwpDQoJ4oCiIENPTkZJR19ORl9DT05OVFJB
+Q0s9bSAobG9hZGVkIHZpYSBtb2Rwcm9iZSBuZl9jb25udHJhY2spDQoJ4oCiIENPTkZJR19ORVRG
+SUxURVJfWFRfTUFUQ0hfSEFTSExJTUlUPW0gKGxvYWRlZCB2aWEgbW9kcHJvYmUgeHRfaGFzaGxp
+bWl0KQ0KCeKAoiBDT05GSUdfSVA2X05GX0lQVEFCTEVTPW0gKGxvYWRlZCB2aWEgbW9kcHJvYmUg
+aXA2X3RhYmxlcykNCgnigKIgQ09ORklHX0NSWVBUT19CTEtDSVBIRVI9eQ0KCeKAoiBDT05GSUdf
+UEFEQVRBPXkNCg0KDQpMZXQgbWUga25vdyBpZiBtb3JlIGluZm9ybWF0aW9uIGlzIG5lZWRlZC4g
+QW55IGFkdmljZSBpcyBhcHByZWNpYXRlZCENCg0KLS0NCmNtDQoNCg==
