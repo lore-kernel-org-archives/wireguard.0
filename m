@@ -1,22 +1,21 @@
-Return-Path: samuel@sholland.org
+Return-Path: saeidscorp@yahoo.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 88effac0
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 077f4482
  for <wireguard@lists.zx2c4.com>;
- Sun, 23 Apr 2017 19:11:19 +0000 (UTC)
-Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com
- [66.111.4.27])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9d0ca916
+ Mon, 24 Apr 2017 07:53:18 +0000 (UTC)
+Received: from nm7.bullet.mail.bf1.yahoo.com (nm7.bullet.mail.bf1.yahoo.com
+ [98.139.212.166])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c1f10710
  for <wireguard@lists.zx2c4.com>;
- Sun, 23 Apr 2017 19:11:18 +0000 (UTC)
+ Mon, 24 Apr 2017 07:53:18 +0000 (UTC)
+Date: Mon, 24 Apr 2017 12:31:42 +0430
 Subject: Re: Issue, WireGuard on a PaX kernel
-To: saeidscorp <saeidscorp@yahoo.com>, wireguard@lists.zx2c4.com
-References: <wexyqgwcryb4usbwj8td1g9m.1492956648412@email.android.com>
-From: Samuel Holland <samuel@sholland.org>
-Message-ID: <dbfdc15d-f7b8-f195-d8f3-013165bb8e84@sholland.org>
-Date: Sun, 23 Apr 2017 14:19:45 -0500
+Message-ID: <7q5ai0xxxspe3tvq5oeevqa2.1493020715732@email.android.com>
+From: saeidscorp <saeidscorp@yahoo.com>
+To: Samuel Holland <samuel@sholland.org>, wireguard@lists.zx2c4.com
 MIME-Version: 1.0
-In-Reply-To: <wexyqgwcryb4usbwj8td1g9m.1492956648412@email.android.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: multipart/alternative;
+ boundary="--_com.samsung.android.email_2542390307526140"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,26 +25,75 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hello,
+----_com.samsung.android.email_2542390307526140
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: base64
 
-On 04/23/17 09:53, saeidscorp wrote:
-> I've been having troubles using WireGuard on Gentoo hardened/PaX
-> kernel. I have set up WireGuard on regular kernels several times, but
-> on a PaX kernel it causes the kernel to panic.
->
-> All steps of interface addition and configuration using wg tool work
-> well, but as soon as the first packet goes through the interface, it
-> crashes the whole system.
+VGhhbmtzIGZvciBhbnN3ZXJpbmchClllcywgSSB3YXMgdXNpbmcgdGhlIDQuOCBoYXJkZW5lZC1z
+b3VyY2VzLiBJIHRyaWVkIGJvdGggdXBncmFkaW5nIHRvIDQuOSBhbmQgZG93bmdyYWRpbmcgdG8g
+NC43LlN0aWxsIHRoZSBrZXJuZWwgcGFuaWNzLgpIb3dldmVyIEkgY29waWVkIG15IC5jb25maWcg
+ZmlsZSBmcm9tIHByZXZpb3VzIDQuOCBrZXJuZWwgdG8gdGhlc2Ugc291cmNlcycgaW5zdGFsbCBk
+aXJlY3Rvcmllcy5DYW4geW91IHBvaW50IG1lIHRvIHJlbGF0ZWQgaXNzdWVzIG9mIEdyc2VjdXJp
+dHkgcGF0Y2hlcyBjYXVzaW5nIHRoZSBwcm9ibGVtPyBJIGNvdWxkbid0IGZpbmQgdGhlIHNlYXJj
+aCBjYXBhYmlsaXR5IGluIG1haWxpbmcgbGlzdCBhcmNoaXZlcy4KVGhhbmtzIGluIGFkdmFuY2Uu
+Ci0tLS0tLS0tIE9yaWdpbmFsIG1lc3NhZ2UgLS0tLS0tLS1Gcm9tOiBTYW11ZWwgSG9sbGFuZCA8
+c2FtdWVsQHNob2xsYW5kLm9yZz4gRGF0ZTogMjMvMDQvMjAxNyAgMjM6NDkgIChHTVQrMDM6MzAp
+IFRvOiBzYWVpZHNjb3JwIDxzYWVpZHNjb3JwQHlhaG9vLmNvbT4sIHdpcmVndWFyZEBsaXN0cy56
+eDJjNC5jb20gU3ViamVjdDogUmU6IElzc3VlLCBXaXJlR3VhcmQgb24gYSBQYVgga2VybmVsIApI
+ZWxsbywKCk9uIDA0LzIzLzE3IDA5OjUzLCBzYWVpZHNjb3JwIHdyb3RlOgo+IEkndmUgYmVlbiBo
+YXZpbmcgdHJvdWJsZXMgdXNpbmcgV2lyZUd1YXJkIG9uIEdlbnRvbyBoYXJkZW5lZC9QYVgKPiBr
+ZXJuZWwuIEkgaGF2ZSBzZXQgdXAgV2lyZUd1YXJkIG9uIHJlZ3VsYXIga2VybmVscyBzZXZlcmFs
+IHRpbWVzLCBidXQKPiBvbiBhIFBhWCBrZXJuZWwgaXQgY2F1c2VzIHRoZSBrZXJuZWwgdG8gcGFu
+aWMuCj4KPiBBbGwgc3RlcHMgb2YgaW50ZXJmYWNlIGFkZGl0aW9uIGFuZCBjb25maWd1cmF0aW9u
+IHVzaW5nIHdnIHRvb2wgd29yawo+IHdlbGwsIGJ1dCBhcyBzb29uIGFzIHRoZSBmaXJzdCBwYWNr
+ZXQgZ29lcyB0aHJvdWdoIHRoZSBpbnRlcmZhY2UsIGl0Cj4gY3Jhc2hlcyB0aGUgd2hvbGUgc3lz
+dGVtLgoKWW91IGRpZG4ndCBtZW50aW9uIHlvdXIga2VybmVsIHZlcnNpb24sIHNvIEkgYXNzdW1l
+IHlvdSdyZSB1c2luZyB0aGUKbGF0ZXN0IHN0YWJsZSBoYXJkZW5lZC1zb3VyY2VzLiBUaGUgcGFu
+aWMgaXMgYSBrbm93biBpc3N1ZSBmb3IgNC44LApjYXVzZWQgYnkgYSBjb21iaW5hdGlvbiBvZiBi
+dWdzIGluIHRoZSB1cHN0cmVhbSBrZXJuZWwgYW5kIHRoZQpncnNlY3VyaXR5IHBhdGNoLiBZb3Ug
+Y2FuIHJlc29sdmUgaXQgYnkgZWl0aGVyIGRvd25ncmFkaW5nIHRvIDQuNyBvcgp1cGdyYWRpbmcg
+dG8gNC45LgoKU2VlIHRoaXMgdGhyZWFkWzBdIGZvciBtb3JlIGluZm9ybWF0aW9uLgoKUmVnYXJk
+cywKU2FtdWVsCgpbMF0gaHR0cHM6Ly93d3cubWFpbC1hcmNoaXZlLmNvbS93aXJlZ3VhcmRAbGlz
+dHMuengyYzQuY29tL21zZzAwMzg1Lmh0bWwK
 
-You didn't mention your kernel version, so I assume you're using the
-latest stable hardened-sources. The panic is a known issue for 4.8,
-caused by a combination of bugs in the upstream kernel and the
-grsecurity patch. You can resolve it by either downgrading to 4.7 or
-upgrading to 4.9.
+----_com.samsung.android.email_2542390307526140
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: base64
 
-See this thread[0] for more information.
+PGh0bWw+PGhlYWQ+PG1ldGEgaHR0cC1lcXVpdj0iQ29udGVudC1UeXBlIiBjb250ZW50PSJ0ZXh0
+L2h0bWw7IGNoYXJzZXQ9VVRGLTgiPjwvaGVhZD48Ym9keT5UaGFua3MgZm9yIGFuc3dlcmluZyE8
+ZGl2Pjxicj48L2Rpdj48ZGl2PlllcywgSSB3YXMgdXNpbmcgdGhlIDQuOCBoYXJkZW5lZC1zb3Vy
+Y2VzLiBJIHRyaWVkIGJvdGggdXBncmFkaW5nIHRvIDQuOSBhbmQgZG93bmdyYWRpbmcgdG8gNC43
+LjxkaXYgZGlyPSJhdXRvIj5TdGlsbCB0aGUga2VybmVsIHBhbmljcy48L2Rpdj48ZGl2IGRpcj0i
+YXV0byI+PGJyPjwvZGl2PjxkaXYgZGlyPSJhdXRvIj5Ib3dldmVyIEkgY29waWVkIG15IC5jb25m
+aWcgZmlsZSBmcm9tIHByZXZpb3VzIDQuOCBrZXJuZWwgdG8gdGhlc2Ugc291cmNlcycgaW5zdGFs
+bCBkaXJlY3Rvcmllcy48L2Rpdj48ZGl2IGRpcj0iYXV0byI+Q2FuIHlvdSBwb2ludCBtZSB0byBy
+ZWxhdGVkIGlzc3VlcyBvZiBHcnNlY3VyaXR5IHBhdGNoZXMgY2F1c2luZyB0aGUgcHJvYmxlbT8g
+SSBjb3VsZG4ndCBmaW5kIHRoZSBzZWFyY2ggY2FwYWJpbGl0eSBpbiBtYWlsaW5nIGxpc3QgYXJj
+aGl2ZXMuPC9kaXY+PGRpdiBkaXI9ImF1dG8iPjxicj48L2Rpdj48ZGl2IGRpcj0iYXV0byI+VGhh
+bmtzIGluIGFkdmFuY2UuPC9kaXY+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdiBzdHlsZT0iZm9u
+dC1zaXplOjEwMCU7Y29sb3I6IzAwMDAwMCI+PCEtLSBvcmlnaW5hbE1lc3NhZ2UgLS0+PGRpdj4t
+LS0tLS0tLSBPcmlnaW5hbCBtZXNzYWdlIC0tLS0tLS0tPC9kaXY+PGRpdj5Gcm9tOiBTYW11ZWwg
+SG9sbGFuZCAmbHQ7c2FtdWVsQHNob2xsYW5kLm9yZyZndDsgPC9kaXY+PGRpdj5EYXRlOiAyMy8w
+NC8yMDE3ICAyMzo0OSAgKEdNVCswMzozMCkgPC9kaXY+PGRpdj5Ubzogc2FlaWRzY29ycCAmbHQ7
+c2FlaWRzY29ycEB5YWhvby5jb20mZ3Q7LCB3aXJlZ3VhcmRAbGlzdHMuengyYzQuY29tIDwvZGl2
+PjxkaXY+U3ViamVjdDogUmU6IElzc3VlLCBXaXJlR3VhcmQgb24gYSBQYVgga2VybmVsIDwvZGl2
+PjxkaXY+PGJyPjwvZGl2PjwvZGl2PkhlbGxvLDxicj48YnI+T24gMDQvMjMvMTcgMDk6NTMsIHNh
+ZWlkc2NvcnAgd3JvdGU6PGJyPiZndDsgSSd2ZSBiZWVuIGhhdmluZyB0cm91YmxlcyB1c2luZyBX
+aXJlR3VhcmQgb24gR2VudG9vIGhhcmRlbmVkL1BhWDxicj4mZ3Q7IGtlcm5lbC4gSSBoYXZlIHNl
+dCB1cCBXaXJlR3VhcmQgb24gcmVndWxhciBrZXJuZWxzIHNldmVyYWwgdGltZXMsIGJ1dDxicj4m
+Z3Q7IG9uIGEgUGFYIGtlcm5lbCBpdCBjYXVzZXMgdGhlIGtlcm5lbCB0byBwYW5pYy48YnI+Jmd0
+Ozxicj4mZ3Q7IEFsbCBzdGVwcyBvZiBpbnRlcmZhY2UgYWRkaXRpb24gYW5kIGNvbmZpZ3VyYXRp
+b24gdXNpbmcgd2cgdG9vbCB3b3JrPGJyPiZndDsgd2VsbCwgYnV0IGFzIHNvb24gYXMgdGhlIGZp
+cnN0IHBhY2tldCBnb2VzIHRocm91Z2ggdGhlIGludGVyZmFjZSwgaXQ8YnI+Jmd0OyBjcmFzaGVz
+IHRoZSB3aG9sZSBzeXN0ZW0uPGJyPjxicj5Zb3UgZGlkbid0IG1lbnRpb24geW91ciBrZXJuZWwg
+dmVyc2lvbiwgc28gSSBhc3N1bWUgeW91J3JlIHVzaW5nIHRoZTxicj5sYXRlc3Qgc3RhYmxlIGhh
+cmRlbmVkLXNvdXJjZXMuIFRoZSBwYW5pYyBpcyBhIGtub3duIGlzc3VlIGZvciA0LjgsPGJyPmNh
+dXNlZCBieSBhIGNvbWJpbmF0aW9uIG9mIGJ1Z3MgaW4gdGhlIHVwc3RyZWFtIGtlcm5lbCBhbmQg
+dGhlPGJyPmdyc2VjdXJpdHkgcGF0Y2guIFlvdSBjYW4gcmVzb2x2ZSBpdCBieSBlaXRoZXIgZG93
+bmdyYWRpbmcgdG8gNC43IG9yPGJyPnVwZ3JhZGluZyB0byA0LjkuPGJyPjxicj5TZWUgdGhpcyB0
+aHJlYWRbMF0gZm9yIG1vcmUgaW5mb3JtYXRpb24uPGJyPjxicj5SZWdhcmRzLDxicj5TYW11ZWw8
+YnI+PGJyPlswXSBodHRwczovL3d3dy5tYWlsLWFyY2hpdmUuY29tL3dpcmVndWFyZEBsaXN0cy56
+eDJjNC5jb20vbXNnMDAzODUuaHRtbDxicj48L2JvZHk+PC9odG1sPg==
 
-Regards,
-Samuel
-
-[0] https://www.mail-archive.com/wireguard@lists.zx2c4.com/msg00385.html
+----_com.samsung.android.email_2542390307526140--
