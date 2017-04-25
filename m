@@ -1,23 +1,31 @@
-Return-Path: stromberg@mullvad.net
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 93854adc
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 074a9f73
  for <wireguard@lists.zx2c4.com>;
- Tue, 25 Apr 2017 11:09:53 +0000 (UTC)
-Received: from mail-wm0-f41.google.com (mail-wm0-f41.google.com [74.125.82.41])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 37c3edb6
+ Tue, 25 Apr 2017 13:12:27 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 01715923
  for <wireguard@lists.zx2c4.com>;
- Tue, 25 Apr 2017 11:09:53 +0000 (UTC)
-Received: by mail-wm0-f41.google.com with SMTP id u65so19654886wmu.1
- for <wireguard@lists.zx2c4.com>; Tue, 25 Apr 2017 04:18:32 -0700 (PDT)
+ Tue, 25 Apr 2017 13:12:27 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 052919fd
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 25 Apr 2017 13:12:26 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id a2a965e0
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 25 Apr 2017 13:12:26 +0000 (UTC)
+Received: by mail-oi0-f51.google.com with SMTP id y11so138668545oie.0
+ for <wireguard@lists.zx2c4.com>; Tue, 25 Apr 2017 06:21:06 -0700 (PDT)
 MIME-Version: 1.0
 In-Reply-To: <193CB6CC-DC39-482E-9050-4106262C1260@onebillion.org>
 References: <193CB6CC-DC39-482E-9050-4106262C1260@onebillion.org>
-From: =?UTF-8?Q?Fredrik_Str=C3=B6mberg?= <stromberg@mullvad.net>
-Date: Tue, 25 Apr 2017 13:18:30 +0200
-Message-ID: <CANTUoecSYvqbpBRy4Bt+fiS2MjEdxTnOF0EkvQJQBz1a1ag2+w@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Tue, 25 Apr 2017 15:21:05 +0200
+Message-ID: <CAHmME9oWuXca=GE0oZ0Yj=dc7DE=fheGi8zTCxjSkkTux9hSPQ@mail.gmail.com>
 Subject: Re: Client / Server help
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+To: Jamie Stuart <jamie@onebillion.org>
 Content-Type: text/plain; charset=UTF-8
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -27,21 +35,10 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Tue, Apr 25, 2017 at 12:48 PM, Jamie Stuart <jamie@onebillion.org> wrote=
-:
-> Hi,
-> I=E2=80=99d like to trial transitioning our VPN system to WireGuard.
-> We currently have an Ubuntu server running OpenVPN with many ( > 50) clie=
-nts (running OpenWRT) connecting to it periodically. Clients get addresses =
-via DHCP from the server.
-> How would I go about transitioning this architecture to Wireguard? Note I=
- have wg on both the clients and server already.
->
-
 Hi Jamie,
 
-Unless something has changed recently Wireguard doesn't support
-dynamic provisioning of IP addresses (yet).
+What specifically are you wondering about? How to replace DHCP? In
+general "how do I wireguard?" Not sure I understood the thrust of the
+inquiry.
 
-Cheers,
-Fredrik
+Jason
