@@ -1,32 +1,23 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: mathias@hall-andersen.dk
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0e178ad9
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2db9d2d0
  for <wireguard@lists.zx2c4.com>;
- Thu, 27 Apr 2017 21:57:06 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 254cc9f4
+ Fri, 28 Apr 2017 09:15:36 +0000 (UTC)
+Received: from mailrelay10.public.one.com (mailrelay10.public.one.com
+ [195.47.247.78])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 678a91b2
  for <wireguard@lists.zx2c4.com>;
- Thu, 27 Apr 2017 21:57:06 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 45ce826d
- for <wireguard@lists.zx2c4.com>;
- Thu, 27 Apr 2017 21:57:06 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id b901571c
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Thu, 27 Apr 2017 21:57:06 +0000 (UTC)
-Received: by mail-io0-f176.google.com with SMTP id a103so37442600ioj.1
- for <wireguard@lists.zx2c4.com>; Thu, 27 Apr 2017 15:06:03 -0700 (PDT)
+ Fri, 28 Apr 2017 09:15:36 +0000 (UTC)
+Subject: Re: potential preshared-key changes
+To: wireguard@lists.zx2c4.com
+References: <CAHmME9pXHZXfY+ebGQ2KrYPxZwqW7WxNWsi=iMDjsSQcZD3cJw@mail.gmail.com>
+From: Mathias <mathias@hall-andersen.dk>
+Message-ID: <24fd775a-38aa-d6fa-476f-95cc734d990d@hall-andersen.dk>
+Date: Fri, 28 Apr 2017 11:24:35 +0200
 MIME-Version: 1.0
-In-Reply-To: <em2d98f94f-86e9-49a2-88de-5960b0aa5e13@fmf-laptop>
-References: <em2d98f94f-86e9-49a2-88de-5960b0aa5e13@fmf-laptop>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 28 Apr 2017 00:06:02 +0200
-Message-ID: <CAHmME9qfaWhcAf1EEURxo9OkTo8HLW=g+amWbBonUKz7suvvAg@mail.gmail.com>
-Subject: Re: System crash consistently after transferring around 280 Mbyte
- over Wireguard
-To: Florian Franzeck <fmfranzeck@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+In-Reply-To: <CAHmME9pXHZXfY+ebGQ2KrYPxZwqW7WxNWsi=iMDjsSQcZD3cJw@mail.gmail.com>
+Content-Type: multipart/alternative;
+ boundary="------------809A0B3DC721727EE56A35CB"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -36,16 +27,140 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hey Florian,
+This is a multi-part message in MIME format.
+--------------809A0B3DC721727EE56A35CB
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
 
-So sorry to hear you're having this problem. That really really should
-not be happening. I'm happy to help you debug it.
+We should definitely change to per peer PSKs.
+Following Storömberg's observations, the following points may also be
+worth considering:
 
-Could you enable netconsole on the box, so that you can send your
-kernel log remotely over ethernet to a logging udp server in the event
-of another crash? It's really easy to setup generally. Then you'll
-have a good log for me to analyze.
+1. Partial deployment
 
-Feel free to pop into IRC -- I'm zx2c4 -- and I can walk you through steps.
+Per peer PSK allows organization to deploy PSK to a subset of peers and
+have a smooth transition should they wish to implement it later.
 
-Jason
+2. Compromise of endpoints
+
+All it takes is one compromised endpoint and PQ secrecy fails completely.
+If an employee ever leaves his laptop unencrypted and unattended, the PQ
+secrecy of all the corporations VPN connections could be lost.
+
+Furthermore, if an administrator suspects this may be the case,
+he has to deploy new keys to all endpoints in a PQ secure manner (e.g
+sending them over HTTPS is meaningless);
+he most likely has to physically install the new PSK on every client!
+
+In case of compromise, the peers public key must be updated regardless
+and updating the per peer PSK along with it seems a manageable task.
+
+3. Disclosure of data under a warrant
+
+Suppose the organization deploying Wireguard is forced to decrypt the
+data to/from a single peer.
+Currently this is not possible, because of forward secrecy, however in a
+post-quantum setting it would be.
+Limiting the disclosure to a single peer is substantially harder with a
+globally shared PSK.
+*
+*Periodically rotating the PSKs and completely avoiding the case above
+is much easier if the PSK is per peer.
+*
+*4. Public VPN*
+
+*If Wireguard is deployed as a public VPN, there is no hope of PQ
+security with a global PSK.
+In the case of a per peer PSK, this may be achieved by meeting in person
+or exchanging the PSK with PQ crypto, e.g
+the overhead of McEliece may be acceptable, since the PSK is only
+transfered once.
+
+5. Users and secrets*
+*
+Since the key is shared, you can count on Alice asking Bob for his VPN
+configuration,
+you can also count on Bob sending said configuration over email.
+Again the PQ security for the entire organization is lost.
+
+As the organization grows, the probability of such an event goes to 1.
+
+Regards,
+Mathias
+
+--------------809A0B3DC721727EE56A35CB
+Content-Type: text/html; charset=windows-1252
+Content-Transfer-Encoding: 8bit
+
+<html>
+  <head>
+    <meta content="text/html; charset=windows-1252"
+      http-equiv="Content-Type">
+  </head>
+  <body bgcolor="#FFFFFF" text="#000000">
+    <tt>We should definitely change to per peer PSKs.<br>
+      Following </tt><tt><tt>Storömberg's observations, the following </tt>points
+      may also be worth considering:<br>
+    </tt><tt><br>
+      1. Partial deployment<br>
+      <br>
+      Per peer PSK allows organization to deploy PSK to a subset of
+      peers and have a smooth transition should they wish to implement
+      it later.<br>
+      <br>
+      2. Compromise of endpoints<br>
+      <br>
+      All it takes is one compromised endpoint and PQ secrecy fails
+      completely.<br>
+      If an employee ever leaves his laptop unencrypted and unattended,
+      the PQ secrecy of all the </tt><tt><tt>corporations</tt> VPN
+      connections could be lost.<br>
+      <br>
+      Furthermore, if an administrator suspects this may be the case,<br>
+      he has to deploy new keys to all endpoints in a PQ secure manner
+      (e.g sending them over HTTPS is meaningless);<br>
+      he most likely has to physically install the new PSK on every
+      client!<br>
+      <br>
+      In case of compromise, the peers public key must be updated
+      regardless and updating the per peer PSK along with it seems a
+      manageable task.<br>
+      <br>
+      3. Disclosure of data under a warrant<br>
+      <br>
+      Suppose the </tt><tt><tt>organization</tt> deploying Wireguard is
+      forced to decrypt the data to/from a single peer.<br>
+      Currently this is not possible, because of forward secrecy,
+      however in a post-quantum setting it would be.<br>
+      Limiting the disclosure to a single peer is substantially harder
+      with a globally shared PSK.<br>
+      <b><br>
+      </b>Periodically rotating the PSKs and completely avoiding the
+      case above is much easier if the PSK is per peer.<br>
+    </tt><tt><b><br>
+      </b>4. Public VPN<b><br>
+        <br>
+      </b>If Wireguard is deployed as a public VPN, there is no hope of
+      PQ security with a global PSK.<br>
+      In the case of a per peer PSK, this may be achieved by meeting in
+      person or exchanging the PSK with PQ crypto, e.g<br>
+      the overhead of McEliece may be acceptable, since the PSK is only
+      transfered once.<br>
+      <br>
+      5. Users and secrets<b><br>
+      </b><br>
+      Since the key is shared, you can count on Alice asking Bob for his
+      VPN configuration, <br>
+      you can also count on Bob sending said configuration over email.<br>
+      Again the PQ security for the entire organization is lost.<br>
+      <br>
+      As the organization grows, the probability of such an event goes
+      to 1.<br>
+      <br>
+      Regards,<br>
+      Mathias<br>
+    </tt>
+  </body>
+</html>
+
+--------------809A0B3DC721727EE56A35CB--
