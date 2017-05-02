@@ -1,21 +1,18 @@
 Return-Path: lazyvirus@gmx.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2816fefc
- for <wireguard@lists.zx2c4.com>; Tue, 2 May 2017 14:58:29 +0000 (UTC)
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ef8fd28a
- for <wireguard@lists.zx2c4.com>; Tue, 2 May 2017 14:58:29 +0000 (UTC)
-Received: from msi.defcon1 ([93.15.31.113]) by mail.gmx.com (mrgmx001
- [212.227.17.184]) with ESMTPSA (Nemesis) id 0Llm5o-1ded6m2mmm-00ZP20 for
- <wireguard@lists.zx2c4.com>; Tue, 02 May 2017 17:08:00 +0200
-Date: Tue, 2 May 2017 17:07:59 +0200
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 867a4051
+ for <wireguard@lists.zx2c4.com>; Tue, 2 May 2017 15:18:23 +0000 (UTC)
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5a857492
+ for <wireguard@lists.zx2c4.com>; Tue, 2 May 2017 15:18:22 +0000 (UTC)
+Received: from msi.defcon1 ([93.15.31.113]) by mail.gmx.com (mrgmx102
+ [212.227.17.174]) with ESMTPSA (Nemesis) id 0MCOdh-1dEc7n1IOH-0097zj for
+ <wireguard@lists.zx2c4.com>; Tue, 02 May 2017 17:27:54 +0200
+Date: Tue, 2 May 2017 17:27:52 +0200
 From: Bzzzz <lazyvirus@gmx.com>
 To: wireguard@lists.zx2c4.com
-Subject: Re: Doc enhancement
-Message-ID: <20170502170759.63a4b750@msi.defcon1>
-In-Reply-To: <21b8fecd-119c-be0f-0f21-a4f03e2cb4a4@york.ac.uk>
-References: <20170502165145.2bf33eef@msi.defcon1>
- <21b8fecd-119c-be0f-0f21-a4f03e2cb4a4@york.ac.uk>
+Subject: wg-quick can't down my vpn I/F and DNS problem
+Message-ID: <20170502172752.4e234cd8@msi.defcon1>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
@@ -27,16 +24,36 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Tue, 2 May 2017 15:57:49 +0100
-Jonathon Fernyhough <jonathon.fernyhough@york.ac.uk> wrote:
+Debian jessie + backports - arch amd64
+wireguard-dkms  0.0.20170421-wg1~zesty
+wireguard-tools 0.0.20170421-wg1~zesty
+======================================
 
-No, I mean e.g.: 10.11.12.1/24
+Hi list,
 
-at first, I thought it was a typo and added 2 'Address' lines in the
-configuration file, one for the wg0 IP and one for the segment; but I
-was wrong as the above notation is the way to go.
-However, it is not publicized anywhere, so it took me 'some' time to
-figure this out.
 
-> Do you mean 192.168.88.0/24 ? That's the standard annotation for IP
-> subnets (e.g. 10.0.0.0/16, 192.168.0.0/24, 8.8.8.8/32).
+I've a very simple setup:
+LAN: 192.168.1.0/24
+VPN: 10.11.12.0/24
+
+if wg-quick raises the VPN smoothly and although it's working perfectly
+and damned fast, if fails when trying to take it down with the
+following error:
+wg-quick: `vpnserver' is not a WireGuard interface
+
+the only way I found to stop it is to use 2 lines:
+ip link del vpnserver
+rmmod wireguard
+
+why is that?
+
+
+The 2 machines I test on are also DNS, but once the vpn's connected, I
+lose all possibility of name resolution - It might be tied to
+resolvconf, but I'm not tough enough to know what to do.
+(NB: I *want* these because bind is passing through dnscrypt-proxy,
+leaving no traces of DNS external requests)
+
+How can I fix that?
+
+Jean-Yves
