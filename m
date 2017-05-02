@@ -1,27 +1,19 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: lazyvirus@gmx.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b980e858
- for <wireguard@lists.zx2c4.com>; Tue, 2 May 2017 16:23:26 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c7ddfc98
- for <wireguard@lists.zx2c4.com>; Tue, 2 May 2017 16:23:26 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2881f39f
- for <wireguard@lists.zx2c4.com>; Tue, 2 May 2017 16:23:26 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id cd863c30
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>; Tue, 2 May 2017 16:23:25 +0000 (UTC)
-Received: by mail-io0-f171.google.com with SMTP id a103so162202143ioj.1
- for <wireguard@lists.zx2c4.com>; Tue, 02 May 2017 09:32:58 -0700 (PDT)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 22f676cc
+ for <wireguard@lists.zx2c4.com>; Tue, 2 May 2017 16:45:26 +0000 (UTC)
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 665656bf
+ for <wireguard@lists.zx2c4.com>; Tue, 2 May 2017 16:45:26 +0000 (UTC)
+Date: Tue, 2 May 2017 18:54:55 +0200
+From: Bzzzz <lazyvirus@gmx.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: Re: wg-quick can't down my vpn I/F and DNS problem
+Message-ID: <20170502185455.4e88561e@msi.defcon1>
+In-Reply-To: <CAHmME9rrgXSW5pbg56JwBXwcfey0MS-fT7zF-+SmiBwCa5a7bg@mail.gmail.com>
+References: <20170502172752.4e234cd8@msi.defcon1>
+ <CAHmME9rrgXSW5pbg56JwBXwcfey0MS-fT7zF-+SmiBwCa5a7bg@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CAGzienHd=L8tYn41WdjGSk4hvCWiUW8LUi4C8jf8piBhLA=dng@mail.gmail.com>
-References: <CAGzienFDihyN8fDbKj4KQ-1cwz53_u7Vz3G37P08+wS=hbF0LA@mail.gmail.com>
- <CAHmME9pNgSjXeKnzM23Bb3Q=zZJKMDtq-3xevMzdtP7XdoMjkQ@mail.gmail.com>
- <CAGzienHd=L8tYn41WdjGSk4hvCWiUW8LUi4C8jf8piBhLA=dng@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 2 May 2017 18:32:56 +0200
-Message-ID: <CAHmME9q9Z+P7=UTE2Sc9b7tUajjkgG-pnvgpMqBO33AGdwdoyw@mail.gmail.com>
-Subject: Re: Ability to use one udp port for multiple wg interfaces
-To: Damian Kaczkowski <damian.kaczkowski@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
@@ -33,31 +25,47 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Tue, May 2, 2017 at 11:56 AM, Damian Kaczkowski
-<damian.kaczkowski@gmail.com> wrote:
-> Hello Janson.
+On Tue, 2 May 2017 18:31:14 +0200
+"Jason A. Donenfeld" <Jason@zx2c4.com> wrote:
 
-My name is Jason.
+Oops, sorry for the PM, I put my answer back in the loop.
 
-> 3. Well if one uses firewall to control flows between zones in environment
-> with mix protocols (eg. gre, ipsec, openvpn and so on) then using second
-> tool just to control only wireguard ACLs is not very convenient way from
-> administrative point of view. Also in case where peer is roaming and
-> changing its source IP (eg. road warrior) then maintaining wireguard ACLs
-> will be a huge PITA, if not impossible at large scale.
+> If your wg-quick config file is in /etc/wireguard and ends in ".conf"
+> then you can use `wg-quick down vpnserver`. Otherwise, please specify
+> the full path when calling wg-quick down.
 
-No, you are wrong. Allowed-ips controls the IP addresses _within_ the
-tunnel. Thus your iptables rules can use "-i wg0 -s 10.0.0.3/32" or
-similar to match a _precise_ peer.
+Hi Jason, very nice work BTW,
 
+this is _exactly_ what I do, on the server and the client, I've:
+/etc/wireguard/vpnserver.conf
+/etc/wireguard/vpnclient.conf
 
-> 4. Does wireguard have some means so that iptables can easily differentiate
-> tunnels (peers) and put them in appropriate 'zone'? like eg.
-> iptables -m policy --help
-> iptables -m ah --help
-> iptables -m esp --help
->
-> Or something similar?
+I created 4 scripts: SERVER||CLIENT_WG_UP||DOWN.sh that use this syntax,
+(it either fails when typing it in command line).
 
-WireGuard has gone out of its way to explicitly avoid this brain
-damage. Use the allowed-ips concept instead.
+So the command issued are:
+wg-quick up vpnserver (works perfectly)
+wg-quick down vpnserver (fails)
+and d=C2=B0 for the client.
+
+My setup is basic (but may be wrong) on both srv & cli, here's the srv
+one:
+
+[Interface]
+Address         =3D 10.11.12.1/24
+ListenPort      =3D 1194
+PresharedKey    =3D =E2=80=A6
+PrivateKey      =3D =E2=80=A6
+[Peer]
+PublicKey       =3D =E2=80=A6
+AllowedIPs      =3D 0.0.0.0/0
+
+The VPN is working, I made a try yesterday, passing by my cell phone
+to reach my site and was amazed by the speed 'cos I keep my phone in gsm
+mode, otherwise it eats my battery alive (so ~20kB max speed on an old
+Xperia x10).
+
+This isn't really a problem, as I use 2 lines that do the work
+correctly; however, the DNS problem is a real concern.
+
+Jean-Yves
