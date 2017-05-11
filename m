@@ -1,23 +1,26 @@
-Return-Path: nicolas.prochazka@gmail.com
+Return-Path: benedikt.morbach@googlemail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f571e1e7
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c6a31b26
  for <wireguard@lists.zx2c4.com>;
- Thu, 11 May 2017 12:09:51 +0000 (UTC)
-Received: from mail-wr0-f177.google.com (mail-wr0-f177.google.com
- [209.85.128.177])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ec02ba9d
+ Thu, 11 May 2017 12:20:28 +0000 (UTC)
+Received: from mail-it0-f44.google.com (mail-it0-f44.google.com
+ [209.85.214.44])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0a32db5c
  for <wireguard@lists.zx2c4.com>;
- Thu, 11 May 2017 12:09:51 +0000 (UTC)
-Received: by mail-wr0-f177.google.com with SMTP id l9so19094266wre.1
- for <wireguard@lists.zx2c4.com>; Thu, 11 May 2017 05:20:29 -0700 (PDT)
+ Thu, 11 May 2017 12:20:28 +0000 (UTC)
+Received: by mail-it0-f44.google.com with SMTP id e65so18633714ita.1
+ for <wireguard@lists.zx2c4.com>; Thu, 11 May 2017 05:31:06 -0700 (PDT)
 MIME-Version: 1.0
-Sender: nicolas.prochazka@gmail.com
-From: nicolas prochazka <prochazka.nicolas@gmail.com>
-Date: Thu, 11 May 2017 14:20:27 +0200
-Message-ID: <CADdae-g_jBia3E5NnCvK8j+C_tQxOvj0U6r4iHbHd_2Lg7OADg@mail.gmail.com>
-Subject: [wireguard-devel] Check wireguard tunnel is alive
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+In-Reply-To: <CAHmME9qqPoXpf9-GpRRuQ4mSjGJ_Eh7Pn_vXPbWZXxYoLbRy6A@mail.gmail.com>
+References: <20170510213123.8147-1-benedikt.morbach@googlemail.com>
+ <CAHmME9qqPoXpf9-GpRRuQ4mSjGJ_Eh7Pn_vXPbWZXxYoLbRy6A@mail.gmail.com>
+From: Benedikt Morbach <benedikt.morbach@googlemail.com>
+Date: Thu, 11 May 2017 14:30:45 +0200
+Message-ID: <CAC-H7H=LfyykpMx=vKQWA2Ag+89JOZ34o_2UF0Nf6pJjsMp1GQ@mail.gmail.com>
+Subject: Re: [PATCH] contrib: fix out-of-tree build with jerry-rig.sh
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -27,14 +30,13 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hello,
-For the moment, for check if a wireguard tunnel is alive, we ping
-peer, it's working well  but,
-we would prefer to use latest handshake.
-At https://www.wireguard.io/protocol/ ,  we can read some information,
-it seems based on REKEY_TIMOUT ?
-can you be more precise, what is the maximum interval in second
-between handshake, can we set this interval ?
+Hi Jason,
 
-Regards,
-Nicolas Prochazka
+I started doing out-of-tree kernel builds with "make KBUILD_OUTPUT=/foo".
+While it does work, it puts wireguards .o files in
+/foo/net/../../../..../wireguard/src, which isn't exactly what I
+expected/intended. By changing the path in the Makefile the .o files
+end up in /foo/net/wireguard.
+
+Thanks
+Benedikt
