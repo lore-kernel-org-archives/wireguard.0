@@ -1,26 +1,22 @@
-Return-Path: benedikt.morbach@googlemail.com
+Return-Path: bursaaksoynakliyat@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c6a31b26
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id eef7033f
  for <wireguard@lists.zx2c4.com>;
- Thu, 11 May 2017 12:20:28 +0000 (UTC)
-Received: from mail-it0-f44.google.com (mail-it0-f44.google.com
- [209.85.214.44])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0a32db5c
+ Thu, 11 May 2017 12:59:46 +0000 (UTC)
+Received: from mail-vk0-f42.google.com (mail-vk0-f42.google.com
+ [209.85.213.42])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2d7bb46b
  for <wireguard@lists.zx2c4.com>;
- Thu, 11 May 2017 12:20:28 +0000 (UTC)
-Received: by mail-it0-f44.google.com with SMTP id e65so18633714ita.1
- for <wireguard@lists.zx2c4.com>; Thu, 11 May 2017 05:31:06 -0700 (PDT)
+ Thu, 11 May 2017 12:59:46 +0000 (UTC)
+Received: by mail-vk0-f42.google.com with SMTP id x71so785747vkd.0
+ for <wireguard@lists.zx2c4.com>; Thu, 11 May 2017 06:10:24 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9qqPoXpf9-GpRRuQ4mSjGJ_Eh7Pn_vXPbWZXxYoLbRy6A@mail.gmail.com>
-References: <20170510213123.8147-1-benedikt.morbach@googlemail.com>
- <CAHmME9qqPoXpf9-GpRRuQ4mSjGJ_Eh7Pn_vXPbWZXxYoLbRy6A@mail.gmail.com>
-From: Benedikt Morbach <benedikt.morbach@googlemail.com>
-Date: Thu, 11 May 2017 14:30:45 +0200
-Message-ID: <CAC-H7H=LfyykpMx=vKQWA2Ag+89JOZ34o_2UF0Nf6pJjsMp1GQ@mail.gmail.com>
-Subject: Re: [PATCH] contrib: fix out-of-tree build with jerry-rig.sh
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: Bursa Evden Eve Nakliyat <bursaaksoynakliyat@gmail.com>
+Date: Thu, 11 May 2017 16:10:22 +0300
+Message-ID: <CA+UdKaeFK6NYHTAA9sqcb9pac=fKg3KGFdpxW+o+rGVkLULueA@mail.gmail.com>
+Subject: =?UTF-8?B?VGVrIGJhxZ/EsW5hIGhlciB0dXphayBnZcOnaWxtZXogLg==?=
+To: wireguard@lists.zx2c4.com
+Content-Type: multipart/alternative; boundary="001a114e25a2bc426d054f3f4f6c"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -30,13 +26,15 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Jason,
+--001a114e25a2bc426d054f3f4f6c
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
 
-I started doing out-of-tree kernel builds with "make KBUILD_OUTPUT=/foo".
-While it does work, it puts wireguards .o files in
-/foo/net/../../../..../wireguard/src, which isn't exactly what I
-expected/intended. By changing the path in the Makefile the .o files
-end up in /foo/net/wireguard.
+SEVSIEJBQkFZxLDEnsSwRMSwTiBERcSexLBMIEhBUkNJLi4uLg0K
+--001a114e25a2bc426d054f3f4f6c
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: base64
 
-Thanks
-Benedikt
+PGRpdiBkaXI9ImF1dG8iPkhFUiBCQUJBWcSwxJ7EsETEsE4gREXEnsSwTCBIQVJDSS4uLi48L2Rp
+dj4NCg==
+--001a114e25a2bc426d054f3f4f6c--
