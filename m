@@ -1,25 +1,31 @@
-Return-Path: baptiste@bitsofnetworks.org
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5b9ac01d
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bf641a33
  for <wireguard@lists.zx2c4.com>;
- Sat, 13 May 2017 07:26:31 +0000 (UTC)
-Received: from mails.bitsofnetworks.org (rezine.polyno.me [193.33.56.138])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 03c8a62e
+ Sat, 13 May 2017 22:41:20 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9112da7b
  for <wireguard@lists.zx2c4.com>;
- Sat, 13 May 2017 07:26:30 +0000 (UTC)
-Received: from [172.23.184.97] (helo=tuxmachine.polynome.dn42)
- by mails.bitsofnetworks.org with esmtps
- (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.89)
- (envelope-from <baptiste@bitsofnetworks.org>) id 1d9RcA-0004nB-Ct
- for wireguard@lists.zx2c4.com; Sat, 13 May 2017 09:37:22 +0200
-Date: Sat, 13 May 2017 09:37:21 +0200
-From: Baptiste Jonglez <baptiste@bitsofnetworks.org>
-To: wireguard@lists.zx2c4.com
-Subject: Performance of Wireguard on Infiniband 40G
-Message-ID: <20170513073721.GD22218@tuxmachine.polynome.dn42>
+ Sat, 13 May 2017 22:41:20 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 01ade3cd
+ for <wireguard@lists.zx2c4.com>;
+ Sat, 13 May 2017 22:41:17 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 4b8cb2ac
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Sat, 13 May 2017 22:41:16 +0000 (UTC)
+Received: by mail-oi0-f50.google.com with SMTP id h4so98385641oib.3
+ for <wireguard@lists.zx2c4.com>; Sat, 13 May 2017 15:52:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="AbQceqfdZEv+FvjW"
+In-Reply-To: <20170513073721.GD22218@tuxmachine.polynome.dn42>
+References: <20170513073721.GD22218@tuxmachine.polynome.dn42>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Sun, 14 May 2017 00:52:11 +0200
+Message-ID: <CAHmME9pgLtP4z-vvuHxH4ST2f6ZeHhKZXM8FnyrRnxojYDsGGQ@mail.gmail.com>
+Subject: Re: Performance of Wireguard on Infiniband 40G
+To: Baptiste Jonglez <baptiste@bitsofnetworks.org>
+Content-Type: text/plain; charset="UTF-8"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -29,61 +35,49 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
+Hey Baptiste,
 
---AbQceqfdZEv+FvjW
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Awesome test! Thanks for reporting the results.
 
-Hi,
+On Sat, May 13, 2017 at 9:37 AM, Baptiste Jonglez
+<baptiste@bitsofnetworks.org> wrote:
+> Using iperf (TCP mode) over the wireguard interface, performance was
+> around 1.6 Gbit/s.  In bidirectional mode (iperf -d), performance was
+> 700 Mbit/s + 800 Mbit/s.
 
-Just for information, I did a quick test of Wireguard over a 40G
-Infiniband network, between two machines with a Xeon E5520.
+Indeed the current multicore algorithm has a lot of issues. Samuel,
+CCd, is going to be doing some work on optimizing this algorithm this
+summer.
 
-Using iperf (TCP mode) over the wireguard interface, performance was
-around 1.6 Gbit/s.  In bidirectional mode (iperf -d), performance was
-700 Mbit/s + 800 Mbit/s.
+> After raising the MTU of the wireguard interface to 65450, performance
+> went up to 7.6 Gbit/s (unidirectional iperf).
 
-Note that infiniband has a MTU of 65520 bytes, but Wireguard still selects
-a MTU of 1420 bytes for its interface.
-After raising the MTU of the wireguard interface to 65450, performance
-went up to 7.6 Gbit/s (unidirectional iperf).
+It makes sense that it'd be higher, since CPUs work best when running
+uninterrupted, but still this indicates that padata is a very
+suboptimal algorithm. Expect some improvements on this in the coming
+months. Hopefully you'll be able to test on similar hardware at some
+point when things are finished.
 
-Using the Infiniband network directly, iperf's performance is 21.7 Gbit/s
-(iperf maxes out the CPU at the receiver, even when using 8 threads).
+> Note that infiniband has a MTU of 65520 bytes, but Wireguard still selects
+> a MTU of 1420 bytes for its interface.
 
-Hardware used:
+Yea the 1420 is just a hard coded "default". I probably add something
+clever to autoselect an MTU when configuring the first peer's first
+endpoint (by computing the route and taking its interface's mtu and
+doing subtraction, etc), but the long term solution, I think, will be
+to do some more clever PMTU situation from within WireGuard. I'm still
+working out exactly how to do this, but it should be possible.
 
-- Xeon E5520 @2.27GHz (2 CPUs, 4 cores each)
-- Mellanox ConnectX IB 4X QDR MT26428
 
-Versions used:
+> - Xeon E5520 @2.27GHz (2 CPUs, 4 cores each)
+> - Mellanox ConnectX IB 4X QDR MT26428
 
-- Debian jessie
-- Linux 3.16.43-2
-- Wireguard 0.0.20170421-2
-- iperf 2.0.5
-- Mellanox ConnectX InfiniBand driver v2.2-1
+*drools* That's some awesome hardware!
 
-Baptiste
+> - iperf 2.0.5
 
---AbQceqfdZEv+FvjW
-Content-Type: application/pgp-signature; name="signature.asc"
+iperf2 has the -b bidirectional mode which is nice, but it seems like
+most people are using iperf3 now. Out of curiosity, is there a reason
+for preferring iperf2, beyond the -b switch?
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEjVflzZuxNlVFbt5QvgHsIqBOLkYFAlkWt6gACgkQvgHsIqBO
-Lkat9BAAjap//0yi7A/BjfUdAj0n4nZpqelxf1nXdE4ogNseGc/EmDXERdz/PoxB
-ZdALNfXqW+0t3plQYfz3YbPhTw4PHJhsx3ZtJc56Qb7AacJsobO+qmXcfB3ueG3V
-r+1kC6i4jQYMJJzonkorAixRDTm+cJsmIqSahpx6CA+kZabtpevB3SBfnTezOGRU
-6Cg+QV7Y2Q19EK7VNpEbx1Ucj8jQNJwosQzsEcylo6yPVtZ+LMXi0iOnmOSPE3vq
-QefssNIn4cUG0vKsH7k5uZ1SGCwJvtdhKDHtGwyzgL7OTvBUNBCzMiA4oEAisznN
-Z2S8GrUaqh0vEbqlzvHO+cq7RijkYCzIHrzu9zcYAfvOs6GRZGa4ZJA0ZxQ/Y5b8
-Ld3NwuNIfFYVswwwzRwq95k57F9ex0n2p3vWsSbMESaZvWyGawoFUVODhJ+R0rJb
-rncNmjhJFrFPpUZ2DmUvzZKqVZ3oZ3qToQNUtdNbzchXZnaWQyC4Bi+BvBwBgpvE
-o4H2PCKYC7w5jn6GTG9X5b6uUUPi+P1+Za1DUYK6A/xQJWXab78dNnSDDhecOyzH
-/HCYTnJEec2DwiPcu3tm/QO5/Lv0WU/DDkR0NoyeaR21Df0/s73aYmdwfnfnP73K
-bfkMUrTwI5cgjFmtiscLlIHRzZKIBwfuqwtfQ+I+YJugkwA3UFQ=
-=31zV
------END PGP SIGNATURE-----
-
---AbQceqfdZEv+FvjW--
+Jason
