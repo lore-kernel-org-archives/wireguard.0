@@ -1,32 +1,25 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: dkg@fifthhorseman.net
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6319c87e
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 604806cb
  for <wireguard@lists.zx2c4.com>;
- Sun, 14 May 2017 12:23:06 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2dad4aab
+ Sun, 14 May 2017 12:41:17 +0000 (UTC)
+Received: from che.mayfirst.org (che.mayfirst.org [162.247.75.118])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id afde40ef
  for <wireguard@lists.zx2c4.com>;
- Sun, 14 May 2017 12:23:06 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 41e15ebb
- for <wireguard@lists.zx2c4.com>;
- Sun, 14 May 2017 12:23:06 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id b97171b0
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Sun, 14 May 2017 12:23:05 +0000 (UTC)
-Received: by mail-oi0-f43.google.com with SMTP id h4so105587415oib.3
- for <wireguard@lists.zx2c4.com>; Sun, 14 May 2017 05:34:06 -0700 (PDT)
+ Sun, 14 May 2017 12:41:17 +0000 (UTC)
+From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+To: Baptiste Jonglez <baptiste@bitsofnetworks.org>,
+ "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: Re: Installation instructions for Debian
+In-Reply-To: <20170514084456.GA7227@tuxmachine.polynome.dn42>
+References: <20170513070534.GA22218@tuxmachine.polynome.dn42>
+ <CAHmME9o=EGWOcTRVtVQVCoJXL6KueX8eM98GWBJUtzEE67tAhw@mail.gmail.com>
+ <20170514084456.GA7227@tuxmachine.polynome.dn42>
+Date: Sun, 14 May 2017 08:52:12 -0400
+Message-ID: <87wp9jfvnn.fsf@fifthhorseman.net>
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9ordQEZYsA3-b+7Gp6YVVomVXQ9d9T_CYBOYh=MqKWpAQ@mail.gmail.com>
-References: <20170513070843.GB22218@tuxmachine.polynome.dn42>
- <CAHmME9rDvMq1QF7qMOT5rehttTFLGmcE7fGs_VRqKOc9eSJTCw@mail.gmail.com>
- <CAHmME9ordQEZYsA3-b+7Gp6YVVomVXQ9d9T_CYBOYh=MqKWpAQ@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sun, 14 May 2017 14:34:04 +0200
-Message-ID: <CAHmME9o3-L2wHHSe6mnEOWd9QyG0eLs1-aCp=jQkq4sYzBQXxQ@mail.gmail.com>
-Subject: Re: TX counters not updated on wireguard interface
-To: Baptiste Jonglez <baptiste@bitsofnetworks.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; boundary="=-=-=";
+ micalg=pgp-sha512; protocol="application/pgp-signature"
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -37,16 +30,45 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hey again,
+--=-=-=
+Content-Type: text/plain
 
-I've committed a fix [1] for this which will be out in the next
-snapshot. I've also added a test [2] for this to the automated test
-suite on https://build.wireguard.io/ so that if the bug ever
-resurfaces, it will be caught. Before reading [1], be sure to wear
-protective eyewear, as your pupils are likely to start bleeding at the
-sight of horrendous compatibility ifdef hackery.
+On Sun 2017-05-14 10:44:56 +0200, Baptiste Jonglez wrote:
+> Note that the previous installation instructions (basically, just "sudo
+> apt install wireguard-tools wireguard-dkms") were valid for Debian sid.
+>
+> The new installation instructions are only valid for Debian jessie and
+> Debian stretch (admittedly, probably the largest fraction of Debian
+> users).  But I still think you should reflect this in the instructions.
+>
+> Debian wheezy is not supported (with its old 3.2 kernel), although it
+> could be possible to use wireguard with the wheezy-backports kernel
+> (3.16).  I don't think it's worth mentioning it anyway, Wheezy is
+> old-stable and will soon be old-old-stable.
 
-Jason
+As the debian maintainer for wireguard, I agree with Baptiste on all
+these points, and on his earlier recommendations.  Thanks, Baptiste, for
+the clear and concise documentation.
 
-[1] https://git.zx2c4.com/WireGuard/commit/?id=4c294b7ec676105abc3abb3a3dd65a63a3466eb2
-[2] https://git.zx2c4.com/WireGuard/commit/?id=5437b87afcfed371b31eff25f15663f3d43ca065
+        --dkg
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEOCdgUepHf6PklTkyFJitxsGSMjcFAlkYUv0ACgkQFJitxsGS
+MjdxAQ/9Hccu2ra3+XQlDVs5kPL9K21wjyOaI8l2MxjzzSC2DjWk7iiWXfTnByHv
+HA4+mBlr7k0OdBAf0YxRyP4BM3YD58jCFdfBcfNnHLZ6ThYvWBLYTxfxOqXkDYBq
+StUAqiIk49JA+qO8z9/R4L1B8GmaPIoLkGWyZNxW8vNRrd6faZzGR0CtE9gUyWad
+d+GvkcasjaTE/rRFWVRyKXLTyvPQVEK2ZeSDOCgNojvooOGDp/wBNw6t7IuW2ouJ
+HqufOy3YVzlJX7lekTwHE8JdB4/YbYEuPZpuVG2kCfhpukPrwGh91tZrgSXUHLvR
+xgZsnR21hNgUtneKoyvR2jopT3ifPcmaPuGLlkWRPDRHizRkua1N/v+QIQ8iQJsl
+3YNv4YQHP9BDpvhQ8cNynNGeXWzGwfH2QHjILM9kj/DRBT/j9czG0XdU5qUuF7Zz
+8HccaGFkg+4i/InLQQn1BRf0Mo5N0p1q5N3tr4JDWpMDsHwBOQRJgww+DOQxIb/N
+mJ8ArFRY9OBzNAC5K/9MCwu/lUPfmt4jIcjveB635l6FY+Y9LvIuQOYrrOQZ0xe0
+/LT9bL0g0rX0ncZ14PNuqegQXtdEoP+io3mRNBEkW3sNYQTslxyIJQGYPWiKEz3K
+gGt8ScRWlbs3ms8SAaeb+MNDX2KUlflObh0ERbvI+JzOlSYv6bs=
+=rioH
+-----END PGP SIGNATURE-----
+--=-=-=--
