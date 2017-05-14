@@ -1,32 +1,31 @@
 Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b888b051
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6319c87e
  for <wireguard@lists.zx2c4.com>;
- Sun, 14 May 2017 10:39:00 +0000 (UTC)
+ Sun, 14 May 2017 12:23:06 +0000 (UTC)
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2da5885a
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2dad4aab
  for <wireguard@lists.zx2c4.com>;
- Sun, 14 May 2017 10:39:00 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1eebfad1
+ Sun, 14 May 2017 12:23:06 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 41e15ebb
  for <wireguard@lists.zx2c4.com>;
- Sun, 14 May 2017 10:39:00 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id a65eacc3
+ Sun, 14 May 2017 12:23:06 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id b97171b0
  (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 14 May 2017 10:39:00 +0000 (UTC)
-Received: by mail-oi0-f54.google.com with SMTP id l18so104588561oig.2
- for <wireguard@lists.zx2c4.com>; Sun, 14 May 2017 03:50:00 -0700 (PDT)
+ Sun, 14 May 2017 12:23:05 +0000 (UTC)
+Received: by mail-oi0-f43.google.com with SMTP id h4so105587415oib.3
+ for <wireguard@lists.zx2c4.com>; Sun, 14 May 2017 05:34:06 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20170514104817.GA29758@kroah.com>
-References: <20170513073721.GD22218@tuxmachine.polynome.dn42>
- <CAHmME9pgLtP4z-vvuHxH4ST2f6ZeHhKZXM8FnyrRnxojYDsGGQ@mail.gmail.com>
- <20170514095552.GB7227@tuxmachine.polynome.dn42>
- <20170514104817.GA29758@kroah.com>
+In-Reply-To: <CAHmME9ordQEZYsA3-b+7Gp6YVVomVXQ9d9T_CYBOYh=MqKWpAQ@mail.gmail.com>
+References: <20170513070843.GB22218@tuxmachine.polynome.dn42>
+ <CAHmME9rDvMq1QF7qMOT5rehttTFLGmcE7fGs_VRqKOc9eSJTCw@mail.gmail.com>
+ <CAHmME9ordQEZYsA3-b+7Gp6YVVomVXQ9d9T_CYBOYh=MqKWpAQ@mail.gmail.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sun, 14 May 2017 12:49:59 +0200
-Message-ID: <CAHmME9rxGD6gWoW0Q71YN4dn_J4bRD7rk1x_2ihgb0sn0r4Dbw@mail.gmail.com>
-Subject: Re: Performance of Wireguard on Infiniband 40G
-To: Greg KH <greg@kroah.com>
+Date: Sun, 14 May 2017 14:34:04 +0200
+Message-ID: <CAHmME9o3-L2wHHSe6mnEOWd9QyG0eLs1-aCp=jQkq4sYzBQXxQ@mail.gmail.com>
+Subject: Re: TX counters not updated on wireguard interface
+To: Baptiste Jonglez <baptiste@bitsofnetworks.org>
 Content-Type: text/plain; charset="UTF-8"
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
@@ -38,14 +37,16 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hey Greg,
+Hey again,
 
-On Sun, May 14, 2017 at 12:48 PM, Greg KH <greg@kroah.com> wrote:
-> 4.9 is 6 months old, I'd be curious if 4.11 is any faster given the rate
-> of change in the network stack :)
-
-I imagine it might be. I think the biggest bottle neck, in any case,
-is still the poor algorithm in padata. Hopefully we'll get this sorted
-with the help of Samuel's research this summer!
+I've committed a fix [1] for this which will be out in the next
+snapshot. I've also added a test [2] for this to the automated test
+suite on https://build.wireguard.io/ so that if the bug ever
+resurfaces, it will be caught. Before reading [1], be sure to wear
+protective eyewear, as your pupils are likely to start bleeding at the
+sight of horrendous compatibility ifdef hackery.
 
 Jason
+
+[1] https://git.zx2c4.com/WireGuard/commit/?id=4c294b7ec676105abc3abb3a3dd65a63a3466eb2
+[2] https://git.zx2c4.com/WireGuard/commit/?id=5437b87afcfed371b31eff25f15663f3d43ca065
