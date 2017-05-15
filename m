@@ -1,25 +1,22 @@
-Return-Path: dkg@fifthhorseman.net
+Return-Path: stefan@agner.ch
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 604806cb
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 95090e26
  for <wireguard@lists.zx2c4.com>;
- Sun, 14 May 2017 12:41:17 +0000 (UTC)
-Received: from che.mayfirst.org (che.mayfirst.org [162.247.75.118])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id afde40ef
+ Mon, 15 May 2017 03:23:01 +0000 (UTC)
+Received: from mail.kmu-office.ch (mail.kmu-office.ch [178.209.48.109])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id eeb5a8e0
  for <wireguard@lists.zx2c4.com>;
- Sun, 14 May 2017 12:41:17 +0000 (UTC)
-From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-To: Baptiste Jonglez <baptiste@bitsofnetworks.org>,
- "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: Re: Installation instructions for Debian
-In-Reply-To: <20170514084456.GA7227@tuxmachine.polynome.dn42>
-References: <20170513070534.GA22218@tuxmachine.polynome.dn42>
- <CAHmME9o=EGWOcTRVtVQVCoJXL6KueX8eM98GWBJUtzEE67tAhw@mail.gmail.com>
- <20170514084456.GA7227@tuxmachine.polynome.dn42>
-Date: Sun, 14 May 2017 08:52:12 -0400
-Message-ID: <87wp9jfvnn.fsf@fifthhorseman.net>
+ Mon, 15 May 2017 03:23:01 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
- micalg=pgp-sha512; protocol="application/pgp-signature"
+Content-Type: text/plain; charset=US-ASCII
+Date: Sun, 14 May 2017 20:33:27 -0700
+From: Stefan Agner <stefan@agner.ch>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: Re: WireGuard recipes for OpenEmbedded
+In-Reply-To: <CAHmME9qrvAsNTEvW=a8wBQbOu38uTxZE0D2Wa_bbPfM7x45ZyA@mail.gmail.com>
+References: <a994fb2505af736da73a956fdee94128@agner.ch>
+ <CAHmME9qrvAsNTEvW=a8wBQbOu38uTxZE0D2Wa_bbPfM7x45ZyA@mail.gmail.com>
+Message-ID: <a78f7ef04df7ebb7f12e2be5456bd9fb@agner.ch>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -30,45 +27,23 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---=-=-=
-Content-Type: text/plain
+Hi Jason,
 
-On Sun 2017-05-14 10:44:56 +0200, Baptiste Jonglez wrote:
-> Note that the previous installation instructions (basically, just "sudo
-> apt install wireguard-tools wireguard-dkms") were valid for Debian sid.
->
-> The new installation instructions are only valid for Debian jessie and
-> Debian stretch (admittedly, probably the largest fraction of Debian
-> users).  But I still think you should reflect this in the instructions.
->
-> Debian wheezy is not supported (with its old 3.2 kernel), although it
-> could be possible to use wireguard with the wheezy-backports kernel
-> (3.16).  I don't think it's worth mentioning it anyway, Wheezy is
-> old-stable and will soon be old-old-stable.
+On 2017-04-04 06:28, Jason A. Donenfeld wrote:
+> Hey Stefan,
+> 
+> Very cool! Thanks for posting it. Let me know when it gets accepted,
+> and we can add official instructions for the package on
+> wireguard.io/install/ .
 
-As the debian maintainer for wireguard, I agree with Baptiste on all
-these points, and on his earlier recommendations.  Thanks, Baptiste, for
-the clear and concise documentation.
+The recipes are now in the OpenEmbedded pyro and master branch. The pyro
+branch should end up in the next Yocto release soon (Yocto 2.3).
 
-        --dkg
+As for the "installation instructions", since this is meta distribution
+people will have to build from source... Not sure what you would like to
+add there. Adding IMAGE_INSTALL_append = " wireguard-tools" to
+conf/local.conf and building using "bitbake core-image-minimal" is
+probably the shortest path to build a complete image with wireguard.
 
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEOCdgUepHf6PklTkyFJitxsGSMjcFAlkYUv0ACgkQFJitxsGS
-MjdxAQ/9Hccu2ra3+XQlDVs5kPL9K21wjyOaI8l2MxjzzSC2DjWk7iiWXfTnByHv
-HA4+mBlr7k0OdBAf0YxRyP4BM3YD58jCFdfBcfNnHLZ6ThYvWBLYTxfxOqXkDYBq
-StUAqiIk49JA+qO8z9/R4L1B8GmaPIoLkGWyZNxW8vNRrd6faZzGR0CtE9gUyWad
-d+GvkcasjaTE/rRFWVRyKXLTyvPQVEK2ZeSDOCgNojvooOGDp/wBNw6t7IuW2ouJ
-HqufOy3YVzlJX7lekTwHE8JdB4/YbYEuPZpuVG2kCfhpukPrwGh91tZrgSXUHLvR
-xgZsnR21hNgUtneKoyvR2jopT3ifPcmaPuGLlkWRPDRHizRkua1N/v+QIQ8iQJsl
-3YNv4YQHP9BDpvhQ8cNynNGeXWzGwfH2QHjILM9kj/DRBT/j9czG0XdU5qUuF7Zz
-8HccaGFkg+4i/InLQQn1BRf0Mo5N0p1q5N3tr4JDWpMDsHwBOQRJgww+DOQxIb/N
-mJ8ArFRY9OBzNAC5K/9MCwu/lUPfmt4jIcjveB635l6FY+Y9LvIuQOYrrOQZ0xe0
-/LT9bL0g0rX0ncZ14PNuqegQXtdEoP+io3mRNBEkW3sNYQTslxyIJQGYPWiKEz3K
-gGt8ScRWlbs3ms8SAaeb+MNDX2KUlflObh0ERbvI+JzOlSYv6bs=
-=rioH
------END PGP SIGNATURE-----
---=-=-=--
+--
+Stefan
