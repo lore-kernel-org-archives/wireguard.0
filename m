@@ -1,23 +1,24 @@
-Return-Path: toke@toke.dk
+Return-Path: labawi-wg@matrix-dream.net
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 81eba860
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 36b85545
  for <wireguard@lists.zx2c4.com>;
- Tue, 16 May 2017 13:01:27 +0000 (UTC)
-Received: from mail.toke.dk (mail.toke.dk [52.28.52.200])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e535a970
+ Tue, 16 May 2017 15:32:26 +0000 (UTC)
+Received: from matrix-dream.net (matrix2.matrix-dream.net [84.200.73.251])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6a5c6d85
  for <wireguard@lists.zx2c4.com>;
- Tue, 16 May 2017 13:01:27 +0000 (UTC)
-From: =?utf-8?Q?Toke_H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+ Tue, 16 May 2017 15:32:26 +0000 (UTC)
+Received: from ivan by matrix-dream.net with local (Exim 4.88)
+ (envelope-from <labawi-wg@matrix-dream.net>) id 1dAedS-0003BK-5n
+ for wireguard@lists.zx2c4.com; Tue, 16 May 2017 16:43:42 +0100
+Date: Tue, 16 May 2017 16:43:42 +0100
+From: Ivan =?iso-8859-1?Q?Lab=E1th?= <labawi-wg@matrix-dream.net>
+To: wireguard@lists.zx2c4.com
 Subject: Re: Text-based IPC for Userspace Implementations
+Message-ID: <20170516154342.GC9458@matrix-dream.net>
 References: <CAHmME9pGX9zH+A9ouz0g8g6R7ZheZ=sKu_seAZ8r-DtBRdY_Rw@mail.gmail.com>
-Date: Tue, 16 May 2017 15:12:39 +0200
-In-Reply-To: <CAHmME9pGX9zH+A9ouz0g8g6R7ZheZ=sKu_seAZ8r-DtBRdY_Rw@mail.gmail.com>
- (Jason A. Donenfeld's message of "Tue, 16 May 2017 14:36:00 +0200")
-Message-ID: <87vap1gd2w.fsf@alrua-kau>
 MIME-Version: 1.0
-Content-Type: text/plain
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset=iso-8859-1
+In-Reply-To: <CAHmME9pGX9zH+A9ouz0g8g6R7ZheZ=sKu_seAZ8r-DtBRdY_Rw@mail.gmail.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -27,10 +28,17 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-"Jason A. Donenfeld" <Jason@zx2c4.com> writes:
+Hello,
 
+does changing one peer affect settings of another
+peer if they have common allowed_ips?
+
+Regards,
+Ivan Labáth
+
+On Tue, May 16, 2017 at 02:36:00PM +0200, Jason A. Donenfeld wrote:
 > Hey guys,
->
+> 
 > Currently wg(8) talks to the kernel by passing structs through an
 > ioctl. Due to upstream demands, this is going to be changed to
 > netlink, and we'll ditch those structs. wg(8) previously tried to
@@ -41,26 +49,16 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 > wg(8) now has a very simple text-based IPC format over unix sockets
 > (or Windows named pipes) that can be easily implemented in nearly
 > every language, even bash.
->
+> 
 > I've written a small description of it here: https://www.wireguard.io/xplatform/
->
+> 
 > This will be part of the next snapshot.
->
+> 
 > Any questions?
-
-I applaud the general idea of moving to a text-based interface. But why
-invent Yet Another Configuration Format?
-
-I guess you could say that key=value pairs are fairly straight forward;
-but from the examples it looks like there's an implicit nested
-structure? I.e. a public_key=xxx line denotes the start of a new
-endpoint, and the following keys are logically part of that endpoint?
-Or? If this is the case, you'll need a stateful parser to parse it,
-which is not immediately obvious from the description, and is bound to
-trip people up at some point...
-
-So why not avoid any possible confusion and just emit JSON? Or another
-well-established serialisation format where the nesting can be made
-explicit... :)
-
--Toke
+> 
+> Regards,
+> Jason
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
