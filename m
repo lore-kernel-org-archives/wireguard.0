@@ -1,23 +1,28 @@
-Return-Path: stefan@agner.ch
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 95090e26
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e43dfaac
  for <wireguard@lists.zx2c4.com>;
- Mon, 15 May 2017 03:23:01 +0000 (UTC)
-Received: from mail.kmu-office.ch (mail.kmu-office.ch [178.209.48.109])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id eeb5a8e0
+ Tue, 16 May 2017 12:24:46 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 12dce961
  for <wireguard@lists.zx2c4.com>;
- Mon, 15 May 2017 03:23:01 +0000 (UTC)
+ Tue, 16 May 2017 12:24:46 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0d1eaaed
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 16 May 2017 12:24:46 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 764a8db5
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 16 May 2017 12:24:46 +0000 (UTC)
+Received: by mail-oi0-f52.google.com with SMTP id b204so23015586oii.1
+ for <wireguard@lists.zx2c4.com>; Tue, 16 May 2017 05:36:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Date: Sun, 14 May 2017 20:33:27 -0700
-From: Stefan Agner <stefan@agner.ch>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: Re: WireGuard recipes for OpenEmbedded
-In-Reply-To: <CAHmME9qrvAsNTEvW=a8wBQbOu38uTxZE0D2Wa_bbPfM7x45ZyA@mail.gmail.com>
-References: <a994fb2505af736da73a956fdee94128@agner.ch>
- <CAHmME9qrvAsNTEvW=a8wBQbOu38uTxZE0D2Wa_bbPfM7x45ZyA@mail.gmail.com>
-Message-ID: <a78f7ef04df7ebb7f12e2be5456bd9fb@agner.ch>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Tue, 16 May 2017 14:36:00 +0200
+Message-ID: <CAHmME9pGX9zH+A9ouz0g8g6R7ZheZ=sKu_seAZ8r-DtBRdY_Rw@mail.gmail.com>
+Subject: Text-based IPC for Userspace Implementations
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -27,23 +32,24 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Jason,
+Hey guys,
 
-On 2017-04-04 06:28, Jason A. Donenfeld wrote:
-> Hey Stefan,
-> 
-> Very cool! Thanks for posting it. Let me know when it gets accepted,
-> and we can add official instructions for the package on
-> wireguard.io/install/ .
+Currently wg(8) talks to the kernel by passing structs through an
+ioctl. Due to upstream demands, this is going to be changed to
+netlink, and we'll ditch those structs. wg(8) previously tried to
+re-use those same structs for userspace implementations, passing them
+through a unix socket. Implementors did not like dealing with this.
+Since the structs are going for the kernel stuff, we might as well
+move to something better, too, for the userspace stuff. Therefore
+wg(8) now has a very simple text-based IPC format over unix sockets
+(or Windows named pipes) that can be easily implemented in nearly
+every language, even bash.
 
-The recipes are now in the OpenEmbedded pyro and master branch. The pyro
-branch should end up in the next Yocto release soon (Yocto 2.3).
+I've written a small description of it here: https://www.wireguard.io/xplatform/
 
-As for the "installation instructions", since this is meta distribution
-people will have to build from source... Not sure what you would like to
-add there. Adding IMAGE_INSTALL_append = " wireguard-tools" to
-conf/local.conf and building using "bitbake core-image-minimal" is
-probably the shortest path to build a complete image with wireguard.
+This will be part of the next snapshot.
 
---
-Stefan
+Any questions?
+
+Regards,
+Jason
