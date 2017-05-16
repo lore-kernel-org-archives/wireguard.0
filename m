@@ -1,24 +1,25 @@
-Return-Path: labawi-wg@matrix-dream.net
+Return-Path: jonathan@titanous.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 36b85545
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e5224e1d
  for <wireguard@lists.zx2c4.com>;
- Tue, 16 May 2017 15:32:26 +0000 (UTC)
-Received: from matrix-dream.net (matrix2.matrix-dream.net [84.200.73.251])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6a5c6d85
+ Tue, 16 May 2017 15:50:01 +0000 (UTC)
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
+ [66.111.4.25])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 78ce505f
  for <wireguard@lists.zx2c4.com>;
- Tue, 16 May 2017 15:32:26 +0000 (UTC)
-Received: from ivan by matrix-dream.net with local (Exim 4.88)
- (envelope-from <labawi-wg@matrix-dream.net>) id 1dAedS-0003BK-5n
- for wireguard@lists.zx2c4.com; Tue, 16 May 2017 16:43:42 +0100
-Date: Tue, 16 May 2017 16:43:42 +0100
-From: Ivan =?iso-8859-1?Q?Lab=E1th?= <labawi-wg@matrix-dream.net>
-To: wireguard@lists.zx2c4.com
+ Tue, 16 May 2017 15:50:01 +0000 (UTC)
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
 Subject: Re: Text-based IPC for Userspace Implementations
-Message-ID: <20170516154342.GC9458@matrix-dream.net>
+From: Jonathan Rudenberg <jonathan@titanous.com>
+In-Reply-To: <87vap1gd2w.fsf@alrua-kau>
+Date: Tue, 16 May 2017 12:01:17 -0400
+Message-Id: <358B5193-8D9F-472F-8202-B81BAA022FDD@titanous.com>
 References: <CAHmME9pGX9zH+A9ouz0g8g6R7ZheZ=sKu_seAZ8r-DtBRdY_Rw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-In-Reply-To: <CAHmME9pGX9zH+A9ouz0g8g6R7ZheZ=sKu_seAZ8r-DtBRdY_Rw@mail.gmail.com>
+ <87vap1gd2w.fsf@alrua-kau>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: =?utf-8?Q?Toke_H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -28,37 +29,20 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hello,
 
-does changing one peer affect settings of another
-peer if they have common allowed_ips?
+> On May 16, 2017, at 09:12, Toke H=C3=B8iland-J=C3=B8rgensen =
+<toke@toke.dk> wrote:
+>=20
+> So why not avoid any possible confusion and just emit JSON? Or another
+> well-established serialisation format where the nesting can be made
+> explicit... :)
 
-Regards,
-Ivan Labáth
++1 to this, requiring implementors to also implement a custom =
+serialization format will lead to avoidable bugs.
 
-On Tue, May 16, 2017 at 02:36:00PM +0200, Jason A. Donenfeld wrote:
-> Hey guys,
-> 
-> Currently wg(8) talks to the kernel by passing structs through an
-> ioctl. Due to upstream demands, this is going to be changed to
-> netlink, and we'll ditch those structs. wg(8) previously tried to
-> re-use those same structs for userspace implementations, passing them
-> through a unix socket. Implementors did not like dealing with this.
-> Since the structs are going for the kernel stuff, we might as well
-> move to something better, too, for the userspace stuff. Therefore
-> wg(8) now has a very simple text-based IPC format over unix sockets
-> (or Windows named pipes) that can be easily implemented in nearly
-> every language, even bash.
-> 
-> I've written a small description of it here: https://www.wireguard.io/xplatform/
-> 
-> This will be part of the next snapshot.
-> 
-> Any questions?
-> 
-> Regards,
-> Jason
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
+I took a quick look and there is a bit of precedent for the use of JSON =
+in the kernel tree: =
+https://github.com/torvalds/linux/tree/3401e8d1e1300742ed41910b9338b9da526=
+89a16/tools/perf/pmu-events
+
+Jonathan
