@@ -1,19 +1,31 @@
-Return-Path: bruno@wolff.to
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d88c6549
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5275d1a0
  for <wireguard@lists.zx2c4.com>;
- Wed, 17 May 2017 14:40:06 +0000 (UTC)
-Received: from wolff.to (wolff.to [98.103.208.27])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with SMTP id 4c98346f
+ Wed, 17 May 2017 14:41:41 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e37d1042
  for <wireguard@lists.zx2c4.com>;
- Wed, 17 May 2017 14:40:05 +0000 (UTC)
-Date: Wed, 17 May 2017 09:47:09 -0500
-From: Bruno Wolff III <bruno@wolff.to>
-To: wireguard@lists.zx2c4.com
-Subject: Wireguard is not building on Fedora with 4.12 rc1 kernels
-Message-ID: <20170517144709.GA28773@wolff.to>
+ Wed, 17 May 2017 14:41:41 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 234b454c
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 17 May 2017 14:41:41 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id ccb02b61
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 17 May 2017 14:41:40 +0000 (UTC)
+Received: by mail-oi0-f44.google.com with SMTP id h4so18139395oib.3
+ for <wireguard@lists.zx2c4.com>; Wed, 17 May 2017 07:53:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <20170517144709.GA28773@wolff.to>
+References: <20170517144709.GA28773@wolff.to>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 17 May 2017 16:53:02 +0200
+Message-ID: <CAHmME9od2sWr4gRk1Py+rHN1QNihser7eHoj317H8V7qYuA5yw@mail.gmail.com>
+Subject: Re: Wireguard is not building on Fedora with 4.12 rc1 kernels
+To: Bruno Wolff III <bruno@wolff.to>
+Content-Type: text/plain; charset="UTF-8"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -23,23 +35,10 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-It looks like the test for memneq is broken and both the kernel and compat 
-versions get used at the same time.
+Hey Bruno,
 
-[bruno@cerberus src]$ make
-make -C /lib/modules/4.12.0-0.rc1.git0.1.fc27.x86_64/build M=/home/bruno/WireGuard/src modules
-make[1]: Entering directory '/usr/src/kernels/4.12.0-0.rc1.git0.1.fc27.x86_64'
-  CC [M]  /home/bruno/WireGuard/src/main.o
-  CC [M]  /home/bruno/WireGuard/src/noise.o
-In file included from /home/bruno/WireGuard/src/noise.c:15:0:
-./include/crypto/algapi.h:389:19: error: redefinition of ‘crypto_memneq’
- static inline int crypto_memneq(const void *a, const void *b, size_t size)
-                   ^~~~~~~~~~~~~
-In file included from <command-line>:0:0:
-/home/bruno/WireGuard/src/compat/memneq/include.h:2:19: note: previous definition of ‘crypto_memneq’ was here
- static inline int crypto_memneq(const void *a, const void *b, size_t size)
-                   ^~~~~~~~~~~~~
-make[2]: *** [scripts/Makefile.build:303: /home/bruno/WireGuard/src/noise.o] Error 1
-make[1]: *** [Makefile:1516: _module_/home/bruno/WireGuard/src] Error 2
-make[1]: Leaving directory '/usr/src/kernels/4.12.0-0.rc1.git0.1.fc27.x86_64'
-make: *** [Makefile:28: module] Error 2
+Youch. I'm guessing this is because checking for the existence of a .c
+file isn't sufficient, since it might not be supplied. I'll change
+things around and you can retest.
+
+Jason
