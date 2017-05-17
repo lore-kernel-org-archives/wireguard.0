@@ -1,35 +1,19 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: bruno@wolff.to
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f819651d
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d88c6549
  for <wireguard@lists.zx2c4.com>;
- Wed, 17 May 2017 14:06:31 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f3772a6e
+ Wed, 17 May 2017 14:40:06 +0000 (UTC)
+Received: from wolff.to (wolff.to [98.103.208.27])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with SMTP id 4c98346f
  for <wireguard@lists.zx2c4.com>;
- Wed, 17 May 2017 14:06:31 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d3e3ffe4
- for <wireguard@lists.zx2c4.com>;
- Wed, 17 May 2017 14:06:31 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 1cedb744
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Wed, 17 May 2017 14:06:31 +0000 (UTC)
-Received: by mail-oi0-f42.google.com with SMTP id h4so16703416oib.3
- for <wireguard@lists.zx2c4.com>; Wed, 17 May 2017 07:17:55 -0700 (PDT)
+ Wed, 17 May 2017 14:40:05 +0000 (UTC)
+Date: Wed, 17 May 2017 09:47:09 -0500
+From: Bruno Wolff III <bruno@wolff.to>
+To: wireguard@lists.zx2c4.com
+Subject: Wireguard is not building on Fedora with 4.12 rc1 kernels
+Message-ID: <20170517144709.GA28773@wolff.to>
 MIME-Version: 1.0
-In-Reply-To: <20170517161448.6b56f107@msi.defcon1>
-References: <CAHmME9pGX9zH+A9ouz0g8g6R7ZheZ=sKu_seAZ8r-DtBRdY_Rw@mail.gmail.com>
- <87vap1gd2w.fsf@alrua-kau> <358B5193-8D9F-472F-8202-B81BAA022FDD@titanous.com>
- <1500fe21-c423-b34d-adf5-463b5d483cbf@higgsboson.tk>
- <CAHmME9p4wtwUG8_4KvjdLcNcE33=BTWTNmWWX_eMWkiE=Z3Grw@mail.gmail.com>
- <20170517161448.6b56f107@msi.defcon1>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 17 May 2017 16:17:53 +0200
-Message-ID: <CAHmME9rVrfuO4_T7RYzPMX7J-XkJCXb-Pv96AYpFqVmqgZKNsw@mail.gmail.com>
-Subject: Re: Text-based IPC for Userspace Implementations
-To: Bzzzz <lazyvirus@gmx.com>
-Content-Type: text/plain; charset="UTF-8"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -39,14 +23,23 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Wed, May 17, 2017 at 4:14 PM, Bzzzz <lazyvirus@gmx.com> wrote:
-> On Wed, 17 May 2017 16:01:16 +0200
-> "Jason A. Donenfeld" <Jason@zx2c4.com> wrote:
->> Right. I'd indeed be very amused to see a JSON parser land in the
->> Linux kernel.
->
-> Perhaps, this could do the trick: https://github.com/martinh/libconfuse
+It looks like the test for memneq is broken and both the kernel and compat 
+versions get used at the same time.
 
-If you'd like to add a JSON parser to the Linux kernel, please direct
-your questions to linux-kernel@vger.kernel.org instead. You'll be
-asking solely on your own accord; please do _not_ mention WireGuard.
+[bruno@cerberus src]$ make
+make -C /lib/modules/4.12.0-0.rc1.git0.1.fc27.x86_64/build M=/home/bruno/WireGuard/src modules
+make[1]: Entering directory '/usr/src/kernels/4.12.0-0.rc1.git0.1.fc27.x86_64'
+  CC [M]  /home/bruno/WireGuard/src/main.o
+  CC [M]  /home/bruno/WireGuard/src/noise.o
+In file included from /home/bruno/WireGuard/src/noise.c:15:0:
+./include/crypto/algapi.h:389:19: error: redefinition of ‘crypto_memneq’
+ static inline int crypto_memneq(const void *a, const void *b, size_t size)
+                   ^~~~~~~~~~~~~
+In file included from <command-line>:0:0:
+/home/bruno/WireGuard/src/compat/memneq/include.h:2:19: note: previous definition of ‘crypto_memneq’ was here
+ static inline int crypto_memneq(const void *a, const void *b, size_t size)
+                   ^~~~~~~~~~~~~
+make[2]: *** [scripts/Makefile.build:303: /home/bruno/WireGuard/src/noise.o] Error 1
+make[1]: *** [Makefile:1516: _module_/home/bruno/WireGuard/src] Error 2
+make[1]: Leaving directory '/usr/src/kernels/4.12.0-0.rc1.git0.1.fc27.x86_64'
+make: *** [Makefile:28: module] Error 2
