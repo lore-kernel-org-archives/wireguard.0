@@ -1,33 +1,30 @@
 Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7cfc4715
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id df2d60d3
  for <wireguard@lists.zx2c4.com>;
- Wed, 17 May 2017 13:41:45 +0000 (UTC)
+ Wed, 17 May 2017 13:48:55 +0000 (UTC)
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fac3b4c9
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 152b2ba9
  for <wireguard@lists.zx2c4.com>;
- Wed, 17 May 2017 13:41:45 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b48c218b
+ Wed, 17 May 2017 13:48:55 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0bf534f1
  for <wireguard@lists.zx2c4.com>;
- Wed, 17 May 2017 13:41:44 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id bebdfef5
+ Wed, 17 May 2017 13:48:55 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id f480f8aa
  (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 17 May 2017 13:41:44 +0000 (UTC)
-Received: by mail-oi0-f41.google.com with SMTP id b204so15710448oii.1
- for <wireguard@lists.zx2c4.com>; Wed, 17 May 2017 06:53:07 -0700 (PDT)
+ Wed, 17 May 2017 13:48:55 +0000 (UTC)
+Received: by mail-oi0-f52.google.com with SMTP id h4so15967117oib.3
+ for <wireguard@lists.zx2c4.com>; Wed, 17 May 2017 07:00:19 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <0f5ecdc1-bda0-ec74-024c-e73b8791bb11@mysterious.site>
+In-Reply-To: <CAHmME9pGX9zH+A9ouz0g8g6R7ZheZ=sKu_seAZ8r-DtBRdY_Rw@mail.gmail.com>
 References: <CAHmME9pGX9zH+A9ouz0g8g6R7ZheZ=sKu_seAZ8r-DtBRdY_Rw@mail.gmail.com>
- <87vap1gd2w.fsf@alrua-kau>
- <0f5ecdc1-bda0-ec74-024c-e73b8791bb11@mysterious.site>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 17 May 2017 15:53:06 +0200
-Message-ID: <CAHmME9rq=q-v8hoEhvsA3MYb14WisDkdm0Sd_WdCcwAMFsr6Vw@mail.gmail.com>
+Date: Wed, 17 May 2017 16:00:17 +0200
+Message-ID: <CAHmME9o-PM0ma0E5tF868fBCmOfoSdJ8BYA+_Enbbq89t900+w@mail.gmail.com>
 Subject: Re: Text-based IPC for Userspace Implementations
-To: Guanhao Yin <sopium@mysterious.site>
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -37,20 +34,20 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Tue, May 16, 2017 at 6:33 PM, Guanhao Yin <sopium@mysterious.site> wrote=
-:
-> In the =E2=80=9Cconfiguration protocol=E2=80=9D section, I think =E2=80=
-=9Cwg(8) responds to
-> ...=E2=80=9D should be =E2=80=9CAn userspace implementation respondes to =
-...=E2=80=9D?
+Hello list,
 
-Nice find, thanks.
+Re:JSON --
 
-> A text based format is certainly easier to deal with than C
-> structs. Hope I can find some time to finally implement it in
-> WireGuard.rs.
+JSON is difficult to parse and requires large libraries, especially
+for something like JSON-RPC. I'd rather not have these dependencies or
+complications.
 
-Looking forward to that.
+On the contrary, a simple key=value newline scheme can be parsed
+trivially by anyone in a safe way, and allows for very quick in basic
+implementations in nearly all environments, even bash. Even given a
+JSON library, a stream of key=value is considerably easier and more
+flexible in the parsing stage.
 
-Regards,
+JSON is nice but it is not ideal for all environments.
+
 Jason
