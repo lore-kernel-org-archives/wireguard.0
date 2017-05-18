@@ -1,28 +1,30 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: manuel.schoelling@gmx.de
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 81e40943
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5ef968ed
  for <wireguard@lists.zx2c4.com>;
- Thu, 18 May 2017 13:06:06 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0077d3a2
+ Thu, 18 May 2017 16:35:13 +0000 (UTC)
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e53e6723
  for <wireguard@lists.zx2c4.com>;
- Thu, 18 May 2017 13:06:05 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8d471697
- for <wireguard@lists.zx2c4.com>;
- Thu, 18 May 2017 13:17:30 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 1eb4baa1
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Thu, 18 May 2017 13:17:30 +0000 (UTC)
-Received: by mail-oi0-f53.google.com with SMTP id l18so53263866oig.2
- for <wireguard@lists.zx2c4.com>; Thu, 18 May 2017 06:17:36 -0700 (PDT)
-MIME-Version: 1.0
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 18 May 2017 15:17:35 +0200
-Message-ID: <CAHmME9ozJq2uy7Kgp4FYAUkM0owmh6w3mzyMG6hxZXB-bZsEYg@mail.gmail.com>
-Subject: I will mail you WireGuard stickers
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+ Thu, 18 May 2017 16:35:13 +0000 (UTC)
+Received: from xps ([37.201.240.208]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MhQju-1dP5fN3myY-00MdXx for
+ <wireguard@lists.zx2c4.com>; Thu, 18 May 2017 18:46:44 +0200
+Message-ID: <1495126002.1834.2.camel@gmx.de>
+Subject: Re: Text-based IPC for Userspace Implementations
+From: Manuel =?ISO-8859-1?Q?Sch=F6lling?= <manuel.schoelling@gmx.de>
+To: wireguard@lists.zx2c4.com
+Date: Thu, 18 May 2017 18:46:42 +0200
+In-Reply-To: <CAHmME9pQxx_-h=8a_YpRgGnidjOA8aJeT=Lz3v-RkB_17dP9jA@mail.gmail.com>
+References: <CAHmME9pGX9zH+A9ouz0g8g6R7ZheZ=sKu_seAZ8r-DtBRdY_Rw@mail.gmail.com>
+ <87vap1gd2w.fsf@alrua-kau>
+ <358B5193-8D9F-472F-8202-B81BAA022FDD@titanous.com>
+ <1500fe21-c423-b34d-adf5-463b5d483cbf@higgsboson.tk>
+ <CAHmME9p4wtwUG8_4KvjdLcNcE33=BTWTNmWWX_eMWkiE=Z3Grw@mail.gmail.com>
+ <1495029845.13481.33.camel@gmx.de>
+ <CAHmME9pQxx_-h=8a_YpRgGnidjOA8aJeT=Lz3v-RkB_17dP9jA@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -32,19 +34,26 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hey list,
+On Wed, 2017-05-17 at 16:08 +0200, Jason A. Donenfeld wrote:
+> Hi Manuel,
+>=20
+> On Wed, May 17, 2017 at 4:04 PM, Manuel Sch=C3=B6lling
+> <manuel.schoelling@gmx.de> wrote:
+> > Great to hear that wireguard gets a nice IPC interface.
+> > Do you already know when this is about to land in the wireguard
+> > releases/repos?
+>=20
+> When Trevor wakes up today and publishes rev32b of Noise, I'm
+> planning
+> on releasing a snapshot of WireGuard seconds after. Currently 7am on
+> the pacific coast...
 
-Today an order of WireGuard stickers arrived. If you've come to any
-conferences where there's been a WireGuard talk, then you've
-undoubtedly gotten some stickers. If not, however, you might be
-missing out. Want me to send you some? Or a decent amount of them for
-a local hacker space?
+I am a bit confused: I updated to 0.0.20170517 on Debian, but no
+/run/wireguard/ or /var/run/wireguard/ exists.
+Then I checked the source code and apparently only the wireguard-tools
+support the new socket IPC interface but the kernel module does not.
+Is that observation correct?
 
-If you write to me with your name, address, and roughly how many
-stickers you want, I'll put them inside an envelop and send them off.
-If you're requesting "tons" of stickers, knowing the name of the
-hackerspace or organization to which you plan to distribute them would
-probably foster more confidence. I'll be mailing these from Paris.
+Thanks!
 
-Regards,
-Jason
+Manuel
