@@ -1,24 +1,34 @@
-Return-Path: labawi-wg@matrix-dream.net
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 98c20f16
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 375901d0
  for <wireguard@lists.zx2c4.com>;
- Thu, 18 May 2017 07:50:46 +0000 (UTC)
-Received: from matrix-dream.net (matrix2.matrix-dream.net [84.200.73.251])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 55650b40
+ Thu, 18 May 2017 09:57:09 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fba38e7c
  for <wireguard@lists.zx2c4.com>;
- Thu, 18 May 2017 07:50:46 +0000 (UTC)
-Date: Thu, 18 May 2017 09:02:13 +0100
-From: Ivan =?iso-8859-1?Q?Lab=E1th?= <labawi-wg@matrix-dream.net>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: allowed_ips move semantics?
-Message-ID: <20170518080213.GB1941@matrix-dream.net>
+ Thu, 18 May 2017 09:57:09 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f8f78a3a
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 18 May 2017 10:08:34 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 15ec58ea
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 18 May 2017 10:08:33 +0000 (UTC)
+Received: by mail-oi0-f43.google.com with SMTP id h4so47783334oib.3
+ for <wireguard@lists.zx2c4.com>; Thu, 18 May 2017 03:08:38 -0700 (PDT)
+MIME-Version: 1.0
+In-Reply-To: <20170518080213.GB1941@matrix-dream.net>
 References: <CAHmME9pGX9zH+A9ouz0g8g6R7ZheZ=sKu_seAZ8r-DtBRdY_Rw@mail.gmail.com>
  <20170516154204.GB9458@matrix-dream.net>
  <CAHmME9roTAqMYB0qB7JG3rkKfGw1nfzTz0AD-frcGyyweCTcJQ@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-In-Reply-To: <CAHmME9roTAqMYB0qB7JG3rkKfGw1nfzTz0AD-frcGyyweCTcJQ@mail.gmail.com>
-Cc: wireguard@lists.zx2c4.com
+ <20170518080213.GB1941@matrix-dream.net>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 18 May 2017 12:08:37 +0200
+Message-ID: <CAHmME9pqK6qbbSWQoxE4j6E-bXBObQZTBJ8-Zjkrhw78Xj14nQ@mail.gmail.com>
+Subject: Re: allowed_ips move semantics?
+To: =?UTF-8?B?SXZhbiBMYWLDoXRo?= <labawi-wg@matrix-dream.net>
+Content-Type: multipart/alternative; boundary="001a113cd13ea2be1c054fc9963c"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -28,90 +38,105 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi,
+--001a113cd13ea2be1c054fc9963c
+Content-Type: text/plain; charset="UTF-8"
 
-I was asking, because I think automatically
-moving allowed_ips is prone to cause more
-trouble than the small savings of one or few
-commands, both via IPC and the wg tool. I would
-suggest having an error semantics instead.
+Hi Ivan,
 
+You make a lot of compelling points there, and I'm inclined to follow your
+advice. The (untested) patch to change this to the behavior you'd like is
+actually this trivial two line change:
 
-I believe there are two cases where moving
-ranges is relevant:
+diff --git a/src/routingtable.c b/src/routingtable.c
+index f9c3eff..0ad4d3c 100644
+--- a/src/routingtable.c
++++ b/src/routingtable.c
+@@ -194,6 +194,8 @@ static int add(struct routing_table_node __rcu **trie,
+u8 bits, const u8 *key, u
+  return 0;
+  }
+  if (node_placement(*trie, key, cidr, bits, &node, lock)) {
++ if (node->peer)
++ return -EEXIST;
+  node->peer = peer;
+  return 0;
+  }
 
-1) You know the range is a duplicate, in which
-case it shouln't be that hard to remove it
-from the relevant peer first.
-If it is hard, then it is a good area
-of improvement.
+I'm especially compelled by your point that this would mirror the semantics
+of the routing table.
 
-2) You don't know the range is a duplicate,
-in which case you have probably made a mistake.
-One wich you might not notice until you see
-something is broken, so an error instead would
-be welcome.
+However, I was a bit confused by your mention of a race condition, because
+I believe that my current solution _avoids_ a race condition. The routing
+table has a concept of metrics, which allows for avoiding a race condition
+when gracefully handing over routes between different interfaces, like this:
 
+# ip route add 10.0.0.0/24 dev eth0 metric 1000
+# ip route add 10.0.0.0/24 dev wlan0 metric 1001
+# ip route del 10.0.0.0/24 dev eth0 metric 1000
 
-Semantics of (permanently) moving a range
-from another peer is not obvious unless you
-know it or actually consider the effects.
+(It also has `ip route change`, but I don't know if this is actually
+implemented in a race free way in the kernel or how it works.)
 
-IMO it is a bad default. It will cause pains
-to fat-fingered sysadmins, it is prone to
-race conditions and even more importantly
-if in API, it will lead to development of
-slightly broken tools.
+If I added the -EEXIST semantic to WireGuard's allowed-ips, if you wanted
+to change traffic from one peer to the other, you could not do so without
+dropping a bunch of packets during the interim. Thus, a race condition.
+This was the original reason for designing it as I did -- I liked the idea
+of race-free handovers.
 
+Do you think maintaining race-free handover is important enough to warrant
+not using -EEXIST? I sort of think it is important. Of course, I could add
+an explicit "change" flag, but that makes things a bit complicated. And, in
+the case of your hypothetical fat-fingered sysadmin, the error condition is
+that this "fails closed", rather than "fails open", which probably makes it
+not such a big deal.
 
-Case in point:
+What do you think of that argumentation?
 
-The wg tool itself (0.0.20170517) will happily
-accept this configuration
+Jason
 
-[Interface]
-ListenPort = 51820
-PrivateKey = NNNNooootttt++rrreeeaaalll+++kkkkkeeeeyyyy0=
+--001a113cd13ea2be1c054fc9963c
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-[Peer]
-PublicKey = 5c/Fuf2V7tgcxNRfMvuyCsZ+/5xXZm1pxewmvpY0n1k=
-AllowedIPs = 172.16.0.1/32
+<div dir=3D"ltr">Hi Ivan,<br><br>You make a lot of compelling points there,=
+ and I&#39;m inclined to follow your advice. The (untested) patch to change=
+ this to the behavior you&#39;d like is actually this trivial two line chan=
+ge:<br><br><div>diff --git a/src/routingtable.c b/src/routingtable.c</div><=
+div>index f9c3eff..0ad4d3c 100644</div><div>--- a/src/routingtable.c</div><=
+div>+++ b/src/routingtable.c</div><div>@@ -194,6 +194,8 @@ static int add(s=
+truct routing_table_node __rcu **trie, u8 bits, const u8 *key, u</div><div>=
+=C2=A0<span style=3D"white-space:pre">		</span>return 0;</div><div>=C2=A0<s=
+pan style=3D"white-space:pre">	</span>}</div><div>=C2=A0<span style=3D"whit=
+e-space:pre">	</span>if (node_placement(*trie, key, cidr, bits, &amp;node, =
+lock)) {</div><div>+<span style=3D"white-space:pre">		</span>if (node-&gt;p=
+eer)</div><div>+<span style=3D"white-space:pre">			</span>return -EEXIST;</=
+div><div>=C2=A0<span style=3D"white-space:pre">		</span>node-&gt;peer =3D p=
+eer;</div><div>=C2=A0<span style=3D"white-space:pre">		</span>return 0;</di=
+v><div>=C2=A0<span style=3D"white-space:pre">	</span>}</div><div><br></div>=
+<div>I&#39;m especially compelled by your point that this would mirror the =
+semantics of the routing table.</div><div><br></div><div>However, I was a b=
+it confused by your mention of a race condition, because I believe that my =
+current solution _avoids_ a race condition. The routing table has a concept=
+ of metrics, which allows for avoiding a race condition when gracefully han=
+ding over routes between different interfaces, like this:</div><div><br></d=
+iv><div>#=C2=A0ip route add <a href=3D"http://10.0.0.0/24">10.0.0.0/24</a> =
+dev eth0 metric 1000</div><div>#=C2=A0ip route add <a href=3D"http://10.0.0=
+.0/24">10.0.0.0/24</a> dev wlan0 metric 1001</div><div># ip route del <a hr=
+ef=3D"http://10.0.0.0/24">10.0.0.0/24</a> dev eth0 metric 1000<br></div><di=
+v><br></div><div>(It also has `ip route change`, but I don&#39;t know if th=
+is is actually implemented in a race free way in the kernel or how it works=
+.)</div><div><br></div><div>If I added the -EEXIST semantic to WireGuard&#3=
+9;s allowed-ips, if you wanted to change traffic from one peer to the other=
+, you could not do so without dropping a bunch of packets during the interi=
+m. Thus, a race condition. This was the original reason for designing it as=
+ I did -- I liked the idea of race-free handovers.</div><div><br></div><div=
+>Do you think maintaining race-free handover is important enough to warrant=
+ not using -EEXIST? I sort of think it is important. Of course, I could add=
+ an explicit &quot;change&quot; flag, but that makes things a bit complicat=
+ed. And, in the case of your hypothetical fat-fingered sysadmin, the error =
+condition is that this &quot;fails closed&quot;, rather than &quot;fails op=
+en&quot;, which probably makes it not such a big deal.</div><div><br></div>=
+<div>What do you think of that argumentation?</div><div><br></div><div>Jaso=
+n</div></div>
 
-[Peer]
-PublicKey = 6yztQEsu3vCsKz3WrCgqXfTjizHAtTylqAQzrTwjIA0=
-AllowedIPs = 172.16.0.1/32
-
-After load, the first peer will have no allowed ips,
-which was probably not intended and in large configurations
-it would be easy to miss.
-
-
-Example of prior art:
-
-# ip route add 172.16.0.1/32 dev lo
-# ip route add 172.16.0.1/32 dev wg0
-RTNETLINK answers: File exists
-
-
-I would suggest changing allowed_ips moves to be errors,
-and possibly improving the wg tool to make removing unwanted
-allowed_ips easier. Perhaps something ip route add/delete style
-would be appropriate.
-
-Regards,
-Ivan
-
-
-On Wed, May 17, 2017 at 03:47:51PM +0200, Jason A. Donenfeld wrote:
-> Hi Ivan,
-> 
-> On Tue, May 16, 2017 at 5:42 PM, Ivan Labáth <labawi-wg@matrix-dream.net> wrote:
-> > does changing one peer affect settings of another
-> > peer if they have common allowed_ips?
-> 
-> Great question. I've improved the documentation to note this. The
-> answer is that: if you have a 100% identical allowed_ips entry in a
-> first peer and in a second peer, the entry moves from the first to the
-> second.
-> 
-> Jason
+--001a113cd13ea2be1c054fc9963c--
