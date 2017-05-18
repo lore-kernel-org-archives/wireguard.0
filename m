@@ -1,21 +1,31 @@
-Return-Path: bruno@wolff.to
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d6557cbc
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 978b00da
  for <wireguard@lists.zx2c4.com>;
- Thu, 18 May 2017 20:02:39 +0000 (UTC)
-Received: from wolff.to (wolff.to [98.103.208.27])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with SMTP id d3c63f1a
+ Thu, 18 May 2017 20:16:35 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f81d3c59
  for <wireguard@lists.zx2c4.com>;
- Thu, 18 May 2017 20:02:39 +0000 (UTC)
-Date: Thu, 18 May 2017 15:09:40 -0500
-From: Bruno Wolff III <bruno@wolff.to>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: Re: I will mail you WireGuard stickers
-Message-ID: <20170518200940.GC32114@wolff.to>
-References: <CAHmME9ozJq2uy7Kgp4FYAUkM0owmh6w3mzyMG6hxZXB-bZsEYg@mail.gmail.com>
+ Thu, 18 May 2017 20:16:35 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ca134b2a
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 18 May 2017 20:28:00 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 6a53bb6b
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 18 May 2017 20:27:59 +0000 (UTC)
+Received: by mail-oi0-f41.google.com with SMTP id w10so69272232oif.0
+ for <wireguard@lists.zx2c4.com>; Thu, 18 May 2017 13:28:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-In-Reply-To: <CAHmME9ozJq2uy7Kgp4FYAUkM0owmh6w3mzyMG6hxZXB-bZsEYg@mail.gmail.com>
+In-Reply-To: <20170518200940.GC32114@wolff.to>
+References: <CAHmME9ozJq2uy7Kgp4FYAUkM0owmh6w3mzyMG6hxZXB-bZsEYg@mail.gmail.com>
+ <20170518200940.GC32114@wolff.to>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 18 May 2017 22:28:07 +0200
+Message-ID: <CAHmME9qdR9-gBfEjgfwgz2t=7CFRtahjC-uwhaEMnbGmEONEAQ@mail.gmail.com>
+Subject: Re: I will mail you WireGuard stickers
+To: Bruno Wolff III <bruno@wolff.to>
+Content-Type: text/plain; charset="UTF-8"
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -26,15 +36,9 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Thu, May 18, 2017 at 15:17:35 +0200,
-  "Jason A. Donenfeld" <Jason@zx2c4.com> wrote:
->
->Today an order of WireGuard stickers arrived. If you've come to any
->conferences where there's been a WireGuard talk, then you've
->undoubtedly gotten some stickers. If not, however, you might be
->missing out. Want me to send you some? Or a decent amount of them for
->a local hacker space?
+Hey Bruno,
 
-I don't want to have you mail me stuff from Paris, but if the artwork 
-were available I might make a copy locally. I'm guessing you use the 
-Serpent from the web page in some manner?
+I'm happy to mail you this from Paris. I'm already mailing 40 other
+envelopes all around the world...
+
+Jason
