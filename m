@@ -1,25 +1,22 @@
-Return-Path: lazyvirus@gmx.com
+Return-Path: texteditor.si@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b19d1342
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ffac6680
  for <wireguard@lists.zx2c4.com>;
- Wed, 24 May 2017 02:06:21 +0000 (UTC)
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5200cac2
+ Wed, 24 May 2017 22:52:21 +0000 (UTC)
+Received: from mail-oi0-f53.google.com (mail-oi0-f53.google.com
+ [209.85.218.53])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8fe3c632
  for <wireguard@lists.zx2c4.com>;
- Wed, 24 May 2017 02:06:21 +0000 (UTC)
-Date: Wed, 24 May 2017 04:18:29 +0200
-From: Bzzzz <lazyvirus@gmx.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: Re: What has changed in the configuration file?
-Message-ID: <20170524041829.1112596e@msi.defcon1>
-In-Reply-To: <CAHmME9pgWYO8J8-eqy=Ciz+hsOi-=89bj1qf42rXieALm5G5gg@mail.gmail.com>
-References: <20170524034606.54078c3c@msi.defcon1>
- <CAHmME9rQoSrRsVWzOMWbc4FMrHG1+jWj4VM7C7tQQE9c9P0ooA@mail.gmail.com>
- <20170524040825.2087168f@msi.defcon1>
- <CAHmME9pgWYO8J8-eqy=Ciz+hsOi-=89bj1qf42rXieALm5G5gg@mail.gmail.com>
+ Wed, 24 May 2017 22:52:21 +0000 (UTC)
+Received: by mail-oi0-f53.google.com with SMTP id l18so260869849oig.2
+ for <wireguard@lists.zx2c4.com>; Wed, 24 May 2017 16:04:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: Text Editor <texteditor.si@gmail.com>
+Date: Wed, 24 May 2017 19:04:38 -0400
+Message-ID: <CAL+S5MVFd9Z=70X67E69-XcEq7hO76UT6vmzLGj+0YS8vhfedA@mail.gmail.com>
+Subject: Can't seem to split tunnel using tables the way I can in OpenVPN
+To: wireguard@lists.zx2c4.com
+Content-Type: multipart/alternative; boundary="001a11407770f0921905504d20d3"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -29,19 +26,48 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Wed, 24 May 2017 04:09:52 +0200
-"Jason A. Donenfeld" <Jason@zx2c4.com> wrote:
+--001a11407770f0921905504d20d3
+Content-Type: text/plain; charset="UTF-8"
 
-> As mentioned in the snapshot changelog email, PresharedKey is now a
-> property of the Peer, not the Interface.
+Trying to replicate my OpenVPN routing setup, tunnel is split to go to /24
+subnet inside OpenVPN without the default traffic going through it.
 
-Crap, again my bad :/
+However, it is setup to use a gateway in OpenVPN to reach the internet when
+packets go through the interface
 
-> If you have lots of random questions like this, feel free to find me
-> on IRC -- #wireguard on Freenode.
 
-I'll do that.
+Copying this setup over to Wireguard seems to break - I can ping the
+endpoints inside the Wireguard VPN, but trying to reach the internet via
+the internet seems to not work
 
-Thanks for your time, Jason.
 
-Jean-Yves
+
+Configuration files on the Server side:
+
+https://pastebin.com/raw/TJvKazSL
+
+Configuration files on the Server side:
+
+https://pastebin.com/raw/2t760WvY
+
+
+This same concept works on OpenVPN without issue, not sure what is happening
+
+--001a11407770f0921905504d20d3
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div><div><div><div>Trying to replicate my OpenVPN routing=
+ setup, tunnel is split to go to /24 subnet inside OpenVPN without the defa=
+ult traffic going through it.<br><br></div>However, it is setup to use a ga=
+teway in OpenVPN to reach the internet when packets go through the interfac=
+e<br><br><br></div>Copying this setup over to Wireguard seems to break - I =
+can ping the endpoints inside the Wireguard VPN, but trying to reach the in=
+ternet via the internet seems to not work<br><br><br><br></div>Configuratio=
+n files on the Server side:<br><br><a href=3D"https://pastebin.com/raw/TJvK=
+azSL">https://pastebin.com/raw/TJvKazSL</a><br><br>Configuration files on t=
+he Server side:<br><br><a href=3D"https://pastebin.com/raw/2t760WvY">https:=
+//pastebin.com/raw/2t760WvY</a><br><br><br></div>This same concept works on=
+ OpenVPN without issue, not sure what is happening<br></div>
+
+--001a11407770f0921905504d20d3--
