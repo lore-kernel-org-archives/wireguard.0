@@ -1,23 +1,27 @@
-Return-Path: lazyvirus@gmx.com
+Return-Path: me.kalin@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2177f349
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ceefee0a
  for <wireguard@lists.zx2c4.com>;
- Thu, 25 May 2017 17:59:20 +0000 (UTC)
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7f13f4dc
+ Thu, 25 May 2017 19:02:22 +0000 (UTC)
+Received: from mail-oi0-f50.google.com (mail-oi0-f50.google.com
+ [209.85.218.50])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 718d5a65
  for <wireguard@lists.zx2c4.com>;
- Thu, 25 May 2017 17:59:20 +0000 (UTC)
-Date: Thu, 25 May 2017 20:11:41 +0200
-From: Bzzzz <lazyvirus@gmx.com>
-To: Kalin KOZHUHAROV <me.kalin@gmail.com>
-Subject: Re: Can't seem to split tunnel using tables the way I can in OpenVPN
-Message-ID: <20170525201141.0d6a67ed@msi.defcon1>
-In-Reply-To: <CAKXLc7cf-XW=-yeSDPQbDaKhHmKrj3Tb+n_jv4GLUt_k+qg1xg@mail.gmail.com>
+ Thu, 25 May 2017 19:02:22 +0000 (UTC)
+Received: by mail-oi0-f50.google.com with SMTP id l18so292047317oig.2
+ for <wireguard@lists.zx2c4.com>; Thu, 25 May 2017 12:14:47 -0700 (PDT)
+MIME-Version: 1.0
+In-Reply-To: <20170525201141.0d6a67ed@msi.defcon1>
 References: <CAL+S5MVFd9Z=70X67E69-XcEq7hO76UT6vmzLGj+0YS8vhfedA@mail.gmail.com>
  <20170525191337.696cd9d5@msi.defcon1>
  <CAKXLc7cf-XW=-yeSDPQbDaKhHmKrj3Tb+n_jv4GLUt_k+qg1xg@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+ <20170525201141.0d6a67ed@msi.defcon1>
+From: Kalin KOZHUHAROV <me.kalin@gmail.com>
+Date: Thu, 25 May 2017 21:14:26 +0200
+Message-ID: <CAKXLc7cBiMrx=uXtOtujt=wStVjECU2_oc7ptpTuuwRKpo4TJw@mail.gmail.com>
+Subject: Re: Can't seem to split tunnel using tables the way I can in OpenVPN
+To: Bzzzz <lazyvirus@gmx.com>
+Content-Type: text/plain; charset="UTF-8"
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -28,26 +32,14 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Thu, 25 May 2017 19:58:19 +0200
-Kalin KOZHUHAROV <me.kalin@gmail.com> wrote:
+Hello Jean-Yves,
 
-> On Thu, May 25, 2017 at 7:13 PM, Bzzzz <lazyvirus@gmx.com> wrote:
-> > And BTW, it is much more dangerous to reveal your keys on the Ternet
-> > than your endpoint IP address=E2=80=A6
-> >
->=20
-> That just made my day, LoL! I could not help posting it on twitter:
-> https://twitter.com/thinrope/status/867801802724569088
->=20
-> Kalin.
+I apologize for the misunderstanding, I completely agree with your advice!
 
-I'm not sure about the way I should take it=E2=80=A6
+I guess the adding of "LoL" at the end didn't make that clearer, I
+just re-read my tweet.
+Thinking about it, I was re-editing it quite a few times to make it
+fit the length restriction and the end result was not clear, when
+taken out of context. "FAIL" for me, sorry.
 
-When I wrote these lines, I was especially thinking to an old and now
-abandoned security project of mine that was a spider digging all possible
-information from mostly MLs: IP addresses, account names, e-mail
-addresses, keys of course, pet names, kids names, etc;
-running in parallel of another spider that used this information to
-"dig" the web, the results were "quite interesting"=E2=80=A6
-
-Jean-Yves
+Kalin.
