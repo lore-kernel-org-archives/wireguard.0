@@ -1,30 +1,17 @@
-Return-Path: lazyvirus@gmx.com
+Return-Path: flokli@flokli.de
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ba54bbd2
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 590fcc3e
  for <wireguard@lists.zx2c4.com>;
- Thu, 25 May 2017 19:50:48 +0000 (UTC)
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 29919c76
+ Fri, 26 May 2017 08:32:27 +0000 (UTC)
+Received: from zeus.flokli.de (mail.zeus.flokli.de [88.198.15.28])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b00afbc1
  for <wireguard@lists.zx2c4.com>;
- Thu, 25 May 2017 19:50:47 +0000 (UTC)
-Date: Thu, 25 May 2017 22:03:08 +0200
-From: Bzzzz <lazyvirus@gmx.com>
-To: David Woodhouse <dwmw2@infradead.org>
-Subject: Re: Can't seem to split tunnel using tables the way I can in OpenVPN
-Message-ID: <20170525220308.2952f2a0@msi.defcon1>
-In-Reply-To: <1495741814.5454.22.camel@infradead.org>
-References: <CAL+S5MVFd9Z=70X67E69-XcEq7hO76UT6vmzLGj+0YS8vhfedA@mail.gmail.com>
- <20170525191337.696cd9d5@msi.defcon1>
- <CAKXLc7cf-XW=-yeSDPQbDaKhHmKrj3Tb+n_jv4GLUt_k+qg1xg@mail.gmail.com>
- <20170525201141.0d6a67ed@msi.defcon1>
- <CAKXLc7cBiMrx=uXtOtujt=wStVjECU2_oc7ptpTuuwRKpo4TJw@mail.gmail.com>
- <20170525212839.2ec1cd51@msi.defcon1>
- <1495740721.5454.9.camel@infradead.org>
- <20170525214551.4b602d80@msi.defcon1>
- <1495741814.5454.22.camel@infradead.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+ Fri, 26 May 2017 08:32:27 +0000 (UTC)
+From: Florian Klink <flokli@flokli.de>
+To: wireguard@lists.zx2c4.com
+Subject: [PATCH] tools: add wireguard@.service
+Date: Fri, 26 May 2017 10:44:23 +0200
+Message-Id: <20170526084423.31088-1-flokli@flokli.de>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -34,18 +21,65 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Thu, 25 May 2017 20:50:14 +0100
-David Woodhouse <dwmw2@infradead.org> wrote:
+If you simply want to create wireguard interfaces and configure them,
+wg-quick might be too much, as it also configures Addresses, MTU and
+adds routes. This unit file can be used in cases where you want to use
+wg(8) to configure the wireguard interface, but do regular network
+configuration on top of the link by something else (possibly not knowing
+wireguard, like systemd-networkd or NetworkManager.
 
-> The list doesn't have the RFC2369 List-Post: header which would allow
-> the 'Reply to List' option to work.
-> 
-> But that's OK because I just explained to you why it's anti-social and
-> shouldn't be used anyway.
+Signed-off-by: Florian Klink <flokli@flokli.de>
+---
+ src/tools/Makefile           |  3 ++-
+ src/tools/wireguard@.service | 19 +++++++++++++++++++
+ 2 files changed, 21 insertions(+), 1 deletion(-)
+ create mode 100644 src/tools/wireguard@.service
 
-If I had time to lose, this could for sure leads to a looong (and,
-almost as surely, sterile) discussion, as it concerns only your own
-opinion and you're twisting arguments to reflect only it.
-I've no spare time to toy, so have a nice day/night and bye.
-
-JY
+diff --git a/src/tools/Makefile b/src/tools/Makefile
+index 2dd7f6a..5206832 100644
+--- a/src/tools/Makefile
++++ b/src/tools/Makefile
+@@ -51,6 +51,7 @@ clean:
+ install: wg
+ 	@install -v -d "$(DESTDIR)$(BINDIR)" && install -m 0755 -v wg "$(DESTDIR)$(BINDIR)/wg"
+ 	@install -v -d "$(DESTDIR)$(MANDIR)/man8" && install -m 0644 -v wg.8 "$(DESTDIR)$(MANDIR)/man8/wg.8"
++	[ "$(WITH_SYSTEMDUNITS)" = "yes" ] && install -v -d "$(DESTDIR)$(SYSTEMDUNITDIR)" && install -m 0644 -v wireguard@.service "$(DESTDIR)$(SYSTEMDUNITDIR)/wireguard@.service"
+ 	@[ "$(WITH_BASHCOMPLETION)" = "yes" ] || exit 0; \
+ 	install -v -d "$(DESTDIR)$(BASHCOMPDIR)" && install -m 0644 -v completion/wg.bash-completion "$(DESTDIR)$(BASHCOMPDIR)/wg"
+ 	@[ "$(WITH_WGQUICK)" = "yes" ] || exit 0; \
+@@ -60,7 +61,7 @@ install: wg
+ 	@[ "$(WITH_WGQUICK)" = "yes" -a "$(WITH_BASHCOMPLETION)" = "yes" ] || exit 0; \
+ 	install -m 0644 -v completion/wg-quick.bash-completion "$(DESTDIR)$(BASHCOMPDIR)/wg-quick"
+ 	@[ "$(WITH_WGQUICK)" = "yes" -a "$(WITH_SYSTEMDUNITS)" = "yes" ] || exit 0; \
+-	install -v -d "$(DESTDIR)$(SYSTEMDUNITDIR)" && install -m 0644 -v wg-quick@.service "$(DESTDIR)$(SYSTEMDUNITDIR)/wg-quick@.service"
++	install -m 0644 -v wg-quick@.service "$(DESTDIR)$(SYSTEMDUNITDIR)/wg-quick@.service"
+ 
+ check: clean
+ 	CFLAGS=-g scan-build --view --keep-going $(MAKE) wg
+diff --git a/src/tools/wireguard@.service b/src/tools/wireguard@.service
+new file mode 100644
+index 0000000..b6d53bf
+--- /dev/null
++++ b/src/tools/wireguard@.service
+@@ -0,0 +1,19 @@
++[Unit]
++Description=WireGuard via wg(8) for %I
++After=network-online.target
++Wants=network-online.target
++Documentation=man:wg(8)
++Documentation=https://www.wireguard.io/
++Documentation=https://www.wireguard.io/quickstart/
++Documentation=https://git.zx2c4.com/WireGuard/about/src/tools/wg.8
++
++[Service]
++Type=oneshot
++RemainAfterExit=yes
++ExecStartPre=/sbin/ip link add dev %i type wireguard
++ExecStart=/usr/bin/wg setconf %i /etc/wireguard/%i.conf
++ExecStop=/sbin/ip link del %i
++ExecReload=/usr/bin/wg setconf %i /etc/wireguard/%i.conf
++
++[Install]
++WantedBy=multi-user.target
+-- 
+2.13.0
