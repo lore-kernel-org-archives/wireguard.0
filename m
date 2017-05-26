@@ -1,24 +1,22 @@
-Return-Path: flokli@flokli.de
+Return-Path: spagan@instartlogic.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1035cc27
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 81f1c124
  for <wireguard@lists.zx2c4.com>;
- Fri, 26 May 2017 16:49:12 +0000 (UTC)
-Received: from zeus.flokli.de (mail.zeus.flokli.de [88.198.15.28])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7940171b
+ Fri, 26 May 2017 17:14:05 +0000 (UTC)
+Received: from mail-qt0-f180.google.com (mail-qt0-f180.google.com
+ [209.85.216.180])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id be2dbf84
  for <wireguard@lists.zx2c4.com>;
- Fri, 26 May 2017 16:49:12 +0000 (UTC)
-Date: Fri, 26 May 2017 19:01:35 +0200
-From: Florian Klink <flokli@flokli.de>
-To: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-Subject: Re: [PATCH] tools: add wireguard@.service
-Message-ID: <20170526170135.oxt5l3pegpoo2dow@tp.flokli.de>
-References: <20170526084423.31088-1-flokli@flokli.de>
- <87wp93octp.fsf@fifthhorseman.net>
+ Fri, 26 May 2017 17:14:05 +0000 (UTC)
+Received: by mail-qt0-f180.google.com with SMTP id c13so13591176qtc.1
+ for <wireguard@lists.zx2c4.com>; Fri, 26 May 2017 10:26:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="rlabs3wq6i7rp3kx"
-In-Reply-To: <87wp93octp.fsf@fifthhorseman.net>
-Cc: wireguard@lists.zx2c4.com
+From: Steve Pagan <spagan@instartlogic.com>
+Date: Fri, 26 May 2017 10:26:14 -0700
+Message-ID: <CAK-i-m_Bv92mtdbPXZrqmC5pqiVkMrP=DsY8Hc69BZ_0McRQZA@mail.gmail.com>
+Subject: Repo broken?
+To: wireguard@lists.zx2c4.com
+Content-Type: multipart/alternative; boundary="001a113f475e9e67ef055070a373"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -28,117 +26,78 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
+--001a113f475e9e67ef055070a373
+Content-Type: text/plain; charset="UTF-8"
 
---rlabs3wq6i7rp3kx
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
+I cannot download the required packages to my system. I get a 404 error:
+
+W: Failed to fetch
+http://ppa.launchpad.net/wireguard/wireguard/ubuntu/dists/precise/main/source/Sources
+ 404  Not Found
+
+W: Failed to fetch
+http://ppa.launchpad.net/wireguard/wireguard/ubuntu/dists/precise/main/binary-amd64/Packages
+ 404  Not Found
+
+W: Failed to fetch
+http://ppa.launchpad.net/wireguard/wireguard/ubuntu/dists/precise/main/binary-i386/Packages
+ 404  Not Found
+
+[image: Instart Logic] <http://www.instartlogic.com/>
+ World's First Endpoint-Aware Application Delivery Solution
+*Steve Pagan *
+Network Engineer - Operations
+
+Phone: 650-919-8856 | Email: spagan@instartlogic.com
+<spagan@instartlogic.com>
+Instart Logic | 450 Lambert Ave, Palo Alto, CA 94306 | instartlogic.com
+
+--001a113f475e9e67ef055070a373
+Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hey dkg,
+<div dir=3D"ltr">I cannot download the required packages to my system. I ge=
+t a 404 error:<div><br></div><div><div>W: Failed to fetch <a href=3D"http:/=
+/ppa.launchpad.net/wireguard/wireguard/ubuntu/dists/precise/main/source/Sou=
+rces">http://ppa.launchpad.net/wireguard/wireguard/ubuntu/dists/precise/mai=
+n/source/Sources</a> =C2=A0404 =C2=A0Not Found</div><div><br></div><div>W: =
+Failed to fetch <a href=3D"http://ppa.launchpad.net/wireguard/wireguard/ubu=
+ntu/dists/precise/main/binary-amd64/Packages">http://ppa.launchpad.net/wire=
+guard/wireguard/ubuntu/dists/precise/main/binary-amd64/Packages</a> =C2=A04=
+04 =C2=A0Not Found</div><div><br></div><div>W: Failed to fetch <a href=3D"h=
+ttp://ppa.launchpad.net/wireguard/wireguard/ubuntu/dists/precise/main/binar=
+y-i386/Packages">http://ppa.launchpad.net/wireguard/wireguard/ubuntu/dists/=
+precise/main/binary-i386/Packages</a> =C2=A0404 =C2=A0Not Found</div><div><=
+div class=3D"gmail_signature"><div dir=3D"ltr"><div><div dir=3D"ltr"><div d=
+ir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div style=3D=
+"color:rgb(0,0,0);font-family:Helvetica;font-size:12px"><table border=3D"0"=
+ cellpadding=3D"10" cellspacing=3D"10" width=3D"550" style=3D"margin:0px;co=
+lor:rgb(97,97,97);font-family:&quot;Open Sans&quot;;font-size:14px;line-hei=
+ght:21px"><tbody><tr><td colspan=3D"4" valign=3D"top" width=3D"100%" style=
+=3D"font-family:&quot;Trebuchet MS&quot;,Helvetica,Arial,sans-serif;vertica=
+l-align:top;font-size:10px;color:rgb(51,51,51)"><br></td></tr><tr><td align=
+=3D"left" valign=3D"top" width=3D"65%" style=3D"font-family:&quot;Trebuchet=
+ MS&quot;,Helvetica,Arial,sans-serif;vertical-align:top;font-size:10px;colo=
+r:rgb(51,51,51);border-top:1px solid rgb(0,121,194)"><a href=3D"http://www.=
+instartlogic.com/" style=3D"color:rgb(131,94,165);text-decoration:none" tar=
+get=3D"_blank"><img alt=3D"Instart Logic" border=3D"0" height=3D"39" src=3D=
+"http://go.instartlogic.com/rs/growthfusion/images/Instart_Logic_Logo_130px=
+-width.jpg" title=3D"Instart Logic" width=3D"130" style=3D"border: none; pa=
+dding: 0px; border-radius: 2px; margin: 7px;"></a>=C2=A0<br>=C2=A0World&#39=
+;s First Endpoint-Aware Application Delivery Solution<br><table border=3D"0=
+" cellpadding=3D"5" cellspacing=3D"0" width=3D"100%" style=3D"margin:0px"><=
+tbody><tr valign=3D"top"><td style=3D"font-family:&quot;Trebuchet MS&quot;,=
+Helvetica,Arial,sans-serif;vertical-align:top"><span style=3D"color:rgb(0,1=
+21,194)"><strong>Steve Pagan=C2=A0</strong><br>Network Engineer - Operation=
+s<br></span><br>Phone:=C2=A0<a href=3D"tel:650-919-8856" value=3D"+16509198=
+856" style=3D"color:rgb(17,85,204)" target=3D"_blank">650-919-8856</a>=C2=
+=A0| Email:=C2=A0<a href=3D"mailto:spagan@instartlogic.com" target=3D"_blan=
+k">spagan<font color=3D"#1155cc">@instartlogic.com</font>=C2=A0</a><br>Inst=
+art Logic | 450 Lambert Ave, Palo Alto, CA 94306 |=C2=A0<a href=3D"http://i=
+nstartlogic.com/" style=3D"color:rgb(0,79,143);text-decoration:none" target=
+=3D"_blank">instartlogic.com</a></td></tr></tbody></table></td></tr></tbody=
+></table></div><div></div></div></div></div></div></div></div></div></div><=
+/div>
+</div></div>
 
-Once upon a time, Daniel Kahn Gillmor wrote:
->Hi Florian--
->
->On Fri 2017-05-26 10:44:23 +0200, Florian Klink wrote:
->> If you simply want to create wireguard interfaces and configure them,
->> wg-quick might be too much, as it also configures Addresses, MTU and
->> adds routes. This unit file can be used in cases where you want to use
->> wg(8) to configure the wireguard interface, but do regular network
->> configuration on top of the link by something else (possibly not knowing
->> wireguard, like systemd-networkd or NetworkManager.
->
->I like this suggestion, but i see it as a stopgap until there is real
->integration with systemd-networkd -- this would ideally be a .network
->unit just like every other network interface, right?
-
-There is already a pull request to allow systemd-networkd to create
-wireguard interfaces and configure wireguard-specific settings on them:
-https://github.com/systemd/systemd/pull/4191
-
-This will allow `*.netdev` files with `Kind=3Dwireguard` to be created,
-with all the wireguard-specific settings currently defined in
-`/etc/wireguard/*.conf` and understood by plain `wg setconf`.
-
-However, this PR will need to wait until wireguard is considered stable:
-https://github.com/systemd/systemd/pull/4191#issuecomment-252923968
-
-What currently already works in systemd-networkd is the whole
-IP, Route etc. configuration, which is independent of the underlying
-wireguard config and done in `*.network` files (man systemd.network).
-
-wg-quick, which already brings systemd unit files, is too much, as it
-also adds addresses and routes (in my case, it gets in my way, as I'd
-like to set  AllowedIPs to `::/0 and 0.0.0.0/0` but not default route),
-but there may also be other cases where you don't need or want the whole
-wg-quick.
-
-So as long as support for configuring the underlying wireguard netdev
-interface entirely inside systemd-networkd is missing, I'd really favor
-a unit file to only configure wireguard-specific parameters.=20
-
->
->A couple thoughts on the .service file:
->
->> diff --git a/src/tools/wireguard@.service b/src/tools/wireguard@.service
->> new file mode 100644
->> index 0000000..b6d53bf
->> --- /dev/null
->> +++ b/src/tools/wireguard@.service
->> @@ -0,0 +1,19 @@
->> +[Unit]
->> +Description=3DWireGuard via wg(8) for %I
->> +After=3Dnetwork-online.target
->> +Wants=3Dnetwork-online.target
->
->This implies that the network is online *before* the interface comes up.
->That means that other tools which depend on the wireguard link being
->established can no longer depend on network-online.target, right?
-
-Right. This was simply copied from wg-quick@.service. ;-)
-
-These two lines
-could probably be replaced by
-
-After=3Dnetwork-pre.target
-Wants=3Dnetwork.target
-
-but I'm open to other suggestions :-)
-
->
->> +Documentation=3Dman:wg(8)
->> +Documentation=3Dhttps://www.wireguard.io/
->> +Documentation=3Dhttps://www.wireguard.io/quickstart/
->> +Documentation=3Dhttps://git.zx2c4.com/WireGuard/about/src/tools/wg.8
->
->I think given the use of the conf file, the [Unit] section should also
->have:
->
->ConditionFileNotEmpty=3D/etc/wireguard/%i.conf
-
-Yes, this might make sense. Not sure if `wg setconf` will fail anyhow,
-but failing before creating the interface might be a good idea, thanks :-)
-
-Regards,
-flokli
-
->
->Regards,
->
->        --dkg
-
---rlabs3wq6i7rp3kx
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEdQpT8aoDC+ls4wqU86BgVS9TAioFAlkoX2oACgkQ86BgVS9T
-AioFVQgAiARls0r9LXYEt2Kp2HgnuI6GGQatBplPXsg4kTa1C9KpI0gp94dPs834
-gXBiR/y7DjUY82h6+P63wCHAx1XX3eZEQqWUgOEUFrW6u0N2i5gCOOSHwB73ht7v
-bcdH90dqGyEkORzR12t0+FlUTDXHmLgKOp+UOsPetC67AZF6JJv8pJ+gFJD4Ham1
-u2zwTTFxBj3H+8ZHgPSeGP+dD8uHIImg76P1x6VgB9XRd5kNc/jYXN6wqto5Q7LX
-JN1P8M2hrujBjvkBFvb0ZBeK0LkNTKGYpZRS2XOKEG/pf2u7ZYeZRedLLe9WsaqX
-j+6NbU99+XAN+GtfjGDhmxMgKi0Mig==
-=fO5M
------END PGP SIGNATURE-----
-
---rlabs3wq6i7rp3kx--
+--001a113f475e9e67ef055070a373--
