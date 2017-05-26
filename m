@@ -1,22 +1,26 @@
-Return-Path: egbert@eggiecode.org
+Return-Path: joerg@higgsboson.tk
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 75c10b5e
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 16c63a81
  for <wireguard@lists.zx2c4.com>;
- Fri, 26 May 2017 20:42:02 +0000 (UTC)
-Received: from mail01.eggieservers.nl (mail01.eggieservers.nl
- [149.210.159.147])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d75d24a3
+ Fri, 26 May 2017 20:56:39 +0000 (UTC)
+Received: from mail.thalheim.io (mail.thalheim.io [188.68.39.17])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 45eb9bbd
  for <wireguard@lists.zx2c4.com>;
- Fri, 26 May 2017 20:42:02 +0000 (UTC)
-Message-ID: <1495832060.1086.1.camel@eggiecode.org>
-Subject: Re: Repo broken?
-From: Egbert Verhage <egbert@eggiecode.org>
-To: Steve Pagan <spagan@instartlogic.com>, wireguard@lists.zx2c4.com
-Date: Fri, 26 May 2017 22:54:20 +0200
-In-Reply-To: <CAK-i-m_Bv92mtdbPXZrqmC5pqiVkMrP=DsY8Hc69BZ_0McRQZA@mail.gmail.com>
-References: <CAK-i-m_Bv92mtdbPXZrqmC5pqiVkMrP=DsY8Hc69BZ_0McRQZA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Mime-Version: 1.0
+ Fri, 26 May 2017 20:56:39 +0000 (UTC)
+Received: from [172.22.213.17] (global-184-110.nat-1.net.cam.ac.uk
+ [131.111.184.110])
+ by mail.thalheim.io (Postfix) with ESMTPSA id 238B26F756
+ for <wireguard@lists.zx2c4.com>; Fri, 26 May 2017 21:09:11 +0000 (UTC)
+Subject: Re: [PATCH] tools: add wireguard@.service
+To: wireguard@lists.zx2c4.com
+References: <20170526084423.31088-1-flokli@flokli.de>
+ <87wp93octp.fsf@fifthhorseman.net>
+From: =?UTF-8?Q?J=c3=b6rg_Thalheim?= <joerg@higgsboson.tk>
+Message-ID: <e28694a9-53af-57ce-9b94-cf5f2d25b1e7@higgsboson.tk>
+Date: Fri, 26 May 2017 22:09:10 +0100
+MIME-Version: 1.0
+In-Reply-To: <87wp93octp.fsf@fifthhorseman.net>
+Content-Type: text/plain; charset=utf-8
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,43 +30,21 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hey Steve,
 
-That is because in the beging of the ppa repo we only had support for
-kernel >4.1.
+On 2017-05-26 16:30, Daniel Kahn Gillmor wrote:
+>> diff --git a/src/tools/wireguard@.service b/src/tools/wireguard@.service
+>> new file mode 100644
+>> index 0000000..b6d53bf
+>> --- /dev/null
+>> +++ b/src/tools/wireguard@.service
+>> @@ -0,0 +1,19 @@
+>> +[Unit]
+>> +Description=WireGuard via wg(8) for %I
+>> +After=network-online.target
+>> +Wants=network-online.target
 
-On snapshot: 0.0.20170409 we got support for 3.16, 3.14, 3.12, 3.10.
-And precise has kernel 3.2 (OLD!) and since April 28, 2017 precise is
-eol.
+My guess is that network-online.target was chosen for wg-quick because DNS resolving of endpoints might be required.
+For this target to become effective this requires either systemd-networkd or a recent version NetworkManager to be running
+(or any other service, which makes its connection state a dependency of |network-online.target|).
 
-Best way to run wireguard on ubuntu is run xenial or a higher release.
-
-Greetz,
-Egbert
-
-
-On Fri, 2017-05-26 at 10:26 -0700, Steve Pagan wrote:
-> I cannot download the required packages to my system. I get a 404
-> error:
-> 
-> W: Failed to fetch http://ppa.launchpad.net/wireguard/wireguard/ubunt
-> u/dists/precise/main/source/Sources  404  Not Found
-> 
-> W: Failed to fetch http://ppa.launchpad.net/wireguard/wireguard/ubunt
-> u/dists/precise/main/binary-amd64/Packages  404  Not Found
-> 
-> W: Failed to fetch http://ppa.launchpad.net/wireguard/wireguard/ubunt
-> u/dists/precise/main/binary-i386/Packages  404  Not Found
-> 
->  
->  World's First Endpoint-Aware Application Delivery Solution
-> Steve Pagan 
-> Network Engineer - Operations
-> 
-> Phone: 650-919-8856 | Email: spagan@instartlogic.com 
-> Instart Logic | 450 Lambert Ave, Palo Alto, CA 94306
-> | instartlogic.com 
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
+Once wireguard becomes integrated into systemd-networkd, networkd will just retry forever to resolve endpoints with exponential back-off.
