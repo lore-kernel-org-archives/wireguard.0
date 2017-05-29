@@ -1,31 +1,26 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: ivan.leonardo@nickmaleao.stream
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0f42e321
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 32089d37
  for <wireguard@lists.zx2c4.com>;
- Mon, 29 May 2017 20:41:17 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 53c7fac0
+ Mon, 29 May 2017 20:44:19 +0000 (UTC)
+Received: from mail.nickmaleao.stream (69.228.115.89.rev.vodafone.pt
+ [89.115.228.69])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 692c5e4d
  for <wireguard@lists.zx2c4.com>;
- Mon, 29 May 2017 20:41:17 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8ff9234e
- for <wireguard@lists.zx2c4.com>;
- Mon, 29 May 2017 20:52:41 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 0595119a
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Mon, 29 May 2017 20:52:41 +0000 (UTC)
-Received: by mail-oi0-f42.google.com with SMTP id h4so89728627oib.3
- for <wireguard@lists.zx2c4.com>; Mon, 29 May 2017 13:54:12 -0700 (PDT)
+ Mon, 29 May 2017 20:44:18 +0000 (UTC)
+Received: from authenticated-user (mail.nickmaleao.stream [89.115.228.69])
+ (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+ (No client certificate requested)
+ by mail.nickmaleao.stream (Postfix) with ESMTPSA id 0CEA2161B1
+ for <wireguard@lists.zx2c4.com>; Mon, 29 May 2017 21:57:12 +0100 (WEST)
 MIME-Version: 1.0
-In-Reply-To: <CACTq0bRv6KcKCvw3iYnkeFU+vvr0WTgHU5nT=TskYQ7F5NodmA@mail.gmail.com>
-References: <CACTq0bRv6KcKCvw3iYnkeFU+vvr0WTgHU5nT=TskYQ7F5NodmA@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 29 May 2017 22:54:10 +0200
-Message-ID: <CAHmME9rzL8ZRb0zpOFXp2i_3eGsWaMSm=MQ2ODyYOs+vAxpz_Q@mail.gmail.com>
-Subject: Re: Multiple peers to one wireguard "server"
-To: Ibrahim Tachijian <barhom@netsat.se>
-Content-Type: text/plain; charset="UTF-8"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Date: Mon, 29 May 2017 21:57:12 +0100
+From: Ivan Leonardo <ivan.leonardo@nickmaleao.stream>
+To: wireguard@lists.zx2c4.com
+Subject: TCP traffic in ipip tunnel inside wireguard connection
+Message-ID: <3aee46648bd2d8c49fd13e1fd140d3d3@nickmaleao.stream>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -35,39 +30,48 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Ibrahim,
+Hello
 
-On Mon, May 29, 2017 at 10:31 PM, Ibrahim Tachijian <barhom@netsat.se> wrote:
-> If I understand correctly if I need to connect 10 different wg "clients" to
-> one wg "server" I will require one wgX interface per-client on the "server".
->
-> Is this correct? Does this mean also that each wgX interface on the "server"
-> needs to listen on its own UDP port or can the "server" reuse the same UDP
-> port?
+Recently i have been experimenting with wireguard, and in fact the 
+performance in wg is better than the ipsec tunnels i have. In my ipsec 
+implementation i'm using vti interfaces(SAs 0.0.0.0/0) and i can select 
+the traffic flow with static/dynamic routing.
 
-No. Each WireGuard interface may have multiple peers:
+Knowing that wg doesn't allow multiple tunnels with allowedip=0.0.0.0/0, 
+  i tried to create a ipip tunnel using the wg endpoint tunnel ips. I 
+don't have problems with UDP/ICMP traffic, but with TCP when a 
+host(192.168.1.110) in lan1 tries to communicate with the ip of the ipip 
+tunnel in server2, the returning tcp traffic has bad tcp checksum and 
+the packets are discarded. If i try to send tcp packets with the source 
+ip of the ipip tunnel of server2 to host(192.168.1.110) in lan1 , in 
+tcpdump in server2 i see the tcp packets, but in the tcpdump in server1 
+i dont see the packets.
 
-           [Interface]
-           PrivateKey = yAnz5TF+lXXJte14tji3zlMNq+hd2rYUIgJBgB3fBmk=
-           ListenPort = 51820
+Resuming, in this topology i only have problems with tcp traffic, udp 
+and icmp works fine.
 
-           [Peer]
-           PublicKey = xTIBA5rboUvnH4htodjb6e697QjLERt1NAB4mZqp8Dg=
-           Endpoint = 192.95.5.67:1234
-           AllowedIPs = 10.192.122.3/32, 10.192.124.1/24
 
-           [Peer]
-           PublicKey = TrMvSoP4jYQlY6RIzBgbssQqY3vxI2Pi+y71lOWWXX0=
-           Endpoint = [2607:5300:60:6b0::c05f:543]:2468
-           AllowedIPs = 10.192.122.4/32, 192.168.0.0/16
+I have search the web for this use case, but didn't find anyone using 
+it, in this topic 
+https://forum.freifunk.net/t/wireguard-0-0-20161230-linuxkernel-3-18-gluon-v2016-2-2/14122 
+, they managed to get a gre/gretap tunnel functioning with wg.
 
-           [Peer]
-           PublicKey = gN65BkIKy1eCE9pP1wdc8ROUtkHLF2PfAqYdyYBz6EA=
-           Endpoint = test.wireguard.io:18981
-           AllowedIPs = 10.10.10.230/32
+Does anyone have any ideia if its possible to use this topology?
 
-Please see the man page wg(8) or the front page of the website --
-www.wireguard.io -- for more details.
+Topology:
 
-Regards,
-Jason
+172.16.17.2/30 	             172.16.17.1/30
+            wg0(172.16.17.0/30)
+Server2  <----------------------> Server1   <----> lan1 (192.168.1.0/24)
+             <--------------->
+           ipip0(172.18.0.0/30)(remote/local = wireguard tunnel 
+endpoints)
+172.18.0.2/30                 172.18.0.1/30
+
+Servers specs:
+
+Server1/2 Ubuntu 16.04.02 (Kernel 4.4.0-78-generic)
+WG version: 0.0.20170517-wg2~xenial
+
+
+Best regards.
