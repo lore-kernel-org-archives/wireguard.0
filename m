@@ -1,32 +1,27 @@
-Return-Path: bassbeat@gmail.com
+Return-Path: joerg@higgsboson.tk
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6482bf5d
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4e181113
  for <wireguard@lists.zx2c4.com>;
- Tue, 30 May 2017 18:41:38 +0000 (UTC)
-Received: from mail-wr0-f172.google.com (mail-wr0-f172.google.com
- [209.85.128.172])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1be87740
+ Tue, 30 May 2017 21:06:09 +0000 (UTC)
+Received: from mail.thalheim.io (mail.thalheim.io [188.68.39.17])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e1429303
  for <wireguard@lists.zx2c4.com>;
- Tue, 30 May 2017 18:41:38 +0000 (UTC)
-Received: by mail-wr0-f172.google.com with SMTP id j27so5789700wre.3
- for <wireguard@lists.zx2c4.com>; Tue, 30 May 2017 11:54:40 -0700 (PDT)
-Return-Path: <bassbeat@gmail.com>
+ Tue, 30 May 2017 21:06:09 +0000 (UTC)
+Received: from [10.99.0.12] (unknown [38.132.107.154])
+ by mail.thalheim.io (Postfix) with ESMTPSA id EED3771B8A
+ for <wireguard@lists.zx2c4.com>; Tue, 30 May 2017 21:19:09 +0000 (UTC)
+Subject: Re: openresolv dependency
+To: wireguard@lists.zx2c4.com
+References: <2fa3ef35-fde6-55d2-0872-52aa2bcb87d2@biot.com>
+ <CAHmME9pJEXKRhz8dbY6hrg33Ey-j6zD6O2uu125bMqx_vCKovg@mail.gmail.com>
+ <20170522030211.6fb18de8@msi.defcon1>
+ <CAHmME9pntk1UvFscCWsryW8eSCqzL66of0_F=H4KE0bmpZwA+Q@mail.gmail.com>
+From: =?UTF-8?Q?J=c3=b6rg_Thalheim?= <joerg@higgsboson.tk>
+Message-ID: <71eafdde-eadd-e1e6-c5be-fddf8feedba8@higgsboson.tk>
+Date: Tue, 30 May 2017 22:18:57 +0100
+MIME-Version: 1.0
+In-Reply-To: <CAHmME9pntk1UvFscCWsryW8eSCqzL66of0_F=H4KE0bmpZwA+Q@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2104\))
-Subject: Re: Kernel panic on ARM
-From: Alexandre Karlov <bassbeat@gmail.com>
-In-Reply-To: <CAHmME9rKAXC2AXKkLKK3k5Nw11n1nAF3gro1ynEGXnqMuaxEYg@mail.gmail.com>
-Date: Tue, 30 May 2017 20:54:38 +0200
-Message-Id: <267E2F68-320A-4D1F-BDC7-7B5A240B75C8@gmail.com>
-References: <61E1F38E-66AB-4AD1-B3B0-79FB42A3B4C8@gmail.com>
- <CAHmME9rtEXCHG6LE+JP7jaDnM7cR+faJOAKJLW0bMBKawoZZ0Q@mail.gmail.com>
- <987716C2-3ABE-4705-A7AA-98511627C777@gmail.com>
- <CAHmME9ou95Lq=Dc86iCC7H1_N+oLckyM7Ngrv1hwOp=TarOkRQ@mail.gmail.com>
- <CAHmME9o1tngXJWLOrKMbtwZizb=0gt+njaC9NphJ_yhNfEqk_A@mail.gmail.com>
- <6002289F-7871-482D-A0DE-C2DB3B0A4C5D@gmail.com>
- <CAHmME9rKAXC2AXKkLKK3k5Nw11n1nAF3gro1ynEGXnqMuaxEYg@mail.gmail.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -36,38 +31,27 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hey Jason,=20
+On 2017-05-22 02:08, Jason A. Donenfeld wrote:
+>
+>
+> On Mon, May 22, 2017 at 3:02 AM, Bzzzz <lazyvirus@gmx.com <mailto:lazyvirus@gmx.com>> wrote:
+>
+>     On Mon, 22 May 2017 02:41:13 +0200
+>     "Jason A. Donenfeld" <Jason@zx2c4.com <mailto:Jason@zx2c4.com>> wrote:
+>
+>     > https://github.com/EggieCode/wireguard-ppa/issues/19 <https://github.com/EggieCode/wireguard-ppa/issues/19>
+>
+>     Following your comment, you could flip the resolvconf dependency from
+>     a mandatory one to a a recommand or even a suggest, with a few comment
+>     lines into the /usr/share/doc/README.Debian file.
+>
+>
+> The problem is that I would like to be able to use the -x and -m switches of resolvconf, which only openresolv has. However, it appears that openresolv does not work very well out of the box on Ubuntu.
+>
+> So, I'm not quite sure what I can recommend to Ubuntu users as a reliable way of setting a per-interface DNS override. Or even what command I could put in wg-quick to encapsulate that kind of logic.
+>
+> Any ideas?
+>
 
-I confirm, the hardware is now running for almost 4 hours without any =
-issues, so let=E2=80=99s be optimistic and say the patch solved it.=20
-
-I will continue to run the patched version on one device and try the =
-latest master branch on another one. I=E2=80=99ll report there is =
-something weird.=20
-
-Thanks for your quick help and keep up the great work!
-
-Cheers,
-Alexandre=20
-
-> On 30 May 2017, at 18:04 , Jason A. Donenfeld <Jason@zx2c4.com> wrote:
->=20
-> Hi Alexandre,
->=20
-> As 2 hours have gone by, I assume things are working somewhat =
-decently. Great!
->=20
-> If that patch is stable for you, you might be interested in trying out
-> the latest `master` branch in the git repo:
->=20
-> $ git clone https://git.zx2c4.com/WireGuard
-> $ cd WireGuard/src
-> $ make debug -j$(nproc) && make install
->=20
-> I'll probably make a new snapshot in a few days, but if you'd like to
-> try things out in advance, that'd be welcome. The master branch
-> contains some NEON accelerations for the hardware you're using, so if
-> all goes well, you should see an increase in performance.
->=20
-> Regards,
-> Jason
+If I recall correctly ubuntu 16.10+ switched to systemd-resolved, which has a saner way of per-interface DNS server
+(I would even say the first true DNS server per-interface resolver implementation at all on linux).
