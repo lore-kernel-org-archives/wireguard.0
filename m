@@ -1,27 +1,21 @@
-Return-Path: joerg@higgsboson.tk
+Return-Path: barhom@netsat.se
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4e181113
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4fdc06d6
  for <wireguard@lists.zx2c4.com>;
- Tue, 30 May 2017 21:06:09 +0000 (UTC)
-Received: from mail.thalheim.io (mail.thalheim.io [188.68.39.17])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e1429303
+ Wed, 31 May 2017 09:18:42 +0000 (UTC)
+Received: from mail-wm0-f42.google.com (mail-wm0-f42.google.com [74.125.82.42])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8a681fcc
  for <wireguard@lists.zx2c4.com>;
- Tue, 30 May 2017 21:06:09 +0000 (UTC)
-Received: from [10.99.0.12] (unknown [38.132.107.154])
- by mail.thalheim.io (Postfix) with ESMTPSA id EED3771B8A
- for <wireguard@lists.zx2c4.com>; Tue, 30 May 2017 21:19:09 +0000 (UTC)
-Subject: Re: openresolv dependency
-To: wireguard@lists.zx2c4.com
-References: <2fa3ef35-fde6-55d2-0872-52aa2bcb87d2@biot.com>
- <CAHmME9pJEXKRhz8dbY6hrg33Ey-j6zD6O2uu125bMqx_vCKovg@mail.gmail.com>
- <20170522030211.6fb18de8@msi.defcon1>
- <CAHmME9pntk1UvFscCWsryW8eSCqzL66of0_F=H4KE0bmpZwA+Q@mail.gmail.com>
-From: =?UTF-8?Q?J=c3=b6rg_Thalheim?= <joerg@higgsboson.tk>
-Message-ID: <71eafdde-eadd-e1e6-c5be-fddf8feedba8@higgsboson.tk>
-Date: Tue, 30 May 2017 22:18:57 +0100
+ Wed, 31 May 2017 09:18:42 +0000 (UTC)
+Received: by mail-wm0-f42.google.com with SMTP id d127so11555331wmf.0
+ for <wireguard@lists.zx2c4.com>; Wed, 31 May 2017 02:31:48 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9pntk1UvFscCWsryW8eSCqzL66of0_F=H4KE0bmpZwA+Q@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
+From: Ibrahim Tachijian <barhom@netsat.se>
+Date: Wed, 31 May 2017 09:31:35 +0000
+Message-ID: <CACTq0bRBqH85OhjF2gRmkRGay91+L=XXy7Y6mAYuodGPz9L62w@mail.gmail.com>
+Subject: Wireguard and MTU
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: multipart/alternative; boundary="f403045c0d04c595920550ce96e6"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -31,27 +25,83 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On 2017-05-22 02:08, Jason A. Donenfeld wrote:
->
->
-> On Mon, May 22, 2017 at 3:02 AM, Bzzzz <lazyvirus@gmx.com <mailto:lazyvirus@gmx.com>> wrote:
->
->     On Mon, 22 May 2017 02:41:13 +0200
->     "Jason A. Donenfeld" <Jason@zx2c4.com <mailto:Jason@zx2c4.com>> wrote:
->
->     > https://github.com/EggieCode/wireguard-ppa/issues/19 <https://github.com/EggieCode/wireguard-ppa/issues/19>
->
->     Following your comment, you could flip the resolvconf dependency from
->     a mandatory one to a a recommand or even a suggest, with a few comment
->     lines into the /usr/share/doc/README.Debian file.
->
->
-> The problem is that I would like to be able to use the -x and -m switches of resolvconf, which only openresolv has. However, it appears that openresolv does not work very well out of the box on Ubuntu.
->
-> So, I'm not quite sure what I can recommend to Ubuntu users as a reliable way of setting a per-interface DNS override. Or even what command I could put in wg-quick to encapsulate that kind of logic.
->
-> Any ideas?
->
+--f403045c0d04c595920550ce96e6
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-If I recall correctly ubuntu 16.10+ switched to systemd-resolved, which has a saner way of per-interface DNS server
-(I would even say the first true DNS server per-interface resolver implementation at all on linux).
+I understand that by default wireguard chooses an MTU of 1420.
+The way that I have setup wireguard now is that I have a router (running
+LEDE/openwrt) connecting to wireguard running on an arch server.
+
+I then set the default gw to go through wireguard and properly do iptables
+nat masquerading so that the only ip inside the tunnel is the ones in
+allowed_ips.
+Basically all my traffic from the router (lede/openwrt) now flows over
+wireguard and then to the internet.
+
+
+   - Router -> wireguard -> Internet
+      - working good because the MTU is properly set to 1420.
+   - Wifi Client -> Router -> wireguard -> internet
+      - Not working properly because of MTU is set at 1500 at wifi/wired
+      dhcp clients.
+
+How do we propose that we advertise the correct MTU that the NAT clients of
+the router should use? Is there any other way to solve this issue?
+
+Thanks,
+
+
+
+--=20
+*Ibrahim Tachijian*
+
+CEO Net Sat AB
+Mobile: +46723321377
+barhom@netsat.se
+
+_________________________
+
+
+*Net Sat ABC/O Jayway AB*Klara =C3=96stra Kyrkogata 2B, 1TR, 111 52 Stockho=
+lm,
+Sweden
+Office: +46 (0)8 408 394 53
+
+--f403045c0d04c595920550ce96e6
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">I understand that by default wireguard chooses an MTU of 1=
+420.<div>The way that I have setup wireguard now is that I have a router (r=
+unning LEDE/openwrt) connecting to wireguard running on an arch server.</di=
+v><div><br></div><div>I then set the default gw to go through wireguard and=
+ properly do iptables nat masquerading so that the only ip inside the tunne=
+l is the ones in allowed_ips.</div><div>Basically all my traffic from the r=
+outer (lede/openwrt) now flows over wireguard and then to the internet.</di=
+v><div><br></div><div><ul><li>Router -&gt; wireguard -&gt; Internet</li><ul=
+><li>working good because the MTU is properly set to 1420.</li></ul><li>Wif=
+i Client -&gt; Router -&gt; wireguard -&gt; internet</li><ul><li>Not workin=
+g properly because of MTU is set at 1500 at wifi/wired dhcp clients.</li></=
+ul></ul><div>How do we propose that we advertise the correct MTU that the N=
+AT clients of the router should use? Is there any other way to solve this i=
+ssue?</div></div><div><br></div><div>Thanks,</div><div><br></div><div><br><=
+/div><div><br></div></div><div dir=3D"ltr">-- <br></div><div data-smartmail=
+=3D"gmail_signature"><div dir=3D"ltr"><b style=3D"color:black;font-family:a=
+rial,sans-serif;font-size:small"><span style=3D"font-size:11px;line-height:=
+12.2667px">Ibrahim Tachijian</span></b><div class=3D"gmail_signature" style=
+=3D"color:rgb(34,34,34);font-family:arial,sans-serif;font-size:small"><div =
+dir=3D"ltr"><div><div dir=3D"ltr"><div dir=3D"ltr"><p><span style=3D"color:=
+black;font-size:7.5pt;line-height:11.5px">CEO Net Sat AB<br></span><span st=
+yle=3D"font-size:7.5pt;line-height:11.5px"><font color=3D"#000000">Mobile: =
++46723321377<br></font></span><a href=3D"mailto:barhom@netsat.se" target=3D=
+"_blank" style=3D"color:rgb(17,85,204);font-size:7.5pt;line-height:11.5px">=
+barhom@netsat.se</a></p><p style=3D"line-height:14.72px"><span style=3D"fon=
+t-size:7.5pt;line-height:11.5px;color:black">_________________________<br><=
+b>Net Sat AB<br>C/O Jayway AB<br></b></span><span style=3D"color:black;font=
+-size:7.5pt;line-height:11.5px">Klara =C3=96stra Kyrkogata 2B, 1TR, 111 52 =
+Stockholm, Sweden<br></span><span style=3D"color:black;font-size:7.5pt;line=
+-height:11.5px">Office: +46 (0)8 408 394 53</span></p></div></div></div></d=
+iv></div></div></div>
+
+--f403045c0d04c595920550ce96e6--
