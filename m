@@ -1,28 +1,20 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: zweizweizwoelf@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0dfd68b3
- for <wireguard@lists.zx2c4.com>; Sat, 3 Jun 2017 01:17:51 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b7fb1563
- for <wireguard@lists.zx2c4.com>; Sat, 3 Jun 2017 01:17:51 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1c6eeac9
- for <wireguard@lists.zx2c4.com>; Sat, 3 Jun 2017 01:29:16 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id ab0b9bc0
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>; Sat, 3 Jun 2017 01:29:16 +0000 (UTC)
-Received: by mail-oi0-f54.google.com with SMTP id o65so86155475oif.1
- for <wireguard@lists.zx2c4.com>; Fri, 02 Jun 2017 18:31:17 -0700 (PDT)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3142ff3c
+ for <wireguard@lists.zx2c4.com>; Mon, 5 Jun 2017 11:00:04 +0000 (UTC)
+Received: from mail-yw0-f179.google.com (mail-yw0-f179.google.com
+ [209.85.161.179])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 60544a5d
+ for <wireguard@lists.zx2c4.com>; Mon, 5 Jun 2017 11:00:04 +0000 (UTC)
+Received: by mail-yw0-f179.google.com with SMTP id l14so52153034ywk.1
+ for <wireguard@lists.zx2c4.com>; Mon, 05 Jun 2017 04:13:48 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAKgwHq-d0vMPLsQ7p1WjW4yiUehDG3vCKYZkodDx+P8yamkCNw@mail.gmail.com>
-References: <c04b7a897d9fce0a@frisell.zx2c4.com>
- <CAKgwHq-d0vMPLsQ7p1WjW4yiUehDG3vCKYZkodDx+P8yamkCNw@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sat, 3 Jun 2017 03:31:16 +0200
-Message-ID: <CAHmME9oGkubUS-cvcepvF4-JDo8-J8Pdfg7fDoOj=dNE-hsa1w@mail.gmail.com>
-Subject: Re: [ANNOUNCE] WireGuard Snapshot `0.0.20170531` Available
-To: Le Sandie <lesandie@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: Hubert Goisern <zweizweizwoelf@gmail.com>
+Date: Mon, 05 Jun 2017 11:13:37 +0000
+Message-ID: <CANUDHxUV=qHinZWs54BqzRRtAXhA1o7iSBb4J9yB7FhWAQc25Q@mail.gmail.com>
+Subject: Kernel Panic (20170531, 4.9.16-gentoo)
+To: wireguard@lists.zx2c4.com
+Content-Type: multipart/alternative; boundary="001a11494148d74eaf05513498d2"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -32,22 +24,29 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Sat, Jun 3, 2017 at 12:47 AM, Le Sandie <lesandie@gmail.com> wrote:
-> I have tested the WireGuard-0.0.20170531 snapshot between two ARM peers (a
-> couple of rpi3s with the same snapshot) and it works nice. I haven't had
-> time to iperf but will do to check that performance raise in ARM SoCs.
+--001a11494148d74eaf05513498d2
+Content-Type: text/plain; charset="UTF-8"
 
-Great, please do let me know.
+Hi,
 
->
-> Also i tested this snapshot with one ARM peer and the other peer with a LEDE
-> (17.01.1) router with wireguard and the handshake goes well but no
-> connectivity between peers. If i downgrade the ARM peer snapshot to
-> WireGuard-0.0.20170421, both peers see each other with connectivity.
-> Probably when the openwrt/LEDE package maintainer bump up the package to the
-> new snapshot it will work.
+I successfully setup an wireguard network, but after a reboot the system
+freezes:
+http://imgur.com/a/tvI34
 
-Yes indeed there was a backwards incompatible change made. The
-openwrt/lede package already has been bumped, however, so just update
-your system.
-https://github.com/openwrt/packages/blob/master/net/wireguard/Makefile
+Kernel: 4.9.16-gentoo
+
+Maybe this helps.
+
+Thanks
+
+--001a11494148d74eaf05513498d2
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hi,<div><br></div><div>I successfully setup an wireguard n=
+etwork, but after a reboot the system freezes:</div><div><a href=3D"http://=
+imgur.com/a/tvI34">http://imgur.com/a/tvI34</a><br></div><div><br></div><di=
+v>Kernel:=C2=A04.9.16-gentoo</div><div><br></div><div>Maybe this helps.</di=
+v><div><br></div><div>Thanks</div></div>
+
+--001a11494148d74eaf05513498d2--
