@@ -1,29 +1,27 @@
-Return-Path: nicolas.prochazka@gmail.com
+Return-Path: pranesh@cis-india.org
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d61fca68
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8c9111a5
  for <wireguard@lists.zx2c4.com>;
- Wed, 14 Jun 2017 07:37:24 +0000 (UTC)
-Received: from mail-oi0-f48.google.com (mail-oi0-f48.google.com
- [209.85.218.48])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f4184d83
+ Wed, 14 Jun 2017 07:45:35 +0000 (UTC)
+Received: from smarthost1.greenhost.nl (smarthost1.greenhost.nl
+ [195.190.28.81])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 44758775
  for <wireguard@lists.zx2c4.com>;
- Wed, 14 Jun 2017 07:37:24 +0000 (UTC)
-Received: by mail-oi0-f48.google.com with SMTP id e11so43549568oia.2
- for <wireguard@lists.zx2c4.com>; Wed, 14 Jun 2017 00:52:15 -0700 (PDT)
+ Wed, 14 Jun 2017 07:45:35 +0000 (UTC)
+Received: from smtp.greenhost.nl ([213.108.104.138])
+ by smarthost1.greenhost.nl with esmtps
+ (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim 4.84_2)
+ (envelope-from <pranesh@cis-india.org>) id 1dL3Dz-0001AE-RW
+ for wireguard@lists.zx2c4.com; Wed, 14 Jun 2017 10:00:24 +0200
+To: wireguard@lists.zx2c4.com
+From: Pranesh Prakash <pranesh@cis-india.org>
+Subject: Trouble running a proxy VPN
+Message-ID: <3bd46519-ee20-8b1a-ca88-95b60bbc9e81@cis-india.org>
+Date: Wed, 14 Jun 2017 13:30:20 +0530
 MIME-Version: 1.0
-Sender: nicolas.prochazka@gmail.com
-In-Reply-To: <CAHmME9rQk=wv=X+KqF-NXe1n=Pyj6L1JaZ-oBoLeCV+dxoK1kw@mail.gmail.com>
-References: <CADdae-jBtz7zfMRPkS3c2n_zG+LCuN_0iUZHCSM=H8dWdDBUUw@mail.gmail.com>
- <CAHmME9pvAK=v32ck14AyKhAP-YFSgfzTi7f33nLBUPb7Sx1pYA@mail.gmail.com>
- <CADdae-i73rU0ot_OwvBSBdGD+mFwxQgTK0venNT6iy5QzwsDEA@mail.gmail.com>
- <CAHmME9rQk=wv=X+KqF-NXe1n=Pyj6L1JaZ-oBoLeCV+dxoK1kw@mail.gmail.com>
-From: nicolas prochazka <prochazka.nicolas@gmail.com>
-Date: Wed, 14 Jun 2017 09:52:13 +0200
-Message-ID: <CADdae-h6BO4=tGU=QrYHWr4iW7MgMzk2ukw9jes33WEoxAF1Gw@mail.gmail.com>
-Subject: Re: multiple wireguard interface and kworker ressources
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="7W9ngk86olELA689Am7e95LfUsGrHoSKa"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -33,28 +31,149 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-hello,
-after create of wg interface, kworker thread does not return to a
-normal state in my case,
-kernel thread continues to consume a lot of cpu .
-I must delete wireguard interface to kworker decrease.
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--7W9ngk86olELA689Am7e95LfUsGrHoSKa
+Content-Type: multipart/mixed; boundary="6Pex0jKHe2SQbQKAFvKet7QOMcnp0wQAH";
+ protected-headers="v1"
+From: Pranesh Prakash <pranesh@cis-india.org>
+To: wireguard@lists.zx2c4.com
+Message-ID: <3bd46519-ee20-8b1a-ca88-95b60bbc9e81@cis-india.org>
+Subject: Trouble running a proxy VPN
 
-Nicolas
+--6Pex0jKHe2SQbQKAFvKet7QOMcnp0wQAH
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
 
-2017-06-13 23:47 GMT+02:00 Jason A. Donenfeld <Jason@zx2c4.com>:
-> Hi Nicolas,
->
-> It looks to me like some resources are indeed expended in adding those
-> interfaces. Not that much that would be problematic -- are you seeing
-> a problematic case? -- but still a non-trivial amount.
->
-> I tracked it down to WireGuard's instantiation of xt_hashlimit, which
-> does some ugly vmalloc, and it's call into the power state
-> notification system, which uses a naive O(n) algorithm for insertion.
-> I might have a way of amortizing on module insertion, which would
-> speed things up. But I wonder -- what is the practical detriment of
-> spending a few extra cycles on `ip link add`? What's your use case
-> where this would actually be a problem?
->
-> Thanks,
-> Jason
+Dear all,
+I'm running Ubuntu 16.04 on my laptop and a remote DigitalOcean server,=20
+and trying to set up a VPN proxy to send all my (for now IPv4) traffic=20
+through that server.
+
+I can get a VPN tunnel up an working, but I can't get my web traffic to=20
+pass through it.  What am I doing wrong?
+
+Here are my config files:
+=3D=3D=3D
+On the client:
+~ cat /etc/wireguard/deneb.conf
+[Interface]
+Address =3D 10.10.10.2/32
+PostUp =3D echo nameserver 10.10.10.1 | resolvconf -a tun.%i -m 0 -x
+PostDown =3D resolvconf -d tun.%i
+PrivateKey =3D [pvtkey-of-client]
+
+[Peer]
+PublicKey =3D [pubkey-of-server]
+AllowedIPs =3D 0.0.0.0/0
+Endpoint =3D 162.x.x.125:500
+PersistentKeepalive =3D 25
+
+On server:
+sol@deneb:~=E2=9F=AB cat /etc/wireguard/deneb.conf
+[Interface]
+Address =3D 10.10.10.1
+PrivateKey =3D [pvtkey-of-server]
+ListenPort =3D 500
+
+[Peer]
+PublicKey =3D [pubkey-of-client]
+AllowedIPs =3D 10.10.10.2/24
+=3D=3D=3D
+
+On the client I do:
+~ sudo wg-quick up deneb
+[#] ip link add deneb type wireguard
+[#] wg setconf deneb /dev/fd/63
+[#] ip address add 10.10.10.2/32 dev deneb
+[#] ip link set mtu 1420 dev deneb
+[#] ip link set deneb up
+[#] wg set deneb fwmark 51820
+[#] ip -4 route add 0.0.0.0/0 dev deneb table 51820
+[#] ip -4 rule add not fwmark 51820 table 51820
+[#] ip -4 rule add table main suppress_prefixlength 0
+[#] echo nameserver 10.10.10.1 | resolvconf -a tun.deneb -m 0 -x
+
+~ cat /etc/resolv.conf
+# Dynamic resolv.conf(5) file for glibc resolver(3) generated by=20
+resolvconf(8)
+#     DO NOT EDIT THIS FILE BY HAND -- YOUR CHANGES WILL BE OVERWRITTEN
+nameserver 10.10.10.1
+nameserver 127.0.1.1
+search lan
+
+~ ping -c2 10.10.10.1
+PING 10.10.10.1 (10.10.10.1) 56(84) bytes of data.
+64 bytes from 10.10.10.1: icmp_seq=3D1 ttl=3D64 time=3D263 ms
+64 bytes from 10.10.10.1: icmp_seq=3D2 ttl=3D64 time=3D287 ms
+
+--- 10.10.10.1 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 999ms
+rtt min/avg/max/mdev =3D 263.302/275.567/287.833/12.276 ms
+
+~ ping google.com
+PING google.com (216.58.197.46) 56(84) bytes of data.
+^C
+--- google.com ping statistics ---
+8 packets transmitted, 0 received, 100% packet loss, time 7000ms
+
+~ =EE=82=B0 sudo wg show deneb
+interface: deneb
+  public key: [pubkey-of-client]
+  private key: (hidden)
+  listening port: 40401
+  fwmark: 0xca6c
+
+peer: [pubkey-of-server]
+  endpoint: 162.x.x.125:500
+  allowed ips: 0.0.0.0/0
+  latest handshake: 1 minute, 48 seconds ago
+  transfer: 85.73 KiB received, 208.13 KiB sent
+  persistent keepalive: every 25 seconds
+
+On the server:
+sol@deneb:~=E2=9F=AB sudo wg show wg0
+interface: wg0
+   public key: [pubkey-of-server]
+   private key: (hidden)
+   listening port: 500
+
+peer: [pubkey-of-client]
+   endpoint: 123.x.x.4:40401
+   allowed ips: 10.10.10.0/24
+   latest handshake: 10 seconds ago
+   transfer: 1.26 MiB received, 1.15 MiB sent
+
+--=20
+Pranesh Prakash
+Policy Director, Centre for Internet and Society
+http://cis-india.org | tel:+91 80 40926283
+sip:pranesh@ostel.co | xmpp:pranesh@cis-india.org
+https://twitter.com/pranesh
+
+
+--6Pex0jKHe2SQbQKAFvKet7QOMcnp0wQAH--
+
+--7W9ngk86olELA689Am7e95LfUsGrHoSKa
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIcBAEBCgAGBQJZQO0VAAoJEE0qlBAVWSN1QWoQAKrjHdJiw/blJDUPIqSYRY9j
+O5V/gCDNKS4BOxU5hmIWARzO3VVc1GAUgGdkmdVjKYN4f00vzxC+WI/EaH0g+GmM
+jKeASGYmB5j38BM09RwJgp8+C5OraMphcGfCK93wiLizg7PIgJoljFtKmCqxQ7DM
+4LrFE4gxX3tQHyiOeVIWImerDrzthgaJXjcDd8rZeAqsa47F5wQ08Hxy7NJlkriK
+Pyw625mkRPzzrnGZhFhdgz7LrWqCojQjVO5WEpT8hbciOqeNvvZs7CGDYdE6i4XG
++x40hBlQWmPDGUz7wchS8AXvMT/BuKMDPyeRmAvuqcNdzdh7Sw1yJgYJw31YH9Mg
+9NOcgvgiAlDPMpI4Ta4o4cw++Uug+Kgq+4tMDi9/6F6WyiT1Iab0QldSGRlNUPI+
+EkG3pk6rYhfKDz8358oWtr0z9NdjYpEj+RIIInQeGcQ9ylCZesRsxEmo76qOLcVH
+JhlqLuYfC/wujpQDxnUW7O+nbVecTy6jV/WyHFRcDLdAvGnMrWvsNQ2ZwPDnf4vJ
+TaISYXOicGyr9xl91iJAdAKWI19SxzUA3Rv5gsyFSst2bBiYst7Zuq6Wh0BwfEgB
+QK3bnAm8GjzdnVj2E2WZHxM+Jm1HB5e/xIAwSrnSxpS6nxwmPbaEBCAqMcoT9fyb
+OaykTdQAxqq7UTAZleF4
+=KmNW
+-----END PGP SIGNATURE-----
+
+--7W9ngk86olELA689Am7e95LfUsGrHoSKa--
