@@ -1,19 +1,38 @@
-Return-Path: luci@createc.ro
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a44e704a
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5c3a5137
  for <wireguard@lists.zx2c4.com>;
- Mon, 19 Jun 2017 17:28:33 +0000 (UTC)
-Received: from mail.crimel.ro (109.166.220.71 [109.166.220.71])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 95e19239
+ Wed, 21 Jun 2017 13:38:40 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 68faeae7
  for <wireguard@lists.zx2c4.com>;
- Mon, 19 Jun 2017 17:28:33 +0000 (UTC)
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-From: Lucian Cristian <luci@createc.ro>
-Subject: fix centos 6 compile
-Message-ID: <8cfef683-d9e1-fb6b-704c-f0c938c84c5b@createc.ro>
-Date: Mon, 19 Jun 2017 20:44:01 +0300
+ Wed, 21 Jun 2017 13:38:40 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 88a37118
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 21 Jun 2017 13:52:13 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id f806622e
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 21 Jun 2017 13:52:13 +0000 (UTC)
+Received: by mail-ot0-f173.google.com with SMTP id s7so112508760otb.3
+ for <wireguard@lists.zx2c4.com>; Wed, 21 Jun 2017 06:54:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="------------893737C815486DF61B1E3B31"
+In-Reply-To: <CADdae-gdmjA+PArR+8G3Qy7DPakGqrRZv1E8pB9COhxuoSwhUg@mail.gmail.com>
+References: <CADdae-jBtz7zfMRPkS3c2n_zG+LCuN_0iUZHCSM=H8dWdDBUUw@mail.gmail.com>
+ <CAHmME9pvAK=v32ck14AyKhAP-YFSgfzTi7f33nLBUPb7Sx1pYA@mail.gmail.com>
+ <CADdae-i73rU0ot_OwvBSBdGD+mFwxQgTK0venNT6iy5QzwsDEA@mail.gmail.com>
+ <CAHmME9rQk=wv=X+KqF-NXe1n=Pyj6L1JaZ-oBoLeCV+dxoK1kw@mail.gmail.com>
+ <CADdae-h6BO4=tGU=QrYHWr4iW7MgMzk2ukw9jes33WEoxAF1Gw@mail.gmail.com>
+ <CADdae-jco2xALe1_OTtYQZA7EdRSih+fJge_+FLwNsGQWvRAjg@mail.gmail.com>
+ <CAHmME9oZUT4BfGojkiEpX5+EXLGcyXNp7mz3mvHBVfPHiYospw@mail.gmail.com>
+ <CADdae-gdmjA+PArR+8G3Qy7DPakGqrRZv1E8pB9COhxuoSwhUg@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 21 Jun 2017 15:54:22 +0200
+Message-ID: <CAHmME9ocn2vePKi6OyrFO522aoFN2KZwgz0cW=q+nh6GAT9gGg@mail.gmail.com>
+Subject: Re: multiple wireguard interface and kworker ressources
+To: nicolas prochazka <prochazka.nicolas@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -23,63 +42,24 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-This is a multi-part message in MIME format.
---------------893737C815486DF61B1E3B31
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Hi Nicolas,
 
-centos 6 has gcc 4.4.7
+1000 interfaces with 500 peers each. That's a very impressive quantity
+of 500001 wireguard deployments! Please do let me know how that goes.
+I'd be interested to learn what the name of this project/company is.
 
-with some minor modification and the updated kernel from elrepo this is 
-working as it should
+With regards to your problem, I've fixed it by completely rewriting
+ratelimiter.c to not use xt_hashtable, a piece of decaying Linux code
+from the 1990s, and instead using my own token bucket implementation.
+The result performs much better, is easier on RAM usage, and requires
+far fewer lines of code. Most importantly for you, all interfaces will
+now be able to share the same netns-keyed hashtable, so that the
+cleanup routines are always fast, no matter how many interfaces you
+have.
 
+I'll likely sit on it for a bit longer while I verify it and make sure
+it works, but if you'd like to try it now, it's sitting in the git
+master. Please let me know how it goes.
 
-Regards
-
-
---------------893737C815486DF61B1E3B31
-Content-Type: text/plain; charset=UTF-8;
- name="fix_gcc_centos_6.patch"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment;
- filename="fix_gcc_centos_6.patch"
-
-ZGlmZiAtYXVyIFdpcmVHdWFyZC0wLjAuMjAxNzA2MTMvc3JjL3NvY2tldC5jIFdpcmVHdWFy
-ZC0wLjAuMjAxNzA2MTMtY250Ni9zcmMvc29ja2V0LmMKLS0tIFdpcmVHdWFyZC0wLjAuMjAx
-NzA2MTMvc3JjL3NvY2tldC5jCTIwMTctMDYtMTMgMDE6MTg6MTQuMDAwMDAwMDAwICswMzAw
-CisrKyBXaXJlR3VhcmQtMC4wLjIwMTcwNjEzL3NyYy9zb2NrZXQuYwkyMDE3LTA2LTE5IDIw
-OjM2OjU4Ljk5NzAxODc2OSArMDMwMApAQCAtMTIsNiArMTIsOSBAQAogI2luY2x1ZGUgPGxp
-bnV4L2lmX2V0aGVyLmg+CiAjaW5jbHVkZSA8bmV0L3VkcF90dW5uZWwuaD4KICNpbmNsdWRl
-IDxuZXQvaXB2Ni5oPgorI2RlZmluZSBHQ0NfVkVSU0lPTiAoX19HTlVDX18gKiAxMDAwMCBc
-CisJCSAgICArIF9fR05VQ19NSU5PUl9fICogMTAwIFwKKwkJICAgICsgX19HTlVDX1BBVENI
-TEVWRUxfXykKIAogc3RhdGljIGlubGluZSBpbnQgc2VuZDQoc3RydWN0IHdpcmVndWFyZF9k
-ZXZpY2UgKndnLCBzdHJ1Y3Qgc2tfYnVmZiAqc2tiLCBzdHJ1Y3QgZW5kcG9pbnQgKmVuZHBv
-aW50LCB1OCBkcywgc3RydWN0IGRzdF9jYWNoZSAqY2FjaGUpCiB7CkBAIC0zMDcsNyArMzEw
-LDEwIEBACiAJc3RydWN0IHNvY2tldCAqbmV3NCA9IE5VTEw7CiAJc3RydWN0IHVkcF9wb3J0
-X2NmZyBwb3J0NCA9IHsKIAkJLmZhbWlseSA9IEFGX0lORVQsCisvKiBUZXN0IGZvciBHQ0Mg
-PiA0LjQuNyAqLworI2lmIEdDQ19WRVJTSU9OID4gNDA0MDcKIAkJLmxvY2FsX2lwLnNfYWRk
-ciA9IGh0b25sKElOQUREUl9BTlkpLAorI2VuZGlmCiAJCS5sb2NhbF91ZHBfcG9ydCA9IGh0
-b25zKHdnLT5pbmNvbWluZ19wb3J0KSwKIAkJLnVzZV91ZHBfY2hlY2tzdW1zID0gdHJ1ZQog
-CX07CkBAIC0zMTYsNyArMzIyLDEwIEBACiAJc3RydWN0IHNvY2tldCAqbmV3NiA9IE5VTEw7
-CiAJc3RydWN0IHVkcF9wb3J0X2NmZyBwb3J0NiA9IHsKIAkJLmZhbWlseSA9IEFGX0lORVQ2
-LAorLyogVGVzdCBmb3IgR0NDID4gNC40LjcgKi8KKyNpZiBHQ0NfVkVSU0lPTiA+IDQwNDA3
-CiAJCS5sb2NhbF9pcDYgPSBJTjZBRERSX0FOWV9JTklULAorI2VuZGlmCiAJCS5sb2NhbF91
-ZHBfcG9ydCA9IGh0b25zKHdnLT5pbmNvbWluZ19wb3J0KSwKIAkJLnVzZV91ZHA2X3R4X2No
-ZWNrc3VtcyA9IHRydWUsCiAJCS51c2VfdWRwNl9yeF9jaGVja3N1bXMgPSB0cnVlLApkaWZm
-IC1hdXIgV2lyZUd1YXJkLTAuMC4yMDE3MDYxMy9zcmMvdG9vbHMvTWFrZWZpbGUgV2lyZUd1
-YXJkLTAuMC4yMDE3MDYxMy1jbnQ2L3NyYy90b29scy9NYWtlZmlsZQotLS0gV2lyZUd1YXJk
-LTAuMC4yMDE3MDYxMy9zcmMvdG9vbHMvTWFrZWZpbGUJMjAxNy0wNi0xMyAwMToxODoxNC4w
-MDAwMDAwMDAgKzAzMDAKKysrIFdpcmVHdWFyZC0wLjAuMjAxNzA2MTMvc3JjL3Rvb2xzL01h
-a2VmaWxlCTIwMTctMDYtMTkgMjA6MTk6NDIuNTYwNDY3MjI2ICswMzAwCkBAIC0xMSw2ICsx
-MSw4IEBACiBXSVRIX0JBU0hDT01QTEVUSU9OID89CiBXSVRIX1dHUVVJQ0sgPz0KIFdJVEhf
-U1lTVEVNRFVOSVRTID89CitHQ0NfRVFfNDQ3IDo9ICQoc2hlbGwgZXhwciBgZ2NjIC1kdW1w
-dmVyc2lvbiB8IHNlZCAtZSAncy9cLlwoWzAtOV1bMC05XVwpL1wxL2cnIC1lICdzL1wuXChb
-MC05XVwpLzBcMS9nJyAtZSAncy9eWzAtOV1cezMsNFx9JCQvJjAwLydgIFw9IDQwNDA3KQor
-CiAKIGlmZXEgKCQoV0lUSF9CQVNIQ09NUExFVElPTiksKQogaWZuZXEgKCQoc3RyaXAgJCh3
-aWxkY2FyZCAkKEJBU0hDT01QRElSKSkpLCkKQEAgLTMyLDcgKzM0LDExIEBACiBlbmRpZgog
-CiBDRkxBR1MgPz0gLU8zCitpZmVxICIkKEdDQ19FUV80NDcpIiAiMSIKK0NGTEFHUyArPSAt
-c3RkPWdudTk5IC1EX0dOVV9TT1VSQ0UKK2Vsc2UKIENGTEFHUyArPSAtc3RkPWdudTExIC1E
-X0dOVV9TT1VSQ0UKK2VuZGlmCiBDRkxBR1MgKz0gLVdhbGwgLVdleHRyYQogQ0ZMQUdTICs9
-IC1NTUQgLU1QCiBDRkxBR1MgKz0gLURSVU5TVEFURURJUj0iXCIkKFJVTlNUQVRFRElSKVwi
-Igo=
---------------893737C815486DF61B1E3B31--
+Regards,
+Jason
