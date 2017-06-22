@@ -1,38 +1,22 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: barhom@netsat.se
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5c3a5137
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dc5d2724
  for <wireguard@lists.zx2c4.com>;
- Wed, 21 Jun 2017 13:38:40 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 68faeae7
+ Wed, 21 Jun 2017 23:52:42 +0000 (UTC)
+Received: from mail-wr0-f182.google.com (mail-wr0-f182.google.com
+ [209.85.128.182])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c5f53d8c
  for <wireguard@lists.zx2c4.com>;
- Wed, 21 Jun 2017 13:38:40 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 88a37118
- for <wireguard@lists.zx2c4.com>;
- Wed, 21 Jun 2017 13:52:13 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id f806622e
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Wed, 21 Jun 2017 13:52:13 +0000 (UTC)
-Received: by mail-ot0-f173.google.com with SMTP id s7so112508760otb.3
- for <wireguard@lists.zx2c4.com>; Wed, 21 Jun 2017 06:54:25 -0700 (PDT)
+ Wed, 21 Jun 2017 23:52:42 +0000 (UTC)
+Received: by mail-wr0-f182.google.com with SMTP id r103so1263864wrb.0
+ for <wireguard@lists.zx2c4.com>; Wed, 21 Jun 2017 17:08:31 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CADdae-gdmjA+PArR+8G3Qy7DPakGqrRZv1E8pB9COhxuoSwhUg@mail.gmail.com>
-References: <CADdae-jBtz7zfMRPkS3c2n_zG+LCuN_0iUZHCSM=H8dWdDBUUw@mail.gmail.com>
- <CAHmME9pvAK=v32ck14AyKhAP-YFSgfzTi7f33nLBUPb7Sx1pYA@mail.gmail.com>
- <CADdae-i73rU0ot_OwvBSBdGD+mFwxQgTK0venNT6iy5QzwsDEA@mail.gmail.com>
- <CAHmME9rQk=wv=X+KqF-NXe1n=Pyj6L1JaZ-oBoLeCV+dxoK1kw@mail.gmail.com>
- <CADdae-h6BO4=tGU=QrYHWr4iW7MgMzk2ukw9jes33WEoxAF1Gw@mail.gmail.com>
- <CADdae-jco2xALe1_OTtYQZA7EdRSih+fJge_+FLwNsGQWvRAjg@mail.gmail.com>
- <CAHmME9oZUT4BfGojkiEpX5+EXLGcyXNp7mz3mvHBVfPHiYospw@mail.gmail.com>
- <CADdae-gdmjA+PArR+8G3Qy7DPakGqrRZv1E8pB9COhxuoSwhUg@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 21 Jun 2017 15:54:22 +0200
-Message-ID: <CAHmME9ocn2vePKi6OyrFO522aoFN2KZwgz0cW=q+nh6GAT9gGg@mail.gmail.com>
-Subject: Re: multiple wireguard interface and kworker ressources
-To: nicolas prochazka <prochazka.nicolas@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: Ibrahim Tachijian <barhom@netsat.se>
+Date: Thu, 22 Jun 2017 00:08:19 +0000
+Message-ID: <CACTq0bTLXJ+HGasd7re7-T4bejfpX71VSojGEWH6fv_FDSxU5w@mail.gmail.com>
+Subject: wg setconf - does it reinitialize ?
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: multipart/alternative; boundary="94eb2c1b53b6db447a0552814839"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -42,24 +26,65 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Nicolas,
+--94eb2c1b53b6db447a0552814839
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-1000 interfaces with 500 peers each. That's a very impressive quantity
-of 500001 wireguard deployments! Please do let me know how that goes.
-I'd be interested to learn what the name of this project/company is.
+Hey,
 
-With regards to your problem, I've fixed it by completely rewriting
-ratelimiter.c to not use xt_hashtable, a piece of decaying Linux code
-from the 1990s, and instead using my own token bucket implementation.
-The result performs much better, is easier on RAM usage, and requires
-far fewer lines of code. Most importantly for you, all interfaces will
-now be able to share the same netns-keyed hashtable, so that the
-cleanup routines are always fast, no matter how many interfaces you
-have.
+Imagine you have a WG instance between two peers working fine.
 
-I'll likely sit on it for a bit longer while I verify it and make sure
-it works, but if you'd like to try it now, it's sitting in the git
-master. Please let me know how it goes.
+When I run "wg setconf wg0 myconf" (myconf was not changed and is identical
+to what was running) then current connections break and PING does not
+transverse until some time (seconds up to a min?). Probably until the next
+handshake.
 
-Regards,
-Jason
+Is there a way to run setconf without reinitializing all the peers?
+Basically, look for changes and only those changes.
+
+Thanks,
+--=20
+*Ibrahim Tachijian*
+
+CEO Net Sat AB
+Mobile: +46723321377
+barhom@netsat.se
+
+_________________________
+
+
+*Net Sat ABC/O Jayway AB*Klara =C3=96stra Kyrkogata 2B, 1TR, 111 52 Stockho=
+lm,
+Sweden
+Office: +46 (0)8 408 394 53
+
+--94eb2c1b53b6db447a0552814839
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hey,<div><br></div><div>Imagine you have a WG instance bet=
+ween two peers working fine.</div><div><br></div><div>When I run &quot;wg s=
+etconf wg0 myconf&quot; (myconf was not changed and is identical to what wa=
+s running) then current connections break and PING does not transverse unti=
+l some time (seconds up to a min?). Probably until the next handshake.</div=
+><div><br></div><div>Is there a way to run setconf without reinitializing a=
+ll the peers? Basically, look for changes and only those changes.</div><div=
+><br></div><div>Thanks,</div></div><div dir=3D"ltr">-- <br></div><div data-=
+smartmail=3D"gmail_signature"><div dir=3D"ltr"><b style=3D"color:black;font=
+-family:arial,sans-serif;font-size:small"><span style=3D"font-size:11px;lin=
+e-height:12.2667px">Ibrahim Tachijian</span></b><div class=3D"gmail_signatu=
+re" style=3D"color:rgb(34,34,34);font-family:arial,sans-serif;font-size:sma=
+ll"><div dir=3D"ltr"><div><div dir=3D"ltr"><div dir=3D"ltr"><p><span style=
+=3D"color:black;font-size:7.5pt;line-height:11.5px">CEO Net Sat AB<br></spa=
+n><span style=3D"font-size:7.5pt;line-height:11.5px"><font color=3D"#000000=
+">Mobile: +46723321377<br></font></span><a href=3D"mailto:barhom@netsat.se"=
+ target=3D"_blank" style=3D"color:rgb(17,85,204);font-size:7.5pt;line-heigh=
+t:11.5px">barhom@netsat.se</a></p><p style=3D"line-height:14.72px"><span st=
+yle=3D"font-size:7.5pt;line-height:11.5px;color:black">____________________=
+_____<br><b>Net Sat AB<br>C/O Jayway AB<br></b></span><span style=3D"color:=
+black;font-size:7.5pt;line-height:11.5px">Klara =C3=96stra Kyrkogata 2B, 1T=
+R, 111 52 Stockholm, Sweden<br></span><span style=3D"color:black;font-size:=
+7.5pt;line-height:11.5px">Office: +46 (0)8 408 394 53</span></p></div></div=
+></div></div></div></div></div>
+
+--94eb2c1b53b6db447a0552814839--
