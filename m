@@ -1,30 +1,31 @@
 Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6485aa8e
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 49f43c67
  for <wireguard@lists.zx2c4.com>;
- Fri, 23 Jun 2017 18:41:10 +0000 (UTC)
+ Fri, 23 Jun 2017 19:26:45 +0000 (UTC)
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c1b74e2a
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1306e50b
  for <wireguard@lists.zx2c4.com>;
- Fri, 23 Jun 2017 18:41:10 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b09aa03d
+ Fri, 23 Jun 2017 19:26:45 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f27c4451
  for <wireguard@lists.zx2c4.com>;
- Fri, 23 Jun 2017 18:54:44 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id cc471db2
+ Fri, 23 Jun 2017 19:40:19 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 7d37cbb1
  (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 23 Jun 2017 18:54:42 +0000 (UTC)
-Received: by mail-ot0-f172.google.com with SMTP id u13so37402485otd.2
- for <wireguard@lists.zx2c4.com>; Fri, 23 Jun 2017 11:57:11 -0700 (PDT)
+ Fri, 23 Jun 2017 19:40:19 +0000 (UTC)
+Received: by mail-ot0-f178.google.com with SMTP id u13so38120564otd.2
+ for <wireguard@lists.zx2c4.com>; Fri, 23 Jun 2017 12:42:48 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9pzg__jT1zaG+ThTsOCgo=DaXC-iV-yJp1O4didhPLubA@mail.gmail.com>
+In-Reply-To: <CAHmME9p807nxgrJ9sM6TSuZnna6dL8e4x8o+TWkjG+50w+T0mA@mail.gmail.com>
 References: <EE8741B3-9787-4522-98B9-D484C4BE7A8E@veniamworks.com>
  <CAHmME9rwLqT6Ph_LxYMQLaZw-=f-LTxf7ScnqJ6jbDD+BqN87w@mail.gmail.com>
  <48D760AA-BFB5-4A3E-B8C8-81E49A65BC5A@veniamworks.com>
  <CAHmME9pzg__jT1zaG+ThTsOCgo=DaXC-iV-yJp1O4didhPLubA@mail.gmail.com>
+ <CAHmME9p807nxgrJ9sM6TSuZnna6dL8e4x8o+TWkjG+50w+T0mA@mail.gmail.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 23 Jun 2017 20:57:10 +0200
-Message-ID: <CAHmME9p807nxgrJ9sM6TSuZnna6dL8e4x8o+TWkjG+50w+T0mA@mail.gmail.com>
+Date: Fri, 23 Jun 2017 21:42:47 +0200
+Message-ID: <CAHmME9oPp0EAmkbjHHgsuMVQ5-MhswysW+MvFdpb0qRRW0qMcg@mail.gmail.com>
 Subject: Re: Wireguard multihomed roaming performance
 To: Tiago Condeixa <tcondeixa@veniamworks.com>
 Content-Type: text/plain; charset="UTF-8"
@@ -38,4 +39,14 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Nevermind, please ignore, still debugging.
+Hi Tiago,
+
+Okay, I've fixed it, and the fix is in the git master branch.
+
+I've made a small video demonstrating the fix:
+https://data.zx2c4.com/fixed-route-change-wireguard.gif
+
+Can you try things out and let me know how it works?
+
+Thanks,
+Jason
