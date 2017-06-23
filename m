@@ -1,30 +1,27 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: tcondeixa@veniamworks.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 48135c46
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id baff66df
  for <wireguard@lists.zx2c4.com>;
- Fri, 23 Jun 2017 17:12:16 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 31f0385e
+ Fri, 23 Jun 2017 17:31:37 +0000 (UTC)
+Received: from mail-wr0-f175.google.com (mail-wr0-f175.google.com
+ [209.85.128.175])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 391b97c3
  for <wireguard@lists.zx2c4.com>;
- Fri, 23 Jun 2017 17:12:15 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2d3fd647
- for <wireguard@lists.zx2c4.com>;
- Fri, 23 Jun 2017 17:25:49 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id a73f0374
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Fri, 23 Jun 2017 17:25:48 +0000 (UTC)
-Received: by mail-oi0-f49.google.com with SMTP id c189so29096603oia.2
- for <wireguard@lists.zx2c4.com>; Fri, 23 Jun 2017 10:28:16 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <EE8741B3-9787-4522-98B9-D484C4BE7A8E@veniamworks.com>
+ Fri, 23 Jun 2017 17:31:37 +0000 (UTC)
+Received: by mail-wr0-f175.google.com with SMTP id r103so75358282wrb.0
+ for <wireguard@lists.zx2c4.com>; Fri, 23 Jun 2017 10:47:39 -0700 (PDT)
+Return-Path: <tcondeixa@veniamworks.com>
 References: <EE8741B3-9787-4522-98B9-D484C4BE7A8E@veniamworks.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 23 Jun 2017 19:28:14 +0200
-Message-ID: <CAHmME9rwLqT6Ph_LxYMQLaZw-=f-LTxf7ScnqJ6jbDD+BqN87w@mail.gmail.com>
+ <CAHmME9rwLqT6Ph_LxYMQLaZw-=f-LTxf7ScnqJ6jbDD+BqN87w@mail.gmail.com>
+Mime-Version: 1.0 (1.0)
+In-Reply-To: <CAHmME9rwLqT6Ph_LxYMQLaZw-=f-LTxf7ScnqJ6jbDD+BqN87w@mail.gmail.com>
+Content-Type: text/plain;
+	charset=us-ascii
+Message-Id: <48D760AA-BFB5-4A3E-B8C8-81E49A65BC5A@veniamworks.com>
+From: Tiago Condeixa <tcondeixa@veniamworks.com>
 Subject: Re: Wireguard multihomed roaming performance
-To: Tiago Condeixa <tcondeixa@veniamworks.com>
-Content-Type: text/plain; charset="UTF-8"
+Date: Fri, 23 Jun 2017 18:47:34 +0100
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -35,13 +32,21 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hello Tiago,
-
-WireGuard should do roaming instantly. There should be no delay at
-all. If you're experiencing delay, this is a bug that needs
-investigating...
-
-What kinds of timeouts are you seeing with the source address change?
+When the IP address source changes it is really fast, but when it doesn't it=
+ takes 20 to 40 seconds.
 
 Regards,
-Jason
+Tiago
+
+> On 23 Jun 2017, at 18:28, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+>=20
+> Hello Tiago,
+>=20
+> WireGuard should do roaming instantly. There should be no delay at
+> all. If you're experiencing delay, this is a bug that needs
+> investigating...
+>=20
+> What kinds of timeouts are you seeing with the source address change?
+>=20
+> Regards,
+> Jason
