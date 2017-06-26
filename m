@@ -1,28 +1,24 @@
-Return-Path: tcondeixa@veniamworks.com
+Return-Path: opensource@vdorst.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f0465443
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4e0282fe
  for <wireguard@lists.zx2c4.com>;
- Mon, 26 Jun 2017 10:45:49 +0000 (UTC)
-Received: from mail-wr0-f179.google.com (mail-wr0-f179.google.com
- [209.85.128.179])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 63fc1695
+ Mon, 26 Jun 2017 11:13:48 +0000 (UTC)
+Received: from smtp01.bhosted.nl (smtp01.bhosted.nl [94.124.121.11])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0e2cadcf
  for <wireguard@lists.zx2c4.com>;
- Mon, 26 Jun 2017 10:45:49 +0000 (UTC)
-Received: by mail-wr0-f179.google.com with SMTP id k67so142147916wrc.2
- for <wireguard@lists.zx2c4.com>; Mon, 26 Jun 2017 04:02:11 -0700 (PDT)
-Return-Path: <tcondeixa@veniamworks.com>
-From: Tiago Condeixa <tcondeixa@veniamworks.com>
-Message-Id: <805AA098-0286-4FF1-B977-2A1744595B52@veniamworks.com>
-Content-Type: multipart/alternative;
- boundary="Apple-Mail=_FF16E53D-557D-4293-8DEA-C923DD41D8FA"
-Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
-Subject: Re: openwrt reboot with high load using wireguard
-Date: Mon, 26 Jun 2017 12:02:08 +0100
-In-Reply-To: <CAHmME9qXR6_RByz5Uc8NhPUMwKU20tm=J5vZJsBYQEenEeQkVg@mail.gmail.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-References: <7F8F2DEF-6394-4169-8232-75781A45CA7D@veniamworks.com>
- <CAHmME9qXR6_RByz5Uc8NhPUMwKU20tm=J5vZJsBYQEenEeQkVg@mail.gmail.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+ Mon, 26 Jun 2017 11:13:48 +0000 (UTC)
+Received: from www.lan.vdorst.com (www.lan.vdorst.com [192.168.2.220])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.vdorst.com (Postfix) with ESMTPSA id 3F84D11B5166
+ for <wireguard@lists.zx2c4.com>; Mon, 26 Jun 2017 13:30:08 +0200 (CEST)
+Date: Mon, 26 Jun 2017 11:30:11 +0000
+Message-ID: <20170626113011.Horde.LnrakzTxipAs-PhMdgApTF3@www.vdorst.com>
+From: =?utf-8?b?UmVuw6k=?= van Dorst <opensource@vdorst.com>
+To: WireGuard list <wireguard@lists.zx2c4.com>
+Subject: Hash fix commit by Sultan Alsawaf.
+Content-Type: text/plain; charset=utf-8; format=flowed; DelSp=Yes
+MIME-Version: 1.0
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -32,65 +28,13 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
+Jason,
 
---Apple-Mail=_FF16E53D-557D-4293-8DEA-C923DD41D8FA
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
+Did you notice this commit [1] from Sultan Alsawaf?
 
-Hi Jason,
+[1] ratelimiter: fix hashing and hashmap searching for ipv4 addresses;  
+https://git.zx2c4.com/WireGuard/commit/?h=sa/20170623&id=8da15aa96cdf918d8a98cf2caaefb475cadee355
 
-I was using Wireguard version 20170517, but now I tried with wireguard =
-from master branch (2f12227690cf9a979a9a148109c96ab4f6ee6c0e) to check =
-results after IP address source issue correction and the reboot problem =
-goes away.=20
-If for some reason I detect some storage behaviour latter I will let you =
-know, but right now it=E2=80=99s really good.
+Greats,
 
-
-Thanks,
-Tiago
-
-> On 23 Jun 2017, at 22:05, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
->=20
-> Hi Tiago,
->=20
-> That's odd. What's the memory like on the system? Are you able to
-> capture a debug log via pstore or serial?
->=20
-> Thanks,
-> Jason
-
-
---Apple-Mail=_FF16E53D-557D-4293-8DEA-C923DD41D8FA
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html;
-	charset=utf-8
-
-<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html =
-charset=3Dutf-8"></head><body style=3D"word-wrap: break-word; =
--webkit-nbsp-mode: space; -webkit-line-break: after-white-space;" =
-class=3D"">Hi Jason,<div class=3D""><br class=3D""></div><div class=3D"">I=
- was using Wireguard version&nbsp;20170517, but now I tried with =
-wireguard from master branch (<span style=3D"color: rgb(68, 77, 86); =
-font-family: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, =
-Courier, monospace; orphans: 2; widows: 2; background-color: rgb(255, =
-255, 255);" =
-class=3D"">2f12227690cf9a979a9a148109c96ab4f6ee6c0e</span>)&nbsp;to =
-check results after IP address source issue correction and the reboot =
-problem goes away.&nbsp;</div><div class=3D"">If for some reason I =
-detect some storage behaviour latter I will let you know, but right now =
-it=E2=80=99s really good.</div><div class=3D""><br class=3D""></div><div =
-class=3D""><br class=3D""></div><div class=3D"">Thanks,</div><div =
-class=3D"">Tiago</div><div class=3D""><br class=3D""><div><blockquote =
-type=3D"cite" class=3D""><div class=3D"">On 23 Jun 2017, at 22:05, Jason =
-A. Donenfeld &lt;<a href=3D"mailto:Jason@zx2c4.com" =
-class=3D"">Jason@zx2c4.com</a>&gt; wrote:</div><br =
-class=3D"Apple-interchange-newline"><div class=3D""><div class=3D"">Hi =
-Tiago,<br class=3D""><br class=3D"">That's odd. What's the memory like =
-on the system? Are you able to<br class=3D"">capture a debug log via =
-pstore or serial?<br class=3D""><br class=3D"">Thanks,<br =
-class=3D"">Jason<br class=3D""></div></div></blockquote></div><br =
-class=3D""></div></body></html>=
-
---Apple-Mail=_FF16E53D-557D-4293-8DEA-C923DD41D8FA--
+René van Dorst.
