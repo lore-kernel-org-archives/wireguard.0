@@ -1,23 +1,22 @@
-Return-Path: tcondeixa@veniamworks.com
+Return-Path: luci@createc.ro
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a98ec166
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f0ac1295
  for <wireguard@lists.zx2c4.com>;
- Mon, 26 Jun 2017 12:14:14 +0000 (UTC)
-Received: from mail-wm0-f51.google.com (mail-wm0-f51.google.com [74.125.82.51])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c3f38263
+ Mon, 26 Jun 2017 12:26:49 +0000 (UTC)
+Received: from mail.crimel.ro (109.166.220.71 [109.166.220.71])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ad4d0fe3
  for <wireguard@lists.zx2c4.com>;
- Mon, 26 Jun 2017 12:14:14 +0000 (UTC)
-Received: by mail-wm0-f51.google.com with SMTP id w126so5912385wme.0
- for <wireguard@lists.zx2c4.com>; Mon, 26 Jun 2017 05:30:37 -0700 (PDT)
-Return-Path: <tcondeixa@veniamworks.com>
-From: Tiago Condeixa <tcondeixa@veniamworks.com>
-Content-Type: text/plain; charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
-Subject: Wireguard performance
-Message-Id: <CCB871CE-1067-41E6-BE5F-837362773C7D@veniamworks.com>
-Date: Mon, 26 Jun 2017 13:30:35 +0100
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>
+ Mon, 26 Jun 2017 12:26:49 +0000 (UTC)
+Subject: Re: fix centos 6 compile
+To: wireguard@lists.zx2c4.com
+References: <8cfef683-d9e1-fb6b-704c-f0c938c84c5b@createc.ro>
+From: Lucian Cristian <luci@createc.ro>
+Message-ID: <72b8742f-c5e7-557e-a45c-3b0b99efaf47@createc.ro>
+Date: Mon, 26 Jun 2017 15:43:07 +0300
+MIME-Version: 1.0
+In-Reply-To: <8cfef683-d9e1-fb6b-704c-f0c938c84c5b@createc.ro>
+Content-Type: multipart/alternative;
+ boundary="------------FAC9D1D67934C2FF49A7A988"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -27,21 +26,76 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi,
+This is a multi-part message in MIME format.
+--------------FAC9D1D67934C2FF49A7A988
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-I have been doing more experiments with heterogenous technologies and =
-connections and there is a scenario where I believe that something =
-strange is happening with wireguard.
-When my board is using a 100 Mbps ethernet connection in a local network =
-the iperf3 TCP is able to reach 95Mbps with the direct IP route, but =
-when using wireguard the throughput reduces to 65/70 Mbps.=20
-It=E2=80=99s not a bad result at all, but I noticed that with wireguard =
-the iperf3 CPU consumption goes from 10% to 70% when comparing with =
-direct IP route. Do you have any idea why is this happening? ...the =
-overall system CPU can slightly increase but I do not expect that happen =
-with iperf3.
-In other scenarios with other technologies and networks wireguard =
-usually reduce 5% of the throughput but in this case it goes beyond 25%.
+just reminding of this as I didn't see any input about it
+REHL 6 is EOL in 2020 and this is a minor change
 
-Thanks a lot,
-Tiago=
+Regards
+
+On 19.06.2017 20:44, Lucian Cristian wrote:
+> centos 6 has gcc 4.4.7
+>
+> with some minor modification and the updated kernel from elrepo this 
+> is working as it should
+>
+>
+> Regards
+>
+>
+>
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+
+
+--------------FAC9D1D67934C2FF49A7A988
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  </head>
+  <body text="#000000" bgcolor="#FFFFFF">
+    <div class="moz-cite-prefix">just reminding of this as I didn't see
+      any input about it<br>
+      REHL 6 is EOL in 2020 and this is a minor change<br>
+      <br>
+      Regards<br>
+      <br>
+      On 19.06.2017 20:44, Lucian Cristian wrote:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:8cfef683-d9e1-fb6b-704c-f0c938c84c5b@createc.ro">centos
+      6 has gcc 4.4.7
+      <br>
+      <br>
+      with some minor modification and the updated kernel from elrepo
+      this is working as it should
+      <br>
+      <br>
+      <br>
+      Regards
+      <br>
+      <br>
+      <br>
+      <fieldset class="mimeAttachmentHeader"></fieldset>
+      <br>
+      <pre wrap="">_______________________________________________
+WireGuard mailing list
+<a class="moz-txt-link-abbreviated" href="mailto:WireGuard@lists.zx2c4.com">WireGuard@lists.zx2c4.com</a>
+<a class="moz-txt-link-freetext" href="https://lists.zx2c4.com/mailman/listinfo/wireguard">https://lists.zx2c4.com/mailman/listinfo/wireguard</a>
+</pre>
+    </blockquote>
+    <p><br>
+    </p>
+  </body>
+</html>
+
+--------------FAC9D1D67934C2FF49A7A988--
