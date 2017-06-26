@@ -1,24 +1,24 @@
-Return-Path: wireguard@wut.to
+Return-Path: aaron@correspondwith.me
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4f22a432
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0fc78fe7
  for <wireguard@lists.zx2c4.com>;
- Sat, 24 Jun 2017 15:02:48 +0000 (UTC)
-Received: from opal.spod.org (opal.spod.org [217.135.32.99])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 86d1001a
+ Mon, 26 Jun 2017 07:31:23 +0000 (UTC)
+Received: from marumie.magnifi.ca (marumie.magnifi.ca [104.131.125.198])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 06071e27
  for <wireguard@lists.zx2c4.com>;
- Sat, 24 Jun 2017 15:02:48 +0000 (UTC)
-Received: from [127.0.0.1] (helo=localhost)
- by opal.spod.org with esmtp (Exim 4.88)
- (envelope-from <wireguard@wut.to>) id 1dOmpn-0005ek-Fv
- for wireguard@lists.zx2c4.com; Sat, 24 Jun 2017 16:18:53 +0100
-Date: Sat, 24 Jun 2017 16:18:51 +0100 (BST)
-From: wireguard@wut.to
-To: wireguard@lists.zx2c4.com
-Subject: making wireguard work on RHEL7/etc.
-Message-ID: <alpine.LRH.2.20.1706241613350.14074@bcny.fcbq.bet>
+ Mon, 26 Jun 2017 07:31:23 +0000 (UTC)
+From: Aaron Muir Hamilton <aaron@correspondwith.me>
+To: wireguard@wut.to
+Subject: Re: making wireguard work on RHEL7/etc.
+References: <alpine.LRH.2.20.1706241613350.14074@bcny.fcbq.bet>
+Date: Mon, 26 Jun 2017 08:07:53 +0000
+In-Reply-To: <alpine.LRH.2.20.1706241613350.14074@bcny.fcbq.bet>
+ (wireguard@wut.to's message of "Sat, 24 Jun 2017 16:18:51 +0100
+ (BST)")
+Message-ID: <87o9tbuq7a.fsf@correspondwith.me>
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- BOUNDARY="-2015796448-1598374587-1498317531=:14074"
+Content-Type: text/plain
+Cc: wireguard@lists.zx2c4.com
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -28,110 +28,5 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
----2015796448-1598374587-1498317531=:14074
-Content-Type: text/plain; charset=US-ASCII
-
-hello,
-
-the two diffs attached (hopefully not eaten by mailman) made wireguard
-work for me on Scientific Linux 7.3 and CentOS Linux 7.3.1611
-
-hopefully they are useful for other people
-
-they were patched against the source installed by
-wireguard-dkms-0.0.20170613-1.el7.centos.noarch in /usr/src/wireguard-*
-
-also available here:
-
-https://pastebin.com/uWGWuF8f
-https://pastebin.com/P3VqR1H6
-
----2015796448-1598374587-1498317531=:14074
-Content-Type: text/plain; charset=US-ASCII; name=compat-rhel7-patch.diff
-Content-Transfer-Encoding: BASE64
-Content-ID: <alpine.LRH.2.20.1706241618510.14074@bcny.fcbq.bet>
-Content-Description: compat-rhel7-patch.diff
-Content-Disposition: attachment; filename=compat-rhel7-patch.diff
-
-LS0tIGNvbXBhdC9jb21wYXQuaC5vcmlnCTIwMTctMDYtMTMgMTY6MzM6MjYu
-MDAwMDAwMDAwICswMTAwDQorKysgY29tcGF0L2NvbXBhdC5oCTIwMTctMDYt
-MjQgMTU6Mjg6MzguODY2NjM3NjgzICswMTAwDQpAQCAtNyw2ICs3LDkgQEAN
-CiAjaW5jbHVkZSA8bGludXgvdmVyc2lvbi5oPg0KICNpbmNsdWRlIDxsaW51
-eC90eXBlcy5oPg0KIA0KKyN1bmRlZiAgTElOVVhfVkVSU0lPTl9DT0RFDQor
-I2RlZmluZSBMSU5VWF9WRVJTSU9OX0NPREUgS0VSTkVMX1ZFUlNJT04oMywg
-MTgsIDApDQorDQogI2lmIExJTlVYX1ZFUlNJT05fQ09ERSA8IEtFUk5FTF9W
-RVJTSU9OKDMsIDEwLCAwKQ0KICNlcnJvciAiV2lyZUd1YXJkIHJlcXVpcmVz
-IExpbnV4ID49IDMuMTAiDQogI2VuZGlmDQpAQCAtMjksOSArMzIsOSBAQA0K
-ICNkZWZpbmUgaGVhZGVyc19lbmQgZGF0YQ0KICNlbmRpZg0KIA0KLSNpZiBM
-SU5VWF9WRVJTSU9OX0NPREUgPj0gS0VSTkVMX1ZFUlNJT04oMywgMTcsIDAp
-DQotI2luY2x1ZGUgInVkcF90dW5uZWwvdWRwX3R1bm5lbF9wYXJ0aWFsX2Nv
-bXBhdC5oIg0KLSNlbmRpZg0KKy8vI2lmIExJTlVYX1ZFUlNJT05fQ09ERSA+
-PSBLRVJORUxfVkVSU0lPTigzLCAxNywgMCkNCisvLyNpbmNsdWRlICJ1ZHBf
-dHVubmVsL3VkcF90dW5uZWxfcGFydGlhbF9jb21wYXQuaCINCisvLyNlbmRp
-Zg0KIA0KICNpZiBMSU5VWF9WRVJTSU9OX0NPREUgPCBLRVJORUxfVkVSU0lP
-Tig0LCAzLCAwKSAmJiAhZGVmaW5lZChERUJVRykgJiYgZGVmaW5lZChuZXRf
-ZGJnX3JhdGVsaW1pdGVkKQ0KICN1bmRlZiBuZXRfZGJnX3JhdGVsaW1pdGVk
-DQpAQCAtNDMsMTQgKzQ2LDE0IEBADQogI2VuZGlmDQogDQogI2lmIChMSU5V
-WF9WRVJTSU9OX0NPREUgPiBLRVJORUxfVkVSU0lPTigzLCAxOSwgMCkgJiYg
-TElOVVhfVkVSU0lPTl9DT0RFIDwgS0VSTkVMX1ZFUlNJT04oMywgMTksIDYp
-KSB8fCBcDQotICAgIChMSU5VWF9WRVJTSU9OX0NPREUgPCBLRVJORUxfVkVS
-U0lPTigzLCAxOCwgMTIpICYmIExJTlVYX1ZFUlNJT05fQ09ERSA+IEtFUk5F
-TF9WRVJTSU9OKDMsIDE3LCAwKSkgfHwgXA0KLSAgICAoTElOVVhfVkVSU0lP
-Tl9DT0RFIDwgS0VSTkVMX1ZFUlNJT04oMywgMTYsIDgpICYmIExJTlVYX1ZF
-UlNJT05fQ09ERSA+PSBLRVJORUxfVkVSU0lPTigzLCAxNSwgMCkpIHx8IFwN
-Ci0gICAgTElOVVhfVkVSU0lPTl9DT0RFIDwgS0VSTkVMX1ZFUlNJT04oMywg
-MTQsIDQwKQ0KLSNkZWZpbmUgZGV2X3JlY3Vyc2lvbl9sZXZlbCgpIDANCisg
-ICAoTElOVVhfVkVSU0lPTl9DT0RFIDwgS0VSTkVMX1ZFUlNJT04oMywgMTgs
-IDEyKSAmJiBMSU5VWF9WRVJTSU9OX0NPREUgPiBLRVJORUxfVkVSU0lPTigz
-LCAxNywgMCkpIHx8IFwNCisgICAoTElOVVhfVkVSU0lPTl9DT0RFIDwgS0VS
-TkVMX1ZFUlNJT04oMywgMTYsIDgpICYmIExJTlVYX1ZFUlNJT05fQ09ERSA+
-PSBLRVJORUxfVkVSU0lPTigzLCAxNSwgMCkpIHx8IFwNCisgICBMSU5VWF9W
-RVJTSU9OX0NPREUgPCBLRVJORUxfVkVSU0lPTigzLCAxNCwgNDApDQorLy8j
-ZGVmaW5lIGRldl9yZWN1cnNpb25fbGV2ZWwoKSAwDQogI2VuZGlmDQogDQog
-I2lmIExJTlVYX1ZFUlNJT05fQ09ERSA8IEtFUk5FTF9WRVJTSU9OKDQsIDMs
-IDApDQotI2RlZmluZSBpcHY2X2RzdF9sb29rdXAoYSwgYiwgYywgZCkgaXB2
-Nl9kc3RfbG9va3VwKGIsIGMsIGQpDQorLy8jZGVmaW5lIGlwdjZfZHN0X2xv
-b2t1cChhLCBiLCBjLCBkKSBpcHY2X2RzdF9sb29rdXAoYiwgYywgZCkNCiAj
-ZW5kaWYNCiANCiAjaWYgKExJTlVYX1ZFUlNJT05fQ09ERSA8IEtFUk5FTF9W
-RVJTSU9OKDQsIDMsIDUpICYmIExJTlVYX1ZFUlNJT05fQ09ERSA+PSBLRVJO
-RUxfVkVSU0lPTig0LCAyLCAwKSkgfHwgXA0KQEAgLTE0OSw3ICsxNTIsNyBA
-QA0KIH0pDQogI2VuZGlmDQogDQotI2lmIExJTlVYX1ZFUlNJT05fQ09ERSA8
-IEtFUk5FTF9WRVJTSU9OKDMsIDE0LCAwKQ0KKy8vI2lmIExJTlVYX1ZFUlNJ
-T05fQ09ERSA8IEtFUk5FTF9WRVJTSU9OKDMsIDE0LCAwKQ0KICNpbmNsdWRl
-ICJjaGVja3N1bS9jaGVja3N1bV9wYXJ0aWFsX2NvbXBhdC5oIg0KIHN0YXRp
-YyBpbmxpbmUgdm9pZCAqb3VyX3Bza2JfcHV0KHN0cnVjdCBza19idWZmICpz
-a2IsIHN0cnVjdCBza19idWZmICp0YWlsLCBpbnQgbGVuKQ0KIHsNCkBAIC0x
-NjAsNyArMTYzLDcgQEANCiAJcmV0dXJuIHNrYl9wdXQodGFpbCwgbGVuKTsN
-CiB9DQogI2RlZmluZSBwc2tiX3B1dCBvdXJfcHNrYl9wdXQNCi0jZW5kaWYN
-CisvLyNlbmRpZg0KIA0KICNpZiBMSU5VWF9WRVJTSU9OX0NPREUgPCBLRVJO
-RUxfVkVSU0lPTigzLCAxMSwgMCkNCiAjaW5jbHVkZSA8bmV0L3hmcm0uaD4N
-Cg==
-
----2015796448-1598374587-1498317531=:14074
-Content-Type: text/plain; charset=US-ASCII; name=siphash-rhel7-patch.diff
-Content-Transfer-Encoding: BASE64
-Content-ID: <alpine.LRH.2.20.1706241618511.14074@bcny.fcbq.bet>
-Content-Description: siphash-rhel7-patch.diff
-Content-Disposition: attachment; filename=siphash-rhel7-patch.diff
-
-LS0tIGNvbXBhdC9zaXBoYXNoL3NpcGhhc2guYwkyMDE3LTA2LTI0IDE1OjMy
-OjE5LjEzOTQ4MjEzMyArMDEwMA0KKysrIGNvbXBhdC9zaXBoYXNoL3NpcGhh
-c2guYwkyMDE3LTA2LTI0IDE1OjMwOjA5LjIwNTAyMTQ1NyArMDEwMA0KQEAg
-LTEzLDcgKzEzLDcgQEANCiAjaW5jbHVkZSA8bGludXgvc2lwaGFzaC5oPg0K
-ICNpbmNsdWRlIDxhc20vdW5hbGlnbmVkLmg+DQogDQotI2lmIExJTlVYX1ZF
-UlNJT05fQ09ERSA8IEtFUk5FTF9WRVJTSU9OKDMsIDE0LCAwKQ0KKy8vI2lm
-IExJTlVYX1ZFUlNJT05fQ09ERSA8IEtFUk5FTF9WRVJTSU9OKDMsIDE0LCAw
-KQ0KICNpZmRlZiBfX0xJVFRMRV9FTkRJQU4NCiAgI2RlZmluZSBIQVNIX0xF
-Tl9ERUNMQVJFIHUzMiBoYXNoOyB1MzIgbGVuOw0KICAjZGVmaW5lIGJ5dGVt
-YXNrX2Zyb21fY291bnQoY250KQkofih+MHVsIDw8IChjbnQpKjgpKQ0KQEAg
-LTIxLDcgKzIxLDcgQEANCiAgI2RlZmluZSBIQVNIX0xFTl9ERUNMQVJFIHUz
-MiBsZW47IHUzMiBoYXNoOw0KICAjZGVmaW5lIGJ5dGVtYXNrX2Zyb21fY291
-bnQoY250KQkofih+MHVsID4+IChjbnQpKjgpKQ0KICNlbmRpZg0KLSNlbmRp
-Zg0KKy8vI2VuZGlmDQogDQogI2lmIGRlZmluZWQoQ09ORklHX0RDQUNIRV9X
-T1JEX0FDQ0VTUykgJiYgQklUU19QRVJfTE9ORyA9PSA2NA0KICNpbmNsdWRl
-IDxsaW51eC9kY2FjaGUuaD4NCg==
-
----2015796448-1598374587-1498317531=:14074--
+This is bizarre, isn't the current RHEL/CentOS/Scientific Linux 7 kernel
+a 3.10 series? Are these ifdefs only wrong on RHEL derivatives?
