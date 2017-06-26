@@ -1,22 +1,29 @@
-Return-Path: jedi_papi@yahoo.com
+Return-Path: wireguard@wut.to
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4fe93b25
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e412ce2f
  for <wireguard@lists.zx2c4.com>;
- Mon, 26 Jun 2017 18:10:01 +0000 (UTC)
-Received: from sonic322-21.consmr.mail.gq1.yahoo.com
- (sonic322-21.consmr.mail.gq1.yahoo.com [98.137.70.84])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2d70088e
+ Mon, 26 Jun 2017 19:38:41 +0000 (UTC)
+Received: from opal.spod.org (opal.spod.org [217.135.32.99])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6ae5f484
  for <wireguard@lists.zx2c4.com>;
- Mon, 26 Jun 2017 18:10:01 +0000 (UTC)
-Date: Mon, 26 Jun 2017 18:24:33 +0000 (UTC)
-From: Jose Marinez <jedi_papi@yahoo.com>
-To: wireguard@lists.zx2c4.com
-Message-ID: <167316217.2638378.1498501473436@mail.yahoo.com>
-Subject: [Question] - Would it be possible to have the ip commands in ifconfig?
+ Mon, 26 Jun 2017 19:38:41 +0000 (UTC)
+Date: Mon, 26 Jun 2017 20:55:02 +0100 (BST)
+From: wireguard@wut.to
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: Re: making wireguard work on RHEL7/etc.
+In-Reply-To: <CAHmME9ph1LQ0kufpf2RMDsMRpz7txWJGvr=d=Jr5Z1kxqqOWfQ@mail.gmail.com>
+Message-ID: <alpine.LRH.2.20.1706262050540.17486@bcny.fcbq.bet>
+References: <alpine.LRH.2.20.1706241613350.14074@bcny.fcbq.bet>
+ <87o9tbuq7a.fsf@correspondwith.me>
+ <alpine.LRH.2.20.1706260917250.14074@bcny.fcbq.bet>
+ <CAHmME9p++Q0v6Ypt2Y5AFZO36hHnTKv7KBnWNnSk84V8YK+oJw@mail.gmail.com>
+ <alpine.LRH.2.20.1706261023540.14074@bcny.fcbq.bet>
+ <CAHmME9oHG6a1==KzrrfuvmkKoVJHhTtToP00qYtcKXEGDCnm8Q@mail.gmail.com>
+ <CAHmME9ph1LQ0kufpf2RMDsMRpz7txWJGvr=d=Jr5Z1kxqqOWfQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="----=_Part_2638377_701623890.1498501473434"
-References: <167316217.2638378.1498501473436.ref@mail.yahoo.com>
+Content-Type: multipart/mixed;
+ BOUNDARY="-2015796448-1728771282-1498506902=:17486"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,93 +33,163 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-------=_Part_2638377_701623890.1498501473434
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
- blockquote, div.yahoo_quoted { margin-left: 0 !important; border-left:1px =
-#715FFA solid !important; padding-left:1ex !important; background-color:whi=
-te !important; } Hi Guys,
-First, great work on Wireguard!!
-I have a linux server configured with wireguard running well with other lin=
-ux computers working. I=E2=80=99d like to extend that to a few macOS comput=
-ers we have. I know the project at the moment is only for Linux, but I saw =
-the distribution package and decided to give it a try. For the last 4 days =
-I=E2=80=99ve been jumping through hoops trying to get this working. At firs=
-t, it took so long mainly because I was attempting to connect from the late=
-st macOS 10.13 beta - bad idea, yes I know. However, when I attempted to do=
- this from the stable version, things were much better, but still haven=E2=
-=80=99t been able to connect. =C2=A0Here=E2=80=99s why:
-The package for wireguard on the mac only includes wg, you don=E2=80=99t ge=
-t wg-quick or any other tools. Not a big deal, but it makes a difference sp=
-ecially because the quick start instructions use ip-link and other ip relat=
-ed commands. Unfortunately, on the mac there=E2=80=99s no official release =
-of ip-link and the iproute2mac brew package is only a subset of iproute2 so=
- it doesn=E2=80=99t work. I know that ip is the future replacement for ifco=
-nfig, but ifconfig is practically everywhere there=E2=80=99s a POSIX-like O=
-S. To make matters worse, even the =E2=80=9Cclassic=E2=80=9D capabilities f=
-or setting up routing on linux with netns are not available on the mac eith=
-er.
-Forgive my na=C3=AFvet=C3=A9 - I=E2=80=99m a developer, not a network engin=
-eer - but if I had the ifconfig (perhaps also vconfig) versions of the foll=
-owing quick start commands, plus the official wg for the mac, wouldn=E2=80=
-=99t I be able to connect?:
-ip link add dev wg0 type wireguard=C2=A0
-ip address add dev wg0 IPRANGEip link set up dev wg0
+---2015796448-1728771282-1498506902=:17486
+Content-Type: text/plain; charset=US-ASCII
 
+I think this might work ...
 
-Last, but not least... I=E2=80=99m very interested in the Rust version of w=
-ireguard. I read the code and the readme, but I couldn=E2=80=99t tell what =
-the exact capabilities and limitations are as a cross-platform userspace im=
-plementation. Could one redirect all internet traffic through it? Would it =
-work on the mac as it is?
-Thanks again,Jose
+I was still able to compile on Amazon AMI/4.9.32 Kernel
 
 
 
-------=_Part_2638377_701623890.1498501473434
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
 
-<html xmlns=3D"http://www.w3.org/1999/xhtml" xmlns:v=3D"urn:schemas-microso=
-ft-com:vml" xmlns:o=3D"urn:schemas-microsoft-com:office:office"><head><!--[=
-if gte mso 9]><xml><o:OfficeDocumentSettings><o:AllowPNG/><o:PixelsPerInch>=
-96</o:PixelsPerInch></o:OfficeDocumentSettings></xml><![endif]--></head><bo=
-dy>
-<style type=3D"text/css" scoped> blockquote, div.yahoo_quoted { margin-left=
-: 0 !important; border-left:1px #715FFA solid !important; padding-left:1ex =
-!important; background-color:white !important; } </style>Hi Guys,<div><br><=
-/div><div>First, great work on Wireguard!!</div><div><br></div><div>I have =
-a linux server configured with wireguard running well with other linux comp=
-uters working. I=E2=80=99d like to extend that to a few macOS computers we =
-have. I know the project at the moment is only for Linux, but I saw the dis=
-tribution package and decided to give it a try. For the last 4 days I=E2=80=
-=99ve been jumping through hoops trying to get this working. At first, it t=
-ook so long mainly because I was attempting to connect from the latest macO=
-S 10.13 beta - bad idea, yes I know. However, when I attempted to do this f=
-rom the stable version, things were much better, but still haven=E2=80=99t =
-been able to connect. &nbsp;Here=E2=80=99s why:</div><div><br></div><div>Th=
-e package for wireguard on the mac only includes wg, you don=E2=80=99t get =
-wg-quick or any other tools. Not a big deal, but it makes a difference spec=
-ially because the quick start instructions use ip-link and other ip related=
- commands. Unfortunately, on the mac there=E2=80=99s no official release of=
- ip-link and the iproute2mac brew package is only a subset of iproute2 so i=
-t doesn=E2=80=99t work. I know that ip is the future replacement for ifconf=
-ig, but ifconfig is practically everywhere there=E2=80=99s a POSIX-like OS.=
- To make matters worse, even the =E2=80=9Cclassic=E2=80=9D capabilities for=
- setting up routing on linux with netns are not available on the mac either=
-.</div><div><br></div><div>Forgive my na=C3=AFvet=C3=A9 - I=E2=80=99m a dev=
-eloper, not a network engineer - but if I had the ifconfig (perhaps also vc=
-onfig) versions of the following quick start commands, plus the official wg=
- for the mac, wouldn=E2=80=99t I be able to connect?:</div><div><br></div><=
-div><span style=3D"-webkit-text-size-adjust: auto; background-color: rgba(2=
-55, 255, 255, 0);">ip link add dev wg0 type wireguard</span>&nbsp;<br>ip ad=
-dress add dev wg0 IPRANGE</div><div>ip link set up dev wg0<br><br><br>Last,=
- but not least... I=E2=80=99m very interested in the Rust version of wiregu=
-ard. I read the code and the readme, but I couldn=E2=80=99t tell what the e=
-xact capabilities and limitations are as a cross-platform userspace impleme=
-ntation. Could one redirect all internet traffic through it? Would it work =
-on the mac as it is?</div><div><br></div><div>Thanks again,</div><div>Jose<=
-/div><div><br></div><div><br><br></div>
-</body></html>
-------=_Part_2638377_701623890.1498501473434--
+---2015796448-1728771282-1498506902=:17486
+Content-Type: text/plain; charset=US-ASCII; name=wireguard-compat-rhel7.patch
+Content-Transfer-Encoding: BASE64
+Content-ID: <alpine.LRH.2.20.1706262055020.17486@bcny.fcbq.bet>
+Content-Description: 
+Content-Disposition: attachment; filename=wireguard-compat-rhel7.patch
+
+ZGlmZiAtLWdpdCBhL3NyYy9jb21wYXQvY29tcGF0LmggYi9zcmMvY29tcGF0
+L2NvbXBhdC5oDQppbmRleCAxNTlhYmIxLi45MDNjOWJlIDEwMDY0NA0KLS0t
+IGEvc3JjL2NvbXBhdC9jb21wYXQuaA0KKysrIGIvc3JjL2NvbXBhdC9jb21w
+YXQuaA0KQEAgLTcsNiArNywxMyBAQA0KICNpbmNsdWRlIDxsaW51eC92ZXJz
+aW9uLmg+DQogI2luY2x1ZGUgPGxpbnV4L3R5cGVzLmg+DQogDQorLy8jdW5k
+ZWYgIExJTlVYX1ZFUlNJT05fQ09ERQ0KKy8vI2RlZmluZSBMSU5VWF9WRVJT
+SU9OX0NPREUgS0VSTkVMX1ZFUlNJT04oMywgMTgsIDApDQorDQorI2lmIGRl
+ZmluZWQoUkhFTF9NQUpPUikgJiYgUkhFTF9NQUpPUiA8PSA3DQorI2RlZmlu
+ZSBJU1JIRUw3DQorI2VuZGlmDQorDQogI2lmIExJTlVYX1ZFUlNJT05fQ09E
+RSA8IEtFUk5FTF9WRVJTSU9OKDMsIDEwLCAwKQ0KICNlcnJvciAiV2lyZUd1
+YXJkIHJlcXVpcmVzIExpbnV4ID49IDMuMTAiDQogI2VuZGlmDQpAQCAtMTUs
+NyArMjIsNyBAQA0KICNkZWZpbmUgQ09ORklHX0FTX1NTU0UzDQogI2VuZGlm
+DQogDQotI2lmIExJTlVYX1ZFUlNJT05fQ09ERSA8IEtFUk5FTF9WRVJTSU9O
+KDMsIDE4LCAwKQ0KKyNpZiAoTElOVVhfVkVSU0lPTl9DT0RFIDwgS0VSTkVM
+X1ZFUlNJT04oMywgMTgsIDApKSAmJiAhZGVmaW5lZChJU1JIRUw3KQ0KICNk
+ZWZpbmUgaGVhZGVyc19zdGFydCBkYXRhDQogI2RlZmluZSBoZWFkZXJzX2Vu
+ZCBkYXRhDQogI2VuZGlmDQpAQCAtMzQsMTMgKzQxLDE1IEBADQogI2VuZGlm
+DQogDQogI2lmIChMSU5VWF9WRVJTSU9OX0NPREUgPiBLRVJORUxfVkVSU0lP
+TigzLCAxOSwgMCkgJiYgTElOVVhfVkVSU0lPTl9DT0RFIDwgS0VSTkVMX1ZF
+UlNJT04oMywgMTksIDYpKSB8fCBcDQotICAgIChMSU5VWF9WRVJTSU9OX0NP
+REUgPCBLRVJORUxfVkVSU0lPTigzLCAxOCwgMTIpICYmIExJTlVYX1ZFUlNJ
+T05fQ09ERSA+IEtFUk5FTF9WRVJTSU9OKDMsIDE3LCAwKSkgfHwgXA0KLSAg
+ICAoTElOVVhfVkVSU0lPTl9DT0RFIDwgS0VSTkVMX1ZFUlNJT04oMywgMTYs
+IDgpICYmIExJTlVYX1ZFUlNJT05fQ09ERSA+PSBLRVJORUxfVkVSU0lPTigz
+LCAxNSwgMCkpIHx8IFwNCi0gICAgTElOVVhfVkVSU0lPTl9DT0RFIDwgS0VS
+TkVMX1ZFUlNJT04oMywgMTQsIDQwKQ0KKyAgIChMSU5VWF9WRVJTSU9OX0NP
+REUgPCBLRVJORUxfVkVSU0lPTigzLCAxOCwgMTIpICYmIExJTlVYX1ZFUlNJ
+T05fQ09ERSA+IEtFUk5FTF9WRVJTSU9OKDMsIDE3LCAwKSkgfHwgXA0KKyAg
+IChMSU5VWF9WRVJTSU9OX0NPREUgPCBLRVJORUxfVkVSU0lPTigzLCAxNiwg
+OCkgJiYgTElOVVhfVkVSU0lPTl9DT0RFID49IEtFUk5FTF9WRVJTSU9OKDMs
+IDE1LCAwKSkgfHwgXA0KKyAgIExJTlVYX1ZFUlNJT05fQ09ERSA8IEtFUk5F
+TF9WRVJTSU9OKDMsIDE0LCA0MCkNCisjaWYgIWRlZmluZWQoSVNSSEVMNykN
+CiAjZGVmaW5lIGRldl9yZWN1cnNpb25fbGV2ZWwoKSAwDQogI2VuZGlmDQor
+I2VuZGlmDQogDQotI2lmIExJTlVYX1ZFUlNJT05fQ09ERSA8IEtFUk5FTF9W
+RVJTSU9OKDQsIDMsIDApDQorI2lmIChMSU5VWF9WRVJTSU9OX0NPREUgPCBL
+RVJORUxfVkVSU0lPTig0LCAzLCAwKSkgJiYgIWRlZmluZWQoSVNSSEVMNykN
+CiAjZGVmaW5lIGlwdjZfZHN0X2xvb2t1cChhLCBiLCBjLCBkKSBpcHY2X2Rz
+dF9sb29rdXAoYiwgYywgZCkNCiAjZW5kaWYNCiANCkBAIC00OSwyMSArNTgs
+MjEgQEANCiAgICAgKExJTlVYX1ZFUlNJT05fQ09ERSA8IEtFUk5FTF9WRVJT
+SU9OKDMsIDE4LCAyNykgJiYgTElOVVhfVkVSU0lPTl9DT0RFID49IEtFUk5F
+TF9WRVJTSU9OKDMsIDE3LCAwKSkgfHwgXA0KICAgICAoTElOVVhfVkVSU0lP
+Tl9DT0RFIDwgS0VSTkVMX1ZFUlNJT04oMywgMTYsIDgpICYmIExJTlVYX1ZF
+UlNJT05fQ09ERSA+PSBLRVJORUxfVkVSU0lPTigzLCAxNSwgMCkpIHx8IFwN
+CiAgICAgKExJTlVYX1ZFUlNJT05fQ09ERSA8IEtFUk5FTF9WRVJTSU9OKDMs
+IDE0LCA0MCkgJiYgTElOVVhfVkVSU0lPTl9DT0RFID49IEtFUk5FTF9WRVJT
+SU9OKDMsIDEzLCAwKSkgfHwgXA0KLSAgICAoTElOVVhfVkVSU0lPTl9DT0RF
+IDwgS0VSTkVMX1ZFUlNJT04oMywgMTIsIDU0KSkNCisgICAgKExJTlVYX1ZF
+UlNJT05fQ09ERSA8IEtFUk5FTF9WRVJTSU9OKDMsIDEyLCA1NCkgfHwgZGVm
+aW5lZChJU1JIRUw3KSkNCiANCiAjaW5jbHVkZSA8bGludXgvaWYuaD4NCiAj
+aW5jbHVkZSA8bmV0L2lwX3R1bm5lbHMuaD4NCiAjZGVmaW5lIElQNl9FQ05f
+c2V0X2NlKGEsIGIpIElQNl9FQ05fc2V0X2NlKGIpDQogI2VuZGlmDQogDQot
+I2lmIExJTlVYX1ZFUlNJT05fQ09ERSA8IEtFUk5FTF9WRVJTSU9OKDQsIDks
+IDApDQorI2lmIChMSU5VWF9WRVJTSU9OX0NPREUgPCBLRVJORUxfVkVSU0lP
+Tig0LCA5LCAwKSkNCiAjZGVmaW5lIHRpbWVfaXNfYmVmb3JlX2ppZmZpZXM2
+NChhKSB0aW1lX2FmdGVyNjQoZ2V0X2ppZmZpZXNfNjQoKSwgYSkNCiAjZGVm
+aW5lIHRpbWVfaXNfYWZ0ZXJfamlmZmllczY0KGEpIHRpbWVfYmVmb3JlNjQo
+Z2V0X2ppZmZpZXNfNjQoKSwgYSkNCiAjZGVmaW5lIHRpbWVfaXNfYmVmb3Jl
+X2VxX2ppZmZpZXM2NChhKSB0aW1lX2FmdGVyX2VxNjQoZ2V0X2ppZmZpZXNf
+NjQoKSwgYSkNCiAjZGVmaW5lIHRpbWVfaXNfYWZ0ZXJfZXFfamlmZmllczY0
+KGEpIHRpbWVfYmVmb3JlX2VxNjQoZ2V0X2ppZmZpZXNfNjQoKSwgYSkNCiAj
+ZW5kaWYNCiANCi0jaWYgTElOVVhfVkVSU0lPTl9DT0RFIDwgS0VSTkVMX1ZF
+UlNJT04oMywgMTIsIDApICYmIElTX0VOQUJMRUQoQ09ORklHX0lQVjYpDQor
+I2lmIExJTlVYX1ZFUlNJT05fQ09ERSA8IEtFUk5FTF9WRVJTSU9OKDMsIDEy
+LCAwKSAmJiBJU19FTkFCTEVEKENPTkZJR19JUFY2KSAmJiAhZGVmaW5lZChJ
+U1JIRUw3KQ0KICNpbmNsdWRlIDxuZXQvaXB2Ni5oPg0KIHN0cnVjdCBpcHY2
+X3N0dWJfdHlwZSB7DQogCXZvaWQgKnVkcHY2X2VuY2FwX2VuYWJsZTsNCkBA
+IC0xMTQsMTcgKzEyMywxNyBAQCBzdGF0aWMgaW5saW5lIHUzMiBnZXRfcmFu
+ZG9tX3UzMih2b2lkKQ0KIH0NCiAjZW5kaWYNCiANCi0jaWYgTElOVVhfVkVS
+U0lPTl9DT0RFIDwgS0VSTkVMX1ZFUlNJT04oMywgMTgsIDApDQorI2lmIExJ
+TlVYX1ZFUlNJT05fQ09ERSA8IEtFUk5FTF9WRVJTSU9OKDMsIDE4LCAwKSAm
+JiAhZGVmaW5lZChJU1JIRUw3KQ0KIHN0YXRpYyBpbmxpbmUgdm9pZCBuZXRp
+Zl9rZWVwX2RzdChzdHJ1Y3QgbmV0X2RldmljZSAqZGV2KQ0KIHsNCiAJZGV2
+LT5wcml2X2ZsYWdzICY9IH5JRkZfWE1JVF9EU1RfUkVMRUFTRTsNCiB9DQog
+I2VuZGlmDQogDQotI2lmIExJTlVYX1ZFUlNJT05fQ09ERSA8IEtFUk5FTF9W
+RVJTSU9OKDMsIDE0LCAwKQ0KKyNpZiBMSU5VWF9WRVJTSU9OX0NPREUgPCBL
+RVJORUxfVkVSU0lPTigzLCAxNCwgMCkgJiYgIWRlZmluZWQoSVNSSEVMNykN
+CiAjZGVmaW5lIHBjcHVfc3dfbmV0c3RhdHMgcGNwdV90c3RhdHMNCiAjZGVm
+aW5lIG5ldGRldl9hbGxvY19wY3B1X3N0YXRzIGFsbG9jX3BlcmNwdQ0KLSNl
+bGlmIExJTlVYX1ZFUlNJT05fQ09ERSA8IEtFUk5FTF9WRVJTSU9OKDMsIDE1
+LCAwKQ0KKyNlbGlmIExJTlVYX1ZFUlNJT05fQ09ERSA8IEtFUk5FTF9WRVJT
+SU9OKDMsIDE1LCAwKSAmJiAhZGVmaW5lZChJU1JIRUw3KQ0KICNkZWZpbmUg
+bmV0ZGV2X2FsbG9jX3BjcHVfc3RhdHModHlwZSkJCQkJCVwNCiAoewkJCQkJ
+CQkJCVwNCiAJdHlwZW9mKHR5cGUpIF9fcGVyY3B1ICpwY3B1X3N0YXRzID0g
+YWxsb2NfcGVyY3B1KHR5cGUpOwkJXA0KQEAgLTE1Myw3ICsxNjIsNyBAQCBz
+dGF0aWMgaW5saW5lIHZvaWQgKm91cl9wc2tiX3B1dChzdHJ1Y3Qgc2tfYnVm
+ZiAqc2tiLCBzdHJ1Y3Qgc2tfYnVmZiAqdGFpbCwgaW50DQogI2RlZmluZSBw
+c2tiX3B1dCBvdXJfcHNrYl9wdXQNCiAjZW5kaWYNCiANCi0jaWYgTElOVVhf
+VkVSU0lPTl9DT0RFIDwgS0VSTkVMX1ZFUlNJT04oMywgMTEsIDApDQorI2lm
+IExJTlVYX1ZFUlNJT05fQ09ERSA8IEtFUk5FTF9WRVJTSU9OKDMsIDExLCAw
+KSAmJiAhZGVmaW5lZChJU1JIRUw3KQ0KICNpbmNsdWRlIDxuZXQveGZybS5o
+Pg0KIHN0YXRpYyBpbmxpbmUgdm9pZCBza2Jfc2NydWJfcGFja2V0KHN0cnVj
+dCBza19idWZmICpza2IsIGJvb2wgeG5ldCkNCiB7DQpAQCAtMTc1LDcgKzE4
+NCw3IEBAIHN0YXRpYyBpbmxpbmUgdm9pZCBza2Jfc2NydWJfcGFja2V0KHN0
+cnVjdCBza19idWZmICpza2IsIGJvb2wgeG5ldCkNCiB9DQogI2VuZGlmDQog
+DQotI2lmIExJTlVYX1ZFUlNJT05fQ09ERSA8IEtFUk5FTF9WRVJTSU9OKDMs
+IDEyLCAwKQ0KKyNpZiBMSU5VWF9WRVJTSU9OX0NPREUgPCBLRVJORUxfVkVS
+U0lPTigzLCAxMiwgMCkgJiYgIWRlZmluZWQoSVNSSEVMNykNCiAjaW5jbHVk
+ZSA8bGludXgvcmFuZG9tLmg+DQogc3RhdGljIGlubGluZSB1MzIgcHJhbmRv
+bV91MzJfbWF4KHUzMiBlcF9ybykNCiB7DQpAQCAtMTgzLDcgKzE5Miw3IEBA
+IHN0YXRpYyBpbmxpbmUgdTMyIHByYW5kb21fdTMyX21heCh1MzIgZXBfcm8p
+DQogfQ0KICNlbmRpZg0KIA0KLSNpZiBMSU5VWF9WRVJTSU9OX0NPREUgPCBL
+RVJORUxfVkVSU0lPTigzLCAxMCwgNzUpDQorI2lmIExJTlVYX1ZFUlNJT05f
+Q09ERSA8IEtFUk5FTF9WRVJTSU9OKDMsIDEwLCA3NSkgJiYgIWRlZmluZWQo
+SVNSSEVMNykNCiAjZGVmaW5lIFU4X01BWCAoKHU4KX4wVSkNCiAjZGVmaW5l
+IFM4X01BWCAoKHM4KShVOF9NQVggPj4gMSkpDQogI2RlZmluZSBTOF9NSU4g
+KChzOCkoLVM4X01BWCAtIDEpKQ0KQEAgLTE5OCw3ICsyMDcsNyBAQCBzdGF0
+aWMgaW5saW5lIHUzMiBwcmFuZG9tX3UzMl9tYXgodTMyIGVwX3JvKQ0KICNk
+ZWZpbmUgUzY0X01JTiAoKHM2NCkoLVM2NF9NQVggLSAxKSkNCiAjZW5kaWYN
+CiANCi0jaWYgTElOVVhfVkVSU0lPTl9DT0RFIDwgS0VSTkVMX1ZFUlNJT04o
+MywgMTAsIDYwKQ0KKyNpZiBMSU5VWF9WRVJTSU9OX0NPREUgPCBLRVJORUxf
+VkVSU0lPTigzLCAxMCwgNjApICYmICFkZWZpbmVkKElTUkhFTDcpDQogLyog
+TWFraW5nIHRoaXMgc3RhdGljIG1heSB2ZXJ5IHdlbGwgaW52YWxpZGF0ZSBp
+dHMgdXNlZnVsbmVzcywNCiAgKiBidXQgc28gaXQgZ29lcyB3aXRoIGNvbXBh
+dCBjb2RlLiAqLw0KIHN0YXRpYyBpbmxpbmUgdm9pZCBtZW16ZXJvX2V4cGxp
+Y2l0KHZvaWQgKnMsIHNpemVfdCBjb3VudCkNCkBAIC0yMDgsNyArMjE3LDcg
+QEAgc3RhdGljIGlubGluZSB2b2lkIG1lbXplcm9fZXhwbGljaXQodm9pZCAq
+cywgc2l6ZV90IGNvdW50KQ0KIH0NCiAjZW5kaWYNCiANCi0jaWYgTElOVVhf
+VkVSU0lPTl9DT0RFIDwgS0VSTkVMX1ZFUlNJT04oMywgMTIsIDApDQorI2lm
+IExJTlVYX1ZFUlNJT05fQ09ERSA8IEtFUk5FTF9WRVJTSU9OKDMsIDEyLCAw
+KSAmJiAhZGVmaW5lZChJU1JIRUw3KQ0KIHN0YXRpYyBjb25zdCBzdHJ1Y3Qg
+aW42X2FkZHIgb3VyX2luNmFkZHJfYW55ID0gSU42QUREUl9BTllfSU5JVDsN
+CiAjZGVmaW5lIGluNmFkZHJfYW55IG91cl9pbjZhZGRyX2FueQ0KICNlbmRp
+Zg0KQEAgLTI2NywxMSArMjc2LDExIEBAIHN0YXRpYyBpbmxpbmUgaW50IGdl
+dF9yYW5kb21fYnl0ZXNfd2FpdCh2b2lkICpidWYsIGludCBuYnl0ZXMpDQog
+fQ0KICNlbmRpZg0KIA0KLSNpZiBMSU5VWF9WRVJTSU9OX0NPREUgPCBLRVJO
+RUxfVkVSU0lPTigzLCAxMSwgMCkNCisjaWYgTElOVVhfVkVSU0lPTl9DT0RF
+IDwgS0VSTkVMX1ZFUlNJT04oMywgMTEsIDApICYmICFkZWZpbmVkKElTUkhF
+TDcpDQogI2RlZmluZSBzeXN0ZW1fcG93ZXJfZWZmaWNpZW50X3dxIHN5c3Rl
+bV91bmJvdW5kX3dxDQogI2VuZGlmDQogDQotI2lmIExJTlVYX1ZFUlNJT05f
+Q09ERSA8IEtFUk5FTF9WRVJTSU9OKDMsIDE3LCAwKQ0KKyNpZiBMSU5VWF9W
+RVJTSU9OX0NPREUgPCBLRVJORUxfVkVSU0lPTigzLCAxNywgMCkgJiYgIWRl
+ZmluZWQoSVNSSEVMNykNCiAjaW5jbHVkZSA8bGludXgva3RpbWUuaD4NCiBz
+dGF0aWMgaW5saW5lIHU2NCBrdGltZV9nZXRfbnModm9pZCkNCiB7DQpAQCAt
+MzM5LDQgKzM0OCw3IEBAIHN0YXRpYyBpbmxpbmUgc3RydWN0IG5ldF9kZXZp
+Y2UgKm5ldGRldl9wdWIodm9pZCAqZGV2KQ0KICNkZWZpbmUgbmV0X2RiZ19z
+a2JfcmF0ZWxpbWl0ZWQoZm10LCBza2IsIC4uLikNCiAjZW5kaWYNCiANCisj
+aWYgZGVmaW5lZChJU1JIRUw3KQ0KKyN1bmRlZiBJU1JIRUw3DQorI2VuZGlm
+DQogI2VuZGlmDQo=
+
+---2015796448-1728771282-1498506902=:17486--
