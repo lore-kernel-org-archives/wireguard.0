@@ -1,23 +1,33 @@
-Return-Path: luci@createc.ro
+Return-Path: wireguard@wut.to
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6c08ce24
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4a10aed3
  for <wireguard@lists.zx2c4.com>;
- Tue, 27 Jun 2017 21:08:23 +0000 (UTC)
-Received: from mail.crimel.ro (mail.crimel.ro [5.2.196.145])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5dd155ba
+ Tue, 27 Jun 2017 21:13:40 +0000 (UTC)
+Received: from opal.spod.org (opal.spod.org [217.135.32.99])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 85eaa998
  for <wireguard@lists.zx2c4.com>;
- Tue, 27 Jun 2017 21:08:22 +0000 (UTC)
-Subject: Re: fix centos 6 compile
+ Tue, 27 Jun 2017 21:13:40 +0000 (UTC)
+Date: Tue, 27 Jun 2017 22:30:10 +0100 (BST)
+From: wireguard@wut.to
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-References: <8cfef683-d9e1-fb6b-704c-f0c938c84c5b@createc.ro>
- <72b8742f-c5e7-557e-a45c-3b0b99efaf47@createc.ro>
- <CAHmME9pW9Ritr6D1kQRS6F__mXcmko_c5+MkXMrkbuOnUvKR=Q@mail.gmail.com>
-From: Lucian Cristian <luci@createc.ro>
-Message-ID: <7fd07a69-8c02-e055-d68c-e1310900bb49@createc.ro>
-Date: Wed, 28 Jun 2017 00:24:54 +0300
+Subject: Re: making wireguard work on RHEL7/etc.
+In-Reply-To: <CAHmME9ph732BdGn=COGF4b2Q-7fs_XY1WWgE+o6zjRdLDYYZFA@mail.gmail.com>
+Message-ID: <alpine.LRH.2.20.1706272226190.17486@bcny.fcbq.bet>
+References: <alpine.LRH.2.20.1706260917250.14074@bcny.fcbq.bet>
+ <CAHmME9p++Q0v6Ypt2Y5AFZO36hHnTKv7KBnWNnSk84V8YK+oJw@mail.gmail.com>
+ <alpine.LRH.2.20.1706261023540.14074@bcny.fcbq.bet>
+ <CAHmME9oHG6a1==KzrrfuvmkKoVJHhTtToP00qYtcKXEGDCnm8Q@mail.gmail.com>
+ <CAHmME9ph1LQ0kufpf2RMDsMRpz7txWJGvr=d=Jr5Z1kxqqOWfQ@mail.gmail.com>
+ <alpine.LRH.2.20.1706262144070.17486@bcny.fcbq.bet>
+ <20170627110530.GC3026@zx2c4.com>
+ <alpine.LRH.2.20.1706271237180.17486@bcny.fcbq.bet>
+ <CAHmME9q8+Y_x8fDZ4n-EmU_NB6+vfBttFQ3S58h+B-j-j8e2Kg@mail.gmail.com>
+ <alpine.LRH.2.20.1706272042170.17486@bcny.fcbq.bet>
+ <20170627195904.GA14889@zx2c4.com>
+ <CAHmME9ocHgYQe1gXRrYjJP89Ko+bFs_pt6oZtse7TaL-0KCaJA@mail.gmail.com>
+ <CAHmME9ph732BdGn=COGF4b2Q-7fs_XY1WWgE+o6zjRdLDYYZFA@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9pW9Ritr6D1kQRS6F__mXcmko_c5+MkXMrkbuOnUvKR=Q@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -28,23 +38,14 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On 27.06.2017 23:59, Jason A. Donenfeld wrote:
-> Isn't EL6 still on 2.6.32, which is far away from the 3.10 that
-> WireGuard requires? In that case you'll be running with a custom
-> kernel. Why can't you just update your gcc from the same external
-> repo, at the same time?
+Jason A. Donenfeld wrote:
+
+> Okay, and for the kernel, please give this commit a try:
 >
-> I just backported to EL7.3 and felt nauseous the whole time. Not sure
-> I have the stomach for EL6...
+> https://git.zx2c4.com/WireGuard/commit/?id=32e20ef627048ffa7f8cb3567e6b4c639cd42607
+>
+> Or just run the latest git master.
+>
 
-the elrepo kernel for centos 6 is mainline or LT
-
-the kernel is compiled with gcc 4.4.7 and won't run modules compiled 
-with newer gcc, the patch is only for older gcc support, not for kernel, 
-I don't think that  anyone will complain updating to kernel 4.4+ on el6
-
-the old approach was to compile the module with gcc 4.4.7 commenting the 
-two lines in socket.c and after that to build the wg tools with gcc 4.8 
-but with this patch the compile is straightforward
-
-regards
+after a quick wg-quick stop / rmmod / insmod / wg-quick start / ping this
+seems to work.
