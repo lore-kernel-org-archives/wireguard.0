@@ -1,19 +1,26 @@
-Return-Path: admin@hda.me
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8283e9ca
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8b75c567
  for <wireguard@lists.zx2c4.com>;
- Thu, 29 Jun 2017 17:45:34 +0000 (UTC)
-Received: from sender-of-o52.zoho.com (sender-of-o52.zoho.com [135.84.80.217])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e9be81b4
+ Thu, 29 Jun 2017 19:11:15 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c53e1fae
  for <wireguard@lists.zx2c4.com>;
- Thu, 29 Jun 2017 17:45:34 +0000 (UTC)
-Date: Thu, 29 Jun 2017 20:02:15 +0200
-From: HDA <admin@hda.me>
-To: <wireguard@lists.zx2c4.com>,  <reuben.m.work@gmail.com>
-Message-ID: <15cf5049001.efa4dc9c195686.3384309935944529785@hda.me>
-Subject: Re: snapshot 0.0.20170628 broken?
+ Thu, 29 Jun 2017 19:11:15 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 28f4fb8d
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 29 Jun 2017 19:24:49 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id ecfcf323
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 29 Jun 2017 19:24:49 +0000 (UTC)
+Date: Thu, 29 Jun 2017 21:27:58 +0200
+To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: [ANNOUNCE] WireGuard Snapshot `0.0.20170629` Available
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Message-Id: <f64aa1535f888863@frisell.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -23,77 +30,66 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Just to be sure, you can replace wg-quick for 0.0.20170628 with 0.0.2017061=
-3  wg-quick version from https://git.zx2c4.com/WireGuard/tree/src/tools/wg-=
-quick.bash?h=3D0.0.20170613 and try it out.
-On Thu, Jun 29, 2017, at 17:23, Reuben Martin wrote:
-> On Thursday, June 29, 2017 11:39:33 AM CDT Jason A. Donenfeld wrote:
-> > Hey Reuben,
-> >=20
-> > I'm unable to reproduce these results. How sure are you about this
-> > situation? Have you tried to reproduce more than once? What are you
-> > using to configure the peers?
-> >=20
-> > Jason
->=20
-> Yes, I can consistantly reproduce when I move all 3 computers to the
-> newer
-> snapshot. This is Gentoo system using (gasp) systemd. I configure the
-> peers
-> using the wg-quick@wg0 service unit. I use a post-up and pre-down in the
-> config to setup a vxlan overlayed on top of the VPN connections, but I
-> don=E2=80=99t
-> think that should matter since this is just using the wg0 interface
-> directly. I
-> can provide that setup info if you think it might be relevant.
->=20
-> tshark capture of a simple wget from the computer that can=E2=80=99t conn=
-ect.
->=20
->=20
->     5 7.615139647 192.168.100.12 =E2=86=92 192.168.100.1 TCP 60 54134 =E2=
-=86=92 80 [SYN]
->     Seq=3D0 Win=3D27600 Len=3D0 MSS=3D1380 SACK_PERM=3D1 TSval=3D38525263=
-53 TSecr=3D0
->     WS=3D128
->     6 7.684940917 192.168.100.1 =E2=86=92 192.168.100.12 TCP 60 80 =E2=86=
-=92 54134 [SYN,
->     ACK] Seq=3D0 Ack=3D1 Win=3D27360 Len=3D0 MSS=3D1380 SACK_PERM=3D1
->     TSval=3D3308550712 TSecr=3D3852526353 WS=3D128
->     7 7.684956294 192.168.100.12 =E2=86=92 192.168.100.1 TCP 52 54134 =E2=
-=86=92 80 [ACK]
->     Seq=3D1 Ack=3D1 Win=3D27648 Len=3D0 TSval=3D3852526423 TSecr=3D330855=
-0712
->     8 7.685008715 192.168.100.12 =E2=86=92 192.168.100.1 HTTP 202 GET /in=
-dex.html
->     HTTP/1.1=20
->     9 7.754723388 192.168.100.1 =E2=86=92 192.168.100.12 TCP 52 80 =E2=86=
-=92 54134 [ACK]
->     Seq=3D1 Ack=3D151 Win=3D28544 Len=3D0 TSval=3D3308550782 TSecr=3D3852=
-526423
->    10 7.998440304 a6:67:de:b7:51:27 =E2=86=92 Spanning-tree-(for-bridges)=
-_00 STP
->    88 Conf. Root =3D 0/0/8a:46:93:88:40:8b  Cost =3D 0  Port =3D 0x8003
->    11 9.982462221 a6:67:de:b7:51:27 =E2=86=92 Spanning-tree-(for-bridges)=
-_00 STP
->    88 Conf. Root =3D 0/0/8a:46:93:88:40:8b  Cost =3D 0  Port =3D 0x8003
->    12 10.321889091 192.168.100.12 =E2=86=92 192.168.100.1 TCP 52 54134 =
-=E2=86=92 80 [FIN,
->    ACK] Seq=3D151 Ack=3D1 Win=3D27648 Len=3D0 TSval=3D3852529060 TSecr=3D=
-3308550782
->    13 10.392081110 192.168.100.1 =E2=86=92 192.168.100.12 TCP 52 [TCP Pre=
-vious
->    segment not captured] 80 =E2=86=92 54134 [FIN, ACK] Seq=3D1010 Ack=3D1=
-52 Win=3D28544
->    Len=3D0 TSval=3D3308553420 TSecr=3D3852529060
->    14 10.392097109 192.168.100.12 =E2=86=92 192.168.100.1 TCP 40 54134 =
-=E2=86=92 80 [RST]
->    Seq=3D152 Win=3D0 Len=3D0
->=20
->=20
-> -Reuben
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
+Hello,
+
+A new snapshot, `0.0.20170629`, has been tagged in the git repository.
+
+Please note that this snapshot is, like the rest of the project at this point
+in time, experimental, and does not consitute a real release that would be
+considered secure and bug-free. WireGuard is generally thought to be fairly
+stable, and most likely will not crash your computer (though it may).
+However, as this is a pre-release snapshot, it comes with no guarantees, and
+its security is not yet to be depended on; it is not applicable for CVEs.
+
+With all that said, if you'd like to test this snapshot out, there are a
+few relevent changes.
+
+== Changes ==
+
+  This release fixes a regression reported by Reuben Martin, which we
+  then debugged together on his hardware.
+  
+  Certain length checking conflicted with GRO on particular hardware which only
+  pulled the precise UDP header into the skb head fragment. This caused certain
+  packets to be rejected unnecessarily.
+  
+  The regression was introduced during a cleanup of the last snapshot. The
+  static analysis suite is being augmented to catch these types of errors in the
+  future.
+
+As always, the source is available at https://git.zx2c4.com/WireGuard/ and
+information about the project is available at https://www.wireguard.io/ .
+
+This snapshot is available in tarball form here:
+  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-0.0.20170629.tar.xz
+  SHA2-256: 51c44624f20eaff96780845214f85491c0c7330598633cd180bb2a6547e5d2b2
+  BLAKE2b-256: cbbf05325863f18c87cfd2a9789fe35892c0fa3fd338a5ca8db2e31a8cb92653
+
+If you're a snapshot package maintainer, please bump your package version. If
+you're a user, the WireGuard team welcomes any and all feedback on this latest
+snapshot.
+
+Thank you,
+Jason Donenfeld
+
+
+-----BEGIN PGP SIGNATURE-----
+
+iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAllVVLMQHGphc29uQHp4
+MmM0LmNvbQAKCRBJ/HASpd4DrneREADS1547FFb308knr/oZuw+wVZedIvT3Ih64
+bu6nigNNBhhcANePKKXHAYS0oBrcIkyJazfgSzp1uzwn8wXXFTMSJ2P1GuZz+SFc
+U1QyHJA9r0GiUoodWtoP3lj3dKz6XuvQGU6VpHhJaq/DlRVeFeCdjrEudKywCOTc
+lauzkxkktwL+QjT2c06RaKIScJHRX8z9uUlCWfLIy1593EBgi764N27uS/gGoNey
+ZkJizPxrKcE20XNCIGEDkEsF5lBtXFH+yNUkHbRdewbsLwiNmDL6Hii/ZBmSun1s
+Yw4cWfKwuB939vw5v5xHLllvmI58ILeBWvUMCErMUCV6jo5BSosTUZGc+ZE4ECHd
+ZANcZWHDUflrBoT0v2yYQIHtCvsFASP2GFoX6WXvxbyKctoOktF3wF3R2C7pcIvN
+Cl3tnAmVW6oMgod0H6QGVszqB5xKb+6sK3ksRchG2rYAbw6QaNLvU9P58MjFcBzG
+WQCkLhxvngmddbHhmoCkj9KPQdusr/2c4cuUe6nwyntxN0yJ4F9C17MbBgtGRa4/
+v+3DILDOGG8nf847RY9U3oMgaMVQPWZiflQwKutRF10YUYlhSSn6/Rc2p87pR2Mx
+LQeaL1Ru7meeyEenqsSbdzwnY7kZYz5KWcxlAW+HZ5OVdCyhPB/k3y/EPJVm6Lj5
+u+vI6rpkew==
+=qCMn
+-----END PGP SIGNATURE-----
