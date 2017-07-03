@@ -1,17 +1,23 @@
-Return-Path: www-data@WordPress-on-1404.071116-362
+Return-Path: aeforeve@mail.ru
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e588b547
- for <wireguard@lists.zx2c4.com>; Sun, 2 Jul 2017 12:06:43 +0000 (UTC)
-Received: from WordPress-on-1404.071116-362 (37.139.12.48 [37.139.12.48])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 91eabd1f
- for <wireguard@lists.zx2c4.com>; Sun, 2 Jul 2017 12:06:43 +0000 (UTC)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 23311661
+ for <wireguard@lists.zx2c4.com>; Mon, 3 Jul 2017 20:52:06 +0000 (UTC)
+Received: from f401.i.mail.ru (f401.i.mail.ru [185.5.136.72])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ad9132ab
+ for <wireguard@lists.zx2c4.com>; Mon, 3 Jul 2017 20:52:05 +0000 (UTC)
+Received: by f401.i.mail.ru with local (envelope-from <aeforeve@mail.ru>)
+ id 1dS8aw-0004Am-JB
+ for wireguard@lists.zx2c4.com; Tue, 04 Jul 2017 00:09:22 +0300
+From: =?UTF-8?B?YWU=?= <aeforeve@mail.ru>
 To: wireguard@lists.zx2c4.com
-Subject: Parcel 001544328 delivery notification, UPS
-Date: Sun, 2 Jul 2017 14:23:50 +0200
-Content-Type: multipart/mixed;
- boundary="bound1_cf04d5caf3b36261158f990eff077af5"
-Message-Id: <20170702122350.6917810A374@WordPress-on-1404.071116-362>
-From: www-data@WordPress-on-1404.071116-362 (www-data)
+Subject: =?UTF-8?B?cHJvYmxlbSAgd2lyZWd1YXJkICsgb3NwZiArIHVuY29ubmVjdGVkIHR1bm5l?=
+ =?UTF-8?B?bHM=?=
+MIME-Version: 1.0
+Date: Tue, 04 Jul 2017 00:09:22 +0300
+Message-ID: <1499116162.70598782@f401.i.mail.ru>
+Content-Type: multipart/alternative;
+ boundary="--ALT--NiHoLc69ANYJ6xkUf2jSkLomUDXMkHll1499116162"
+Reply-To: =?UTF-8?B?YWU=?= <aeforeve@mail.ru>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -21,51 +27,38 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---bound1_cf04d5caf3b36261158f990eff077af5
-Content-Type: text/plain; charset=us-ascii
 
-Dear Customer,
-
-UPS courier was unable to contact you for your parcel delivery.
-
-Please review delivery label in attachment!
-
-Yours truly,
- ,
-UPS Delivery Manager.
-
-
---bound1_cf04d5caf3b36261158f990eff077af5
-Content-Type: application/zip; name="UPS-Delivery-001544328.zip"
+----ALT--NiHoLc69ANYJ6xkUf2jSkLomUDXMkHll1499116162
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename=UPS-Delivery-001544328.zip
 
-UEsDBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAAAVVBTLURlbGl2ZXJ5LTAwMTU0NDMyOAAAAAAA
-AAAAAAAAAFBLAwQUAAAACAAAAAAA8g6/F1cEAACGBgAANAAAAFVQUy1EZWxpdmVyeS0wMDE1NDQz
-MjgvVVBTLURlbGl2ZXJ5LTAwMTU0NDMyOC5kb2MuanNdVFtzokoQfjZV+Q+UDyuulyCogZPKngIl
-0cQraDTZ2koNMsDI1WHwQir//Qxg3N3Dw1x6+pv+euj+9gAzNsQxc89wd9dXVhJsCAoDJk28xGcj
-5CawynzkczOGgclW7z6vr/YUdaSQn2UMY2iCiDobKLCbm9Av18vtOEyIA3Fw3ieRFwLTR54HcbOY
-Gj40EWgCQo9jivTgqbEJg5jgJCdwRqLAhMcYZLsmwOVfd0VsP/GRS+MH8MDIGIMTW9FUfSZPKnWm
-8qgusmm81If9aaV6gcQEWICCjk0PBjZx/kwXuBj5rI2RDfx6FJqhV/3AkCQ4YApjE8PIAxvI3sjy
-jV0vl/N3ODjIgyzlDKvXVx/XVyVksdlr/rg/h6PmUmYvGRgCl0YsUVSJ4FNmL5Wyk4zcNoxh5Hwl
-RCnt4XpqbOGGsAWz8lhfy/J4xDfX49FgIcuLWbmapVbgU+hnz1Hh8q81SJ7tntZPH4znHexM/Bl+
-62vKaWwoaAWi3mDGtVu3YpfjxsOhMtzKE8V2d46LHqUDp8hz9UGWpz15LsrZec9+pmtVtk+KPIsn
-fWn5kO7mcdKaCppITkNXPK7iZ2kmCh6Jp/OuG2rrjSKrjW6Xn/q8GZmQ1xurdAuURUcbT0x7me58
-gbj+GKfWWH93WnrjwX9N4RK++k8z03xwUUR2gk/wqjNMrVCcptN0E5qpoh+R3tNCUwrn7fUjUVYN
-vtdPoeW8CERcTd2RMB8dxmREcLwbqnPwPuW2zsAOpN6bhBwAzaGjDofcE24LYrtz2u+XCxEMZgqn
-HDw8soTdRrJHaqANFoqw5SPx/dRJn/ax9nbaG48Ne7XrqP3uQ4R2jeXsVve0TpxMlotdPFmKwkxQ
-kL4B2hG8vvRa9u1uM+9P2hguO5pmOAu13W3bA8lsa84L/0hQD8fD/vt82JfnspKuYlWMVgdnsd2/
-dSMXGKrf6G/fFF46hLqrNOYeeX496G0HeL79hNZe2moJFm/N0oYLn17UDnkKfLSSVHu21vu6EZgn
-rnIpD9s5EVoeFvBi+NsIsZcVzfFnVrG/LnacHPNaaoEWgN2OcStB0+hyvAVgBwBRlIy2dduVxOL6
-onKbYQQDNu/Kn0KD/1Vnyg4h0T83N+VaHqdWuanUbAxhGoRstVb5t1LLaraeUyvquFCc4r7flW1n
-xM9BqNZEVCLgAh7JxcFHluVmbW2TZq4WU4vNUvh9RYRoKxYOl8b/wnpJ6CJ6Vgbl3IoshmVzQI2r
-Mj8YVqy1aq0q851pcRzz7RvDM/f3dKCrc+AaI1A/vspk8LzVC95JTMd7BqPUB6xN6vm7VpvbENGH
-KuIWFEsOlQo29z8bCq0oFfLwedaMDSAbh4VfgvKZuWY/rlajq88/tcwH3il2WCrbZwU7S4hDZJlE
-hXBdnAt+7tauMx5lxHyUziBqasaRhwib2f/CXP7j/yJUNmES0BgQV/4GnDP0kAFIiKsfcA+8P/Z3
-n/8B8g6/F1cEAACGBgAAUEsBAgAACgAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAQAAAA
-AAAAAFVQUy1EZWxpdmVyeS0wMDE1NDQzMjhQSwECAAAUAAAACAAAAAAA8g6/F1cEAACGBgAANAAA
-AAAAAAAAACAAAABAAAAAVVBTLURlbGl2ZXJ5LTAwMTU0NDMyOC9VUFMtRGVsaXZlcnktMDAxNTQ0
-MzI4LmRvYy5qc1BLBQYAAAAAAgACAKYAAAD1BAAAAAA=
+c2l0dWF0aW9uCjIgdHVubmVscwoxIG5vcm1hbCAtIDJuZCB3aXRoIHVuY29ubmVjdGVkIGVuZGlu
+ZworIG9zcGZkIHF1YWdnZQoKQXQgc3RhcnQgZXZlcnl0aGluZyB3b3JrcyBmaW5lIC0gYnV0IGFm
+dGVyIH4gMzAtNjAgc2Vjb25kcyAtIHRoZSBvc3BmIHN0b3BzIHdvcmtpbmcKClRoaXMgaXMgZHVl
+IHRvIHRoZSBmYWN0IHRoYXQgdGhlIG9zcGYgZGFlbW9uIHNlbmRzIHBhY2tldHMgZnJvbSB0aGUg
+c2FtZSBzb2NrZXQgb24gZGlmZmVyZW50IGludGVyZmFjZXMgLSBhbmQgaW4gdGhlIHR1bm5lbCBp
+bnRlcmZhY2UgZXZlcnl0aGluZyBnb2VzIGZpbmUgLSBidXQgaW4gdGhlIDJuZCBwYWNrZXRzIGFj
+Y3VtdWxhdGUKQW5kIGFmdGVyIGEgY2VydGFpbiBhY2N1bXVsYXRpb24gLSB0aGUgc29ja2V0IG9m
+IHRoZSBkZW1vbiBkYWVtb24gc3RvcHMgd29ya2luZyBvbiBzZW5kaW5nIGNvbXBsZXRlbHkgIk5v
+IGJ1ZmZlciBzcGFjZSBhdmFpbGFibGUgIgoKSXMgaXQgcG9zc2libGUgdG8gZml4IHRoaXMgd2l0
+aCBzZXR0aW5ncz8KCg==
 
+----ALT--NiHoLc69ANYJ6xkUf2jSkLomUDXMkHll1499116162
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: base64
 
---bound1_cf04d5caf3b36261158f990eff077af5--
+CjxIVE1MPjxCT0RZPjxzcGFuIGlkPSJyZXN1bHRfYm94IiBsYW5nPSJlbiI+PHNwYW4+c2l0dWF0
+aW9uPC9zcGFuPjxicj48c3Bhbj4yIHR1bm5lbHM8L3NwYW4+PGJyPjxzcGFuPjEgbm9ybWFsIC0g
+Mm5kIHdpdGggdW5jb25uZWN0ZWQgZW5kaW5nPC9zcGFuPjxicj48c3Bhbj4rIG9zcGZkIHF1YWdn
+ZTwvc3Bhbj48YnI+PGJyPjxzcGFuPkF0IHN0YXJ0IGV2ZXJ5dGhpbmcgd29ya3MgZmluZSAtIGJ1
+dCBhZnRlciB+IDMwLTYwIHNlY29uZHMgLSB0aGUgb3NwZiBzdG9wcyB3b3JraW5nPC9zcGFuPjxi
+cj48YnI+PHNwYW4+VGhpcyBpcyBkdWUgdG8gdGhlIGZhY3QgdGhhdCB0aGUgb3NwZiBkYWVtb24g
+c2VuZHMgcGFja2V0cyBmcm9tIHRoZSBzYW1lIHNvY2tldCBvbiBkaWZmZXJlbnQgaW50ZXJmYWNl
+cyAtIGFuZCBpbiB0aGUgdHVubmVsIGludGVyZmFjZSBldmVyeXRoaW5nIGdvZXMgZmluZSAtIGJ1
+dCBpbiB0aGUgMm5kIHBhY2tldHMgYWNjdW11bGF0ZTwvc3Bhbj48YnI+PHNwYW4+QW5kIGFmdGVy
+IGEgY2VydGFpbiBhY2N1bXVsYXRpb24gLSB0aGUgc29ja2V0IG9mIHRoZSBkZW1vbiBkYWVtb24g
+c3RvcHMgd29ya2luZyBvbiBzZW5kaW5nIGNvbXBsZXRlbHkgIk5vIGJ1ZmZlciBzcGFjZSBhdmFp
+bGFibGU8L3NwYW4+Ijxicj48YnI+PHNwYW4+SXMgaXQgcG9zc2libGUgdG8gZml4IHRoaXMgd2l0
+aCBzZXR0aW5ncz88L3NwYW4+PC9zcGFuPjxicj48YnI+PC9CT0RZPjwvSFRNTD4K
+
+----ALT--NiHoLc69ANYJ6xkUf2jSkLomUDXMkHll1499116162--
