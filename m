@@ -1,27 +1,25 @@
-Return-Path: mailings@roelf.org
+Return-Path: aeforeve@mail.ru
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4ab465eb
- for <wireguard@lists.zx2c4.com>; Tue, 4 Jul 2017 15:38:30 +0000 (UTC)
-Received: from mail.aperture-laboratories.science
- (mail.aperture-laboratories.science [176.31.38.83])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6f8bc814
- for <wireguard@lists.zx2c4.com>; Tue, 4 Jul 2017 15:38:30 +0000 (UTC)
-Received: from mail.aperture-laboratories.science (localhost [127.0.0.1])
- by mail.aperture-laboratories.science (Postfix) with ESMTP id 95BF343D73
- for <wireguard@lists.zx2c4.com>; Tue,  4 Jul 2017 16:07:15 +0000 (UTC)
-Received: from [IPv6:2a06:e881:1301:2:86ba:9dc0:2d2d:8faa] (unknown
- [IPv6:2a06:e881:1301:2:86ba:9dc0:2d2d:8faa])
- by mail.aperture-laboratories.science (Postfix) with ESMTPSA id 9FE5643D72
- for <wireguard@lists.zx2c4.com>; Tue,  4 Jul 2017 16:07:14 +0000 (UTC)
-Subject: Re: problem wireguard + ospf + unconnected tunnels
-To: wireguard@lists.zx2c4.com
-References: <1499116162.70598782@f401.i.mail.ru>
-From: "Roelf \"rewbycraft\" Wichertjes" <mailings+wireguard@roelf.org>
-Message-ID: <740cb9af-aba8-c610-c1b7-0a7c69396e46@roelf.org>
-Date: Tue, 4 Jul 2017 17:55:48 +0200
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 45195e36
+ for <wireguard@lists.zx2c4.com>; Tue, 4 Jul 2017 16:52:45 +0000 (UTC)
+Received: from f408.i.mail.ru (f408.i.mail.ru [185.5.136.79])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 045347f1
+ for <wireguard@lists.zx2c4.com>; Tue, 4 Jul 2017 16:52:45 +0000 (UTC)
+From: =?UTF-8?B?YWU=?= <aeforeve@mail.ru>
+To: =?UTF-8?B?Um9lbGYgXCJyZXdieWNyYWZ0XCIgV2ljaGVydGplcw==?=
+ <mailings+wireguard@roelf.org>
+Subject: =?UTF-8?B?UmVbMl06IHByb2JsZW0gd2lyZWd1YXJkICsgb3NwZiArIHVuY29ubmVjdGVk?=
+ =?UTF-8?B?IHR1bm5lbHM=?=
 MIME-Version: 1.0
-In-Reply-To: <1499116162.70598782@f401.i.mail.ru>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Date: Tue, 04 Jul 2017 20:10:07 +0300
+Message-ID: <1499188207.518000711@f408.i.mail.ru>
+Content-Type: multipart/alternative;
+ boundary="--ALT--ewZlZGfAobyQo2HR3cBPbYFxwaLNYxE41499188207"
+In-Reply-To: <740cb9af-aba8-c610-c1b7-0a7c69396e46@roelf.org>
+References: <1499116162.70598782@f401.i.mail.ru>
+ <740cb9af-aba8-c610-c1b7-0a7c69396e46@roelf.org>
+Cc: wireguard@lists.zx2c4.com
+Reply-To: =?UTF-8?B?YWU=?= <aeforeve@mail.ru>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -31,56 +29,150 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
- From what you said, I surmise the following setup:
-- Three devices, A, B and C.
-- A talks ospf to B over wireguard.
-- A talks ospf to C over wireguard.
-- The connection between A and C has gotten interrupted. (maybe C is a 
-laptop)
-- The error causes the entire ospf process to fail for all interfaces.
-   In other words: A will suddenly also stop talking B when the 
-connection A<->C fails?
 
-If I am correct in that, there are a few things to note:
-  - The "No buffer space available" error is normal from wireguard when 
-an interface cannot reach the peer.
-  - A single "failing" interface shouldn't kill the ospf process for all 
-interfaces.
-  - This sounds more like a quagga problem, as I have a similar setup (I 
-use my laptop for device C in my case) except I use the BIRD routing 
-daemon instead of quagga (and this setup works fine for me).
+----ALT--ewZlZGfAobyQo2HR3cBPbYFxwaLNYxE41499188207
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: base64
 
-Of course, before any definitive conclusions can be made, we'll need a 
-bit more information. Could you possibly provide us with the following 
-pieces of information:
-  - What distribution are you using?
-  - What kernel (version) are you using?
-  - What wireguard version are you using?
-  - What quagga version are you using?
-  - Please provide the kernel logs.
-  - Please provide the quagga logs.
+Cgo+0JLRgtC+0YDQvdC40LosIDQg0LjRjtC70Y8gMjAxNywgMjA6NTYgKzA1OjAwINC+0YIgIlJv
+ZWxmIFwicmV3YnljcmFmdFwiIFdpY2hlcnRqZXMiIDwgbWFpbGluZ3Mrd2lyZWd1YXJkQHJvZWxm
+Lm9yZyA+Ogo+Cj5Gcm9tIHdoYXQgeW91IHNhaWQsIEkgc3VybWlzZSB0aGUgZm9sbG93aW5nIHNl
+dHVwOgo+LSBUaHJlZSBkZXZpY2VzLCBBLCBCIGFuZCBDLgo+LSBBIHRhbGtzIG9zcGYgdG8gQiBv
+dmVyIHdpcmVndWFyZC4KPi0gQSB0YWxrcyBvc3BmIHRvIEMgb3ZlciB3aXJlZ3VhcmQuCj4tIFRo
+ZSBjb25uZWN0aW9uIGJldHdlZW4gQSBhbmQgQyBoYXMgZ290dGVuIGludGVycnVwdGVkLiAobWF5
+YmUgQyBpcyBhIAo+bGFwdG9wKQo+LSBUaGUgZXJyb3IgY2F1c2VzIHRoZSBlbnRpcmUgb3NwZiBw
+cm9jZXNzIHRvIGZhaWwgZm9yIGFsbCBpbnRlcmZhY2VzLgo+wqDCoMKgSW4gb3RoZXIgd29yZHM6
+IEEgd2lsbCBzdWRkZW5seSBhbHNvIHN0b3AgdGFsa2luZyBCIHdoZW4gdGhlIAo+Y29ubmVjdGlv
+biBBPC0+QyBmYWlscz8gCk5vdCBhdCBhbGwKQS1CIG5vcm1hbGx5IGluc3RhbGxlZCB0dW5uZWxz
+CkEtQyB3aXRoIG5ldmVyIHdvcmtpbmcgdHVubmVsIC0gdGhlcmUgd2FzIG5vIGNvbm5lY3Rpb24g
+c2V0dXAgbmV2ZXIKQm90aCB0dW5uZWxzIGFyZSBkZXNjcmliZWQgd2l0aCBhIGRpcmVjdCBpbmRp
+Y2F0aW9uIG9mIHRoZSBvdGhlciBzaWRlJ3MgZmVhc3QgKGlwIHBvcnQpCgpUaGVyZSBpcyBhIGJs
+b2NraW5nIG9mIHRoZSB3b3JrIG9mIHRoZSBkZW1vbidzIG9zcGZkIC0gYmVjYXVzZSBvZiAiTm8g
+YnVmZmVyIHNwYWNlIGF2YWlsYWJsZSIKT3NwZiB1c2VzIE9ORSBzb2NrZXQgdG8gc2VuZCBpdHMg
+bWVzc2FnZSB0byBhbGwgaW50ZXJmYWNlcyAtIGFuZCB0aGlzIHNvY2tldCBpcyBibG9ja2VkIGR1
+ZSB0byBidWZmZXIgb3ZlcmZsb3cgLSB3aGljaCBvY2N1cnMgd2hlbiBpdCBzZW5kcyBwYWNrZXRz
+IHRvIGEgbm9uLXN0YXJ0aW5nIHR1bm5lbAoKPgo+SWYgSSBhbSBjb3JyZWN0IGluIHRoYXQsIHRo
+ZXJlIGFyZSBhIGZldyB0aGluZ3MgdG8gbm90ZToKPsKgwqAtIFRoZSAiTm8gYnVmZmVyIHNwYWNl
+IGF2YWlsYWJsZSIgZXJyb3IgaXMgbm9ybWFsIGZyb20gd2lyZWd1YXJkIHdoZW4gCj5hbiBpbnRl
+cmZhY2UgY2Fubm90IHJlYWNoIHRoZSBwZWVyLiAKQ2FuIGFuZCBub3JtYWwgLSBidXQgaXQgYmxv
+Y2tzIG9zcGZkIC0gYW5kIGFzIGEgcmVzdWx0IHRvIHVzZSB0aGVtIHRvZ2V0aGVyIGlzIHNpbXBs
+eSBpbXBvc3NpYmxlCldvdWxkIGhlIHJhdGhlciBoYXZlIGRyb3BwZWQgdGhlbT8KPgo+wqDCoC0g
+QSBzaW5nbGUgImZhaWxpbmciIGludGVyZmFjZSBzaG91bGRuJ3Qga2lsbCB0aGUgb3NwZiBwcm9j
+ZXNzIGZvciBhbGwgCj5pbnRlcmZhY2VzLiAKbm90IGtpbGwgLSBibG9ja2VkIHllcwo+Cj7CoMKg
+LSBUaGlzIHNvdW5kcyBtb3JlIGxpa2UgYSBxdWFnZ2EgcHJvYmxlbSwgYXMgSSBoYXZlIGEgc2lt
+aWxhciBzZXR1cCAoSSAKPnVzZSBteSBsYXB0b3AgZm9yIGRldmljZSBDIGluIG15IGNhc2UpIGV4
+Y2VwdCBJIHVzZSB0aGUgQklSRCByb3V0aW5nIAo+ZGFlbW9uIGluc3RlYWQgb2YgcXVhZ2dhIChh
+bmQgdGhpcyBzZXR1cCB3b3JrcyBmaW5lIGZvciBtZSkuIApUaGlzIGlzIGEgcHJvYmxlbSB3aXRo
+IHZpcmVndWFyZApObyBvdGhlciB0dW5uZWxzIC0gSSBkaWQgbm90IGFsbG93IG15c2VsZiB0byBk
+byB0aGlzCkFib3V0IHRoZSBpbmFiaWxpdHkgdG8gcmVhY2ggdGhlIGFkZHJlc3NlZSAtIHBhY2tl
+dHMganVzdCBkcm9wIG91dApCdXQgaGVyZSBoZSBhY2N1bXVsYXRlcyBhbmQgYWNjdW11bGF0ZSAu
+Li4uCj4KPk9mIGNvdXJzZSwgYmVmb3JlIGFueSBkZWZpbml0aXZlIGNvbmNsdXNpb25zIGNhbiBi
+ZSBtYWRlLCB3ZSdsbCBuZWVkIGEgCj5iaXQgbW9yZSBpbmZvcm1hdGlvbi4gQ291bGQgeW91IHBv
+c3NpYmx5IHByb3ZpZGUgdXMgd2l0aCB0aGUgZm9sbG93aW5nIAo+cGllY2VzIG9mIGluZm9ybWF0
+aW9uOgo+wqDCoC0gV2hhdCBkaXN0cmlidXRpb24gYXJlIHlvdSB1c2luZz8gCmRlYmlhbjkKPgo+
+wqDCoC0gV2hhdCBrZXJuZWwgKHZlcnNpb24pIGFyZSB5b3UgdXNpbmc/IAo0LjkuMzAtMitkZWI5
+dTIKPgo+wqDCoC0gV2hhdCB3aXJlZ3VhcmQgdmVyc2lvbiBhcmUgeW91IHVzaW5nPyAKd2lyZWd1
+YXJkLTAuMC4yMDE3MDYxMy0xCj4KPsKgwqAtIFdoYXQgcXVhZ2dhIHZlcnNpb24gYXJlIHlvdSB1
+c2luZz8gCjAuOTkuMjMuMS0xK2RlYjh1Mwo+Cj7CoMKgLSBQbGVhc2UgcHJvdmlkZSB0aGUga2Vy
+bmVsIGxvZ3MuIAplbXB0eQo+Cj7CoMKgLSBQbGVhc2UgcHJvdmlkZSB0aGUgcXVhZ2dhIGxvZ3Mu
+IAplbXB0eQoK
 
-On 07/03/2017 11:09 PM, ae wrote:
-> situation
-> 2 tunnels
-> 1 normal - 2nd with unconnected ending
-> + ospfd quagge
-> 
-> At start everything works fine - but after ~ 30-60 seconds - the ospf 
-> stops working
-> 
-> This is due to the fact that the ospf daemon sends packets from the same 
-> socket on different interfaces - and in the tunnel interface everything 
-> goes fine - but in the 2nd packets accumulate
-> And after a certain accumulation - the socket of the demon daemon stops 
-> working on sending completely "No buffer space available"
-> 
-> Is it possible to fix this with settings?
-> 
-> 
-> 
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
-> 
+----ALT--ewZlZGfAobyQo2HR3cBPbYFxwaLNYxE41499188207
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: base64
+
+CjxIVE1MPjxCT0RZPjxicj48YnI+PGJsb2NrcXVvdGUgc3R5bGU9ImJvcmRlci1sZWZ0OiAxcHgg
+c29saWQgIzA4NTdBNjsgbWFyZ2luOiAxMHB4OyBwYWRkaW5nOiAwIDAgMCAxMHB4OyIgZGF0YS1t
+Y2Utc3R5bGU9ImJvcmRlci1sZWZ0OiAxcHggc29saWQgIzA4NTdBNjsgbWFyZ2luOiAxMHB4OyBw
+YWRkaW5nOiAwIDAgMCAxMHB4OyI+0JLRgtC+0YDQvdC40LosIDQg0LjRjtC70Y8gMjAxNywgMjA6
+NTYgKzA1OjAwINC+0YIgIlJvZWxmIFwicmV3YnljcmFmdFwiIFdpY2hlcnRqZXMiICZsdDs8YSBo
+cmVmPSJodHRwczovL2UubWFpbC5ydS9jb21wb3NlP1RvPW1haWxpbmdzJTJid2lyZWd1YXJkQHJv
+ZWxmLm9yZyIgcmVsPSJub29wZW5lciIgZGF0YS1tY2UtaHJlZj0iaHR0cHM6Ly9lLm1haWwucnUv
+Y29tcG9zZT9Ubz1tYWlsaW5ncyUyYndpcmVndWFyZEByb2VsZi5vcmciPm1haWxpbmdzK3dpcmVn
+dWFyZEByb2VsZi5vcmc8L2E+Jmd0Ozo8YnI+PGJyPjxkaXY+PGRpdj48ZGl2PjxkaXY+RnJvbSB3
+aGF0IHlvdSBzYWlkLCBJIHN1cm1pc2UgdGhlIGZvbGxvd2luZyBzZXR1cDo8YnI+IC0gVGhyZWUg
+ZGV2aWNlcywgQSwgQiBhbmQgQy48YnI+IC0gQSB0YWxrcyBvc3BmIHRvIEIgb3ZlciB3aXJlZ3Vh
+cmQuPGJyPiAtIEEgdGFsa3Mgb3NwZiB0byBDIG92ZXIgd2lyZWd1YXJkLjxicj4gLSBUaGUgY29u
+bmVjdGlvbiBiZXR3ZWVuIEEgYW5kIEMgaGFzIGdvdHRlbiBpbnRlcnJ1cHRlZC4gKG1heWJlIEMg
+aXMgYSA8YnI+IGxhcHRvcCk8YnI+IC0gVGhlIGVycm9yIGNhdXNlcyB0aGUgZW50aXJlIG9zcGYg
+cHJvY2VzcyB0byBmYWlsIGZvciBhbGwgaW50ZXJmYWNlcy48YnI+ICZuYnNwOyZuYnNwOyZuYnNw
+O0luIG90aGVyIHdvcmRzOiBBIHdpbGwgc3VkZGVubHkgYWxzbyBzdG9wIHRhbGtpbmcgQiB3aGVu
+IHRoZSA8YnI+IGNvbm5lY3Rpb24gQSZsdDstJmd0O0MgZmFpbHM/PC9kaXY+PC9kaXY+PC9kaXY+
+PC9kaXY+PC9ibG9ja3F1b3RlPjxzcGFuIGxhbmc9ImVuIj48c3Bhbj5Ob3QgYXQgYWxsPC9zcGFu
+Pjxicj48c3Bhbj5BLUIgbm9ybWFsbHkgaW5zdGFsbGVkIHR1bm5lbHM8L3NwYW4+PGJyPjxzcGFu
+PkEtQyB3aXRoIG5ldmVyIHdvcmtpbmcgdHVubmVsIC0gdGhlcmUgd2FzIG5vIGNvbm5lY3Rpb24g
+c2V0dXAgbmV2ZXI8L3NwYW4+PGJyPjxzcGFuPkJvdGggdHVubmVscyBhcmUgZGVzY3JpYmVkIHdp
+dGggYSBkaXJlY3QgaW5kaWNhdGlvbiBvZiB0aGUgb3RoZXIgc2lkZSdzIGZlYXN0IChpcCBwb3J0
+KTwvc3Bhbj48YnI+PGJyPjxzcGFuPlRoZXJlIGlzIGEgYmxvY2tpbmcgb2YgdGhlIHdvcmsgb2Yg
+dGhlIGRlbW9uJ3Mgb3NwZmQgLSBiZWNhdXNlIG9mICJObyBidWZmZXIgc3BhY2UgYXZhaWxhYmxl
+Ijwvc3Bhbj48YnI+PHNwYW4+T3NwZiB1c2VzIE9ORSBzb2NrZXQgdG8gc2VuZCBpdHMgbWVzc2Fn
+ZSB0byBhbGwgaW50ZXJmYWNlcyAtIGFuZCB0aGlzIHNvY2tldCBpcyBibG9ja2VkIGR1ZSB0byBi
+dWZmZXIgb3ZlcmZsb3cgLSB3aGljaCBvY2N1cnMgd2hlbiBpdCBzZW5kcyBwYWNrZXRzIHRvIGEg
+bm9uLXN0YXJ0aW5nIHR1bm5lbDwvc3Bhbj48YnI+PC9zcGFuPjxicj48YmxvY2txdW90ZSBzdHls
+ZT0iYm9yZGVyLWxlZnQ6IDFweCBzb2xpZCAjMDg1N0E2OyBtYXJnaW46IDEwcHg7IHBhZGRpbmc6
+IDAgMCAwIDEwcHg7IiBkYXRhLW1jZS1zdHlsZT0iYm9yZGVyLWxlZnQ6IDFweCBzb2xpZCAjMDg1
+N0E2OyBtYXJnaW46IDEwcHg7IHBhZGRpbmc6IDAgMCAwIDEwcHg7Ij48ZGl2PjxkaXY+PGRpdj48
+ZGl2Pjxicj4gSWYgSSBhbSBjb3JyZWN0IGluIHRoYXQsIHRoZXJlIGFyZSBhIGZldyB0aGluZ3Mg
+dG8gbm90ZTo8YnI+ICZuYnNwOyZuYnNwOy0gVGhlICJObyBidWZmZXIgc3BhY2UgYXZhaWxhYmxl
+IiBlcnJvciBpcyBub3JtYWwgZnJvbSB3aXJlZ3VhcmQgd2hlbiA8YnI+IGFuIGludGVyZmFjZSBj
+YW5ub3QgcmVhY2ggdGhlIHBlZXIuPC9kaXY+PC9kaXY+PC9kaXY+PC9kaXY+PC9ibG9ja3F1b3Rl
+PjxzcGFuIGxhbmc9ImVuIj48c3Bhbj5DYW4gYW5kIG5vcm1hbCAtIGJ1dCBpdCBibG9ja3Mgb3Nw
+ZmQgLSBhbmQgYXMgYSByZXN1bHQgdG8gdXNlIHRoZW0gdG9nZXRoZXIgaXMgc2ltcGx5IGltcG9z
+c2libGU8YnI+PC9zcGFuPjwvc3Bhbj48c3BhbiBsYW5nPSJlbiI+PHNwYW4+V291bGQgaGUgcmF0
+aGVyIGhhdmUgZHJvcHBlZCB0aGVtPzwvc3Bhbj48L3NwYW4+PGJyPjxibG9ja3F1b3RlIHN0eWxl
+PSJib3JkZXItbGVmdDogMXB4IHNvbGlkICMwODU3QTY7IG1hcmdpbjogMTBweDsgcGFkZGluZzog
+MCAwIDAgMTBweDsiIGRhdGEtbWNlLXN0eWxlPSJib3JkZXItbGVmdDogMXB4IHNvbGlkICMwODU3
+QTY7IG1hcmdpbjogMTBweDsgcGFkZGluZzogMCAwIDAgMTBweDsiPjxkaXY+PGRpdj48ZGl2Pjxk
+aXY+PGJyPiAmbmJzcDsmbmJzcDstIEEgc2luZ2xlICJmYWlsaW5nIiBpbnRlcmZhY2Ugc2hvdWxk
+bid0IGtpbGwgdGhlIG9zcGYgcHJvY2VzcyBmb3IgYWxsIDxicj4gaW50ZXJmYWNlcy48L2Rpdj48
+L2Rpdj48L2Rpdj48L2Rpdj48L2Jsb2NrcXVvdGU+bm90IGtpbGwgLSBibG9ja2VkIHllczxicj48
+YmxvY2txdW90ZSBzdHlsZT0iYm9yZGVyLWxlZnQ6IDFweCBzb2xpZCAjMDg1N0E2OyBtYXJnaW46
+IDEwcHg7IHBhZGRpbmc6IDAgMCAwIDEwcHg7IiBkYXRhLW1jZS1zdHlsZT0iYm9yZGVyLWxlZnQ6
+IDFweCBzb2xpZCAjMDg1N0E2OyBtYXJnaW46IDEwcHg7IHBhZGRpbmc6IDAgMCAwIDEwcHg7Ij48
+ZGl2PjxkaXY+PGRpdj48ZGl2Pjxicj4gJm5ic3A7Jm5ic3A7LSBUaGlzIHNvdW5kcyBtb3JlIGxp
+a2UgYSBxdWFnZ2EgcHJvYmxlbSwgYXMgSSBoYXZlIGEgc2ltaWxhciBzZXR1cCAoSSA8YnI+IHVz
+ZSBteSBsYXB0b3AgZm9yIGRldmljZSBDIGluIG15IGNhc2UpIGV4Y2VwdCBJIHVzZSB0aGUgQklS
+RCByb3V0aW5nIDxicj4gZGFlbW9uIGluc3RlYWQgb2YgcXVhZ2dhIChhbmQgdGhpcyBzZXR1cCB3
+b3JrcyBmaW5lIGZvciBtZSkuPC9kaXY+PC9kaXY+PC9kaXY+PC9kaXY+PC9ibG9ja3F1b3RlPjxz
+cGFuIGxhbmc9ImVuIj48c3Bhbj5UaGlzIGlzIGEgcHJvYmxlbSB3aXRoIHZpcmVndWFyZDwvc3Bh
+bj48YnI+PHNwYW4+Tm8gb3RoZXIgdHVubmVscyAtIEkgZGlkIG5vdCBhbGxvdyBteXNlbGYgdG8g
+ZG8gdGhpczwvc3Bhbj48YnI+PHNwYW4+QWJvdXQgdGhlIGluYWJpbGl0eSB0byByZWFjaCB0aGUg
+YWRkcmVzc2VlIC0gcGFja2V0cyBqdXN0IGRyb3Agb3V0PC9zcGFuPjxicj48c3Bhbj5CdXQgaGVy
+ZSBoZSBhY2N1bXVsYXRlcyBhbmQgYWNjdW11bGF0ZSAuLi4uPC9zcGFuPjwvc3Bhbj48YnI+PGJs
+b2NrcXVvdGUgc3R5bGU9ImJvcmRlci1sZWZ0OiAxcHggc29saWQgIzA4NTdBNjsgbWFyZ2luOiAx
+MHB4OyBwYWRkaW5nOiAwIDAgMCAxMHB4OyIgZGF0YS1tY2Utc3R5bGU9ImJvcmRlci1sZWZ0OiAx
+cHggc29saWQgIzA4NTdBNjsgbWFyZ2luOiAxMHB4OyBwYWRkaW5nOiAwIDAgMCAxMHB4OyI+PGRp
+dj48ZGl2PjxkaXY+PGRpdj48YnI+IE9mIGNvdXJzZSwgYmVmb3JlIGFueSBkZWZpbml0aXZlIGNv
+bmNsdXNpb25zIGNhbiBiZSBtYWRlLCB3ZSdsbCBuZWVkIGEgPGJyPiBiaXQgbW9yZSBpbmZvcm1h
+dGlvbi4gQ291bGQgeW91IHBvc3NpYmx5IHByb3ZpZGUgdXMgd2l0aCB0aGUgZm9sbG93aW5nIDxi
+cj4gcGllY2VzIG9mIGluZm9ybWF0aW9uOjxicj4gJm5ic3A7Jm5ic3A7LSBXaGF0IGRpc3RyaWJ1
+dGlvbiBhcmUgeW91IHVzaW5nPzwvZGl2PjwvZGl2PjwvZGl2PjwvZGl2PjwvYmxvY2txdW90ZT5k
+ZWJpYW45PGJyPjxibG9ja3F1b3RlIHN0eWxlPSJib3JkZXItbGVmdDogMXB4IHNvbGlkICMwODU3
+QTY7IG1hcmdpbjogMTBweDsgcGFkZGluZzogMCAwIDAgMTBweDsiIGRhdGEtbWNlLXN0eWxlPSJi
+b3JkZXItbGVmdDogMXB4IHNvbGlkICMwODU3QTY7IG1hcmdpbjogMTBweDsgcGFkZGluZzogMCAw
+IDAgMTBweDsiPjxkaXY+PGRpdj48ZGl2PjxkaXY+PGJyPiAmbmJzcDsmbmJzcDstIFdoYXQga2Vy
+bmVsICh2ZXJzaW9uKSBhcmUgeW91IHVzaW5nPzwvZGl2PjwvZGl2PjwvZGl2PjwvZGl2PjwvYmxv
+Y2txdW90ZT40LjkuMzAtMitkZWI5dTI8YnI+PGJsb2NrcXVvdGUgc3R5bGU9ImJvcmRlci1sZWZ0
+OiAxcHggc29saWQgIzA4NTdBNjsgbWFyZ2luOiAxMHB4OyBwYWRkaW5nOiAwIDAgMCAxMHB4OyIg
+ZGF0YS1tY2Utc3R5bGU9ImJvcmRlci1sZWZ0OiAxcHggc29saWQgIzA4NTdBNjsgbWFyZ2luOiAx
+MHB4OyBwYWRkaW5nOiAwIDAgMCAxMHB4OyI+PGRpdj48ZGl2PjxkaXY+PGRpdj48YnI+ICZuYnNw
+OyZuYnNwOy0gV2hhdCB3aXJlZ3VhcmQgdmVyc2lvbiBhcmUgeW91IHVzaW5nPzwvZGl2PjwvZGl2
+PjwvZGl2PjwvZGl2PjwvYmxvY2txdW90ZT53aXJlZ3VhcmQtMC4wLjIwMTcwNjEzLTE8YnI+PGJs
+b2NrcXVvdGUgc3R5bGU9ImJvcmRlci1sZWZ0OiAxcHggc29saWQgIzA4NTdBNjsgbWFyZ2luOiAx
+MHB4OyBwYWRkaW5nOiAwIDAgMCAxMHB4OyIgZGF0YS1tY2Utc3R5bGU9ImJvcmRlci1sZWZ0OiAx
+cHggc29saWQgIzA4NTdBNjsgbWFyZ2luOiAxMHB4OyBwYWRkaW5nOiAwIDAgMCAxMHB4OyI+PGRp
+dj48ZGl2PjxkaXY+PGRpdj48YnI+ICZuYnNwOyZuYnNwOy0gV2hhdCBxdWFnZ2EgdmVyc2lvbiBh
+cmUgeW91IHVzaW5nPzwvZGl2PjwvZGl2PjwvZGl2PjwvZGl2PjwvYmxvY2txdW90ZT4wLjk5LjIz
+LjEtMStkZWI4dTM8YnI+PGJsb2NrcXVvdGUgc3R5bGU9ImJvcmRlci1sZWZ0OiAxcHggc29saWQg
+IzA4NTdBNjsgbWFyZ2luOiAxMHB4OyBwYWRkaW5nOiAwIDAgMCAxMHB4OyIgZGF0YS1tY2Utc3R5
+bGU9ImJvcmRlci1sZWZ0OiAxcHggc29saWQgIzA4NTdBNjsgbWFyZ2luOiAxMHB4OyBwYWRkaW5n
+OiAwIDAgMCAxMHB4OyI+PGRpdj48ZGl2PjxkaXY+PGRpdj48YnI+ICZuYnNwOyZuYnNwOy0gUGxl
+YXNlIHByb3ZpZGUgdGhlIGtlcm5lbCBsb2dzLjwvZGl2PjwvZGl2PjwvZGl2PjwvZGl2PjwvYmxv
+Y2txdW90ZT5lbXB0eTxicj48YmxvY2txdW90ZSBzdHlsZT0iYm9yZGVyLWxlZnQ6IDFweCBzb2xp
+ZCAjMDg1N0E2OyBtYXJnaW46IDEwcHg7IHBhZGRpbmc6IDAgMCAwIDEwcHg7IiBkYXRhLW1jZS1z
+dHlsZT0iYm9yZGVyLWxlZnQ6IDFweCBzb2xpZCAjMDg1N0E2OyBtYXJnaW46IDEwcHg7IHBhZGRp
+bmc6IDAgMCAwIDEwcHg7Ij48ZGl2PjxkaXY+PGRpdj48ZGl2Pjxicj4gJm5ic3A7Jm5ic3A7LSBQ
+bGVhc2UgcHJvdmlkZSB0aGUgcXVhZ2dhIGxvZ3MuPC9kaXY+PC9kaXY+PC9kaXY+PC9kaXY+PC9i
+bG9ja3F1b3RlPmVtcHR5PGJyPjxicj48L0JPRFk+PC9IVE1MPgo=
+
+----ALT--ewZlZGfAobyQo2HR3cBPbYFxwaLNYxE41499188207--
