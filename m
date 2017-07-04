@@ -1,23 +1,27 @@
-Return-Path: aeforeve@mail.ru
+Return-Path: mailings@roelf.org
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 23311661
- for <wireguard@lists.zx2c4.com>; Mon, 3 Jul 2017 20:52:06 +0000 (UTC)
-Received: from f401.i.mail.ru (f401.i.mail.ru [185.5.136.72])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ad9132ab
- for <wireguard@lists.zx2c4.com>; Mon, 3 Jul 2017 20:52:05 +0000 (UTC)
-Received: by f401.i.mail.ru with local (envelope-from <aeforeve@mail.ru>)
- id 1dS8aw-0004Am-JB
- for wireguard@lists.zx2c4.com; Tue, 04 Jul 2017 00:09:22 +0300
-From: =?UTF-8?B?YWU=?= <aeforeve@mail.ru>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4ab465eb
+ for <wireguard@lists.zx2c4.com>; Tue, 4 Jul 2017 15:38:30 +0000 (UTC)
+Received: from mail.aperture-laboratories.science
+ (mail.aperture-laboratories.science [176.31.38.83])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6f8bc814
+ for <wireguard@lists.zx2c4.com>; Tue, 4 Jul 2017 15:38:30 +0000 (UTC)
+Received: from mail.aperture-laboratories.science (localhost [127.0.0.1])
+ by mail.aperture-laboratories.science (Postfix) with ESMTP id 95BF343D73
+ for <wireguard@lists.zx2c4.com>; Tue,  4 Jul 2017 16:07:15 +0000 (UTC)
+Received: from [IPv6:2a06:e881:1301:2:86ba:9dc0:2d2d:8faa] (unknown
+ [IPv6:2a06:e881:1301:2:86ba:9dc0:2d2d:8faa])
+ by mail.aperture-laboratories.science (Postfix) with ESMTPSA id 9FE5643D72
+ for <wireguard@lists.zx2c4.com>; Tue,  4 Jul 2017 16:07:14 +0000 (UTC)
+Subject: Re: problem wireguard + ospf + unconnected tunnels
 To: wireguard@lists.zx2c4.com
-Subject: =?UTF-8?B?cHJvYmxlbSAgd2lyZWd1YXJkICsgb3NwZiArIHVuY29ubmVjdGVkIHR1bm5l?=
- =?UTF-8?B?bHM=?=
+References: <1499116162.70598782@f401.i.mail.ru>
+From: "Roelf \"rewbycraft\" Wichertjes" <mailings+wireguard@roelf.org>
+Message-ID: <740cb9af-aba8-c610-c1b7-0a7c69396e46@roelf.org>
+Date: Tue, 4 Jul 2017 17:55:48 +0200
 MIME-Version: 1.0
-Date: Tue, 04 Jul 2017 00:09:22 +0300
-Message-ID: <1499116162.70598782@f401.i.mail.ru>
-Content-Type: multipart/alternative;
- boundary="--ALT--NiHoLc69ANYJ6xkUf2jSkLomUDXMkHll1499116162"
-Reply-To: =?UTF-8?B?YWU=?= <aeforeve@mail.ru>
+In-Reply-To: <1499116162.70598782@f401.i.mail.ru>
+Content-Type: text/plain; charset=utf-8; format=flowed
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -27,38 +31,56 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
+ From what you said, I surmise the following setup:
+- Three devices, A, B and C.
+- A talks ospf to B over wireguard.
+- A talks ospf to C over wireguard.
+- The connection between A and C has gotten interrupted. (maybe C is a 
+laptop)
+- The error causes the entire ospf process to fail for all interfaces.
+   In other words: A will suddenly also stop talking B when the 
+connection A<->C fails?
 
-----ALT--NiHoLc69ANYJ6xkUf2jSkLomUDXMkHll1499116162
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: base64
+If I am correct in that, there are a few things to note:
+  - The "No buffer space available" error is normal from wireguard when 
+an interface cannot reach the peer.
+  - A single "failing" interface shouldn't kill the ospf process for all 
+interfaces.
+  - This sounds more like a quagga problem, as I have a similar setup (I 
+use my laptop for device C in my case) except I use the BIRD routing 
+daemon instead of quagga (and this setup works fine for me).
 
-c2l0dWF0aW9uCjIgdHVubmVscwoxIG5vcm1hbCAtIDJuZCB3aXRoIHVuY29ubmVjdGVkIGVuZGlu
-ZworIG9zcGZkIHF1YWdnZQoKQXQgc3RhcnQgZXZlcnl0aGluZyB3b3JrcyBmaW5lIC0gYnV0IGFm
-dGVyIH4gMzAtNjAgc2Vjb25kcyAtIHRoZSBvc3BmIHN0b3BzIHdvcmtpbmcKClRoaXMgaXMgZHVl
-IHRvIHRoZSBmYWN0IHRoYXQgdGhlIG9zcGYgZGFlbW9uIHNlbmRzIHBhY2tldHMgZnJvbSB0aGUg
-c2FtZSBzb2NrZXQgb24gZGlmZmVyZW50IGludGVyZmFjZXMgLSBhbmQgaW4gdGhlIHR1bm5lbCBp
-bnRlcmZhY2UgZXZlcnl0aGluZyBnb2VzIGZpbmUgLSBidXQgaW4gdGhlIDJuZCBwYWNrZXRzIGFj
-Y3VtdWxhdGUKQW5kIGFmdGVyIGEgY2VydGFpbiBhY2N1bXVsYXRpb24gLSB0aGUgc29ja2V0IG9m
-IHRoZSBkZW1vbiBkYWVtb24gc3RvcHMgd29ya2luZyBvbiBzZW5kaW5nIGNvbXBsZXRlbHkgIk5v
-IGJ1ZmZlciBzcGFjZSBhdmFpbGFibGUgIgoKSXMgaXQgcG9zc2libGUgdG8gZml4IHRoaXMgd2l0
-aCBzZXR0aW5ncz8KCg==
+Of course, before any definitive conclusions can be made, we'll need a 
+bit more information. Could you possibly provide us with the following 
+pieces of information:
+  - What distribution are you using?
+  - What kernel (version) are you using?
+  - What wireguard version are you using?
+  - What quagga version are you using?
+  - Please provide the kernel logs.
+  - Please provide the quagga logs.
 
-----ALT--NiHoLc69ANYJ6xkUf2jSkLomUDXMkHll1499116162
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: base64
-
-CjxIVE1MPjxCT0RZPjxzcGFuIGlkPSJyZXN1bHRfYm94IiBsYW5nPSJlbiI+PHNwYW4+c2l0dWF0
-aW9uPC9zcGFuPjxicj48c3Bhbj4yIHR1bm5lbHM8L3NwYW4+PGJyPjxzcGFuPjEgbm9ybWFsIC0g
-Mm5kIHdpdGggdW5jb25uZWN0ZWQgZW5kaW5nPC9zcGFuPjxicj48c3Bhbj4rIG9zcGZkIHF1YWdn
-ZTwvc3Bhbj48YnI+PGJyPjxzcGFuPkF0IHN0YXJ0IGV2ZXJ5dGhpbmcgd29ya3MgZmluZSAtIGJ1
-dCBhZnRlciB+IDMwLTYwIHNlY29uZHMgLSB0aGUgb3NwZiBzdG9wcyB3b3JraW5nPC9zcGFuPjxi
-cj48YnI+PHNwYW4+VGhpcyBpcyBkdWUgdG8gdGhlIGZhY3QgdGhhdCB0aGUgb3NwZiBkYWVtb24g
-c2VuZHMgcGFja2V0cyBmcm9tIHRoZSBzYW1lIHNvY2tldCBvbiBkaWZmZXJlbnQgaW50ZXJmYWNl
-cyAtIGFuZCBpbiB0aGUgdHVubmVsIGludGVyZmFjZSBldmVyeXRoaW5nIGdvZXMgZmluZSAtIGJ1
-dCBpbiB0aGUgMm5kIHBhY2tldHMgYWNjdW11bGF0ZTwvc3Bhbj48YnI+PHNwYW4+QW5kIGFmdGVy
-IGEgY2VydGFpbiBhY2N1bXVsYXRpb24gLSB0aGUgc29ja2V0IG9mIHRoZSBkZW1vbiBkYWVtb24g
-c3RvcHMgd29ya2luZyBvbiBzZW5kaW5nIGNvbXBsZXRlbHkgIk5vIGJ1ZmZlciBzcGFjZSBhdmFp
-bGFibGU8L3NwYW4+Ijxicj48YnI+PHNwYW4+SXMgaXQgcG9zc2libGUgdG8gZml4IHRoaXMgd2l0
-aCBzZXR0aW5ncz88L3NwYW4+PC9zcGFuPjxicj48YnI+PC9CT0RZPjwvSFRNTD4K
-
-----ALT--NiHoLc69ANYJ6xkUf2jSkLomUDXMkHll1499116162--
+On 07/03/2017 11:09 PM, ae wrote:
+> situation
+> 2 tunnels
+> 1 normal - 2nd with unconnected ending
+> + ospfd quagge
+> 
+> At start everything works fine - but after ~ 30-60 seconds - the ospf 
+> stops working
+> 
+> This is due to the fact that the ospf daemon sends packets from the same 
+> socket on different interfaces - and in the tunnel interface everything 
+> goes fine - but in the 2nd packets accumulate
+> And after a certain accumulation - the socket of the demon daemon stops 
+> working on sending completely "No buffer space available"
+> 
+> Is it possible to fix this with settings?
+> 
+> 
+> 
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
+> 
