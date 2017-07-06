@@ -1,19 +1,28 @@
-Return-Path: me@tombowdit.ch
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5451cce4
- for <wireguard@lists.zx2c4.com>; Wed, 5 Jul 2017 19:55:21 +0000 (UTC)
-Received: from mx01.yodamail.uk (mx01.yodamail.uk [185.52.3.156])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0092b3e0
- for <wireguard@lists.zx2c4.com>; Wed, 5 Jul 2017 19:55:21 +0000 (UTC)
-Mime-Version: 1.0
-Date: Wed, 05 Jul 2017 20:12:50 +0000
-Content-Type: text/plain; charset="utf-8"
-Message-ID: <8e6d9d35796e369800afc532a92884fc@bfb47388622b>
-From: "Tom Bowditch" <me@tombowdit.ch>
-Subject: Re: Status of your UPS delivery ID:003805665
-To: wwmyurb@mopar.websitewelcome.com, wireguard@lists.zx2c4.com
-In-Reply-To: <E1dSqXc-000ICF-1O@mopar.websitewelcome.com>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 627d0430
+ for <wireguard@lists.zx2c4.com>; Thu, 6 Jul 2017 00:34:05 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 98b5502e
+ for <wireguard@lists.zx2c4.com>; Thu, 6 Jul 2017 00:34:05 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7cb1d117
+ for <wireguard@lists.zx2c4.com>; Thu, 6 Jul 2017 00:47:38 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id c4b90f5b
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>; Thu, 6 Jul 2017 00:47:37 +0000 (UTC)
+Received: by mail-wr0-f169.google.com with SMTP id r103so6946460wrb.0
+ for <wireguard@lists.zx2c4.com>; Wed, 05 Jul 2017 17:51:38 -0700 (PDT)
+MIME-Version: 1.0
+In-Reply-To: <8e6d9d35796e369800afc532a92884fc@bfb47388622b>
 References: <E1dSqXc-000ICF-1O@mopar.websitewelcome.com>
+ <8e6d9d35796e369800afc532a92884fc@bfb47388622b>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 6 Jul 2017 02:51:36 +0200
+Message-ID: <CAHmME9pG==kwqO5iSeuvSecMrVh1e9VUhEnp8yWJemoRT7SRtQ@mail.gmail.com>
+Subject: Re: Status of your UPS delivery ID:003805665
+To: Tom Bowditch <me@tombowdit.ch>
+Content-Type: text/plain; charset="UTF-8"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -23,10 +32,4 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-... is the list set to reject emails from non-members? Might be worth it.=
-=0A=0ATom=0A=0AJuly 5, 2017 9:05 PM, wwmyurb@mopar.websitewelcome.com wro=
-te:=0A=0A> Dear Customer,=0A> =0A> We can not deliver your parcel arrived=
- at July 04.=0A> =0A> You can find more details in this e-mail attachment=
-!=0A> =0A> Thanks,=0A> ,=0A> UPS Office Clerk.=0A> =0A> _________________=
-______________________________=0A> WireGuard mailing list=0A> WireGuard@l=
-ists.zx2c4.com=0A> https://lists.zx2c4.com/mailman/listinfo/wireguard
+It is now. Darn spammers.
