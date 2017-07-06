@@ -1,19 +1,21 @@
-Return-Path: jugs@protonmail.ch
+Return-Path: me@lochnair.net
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a483d55e
- for <wireguard@lists.zx2c4.com>; Thu, 6 Jul 2017 10:09:39 +0000 (UTC)
-Received: from mail4.protonmail.ch (mail4.protonmail.ch [185.70.40.27])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8291de80
- for <wireguard@lists.zx2c4.com>; Thu, 6 Jul 2017 10:09:39 +0000 (UTC)
-Date: Thu, 06 Jul 2017 06:27:12 -0400
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-From: jugs <jugs@protonmail.ch>
-Subject: Kernel 4.11.9 Support
-Message-ID: <D-MLue-9vlB3Qm_i2xdc-LgpmmeCkvnAXCRXV1rGDvpU_z9CY_-VqoJ_4PvJOk3dXto6TNRvfcV-mX42nqcYqA==@protonmail.ch>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 718d4058
+ for <wireguard@lists.zx2c4.com>; Thu, 6 Jul 2017 10:22:54 +0000 (UTC)
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
+ [66.111.4.26])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3a8b8433
+ for <wireguard@lists.zx2c4.com>; Thu, 6 Jul 2017 10:22:54 +0000 (UTC)
+Message-Id: <1499337631.2605924.1032148312.417D8BEF@webmail.messagingengine.com>
+From: Nils Andreas Svee <me@lochnair.net>
+To: jugs <jugs@protonmail.ch>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="b1_3ee10835643547fc1b5a56947f412e8f"
-Reply-To: jugs <jugs@protonmail.ch>
+Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <D-MLue-9vlB3Qm_i2xdc-LgpmmeCkvnAXCRXV1rGDvpU_z9CY_-VqoJ_4PvJOk3dXto6TNRvfcV-mX42nqcYqA==@protonmail.ch>
+Subject: Re: Kernel 4.11.9 Support
+Date: Thu, 06 Jul 2017 12:40:31 +0200
+References: <D-MLue-9vlB3Qm_i2xdc-LgpmmeCkvnAXCRXV1rGDvpU_z9CY_-VqoJ_4PvJOk3dXto6TNRvfcV-mX42nqcYqA==@protonmail.ch>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -23,206 +25,147 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-This is a multi-part message in MIME format.
+Apparentaly this commit
+(https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git/co=
+mmit/?h=3Dlinux-4.11.y&id=3D95876855a55072572895a236b156ffb357fd5538)
+from 4.12 was backported to the 4.11.y branch and included in 4.11.9.
 
---b1_3ee10835643547fc1b5a56947f412e8f
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-
-V291bGQgaXQgYmUgcG9zc2libGUgdG8gYWRkIHN1cHBvcnQgZm9yIHRoZSBjdXJyZW50IDQuMTEu
-eCBrZXJuZWw/IEFmdGVyIHVwZ3JhZGluZyB0byA0LjExLjkgZnJvbSA0LjExLjcgdGhlIGN1cnJl
-bnQgd2lyZWd1YXJkIHNuYXBzaG90IG5vIGxvbmdlciB3b3Jrcy4KQWZ0ZXIgaW5zdGFsbGF0aW9u
-LCBJIGdldCB0aGUgZm9sbG93aW5nIGVycm9yczoKOjogUnVubmluZyBwb3N0LXRyYW5zYWN0aW9u
-IGhvb2tzLi4uCigxLzMpIEluc3RhbGwgREtNUyBtb2R1bGVzCj09PiBka21zIGluc3RhbGwgd2ly
-ZWd1YXJkLzAuMC4yMDE3MDYyOSAtayA0LjExLjktMS1BUkNICkVycm9yISBCYWQgcmV0dXJuIHN0
-YXR1cyBmb3IgbW9kdWxlIGJ1aWxkIG9uIGtlcm5lbDogNC4xMS45LTEtQVJDSCAoeDg2XzY0KQpD
-b25zdWx0IC92YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE3MDYyOS9idWlsZC9tYWtlLmxv
-ZyBmb3IgbW9yZSBpbmZvcm1hdGlvbi4KW2p1Z3NAaG9zdCB+XSQgY2F0IC92YXIvbGliL2RrbXMv
-d2lyZWd1YXJkLzAuMC4yMDE3MDYyOS9idWlsZC9tYWtlLmxvZwpES01TIG1ha2UubG9nIGZvciB3
-aXJlZ3VhcmQtMC4wLjIwMTcwNjI5IGZvciBrZXJuZWwgNC4xMS45LTEtQVJDSCAoeDg2XzY0KQpU
-aHUgSnVsIDYgMDY6MjE6MTggRURUIDIwMTcKbWFrZTogRW50ZXJpbmcgZGlyZWN0b3J5ICcvdXNy
-L2xpYi9tb2R1bGVzLzQuMTEuOS0xLUFSQ0gvYnVpbGQnCkxEIC92YXIvbGliL2RrbXMvd2lyZWd1
-YXJkLzAuMC4yMDE3MDYyOS9idWlsZC9idWlsdC1pbi5vCkNDIFtNXSAvdmFyL2xpYi9ka21zL3dp
-cmVndWFyZC8wLjAuMjAxNzA2MjkvYnVpbGQvbm9pc2UubwpDQyBbTV0gL3Zhci9saWIvZGttcy93
-aXJlZ3VhcmQvMC4wLjIwMTcwNjI5L2J1aWxkL2RldmljZS5vCkNDIFtNXSAvdmFyL2xpYi9ka21z
-L3dpcmVndWFyZC8wLjAuMjAxNzA2MjkvYnVpbGQvbWFpbi5vCkNDIFtNXSAvdmFyL2xpYi9ka21z
-L3dpcmVndWFyZC8wLjAuMjAxNzA2MjkvYnVpbGQvcGVlci5vCkNDIFtNXSAvdmFyL2xpYi9ka21z
-L3dpcmVndWFyZC8wLjAuMjAxNzA2MjkvYnVpbGQvdGltZXJzLm8KQ0MgW01dIC92YXIvbGliL2Rr
-bXMvd2lyZWd1YXJkLzAuMC4yMDE3MDYyOS9idWlsZC9kYXRhLm8KQ0MgW01dIC92YXIvbGliL2Rr
-bXMvd2lyZWd1YXJkLzAuMC4yMDE3MDYyOS9idWlsZC9zZW5kLm8KQ0MgW01dIC92YXIvbGliL2Rr
-bXMvd2lyZWd1YXJkLzAuMC4yMDE3MDYyOS9idWlsZC9yZWNlaXZlLm8KQ0MgW01dIC92YXIvbGli
-L2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE3MDYyOS9idWlsZC9zb2NrZXQubwpDQyBbTV0gL3Zhci9s
-aWIvZGttcy93aXJlZ3VhcmQvMC4wLjIwMTcwNjI5L2J1aWxkL2NvbmZpZy5vCkNDIFtNXSAvdmFy
-L2xpYi9ka21zL3dpcmVndWFyZC8wLjAuMjAxNzA2MjkvYnVpbGQvaGFzaHRhYmxlcy5vCkNDIFtN
-XSAvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8wLjAuMjAxNzA2MjkvYnVpbGQvcm91dGluZ3RhYmxl
-Lm8KQ0MgW01dIC92YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE3MDYyOS9idWlsZC9yYXRl
-bGltaXRlci5vCkNDIFtNXSAvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8wLjAuMjAxNzA2MjkvYnVp
-bGQvY29va2llLm8KQ0MgW01dIC92YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE3MDYyOS9i
-dWlsZC9jcnlwdG8vY2hhY2hhMjBwb2x5MTMwNS5vCkNDIFtNXSAvdmFyL2xpYi9ka21zL3dpcmVn
-dWFyZC8wLjAuMjAxNzA2MjkvYnVpbGQvY3J5cHRvL2N1cnZlMjU1MTkubwovdmFyL2xpYi9ka21z
-L3dpcmVndWFyZC8wLjAuMjAxNzA2MjkvYnVpbGQvZGV2aWNlLmM6IEluIGZ1bmN0aW9uIOKAmHNl
-dHVw4oCZOgovdmFyL2xpYi9ka21zL3dpcmVndWFyZC8wLjAuMjAxNzA2MjkvYnVpbGQvZGV2aWNl
-LmM6MjU1Ojc6IGVycm9yOiDigJhzdHJ1Y3QgbmV0X2RldmljZeKAmSBoYXMgbm8gbWVtYmVyIG5h
-bWVkIOKAmGRlc3RydWN0b3LigJk7IGRpZCB5b3UgbWVhbiDigJhwcml2X2Rlc3RydWN0b3LigJk/
-CmRldi0+ZGVzdHJ1Y3RvciA9IGRlc3RydWN0Owpefn5+fn5+fn5+CnByaXZfZGVzdHJ1Y3Rvcgpt
-YWtlWzFdOiAqKiogW3NjcmlwdHMvTWFrZWZpbGUuYnVpbGQ6Mjk0OiAvdmFyL2xpYi9ka21zL3dp
-cmVndWFyZC8wLjAuMjAxNzA2MjkvYnVpbGQvZGV2aWNlLm9dIEVycm9yIDEKbWFrZVsxXTogKioq
-IFdhaXRpbmcgZm9yIHVuZmluaXNoZWQgam9icy4uLi4KbWFrZTogKioqIFtNYWtlZmlsZToxNDky
-OiBfbW9kdWxlXy92YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE3MDYyOS9idWlsZF0gRXJy
-b3IgMgptYWtlOiBMZWF2aW5nIGRpcmVjdG9yeSAnL3Vzci9saWIvbW9kdWxlcy80LjExLjktMS1B
-UkNIL2J1aWxkJwoKLWp1Z3M=
+This was fixed for WireGuard in
+https://git.zx2c4.com/WireGuard/commit/?id=3De5c75663c35d30816807bcb1f97c83=
+ba960b247a
+for 4.12, we need to apply this for 4.11.9 and later too.
 
 
---b1_3ee10835643547fc1b5a56947f412e8f
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: base64
+On Thu, Jul 6, 2017, at 12:27, jugs wrote:
+> Would it be possible to add support for the current 4.11.x kernel? After =
+upgrading to 4.11.9 from 4.11.7 the current wireguard snapshot no longer wo=
+rks.
+>=20
+> After installation, I get the following errors:
+>=20
+> :: Running post-transaction hooks...=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=20
+> (1/3) Install DKMS modules=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+> =3D=3D> dkms install wireguard/0.0.20170629 -k 4.11.9-1-ARCH=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+> Error! Bad return status for module build on kernel: 4.11.9-1-ARCH (x86_6=
+4)=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0
+> Consult /var/lib/dkms/wireguard/0.0.20170629/build/make.log for more info=
+rmation.=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+>=20
+> [jugs@host ~]$ cat /var/lib/dkms/wireguard/0.0.20170629/build/make.log=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=20
+> DKMS make.log for wireguard-0.0.20170629 for kernel 4.11.9-1-ARCH (x86_64=
+)=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0
+> Thu Jul=C2=A0 6 06:21:18 EDT 2017=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+> make: Entering directory '/usr/lib/modules/4.11.9-1-ARCH/build'=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0
+> =C2=A0 LD=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /var/lib/dkms/wireguard/0.0.20170=
+629/build/built-in.o=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+> =C2=A0 CC [M]=C2=A0 /var/lib/dkms/wireguard/0.0.20170629/build/noise.o=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+> =C2=A0 CC [M]=C2=A0 /var/lib/dkms/wireguard/0.0.20170629/build/device.o=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+> =C2=A0 CC [M]=C2=A0 /var/lib/dkms/wireguard/0.0.20170629/build/main.o=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+> =C2=A0 CC [M]=C2=A0 /var/lib/dkms/wireguard/0.0.20170629/build/peer.o=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+> =C2=A0 CC [M]=C2=A0 /var/lib/dkms/wireguard/0.0.20170629/build/timers.o=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+> =C2=A0 CC [M]=C2=A0 /var/lib/dkms/wireguard/0.0.20170629/build/data.o=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+> =C2=A0 CC [M]=C2=A0 /var/lib/dkms/wireguard/0.0.20170629/build/send.o=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+> =C2=A0 CC [M]=C2=A0 /var/lib/dkms/wireguard/0.0.20170629/build/receive.o=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+> =C2=A0 CC [M]=C2=A0 /var/lib/dkms/wireguard/0.0.20170629/build/socket.o=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+> =C2=A0 CC [M]=C2=A0 /var/lib/dkms/wireguard/0.0.20170629/build/config.o=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+> =C2=A0 CC [M]=C2=A0 /var/lib/dkms/wireguard/0.0.20170629/build/hashtables=
+.o=C2=A0=C2=A0=C2=A0=C2=A0
+> =C2=A0 CC [M]=C2=A0 /var/lib/dkms/wireguard/0.0.20170629/build/routingtab=
+le.o=C2=A0=C2=A0
+> =C2=A0 CC [M]=C2=A0 /var/lib/dkms/wireguard/0.0.20170629/build/ratelimite=
+r.o=C2=A0=C2=A0=C2=A0
+> =C2=A0 CC [M]=C2=A0 /var/lib/dkms/wireguard/0.0.20170629/build/cookie.o=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+> =C2=A0 CC [M]=C2=A0 /var/lib/dkms/wireguard/0.0.20170629/build/crypto/cha=
+cha20poly1305.o=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0
+> =C2=A0 CC [M]=C2=A0 /var/lib/dkms/wireguard/0.0.20170629/build/crypto/cur=
+ve25519.o=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+> /var/lib/dkms/wireguard/0.0.20170629/build/device.c: In function =E2=80=
+=98setup=E2=80=99:=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+> /var/lib/dkms/wireguard/0.0.20170629/build/device.c:255:7: error: =E2=80=
+=98struct net_device=E2=80=99 has no member named =E2=80=98destructor=E2=80=
+=99; did you mean =E2=80=98priv_destructor=E2=80=99?
+> =C2=A0 dev->destructor =3D destruct;=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ^~~~~~~~~~=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 priv_destructor=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+> make[1]: *** [scripts/Makefile.build:294: /var/lib/dkms/wireguard/0.0.201=
+70629/build/device.o] Error 1=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+> make[1]: *** Waiting for unfinished jobs....=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+> make: *** [Makefile:1492: _module_/var/lib/dkms/wireguard/0.0.20170629/bu=
+ild] Error 2=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+> make: Leaving directory '/usr/lib/modules/4.11.9-1-ARCH/build'
+>=20
+>=20
+>=20
+> -jugs
+>=20
+>=20
+> _________________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
 
-PGRpdj5Xb3VsZCBpdCBiZSBwb3NzaWJsZSB0byBhZGQgc3VwcG9ydCBmb3IgdGhlIGN1cnJlbnQg
-NC4xMS54IGtlcm5lbD8gQWZ0ZXIgdXBncmFkaW5nIHRvIDQuMTEuOSBmcm9tIDQuMTEuNyB0aGUg
-Y3VycmVudCB3aXJlZ3VhcmQgc25hcHNob3Qgbm8gbG9uZ2VyIHdvcmtzLjxicj48L2Rpdj48ZGl2
-Pjxicj48L2Rpdj48ZGl2PkFmdGVyIGluc3RhbGxhdGlvbiwgSSBnZXQgdGhlIGZvbGxvd2luZyBl
-cnJvcnM6PGJyPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+OjogUnVubmluZyBwb3N0LXRyYW5z
-YWN0aW9uIGhvb2tzLi4uJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
-Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
-c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
-Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IDxicj48L2Rpdj48ZGl2
-PigxLzMpIEluc3RhbGwgREtNUyBtb2R1bGVzJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
-Jm5ic3A7Jm5ic3A7Jm5ic3A7PGJyPjwvZGl2PjxkaXY+PT0mZ3Q7IGRrbXMgaW5zdGFsbCB3aXJl
-Z3VhcmQvMC4wLjIwMTcwNjI5IC1rIDQuMTEuOS0xLUFSQ0gmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
-cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDs8
-YnI+PC9kaXY+PGRpdj5FcnJvciEgQmFkIHJldHVybiBzdGF0dXMgZm9yIG1vZHVsZSBidWlsZCBv
-biBrZXJuZWw6IDQuMTEuOS0xLUFSQ0ggKHg4Nl82NCkmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
-bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
-cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
-bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
-cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
-bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
-cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
-bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDs8YnI+PC9kaXY+PGRpdj5Db25zdWx0IC92YXIvbGliL2Rr
-bXMvd2lyZWd1YXJkLzAuMC4yMDE3MDYyOS9idWlsZC9tYWtlLmxvZyBmb3IgbW9yZSBpbmZvcm1h
-dGlvbi4mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
-cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
-bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
-cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
-bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
-cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
-bmJzcDsmbmJzcDsmbmJzcDs8YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5banVnc0Bob3N0
-IH5dJCBjYXQgL3Zhci9saWIvZGttcy93aXJlZ3VhcmQvMC4wLjIwMTcwNjI5L2J1aWxkL21ha2Uu
-bG9nJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
-Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
-c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
-Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
-c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
-Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
-c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
-Jm5ic3A7Jm5ic3A7Jm5ic3A7IDxicj48L2Rpdj48ZGl2PkRLTVMgbWFrZS5sb2cgZm9yIHdpcmVn
-dWFyZC0wLjAuMjAxNzA2MjkgZm9yIGtlcm5lbCA0LjExLjktMS1BUkNIICh4ODZfNjQpJm5ic3A7
-Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
-c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
-Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
-c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
-Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
-c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
-Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7PGJyPjwvZGl2
-PjxkaXY+VGh1IEp1bCZuYnNwOyA2IDA2OjIxOjE4IEVEVCAyMDE3Jm5ic3A7Jm5ic3A7Jm5ic3A7
-Jm5ic3A7Jm5ic3A7Jm5ic3A7PGJyPjwvZGl2PjxkaXY+bWFrZTogRW50ZXJpbmcgZGlyZWN0b3J5
-ICcvdXNyL2xpYi9tb2R1bGVzLzQuMTEuOS0xLUFSQ0gvYnVpbGQnJm5ic3A7Jm5ic3A7Jm5ic3A7
-Jm5ic3A7Jm5ic3A7Jm5ic3A7PGJyPjwvZGl2PjxkaXY+Jm5ic3A7IExEJm5ic3A7Jm5ic3A7Jm5i
-c3A7Jm5ic3A7Jm5ic3A7IC92YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE3MDYyOS9idWls
-ZC9idWlsdC1pbi5vJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7PGJyPjwvZGl2
-PjxkaXY+Jm5ic3A7IENDIFtNXSZuYnNwOyAvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8wLjAuMjAx
-NzA2MjkvYnVpbGQvbm9pc2UubyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
-YnNwOyZuYnNwOyZuYnNwOzxicj48L2Rpdj48ZGl2PiZuYnNwOyBDQyBbTV0mbmJzcDsgL3Zhci9s
-aWIvZGttcy93aXJlZ3VhcmQvMC4wLjIwMTcwNjI5L2J1aWxkL2RldmljZS5vJm5ic3A7Jm5ic3A7
-Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7PGJyPjwvZGl2PjxkaXY+Jm5ic3A7
-IENDIFtNXSZuYnNwOyAvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8wLjAuMjAxNzA2MjkvYnVpbGQv
-bWFpbi5vJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
-c3A7Jm5ic3A7PGJyPjwvZGl2PjxkaXY+Jm5ic3A7IENDIFtNXSZuYnNwOyAvdmFyL2xpYi9ka21z
-L3dpcmVndWFyZC8wLjAuMjAxNzA2MjkvYnVpbGQvcGVlci5vJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
-c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7PGJyPjwvZGl2PjxkaXY+Jm5i
-c3A7IENDIFtNXSZuYnNwOyAvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8wLjAuMjAxNzA2MjkvYnVp
-bGQvdGltZXJzLm8mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
-cDs8YnI+PC9kaXY+PGRpdj4mbmJzcDsgQ0MgW01dJm5ic3A7IC92YXIvbGliL2RrbXMvd2lyZWd1
-YXJkLzAuMC4yMDE3MDYyOS9idWlsZC9kYXRhLm8mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
-cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDs8YnI+PC9kaXY+PGRpdj4mbmJzcDsgQ0Mg
-W01dJm5ic3A7IC92YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE3MDYyOS9idWlsZC9zZW5k
-Lm8mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
-bmJzcDs8YnI+PC9kaXY+PGRpdj4mbmJzcDsgQ0MgW01dJm5ic3A7IC92YXIvbGliL2RrbXMvd2ly
-ZWd1YXJkLzAuMC4yMDE3MDYyOS9idWlsZC9yZWNlaXZlLm8mbmJzcDsmbmJzcDsmbmJzcDsmbmJz
-cDsmbmJzcDsmbmJzcDsmbmJzcDs8YnI+PC9kaXY+PGRpdj4mbmJzcDsgQ0MgW01dJm5ic3A7IC92
-YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE3MDYyOS9idWlsZC9zb2NrZXQubyZuYnNwOyZu
-YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOzxicj48L2Rpdj48ZGl2PiZu
-YnNwOyBDQyBbTV0mbmJzcDsgL3Zhci9saWIvZGttcy93aXJlZ3VhcmQvMC4wLjIwMTcwNjI5L2J1
-aWxkL2NvbmZpZy5vJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
-c3A7PGJyPjwvZGl2PjxkaXY+Jm5ic3A7IENDIFtNXSZuYnNwOyAvdmFyL2xpYi9ka21zL3dpcmVn
-dWFyZC8wLjAuMjAxNzA2MjkvYnVpbGQvaGFzaHRhYmxlcy5vJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
-c3A7PGJyPjwvZGl2PjxkaXY+Jm5ic3A7IENDIFtNXSZuYnNwOyAvdmFyL2xpYi9ka21zL3dpcmVn
-dWFyZC8wLjAuMjAxNzA2MjkvYnVpbGQvcm91dGluZ3RhYmxlLm8mbmJzcDsmbmJzcDs8YnI+PC9k
-aXY+PGRpdj4mbmJzcDsgQ0MgW01dJm5ic3A7IC92YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4y
-MDE3MDYyOS9idWlsZC9yYXRlbGltaXRlci5vJm5ic3A7Jm5ic3A7Jm5ic3A7PGJyPjwvZGl2Pjxk
-aXY+Jm5ic3A7IENDIFtNXSZuYnNwOyAvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8wLjAuMjAxNzA2
-MjkvYnVpbGQvY29va2llLm8mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
-cDsmbmJzcDs8YnI+PC9kaXY+PGRpdj4mbmJzcDsgQ0MgW01dJm5ic3A7IC92YXIvbGliL2RrbXMv
-d2lyZWd1YXJkLzAuMC4yMDE3MDYyOS9idWlsZC9jcnlwdG8vY2hhY2hhMjBwb2x5MTMwNS5vJm5i
-c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
-Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
-c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
-Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
-c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
-Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
-c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7PGJyPjwvZGl2PjxkaXY+Jm5ic3A7IENDIFtNXSZu
-YnNwOyAvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8wLjAuMjAxNzA2MjkvYnVpbGQvY3J5cHRvL2N1
-cnZlMjU1MTkubyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
-OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
-YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
-OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
-YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
-OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
-YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
-OyZuYnNwOyZuYnNwOyZuYnNwOzxicj48L2Rpdj48ZGl2Pi92YXIvbGliL2RrbXMvd2lyZWd1YXJk
-LzAuMC4yMDE3MDYyOS9idWlsZC9kZXZpY2UuYzogSW4gZnVuY3Rpb24g4oCYc2V0dXDigJk6Jm5i
-c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
-Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
-c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
-Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
-c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
-Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
-c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
-PGJyPjwvZGl2PjxkaXY+L3Zhci9saWIvZGttcy93aXJlZ3VhcmQvMC4wLjIwMTcwNjI5L2J1aWxk
-L2RldmljZS5jOjI1NTo3OiBlcnJvcjog4oCYc3RydWN0IG5ldF9kZXZpY2XigJkgaGFzIG5vIG1l
-bWJlciBuYW1lZCDigJhkZXN0cnVjdG9y4oCZOyBkaWQgeW91IG1lYW4g4oCYcHJpdl9kZXN0cnVj
-dG9y4oCZPzxicj48L2Rpdj48ZGl2PiZuYnNwOyBkZXYtJmd0O2Rlc3RydWN0b3IgPSBkZXN0cnVj
-dDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDs8YnI+PC9kaXY+PGRpdj4mbmJzcDsmbmJz
-cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgXn5+fn5+fn5+fiZuYnNwOyZuYnNwOyZuYnNwOyZu
-YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
-OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOzxicj48L2Rpdj48ZGl2PiZuYnNwOyZuYnNwOyZuYnNw
-OyZuYnNwOyZuYnNwOyZuYnNwOyBwcml2X2Rlc3RydWN0b3ImbmJzcDsmbmJzcDsmbmJzcDsmbmJz
-cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDs8YnI+PC9k
-aXY+PGRpdj5tYWtlWzFdOiAqKiogW3NjcmlwdHMvTWFrZWZpbGUuYnVpbGQ6Mjk0OiAvdmFyL2xp
-Yi9ka21zL3dpcmVndWFyZC8wLjAuMjAxNzA2MjkvYnVpbGQvZGV2aWNlLm9dIEVycm9yIDEmbmJz
-cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
-bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
-cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
-bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDs8YnI+
-PC9kaXY+PGRpdj5tYWtlWzFdOiAqKiogV2FpdGluZyBmb3IgdW5maW5pc2hlZCBqb2JzLi4uLiZu
-YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
-OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
-YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOzxicj48L2Rpdj48ZGl2Pm1ha2U6ICoq
-KiBbTWFrZWZpbGU6MTQ5MjogX21vZHVsZV8vdmFyL2xpYi9ka21zL3dpcmVndWFyZC8wLjAuMjAx
-NzA2MjkvYnVpbGRdIEVycm9yIDImbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
-bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
-cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
-bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
-cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
-bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
-cDsmbmJzcDs8YnI+PC9kaXY+PGRpdj5tYWtlOiBMZWF2aW5nIGRpcmVjdG9yeSAnL3Vzci9saWIv
-bW9kdWxlcy80LjExLjktMS1BUkNIL2J1aWxkJzxicj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2
-Pjxicj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2IGNsYXNzPSJwcm90b25tYWlsX3NpZ25hdHVy
-ZV9ibG9jayAiPjxkaXYgY2xhc3M9InByb3Rvbm1haWxfc2lnbmF0dXJlX2Jsb2NrLXVzZXIgIj48
-ZGl2Pi1qdWdzPGJyPjwvZGl2PjwvZGl2PjxkaXYgY2xhc3M9InByb3Rvbm1haWxfc2lnbmF0dXJl
-X2Jsb2NrLXByb3RvbiBwcm90b25tYWlsX3NpZ25hdHVyZV9ibG9jay1lbXB0eSI+PGJyPjwvZGl2
-PjwvZGl2PjxkaXY+PGJyPjwvZGl2Pg==
-
-
-
---b1_3ee10835643547fc1b5a56947f412e8f--
+Best Regards
+Nils
