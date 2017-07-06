@@ -1,22 +1,28 @@
 Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f8d01a04
- for <wireguard@lists.zx2c4.com>; Thu, 6 Jul 2017 16:05:01 +0000 (UTC)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cd4c1f96
+ for <wireguard@lists.zx2c4.com>; Thu, 6 Jul 2017 17:55:48 +0000 (UTC)
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 46b7aa26
- for <wireguard@lists.zx2c4.com>; Thu, 6 Jul 2017 16:05:01 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8096b243
- for <wireguard@lists.zx2c4.com>; Thu, 6 Jul 2017 16:18:35 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id a26c1aee
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Thu, 6 Jul 2017 16:18:35 +0000 (UTC)
-Date: Thu, 06 Jul 2017 18:22:40 +0200
-To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: [ANNOUNCE] WireGuard Snapshot `0.0.20170706` Available
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 01ffeaaf
+ for <wireguard@lists.zx2c4.com>; Thu, 6 Jul 2017 17:55:48 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d33d550c
+ for <wireguard@lists.zx2c4.com>; Thu, 6 Jul 2017 18:09:22 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id e1155493
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>; Thu, 6 Jul 2017 18:09:21 +0000 (UTC)
+Received: by mail-wr0-f172.google.com with SMTP id r103so13775390wrb.0
+ for <wireguard@lists.zx2c4.com>; Thu, 06 Jul 2017 11:13:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Message-Id: <f64d33b537d9b574@frisell.zx2c4.com>
+In-Reply-To: <1499337631.2605924.1032148312.417D8BEF@webmail.messagingengine.com>
+References: <D-MLue-9vlB3Qm_i2xdc-LgpmmeCkvnAXCRXV1rGDvpU_z9CY_-VqoJ_4PvJOk3dXto6TNRvfcV-mX42nqcYqA==@protonmail.ch>
+ <1499337631.2605924.1032148312.417D8BEF@webmail.messagingengine.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 6 Jul 2017 20:13:25 +0200
+Message-ID: <CAHmME9pmf2A=HJ5T7_tDEoXGN=ph0VBYKLVOVsN4Mvk+hB-tPQ@mail.gmail.com>
+Subject: Re: Kernel 4.11.9 Support
+To: Nils Andreas Svee <me@lochnair.net>
+Content-Type: multipart/alternative; boundary="001a114b2d10ab66540553aa12d3"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,81 +32,20 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--001a114b2d10ab66540553aa12d3
+Content-Type: text/plain; charset="UTF-8"
 
-Hello,
+Hey guys,
 
-A new snapshot, `0.0.20170706`, has been tagged in the git repository.
+I released a new snapshot that supports 4.11.9 today. Thanks for bringing
+this to my attention.
 
-Please note that this snapshot is, like the rest of the project at this point
-in time, experimental, and does not consitute a real release that would be
-considered secure and bug-free. WireGuard is generally thought to be fairly
-stable, and most likely will not crash your computer (though it may).
-However, as this is a pre-release snapshot, it comes with no guarantees, and
-its security is not yet to be depended on; it is not applicable for CVEs.
+Jason
 
-With all that said, if you'd like to test this snapshot out, there are a
-few relevent changes.
+--001a114b2d10ab66540553aa12d3
+Content-Type: text/html; charset="UTF-8"
 
-== Changes ==
+<div dir="ltr"><div class="gmail_extra">Hey guys,
+</div><div class="gmail_extra"><br></div><div class="gmail_extra">I released a new snapshot that supports 4.11.9 today. Thanks for bringing this to my attention.</div><div class="gmail_extra"><br></div><div class="gmail_extra">Jason</div></div>
 
-  * ratelimiter: use kvzalloc for hash table allocation
-  * ratelimiter: use IPv6 /64 instead of /96
-  * ratelimiter: add self-test
-  
-  These should make the rate-limiting a bit faster. We also switch to using
-  a /64 instead of a /96 for IPv6, which seems to be what various RFCs
-  recommend for this sort of thing.
-  
-  * receive: cleanup error handlers
-  * gitignore: ignore split DWARF debug info
-  * socket: the checkers distinguish between _bh and non _bh
-  * counter: use correct unit for indices
-  
-  Various cleanups.
-  
-  * compat: support OpenSUSE's backports
-  * compat: workaround Ubuntu 16.10 kernel weirdness
-  * compat: priv_destructor got backported
-  * device: cleanup register_netdev logic
-  
-  This is the main reason why this snapshot is being released a bit early.
-  Kernel 4.11.9 came out, which backported some changes from 4.12, so
-  we had to adjust the compat layer. This snapshot should now work with
-  this recently released kernel (and all others >= 3.10) too. We also
-  add support to a few more odd distro kernels.
-
-As always, the source is available at https://git.zx2c4.com/WireGuard/ and
-information about the project is available at https://www.wireguard.io/ .
-
-This snapshot is available in tarball form here:
-  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-0.0.20170706.tar.xz
-  SHA2-256: 5763b9436265421a67f92cb82142042867fc87c573ecc18033d40c1476146c33
-  BLAKE2b-256: 90b1833a94060efd1686d608421eb9e7633e3590870dbd664a42249e495388e9
-
-If you're a snapshot package maintainer, please bump your package version. If
-you're a user, the WireGuard team welcomes any and all feedback on this latest
-snapshot.
-
-Thank you,
-Jason Donenfeld
-
-
------BEGIN PGP SIGNATURE-----
-
-iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAlleY54QHGphc29uQHp4
-MmM0LmNvbQAKCRBJ/HASpd4DrspMD/49maoX768282E+2dkaReI3LJqNfmf7sUpU
-Q543iS/WzhxxsQS9m79FCPP/zHwpEqxx6f4oGW9zyYLJlaowx4p0MQRVzS+Po/ng
-0IuFpnVFZemS4g0xurhtcWlOCdxYQgLIcSfgClqzDQniUypyvXs9E4yazK3qfRFq
-oDB9gAlxfWW0swOtT3nTffHCD5Cq7PC/6s3vCec8vsG7ovRnyVAEnWIjYZoF+vUF
-xwXsCc6sspUGYq/HxmitnNCpB2ZifK3J+1UXT2HjQwQlh6H2rkIPDUWSuh1fvxm1
-MA+fcMEavlyn6+rUd1trqtcHGnLcQW05iYgwVgPCpWsDRDBOveFjk5K7SEAQJBOO
-BtZhgVoxNECyoaypRwFhCqrSckCB5q4CL9sLSASAyX0axX3kvFt2OXFK4WKMZ90K
-EWTaEFexYOqWpnkp64HPY6mdaYsrqMaLV8o5emk2M1rCi3/PiCv4b7LC5l6aZQZT
-qXXT7ubgBQaa3a5jKho03w/3Soai/BWikS3WoXNJds+mGFFnwHU61NIqJf/U3L/z
-zEmlJ1wZTCwDKxGpOVaOfgB7TO5z8Vim9Mogcm7wVUZ2N6zv2xNFkEEsn+PRv/CY
-CZyyGOzDj/9UKy3iE90HxtiEq6c1km7PPj3cu2whyKZXHq7VWFkiBqTez8Rb1iE4
-PSR2PTf/sw==
-=76OE
------END PGP SIGNATURE-----
+--001a114b2d10ab66540553aa12d3--
