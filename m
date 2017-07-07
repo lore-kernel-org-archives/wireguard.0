@@ -1,29 +1,26 @@
-Return-Path: mailings@roelf.org
+Return-Path: aeforeve@mail.ru
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f7ac577a
- for <wireguard@lists.zx2c4.com>; Fri, 7 Jul 2017 14:50:53 +0000 (UTC)
-Received: from mail.aperture-laboratories.science
- (mail.aperture-laboratories.science [176.31.38.83])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d144680f
- for <wireguard@lists.zx2c4.com>; Fri, 7 Jul 2017 14:50:53 +0000 (UTC)
-Received: from mail.aperture-laboratories.science (localhost [127.0.0.1])
- by mail.aperture-laboratories.science (Postfix) with ESMTP id 64F1943E25
- for <wireguard@lists.zx2c4.com>; Fri,  7 Jul 2017 15:20:06 +0000 (UTC)
-Received: from [IPv6:2a06:e881:1301:2:86ba:9dc0:2d2d:8faa] (unknown
- [IPv6:2a06:e881:1301:2:86ba:9dc0:2d2d:8faa])
- by mail.aperture-laboratories.science (Postfix) with ESMTPSA id 05F4943E24
- for <wireguard@lists.zx2c4.com>; Fri,  7 Jul 2017 15:20:06 +0000 (UTC)
-Subject: Re: problem wireguard + ospf + unconnected tunnels
-References: <1499116162.70598782@f401.i.mail.ru>
- <740cb9af-aba8-c610-c1b7-0a7c69396e46@roelf.org>
- <1499188207.518000711@f408.i.mail.ru>
-To: wireguard@lists.zx2c4.com
-From: "Roelf \"rewbycraft\" Wichertjes" <mailings+wireguard@roelf.org>
-Message-ID: <e3a0ff13-fea4-e5e3-7529-ae746d74a17a@roelf.org>
-Date: Fri, 7 Jul 2017 17:08:34 +0200
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 242bb475
+ for <wireguard@lists.zx2c4.com>; Fri, 7 Jul 2017 15:29:17 +0000 (UTC)
+Received: from f466.i.mail.ru (f466.i.mail.ru [185.5.136.199])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a8308e6a
+ for <wireguard@lists.zx2c4.com>; Fri, 7 Jul 2017 15:29:17 +0000 (UTC)
+From: =?UTF-8?B?YWU=?= <aeforeve@mail.ru>
+To: =?UTF-8?B?Um9lbGYgXCJyZXdieWNyYWZ0XCIgV2ljaGVydGplcw==?=
+ <mailings+wireguard@roelf.org>
+Subject: =?UTF-8?B?UmVbMl06IHByb2JsZW0gd2lyZWd1YXJkICsgb3NwZiArIHVuY29ubmVjdGVk?=
+ =?UTF-8?B?IHR1bm5lbHM=?=
 MIME-Version: 1.0
-In-Reply-To: <1499188207.518000711@f408.i.mail.ru>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Date: Fri, 07 Jul 2017 18:47:02 +0300
+Message-ID: <1499442422.268064455@f466.i.mail.ru>
+Content-Type: multipart/alternative;
+ boundary="--ALT--pR5J8qGDNlXQza4KGtIBdXiTpnLPRbWP1499442422"
+In-Reply-To: <e3a0ff13-fea4-e5e3-7529-ae746d74a17a@roelf.org>
+References: <1499116162.70598782@f401.i.mail.ru>
+ <1499188207.518000711@f408.i.mail.ru>
+ <e3a0ff13-fea4-e5e3-7529-ae746d74a17a@roelf.org>
+Cc: wireguard@lists.zx2c4.com
+Reply-To: =?UTF-8?B?YWU=?= <aeforeve@mail.ru>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -33,109 +30,120 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-So, is the problem you actually want help with actually getting A and C 
-to talk to eachother?
-If so, we'll need to see the configs you're using on both ends of the 
-tunnel. I'd also suggest checking your firewalls in this case.
 
-And ospf is simply refusing to use the A<->C but is still working just 
-fine across A<->B?
-If so, that's normal.
-If A<->B also stops working due to the "No buffer space available" 
-error, that is a bug with quagga. (which we can try to (get) fix(ed) in 
-that situation)
+----ALT--pR5J8qGDNlXQza4KGtIBdXiTpnLPRbWP1499442422
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: base64
 
-Sorry if it seems obvious, I'm simply trying to get a grasp as to what 
-the actual problem you want help with is.
+Cj5TbywgaXMgdGhlIHByb2JsZW0geW91IGFjdHVhbGx5IHdhbnQgaGVscCB3aXRoIGFjdHVhbGx5
+IGdldHRpbmcgQSBhbmQgQyAKPnRvIHRhbGsgdG8gZWFjaG90aGVyPwo+SWYgc28sIHdlJ2xsIG5l
+ZWQgdG8gc2VlIHRoZSBjb25maWdzIHlvdSdyZSB1c2luZyBvbiBib3RoIGVuZHMgb2YgdGhlIAo+
+dHVubmVsLiBJJ2QgYWxzbyBzdWdnZXN0IGNoZWNraW5nIHlvdXIgZmlyZXdhbGxzIGluIHRoaXMg
+Y2FzZS4KPgo+QW5kIG9zcGYgaXMgc2ltcGx5IHJlZnVzaW5nIHRvIHVzZSB0aGUgQTwtPkMgYnV0
+IGlzIHN0aWxsIHdvcmtpbmcganVzdCAKPmZpbmUgYWNyb3NzIEE8LT5CPwo+SWYgc28sIHRoYXQn
+cyBub3JtYWwuCj5JZiBBPC0+QiBhbHNvIHN0b3BzIHdvcmtpbmcgZHVlIHRvIHRoZSAiTm8gYnVm
+ZmVyIHNwYWNlIGF2YWlsYWJsZSIgCj5lcnJvciwgdGhhdCBpcyBhIGJ1ZyB3aXRoIHF1YWdnYS4g
+KHdoaWNoIHdlIGNhbiB0cnkgdG8gKGdldCkgZml4KGVkKSBpbiAKPnRoYXQgc2l0dWF0aW9uKQo+
+Cj5Tb3JyeSBpZiBpdCBzZWVtcyBvYnZpb3VzLCBJJ20gc2ltcGx5IHRyeWluZyB0byBnZXQgYSBn
+cmFzcCBhcyB0byB3aGF0IAo+dGhlIGFjdHVhbCBwcm9ibGVtIHlvdSB3YW50IGhlbHAgd2l0aCBp
+cy4KPgpJIGdhdmUgYW4gYWNjdXJhdGUgZGVzY3JpcHRpb24gb2YgdGhlIHByb2JsZW0KSXRzIGVz
+c2VuY2UgaXMgdGhhdCB0aGUgYnVmZmVyIG92ZXJmbG93IC0gd2hpY2ggb2NjdXJzIHdoZW4gc2Vu
+ZGluZyB0byB0aGUgc29ja2V0IGluIHRoZSBlc3NlbmNlIG9mIGJlaW5nIG9uIGFuIHVuY29ubmVj
+dGVkIHR1bm5lbCAtIGJsb2NrcyBhbnkgb3RoZXIgcmVmZXJlbmNlcyBmcm9tIHRoaXMgc29ja2V0
+IHRvIG90aGVyIG5ldHdvcmtzCgpUaGF0IGlzLCBhIG5vbi13b3JraW5nIHR1bm5lbCBjYW4gYmxv
+Y2sgQU5ZIHNvY2tldCBmcm9tIHdoaWNoIHRoZSB0cmFmZmljIGlzIHNlbnQgdG8gZGlmZmVyZW50
+IHBvaW50cwoKSWYgeW91IGRvIG5vdCBjb25zaWRlciB0aGlzIGEgcHJvYmxlbSAtIHRoZW4gaW5k
+aWNhdGUgaW4gdGhlIGRvY3VtZW50YXRpb24gdGhhdCB0aGlzIHR1bm5lbCBpcyBwYXJ0aWFsbHkg
+aW5jb21wYXRpYmxlIHdpdGggdGhlIGd1YWdlIG9zcGYgYW5kIGNhbiBsZWFkIHRvIG5vdCBqdXN0
+IGRpYWdub3NlZCBwcm9ibGVtcyBpbiB0aGUgbmV0d29yawoKQW5kIGlmIHlvdSB3YW50IHRvIHNp
+bXVsYXRlIHRoZSBzaXR1YXRpb24gLSB0aGVuCndnIHNldGNvbmYgd2cwIHdnMC5jb25mwqAgKHN0
+YW5kYXJ0IHNldHRpbmcgLSB0dW5uZWwgdG8gcmFuZG9tIGhvc3QgLSAwLjAuMC4wLzAgZHN0KQpp
+cCByb3V0ZSBhZGQgMTAuMTkyLjEyMi4zIGRldiB3ZzAKCmltcG9ydCBzb2NrZXQKaW1wb3J0IHRp
+bWUKVURQX0lQID0gIjEyNy4wLjAuMSIKVURQX1BPUlQgPSA1MDA1ClVEUF9JUDIgPSAiMTAuMTky
+LjEyMi4zIgpVRFBfUE9SVDIgPSA1MDA1Ck1FU1NBR0UgPSAiSGVsbG8sIFdvcmxkISIKc29jayA9
+IHNvY2tldC5zb2NrZXQoc29ja2V0LkFGX0lORVQsIHNvY2tldC5TT0NLX0RHUkFNKSAjIFVEUApu
+ID0gMAp3aGlsZSBUcnVlOgrCoMKgwqAgcHJpbnQgInNlbmQxIiwgbgrCoMKgwqAgc29jay5zZW5k
+dG8oTUVTU0FHRSwgKFVEUF9JUCwgVURQX1BPUlQpKQrCoMKgwqAgcHJpbnQgInNlbmQyIiwgbgrC
+oMKgwqAgc29jay5zZW5kdG8oTUVTU0FHRSwgKFVEUF9JUDIsIFVEUF9QT1JUMikpCsKgwqDCoCB0
+aW1lLnNsZWVwKDAuMSkKwqDCoMKgIG4rPTEKCgphbmQgcnVuClRoZSBhcHBsaWNhdGlvbiB3aWxs
+IGJlIGJsb2NrZWQgYWZ0ZXIgMjAgc2Vjb25kcwpUaGUgYXBwbGljYXRpb24gd2lsbCBiZSBibG9j
+a2VkIGFmdGVyIDIwIHNlY29uZHMKaXQgaXMgbm90IHJpZ2h0Cgo=
 
+----ALT--pR5J8qGDNlXQza4KGtIBdXiTpnLPRbWP1499442422
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: base64
 
-On 07/04/2017 07:10 PM, ae wrote:
-> 
-> 
->     Вторник, 4 июля 2017, 20:56 +05:00 от "Roelf \"rewbycraft\"
->     Wichertjes" <mailings+wireguard@roelf.org
->     <https://e.mail.ru/compose?To=mailings%2bwireguard@roelf.org>>:
-> 
->      From what you said, I surmise the following setup:
->     - Three devices, A, B and C.
->     - A talks ospf to B over wireguard.
->     - A talks ospf to C over wireguard.
->     - The connection between A and C has gotten interrupted. (maybe C is a
->     laptop)
->     - The error causes the entire ospf process to fail for all interfaces.
->         In other words: A will suddenly also stop talking B when the
->     connection A<->C fails?
-> 
-> Not at all
-> A-B normally installed tunnels
-> A-C with never working tunnel - there was no connection setup never
-> Both tunnels are described with a direct indication of the other side's 
-> feast (ip port)
-> 
-> There is a blocking of the work of the demon's ospfd - because of "No 
-> buffer space available"
-> Ospf uses ONE socket to send its message to all interfaces - and this 
-> socket is blocked due to buffer overflow - which occurs when it sends 
-> packets to a non-starting tunnel
-> 
-> 
->     If I am correct in that, there are a few things to note:
->        - The "No buffer space available" error is normal from wireguard
->     when
->     an interface cannot reach the peer.
-> 
-> Can and normal - but it blocks ospfd - and as a result to use them 
-> together is simply impossible
-> Would he rather have dropped them?
-> 
-> 
->        - A single "failing" interface shouldn't kill the ospf process
->     for all
->     interfaces.
-> 
-> not kill - blocked yes
-> 
-> 
->        - This sounds more like a quagga problem, as I have a similar
->     setup (I
->     use my laptop for device C in my case) except I use the BIRD routing
->     daemon instead of quagga (and this setup works fine for me).
-> 
-> This is a problem with vireguard
-> No other tunnels - I did not allow myself to do this
-> About the inability to reach the addressee - packets just drop out
-> But here he accumulates and accumulate ....
-> 
-> 
->     Of course, before any definitive conclusions can be made, we'll need a
->     bit more information. Could you possibly provide us with the following
->     pieces of information:
->        - What distribution are you using?
-> 
-> debian9
-> 
-> 
->        - What kernel (version) are you using?
-> 
-> 4.9.30-2+deb9u2
-> 
-> 
->        - What wireguard version are you using?
-> 
-> wireguard-0.0.20170613-1
-> 
-> 
->        - What quagga version are you using?
-> 
-> 0.99.23.1-1+deb8u3
-> 
-> 
->        - Please provide the kernel logs.
-> 
-> empty
-> 
-> 
->        - Please provide the quagga logs.
-> 
-> empty
-> 
+CjxIVE1MPjxCT0RZPjxiciBpZD0idGlueW1jZSIgY2xhc3M9Im1jZUNvbnRlbnRCb2R5IGluY3Jl
+YXNlLWZvbnQgY29tcG9zZTIiIG9ubG9hZD0id2luZG93LnBhcmVudC50aW55TUNFLmdldCgndG9v
+bGtpdC0xNDk5NDQwMjY0ODczNzJjb21wb3NlRWRpdG9yJykub25Mb2FkLmRpc3BhdGNoKCk7IiBk
+aXI9Imx0ciIgc3R5bGU9Im92ZXJmbG93OiBhdXRvOyIgY29udGVudGVkaXRhYmxlPSJ0cnVlIj48
+YmxvY2txdW90ZSBzdHlsZT0iYm9yZGVyLWxlZnQ6MXB4IHNvbGlkICMwODU3QTY7IG1hcmdpbjox
+MHB4OyBwYWRkaW5nOjAgMCAwIDEwcHg7Ij48ZGl2IGlkPSIiPjxkaXYgY2xhc3M9ImpzLWhlbHBl
+ciBqcy1yZWFkbXNnLW1zZyI+PGRpdj48ZGl2IGlkPSJzdHlsZV8xNDk5NDQwMTM0MDAwMDAwMDMy
+NV9CT0RZIj5TbywgaXMgdGhlIHByb2JsZW0geW91IGFjdHVhbGx5IHdhbnQgaGVscCB3aXRoIGFj
+dHVhbGx5IGdldHRpbmcgQSBhbmQgQyA8YnI+CnRvIHRhbGsgdG8gZWFjaG90aGVyPzxicj4KSWYg
+c28sIHdlJ2xsIG5lZWQgdG8gc2VlIHRoZSBjb25maWdzIHlvdSdyZSB1c2luZyBvbiBib3RoIGVu
+ZHMgb2YgdGhlIDxicj4KdHVubmVsLiBJJ2QgYWxzbyBzdWdnZXN0IGNoZWNraW5nIHlvdXIgZmly
+ZXdhbGxzIGluIHRoaXMgY2FzZS48YnI+PGJyPgpBbmQgb3NwZiBpcyBzaW1wbHkgcmVmdXNpbmcg
+dG8gdXNlIHRoZSBBJmx0Oy0mZ3Q7QyBidXQgaXMgc3RpbGwgd29ya2luZyBqdXN0IDxicj4KZmlu
+ZSBhY3Jvc3MgQSZsdDstJmd0O0I/PGJyPgpJZiBzbywgdGhhdCdzIG5vcm1hbC48YnI+CklmIEEm
+bHQ7LSZndDtCIGFsc28gc3RvcHMgd29ya2luZyBkdWUgdG8gdGhlICJObyBidWZmZXIgc3BhY2Ug
+YXZhaWxhYmxlIiA8YnI+CmVycm9yLCB0aGF0IGlzIGEgYnVnIHdpdGggcXVhZ2dhLiAod2hpY2gg
+d2UgY2FuIHRyeSB0byAoZ2V0KSBmaXgoZWQpIGluIDxicj4KdGhhdCBzaXR1YXRpb24pPGJyPjxi
+cj4KU29ycnkgaWYgaXQgc2VlbXMgb2J2aW91cywgSSdtIHNpbXBseSB0cnlpbmcgdG8gZ2V0IGEg
+Z3Jhc3AgYXMgdG8gd2hhdCA8YnI+CnRoZSBhY3R1YWwgcHJvYmxlbSB5b3Ugd2FudCBoZWxwIHdp
+dGggaXMuPGJyPjxicj48L2Rpdj48L2Rpdj48L2Rpdj48L2Rpdj48L2Jsb2NrcXVvdGU+PHNwYW4g
+aWQ9InJlc3VsdF9ib3giIGxhbmc9ImVuIj48c3BhbiB0aXRsZT0i0Y8g0L/RgNC40LLQtdC7INGC
+0L7Rh9C90L7QtSDQvtC/0LjRgdCw0L3QuNC1INCy0L7Qt9C90LjQutCw0Y7RidC10Lkg0L/RgNC+
+0LHQu9C10LzRiwoiPkkgZ2F2ZSBhbiBhY2N1cmF0ZSBkZXNjcmlwdGlvbiBvZiB0aGUgcHJvYmxl
+bTxicj48L3NwYW4+PHNwYW4gdGl0bGU9ItGB0YPRgtGMINC10LUg0LIg0YLQvtC8INGH0YLQviDQ
+v9C10YDQtdC/0L7Qu9C90LXQvdC40LUg0LHRg9GE0LXRgNCwIC0g0LLQvtC30L3QuNC60LDRjtGJ
+0LjQuSDQv9GA0Lgg0L/QvtGB0YvQu9C60LUg0LIg0YHQvtC60LXRgiDQsiDRgdGD0YLRjCDQvdCw
+0YXQvtC00Y/RidC10LnRgdGPINC90LAg0L3QtdC/0L7QtNC60LvRjtGH0LXQvdC90YvQvCDRgtGD
+0L3QvdC10LvQtdC8IC0g0LHQu9C+0LrQuNGA0YPQtdGCINC70Y7QsdGL0LUg0LTRgNGD0LPQuNC1
+INC+0YLRgdGL0LvQutC4INGBINC00LDQvdC90L7Qs9C+INGB0L7QutC10YLQsCDQsiDQtNGA0YPQ
+s9C40LUg0YHQtdGC0LgKCiI+SXRzIGVzc2VuY2UgaXMgdGhhdCB0aGUgYnVmZmVyIG92ZXJmbG93
+IC0gd2hpY2ggb2NjdXJzIHdoZW4gc2VuZGluZyB0byB0aGUgc29ja2V0IGluIHRoZSBlc3NlbmNl
+IG9mIGJlaW5nIG9uIGFuIHVuY29ubmVjdGVkIHR1bm5lbCAtIGJsb2NrcyBhbnkgb3RoZXIgcmVm
+ZXJlbmNlcyBmcm9tIHRoaXMgc29ja2V0IHRvIG90aGVyIG5ldHdvcmtzPGJyPjxicj48L3NwYW4+
+PHNwYW4gdGl0bGU9ItGC0L4g0LXRgdGC0Ywg0L3QtdGA0LDQsdC+0YfQuNC5INGC0YPQvdC90LXQ
+u9GMINC80L7QttC10YIg0LHQu9C+0LrQuNGA0L7QstCw0YLRjCDQm9Cu0JHQntCZINGB0L7QutC1
+0YIg0YEg0LrQvtGC0L7RgNC+0LPQviDRgNCw0YHRgdGL0LvQsNGO0YIg0LIg0YDQsNC30LvQuNGH
+0L3Ri9C1INGC0L7Rh9C60Lgg0YLRgNCw0YTRhNC40LoKCiI+VGhhdCBpcywgYSBub24td29ya2lu
+ZyB0dW5uZWwgY2FuIGJsb2NrIEFOWSBzb2NrZXQgZnJvbSB3aGljaCB0aGUgdHJhZmZpYyBpcyBz
+ZW50IHRvIGRpZmZlcmVudCBwb2ludHM8YnI+PGJyPjwvc3Bhbj48c3BhbiB0aXRsZT0i0LXRgdC7
+0Lgg0LLRiyDQvdC1INGB0YfQuNGC0LDQtdGC0LUg0Y3RgtC+INC/0YDQvtCx0LvQtdC80L7QuSAt
+INGC0L4g0YPQutCw0LbQuNGC0LUg0LIg0LTQvtC60YPQvNC10L3RgtCw0YbQuNC4INGH0YLQviDQ
+tNCw0L3QvdGL0Lkg0YLRg9C90LXQu9GMINGH0LDRgdGC0LjRh9C90L4g0L3QtSDRgdC+0LLQvNC1
+0YHRgtC40Lwg0YEg0LPRg9Cw0LPQsCDQvtGB0L/RhCDQuCDQvNC+0LbQtdGCINC/0YDQuNCy0L7Q
+tNC40YLRjCDQuiDQvdC1INC/0YDQvtGB0YLQviDQtNC40LDQs9C90L7RgdGC0LjRgNGD0LXQvNGL
+0Lwg0L/RgNC+0LHQu9C10LzQsNC8INCyINGB0LXRgtC4CgoiPklmIHlvdSBkbyBub3QgY29uc2lk
+ZXIgdGhpcyBhIHByb2JsZW0gLSB0aGVuIGluZGljYXRlIGluIHRoZSBkb2N1bWVudGF0aW9uIHRo
+YXQgdGhpcyB0dW5uZWwgaXMgcGFydGlhbGx5IGluY29tcGF0aWJsZSB3aXRoIHRoZSBndWFnZSBv
+c3BmIGFuZCBjYW4gbGVhZCB0byBub3QganVzdCBkaWFnbm9zZWQgcHJvYmxlbXMgaW4gdGhlIG5l
+dHdvcms8YnI+PGJyPjwvc3Bhbj48c3BhbiB0aXRsZT0i0LAg0LXRgdC70Lgg0LLRiyDRhdC+0YLQ
+uNGC0LUg0YHRjdC80YPQu9C40YDQvtCy0LDRgtGMINGB0LjRgtGD0LDRhtC40Y4gLSDRgtC+Ij5B
+bmQgaWYgeW91IHdhbnQgdG8gc2ltdWxhdGUgdGhlIHNpdHVhdGlvbiAtIHRoZW48L3NwYW4+PC9z
+cGFuPjxicj53ZyBzZXRjb25mIHdnMCB3ZzAuY29uZiZuYnNwOyAoc3RhbmRhcnQgc2V0dGluZyAt
+IHR1bm5lbCB0byByYW5kb20gaG9zdCAtIDAuMC4wLjAvMCBkc3QpPGJyPmlwIHJvdXRlIGFkZCAx
+MC4xOTIuMTIyLjMgZGV2IHdnMDxicj48YnI+aW1wb3J0IHNvY2tldDxicj5pbXBvcnQgdGltZTxi
+cj5VRFBfSVAgPSAiMTI3LjAuMC4xIjxicj5VRFBfUE9SVCA9IDUwMDU8YnI+VURQX0lQMiA9ICIx
+MC4xOTIuMTIyLjMiPGJyPlVEUF9QT1JUMiA9IDUwMDU8YnI+TUVTU0FHRSA9ICJIZWxsbywgV29y
+bGQhIjxicj5zb2NrID0gc29ja2V0LnNvY2tldChzb2NrZXQuQUZfSU5FVCwgc29ja2V0LlNPQ0tf
+REdSQU0pICMgVURQPGJyPm4gPSAwPGJyPndoaWxlIFRydWU6PGJyPiZuYnNwOyZuYnNwOyZuYnNw
+OyBwcmludCAic2VuZDEiLCBuPGJyPiZuYnNwOyZuYnNwOyZuYnNwOyBzb2NrLnNlbmR0byhNRVNT
+QUdFLCAoVURQX0lQLCBVRFBfUE9SVCkpPGJyPiZuYnNwOyZuYnNwOyZuYnNwOyBwcmludCAic2Vu
+ZDIiLCBuPGJyPiZuYnNwOyZuYnNwOyZuYnNwOyBzb2NrLnNlbmR0byhNRVNTQUdFLCAoVURQX0lQ
+MiwgVURQX1BPUlQyKSk8YnI+Jm5ic3A7Jm5ic3A7Jm5ic3A7IHRpbWUuc2xlZXAoMC4xKTxicj4m
+bmJzcDsmbmJzcDsmbmJzcDsgbis9MTxicj48YnI+PGJyPmFuZCBydW48YnI+PHNwYW4gaWQ9InJl
+c3VsdF9ib3giIGxhbmc9ImVuIj48c3BhbiB0aXRsZT0i0L/RgNC40LvQvtC20LXQvdC40LUg0LfQ
+sNCx0LvQvtC60LjRgNGD0LXRgtGM0YHRjyDRh9C10YDQtdC3IDIwINGB0LXQutGD0L3QtCI+VGhl
+IGFwcGxpY2F0aW9uIHdpbGwgYmUgYmxvY2tlZCBhZnRlciAyMCBzZWNvbmRzPC9zcGFuPjwvc3Bh
+bj48YnI+PHNwYW4gaWQ9InJlc3VsdF9ib3giIGxhbmc9ImVuIj48c3BhbiB0aXRsZT0i0L/RgNC4
+0LvQvtC20LXQvdC40LUg0LfQsNCx0LvQvtC60LjRgNGD0LXRgtGM0YHRjyDRh9C10YDQtdC3IDIw
+INGB0LXQutGD0L3QtAoKIj5UaGUgYXBwbGljYXRpb24gd2lsbCBiZSBibG9ja2VkIGFmdGVyIDIw
+IHNlY29uZHM8YnI+PC9zcGFuPjxzcGFuIHRpdGxlPSLRjdGC0L4g0L3QtSDQv9GA0LDQstC40LvR
+jNC90L4iPml0IGlzIG5vdCByaWdodDwvc3Bhbj48L3NwYW4+PGJyPjxicj48L0JPRFk+PC9IVE1M
+Pgo=
+
+----ALT--pR5J8qGDNlXQza4KGtIBdXiTpnLPRbWP1499442422--
