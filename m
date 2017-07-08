@@ -1,26 +1,21 @@
-Return-Path: aeforeve@mail.ru
+Return-Path: raulbe@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 242bb475
- for <wireguard@lists.zx2c4.com>; Fri, 7 Jul 2017 15:29:17 +0000 (UTC)
-Received: from f466.i.mail.ru (f466.i.mail.ru [185.5.136.199])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a8308e6a
- for <wireguard@lists.zx2c4.com>; Fri, 7 Jul 2017 15:29:17 +0000 (UTC)
-From: =?UTF-8?B?YWU=?= <aeforeve@mail.ru>
-To: =?UTF-8?B?Um9lbGYgXCJyZXdieWNyYWZ0XCIgV2ljaGVydGplcw==?=
- <mailings+wireguard@roelf.org>
-Subject: =?UTF-8?B?UmVbMl06IHByb2JsZW0gd2lyZWd1YXJkICsgb3NwZiArIHVuY29ubmVjdGVk?=
- =?UTF-8?B?IHR1bm5lbHM=?=
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id acb9df2f
+ for <wireguard@lists.zx2c4.com>; Sat, 8 Jul 2017 02:08:39 +0000 (UTC)
+Received: from mail-qt0-f170.google.com (mail-qt0-f170.google.com
+ [209.85.216.170])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d655e8be
+ for <wireguard@lists.zx2c4.com>; Sat, 8 Jul 2017 02:08:39 +0000 (UTC)
+Received: by mail-qt0-f170.google.com with SMTP id b40so40353433qtb.2
+ for <wireguard@lists.zx2c4.com>; Fri, 07 Jul 2017 19:26:29 -0700 (PDT)
 MIME-Version: 1.0
-Date: Fri, 07 Jul 2017 18:47:02 +0300
-Message-ID: <1499442422.268064455@f466.i.mail.ru>
-Content-Type: multipart/alternative;
- boundary="--ALT--pR5J8qGDNlXQza4KGtIBdXiTpnLPRbWP1499442422"
-In-Reply-To: <e3a0ff13-fea4-e5e3-7529-ae746d74a17a@roelf.org>
-References: <1499116162.70598782@f401.i.mail.ru>
- <1499188207.518000711@f408.i.mail.ru>
- <e3a0ff13-fea4-e5e3-7529-ae746d74a17a@roelf.org>
-Cc: wireguard@lists.zx2c4.com
-Reply-To: =?UTF-8?B?YWU=?= <aeforeve@mail.ru>
+From: raul <raulbe@gmail.com>
+Date: Sat, 8 Jul 2017 07:56:28 +0530
+Message-ID: <CAOLRk5n2FvxWN_O+Th8Zy+Mga-MKA7_bOaWVsFh6MvVdfM6S2A@mail.gmail.com>
+Subject: Early Feedback on Container Networking, Resilience,
+ Json Config and AcceptedIPs
+To: wireguard@lists.zx2c4.com
+Content-Type: multipart/alternative; boundary="001a113f458cc6d93a0553c51332"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -30,120 +25,117 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
+--001a113f458cc6d93a0553c51332
+Content-Type: text/plain; charset="UTF-8"
 
-----ALT--pR5J8qGDNlXQza4KGtIBdXiTpnLPRbWP1499442422
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: base64
+Hi Jason,
 
-Cj5TbywgaXMgdGhlIHByb2JsZW0geW91IGFjdHVhbGx5IHdhbnQgaGVscCB3aXRoIGFjdHVhbGx5
-IGdldHRpbmcgQSBhbmQgQyAKPnRvIHRhbGsgdG8gZWFjaG90aGVyPwo+SWYgc28sIHdlJ2xsIG5l
-ZWQgdG8gc2VlIHRoZSBjb25maWdzIHlvdSdyZSB1c2luZyBvbiBib3RoIGVuZHMgb2YgdGhlIAo+
-dHVubmVsLiBJJ2QgYWxzbyBzdWdnZXN0IGNoZWNraW5nIHlvdXIgZmlyZXdhbGxzIGluIHRoaXMg
-Y2FzZS4KPgo+QW5kIG9zcGYgaXMgc2ltcGx5IHJlZnVzaW5nIHRvIHVzZSB0aGUgQTwtPkMgYnV0
-IGlzIHN0aWxsIHdvcmtpbmcganVzdCAKPmZpbmUgYWNyb3NzIEE8LT5CPwo+SWYgc28sIHRoYXQn
-cyBub3JtYWwuCj5JZiBBPC0+QiBhbHNvIHN0b3BzIHdvcmtpbmcgZHVlIHRvIHRoZSAiTm8gYnVm
-ZmVyIHNwYWNlIGF2YWlsYWJsZSIgCj5lcnJvciwgdGhhdCBpcyBhIGJ1ZyB3aXRoIHF1YWdnYS4g
-KHdoaWNoIHdlIGNhbiB0cnkgdG8gKGdldCkgZml4KGVkKSBpbiAKPnRoYXQgc2l0dWF0aW9uKQo+
-Cj5Tb3JyeSBpZiBpdCBzZWVtcyBvYnZpb3VzLCBJJ20gc2ltcGx5IHRyeWluZyB0byBnZXQgYSBn
-cmFzcCBhcyB0byB3aGF0IAo+dGhlIGFjdHVhbCBwcm9ibGVtIHlvdSB3YW50IGhlbHAgd2l0aCBp
-cy4KPgpJIGdhdmUgYW4gYWNjdXJhdGUgZGVzY3JpcHRpb24gb2YgdGhlIHByb2JsZW0KSXRzIGVz
-c2VuY2UgaXMgdGhhdCB0aGUgYnVmZmVyIG92ZXJmbG93IC0gd2hpY2ggb2NjdXJzIHdoZW4gc2Vu
-ZGluZyB0byB0aGUgc29ja2V0IGluIHRoZSBlc3NlbmNlIG9mIGJlaW5nIG9uIGFuIHVuY29ubmVj
-dGVkIHR1bm5lbCAtIGJsb2NrcyBhbnkgb3RoZXIgcmVmZXJlbmNlcyBmcm9tIHRoaXMgc29ja2V0
-IHRvIG90aGVyIG5ldHdvcmtzCgpUaGF0IGlzLCBhIG5vbi13b3JraW5nIHR1bm5lbCBjYW4gYmxv
-Y2sgQU5ZIHNvY2tldCBmcm9tIHdoaWNoIHRoZSB0cmFmZmljIGlzIHNlbnQgdG8gZGlmZmVyZW50
-IHBvaW50cwoKSWYgeW91IGRvIG5vdCBjb25zaWRlciB0aGlzIGEgcHJvYmxlbSAtIHRoZW4gaW5k
-aWNhdGUgaW4gdGhlIGRvY3VtZW50YXRpb24gdGhhdCB0aGlzIHR1bm5lbCBpcyBwYXJ0aWFsbHkg
-aW5jb21wYXRpYmxlIHdpdGggdGhlIGd1YWdlIG9zcGYgYW5kIGNhbiBsZWFkIHRvIG5vdCBqdXN0
-IGRpYWdub3NlZCBwcm9ibGVtcyBpbiB0aGUgbmV0d29yawoKQW5kIGlmIHlvdSB3YW50IHRvIHNp
-bXVsYXRlIHRoZSBzaXR1YXRpb24gLSB0aGVuCndnIHNldGNvbmYgd2cwIHdnMC5jb25mwqAgKHN0
-YW5kYXJ0IHNldHRpbmcgLSB0dW5uZWwgdG8gcmFuZG9tIGhvc3QgLSAwLjAuMC4wLzAgZHN0KQpp
-cCByb3V0ZSBhZGQgMTAuMTkyLjEyMi4zIGRldiB3ZzAKCmltcG9ydCBzb2NrZXQKaW1wb3J0IHRp
-bWUKVURQX0lQID0gIjEyNy4wLjAuMSIKVURQX1BPUlQgPSA1MDA1ClVEUF9JUDIgPSAiMTAuMTky
-LjEyMi4zIgpVRFBfUE9SVDIgPSA1MDA1Ck1FU1NBR0UgPSAiSGVsbG8sIFdvcmxkISIKc29jayA9
-IHNvY2tldC5zb2NrZXQoc29ja2V0LkFGX0lORVQsIHNvY2tldC5TT0NLX0RHUkFNKSAjIFVEUApu
-ID0gMAp3aGlsZSBUcnVlOgrCoMKgwqAgcHJpbnQgInNlbmQxIiwgbgrCoMKgwqAgc29jay5zZW5k
-dG8oTUVTU0FHRSwgKFVEUF9JUCwgVURQX1BPUlQpKQrCoMKgwqAgcHJpbnQgInNlbmQyIiwgbgrC
-oMKgwqAgc29jay5zZW5kdG8oTUVTU0FHRSwgKFVEUF9JUDIsIFVEUF9QT1JUMikpCsKgwqDCoCB0
-aW1lLnNsZWVwKDAuMSkKwqDCoMKgIG4rPTEKCgphbmQgcnVuClRoZSBhcHBsaWNhdGlvbiB3aWxs
-IGJlIGJsb2NrZWQgYWZ0ZXIgMjAgc2Vjb25kcwpUaGUgYXBwbGljYXRpb24gd2lsbCBiZSBibG9j
-a2VkIGFmdGVyIDIwIHNlY29uZHMKaXQgaXMgbm90IHJpZ2h0Cgo=
+First, this is a stunning piece of work.
 
-----ALT--pR5J8qGDNlXQza4KGtIBdXiTpnLPRbWP1499442422
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: base64
+I am working on a container networking project with vxlan and peervpn at L2
+and quagga at L3 with a smattering of nearly all Linux networking tunnels
+and testing Wireguard has been a revelation.
 
-CjxIVE1MPjxCT0RZPjxiciBpZD0idGlueW1jZSIgY2xhc3M9Im1jZUNvbnRlbnRCb2R5IGluY3Jl
-YXNlLWZvbnQgY29tcG9zZTIiIG9ubG9hZD0id2luZG93LnBhcmVudC50aW55TUNFLmdldCgndG9v
-bGtpdC0xNDk5NDQwMjY0ODczNzJjb21wb3NlRWRpdG9yJykub25Mb2FkLmRpc3BhdGNoKCk7IiBk
-aXI9Imx0ciIgc3R5bGU9Im92ZXJmbG93OiBhdXRvOyIgY29udGVudGVkaXRhYmxlPSJ0cnVlIj48
-YmxvY2txdW90ZSBzdHlsZT0iYm9yZGVyLWxlZnQ6MXB4IHNvbGlkICMwODU3QTY7IG1hcmdpbjox
-MHB4OyBwYWRkaW5nOjAgMCAwIDEwcHg7Ij48ZGl2IGlkPSIiPjxkaXYgY2xhc3M9ImpzLWhlbHBl
-ciBqcy1yZWFkbXNnLW1zZyI+PGRpdj48ZGl2IGlkPSJzdHlsZV8xNDk5NDQwMTM0MDAwMDAwMDMy
-NV9CT0RZIj5TbywgaXMgdGhlIHByb2JsZW0geW91IGFjdHVhbGx5IHdhbnQgaGVscCB3aXRoIGFj
-dHVhbGx5IGdldHRpbmcgQSBhbmQgQyA8YnI+CnRvIHRhbGsgdG8gZWFjaG90aGVyPzxicj4KSWYg
-c28sIHdlJ2xsIG5lZWQgdG8gc2VlIHRoZSBjb25maWdzIHlvdSdyZSB1c2luZyBvbiBib3RoIGVu
-ZHMgb2YgdGhlIDxicj4KdHVubmVsLiBJJ2QgYWxzbyBzdWdnZXN0IGNoZWNraW5nIHlvdXIgZmly
-ZXdhbGxzIGluIHRoaXMgY2FzZS48YnI+PGJyPgpBbmQgb3NwZiBpcyBzaW1wbHkgcmVmdXNpbmcg
-dG8gdXNlIHRoZSBBJmx0Oy0mZ3Q7QyBidXQgaXMgc3RpbGwgd29ya2luZyBqdXN0IDxicj4KZmlu
-ZSBhY3Jvc3MgQSZsdDstJmd0O0I/PGJyPgpJZiBzbywgdGhhdCdzIG5vcm1hbC48YnI+CklmIEEm
-bHQ7LSZndDtCIGFsc28gc3RvcHMgd29ya2luZyBkdWUgdG8gdGhlICJObyBidWZmZXIgc3BhY2Ug
-YXZhaWxhYmxlIiA8YnI+CmVycm9yLCB0aGF0IGlzIGEgYnVnIHdpdGggcXVhZ2dhLiAod2hpY2gg
-d2UgY2FuIHRyeSB0byAoZ2V0KSBmaXgoZWQpIGluIDxicj4KdGhhdCBzaXR1YXRpb24pPGJyPjxi
-cj4KU29ycnkgaWYgaXQgc2VlbXMgb2J2aW91cywgSSdtIHNpbXBseSB0cnlpbmcgdG8gZ2V0IGEg
-Z3Jhc3AgYXMgdG8gd2hhdCA8YnI+CnRoZSBhY3R1YWwgcHJvYmxlbSB5b3Ugd2FudCBoZWxwIHdp
-dGggaXMuPGJyPjxicj48L2Rpdj48L2Rpdj48L2Rpdj48L2Rpdj48L2Jsb2NrcXVvdGU+PHNwYW4g
-aWQ9InJlc3VsdF9ib3giIGxhbmc9ImVuIj48c3BhbiB0aXRsZT0i0Y8g0L/RgNC40LLQtdC7INGC
-0L7Rh9C90L7QtSDQvtC/0LjRgdCw0L3QuNC1INCy0L7Qt9C90LjQutCw0Y7RidC10Lkg0L/RgNC+
-0LHQu9C10LzRiwoiPkkgZ2F2ZSBhbiBhY2N1cmF0ZSBkZXNjcmlwdGlvbiBvZiB0aGUgcHJvYmxl
-bTxicj48L3NwYW4+PHNwYW4gdGl0bGU9ItGB0YPRgtGMINC10LUg0LIg0YLQvtC8INGH0YLQviDQ
-v9C10YDQtdC/0L7Qu9C90LXQvdC40LUg0LHRg9GE0LXRgNCwIC0g0LLQvtC30L3QuNC60LDRjtGJ
-0LjQuSDQv9GA0Lgg0L/QvtGB0YvQu9C60LUg0LIg0YHQvtC60LXRgiDQsiDRgdGD0YLRjCDQvdCw
-0YXQvtC00Y/RidC10LnRgdGPINC90LAg0L3QtdC/0L7QtNC60LvRjtGH0LXQvdC90YvQvCDRgtGD
-0L3QvdC10LvQtdC8IC0g0LHQu9C+0LrQuNGA0YPQtdGCINC70Y7QsdGL0LUg0LTRgNGD0LPQuNC1
-INC+0YLRgdGL0LvQutC4INGBINC00LDQvdC90L7Qs9C+INGB0L7QutC10YLQsCDQsiDQtNGA0YPQ
-s9C40LUg0YHQtdGC0LgKCiI+SXRzIGVzc2VuY2UgaXMgdGhhdCB0aGUgYnVmZmVyIG92ZXJmbG93
-IC0gd2hpY2ggb2NjdXJzIHdoZW4gc2VuZGluZyB0byB0aGUgc29ja2V0IGluIHRoZSBlc3NlbmNl
-IG9mIGJlaW5nIG9uIGFuIHVuY29ubmVjdGVkIHR1bm5lbCAtIGJsb2NrcyBhbnkgb3RoZXIgcmVm
-ZXJlbmNlcyBmcm9tIHRoaXMgc29ja2V0IHRvIG90aGVyIG5ldHdvcmtzPGJyPjxicj48L3NwYW4+
-PHNwYW4gdGl0bGU9ItGC0L4g0LXRgdGC0Ywg0L3QtdGA0LDQsdC+0YfQuNC5INGC0YPQvdC90LXQ
-u9GMINC80L7QttC10YIg0LHQu9C+0LrQuNGA0L7QstCw0YLRjCDQm9Cu0JHQntCZINGB0L7QutC1
-0YIg0YEg0LrQvtGC0L7RgNC+0LPQviDRgNCw0YHRgdGL0LvQsNGO0YIg0LIg0YDQsNC30LvQuNGH
-0L3Ri9C1INGC0L7Rh9C60Lgg0YLRgNCw0YTRhNC40LoKCiI+VGhhdCBpcywgYSBub24td29ya2lu
-ZyB0dW5uZWwgY2FuIGJsb2NrIEFOWSBzb2NrZXQgZnJvbSB3aGljaCB0aGUgdHJhZmZpYyBpcyBz
-ZW50IHRvIGRpZmZlcmVudCBwb2ludHM8YnI+PGJyPjwvc3Bhbj48c3BhbiB0aXRsZT0i0LXRgdC7
-0Lgg0LLRiyDQvdC1INGB0YfQuNGC0LDQtdGC0LUg0Y3RgtC+INC/0YDQvtCx0LvQtdC80L7QuSAt
-INGC0L4g0YPQutCw0LbQuNGC0LUg0LIg0LTQvtC60YPQvNC10L3RgtCw0YbQuNC4INGH0YLQviDQ
-tNCw0L3QvdGL0Lkg0YLRg9C90LXQu9GMINGH0LDRgdGC0LjRh9C90L4g0L3QtSDRgdC+0LLQvNC1
-0YHRgtC40Lwg0YEg0LPRg9Cw0LPQsCDQvtGB0L/RhCDQuCDQvNC+0LbQtdGCINC/0YDQuNCy0L7Q
-tNC40YLRjCDQuiDQvdC1INC/0YDQvtGB0YLQviDQtNC40LDQs9C90L7RgdGC0LjRgNGD0LXQvNGL
-0Lwg0L/RgNC+0LHQu9C10LzQsNC8INCyINGB0LXRgtC4CgoiPklmIHlvdSBkbyBub3QgY29uc2lk
-ZXIgdGhpcyBhIHByb2JsZW0gLSB0aGVuIGluZGljYXRlIGluIHRoZSBkb2N1bWVudGF0aW9uIHRo
-YXQgdGhpcyB0dW5uZWwgaXMgcGFydGlhbGx5IGluY29tcGF0aWJsZSB3aXRoIHRoZSBndWFnZSBv
-c3BmIGFuZCBjYW4gbGVhZCB0byBub3QganVzdCBkaWFnbm9zZWQgcHJvYmxlbXMgaW4gdGhlIG5l
-dHdvcms8YnI+PGJyPjwvc3Bhbj48c3BhbiB0aXRsZT0i0LAg0LXRgdC70Lgg0LLRiyDRhdC+0YLQ
-uNGC0LUg0YHRjdC80YPQu9C40YDQvtCy0LDRgtGMINGB0LjRgtGD0LDRhtC40Y4gLSDRgtC+Ij5B
-bmQgaWYgeW91IHdhbnQgdG8gc2ltdWxhdGUgdGhlIHNpdHVhdGlvbiAtIHRoZW48L3NwYW4+PC9z
-cGFuPjxicj53ZyBzZXRjb25mIHdnMCB3ZzAuY29uZiZuYnNwOyAoc3RhbmRhcnQgc2V0dGluZyAt
-IHR1bm5lbCB0byByYW5kb20gaG9zdCAtIDAuMC4wLjAvMCBkc3QpPGJyPmlwIHJvdXRlIGFkZCAx
-MC4xOTIuMTIyLjMgZGV2IHdnMDxicj48YnI+aW1wb3J0IHNvY2tldDxicj5pbXBvcnQgdGltZTxi
-cj5VRFBfSVAgPSAiMTI3LjAuMC4xIjxicj5VRFBfUE9SVCA9IDUwMDU8YnI+VURQX0lQMiA9ICIx
-MC4xOTIuMTIyLjMiPGJyPlVEUF9QT1JUMiA9IDUwMDU8YnI+TUVTU0FHRSA9ICJIZWxsbywgV29y
-bGQhIjxicj5zb2NrID0gc29ja2V0LnNvY2tldChzb2NrZXQuQUZfSU5FVCwgc29ja2V0LlNPQ0tf
-REdSQU0pICMgVURQPGJyPm4gPSAwPGJyPndoaWxlIFRydWU6PGJyPiZuYnNwOyZuYnNwOyZuYnNw
-OyBwcmludCAic2VuZDEiLCBuPGJyPiZuYnNwOyZuYnNwOyZuYnNwOyBzb2NrLnNlbmR0byhNRVNT
-QUdFLCAoVURQX0lQLCBVRFBfUE9SVCkpPGJyPiZuYnNwOyZuYnNwOyZuYnNwOyBwcmludCAic2Vu
-ZDIiLCBuPGJyPiZuYnNwOyZuYnNwOyZuYnNwOyBzb2NrLnNlbmR0byhNRVNTQUdFLCAoVURQX0lQ
-MiwgVURQX1BPUlQyKSk8YnI+Jm5ic3A7Jm5ic3A7Jm5ic3A7IHRpbWUuc2xlZXAoMC4xKTxicj4m
-bmJzcDsmbmJzcDsmbmJzcDsgbis9MTxicj48YnI+PGJyPmFuZCBydW48YnI+PHNwYW4gaWQ9InJl
-c3VsdF9ib3giIGxhbmc9ImVuIj48c3BhbiB0aXRsZT0i0L/RgNC40LvQvtC20LXQvdC40LUg0LfQ
-sNCx0LvQvtC60LjRgNGD0LXRgtGM0YHRjyDRh9C10YDQtdC3IDIwINGB0LXQutGD0L3QtCI+VGhl
-IGFwcGxpY2F0aW9uIHdpbGwgYmUgYmxvY2tlZCBhZnRlciAyMCBzZWNvbmRzPC9zcGFuPjwvc3Bh
-bj48YnI+PHNwYW4gaWQ9InJlc3VsdF9ib3giIGxhbmc9ImVuIj48c3BhbiB0aXRsZT0i0L/RgNC4
-0LvQvtC20LXQvdC40LUg0LfQsNCx0LvQvtC60LjRgNGD0LXRgtGM0YHRjyDRh9C10YDQtdC3IDIw
-INGB0LXQutGD0L3QtAoKIj5UaGUgYXBwbGljYXRpb24gd2lsbCBiZSBibG9ja2VkIGFmdGVyIDIw
-IHNlY29uZHM8YnI+PC9zcGFuPjxzcGFuIHRpdGxlPSLRjdGC0L4g0L3QtSDQv9GA0LDQstC40LvR
-jNC90L4iPml0IGlzIG5vdCByaWdodDwvc3Bhbj48L3NwYW4+PGJyPjxicj48L0JPRFk+PC9IVE1M
-Pgo=
+Vxlan is not useful without multicast. BGP may be overkill for simple route
+management, most other tunnels require intensive management at scale.
+Peervpn is nice and has autodiscovery of nodes but like most current
+encrypted tunnels has a performance penalty. Ipsec doesn't but adds config
+complexity. Wireguard brings something fresh to the table.
 
-----ALT--pR5J8qGDNlXQza4KGtIBdXiTpnLPRbWP1499442422--
+My early Wireguard Iperf tests show near line speed, 942Mbps without and
+870-890Mbps with Wireguard. Around 120Mbps for Peervpn. CPU usage is at
+around 100% on one core for Peervpn and around 50-60% across 4 cores for
+Wireguard for sending and 35-40% receiving . These tests are on low power
+1.5Ghz quad core Apollo lake Celeron J3455 clusters on Ubuntu Xenial.
+
+You have been able to hide a tremendous amount of complexity to expose a
+simple, flexible but powerful front end and I am certain this must have
+taken extraordinary talent, experience, time and engineering.
+
+I have been running a number of scenarios mainly around container
+networking and service discovery across multiple clouds and systems and am
+glad to report its is much more robust than I expected and just works.
+
+There are 4 things I wanted to bring up.
+
+1. Do you anticipate a situation where differing Wireguard versions across
+distributions and kernels do not inter-operate? This introduces a huge
+amount of complexity to managing clusters. I faced this with Gluster and it
+is a significant pain and blocker.
+
+2. Would you consider supporting a json configuration file? The current
+Wireguard ini format has duplicate entires for 'Peers' and the python ini
+parser for instance does not support duplicate section heads.
+
+3. While the allowed IPs construct is powerful it can sometimes feel a bit
+unintuitive. The way I understand it the 'AllowedIP config on the Wireguard
+server is for shared networks from the client and on the client for
+accepted networks. This is so the server knows where to route (and thus
+there cannot be duplicate IPs, subnets or any subnet overlapping in the
+server config) and the client can only receive traffic from acceptedips
+recorded on the client side config.
+
+My mindset may be a bit too container orientated with hosts sharing
+internal container networks across systems at the moment, and Wireguard has
+a much broader use case but the share/accept construct seems slightly more
+intuitive though I could be wrong.
+
+4. The Wireguard server is a single point of failure in a star topology. If
+the server host goes down your network goes down with it. How can we add
+more resilience in a simple way? A backup server in L2 with identical keys
+and a floating internal IP?
+
+Thanks for Wireguard!
+
+Raul
+
+--001a113f458cc6d93a0553c51332
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div><div><div><div><div>Hi Jason,<br><br></div>First, thi=
+s is a stunning piece of work. <br><br>I am working on a container networki=
+ng project with vxlan and peervpn at L2 and quagga at L3 with a smattering =
+of nearly all Linux networking tunnels and testing Wireguard has been a rev=
+elation.<br><br>Vxlan is not useful without multicast. BGP may be overkill =
+for simple route management, most other tunnels require intensive managemen=
+t at scale. Peervpn is nice and has autodiscovery of nodes but like most cu=
+rrent encrypted tunnels has a performance penalty. Ipsec doesn&#39;t but ad=
+ds config complexity. Wireguard brings something fresh to the table.<br></d=
+iv></div><div><br></div><div>My early Wireguard Iperf tests show near line =
+speed, 942Mbps without and 870-890Mbps with Wireguard. Around 120Mbps for P=
+eervpn. CPU usage is at around 100% on one core for Peervpn and around 50-6=
+0% across 4 cores for Wireguard for sending and 35-40% receiving . These te=
+sts are on low power 1.5Ghz quad core Apollo lake Celeron J3455 clusters on=
+ Ubuntu Xenial. <br></div><div><br>You have been able to hide a tremendous =
+amount of complexity to expose a simple, flexible but powerful front end an=
+d I am certain this must have taken extraordinary talent, experience, time =
+and engineering.<br><br>I have been running a number of scenarios mainly ar=
+ound container networking and service discovery across multiple clouds and =
+systems and am glad to report its is much more robust than I expected and j=
+ust works.<br><br></div></div>There are 4 things I wanted to bring up.<br><=
+br></div>1. Do you anticipate a situation where differing Wireguard version=
+s across distributions and kernels do not inter-operate? This introduces a =
+huge amount of complexity to managing clusters. I faced this with Gluster a=
+nd it is a significant pain and blocker.<br><div><div><div><br></div><div>2=
+. Would you consider supporting a json configuration file? The current Wire=
+guard ini format has duplicate entires for &#39;Peers&#39; and the python i=
+ni parser for instance does not support duplicate section heads.<br><br></d=
+iv><div>3. While the allowed IPs construct is powerful it can sometimes fee=
+l a bit unintuitive. The way I understand it the &#39;AllowedIP config on t=
+he Wireguard server is for shared networks from the client and on the clien=
+t for accepted networks. This is so the server knows where to route (and th=
+us there cannot be duplicate IPs, subnets or any subnet overlapping in the =
+server config) and the client can only receive traffic from acceptedips rec=
+orded on the client side config.<br><br>My mindset may be a bit too contain=
+er orientated with hosts sharing internal container networks across systems=
+ at the moment, and Wireguard has a much broader use case but the share/acc=
+ept construct seems slightly more intuitive though I could be wrong.<br><br=
+></div><div>4. The Wireguard server is a single point of failure in a star =
+topology. If the server host goes down your network goes down with it. How =
+can we add more resilience in a simple way? A backup server in L2 with iden=
+tical keys and a floating internal IP?<br></div><div><br></div><div>Thanks =
+for Wireguard!<br><br></div><div>Raul<br></div><div><br><div><br><br><br><b=
+r><br></div></div></div></div></div>
+
+--001a113f458cc6d93a0553c51332--
