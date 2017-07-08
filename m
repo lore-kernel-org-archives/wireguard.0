@@ -1,21 +1,22 @@
-Return-Path: raulbe@gmail.com
+Return-Path: baptiste@bitsofnetworks.org
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id acb9df2f
- for <wireguard@lists.zx2c4.com>; Sat, 8 Jul 2017 02:08:39 +0000 (UTC)
-Received: from mail-qt0-f170.google.com (mail-qt0-f170.google.com
- [209.85.216.170])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d655e8be
- for <wireguard@lists.zx2c4.com>; Sat, 8 Jul 2017 02:08:39 +0000 (UTC)
-Received: by mail-qt0-f170.google.com with SMTP id b40so40353433qtb.2
- for <wireguard@lists.zx2c4.com>; Fri, 07 Jul 2017 19:26:29 -0700 (PDT)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2a79b7b5
+ for <wireguard@lists.zx2c4.com>; Sat, 8 Jul 2017 13:56:13 +0000 (UTC)
+Received: from mails.bitsofnetworks.org (rezine.polyno.me [193.33.56.138])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3c27fe63
+ for <wireguard@lists.zx2c4.com>; Sat, 8 Jul 2017 13:56:12 +0000 (UTC)
+Date: Sat, 8 Jul 2017 16:14:02 +0200
+From: Baptiste Jonglez <baptiste@bitsofnetworks.org>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: Re: Installation instructions for Debian
+Message-ID: <20170708141402.GA13268@tuxmachine.polynome.dn42>
+References: <20170513070534.GA22218@tuxmachine.polynome.dn42>
+ <CAHmME9o=EGWOcTRVtVQVCoJXL6KueX8eM98GWBJUtzEE67tAhw@mail.gmail.com>
 MIME-Version: 1.0
-From: raul <raulbe@gmail.com>
-Date: Sat, 8 Jul 2017 07:56:28 +0530
-Message-ID: <CAOLRk5n2FvxWN_O+Th8Zy+Mga-MKA7_bOaWVsFh6MvVdfM6S2A@mail.gmail.com>
-Subject: Early Feedback on Container Networking, Resilience,
- Json Config and AcceptedIPs
-To: wireguard@lists.zx2c4.com
-Content-Type: multipart/alternative; boundary="001a113f458cc6d93a0553c51332"
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="u3/rZRmxL6MmkK24"
+In-Reply-To: <CAHmME9o=EGWOcTRVtVQVCoJXL6KueX8eM98GWBJUtzEE67tAhw@mail.gmail.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -25,117 +26,83 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---001a113f458cc6d93a0553c51332
-Content-Type: text/plain; charset="UTF-8"
 
-Hi Jason,
-
-First, this is a stunning piece of work.
-
-I am working on a container networking project with vxlan and peervpn at L2
-and quagga at L3 with a smattering of nearly all Linux networking tunnels
-and testing Wireguard has been a revelation.
-
-Vxlan is not useful without multicast. BGP may be overkill for simple route
-management, most other tunnels require intensive management at scale.
-Peervpn is nice and has autodiscovery of nodes but like most current
-encrypted tunnels has a performance penalty. Ipsec doesn't but adds config
-complexity. Wireguard brings something fresh to the table.
-
-My early Wireguard Iperf tests show near line speed, 942Mbps without and
-870-890Mbps with Wireguard. Around 120Mbps for Peervpn. CPU usage is at
-around 100% on one core for Peervpn and around 50-60% across 4 cores for
-Wireguard for sending and 35-40% receiving . These tests are on low power
-1.5Ghz quad core Apollo lake Celeron J3455 clusters on Ubuntu Xenial.
-
-You have been able to hide a tremendous amount of complexity to expose a
-simple, flexible but powerful front end and I am certain this must have
-taken extraordinary talent, experience, time and engineering.
-
-I have been running a number of scenarios mainly around container
-networking and service discovery across multiple clouds and systems and am
-glad to report its is much more robust than I expected and just works.
-
-There are 4 things I wanted to bring up.
-
-1. Do you anticipate a situation where differing Wireguard versions across
-distributions and kernels do not inter-operate? This introduces a huge
-amount of complexity to managing clusters. I faced this with Gluster and it
-is a significant pain and blocker.
-
-2. Would you consider supporting a json configuration file? The current
-Wireguard ini format has duplicate entires for 'Peers' and the python ini
-parser for instance does not support duplicate section heads.
-
-3. While the allowed IPs construct is powerful it can sometimes feel a bit
-unintuitive. The way I understand it the 'AllowedIP config on the Wireguard
-server is for shared networks from the client and on the client for
-accepted networks. This is so the server knows where to route (and thus
-there cannot be duplicate IPs, subnets or any subnet overlapping in the
-server config) and the client can only receive traffic from acceptedips
-recorded on the client side config.
-
-My mindset may be a bit too container orientated with hosts sharing
-internal container networks across systems at the moment, and Wireguard has
-a much broader use case but the share/accept construct seems slightly more
-intuitive though I could be wrong.
-
-4. The Wireguard server is a single point of failure in a star topology. If
-the server host goes down your network goes down with it. How can we add
-more resilience in a simple way? A backup server in L2 with identical keys
-and a floating internal IP?
-
-Thanks for Wireguard!
-
-Raul
-
---001a113f458cc6d93a0553c51332
-Content-Type: text/html; charset="UTF-8"
+--u3/rZRmxL6MmkK24
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div><div><div><div><div>Hi Jason,<br><br></div>First, thi=
-s is a stunning piece of work. <br><br>I am working on a container networki=
-ng project with vxlan and peervpn at L2 and quagga at L3 with a smattering =
-of nearly all Linux networking tunnels and testing Wireguard has been a rev=
-elation.<br><br>Vxlan is not useful without multicast. BGP may be overkill =
-for simple route management, most other tunnels require intensive managemen=
-t at scale. Peervpn is nice and has autodiscovery of nodes but like most cu=
-rrent encrypted tunnels has a performance penalty. Ipsec doesn&#39;t but ad=
-ds config complexity. Wireguard brings something fresh to the table.<br></d=
-iv></div><div><br></div><div>My early Wireguard Iperf tests show near line =
-speed, 942Mbps without and 870-890Mbps with Wireguard. Around 120Mbps for P=
-eervpn. CPU usage is at around 100% on one core for Peervpn and around 50-6=
-0% across 4 cores for Wireguard for sending and 35-40% receiving . These te=
-sts are on low power 1.5Ghz quad core Apollo lake Celeron J3455 clusters on=
- Ubuntu Xenial. <br></div><div><br>You have been able to hide a tremendous =
-amount of complexity to expose a simple, flexible but powerful front end an=
-d I am certain this must have taken extraordinary talent, experience, time =
-and engineering.<br><br>I have been running a number of scenarios mainly ar=
-ound container networking and service discovery across multiple clouds and =
-systems and am glad to report its is much more robust than I expected and j=
-ust works.<br><br></div></div>There are 4 things I wanted to bring up.<br><=
-br></div>1. Do you anticipate a situation where differing Wireguard version=
-s across distributions and kernels do not inter-operate? This introduces a =
-huge amount of complexity to managing clusters. I faced this with Gluster a=
-nd it is a significant pain and blocker.<br><div><div><div><br></div><div>2=
-. Would you consider supporting a json configuration file? The current Wire=
-guard ini format has duplicate entires for &#39;Peers&#39; and the python i=
-ni parser for instance does not support duplicate section heads.<br><br></d=
-iv><div>3. While the allowed IPs construct is powerful it can sometimes fee=
-l a bit unintuitive. The way I understand it the &#39;AllowedIP config on t=
-he Wireguard server is for shared networks from the client and on the clien=
-t for accepted networks. This is so the server knows where to route (and th=
-us there cannot be duplicate IPs, subnets or any subnet overlapping in the =
-server config) and the client can only receive traffic from acceptedips rec=
-orded on the client side config.<br><br>My mindset may be a bit too contain=
-er orientated with hosts sharing internal container networks across systems=
- at the moment, and Wireguard has a much broader use case but the share/acc=
-ept construct seems slightly more intuitive though I could be wrong.<br><br=
-></div><div>4. The Wireguard server is a single point of failure in a star =
-topology. If the server host goes down your network goes down with it. How =
-can we add more resilience in a simple way? A backup server in L2 with iden=
-tical keys and a floating internal IP?<br></div><div><br></div><div>Thanks =
-for Wireguard!<br><br></div><div>Raul<br></div><div><br><div><br><br><br><b=
-r><br></div></div></div></div></div>
+Hi again,
 
---001a113f458cc6d93a0553c51332--
+I think there is a small mistake in the installation instruction for
+Debian, sorry about that: the "Pin-Priority" should be set to 150 instead
+of 200.
+
+Long explanation: on jessie, the jessie-backports repository also has a
+priority of 200.  After enabling unstable with the same priority, APT will
+propose to upgrade all packages from jessie-backports to unstable, which
+is probably not wanted nor expected.
+
+Daniel, does that all make sense?
+
+Baptiste
+
+On Sun, May 14, 2017 at 12:58:37AM +0200, Jason A. Donenfeld wrote:
+> Hey Baptiste,
+>=20
+> Spectacular, thanks a bunch. I think I had asked about this same thing
+> a while back, but somehow I got confused in the ensuing mailing list
+> thread and eventually I forgot about it. So I'm glad you've brought
+> this back up. I updated the install page with verbatim what you sent.
+>=20
+> Jason
+>=20
+> On Sat, May 13, 2017 at 9:05 AM, Baptiste Jonglez
+> <baptiste@bitsofnetworks.org> wrote:
+> > Hi Jason,
+> >
+> > Could you update the installation instructions for Debian [1]?
+> >
+> > Based on the discussion from a few months ago, and given that Wireguard
+> > now supports Jessie's 3.16 kernel, these instructions should be added:
+> >
+> >     For Debian jessie or stretch:
+> >     # echo "deb http://deb.debian.org/debian/ unstable main" > /etc/apt=
+/sources.list.d/unstable-wireguard.list
+> >     # cat <<EOF > /etc/apt/preferences.d/limit-unstable
+> >     Package: *
+> >     Pin: release a=3Dunstable
+> >     Pin-Priority: 200
+> >     EOF
+> >     # apt update
+> >     # apt install wireguard-dkms wireguard-tools
+> >
+> > I have verified that the resulting setup is functional (with 0.0.201704=
+21-2 on jessie).
+> >
+> > Thanks,
+> > Baptiste
+> >
+> > [1] https://www.wireguard.io/install/
+
+--u3/rZRmxL6MmkK24
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEjVflzZuxNlVFbt5QvgHsIqBOLkYFAllg6KEACgkQvgHsIqBO
+Lkaytg//U+7yL5jKI+m+MO1iX/PEzZpzDfUAUAcXdIi3FI6xw9P9nR84sJ36M4fk
+1XatTkRmzQhvi8a3kw0hpcJDC0DSqVvs1NuDiZVTeqLAamcQRMRcsV5Rb+w6FEHX
+oORJvkNauo6EKo/+w4An7wN7TjnRsrcsEVXST/16UJJyseUUZL+XDd0hF8N3C2CR
++wTroUF3Mn4jhhGUUXiY7Xkl6mXhyfbn2C9792rNLdnP48rQv8fRZS4fWRHh39D7
+/w08domEnJdihE2jopnhIgeFKDaDhx5PZOubXYmjHcUDuygshRwVonCtJrAlq8Ok
+Qd4GLSnuRLBj3UcBNoltBV+VoAmSnApy3fC6qTYIGap5M//BhXYxkBVfSkDe7KmF
+eHpA2EACONOuRhHm/9jnN3sikn/JAYNKNhvae1aFNY0y/vUD51lctY5oY3Ud+el4
+OawFsYvgH7jH89hD27vKeDy2gM72GArp2MlvDVXOL7tz5Wq1HyB8t0uNSU/QFLfX
+T66tsTWGcMI8Veu5v/LOsFyZmTUKCPwwb7vhRDskIsx+rCG4qErpDQ9NLDANFMo6
+68BN4vwl/vcMGgzyVfYUcrZwgCbK+FiFIo2mUjkbXSqghU7qhK9OuaZqfNiXWcAz
+FOfiIpWYPo2cd+DzTl2CWwxkhwhdZeHPk0PvJQIJ4LFacJJhQD8=
+=9YOX
+-----END PGP SIGNATURE-----
+
+--u3/rZRmxL6MmkK24--
