@@ -1,18 +1,21 @@
-Return-Path: baptiste@bitsofnetworks.org
+Return-Path: jomat+wireguard.io@jmt.gr
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 475ea3e0
- for <wireguard@lists.zx2c4.com>; Sun, 9 Jul 2017 21:12:19 +0000 (UTC)
-Received: from mails.bitsofnetworks.org (rezine.polyno.me [193.33.56.138])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3592d080
- for <wireguard@lists.zx2c4.com>; Sun, 9 Jul 2017 21:12:19 +0000 (UTC)
-Date: Sun, 9 Jul 2017 23:30:20 +0200
-From: Baptiste Jonglez <baptiste@bitsofnetworks.org>
-To: wireguard@lists.zx2c4.com
-Subject: Debian-based configuration for wireguard
-Message-ID: <20170709213020.GF22784@tuxmachine.polynome.dn42>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6bc0f697
+ for <wireguard@lists.zx2c4.com>; Sun, 9 Jul 2017 22:59:00 +0000 (UTC)
+Received: from mx0.jmt.gr (mx0.jmt.gr [81.7.7.41])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 50f743d8
+ for <wireguard@lists.zx2c4.com>; Sun, 9 Jul 2017 22:59:00 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="juZjCTNxrMaZdGZC"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Date: Sun, 09 Jul 2017 23:17:04 +0000
+From: jomat+wireguard.io@jmt.gr
+To: Baptiste Jonglez <baptiste@bitsofnetworks.org>
+Subject: Re: Debian-based configuration for wireguard
+In-Reply-To: <20170709213020.GF22784@tuxmachine.polynome.dn42>
+References: <20170709213020.GF22784@tuxmachine.polynome.dn42>
+Message-ID: <35cd4d321a82ba05aa4e118979bc5a87@jmt.gr>
+Cc: wireguard@lists.zx2c4.com
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -22,41 +25,20 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-
---juZjCTNxrMaZdGZC
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
 Hi,
 
-I wrote up some configuration I use for Wireguard on Debian:
+On 2017-07-09 21:30, Baptiste Jonglez wrote:
+> The goal is to reuse functionalities from /etc/network/interfaces, 
+> which
+> is quite natural on Debian.  Simple use-cases like the point-to-point
+> tunnel don't need wg-quick at all.
 
-    https://wiki.debian.org/Wireguard#Configuration_on_Debian
+Nice! I also don't like wg-quick too much, but also dislike the
+pre-/post-/-up/-down directives in my /etc/network/interfaces, so
+I put this script to /etc/network/if-pre-up.d/ and if-post-down.d
+which could work for Debian, too:
 
-The goal is to reuse functionalities from /etc/network/interfaces, which
-is quite natural on Debian.  Simple use-cases like the point-to-point
-tunnel don't need wg-quick at all.
+https://github.com/jomat/aports/blob/master/testing/wireguard/wireguard.ifupdown
 
-Baptiste
-
---juZjCTNxrMaZdGZC
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEjVflzZuxNlVFbt5QvgHsIqBOLkYFAllioGwACgkQvgHsIqBO
-LkZphQ//WOuCJMAi9z0FEBQyC44oOg5LMpMTuKdM/p7vBlMr1C/YiJA4husDAESY
-al2gamZ5mlwxSxPWMeDqyZcfKbICgU8yMEfcpfjOwmGotd2nE0sw5iResaQnL/Hx
-WlHE3BpFX9SgeaJoYw5umvXAYMXoyadkry+UNFatQJn8KG8HJRyZJhNBaz+aSBpM
-qQ0mOC+CDs0doX9iWa2xVNu1usmnlIqnV/xaSFxf/yQWVilGhK42iC5TRKeVuU+H
-ZhglZsz/uMbRrKN9ajUm6gkhhfdD7TG/3jgxXsp8l7rGqBMRh2f5DTmJu2+qwN1T
-OjTPHH0VYQCIV2KYSHUWBWJKldEQKtNO3D/623LJljc7NhDyaAIhKTmv8o7JP03P
-8pzWxaKJ95cjzFF4Xot6vrxs1iztHw9JJnaIjAQBp8xLmG5xaLwbJcBK3LgcOcpw
-b+vFt3E4aiyGIgePjPQ0WLiNPXuRJKzpAbWlagZaUnLhpnKpocrFWOmxeL5noah6
-gAmgFDfXgxCsfwh1DIxf8q89W3gqJKf0kbqm2JuQhTJ/UyKR+0ocBCPvYEQD/sWu
-Tl4TdWJcCwqQAKbAaEE/ep9JlG6nrR6Zj7BkRw6PhcVnQl+35Cb+JLaQ06vPt+b/
-aES1XbcXd4mcOn8AZSuzJ0d9RjJqLvs1DgTKM9cqGbkw1JCHmno=
-=KanQ
------END PGP SIGNATURE-----
-
---juZjCTNxrMaZdGZC--
+Bye,
+jomat
