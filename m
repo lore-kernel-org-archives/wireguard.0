@@ -1,22 +1,18 @@
-Return-Path: sg5414@g.rit.edu
+Return-Path: baptiste@bitsofnetworks.org
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dda746fc
- for <wireguard@lists.zx2c4.com>; Sun, 9 Jul 2017 03:23:20 +0000 (UTC)
-Received: from mx03b-out01ag.rit.edu (mx03b-out01ag.rit.edu [129.21.3.135])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4dd954ca
- for <wireguard@lists.zx2c4.com>; Sun, 9 Jul 2017 03:23:20 +0000 (UTC)
-From: Sahil Gupta <sg5414@rit.edu>
-Received: by mail-pf0-f199.google.com with SMTP id 1so76766490pfi.14
- for <wireguard@lists.zx2c4.com>; Sat, 08 Jul 2017 20:41:18 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <CAA8CD9u2stOgn=tRTn6LXDQrCSL2zcf_CZC83cy6Zs3FJ9x3kg@mail.gmail.com>
-References: <CAA8CD9u2stOgn=tRTn6LXDQrCSL2zcf_CZC83cy6Zs3FJ9x3kg@mail.gmail.com>
-Date: Sat, 8 Jul 2017 23:41:17 -0400
-Message-ID: <CAA8CD9unc7YNUZ3ONibnsinYsK29K+49vBev7Us5KuuWbNiRvw@mail.gmail.com>
-Subject: Re: Some information on usage of wire-guard on low constraint devices.
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 475ea3e0
+ for <wireguard@lists.zx2c4.com>; Sun, 9 Jul 2017 21:12:19 +0000 (UTC)
+Received: from mails.bitsofnetworks.org (rezine.polyno.me [193.33.56.138])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3592d080
+ for <wireguard@lists.zx2c4.com>; Sun, 9 Jul 2017 21:12:19 +0000 (UTC)
+Date: Sun, 9 Jul 2017 23:30:20 +0200
+From: Baptiste Jonglez <baptiste@bitsofnetworks.org>
 To: wireguard@lists.zx2c4.com
-Content-Type: multipart/alternative; boundary="94eb2c145e6827880e0553da3d4c"
-Reply-To: sg5414@rit.edu
+Subject: Debian-based configuration for wireguard
+Message-ID: <20170709213020.GF22784@tuxmachine.polynome.dn42>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="juZjCTNxrMaZdGZC"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,21 +22,41 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---94eb2c145e6827880e0553da3d4c
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Adding one more point to it.
-4. Is it possible to code this pacakage in android or basically do you have
-support of wireguard for mobile phones or to get it in android/IOS apps?=E2=
-=80=8B
+--juZjCTNxrMaZdGZC
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
---94eb2c145e6827880e0553da3d4c
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-<div dir=3D"ltr">Adding one more point to it.<br>4. Is it possible to code =
-this pacakage in android or basically do you have support of wireguard for =
-mobile phones or to get it in android/IOS apps?=E2=80=8B</div>
+I wrote up some configuration I use for Wireguard on Debian:
 
---94eb2c145e6827880e0553da3d4c--
+    https://wiki.debian.org/Wireguard#Configuration_on_Debian
+
+The goal is to reuse functionalities from /etc/network/interfaces, which
+is quite natural on Debian.  Simple use-cases like the point-to-point
+tunnel don't need wg-quick at all.
+
+Baptiste
+
+--juZjCTNxrMaZdGZC
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEjVflzZuxNlVFbt5QvgHsIqBOLkYFAllioGwACgkQvgHsIqBO
+LkZphQ//WOuCJMAi9z0FEBQyC44oOg5LMpMTuKdM/p7vBlMr1C/YiJA4husDAESY
+al2gamZ5mlwxSxPWMeDqyZcfKbICgU8yMEfcpfjOwmGotd2nE0sw5iResaQnL/Hx
+WlHE3BpFX9SgeaJoYw5umvXAYMXoyadkry+UNFatQJn8KG8HJRyZJhNBaz+aSBpM
+qQ0mOC+CDs0doX9iWa2xVNu1usmnlIqnV/xaSFxf/yQWVilGhK42iC5TRKeVuU+H
+ZhglZsz/uMbRrKN9ajUm6gkhhfdD7TG/3jgxXsp8l7rGqBMRh2f5DTmJu2+qwN1T
+OjTPHH0VYQCIV2KYSHUWBWJKldEQKtNO3D/623LJljc7NhDyaAIhKTmv8o7JP03P
+8pzWxaKJ95cjzFF4Xot6vrxs1iztHw9JJnaIjAQBp8xLmG5xaLwbJcBK3LgcOcpw
+b+vFt3E4aiyGIgePjPQ0WLiNPXuRJKzpAbWlagZaUnLhpnKpocrFWOmxeL5noah6
+gAmgFDfXgxCsfwh1DIxf8q89W3gqJKf0kbqm2JuQhTJ/UyKR+0ocBCPvYEQD/sWu
+Tl4TdWJcCwqQAKbAaEE/ep9JlG6nrR6Zj7BkRw6PhcVnQl+35Cb+JLaQ06vPt+b/
+aES1XbcXd4mcOn8AZSuzJ0d9RjJqLvs1DgTKM9cqGbkw1JCHmno=
+=KanQ
+-----END PGP SIGNATURE-----
+
+--juZjCTNxrMaZdGZC--
