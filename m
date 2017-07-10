@@ -1,33 +1,19 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: bruno@wolff.to
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b7bcb1a7
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 62eeaadb
  for <wireguard@lists.zx2c4.com>;
- Mon, 10 Jul 2017 00:35:16 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8aa4d49c
+ Mon, 10 Jul 2017 01:34:50 +0000 (UTC)
+Received: from wolff.to (wolff.to [98.103.208.27])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with SMTP id 2ea436dd
  for <wireguard@lists.zx2c4.com>;
- Mon, 10 Jul 2017 00:35:16 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b7ad6f47
- for <wireguard@lists.zx2c4.com>;
- Mon, 10 Jul 2017 00:48:50 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 9a850236
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Mon, 10 Jul 2017 00:48:50 +0000 (UTC)
-Received: by mail-wr0-f182.google.com with SMTP id k67so116892131wrc.2
- for <wireguard@lists.zx2c4.com>; Sun, 09 Jul 2017 17:53:21 -0700 (PDT)
+ Mon, 10 Jul 2017 01:34:50 +0000 (UTC)
+Date: Sun, 9 Jul 2017 20:48:34 -0500
+From: Bruno Wolff III <bruno@wolff.to>
+To: wireguard@lists.zx2c4.com
+Subject: Looks like 4.13 introduces a new incompatibility
+Message-ID: <20170710014834.GA14901@wolff.to>
 MIME-Version: 1.0
-In-Reply-To: <20170708142156.GB13268@tuxmachine.polynome.dn42>
-References: <1499116162.70598782@f401.i.mail.ru>
- <20170708142156.GB13268@tuxmachine.polynome.dn42>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 10 Jul 2017 02:53:20 +0200
-Message-ID: <CAHmME9q79erdSUq7uWfT0+Cc09N_HzJ1BBb5-Q5RK2NQXyRnYw@mail.gmail.com>
-Subject: Re: Indefinite queuing for unconnected peers (Was: problem wireguard
- + ospf + unconnected tunnels)
-To: Baptiste Jonglez <baptiste@bitsofnetworks.org>
-Content-Type: text/plain; charset="UTF-8"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -37,13 +23,30 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hey Baptiste,
+With Fedora's 4.13.0-0.rc0.git3.1.fc27 kernel, master no longer compiles. 
+It is still a week before rc1 and I can use 4.12 on the relevant machines, 
+but I thought I'd give a heads up.
 
-As alluded to in my other recent reply, WireGuard already does this
-actually. It tries the handshake a few times, and only after failing
-does it drop the queue. I suppose I could greatly reduce the clearing
-condition from dropping after 20 handshakes to dropping after 1
-handshake, but I don't think it makes a difference anyway, because new
-packets should replace old packets in the queue.
-
-Jason
+[bruno@wolff src]$ make clean all
+make -C /lib/modules/4.13.0-0.rc0.git3.1.fc27.i686+PAE/build M=/home/bruno/WireGuard/src clean
+make[1]: Entering directory '/usr/src/kernels/4.13.0-0.rc0.git3.1.fc27.i686+PAE'
+  CLEAN   /home/bruno/WireGuard/src/.tmp_versions
+make[1]: Leaving directory '/usr/src/kernels/4.13.0-0.rc0.git3.1.fc27.i686+PAE'
+make -C tools clean
+make[1]: Entering directory '/home/bruno/WireGuard/src/tools'
+rm -f wg *.o *.d
+make[1]: Leaving directory '/home/bruno/WireGuard/src/tools'
+make -C /lib/modules/4.13.0-0.rc0.git3.1.fc27.i686+PAE/build M=/home/bruno/WireGuard/src modules
+make[1]: Entering directory '/usr/src/kernels/4.13.0-0.rc0.git3.1.fc27.i686+PAE'
+  CC [M]  /home/bruno/WireGuard/src/main.o
+  CC [M]  /home/bruno/WireGuard/src/noise.o
+  CC [M]  /home/bruno/WireGuard/src/device.o
+/home/bruno/WireGuard/src/device.c:372:14: error: initialization from incompatible pointer type [-Werror=incompatible-pointer-types]
+  .newlink  = newlink,
+              ^~~~~~~
+/home/bruno/WireGuard/src/device.c:372:14: note: (near initialization for ‘link_ops.newlink’)
+cc1: some warnings being treated as errors
+make[2]: *** [scripts/Makefile.build:303: /home/bruno/WireGuard/src/device.o] Error 1
+make[1]: *** [Makefile:1512: _module_/home/bruno/WireGuard/src] Error 2
+make[1]: Leaving directory '/usr/src/kernels/4.13.0-0.rc0.git3.1.fc27.i686+PAE'
+make: *** [Makefile:28: module] Error 2
