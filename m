@@ -1,28 +1,35 @@
-Return-Path: aeforeve@mail.ru
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ae104640
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 90801885
  for <wireguard@lists.zx2c4.com>;
- Mon, 10 Jul 2017 16:47:58 +0000 (UTC)
-Received: from f388.i.mail.ru (f388.i.mail.ru [185.5.136.59])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 73fa2cac
+ Mon, 10 Jul 2017 16:51:16 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b69fdb1f
  for <wireguard@lists.zx2c4.com>;
- Mon, 10 Jul 2017 16:47:57 +0000 (UTC)
-From: =?UTF-8?B?YWU=?= <aeforeve@mail.ru>
-To: =?UTF-8?B?SmFzb24gQS4gRG9uZW5mZWxk?= <Jason@zx2c4.com>
-Subject: =?UTF-8?B?UmVbMl06IHByb2JsZW0gd2lyZWd1YXJkICsgb3NwZiArIHVuY29ubmVjdGVk?=
- =?UTF-8?B?IHR1bm5lbHM=?=
+ Mon, 10 Jul 2017 16:51:16 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9a75ec53
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 10 Jul 2017 17:04:50 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id a85d2f21
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 10 Jul 2017 17:04:50 +0000 (UTC)
+Received: by mail-wr0-f169.google.com with SMTP id k67so146553655wrc.2
+ for <wireguard@lists.zx2c4.com>; Mon, 10 Jul 2017 10:09:26 -0700 (PDT)
 MIME-Version: 1.0
-Date: Mon, 10 Jul 2017 20:06:03 +0300
-Message-ID: <1499706363.749987194@f388.i.mail.ru>
-Content-Type: multipart/alternative;
- boundary="--ALT--JwEWo1BkIE9pDHRmXuoANiYUebQNgV8u1499706363"
-In-Reply-To: <CAHmME9qUHN_G2vf7A_haTpk+yMK6rVe42B56N9LFLP7tBh-VkQ@mail.gmail.com>
+In-Reply-To: <1499706363.749987194@f388.i.mail.ru>
 References: <1499116162.70598782@f401.i.mail.ru>
  <e3a0ff13-fea4-e5e3-7529-ae746d74a17a@roelf.org>
  <CAHmME9qUHN_G2vf7A_haTpk+yMK6rVe42B56N9LFLP7tBh-VkQ@mail.gmail.com>
-Cc: =?UTF-8?B?V2lyZUd1YXJkIG1haWxpbmcgbGlzdA==?= <wireguard@lists.zx2c4.com>,
- =?UTF-8?B?Um9lbGYgV2ljaGVydGplcw==?= <roelf@roelf.org>
-Reply-To: =?UTF-8?B?YWU=?= <aeforeve@mail.ru>
+ <1499706363.749987194@f388.i.mail.ru>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Mon, 10 Jul 2017 19:09:25 +0200
+Message-ID: <CAHmME9rBDRRnQ1z4+OFRrYjB5c+01oDAqxzdipx9TH4exhdg+w@mail.gmail.com>
+Subject: Re: Re[2]: problem wireguard + ospf + unconnected tunnels
+To: ae <aeforeve@mail.ru>
+Content-Type: text/plain; charset="UTF-8"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ Roelf Wichertjes <roelf@roelf.org>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -32,60 +39,15 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
+On Mon, Jul 10, 2017 at 7:06 PM, ae <aeforeve@mail.ru> wrote:
+> yes - work
+Great to hear! This will be a part of the next snapshot.
 
-----ALT--JwEWo1BkIE9pDHRmXuoANiYUebQNgV8u1499706363
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: base64
+> + Pair of missing functionality - which I lacked when replacing with wireguard
+>
+> 1) src addr tunnel
+What is this? Can you elaborate on what you mean?
 
-Cj5IZXkgYWUsCj4KPlRoYW5rcyBmb3IgeW91ciBkZXRhaWxlZCByZXBvcnRzLCBlc3BlY2lhbGx5
-IHRoZSBuaWNlIFB5dGhvbgo+cmVwcm9kdWNlciB5b3Ugc2VudC4gQW5kIHNvcnJ5IGZvciB0aGUg
-ZGVsYXkgaW4gZ2V0dGluZyBiYWNrIHRvIHlvdQo+YW5kIGludmVzdGlnYXRpbmcgdGhpcy4gSSBh
-Y3R1YWxseSBkb24ndCByZWNlaXZlIGFueSBvZiB5b3VyIGVtYWlscy4gSQo+ZG9uJ3Qga25vdyBp
-ZiBpdCdzIGJlY2F1c2UgbWFpbC5ydSBoYXMgYSBiYWQgc3BhbSBzY29yZSwgb3IgYmVjYXVzZQo+
-dGhlIEhUTUwgcGFydCBvZiB5b3VyIGVtYWlsIGNvbnRhaW5zIGVtYmVkZGVkIGphdmFzY3JpcHQs
-IGJ1dCB0aGVyZSdzCj5zb21ldGhpbmcgc3VmZmljaWVudGx5IHNrZXRjaHkgdGhhdCBwcmVjbHVk
-ZXMgdGhlbSBmcm9tIGJlaW5nCj5kZWxpdmVyZWQgdG8gbXkgbWFpbGJveC4gTHVja2lseSBvdGhl
-cnMgb24gdGhlIGxpc3QgYnJvdWdodCB0aGlzCj50aHJlYWQgdG8gbXkgYXR0ZW50aW9uLgo+Cj5J
-IHN1Y2Nlc3NmdWxseSBkZWJ1Z2dlZCBhbmQgZml4ZWQgdGhlIFB5dGhvbiByZXByb2R1Y2VyIHlv
-dSBzZW50IG1lLgo+Q291bGQgeW91IHRyeSB0aGUgZm9sbG93aW5nIHBhdGNoLCBhbmQgc2VlIGlm
-IGFwcGx5aW5nIGl0IHJlc3VsdHMgaW4KPm9zcGZkIHdvcmtpbmcgcHJvcGVybHk/Cj4KPmh0dHBz
-Oi8vZ2l0Lnp4MmM0LmNvbS9XaXJlR3VhcmQvcGF0Y2gvP2lkPTE3NzMzNWQ1YjQ2MGNjZTA3NjMx
-ZGZmOGJlYTQ3OGI3M2UxODQyNDcKCnllcyAtIHdvcmsKCisgUGFpciBvZiBtaXNzaW5nIGZ1bmN0
-aW9uYWxpdHkgLSB3aGljaCBJIGxhY2tlZCB3aGVuIHJlcGxhY2luZyB3aXRoIHdpcmVndWFyZAoK
-MSkgc3JjIGFkZHIgdHVubmVsCjIpIHdvcmsgaW4gb25seSBwcmVzaGFyZWQgY3J5cHRvCgo=
-
-----ALT--JwEWo1BkIE9pDHRmXuoANiYUebQNgV8u1499706363
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: base64
-
-CjxIVE1MPjxCT0RZPjxiciBpZD0idGlueW1jZSIgY2xhc3M9Im1jZUNvbnRlbnRCb2R5IGluY3Jl
-YXNlLWZvbnQgY29tcG9zZTIiIG9ubG9hZD0id2luZG93LnBhcmVudC50aW55TUNFLmdldCgndG9v
-bGtpdC0xNDk5NzA2MTA1MTc4Njhjb21wb3NlRWRpdG9yJykub25Mb2FkLmRpc3BhdGNoKCk7IiBk
-aXI9Imx0ciIgc3R5bGU9Im92ZXJmbG93OiBhdXRvOyIgY29udGVudGVkaXRhYmxlPSJ0cnVlIj4K
-CTxibG9ja3F1b3RlIHN0eWxlPSJib3JkZXItbGVmdDoxcHggc29saWQgIzA4NTdBNjsgbWFyZ2lu
-OjEwcHg7IHBhZGRpbmc6MCAwIDAgMTBweDsiPjxkaXYgaWQ9IiI+PGRpdiBjbGFzcz0ianMtaGVs
-cGVyIGpzLXJlYWRtc2ctbXNnIj48ZGl2PjxkaXYgaWQ9InN0eWxlXzE0OTk2NDc2MTAwMDAwMDAw
-MDQxX0JPRFkiPkhleSBhZSw8YnI+PGJyPgpUaGFua3MgZm9yIHlvdXIgZGV0YWlsZWQgcmVwb3J0
-cywgZXNwZWNpYWxseSB0aGUgbmljZSBQeXRob248YnI+CnJlcHJvZHVjZXIgeW91IHNlbnQuIEFu
-ZCBzb3JyeSBmb3IgdGhlIGRlbGF5IGluIGdldHRpbmcgYmFjayB0byB5b3U8YnI+CmFuZCBpbnZl
-c3RpZ2F0aW5nIHRoaXMuIEkgYWN0dWFsbHkgZG9uJ3QgcmVjZWl2ZSBhbnkgb2YgeW91ciBlbWFp
-bHMuIEk8YnI+CmRvbid0IGtub3cgaWYgaXQncyBiZWNhdXNlIG1haWwucnUgaGFzIGEgYmFkIHNw
-YW0gc2NvcmUsIG9yIGJlY2F1c2U8YnI+CnRoZSBIVE1MIHBhcnQgb2YgeW91ciBlbWFpbCBjb250
-YWlucyBlbWJlZGRlZCBqYXZhc2NyaXB0LCBidXQgdGhlcmUnczxicj4Kc29tZXRoaW5nIHN1ZmZp
-Y2llbnRseSBza2V0Y2h5IHRoYXQgcHJlY2x1ZGVzIHRoZW0gZnJvbSBiZWluZzxicj4KZGVsaXZl
-cmVkIHRvIG15IG1haWxib3guIEx1Y2tpbHkgb3RoZXJzIG9uIHRoZSBsaXN0IGJyb3VnaHQgdGhp
-czxicj4KdGhyZWFkIHRvIG15IGF0dGVudGlvbi48YnI+PGJyPgpJIHN1Y2Nlc3NmdWxseSBkZWJ1
-Z2dlZCBhbmQgZml4ZWQgdGhlIFB5dGhvbiByZXByb2R1Y2VyIHlvdSBzZW50IG1lLjxicj4KQ291
-bGQgeW91IHRyeSB0aGUgZm9sbG93aW5nIHBhdGNoLCBhbmQgc2VlIGlmIGFwcGx5aW5nIGl0IHJl
-c3VsdHMgaW48YnI+Cm9zcGZkIHdvcmtpbmcgcHJvcGVybHk/PGJyPjxicj48YSBocmVmPSJodHRw
-czovL2dpdC56eDJjNC5jb20vV2lyZUd1YXJkL3BhdGNoLz9pZD0xNzczMzVkNWI0NjBjY2UwNzYz
-MWRmZjhiZWE0NzhiNzNlMTg0MjQ3IiB0YXJnZXQ9Il9ibGFuayI+aHR0cHM6Ly9naXQuengyYzQu
-Y29tL1dpcmVHdWFyZC9wYXRjaC8/aWQ9MTc3MzM1ZDViNDYwY2NlMDc2MzFkZmY4YmVhNDc4Yjcz
-ZTE4NDI0NzwvYT48YnIgZGF0YS1tY2UtYm9ndXM9IjEiPjwvZGl2PjwvZGl2PjwvZGl2PjwvZGl2
-PjwvYmxvY2txdW90ZT48YnI+eWVzIC0gd29yazxicj48YnI+PHNwYW4gaWQ9InJlc3VsdF9ib3gi
-IGxhbmc9ImVuIj48c3Bhbj4rIFBhaXIgb2YgbWlzc2luZyBmdW5jdGlvbmFsaXR5IC0gd2hpY2gg
-SSBsYWNrZWQgd2hlbiByZXBsYWNpbmcgd2l0aCB3aXJlZ3VhcmQ8L3NwYW4+PGJyPjwvc3Bhbj48
-YnI+MSkgc3JjIGFkZHIgdHVubmVsPGJyPjIpIHdvcmsgaW4gb25seSBwcmVzaGFyZWQgY3J5cHRv
-PGJyPjxicj48L0JPRFk+PC9IVE1MPgo=
-
-----ALT--JwEWo1BkIE9pDHRmXuoANiYUebQNgV8u1499706363--
+> 2) work in only preshared crypto
+WireGuard has a preshared-key mode, but it's in addition to the normal
+EC-based crypto, not instead of. Welcome to the future!
