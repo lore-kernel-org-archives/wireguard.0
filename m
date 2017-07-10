@@ -1,35 +1,28 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: aeforeve@mail.ru
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 90801885
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 531af582
  for <wireguard@lists.zx2c4.com>;
- Mon, 10 Jul 2017 16:51:16 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b69fdb1f
+ Mon, 10 Jul 2017 17:08:33 +0000 (UTC)
+Received: from f511.i.mail.ru (f511.i.mail.ru [217.69.138.178])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4530b5d8
  for <wireguard@lists.zx2c4.com>;
- Mon, 10 Jul 2017 16:51:16 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9a75ec53
- for <wireguard@lists.zx2c4.com>;
- Mon, 10 Jul 2017 17:04:50 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id a85d2f21
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Mon, 10 Jul 2017 17:04:50 +0000 (UTC)
-Received: by mail-wr0-f169.google.com with SMTP id k67so146553655wrc.2
- for <wireguard@lists.zx2c4.com>; Mon, 10 Jul 2017 10:09:26 -0700 (PDT)
+ Mon, 10 Jul 2017 17:08:33 +0000 (UTC)
+From: =?UTF-8?B?YWU=?= <aeforeve@mail.ru>
+To: =?UTF-8?B?SmFzb24gQS4gRG9uZW5mZWxk?= <Jason@zx2c4.com>
+Subject: =?UTF-8?B?UmVbNF06IHByb2JsZW0gd2lyZWd1YXJkICsgb3NwZiArIHVuY29ubmVjdGVk?=
+ =?UTF-8?B?IHR1bm5lbHM=?=
 MIME-Version: 1.0
-In-Reply-To: <1499706363.749987194@f388.i.mail.ru>
+Date: Mon, 10 Jul 2017 20:26:36 +0300
+Message-ID: <1499707596.974784933@f511.i.mail.ru>
+Content-Type: multipart/alternative;
+ boundary="--ALT--iQoX7c4wcQzZI5s4fitZNdMI9X5atmS81499707596"
+In-Reply-To: <CAHmME9rBDRRnQ1z4+OFRrYjB5c+01oDAqxzdipx9TH4exhdg+w@mail.gmail.com>
 References: <1499116162.70598782@f401.i.mail.ru>
- <e3a0ff13-fea4-e5e3-7529-ae746d74a17a@roelf.org>
- <CAHmME9qUHN_G2vf7A_haTpk+yMK6rVe42B56N9LFLP7tBh-VkQ@mail.gmail.com>
  <1499706363.749987194@f388.i.mail.ru>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 10 Jul 2017 19:09:25 +0200
-Message-ID: <CAHmME9rBDRRnQ1z4+OFRrYjB5c+01oDAqxzdipx9TH4exhdg+w@mail.gmail.com>
-Subject: Re: Re[2]: problem wireguard + ospf + unconnected tunnels
-To: ae <aeforeve@mail.ru>
-Content-Type: text/plain; charset="UTF-8"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
- Roelf Wichertjes <roelf@roelf.org>
+ <CAHmME9rBDRRnQ1z4+OFRrYjB5c+01oDAqxzdipx9TH4exhdg+w@mail.gmail.com>
+Cc: =?UTF-8?B?V2lyZUd1YXJkIG1haWxpbmcgbGlzdA==?= <wireguard@lists.zx2c4.com>,
+ =?UTF-8?B?Um9lbGYgV2ljaGVydGplcw==?= <roelf@roelf.org>
+Reply-To: =?UTF-8?B?YWU=?= <aeforeve@mail.ru>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -39,15 +32,68 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Mon, Jul 10, 2017 at 7:06 PM, ae <aeforeve@mail.ru> wrote:
-> yes - work
-Great to hear! This will be a part of the next snapshot.
 
-> + Pair of missing functionality - which I lacked when replacing with wireguard
->
-> 1) src addr tunnel
-What is this? Can you elaborate on what you mean?
+----ALT--iQoX7c4wcQzZI5s4fitZNdMI9X5atmS81499707596
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: base64
 
-> 2) work in only preshared crypto
-WireGuard has a preshared-key mode, but it's in addition to the normal
-EC-based crypto, not instead of. Welcome to the future!
+CgoKPtCf0L7QvdC10LTQtdC70YzQvdC40LosIDEwINC40Y7Qu9GPIDIwMTcsIDIyOjA5ICswNTow
+MCDQvtGCICJKYXNvbiBBLiBEb25lbmZlbGQiIDxKYXNvbkB6eDJjNC5jb20+Ogo+Cj5PbiBNb24s
+IEp1bCAxMCwgMjAxNyBhdCA3OjA2IFBNLCBhZSA8IGFlZm9yZXZlQG1haWwucnUgPiB3cm90ZToK
+Pj4geWVzIC0gd29yawo+R3JlYXQgdG8gaGVhciEgVGhpcyB3aWxsIGJlIGEgcGFydCBvZiB0aGUg
+bmV4dCBzbmFwc2hvdC4KPgo+PiArIFBhaXIgb2YgbWlzc2luZyBmdW5jdGlvbmFsaXR5IC0gd2hp
+Y2ggSSBsYWNrZWQgd2hlbiByZXBsYWNpbmcgd2l0aCB3aXJlZ3VhcmQKPj4KPj4gMSkgc3JjIGFk
+ZHIgdHVubmVsCj5XaGF0IGlzIHRoaXM/IENhbiB5b3UgZWxhYm9yYXRlIG9uIHdoYXQgeW91IG1l
+YW4/CgpzcmMgYWRkcmVzcyB0dW5uZWwKTm90IG9ubHkgc3JjIHBvcnQKQnV0IGFsc28gd2l0aCBh
+biBhZGRyZXNzIGZyb20gd2hpY2ggdGhlIHR1bm5lbCBwYWNrZXRzIGFyZSBzZW50CkF0IGEgbXVs
+dGljaHJvbWVkIHNlcnZlciAtIGl0IGlzIHBvc3NpYmxlIGJ1dCBpbmNvbnZlbmllbnQgdG8gb3Bl
+cmF0ZSBmcm9tIHdoZXJlIHRoZSBwYWNrZXRzIHdpbGwgYmUgc2VudCB2aWEgdGhlIGlwIG1hcmsK
+Cgo+Cj4+IDIpIHdvcmsgaW4gb25seSBwcmVzaGFyZWQgY3J5cHRvCj5XaXJlR3VhcmQgaGFzIGEg
+cHJlc2hhcmVkLWtleSBtb2RlLCBidXQgaXQncyBpbiBhZGRpdGlvbiB0byB0aGUgbm9ybWFsCj5F
+Qy1iYXNlZCBjcnlwdG8sIG5vdCBpbnN0ZWFkIG9mLiBXZWxjb21lIHRvIHRoZSBmdXR1cmUhCgpS
+b3V0aW5nIHRocm91Z2ggY3J5cHRvIGtleXMgLSBtYXliZSB3ZWxsIC0gYnV0IHdpdGggZHluYW1p
+YyByb3V0aW5nIC0gbm90IHdvcmtpbmcgYXQgYWxsCkdvIHRocm91Z2ggdG8gY3JlYXRlIGEgY3Jv
+d2Qgb2YgcG9pbnQtcG9pbnQgdHVubmVscyAtIGFuZCBoYXZlIDIga2V5cyB0byB1c2UKCgpBbmQg
+dGhlIHF1ZXN0aW9uIGlzOiBob3cgcHJvZHVjdGl2ZSB3aWxsIGl0IHdvcmsgd2hlbiBwb2ludCBt
+dWx0aXBvaW50LCBwcm92aWRlZCB0aGF0IG11bHRpcG9pbnQgfiAxMDAwMD8gQW5kIDEwLDAwMCAr
+IDEga2V5Cgo=
+
+----ALT--iQoX7c4wcQzZI5s4fitZNdMI9X5atmS81499707596
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: base64
+
+CjxIVE1MPjxCT0RZPjxicj48YnI+PGJyPjxibG9ja3F1b3RlIHN0eWxlPSJib3JkZXItbGVmdDox
+cHggc29saWQgIzA4NTdBNjsgbWFyZ2luOjEwcHg7IHBhZGRpbmc6MCAwIDAgMTBweDsiPgoJ0J/Q
+vtC90LXQtNC10LvRjNC90LjQuiwgMTAg0LjRjtC70Y8gMjAxNywgMjI6MDkgKzA1OjAwINC+0YIg
+Ikphc29uIEEuIERvbmVuZmVsZCIgJmx0O0phc29uQHp4MmM0LmNvbSZndDs6PGJyPjxicj48ZGl2
+IGlkPSIiPjxkaXYgY2xhc3M9ImpzLWhlbHBlciBqcy1yZWFkbXNnLW1zZyI+PGRpdj48ZGl2IGlk
+PSJzdHlsZV8xNDk5NzA2NTc5MDAwMDAwMDAzMF9CT0RZIj5PbiBNb24sIEp1bCAxMCwgMjAxNyBh
+dCA3OjA2IFBNLCBhZSAmbHQ7PGEgaHJlZj0ibWFpbHRvOmFlZm9yZXZlQG1haWwucnUiPmFlZm9y
+ZXZlQG1haWwucnU8L2E+Jmd0OyB3cm90ZTo8YnI+CiZndDsgeWVzIC0gd29yazxicj4KR3JlYXQg
+dG8gaGVhciEgVGhpcyB3aWxsIGJlIGEgcGFydCBvZiB0aGUgbmV4dCBzbmFwc2hvdC48YnI+PGJy
+PgomZ3Q7ICsgUGFpciBvZiBtaXNzaW5nIGZ1bmN0aW9uYWxpdHkgLSB3aGljaCBJIGxhY2tlZCB3
+aGVuIHJlcGxhY2luZyB3aXRoIHdpcmVndWFyZDxicj4KJmd0Ozxicj4KJmd0OyAxKSBzcmMgYWRk
+ciB0dW5uZWw8YnI+CldoYXQgaXMgdGhpcz8gQ2FuIHlvdSBlbGFib3JhdGUgb24gd2hhdCB5b3Ug
+bWVhbj88YnI+PC9kaXY+PC9kaXY+PC9kaXY+PC9kaXY+PC9ibG9ja3F1b3RlPjxicj5zcmMgYWRk
+cmVzcyB0dW5uZWw8YnI+PHNwYW4gaWQ9InJlc3VsdF9ib3giIGxhbmc9ImVuIj48c3Bhbj5Ob3Qg
+b25seSBzcmMgcG9ydDwvc3Bhbj48YnI+PHNwYW4+QnV0IGFsc28gd2l0aCBhbiBhZGRyZXNzIGZy
+b20gd2hpY2ggdGhlIHR1bm5lbCBwYWNrZXRzIGFyZSBzZW50PC9zcGFuPjxicj48c3Bhbj5BdCBh
+IG11bHRpY2hyb21lZCBzZXJ2ZXIgLSBpdCBpcyBwb3NzaWJsZSBidXQgaW5jb252ZW5pZW50IHRv
+IG9wZXJhdGUgZnJvbSB3aGVyZSB0aGUgcGFja2V0cyB3aWxsIGJlIHNlbnQgdmlhIHRoZSBpcCBt
+YXJrPC9zcGFuPjxicj48YnI+PC9zcGFuPjxicj48YmxvY2txdW90ZSBzdHlsZT0iYm9yZGVyLWxl
+ZnQ6MXB4IHNvbGlkICMwODU3QTY7IG1hcmdpbjoxMHB4OyBwYWRkaW5nOjAgMCAwIDEwcHg7Ij48
+ZGl2IGlkPSIiPjxkaXYgY2xhc3M9ImpzLWhlbHBlciBqcy1yZWFkbXNnLW1zZyI+PGRpdj48ZGl2
+IGlkPSJzdHlsZV8xNDk5NzA2NTc5MDAwMDAwMDAzMF9CT0RZIj48YnI+CiZndDsgMikgd29yayBp
+biBvbmx5IHByZXNoYXJlZCBjcnlwdG88YnI+CldpcmVHdWFyZCBoYXMgYSBwcmVzaGFyZWQta2V5
+IG1vZGUsIGJ1dCBpdCdzIGluIGFkZGl0aW9uIHRvIHRoZSBub3JtYWw8YnI+CkVDLWJhc2VkIGNy
+eXB0bywgbm90IGluc3RlYWQgb2YuIFdlbGNvbWUgdG8gdGhlIGZ1dHVyZSE8YnI+PC9kaXY+PC9k
+aXY+PC9kaXY+PC9kaXY+PC9ibG9ja3F1b3RlPgo8YnI+PHNwYW4gaWQ9InJlc3VsdF9ib3giIGxh
+bmc9ImVuIj48c3Bhbj5Sb3V0aW5nIHRocm91Z2ggY3J5cHRvIGtleXMgLSBtYXliZSB3ZWxsIC0g
+YnV0IHdpdGggZHluYW1pYyByb3V0aW5nIC0gbm90IHdvcmtpbmcgYXQgYWxsPC9zcGFuPjxicj48
+c3Bhbj5HbyB0aHJvdWdoIHRvIGNyZWF0ZSBhIGNyb3dkIG9mIHBvaW50LXBvaW50IHR1bm5lbHMg
+LSBhbmQgaGF2ZSAyIGtleXMgdG8gdXNlPC9zcGFuPjxicj48YnI+PGJyPjxzcGFuPkFuZCB0aGUg
+cXVlc3Rpb24gaXM6IGhvdyBwcm9kdWN0aXZlIHdpbGwgaXQgd29yayB3aGVuIHBvaW50IG11bHRp
+cG9pbnQsIHByb3ZpZGVkIHRoYXQgbXVsdGlwb2ludCB+IDEwMDAwPzwvc3Bhbj4gPHNwYW4+QW5k
+IDEwLDAwMCArIDEga2V5PGJyPjwvc3Bhbj48L3NwYW4+PGJyPjwvQk9EWT48L0hUTUw+Cg==
+
+----ALT--iQoX7c4wcQzZI5s4fitZNdMI9X5atmS81499707596--
