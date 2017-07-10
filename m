@@ -1,27 +1,25 @@
-Return-Path: sg5414@g.rit.edu
+Return-Path: egbert@eggiecode.org
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b348b77c
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 70ce3af1
  for <wireguard@lists.zx2c4.com>;
- Mon, 10 Jul 2017 18:32:14 +0000 (UTC)
-Received: from mx03b-out01ag.rit.edu (mx03b-out01ag.rit.edu [129.21.3.135])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e5162d6d
+ Mon, 10 Jul 2017 19:36:07 +0000 (UTC)
+Received: from mail01.eggieservers.nl (mail01.eggieservers.nl
+ [149.210.159.147])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 18512268
  for <wireguard@lists.zx2c4.com>;
- Mon, 10 Jul 2017 18:32:14 +0000 (UTC)
-From: Sahil Gupta <sg5414@rit.edu>
-Received: by mail-pg0-f71.google.com with SMTP id g7so125093225pgp.1
- for <wireguard@lists.zx2c4.com>; Mon, 10 Jul 2017 11:50:24 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <CAA8CD9vVpqsHajaYW3s2RebYN6EMxRaL0GSSbMdocEwDjVZapw@mail.gmail.com>
-References: <CAA8CD9u2stOgn=tRTn6LXDQrCSL2zcf_CZC83cy6Zs3FJ9x3kg@mail.gmail.com>
- <CAHmME9oRBP0RML_F=L9BXuHBNRx5MXTUQj=Pt2F+HG=tfqs9tw@mail.gmail.com>
- <CAA8CD9vVpqsHajaYW3s2RebYN6EMxRaL0GSSbMdocEwDjVZapw@mail.gmail.com>
-Date: Mon, 10 Jul 2017 14:50:23 -0400
-Message-ID: <CAA8CD9trztS9WEWa-Q2NFXpCT463wcEBB4TY4pA7H_G6jyW+Uw@mail.gmail.com>
-Subject: Re: Some information on usage of wire-guard on low constraint devices.
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Content-Type: multipart/alternative; boundary="94eb2c13053834291a0553fb0e8f"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Reply-To: sg5414@rit.edu
+ Mon, 10 Jul 2017 19:36:07 +0000 (UTC)
+Message-ID: <1499716437.988.1.camel@eggiecode.org>
+Subject: Re: Debian-based configuration for wireguard
+From: Egbert Verhage <egbert@eggiecode.org>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>, jomat+wireguard.io@jmt.gr
+Date: Mon, 10 Jul 2017 21:53:57 +0200
+In-Reply-To: <20170710025323.GC31153@zx2c4.com>
+References: <20170709213020.GF22784@tuxmachine.polynome.dn42>
+ <35cd4d321a82ba05aa4e118979bc5a87@jmt.gr>
+ <20170710025323.GC31153@zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
+Cc: wireguard@lists.zx2c4.com
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -31,25 +29,36 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---94eb2c13053834291a0553fb0e8f
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hey Baptiste,
 
-One more query.
-Which IDE is best to import Wireguard GitHub package.
-I am familiar with eclipse and Netbeans IDE.
-Is there some other preferable option of IDE for development.
+Jep, I did that.
+See the ifupdown package of my own wireguard ppa:
 
-Regards
-Sahil Gupta=E2=80=8B
+https://launchpad.net/~eggiecode/+archive/ubuntu/wireguard
 
---94eb2c13053834291a0553fb0e8f
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+And here is the diff:
+http://test.egbert.online/diff_ifupdown_ppa.txt
 
-<div dir=3D"ltr">One more query.<br>Which IDE is best to import Wireguard G=
-itHub package.<br>I am familiar with eclipse and Netbeans IDE.<br>Is there =
-some other preferable option of IDE for development.<div><br></div><div>Reg=
-ards</div><div>Sahil Gupta=E2=80=8B</div><div><br></div></div>
 
---94eb2c13053834291a0553fb0e8f--
+Greetz,
+Egbert
+
+
+On Mon, 2017-07-10 at 04:53 +0200, Jason A. Donenfeld wrote:
+> On Sun, Jul 09, 2017 at 11:17:04PM +0000, jomat+wireguard.io@jmt.gr
+> wrote:
+> > Nice! I also don't like wg-quick too much, but also dislike the
+> > pre-/post-/-up/-down directives in my /etc/network/interfaces, so
+> > I put this script to /etc/network/if-pre-up.d/ and if-post-down.d
+> > which could work for Debian, too:
+> > 
+> > https://github.com/jomat/aports/blob/master/testing/wireguard/wireg
+> > uard.ifupdown
+> 
+> I think Egbert might have also written an ifupdown thing? Adding him
+> to
+> the CC in case you guys want to standardize on one Debian way of
+> doing
+> things?
+> 
+> Jason
