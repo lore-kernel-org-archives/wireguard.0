@@ -1,27 +1,25 @@
-Return-Path: sg5414@g.rit.edu
+Return-Path: jomat+wireguard.io@jmt.gr
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9ae38d5a
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 63692153
  for <wireguard@lists.zx2c4.com>;
- Tue, 11 Jul 2017 11:57:48 +0000 (UTC)
-Received: from mx03b-out01ag.rit.edu (mx03b-out01ag.rit.edu [129.21.3.135])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 19c0a897
+ Tue, 11 Jul 2017 12:46:27 +0000 (UTC)
+Received: from mx0.jmt.gr (mx0.jmt.gr [81.7.7.41])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ddcf2341
  for <wireguard@lists.zx2c4.com>;
- Tue, 11 Jul 2017 11:57:48 +0000 (UTC)
-From: Sahil Gupta <sg5414@rit.edu>
-Received: by mail-pf0-f198.google.com with SMTP id v62so143085219pfd.10
- for <wireguard@lists.zx2c4.com>; Tue, 11 Jul 2017 05:15:59 -0700 (PDT)
+ Tue, 11 Jul 2017 12:46:27 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9rV14Gfn9eyTFGHRrTtC1skMN1Qd1wsysNmXJcDWwF=ug@mail.gmail.com>
-References: <CAA8CD9u+Xdsu_wx2RVqCLSPwAKEGJxrj_ZL-gFUwLtYc6e9PeQ@mail.gmail.com>
- <CAA8CD9skCcHmPJTXRWbNUBajRuWhYG4Tg9fVFotwsvi987og1w@mail.gmail.com>
- <CAHmME9rV14Gfn9eyTFGHRrTtC1skMN1Qd1wsysNmXJcDWwF=ug@mail.gmail.com>
-Date: Tue, 11 Jul 2017 08:15:57 -0400
-Message-ID: <CAA8CD9viAFQtKVrd_i5svJyGs50YMPDi=iW=OXMWP1Rfa1_c4Q@mail.gmail.com>
-Subject: Re: Build fail error.
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Content-Type: multipart/alternative; boundary="f403045d1ad675c085055409a938"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Reply-To: sg5414@rit.edu
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Date: Tue, 11 Jul 2017 13:04:40 +0000
+From: jomat+wireguard.io@jmt.gr
+To: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+Subject: Re: Debian-based configuration for wireguard
+In-Reply-To: <87ziccyoo1.fsf@fifthhorseman.net>
+References: <20170709213020.GF22784@tuxmachine.polynome.dn42>
+ <35cd4d321a82ba05aa4e118979bc5a87@jmt.gr> <20170710025323.GC31153@zx2c4.com>
+ <1499716437.988.1.camel@eggiecode.org> <87ziccyoo1.fsf@fifthhorseman.net>
+Message-ID: <71133f541e1824a0eeb5e2e624aa1f2f@jmt.gr>
+Cc: wireguard@lists.zx2c4.com
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -31,18 +29,16 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---f403045d1ad675c085055409a938
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-Thanks.
-Error resolved.
-=F0=9F=98=8A
+>  * it looks to me like configuring a wireguard link this way will
+>    require an entry in /etc/network/interfaces (or interfaces.d) *and* 
+> a
+>    config file in /etc/wireguard/*.conf.  It seems like it would be
+>    cleaner to have all the configuration in one place, no?
 
---f403045d1ad675c085055409a938
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+/etc/network/interfaces is usually world readable, /etc/wireguard/ not
+as your private keys are stored there.
 
-<div dir=3D"ltr">Thanks.<br>Error resolved.<br>=F0=9F=98=8A<br></div>
-
---f403045d1ad675c085055409a938--
+Bye,
+jomat
