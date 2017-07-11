@@ -1,23 +1,22 @@
 Return-Path: dkg@fifthhorseman.net
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 57723737
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7d687f16
  for <wireguard@lists.zx2c4.com>;
- Tue, 11 Jul 2017 22:54:52 +0000 (UTC)
+ Tue, 11 Jul 2017 23:28:40 +0000 (UTC)
 Received: from che.mayfirst.org (che.mayfirst.org [162.247.75.118])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 043bfeec
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f5412ac7
  for <wireguard@lists.zx2c4.com>;
- Tue, 11 Jul 2017 22:54:51 +0000 (UTC)
+ Tue, 11 Jul 2017 23:28:40 +0000 (UTC)
 From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: Re: Debian-based configuration for wireguard
-In-Reply-To: <CAHmME9qAig60WBrjiz=se=B9zhBfhgMOma17MuiQPGdfs+UgRA@mail.gmail.com>
-References: <20170709213020.GF22784@tuxmachine.polynome.dn42>
- <35cd4d321a82ba05aa4e118979bc5a87@jmt.gr> <20170710025323.GC31153@zx2c4.com>
- <1499716437.988.1.camel@eggiecode.org> <87ziccyoo1.fsf@fifthhorseman.net>
- <71133f541e1824a0eeb5e2e624aa1f2f@jmt.gr> <871spmzke6.fsf@fifthhorseman.net>
- <CAHmME9qAig60WBrjiz=se=B9zhBfhgMOma17MuiQPGdfs+UgRA@mail.gmail.com>
-Date: Tue, 11 Jul 2017 19:12:09 -0400
-Message-ID: <87shi2y3ee.fsf@fifthhorseman.net>
+To: Baptiste Jonglez <baptiste@bitsofnetworks.org>,
+ "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: Re: Installation instructions for Debian
+In-Reply-To: <20170708141402.GA13268@tuxmachine.polynome.dn42>
+References: <20170513070534.GA22218@tuxmachine.polynome.dn42>
+ <CAHmME9o=EGWOcTRVtVQVCoJXL6KueX8eM98GWBJUtzEE67tAhw@mail.gmail.com>
+ <20170708141402.GA13268@tuxmachine.polynome.dn42>
+Date: Tue, 11 Jul 2017 19:36:02 -0400
+Message-ID: <87mv8ay2al.fsf@fifthhorseman.net>
 MIME-Version: 1.0
 Content-Type: text/plain
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
@@ -30,18 +29,23 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Wed 2017-07-12 00:48:59 +0200, Jason A. Donenfeld wrote:
-> It is for this reason that wg(8)'s private-key and preshared-key
-> arguments take a file to the key, not the actual key itself.
+On Sat 2017-07-08 16:14:02 +0200, Baptiste Jonglez wrote:
 
-Right.  but the ifupdown configuration that Egbert has proposed tries to
-pull some info from the /etc/network/interfaces stanza and then some
-other info from a wireguard configuration file.  To a novice user it
-looks pretty confusing because the split seems arbitrary.
+> I think there is a small mistake in the installation instruction for
+> Debian, sorry about that: the "Pin-Priority" should be set to 150 instead
+> of 200.
+>
+> Long explanation: on jessie, the jessie-backports repository also has a
+> priority of 200.  After enabling unstable with the same priority, APT will
+> propose to upgrade all packages from jessie-backports to unstable, which
+> is probably not wanted nor expected.
+>
+> Daniel, does that all make sense?
 
-So the extension to ifupdown should really take just the path to the key
-file as an extra argument, not a path to a full wg(8) conf file.  I
-agree with Egbert that this patch isn't ready for integration with
-ifupdown, unfortunately.
+Yep, that sounds reasonable to me.  fwiw, apt_preferences(5) indicates
+what the different cutoffs for priorities are, and explains why
+jessie-backports defaults to something in the 200 range ("NotAutomatic:
+yes" and "ButAutomaticUpgrades: yes"), and 150 should still have the
+same properties (it's above 100, but below 500).
 
-          --dkg
+     --dkg
