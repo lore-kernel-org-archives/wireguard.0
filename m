@@ -1,20 +1,25 @@
-Return-Path: luci@createc.ro
+Return-Path: bruno@wolff.to
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0e06ce86
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id de45eba4
  for <wireguard@lists.zx2c4.com>;
- Wed, 12 Jul 2017 17:34:39 +0000 (UTC)
-Received: from mail.crimel.ro (109.166.220.71 [109.166.220.71])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8fb661c8
+ Sat, 15 Jul 2017 21:43:31 +0000 (UTC)
+Received: from wolff.to (wolff.to [98.103.208.27])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with SMTP id 47d23733
  for <wireguard@lists.zx2c4.com>;
- Wed, 12 Jul 2017 17:34:39 +0000 (UTC)
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>,
- "jason A. Donenfeld" <Jason@zx2c4.com>
-From: Lucian Cristian <luci@createc.ro>
-Subject: wg-quick add_route
-Message-ID: <fe5fcf1b-a7d1-6f6c-1561-4b1b1fa4e326@createc.ro>
-Date: Wed, 12 Jul 2017 20:53:01 +0300
+ Sat, 15 Jul 2017 21:43:31 +0000 (UTC)
+Date: Sat, 15 Jul 2017 16:57:51 -0500
+From: Bruno Wolff III <bruno@wolff.to>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: Re: Looks like 4.13 introduces a new incompatibility
+Message-ID: <20170715215751.GA3773@wolff.to>
+References: <20170710014834.GA14901@wolff.to>
+ <CAHmME9qHmJCHT8_ZM1CYDbPx62T-Zuf3BfdL_ZpfB6drOsnwFw@mail.gmail.com>
+ <20170710025614.GA17552@wolff.to>
+ <CAHmME9pbky9H=+QkXA2VMeZ3OQonxxZ_H2-Jiz8Gy6FeYuR+7g@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=us-ascii; format=flowed
+In-Reply-To: <CAHmME9pbky9H=+QkXA2VMeZ3OQonxxZ_H2-Jiz8Gy6FeYuR+7g@mail.gmail.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -24,22 +29,12 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Jason,
+On Mon, Jul 10, 2017 at 05:03:42 +0200,
+  "Jason A. Donenfeld" <Jason@zx2c4.com> wrote:
+>
+>I need to annoy Ted Tso about this. It'll get merged for rc1 or rc2.
 
-I'm using wireguard in some mixed topology and until now I've had LEDE 
-routers as clients but now I would like to add some CENTOS(and other 
-distros) clients too.
-
-On LEDE there is an option "Create routes for Allowed IPs for this peer" 
-that is off by default, but in wg-quick this thing is not optional and 
-the routes are created by default, so if I would like to allow 
-10.0.0.0/8 it would create default route for all 10.0.0.0/8 to wg 
-interface and I don't want that.
-
-I would like to use dynamic routing (rip+eigrp) for routing, if you 
-could add an entry to peers not to add default route to allowed ip would 
-be great
-
-until then I've disabled add_route rule in the script
-
-Regards
+Linus merged it a couple of hours ago, so it will make rc1. I'll be able 
+to use Fedora kernels again early next week. I'm going to build another 
+kernel manually in the mean time. I'll let you know if there is a problem, 
+otherwise we can consider this issued closed.
