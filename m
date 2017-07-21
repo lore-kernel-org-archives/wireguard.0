@@ -1,27 +1,28 @@
-Return-Path: eric@ericlight.com
+Return-Path: sg5414@g.rit.edu
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d167c22e
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3366b64f
  for <wireguard@lists.zx2c4.com>;
- Fri, 21 Jul 2017 23:14:23 +0000 (UTC)
-Received: from new2-smtp.messagingengine.com (new2-smtp.messagingengine.com
- [66.111.4.224])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id acec6f10
+ Fri, 21 Jul 2017 23:35:12 +0000 (UTC)
+Received: from mx03b-out01ag.rit.edu (mx03b-out01ag.rit.edu [129.21.3.135])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id eec30604
  for <wireguard@lists.zx2c4.com>;
- Fri, 21 Jul 2017 23:14:23 +0000 (UTC)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
- by mailnew.nyi.internal (Postfix) with ESMTP id 4BE40120B
- for <wireguard@lists.zx2c4.com>; Fri, 21 Jul 2017 19:33:59 -0400 (EDT)
-Message-Id: <1500680038.1009000.1048775720.4A6974DA@webmail.messagingengine.com>
-From: Eric Light <eric@ericlight.com>
-To: wireguard@lists.zx2c4.com
+ Fri, 21 Jul 2017 23:35:12 +0000 (UTC)
+From: Sahil Gupta <sg5414@rit.edu>
+Received: by mail-pg0-f72.google.com with SMTP id g14so82537590pgu.9
+ for <wireguard@lists.zx2c4.com>; Fri, 21 Jul 2017 16:54:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <1500680038.1009000.1048775720.4A6974DA@webmail.messagingengine.com>
 References: <CAA8CD9vTW5XJVDjhE=5t6e8midm6LivLYqLHBrT98riTYnP3kQ@mail.gmail.com>
  <CAA8CD9s67yT1esUYwyo5rmsZAKahoXn86AAX8faccgvTcA8_xw@mail.gmail.com>
  <CAHmME9pQR3hmHJjV-wUah2wqYGKqSw+HipuQH6F92hVgD4FBrg@mail.gmail.com>
+ <1500680038.1009000.1048775720.4A6974DA@webmail.messagingengine.com>
+Date: Fri, 21 Jul 2017 19:54:46 -0400
+Message-ID: <CAA8CD9uBLq_2NsVVDYw8MkJa19a86YabtWrvmx1qsNxzhx+scw@mail.gmail.com>
 Subject: Re: Not able to ping the host as per demo of wireguard.
-Date: Sat, 22 Jul 2017 11:33:58 +1200
-In-Reply-To: <CAHmME9pQR3hmHJjV-wUah2wqYGKqSw+HipuQH6F92hVgD4FBrg@mail.gmail.com>
+To: Eric Light <eric@ericlight.com>
+Content-Type: multipart/alternative; boundary="94eb2c12f8440a98c60554dc97ab"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Reply-To: sg5414@rit.edu
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -31,36 +32,35 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Sahil,
+--94eb2c12f8440a98c60554dc97ab
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Both of your wg0 interfaces are set to 10.0.0.1/24, but both of your
-AllowedIPs are set to 10.0.0.2/32 -- so neither of them are routing to
-the other.  For me, I'd set AllowedIPs to 10.0.0.1/24 on both laptops,
-so they can each talk to  10.0.0.x.
+Sorry, my bad.
+I copy =E2=80=8Bpaste configuration of Peer A in both Peer A and B in this =
+email.
+I will follow the advise of Jason.
 
-Also, your Endpoints are both set to 192.168.2.170, but neither of your
-wlp1s0 interfaces are set to this IP address... this means they're each
-throwing their wg packets to some unknown third device.
+I switched off both Laptops and now wg interface are gone.
+I need to create them again.
+Can we make these interfaces permanent so they will not go upon switching
+off the laptop?
 
-And then there's the Listening Port thing that Jason already
-mentioned... If computer A is listening on 12345, computer B must be
-talking to 12345 as well.
+I will mail again if problem still persists.
 
-Hope this helps
-E
+Thanks
+Sahil Gupta
 
---------------------------------------------
-Q: Why is this email five sentences or less?
-A: http://five.sentenc.es
+--94eb2c12f8440a98c60554dc97ab
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sat, 22 Jul 2017, at 10:22, Jason A. Donenfeld wrote:
-> You need to set the correct listening port. If you want to use port
-> 51820, set it as such:
-> 
-> $ wg set wg0 listen-port 51820
-> 
-> Then adjust your endpoint to 'endpoint 1.2.3.4:51820'.
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
+<div dir=3D"ltr">Sorry, my bad.<br>I copy=C2=A0=E2=80=8Bpaste configuration=
+ of Peer A in both Peer A and B in this email.<br>I will follow the advise =
+of Jason.<br><br><div>I switched off both Laptops and now wg interface are =
+gone.<br>I need to create them again.<br>Can we make these interfaces perma=
+nent so they will not go upon switching off the laptop?<br></div><div><br><=
+/div><div>I will mail again if problem still persists.<br><br></div><div>Th=
+anks<br>Sahil Gupta<br><br></div></div>
+
+--94eb2c12f8440a98c60554dc97ab--
