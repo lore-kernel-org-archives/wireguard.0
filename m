@@ -1,38 +1,36 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: maxxer@ufficyo.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0cd8fd7e
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2d80cd05
  for <wireguard@lists.zx2c4.com>;
- Sat, 22 Jul 2017 00:10:44 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5e1f3be7
+ Tue, 25 Jul 2017 12:34:21 +0000 (UTC)
+Received: from mail.ufficyo.com (mail.ufficyo.com [79.3.72.69])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 812d31f7
  for <wireguard@lists.zx2c4.com>;
- Sat, 22 Jul 2017 00:10:44 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 682d3bd8
- for <wireguard@lists.zx2c4.com>;
- Sat, 22 Jul 2017 00:29:47 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 2b645d08
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Sat, 22 Jul 2017 00:29:47 +0000 (UTC)
-Received: by mail-io0-f175.google.com with SMTP id l7so27919317iof.1
- for <wireguard@lists.zx2c4.com>; Fri, 21 Jul 2017 17:30:20 -0700 (PDT)
+ Tue, 25 Jul 2017 12:34:21 +0000 (UTC)
+Received: from localhost (ip6-localhost [IPv6:::1])
+ by mail.ufficyo.com (Postfix) with ESMTP id CC880C00DD
+ for <wireguard@lists.zx2c4.com>; Tue, 25 Jul 2017 14:54:20 +0200 (CEST)
+Received: from mail.ufficyo.com ([IPv6:::1])
+ by localhost (mail.ufficyo.com [IPv6:::1]) (amavisd-new, port 10032)
+ with ESMTP id d1yoNe_e3GQG for <wireguard@lists.zx2c4.com>;
+ Tue, 25 Jul 2017 14:54:18 +0200 (CEST)
+Received: from localhost (ip6-localhost [IPv6:::1])
+ by mail.ufficyo.com (Postfix) with ESMTP id 87E78C0260
+ for <wireguard@lists.zx2c4.com>; Tue, 25 Jul 2017 14:54:18 +0200 (CEST)
+Received: from mail.ufficyo.com ([IPv6:::1])
+ by localhost (mail.ufficyo.com [IPv6:::1]) (amavisd-new, port 10026)
+ with ESMTP id iQPdpb-O73xP for <wireguard@lists.zx2c4.com>;
+ Tue, 25 Jul 2017 14:54:16 +0200 (CEST)
+Received: from mail.ufficyo.com (mail.ufficyo.com [10.22.22.190])
+ by mail.ufficyo.com (Postfix) with ESMTP id 2DDD9C00DD
+ for <wireguard@lists.zx2c4.com>; Tue, 25 Jul 2017 14:54:12 +0200 (CEST)
+Date: Tue, 25 Jul 2017 14:54:07 +0200 (CEST)
+From: Lorenzo Milesi <maxxer@ufficyo.com>
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Message-ID: <1901175050.247752.1500987247817.JavaMail.zimbra@yetopen.it>
+Subject: Dynamic backend
 MIME-Version: 1.0
-In-Reply-To: <CAA8CD9tSbtECmVOyYAXq+=AXk2RHqZA07tbaacjqr_tei8p66g@mail.gmail.com>
-References: <CAA8CD9vTW5XJVDjhE=5t6e8midm6LivLYqLHBrT98riTYnP3kQ@mail.gmail.com>
- <CAA8CD9s67yT1esUYwyo5rmsZAKahoXn86AAX8faccgvTcA8_xw@mail.gmail.com>
- <CAHmME9pQR3hmHJjV-wUah2wqYGKqSw+HipuQH6F92hVgD4FBrg@mail.gmail.com>
- <1500680038.1009000.1048775720.4A6974DA@webmail.messagingengine.com>
- <CAA8CD9uBLq_2NsVVDYw8MkJa19a86YabtWrvmx1qsNxzhx+scw@mail.gmail.com>
- <1500681823.1017135.1048796128.794D7A24@webmail.messagingengine.com>
- <CAA8CD9vAD2aqjwQ+tpO_T-X_8PsoXLi8Fs7Q=GwT1X++eO_wRQ@mail.gmail.com>
- <CAA8CD9tSbtECmVOyYAXq+=AXk2RHqZA07tbaacjqr_tei8p66g@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sat, 22 Jul 2017 02:30:19 +0200
-Message-ID: <CAHmME9qB8rR9mX9Jr+Fbv8_x2uWzE9mzVWnNivqC08PDOBvsiQ@mail.gmail.com>
-Subject: Re: Not able to ping the host as per demo of wireguard.
-To: Sahil Gupta <sg5414@rit.edu>
-Content-Type: text/plain; charset="UTF-8"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset=utf-8
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -42,8 +40,11 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Assuredly there are reasonable ways to work around whatever the router
-is doing, but glad it worked out for you in the end.
+Hi
+Is it possible to configure peers dynamically via a backend, being it something like MySQL, LDAP or Radius?
 
-Regards,
-Jason
+thanks
+-- 
+Lorenzo Milesi - lorenzo.milesi@yetopen.it
+
+YetOpen S.r.l. - http://www.yetopen.it/
