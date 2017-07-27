@@ -1,22 +1,32 @@
-Return-Path: jedi_papi@yahoo.com
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bddc6562
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b4fe280e
  for <wireguard@lists.zx2c4.com>;
- Wed, 26 Jul 2017 05:57:42 +0000 (UTC)
-Received: from sonic315-37.consmr.mail.gq1.yahoo.com
- (sonic315-37.consmr.mail.gq1.yahoo.com [98.137.65.61])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e1566299
+ Thu, 27 Jul 2017 16:11:05 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6477cacc
  for <wireguard@lists.zx2c4.com>;
- Wed, 26 Jul 2017 05:57:41 +0000 (UTC)
-Date: Wed, 26 Jul 2017 06:13:26 +0000 (UTC)
-From: Jose Marinez <jedi_papi@yahoo.com>
-To: WireGuard Mailing List <wireguard@lists.zx2c4.com>
-Message-ID: <807226423.1208180.1501049606445@mail.yahoo.com>
-Subject: Android wg binary
+ Thu, 27 Jul 2017 16:11:05 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 066a4465
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 27 Jul 2017 16:30:08 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 63d949b4
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 27 Jul 2017 16:30:07 +0000 (UTC)
+Received: by mail-it0-f46.google.com with SMTP id v205so68640697itf.1
+ for <wireguard@lists.zx2c4.com>; Thu, 27 Jul 2017 09:31:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="----=_Part_1208179_485338586.1501049606444"
+In-Reply-To: <807226423.1208180.1501049606445@mail.yahoo.com>
 References: <807226423.1208180.1501049606445.ref@mail.yahoo.com>
+ <807226423.1208180.1501049606445@mail.yahoo.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 27 Jul 2017 18:31:22 +0200
+Message-ID: <CAHmME9oggvZM7x__B_AC+b=nv_D9+ibzwFXf_hdioTnngWaU3A@mail.gmail.com>
+Subject: Re: Android wg binary
+To: Jose Marinez <jedi_papi@yahoo.com>
+Content-Type: text/plain; charset="UTF-8"
+Cc: WireGuard Mailing List <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,30 +36,9 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-------=_Part_1208179_485338586.1501049606444
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Hi Jose,
 
-On the latest snapshot I noticed there=E2=80=99s a wg-quick port. One needs=
- to build a =E2=80=9Cwg=E2=80=9D binary for Android to be able to test. At =
-the moment, there=E2=80=99s no instructions to do so from source on the ins=
-tallation section of wireguard.com. What=E2=80=99s the best way to build th=
-e binary?
+I usually build it statically against musl, rather than messing with
+bionic, but it should build against bionic too.
 
-Thanks,Jose
-------=_Part_1208179_485338586.1501049606444
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-<html xmlns=3D"http://www.w3.org/1999/xhtml" xmlns:v=3D"urn:schemas-microso=
-ft-com:vml" xmlns:o=3D"urn:schemas-microsoft-com:office:office"><head><!--[=
-if gte mso 9]><xml><o:OfficeDocumentSettings><o:AllowPNG/><o:PixelsPerInch>=
-96</o:PixelsPerInch></o:OfficeDocumentSettings></xml><![endif]--></head><bo=
-dy>
-On the latest snapshot I noticed there=E2=80=99s a wg-quick port. One needs=
- to build a =E2=80=9Cwg=E2=80=9D binary for Android to be able to test. At =
-the moment, there=E2=80=99s no instructions to do so from source on the ins=
-tallation section of wireguard.com. What=E2=80=99s the best way to build th=
-e binary?<div><br><br>Thanks,<div>Jose</div></div>
-</body></html>
-------=_Part_1208179_485338586.1501049606444--
+Jason
