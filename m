@@ -1,20 +1,20 @@
 Return-Path: pants@kent-dobias.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d3ff33b4
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1e839fe5
  for <wireguard@lists.zx2c4.com>;
- Thu, 27 Jul 2017 17:00:37 +0000 (UTC)
+ Thu, 27 Jul 2017 16:58:51 +0000 (UTC)
 Received: from mail.kent-dobias.com (mail.kent-dobias.com [5.2.75.74])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9557ee7d
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 65046308
  for <wireguard@lists.zx2c4.com>;
- Thu, 27 Jul 2017 17:00:37 +0000 (UTC)
-Date: Thu, 27 Jul 2017 13:21:10 -0400
-From: Jaron Kent-Dobias <jaron-wg@kent-dobias.com>
+ Thu, 27 Jul 2017 16:58:51 +0000 (UTC)
+Date: Thu, 27 Jul 2017 13:19:23 -0400
+From: Jaron Kent-Dobias <jaron@kent-dobias.com>
 To: wireguard@lists.zx2c4.com
 Subject: errors building 0.0.20170706 and later with Linux 3.14.0
-Message-ID: <20170727172110.GB28775@lore.localdomain>
+Message-ID: <20170727171923.GA28775@lore.localdomain>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="C+ts3FVlLX8+P6JN"
+ protocol="application/pgp-signature"; boundary="qcHopEYAB45HaUaB"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -25,12 +25,12 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
 
---C+ts3FVlLX8+P6JN
-Content-Type: multipart/mixed; boundary="i7F3eY7HS/tUJxUd"
+--qcHopEYAB45HaUaB
+Content-Type: multipart/mixed; boundary="VbJkn9YxBvnuCH5J"
 Content-Disposition: inline
 
 
---i7F3eY7HS/tUJxUd
+--VbJkn9YxBvnuCH5J
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
@@ -46,7 +46,7 @@ Thanks in advance for any help,
 Jaron
 
 
---i7F3eY7HS/tUJxUd
+--VbJkn9YxBvnuCH5J
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: attachment; filename="make.log"
 Content-Transfer-Encoding: quoted-printable
@@ -340,26 +340,26 @@ make: *** [Makefile:1298: _module_/var/lib/dkms/wireguard/0.0.20170706/buil=
 d] Error 2
 make: Leaving directory '/usr/lib/modules/3.14.0-26-ARCH/build'
 
---i7F3eY7HS/tUJxUd--
+--VbJkn9YxBvnuCH5J--
 
---C+ts3FVlLX8+P6JN
+--qcHopEYAB45HaUaB
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEESQHwQKRh1Whpo6HFI20K3+69dxoFAll6IQUACgkQI20K3+69
-dxpIGBAAjcoszWyP3hCZ+5vGCAxTgDxA34/kzwxYUwnKuXs36rkH9O9Jdf/lhQ5N
-+/qlYlItPc+OcsSlXJRIJPA2o63p21yKBIM5TSs6lQ7NsfM2YAtj0lNk2oN9OtCk
-lZ8kVOrmKgUIMU20T002Qg0jdR0N5YIRRNCKp5MrLEAi8GfSF3DQ5IJJz6SRtYRl
-X7+O4s3LWOBt5yI+znBceSh1FCBy9GcU52FAD0BV8g2M+0RAuMPjmhPcRjHE5Fpo
-cqIt4TLzsTPnVkz0GZXV5H/xM2Nbb3yy8rLqCid8jwsWVq2TlxZvKeosOESRrYAu
-ntPyxEg/g465UEq7cOeVlzVruTSF/7phU/80GcIHydGitY6E9h781XvdqaGcC4gz
-Zb/Mv+ULUBxVF2Bf5ClaNQWInkTxR6TIZxUyKcsiELWwR2Zq1KXk0zwZE7++fRjY
-AuAWRl3hN81LaBABkA/bJ6XQ7lFsS8a+XrFNfrIj0ZHNNde+vWqosVllGAyPZaSv
-z+abgSQErZD8T0HMVdwFHKtfNd0X0RVo3MN3MjJEAf57X7fPhx8BNQb2d4h1iFG5
-cLcXQ4ohFs9Pzpg5MA7RDc9Yhl02YiLapO9KPwnouq7bn2SlIOwaXfmDhDGPClAd
-IFchhMsZ/yLl/BOul2PcMn3sEK1WYk8iJbtTa78fNnHwk1MGRuA=
-=67+Y
+iQIzBAEBCgAdFiEESQHwQKRh1Whpo6HFI20K3+69dxoFAll6IJsACgkQI20K3+69
+dxregw/+Lr0Om43n0ylly7KmvzaHhAh56/HYmPDshnHbIWn7b6Med8gjUpkkkpRj
+Y9zRT+A0OZ8K9vpLDZz1RbSjlZ25GUIJDgo5icHRryrNC5oRdhnCYR8TV5WvPNa5
+yMXngWSnocoU946ozZEo8XeFaLp88BIcMkK3jJHBrWGQAx0Qr8/ozMLH3rnojxed
+s4CWLfQOPR+aJ19iSyOQbnq/1qPNFICavpIvbDujn3pjVvojlk2aEkJDwv9IfOq4
+2SqtL1C2tJfHRwNNqTFa0g6YIjNLsjR4pL4WQgPHtnBqmIYt93UdEq5xYtE2jTd9
+e8rNI3Js5mHvvbdtNWmqN3Y/El3QF292212qID9Bq58mRU6Uk8Jyr8ahJi6CSQRp
+G05P2pQ4z90c8k3/32WQwd5h3ACnx6mXnQxC3/Mo2BM7DWStItb8/+u2+FSq009m
+e1CC1qj2yFywJhe3ilUvCNUh+qhWrRxibrvzoy84y7f+yZbz0agNnITO636b7ZRY
++VOQLG3ww/7iNdyVFlFTQUSkWVlaR7jLy9mkm1mDJBOz06C6mYDEAV82Uq6IliMA
+lD2VJVAuf02RwromYRB3n1jIibA0jNwXVJ0JJ0yH9OWLJnvNlFDcsipxvYccMdKC
+QrQQZ0Hv55du0Fm0jy2Qkmi6OAG3sdx0reHPraEqs8BkNqbLqE0=
+=P1ox
 -----END PGP SIGNATURE-----
 
---C+ts3FVlLX8+P6JN--
+--qcHopEYAB45HaUaB--
