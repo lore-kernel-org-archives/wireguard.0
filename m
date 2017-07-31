@@ -1,22 +1,31 @@
-Return-Path: larkwang@gmail.com
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c8d78e28
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 32efa032
  for <wireguard@lists.zx2c4.com>;
- Fri, 28 Jul 2017 00:31:16 +0000 (UTC)
-Received: from mail-ua0-f169.google.com (mail-ua0-f169.google.com
- [209.85.217.169])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 26b21158
+ Mon, 31 Jul 2017 15:14:07 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 06edce4c
  for <wireguard@lists.zx2c4.com>;
- Fri, 28 Jul 2017 00:31:16 +0000 (UTC)
-Received: by mail-ua0-f169.google.com with SMTP id 80so152881221uas.0
- for <wireguard@lists.zx2c4.com>; Thu, 27 Jul 2017 17:51:38 -0700 (PDT)
+ Mon, 31 Jul 2017 15:14:07 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5fbc0bb6
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 31 Jul 2017 15:33:10 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 6a714b34
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 31 Jul 2017 15:33:09 +0000 (UTC)
+Received: by mail-io0-f169.google.com with SMTP id m88so103697908iod.2
+ for <wireguard@lists.zx2c4.com>; Mon, 31 Jul 2017 08:34:56 -0700 (PDT)
 MIME-Version: 1.0
-From: Wang Jian <larkwang@gmail.com>
-Date: Fri, 28 Jul 2017 08:51:35 +0800
-Message-ID: <CAF75rJBdfeD-7MpDGfFBV=bLbm0-H--mFin30QL9jDmpd4z1jw@mail.gmail.com>
-Subject: Multihomed server issue
-To: wireguard@lists.zx2c4.com
+In-Reply-To: <CAF75rJBdfeD-7MpDGfFBV=bLbm0-H--mFin30QL9jDmpd4z1jw@mail.gmail.com>
+References: <CAF75rJBdfeD-7MpDGfFBV=bLbm0-H--mFin30QL9jDmpd4z1jw@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Mon, 31 Jul 2017 17:34:55 +0200
+Message-ID: <CAHmME9oj1N3PdutkA1dAPOieqn6ukUPnRONp-_iBck1HhnjZiw@mail.gmail.com>
+Subject: Re: Multihomed server issue
+To: Wang Jian <larkwang@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,61 +35,16 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi,
+On Fri, Jul 28, 2017 at 2:51 AM, Wang Jian <larkwang@gmail.com> wrote:
+> The solution can be one of:
+>
+> 1. server can RTS (response to source), or can bind to arbitary
+> address for outgoing
 
-I have met multihome server issue with an unusual network setup.
+The server does already respond to source.
 
-The server is multihomed, all public addresses are configured on
-dummyN interfaces,
-and routes are established by bird routing daemon, via address pairs
-(172.16.xx.xx/30) on public network interface.
+Can you send me a TCP dump and the output of `ip route` indicating
+that WireGuard is doing otherwise?
 
-And, the default route is via private gateway on private interface
-(10.x.x.x), which actually will be NATed by dedicated NAT gateway.
-
-(The server has two network interface, one for private network, one
-for public network)
-
-The configuration is the simplest form:  server has [Interface]
-ListenPort, while client has [Peer] Endpoint but no [Interface]
-ListenPort.
-
-The problem is
-
-1. when wg0 on both side is brought up at the same time,  ping server
-from client doesn't get response; but then ping client from server
-will make tunnel alive. The tunnel will keep alive any longer.
-
->From 'wg' command output on client, it's clear that peer Endpoint is
-NAT gateway pool address, not the one specified in config file
-
-2. After 1, down and up client wg0, the tunnel stops work; even ping
-client from server doesn't help
-
-3. After some time, ping client from server will make tunnel alive again.
-
-====
-
-IMHO, the reason behind that is
-
-1. when client contacts server, the server remembers the client's
-endpoint, but handshake will fail because server responses using
-10.x.x.x (which then NATed). But when ping client from server, server
-will use remembered client endpoint, and client can finish handshake.
-
-Beware that I can do nothing to help server choosing the correct
-public address. Server will use best route to deduce UDP source
-address, in my case, 10.x.x.x or 172.16.xx.xx/30, which doesn't help
-the situation.
-
-2. when client wg0 down and up again, the server will not do handshake
-
-3. after some time, server will do handshake, and things work again
-
-====
-
-The solution can be one of:
-
-1. server can RTS (response to source), or can bind to arbitary
-address for outgoing
-2. improve handshake
+Thanks,
+Jason
