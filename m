@@ -1,22 +1,31 @@
-Return-Path: lazyvirus@gmx.com
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cd7634b9
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ec620221
  for <wireguard@lists.zx2c4.com>;
- Mon, 31 Jul 2017 15:45:46 +0000 (UTC)
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 40710ddd
+ Mon, 31 Jul 2017 15:49:52 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3f062ef3
  for <wireguard@lists.zx2c4.com>;
- Mon, 31 Jul 2017 15:45:46 +0000 (UTC)
-Received: from msi.defcon1 ([93.15.31.113]) by mail.gmx.com (mrgmx003
- [212.227.17.184]) with ESMTPSA (Nemesis) id 0Lfjxq-1dvcrx0JlC-00pKQH for
- <wireguard@lists.zx2c4.com>; Mon, 31 Jul 2017 18:06:35 +0200
-Date: Mon, 31 Jul 2017 18:06:32 +0200
-From: Bzzzz <lazyvirus@gmx.com>
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: About compression
-Message-ID: <20170731180632.51aeed9d@msi.defcon1>
+ Mon, 31 Jul 2017 15:49:52 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f1932f7a
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 31 Jul 2017 16:08:55 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id e0fab049
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 31 Jul 2017 16:08:54 +0000 (UTC)
+Received: by mail-it0-f50.google.com with SMTP id h199so127836221ith.1
+ for <wireguard@lists.zx2c4.com>; Mon, 31 Jul 2017 09:10:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+In-Reply-To: <20170731180632.51aeed9d@msi.defcon1>
+References: <20170731180632.51aeed9d@msi.defcon1>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Mon, 31 Jul 2017 18:10:39 +0200
+Message-ID: <CAHmME9q2HWQuOciL73HCo+epVbruSO=sP5syAP2GPw5wQ=upKA@mail.gmail.com>
+Subject: Re: About compression
+To: Bzzzz <lazyvirus@gmx.com>
+Content-Type: text/plain; charset="UTF-8"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,9 +35,16 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Jason,
+Hi Jean-Yves,
 
-is there a way at this time (or do you intend to add it) to compress WG
-streams on the fly ? (something fast and quite light, such as eg: lz4)
+No, not a chance. Compression is really better left for upper layers.
+I'm not sure I see the value in adding at layer 3. This is an
+especially contentious issue because of the history of complex and
+catastrophic interactions between compression and encryption (such as
+the CRIME and BREACH attacks against TLS).
 
-Jean-Yves
+What workload are you currently experiencing that would measurably
+benefit from having layer 3 compression?
+
+Regards,
+Jason
