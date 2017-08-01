@@ -1,25 +1,20 @@
-Return-Path: lazyvirus@gmx.com
+Return-Path: sg5414@g.rit.edu
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0d4387b0
- for <wireguard@lists.zx2c4.com>;
- Mon, 31 Jul 2017 19:15:22 +0000 (UTC)
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 22a79e93
- for <wireguard@lists.zx2c4.com>;
- Mon, 31 Jul 2017 19:15:22 +0000 (UTC)
-Received: from msi.defcon1 ([93.15.31.113]) by mail.gmx.com (mrgmx002
- [212.227.17.184]) with ESMTPSA (Nemesis) id 0LpL4H-1e5Z1t1UCz-00fCpG for
- <wireguard@lists.zx2c4.com>; Mon, 31 Jul 2017 21:36:12 +0200
-Date: Mon, 31 Jul 2017 21:36:10 +0200
-From: Bzzzz <lazyvirus@gmx.com>
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: About compression
-Message-ID: <20170731213610.5a1304ab@msi.defcon1>
-In-Reply-To: <CAHmME9q2HWQuOciL73HCo+epVbruSO=sP5syAP2GPw5wQ=upKA@mail.gmail.com>
-References: <20170731180632.51aeed9d@msi.defcon1>
- <CAHmME9q2HWQuOciL73HCo+epVbruSO=sP5syAP2GPw5wQ=upKA@mail.gmail.com>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 75b75aa2
+ for <wireguard@lists.zx2c4.com>; Tue, 1 Aug 2017 01:37:24 +0000 (UTC)
+Received: from mx03a-out01ag.rit.edu (mx03a-out01ag.rit.edu [129.21.3.134])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 17b8482e
+ for <wireguard@lists.zx2c4.com>; Tue, 1 Aug 2017 01:37:24 +0000 (UTC)
+From: Sahil Gupta <sg5414@rit.edu>
+Received: by mail-pg0-f72.google.com with SMTP id s14so3644163pgs.4
+ for <wireguard@lists.zx2c4.com>; Mon, 31 Jul 2017 18:58:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Date: Mon, 31 Jul 2017 21:58:14 -0400
+Message-ID: <CAA8CD9uo0s0HrYeArMjRS2Hqkrv4hL7tXAfv-vWSkzoANWQ57A@mail.gmail.com>
+Subject: Tunneling protocol in WireGuard
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: multipart/alternative; boundary="089e082383580433e00555a77b04"
+Reply-To: sg5414@rit.edu
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -29,29 +24,17 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Mon, 31 Jul 2017 18:10:39 +0200
-"Jason A. Donenfeld" <Jason@zx2c4.com> wrote:
+--089e082383580433e00555a77b04
+Content-Type: text/plain; charset="UTF-8"
 
-> especially contentious issue because of the history of complex and
-> catastrophic interactions between compression and encryption (such as
-> the CRIME and BREACH attacks against TLS).
+Is there any specific tunneling protocol is used in WireGuard?
 
-Hmm, it just made it much more apparent.
+Regards
+Sahil Gupta
 
-Recently, nsa dismissed the elliptic curve crypto, however, even if I'm
-not a mathematico-differencio-analyso-crypto god (but I compensate with
-huge premonitions;), something is telling me it's because they can't
-break it, compressed or not.
+--089e082383580433e00555a77b04
+Content-Type: text/html; charset="UTF-8"
 
-> What workload are you currently experiencing that would measurably
-> benefit from having layer 3 compression?
+<div dir="ltr">Is there any specific tunneling protocol is used in WireGuard?<br><br><div>Regards</div><div>Sahil Gupta</div></div>
 
-It was more a generic question, somewhat linked to cell phone data
-monthly quota, than something vital.
-
-I take good note of your explanation and about what Daniel said,
-which is quite logical (doing app level compression.)
-
-Thanks to the both of you.
-
-JY
+--089e082383580433e00555a77b04--
