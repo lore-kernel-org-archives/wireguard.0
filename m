@@ -1,25 +1,30 @@
-Return-Path: sg5414@g.rit.edu
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 74e00047
- for <wireguard@lists.zx2c4.com>; Tue, 1 Aug 2017 18:02:30 +0000 (UTC)
-Received: from mx03a-out01ag.rit.edu (mx03a-out01ag.rit.edu [129.21.3.134])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 590b6304
- for <wireguard@lists.zx2c4.com>; Tue, 1 Aug 2017 18:02:30 +0000 (UTC)
-From: Sahil Gupta <sg5414@rit.edu>
-Received: by mail-pf0-f199.google.com with SMTP id r13so23620487pfd.14
- for <wireguard@lists.zx2c4.com>; Tue, 01 Aug 2017 11:23:23 -0700 (PDT)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 737f6420
+ for <wireguard@lists.zx2c4.com>; Tue, 1 Aug 2017 18:04:19 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 945024be
+ for <wireguard@lists.zx2c4.com>; Tue, 1 Aug 2017 18:04:19 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6401f7ed
+ for <wireguard@lists.zx2c4.com>; Tue, 1 Aug 2017 18:23:22 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id e6e3cc4a
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>; Tue, 1 Aug 2017 18:23:22 +0000 (UTC)
+Received: by mail-oi0-f44.google.com with SMTP id g131so23169950oic.3
+ for <wireguard@lists.zx2c4.com>; Tue, 01 Aug 2017 11:25:17 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAKXLc7epY9Sz3s3mPhOJMOxjMK6JBgD0YNcqBsZOEgVS3_fwzA@mail.gmail.com>
+In-Reply-To: <CAA8CD9vqc=-xX_YNM5NKc+sTP6LHDiBHh1xxp1__fN_jU+8yrQ@mail.gmail.com>
 References: <CAA8CD9vRACxwE=XWWg_bgbjuwu0NXMYw-FTBq_grxK2Yy=VQqA@mail.gmail.com>
  <CAKXLc7epY9Sz3s3mPhOJMOxjMK6JBgD0YNcqBsZOEgVS3_fwzA@mail.gmail.com>
-Date: Tue, 1 Aug 2017 14:23:21 -0400
-Message-ID: <CAA8CD9vqc=-xX_YNM5NKc+sTP6LHDiBHh1xxp1__fN_jU+8yrQ@mail.gmail.com>
+ <CAA8CD9vqc=-xX_YNM5NKc+sTP6LHDiBHh1xxp1__fN_jU+8yrQ@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Tue, 1 Aug 2017 20:25:14 +0200
+Message-ID: <CAHmME9oSECKnKsZWE3iSBmEyfxF=c8eyyo_P47DXHAsQ-GdFZg@mail.gmail.com>
 Subject: Re: Any tool to study the wireguard effect on Bandwidth, memory and
  processing power.
-To: Kalin KOZHUHAROV <me.kalin@gmail.com>
-Content-Type: multipart/alternative; boundary="94eb2c03bc3a10fd470555b53e56"
+To: Sahil Gupta <sg5414@rit.edu>
+Content-Type: text/plain; charset="UTF-8"
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Reply-To: sg5414@rit.edu
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -29,17 +34,14 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---94eb2c03bc3a10fd470555b53e56
-Content-Type: text/plain; charset="UTF-8"
+Hello Sahil,
 
-Thanks.
-Is there any video tutorials for this tool?
-Want to learn quick.
-Can this tool simulate embedded system OS network stack as well?
+Another good tool is flent -- https://flent.org/
+Not sure about video tutorials but probably Google can help with that.
 
---94eb2c03bc3a10fd470555b53e56
-Content-Type: text/html; charset="UTF-8"
+May I ask exactly what's brought you toward this mailing list? I
+noticed you have an @rit.edu email address. Is this related to a
+school project? Or just curiosity?
 
-<div dir="ltr"><div class="gmail_extra">Thanks.<br>Is there any video tutorials for this tool?<br>Want to learn quick.<br>Can this tool simulate embedded system OS network stack as well?<br><br><br></div></div>
-
---94eb2c03bc3a10fd470555b53e56--
+Regards,
+Jason
