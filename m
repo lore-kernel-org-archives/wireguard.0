@@ -1,27 +1,21 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: bruno@wolff.to
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8fefde85
- for <wireguard@lists.zx2c4.com>; Wed, 2 Aug 2017 12:17:57 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 625fb3dc
- for <wireguard@lists.zx2c4.com>; Wed, 2 Aug 2017 12:17:57 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e35be0ba
- for <wireguard@lists.zx2c4.com>; Wed, 2 Aug 2017 12:37:00 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 74a4ebb9
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 2 Aug 2017 12:37:00 +0000 (UTC)
-Received: by mail-it0-f45.google.com with SMTP id 77so23023574itj.1
- for <wireguard@lists.zx2c4.com>; Wed, 02 Aug 2017 05:39:01 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <20170802122935.GA21536@wolff.to>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0bc23e9a
+ for <wireguard@lists.zx2c4.com>; Wed, 2 Aug 2017 12:25:22 +0000 (UTC)
+Received: from wolff.to (wolff.to [98.103.208.27])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with SMTP id 38628bec
+ for <wireguard@lists.zx2c4.com>; Wed, 2 Aug 2017 12:25:22 +0000 (UTC)
+Date: Wed, 2 Aug 2017 07:41:21 -0500
+From: Bruno Wolff III <bruno@wolff.to>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: Re: Compile time assertion failure
+Message-ID: <20170802124121.GA27945@wolff.to>
 References: <20170802121920.GA3119@wolff.to> <20170802122430.GA11203@wolff.to>
  <20170802122935.GA21536@wolff.to>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 2 Aug 2017 14:38:59 +0200
-Message-ID: <CAHmME9qwUezvL6Aab+r=DSqZ8RtFB-odpBZ70_2SAheL58A66w@mail.gmail.com>
-Subject: Re: Compile time assertion failure
-To: Bruno Wolff III <bruno@wolff.to>
-Content-Type: text/plain; charset="UTF-8"
+ <CAHmME9qwUezvL6Aab+r=DSqZ8RtFB-odpBZ70_2SAheL58A66w@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; format=flowed
+In-Reply-To: <CAHmME9qwUezvL6Aab+r=DSqZ8RtFB-odpBZ70_2SAheL58A66w@mail.gmail.com>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -32,9 +26,21 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hey Bruno,
+On Wed, Aug 02, 2017 at 14:38:59 +0200,
+  "Jason A. Donenfeld" <Jason@zx2c4.com> wrote:
+>
+>Thanks for the report. Looks like I was relying on optimization
+>behavior of a gcc newer than yours. I'll revert.
 
-Thanks for the report. Looks like I was relying on optimization
-behavior of a gcc newer than yours. I'll revert.
+commit 107735eaea0f48c1f5bfc0a6ca82f1879a850b98 (HEAD -> master, origin/master, origin/HEAD)
+Author: Jason A. Donenfeld <Jason@zx2c4.com>
+Date:   Tue Aug 1 22:47:26 2017 +0200
 
-Jason
+    routingtable: unbloat BUG()
+    
+    Really isn't necessary.
+
+fixes the problem for me. I tested building and connecting to another 
+machine.
+
+Thanks!
