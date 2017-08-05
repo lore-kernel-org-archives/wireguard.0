@@ -1,29 +1,22 @@
-Return-Path: larkwang@gmail.com
+Return-Path: sg5414@g.rit.edu
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6dd2b5f5
- for <wireguard@lists.zx2c4.com>; Thu, 3 Aug 2017 18:17:02 +0000 (UTC)
-Received: from mail-ua0-f176.google.com (mail-ua0-f176.google.com
- [209.85.217.176])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6f1b6124
- for <wireguard@lists.zx2c4.com>; Thu, 3 Aug 2017 18:17:02 +0000 (UTC)
-Received: by mail-ua0-f176.google.com with SMTP id q25so9997387uah.1
- for <wireguard@lists.zx2c4.com>; Thu, 03 Aug 2017 11:38:15 -0700 (PDT)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5700315d
+ for <wireguard@lists.zx2c4.com>; Sat, 5 Aug 2017 04:11:39 +0000 (UTC)
+Received: from mx03a-out01ag.rit.edu (mx03a-out01ag.rit.edu [129.21.3.134])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a5c4be07
+ for <wireguard@lists.zx2c4.com>; Sat, 5 Aug 2017 04:11:39 +0000 (UTC)
+From: Sahil Gupta <sg5414@rit.edu>
+Received: by mail-pf0-f198.google.com with SMTP id t25so35906658pfg.15
+ for <wireguard@lists.zx2c4.com>; Fri, 04 Aug 2017 21:33:03 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9rJ7BiinhPRhOqzAjZJEdc=wKzdk80Dvi=xQnP2fu_eqw@mail.gmail.com>
-References: <CAF75rJBdfeD-7MpDGfFBV=bLbm0-H--mFin30QL9jDmpd4z1jw@mail.gmail.com>
- <CAHmME9oj1N3PdutkA1dAPOieqn6ukUPnRONp-_iBck1HhnjZiw@mail.gmail.com>
- <CAF75rJDubyJwgrwTFTTzM4nKX2e=+6h_qBBC+Vt4FvzVhbfnuw@mail.gmail.com>
- <CAHmME9pujFf3pUAr9NZK81DZMQHYsH1gvgh3uH6RAQwNEZ8JDA@mail.gmail.com>
- <CAF75rJD7ZcSKp6WiEHg+VUa7=07-+9P3r6TxU6s9ieW+LdkNhQ@mail.gmail.com>
- <CAF75rJD3LH-CcPt2Da2qfxtv7C+W4Ed=ORkUg0L2vW1QiUfBcg@mail.gmail.com>
- <CAHmME9rJ7BiinhPRhOqzAjZJEdc=wKzdk80Dvi=xQnP2fu_eqw@mail.gmail.com>
-From: Wang Jian <larkwang@gmail.com>
-Date: Fri, 4 Aug 2017 02:38:13 +0800
-Message-ID: <CAF75rJDj79FU7GMa1DKxPNZ9V2dSW0+rFUDQjmEJ_z3ZDeuuGA@mail.gmail.com>
-Subject: Re: Multihomed server issue
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Date: Sat, 5 Aug 2017 00:32:58 -0400
+Message-ID: <CAA8CD9vz8FQpgK4P7Je7txuoQBfi-=OSXpT=siXTQKhGgw1Nng@mail.gmail.com>
+Subject: Query regarding the metric of comparison in Wireguard white
+ paper(Section 8)
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ "Jason A. Donenfeld" <Jason@zx2c4.com>
+Content-Type: multipart/alternative; boundary="f403045c6a1ed6d0ac0555fa1b70"
+Reply-To: sg5414@rit.edu
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -33,47 +26,51 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-2017-08-03 20:59 GMT+08:00 Jason A. Donenfeld <Jason@zx2c4.com>:
-> Hi Wang,
->
-> I understand your inquiry and I see what you're trying to accomplish
-> with your use of ip rule and fwmark. However, *WireGuard already does
-> this automatically*. We _do_ support reply-to-sender. We _do_
-> supported multihomed servers. You wrote, "But I do wish that server
-> can deduce public address which the client connects to, and use the
-> public address to response to the client, then the configuration will
-> be simple and straightforward." WireGuard _does_ do this.
->
-> To demonstrate that, I've added a more explicit test of this to the test suite:
-> https://git.zx2c4.com/WireGuard/commit/?id=bf44c07a805a5e40408059ac60dfc526196a3797
->
-> If this is not working for you, then you're either doing something
-> wrong, or you've uncovered a bug in either WireGuard or the kernel. In
-> case it's the latter, would you send me a patch for netns.sh that
-> demonstrated the problem in a clear way?
+--f403045c6a1ed6d0ac0555fa1b70
+Content-Type: text/plain; charset="UTF-8"
 
-Your test case is straightforward. And I am confident that you're right in this
-kind of setup.
+Hi,
+In section 8, Throughput and Ping Time is used for comparison of WireGuard
+with IPsec etc.
 
-But there's significant difference. In your test case, the endpoint
-addresses are configured
-directly on attached link. In my case, the wireguard server's endpoint
-address is configured on
-dummy interface, not attached link.
+So my questions are:
+1. How you test both metrics with IPSec protocol? Do you have
+implementation of IPSec with you? Same for OpenVPN?
+2. I have install the flent and run ping command between to laptop to see
+some sample results.
+But can you point out which source files or command utility I should used
+to measure the  Bandwidth, Memory,Energy both in communication and packet
+processing,throughput and latency.
+3.  How can I control the number of packets send per unit time or recieved
+per unit time in tool? If not flent then any tool is well come for that
+matter.
+4. If I ping from two machine running wireguard at the same time to third
+machine having server configuration. Will it process ping packet in serial
+order or parallel order?
 
-I reproduce the problem while using tcpdump to get some clues,
 
-1. server can receives client's packet
-2. server 'wg' output shows client's endpoint addr:port correctly
-3. tcpdump on client only captures outgoing request packets, no
-response from server
-4. tcpdump on server only captures incoming request packets, no
-response (on all physical interfaces)
 
-I was wrong. Response is not routed via default gateway, or other
-interfaces. There is NO response at all.
-Very sorry for misleading.
+Regards
+Sahil Gupta
 
-I am not familiar with test in namespace. I will look into it.
-Hopefully I can come back
-with a patch.
+--f403045c6a1ed6d0ac0555fa1b70
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hi,<br>In section 8, Throughput and Ping Time is used for =
+comparison of WireGuard with IPsec etc.<div><br></div><div>So my questions =
+are:<br>1. How you test both metrics with IPSec protocol? Do you have imple=
+mentation of IPSec with you? Same for OpenVPN?<br>2. I have install the fle=
+nt and run ping command between to laptop to see some sample results.<br>Bu=
+t can you point out which source files or command utility I should used to =
+measure the=C2=A0<span style=3D"font-size:12.8px">=C2=A0Bandwidth,=C2=A0</s=
+pan><span style=3D"font-size:12.8px">Memory,Energy both in communication an=
+d packet processing,throughput=C2=A0and latency.</span><br></div><div>3.=C2=
+=A0 How can I control the number of packets send per unit time or recieved =
+per unit time in tool? If not flent then any tool is well come for that mat=
+ter.<br>4. If I ping from two machine running wireguard at the same time to=
+ third machine having server configuration. Will it process ping packet in =
+serial order or parallel order?</div><div><br></div><div><br></div><div><br=
+></div><div>Regards</div><div>Sahil Gupta</div></div>
+
+--f403045c6a1ed6d0ac0555fa1b70--
