@@ -1,22 +1,17 @@
-Return-Path: sg5414@g.rit.edu
+Return-Path: snakker@mail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5700315d
- for <wireguard@lists.zx2c4.com>; Sat, 5 Aug 2017 04:11:39 +0000 (UTC)
-Received: from mx03a-out01ag.rit.edu (mx03a-out01ag.rit.edu [129.21.3.134])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a5c4be07
- for <wireguard@lists.zx2c4.com>; Sat, 5 Aug 2017 04:11:39 +0000 (UTC)
-From: Sahil Gupta <sg5414@rit.edu>
-Received: by mail-pf0-f198.google.com with SMTP id t25so35906658pfg.15
- for <wireguard@lists.zx2c4.com>; Fri, 04 Aug 2017 21:33:03 -0700 (PDT)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7cab2da3
+ for <wireguard@lists.zx2c4.com>; Sat, 5 Aug 2017 15:42:39 +0000 (UTC)
+Received: from mout.gmx.com (mout.gmx.com [74.208.4.200])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8bbf8601
+ for <wireguard@lists.zx2c4.com>; Sat, 5 Aug 2017 15:42:39 +0000 (UTC)
 MIME-Version: 1.0
-Date: Sat, 5 Aug 2017 00:32:58 -0400
-Message-ID: <CAA8CD9vz8FQpgK4P7Je7txuoQBfi-=OSXpT=siXTQKhGgw1Nng@mail.gmail.com>
-Subject: Query regarding the metric of comparison in Wireguard white
- paper(Section 8)
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>,
- "Jason A. Donenfeld" <Jason@zx2c4.com>
-Content-Type: multipart/alternative; boundary="f403045c6a1ed6d0ac0555fa1b70"
-Reply-To: sg5414@rit.edu
+Message-ID: <trinity-7bfdb88a-30b2-44a2-8dd9-06c245b8a247-1501949046979@3capp-mailcom-lxa11>
+From: "Mail Mail" <snakker@mail.com>
+To: wireguard@lists.zx2c4.com
+Subject: net-2-host configuration
+Content-Type: text/plain; charset=UTF-8
+Date: Sat, 5 Aug 2017 18:04:06 +0200
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,51 +21,43 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---f403045c6a1ed6d0ac0555fa1b70
-Content-Type: text/plain; charset="UTF-8"
-
 Hi,
-In section 8, Throughput and Ping Time is used for comparison of WireGuard
-with IPsec etc.
 
-So my questions are:
-1. How you test both metrics with IPSec protocol? Do you have
-implementation of IPSec with you? Same for OpenVPN?
-2. I have install the flent and run ping command between to laptop to see
-some sample results.
-But can you point out which source files or command utility I should used
-to measure the  Bandwidth, Memory,Energy both in communication and packet
-processing,throughput and latency.
-3.  How can I control the number of packets send per unit time or recieved
-per unit time in tool? If not flent then any tool is well come for that
-matter.
-4. If I ping from two machine running wireguard at the same time to third
-machine having server configuration. Will it process ping packet in serial
-order or parallel order?
+Trying to wrap my head around how this is supposed to work, more used to tinc/softether.
 
+I got the follow network setup (https://pastebin.com/kjn0GRzM):
 
++-------------------+     +--------------------+                             
+| Internal Server 1 |     | Main FW Site A     |                             
+| VLAN 101          |     |                    |                             
+| 10.90.1.10/24     |     | Eth0 = Ext Pub IP  |-\    +---------------------+
+|                   |\    | VLAN 100           |  -\  |  Remote Site B      |
++-------------------+ -\  |                    |    --|  Eth0 = Ext Pub IP  |
+                        -\| Eth1 = Internal IP |      |                     |
+                          - VLAN 101           |      |  wg0                |
++-------------------+   -/| 10.90.1.2/24       |      |  10.90.1.100/24     |
+| Internal Server 2 | -/  |                    |      |                     |
+- VLAN 101          |/    | wg0                |      +---------------------+
+| 10.90.1.11/24     |     | 10.90.1.1/24       |                             
+|                   |     |                    |                             
++-------------------+     +--------------------+                             
 
-Regards
-Sahil Gupta
+Say I have a Site A, that has two or more internal servers only on VLAN 101 / 10.90.1.0/24, that are connected to the FW in Site A on a physical interface (eth1). 
+Site B needs to be able to access the internal servers in Site A, so i created wg0 with wireguard between the two sites, they can both see each other / 10.90.1.100 can ping 10.90.1.1 and the other way around just fine, but how do i get access to internal servers in Site A, that are connected to the FW at Site A, if i add the 10.90.1.2 ip to eth1 in the FW at Site A, wireguard refuses to come up:
 
---f403045c6a1ed6d0ac0555fa1b70
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+[#] ip link add wg0 type wireguard
+[#] wg setconf wg0 /dev/fd/63
+[#] ip address add 10.90.1.1/24 dev wg0
+[#] ip link set mtu 1420 dev wg0
+[#] ip link set wg0 up
+[#] ip route add 10.90.1.0/24 dev wg0
+RTNETLINK answers: File exists
+[#] ip link delete dev wg0
 
-<div dir=3D"ltr">Hi,<br>In section 8, Throughput and Ping Time is used for =
-comparison of WireGuard with IPsec etc.<div><br></div><div>So my questions =
-are:<br>1. How you test both metrics with IPSec protocol? Do you have imple=
-mentation of IPSec with you? Same for OpenVPN?<br>2. I have install the fle=
-nt and run ping command between to laptop to see some sample results.<br>Bu=
-t can you point out which source files or command utility I should used to =
-measure the=C2=A0<span style=3D"font-size:12.8px">=C2=A0Bandwidth,=C2=A0</s=
-pan><span style=3D"font-size:12.8px">Memory,Energy both in communication an=
-d packet processing,throughput=C2=A0and latency.</span><br></div><div>3.=C2=
-=A0 How can I control the number of packets send per unit time or recieved =
-per unit time in tool? If not flent then any tool is well come for that mat=
-ter.<br>4. If I ping from two machine running wireguard at the same time to=
- third machine having server configuration. Will it process ping packet in =
-serial order or parallel order?</div><div><br></div><div><br></div><div><br=
-></div><div>Regards</div><div>Sahil Gupta</div></div>
+Then i tried just bridging wg0 and eth1, but that doesn't work either:
+brctl addif br0 eth1 wg0
+can't add wg0 to bridge br0: Invalid argument
 
---f403045c6a1ed6d0ac0555fa1b70--
+If eth1 and wg0 could just coexist, I could probably fix it with some static routes, but when they can't I'm a bit lost.
+
+I'm probably missing something obvious, but I have stared myself blind on this, any pointers or help would be very appreciated :)
