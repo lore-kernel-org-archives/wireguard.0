@@ -1,20 +1,27 @@
-Return-Path: lazyvirus@gmx.com
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2e5da4bb
- for <wireguard@lists.zx2c4.com>; Sun, 6 Aug 2017 18:41:05 +0000 (UTC)
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6faac76f
- for <wireguard@lists.zx2c4.com>; Sun, 6 Aug 2017 18:41:05 +0000 (UTC)
-Received: from msi.defcon1 ([93.15.31.113]) by mail.gmx.com (mrgmx101
- [212.227.17.174]) with ESMTPSA (Nemesis) id 0M5q45-1dTFYf1csr-00xq5R for
- <wireguard@lists.zx2c4.com>; Sun, 06 Aug 2017 21:02:40 +0200
-Date: Sun, 6 Aug 2017 21:02:37 +0200
-From: Bzzzz <lazyvirus@gmx.com>
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Many users
-Message-ID: <20170806210237.4dbbed42@msi.defcon1>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 501d6698
+ for <wireguard@lists.zx2c4.com>; Sun, 6 Aug 2017 20:00:53 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a05c9f86
+ for <wireguard@lists.zx2c4.com>; Sun, 6 Aug 2017 20:00:53 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 86f7711a
+ for <wireguard@lists.zx2c4.com>; Sun, 6 Aug 2017 20:19:55 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id ddf07312
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>; Sun, 6 Aug 2017 20:19:55 +0000 (UTC)
+Received: by mail-it0-f45.google.com with SMTP id 76so10473104ith.0
+ for <wireguard@lists.zx2c4.com>; Sun, 06 Aug 2017 13:22:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+In-Reply-To: <20170806210237.4dbbed42@msi.defcon1>
+References: <20170806210237.4dbbed42@msi.defcon1>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Sun, 6 Aug 2017 22:22:28 +0200
+Message-ID: <CAHmME9op6iHuOxRHaRvgmKetoMEM1RtY=x7S_Fug=6m6CpWGfg@mail.gmail.com>
+Subject: Re: Many users
+To: Bzzzz <lazyvirus@gmx.com>
+Content-Type: text/plain; charset="UTF-8"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -24,17 +31,17 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi mailing-listers,
+Hey Jean-Yves,
 
-I wonder if any of you have either made a large test or is using 
-WG with a large number of users, each one having his own key.
-I'm talking about >> 1,000 keys (closer to 10k is better) ?
-Or at least with a maximum of individual keys.
+There's an artificial limitation of 65535 peers per interface. This
+limitation isn't _entirely_ necessary, and if it becomes a problem for
+folks, I could remove it.
 
-And are there hard/soft limits to this number ?
+There was somebody on this list who set up thousands of peers and
+thousands of interfaces a while ago, and after handling some issues
+with him, things worked pretty well.
 
-The goal is to be able to revoke access user by user.
+So, to answer your question: WireGuard should scale quite well, and
+you shouldn't have many problems. But of course let me know if you do.
 
-Thanks in advance & regards.
-
-Jean-Yves
+Jason
