@@ -1,22 +1,20 @@
-Return-Path: seb@sebastiaan-stoffels.com
+Return-Path: konstantin@ltmd.net
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 728b4f6c
- for <wireguard@lists.zx2c4.com>; Tue, 8 Aug 2017 20:52:00 +0000 (UTC)
-Received: from mail-pg0-f42.google.com (mail-pg0-f42.google.com [74.125.83.42])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dcad5878
- for <wireguard@lists.zx2c4.com>; Tue, 8 Aug 2017 20:52:00 +0000 (UTC)
-Received: by mail-pg0-f42.google.com with SMTP id y129so19547673pgy.4
- for <wireguard@lists.zx2c4.com>; Tue, 08 Aug 2017 14:13:52 -0700 (PDT)
-Return-Path: <seb@sebastiaan-stoffels.com>
-Message-ID: <598a298e.4511620a.d027.99a2@mx.google.com>
-Date: Wed, 09 Aug 2017 07:13:45 +1000
-Subject: Re: silly (?) questions
-From: seb <seb@sebastiaan-stoffels.com>
-To: Bzzzz <lazyvirus@gmx.com>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cac95960
+ for <wireguard@lists.zx2c4.com>; Tue, 8 Aug 2017 22:00:53 +0000 (UTC)
+Received: from mail.ltmd.net (mail.ltmd.net [91.206.132.5])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id da443d45
+ for <wireguard@lists.zx2c4.com>; Tue, 8 Aug 2017 22:00:52 +0000 (UTC)
+To: wireguard@lists.zx2c4.com
+Subject: Re: Latest Gentoo WireGuard Ebuilds Doesn't Work
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="--_com.samsung.android.email_268350497239440"
-Cc: wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Date: Tue, 08 Aug 2017 15:22:44 -0700
+From: Konstantin <konstantin@ltmd.net>
+In-Reply-To: <7849918697a74f47719ca480aa919c15@ltmd.net>
+References: <7849918697a74f47719ca480aa919c15@ltmd.net>
+Message-ID: <ff2fe3d745cc06d78aa45b9d6a54da2b@ltmd.net>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,73 +24,52 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-----_com.samsung.android.email_268350497239440
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: base64
+On 2017-08-07 17:17, Konstantin wrote:
+> Hi guys,
+> 
+> I have issues upgrading WireGuard on my Gentoo servers. I tried
+> different kernels and latest WireGuard versions without any luck.
+> 
+> When I type wg command I got only the "interface" portion:
+> 
+> interface: wg0
+>   public key: PUkm5fRn25hbv9Zh2tetny3tV3l9WnbxvIFeZTSd9BM=
+>   private key: (hidden)
+>   listening port: 58800
+> 
+> without any peer block below.
+> 
+> Latest WireGuard version that still works for me was 0.0.20170214 but
+> I can't find these sources anymore and I need to upgrade to a new
+> kernel.
+> 
+> According to kernel requirements (here
+> https://www.wireguard.com/install/#kernel-requirements
+>  ) I understand that need to have a certain options enables.
+> 
+> My current kernel 4.9.34 config has:
+> CONFIG_NET=y
+> CONFIG_INET=y
+> CONFIG_NET_UDP_TUNNEL=m
+> CONFIG_CRYPTO_BLKCIPHER=m
+> CONFIG_CRYPTO_BLKCIPHER2=y
+> CONFIG_PADATA=y
+> 
+> Yes, some of these modules are not built-in but I had it the same way
+> earlier when it worked with kernel 4.4.39.
+> 
+> When I'm loading the wireguard.ko module and setting wg interface
+> configuration I don't see any error but not even a single packet
+> leaves a server interface towards the peer. What am I missing here?
+> How can I debug it?
+> 
+> Thank you.
 
-V2hhdCBhIHNoYW1lIHlvdSBhcmUgc28gY3luaWNhbCwgYW5kIHJ1ZGUuCkkgd2FzIHNpbXBseSBj
-aGltaW5nIGluIHRvIGhpZ2hsaWdodCBhIFB5dGhvbiBHVUkgbGlicmFyeSBhcyB5b3UgbWVudGlv
-bmVkIGtpdnkuCmFwb2xvZ2llcyBpZiBpIGRpZG50IHNvbHZlIGFsbCB5b3VyIHByb2JsZW1zLgpw
-LnMuIGRpZCB5b3UgZXZlbiBsb29rIGF0IHRoZSBwcm9qZWN0PwpJdCBjZXJ0YWlubHkgd2FzbnQg
-bWVhbnQgdG8gYmUgYW4gYWR2ZXJ0aXNlbWVudC4gTm90IGVudGlyZWx5IHN1cmUgd2hhdCBpIHdv
-dWxkIGhhdmUgYmVlbiBhZHZlcnRpc2luZyBhcyB0aGUgcHJvamVjdCBpcyBvcGVuIHNvdXJjZS4K
-SWYgdGhpcyBpcyB3aGF0IHRoZSBXRyBsaXN0IGlzIGxpa2UsIGlsbCBiZSBoYXBweSB0byBsZWF2
-ZS4KaG9wZSBhbGwgeW91ciBxdWVzdGlvbnMgZ2V0IGFuc3dlcmVkLgoKCgoKU2VudCBmcm9tIG15
-IFNhbXN1bmcgR2FsYXh5IHNtYXJ0cGhvbmUuCi0tLS0tLS0tIE9yaWdpbmFsIG1lc3NhZ2UgLS0t
-LS0tLS1Gcm9tOiBCenp6eiA8bGF6eXZpcnVzQGdteC5jb20+IERhdGU6IDkvOC8xNyAgMTI6MDYg
-YW0gIChHTVQrMTA6MDApIFRvOiBTZWJhc3RpYWFuIFN0b2ZmZWxzIDxzZWJAc2ViYXN0aWFhbi1z
-dG9mZmVscy5jb20+IENjOiB3aXJlZ3VhcmRAbGlzdHMuengyYzQuY29tIFN1YmplY3Q6IFJlOiBz
-aWxseSAoPykgcXVlc3Rpb25zIApPbiBUdWUsIDggQXVnIDIwMTcgMjE6MDU6NTcgKzEwMDAKU2Vi
-YXN0aWFhbiBTdG9mZmVscyA8c2ViQHNlYmFzdGlhYW4tc3RvZmZlbHMuY29tPiB3cm90ZToKCllv
-dXIgcG9zdDoKKiBkb2Vzbid0IGFkZHJlc3MgQU5ZIG9mIG15IHF1ZXN0aW9ucywKKiBzb3VuZHMg
-bW9yZSBsaWtlIGEgQnVkIGNvbW1lcmNpYWwsIG1pbnVzIHRoZSBmdW4sCgpzbywgdGhhbmtzLCBi
-dXQgbm8gdGhhbmtzLgoKSlkKCj4gSmVhbi1ZdmVzLAo+IAo+IEkganVzdCBnb3QgYmFjayBmcm9t
-IFB5Y29uIEFVIGFuZCB0aGVyZSB3YXMgYSBzZXNzaW9uIG9uIEJlZXdhcmUgd2hpY2ggCj4gaGFz
-IGEgZ3JlYXQgYnVuY2ggb2YgdG9vbHMgZm9yIGNyb3NzIHBsYXRmb3JtIEdVSSBkZXZlbG9wbWVu
-dCAoIAo+IGluY2x1ZGluZyBBbmRyb2lkICkuIFdlbGwgd29ydGggYSBsb29rOgo+IAo+IGh0dHBz
-Oi8vcHliZWUub3JnL3Byb2plY3QvdXNpbmcvYW5kcm9pZC1hcHAvCj4gCj4gWW91IGNvdWxkIHRo
-ZW4gdXNlIHRoZSBzYW1lIGNvZGUgdG8gcGFja2FnZSB1cCBhbiBhcHAgZm9yIG90aGVyIAo+IHBs
-YXRmb3Jtcy4gSXQgZXZlbiBkb2VzIGluc3RhbGxlcnMgYW5kIHBhY2thZ2luZyEK
+For the record I want to explain what was the problem and how it was 
+solved. I haven't noticed that in the old configuration file the same 
+pair of keys were used for both sides. And new WG version doesn't allow 
+to use it that way. Obviously it was a wrong configuration which 
+apparently works using an old WG version. That's it. Thank you!
 
-----_com.samsung.android.email_268350497239440
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: base64
-
-PGh0bWw+PGhlYWQ+PG1ldGEgaHR0cC1lcXVpdj0iQ29udGVudC1UeXBlIiBjb250ZW50PSJ0ZXh0
-L2h0bWw7IGNoYXJzZXQ9VVRGLTgiPjwvaGVhZD48Ym9keT48ZGl2PldoYXQgYSBzaGFtZSB5b3Ug
-YXJlIHNvIGN5bmljYWwsIGFuZCBydWRlLjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+SSB3YXMg
-c2ltcGx5IGNoaW1pbmcgaW4gdG8gaGlnaGxpZ2h0IGEgUHl0aG9uIEdVSSBsaWJyYXJ5IGFzIHlv
-dSBtZW50aW9uZWQga2l2eS48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PmFwb2xvZ2llcyBpZiBp
-IGRpZG50IHNvbHZlIGFsbCB5b3VyIHByb2JsZW1zLjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+
-cC5zLiBkaWQgeW91IGV2ZW4gbG9vayBhdCB0aGUgcHJvamVjdD88L2Rpdj48ZGl2Pjxicj48L2Rp
-dj48ZGl2Pkl0IGNlcnRhaW5seSB3YXNudCBtZWFudCB0byBiZSBhbiBhZHZlcnRpc2VtZW50LiBO
-b3QgZW50aXJlbHkgc3VyZSB3aGF0IGkgd291bGQgaGF2ZSBiZWVuIGFkdmVydGlzaW5nIGFzIHRo
-ZSBwcm9qZWN0IGlzIG9wZW4gc291cmNlLjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+SWYgdGhp
-cyBpcyB3aGF0IHRoZSBXRyBsaXN0IGlzIGxpa2UsIGlsbCBiZSBoYXBweSB0byBsZWF2ZS48L2Rp
-dj48ZGl2Pjxicj48L2Rpdj48ZGl2PmhvcGUgYWxsIHlvdXIgcXVlc3Rpb25zIGdldCBhbnN3ZXJl
-ZC48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2
-Pjxicj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2IGlkPSJjb21wb3Nlcl9zaWduYXR1cmUiPjxk
-aXYgc3R5bGU9ImZvbnQtc2l6ZTo4NSU7Y29sb3I6IzU3NTc1NyIgZGlyPSJhdXRvIj5TZW50IGZy
-b20gbXkgU2Ftc3VuZyBHYWxheHkgc21hcnRwaG9uZS48L2Rpdj48L2Rpdj48ZGl2Pjxicj48L2Rp
-dj48ZGl2IHN0eWxlPSJmb250LXNpemU6MTAwJTtjb2xvcjojMDAwMDAwIj48IS0tIG9yaWdpbmFs
-TWVzc2FnZSAtLT48ZGl2Pi0tLS0tLS0tIE9yaWdpbmFsIG1lc3NhZ2UgLS0tLS0tLS08L2Rpdj48
-ZGl2PkZyb206IEJ6enp6ICZsdDtsYXp5dmlydXNAZ214LmNvbSZndDsgPC9kaXY+PGRpdj5EYXRl
-OiA5LzgvMTcgIDEyOjA2IGFtICAoR01UKzEwOjAwKSA8L2Rpdj48ZGl2PlRvOiBTZWJhc3RpYWFu
-IFN0b2ZmZWxzICZsdDtzZWJAc2ViYXN0aWFhbi1zdG9mZmVscy5jb20mZ3Q7IDwvZGl2PjxkaXY+
-Q2M6IHdpcmVndWFyZEBsaXN0cy56eDJjNC5jb20gPC9kaXY+PGRpdj5TdWJqZWN0OiBSZTogc2ls
-bHkgKD8pIHF1ZXN0aW9ucyA8L2Rpdj48ZGl2Pjxicj48L2Rpdj48L2Rpdj5PbiBUdWUsIDggQXVn
-IDIwMTcgMjE6MDU6NTcgKzEwMDA8YnI+U2ViYXN0aWFhbiBTdG9mZmVscyAmbHQ7c2ViQHNlYmFz
-dGlhYW4tc3RvZmZlbHMuY29tJmd0OyB3cm90ZTo8YnI+PGJyPllvdXIgcG9zdDo8YnI+KiBkb2Vz
-bid0IGFkZHJlc3MgQU5ZIG9mIG15IHF1ZXN0aW9ucyw8YnI+KiBzb3VuZHMgbW9yZSBsaWtlIGEg
-QnVkIGNvbW1lcmNpYWwsIG1pbnVzIHRoZSBmdW4sPGJyPjxicj5zbywgdGhhbmtzLCBidXQgbm8g
-dGhhbmtzLjxicj48YnI+Slk8YnI+PGJyPiZndDsgSmVhbi1ZdmVzLDxicj4mZ3Q7IDxicj4mZ3Q7
-IEkganVzdCBnb3QgYmFjayBmcm9tIFB5Y29uIEFVIGFuZCB0aGVyZSB3YXMgYSBzZXNzaW9uIG9u
-IEJlZXdhcmUgd2hpY2ggPGJyPiZndDsgaGFzIGEgZ3JlYXQgYnVuY2ggb2YgdG9vbHMgZm9yIGNy
-b3NzIHBsYXRmb3JtIEdVSSBkZXZlbG9wbWVudCAoIDxicj4mZ3Q7IGluY2x1ZGluZyBBbmRyb2lk
-ICkuIFdlbGwgd29ydGggYSBsb29rOjxicj4mZ3Q7IDxicj4mZ3Q7IGh0dHBzOi8vcHliZWUub3Jn
-L3Byb2plY3QvdXNpbmcvYW5kcm9pZC1hcHAvPGJyPiZndDsgPGJyPiZndDsgWW91IGNvdWxkIHRo
-ZW4gdXNlIHRoZSBzYW1lIGNvZGUgdG8gcGFja2FnZSB1cCBhbiBhcHAgZm9yIG90aGVyIDxicj4m
-Z3Q7IHBsYXRmb3Jtcy4gSXQgZXZlbiBkb2VzIGluc3RhbGxlcnMgYW5kIHBhY2thZ2luZyE8YnI+
-PC9ib2R5PjwvaHRtbD4=
-
-----_com.samsung.android.email_268350497239440--
+-- 
+Konstantin
