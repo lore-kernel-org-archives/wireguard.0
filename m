@@ -1,19 +1,27 @@
 Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bfa3fd1c
- for <wireguard@lists.zx2c4.com>; Tue, 8 Aug 2017 22:54:24 +0000 (UTC)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0d2c5819
+ for <wireguard@lists.zx2c4.com>; Tue, 8 Aug 2017 22:59:55 +0000 (UTC)
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ce54678d
- for <wireguard@lists.zx2c4.com>; Tue, 8 Aug 2017 22:54:24 +0000 (UTC)
-Date: Wed, 9 Aug 2017 01:16:14 +0200
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Daniel Kahn Gillmor <dkg@fifthhorseman.net>,
- Egbert Verhage <egbert@eggiecode.org>, Anonymous Anonymous <admin@hda.me>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Advising in packages to load new module or reboot
-Message-ID: <20170808231612.GA24254@zx2c4.com>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4a21c1bc
+ for <wireguard@lists.zx2c4.com>; Tue, 8 Aug 2017 22:59:55 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5a251c3d
+ for <wireguard@lists.zx2c4.com>; Tue, 8 Aug 2017 23:18:59 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 1e130c14
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>; Tue, 8 Aug 2017 23:18:58 +0000 (UTC)
+Received: by mail-io0-f175.google.com with SMTP id g71so19277159ioe.5
+ for <wireguard@lists.zx2c4.com>; Tue, 08 Aug 2017 16:21:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <CAJkVDg1O8SXWtR1cazOMQX6U-sxRVh57MNfTdNGBLpCUdOPnog@mail.gmail.com>
+References: <CAJkVDg1O8SXWtR1cazOMQX6U-sxRVh57MNfTdNGBLpCUdOPnog@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 9 Aug 2017 01:21:47 +0200
+Message-ID: <CAHmME9pxbEH67swY+k-2bSar1e95rfMCQoxkzYAzSfbsA8JGcw@mail.gmail.com>
+Subject: Re: trouble installing on Fedora and CentOS
+To: Joe Doss <joe@solidadmin.com>
+Content-Type: text/plain; charset="UTF-8"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -23,54 +31,83 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hey guys,
+Hi Joe,
 
-I've noticed that around 60% of emails and IRC messages I get about
-WireGuard issues are due to:
+Could you look into Adam's issue with your package?
 
-1) forgetting to `rmmod wireguard && modprobe wireguard` after updating
-2) installing new kernel headers, removing old kernel headers, updating
-   wireguard, and then having the module built for the newer kernel and
-   forgetting to reboot
-3) not having any headers installed
+Adam,
 
-I don't really know the best generic solution for (3), since different
-distros and distro-derivatives (armbian,raspian,archlinuxarm,etc) seem
-to express these dependencies in different ways, or not at all. But I do
-have an idea to pretty easily address (1) and (2). I've just added the
-below to the Gentoo ebuild:
+Can you provide the full output of whatever is behind "warning:
+%post(wireguard-dkms-1:0.0.20170629-2.fc25.noarch) scriptlet failed,
+exit status 1"? Is there a debug switch to get more verbose logs?
 
-+ if [[ $(uname -r) != "${KV_FULL}" ]]; then
-+         ewarn
-+         ewarn "You have just built WireGuard for kernel ${KV_FULL}, yet the currently running"
-+         ewarn "kernel is $(uname -r). If you intend to use this WireGuard module on the currently"
-+         ewarn "running machine, you will first need to reboot it into the kernel ${KV_FULL}, for"
-+         ewarn "which this module was built."
-+         ewarn
-+ elif [[ -f /sys/module/wireguard/version ]] && \
-+      old="$(< /sys/module/wireguard/version)" && \
-+      new="$(modinfo -F version "${ROOT}/lib/modules/${KV_FULL}/net/wireguard.ko" 2>/dev/null)" && \
-+      [[ $old != "$new" ]]; then
-+         ewarn
-+         ewarn "You appear to have just upgraded WireGuard from version v$old to v$new."
-+         ewarn "However, the old version is still running on your system. In order to use the"
-+         ewarn "new version, you will need to remove the old module and load the new one. As"
-+         ewarn "root, you can accomplish this with the following commands:"
-+         ewarn
-+         ewarn "    # rmmod wireguard"
-+         ewarn "    # modprobe wireguard"
-+         ewarn
-+         ewarn "Do note that doing this will remove current WireGuard interfaces, so you may want"
-+         ewarn "to gracefully remove them yourself prior."
-+         ewarn
-+ fi
+Why not install this directly from copr? Additionally, why are you
+installing 0629? That package is very old.
 
-There's a bit of Gentoo-specific stuff in there, but the general idea is
-that I first check to see if the module is being built for the current
-kernel or a different one, and then I check whether an older module is
-loaded than the one just built. It might be slightly trickier to
-accomplish this with DKMS, but I think still it's possible.
-
-Any thoughts on this pattern?
+https://copr.fedorainfracloud.org/coprs/jdoss/wireguard/
 
 Jason
+
+
+
+On Tue, Aug 8, 2017 at 9:58 PM, adam souzis <adam@souzis.com> wrote:
+>
+> I've been impressed with Wireguard, its design has helped simplify the im=
+plementation of a distributed sandbox app I am building quite a bit. But I =
+have had mixed results getting it running on different distributions.
+>
+> The good news is that I can report that I was able to build, install and =
+run Wireguard on CoreOs.
+>
+> The bad news is I was unable to get Wireguard working on either CentOS 7,=
+ Fedora 26 or Fedora 25 (running these on AWS), it doesn't appear to be ins=
+talling the kernel module properly.
+>
+> Here's what I see when install the RPM:
+>
+> + dkms add -m wireguard -v 0.0.20170629 -q --rpm_safe_upgrade
+>
+> + dkms build -m wireguard -v 0.0.20170629 -q
+>
+> + dkms install -m wireguard -v 0.0.20170629 -q
+>
+> D: %post(wireguard-dkms-1:0.0.20170629-2.fc25.noarch): waitpid(14760) rc =
+14760 status 100
+>
+> warning: %post(wireguard-dkms-1:0.0.20170629-2.fc25.noarch) scriptlet fai=
+led, exit status 1
+>
+> Non-fatal POSTIN scriptlet failure in rpm package wireguard-dkms
+>
+>
+> Looks like it might have worked:
+>
+> [fedora@ip-1~]$ sudo dkms status
+>
+> wireguard, 0.0.20170629: added
+>
+> BUT:
+>
+> [fedora@ip-1 ~]$ sudo ip link add dev wg0 type wireguard
+>
+> RTNETLINK answers: Operation not supported
+>
+> I tried this on the latest version of the RPM and this earlier version. I=
+ also tried compiling it from source on Fedora but make failed early on.
+>
+> I disabled selinux, verified the kernel config is good and manually enabl=
+ed udp_tunnel for good measure. Any other suggestions? (I did see an earlie=
+r post here recommending using kernel-ml for centos 7 but I need to use the=
+ Atomic Host variant and swapping out the kernel on that is non-trivial. I =
+was hoping using a recent Fedora would solve the kernel compatibility issue=
+s.)
+>
+> thank you!
+> Adam
+> =E1=90=A7
+>
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
+>
