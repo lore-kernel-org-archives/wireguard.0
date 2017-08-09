@@ -1,22 +1,22 @@
-Return-Path: joe@solidadmin.com
+Return-Path: dkg@fifthhorseman.net
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 67f854b0
- for <wireguard@lists.zx2c4.com>; Wed, 9 Aug 2017 14:32:13 +0000 (UTC)
-Received: from conquer.yellowcord.com (conquer.yellowcord.com [45.55.224.114])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 975587bc
- for <wireguard@lists.zx2c4.com>; Wed, 9 Aug 2017 14:32:13 +0000 (UTC)
-Subject: Re: trouble installing on Fedora and CentOS
-To: adam souzis <adam@souzis.com>
-References: <CAJkVDg1O8SXWtR1cazOMQX6U-sxRVh57MNfTdNGBLpCUdOPnog@mail.gmail.com>
- <0774b643-23a3-5e57-c4db-889db42ae7eb@solidadmin.com>
- <CAJkVDg1-0rQU0KCoVTyyiEK2Usuyf=djszSJ2KhP6xJdZwgzow@mail.gmail.com>
-From: Joe Doss <joe@solidadmin.com>
-Message-ID: <7ba12438-298e-7cad-af65-c39ccb0de07f@solidadmin.com>
-Date: Wed, 9 Aug 2017 09:54:06 -0500
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 29e23c04
+ for <wireguard@lists.zx2c4.com>; Wed, 9 Aug 2017 19:56:40 +0000 (UTC)
+Received: from che.mayfirst.org (che.mayfirst.org [162.247.75.118])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5ce55c23
+ for <wireguard@lists.zx2c4.com>; Wed, 9 Aug 2017 19:56:40 +0000 (UTC)
+From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+To: Egbert Verhage <egbert@eggiecode.org>,
+ "Jason A. Donenfeld" <Jason@zx2c4.com>, Anonymous Anonymous <admin@hda.me>,
+ "WireGuard mailing list" <wireguard@lists.zx2c4.com>
+Subject: Re: Advising in packages to load new module or reboot
+In-Reply-To: <1502277405.1043.2.camel@eggiecode.org>
+References: <20170808231612.GA24254@zx2c4.com>
+ <1502277405.1043.2.camel@eggiecode.org>
+Date: Wed, 09 Aug 2017 13:05:14 -0400
+Message-ID: <87mv78r7sl.fsf@fifthhorseman.net>
 MIME-Version: 1.0
-In-Reply-To: <CAJkVDg1-0rQU0KCoVTyyiEK2Usuyf=djszSJ2KhP6xJdZwgzow@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Cc: wireguard@lists.zx2c4.com
+Content-Type: text/plain
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,53 +26,37 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On 08/09/2017 07:39 AM, adam souzis wrote:
-> Hi Joe,
-> 
-> Thanks for looking into this, yes you are correct that my machine's 
-> kernel version didn't match with what the rpm expected, I discovered 
-> this when I tried to build from source. Maybe this error should be fatal 
-> or output a message suggesting the expected kernel?
+On Wed 2017-08-09 13:16:45 +0200, Egbert Verhage wrote:
 
-I am not sure how must effort that will require. If anyone has any ideas 
-on how to make this edge case better I am all ears.
+> Ow, that it is a common problem.
+> I think your patch is a nice updated.
+>
+> So I got some time left and build a patch (pull request) on github
+> here: https://github.com/EggieCode/wireguard-ppa/pull/24
 
-For the time being, just ensure you have the right kernel-headers 
-installed for your running kernel and you should be fine.
+thanks for writing this notification, Jason, and for including it in
+your ubuntu ppa, Egbert.
 
-> Have you tried to get your packages to working on an Atomic Host build? 
-> When I did, the install failed:
-> 
-> [fedora@atomic~]$ uname -r
-> 
-> 4.11.11-300.fc26.x86_64
-> 
-> [fedora@atomic~]$ sudo rpm-ostree install 
-> ./wireguard-dkms-0.0.20170726-1.fc26.noarch.rpm
-> 
-> Checking out tree 0715ce8... done
-> 
-> Resolving dependencies... done
-> 
-> Overlaying... done
-> 
-> *error: *Running %post for wireguard-dkms: Executing 
-> bwrap(/usr/wireguard-dkms.post): Child process exited with code 8
-> 
-> So I just copied the wireguard.ko and wg binaries over from a regular 
-> Fedora 26, did an insmod and things are working, so I'm good for now.
+I'm wondering whether the advice it gives is correct and thorough enough
+for non-gentoo users, though.
 
+If i "rmmod wireguard && modprobe wireguard" won't my configuration be
+lost?  You point out that you might want to tear them down gracefully
+first.  But then no mention of needing to bring them up again later?
 
-If I get some time I will ask the folks in #atomic what the best method 
-is for adjusting a F26 RPM to work in Atomic. My hunch it is failing 
-when it tries to write the WireGuard files to /usr/src/ which is read 
-only (I think).
+Aren't there additional commands that the admin will have to do to have
+a *functional* wireguard implementation, and those commands might
+differe based on their userspace layout/configuration/policy?
 
-Joe
+The simplest instruction for the upgrade (which is probably offensive to
+all of us here) is to say "you should reboot your machine for the
+wireguard upgrade to take effect" -- that gets us the benefit of any
+userspace wireguard configuration that happens during system
+initialization to happen, without having to guess/poke/prod at the
+user's networking config while live.
 
+Also, for an administrator doing this over ssh, we might want to warn
+them that taking these steps will lock them out if they're connecting
+via ssh on top of wireguard, right?
 
-
-
---
-Joe Doss
-joe@solidadmin.com
+      --dkg
