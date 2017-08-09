@@ -1,32 +1,24 @@
-Return-Path: jonathon.fernyhough@york.ac.uk
+Return-Path: joe@solidadmin.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4c4d2b72
- for <wireguard@lists.zx2c4.com>; Tue, 8 Aug 2017 23:24:30 +0000 (UTC)
-Received: from mail-wr0-f169.google.com (mail-wr0-f169.google.com
- [209.85.128.169])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 24cd4d27
- for <wireguard@lists.zx2c4.com>; Tue, 8 Aug 2017 23:24:30 +0000 (UTC)
-Received: by mail-wr0-f169.google.com with SMTP id k71so18193838wrc.2
- for <wireguard@lists.zx2c4.com>; Tue, 08 Aug 2017 16:46:23 -0700 (PDT)
-Return-Path: <jonathon.fernyhough@york.ac.uk>
-Received: from [10.10.10.52] (uk.webcrumb.net. [176.126.241.16])
- by smtp.googlemail.com with ESMTPSA id s4sm4185348wrc.13.2017.08.08.16.46.21
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 08 Aug 2017 16:46:22 -0700 (PDT)
-Subject: Re: Advising in packages to load new module or reboot
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-References: <20170808231612.GA24254@zx2c4.com>
- <daea6ec7-4f6e-b23d-6ae7-3cc5ae49e90c@york.ac.uk>
- <CAHmME9q50iu1h+Wxi1CGji0MbD2dYtiCyGhPT3cvihsC0MsJNw@mail.gmail.com>
-From: Jonathon Fernyhough <jonathon.fernyhough@york.ac.uk>
-Message-ID: <58b21d76-af42-b166-06d3-31b8d801ff98@york.ac.uk>
-Date: Wed, 9 Aug 2017 00:46:16 +0100
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ca7f3a6f
+ for <wireguard@lists.zx2c4.com>; Wed, 9 Aug 2017 01:29:44 +0000 (UTC)
+Received: from conquer.yellowcord.com (conquer.yellowcord.com [45.55.224.114])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id df86ada5
+ for <wireguard@lists.zx2c4.com>; Wed, 9 Aug 2017 01:29:44 +0000 (UTC)
+Received: from d53-64-244-190.nap.wideopenwest.com ([64.53.190.244]:63235
+ helo=[192.168.1.155])
+ by conquer.yellowcord.com with esmtpsa (TLSv1.2:DHE-RSA-AES128-SHA:128)
+ (Exim 4.85) (envelope-from <joe@solidadmin.com>) id 1dfG9q-0005iL-2J
+ for wireguard@lists.zx2c4.com; Tue, 08 Aug 2017 20:51:38 -0500
+Subject: Re: trouble installing on Fedora and CentOS
+To: wireguard@lists.zx2c4.com
+References: <CAJkVDg1O8SXWtR1cazOMQX6U-sxRVh57MNfTdNGBLpCUdOPnog@mail.gmail.com>
+From: Joe Doss <joe@solidadmin.com>
+Message-ID: <0774b643-23a3-5e57-c4db-889db42ae7eb@solidadmin.com>
+Date: Tue, 8 Aug 2017 20:51:37 -0500
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9q50iu1h+Wxi1CGji0MbD2dYtiCyGhPT3cvihsC0MsJNw@mail.gmail.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="WMVE1cUnha6BS35uk9l2kv7nND48DOV2M"
+In-Reply-To: <CAJkVDg1O8SXWtR1cazOMQX6U-sxRVh57MNfTdNGBLpCUdOPnog@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -36,81 +28,93 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---WMVE1cUnha6BS35uk9l2kv7nND48DOV2M
-Content-Type: multipart/mixed; boundary="3HdgJ7BeQ8uCvXHIrvbjwhGFliIHaFSwP";
- protected-headers="v1"
-From: Jonathon Fernyhough <jonathon.fernyhough@york.ac.uk>
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Message-ID: <58b21d76-af42-b166-06d3-31b8d801ff98@york.ac.uk>
-Subject: Re: Advising in packages to load new module or reboot
-References: <20170808231612.GA24254@zx2c4.com>
- <daea6ec7-4f6e-b23d-6ae7-3cc5ae49e90c@york.ac.uk>
- <CAHmME9q50iu1h+Wxi1CGji0MbD2dYtiCyGhPT3cvihsC0MsJNw@mail.gmail.com>
-In-Reply-To: <CAHmME9q50iu1h+Wxi1CGji0MbD2dYtiCyGhPT3cvihsC0MsJNw@mail.gmail.com>
+Hey Adam,
 
---3HdgJ7BeQ8uCvXHIrvbjwhGFliIHaFSwP
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: quoted-printable
+Thanks for using WireGuard. See my response below.
 
-On 09/08/17 00:30, Jason A. Donenfeld wrote:
-> For (1) and (2), though, what do you think of the warning I've added
-> to Gentoo? That's what I meant by asking for thoughts on "this
-> pattern" -- the whole thing with comparing running kernel and
-> compiled-for-kernel and comparing loaded-module-version and
-> compiled-module-version.
->=20
+On 08/08/2017 02:58 PM, adam souzis wrote:
+> I've been impressed with Wireguard, its design has helped simplify the 
+> implementation of a distributed sandbox app I am building quite a bit. 
+> But I have had mixed results getting it running on different distributions.
+> 
+> The good news is that I can report that I was able to build, install and 
+> run Wireguard on CoreOs.
+> 
+> The bad news is I was unable to get Wireguard working on either CentOS 
+> 7, Fedora 26 or Fedora 25 (running these on AWS), it doesn't appear to 
+> be installing the kernel module properly.
+> 
+> Here's what I see when install the RPM:
+> 
+> + dkms add -m wireguard -v 0.0.20170629 -q --rpm_safe_upgrade
+> 
+> + dkms build -m wireguard -v 0.0.20170629 -q
+> 
+> + dkms install -m wireguard -v 0.0.20170629 -q
+> 
+> D: %post(wireguard-dkms-1:0.0.20170629-2.fc25.noarch): waitpid(14760) rc 
+> 14760 status 100
+> 
+> warning: %post(wireguard-dkms-1:0.0.20170629-2.fc25.noarch) scriptlet 
+> failed, exit status 1
+> 
+> Non-fatal POSTIN scriptlet failure in rpm package wireguard-dkms
+Are you running into this issue on a freshly provisioned server? Or 
+after you do a system update? Do you reboot into the most current kernel 
+if you do update? Does the kernel update along with kernel-devel and 
+kernel-headers?
 
-Ah, righty. From my admittedly limited experience that seems fine - for
-example, from the Debian/Ubuntu virtualbox-dkms package
-(vboxdrv/Makefile, #192):
+This issue is caused by you running a kernel that doesn't have the 
+correct kernel-header package installed:
 
->  # kernel base directory
->  ifndef KERN_DIR
->   # build for the current kernel, version check
->   KERN_DIR :=3D /lib/modules/$(shell uname -r)/build
->   ifneq ($(shell if test -d $(KERN_DIR); then echo yes; fi),yes)
->    KERN_DIR :=3D /usr/src/linux
->    ifneq ($(shell if test -d $(KERN_DIR); then echo yes; fi),yes)
->     $(error Error: unable to find the sources of your current Linux ker=
-nel. \
-> 	           Specify KERN_DIR=3D<directory> and run Make again)
->    endif
->    $(warning Warning: using /usr/src/linux as the source directory of y=
-our \
->                       Linux kernel. If this is not correct, specify \
-> 		      KERN_DIR=3D<directory> and run Make again.)
->   endif
->  else
->   ifneq ($(shell if test -d $(KERN_DIR); then echo yes; fi),yes)
->    $(error Error: KERN_DIR does not point to a directory)
->   endif
->  endif
+[root@localhost ~]# dkms status
+wireguard, 0.0.20170726: added
 
+[root@localhost wireguard-0.0.20170726]# dkms build -m wireguard -v 
+0.0.20170726
+Error! echo
+Your kernel headers for kernel 4.11.8-300.fc26.x86_64 cannot be found at
+/lib/modules/4.11.8-300.fc26.x86_64/build or 
+/lib/modules/4.11.8-300.fc26.x86_64/source.
 
---3HdgJ7BeQ8uCvXHIrvbjwhGFliIHaFSwP--
+[root@localhost ~]# uname -a
+Linux localhost.localdomain 4.11.8-300.fc26.x86_64 #1 SMP Thu Jun 29 
+20:09:48 UTC 2017 x86_64 x86_64 x86_64 GNU/Linux
 
---WMVE1cUnha6BS35uk9l2kv7nND48DOV2M
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+[root@localhost ~]# rpm -qa |grep kernel
+kernel-devel-4.11.11-300.fc26.x86_64
+kernel-core-4.11.8-300.fc26.x86_64
+kernel-headers-4.11.11-300.fc26.x86_64
 
------BEGIN PGP SIGNATURE-----
+I just tested the latest package on Vagrant and it works after running a 
+dnf update and rebooting into the most current kernel that matches the 
+currently installed kernel headers package.
 
-iQIzBAEBCAAdFiEEUzSNjhumunvu6bYD4DBDgow/9LsFAlmKTUgACgkQ4DBDgow/
-9LvRJRAAj7FCWdrTGfG097DCEwnw+A+9v2sOeCcBiEgm+bJK+gsBo4cVBHcMDfPK
-CeR/lzsOPd9LDd/eI2izsiwZbDTGhpgjni9ZS7LTn8/ZWgBvEUQmcRJPYaJIxkwf
-mh+HH7XL+hsXEuA6+7zTHXqI9vQesdrcgh5hidzCgjgjgKL5+y2o51YdJCeMBvHZ
-2BQ8f1rD3o0D7hNxW5mIZgRaw1YEFsoYefQ/6YMXMTMeIGSnKqxPjErPplO6DbKJ
-kJJEwMOR+Ceu/FV9tOE6YLFsPjrNLl63UfgJ+v2J86HNuOgpiAJE8ypego3CM5X/
-PCzdLUXqeAR7WvP9goDGaRIYiwYjPxjg4PPf927VBsAWIkUdXs2Tp1c+PhlulfkP
-hnosO5nWERsC77knhdDvSJSPysuA7/FVCA4I1RnExWctQ9GZXba8YGGw3PrhcUnq
-irZC04UngMBkn6cf/heEFTMcl+1+9h1Oejbm/XCBOjIOi+BtAFLwBDx34pNjS1s1
-w7iMvOzNRvZKkL35zzzUD5aUDpLkcPXflCYs13sKokzDEwIfqOtL4tf2ZE4cU49h
-1kTEAECVrKRe3fpAxLtFENYr5mAjsADNO9ZbGquRVOxk42UU/0l6ii46ckbLyDbn
-rbZ+DpmkTCoAZXZvV+BOLMG018AWRt0iEecou83/HI7eKH00mKA=
-=b7O4
------END PGP SIGNATURE-----
+[root@localhost ~]# uname -a
+Linux localhost.localdomain 4.11.11-300.fc26.x86_64 #1 SMP Mon Jul 17 
+16:32:11 UTC 2017 x86_64 x86_64 x86_64 GNU/Linux
 
---WMVE1cUnha6BS35uk9l2kv7nND48DOV2M--
+[root@localhost ~]# rpm -qa |grep kernel
+kernel-devel-4.11.11-300.fc26.x86_64
+kernel-core-4.11.8-300.fc26.x86_64
+kernel-headers-4.11.11-300.fc26.x86_64
+kernel-core-4.11.11-300.fc26.x86_64
+
+[root@localhost ~]# dkms build -m wireguard -v 0.0.20170726
+Module wireguard/0.0.20170726 already built for kernel 
+4.11.11-300.fc26.x86_64/4
+
+[root@localhost ~]# ip link add dev wg0 type wireguard
+
+[root@localhost ~]# wg show
+interface: wg0
+
+You either want to install the kernel-headers package that matches your 
+currently running kernel or dnf update and reboot, then DKMS will auto 
+build the WireGuard kernel module on boot.
+
+Joe
+
+--
+Joe Doss
+joe@solidadmin.com
