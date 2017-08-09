@@ -1,24 +1,22 @@
-Return-Path: joe@solidadmin.com
+Return-Path: egbert@eggiecode.org
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ca7f3a6f
- for <wireguard@lists.zx2c4.com>; Wed, 9 Aug 2017 01:29:44 +0000 (UTC)
-Received: from conquer.yellowcord.com (conquer.yellowcord.com [45.55.224.114])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id df86ada5
- for <wireguard@lists.zx2c4.com>; Wed, 9 Aug 2017 01:29:44 +0000 (UTC)
-Received: from d53-64-244-190.nap.wideopenwest.com ([64.53.190.244]:63235
- helo=[192.168.1.155])
- by conquer.yellowcord.com with esmtpsa (TLSv1.2:DHE-RSA-AES128-SHA:128)
- (Exim 4.85) (envelope-from <joe@solidadmin.com>) id 1dfG9q-0005iL-2J
- for wireguard@lists.zx2c4.com; Tue, 08 Aug 2017 20:51:38 -0500
-Subject: Re: trouble installing on Fedora and CentOS
-To: wireguard@lists.zx2c4.com
-References: <CAJkVDg1O8SXWtR1cazOMQX6U-sxRVh57MNfTdNGBLpCUdOPnog@mail.gmail.com>
-From: Joe Doss <joe@solidadmin.com>
-Message-ID: <0774b643-23a3-5e57-c4db-889db42ae7eb@solidadmin.com>
-Date: Tue, 8 Aug 2017 20:51:37 -0500
-MIME-Version: 1.0
-In-Reply-To: <CAJkVDg1O8SXWtR1cazOMQX6U-sxRVh57MNfTdNGBLpCUdOPnog@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5cda03c5
+ for <wireguard@lists.zx2c4.com>; Wed, 9 Aug 2017 10:55:05 +0000 (UTC)
+Received: from mail01.eggieservers.nl (mail01.eggieservers.nl
+ [149.210.159.147])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 17b586f9
+ for <wireguard@lists.zx2c4.com>; Wed, 9 Aug 2017 10:55:05 +0000 (UTC)
+Message-ID: <1502277405.1043.2.camel@eggiecode.org>
+Subject: Re: Advising in packages to load new module or reboot
+From: Egbert Verhage <egbert@eggiecode.org>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>, Daniel Kahn Gillmor
+ <dkg@fifthhorseman.net>, Anonymous Anonymous <admin@hda.me>, WireGuard
+ mailing list <wireguard@lists.zx2c4.com>
+Date: Wed, 09 Aug 2017 13:16:45 +0200
+In-Reply-To: <20170808231612.GA24254@zx2c4.com>
+References: <20170808231612.GA24254@zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -28,93 +26,87 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hey Adam,
+Hey Jason,
 
-Thanks for using WireGuard. See my response below.
+Ow, that it is a common problem.
+I think your patch is a nice updated.
 
-On 08/08/2017 02:58 PM, adam souzis wrote:
-> I've been impressed with Wireguard, its design has helped simplify the 
-> implementation of a distributed sandbox app I am building quite a bit. 
-> But I have had mixed results getting it running on different distributions.
+So I got some time left and build a patch (pull request) on github
+here: https://github.com/EggieCode/wireguard-ppa/pull/24
+
+Let me known what you think.
+
+Greetz,
+Egbert
+
+On Wed, 2017-08-09 at 01:16 +0200, Jason A. Donenfeld wrote:
+> Hey guys,
 > 
-> The good news is that I can report that I was able to build, install and 
-> run Wireguard on CoreOs.
+> I've noticed that around 60% of emails and IRC messages I get about
+> WireGuard issues are due to:
 > 
-> The bad news is I was unable to get Wireguard working on either CentOS 
-> 7, Fedora 26 or Fedora 25 (running these on AWS), it doesn't appear to 
-> be installing the kernel module properly.
+> 1) forgetting to `rmmod wireguard && modprobe wireguard` after
+> updating
+> 2) installing new kernel headers, removing old kernel headers,
+> updating
+>    wireguard, and then having the module built for the newer kernel
+> and
+>    forgetting to reboot
+> 3) not having any headers installed
 > 
-> Here's what I see when install the RPM:
+> I don't really know the best generic solution for (3), since
+> different
+> distros and distro-derivatives (armbian,raspian,archlinuxarm,etc)
+> seem
+> to express these dependencies in different ways, or not at all. But I
+> do
+> have an idea to pretty easily address (1) and (2). I've just added
+> the
+> below to the Gentoo ebuild:
 > 
-> + dkms add -m wireguard -v 0.0.20170629 -q --rpm_safe_upgrade
+> + if [[ $(uname -r) != "${KV_FULL}" ]]; then
+> +         ewarn
+> +         ewarn "You have just built WireGuard for kernel ${KV_FULL},
+> yet the currently running"
+> +         ewarn "kernel is $(uname -r). If you intend to use this
+> WireGuard module on the currently"
+> +         ewarn "running machine, you will first need to reboot it
+> into the kernel ${KV_FULL}, for"
+> +         ewarn "which this module was built."
+> +         ewarn
+> + elif [[ -f /sys/module/wireguard/version ]] && \
+> +      old="$(< /sys/module/wireguard/version)" && \
+> +      new="$(modinfo -F version
+> "${ROOT}/lib/modules/${KV_FULL}/net/wireguard.ko" 2>/dev/null)" && \
+> +      [[ $old != "$new" ]]; then
+> +         ewarn
+> +         ewarn "You appear to have just upgraded WireGuard from
+> version v$old to v$new."
+> +         ewarn "However, the old version is still running on your
+> system. In order to use the"
+> +         ewarn "new version, you will need to remove the old module
+> and load the new one. As"
+> +         ewarn "root, you can accomplish this with the following
+> commands:"
+> +         ewarn
+> +         ewarn "    # rmmod wireguard"
+> +         ewarn "    # modprobe wireguard"
+> +         ewarn
+> +         ewarn "Do note that doing this will remove current
+> WireGuard interfaces, so you may want"
+> +         ewarn "to gracefully remove them yourself prior."
+> +         ewarn
+> + fi
 > 
-> + dkms build -m wireguard -v 0.0.20170629 -q
+> There's a bit of Gentoo-specific stuff in there, but the general idea
+> is
+> that I first check to see if the module is being built for the
+> current
+> kernel or a different one, and then I check whether an older module
+> is
+> loaded than the one just built. It might be slightly trickier to
+> accomplish this with DKMS, but I think still it's possible.
 > 
-> + dkms install -m wireguard -v 0.0.20170629 -q
+> Any thoughts on this pattern?
 > 
-> D: %post(wireguard-dkms-1:0.0.20170629-2.fc25.noarch): waitpid(14760) rc 
-> 14760 status 100
-> 
-> warning: %post(wireguard-dkms-1:0.0.20170629-2.fc25.noarch) scriptlet 
-> failed, exit status 1
-> 
-> Non-fatal POSTIN scriptlet failure in rpm package wireguard-dkms
-Are you running into this issue on a freshly provisioned server? Or 
-after you do a system update? Do you reboot into the most current kernel 
-if you do update? Does the kernel update along with kernel-devel and 
-kernel-headers?
-
-This issue is caused by you running a kernel that doesn't have the 
-correct kernel-header package installed:
-
-[root@localhost ~]# dkms status
-wireguard, 0.0.20170726: added
-
-[root@localhost wireguard-0.0.20170726]# dkms build -m wireguard -v 
-0.0.20170726
-Error! echo
-Your kernel headers for kernel 4.11.8-300.fc26.x86_64 cannot be found at
-/lib/modules/4.11.8-300.fc26.x86_64/build or 
-/lib/modules/4.11.8-300.fc26.x86_64/source.
-
-[root@localhost ~]# uname -a
-Linux localhost.localdomain 4.11.8-300.fc26.x86_64 #1 SMP Thu Jun 29 
-20:09:48 UTC 2017 x86_64 x86_64 x86_64 GNU/Linux
-
-[root@localhost ~]# rpm -qa |grep kernel
-kernel-devel-4.11.11-300.fc26.x86_64
-kernel-core-4.11.8-300.fc26.x86_64
-kernel-headers-4.11.11-300.fc26.x86_64
-
-I just tested the latest package on Vagrant and it works after running a 
-dnf update and rebooting into the most current kernel that matches the 
-currently installed kernel headers package.
-
-[root@localhost ~]# uname -a
-Linux localhost.localdomain 4.11.11-300.fc26.x86_64 #1 SMP Mon Jul 17 
-16:32:11 UTC 2017 x86_64 x86_64 x86_64 GNU/Linux
-
-[root@localhost ~]# rpm -qa |grep kernel
-kernel-devel-4.11.11-300.fc26.x86_64
-kernel-core-4.11.8-300.fc26.x86_64
-kernel-headers-4.11.11-300.fc26.x86_64
-kernel-core-4.11.11-300.fc26.x86_64
-
-[root@localhost ~]# dkms build -m wireguard -v 0.0.20170726
-Module wireguard/0.0.20170726 already built for kernel 
-4.11.11-300.fc26.x86_64/4
-
-[root@localhost ~]# ip link add dev wg0 type wireguard
-
-[root@localhost ~]# wg show
-interface: wg0
-
-You either want to install the kernel-headers package that matches your 
-currently running kernel or dnf update and reboot, then DKMS will auto 
-build the WireGuard kernel module on boot.
-
-Joe
-
---
-Joe Doss
-joe@solidadmin.com
+> Jason
