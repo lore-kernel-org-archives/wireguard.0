@@ -1,40 +1,28 @@
 Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 50ecdcea
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 90477863
  for <wireguard@lists.zx2c4.com>;
- Thu, 10 Aug 2017 18:20:57 +0000 (UTC)
+ Thu, 10 Aug 2017 18:22:34 +0000 (UTC)
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 38250c17
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e23a5825
  for <wireguard@lists.zx2c4.com>;
- Thu, 10 Aug 2017 18:20:57 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5e854e9a
+ Thu, 10 Aug 2017 18:22:34 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 162d2f58
  for <wireguard@lists.zx2c4.com>;
- Thu, 10 Aug 2017 18:40:00 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id f8970bc6
+ Thu, 10 Aug 2017 18:41:37 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 4ad66b8f
  (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 10 Aug 2017 18:39:59 +0000 (UTC)
-Received: by mail-io0-f182.google.com with SMTP id j32so12877788iod.0
- for <wireguard@lists.zx2c4.com>; Thu, 10 Aug 2017 11:43:03 -0700 (PDT)
+ Thu, 10 Aug 2017 18:41:37 +0000 (UTC)
+Received: by mail-it0-f48.google.com with SMTP id m34so16608200iti.1
+ for <wireguard@lists.zx2c4.com>; Thu, 10 Aug 2017 11:44:40 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9q5T-KpTatXxLZ_H_j_Ly=ZTX63wKTeYD=jqKQeupFFpQ@mail.gmail.com>
-References: <CAF75rJBdfeD-7MpDGfFBV=bLbm0-H--mFin30QL9jDmpd4z1jw@mail.gmail.com>
- <CAHmME9oj1N3PdutkA1dAPOieqn6ukUPnRONp-_iBck1HhnjZiw@mail.gmail.com>
- <CAF75rJDubyJwgrwTFTTzM4nKX2e=+6h_qBBC+Vt4FvzVhbfnuw@mail.gmail.com>
- <CAHmME9pujFf3pUAr9NZK81DZMQHYsH1gvgh3uH6RAQwNEZ8JDA@mail.gmail.com>
- <CAF75rJD7ZcSKp6WiEHg+VUa7=07-+9P3r6TxU6s9ieW+LdkNhQ@mail.gmail.com>
- <CAF75rJD3LH-CcPt2Da2qfxtv7C+W4Ed=ORkUg0L2vW1QiUfBcg@mail.gmail.com>
- <CAHmME9rJ7BiinhPRhOqzAjZJEdc=wKzdk80Dvi=xQnP2fu_eqw@mail.gmail.com>
- <CAF75rJDj79FU7GMa1DKxPNZ9V2dSW0+rFUDQjmEJ_z3ZDeuuGA@mail.gmail.com>
- <CAHmME9q5T-KpTatXxLZ_H_j_Ly=ZTX63wKTeYD=jqKQeupFFpQ@mail.gmail.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 10 Aug 2017 20:43:02 +0200
-Message-ID: <CAHmME9r-TM_T7aqNfBhXVyF_Lc5Nf0KQGCqTCcZSEpZY+mMBYw@mail.gmail.com>
-Subject: Re: Multihomed server issue
-To: Wang Jian <larkwang@gmail.com>
+Date: Thu, 10 Aug 2017 20:44:39 +0200
+Message-ID: <CAHmME9qY-yF2UNOwex1fnvQOtGYvNVhztp3434OjKv0BEc2MmA@mail.gmail.com>
+Subject: Off the grid
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
- Jan De Landtsheer <jan@delandtsheer.eu>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -44,14 +32,13 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Thu, Aug 10, 2017 at 4:29 PM, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
-> It seems like the problem you're facing is that B does not belong to
-> I, because B belongs to an unrouted dummy0 interface. The solution
-> would be to change the question of step 4 to instead ask if _any_
-> interface contains B, not just the returned interface I. While this is
-> essentially what's done for IPv6, I'm not certain this is the correct
-> behavior for IPv4.
+Hey folks,
 
-This looks like http://ix.io/z3d if you want to try it and report back.
+Just FYI, I'll be out of touch for a little while on vacation.
+Development should resume at an even faster pace than before when I
+return. But, if I'm not responding to posts during the next few weeks,
+please just be patient. Hopefully some of the regulars here can handle
+the various support emails we get on the list.
 
+Regards,
 Jason
