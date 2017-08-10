@@ -1,38 +1,33 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: jan.delandtsheer@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1d09d92f
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2003d05f
  for <wireguard@lists.zx2c4.com>;
- Thu, 10 Aug 2017 20:41:37 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 561bf477
+ Thu, 10 Aug 2017 20:55:51 +0000 (UTC)
+Received: from mail-oi0-f46.google.com (mail-oi0-f46.google.com
+ [209.85.218.46])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ae292308
  for <wireguard@lists.zx2c4.com>;
- Thu, 10 Aug 2017 20:41:37 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7a81945d
- for <wireguard@lists.zx2c4.com>;
- Thu, 10 Aug 2017 21:00:40 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 19300b8f
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Thu, 10 Aug 2017 21:00:40 +0000 (UTC)
-Received: by mail-io0-f179.google.com with SMTP id c74so13946074iod.4
- for <wireguard@lists.zx2c4.com>; Thu, 10 Aug 2017 14:03:44 -0700 (PDT)
+ Thu, 10 Aug 2017 20:55:51 +0000 (UTC)
+Received: by mail-oi0-f46.google.com with SMTP id x3so18507610oia.1
+ for <wireguard@lists.zx2c4.com>; Thu, 10 Aug 2017 14:17:59 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CABQfmN0ULhDZ5vgrdgiQMy83Lt0Lze4bB3e08araPFtreW=oOQ@mail.gmail.com>
-References: <CADqnr01+qq8K+083_LRJeq424BHB_F+R-nxoGdrWAPCuS1r=gA@mail.gmail.com>
- <CAHmME9pMAMC4DY6PXTB_y64O6O2O6JVQY8ks=c=co+gDFYMHqA@mail.gmail.com>
- <CADqnr00euKzi7R44JSTktKCbooodU5Y1sko6wP9b8bpf4SLFbg@mail.gmail.com>
- <CAHmME9q8hNh8tfqruwyYfb0G0qZgdHN53p2NVzpG8QZcx++z8Q@mail.gmail.com>
- <CABQfmN1fviFhgp1bw82_A9RnZrokch+PmwLZCUMZm=F_doxc5g@mail.gmail.com>
- <CABQfmN3EFBL-w3KwLJQMa3HB7_FTrFEFXyQyeJqDtM4yg4DW4Q@mail.gmail.com>
- <CAHmME9qNUzNqPQK-csdRou3Ndy5rqsugdMQ132_uADNOhmMeuw@mail.gmail.com>
- <CABQfmN3uYPrhMzUOvQ9cphXVN3WwNE8YAXdyrTa_cYtfr=9BLA@mail.gmail.com>
- <CABQfmN0ULhDZ5vgrdgiQMy83Lt0Lze4bB3e08araPFtreW=oOQ@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 10 Aug 2017 23:03:43 +0200
-Message-ID: <CAHmME9pySYzi06OU0QhG_XdmKMJMKg=UBhYcZ_rR-YEmrbETLw@mail.gmail.com>
-Subject: Re: FR: interface ListenAddress (Aka:Multihomed server issue)
-To: Jan De Landtsheer <jan.delandtsheer@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+References: <CAF75rJBdfeD-7MpDGfFBV=bLbm0-H--mFin30QL9jDmpd4z1jw@mail.gmail.com>
+ <CAHmME9oj1N3PdutkA1dAPOieqn6ukUPnRONp-_iBck1HhnjZiw@mail.gmail.com>
+ <CAF75rJDubyJwgrwTFTTzM4nKX2e=+6h_qBBC+Vt4FvzVhbfnuw@mail.gmail.com>
+ <CAHmME9pujFf3pUAr9NZK81DZMQHYsH1gvgh3uH6RAQwNEZ8JDA@mail.gmail.com>
+ <CAF75rJD7ZcSKp6WiEHg+VUa7=07-+9P3r6TxU6s9ieW+LdkNhQ@mail.gmail.com>
+ <CAF75rJD3LH-CcPt2Da2qfxtv7C+W4Ed=ORkUg0L2vW1QiUfBcg@mail.gmail.com>
+ <CAHmME9rJ7BiinhPRhOqzAjZJEdc=wKzdk80Dvi=xQnP2fu_eqw@mail.gmail.com>
+ <CAF75rJDj79FU7GMa1DKxPNZ9V2dSW0+rFUDQjmEJ_z3ZDeuuGA@mail.gmail.com>
+ <CAHmME9q5T-KpTatXxLZ_H_j_Ly=ZTX63wKTeYD=jqKQeupFFpQ@mail.gmail.com>
+ <CAHmME9r-TM_T7aqNfBhXVyF_Lc5Nf0KQGCqTCcZSEpZY+mMBYw@mail.gmail.com>
+In-Reply-To: <CAHmME9r-TM_T7aqNfBhXVyF_Lc5Nf0KQGCqTCcZSEpZY+mMBYw@mail.gmail.com>
+From: Jan De Landtsheer <jan.delandtsheer@gmail.com>
+Date: Thu, 10 Aug 2017 21:17:48 +0000
+Message-ID: <CABQfmN3JZ2oBQQJyEPv2CEV+LZJPjPDszyXL8Y-R=fzuy8NFhg@mail.gmail.com>
+Subject: Re: Multihomed server issue
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>, Wang Jian <larkwang@gmail.com>
+Content-Type: multipart/alternative; boundary="001a113acab216001b05566cbb74"
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
  Jan De Landtsheer <jan@delandtsheer.eu>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
@@ -44,87 +39,53 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Thu, Aug 10, 2017 at 11:00 PM, Jan De Landtsheer
-<jan.delandtsheer@gmail.com> wrote:
-> seeing the latest & greatest, this patch will not apply cleanly, so I don't
-> know ... is this train of thought going to be kept for later releases ?
+--001a113acab216001b05566cbb74
+Content-Type: text/plain; charset="UTF-8"
 
-If anything changes, it would be for whatever snapshot I publish after
-vacation. But I'd like some feedback on whether or not it works first.
+indeed, this looks the same
 
-zx2c4@thinkpad ~ $ git clone https://git.zx2c4.com/WireGuard
-Cloning into 'WireGuard'...
-remote: Counting objects: 3995, done.
-remote: Compressing objects: 100% (1623/1623), done.
-remote: Total 3995 (delta 2913), reused 3212 (delta 2301)
-Receiving objects: 100% (3995/3995), 778.37 KiB | 1.76 MiB/s, done.
-Resolving deltas: 100% (2913/2913), done.
-zx2c4@thinkpad ~ $ cd WireGuard/
-zx2c4@thinkpad ~/WireGuard $ curl http://ix.io/z3d | patch -p1
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-100   807  100   807    0     0    919      0 --:--:-- --:--:-- --:--:--  1310
-patching file src/socket.c
-zx2c4@thinkpad ~/WireGuard $ cd src
-zx2c4@thinkpad ~/WireGuard/src $ make -j9
-make -C tools
-make[1]: Entering directory '/home/zx2c4/WireGuard/src/tools'
-cc -O3 -std=gnu11 -D_GNU_SOURCE -Wall -Wextra -MMD -MP
--DRUNSTATEDIR="\"/var/run\""    -c -o wg.o wg.c
-cc -O3 -std=gnu11 -D_GNU_SOURCE -Wall -Wextra -MMD -MP
--DRUNSTATEDIR="\"/var/run\""    -c -o config.o config.c
-cc -O3 -std=gnu11 -D_GNU_SOURCE -Wall -Wextra -MMD -MP
--DRUNSTATEDIR="\"/var/run\""    -c -o show.o show.c
-cc -O3 -std=gnu11 -D_GNU_SOURCE -Wall -Wextra -MMD -MP
--DRUNSTATEDIR="\"/var/run\""    -c -o terminal.o terminal.c
-cc -O3 -std=gnu11 -D_GNU_SOURCE -Wall -Wextra -MMD -MP
--DRUNSTATEDIR="\"/var/run\""    -c -o ipc.o ipc.c
-cc -O3 -std=gnu11 -D_GNU_SOURCE -Wall -Wextra -MMD -MP
--DRUNSTATEDIR="\"/var/run\""    -c -o encoding.o encoding.c
-cc -O3 -std=gnu11 -D_GNU_SOURCE -Wall -Wextra -MMD -MP
--DRUNSTATEDIR="\"/var/run\""    -c -o curve25519.o curve25519.c
-cc -O3 -std=gnu11 -D_GNU_SOURCE -Wall -Wextra -MMD -MP
--DRUNSTATEDIR="\"/var/run\""    -c -o setconf.o setconf.c
-make -C /lib/modules/4.12.5-gentoo/build M=/home/zx2c4/WireGuard/src modules
-make[1]: Entering directory '/usr/src/linux-4.12.5-gentoo'
-cc -O3 -std=gnu11 -D_GNU_SOURCE -Wall -Wextra -MMD -MP
--DRUNSTATEDIR="\"/var/run\""    -c -o genkey.o genkey.c
-cc -O3 -std=gnu11 -D_GNU_SOURCE -Wall -Wextra -MMD -MP
--DRUNSTATEDIR="\"/var/run\""    -c -o showconf.o showconf.c
-cc -O3 -std=gnu11 -D_GNU_SOURCE -Wall -Wextra -MMD -MP
--DRUNSTATEDIR="\"/var/run\""    -c -o pubkey.o pubkey.c
-cc -O3 -std=gnu11 -D_GNU_SOURCE -Wall -Wextra -MMD -MP
--DRUNSTATEDIR="\"/var/run\""    -c -o set.o set.c
-cc   wg.o config.o show.o terminal.o ipc.o encoding.o curve25519.o
-setconf.o genkey.o showconf.o pubkey.o set.o  -lmnl -o wg
-make[1]: Leaving directory '/home/zx2c4/WireGuard/src/tools'
-  CC [M]  /home/zx2c4/WireGuard/src/main.o
-  CC [M]  /home/zx2c4/WireGuard/src/noise.o
-  CC [M]  /home/zx2c4/WireGuard/src/device.o
-  CC [M]  /home/zx2c4/WireGuard/src/peer.o
-  CC [M]  /home/zx2c4/WireGuard/src/timers.o
-  CC [M]  /home/zx2c4/WireGuard/src/data.o
-  CC [M]  /home/zx2c4/WireGuard/src/send.o
-  CC [M]  /home/zx2c4/WireGuard/src/receive.o
-  CC [M]  /home/zx2c4/WireGuard/src/socket.o
-  CC [M]  /home/zx2c4/WireGuard/src/config.o
-  CC [M]  /home/zx2c4/WireGuard/src/hashtables.o
-  CC [M]  /home/zx2c4/WireGuard/src/routingtable.o
-  CC [M]  /home/zx2c4/WireGuard/src/ratelimiter.o
-  CC [M]  /home/zx2c4/WireGuard/src/cookie.o
-  CC [M]  /home/zx2c4/WireGuard/src/crypto/curve25519.o
-  CC [M]  /home/zx2c4/WireGuard/src/crypto/chacha20poly1305.o
-  CC [M]  /home/zx2c4/WireGuard/src/crypto/blake2s.o
-  AS [M]  /home/zx2c4/WireGuard/src/crypto/chacha20-ssse3-x86_64.o
-  AS [M]  /home/zx2c4/WireGuard/src/crypto/poly1305-sse2-x86_64.o
-  AS [M]  /home/zx2c4/WireGuard/src/crypto/blake2s-avx-x86_64.o
-  AS [M]  /home/zx2c4/WireGuard/src/crypto/curve25519-avx-x86_64.o
-  AS [M]  /home/zx2c4/WireGuard/src/crypto/chacha20-avx2-x86_64.o
-  AS [M]  /home/zx2c4/WireGuard/src/crypto/poly1305-avx2-x86_64.o
-  LD [M]  /home/zx2c4/WireGuard/src/wireguard.o
-  Building modules, stage 2.
-  MODPOST 1 modules
-  CC      /home/zx2c4/WireGuard/src/wireguard.mod.o
-  LD [M]  /home/zx2c4/WireGuard/src/wireguard.ko
-make[1]: Leaving directory '/usr/src/linux-4.12.5-gentoo'
-zx2c4@thinkpad ~/WireGuard/src $ sudo rmmod wireguard; sudo make install
+
+On Thu, Aug 10, 2017 at 8:43 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+
+> On Thu, Aug 10, 2017 at 4:29 PM, Jason A. Donenfeld <Jason@zx2c4.com>
+> wrote:
+> > It seems like the problem you're facing is that B does not belong to
+> > I, because B belongs to an unrouted dummy0 interface. The solution
+> > would be to change the question of step 4 to instead ask if _any_
+> > interface contains B, not just the returned interface I. While this is
+> > essentially what's done for IPv6, I'm not certain this is the correct
+> > behavior for IPv4.
+>
+> This looks like http://ix.io/z3d if you want to try it and report back.
+>
+> Jason
+>
+
+--001a113acab216001b05566cbb74
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">indeed, this looks the same<div><br></div></div><br><div c=
+lass=3D"gmail_quote"><div dir=3D"ltr">On Thu, Aug 10, 2017 at 8:43 PM Jason=
+ A. Donenfeld &lt;<a href=3D"mailto:Jason@zx2c4.com">Jason@zx2c4.com</a>&gt=
+; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .=
+8ex;border-left:1px #ccc solid;padding-left:1ex">On Thu, Aug 10, 2017 at 4:=
+29 PM, Jason A. Donenfeld &lt;<a href=3D"mailto:Jason@zx2c4.com" target=3D"=
+_blank">Jason@zx2c4.com</a>&gt; wrote:<br>
+&gt; It seems like the problem you&#39;re facing is that B does not belong =
+to<br>
+&gt; I, because B belongs to an unrouted dummy0 interface. The solution<br>
+&gt; would be to change the question of step 4 to instead ask if _any_<br>
+&gt; interface contains B, not just the returned interface I. While this is=
+<br>
+&gt; essentially what&#39;s done for IPv6, I&#39;m not certain this is the =
+correct<br>
+&gt; behavior for IPv4.<br>
+<br>
+This looks like <a href=3D"http://ix.io/z3d" rel=3D"noreferrer" target=3D"_=
+blank">http://ix.io/z3d</a> if you want to try it and report back.<br>
+<br>
+Jason<br>
+</blockquote></div>
+
+--001a113acab216001b05566cbb74--
