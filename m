@@ -1,22 +1,39 @@
-Return-Path: jan@delandtsheer.eu
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 04621449
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e170eb0d
  for <wireguard@lists.zx2c4.com>;
- Thu, 10 Aug 2017 08:51:54 +0000 (UTC)
-Received: from mail-yw0-f193.google.com (mail-yw0-f193.google.com
- [209.85.161.193])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b7e6a6ae
+ Thu, 10 Aug 2017 14:07:51 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4076f839
  for <wireguard@lists.zx2c4.com>;
- Thu, 10 Aug 2017 08:51:54 +0000 (UTC)
-Received: by mail-yw0-f193.google.com with SMTP id p68so78497ywg.5
- for <wireguard@lists.zx2c4.com>; Thu, 10 Aug 2017 02:13:58 -0700 (PDT)
+ Thu, 10 Aug 2017 14:07:51 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d0ea0b22
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 10 Aug 2017 14:26:54 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id c180033b
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 10 Aug 2017 14:26:53 +0000 (UTC)
+Received: by mail-it0-f49.google.com with SMTP id 76so13778460ith.0
+ for <wireguard@lists.zx2c4.com>; Thu, 10 Aug 2017 07:29:55 -0700 (PDT)
 MIME-Version: 1.0
-From: Jan De Landtsheer <jan@delandtsheer.eu>
-Date: Thu, 10 Aug 2017 09:13:46 +0000
-Message-ID: <CADqnr01+qq8K+083_LRJeq424BHB_F+R-nxoGdrWAPCuS1r=gA@mail.gmail.com>
-Subject: FR: interface ListenAddress (Aka:Multihomed server issue)
-To: wireguard@lists.zx2c4.com
-Content-Type: multipart/alternative; boundary="001a114e46a0c99b120556629dee"
+In-Reply-To: <CAF75rJDj79FU7GMa1DKxPNZ9V2dSW0+rFUDQjmEJ_z3ZDeuuGA@mail.gmail.com>
+References: <CAF75rJBdfeD-7MpDGfFBV=bLbm0-H--mFin30QL9jDmpd4z1jw@mail.gmail.com>
+ <CAHmME9oj1N3PdutkA1dAPOieqn6ukUPnRONp-_iBck1HhnjZiw@mail.gmail.com>
+ <CAF75rJDubyJwgrwTFTTzM4nKX2e=+6h_qBBC+Vt4FvzVhbfnuw@mail.gmail.com>
+ <CAHmME9pujFf3pUAr9NZK81DZMQHYsH1gvgh3uH6RAQwNEZ8JDA@mail.gmail.com>
+ <CAF75rJD7ZcSKp6WiEHg+VUa7=07-+9P3r6TxU6s9ieW+LdkNhQ@mail.gmail.com>
+ <CAF75rJD3LH-CcPt2Da2qfxtv7C+W4Ed=ORkUg0L2vW1QiUfBcg@mail.gmail.com>
+ <CAHmME9rJ7BiinhPRhOqzAjZJEdc=wKzdk80Dvi=xQnP2fu_eqw@mail.gmail.com>
+ <CAF75rJDj79FU7GMa1DKxPNZ9V2dSW0+rFUDQjmEJ_z3ZDeuuGA@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 10 Aug 2017 16:29:54 +0200
+Message-ID: <CAHmME9q5T-KpTatXxLZ_H_j_Ly=ZTX63wKTeYD=jqKQeupFFpQ@mail.gmail.com>
+Subject: Re: Multihomed server issue
+To: Wang Jian <larkwang@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ Jan De Landtsheer <jan@delandtsheer.eu>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,214 +43,37 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---001a114e46a0c99b120556629dee
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi Wang,
 
-Jason,
-To elaborate on
-https://lists.zx2c4.com/pipermail/wireguard/2017-August/001598.html, there
-is something that can be clarified =E2=80=A6
+Did you have any luck reproducing this with the netns.sh script?
 
-I have a multihomed server (our router for everything) attached to a core
-switch with vlans, and the router runs openvswitch (but that=E2=80=99s besi=
-des the
-point).
+Here's what's happening here:
 
-We run a bunch of wg peers, interconnected to each other (30 or so), but
-most connect directly to our router.
+1. Packet from peer P arrives from src:A dst:B
+2. WireGuard records that it should contact P at src:B dst:A
+3. When sending an encrypted packet to P, it asks for which interface
+to use for src:B dst:A. The routing API returns interface I.
+4. We ask whether interface I has an address B assigned to it. If yes,
+we transmit the packet as src:B dst:A using interface I, and return.
+If no, we move to step 5:
+5. We ask which interface and src IP we should use for src:default
+dst:A. The routing API returns interface I' (which may be the same as
+I or perhaps not) and a default src address, B', for interface I'.
+6. We transmit the packet as src:B' dst:A using interface I'.
 
-The router has an Uplink interface with a /30 and I use that interface
-solely to forward packets to our (bgp routed) default gw (Provider).
+In the past, this has been sufficient for handling issues with
+multihomed servers, while still dealing gracefully with IP address
+changes.
 
-On the same router, I have a Public Interface, also with a public IP (/24)
-and have on the router itself some IP addresses used for DNAT, and here
-specifically one for Wireguard. (so NOT the Uplink IP address)
+It seems like the problem you're facing is that B does not belong to
+I, because B belongs to an unrouted dummy0 interface. The solution
+would be to change the question of step 4 to instead ask if _any_
+interface contains B, not just the returned interface I. While this is
+essentially what's done for IPv6, I'm not certain this is the correct
+behavior for IPv4. Do you know of any relevant RFCs for your use of v4
+dummy interfaces and RTS routing? Or some other reference?
 
-When wireguard clients connect, their config shows their peer to be the
-Uplink IP address instead of the IP on the Public interface that was
-specifically assigned for wireguard (wgsrv), and as such packets sent to
-the Uplink IP address were dropped by the firewall.
+Please do let me know whether the above is an accurate representation
+of the problem you're facing.
 
-You might say: open up the port for wireguard on the Uplink and off you go.
-Which I did, to solve my immediate problem. (still find it ugly)
-
-But no we=E2=80=99re getting a second provider in da house, that will be co=
-nnected
-the same way as the other, with that link being Uplink2. So now I *really*
-need my bgp routed Public IP address to be the sole answering wireguard IP
-packets, so that I can be sure that if one of my bgp peers dies, the same
-Public ip address is used by the clients, not the one wireguard deduces
-from the subnet with the default route.
-
-Now, wireguard will use the incoming UplinkX ip as source and advertise it
-to the clients connected through either one that has the same metric and
-routing policy
-
-Voila=E2=80=A6 in a nutshell ;-)
-
-Jan
-=E2=80=8B
-
---001a114e46a0c99b120556629dee
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div class=3D"markdown-here-wrapper" style=3D""><p style=
-=3D"margin:0px 0px 1.2em!important">Jason,<br>To elaborate on <a href=3D"ht=
-tps://lists.zx2c4.com/pipermail/wireguard/2017-August/001598.html">https://=
-lists.zx2c4.com/pipermail/wireguard/2017-August/001598.html</a>, there is s=
-omething that can be clarified =E2=80=A6</p>
-<p style=3D"margin:0px 0px 1.2em!important">I have a multihomed server (our=
- router for everything) attached to a core switch with vlans, and the route=
-r runs openvswitch (but that=E2=80=99s besides the point).</p>
-<p style=3D"margin:0px 0px 1.2em!important">We run a bunch of wg peers, int=
-erconnected to each other (30 or so), but most connect directly to our rout=
-er.</p>
-<p style=3D"margin:0px 0px 1.2em!important">The router has an <code style=
-=3D"font-size:0.85em;font-family:Consolas,Inconsolata,Courier,monospace;mar=
-gin:0px 0.15em;padding:0px 0.3em;white-space:pre-wrap;border:1px solid rgb(=
-234,234,234);background-color:rgb(248,248,248);border-radius:3px;display:in=
-line">Uplink</code> interface with a /30 and I use that interface solely to=
- forward packets to our (bgp routed) default gw (Provider).</p>
-<p style=3D"margin:0px 0px 1.2em!important">On the same router, I have a <c=
-ode style=3D"font-size:0.85em;font-family:Consolas,Inconsolata,Courier,mono=
-space;margin:0px 0.15em;padding:0px 0.3em;white-space:pre-wrap;border:1px s=
-olid rgb(234,234,234);background-color:rgb(248,248,248);border-radius:3px;d=
-isplay:inline">Public</code> Interface, also with a public IP (/24) and hav=
-e on the router itself some IP addresses used for DNAT, and here specifical=
-ly one for Wireguard. (so NOT the <code style=3D"font-size:0.85em;font-fami=
-ly:Consolas,Inconsolata,Courier,monospace;margin:0px 0.15em;padding:0px 0.3=
-em;white-space:pre-wrap;border:1px solid rgb(234,234,234);background-color:=
-rgb(248,248,248);border-radius:3px;display:inline">Uplink</code> IP address=
-)</p>
-<p style=3D"margin:0px 0px 1.2em!important">When wireguard clients connect,=
- their config shows their peer to be the <code style=3D"font-size:0.85em;fo=
-nt-family:Consolas,Inconsolata,Courier,monospace;margin:0px 0.15em;padding:=
-0px 0.3em;white-space:pre-wrap;border:1px solid rgb(234,234,234);background=
--color:rgb(248,248,248);border-radius:3px;display:inline">Uplink</code> IP =
-address instead of the IP on the <code style=3D"font-size:0.85em;font-famil=
-y:Consolas,Inconsolata,Courier,monospace;margin:0px 0.15em;padding:0px 0.3e=
-m;white-space:pre-wrap;border:1px solid rgb(234,234,234);background-color:r=
-gb(248,248,248);border-radius:3px;display:inline">Public</code> interface t=
-hat was specifically assigned for wireguard (<code style=3D"font-size:0.85e=
-m;font-family:Consolas,Inconsolata,Courier,monospace;margin:0px 0.15em;padd=
-ing:0px 0.3em;white-space:pre-wrap;border:1px solid rgb(234,234,234);backgr=
-ound-color:rgb(248,248,248);border-radius:3px;display:inline">wgsrv</code>)=
-, and as such packets sent to the <code style=3D"font-size:0.85em;font-fami=
-ly:Consolas,Inconsolata,Courier,monospace;margin:0px 0.15em;padding:0px 0.3=
-em;white-space:pre-wrap;border:1px solid rgb(234,234,234);background-color:=
-rgb(248,248,248);border-radius:3px;display:inline">Uplink</code> IP address=
- were dropped by the firewall.</p>
-<p style=3D"margin:0px 0px 1.2em!important">You might say: open up the port=
- for wireguard on the <code style=3D"font-size:0.85em;font-family:Consolas,=
-Inconsolata,Courier,monospace;margin:0px 0.15em;padding:0px 0.3em;white-spa=
-ce:pre-wrap;border:1px solid rgb(234,234,234);background-color:rgb(248,248,=
-248);border-radius:3px;display:inline">Uplink</code> and off you go. Which =
-I did, to solve my immediate problem. (still find it ugly)</p>
-<p style=3D"margin:0px 0px 1.2em!important">But no we=E2=80=99re getting a =
-second provider in da house, that will be connected the same way as the oth=
-er, with that link being <code style=3D"font-size:0.85em;font-family:Consol=
-as,Inconsolata,Courier,monospace;margin:0px 0.15em;padding:0px 0.3em;white-=
-space:pre-wrap;border:1px solid rgb(234,234,234);background-color:rgb(248,2=
-48,248);border-radius:3px;display:inline">Uplink2</code>. So now I <em>real=
-ly</em> need my bgp routed <code style=3D"font-size:0.85em;font-family:Cons=
-olas,Inconsolata,Courier,monospace;margin:0px 0.15em;padding:0px 0.3em;whit=
-e-space:pre-wrap;border:1px solid rgb(234,234,234);background-color:rgb(248=
-,248,248);border-radius:3px;display:inline">Public</code> IP address to be =
-the sole answering wireguard IP packets, so that I can be sure that if one =
-of my bgp peers dies, the same <code style=3D"font-size:0.85em;font-family:=
-Consolas,Inconsolata,Courier,monospace;margin:0px 0.15em;padding:0px 0.3em;=
-white-space:pre-wrap;border:1px solid rgb(234,234,234);background-color:rgb=
-(248,248,248);border-radius:3px;display:inline">Public</code> ip address is=
- used by the clients, not the one wireguard deduces from the subnet with th=
-e default route.</p>
-<p style=3D"margin:0px 0px 1.2em!important">Now, wireguard will use the inc=
-oming <code style=3D"font-size:0.85em;font-family:Consolas,Inconsolata,Cour=
-ier,monospace;margin:0px 0.15em;padding:0px 0.3em;white-space:pre-wrap;bord=
-er:1px solid rgb(234,234,234);background-color:rgb(248,248,248);border-radi=
-us:3px;display:inline">UplinkX</code> ip as source and advertise it to the =
-clients connected through either one  that has the same metric and routing =
-policy</p>
-<p style=3D"margin:0px 0px 1.2em!important">Voila=E2=80=A6 in a nutshell ;-=
-)</p>
-<p style=3D"margin:0px 0px 1.2em!important">Jan</p>
-<div title=3D"MDH:SmFzb24swqA8ZGl2PlRvIGVsYWJvcmF0ZSBvbiZuYnNwOzxhIGhyZWY9I=
-mh0dHBzOi8vbGlzdHMu
-engyYzQuY29tL3BpcGVybWFpbC93aXJlZ3VhcmQvMjAxNy1BdWd1c3QvMDAxNTk4Lmh0bWwiPmh=
-0
-dHBzOi8vbGlzdHMuengyYzQuY29tL3BpcGVybWFpbC93aXJlZ3VhcmQvMjAxNy1BdWd1c3QvMDA=
-x
-NTk4Lmh0bWw8L2E+LCB0aGVyZSBpcyBzb21ldGhpbmcgdGhhdCBjYW4gYmUgY2xhcmlmaWVkIC4=
-u
-LjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+SSBoYXZlIGEgbXVsdGlob21lZCBzZXJ2ZXIgKG9=
-1
-ciByb3V0ZXIgZm9yIGV2ZXJ5dGhpbmcpIGF0dGFjaGVkIHRvIGEgY29yZSBzd2l0Y2ggd2l0aCB=
-2
-bGFucywgYW5kIHRoZSByb3V0ZXIgcnVucyBvcGVudnN3aXRjaCAoYnV0IHRoYXQncyBiZXNpZGV=
-z
-IHRoZSBwb2ludCkuPC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5XZSBydW4gYSBidW5jaCBvZiB=
-3
-ZyBwZWVycywgaW50ZXJjb25uZWN0ZWQgdG8gZWFjaCBvdGhlciAoMzAgb3Igc28pLCBidXQgbW9=
-z
-dCBjb25uZWN0IGRpcmVjdGx5IHRvIG91ciByb3V0ZXIuPC9kaXY+PGRpdj48YnI+PC9kaXY+PGR=
-p
-dj5UaGUgcm91dGVyIGhhcyBhbiBgVXBsaW5rYCBpbnRlcmZhY2Ugd2l0aCBhIC8zMCBhbmQgSSB=
-1
-c2UgdGhhdCBpbnRlcmZhY2Ugc29sZWx5IHRvIGZvcndhcmQgcGFja2V0cyB0byBvdXIgKGJncCB=
-y
-b3V0ZWQpIGRlZmF1bHQgZ3cgKFByb3ZpZGVyKS48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2Pk9=
-u
-IHRoZSBzYW1lIHJvdXRlciwgSSBoYXZlIGEgYFB1YmxpY2AgSW50ZXJmYWNlLCBhbHNvIHdpdGg=
-g
-YSBwdWJsaWMgSVAgKC8yNCkgYW5kIGhhdmUgb24gdGhlIHJvdXRlciBpdHNlbGYgc29tZSBJUCB=
-h
-ZGRyZXNzZXMgdXNlZCBmb3IgRE5BVCwgYW5kIGhlcmUgc3BlY2lmaWNhbGx5IG9uZSBmb3IgV2l=
-y
-ZWd1YXJkLiAoc28gTk9UIHRoZSBgVXBsaW5rYCBJUCBhZGRyZXNzKTwvZGl2PjxkaXY+PGJyPjw=
-v
-ZGl2PjxkaXY+V2hlbiB3aXJlZ3VhcmQgY2xpZW50cyBjb25uZWN0LCB0aGVpciBjb25maWcgc2h=
-v
-d3MgdGhlaXIgcGVlciB0byBiZSB0aGUgYFVwbGlua2AgSVAgYWRkcmVzcyBpbnN0ZWFkIG9mIHR=
-o
-ZSBJUCBvbiB0aGUgYFB1YmxpY2AgaW50ZXJmYWNlIHRoYXQgd2FzIHNwZWNpZmljYWxseSBhc3N=
-p
-Z25lZCBmb3Igd2lyZWd1YXJkIChgd2dzcnZgKSwgYW5kIGFzIHN1Y2ggcGFja2V0cyBzZW50IHR=
-v
-IHRoZSBgVXBsaW5rYCBJUCBhZGRyZXNzIHdlcmUgZHJvcHBlZCBieSB0aGUgZmlyZXdhbGwuPC9=
-k
-aXY+PGRpdj48YnI+PC9kaXY+PGRpdj5Zb3UgbWlnaHQgc2F5OiBvcGVuIHVwIHRoZSBwb3J0IGZ=
-v
-ciB3aXJlZ3VhcmQgb24gdGhlIGBVcGxpbmtgIGFuZCBvZmYgeW91IGdvLiBXaGljaCBJIGRpZCw=
-g
-dG8gc29sdmUgbXkgaW1tZWRpYXRlIHByb2JsZW0uIChzdGlsbCBmaW5kIGl0IHVnbHkpPC9kaXY=
-+
-PGRpdj48YnI+PC9kaXY+PGRpdj5CdXQgbm8gd2UncmUgZ2V0dGluZyBhIHNlY29uZCBwcm92aWR=
-l
-ciBpbiBkYSBob3VzZSwgdGhhdCB3aWxsIGJlIGNvbm5lY3RlZCB0aGUgc2FtZSB3YXkgYXMgdGh=
-l
-IG90aGVyLCB3aXRoIHRoYXQgbGluayBiZWluZyBgVXBsaW5rMmAuIFNvIG5vdyBJICpyZWFsbHk=
-q
-IG5lZWQgbXkgYmdwIHJvdXRlZCBgUHVibGljYCBJUCBhZGRyZXNzIHRvIGJlIHRoZSBzb2xlIGF=
-u
-c3dlcmluZyB3aXJlZ3VhcmQgSVAgcGFja2V0cywgc28gdGhhdCBJIGNhbiBiZSBzdXJlIHRoYXQ=
-g
-aWYgb25lIG9mIG15IGJncCBwZWVycyBkaWVzLCB0aGUgc2FtZSBgUHVibGljYCBpcCBhZGRyZXN=
-z
-IGlzIHVzZWQgYnkgdGhlIGNsaWVudHMsIG5vdCB0aGUgb25lIHdpcmVndWFyZCBkZWR1Y2VzIGZ=
-y
-b20gdGhlIHN1Ym5ldCB3aXRoIHRoZSBkZWZhdWx0IHJvdXRlLjwvZGl2PjxkaXY+PGJyPjwvZGl=
-2
-PjxkaXY+Tm93LCB3aXJlZ3VhcmQgd2lsbCB1c2UgdGhlIGluY29taW5nIGBVcGxpbmtYYCBpcCB=
-h
-cyBzb3VyY2UgYW5kIGFkdmVydGlzZSBpdCB0byB0aGUgY2xpZW50cyBjb25uZWN0ZWQgdGhyb3V=
-n
-aCBlaXRoZXIgb25lICZuYnNwO3RoYXQgaGFzIHRoZSBzYW1lIG1ldHJpYyBhbmQgcm91dGluZyB=
-w
-b2xpY3k8L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PlZvaWxhLi4uIGl=
-u
-IGEgbnV0c2hlbGwgOy0pPC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5KYW48L2Rpdj4=3D" sty=
-le=3D"height:0;width:0;max-height:0;max-width:0;overflow:hidden;font-size:0=
-em;padding:0;margin:0">=E2=80=8B</div></div></div>
-
---001a114e46a0c99b120556629dee--
+Jason
