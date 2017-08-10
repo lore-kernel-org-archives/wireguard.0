@@ -1,28 +1,29 @@
 Return-Path: jan.delandtsheer@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5ce0183b
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e46d6051
  for <wireguard@lists.zx2c4.com>;
- Thu, 10 Aug 2017 18:48:29 +0000 (UTC)
-Received: from mail-oi0-f42.google.com (mail-oi0-f42.google.com
- [209.85.218.42])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5c9849e0
+ Thu, 10 Aug 2017 18:50:49 +0000 (UTC)
+Received: from mail-oi0-f49.google.com (mail-oi0-f49.google.com
+ [209.85.218.49])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ee43dada
  for <wireguard@lists.zx2c4.com>;
- Thu, 10 Aug 2017 18:48:29 +0000 (UTC)
-Received: by mail-oi0-f42.google.com with SMTP id x3so15635647oia.1
- for <wireguard@lists.zx2c4.com>; Thu, 10 Aug 2017 12:10:36 -0700 (PDT)
+ Thu, 10 Aug 2017 18:50:49 +0000 (UTC)
+Received: by mail-oi0-f49.google.com with SMTP id e124so15676933oig.2
+ for <wireguard@lists.zx2c4.com>; Thu, 10 Aug 2017 12:12:56 -0700 (PDT)
 MIME-Version: 1.0
 References: <CADqnr01+qq8K+083_LRJeq424BHB_F+R-nxoGdrWAPCuS1r=gA@mail.gmail.com>
  <CAHmME9pMAMC4DY6PXTB_y64O6O2O6JVQY8ks=c=co+gDFYMHqA@mail.gmail.com>
  <CADqnr00euKzi7R44JSTktKCbooodU5Y1sko6wP9b8bpf4SLFbg@mail.gmail.com>
  <CAHmME9q8hNh8tfqruwyYfb0G0qZgdHN53p2NVzpG8QZcx++z8Q@mail.gmail.com>
-In-Reply-To: <CAHmME9q8hNh8tfqruwyYfb0G0qZgdHN53p2NVzpG8QZcx++z8Q@mail.gmail.com>
+ <CABQfmN1fviFhgp1bw82_A9RnZrokch+PmwLZCUMZm=F_doxc5g@mail.gmail.com>
+In-Reply-To: <CABQfmN1fviFhgp1bw82_A9RnZrokch+PmwLZCUMZm=F_doxc5g@mail.gmail.com>
 From: Jan De Landtsheer <jan.delandtsheer@gmail.com>
-Date: Thu, 10 Aug 2017 19:10:24 +0000
-Message-ID: <CABQfmN1fviFhgp1bw82_A9RnZrokch+PmwLZCUMZm=F_doxc5g@mail.gmail.com>
+Date: Thu, 10 Aug 2017 19:12:27 +0000
+Message-ID: <CABQfmN3EFBL-w3KwLJQMa3HB7_FTrFEFXyQyeJqDtM4yg4DW4Q@mail.gmail.com>
 Subject: Re: FR: interface ListenAddress (Aka:Multihomed server issue)
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
  Jan De Landtsheer <jan@delandtsheer.eu>, Wang Jian <larkwang@gmail.com>
-Content-Type: multipart/related; boundary="001a113d5ed8860aad05566af381"
+Content-Type: multipart/related; boundary="001a113bf9e8e1372f05566afb19"
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -33,207 +34,230 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---001a113d5ed8860aad05566af381
-Content-Type: multipart/alternative; boundary="001a113d5ed8860aab05566af380"
+--001a113bf9e8e1372f05566afb19
+Content-Type: multipart/alternative; boundary="001a113bf9e8e1372a05566afb18"
 
---001a113d5ed8860aab05566af380
+--001a113bf9e8e1372a05566afb18
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-basically this is what happens:
-client connects to 134.56.78.5:443
-wg show gives:
-peer 111.22.33.25:443
-
-
- +----------------------+
-                                                       |
-   |
-                                      +----------------+      client
-   |
-                                      |                |   81.82.222.111/18
-(fixed IP)
-                                  XXXX++XX             |
-   |
-                            XXXXXX        XXX
- +----------------------+
-                          XX  X              XX
-                          X     internet      X          client config:
-                          X X                XX            [interface]
-                               XX           XX             peer
-134.56.78.5:443
-               111.22.33.26/30  |XXX      XX
-                default gateway |   XXXXXXX
-                                |
-                                |                        after connect:
-                     UPLINK     |                        wg show
-                                |                          peer
-111.22.33.25:443
-                                |
-            +-------------------+-------------------+
-            |    eth1:111.22.33.25/30               |
-            |                                       |
-            |       router  =3D wg server             |
-            |                                       |
-            |    eth0: 134.56.78.1/24 deft gw for 134.56.78.0/24
-            |    eth0: 134.56.78.5/24 a free ip with open port for 443 (wg
-destination)
-            +----------------+----------------------+
-                             |
-                             |
-                             |
-                             |
-                             |
-+----------------------------+--------------------------------+ also
-134.56.78.0/24
-
-no nat at all in this setup only some firewall filtering
+Forgot to tell :
+both versions (server/client) 0.0.20170726
 
 Jan
 
-On Thu, Aug 10, 2017 at 8:40 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+On Thu, Aug 10, 2017 at 9:10 PM Jan De Landtsheer <
+jan.delandtsheer@gmail.com> wrote:
 
-> Hi Jan,
 >
-> So it looks like this is happening to you:
+> basically this is what happens:
+> client connects to 134.56.78.5:443
+> wg show gives:
+> peer 111.22.33.25:443
 >
 >
-> This should not be the behavior, and if it is, you've either found a bug
-> in WireGuard or a bug in your own setup.
+>  +----------------------+
+>                                                        |
+>    |
+>                                       +----------------+      client
+>    |
+>                                       |                |
+> 81.82.222.111/18 (fixed IP)
+>                                   XXXX++XX             |
+>    |
+>                             XXXXXX        XXX
+>  +----------------------+
+>                           XX  X              XX
+>                           X     internet      X          client config:
+>                           X X                XX            [interface]
+>                                XX           XX             peer
+> 134.56.78.5:443
+>                111.22.33.26/30  |XXX      XX
+>                 default gateway |   XXXXXXX
+>                                 |
+>                                 |                        after connect:
+>                      UPLINK     |                        wg show
+>                                 |                          peer
+> 111.22.33.25:443
+>                                 |
+>             +-------------------+-------------------+
+>             |    eth1:111.22.33.25/30               |
+>             |                                       |
+>             |       router  =3D wg server             |
+>             |                                       |
+>             |    eth0: 134.56.78.1/24 deft gw for 134.56.78.0/24
+>             |    eth0: 134.56.78.5/24 a free ip with open port for 443
+> (wg destination)
+>             +----------------+----------------------+
+>                              |
+>                              |
+>                              |
+>                              |
+>                              |
+> +----------------------------+--------------------------------+ also
+> 134.56.78.0/24
 >
-> 1) Are you running the latest snapshot of WireGuard? Which one?
-> 2) "but I don=E2=80=99t know for sure=E2=80=A6 it seems to be a regressio=
-n somewhere as I
-> don=E2=80=99t recall to have that problem before=E2=80=A6" Can you be mor=
-e precise?
-> 3) If you are running the latest version, does this patch fix it?
-> http://ix.io/z3d
-> 4) Can you confirm that there exists a route from the server back to the
-> client?
+> no nat at all in this setup only some firewall filtering
 >
-> Thanks,
-> Jason
-> =E2=80=8B
+> Jan
+>
+> On Thu, Aug 10, 2017 at 8:40 PM Jason A. Donenfeld <Jason@zx2c4.com>
+> wrote:
+>
+>> Hi Jan,
+>>
+>> So it looks like this is happening to you:
+>>
+>>
+>> This should not be the behavior, and if it is, you've either found a bug
+>> in WireGuard or a bug in your own setup.
+>>
+>> 1) Are you running the latest snapshot of WireGuard? Which one?
+>> 2) "but I don=E2=80=99t know for sure=E2=80=A6 it seems to be a regressi=
+on somewhere as
+>> I don=E2=80=99t recall to have that problem before=E2=80=A6" Can you be =
+more precise?
+>> 3) If you are running the latest version, does this patch fix it?
+>> http://ix.io/z3d
+>> 4) Can you confirm that there exists a route from the server back to the
+>> client?
+>>
+>> Thanks,
+>> Jason
+>> =E2=80=8B
+>>
 >
 
---001a113d5ed8860aab05566af380
+--001a113bf9e8e1372a05566afb18
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: base64
 
-PGRpdiBkaXI9Imx0ciI+PGRpdj48Zm9udCBmYWNlPSJtb25vc3BhY2UiIHNpemU9IjIiPjxicj48
-L2ZvbnQ+PC9kaXY+PGRpdj48Zm9udCBmYWNlPSJtb25vc3BhY2UiIHNpemU9IjIiPmJhc2ljYWxs
-eSB0aGlzIGlzIHdoYXQgaGFwcGVuczo8L2ZvbnQ+PC9kaXY+PGRpdj48Zm9udCBmYWNlPSJtb25v
-c3BhY2UiIHNpemU9IjIiPmNsaWVudCBjb25uZWN0cyB0b8KgPGEgaHJlZj0iaHR0cDovLzEzNC41
-Ni43OC41OjQ0MyI+MTM0LjU2Ljc4LjU6NDQzPC9hPjwvZm9udD48L2Rpdj48ZGl2Pjxmb250IGZh
-Y2U9Im1vbm9zcGFjZSIgc2l6ZT0iMiI+d2cgc2hvdyBnaXZlczo8L2ZvbnQ+PC9kaXY+PGRpdj48
-Zm9udCBmYWNlPSJtb25vc3BhY2UiIHNpemU9IjIiPnBlZXIgPGEgaHJlZj0iaHR0cDovLzExMS4y
-Mi4zMy4yNTo0NDMiPjExMS4yMi4zMy4yNTo0NDM8L2E+PC9mb250PjwvZGl2PjxkaXY+PGZvbnQg
-ZmFjZT0ibW9ub3NwYWNlIiBzaXplPSIyIj48YnI+PC9mb250PjwvZGl2PjxkaXY+PGZvbnQgZmFj
+PGRpdiBkaXI9Imx0ciI+PGRpdj5Gb3Jnb3QgdG8gdGVsbCA6wqA8L2Rpdj5ib3RoIHZlcnNpb25z
+IChzZXJ2ZXIvY2xpZW50KcKgMC4wLjIwMTcwNzI2PGRpdj48YnI+PC9kaXY+PGRpdj5KYW48L2Rp
+dj48L2Rpdj48YnI+PGRpdiBjbGFzcz0iZ21haWxfcXVvdGUiPjxkaXYgZGlyPSJsdHIiPk9uIFRo
+dSwgQXVnIDEwLCAyMDE3IGF0IDk6MTAgUE0gSmFuIERlIExhbmR0c2hlZXIgJmx0OzxhIGhyZWY9
+Im1haWx0bzpqYW4uZGVsYW5kdHNoZWVyQGdtYWlsLmNvbSI+amFuLmRlbGFuZHRzaGVlckBnbWFp
+bC5jb208L2E+Jmd0OyB3cm90ZTo8YnI+PC9kaXY+PGJsb2NrcXVvdGUgY2xhc3M9ImdtYWlsX3F1
+b3RlIiBzdHlsZT0ibWFyZ2luOjAgMCAwIC44ZXg7Ym9yZGVyLWxlZnQ6MXB4ICNjY2Mgc29saWQ7
+cGFkZGluZy1sZWZ0OjFleCI+PGRpdiBkaXI9Imx0ciI+PGRpdj48Zm9udCBmYWNlPSJtb25vc3Bh
+Y2UiIHNpemU9IjIiPjxicj48L2ZvbnQ+PC9kaXY+PGRpdj48Zm9udCBmYWNlPSJtb25vc3BhY2Ui
+IHNpemU9IjIiPmJhc2ljYWxseSB0aGlzIGlzIHdoYXQgaGFwcGVuczo8L2ZvbnQ+PC9kaXY+PGRp
+dj48Zm9udCBmYWNlPSJtb25vc3BhY2UiIHNpemU9IjIiPmNsaWVudCBjb25uZWN0cyB0b8KgPGEg
+aHJlZj0iaHR0cDovLzEzNC41Ni43OC41OjQ0MyIgdGFyZ2V0PSJfYmxhbmsiPjEzNC41Ni43OC41
+OjQ0MzwvYT48L2ZvbnQ+PC9kaXY+PGRpdj48Zm9udCBmYWNlPSJtb25vc3BhY2UiIHNpemU9IjIi
+PndnIHNob3cgZ2l2ZXM6PC9mb250PjwvZGl2PjxkaXY+PGZvbnQgZmFjZT0ibW9ub3NwYWNlIiBz
+aXplPSIyIj5wZWVyIDxhIGhyZWY9Imh0dHA6Ly8xMTEuMjIuMzMuMjU6NDQzIiB0YXJnZXQ9Il9i
+bGFuayI+MTExLjIyLjMzLjI1OjQ0MzwvYT48L2ZvbnQ+PC9kaXY+PGRpdj48Zm9udCBmYWNlPSJt
+b25vc3BhY2UiIHNpemU9IjIiPjxicj48L2ZvbnQ+PC9kaXY+PGRpdj48Zm9udCBmYWNlPSJtb25v
+c3BhY2UiIHNpemU9IjIiPsKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgKy0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0rPC9mb250PjwvZGl2PjxkaXY+PGZvbnQgZmFjZT0ibW9ub3NwYWNlIiBzaXplPSIy
+Ij7CoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoHwgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqB8PC9mb250PjwvZGl2PjxkaXY+PGZvbnQgZmFjZT0ibW9ub3NwYWNlIiBzaXplPSIyIj7C
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCAr
+LS0tLS0tLS0tLS0tLS0tLSsgwqAgwqAgwqBjbGllbnQgwqAgwqAgwqAgwqAgwqB8PC9mb250Pjwv
+ZGl2PjxkaXY+PGZvbnQgZmFjZT0ibW9ub3NwYWNlIiBzaXplPSIyIj7CoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCB8IMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgfCDCoCA8YSBocmVmPSJodHRwOi8vODEuODIuMjIyLjExMS8xOCIgdGFyZ2V0PSJf
+YmxhbmsiPjgxLjgyLjIyMi4xMTEvMTg8L2E+IChmaXhlZCBJUCk8L2ZvbnQ+PC9kaXY+PGRpdj48
+Zm9udCBmYWNlPSJtb25vc3BhY2UiIHNpemU9IjIiPsKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIFhYWFgrK1hYIMKgIMKgIMKgIMKgIMKgIMKgIHwgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqB8PC9mb250PjwvZGl2PjxkaXY+PGZvbnQgZmFj
 ZT0ibW9ub3NwYWNlIiBzaXplPSIyIj7CoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCstLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tKzwvZm9udD48L2Rpdj48ZGl2Pjxmb250IGZhY2U9Im1vbm9zcGFjZSIg
-c2l6ZT0iMiI+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqB8IMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgfDwvZm9udD48L2Rpdj48ZGl2Pjxmb250IGZhY2U9Im1vbm9zcGFjZSIgc2l6
-ZT0iMiI+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgKy0tLS0tLS0tLS0tLS0tLS0rIMKgIMKgIMKgY2xpZW50IMKgIMKgIMKgIMKgIMKgfDwv
+oCDCoCDCoCBYWFhYWFggwqAgwqAgwqAgwqBYWFggwqAgwqAgwqAgwqAgwqArLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLSs8L2ZvbnQ+PC9kaXY+PGRpdj48Zm9udCBmYWNlPSJtb25vc3BhY2UiIHNpemU9
+IjIiPsKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIFhYIMKgWCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoFhYPC9mb250PjwvZGl2PjxkaXY+PGZvbnQgZmFjZT0ibW9ub3NwYWNlIiBz
+aXplPSIyIj7CoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBYIMKgIMKgIGlu
+dGVybmV0wqAgwqAgwqAgWCDCoCDCoCDCoCDCoCDCoGNsaWVudCBjb25maWc6PC9mb250PjwvZGl2
+PjxkaXY+PGZvbnQgZmFjZT0ibW9ub3NwYWNlIiBzaXplPSIyIj7CoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCBYIFggwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBYWCDCoCDCoCDC
+oCDCoCDCoCDCoFtpbnRlcmZhY2VdPC9mb250PjwvZGl2PjxkaXY+PGZvbnQgZmFjZT0ibW9ub3Nw
+YWNlIiBzaXplPSIyIj7CoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoFhYIMKgIMKgIMKgIMKgIMKgIFhYIMKgIMKgIMKgIMKgIMKgIMKgIHBlZXIgPGEgaHJlZj0i
+aHR0cDovLzEzNC41Ni43OC41OjQ0MyIgdGFyZ2V0PSJfYmxhbmsiPjEzNC41Ni43OC41OjQ0Mzwv
+YT48L2ZvbnQ+PC9kaXY+PGRpdj48Zm9udCBmYWNlPSJtb25vc3BhY2UiIHNpemU9IjIiPsKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgPGEgaHJlZj0iaHR0cDovLzExMS4yMi4zMy4yNi8zMCIgdGFyZ2V0
+PSJfYmxhbmsiPjExMS4yMi4zMy4yNi8zMDwvYT4gwqB8WFhYIMKgIMKgIMKgWFg8L2ZvbnQ+PC9k
+aXY+PGRpdj48Zm9udCBmYWNlPSJtb25vc3BhY2UiIHNpemU9IjIiPsKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIGRlZmF1bHQgZ2F0ZXdheSB8IMKgIFhYWFhYWFg8L2ZvbnQ+PC9kaXY+PGRpdj48Zm9u
+dCBmYWNlPSJtb25vc3BhY2UiIHNpemU9IjIiPsKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIHw8L2ZvbnQ+PC9kaXY+PGRpdj48Zm9udCBmYWNlPSJtb25vc3Bh
+Y2UiIHNpemU9IjIiPsKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIHwgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBhZnRlciBjb25uZWN0Ojwv
 Zm9udD48L2Rpdj48ZGl2Pjxmb250IGZhY2U9Im1vbm9zcGFjZSIgc2l6ZT0iMiI+wqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgfCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoHwgwqAgPGEgaHJlZj0iaHR0cDovLzgxLjgyLjIyMi4xMTEvMTgiPjgx
-LjgyLjIyMi4xMTEvMTg8L2E+IChmaXhlZCBJUCk8L2ZvbnQ+PC9kaXY+PGRpdj48Zm9udCBmYWNl
-PSJtb25vc3BhY2UiIHNpemU9IjIiPsKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIFhYWFgrK1hYIMKgIMKgIMKgIMKgIMKgIMKgIHwgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqB8PC9mb250PjwvZGl2PjxkaXY+PGZvbnQgZmFjZT0ibW9ub3Nw
-YWNlIiBzaXplPSIyIj7CoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBY
-WFhYWFggwqAgwqAgwqAgwqBYWFggwqAgwqAgwqAgwqAgwqArLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LSs8L2ZvbnQ+PC9kaXY+PGRpdj48Zm9udCBmYWNlPSJtb25vc3BhY2UiIHNpemU9IjIiPsKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIFhYIMKgWCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoFhYPC9mb250PjwvZGl2PjxkaXY+PGZvbnQgZmFjZT0ibW9ub3NwYWNlIiBzaXplPSIyIj7C
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBYIMKgIMKgIGludGVybmV0wqAg
-wqAgwqAgWCDCoCDCoCDCoCDCoCDCoGNsaWVudCBjb25maWc6PC9mb250PjwvZGl2PjxkaXY+PGZv
-bnQgZmFjZT0ibW9ub3NwYWNlIiBzaXplPSIyIj7CoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCBYIFggwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBYWCDCoCDCoCDCoCDCoCDCoCDC
-oFtpbnRlcmZhY2VdPC9mb250PjwvZGl2PjxkaXY+PGZvbnQgZmFjZT0ibW9ub3NwYWNlIiBzaXpl
-PSIyIj7CoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoFhYIMKg
-IMKgIMKgIMKgIMKgIFhYIMKgIMKgIMKgIMKgIMKgIMKgIHBlZXIgPGEgaHJlZj0iaHR0cDovLzEz
-NC41Ni43OC41OjQ0MyI+MTM0LjU2Ljc4LjU6NDQzPC9hPjwvZm9udD48L2Rpdj48ZGl2Pjxmb250
-IGZhY2U9Im1vbm9zcGFjZSIgc2l6ZT0iMiI+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqA8YSBocmVm
-PSJodHRwOi8vMTExLjIyLjMzLjI2LzMwIj4xMTEuMjIuMzMuMjYvMzA8L2E+IMKgfFhYWCDCoCDC
-oCDCoFhYPC9mb250PjwvZGl2PjxkaXY+PGZvbnQgZmFjZT0ibW9ub3NwYWNlIiBzaXplPSIyIj7C
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBkZWZhdWx0IGdhdGV3YXkgfCDCoCBYWFhYWFhYPC9mb250
-PjwvZGl2PjxkaXY+PGZvbnQgZmFjZT0ibW9ub3NwYWNlIiBzaXplPSIyIj7CoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCB8PC9mb250PjwvZGl2PjxkaXY+PGZv
-bnQgZmFjZT0ibW9ub3NwYWNlIiBzaXplPSIyIj7CoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCB8IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-YWZ0ZXIgY29ubmVjdDo8L2ZvbnQ+PC9kaXY+PGRpdj48Zm9udCBmYWNlPSJtb25vc3BhY2UiIHNp
-emU9IjIiPsKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgVVBMSU5LIMKgIMKgIHwgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqB3ZyBzaG93PC9mb250PjwvZGl2PjxkaXY+
-PGZvbnQgZmFjZT0ibW9ub3NwYWNlIiBzaXplPSIyIj7CoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCB8IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgcGVlciA8YSBocmVmPSJodHRwOi8vMTExLjIyLjMzLjI1OjQ0MyI+MTExLjIyLjMzLjI1
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBVUExJTksgwqAgwqAgfCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoHdnIHNob3c8L2ZvbnQ+PC9kaXY+PGRpdj48Zm9udCBmYWNlPSJtb25v
+c3BhY2UiIHNpemU9IjIiPsKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIHwgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBwZWVyIDxhIGhy
+ZWY9Imh0dHA6Ly8xMTEuMjIuMzMuMjU6NDQzIiB0YXJnZXQ9Il9ibGFuayI+MTExLjIyLjMzLjI1
 OjQ0MzwvYT48L2ZvbnQ+PC9kaXY+PGRpdj48Zm9udCBmYWNlPSJtb25vc3BhY2UiIHNpemU9IjIi
 PsKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHw8L2ZvbnQ+
 PC9kaXY+PGRpdj48Zm9udCBmYWNlPSJtb25vc3BhY2UiIHNpemU9IjIiPsKgIMKgIMKgIMKgIMKg
 IMKgICstLS0tLS0tLS0tLS0tLS0tLS0tKy0tLS0tLS0tLS0tLS0tLS0tLS0rPC9mb250PjwvZGl2
 PjxkaXY+PGZvbnQgZmFjZT0ibW9ub3NwYWNlIiBzaXplPSIyIj7CoCDCoCDCoCDCoCDCoCDCoCB8
-IMKgIMKgZXRoMTo8YSBocmVmPSJodHRwOi8vMTExLjIyLjMzLjI1LzMwIj4xMTEuMjIuMzMuMjUv
-MzA8L2E+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIHw8L2ZvbnQ+PC9kaXY+PGRpdj48Zm9udCBmYWNl
-PSJtb25vc3BhY2UiIHNpemU9IjIiPsKgIMKgIMKgIMKgIMKgIMKgIHwgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgfDwvZm9udD48L2Rpdj48
-ZGl2Pjxmb250IGZhY2U9Im1vbm9zcGFjZSIgc2l6ZT0iMiI+wqAgwqAgwqAgwqAgwqAgwqAgfCDC
-oCDCoCDCoCByb3V0ZXIgwqA9IHdnIHNlcnZlciDCoCDCoCDCoCDCoCDCoCDCoCB8PC9mb250Pjwv
-ZGl2PjxkaXY+PGZvbnQgZmFjZT0ibW9ub3NwYWNlIiBzaXplPSIyIj7CoCDCoCDCoCDCoCDCoCDC
-oCB8IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIHw8L2ZvbnQ+PC9kaXY+PGRpdj48Zm9udCBmYWNlPSJtb25vc3BhY2UiIHNpemU9IjIiPsKg
-IMKgIMKgIMKgIMKgIMKgIHwgwqAgwqBldGgwOiA8YSBocmVmPSJodHRwOi8vMTM0LjU2Ljc4LjEv
-MjQiPjEzNC41Ni43OC4xLzI0PC9hPiBkZWZ0IGd3IGZvciA8YSBocmVmPSJodHRwOi8vMTM0LjU2
-Ljc4LjAvMjQiPjEzNC41Ni43OC4wLzI0PC9hPjwvZm9udD48L2Rpdj48ZGl2Pjxmb250IGZhY2U9
-Im1vbm9zcGFjZSIgc2l6ZT0iMiI+wqAgwqAgwqAgwqAgwqAgwqAgfCDCoCDCoGV0aDA6IDxhIGhy
-ZWY9Imh0dHA6Ly8xMzQuNTYuNzguNS8yNCI+MTM0LjU2Ljc4LjUvMjQ8L2E+IGEgZnJlZSBpcCB3
-aXRoIG9wZW4gcG9ydCBmb3IgNDQzICh3ZyBkZXN0aW5hdGlvbik8L2ZvbnQ+PC9kaXY+PGRpdj48
-Zm9udCBmYWNlPSJtb25vc3BhY2UiIHNpemU9IjIiPsKgIMKgIMKgIMKgIMKgIMKgICstLS0tLS0t
-LS0tLS0tLS0tKy0tLS0tLS0tLS0tLS0tLS0tLS0tLS0rPC9mb250PjwvZGl2PjxkaXY+PGZvbnQg
-ZmFjZT0ibW9ub3NwYWNlIiBzaXplPSIyIj7CoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoHw8L2ZvbnQ+PC9kaXY+PGRpdj48Zm9udCBmYWNlPSJtb25vc3BhY2UiIHNp
-emU9IjIiPsKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgfDwvZm9u
-dD48L2Rpdj48ZGl2Pjxmb250IGZhY2U9Im1vbm9zcGFjZSIgc2l6ZT0iMiI+wqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqB8PC9mb250PjwvZGl2PjxkaXY+PGZvbnQg
-ZmFjZT0ibW9ub3NwYWNlIiBzaXplPSIyIj7CoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoHw8L2ZvbnQ+PC9kaXY+PGRpdj48Zm9udCBmYWNlPSJtb25vc3BhY2UiIHNp
-emU9IjIiPsKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgfDwvZm9u
-dD48L2Rpdj48ZGl2Pjxmb250IGZhY2U9Im1vbm9zcGFjZSIgc2l6ZT0iMiI+Ky0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0rLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0rIGFsc28g
-PGEgaHJlZj0iaHR0cDovLzEzNC41Ni43OC4wLzI0Ij4xMzQuNTYuNzguMC8yNDwvYT48L2ZvbnQ+
-PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5ubyBuYXQgYXQgYWxsIGluIHRoaXMgc2V0dXAgb25s
-eSBzb21lIGZpcmV3YWxsIGZpbHRlcmluZzwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+SmFuPC9k
-aXY+PC9kaXY+PGJyPjxkaXYgY2xhc3M9ImdtYWlsX3F1b3RlIj48ZGl2IGRpcj0ibHRyIj5PbiBU
-aHUsIEF1ZyAxMCwgMjAxNyBhdCA4OjQwIFBNIEphc29uIEEuIERvbmVuZmVsZCAmbHQ7PGEgaHJl
-Zj0ibWFpbHRvOkphc29uQHp4MmM0LmNvbSI+SmFzb25AengyYzQuY29tPC9hPiZndDsgd3JvdGU6
-PGJyPjwvZGl2PjxibG9ja3F1b3RlIGNsYXNzPSJnbWFpbF9xdW90ZSIgc3R5bGU9Im1hcmdpbjow
-IDAgMCAuOGV4O2JvcmRlci1sZWZ0OjFweCAjY2NjIHNvbGlkO3BhZGRpbmctbGVmdDoxZXgiPjxk
-aXYgZGlyPSJsdHIiPkhpIEphbiw8ZGl2Pjxicj48L2Rpdj48ZGl2PlNvIGl0IGxvb2tzIGxpa2Ug
-dGhpcyBpcyBoYXBwZW5pbmcgdG8geW91OjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+PGltZyBz
-cmM9ImNpZDppaV9qNjZzZG54eTBfMTVkY2Q3MGFmNjAzNzk4NyIgd2lkdGg9IjM4MyIgaGVpZ2h0
-PSI1NjIiPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+VGhpcyBzaG91bGQgbm90IGJlIHRoZSBi
-ZWhhdmlvciwgYW5kIGlmIGl0IGlzLCB5b3UmIzM5O3ZlIGVpdGhlciBmb3VuZCBhIGJ1ZyBpbiBX
-aXJlR3VhcmQgb3IgYSBidWcgaW4geW91ciBvd24gc2V0dXAuPC9kaXY+PGRpdj48YnI+PC9kaXY+
-PGRpdj4xKSBBcmUgeW91IHJ1bm5pbmcgdGhlIGxhdGVzdCBzbmFwc2hvdCBvZiBXaXJlR3VhcmQ/
-IFdoaWNoIG9uZT88L2Rpdj48ZGl2PjIpICZxdW90OzxzcGFuIHN0eWxlPSJmb250LXNpemU6MTIu
-OHB4Ij5idXQgSSBkb27igJl0IGtub3cgZm9yIHN1cmXigKYgaXQgc2VlbXMgdG8gYmUgYSByZWdy
-ZXNzaW9uIHNvbWV3aGVyZSBhcyBJIGRvbuKAmXQgcmVjYWxsIHRvIGhhdmUgdGhhdCBwcm9ibGVt
-IGJlZm9yZeKApiZxdW90OyBDYW4geW91IGJlIG1vcmUgcHJlY2lzZT88L3NwYW4+PC9kaXY+PGRp
-dj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjEyLjhweCI+MykgSWYgeW91IGFyZSBydW5uaW5nIHRo
-ZSBsYXRlc3QgdmVyc2lvbiwgZG9lcyB0aGlzIHBhdGNoIGZpeCBpdD8gPGEgaHJlZj0iaHR0cDov
-L2l4LmlvL3ozZCIgdGFyZ2V0PSJfYmxhbmsiPmh0dHA6Ly9peC5pby96M2Q8L2E+PC9zcGFuPjwv
-ZGl2PjxkaXY+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMi44cHgiPjQpIENhbiB5b3UgY29uZmly
-bSB0aGF0IHRoZXJlIGV4aXN0cyBhIHJvdXRlIGZyb20gdGhlIHNlcnZlciBiYWNrIHRvIHRoZSBj
-bGllbnQ/PC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMi44cHgiPjxi
-cj48L3NwYW4+PC9kaXY+PGRpdj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjEyLjhweCI+VGhhbmtz
-LDwvc3Bhbj48L2Rpdj48ZGl2PjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTIuOHB4Ij5KYXNvbjxi
-cj48L3NwYW4+4oCLPGJyPjwvZGl2PjwvZGl2Pg0KPC9ibG9ja3F1b3RlPjwvZGl2Pg0K
---001a113d5ed8860aab05566af380--
+IMKgIMKgZXRoMTo8YSBocmVmPSJodHRwOi8vMTExLjIyLjMzLjI1LzMwIiB0YXJnZXQ9Il9ibGFu
+ayI+MTExLjIyLjMzLjI1LzMwPC9hPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCB8PC9mb250PjwvZGl2
+PjxkaXY+PGZvbnQgZmFjZT0ibW9ub3NwYWNlIiBzaXplPSIyIj7CoCDCoCDCoCDCoCDCoCDCoCB8
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IHw8L2ZvbnQ+PC9kaXY+PGRpdj48Zm9udCBmYWNlPSJtb25vc3BhY2UiIHNpemU9IjIiPsKgIMKg
+IMKgIMKgIMKgIMKgIHwgwqAgwqAgwqAgcm91dGVyIMKgPSB3ZyBzZXJ2ZXIgwqAgwqAgwqAgwqAg
+wqAgwqAgfDwvZm9udD48L2Rpdj48ZGl2Pjxmb250IGZhY2U9Im1vbm9zcGFjZSIgc2l6ZT0iMiI+
+wqAgwqAgwqAgwqAgwqAgwqAgfCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCB8PC9mb250PjwvZGl2PjxkaXY+PGZvbnQgZmFjZT0ibW9ub3Nw
+YWNlIiBzaXplPSIyIj7CoCDCoCDCoCDCoCDCoCDCoCB8IMKgIMKgZXRoMDogPGEgaHJlZj0iaHR0
+cDovLzEzNC41Ni43OC4xLzI0IiB0YXJnZXQ9Il9ibGFuayI+MTM0LjU2Ljc4LjEvMjQ8L2E+IGRl
+ZnQgZ3cgZm9yIDxhIGhyZWY9Imh0dHA6Ly8xMzQuNTYuNzguMC8yNCIgdGFyZ2V0PSJfYmxhbmsi
+PjEzNC41Ni43OC4wLzI0PC9hPjwvZm9udD48L2Rpdj48ZGl2Pjxmb250IGZhY2U9Im1vbm9zcGFj
+ZSIgc2l6ZT0iMiI+wqAgwqAgwqAgwqAgwqAgwqAgfCDCoCDCoGV0aDA6IDxhIGhyZWY9Imh0dHA6
+Ly8xMzQuNTYuNzguNS8yNCIgdGFyZ2V0PSJfYmxhbmsiPjEzNC41Ni43OC41LzI0PC9hPiBhIGZy
+ZWUgaXAgd2l0aCBvcGVuIHBvcnQgZm9yIDQ0MyAod2cgZGVzdGluYXRpb24pPC9mb250PjwvZGl2
+PjxkaXY+PGZvbnQgZmFjZT0ibW9ub3NwYWNlIiBzaXplPSIyIj7CoCDCoCDCoCDCoCDCoCDCoCAr
+LS0tLS0tLS0tLS0tLS0tLSstLS0tLS0tLS0tLS0tLS0tLS0tLS0tKzwvZm9udD48L2Rpdj48ZGl2
+Pjxmb250IGZhY2U9Im1vbm9zcGFjZSIgc2l6ZT0iMiI+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqB8PC9mb250PjwvZGl2PjxkaXY+PGZvbnQgZmFjZT0ibW9ub3Nw
+YWNlIiBzaXplPSIyIj7CoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oHw8L2ZvbnQ+PC9kaXY+PGRpdj48Zm9udCBmYWNlPSJtb25vc3BhY2UiIHNpemU9IjIiPsKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgfDwvZm9udD48L2Rpdj48ZGl2
+Pjxmb250IGZhY2U9Im1vbm9zcGFjZSIgc2l6ZT0iMiI+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqB8PC9mb250PjwvZGl2PjxkaXY+PGZvbnQgZmFjZT0ibW9ub3Nw
+YWNlIiBzaXplPSIyIj7CoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oHw8L2ZvbnQ+PC9kaXY+PGRpdj48Zm9udCBmYWNlPSJtb25vc3BhY2UiIHNpemU9IjIiPistLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tKy0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+KyBhbHNvIDxhIGhyZWY9Imh0dHA6Ly8xMzQuNTYuNzguMC8yNCIgdGFyZ2V0PSJfYmxhbmsiPjEz
+NC41Ni43OC4wLzI0PC9hPjwvZm9udD48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2Pm5vIG5hdCBh
+dCBhbGwgaW4gdGhpcyBzZXR1cCBvbmx5IHNvbWUgZmlyZXdhbGwgZmlsdGVyaW5nPC9kaXY+PC9k
+aXY+PGRpdiBkaXI9Imx0ciI+PGRpdj48YnI+PC9kaXY+PGRpdj5KYW48L2Rpdj48L2Rpdj48YnI+
+PGRpdiBjbGFzcz0iZ21haWxfcXVvdGUiPjxkaXYgZGlyPSJsdHIiPk9uIFRodSwgQXVnIDEwLCAy
+MDE3IGF0IDg6NDAgUE0gSmFzb24gQS4gRG9uZW5mZWxkICZsdDs8YSBocmVmPSJtYWlsdG86SmFz
+b25AengyYzQuY29tIiB0YXJnZXQ9Il9ibGFuayI+SmFzb25AengyYzQuY29tPC9hPiZndDsgd3Jv
+dGU6PGJyPjwvZGl2PjxibG9ja3F1b3RlIGNsYXNzPSJnbWFpbF9xdW90ZSIgc3R5bGU9Im1hcmdp
+bjowIDAgMCAuOGV4O2JvcmRlci1sZWZ0OjFweCAjY2NjIHNvbGlkO3BhZGRpbmctbGVmdDoxZXgi
+PjxkaXYgZGlyPSJsdHIiPkhpIEphbiw8ZGl2Pjxicj48L2Rpdj48ZGl2PlNvIGl0IGxvb2tzIGxp
+a2UgdGhpcyBpcyBoYXBwZW5pbmcgdG8geW91OjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+PGlt
+ZyBzcmM9ImNpZDppaV9qNjZzZG54eTBfMTVkY2Q3MGFmNjAzNzk4NyIgd2lkdGg9IjM4MyIgaGVp
+Z2h0PSI1NjIiPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+VGhpcyBzaG91bGQgbm90IGJlIHRo
+ZSBiZWhhdmlvciwgYW5kIGlmIGl0IGlzLCB5b3UmIzM5O3ZlIGVpdGhlciBmb3VuZCBhIGJ1ZyBp
+biBXaXJlR3VhcmQgb3IgYSBidWcgaW4geW91ciBvd24gc2V0dXAuPC9kaXY+PGRpdj48YnI+PC9k
+aXY+PGRpdj4xKSBBcmUgeW91IHJ1bm5pbmcgdGhlIGxhdGVzdCBzbmFwc2hvdCBvZiBXaXJlR3Vh
+cmQ/IFdoaWNoIG9uZT88L2Rpdj48ZGl2PjIpICZxdW90OzxzcGFuIHN0eWxlPSJmb250LXNpemU6
+MTIuOHB4Ij5idXQgSSBkb27igJl0IGtub3cgZm9yIHN1cmXigKYgaXQgc2VlbXMgdG8gYmUgYSBy
+ZWdyZXNzaW9uIHNvbWV3aGVyZSBhcyBJIGRvbuKAmXQgcmVjYWxsIHRvIGhhdmUgdGhhdCBwcm9i
+bGVtIGJlZm9yZeKApiZxdW90OyBDYW4geW91IGJlIG1vcmUgcHJlY2lzZT88L3NwYW4+PC9kaXY+
+PGRpdj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjEyLjhweCI+MykgSWYgeW91IGFyZSBydW5uaW5n
+IHRoZSBsYXRlc3QgdmVyc2lvbiwgZG9lcyB0aGlzIHBhdGNoIGZpeCBpdD8gPGEgaHJlZj0iaHR0
+cDovL2l4LmlvL3ozZCIgdGFyZ2V0PSJfYmxhbmsiPmh0dHA6Ly9peC5pby96M2Q8L2E+PC9zcGFu
+PjwvZGl2PjxkaXY+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMi44cHgiPjQpIENhbiB5b3UgY29u
+ZmlybSB0aGF0IHRoZXJlIGV4aXN0cyBhIHJvdXRlIGZyb20gdGhlIHNlcnZlciBiYWNrIHRvIHRo
+ZSBjbGllbnQ/PC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMi44cHgi
+Pjxicj48L3NwYW4+PC9kaXY+PGRpdj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjEyLjhweCI+VGhh
+bmtzLDwvc3Bhbj48L2Rpdj48ZGl2PjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTIuOHB4Ij5KYXNv
+bjxicj48L3NwYW4+4oCLPGJyPjwvZGl2PjwvZGl2Pg0KPC9ibG9ja3F1b3RlPjwvZGl2PjwvYmxv
+Y2txdW90ZT48L2Rpdj4NCg==
+--001a113bf9e8e1372a05566afb18--
 
---001a113d5ed8860aad05566af381
+--001a113bf9e8e1372f05566afb19
 Content-Type: image/jpeg; name="rts.jpg"
 Content-Disposition: inline; filename="rts.jpg"
 Content-Transfer-Encoding: base64
@@ -1665,4 +1689,4 @@ rXoopvcQVkeKD/xLEQHBe4hUH/totFFEdwNeiiikAVjSEN4ugU9UsnP5uv8AhRRTQGzRRRSAKyPD
 OTaXTnGXu5j/AOPkf0oop9ANeiiikBk+LG2+Hb7jOU2/mQP61qoBsAHTFFFPoAtFFFIDJv8AnxFp
 K8cJM36KP61rUUU30AKKKKQGRoYJv9Zc45ugPyjSteiimwCqOuNt0W/b0gk/9BNFFC3Al0xPL060
 T+7Eg/QVZoooe4BWRrOW1PRlHT7QzH8I2ooojuB//9k=
---001a113d5ed8860aad05566af381--
+--001a113bf9e8e1372f05566afb19--
