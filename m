@@ -1,24 +1,22 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: jan@delandtsheer.eu
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ccade3fb
- for <wireguard@lists.zx2c4.com>; Wed, 9 Aug 2017 23:58:08 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f8c5d41f
- for <wireguard@lists.zx2c4.com>; Wed, 9 Aug 2017 23:58:08 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0f443900
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 04621449
  for <wireguard@lists.zx2c4.com>;
- Thu, 10 Aug 2017 00:17:11 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id f168032b
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ Thu, 10 Aug 2017 08:51:54 +0000 (UTC)
+Received: from mail-yw0-f193.google.com (mail-yw0-f193.google.com
+ [209.85.161.193])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b7e6a6ae
  for <wireguard@lists.zx2c4.com>;
- Thu, 10 Aug 2017 00:17:11 +0000 (UTC)
-Date: Thu, 10 Aug 2017 02:20:06 +0200
-To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: [ANNOUNCE] WireGuard Snapshot `0.0.20170810` Available
+ Thu, 10 Aug 2017 08:51:54 +0000 (UTC)
+Received: by mail-yw0-f193.google.com with SMTP id p68so78497ywg.5
+ for <wireguard@lists.zx2c4.com>; Thu, 10 Aug 2017 02:13:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Message-Id: <c571e33604f58858@frisell.zx2c4.com>
+From: Jan De Landtsheer <jan@delandtsheer.eu>
+Date: Thu, 10 Aug 2017 09:13:46 +0000
+Message-ID: <CADqnr01+qq8K+083_LRJeq424BHB_F+R-nxoGdrWAPCuS1r=gA@mail.gmail.com>
+Subject: FR: interface ListenAddress (Aka:Multihomed server issue)
+To: wireguard@lists.zx2c4.com
+Content-Type: multipart/alternative; boundary="001a114e46a0c99b120556629dee"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -28,119 +26,214 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--001a114e46a0c99b120556629dee
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hello,
+Jason,
+To elaborate on
+https://lists.zx2c4.com/pipermail/wireguard/2017-August/001598.html, there
+is something that can be clarified =E2=80=A6
 
-A new snapshot, `0.0.20170810`, has been tagged in the git repository.
+I have a multihomed server (our router for everything) attached to a core
+switch with vlans, and the router runs openvswitch (but that=E2=80=99s besi=
+des the
+point).
 
-Please note that this snapshot is, like the rest of the project at this point
-in time, experimental, and does not consitute a real release that would be
-considered secure and bug-free. WireGuard is generally thought to be fairly
-stable, and most likely will not crash your computer (though it may).
-However, as this is a pre-release snapshot, it comes with no guarantees, and
-its security is not yet to be depended on; it is not applicable for CVEs.
+We run a bunch of wg peers, interconnected to each other (30 or so), but
+most connect directly to our router.
 
-With all that said, if you'd like to test this snapshot out, there are a
-few relevent changes.
+The router has an Uplink interface with a /30 and I use that interface
+solely to forward packets to our (bgp routed) default gw (Provider).
 
-== Changes ==
+On the same router, I have a Public Interface, also with a public IP (/24)
+and have on the router itself some IP addresses used for DNAT, and here
+specifically one for Wireguard. (so NOT the Uplink IP address)
 
-  * jason: leaving for short trip
-  
-  This is the last snapshot I'll be making for the next 3 or so weeks,
-  as I'll be going on a short vacation mostly off-the-grid. (If any
-  Icelandic WireGuarders are reading this, feel free to shoot me
-  an email if you'd like some stickers.) When I return, development
-  will resume at an even faster rate than before.
-  
-  * android: fix readme
-  * contrib: move Android tools to wireguard-android repo
-  
-  All the Android tools have been moved to an Android-specific repo,
-  which, in addition to having all the wg-quick CLI things, will also
-  have a nice UI that Samuel, one of our GSoC students, has been
-  working on. Stay tuned, exciting things coming.
-  
-  * socket: move print function from compat
-  * compat: work around odd kernels that backport kv[mz]alloc
-  * compat: get rid of warnings on frankenkernels
-  * compat: support grsecurity with our compat padata implementation
-  * netns: work around linux 3.10 issues
-  
-  The usual set of compat fixups for weird kernels. With regards to
-  Grsecurity, we make a change that _should_ make this part of the
-  compat layer work with Grsecurity, but unfortunately I really have
-  no way of knowing, since I don't actually have access to their
-  source code. I assume, though, if this doesn't work, I'll receive
-  more complaints and will take another stab in the dark. The general
-  situation saddens me, as I really liked that project and wish I
-  could still play with it.
-  
-  * recieve: cleanup variable usage
-  * receive: single line if style
-  * recieve: pskb_trim already checks length
-  * receive: move lastminute guard into timer event
-  * selftest: more checking in ratelimiter
-  * blake2s: satisfy sparse
-  * routingtable: unbloat BUG()
-  * timers: rename confusingly named functions and variables
-  * noise: infer initiator or not from handshake state
-  
-  Usual set of code quality cleanups.
-  
-  * tools: stricter userspace ipc parsing
-  * netns: explictly test reply to sender routing
-  * timers: do not send out double keepalive
-  
-  Some logic fixes and a more expansive test suite.
-  
-  * hashtables: allow up to 2^20 peers per interface
-  * hashtables: if we have an index match, don't search further ever
-  
-  This allows for nearly 1 million peers per interface, which should be
-  more than enough. If needed later, this number could easily be increased
-  beyond this. We also increase the size of the hashtables to accommodate
-  this upper bound. In the future, it might be smart to dynamically expand
-  the hashtable instead of this hard coded compromise value between small
-  systems and large systems. Ongoing work includes figuring out the most
-  optimal scheme for these hashtables and for the insertion to mask their
-  order from timing inference.
+When wireguard clients connect, their config shows their peer to be the
+Uplink IP address instead of the IP on the Public interface that was
+specifically assigned for wireguard (wgsrv), and as such packets sent to
+the Uplink IP address were dropped by the firewall.
 
-As always, the source is available at https://git.zx2c4.com/WireGuard/ and
-information about the project is available at https://www.wireguard.com/ .
+You might say: open up the port for wireguard on the Uplink and off you go.
+Which I did, to solve my immediate problem. (still find it ugly)
 
-This snapshot is available in tarball form here:
-  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-0.0.20170810.tar.xz
-  SHA2-256: ab96230390625aad6f4816fa23aef6e9f7fee130f083d838919129ff12089bf7
-  BLAKE2b-256: efd0c65b6d18ce4009a62fa08c4c82ce9850ddb736b389c5d1bd14414dfce142
+But no we=E2=80=99re getting a second provider in da house, that will be co=
+nnected
+the same way as the other, with that link being Uplink2. So now I *really*
+need my bgp routed Public IP address to be the sole answering wireguard IP
+packets, so that I can be sure that if one of my bgp peers dies, the same
+Public ip address is used by the clients, not the one wireguard deduces
+from the subnet with the default route.
 
-If you're a snapshot package maintainer, please bump your package version. If
-you're a user, the WireGuard team welcomes any and all feedback on this latest
-snapshot.
+Now, wireguard will use the incoming UplinkX ip as source and advertise it
+to the clients connected through either one that has the same metric and
+routing policy
 
-Finally, WireGuard development thrives on donations. By popular demand, we
-have a webpage for this: https://www.wireguard.com/donations/
+Voila=E2=80=A6 in a nutshell ;-)
 
-Thank you,
-Jason Donenfeld
+Jan
+=E2=80=8B
 
+--001a114e46a0c99b120556629dee
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
------BEGIN PGP SIGNATURE-----
+<div dir=3D"ltr"><div class=3D"markdown-here-wrapper" style=3D""><p style=
+=3D"margin:0px 0px 1.2em!important">Jason,<br>To elaborate on <a href=3D"ht=
+tps://lists.zx2c4.com/pipermail/wireguard/2017-August/001598.html">https://=
+lists.zx2c4.com/pipermail/wireguard/2017-August/001598.html</a>, there is s=
+omething that can be clarified =E2=80=A6</p>
+<p style=3D"margin:0px 0px 1.2em!important">I have a multihomed server (our=
+ router for everything) attached to a core switch with vlans, and the route=
+r runs openvswitch (but that=E2=80=99s besides the point).</p>
+<p style=3D"margin:0px 0px 1.2em!important">We run a bunch of wg peers, int=
+erconnected to each other (30 or so), but most connect directly to our rout=
+er.</p>
+<p style=3D"margin:0px 0px 1.2em!important">The router has an <code style=
+=3D"font-size:0.85em;font-family:Consolas,Inconsolata,Courier,monospace;mar=
+gin:0px 0.15em;padding:0px 0.3em;white-space:pre-wrap;border:1px solid rgb(=
+234,234,234);background-color:rgb(248,248,248);border-radius:3px;display:in=
+line">Uplink</code> interface with a /30 and I use that interface solely to=
+ forward packets to our (bgp routed) default gw (Provider).</p>
+<p style=3D"margin:0px 0px 1.2em!important">On the same router, I have a <c=
+ode style=3D"font-size:0.85em;font-family:Consolas,Inconsolata,Courier,mono=
+space;margin:0px 0.15em;padding:0px 0.3em;white-space:pre-wrap;border:1px s=
+olid rgb(234,234,234);background-color:rgb(248,248,248);border-radius:3px;d=
+isplay:inline">Public</code> Interface, also with a public IP (/24) and hav=
+e on the router itself some IP addresses used for DNAT, and here specifical=
+ly one for Wireguard. (so NOT the <code style=3D"font-size:0.85em;font-fami=
+ly:Consolas,Inconsolata,Courier,monospace;margin:0px 0.15em;padding:0px 0.3=
+em;white-space:pre-wrap;border:1px solid rgb(234,234,234);background-color:=
+rgb(248,248,248);border-radius:3px;display:inline">Uplink</code> IP address=
+)</p>
+<p style=3D"margin:0px 0px 1.2em!important">When wireguard clients connect,=
+ their config shows their peer to be the <code style=3D"font-size:0.85em;fo=
+nt-family:Consolas,Inconsolata,Courier,monospace;margin:0px 0.15em;padding:=
+0px 0.3em;white-space:pre-wrap;border:1px solid rgb(234,234,234);background=
+-color:rgb(248,248,248);border-radius:3px;display:inline">Uplink</code> IP =
+address instead of the IP on the <code style=3D"font-size:0.85em;font-famil=
+y:Consolas,Inconsolata,Courier,monospace;margin:0px 0.15em;padding:0px 0.3e=
+m;white-space:pre-wrap;border:1px solid rgb(234,234,234);background-color:r=
+gb(248,248,248);border-radius:3px;display:inline">Public</code> interface t=
+hat was specifically assigned for wireguard (<code style=3D"font-size:0.85e=
+m;font-family:Consolas,Inconsolata,Courier,monospace;margin:0px 0.15em;padd=
+ing:0px 0.3em;white-space:pre-wrap;border:1px solid rgb(234,234,234);backgr=
+ound-color:rgb(248,248,248);border-radius:3px;display:inline">wgsrv</code>)=
+, and as such packets sent to the <code style=3D"font-size:0.85em;font-fami=
+ly:Consolas,Inconsolata,Courier,monospace;margin:0px 0.15em;padding:0px 0.3=
+em;white-space:pre-wrap;border:1px solid rgb(234,234,234);background-color:=
+rgb(248,248,248);border-radius:3px;display:inline">Uplink</code> IP address=
+ were dropped by the firewall.</p>
+<p style=3D"margin:0px 0px 1.2em!important">You might say: open up the port=
+ for wireguard on the <code style=3D"font-size:0.85em;font-family:Consolas,=
+Inconsolata,Courier,monospace;margin:0px 0.15em;padding:0px 0.3em;white-spa=
+ce:pre-wrap;border:1px solid rgb(234,234,234);background-color:rgb(248,248,=
+248);border-radius:3px;display:inline">Uplink</code> and off you go. Which =
+I did, to solve my immediate problem. (still find it ugly)</p>
+<p style=3D"margin:0px 0px 1.2em!important">But no we=E2=80=99re getting a =
+second provider in da house, that will be connected the same way as the oth=
+er, with that link being <code style=3D"font-size:0.85em;font-family:Consol=
+as,Inconsolata,Courier,monospace;margin:0px 0.15em;padding:0px 0.3em;white-=
+space:pre-wrap;border:1px solid rgb(234,234,234);background-color:rgb(248,2=
+48,248);border-radius:3px;display:inline">Uplink2</code>. So now I <em>real=
+ly</em> need my bgp routed <code style=3D"font-size:0.85em;font-family:Cons=
+olas,Inconsolata,Courier,monospace;margin:0px 0.15em;padding:0px 0.3em;whit=
+e-space:pre-wrap;border:1px solid rgb(234,234,234);background-color:rgb(248=
+,248,248);border-radius:3px;display:inline">Public</code> IP address to be =
+the sole answering wireguard IP packets, so that I can be sure that if one =
+of my bgp peers dies, the same <code style=3D"font-size:0.85em;font-family:=
+Consolas,Inconsolata,Courier,monospace;margin:0px 0.15em;padding:0px 0.3em;=
+white-space:pre-wrap;border:1px solid rgb(234,234,234);background-color:rgb=
+(248,248,248);border-radius:3px;display:inline">Public</code> ip address is=
+ used by the clients, not the one wireguard deduces from the subnet with th=
+e default route.</p>
+<p style=3D"margin:0px 0px 1.2em!important">Now, wireguard will use the inc=
+oming <code style=3D"font-size:0.85em;font-family:Consolas,Inconsolata,Cour=
+ier,monospace;margin:0px 0.15em;padding:0px 0.3em;white-space:pre-wrap;bord=
+er:1px solid rgb(234,234,234);background-color:rgb(248,248,248);border-radi=
+us:3px;display:inline">UplinkX</code> ip as source and advertise it to the =
+clients connected through either one  that has the same metric and routing =
+policy</p>
+<p style=3D"margin:0px 0px 1.2em!important">Voila=E2=80=A6 in a nutshell ;-=
+)</p>
+<p style=3D"margin:0px 0px 1.2em!important">Jan</p>
+<div title=3D"MDH:SmFzb24swqA8ZGl2PlRvIGVsYWJvcmF0ZSBvbiZuYnNwOzxhIGhyZWY9I=
+mh0dHBzOi8vbGlzdHMu
+engyYzQuY29tL3BpcGVybWFpbC93aXJlZ3VhcmQvMjAxNy1BdWd1c3QvMDAxNTk4Lmh0bWwiPmh=
+0
+dHBzOi8vbGlzdHMuengyYzQuY29tL3BpcGVybWFpbC93aXJlZ3VhcmQvMjAxNy1BdWd1c3QvMDA=
+x
+NTk4Lmh0bWw8L2E+LCB0aGVyZSBpcyBzb21ldGhpbmcgdGhhdCBjYW4gYmUgY2xhcmlmaWVkIC4=
+u
+LjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+SSBoYXZlIGEgbXVsdGlob21lZCBzZXJ2ZXIgKG9=
+1
+ciByb3V0ZXIgZm9yIGV2ZXJ5dGhpbmcpIGF0dGFjaGVkIHRvIGEgY29yZSBzd2l0Y2ggd2l0aCB=
+2
+bGFucywgYW5kIHRoZSByb3V0ZXIgcnVucyBvcGVudnN3aXRjaCAoYnV0IHRoYXQncyBiZXNpZGV=
+z
+IHRoZSBwb2ludCkuPC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5XZSBydW4gYSBidW5jaCBvZiB=
+3
+ZyBwZWVycywgaW50ZXJjb25uZWN0ZWQgdG8gZWFjaCBvdGhlciAoMzAgb3Igc28pLCBidXQgbW9=
+z
+dCBjb25uZWN0IGRpcmVjdGx5IHRvIG91ciByb3V0ZXIuPC9kaXY+PGRpdj48YnI+PC9kaXY+PGR=
+p
+dj5UaGUgcm91dGVyIGhhcyBhbiBgVXBsaW5rYCBpbnRlcmZhY2Ugd2l0aCBhIC8zMCBhbmQgSSB=
+1
+c2UgdGhhdCBpbnRlcmZhY2Ugc29sZWx5IHRvIGZvcndhcmQgcGFja2V0cyB0byBvdXIgKGJncCB=
+y
+b3V0ZWQpIGRlZmF1bHQgZ3cgKFByb3ZpZGVyKS48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2Pk9=
+u
+IHRoZSBzYW1lIHJvdXRlciwgSSBoYXZlIGEgYFB1YmxpY2AgSW50ZXJmYWNlLCBhbHNvIHdpdGg=
+g
+YSBwdWJsaWMgSVAgKC8yNCkgYW5kIGhhdmUgb24gdGhlIHJvdXRlciBpdHNlbGYgc29tZSBJUCB=
+h
+ZGRyZXNzZXMgdXNlZCBmb3IgRE5BVCwgYW5kIGhlcmUgc3BlY2lmaWNhbGx5IG9uZSBmb3IgV2l=
+y
+ZWd1YXJkLiAoc28gTk9UIHRoZSBgVXBsaW5rYCBJUCBhZGRyZXNzKTwvZGl2PjxkaXY+PGJyPjw=
+v
+ZGl2PjxkaXY+V2hlbiB3aXJlZ3VhcmQgY2xpZW50cyBjb25uZWN0LCB0aGVpciBjb25maWcgc2h=
+v
+d3MgdGhlaXIgcGVlciB0byBiZSB0aGUgYFVwbGlua2AgSVAgYWRkcmVzcyBpbnN0ZWFkIG9mIHR=
+o
+ZSBJUCBvbiB0aGUgYFB1YmxpY2AgaW50ZXJmYWNlIHRoYXQgd2FzIHNwZWNpZmljYWxseSBhc3N=
+p
+Z25lZCBmb3Igd2lyZWd1YXJkIChgd2dzcnZgKSwgYW5kIGFzIHN1Y2ggcGFja2V0cyBzZW50IHR=
+v
+IHRoZSBgVXBsaW5rYCBJUCBhZGRyZXNzIHdlcmUgZHJvcHBlZCBieSB0aGUgZmlyZXdhbGwuPC9=
+k
+aXY+PGRpdj48YnI+PC9kaXY+PGRpdj5Zb3UgbWlnaHQgc2F5OiBvcGVuIHVwIHRoZSBwb3J0IGZ=
+v
+ciB3aXJlZ3VhcmQgb24gdGhlIGBVcGxpbmtgIGFuZCBvZmYgeW91IGdvLiBXaGljaCBJIGRpZCw=
+g
+dG8gc29sdmUgbXkgaW1tZWRpYXRlIHByb2JsZW0uIChzdGlsbCBmaW5kIGl0IHVnbHkpPC9kaXY=
++
+PGRpdj48YnI+PC9kaXY+PGRpdj5CdXQgbm8gd2UncmUgZ2V0dGluZyBhIHNlY29uZCBwcm92aWR=
+l
+ciBpbiBkYSBob3VzZSwgdGhhdCB3aWxsIGJlIGNvbm5lY3RlZCB0aGUgc2FtZSB3YXkgYXMgdGh=
+l
+IG90aGVyLCB3aXRoIHRoYXQgbGluayBiZWluZyBgVXBsaW5rMmAuIFNvIG5vdyBJICpyZWFsbHk=
+q
+IG5lZWQgbXkgYmdwIHJvdXRlZCBgUHVibGljYCBJUCBhZGRyZXNzIHRvIGJlIHRoZSBzb2xlIGF=
+u
+c3dlcmluZyB3aXJlZ3VhcmQgSVAgcGFja2V0cywgc28gdGhhdCBJIGNhbiBiZSBzdXJlIHRoYXQ=
+g
+aWYgb25lIG9mIG15IGJncCBwZWVycyBkaWVzLCB0aGUgc2FtZSBgUHVibGljYCBpcCBhZGRyZXN=
+z
+IGlzIHVzZWQgYnkgdGhlIGNsaWVudHMsIG5vdCB0aGUgb25lIHdpcmVndWFyZCBkZWR1Y2VzIGZ=
+y
+b20gdGhlIHN1Ym5ldCB3aXRoIHRoZSBkZWZhdWx0IHJvdXRlLjwvZGl2PjxkaXY+PGJyPjwvZGl=
+2
+PjxkaXY+Tm93LCB3aXJlZ3VhcmQgd2lsbCB1c2UgdGhlIGluY29taW5nIGBVcGxpbmtYYCBpcCB=
+h
+cyBzb3VyY2UgYW5kIGFkdmVydGlzZSBpdCB0byB0aGUgY2xpZW50cyBjb25uZWN0ZWQgdGhyb3V=
+n
+aCBlaXRoZXIgb25lICZuYnNwO3RoYXQgaGFzIHRoZSBzYW1lIG1ldHJpYyBhbmQgcm91dGluZyB=
+w
+b2xpY3k8L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PlZvaWxhLi4uIGl=
+u
+IGEgbnV0c2hlbGwgOy0pPC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5KYW48L2Rpdj4=3D" sty=
+le=3D"height:0;width:0;max-height:0;max-width:0;overflow:hidden;font-size:0=
+em;padding:0;margin:0">=E2=80=8B</div></div></div>
 
-iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAlmLpdgQHGphc29uQHp4
-MmM0LmNvbQAKCRBJ/HASpd4DrgyfD/991kMeNobaCB6E9bsJ1mHc+lXWsE+2JPDY
-TtezEzBS+kS635s/vD/9nS38wss0BJZxxAUl+tcrFjE6MvIWb7dv07KFqUuLsVip
-hGdXNwZtWvI2cduyehgHT8oavZUxyRTtYA8oxCIbdaRg8aOtlyW1HNzyeRhzzRxf
-qRbkcToUyStcaC5bzCWcr/cRh2mndPjT4reT+n2tg/RHS00aFmkgtJ7GWTeJyEhv
-JaLfEo+fTPvepBBOiDamZQCqBt/jWjUxub2xb8M6dXzdC6Yzg/n70tT1ABf8uS1q
-zQpOLi6RaD2cZ/jAXqW0XDX8rhz0IwzM+OY18B43LHZZ6TUyCqiS1/TdxmLNhLho
-IQBFnaBII12F6ZYiXl3j7fwgaF1LhzEm7itIFGNHDEJ4RxCcNoq4azLV6acBHCqS
-dnHrHCs0/uisx0qPdKT97b7faTPabO8mlXCtqV3F+MRVBtytRhUo/PTZ62JfYfYb
-QqgRY9WhOFwmnPgZOvPyPhgrsm/qCjhT8Y48DZVKpJ/d5PdW35AClq6VTi6U416O
-XG71UJx+2psrS5poL7mtRHo+UN1HKiPOU2VAI+kno4e4FBRmqClsUeHvXgeIFrGk
-o40vbVEihx7QEoUV8z0edwNTPXaPTGEbZFW6sYe0MVQlR9C8TY7rDEWi90MFAp5C
-nLF80s0z+w==
-=zr1b
------END PGP SIGNATURE-----
+--001a114e46a0c99b120556629dee--
