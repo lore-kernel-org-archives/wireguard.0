@@ -1,23 +1,17 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: larkwang@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 94386584
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1bac2be9
  for <wireguard@lists.zx2c4.com>;
- Sat, 12 Aug 2017 01:33:08 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 78b46745
+ Sat, 12 Aug 2017 15:46:17 +0000 (UTC)
+Received: from mail-ua0-f173.google.com (mail-ua0-f173.google.com
+ [209.85.217.173])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b0a32692
  for <wireguard@lists.zx2c4.com>;
- Sat, 12 Aug 2017 01:33:08 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 108320f8
- for <wireguard@lists.zx2c4.com>;
- Sat, 12 Aug 2017 01:52:11 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id f04a65cd
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Sat, 12 Aug 2017 01:52:10 +0000 (UTC)
-Received: by mail-it0-f47.google.com with SMTP id f16so4172055itb.0
- for <wireguard@lists.zx2c4.com>; Fri, 11 Aug 2017 18:55:24 -0700 (PDT)
+ Sat, 12 Aug 2017 15:46:17 +0000 (UTC)
+Received: by mail-ua0-f173.google.com with SMTP id 80so24817362uas.0
+ for <wireguard@lists.zx2c4.com>; Sat, 12 Aug 2017 09:08:38 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9o7Z4L+UrzeLgnetdJ_LWO-XbJE-kcM8W_r76QB7JT_aA@mail.gmail.com>
+In-Reply-To: <CAHmME9q5T-KpTatXxLZ_H_j_Ly=ZTX63wKTeYD=jqKQeupFFpQ@mail.gmail.com>
 References: <CAF75rJBdfeD-7MpDGfFBV=bLbm0-H--mFin30QL9jDmpd4z1jw@mail.gmail.com>
  <CAHmME9oj1N3PdutkA1dAPOieqn6ukUPnRONp-_iBck1HhnjZiw@mail.gmail.com>
  <CAF75rJDubyJwgrwTFTTzM4nKX2e=+6h_qBBC+Vt4FvzVhbfnuw@mail.gmail.com>
@@ -27,14 +21,12 @@ References: <CAF75rJBdfeD-7MpDGfFBV=bLbm0-H--mFin30QL9jDmpd4z1jw@mail.gmail.com>
  <CAHmME9rJ7BiinhPRhOqzAjZJEdc=wKzdk80Dvi=xQnP2fu_eqw@mail.gmail.com>
  <CAF75rJDj79FU7GMa1DKxPNZ9V2dSW0+rFUDQjmEJ_z3ZDeuuGA@mail.gmail.com>
  <CAHmME9q5T-KpTatXxLZ_H_j_Ly=ZTX63wKTeYD=jqKQeupFFpQ@mail.gmail.com>
- <20170810221606.GC30478@lud>
- <CAHmME9o7Z4L+UrzeLgnetdJ_LWO-XbJE-kcM8W_r76QB7JT_aA@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sat, 12 Aug 2017 01:55:23 +0000
-Message-ID: <CAHmME9qR3jeh-TmG+yeE8qwEypeoy1GV_FDMUb+ZK0bDF+fawQ@mail.gmail.com>
+From: Wang Jian <larkwang@gmail.com>
+Date: Sun, 13 Aug 2017 00:08:37 +0800
+Message-ID: <CAF75rJB_eToq4bTqRzqsB7ncObVo2SpsMFKOZFNzoenzkMnJDg@mail.gmail.com>
 Subject: Re: Multihomed server issue
-To: Baptiste Jonglez <baptiste@bitsofnetworks.org>
-Content-Type: text/plain; charset="UTF-8"
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Content-Type: multipart/mixed; boundary="94eb2c18fe4678b6b4055690a4b0"
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
  Jan De Landtsheer <jan@delandtsheer.eu>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
@@ -46,8 +38,117 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Work in progress of last email from airplane:
-https://git.zx2c4.com/WireGuard/commit/?id=afca9ef9ce88e8ef026e9c9deca98600c19c502e
-If you'd like to test or play with the code.
+--94eb2c18fe4678b6b4055690a4b0
+Content-Type: text/plain; charset="UTF-8"
 
-(Will refine further when I'm home.)
+2017-08-10 22:29 GMT+08:00 Jason A. Donenfeld <Jason@zx2c4.com>:
+> Hi Wang,
+>
+> Did you have any luck reproducing this with the netns.sh script?
+
+I managed to test with dummy interface but things are not as expected.
+I think it's because my test case patch is not equvalent to my real setup.
+
+I was building a more complex test case that mimics my real setup, but
+got stuck on other things and got no progress by now.
+
+It seems that you have figured out what the scenario is and how to deal
+with it.
+
+IMHO, you have several options
+1. Use request's destination address as reply source address, inject
+the packet, then let kernel routing code do the left work, because a
+policy route is installed anyway
+2. like 1, but your code lookup routing table and search best route for
+reply source address
+3. provide config option that ListenAddress can be specified. You just
+use it/them to check against request packet's dest address, and inject
+the reply packet.
+
+(Disclaimer: I haven't looked into your code related to routing due to
+time constraint, so my opinions may be totally wrong)
+
+I understand that you prefer 0.0.0.0 for most flexible, thus option 3
+is not convicing.
+
+BTW: finished test case is attached anyway.
+
+--94eb2c18fe4678b6b4055690a4b0
+Content-Type: application/octet-stream; name="netns.dummy.patch"
+Content-Disposition: attachment; filename="netns.dummy.patch"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_j69h3k360
+
+ZGlmZiAtLWdpdCBhL3NyYy90ZXN0cy9uZXRucy5zaCBiL3NyYy90ZXN0cy9uZXRucy5zaAppbmRl
+eCA2YTU4YjM3Li42Njg2OWE2IDEwMDc1NQotLS0gYS9zcmMvdGVzdHMvbmV0bnMuc2gKKysrIGIv
+c3JjL3Rlc3RzL25ldG5zLnNoCkBAIC0zMjUsMyArMzI1LDY5IEBAIG4yIHBpbmcgLVcgMSAtYyAx
+IDE5Mi4xNjguMjQxLjEKIGlwMSBsaW5rIGRlbCB2ZXRoMQogaXAxIGxpbmsgZGVsIHdnMAogaXAy
+IGxpbmsgZGVsIHdnMAorCisKKyMgVGVzdCBtdWx0aWhvbWVkIHNlcnZlciB3aGljaCB1c2VzIGR1
+bW15IGludGVyZmFjZXMKKyMg4pSM4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA
+4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA
+4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSQICAgIOKUjOKUgOKUgOKUgOKUgOKUgOKUgOKU
+gOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKU
+gOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKU
+gOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUkAorIyDilIIgICAgICAgICAg
+ICAgJG5zMSBuYW1lc3BhY2UgICAgICAgICAgICAg4pSCICAgIOKUgiAgICAgICAgICAgICAgICAg
+ICAgICRuczIgbmFtZXNwYWNlICAgICAgICAgICAgICAgICAgICAgIOKUggorIyDilIIgICAgICAg
+ICAgICAgICAgIGNsaWVudCAgICAgICAgICAgICAgICAg4pSCICAgIOKUgiAgICAgICAgICAgICAg
+ICAgICAgICAgICAgc2VydmVyICAgICAgICAgICAgICAgICAgICAgICAgIOKUggorIyDilIIgIOKU
+jOKUgOKUgOKUgOKUgOKUgOKUkCAgICAgICAgICAgICDilIzilIDilIDilIDilIDilIDilJAgICAg
+ICAgICAgIOKUgiAgICDilIIgIOKUjOKUgOKUgOKUgOKUgOKUgOKUkCAgICAgICAgICAgIOKUjOKU
+gOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUkCAgICAgICDilIzilIDilIDilIDilIDilIDilJAgICAg
+ICAgICAgICDilIIKKyMg4pSCICDilIIgd2cwIOKUguKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKU
+gOKUgOKUgOKUgOKUgOKUgnZldGgx4pSC4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA
+4pS84pSA4pSA4pSA4pSA4pS84pSA4pSA4pSCdmV0aDLilILilIDilIDilIDilIDilIDilIDilIDi
+lIDilIDilIDilIDilIDilIIgZHVtbXkwIOKUguKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgiB3ZzAg
+4pSCICAgICAgICAgICAg4pSCCisjIOKUgiAg4pSc4pSA4pSA4pSA4pSA4pSA4pS04pSA4pSA4pSA
+4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSQICDilJzilIDilIDilIDilIDilIDilLTilIDilIDilIDi
+lIDilIDilIDilIDilIDilIDilIDilJDilIIgICAg4pSCICDilJzilIDilIDilIDilIDilIDilLTi
+lIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilJAg4pSc4pSA4pSA4pSA4pSA4pSA4pSA4pSA
+4pSA4pS04pSA4pSA4pSA4pSA4pSA4pSQIOKUnOKUgOKUgOKUgOKUgOKUgOKUtOKUgOKUgOKUgOKU
+gOKUgOKUgOKUgOKUgOKUgOKUgOKUkCDilIIKKyMg4pSCICDilIIxOTIuMTY4LjI0MS4xLzI04pSC
+ICDilIIxMC4wLjAuMS8yNCAgICAg4pSC4pSCICAgIOKUgiAg4pSCMTAuMC4wLjIvMjQgICAgIOKU
+giDilIIxNzIuMTYuMC4yLzMyIOKUgiDilIIxOTIuMTY4LjI0MS4yLzI04pSCIOKUggorIyDilIIg
+IOKUgmZkMDA6OjEvMjQgICAgICDilIIgIOKUgmZkMDA6YWE6OjEvOTYgICDilILilIIgICAg4pSC
+ICDilIJmZDAwOmFhOjoyLzk2ICAg4pSCIOKUgiAgICAgICAgICAgICAg4pSCIOKUgmZkMDA6OjIv
+MjQgICAgICDilIIg4pSCCisjIOKUgiAg4pSU4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA
+4pSA4pSA4pSA4pSA4pSA4pSA4pSYICDilJTilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDi
+lIDilIDilIDilIDilIDilIDilJjilIIgICAg4pSCICDilJTilIDilIDilIDilIDilIDilIDilIDi
+lIDilIDilIDilIDilIDilIDilIDilIDilIDilJgg4pSU4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA
+4pSA4pSA4pSA4pSA4pSA4pSA4pSYIOKUlOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKU
+gOKUgOKUgOKUgOKUgOKUgOKUmCDilIIKKyMg4pSU4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA
+4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA
+4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSYICAgIOKUlOKUgOKUgOKUgOKU
+gOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKU
+gOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKU
+gOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUmAorCitpcDEg
+bGluayBhZGQgZGV2IHdnMCB0eXBlIHdpcmVndWFyZAoraXAyIGxpbmsgYWRkIGRldiB3ZzAgdHlw
+ZSB3aXJlZ3VhcmQKK2NvbmZpZ3VyZV9wZWVycworaXAxIGxpbmsgYWRkIHZldGgxIHR5cGUgdmV0
+aCBwZWVyIG5hbWUgdmV0aDIKK2lwMSBsaW5rIHNldCB2ZXRoMiBuZXRucyAkbmV0bnMyCituMSBi
+YXNoIC1jICdwcmludGYgMCA+IC9wcm9jL3N5cy9uZXQvaXB2Ni9jb25mL3ZldGgxL2FjY2VwdF9k
+YWQnCituMiBiYXNoIC1jICdwcmludGYgMCA+IC9wcm9jL3N5cy9uZXQvaXB2Ni9jb25mL3ZldGgy
+L2FjY2VwdF9kYWQnCituMSBiYXNoIC1jICdwcmludGYgMSA+IC9wcm9jL3N5cy9uZXQvaXB2NC9j
+b25mL3ZldGgxL3Byb21vdGVfc2Vjb25kYXJpZXMnCisKKyMgTm93IHdlIHNob3cgdGhhdCB3ZSBj
+YW4gc3VjY2Vzc2Z1bGx5IGRvIHJlcGx5IHRvIHNlbmRlciByb3V0aW5nCitpcDEgbGluayBzZXQg
+dmV0aDEgZG93bgoraXAyIGxpbmsgc2V0IHZldGgyIGRvd24KK2lwMSBhZGRyIGZsdXNoIGRldiB2
+ZXRoMQoraXAyIGFkZHIgZmx1c2ggZGV2IHZldGgyCitpcDEgYWRkciBhZGQgMTAuMC4wLjEvMjQg
+ZGV2IHZldGgxCitpcDEgYWRkciBhZGQgZmQwMDphYTo6MS85NiBkZXYgdmV0aDEKK2lwMiBhZGRy
+IGFkZCAxMC4wLjAuMi8yNCBkZXYgdmV0aDIKK2lwMiBhZGRyIGFkZCBmZDAwOmFhOjoyLzk2IGRl
+diB2ZXRoMgoraXAxIGxpbmsgc2V0IHZldGgxIHVwCitpcDIgbGluayBzZXQgdmV0aDIgdXAKK3dh
+aXRpZmFjZSAkbmV0bnMxIHZldGgxCit3YWl0aWZhY2UgJG5ldG5zMiB2ZXRoMgorCitpcDIgbGlu
+ayBhZGQgZGV2IGR1bW15MCB0eXBlIGR1bW15CitpcDIgYWRkciBhZGQgMTcyLjE2LjAuMi8zMiBk
+ZXYgZHVtbXkwCitpcDEgcm91dGUgYWRkIDE3Mi4xNi4wLjIvMzIgdmlhIDEwLjAuMC4yCisKK2lw
+MiBydWxlIGFkZCBwcmVmIDIwMDAwIGZyb20gMTcyLjE2LjAuMi8zMiB0YWJsZSAyMDAwCitpcDIg
+cm91dGUgYWRkIHRhYmxlIDIwMDAgZGVmYXVsdCB2aWEgMTAuMC4wLjEgZGV2IHZldGgyIHNyYyAx
+NzIuMTYuMC4yCituMSBwaW5nIC1XIDEgLWMgMSAtSSAxMC4wLjAuMSAgICAxNzIuMTYuMC4yCitu
+MiBwaW5nIC1XIDEgLWMgMSAtSSAxNzIuMTYuMC4yICAxMC4wLjAuMQorCituMSB3ZyBzZXQgd2cw
+IHBlZXIgIiRwdWIyIiBlbmRwb2ludCAxNzIuMTYuMC4yOjIKK24xIHBpbmcgLVcgMSAtYyAxIDE5
+Mi4xNjguMjQxLjIgfHwgdHJ1ZQorbjEgd2cKK24yIHdnCisKK2lwMSBsaW5rIGRlbCB3ZzAKK2lw
+MiBsaW5rIGRlbCB3ZzAKK2lwMSBsaW5rIGFkZCBkZXYgd2cwIHR5cGUgd2lyZWd1YXJkCitpcDIg
+bGluayBhZGQgZGV2IHdnMCB0eXBlIHdpcmVndWFyZAorY29uZmlndXJlX3BlZXJzCituMSB3ZyBz
+ZXQgd2cwIHBlZXIgIiRwdWIyIiBlbmRwb2ludCAxNzIuMTYuMC4yOjIKK24yIHdnIHNldCB3ZzAg
+ZndtYXJrIDB4MzAwCituMiBpcCBydWxlIGFkZCBwcmVmIDIwMDAwIGZ3bWFyayAweDMwMCB0YWJs
+ZSAyMDAwCituMSBwaW5nIC1XIDEgLWMgNSAxOTIuMTY4LjI0MS4yIHx8IHRydWUKK24xIHdnCitu
+MiB3ZworCitpcDEgbGluayBkZWwgdmV0aDEKK2lwMSBsaW5rIGRlbCB3ZzAKK2lwMiBsaW5rIGRl
+bCB3ZzAK
+--94eb2c18fe4678b6b4055690a4b0--
