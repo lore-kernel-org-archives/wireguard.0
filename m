@@ -1,34 +1,22 @@
-Return-Path: larkwang@gmail.com
+Return-Path: andy@herdoralden.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1bac2be9
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a86a0f58
  for <wireguard@lists.zx2c4.com>;
- Sat, 12 Aug 2017 15:46:17 +0000 (UTC)
-Received: from mail-ua0-f173.google.com (mail-ua0-f173.google.com
- [209.85.217.173])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b0a32692
+ Sat, 19 Aug 2017 18:14:19 +0000 (UTC)
+Received: from mail-pf0-f173.google.com (mail-pf0-f173.google.com
+ [209.85.192.173])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6a096b75
  for <wireguard@lists.zx2c4.com>;
- Sat, 12 Aug 2017 15:46:17 +0000 (UTC)
-Received: by mail-ua0-f173.google.com with SMTP id 80so24817362uas.0
- for <wireguard@lists.zx2c4.com>; Sat, 12 Aug 2017 09:08:38 -0700 (PDT)
+ Sat, 19 Aug 2017 18:14:19 +0000 (UTC)
+Received: by mail-pf0-f173.google.com with SMTP id w127so5623971pfd.2
+ for <wireguard@lists.zx2c4.com>; Sat, 19 Aug 2017 11:37:34 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9q5T-KpTatXxLZ_H_j_Ly=ZTX63wKTeYD=jqKQeupFFpQ@mail.gmail.com>
-References: <CAF75rJBdfeD-7MpDGfFBV=bLbm0-H--mFin30QL9jDmpd4z1jw@mail.gmail.com>
- <CAHmME9oj1N3PdutkA1dAPOieqn6ukUPnRONp-_iBck1HhnjZiw@mail.gmail.com>
- <CAF75rJDubyJwgrwTFTTzM4nKX2e=+6h_qBBC+Vt4FvzVhbfnuw@mail.gmail.com>
- <CAHmME9pujFf3pUAr9NZK81DZMQHYsH1gvgh3uH6RAQwNEZ8JDA@mail.gmail.com>
- <CAF75rJD7ZcSKp6WiEHg+VUa7=07-+9P3r6TxU6s9ieW+LdkNhQ@mail.gmail.com>
- <CAF75rJD3LH-CcPt2Da2qfxtv7C+W4Ed=ORkUg0L2vW1QiUfBcg@mail.gmail.com>
- <CAHmME9rJ7BiinhPRhOqzAjZJEdc=wKzdk80Dvi=xQnP2fu_eqw@mail.gmail.com>
- <CAF75rJDj79FU7GMa1DKxPNZ9V2dSW0+rFUDQjmEJ_z3ZDeuuGA@mail.gmail.com>
- <CAHmME9q5T-KpTatXxLZ_H_j_Ly=ZTX63wKTeYD=jqKQeupFFpQ@mail.gmail.com>
-From: Wang Jian <larkwang@gmail.com>
-Date: Sun, 13 Aug 2017 00:08:37 +0800
-Message-ID: <CAF75rJB_eToq4bTqRzqsB7ncObVo2SpsMFKOZFNzoenzkMnJDg@mail.gmail.com>
-Subject: Re: Multihomed server issue
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Content-Type: multipart/mixed; boundary="94eb2c18fe4678b6b4055690a4b0"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
- Jan De Landtsheer <jan@delandtsheer.eu>
+From: Andrew Harrison <andy@herdoralden.com>
+Date: Sat, 19 Aug 2017 11:37:33 -0700
+Message-ID: <CAJmufjLM+pk-mwAaAbbsJ9obPjOvOmt_t_dMK4k1RX30sYts3w@mail.gmail.com>
+Subject: Having some trouble with an ip rule
+To: wireguard@lists.zx2c4.com
+Content-Type: multipart/alternative; boundary="94eb2c18eea0f4935705571f89d9"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -38,117 +26,80 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---94eb2c18fe4678b6b4055690a4b0
+--94eb2c18eea0f4935705571f89d9
 Content-Type: text/plain; charset="UTF-8"
 
-2017-08-10 22:29 GMT+08:00 Jason A. Donenfeld <Jason@zx2c4.com>:
-> Hi Wang,
->
-> Did you have any luck reproducing this with the netns.sh script?
+I've been messing around with WireGuard, and I'm trying to get it to route
+all of my traffic.
 
-I managed to test with dummy interface but things are not as expected.
-I think it's because my test case patch is not equvalent to my real setup.
+I was trying to emulate what is shown in this gif
+<https://www.wireguard.com/img/wg-quick-tool.gif>, but I've made a mistake.
 
-I was building a more complex test case that mimics my real setup, but
-got stuck on other things and got no progress by now.
+Instead of showing:
 
-It seems that you have figured out what the scenario is and how to deal
-with it.
+    ip rule add not to *server ip address* table 51820
 
-IMHO, you have several options
-1. Use request's destination address as reply source address, inject
-the packet, then let kernel routing code do the left work, because a
-policy route is installed anyway
-2. like 1, but your code lookup routing table and search best route for
-reply source address
-3. provide config option that ListenAddress can be specified. You just
-use it/them to check against request packet's dest address, and inject
-the reply packet.
 
-(Disclaimer: I haven't looked into your code related to routing due to
-time constraint, so my opinions may be totally wrong)
+I am left with:
 
-I understand that you prefer 0.0.0.0 for most flexible, thus option 3
-is not convicing.
+    [#] ip -4 rule add not fwmark 51820 table 51820
 
-BTW: finished test case is attached anyway.
 
---94eb2c18fe4678b6b4055690a4b0
-Content-Type: application/octet-stream; name="netns.dummy.patch"
-Content-Disposition: attachment; filename="netns.dummy.patch"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_j69h3k360
+and I'm not sure how to remove this.  Anytime I try to use WireGuard with
+the `wg-quick` command, it makes/executes this rule, and it clobbers my
+connections.
 
-ZGlmZiAtLWdpdCBhL3NyYy90ZXN0cy9uZXRucy5zaCBiL3NyYy90ZXN0cy9uZXRucy5zaAppbmRl
-eCA2YTU4YjM3Li42Njg2OWE2IDEwMDc1NQotLS0gYS9zcmMvdGVzdHMvbmV0bnMuc2gKKysrIGIv
-c3JjL3Rlc3RzL25ldG5zLnNoCkBAIC0zMjUsMyArMzI1LDY5IEBAIG4yIHBpbmcgLVcgMSAtYyAx
-IDE5Mi4xNjguMjQxLjEKIGlwMSBsaW5rIGRlbCB2ZXRoMQogaXAxIGxpbmsgZGVsIHdnMAogaXAy
-IGxpbmsgZGVsIHdnMAorCisKKyMgVGVzdCBtdWx0aWhvbWVkIHNlcnZlciB3aGljaCB1c2VzIGR1
-bW15IGludGVyZmFjZXMKKyMg4pSM4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA
-4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA
-4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSQICAgIOKUjOKUgOKUgOKUgOKUgOKUgOKUgOKU
-gOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKU
-gOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKU
-gOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUkAorIyDilIIgICAgICAgICAg
-ICAgJG5zMSBuYW1lc3BhY2UgICAgICAgICAgICAg4pSCICAgIOKUgiAgICAgICAgICAgICAgICAg
-ICAgICRuczIgbmFtZXNwYWNlICAgICAgICAgICAgICAgICAgICAgIOKUggorIyDilIIgICAgICAg
-ICAgICAgICAgIGNsaWVudCAgICAgICAgICAgICAgICAg4pSCICAgIOKUgiAgICAgICAgICAgICAg
-ICAgICAgICAgICAgc2VydmVyICAgICAgICAgICAgICAgICAgICAgICAgIOKUggorIyDilIIgIOKU
-jOKUgOKUgOKUgOKUgOKUgOKUkCAgICAgICAgICAgICDilIzilIDilIDilIDilIDilIDilJAgICAg
-ICAgICAgIOKUgiAgICDilIIgIOKUjOKUgOKUgOKUgOKUgOKUgOKUkCAgICAgICAgICAgIOKUjOKU
-gOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUkCAgICAgICDilIzilIDilIDilIDilIDilIDilJAgICAg
-ICAgICAgICDilIIKKyMg4pSCICDilIIgd2cwIOKUguKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKU
-gOKUgOKUgOKUgOKUgOKUgnZldGgx4pSC4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA
-4pS84pSA4pSA4pSA4pSA4pS84pSA4pSA4pSCdmV0aDLilILilIDilIDilIDilIDilIDilIDilIDi
-lIDilIDilIDilIDilIDilIIgZHVtbXkwIOKUguKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgiB3ZzAg
-4pSCICAgICAgICAgICAg4pSCCisjIOKUgiAg4pSc4pSA4pSA4pSA4pSA4pSA4pS04pSA4pSA4pSA
-4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSQICDilJzilIDilIDilIDilIDilIDilLTilIDilIDilIDi
-lIDilIDilIDilIDilIDilIDilIDilJDilIIgICAg4pSCICDilJzilIDilIDilIDilIDilIDilLTi
-lIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilJAg4pSc4pSA4pSA4pSA4pSA4pSA4pSA4pSA
-4pSA4pS04pSA4pSA4pSA4pSA4pSA4pSQIOKUnOKUgOKUgOKUgOKUgOKUgOKUtOKUgOKUgOKUgOKU
-gOKUgOKUgOKUgOKUgOKUgOKUgOKUkCDilIIKKyMg4pSCICDilIIxOTIuMTY4LjI0MS4xLzI04pSC
-ICDilIIxMC4wLjAuMS8yNCAgICAg4pSC4pSCICAgIOKUgiAg4pSCMTAuMC4wLjIvMjQgICAgIOKU
-giDilIIxNzIuMTYuMC4yLzMyIOKUgiDilIIxOTIuMTY4LjI0MS4yLzI04pSCIOKUggorIyDilIIg
-IOKUgmZkMDA6OjEvMjQgICAgICDilIIgIOKUgmZkMDA6YWE6OjEvOTYgICDilILilIIgICAg4pSC
-ICDilIJmZDAwOmFhOjoyLzk2ICAg4pSCIOKUgiAgICAgICAgICAgICAg4pSCIOKUgmZkMDA6OjIv
-MjQgICAgICDilIIg4pSCCisjIOKUgiAg4pSU4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA
-4pSA4pSA4pSA4pSA4pSA4pSA4pSYICDilJTilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDi
-lIDilIDilIDilIDilIDilIDilJjilIIgICAg4pSCICDilJTilIDilIDilIDilIDilIDilIDilIDi
-lIDilIDilIDilIDilIDilIDilIDilIDilIDilJgg4pSU4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA
-4pSA4pSA4pSA4pSA4pSA4pSA4pSYIOKUlOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKU
-gOKUgOKUgOKUgOKUgOKUgOKUmCDilIIKKyMg4pSU4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA
-4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA
-4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSYICAgIOKUlOKUgOKUgOKUgOKU
-gOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKU
-gOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKU
-gOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUmAorCitpcDEg
-bGluayBhZGQgZGV2IHdnMCB0eXBlIHdpcmVndWFyZAoraXAyIGxpbmsgYWRkIGRldiB3ZzAgdHlw
-ZSB3aXJlZ3VhcmQKK2NvbmZpZ3VyZV9wZWVycworaXAxIGxpbmsgYWRkIHZldGgxIHR5cGUgdmV0
-aCBwZWVyIG5hbWUgdmV0aDIKK2lwMSBsaW5rIHNldCB2ZXRoMiBuZXRucyAkbmV0bnMyCituMSBi
-YXNoIC1jICdwcmludGYgMCA+IC9wcm9jL3N5cy9uZXQvaXB2Ni9jb25mL3ZldGgxL2FjY2VwdF9k
-YWQnCituMiBiYXNoIC1jICdwcmludGYgMCA+IC9wcm9jL3N5cy9uZXQvaXB2Ni9jb25mL3ZldGgy
-L2FjY2VwdF9kYWQnCituMSBiYXNoIC1jICdwcmludGYgMSA+IC9wcm9jL3N5cy9uZXQvaXB2NC9j
-b25mL3ZldGgxL3Byb21vdGVfc2Vjb25kYXJpZXMnCisKKyMgTm93IHdlIHNob3cgdGhhdCB3ZSBj
-YW4gc3VjY2Vzc2Z1bGx5IGRvIHJlcGx5IHRvIHNlbmRlciByb3V0aW5nCitpcDEgbGluayBzZXQg
-dmV0aDEgZG93bgoraXAyIGxpbmsgc2V0IHZldGgyIGRvd24KK2lwMSBhZGRyIGZsdXNoIGRldiB2
-ZXRoMQoraXAyIGFkZHIgZmx1c2ggZGV2IHZldGgyCitpcDEgYWRkciBhZGQgMTAuMC4wLjEvMjQg
-ZGV2IHZldGgxCitpcDEgYWRkciBhZGQgZmQwMDphYTo6MS85NiBkZXYgdmV0aDEKK2lwMiBhZGRy
-IGFkZCAxMC4wLjAuMi8yNCBkZXYgdmV0aDIKK2lwMiBhZGRyIGFkZCBmZDAwOmFhOjoyLzk2IGRl
-diB2ZXRoMgoraXAxIGxpbmsgc2V0IHZldGgxIHVwCitpcDIgbGluayBzZXQgdmV0aDIgdXAKK3dh
-aXRpZmFjZSAkbmV0bnMxIHZldGgxCit3YWl0aWZhY2UgJG5ldG5zMiB2ZXRoMgorCitpcDIgbGlu
-ayBhZGQgZGV2IGR1bW15MCB0eXBlIGR1bW15CitpcDIgYWRkciBhZGQgMTcyLjE2LjAuMi8zMiBk
-ZXYgZHVtbXkwCitpcDEgcm91dGUgYWRkIDE3Mi4xNi4wLjIvMzIgdmlhIDEwLjAuMC4yCisKK2lw
-MiBydWxlIGFkZCBwcmVmIDIwMDAwIGZyb20gMTcyLjE2LjAuMi8zMiB0YWJsZSAyMDAwCitpcDIg
-cm91dGUgYWRkIHRhYmxlIDIwMDAgZGVmYXVsdCB2aWEgMTAuMC4wLjEgZGV2IHZldGgyIHNyYyAx
-NzIuMTYuMC4yCituMSBwaW5nIC1XIDEgLWMgMSAtSSAxMC4wLjAuMSAgICAxNzIuMTYuMC4yCitu
-MiBwaW5nIC1XIDEgLWMgMSAtSSAxNzIuMTYuMC4yICAxMC4wLjAuMQorCituMSB3ZyBzZXQgd2cw
-IHBlZXIgIiRwdWIyIiBlbmRwb2ludCAxNzIuMTYuMC4yOjIKK24xIHBpbmcgLVcgMSAtYyAxIDE5
-Mi4xNjguMjQxLjIgfHwgdHJ1ZQorbjEgd2cKK24yIHdnCisKK2lwMSBsaW5rIGRlbCB3ZzAKK2lw
-MiBsaW5rIGRlbCB3ZzAKK2lwMSBsaW5rIGFkZCBkZXYgd2cwIHR5cGUgd2lyZWd1YXJkCitpcDIg
-bGluayBhZGQgZGV2IHdnMCB0eXBlIHdpcmVndWFyZAorY29uZmlndXJlX3BlZXJzCituMSB3ZyBz
-ZXQgd2cwIHBlZXIgIiRwdWIyIiBlbmRwb2ludCAxNzIuMTYuMC4yOjIKK24yIHdnIHNldCB3ZzAg
-ZndtYXJrIDB4MzAwCituMiBpcCBydWxlIGFkZCBwcmVmIDIwMDAwIGZ3bWFyayAweDMwMCB0YWJs
-ZSAyMDAwCituMSBwaW5nIC1XIDEgLWMgNSAxOTIuMTY4LjI0MS4yIHx8IHRydWUKK24xIHdnCitu
-MiB3ZworCitpcDEgbGluayBkZWwgdmV0aDEKK2lwMSBsaW5rIGRlbCB3ZzAKK2lwMiBsaW5rIGRl
-bCB3ZzAK
---94eb2c18fe4678b6b4055690a4b0--
+The command I used that got me in this mess is (I think):
+
+    ip rule add not to *server ip address* table 51820
+
+
+Anytime WireGuard creates the VPN interface (wg0vpn), it creates this rule.
+
+
+ I can run
+
+    ip rule del table 51820
+
+and it gets rid of it, but next time I initiate the connection, it is
+back.  And also, it's not routing my traffic...
+
+Any help would be appreciated.
+
+--94eb2c18eea0f4935705571f89d9
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div style=3D"font-size:12.8px">I&#39;ve been messing arou=
+nd with WireGuard, and I&#39;m trying to get it to route all of my traffic.=
+</div><div style=3D"font-size:12.8px"><br></div><div style=3D"font-size:12.=
+8px">I was trying to emulate what is shown in=C2=A0<a href=3D"https://www.w=
+ireguard.com/img/wg-quick-tool.gif" target=3D"_blank">this gif</a>, but I&#=
+39;ve made a mistake.</div><div style=3D"font-size:12.8px"><br></div><div s=
+tyle=3D"font-size:12.8px">Instead of showing:</div><div style=3D"font-size:=
+12.8px"><br></div><div style=3D"font-size:12.8px">=C2=A0 =C2=A0 ip rule add=
+ not to *server ip address* table 51820</div><div style=3D"font-size:12.8px=
+"><br></div><div style=3D"font-size:12.8px"><br></div><div style=3D"font-si=
+ze:12.8px">I am left with:</div><div style=3D"font-size:12.8px"><br></div><=
+div style=3D"font-size:12.8px">=C2=A0 =C2=A0 [#] ip -4 rule add not fwmark =
+51820 table 51820</div><div style=3D"font-size:12.8px"><br></div><div style=
+=3D"font-size:12.8px"><br></div><div style=3D"font-size:12.8px">and I&#39;m=
+ not sure how to remove this.=C2=A0 Anytime I try to use WireGuard with the=
+ `wg-quick` command, it makes/executes this rule, and it clobbers my connec=
+tions.</div><div style=3D"font-size:12.8px"><br></div><div style=3D"font-si=
+ze:12.8px">The command I used that got me in this mess is (I think):</div><=
+div style=3D"font-size:12.8px"><br></div><div style=3D"font-size:12.8px">=
+=C2=A0 =C2=A0 ip rule add not to *server ip address* table 51820</div><div =
+style=3D"font-size:12.8px"><br></div><div style=3D"font-size:12.8px"><br></=
+div><div style=3D"font-size:12.8px">Anytime WireGuard creates the VPN inter=
+face (wg0vpn), it creates this rule.=C2=A0</div><div style=3D"font-size:12.=
+8px"><br></div><div style=3D"font-size:12.8px"><br></div><div style=3D"font=
+-size:12.8px">=C2=A0I can run</div><div style=3D"font-size:12.8px"><br></di=
+v><div style=3D"font-size:12.8px">=C2=A0 =C2=A0 ip rule del table 51820</di=
+v><div style=3D"font-size:12.8px"><br></div><div style=3D"font-size:12.8px"=
+>and it gets rid of it, but next time I initiate the connection, it is back=
+.=C2=A0 And also, it&#39;s not routing my traffic... =C2=A0</div><div style=
+=3D"font-size:12.8px"><br></div><div style=3D"font-size:12.8px">Any help wo=
+uld be appreciated.</div></div>
+
+--94eb2c18eea0f4935705571f89d9--
