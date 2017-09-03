@@ -1,28 +1,30 @@
-Return-Path: sirocco@gmx.fr
+Return-Path: dangf09@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9272b6ed
- for <wireguard@lists.zx2c4.com>;
- Mon, 21 Aug 2017 13:56:47 +0000 (UTC)
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7ae76326
- for <wireguard@lists.zx2c4.com>;
- Mon, 21 Aug 2017 13:56:47 +0000 (UTC)
-Received: from mail.vepito.fr ([82.230.44.96]) by mail.gmx.com (mrgmx002
- [212.227.17.184]) with ESMTPSA (Nemesis) id 0MSv6D-1eBSvr3drB-00RpUN for
- <wireguard@lists.zx2c4.com>; Mon, 21 Aug 2017 16:20:14 +0200
-Received: from vepito.fr (localhost.vepito.fr [127.0.0.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (No client certificate requested)
- by mail.vepito.fr (Postfix) with ESMTPS id 7A7C93E1A10
- for <wireguard@lists.zx2c4.com>; Mon, 21 Aug 2017 16:20:13 +0200 (CEST)
-Mime-Version: 1.0
-Date: Mon, 21 Aug 2017 14:20:13 +0000
-Content-Type: multipart/alternative;
- boundary="--=_RainLoop_453_802951873.1503325213"
-From: "Guillaume" <sirocco@gmx.fr>
-Message-ID: <25e3c10c5b4d3b858eaa18dad94cdcbe@gmx.fr>
-Subject: Wireguard without kernel module
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 79262719
+ for <wireguard@lists.zx2c4.com>; Sun, 3 Sep 2017 02:27:30 +0000 (UTC)
+Received: from mail-qk0-f180.google.com (mail-qk0-f180.google.com
+ [209.85.220.180])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c397bb97
+ for <wireguard@lists.zx2c4.com>; Sun, 3 Sep 2017 02:27:30 +0000 (UTC)
+Received: by mail-qk0-f180.google.com with SMTP id l65so12884205qkc.0
+ for <wireguard@lists.zx2c4.com>; Sat, 02 Sep 2017 19:52:33 -0700 (PDT)
+Return-Path: <dangf09@gmail.com>
+Received: from auth2-smtp.messagingengine.com (auth2-smtp.messagingengine.com.
+ [66.111.4.228])
+ by smtp.gmail.com with ESMTPSA id v32sm342807qtc.14.2017.09.02.19.52.31
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Sat, 02 Sep 2017 19:52:31 -0700 (PDT)
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
+ by mailauth.nyi.internal (Postfix) with ESMTP id E009220D28
+ for <wireguard@lists.zx2c4.com>; Sat,  2 Sep 2017 22:52:30 -0400 (EDT)
+Message-Id: <1504407150.3783820.1093515456.1E75D390@webmail.messagingengine.com>
+From: DANG Fan <dangf09@gmail.com>
 To: wireguard@lists.zx2c4.com
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="_----------=_150440715037838202"
+Date: Sun, 03 Sep 2017 10:52:30 +0800
+Subject: Module verification failed
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -32,25 +34,47 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
+This is a multi-part message in MIME format.
 
-----=_RainLoop_453_802951873.1503325213
+--_----------=_150440715037838202
+Content-Transfer-Encoding: 7bit
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
 
-Hi,=0A=0AI would like to test wireguard on OpenVZ.=0ACould wireguard be u=
-sed without loading an external kernel module ? (or in the future ?)=0A=
-=0AThanks,=0ARegards,=0AGuillaume
+I built WireGuard from source, and I got "Module verification failed"
+message when I tried to run "wg-quick up".
+Here is what I found in dmesg:
 
-----=_RainLoop_453_802951873.1503325213
+[   55.700967] wireguard: module verification failed: signature and/or
+required key missing - tainting kernel[   55.701390] wireguard: WireGuard 0.0.20170810 loaded. See
+www.wireguard.com for information.[   55.701391] wireguard: Copyright (C) 2015-2017 Jason A. Donenfeld
+<Jason@zx2c4.com>. All Rights Reserved.
+ffs@server:~$ uname -a
+Linux server 4.4.0-93-generic #116-Ubuntu SMP Fri Aug 11 21:17:51 UTC
+2017 x86_64 x86_64 x86_64 GNU/Linux
+Thanks!
+
+--_----------=_150440715037838202
+Content-Transfer-Encoding: 7bit
 Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
 
-<!DOCTYPE html><html><head><meta http-equiv=3D"Content-Type" content=3D"t=
-ext/html; charset=3Dutf-8" /></head><body><div data-html-editor-font-wrap=
-per=3D"true" style=3D"font-family: arial, sans-serif; font-size: 13px;"> =
-<signature>Hi,<br><br>I would like to test wireguard on OpenVZ.<br>Could =
-wireguard be used without loading an external kernel module ? (or in the =
-future ?)<br><br>Thanks,<br>Regards,<br>Guillaume</signature><br> </div><=
-/body></html>
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+</head>
+<body><div>I built WireGuard from source, and I got "Module verification failed" message when I tried to run "wg-quick up".<br></div>
+<div><br></div>
+<div>Here is what I found in dmesg:<br></div>
+<div><br></div>
+<div>[&nbsp;&nbsp; 55.700967] wireguard: module verification failed: signature and/or required key missing - tainting kernel<br></div>
+<div>[&nbsp;&nbsp; 55.701390] wireguard: WireGuard 0.0.20170810 loaded. See <a href="http://www.wireguard.com">www.wireguard.com</a> for information.<br></div>
+<div>[&nbsp;&nbsp; 55.701391] wireguard: Copyright (C) 2015-2017 Jason A. Donenfeld &lt;<a href="mailto:Jason@zx2c4.com">Jason@zx2c4.com</a>&gt;. All Rights Reserved.<br></div>
+<div><br></div>
+<div>ffs@server:~$ uname -a<br></div>
+<div>Linux server 4.4.0-93-generic #116-Ubuntu SMP Fri Aug 11 21:17:51 UTC 2017 x86_64 x86_64 x86_64 GNU/Linux<br></div>
+<div><br></div>
+<div>Thanks!</div>
+</body>
+</html>
 
-----=_RainLoop_453_802951873.1503325213--
+--_----------=_150440715037838202--
