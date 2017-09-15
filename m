@@ -1,23 +1,31 @@
-Return-Path: max@principal.rfc2324.org
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 688e30b2
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 84574517
  for <wireguard@lists.zx2c4.com>;
- Fri, 15 Sep 2017 00:46:36 +0000 (UTC)
-Received: from mail.rfc2324.org (mail.rfc2324.org [31.172.8.67])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 73bec3e1
+ Fri, 15 Sep 2017 01:50:51 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 19bd4530
  for <wireguard@lists.zx2c4.com>;
- Fri, 15 Sep 2017 00:46:36 +0000 (UTC)
-Received: from rfc2324.org ([31.172.8.84] helo=principal.rfc2324.org)
- by mail.rfc2324.org with esmtp rfc2324.org Mailserver
- id 1dsfBs-00004x-UV
- for <wireguard@lists.zx2c4.com>; Fri, 15 Sep 2017 03:13:09 +0200
-Date: Fri, 15 Sep 2017 02:52:55 +0200
-From: Maximilian Wilhelm <max@sdn.clinic>
-To: wireguard@lists.zx2c4.com
-Message-ID: <20170915005255.GA5107@principal.rfc2324.org>
+ Fri, 15 Sep 2017 01:50:51 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id de19e3b7
+ for <wireguard@lists.zx2c4.com>;
+ Fri, 15 Sep 2017 02:09:52 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 8b95c00d
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Fri, 15 Sep 2017 02:09:52 +0000 (UTC)
+Received: by mail-io0-f172.google.com with SMTP id d16so5123318ioj.3
+ for <wireguard@lists.zx2c4.com>; Thu, 14 Sep 2017 19:17:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Subject: Wireguard and VRFs?
+In-Reply-To: <20170915005255.GA5107@principal.rfc2324.org>
+References: <20170915005255.GA5107@principal.rfc2324.org>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Fri, 15 Sep 2017 04:17:20 +0200
+Message-ID: <CAHmME9oy6P6Uu1Ua=heozE8LsfFK2OPUtLwLa7e4N_QypjvqHg@mail.gmail.com>
+Subject: Re: Wireguard and VRFs?
+To: Maximilian Wilhelm <max@sdn.clinic>
+Content-Type: text/plain; charset="UTF-8"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -27,30 +35,19 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi folks,
+Hi Max,
 
-I just stumbled across wireguard and really like it!
+Yes, WireGuard supports this type of functionality through two more
+powerful mechanisms:
 
-While reading the docs and seeing the notes on network name spaces I
-started wondering if there's any support for Linux VRFs? [0]
+- fwmark, so you can do proper policy-based routing via `ip rule` with
+multiple tables
+- network namespace, so that you can have the udp socket in one
+namespace and the actual interface in another
 
-What I'd like to do is builing a VPN tunnel using VRF "external" and
-terminate the tunnel within the main VRF. For OpenVPN this required a
-patch [65] for the setsockopt() but then works fine. Is something like
-this already possible with Wireguard?
+I imagine what you want is the fwmark feature, which seems to match up
+with much of the language used in vrf.txt. Check out the wg(8) manpage
+for details.
 
-And if not would you be open to adding it or merging a patch for it?
-I didn't look through the code yet, but I would suggest an option for the
-tun interface which will then trigger a setsockopt() call. Like a
-parameter for iproute for type wireguard interfaces.
-
-Thanks a lot!
-Best
-Max
-
-[0] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/networking/vrf.txt
-[65] https://github.com/OpenVPN/openvpn/pull/65
--- 
-"I have to admit I've always suspected that MTBWTF would be a more useful
- metric of real-world performance."
- -- Valdis Kletnieks on NANOG
+Regards,
+Jason
