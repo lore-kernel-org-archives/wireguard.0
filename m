@@ -1,26 +1,26 @@
-Return-Path: jugs@protonmail.ch
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id aacb9637
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 61e13a22
  for <wireguard@lists.zx2c4.com>;
- Sat, 16 Sep 2017 02:02:25 +0000 (UTC)
-Received: from mail4.protonmail.ch (mail4.protonmail.ch [185.70.40.27])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3c4c92e3
+ Mon, 18 Sep 2017 15:25:30 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c7b5393d
  for <wireguard@lists.zx2c4.com>;
- Sat, 16 Sep 2017 02:02:24 +0000 (UTC)
-Date: Fri, 15 Sep 2017 22:28:55 -0400
-From: jugs <jugs@protonmail.ch>
-Cc: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
-Subject: Re: List of commercial WireGuard offerings
-Message-ID: <9cSXdXwbMn7UGrsnDTq51Hem_VPyyQ0Rfzf4JG8PK4LoiYXqNHiThmcx6ge7gPNwJExNPIl4Lu0vCYyOl1pF5g==@protonmail.ch>
-In-Reply-To: <1505293196.1327913.1104462088.47315F9B@webmail.messagingengine.com>
-References: <CAHmME9qOEw6Axjv9=XcnrQAm6atZVS4nwXakUBGJunu-eMBmPg@mail.gmail.com>
- <1505203686.807343.1103136184.6C8863CB@webmail.messagingengine.com>
- <CANTUoedL9kAozDzwreAjA2VvmJay34Lm7C+aEb7fXZ=jdqhdQA@mail.gmail.com>
- <1505293196.1327913.1104462088.47315F9B@webmail.messagingengine.com>
+ Mon, 18 Sep 2017 15:25:30 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9736ac02
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 18 Sep 2017 15:44:33 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id c0d62ed4
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 18 Sep 2017 15:44:33 +0000 (UTC)
+Date: Mon, 18 Sep 2017 17:52:29 +0200
+To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: [ANNOUNCE] WireGuard Snapshot `0.0.20170918` Available
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="b1_be3e7e751d99a6725ab9f7f869329f87"
-Reply-To: jugs <jugs@protonmail.ch>
+Content-Type: text/plain; charset=UTF-8
+Message-Id: <364762ca05cce093@frisell.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -30,180 +30,111 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-This is a multi-part message in MIME format.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
---b1_be3e7e751d99a6725ab9f7f869329f87
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+Hello,
 
-SnVzdCB0byB0aHJvdyBpbiBteSB0d28gY2VudHMsIEkndmUgYmVlbiB1c2luZyBtdWxsdmFkIHNp
-bmNlIHRoZXkgZmlyc3QgYW5ub3VuY2VkIHRoZWlyIHB1YmxpYyB0ZXN0IHNlcnZlcnMgYW5kIGhh
-dmUgYmVlbiB2ZXJ5IHBsZWFzZWQgYW5kIGltcHJlc3NlZCB3aXRoIGJvdGggdGhlIHF1YWxpdHkg
-b2Ygc2VydmljZSBhcyB3ZWxsIGFzIHRoZWlyIHN1cHBvcnQuIFRoZXkgY29udGludWUgdG8gaW5u
-b3ZhdGUgaW4gdGhlIFZQTiBwcm92aWRlciBzcGFjZSBhcyB5b3UgY2FuIHNlZSB3aGVuIHlvdSBz
-aWduIHVwIHdpdGggdGhlbSwgdGhleSByZWFsbHkgZ28gb3V0IG9mIHRoZWlyIHdheSB0byBtYWtl
-IHRoZWlyIHNlcnZpY2UgYXMgcHJpdmF0ZSBhbmQgYW5vbnltb3VzIGFzIHBvc3NpYmxlLgoKTXVs
-bHZhZCA6dGh1bWJzX3VwOgoKLWp1Z3MKCj4gLS0tLS0tLS0gT3JpZ2luYWwgTWVzc2FnZSAtLS0t
-LS0tLQo+IFN1YmplY3Q6IFJlOiBMaXN0IG9mIGNvbW1lcmNpYWwgV2lyZUd1YXJkIG9mZmVyaW5n
-cwo+IExvY2FsIFRpbWU6IFNlcHRlbWJlciAxMywgMjAxNyA4OjU5IEFNCj4gVVRDIFRpbWU6IFNl
-cHRlbWJlciAxMywgMjAxNyA4OjU5IEFNCj4gRnJvbTogZXJpY0BlcmljbGlnaHQuY29tCj4gVG86
-IHdpcmVndWFyZEBsaXN0cy56eDJjNC5jb20KPgo+IEhpLCBGcmVkcmlrISA6KQo+Cj4gWW91InJl
-IHJpZ2h0LCBJIHNob3VsZCBoYXZlIG1hZGUgYSBkaXN0aW5jdGlvbiBiZXR3ZWVuIHNwb25zb3Jz
-aGlwIGFuZCBhCj4gZG9uYXRpb24uIEl0InMgYW4gaW1wb3J0YW50IGRpZmZlcmVuY2UsIGFuZCBJ
-Im0gZ2xhZCB0byBoZWFyIHlvdXIKPiBzdGFuY2Ugb24gaXQuCj4KPiBJIHNoYXJlIHlvdXIgZXhj
-aXRlbWVudCBhYm91dCB0aGUgZnV0dXJlIG9mIHRoZSBwcm9qZWN0LCBhbmQgdGhlCj4gYWRkaXRp
-b25hbCBwcml2YWN5IGl0IGJyaW5ncy4gVGhhbmsgeW91IGZvciB5b3VyIGNvbnRyaWJ1dGlvbiB0
-byB0aGF0Cj4gZnV0dXJlIQo+Cj4gRQo+Cj4gLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0KPiBROiBXaHkgaXMgdGhpcyBlbWFpbCBmaXZlIHNlbnRlbmNlcyBvciBs
-ZXNzPwo+IEE6IGh0dHA6Ly9maXZlLnNlbnRlbmMuZXMKPgo+IE9uIFR1ZSwgMTIgU2VwIDIwMTcs
-IGF0IDIxOjExLCBGcmVkcmlrIFN0csO2bWJlcmcgd3JvdGU6Cj4+IE9uIFR1ZSwgU2VwIDEyLCAy
-MDE3IGF0IDEwOjA4IEFNLCBFcmljIExpZ2h0IDxlcmljQGVyaWNsaWdodC5jb20+IHdyb3RlOgo+
-PiA+IEZvciB0aGUgcmVjb3JkLCBNdWxsdmFkIGFyZSBncmVhdC4gSSJ2ZSBwdXJjaGFzZWQgYSBz
-dWJzY3JpcHRpb24gdGhlcmUKPj4gPiBhcyBhIGRpcmVjdCByZXN1bHQgb2YgdGhlaXIgc3BvbnNv
-cnNoaXAgb2YgV2lyZWd1YXJkLiBJInZlIGFsc28KPj4gPiByZWNvbW1lbmRlZCBpdCB0byBvdGhl
-cnMuIDopCj4+ID4KPj4KPj4gVGhhbmtzIEVyaWMhIEkibSBoYXBweSB0byBoZWFyIHRoYXQgeW91
-IGxpa2Ugb3VyIHNlcnZpY2UuIEkidmUKPj4gZm9yd2FyZGVkIHlvdXIgY29tbWVudHMgdG8gdGhl
-IHJlc3Qgb2YgdGhlIHRlYW0uCj4+Cj4+IE9uZSB0aW55IGRldGFpbCB0aG91Z2guIEFsdGhvdWdo
-IE11bGx2YWQgaXMgYSBtYWpvciAiZG9ub3IiIG9mCj4+IFdpcmVHdWFyZCwgd2UgYXJlIG5vdCBh
-ICJzcG9uc29yIi4KPj4KPj4gSSBmb3VuZCBvdXQgYWJvdXQgV2lyZUd1YXJkIGluIHRoZSBzdW1t
-ZXIgb2YgMjAxNi4gTXVsbHZhZCB0aGVuCj4+IHN0YXJ0ZWQgc3R1ZHlpbmcgdGhlIHNwZWNpZmlj
-YXRpb25zIGFuZCBleHBlcmltZW50aW5nIHdpdGggaXQuIEFmdGVyIGEKPj4gZmV3IG1lZXRpbmdz
-IHdpdGggSmFzb24sIHdlIG1hZGUgYSBkb25hdGlvbiBpbiBKdW5lIDIwMTcgdG8gZW5zdXJlCj4+
-IHRoYXQgaGUgY291bGQgZm9jdXMgcHJpbWFyaWx5IG9uIFdpcmVHdWFyZCBmb3IgdGhlIHJlc3Qg
-b2YgdGhlIHllYXIuCj4+Cj4+IFdlIGFyZSBjb21wbGV0ZWx5IGFsaWduZWQgd2l0aCBoaXMgdmlz
-aW9uIG9mIFdpcmVHdWFyZC4gWWV0IGluIG9yZGVyCj4+IGZvciB0aGF0IHZpc2lvbiB0byBiZWNv
-bWUgcmVhbGl0eSwgV2lyZUd1YXJkIG5lZWRzIHRvIHJlbWFpbiBuZXV0cmFsCj4+IGFuZCBpbmRl
-cGVuZGVudCBvZiBjb21tZXJjaWFsIGluZmx1ZW5jZS4KPj4KPj4gT3VyIG1vdGl2YXRpb24gZm9y
-IGRvbmF0aW5nIHRvIFdpcmVHdWFyZCBpcyB0aGF0IGl0IHdpbGwgaW1wcm92ZSBvdXIKPj4gcHJv
-ZHVjdHMgYXMgd2VsbCBhcyB0aGUgd29ybGQuIE1vcmUgc3BlY2lmaWNhbGx5LCBpdCB3aWxsIG1v
-dmUgdGhlCj4+IHdvcmxkIGNsb3NlciB0byBvdXIgb3duIHZpc2lvbiB3aGljaCBpcyB0byBtYWtl
-IG1hc3Mgc3VydmVpbGxhbmNlCj4+IGluZWZmZWN0aXZlLgo+Pgo+PiBDaGVlcnMsCj4+IEZyZWRy
-aWsKPj4KPj4gPiBFCj4+ID4KPj4gPiAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLQo+PiA+IFE6IFdoeSBpcyB0aGlzIGVtYWlsIGZpdmUgc2VudGVuY2VzIG9yIGxl
-c3M/Cj4+ID4gQTogaHR0cDovL2ZpdmUuc2VudGVuYy5lcwo+PiA+Cj4+ID4gT24gVHVlLCAxMiBT
-ZXAgMjAxNywgYXQgMTA6MTQsIEphc29uIEEuIERvbmVuZmVsZCB3cm90ZToKPj4gPj4gSGV5LAo+
-PiA+Pgo+PiA+PiBNYW55IHBlb3BsZSBoYXZlIGFza2VkIG1lIHdoaWNoIGNvbXBhbmllcyBoYXZl
-IGNvbW1lcmNpYWwgZm9yLXByb2ZpdAo+PiA+PiBXaXJlR3VhcmQgb2ZmZXJpbmdzLiBPZmZoYW5k
-IEkgY2FuIHRoaW5rIG9mIDMgYXQgdGhlIG1vbWVudDoKPj4gPj4KPj4gPj4gaHR0cHM6Ly93d3cu
-bXVsbHZhZC5uZXQvZ3VpZGVzL3dpcmVndWFyZC1hbmQtbXVsbHZhZC12cG4vCj4+ID4+IGh0dHBz
-Oi8vd3d3LmF6aXJldnBuLmNvbS93aXJlZ3VhcmQKPj4gPj4gaHR0cHM6Ly9ibGFja2hvbGVjbG91
-ZC5jb20KPj4gPj4KPj4gPj4gSSB3YXMgY3VyaW91cyBpZiBhbnlib2R5IGtuZXcgb2Ygb3RoZXJz
-IHRvIGFkZCB0byB0aGUgbGlzdC4KPj4gPj4KPj4gPj4gSmFzb24KPj4gPj4gX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18KPj4gPj4gV2lyZUd1YXJkIG1haWxp
-bmcgbGlzdAo+PiA+PiBXaXJlR3VhcmRAbGlzdHMuengyYzQuY29tCj4+ID4+IGh0dHBzOi8vbGlz
-dHMuengyYzQuY29tL21haWxtYW4vbGlzdGluZm8vd2lyZWd1YXJkCj4+ID4gX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18KPj4gPiBXaXJlR3VhcmQgbWFpbGlu
-ZyBsaXN0Cj4+ID4gV2lyZUd1YXJkQGxpc3RzLnp4MmM0LmNvbQo+PiA+IGh0dHBzOi8vbGlzdHMu
-engyYzQuY29tL21haWxtYW4vbGlzdGluZm8vd2lyZWd1YXJkCj4+IF9fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fCj4+IFdpcmVHdWFyZCBtYWlsaW5nIGxpc3QK
-Pj4gV2lyZUd1YXJkQGxpc3RzLnp4MmM0LmNvbQo+PiBodHRwczovL2xpc3RzLnp4MmM0LmNvbS9t
-YWlsbWFuL2xpc3RpbmZvLwo+IF9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fCj4gV2lyZUd1YXJkIG1haWxpbmcgbGlzdAo+IFdpcmVHdWFyZEBsaXN0cy56eDJj
-NC5jb20KPiBodHRwczovL2xpc3RzLnp4MmM0LmNvbS9tYWlsbWFuL2xpc3RpbmZvL3dpcmVndWFy
-ZA==
+A new snapshot, `0.0.20170918`, has been tagged in the git repository.
 
+Please note that this snapshot is, like the rest of the project at this point
+in time, experimental, and does not consitute a real release that would be
+considered secure and bug-free. WireGuard is generally thought to be fairly
+stable, and most likely will not crash your computer (though it may).
+However, as this is a pre-release snapshot, it comes with no guarantees, and
+its security is not yet to be depended on; it is not applicable for CVEs.
 
---b1_be3e7e751d99a6725ab9f7f869329f87
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: base64
+With all that said, if you'd like to test this snapshot out, there are a
+few relevent changes.
 
-PGRpdj5KdXN0IHRvIHRocm93IGluIG15IHR3byBjZW50cywgSSd2ZSBiZWVuIHVzaW5nIG11bGx2
-YWQgc2luY2UgdGhleSBmaXJzdCBhbm5vdW5jZWQgdGhlaXIgcHVibGljIHRlc3Qgc2VydmVycyBh
-bmQgaGF2ZSBiZWVuIHZlcnkgcGxlYXNlZCBhbmQgaW1wcmVzc2VkIHdpdGggYm90aCB0aGUgcXVh
-bGl0eSBvZiBzZXJ2aWNlIGFzIHdlbGwgYXMgdGhlaXIgc3VwcG9ydC4gVGhleSBjb250aW51ZSB0
-byBpbm5vdmF0ZSBpbiB0aGUgVlBOIHByb3ZpZGVyIHNwYWNlIGFzIHlvdSBjYW4gc2VlIHdoZW4g
-eW91IHNpZ24gdXAgd2l0aCB0aGVtLCB0aGV5IHJlYWxseSBnbyBvdXQgb2YgdGhlaXIgd2F5IHRv
-IG1ha2UgdGhlaXIgc2VydmljZSBhcyBwcml2YXRlIGFuZCBhbm9ueW1vdXMgYXMgcG9zc2libGUu
-PGJyPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+TXVsbHZhZCA6dGh1bWJzX3VwOjxicj48L2Rp
-dj48ZGl2Pjxicj48L2Rpdj48ZGl2IGNsYXNzPSJwcm90b25tYWlsX3NpZ25hdHVyZV9ibG9jayI+
-PGRpdiBjbGFzcz0icHJvdG9ubWFpbF9zaWduYXR1cmVfYmxvY2stdXNlciI+PGRpdj4tanVnczxi
-cj48L2Rpdj48L2Rpdj48ZGl2IGNsYXNzPSJwcm90b25tYWlsX3NpZ25hdHVyZV9ibG9jay1wcm90
-b24gcHJvdG9ubWFpbF9zaWduYXR1cmVfYmxvY2stZW1wdHkiPjxicj48L2Rpdj48L2Rpdj48ZGl2
-Pjxicj48L2Rpdj48YmxvY2txdW90ZSB0eXBlPSJjaXRlIiBjbGFzcz0icHJvdG9ubWFpbF9xdW90
-ZSI+PGRpdj4tLS0tLS0tLSBPcmlnaW5hbCBNZXNzYWdlIC0tLS0tLS0tPGJyPjwvZGl2PjxkaXY+
-U3ViamVjdDogUmU6IExpc3Qgb2YgY29tbWVyY2lhbCBXaXJlR3VhcmQgb2ZmZXJpbmdzPGJyPjwv
-ZGl2PjxkaXY+TG9jYWwgVGltZTogU2VwdGVtYmVyIDEzLCAyMDE3IDg6NTkgQU08YnI+PC9kaXY+
-PGRpdj5VVEMgVGltZTogU2VwdGVtYmVyIDEzLCAyMDE3IDg6NTkgQU08YnI+PC9kaXY+PGRpdj5G
-cm9tOiBlcmljQGVyaWNsaWdodC5jb208YnI+PC9kaXY+PGRpdj5Ubzogd2lyZWd1YXJkQGxpc3Rz
-Lnp4MmM0LmNvbTxicj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PkhpLCBGcmVkcmlrISAgOik8
-YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5Zb3UicmUgcmlnaHQsIEkgc2hvdWxkIGhhdmUg
-bWFkZSBhIGRpc3RpbmN0aW9uIGJldHdlZW4gc3BvbnNvcnNoaXAgYW5kIGE8YnI+PC9kaXY+PGRp
-dj5kb25hdGlvbi4gIEl0InMgYW4gaW1wb3J0YW50IGRpZmZlcmVuY2UsIGFuZCBJIm0gZ2xhZCB0
-byBoZWFyIHlvdXI8YnI+PC9kaXY+PGRpdj5zdGFuY2Ugb24gaXQuPGJyPjwvZGl2PjxkaXY+PGJy
-PjwvZGl2PjxkaXY+SSBzaGFyZSB5b3VyIGV4Y2l0ZW1lbnQgYWJvdXQgdGhlIGZ1dHVyZSBvZiB0
-aGUgcHJvamVjdCwgYW5kIHRoZTxicj48L2Rpdj48ZGl2PmFkZGl0aW9uYWwgcHJpdmFjeSBpdCBi
-cmluZ3MuICBUaGFuayB5b3UgZm9yIHlvdXIgY29udHJpYnV0aW9uIHRvIHRoYXQ8YnI+PC9kaXY+
-PGRpdj5mdXR1cmUhPGJyPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+RTxicj48L2Rpdj48ZGl2
-Pjxicj48L2Rpdj48ZGl2Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tPGJyPjwvZGl2PjxkaXY+UTogV2h5IGlzIHRoaXMgZW1haWwgZml2ZSBzZW50ZW5jZXMgb3Ig
-bGVzcz88YnI+PC9kaXY+PGRpdj5BOiBodHRwOi8vZml2ZS5zZW50ZW5jLmVzPGJyPjwvZGl2Pjxk
-aXY+PGJyPjwvZGl2PjxkaXY+T24gVHVlLCAxMiBTZXAgMjAxNywgYXQgMjE6MTEsIEZyZWRyaWsg
-U3Ryw7ZtYmVyZyB3cm90ZTo8YnI+PC9kaXY+PGRpdj4mZ3Q7IE9uIFR1ZSwgU2VwIDEyLCAyMDE3
-IGF0IDEwOjA4IEFNLCBFcmljIExpZ2h0ICZsdDtlcmljQGVyaWNsaWdodC5jb20mZ3Q7IHdyb3Rl
-Ojxicj48L2Rpdj48ZGl2PiZndDsgJmd0OyBGb3IgdGhlIHJlY29yZCwgTXVsbHZhZCBhcmUgZ3Jl
-YXQuICBJInZlIHB1cmNoYXNlZCBhIHN1YnNjcmlwdGlvbiB0aGVyZTxicj48L2Rpdj48ZGl2PiZn
-dDsgJmd0OyBhcyBhIGRpcmVjdCByZXN1bHQgb2YgdGhlaXIgc3BvbnNvcnNoaXAgb2YgV2lyZWd1
-YXJkLiAgSSJ2ZSBhbHNvPGJyPjwvZGl2PjxkaXY+Jmd0OyAmZ3Q7IHJlY29tbWVuZGVkIGl0IHRv
-IG90aGVycy4gIDopPGJyPjwvZGl2PjxkaXY+Jmd0OyAmZ3Q7PGJyPjwvZGl2PjxkaXY+Jmd0OyA8
-YnI+PC9kaXY+PGRpdj4mZ3Q7IFRoYW5rcyBFcmljISBJIm0gaGFwcHkgdG8gaGVhciB0aGF0IHlv
-dSBsaWtlIG91ciBzZXJ2aWNlLiBJInZlPGJyPjwvZGl2PjxkaXY+Jmd0OyBmb3J3YXJkZWQgeW91
-ciBjb21tZW50cyB0byB0aGUgcmVzdCBvZiB0aGUgdGVhbS48YnI+PC9kaXY+PGRpdj4mZ3Q7IDxi
-cj48L2Rpdj48ZGl2PiZndDsgT25lIHRpbnkgZGV0YWlsIHRob3VnaC4gQWx0aG91Z2ggTXVsbHZh
-ZCBpcyBhIG1ham9yICJkb25vciIgb2Y8YnI+PC9kaXY+PGRpdj4mZ3Q7IFdpcmVHdWFyZCwgd2Ug
-YXJlIG5vdCBhICJzcG9uc29yIi48YnI+PC9kaXY+PGRpdj4mZ3Q7IDxicj48L2Rpdj48ZGl2PiZn
-dDsgSSBmb3VuZCBvdXQgYWJvdXQgV2lyZUd1YXJkIGluIHRoZSBzdW1tZXIgb2YgMjAxNi4gTXVs
-bHZhZCB0aGVuPGJyPjwvZGl2PjxkaXY+Jmd0OyBzdGFydGVkIHN0dWR5aW5nIHRoZSBzcGVjaWZp
-Y2F0aW9ucyBhbmQgZXhwZXJpbWVudGluZyB3aXRoIGl0LiBBZnRlciBhPGJyPjwvZGl2PjxkaXY+
-Jmd0OyBmZXcgbWVldGluZ3Mgd2l0aCBKYXNvbiwgd2UgbWFkZSBhIGRvbmF0aW9uIGluIEp1bmUg
-MjAxNyB0byBlbnN1cmU8YnI+PC9kaXY+PGRpdj4mZ3Q7IHRoYXQgaGUgY291bGQgZm9jdXMgcHJp
-bWFyaWx5IG9uIFdpcmVHdWFyZCBmb3IgdGhlIHJlc3Qgb2YgdGhlIHllYXIuPGJyPjwvZGl2Pjxk
-aXY+Jmd0OyA8YnI+PC9kaXY+PGRpdj4mZ3Q7IFdlIGFyZSBjb21wbGV0ZWx5IGFsaWduZWQgd2l0
-aCBoaXMgdmlzaW9uIG9mIFdpcmVHdWFyZC4gWWV0IGluIG9yZGVyPGJyPjwvZGl2PjxkaXY+Jmd0
-OyBmb3IgdGhhdCB2aXNpb24gdG8gYmVjb21lIHJlYWxpdHksIFdpcmVHdWFyZCBuZWVkcyB0byBy
-ZW1haW4gbmV1dHJhbDxicj48L2Rpdj48ZGl2PiZndDsgYW5kIGluZGVwZW5kZW50IG9mIGNvbW1l
-cmNpYWwgaW5mbHVlbmNlLjxicj48L2Rpdj48ZGl2PiZndDsgPGJyPjwvZGl2PjxkaXY+Jmd0OyBP
-dXIgbW90aXZhdGlvbiBmb3IgZG9uYXRpbmcgdG8gV2lyZUd1YXJkIGlzIHRoYXQgaXQgd2lsbCBp
-bXByb3ZlIG91cjxicj48L2Rpdj48ZGl2PiZndDsgcHJvZHVjdHMgYXMgd2VsbCBhcyB0aGUgd29y
-bGQuIE1vcmUgc3BlY2lmaWNhbGx5LCBpdCB3aWxsIG1vdmUgdGhlPGJyPjwvZGl2PjxkaXY+Jmd0
-OyB3b3JsZCBjbG9zZXIgdG8gb3VyIG93biB2aXNpb24gd2hpY2ggaXMgdG8gbWFrZSBtYXNzIHN1
-cnZlaWxsYW5jZTxicj48L2Rpdj48ZGl2PiZndDsgaW5lZmZlY3RpdmUuPGJyPjwvZGl2PjxkaXY+
-Jmd0OyA8YnI+PC9kaXY+PGRpdj4mZ3Q7IENoZWVycyw8YnI+PC9kaXY+PGRpdj4mZ3Q7IEZyZWRy
-aWs8YnI+PC9kaXY+PGRpdj4mZ3Q7IDxicj48L2Rpdj48ZGl2PiZndDsgJmd0OyBFPGJyPjwvZGl2
-PjxkaXY+Jmd0OyAmZ3Q7PGJyPjwvZGl2PjxkaXY+Jmd0OyAmZ3Q7IC0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tPGJyPjwvZGl2PjxkaXY+Jmd0OyAmZ3Q7IFE6IFdo
-eSBpcyB0aGlzIGVtYWlsIGZpdmUgc2VudGVuY2VzIG9yIGxlc3M/PGJyPjwvZGl2PjxkaXY+Jmd0
-OyAmZ3Q7IEE6IGh0dHA6Ly9maXZlLnNlbnRlbmMuZXM8YnI+PC9kaXY+PGRpdj4mZ3Q7ICZndDs8
-YnI+PC9kaXY+PGRpdj4mZ3Q7ICZndDsgT24gVHVlLCAxMiBTZXAgMjAxNywgYXQgMTA6MTQsIEph
-c29uIEEuIERvbmVuZmVsZCB3cm90ZTo8YnI+PC9kaXY+PGRpdj4mZ3Q7ICZndDsmZ3Q7IEhleSw8
-YnI+PC9kaXY+PGRpdj4mZ3Q7ICZndDsmZ3Q7PGJyPjwvZGl2PjxkaXY+Jmd0OyAmZ3Q7Jmd0OyBN
-YW55IHBlb3BsZSBoYXZlIGFza2VkIG1lIHdoaWNoIGNvbXBhbmllcyBoYXZlIGNvbW1lcmNpYWwg
-Zm9yLXByb2ZpdDxicj48L2Rpdj48ZGl2PiZndDsgJmd0OyZndDsgV2lyZUd1YXJkIG9mZmVyaW5n
-cy4gT2ZmaGFuZCBJIGNhbiB0aGluayBvZiAzIGF0IHRoZSBtb21lbnQ6PGJyPjwvZGl2PjxkaXY+
-Jmd0OyAmZ3Q7Jmd0Ozxicj48L2Rpdj48ZGl2PiZndDsgJmd0OyZndDsgaHR0cHM6Ly93d3cubXVs
-bHZhZC5uZXQvZ3VpZGVzL3dpcmVndWFyZC1hbmQtbXVsbHZhZC12cG4vPGJyPjwvZGl2PjxkaXY+
-Jmd0OyAmZ3Q7Jmd0OyBodHRwczovL3d3dy5hemlyZXZwbi5jb20vd2lyZWd1YXJkPGJyPjwvZGl2
-PjxkaXY+Jmd0OyAmZ3Q7Jmd0OyBodHRwczovL2JsYWNraG9sZWNsb3VkLmNvbTxicj48L2Rpdj48
-ZGl2PiZndDsgJmd0OyZndDs8YnI+PC9kaXY+PGRpdj4mZ3Q7ICZndDsmZ3Q7IEkgd2FzIGN1cmlv
-dXMgaWYgYW55Ym9keSBrbmV3IG9mIG90aGVycyB0byBhZGQgdG8gdGhlIGxpc3QuPGJyPjwvZGl2
-PjxkaXY+Jmd0OyAmZ3Q7Jmd0Ozxicj48L2Rpdj48ZGl2PiZndDsgJmd0OyZndDsgSmFzb248YnI+
-PC9kaXY+PGRpdj4mZ3Q7ICZndDsmZ3Q7IF9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fPGJyPjwvZGl2PjxkaXY+Jmd0OyAmZ3Q7Jmd0OyBXaXJlR3VhcmQgbWFp
-bGluZyBsaXN0PGJyPjwvZGl2PjxkaXY+Jmd0OyAmZ3Q7Jmd0OyBXaXJlR3VhcmRAbGlzdHMuengy
-YzQuY29tPGJyPjwvZGl2PjxkaXY+Jmd0OyAmZ3Q7Jmd0OyBodHRwczovL2xpc3RzLnp4MmM0LmNv
-bS9tYWlsbWFuL2xpc3RpbmZvL3dpcmVndWFyZDxicj48L2Rpdj48ZGl2PiZndDsgJmd0OyBfX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXzxicj48L2Rpdj48ZGl2
-PiZndDsgJmd0OyBXaXJlR3VhcmQgbWFpbGluZyBsaXN0PGJyPjwvZGl2PjxkaXY+Jmd0OyAmZ3Q7
-IFdpcmVHdWFyZEBsaXN0cy56eDJjNC5jb208YnI+PC9kaXY+PGRpdj4mZ3Q7ICZndDsgaHR0cHM6
-Ly9saXN0cy56eDJjNC5jb20vbWFpbG1hbi9saXN0aW5mby93aXJlZ3VhcmQ8YnI+PC9kaXY+PGRp
-dj4mZ3Q7IF9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fPGJy
-PjwvZGl2PjxkaXY+Jmd0OyBXaXJlR3VhcmQgbWFpbGluZyBsaXN0PGJyPjwvZGl2PjxkaXY+Jmd0
-OyBXaXJlR3VhcmRAbGlzdHMuengyYzQuY29tPGJyPjwvZGl2PjxkaXY+Jmd0OyBodHRwczovL2xp
-c3RzLnp4MmM0LmNvbS9tYWlsbWFuL2xpc3RpbmZvLzxicj48L2Rpdj48ZGl2Pl9fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fPGJyPjwvZGl2PjxkaXY+V2lyZUd1
-YXJkIG1haWxpbmcgbGlzdDxicj48L2Rpdj48ZGl2PldpcmVHdWFyZEBsaXN0cy56eDJjNC5jb208
-YnI+PC9kaXY+PGRpdj5odHRwczovL2xpc3RzLnp4MmM0LmNvbS9tYWlsbWFuL2xpc3RpbmZvL3dp
-cmVndWFyZDxicj48L2Rpdj48L2Jsb2NrcXVvdGU+PGRpdj48YnI+PC9kaXY+
+== Changes ==
+
+  * queue: entirely rework parallel system
+  
+  This is one of the most significant changes in WireGuard's codebase
+  in a long time, so I'd appreciate some thorough testing of this
+  snapshot. Work here began as part of Samuel Holland (smaeul)'s project
+  for Google Summer of Code, and then I gradually morphed it into its
+  present design.
+  
+  It's a rewrite of the entire multicore processing algorithm of WireGuard.
+  No longer are we relying on padata, an inefficient kernel library that
+  weighs a whopping 1000 lines of code alone. Instead, we've implemented
+  parallel processing using algorithms specifically tailored for WireGuard's
+  structures and ordering concerns. In spite of having to provide ourselves
+  what this library priorly provided, this snapshot actually weighs in
+  _shorter_ than the previous one, which goes to show how cumbersome even
+  using padata's APIs were and how much leaner we can make things.
+  
+  The result is a big improvement in performance on most systems. On my laptop,
+  I'm seeing about 1.4x performance as before, which is quite nice. We're
+  still working on the best way to scale this to systems with absurd quantities
+  of cores, but overall it's working quite well. Future work also involves
+  using the DQL and qdisc systems.
+  
+  In the process, the entire project's code was significantly cleaned up and
+  revised.
+  
+  Samuel was extremely instrumental in kickstarting these efforts, and his
+  GSoC was most certainly valuable for getting this project started. He knows
+  large parts of the WireGuard codebase well, and I expect for him to be
+  a valuable colleague moving forward.
+  
+  * device: IFF_NO_QUEUE is a private flag, not a public one
+  
+  This will prevent the weird "20000" flag from showing up in
+  ip-link when the device is down.
+  
+  * socket: satisfy sparse
+  * routingtable: satisfy sparse
+  * timers: style
+  * compat: ensure we can build without compat.h
+  * send: no need to check for NULL since ref is valid
+  
+  Style and correctness fixes.
+  
+  * qemu: enable debug info for debug qemu
+  
+  A welcome improvement for all those trying to debug things.
+  
+  * compat: support RHEL 7.4
+  
+  This snapshot drops support for RHEL 7.3, moving on instead
+  to RHEL 7.4.
+
+As always, the source is available at https://git.zx2c4.com/WireGuard/ and
+information about the project is available at https://www.wireguard.com/ .
+
+This snapshot is available in tarball form here:
+  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-0.0.20170918.tar.xz
+  SHA2-256: e083f18596574fb7050167090bfb4db4df09a1a99f3c1adc77f820c166368881
+  BLAKE2b-256: 9035708a21cb7df8cfc11bdde26bcb2fbc0b3165b6ec913ebb92f336a7d69b76
+
+If you're a snapshot package maintainer, please bump your package version. If
+you're a user, the WireGuard team welcomes any and all feedback on this latest
+snapshot.
+
+Finally, WireGuard development thrives on donations. By popular demand, we
+have a webpage for this: https://www.wireguard.com/donations/
+
+Thank you,
+Jason Donenfeld
 
 
+-----BEGIN PGP SIGNATURE-----
 
---b1_be3e7e751d99a6725ab9f7f869329f87--
+iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAlm/62cQHGphc29uQHp4
+MmM0LmNvbQAKCRBJ/HASpd4DrpktD/99gSN36Z/im831DIN8ZW9QDiMu2lMw2ewP
+SyndvQH2yWTuaKd1Dxj9PLo1/JoCej1/VAzQvy0ndT3MA2vC9z1GIsoIv+AHgPVf
+d7w9ZcPreYviemkeHPmKwRuj6rskte4QCeQdRYgMe+W8RrlDSwbnhLoc7rgA07Kk
+lb8Dgz0e0cogXHLijHmAvxL0cFFrnqptCifjnwXKWO5oWt0j7kndCuDfGxScRxJA
+HG0rv2fZiDkiRZjm6mgGkST1/4OJ/MOY+CSPN+YGqbdwyG5wfSQ04A/RdZ2ph3mn
+hikZ5iT1I424ZxTgVC1WDwa9HREg1fGiWuEdx2TQgUce3GuyM+3X8rb/m7OdRPsn
+2ZeLJYLUVRP7PNDf/Wl0ok8S8c+w4h3blT74wCYGFHiuNJOVCTeWOh8QgbPQgTnS
+5kygJWbPVv90MEj6yEQ2nsZg/dhdZ//9okSE0QmT6xl8fC61VkdgvygpugX8n+bf
+3JgHqMFLzF1cNop9GPGOTJGDjt+DS4yNoW44oK/oKZJLwRUY9HjUDFh7C134UH75
+I4RRgWR7PxJj0ilkbBmWz+xa0ywnIErwN+v6uLfPZ7ljo86kG0IAdHC7YRH/gsOK
+XLVNXIexmc5JmO0Ol4wSvs6VPnZvc7cEp+RfvPBJDIeUV0TERucJRx0r6t83OawN
+6cdkBxkkpA==
+=jQYG
+-----END PGP SIGNATURE-----
