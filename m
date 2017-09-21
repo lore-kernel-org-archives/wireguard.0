@@ -1,35 +1,28 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: opensource@vdorst.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bb1bdfe4
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id da440009
  for <wireguard@lists.zx2c4.com>;
- Wed, 20 Sep 2017 20:50:14 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4be53175
+ Thu, 21 Sep 2017 05:22:02 +0000 (UTC)
+Received: from smtp21.bhosted.nl (smtp21.bhosted.nl [94.124.121.33])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3c613886
  for <wireguard@lists.zx2c4.com>;
- Wed, 20 Sep 2017 20:50:14 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 879e7adb
- for <wireguard@lists.zx2c4.com>;
- Wed, 20 Sep 2017 21:09:17 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 570f2fb0
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Wed, 20 Sep 2017 21:09:17 +0000 (UTC)
-Received: by mail-io0-f182.google.com with SMTP id v36so6698582ioi.1
- for <wireguard@lists.zx2c4.com>; Wed, 20 Sep 2017 14:17:31 -0700 (PDT)
+ Thu, 21 Sep 2017 05:22:02 +0000 (UTC)
+Date: Thu, 21 Sep 2017 05:49:18 +0000
+Message-ID: <20170921054918.Horde.1_230K0CRegHDpAhjlGk8u3@www.vdorst.com>
+From: =?utf-8?b?UmVuw6k=?= van Dorst <opensource@vdorst.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: Re: Last pingtest always fails with netns.sh script on ARM device
+ with F25.
+References: <20170919151533.Horde.MQvI7jMPhVKrVNqOVodg-dg@www.vdorst.com>
+ <CAHmME9p17p2Hq6c1rw4QB=PztStywoR-r1r-L6bGiNZ2WU=62g@mail.gmail.com>
+ <20170919183438.Horde.O_l7lFVqHiv6-cvQ2uGXuyk@www.vdorst.com>
+ <CAHmME9qS6p6nhkV-3_kNiyGU3Mi56tgwcgKa+ng2P+tQ14h3pA@mail.gmail.com>
+ <20170920170055.Horde.VMh86cFTXHMnql4s7ycIl7z@www.vdorst.com>
+ <CAHmME9osiU+rgWyep6=Zku1+amB7-9bqfG0PZbeUXDf69oWvXg@mail.gmail.com>
+In-Reply-To: <CAHmME9osiU+rgWyep6=Zku1+amB7-9bqfG0PZbeUXDf69oWvXg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed; DelSp=Yes
 MIME-Version: 1.0
-In-Reply-To: <CADdae-j5Xr0jqB+dHcX7aYat60tahMCBTKiWVnSm_A-cQuf=qA@mail.gmail.com>
-References: <CADdae-hw0VGaCDGmsVpVT5g56xM3vs+AeOS8MYLwFo5pnf1N8Q@mail.gmail.com>
- <CAHmME9qrtSm1Y-h9FfyXWVCmrvmtciFau0jG2144Yrwu=BRMig@mail.gmail.com>
- <CAHmME9r0hXW8CT5wO10X-b-9HUBDzzvSAbnn69aFav+6ovxQGA@mail.gmail.com>
- <CAHmME9rWpuWBRzZLFeaOG4zG-VxHUEi8wbXe4iL7xYguk0TMFw@mail.gmail.com>
- <CADdae-j5Xr0jqB+dHcX7aYat60tahMCBTKiWVnSm_A-cQuf=qA@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 20 Sep 2017 23:17:30 +0200
-Message-ID: <CAHmME9oaM+n6DNN-pVfx+4D2_r=FEo=D9hEKyuLrO7rJu1tY9g@mail.gmail.com>
-Subject: Re: [wireguard-dev] Help about configuration
-To: nicolas prochazka <prochazka.nicolas@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Cc: WireGuard list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -39,13 +32,30 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Nicolas,
+Quoting "Jason A. Donenfeld" <Jason@zx2c4.com>:
 
-Great that fixed it. Sometimes WireGuard can be a good diagnostic for
-figuring out various network misconfigurations, because WireGuard's
-allowed-ips binding is very strict and explicit.
+> Hey René,
+>
+> I figured it out; it was a bug in the test suite, relying on default
+> Linux values, instead of explicitly setting them. It was introduced
+> here:
+>
+> https://git.zx2c4.com/WireGuard/diff/src/tests/netns.sh?id=af2435d180ebb5a3d89b21eb9118d1c643f03f95
+>
+> And I've fixed it here:
+>
+> https://git.zx2c4.com/WireGuard/commit/?id=9bd0558427d7eb7dc36b7f720d83ef835056fae6
+>
+> Thanks for sending all the info!
+>
+> Regards,
+> Jason
 
-By the way, you might want to change your private key to something
-new, since your first email contained these in plaintext.
+Hi Jason,
 
-Jason
+It is working here too.
+Thanks for fixing it.
+
+Greats,
+
+René
