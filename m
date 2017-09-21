@@ -1,29 +1,28 @@
 Return-Path: konstantin@linuxfoundation.org
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ba515ca0
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ca9a31f1
  for <wireguard@lists.zx2c4.com>;
- Thu, 21 Sep 2017 18:54:28 +0000 (UTC)
-Received: from mail-it0-f44.google.com (mail-it0-f44.google.com
- [209.85.214.44])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a667cd33
+ Thu, 21 Sep 2017 19:16:01 +0000 (UTC)
+Received: from mail-it0-f52.google.com (mail-it0-f52.google.com
+ [209.85.214.52])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b3e86524
  for <wireguard@lists.zx2c4.com>;
- Thu, 21 Sep 2017 18:54:28 +0000 (UTC)
-Received: by mail-it0-f44.google.com with SMTP id e134so1484584ite.3
- for <wireguard@lists.zx2c4.com>; Thu, 21 Sep 2017 12:21:53 -0700 (PDT)
+ Thu, 21 Sep 2017 19:16:01 +0000 (UTC)
+Received: by mail-it0-f52.google.com with SMTP id g18so1533603itg.5
+ for <wireguard@lists.zx2c4.com>; Thu, 21 Sep 2017 12:43:26 -0700 (PDT)
 Return-Path: <konstantin@linuxfoundation.org>
 Received: from gmail.com (192-0-230-179.cpe.teksavvy.com. [192.0.230.179])
- by smtp.gmail.com with ESMTPSA id m145sm1311601itg.31.2017.09.21.12.21.49
+ by smtp.gmail.com with ESMTPSA id p18sm1384726itp.24.2017.09.21.12.43.24
  for <wireguard@lists.zx2c4.com>
  (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
- Thu, 21 Sep 2017 12:21:50 -0700 (PDT)
-Date: Thu, 21 Sep 2017 15:21:48 -0400
+ Thu, 21 Sep 2017 12:43:24 -0700 (PDT)
+Date: Thu, 21 Sep 2017 15:43:23 -0400
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 To: wireguard@lists.zx2c4.com
-Subject: 2-factor auth options
-Message-ID: <20170921192148.GB2587@gmail.com>
+Subject: Failure building on CentOS-7.4
+Message-ID: <20170921194323.GC2587@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="3MwIy2ne0vdjdPXF"
+Content-Type: text/plain; charset=utf-8
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -33,47 +32,73 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
+Hi, all:
 
---3MwIy2ne0vdjdPXF
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+I am getting the following error trying to build using the latest
+CentOS-7.4 kernel using the 20170907 snapshot:
 
-Hello, all:
-
-Is there any mechanism to add some kind of 2-factor authentication
-mechanism either via:
-
-a. additional prompting for a HOTP/TOTP key sequence similar to how
-openvpn allows doing auth-user-pass in addition to certificate-based
-authentication
-
-b. some way to use PGP Auth keys with wireguard so that keys stored on
-GnuPG-capable smartcards can be used for establishing a VPN connection.
-
-c. (some other means)
-
+[root@ossna17 ~]# uname -r
+3.10.0-693.2.2.el7.x86_64
+[root@ossna17 ~]# cat /var/lib/dkms/wireguard/0.0.20170907/build/make.log
+DKMS make.log for wireguard-0.0.20170907 for kernel 3.10.0-693.2.2.el7.x86_64 (x86_64)
+Thu Sep 21 19:37:51 UTC 2017
+make: Entering directory `/usr/src/kernels/3.10.0-693.2.2.el7.x86_64'
+  LD      /var/lib/dkms/wireguard/0.0.20170907/build/built-in.o
+  CC [M]  /var/lib/dkms/wireguard/0.0.20170907/build/main.o
+  CC [M]  /var/lib/dkms/wireguard/0.0.20170907/build/noise.o
+  CC [M]  /var/lib/dkms/wireguard/0.0.20170907/build/device.o
+  CC [M]  /var/lib/dkms/wireguard/0.0.20170907/build/peer.o
+In file included from <command-line>:0:0:
+/var/lib/dkms/wireguard/0.0.20170907/build/compat/compat.h:98:20: error: static declaration of ‘ipv6_mod_enabled’ follows non-static declaration
+ static inline bool ipv6_mod_enabled(void)
+                    ^
+In file included from <command-line>:0:0:
+/var/lib/dkms/wireguard/0.0.20170907/build/compat/compat.h:98:20: error: static declaration of ‘ipv6_mod_enabled’ follows non-static declaration
+ static inline bool ipv6_mod_enabled(void)
+                    ^
+In file included from include/net/dsfield.h:11:0,
+                 from include/net/ip_tunnels.h:10,
+                 from /var/lib/dkms/wireguard/0.0.20170907/build/compat/compat.h:71,
+                 from <command-line>:0:
+include/linux/ipv6.h:260:6: note: previous declaration of ‘ipv6_mod_enabled’ was here
+ bool ipv6_mod_enabled(void);
+      ^
+In file included from include/net/dsfield.h:11:0,
+                 from include/net/ip_tunnels.h:10,
+                 from /var/lib/dkms/wireguard/0.0.20170907/build/compat/compat.h:71,
+                 from <command-line>:0:
+include/linux/ipv6.h:260:6: note: previous declaration of ‘ipv6_mod_enabled’ was here
+ bool ipv6_mod_enabled(void);
+      ^
+In file included from <command-line>:0:0:
+/var/lib/dkms/wireguard/0.0.20170907/build/compat/compat.h:98:20: error: static declaration of ‘ipv6_mod_enabled’ follows non-static declaration
+ static inline bool ipv6_mod_enabled(void)
+                    ^
+In file included from include/net/dsfield.h:11:0,
+                 from include/net/ip_tunnels.h:10,
+                 from /var/lib/dkms/wireguard/0.0.20170907/build/compat/compat.h:71,
+                 from <command-line>:0:
+include/linux/ipv6.h:260:6: note: previous declaration of ‘ipv6_mod_enabled’ was here
+ bool ipv6_mod_enabled(void);
+      ^
+In file included from <command-line>:0:0:
+/var/lib/dkms/wireguard/0.0.20170907/build/compat/compat.h:98:20: error: static declaration of ‘ipv6_mod_enabled’ follows non-static declaration
+ static inline bool ipv6_mod_enabled(void)
+                    ^
+In file included from include/net/dsfield.h:11:0,
+                 from include/net/ip_tunnels.h:10,
+                 from /var/lib/dkms/wireguard/0.0.20170907/build/compat/compat.h:71,
+                 from <command-line>:0:
+include/linux/ipv6.h:260:6: note: previous declaration of ‘ipv6_mod_enabled’ was here
+ bool ipv6_mod_enabled(void);
+      ^
+make[1]: *** [/var/lib/dkms/wireguard/0.0.20170907/build/peer.o] Error 1
+make[1]: *** Waiting for unfinished jobs....
+make[1]: *** [/var/lib/dkms/wireguard/0.0.20170907/build/main.o] Error 1
+make[1]: *** [/var/lib/dkms/wireguard/0.0.20170907/build/device.o] Error 1
+make[1]: *** [/var/lib/dkms/wireguard/0.0.20170907/build/noise.o] Error 1
+make: *** [_module_/var/lib/dkms/wireguard/0.0.20170907/build] Error 2
+make: Leaving directory `/usr/src/kernels/3.10.0-693.2.2.el7.x86_64'
 
 Best,
--K
-
---3MwIy2ne0vdjdPXF
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEVvtv9GdDE/wE1t+WNLq4CvnyR7gFAlnEEUgACgkQNLq4Cvny
-R7iWbw/+Ie8bS0rH1NB49D816X2u8jzQlFyCp4pLR5HqYmAX95Yk7T5sVT7L+hY7
-nYaOQVcOXwFIrvs3J6WRt4AWUyStSqBIPBNMbZTuaR8qtxtifCCinW/8L8/fTiuq
-PvEGKn7iuO0jtN+VUtUNeak3Cvw3uept2d8ep61vGMtrEAOBkxXEAaYpKhf+sTqt
-mmBiWZXQn0NElUTrwTBnC66gNrw7AXY1E0Y3psEFpraWLr9xB6w1p5X5PXaRuooZ
-Dv+NlBZ+eMjNcYieolLrrAoxiYbwtayvcHSktGhKHs9fJrgu1BEfsoJ0sCYiMydH
-Tl8cFwYKA6CRy+ipux28/1svU1Thdo4iAfv1cp4nS6jSkEItAixYV1st/5q16+pQ
-Mxxuux/RdXdZ0kl9/3lBYp9MSBniRLxplW32DtvZQs+cumuHRnwvpTaKScREnWTe
-XajK3JzRuVF/fA81zCdG9bHlmqQhtXlFDXgUJ1nr0zh01YHmyc8KoT1T+F0uXj4K
-KIXqrTCnaQdm+8NBuafKWqjrVj2RU0LqE5J6znHbNcNKDMU4d7QVtKOozVi3XnAR
-mi9dxLmb/NAGB55FRu2EFY+lsK3X0XBDFGp1WQWsKCXtIWhtdeVZHWRN67OLToKH
-zApZXMHlxcH4illvcdPNP6HElqnBAbZZkEqtqgQ1SQ5csP74Bco=
-=8KxT
------END PGP SIGNATURE-----
-
---3MwIy2ne0vdjdPXF--
+Konstantin
