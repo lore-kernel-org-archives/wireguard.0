@@ -1,28 +1,23 @@
-Return-Path: konstantin@linuxfoundation.org
+Return-Path: BATV+56e7f80e64469093109a+5142+infradead.org+dwmw2@twosheds.srs.infradead.org
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ca9a31f1
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4cc69582
  for <wireguard@lists.zx2c4.com>;
- Thu, 21 Sep 2017 19:16:01 +0000 (UTC)
-Received: from mail-it0-f52.google.com (mail-it0-f52.google.com
- [209.85.214.52])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b3e86524
+ Thu, 21 Sep 2017 21:51:21 +0000 (UTC)
+Received: from twosheds.infradead.org (twosheds.infradead.org [90.155.92.209])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 911cf176
  for <wireguard@lists.zx2c4.com>;
- Thu, 21 Sep 2017 19:16:01 +0000 (UTC)
-Received: by mail-it0-f52.google.com with SMTP id g18so1533603itg.5
- for <wireguard@lists.zx2c4.com>; Thu, 21 Sep 2017 12:43:26 -0700 (PDT)
-Return-Path: <konstantin@linuxfoundation.org>
-Received: from gmail.com (192-0-230-179.cpe.teksavvy.com. [192.0.230.179])
- by smtp.gmail.com with ESMTPSA id p18sm1384726itp.24.2017.09.21.12.43.24
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
- Thu, 21 Sep 2017 12:43:24 -0700 (PDT)
-Date: Thu, 21 Sep 2017 15:43:23 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: wireguard@lists.zx2c4.com
-Subject: Failure building on CentOS-7.4
-Message-ID: <20170921194323.GC2587@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+ Thu, 21 Sep 2017 21:51:21 +0000 (UTC)
+Message-ID: <1506032321.15235.108.camel@infradead.org>
+Subject: Re: 2-factor auth options
+From: David Woodhouse <dwmw2@infradead.org>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+ wireguard@lists.zx2c4.com
+In-Reply-To: <20170921192148.GB2587@gmail.com>
+References: <20170921192148.GB2587@gmail.com>
+Content-Type: multipart/signed; micalg="sha-256";
+ protocol="application/x-pkcs7-signature"; boundary="=-e9vZiq5QTrjf3QaJl1li"
+Date: Thu, 21 Sep 2017 15:18:41 -0700
+Mime-Version: 1.0
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -32,73 +27,122 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi, all:
 
-I am getting the following error trying to build using the latest
-CentOS-7.4 kernel using the 20170907 snapshot:
+--=-e9vZiq5QTrjf3QaJl1li
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-[root@ossna17 ~]# uname -r
-3.10.0-693.2.2.el7.x86_64
-[root@ossna17 ~]# cat /var/lib/dkms/wireguard/0.0.20170907/build/make.log
-DKMS make.log for wireguard-0.0.20170907 for kernel 3.10.0-693.2.2.el7.x86_64 (x86_64)
-Thu Sep 21 19:37:51 UTC 2017
-make: Entering directory `/usr/src/kernels/3.10.0-693.2.2.el7.x86_64'
-  LD      /var/lib/dkms/wireguard/0.0.20170907/build/built-in.o
-  CC [M]  /var/lib/dkms/wireguard/0.0.20170907/build/main.o
-  CC [M]  /var/lib/dkms/wireguard/0.0.20170907/build/noise.o
-  CC [M]  /var/lib/dkms/wireguard/0.0.20170907/build/device.o
-  CC [M]  /var/lib/dkms/wireguard/0.0.20170907/build/peer.o
-In file included from <command-line>:0:0:
-/var/lib/dkms/wireguard/0.0.20170907/build/compat/compat.h:98:20: error: static declaration of ‘ipv6_mod_enabled’ follows non-static declaration
- static inline bool ipv6_mod_enabled(void)
-                    ^
-In file included from <command-line>:0:0:
-/var/lib/dkms/wireguard/0.0.20170907/build/compat/compat.h:98:20: error: static declaration of ‘ipv6_mod_enabled’ follows non-static declaration
- static inline bool ipv6_mod_enabled(void)
-                    ^
-In file included from include/net/dsfield.h:11:0,
-                 from include/net/ip_tunnels.h:10,
-                 from /var/lib/dkms/wireguard/0.0.20170907/build/compat/compat.h:71,
-                 from <command-line>:0:
-include/linux/ipv6.h:260:6: note: previous declaration of ‘ipv6_mod_enabled’ was here
- bool ipv6_mod_enabled(void);
-      ^
-In file included from include/net/dsfield.h:11:0,
-                 from include/net/ip_tunnels.h:10,
-                 from /var/lib/dkms/wireguard/0.0.20170907/build/compat/compat.h:71,
-                 from <command-line>:0:
-include/linux/ipv6.h:260:6: note: previous declaration of ‘ipv6_mod_enabled’ was here
- bool ipv6_mod_enabled(void);
-      ^
-In file included from <command-line>:0:0:
-/var/lib/dkms/wireguard/0.0.20170907/build/compat/compat.h:98:20: error: static declaration of ‘ipv6_mod_enabled’ follows non-static declaration
- static inline bool ipv6_mod_enabled(void)
-                    ^
-In file included from include/net/dsfield.h:11:0,
-                 from include/net/ip_tunnels.h:10,
-                 from /var/lib/dkms/wireguard/0.0.20170907/build/compat/compat.h:71,
-                 from <command-line>:0:
-include/linux/ipv6.h:260:6: note: previous declaration of ‘ipv6_mod_enabled’ was here
- bool ipv6_mod_enabled(void);
-      ^
-In file included from <command-line>:0:0:
-/var/lib/dkms/wireguard/0.0.20170907/build/compat/compat.h:98:20: error: static declaration of ‘ipv6_mod_enabled’ follows non-static declaration
- static inline bool ipv6_mod_enabled(void)
-                    ^
-In file included from include/net/dsfield.h:11:0,
-                 from include/net/ip_tunnels.h:10,
-                 from /var/lib/dkms/wireguard/0.0.20170907/build/compat/compat.h:71,
-                 from <command-line>:0:
-include/linux/ipv6.h:260:6: note: previous declaration of ‘ipv6_mod_enabled’ was here
- bool ipv6_mod_enabled(void);
-      ^
-make[1]: *** [/var/lib/dkms/wireguard/0.0.20170907/build/peer.o] Error 1
-make[1]: *** Waiting for unfinished jobs....
-make[1]: *** [/var/lib/dkms/wireguard/0.0.20170907/build/main.o] Error 1
-make[1]: *** [/var/lib/dkms/wireguard/0.0.20170907/build/device.o] Error 1
-make[1]: *** [/var/lib/dkms/wireguard/0.0.20170907/build/noise.o] Error 1
-make: *** [_module_/var/lib/dkms/wireguard/0.0.20170907/build] Error 2
-make: Leaving directory `/usr/src/kernels/3.10.0-693.2.2.el7.x86_64'
+On Thu, 2017-09-21 at 15:21 -0400, Konstantin Ryabitsev wrote:
+> Hello, all:
+>=20
+> Is there any mechanism to add some kind of 2-factor authentication
+> mechanism either via:
+>=20
+> a. additional prompting for a HOTP/TOTP key sequence similar to how
+> openvpn allows doing auth-user-pass in addition to certificate-based
+> authentication
 
-Best,
-Konstantin
+Remember things like Yubikeys can do [HT]OTP in hardware. Not as HID
+but actually generating the OTP on demand via PCSC.
+
+> b. some way to use PGP Auth keys with wireguard so that keys stored on
+> GnuPG-capable smartcards can be used for establishing a VPN connection.
+
+PKCS#11 might be a better choice than PGP.
+
+> c. (some other means)
+--=-e9vZiq5QTrjf3QaJl1li
+Content-Type: application/x-pkcs7-signature; name="smime.p7s"
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Transfer-Encoding: base64
+
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCDzUw
+ggSvMIIDl6ADAgECAhEA4CPLFRKDU4mtYW56VGdrITANBgkqhkiG9w0BAQsFADBvMQswCQYDVQQG
+EwJTRTEUMBIGA1UEChMLQWRkVHJ1c3QgQUIxJjAkBgNVBAsTHUFkZFRydXN0IEV4dGVybmFsIFRU
+UCBOZXR3b3JrMSIwIAYDVQQDExlBZGRUcnVzdCBFeHRlcm5hbCBDQSBSb290MB4XDTE0MTIyMjAw
+MDAwMFoXDTIwMDUzMDEwNDgzOFowgZsxCzAJBgNVBAYTAkdCMRswGQYDVQQIExJHcmVhdGVyIE1h
+bmNoZXN0ZXIxEDAOBgNVBAcTB1NhbGZvcmQxGjAYBgNVBAoTEUNPTU9ETyBDQSBMaW1pdGVkMUEw
+PwYDVQQDEzhDT01PRE8gU0hBLTI1NiBDbGllbnQgQXV0aGVudGljYXRpb24gYW5kIFNlY3VyZSBF
+bWFpbCBDQTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAImxDdp6UxlOcFIdvFamBia3
+uEngludRq/HwWhNJFaO0jBtgvHpRQqd5jKQi3xdhTpHVdiMKFNNKAn+2HQmAbqUEPdm6uxb+oYep
+LkNSQxZ8rzJQyKZPWukI2M+TJZx7iOgwZOak+FaA/SokFDMXmaxE5WmLo0YGS8Iz1OlAnwawsayT
+QLm1CJM6nCpToxDbPSBhPFUDjtlOdiUCISn6o3xxdk/u4V+B6ftUgNvDezVSt4TeIj0sMC0xf1m9
+UjewM2ktQ+v61qXxl3dnUYzZ7ifrvKUHOHaMpKk4/9+M9QOsSb7K93OZOg8yq5yVOhM9DkY6V3Rh
+UL7GQD/L5OKfoiECAwEAAaOCARcwggETMB8GA1UdIwQYMBaAFK29mHo0tCb3+sQmVO8DveAky1Qa
+MB0GA1UdDgQWBBSSYWuC4aKgqk/sZ/HCo/e0gADB7DAOBgNVHQ8BAf8EBAMCAYYwEgYDVR0TAQH/
+BAgwBgEB/wIBADAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwEQYDVR0gBAowCDAGBgRV
+HSAAMEQGA1UdHwQ9MDswOaA3oDWGM2h0dHA6Ly9jcmwudXNlcnRydXN0LmNvbS9BZGRUcnVzdEV4
+dGVybmFsQ0FSb290LmNybDA1BggrBgEFBQcBAQQpMCcwJQYIKwYBBQUHMAGGGWh0dHA6Ly9vY3Nw
+LnVzZXJ0cnVzdC5jb20wDQYJKoZIhvcNAQELBQADggEBABsqbqxVwTqriMXY7c1V86prYSvACRAj
+mQ/FZmpvsfW0tXdeDwJhAN99Bf4Ss6SAgAD8+x1banICCkG8BbrBWNUmwurVTYT7/oKYz1gb4yJj
+nFL4uwU2q31Ypd6rO2Pl2tVz7+zg+3vio//wQiOcyraNTT7kSxgDsqgt1Ni7QkuQaYUQ26Y3NOh7
+4AEQpZzKOsefT4g0bopl0BqKu6ncyso20fT8wmQpNa/WsadxEdIDQ7GPPprsnjJT9HaSyoY0B7ks
+yuYcStiZDcGG4pCS+1pCaiMhEOllx/XVu37qjIUgAmLq0ToHLFnFmTPyOInltukWeh95FPZKEBom
++nyK+5swggU9MIIEJaADAgECAhBqC1BYlVMtBFBN4igR/howMA0GCSqGSIb3DQEBCwUAMIGbMQsw
+CQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3Jk
+MRowGAYDVQQKExFDT01PRE8gQ0EgTGltaXRlZDFBMD8GA1UEAxM4Q09NT0RPIFNIQS0yNTYgQ2xp
+ZW50IEF1dGhlbnRpY2F0aW9uIGFuZCBTZWN1cmUgRW1haWwgQ0EwHhcNMTYxMjIwMDAwMDAwWhcN
+MTcxMjIwMjM1OTU5WjAkMSIwIAYJKoZIhvcNAQkBFhNkd213MkBpbmZyYWRlYWQub3JnMIIBIjAN
+BgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwbTrFaiGdvN2pThnR9q+4eaXB2wQZQNqhter5ZrJ
+pPO47e87bZ+f1tmYoh6+rB90G/XN24NErPRfvU4zVzNT9pCtCzSSVnBlZQBpaEYMKhcXo5PGKNsm
+An8BoGwNXjlxwbBNRaNO+ky0wNCaMNd1JLxEuvqg9J7rrcpHhWmnpXD5IKa8gv9GyVAJgOpiBOts
+p91sShc2kHvWJ5waPEWPCHDH9J+twGGKqKIIU7fdbURLUgUL1wlDSAHf/lgIAVCSj2H2HpoGqHpy
+HgOAClX9iRSLNa0Znj8HTaqfOwxXevsz1KkLFY+Ahm426GIEqdfkK2iT6Hhgc7tjNO3f8i5ALQID
+AQABo4IB8TCCAe0wHwYDVR0jBBgwFoAUkmFrguGioKpP7GfxwqP3tIAAwewwHQYDVR0OBBYEFILE
+dmHLtK6oxmFJZvBhTQhvqrS0MA4GA1UdDwEB/wQEAwIFoDAMBgNVHRMBAf8EAjAAMCAGA1UdJQQZ
+MBcGCCsGAQUFBwMEBgsrBgEEAbIxAQMFAjARBglghkgBhvhCAQEEBAMCBSAwRgYDVR0gBD8wPTA7
+BgwrBgEEAbIxAQIBAQEwKzApBggrBgEFBQcCARYdaHR0cHM6Ly9zZWN1cmUuY29tb2RvLm5ldC9D
+UFMwXQYDVR0fBFYwVDBSoFCgToZMaHR0cDovL2NybC5jb21vZG9jYS5jb20vQ09NT0RPU0hBMjU2
+Q2xpZW50QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNybDCBkAYIKwYBBQUHAQEEgYMw
+gYAwWAYIKwYBBQUHMAKGTGh0dHA6Ly9jcnQuY29tb2RvY2EuY29tL0NPTU9ET1NIQTI1NkNsaWVu
+dEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1haWxDQS5jcnQwJAYIKwYBBQUHMAGGGGh0dHA6Ly9v
+Y3NwLmNvbW9kb2NhLmNvbTAeBgNVHREEFzAVgRNkd213MkBpbmZyYWRlYWQub3JnMA0GCSqGSIb3
+DQEBCwUAA4IBAQA+AfvNhFwtapF5Lzjapgul3zYuEnMfR538Ya1vhP8wuOkcoJeT2gEFXzVO2WUu
+eWM0g0/DumnRB53htV/Qq/+vsL0i6a2+iOO7kHi5O7bZkgbdNv0t2lzonDUHi6LTa7NUj+tv+j6y
+hW+iNquC3ACP1dIZH8gJmicHblW63qRgp6wxhn315MLBeavi3uiSag2eeKFePiTIwJjN2UYq6kWg
+PL5G/Ycf9x/xN1XBTfJiURc0FsXhrA98VMWnt52C5Lo4txhGjzTI+IZg40b3YDs6E7mTYb5KKmbc
+QZA9priOFDdj1z5W9BdWhU6I/D0P9y8Z4Tr6+ZscMUVD0RqWy2LeMIIFPTCCBCWgAwIBAgIQagtQ
+WJVTLQRQTeIoEf4aMDANBgkqhkiG9w0BAQsFADCBmzELMAkGA1UEBhMCR0IxGzAZBgNVBAgTEkdy
+ZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEaMBgGA1UEChMRQ09NT0RPIENBIExp
+bWl0ZWQxQTA/BgNVBAMTOENPTU9ETyBTSEEtMjU2IENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQg
+U2VjdXJlIEVtYWlsIENBMB4XDTE2MTIyMDAwMDAwMFoXDTE3MTIyMDIzNTk1OVowJDEiMCAGCSqG
+SIb3DQEJARYTZHdtdzJAaW5mcmFkZWFkLm9yZzCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoC
+ggEBAMG06xWohnbzdqU4Z0favuHmlwdsEGUDaobXq+WayaTzuO3vO22fn9bZmKIevqwfdBv1zduD
+RKz0X71OM1czU/aQrQs0klZwZWUAaWhGDCoXF6OTxijbJgJ/AaBsDV45ccGwTUWjTvpMtMDQmjDX
+dSS8RLr6oPSe663KR4Vpp6Vw+SCmvIL/RslQCYDqYgTrbKfdbEoXNpB71iecGjxFjwhwx/SfrcBh
+iqiiCFO33W1ES1IFC9cJQ0gB3/5YCAFQko9h9h6aBqh6ch4DgApV/YkUizWtGZ4/B02qnzsMV3r7
+M9SpCxWPgIZuNuhiBKnX5Ctok+h4YHO7YzTt3/IuQC0CAwEAAaOCAfEwggHtMB8GA1UdIwQYMBaA
+FJJha4LhoqCqT+xn8cKj97SAAMHsMB0GA1UdDgQWBBSCxHZhy7SuqMZhSWbwYU0Ib6q0tDAOBgNV
+HQ8BAf8EBAMCBaAwDAYDVR0TAQH/BAIwADAgBgNVHSUEGTAXBggrBgEFBQcDBAYLKwYBBAGyMQED
+BQIwEQYJYIZIAYb4QgEBBAQDAgUgMEYGA1UdIAQ/MD0wOwYMKwYBBAGyMQECAQEBMCswKQYIKwYB
+BQUHAgEWHWh0dHBzOi8vc2VjdXJlLmNvbW9kby5uZXQvQ1BTMF0GA1UdHwRWMFQwUqBQoE6GTGh0
+dHA6Ly9jcmwuY29tb2RvY2EuY29tL0NPTU9ET1NIQTI1NkNsaWVudEF1dGhlbnRpY2F0aW9uYW5k
+U2VjdXJlRW1haWxDQS5jcmwwgZAGCCsGAQUFBwEBBIGDMIGAMFgGCCsGAQUFBzAChkxodHRwOi8v
+Y3J0LmNvbW9kb2NhLmNvbS9DT01PRE9TSEEyNTZDbGllbnRBdXRoZW50aWNhdGlvbmFuZFNlY3Vy
+ZUVtYWlsQ0EuY3J0MCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5jb21vZG9jYS5jb20wHgYDVR0R
+BBcwFYETZHdtdzJAaW5mcmFkZWFkLm9yZzANBgkqhkiG9w0BAQsFAAOCAQEAPgH7zYRcLWqReS84
+2qYLpd82LhJzH0ed/GGtb4T/MLjpHKCXk9oBBV81TtllLnljNINPw7pp0Qed4bVf0Kv/r7C9Iumt
+vojju5B4uTu22ZIG3Tb9Ldpc6Jw1B4ui02uzVI/rb/o+soVvojargtwAj9XSGR/ICZonB25Vut6k
+YKesMYZ99eTCwXmr4t7okmoNnnihXj4kyMCYzdlGKupFoDy+Rv2HH/cf8TdVwU3yYlEXNBbF4awP
+fFTFp7edguS6OLcYRo80yPiGYONG92A7OhO5k2G+Sipm3EGQPaa4jhQ3Y9c+VvQXVoVOiPw9D/cv
+GeE6+vmbHDFFQ9Ealsti3jGCA9MwggPPAgEBMIGwMIGbMQswCQYDVQQGEwJHQjEbMBkGA1UECBMS
+R3JlYXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRowGAYDVQQKExFDT01PRE8gQ0Eg
+TGltaXRlZDFBMD8GA1UEAxM4Q09NT0RPIFNIQS0yNTYgQ2xpZW50IEF1dGhlbnRpY2F0aW9uIGFu
+ZCBTZWN1cmUgRW1haWwgQ0ECEGoLUFiVUy0EUE3iKBH+GjAwDQYJYIZIAWUDBAIBBQCgggHzMBgG
+CSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTE3MDkyMTIyMTg0MVowLwYJ
+KoZIhvcNAQkEMSIEIIgTAPmuPCYwp6BogUjn82VWuwBkO7dJA+LcC4NEmZ9bMIHBBgkrBgEEAYI3
+EAQxgbMwgbAwgZsxCzAJBgNVBAYTAkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAO
+BgNVBAcTB1NhbGZvcmQxGjAYBgNVBAoTEUNPTU9ETyBDQSBMaW1pdGVkMUEwPwYDVQQDEzhDT01P
+RE8gU0hBLTI1NiBDbGllbnQgQXV0aGVudGljYXRpb24gYW5kIFNlY3VyZSBFbWFpbCBDQQIQagtQ
+WJVTLQRQTeIoEf4aMDCBwwYLKoZIhvcNAQkQAgsxgbOggbAwgZsxCzAJBgNVBAYTAkdCMRswGQYD
+VQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNVBAcTB1NhbGZvcmQxGjAYBgNVBAoTEUNPTU9E
+TyBDQSBMaW1pdGVkMUEwPwYDVQQDEzhDT01PRE8gU0hBLTI1NiBDbGllbnQgQXV0aGVudGljYXRp
+b24gYW5kIFNlY3VyZSBFbWFpbCBDQQIQagtQWJVTLQRQTeIoEf4aMDANBgkqhkiG9w0BAQEFAASC
+AQAaGgiEEl0ud79vb+xfMH7fhYZ2XmYwYPBsd5eS/HqAIf/0AvWrU3LFP+JvbOvw4pMdT8QLeMDQ
+B84zixvdlE5D+n2rxVpzCJoQKKhVlE4I+HwZEYL/6/eBG2dX9+cwScrkxukGnVn6Y8qPUjH0rmYX
+5awRdZ6INsHaZ/NNXNeZG9eYdhZLG8hSG858jxEMbbhAi9qqDnr2eaTD28gxY3U+/AAlZ6EKkzTm
+AoCgIyAPtOzTg8vlKNt1VC05EpGkVGBOJYWijbWrrnlV1YLSdpBF2hMpnlawxRbinnMw+tJJf4RM
+xuU3aZrC8atFeScW8fN0Z47omRiTWTBzBMqxl5kfAAAAAAAA
+
+
+--=-e9vZiq5QTrjf3QaJl1li--
