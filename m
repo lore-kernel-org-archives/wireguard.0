@@ -1,28 +1,23 @@
-Return-Path: opensource@vdorst.com
+Return-Path: nicolas.prochazka@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id da440009
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4fb24ae4
  for <wireguard@lists.zx2c4.com>;
- Thu, 21 Sep 2017 05:22:02 +0000 (UTC)
-Received: from smtp21.bhosted.nl (smtp21.bhosted.nl [94.124.121.33])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3c613886
+ Thu, 21 Sep 2017 09:05:33 +0000 (UTC)
+Received: from mail-io0-f172.google.com (mail-io0-f172.google.com
+ [209.85.223.172])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fa8ecc32
  for <wireguard@lists.zx2c4.com>;
- Thu, 21 Sep 2017 05:22:02 +0000 (UTC)
-Date: Thu, 21 Sep 2017 05:49:18 +0000
-Message-ID: <20170921054918.Horde.1_230K0CRegHDpAhjlGk8u3@www.vdorst.com>
-From: =?utf-8?b?UmVuw6k=?= van Dorst <opensource@vdorst.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: Re: Last pingtest always fails with netns.sh script on ARM device
- with F25.
-References: <20170919151533.Horde.MQvI7jMPhVKrVNqOVodg-dg@www.vdorst.com>
- <CAHmME9p17p2Hq6c1rw4QB=PztStywoR-r1r-L6bGiNZ2WU=62g@mail.gmail.com>
- <20170919183438.Horde.O_l7lFVqHiv6-cvQ2uGXuyk@www.vdorst.com>
- <CAHmME9qS6p6nhkV-3_kNiyGU3Mi56tgwcgKa+ng2P+tQ14h3pA@mail.gmail.com>
- <20170920170055.Horde.VMh86cFTXHMnql4s7ycIl7z@www.vdorst.com>
- <CAHmME9osiU+rgWyep6=Zku1+amB7-9bqfG0PZbeUXDf69oWvXg@mail.gmail.com>
-In-Reply-To: <CAHmME9osiU+rgWyep6=Zku1+amB7-9bqfG0PZbeUXDf69oWvXg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed; DelSp=Yes
+ Thu, 21 Sep 2017 09:05:33 +0000 (UTC)
+Received: by mail-io0-f172.google.com with SMTP id m103so9419988iod.13
+ for <wireguard@lists.zx2c4.com>; Thu, 21 Sep 2017 02:32:55 -0700 (PDT)
 MIME-Version: 1.0
-Cc: WireGuard list <wireguard@lists.zx2c4.com>
+Sender: nicolas.prochazka@gmail.com
+From: nicolas prochazka <prochazka.nicolas@gmail.com>
+Date: Thu, 21 Sep 2017 11:32:53 +0200
+Message-ID: <CADdae-hcrAL6-pMPwVOmGe3cb299jtUj68WVbz3EU5MmGQbtaQ@mail.gmail.com>
+Subject: [wireguard-dev] Ability to use one udp port for multiple wg interfaces
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -32,30 +27,15 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Quoting "Jason A. Donenfeld" <Jason@zx2c4.com>:
-
-> Hey René,
->
-> I figured it out; it was a bug in the test suite, relying on default
-> Linux values, instead of explicitly setting them. It was introduced
-> here:
->
-> https://git.zx2c4.com/WireGuard/diff/src/tests/netns.sh?id=af2435d180ebb5a3d89b21eb9118d1c643f03f95
->
-> And I've fixed it here:
->
-> https://git.zx2c4.com/WireGuard/commit/?id=9bd0558427d7eb7dc36b7f720d83ef835056fae6
->
-> Thanks for sending all the info!
->
-> Regards,
-> Jason
-
-Hi Jason,
-
-It is working here too.
-Thanks for fixing it.
-
-Greats,
-
-René
+Hello,
+this question have alreadry be post in the past, but i need some help.
+We want create one wireguard interface by client, because at this
+moment, we are using one interface for all our client, and it's
+becomes very difficult to manage in term of Qos , network analyse ,
+security , iptables ..
+With mutliple interface, all is good in term of performance with the
+last release , but each interface must have it's own port, that  is
+not possible to manage ( different port by client )
+Is there a solution ?
+Regards,
+Nicolas Prochazka
