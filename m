@@ -1,32 +1,29 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: outbackdingo@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id de8f18e9
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fd6bc9b5
  for <wireguard@lists.zx2c4.com>;
- Mon, 25 Sep 2017 21:51:52 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f0c44956
+ Tue, 26 Sep 2017 08:39:00 +0000 (UTC)
+Received: from mail-wr0-f170.google.com (mail-wr0-f170.google.com
+ [209.85.128.170])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1b803607
  for <wireguard@lists.zx2c4.com>;
- Mon, 25 Sep 2017 21:51:52 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ed0653d8
- for <wireguard@lists.zx2c4.com>;
- Mon, 25 Sep 2017 22:10:55 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id c288f18f
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Mon, 25 Sep 2017 22:10:55 +0000 (UTC)
-Received: by mail-oi0-f45.google.com with SMTP id i128so9219549oih.6
- for <wireguard@lists.zx2c4.com>; Mon, 25 Sep 2017 15:19:48 -0700 (PDT)
+ Tue, 26 Sep 2017 08:39:00 +0000 (UTC)
+Received: by mail-wr0-f170.google.com with SMTP id l39so12257559wrl.12
+ for <wireguard@lists.zx2c4.com>; Tue, 26 Sep 2017 02:07:00 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9q2-3SNzxT9VPb=8QmB3=CzkBbmEe+Xh3dhSr8Yw_kvfw@mail.gmail.com>
-References: <CAE2xwxm2k_zMLdtQS3yQFUF-47O0thBKUtDfnUMLcZjKMnZcaQ@mail.gmail.com>
- <CAHmME9q2-3SNzxT9VPb=8QmB3=CzkBbmEe+Xh3dhSr8Yw_kvfw@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 26 Sep 2017 00:19:47 +0200
-Message-ID: <CAHmME9rG-J79u-fpu4b97OLORPUsX0GhQpzaU3fQ=wV2HGLdrw@mail.gmail.com>
-Subject: Re: Key generation in Java
-To: Christian Colic <colic.christian@gmail.com>
+In-Reply-To: <9cSXdXwbMn7UGrsnDTq51Hem_VPyyQ0Rfzf4JG8PK4LoiYXqNHiThmcx6ge7gPNwJExNPIl4Lu0vCYyOl1pF5g==@protonmail.ch>
+References: <CAHmME9qOEw6Axjv9=XcnrQAm6atZVS4nwXakUBGJunu-eMBmPg@mail.gmail.com>
+ <1505203686.807343.1103136184.6C8863CB@webmail.messagingengine.com>
+ <CANTUoedL9kAozDzwreAjA2VvmJay34Lm7C+aEb7fXZ=jdqhdQA@mail.gmail.com>
+ <1505293196.1327913.1104462088.47315F9B@webmail.messagingengine.com>
+ <9cSXdXwbMn7UGrsnDTq51Hem_VPyyQ0Rfzf4JG8PK4LoiYXqNHiThmcx6ge7gPNwJExNPIl4Lu0vCYyOl1pF5g==@protonmail.ch>
+From: Outback Dingo <outbackdingo@gmail.com>
+Date: Tue, 26 Sep 2017 05:06:17 -0400
+Message-ID: <CAKYr3zz6WQFB3r=orSZPQzDaNkNtSR3gJwEFntTJATj+z5vwTg@mail.gmail.com>
+Subject: Re: List of commercial WireGuard offerings
+To: jugs <jugs@protonmail.ch>
 Content-Type: text/plain; charset="UTF-8"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Cc: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -36,8 +33,117 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Oh, and wg genpsk (not genkey) is just:
+Optim will soon be also offering commercial services
 
-       SecureRandom random = new SecureRandom();
-       byte privateKey[] = new byte[32];
-       random.nextBytes(privateKey);
+On Fri, Sep 15, 2017 at 10:28 PM, jugs <jugs@protonmail.ch> wrote:
+> Just to throw in my two cents, I've been using mullvad since they first
+> announced their public test servers and have been very pleased and impres=
+sed
+> with both the quality of service as well as their support. They continue =
+to
+> innovate in the VPN provider space as you can see when you sign up with
+> them, they really go out of their way to make their service as private an=
+d
+> anonymous as possible.
+>
+> Mullvad :thumbs_up:
+>
+> -jugs
+>
+>
+> -------- Original Message --------
+> Subject: Re: List of commercial WireGuard offerings
+> Local Time: September 13, 2017 8:59 AM
+> UTC Time: September 13, 2017 8:59 AM
+> From: eric@ericlight.com
+> To: wireguard@lists.zx2c4.com
+>
+> Hi, Fredrik! :)
+>
+> You"re right, I should have made a distinction between sponsorship and a
+> donation. It"s an important difference, and I"m glad to hear your
+> stance on it.
+>
+> I share your excitement about the future of the project, and the
+> additional privacy it brings. Thank you for your contribution to that
+> future!
+>
+> E
+>
+> --------------------------------------------
+> Q: Why is this email five sentences or less?
+> A: http://five.sentenc.es
+>
+> On Tue, 12 Sep 2017, at 21:11, Fredrik Str=C3=B6mberg wrote:
+>> On Tue, Sep 12, 2017 at 10:08 AM, Eric Light <eric@ericlight.com> wrote:
+>> > For the record, Mullvad are great. I"ve purchased a subscription there
+>> > as a direct result of their sponsorship of Wireguard. I"ve also
+>> > recommended it to others. :)
+>> >
+>>
+>> Thanks Eric! I"m happy to hear that you like our service. I"ve
+>> forwarded your comments to the rest of the team.
+>>
+>> One tiny detail though. Although Mullvad is a major "donor" of
+>> WireGuard, we are not a "sponsor".
+>>
+>> I found out about WireGuard in the summer of 2016. Mullvad then
+>> started studying the specifications and experimenting with it. After a
+>> few meetings with Jason, we made a donation in June 2017 to ensure
+>> that he could focus primarily on WireGuard for the rest of the year.
+>>
+>> We are completely aligned with his vision of WireGuard. Yet in order
+>> for that vision to become reality, WireGuard needs to remain neutral
+>> and independent of commercial influence.
+>>
+>> Our motivation for donating to WireGuard is that it will improve our
+>> products as well as the world. More specifically, it will move the
+>> world closer to our own vision which is to make mass surveillance
+>> ineffective.
+>>
+>> Cheers,
+>> Fredrik
+>>
+>> > E
+>> >
+>> > --------------------------------------------
+>> > Q: Why is this email five sentences or less?
+>> > A: http://five.sentenc.es
+>> >
+>> > On Tue, 12 Sep 2017, at 10:14, Jason A. Donenfeld wrote:
+>> >> Hey,
+>> >>
+>> >> Many people have asked me which companies have commercial for-profit
+>> >> WireGuard offerings. Offhand I can think of 3 at the moment:
+>> >>
+>> >> https://www.mullvad.net/guides/wireguard-and-mullvad-vpn/
+>> >> https://www.azirevpn.com/wireguard
+>> >> https://blackholecloud.com
+>> >>
+>> >> I was curious if anybody knew of others to add to the list.
+>> >>
+>> >> Jason
+>> >> _______________________________________________
+>> >> WireGuard mailing list
+>> >> WireGuard@lists.zx2c4.com
+>> >> https://lists.zx2c4.com/mailman/listinfo/wireguard
+>> > _______________________________________________
+>> > WireGuard mailing list
+>> > WireGuard@lists.zx2c4.com
+>> > https://lists.zx2c4.com/mailman/listinfo/wireguard
+>> _______________________________________________
+>> WireGuard mailing list
+>> WireGuard@lists.zx2c4.com
+>> https://lists.zx2c4.com/mailman/listinfo/
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
+>
+>
+>
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
+>
