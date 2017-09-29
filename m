@@ -1,26 +1,26 @@
-Return-Path: lordkitsuna112@gmail.com
+Return-Path: chetgurevitch@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 20d9cd0f
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c35fe903
  for <wireguard@lists.zx2c4.com>;
- Thu, 28 Sep 2017 05:17:20 +0000 (UTC)
-Received: from mail-wr0-f179.google.com (mail-wr0-f179.google.com
- [209.85.128.179])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 64347678
+ Fri, 29 Sep 2017 03:55:13 +0000 (UTC)
+Received: from mail-pf0-f195.google.com (mail-pf0-f195.google.com
+ [209.85.192.195])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c8e2edc3
  for <wireguard@lists.zx2c4.com>;
- Thu, 28 Sep 2017 05:17:20 +0000 (UTC)
-Received: by mail-wr0-f179.google.com with SMTP id a43so686781wrc.0
- for <wireguard@lists.zx2c4.com>; Wed, 27 Sep 2017 22:45:34 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <CAHmME9pD--t1gNhZ=W=LS1PC0Rz3umEY8pbpsbcmU8MSqp5XCw@mail.gmail.com>
-References: <CAH8WAOZGHrxOHTWsTCgEQNgF3XixeeWeU6+-nMSjOeoFNtDJFQ@mail.gmail.com>
- <CAHmME9pD--t1gNhZ=W=LS1PC0Rz3umEY8pbpsbcmU8MSqp5XCw@mail.gmail.com>
-From: Lord Kitsuna <lordkitsuna112@gmail.com>
-Date: Wed, 27 Sep 2017 22:45:32 -0700
-Message-ID: <CAH8WAOY8qiF8GbdOCNKqO9wbOMztaXwyci71KuvRgH3wFNMmWQ@mail.gmail.com>
-Subject: Re: Bridge interfaces?
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Content-Type: multipart/alternative; boundary="94eb2c14a378af0f88055a396a84"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+ Fri, 29 Sep 2017 03:55:13 +0000 (UTC)
+Received: by mail-pf0-f195.google.com with SMTP id f84so252318pfj.3
+ for <wireguard@lists.zx2c4.com>; Thu, 28 Sep 2017 21:23:34 -0700 (PDT)
+Return-Path: <chetgurevitch@gmail.com>
+Received: from localhost.localdomain ([38.95.108.168])
+ by smtp.gmail.com with ESMTPSA id m24sm5396958pfj.28.2017.09.28.21.23.32
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Thu, 28 Sep 2017 21:23:33 -0700 (PDT)
+From: Chet Gurevitch <chetgurevitch@gmail.com>
+To: wireguard@lists.zx2c4.com
+Subject: [PATCH] Makefile: add uapi level to dkms-install target
+Date: Thu, 28 Sep 2017 21:23:31 -0700
+Message-Id: <20170929042331.18247-1-chetgurevitch@protonmail.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -30,59 +30,28 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---94eb2c14a378af0f88055a396a84
-Content-Type: text/plain; charset="UTF-8"
+---
+ src/Makefile | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-Oh hey missed this reply, thanks! That was what i needed working
-beautifully.
-
-On Sep 23, 2017 3:44 PM, "Jason A. Donenfeld" <Jason@zx2c4.com> wrote:
-
-> Hi,
->
-> Yes indeed this is possible. Enable ip forwarding (sysctl -w
-> net.ipv4.ip_forwarding=1), and then make sure you have the correct
-> routes set. You may have to add a few entries to your allowed-ips to
-> ensure that the network is okay with wireguard, or, perhaps easier,
-> would to just enable MASQUERADEing (iptables -t nat -A POSTROUTING -s
-> 10.8.8.0/24 -o tinc0 -j MASQUERADE, where 10.8.8.0/24 is the wireguard
-> network.)
->
-> There are a lot of ways to skin the cat, and I suspect if you write
-> back with details of network segments and whatnot, there might be
-> others who might have their own useful opinions. Alternatively, you
-> can always ask in #wireguard on Freenode.
->
-> Jason
->
-
---94eb2c14a378af0f88055a396a84
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto">Oh hey missed this reply, thanks! That was what i needed =
-working beautifully.=C2=A0</div><div class=3D"gmail_extra"><br><div class=
-=3D"gmail_quote">On Sep 23, 2017 3:44 PM, &quot;Jason A. Donenfeld&quot; &l=
-t;<a href=3D"mailto:Jason@zx2c4.com">Jason@zx2c4.com</a>&gt; wrote:<br type=
-=3D"attribution"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8=
-ex;border-left:1px #ccc solid;padding-left:1ex">Hi,<br>
-<br>
-Yes indeed this is possible. Enable ip forwarding (sysctl -w<br>
-net.ipv4.ip_forwarding=3D1), and then make sure you have the correct<br>
-routes set. You may have to add a few entries to your allowed-ips to<br>
-ensure that the network is okay with wireguard, or, perhaps easier,<br>
-would to just enable MASQUERADEing (iptables -t nat -A POSTROUTING -s<br>
-<a href=3D"http://10.8.8.0/24" rel=3D"noreferrer" target=3D"_blank">10.8.8.=
-0/24</a> -o tinc0 -j MASQUERADE, where <a href=3D"http://10.8.8.0/24" rel=
-=3D"noreferrer" target=3D"_blank">10.8.8.0/24</a> is the wireguard<br>
-network.)<br>
-<br>
-There are a lot of ways to skin the cat, and I suspect if you write<br>
-back with details of network segments and whatnot, there might be<br>
-others who might have their own useful opinions. Alternatively, you<br>
-can always ask in #wireguard on Freenode.<br>
-<br>
-Jason<br>
-</blockquote></div></div>
-
---94eb2c14a378af0f88055a396a84--
+diff --git a/src/Makefile b/src/Makefile
+index 960bbb4..f437de3 100644
+--- a/src/Makefile
++++ b/src/Makefile
+@@ -44,11 +44,13 @@ install:
+ 	$(MAKE) -C tools install
+ 
+ DKMS_TOP_LEVEL := Makefile Kbuild Kconfig $(filter-out wireguard.mod.c, $(wildcard *.c)) $(filter-out version.h, $(wildcard *.h)) version.h dkms.conf
++DKMS_UAPI_LEVEL := $(wildcard uapi/*.c) $(wildcard uapi/*.h)
+ DKMS_SELFTEST_LEVEL := $(wildcard selftest/*.c) $(wildcard selftest/*.h)
+ DKMS_CRYPTO_LEVEL := $(wildcard crypto/*.c) $(wildcard crypto/*.h) $(wildcard crypto/*.S)
+ DKMS_COMPAT_LEVEL := $(shell find compat/ -name '*.c' -o -name '*.h' -o -name '*.include')
+-dkms-install: $(DKMS_TOP_LEVEL) $(DKMS_SELFTEST_LEVEL) $(DKMS_CRYPTO_LEVEL) $(DKMS_COMPAT_LEVEL)
++dkms-install: $(DKMS_TOP_LEVEL) $(DKMS_UAPI_LEVEL) $(DKMS_SELFTEST_LEVEL) $(DKMS_CRYPTO_LEVEL) $(DKMS_COMPAT_LEVEL)
+ 	@install -v -m0644 -D -t$(DESTDIR)$(DKMSDIR) $(DKMS_TOP_LEVEL)
++	@install -v -m0644 -D -t$(DESTDIR)$(DKMSDIR)/uapi $(DKMS_UAPI_LEVEL)
+ 	@install -v -m0644 -D -t$(DESTDIR)$(DKMSDIR)/selftest $(DKMS_SELFTEST_LEVEL)
+ 	@install -v -m0644 -D -t$(DESTDIR)$(DKMSDIR)/crypto $(DKMS_CRYPTO_LEVEL)
+ 	@for file in $(DKMS_COMPAT_LEVEL); do install -v -m0644 -D $$file $(DESTDIR)$(DKMSDIR)/$$file; done
+-- 
+2.14.2
