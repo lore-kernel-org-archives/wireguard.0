@@ -1,26 +1,22 @@
-Return-Path: chetgurevitch@gmail.com
+Return-Path: dkg@fifthhorseman.net
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c35fe903
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id afc5a874
  for <wireguard@lists.zx2c4.com>;
- Fri, 29 Sep 2017 03:55:13 +0000 (UTC)
-Received: from mail-pf0-f195.google.com (mail-pf0-f195.google.com
- [209.85.192.195])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c8e2edc3
+ Fri, 29 Sep 2017 04:06:45 +0000 (UTC)
+Received: from che.mayfirst.org (che.mayfirst.org [162.247.75.118])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1ca353f9
  for <wireguard@lists.zx2c4.com>;
- Fri, 29 Sep 2017 03:55:13 +0000 (UTC)
-Received: by mail-pf0-f195.google.com with SMTP id f84so252318pfj.3
- for <wireguard@lists.zx2c4.com>; Thu, 28 Sep 2017 21:23:34 -0700 (PDT)
-Return-Path: <chetgurevitch@gmail.com>
-Received: from localhost.localdomain ([38.95.108.168])
- by smtp.gmail.com with ESMTPSA id m24sm5396958pfj.28.2017.09.28.21.23.32
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 28 Sep 2017 21:23:33 -0700 (PDT)
-From: Chet Gurevitch <chetgurevitch@gmail.com>
-To: wireguard@lists.zx2c4.com
-Subject: [PATCH] Makefile: add uapi level to dkms-install target
-Date: Thu, 28 Sep 2017 21:23:31 -0700
-Message-Id: <20170929042331.18247-1-chetgurevitch@protonmail.com>
+ Fri, 29 Sep 2017 04:06:45 +0000 (UTC)
+From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+To: Chet Gurevitch <chetgurevitch@gmail.com>, wireguard@lists.zx2c4.com
+Subject: Re: [PATCH] Makefile: add uapi level to dkms-install target
+In-Reply-To: <20170929042331.18247-1-chetgurevitch@protonmail.com>
+References: <20170929042331.18247-1-chetgurevitch@protonmail.com>
+Date: Fri, 29 Sep 2017 00:34:58 -0400
+Message-ID: <87y3oyp1fx.fsf@fifthhorseman.net>
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="=-=-=";
+ micalg=pgp-sha512; protocol="application/pgp-signature"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -30,28 +26,36 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
----
- src/Makefile | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+--=-=-=
+Content-Type: text/plain
 
-diff --git a/src/Makefile b/src/Makefile
-index 960bbb4..f437de3 100644
---- a/src/Makefile
-+++ b/src/Makefile
-@@ -44,11 +44,13 @@ install:
- 	$(MAKE) -C tools install
- 
- DKMS_TOP_LEVEL := Makefile Kbuild Kconfig $(filter-out wireguard.mod.c, $(wildcard *.c)) $(filter-out version.h, $(wildcard *.h)) version.h dkms.conf
-+DKMS_UAPI_LEVEL := $(wildcard uapi/*.c) $(wildcard uapi/*.h)
- DKMS_SELFTEST_LEVEL := $(wildcard selftest/*.c) $(wildcard selftest/*.h)
- DKMS_CRYPTO_LEVEL := $(wildcard crypto/*.c) $(wildcard crypto/*.h) $(wildcard crypto/*.S)
- DKMS_COMPAT_LEVEL := $(shell find compat/ -name '*.c' -o -name '*.h' -o -name '*.include')
--dkms-install: $(DKMS_TOP_LEVEL) $(DKMS_SELFTEST_LEVEL) $(DKMS_CRYPTO_LEVEL) $(DKMS_COMPAT_LEVEL)
-+dkms-install: $(DKMS_TOP_LEVEL) $(DKMS_UAPI_LEVEL) $(DKMS_SELFTEST_LEVEL) $(DKMS_CRYPTO_LEVEL) $(DKMS_COMPAT_LEVEL)
- 	@install -v -m0644 -D -t$(DESTDIR)$(DKMSDIR) $(DKMS_TOP_LEVEL)
-+	@install -v -m0644 -D -t$(DESTDIR)$(DKMSDIR)/uapi $(DKMS_UAPI_LEVEL)
- 	@install -v -m0644 -D -t$(DESTDIR)$(DKMSDIR)/selftest $(DKMS_SELFTEST_LEVEL)
- 	@install -v -m0644 -D -t$(DESTDIR)$(DKMSDIR)/crypto $(DKMS_CRYPTO_LEVEL)
- 	@for file in $(DKMS_COMPAT_LEVEL); do install -v -m0644 -D $$file $(DESTDIR)$(DKMSDIR)/$$file; done
--- 
-2.14.2
+On Thu 2017-09-28 21:23:31 -0700, Chet Gurevitch wrote:
+> add uapi level to dkms-install target
+
+care to comment on the rationale for this?  dkms is the kernel module,
+and aiui the ioctl interface is likely going away.  we don't want people
+to be building tools that are bound to that interface unless they're
+also bound to the same version of wireguard, right?
+
+     --dkg
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEOCdgUepHf6PklTkyFJitxsGSMjcFAlnNzXIACgkQFJitxsGS
+MjdLsg//arXQTSpkgwUF5M7AxYR7DzfuniRxsynlX7YXcCfsPaa1jyjCF6o/81KW
+heHolevyrvsqf1ZdeDontmXTP/7K6HzvxxpmAA1T46cJRi8dvIyOTE5UHVaVczt/
+jycRPsjlX7aMas+93UeIV5ViEbRYXTOxVZuGGXceh8SSfA/KHWB0e0pHQXf3r5dt
+dC2WG6jxl7XN3hZkwZNcq/4x8K5onKrLAjYNNEoJ8CBSEei+3hWErI4n6Fs2GvHk
+0G+pdk8OV/x4zP1WnyhXPD9b+nwNTX0zgHISrlQC8ckaXNHJS3rlhBECd0zQYBkQ
+gfA0ln9g+ZuyjaM0dR7qprjR2jn3mtPEv0d5YFEsp5Ck+6G1Bvl+MhbCUb0Kk8qY
+R54M+0Ecz2/FZvYYDK3g0dJ5sGT2ZnCaKFP9OK32vo1n0JdbVg15RPJ0W1RWkkBm
+EqSqjZSpdvyf/wzqN9iqDEUHcC/xg3B+37VN5mlqtvBZrSsnjn9iPRvIvy1amkrz
+eKFzKjvxhpIRlrTRNu5l+vdDzbIul2ESywPkfGpcTH0sY8Yb1vzeARyArwr+GXgc
+zeJQe87B03hiDM/hfo0LJn1fYdnMzDIyz3It0xfSpP2eiFPyGO6Rlzh1wEfUfMYe
+DdkQZZ98rF/75+LOY4qjheR/WRY02ZzxqC1m+OtyM9NhETJTzk8=
+=vqZZ
+-----END PGP SIGNATURE-----
+--=-=-=--
