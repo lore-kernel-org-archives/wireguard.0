@@ -1,24 +1,24 @@
-Return-Path: opensource@vdorst.com
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 887ccd3b
- for <wireguard@lists.zx2c4.com>; Tue, 3 Oct 2017 09:29:02 +0000 (UTC)
-Received: from smtp21.bhosted.nl (smtp21.bhosted.nl [94.124.121.33])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 97e91655
- for <wireguard@lists.zx2c4.com>; Tue, 3 Oct 2017 09:29:02 +0000 (UTC)
-Date: Tue, 03 Oct 2017 09:57:52 +0000
-Message-ID: <20171003095752.Horde.9WQT2xJ2r4qJ8yAEo004H9W@www.vdorst.com>
-From: =?utf-8?b?UmVuw6k=?= van Dorst <opensource@vdorst.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: Re: Failed to give packet to userspace from peer with very poor
- wifi connection.
-References: <20170922101756.Horde.0028OWy_TWcXeR6q3nnfYrp@www.vdorst.com>
- <CAHmME9qPOjjtjVt-E03uz8PUs3voGDGjpJ9f8YDGbDsfBPVAqw@mail.gmail.com>
- <20170922124913.Horde.l7vpYDEtJHMgZ9U602cMi6K@www.vdorst.com>
- <CAHmME9prH1dmZSPt0AzEeGs=4gKu=2zPBp-ceDqJ=SxH9qma+A@mail.gmail.com>
-In-Reply-To: <CAHmME9prH1dmZSPt0AzEeGs=4gKu=2zPBp-ceDqJ=SxH9qma+A@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed; DelSp=Yes
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id aed3330e
+ for <wireguard@lists.zx2c4.com>; Tue, 3 Oct 2017 12:47:40 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d8d07155
+ for <wireguard@lists.zx2c4.com>; Tue, 3 Oct 2017 12:47:40 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 39dd52b8
+ for <wireguard@lists.zx2c4.com>; Tue, 3 Oct 2017 13:06:43 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 0474ffd3
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>; Tue, 3 Oct 2017 13:06:43 +0000 (UTC)
+Received: by mail-oi0-f48.google.com with SMTP id q133so8329266oic.12
+ for <wireguard@lists.zx2c4.com>; Tue, 03 Oct 2017 06:16:34 -0700 (PDT)
 MIME-Version: 1.0
-Cc: WireGuard list <wireguard@lists.zx2c4.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Tue, 3 Oct 2017 15:16:32 +0200
+Message-ID: <CAHmME9pU3CoPXdboFCGRFMheOzAHOdDcq14W9yQsSifHKPYOxw@mail.gmail.com>
+Subject: List of things to do maybe
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -28,17 +28,19 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Quoting "Jason A. Donenfeld" <Jason@zx2c4.com>:
+Hi guys,
 
-> Hey René,
->
-> I've got this fixed in the latest master branch, and it will roll out
-> in the upcoming snapshot.
->
-> Jason
+Many people have been asking me how they can "help out" with WireGuard
+development. So, I put together a list of things:
 
-I tried but I don't get the error any more.
+https://www.wireguard.com/todo/
+
+The ordering isn't relavent. Some of the things in there don't matter
+and are just curious research topics. Other things matter a bunch and
+we need to get them done.
+
+Anyway, if you feel like writing some kernel code, the above list has
+tasks both big and small.
 
 Thanks,
-
-René
+Jason
