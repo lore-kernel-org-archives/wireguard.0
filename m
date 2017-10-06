@@ -1,22 +1,22 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: opensource@vdorst.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 579c9c26
- for <wireguard@lists.zx2c4.com>; Fri, 6 Oct 2017 01:08:33 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c3d9dfbc
- for <wireguard@lists.zx2c4.com>; Fri, 6 Oct 2017 01:08:33 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 26c8109d
- for <wireguard@lists.zx2c4.com>; Fri, 6 Oct 2017 01:27:36 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 81b67d89
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Fri, 6 Oct 2017 01:27:36 +0000 (UTC)
-Date: Fri, 06 Oct 2017 03:37:43 +0200
-To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: [ANNOUNCE] WireGuard Snapshot `0.0.20171005` Available
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c0baa78b
+ for <wireguard@lists.zx2c4.com>; Fri, 6 Oct 2017 10:30:28 +0000 (UTC)
+Received: from smtp02.bhosted.nl (smtp02.bhosted.nl [94.124.121.13])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f53a2e03
+ for <wireguard@lists.zx2c4.com>; Fri, 6 Oct 2017 10:30:28 +0000 (UTC)
+Received: from www (www.lan.vdorst.com [172.16.2.220])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by mail.vdorst.com (Postfix) with ESMTPSA id 9CC4B132EA1E
+ for <wireguard@lists.zx2c4.com>; Fri,  6 Oct 2017 12:59:40 +0200 (CEST)
+Date: Fri, 06 Oct 2017 10:59:40 +0000
+Message-ID: <20171006105940.Horde.-YgH3Xzem0aIzxlyFy3xGun@www.vdorst.com>
+From: =?utf-8?b?UmVuw6k=?= van Dorst <opensource@vdorst.com>
+To: WireGuard list <wireguard@lists.zx2c4.com>
+Subject: netns.sh: Sending cookie response for denied handshake
+Content-Type: text/plain; charset=utf-8; format=flowed; DelSp=Yes
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Message-Id: <36524184bce66499@frisell.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,112 +26,292 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi Jason,
 
-Hello,
+I was testing the latest version on my Cubox i4pro with netns.sh script.
+Standard F26 kernel 4.13.4-200.fc26.armv7hl, on the device compiled  
+Wireguard 0.0.20171005.
 
-A new snapshot, `0.0.20171005`, has been tagged in the git repository.
+First test fails.
 
-Please note that this snapshot is, like the rest of the project at this point
-in time, experimental, and does not consitute a real release that would be
-considered secure and bug-free. WireGuard is generally thought to be fairly
-stable, and most likely will not crash your computer (though it may).
-However, as this is a pre-release snapshot, it comes with no guarantees, and
-its security is not yet to be depended on; it is not applicable for CVEs.
+But after I connect and disconnect with my home tunnel "wg-quick up  
+wg0", the test runs fine.
+Also reload the module keeps the test working.
+So it seems only on a fresh reboot it fails the test.
 
-With all that said, if you'd like to test this snapshot out, there are a
-few relevent changes.
+MESG + CONSOLE log:
 
-== Changes ==
+[root@cubox tests]# ./netns.sh
+[+] ip netns add wg-test-960-0
+[+] ip netns add wg-test-960-1
+[+] ip netns add wg-test-960-2
+[+] NS0: ip link set up dev lo
+[+] NS0: ip link add dev wg0 type wireguard
+[  291.156574] wireguard: wg0: Interface created
+[+] NS0: ip link set wg0 netns wg-test-960-1
+[+] NS0: ip link add dev wg0 type wireguard
+[  291.244318] wireguard: wg0: Interface created
+[+] NS0: ip link set wg0 netns wg-test-960-2
+[+] wg genkey
+[+] wg genkey
+[+] wg pubkey
+[+] wg pubkey
+[+] wg genpsk
+[+] NS1: ip addr add 192.168.241.1/24 dev wg0
+[+] NS1: ip addr add fd00::1/24 dev wg0
+[+] NS2: ip addr add 192.168.241.2/24 dev wg0
+[+] NS2: ip addr add fd00::2/24 dev wg0
+[+] NS1: wg set wg0 private-key /dev/fd/63 listen-port 1 peer  
+WEteJQshsIwGXnjC/Bzz2+jM2ZVCWJJAp2YTeIKQGiw= preshared-key /dev/fd/62  
+allowed-ips 192.168.241.2/32,fd00::2/128
+[  291.520731] wireguard: wg0: Peer 3 created
+[+] NS2: wg set wg0 private-key /dev/fd/63 listen-port 2 peer  
+cxbjGbjkKFIVIv/Pv4LTkpcy+u5Mha/iTdkWyCo8t04= preshared-key /dev/fd/62  
+allowed-ips 192.168.241.1/32,fd00::1/128
+[  291.577721] wireguard: wg0: Peer 4 created
+[+] NS1: ip link set up dev wg0
+[+] NS2: ip link set up dev wg0
+[+] NS1: ip link show dev wg0
+[+] NS1: wg set wg0 peer WEteJQshsIwGXnjC/Bzz2+jM2ZVCWJJAp2YTeIKQGiw=  
+endpoint 127.0.0.1:2
+[+] NS2: wg set wg0 peer cxbjGbjkKFIVIv/Pv4LTkpcy+u5Mha/iTdkWyCo8t04=  
+endpoint 127.0.0.1:1
+[+] NS2: ping -c 10 -f -W 1 192.168.241.1
+PING 192.168.241.1 (192.168.241.1) 56(84) bytes of data.
+.[  291.798677] wireguard: wg0: Sending handshake initiation to peer 4  
+(127.0.0.1:1)
+[  291.800599] wireguard: wg0: Sending cookie response for denied  
+handshake message for 127.0.0.1:2
+[  291.800696] wireguard: wg0: Receiving cookie response from 127.0.0.1:1
+.........
+--- 192.168.241.1 ping statistics ---
+10 packets transmitted, 0 received, 100% packet loss, time 98ms
 
-  * community: code welcomed
-  
-  There's a small disorganized list of things to do, some of which are large
-  projects, and others are just little cleanups:
-  
-  https://www.wireguard.com/todo/
-  
-  If anybody is interested in working on something, please don't hesitate to
-  send an email to this list, team@wireguard.com, or me directly.
-  
-  * tools: simmer down silly compilers
-  * tools: compile on non-Linux
-  * contrib: remove worthless build artifact
-  * kernel-tree: remember UAPI in patch creation
-  * curve25519-neon-arm: force ARM encoding, since this is unrepresentable in Thumb
-  * compat: support ptr_ring for old kernels
-  * compat: conditionally redefine GENL_UNS_ADMIN_PERM
-  * compat: RHEL backported netlink changes
-  
-  These here are all compatibility-related fixes mostly left over from churn of
-  the previous snapshots, where we lost some compatibility with old kernels and
-  weird toolchains. The above series of fixes brings us back up to par, and
-  should make life slightly easier for a few packagers who had to work-around
-  things in the last snapshot.
-  
-  * compat: macro rewrite netlink instead of cluttering
-  * global: satisfy bitshift pedantry
-  * global: use _WG prefix for include guards
-  * global: add space around variable declarations
-  * queueing: cleanup skb_padding
-  
-  Style, mostly.
-  
-  * Makefile: add non-verbose mode to tools
-  * Makefile: clang now builds the kernel, so use scan-build
-  
-  One touch static analysis: `make check`.
-  
-  * receive: simplify message type validation
-  * receive: use local keypair, not ctx keypair in error path
-  * send: put keypair reference
-  * receive: we're not planning on turning that into a while loop now
-  * queueing: use ptr_ring instead of linked lists
-  * receive: do not store endpoint in ctx
-  * queueing: move from ctx to cb
-  
-  This is another huge change, and the main motivation for releasing this
-  snapshot. We move from using a linked list-based queue to a ring buffer-based
-  queue, which yields considerable performance increases. It also allows us to
-  entirely rid ourselves of a memory cache object, which further increases
-  performance and decreases latency. The move to a ring buffer will also make
-  writing lock-less algorithms easier, which will eventually increase our
-  performance on systems with extremely high core counts.
-
-As always, the source is available at https://git.zx2c4.com/WireGuard/ and
-information about the project is available at https://www.wireguard.com/ .
-
-This snapshot is available in tarball form here:
-  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-0.0.20171005.tar.xz
-  SHA2-256: 832a3b7cbb510f6986fd0c3a6b2d86bc75fc9f23b6754d8f46bc58ea8e02d608
-  BLAKE2b-256: 1ca53bfe8e3a268cdbdda0ca26537b81350ec24aa708c5d1d66c459bed005156
-
-If you're a snapshot package maintainer, please bump your package version. If
-you're a user, the WireGuard team welcomes any and all feedback on this latest
-snapshot.
-
-Finally, WireGuard development thrives on donations. By popular demand, we
-have a webpage for this: https://www.wireguard.com/donations/
-
-Thank you,
-Jason Donenfeld
+[+] NS0: ip link del dev wg0
+[+] NS1: ip link del dev wg0
+[  293.004307] wireguard: wg0: Peer 3 (127.0.0.1:2) destroyed
+[  293.013305] wireguard: wg0: Interface deleted
+[+] NS2: ip link del dev wg0
+[  293.064291] wireguard: wg0: Peer 4 (127.0.0.1:1) destroyed
+[  293.084298] wireguard: wg0: Interface deleted
+[+] ip netns del wg-test-960-1
+[+] ip netns del wg-test-960-2
+[+] ip netns del wg-test-960-0
 
 
------BEGIN PGP SIGNATURE-----
 
-iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAlnW3eMQHGphc29uQHp4
-MmM0LmNvbQAKCRBJ/HASpd4DrvE4EACO9hAJN3w8O/DxJ4tyXzlZv9Y9O/YvhCei
-gukviYnsop9VImpX8/pUBdzseP9N9D9ESIjPveEZZt8sbJCdaOUozRzP6NZraq+w
-jHAd716xPv7GNKOr/pAFJnZJQOeJ8Fs6fwxSQ8S6HBYR6px233l8gRfmZLKphCaB
-OEPf/7POGFoIfKTjGYPv5+GMpdaJU1RTVSBlWXU5a31bLDdEShyKuw1Z/eyNVAhk
-QYnrBFsPa4Dy9uS3uXdBBRsrYyQcJkcC1d9+5RFv8gyUB36KnVGIGkLdLgdZfLDT
-qzzf+EkJl0xIeDmYvHEx+XekBtW23AzIo7oq9r97u6UEh91OSEUyrVjXlbyVSxE4
-gfZSSBByZ0KnyBKWcrDDdYDsrpUN00VOJ7GOmzZkZ06KfOfyVYP9j0cL/cxiOIqp
-oNGod1kIk+i+nfrvDYohQpIyjH90I0gOz3AfpxQRqCNHVwzxZD0wudE360Ish7A3
-Px1akrptkp3kMmY88vZabVi3rWEZISd1Or2wgotDP/+GBpjmE0A5j1JznjHuZHEd
-UXv4IaEl9vFlfPuuClRy3ioFL9XORq8h/6xVl5hKrBrRf1jyGeoFQ0AqF18fjMgg
-iKSLZHeqFSf8oPgaXKyf7fJV0LFZbxQoCFBMd4B7VLUxuNFaV36Q6Ni+wjLp6SYx
-qsMbKxykDw==
-=DJ2X
------END PGP SIGNATURE-----
+
+
+
+MESG + CONSOLE log after the failed test to home tunnel:
+
+[root@cubox tests]# wg-quick up wg0
+[#] ip link add wg0 type wireguard
+[  430.786542] wireguard: wg0: Interface created
+[#] wg setconf wg0 /dev/fd/63
+
+[  435.854103] wireguard: wg0: Peer 5 created
+[#] ip address add 10.0.0.2/24 dev wg0
+[#] ip address add fd00::2/128 dev wg0
+[#] ip link set mtu 1440 dev wg0
+[#] ip link set wg0 up
+[  435.897244] wireguard: wg0: Sending keepalive packet to peer 5  
+(192.168.2.222:36464)
+[  435.897289] wireguard: wg0: Sending handshake initiation to peer 5  
+(192.168.2.222:36464)
+[  435.917129] wireguard: wg0: Receiving handshake response from peer  
+5 (192.168.2.222:36464)
+[  435.917175] wireguard: wg0: Keypair 1 created for peer 5
+[#] ip route add fd00::/64 dev wg0
+[root@cubox tests]#
+[root@cubox tests]# ping 10.0.0.1
+PING 10.0.0.1 (10.0.0.1) 56(84) bytes of data.
+64 bytes from 10.0.0.1: icmp_seq=1 ttl=64 time=4.35 ms
+64 bytes from 10.0.0.1: icmp_seq=2 ttl=64 time=9.00 ms
+64 bytes from 10.0.0.1: icmp_seq=3 ttl=64 time=8.84 ms
+^C
+--- 10.0.0.1 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2002ms
+rtt min/avg/max/mdev = 4.354/7.402/9.008/2.156 ms
+[root@cubox tests]# [  454.590369] wireguard: wg0: Sending keepalive  
+packet to peer 5 (192.168.2.222:36464)
+[  479.676530] wireguard: wg0: Sending keepalive packet to peer 5  
+(192.168.2.222:36464)
+wg-quick down wg0
+[#] ip link delete dev wg0
+[  487.218969] wireguard: wg0: Keypair 1 destroyed for peer 5
+[  487.240952] wireguard: wg0: Peer 5 (192.168.2.222:36464) destroyed
+[  487.259973] wireguard: wg0: Interface deleted
+
+
+
+
+MESG + CONSOLE log after to home tunnel and manual terminated the test.:
+
+[root@cubox tests]# ./netns.sh
+[+] ip netns add wg-test-1076-0
+[+] ip netns add wg-test-1076-1
+[+] ip netns add wg-test-1076-2
+[+] NS0: ip link set up dev lo
+[+] NS0: ip link add dev wg0 type wireguard
+[  490.497685] wireguard: wg0: Interface created
+[+] NS0: ip link set wg0 netns wg-test-1076-1
+[+] NS0: ip link add dev wg0 type wireguard
+[  490.576768] wireguard: wg0: Interface created
+[+] NS0: ip link set wg0 netns wg-test-1076-2
+[+] wg genkey
+[+] wg genkey
+[+] wg pubkey
+[+] wg pubkey
+[+] wg genpsk
+[+] NS1: ip addr add 192.168.241.1/24 dev wg0
+[+] NS1: ip addr add fd00::1/24 dev wg0
+[+] NS2: ip addr add 192.168.241.2/24 dev wg0
+[+] NS2: ip addr add fd00::2/24 dev wg0
+[+] NS1: wg set wg0 private-key /dev/fd/63 listen-port 1 peer  
+1Eb46rPrWmtxhAKilAlPfuXpVHIQOpt3di3WEpPkOQ4= preshared-key /dev/fd/62  
+allowed-ips 192.168.241.2/32,fd00::2/128
+[  490.852081] wireguard: wg0: Peer 6 created
+[+] NS2: wg set wg0 private-key /dev/fd/63 listen-port 2 peer  
+hIzK+p/m7yHGVhbJedaZe8kDLURQi0bDY9Rr9a49GhI= preshared-key /dev/fd/62  
+allowed-ips 192.168.241.1/32,fd00::1/128
+[  490.910017] wireguard: wg0: Peer 7 created
+[+] NS1: ip link set up dev wg0
+[+] NS2: ip link set up dev wg0
+[+] NS1: ip link show dev wg0
+[+] NS1: wg set wg0 peer 1Eb46rPrWmtxhAKilAlPfuXpVHIQOpt3di3WEpPkOQ4=  
+endpoint 127.0.0.1:2
+[+] NS2: wg set wg0 peer hIzK+p/m7yHGVhbJedaZe8kDLURQi0bDY9Rr9a49GhI=  
+endpoint 127.0.0.1:1
+[+] NS2: ping -c 10 -f -W 1 192.168.241.1
+PING 192.168.241.1 (192.168.241.1) 56(84) bytes of data.
+.[  491.105139] wireguard: wg0: Sending handshake initiation to peer 7  
+(127.0.0.1:1)
+[  491.108754] wireguard: wg0: Receiving handshake initiation from  
+peer 6 (127.0.0.1:2)
+[  491.108765] wireguard: wg0: Sending handshake response to peer 6  
+(127.0.0.1:2)
+[  491.112220] wireguard: wg0: Keypair 2 created for peer 6
+[  491.114402] wireguard: wg0: Receiving handshake response from peer  
+7 (127.0.0.1:1)
+[  491.114446] wireguard: wg0: Keypair 3 created for peer 7
+--- 192.168.241.1 ping statistics ---
+10 packets transmitted, 10 received, 0% packet loss, time 15ms
+rtt min/avg/max/mdev = 0.350/1.544/10.808/3.089 ms, pipe 2, ipg/ewma  
+1.745/3.616 ms
+[+] NS2: ip -stats link show dev wg0
+[+] NS2: ping -c 10 -f -W 1 192.168.241.1
+PING 192.168.241.1 (192.168.241.1) 56(84) bytes of data.
+
+--- 192.168.241.1 ping statistics ---
+10 packets transmitted, 10 received, 0% packet loss, time 4ms
+rtt min/avg/max/mdev = 0.330/0.427/0.609/0.080 ms, ipg/ewma 0.546/0.464 ms
+[+] NS1: ping -c 10 -f -W 1 192.168.241.2
+PING 192.168.241.2 (192.168.241.2) 56(84) bytes of data.
+
+--- 192.168.241.2 ping statistics ---
+10 packets transmitted, 10 received, 0% packet loss, time 5ms
+rtt min/avg/max/mdev = 0.355/0.484/0.751/0.128 ms, ipg/ewma 0.614/0.550 ms
+[+] NS2: ping6 -c 10 -f -W 1 fd00::1
+PING fd00::1(fd00::1) 56 data bytes
+
+--- fd00::1 ping statistics ---
+10 packets transmitted, 10 received, 0% packet loss, time 5ms
+rtt min/avg/max/mdev = 0.376/0.490/0.732/0.120 ms, ipg/ewma 0.627/0.529 ms
+[+] NS1: ping6 -c 10 -f -W 1 fd00::2
+PING fd00::2(fd00::2) 56 data bytes
+
+--- fd00::2 ping statistics ---
+10 packets transmitted, 10 received, 0% packet loss, time 5ms
+rtt min/avg/max/mdev = 0.409/0.506/0.801/0.106 ms, ipg/ewma 0.662/0.575 ms
+[+] NS2: wait for iperf:5201
+[+] NS2: iperf3 -s -1 -B 192.168.241.2
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+[+] NS1: iperf3 -Z -n 1G -c 192.168.241.2
+Connecting to host 192.168.241.2, port 5201
+Accepted connection from 192.168.241.1, port 52278
+[  6] local 192.168.241.2 port 5201 connected to 192.168.241.1 port 52280
+[  5] local 192.168.241.1 port 52280 connected to 192.168.241.2 port 5201
+[ ID] Interval           Transfer     Bandwidth
+[  6]   0.00-1.00   sec  23.6 MBytes   198 Mbits/sec
+[ ID] Interval           Transfer     Bandwidth       Retr  Cwnd
+[  5]   0.00-1.00   sec  25.0 MBytes   210 Mbits/sec    0    477 KBytes
+^C[  6]   1.00-1.44   sec  11.4 MBytes   216 Mbits/sec
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bandwidth
+[  6]   0.00-1.44   sec  0.00 Bytes  0.00 bits/sec                  sender
+[  6]   0.00-1.44   sec  35.0 MBytes   203 Mbits/sec                  receiver
+iperf3: interrupt - the server has terminated
+[  5]   1.00-1.43   sec  11.0 MBytes   216 Mbits/sec    0    526 KBytes
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bandwidth       Retr
+[  5]   0.00-1.43   sec  36.0 MBytes   212 Mbits/sec    0             sender
+[  5]   0.00-1.43   sec  0.00 Bytes  0.00 bits/sec                  receiver
+iperf3: interrupt - the client has terminated
+[+] NS0: ip link del dev wg0
+[+] NS1: ip link del dev wg0
+[  493.248506] wireguard: wg0: Keypair 2 destroyed for peer 6
+[  493.268504] wireguard: wg0: Peer 6 (127.0.0.1:2) destroyed
+[  493.280524] wireguard: wg0: Interface deleted
+[+] NS2: ip link del dev wg0
+[  493.310507] wireguard: wg0: Keypair 3 destroyed for peer 7
+[  493.325499] wireguard: wg0: Peer 7 (127.0.0.1:1) destroyed
+[  493.341519] wireguard: wg0: Interface deleted
+[+] ip netns del wg-test-1076-1
+[+] ip netns del wg-test-1076-2
+[+] ip netns del wg-test-1076-0
+
+
+
+
+EXTRA INFO:
+
+
+
+[root@cubox tests]# uname -a
+Linux cubox 4.13.4-200.fc26.armv7hl #1 SMP Thu Sep 28 22:34:11 UTC  
+2017 armv7l armv7l armv7l GNU/Linux
+
+[root@cubox tests]# cat /proc/cpuinfo
+processor       : 0-3
+model name      : ARMv7 Processor rev 10 (v7l)
+BogoMIPS        : 6.00
+Features        : half thumb fastmult vfp edsp thumbee neon vfpv3 tls vfpd32
+CPU implementer : 0x41
+CPU architecture: 7
+CPU variant     : 0x2
+CPU part        : 0xc09
+CPU revision    : 10
+
+Hardware        : Freescale i.MX6 Quad/DualLite (Device Tree)
+Revision        : 0000
+Serial          : 0000000000000000
+
+
+[root@cubox tests]# gcc -v
+Using built-in specs.
+COLLECT_GCC=gcc
+COLLECT_LTO_WRAPPER=/usr/libexec/gcc/armv7hl-redhat-linux-gnueabi/7/lto-wrapper
+Target: armv7hl-redhat-linux-gnueabi
+Configured with: ../configure --enable-bootstrap  
+--enable-languages=c,c++,objc,obj-c++,fortran,ada,go,lto --prefix=/usr  
+--mandir=/usr/share/man --infodir=/usr/share/info  
+--with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-shared  
+--enable-threads=posix --enable-checking=release --enable-multilib  
+--with-system-zlib --enable-__cxa_atexit  
+--disable-libunwind-exceptions --enable-gnu-unique-object  
+--enable-linker-build-id --with-gcc-major-version-only  
+--with-linker-hash-style=gnu --enable-plugin --enable-initfini-array  
+--with-isl --disable-libmpx --enable-gnu-indirect-function  
+--disable-sjlj-exceptions --with-tune=cortex-a8 --with-arch=armv7-a  
+--with-float=hard --with-fpu=vfpv3-d16 --with-abi=aapcs-linux  
+--build=armv7hl-redhat-linux-gnueabi
+Thread model: posix
+gcc version 7.2.1 20170915 (Red Hat 7.2.1-2) (GCC)
+
+
+Greats,
+
+René van Dorst.
