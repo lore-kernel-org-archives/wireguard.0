@@ -1,30 +1,20 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: rwm.pc.repair@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 56817e94
- for <wireguard@lists.zx2c4.com>; Thu, 5 Oct 2017 12:53:36 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4a5ad192
- for <wireguard@lists.zx2c4.com>; Thu, 5 Oct 2017 12:53:36 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d23411e6
- for <wireguard@lists.zx2c4.com>; Thu, 5 Oct 2017 13:12:39 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 4d8c6524
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>; Thu, 5 Oct 2017 13:12:39 +0000 (UTC)
-Received: by mail-oi0-f49.google.com with SMTP id u130so24573060oib.11
- for <wireguard@lists.zx2c4.com>; Thu, 05 Oct 2017 06:22:45 -0700 (PDT)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 32fecde3
+ for <wireguard@lists.zx2c4.com>; Fri, 6 Oct 2017 00:13:12 +0000 (UTC)
+Received: from mail-qt0-f171.google.com (mail-qt0-f171.google.com
+ [209.85.216.171])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d26fd486
+ for <wireguard@lists.zx2c4.com>; Fri, 6 Oct 2017 00:13:12 +0000 (UTC)
+Received: by mail-qt0-f171.google.com with SMTP id v28so19881898qtv.1
+ for <wireguard@lists.zx2c4.com>; Thu, 05 Oct 2017 17:42:25 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9rRo3jeKhdD-6JuWijZLnSdoGc_POx-jrELWgdm4Um6wA@mail.gmail.com>
-References: <CY1PR0501MB157904D69DD3E95529A3E04AC4730@CY1PR0501MB1579.namprd05.prod.outlook.com>
- <CAHmME9qQTch=-yCfHr0xTBLk+bHBWw675WEiY8+BM58_2vq+Ug@mail.gmail.com>
- <CY1PR0501MB15797EB039F2510EA00B0303C4700@CY1PR0501MB1579.namprd05.prod.outlook.com>
- <CAHmME9rRo3jeKhdD-6JuWijZLnSdoGc_POx-jrELWgdm4Um6wA@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 5 Oct 2017 15:22:43 +0200
-Message-ID: <CAHmME9rM7vwAgZvxmtfHS0vSsN3H-6i1Frx-YetgJWVD9L1Bmw@mail.gmail.com>
-Subject: Re: CentOS kernel module build failure
-To: Andrey Petrov <apetrov@vmware.com>
-Content-Type: text/plain; charset="UTF-8"
-Cc: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+From: Ryan McGee <rwm.pc.repair@gmail.com>
+Date: Thu, 5 Oct 2017 17:41:44 -0700
+Message-ID: <CANcRkik-gjJqz89FFtAXPC2_ixi8uZv6wDTTOOsjJqNieiDPKg@mail.gmail.com>
+Subject: wireguard bypass question
+To: wireguard@lists.zx2c4.com
+Content-Type: multipart/alternative; boundary="94eb2c0b79564a8e95055ad61db6"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -34,5 +24,44 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Looks like you'll also need:
-https://git.zx2c4.com/WireGuard/patch/?id=e3b70f72236c26cdda6f7538d7a5854c1d0d43f3
+--94eb2c0b79564a8e95055ad61db6
+Content-Type: text/plain; charset="UTF-8"
+
+Hello,
+
+Sorry if this has been asked before. I recently installed LED on my router
+and setup a wireguard tunnel to the Mullvad VPN. Wireguard is amazingly
+fast!
+
+So the issue that I am hoping for some direction on. The Mullvad VPN
+servers are blocked by netflix. I'm trying to figure out how to have the
+netflix domain bypass the wireguard tunnel and go straight through my ISP.
+I found an app for lede called vpnbypass but it seems to have been designed
+for OpenVPN which I'm assuming does things very differently than wireguard.
+
+So how would I go about making a split tunnel to send netlix domain traffic
+through my ISP instead of the wireguard tunnel? Or is this possible?
+
+Thanks and have an awesome day!
+
+--94eb2c0b79564a8e95055ad61db6
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><span style=3D"font-size:12.8px">Hello,</span><div style=
+=3D"font-size:12.8px"><br></div><div style=3D"font-size:12.8px">Sorry if th=
+is has been asked before. I recently installed LED on my router and setup a=
+ wireguard tunnel to the Mullvad VPN. Wireguard is amazingly fast!</div><di=
+v style=3D"font-size:12.8px"><br></div><div style=3D"font-size:12.8px">So t=
+he issue that I am hoping for some direction on. The Mullvad VPN servers ar=
+e blocked by netflix. I&#39;m trying to figure out how to have the netflix =
+domain bypass the wireguard tunnel and go straight through my ISP. I found =
+an app for lede called vpnbypass but it seems to have been designed for Ope=
+nVPN which I&#39;m assuming does things very differently than wireguard.</d=
+iv><div style=3D"font-size:12.8px"><br></div><div style=3D"font-size:12.8px=
+">So how would I go about making a split tunnel to send netlix domain traff=
+ic through my ISP instead of the wireguard tunnel? Or is this possible?</di=
+v><div style=3D"font-size:12.8px"><br></div><div style=3D"font-size:12.8px"=
+>Thanks and have an awesome day!</div></div>
+
+--94eb2c0b79564a8e95055ad61db6--
