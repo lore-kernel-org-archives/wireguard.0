@@ -1,24 +1,34 @@
-Return-Path: opensource@vdorst.com
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f279c8fb
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 69607864
  for <wireguard@lists.zx2c4.com>;
- Wed, 11 Oct 2017 13:00:34 +0000 (UTC)
-Received: from smtp02.bhosted.nl (smtp02.bhosted.nl [94.124.121.13])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6764010b
+ Wed, 11 Oct 2017 13:16:31 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b09cf917
  for <wireguard@lists.zx2c4.com>;
- Wed, 11 Oct 2017 13:00:34 +0000 (UTC)
-Date: Wed, 11 Oct 2017 13:30:24 +0000
-Message-ID: <20171011133024.Horde.Lj1Pe-ln1REown-ec1q9f92@www.vdorst.com>
-From: =?utf-8?b?UmVuw6k=?= van Dorst <opensource@vdorst.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: Re: possible irq lock inversion dependency detected
+ Wed, 11 Oct 2017 13:16:31 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9d85802c
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 11 Oct 2017 13:35:34 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 4252c95d
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 11 Oct 2017 13:35:34 +0000 (UTC)
+Received: by mail-oi0-f41.google.com with SMTP id f66so3135047oib.2
+ for <wireguard@lists.zx2c4.com>; Wed, 11 Oct 2017 06:46:25 -0700 (PDT)
+MIME-Version: 1.0
+In-Reply-To: <20171011133024.Horde.Lj1Pe-ln1REown-ec1q9f92@www.vdorst.com>
 References: <20171010185133.Horde.g9yJlkVpxW5Gk-qJumftGF_@www.vdorst.com>
  <CAHmME9rtGod=Jw-vGKnUfPwDh+16zP1MjNr57+8k5PUVMhxtYA@mail.gmail.com>
  <20171011124935.Horde.WT_JO7z6wRK6_tlxjtJxnSr@www.vdorst.com>
  <CAHmME9pSeLf7WuWj4mB7qhTstTPEX7cTcwyGL67F8CDSbqjEjw@mail.gmail.com>
-In-Reply-To: <CAHmME9pSeLf7WuWj4mB7qhTstTPEX7cTcwyGL67F8CDSbqjEjw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed; DelSp=Yes
-MIME-Version: 1.0
+ <20171011133024.Horde.Lj1Pe-ln1REown-ec1q9f92@www.vdorst.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 11 Oct 2017 15:46:23 +0200
+Message-ID: <CAHmME9pbwA5_HJL1mEsDodu=0nyS6HCoGfj3WXa4Ki-yyH3qHQ@mail.gmail.com>
+Subject: Re: possible irq lock inversion dependency detected
+To: =?UTF-8?Q?Ren=C3=A9_van_Dorst?= <opensource@vdorst.com>
+Content-Type: text/plain; charset="UTF-8"
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -29,25 +39,8 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Quoting "Jason A. Donenfeld" <Jason@zx2c4.com>:
+Hi Ren=C3=A9,
 
-> Hi René,
->
-> I'm having trouble parsing your message. You wrote:
->
->> So I am not sure if you patch works or not.
->> Because it was not that easy to reproduce the last one.
->
-> Do you mean to imply that you could NOT reproduce it with my patch?
-> But that you could reproduce it WITHOUT the patch?
->
-> Jason
+Great, I'll ship it! Thanks for debugging.
 
-I was trying to reproduce the bug before the patch.
-I could not reproduce the first one. Only hitting the second one 3 times.
-
-After the patch I could not reproduce any of them.
-
-Greats,
-
-René
+Jason
