@@ -1,19 +1,31 @@
-Return-Path: bruno@wolff.to
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 09dbe165
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 600b1244
  for <wireguard@lists.zx2c4.com>;
- Fri, 20 Oct 2017 17:47:01 +0000 (UTC)
-Received: from wolff.to (wolff.to [98.103.208.27])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with SMTP id 365128a7
+ Fri, 20 Oct 2017 18:01:45 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 74b7d0bb
  for <wireguard@lists.zx2c4.com>;
- Fri, 20 Oct 2017 17:47:00 +0000 (UTC)
-Date: Fri, 20 Oct 2017 12:39:41 -0500
-From: Bruno Wolff III <bruno@wolff.to>
-To: wireguard@lists.zx2c4.com
-Subject: crypto routing with subnets?
-Message-ID: <20171020173941.GA23750@wolff.to>
+ Fri, 20 Oct 2017 18:01:45 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a7cb9c79
+ for <wireguard@lists.zx2c4.com>;
+ Fri, 20 Oct 2017 18:01:44 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id b77eb74e
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Fri, 20 Oct 2017 18:01:44 +0000 (UTC)
+Received: by mail-oi0-f45.google.com with SMTP id w197so21298799oif.6
+ for <wireguard@lists.zx2c4.com>; Fri, 20 Oct 2017 11:02:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+In-Reply-To: <20171020173941.GA23750@wolff.to>
+References: <20171020173941.GA23750@wolff.to>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Fri, 20 Oct 2017 20:02:43 +0200
+Message-ID: <CAHmME9rf2+S_pJqpGPPq+BXzMWTVyF92W2bVT904teHhVhJHoQ@mail.gmail.com>
+Subject: Re: crypto routing with subnets?
+To: Bruno Wolff III <bruno@wolff.to>
+Content-Type: text/plain; charset="UTF-8"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -23,39 +35,19 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-I want to try to route a local network over wireguard through my router 
-while not breaking a direct connection from my server while I'm testing 
-the new setup. And I'm wondering if I'm going to need two wg devices or 
-if I can use one?
+Hi Bruno,
 
-On the destination the config would be something like:
-[peer]
-PublicKey = I37b0D0JbbBrSyH/oHjdMvL0P3m8kZQ5RiJ0Dha3ClU=
-    Endpoint = 98.103.208.27:992
-    AllowedIPs = 192.168.7.1/32
-    PersistentKeepalive = 25
-[peer]
-PublicKey = I37b0D0JbbBrSyH/oHjdMvL0P3m8kZQ5RiJ0Dha3ClU=
-    Endpoint = 98.103.208.26:992
-    AllowedIPs = 192.168.0.0/16
-    PersistentKeepalive = 25
+Fortunately the inquires of this email are things that you could
+figure out simply by trying, so if you want to learn-by-doing, you can
+stop reading here and finish reading afterward.
 
-It seems like this should work, though the public keys would be different 
-in the real setup. (The second peer doesn't exist yet, so I can't use its 
-public key in the example.)
+Here are the solutions:
 
-So my main question is will traffic to 192.168.7.1 go to the first peer even 
-though it is covered by the network in the second peer or do I need to 
-make a wg0 and wg1 and do the routing at the interface level?
+1. A peer is its public key, which means you can't have two different
+peers with the same key, since they'd be the same peer. In essence
+you're asking for a==a&&a!=a, which is always false.
 
-If I actually left the public keys the same, would this still work? (The 
-securtity domain is nearly the same as the hardware is in the same place.) 
-I don't think it could work as I think this would break tracking what IP 
-address was last used by each peer.
+2. Traffic will always go to the most specific route, which means the
+/32 will take precedence over the /16.
 
-Eventually I want to do something a bit more complicated, because I will only 
-want devices that connected to my router with wireguard (i.e. my devices, 
-not guests on my network) to be able to send packets over that tunnel. 
-But for now traffic going through the tunnel doesn't get any access where I 
-would be worried about guest traffic using the tunnel. At that time the server 
-and router peer networks will be disjoint.
+Jason
