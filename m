@@ -1,26 +1,28 @@
-Return-Path: yszhou4tech@gmail.com
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bd2166f1
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 16bde0fb
  for <wireguard@lists.zx2c4.com>;
- Mon, 23 Oct 2017 09:51:39 +0000 (UTC)
-Received: from mail-yw0-f172.google.com (mail-yw0-f172.google.com
- [209.85.161.172])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f8515a47
+ Wed, 25 Oct 2017 22:42:12 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dd7432a9
  for <wireguard@lists.zx2c4.com>;
- Mon, 23 Oct 2017 09:51:39 +0000 (UTC)
-Received: by mail-yw0-f172.google.com with SMTP id k3so11509261ywk.8
- for <wireguard@lists.zx2c4.com>; Mon, 23 Oct 2017 02:52:59 -0700 (PDT)
+ Wed, 25 Oct 2017 22:42:12 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cf7ba06f
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 25 Oct 2017 22:42:12 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 9e2c03cb
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 25 Oct 2017 22:42:12 +0000 (UTC)
+Received: by mail-oi0-f53.google.com with SMTP id j126so2673488oib.8
+ for <wireguard@lists.zx2c4.com>; Wed, 25 Oct 2017 15:43:50 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9pA5vkCYsdFDHeXjYV=HFRm1aAFJGT1RsjuSrpZ8jZiog@mail.gmail.com>
-References: <CAECwjAgRyK0T3vtBUzR1P-d--vdEDS=Jj-nFWHx1=7ivEd6Zvw@mail.gmail.com>
- <CAHmME9pA5vkCYsdFDHeXjYV=HFRm1aAFJGT1RsjuSrpZ8jZiog@mail.gmail.com>
-From: Yousong Zhou <yszhou4tech@gmail.com>
-Date: Mon, 23 Oct 2017 17:52:37 +0800
-Message-ID: <CAECwjAhh-mhGvEAW-9cXSSHmJJkD4m0xUA9ac3TP7PKWXFWj-w@mail.gmail.com>
-Subject: Re: Flood ping can cause oom when handshake fails
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 26 Oct 2017 00:43:49 +0200
+Message-ID: <CAHmME9q0m1rEfc_CFsb3qv6oQ97QOjtPDxe6yY+D+0aAApE9Yg@mail.gmail.com>
+Subject: Fixing wg-quick's DNS= directive with a hatchet
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -32,78 +34,70 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 
 Hi,
 
-Sorry for the late reply to the issue.  I have been away from the
-problematic device for a while and only found time and finally decided
-to debug this further just a while ago...
+A sensible way to manage DNS on a distribution is via openresolv's
+resolvconf(8) [1]. Various networking utilities can call resolvconf
+with various arguments, and resolvconf will handle everything.
 
-The oom issue caused by staged packets is now gone with the change of
-queue length from 1024 to 128.
+Resolvconf offers two useful options: metric via -m and exclusive via
+-x. The metric options imply controls the order of entries in the
+subsequent /etc/resolv.conf. The exclusive option sets the provided
+nameserver to be the _only_ one listed in /etc/resolv.conf. This
+general system works great and is what wg-quick(8) uses at the moment.
 
-The handshake failure issue persists but it's more an issue of the
-network infrastructure than the wireguard itself.  Previously I
-thought maybe the handshake packets were actually not on the wire
-because maybe wireguard could not work with the switch and vlan
-setting, but I could not confirm that guess because I cannot observe
-traffics on the intermediate devices.
+Debian (and by extension Ubuntu), however, ship with a butchered
+resolvconf [2] that silently ignores the -m and -x options. Instead,
+Debian's resolvconf orders the entries of /etc/resolv.conf according
+to some pre-defined interface naming heuristics, and does not allow
+for an exclusive mode at all. wg-quick thus uses openresolv's -m 0 and
+-x arguments, described above, but does so for an interface called
+"tun.wg0". The "tun." prefix tricks Debian's resolvconf into ordering
+WireGuard entries first, but still not exclusively.
 
-I just captured and replayed the udp handshake packets with varying
-TTL settings (with corrected ip checksum), it seems that some
-intermediate devices just dropped these packets silently!!!  Well, the
-still more annoying part is that it's not a deterministic behaviour,
-other traffics like tcp and icmp flows through it just fine most of
-the time and the udp port 21841 i am using for wireguard fails more
-frequently.
+Meanwhile, Fedora does not ship resolvconf at all, and instead either
+uses NetworkManager or dhclient-script, depending on the configuration
+of a variable inside of some file in /etc/sysconfig/network-scripts/.
+I haven't really looked at how to coherently interface with all the
+possibilities, and I'm kind of reluctant to look.
 
-I guess stealthy channel is not part of the game with wireguard at the
-moment...  Thanks for the good work though, really awesome.
+So I have three options: 1) require openresolv, 2) punt the issue to
+distro package managers, by making wg-quick "source" a file in
+/usr/lib/wg-quick/dns.bash that provides the distro-specific
+DNS-setting function, or 3) the hatchet, described below.
 
-Regards,
-                yousong
+Before I describe the hatchet, though, it might be worthwhile to
+remind ourselves of the three goals of DNS setting in this
+environment: a) be the exclusive DNS entry, b) restore the previous
+settings when the wireguard interface is removed, and c) not allow
+other things on the system (like roving dhcp daemons) to overwrite our
+settings.
+
+The hatchet works as follows. On interface addition:
+
+# echo nameserver 1.2.3.4 > /etc/resolv.conf.wg-quick.wg0
+# [ -f /etc/resolv.conf ] || touch /etc/resolv.conf
+# mount -o ro --bind /etc/resolv.conf.wg-quick.wg0 /etc/resolv.conf
+# unlink /etc/resolv.conf.wg-quick.wg0
+
+On interface removal:
+
+# umount /etc/resolv.conf
+
+This achieves all goals. Goal (a) is achieved because we're mounting
+over the existing /etc/resolv.conf, so we blow away old entries. Goal
+(b) is achieved because unmounting reveals the original file just
+below it. Goal (c) is achieved because we're mounting as read-only; we
+can't even remove the file without unmounting.
+
+So, I'm leaning over going with (3) the hatchet rather than (2) the
+distros, because I think this will likely work more universally.
+However, it's a hatchet. And hatchets have sharp dangerous blades, and
+Linux is not the rewarding bush terrain of Gary Paulsen.
+
+Can anybody think of any potential issues with this?
+
+Thanks,
+Jason
 
 
-On 22 September 2017 at 21:19, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
-> Hi Yousong,
->
-> Thanks for the report.
->
-> On Fri, Sep 22, 2017 at 2:58 PM, Yousong Zhou <yszhou4tech@gmail.com> wrote:
->> The first issue is that occasionally wireguard failed to send
->> handshake initiation packets to the remote.  I got to this conclusion
->> by two observations
->>  - Tearing down then bringing up ("ifup air") the local wireguard
->> device did not trigger the update of "latest handshake" timestamp on
->> the remote
->
->
-> The handshake will not actually occur until you try to send data over
-> the interface. So after bringing the interface up, send a ping. Then
-> you'll have the handshake. If you'd like the handshake to happen
-> immediately and for packets in general to persistently be sent, to,
-> for example, keep NAT mappings alive, there's the persistent-keepalive
-> option. See the wg(8) man page for details.
->
->>  - Wireguard packets can be captured on eth0.1 but not on the remote
->
-> I'm not sure I understood this point. Can you elaborate?
->
->> The second issue is that when handshake fails, flood ping traffic that
->> was expected to be forwarded through the wireguard interface can cause
->> oom and hang the device to death.  There is a [kworker] process taking
->> up high cpu usage.
->
-> That's very interesting. Here's what I suspect happening: before
-> there's a handshake, outgoing packets are queued up to be sent for
-> when a handshake does occur. Right now I allow queueing up a whopping
-> 1024 packets, before they're rotated out and freed LIFO. This is
-> obviously silly for low-ram situations like yours, and I should make
-> that mechanism a bit smarter. I'll do that for the next snapshot. I
-> assume that the high CPU kworker is a last minute attempt at memory
-> compaction, or something of that sort. However, it'd be good to know
-> -- could you find more information about that process? Perhaps
-> /proc/pid/stack or related things in there?
->
-> Additionally, I see that you're running 20170907, which is an older
-> snapshot. If you update to the newer one (20170918), I'd be interested
-> to learn if the behavior is different.
->
-> Jason
+[1] https://roy.marples.name/projects/openresolv
+[2] https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=860564
