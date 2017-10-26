@@ -1,33 +1,24 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: geokozey@mailfence.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 853f2201
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 85d22b5d
  for <wireguard@lists.zx2c4.com>;
- Thu, 26 Oct 2017 17:23:16 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d9d1f4df
+ Thu, 26 Oct 2017 19:56:36 +0000 (UTC)
+Received: from wilbur.contactoffice.com (wilbur.contactoffice.com
+ [212.3.242.68])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 63c4bfb9
  for <wireguard@lists.zx2c4.com>;
- Thu, 26 Oct 2017 17:23:16 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 90a66145
- for <wireguard@lists.zx2c4.com>;
- Thu, 26 Oct 2017 17:23:16 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 7bc5ec6e
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Thu, 26 Oct 2017 17:23:15 +0000 (UTC)
-Received: by mail-oi0-f43.google.com with SMTP id h6so6885533oia.10
- for <wireguard@lists.zx2c4.com>; Thu, 26 Oct 2017 10:24:59 -0700 (PDT)
+ Thu, 26 Oct 2017 19:56:36 +0000 (UTC)
+Received: from ichabod.co-bxl (ichabod.co-bxl [10.2.0.36])
+ by wilbur.contactoffice.com (Postfix) with ESMTP id B5BC02860
+ for <wireguard@lists.zx2c4.com>; Thu, 26 Oct 2017 21:58:20 +0200 (CEST)
+Message-ID: <2027941193.391349.1509047899053@ichabod.co-bxl>
 MIME-Version: 1.0
-In-Reply-To: <3a761178-19bc-1d01-b6a8-9fb801312d47@solidadmin.com>
-References: <CAHmME9q0m1rEfc_CFsb3qv6oQ97QOjtPDxe6yY+D+0aAApE9Yg@mail.gmail.com>
- <3a761178-19bc-1d01-b6a8-9fb801312d47@solidadmin.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 26 Oct 2017 19:24:58 +0200
-Message-ID: <CAHmME9oSB-wS7eatR3aDtzNLo3Fqe1ksg4si2Q9-XM1FGF3Aeg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
 Subject: Re: Fixing wg-quick's DNS= directive with a hatchet
-To: Joe Doss <joe@solidadmin.com>
-Content-Type: text/plain; charset="UTF-8"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
- Max Moser <e1326252@student.tuwien.ac.at>
+From: Geo Kozey <geokozey@mailfence.com>
+To: wireguard@lists.zx2c4.com
+Date: Thu, 26 Oct 2017 21:58:19 +0200 (CEST)
+Reply-To: Geo Kozey <geokozey@mailfence.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -37,12 +28,13 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Joe,
+On Thu, 26 Oct 2017, Jason A. Donenfeld wrote:
 
-Indeed you're right. A systemd-networkd integration is in progress. A
-student (CCd) has several times promised to write a networkmanager
-plugin, but has continually flaked out, so still no progress there. If
-somebody else on this list is interested in doing that, that'd be
-nice.
+>Before I describe the hatchet, though, it might be worthwhile to
+>remind ourselves of the three goals of DNS setting in this
+>environment: a) be the exclusive DNS entry, b) restore the previous
+>settings when the wireguard interface is removed, and c) not allow
+>other things on the system (like roving dhcp daemons) to overwrite our
+>settings.
 
-Jason
+What about usecases where more nameservers are needed, i.e. local nameserver used for caching, adblocking or whatever?
