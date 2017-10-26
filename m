@@ -1,32 +1,20 @@
 Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4f0ef1ba
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id db228822
  for <wireguard@lists.zx2c4.com>;
- Thu, 26 Oct 2017 00:54:11 +0000 (UTC)
+ Thu, 26 Oct 2017 01:31:12 +0000 (UTC)
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e17443c6
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 041c80bf
  for <wireguard@lists.zx2c4.com>;
- Thu, 26 Oct 2017 00:54:11 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1b345bfe
- for <wireguard@lists.zx2c4.com>;
- Thu, 26 Oct 2017 00:54:11 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 78761060
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Thu, 26 Oct 2017 00:54:11 +0000 (UTC)
-Received: by mail-oi0-f48.google.com with SMTP id h200so3067023oib.4
- for <wireguard@lists.zx2c4.com>; Wed, 25 Oct 2017 17:55:50 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <CAKXLc7fv-d2sswAUcVA7n2oedgZZfdqO1WmQxi=yvzu6rQB9mQ@mail.gmail.com>
-References: <CAHmME9q0m1rEfc_CFsb3qv6oQ97QOjtPDxe6yY+D+0aAApE9Yg@mail.gmail.com>
- <CAKXLc7fv-d2sswAUcVA7n2oedgZZfdqO1WmQxi=yvzu6rQB9mQ@mail.gmail.com>
+ Thu, 26 Oct 2017 01:31:12 +0000 (UTC)
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 26 Oct 2017 02:55:49 +0200
-Message-ID: <CAHmME9pdCnrfWBymOvhkff8coFn28jPAx6-Ss8yAPgVMKTDiyQ@mail.gmail.com>
-Subject: Re: Fixing wg-quick's DNS= directive with a hatchet
-To: Kalin KOZHUHAROV <me.kalin@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+To: wireguard@lists.zx2c4.com,
+	Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+Subject: [PATCH] wg-quick: use bind mount for DNS when no openresolv
+Date: Thu, 26 Oct 2017 03:32:40 +0200
+Message-Id: <20171026013240.13503-1-Jason@zx2c4.com>
+In-Reply-To: <CAHmME9q0m1rEfc_CFsb3qv6oQ97QOjtPDxe6yY+D+0aAApE9Yg@mail.gmail.com>
+References: <CAHmME9q0m1rEfc_CFsb3qv6oQ97QOjtPDxe6yY+D+0aAApE9Yg@mail.gmail.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -36,40 +24,63 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Thu, Oct 26, 2017 at 1:37 AM, Kalin KOZHUHAROV <me.kalin@gmail.com> wrote:
-> And can you briefly remind me why do you need to bother with the
-> resolv settings?
-> May be this is only valid for "use-only-VPN", e.g. laptop in China?
+Posting this to the mailing list for review. Based on the thread
+entitled, "Fixing wg-quick's DNS= directive with a hatchet". Comments
+are very welcome.
 
-Sometimes people use a VPN to access an intranet with its own naming
-scheme. For example, when you're at my house, if you do a DNS lookup
-for "thinkpad", you get my laptop. When I wireguard in from the road,
-sometimes I'll do things like `ssh odroid`, which uses my home
-resolver to get the home IP of my odroid. This is possible because I
-have `DNS = 10.0.0.8` or whatever in my wireguard config file.
+---
+ src/tools/wg-quick.bash | 28 +++++++++++++++++++++++++---
+ 1 file changed, 25 insertions(+), 3 deletions(-)
 
-> * See if there is another mount, before doing it, i.e. check for the
-> hatchet before using it?
-
-I guess the idea here is that since unmounting can only be done in
-reverse order, yet removing interfaces can be done in any order,
-allowing multiply-stacked resolv.conf mounts would fail to unwind in
-the correct way. That makes sense.
-
-Fortunately, by calling `unlink(2)` on the file after I bind mount it,
-subsequent bind mounts on top fail to work, because they can't resolve
-that dentry any more. The underlying reasoning behind that is caught
-up in the insane fs/namespace.c voodoo magic that probably only Al
-Viro understands.
-
-> * Not sure anyone will hit the corner case of needing to umount /etc
-> while wireguard is running, but who knows.
-
-That's a good point.
-
-Another potential snag:
-
-- If other daemons try to update the old file while it's being mounted
-over, it won't be able to be updated, so when the user finally
-unmounts when removing the wireguard interface, the resolv.conf could
-be stale. Probably this isn't a real concern, but it is a possibility.
+diff --git a/src/tools/wg-quick.bash b/src/tools/wg-quick.bash
+index def78af..2fc19f1 100755
+--- a/src/tools/wg-quick.bash
++++ b/src/tools/wg-quick.bash
+@@ -131,11 +131,33 @@ set_mtu() {
+ }
+ 
+ set_dns() {
+-	[[ ${#DNS[@]} -eq 0 ]] || printf 'nameserver %s\n' "${DNS[@]}" | cmd resolvconf -a "tun.$INTERFACE" -m 0 -x
++	[[ ${#DNS[@]} -gt 0 ]] || return 0
++
++	if [[ $(resolvconf --version 2>/dev/null) == openresolv\ * ]]; then
++		printf 'nameserver %s\n' "${DNS[@]}" | cmd resolvconf -a "$INTERFACE" -m 0 -x
++	else
++		local our_resolv="/etc/resolv.conf.wg-quick.$INTERFACE"
++		[[ -e /etc/resolv.conf ]] || touch /etc/resolv.conf
++		{ echo "# This file was generated by wg-quick(8) for use with"
++		  echo "# the WireGuard interface $INTERFACE. It cannot be"
++		  echo "# removed or altered directly. You may remove this file"
++		  echo "# by running \`wg-quick down $INTERFACE\`, or if that"
++		  echo "# poses problems, run \`unmount /etc/resolv.conf\`."
++		  printf 'nameserver %s\n' "${DNS[@]}"
++		} > "$our_resolv"
++		cmd mount -Br "$our_resolv" /etc/resolv.conf || { unlink "$our_resolv"; false; }
++		unlink "$our_resolv"
++	fi
+ }
+ 
+ unset_dns() {
+-	[[ ${#DNS[@]} -eq 0 ]] || cmd resolvconf -d "tun.$INTERFACE"
++	[[ ${#DNS[@]} -gt 0 ]] || return 0
++
++	if [[ $(resolvconf --version 2>/dev/null) == openresolv\ * ]]; then
++		cmd resolvconf -d "$INTERFACE"
++	else
++		cmd umount /etc/resolv.conf
++	fi
+ }
+ 
+ add_route() {
+@@ -254,8 +276,8 @@ cmd_down() {
+ 	[[ " $(wg show interfaces) " == *" $INTERFACE "* ]] || die "\`$INTERFACE' is not a WireGuard interface"
+ 	execute_hooks "${PRE_DOWN[@]}"
+ 	[[ $SAVE_CONFIG -eq 0 ]] || save_config
+-	unset_dns
+ 	del_if
++	unset_dns
+ 	execute_hooks "${POST_DOWN[@]}"
+ }
+ 
+-- 
+2.14.2
