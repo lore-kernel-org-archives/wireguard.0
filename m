@@ -1,36 +1,22 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: luci@createc.ro
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5515ff00
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bd2a7b40
  for <wireguard@lists.zx2c4.com>;
- Fri, 27 Oct 2017 17:13:21 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c3f26bf6
+ Fri, 27 Oct 2017 17:21:52 +0000 (UTC)
+Received: from mail.crimel.ro (109.166.220.71 [109.166.220.71])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8b33606b
  for <wireguard@lists.zx2c4.com>;
- Fri, 27 Oct 2017 17:13:21 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9d0841e2
- for <wireguard@lists.zx2c4.com>;
- Fri, 27 Oct 2017 17:13:19 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id de00267a
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Fri, 27 Oct 2017 17:13:18 +0000 (UTC)
-Received: by mail-oi0-f52.google.com with SMTP id f66so11896940oib.2
- for <wireguard@lists.zx2c4.com>; Fri, 27 Oct 2017 10:15:10 -0700 (PDT)
+ Fri, 27 Oct 2017 17:21:52 +0000 (UTC)
+Subject: Fwd: wg-quick add_route
+References: <fe5fcf1b-a7d1-6f6c-1561-4b1b1fa4e326@createc.ro>
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: Lucian Cristian <luci@createc.ro>
+Message-ID: <079f400c-a2ed-9f11-c8e1-a7a7da1074b9@createc.ro>
+Date: Fri, 27 Oct 2017 20:23:45 +0300
 MIME-Version: 1.0
-In-Reply-To: <92b6b9c5-b07c-52fa-a72a-0fc2dcc253bc@solidadmin.com>
-References: <CAHmME9q0m1rEfc_CFsb3qv6oQ97QOjtPDxe6yY+D+0aAApE9Yg@mail.gmail.com>
- <3a761178-19bc-1d01-b6a8-9fb801312d47@solidadmin.com>
- <CAHmME9q3g3622k6C+pcvb_EpA9NdedTmmE59vohUR3nF3fyuvg@mail.gmail.com>
- <44ac12fe-685b-730e-8afd-e4081daf038d@solidadmin.com>
- <CAHmME9oSNNG7-CrC5Emuvi33JD=PBD4rXkwoJABnUcn6-oh6yg@mail.gmail.com>
- <92b6b9c5-b07c-52fa-a72a-0fc2dcc253bc@solidadmin.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 27 Oct 2017 19:15:08 +0200
-Message-ID: <CAHmME9pn977yhsu-rVdR-Mz+ZnsrUaxjQYxc2SveYL9zKNXB4w@mail.gmail.com>
-Subject: Re: Fixing wg-quick's DNS= directive with a hatchet
-To: Joe Doss <joe@solidadmin.com>
-Content-Type: text/plain; charset="UTF-8"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+In-Reply-To: <fe5fcf1b-a7d1-6f6c-1561-4b1b1fa4e326@createc.ro>
+Content-Type: multipart/alternative;
+ boundary="------------831C8B7CC64EF3DC525EC3B0"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -40,43 +26,118 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Fri, Oct 27, 2017 at 5:38 PM, Joe Doss <joe@solidadmin.com> wrote:
->
-> Don't let small amount of WG users that are rude and ignorant push the
-> project around. It's not the project's fault that they don't understand how
-> to install resolvconf or manage their own DNS if wg-quick doesn't work. This
-> isn't me saying that we shouldn't make it better. We should and we will. It
-> is just going to take time.
+This is a multi-part message in MIME format.
+--------------831C8B7CC64EF3DC525EC3B0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Actually, the problem is that there's no resolvconf of any kind on
-Fedora, and this is what wg-quick uses. Thus wg-quick doesn't work
-with Fedora, yet we ship packages for Fedora with wg-quick. So:
-there's a problem that we need to work out. I take responsibility for
-it and I don't blame the users.
+coming back with this
 
-> If you feel this is super important and you want to ship a hacky solution to
-> fix then do it.
-> It's a temp solution for a problem that needs a lot more packaging and dev
-> time to fix correctly for every distro.
+is ok if I make a patch to add an option for this situation ?
 
-Alright. So in that case, I guess ship the hatchet as a patch in the
-RPM, and later when you have time, you can investigate if there's
-actually a proper Fedora way of doing things. Likewise Martin can do
-the same with OpenSUSE.
+keep the default as it is and if the let's say NOT_DEFAULT=true, to skip 
+the add_route or something like this
 
-(Daniel and Egbert seem mostly okay with the butchered resolvconf in
-their distros; at least they don't see any reason to change things,
-since it mostly works, and users there at least have the choice of
-somehow installing openresolv need be.)
+Regards!
+-------- Forwarded Message --------
+Subject: 	wg-quick add_route
+Date: 	Wed, 12 Jul 2017 20:53:01 +0300
+From: 	Lucian Cristian <luci@createc.ro>
+To: 	WireGuard mailing list <wireguard@lists.zx2c4.com>, jason A. 
+Donenfeld <Jason@zx2c4.com>
 
-> I
-> manage my own DNS because I don't have a fancy NetworkManager drop down in
-> GNOME to do it for me... at least not yet. ;)
 
-Sounds like a fun project coming up...
 
-> With that all said, I don't think the hatchet solution is great.
-> have this issue fixed because users are super frustrated then do it for
-> now and we can fix it later with the right way to do things in Fedora.
+Hi Jason,
 
-I suppose that's the plan then!
+I'm using wireguard in some mixed topology and until now I've had LEDE
+routers as clients but now I would like to add some CENTOS(and other
+distros) clients too.
+
+On LEDE there is an option "Create routes for Allowed IPs for this peer"
+that is off by default, but in wg-quick this thing is not optional and
+the routes are created by default, so if I would like to allow
+10.0.0.0/8 it would create default route for all 10.0.0.0/8 to wg
+interface and I don't want that.
+
+I would like to use dynamic routing (rip+eigrp) for routing, if you
+could add an entry to peers not to add default route to allowed ip would
+be great
+
+until then I've disabled add_route rule in the script
+
+Regards
+
+
+--------------831C8B7CC64EF3DC525EC3B0
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+<html>
+  <head>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  </head>
+  <body text="#000000" bgcolor="#FFFFFF">
+    <p>coming back with this<br>
+    </p>
+    <p>is ok if I make a patch to add an option for this situation ?<br>
+    </p>
+    <div class="moz-forward-container">keep the default as it is and if
+      the let's say NOT_DEFAULT=true, to skip the add_route or something
+      like this<br>
+      <br>
+      Regards!<br>
+      -------- Forwarded Message --------
+      <table class="moz-email-headers-table" cellspacing="0"
+        cellpadding="0" border="0">
+        <tbody>
+          <tr>
+            <th nowrap="nowrap" valign="BASELINE" align="RIGHT">Subject:
+            </th>
+            <td>wg-quick add_route</td>
+          </tr>
+          <tr>
+            <th nowrap="nowrap" valign="BASELINE" align="RIGHT">Date: </th>
+            <td>Wed, 12 Jul 2017 20:53:01 +0300</td>
+          </tr>
+          <tr>
+            <th nowrap="nowrap" valign="BASELINE" align="RIGHT">From: </th>
+            <td>Lucian Cristian <a class="moz-txt-link-rfc2396E" href="mailto:luci@createc.ro">&lt;luci@createc.ro&gt;</a></td>
+          </tr>
+          <tr>
+            <th nowrap="nowrap" valign="BASELINE" align="RIGHT">To: </th>
+            <td>WireGuard mailing list
+              <a class="moz-txt-link-rfc2396E" href="mailto:wireguard@lists.zx2c4.com">&lt;wireguard@lists.zx2c4.com&gt;</a>, jason A. Donenfeld
+              <a class="moz-txt-link-rfc2396E" href="mailto:Jason@zx2c4.com">&lt;Jason@zx2c4.com&gt;</a></td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      <br>
+      <pre>Hi Jason,
+
+I'm using wireguard in some mixed topology and until now I've had LEDE 
+routers as clients but now I would like to add some CENTOS(and other 
+distros) clients too.
+
+On LEDE there is an option "Create routes for Allowed IPs for this peer" 
+that is off by default, but in wg-quick this thing is not optional and 
+the routes are created by default, so if I would like to allow 
+10.0.0.0/8 it would create default route for all 10.0.0.0/8 to wg 
+interface and I don't want that.
+
+I would like to use dynamic routing (rip+eigrp) for routing, if you 
+could add an entry to peers not to add default route to allowed ip would 
+be great
+
+until then I've disabled add_route rule in the script
+
+Regards
+
+</pre>
+    </div>
+  </body>
+</html>
+
+--------------831C8B7CC64EF3DC525EC3B0--
