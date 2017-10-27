@@ -1,23 +1,26 @@
-Return-Path: luci@createc.ro
+Return-Path: bruno@wolff.to
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d48311d6
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id db4e4dd0
  for <wireguard@lists.zx2c4.com>;
- Fri, 27 Oct 2017 20:57:26 +0000 (UTC)
-Received: from mail.crimel.ro (mail.crimel.ro [5.2.196.145])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 759c9570
+ Fri, 27 Oct 2017 22:12:28 +0000 (UTC)
+Received: from wolff.to (wolff.to [98.103.208.27])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with SMTP id 2f60b74f
  for <wireguard@lists.zx2c4.com>;
- Fri, 27 Oct 2017 20:57:26 +0000 (UTC)
-Subject: Re: wg-quick add_route
+ Fri, 27 Oct 2017 22:12:28 +0000 (UTC)
+Date: Fri, 27 Oct 2017 17:04:48 -0500
+From: Bruno Wolff III <bruno@wolff.to>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-References: <fe5fcf1b-a7d1-6f6c-1561-4b1b1fa4e326@createc.ro>
- <079f400c-a2ed-9f11-c8e1-a7a7da1074b9@createc.ro>
- <CAHmME9o-4CNR6TD10j1zzAt1VCR95xEs076AnbstxSto3CQYew@mail.gmail.com>
-From: Lucian Cristian <luci@createc.ro>
-Message-ID: <83f79ed2-4dff-c197-7b4f-40df3a6b7fe5@createc.ro>
-Date: Fri, 27 Oct 2017 23:59:17 +0300
+Subject: Re: Fixing wg-quick's DNS= directive with a hatchet
+Message-ID: <20171027220448.GA974@wolff.to>
+References: <CAHmME9q0m1rEfc_CFsb3qv6oQ97QOjtPDxe6yY+D+0aAApE9Yg@mail.gmail.com>
+ <3a761178-19bc-1d01-b6a8-9fb801312d47@solidadmin.com>
+ <CAHmME9q3g3622k6C+pcvb_EpA9NdedTmmE59vohUR3nF3fyuvg@mail.gmail.com>
+ <44ac12fe-685b-730e-8afd-e4081daf038d@solidadmin.com>
+ <CAHmME9oSNNG7-CrC5Emuvi33JD=PBD4rXkwoJABnUcn6-oh6yg@mail.gmail.com>
+ <CAHmME9r8g2ac8Y+wT=EFjbN7ihMQpxh4XLOAy42wmOxgPT3ewg@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9o-4CNR6TD10j1zzAt1VCR95xEs076AnbstxSto3CQYew@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=us-ascii; format=flowed
+In-Reply-To: <CAHmME9r8g2ac8Y+wT=EFjbN7ihMQpxh4XLOAy42wmOxgPT3ewg@mail.gmail.com>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -28,46 +31,15 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On 27.10.2017 22:48, Jason A. Donenfeld wrote:
-> Hey Lucian,
+On Fri, Oct 27, 2017 at 17:02:55 +0200,
+  "Jason A. Donenfeld" <Jason@zx2c4.com> wrote:
 >
-> If you're using WireGuard for real purposes and not just for a quick
-> "turn it on turn it off" situation with a remote endpoint, then
-> wg-quick probably isn't the right tool for you. Instead, I think
-> you'll be better off just calling wg(8) and ip(8) normally.
->
-> The usage of WireGuard in general is supposed to be trivial enough
-> that you can script this without too much fuss. After all, wg-quick
-> itself is just a silly little bash script trivially wrapping some
-> common functionality.
->
-> I think if we go down the road of adding a nob for every possible
-> configuration, you'll wind up having to spend time learning about
-> which nobs map to which sequence of commands, which will be more
-> complex than just doing it yourself.
->
-> So, I think probably I wouldn't accept such a patch, and you'd be
-> better off just scripting 4 lines yourself:
->
-> ip link add wg0 type wireguard
-> wg setconf wg0 path/to/conf.conf
-> ip addr add 10.0.0.1/24 dev wg0
-> ip link set wg0 up
->
-> Especially if you're using rip+eigrp, you already know what you're
-> doing, and this shouldn't be too difficult for you.
->
-> I'm happy to bikeshed this if you'd like; other opinions are always
-> interesting. But my initial instinct is that needless complexity is
-> needless.
->
-> Jason
+>I don't even... Are they serious? Who knows, but I've gotten a lot of
+>these, some via IRC, some sent to team@wireguard.com. Kind of
+>disheartening to receive, but at least their complaints, however rude,
+>are something addressable with technical fixes.
 
-I Jason, I just liked how systemd integrated with wg-quick that's why I 
-used it and if things are already this way in LEDE then why not have it 
-in here too
-
-if is not gonna happen is your call and I accept i but is just and if to 
-the bash script, nothing in the core system
-
-Regards
+I'm a Fedora user and I find WireGuard very useful. I have found you to 
+be extremely responseful. I've reported incompatibilities with new 
+development kernels that I don't have the skill to resolve myself and 
+had fixes from you in less than an hour. That's crazy good support.
