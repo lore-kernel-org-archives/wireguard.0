@@ -1,22 +1,15 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: dkg@fifthhorseman.net
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 54ef50bb
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8128d22e
  for <wireguard@lists.zx2c4.com>;
- Sat, 28 Oct 2017 02:37:08 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9d3c5813
+ Sat, 28 Oct 2017 15:01:37 +0000 (UTC)
+Received: from che.mayfirst.org (che.mayfirst.org [162.247.75.118])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f54b4877
  for <wireguard@lists.zx2c4.com>;
- Sat, 28 Oct 2017 02:37:08 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 898ecb62
- for <wireguard@lists.zx2c4.com>;
- Sat, 28 Oct 2017 02:37:08 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 3fadd82a
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Sat, 28 Oct 2017 02:37:06 +0000 (UTC)
-Received: by mail-oi0-f44.google.com with SMTP id v132so13589064oie.1
- for <wireguard@lists.zx2c4.com>; Fri, 27 Oct 2017 19:39:01 -0700 (PDT)
-MIME-Version: 1.0
+ Sat, 28 Oct 2017 15:01:37 +0000 (UTC)
+From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: Re: Fixing wg-quick's DNS= directive with a hatchet
 In-Reply-To: <CAHmME9r0ji7bE4kzJ6964y8kzt061rUOLFKGfCJbpO19sTOMRw@mail.gmail.com>
 References: <CAHmME9q0m1rEfc_CFsb3qv6oQ97QOjtPDxe6yY+D+0aAApE9Yg@mail.gmail.com>
  <3a761178-19bc-1d01-b6a8-9fb801312d47@solidadmin.com>
@@ -27,12 +20,11 @@ References: <CAHmME9q0m1rEfc_CFsb3qv6oQ97QOjtPDxe6yY+D+0aAApE9Yg@mail.gmail.com>
  <CAHmME9pn977yhsu-rVdR-Mz+ZnsrUaxjQYxc2SveYL9zKNXB4w@mail.gmail.com>
  <87she4fdol.fsf@fifthhorseman.net>
  <CAHmME9r0ji7bE4kzJ6964y8kzt061rUOLFKGfCJbpO19sTOMRw@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sat, 28 Oct 2017 04:39:00 +0200
-Message-ID: <CAHmME9p26KuNR33Lzjp7V4tE1_b9EBFF7_AmnBsuedEq52r4og@mail.gmail.com>
-Subject: Re: Fixing wg-quick's DNS= directive with a hatchet
-To: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-Content-Type: text/plain; charset="UTF-8"
+Date: Sat, 28 Oct 2017 16:35:21 +0200
+Message-ID: <87ineze3x2.fsf@fifthhorseman.net>
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="=-=-=";
+ micalg=pgp-sha512; protocol="application/pgp-signature"
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -43,11 +35,112 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Sat, Oct 28, 2017 at 4:24 AM, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+--=-=-=
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
+
+On Sat 2017-10-28 04:24:08 +0200, Jason A. Donenfeld wrote:
+
+> Openresolv is a fine piece of code that works reliably; I'd encourage
+> you to check it out, especially before you dismiss the whole idea and
+> start recommending dbus instead. It's a tiny component where you can
+> see all of its parts as clear transparent components. Many apps can
+> interact with it through a consistent mechanism. It doesn't require a
+> daemon, nor does it require any central management.
+
+My concern with the resolvconf model (whether implemented by openresolv
+or not) is that each daemon that needs to execute resolvconf needs to be
+root.
+
+This is because of the extensibility -- you don't know what plugin
+scripts you might be invoking when you invoke resolvconf, and those
+scripts don't know what your constraints might be.
+
+At its core, this model encourages *anything* that might need to update
+/etc/resolv.conf to have full system administration privileges.
+
+Consider a DHCP client (any DHCP client) -- at most, it should have
+CAP_NET_ADMIN and maybe CAP_NET_RAW.  And it needs to be able to update
+the local DNS resolution, and maybe the hostname.  But it parses
+arbitrary data from the network, and acts on it.  yikes!  I'd prefer
+that any such daemon run with minimal privileges, but on a system where
+resolvconf is present, it has to have superuser privileges, or else
+resolvconf won't work.
+
+I actually shipped the resolvconf-admin package in debian to provide
+some kind of filtering interface to avoid total garbage from the network
+getting accidentally passed through to arbitrary resolvconf plugins.
+But it's a setuid program, yuck.
+
+as the package description says:
+
+=2D------
+ Note: setuid binaries like resolvconf-admin are additional attack
+ surface on your system.  If you can use a different approach, such as
+ enabling systemd-resolved, you should probably prefer it.
+ .
+ DO NOT INSTALL THIS PACKAGE (or any other with a setuid binary) IF
+ YOU DO NOT NEED IT!
+=2D------
+
+We have effective privilege separation in userspace, and it seems
+foolhardy not to use it just because some daemon or networking policy
+agent needs to update the DNS resolver.
+
+> For this reason, and at Kalin's suggestion as the first reply on the
+> thread, I prefix this onto resolv.conf with the hatchet:
+>
+> # This file was generated by wg-quick(8) for use with
+> # the WireGuard interface wg0. It cannot be
+> # removed or altered directly. You may remove this file
+> # by running `wg-quick down wg0', or if that
+> # poses problems, run `umount /etc/resolv.conf'.
+>
+> Not perfect, of course, but I imagine this simple comment will address
+> 85% of confused users very quickly.
+
+You seem to think that 85% of confused users, when faced with the fact
+that "the Internet doesn't work" can (a) can determine that their DNS
+resolution is specifically what is failing, and (b) subsequently think
+to look in /etc/resolv.conf, and (c) follow the instructions therein.
+And you think they'll do it all "very quickly".
+
+I say this with love, but I don't think we've worked with the same
+caliber of confused users. :)=20
+
+> So, based on the above, my intention is to do this, but in the context
+> of option (3), which means I'll only warn if there's no resolvconf,
+> permitting Debian's resolvconf to provide its limited support if it's
+> there and openresolv isn't.
+
+sounds good to me.
+
 > I don't want to manually construct dbus messages from bash.
 
-https://github.com/jonathanio/update-systemd-resolved/blob/master/update-systemd-resolved
+i understand this complaint, they should offer a simple command-line
+tool that communicates the right thing via dbus on the backend.  I've
+subscribed to https://github.com/systemd/systemd/issues/7202, thanks for
+opening it.
 
-The author of that script is some kind of genius. But it also happens
-to be longer than all of wg-quick itself. V6 is gnarly to parse,
-evidently.
+        --dkg
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEOCdgUepHf6PklTkyFJitxsGSMjcFAln0lakACgkQFJitxsGS
+MjdmEBAAv0/bzejwhRiUwZPzdpTQ94Q4m/fwAKUkAf9rPfJYc5V1UE0kBIzIC9Aj
+/U20iY33oyp+l7SKHIMLsG/c0v790y3IWDfDi63L3hRMxkOiFVILY9fdMuuGO98k
+HvSQrRS5o0mQiXiPldze8moiMO9GYjtdSBwQ0GAFoddUhCPV2eonjAYDVcTbipCg
+oVHFs3cApG0ikqmLLv0htV0MFsLf/FqTsNP57o2sFs89GVdwvkGvU0cZnhFkNuXt
+n3nVZPF8jfMtGAr3PyIbdSghbX9BLBMQth1XzyQpxfGnPjUsfS7JKlUuWElP0sQE
+gDEbrrB4VjPYumEykxTT0wqOt95ZhEbHLtU5wnA29sWNScK3dsP0TjZylYgiyhpn
+vGjP5crKExnSc063LbPmrGfufzpMgRV+Bnw9mk44YJ6URCLyOskScfOBaTVZcT3p
+d2lPCJYDnrCxCmlFtXwektm9Q8UbDY56YsiSb5ygUuzrHDgqXbtz/G25edYjt5Tw
+b5/BXLYI++UPu+Rh0VwB9d5foIQym9gLkDLIHT2NIHrWYQL9ZqEbgvy39nWxb9iO
+g/YyUM8MNXXluVParwYpnYDT9W6+o3LM39v0j/uLUnTQNXIUAHauQTqFgR+sPoTX
+eW4OBbQIeYH8Og08YIoNO0cFhR1bacFiu1uqG8B8NQXOomHTKz8=
+=44BD
+-----END PGP SIGNATURE-----
+--=-=-=--
