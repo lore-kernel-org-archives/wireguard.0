@@ -1,16 +1,23 @@
-Return-Path: dkg@fifthhorseman.net
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0cebff5a
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b39161f6
  for <wireguard@lists.zx2c4.com>;
- Fri, 27 Oct 2017 22:24:36 +0000 (UTC)
-Received: from che.mayfirst.org (che.mayfirst.org [162.247.75.118])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 908f5fb5
+ Sat, 28 Oct 2017 02:22:16 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d374b877
  for <wireguard@lists.zx2c4.com>;
- Fri, 27 Oct 2017 22:24:36 +0000 (UTC)
-From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>, Joe Doss <joe@solidadmin.com>
-Subject: Re: Fixing wg-quick's DNS= directive with a hatchet
-In-Reply-To: <CAHmME9pn977yhsu-rVdR-Mz+ZnsrUaxjQYxc2SveYL9zKNXB4w@mail.gmail.com>
+ Sat, 28 Oct 2017 02:22:16 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 76352eed
+ for <wireguard@lists.zx2c4.com>;
+ Sat, 28 Oct 2017 02:22:16 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 171a9861
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Sat, 28 Oct 2017 02:22:15 +0000 (UTC)
+Received: by mail-oi0-f41.google.com with SMTP id c77so13588393oig.0
+ for <wireguard@lists.zx2c4.com>; Fri, 27 Oct 2017 19:24:10 -0700 (PDT)
+MIME-Version: 1.0
+In-Reply-To: <87she4fdol.fsf@fifthhorseman.net>
 References: <CAHmME9q0m1rEfc_CFsb3qv6oQ97QOjtPDxe6yY+D+0aAApE9Yg@mail.gmail.com>
  <3a761178-19bc-1d01-b6a8-9fb801312d47@solidadmin.com>
  <CAHmME9q3g3622k6C+pcvb_EpA9NdedTmmE59vohUR3nF3fyuvg@mail.gmail.com>
@@ -18,11 +25,13 @@ References: <CAHmME9q0m1rEfc_CFsb3qv6oQ97QOjtPDxe6yY+D+0aAApE9Yg@mail.gmail.com>
  <CAHmME9oSNNG7-CrC5Emuvi33JD=PBD4rXkwoJABnUcn6-oh6yg@mail.gmail.com>
  <92b6b9c5-b07c-52fa-a72a-0fc2dcc253bc@solidadmin.com>
  <CAHmME9pn977yhsu-rVdR-Mz+ZnsrUaxjQYxc2SveYL9zKNXB4w@mail.gmail.com>
-Date: Fri, 27 Oct 2017 18:06:50 -0400
-Message-ID: <87she4fdol.fsf@fifthhorseman.net>
-MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
- micalg=pgp-sha512; protocol="application/pgp-signature"
+ <87she4fdol.fsf@fifthhorseman.net>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Sat, 28 Oct 2017 04:24:08 +0200
+Message-ID: <CAHmME9r0ji7bE4kzJ6964y8kzt061rUOLFKGfCJbpO19sTOMRw@mail.gmail.com>
+Subject: Re: Fixing wg-quick's DNS= directive with a hatchet
+To: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+Content-Type: text/plain; charset="UTF-8"
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -33,108 +42,164 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---=-=-=
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Hi Daniel,
 
-On Fri 2017-10-27 19:15:08 +0200, Jason A. Donenfeld wrote:
-> (Daniel and Egbert seem mostly okay with the butchered resolvconf in
-> their distros; at least they don't see any reason to change things,
-> since it mostly works, and users there at least have the choice of
-> somehow installing openresolv need be.)
+On Sat, Oct 28, 2017 at 12:06 AM, Daniel Kahn Gillmor
+<dkg@fifthhorseman.net> wrote:
+> fwiw, i'm *not* ok with resolvconf.  I tried to help co-maintain it for
+> several years and stepped back from it in disappointment.  I don't even
+> remember the details at this point, but I'm not convinced that it's
+> particularly architecturally sound.  I haven't looked at openresolv
+> myself.
 
-fwiw, i'm *not* ok with resolvconf.  I tried to help co-maintain it for
-several years and stepped back from it in disappointment.  I don't even
-remember the details at this point, but I'm not convinced that it's
-particularly architecturally sound.  I haven't looked at openresolv
-myself.
+Rightfully so: Debian's resolvconf is junk and really should be
+removed from the distro. Roy Marples, the openresolv guy, tried to fix
+the situation a while back, but for whatever reason the maintainer of
+the Debian one didn't follow through, and we are where we are today.
+Openresolv is a fine piece of code that works reliably; I'd encourage
+you to check it out, especially before you dismiss the whole idea and
+start recommending dbus instead. It's a tiny component where you can
+see all of its parts as clear transparent components. Many apps can
+interact with it through a consistent mechanism. It doesn't require a
+daemon, nor does it require any central management. Every distribution
+has adopted the resolvconf method -- except for Redhat land, where
+they have different ideas about things (NetworkManager,
+dhclient-script) -- and I think it's mostly a historical accident and
+maintenance oversight that Debian wound up with the butchered one.
+Fortunately that should be somewhat easy to fix.
 
-I personally think that the hatchet is an unfortunate distraction from
-wireguard.  If Jason decides to ship it upstream, i'll include it in the
-debian packages as part of his decision.  However, i suspect it will
-break some people's DNS resolution in ways that they don't know how to
-recover from besides a reboot (maybe it'll come back after a reboot too?
-yikes).  I suspect this will raise even worse noise and abuse than
-"Rodney"'s silliness.  And this time, they'll be (at least partly)
-right, because the experimental networking tool that they installed will
-have done bizarre things to their filesystem mount points(!) and
-hijacked an important system configuration file out from under whatever
-was maintaining it in the first place.
+For this reason, I've gravitated strongly in favor of your suggestion
+on IRC: support resolvconf, be it the debian frankenstein or the
+openresolv one, and have distributions that don't have resolvconf
+figure out something else within their package. At some point, maybe
+Redhat will come around, or every other distribution will come around
+to Redhat, and then we'll converge, but for now, with basically one
+camp out, it seems easiest to just punt the problem to that one camp,
+where the hatchet hopefully will be a sufficient stop-gap measure for
+them (unless they come up with something better).
 
-=2D-----
+> I personally think that the hatchet is an unfortunate distraction from
+> wireguard.  If Jason decides to ship it upstream, i'll include it in the
+> debian packages as part of his decision.  However, i suspect it will
+> break some people's DNS resolution in ways that they don't know how to
+> recover from besides a reboot (maybe it'll come back after a reboot too?
+> yikes).
 
-So I think wireguard is better off with a light touch here.  If Jason
-just wants to maintain the current openresolv hook, then any wg-quick
-invocation that tries to set DNS can just warn on non-openresolv
-systems.  something liike:
+For this reason, and at Kalin's suggestion as the first reply on the
+thread, I prefix this onto resolv.conf with the hatchet:
 
-    you asked me to set up the DNS but i only know how to do that with
-    openresolv installed.  Please install openresolv and try again!
+# This file was generated by wg-quick(8) for use with
+# the WireGuard interface wg0. It cannot be
+# removed or altered directly. You may remove this file
+# by running `wg-quick down wg0', or if that
+# poses problems, run `umount /etc/resolv.conf'.
 
-This isn't as magic as the hatchet, but it means wireguard is not
-responsible for breaking the user's name resolution.
+Not perfect, of course, but I imagine this simple comment will address
+85% of confused users very quickly.
 
-And if folks want to integrate it with other /etc/resolv.conf managers,
-they can write, test, and propose patches themselves.
+> hijacked an important system configuration file out from under whatever
+> was maintaining it in the first place.
 
-=2D----
-
-As for what the right solution looks like on a modern GNU/Linux system:
-
-A sensible approach (which i think should be the default on machines
-running systemd) is to use systemd-resolved as a local resolving cache.
-The easiest way to do that permanently is:
-
-    systemctl enable --now systemd-resolved
-    ln -sf /lib/systemd/resolv.conf /etc/resolv.conf
-
-If your networking is configured by systemd-networkd, then everything
-else JustWorks=E2=84=A2
+When you set DNS=3D, you expect for that configuration file to be
+modified, but then put back how it was when things are turned off.
+That's why mount points, resolvconf, and so forth present a
+"stackable" interface. This is what Debian has long provided with the
+integration between resolvconf and openvpn, even.
 
 
-On systems that use network-manager, you should tell nm to just inform
-resolved when it learns about new DNS servers:
 
-    cat > /etc/NetworkManager/conf.d/use-resolved.conf <<EOF
-    [main]
-    dns=3Dsystemd-resolved
-    EOF
-    systemctl restart NetworkManager
+Of the current methods an options available, I see three
+possibilities, with one of them being obviously unacceptable to me,
+and this unacceptability should shed light on how I'm approaching the
+issue:
 
-On a system configured with systemd-resolved (with or without
-network-manager), i'd want wg-quick to just inform systemd-resolved that
-it has a new DNS resolver available.  This is probably some ungodly dbus
-invocation that i don't know what it is, but would likely not be an
-impossibility to figure out.
+1) Use openresolv, which supports -x, and if it isn't there, fall back
+to the hatchet, which emulates openresolv's -x.
+2) Use openresolv, which supports -x, and if it isn't there, fall back
+to Debian resolvconf, which doesn't support -x, and if it isn't there,
+fall back to the hatchet, which emulates -x.
+3) Use openresolv, which supports -x, and if it isn't there, fall back
+to Debian resolvconf, which doesn't support -x.
 
-    https://www.freedesktop.org/wiki/Software/systemd/resolved/
+It might be a surprise to you to learn that (2) is actually the
+unacceptable option! The reason is that I will hedge my bets on the
+hatchet if it's for the purpose of making unified semantic behavior of
+the DNS=3D option, with regards to -x. This to me is a worthy goal that
+would justify such things. Thus, allowing for the hatchet in the same
+setting where I'd allow for the incorrect behavior of Debian's missing
+-x option is inconsistent and therefore indefensible.
 
-If someone has the fortitude to wade through that, i'd happily ship such
-a patch in debian (and encourage Jason to take it upstream alongside his
-openresolv hook), but i'm scattered to too many places to do that myself
-today.
+This, then, leaves (1) and (3). The reason for (1) has already been
+stated: to enable consistant -x behavior everywhere. The reasons for
+going with (3), instead, would be some of the points you brought up on
+IRC, in your email, and some additional ones too:
 
-all the best,
+a) Messing with mount points is heavy handed and potentially confusing.
+b) The application should choose *one* good mechanism for setting the
+DNS, choosing the mechanism that's most widely supported, and punting
+the issue to distributions if they don't have that mechanism available
+to them. The reason is that the rabbit hole of supporting _every
+possible DNS configuration ability_ is vast and horrible, and things
+should be stopped before they slide this way.
+c) Calling resolvconf is extremely simple to do, and something called
+wg-"quick" should only contain pieces of logic that are simple.
+d) The hatchet can be provided on a case by case basis as a patch by
+distributions who are unable to provide a desired level of
+resolvconf-ness.
+e) By not being pedantic about the fact that Debian's resolvconf
+doesn't support -x, I remind users that avoiding extratunnicular leaks
+is better achieved with something like https://=D7=90.cc/KXez5GRr (taken
+from the man page of wg-quick(8)), rather than trying to whack-a-mole
+with things like -x DNS configuration.
+f) The current "tun." prefix hack to simultaneously work with Debian's
+resolvconf and openresolv is "good enough".
+g) I'm not keen on the escalating arms race that the hatchet causes
+when it's included in upstream software -- will programs add code to
+do a stat(2) followed by an inode comparison and then run umount(2),
+when open(2) returns -EROFS? I don't think this arms race concern
+follows through to downstream distros, though, since they're usually
+more agile with removing these things before they become a problem, if
+they're becoming one.
 
-       --dkg
+Of these, I'm most compelled by (c), (e), and (f).
 
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
 
------BEGIN PGP SIGNATURE-----
+>     you asked me to set up the DNS but i only know how to do that with
+>     openresolv installed.  Please install openresolv and try again!
 
-iQIzBAEBCgAdFiEEOCdgUepHf6PklTkyFJitxsGSMjcFAlnzrfoACgkQFJitxsGS
-MjdwFg//atzUpC8CyynJ7Lg9S2RAZ4M6ZufCP8BbFLCgA3MJZd4niCD5OKGxffhi
-gm1L88IX6G0pPqhhUz6qK3TFWqG818T42EjXQoe6ACpypUTYKKnPcMoVbG9aiG/Q
-LSofmd/8YXtFoe7RUfeHogtLLDTl0Y+4wMIg04X+F3RCH0O1ILWAO0wlrcKReWuK
-TwhMnGoEXE6rFabNckC/Qw0SM1v3R/qJNk2X92W5hjPvqnqYMY9q5rgZo9XZAtaO
-ZM6J16MzSAcMl2ukfxuiUWnk380+ZgO70KFyYAV4oMovVKrBbuBa7DXvyFtJDnQl
-Gqqd+pintFhUPbsxcRoVbMINwMUzvx+H83ZUbKfu0YCw3+kxjk7BlLBxSPTsW7bA
-+mnbYH4qgZnpulPnU0XP7NNQyfkkpRnYsSer3lLdg+1bS0Z0rryQWRLC+E9ZSHvs
-UPG/HxjKzdZLSbVzzatTVAvTtGVbgQDdvc6uoRHQjKFLhdH1fFcnieMPTjx3Icx2
-O82TPd9RNlpWkW8pEFuiVsMtN1ExKEeU19OoTvsLIunmcdhEPKAKBvfEF6ZBdVE9
-hhAfxxh6/SCsWu01sU5fDa7odm+mjQSHj05ZDBxyFGgYi9yAwl/zfKf+MCq5bTlZ
-bK+xFrR553/MOJPW+Leo30GT6VBWnBJC7Wyo3k3HbSBQKy59G7w=
-=m+C3
------END PGP SIGNATURE-----
---=-=-=--
+So, based on the above, my intention is to do this, but in the context
+of option (3), which means I'll only warn if there's no resolvconf,
+permitting Debian's resolvconf to provide its limited support if it's
+there and openresolv isn't.
+
+> As for what the right solution looks like on a modern GNU/Linux system:
+>
+> A sensible approach (which i think should be the default on machines
+> running systemd) is to use systemd-resolved as a local resolving cache.
+> If your networking is configured by systemd-networkd, then everything
+> else JustWorks=E2=84=A2
+
+It really doesn't "just work" (and systemd-networkd is mostly for
+servers, but not for dynamically changing "desktop linux" machines,
+due to a currently very limited external interface into it). As you
+said, systemd-resolved not on by default in distros, which means
+people have to likely change their whole networking situation to use
+it. (When it is ubiquitous, perhaps things can be reconsidered.) More
+importantly, the dbus interface to interact with it is not pleasant.
+This deserves a line break:
+
+I don't want to manually construct dbus messages from bash.
+
+I think resolvconf is the right interface for DNS configuration. I
+understand that systemd-resolved doesn't want to manage things with
+files -- because they wish to integrate deeper with NSS and
+multi-machine tenancy and so forth, which are all interesting projects
+-- but I still think resolvconf, as a command line program, is the
+right interface for ad-hoc things to configure DNS. For this reason, I
+filed this issue with systemd --
+https://github.com/systemd/systemd/issues/7202 -- and I'll be curious
+to hear their take on it. Maybe they'll provide an interesting new
+perspective, or just confirm this one.
+
+Regards,
+Jason
