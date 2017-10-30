@@ -1,16 +1,16 @@
 Return-Path: dkg@fifthhorseman.net
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c373d4c2
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c2b603ca
  for <wireguard@lists.zx2c4.com>;
- Mon, 30 Oct 2017 12:14:18 +0000 (UTC)
+ Mon, 30 Oct 2017 12:14:19 +0000 (UTC)
 Received: from che.mayfirst.org (che.mayfirst.org [162.247.75.118])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 896baced
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8979e93d
  for <wireguard@lists.zx2c4.com>;
  Mon, 30 Oct 2017 12:14:18 +0000 (UTC)
 From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>
 Subject: Re: Fixing wg-quick's DNS= directive with a hatchet
-In-Reply-To: <CAHmME9quj4hEy37B-+HgP1GZRjF__mZ6YGC3V+NDeGsH7JksKA@mail.gmail.com>
+In-Reply-To: <CAHmME9rpVS84KzU4a76tKLPVQ0MfjegvQhLzrF6z=F5Um8128g@mail.gmail.com>
 References: <CAHmME9q0m1rEfc_CFsb3qv6oQ97QOjtPDxe6yY+D+0aAApE9Yg@mail.gmail.com>
  <3a761178-19bc-1d01-b6a8-9fb801312d47@solidadmin.com>
  <CAHmME9q3g3622k6C+pcvb_EpA9NdedTmmE59vohUR3nF3fyuvg@mail.gmail.com>
@@ -21,9 +21,9 @@ References: <CAHmME9q0m1rEfc_CFsb3qv6oQ97QOjtPDxe6yY+D+0aAApE9Yg@mail.gmail.com>
  <87she4fdol.fsf@fifthhorseman.net>
  <CAHmME9r0ji7bE4kzJ6964y8kzt061rUOLFKGfCJbpO19sTOMRw@mail.gmail.com>
  <87ineze3x2.fsf@fifthhorseman.net>
- <CAHmME9quj4hEy37B-+HgP1GZRjF__mZ6YGC3V+NDeGsH7JksKA@mail.gmail.com>
-Date: Mon, 30 Oct 2017 13:10:57 +0100
-Message-ID: <87lgjsdeem.fsf@fifthhorseman.net>
+ <CAHmME9rpVS84KzU4a76tKLPVQ0MfjegvQhLzrF6z=F5Um8128g@mail.gmail.com>
+Date: Mon, 30 Oct 2017 13:16:22 +0100
+Message-ID: <87inewde5l.fsf@fifthhorseman.net>
 MIME-Version: 1.0
 Content-Type: multipart/signed; boundary="=-=-=";
  micalg=pgp-sha512; protocol="application/pgp-signature"
@@ -40,53 +40,48 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 --=-=-=
 Content-Type: text/plain
 
-On Sat 2017-10-28 20:57:06 +0200, Jason A. Donenfeld wrote:
-> 1) wg-quick isn't a daemon, though openvpn is.
+On Sun 2017-10-29 23:06:31 +0100, Jason A. Donenfeld wrote:
+> By the way, the program you wrote introduces a trivial local privilege
+> escalation vulnerability into Debian, since not all available
+> providers of the resolvconf binary set PATH themselves. Always clear
+> environment variables yourself before exec'ing anything in an suid
+> executable.
 
-wg-quick could be invoked from a network management daemon.  Part of the
-brilliance of wireguard is that the in-kernel stuff *doesn't* try to
-integrate fancy configuration/setup policy.  But that does mean that
-it's likely that there needs to be some user-space policy agent for
-system integration.
+Thanks for this report, it should be fixed in resolvconf-admin 0.3.
+This is a bad failure in the filtering that resolvconf-admin is supposed
+to provide.
 
-> 2) I can think of at least 5 ways to implement a resolvconf binary without
-> requiring root, making your argument moot. There's nothing inherent in the
-> resolvconf model that would require it.
->
-> If you're interested in spending the time implementing this for openresolv,
-> I can spec those out in detail for you.
+I note that the privilege escalation vulnerability was for any code that
+would normally have been running as root anyway without resolvconf-admin
+-- so it leaves systems no worse than they'd been without
+resolvconf-admin (since no user is added to the resolvconf-admins group
+by default).  But it's definitely a bad failure mode, given the design
+and intent of resolvconf-admin.
 
-Please report these suggestions to openresolv or any other resolvconf
-implementations.  My point is about what exists today, not about what is
-theoretically possible.  This argument will be moot when any widely-used
-resolvconf implementation doesn't have to be executed as the superuser
-by default.  Please, make it moot! :)
+I appreciate the catch!  Please don't hesitate to report any other
+similar problems.
 
-> Alternatively, you can just wait for the systemd devs to add a
-> resolvconf for controlling systemd-resolved, if that's the horse
-> you're betting on.
+Regards,
 
-That'd be fine with me, thanks for pushing on it.
-
-       --dkg
+        --dkg
 
 --=-=-=
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEOCdgUepHf6PklTkyFJitxsGSMjcFAln3FtEACgkQFJitxsGS
-MjeS+A/+IYyiFqGSpSyvWbbTPAQYqdy7IORqnf9TAS/o+qqVl9UMec0Uxpqg1vA6
-uMYGTVMen/PKnODgcn+pB/jNw7n8jjHg1bwZ8B2EN/pIP3Kz3uHNWaafH5wGekWz
-cfJchhGA8N/YURLxybWNY7Q49TzpQ3VTXv3roI9WPSzIMaDzzsnjfs8c5ApjtaKd
-LN/ezlRZlw3bU4xa3UvL0uh1eui3TdWBQ88u/idjj+in9mEgKDccKT1VgysCqTqB
-l9rILrtFcSjdOlBaDGt4nhuUeSvF+8RitsGRiDz/5E+8TG8fz4M2amD9tpvyVUFy
-aQKUIvCotDVKELh4mP47LE3eqNJFIHsJ3hy5KGkP8kYrCC6QySkhqyg8qBqgCD76
-P/SiZwhTAwUeGtMmaxiFAPIumZ7fWj9oiQ6jcBiBo1sa5SXrLX8wYMCOF8Tz4ACm
-KSuQTffm0osyndE1325vwksb2PXObhCcNaRY/oj1DycetBJg0/jZKdJoAbbzoSh2
-b17Aut5SixPncKn08roKGqx17OZlExIsIOBt65tbZg3yB4QxuOLKMid/aDWns7iF
-jdTKmt/ZYV51IevA7uSiE4IlmqTeaYretDO20bU9HkoFqt8ZkpnlbxrH6v1gTi3y
-e7lsLjmacxO6RD5am/BjO7K5hnfJydNrcOcgzyNwB8+qUXVsJBw=
-=FnRE
+iQIzBAEBCgAdFiEEOCdgUepHf6PklTkyFJitxsGSMjcFAln3GBcACgkQFJitxsGS
+MjeI8A//dGEwWZQMyBD5MMsGIFaw0e7BgaMWJy25UgqgCJzok/h5VocwviiH+0oY
+MDKANi7w5fTm/guN2OOBVViweypK0jI6S0pYQTuJNAbHUqWZbHI/0006NlVfgfa5
+ceoBKyUw16z7Aq0rlQ4/CDuYO8BuwSBNNw6NJZUqr+5DNeFgp63sA0bhrQr9lC2O
+cbgr40F7yW1jUap3N2al461BeDpJGiUUb+watnMRKo8j3Y86jKUkiwuYRFqaoC6B
+6OoFsUZJxg7k1ldjXh1v+oQGNDo2ZfQeG7iKJXgI7HoUpVgrsVwiYUSZvkOb0pQ/
+uPCviL+xHNtW7tdEU3zAfeB2FH5aJRXlHCFoQsa0vUP4KGGwkehXwMMBavJOObBm
+eQKnD0xP0KK/wtQkT3DmPvYRTenv45UCJq2Hm0YVFEGWI/WsWeNsNa7c9g1LDGhv
+g2Vk8kwSK7WpXCIzXP7IdtGyyfKZPaFIcElCF/BZsUsUBo5YoYXUTRGSA/RuTnB+
+pxsS5hY0k5wLqA199wXbVAcs+ZlUHh8KjDHEhJj0ylf5W1Um6XcORpsC8faG7L8W
+EHQM92k8I7dV7LSJnOAkAOW9gVKXlvL0Z2qt3/G4KHvCDWUZ+Famqb+rzd7mes+i
+R5iq2ZsDLxnvpR/mTDA8hXnu3w+Si8cM2LYh7UFPCV2mol+QFOQ=
+=HRoU
 -----END PGP SIGNATURE-----
 --=-=-=--
