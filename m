@@ -1,16 +1,16 @@
 Return-Path: dkg@fifthhorseman.net
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c2b603ca
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9b8863fb
  for <wireguard@lists.zx2c4.com>;
  Mon, 30 Oct 2017 12:14:19 +0000 (UTC)
 Received: from che.mayfirst.org (che.mayfirst.org [162.247.75.118])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8979e93d
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 51409eb6
  for <wireguard@lists.zx2c4.com>;
  Mon, 30 Oct 2017 12:14:18 +0000 (UTC)
 From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: Geo Kozey <geokozey@mailfence.com>, "Jason A. Donenfeld" <Jason@zx2c4.com>
 Subject: Re: Fixing wg-quick's DNS= directive with a hatchet
-In-Reply-To: <CAHmME9rpVS84KzU4a76tKLPVQ0MfjegvQhLzrF6z=F5Um8128g@mail.gmail.com>
+In-Reply-To: <801971811.33026.1509279684633@ichabod.co-bxl>
 References: <CAHmME9q0m1rEfc_CFsb3qv6oQ97QOjtPDxe6yY+D+0aAApE9Yg@mail.gmail.com>
  <3a761178-19bc-1d01-b6a8-9fb801312d47@solidadmin.com>
  <CAHmME9q3g3622k6C+pcvb_EpA9NdedTmmE59vohUR3nF3fyuvg@mail.gmail.com>
@@ -21,9 +21,10 @@ References: <CAHmME9q0m1rEfc_CFsb3qv6oQ97QOjtPDxe6yY+D+0aAApE9Yg@mail.gmail.com>
  <87she4fdol.fsf@fifthhorseman.net>
  <CAHmME9r0ji7bE4kzJ6964y8kzt061rUOLFKGfCJbpO19sTOMRw@mail.gmail.com>
  <87ineze3x2.fsf@fifthhorseman.net>
- <CAHmME9rpVS84KzU4a76tKLPVQ0MfjegvQhLzrF6z=F5Um8128g@mail.gmail.com>
-Date: Mon, 30 Oct 2017 13:16:22 +0100
-Message-ID: <87inewde5l.fsf@fifthhorseman.net>
+ <CAHmME9quj4hEy37B-+HgP1GZRjF__mZ6YGC3V+NDeGsH7JksKA@mail.gmail.com>
+ <801971811.33026.1509279684633@ichabod.co-bxl>
+Date: Mon, 30 Oct 2017 12:58:48 +0100
+Message-ID: <87po94deyv.fsf@fifthhorseman.net>
 MIME-Version: 1.0
 Content-Type: multipart/signed; boundary="=-=-=";
  micalg=pgp-sha512; protocol="application/pgp-signature"
@@ -40,48 +41,43 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 --=-=-=
 Content-Type: text/plain
 
-On Sun 2017-10-29 23:06:31 +0100, Jason A. Donenfeld wrote:
-> By the way, the program you wrote introduces a trivial local privilege
-> escalation vulnerability into Debian, since not all available
-> providers of the resolvconf binary set PATH themselves. Always clear
-> environment variables yourself before exec'ing anything in an suid
-> executable.
+On Sun 2017-10-29 13:21:24 +0100, Geo Kozey wrote:
+> FYI you can already change DNS through resolvconf from non-root
+> daemons with correct file permissions or ACLs
 
-Thanks for this report, it should be fixed in resolvconf-admin 0.3.
-This is a bad failure in the filtering that resolvconf-admin is supposed
-to provide.
+resolvconf has plugins on the consumer side as well.  while you might be
+able to guarantee that you have the correct file permissions or ACLs on
+/etc/resolv.conf, you probably can't make a guarantee that all of the
+plugins are going to work with that arrangement.
 
-I note that the privilege escalation vulnerability was for any code that
-would normally have been running as root anyway without resolvconf-admin
--- so it leaves systems no worse than they'd been without
-resolvconf-admin (since no user is added to the resolvconf-admins group
-by default).  But it's definitely a bad failure mode, given the design
-and intent of resolvconf-admin.
+That said, i'd love to see this kind of proposal standardized and
+documented.  Are there any systems that ship with correct file
+permissions or ACLs?
 
-I appreciate the catch!  Please don't hesitate to report any other
-similar problems.
+> but that's off-topic.
 
-Regards,
+It was off-topic until wg-quick started messing around with the local
+system's DNS resolution.  Now it's on-topic :/
 
-        --dkg
+             --dkg
 
 --=-=-=
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEOCdgUepHf6PklTkyFJitxsGSMjcFAln3GBcACgkQFJitxsGS
-MjeI8A//dGEwWZQMyBD5MMsGIFaw0e7BgaMWJy25UgqgCJzok/h5VocwviiH+0oY
-MDKANi7w5fTm/guN2OOBVViweypK0jI6S0pYQTuJNAbHUqWZbHI/0006NlVfgfa5
-ceoBKyUw16z7Aq0rlQ4/CDuYO8BuwSBNNw6NJZUqr+5DNeFgp63sA0bhrQr9lC2O
-cbgr40F7yW1jUap3N2al461BeDpJGiUUb+watnMRKo8j3Y86jKUkiwuYRFqaoC6B
-6OoFsUZJxg7k1ldjXh1v+oQGNDo2ZfQeG7iKJXgI7HoUpVgrsVwiYUSZvkOb0pQ/
-uPCviL+xHNtW7tdEU3zAfeB2FH5aJRXlHCFoQsa0vUP4KGGwkehXwMMBavJOObBm
-eQKnD0xP0KK/wtQkT3DmPvYRTenv45UCJq2Hm0YVFEGWI/WsWeNsNa7c9g1LDGhv
-g2Vk8kwSK7WpXCIzXP7IdtGyyfKZPaFIcElCF/BZsUsUBo5YoYXUTRGSA/RuTnB+
-pxsS5hY0k5wLqA199wXbVAcs+ZlUHh8KjDHEhJj0ylf5W1Um6XcORpsC8faG7L8W
-EHQM92k8I7dV7LSJnOAkAOW9gVKXlvL0Z2qt3/G4KHvCDWUZ+Famqb+rzd7mes+i
-R5iq2ZsDLxnvpR/mTDA8hXnu3w+Si8cM2LYh7UFPCV2mol+QFOQ=
-=HRoU
+iQIzBAEBCgAdFiEEOCdgUepHf6PklTkyFJitxsGSMjcFAln3E/gACgkQFJitxsGS
+Mjdllw//SVrhfsokb9/7+eczuYQrm7DRFLMjLqSerof/XK9Aoc3PTEgyr1baEb2I
+X9WblboTZzkFS4yGyIllm7cVMVd4ITz2a3ybxSBBroAcB3vctKfqCIJT9KBibwhV
+41y6E+DZdgAXt1Qcd2Nr5oBeB/2HXi8oEZoftQ+VhAseYD/WMEQe+LZASB35aW4O
+iEYxD/7tLXrFAESVKRY0QaB5J3v/U6m1gaJ5W+VvwqI2iIrCJYA3vHNz5Bnb1IQO
+vdS4DDIO3u8epZX2XlZGyZzGmIvT244e6c/fvDnHv1B1LdkTFVXOpJ8XsQx3RWb9
++SLDd5Z988y+DMXxdBIdO3FR+BMe3D8N03NTAwmQEBJ4KRZST8n/vaiuzh5aqvPj
+icgU1iXZv2Ii52/aDFUDkzEk+TUsQbajAT4E8BYJDoBLkSH1YUW99inSophcif9Q
+S9Q7xhmT2S7HYj9syIEUAv/x4o7xXRQGjhuYO2/Vsspu34wlW84tx/RekJOOf6KJ
+BZMmzmGDvF/tBASQJTXIPrxEI3clrdMQ0/nmqJXeSH6m3TaXlNiXumqIaBP4qnvg
+PvzUqfnrnn6O0n2vMz3Zcs++nAr2/zfr2QRkDnldO0itAkJd38uCEyNMp+Nb+TAU
+9ST11NtsHgW6Clm0gOGbF025XOHg8RuWTtSf29sNkZNycdCaTL8=
+=rj0g
 -----END PGP SIGNATURE-----
 --=-=-=--
