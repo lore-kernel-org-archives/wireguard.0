@@ -1,18 +1,26 @@
-Return-Path: gregkh@linuxfoundation.org
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1558f354
- for <wireguard@lists.zx2c4.com>; Wed, 1 Nov 2017 09:44:48 +0000 (UTC)
-Received: from mail.linuxfoundation.org (mail.linuxfoundation.org
- [140.211.169.12])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 346f0c85
- for <wireguard@lists.zx2c4.com>; Wed, 1 Nov 2017 09:44:48 +0000 (UTC)
-Date: Wed, 1 Nov 2017 10:47:26 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: [PATCH] Kconfig: remove trailing whitespace
-Message-ID: <20171101094726.GA22004@kroah.com>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cba13b22
+ for <wireguard@lists.zx2c4.com>; Wed, 1 Nov 2017 13:18:50 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 896973e2
+ for <wireguard@lists.zx2c4.com>; Wed, 1 Nov 2017 13:18:50 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4a5fae48
+ for <wireguard@lists.zx2c4.com>; Wed, 1 Nov 2017 13:18:50 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 7bfea2fa
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>; Wed, 1 Nov 2017 13:18:49 +0000 (UTC)
+Received: by mail-oi0-f41.google.com with SMTP id n82so4101135oig.3
+ for <wireguard@lists.zx2c4.com>; Wed, 01 Nov 2017 06:21:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+In-Reply-To: <20171101094726.GA22004@kroah.com>
+References: <20171101094726.GA22004@kroah.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 1 Nov 2017 14:21:16 +0100
+Message-ID: <CAHmME9p4J-8_Y64hRF7L_Sf9vfYNC=aZVU0qNgvKznqNNxaGFQ@mail.gmail.com>
+Subject: Re: [PATCH] Kconfig: remove trailing whitespace
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Content-Type: text/plain; charset="UTF-8"
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -23,19 +31,9 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Git complains when applying this Kconfig file as part of a patch to the
-kernel tree, so drop the trailing whitespace.
+Hi Greg,
 
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Thanks for the patch. Applied here:
+https://git.zx2c4.com/WireGuard/commit/?id=289cb2f0ec1e9ae7fa78631ae9203398bfa1f46e
 
-diff --git a/src/Kconfig b/src/Kconfig
-index 811d1e230531..4385995d61c5 100644
---- a/src/Kconfig
-+++ b/src/Kconfig
-@@ -26,5 +26,5 @@ config WIREGUARD_DEBUG
- 	  that occur for a WireGuard interface. It will also perform some
- 	  extra validation checks and unit tests at various points. This is
- 	  only useful for debugging.
--	  
-+
- 	  Say N here unless you know what you're doing.
+Jason
