@@ -1,27 +1,20 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: adriankoooo@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cba13b22
- for <wireguard@lists.zx2c4.com>; Wed, 1 Nov 2017 13:18:50 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 896973e2
- for <wireguard@lists.zx2c4.com>; Wed, 1 Nov 2017 13:18:50 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4a5fae48
- for <wireguard@lists.zx2c4.com>; Wed, 1 Nov 2017 13:18:50 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 7bfea2fa
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 1 Nov 2017 13:18:49 +0000 (UTC)
-Received: by mail-oi0-f41.google.com with SMTP id n82so4101135oig.3
- for <wireguard@lists.zx2c4.com>; Wed, 01 Nov 2017 06:21:17 -0700 (PDT)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a743f247
+ for <wireguard@lists.zx2c4.com>; Thu, 2 Nov 2017 19:41:12 +0000 (UTC)
+Received: from mail-io0-f171.google.com (mail-io0-f171.google.com
+ [209.85.223.171])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 542e032f
+ for <wireguard@lists.zx2c4.com>; Thu, 2 Nov 2017 19:41:12 +0000 (UTC)
+Received: by mail-io0-f171.google.com with SMTP id n137so1490799iod.6
+ for <wireguard@lists.zx2c4.com>; Thu, 02 Nov 2017 12:43:49 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20171101094726.GA22004@kroah.com>
-References: <20171101094726.GA22004@kroah.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 1 Nov 2017 14:21:16 +0100
-Message-ID: <CAHmME9p4J-8_Y64hRF7L_Sf9vfYNC=aZVU0qNgvKznqNNxaGFQ@mail.gmail.com>
-Subject: Re: [PATCH] Kconfig: remove trailing whitespace
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Content-Type: text/plain; charset="UTF-8"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: =?UTF-8?B?QWRyacOhbiBNaWjDoWxrbw==?= <adriankoooo@gmail.com>
+Date: Thu, 2 Nov 2017 20:43:27 +0100
+Message-ID: <CA+Hw3eYrO9ksGfdLxvK0XhEbqA8x3_gXb1CnAhCiifwfyiY9-A@mail.gmail.com>
+Subject: Wireguard: segmentation fault on rPi
+To: dkg@fifthhorseman.net, wireguard@lists.zx2c4.com
+Content-Type: multipart/alternative; boundary="f403045fae30f6a411055d053450"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -31,9 +24,38 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Greg,
+--f403045fae30f6a411055d053450
+Content-Type: text/plain; charset="UTF-8"
 
-Thanks for the patch. Applied here:
-https://git.zx2c4.com/WireGuard/commit/?id=289cb2f0ec1e9ae7fa78631ae9203398bfa1f46e
+Hi Daniel,
 
-Jason
+It is possible that the build is wrong on the repo?
+
+Installed WG using source, it is worked, then I decided to install new
+version from repo - added the repo into sources.list then I installed the
+tools:
+
+# apt update
+# apt install wireguard-dkms wireguard-tools
+
+When I try to run wg tool I get: Segmentation Fault.
+
+I am using rPi and armbian.
+
+Regards,
+Adrian
+
+--f403045fae30f6a411055d053450
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hi Daniel,<div><br></div><div>It is possible that the buil=
+d is wrong on the repo?</div><div><br></div>Installed WG using source, it i=
+s worked, then I decided to install new version from repo - added the repo =
+into sources.list then I=C2=A0installed the tools:  <div><br></div># apt up=
+date=C2=A0<div># apt install wireguard-dkms wireguard-tools<div><br></div><=
+/div><div>When I try to run wg tool I get: Segmentation Fault.</div><div><b=
+r></div><div>I am using rPi and armbian.</div><div><br></div><div>Regards,<=
+/div><div>Adrian</div></div>
+
+--f403045fae30f6a411055d053450--
