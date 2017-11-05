@@ -1,27 +1,27 @@
-Return-Path: aranea@aixah.de
+Return-Path: markus.woschank@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0441b59c
- for <wireguard@lists.zx2c4.com>; Sat, 4 Nov 2017 23:00:37 +0000 (UTC)
-Received: from wp260.webpack.hosteurope.de (wp260.webpack.hosteurope.de
- [80.237.133.29])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 16f29008
- for <wireguard@lists.zx2c4.com>; Sat, 4 Nov 2017 23:00:37 +0000 (UTC)
-Received: from vega.skynet.aixah.de (localhost [IPv6:::1])
- by vega.skynet.aixah.de (Postfix) with ESMTP id B8A03260059
- for <wireguard@lists.zx2c4.com>; Sun,  5 Nov 2017 00:03:29 +0100 (CET)
-Date: Sun, 5 Nov 2017 00:03:27 +0100
-From: Luis Ressel <aranea@aixah.de>
-To: wireguard@lists.zx2c4.com
-Subject: Re: wg showconf
-Message-ID: <20171105000327.0a772771@vega.skynet.aixah.de>
-In-Reply-To: <20171105000122.09eae100@vega.skynet.aixah.de>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b39eae1e
+ for <wireguard@lists.zx2c4.com>; Sun, 5 Nov 2017 00:02:25 +0000 (UTC)
+Received: from mail-ot0-f170.google.com (mail-ot0-f170.google.com
+ [74.125.82.170])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 81b88f54
+ for <wireguard@lists.zx2c4.com>; Sun, 5 Nov 2017 00:02:25 +0000 (UTC)
+Received: by mail-ot0-f170.google.com with SMTP id f18so5602109otd.10
+ for <wireguard@lists.zx2c4.com>; Sat, 04 Nov 2017 17:05:19 -0700 (PDT)
+MIME-Version: 1.0
+In-Reply-To: <20171105000327.0a772771@vega.skynet.aixah.de>
 References: <CAKUy5axWvBJfDQOjWSs7T0BCJ3Gw051Uu8gGw0BdSUOrzMAndw@mail.gmail.com>
  <20171104212701.527fadc1@vega.skynet.aixah.de>
  <CAKUy5ayAzFtkLvagJN=m9Qk5Zuk1uwhHkj19=kCKDqNDj4jBxQ@mail.gmail.com>
  <20171105000122.09eae100@vega.skynet.aixah.de>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- boundary="Sig_/.ZG8GPuKj1O3e5g9NTotlal"; protocol="application/pgp-signature"
+ <20171105000327.0a772771@vega.skynet.aixah.de>
+From: Markus Woschank <markus.woschank@gmail.com>
+Date: Sun, 5 Nov 2017 01:05:18 +0100
+Message-ID: <CAKUy5az5NX6hLDPsiUg1eoJEnJ4VK6Q2KyrKLzZ3BMAGrg2nnw@mail.gmail.com>
+Subject: Re: wg showconf
+To: Luis Ressel <aranea@aixah.de>
+Content-Type: text/plain; charset="UTF-8"
+Cc: wireguard@lists.zx2c4.com
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -31,41 +31,38 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---Sig_/.ZG8GPuKj1O3e5g9NTotlal
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+>> While searching for arguments I realised that wireguard will allow a
+>> peer to connect with a different IP from the one set in the
+>> configuration.
+>> Not sure if this is the best behaviour (I understand that the peer
+>> needs to know the secret key, anyway not sure).
+>
+> Yes, wg does this. It's a deliberate design decision which is important
+> to support roaming peers.
+>
+> This is not a security problem. Since wg uses UDP as a transport
+> protocol, source IPs can be trivially forged by an attacker; therefore
+> checking source IPs wouldn't add any real value.
 
-On Sun, 5 Nov 2017 00:01:22 +0100
-Luis Ressel <aranea@aixah.de> wrote:
+Nevertheless this is different from the behaviour I expected:
+If I specify an endpoint IP the peer is only allowed to connect via
+the specified IP/Port.
+If I don't specify an endpoint IP the peer is allowed to connect from
+everywhere.
 
-> Yes, wg does this. It's a deliberate design decision which is
-> important to supporting roaming peers.
+Yes, I could have read the documentation more carefully but maybe
+restricting the remote IP/Port in cases the endpoint has been
+specified would prevent some confusion/discussion.
+This would also make the behaviour of the showconf command more
+"consistent" because then the information, if the endpoint is set by
+config or not, would be available and also the showconf command could
+generate an equivalent configuration.
 
-Whoops, sorry about that. Absentmindedly editing sentences without
-reading the result is not a good idea. :)
+I imaging specifying an endpoint IP for a peer and than discovering
+that it connected from a different IP may be surprising to some. I
+generally prefer for things to break if I configure them the wrong way
+and not work "sometimes" (wrong endpoint IP on one side but the other
+first initiating the connection most of the time).
 
-Cheers,
-Luis Ressel
-
---Sig_/.ZG8GPuKj1O3e5g9NTotlal
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEbPzLt4vriSGj7oj2YKkwapaNrTgFAln+Rz8ACgkQYKkwapaN
-rTgP2xAAhTCgV4jepa917NsE38cPMU/lKsYw9yAibfPpfE8JvMXvl604qeQLquU5
-bzf2ONIKCVgwVKW0TRD3p9QIRNklG3rd9xebjazNPVtTUsX4p0Qs0bGp7egeTUuE
-cDSkr5E0FB6zgp8d5F3PktqPoBg2uW9DkpIXTWFdytzMS6pondY+oa+QYEKVU/+q
-77C3l78B40WTUJ1/dOWB5XNvvGlR670nDHElihcBV1cACFjZGRKQSDrhNvbVbwA3
-tILyO9WTekVQ5VC8+nGG5mEeBMtTd40qCz+gDIaUzPrbp/kIrmI9uwPO5oJjoTg+
-Un41mLtsIkN9kxFWg0COYCVZvIgamFTw5ooIsLTXdOTAoEpOwHezu8geVeXt11p9
-yfxnjJkdrTsrArEdki+pCm4XHW3mzCA6tsc1XXdxOHinPXol0jEYIk1EsLpvV9Xa
-PFBUR6JbhlTBA+5bSTvEq3wIu5977J8CRkf98x0pDSetxsLFbVqlyvT1abQkBKec
-k/Iiy7HwH6NLJIiqsF7YiaCxruYSX0WVeLXAm2O8Wl+Qj5C6WPUM2ZYQOzEijWZH
-6xzFDq9Q8PX02nJHQuphRj51KOT/v4QxKuNFhTemYPl0aTjqKrJ/r+N4DK9Atc4q
-4eKvjQrYFa2hySgduUuSw7STqzYu+UR6EsTC+Fq29g8NMipznp8=
-=VX5q
------END PGP SIGNATURE-----
-
---Sig_/.ZG8GPuKj1O3e5g9NTotlal--
+Thanks,
+Markus
