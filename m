@@ -1,23 +1,25 @@
-Return-Path: outbackdingo@gmail.com
+Return-Path: aurelien@chabot.fr
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 06dbf017
- for <wireguard@lists.zx2c4.com>; Tue, 7 Nov 2017 10:50:13 +0000 (UTC)
-Received: from mail-wm0-f66.google.com (mail-wm0-f66.google.com [74.125.82.66])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c7c37bda
- for <wireguard@lists.zx2c4.com>; Tue, 7 Nov 2017 10:50:13 +0000 (UTC)
-Received: by mail-wm0-f66.google.com with SMTP id b9so2889586wmh.0
- for <wireguard@lists.zx2c4.com>; Tue, 07 Nov 2017 02:53:25 -0800 (PST)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 47453c78
+ for <wireguard@lists.zx2c4.com>; Tue, 7 Nov 2017 11:56:44 +0000 (UTC)
+Received: from 10.mo3.mail-out.ovh.net (10.mo3.mail-out.ovh.net
+ [87.98.165.232])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cd996c8d
+ for <wireguard@lists.zx2c4.com>; Tue, 7 Nov 2017 11:56:44 +0000 (UTC)
+Received: from player732.ha.ovh.net (b9.ovh.net [213.186.33.59])
+ by mo3.mail-out.ovh.net (Postfix) with ESMTP id 6B57F16DB8B
+ for <wireguard@lists.zx2c4.com>; Tue,  7 Nov 2017 12:59:56 +0100 (CET)
+Received: from localhost.localdomain (60-242-138-227.static.tpgi.com.au
+ [60.242.138.227]) (Authenticated sender: aurelien@chabot.fr)
+ by player732.ha.ovh.net (Postfix) with ESMTPA id E2C6E200EE
+ for <wireguard@lists.zx2c4.com>; Tue,  7 Nov 2017 12:59:53 +0100 (CET)
+From: =?UTF-8?q?Aur=C3=A9lien=20Chabot?= <aurelien@chabot.fr>
+To: wireguard@lists.zx2c4.com
+Subject: WireGuard-Go Android support
+Date: Tue,  7 Nov 2017 22:59:37 +1100
+Message-Id: <20171107115939.4879-1-aurelien@chabot.fr>
 MIME-Version: 1.0
-In-Reply-To: <20171107093832.GB7891@kroah.com>
-References: <CAC4KqtwH_XAXeXHSf9Kxs5t80Qag9GrMwp6SaPnO9bj=GVL-7w@mail.gmail.com>
- <20171107093832.GB7891@kroah.com>
-From: Outback Dingo <outbackdingo@gmail.com>
-Date: Tue, 7 Nov 2017 11:52:44 +0100
-Message-ID: <CAKYr3zx4mxd_=phzgnXB_44YGGfU4BxkH0fHuOAfA9dkfwjF7Q@mail.gmail.com>
-Subject: Re: Production usage of Wireguard
-To: Greg KH <gregkh@linuxfoundation.org>
-Content-Type: text/plain; charset="UTF-8"
-Cc: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset=UTF-8
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -27,41 +29,23 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Tue, Nov 7, 2017 at 10:38 AM, Greg KH <gregkh@linuxfoundation.org> wrote=
-:
-> On Mon, Nov 06, 2017 at 09:41:18PM +0000, Ferris Ellis wrote:
->> Hello Wireguard mailing list!
->>
->> I have been very interested in the WireGuard project for a little while =
-now
->> and am in the process of evaluating it. While benchmarks and code review=
-s
->> are useful, they don=E2=80=99t uncover many of the issues that can poten=
-tially wake
->> one up at 3am. I=E2=80=99d hunted around on the web for a while but wasn=
-=E2=80=99t able to
->> find any articles on running WireGuard in a production environment. I kn=
-ow
->> the project is still young but was wondering if anyone on the mailing li=
-st
->> had started using WireGuard in production? And, if so, if they=E2=80=99d=
- be willing
->> to share some details about their use case and experience?
->
-> There are at least two companies offering Wireguard as a VPN service
-> "commercially" right now, so it is being used in that manner already.
->
-> But as "production environment" always means different things for
-> different people, perhaps only you can answer this question?  What would
-> it take for _you_ to be comfortable with it in your network environment?
+Hi,
 
-FreeBSD kernel module :) and Im all in....
+This is a set of patch the wireguard-go project adding some needed stuff
+to have android support. 
+The idea is to use the wireguard-go project as a library that is exposed
+with a "gomobile" binding to an android application.
+I posted a set of patch on the wireguard-android project too and it is
+worth for anyone looking at those change to have a look there too, at
+least at the couple of go file that live there.
+The change look a bit intrusive here (I had to move most of the code to
+a folder...) but I did not find any other clean solution to be able to
+use this code as an outside library (although I am not a go expert). I
+am open to any better idea.
 
->
-> thanks,
->
-> greg k-h
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
+Regarding the change itself, there is one item that i'd like to
+highlight, it's the change on that add a "tun device close". I am not
+sure why I had to add this code, maybe I miss something else more
+general, but it was actually never called in my case.   
+
+Aurélien
