@@ -1,22 +1,36 @@
-Return-Path: aurelien@chabot.fr
+Return-Path: william@azirevpn.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id efb19f2a
- for <wireguard@lists.zx2c4.com>; Tue, 7 Nov 2017 11:56:53 +0000 (UTC)
-Received: from 5.mo3.mail-out.ovh.net (5.mo3.mail-out.ovh.net [87.98.178.36])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a19de982
- for <wireguard@lists.zx2c4.com>; Tue, 7 Nov 2017 11:56:53 +0000 (UTC)
-Received: from player732.ha.ovh.net (b9.ovh.net [213.186.33.59])
- by mo3.mail-out.ovh.net (Postfix) with ESMTP id 33F4916E145
- for <wireguard@lists.zx2c4.com>; Tue,  7 Nov 2017 13:00:05 +0100 (CET)
-From: =?UTF-8?q?Aur=C3=A9lien=20Chabot?= <aurelien@chabot.fr>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fef801a8
+ for <wireguard@lists.zx2c4.com>; Tue, 7 Nov 2017 12:53:51 +0000 (UTC)
+Received: from mail.foilhat.net (mail.foilhat.net [185.169.40.4])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 423974e5
+ for <wireguard@lists.zx2c4.com>; Tue, 7 Nov 2017 12:53:51 +0000 (UTC)
+Received: from localhost (localhost [IPv6:::1])
+ by mail.foilhat.net (Postfix) with ESMTP id E38B33E39DF
+ for <wireguard@lists.zx2c4.com>; Tue,  7 Nov 2017 13:57:03 +0100 (CET)
+Received: from mail.foilhat.net ([IPv6:::1])
+ by localhost (mail.foilhat.net [IPv6:::1]) (amavisd-new, port 10032)
+ with ESMTP id Xp547pbJJKQ4 for <wireguard@lists.zx2c4.com>;
+ Tue,  7 Nov 2017 13:57:03 +0100 (CET)
+Received: from localhost (localhost [IPv6:::1])
+ by mail.foilhat.net (Postfix) with ESMTP id 6242A3E32F0
+ for <wireguard@lists.zx2c4.com>; Tue,  7 Nov 2017 13:57:03 +0100 (CET)
+Received: from mail.foilhat.net ([IPv6:::1])
+ by localhost (mail.foilhat.net [IPv6:::1]) (amavisd-new, port 10026)
+ with ESMTP id zudC0hxvP7Mz for <wireguard@lists.zx2c4.com>;
+ Tue,  7 Nov 2017 13:57:03 +0100 (CET)
+Received: from mail.foilhat.net (mail.foilhat.net [185.169.40.4])
+ by mail.foilhat.net (Postfix) with ESMTP id 4DDEA3E39DF
+ for <wireguard@lists.zx2c4.com>; Tue,  7 Nov 2017 13:57:03 +0100 (CET)
+Date: Tue, 7 Nov 2017 13:57:03 +0100 (CET)
+From: William =?utf-8?Q?=C3=96ling?= <william@azirevpn.com>
 To: wireguard@lists.zx2c4.com
-Subject: [PATCH 2/2] Add android support
-Date: Tue,  7 Nov 2017 22:59:39 +1100
-Message-Id: <20171107115939.4879-3-aurelien@chabot.fr>
-In-Reply-To: <20171107115939.4879-1-aurelien@chabot.fr>
-References: <20171107115939.4879-1-aurelien@chabot.fr>
+Message-ID: <993737547.71422.1510059423267.JavaMail.zimbra@azirevpn.com>
+In-Reply-To: <CAC4KqtwH_XAXeXHSf9Kxs5t80Qag9GrMwp6SaPnO9bj=GVL-7w@mail.gmail.com>
+References: <CAC4KqtwH_XAXeXHSf9Kxs5t80Qag9GrMwp6SaPnO9bj=GVL-7w@mail.gmail.com>
+Subject: Re: Production usage of Wireguard
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,224 +40,44 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Signed-off-by: Aurélien Chabot <aurelien@chabot.fr>
----
- src/wireguard/conn.go      | 16 ++++++++++
- src/wireguard/device.go    |  1 +
- src/wireguard/send.go      | 77 +++++++++++++++++++++++++---------------------
- src/wireguard/tun_linux.go |  2 ++
- src/wireguard/uapi.go      | 36 +++++++++++++---------
- 5 files changed, 83 insertions(+), 49 deletions(-)
+Hello,
 
-diff --git a/src/wireguard/conn.go b/src/wireguard/conn.go
-index 89b79ba..2706273 100644
---- a/src/wireguard/conn.go
-+++ b/src/wireguard/conn.go
-@@ -87,3 +87,19 @@ func closeUDPConn(device *Device) {
- 	netc.mutex.Unlock()
- 	signalSend(device.signal.newUDPConn)
- }
-+
-+func GetUDPConn(device *Device) (uintptr, error) {
-+	netc := &device.net
-+	netc.mutex.Lock()
-+	defer netc.mutex.Unlock()
-+
-+	if netc.conn == nil {
-+        return 0, nil
-+    }
-+
-+    file, err := netc.conn.File()
-+    if err != nil {
-+        return 0, err
-+    }
-+    return file.Fd(), nil
-+}
-diff --git a/src/wireguard/device.go b/src/wireguard/device.go
-index 2928ab5..5400d0e 100644
---- a/src/wireguard/device.go
-+++ b/src/wireguard/device.go
-@@ -205,6 +205,7 @@ func (device *Device) Close() {
- 	device.RemoveAllPeers()
- 	close(device.signal.stop)
- 	closeUDPConn(device)
-+	device.tun.device.Close()
- }
- 
- func (device *Device) WaitChannel() chan struct{} {
-diff --git a/src/wireguard/send.go b/src/wireguard/send.go
-index d781c40..d081b90 100644
---- a/src/wireguard/send.go
-+++ b/src/wireguard/send.go
-@@ -141,53 +141,60 @@ func (device *Device) RoutineReadFromTUN() {
- 
- 	for {
- 
--		// read packet
--
--		elem.packet = elem.buffer[MessageTransportHeaderSize:]
--		size, err := device.tun.device.Read(elem.packet)
--		if err != nil {
--			logError.Println("Failed to read packet from TUN device:", err)
--			device.Close()
-+		select {
-+		case <-device.signal.stop:
-+			logDebug.Println("Routine, TUN Reader worker, stopped")
- 			return
--		}
--
--		if size == 0 || size > MaxContentSize {
--			continue
--		}
- 
--		elem.packet = elem.packet[:size]
-+		default:
-+			// read packet
- 
--		// lookup peer
-+			elem.packet = elem.buffer[MessageTransportHeaderSize:]
-+			size, err := device.tun.device.Read(elem.packet)
-+			if err != nil {
-+				logError.Println("Failed to read packet from TUN device:", err)
-+				device.Close()
-+				return
-+			}
- 
--		var peer *Peer
--		switch elem.packet[0] >> 4 {
--		case ipv4.Version:
--			if len(elem.packet) < ipv4.HeaderLen {
-+			if size == 0 || size > MaxContentSize {
- 				continue
- 			}
--			dst := elem.packet[IPv4offsetDst : IPv4offsetDst+net.IPv4len]
--			peer = device.routingTable.LookupIPv4(dst)
- 
--		case ipv6.Version:
--			if len(elem.packet) < ipv6.HeaderLen {
-+			elem.packet = elem.packet[:size]
-+
-+			// lookup peer
-+
-+			var peer *Peer
-+			switch elem.packet[0] >> 4 {
-+			case ipv4.Version:
-+				if len(elem.packet) < ipv4.HeaderLen {
-+					continue
-+				}
-+				dst := elem.packet[IPv4offsetDst : IPv4offsetDst+net.IPv4len]
-+				peer = device.routingTable.LookupIPv4(dst)
-+
-+			case ipv6.Version:
-+				if len(elem.packet) < ipv6.HeaderLen {
-+					continue
-+				}
-+				dst := elem.packet[IPv6offsetDst : IPv6offsetDst+net.IPv6len]
-+				peer = device.routingTable.LookupIPv6(dst)
-+
-+			default:
-+				logDebug.Println("Receieved packet with unknown IP version")
-+			}
-+
-+			if peer == nil {
- 				continue
- 			}
--			dst := elem.packet[IPv6offsetDst : IPv6offsetDst+net.IPv6len]
--			peer = device.routingTable.LookupIPv6(dst)
- 
--		default:
--			logDebug.Println("Receieved packet with unknown IP version")
--		}
-+			// insert into nonce/pre-handshake queue
- 
--		if peer == nil {
--			continue
-+			signalSend(peer.signal.handshakeReset)
-+			addToOutboundQueue(peer.queue.nonce, elem)
-+			elem = device.NewOutboundElement()
- 		}
--
--		// insert into nonce/pre-handshake queue
--
--		signalSend(peer.signal.handshakeReset)
--		addToOutboundQueue(peer.queue.nonce, elem)
--		elem = device.NewOutboundElement()
- 	}
- }
- 
-diff --git a/src/wireguard/tun_linux.go b/src/wireguard/tun_linux.go
-index 4b7fc94..6f2e036 100644
---- a/src/wireguard/tun_linux.go
-+++ b/src/wireguard/tun_linux.go
-@@ -1,3 +1,5 @@
-+// +build !android
-+
- package wireguard
- 
- /* Implementation of the TUN device interface for linux
-diff --git a/src/wireguard/uapi.go b/src/wireguard/uapi.go
-index b3984ad..ea9e29a 100644
---- a/src/wireguard/uapi.go
-+++ b/src/wireguard/uapi.go
-@@ -24,13 +24,30 @@ func (s *IPCError) ErrorCode() int64 {
- }
- 
- func ipcGetOperation(device *Device, socket *bufio.ReadWriter) *IPCError {
-+	lines := make([]string, 0, 100)
-+	GetOperation(device, lines)
-+
-+	// send lines
-+
-+	for _, line := range lines {
-+		_, err := socket.WriteString(line + "\n")
-+		if err != nil {
-+			return &IPCError{
-+				Code: ipcErrorIO,
-+			}
-+		}
-+	}
-+
-+	return nil
-+}
-+
-+func GetOperation(device *Device, lines []string) {
- 
- 	// create lines
- 
- 	device.mutex.RLock()
- 	device.net.mutex.RLock()
- 
--	lines := make([]string, 0, 100)
- 	send := func(line string) {
- 		lines = append(lines, line)
- 	}
-@@ -76,23 +93,14 @@ func ipcGetOperation(device *Device, socket *bufio.ReadWriter) *IPCError {
- 
- 	device.net.mutex.RUnlock()
- 	device.mutex.RUnlock()
--
--	// send lines
--
--	for _, line := range lines {
--		_, err := socket.WriteString(line + "\n")
--		if err != nil {
--			return &IPCError{
--				Code: ipcErrorIO,
--			}
--		}
--	}
--
--	return nil
- }
- 
- func ipcSetOperation(device *Device, socket *bufio.ReadWriter) *IPCError {
- 	scanner := bufio.NewScanner(socket)
-+	return SetOperation(device, scanner)
-+}
-+
-+func SetOperation(device *Device, scanner *bufio.Scanner) *IPCError {
- 	logInfo := device.Log.Info
- 	logError := device.Log.Error
- 	logDebug := device.Log.Debug
--- 
-2.15.0
+We run WireGuard in production for a sizable user base. We've had no proble=
+ms with it at all so far. However, we'd like to create problems as a means =
+of finding any latent bugs, so yesterday we opened up our service for free,=
+ so we can get more people toasting our servers.
+
+Check out https://www.azirevpn.com/wireguard if anybody wants to put some b=
+andwidth through our pipes.
+
+Br,
+William, AzireVPN
+
+----- Original Message -----
+From: "Ferris Ellis" <ferris@ferrisellis.com>
+To: wireguard@lists.zx2c4.com
+Sent: Monday, November 6, 2017 10:41:18 PM
+Subject: Production usage of Wireguard
+
+Hello Wireguard mailing list!=20
+
+I have been very interested in the WireGuard project for a little while now=
+ and am in the process of evaluating it. While benchmarks and code reviews =
+are useful, they don=E2=80=99t uncover many of the issues that can potentia=
+lly wake one up at 3am. I=E2=80=99d hunted around on the web for a while bu=
+t wasn=E2=80=99t able to find any articles on running WireGuard in a produc=
+tion environment. I know the project is still young but was wondering if an=
+yone on the mailing list had started using WireGuard in production? And, if=
+ so, if they=E2=80=99d be willing to share some details about their use cas=
+e and experience?=20
+
+Cheers,=20
+Ferris=20
+
+--=20
+Ferris Ellis=20
+
+_______________________________________________=20
+WireGuard mailing list=20
+WireGuard@lists.zx2c4.com=20
+https://lists.zx2c4.com/mailman/listinfo/wireguard=20
