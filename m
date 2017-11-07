@@ -1,22 +1,21 @@
-Return-Path: greg@kroah.com
+Return-Path: gregkh@linuxfoundation.org
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b1740dde
- for <wireguard@lists.zx2c4.com>; Tue, 7 Nov 2017 09:31:20 +0000 (UTC)
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
- [66.111.4.28])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2d0353de
- for <wireguard@lists.zx2c4.com>; Tue, 7 Nov 2017 09:31:20 +0000 (UTC)
-Date: Tue, 7 Nov 2017 10:34:46 +0100
-From: Greg KH <greg@kroah.com>
-To: =?iso-8859-1?Q?Aur=E9lien?= Chabot <aurelien@chabot.fr>
-Subject: Re: [PATCH 1/4] Add wireguard-go as submodule
-Message-ID: <20171107093446.GA7891@kroah.com>
-References: <20171107043817.9050-1-aurelien@chabot.fr>
- <20171107043817.9050-2-aurelien@chabot.fr>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 843ba7cf
+ for <wireguard@lists.zx2c4.com>; Tue, 7 Nov 2017 09:35:08 +0000 (UTC)
+Received: from mail.linuxfoundation.org (mail.linuxfoundation.org
+ [140.211.169.12])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 784a7830
+ for <wireguard@lists.zx2c4.com>; Tue, 7 Nov 2017 09:35:08 +0000 (UTC)
+Date: Tue, 7 Nov 2017 10:38:32 +0100
+From: Greg KH <gregkh@linuxfoundation.org>
+To: Ferris Ellis <ferris@ferrisellis.com>
+Subject: Re: Production usage of Wireguard
+Message-ID: <20171107093832.GB7891@kroah.com>
+References: <CAC4KqtwH_XAXeXHSf9Kxs5t80Qag9GrMwp6SaPnO9bj=GVL-7w@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-In-Reply-To: <20171107043817.9050-2-aurelien@chabot.fr>
-Cc: wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset=utf-8
+In-Reply-To: <CAC4KqtwH_XAXeXHSf9Kxs5t80Qag9GrMwp6SaPnO9bj=GVL-7w@mail.gmail.com>
+Cc: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,32 +25,24 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Tue, Nov 07, 2017 at 03:38:12PM +1100, Aur�lien Chabot wrote:
-> Signed-off-by: Aur�lien Chabot <aurelien@chabot.fr>
-> ---
->  .gitmodules  | 3 +++
->  wireguard-go | 1 +
->  2 files changed, 4 insertions(+)
->  create mode 100644 .gitmodules
->  create mode 160000 wireguard-go
+On Mon, Nov 06, 2017 at 09:41:18PM +0000, Ferris Ellis wrote:
+> Hello Wireguard mailing list!
 > 
-> diff --git a/.gitmodules b/.gitmodules
-> new file mode 100644
-> index 0000000..c7957ea
-> --- /dev/null
-> +++ b/.gitmodules
-> @@ -0,0 +1,3 @@
-> +[submodule "wireguard-go"]
-> +	path = wireguard-go
-> +	url = git@github.com:trishika/wireguard-go.git
+> I have been very interested in the WireGuard project for a little while now
+> and am in the process of evaluating it. While benchmarks and code reviews
+> are useful, they don’t uncover many of the issues that can potentially wake
+> one up at 3am. I’d hunted around on the web for a while but wasn’t able to
+> find any articles on running WireGuard in a production environment. I know
+> the project is still young but was wondering if anyone on the mailing list
+> had started using WireGuard in production? And, if so, if they’d be willing
+> to share some details about their use case and experience?
 
-Ugh, submodules are a pain in git, do you really want to do it this way?
-If so, why?  I thought there was a "replacement" for submodules that was
-recommended to use instead.
+There are at least two companies offering Wireguard as a VPN service
+"commercially" right now, so it is being used in that manner already.
 
-And I mention this because I have a submodule in a project I maintain,
-and I _always_ mess it up when I go to update it, and have to go read
-the documentation for how to do it properly.
+But as "production environment" always means different things for
+different people, perhaps only you can answer this question?  What would
+it take for _you_ to be comfortable with it in your network environment?
 
 thanks,
 
