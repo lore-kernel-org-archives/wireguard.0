@@ -1,21 +1,25 @@
-Return-Path: mathias@hall-andersen.dk
+Return-Path: ferris@ferrisellis.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id aba76b64
- for <wireguard@lists.zx2c4.com>; Wed, 8 Nov 2017 17:40:41 +0000 (UTC)
-Received: from mailrelay4-2.pub.mailoutpod1-cph3.one.com
- (mailrelay4-2.pub.mailoutpod1-cph3.one.com [46.30.212.3])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 17f39a1a
- for <wireguard@lists.zx2c4.com>; Wed, 8 Nov 2017 17:40:41 +0000 (UTC)
-Subject: Re: WireGuard root-less support for android
-To: =?UTF-8?Q?Aur=c3=a9lien_Chabot?= <aurelien@chabot.fr>
-References: <20171107043817.9050-1-aurelien@chabot.fr>
-From: Mathias Hall-Andersen <mathias@hall-andersen.dk>
-Message-ID: <68455df5-a429-09aa-308d-fc3615557530@hall-andersen.dk>
-Date: Wed, 8 Nov 2017 18:44:01 +0100
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6256fd5c
+ for <wireguard@lists.zx2c4.com>; Wed, 8 Nov 2017 21:37:37 +0000 (UTC)
+Received: from mail-io0-f170.google.com (mail-io0-f170.google.com
+ [209.85.223.170])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 06f3083e
+ for <wireguard@lists.zx2c4.com>; Wed, 8 Nov 2017 21:37:37 +0000 (UTC)
+Received: by mail-io0-f170.google.com with SMTP id m16so7582443iod.1
+ for <wireguard@lists.zx2c4.com>; Wed, 08 Nov 2017 13:41:00 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20171107043817.9050-1-aurelien@chabot.fr>
-Content-Type: text/plain; charset=utf-8
-Cc: wireguard@lists.zx2c4.com
+References: <CAC4KqtwH_XAXeXHSf9Kxs5t80Qag9GrMwp6SaPnO9bj=GVL-7w@mail.gmail.com>
+ <CALJ2VGZzPmYvVDethJkeYzGq38g1Y4Nj6=QyscWcXVY+xnWXow@mail.gmail.com>
+ <CAM3m09T26HgZfNihNO+-QR-5bsd=m+koY=gudThW6Kii9jETgQ@mail.gmail.com>
+In-Reply-To: <CAM3m09T26HgZfNihNO+-QR-5bsd=m+koY=gudThW6Kii9jETgQ@mail.gmail.com>
+From: Ferris Ellis <ferris@ferrisellis.com>
+Date: Wed, 08 Nov 2017 21:40:49 +0000
+Message-ID: <CAC4KqtxdQOnM_2B+3i9F6sg=EMiWCH1MJf-N-aT55PJrTu-eQg@mail.gmail.com>
+Subject: Re: Production usage of Wireguard
+To: Ryan Whelan <rcwhelan@gmail.com>
+Content-Type: multipart/alternative; boundary="001a11c147882567c3055d7f8bfe"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -25,25 +29,29 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Aurélien
+--001a11c147882567c3055d7f8bfe
+Content-Type: text/plain; charset="UTF-8"
 
-Thanks for contributing to the wireguard-go project.
+Wow, this was an awesome amount of response to get from the community :D
+also definitely gives me confidence to start moving stuff to WireGuard.
+Thanks to everyone for the comments and thanks to Jason for making this
+project a reality!
 
-I never anticipated for the implementation to be used as a library.
-This means that I either have to:
+Cheers,
+Ferris
+-- 
+Ferris Ellis
 
-1. Settle for an API and reconsider what is exported and not.
-2. Give no guarantees about API stability
+--001a11c147882567c3055d7f8bfe
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Providing the functionality as a library might be the cleanest solution
-in this case.
-One option is to have an internal package and a small exported API.
+<div><div><div dir=3D"auto">Wow, this was an awesome amount of response to =
+get from the community :D also definitely gives me confidence to start movi=
+ng stuff to WireGuard. Thanks to everyone for the comments and thanks to Ja=
+son for making this project a reality!</div></div></div><div dir=3D"auto"><=
+br></div><div dir=3D"auto">Cheers,</div><div dir=3D"auto">Ferris</div><div =
+dir=3D"ltr">-- <br></div><div class=3D"gmail_signature" data-smartmail=3D"g=
+mail_signature"><div dir=3D"ltr">Ferris Ellis</div></div>
 
-Is the GetUDPConn only used to wait for the device to bind?
-
-The missing device.tun.device.Close() is indeed a bug.
-
-I will look more at your patches during the weekend,
-Thanks once again.
-
-Mathias
+--001a11c147882567c3055d7f8bfe--
