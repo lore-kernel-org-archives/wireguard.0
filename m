@@ -1,20 +1,21 @@
-Return-Path: kofec80@gmail.com
+Return-Path: samuel@sholland.org
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fda0b4ca
- for <wireguard@lists.zx2c4.com>; Tue, 7 Nov 2017 15:28:29 +0000 (UTC)
-Received: from mail-qt0-f175.google.com (mail-qt0-f175.google.com
- [209.85.216.175])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d6cdc0a9
- for <wireguard@lists.zx2c4.com>; Tue, 7 Nov 2017 15:28:29 +0000 (UTC)
-Received: by mail-qt0-f175.google.com with SMTP id j58so15696425qtj.0
- for <wireguard@lists.zx2c4.com>; Tue, 07 Nov 2017 07:31:43 -0800 (PST)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fa7f1f1e
+ for <wireguard@lists.zx2c4.com>; Wed, 8 Nov 2017 05:11:49 +0000 (UTC)
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
+ [66.111.4.28])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 762f0a8d
+ for <wireguard@lists.zx2c4.com>; Wed, 8 Nov 2017 05:11:49 +0000 (UTC)
+Subject: Re: WireGuard root-less support for android
+To: =?UTF-8?Q?Aur=c3=a9lien_Chabot?= <aurelien@chabot.fr>,
+ wireguard@lists.zx2c4.com
+References: <20171107043817.9050-1-aurelien@chabot.fr>
+From: Samuel Holland <samuel@sholland.org>
+Message-ID: <962a4121-b5c8-c64a-30c1-e061eba656b0@sholland.org>
+Date: Tue, 7 Nov 2017 23:15:06 -0600
 MIME-Version: 1.0
-From: =?UTF-8?Q?Micha=C5=82_Kowalski?= <kofec80@gmail.com>
-Date: Tue, 7 Nov 2017 16:31:42 +0100
-Message-ID: <CA+9wVskTTuJSz82K+Bi8JEs7n8WK3oiD_egJDVpUe=OAD-28WA@mail.gmail.com>
-Subject: Windows Subsystem for Linux & wireguard
-To: wireguard@lists.zx2c4.com
-Content-Type: multipart/alternative; boundary="001a113e4d6aa3e0ac055d664498"
+In-Reply-To: <20171107043817.9050-1-aurelien@chabot.fr>
+Content-Type: text/plain; charset=utf-8; format=flowed
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -24,25 +25,45 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---001a113e4d6aa3e0ac055d664498
-Content-Type: text/plain; charset="UTF-8"
+Hello,
 
-Hi
+On 11/06/17 22:38, Aurélien Chabot wrote:
+> I worked on a set of change to add root-less support of WireGuard for
+> android. The solution I choose is to use the wireguard-go library 
+> inside the android application. Golang as a mechanism to export some 
+> native binding quite easily to java. The set of patch need some 
+> feedback but it's actually working well. I'd like to know if you 
+> think this is a good direction to take for the android application.
 
-I <wireguard@lists.zx2c4.com>s it possible to  create interface for
-wiregurad in Windows Subsystem for Linux (e.g UBUNTU) ?
+Thanks for your contribution! This is definitely the direction we want
+to work toward; the Go implementation is much more accessible to
+non-rooted devices. I had assumed we would have to run wireguard-go as a
+separate process (my only experience with Go-on-Android is syncthing[1],
+which pretends its Go binary is a native library[2]). If we can run
+wireguard-go in process, that would be much better!
 
-Regards,
-Michal
+[1]: https://github.com/syncthing/syncthing-android
+[2]: 
+https://github.com/syncthing/syncthing-android/blob/master/make-syncthing.bash
 
---001a113e4d6aa3e0ac055d664498
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+> The patch are in the thread but I used a submodule to integrate the 
+> wireguard-go library inside the wireguard-android so at least this 
+> need to be change with the official url if it's get merge.
 
-<div dir=3D"ltr"><div>Hi</div><div><br></div><a href=3D"mailto:wireguard@li=
-sts.zx2c4.com" style=3D"font-family:&quot;Times New Roman&quot;;font-size:m=
-edium">I</a>s it possible to=C2=A0 create interface for wiregurad in=C2=A0W=
-indows Subsystem for Linux (e.g UBUNTU) ?<br><div><br></div><div>Regards,</=
-div><div>Michal</div></div>
+Also, your patch 2 won't work as-is with the upstream version since it
+won't have the same commit hash.
 
---001a113e4d6aa3e0ac055d664498--
+> You can also find the set of change on my github : 
+> https://github.com/trishika/wireguard-android 
+> https://github.com/trishika/wireguard-go
+
+I've started looking through your Java changes, and they're generally
+looking good. The actual wireguard-go glue can't be merged until after
+the changes to the other repository (hooray submodules!), but I'll go
+ahead and try to integrate your service abstraction layer. That way I
+can reuse it for switching the kernel-space interface from wg-quick to
+wg proper (an existing to-do item).
+
+> Aurélien
+Thanks,
+Samuel
