@@ -1,23 +1,20 @@
-Return-Path: aurelien.chabot@gmail.com
+Return-Path: steve@erayd.net
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 172f1d0e
- for <wireguard@lists.zx2c4.com>; Wed, 8 Nov 2017 21:47:34 +0000 (UTC)
-Received: from mail-wm0-f48.google.com (mail-wm0-f48.google.com [74.125.82.48])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c8eea84f
- for <wireguard@lists.zx2c4.com>; Wed, 8 Nov 2017 21:47:34 +0000 (UTC)
-Received: by mail-wm0-f48.google.com with SMTP id r196so13785312wmf.2
- for <wireguard@lists.zx2c4.com>; Wed, 08 Nov 2017 13:50:57 -0800 (PST)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 67111ca2
+ for <wireguard@lists.zx2c4.com>; Thu, 9 Nov 2017 05:10:04 +0000 (UTC)
+Received: from mail-yw0-f169.google.com (mail-yw0-f169.google.com
+ [209.85.161.169])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4aace650
+ for <wireguard@lists.zx2c4.com>; Thu, 9 Nov 2017 05:10:04 +0000 (UTC)
+Received: by mail-yw0-f169.google.com with SMTP id i198so4320380ywe.7
+ for <wireguard@lists.zx2c4.com>; Wed, 08 Nov 2017 21:13:30 -0800 (PST)
 MIME-Version: 1.0
-References: <20171107043817.9050-1-aurelien@chabot.fr>
- <68455df5-a429-09aa-308d-fc3615557530@hall-andersen.dk>
-In-Reply-To: <68455df5-a429-09aa-308d-fc3615557530@hall-andersen.dk>
-From: =?UTF-8?Q?Aur=C3=A9lien_Chabot?= <aurelien@chabot.fr>
-Date: Wed, 08 Nov 2017 21:50:46 +0000
-Message-ID: <CAJup9ciQfnxJ8joN3bHT2Aqw3shV_=P-tQ6v-gw3RSM1R1VdPg@mail.gmail.com>
-Subject: Re: WireGuard root-less support for android
-To: Mathias Hall-Andersen <mathias@hall-andersen.dk>
-Content-Type: multipart/alternative; boundary="089e08310224b7b61f055d7fae80"
-Cc: wireguard@lists.zx2c4.com
+From: Steve Gilberd <steve@erayd.net>
+Date: Thu, 09 Nov 2017 05:13:18 +0000
+Message-ID: <CAJQSx3aCmyP=a=WptUTUn-3igOL0D4i8ETij412bpfdTGeab7Q@mail.gmail.com>
+Subject: Alpine Linux Packages
+To: wireguard@lists.zx2c4.com
+Content-Type: multipart/alternative; boundary="94eb2c1f14705e5501055d85ddbb"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -27,83 +24,53 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---089e08310224b7b61f055d7fae80
+--94eb2c1f14705e5501055d85ddbb
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-The GetUDPConn is used to forward the socket id to the Java layer. The
-android API allow to protect the socket from being route to the VPN, making
-the job of using the VPN as default route easy.
+Hi All,
 
-About the close, good to know I am not missing something. I might spit the
-patch then, so the bug fix doesn't get stuck with the rest.
+Where might I find the Alpine Linux packages for Wireguard? I've found a
+number of messages in the mailing list archives that indicate it's
+available, but cannot find actual packages anywhere. The instructions at
+https://www.wireguard.com/install/ imply that it's in the main repository,
+but that doesn't seem to be the case, and searching
+https://pkgs.alpinelinux.org/packages does not yield any related packages.
 
-Aur=C3=A9lien
+Cheers,
+Steve
+--=20
 
-On Thu, Nov 9, 2017, 04:48 Mathias Hall-Andersen <mathias@hall-andersen.dk>
-wrote:
+Cheers,
 
-> Hi Aur=C3=A9lien
->
-> Thanks for contributing to the wireguard-go project.
->
-> I never anticipated for the implementation to be used as a library.
-> This means that I either have to:
->
-> 1. Settle for an API and reconsider what is exported and not.
-> 2. Give no guarantees about API stability
->
-> Providing the functionality as a library might be the cleanest solution
-> in this case.
-> One option is to have an internal package and a small exported API.
->
-> Is the GetUDPConn only used to wait for the device to bind?
->
-> The missing device.tun.device.Close() is indeed a bug.
->
-> I will look more at your patches during the weekend,
-> Thanks once again.
->
-> Mathias
->
+*Steve Gilberd*
+Erayd LTD *=C2=B7* Consultant
+*Phone: +64 4 974-4229 **=C2=B7** Mob: +64 27 565-3237*
+*PO Box 10019 The Terrace, Wellington 6143, NZ*
 
---089e08310224b7b61f055d7fae80
+--94eb2c1f14705e5501055d85ddbb
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<p dir=3D"ltr">The GetUDPConn is used to forward the socket id to the Java =
-layer. The android API allow to protect the socket from being route to the =
-VPN, making the job of using the VPN as default route easy.</p>
-<p dir=3D"ltr">About the close, good to know I am not missing something. I =
-might spit the patch then, so the bug fix doesn&#39;t get stuck with the re=
-st.</p>
-<p dir=3D"ltr">Aur=C3=A9lien</p>
-<br><div class=3D"gmail_quote"><div dir=3D"ltr">On Thu, Nov 9, 2017, 04:48 =
-Mathias Hall-Andersen &lt;<a href=3D"mailto:mathias@hall-andersen.dk">mathi=
-as@hall-andersen.dk</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quot=
-e" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">=
-Hi Aur=C3=A9lien<br>
-<br>
-Thanks for contributing to the wireguard-go project.<br>
-<br>
-I never anticipated for the implementation to be used as a library.<br>
-This means that I either have to:<br>
-<br>
-1. Settle for an API and reconsider what is exported and not.<br>
-2. Give no guarantees about API stability<br>
-<br>
-Providing the functionality as a library might be the cleanest solution<br>
-in this case.<br>
-One option is to have an internal package and a small exported API.<br>
-<br>
-Is the GetUDPConn only used to wait for the device to bind?<br>
-<br>
-The missing device.tun.device.Close() is indeed a bug.<br>
-<br>
-I will look more at your patches during the weekend,<br>
-Thanks once again.<br>
-<br>
-Mathias<br>
-</blockquote></div>
+<div dir=3D"ltr">Hi All,<div><br></div><div>Where might I find the Alpine L=
+inux packages for Wireguard? I&#39;ve found a number of messages in the mai=
+ling list archives that indicate it&#39;s available, but cannot find actual=
+ packages anywhere. The instructions at=C2=A0<a href=3D"https://www.wiregua=
+rd.com/install/">https://www.wireguard.com/install/</a>=C2=A0imply that it&=
+#39;s in the main repository, but that doesn&#39;t seem to be the case, and=
+ searching=C2=A0<a href=3D"https://pkgs.alpinelinux.org/packages">https://p=
+kgs.alpinelinux.org/packages</a>=C2=A0does not yield any related packages.<=
+/div><div><br></div><div>Cheers,</div><div>Steve</div></div><div dir=3D"ltr=
+">-- <br></div><div class=3D"gmail_signature" data-smartmail=3D"gmail_signa=
+ture"><div dir=3D"ltr"><p dir=3D"ltr">Cheers,</p>
+<p dir=3D"ltr"><b>Steve Gilberd</b><br>
+<font color=3D"#666666">Erayd LTD=C2=A0</font><b><font color=3D"#666666">=
+=C2=B7</font></b><font color=3D"#666666">=C2=A0Consultant</font><br>
+<i><font color=3D"#666666">Phone: +64 4 974-4229=C2=A0</font></i><b><i><fon=
+t color=3D"#666666">=C2=B7</font></i></b><i><font color=3D"#666666">=C2=A0M=
+ob: +64 27 565-3237</font></i><br>
+<i><font color=3D"#666666">PO Box 10019 The Terrace, Wellington 6143, NZ</f=
+ont></i></p>
+</div></div>
 
---089e08310224b7b61f055d7fae80--
+--94eb2c1f14705e5501055d85ddbb--
