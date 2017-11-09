@@ -1,24 +1,27 @@
-Return-Path: steve@erayd.net
+Return-Path: mk.fraggod@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3985bc70
- for <wireguard@lists.zx2c4.com>; Thu, 9 Nov 2017 05:38:28 +0000 (UTC)
-Received: from mail-yw0-f171.google.com (mail-yw0-f171.google.com
- [209.85.161.171])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 79a477c5
- for <wireguard@lists.zx2c4.com>; Thu, 9 Nov 2017 05:38:28 +0000 (UTC)
-Received: by mail-yw0-f171.google.com with SMTP id u142so4364614ywg.4
- for <wireguard@lists.zx2c4.com>; Wed, 08 Nov 2017 21:41:54 -0800 (PST)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 394667a1
+ for <wireguard@lists.zx2c4.com>; Thu, 9 Nov 2017 16:45:08 +0000 (UTC)
+Received: from mail-lf0-f52.google.com (mail-lf0-f52.google.com
+ [209.85.215.52])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9f7772a1
+ for <wireguard@lists.zx2c4.com>; Thu, 9 Nov 2017 16:45:08 +0000 (UTC)
+Received: by mail-lf0-f52.google.com with SMTP id s16so7702861lfs.1
+ for <wireguard@lists.zx2c4.com>; Thu, 09 Nov 2017 08:48:38 -0800 (PST)
+Return-Path: <mk.fraggod@gmail.com>
+Received: from malediction ([188.226.62.174])
+ by smtp.gmail.com with ESMTPSA id g12sm1280958lfd.61.2017.11.09.08.48.31
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+ Thu, 09 Nov 2017 08:48:31 -0800 (PST)
+Date: Thu, 9 Nov 2017 21:48:29 +0500
+From: Mike Kazantsev <mk.fraggod@gmail.com>
+To: wireguard@lists.zx2c4.com
+Subject: Documentation for kernel requirements doesn't mention
+ CONFIG_UNUSED_SYMBOLS
+Message-ID: <20171109214829.7205e821@malediction>
 MIME-Version: 1.0
-References: <CAJQSx3aCmyP=a=WptUTUn-3igOL0D4i8ETij412bpfdTGeab7Q@mail.gmail.com>
- <CAHmME9pCYjzr_41kCcDqwa_8HJhC3WOm2Fxyk9RbeRO9hpyACg@mail.gmail.com>
-In-Reply-To: <CAHmME9pCYjzr_41kCcDqwa_8HJhC3WOm2Fxyk9RbeRO9hpyACg@mail.gmail.com>
-From: Steve Gilberd <steve@erayd.net>
-Date: Thu, 09 Nov 2017 05:41:42 +0000
-Message-ID: <CAJQSx3YRbZJhHBRWKZrh33ZQQeSJ4m=cyvqzrKvB5qzeE5Ngcg@mail.gmail.com>
-Subject: Re: Alpine Linux Packages
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Content-Type: multipart/alternative; boundary="001a114fbd78f74285055d8642ff"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset=US-ASCII
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -28,66 +31,55 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---001a114fbd78f74285055d8642ff
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-Oops - looks like I missed the edge requirement. Mea culpa, and thanks for
-setting me on the right track :-)
+Have tried to build wireguard module (using dkms) on mainline 4.9.58
+from kernel.org, and had following warnings on MODPOST:
 
-Cheers,
-Steve
+  MODPOST 1 modules
+  WARNING: "inet_confirm_addr" [/var/lib/dkms/wireguard/0.0.20171101/build/wireguard.ko] undefined!
+  WARNING: "skb_checksum_setup" [/var/lib/dkms/wireguard/0.0.20171101/build/wireguard.ko] undefined!
+  WARNING: "add_random_ready_callback" [/var/lib/dkms/wireguard/0.0.20171101/build/wireguard.ko] undefined!
+  WARNING: "del_random_ready_callback" [/var/lib/dkms/wireguard/0.0.20171101/build/wireguard.ko] undefined!
 
-On Thu, 9 Nov 2017 at 18:23 Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+These symbols did exist in /proc/kallsyms:
 
-> http://pkgs.alpinelinux.org/packages?name=3Dwireguard-*
->
-> Enable edge:
-> https://wiki.alpinelinux.org/wiki/Edge
->
-> Then:
-> # apk add -U wireguard-tools
->
---=20
+  ffffffff9385a100 T add_random_ready_callback
+  ffffffff9385a1b0 T del_random_ready_callback
+  ffffffff93991c20 T skb_checksum_setup
+  ffffffff93a22ab0 T inet_confirm_addr
 
-Cheers,
+But not in Module.symvers file, hence the warnings.
 
-*Steve Gilberd*
-Erayd LTD *=C2=B7* Consultant
-*Phone: +64 4 974-4229 **=C2=B7** Mob: +64 27 565-3237*
-*PO Box 10019 The Terrace, Wellington 6143, NZ*
+Loading module also failed with following dmesg output:
 
---001a114fbd78f74285055d8642ff
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+  [20139.879546] wireguard: Unknown symbol del_random_ready_callback (err 0)
+  [20139.879568] wireguard: Unknown symbol add_random_ready_callback (err 0)
+  [20139.879611] wireguard: Unknown symbol skb_checksum_setup (err 0)
+  [20139.879627] wireguard: Unknown symbol inet_confirm_addr (err 0)
 
-<div dir=3D"ltr">Oops - looks like I missed the edge requirement. Mea culpa=
-, and thanks for setting me on the right track :-)<div><br></div><div>Cheer=
-s,</div><div>Steve</div></div><br><div class=3D"gmail_quote"><div dir=3D"lt=
-r">On Thu, 9 Nov 2017 at 18:23 Jason A. Donenfeld &lt;<a href=3D"mailto:Jas=
-on@zx2c4.com">Jason@zx2c4.com</a>&gt; wrote:<br></div><blockquote class=3D"=
-gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-=
-left:1ex"><a href=3D"http://pkgs.alpinelinux.org/packages?name=3Dwireguard-=
-*" rel=3D"noreferrer" target=3D"_blank">http://pkgs.alpinelinux.org/package=
-s?name=3Dwireguard-*</a><br>
-<br>
-Enable edge:<br>
-<a href=3D"https://wiki.alpinelinux.org/wiki/Edge" rel=3D"noreferrer" targe=
-t=3D"_blank">https://wiki.alpinelinux.org/wiki/Edge</a><br>
-<br>
-Then:<br>
-# apk add -U wireguard-tools<br>
-</blockquote></div><div dir=3D"ltr">-- <br></div><div class=3D"gmail_signat=
-ure" data-smartmail=3D"gmail_signature"><div dir=3D"ltr"><p dir=3D"ltr">Che=
-ers,</p>
-<p dir=3D"ltr"><b>Steve Gilberd</b><br>
-<font color=3D"#666666">Erayd LTD=C2=A0</font><b><font color=3D"#666666">=
-=C2=B7</font></b><font color=3D"#666666">=C2=A0Consultant</font><br>
-<i><font color=3D"#666666">Phone: +64 4 974-4229=C2=A0</font></i><b><i><fon=
-t color=3D"#666666">=C2=B7</font></i></b><i><font color=3D"#666666">=C2=A0M=
-ob: +64 27 565-3237</font></i><br>
-<i><font color=3D"#666666">PO Box 10019 The Terrace, Wellington 6143, NZ</f=
-ont></i></p>
-</div></div>
+All symbols in question have e.g. "EXPORT_SYMBOL(inet_confirm_addr);"
+in the kernel code.
 
---001a114fbd78f74285055d8642ff--
+Reason seem to be missing CONFIG_UNUSED_SYMBOLS=y kernel option, which
+wireguard effectively requires to be enabled, but which is missing from
+"Kernel Requirements" section of the documentation (as of today, at least):
+
+  https://www.wireguard.com/install/#kernel-requirements
+
+While docs might not mention some other common sense options which are
+enabled in most kernels, I wanted to suggest considering including this
+one, in case it wasn't considered already.
+
+As description above suggests, it might be not obvious why these
+particular symbols get stripped during build, unlike with other options
+that are already documented, where one can easily trace missing symbol
+to a disabled module.
+
+It'd have saved me a bunch of time spent looking into the issue.
+
+Thanks!
+
+
+-- 
+Mike Kazantsev // fraggod.net
