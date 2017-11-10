@@ -1,32 +1,27 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: aurelien@chabot.fr
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 55995939
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 76dd483b
  for <wireguard@lists.zx2c4.com>;
- Fri, 10 Nov 2017 04:35:27 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ac5d0629
+ Fri, 10 Nov 2017 10:57:21 +0000 (UTC)
+Received: from 15.mo3.mail-out.ovh.net (15.mo3.mail-out.ovh.net
+ [87.98.150.177])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 65387398
  for <wireguard@lists.zx2c4.com>;
- Fri, 10 Nov 2017 04:35:27 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 34036f67
- for <wireguard@lists.zx2c4.com>;
- Fri, 10 Nov 2017 04:35:26 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 0ab56fd3
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Fri, 10 Nov 2017 04:35:25 +0000 (UTC)
-Received: by mail-oi0-f53.google.com with SMTP id y206so4781483oiy.4
- for <wireguard@lists.zx2c4.com>; Thu, 09 Nov 2017 20:38:59 -0800 (PST)
+ Fri, 10 Nov 2017 10:57:21 +0000 (UTC)
+Received: from player797.ha.ovh.net (b9.ovh.net [213.186.33.59])
+ by mo3.mail-out.ovh.net (Postfix) with ESMTP id 6325816FC5B
+ for <wireguard@lists.zx2c4.com>; Fri, 10 Nov 2017 12:00:55 +0100 (CET)
+Received: from localhost.localdomain (60-242-138-227.static.tpgi.com.au
+ [60.242.138.227]) (Authenticated sender: aurelien@chabot.fr)
+ by player797.ha.ovh.net (Postfix) with ESMTPA id DE0CB2E008A
+ for <wireguard@lists.zx2c4.com>; Fri, 10 Nov 2017 12:00:51 +0100 (CET)
+From: =?UTF-8?q?Aur=C3=A9lien=20Chabot?= <aurelien@chabot.fr>
+To: wireguard@lists.zx2c4.com
+Subject: Close the tun fd when closing the device
+Date: Fri, 10 Nov 2017 22:00:32 +1100
+Message-Id: <20171110110033.24210-1-aurelien@chabot.fr>
 MIME-Version: 1.0
-In-Reply-To: <20171109214829.7205e821@malediction>
-References: <20171109214829.7205e821@malediction>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 10 Nov 2017 13:38:57 +0900
-Message-ID: <CAHmME9pQmLJcq46Lz1zUopwnw3w=01nxjaVZhTWaCOVBOPiS1w@mail.gmail.com>
-Subject: Re: Documentation for kernel requirements doesn't mention
- CONFIG_UNUSED_SYMBOLS
-To: Mike Kazantsev <mk.fraggod@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset=UTF-8
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -36,8 +31,5 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Mike,
-
-Thanks for tracking this down. I've added note of this to the /install page.
-
-Jason
+This patch was part of the android development, as this is not specific
+to android, here is an independent patch. 
