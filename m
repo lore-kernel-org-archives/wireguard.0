@@ -1,32 +1,24 @@
-Return-Path: georg@riseup.net
+Return-Path: dkg@fifthhorseman.net
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2bdd27f5
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 876387f5
  for <wireguard@lists.zx2c4.com>;
- Fri, 10 Nov 2017 11:35:55 +0000 (UTC)
-Received: from mx1.riseup.net (mx1.riseup.net [198.252.153.129])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a1f71373
+ Fri, 10 Nov 2017 14:49:04 +0000 (UTC)
+Received: from che.mayfirst.org (che.mayfirst.org [162.247.75.118])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4dfe353c
  for <wireguard@lists.zx2c4.com>;
- Fri, 10 Nov 2017 11:35:55 +0000 (UTC)
-Received: from cotinga.riseup.net (unknown [10.0.1.164])
- (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
- (Client CN "*.riseup.net",
- Issuer "COMODO RSA Domain Validation Secure Server CA" (verified OK))
- by mx1.riseup.net (Postfix) with ESMTPS id 6C3A31A057E
- for <wireguard@lists.zx2c4.com>; Fri, 10 Nov 2017 03:39:30 -0800 (PST)
-Received: from [127.0.0.1] (localhost [127.0.0.1])
- by cotinga.riseup.net with ESMTPSA id 23B774E6CD
- for <wireguard@lists.zx2c4.com>; Fri, 10 Nov 2017 03:39:30 -0800 (PST)
-Date: Fri, 10 Nov 2017 12:39:27 +0100
-From: Georg Faerber <georg@riseup.net>
-To: wireguard@lists.zx2c4.com
-Subject: Re: Close the tun fd when closing the device
-Message-ID: <20171110113927.GB20381@debian>
-References: <20171110110033.24210-1-aurelien@chabot.fr>
- <20171110113841.GA20381@debian>
+ Fri, 10 Nov 2017 14:49:04 +0000 (UTC)
+From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: Re: Fix Debian install guide on wireguard.com/install
+In-Reply-To: <CAHmME9qZsKXR--RVJbyA-DPGKeX4GuYEwVp2EP6VhVE59hSOAQ@mail.gmail.com>
+References: <CA+Hw3eY4541LNE9TnS5tsU2O+n28BNQ-Spko5dpem8Ej2_ctFA@mail.gmail.com>
+ <CAHmME9qZsKXR--RVJbyA-DPGKeX4GuYEwVp2EP6VhVE59hSOAQ@mail.gmail.com>
+Date: Fri, 10 Nov 2017 07:48:39 +0000
+Message-ID: <87mv3u376w.fsf@fifthhorseman.net>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="2bJ57vwr75KGnr5s"
-In-Reply-To: <20171110113841.GA20381@debian>
+Content-Type: multipart/signed; boundary="=-=-=";
+ micalg=pgp-sha512; protocol="application/pgp-signature"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -36,40 +28,48 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-
---2bJ57vwr75KGnr5s
+--=-=-=
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On 17-11-10 12:38:41, Georg Faerber wrote:
-> On 17-11-10 22:00:32, Aur=C3=A9lien Chabot wrote:
-> > This patch was part of the android development, as this is not
-> > specific to android, here is an independent patch.=20
->=20
-> You forgot to attach the patch.. :)
+Hi Jason, Adri=C3=A1n, all--
 
-Sorry for the noise! :x
+On Tue 2017-10-31 23:20:02 +0100, Jason A. Donenfeld wrote:
 
---2bJ57vwr75KGnr5s
+> I have no idea what the right instructions to give for Debian are. Is
+> there something I should be doing so I don't have to hard code those
+> keys on the install page instructions?
+
+The right instructions for debian users would generally be to pull the
+package from unstable.  This should absolutely not require the use of
+"apt-key add", which is generally deprecated.
+
+If you want to provide a separate ("third-party") repository, the
+current best guidance is:
+
+    https://wiki.debian.org/DebianRepository/UseThirdParty
+
+Regards,
+
+        --dkg
+
+--=-=-=
 Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEE4p3Q++yWB9ljva4NWtdbQU6kFmcFAloFj+8ACgkQWtdbQU6k
-FmecgRAAlNfaDPssuHOqXSXjzwKYhEn+XXrKrm9KHHcmYgyZ/pzpAhk7tv/Kcks1
-4G1k1aN7aV/VsTIQhmfHXxWyaPQv/2X4vFg/cDSSWSKuw3bqL6IaHg+hBxI70VW5
-WVrmSFtaLNi2xdFBLwaiud1wts5GMe/Z7gOWu5CkuJTG0e9p/C1bIgMOh60xE2Bh
-TWsRuVdn5Eow6+sBSNCi8HmsY5OkkmBQwE+FLVpdKcwCBxLku8ztCybrU7+2lDYZ
-NQg7oGqCUYUer0iMH3Sg1rmKiJfU0nCWN7VgCQM+Z1y0TBActq8Op7ql19n0/ZzZ
-RyknHfbyXquZXtzctYZNx2AGHVci9KGKaVLqTAh3z80WunAt9NKXBXlqNEV+IpaG
-68AUSJ2ka+njaKeLeQ7PmzysyI/d9v5Oj3ixw1TUsLIFPODbo2h2bYOmwx4j6w4s
-wlEvdd4yRg0tZtqvVzma1kE1MKbBGrBh++C/9KbLIkTQvQZaiCoiACtG+5Eb1xW/
-/RwUGX/UUALjgeiMZLiltIwN5/IhcUIWECmJ3FlzWx2PE1IFmJk7BA8V9X4lsK93
-CMpU7Aus0pvAsRkIlh5UqXuuYEDWWnv0+2viwaT2qGyo4doHbACwSI8iLR7sB5s6
-SNqsKKv9jMvaV1Dzblk9e+sCr15vT/S1PgJQjCNpuqbgZ2KTYpk=
-=rLV/
+iQIzBAEBCgAdFiEEOCdgUepHf6PklTkyFJitxsGSMjcFAloFWdcACgkQFJitxsGS
+MjeUPQ//Zoh+YyDtP2ziCADlL5+xzSQxYmnrQftWoB1GCVpQmoRsJP1W/lqoPyeu
+hpQaMKyD18xL4MP4ZtPPujFP6JkXJVl7JaEYCS+7xD5x5AfYSgRfPRbbAlQbVZWL
+vl817xcxyvj2BJfFbxG2ZF2f8jDFNWFgEpxRmKKq2AjxSKzAO7pFoqAhcO+k8Zj5
+BvDKWc9HeNfymFSx5s85g5LIliug3DE/4pd9ppgogF5JgsOD+GG+jZG20DU6gKQO
+WT0u90ecUUSfd3IvmPMkTvBvz5vTHMlx94OMfSfLghA0OxI59ZdCno4f2gl1udhC
+WOfb5Ww234Q8Epe1UsEwAXM6OL1Sbgkd/Lbs+Af2CkL/0Vz5sFv+VELKMzT7obkK
+dim89nykBqx7Ij3S+Bv6mFa121ObOCms4WY4+P8nWGhkvgKzNiH78CuLW0n18TCs
+VlBysrvJAdnPt+9yQLbuQELmbDleyz01JR4XanAPVknwM28LfFBCvIAKNjN5zTTp
+aLlXiVX9HdRj7z72TMs/hlDX9zYW/DnalvyiEIk0NO6HbF052hSYZSHyR03GC0UI
+iLWyoMhNhNKf9O+R9onitZG3AyNXbo5jrrErYyB90U53SKZzRn6Nn32yT11UPirO
+H5o2Vmi6qAmY5flndO4kXNcEhgKzFHRff39pOvuJUlOgfDtit/Y=
+=/bw7
 -----END PGP SIGNATURE-----
-
---2bJ57vwr75KGnr5s--
+--=-=-=--
