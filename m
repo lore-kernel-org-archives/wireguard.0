@@ -1,20 +1,23 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: tomli@tomli.me
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d5f017c2
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 385f2064
  for <wireguard@lists.zx2c4.com>;
- Sat, 11 Nov 2017 04:45:21 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6d13f474
+ Sat, 11 Nov 2017 08:05:46 +0000 (UTC)
+Received: from tomli.me (tomli.me [153.92.126.73])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d0812662
  for <wireguard@lists.zx2c4.com>;
- Sat, 11 Nov 2017 04:45:21 +0000 (UTC)
-Date: Sat, 11 Nov 2017 13:48:56 +0900
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
- wireguard@lists.zx2c4.com
-Subject: WireGuard Upstreaming Roadmap (November 2017)
-Message-ID: <20171111044854.GA7956@zx2c4.com>
+ Sat, 11 Nov 2017 08:05:45 +0000 (UTC)
+Received: from tomli.me (localhost [127.0.0.1])
+ by tomli.me (OpenSMTPD) with ESMTP id 1cb45a21
+ for <wireguard@lists.zx2c4.com>;
+ Sat, 11 Nov 2017 08:09:27 +0000 (UTC)
+Date: Sat, 11 Nov 2017 16:09:20 +0800
+From: Tom Li <tomli@tomli.me>
+To: wireguard@lists.zx2c4.com
+Subject: imer_setup() is not compatible with PaX's RAP
+Message-ID: <20171111080920.GA5705@localhost.localdomain>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -24,97 +27,47 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi folks,
+After upgraded to 0.0.20171101, I found my 4.9 PaX/grsecurity kernel
+will panic soon if wireguard has been started, because of a RAP function
+point type violation.
 
-This relates to WireGuard [0].
+PAX: RAP hash violation for function pointer: peer_remove_all+0x450/0x930 [wireguard]
+PAX: overwritten function pointer detected: 0000 [#1] PREEMPT SMP
+RIP: 0010:[<ffffffff8115f670>]  [<ffffffff8115f670>] call_timer_fn+0x210/0x230
 
-Following a very nice conference with the Linux kernel networking subsystem
-community [1,2], I thought it might be a good idea to spell out the roadmap
-for the coming months and the trajectory into upstream, based on my
-discussions with several developers and maintainers. There are several threads
-of this, the biggest of which surrounds the kernel code base, but there are
-some other ends of the WireGuard project as a whole that are also relevant.
+Basically it says call_timer_fn() was going to call a function pointer led to peer_remove_all(),
+but the type of the function pointer doesn't match the function.
 
-The current biggest blocker is issues with the crypto API. Before WireGuard
-can go upstream, I intend to embark on a multi-pronged effort to overhaul the
-crypto API. I very much need to sync up with Herbert regarding my plans for
-this, and start spec'ing things out a bit more formally, so I can begin
-concrete discussions with him. I intend to base my work both on feedback
-from linux-crypto/Herbert and from the cryptographic research community. I
-hope to go to RWC2018 [3] and the subsequent HACS workshop for the academic
-engagement side, but of course like all the work I do on the kernel, things
-will be highly based in engineering, rather than purely academic, practices.
+A quick look to the kernel source code showed it was a side-effect of Kees Cook's
+new timer API in commit 686fef928bba6be13cabe639f154af7d72b63120 [1], which introduced
+new timer_setup() function.
 
-Dave has strongly encouraged me to post patches sooner rather than later.
-So I think before the crypto API is ready to go, I'll likely post a [RFG] --
-request for grumbles -- patch set to netdev, in order to have some code
-review, so as to gauge where we're at. This patch set will use my current
-crypto API, not the kernel's crypto API, with it mentioned in the opening that
-I intend to switch to the kernel's crypto API when it looks like the one used
-here. This way we'll get early feedback so that the later real [PATCH] series
-will go more smoothly.
+static inline void timer_setup(struct timer_list *timer,
+                               void (*callback)(struct timer_list *),
+                               unsigned int flags)
 
-There are a few WireGuard features that some of you have been waiting for. At
-the urging of some folks at the conference, I intend to submit a "core"
-WireGuard to upstream, and then use future releases to build on top of that,
-to make the initial upstreaming process go as easily as possible. Therefore,
-there are three big TODO items that may _or_ may not go in after upstreaming:
+WireGuard has switched to this new API to setup timers since
+7be989478f2fa659b0b6b55dbd72f222b932a5ee [2], and provided a macro to be compatible
+with older kernels.
 
- - In-band control messages [possibly not]
- - Netlink multicast event notification
- - GRO integration
+#define timer_setup(a, b, c) setup_timer(a, ((void (*)(unsigned long))b), ((unsigned long)a))
 
-Of these, it's most likely I'll implement GRO and leave the other two until
-after, but this may change. Since WireGuard already does GSO, it would make
-sense to implement the other side of things too. There's also a longer more
-ambitious roadmap [4], filled with both easy coding-related things and longer
-term design things, but that's out of scope for this email, though many of
-which will likely be completed before submission time.
+But it has an unfortunately consequence. a function type must match function pointer type used
+in the indirect call, although conversion in-between is allowed, but it has to be matched
+when the pointer is called, otherwise it's an undefined behavior.
 
-There are also six other threads of development that are ongoing, which I
-intend to put a bit more focus on too in the near future:
+Normally, it works on most compilers, but it triggers PaX's RAP as a breach of Control-Flow
+Integrity. I don't think there were any RAP violations in the previous version, and as user
+it would be the best to get it fixed in a way that doesn't involve incompatible function pointer
+types to comfort RAP, but I don't know if WireGuard is still going to support 4.9 PaX kernel...
 
-  - The userspace implementation. I'd like to bring this up to deployment
-    quality, which naturally fits into the next area.
+P.S: Now the kernel is doing essentially the same thing, but Cook said after the conversion is
+finished, pointer cast will be removed. But on existing kernels it'll always be an issue...
 
-  - Mobile apps. It's fairly easy to integrate the userspace implementation
-    with existing APIs. The current Android app already works well with the
-    kernel module, but of course people want this more easily deployed.
+Anyway, It's hard to say who break who... Probably it's going to work for me if I revert
+7be989478f2fa659b0b6b55dbd72f222b932a5ee on my computer as for now...
 
-  - Mac and Windows support for the userspace implementation. These are
-    already mostly done, but the APIs used may in fact change, so there may
-    still be a bit of work to do here before we're satisfied.
-
-  - Bindings and libraries. Now that we have a stable Netlink API, we can
-    start making nice wrappers for the various languages people like to use.
-    It remains to be seen whether or not a C "libwireguard" is needed, since in
-    that domain, talking Netlink directly is often a better choice, but I do see
-    some potential for a pywireguard and the like. This will also be essential
-    when the already mentioned plans for event notification and the possibly
-    excluded control messages materialize.
-
-  - More formal verification. While we have the cryptographic protocol
-    verified, there are still more places where formalism is quite helpful,
-    proving more state machines, and even proving C implementations to be
-    correct. Work and research is ongoing in this domain.
-
-  - Integration into network managers and routing daemons (mesh and
-    traditional). Work has already begun here on systemd-networkd, and others
-    are looking into daemons like babel and bird.
-
-So that's where we're at. I hope to have a RFG submitted in the next several
-months, and hopefully we gather some nice momentum and get the work
-upstreamed and the project completed soon, for some definition of "complete".
-
-If you'd like to work on WireGuard, or simply have any questions, don't
-hesitate to email me.
+At least it has been documented in the mailing list now...
 
 Regards,
-Jason
-
-
-[0] https://www.wireguard.com/
-[1] https://www.netdevconf.org/2.2/
-[2] https://www.wireguard.com/presentations/
-[3] https://rwc.iacr.org
-[4] https://www.wireguard.com/todo/
+Tom Li
