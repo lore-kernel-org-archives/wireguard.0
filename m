@@ -1,31 +1,31 @@
 Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c86334df
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6a3dc1a2
  for <wireguard@lists.zx2c4.com>;
- Mon, 13 Nov 2017 19:22:05 +0000 (UTC)
+ Mon, 13 Nov 2017 19:30:59 +0000 (UTC)
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4fd1a684
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a437d622
  for <wireguard@lists.zx2c4.com>;
- Mon, 13 Nov 2017 19:22:05 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 607361f8
+ Mon, 13 Nov 2017 19:30:59 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1b63c9f9
  for <wireguard@lists.zx2c4.com>;
- Mon, 13 Nov 2017 19:22:05 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id a4310c74
+ Mon, 13 Nov 2017 19:30:59 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id d6923695
  (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 13 Nov 2017 19:22:05 +0000 (UTC)
-Received: by mail-ot0-f173.google.com with SMTP id u10so7253742otc.12
- for <wireguard@lists.zx2c4.com>; Mon, 13 Nov 2017 11:26:06 -0800 (PST)
+ Mon, 13 Nov 2017 19:30:58 +0000 (UTC)
+Received: by mail-oi0-f41.google.com with SMTP id l138so1959663oib.7
+ for <wireguard@lists.zx2c4.com>; Mon, 13 Nov 2017 11:34:59 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CALpTdxkEn6yM3b20Qm9KAGqmEH=9kiFhCGxkBAeuEwrxj1o4uQ@mail.gmail.com>
-References: <CALpTdxmmm9PwtFEZ7bwHTvCcfB5VEpLTnHi0E-z3skSJvSdSuw@mail.gmail.com>
- <CAHmME9obe3j1suYKxFUHbCBHE7snQ+AtVFbjikv8rnf=m5Gc5A@mail.gmail.com>
- <CALpTdxkEn6yM3b20Qm9KAGqmEH=9kiFhCGxkBAeuEwrxj1o4uQ@mail.gmail.com>
+In-Reply-To: <5A08F7ED.19177.35F8664A@pageexec.freemail.hu>
+References: <20171111080920.GA5705@localhost.localdomain>
+ <CAHmME9qYobSS1aaj4ahqprmf_CFX49puiSVSg-WGdT9vzNZ-Ww@mail.gmail.com>
+ <5A08F7ED.19177.35F8664A@pageexec.freemail.hu>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 13 Nov 2017 20:26:05 +0100
-Message-ID: <CAHmME9pWjzkvSQxq+kjx5vQZYQD1JJyrfymTfFJc+kPScLQVRA@mail.gmail.com>
-Subject: Re: bug on armhf
-To: =?UTF-8?B?0KDQvtC80LDQvSDQk9Cw0LLRgNC40LvQvtCy?= <kogeler@gmail.com>
+Date: Mon, 13 Nov 2017 20:34:58 +0100
+Message-ID: <CAHmME9pDi9Djov75zjuc++jzZ+ksYPMwGs=tUMJU=C2Vk1od7Q@mail.gmail.com>
+Subject: Re: imer_setup() is not compatible with PaX's RAP
+To: pageexec@freemail.hu
 Content-Type: text/plain; charset="UTF-8"
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
@@ -37,12 +37,32 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Roman,
+Hey Pipacs,
 
-Thanks for the configuration. Could you try this commit, and tell me
-if it fixes the problem for you?
+On Mon, Nov 13, 2017 at 2:39 AM, PaX Team <pageexec@freemail.hu> wrote:
+> at fptr dereference time RAP will still see the type hash mismatch.
+> another approach could be to depend on TIMER_DATA_TYPE instead and use
+> it in your callback prototypes. as a sidenote, if you want to depend
+> on plugin related features, it's better to depend on RAP_PLUGIN
 
-https://git.zx2c4.com/WireGuard/commit/?id=921c3eb23009558fdd4a64c36c379b7a8dc6b22f
+I've fixed this all up here:
+https://git.zx2c4.com/WireGuard/commit/?id=e4bf02b833f99f4dcc2ab685d92517ccf8cc4766
 
-Regards,
+I think it _should_ work now. Thanks for the suggestions. I just
+monkey patched the signatures of each of those functions. Ugly, but it
+works.
+
+>
+> speaking of PaX support, you recently added some __ro_after_init wrapper
+> to wireguard which breaks under KERNEXEC when it's used on ops structs
+> (my __read_only has different semantics) so i have to revert it here but
+> it'd be nicer if you didn't define it when KERNEXEC is active.
+
+I've attempted to fix this in the same commit. Does that look like it will work?
+
+By the way, if you ever find yourself having to revert things to run
+WireGuard, don't hesitate to send a patch or just poke me, and I'll
+fix things. I'd definitely like to support PaX for as long as I can
+manage to do so.
+
 Jason
