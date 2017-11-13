@@ -1,23 +1,33 @@
-Return-Path: geokozey@mailfence.com
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1043f6f4
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c86334df
  for <wireguard@lists.zx2c4.com>;
- Mon, 13 Nov 2017 12:13:55 +0000 (UTC)
-Received: from wilbur.contactoffice.com (cinderella.contactoffice.com
- [212.3.242.69])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ff9b7e95
+ Mon, 13 Nov 2017 19:22:05 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4fd1a684
  for <wireguard@lists.zx2c4.com>;
- Mon, 13 Nov 2017 12:13:54 +0000 (UTC)
-Date: Mon, 13 Nov 2017 13:17:50 +0100 (CET)
-From: Geo Kozey <geokozey@mailfence.com>
-To: Stephen Major <smajor@gmail.com>, wireguard@lists.zx2c4.com
-Message-ID: <332327830.119976.1510575470630@ichabod.co-bxl>
-In-Reply-To: <CALzTOmLS-RYnns4xPpDSA6zaDBFhXqgL02n7PjzZjZMM4y0pPg@mail.gmail.com>
-References: <CALzTOmLS-RYnns4xPpDSA6zaDBFhXqgL02n7PjzZjZMM4y0pPg@mail.gmail.com>
-Subject: Re: Hardware based two factor authentication
+ Mon, 13 Nov 2017 19:22:05 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 607361f8
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 13 Nov 2017 19:22:05 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id a4310c74
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 13 Nov 2017 19:22:05 +0000 (UTC)
+Received: by mail-ot0-f173.google.com with SMTP id u10so7253742otc.12
+ for <wireguard@lists.zx2c4.com>; Mon, 13 Nov 2017 11:26:06 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Reply-To: Geo Kozey <geokozey@mailfence.com>
+In-Reply-To: <CALpTdxkEn6yM3b20Qm9KAGqmEH=9kiFhCGxkBAeuEwrxj1o4uQ@mail.gmail.com>
+References: <CALpTdxmmm9PwtFEZ7bwHTvCcfB5VEpLTnHi0E-z3skSJvSdSuw@mail.gmail.com>
+ <CAHmME9obe3j1suYKxFUHbCBHE7snQ+AtVFbjikv8rnf=m5Gc5A@mail.gmail.com>
+ <CALpTdxkEn6yM3b20Qm9KAGqmEH=9kiFhCGxkBAeuEwrxj1o4uQ@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Mon, 13 Nov 2017 20:26:05 +0100
+Message-ID: <CAHmME9pWjzkvSQxq+kjx5vQZYQD1JJyrfymTfFJc+kPScLQVRA@mail.gmail.com>
+Subject: Re: bug on armhf
+To: =?UTF-8?B?0KDQvtC80LDQvSDQk9Cw0LLRgNC40LvQvtCy?= <kogeler@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -27,25 +37,12 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-November 13, 2017 12:18:28 AM CET Stephen Major <smajor@gmail.com> wrote:
->This is a two-fold=C2=A0question:
->
->1) Can Wireguard=C2=A0be used directly with=C2=A0Yubikeys:=C2=A0https://ww=
-w.yubico.com
->
->2) Can Wireguard=C2=A0be used with a radius server like GreenRADIUS:http:/=
-/www.greenrocketsecurity.com/greenradius/
-=C2=A0
-In case of [1] you can store wireguard keys in pass (https://www.passwordst=
-ore.org) database which is encrypted using yubikey smartcard  mode. See exa=
-mple setup https://www.palkeo.com/sys/perfect-password-manager.html
+Hi Roman,
 
-Then you can add below command to your wg config, see https://git.zx2c4.com=
-/WireGuard/about/src/tools/wg-quick.8:
+Thanks for the configuration. Could you try this commit, and tell me
+if it fixes the problem for you?
 
-PostUp =3D wg set %i private-key <(pass WireGuard/private-keys/%i)
+https://git.zx2c4.com/WireGuard/commit/?id=921c3eb23009558fdd4a64c36c379b7a8dc6b22f
 
-
-Yours sincerely
-
-G. K.
+Regards,
+Jason
