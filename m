@@ -1,25 +1,22 @@
-Return-Path: pageexec@freemail.hu
+Return-Path: bruno@wolff.to
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 69c9887e
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 138dfdfa
  for <wireguard@lists.zx2c4.com>;
- Tue, 14 Nov 2017 11:08:30 +0000 (UTC)
-Received: from r00tworld.com (r00tworld.com [212.85.137.150])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 43c2d1f7
+ Tue, 14 Nov 2017 13:22:43 +0000 (UTC)
+Received: from wolff.to (wolff.to [98.103.208.27])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with SMTP id 80c220cf
  for <wireguard@lists.zx2c4.com>;
- Tue, 14 Nov 2017 11:08:29 +0000 (UTC)
-From: "PaX Team" <pageexec@freemail.hu>
+ Tue, 14 Nov 2017 13:22:43 +0000 (UTC)
+Date: Tue, 14 Nov 2017 07:25:51 -0600
+From: Bruno Wolff III <bruno@wolff.to>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 14 Nov 2017 12:12:24 +0100
+Subject: Re: Roaming Mischief
+Message-ID: <20171114132551.GB13027@wolff.to>
+References: <CAHmME9pW_0o8C+ovxgN3_-6csAa2sjF4hXo=24bhsi0jo=AP0Q@mail.gmail.com>
 MIME-Version: 1.0
-Subject: Re: imer_setup() is not compatible with PaX's RAP
-Message-ID: <5A0ACF98.2734.3D2AE425@pageexec.freemail.hu>
-In-reply-to: <CAHmME9prMg_RuEUaO1XNy4Aj6MH3Cu=16kp=F_B-kKbSwO+qdQ@mail.gmail.com>
-References: <20171111080920.GA5705@localhost.localdomain>,
- <5A0A3587.25804.3AD10FF8@pageexec.freemail.hu>,
- <CAHmME9prMg_RuEUaO1XNy4Aj6MH3Cu=16kp=F_B-kKbSwO+qdQ@mail.gmail.com>
-Content-type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii; format=flowed
+In-Reply-To: <CAHmME9pW_0o8C+ovxgN3_-6csAa2sjF4hXo=24bhsi0jo=AP0Q@mail.gmail.com>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Reply-To: pageexec@freemail.hu
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -29,21 +26,17 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On 14 Nov 2017 at 10:29, Jason A. Donenfeld wrote:
+On Tue, Nov 14, 2017 at 10:59:03 +0100,
+  "Jason A. Donenfeld" <Jason@zx2c4.com> wrote:
+>(Endpoint=my.server.whatever.zx2c4.com:51820!), that would prevent
+>servers from roaming; the client would still roam in the eyes of the
+>server, but the server, would no longer roam in the eyes of the
+>client. In other words, an option -- gasp, a nob! -- to disable
+>roaming on a per-by-peer one-sided basis. As you know, I don't really
+>like nobs. And I'd hate to add this, and then for people to use it,
+>and then loose some nice aspects of roaming, if it's not really even
+>required.
 
-> I fixed things up here:
-> https://git.zx2c4.com/WireGuard/commit/?id=df318d1f0526663a2d92439376379e32ebcfef1a
-
-works fine, thanks.
-
-> > speaking of PaX support, you recently added some __ro_after_init wrapper
-> > to wireguard which breaks under KERNEXEC when it's used on ops structs
-> > (my __read_only has different semantics) so i have to revert it here but
-> > it'd be nicer if you didn't define it when KERNEXEC is active.
-> 
-> So what exactly should I be fixing? I think in that last patch I
-> forgot to redefine it to be empty. Would this do what you have in
-> mind:
-
-i said 'don't define it', not 'redefine it' ;). the difference is that the
-latter removes the definition provided under KERNEXEC.
+If you know your other end point is at a fixed address you can use 
+iptables (or the equivalent) to enforce this. I don't think it needs 
+to be in WireGuard.
