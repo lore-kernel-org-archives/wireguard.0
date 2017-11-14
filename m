@@ -1,19 +1,28 @@
-Return-Path: bruno@wolff.to
+Return-Path: kogeler@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1d56cffe
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 20f4f5e6
  for <wireguard@lists.zx2c4.com>;
- Tue, 14 Nov 2017 16:31:45 +0000 (UTC)
-Received: from wolff.to (wolff.to [98.103.208.27])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with SMTP id 6b9d433c
+ Tue, 14 Nov 2017 18:05:51 +0000 (UTC)
+Received: from mail-io0-f170.google.com (mail-io0-f170.google.com
+ [209.85.223.170])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cb566c49
  for <wireguard@lists.zx2c4.com>;
- Tue, 14 Nov 2017 16:31:45 +0000 (UTC)
-Date: Tue, 14 Nov 2017 10:34:53 -0600
-From: Bruno Wolff III <bruno@wolff.to>
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Road Warrior config with fwmark
-Message-ID: <20171114163453.GA27547@wolff.to>
+ Tue, 14 Nov 2017 18:05:51 +0000 (UTC)
+Received: by mail-io0-f170.google.com with SMTP id 134so25342316ioo.0
+ for <wireguard@lists.zx2c4.com>; Tue, 14 Nov 2017 10:09:59 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+In-Reply-To: <CAHmME9pWjzkvSQxq+kjx5vQZYQD1JJyrfymTfFJc+kPScLQVRA@mail.gmail.com>
+References: <CALpTdxmmm9PwtFEZ7bwHTvCcfB5VEpLTnHi0E-z3skSJvSdSuw@mail.gmail.com>
+ <CAHmME9obe3j1suYKxFUHbCBHE7snQ+AtVFbjikv8rnf=m5Gc5A@mail.gmail.com>
+ <CALpTdxkEn6yM3b20Qm9KAGqmEH=9kiFhCGxkBAeuEwrxj1o4uQ@mail.gmail.com>
+ <CAHmME9pWjzkvSQxq+kjx5vQZYQD1JJyrfymTfFJc+kPScLQVRA@mail.gmail.com>
+From: =?UTF-8?B?0KDQvtC80LDQvSDQk9Cw0LLRgNC40LvQvtCy?= <kogeler@gmail.com>
+Date: Tue, 14 Nov 2017 21:09:58 +0300
+Message-ID: <CALpTdxmquLU44VuBUW1Fz_5y+Jwi_kfSmJSdUrgpBe0rezB8Yg@mail.gmail.com>
+Subject: Re: bug on armhf
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Content-Type: multipart/alternative; boundary="001a113eb83a7e0f94055df54bb3"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -23,19 +32,25 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-It would be nice if fwmark was mentioned on https://www.wireguard.com/netns/ 
-when covering routing all of your traffic through your tunnel for Road 
-Warrior setups.
+--001a113eb83a7e0f94055df54bb3
+Content-Type: text/plain; charset="UTF-8"
 
-I noticed the fwmark support when looking at tools/wg-quick.bash. 
-fwmark can be used to set up routing configurations that are essentially 
-(they don't give bogus addresses) independent of the local network 
-configuration. So no special action needs to be taken as you move from 
-one wireless network to another. This makes the rules based approach much 
-more competitive with the namespace technique.
+Yes, this commit solved the problem. Thanks for the quick response!
 
-I have this working on my laptop, but I want to tweak my router so that 
-I don't need to have special iptables rules on my home network.
+-- 
+Thanks,
+Roman Gavrilov
 
-I have things set up to give my laptop the same static IP address, no matter 
-where it is located.
+--001a113eb83a7e0f94055df54bb3
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><span id=3D"gmail-result_box" class=3D"gmail-" lang=3D"en"=
+><span>Yes, this commit solved the problem.</span> <span class=3D"gmail-">T=
+hanks for the quick response!</span></span><br><br><div class=3D"gmail_extr=
+a"><span class=3D"gmail-HOEnZb gmail-adL"><font color=3D"#888888">-- <br><d=
+iv class=3D"gmail-m_5673561690374840175gmail-m_4963248276163928978gmail-m_-=
+3577053390672033949gmail_signature"><div dir=3D"ltr">Thanks,</div><div>Roma=
+n Gavrilov</div></div></font></span></div></div>
+
+--001a113eb83a7e0f94055df54bb3--
