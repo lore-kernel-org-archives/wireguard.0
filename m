@@ -1,25 +1,25 @@
-Return-Path: markus.woschank@gmail.com
+Return-Path: baptiste@bitsofnetworks.org
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 689ab3fc
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fc2c2483
  for <wireguard@lists.zx2c4.com>;
- Wed, 15 Nov 2017 18:33:57 +0000 (UTC)
-Received: from mail-oi0-f43.google.com (mail-oi0-f43.google.com
- [209.85.218.43])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 43038458
+ Wed, 15 Nov 2017 21:56:32 +0000 (UTC)
+Received: from mails.bitsofnetworks.org (rezine.polyno.me [193.33.56.138])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2b1f7d8e
  for <wireguard@lists.zx2c4.com>;
- Wed, 15 Nov 2017 18:33:57 +0000 (UTC)
-Received: by mail-oi0-f43.google.com with SMTP id l138so6600780oib.7
- for <wireguard@lists.zx2c4.com>; Wed, 15 Nov 2017 10:38:13 -0800 (PST)
+ Wed, 15 Nov 2017 21:56:32 +0000 (UTC)
+Date: Wed, 15 Nov 2017 23:00:45 +0100
+From: Baptiste Jonglez <baptiste@bitsofnetworks.org>
+To: =?iso-8859-1?Q?Adri=E1n_Mih=E1lko?= <adriankoooo@gmail.com>
+Subject: Re: Fix Debian install guide on wireguard.com/install
+Message-ID: <20171115220045.GE27782@lud.polynome.dn42>
+References: <CA+Hw3eY4541LNE9TnS5tsU2O+n28BNQ-Spko5dpem8Ej2_ctFA@mail.gmail.com>
+ <20171115110849.GA27782@lud.polynome.dn42>
+ <9AD312F5-AB70-40F8-BAF9-64200037D125@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9pW_0o8C+ovxgN3_-6csAa2sjF4hXo=24bhsi0jo=AP0Q@mail.gmail.com>
-References: <CAHmME9pW_0o8C+ovxgN3_-6csAa2sjF4hXo=24bhsi0jo=AP0Q@mail.gmail.com>
-From: Markus Woschank <markus.woschank@gmail.com>
-Date: Wed, 15 Nov 2017 19:38:11 +0100
-Message-ID: <CAKUy5axhFKvgeGY1FrP5S4UON2QPV=7jQjZM268qG-M3RCAcVw@mail.gmail.com>
-Subject: Re: Roaming Mischief
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="ncSAzJYg3Aa9+CRW"
+In-Reply-To: <9AD312F5-AB70-40F8-BAF9-64200037D125@gmail.com>
+Cc: wireguard@lists.zx2c4.com
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -29,96 +29,98 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-+1 on restricting the peer endpoint in non-roaming mode.
 
-Personally, i would even go so far as to make it the default - meaning
-if one does not specify an endpoint roaming is enabled and if the user
-explicitly specified the endpoints address to not not allow any other
-IPs for that peer. Keep expectations (some, definitely I) have
-consistent with the behaviour.
-I don't see the point in allowing other IPs to connect if an endpoint
-IP has been specified - more confusing then helpful IMO.
+--ncSAzJYg3Aa9+CRW
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Anyway, I would be most happy with my personal favourite, but at least
-having the option is better than not having it (nob).
+Hi,
 
-Markus
+Please keep the list in copy.
 
+On 15-11-17, Adri=E1n Mih=E1lko wrote:
+> Hi Baptiste,
+>=20
+> I am using Rapbian and Raspberry Pi 3, it is not compatible with this rep=
+o?
 
-On 14 November 2017 at 10:59, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
-> Hey folks,
->
-> WireGuard has been built with the general rule that unauthenticated
-> data doesn't influence state. There has always been one exception to
-> this: roaming. The source IP address when roaming is always
-> unauthenticated, and replies always happen to the source that prompted
-> the reply. This means there is all sorts of mischief you can do. I
-> thought it might be useful to write down a bit of this mischief.
->
-> If an active man in the middle modifies a source address, he can have
-> reply packets sent elsewhere, for a very limited amount of time, until
-> either the encapsulated connection is dropped or the key expires and a
-> handshake is needed. This kind of disruption, however, isn't that much
-> different from what an active man in the middle already can do, by
-> just dropping packets, or generating packets, etc.
->
-> If an active man in the middle modifies a source address to be a
-> server he controls, which then relays encrypted packets between the
-> destination and the original source, then the sender and receiver will
-> communicate through this server rather than directly. The
-> communication is, of course, encrypted and authenticated, so there's
-> no chance of tampering. It's mostly then just a waste of bandwidth
-> resources of the attacker, to have to relay all of these unreadable
-> and unmodifiable packets. However, this does make it possible to
-> _extend the duration_ of a man in the middle attack, even if the man
-> in the middle can't do anything with the packets. For example, an
-> attacker at a coffee shop could change the endpoints to his relay
-> server; when you go home, you'd ostensibly still be using that relay
-> server.
->
-> Is this a meaningful attack? Does anybody care? Can this be used for
-> something interesting? When it comes to security of these things,
-> "probably" is usually a better answer than "no". For example, even
-> though the attacker with the MITM relay can't read or modify any
-> packets, he may still be able to do timing correlation attacks, if he
-> controls many points on the Internet. But was WireGuard ever supposed
-> to protect against correlation issues? Correlation issues already
-> exist without the relay anyway. And for what it's worth, Tor doesn't
-> really deal with that either. So maybe this doesn't really matter. But
-> perhaps there are worse things one can do with this primitive. And
-> perhaps there's even further mischief.
->
-> There is a mitigating factor in this that further makes it mostly not
-> a practical concern: people who are looking up their endpoints using
-> DNS are likely to want requery that DNS entry based on its TTL (or
-> sooner in the case of dynamic IPs), in which case this aspect of
-> extending the duration of an active MITM mostly goes away. However,
-> telling people to use DNS to prevent against something something
-> doesn't really seem like comprehensive advice. But it is a mitigating
-> factor worth mentioning.
->
-> So there are two attitudes toward this mischief. The first is to just
-> say it doesn't matter. WireGuard's crypto is resilient to all types of
-> men in the middle, and the fact of extending the duration of a man in
-> the middle doesn't change the fact that WireGuard's crypto is still
-> resilient. The other approach would be to add an optional exclamation
-> mark to the end of an endpoint specification
-> (Endpoint=my.server.whatever.zx2c4.com:51820!), that would prevent
-> servers from roaming; the client would still roam in the eyes of the
-> server, but the server, would no longer roam in the eyes of the
-> client. In other words, an option -- gasp, a nob! -- to disable
-> roaming on a per-by-peer one-sided basis. As you know, I don't really
-> like nobs. And I'd hate to add this, and then for people to use it,
-> and then loose some nice aspects of roaming, if it's not really even
-> required.
->
-> Regardless of which attitude we pick, I thought it might be a decent
-> idea to write this down on the list. This is not really new -- roaming
-> has been discussed in the literature for a long time now -- but it is
-> interesting. And of course I'm interested to hear your thoughts.
->
-> Jason
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
+As far as I know, Raspbian uses its own repositories.  I had a quick look
+at the repository archive and they don't seem to package wireguard.
+
+Installing wireguard from the official Debian armhf package might work,
+but there could be compatibility issues.  The installation instructions
+are valid for Debian, where the GPG key for unstable is already available.
+
+Does wireguard work fine on your raspberrypi when you install it this way?
+
+> $ cat /etc/issue
+> Raspbian GNU/Linux 8 \n \l
+>=20
+> Best regards,
+> Adrian
+>=20
+> > On 15 Nov 2017, at 12:08, Baptiste Jonglez <baptiste@bitsofnetworks.org=
+> wrote:
+> >=20
+> > Hi Daniel, Adri=E1n,
+> >=20
+> > On 31-10-17, Adri=E1n Mih=E1lko wrote:
+> >> There is a missing step in the Debian installation guide, you must imp=
+ort
+> >> GPG keys before you can add the new repo:
+> >=20
+> > Which version of Debian are you using?
+> >=20
+> > The installation instructions on https://www.wireguard.com/install/ <ht=
+tps://www.wireguard.com/install/> are
+> > tested on Jessie and Stretch, anything older (wheezy) will not work
+> > because the kernel is too old.
+> >=20
+> > Jason, can you add a note on the installation page that says "Jessie or
+> > later" somewhere?
+> >=20
+> > Baptiste
+> >=20
+> >> gpg --keyserver pgpkeys.mit.edu --recv-key  8B48AD6246925553
+> >> gpg -a --export 8B48AD6246925553 | sudo apt-key add -
+> >>=20
+> >> and also the key 7638D0442B90D010
+> >>=20
+> >> gpg --keyserver pgpkeys.mit.edu --recv-key 7638D0442B90D010
+> >> gpg -a --export 7638D0442B90D010 | sudo apt-key add -
+> >>=20
+> >> More about PGP and APT:
+> >>=20
+> >> http://ccm.net/faq/809-debian-apt-get-no-pubkey-gpg-error
+> >>=20
+> >> Regards,
+> >> Adrian Mihalko
+> >=20
+> >> _______________________________________________
+> >> WireGuard mailing list
+> >> WireGuard@lists.zx2c4.com <mailto:WireGuard@lists.zx2c4.com>
+> >> https://lists.zx2c4.com/mailman/listinfo/wireguard <https://lists.zx2c=
+4.com/mailman/listinfo/wireguard>
+
+--ncSAzJYg3Aa9+CRW
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEjVflzZuxNlVFbt5QvgHsIqBOLkYFAloMuQgACgkQvgHsIqBO
+LkZYRw//d0SpCNjNd61ijgebmnB1g/BQCjpcGjIDjXEuWTh9zv59EOlShlMND1bP
+crwFyRqdsT47eyIBspto3Td8qxEkOpWL77pseAb25+k0FErgwE+9E9EbdEMf8szh
+/YSmHJNNxl9ia6y7McGf6TXdrAXtLVHkUdyFW0ibFSCNcOoa0DliAzQF9QgB4/FA
+cW9uCxd4k2gTHuO0h9yAZjNanbmfjkCWDgao7ytod0SeLtadgbPBk5G6c2zaC/Y+
+YyVyfrIDLJFb95SCN3LuS98mCGoHv/jAv0ArrHq6a5WF42WJa0WxlSvtM8xCxG1D
+JsPv+XQcAPIErEkzuKaruK4gURODzjCBGcvhhh38kT+AdfH6BL4+4GZAx2q71VSm
+D/tEZXRJw8y21+T1w+e4BGTk1raqws0zfZbZJXAFjkVvLlzyHkSZ6NCdUxJRO4AK
+NGpuKEPi8vUKr1mCwmwwscrcjgi9gzivpFIddQ6xVPkeGtLRIKhKyRcEuz3QAqVF
+qnp7k0kJbKnTskRaabQp/SWmqnCJ9Q25U5ky29nZSz7UI701355NLjN3r4uLiSSs
+ID7oTyTkHbc9jF0HmrbQaFW40hbffBmoJYofumXpn2E/COU8vYXGHOfgSZsDtHW7
+aru984/vgdb36GxvyAF4gNrP2uxBnlRmsYXUqwTBf6REpzdHg1U=
+=zK8D
+-----END PGP SIGNATURE-----
+
+--ncSAzJYg3Aa9+CRW--
