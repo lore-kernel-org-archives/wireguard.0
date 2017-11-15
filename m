@@ -1,23 +1,25 @@
-Return-Path: gregkh@linuxfoundation.org
+Return-Path: markus.woschank@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 39eb08f3
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 689ab3fc
  for <wireguard@lists.zx2c4.com>;
- Wed, 15 Nov 2017 17:17:12 +0000 (UTC)
-Received: from mail.linuxfoundation.org (mail.linuxfoundation.org
- [140.211.169.12])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 70f248a8
+ Wed, 15 Nov 2017 18:33:57 +0000 (UTC)
+Received: from mail-oi0-f43.google.com (mail-oi0-f43.google.com
+ [209.85.218.43])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 43038458
  for <wireguard@lists.zx2c4.com>;
- Wed, 15 Nov 2017 17:17:12 +0000 (UTC)
-Date: Wed, 15 Nov 2017 18:21:32 +0100
-From: Greg KH <gregkh@linuxfoundation.org>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: Re: Blind Operator Mode - A Defensive Rootkit
-Message-ID: <20171115172132.GB8360@kroah.com>
-References: <20171115151852.GA23957@zx2c4.com>
+ Wed, 15 Nov 2017 18:33:57 +0000 (UTC)
+Received: by mail-oi0-f43.google.com with SMTP id l138so6600780oib.7
+ for <wireguard@lists.zx2c4.com>; Wed, 15 Nov 2017 10:38:13 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-In-Reply-To: <20171115151852.GA23957@zx2c4.com>
-Cc: wireguard@lists.zx2c4.com
+In-Reply-To: <CAHmME9pW_0o8C+ovxgN3_-6csAa2sjF4hXo=24bhsi0jo=AP0Q@mail.gmail.com>
+References: <CAHmME9pW_0o8C+ovxgN3_-6csAa2sjF4hXo=24bhsi0jo=AP0Q@mail.gmail.com>
+From: Markus Woschank <markus.woschank@gmail.com>
+Date: Wed, 15 Nov 2017 19:38:11 +0100
+Message-ID: <CAKUy5axhFKvgeGY1FrP5S4UON2QPV=7jQjZM268qG-M3RCAcVw@mail.gmail.com>
+Subject: Re: Roaming Mischief
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -27,61 +29,96 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Wed, Nov 15, 2017 at 04:18:54PM +0100, Jason A. Donenfeld wrote:
++1 on restricting the peer endpoint in non-roaming mode.
+
+Personally, i would even go so far as to make it the default - meaning
+if one does not specify an endpoint roaming is enabled and if the user
+explicitly specified the endpoints address to not not allow any other
+IPs for that peer. Keep expectations (some, definitely I) have
+consistent with the behaviour.
+I don't see the point in allowing other IPs to connect if an endpoint
+IP has been specified - more confusing then helpful IMO.
+
+Anyway, I would be most happy with my personal favourite, but at least
+having the option is better than not having it (nob).
+
+Markus
+
+
+On 14 November 2017 at 10:59, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
 > Hey folks,
-> 
-> One of the strengths of WireGuard is its visibility. wg(8) is a tiny tool
-> that's easy to use, and you can configure and reconfigure everything at
-> runtime, examining the current configuration, and doing other various things.
-> It works well and for the most part people seem to like it.
-> 
-> It turns out that this strength might actually be a weakness for some. A small
-> commercial VPN provider approached me recently about the fact they could see
-> the allowed IPs mapping easily with WireGuard, whereas with OpenVPN it was
-> hidden deep inside a process they didn't know how to debug. "Great," I
-> thought. Not so fast. They were concerned that when compelled to retrieve this
-> kind of information, they would no longer be able to claim, "we don't know
-> how," since WireGuard makes it so easy. So, they hired me for a day to develop
-> and open source a small solution for their unique use case and odd scenario.
-> 
-> Before reading further, do you have the same bizarre requirement? Probably
-> not. In that likely case, please keep reading only under the scope of,
-> "something somebody else thought they needed, but I don't need myself." In
-> other words, don't use this code.
-> 
-> Not wanting to hack up WireGuard or add configuration nobs -- or really
-> compromise any of what the project is about in response to these kinds of
-> requests -- I thought I'd write a small "defensive rootkit," which most
-> certainly kills both your kitten and your neighbor's parrot.
-> 
-> It started out by just hooking the Netlink API to zero out the endpoints and
-> allowedips for each peer. Then I disabled tcpdump. Then I disabled /dev/mem,
-> /dev/kmem, /dev/port, /proc/kcore, and module loading. Things were looking
-> fairly clean, until I needed to add compatibility support for old kernels, and
-> then I reverted to some cthulhu-style x86 opcode parsing and writing to proc
-> from kernelspace and other atrocities. It seems to work relatively well on
-> the kernels I've tested, but of course there are no guarantees with this kind
-> of stuff. In any case, there aren't very many public rootkit examples like
-> this, so at the very least it might be an aid to a college freshman doing an
-> assignment for his "Intro to Computer Security" course.
-> 
-> Keep in mind that there are several ways to subvert each and every defense
-> that this thing introduces. Several ways! All of the defenses! Subverted! For
-> that reason, you shouldn't use this if you're relying on the impossibility of
-> subversion. It's only meant as a confinement based on your own lack of
-> knowledge on how to subvert it. As you learn more, the software becomes less
-> effective.
-> 
-> If it's of any interest, it's online here:
-> https://git.zx2c4.com/blind-operator-mode/about/
-> https://git.zx2c4.com/blind-operator-mode/tree/blind-operator-mode.c
-> $ git clone https://git.zx2c4.com/blind-operator-mode/
-> 
-> Enjoy! Please don't run this monster at home!
-
-Ouch, my eyes!!!
-
-That's a great kernel module, thanks for publishing it, lots of fun
-things in there :)
-
-greg k-h
+>
+> WireGuard has been built with the general rule that unauthenticated
+> data doesn't influence state. There has always been one exception to
+> this: roaming. The source IP address when roaming is always
+> unauthenticated, and replies always happen to the source that prompted
+> the reply. This means there is all sorts of mischief you can do. I
+> thought it might be useful to write down a bit of this mischief.
+>
+> If an active man in the middle modifies a source address, he can have
+> reply packets sent elsewhere, for a very limited amount of time, until
+> either the encapsulated connection is dropped or the key expires and a
+> handshake is needed. This kind of disruption, however, isn't that much
+> different from what an active man in the middle already can do, by
+> just dropping packets, or generating packets, etc.
+>
+> If an active man in the middle modifies a source address to be a
+> server he controls, which then relays encrypted packets between the
+> destination and the original source, then the sender and receiver will
+> communicate through this server rather than directly. The
+> communication is, of course, encrypted and authenticated, so there's
+> no chance of tampering. It's mostly then just a waste of bandwidth
+> resources of the attacker, to have to relay all of these unreadable
+> and unmodifiable packets. However, this does make it possible to
+> _extend the duration_ of a man in the middle attack, even if the man
+> in the middle can't do anything with the packets. For example, an
+> attacker at a coffee shop could change the endpoints to his relay
+> server; when you go home, you'd ostensibly still be using that relay
+> server.
+>
+> Is this a meaningful attack? Does anybody care? Can this be used for
+> something interesting? When it comes to security of these things,
+> "probably" is usually a better answer than "no". For example, even
+> though the attacker with the MITM relay can't read or modify any
+> packets, he may still be able to do timing correlation attacks, if he
+> controls many points on the Internet. But was WireGuard ever supposed
+> to protect against correlation issues? Correlation issues already
+> exist without the relay anyway. And for what it's worth, Tor doesn't
+> really deal with that either. So maybe this doesn't really matter. But
+> perhaps there are worse things one can do with this primitive. And
+> perhaps there's even further mischief.
+>
+> There is a mitigating factor in this that further makes it mostly not
+> a practical concern: people who are looking up their endpoints using
+> DNS are likely to want requery that DNS entry based on its TTL (or
+> sooner in the case of dynamic IPs), in which case this aspect of
+> extending the duration of an active MITM mostly goes away. However,
+> telling people to use DNS to prevent against something something
+> doesn't really seem like comprehensive advice. But it is a mitigating
+> factor worth mentioning.
+>
+> So there are two attitudes toward this mischief. The first is to just
+> say it doesn't matter. WireGuard's crypto is resilient to all types of
+> men in the middle, and the fact of extending the duration of a man in
+> the middle doesn't change the fact that WireGuard's crypto is still
+> resilient. The other approach would be to add an optional exclamation
+> mark to the end of an endpoint specification
+> (Endpoint=my.server.whatever.zx2c4.com:51820!), that would prevent
+> servers from roaming; the client would still roam in the eyes of the
+> server, but the server, would no longer roam in the eyes of the
+> client. In other words, an option -- gasp, a nob! -- to disable
+> roaming on a per-by-peer one-sided basis. As you know, I don't really
+> like nobs. And I'd hate to add this, and then for people to use it,
+> and then loose some nice aspects of roaming, if it's not really even
+> required.
+>
+> Regardless of which attitude we pick, I thought it might be a decent
+> idea to write this down on the list. This is not really new -- roaming
+> has been discussed in the literature for a long time now -- but it is
+> interesting. And of course I'm interested to hear your thoughts.
+>
+> Jason
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
