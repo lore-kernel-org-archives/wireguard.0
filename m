@@ -1,21 +1,23 @@
-Return-Path: bruno@wolff.to
+Return-Path: baptiste@bitsofnetworks.org
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fa4a18ab
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f0f37923
  for <wireguard@lists.zx2c4.com>;
- Wed, 15 Nov 2017 08:31:18 +0000 (UTC)
-Received: from wolff.to (wolff.to [98.103.208.27])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with SMTP id f1c72188
+ Wed, 15 Nov 2017 11:04:39 +0000 (UTC)
+Received: from mails.bitsofnetworks.org (rezine.polyno.me [193.33.56.138])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6961b83b
  for <wireguard@lists.zx2c4.com>;
- Wed, 15 Nov 2017 08:31:18 +0000 (UTC)
-Date: Wed, 15 Nov 2017 02:34:23 -0600
-From: Bruno Wolff III <bruno@wolff.to>
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: Road Warrior config with fwmark
-Message-ID: <20171115083423.GA11843@wolff.to>
-References: <20171114163453.GA27547@wolff.to>
+ Wed, 15 Nov 2017 11:04:39 +0000 (UTC)
+Date: Wed, 15 Nov 2017 12:08:49 +0100
+From: Baptiste Jonglez <baptiste@bitsofnetworks.org>
+To: =?iso-8859-1?Q?Adri=E1n_Mih=E1lko?= <adriankoooo@gmail.com>
+Subject: Re: Fix Debian install guide on wireguard.com/install
+Message-ID: <20171115110849.GA27782@lud.polynome.dn42>
+References: <CA+Hw3eY4541LNE9TnS5tsU2O+n28BNQ-Spko5dpem8Ej2_ctFA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="fUYQa+Pmc3FrFX/N"
-In-Reply-To: <20171114163453.GA27547@wolff.to>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="a8Wt8u1KmwUX3Y2C"
+In-Reply-To: <CA+Hw3eY4541LNE9TnS5tsU2O+n28BNQ-Spko5dpem8Ej2_ctFA@mail.gmail.com>
+Cc: wireguard@lists.zx2c4.com
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,77 +28,67 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
 
---fUYQa+Pmc3FrFX/N
-Content-Type: text/plain; charset=us-ascii; format=flowed
+--a8Wt8u1KmwUX3Y2C
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Nov 14, 2017 at 10:34:53 -0600,
-  Bruno Wolff III <bruno@wolff.to> wrote:
->
->I have this working on my laptop, but I want to tweak my router so 
->that I don't need to have special iptables rules on my home network.
+Hi Daniel, Adri=E1n,
 
-I got this fixed so I'll attach /etc/sysconfig/iptables and 
-/etc/systemd/system/wireguard.service that make things work.
+On 31-10-17, Adri=E1n Mih=E1lko wrote:
+> There is a missing step in the Debian installation guide, you must import
+> GPG keys before you can add the new repo:
 
---fUYQa+Pmc3FrFX/N
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename=iptables
+Which version of Debian are you using?
 
-# If our addresses are used by the local network, the wrong source
-# address will be used for packets that initially (before marking)
-# look like they should go out the local gateway will get the wrong
-# source address. So we need to be prepared to rewrite it to make things
-# work.
-*nat
-:PREROUTING ACCEPT [0:0]
-:INPUT ACCEPT [0:0]
-:OUTPUT ACCEPT [0:0]
-:POSTROUTING ACCEPT [0:0]
--A POSTROUTING ! -s 98.103.208.29/32 -o wg0 -j SNAT --to-source 98.103.208.29
-COMMIT
-*filter
-:INPUT ACCEPT [0:0]
-:FORWARD DROP [0:0]
-:OUTPUT ACCEPT [0:0]
--A INPUT -i lo -j ACCEPT
--A INPUT -i wg0 -p icmp -m icmp --icmp-type any -j ACCEPT
--A INPUT -s 98.103.208.26 -p icmp -m icmp --icmp-type any -j ACCEPT
--A INPUT -i wg0 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
--A INPUT -s 98.103.208.24/29 -i wg0 -p tcp -m conntrack --ctstate NEW -m tcp --dport 22 -j ACCEPT
--A INPUT -s 129.89.240.0/24 -i wg0 -p tcp -m conntrack --ctstate NEW -m tcp --dport 22 -j ACCEPT
--A INPUT -s 10.32.2.72/32 -i wg0 -p tcp -m conntrack --ctstate NEW -m tcp --dport 22 -j ACCEPT
--A INPUT -p udp -m udp -s 98.103.208.26 --dport 992 -j ACCEPT
--A INPUT -j REJECT --reject-with icmp-port-unreachable
--A FORWARD -j REJECT --reject-with icmp-host-prohibited
--A OUTPUT -o lo -j ACCEPT
--A OUTPUT -o wg0 -j ACCEPT
--A OUTPUT -m mark --mark 0x1 -j ACCEPT
--A OUTPUT -j REJECT --reject-with icmp-port-unreachable
-COMMIT
+The installation instructions on https://www.wireguard.com/install/ are
+tested on Jessie and Stretch, anything older (wheezy) will not work
+because the kernel is too old.
 
---fUYQa+Pmc3FrFX/N
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename="wireguard.service"
+Jason, can you add a note on the installation page that says "Jessie or
+later" somewhere?
 
-[Unit]
-Description=WireGuard Server
+Baptiste
 
-[Service]
-Type=oneshot
-RemainAfterExit=yes
-ExecStart=-/usr/sbin/ip link del dev wg0
-ExecStart=-/usr/sbin/ip rule del pref 100
-ExecStart=/usr/sbin/ip link add dev wg0 type wireguard
-ExecStart=/usr/bin/wg setconf wg0 /etc/wireguard/config
-ExecStart=/usr/sbin/ip address add 98.103.208.29/32 dev wg0
-ExecStart=/usr/sbin/ip link set up dev wg0
-ExecStart=/usr/sbin/ip route add default dev wg0 src 98.103.208.29 table 100
-ExecStart=/usr/sbin/ip rule add not fwmark 1 pref 100 table 100
-ExecStopPost=/usr/sbin/ip link del dev wg0
-ExecStopPost=/usr/sbin/ip rule del pref 100
+> gpg --keyserver pgpkeys.mit.edu --recv-key  8B48AD6246925553
+> gpg -a --export 8B48AD6246925553 | sudo apt-key add -
+>=20
+> and also the key 7638D0442B90D010
+>=20
+> gpg --keyserver pgpkeys.mit.edu --recv-key 7638D0442B90D010
+> gpg -a --export 7638D0442B90D010 | sudo apt-key add -
+>=20
+> More about PGP and APT:
+>=20
+> http://ccm.net/faq/809-debian-apt-get-no-pubkey-gpg-error
+>=20
+> Regards,
+> Adrian Mihalko
 
-[Install]
-WantedBy=multi-user.target
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---fUYQa+Pmc3FrFX/N--
+
+--a8Wt8u1KmwUX3Y2C
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEjVflzZuxNlVFbt5QvgHsIqBOLkYFAloMIDgACgkQvgHsIqBO
+LkbVfw/9GfsSrG5H407fqU3tothjGkA55iQTqxqdyeCSS50N5GQeTpYQUCRd9nH6
+Y5rrOpSGQBYqAiDdlkrUoK3gBvusn+m5egKTa1RjPdYE6iRtvngjBNWNnOCU4qTi
+PJxCFzeDrlHLmzuhKV8ZEBN5bgS9dKCxM6ixdynJrEeK5p0SwUc4g4PdPRYruTgw
+U5Ln/FaLSYwClLK5MubIBqOdfIKY9vyrq9kezRxfbDcNr6C05YX5jIw9UHHWsTjj
+2H4QSOKFSgR3YNiUVobd5wxl+TZltH/rtcfDHbD7kf5OImuh74Livds4p2SIwP1l
+mJhKWW4lhWvOzZPLbQudFT4QIpwSktiaJRkCEjf3uJlEMP4sNIwuAe8fG4oHd4Tt
+RkcfAXEZWMbZf6aIvFFjPAl9XZEuCnOuvFUO6AD7hGQLJUhG+Pa8fKsY34uGQgSB
+beYf3A20sR47VK9zHbPuGJ7sSme4Q3A6hLAVgD1t9iFiPgTm8YU4kN80HBpVTdEc
+ICxFrUh4vHJRu5Z7ytpUtPiw2bMAb97GhSfPPAsjd4lE/M6fpakjOYO0t82hNk/a
+coCP0PIvNs6A2emnFaGZpeK6Kygbg4lHHCj54oipZxDK5q16K30YioJwAXKpWpiV
+Cq8yxlxPpn2GDiIYvxj11LtDoOSIW1/Haas1GedhAKbMXSuRG34=
+=6rhf
+-----END PGP SIGNATURE-----
+
+--a8Wt8u1KmwUX3Y2C--
