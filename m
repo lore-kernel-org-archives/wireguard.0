@@ -1,23 +1,26 @@
-Return-Path: baptiste@bitsofnetworks.org
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f0f37923
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e75c60fa
  for <wireguard@lists.zx2c4.com>;
- Wed, 15 Nov 2017 11:04:39 +0000 (UTC)
-Received: from mails.bitsofnetworks.org (rezine.polyno.me [193.33.56.138])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6961b83b
+ Wed, 15 Nov 2017 15:14:42 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a6c32a43
  for <wireguard@lists.zx2c4.com>;
- Wed, 15 Nov 2017 11:04:39 +0000 (UTC)
-Date: Wed, 15 Nov 2017 12:08:49 +0100
-From: Baptiste Jonglez <baptiste@bitsofnetworks.org>
-To: =?iso-8859-1?Q?Adri=E1n_Mih=E1lko?= <adriankoooo@gmail.com>
-Subject: Re: Fix Debian install guide on wireguard.com/install
-Message-ID: <20171115110849.GA27782@lud.polynome.dn42>
-References: <CA+Hw3eY4541LNE9TnS5tsU2O+n28BNQ-Spko5dpem8Ej2_ctFA@mail.gmail.com>
+ Wed, 15 Nov 2017 15:14:42 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e9c378ec
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 15 Nov 2017 15:14:41 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 5b4c9103
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 15 Nov 2017 15:14:41 +0000 (UTC)
+Date: Wed, 15 Nov 2017 16:18:54 +0100
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: wireguard@lists.zx2c4.com
+Subject: Blind Operator Mode - A Defensive Rootkit
+Message-ID: <20171115151852.GA23957@zx2c4.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="a8Wt8u1KmwUX3Y2C"
-In-Reply-To: <CA+Hw3eY4541LNE9TnS5tsU2O+n28BNQ-Spko5dpem8Ej2_ctFA@mail.gmail.com>
-Cc: wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset=utf-8
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -27,68 +30,55 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
+Hey folks,
 
---a8Wt8u1KmwUX3Y2C
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+One of the strengths of WireGuard is its visibility. wg(8) is a tiny tool
+that's easy to use, and you can configure and reconfigure everything at
+runtime, examining the current configuration, and doing other various things.
+It works well and for the most part people seem to like it.
 
-Hi Daniel, Adri=E1n,
+It turns out that this strength might actually be a weakness for some. A small
+commercial VPN provider approached me recently about the fact they could see
+the allowed IPs mapping easily with WireGuard, whereas with OpenVPN it was
+hidden deep inside a process they didn't know how to debug. "Great," I
+thought. Not so fast. They were concerned that when compelled to retrieve this
+kind of information, they would no longer be able to claim, "we don't know
+how," since WireGuard makes it so easy. So, they hired me for a day to develop
+and open source a small solution for their unique use case and odd scenario.
 
-On 31-10-17, Adri=E1n Mih=E1lko wrote:
-> There is a missing step in the Debian installation guide, you must import
-> GPG keys before you can add the new repo:
+Before reading further, do you have the same bizarre requirement? Probably
+not. In that likely case, please keep reading only under the scope of,
+"something somebody else thought they needed, but I don't need myself." In
+other words, don't use this code.
 
-Which version of Debian are you using?
+Not wanting to hack up WireGuard or add configuration nobs -- or really
+compromise any of what the project is about in response to these kinds of
+requests -- I thought I'd write a small "defensive rootkit," which most
+certainly kills both your kitten and your neighbor's parrot.
 
-The installation instructions on https://www.wireguard.com/install/ are
-tested on Jessie and Stretch, anything older (wheezy) will not work
-because the kernel is too old.
+It started out by just hooking the Netlink API to zero out the endpoints and
+allowedips for each peer. Then I disabled tcpdump. Then I disabled /dev/mem,
+/dev/kmem, /dev/port, /proc/kcore, and module loading. Things were looking
+fairly clean, until I needed to add compatibility support for old kernels, and
+then I reverted to some cthulhu-style x86 opcode parsing and writing to proc
+from kernelspace and other atrocities. It seems to work relatively well on
+the kernels I've tested, but of course there are no guarantees with this kind
+of stuff. In any case, there aren't very many public rootkit examples like
+this, so at the very least it might be an aid to a college freshman doing an
+assignment for his "Intro to Computer Security" course.
 
-Jason, can you add a note on the installation page that says "Jessie or
-later" somewhere?
+Keep in mind that there are several ways to subvert each and every defense
+that this thing introduces. Several ways! All of the defenses! Subverted! For
+that reason, you shouldn't use this if you're relying on the impossibility of
+subversion. It's only meant as a confinement based on your own lack of
+knowledge on how to subvert it. As you learn more, the software becomes less
+effective.
 
-Baptiste
+If it's of any interest, it's online here:
+https://git.zx2c4.com/blind-operator-mode/about/
+https://git.zx2c4.com/blind-operator-mode/tree/blind-operator-mode.c
+$ git clone https://git.zx2c4.com/blind-operator-mode/
 
-> gpg --keyserver pgpkeys.mit.edu --recv-key  8B48AD6246925553
-> gpg -a --export 8B48AD6246925553 | sudo apt-key add -
->=20
-> and also the key 7638D0442B90D010
->=20
-> gpg --keyserver pgpkeys.mit.edu --recv-key 7638D0442B90D010
-> gpg -a --export 7638D0442B90D010 | sudo apt-key add -
->=20
-> More about PGP and APT:
->=20
-> http://ccm.net/faq/809-debian-apt-get-no-pubkey-gpg-error
->=20
-> Regards,
-> Adrian Mihalko
+Enjoy! Please don't run this monster at home!
 
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
-
-
---a8Wt8u1KmwUX3Y2C
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEjVflzZuxNlVFbt5QvgHsIqBOLkYFAloMIDgACgkQvgHsIqBO
-LkbVfw/9GfsSrG5H407fqU3tothjGkA55iQTqxqdyeCSS50N5GQeTpYQUCRd9nH6
-Y5rrOpSGQBYqAiDdlkrUoK3gBvusn+m5egKTa1RjPdYE6iRtvngjBNWNnOCU4qTi
-PJxCFzeDrlHLmzuhKV8ZEBN5bgS9dKCxM6ixdynJrEeK5p0SwUc4g4PdPRYruTgw
-U5Ln/FaLSYwClLK5MubIBqOdfIKY9vyrq9kezRxfbDcNr6C05YX5jIw9UHHWsTjj
-2H4QSOKFSgR3YNiUVobd5wxl+TZltH/rtcfDHbD7kf5OImuh74Livds4p2SIwP1l
-mJhKWW4lhWvOzZPLbQudFT4QIpwSktiaJRkCEjf3uJlEMP4sNIwuAe8fG4oHd4Tt
-RkcfAXEZWMbZf6aIvFFjPAl9XZEuCnOuvFUO6AD7hGQLJUhG+Pa8fKsY34uGQgSB
-beYf3A20sR47VK9zHbPuGJ7sSme4Q3A6hLAVgD1t9iFiPgTm8YU4kN80HBpVTdEc
-ICxFrUh4vHJRu5Z7ytpUtPiw2bMAb97GhSfPPAsjd4lE/M6fpakjOYO0t82hNk/a
-coCP0PIvNs6A2emnFaGZpeK6Kygbg4lHHCj54oipZxDK5q16K30YioJwAXKpWpiV
-Cq8yxlxPpn2GDiIYvxj11LtDoOSIW1/Haas1GedhAKbMXSuRG34=
-=6rhf
------END PGP SIGNATURE-----
-
---a8Wt8u1KmwUX3Y2C--
+Jason
