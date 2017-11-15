@@ -1,28 +1,21 @@
-Return-Path: kogeler@gmail.com
+Return-Path: bruno@wolff.to
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 20f4f5e6
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fa4a18ab
  for <wireguard@lists.zx2c4.com>;
- Tue, 14 Nov 2017 18:05:51 +0000 (UTC)
-Received: from mail-io0-f170.google.com (mail-io0-f170.google.com
- [209.85.223.170])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cb566c49
+ Wed, 15 Nov 2017 08:31:18 +0000 (UTC)
+Received: from wolff.to (wolff.to [98.103.208.27])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with SMTP id f1c72188
  for <wireguard@lists.zx2c4.com>;
- Tue, 14 Nov 2017 18:05:51 +0000 (UTC)
-Received: by mail-io0-f170.google.com with SMTP id 134so25342316ioo.0
- for <wireguard@lists.zx2c4.com>; Tue, 14 Nov 2017 10:09:59 -0800 (PST)
+ Wed, 15 Nov 2017 08:31:18 +0000 (UTC)
+Date: Wed, 15 Nov 2017 02:34:23 -0600
+From: Bruno Wolff III <bruno@wolff.to>
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Subject: Re: Road Warrior config with fwmark
+Message-ID: <20171115083423.GA11843@wolff.to>
+References: <20171114163453.GA27547@wolff.to>
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9pWjzkvSQxq+kjx5vQZYQD1JJyrfymTfFJc+kPScLQVRA@mail.gmail.com>
-References: <CALpTdxmmm9PwtFEZ7bwHTvCcfB5VEpLTnHi0E-z3skSJvSdSuw@mail.gmail.com>
- <CAHmME9obe3j1suYKxFUHbCBHE7snQ+AtVFbjikv8rnf=m5Gc5A@mail.gmail.com>
- <CALpTdxkEn6yM3b20Qm9KAGqmEH=9kiFhCGxkBAeuEwrxj1o4uQ@mail.gmail.com>
- <CAHmME9pWjzkvSQxq+kjx5vQZYQD1JJyrfymTfFJc+kPScLQVRA@mail.gmail.com>
-From: =?UTF-8?B?0KDQvtC80LDQvSDQk9Cw0LLRgNC40LvQvtCy?= <kogeler@gmail.com>
-Date: Tue, 14 Nov 2017 21:09:58 +0300
-Message-ID: <CALpTdxmquLU44VuBUW1Fz_5y+Jwi_kfSmJSdUrgpBe0rezB8Yg@mail.gmail.com>
-Subject: Re: bug on armhf
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Content-Type: multipart/alternative; boundary="001a113eb83a7e0f94055df54bb3"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: multipart/mixed; boundary="fUYQa+Pmc3FrFX/N"
+In-Reply-To: <20171114163453.GA27547@wolff.to>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -32,25 +25,78 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---001a113eb83a7e0f94055df54bb3
-Content-Type: text/plain; charset="UTF-8"
 
-Yes, this commit solved the problem. Thanks for the quick response!
+--fUYQa+Pmc3FrFX/N
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
 
--- 
-Thanks,
-Roman Gavrilov
+On Tue, Nov 14, 2017 at 10:34:53 -0600,
+  Bruno Wolff III <bruno@wolff.to> wrote:
+>
+>I have this working on my laptop, but I want to tweak my router so 
+>that I don't need to have special iptables rules on my home network.
 
---001a113eb83a7e0f94055df54bb3
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+I got this fixed so I'll attach /etc/sysconfig/iptables and 
+/etc/systemd/system/wireguard.service that make things work.
 
-<div dir=3D"ltr"><span id=3D"gmail-result_box" class=3D"gmail-" lang=3D"en"=
-><span>Yes, this commit solved the problem.</span> <span class=3D"gmail-">T=
-hanks for the quick response!</span></span><br><br><div class=3D"gmail_extr=
-a"><span class=3D"gmail-HOEnZb gmail-adL"><font color=3D"#888888">-- <br><d=
-iv class=3D"gmail-m_5673561690374840175gmail-m_4963248276163928978gmail-m_-=
-3577053390672033949gmail_signature"><div dir=3D"ltr">Thanks,</div><div>Roma=
-n Gavrilov</div></div></font></span></div></div>
+--fUYQa+Pmc3FrFX/N
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename=iptables
 
---001a113eb83a7e0f94055df54bb3--
+# If our addresses are used by the local network, the wrong source
+# address will be used for packets that initially (before marking)
+# look like they should go out the local gateway will get the wrong
+# source address. So we need to be prepared to rewrite it to make things
+# work.
+*nat
+:PREROUTING ACCEPT [0:0]
+:INPUT ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+:POSTROUTING ACCEPT [0:0]
+-A POSTROUTING ! -s 98.103.208.29/32 -o wg0 -j SNAT --to-source 98.103.208.29
+COMMIT
+*filter
+:INPUT ACCEPT [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT ACCEPT [0:0]
+-A INPUT -i lo -j ACCEPT
+-A INPUT -i wg0 -p icmp -m icmp --icmp-type any -j ACCEPT
+-A INPUT -s 98.103.208.26 -p icmp -m icmp --icmp-type any -j ACCEPT
+-A INPUT -i wg0 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+-A INPUT -s 98.103.208.24/29 -i wg0 -p tcp -m conntrack --ctstate NEW -m tcp --dport 22 -j ACCEPT
+-A INPUT -s 129.89.240.0/24 -i wg0 -p tcp -m conntrack --ctstate NEW -m tcp --dport 22 -j ACCEPT
+-A INPUT -s 10.32.2.72/32 -i wg0 -p tcp -m conntrack --ctstate NEW -m tcp --dport 22 -j ACCEPT
+-A INPUT -p udp -m udp -s 98.103.208.26 --dport 992 -j ACCEPT
+-A INPUT -j REJECT --reject-with icmp-port-unreachable
+-A FORWARD -j REJECT --reject-with icmp-host-prohibited
+-A OUTPUT -o lo -j ACCEPT
+-A OUTPUT -o wg0 -j ACCEPT
+-A OUTPUT -m mark --mark 0x1 -j ACCEPT
+-A OUTPUT -j REJECT --reject-with icmp-port-unreachable
+COMMIT
+
+--fUYQa+Pmc3FrFX/N
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="wireguard.service"
+
+[Unit]
+Description=WireGuard Server
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=-/usr/sbin/ip link del dev wg0
+ExecStart=-/usr/sbin/ip rule del pref 100
+ExecStart=/usr/sbin/ip link add dev wg0 type wireguard
+ExecStart=/usr/bin/wg setconf wg0 /etc/wireguard/config
+ExecStart=/usr/sbin/ip address add 98.103.208.29/32 dev wg0
+ExecStart=/usr/sbin/ip link set up dev wg0
+ExecStart=/usr/sbin/ip route add default dev wg0 src 98.103.208.29 table 100
+ExecStart=/usr/sbin/ip rule add not fwmark 1 pref 100 table 100
+ExecStopPost=/usr/sbin/ip link del dev wg0
+ExecStopPost=/usr/sbin/ip rule del pref 100
+
+[Install]
+WantedBy=multi-user.target
+
+--fUYQa+Pmc3FrFX/N--
