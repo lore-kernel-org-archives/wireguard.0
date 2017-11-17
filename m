@@ -1,31 +1,26 @@
-Return-Path: lists@lonnie.abelbeck.com
+Return-Path: manuel.schoelling@gmx.de
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 522dc528
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8382b642
  for <wireguard@lists.zx2c4.com>;
- Thu, 16 Nov 2017 20:26:58 +0000 (UTC)
-Received: from ibughas.pair.com (ibughas.pair.com [209.68.5.177])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9516dbce
+ Fri, 17 Nov 2017 08:16:10 +0000 (UTC)
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f9511bdc
  for <wireguard@lists.zx2c4.com>;
- Thu, 16 Nov 2017 20:26:58 +0000 (UTC)
-Received: from ibughas.pair.com (localhost [127.0.0.1])
- by ibughas.pair.com (Postfix) with ESMTP id F19B511662
- for <wireguard@lists.zx2c4.com>; Thu, 16 Nov 2017 15:31:21 -0500 (EST)
-Received: from macpro.priv.abelbeck.com (wsip-70-165-110-240.om.om.cox.net
- [70.165.110.240])
- (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
- (No client certificate requested)
- by ibughas.pair.com (Postfix) with ESMTPSA id A92D21165B
- for <wireguard@lists.zx2c4.com>; Thu, 16 Nov 2017 15:31:21 -0500 (EST)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-Subject: Request: Optional "Comment" [Peer] entry
-From: Lonnie Abelbeck <lists@lonnie.abelbeck.com>
-In-Reply-To: <CAHmME9qvePERJzuUKXz+nMgd9rH2G9T2EkTbyfPO+8oonR+KoQ@mail.gmail.com>
-Date: Thu, 16 Nov 2017 14:31:20 -0600
-Message-Id: <7777F2EF-1D1B-4403-91C6-FB4A36C92CC5@lonnie.abelbeck.com>
+ Fri, 17 Nov 2017 08:16:10 +0000 (UTC)
+Received: from schoellingm ([193.175.154.19]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LuP5z-1fDnUZ1G6x-011kwF for
+ <wireguard@lists.zx2c4.com>; Fri, 17 Nov 2017 09:20:36 +0100
+Message-ID: <1510906834.6309.77.camel@gmx.de>
+Subject: Re: Request: Optional "Comment" [Peer] entry
+From: Manuel =?ISO-8859-1?Q?Sch=F6lling?= <manuel.schoelling@gmx.de>
+To: wireguard@lists.zx2c4.com
+Date: Fri, 17 Nov 2017 09:20:34 +0100
+In-Reply-To: <7777F2EF-1D1B-4403-91C6-FB4A36C92CC5@lonnie.abelbeck.com>
 References: <1510826689.1349863.1174432192.27EE87E6@webmail.messagingengine.com>
  <CAHmME9qvePERJzuUKXz+nMgd9rH2G9T2EkTbyfPO+8oonR+KoQ@mail.gmail.com>
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+ <7777F2EF-1D1B-4403-91C6-FB4A36C92CC5@lonnie.abelbeck.com>
+Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -35,38 +30,60 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-I have a suggestion, feature request ...
+I like the idea of comments!
 
-With several peers, the output of "wg show" is difficult to visually =
-identify the peers at a quick glance.
+And while we're at it: having multiple [Peer] section in incompatible
+with most other config parsing tools (e.g. python std library's
+configparser [1]).
+Maybe we could allow the peer section names to be of the form "Peer[A-
+Za-z0-9\-]*" or something?
+You could also use it for naming peers, i.e. using "Peer-(?P<name>[A-
+Za-z0-9\-]+)".
 
-How about an optional "Comment =3D " entry for the [Peer] section.
+Bye,
 
-For Example:
---
-[Peer]
-PublicKey =3D UMJMPFVTzjmzr7SJMQ7k+Z+3Pr1aq4w+5chtUny6Akg=3D
-Endpoint =3D [fda6:66b2:b74a:50::3]:51820
-AllowedIPs =3D 10.4.0.2/32
-Comment =3D pbx3 - Jetway NF9HG-2930
---
+Manuel
 
-For each peer in "wg show" with a "Comment =3D " defined ...
---
-peer: HIgo9xNzJMWLKASShiTqIybxZ0U3wGLiUeJ1PKf8ykw=3D
-  endpoint: [fda6:662b:b74a:50::3]:51820
-  allowed ips: 10.4.0.2/32
-  latest handshake: 3 seconds ago
-  transfer: 376 B received, 680 B sent
-  comment: pbx3 - Jetway NF9HG-2930
---
+[1] https://docs.python.org/3.5/library/configparser.html
 
-If others like this idea, should the comment be displayed first, last, =
-etc. ?
-
-Truncating the comment string to 64 characters would be fine.  Or even =
-32 chars.
-
-Thoughts ?
-
-Lonnie
+On Thu, 2017-11-16 at 14:31 -0600, Lonnie Abelbeck wrote:
+> I have a suggestion, feature request ...
+> 
+> With several peers, the output of "wg show" is difficult to visually
+> identify the peers at a quick glance.
+> 
+> How about an optional "Comment = " entry for the [Peer] section.
+> 
+> For Example:
+> --
+> [Peer]
+> PublicKey = UMJMPFVTzjmzr7SJMQ7k+Z+3Pr1aq4w+5chtUny6Akg=
+> Endpoint = [fda6:66b2:b74a:50::3]:51820
+> AllowedIPs = 10.4.0.2/32
+> Comment = pbx3 - Jetway NF9HG-2930
+> --
+> 
+> For each peer in "wg show" with a "Comment = " defined ...
+> --
+> peer: HIgo9xNzJMWLKASShiTqIybxZ0U3wGLiUeJ1PKf8ykw=
+>   endpoint: [fda6:662b:b74a:50::3]:51820
+>   allowed ips: 10.4.0.2/32
+>   latest handshake: 3 seconds ago
+>   transfer: 376 B received, 680 B sent
+>   comment: pbx3 - Jetway NF9HG-2930
+> --
+> 
+> If others like this idea, should the comment be displayed first,
+> last, etc. ?
+> 
+> Truncating the comment string to 64 characters would be fine.  Or
+> even 32 chars.
+> 
+> Thoughts ?
+> 
+> Lonnie
+> 
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
