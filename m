@@ -1,30 +1,30 @@
-Return-Path: aaronmdjones@gmail.com
+Return-Path: markus.woschank@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 76685d6a
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 12fc48fa
  for <wireguard@lists.zx2c4.com>;
- Fri, 17 Nov 2017 21:24:52 +0000 (UTC)
-Received: from mail-wr0-f182.google.com (mail-wr0-f182.google.com
- [209.85.128.182])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ebcd43d7
+ Fri, 17 Nov 2017 22:01:41 +0000 (UTC)
+Received: from mail-ot0-f179.google.com (mail-ot0-f179.google.com
+ [74.125.82.179])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5619feb8
  for <wireguard@lists.zx2c4.com>;
- Fri, 17 Nov 2017 21:24:52 +0000 (UTC)
-Received: by mail-wr0-f182.google.com with SMTP id z14so3211448wrb.8
- for <wireguard@lists.zx2c4.com>; Fri, 17 Nov 2017 13:29:24 -0800 (PST)
-Return-Path: <aaronmdjones@gmail.com>
-Subject: Re: Roaming Mischief
-To: Markus Woschank <markus.woschank@gmail.com>
+ Fri, 17 Nov 2017 22:01:41 +0000 (UTC)
+Received: by mail-ot0-f179.google.com with SMTP id b49so3243551otj.5
+ for <wireguard@lists.zx2c4.com>; Fri, 17 Nov 2017 14:06:13 -0800 (PST)
+MIME-Version: 1.0
+In-Reply-To: <630c9955-ae3a-bf10-02ae-e5aa7eee6e64@gmail.com>
 References: <CAHmME9pW_0o8C+ovxgN3_-6csAa2sjF4hXo=24bhsi0jo=AP0Q@mail.gmail.com>
  <CAKUy5axhFKvgeGY1FrP5S4UON2QPV=7jQjZM268qG-M3RCAcVw@mail.gmail.com>
  <593d6d3a-550e-a14d-4c1d-f7ee8e731d87@gmail.com>
  <CAKUy5axo5jO=6qv1XEsHvOUkcm6z7r4UW1hV+Oeomq_dJqQXJg@mail.gmail.com>
  <cdf48a39-3d81-5269-dbb4-93929cdf081f@gmail.com>
  <CAKUy5ayo2jWAaA-D2UmtO6q4YUe-KP4u1+3VF32-kvbHbjZLsA@mail.gmail.com>
-From: Aaron Jones <aaronmdjones@gmail.com>
-Message-ID: <630c9955-ae3a-bf10-02ae-e5aa7eee6e64@gmail.com>
-Date: Fri, 17 Nov 2017 21:29:21 +0000
-MIME-Version: 1.0
-In-Reply-To: <CAKUy5ayo2jWAaA-D2UmtO6q4YUe-KP4u1+3VF32-kvbHbjZLsA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
+ <630c9955-ae3a-bf10-02ae-e5aa7eee6e64@gmail.com>
+From: Markus Woschank <markus.woschank@gmail.com>
+Date: Fri, 17 Nov 2017 23:06:11 +0100
+Message-ID: <CAKUy5ax9kWWF_PPLQYy09-EVnH-CCfQDpYctn3X+Cpe+FNP_0Q@mail.gmail.com>
+Subject: Re: Roaming Mischief
+To: Aaron Jones <aaronmdjones@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -35,35 +35,38 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+> My example is most useful when both endpoints are roaming and either
+> endpoint needs to be able to initiate sessions. It's not a very
+> common scenario I'll give you that, but the current full roaming
+> support does enable it seamlessly (when you also enable keep-alives).
 
-On 17/11/17 18:46, Markus Woschank wrote:
-> Am I missing something here?
+Thank you for clarifying.
 
-My example is most useful when both endpoints are roaming and either
-endpoint needs to be able to initiate sessions. It's not a very
-common scenario I'll give you that, but the current full roaming
-support does enable it seamlessly (when you also enable keep-alives).
+This really sound like an unusual situation, where you need to make
+sure that while one peer is down the other doesn't move.
+I wonder if this could not, should the need arise, be solved in another fashion.
 
-- -- 
-Aaron Jones
+>From experience I have another concern towards the current mechanism.
+When configuring two peers pointing at each other and by mistake
+setting one endpoint IP to a wrong value (typo in the IP) there is a
+good chance this mistake may not be noticed for quiet some time, if
+the correctly configured endpoint initiates the connection most of the
+time. The user (me), believing to have correctly configured the link,
+may be taken by surprise at a later point in time when the link is not
+established, as he expects, when the wrongly configured side tries to
+initiate it after say a reboot. This is more of a concern to me than
+supporting to roaming  peers.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+Also the thought of something like `wg showconf wg0 >
+/etc/wireguard/wg0.conf` happening at shutdown frightens me a little.
+Because if the command fails for whatever reason the configuration
+will be truncated and after the reboot completes the link will be
+non-functional (conf vs state).
 
-iQIcBAEBCAAGBQJaD1SvAAoJEIrwc3SIqzASeGEP/jM0ibvZPNF3LDXnRTVlsSQW
-CCG4cAFmTkemV3MHoOjTIyzmpXHVSEJVqoJCPPqjeMkQp7tENJyUuuHt4JMu0ZSb
-RW/mUr6DHtl1QvIeT0u/zb88NX36NyR0KalUE6R3yA5LHlUjqx1OVVpq+sEQMT9p
-iRUAusn2psJGQAyu+QW9faU+4HQdbv2d8khLdZqC/0g+YxG24/B+3xVJYtv4Ou9Z
-1M8MRWggiSyEOx/LoifxVYRlW0d8mgJV75e921bV9NkGFLATQ6tFvbaJn9ZP98iP
-uGBP0XIT2NUb6HuekxJaTud7wsoTNiX1g57UdQtrgH0rTIjBzqlRG3atBgxCJ682
-dpN1vvuAaiQrXoieHTek/d9pMAa8xwhc2uNQ36pi3xHrEFveqMIhQv95Qh0cwcpL
-PoqciZyVDNrFdDkDajdhKMOhcH6qs2uWP8vYPkxZRaN5INU1kMZbIuBsBefr/yzl
-4FqKuYRBHrKHZmrltLo0ek5B0Ib9oACE1HnTy4SyvonVOQwy6bKEQLw5D3/P+u1T
-cX5bk0PWyVDLrc9zegxsl68tNjw9QYyxSV3rjleTUZatXu4CYGA9EgtkAICQ8TU0
-Y0Gy325nAoKP/jXZWxUlXx75uU86ul12HoqrNgVYBcAYokDTz8U9qReBUCCGhqAP
-neeE8d6rJBN9ZRWsBQzz
-=BDlR
------END PGP SIGNATURE-----
+Please don't interpret my comments the wrong way, I grew to love
+wireguard. Just trying to state the kinks (IMO) I see, and this is one
+of them.
+I still vote for: if an endpoint is specified, don't allow the peer
+from another source - no config syntax change needed ;).
+
+Markus
