@@ -1,32 +1,31 @@
-Return-Path: markus.woschank@gmail.com
+Return-Path: matthias@urlichs.de
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9d8fc83e
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cb4c4401
  for <wireguard@lists.zx2c4.com>;
- Fri, 17 Nov 2017 22:07:19 +0000 (UTC)
-Received: from mail-oi0-f49.google.com (mail-oi0-f49.google.com
- [209.85.218.49])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f01ba22c
+ Sat, 18 Nov 2017 09:35:08 +0000 (UTC)
+Received: from netz.smurf.noris.de (netz.smurf.noris.de [213.95.21.43])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2c29e333
  for <wireguard@lists.zx2c4.com>;
- Fri, 17 Nov 2017 22:07:19 +0000 (UTC)
-Received: by mail-oi0-f49.google.com with SMTP id f135so2661623oib.0
- for <wireguard@lists.zx2c4.com>; Fri, 17 Nov 2017 14:11:51 -0800 (PST)
-MIME-Version: 1.0
-In-Reply-To: <CAKUy5ax9kWWF_PPLQYy09-EVnH-CCfQDpYctn3X+Cpe+FNP_0Q@mail.gmail.com>
+ Sat, 18 Nov 2017 09:35:08 +0000 (UTC)
+Received: from [2001:780:107:0:1278:d2ff:fea3:d4a6]
+ by netz.extern.smurf.noris.de with esmtpsa
+ (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim 4.89)
+ (envelope-from <matthias@urlichs.de>) id 1eFzaS-0005Bn-PT
+ for wireguard@lists.zx2c4.com; Sat, 18 Nov 2017 09:38:58 +0000
+Subject: Re: Roaming Mischief
+To: wireguard@lists.zx2c4.com
 References: <CAHmME9pW_0o8C+ovxgN3_-6csAa2sjF4hXo=24bhsi0jo=AP0Q@mail.gmail.com>
  <CAKUy5axhFKvgeGY1FrP5S4UON2QPV=7jQjZM268qG-M3RCAcVw@mail.gmail.com>
  <593d6d3a-550e-a14d-4c1d-f7ee8e731d87@gmail.com>
  <CAKUy5axo5jO=6qv1XEsHvOUkcm6z7r4UW1hV+Oeomq_dJqQXJg@mail.gmail.com>
  <cdf48a39-3d81-5269-dbb4-93929cdf081f@gmail.com>
  <CAKUy5ayo2jWAaA-D2UmtO6q4YUe-KP4u1+3VF32-kvbHbjZLsA@mail.gmail.com>
- <630c9955-ae3a-bf10-02ae-e5aa7eee6e64@gmail.com>
- <CAKUy5ax9kWWF_PPLQYy09-EVnH-CCfQDpYctn3X+Cpe+FNP_0Q@mail.gmail.com>
-From: Markus Woschank <markus.woschank@gmail.com>
-Date: Fri, 17 Nov 2017 23:11:49 +0100
-Message-ID: <CAKUy5awqDFNFmhiL+sDdO7YiwnkJAdjuNbeP9+d=V8ABqgrZog@mail.gmail.com>
-Subject: Re: Roaming Mischief
-To: Aaron Jones <aaronmdjones@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: Matthias Urlichs <matthias@urlichs.de>
+Message-ID: <4cd6a9b8-b317-3fdb-d758-08a546bc5acf@urlichs.de>
+Date: Sat, 18 Nov 2017 10:38:55 +0100
+MIME-Version: 1.0
+In-Reply-To: <CAKUy5ayo2jWAaA-D2UmtO6q4YUe-KP4u1+3VF32-kvbHbjZLsA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -36,45 +35,17 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
->  where you need to make sure that while one peer is down the other doesn't move.
+On 17.11.2017 19:46, Markus Woschank wrote:
+> After some more thoughts, in the scenario that you are describing,
+> where does persisting the state on the roaming peer help?
+> The roaming peer has the fixed peer's address in his configuration
+> (his IP does not change), and the remote side did not suspend.
+> Am I missing something here?
 
-This is obviously wrong, should be:
-"where you need to make sure that only one side changes it's network
-while one is down."
+Simple example: a mobile IP phone. Rebooting your telephony server
+causes you to drop the connection to the client until _it_ next issues a
+call. However, if you persist the phone's address, you don't lose
+incoming service.
 
-On 17 November 2017 at 23:06, Markus Woschank <markus.woschank@gmail.com> wrote:
->> My example is most useful when both endpoints are roaming and either
->> endpoint needs to be able to initiate sessions. It's not a very
->> common scenario I'll give you that, but the current full roaming
->> support does enable it seamlessly (when you also enable keep-alives).
->
-> Thank you for clarifying.
->
-> This really sound like an unusual situation, where you need to make
-> sure that while one peer is down the other doesn't move.
-> I wonder if this could not, should the need arise, be solved in another fashion.
->
-> From experience I have another concern towards the current mechanism.
-> When configuring two peers pointing at each other and by mistake
-> setting one endpoint IP to a wrong value (typo in the IP) there is a
-> good chance this mistake may not be noticed for quiet some time, if
-> the correctly configured endpoint initiates the connection most of the
-> time. The user (me), believing to have correctly configured the link,
-> may be taken by surprise at a later point in time when the link is not
-> established, as he expects, when the wrongly configured side tries to
-> initiate it after say a reboot. This is more of a concern to me than
-> supporting to roaming  peers.
->
-> Also the thought of something like `wg showconf wg0 >
-> /etc/wireguard/wg0.conf` happening at shutdown frightens me a little.
-> Because if the command fails for whatever reason the configuration
-> will be truncated and after the reboot completes the link will be
-> non-functional (conf vs state).
->
-> Please don't interpret my comments the wrong way, I grew to love
-> wireguard. Just trying to state the kinks (IMO) I see, and this is one
-> of them.
-> I still vote for: if an endpoint is specified, don't allow the peer
-> from another source - no config syntax change needed ;).
->
-> Markus
+-- 
+-- Matthias Urlichs
