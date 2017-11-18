@@ -1,27 +1,22 @@
-Return-Path: markus.woschank@gmail.com
+Return-Path: rcwhelan@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id eb4cad25
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6336a9a1
  for <wireguard@lists.zx2c4.com>;
- Sat, 18 Nov 2017 15:07:18 +0000 (UTC)
-Received: from mail-oi0-f43.google.com (mail-oi0-f43.google.com
- [209.85.218.43])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 714589eb
+ Sat, 18 Nov 2017 23:39:37 +0000 (UTC)
+Received: from mail-qt0-f170.google.com (mail-qt0-f170.google.com
+ [209.85.216.170])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8d8bd2e9
  for <wireguard@lists.zx2c4.com>;
- Sat, 18 Nov 2017 15:07:18 +0000 (UTC)
-Received: by mail-oi0-f43.google.com with SMTP id a75so3581956oib.1
- for <wireguard@lists.zx2c4.com>; Sat, 18 Nov 2017 07:11:55 -0800 (PST)
+ Sat, 18 Nov 2017 23:39:37 +0000 (UTC)
+Received: by mail-qt0-f170.google.com with SMTP id a19so11020405qtb.3
+ for <wireguard@lists.zx2c4.com>; Sat, 18 Nov 2017 15:44:17 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CAKUy5ayySemw3Yct425deiLmqSLNLDTS-2Q2GAYp9y8aJabOhg@mail.gmail.com>
-References: <CAHmME9pW_0o8C+ovxgN3_-6csAa2sjF4hXo=24bhsi0jo=AP0Q@mail.gmail.com>
- <CAKUy5axhFKvgeGY1FrP5S4UON2QPV=7jQjZM268qG-M3RCAcVw@mail.gmail.com>
- <593d6d3a-550e-a14d-4c1d-f7ee8e731d87@gmail.com>
- <CAKUy5ayySemw3Yct425deiLmqSLNLDTS-2Q2GAYp9y8aJabOhg@mail.gmail.com>
-From: Markus Woschank <markus.woschank@gmail.com>
-Date: Sat, 18 Nov 2017 16:11:54 +0100
-Message-ID: <CAKUy5axn5nMsjFs6QeB624MokCdAQp+xa_=p=8Z8OkMuE6ddaQ@mail.gmail.com>
-Subject: Re: Roaming Mischief
+From: Ryan Whelan <rcwhelan@gmail.com>
+Date: Sat, 18 Nov 2017 18:44:15 -0500
+Message-ID: <CAM3m09QZc=kJoXUQvCpCVQG62TeDX0B4BdcuUU3A9T2Lfg10VQ@mail.gmail.com>
+Subject: Another allowed-ips question
 To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/alternative; boundary="001a1137b42a5cae5d055e4a6e64"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -31,32 +26,43 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Sorry for the previous message.
+--001a1137b42a5cae5d055e4a6e64
+Content-Type: text/plain; charset="UTF-8"
 
-@matthias
+I'm working on a system where Wireguard machines can connect directly to
+one another as well as communicate with one another via an intermediary
+router (or 'server').
 
-> Simple example: a mobile IP phone. Rebooting your telephony server
-> causes you to drop the connection to the client until _it_ next issues a
-> call. However, if you persist the phone's address, you don't lose
-> incoming service.
+When 2 machines directly connect to one another, the allowed-ips setting is
+obviously a non-issue; what i'm struggling with is if they are unable to
+communicate directly and build routes to one another via an intermediary
+router (which is also connected to each 'client' via wireguard).  Unless
+the 'server' NATs the traffic, the allowed-ips setting will prevent the
+'clients' from communicating.  Am i missing something?
 
-Thank you for the example.
+I'm trying to avoid building a wg interface for each peer connection if
+possible, but i'm failing to see any other way around it.  Either NAT at
+the intermediary router or create an interface per-peer.
 
-While a reboot already impacts the service of the telephony system
-this might be also tackled via the persistent keepalive, but I see
-your point.
+Are there other options?
 
-But then again the original configuration did not specify any endpoint
-and suddenly, after reboot, it does.
-I strongly believe the state (current endpoint of roaming peers) needs
-to be separated from the configuration.
-Take the dhcpd server for example, it does _not_ store leases in the
-configuration and rewrites it on every shutdown, it stores the _state_
-at a different location.
+--001a1137b42a5cae5d055e4a6e64
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
- Again ;) my proposal: if a peer's endpoint is specified this makes it
-a non roaming peer, make it possible to store and restore, and/or set
-current roaming peers endpoints, for special situations and don't
-change the configuration syntax.
+<div dir=3D"ltr">I&#39;m working on a system where Wireguard machines can c=
+onnect directly to one another as well as communicate with one another via =
+an intermediary router (or &#39;server&#39;).=C2=A0<div><br></div><div>When=
+ 2 machines directly connect to one another, the allowed-ips setting is obv=
+iously a non-issue; what i&#39;m struggling with is if they are unable to c=
+ommunicate directly and build routes to one another via an intermediary rou=
+ter (which is also connected to each &#39;client&#39; via wireguard).=C2=A0=
+ Unless the &#39;server&#39; NATs the traffic, the allowed-ips setting will=
+ prevent the &#39;clients&#39; from communicating.=C2=A0 Am i missing somet=
+hing?</div><div><br></div><div>I&#39;m trying to avoid building a wg interf=
+ace for each peer connection if possible, but i&#39;m failing to see any ot=
+her way around it.=C2=A0 Either NAT at the intermediary router or create an=
+ interface per-peer.</div><div><br></div><div>Are there other options?</div=
+></div>
 
-Markus
+--001a1137b42a5cae5d055e4a6e64--
