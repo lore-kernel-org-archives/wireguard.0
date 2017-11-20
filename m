@@ -1,22 +1,24 @@
-Return-Path: kogeler@gmail.com
+Return-Path: opensource@vdorst.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 89812751
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ab5a3e27
  for <wireguard@lists.zx2c4.com>;
- Mon, 20 Nov 2017 19:29:16 +0000 (UTC)
-Received: from mail-it0-f48.google.com (mail-it0-f48.google.com
- [209.85.214.48])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2eabcf8d
+ Mon, 20 Nov 2017 23:09:22 +0000 (UTC)
+Received: from smtp21.bhosted.nl (smtp21.bhosted.nl [94.124.121.33])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f4bbd327
  for <wireguard@lists.zx2c4.com>;
- Mon, 20 Nov 2017 19:29:16 +0000 (UTC)
-Received: by mail-it0-f48.google.com with SMTP id x28so13341140ita.0
- for <wireguard@lists.zx2c4.com>; Mon, 20 Nov 2017 11:34:10 -0800 (PST)
+ Mon, 20 Nov 2017 23:09:22 +0000 (UTC)
+Received: from www (www.lan.vdorst.com [172.16.2.220])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by mail.vdorst.com (Postfix) with ESMTPSA id 41805137AE03
+ for <wireguard@lists.zx2c4.com>; Tue, 21 Nov 2017 00:14:53 +0100 (CET)
+Date: Mon, 20 Nov 2017 23:14:16 +0000
+Message-ID: <20171120231416.Horde.CgDTFw41-BBj-IomMwxyq3_@www.vdorst.com>
+From: =?utf-8?b?UmVuw6k=?= van Dorst <opensource@vdorst.com>
+To: WireGuard list <wireguard@lists.zx2c4.com>
+Subject: netns.sh stuck at ncat.
+Content-Type: text/plain; charset=utf-8; format=flowed; DelSp=Yes
 MIME-Version: 1.0
-From: =?UTF-8?B?0KDQvtC80LDQvSDQk9Cw0LLRgNC40LvQvtCy?= <kogeler@gmail.com>
-Date: Mon, 20 Nov 2017 22:34:09 +0300
-Message-ID: <CALpTdxnL6akts71rb4yg+wisxqqs0U2wXPE5c12J9yMHVL6wGw@mail.gmail.com>
-Subject: new bug on armhf
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: multipart/alternative; boundary="001a11445a2a9d8096055e6f2b2b"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,164 +28,110 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---001a11445a2a9d8096055e6f2b2b
-Content-Type: text/plain; charset="UTF-8"
+Hi Jason,
 
-Hello!
+Tested the latest code on my Solidrun Cubox with Marvell Dove 88AP510 SoC.
+But is get stuck on ncat. Device did not crash. I can terminate the  
+script with ctrl-c.
 
-I have new bug on armhf.
+Probably a weird config ;-)
 
-____________________________________________________________
+Crosscompiled kernel 4.13.14 and wireguard on F26 from git source.
 
-build from:
-https://git.zx2c4.com/WireGuard/commit/?id=82cacee3511e5c2f624203487124e5ba0151c84d
+Linux cubox-es 4.13.14 #8 Mon Nov 20 17:47:03 CET 2017 armv7l armv7l  
+armv7l GNU/Linux
 
-____________________________________________________________
+console:
 
-software:
-Ubuntu Xenial 16.04
+[   15.283929] wireguard: loading out-of-tree module taints kernel.
+[   15.339447] wireguard: allowedips self-tests: pass
+[   15.341220] wireguard: nonce counter self-tests: pass
+[   15.370589] wireguard: curve25519 self-tests: pass
+[   15.371282] wireguard: chacha20poly1305 self-tests: pass
+[   15.374534] wireguard: blake2s self-tests: pass
+[   15.798922] wireguard: ratelimiter self-tests: pass
+[   15.799019] wireguard: WireGuard 0.0.20171111-16-gaffc38e loaded.  
+See www.wireguard.com for information.
+[   15.799023] wireguard: Copyright (C) 2015-2017 Jason A. Donenfeld  
+<Jason@zx2c4.com>. All Rights Reserved.
 
-hardware:
-PC: Orange Pi Plus 2E
-SOC: Allwinner H3
+[+] NS2: wg show wg0 endpoints
+[+] NS1: wg set wg0 peer wXPE01il/3J9gBYCroPUc7mHgIxXjKW/TPULllHFWmc=  
+allowed-ips 192.168.241.0/24
+[+] NS1: wait for udp:1111
+[+] NS1: ncat -l -u -p 1111
+[  318.566899] wireguard: wg0: Sending keepalive packet to peer 6  
+([::1]:2/0%0)
+[  318.567104] wireguard: wg0: Receiving keepalive packet from peer 7  
+([::1]:9998/0%0)
+[  325.607881] wireguard: wg0: Packet has unallowed src IP (fd00::2)  
+from peer 6 ([::1]:2/0%0)
+[  325.607898] wireguard: wg0: Packet has unallowed src IP (fd00::2)  
+from peer 6 ([::1]:2/0%0)
+[  325.607915] wireguard: wg0: Packet has unallowed src IP (fd00::2)  
+from peer 6 ([::1]:2/0%0)
+[  325.607925] wireguard: wg0: Packet has unallowed src IP (fd00::2)  
+from peer 6 ([::1]:2/0%0)
+[  325.607936] wireguard: wg0: Packet has unallowed src IP (fd00::2)  
+from peer 6 ([::1]:2/0%0)
+[  325.607946] wireguard: wg0: Packet has unallowed src IP (fd00::2)  
+from peer 6 ([::1]:2/0%0)
+[  330.727519] wireguard: wg0: Packet has unallowed src IP (fd00::2)  
+from peer 6 ([::1]:2/0%0)
+[  330.727536] wireguard: wg0: Packet has unallowed src IP (fd00::2)  
+from peer 6 ([::1]:2/0%0)
+[  330.727547] wireguard: wg0: Packet has unallowed src IP (fd00::2)  
+from peer 6 ([::1]:2/0%0)
+[  335.846999] wireguard: wg0: Sending keepalive packet to peer 6  
+([::1]:2/0%0)
+[  335.847198] wireguard: wg0: Receiving keepalive packet from peer 7  
+([::1]:9998/0%0)
+[  346.087013] wireguard: wg0: Sending keepalive packet to peer 6  
+([::1]:2/0%0)
+[  346.087203] wireguard: wg0: Receiving keepalive packet from peer 7  
+([::1]:9998/0%0)
+[  356.328019] wireguard: wg0: Packet has unallowed src IP (fd00::2)  
+from peer 6 ([::1]:2/0%0)
+[  356.328037] wireguard: wg0: Packet has unallowed src IP (fd00::2)  
+from peer 6 ([::1]:2/0%0)
+[  356.328047] wireguard: wg0: Packet has unallowed src IP (fd00::2)  
+from peer 6 ([::1]:2/0%0)
+[  356.328057] wireguard: wg0: Packet has unallowed src IP (fd00::2)  
+from peer 6 ([::1]:2/0%0)
+[  356.328067] wireguard: wg0: Packet has unallowed src IP (fd00::2)  
+from peer 6 ([::1]:2/0%0)
+[  356.328077] wireguard: wg0: Packet has unallowed src IP (fd00::2)  
+from peer 6 ([::1]:2/0%0)
+[  366.567072] wireguard: wg0: Sending keepalive packet to peer 6  
+([::1]:2/0%0)
+[  366.567207] wireguard: wg0: Receiving keepalive packet from peer 7  
+([::1]:9998/0%0)
+[  376.807090] wireguard: wg0: Sending keepalive packet to peer 6  
+([::1]:2/0%0)
+[  376.807281] wireguard: wg0: Receiving keepalive packet from peer 7  
+([::1]:9998/0%0)
 
-____________________________________________________________
-cat /proc/cpuinfo
-processor    : 0
-model name    : ARMv7 Processor rev 5 (v7l)
-BogoMIPS    : 11.42
-Features    : half thumb fastmult vfp edsp neon vfpv3 tls vfpv4 idiva idivt
-vfpd32 lpae evtstrm
-CPU implementer    : 0x41
+Kernel CONFIG: https://paste.fedoraproject.org/paste/W6aa6vCAmrDMEgSwdAxbYA
+
+root@cubox-es:/usr/src/WireGuard/src/tests# cat /proc/cpuinfo
+processor       : 0
+model name      : ARMv7 Processor rev 5 (v7l)
+BogoMIPS        : 333.33
+Features        : half thumb fastmult vfp edsp iwmmxt thumbee vfpv3  
+vfpv3d16 tls idivt
+CPU implementer : 0x56
 CPU architecture: 7
-CPU variant    : 0x0
-CPU part    : 0xc07
+CPU variant     : 0x0
+CPU part        : 0x581
 CPU revision    : 5
 
-processor    : 1
-model name    : ARMv7 Processor rev 5 (v7l)
-BogoMIPS    : 11.42
-Features    : half thumb fastmult vfp edsp neon vfpv3 tls vfpv4 idiva idivt
-vfpd32 lpae evtstrm
-CPU implementer    : 0x41
-CPU architecture: 7
-CPU variant    : 0x0
-CPU part    : 0xc07
-CPU revision    : 5
+Hardware        : Marvell Dove
+Revision        : 0000
+Serial          : 0000000000000000
 
-processor    : 2
-model name    : ARMv7 Processor rev 5 (v7l)
-BogoMIPS    : 11.42
-Features    : half thumb fastmult vfp edsp neon vfpv3 tls vfpv4 idiva idivt
-vfpd32 lpae evtstrm
-CPU implementer    : 0x41
-CPU architecture: 7
-CPU variant    : 0x0
-CPU part    : 0xc07
-CPU revision    : 5
 
-processor    : 3
-model name    : ARMv7 Processor rev 5 (v7l)
-BogoMIPS    : 11.42
-Features    : half thumb fastmult vfp edsp neon vfpv3 tls vfpv4 idiva idivt
-vfpd32 lpae evtstrm
-CPU implementer    : 0x41
-CPU architecture: 7
-CPU variant    : 0x0
-CPU part    : 0xc07
-CPU revision    : 5
+gcc version 7.0.1 20170309 (Red Hat Cross 7.0.1-0.4)
 
-Hardware    : Allwinner sun8i Family
-Revision    : 0000
-Serial        : 02c0008149ab5a29
+Greats,
 
-____________________________________________________________
-
-uname -a
-Linux LAB-HOME-SERVER 4.13.14-sunxi #240 SMP Mon Nov 20 00:09:06 CET 2017
-armv7l armv7l armv7l GNU/Linux
-
-____________________________________________________________
-
-I use mainline kernel.
-
-Kernel config:
-https://drive.google.com/open?id=1H6Vk7P8bCNAktBhmfJpTtGse2rRauRiB
-
-____________________________________________________________
-
-sudo modprobe wireguard
-modprobe: ERROR: could not insert 'wireguard': Exec format error
-
-____________________________________________________________
-
-dmesg | grep wiregu
-[  532.927236] wireguard: loading out-of-tree module taints kernel.
-[  532.930604] wireguard: unknown relocation: 51
-[  533.005892] wireguard: unknown relocation: 51
-
--- 
-Thanks,
-Roman Gavrilov
-
---001a11445a2a9d8096055e6f2b2b
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>Hello!<br><br>I have new bug on armhf.<br><br>_______=
-_______________________<wbr>______________________________<wbr><br><br></di=
-v>build from:<br><a href=3D"https://git.zx2c4.com/WireGuard/commit/?id=3D82=
-cacee3511e5c2f624203487124e5ba0151c84d">https://git.zx2c4.com/WireGuard/com=
-mit/?id=3D82cacee3511e5c2f624203487124e5ba0151c84d</a><br><div><br></div><d=
-iv>______________________________<wbr>______________________________<wbr><b=
-r><br></div><div>software:<br></div><div>Ubuntu Xenial 16.04<br></div><div>=
-<br></div><div>hardware:<br></div><div>PC: Orange Pi Plus 2E<br>SOC: Allwin=
-ner H3<br><br>______________________________<wbr>__________________________=
-____<wbr><br>cat /proc/cpuinfo<br>processor=C2=A0=C2=A0=C2=A0 : 0<br>model =
-name=C2=A0=C2=A0=C2=A0 : ARMv7 Processor rev 5 (v7l)<br>BogoMIPS=C2=A0=C2=
-=A0=C2=A0 : 11.42<br>Features=C2=A0=C2=A0=C2=A0 : half thumb fastmult vfp e=
-dsp neon vfpv3 tls vfpv4 idiva idivt vfpd32 lpae evtstrm <br>CPU implemente=
-r=C2=A0=C2=A0=C2=A0 : 0x41<br>CPU architecture: 7<br>CPU variant=C2=A0=C2=
-=A0=C2=A0 : 0x0<br>CPU part=C2=A0=C2=A0=C2=A0 : 0xc07<br>CPU revision=C2=A0=
-=C2=A0=C2=A0 : 5<br><br>processor=C2=A0=C2=A0=C2=A0 : 1<br>model name=C2=A0=
-=C2=A0=C2=A0 : ARMv7 Processor rev 5 (v7l)<br>BogoMIPS=C2=A0=C2=A0=C2=A0 : =
-11.42<br>Features=C2=A0=C2=A0=C2=A0 : half thumb fastmult vfp edsp neon vfp=
-v3 tls vfpv4 idiva idivt vfpd32 lpae evtstrm <br>CPU implementer=C2=A0=C2=
-=A0=C2=A0 : 0x41<br>CPU architecture: 7<br>CPU variant=C2=A0=C2=A0=C2=A0 : =
-0x0<br>CPU part=C2=A0=C2=A0=C2=A0 : 0xc07<br>CPU revision=C2=A0=C2=A0=C2=A0=
- : 5<br><br>processor=C2=A0=C2=A0=C2=A0 : 2<br>model name=C2=A0=C2=A0=C2=A0=
- : ARMv7 Processor rev 5 (v7l)<br>BogoMIPS=C2=A0=C2=A0=C2=A0 : 11.42<br>Fea=
-tures=C2=A0=C2=A0=C2=A0 : half thumb fastmult vfp edsp neon vfpv3 tls vfpv4=
- idiva idivt vfpd32 lpae evtstrm <br>CPU implementer=C2=A0=C2=A0=C2=A0 : 0x=
-41<br>CPU architecture: 7<br>CPU variant=C2=A0=C2=A0=C2=A0 : 0x0<br>CPU par=
-t=C2=A0=C2=A0=C2=A0 : 0xc07<br>CPU revision=C2=A0=C2=A0=C2=A0 : 5<br><br>pr=
-ocessor=C2=A0=C2=A0=C2=A0 : 3<br>model name=C2=A0=C2=A0=C2=A0 : ARMv7 Proce=
-ssor rev 5 (v7l)<br>BogoMIPS=C2=A0=C2=A0=C2=A0 : 11.42<br>Features=C2=A0=C2=
-=A0=C2=A0 : half thumb fastmult vfp edsp neon vfpv3 tls vfpv4 idiva idivt v=
-fpd32 lpae evtstrm <br>CPU implementer=C2=A0=C2=A0=C2=A0 : 0x41<br>CPU arch=
-itecture: 7<br>CPU variant=C2=A0=C2=A0=C2=A0 : 0x0<br>CPU part=C2=A0=C2=A0=
-=C2=A0 : 0xc07<br>CPU revision=C2=A0=C2=A0=C2=A0 : 5<br><br>Hardware=C2=A0=
-=C2=A0=C2=A0 : Allwinner sun8i Family<br>Revision=C2=A0=C2=A0=C2=A0 : 0000<=
-br>Serial=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0 : 02c0008149ab5a29<br><br>__=
-____________________________<wbr>______________________________<wbr><br><br=
->uname -a<br>Linux LAB-HOME-SERVER 4.13.14-sunxi #240 SMP Mon Nov 20 00:09:=
-06 CET 2017 armv7l armv7l armv7l GNU/Linux<br><br>_________________________=
-_____<wbr>______________________________<wbr><br><br></div><div>I use mainl=
-ine kernel.</div><div><br></div><div>Kernel config:</div><div><a href=3D"ht=
-tps://drive.google.com/open?id=3D1H6Vk7P8bCNAktBhmfJpTtGse2rRauRiB">https:/=
-/drive.google.com/open?id=3D1H6Vk7P8bCNAktBhmfJpTtGse2rRauRiB</a><br></div>=
-<div><br>______________________________<wbr>______________________________<=
-wbr></div><div><br>sudo modprobe wireguard<br>modprobe: ERROR: could not in=
-sert &#39;wireguard&#39;: Exec format error<br><br>________________________=
-______<wbr>______________________________<wbr></div><div><br>dmesg | grep w=
-iregu<br>[=C2=A0 532.927236] wireguard: loading out-of-tree module taints k=
-ernel.<br>[=C2=A0 532.930604] wireguard: unknown relocation: 51<br>[=C2=A0 =
-533.005892] wireguard: unknown relocation: 51<br clear=3D"all"><br><span cl=
-ass=3D"gmail-HOEnZb gmail-adL"><font color=3D"#888888"><span class=3D"gmail=
--m_6581058282960491625gmail-HOEnZb gmail-m_6581058282960491625gmail-adL"><f=
-ont color=3D"#888888">-- <br><div class=3D"gmail-m_6581058282960491625gmail=
--m_5673561690374840175gmail-m_4963248276163928978gmail-m_-35770533906720339=
-49gmail_signature"><div dir=3D"ltr">Thanks,</div><div>Roman Gavrilov</div><=
-/div></font></span></font></span></div></div>
-
---001a11445a2a9d8096055e6f2b2b--
+René van Dorst.
