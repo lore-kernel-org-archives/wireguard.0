@@ -1,31 +1,24 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: opensource@vdorst.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 331fcd5c
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 18270a5c
  for <wireguard@lists.zx2c4.com>;
- Tue, 21 Nov 2017 00:36:11 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 23b2d021
+ Tue, 21 Nov 2017 07:49:07 +0000 (UTC)
+Received: from smtp21.bhosted.nl (smtp21.bhosted.nl [94.124.121.33])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0cba52a6
  for <wireguard@lists.zx2c4.com>;
- Tue, 21 Nov 2017 00:36:11 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ff2b8ccd
- for <wireguard@lists.zx2c4.com>;
- Tue, 21 Nov 2017 00:36:11 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 80af5192
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Tue, 21 Nov 2017 00:36:10 +0000 (UTC)
-Received: by mail-ot0-f173.google.com with SMTP id u10so9157073otc.12
- for <wireguard@lists.zx2c4.com>; Mon, 20 Nov 2017 16:41:06 -0800 (PST)
+ Tue, 21 Nov 2017 07:49:06 +0000 (UTC)
+Date: Tue, 21 Nov 2017 07:54:01 +0000
+Message-ID: <20171121075401.Horde.gAK_8RJbLyuvqgW8amLTrYK@www.vdorst.com>
+From: =?utf-8?b?UmVuw6k=?= van Dorst <opensource@vdorst.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: Re: netns.sh stuck at ncat.
+References: <20171120231416.Horde.CgDTFw41-BBj-IomMwxyq3_@www.vdorst.com>
+ <CAHmME9pFmoZYR2Teh2t+6hjp9HNZcE8o_jvZ17Xvzqmf7bpd6A@mail.gmail.com>
+ <CAHmME9r3BDd97=tZZg1kxn_gyQPrdfsdOkLo-Zv=1-rZWDqnHg@mail.gmail.com>
+In-Reply-To: <CAHmME9r3BDd97=tZZg1kxn_gyQPrdfsdOkLo-Zv=1-rZWDqnHg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed; DelSp=Yes
 MIME-Version: 1.0
-In-Reply-To: <b68e7d6a-baba-630c-49f5-193899f05d38@gmail.com>
-References: <b68e7d6a-baba-630c-49f5-193899f05d38@gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 21 Nov 2017 01:41:04 +0100
-Message-ID: <CAHmME9rA=kN7ZaTnco4XXAgDRa0bmE6uwM2MSO0qq1Dw=t3czw@mail.gmail.com>
-Subject: Re: Gateway for Wireguard VPN
-To: Germano Massullo <germano.massullo@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Cc: WireGuard list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -35,93 +28,55 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-If you want A and C to communicate through B as a trusted intermediary
-for A and C's IPs, then your configs actually need to be:
+Quoting "Jason A. Donenfeld" <Jason@zx2c4.com>:
 
-=== Host A (Fedora 26) ===
-# cat /etc/wireguard/wg0.conf
-[Interface]
-Address = 10.1.0.21/24
-PrivateKey = *censored*
+> This is pretty strange looking, and appears like it's a userland issue
+> -- like the versions of ncat or ss or whatever weird scripting hacks
+> in netns.sh aren't working well with the tools installed or some
+> networking sysctl I forgot to toggle... Maybe one quick way of testing
+> if it's an ss issue (old RHEL tools, or the like) would be to change
+> the function body of waitncatudp into just `sleep 2` or something.
 
-[Peer]
-PublicKey = *censored*
-Endpoint = vpn.foo.xx:51820  # vpn.foo.xx is Host B
-AllowedIPs = 10.1.0.2/32, 10.1.0.22/32
+Maybe it did not work before but I didn't noticed because ncat was not  
+installed until yesterday.
+I tried old wireguard module not the userland tools. But the same  
+results stuck at ncat.
 
+This Cubox is running Ubuntu xenial 16.04.3 LTS (GNU/Linux 4.13.14 armv7l)
 
-=== Host B (vpn.foo.xx) (CentOS 7) ===
-ip forwarding active: net.ipv4.ip_forward = 1
-# cat wg0.conf
-[Interface]
-Address = 10.1.0.2/24
-ListenPort = 51820
-PrivateKey = *censored*
+ncat comes with package nmap
 
-[Peer]
-PublicKey = *censored*
-AllowedIPs = 10.1.0.21/32
+root@cubox-es:~# apt show nmap
+Package: nmap
+Version: 7.01-2ubuntu2
 
-[Peer]
-PublicKey = *censored*
-AllowedIPs = 10.1.0.22/32
+ss utility, iproute2-ss151103
 
 
-=== Host C (CentOS 7) ===
-
-# cat wg0.conf
-[Interface]
-Address = 10.1.0.22/24
-ListenPort = 51820
-PrivateKey = *censored*
-
-[Peer]
-PublicKey = *censored*
-Endpoint = 192.168.1.1:51820
-AllowedIPs = 10.1.0.2/32, 10.1.0.21/32
+With sleep 2 it works again.
 
 
-Alternatively, since you're likely going to be doing this for many
-peers, you might be best off with this config instead:
+My script modifications.
 
-=== Host A (Fedora 26) ===
-# cat /etc/wireguard/wg0.conf
-[Interface]
-Address = 10.1.0.21/24
-PrivateKey = *censored*
+root@cubox-es:/usr/src/WireGuard/src/tests# git diff ./netns.sh
+diff --git a/src/tests/netns.sh b/src/tests/netns.sh
+index 2ad8d88..7718da6 100755
+--- a/src/tests/netns.sh
++++ b/src/tests/netns.sh
+@@ -38,7 +38,7 @@ ip1() { pretty 1 "ip $*"; ip -n $netns1 "$@"; }
+  ip2() { pretty 2 "ip $*"; ip -n $netns2 "$@"; }
+  sleep() { read -t "$1" -N 0 || true; }
+  waitiperf() { pretty "${1//*-}" "wait for iperf:5201"; while [[ $(ss  
+-N "$1" -tlp 'sport = 5201') != *iperf3* ]]; do sleep 0.1; done; }
+-waitncatudp() { pretty "${1//*-}" "wait for udp:1111"; while [[ $(ss  
+-N "$1" -ulp 'sport = 1111') != *ncat* ]]; do sleep 0.1; done; }
++waitncatudp() { pretty "${1//*-}" "wait for udp:1111"; sleep 2; }
+  waitncattcp() { pretty "${1//*-}" "wait for tcp:1111"; while [[ $(ss  
+-N "$1" -tlp 'sport = 1111') != *ncat* ]]; do sleep 0.1; done; }
+  waitiface() { pretty "${1//*-}" "wait for $2 to come up"; ip netns  
+exec "$1" bash -c "while [[ \$(< \"/sys/class/net/$2/operstate\") !=  
+up ]]; do read -t .1 -N 0 || true; done;"; }
 
-[Peer]
-PublicKey = *censored*
-Endpoint = vpn.foo.xx:51820  # vpn.foo.xx is Host B
-AllowedIPs = 10.1.0.0/24
+Greats,
 
-
-=== Host B (vpn.foo.xx) (CentOS 7) ===
-ip forwarding active: net.ipv4.ip_forward = 1
-# cat wg0.conf
-[Interface]
-Address = 10.1.0.2/24
-ListenPort = 51820
-PrivateKey = *censored*
-
-[Peer]
-PublicKey = *censored*
-AllowedIPs = 10.1.0.21/32
-
-[Peer]
-PublicKey = *censored*
-AllowedIPs = 10.1.0.22/32
-
-
-=== Host C (CentOS 7) ===
-
-# cat wg0.conf
-[Interface]
-Address = 10.1.0.22/24
-ListenPort = 51820
-PrivateKey = *censored*
-
-[Peer]
-PublicKey = *censored*
-Endpoint = 192.168.1.1:51820
-AllowedIPs = 10.1.0.0/24
+René van Dorst.
