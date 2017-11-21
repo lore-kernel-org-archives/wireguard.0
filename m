@@ -1,32 +1,20 @@
-Return-Path: germano.massullo@gmail.com
+Return-Path: bruno@wolff.to
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 327f9d85
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c59c7843
  for <wireguard@lists.zx2c4.com>;
- Tue, 21 Nov 2017 18:07:46 +0000 (UTC)
-Received: from mail-wm0-f41.google.com (mail-wm0-f41.google.com [74.125.82.41])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4be8f6a0
+ Tue, 21 Nov 2017 19:38:49 +0000 (UTC)
+Received: from wolff.to (wolff.to [98.103.208.27])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with SMTP id f90d8cb9
  for <wireguard@lists.zx2c4.com>;
- Tue, 21 Nov 2017 18:07:46 +0000 (UTC)
-Received: by mail-wm0-f41.google.com with SMTP id v186so5276610wma.2
- for <wireguard@lists.zx2c4.com>; Tue, 21 Nov 2017 10:12:47 -0800 (PST)
-Return-Path: <germano.massullo@gmail.com>
-Received: from [192.168.1.100]
- (host179-8-dynamic.56-79-r.retail.telecomitalia.it. [79.56.8.179])
- by smtp.googlemail.com with ESMTPSA id g3sm8183723edi.66.2017.11.21.10.12.46
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 21 Nov 2017 10:12:46 -0800 (PST)
-Subject: Re: Gateway for Wireguard VPN
-From: Germano Massullo <germano.massullo@gmail.com>
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-References: <b68e7d6a-baba-630c-49f5-193899f05d38@gmail.com>
- <CAHmME9rA=kN7ZaTnco4XXAgDRa0bmE6uwM2MSO0qq1Dw=t3czw@mail.gmail.com>
- <2a922e87-81a4-0bbe-8990-2502a91429ef@gmail.com>
-Message-ID: <a32ab937-8b60-38f4-b042-64a7c4aa41e4@gmail.com>
-Date: Tue, 21 Nov 2017 19:12:45 +0100
+ Tue, 21 Nov 2017 19:38:49 +0000 (UTC)
+Date: Tue, 21 Nov 2017 13:41:37 -0600
+From: Bruno Wolff III <bruno@wolff.to>
+To: wireguard@lists.zx2c4.com
+Subject: d8738d57ab9ab976a1899e73d955d38317f44486 not building with
+ 4.15.0-0.rc0.git6.
+Message-ID: <20171121194137.GA20179@wolff.to>
 MIME-Version: 1.0
-In-Reply-To: <2a922e87-81a4-0bbe-8990-2502a91429ef@gmail.com>
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=utf-8; format=flowed
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -36,18 +24,30 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-For who has a Firewalld based Linux distribution like Fedora/RHEL/CentOS:
+I tried building the latest WireGuard on the latest rawhide kernel an got 
+the following error:
 
-=== Host B (VPN gateway) ===
-When system creates interface wg0, it is not attached to any firewall
-zone, so it falls into default zone, that blocks everything except for
-ICMP packets. Therefore if you simply run ping among hosts (example from
-A to C) everything works, but as soon you try to use a service, it will
-not work.
-You can solve with
-# firewall-cmd --zone=trusted --add-interface=wg0 --permanent
-# firewall-cmd --reload
+/home/bruno/WireGuard/src/netlink.c: In function ‘get_device_dump_real’:
+/home/bruno/WireGuard/src/netlink.c:180:2: error: too many arguments to function ‘genl_dump_check_consistent’
+  genl_dump_check_consistent(cb, hdr, &genl_family);
+  ^~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /home/bruno/WireGuard/src/netlink.c:11:0:
+./include/net/genetlink.h:194:20: note: declared here
+ static inline void genl_dump_check_consistent(struct netlink_callback *cb,
+                    ^~~~~~~~~~~~~~~~~~~~~~~~~~
+make[2]: *** [scripts/Makefile.build:306: /home/bruno/WireGuard/src/netlink.o] Error 1
 
-Now from host A you can correctly run
-$ ssh user@10.1.0.22
-that is the server running on host C
+I also got some warnings about redefining READ_ONCE:
+
+ CC [M]  /home/bruno/WireGuard/src/netlink.o
+In file included from ./include/linux/kernel.h:10:0,
+                 from ./include/linux/skbuff.h:17,
+                 from ./include/linux/ip.h:20,
+                 from /home/bruno/WireGuard/src/compat/compat.h:528,
+                 from <command-line>:0:
+./include/linux/compiler.h:249:0: warning: "READ_ONCE" redefined
+ #define READ_ONCE(x) __READ_ONCE(x, 1)
+ 
+In file included from <command-line>:0:0:
+/home/bruno/WireGuard/src/compat/compat.h:42:0: note: this is the location of the previous definition
+ #define READ_ONCE ACCESS_ONCE
