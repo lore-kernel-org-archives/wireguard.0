@@ -1,31 +1,12 @@
-Return-Path: Jason@zx2c4.com
-Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6047dedd
- for <wireguard@lists.zx2c4.com>;
- Wed, 22 Nov 2017 23:46:25 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 51b8edbd
- for <wireguard@lists.zx2c4.com>;
- Wed, 22 Nov 2017 23:46:25 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 84951ff0
- for <wireguard@lists.zx2c4.com>;
- Wed, 22 Nov 2017 23:46:25 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id cc4870c9
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Wed, 22 Nov 2017 23:46:25 +0000 (UTC)
-Received: by mail-ot0-f170.google.com with SMTP id b17so14988177oth.2
- for <wireguard@lists.zx2c4.com>; Wed, 22 Nov 2017 15:51:36 -0800 (PST)
+Return-Path: tim@sedlmeyer.us
+Return-Path: <tim@sedlmeyer.us>
+From: Tim Sedlmeyer <tim@sedlmeyer.us>
 MIME-Version: 1.0
-In-Reply-To: <CAM3m09QZc=kJoXUQvCpCVQG62TeDX0B4BdcuUU3A9T2Lfg10VQ@mail.gmail.com>
-References: <CAM3m09QZc=kJoXUQvCpCVQG62TeDX0B4BdcuUU3A9T2Lfg10VQ@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 23 Nov 2017 00:51:35 +0100
-Message-ID: <CAHmME9qBc1Wm1=QgAY6gSR65bsfNppsRjeZFwJfF1nBAr1WF9A@mail.gmail.com>
-Subject: Re: Another allowed-ips question
-To: Ryan Whelan <rcwhelan@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Date: Wed, 22 Nov 2017 23:53:43 +0000
+Message-ID: <CAK_h9uHiudc2d_qOJgQeQd7+8oB-Kgr8nN_S5Y1hsBUu==Zd1w@mail.gmail.com>
+Subject: Removing pre-shared key from peer using wg set fails
+To: WireGuard@lists.zx2c4.com
+Content-Type: multipart/alternative; boundary="94eb2c0551c6355ccd055e9b088e"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -35,23 +16,28 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Ryan,
+--94eb2c0551c6355ccd055e9b088e
+Content-Type: text/plain; charset="UTF-8"
 
-Sorry for the delayed response. The high volume and churn of
-development recently has gotten me a bit behind on the mail queue and
-rather confused.
+Removal of the preshared-key from a peer using the 'wg set' command and
+providing /dev/null or an empty file as the preshared-key filename does not
+result in the key being removed from the peer. The command doesn't return
+an error, but it also doesn't remove the key. I have attempted it using
+0.0.20171111 and 0.0.20171122.
 
-You wrote:
->  what i'm struggling with is if they are unable to communicate directly and build routes to one another via an intermediary router (which is also connected to each 'client' via wireguard).
+Supplying /dev/null or an empty file as the filename does work properly for
+removing the interface private-key.
 
-If I understood you correctly, you're looking at this situation: Peer
-A connects to Peer S. Peer B connects to Peer S. A wants to talk to B,
-through S. In this case, the allowed-ips of S on A lists B's internal
-IP, and the allowed-ips of S on B lists A's internal IP address. In
-other words, you have A/B state that "I trust S to send me the traffic
-of B/A."
+--94eb2c0551c6355ccd055e9b088e
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Does this answer your question?
+<div dir=3D"ltr">Removal of the preshared-key from a peer using the &#39;wg=
+ set&#39; command and providing /dev/null or an empty file as the preshared=
+-key filename does not result in the key being removed from the peer. The c=
+ommand doesn&#39;t return an error, but it also doesn&#39;t remove the key.=
+ I have attempted it using 0.0.20171111 and 0.0.20171122.<div><br><div>Supp=
+lying /dev/null or an empty file as the filename does work properly for rem=
+oving the interface private-key.</div></div></div>
 
-Regards,
-Jason
+--94eb2c0551c6355ccd055e9b088e--
