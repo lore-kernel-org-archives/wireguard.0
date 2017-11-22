@@ -1,21 +1,31 @@
-Return-Path: tbskyd@gmail.com
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4e2ba369
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d4735af7
  for <wireguard@lists.zx2c4.com>;
- Wed, 22 Nov 2017 10:48:34 +0000 (UTC)
-Received: from mail-wm0-f43.google.com (mail-wm0-f43.google.com [74.125.82.43])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 84ec1d36
+ Wed, 22 Nov 2017 11:54:29 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dfa869e0
  for <wireguard@lists.zx2c4.com>;
- Wed, 22 Nov 2017 10:48:34 +0000 (UTC)
-Received: by mail-wm0-f43.google.com with SMTP id l188so7616318wma.1
- for <wireguard@lists.zx2c4.com>; Wed, 22 Nov 2017 02:53:40 -0800 (PST)
+ Wed, 22 Nov 2017 11:54:29 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0bcd18c8
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 22 Nov 2017 11:54:28 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 9d18060a
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 22 Nov 2017 11:54:28 +0000 (UTC)
+Received: by mail-ot0-f169.google.com with SMTP id t79so13353346ota.3
+ for <wireguard@lists.zx2c4.com>; Wed, 22 Nov 2017 03:59:35 -0800 (PST)
 MIME-Version: 1.0
-From: d tbsky <tbskyd@gmail.com>
-Date: Wed, 22 Nov 2017 18:53:39 +0800
-Message-ID: <CAC6SzHKVvOEZYXiuK-O6jMN=OOPjfogq2bbeHnYA1xoLew-OcQ@mail.gmail.com>
-Subject: roaming and ddns dynamic ip
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+In-Reply-To: <CAC6SzHKVvOEZYXiuK-O6jMN=OOPjfogq2bbeHnYA1xoLew-OcQ@mail.gmail.com>
+References: <CAC6SzHKVvOEZYXiuK-O6jMN=OOPjfogq2bbeHnYA1xoLew-OcQ@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 22 Nov 2017 12:59:34 +0100
+Message-ID: <CAHmME9qmZCt7GDeXZtDBwSeg2z1Md9UQENbNo5TXvSqWion9rA@mail.gmail.com>
+Subject: Re: roaming and ddns dynamic ip
+To: d tbsky <tbskyd@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -25,37 +35,13 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi:
-    I tried some setup for wireguard and found it may cause problem.
-assume server has dynamic ip and has a static dns name
-"ddns-server.example.com".
+Hello,
 
-client.conf like below:
-[Interface]
-PrivateKey = ****
-ListenPort = 51820
-[Peer]
-PublicKey = ****
-Endpoint =  ddns-server.example.com:51820
-AllowedIPs = 0.0.0.0/0
+This is not a bug. DNS resolution is not done by the WireGuard module,
+but rather by the configuration tool. If you want to update an IP,
+you'll need to devise a mechanism for this. One popular one is this
+example script:
+https://git.zx2c4.com/WireGuard/tree/contrib/examples/reresolve-dns ,
+but many other possibilities exist too.
 
-if I use "wg setconf wg0 client.conf", then use "wg showconf wg0", result below:
-[Interface]
-ListenPort = 51820
-PrivateKey = ****
-[Peer]
-PublicKey = ****
-AllowedIPs = 0.0.0.0/0
-Endpoint = 1.1.1.1:51820
-
-the "ddns-server.example.com" has translate to ip "1.1.1.1".
-
-if later "ddns-server.example.com" change ip to "2.2.2.2", I wonder if
-wireguard will try to resolve "ddns-server.example.com" again?  will
-wireguard try to resolve  "ddns-server.example.com" again  when
-connection is broken?
-
-thanks a lot for help!!
-
-Regards,
-tbskyd
+Jason
