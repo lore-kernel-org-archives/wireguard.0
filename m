@@ -1,24 +1,21 @@
-Return-Path: bruno@wolff.to
+Return-Path: tbskyd@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ed1d3a07
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4e2ba369
  for <wireguard@lists.zx2c4.com>;
- Tue, 21 Nov 2017 20:13:08 +0000 (UTC)
-Received: from wolff.to (wolff.to [98.103.208.27])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with SMTP id 0cb2cdf6
+ Wed, 22 Nov 2017 10:48:34 +0000 (UTC)
+Received: from mail-wm0-f43.google.com (mail-wm0-f43.google.com [74.125.82.43])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 84ec1d36
  for <wireguard@lists.zx2c4.com>;
- Tue, 21 Nov 2017 20:13:07 +0000 (UTC)
-Date: Tue, 21 Nov 2017 14:15:56 -0600
-From: Bruno Wolff III <bruno@wolff.to>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: Re: d8738d57ab9ab976a1899e73d955d38317f44486 not building with
- 4.15.0-0.rc0.git6.
-Message-ID: <20171121201556.GA6337@wolff.to>
-References: <20171121194137.GA20179@wolff.to>
- <CAHmME9pQvuB8g601HFJgCf0mpvHN+eqoj_2OngmMitKr_eZAgw@mail.gmail.com>
+ Wed, 22 Nov 2017 10:48:34 +0000 (UTC)
+Received: by mail-wm0-f43.google.com with SMTP id l188so7616318wma.1
+ for <wireguard@lists.zx2c4.com>; Wed, 22 Nov 2017 02:53:40 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-In-Reply-To: <CAHmME9pQvuB8g601HFJgCf0mpvHN+eqoj_2OngmMitKr_eZAgw@mail.gmail.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: d tbsky <tbskyd@gmail.com>
+Date: Wed, 22 Nov 2017 18:53:39 +0800
+Message-ID: <CAC6SzHKVvOEZYXiuK-O6jMN=OOPjfogq2bbeHnYA1xoLew-OcQ@mail.gmail.com>
+Subject: roaming and ddns dynamic ip
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -28,13 +25,37 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Tue, Nov 21, 2017 at 20:51:49 +0100,
-  "Jason A. Donenfeld" <Jason@zx2c4.com> wrote:
->Hi Bruno,
->
->I'll start working on 4.15 after rc1 hits or possibly sooner, as
->there's currently quite a bit of churn at the moment. The current
->errors are caused by:
+Hi:
+    I tried some setup for wireguard and found it may cause problem.
+assume server has dynamic ip and has a static dns name
+"ddns-server.example.com".
 
-OK. I switched back to 4.14 and things are fine. Linus was threatening to 
-close the merge window early, so maybe we'll get rc1 tomorrow night (-0600).
+client.conf like below:
+[Interface]
+PrivateKey = ****
+ListenPort = 51820
+[Peer]
+PublicKey = ****
+Endpoint =  ddns-server.example.com:51820
+AllowedIPs = 0.0.0.0/0
+
+if I use "wg setconf wg0 client.conf", then use "wg showconf wg0", result below:
+[Interface]
+ListenPort = 51820
+PrivateKey = ****
+[Peer]
+PublicKey = ****
+AllowedIPs = 0.0.0.0/0
+Endpoint = 1.1.1.1:51820
+
+the "ddns-server.example.com" has translate to ip "1.1.1.1".
+
+if later "ddns-server.example.com" change ip to "2.2.2.2", I wonder if
+wireguard will try to resolve "ddns-server.example.com" again?  will
+wireguard try to resolve  "ddns-server.example.com" again  when
+connection is broken?
+
+thanks a lot for help!!
+
+Regards,
+tbskyd
