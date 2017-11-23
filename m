@@ -1,24 +1,24 @@
-Return-Path: nicolas.prochazka@gmail.com
+Return-Path: tbskyd@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cd7485a8
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a5d4045c
  for <wireguard@lists.zx2c4.com>;
- Thu, 23 Nov 2017 12:22:35 +0000 (UTC)
-Received: from mail-qt0-f177.google.com (mail-qt0-f177.google.com
- [209.85.216.177])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8ff02017
+ Thu, 23 Nov 2017 17:01:45 +0000 (UTC)
+Received: from mail-wm0-f50.google.com (mail-wm0-f50.google.com [74.125.82.50])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 103d1dfb
  for <wireguard@lists.zx2c4.com>;
- Thu, 23 Nov 2017 12:22:35 +0000 (UTC)
-Received: by mail-qt0-f177.google.com with SMTP id 33so18843310qtv.1
- for <wireguard@lists.zx2c4.com>; Thu, 23 Nov 2017 04:27:49 -0800 (PST)
+ Thu, 23 Nov 2017 17:01:44 +0000 (UTC)
+Received: by mail-wm0-f50.google.com with SMTP id r68so18011280wmr.1
+ for <wireguard@lists.zx2c4.com>; Thu, 23 Nov 2017 09:07:00 -0800 (PST)
 MIME-Version: 1.0
-Sender: nicolas.prochazka@gmail.com
-In-Reply-To: <CAHmME9rng4iyqHmWVB3HbizD-7bvRZQUe_Zhc-LHo-vaiz5D2A@mail.gmail.com>
-References: <CADdae-gxRdskDLWaHhGF8otRDV4ps_VQ4qfabw9njLRnnYNNmQ@mail.gmail.com>
- <CAHmME9rng4iyqHmWVB3HbizD-7bvRZQUe_Zhc-LHo-vaiz5D2A@mail.gmail.com>
-From: nicolas prochazka <prochazka.nicolas@gmail.com>
-Date: Thu, 23 Nov 2017 13:27:49 +0100
-Message-ID: <CADdae-g0+P4OU2WTZwqhFr8iGUApu1JS68OWbvUUEkj4r2xtWA@mail.gmail.com>
-Subject: Re: about high availibity
+In-Reply-To: <CAHmME9qeUw5VsaEoAG=i0=5LfOq4aPGi2KjDHKDjAPorXKJgbA@mail.gmail.com>
+References: <CAC6SzH+Q-1SRVXOoScGhXWraOLdp9_Rud6cMbQ95a51r=eRWTw@mail.gmail.com>
+ <CAHmME9piZhSukf55XY1Un2hO0TZyfHRh+afU8kk6R6yoSA5pQA@mail.gmail.com>
+ <CAC6SzHJZj5BOMek4i=1ykepHSzHRDGKYTj-Cfa4veRbsVuj2WA@mail.gmail.com>
+ <CAHmME9qeUw5VsaEoAG=i0=5LfOq4aPGi2KjDHKDjAPorXKJgbA@mail.gmail.com>
+From: d tbsky <tbskyd@gmail.com>
+Date: Fri, 24 Nov 2017 01:06:59 +0800
+Message-ID: <CAC6SzHLUP5TFnra63T_DXkqxPpDQr_-n5KCNGkWqG02DyBvgVA@mail.gmail.com>
+Subject: Re: multi-home difficulty
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
@@ -31,33 +31,101 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-ok and thanks
-nicolas<div id="DAB4FAD8-2DD7-40BB-A1B8-4E2AA1F9FDF2"><br /> <table
-style="border-top: 1px solid #D3D4DE;">
-	<tr>
-      <td style="width: 55px; padding-top: 18px;"><a
-href="https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail"
-target="_blank"><img
-src="https://ipmcdn.avast.com/images/icons/icon-envelope-tick-round-orange-animated-no-repeat-v1.gif"
-alt="" width="46" height="29" style="width: 46px; height: 29px;"
-/></a></td>
-		<td style="width: 470px; padding-top: 17px; color: #41424e;
-font-size: 13px; font-family: Arial, Helvetica, sans-serif;
-line-height: 18px;">Garanti sans virus. <a
-href="https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail"
-target="_blank" style="color: #4453ea;">www.avast.com</a> 		</td>
-	</tr>
-</table>
-<a href="#DAB4FAD8-2DD7-40BB-A1B8-4E2AA1F9FDF2" width="1" height="1"></a></div>
-
-2017-11-23 12:52 GMT+01:00 Jason A. Donenfeld <Jason@zx2c4.com>:
-> Hi Nicolas,
+2017-11-23 7:35 GMT+08:00 Jason A. Donenfeld <Jason@zx2c4.com>:
+> On Tue, Nov 21, 2017 at 3:35 PM, d tbsky <tbskyd@gmail.com> wrote:
+>> thanks for the quick reply. my wireguard configuration is in the
+>> previous mail, so I think the linux firewall part is what you want.
 >
-> You can't change that parameter, and I won't ever add that option.
-> This isn't negotiable.
->
-> However, I'll at some point be adding netlink event notifications, so
-> that you learn when WireGuard itself has detected connectivity
-> problems (usually in about 15 seconds), and react accordingly.
+> Right. So if you can give me minimal instructions on how to set up a
+> box that exhibits the buggy behavior you're seeing, I can try to fix
+> it.
 >
 > Jason
+
+sorry for the delay.  I try to make a minimal config to reproduce the
+problem in our firewall, but it's not easy. the communication
+sometimes works, sometimes failed. suddenly I remember many years ago
+I got similar problems with openvpn. according the manual pages of
+openvpn:
+
+ --multihome
+              Configure a multi-homed UDP server.  This option needs
+to be used when a server has more  than  one  IP
+              address  (e.g. multiple interfaces, or secondary IP
+addresses), and is not using --local to force bind=E2=80=90
+              ing to one specific address only.  This option will add
+some extra lookups to the packet path to ensure
+              that  the UDP reply packets are always sent from the
+address that the client is talking to. This is not
+              supported on all platforms, and it adds more processing,
+so it's not enabled by default.
+
+              Note: this option is only relevant for UDP servers.
+
+              Note 2: if you do an IPv6+IPv4 dual-stack bind on a
+Linux machine with multiple IPv4  address,  connec=E2=80=90
+              tions  to  IPv4 addresses will not work right on kernels
+before 3.15, due to missing kernel support for
+              the IPv4-mapped case (some distributions have ported
+this to earlier kernel versions, though).
+
+  I forgot these. many strange things happen if you didn't bind
+specific ip, even with "--multihome"
+
+  finally I made a environment for you to test. my OS is rehl 7.4,
+kernel version 3.10.0-693.5.2
+
+  1. build a virtual rhel 7.4 box, bind 2 virtio nic to it. (single
+nic won't show the problem, I don't now why).
+  2. stop NetworkManager
+  3. setup network environment like below(skip eth0, setup eth1 with
+two ip addresses):
+
+ip addr flush dev eth1
+ip addr add 10.99.1.99/24 dev eth1
+ip addr add 10.99.1.100/24 dev eth1
+ip link set eth1 up
+ip route add default via 10.99.1.254
+
+ip link add wg0 type wireguard
+ip addr add 172.31.21.1 peer 172.31.21.2 dev wg0
+wg setconf wg0 /root/server.conf
+ip link set wg0 up
+
+/root/server.conf like below:
+[Interface]
+PrivateKey =3D ****
+ListenPort =3D 51820
+[Peer]
+PublicKey =3D ****
+AllowedIPs =3D 0.0.0.0/0
+
+    4. setup wireguard at client site. client.conf like below:
+
+[Interface]
+PrivateKey =3D ****
+ListenPort =3D 51820
+[Peer]
+PublicKey =3D ****
+Endpoint =3D  10.99.1.100:51820
+AllowedIPs =3D 0.0.0.0/0
+
+    5. at client site, "ping 172.31.21.1".
+
+    6. at server site, "modprobe nf_conntrack_ipv4;cat
+/proc/net/nf_conntrack | grep 51820":
+
+ipv4     2 udp      17 29 src=3D10.99.1.99 dst=3D10.99.20.254 sport=3D51820
+dport=3D51820 [UNREPLIED] src=3D10.99.20.254 dst=3D10.99.1.99 sport=3D51820
+dport=3D51820 mark=3D0 zone=3D0 use=3D2
+ipv4     2 udp      17 29 src=3D10.99.20.254 dst=3D10.99.1.100 sport=3D5182=
+0
+dport=3D51820 [UNREPLIED] src=3D10.99.1.100 dst=3D10.99.20.254 sport=3D5182=
+0
+dport=3D51820 mark=3D0 zone=3D0 use=3D2
+
+   I don't know if you can reproduce in your environment.
+   hope  wireguard can bind to specific ip in the future..
+
+Regards,
+tbskyd
