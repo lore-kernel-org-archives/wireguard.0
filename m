@@ -1,16 +1,23 @@
-Return-Path: tim@sedlmeyer.us
-Return-Path: <tim@sedlmeyer.us>
+Return-Path: nicolas.prochazka@gmail.com
+Received: from krantz.zx2c4.com (localhost [127.0.0.1])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2ea86ed5
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 23 Nov 2017 11:43:06 +0000 (UTC)
+Received: from mail-qk0-f171.google.com (mail-qk0-f171.google.com
+ [209.85.220.171])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2447e72f
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 23 Nov 2017 11:43:06 +0000 (UTC)
+Received: by mail-qk0-f171.google.com with SMTP id o6so20607819qkh.3
+ for <wireguard@lists.zx2c4.com>; Thu, 23 Nov 2017 03:48:21 -0800 (PST)
 MIME-Version: 1.0
-References: <CAK_h9uHiudc2d_qOJgQeQd7+8oB-Kgr8nN_S5Y1hsBUu==Zd1w@mail.gmail.com>
- <CAHmME9r=H0Kp_3HYvxB62c3-LcMDKnYaTt-nn7b93JToWg91mA@mail.gmail.com>
-In-Reply-To: <CAHmME9r=H0Kp_3HYvxB62c3-LcMDKnYaTt-nn7b93JToWg91mA@mail.gmail.com>
-From: Tim Sedlmeyer <tim@sedlmeyer.us>
-Date: Thu, 23 Nov 2017 02:17:32 +0000
-Message-ID: <CAK_h9uF_miSZs=sJ4b4Dx37Ukd-sO8p_cHzJVuDBN9f9waJZvQ@mail.gmail.com>
-Subject: Re: Removing pre-shared key from peer using wg set fails
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Content-Type: multipart/alternative; boundary="94eb2c0551c688040a055e9d0a8a"
-Cc: WireGuard mailing list <WireGuard@lists.zx2c4.com>
+Sender: nicolas.prochazka@gmail.com
+From: nicolas prochazka <prochazka.nicolas@gmail.com>
+Date: Thu, 23 Nov 2017 12:48:20 +0100
+Message-ID: <CADdae-gxRdskDLWaHhGF8otRDV4ps_VQ4qfabw9njLRnnYNNmQ@mail.gmail.com>
+Subject: about high availibity
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -20,58 +27,29 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---94eb2c0551c688040a055e9d0a8a
-Content-Type: text/plain; charset="UTF-8"
+Hello,
+latest handshake seems to be a convinient way to determine if
+wireguard tunnel is up or down, to manage a high availibity for server
+side.
+Now, it seems latest handshame must > 135 s to be sure that tunnel is
+down, how can we specify a small delay, as 30s for example.
 
-Jason,
-
-That fixed it.
-
-Thanks,
-
-Tim
-
-On Wed, Nov 22, 2017 at 7:20 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
-
-> Hi Tim,
->
-> Thanks for letting me know. This is a tools regression from
-> 0.0.20171111, which I just fixed, based on your report:
->
->
-> https://git.zx2c4.com/WireGuard/patch/?id=7153081da70006a8723474580543bd3223d1baf4
->
-> Let me know if this fixes the issue. It will be included in the next
-> snapshot.
->
-> Regards,
-> Jason
->
-
---94eb2c0551c688040a055e9d0a8a
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Jason,<div><br></div><div>That fixed it.</div><div><br></d=
-iv><div>Thanks,</div><div><br></div><div>Tim</div></div><br><div class=3D"g=
-mail_quote"><div dir=3D"ltr">On Wed, Nov 22, 2017 at 7:20 PM Jason A. Donen=
-feld &lt;<a href=3D"mailto:Jason@zx2c4.com">Jason@zx2c4.com</a>&gt; wrote:<=
-br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;borde=
-r-left:1px #ccc solid;padding-left:1ex">Hi Tim,<br>
-<br>
-Thanks for letting me know. This is a tools regression from<br>
-0.0.20171111, which I just fixed, based on your report:<br>
-<br>
-<a href=3D"https://git.zx2c4.com/WireGuard/patch/?id=3D7153081da70006a87234=
-74580543bd3223d1baf4" rel=3D"noreferrer" target=3D"_blank">https://git.zx2c=
-4.com/WireGuard/patch/?id=3D7153081da70006a8723474580543bd3223d1baf4</a><br=
->
-<br>
-Let me know if this fixes the issue. It will be included in the next snapsh=
-ot.<br>
-<br>
-Regards,<br>
-Jason<br>
-</blockquote></div>
-
---94eb2c0551c688040a055e9d0a8a--
+Regards,
+Nicolas Prochazka.
+<div id="DAB4FAD8-2DD7-40BB-A1B8-4E2AA1F9FDF2"><br /> <table
+style="border-top: 1px solid #D3D4DE;">
+	<tr>
+      <td style="width: 55px; padding-top: 18px;"><a
+href="https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail"
+target="_blank"><img
+src="https://ipmcdn.avast.com/images/icons/icon-envelope-tick-round-orange-animated-no-repeat-v1.gif"
+alt="" width="46" height="29" style="width: 46px; height: 29px;"
+/></a></td>
+		<td style="width: 470px; padding-top: 17px; color: #41424e;
+font-size: 13px; font-family: Arial, Helvetica, sans-serif;
+line-height: 18px;">Garanti sans virus. <a
+href="https://www.avast.com/sig-email?utm_medium=email&utm_source=link&utm_campaign=sig-email&utm_content=webmail"
+target="_blank" style="color: #4453ea;">www.avast.com</a> 		</td>
+	</tr>
+</table>
+<a href="#DAB4FAD8-2DD7-40BB-A1B8-4E2AA1F9FDF2" width="1" height="1"></a></div>
