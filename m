@@ -1,12 +1,14 @@
-Return-Path: tim@sedlmeyer.us
-Return-Path: <tim@sedlmeyer.us>
-From: Tim Sedlmeyer <tim@sedlmeyer.us>
+Return-Path: Jason@zx2c4.com
 MIME-Version: 1.0
-Date: Wed, 22 Nov 2017 23:53:43 +0000
-Message-ID: <CAK_h9uHiudc2d_qOJgQeQd7+8oB-Kgr8nN_S5Y1hsBUu==Zd1w@mail.gmail.com>
-Subject: Removing pre-shared key from peer using wg set fails
-To: WireGuard@lists.zx2c4.com
-Content-Type: multipart/alternative; boundary="94eb2c0551c6355ccd055e9b088e"
+In-Reply-To: <CAK_h9uHiudc2d_qOJgQeQd7+8oB-Kgr8nN_S5Y1hsBUu==Zd1w@mail.gmail.com>
+References: <CAK_h9uHiudc2d_qOJgQeQd7+8oB-Kgr8nN_S5Y1hsBUu==Zd1w@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 23 Nov 2017 01:20:48 +0100
+Message-ID: <CAHmME9r=H0Kp_3HYvxB62c3-LcMDKnYaTt-nn7b93JToWg91mA@mail.gmail.com>
+Subject: Re: Removing pre-shared key from peer using wg set fails
+To: Tim Sedlmeyer <tim@sedlmeyer.us>
+Content-Type: text/plain; charset="UTF-8"
+Cc: WireGuard mailing list <WireGuard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -16,28 +18,14 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---94eb2c0551c6355ccd055e9b088e
-Content-Type: text/plain; charset="UTF-8"
+Hi Tim,
 
-Removal of the preshared-key from a peer using the 'wg set' command and
-providing /dev/null or an empty file as the preshared-key filename does not
-result in the key being removed from the peer. The command doesn't return
-an error, but it also doesn't remove the key. I have attempted it using
-0.0.20171111 and 0.0.20171122.
+Thanks for letting me know. This is a tools regression from
+0.0.20171111, which I just fixed, based on your report:
 
-Supplying /dev/null or an empty file as the filename does work properly for
-removing the interface private-key.
+https://git.zx2c4.com/WireGuard/patch/?id=7153081da70006a8723474580543bd3223d1baf4
 
---94eb2c0551c6355ccd055e9b088e
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Let me know if this fixes the issue. It will be included in the next snapshot.
 
-<div dir=3D"ltr">Removal of the preshared-key from a peer using the &#39;wg=
- set&#39; command and providing /dev/null or an empty file as the preshared=
--key filename does not result in the key being removed from the peer. The c=
-ommand doesn&#39;t return an error, but it also doesn&#39;t remove the key.=
- I have attempted it using 0.0.20171111 and 0.0.20171122.<div><br><div>Supp=
-lying /dev/null or an empty file as the filename does work properly for rem=
-oving the interface private-key.</div></div></div>
-
---94eb2c0551c6355ccd055e9b088e--
+Regards,
+Jason
