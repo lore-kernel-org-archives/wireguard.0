@@ -1,21 +1,29 @@
-Return-Path: luci@createc.ro
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 594bf2ef
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 191f29d6
  for <wireguard@lists.zx2c4.com>;
- Sat, 25 Nov 2017 11:39:45 +0000 (UTC)
-Received: from mail.crimel.ro (mail.crimel.ro [5.2.196.145])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 76cbb0de
+ Sat, 25 Nov 2017 14:17:35 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 98de6029
  for <wireguard@lists.zx2c4.com>;
- Sat, 25 Nov 2017 11:39:44 +0000 (UTC)
-Subject: Re: LibreCMC Wireguard Issue
-To: wireguard@lists.zx2c4.com
-References: <698609534.8582.1511609887938@ichabod.co-bxl>
-From: Lucian Cristian <luci@createc.ro>
-Message-ID: <33ed921e-3710-1271-b11d-cdc8ae88fb76@createc.ro>
-Date: Sat, 25 Nov 2017 13:45:16 +0200
+ Sat, 25 Nov 2017 14:17:35 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7d89cc99
+ for <wireguard@lists.zx2c4.com>;
+ Sat, 25 Nov 2017 14:17:34 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id bc3d4b41
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Sat, 25 Nov 2017 14:17:34 +0000 (UTC)
+Received: by mail-ot0-f174.google.com with SMTP id j29so20812566oth.13
+ for <wireguard@lists.zx2c4.com>; Sat, 25 Nov 2017 06:23:05 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <698609534.8582.1511609887938@ichabod.co-bxl>
-Content-Type: text/plain; charset=utf-8; format=flowed
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Sat, 25 Nov 2017 15:23:04 +0100
+Message-ID: <CAHmME9q8VbC_brP5BJVTS9YFTNxoiL2owW3gGdmJCpcXtzHgXw@mail.gmail.com>
+Subject: Easily adding WireGuard to Android ROMs
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
+Cc: Sultan XDA <sultanxda@gmail.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -25,22 +33,54 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On 25.11.2017 13:38, xx xxx wrote:
-> I have a Thinkpenguin TPE R1100 Router with a Librecmc snapshot dated 13 Nov 2017 installed.
-> I've run "opkg update" and then unsuccessfully tried to install Wireguard [Luci-proto-wireguard} via both the cli and wui. In both cases I get the following errors:
-> root@libreCMC:~# opkg install luci-proto-wireguard
-> Installing luci-proto-wireguard (git-17.290.15350-38115e8-1) to root...
-> Downloading https://librecmc.org/librecmc/downloads/snapshots/v1.4.1/packages/mips_24kc/base/luci-proto-wireguard_git-17.290.15350-38115e8-1_all.ipk
-> Collected errors:
-> * satisfy_dependencies_for: Cannot satisfy the following dependencies for luci-proto-wireguard:
-> * kernel (= 4.4.87-1-4da53cbca65b7f25a04fcf5e4f6404a0) * kernel (= 4.4.87-1-4da53cbca65b7f25a04fcf5e4f6404a0) * kernel (= 4.4.87-1-4da53cbca65b7f25a04fcf5e4f6404a0) * kernel (= 4.4.87-1-4da53cbca65b7f25a04fcf5e4f6404a0) *
-> * opkg_install_cmd: Cannot install package luci-proto-wireguard.
->
-> Any ideas how to resolve?
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
+Hey folks,
 
-try to use  opkg install luci-proto-wireguard --force-reinstall 
---force-depends
+Work continues on making a userspace version of WireGuard that will
+allow us to run on normal Play Store/App Store apps on Android and
+iOS. The work is coming along nicely, and we have some wind on our
+sails thanks to the recent submission on this mailing list. This email
+isn't about that, however. It's about the WireGuard kernel module and
+CLI components on Android.
+
+Custom ROM integrators have expressed interest in shipping the kernel
+component of WireGuard with their Android ROMs, in order to have the
+best possible WireGuard experience. No matter how good we make the
+userspace implementation, a kernel implementation will inherently
+always be faster, more power efficient, and better integrated into the
+deepest mechanics of the operating system. That's just how it works.
+Thus, in addition to the userspace work we're doing for global
+compatibility, we're also very interested in providing a viable path
+for ROM integrators to use the kernel module.
+
+Currently the kernel component ships on Sultan's ROMs, and next week
+after some other things happen, I expect for it to be picked up by a
+few other ROM builders as well.
+
+In order to make this as easy as possible, I've made a repository to
+which ROM builders can link via their local_manifest.xml file by
+simply adding these two lines:
+
+  <remote name="zx2c4" fetch="https://git.zx2c4.com/" />
+  <project remote="zx2c4" name="android_kernel_wireguard"
+path="kernel/wireguard" revision="master" sync-s="true" />
+
+Documentation is available here:
+https://git.zx2c4.com/android_kernel_wireguard/about/
+
+This automatically patches the kernel component directly into the
+Android kernel at build time, and also includes wg(8) and wg-quick(8)
+in /system/xbin. It will stay up to date via `repo sync`, so as we
+roll out new snapshots, ROM integrators will pick up those changes
+naturally on their next rebuild.
+
+The Android GUI app, which is currently in development, will
+opportunistically use the kernel component if it's available, and will
+then fall back to the userspace implementation otherwise.
+
+So, if any of you on this list are into building your own Android ROMs
+and would like to give this a try, don't hesitate to see what happens
+when you link to that repo via the manifest xml. Let me know how it
+goes.
+
+Enjoy!
+Jason
