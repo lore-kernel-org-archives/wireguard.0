@@ -1,17 +1,21 @@
-Return-Path: agk@godking.net
+Return-Path: ylomega@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7dcfce41
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ff0c2d75
  for <wireguard@lists.zx2c4.com>;
- Sat, 25 Nov 2017 20:54:24 +0000 (UTC)
-Received: from godking.net (s18231873.onlinehome-server.info [217.160.179.168])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c5608478
+ Sat, 25 Nov 2017 22:30:57 +0000 (UTC)
+Received: from mail-wm0-f65.google.com (mail-wm0-f65.google.com [74.125.82.65])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2b122532
  for <wireguard@lists.zx2c4.com>;
- Sat, 25 Nov 2017 20:54:24 +0000 (UTC)
-From: Alexander Kappner <agk@godking.net>
+ Sat, 25 Nov 2017 22:30:57 +0000 (UTC)
+Received: by mail-wm0-f65.google.com with SMTP id r68so27976119wmr.3
+ for <wireguard@lists.zx2c4.com>; Sat, 25 Nov 2017 14:36:30 -0800 (PST)
+MIME-Version: 1.0
+From: Yevgeniy Liverant <ylomega@gmail.com>
+Date: Sat, 25 Nov 2017 17:36:28 -0500
+Message-ID: <CACFub2e+HrBQ1y0mDH8LegDH0JhTaynY+P10cck613FJ_TUrug@mail.gmail.com>
+Subject: Re: I will mail you WireGuard stickers
 To: wireguard@lists.zx2c4.com
-Subject: [PATCH] address kernel commit 0a833c29d89656025443cb9f0ebff7052dd95ce0
-Date: Sat, 25 Nov 2017 12:59:48 -0800
-Message-Id: <1511643588-12378-1-git-send-email-agk@godking.net>
+Content-Type: multipart/alternative; boundary="001a11468d12e0e84a055ed64c5b"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -21,27 +25,26 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-The above-referenced commit in Linus'
-tree changed the prototype of genl_dump_check_consistent in netlink.h. This
-patch updates netlink.c in WG accordingly so WG builds against the latest
-tree.
+--001a11468d12e0e84a055ed64c5b
+Content-Type: text/plain; charset="UTF-8"
 
----
- src/netlink.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Hey Jason,
 
-diff --git a/src/netlink.c b/src/netlink.c
-index 7fa243e..43e5ce0 100644
---- a/src/netlink.c
-+++ b/src/netlink.c
-@@ -177,7 +177,7 @@ static int get_device_dump(struct sk_buff *skb, struct netlink_callback *cb)
- 	hdr = genlmsg_put(skb, NETLINK_CB(cb->skb).portid, cb->nlh->nlmsg_seq, &genl_family, NLM_F_MULTI, WG_CMD_GET_DEVICE);
- 	if (!hdr)
- 		goto out;
--	genl_dump_check_consistent(cb, hdr, &genl_family);
-+	genl_dump_check_consistent(cb, hdr);
- 
- 	if (!last_peer_cursor) {
- 		if (nla_put_u16(skb, WGDEVICE_A_LISTEN_PORT, wg->incoming_port) || nla_put_u32(skb, WGDEVICE_A_FWMARK, wg->fwmark) || nla_put_u32(skb, WGDEVICE_A_IFINDEX, wg->dev->ifindex) || nla_put_string(skb, WGDEVICE_A_IFNAME, wg->dev->name))
--- 
-2.1.4
+Thanks for the kind offer. I'd love it if you'd get me 5 stickers. Thanks
+again! Excited for the future!
+
+Best,
+Yevgeniy Liverant
+207 Old Farm Road
+Valhalla, NY, USA 10595
+
+--001a11468d12e0e84a055ed64c5b
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hey Jason,<div><br></div><div>Thanks for the kind offer. I=
+&#39;d love it if you&#39;d get me 5 stickers. Thanks again! Excited for th=
+e future!</div><div><br></div><div>Best,</div><div>Yevgeniy Liverant</div><=
+div>207 Old Farm Road</div><div>Valhalla, NY, USA 10595</div></div>
+
+--001a11468d12e0e84a055ed64c5b--
