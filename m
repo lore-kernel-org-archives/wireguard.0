@@ -1,28 +1,23 @@
-Return-Path: adrian.sev@gmail.com
+Return-Path: bruno@wolff.to
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b17788c3
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 14fa9901
  for <wireguard@lists.zx2c4.com>;
- Mon, 27 Nov 2017 11:35:13 +0000 (UTC)
-Received: from mail-wr0-f181.google.com (mail-wr0-f181.google.com
- [209.85.128.181])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 581681fe
+ Mon, 27 Nov 2017 13:44:35 +0000 (UTC)
+Received: from wolff.to (wolff.to [98.103.208.27])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with SMTP id c129461f
  for <wireguard@lists.zx2c4.com>;
- Mon, 27 Nov 2017 11:35:13 +0000 (UTC)
-Received: by mail-wr0-f181.google.com with SMTP id r2so19634020wra.13
- for <wireguard@lists.zx2c4.com>; Mon, 27 Nov 2017 03:40:58 -0800 (PST)
-Return-Path: <adrian.sev@gmail.com>
-Received: from hal.home (5-12-35-87.residential.rdsnet.ro. [5.12.35.87])
- by smtp.gmail.com with ESMTPSA id p42sm50989869wrb.28.2017.11.27.03.40.55
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 27 Nov 2017 03:40:56 -0800 (PST)
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-From: Adrian Sevcenco <adrian.sev@gmail.com>
-Subject: wg usage :: questions/proposals
-Message-ID: <4d6cd46f-dca8-7b9c-4c22-b5062244093e@gmail.com>
-Date: Mon, 27 Nov 2017 13:40:55 +0200
+ Mon, 27 Nov 2017 13:44:35 +0000 (UTC)
+Date: Mon, 27 Nov 2017 07:49:14 -0600
+From: Bruno Wolff III <bruno@wolff.to>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: Re: Should I expect faster recovery after one side goes down
+Message-ID: <20171127134914.GA9392@wolff.to>
+References: <20171127094931.GA3104@wolff.to>
+ <CAHmME9q+giuOXVz1=hE-F34vFMP0GxzveMzLbzrjeXbbjnrGCQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=us-ascii; format=flowed
+In-Reply-To: <CAHmME9q+giuOXVz1=hE-F34vFMP0GxzveMzLbzrjeXbbjnrGCQ@mail.gmail.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -32,68 +27,24 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi! I started yesterday to use Wireguard and in about 1h i already had 
-in place about a dozen of tunnels .. so, yeah, this project is at this 
-level of awesomeness ..
+On Mon, Nov 27, 2017 at 12:04:06 +0100,
+  "Jason A. Donenfeld" <Jason@zx2c4.com> wrote:
+>Hi Bruno,
+>
+>The first question is - how long?
 
-Following the usage patterns i encountered some steps that i think that 
-can be simplified :
+For "systemctl iptables stop" I have waited around a minute before 
+using control C. After running "systemctl stop wireguard" or 
+"systemctl restart wireguard" (which will delete wg0) "systemctl stop 
+iptables" will run with no noticeable delay.
 
-#####
-1. it would be useful if wg could use the ip command and take (and save)
-device information with showconf .. something like :
-[Device]
-NAME=wg0
-IP_CIDR=some_ip/netmask
-..
-any pairs of options belonging to "ip link add"
-..
-OPTARGS="string to be used with ip link add"
-
-and wg could parse this section and run
-
-ip link add dev NAME <pairs_of_options> OPTARGS type wireguard
-ip address add dev NAME IP_CIDR
-
-Aditionaly maybe would be useful an
-[Device_Options]
-options of "ip link set"
-.......
-OPTARGS="string to be used with ip link set"
-
-and similar run
-ip link set NAME <pairs_of_options> OPTARGS
-
-after parsing of Device sections wg would run
-ip link set up dev NAME
-
-if NAME exists setconf would throw "Device already setup" but with some 
-"force" option like "wg -f setconf" it would delete the found device and 
-proceed with the configuration
-
-#####
-2. maybe the keys format could be something like :
-key ; ip:port(mandatory) ; hostname (optional)
-
-this way one could do for the server case :
-wg set ${DEV} private-key ${PRIV_KEY}
-without listen-port
-
-for the client case :
-wg set ${DEV} private-key CLIENT_PRIV_KEY_FILE peer SERVER_PUB_KEY_FILE 
-allowed-ips 0.0.0.0/0 persistent-keepalive 25
-
-where endpoint information is taken from the server public key file
-
-and for the additions of the peers :
-wg set ${DEV} peer PEER_PUB_KEY_FILE
-
-where allowed-ips is taken from the file
-
-#####
-3. is allowed-ips only an ip? could be a network?
-for cases where the client is taking the ip from dhcp and the network is
-known and the tunnel stays even if the ip changes ..
-
-Thank you very much for your great work!!
-Adrian
+For network traffic, I waited around 10 minutes and things were still not 
+working. Web page loads would still time out after a minute or two. But 
+I did have a few DNS lookups succeed. I'm not sure if I did something 
+that allowed a value to get cached (there is a local caching resolver 
+on the affected machines) or if a response eventually made it through. 
+After "systemctl restart wireguard" things start working normal right 
+away. So I don't know the delay for specific traffic, but it looks to 
+be at least a minute for most traffic. The problem does not seem to 
+resolve for at least 10 minutes, though I don't think I have ever seen it 
+resolve on its own.
