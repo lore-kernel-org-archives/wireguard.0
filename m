@@ -1,25 +1,30 @@
-Return-Path: pageexec@freemail.hu
+Return-Path: yuanchaosun@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1cad0bc4
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6c4c8e9d
  for <wireguard@lists.zx2c4.com>;
- Tue, 28 Nov 2017 12:44:50 +0000 (UTC)
-Received: from r00tworld.com (r00tworld.com [212.85.137.150])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3de209e7
+ Tue, 28 Nov 2017 14:48:07 +0000 (UTC)
+Received: from mail-pl0-f65.google.com (mail-pl0-f65.google.com
+ [209.85.160.65])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 771d9743
  for <wireguard@lists.zx2c4.com>;
- Tue, 28 Nov 2017 12:44:49 +0000 (UTC)
-From: "PaX Team" <pageexec@freemail.hu>
+ Tue, 28 Nov 2017 14:48:07 +0000 (UTC)
+Received: by mail-pl0-f65.google.com with SMTP id g2so42249pli.8
+ for <wireguard@lists.zx2c4.com>; Tue, 28 Nov 2017 06:54:01 -0800 (PST)
+Return-Path: <yuanchaosun@gmail.com>
+From: Yuanchao Sun <yuanchaosun@gmail.com>
+Content-Type: text/plain;
+	charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 11.1 \(3445.4.7\))
+Subject: Re: [PATCH 1/1] tools: remove '\n' in fscanf format-string
+In-Reply-To: <CAHmME9pUk6pdp5VtGKaebAB70mcz+D_nW8E1vCRhm-jQzm6Bjw@mail.gmail.com>
+Date: Tue, 28 Nov 2017 22:53:54 +0800
+Message-Id: <739926D8-0CAD-48C9-9BCF-6CA91986E715@gmail.com>
+References: <20171128074947.2212-1-yuanchao.sun@gmail.com>
+ <20171128074947.2212-2-yuanchao.sun@gmail.com>
+ <CAHmME9pUk6pdp5VtGKaebAB70mcz+D_nW8E1vCRhm-jQzm6Bjw@mail.gmail.com>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 28 Nov 2017 13:50:36 +0100
-MIME-Version: 1.0
-Subject: Re: imer_setup() is not compatible with PaX's RAP
-Message-ID: <5A1D5B9C.27534.47CC58C6@pageexec.freemail.hu>
-In-reply-to: <CAHmME9oxY3JRX4W3Xsx-RTc-9NKEdoC_14nPz+7R2_X5b5sfJw@mail.gmail.com>
-References: <20171111080920.GA5705@localhost.localdomain>,
- <5A1D5741.21951.47BB55BB@pageexec.freemail.hu>,
- <CAHmME9oxY3JRX4W3Xsx-RTc-9NKEdoC_14nPz+7R2_X5b5sfJw@mail.gmail.com>
-Content-type: text/plain; charset=US-ASCII
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Reply-To: pageexec@freemail.hu
+Cc: Yuanchao Sun <yuanchaosun@gmail.com>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -29,34 +34,34 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On 28 Nov 2017 at 13:36, Jason A. Donenfeld wrote:
+Hi Jason,
 
-> On Tue, Nov 28, 2017 at 1:32 PM, PaX Team <pageexec@freemail.hu> wrote:
-> > targets of indirect calls must be marked by the RAP hash which the plugin
-> > will do for code it sees but for asm you'll have to do it yourself, look at
-> > the use of RAP_ENTRY to see how that works.
-> 
-> Oh, terrific. So I can just do something horrible like:
-> 
-> #ifdef RAP_PLUGIN
-> #undef ENTRY
-> #define ENTRY RAP_ENTRY
-> #endif
+> Thanks for the patch. In the future, please include your Signed-off-by
+> line and include the explanation in the body of the commit where it
+> will be recorded in the future.
 
-well, that would work but if not all asm entry points are meant to be called
-indirectly then you're unnecessarily increasing the attack surface ;). better
-would be something like:
+Sure. This is my first time using git send-email ... I just followed the =
+steps
+from a quick guide. I will figure out how to add the Signed-off-by line
+the next time.
 
-1. use ENTRY/RAP_ENTRY in your asm as necessary. you can call it something
-   more generic like CFI_ENTRY if you want to cover other CFI systems in the
-   future, e.g., intel's CET will need its own entry point marker insn.
+>=20
+> I'm not sure this patch is correct. The /xplatform spec mandates an
+> empty line. This patch enforces that. What is the purpose of removing
+> that requirement?
+>=20
+> Also, I'm curious to learn what you're doing with this API at this =
+early stage.
 
-2. have this in your headers:
+I'm trying to implement a userspace client using rust (does not work =
+properly
+for now ;/ ).
 
-#ifdef RAP_PLUGIN
-#define CFI_ENTRY RAP_ENTRY
-#elif defined(...)
-...
-#else
-#define CFI_ENTRY ENTRY
-#endif
+But I found fscanf does not return after reading a complete response =
+(b"errno=3D0\n\n").
+After searching, it seems '\n' in format string does not mean newline =
+but any whitespaces.
+fscanf hangs until a extra non-whitespace character.
+So I fix this problem by removing the trailing '\n's in format string.
+
+Yuanchao
