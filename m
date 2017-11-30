@@ -1,18 +1,18 @@
 Return-Path: gregkh@linuxfoundation.org
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ab78acc1
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5aab7b42
  for <wireguard@lists.zx2c4.com>;
- Thu, 30 Nov 2017 15:18:06 +0000 (UTC)
+ Thu, 30 Nov 2017 15:18:10 +0000 (UTC)
 Received: from mail.linuxfoundation.org (mail.linuxfoundation.org
  [140.211.169.12])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 960d9d9c
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 40a5fe3d
  for <wireguard@lists.zx2c4.com>;
- Thu, 30 Nov 2017 15:18:05 +0000 (UTC)
+ Thu, 30 Nov 2017 15:18:09 +0000 (UTC)
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: Jason@zx2c4.com
-Subject: [PATCH 4/6] src/crypto: add SPDX tags to all files
-Date: Thu, 30 Nov 2017 15:23:53 +0000
-Message-Id: <20171130152355.25387-5-gregkh@linuxfoundation.org>
+Subject: [PATCH 5/6] src: add SPDX tags to all files
+Date: Thu, 30 Nov 2017 15:23:54 +0000
+Message-Id: <20171130152355.25387-6-gregkh@linuxfoundation.org>
 In-Reply-To: <20171130152355.25387-1-gregkh@linuxfoundation.org>
 References: <20171130152355.25387-1-gregkh@linuxfoundation.org>
 Cc: wireguard@lists.zx2c4.com
@@ -28,174 +28,282 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 It's good to have SPDX identifiers in all files as the Linux kernel
 developers are working to add these identifiers to all files.
 
-Update the src/crypto/ files with the correct SPDX license identifier
-based on the license text of the project or based on the license in the
-file itself.  The SPDX identifier is a legally binding shorthand, which
-can be used instead of the full boiler plate text.
+Update the src/ files with the correct SPDX license identifier based on
+the license text of the project or based on the license in the file
+itself.  The SPDX identifier is a legally binding shorthand, which can
+be used instead of the full boiler plate text.
 
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- src/crypto/blake2s-x86_64.S    | 1 +
- src/crypto/blake2s.c           | 1 +
- src/crypto/blake2s.h           | 1 +
- src/crypto/chacha20-arm.S      | 1 +
- src/crypto/chacha20-arm64.S    | 1 +
- src/crypto/chacha20-x86_64.S   | 1 +
- src/crypto/chacha20poly1305.c  | 1 +
- src/crypto/chacha20poly1305.h  | 1 +
- src/crypto/curve25519-arm.S    | 1 +
- src/crypto/curve25519-x86_64.S | 1 +
- src/crypto/curve25519.c        | 1 +
- src/crypto/curve25519.h        | 1 +
- src/crypto/poly1305-arm.S      | 1 +
- src/crypto/poly1305-arm64.S    | 1 +
- src/crypto/poly1305-mips64.S   | 1 +
- src/crypto/poly1305-x86_64.S   | 1 +
- 16 files changed, 16 insertions(+)
+ src/allowedips.c  | 1 +
+ src/allowedips.h  | 1 +
+ src/cookie.c      | 1 +
+ src/cookie.h      | 1 +
+ src/device.c      | 1 +
+ src/device.h      | 1 +
+ src/hashtables.c  | 1 +
+ src/hashtables.h  | 1 +
+ src/main.c        | 1 +
+ src/messages.h    | 1 +
+ src/netlink.c     | 1 +
+ src/netlink.h     | 1 +
+ src/noise.c       | 1 +
+ src/noise.h       | 1 +
+ src/peer.c        | 1 +
+ src/peer.h        | 1 +
+ src/queueing.c    | 1 +
+ src/queueing.h    | 1 +
+ src/ratelimiter.c | 1 +
+ src/ratelimiter.h | 1 +
+ src/receive.c     | 1 +
+ src/send.c        | 1 +
+ src/socket.c      | 1 +
+ src/socket.h      | 1 +
+ src/timers.c      | 1 +
+ src/timers.h      | 1 +
+ src/version.h     | 1 +
+ 27 files changed, 27 insertions(+)
 
-diff --git a/src/crypto/blake2s-x86_64.S b/src/crypto/blake2s-x86_64.S
-index d1e0c0390be7..ba31766d3ce0 100644
---- a/src/crypto/blake2s-x86_64.S
-+++ b/src/crypto/blake2s-x86_64.S
+diff --git a/src/allowedips.c b/src/allowedips.c
+index 8ad3291d7380..c20c158a360d 100644
+--- a/src/allowedips.c
++++ b/src/allowedips.c
+@@ -1,3 +1,4 @@
++// SPDX-License-Identifier: GPL-2.0
+ /* Copyright (C) 2015-2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved. */
+ 
+ #include "allowedips.h"
+diff --git a/src/allowedips.h b/src/allowedips.h
+index 53e674bee19f..0d5c5f885913 100644
+--- a/src/allowedips.h
++++ b/src/allowedips.h
+@@ -1,3 +1,4 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /* Copyright (C) 2015-2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved. */
+ 
+ #ifndef _WG_ALLOWEDIPS_H
+diff --git a/src/cookie.c b/src/cookie.c
+index 7dffb8601260..8a75078b30cb 100644
+--- a/src/cookie.c
++++ b/src/cookie.c
+@@ -1,3 +1,4 @@
++// SPDX-License-Identifier: GPL-2.0
+ /* Copyright (C) 2015-2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved. */
+ 
+ #include "cookie.h"
+diff --git a/src/cookie.h b/src/cookie.h
+index e264e354d1c7..61a2a1f60b32 100644
+--- a/src/cookie.h
++++ b/src/cookie.h
+@@ -1,3 +1,4 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /* Copyright (C) 2015-2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved. */
+ 
+ #ifndef _WG_COOKIE_H
+diff --git a/src/device.c b/src/device.c
+index d5dc93cde8b7..f6be267b90ae 100644
+--- a/src/device.c
++++ b/src/device.c
+@@ -1,3 +1,4 @@
++// SPDX-License-Identifier: GPL-2.0
+ /* Copyright (C) 2015-2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved. */
+ 
+ #include "queueing.h"
+diff --git a/src/device.h b/src/device.h
+index 7b305a3eba1c..bc6e42337c04 100644
+--- a/src/device.h
++++ b/src/device.h
+@@ -1,3 +1,4 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /* Copyright (C) 2015-2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved. */
+ 
+ #ifndef _WG_DEVICE_H
+diff --git a/src/hashtables.c b/src/hashtables.c
+index 8d61f4c8a740..8554d3f4fb95 100644
+--- a/src/hashtables.c
++++ b/src/hashtables.c
+@@ -1,3 +1,4 @@
++// SPDX-License-Identifier: GPL-2.0
+ /* Copyright (C) 2015-2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved. */
+ 
+ #include "hashtables.h"
+diff --git a/src/hashtables.h b/src/hashtables.h
+index 55f608a908dc..d5f5826ca68c 100644
+--- a/src/hashtables.h
++++ b/src/hashtables.h
+@@ -1,3 +1,4 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /* Copyright (C) 2015-2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved. */
+ 
+ #ifndef _WG_HASHTABLES_H
+diff --git a/src/main.c b/src/main.c
+index fea8c652e6e1..249ea5b01bf9 100644
+--- a/src/main.c
++++ b/src/main.c
+@@ -1,3 +1,4 @@
++// SPDX-License-Identifier: GPL-2.0
+ /* Copyright (C) 2015-2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved. */
+ 
+ #include "version.h"
+diff --git a/src/messages.h b/src/messages.h
+index 927b487043bf..6a183d279b00 100644
+--- a/src/messages.h
++++ b/src/messages.h
 @@ -1,3 +1,4 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
  /*
-  * Copyright (C) 2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
-  * Based on algorithms from Samuel Neves <sneves@dei.uc.pt>
-diff --git a/src/crypto/blake2s.c b/src/crypto/blake2s.c
-index d0a121aaf182..06ce3fc81d45 100644
---- a/src/crypto/blake2s.c
-+++ b/src/crypto/blake2s.c
-@@ -1,3 +1,4 @@
-+// SPDX-License-Identifier: GPL-2.0
- /* Original author: Samuel Neves <sneves@dei.uc.pt>
-  *
   * Copyright (C) 2015-2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
-diff --git a/src/crypto/blake2s.h b/src/crypto/blake2s.h
-index 9ed53ea2f8a8..636ec3dc4996 100644
---- a/src/crypto/blake2s.h
-+++ b/src/crypto/blake2s.h
-@@ -1,3 +1,4 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
- /* Copyright (C) 2015-2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved. */
- 
- #ifndef _WG_BLAKE2S_H
-diff --git a/src/crypto/chacha20-arm.S b/src/crypto/chacha20-arm.S
-index 62b7eeb8ea2b..c16bf655285d 100644
---- a/src/crypto/chacha20-arm.S
-+++ b/src/crypto/chacha20-arm.S
-@@ -1,3 +1,4 @@
-+/* SPDX-License-Identifier: (GPL-2.0 OR OpenSSL) */
- /* Copyright 2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
-  * Copyright 2016 The OpenSSL Project Authors. All Rights Reserved.
-  * Redistribution and use in source and binary forms, with or without
-diff --git a/src/crypto/chacha20-arm64.S b/src/crypto/chacha20-arm64.S
-index 6347adba642a..96b7693b4a93 100644
---- a/src/crypto/chacha20-arm64.S
-+++ b/src/crypto/chacha20-arm64.S
-@@ -1,3 +1,4 @@
-+/* SPDX-License-Identifier: (GPL-2.0 OR OpenSSL) */
- /* Copyright 2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
-  * Copyright 2016 The OpenSSL Project Authors. All Rights Reserved.
-  * Redistribution and use in source and binary forms, with or without
-diff --git a/src/crypto/chacha20-x86_64.S b/src/crypto/chacha20-x86_64.S
-index 4a017611e2d8..a9c7d287b3ed 100644
---- a/src/crypto/chacha20-x86_64.S
-+++ b/src/crypto/chacha20-x86_64.S
-@@ -1,3 +1,4 @@
-+/* SPDX-License-Identifier: (GPL-2.0 OR OpenSSL) */
- /* Copyright 2017 Samuel Neves <sneves@dei.uc.pt>. All Rights Reserved.
-  * Copyright 2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
-  * Copyright 2016 The OpenSSL Project Authors. All Rights Reserved.
-diff --git a/src/crypto/chacha20poly1305.c b/src/crypto/chacha20poly1305.c
-index e795d2f23829..4f3885eae6da 100644
---- a/src/crypto/chacha20poly1305.c
-+++ b/src/crypto/chacha20poly1305.c
-@@ -1,3 +1,4 @@
-+// SPDX-License-Identifier: (GPL-2.0 OR OpenSSL)
- /* Copyright (C) 2015-2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
-  * Copyright 2015 Martin Willi.
-  * Copyright 2016 The OpenSSL Project Authors. All Rights Reserved.
-diff --git a/src/crypto/chacha20poly1305.h b/src/crypto/chacha20poly1305.h
-index 991755de79c8..b654800a9986 100644
---- a/src/crypto/chacha20poly1305.h
-+++ b/src/crypto/chacha20poly1305.h
-@@ -1,3 +1,4 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
- /* Copyright (C) 2015-2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved. */
- 
- #ifndef _WG_CHACHA20POLY1305_H
-diff --git a/src/crypto/curve25519-arm.S b/src/crypto/curve25519-arm.S
-index 165675a6bc1a..8c903bb00325 100644
---- a/src/crypto/curve25519-arm.S
-+++ b/src/crypto/curve25519-arm.S
-@@ -1,3 +1,4 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
- /*
-  * Copyright (C) 2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
-  * Based on algorithms from Daniel J. Bernstein and Peter Schwabe.
-diff --git a/src/crypto/curve25519-x86_64.S b/src/crypto/curve25519-x86_64.S
-index 2407ff4ca50d..31c57cf555b7 100644
---- a/src/crypto/curve25519-x86_64.S
-+++ b/src/crypto/curve25519-x86_64.S
-@@ -1,3 +1,4 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
- /*
-  * Copyright (C) 2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
-  * Based on algorithms from Tung Chou <blueprint@crypto.tw>
-diff --git a/src/crypto/curve25519.c b/src/crypto/curve25519.c
-index 6dbd74b51100..ee105e894682 100644
---- a/src/crypto/curve25519.c
-+++ b/src/crypto/curve25519.c
+  *
+diff --git a/src/netlink.c b/src/netlink.c
+index 7faaa1a74d3c..7a5951438b54 100644
+--- a/src/netlink.c
++++ b/src/netlink.c
 @@ -1,3 +1,4 @@
 +// SPDX-License-Identifier: GPL-2.0
- /* Original author: Adam Langley <agl@imperialviolet.org>
-  *
-  * Copyright 2008 Google Inc. All Rights Reserved.
-diff --git a/src/crypto/curve25519.h b/src/crypto/curve25519.h
-index 800cefadb001..b76acf7ade45 100644
---- a/src/crypto/curve25519.h
-+++ b/src/crypto/curve25519.h
+ /* Copyright (C) 2015-2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved. */
+ 
+ #include "netlink.h"
+diff --git a/src/netlink.h b/src/netlink.h
+index 750b87452542..fdda823e7161 100644
+--- a/src/netlink.h
++++ b/src/netlink.h
 @@ -1,3 +1,4 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
  /* Copyright (C) 2015-2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved. */
  
- #ifndef _WG_CURVE25519_H
-diff --git a/src/crypto/poly1305-arm.S b/src/crypto/poly1305-arm.S
-index ca2248107e19..2653e864653e 100644
---- a/src/crypto/poly1305-arm.S
-+++ b/src/crypto/poly1305-arm.S
+ #ifndef _WG_NETLINK_H
+diff --git a/src/noise.c b/src/noise.c
+index 9d99bfa3cd12..8587027d4e67 100644
+--- a/src/noise.c
++++ b/src/noise.c
 @@ -1,3 +1,4 @@
-+/* SPDX-License-Identifier: (GPL-2.0 OR OpenSSL) */
- /* Copyright 2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
-  * Copyright 2016 The OpenSSL Project Authors. All Rights Reserved.
-  * Redistribution and use in source and binary forms, with or without
-diff --git a/src/crypto/poly1305-arm64.S b/src/crypto/poly1305-arm64.S
-index 13c7a6bcf120..6a2e0a44ab69 100644
---- a/src/crypto/poly1305-arm64.S
-+++ b/src/crypto/poly1305-arm64.S
++// SPDX-License-Identifier: GPL-2.0
+ /* Copyright (C) 2015-2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved. */
+ 
+ #include "noise.h"
+diff --git a/src/noise.h b/src/noise.h
+index 01026a4aee3b..6754d3b8d14f 100644
+--- a/src/noise.h
++++ b/src/noise.h
 @@ -1,3 +1,4 @@
-+/* SPDX-License-Identifier: (GPL-2.0 OR OpenSSL) */
- /* Copyright 2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
-  * Copyright 2016 The OpenSSL Project Authors. All Rights Reserved.
-  * Redistribution and use in source and binary forms, with or without
-diff --git a/src/crypto/poly1305-mips64.S b/src/crypto/poly1305-mips64.S
-index 5275a8c067c0..c2619ef60c66 100644
---- a/src/crypto/poly1305-mips64.S
-+++ b/src/crypto/poly1305-mips64.S
++/* SPDX-License-Identifier: GPL-2.0 */
+ /*
+  * Copyright (C) 2015-2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
+  *
+diff --git a/src/peer.c b/src/peer.c
+index 78ba5b0eb08b..24338d5185a1 100644
+--- a/src/peer.c
++++ b/src/peer.c
 @@ -1,3 +1,4 @@
-+/* SPDX-License-Identifier: (GPL-2.0 OR OpenSSL) */
- /* Copyright 2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
-  * Copyright 2016 The OpenSSL Project Authors. All Rights Reserved.
-  * Redistribution and use in source and binary forms, with or without
-diff --git a/src/crypto/poly1305-x86_64.S b/src/crypto/poly1305-x86_64.S
-index bff1d0e53e55..b0f782fb5b9b 100644
---- a/src/crypto/poly1305-x86_64.S
-+++ b/src/crypto/poly1305-x86_64.S
++// SPDX-License-Identifier: GPL-2.0
+ /* Copyright (C) 2015-2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved. */
+ 
+ #include "peer.h"
+diff --git a/src/peer.h b/src/peer.h
+index 1e3c1ae8bf86..db4671e3351a 100644
+--- a/src/peer.h
++++ b/src/peer.h
 @@ -1,3 +1,4 @@
-+/* SPDX-License-Identifier: (GPL-2.0 OR OpenSSL) */
- /* Copyright 2017 Samuel Neves <sneves@dei.uc.pt>. All Rights Reserved.
-  * Copyright 2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
-  * Copyright 2016 The OpenSSL Project Authors. All Rights Reserved.
++/* SPDX-License-Identifier: GPL-2.0 */
+ /* Copyright (C) 2015-2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved. */
+ 
+ #ifndef _WG_PEER_H
+diff --git a/src/queueing.c b/src/queueing.c
+index bce406adce69..fb52bfcba0e5 100644
+--- a/src/queueing.c
++++ b/src/queueing.c
+@@ -1,3 +1,4 @@
++// SPDX-License-Identifier: GPL-2.0
+ /* Copyright (C) 2015-2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved. */
+ 
+ #include "queueing.h"
+diff --git a/src/queueing.h b/src/queueing.h
+index a385d67f1b86..b84dd83883bf 100644
+--- a/src/queueing.h
++++ b/src/queueing.h
+@@ -1,3 +1,4 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /* Copyright (C) 2015-2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved. */
+ 
+ #ifndef _WG_QUEUEING_H
+diff --git a/src/ratelimiter.c b/src/ratelimiter.c
+index 8a73dd170e0b..5eb7ddb05b93 100644
+--- a/src/ratelimiter.c
++++ b/src/ratelimiter.c
+@@ -1,3 +1,4 @@
++// SPDX-License-Identifier: GPL-2.0
+ /* Copyright (C) 2015-2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved. */
+ 
+ #include "ratelimiter.h"
+diff --git a/src/ratelimiter.h b/src/ratelimiter.h
+index d2fcb64a90fb..1cb264e65e17 100644
+--- a/src/ratelimiter.h
++++ b/src/ratelimiter.h
+@@ -1,3 +1,4 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /* Copyright (C) 2015-2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved. */
+ 
+ #ifndef _WG_RATELIMITER_H
+diff --git a/src/receive.c b/src/receive.c
+index 080f6ba39178..62b5ad45c897 100644
+--- a/src/receive.c
++++ b/src/receive.c
+@@ -1,3 +1,4 @@
++// SPDX-License-Identifier: GPL-2.0
+ /* Copyright (C) 2015-2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved. */
+ 
+ #include "queueing.h"
+diff --git a/src/send.c b/src/send.c
+index 180d90988f60..6056dc1abd8f 100644
+--- a/src/send.c
++++ b/src/send.c
+@@ -1,3 +1,4 @@
++// SPDX-License-Identifier: GPL-2.0
+ /* Copyright (C) 2015-2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved. */
+ 
+ #include "queueing.h"
+diff --git a/src/socket.c b/src/socket.c
+index 5bf5a9220429..f39653780e26 100644
+--- a/src/socket.c
++++ b/src/socket.c
+@@ -1,3 +1,4 @@
++// SPDX-License-Identifier: GPL-2.0
+ /* Copyright (C) 2015-2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved. */
+ 
+ #include "device.h"
+diff --git a/src/socket.h b/src/socket.h
+index 161bd0b0f9f9..c3483b4dda77 100644
+--- a/src/socket.h
++++ b/src/socket.h
+@@ -1,3 +1,4 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /* Copyright (C) 2015-2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved. */
+ 
+ #ifndef _WG_SOCKET_H
+diff --git a/src/timers.c b/src/timers.c
+index 5f2570f7f51a..6b453f4fa02f 100644
+--- a/src/timers.c
++++ b/src/timers.c
+@@ -1,3 +1,4 @@
++// SPDX-License-Identifier: GPL-2.0
+ /* Copyright (C) 2015-2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved. */
+ 
+ #include "timers.h"
+diff --git a/src/timers.h b/src/timers.h
+index 105193edca50..465fcbed4002 100644
+--- a/src/timers.h
++++ b/src/timers.h
+@@ -1,3 +1,4 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /* Copyright (C) 2015-2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved. */
+ 
+ #ifndef _WG_TIMERS_H
+diff --git a/src/version.h b/src/version.h
+index 8ed54477cdfc..da18820bf3b2 100644
+--- a/src/version.h
++++ b/src/version.h
+@@ -1 +1,2 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ #define WIREGUARD_VERSION "0.0.20171127"
 -- 
 2.15.1
