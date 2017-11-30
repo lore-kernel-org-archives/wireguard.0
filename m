@@ -1,18 +1,20 @@
 Return-Path: gregkh@linuxfoundation.org
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bb7e4a09
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 39560502
  for <wireguard@lists.zx2c4.com>;
- Thu, 30 Nov 2017 15:17:50 +0000 (UTC)
+ Thu, 30 Nov 2017 15:17:59 +0000 (UTC)
 Received: from mail.linuxfoundation.org (mail.linuxfoundation.org
  [140.211.169.12])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1920a6e2
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3dcada2d
  for <wireguard@lists.zx2c4.com>;
- Thu, 30 Nov 2017 15:17:50 +0000 (UTC)
+ Thu, 30 Nov 2017 15:17:58 +0000 (UTC)
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: Jason@zx2c4.com
-Subject: [PATCH 0/6] wireguard: add SPDX tags
-Date: Thu, 30 Nov 2017 15:23:49 +0000
-Message-Id: <20171130152355.25387-1-gregkh@linuxfoundation.org>
+Subject: [PATCH 2/6] src/selftest: add SPDX tags to all files
+Date: Thu, 30 Nov 2017 15:23:51 +0000
+Message-Id: <20171130152355.25387-3-gregkh@linuxfoundation.org>
+In-Reply-To: <20171130152355.25387-1-gregkh@linuxfoundation.org>
+References: <20171130152355.25387-1-gregkh@linuxfoundation.org>
 Cc: wireguard@lists.zx2c4.com
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -23,116 +25,77 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-The Linux kernel developers are currently adding the correct SPDX tag to
-all of the in-tree files.  This patch series adds the needed SPDX tags
-to all of the wireguard kernel files as well as a few others in src/
-using the agreeded apon format and style for the different files.
+It's good to have SPDX identifiers in all files as the Linux kernel
+developers are working to add these identifiers to all files.
 
-No license was changed in any of these patches, except the last patch.
+Update the src/selftest/ files with the correct SPDX license identifier
+based on the license text of the project or based on the license in the
+file itself.  The SPDX identifier is a legally binding shorthand, which
+can be used instead of the full boiler plate text.
 
-Note, the last patch in the series does change the license to be maybe
-what I think you want, but I could be wrong.  Please see the changelog
-text for that patch for what you might want.  In any case, only apply it
-if you really know what you are doing :)
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ src/selftest/allowedips.h       | 1 +
+ src/selftest/blake2s.h          | 1 +
+ src/selftest/chacha20poly1305.h | 1 +
+ src/selftest/counter.h          | 1 +
+ src/selftest/curve25519.h       | 1 +
+ src/selftest/ratelimiter.h      | 1 +
+ 6 files changed, 6 insertions(+)
 
-On a side note, the whole "All rights reserved" is cargo-cult crud.  As
-described by a developer who has done more license work than probably
-anyone else on the kernel mailing list today:
-	Side note a trailing  "All Rights Reserved." in a copyright
-	statement is never needed, even though customarily cargo culted
-	by everyone, including me.  Started in 1910, it become fully
-	obsolete in 2000 thanks to Nicaragua [1] signing the Berne
-	convention.
-	[1] https://en.wikipedia.org/wiki/All_rights_reserved
-
-So you can remove those from the files as well if you want to, but I'll
-let you do that :)
-
-Greg Kroah-Hartman (6):
-  src/tools: add SPDX tags to all files
-  src/selftest: add SPDX tags to all files
-  src/tests: add SPDX tags to all files
-  src/crypto: add SPDX tags to all files
-  src: add SPDX tags to all files
-  src/uapi/wireguard: add SPDX tag
-
- src/allowedips.c                              | 1 +
- src/allowedips.h                              | 1 +
- src/cookie.c                                  | 1 +
- src/cookie.h                                  | 1 +
- src/crypto/blake2s-x86_64.S                   | 1 +
- src/crypto/blake2s.c                          | 1 +
- src/crypto/blake2s.h                          | 1 +
- src/crypto/chacha20-arm.S                     | 1 +
- src/crypto/chacha20-arm64.S                   | 1 +
- src/crypto/chacha20-x86_64.S                  | 1 +
- src/crypto/chacha20poly1305.c                 | 1 +
- src/crypto/chacha20poly1305.h                 | 1 +
- src/crypto/curve25519-arm.S                   | 1 +
- src/crypto/curve25519-x86_64.S                | 1 +
- src/crypto/curve25519.c                       | 1 +
- src/crypto/curve25519.h                       | 1 +
- src/crypto/poly1305-arm.S                     | 1 +
- src/crypto/poly1305-arm64.S                   | 1 +
- src/crypto/poly1305-mips64.S                  | 1 +
- src/crypto/poly1305-x86_64.S                  | 1 +
- src/device.c                                  | 1 +
- src/device.h                                  | 1 +
- src/hashtables.c                              | 1 +
- src/hashtables.h                              | 1 +
- src/main.c                                    | 1 +
- src/messages.h                                | 1 +
- src/netlink.c                                 | 1 +
- src/netlink.h                                 | 1 +
- src/noise.c                                   | 1 +
- src/noise.h                                   | 1 +
- src/peer.c                                    | 1 +
- src/peer.h                                    | 1 +
- src/queueing.c                                | 1 +
- src/queueing.h                                | 1 +
- src/ratelimiter.c                             | 1 +
- src/ratelimiter.h                             | 1 +
- src/receive.c                                 | 1 +
- src/selftest/allowedips.h                     | 1 +
- src/selftest/blake2s.h                        | 1 +
- src/selftest/chacha20poly1305.h               | 1 +
- src/selftest/counter.h                        | 1 +
- src/selftest/curve25519.h                     | 1 +
- src/selftest/ratelimiter.h                    | 1 +
- src/send.c                                    | 1 +
- src/socket.c                                  | 1 +
- src/socket.h                                  | 1 +
- src/tests/netns.sh                            | 1 +
- src/tests/qemu/init.c                         | 1 +
- src/timers.c                                  | 1 +
- src/timers.h                                  | 1 +
- src/tools/completion/wg-quick.bash-completion | 1 +
- src/tools/completion/wg.bash-completion       | 1 +
- src/tools/config.c                            | 1 +
- src/tools/config.h                            | 1 +
- src/tools/containers.h                        | 1 +
- src/tools/curve25519.c                        | 1 +
- src/tools/curve25519.h                        | 1 +
- src/tools/encoding.c                          | 1 +
- src/tools/encoding.h                          | 1 +
- src/tools/genkey.c                            | 1 +
- src/tools/ipc.c                               | 1 +
- src/tools/ipc.h                               | 1 +
- src/tools/mnlg.c                              | 1 +
- src/tools/mnlg.h                              | 1 +
- src/tools/pubkey.c                            | 1 +
- src/tools/set.c                               | 1 +
- src/tools/setconf.c                           | 1 +
- src/tools/show.c                              | 1 +
- src/tools/showconf.c                          | 1 +
- src/tools/subcommands.h                       | 1 +
- src/tools/terminal.c                          | 1 +
- src/tools/terminal.h                          | 1 +
- src/tools/wg-quick.bash                       | 1 +
- src/tools/wg.c                                | 1 +
- src/uapi/wireguard.h                          | 1 +
- src/version.h                                 | 1 +
- 76 files changed, 76 insertions(+)
-
+diff --git a/src/selftest/allowedips.h b/src/selftest/allowedips.h
+index 8a568c8e67a2..26d2591d7c6f 100644
+--- a/src/selftest/allowedips.h
++++ b/src/selftest/allowedips.h
+@@ -1,3 +1,4 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /* Copyright (C) 2015-2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved. */
+ 
+ #ifdef DEBUG
+diff --git a/src/selftest/blake2s.h b/src/selftest/blake2s.h
+index 94dda274cb85..ae00a24eb232 100644
+--- a/src/selftest/blake2s.h
++++ b/src/selftest/blake2s.h
+@@ -1,3 +1,4 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /* Copyright (C) 2015-2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved. */
+ 
+ #ifdef DEBUG
+diff --git a/src/selftest/chacha20poly1305.h b/src/selftest/chacha20poly1305.h
+index a9ccd66ae1a3..e9f89d419b8f 100644
+--- a/src/selftest/chacha20poly1305.h
++++ b/src/selftest/chacha20poly1305.h
+@@ -1,3 +1,4 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /* Copyright (C) 2015-2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved. */
+ 
+ #ifdef DEBUG
+diff --git a/src/selftest/counter.h b/src/selftest/counter.h
+index 56d6006e01ea..7c0d23af4a7a 100644
+--- a/src/selftest/counter.h
++++ b/src/selftest/counter.h
+@@ -1,3 +1,4 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /* Copyright (C) 2015-2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved. */
+ 
+ #ifdef DEBUG
+diff --git a/src/selftest/curve25519.h b/src/selftest/curve25519.h
+index 17ff57a19570..7772e928dd44 100644
+--- a/src/selftest/curve25519.h
++++ b/src/selftest/curve25519.h
+@@ -1,3 +1,4 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /* Copyright (C) 2015-2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved. */
+ 
+ #ifdef DEBUG
+diff --git a/src/selftest/ratelimiter.h b/src/selftest/ratelimiter.h
+index 202c573b2333..607dc7d0f4e3 100644
+--- a/src/selftest/ratelimiter.h
++++ b/src/selftest/ratelimiter.h
+@@ -1,3 +1,4 @@
++/* SPDX-License-Identifier: GPL-2.0 */
+ /* Copyright (C) 2015-2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved. */
+ 
+ #ifdef DEBUG
 -- 
 2.15.1
