@@ -1,30 +1,27 @@
 Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1ad59189
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ae33a4f9
  for <wireguard@lists.zx2c4.com>;
- Thu, 30 Nov 2017 12:33:42 +0000 (UTC)
+ Thu, 30 Nov 2017 12:57:19 +0000 (UTC)
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4313c41a
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 10d42763
  for <wireguard@lists.zx2c4.com>;
- Thu, 30 Nov 2017 12:33:42 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 695c97d1
+ Thu, 30 Nov 2017 12:57:19 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 39341961
  for <wireguard@lists.zx2c4.com>;
- Thu, 30 Nov 2017 12:33:42 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id f6749f64
+ Thu, 30 Nov 2017 12:57:19 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 800e867e
  (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 30 Nov 2017 12:33:41 +0000 (UTC)
-Received: by mail-ot0-f181.google.com with SMTP id y10so5929134otg.10
- for <wireguard@lists.zx2c4.com>; Thu, 30 Nov 2017 04:39:49 -0800 (PST)
+ Thu, 30 Nov 2017 12:57:19 +0000 (UTC)
+Received: by mail-oi0-f43.google.com with SMTP id y75so4745878oie.4
+ for <wireguard@lists.zx2c4.com>; Thu, 30 Nov 2017 05:03:27 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20171130081645.GA32848@x220>
-References: <CAAykO_OpzOeiLHaLwfaKtemYxQUVLZqta+pCLgdcHT6x5WK6rA@mail.gmail.com>
- <20171130081645.GA32848@x220>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 30 Nov 2017 13:39:48 +0100
-Message-ID: <CAHmME9qf6gizRijhBwkxLvaWWQtrfqNPjUMuD+NeQh7PW7XJ8A@mail.gmail.com>
-Subject: Re: I will mail you Wireguard stickers
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>, Tom Li <tomli@tomli.me>
+Date: Thu, 30 Nov 2017 14:03:26 +0100
+Message-ID: <CAHmME9qmjgDJ3bXhWaZ86=iuLi+kDVmLqC0iZnU=3QHA0wBDMg@mail.gmail.com>
+Subject: Dealing with list volume
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -35,21 +32,19 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Thu, Nov 30, 2017 at 9:16 AM,  <tomli@tomli.me> wrote:
->
-> Please stop.
-> Now hundreds of people just knew your personal address, and it's a
-> physical one. It has also been archived online permanently for everyone
-> on the Internet to look for.
-> I'm just a normal user and a reader of this list, so I perhaps I would
-> like to come and visit you if I am going to the States
+Hi guys,
 
-No need to be overly aggressive, but I agree this is a problem. I
-suspect the recent introduction of WireGuard to a forum called "XDA",
-which is generally frequented by teenagers, has resulted in the uptick
-in these kinds of accidents.
+Recently XDA learned about WireGuard, which has resulted in an influx
+of teenagers writing in, sometimes with their mailing addresses, and
+generally decreasing the overall quality of discussion here. As
+WireGuard becomes more well known, this kind of thing is expected to
+continue. I'd prefer for this list to stay one where it's easy to stay
+up to date and "read every post". I'll be enabling some mailman
+filters in the coming days to try and filter some things out and keep
+things sane around here. If you all have any suggestions or requests
+with regards to this, I'm happy to listen to them.
 
-I'll try to make a filter for the mailing list to reduce the amount of
-these emails that clutter your inboxes. Sorry about this all!
+Sorry for the ruckus.
 
+Regards,
 Jason
