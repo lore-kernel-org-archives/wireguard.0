@@ -1,19 +1,22 @@
-Return-Path: luci@createc.ro
+Return-Path: keith.labit@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e7b73c9b
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 78b5931e
  for <wireguard@lists.zx2c4.com>;
- Wed, 29 Nov 2017 23:21:06 +0000 (UTC)
-Received: from mail.crimel.ro (mail.crimel.ro [5.2.196.145])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bbeae519
+ Thu, 30 Nov 2017 05:59:49 +0000 (UTC)
+Received: from mail-io0-f170.google.com (mail-io0-f170.google.com
+ [209.85.223.170])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f93b0101
  for <wireguard@lists.zx2c4.com>;
- Wed, 29 Nov 2017 23:21:05 +0000 (UTC)
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-From: Lucian Cristian <luci@createc.ro>
-Subject: Qualcomm Shortcut Forwarding Engine
-Message-ID: <f899416f-8d9c-d5f2-f7d0-e393fe989320@createc.ro>
-Date: Thu, 30 Nov 2017 01:27:10 +0200
+ Thu, 30 Nov 2017 05:59:49 +0000 (UTC)
+Received: by mail-io0-f170.google.com with SMTP id d21so6306772ioe.7
+ for <wireguard@lists.zx2c4.com>; Wed, 29 Nov 2017 22:05:55 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
+From: klabit87 <keith.labit@gmail.com>
+Date: Thu, 30 Nov 2017 00:05:53 -0600
+Message-ID: <CAAykO_OpzOeiLHaLwfaKtemYxQUVLZqta+pCLgdcHT6x5WK6rA@mail.gmail.com>
+Subject: Re: I will mail you Wireguard stickers
+To: wireguard@lists.zx2c4.com
+Content-Type: multipart/alternative; boundary="001a114040c07f68f3055f2d0b62"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -23,24 +26,45 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi
+--001a114040c07f68f3055f2d0b62
+Content-Type: text/plain; charset="UTF-8"
 
-Not sure if you can do something about this, I started to test this 
-option for accelerated speed on NAT module (fast path) and I don't 
-understand why is bothering the wireguard VPN, it should be active only 
-on NAT connections.
+Hello, I would like to get some stickers please.
 
-The problem is strange, the iperf3 speed test will do about ~300 mb/s on 
-WRT3200ACM router in bot direction (I think is my ISP limit for the two 
-peers) but if I want to make an SCCP/SIP phone call it will not always 
-connect or there will be some delay in doing it, also remote desktop 
-will disconnect and reconnect every ~5 seconds.
+I will be incorporating your VPN tunnel into my Nexus 6 kernel in the next
+coming week or two.
 
-There is no NAT in the VPN, everything is routed by zebra deamon.
+The concept and security is brilliant and I would like to include it.
 
-this is the forum discussion: 
-https://forum.lede-project.org/t/qualcomm-fast-path-for-lede/4582
+If I could possibly get about 4 or 5 that would be great!
 
-this is the PR for LEDE : https://github.com/lede-project/source/pull/1269
+My mailing address is:
 
-Regards
+Keith Labit
+501 E. Union Street
+Magnolia, AR, 71753
+United States
+
+I know that you are based in Paris so if this is not possible I completely
+understand.
+
+Thank you for your time and contribution to securing Android and the Linux
+kernel.
+
+--001a114040c07f68f3055f2d0b62
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hello, I would like to get some stickers please.<div><br><=
+/div><div>I will be incorporating your VPN tunnel into my Nexus 6 kernel in=
+ the next coming week or two.</div><div><br></div><div>The concept and secu=
+rity is brilliant and I would like to include it.</div><div><br></div><div>=
+If I could possibly get about 4 or 5 that would be great!</div><div><br></d=
+iv><div>My mailing address is:</div><div><br></div><div>Keith Labit</div><d=
+iv>501 E. Union Street</div><div>Magnolia, AR, 71753</div><div>United State=
+s</div><div><br></div><div>I know that you are based in Paris so if this is=
+ not possible I completely understand.</div><div><br></div><div>Thank you f=
+or your time and contribution to securing Android and the Linux kernel.<br>=
+</div></div>
+
+--001a114040c07f68f3055f2d0b62--
