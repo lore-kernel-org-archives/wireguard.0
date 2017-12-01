@@ -1,26 +1,26 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: ferris@ferrisellis.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e439209c
- for <wireguard@lists.zx2c4.com>; Fri, 1 Dec 2017 20:53:36 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ddbfbeed
- for <wireguard@lists.zx2c4.com>; Fri, 1 Dec 2017 20:53:36 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ca633192
- for <wireguard@lists.zx2c4.com>; Fri, 1 Dec 2017 20:53:36 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id cec5cde6
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>; Fri, 1 Dec 2017 20:53:36 +0000 (UTC)
-Received: by mail-ot0-f180.google.com with SMTP id q3so10150028oth.2
- for <wireguard@lists.zx2c4.com>; Fri, 01 Dec 2017 12:59:54 -0800 (PST)
-MIME-Version: 1.0
-In-Reply-To: <CAKgnZ5wDEwMXA6+WbxrmQocBgPPeHCH-WBdn5kHezzsLPGDdtQ@mail.gmail.com>
-References: <CAKgnZ5wDEwMXA6+WbxrmQocBgPPeHCH-WBdn5kHezzsLPGDdtQ@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 1 Dec 2017 21:59:53 +0100
-Message-ID: <CAHmME9qXr5aig-79MjuCbaTUPt2MEh+oAA53gpxOk999CsqKmw@mail.gmail.com>
-Subject: Re: WireGuard (Android) Configuration issues, etc.
-To: Jordan Johnston <johnstonljordan@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 31344c75
+ for <wireguard@lists.zx2c4.com>; Fri, 1 Dec 2017 22:55:02 +0000 (UTC)
+Received: from mail-yb0-f179.google.com (mail-yb0-f179.google.com
+ [209.85.213.179])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 48a4bf47
+ for <wireguard@lists.zx2c4.com>; Fri, 1 Dec 2017 22:55:02 +0000 (UTC)
+Received: by mail-yb0-f179.google.com with SMTP id v5so237648ybi.3
+ for <wireguard@lists.zx2c4.com>; Fri, 01 Dec 2017 15:01:21 -0800 (PST)
+Return-Path: <ferris@ferrisellis.com>
+Content-Type: multipart/alternative;
+ boundary=Apple-Mail-4653C52C-3896-4DDE-83AE-A566ECB49E95
+Mime-Version: 1.0 (1.0)
+Subject: Re: Dealing with list volume
+From: Ferris Ellis <ferris@ferrisellis.com>
+In-Reply-To: <CAHmME9p+20_OGuGDTF5e7nfGz=-PTBrVfOxu3P27GQMd3vLrLA@mail.gmail.com>
+Date: Fri, 1 Dec 2017 18:01:19 -0500
+Message-Id: <EE5CC249-FD46-4984-8A0A-0CC583E3C3FA@ferrisellis.com>
+References: <CAHmME9qmjgDJ3bXhWaZ86=iuLi+kDVmLqC0iZnU=3QHA0wBDMg@mail.gmail.com>
+ <cdc270d3-19ea-97b9-eb34-efff88ec3d25@posteo.de>
+ <CAHmME9p+20_OGuGDTF5e7nfGz=-PTBrVfOxu3P27GQMd3vLrLA@mail.gmail.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -31,69 +31,74 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Jordan,
 
-Thanks for getting in touch with your detailed email. Responses are
-inline below.
+--Apple-Mail-4653C52C-3896-4DDE-83AE-A566ECB49E95
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-> But in the process, I've figured out that wq-quick is NOT
-> working properly The wg-quick issue is probably why the
-> android WireGuard app isn't working (as I assume it requires wg-quick)... My
-> pixel doesn't seem to recognise the wg-quick script being in /system/xbin
-> # wg-quick up wg0
-> sh: /system/xbin/wg-quick: No such file or directory
-> #!/system/xbin/bash
-> sh: /system/xbin/wg-quick: Permission denied
+>> Maybe it is easier for
+>> you to have an wiki and bugtracker like gitlab or gitlab, where
+>> everybody can get the informations he need, show bugs, get infos about
+>> bugs and ask questions to other users.
+>=20
+> That's what the list is supposed to be for, though. Maybe it's just a
+> matter of SNR?
 
-Ahhh. wg-quick indeed requires bash, and from what I gather, there
-isn't bash on your ROM. You should be able to build that easily from
-the AOSP source `mka bash`. This is one of the reasons I first
-launched the Android stuff with the local_manifest.xml hack instead of
-the standalone tools. I'll have to think about a more general purpose
-solution, but for now, I thing the best thing you can do would be to
-just add bash. If you're stuck and need help, I can probably build you
-a statically linked musl aarch64 bash that will work mostly
-everywhere.
 
-Alternatively, maybe there is bash on that phone, but it isn't where I
-was expecting. Could you run the commands:
+Just my two cents on matter based on personal experience:
 
-# find / -name bash -or -name env 2>/dev/null
+Issue trackers: I personally suspect as adoption increases the popular expec=
+tation will be for a more ticket oriented (i.e. Github like) experience for f=
+iling bugs and feature requests. For better or worse people seem to feel the=
+re=E2=80=99s a large commitment increase on their part from filing a ticket =
+ and being part of a community mailing list.
 
-And send me the output?
+Wikis: As for wikis, I always have had mixed feelings about them. For large p=
+rojects like Gentoo or Arch they=E2=80=99re great, in my opinion, for commun=
+ity knowledge accumulation. But for smaller projects I=E2=80=99ve found havi=
+ng something to the effect of a community maintained `docs/` directory with m=
+arkdown is just simpler and easier. Plus you can always go back and generate=
+ some pretty webpages out of the `docs/` markdown files if you=E2=80=99ve re=
+ached the adoption level where people expect documentation to be in webpages=
+.
 
-> That said ~ I'm
-> going to have a stab at repackaging the user-space components as a standard
-> android flashable zip (as we talked about on XDA, @Jason), start fresh and
-> see if I can get it working...
+Cheers,
+Ferris
 
-We might wind up wanting that statically compiled bash for the .zip.
-Based on your findings above, we can adjust this plan accordingly.
-Having the flashable .zip infra seems like a good idea either way.
 
-> All of that aside; I'm wondering if someone could post a working
-> config/template for AzireVPN or any other free VPN that supports
-> WireGuard???
+--Apple-Mail-4653C52C-3896-4DDE-83AE-A566ECB49E95
+Content-Type: text/html;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-We don't use this list for commercial providers -- they have their own
-private support emails and contact methods -- but I can help you with
-the free non-commericial demo server -- demo.wireguard.com.
+<html><head><meta http-equiv=3D"content-type" content=3D"text/html; charset=3D=
+utf-8"></head><body dir=3D"auto"><div><span></span></div><div><span></span><=
+blockquote type=3D"cite"><blockquote type=3D"cite"><span>Maybe it is easier f=
+or</span><br></blockquote></blockquote><blockquote type=3D"cite"><blockquote=
+ type=3D"cite"><span>you to have an wiki and bugtracker like gitlab or gitla=
+b, where</span><br></blockquote></blockquote><blockquote type=3D"cite"><bloc=
+kquote type=3D"cite"><span>everybody can get the informations he need, show b=
+ugs, get infos about</span><br></blockquote></blockquote><blockquote type=3D=
+"cite"><blockquote type=3D"cite"><span>bugs and ask questions to other users=
+.</span><br></blockquote></blockquote><blockquote type=3D"cite"><span></span=
+><br></blockquote><blockquote type=3D"cite"><span>That's what the list is su=
+pposed to be for, though. Maybe it's just a</span><br></blockquote><blockquo=
+te type=3D"cite"><span>matter of SNR?</span></blockquote></div><div><br></di=
+v><div>Just my two cents on matter based on personal experience:</div><div><=
+br></div><div><b>Issue trackers:</b> I personally suspect as adoption increa=
+ses the popular expectation will be for a more ticket oriented (i.e. Github l=
+ike) experience for filing bugs and feature requests. For better or worse pe=
+ople seem to feel there=E2=80=99s a large commitment increase on their part f=
+rom filing a ticket &nbsp;and being part of a community mailing list.</div><=
+div><br></div><div><b>Wikis:</b> As for wikis, I always have had mixed feeli=
+ngs about them. For large projects like Gentoo or Arch they=E2=80=99re great=
+, in my opinion, for community knowledge accumulation. But for smaller proje=
+cts I=E2=80=99ve found having something to the effect of a community maintai=
+ned `docs/` directory with markdown is just simpler and easier. Plus you can=
+ always go back and generate some pretty webpages out of the `docs/` markdow=
+n files if you=E2=80=99ve reached the adoption level where people expect doc=
+umentation to be in webpages.</div><div><br></div><div>Cheers,</div><div>Fer=
+ris</div><div><br></div></body></html>=
 
-> (minus any private information, respectfully). I'd just like to
-> make sure that I have a working config for WireGuard on Android -> so that
-> when I try to test, after re-installing wg-tools ~ that might be one less
-> hiccup... I've never used WireGuard, so all very new to me.
-
-Makes sense. It might make the most sense to just head into #wireguard
-on Freenode too, where we can troubleshoot basic how-to things in real
-time.
->
-> PS: @Jason - I'm also going to have a look (later on) and see If i can get
-> the WireGuard android app to not "crash on boot" in Oreo ~ using the commits
-> for Kernel Aduitor's fixes that I pointed out to you yesterday, when I
-> brought up the issue. ttyl
-
-Oh, wonderful! Don't hesitate to send patches to this list for that stuff.
-
-Talk soon,
-Jason
+--Apple-Mail-4653C52C-3896-4DDE-83AE-A566ECB49E95--
