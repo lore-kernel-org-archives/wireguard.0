@@ -1,24 +1,26 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: bruno@wolff.to
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 35d3bea1
- for <wireguard@lists.zx2c4.com>; Fri, 1 Dec 2017 13:38:55 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7e99dde5
- for <wireguard@lists.zx2c4.com>; Fri, 1 Dec 2017 13:38:55 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 04fa856f
- for <wireguard@lists.zx2c4.com>; Fri, 1 Dec 2017 13:38:55 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id a12f6ff9
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>; Fri, 1 Dec 2017 13:38:55 +0000 (UTC)
-Received: by mail-ot0-f179.google.com with SMTP id v21so9056801oth.6
- for <wireguard@lists.zx2c4.com>; Fri, 01 Dec 2017 05:45:11 -0800 (PST)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b10d97b2
+ for <wireguard@lists.zx2c4.com>; Fri, 1 Dec 2017 16:57:39 +0000 (UTC)
+Received: from wolff.to (wolff.to [98.103.208.27])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with SMTP id 28ad1cdf
+ for <wireguard@lists.zx2c4.com>; Fri, 1 Dec 2017 16:57:39 +0000 (UTC)
+Date: Fri, 1 Dec 2017 11:02:39 -0600
+From: Bruno Wolff III <bruno@wolff.to>
+To: Baptiste Jonglez <baptiste@bitsofnetworks.org>
+Subject: Re: Should I expect faster recovery after one side goes down
+Message-ID: <20171201170239.GA28010@wolff.to>
+References: <20171127094931.GA3104@wolff.to>
+ <CAHmME9q+giuOXVz1=hE-F34vFMP0GxzveMzLbzrjeXbbjnrGCQ@mail.gmail.com>
+ <20171127134914.GA9392@wolff.to> <20171127173354.GA17685@wolff.to>
+ <CAHmME9rq+eaLMZP+a1OAcu1=65X7Q_PrsMNBwAm7U2HaNWfUVQ@mail.gmail.com>
+ <20171127182558.GA19220@wolff.to> <20171128061306.GA7842@wolff.to>
+ <20171128064413.GA9218@wolff.to> <20171128084237.GA12292@wolff.to>
+ <20171201084319.GA30956@tuxmachine.polynome.dn42>
 MIME-Version: 1.0
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 1 Dec 2017 14:45:09 +0100
-Message-ID: <CAHmME9ru-yePxK2dEUNx25n32HzL1mtdBW4KcPBcW2butmqrJg@mail.gmail.com>
-Subject: web browser javascript key generation and related brain disorders
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii; format=flowed
+In-Reply-To: <20171201084319.GA30956@tuxmachine.polynome.dn42>
+Cc: wireguard@lists.zx2c4.com
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -28,44 +30,24 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi everyone,
+On Fri, Dec 01, 2017 at 09:43:19 +0100,
+  Baptiste Jonglez <baptiste@bitsofnetworks.org> wrote:
+>
+>It sounds like one of these situations where persistent keepalives would
+>be useful, doesn't it?
 
-Some people have been asking me about delivering configurations to
-users in the web browser. I usually try to keep sensitive crypto out
-of the browser, and I don't really approve of JavaScript crypto, but
-it struck me that in the absence of something better, commercial
-providers might be tempted to generate private keys server side using
-random(3) and send them to their poor users.
+It is definitely useful as the laptop is expected to be behind NAT, but it 
+doesn't help with the rebooting the router breaking historical source 
+NAT (on my local network) while the other end remembers where it last got a 
+packet from. The solution below dealt with that.
 
-To preempt this mistake, I made this example code:
-https://git.zx2c4.com/WireGuard/tree/contrib/examples/keygen-html
-
-It generates a private key in the browser, makes a request to the
-server with the corresponding public key, and then creates a
-downloadable configuration file for the user. It's extremely simple.
-It's certainly better than generating keys server side, though it does
-come with these caveats:
-
-- Curve25519, for deriving the public key, is compiled using
-emscripten. Who knows what kind of code this actually generates, or
-what all those optimization options wind up doing.
-- explicit_bzero(3) isn't really a thing in JavaScript.
-- You have to trust window.crypto.getRandomValues(). If you don't, you
-could always hash together one block each of output from
-window.crypto.getRandomValues() and some /dev/urandom data delivered
-by the server. Or do that hilarious thing where you're asked to shake
-your mouse around inside a box to "make some randomness", but please
-don't actually do this; the 90s called and wants its DHTML snow flake
-mouse trails back.
-- JavaScript crypto is a pretty dubious proposition.
-
-On the plus side, one could imagine some pretty easy-to-use
-interfaces. Buttons like:
-
-[Download .zip of configurations for all locations]
-[Download .conf of us1] [Download .conf of nl1] [Download .conf of se1]
-
-So, it's there now. Do with it what you will.
-
-Regards,
-Jason
+>
+>> I found a way to make it work more automatically. The reason the port was
+>> getting reassigned was because the original connection packet was being
+>> tracked and was conflicting with the source nat mapping even though in
+>> reallity the connection was the same. By putting in CT --notrack rules I was
+>> able to block that traking and without the conflict the port doesn't get
+>> remapped. I don't need tracking or the original connection for my firewall
+>> rules so this should be OK. On testing it seems to work as expected. Now
+>> when I reboot my router, my laptop reconnects and the wireguard tunnel works
+>> without having to restart it.
