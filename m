@@ -1,31 +1,30 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: tbskyd@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c3313310
- for <wireguard@lists.zx2c4.com>;
- Thu, 30 Nov 2017 23:42:59 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4a8ccd21
- for <wireguard@lists.zx2c4.com>;
- Thu, 30 Nov 2017 23:42:59 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6037697a
- for <wireguard@lists.zx2c4.com>;
- Thu, 30 Nov 2017 23:42:59 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 735f3e9b
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Thu, 30 Nov 2017 23:42:59 +0000 (UTC)
-Received: by mail-ot0-f170.google.com with SMTP id p3so7664452oti.5
- for <wireguard@lists.zx2c4.com>; Thu, 30 Nov 2017 15:49:10 -0800 (PST)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f85724f2
+ for <wireguard@lists.zx2c4.com>; Fri, 1 Dec 2017 07:38:10 +0000 (UTC)
+Received: from mail-wr0-f177.google.com (mail-wr0-f177.google.com
+ [209.85.128.177])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 761b11de
+ for <wireguard@lists.zx2c4.com>; Fri, 1 Dec 2017 07:38:10 +0000 (UTC)
+Received: by mail-wr0-f177.google.com with SMTP id z34so9053851wrz.10
+ for <wireguard@lists.zx2c4.com>; Thu, 30 Nov 2017 23:44:24 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9q=z9eacusHGf2apYFCghYce5aEXFF7WXLqJ=nGMGD1hQ@mail.gmail.com>
-References: <20171130152355.25387-1-gregkh@linuxfoundation.org>
- <20171130152355.25387-2-gregkh@linuxfoundation.org>
- <CAHmME9q=z9eacusHGf2apYFCghYce5aEXFF7WXLqJ=nGMGD1hQ@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 1 Dec 2017 00:49:09 +0100
-Message-ID: <CAHmME9p9AM+fABC4UecUx4rVn3dCTs8TtUcLotTBnWtABuXy+g@mail.gmail.com>
-Subject: Re: [PATCH 1/6] src/tools: add SPDX tags to all files
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+In-Reply-To: <CAHmME9rquEO5r0cMpTgPsLW790QqbN9DLxuETm-6TfxX9ULsVg@mail.gmail.com>
+References: <CAC6SzH+Q-1SRVXOoScGhXWraOLdp9_Rud6cMbQ95a51r=eRWTw@mail.gmail.com>
+ <CAHmME9piZhSukf55XY1Un2hO0TZyfHRh+afU8kk6R6yoSA5pQA@mail.gmail.com>
+ <CAC6SzHJZj5BOMek4i=1ykepHSzHRDGKYTj-Cfa4veRbsVuj2WA@mail.gmail.com>
+ <CAHmME9qeUw5VsaEoAG=i0=5LfOq4aPGi2KjDHKDjAPorXKJgbA@mail.gmail.com>
+ <CAC6SzHJd8DzMBhuoGG=c8gtKzKd1zFs6wndKF0mEZDQW0aB6aQ@mail.gmail.com>
+ <20171129135124.GA29970@zx2c4.com>
+ <CAC6SzH+yoUtuim6oHypPXmef-oh2rQZTdQXDuN5YAGteXHN7rQ@mail.gmail.com>
+ <CAHmME9pjU_5AncEkqYbnSUtB-h5h1nhrD5FXgkBia-sj=8jKrA@mail.gmail.com>
+ <CAC6SzHJ8Rd3G7KWng5JxhXV4k2OE+uf5XKQNF3k6bzsDP=wUWA@mail.gmail.com>
+ <CAHmME9rquEO5r0cMpTgPsLW790QqbN9DLxuETm-6TfxX9ULsVg@mail.gmail.com>
+From: d tbsky <tbskyd@gmail.com>
+Date: Fri, 1 Dec 2017 15:44:22 +0800
+Message-ID: <CAC6SzHJotdY8ihSdDPBWoz=k9EvN1rUDPR=yvrkutmTEFX75TQ@mail.gmail.com>
+Subject: Re: multi-home difficulty
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
@@ -37,46 +36,29 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Thu, Nov 30, 2017 at 6:57 PM, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
-> On Thu, Nov 30, 2017 at 4:23 PM, Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
->> It's good to have SPDX identifiers in all files as the Linux kernel
->> diff --git a/src/tools/config.c b/src/tools/config.c
->> index 6ff03767f9e6..312cbcdd7a85 100644
->> --- a/src/tools/config.c
->> +++ b/src/tools/config.c
->> @@ -1,3 +1,4 @@
->> +// SPDX-License-Identifier: GPL-2.0
->>  /* Copyright (C) 2015-2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved. */
->>
->>  #include <arpa/inet.h>
->> diff --git a/src/tools/config.h b/src/tools/config.h
->> index 63a272cc1285..e3ad9f87404b 100644
->> --- a/src/tools/config.h
->> +++ b/src/tools/config.h
->> @@ -1,3 +1,4 @@
->> +/* SPDX-License-Identifier: GPL-2.0 */
->>  /* Copyright (C) 2015-2017 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved. */
+2017-11-29 22:49 GMT+08:00 Jason A. Donenfeld <Jason@zx2c4.com>:
+> On Wed, Nov 29, 2017 at 3:16 PM, d tbsky <tbskyd@gmail.com> wrote:
+>>      sorry I misunderstand you. you mean I modify the script and run
+>> in my environment to reveal the problem?
+>> ok I will try to do it.
 >
-> It looks like you're giving .h a /* style comment and .c a // style
-> comment. Is there a reason for this, or did you just have two
-> different sed commands by accident?
+> Take what I sent you. Run it. If it breaks, send me the output and
+> your kernel. If it doesn't break, mess with it until it breaks, and
+> then send it back to me.
 
-zx2c4@thinkpad ~/Projects/linux $ grep -rl '/* SPDX-' | sed
-'s/.*\/\([^/]\+\)$/\1/;s/.*\.\(.\+\)$/\1/' | sort | uniq -c | sort -nr
-| head -n 5
-  7621 h
-  3671 c
-  1193 Makefile
-   486 S
-   221 dts
-zx2c4@thinkpad ~/Projects/linux $ grep -rl '// SPDX-' | sed
-'s/.*\/\([^/]\+\)$/\1/;s/.*\.\(.\+\)$/\1/' | sort | uniq -c | sort -nr
-| head -n 5
-  3655 c
-   326 h
-   187 dts
-   147 dtsi
-     8 cocci
+Hi jason:
 
-Doesn't seem like there's much rhyme or reason to it.
+      during test in netns environment, I saw something that I never
+saw at real world. the steps below:
+
+1. client try connect to multi-home-server.
+2. wait for conntrack session timeout both for client and server.
+3. server try connect to client. server will use source ip at step1 to connect.
+
+it means at step1, wireguard not only remember client's ip address,
+but also remember self source ip address. even though the source
+address didn't show at "wg wg0"  user interface.
+is the assumption true? I didn't see this behavior in real world.
+
+Regards,
+tbskyd
