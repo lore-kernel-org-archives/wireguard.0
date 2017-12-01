@@ -1,26 +1,27 @@
-Return-Path: ferris@ferrisellis.com
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 31344c75
- for <wireguard@lists.zx2c4.com>; Fri, 1 Dec 2017 22:55:02 +0000 (UTC)
-Received: from mail-yb0-f179.google.com (mail-yb0-f179.google.com
- [209.85.213.179])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 48a4bf47
- for <wireguard@lists.zx2c4.com>; Fri, 1 Dec 2017 22:55:02 +0000 (UTC)
-Received: by mail-yb0-f179.google.com with SMTP id v5so237648ybi.3
- for <wireguard@lists.zx2c4.com>; Fri, 01 Dec 2017 15:01:21 -0800 (PST)
-Return-Path: <ferris@ferrisellis.com>
-Content-Type: multipart/alternative;
- boundary=Apple-Mail-4653C52C-3896-4DDE-83AE-A566ECB49E95
-Mime-Version: 1.0 (1.0)
-Subject: Re: Dealing with list volume
-From: Ferris Ellis <ferris@ferrisellis.com>
-In-Reply-To: <CAHmME9p+20_OGuGDTF5e7nfGz=-PTBrVfOxu3P27GQMd3vLrLA@mail.gmail.com>
-Date: Fri, 1 Dec 2017 18:01:19 -0500
-Message-Id: <EE5CC249-FD46-4984-8A0A-0CC583E3C3FA@ferrisellis.com>
-References: <CAHmME9qmjgDJ3bXhWaZ86=iuLi+kDVmLqC0iZnU=3QHA0wBDMg@mail.gmail.com>
- <cdc270d3-19ea-97b9-eb34-efff88ec3d25@posteo.de>
- <CAHmME9p+20_OGuGDTF5e7nfGz=-PTBrVfOxu3P27GQMd3vLrLA@mail.gmail.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f805aae8
+ for <wireguard@lists.zx2c4.com>; Fri, 1 Dec 2017 23:44:02 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 63ba215f
+ for <wireguard@lists.zx2c4.com>; Fri, 1 Dec 2017 23:44:02 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9c7638b5
+ for <wireguard@lists.zx2c4.com>; Fri, 1 Dec 2017 23:44:02 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 15aa3132
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>; Fri, 1 Dec 2017 23:44:02 +0000 (UTC)
+Received: by mail-ot0-f174.google.com with SMTP id e74so10434840ote.7
+ for <wireguard@lists.zx2c4.com>; Fri, 01 Dec 2017 15:50:21 -0800 (PST)
+MIME-Version: 1.0
+In-Reply-To: <CAHmME9qXr5aig-79MjuCbaTUPt2MEh+oAA53gpxOk999CsqKmw@mail.gmail.com>
+References: <CAKgnZ5wDEwMXA6+WbxrmQocBgPPeHCH-WBdn5kHezzsLPGDdtQ@mail.gmail.com>
+ <CAHmME9qXr5aig-79MjuCbaTUPt2MEh+oAA53gpxOk999CsqKmw@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Sat, 2 Dec 2017 00:50:20 +0100
+Message-ID: <CAHmME9o9pQdRdQ=7MqLYe1Yg8vxZNzAHd0ouRSq1Pwb9YYaHdg@mail.gmail.com>
+Subject: Re: WireGuard (Android) Configuration issues, etc.
+To: Jordan Johnston <johnstonljordan@gmail.com>
+Content-Type: multipart/mixed; boundary="001a1148754014fca5055f50087d"
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -31,74 +32,48 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
+--001a1148754014fca5055f50087d
+Content-Type: text/plain; charset="UTF-8"
 
---Apple-Mail-4653C52C-3896-4DDE-83AE-A566ECB49E95
-Content-Type: text/plain;
-	charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Hey again,
 
->> Maybe it is easier for
->> you to have an wiki and bugtracker like gitlab or gitlab, where
->> everybody can get the informations he need, show bugs, get infos about
->> bugs and ask questions to other users.
->=20
-> That's what the list is supposed to be for, though. Maybe it's just a
-> matter of SNR?
+I'll update the demo.wireguard.com scripts in the repo in a bit to
+make them slightly more simple and support v6, like the attached, but
+thought you might benefit from this now.
 
+zx2c4@thinkpad ~ $ ./client.sh > /etc/wireguard/demo.conf
+zx2c4@thinkpad ~ $ wg-quick up demo
+[#] ip link add demo type wireguard
+[#] wg setconf demo /dev/fd/63
+[#] ip address add 192.168.4.178/32 dev demo
+[#] ip link set mtu 1420 dev demo
+[#] ip link set demo up
+[#] resolvconf -a tun.demo -m 0 -x
+[#] wg set x fwmark 51820
+[#] ip -4 route add 0.0.0.0/0 dev demo table 51820
+[#] ip -4 rule add not fwmark 51820 table 51820
+[#] ip -4 rule add table main suppress_prefixlength 0
+zx2c4@thinkpad ~ $ curl -4 zx2c4.com/ip
+163.172.161.0
+demo.wireguard.com
+curl/7.56.1
 
-Just my two cents on matter based on personal experience:
+Please don't run the script more than once or twice or thrice.
 
-Issue trackers: I personally suspect as adoption increases the popular expec=
-tation will be for a more ticket oriented (i.e. Github like) experience for f=
-iling bugs and feature requests. For better or worse people seem to feel the=
-re=E2=80=99s a large commitment increase on their part from filing a ticket =
- and being part of a community mailing list.
+Jason
 
-Wikis: As for wikis, I always have had mixed feelings about them. For large p=
-rojects like Gentoo or Arch they=E2=80=99re great, in my opinion, for commun=
-ity knowledge accumulation. But for smaller projects I=E2=80=99ve found havi=
-ng something to the effect of a community maintained `docs/` directory with m=
-arkdown is just simpler and easier. Plus you can always go back and generate=
- some pretty webpages out of the `docs/` markdown files if you=E2=80=99ve re=
-ached the adoption level where people expect documentation to be in webpages=
-.
+--001a1148754014fca5055f50087d
+Content-Type: application/x-sh; name="client.sh"
+Content-Disposition: attachment; filename="client.sh"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_jaok977h0
 
-Cheers,
-Ferris
-
-
---Apple-Mail-4653C52C-3896-4DDE-83AE-A566ECB49E95
-Content-Type: text/html;
-	charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-
-<html><head><meta http-equiv=3D"content-type" content=3D"text/html; charset=3D=
-utf-8"></head><body dir=3D"auto"><div><span></span></div><div><span></span><=
-blockquote type=3D"cite"><blockquote type=3D"cite"><span>Maybe it is easier f=
-or</span><br></blockquote></blockquote><blockquote type=3D"cite"><blockquote=
- type=3D"cite"><span>you to have an wiki and bugtracker like gitlab or gitla=
-b, where</span><br></blockquote></blockquote><blockquote type=3D"cite"><bloc=
-kquote type=3D"cite"><span>everybody can get the informations he need, show b=
-ugs, get infos about</span><br></blockquote></blockquote><blockquote type=3D=
-"cite"><blockquote type=3D"cite"><span>bugs and ask questions to other users=
-.</span><br></blockquote></blockquote><blockquote type=3D"cite"><span></span=
-><br></blockquote><blockquote type=3D"cite"><span>That's what the list is su=
-pposed to be for, though. Maybe it's just a</span><br></blockquote><blockquo=
-te type=3D"cite"><span>matter of SNR?</span></blockquote></div><div><br></di=
-v><div>Just my two cents on matter based on personal experience:</div><div><=
-br></div><div><b>Issue trackers:</b> I personally suspect as adoption increa=
-ses the popular expectation will be for a more ticket oriented (i.e. Github l=
-ike) experience for filing bugs and feature requests. For better or worse pe=
-ople seem to feel there=E2=80=99s a large commitment increase on their part f=
-rom filing a ticket &nbsp;and being part of a community mailing list.</div><=
-div><br></div><div><b>Wikis:</b> As for wikis, I always have had mixed feeli=
-ngs about them. For large projects like Gentoo or Arch they=E2=80=99re great=
-, in my opinion, for community knowledge accumulation. But for smaller proje=
-cts I=E2=80=99ve found having something to the effect of a community maintai=
-ned `docs/` directory with markdown is just simpler and easier. Plus you can=
- always go back and generate some pretty webpages out of the `docs/` markdow=
-n files if you=E2=80=99ve reached the adoption level where people expect doc=
-umentation to be in webpages.</div><div><br></div><div>Cheers,</div><div>Fer=
-ris</div><div><br></div></body></html>=
-
---Apple-Mail-4653C52C-3896-4DDE-83AE-A566ECB49E95--
+IyEvYmluL2Jhc2gKc2V0IC1lCnVtYXNrIDA3Nwpwcml2YXRlPSIkKHdnIGdlbmtleSkiCmV4ZWMg
+Mzw+L2Rldi90Y3AvZGVtby53aXJlZ3VhcmQuY29tLzQyOTEyCndnIHB1YmtleSA8PDwiJHByaXZh
+dGUiID4mMwpJRlM9OiByZWFkIC1yIHN0YXR1cyBzZXJ2ZXJfcHVia2V5IHNlcnZlcl9wb3J0IGlu
+dGVybmFsX2lwIDwmMwpbWyAkc3RhdHVzID09IE9LIF1dCmNhdCA8PC1fRU9GCglbSW50ZXJmYWNl
+XQoJQWRkcmVzcyA9ICRpbnRlcm5hbF9pcC8zMgoJUHJpdmF0ZUtleSA9ICRwcml2YXRlCglETlMg
+PSA4LjguOC44LCA4LjguNC40CgoJW1BlZXJdCglQdWJsaWNLZXkgPSAkc2VydmVyX3B1YmtleQoJ
+RW5kcG9pbnQgPSBkZW1vLndpcmVndWFyZC5jb206JHNlcnZlcl9wb3J0CglBbGxvd2VkSVBzID0g
+MC4wLjAuMC8wCl9FT0YK
+--001a1148754014fca5055f50087d--
