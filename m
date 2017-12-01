@@ -1,19 +1,28 @@
-Return-Path: johnstonljordan@gmail.com
+Return-Path: germano.massullo@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2ca8c158
- for <wireguard@lists.zx2c4.com>; Fri, 1 Dec 2017 17:24:27 +0000 (UTC)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fb353dba
+ for <wireguard@lists.zx2c4.com>; Fri, 1 Dec 2017 17:44:48 +0000 (UTC)
 Received: from mail-wm0-f47.google.com (mail-wm0-f47.google.com [74.125.82.47])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d4e6b9bc
- for <wireguard@lists.zx2c4.com>; Fri, 1 Dec 2017 17:24:27 +0000 (UTC)
-Received: by mail-wm0-f47.google.com with SMTP id v19so4639133wmh.5
- for <wireguard@lists.zx2c4.com>; Fri, 01 Dec 2017 09:30:44 -0800 (PST)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4efb3318
+ for <wireguard@lists.zx2c4.com>; Fri, 1 Dec 2017 17:44:48 +0000 (UTC)
+Received: by mail-wm0-f47.google.com with SMTP id g75so4997780wme.0
+ for <wireguard@lists.zx2c4.com>; Fri, 01 Dec 2017 09:51:05 -0800 (PST)
+Return-Path: <germano.massullo@gmail.com>
+Received: from [192.168.1.100]
+ (host179-8-dynamic.56-79-r.retail.telecomitalia.it. [79.56.8.179])
+ by smtp.googlemail.com with ESMTPSA id x13sm5234684wre.65.2017.12.01.09.51.04
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Fri, 01 Dec 2017 09:51:04 -0800 (PST)
+Subject: Re: Wireguard ceased to work after Fedora 26->27 upgrade
+From: Germano Massullo <germano.massullo@gmail.com>
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+References: <b984758b-93ce-f909-e63e-f31fb575a5f9@gmail.com>
+Message-ID: <2d50500c-bebb-146d-fbfd-ab9e212101a4@gmail.com>
+Date: Fri, 1 Dec 2017 18:51:03 +0100
 MIME-Version: 1.0
-From: Jordan Johnston <johnstonljordan@gmail.com>
-Date: Fri, 1 Dec 2017 12:30:43 -0500
-Message-ID: <CAKgnZ5wDEwMXA6+WbxrmQocBgPPeHCH-WBdn5kHezzsLPGDdtQ@mail.gmail.com>
-Subject: WireGuard (Android) Configuration issues, etc.
-To: wireguard@lists.zx2c4.com
-Content-Type: multipart/alternative; boundary="089e0820ea0c7025d4055f4abae4"
+In-Reply-To: <b984758b-93ce-f909-e63e-f31fb575a5f9@gmail.com>
+Content-Type: text/plain; charset=utf-8
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -23,110 +32,92 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---089e0820ea0c7025d4055f4abae4
-Content-Type: text/plain; charset="UTF-8"
+jdoss helped me in #wireguard IRC channel. I post the resolution, it
+could be useful for other Fedora users
 
-Hey Jason (and everyone else).
+[18:28] <jdoss> sudo dnf remove wireguard-dkms wireguard-tools; sudo dnf
+install wireguard-dkms wireguard-tools
+[18:31] <me> jdoss: dnf cannot remove wireguard-dkms, output below
 
-@Jason; we chatted on XDA yesterday, a few PMs back and forth (I'm
-nine7nine on XDA).
+=============
+Transazione in corso
+  Preparazione in corso                     
+:                                                                                                                  
+1/1
+  Esecuzione scriptlet in corso              :
+wireguard-dkms-1:0.0.20171127-1.fc27.noarch                                                                      
+1/1
+errore: scriptlet %preun(wireguard-dkms-1:0.0.20171127-1.fc27.noarch)
+fallita, uscita con stato 3
+Error in PREUN scriptlet in rpm package wireguard-dkms
+Error in PREUN scriptlet in rpm package wireguard-dkms
+wireguard-dkms-1:0.0.20171127-1.fc27.noarch doveva essere eliminato, ma
+non lo è stato!
+  Verifica in corso                          :
+wireguard-dkms-1:0.0.20171127-1.fc27.noarch                                                                      
+1/1
+ 
+Non riuscito:
+  wireguard-dkms.noarch 1:0.0.20171127-1.fc27
+Errore: Transazione non riuscita
+=============
 
-So just as a recap; My progress with integrating WireGuard with my Kernel
-and on the Stock Oreo 8.0 rom (Google Pixel 1);
+[18:32] <jdoss> rpm -qa |grep wireguard
+[18:33] <me> jdoss: wireguard-dkms-0.0.20171127-1.fc27.noarch
+[18:35] <jdoss> dkms remove -m wireguard -v 0.0.20171127 --all
+[18:36] <me> jdoss: Error! There are no instances of module:
+wireguard       0.0.20171127 located in the DKMS tree.
+[18:37] <jdoss> That's a doozy
+[18:37] <me> uh
+[18:37] <jdoss> sounds like your dkms went rogue or you removed
+wireguard outside of the RPM doing it's job
+[18:37] <me> jdoss: no, I have never messed up with that stuff
+[18:38] <me> I always used dnf and the copr repo
+[18:38] <jdoss> sudo dkms add -m wireguard -v 0.0.20171127
+[18:38] <me> jdoss: Creating symlink
+/var/lib/dkms/wireguard/0.0.20171127/source ->          
+/usr/src/wireguard-0.0.20171127          DKMS: add completed.
+[18:39] <jdoss> sudo dkms build -m wireguard -v 0.0.20171127; sudo dkms
+install -m wireguard -v 0.0.20171127
+[18:40] <jdoss> the upgrade to 27 prob didn't care over well with dkms.
+[18:41] <me> jdoss: output below
 
-Kernel support - working.
-building the standalone wg-tools - working
-wg-tools installation - working
+=============
+# dkms build -m wireguard -v 0.0.20171127; dkms install -m wireguard -v
+0.0.20171127
 
-Now, my issue seems to be with actually getting the WireGuard app working
-with AzireVPN.... But in the process, I've figured out that wq-quick is NOT
-working properly ~ which aside from the possibility that my configuration
-for AzireVPM may be incorrect ~ The wg-quick issue is probably why the
-android WireGuard app isn't working (as I assume it requires wg-quick)...
-My pixel doesn't seem to recognise the wg-quick script being in
-/system/xbin (even though it's there);
+Kernel preparation unnecessary for this kernel.  Skipping...
 
-# wg-quick up wg0
-sh: /system/xbin/wg-quick: No such file or directory
+Building module:
+cleaning build area...
+make -j4 KERNELRELEASE=4.13.16-300.fc27.x86_64 -C
+/lib/modules/4.13.16-300.fc27.x86_64/build
+M=/var/lib/dkms/wireguard/0.0.20171127/build.......
+cleaning build area...
 
-the script has;
+DKMS: build completed.
 
-#!/system/xbin/bash
+wireguard:
+Running module version sanity check.
+ - Original module
+   - No original module exists within this kernel
+ - Installation
+   - Installing to /lib/modules/4.13.16-300.fc27.x86_64/extra/
+Adding any weak-modules
 
-changing it to not include bash, does allow it to be executed, but then I
-get;
+depmod......
 
-sh: /system/xbin/wg-quick: Permission denied
+DKMS: install completed.
+output below =============
 
-I'm not sure what's up here (but it doesn't matter if I'm root user or not,
-same permission problem, I've checked permissions, it's executable, etc)...
-***NOTE: If I manually use wg for setup ~ I can get the interface up and
-working, following the quick start instructions and running wg for
-verification (ref: https://www.wireguard.com/quickstart/) ... So i think
-WireGuard is actually working. (kernel support and wg).... That said ~ I'm
-going to have a stab at repackaging the user-space components as a standard
-android flashable zip (as we talked about on XDA, @Jason), start fresh and
-see if I can get it working...
-
-All of that aside; I'm wondering if someone could post a working
-config/template for AzireVPN or any other free VPN that supports
-WireGuard??? (minus any private information, respectfully). I'd just like
-to make sure that I have a working config for WireGuard on Android -> so
-that when I try to test, after re-installing wg-tools ~ that might be one
-less hiccup... I've never used WireGuard, so all very new to me.
-
-Thanks
-
-Jordan
-
-PS: @Jason - I'm also going to have a look (later on) and see If i can get
-the WireGuard android app to not "crash on boot" in Oreo ~ using the
-commits for Kernel Aduitor's fixes that I pointed out to you yesterday,
-when I brought up the issue. ttyl
-
---089e0820ea0c7025d4055f4abae4
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>Hey Jason (and everyone else).</div><div><br></div><d=
-iv>@Jason; we chatted on XDA yesterday, a few PMs back and forth (I&#39;m n=
-ine7nine on XDA).</div><div><br></div><div>So just as a recap; My progress =
-with integrating WireGuard with my Kernel and on the Stock Oreo 8.0 rom (Go=
-ogle Pixel 1);</div><div><br></div><div>Kernel support - working.</div><div=
->building the standalone wg-tools - working</div><div>wg-tools installation=
- - working<br></div><div><br></div><div>Now, my issue seems to be with actu=
-ally getting the WireGuard app working with AzireVPN.... But in the process=
-, I&#39;ve figured out that wq-quick is NOT working properly ~ which aside =
-from the possibility that my configuration for AzireVPM may be incorrect ~ =
-The wg-quick issue is probably why the android WireGuard app isn&#39;t work=
-ing (as I assume it requires wg-quick)... My pixel doesn&#39;t seem to reco=
-gnise the wg-quick script being in /system/xbin (even though it&#39;s there=
-);</div><div><br></div><div># wg-quick up wg0<br>sh: /system/xbin/wg-quick:=
- No such file or directory</div><div><br></div><div>the script has;</div><d=
-iv><br></div><div>#!/system/xbin/bash</div><div><br></div><div>changing it =
-to not include bash, does allow it to be executed, but then I get;</div><di=
-v><br></div><div>sh: /system/xbin/wg-quick: Permission denied</div><div><br=
-></div><div>I&#39;m not sure what&#39;s up here (but it doesn&#39;t matter =
-if I&#39;m root user or not, same permission problem, I&#39;ve checked perm=
-issions, it&#39;s executable, etc)... ***NOTE: If I manually use wg for set=
-up ~ I can get the interface up and working, following the quick start inst=
-ructions and running wg for verification (ref: <a href=3D"https://www.wireg=
-uard.com/quickstart/">https://www.wireguard.com/quickstart/</a>) ... So i t=
-hink WireGuard is actually working. (kernel support and wg).... That said ~=
- I&#39;m going to have a stab at repackaging the user-space components as a=
- standard android flashable zip (as we talked about on XDA, @Jason), start =
-fresh and see if I can get it working...</div><div></div><br><div>All of th=
-at aside; I&#39;m wondering if someone could post a working config/template=
- for AzireVPN or any other free VPN that supports WireGuard??? (minus any p=
-rivate information, respectfully). I&#39;d just like to make sure that I ha=
-ve a working config for WireGuard on Android -&gt; so that when I try to te=
-st, after re-installing wg-tools ~ that might be one less hiccup... I&#39;v=
-e never used WireGuard, so all very new to me.</div><div><br></div><div>Tha=
-nks</div><div><br></div><div>Jordan<br></div><div><br></div><div>PS: @Jason=
- - I&#39;m also going to have a look (later on) and see If i can get the Wi=
-reGuard android app to not &quot;crash on boot&quot; in Oreo ~ using the co=
-mmits for Kernel Aduitor&#39;s fixes that I pointed out to you yesterday, w=
-hen I brought up the issue. ttyl<br></div><div><br></div><div><br></div></d=
-iv>
-
---089e0820ea0c7025d4055f4abae4--
+[18:41] <jdoss> dkms status
+[18:41] <me> jdoss: wireguard, 0.0.20171127, 4.13.16-300.fc27.x86_64,
+x86_64: installed
+[18:42] <jdoss> should be good now
+[18:42] <me> I suppose that now I have to reinstall the other wireguard
+packages
+[18:42] <jdoss> yea reinstall wireguard-tools
+[18:43] <me> jdoss: yeah, now everything works fine, thank you very much
+[18:43] <jdoss> no problem
+[18:44] <me> jdoss: I am going to post the resolution to the mailing
+list, in case anyone else is affected by the same problem
