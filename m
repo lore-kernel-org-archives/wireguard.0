@@ -1,28 +1,27 @@
-Return-Path: germano.massullo@gmail.com
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fb353dba
- for <wireguard@lists.zx2c4.com>; Fri, 1 Dec 2017 17:44:48 +0000 (UTC)
-Received: from mail-wm0-f47.google.com (mail-wm0-f47.google.com [74.125.82.47])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4efb3318
- for <wireguard@lists.zx2c4.com>; Fri, 1 Dec 2017 17:44:48 +0000 (UTC)
-Received: by mail-wm0-f47.google.com with SMTP id g75so4997780wme.0
- for <wireguard@lists.zx2c4.com>; Fri, 01 Dec 2017 09:51:05 -0800 (PST)
-Return-Path: <germano.massullo@gmail.com>
-Received: from [192.168.1.100]
- (host179-8-dynamic.56-79-r.retail.telecomitalia.it. [79.56.8.179])
- by smtp.googlemail.com with ESMTPSA id x13sm5234684wre.65.2017.12.01.09.51.04
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Fri, 01 Dec 2017 09:51:04 -0800 (PST)
-Subject: Re: Wireguard ceased to work after Fedora 26->27 upgrade
-From: Germano Massullo <germano.massullo@gmail.com>
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-References: <b984758b-93ce-f909-e63e-f31fb575a5f9@gmail.com>
-Message-ID: <2d50500c-bebb-146d-fbfd-ab9e212101a4@gmail.com>
-Date: Fri, 1 Dec 2017 18:51:03 +0100
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e439209c
+ for <wireguard@lists.zx2c4.com>; Fri, 1 Dec 2017 20:53:36 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ddbfbeed
+ for <wireguard@lists.zx2c4.com>; Fri, 1 Dec 2017 20:53:36 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ca633192
+ for <wireguard@lists.zx2c4.com>; Fri, 1 Dec 2017 20:53:36 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id cec5cde6
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>; Fri, 1 Dec 2017 20:53:36 +0000 (UTC)
+Received: by mail-ot0-f180.google.com with SMTP id q3so10150028oth.2
+ for <wireguard@lists.zx2c4.com>; Fri, 01 Dec 2017 12:59:54 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <b984758b-93ce-f909-e63e-f31fb575a5f9@gmail.com>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <CAKgnZ5wDEwMXA6+WbxrmQocBgPPeHCH-WBdn5kHezzsLPGDdtQ@mail.gmail.com>
+References: <CAKgnZ5wDEwMXA6+WbxrmQocBgPPeHCH-WBdn5kHezzsLPGDdtQ@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Fri, 1 Dec 2017 21:59:53 +0100
+Message-ID: <CAHmME9qXr5aig-79MjuCbaTUPt2MEh+oAA53gpxOk999CsqKmw@mail.gmail.com>
+Subject: Re: WireGuard (Android) Configuration issues, etc.
+To: Jordan Johnston <johnstonljordan@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -32,92 +31,69 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-jdoss helped me in #wireguard IRC channel. I post the resolution, it
-could be useful for other Fedora users
+Hi Jordan,
 
-[18:28] <jdoss> sudo dnf remove wireguard-dkms wireguard-tools; sudo dnf
-install wireguard-dkms wireguard-tools
-[18:31] <me> jdoss: dnf cannot remove wireguard-dkms, output below
+Thanks for getting in touch with your detailed email. Responses are
+inline below.
 
-=============
-Transazione in corso
-  Preparazione in corso                     
-:                                                                                                                  
-1/1
-  Esecuzione scriptlet in corso              :
-wireguard-dkms-1:0.0.20171127-1.fc27.noarch                                                                      
-1/1
-errore: scriptlet %preun(wireguard-dkms-1:0.0.20171127-1.fc27.noarch)
-fallita, uscita con stato 3
-Error in PREUN scriptlet in rpm package wireguard-dkms
-Error in PREUN scriptlet in rpm package wireguard-dkms
-wireguard-dkms-1:0.0.20171127-1.fc27.noarch doveva essere eliminato, ma
-non lo è stato!
-  Verifica in corso                          :
-wireguard-dkms-1:0.0.20171127-1.fc27.noarch                                                                      
-1/1
- 
-Non riuscito:
-  wireguard-dkms.noarch 1:0.0.20171127-1.fc27
-Errore: Transazione non riuscita
-=============
+> But in the process, I've figured out that wq-quick is NOT
+> working properly The wg-quick issue is probably why the
+> android WireGuard app isn't working (as I assume it requires wg-quick)... My
+> pixel doesn't seem to recognise the wg-quick script being in /system/xbin
+> # wg-quick up wg0
+> sh: /system/xbin/wg-quick: No such file or directory
+> #!/system/xbin/bash
+> sh: /system/xbin/wg-quick: Permission denied
 
-[18:32] <jdoss> rpm -qa |grep wireguard
-[18:33] <me> jdoss: wireguard-dkms-0.0.20171127-1.fc27.noarch
-[18:35] <jdoss> dkms remove -m wireguard -v 0.0.20171127 --all
-[18:36] <me> jdoss: Error! There are no instances of module:
-wireguard       0.0.20171127 located in the DKMS tree.
-[18:37] <jdoss> That's a doozy
-[18:37] <me> uh
-[18:37] <jdoss> sounds like your dkms went rogue or you removed
-wireguard outside of the RPM doing it's job
-[18:37] <me> jdoss: no, I have never messed up with that stuff
-[18:38] <me> I always used dnf and the copr repo
-[18:38] <jdoss> sudo dkms add -m wireguard -v 0.0.20171127
-[18:38] <me> jdoss: Creating symlink
-/var/lib/dkms/wireguard/0.0.20171127/source ->          
-/usr/src/wireguard-0.0.20171127          DKMS: add completed.
-[18:39] <jdoss> sudo dkms build -m wireguard -v 0.0.20171127; sudo dkms
-install -m wireguard -v 0.0.20171127
-[18:40] <jdoss> the upgrade to 27 prob didn't care over well with dkms.
-[18:41] <me> jdoss: output below
+Ahhh. wg-quick indeed requires bash, and from what I gather, there
+isn't bash on your ROM. You should be able to build that easily from
+the AOSP source `mka bash`. This is one of the reasons I first
+launched the Android stuff with the local_manifest.xml hack instead of
+the standalone tools. I'll have to think about a more general purpose
+solution, but for now, I thing the best thing you can do would be to
+just add bash. If you're stuck and need help, I can probably build you
+a statically linked musl aarch64 bash that will work mostly
+everywhere.
 
-=============
-# dkms build -m wireguard -v 0.0.20171127; dkms install -m wireguard -v
-0.0.20171127
+Alternatively, maybe there is bash on that phone, but it isn't where I
+was expecting. Could you run the commands:
 
-Kernel preparation unnecessary for this kernel.  Skipping...
+# find / -name bash -or -name env 2>/dev/null
 
-Building module:
-cleaning build area...
-make -j4 KERNELRELEASE=4.13.16-300.fc27.x86_64 -C
-/lib/modules/4.13.16-300.fc27.x86_64/build
-M=/var/lib/dkms/wireguard/0.0.20171127/build.......
-cleaning build area...
+And send me the output?
 
-DKMS: build completed.
+> That said ~ I'm
+> going to have a stab at repackaging the user-space components as a standard
+> android flashable zip (as we talked about on XDA, @Jason), start fresh and
+> see if I can get it working...
 
-wireguard:
-Running module version sanity check.
- - Original module
-   - No original module exists within this kernel
- - Installation
-   - Installing to /lib/modules/4.13.16-300.fc27.x86_64/extra/
-Adding any weak-modules
+We might wind up wanting that statically compiled bash for the .zip.
+Based on your findings above, we can adjust this plan accordingly.
+Having the flashable .zip infra seems like a good idea either way.
 
-depmod......
+> All of that aside; I'm wondering if someone could post a working
+> config/template for AzireVPN or any other free VPN that supports
+> WireGuard???
 
-DKMS: install completed.
-output below =============
+We don't use this list for commercial providers -- they have their own
+private support emails and contact methods -- but I can help you with
+the free non-commericial demo server -- demo.wireguard.com.
 
-[18:41] <jdoss> dkms status
-[18:41] <me> jdoss: wireguard, 0.0.20171127, 4.13.16-300.fc27.x86_64,
-x86_64: installed
-[18:42] <jdoss> should be good now
-[18:42] <me> I suppose that now I have to reinstall the other wireguard
-packages
-[18:42] <jdoss> yea reinstall wireguard-tools
-[18:43] <me> jdoss: yeah, now everything works fine, thank you very much
-[18:43] <jdoss> no problem
-[18:44] <me> jdoss: I am going to post the resolution to the mailing
-list, in case anyone else is affected by the same problem
+> (minus any private information, respectfully). I'd just like to
+> make sure that I have a working config for WireGuard on Android -> so that
+> when I try to test, after re-installing wg-tools ~ that might be one less
+> hiccup... I've never used WireGuard, so all very new to me.
+
+Makes sense. It might make the most sense to just head into #wireguard
+on Freenode too, where we can troubleshoot basic how-to things in real
+time.
+>
+> PS: @Jason - I'm also going to have a look (later on) and see If i can get
+> the WireGuard android app to not "crash on boot" in Oreo ~ using the commits
+> for Kernel Aduitor's fixes that I pointed out to you yesterday, when I
+> brought up the issue. ttyl
+
+Oh, wonderful! Don't hesitate to send patches to this list for that stuff.
+
+Talk soon,
+Jason
