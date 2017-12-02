@@ -1,26 +1,25 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: ferris@ferrisellis.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a15b8358
- for <wireguard@lists.zx2c4.com>; Sat, 2 Dec 2017 13:25:21 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 43af2a3f
- for <wireguard@lists.zx2c4.com>; Sat, 2 Dec 2017 13:25:21 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c2352e77
- for <wireguard@lists.zx2c4.com>; Sat, 2 Dec 2017 13:25:21 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 7ed9b6e7
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>; Sat, 2 Dec 2017 13:25:21 +0000 (UTC)
-Received: by mail-ot0-f180.google.com with SMTP id o23so11309281otd.1
- for <wireguard@lists.zx2c4.com>; Sat, 02 Dec 2017 05:31:44 -0800 (PST)
-MIME-Version: 1.0
-In-Reply-To: <2185653B-D592-4179-96D6-2CFC16F3E0B1@ferrisellis.com>
-References: <2185653B-D592-4179-96D6-2CFC16F3E0B1@ferrisellis.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sat, 2 Dec 2017 14:31:42 +0100
-Message-ID: <CAHmME9q2h_QedDGfmbk-eaniAqB1DV7JUJZ0r36fYmM0Jr8Vow@mail.gmail.com>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 506a9003
+ for <wireguard@lists.zx2c4.com>; Sat, 2 Dec 2017 14:06:22 +0000 (UTC)
+Received: from mail-yw0-f173.google.com (mail-yw0-f173.google.com
+ [209.85.161.173])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 17b278d9
+ for <wireguard@lists.zx2c4.com>; Sat, 2 Dec 2017 14:06:22 +0000 (UTC)
+Received: by mail-yw0-f173.google.com with SMTP id y187so5117661ywd.12
+ for <wireguard@lists.zx2c4.com>; Sat, 02 Dec 2017 06:12:46 -0800 (PST)
+Return-Path: <ferris@ferrisellis.com>
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (1.0)
 Subject: Re: Rolling keys without service interuption
-To: Ferris Ellis <ferris@ferrisellis.com>
-Content-Type: text/plain; charset="UTF-8"
+From: Ferris Ellis <ferris@ferrisellis.com>
+In-Reply-To: <CAHmME9q2h_QedDGfmbk-eaniAqB1DV7JUJZ0r36fYmM0Jr8Vow@mail.gmail.com>
+Date: Sat, 2 Dec 2017 09:12:44 -0500
+Message-Id: <1CF77718-1E9B-4947-852F-930B6784F068@ferrisellis.com>
+References: <2185653B-D592-4179-96D6-2CFC16F3E0B1@ferrisellis.com>
+ <CAHmME9q2h_QedDGfmbk-eaniAqB1DV7JUJZ0r36fYmM0Jr8Vow@mail.gmail.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -31,21 +30,31 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Ferris,
+Jason,
 
-Firstly, WireGuard already has forward secrecy, which means every new
-session (negotiated every 2 minutes) has fresh keys that are
-forgotten, so old recorded traffic cannot be compromised.
+Awesome! That=E2=80=99s exactly what I needed :) I=E2=80=99ll try it out and=
+ post a follow up if I have any issues.
 
-It sounds like, however, you want to rotate the long term static
-"identity" keys. This is possible to do gracefully. If you change the
-private key of an interface, it won't actually be used until the next
-handshake occurs, which means you can rollover gracefully. Likewise
-you can add new peers (via public keys) dynamically at runtime. Moving
-a distinct allowed IP from one peer to another is an atomic operation
-as well.
+Cheers,
+Ferris
 
-Hope this helps!
-
-Regards,
-Jason
+> On Dec 2, 2017, at 8:31 AM, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+>=20
+> Hi Ferris,
+>=20
+> Firstly, WireGuard already has forward secrecy, which means every new
+> session (negotiated every 2 minutes) has fresh keys that are
+> forgotten, so old recorded traffic cannot be compromised.
+>=20
+> It sounds like, however, you want to rotate the long term static
+> "identity" keys. This is possible to do gracefully. If you change the
+> private key of an interface, it won't actually be used until the next
+> handshake occurs, which means you can rollover gracefully. Likewise
+> you can add new peers (via public keys) dynamically at runtime. Moving
+> a distinct allowed IP from one peer to another is an atomic operation
+> as well.
+>=20
+> Hope this helps!
+>=20
+> Regards,
+> Jason
