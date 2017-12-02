@@ -1,28 +1,27 @@
-Return-Path: aaronmdjones@gmail.com
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 252856b7
- for <wireguard@lists.zx2c4.com>; Sat, 2 Dec 2017 05:04:14 +0000 (UTC)
-Received: from mail-wm0-f48.google.com (mail-wm0-f48.google.com [74.125.82.48])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 96932a40
- for <wireguard@lists.zx2c4.com>; Sat, 2 Dec 2017 05:04:14 +0000 (UTC)
-Received: by mail-wm0-f48.google.com with SMTP id y82so7885264wmg.1
- for <wireguard@lists.zx2c4.com>; Fri, 01 Dec 2017 21:10:34 -0800 (PST)
-Return-Path: <aaronmdjones@gmail.com>
-Received: from ?IPv6:2001:470:6aa2:a0::35? (saiga.nanhome.exbit.io.
- [2001:470:6aa2:a0::35])
- by smtp.gmail.com with ESMTPSA id m127sm264120wmm.48.2017.12.01.21.10.32
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Fri, 01 Dec 2017 21:10:33 -0800 (PST)
-Subject: Re: Rolling keys without service interuption
-To: wireguard@lists.zx2c4.com
-References: <2185653B-D592-4179-96D6-2CFC16F3E0B1@ferrisellis.com>
-From: Aaron Jones <aaronmdjones@gmail.com>
-Message-ID: <3830a82e-8c9f-2b91-b408-0901bb7c8f8b@gmail.com>
-Date: Sat, 2 Dec 2017 05:10:31 +0000
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a15b8358
+ for <wireguard@lists.zx2c4.com>; Sat, 2 Dec 2017 13:25:21 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 43af2a3f
+ for <wireguard@lists.zx2c4.com>; Sat, 2 Dec 2017 13:25:21 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c2352e77
+ for <wireguard@lists.zx2c4.com>; Sat, 2 Dec 2017 13:25:21 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 7ed9b6e7
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>; Sat, 2 Dec 2017 13:25:21 +0000 (UTC)
+Received: by mail-ot0-f180.google.com with SMTP id o23so11309281otd.1
+ for <wireguard@lists.zx2c4.com>; Sat, 02 Dec 2017 05:31:44 -0800 (PST)
 MIME-Version: 1.0
 In-Reply-To: <2185653B-D592-4179-96D6-2CFC16F3E0B1@ferrisellis.com>
-Content-Type: text/plain; charset=utf-8
+References: <2185653B-D592-4179-96D6-2CFC16F3E0B1@ferrisellis.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Sat, 2 Dec 2017 14:31:42 +0100
+Message-ID: <CAHmME9q2h_QedDGfmbk-eaniAqB1DV7JUJZ0r36fYmM0Jr8Vow@mail.gmail.com>
+Subject: Re: Rolling keys without service interuption
+To: Ferris Ellis <ferris@ferrisellis.com>
+Content-Type: text/plain; charset="UTF-8"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -32,48 +31,21 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi Ferris,
 
-On 02/12/17 02:45, Ferris Ellis wrote:
-> I was wondering if WireGuard supported dynamically updating / 
-> rolling keys for connections? In many operations security models 
-> credentials are short lived and rotated regularly so that the 
-> consequences of any compromise can be minimized. One problem, 
-> however, with this is that rolling credentials often causes a 
-> service interrupt for the connection being rolling. Does WireGuard 
-> have a way to do this currently?
-> 
-> I wanted to ask the mailing list about this both for my own 
-> knowledge and for public documentation. Though, I presume the 
-> answer is no as WireGuard uses the keys as identity primitives for 
-> connections (which I think is the most honest means of relating 
-> identity to authorization) and thus “rolling” them makes no sense.
+Firstly, WireGuard already has forward secrecy, which means every new
+session (negotiated every 2 minutes) has fresh keys that are
+forgotten, so old recorded traffic cannot be compromised.
 
-As far as I understand it, you can dynamically add a new peer to the
-interface with wg(8) with the same configuration (including Allowed
-IPs and Endpoint) and then remove the old peer. If you are running
-reliable protocols on top (e.g. TCP) their retransmit logic will
-establish a new session with the 'new' peer for you.
+It sounds like, however, you want to rotate the long term static
+"identity" keys. This is possible to do gracefully. If you change the
+private key of an interface, it won't actually be used until the next
+handshake occurs, which means you can rollover gracefully. Likewise
+you can add new peers (via public keys) dynamically at runtime. Moving
+a distinct allowed IP from one peer to another is an atomic operation
+as well.
+
+Hope this helps!
 
 Regards,
-Aaron Jones
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
-
-iQIcBAEBCAAGBQJaIjXEAAoJEIrwc3SIqzAS2yUP/273JhlzYzJREMVzvNyfx2cj
-sNImcmTFQhFB8SaSxM7u5yY9FtOSgvEyx+jFBhywVOEQfMFXwCtZL6XIXgLsoaM+
-GN2NpY+2I95JYOFO6SF0jm4jy3dj0UAZMRctNuM2nasH31jI+E6VDwPcxGsg2o6g
-2Am7ykHXETOZBRG9ZXeQiHiQ9ai3RMbrhP2yiApwzoZg3VsookDN+GEJ/K+ZVxaP
-n0r9KbvOOn4rEnQSB+GSADl2uihaJu/ziiSMSlbsbkjS5yoBhI8v3GQvpWGCsdu9
-hXOR+pmefDsHmurDpBniPWn9epX4aMnOLxzni7WPc3OlgHQg3ZhmvHjW4FrCjX+n
-NDfmcbOxvlcMBhPfoLMk8KJMiWZ2k1yGT4yFYynS99NQ7cFcmQhetAKFochz92OX
-AJT/bH7ExqQtxYhK1YR+rhw9HhzyhykQC70B1Kp2F9uVBjdKERHM1saavLxBAjlt
-U297jzwqxlVji5h2sWHaflPTSnTyx49jSp3ZCPeJ3N57zHzhOmuuyf76CfoE4do+
-/RzUhP96JwWIM6Q4HR/MY7UWHHKvt9GW3M+AwTIRovpL0OFPfuOotXc9fW7F25D2
-gdWJSOxza7d31YgU7XnkVdHeY6T+uQrx77yjAnmSTcVPIiQlBzBNXE/jTAFA2uEG
-Mj71hyihwWkfWOVREg7M
-=naHE
------END PGP SIGNATURE-----
+Jason
