@@ -1,23 +1,20 @@
-Return-Path: aaronmdjones@gmail.com
+Return-Path: whit@transpect.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c39edca9
- for <wireguard@lists.zx2c4.com>; Mon, 4 Dec 2017 17:07:46 +0000 (UTC)
-Received: from mail-yb0-f170.google.com (mail-yb0-f170.google.com
- [209.85.213.170])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id adb8c973
- for <wireguard@lists.zx2c4.com>; Mon, 4 Dec 2017 17:07:46 +0000 (UTC)
-Received: by mail-yb0-f170.google.com with SMTP id i15so6893338ybk.0
- for <wireguard@lists.zx2c4.com>; Mon, 04 Dec 2017 09:14:26 -0800 (PST)
-Return-Path: <aaronmdjones@gmail.com>
-Subject: Re: Standardized IPv6 ULA from PublicKey
-To: Lonnie Abelbeck <lists@lonnie.abelbeck.com>
-References: <372AE79B-69E5-4B18-926C-E402FDFB2E95@lonnie.abelbeck.com>
-From: Aaron Jones <aaronmdjones@gmail.com>
-Message-ID: <191f960d-1375-10c6-b97f-beedda2b33be@gmail.com>
-Date: Mon, 4 Dec 2017 17:14:23 +0000
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3284d4ff
+ for <wireguard@lists.zx2c4.com>; Mon, 4 Dec 2017 17:22:57 +0000 (UTC)
+Received: from black.transpect.com (vt.electrainfo.com [207.136.236.70])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 80ab2442
+ for <wireguard@lists.zx2c4.com>; Mon, 4 Dec 2017 17:22:57 +0000 (UTC)
+Date: Mon, 4 Dec 2017 12:29:37 -0500
+From: Whit Blauvelt <whit@transpect.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: Re: What are the options for stopping and starting?
+Message-ID: <20171204172937.GA11936@black.transpect.com>
+References: <20171204160159.GA27666@black.transpect.com>
+ <CAHmME9o3+SBZfsWLUczAxKOxmBcWeJYyx_wpGnk_sXNbb8aZgA@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <372AE79B-69E5-4B18-926C-E402FDFB2E95@lonnie.abelbeck.com>
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
+In-Reply-To: <CAHmME9o3+SBZfsWLUczAxKOxmBcWeJYyx_wpGnk_sXNbb8aZgA@mail.gmail.com>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -28,45 +25,49 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi Jason,
 
-On 04/12/17 16:52, Lonnie Abelbeck wrote:
-> Hi,
+Thanks for the quick response. I've read through that man page several
+times. Questions remain. 
+
+So "setconf <interface> <configuration-filename>" is the basic equivalent of
+"service reload" or the like. Okay. 
+
+Is there a preferred way to take WireGuard fully down? We could unload the
+wireguard (and ip6_udp_tunnel and udp_tunnel?) modules. But that seems a
+crude method. What's perferred? I see we can "set <interface> remove", but
+is there a simple command to take them all down? (One could obviously be
+scripted; just wondering if I'm missing that one's already there.)
+
+Also, what's "SaveConfig" about? I see I got that from wg-quick:
+https://git.zx2c4.com/WireGuard/about/src/tools/wg-quick.8. I see now in
+testing that that line's not accepted by wg once it's in the conf file --
+nor is the Address line that shows up with wg-quick. I don't see where the
+docs are clear that wg-quick and wg can't work from the same conf files.
+
+I'm not complaining. Just trying to help get clarity for myself and others.
+Your man pages are well written. But I'm sure you know there's much more to
+say. My impression so far is that wg-quick probably shouldn't be used at all
+outside of a specific road-warrior situation. Is that correct?
+
+I'm also trying to fully understand the "kill switch" discussion in the
+wg-quick man page. Is it the case, given standard use of wg (without
+wg-quick), that its wg interfaces are available for unencyrpted traffic just
+if wg itself isn't actively sitting on them? Or is this vulnerabilty
+specific to wg-quick usage?
+
+Best,
+Whit
+
+On Mon, Dec 04, 2017 at 05:14:01PM +0100, Jason A. Donenfeld wrote:
+> Hi Whit,
 > 
-> Has anyone thought about a standardized WireGuard IPv6 ULA
-> generated from the PublicKey ?
+> See the man page of wg(8):
 > 
-> WireGuard Unique Identifier (WUI) allowing a host to assign iteslf
-> a unique 64-Bit IPv6 interface identifier (WUI-64) ?
+> $ man 8 wg
 > 
-> Possibly picking off bits of a hash of the PublicKey ?
+> For your convenience it can be found online here:
+> https://git.zx2c4.com/WireGuard/about/src/tools/wg.8
 > 
-> For mass deployments, could this be a useful standard ?
-
-Mass deployments are likely to use some form of centralised and
-automated configuration management/provisioning solution already,
-which can take care of performing the calculations and assignments you
-are suggesting.
-
-Regards,
-Aaron Jones
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
-
-iQIcBAEBCAAGBQJaJYJsAAoJEIrwc3SIqzASaAYP/RJMae43IXsvgtJd33/awnPD
-Aam6tUWHgISo2SeM3syrXNr1kIpTTca4PwyLfm5w8sxy/Zw0RF0Ux1lx3PH9NAd4
-OT0f+UR9jpzLmncUS1t3I5z2g398kWr3Z5Fud1y8kvWgjbhp1dAjRv1FOwzXeQqM
-Zfk9it3qBVNpu3bzuXwNimT13Z3uYXh6BCyI++gyui9glq2eOUoGRQv5Rw1pXnkY
-2VthV9pnJVjn5crvSyNw5Y0SZisE5BnDxVvy72sXTO//Hx6Gg7bnPYt/2mNOQTNG
-KUL2r7XJ4zm2IdqohOfSmjvCnlkh1KEg9ZPbrrrzSammwPVuMxCxKcy6GG+ETGSn
-yGj4gIYAW1x3HjbhG+1j0jTAh3jelayp4iHMf0gaFo2KY8jxbzXnBRAFiGGKJxIk
-mdIBI64Nog9lIm/hI3wNxkFGKfqMqDP9qVG3jPj2b4ACFLvsy4B8rySc2PjZIaKv
-D+MfSeiB8culswELDgIZH1U4SRks6Kec5qV81wkP/1t1g2t9zspc3rnBahGvMhgs
-lNWLfeFADe5bR7wqeBDzx52XvhvrGWqRD/eJney7THLQj05CVTB0cikPJ25AFnNA
-FfzThVEDIsGrGbzSMAq82Brj6bAs81F8Vz/Lnrmba8ejLsI0QsOjNfncEzte1VBz
-4cbh8sSBh+udO4cItEM3
-=Nvi/
------END PGP SIGNATURE-----
+> Regards,
+> Jason
