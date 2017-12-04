@@ -1,17 +1,27 @@
-Return-Path: whit@transpect.com
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d6b11182
- for <wireguard@lists.zx2c4.com>; Mon, 4 Dec 2017 15:55:20 +0000 (UTC)
-Received: from black.transpect.com (vt.electrainfo.com [207.136.236.70])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dfc65254
- for <wireguard@lists.zx2c4.com>; Mon, 4 Dec 2017 15:55:20 +0000 (UTC)
-Date: Mon, 4 Dec 2017 11:01:59 -0500
-From: Whit Blauvelt <whit@transpect.com>
-To: wireguard@lists.zx2c4.com
-Subject: What are the options for stopping and starting?
-Message-ID: <20171204160159.GA27666@black.transpect.com>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dd4f522a
+ for <wireguard@lists.zx2c4.com>; Mon, 4 Dec 2017 16:07:22 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a5b91b49
+ for <wireguard@lists.zx2c4.com>; Mon, 4 Dec 2017 16:07:22 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1a09cba7
+ for <wireguard@lists.zx2c4.com>; Mon, 4 Dec 2017 16:07:22 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 9083809f
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>; Mon, 4 Dec 2017 16:07:22 +0000 (UTC)
+Received: by mail-ot0-f174.google.com with SMTP id i1so15154900oth.9
+ for <wireguard@lists.zx2c4.com>; Mon, 04 Dec 2017 08:14:02 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+In-Reply-To: <20171204160159.GA27666@black.transpect.com>
+References: <20171204160159.GA27666@black.transpect.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Mon, 4 Dec 2017 17:14:01 +0100
+Message-ID: <CAHmME9o3+SBZfsWLUczAxKOxmBcWeJYyx_wpGnk_sXNbb8aZgA@mail.gmail.com>
+Subject: Re: What are the options for stopping and starting?
+To: Whit Blauvelt <whit@transpect.com>
+Content-Type: text/plain; charset="UTF-8"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -21,25 +31,14 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi,
+Hi Whit,
 
-Great design on this project. If I can understand some of the things the
-docs don't cover yet, I'll try to write them up.
+See the man page of wg(8):
 
-The first thing I'm tripping over is the relationship of a configuration
-file, say wg0.conf, to the wg kernel module. I can follow the documented
-examples to get a connection set up; but once it's going I'm vague on how to
-reset it to other values -- perhaps another port, or different allowed IPs
-.... There are some cases where hand-editing of the conf file gets
-overwritten by some automated process. Does that have something to do with
-the "SaveConfig" flag? What's the theory there?
+$ man 8 wg
 
-More centrally, how does one apply changes through the conf file? Most of
-use are used to user-space daemons, where restarting the daemon or having it
-reload its prefs is standard. Or for kernel stuff, we're used to using
-sysctl.d. Working with settings of a kernel module set through a conf file
-like this is not such a regular thing. What should the standard methods be
-here?
+For your convenience it can be found online here:
+https://git.zx2c4.com/WireGuard/about/src/tools/wg.8
 
-Thanks,
-Whit
+Regards,
+Jason
