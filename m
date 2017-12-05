@@ -1,28 +1,23 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: mytril42@posteo.de
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fa443cef
- for <wireguard@lists.zx2c4.com>; Tue, 5 Dec 2017 03:24:52 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4bbafa34
- for <wireguard@lists.zx2c4.com>; Tue, 5 Dec 2017 03:24:52 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 816ff7ab
- for <wireguard@lists.zx2c4.com>; Tue, 5 Dec 2017 03:24:52 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 346aa1d9
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>; Tue, 5 Dec 2017 03:24:52 +0000 (UTC)
-Received: by mail-ot0-f174.google.com with SMTP id o23so16742142otd.1
- for <wireguard@lists.zx2c4.com>; Mon, 04 Dec 2017 19:31:35 -0800 (PST)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8d42b78c
+ for <wireguard@lists.zx2c4.com>; Tue, 5 Dec 2017 14:30:32 +0000 (UTC)
+Received: from mout01.posteo.de (mout01.posteo.de [185.67.36.65])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3b5f944b
+ for <wireguard@lists.zx2c4.com>; Tue, 5 Dec 2017 14:30:32 +0000 (UTC)
+Received: from submission (posteo.de [89.146.220.130])
+ by mout01.posteo.de (Postfix) with ESMTPS id C38BC20C73
+ for <wireguard@lists.zx2c4.com>; Tue,  5 Dec 2017 15:37:17 +0100 (CET)
+Received: from customer (localhost [127.0.0.1])
+ by submission (posteo.de) with ESMTPSA id 3yrkq101vtz9rxN
+ for <wireguard@lists.zx2c4.com>; Tue,  5 Dec 2017 15:37:16 +0100 (CET)
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: Mytril <mytril42@posteo.de>
+Subject: File Encryption with WireGuard
+Message-ID: <881c121c-5a53-b937-0a3a-f7a7a75400dc@posteo.de>
+Date: Tue, 5 Dec 2017 15:36:36 +0100
 MIME-Version: 1.0
-In-Reply-To: <20171205035352.01ffe1f5@vega.skynet.aixah.de>
-References: <372AE79B-69E5-4B18-926C-E402FDFB2E95@lonnie.abelbeck.com>
- <20171205035352.01ffe1f5@vega.skynet.aixah.de>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 5 Dec 2017 04:31:34 +0100
-Message-ID: <CAHmME9ouUNV4pc7qwr4bO-5bEecFc1U64PF13ExgmYnH9q45tw@mail.gmail.com>
-Subject: Re: Standardized IPv6 ULA from PublicKey
-To: Luis Ressel <aranea@aixah.de>
-Content-Type: text/plain; charset="UTF-8"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset=utf-8
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -32,4 +27,11 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-https://lists.zx2c4.com/pipermail/wireguard/2017-April/001177.html
+Hello,
+
+could it be possible, to encrypt files with WireGuard, copy it to an usb
+stick and decrypt it on another computer?
+
+I knew it is not what WireGuard was designed for. But could it be done?
+
+PS: See also RFC 1149 :D No not really
