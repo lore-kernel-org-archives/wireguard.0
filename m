@@ -1,24 +1,27 @@
-Return-Path: ferris@ferrisellis.com
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dd95f389
- for <wireguard@lists.zx2c4.com>; Tue, 5 Dec 2017 14:41:39 +0000 (UTC)
-Received: from mail-yw0-f180.google.com (mail-yw0-f180.google.com
- [209.85.161.180])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bf154e37
- for <wireguard@lists.zx2c4.com>; Tue, 5 Dec 2017 14:41:39 +0000 (UTC)
-Received: by mail-yw0-f180.google.com with SMTP id r205so203407ywb.3
- for <wireguard@lists.zx2c4.com>; Tue, 05 Dec 2017 06:48:26 -0800 (PST)
-Return-Path: <ferris@ferrisellis.com>
-Content-Type: multipart/alternative;
- boundary=Apple-Mail-67033A07-1E02-4D82-BB91-2AACA182D29C
-Mime-Version: 1.0 (1.0)
-Subject: Re: File Encryption with WireGuard
-From: Ferris Ellis <ferris@ferrisellis.com>
-In-Reply-To: <881c121c-5a53-b937-0a3a-f7a7a75400dc@posteo.de>
-Date: Tue, 5 Dec 2017 09:48:24 -0500
-Message-Id: <C8A2DFA8-4E80-4720-9E8C-88E018D0D8C0@ferrisellis.com>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2bdb2760
+ for <wireguard@lists.zx2c4.com>; Tue, 5 Dec 2017 14:44:25 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e3024645
+ for <wireguard@lists.zx2c4.com>; Tue, 5 Dec 2017 14:44:25 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fdd052e1
+ for <wireguard@lists.zx2c4.com>; Tue, 5 Dec 2017 14:44:25 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 43b7dc10
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>; Tue, 5 Dec 2017 14:44:24 +0000 (UTC)
+Received: by mail-ot0-f179.google.com with SMTP id i1so422405oth.9
+ for <wireguard@lists.zx2c4.com>; Tue, 05 Dec 2017 06:51:11 -0800 (PST)
+MIME-Version: 1.0
+In-Reply-To: <C8A2DFA8-4E80-4720-9E8C-88E018D0D8C0@ferrisellis.com>
 References: <881c121c-5a53-b937-0a3a-f7a7a75400dc@posteo.de>
-To: Mytril <mytril42@posteo.de>
+ <C8A2DFA8-4E80-4720-9E8C-88E018D0D8C0@ferrisellis.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Tue, 5 Dec 2017 15:51:08 +0100
+Message-ID: <CAHmME9osHuX0M8rG=zD6SADUSU2bjURNkjjBfVrFL5XQ56+1zg@mail.gmail.com>
+Subject: Re: File Encryption with WireGuard
+To: Ferris Ellis <ferris@ferrisellis.com>
+Content-Type: text/plain; charset="UTF-8"
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -29,73 +32,17 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
+On Tue, Dec 5, 2017 at 3:48 PM, Ferris Ellis <ferris@ferrisellis.com> wrote=
+:
+> 2. If you had another program which used Curve25519 keys it could
+> theoretically use the keys from two WireGuard clients, but that=E2=80=99s=
+ outside
+> the scope of WireGuard and also likely not a very secure practice.
 
---Apple-Mail-67033A07-1E02-4D82-BB91-2AACA182D29C
-Content-Type: text/plain;
-	charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Nobody should be reusing WireGuard's pubkeys for other purposes,
+unless they can prove (with our open source Tamarin model [1],
+perhaps) that it won't weaken WireGuard's security properties.
 
-Hi Mytril,
+Usually key reuse by the untrained hand results in disasters.
 
-=46rom my understanding of WireGuard (others on the mailing list feel free t=
-o correct me):=20
-
-1. This is not in any way a function WireGuard offers nor related to the pro=
-jects goals.
-2. If you had another program which used Curve25519 keys it could theoretica=
-lly use the keys from two WireGuard clients, but that=E2=80=99s outside the s=
-cope of WireGuard and also likely not a very secure practice.
-
-Perhaps you should look into using GPG for this. Here=E2=80=99s the document=
-ation page on encrypting and decrypting documents using GPG:
-https://www.gnupg.org/gph/en/manual/x110.html
-
-Cheers,
-Ferris
-
-> On Dec 5, 2017, at 9:36 AM, Mytril <mytril42@posteo.de> wrote:
->=20
-> Hello,
->=20
-> could it be possible, to encrypt files with WireGuard, copy it to an usb
-> stick and decrypt it on another computer?
->=20
-> I knew it is not what WireGuard was designed for. But could it be done?
->=20
-> PS: See also RFC 1149 :D No not really
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
-
---Apple-Mail-67033A07-1E02-4D82-BB91-2AACA182D29C
-Content-Type: text/html;
-	charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-
-<html><head><meta http-equiv=3D"content-type" content=3D"text/html; charset=3D=
-utf-8"></head><body dir=3D"auto">Hi Mytril,<br><br>=46rom my understanding o=
-f WireGuard (others on the mailing list feel free to correct me):&nbsp;<div>=
-<br></div><div>1. This is not in any way a function WireGuard offers nor rel=
-ated to the projects goals.</div><div>2. If you had another program which us=
-ed Curve25519 keys it could theoretically use the keys from two WireGuard cl=
-ients, but that=E2=80=99s outside the scope of WireGuard and also likely not=
- a very secure practice.</div><div><br></div><div>Perhaps you should look in=
-to using GPG for this. Here=E2=80=99s the documentation page on encrypting a=
-nd decrypting documents using GPG:</div><div><a href=3D"https://www.gnupg.or=
-g/gph/en/manual/x110.html">https://www.gnupg.org/gph/en/manual/x110.html</a>=
-<br><div><br></div><div>Cheers,</div><div>Ferris</div><div><br></div><div>On=
- Dec 5, 2017, at 9:36 AM, Mytril &lt;<a href=3D"mailto:mytril42@posteo.de">m=
-ytril42@posteo.de</a>&gt; wrote:<br><br></div><blockquote type=3D"cite"><div=
-><span>Hello,</span><br><span></span><br><span>could it be possible, to encr=
-ypt files with WireGuard, copy it to an usb</span><br><span>stick and decryp=
-t it on another computer?</span><br><span></span><br><span>I knew it is not w=
-hat WireGuard was designed for. But could it be done?</span><br><span></span=
-><br><span>PS: See also RFC 1149 :D No not really</span><br><span>__________=
-_____________________________________</span><br><span>WireGuard mailing list=
-</span><br><span><a href=3D"mailto:WireGuard@lists.zx2c4.com">WireGuard@list=
-s.zx2c4.com</a></span><br><span><a href=3D"https://lists.zx2c4.com/mailman/l=
-istinfo/wireguard">https://lists.zx2c4.com/mailman/listinfo/wireguard</a></s=
-pan><br></div></blockquote></div></body></html>=
-
---Apple-Mail-67033A07-1E02-4D82-BB91-2AACA182D29C--
+[1] https://git.zx2c4.com/wireguard-tamarin/
