@@ -1,20 +1,28 @@
-Return-Path: aranea@aixah.de
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cb74b533
- for <wireguard@lists.zx2c4.com>; Tue, 5 Dec 2017 02:47:12 +0000 (UTC)
-Received: from wp260.webpack.hosteurope.de (wp260.webpack.hosteurope.de
- [80.237.133.29])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c6bf629a
- for <wireguard@lists.zx2c4.com>; Tue, 5 Dec 2017 02:47:12 +0000 (UTC)
-Date: Tue, 5 Dec 2017 03:53:52 +0100
-From: Luis Ressel <aranea@aixah.de>
-To: wireguard@lists.zx2c4.com
-Subject: Re: Standardized IPv6 ULA from PublicKey
-Message-ID: <20171205035352.01ffe1f5@vega.skynet.aixah.de>
-In-Reply-To: <372AE79B-69E5-4B18-926C-E402FDFB2E95@lonnie.abelbeck.com>
-References: <372AE79B-69E5-4B18-926C-E402FDFB2E95@lonnie.abelbeck.com>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fa443cef
+ for <wireguard@lists.zx2c4.com>; Tue, 5 Dec 2017 03:24:52 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4bbafa34
+ for <wireguard@lists.zx2c4.com>; Tue, 5 Dec 2017 03:24:52 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 816ff7ab
+ for <wireguard@lists.zx2c4.com>; Tue, 5 Dec 2017 03:24:52 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 346aa1d9
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>; Tue, 5 Dec 2017 03:24:52 +0000 (UTC)
+Received: by mail-ot0-f174.google.com with SMTP id o23so16742142otd.1
+ for <wireguard@lists.zx2c4.com>; Mon, 04 Dec 2017 19:31:35 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+In-Reply-To: <20171205035352.01ffe1f5@vega.skynet.aixah.de>
+References: <372AE79B-69E5-4B18-926C-E402FDFB2E95@lonnie.abelbeck.com>
+ <20171205035352.01ffe1f5@vega.skynet.aixah.de>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Tue, 5 Dec 2017 04:31:34 +0100
+Message-ID: <CAHmME9ouUNV4pc7qwr4bO-5bEecFc1U64PF13ExgmYnH9q45tw@mail.gmail.com>
+Subject: Re: Standardized IPv6 ULA from PublicKey
+To: Luis Ressel <aranea@aixah.de>
+Content-Type: text/plain; charset="UTF-8"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -24,19 +32,4 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Mon, 4 Dec 2017 10:52:28 -0600
-Lonnie Abelbeck <lists@lonnie.abelbeck.com> wrote:
-
-> Hi,
-> 
-> Has anyone thought about a standardized WireGuard IPv6 ULA generated
-> from the PublicKey ?
-
-This was indeed already discussed, albeit not for ULAs, but link-local
-addresses (fe80::/64). IIRC, Jason rejected it citing the KISS
-principle -- and I fully agree with that. Adding a hundred small
-features useful for certain corner cases is a sure way to transform
-wireguard into a behemoth of ipsec/openvpn dimensions. :)
-
-Cheers,
-Luis Ressel
+https://lists.zx2c4.com/pipermail/wireguard/2017-April/001177.html
