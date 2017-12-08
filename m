@@ -1,26 +1,25 @@
 Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e0795b6b
- for <wireguard@lists.zx2c4.com>; Fri, 8 Dec 2017 02:26:00 +0000 (UTC)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ea53c2b8
+ for <wireguard@lists.zx2c4.com>; Fri, 8 Dec 2017 04:16:45 +0000 (UTC)
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2f108ce0
- for <wireguard@lists.zx2c4.com>; Fri, 8 Dec 2017 02:26:00 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c0a1dc69
- for <wireguard@lists.zx2c4.com>; Fri, 8 Dec 2017 02:26:00 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 0ad08af2
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f7136feb
+ for <wireguard@lists.zx2c4.com>; Fri, 8 Dec 2017 04:16:45 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bd7f0ce3
+ for <wireguard@lists.zx2c4.com>; Fri, 8 Dec 2017 04:16:45 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 0a556c56
  (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>; Fri, 8 Dec 2017 02:26:00 +0000 (UTC)
-Received: by mail-ot0-f176.google.com with SMTP id v21so8127018oth.6
- for <wireguard@lists.zx2c4.com>; Thu, 07 Dec 2017 18:33:06 -0800 (PST)
+ for <wireguard@lists.zx2c4.com>; Fri, 8 Dec 2017 04:16:44 +0000 (UTC)
+Received: by mail-ot0-f180.google.com with SMTP id 103so8263405otj.12
+ for <wireguard@lists.zx2c4.com>; Thu, 07 Dec 2017 20:23:51 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <1463e6b8-2aff-b5f6-4375-dbce686f66c2@solidadmin.com>
-References: <CAHmME9qmjgDJ3bXhWaZ86=iuLi+kDVmLqC0iZnU=3QHA0wBDMg@mail.gmail.com>
- <1463e6b8-2aff-b5f6-4375-dbce686f66c2@solidadmin.com>
+In-Reply-To: <4B7E0154-039F-4008-9C47-C825E1474731@lonnie.abelbeck.com>
+References: <4B7E0154-039F-4008-9C47-C825E1474731@lonnie.abelbeck.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 8 Dec 2017 03:33:05 +0100
-Message-ID: <CAHmME9r4tqFcVXQMaH-sfiNZZEjHjR2PyYbomWOCBObJ6E2+uw@mail.gmail.com>
-Subject: Re: Dealing with list volume
-To: Joe Doss <joe@solidadmin.com>
+Date: Fri, 8 Dec 2017 05:23:49 +0100
+Message-ID: <CAHmME9pL8+FQv_oAKCFpnZQ6ew1xmoKk-RQqtDHktWARvDXH_w@mail.gmail.com>
+Subject: Re: [patch] wg: add support for peer names using a file in userspace
+To: Lonnie Abelbeck <lists@lonnie.abelbeck.com>
 Content-Type: text/plain; charset="UTF-8"
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
@@ -32,37 +31,23 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Joe,
+Hi Lonnie,
 
-On Thu, Dec 7, 2017 at 5:34 PM, Joe Doss <joe@solidadmin.com> wrote:
-> We do need a place for users to communicate that isn't going to collide with
-> devel chatter. https://www.discourse.org/ is pretty great for users, easy to
-> use and not terrible to self host. I think it would be good to give users a
-> non mailing list place to self help on their problems.
+Thanks for sending this to the mailing list. Indeed it got lost in the
+fold of disorganized email filters when you sent it to me directly
+twice earlier; sorry about that.
 
-That's what IRC is for, I think. #wireguard is where people should go
-to chat usually.
+I'm not certain this is the right approach -- having wg(8) rely on
+fixed filesystem paths, and splitting peer configuration information
+across three places (original config file, peer data file, kernel).
 
-> I would be willing to donate the server needed to run one for WireGuard and
-> the time/energy to set it up and keep it running.
-
-Thanks for your offer to host something, but I've got more than enough
-stable infrastructure for hosting new gadgets, as they occur to us.
-I'm also very hesitant toward introducing a new platform, when IRC
-should cut it.
-
-> If you want to keep things
-> in email, set up a wg-users list and call it a day.
-
-I've recently been vortexing people who need super basic help toward
-#wireguard, in order to leave this list for discussion of all sorts,
-whether it's discussion of interesting user related things ("how do I
-do this new and interesting thing I couldn't find any documentation
-about?") or development things or bikeshedding or whatever else.
-
-I wish we had some better documentation for getting people acquainted
-with the basics. I don't like having to tell people, "did you read
-these 6 webpages and the man pages and piece it together yet
-yourself?", since the response is invariably, "ugh."
+I think the way forward for this kind of feature would be what I
+proposed in an earlier thread, of attaching it to the kernel object,
+just like ifalias does or netfilter's comment target. However, the
+question I'm still faced with is -- is this really necessary? I
+understand that it's _cool_, and adding bells and whistles is fun and
+exciting, but I wonder if there a complete system that would actually
+benefit form having this that wouldn't already have a better place to
+do it?
 
 Jason
