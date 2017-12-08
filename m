@@ -1,24 +1,25 @@
-Return-Path: dkg@fifthhorseman.net
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8d5aae21
- for <wireguard@lists.zx2c4.com>; Thu, 7 Dec 2017 22:10:23 +0000 (UTC)
-Received: from che.mayfirst.org (che.mayfirst.org [162.247.75.118])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6e464031
- for <wireguard@lists.zx2c4.com>; Thu, 7 Dec 2017 22:10:23 +0000 (UTC)
-From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-To: Bruno Wolff III <bruno@wolff.to>,
- Stefan Tatschner <rumpelsepp@sevenbyte.org>
-Subject: Re: WireGuard Upstreaming Roadmap (November 2017)
-In-Reply-To: <20171207133759.GA395@wolff.to>
-References: <20171111044854.GA7956@zx2c4.com>
- <CAB=oiXZYChYMzqK4cufNy+Gr-QHK7jE=h8-9+zQMx67_xsLVoQ@mail.gmail.com>
- <20171207133759.GA395@wolff.to>
-Date: Thu, 07 Dec 2017 16:57:58 -0500
-Message-ID: <878tee2obd.fsf@fifthhorseman.net>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4064d67b
+ for <wireguard@lists.zx2c4.com>; Fri, 8 Dec 2017 02:17:42 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 87b60536
+ for <wireguard@lists.zx2c4.com>; Fri, 8 Dec 2017 02:17:42 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 408e99b5
+ for <wireguard@lists.zx2c4.com>; Fri, 8 Dec 2017 02:17:41 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 4c629917
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>; Fri, 8 Dec 2017 02:17:41 +0000 (UTC)
+Received: by mail-oi0-f53.google.com with SMTP id j17so6341346oih.3
+ for <wireguard@lists.zx2c4.com>; Thu, 07 Dec 2017 18:24:47 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Cc: wireguard@lists.zx2c4.com
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Fri, 8 Dec 2017 03:24:46 +0100
+Message-ID: <CAHmME9rsH12J7CAtt26=vj7UdUw8NBYLW6Vj9qSpJM_EKLOaBA@mail.gmail.com>
+Subject: Cipher Agility [Re: WireGuard Upstreaming Roadmap (November 2017)]
+To: Stefan Tatschner <rumpelsepp@sevenbyte.org>
+Content-Type: text/plain; charset="UTF-8"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -28,56 +29,41 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---=-=-=
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+On Thu, Dec 7, 2017 at 11:22 AM, Stefan Tatschner
+<rumpelsepp@sevenbyte.org> wrote:
+> I have a question which is related to the involved crypto. As far as I
+> have understood the protocol and the concept of wireguard, there is no
+> crypto agility in the design. That means we cannot easily replace the
+> underlying cryptographic primitives without breaking things. Please
+> correct me if I am wrong.
+> Assuming I am right according the crypto agility, what's the upgrade
+> path if any of the involved cryptographic algorithms will be declared
+> insecure/broken? From my point of view wireguard tries to stay as
+> simple as possible and in general that's a good idea. I am just a bit
+> worrying about the possible lack of a clear upgrade path once
+> wireguard is mainlined.
+> What's your opinion on this?
 
-On Thu 2017-12-07 07:37:59 -0600, Bruno Wolff III wrote:
-> On Thu, Dec 07, 2017 at 11:22:04 +0100,
->   Stefan Tatschner <rumpelsepp@sevenbyte.org> wrote:
->>
->>Assuming I am right according the crypto agility, what's the upgrade
->>path if any of the involved cryptographic algorithms will be declared
->>insecure/broken? From my point of view wireguard tries to stay as
->>simple as possible and in general that's a good idea. I am just a bit
->>worrying about the possible lack of a clear upgrade path once
->>wireguard is mainlined.
->
-> Having alternate crypto paths is also a weakness. There have been lots of=
-=20
-> downgrade attacks against systems that incorporate agility.
+Have you read the paper?
 
-this is clearly true, but it doesn't answer the question that Stefan was
-asking.
+https://www.wireguard.com/papers/wireguard.pdf
 
-As i understand it, for the current form of wireguard, the only way to
-resolve the sort of problem described will be to create a "wireguard2"
-which uses new, better primitives.  and it will probably need to listen
-on a different port than "traditional wireguard" if you have any intent
-on supporting both variants at the same time on the same host.
+The basic answer is that WireGuard has message type identifiers, and
+the handshake also hashes into it an identifier of the primitives
+used. If there's ever a problem with those primitives chosen, it will
+be possible to introduce new message type identifiers, if that kind of
+"support everything even the broken garbage" approach is desired by
+misguided people. However, a better approach, of course, is to keep
+your secure network separate from your insecure network, and to not
+allow insecure nodes on secure segments; when you mix the two,
+disaster tends to strike. So, in other words, both approaches are
+possible, in this fantasy wireguardalypse. Take note, though, that
+neither one of these approaches (support new and retain old protocol
+too for old nodes, or only support new) are "agile" or are anything at
+all like the 90s "cipher agility" -- the user still is not permitted
+to choose ciphers.
 
-As upgrade paths go, this isn't too terrible, but it's not exactly
-pretty either.  it'd be great to hear if folks have better ideas.
+Hope this satisfies your curiosity.
 
-   --dkg
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEOCdgUepHf6PklTkyFJitxsGSMjcFAlopuWYACgkQFJitxsGS
-MjegJhAAlKalZEsFSWxDxYhasN66Ur8kCuXjJgwuccGxsJcWY81EwyFRIPGt6y+b
-uuVsA+vhGOif6Vp20bnoAMZSV5D7uLzf7/d82e+09pOM9++Q9mKl2xOlj4hCtyXP
-/BCPaIvsbc7LP4Oq2+2BE/0hJiOFAhlwlAsl6zIOnklbX+mq0m0zp7yx8LriKVB4
-X6WCvvDHh2Jm+KEbfpvCFJe89P4krzG7SduisuqSZXA71gjMrGLjLZIi+UScH5mq
-BKnlRTAlUwW18vnwXwMMHu4usqchulF/d65ipkOX1pg98j7rbnxB2+jYHtfTVvNC
-h/t67HLCumYTl7daiFRvz/VlIPiz/mZ+urWaAKriD2yBt42R/K/adaviiOpgUgmg
-j8CzUdQNp2Up5mkCx3khPrJpd1Bsh4G7sr9G4jJvAAzXck8DKHMNs1p/6jr6wP+/
-9ZPAJUmaQHdoqk6Bfg/vj0mil2DD1+ONIqPjSFrCxnaGM1unmxypMvee0UWOE+G8
-YpPegwpgqBojvtEjaIGZIKubM9SKq6CeqqCrRbSs8Sbfxf8YPl62+zV/BdrAixbi
-rO3mRC4rdtSnegzMCVwi9tYbQbi5WLNWOoZBvPsUtnOArxTMngskfHMIkO68nCrk
-8p6iJilJ76/P/IhVaz1Se/fHEP0zsb12A+OanzLEQAzYuvXkf60=
-=hffh
------END PGP SIGNATURE-----
---=-=-=--
+Regards,
+Jason
