@@ -1,25 +1,32 @@
-Return-Path: joe@solidadmin.com
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7b91691a
- for <wireguard@lists.zx2c4.com>; Fri, 8 Dec 2017 18:02:28 +0000 (UTC)
-Received: from conquer.yellowcord.com (conquer.yellowcord.com [45.55.224.114])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8fcb8db9
- for <wireguard@lists.zx2c4.com>; Fri, 8 Dec 2017 18:02:28 +0000 (UTC)
-From: Joe Doss <joe@solidadmin.com>
-To: Daniel Kahn Gillmor <dkg@fifthhorseman.net>,
- "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 08 Dec 2017 12:09:33 -0600
-Message-ID: <16037517348.27f8.fd5e59abeac6319e4fe4e8192ea7d08d@solidadmin.com>
-In-Reply-To: <87374l14tv.fsf@fifthhorseman.net>
-References: <CAHmME9qmjgDJ3bXhWaZ86=iuLi+kDVmLqC0iZnU=3QHA0wBDMg@mail.gmail.com>
- <1463e6b8-2aff-b5f6-4375-dbce686f66c2@solidadmin.com>
- <CAHmME9r4tqFcVXQMaH-sfiNZZEjHjR2PyYbomWOCBObJ6E2+uw@mail.gmail.com>
- <7e4be8a2-a4d1-3a65-6c5a-d51aaaccb279@solidadmin.com>
- <87374l14tv.fsf@fifthhorseman.net>
-Subject: Re: Dealing with list volume
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a5a0a4b0
+ for <wireguard@lists.zx2c4.com>; Fri, 8 Dec 2017 18:12:15 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 34455054
+ for <wireguard@lists.zx2c4.com>; Fri, 8 Dec 2017 18:12:15 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4b325fe7
+ for <wireguard@lists.zx2c4.com>; Fri, 8 Dec 2017 18:12:14 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id cfff7534
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>; Fri, 8 Dec 2017 18:12:14 +0000 (UTC)
+Received: by mail-ot0-f181.google.com with SMTP id d5so9863428oti.3
+ for <wireguard@lists.zx2c4.com>; Fri, 08 Dec 2017 10:19:25 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset="us-ascii"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+In-Reply-To: <20171208.103841.516344129530992484.davem@davemloft.net>
+References: <20171111044854.GA7956@zx2c4.com>
+ <CAB=oiXZYChYMzqK4cufNy+Gr-QHK7jE=h8-9+zQMx67_xsLVoQ@mail.gmail.com>
+ <CAHmME9rhB-w=EoUJ-EiT1cgJKS44Uz=uJdphsud-BEN1zHtB9A@mail.gmail.com>
+ <20171208.103841.516344129530992484.davem@davemloft.net>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Fri, 8 Dec 2017 19:19:23 +0100
+Message-ID: <CAHmME9rMfC6xkXO8_-E2Pqf-FMxec98crzkfEcyymZ8yGUhORg@mail.gmail.com>
+Subject: Re: WireGuard Upstreaming Roadmap (November 2017)
+To: David Miller <davem@davemloft.net>
+Content-Type: text/plain; charset="UTF-8"
+Cc: Netdev <netdev@vger.kernel.org>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ LKML <linux-kernel@vger.kernel.org>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -29,64 +36,44 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Daniel,
+Hi Dave,
 
-I already said I would dedicated the time and energy to hel0 make a forum 
-successful. I said that in my first reply. I just won't do it in an 
-unofficial capacity. An unofficial forum isn't going to set it up for 
-success and it's going to take more than just me to make it a first class 
-support channel and user community work.
+On Fri, Dec 8, 2017 at 4:38 PM, David Miller <davem@davemloft.net> wrote:
+> Sorry, you cannot force the discussion of a feature which will be submitted
+> upstream to occur on a private mailing list.
+>
+> It is _ABSOLUTELY_ appropriate to discss this on netdev since it is the
+> netdev community which must consider issues like this when looking at
+> whether to accept WireGuard upstream.
+>
+> Jason, this action and response was entirely inappropriate, and please
+> I'd like you to reply properly to questions about your feature here.
 
-In the end it's Jason's call. A users@ mailing list is a perfect 
-alternative if he wants to keep things in email as stated in my first reply.
+Whoops, okay! Very sorry. I'm actually kind of happy to hear that. I
+had assumed that you'd be annoyed if WireGuard crypto discussion
+spewed over into netdev adding even more message volume there for
+something perhaps not directly relevant. But in fact, you're
+interested and find it important to discuss there. So, good news. And
+sorry for trying to shew it away before. I'll copy and paste the
+response I had made on the other list:
 
-Joe
+> This is covered in the paper:
+> https://www.wireguard.com/papers/wireguard.pdf
+>
+> The basic answer is that WireGuard has message type identifiers, and
+> the handshake also hashes into it an identifier of the primitives
+> used. If there's ever a problem with those primitives chosen, it will
+> be possible to introduce new message type identifiers, if that kind of
+> "support everything even the broken garbage" approach is desired by
+> misguided people. However, a better approach, of course, is to keep
+> your secure network separate from your insecure network, and to not
+> allow insecure nodes on secure segments; when you mix the two,
+> disaster tends to strike. So, in other words, both approaches to "upgrading"
+> are possible, in this fantasy wireguardalypse. Take note, though, that
+> neither one of these approaches (support new and retain old protocol
+> too for old nodes, or only support new) are "agile" or are anything at
+> all like the 90s "cipher agility" -- the user still is not permitted
+> to "choose" ciphers.
 
-
-On December 8, 2017 11:57:26 AM Daniel Kahn Gillmor <dkg@fifthhorseman.net> 
-wrote:
-
-> On Fri 2017-12-08 10:44:41 -0600, Joe Doss wrote:
->> * Large FOSS projects like Fedora have every support channel avail. IRC
->> (https://fedoraproject.org/wiki/IRC), Mailing Lists
->> (https://lists.fedoraproject.org/archives/), GitHub Clone
->> (https://pagure.io/), Forums (https://fedoraforum.org/), Ask Fedora
->> (https://ask.fedoraproject.org/en/questions/) and they don't say well X
->> should be good enough. They let the user pick the channel that works
->> best for them to find help.
->
-> You're right that this approach is important for large projects.  What
-> your request here doesn't acknowledge is that each channel of support
-> that you make available has some additional cost in terms of time and
-> energy.
->
-> Also, wireguard is *not* currently a "Large FOSS project" -- it's a
-> small FOSS project with a ton of potential and small but active user and
-> developer community that is still very much in the experimental phase
-> (the release notes do not lie!).
->
-> If the project adds new support channels, but doesn't have the capacity
-> (time, energy, knowledge) to maintain them responsibly, that's
-> potentially a worse situation for the project than just having fewer
-> support channels.
->
-> If Jason feels comfortable managing IRC and a mailing list, but feels
-> spread too thin to manage a web forum or a discourse instance, i don't
-> think we should pressure him to spread himself too thin.  He needs some
-> time left over to focus on the code too, right? ;)
->
-> That said, if someone knowledgable from the community wanted to
-> volunteer to set up, maintain, and supervise an *unofficial* web forum
-> or other communications platform, with regular reportbacks to to the
-> support channels that Jason *is* willing to support, i can't imagine
-> anyone would have a problem with that.  But, be aware that this
-> represents significant work.  And an ill-maintained, unsupervised
-> platform that presents itself as a WireGuard support channel (even an
-> "unofficial" one) is probably *worse* for the project than just
-> encouraging people to learn to use a mailing list or IRC.
->
-> If you're not willing to commit to that maintenance and supervision work
-> involved with running such a channel, that might be for the same reasons
-> why Jason might not be willing to commit to it either!
->
->     --dkg
+Regards,
+Jason
