@@ -1,20 +1,21 @@
-Return-Path: lists@lonnie.abelbeck.com
+Return-Path: joe@solidadmin.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 145028e1
- for <wireguard@lists.zx2c4.com>; Fri, 8 Dec 2017 13:35:23 +0000 (UTC)
-Received: from ibughas.pair.com (ibughas.pair.com [209.68.5.177])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 54f4602b
- for <wireguard@lists.zx2c4.com>; Fri, 8 Dec 2017 13:35:23 +0000 (UTC)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-Subject: Re: [patch] add support for peer names using a file in userspace
-From: Lonnie Abelbeck <lists@lonnie.abelbeck.com>
-In-Reply-To: <CAHmME9pL8+FQv_oAKCFpnZQ6ew1xmoKk-RQqtDHktWARvDXH_w@mail.gmail.com>
-Date: Fri, 8 Dec 2017 07:42:30 -0600
-Message-Id: <705B40D6-4947-4E5A-A042-B0C8A0D5BB84@lonnie.abelbeck.com>
-References: <4B7E0154-039F-4008-9C47-C825E1474731@lonnie.abelbeck.com>
- <CAHmME9pL8+FQv_oAKCFpnZQ6ew1xmoKk-RQqtDHktWARvDXH_w@mail.gmail.com>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f0ba9f1d
+ for <wireguard@lists.zx2c4.com>; Fri, 8 Dec 2017 16:37:39 +0000 (UTC)
+Received: from conquer.yellowcord.com (conquer.yellowcord.com [45.55.224.114])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3cd1fa8e
+ for <wireguard@lists.zx2c4.com>; Fri, 8 Dec 2017 16:37:39 +0000 (UTC)
+Subject: Re: Dealing with list volume
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+References: <CAHmME9qmjgDJ3bXhWaZ86=iuLi+kDVmLqC0iZnU=3QHA0wBDMg@mail.gmail.com>
+ <1463e6b8-2aff-b5f6-4375-dbce686f66c2@solidadmin.com>
+ <CAHmME9r4tqFcVXQMaH-sfiNZZEjHjR2PyYbomWOCBObJ6E2+uw@mail.gmail.com>
+From: Joe Doss <joe@solidadmin.com>
+Message-ID: <7e4be8a2-a4d1-3a65-6c5a-d51aaaccb279@solidadmin.com>
+Date: Fri, 8 Dec 2017 10:44:41 -0600
+MIME-Version: 1.0
+In-Reply-To: <CAHmME9r4tqFcVXQMaH-sfiNZZEjHjR2PyYbomWOCBObJ6E2+uw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -25,56 +26,84 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
+Hi Jason,
 
-On Dec 7, 2017, at 10:23 PM, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+On 12/07/2017 08:33 PM, Jason A. Donenfeld wrote:
+> That's what IRC is for, I think. #wireguard is where people should go
+> to chat usually.
+>
+> Thanks for your offer to host something, but I've got more than enough
+> stable infrastructure for hosting new gadgets, as they occur to us.
+> I'm also very hesitant toward introducing a new platform, when IRC
+> should cut it.
 
-> Thanks for sending this to the mailing list. Indeed it got lost in the
-> fold of disorganized email filters when you sent it to me directly
-> twice earlier; sorry about that.
+Right, it should cut it but it's becoming obvious that it's not. Here 
+are a few points.
 
-The latest patch is reworked, disabled by default and requires =
-WITH_PEERDATA=3Dyes to be enabled.
+* I have seen comments in IRC that are trying to help new users wishing 
+the new user with problem X would just stick around in the chat so they 
+can get the help.
 
-> I'm not certain this is the right approach -- having wg(8) rely on
-> fixed filesystem paths, and splitting peer configuration information
-> across three places (original config file, peer data file, kernel).
+* There are no methods to search or to keep record of chat from IRC, so 
+we are seeing the same questions over and over again. That a lot of 
+wasted cycles.
 
-I'm just trying to find a solution with traction.  My latest patch works =
-perfectly fine on our Linux appliance, but alternate approaches could be =
-a more general solution.
+* IRC is a barrier for some users. They didn't grow up with it, they 
+don't understand how to use it. This turns them to the mailing list. 
+Everyone uses Email. Some people use IRC.
 
-> I think the way forward for this kind of feature would be what I
-> proposed in an earlier thread, of attaching it to the kernel object,
-> just like ifalias does or netfilter's comment target. However, the
-> question I'm still faced with is -- is this really necessary?
+* Email is search-able on the list but you are pushing users to IRC 
+because the volume is too great. Even then it's not the easiest UI to 
+find answers to your questions or to build a user community.
 
-Yes, Jason, I think it is necessary.
+* Large FOSS projects like Fedora have every support channel avail. IRC 
+(https://fedoraproject.org/wiki/IRC), Mailing Lists 
+(https://lists.fedoraproject.org/archives/), GitHub Clone 
+(https://pagure.io/), Forums (https://fedoraforum.org/), Ask Fedora 
+(https://ask.fedoraproject.org/en/questions/) and they don't say well X 
+should be good enough. They let the user pick the channel that works 
+best for them to find help.
 
-Consider a GUI showing a list of peers that you can click on to edit, =
-there needs some sort of human-memerable "name" associated with each =
-peer.
+I get that for you IRC should fit the bill for supporting the user base 
+and it's the support work flow that works for _you_ the best. I am the 
+same. I RTFM, read online documentation, sludge through the mailing list 
+a bit and then I hit up IRC when all else fails. That is the support 
+work flow that works for _me_, but not everyone is like that. If we give 
+the users a painless way to get the answers they need, and and a 
+painless way to communicate with other users, most will self-help 
+themselves and each other.
 
-Additionally, the "wg show" output is sorted by "handshake time" (a good =
-thing), so remembering your peer config order does not help identifying =
-the peers.
+Email or IRC are great for small projects but as you can see now, we are 
+having some growing pains with the influx of new users. At some point, 
+the project is going to get too big and you won't be able to firefight 
+every support case that comes in. Are were at that point yet? Well this 
+thread got created so you must feel we are close.
 
-While I would be happy with a compile-time option to support peer-names =
-via a userspace file (per my patch), a kernel object would be better.
+Discourse helps fix most of the problems above. It is the _best_ forum 
+software I have used to date and I highly urge you to consider using it 
+to help us create a community for every type of user, technical to 
+layman. Here are some very successful projects using it:
 
-Suggested configuration syntax:
+https://discuss.elastic.co/
+https://forum.sublimetext.com/
+https://forums.meteor.com
+https://talk.jekyllrb.com
+https://discuss.gohugo.io
+https://forum.ionicframework.com
+https://discuss.kotlinlang.org
+https://forum.golangbridge.org
+https://users.rust-lang.org
+https://internals.rust-lang.org
 
-1) Support either [Peer] or [Peer-some_custom_name] in "wg setconf" =
-configurations.
+WireGuard is a stupid easy VPN solution to setup compared to the 
+competition. It's support channels and user community center should be 
+stupid easy too.
 
-2) Make "wg showconf" parrot back any [Peer-some_custom_name] context =
-names.
+Joe
 
-3) Make "wg show" display either "peer: orQ..." or =
-"peer-some_custom_name: orQ..."
 
-4) Any spaces in the "some_custom_name" text are ignored and truncated =
-to 64 characters.
 
-Thanks for your consideration.
 
-Lonnie
+--
+Joe Doss
+joe@solidadmin.com
