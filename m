@@ -1,25 +1,22 @@
-Return-Path: 28387a164997@woerm.at
+Return-Path: manuel.schoelling@gmx.de
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 21254d9f
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 78a3c9b3
  for <wireguard@lists.zx2c4.com>;
- Sun, 10 Dec 2017 10:35:57 +0000 (UTC)
-Received: from mail.c0mm.it (c0mm.it [144.76.78.205])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 95abd889
+ Sun, 10 Dec 2017 12:36:30 +0000 (UTC)
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c5cc00e1
  for <wireguard@lists.zx2c4.com>;
- Sun, 10 Dec 2017 10:35:57 +0000 (UTC)
-Received: from [77.118.148.172] (80-110-98-181.cgn.dynamic.surfer.at
- [80.110.98.181]) (Authenticated sender: c@c0mm.it)
- by mail.c0mm.it (Postfix) with ESMTPSA id 40E301FE53
- for <wireguard@lists.zx2c4.com>; Sun, 10 Dec 2017 11:43:14 +0100 (CET)
-Subject: Re: LEDE Netflix bypass
+ Sun, 10 Dec 2017 12:36:30 +0000 (UTC)
+Received: from xps ([37.201.240.122]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MHH6Z-1eJsN804sF-00E7Lw for
+ <wireguard@lists.zx2c4.com>; Sun, 10 Dec 2017 13:43:53 +0100
+Message-ID: <1512909832.1336.19.camel@gmx.de>
+Subject: Reading configuration from stdin
+From: Manuel =?ISO-8859-1?Q?Sch=F6lling?= <manuel.schoelling@gmx.de>
 To: wireguard@lists.zx2c4.com
-References: <CAL++zqyRjyPH0Jm-niSGj2AN3U8y-b5FumR1tVtzzd3UESauAQ@mail.gmail.com>
-From: Koala Aloha <28387a164997@woerm.at>
-Message-ID: <711f5c99-4e70-82a7-e5e4-bee2a008cb4e@woerm.at>
-Date: Sun, 10 Dec 2017 11:43:13 +0100
-MIME-Version: 1.0
-In-Reply-To: <CAL++zqyRjyPH0Jm-niSGj2AN3U8y-b5FumR1tVtzzd3UESauAQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
+Date: Sun, 10 Dec 2017 13:43:52 +0100
+Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -29,28 +26,35 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hello Daniel (and hi list),
+Hi,
 
-Have you seen the thread 'wireguard bypass question' [0] yet?
-I think that might give you some advice on how to proceed with your
-configuration.
+I am currently working on a NetworkManager plugin for WireGuard in Rust
+[1/2].
+The plugin has to pass the configuration to the wg tool and I am
+wondering if this could be done using interprocess communication.
 
-I guess using a Linux network namespace [1], [2], [3], [4] that never
-routes through your VPN, might be a solution for you. This way you won't
-have to deal with figuring out which domains/ip netflix might want to
-access.
+Would it make sense (aka be secure) if we make it possible to call 'wg
+setconf wg0 -' so the wg tool does not read the configuration from a
+file but from stdin? Same for 'wg set wg0 private-key -' and 'wg set
+wg0 psk -'?
 
-If you don't always want to provide a passphrase or your user shouldn't
-have root at all, you can also configure the '/bin/ip netns exec [...]'
-command as 'NOPASSWD' your user via. 'visudo' in your 'sudoers.d'.
+Btw, this NetworkManager plugin should not only work for the regular
+WireGuard but also for my wireguard peer-to-peer tool [3] whose
+development is currently stalled by a rust bug [4].
 
-[0]: https://lists.zx2c4.com/pipermail/wireguard/2017-October/001787.html
-[1]:
-https://sgros.blogspot.co.nz/2017/04/how-to-run-firefox-in-separate-network.html
-[2]:
-http://hintcafe.net/post/78293519027/running-a-process-inside-a-network-namespace
-[3]: https://blogs.igalia.com/dpino/2016/04/10/network-namespaces/
-[4]:
-https://github.com/Phaeilo/openvpn-namespace/blob/4bb1935dfc2c3c062b2dd84479f3194d2d8da635/firefox.sh
+This wireguard peer-to-peer tool allows you to use wireguard in
+situations where you do not have a static IP and/or you are behind a
+NAT.
 
- - Koala
+Anyway, what do you think about reading the configuration from stdin?
+
+Bye,
+
+Manuel
+
+
+[1] https://github.com/manuels/wg-p2p-nm-plugin
+[2] https://github.com/manuels/wg-p2p-nm-plugin/blob/master/Screenshot.
+png
+[3] https://github.com/manuels/wireguard-p2p
+[4] https://github.com/rust-lang/rust/issues/45259
