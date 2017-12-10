@@ -1,22 +1,17 @@
 Return-Path: manuel.schoelling@gmx.de
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 78a3c9b3
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b16b9a92
  for <wireguard@lists.zx2c4.com>;
- Sun, 10 Dec 2017 12:36:30 +0000 (UTC)
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c5cc00e1
+ Sun, 10 Dec 2017 13:41:00 +0000 (UTC)
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1bfe83df
  for <wireguard@lists.zx2c4.com>;
- Sun, 10 Dec 2017 12:36:30 +0000 (UTC)
-Received: from xps ([37.201.240.122]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MHH6Z-1eJsN804sF-00E7Lw for
- <wireguard@lists.zx2c4.com>; Sun, 10 Dec 2017 13:43:53 +0100
-Message-ID: <1512909832.1336.19.camel@gmx.de>
-Subject: Reading configuration from stdin
-From: Manuel =?ISO-8859-1?Q?Sch=F6lling?= <manuel.schoelling@gmx.de>
+ Sun, 10 Dec 2017 13:41:00 +0000 (UTC)
+From: =?UTF-8?q?Manuel=20Sch=C3=B6lling?= <manuel.schoelling@gmx.de>
 To: wireguard@lists.zx2c4.com
-Date: Sun, 10 Dec 2017 13:43:52 +0100
-Content-Type: text/plain; charset="UTF-8"
-Mime-Version: 1.0
+Subject: [PATCH] tools: Use '-' to read from stdin instead of file
+Date: Sun, 10 Dec 2017 14:48:05 +0100
+Message-Id: <20171210134805.3441-1-manuel.schoelling@gmx.de>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,35 +21,105 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi,
+---
+ src/tools/config.c  | 15 ++++++++++-----
+ src/tools/setconf.c | 17 +++++++++++------
+ src/tools/wg.8      |  6 ++++--
+ 3 files changed, 25 insertions(+), 13 deletions(-)
 
-I am currently working on a NetworkManager plugin for WireGuard in Rust
-[1/2].
-The plugin has to pass the configuration to the wg tool and I am
-wondering if this could be done using interprocess communication.
-
-Would it make sense (aka be secure) if we make it possible to call 'wg
-setconf wg0 -' so the wg tool does not read the configuration from a
-file but from stdin? Same for 'wg set wg0 private-key -' and 'wg set
-wg0 psk -'?
-
-Btw, this NetworkManager plugin should not only work for the regular
-WireGuard but also for my wireguard peer-to-peer tool [3] whose
-development is currently stalled by a rust bug [4].
-
-This wireguard peer-to-peer tool allows you to use wireguard in
-situations where you do not have a static IP and/or you are behind a
-NAT.
-
-Anyway, what do you think about reading the configuration from stdin?
-
-Bye,
-
-Manuel
-
-
-[1] https://github.com/manuels/wg-p2p-nm-plugin
-[2] https://github.com/manuels/wg-p2p-nm-plugin/blob/master/Screenshot.
-png
-[3] https://github.com/manuels/wireguard-p2p
-[4] https://github.com/rust-lang/rust/issues/45259
+diff --git a/src/tools/config.c b/src/tools/config.c
+index 1fddb64..d7bd926 100644
+--- a/src/tools/config.c
++++ b/src/tools/config.c
+@@ -121,10 +121,14 @@ static bool parse_keyfile(uint8_t key[static WG_KEY_LEN], const char *path)
+ 	char dst[WG_KEY_LEN_BASE64];
+ 	bool ret = false;
+ 
+-	f = fopen(path, "r");
+-	if (!f) {
+-		perror("fopen");
+-		return false;
++	if (strcmp(path, "-") == 0)
++		f = stdin;
++	else {
++		f = fopen(path, "r");
++		if (!f) {
++			perror("fopen");
++			return false;
++		}
+ 	}
+ 
+ 	if (fread(dst, WG_KEY_LEN_BASE64 - 1, 1, f) != 1) {
+@@ -157,7 +161,8 @@ static bool parse_keyfile(uint8_t key[static WG_KEY_LEN], const char *path)
+ 	ret = parse_key(key, dst);
+ 
+ out:
+-	fclose(f);
++	if (f != stdin)
++		fclose(f);
+ 	return ret;
+ }
+ 
+diff --git a/src/tools/setconf.c b/src/tools/setconf.c
+index b87a13f..137d2bd 100644
+--- a/src/tools/setconf.c
++++ b/src/tools/setconf.c
+@@ -27,13 +27,18 @@ int setconf_main(int argc, char *argv[])
+ 		return 1;
+ 	}
+ 
+-	config_input = fopen(argv[2], "r");
+-	if (!config_input) {
+-		perror("fopen");
+-		return 1;
++	if (strcmp(argv[2], "-") == 0)
++		config_input = stdin;
++	else {
++		config_input = fopen(argv[2], "r");
++		if (!config_input) {
++			perror("fopen");
++			return 1;
++		}
+ 	}
+ 	if (!config_read_init(&ctx, !strcmp(argv[0], "addconf"))) {
+-		fclose(config_input);
++		if (config_input != stdin)
++			fclose(config_input);
+ 		return 1;
+ 	}
+ 	while (getline(&config_buffer, &config_buffer_len, config_input) >= 0) {
+@@ -58,7 +63,7 @@ int setconf_main(int argc, char *argv[])
+ 	ret = 0;
+ 
+ cleanup:
+-	if (config_input)
++	if (config_input && config_input != stdin)
+ 		fclose(config_input);
+ 	free(config_buffer);
+ 	free_wgdevice(device);
+diff --git a/src/tools/wg.8 b/src/tools/wg.8
+index 612fb4e..9e03882 100644
+--- a/src/tools/wg.8
++++ b/src/tools/wg.8
+@@ -65,8 +65,9 @@ be a files, because command line arguments are not considered private on
+ most systems but if you are using
+ .BR bash (1),
+ you may safely pass in a string by specifying as \fIprivate-key\fP or
+-\fIpreshared-key\fP the expression: <(echo PRIVATEKEYSTRING). If
+-\fI/dev/null\fP or another empty file is specified as the filename for
++\fIpreshared-key\fP the expression: <(echo PRIVATEKEYSTRING). You can also
++pass '-' as filename to read the key from stdin.
++If \fI/dev/null\fP or another empty file is specified as the filename for
+ either \fIprivate-key\fP or \fIpreshared-key\fP, the key is removed from
+ the device. The use of \fIpreshared-key\fP is optional, and may be omitted;
+ it adds an additional layer of symmetric-key cryptography to be mixed into
+@@ -88,6 +89,7 @@ and may be specified in hexadecimal by prepending "0x".
+ Sets the current configuration of \fI<interface>\fP to the contents of
+ \fI<configuration-filename>\fP, which must be in the format described
+ by \fICONFIGURATION FILE FORMAT\fP below.
++If you pass '-' as filename, the configuration will be read from stdin.
+ .TP
+ \fBaddconf\fP \fI<interface>\fP \fI<configuration-filename>\fP
+ Appends the contents of \fI<configuration-filename>\fP, which must
+-- 
+2.15.1
