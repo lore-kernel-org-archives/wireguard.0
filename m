@@ -1,20 +1,25 @@
-Return-Path: thelakesclub@gmail.com
+Return-Path: 28387a164997@woerm.at
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a760c53a
- for <wireguard@lists.zx2c4.com>; Fri, 8 Dec 2017 18:36:02 +0000 (UTC)
-Received: from mail-vk0-f45.google.com (mail-vk0-f45.google.com
- [209.85.213.45])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 236242eb
- for <wireguard@lists.zx2c4.com>; Fri, 8 Dec 2017 18:36:02 +0000 (UTC)
-Received: by mail-vk0-f45.google.com with SMTP id f73so7466955vki.3
- for <wireguard@lists.zx2c4.com>; Fri, 08 Dec 2017 10:43:13 -0800 (PST)
-MIME-Version: 1.0
-From: Daniel Barber <thelakesclub@gmail.com>
-Date: Sat, 9 Dec 2017 05:43:11 +1100
-Message-ID: <CAL++zqyRjyPH0Jm-niSGj2AN3U8y-b5FumR1tVtzzd3UESauAQ@mail.gmail.com>
-Subject: LEDE Netflix bypass
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 21254d9f
+ for <wireguard@lists.zx2c4.com>;
+ Sun, 10 Dec 2017 10:35:57 +0000 (UTC)
+Received: from mail.c0mm.it (c0mm.it [144.76.78.205])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 95abd889
+ for <wireguard@lists.zx2c4.com>;
+ Sun, 10 Dec 2017 10:35:57 +0000 (UTC)
+Received: from [77.118.148.172] (80-110-98-181.cgn.dynamic.surfer.at
+ [80.110.98.181]) (Authenticated sender: c@c0mm.it)
+ by mail.c0mm.it (Postfix) with ESMTPSA id 40E301FE53
+ for <wireguard@lists.zx2c4.com>; Sun, 10 Dec 2017 11:43:14 +0100 (CET)
+Subject: Re: LEDE Netflix bypass
 To: wireguard@lists.zx2c4.com
-Content-Type: multipart/alternative; boundary="001a114e53f6877ff2055fd88e9d"
+References: <CAL++zqyRjyPH0Jm-niSGj2AN3U8y-b5FumR1tVtzzd3UESauAQ@mail.gmail.com>
+From: Koala Aloha <28387a164997@woerm.at>
+Message-ID: <711f5c99-4e70-82a7-e5e4-bee2a008cb4e@woerm.at>
+Date: Sun, 10 Dec 2017 11:43:13 +0100
+MIME-Version: 1.0
+In-Reply-To: <CAL++zqyRjyPH0Jm-niSGj2AN3U8y-b5FumR1tVtzzd3UESauAQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -24,40 +29,28 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---001a114e53f6877ff2055fd88e9d
-Content-Type: text/plain; charset="UTF-8"
+Hello Daniel (and hi list),
 
-Hello Jason,
+Have you seen the thread 'wireguard bypass question' [0] yet?
+I think that might give you some advice on how to proceed with your
+configuration.
 
-I have setup Wireguard on the router/LEDE and it working great - much
-better then OpenVPN. :)
+I guess using a Linux network namespace [1], [2], [3], [4] that never
+routes through your VPN, might be a solution for you. This way you won't
+have to deal with figuring out which domains/ip netflix might want to
+access.
 
-But I cannot work out how to bypass the default route to allow one of my
-devices on the lan to bypass Wireguard route to allow netflix to work
-properly. I have tried the app "vpnbypass and that didn't work. I also
-tired similar app called vpn/wireguard policy routing and it didnt work
-aswell.  I'm using PPPoE on the WAN. I hope you can help me
+If you don't always want to provide a passphrase or your user shouldn't
+have root at all, you can also configure the '/bin/ip netns exec [...]'
+command as 'NOPASSWD' your user via. 'visudo' in your 'sudoers.d'.
 
-I know that "notoif" is in the works. That will make things easier in the
-future. :)
+[0]: https://lists.zx2c4.com/pipermail/wireguard/2017-October/001787.html
+[1]:
+https://sgros.blogspot.co.nz/2017/04/how-to-run-firefox-in-separate-network.html
+[2]:
+http://hintcafe.net/post/78293519027/running-a-process-inside-a-network-namespace
+[3]: https://blogs.igalia.com/dpino/2016/04/10/network-namespaces/
+[4]:
+https://github.com/Phaeilo/openvpn-namespace/blob/4bb1935dfc2c3c062b2dd84479f3194d2d8da635/firefox.sh
 
-Thanks,
-
-Daniel
-
---001a114e53f6877ff2055fd88e9d
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div><div><div><div>Hello Jason,<br><br></div>I have setup=
- Wireguard on the router/LEDE and it working great - much better then OpenV=
-PN. :)<br>=C2=A0<br>But I cannot work out how to bypass the default route t=
-o allow one of my devices on the lan to bypass Wireguard route to allow net=
-flix to work properly. I have tried the app &quot;vpnbypass and that didn&#=
-39;t work. I also tired similar app called vpn/wireguard policy routing and=
- it didnt work aswell.=C2=A0 I&#39;m using PPPoE on the WAN. I hope you can=
- help me<br><br></div>I know that &quot;notoif&quot; is in the works. That =
-will make things easier in the future. :) <br><br></div>Thanks,<br><br></di=
-v>Daniel<br></div>
-
---001a114e53f6877ff2055fd88e9d--
+ - Koala
