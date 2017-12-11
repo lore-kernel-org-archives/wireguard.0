@@ -1,31 +1,28 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: lists@lonnie.abelbeck.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ffc976a1
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 037eed40
  for <wireguard@lists.zx2c4.com>;
- Mon, 11 Dec 2017 04:16:39 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1257c2bf
+ Mon, 11 Dec 2017 17:25:15 +0000 (UTC)
+Received: from ibughas.pair.com (ibughas.pair.com [209.68.5.177])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b09693fb
  for <wireguard@lists.zx2c4.com>;
- Mon, 11 Dec 2017 04:16:39 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ffed7c33
- for <wireguard@lists.zx2c4.com>;
- Mon, 11 Dec 2017 04:16:39 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id a16278aa
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Mon, 11 Dec 2017 04:16:39 +0000 (UTC)
-Received: by mail-oi0-f50.google.com with SMTP id w125so10777237oie.7
- for <wireguard@lists.zx2c4.com>; Sun, 10 Dec 2017 20:24:08 -0800 (PST)
-MIME-Version: 1.0
-In-Reply-To: <1512909832.1336.19.camel@gmx.de>
-References: <1512909832.1336.19.camel@gmx.de>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 11 Dec 2017 05:24:07 +0100
-Message-ID: <CAHmME9oozPm64FhRtTmohsTsghxYgeattRixbKo_bm9Ru9kNDg@mail.gmail.com>
-Subject: Re: Reading configuration from stdin
-To: =?UTF-8?Q?Manuel_Sch=C3=B6lling?= <manuel.schoelling@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+ Mon, 11 Dec 2017 17:25:15 +0000 (UTC)
+Received: from ibughas.pair.com (localhost [127.0.0.1])
+ by ibughas.pair.com (Postfix) with ESMTP id CA10D1165F
+ for <wireguard@lists.zx2c4.com>; Mon, 11 Dec 2017 12:32:48 -0500 (EST)
+Received: from macpro.priv.abelbeck.com (wsip-70-165-110-240.om.om.cox.net
+ [70.165.110.240])
+ (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+ (No client certificate requested)
+ by ibughas.pair.com (Postfix) with ESMTPSA id 83FAD11658
+ for <wireguard@lists.zx2c4.com>; Mon, 11 Dec 2017 12:32:48 -0500 (EST)
+From: Lonnie Abelbeck <lists@lonnie.abelbeck.com>
+Content-Type: text/plain; charset=us-ascii
+Subject: Embedded x86 Benchmarks
+Message-Id: <7A32A237-8282-4BF3-82A3-B8008B99F893@lonnie.abelbeck.com>
+Date: Mon, 11 Dec 2017 11:32:47 -0600
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -35,44 +32,96 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Manuel,
+Greetings,
 
-Thanks for the patch. A few comments on the general idea below:
+I have a collection of lower-end (embedded) x86 boxes that I use for =
+testing with our AstLinux project.
 
-On Sun, Dec 10, 2017 at 1:43 PM, Manuel Sch=C3=B6lling
-<manuel.schoelling@gmx.de> wrote:
-> I am currently working on a NetworkManager plugin for WireGuard in Rust
-> [1/2].
-> The plugin has to pass the configuration to the wg tool and I am
-> wondering if this could be done using interprocess communication.
-> Btw, this NetworkManager plugin should not only work for the regular
-> WireGuard but also for my wireguard peer-to-peer tool [3] whose
-> development is currently stalled by a rust bug [4].
+I ran iperf3 tests of WireGuard performance with a common "fast" VMware =
+VM WireGuard endpoint.
 
-I'd suggest the following for a WireGuard NetworkManager plugin:
+Interestingly the J1900 and N2930 can saturate the 1 Gb interface with 1 =
+to 1.5 CPU cores still available.  The similar OpenVPN performance maxes =
+out at only 100 to 130 Mbps of tunneled traffic.
 
-1. If you want to do stuff for wireguard-p2p, can you make it a
-separate "extra" plugin, so that the generic WireGuard one is globally
-useful? And then people who use the p2p stuff can use a separate
-plugin that piggybacks upon the first?
+Also note that the Lanner Atom N2800 system is 32-bit (i686), so even =
+with 'ssse3' it appears there is no optimization, and the performance =
+reflects that.
 
-2. Write it in a language that will be accepted by upstream. I have no
-clue their thoughts on Rust.
+Hopefully others find this interesting.
 
-3. Rather than calling wg(8), maybe it's best to speak the Netlink API
-directly? I can give you a hand with this, if you want. The API is
-documented in this header:
-https://git.zx2c4.com/WireGuard/tree/src/uapi/wireguard.h
+Lonnie
 
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D
 
-> Would it make sense (aka be secure) if we make it possible to call 'wg
-> setconf wg0 -' so the wg tool does not read the configuration from a
-> file but from stdin? Same for 'wg set wg0 private-key -' and 'wg set
-> wg0 psk -'?
+All WireGuard endpoints:
+Linux 3.16.51
+WireGuard 0.0.20171211
 
-wg-quick(8) does this precise thing, and generally this is a fine way
-of passing config information. However, usually you can get away with
-using the more explicit /dev/stdin or /proc/self/fd/0, as Aaron
-suggested. Are there reasons to prefer - over /dev/stdin?
+Common "Server" endpoint:
 
-Jason
+VMware VM
+x86_64, 2-core, 3.7 GHz Xeon E5-1620
+--
+vmware-vm ~ # iperf3 -s
+--
+
+"Client" endpoints:
+
+Qotom Q190G4N-S07
+x86_64, 4-core, 2.0 GHz Celeron J1900
+--
+[  4]   0.00-30.00  sec  3.05 GBytes   874 Mbits/sec   14             =
+sender
+[  4]   0.00-30.00  sec  3.05 GBytes   873 Mbits/sec                  =
+receiver
+--
+
+Jetway NF9HG-2930
+x86_64, 4-core, 1.8 GHz Celeron N2930
+--
+[  4]   0.00-30.00  sec  3.05 GBytes   873 Mbits/sec   10             =
+sender
+[  4]   0.00-30.00  sec  3.05 GBytes   872 Mbits/sec                  =
+receiver
+--
+
+Lanner FW-7541D
+x86_64, 2-core,4-thread, 1.8 GHz Atom D525
+--
+[  4]   0.00-30.00  sec  2.34 GBytes   669 Mbits/sec    0             =
+sender
+[  4]   0.00-30.00  sec  2.33 GBytes   668 Mbits/sec                  =
+receiver
+--
+
+PC Engines APU2
+x86_64, 4-core, 1.0 GHz AMD GX-412TC
+--
+[  4]   0.00-30.00  sec  1.78 GBytes   510 Mbits/sec    0             =
+sender
+[  4]   0.00-30.00  sec  1.78 GBytes   510 Mbits/sec                  =
+receiver
+--
+
+Lanner LEC-7220-N4
+i686, 2-core,4-thread, 1.9 GHz Atom N2800
+--
+[  4]   0.00-30.00  sec  1.14 GBytes   325 Mbits/sec    0             =
+sender
+[  4]   0.00-30.00  sec  1.13 GBytes   324 Mbits/sec                  =
+receiver
+--
+
+Soekris net5501
+i586, 1-core, 0.5 GHz AMD Geode LX
+--
+[  4]   0.00-30.00  sec  76.6 MBytes  21.4 Mbits/sec    0             =
+sender
+[  4]   0.00-30.00  sec  76.5 MBytes  21.4 Mbits/sec                  =
+receiver
+--
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=
