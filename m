@@ -1,23 +1,22 @@
-Return-Path: manuel.schoelling@gmx.de
+Return-Path: dkg@fifthhorseman.net
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c1ffa2a0
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 33c79d4b
  for <wireguard@lists.zx2c4.com>;
- Mon, 11 Dec 2017 20:28:50 +0000 (UTC)
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b6a6e6c9
+ Mon, 11 Dec 2017 20:48:18 +0000 (UTC)
+Received: from che.mayfirst.org (che.mayfirst.org [162.247.75.118])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2848bf9c
  for <wireguard@lists.zx2c4.com>;
- Mon, 11 Dec 2017 20:28:50 +0000 (UTC)
-Message-ID: <1513024581.24175.8.camel@gmx.de>
-Subject: Re: Reading configuration from stdin
-From: Manuel =?ISO-8859-1?Q?Sch=F6lling?= <manuel.schoelling@gmx.de>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 11 Dec 2017 21:36:21 +0100
-In-Reply-To: <CAHmME9oozPm64FhRtTmohsTsghxYgeattRixbKo_bm9Ru9kNDg@mail.gmail.com>
-References: <1512909832.1336.19.camel@gmx.de>
- <CAHmME9oozPm64FhRtTmohsTsghxYgeattRixbKo_bm9Ru9kNDg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Mime-Version: 1.0
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+ Mon, 11 Dec 2017 20:48:18 +0000 (UTC)
+From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+To: Manuel =?utf-8?Q?Sch=C3=B6lling?= <manuel.schoelling@gmx.de>,
+ wireguard@lists.zx2c4.com
+Subject: Re: [PATCH] tools: Use '-' to read from stdin instead of file
+In-Reply-To: <20171210134805.3441-1-manuel.schoelling@gmx.de>
+References: <20171210134805.3441-1-manuel.schoelling@gmx.de>
+Date: Mon, 11 Dec 2017 14:49:30 -0500
+Message-ID: <871sk1xcxh.fsf@fifthhorseman.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -27,42 +26,114 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Mon, 2017-12-11 at 05:24 +0100, Jason A. Donenfeld wrote:
-> I'd suggest the following for a WireGuard NetworkManager plugin:
-> 
-> 1. If you want to do stuff for wireguard-p2p, can you make it a
-> separate "extra" plugin, so that the generic WireGuard one is
-> globally
-> useful? And then people who use the p2p stuff can use a separate
-> plugin that piggybacks upon the first?
-I can try. Should be easy to rip out the p2p stuff once it's done.
+On Sun 2017-12-10 14:48:05 +0100, Manuel Schölling wrote:
+> ---
+>  src/tools/config.c  | 15 ++++++++++-----
+>  src/tools/setconf.c | 17 +++++++++++------
+>  src/tools/wg.8      |  6 ++++--
+>  3 files changed, 25 insertions(+), 13 deletions(-)
+>
+> diff --git a/src/tools/config.c b/src/tools/config.c
+> index 1fddb64..d7bd926 100644
+> --- a/src/tools/config.c
+> +++ b/src/tools/config.c
+> @@ -121,10 +121,14 @@ static bool parse_keyfile(uint8_t key[static WG_KEY_LEN], const char *path)
+>  	char dst[WG_KEY_LEN_BASE64];
+>  	bool ret = false;
+>  
+> -	f = fopen(path, "r");
+> -	if (!f) {
+> -		perror("fopen");
+> -		return false;
+> +	if (strcmp(path, "-") == 0)
+> +		f = stdin;
+> +	else {
+> +		f = fopen(path, "r");
+> +		if (!f) {
+> +			perror("fopen");
+> +			return false;
+> +		}
+>  	}
+>  
+>  	if (fread(dst, WG_KEY_LEN_BASE64 - 1, 1, f) != 1) {
+> @@ -157,7 +161,8 @@ static bool parse_keyfile(uint8_t key[static WG_KEY_LEN], const char *path)
+>  	ret = parse_key(key, dst);
+>  
+>  out:
+> -	fclose(f);
+> +	if (f != stdin)
+> +		fclose(f);
+>  	return ret;
+>  }
+>  
+> diff --git a/src/tools/setconf.c b/src/tools/setconf.c
+> index b87a13f..137d2bd 100644
+> --- a/src/tools/setconf.c
+> +++ b/src/tools/setconf.c
+> @@ -27,13 +27,18 @@ int setconf_main(int argc, char *argv[])
+>  		return 1;
+>  	}
+>  
+> -	config_input = fopen(argv[2], "r");
+> -	if (!config_input) {
+> -		perror("fopen");
+> -		return 1;
+> +	if (strcmp(argv[2], "-") == 0)
+> +		config_input = stdin;
+> +	else {
+> +		config_input = fopen(argv[2], "r");
+> +		if (!config_input) {
+> +			perror("fopen");
+> +			return 1;
+> +		}
+>  	}
+>  	if (!config_read_init(&ctx, !strcmp(argv[0], "addconf"))) {
+> -		fclose(config_input);
+> +		if (config_input != stdin)
+> +			fclose(config_input);
+>  		return 1;
+>  	}
+>  	while (getline(&config_buffer, &config_buffer_len, config_input) >= 0) {
+> @@ -58,7 +63,7 @@ int setconf_main(int argc, char *argv[])
+>  	ret = 0;
+>  
+>  cleanup:
+> -	if (config_input)
+> +	if (config_input && config_input != stdin)
+>  		fclose(config_input);
+>  	free(config_buffer);
+>  	free_wgdevice(device);
+> diff --git a/src/tools/wg.8 b/src/tools/wg.8
+> index 612fb4e..9e03882 100644
+> --- a/src/tools/wg.8
+> +++ b/src/tools/wg.8
+> @@ -65,8 +65,9 @@ be a files, because command line arguments are not considered private on
+>  most systems but if you are using
+>  .BR bash (1),
+>  you may safely pass in a string by specifying as \fIprivate-key\fP or
+> -\fIpreshared-key\fP the expression: <(echo PRIVATEKEYSTRING). If
+> -\fI/dev/null\fP or another empty file is specified as the filename for
+> +\fIpreshared-key\fP the expression: <(echo PRIVATEKEYSTRING). You can also
+> +pass '-' as filename to read the key from stdin.
+> +If \fI/dev/null\fP or another empty file is specified as the filename for
+>  either \fIprivate-key\fP or \fIpreshared-key\fP, the key is removed from
+>  the device. The use of \fIpreshared-key\fP is optional, and may be omitted;
+>  it adds an additional layer of symmetric-key cryptography to be mixed into
+> @@ -88,6 +89,7 @@ and may be specified in hexadecimal by prepending "0x".
+>  Sets the current configuration of \fI<interface>\fP to the contents of
+>  \fI<configuration-filename>\fP, which must be in the format described
+>  by \fICONFIGURATION FILE FORMAT\fP below.
+> +If you pass '-' as filename, the configuration will be read from stdin.
+>  .TP
+>  \fBaddconf\fP \fI<interface>\fP \fI<configuration-filename>\fP
+>  Appends the contents of \fI<configuration-filename>\fP, which must
 
+This is a common unix convention, and it seems both user-friendly and
+harmless to support it.
 
-> 2. Write it in a language that will be accepted by upstream. I have
-> no
-> clue their thoughts on Rust.
-No idea, either. However, I am not really a fan of writing GTK in C
-(with all the manual reference counting and stuff). Let me first write
-it in Rust and make it work. Then I can still port it back to C.
+I'm not sure why it's important to avoid closing stdin when you don't
+plan on reading from it any more, though.  Isn't it more parsimonious to
+go ahead and explicitly close it so that anything writing additional
+data to stdin will get an error?
 
-> 3. Rather than calling wg(8), maybe it's best to speak the Netlink
-> API
-> directly? I can give you a hand with this, if you want. The API is
-> documented in this header:
-> https://git.zx2c4.com/WireGuard/tree/src/uapi/wireguard.h
-Not a bad idea, I think in the mid/long term I should do that!
-
-> > Would it make sense (aka be secure) if we make it possible to call
-> > 'wg
-> > setconf wg0 -' so the wg tool does not read the configuration from
-> > a
-> > file but from stdin? Same for 'wg set wg0 private-key -' and 'wg
-> > set
-> > wg0 psk -'?
-> 
-> wg-quick(8) does this precise thing, and generally this is a fine way
-> of passing config information. However, usually you can get away with
-> using the more explicit /dev/stdin or /proc/self/fd/0, as Aaron
-> suggested. Are there reasons to prefer - over /dev/stdin?
-> 
-> Jason
+     --dkg
