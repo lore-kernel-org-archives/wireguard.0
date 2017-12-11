@@ -1,32 +1,22 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: manuel.schoelling@gmx.de
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 542fe167
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1db98c53
  for <wireguard@lists.zx2c4.com>;
- Mon, 11 Dec 2017 20:07:43 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5d3f068c
+ Mon, 11 Dec 2017 20:23:40 +0000 (UTC)
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3767b7be
  for <wireguard@lists.zx2c4.com>;
- Mon, 11 Dec 2017 20:07:43 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 87d5d6c8
- for <wireguard@lists.zx2c4.com>;
- Mon, 11 Dec 2017 20:07:43 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id c304e3f8
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Mon, 11 Dec 2017 20:07:43 +0000 (UTC)
-Received: by mail-ot0-f177.google.com with SMTP id b54so15827867otd.8
- for <wireguard@lists.zx2c4.com>; Mon, 11 Dec 2017 12:15:17 -0800 (PST)
-MIME-Version: 1.0
-In-Reply-To: <874loxxe02.fsf@fifthhorseman.net>
-References: <b95c15baca1d3929@frisell.zx2c4.com>
- <874loxxe02.fsf@fifthhorseman.net>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 11 Dec 2017 21:15:16 +0100
-Message-ID: <CAHmME9r8qyXY-h3fw=JBee_mwD3Xe9frUCOTrf05eumrkN+d=g@mail.gmail.com>
-Subject: Re: curve25519_generate.js [was: Re: [ANNOUNCE] WireGuard Snapshot
- `0.0.20171211` Available]
-To: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+ Mon, 11 Dec 2017 20:23:40 +0000 (UTC)
+Message-ID: <1513024271.24175.3.camel@gmx.de>
+Subject: Re: Reading configuration from stdin
+From: Manuel =?ISO-8859-1?Q?Sch=F6lling?= <manuel.schoelling@gmx.de>
+To: Aaron Jones <aaronmdjones@gmail.com>
+Date: Mon, 11 Dec 2017 21:31:11 +0100
+In-Reply-To: <ebc466dc-a1b7-6de9-2e3b-fb94e63f60a6@gmail.com>
+References: <1512909832.1336.19.camel@gmx.de>
+ <ebc466dc-a1b7-6de9-2e3b-fb94e63f60a6@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -37,42 +27,15 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Daniel,
-
-Thanks for bringing this up. All excellent points. I wasn't totally
-confident about doing that, but what went into the decision was the
-following:
-
-- emscripten is laborious to build and recent versions are not readily
-accessible on many distros.
-- I figure web developers generally lack build system competence and
-would be more inclined to use this if it was as easy as copy and
-paste.
-- Signal includes the generated .js file in their repos.
-
-It would indeed be much cleaner to include a Makefile, like you
-suggest, which would take care of all the appropriate magic, but I
-worry about that being overwhelmingly inconvenient for some. Is that
-actually a good reason? I don't know...
-
- > * Do you expect packagers do rebuild this with whatever version of
- >  emscripten available to them?  Or should that be left up to the party
- >  who makes use of the key-generator?
-
-Certainly don't bother rebuilding it. contrib/examples has tons of
-source code (most of which has proper makefiles!), which similarly
-shouldn't be built, since it's example code meant to be tweaked.
-
->   In debian, i can't reasonably ship a binary artifact that i can't
->   build from source (this is sensible debian policy
-
-This is sensible policy. There is a question that people could
-bikeshed about all day: "Is emscripten output a binary artifact?"
-Probably the existing Debian policy answer to that is a sufficient
-one, if that kind of thing has already been decided.
-
-So anyway, I'm not really sure what to do here. Happy to take
-suggestions from all sides. Just keep in mind that emcc is a massive
-pain to get installed.
-
-Jason
+On Mon, 2017-12-11 at 04:12 +0000, Aaron Jones wrote:
+> On 10/12/17 12:43, Manuel Sch=C3=B6lling wrote:
+> > Hi,
+> >=20
+> > Would it make sense (aka be secure) if we make it possible to call
+> > 'wg setconf wg0 -' so the wg tool does not read the configuration
+> > from a file but from stdin? Same for 'wg set wg0 private-key -' and
+> > 'wg set wg0 psk -'?
+>=20
+> This should already be possible via `wg setconf wg0 /dev/stdin', no?
+Duh, you're right. I totally forgot about /dev/stdin 'cause tools like
+cat use '-'!
