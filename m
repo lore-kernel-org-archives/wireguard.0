@@ -1,31 +1,21 @@
-Return-Path: martin.schmiedecker@gmail.com
+Return-Path: the-bigdaddytank@protonmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 77edb740
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 32047213
  for <wireguard@lists.zx2c4.com>;
- Mon, 18 Dec 2017 20:48:02 +0000 (UTC)
-Received: from mail-wr0-f172.google.com (mail-wr0-f172.google.com
- [209.85.128.172])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 15b39a13
+ Tue, 19 Dec 2017 18:27:02 +0000 (UTC)
+Received: from mail3.protonmail.ch (mail3.protonmail.ch [185.70.40.25])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3fec7398
  for <wireguard@lists.zx2c4.com>;
- Mon, 18 Dec 2017 20:48:02 +0000 (UTC)
-Received: by mail-wr0-f172.google.com with SMTP id a41so15638230wra.6
- for <wireguard@lists.zx2c4.com>; Mon, 18 Dec 2017 12:56:30 -0800 (PST)
-Return-Path: <martin.schmiedecker@gmail.com>
-Received: from [192.168.18.104] (194-166-126-32.adsl.highway.telekom.at.
- [194.166.126.32])
- by smtp.gmail.com with ESMTPSA id g54sm4741071wrg.43.2017.12.18.12.56.27
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 18 Dec 2017 12:56:27 -0800 (PST)
-Subject: Re: 34C3 - WireGuard Workshop?
-To: wireguard@lists.zx2c4.com
-References: <CAHmME9qVY2jiMoXGKYmfBSh4DD0tACZiV90RKqxw6SaunbaYLg@mail.gmail.com>
-From: Martin Schmiedecker <martin.schmiedecker@gmail.com>
-Message-ID: <d240d132-c0e3-8ba1-f50b-accce83aa290@gmail.com>
-Date: Mon, 18 Dec 2017 21:56:26 +0100
+ Tue, 19 Dec 2017 18:27:02 +0000 (UTC)
+Date: Tue, 19 Dec 2017 13:35:26 -0500
+To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+From: Alec Stewart <the-bigdaddytank@protonmail.com>
+Subject: Question About Wireguard Config File
+Message-ID: <9cU938sa5rah3jXt_MHHr0V24PxY6qgNutBUGVyHenYmpcRocXuebRaQg8ZflTNFJeXr_ZIFQ5IaSvuHYI7-n-Ad71910_JF5HZ4ZhhfQro=@protonmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9qVY2jiMoXGKYmfBSh4DD0tACZiV90RKqxw6SaunbaYLg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/alternative;
+ boundary="b1_5543dab8c4ba4d9f0c94b189a2c5d57c"
+Reply-To: Alec Stewart <the-bigdaddytank@protonmail.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -35,26 +25,50 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-I'd be all in! Large setups would interest me, how to manage keys
-efficiently and non-standard setups ...
+This is a multi-part message in MIME format.
 
-Greetz, Martin
+--b1_5543dab8c4ba4d9f0c94b189a2c5d57c
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-On 2017-12-18 19:52, Jason A. Donenfeld wrote:
-> Hey guys,
-> 
-> I'll be at 34C3. Is there any interest in having some sort of
-> WireGuard workshop? Are there things to talk about it? Would this be
-> fun or interesting? How many people would be interested in such a
-> thing?
-> 
-> Jason
-> 
-> 
-> PS: still trying to work out hotel arrangements, if anybody knows any
-> Leipzig tricks.
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
-> 
+SGVsbG8gZmVsbG93IFdpcmVndWFyZCB1c2VycywKCkkgaGF2ZSBvbmUgcXVlc3Rpb24gaW4gcmVn
+YXJkcyB0byB0aGUgY29uZmlndXJhdGlvbiBmaWxlLgoKU28gY3JlYXRpbmcgYSBjb25maWd1cmF0
+aW9uIGZpbGUgZG9lc24ndCBzZWVtIGhhcmQgYXQgYWxsLCBidXQgbXkgcXVlc3Rpb24gaXMgaWYg
+dGhlcmUncyBhbiBlYXN5IHdheSB0byBoYXZlIHRoZSBjb25maWcgZmlsZSB0YWtlIGEgbmV3IHBy
+aXZhdGUgYW5kIHB1YmxpYyBrZXlzIGFuZCBwZWVycyBldmVyeSBub3cgYW5kIHRoZW4sIGFuZCBz
+d2l0Y2ggb3V0IHRoZSBhbGxvd2VkLWlwcyBldmVyeSBub3cgYW5kIHRoZW4gdG9vLiBXaGVuIEkg
+ZG8gYWxsIG9mIHRoZSBjb21tYW5kcywgSSB1c3VhbGx5IGdlbmVyYXRlIGFuZCBuZXcgcHJpdmF0
+ZS9wdWJsaWMga2V5IHBhaXIgYXMgd2VsbCBhcyBjcmVhdGUgYSBuZXcgcGVlciwgYW5kIGNoYW5n
+ZSB0aGUgSVB2NCBhZGRyZXNzZXMgSSB1c2UgKGFsdGhvdWdoIGl0J3MgcG9zc2libGUgSSBtYXkg
+YmUgbWlzdW5kZXJzdGFuZGluZyBleGFjdGx5IGhvdyB0aGF0IHdvcmtzKS4gV2hpbGUgaXQncyBu
+b3QgaGFyZCwgaXQgZG9lcyBnZXQgYSBsaXR0bGUgdGVkaW91cyBhbmQgSSB0aGluayBzZXR0aW5n
+IHVwIGEgY29uZmlnIGZpbGUgd291bGQgYmUgZWFzaWVyLCBJIHN0aWxsIHdvdWxkIGxpa2UgdG8g
+c3dpdGNoIG91dCB0aGUga2V5cyBhbmQgaXBzIGhlcmUgYW5kIHRoZXJlLgoKVGhhbmtzIGZvciBh
+bnkgaGVscCE=
+
+
+--b1_5543dab8c4ba4d9f0c94b189a2c5d57c
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: base64
+
+PGRpdj5IZWxsbyBmZWxsb3cgV2lyZWd1YXJkIHVzZXJzLDxicj48L2Rpdj48ZGl2Pjxicj48L2Rp
+dj48ZGl2PkkgaGF2ZSBvbmUgcXVlc3Rpb24gaW4gcmVnYXJkcyB0byB0aGUgY29uZmlndXJhdGlv
+biBmaWxlLjxicj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PlNvIGNyZWF0aW5nIGEgY29uZmln
+dXJhdGlvbiBmaWxlIGRvZXNuJ3Qgc2VlbSBoYXJkIGF0IGFsbCwgYnV0IG15IHF1ZXN0aW9uIGlz
+IGlmIHRoZXJlJ3MgYW4gZWFzeSB3YXkgdG8gaGF2ZSB0aGUgY29uZmlnIGZpbGUgdGFrZSBhIG5l
+dyBwcml2YXRlIGFuZCBwdWJsaWMga2V5cyBhbmQgcGVlcnMgZXZlcnkgbm93IGFuZCB0aGVuLCBh
+bmQgc3dpdGNoIG91dCB0aGUgYWxsb3dlZC1pcHMgZXZlcnkgbm93IGFuZCB0aGVuIHRvby4gV2hl
+biBJIGRvIGFsbCBvZiB0aGUgY29tbWFuZHMsIEkgdXN1YWxseSBnZW5lcmF0ZSBhbmQgbmV3IHBy
+aXZhdGUvcHVibGljIGtleSBwYWlyIGFzIHdlbGwgYXMgY3JlYXRlIGEgbmV3IHBlZXIsIGFuZCBj
+aGFuZ2UgdGhlIElQdjQgYWRkcmVzc2VzIEkgdXNlIChhbHRob3VnaCBpdCdzIHBvc3NpYmxlIEkg
+bWF5IGJlIG1pc3VuZGVyc3RhbmRpbmcgZXhhY3RseSBob3cgdGhhdCB3b3JrcykuIFdoaWxlIGl0
+J3Mgbm90IGhhcmQsIGl0IGRvZXMgZ2V0IGEgbGl0dGxlIHRlZGlvdXMgYW5kIEkgdGhpbmsgc2V0
+dGluZyB1cCBhIGNvbmZpZyBmaWxlIHdvdWxkIGJlIGVhc2llciwgSSBzdGlsbCB3b3VsZCBsaWtl
+IHRvIHN3aXRjaCBvdXQgdGhlIGtleXMgYW5kIGlwcyBoZXJlIGFuZCB0aGVyZS48YnI+PC9kaXY+
+PGRpdj48YnI+PC9kaXY+PGRpdj5UaGFua3MgZm9yIGFueSBoZWxwITxicj48L2Rpdj48ZGl2IGNs
+YXNzPSJwcm90b25tYWlsX3NpZ25hdHVyZV9ibG9jayI+PGRpdj48YnI+PC9kaXY+PC9kaXY+PGRp
+dj48YnI+PC9kaXY+
+
+
+
+--b1_5543dab8c4ba4d9f0c94b189a2c5d57c--
