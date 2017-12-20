@@ -1,21 +1,22 @@
-Return-Path: the-bigdaddytank@protonmail.com
+Return-Path: cmsdew@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 32047213
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6482c2a3
  for <wireguard@lists.zx2c4.com>;
- Tue, 19 Dec 2017 18:27:02 +0000 (UTC)
-Received: from mail3.protonmail.ch (mail3.protonmail.ch [185.70.40.25])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3fec7398
+ Wed, 20 Dec 2017 14:05:12 +0000 (UTC)
+Received: from mail-qt0-f180.google.com (mail-qt0-f180.google.com
+ [209.85.216.180])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 72031daa
  for <wireguard@lists.zx2c4.com>;
- Tue, 19 Dec 2017 18:27:02 +0000 (UTC)
-Date: Tue, 19 Dec 2017 13:35:26 -0500
-To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
-From: Alec Stewart <the-bigdaddytank@protonmail.com>
-Subject: Question About Wireguard Config File
-Message-ID: <9cU938sa5rah3jXt_MHHr0V24PxY6qgNutBUGVyHenYmpcRocXuebRaQg8ZflTNFJeXr_ZIFQ5IaSvuHYI7-n-Ad71910_JF5HZ4ZhhfQro=@protonmail.com>
+ Wed, 20 Dec 2017 14:05:12 +0000 (UTC)
+Received: by mail-qt0-f180.google.com with SMTP id g9so28405161qth.9
+ for <wireguard@lists.zx2c4.com>; Wed, 20 Dec 2017 06:13:53 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="b1_5543dab8c4ba4d9f0c94b189a2c5d57c"
-Reply-To: Alec Stewart <the-bigdaddytank@protonmail.com>
+From: Chris Dew <cmsdew@gmail.com>
+Date: Wed, 20 Dec 2017 14:13:50 +0000
+Message-ID: <CADZktKY-X6ZwwfWx7qqY608RgrSjihQt04DY5DNpu33AZGFrYw@mail.gmail.com>
+Subject: Dual bearer operation.
+To: wireguard@lists.zx2c4.com
+Content-Type: multipart/alternative; boundary="001a113e22fa4ebf230560c6318b"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -25,50 +26,31 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-This is a multi-part message in MIME format.
+--001a113e22fa4ebf230560c6318b
+Content-Type: text/plain; charset="UTF-8"
 
---b1_5543dab8c4ba4d9f0c94b189a2c5d57c
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+Hi,
 
-SGVsbG8gZmVsbG93IFdpcmVndWFyZCB1c2VycywKCkkgaGF2ZSBvbmUgcXVlc3Rpb24gaW4gcmVn
-YXJkcyB0byB0aGUgY29uZmlndXJhdGlvbiBmaWxlLgoKU28gY3JlYXRpbmcgYSBjb25maWd1cmF0
-aW9uIGZpbGUgZG9lc24ndCBzZWVtIGhhcmQgYXQgYWxsLCBidXQgbXkgcXVlc3Rpb24gaXMgaWYg
-dGhlcmUncyBhbiBlYXN5IHdheSB0byBoYXZlIHRoZSBjb25maWcgZmlsZSB0YWtlIGEgbmV3IHBy
-aXZhdGUgYW5kIHB1YmxpYyBrZXlzIGFuZCBwZWVycyBldmVyeSBub3cgYW5kIHRoZW4sIGFuZCBz
-d2l0Y2ggb3V0IHRoZSBhbGxvd2VkLWlwcyBldmVyeSBub3cgYW5kIHRoZW4gdG9vLiBXaGVuIEkg
-ZG8gYWxsIG9mIHRoZSBjb21tYW5kcywgSSB1c3VhbGx5IGdlbmVyYXRlIGFuZCBuZXcgcHJpdmF0
-ZS9wdWJsaWMga2V5IHBhaXIgYXMgd2VsbCBhcyBjcmVhdGUgYSBuZXcgcGVlciwgYW5kIGNoYW5n
-ZSB0aGUgSVB2NCBhZGRyZXNzZXMgSSB1c2UgKGFsdGhvdWdoIGl0J3MgcG9zc2libGUgSSBtYXkg
-YmUgbWlzdW5kZXJzdGFuZGluZyBleGFjdGx5IGhvdyB0aGF0IHdvcmtzKS4gV2hpbGUgaXQncyBu
-b3QgaGFyZCwgaXQgZG9lcyBnZXQgYSBsaXR0bGUgdGVkaW91cyBhbmQgSSB0aGluayBzZXR0aW5n
-IHVwIGEgY29uZmlnIGZpbGUgd291bGQgYmUgZWFzaWVyLCBJIHN0aWxsIHdvdWxkIGxpa2UgdG8g
-c3dpdGNoIG91dCB0aGUga2V5cyBhbmQgaXBzIGhlcmUgYW5kIHRoZXJlLgoKVGhhbmtzIGZvciBh
-bnkgaGVscCE=
+Does WireGuard support dual bearer operation, where there are two or more
+distinct routes between two machines?
 
+I would like maximum reliability, at the cost of wasted bandwidth - i.e.
+every outgoing packet is sent on all routes, in the hope that one will get
+through.
 
---b1_5543dab8c4ba4d9f0c94b189a2c5d57c
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: base64
+Thanks,
 
-PGRpdj5IZWxsbyBmZWxsb3cgV2lyZWd1YXJkIHVzZXJzLDxicj48L2Rpdj48ZGl2Pjxicj48L2Rp
-dj48ZGl2PkkgaGF2ZSBvbmUgcXVlc3Rpb24gaW4gcmVnYXJkcyB0byB0aGUgY29uZmlndXJhdGlv
-biBmaWxlLjxicj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PlNvIGNyZWF0aW5nIGEgY29uZmln
-dXJhdGlvbiBmaWxlIGRvZXNuJ3Qgc2VlbSBoYXJkIGF0IGFsbCwgYnV0IG15IHF1ZXN0aW9uIGlz
-IGlmIHRoZXJlJ3MgYW4gZWFzeSB3YXkgdG8gaGF2ZSB0aGUgY29uZmlnIGZpbGUgdGFrZSBhIG5l
-dyBwcml2YXRlIGFuZCBwdWJsaWMga2V5cyBhbmQgcGVlcnMgZXZlcnkgbm93IGFuZCB0aGVuLCBh
-bmQgc3dpdGNoIG91dCB0aGUgYWxsb3dlZC1pcHMgZXZlcnkgbm93IGFuZCB0aGVuIHRvby4gV2hl
-biBJIGRvIGFsbCBvZiB0aGUgY29tbWFuZHMsIEkgdXN1YWxseSBnZW5lcmF0ZSBhbmQgbmV3IHBy
-aXZhdGUvcHVibGljIGtleSBwYWlyIGFzIHdlbGwgYXMgY3JlYXRlIGEgbmV3IHBlZXIsIGFuZCBj
-aGFuZ2UgdGhlIElQdjQgYWRkcmVzc2VzIEkgdXNlIChhbHRob3VnaCBpdCdzIHBvc3NpYmxlIEkg
-bWF5IGJlIG1pc3VuZGVyc3RhbmRpbmcgZXhhY3RseSBob3cgdGhhdCB3b3JrcykuIFdoaWxlIGl0
-J3Mgbm90IGhhcmQsIGl0IGRvZXMgZ2V0IGEgbGl0dGxlIHRlZGlvdXMgYW5kIEkgdGhpbmsgc2V0
-dGluZyB1cCBhIGNvbmZpZyBmaWxlIHdvdWxkIGJlIGVhc2llciwgSSBzdGlsbCB3b3VsZCBsaWtl
-IHRvIHN3aXRjaCBvdXQgdGhlIGtleXMgYW5kIGlwcyBoZXJlIGFuZCB0aGVyZS48YnI+PC9kaXY+
-PGRpdj48YnI+PC9kaXY+PGRpdj5UaGFua3MgZm9yIGFueSBoZWxwITxicj48L2Rpdj48ZGl2IGNs
-YXNzPSJwcm90b25tYWlsX3NpZ25hdHVyZV9ibG9jayI+PGRpdj48YnI+PC9kaXY+PC9kaXY+PGRp
-dj48YnI+PC9kaXY+
+Chris.
 
+--001a113e22fa4ebf230560c6318b
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+<div dir=3D"ltr">Hi,<br><div><br>Does WireGuard support dual bearer operati=
+on, where there are two or more distinct routes between two machines?<br><b=
+r>I would like maximum reliability, at the cost of wasted bandwidth - i.e. =
+every outgoing packet is sent on all routes, in the hope that one will get =
+through.<br><div><br></div><div>Thanks,</div><div><br></div><div>Chris.<br>=
+</div></div></div>
 
---b1_5543dab8c4ba4d9f0c94b189a2c5d57c--
+--001a113e22fa4ebf230560c6318b--
