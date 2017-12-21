@@ -1,27 +1,28 @@
-Return-Path: markus@lindenberg.io
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e8a776e8
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c3724550
  for <wireguard@lists.zx2c4.com>;
- Wed, 20 Dec 2017 16:31:45 +0000 (UTC)
-Received: from mail.ruhrblick.net (mail.ruhrblick.net [82.165.130.202])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 630fa281
+ Thu, 21 Dec 2017 01:02:50 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6eb5ce94
  for <wireguard@lists.zx2c4.com>;
- Wed, 20 Dec 2017 16:31:45 +0000 (UTC)
-Received: from hodor.lindenberg.io (hodor.lindenberg.io
- [IPv6:2001:8d8:924:5b10::20])
- (using TLSv1.2 with cipher DHE-RSA-CAMELLIA256-SHA256 (256/256 bits))
- (No client certificate requested)
- by mail.ruhrblick.net (Postfix) with ESMTPSA id C49DA5C0044
- for <wireguard@lists.zx2c4.com>; Wed, 20 Dec 2017 17:40:24 +0100 (CET)
-Date: Wed, 20 Dec 2017 17:40:23 +0100
-From: Markus Lindenberg <markus@lindenberg.io>
-To: wireguard@lists.zx2c4.com
-Subject: Re: 34C3 - WireGuard Workshop?
-Message-ID: <20171220164023.dpev2hmuml3bd4m4@hodor.lindenberg.io>
-References: <CAHmME9qVY2jiMoXGKYmfBSh4DD0tACZiV90RKqxw6SaunbaYLg@mail.gmail.com>
+ Thu, 21 Dec 2017 01:02:50 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 96dff3a9
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 21 Dec 2017 01:02:49 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 1a6f5d73
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 21 Dec 2017 01:02:49 +0000 (UTC)
+Received: by mail-ot0-f172.google.com with SMTP id h9so21226589oti.0
+ for <wireguard@lists.zx2c4.com>; Wed, 20 Dec 2017 17:11:32 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-In-Reply-To: <CAHmME9qVY2jiMoXGKYmfBSh4DD0tACZiV90RKqxw6SaunbaYLg@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 21 Dec 2017 02:11:31 +0100
+Message-ID: <CAHmME9o+s=sLcfWK_5TNaAe_tZ+Wz1SJrYQJuuf-zzEOic82XQ@mail.gmail.com>
+Subject: 34C3 - WireGuard Workshop - Dec 29th
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -31,32 +32,15 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Jason,
+Hey folks,
 
-On Mon, Dec 18, 2017 at 07:52:42PM +0100, Jason A. Donenfeld wrote:
-> 
-> I'll be at 34C3. Is there any interest in having some sort of
-> WireGuard workshop? Are there things to talk about it? Would this be
-> fun or interesting? How many people would be interested in such a
-> thing?
+Based on the number of positive off-list emails I received, we'll be
+having a workshop on WireGuard on the 29th, with location and time
+details here:
 
-I (and I guess others in the Freifunk realm) would be interested in how
-to use WireGuard for open mesh networks, there are some unique problems
-here (like running l3 mesh routing or l2 mesh routing protocols inside l2
-tunnels inside wireguard; multicast; provisioning tunnels when only one
-party is trusted, ...). The interest in and visibility of Wireguard is
-quite high in our community, although I'm not familiar with the latest
-developments in the most used wifi mesh firmware (Gluon based on Lede),
-but I guess Gluon/Lede devs will be present.
+https://events.ccc.de/congress/2017/wiki/index.php/Session:WireGuard
 
-If you need a place for a workshop I'm sure you'd be welcome at the
-workshop space or stage of the Open Infrastructure Orbit:
+See you all in a few days!
 
-https://events.ccc.de/congress/2017/wiki/index.php/Cluster:Open_Infrastructure_Orbit
-
-> PS: still trying to work out hotel arrangements, if anybody knows any
-> Leipzig tricks.
-
-Surplus hotel rooms are posted on this page:
-
-https://events.ccc.de/congress/2017/wiki/index.php/HotelExchange
+Talk soon,
+Jason
