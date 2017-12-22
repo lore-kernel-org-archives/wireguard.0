@@ -1,23 +1,22 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: outbackdingo@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 480046a7
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fbf389fa
  for <wireguard@lists.zx2c4.com>;
- Fri, 22 Dec 2017 13:41:48 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cbb483dd
+ Fri, 22 Dec 2017 14:17:42 +0000 (UTC)
+Received: from mail-wr0-f176.google.com (mail-wr0-f176.google.com
+ [209.85.128.176])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 33d3ec18
  for <wireguard@lists.zx2c4.com>;
- Fri, 22 Dec 2017 13:41:48 +0000 (UTC)
-Date: Fri, 22 Dec 2017 14:41:49 +0100
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Ben Lebherz <ben@benleb.de>
-Subject: Re: 34C3 - WireGuard Workshop - Dec 29th
-Message-ID: <20171222134147.GA1836@zx2c4.com>
-References: <CAHmME9o+s=sLcfWK_5TNaAe_tZ+Wz1SJrYQJuuf-zzEOic82XQ@mail.gmail.com>
- <CAA4BbKp2tLgweT2RygbThP+cKtMUjNfRav0TWTQkzDf_1p4g=w@mail.gmail.com>
+ Fri, 22 Dec 2017 14:17:42 +0000 (UTC)
+Received: by mail-wr0-f176.google.com with SMTP id v21so17342418wrc.0
+ for <wireguard@lists.zx2c4.com>; Fri, 22 Dec 2017 06:17:45 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-In-Reply-To: <CAA4BbKp2tLgweT2RygbThP+cKtMUjNfRav0TWTQkzDf_1p4g=w@mail.gmail.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: Outback Dingo <outbackdingo@gmail.com>
+Date: Fri, 22 Dec 2017 09:17:04 -0500
+Message-ID: <CAKYr3zyw829Ed3Dxi1eACQJvQrgPe+H6FTOdNNBNAJVxDeKnxw@mail.gmail.com>
+Subject: wireguard on embedded / no bash
+To: WireGuard <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -27,11 +26,12 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Thu, Dec 21, 2017 at 07:15:38AM +0000, Ben Lebherz wrote:
-> awesome! Do we need to register or something to attend?
+ok enlighten me... embedded platform, no bash, simply bb sh
 
-Nope, just show up.
+is there a wg / wg-quick source i can cross compile for the target
 
-If you'd like to do a small presentation, let me know though.
+i have wireguard in-kernel on the device built from patched kernel sources
 
-Jason
+CONFIG_WIREGUARD=y
+
+amongst the other kernel prereqs.
