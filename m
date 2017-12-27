@@ -1,22 +1,26 @@
-Return-Path: outbackdingo@gmail.com
+Return-Path: matthias@urlichs.de
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 04f13e6f
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6a09e89a
  for <wireguard@lists.zx2c4.com>;
- Wed, 27 Dec 2017 17:52:31 +0000 (UTC)
-Received: from mail-wr0-f172.google.com (mail-wr0-f172.google.com
- [209.85.128.172])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9b15a6c9
+ Wed, 27 Dec 2017 17:55:48 +0000 (UTC)
+Received: from netz.smurf.noris.de (netz.smurf.noris.de [213.95.21.43])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d06486e7
  for <wireguard@lists.zx2c4.com>;
- Wed, 27 Dec 2017 17:52:30 +0000 (UTC)
-Received: by mail-wr0-f172.google.com with SMTP id g17so28093998wrd.13
- for <wireguard@lists.zx2c4.com>; Wed, 27 Dec 2017 09:53:13 -0800 (PST)
-MIME-Version: 1.0
-From: Outback Dingo <outbackdingo@gmail.com>
-Date: Wed, 27 Dec 2017 12:52:30 -0500
-Message-ID: <CAKYr3zyHx6sJo-b0LfZJS9c+TxfHiLD2_pUS-q8YVGg5t6taFA@mail.gmail.com>
-Subject: manual bring up
+ Wed, 27 Dec 2017 17:55:48 +0000 (UTC)
+Received: from [2001:780:107:0:1278:d2ff:fea3:d4a6]
+ by netz.extern.smurf.noris.de with esmtpsa
+ (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim 4.89)
+ (envelope-from <matthias@urlichs.de>) id 1eUFvb-0008CP-5Y
+ for wireguard@lists.zx2c4.com; Wed, 27 Dec 2017 17:55:44 +0000
+Subject: Re: manual bring up
 To: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+References: <CAKYr3zyHx6sJo-b0LfZJS9c+TxfHiLD2_pUS-q8YVGg5t6taFA@mail.gmail.com>
+From: Matthias Urlichs <matthias@urlichs.de>
+Message-ID: <03966d87-bfe3-f49d-e19b-285d08011e46@urlichs.de>
+Date: Wed, 27 Dec 2017 18:55:42 +0100
+MIME-Version: 1.0
+In-Reply-To: <CAKYr3zyHx6sJo-b0LfZJS9c+TxfHiLD2_pUS-q8YVGg5t6taFA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,5 +30,13 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-is there a way to manually bring up wireguard and create keys without
-bash or wg... as wg doesnt seem to build on arm
+On 27.12.2017 18:52, Outback Dingo wrote:
+> is there a way to manually bring up wireguard and create keys without
+> bash or wg... as wg doesnt seem to build on arm
+Yes it does build, at least on my Raspberry Pi, which is as "arm" as
+they get.
+
+What's the (exact) problem?
+
+-- 
+-- Matthias Urlichs
