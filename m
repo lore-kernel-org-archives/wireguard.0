@@ -1,17 +1,17 @@
 Return-Path: simon@ruderich.org
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0e53533a
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0bdb4e45
  for <wireguard@lists.zx2c4.com>;
  Sun, 31 Dec 2017 16:16:10 +0000 (UTC)
 Received: from zucker2.schokokeks.org (zucker2.schokokeks.org [178.63.68.90])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ef2c8a18
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cb9e9edc
  for <wireguard@lists.zx2c4.com>;
  Sun, 31 Dec 2017 16:16:07 +0000 (UTC)
 From: Simon Ruderich <simon@ruderich.org>
 To: wireguard@lists.zx2c4.com
-Subject: [PATCH 5/7] helper_test: adapt to TUNDevice interface change
-Date: Sun, 31 Dec 2017 17:16:52 +0100
-Message-Id: <64acdac5254004b3c8b08ab3a211505a26c75770.1514726309.git.simon@ruderich.org>
+Subject: [PATCH 7/7] tun_darwin: adapt to TUNDevice interface change
+Date: Sun, 31 Dec 2017 17:16:54 +0100
+Message-Id: <33cfb3925304d5047a6e9e81eef0900329aad3b5.1514726309.git.simon@ruderich.org>
 In-Reply-To: <cover.1514726309.git.simon@ruderich.org>
 References: <cover.1514726309.git.simon@ruderich.org>
 In-Reply-To: <cover.1514726309.git.simon@ruderich.org>
@@ -27,32 +27,36 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 
 Broken in 996c7c4 ("Removed IFF_NO_PI from TUN linux", 2017-12-04).
 
+Untested!
 ---
- src/helper_test.go | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ src/tun_windows.go | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/src/helper_test.go b/src/helper_test.go
-index 46bb782..99eb5d6 100644
---- a/src/helper_test.go
-+++ b/src/helper_test.go
-@@ -20,14 +20,14 @@ func (tun *DummyTUN) File() *os.File {
- 	return nil
+diff --git a/src/tun_windows.go b/src/tun_windows.go
+index 0711032..8bb8a66 100644
+--- a/src/tun_windows.go
++++ b/src/tun_windows.go
+@@ -123,7 +123,9 @@ func (f *NativeTUN) Close() error {
+ 	return windows.Close(f.fd)
  }
  
--func (tun *DummyTUN) Read(d []byte) (int, error) {
-+func (tun *DummyTUN) Read(d []byte, offset int) (int, error) {
- 	t := <-tun.packets
--	copy(d, t)
-+	copy(d[offset:], t)
- 	return len(t), nil
+-func (f *NativeTUN) Write(b []byte) (int, error) {
++func (f *NativeTUN) Write(b []byte, offset int) (int, error) {
++	b := b[offset:]
++
+ 	f.wl.Lock()
+ 	defer f.wl.Unlock()
+ 
+@@ -138,7 +140,9 @@ func (f *NativeTUN) Write(b []byte) (int, error) {
+ 	return getOverlappedResult(f.fd, f.wo)
  }
  
--func (tun *DummyTUN) Write(d []byte) (int, error) {
--	tun.packets <- d
-+func (tun *DummyTUN) Write(d []byte, offset int) (int, error) {
-+	tun.packets <- d[offset:]
- 	return len(d), nil
- }
+-func (f *NativeTUN) Read(b []byte) (int, error) {
++func (f *NativeTUN) Read(b []byte, offset int) (int, error) {
++	b := b[offset:]
++
+ 	f.rl.Lock()
+ 	defer f.rl.Unlock()
  
 -- 
 2.15.1
