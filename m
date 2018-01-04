@@ -1,24 +1,30 @@
-Return-Path: simon@ruderich.org
+Return-Path: t0ny0@atlantabg.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id be291737
- for <wireguard@lists.zx2c4.com>; Mon, 1 Jan 2018 11:35:30 +0000 (UTC)
-Received: from zucker2.schokokeks.org (zucker2.schokokeks.org [178.63.68.90])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f19c68e0
- for <wireguard@lists.zx2c4.com>; Mon, 1 Jan 2018 11:35:30 +0000 (UTC)
-Date: Mon, 1 Jan 2018 12:36:48 +0100
-From: Simon Ruderich <simon@ruderich.org>
-To: Mathias Hall-Andersen <mathias@hall-andersen.dk>
-Subject: Re: [PATCH 7/7] tun_darwin: adapt to TUNDevice interface change
-Message-ID: <20180101113648.GA11049@ruderich.org>
-References: <cover.1514726309.git.simon@ruderich.org>
- <33cfb3925304d5047a6e9e81eef0900329aad3b5.1514726309.git.simon@ruderich.org>
- <510f63e7-e50a-46a1-b2d8-ea49ae5f2fc8@hall-andersen.dk>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="=_zucker.schokokeks.org-32049-1514806650-0001-2"
-In-Reply-To: <510f63e7-e50a-46a1-b2d8-ea49ae5f2fc8@hall-andersen.dk>
-Cc: wireguard@lists.zx2c4.com
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2e0ca3f8
+ for <wireguard@lists.zx2c4.com>; Thu, 4 Jan 2018 21:49:36 +0000 (UTC)
+Received: from mail-yb0-f170.google.com (mail-yb0-f170.google.com
+ [209.85.213.170])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 549c3f34
+ for <wireguard@lists.zx2c4.com>; Thu, 4 Jan 2018 21:49:36 +0000 (UTC)
+Received: by mail-yb0-f170.google.com with SMTP id u107so1181954ybi.2
+ for <wireguard@lists.zx2c4.com>; Thu, 04 Jan 2018 13:51:21 -0800 (PST)
+MIME-Version: 1.0
+In-Reply-To: <CAL-k0sTtBWdgV1LfiAF9jjU6T47sT=pYyJgJQej4UmFrA0_27Q@mail.gmail.com>
+References: <CAL-k0sRpa8Z2sW=z3bCW5pqPyJMCc5i3BMcXHRmZxNoRijTOXQ@mail.gmail.com>
+ <CAL-k0sRFgPetkH3n_p4H5cTSA-58bHGJ=mV+rs7tC4kWeqgmiA@mail.gmail.com>
+ <CAL-k0sQk=kbFep0xZ-9_xzUqvgGGqa3Y6=nEe=1kWq98Ek9f6w@mail.gmail.com>
+ <CAL-k0sST3nZnOPAFYtthv4CFJjpoFDvzpxYDwvP1vt_t4bO+kQ@mail.gmail.com>
+ <CAL-k0sTi-g0w4cHw+9K5hqYooupPJVf_bb_tQ3jR-hW=tqmfKA@mail.gmail.com>
+ <CAL-k0sShn5t8K4TCgnWgKp74Lf6ASgrA_SDdAEjdL9Vc-J3e4Q@mail.gmail.com>
+ <CAL-k0sTux_e2CrQG0Pm2cdk4VxdxW9m+BALQ=Ccw34KH-6D25g@mail.gmail.com>
+ <CAL-k0sRUR1DKJK4df1YHvs+3LSJ+qQVUrBgC5-tg2eSjN_wrtw@mail.gmail.com>
+ <CAL-k0sTtBWdgV1LfiAF9jjU6T47sT=pYyJgJQej4UmFrA0_27Q@mail.gmail.com>
+From: Stoyan Mihov <t0ny0@atlantabg.com>
+Date: Thu, 4 Jan 2018 16:51:19 -0500
+Message-ID: <CAL-k0sSF7y63y8wYc0dn2_8j2Sa8_t-U5-5ZZHcRVxh9pRK47w@mail.gmail.com>
+Subject: Question about Wireguard server
+To: wireguard@lists.zx2c4.com
+Content-Type: multipart/alternative; boundary="001a114fc9e010c0860561fa5527"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -28,53 +34,56 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-This is a MIME-formatted message.  If you see this text it means that your
-E-mail software does not support MIME-formatted messages.
+--001a114fc9e010c0860561fa5527
+Content-Type: text/plain; charset="UTF-8"
 
---=_zucker.schokokeks.org-32049-1514806650-0001-2
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Greetings dear wireguards!
+
+First of all - happy 2018!
+
+I have a quick question:
+
+I am running wireguard on ubuntu 16.04 server and LEDE on router. When I
+have everything set up on the router - I decided to upgrade to a newer
+version of LEDE. So I did, and then my router would not connect to the
+server anymore (although settings have been saved) until I issue a command
+on the server:
+wg-quick down wg0 && wg-quick up wg0
+
+Then the router automatically connects without an issue. Before that - the
+server would not accept a connection from the router, there are no dmesg
+errors, no errors whatsoever on both sides. It simply doesn't show a
+handshake on the server, and the router sends packets, but receives 0
+packets.
+
+Is there an easier way to fix that issue, so a restart on the server would
+not be necessary every time an upgrade on the router is made? Or am I
+missing something obvious (quite possible lol) that resolves that issue?
+
+Thank you so much!
+Tony.
+
+--001a114fc9e010c0860561fa5527
+Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, Dec 31, 2017 at 08:17:58PM +0100, Mathias Hall-Andersen wrote:
-> I am still fixing the interface up / down semantics (stopping / starting
-> peer timers and routines not needed when the interface is down).
+<div dir=3D"auto">Greetings dear wireguards!<div dir=3D"auto"><br></div><di=
+v dir=3D"auto">First of all - happy 2018!</div><div dir=3D"auto"><br></div>=
+<div dir=3D"auto">I have a quick question:</div><div dir=3D"auto"><br></div=
+><div dir=3D"auto">I am running wireguard on ubuntu 16.04 server and LEDE o=
+n router. When I have everything set up on the router - I decided to upgrad=
+e to a newer version of LEDE. So I did, and then my router would not connec=
+t to the server anymore (although settings have been saved) until I issue a=
+ command on the server:</div><div dir=3D"auto">wg-quick down wg0 &amp;&amp;=
+ wg-quick up wg0</div><div dir=3D"auto"><br></div><div dir=3D"auto">Then th=
+e router automatically connects without an issue. Before that - the server =
+would not accept a connection from the router, there are no dmesg errors, n=
+o errors whatsoever on both sides. It simply doesn&#39;t show a handshake o=
+n the server, and the router sends packets, but receives 0 packets.</div><d=
+iv dir=3D"auto"><br></div><div dir=3D"auto">Is there an easier way to fix t=
+hat issue, so a restart on the server would not be necessary every time an =
+upgrade on the router is made? Or am I missing something obvious (quite pos=
+sible lol) that resolves that issue?</div><div dir=3D"auto"><br></div><div =
+dir=3D"auto">Thank you so much!</div><div dir=3D"auto">Tony.</div></div>
 
-Regarding this, with d73f960 ("Peer timer teardown", 2017-12-29)
-I can't configure wireguard-go via wg anymore. wg just hangs on
-any command, everything works fine with 996c7c4 ("Removed
-IFF_NO_PI from TUN linux", 2017-12-04).
-
-Any idea what's wrong? Not sure if this is related to the test
-suite failure which also occurs since d73f960 (only visible with
-my TUN patches or the test suite fails to build).
-
-Regards
-Simon
---=20
-+ privacy is necessary
-+ using gnupg http://gnupg.org
-+ public key id: 0x92FEFDB7E44C32F9
-
---=_zucker.schokokeks.org-32049-1514806650-0001-2
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Transfer-Encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEO7rfWMMObpFkF3n0kv79t+RMMvkFAlpKHT8ACgkQkv79t+RM
-Mvn0fhAAvl78NGCz7zDehe11Z/ocLR55G/UiALuOnP/n9txYX4hhayM2KiBHq7GH
-uR6Ej2kPYaMwmO5bnnaZu74+8bPnD9zUYGtxw/w9H3IXJX+YYe3tbswrx/hDy/8G
-F8hoK2ydgWIa7A8f0Ql3VV3YjDfOTYAShUy6JMlyFJ0q6i1ecSB9GRYIAN2569yj
-PCDZjsRfKtWkUKwAYNyGs67Rs5Gn+d7DJU87ZEC1KxhnJV9ImUxV1suo02qLv+lW
-MdQiAwWchwilRO5bvvyTzNmWVpwgKTuFABWjr1cmmvZhqNWWT4B8ylfvDjmrRRAT
-u9qgvWaMxZpoDSJi0vmoGej2cEBk2OnirI+H3dO08gZT1dF+x/ax+KNNJu9Cvzeu
-YT1LELRZq7PU+97I7D900iwbCs7JSV3q7O7YBaRBr19lqxMueiiP3/tuR1131Ux+
-e9EKqkyjF8XlP/XcZCyTf5RPzDLk0QFxIgFLQwRSkoJm83TAVMu3rWfiR1DnlYqT
-qsDnexZx+MsGRHbvKB75jZwsnE8flQHobzyjEjwYhdzNETT4ngUzSW2i6aQn1hFQ
-gRF9xxLD/39iKyrSh1iPEKIWsHewIjofrHlh1aVvYpIFoyZvG0/wt+Ziwx3MpZbO
-FKHfMo+4S6kPkE3hv1TCQCAOPSkEkvklmC5Zz2kB7F/Kyf9hA+s=
-=axU6
------END PGP SIGNATURE-----
-
---=_zucker.schokokeks.org-32049-1514806650-0001-2--
+--001a114fc9e010c0860561fa5527--
