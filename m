@@ -1,24 +1,21 @@
-Return-Path: matthias@urlichs.de
+Return-Path: dkg@fifthhorseman.net
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 04d00c6b
- for <wireguard@lists.zx2c4.com>; Tue, 9 Jan 2018 14:57:35 +0000 (UTC)
-Received: from netz.smurf.noris.de (mail.smurf.noris.de [213.95.149.21])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dfc5a3ac
- for <wireguard@lists.zx2c4.com>; Tue, 9 Jan 2018 14:57:35 +0000 (UTC)
-Received: from [2001:780:107:0:1278:d2ff:fea3:d4a6]
- by mail.vm.smurf.noris.de with esmtpsa
- (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim 4.89)
- (envelope-from <matthias@urlichs.de>) id 1eYvNU-000Ay3-Qp
- for wireguard@lists.zx2c4.com; Tue, 09 Jan 2018 15:59:48 +0100
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8aafa4b3
+ for <wireguard@lists.zx2c4.com>; Tue, 9 Jan 2018 17:01:05 +0000 (UTC)
+Received: from che.mayfirst.org (che.mayfirst.org [162.247.75.118])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 808b5887
+ for <wireguard@lists.zx2c4.com>; Tue, 9 Jan 2018 17:01:05 +0000 (UTC)
+From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
 Subject: Re: WireGuard in systemd-networkd
-To: wireguard@lists.zx2c4.com
-References: <CAHmME9pJHQOTkOm4Cn6rt-ER14L8Pb54L2r3=T=4DphA0wNBTA@mail.gmail.com>
-From: Matthias Urlichs <matthias@urlichs.de>
-Message-ID: <940e5f29-3108-b29b-56cc-9646cdc29a74@urlichs.de>
-Date: Tue, 9 Jan 2018 15:59:47 +0100
-MIME-Version: 1.0
 In-Reply-To: <CAHmME9pJHQOTkOm4Cn6rt-ER14L8Pb54L2r3=T=4DphA0wNBTA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
+References: <CAHmME9pJHQOTkOm4Cn6rt-ER14L8Pb54L2r3=T=4DphA0wNBTA@mail.gmail.com>
+Date: Tue, 09 Jan 2018 10:20:08 -0500
+Message-ID: <871siz6ouv.fsf@fifthhorseman.net>
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="=-=-=";
+ micalg=pgp-sha512; protocol="application/pgp-signature"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -28,15 +25,50 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On 09.01.2018 14:49, Jason A. Donenfeld wrote:
-> Thanks to the wonderful work of Jörg Thalheim, WireGuard is now
-> supported inside systemd-netword's .netdev files.
+--=-=-=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-That's great. Thaks for doing the work.
+On Tue 2018-01-09 14:49:13 +0100, Jason A. Donenfeld wrote:
 
-Speaking of systemd, and almost completely offtopic: would somebody be
-willing to add support for ppp/pppoe to systemd-networkd? that's still
-missing …
+> Thanks to the wonderful work of J=C3=B6rg Thalheim, WireGuard is now
+> supported inside systemd-netword's .netdev files. The syntax should be
+> pretty similar to wg(8). Expect for this to be released as part of the
+> next release of systemd, where you'll then be able to read the man
+> pages for using it.
 
--- 
--- Matthias Urlichs
+very cool!  systemd-networkd end up invoking wg(8)?  or does it interact
+with the kernel directly?
+
+if doesn't need wg(8), then once the new release of systemd is made, we
+may want to change the dependency recommendations for the wireguard
+kernel module packages.
+
+> Next up - anybody interested in providing support for NetworkManager?
+
+iirc, NetworkManager imports a big chunk of systemd in each release
+(yuck embedded code copies).  maybe it'll import the relevant wireguard
+bits as well?  that would probably make the NM work an easier lift.
+
+     --dkg
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEDuW+l5KC2AufdUDxzNLtlNIXOekFAlpU3agACgkQzNLtlNIX
+OenZJw/9E6D96CPQf4vnLgCIDqQRsU5XQqTgMhZEfw9LiR44yzcnLLz2iSeHHWLk
+qUq6ysX1Hc69v+oS65nzCKt2iHi6WXi/P/mxDkDIuCu40jNeOCxsKoG6Y0jMf6y/
+Dg3X52yxIXmooQxjBZudeGZjJ19YM7+bU7x5Y0yz+R4yk8fAO91K1ykWazqrPR5D
+jUT6EDYa7SzW8pkzKW5753N0RjVVWZEE6T4i+K6fRbdeSt2/Ihc4ygtAvwHcxXhg
+XvBjDSD6Pluqh+ePUySUUFReBg0BPSKcJ01flSNLY2rzs3+847voey+89LlkyYuP
+fu7AhJaodHPEinbPssNFiF51ozFmfxrOPysOFWRHUbjl8+Z45KrfxJN+g8VX+cyW
+KYFKcsrj2SehrwBqHntpsJq6GzvuMZj/ED02zU8SUk89dBV7vDAJIJjuvGQZko6v
+FOAWzQH/MBCJ2pHs6RohWJv9nd1pIQuTniF5hUXnXb4NMnFASQkqUnftp3R+iNM8
+CycW6KDpufbCLfQePf0pMM5zzwHllONx7gQ7keGC/TN2wYBDaTIgh3GaJS/QNxd9
+CeJTRFxx8XDxdRYE6qB7l+3PPWhjhQkvBXauwcoAGfF3BQMtCUBWHLMUi5rBdpp5
+TNjhpuFByd+oguhA6o9HwUTh+2UH+yeYby5cHXP5PfEJv5gxfeQ=
+=Lind
+-----END PGP SIGNATURE-----
+--=-=-=--
