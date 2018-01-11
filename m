@@ -1,32 +1,37 @@
 Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2a1beef2
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3483182f
  for <wireguard@lists.zx2c4.com>;
- Thu, 11 Jan 2018 14:58:22 +0000 (UTC)
+ Thu, 11 Jan 2018 14:59:57 +0000 (UTC)
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9c472021
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 54851714
  for <wireguard@lists.zx2c4.com>;
- Thu, 11 Jan 2018 14:58:22 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b80d5ca0
+ Thu, 11 Jan 2018 14:59:57 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f91be14f
  for <wireguard@lists.zx2c4.com>;
- Thu, 11 Jan 2018 14:49:31 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id c67db9ec
+ Thu, 11 Jan 2018 14:51:06 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id aa9fb9b7
  (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 11 Jan 2018 14:49:31 +0000 (UTC)
-Received: by mail-ot0-f181.google.com with SMTP id 37so2303270otv.6
- for <wireguard@lists.zx2c4.com>; Thu, 11 Jan 2018 07:00:58 -0800 (PST)
+ Thu, 11 Jan 2018 14:51:04 +0000 (UTC)
+Received: by mail-oi0-f48.google.com with SMTP id d124so1782531oib.13
+ for <wireguard@lists.zx2c4.com>; Thu, 11 Jan 2018 07:02:31 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <87efmy42c0.fsf@fifthhorseman.net>
+In-Reply-To: <87k1wo1pfu.fsf@fifthhorseman.net>
 References: <CAHmME9pJHQOTkOm4Cn6rt-ER14L8Pb54L2r3=T=4DphA0wNBTA@mail.gmail.com>
  <871siz6ouv.fsf@fifthhorseman.net>
  <CAHmME9qrfy4Lf78NkChdv6tPnSFTcGArwgsizAaapL9k=Tc31w@mail.gmail.com>
  <87efmy42c0.fsf@fifthhorseman.net>
+ <81bb0726-8f67-0163-875f-0d3403f8df29@urlichs.de>
+ <87wp0p1h5j.fsf@fifthhorseman.net>
+ <CAB=oiXauSSzhqEgF32spvWmkd3ZaGZfFmy5NEpQmvqxeuDASqw@mail.gmail.com>
+ <87k1wo1pfu.fsf@fifthhorseman.net>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 11 Jan 2018 16:00:55 +0100
-Message-ID: <CAHmME9o4oMAuW5n0f06-XAF+=kovi7BEi4GE3xjQ1-awrxgNvA@mail.gmail.com>
+Date: Thu, 11 Jan 2018 16:02:30 +0100
+Message-ID: <CAHmME9q8_4Ln=OB7_NDTzE3JpTdf8Ae4isJ+qiAVCJJS1qCDcQ@mail.gmail.com>
 Subject: Re: WireGuard in systemd-networkd
-To: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+To: Daniel Kahn Gillmor <dkg@fifthhorseman.net>,
+ Egbert Verhage <egbert@eggiecode.org>
 Content-Type: text/plain; charset="UTF-8"
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
@@ -38,28 +43,18 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hey Daniel,
-
-On Wed, Jan 10, 2018 at 8:09 AM, Daniel Kahn Gillmor
+On Thu, Jan 11, 2018 at 2:43 PM, Daniel Kahn Gillmor
 <dkg@fifthhorseman.net> wrote:
-> cool.  this sounds very much like you've decided that the netlink
-> interface is now stable, which is good to hear
-
-Yep!
-
->   0)  Recommends: wireguard-tools
->   4)  Recommends: wireguard-tools
->       Suggests: systemd
+> Matthias was suggesting a simply-named meta-package: just "wireguard",
+> which would ensure that both wireguard-dkms and wireguard-tools are
+> installed.  The advantage there is that you can tell people to do:
 >
+>    apt install wireguard
 >
-> Of the above, i think i'll probably either stick with 0 or move to 4.
-> given what you said above, i don't really like the idea of using the
-> disjunction; people already running systemd will have systemd-networkd
-> available; and i don't want the wireguard-dkms package to encourage
-> people to install systemd if they've already made a decision to avoid
-> the default and not use it.
+> and apt make sure the system has the common setup by default :)
 
-I think it probably makes most sense to stick with 0.
-
+This is a great idea. Let me know if you wind up making this. I've
+added Egbert to the CC so that he can make an identical change in the
+Ubuntu PPA.
 
 Jason
