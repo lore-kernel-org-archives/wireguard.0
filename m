@@ -1,21 +1,20 @@
-Return-Path: rumpelsepp@sevenbyte.org
+Return-Path: egbert@eggiecode.org
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 47d4fc69
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d42ea91f
  for <wireguard@lists.zx2c4.com>;
- Fri, 12 Jan 2018 07:38:12 +0000 (UTC)
-Received: from coruscant.sevenbyte.org (coruscant.sevenbyte.org
- [45.32.152.104])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f15f7449
+ Fri, 12 Jan 2018 15:48:16 +0000 (UTC)
+Received: from mail01.eggieservers.nl (mail01.eggieservers.nl
+ [149.210.159.147])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0348bcc3
  for <wireguard@lists.zx2c4.com>;
- Fri, 12 Jan 2018 07:38:12 +0000 (UTC)
-Received: from mail-lf0-f47.google.com (mail-lf0-f47.google.com
- [209.85.215.47]) (Authenticated sender: rumpelsepp@sevenbyte.org)
- by coruscant.sevenbyte.org (Postfix) with ESMTPSA id BDA4A4080E
- for <wireguard@lists.zx2c4.com>; Fri, 12 Jan 2018 08:40:49 +0100 (CET)
-Received: by mail-lf0-f47.google.com with SMTP id h140so4944483lfg.1
- for <wireguard@lists.zx2c4.com>; Thu, 11 Jan 2018 23:40:49 -0800 (PST)
-MIME-Version: 1.0
-In-Reply-To: <87k1wo1pfu.fsf@fifthhorseman.net>
+ Fri, 12 Jan 2018 15:48:15 +0000 (UTC)
+Message-ID: <1515772241.1125.13.camel@eggiecode.org>
+Subject: Re: WireGuard in systemd-networkd
+From: Egbert Verhage <egbert@eggiecode.org>
+To: Daniel Kahn Gillmor <dkg@fifthhorseman.net>, "Jason A. Donenfeld"
+ <Jason@zx2c4.com>
+Date: Fri, 12 Jan 2018 16:50:41 +0100
+In-Reply-To: <8760880xvk.fsf@fifthhorseman.net>
 References: <CAHmME9pJHQOTkOm4Cn6rt-ER14L8Pb54L2r3=T=4DphA0wNBTA@mail.gmail.com>
  <871siz6ouv.fsf@fifthhorseman.net>
  <CAHmME9qrfy4Lf78NkChdv6tPnSFTcGArwgsizAaapL9k=Tc31w@mail.gmail.com>
@@ -24,12 +23,10 @@ References: <CAHmME9pJHQOTkOm4Cn6rt-ER14L8Pb54L2r3=T=4DphA0wNBTA@mail.gmail.com>
  <87wp0p1h5j.fsf@fifthhorseman.net>
  <CAB=oiXauSSzhqEgF32spvWmkd3ZaGZfFmy5NEpQmvqxeuDASqw@mail.gmail.com>
  <87k1wo1pfu.fsf@fifthhorseman.net>
-From: Stefan Tatschner <rumpelsepp@sevenbyte.org>
-Date: Fri, 12 Jan 2018 08:40:46 +0100
-Message-ID: <CAB=oiXb4D+KsaY-2muX=wTXu3q22Mtf3dM-ANbBZcvV=WrYW5g@mail.gmail.com>
-Subject: Re: WireGuard in systemd-networkd
-To: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+ <CAHmME9q8_4Ln=OB7_NDTzE3JpTdf8Ae4isJ+qiAVCJJS1qCDcQ@mail.gmail.com>
+ <8760880xvk.fsf@fifthhorseman.net>
 Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -40,35 +37,62 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Thu, Jan 11, 2018 at 2:43 PM, Daniel Kahn Gillmor
-<dkg@fifthhorseman.net> wrote:
-> Hi Stefan--
->
-> Matthias was suggesting a simply-named meta-package: just "wireguard",
-> which would ensure that both wireguard-dkms and wireguard-tools are
-> installed.  The advantage there is that you can tell people to do:
->
->    apt install wireguard
->
-> and apt make sure the system has the common setup by default :)
+Hey dkg,
 
-Awesome! Thanks for clarifying this.
+I wanted to do the same thing with the meta package, so I have included
+your patch in the ubuntu ppa repo.
 
->
->> I just do
->>
->>   # ifup wg0
->>   # ifdown wg0
->>
->> and it's fine.
->
-> i'm glad it works for you, it's always nice to have positive feedback :)
+I have pushed the packages to the PPA, so will be up in 10min.
 
-:)
+Here the commit with the meta package patch:
+https://github.com/EggieCode/wireguard-ppa/commit/1c502977301cfc1695996
+ba68fa260576f0f0cad
 
-Stefan
+Thanks dkg for the patch!
 
->
-> happy hacking,
->
->     --dkg
+Greetz,
+Egbert
+
+On Thu, 2018-01-11 at 18:38 -0500, Daniel Kahn Gillmor wrote:
+> On Thu 2018-01-11 16:02:30 +0100, Jason A. Donenfeld wrote:
+> > On Thu, Jan 11, 2018 at 2:43 PM, Daniel Kahn Gillmor
+> > <dkg@fifthhorseman.net> wrote:
+> > > Matthias was suggesting a simply-named meta-package: just
+> > > "wireguard",
+> > > which would ensure that both wireguard-dkms and wireguard-tools
+> > > are
+> > > installed.  The advantage there is that you can tell people to
+> > > do:
+> > > 
+> > >    apt install wireguard
+> > > 
+> > > and apt make sure the system has the common setup by default :)
+> > 
+> > This is a great idea. Let me know if you wind up making this. I've
+> > added Egbert to the CC so that he can make an identical change in
+> > the
+> > Ubuntu PPA.
+> 
+> I've just uploaded this arrangement to debian, but it needs to clear
+> the
+> NEW queue, which can take a little while.
+> 
+> You should be able to follow the NEW queue here:
+> 
+>    https://ftp-master.debian.org/new.html
+> 
+> Egbert (or any other packager for a debian derivative) can see my
+> packaging here, if they're interested:
+> 
+>    https://salsa.debian.org/debian/wireguard
+> 
+> in particular:
+> 
+>    https://salsa.debian.org/debian/wireguard/commit/cc3cab4b799a64e9c
+> 74985da627fc85ba0ee2cc8
+> 
+> as always, I welcome feedback and suggestions for other improvements.
+> 
+> Regards,
+> 
+>         --dkg
