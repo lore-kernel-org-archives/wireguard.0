@@ -1,40 +1,27 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: mdt@emdete.de
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6ea33999
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 277dde74
  for <wireguard@lists.zx2c4.com>;
- Fri, 12 Jan 2018 19:42:47 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8ef00df3
+ Sat, 13 Jan 2018 16:27:14 +0000 (UTC)
+Received: from emdete.de (total-communication.vfnet.de [80.84.1.14])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b40de369
  for <wireguard@lists.zx2c4.com>;
- Fri, 12 Jan 2018 19:42:47 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 32e8a845
+ Sat, 13 Jan 2018 16:27:14 +0000 (UTC)
+Received: from localhost (emdete.de [local])
+ by emdete.de (OpenSMTPD) with ESMTPA id c989fb5b
  for <wireguard@lists.zx2c4.com>;
- Fri, 12 Jan 2018 19:33:56 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 3a4f018b
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Fri, 12 Jan 2018 19:33:55 +0000 (UTC)
-Received: by mail-oi0-f48.google.com with SMTP id o64so4655507oia.9
- for <wireguard@lists.zx2c4.com>; Fri, 12 Jan 2018 11:45:31 -0800 (PST)
-MIME-Version: 1.0
-In-Reply-To: <1515772241.1125.13.camel@eggiecode.org>
+ Sat, 13 Jan 2018 16:30:00 +0000 (UTC)
+Date: Sat, 13 Jan 2018 17:30:00 +0100
+From: "M. Dietrich" <mdt@emdete.de>
+Subject: Some gossip
+To: wireguard@lists.zx2c4.com
 References: <CAHmME9pJHQOTkOm4Cn6rt-ER14L8Pb54L2r3=T=4DphA0wNBTA@mail.gmail.com>
- <871siz6ouv.fsf@fifthhorseman.net>
- <CAHmME9qrfy4Lf78NkChdv6tPnSFTcGArwgsizAaapL9k=Tc31w@mail.gmail.com>
- <87efmy42c0.fsf@fifthhorseman.net>
- <81bb0726-8f67-0163-875f-0d3403f8df29@urlichs.de>
- <87wp0p1h5j.fsf@fifthhorseman.net>
- <CAB=oiXauSSzhqEgF32spvWmkd3ZaGZfFmy5NEpQmvqxeuDASqw@mail.gmail.com>
- <87k1wo1pfu.fsf@fifthhorseman.net>
- <CAHmME9q8_4Ln=OB7_NDTzE3JpTdf8Ae4isJ+qiAVCJJS1qCDcQ@mail.gmail.com>
- <8760880xvk.fsf@fifthhorseman.net> <1515772241.1125.13.camel@eggiecode.org>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 12 Jan 2018 20:45:29 +0100
-Message-ID: <CAHmME9qZuzMO7hRE7QUOnJq9jfbAsF+AdF7nWP=yUC8kzwHPsQ@mail.gmail.com>
-Subject: Re: WireGuard in systemd-networkd
-To: Egbert Verhage <egbert@eggiecode.org>
-Content-Type: multipart/alternative; boundary="001a113cbec8d0dbfa0562998146"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+ <81a28425-c131-c3d3-b15b-747aad682973@gmail.com>
+In-Reply-To: <81a28425-c131-c3d3-b15b-747aad682973@gmail.com>
+Message-Id: <1515860143.418c4n4pnq.astroid@morple.none>
+MIME-Version: 1.0
+Content-Type: multipart/signed; protocol="application/pgp-signature";
+ micalg=pgp-sha256; boundary="=-maPkuV+zxUYtD/gkplkq"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -44,164 +31,57 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---001a113cbec8d0dbfa0562998146
-Content-Type: text/plain; charset="UTF-8"
-
-Wonderful! Thanks guys. I'll update the documentation shortly.
-
-Jason
-
-On Jan 12, 2018 16:51, "Egbert Verhage" <egbert@eggiecode.org> wrote:
-
-> Hey dkg,
->
-> I wanted to do the same thing with the meta package, so I have included
-> your patch in the ubuntu ppa repo.
->
-> I have pushed the packages to the PPA, so will be up in 10min.
->
-> Here the commit with the meta package patch:
-> https://github.com/EggieCode/wireguard-ppa/commit/1c502977301cfc1695996
-> ba68fa260576f0f0cad
->
-> Thanks dkg for the patch!
->
-> Greetz,
-> Egbert
->
-> On Thu, 2018-01-11 at 18:38 -0500, Daniel Kahn Gillmor wrote:
-> > On Thu 2018-01-11 16:02:30 +0100, Jason A. Donenfeld wrote:
-> > > On Thu, Jan 11, 2018 at 2:43 PM, Daniel Kahn Gillmor
-> > > <dkg@fifthhorseman.net> wrote:
-> > > > Matthias was suggesting a simply-named meta-package: just
-> > > > "wireguard",
-> > > > which would ensure that both wireguard-dkms and wireguard-tools
-> > > > are
-> > > > installed.  The advantage there is that you can tell people to
-> > > > do:
-> > > >
-> > > >    apt install wireguard
-> > > >
-> > > > and apt make sure the system has the common setup by default :)
-> > >
-> > > This is a great idea. Let me know if you wind up making this. I've
-> > > added Egbert to the CC so that he can make an identical change in
-> > > the
-> > > Ubuntu PPA.
-> >
-> > I've just uploaded this arrangement to debian, but it needs to clear
-> > the
-> > NEW queue, which can take a little while.
-> >
-> > You should be able to follow the NEW queue here:
-> >
-> >    https://ftp-master.debian.org/new.html
-> >
-> > Egbert (or any other packager for a debian derivative) can see my
-> > packaging here, if they're interested:
-> >
-> >    https://salsa.debian.org/debian/wireguard
-> >
-> > in particular:
-> >
-> >    https://salsa.debian.org/debian/wireguard/commit/cc3cab4b799a64e9c
-> > 74985da627fc85ba0ee2cc8
-> >
-> > as always, I welcome feedback and suggestions for other improvements.
-> >
-> > Regards,
-> >
-> >         --dkg
->
-
---001a113cbec8d0dbfa0562998146
-Content-Type: text/html; charset="UTF-8"
+--=-maPkuV+zxUYtD/gkplkq
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"auto"><div data-smartmail=3D"gmail_signature">Wonderful! Thanks=
- guys. I&#39;ll update the documentation shortly.</div><div data-smartmail=
-=3D"gmail_signature" dir=3D"auto"><br></div><div data-smartmail=3D"gmail_si=
-gnature" dir=3D"auto">Jason</div></div><div class=3D"gmail_extra"><br><div =
-class=3D"gmail_quote">On Jan 12, 2018 16:51, &quot;Egbert Verhage&quot; &lt=
-;<a href=3D"mailto:egbert@eggiecode.org">egbert@eggiecode.org</a>&gt; wrote=
-:<br type=3D"attribution"><blockquote class=3D"gmail_quote" style=3D"margin=
-:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">Hey dkg,<br>
-<br>
-I wanted to do the same thing with the meta package, so I have included<br>
-your patch in the ubuntu ppa repo.<br>
-<br>
-I have pushed the packages to the PPA, so will be up in 10min.<br>
-<br>
-Here the commit with the meta package patch:<br>
-<a href=3D"https://github.com/EggieCode/wireguard-ppa/commit/1c502977301cfc=
-1695996
-ba68fa260576f0f0cad" rel=3D"noreferrer" target=3D"_blank">https://github.co=
-m/EggieCode/<wbr>wireguard-ppa/commit/<wbr>1c502977301cfc1695996<br>
-ba68fa260576f0f0cad</a><br>
-<br>
-Thanks dkg for the patch!<br>
-<br>
-Greetz,<br>
-Egbert<br>
-<br>
-On Thu, 2018-01-11 at 18:38 -0500, Daniel Kahn Gillmor wrote:<br>
-&gt; On Thu 2018-01-11 16:02:30 +0100, Jason A. Donenfeld wrote:<br>
-&gt; &gt; On Thu, Jan 11, 2018 at 2:43 PM, Daniel Kahn Gillmor<br>
-&gt; &gt; &lt;<a href=3D"mailto:dkg@fifthhorseman.net">dkg@fifthhorseman.ne=
-t</a>&gt; wrote:<br>
-&gt; &gt; &gt; Matthias was suggesting a simply-named meta-package: just<br=
->
-&gt; &gt; &gt; &quot;wireguard&quot;,<br>
-&gt; &gt; &gt; which would ensure that both wireguard-dkms and wireguard-to=
-ols<br>
-&gt; &gt; &gt; are<br>
-&gt; &gt; &gt; installed.=C2=A0 The advantage there is that you can tell pe=
-ople to<br>
-&gt; &gt; &gt; do:<br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 apt install wireguard<br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt; and apt make sure the system has the common setup by default=
- :)<br>
-&gt; &gt;<br>
-&gt; &gt; This is a great idea. Let me know if you wind up making this. I&#=
-39;ve<br>
-&gt; &gt; added Egbert to the CC so that he can make an identical change in=
-<br>
-&gt; &gt; the<br>
-&gt; &gt; Ubuntu PPA.<br>
-&gt;<br>
-&gt; I&#39;ve just uploaded this arrangement to debian, but it needs to cle=
-ar<br>
-&gt; the<br>
-&gt; NEW queue, which can take a little while.<br>
-&gt;<br>
-&gt; You should be able to follow the NEW queue here:<br>
-&gt;<br>
-&gt;=C2=A0 =C2=A0 <a href=3D"https://ftp-master.debian.org/new.html" rel=3D=
-"noreferrer" target=3D"_blank">https://ftp-master.debian.org/<wbr>new.html<=
-/a><br>
-&gt;<br>
-&gt; Egbert (or any other packager for a debian derivative) can see my<br>
-&gt; packaging here, if they&#39;re interested:<br>
-&gt;<br>
-&gt;=C2=A0 =C2=A0 <a href=3D"https://salsa.debian.org/debian/wireguard" rel=
-=3D"noreferrer" target=3D"_blank">https://salsa.debian.org/<wbr>debian/wire=
-guard</a><br>
-&gt;<br>
-&gt; in particular:<br>
-&gt;<br>
-&gt;=C2=A0 =C2=A0 <a href=3D"https://salsa.debian.org/debian/wireguard/comm=
-it/cc3cab4b799a64e9c" rel=3D"noreferrer" target=3D"_blank">https://salsa.de=
-bian.org/<wbr>debian/wireguard/commit/<wbr>cc3cab4b799a64e9c</a><br>
-&gt; 74985da627fc85ba0ee2cc8<br>
-&gt;<br>
-&gt; as always, I welcome feedback and suggestions for other improvements.<=
-br>
-&gt;<br>
-&gt; Regards,<br>
-&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0--dkg<br>
-</blockquote></div></div>
+Hi All,
 
---001a113cbec8d0dbfa0562998146--
+i looked for a connection-less VPN since long. i am not an
+expert in VPNs and do not want to dive into it too deep but i
+had the impression that all solutions today have a connection
+and once lost it has to be renogotiated.
+
+since using mosh i think this would be an incredible solution
+for a VPN.
+
+Quotation from Germano Massullo at Januar 9, 2018 18:19:
+> Jason it has been a pleasure to meet you at 34C3 :-)
+
+at the 34C3 i was concentrated with some coding at my notebook
+when a guy throw me a sticker directly onto my keyboard. i was
+upset and flicked it off but when i needed a break i grabed
+it and took a look. it was weird, some names, a logo, no url.
+
+the name was good enough to point to the project behind (same
+logo) after a search. and i found out: this seems to be the
+VPN i was looking for so long!
+
+so thank you for this incredible project! i could not attend
+at the workshop because it was too crowded (btw: today
+wireguard is the 6th hit when looking for vpn and mosh).
+
+M. Dietrich
+=
+
+--=-maPkuV+zxUYtD/gkplkq
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEE8ECycNYHT6atlYQywVmjQWUJtykFAlpaNAgACgkQwVmjQWUJ
+tymLwA/+PyxH3Jw8diNJDEgZROCxot8c8G6JTgXUYloO5KzmoDQW9Qqq/4QomV6t
+soljBtAK8Uk/Yj9CX1FO81ZX61lYk1zYhdPiNvL7n2Ermlg8JCpk0pkB+zKQw6tW
+/6s/pXdzgvRm/CqGrqOIJxf/SWS2M6xvPPDeryJbJ/XUgXCnitmcuwwV5SQQp4U5
+1iK+Z3Fdl3jWi0oy3Y93jQQxYkogcBKYx1rwyl9ipkmT9QNAUtl5ymzVKs00I2Lc
+VMVIJuEVrkNrLWTy6+qK6RMzB/KQP2wwQxSEOaE8NV3Xaf7tRdA9sSt5GIAVozTH
+HHJE/jGFBGmkuUwzGrz3TeewUtYSXLCIs2VcqoQNqKj0PEu0KxvdeHT/q6b3I4Di
+cc9DQsLB3SvMKKBnSrvrjUXDBnBMu6aQjkbgNEcJajNb+j3XoQPc7YJHrr+3wqsi
+kqYLLkDsclAnWcrUtOOH9H/5B9x64D+wuKm1oIG9X6GmoE66OrU90h0UWje4b93U
+tRCzdto/0rLtv+C3780mvT19SoBsiEAHENG0vonkwDIVgJTKYNu97BMfR/VOzRKo
+yAQBZ0pAgoSwMuVhU6C4BGX1FV16xmtxYwK/eieIzAlcb60cNXFincPLEVNX5tWc
+9aijSVYqR2ytf82fYGKWpqO7Lmyam/qRvDWL17NRCuXBKm/iQWQ=
+=5oWe
+-----END PGP SIGNATURE-----
+
+--=-maPkuV+zxUYtD/gkplkq--
