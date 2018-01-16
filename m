@@ -1,27 +1,22 @@
-Return-Path: subixonfire@gmail.com
+Return-Path: luizluca@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6d6c6ef2
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f4dfc041
  for <wireguard@lists.zx2c4.com>;
- Tue, 16 Jan 2018 19:14:29 +0000 (UTC)
-Received: from mail-yw0-f171.google.com (mail-yw0-f171.google.com
- [209.85.161.171])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 68d4f726
+ Tue, 16 Jan 2018 23:21:38 +0000 (UTC)
+Received: from mail-it0-f46.google.com (mail-it0-f46.google.com
+ [209.85.214.46])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ecd94eac
  for <wireguard@lists.zx2c4.com>;
- Tue, 16 Jan 2018 19:14:29 +0000 (UTC)
-Received: by mail-yw0-f171.google.com with SMTP id b129so7236240ywa.8
- for <wireguard@lists.zx2c4.com>; Tue, 16 Jan 2018 11:17:43 -0800 (PST)
+ Tue, 16 Jan 2018 23:21:38 +0000 (UTC)
+Received: by mail-it0-f46.google.com with SMTP id q8so6930271itb.2
+ for <wireguard@lists.zx2c4.com>; Tue, 16 Jan 2018 15:24:54 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CAByA2P0aAWtntN2dWTwa1i4HjAOTP5a_Xod93n9yTk9q_Yy9Zg@mail.gmail.com>
-References: <CAByA2P1s_SHXjyZvcDvCz7ehczf0bnNEe19F=-A4dUi5Q7BYJw@mail.gmail.com>
- <CAByA2P3iSs_1Hha=XZ7GShCh1QgxuOjvu2xZq3_VwQkiSkRQ_g@mail.gmail.com>
- <CAByA2P24P7wrLLkaKi5qQKFY+dkHX1wzy=npfwj8E-+WSuZPpg@mail.gmail.com>
- <CAByA2P0aAWtntN2dWTwa1i4HjAOTP5a_Xod93n9yTk9q_Yy9Zg@mail.gmail.com>
-From: Alen Opacic <subixonfire@gmail.com>
-Date: Tue, 16 Jan 2018 20:17:42 +0100
-Message-ID: <CAByA2P19rZDb4QFh__KnyhPhyfiMNOHJ13Rx4LV86V4LAS=EdA@mail.gmail.com>
-Subject: Android app error on samsung s6
+From: Luiz Angelo Daros de Luca <luizluca@gmail.com>
+Date: Tue, 16 Jan 2018 23:24:42 +0000
+Message-ID: <CAJq09z7WRCpOgF24QztfY2++C4tVD2MkN_w3YLoQpmDtiuh5Dw@mail.gmail.com>
+Subject: Sys CPU usage increasing over time
 To: wireguard@lists.zx2c4.com
-Content-Type: multipart/alternative; boundary="94eb2c0329ccbfd54a0562e9956c"
+Content-Type: multipart/alternative; boundary="94eb2c0b0c26bc46ab0562ed09ba"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -31,43 +26,98 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---94eb2c0329ccbfd54a0562e9956c
+--94eb2c0b0c26bc46ab0562ed09ba
 Content-Type: text/plain; charset="UTF-8"
 
-Using samsung s6 latest official firmware with selfbuild stock kernel with
-wireguard patch. Rooted with latest magisk.
+Hello,
 
-I can use wg-quick from terminal emulator without any problems.
+I'm testing wireguard with two LEDE (OpenWrt) 17.01.4 nodes. The "server"
+is a TL-WR2543ND with 64MB RAM and the "client" (the one with a defined
+endpoint address) a poor TL-WR741ND v4 with 32 RAM.
+Both are ar71xx systems, arch MIPS 24Kc CPU, with little to no performance
+difference.
 
-When i try using wireguard app i get an error: "unable to configure tunel".
+As TL-WR741ND has only 4 MB or flash, the smaller footprint of wireguard
+allowed me to squeeze all needed packages without removing any original
+package (as web gui) creating a custom image. That was unimaginable with
+openvpn. Thanks wireguard!
 
-Log here:https://pastebin.com/595a64U9
+Both are using a little bit outdated wireguard module because modules are
+only rebuild on new dot releases. Userland can be updated easier.
 
-The version published on play store before this  was working ok for me.
+kmod-wireguard - 4.4.92+0.0.20171017-1
+wireguard - 0.0.20171221-1
+wireguard-tools - 0.0.20171221-1
 
-Ps: thanks for all your hard work.
+Everything seems to work as expected. However, on the client (TL-WR741ND),
+I noticed that something between half a day to a couple of days normal
+network usage (not VPN) gets slower and slower. Checking the device,
+loadavg reaches values as 15 a little bit before the router stops to work
+and I need to do a cold restart. top tells me sys usage eats 90% of CPU. If
+I restart wireguard interface, nothing changes. The CPU falls drastically
+if I remove wireguard module from kernel (rmmod), returning to a normal
+loadavg of 0.05.
 
---94eb2c0329ccbfd54a0562e9956c
+My VPN link is normally idle, using a couple of MiB per day. The VPN usage
+seems to not affect the time needed to manifest the problem, but normal
+network usage does seem to make the problem appear sooner.
+
+The strange thing is that the "server" node does not show the same
+behavior. Maybe it is related to the fact that it has currently no local
+network usage there. Both nodes uses the same wireguard binary code.
+
+Is this a known issue of version 0.0.20171017? Or do I get something new? I
+tried to read all changelog since 20171017 but I could not identify any
+obvious fix.
+
+Is there anything I can do?
+
+Regards,
+
+
+-- 
+
+Luiz Angelo Daros de Luca
+luizluca@gmail.com
+
+--94eb2c0b0c26bc46ab0562ed09ba
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"auto"><span style=3D"font-family:sans-serif;font-size:12.8px">U=
-sing samsung s6 latest official firmware with selfbuild stock kernel with w=
-ireguard patch. Rooted with latest magisk.</span><div dir=3D"auto" style=3D=
-"font-family:sans-serif;font-size:12.8px"><br></div><div dir=3D"auto" style=
-=3D"font-family:sans-serif;font-size:12.8px">I can use wg-quick from termin=
-al emulator without any problems.</div><div dir=3D"auto" style=3D"font-fami=
-ly:sans-serif;font-size:12.8px"><br></div><div dir=3D"auto" style=3D"font-f=
-amily:sans-serif;font-size:12.8px">When i try using wireguard app i get an =
-error: &quot;unable to configure tunel&quot;.=C2=A0</div><div dir=3D"auto" =
-style=3D"font-family:sans-serif;font-size:12.8px"><br></div><div dir=3D"aut=
-o" style=3D"font-family:sans-serif;font-size:12.8px">Log here:<a href=3D"ht=
-tps://pastebin.com/595a64U9">https://pastebin.com/595a64U9</a></div><div di=
-r=3D"auto" style=3D"font-family:sans-serif;font-size:12.8px"><br></div><div=
- dir=3D"auto" style=3D"font-family:sans-serif;font-size:12.8px">The version=
- published on play store before this=C2=A0 was working ok for me.</div><div=
- dir=3D"auto" style=3D"font-family:sans-serif;font-size:12.8px"><br></div><=
-div dir=3D"auto" style=3D"font-family:sans-serif;font-size:12.8px">Ps: than=
-ks for all your hard work.</div></div>
+<div dir=3D"ltr">Hello,<div><br></div><div>I&#39;m testing wireguard with t=
+wo LEDE (OpenWrt) 17.01.4 nodes. The &quot;server&quot; is a=C2=A0TL-WR2543=
+ND with 64MB RAM and the &quot;client&quot; (the one with a defined endpoin=
+t address) a poor TL-WR741ND v4 with 32 RAM.</div><div>Both are ar71xx syst=
+ems, arch MIPS 24Kc CPU, with little to no performance difference.</div><di=
+v><br></div><div>As TL-WR741ND has only 4 MB or flash, the smaller footprin=
+t of wireguard allowed me to squeeze all needed packages without removing a=
+ny original package (as web gui) creating a custom image. That was unimagin=
+able with openvpn. Thanks wireguard!</div><div><br></div><div><div>Both are=
+ using a little bit outdated wireguard module because modules are only rebu=
+ild on new dot releases. Userland can be updated easier.</div><div><br></di=
+v><div><div>kmod-wireguard - 4.4.92+0.0.20171017-1</div><div>wireguard - 0.=
+0.20171221-1</div><div>wireguard-tools - 0.0.20171221-1</div></div><div><br=
+></div></div><div>Everything seems to work as expected. However, on the cli=
+ent (TL-WR741ND), I noticed that something between half a day to a couple o=
+f days normal network usage (not VPN) gets slower and slower. Checking the =
+device, loadavg reaches values as 15 a little bit before the router stops t=
+o work and I need to do a cold restart. top tells me sys usage eats 90% of =
+CPU. If I restart wireguard interface, nothing changes. The CPU falls drast=
+ically if I remove wireguard module from kernel (rmmod), returning to a nor=
+mal loadavg of 0.05.</div><div><br></div><div>My VPN link is normally idle,=
+ using a couple of MiB per day. The VPN usage seems to not affect the time =
+needed to manifest the problem, but normal network usage does seem to make =
+the problem appear sooner.</div><div><br></div><div>The strange thing is th=
+at the &quot;server&quot; node does not show the same behavior. Maybe it is=
+ related to the fact that it has currently no local network usage there. Bo=
+th nodes uses the same wireguard binary code.</div><div><br></div><div>Is t=
+his a known issue of version 0.0.20171017? Or do I get something new? I tri=
+ed to read all changelog since 20171017 but I could not identify any obviou=
+s fix.=C2=A0</div><div><br></div><div>Is there anything I can do?</div><div=
+><br></div><div>Regards,</div></div><br clear=3D"all"><br>-- <br><div dir=
+=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail_signature"><div =
+dir=3D"ltr"><p dir=3D"ltr">Luiz Angelo Daros de Luca<br>
+<a href=3D"mailto:luizluca@gmail.com">luizluca@gmail.com</a></p>
+</div></div>
 
---94eb2c0329ccbfd54a0562e9956c--
+--94eb2c0b0c26bc46ab0562ed09ba--
