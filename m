@@ -1,33 +1,22 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: labawi-wg@matrix-dream.net
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6917ee81
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ca41c2c5
  for <wireguard@lists.zx2c4.com>;
- Thu, 18 Jan 2018 17:40:59 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 80ce9a64
+ Thu, 18 Jan 2018 20:53:51 +0000 (UTC)
+Received: from matrix-dream.net (matrix2.matrix-dream.net [84.200.73.251])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8805eaa4
  for <wireguard@lists.zx2c4.com>;
- Thu, 18 Jan 2018 17:40:58 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 80e5383d
- for <wireguard@lists.zx2c4.com>;
- Thu, 18 Jan 2018 17:32:07 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 96dea340
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Thu, 18 Jan 2018 17:32:06 +0000 (UTC)
-Received: by mail-ot0-f177.google.com with SMTP id t20so11466501ote.11
- for <wireguard@lists.zx2c4.com>; Thu, 18 Jan 2018 09:44:27 -0800 (PST)
+ Thu, 18 Jan 2018 20:53:51 +0000 (UTC)
+Date: Thu, 18 Jan 2018 20:57:19 +0000
+From: Ivan =?iso-8859-1?Q?Lab=E1th?= <labawi-wg@matrix-dream.net>
+To: Kalin KOZHUHAROV <me.kalin@gmail.com>
+Subject: Re: passtos patch
+Message-ID: <20180118205718.GA12926@matrix-dream.net>
+References: <4dc5f671-790e-88df-5483-ee00716d570e@zenit.ru>
+ <CAKXLc7cAs1fQ49F1ez_--ednQM6=voJEfPGmapBX8wS=XPGvEQ@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <3c3ae663-329c-26f2-227b-68ef6e1b8c0a@dd-wrt.com>
-References: <b96c067bafcb48c3@frisell.zx2c4.com>
- <f2e330d7-d4cb-f317-5774-05136fcb8b48@dd-wrt.com>
- <CAHmME9r5gkLJw3_mxxxNRjdk=HRsupm2Y9RFGLfSWC5G2o0NQA@mail.gmail.com>
- <3c3ae663-329c-26f2-227b-68ef6e1b8c0a@dd-wrt.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 18 Jan 2018 18:44:26 +0100
-Message-ID: <CAHmME9r+NV7J12AAtPDfFxFWFd7xo=bRjBsVcZ-y7OgwiSnN9w@mail.gmail.com>
-Subject: Re: [ANNOUNCE] WireGuard Snapshot `0.0.20180118` Available
-To: Sebastian Gottschall <s.gottschall@dd-wrt.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+In-Reply-To: <CAKXLc7cAs1fQ49F1ez_--ednQM6=voJEfPGmapBX8wS=XPGvEQ@mail.gmail.com>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -38,23 +27,15 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Thu, Jan 18, 2018 at 6:39 PM, Sebastian Gottschall
-<s.gottschall@dd-wrt.com> wrote:
-> i will do some benchmarks later. i already did this
+On Thu, Jan 18, 2018 at 12:56:55PM +0100, Kalin KOZHUHAROV wrote:
+> 
+> Since this is not a common scenario, IMHO, and there are only a
+> handful TOS worth doing something, a workaround would be to bunch a
+> few wg tunnels (even bridge them at both ends?), use fwmark and mangle
+> the TOS with iptables/ift...
+> Just a suggestion, not tried obviously.
+> 
 
-https://git.zx2c4.com/WireGuard/commit/?id=91aedc06052856e4ac54dd48b1f6cb5ea4b3ba2e
-
-This works well. But would you spend some time trying to get a more
-optimal result and produce some precise numbers for your hardware?
-
-> another interesting patch i made locally was compiling all sources as single
-> by including a c files into a single small c source.
-> this allows me to set all functions to static, so the compiler will remove
-> unused code and is able to uninline things which are neccessary
-> side effect. the compiled ko binary is 20% smaller :-)
-
-Yep, old idea, but indeed works well. Too bad Linux doesn't have LTO.
-
-Do you have a link to the kernel sources you're using?
-
-Jason
+Perhaps it would be possible to use one of the **tables packet markings
+to store the TOS before it enters the tunnel and restore it on the
+encrypted packet.
