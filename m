@@ -1,25 +1,24 @@
-Return-Path: me.kalin@gmail.com
+Return-Path: mdt@emdete.de
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ad1923d7
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 29abdf18
  for <wireguard@lists.zx2c4.com>;
- Thu, 18 Jan 2018 11:53:49 +0000 (UTC)
-Received: from mail-ot0-f172.google.com (mail-ot0-f172.google.com
- [74.125.82.172])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a273c3be
+ Thu, 18 Jan 2018 12:56:47 +0000 (UTC)
+Received: from emdete.de (total-communication.vfnet.de [80.84.1.14])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dd190571
  for <wireguard@lists.zx2c4.com>;
- Thu, 18 Jan 2018 11:53:49 +0000 (UTC)
-Received: by mail-ot0-f172.google.com with SMTP id x15so19837259ote.0
- for <wireguard@lists.zx2c4.com>; Thu, 18 Jan 2018 03:57:16 -0800 (PST)
+ Thu, 18 Jan 2018 12:56:47 +0000 (UTC)
+Received: from localhost (emdete.de [local])
+ by emdete.de (OpenSMTPD) with ESMTPA id 21fcc285
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 18 Jan 2018 13:00:12 +0000 (UTC)
+Date: Thu, 18 Jan 2018 14:00:11 +0100
+From: "M. Dietrich" <mdt@emdete.de>
+Subject: Defaultroutepiercing
+To: wireguard@lists.zx2c4.com
+Message-Id: <1516279577.16nr5x0y18.astroid@morple.none>
 MIME-Version: 1.0
-In-Reply-To: <4dc5f671-790e-88df-5483-ee00716d570e@zenit.ru>
-References: <4dc5f671-790e-88df-5483-ee00716d570e@zenit.ru>
-From: Kalin KOZHUHAROV <me.kalin@gmail.com>
-Date: Thu, 18 Jan 2018 12:56:55 +0100
-Message-ID: <CAKXLc7cAs1fQ49F1ez_--ednQM6=voJEfPGmapBX8wS=XPGvEQ@mail.gmail.com>
-Subject: Re: passtos patch
-To: Vadim Zotov <z@zenit.ru>
-Content-Type: text/plain; charset="UTF-8"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: multipart/signed; protocol="application/pgp-signature";
+ micalg=pgp-sha256; boundary="=-kwilt9Hnc0Wz1IpYKLQX"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -29,29 +28,54 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Thu, Jan 18, 2018 at 12:30 PM, Vadim Zotov <z@zenit.ru> wrote:
-> in some circumstances it is important to set the TOS field in tunnel packet equivalent to payload packet TOS.
-> for example, our provider supports three different SLAs, depending on packet TOS field, with different jitter,
-> packet loss and service availability. In current release wireguard always set tos to 0.
->
-Yep, I completely agree to "in some circumstances" :-D
+--=-kwilt9Hnc0Wz1IpYKLQX
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
 
-I am not sure how copying the TOS field can be exploited, I guess it
-is one of those things "potential hazard, use KISS, avoid till needed
-AND assessment can be made"...
-Copying the field straight (in plain-text in a way), will provide some
-see-through-the-tunnel, which WG is designed NOT to allow, AFAIK.
+in case i want to use a vpn to route all my traffic through
+the tunnel i have a kind of hen&egg problem: how does my
+client contact the other side if i switch the default route?=20
 
-There are no optional parameters/options in wireguard (well, except
-fwmark), but I guess that one should be implemented as an option, at
-least at first.
-But again, that contradict KISS principle...
+the demo script adds a route to the other side in the
+moment of establishing the connection like this:
 
-Since this is not a common scenario, IMHO, and there are only a
-handful TOS worth doing something, a workaround would be to bunch a
-few wg tunnels (even bridge them at both ends?), use fwmark and mangle
-the TOS with iptables/ift...
-Just a suggestion, not tried obviously.
+	163.172.161.0 via 192.168.0.1 dev wlan0
 
-Regards,
-Kalin.
+(assuming 192.168.0.1 is my router). this goes well as long as
+the router (or the interface) doesnt change. this is fine for
+most VPNs as they fail when the connection is lost.
+
+wireguard is ment for the modern world and survives connection
+drops. but the route must be reestablished afterwords in case
+router or interface changed.
+
+is there a solution to automate that already? i know this is
+not really a wireguard topic as it has to be done near dhcp.
+
+this should have been solved for android already or am i
+wrong?
+
+M. Dietrich
+=
+
+--=-kwilt9Hnc0Wz1IpYKLQX
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEE8ECycNYHT6atlYQywVmjQWUJtykFAlpgmlwACgkQwVmjQWUJ
+tym8tBAApcbFWr7o85yDCox5P4ubwdlOuJmiJoOeAVY74iACk/tJfuEqTusNCZII
+pcWzF6lrvtxKTjuSiqyPAppfag0HPoazBTfy3gxLgU+MASnDhGVFq8DSAYt+j2d/
+dwf3kGZmsMIwJjSfcmOvlHlMWSSnDBBo34MHA6IRoP1RR4W7NJNpnSgzKqO4cSeL
+WFMYwz8tZCdWzmh84N8cEkjSI19eQFSnwcrJTJZAbYszTysTaVg0weW0GOt6Piae
+rMyXGI14ATJYVKxHgxhKY0DefkUPzK/hiSyVhwkrWqSfwQcehBhsjF8L0BSVbqkt
+VzZ2/iHvmOdVsf2FCWbdR5I9JJdTNBf2vS5MM5n+V+CuwAer++C3laLrmej4TF0q
+8C/hISMQBnYRsIrCSx5xYuL0Mz6E/A4IZl8dE/HedkYGShGp2X/+k1qw/OvCKNIQ
+WJ+VuquWuDHvY11Qp1sDJtrvK5GwJaK7i7BRggmJZfGqRvLx1SeryuYWwXTQiVjh
+Ba+VmHmAQ6m6MZ/gbwjBB/5MU9nW/wncQfaBUPIidcjULSxBY029BVDFgO9AhIeL
+aUyJ3783gmII2N/hqnFKT7stnGtXZKLSsiLbjrblxC3hYqE6Zu6rfSRjKrFzDxyc
+QVTdUlSamdztkW8JexB95AgEeilqPPg0WNaq+lngfJOAE8jSunQ=
+=dte5
+-----END PGP SIGNATURE-----
+
+--=-kwilt9Hnc0Wz1IpYKLQX--
