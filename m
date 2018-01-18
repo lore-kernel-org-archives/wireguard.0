@@ -1,31 +1,27 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: matthias@urlichs.de
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 10f9d541
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3ed33325
  for <wireguard@lists.zx2c4.com>;
- Thu, 18 Jan 2018 12:59:19 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9bd07eed
+ Thu, 18 Jan 2018 13:00:46 +0000 (UTC)
+Received: from netz.smurf.noris.de (mail.smurf.noris.de [213.95.149.21])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f9be5240
  for <wireguard@lists.zx2c4.com>;
- Thu, 18 Jan 2018 12:59:18 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 359b3fad
- for <wireguard@lists.zx2c4.com>;
- Thu, 18 Jan 2018 12:50:27 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id f1b0726a
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Thu, 18 Jan 2018 12:50:27 +0000 (UTC)
-Received: by mail-ot0-f178.google.com with SMTP id r4so16152961oti.12
- for <wireguard@lists.zx2c4.com>; Thu, 18 Jan 2018 05:02:46 -0800 (PST)
+ Thu, 18 Jan 2018 13:00:46 +0000 (UTC)
+Received: from hyper1.noris.net ([62.128.1.62] helo=[10.6.0.3])
+ by mail.vm.smurf.noris.de with esmtpsa
+ (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim 4.89)
+ (envelope-from <matthias@urlichs.de>) id 1ec9rJ-000AZC-O9
+ for wireguard@lists.zx2c4.com; Thu, 18 Jan 2018 14:03:57 +0100
+Subject: Re: passtos patch
+To: wireguard@lists.zx2c4.com
+References: <4dc5f671-790e-88df-5483-ee00716d570e@zenit.ru>
+ <CAKXLc7cAs1fQ49F1ez_--ednQM6=voJEfPGmapBX8wS=XPGvEQ@mail.gmail.com>
+From: Matthias Urlichs <matthias@urlichs.de>
+Message-ID: <77d34157-cbe4-8085-7168-9a0e5fe52505@urlichs.de>
+Date: Thu, 18 Jan 2018 14:03:56 +0100
 MIME-Version: 1.0
-In-Reply-To: <1516279577.16nr5x0y18.astroid@morple.none>
-References: <1516279577.16nr5x0y18.astroid@morple.none>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 18 Jan 2018 14:02:45 +0100
-Message-ID: <CAHmME9oiqr7dN+riRgJ0jXxxwuXB0U9ot94GsoM7KUWGbEE-0Q@mail.gmail.com>
-Subject: Re: Defaultroutepiercing
-To: "M. Dietrich" <mdt@emdete.de>
-Content-Type: text/plain; charset="UTF-8"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+In-Reply-To: <CAKXLc7cAs1fQ49F1ez_--ednQM6=voJEfPGmapBX8wS=XPGvEQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -35,13 +31,21 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
- Take a look at what wg-quick does to solve this:
+On 18.01.2018 12:56, Kalin KOZHUHAROV wrote:
+> a workaround would be to bunch a
+> few wg tunnels (even bridge them at both ends?), use fwmark and mangle
+> the TOS with iptables/ift...
 
-https://git.zx2c4.com/WireGuard/tree/src/tools/wg-quick.bash#n162
+So instead of outside information being visible by way of the TOS field
+it's now visible by way of different UDP ports we're talking to.
 
-It uses policy routing, which is much nicer than overriding the default rou=
-te.
+I don't see any advantage here.
 
-If, however, you do with to do it the old 0/1, 128/1 way, here's a
-script to automate that: https://=D7=90.cc/gvFOR5BO/bash But I'd recommend
-doing the trick that wg-quick does.
+In fact I don't see much advantage of passing TOS out in the first
+place. Either you have a reliable transit network with short queues, or
+you don't. In the former case TOS is useless. In the latter case you
+have other problems which a TOS field cannot fix anyway. (OK, this is a
+bit more black+white than the Real World, but …)
+
+-- 
+-- Matthias Urlichs
