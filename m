@@ -1,28 +1,26 @@
 Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0c03ee7b
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1341280c
  for <wireguard@lists.zx2c4.com>;
- Thu, 18 Jan 2018 15:38:43 +0000 (UTC)
+ Thu, 18 Jan 2018 15:40:18 +0000 (UTC)
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1abbeeda
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4dcfdb77
  for <wireguard@lists.zx2c4.com>;
- Thu, 18 Jan 2018 15:38:43 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 23ccac22
+ Thu, 18 Jan 2018 15:40:18 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4df83363
  for <wireguard@lists.zx2c4.com>;
- Thu, 18 Jan 2018 15:29:51 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 010da899
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ Thu, 18 Jan 2018 15:31:27 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 512e4e86
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 18 Jan 2018 15:29:51 +0000 (UTC)
-Received: by mail-ot0-f171.google.com with SMTP id v5so10095588oth.5
- for <wireguard@lists.zx2c4.com>; Thu, 18 Jan 2018 07:42:11 -0800 (PST)
-MIME-Version: 1.0
+ Thu, 18 Jan 2018 15:31:27 +0000 (UTC)
+Date: Thu, 18 Jan 2018 16:43:46 +0100
+To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 18 Jan 2018 16:42:10 +0100
-Message-ID: <CAHmME9pWnFh4jN72hRo6kFzWTEQn4xF8AGNQUg8r3g_eAPBvdg@mail.gmail.com>
-Subject: Formally Verified Cryptographic Primitive Implementations
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+Subject: [ANNOUNCE] WireGuard Snapshot `0.0.20180118` Available
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Message-Id: <b96c067bafcb48c3@frisell.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -32,74 +30,90 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi folks,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Writing crypto code is hard and sometimes scary. Especially on things
-like elliptic curves and big number arithmetic, subtle but critical
-bugs often sit around undetected for years. For this reason, I've been
-working with some researchers at INRIA on using a formally verified
-Curve25519 implementation inside WireGuard. This last week I had the
-pleasure of talking with INRIA researchers and MIT researchers about
-related efforts to automatically generate C implementations of
-elliptic curve scalar multiplication from formal models. These models
-produce proofs of correctness alongside machine-generated C. I've
-taken these implementations and integrated them into WireGuard.
+Hello,
 
-For 64-bit Curve25519 multiplication, we're using HACL* [1], which has
-specifications written in F* [2] and passes them through KreMLin [3]
-for C generation. You can read the INRIA researchers paper [4] for
-more information. Not only is this formally verified, but it is also
-faster than our previous implementation (agl's donna-64). Mozilla's
-NSS is doing something similar with HACL*.
+A new snapshot, `0.0.20180118`, has been tagged in the git repository.
 
-For 32-bit Curve25519 multiplication, we're using Fiat-Crypto [5],
-which has specifications written in the abstract proof language Coq
-[6], which also generates C code. These MIT researchers also have a
-paper available [7]. This is faster than what we're using before
-(agl's donna-32) and uses much less stack space, which means we no
-longer need to kmalloc on platforms without separate irq stacks, which
-is a nice boost. Google's BoringSSL is doing something similar with
-Fiat-Crypto.
+Please note that this snapshot is, like the rest of the project at this point
+in time, experimental, and does not consitute a real release that would be
+considered secure and bug-free. WireGuard is generally thought to be fairly
+stable, and most likely will not crash your computer (though it may).
+However, as this is a pre-release snapshot, it comes with no guarantees, and
+its security is not yet to be depended on; it is not applicable for CVEs.
 
-Note that not _all_ of our cryptographic primitives are verified.
-We're starting with replacing these two C implementations with
-formally verified ones. Over time, we'll gradually replace remaining
-existing implementations with formally verified counterparts. But
-certainly, as this research is state of the art and quite new, the
-work here is in the evolutionary category.
+With all that said, if you'd like to test this snapshot out, there are a
+few relevent changes.
 
-Some speed results using my kbench9000 software [8] comparing the new
-(top two lines) and old (bottom two lines), with turbo turned on:
+== Changes ==
 
-Xeon E3-1505M v5 [9] -- 14nm Skylake Laptop
-hacl64: 109783 cycles per call
-fiat32: 232710 cycles per call
-donna64: 121794 cycles per call
-donna32: 411588 cycles per call
+  * receive: treat packet checking as irrelevant for timers
+  
+  Small simplification to the state machine, as discussed with Mathias
+  Hall-Andersen.
+  
+  * socket: check for null socket before fishing out sport
+  * wg-quick: ifnames have max len of 15
+  * tools: plug memleak in config error path
+  
+  Important bug fixes.
+  
+  * external-tests: add python implementation
+  
+  Piotr Lizonczyk has contributed a test vector written in Python.
+  
+  * poly1305: remove indirect calls
+  
+  From Samuel Neves, we now are in a better position to mitigate speculative
+  execution attacks.
+  
+  * curve25519: modularize implementation
+  * curve25519: import 32-bit fiat-crypto implementation
+  * curve25519: import 64-bit hacl-star implementation
+  * curve25519: resolve symbol clash between fe types
+  * curve25519: wire up new impls and remove donna
+  * tools: import new curve25519 implementations
+  * contrib: keygen-html: update curve25519 implementation
+  
+  Two of our Curve25519 implementations now use formally verified C. Read this
+  mailing list post for more information:
+    https://lists.zx2c4.com/pipermail/wireguard/2018-January/002304.html
 
-Core i5-5200U [10] -- 14 nm Broadwell Laptop
-hacl64: 127001 cycles per call
-fiat32: 253234 cycles per call
-donna64: 137200 cycles per call
-donna32: 438816 cycles per call
+As always, the source is available at https://git.zx2c4.com/WireGuard/ and
+information about the project is available at https://www.wireguard.com/ .
 
-I've updated the WireGuard formal verification site [11] to contain
-this information. In a few days I expect to update this again with
-some further exciting results in the same formal verification genre.
+This snapshot is available in tarball form here:
+  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-0.0.20180118.tar.xz
+  SHA2-256: 463f3b402deb66b7ceac8df2d50944f32683933356455d6c1c7453926db3a8a3
+  BLAKE2b-256: fe7e3f12c084e50bf2794abafbe8aee48d58f318d508a59c0a4d2b27505b9d01
 
-Let me know if you have any questions.
+If you're a snapshot package maintainer, please bump your package version. If
+you're a user, the WireGuard team welcomes any and all feedback on this latest
+snapshot.
 
-Regards,
-Jason
+Finally, WireGuard development thrives on donations. By popular demand, we
+have a webpage for this: https://www.wireguard.com/donations/
 
-[1] https://github.com/mitls/hacl-star
-[2] https://www.fstar-lang.org/
-[3] https://github.com/FStarLang/kremlin
-[4] https://eprint.iacr.org/2017/536.pdf
-[5] https://github.com/mit-plv/fiat-crypto
-[6] https://coq.inria.fr
-[7] https://people.csail.mit.edu/jgross/personal-website/papers/2018-fiat-crypto-pldi-draft.pdf
-[8] https://git.zx2c4.com/kbench9000/about/
-[9] https://ark.intel.com/products/89608/Intel-Xeon-Processor-E3-1505M-v5-8M-Cache-2_80-GHz
-[10] https://ark.intel.com/products/85212/Intel-Core-i5-5200U-Processor-3M-Cache-up-to-2_70-GHz
-[11] https://www.wireguard.com/formal-verification/
+Thank you,
+Jason Donenfeld
+
+
+-----BEGIN PGP SIGNATURE-----
+
+iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAlpgwKsQHGphc29uQHp4
+MmM0LmNvbQAKCRBJ/HASpd4Drpz+D/9HDOJct7M9kqeHl/jZO3q/ozla1XNYj7cm
+6lGdRNWbaX9MM+Gcuq/5X/CX4J0UKP68DQIQB1B5u6uFe0PeGvwz7Pgd16vxMIPU
+vk7PKVeiQ4dHX81lBG201k9uI+ZmYaJexsiL0lFIQ62WFEGH3ckMgOg3ZeXHs5hx
+FaEqymV/Sn6RguWD+VKPcdK3WVBYorRUUzBXg+FQocR6UB0dgNqcLazPScVpn4W9
+Kurfvru2UoWBXDPicMY+yqJEq52ArS5corHeu06Cu1E8W2gWce+EScJudMOeJzcF
+60imzKDJojfazvXR2WAkkVdQxZ8owi79EO716j70R/TZhHO4oUnCOqwDn/s2zpBy
+goqRuIqBr5Y8wFNwA10RUfo4rfWP2ltBvmRqwKKNGVo4VKuyVS7FMXEikxZedkKq
+e8r+rThW3e7P8dlVq0VhskcrMIYeXvgHVgXdyclie4WRIMyGIfH08pCwuVHnMpta
+Mld/Pfj41Aus3AwqC2iiFmtPulWSrUJXm4eQk+qI41XvXLC36Z82b/SPoFb53uIX
+VVFljuIXHpQseImGvNynqCFqHVypXPqVUz8jbGINvZnocZPAz2fI7bLPXigTV5PR
+3bGRRu8TNi7afmZsMW2jzT2EzXO1mFKEY1NVSoxk41/b3ZOZX6Y+a9SuVhAfQdk0
+QX8FwAfsYQ==
+=1i3k
+-----END PGP SIGNATURE-----
