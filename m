@@ -1,22 +1,29 @@
-Return-Path: greg@kroah.com
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 113bf794
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fbf70653
  for <wireguard@lists.zx2c4.com>;
- Fri, 19 Jan 2018 08:26:24 +0000 (UTC)
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
- [66.111.4.25])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 259a084b
+ Fri, 19 Jan 2018 13:18:09 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2210f777
  for <wireguard@lists.zx2c4.com>;
- Fri, 19 Jan 2018 08:26:24 +0000 (UTC)
-Date: Fri, 19 Jan 2018 09:29:57 +0100
-From: Greg KH <greg@kroah.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: Re: Formally Verified Cryptographic Primitive Implementations
-Message-ID: <20180119082957.GB14517@kroah.com>
-References: <CAHmME9pWnFh4jN72hRo6kFzWTEQn4xF8AGNQUg8r3g_eAPBvdg@mail.gmail.com>
+ Fri, 19 Jan 2018 13:18:09 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 89c63ebb
+ for <wireguard@lists.zx2c4.com>;
+ Fri, 19 Jan 2018 13:09:17 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 8ec29477
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Fri, 19 Jan 2018 13:09:16 +0000 (UTC)
+Received: by mail-ot0-f174.google.com with SMTP id t35so1355856otd.13
+ for <wireguard@lists.zx2c4.com>; Fri, 19 Jan 2018 05:21:43 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-In-Reply-To: <CAHmME9pWnFh4jN72hRo6kFzWTEQn4xF8AGNQUg8r3g_eAPBvdg@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Fri, 19 Jan 2018 14:21:42 +0100
+Message-ID: <CAHmME9rU+n6bMB+eYKu74yVn2bNkMJLX=FP-XbfKt+qjsoTVYQ@mail.gmail.com>
+Subject: decoupling version dependencies from metapackage in debian/ubuntu?
+To: Egbert Verhage <egbert@eggiecode.org>,
+ Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+Content-Type: text/plain; charset="UTF-8"
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -27,67 +34,27 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Thu, Jan 18, 2018 at 04:42:10PM +0100, Jason A. Donenfeld wrote:
-> Hi folks,
-> 
-> Writing crypto code is hard and sometimes scary. Especially on things
-> like elliptic curves and big number arithmetic, subtle but critical
-> bugs often sit around undetected for years. For this reason, I've been
-> working with some researchers at INRIA on using a formally verified
-> Curve25519 implementation inside WireGuard. This last week I had the
-> pleasure of talking with INRIA researchers and MIT researchers about
-> related efforts to automatically generate C implementations of
-> elliptic curve scalar multiplication from formal models. These models
-> produce proofs of correctness alongside machine-generated C. I've
-> taken these implementations and integrated them into WireGuard.
-> 
-> For 64-bit Curve25519 multiplication, we're using HACL* [1], which has
-> specifications written in F* [2] and passes them through KreMLin [3]
-> for C generation. You can read the INRIA researchers paper [4] for
-> more information. Not only is this formally verified, but it is also
-> faster than our previous implementation (agl's donna-64). Mozilla's
-> NSS is doing something similar with HACL*.
-> 
-> For 32-bit Curve25519 multiplication, we're using Fiat-Crypto [5],
-> which has specifications written in the abstract proof language Coq
-> [6], which also generates C code. These MIT researchers also have a
-> paper available [7]. This is faster than what we're using before
-> (agl's donna-32) and uses much less stack space, which means we no
-> longer need to kmalloc on platforms without separate irq stacks, which
-> is a nice boost. Google's BoringSSL is doing something similar with
-> Fiat-Crypto.
-> 
-> Note that not _all_ of our cryptographic primitives are verified.
-> We're starting with replacing these two C implementations with
-> formally verified ones. Over time, we'll gradually replace remaining
-> existing implementations with formally verified counterparts. But
-> certainly, as this research is state of the art and quite new, the
-> work here is in the evolutionary category.
-> 
-> Some speed results using my kbench9000 software [8] comparing the new
-> (top two lines) and old (bottom two lines), with turbo turned on:
-> 
-> Xeon E3-1505M v5 [9] -- 14nm Skylake Laptop
-> hacl64: 109783 cycles per call
-> fiat32: 232710 cycles per call
-> donna64: 121794 cycles per call
-> donna32: 411588 cycles per call
-> 
-> Core i5-5200U [10] -- 14 nm Broadwell Laptop
-> hacl64: 127001 cycles per call
-> fiat32: 253234 cycles per call
-> donna64: 137200 cycles per call
-> donna32: 438816 cycles per call
-> 
-> I've updated the WireGuard formal verification site [11] to contain
-> this information. In a few days I expect to update this again with
-> some further exciting results in the same formal verification genre.
-> 
-> Let me know if you have any questions.
+Hey Egbert, Daniel,
 
-No questions, just a general, "Wow, this is great work!"
+Someone in #wireguard is getting weird errors about version
+dependencies between packages. I started looking into it and noticed
+the strong coupling between the metapackage version and the other two
+packages' versions.
 
-It's wonderful to see this happen, thanks so much for pushing this
-forward.
+The users' issue seems mostly like an Ubuntu problem: they build _all,
+_amd64, and _x86 immediately, but delay the other architectures until
+later. So, the user in #wireguard was using an aarch64 board, which
+pulled in the newer _all package, but that package was unable to
+subsequently satisfy its architecture-specific dependencies, since
+they hadn't been built yet. Annoying Launchpad bug; news at 11.
 
-greg k-h
+But regardless of Launchpad particularities, I was wondering what the
+motivation is for coupling versions together. Since the Netlink
+changes, there should be compatibility between the tools and the
+module. Does that mean it's not useful for the metapackage to do
+strong coupling? Or is there some other factor this is accounting for
+that I don't know about.
+
+(Apologies in advance if I've managed to misunderstand dpkg again.)
+
+Jason
