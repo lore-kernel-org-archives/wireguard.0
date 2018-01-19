@@ -1,23 +1,22 @@
-Return-Path: dkg@fifthhorseman.net
+Return-Path: greg@kroah.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3e8214eb
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 113bf794
  for <wireguard@lists.zx2c4.com>;
- Fri, 19 Jan 2018 04:01:16 +0000 (UTC)
-Received: from che.mayfirst.org (che.mayfirst.org [162.247.75.118])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b1a0db48
+ Fri, 19 Jan 2018 08:26:24 +0000 (UTC)
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
+ [66.111.4.25])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 259a084b
  for <wireguard@lists.zx2c4.com>;
- Fri, 19 Jan 2018 04:01:16 +0000 (UTC)
-From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>, Vadim Zotov <z@zenit.ru>
-Subject: Re: passtos patch
-In-Reply-To: <CAHmME9rL9Koi2-vctwmTjCf2DCMCTEOcueJJNLsprO03-3gwMQ@mail.gmail.com>
-References: <4dc5f671-790e-88df-5483-ee00716d570e@zenit.ru>
- <CAHmME9rL9Koi2-vctwmTjCf2DCMCTEOcueJJNLsprO03-3gwMQ@mail.gmail.com>
-Date: Thu, 18 Jan 2018 23:04:39 -0500
-Message-ID: <87y3ku4hpk.fsf@fifthhorseman.net>
+ Fri, 19 Jan 2018 08:26:24 +0000 (UTC)
+Date: Fri, 19 Jan 2018 09:29:57 +0100
+From: Greg KH <greg@kroah.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: Re: Formally Verified Cryptographic Primitive Implementations
+Message-ID: <20180119082957.GB14517@kroah.com>
+References: <CAHmME9pWnFh4jN72hRo6kFzWTEQn4xF8AGNQUg8r3g_eAPBvdg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
- micalg=pgp-sha512; protocol="application/pgp-signature"
+Content-Type: text/plain; charset=us-ascii
+In-Reply-To: <CAHmME9pWnFh4jN72hRo6kFzWTEQn4xF8AGNQUg8r3g_eAPBvdg@mail.gmail.com>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -28,51 +27,67 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---=-=-=
-Content-Type: text/plain
+On Thu, Jan 18, 2018 at 04:42:10PM +0100, Jason A. Donenfeld wrote:
+> Hi folks,
+> 
+> Writing crypto code is hard and sometimes scary. Especially on things
+> like elliptic curves and big number arithmetic, subtle but critical
+> bugs often sit around undetected for years. For this reason, I've been
+> working with some researchers at INRIA on using a formally verified
+> Curve25519 implementation inside WireGuard. This last week I had the
+> pleasure of talking with INRIA researchers and MIT researchers about
+> related efforts to automatically generate C implementations of
+> elliptic curve scalar multiplication from formal models. These models
+> produce proofs of correctness alongside machine-generated C. I've
+> taken these implementations and integrated them into WireGuard.
+> 
+> For 64-bit Curve25519 multiplication, we're using HACL* [1], which has
+> specifications written in F* [2] and passes them through KreMLin [3]
+> for C generation. You can read the INRIA researchers paper [4] for
+> more information. Not only is this formally verified, but it is also
+> faster than our previous implementation (agl's donna-64). Mozilla's
+> NSS is doing something similar with HACL*.
+> 
+> For 32-bit Curve25519 multiplication, we're using Fiat-Crypto [5],
+> which has specifications written in the abstract proof language Coq
+> [6], which also generates C code. These MIT researchers also have a
+> paper available [7]. This is faster than what we're using before
+> (agl's donna-32) and uses much less stack space, which means we no
+> longer need to kmalloc on platforms without separate irq stacks, which
+> is a nice boost. Google's BoringSSL is doing something similar with
+> Fiat-Crypto.
+> 
+> Note that not _all_ of our cryptographic primitives are verified.
+> We're starting with replacing these two C implementations with
+> formally verified ones. Over time, we'll gradually replace remaining
+> existing implementations with formally verified counterparts. But
+> certainly, as this research is state of the art and quite new, the
+> work here is in the evolutionary category.
+> 
+> Some speed results using my kbench9000 software [8] comparing the new
+> (top two lines) and old (bottom two lines), with turbo turned on:
+> 
+> Xeon E3-1505M v5 [9] -- 14nm Skylake Laptop
+> hacl64: 109783 cycles per call
+> fiat32: 232710 cycles per call
+> donna64: 121794 cycles per call
+> donna32: 411588 cycles per call
+> 
+> Core i5-5200U [10] -- 14 nm Broadwell Laptop
+> hacl64: 127001 cycles per call
+> fiat32: 253234 cycles per call
+> donna64: 137200 cycles per call
+> donna32: 438816 cycles per call
+> 
+> I've updated the WireGuard formal verification site [11] to contain
+> this information. In a few days I expect to update this again with
+> some further exciting results in the same formal verification genre.
+> 
+> Let me know if you have any questions.
 
-On Thu 2018-01-18 17:11:16 +0100, Jason A. Donenfeld wrote:
-> Not sure the infoleak is worth it.
->
-> List: thoughts?
+No questions, just a general, "Wow, this is great work!"
 
-I don't think the infoleak is worth it.  Certainly not by default.
+It's wonderful to see this happen, thanks so much for pushing this
+forward.
 
-and i know wg doesn't want to have a lot of fiddly knobs, so if it's not
-by default, please don't add a fiddly knob here.
-
-As just one scenario where it's harmful, consider the case where your
-ISP wants to sell you VoIP service.  They have a concrete financial
-incentive to delay or add jitter to packets coming from you marked with
-common VoIP ToS markings if your VoIP connections are not made through
-their competing service.  If your VoIP traffic goes out via wireguard,
-your ISP will damage it to try to convince you that their service is
-what you should be using :/
-
-The goal of wireguard-style tunnelling is to avoid leaking information
-about what the user is actively doing.  Let's not introduce exceptions
-where we actively try to export otherwise-confidential information
-outside the encrypted envelope.
-
-        --dkg
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEzicvlOwymaWlnoHjyu+ogyFnUzMFAlphblcACgkQyu+ogyFn
-UzO/WQ/+JQ3WfwT7dP3tgq8ljgUGiNZZJnXlf+qbIM9OYZGXT1iHtKx7e4C5XSUk
-raepg66qNvXQsTxRypFdd8pc2bt6tmwr8Vk4tsJdB4TPO1pPsKYL65fjCcRBx4LM
-x9uFh60mHlmAbU7bf5jaSpNizio1KGv63yPQUdsq9SMbbV3eDRR3UDDqZUQqTHyf
-uSaGKNXYyn0+UboMvNGGUyrrj5yM8PxZZvZwXNn2F71cr6xc3RJ1QFF00FQ3fwsr
-IrY/hx7ofzExtzzq9B73jv0f9McO80T18jSCxdbAtUdpa6jTcDBPoCHu52qHZAWe
-rA4uhgzKcBDWhBo2bgvQYGojXXdQttdiwWrOjWdy3w3CVEOOSiKf2ok9gSHayi/W
-eCyCnWxnOPU+vObEDXcnVGQV2PQQcXN+RaLC0jSUXXnUQXWbhPQfwaUm9rWjLS2i
-wbAs0yeLjZTZA+aq+UvhN7K0zPde6J5qS9Ug6DoRJt8d0Gk7U078ArNaU4uEFFQr
-2ZFxWeC4l8a0fxY6rxZlFjjAmtcYZIOhSzWPXNyT9uyJsph+xn6zAMX5r6fOnh4D
-kVghy0qqndk5T9YOgvNgBHWnjGUUpqgOPVrppFJg9DfDhscK4F65TUPzbf+uDXhw
-BwFvAqJ4Bw4gyjn+5z5QZEF89YkthGIulJuYSXkYU+273FTTLQA=
-=9e2L
------END PGP SIGNATURE-----
---=-=-=--
+greg k-h
