@@ -1,31 +1,25 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: jedi_papi@yahoo.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 77447702
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f48b6ca2
  for <wireguard@lists.zx2c4.com>;
- Sat, 20 Jan 2018 12:15:58 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f3e4356b
+ Sat, 20 Jan 2018 22:11:07 +0000 (UTC)
+Received: from sonic312-22.consmr.mail.gq1.yahoo.com
+ (sonic312-22.consmr.mail.gq1.yahoo.com [98.137.69.203])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fd02634d
  for <wireguard@lists.zx2c4.com>;
- Sat, 20 Jan 2018 12:15:58 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6b43cf90
- for <wireguard@lists.zx2c4.com>;
- Sat, 20 Jan 2018 12:07:06 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id a708eeb4
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Sat, 20 Jan 2018 12:07:05 +0000 (UTC)
-Received: by mail-oi0-f45.google.com with SMTP id a184so2965787oif.7
- for <wireguard@lists.zx2c4.com>; Sat, 20 Jan 2018 04:19:39 -0800 (PST)
+ Sat, 20 Jan 2018 22:11:07 +0000 (UTC)
+Date: Sat, 20 Jan 2018 22:14:45 +0000 (UTC)
+From: Jose Marinez <jedi_papi@yahoo.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>, Greg KH <greg@kroah.com>
+Message-ID: <95653991.1317652.1516486485320@mail.yahoo.com>
+In-Reply-To: <CAHmME9oTZn2sB+6HL2UR3NGSnEw5ywXZYs3hJOGgVSq8BE8Q+g@mail.gmail.com>
+References: <CAHmME9pWnFh4jN72hRo6kFzWTEQn4xF8AGNQUg8r3g_eAPBvdg@mail.gmail.com>
+ <20180119082957.GB14517@kroah.com>
+ <CAHmME9oTZn2sB+6HL2UR3NGSnEw5ywXZYs3hJOGgVSq8BE8Q+g@mail.gmail.com>
+Subject: Re: Formally Verified Cryptographic Primitive Implementations
 MIME-Version: 1.0
-In-Reply-To: <87bmhp3zv6.fsf@fifthhorseman.net>
-References: <CAHmME9rU+n6bMB+eYKu74yVn2bNkMJLX=FP-XbfKt+qjsoTVYQ@mail.gmail.com>
- <87bmhp3zv6.fsf@fifthhorseman.net>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sat, 20 Jan 2018 13:19:37 +0100
-Message-ID: <CAHmME9oGTe0J7YXp+b1hn_4ux6Upi+BMhgst++ppcnGmgbciyA@mail.gmail.com>
-Subject: Re: decoupling version dependencies from metapackage in debian/ubuntu?
-To: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/alternative;
+ boundary="----=_Part_1317649_254356589.1516486485319"
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -36,43 +30,61 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hey Daniel,
+------=_Part_1317649_254356589.1516486485319
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> as explained earlier, this isn't a launchpad bug, it's a function of
-> running with a rolling distribution (debian unstable and ubuntu PPAs
-> both have this characteristic), where there is no coordinated
-> cross-platform release schedule.
-
-Ahh, interesting. I'm surprised there isn't an atomic replacement that
-occurs only once all dependencies and reverse dependencies are
-resolvable.
+Great work. Impressive=C2=A0
 
 
-> If the netlink interface is actually stable, then at least as simple as
-> the current arrangement (and probably more robust) to instead set up the
-> dependency versioning to be at least the first version of both packages
-> which agree to the stable netlink interface contract.
+On Friday, January 19, 2018, 8:26 AM, Jason A. Donenfeld <Jason@zx2c4.com> =
+wrote:
+
+On Fri, Jan 19, 2018 at 9:29 AM, Greg KH <greg@kroah.com> wrote:
+> No questions, just a general, "Wow, this is great work!"
 >
-> I know that we moved from ioctl to netlink in 0.0.20171001 -- was the
-> interface fully stable already by that snapshot?  if so, then i'd just
-> change those metapackage dependencies to (>= 0.0.20171001) and assume
-> that mixing and matching anything beyond that point is an acceptable
-> choice for the package resolver.
->
-> if i do that, i'd ask you to be really clear and explicit in each new
-> snapshot if you think it introduces a backward-incompatible interface on
-> either side of the netlink boundary.  if that happens, it's not the end
-> of the world, i just want to be aware of it so that i can explicitly
-> bump the dependency threshhold in the metapackage.
->
-> what do you think?
+> It's wonderful to see this happen, thanks so much for pushing this
+> forward.
 
-This all sounds good and reasonable to me. My intention is that the
-current Netlink API _is_ stable. I had the Netlink maintainer take a
-look at it before it went live, and things checked out, and now
-systemd-networkd is using it, so the idea here is that that API is a
-stable one. If for whateverunfortunatereason it did break, this would
-of course be a sufficiently large deal that I'd go through the pains
-of multiparty notification, coordination, and such.
+Glad you like it. The real work, of course, will be parlaying this
+work into kernel crypto api 2.0...
 
 Jason
+_______________________________________________
+WireGuard mailing list
+WireGuard@lists.zx2c4.com
+https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+
+
+
+------=_Part_1317649_254356589.1516486485319
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns=3D"http://www.w3.org/1999/xhtml" xmlns:v=3D"urn:schemas-microso=
+ft-com:vml" xmlns:o=3D"urn:schemas-microsoft-com:office:office"><head><!--[=
+if gte mso 9]><xml><o:OfficeDocumentSettings><o:AllowPNG/><o:PixelsPerInch>=
+96</o:PixelsPerInch></o:OfficeDocumentSettings></xml><![endif]--></head><bo=
+dy>
+Great work. Impressive&nbsp;<br><br><p class=3D"yahoo-quoted-begin" style=
+=3D"font-size: 15px; color: #715FFA; padding-top: 15px; margin-top: 0">On F=
+riday, January 19, 2018, 8:26 AM, Jason A. Donenfeld &lt;Jason@zx2c4.com&gt=
+; wrote:</p><blockquote class=3D"iosymail"><div dir=3D"ltr">On Fri, Jan 19,=
+ 2018 at 9:29 AM, Greg KH &lt;<a shape=3D"rect" ymailto=3D"mailto:greg@kroa=
+h.com" href=3D"mailto:greg@kroah.com">greg@kroah.com</a>&gt; wrote:<br clea=
+r=3D"none">&gt; No questions, just a general, "Wow, this is great work!"<br=
+ clear=3D"none">&gt;<br clear=3D"none">&gt; It's wonderful to see this happ=
+en, thanks so much for pushing this<br clear=3D"none">&gt; forward.<br clea=
+r=3D"none"><br clear=3D"none">Glad you like it. The real work, of course, w=
+ill be parlaying this<br clear=3D"none">work into kernel crypto api 2.0...<=
+div class=3D"yqt4031667614" id=3D"yqtfd93024"><br clear=3D"none"><br clear=
+=3D"none">Jason<br clear=3D"none">_________________________________________=
+______<br clear=3D"none">WireGuard mailing list<br clear=3D"none"><a shape=
+=3D"rect" ymailto=3D"mailto:WireGuard@lists.zx2c4.com" href=3D"mailto:WireG=
+uard@lists.zx2c4.com">WireGuard@lists.zx2c4.com</a><br clear=3D"none"><a sh=
+ape=3D"rect" href=3D"https://lists.zx2c4.com/mailman/listinfo/wireguard" ta=
+rget=3D"_blank">https://lists.zx2c4.com/mailman/listinfo/wireguard</a><br c=
+lear=3D"none"></div></div><blockquote></blockquote></blockquote>
+</body></html>
+------=_Part_1317649_254356589.1516486485319--
