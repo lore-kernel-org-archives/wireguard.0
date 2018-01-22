@@ -1,33 +1,25 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: saeidscorp@yahoo.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cad184f7
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id af99dfed
  for <wireguard@lists.zx2c4.com>;
- Mon, 22 Jan 2018 16:03:40 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 83ec2ae1
+ Mon, 22 Jan 2018 21:04:58 +0000 (UTC)
+Received: from sonic305-21.consmr.mail.ir2.yahoo.com
+ (sonic305-21.consmr.mail.ir2.yahoo.com [77.238.177.83])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 209ac24e
  for <wireguard@lists.zx2c4.com>;
- Mon, 22 Jan 2018 16:03:40 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id aa552236
- for <wireguard@lists.zx2c4.com>;
- Mon, 22 Jan 2018 15:54:49 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 503081f8
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Mon, 22 Jan 2018 15:54:49 +0000 (UTC)
-Received: by mail-ot0-f181.google.com with SMTP id p36so7899520otd.10
- for <wireguard@lists.zx2c4.com>; Mon, 22 Jan 2018 08:07:39 -0800 (PST)
+ Mon, 22 Jan 2018 21:04:58 +0000 (UTC)
+Received: from smtp173.mail.ir2.yahoo.com (EHLO scorpbook.localnet)
+ ([46.228.39.40])
+ by smtp410.mail.ir2.yahoo.com (JAMES SMTP Server ) with ESMTPA ID
+ 0d7fc9413d7e2c726f9d1bdf1e05e13b for <wireguard@lists.zx2c4.com>;
+ Mon, 22 Jan 2018 21:08:56 +0000 (UTC)
+From: Saeid Akbari <saeidscorp@yahoo.com>
+To: wireguard@lists.zx2c4.com
+Subject: Channel/Tunnel bonding with wireguard
+Date: Tue, 23 Jan 2018 00:33:27 +0330
+Message-ID: <2657672.Dq05pOSN56@scorpbook>
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9qY1rVUxsdkD+M91pZJNcncG+PrG-9ypK0YPvfb4k4_JA@mail.gmail.com>
-References: <1516632145.2241.49.camel@inventati.org>
- <CAHmME9rEFgWHewhf8mC=7ec=NRdhqAJQtuG1ggby-Bzfd8zaaw@mail.gmail.com>
- <CAHmME9qY1rVUxsdkD+M91pZJNcncG+PrG-9ypK0YPvfb4k4_JA@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 22 Jan 2018 17:07:38 +0100
-Message-ID: <CAHmME9o5N9P3aDV-Y+fm=qMqijMZQBryoP7XpkEEbwMbQJHmGA@mail.gmail.com>
-Subject: Re: Trouble building WireGuard since December releases
-To: Kevin <anaknaga@inventati.org>
-Content-Type: text/plain; charset="UTF-8"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="us-ascii"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -37,24 +29,32 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Ahh, small update. When building this, I noticed:
+Hi folks,
 
-Makefile:944: "Cannot use CONFIG_STACK_VALIDATION=y, please install
-libelf-dev, libelf-devel or elfutils-libelf-devel"
+I have been thinking about utilizing WireGuard on my VPS to act as a central 
+hub for combining my multiple slower connections and having a faster one. I 
+had a possible way of doing it in my mind, and finally today I did a little bit 
+of googling found this article (also learned the real name for the technique: 
+bonding):
 
-After installing libelf-devel, the exact problem you reported
-appeared. I then tried this hack:
+http://vrayo.com/how-to-set-up-a-bonding-vpn-connection-in-linux/
 
-$ sudo ln -s /bin/true /lib/modules/$(uname -r)/build/tools/objtool/objtool
+Since this approach uses a user-space daemon to relay around data, it would 
+incur some performance penalties compared to a kernel-mode driver like WG. So 
+it's probably not a good idea to use it on top of WG.
 
-And after, the build worked again. It therefore appears that Solus is
-not distributing objtool with their kernel headers, when they should
-be.
+The pure WG scheme I have in my mind goes something like this:
+- having a single swg0 interface on VPS.
+- having multiple interfaces on the client (cwg0, cwg1, ...), each configured 
+with a single peer, that is the VPS swg0 interface.
+- some iptables + ip rules fu to split and re-join the stream of IP packets.
 
-I opened a bug for your issue, but as I've never used Solus until
-today, I won't be following up on it. So, please direct your
-distribution to the bug at: https://dev.solus-project.com/T5607 and
-see what you can do about helping to get this fixed.
+For the third part, I can think of statistic netfilter match for splitting the 
+packets. But there are other things around which I don't know much about; like 
+the qdiscs... so I'm not confident if I'm headed in the right direction...
 
-Regards,
-Jason
+Is this a good idea? What do you suggest? Is there any better way to do it?
+
+Thanks in Advance
+
+Saeid,
