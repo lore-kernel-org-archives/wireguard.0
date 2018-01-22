@@ -1,31 +1,24 @@
-Return-Path: subixonfire@gmail.com
+Return-Path: anaknaga@inventati.org
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0fcba97d
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 25a8ff43
  for <wireguard@lists.zx2c4.com>;
- Sun, 21 Jan 2018 15:24:31 +0000 (UTC)
-Received: from mail-yb0-f178.google.com (mail-yb0-f178.google.com
- [209.85.213.178])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 947a87f4
+ Mon, 22 Jan 2018 14:38:35 +0000 (UTC)
+Received: from devianza.investici.org (devianza.investici.org
+ [198.167.222.108])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 51a0c464
  for <wireguard@lists.zx2c4.com>;
- Sun, 21 Jan 2018 15:24:31 +0000 (UTC)
-Received: by mail-yb0-f178.google.com with SMTP id v12so2173832ybl.3
- for <wireguard@lists.zx2c4.com>; Sun, 21 Jan 2018 07:28:22 -0800 (PST)
-MIME-Version: 1.0
-In-Reply-To: <CAByA2P1EbfFdCOCJUZ4ip=f8V7q+Vucju_OZUnoBK+eiRQuNzw@mail.gmail.com>
-References: <CAByA2P1s_SHXjyZvcDvCz7ehczf0bnNEe19F=-A4dUi5Q7BYJw@mail.gmail.com>
- <CAByA2P3iSs_1Hha=XZ7GShCh1QgxuOjvu2xZq3_VwQkiSkRQ_g@mail.gmail.com>
- <CAByA2P24P7wrLLkaKi5qQKFY+dkHX1wzy=npfwj8E-+WSuZPpg@mail.gmail.com>
- <CAByA2P0aAWtntN2dWTwa1i4HjAOTP5a_Xod93n9yTk9q_Yy9Zg@mail.gmail.com>
- <CAByA2P19rZDb4QFh__KnyhPhyfiMNOHJ13Rx4LV86V4LAS=EdA@mail.gmail.com>
- <CAHmME9rMXtZaAfjuN0Y=0QTLB_qwu776-MK2G=GnEkoGjhGeeA@mail.gmail.com>
- <CAByA2P00+S8JhZXctQo0ZDc+yX4sVTOU8hDbuqyQGX_wyojSyQ@mail.gmail.com>
- <CAByA2P1EbfFdCOCJUZ4ip=f8V7q+Vucju_OZUnoBK+eiRQuNzw@mail.gmail.com>
-From: Alen Opacic <subixonfire@gmail.com>
-Date: Sun, 21 Jan 2018 16:28:21 +0100
-Message-ID: <CAByA2P1tVvvd7F74k3vsTOzyFzqJDuWgRMNLWdNQuR5drPu_xw@mail.gmail.com>
-Subject: Re: Android app error on samsung s6
+ Mon, 22 Jan 2018 14:38:35 +0000 (UTC)
+Received: from [198.167.222.108] (devianza [198.167.222.108]) (Authenticated
+ sender: anaknaga@inventati.org) by localhost (Postfix) with ESMTPSA id
+ 9625913
+ for <wireguard@lists.zx2c4.com>; Mon, 22 Jan 2018 14:42:31 +0000 (UTC)
+Message-ID: <1516632145.2241.49.camel@inventati.org>
+Subject: Trouble building WireGuard since December releases
+From: Kevin <anaknaga@inventati.org>
 To: wireguard@lists.zx2c4.com
-Content-Type: multipart/alternative; boundary="f403043ded0cbd444605634af6e8"
+Date: Mon, 22 Jan 2018 15:42:25 +0100
+Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -35,39 +28,31 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---f403043ded0cbd444605634af6e8
-Content-Type: text/plain; charset="UTF-8"
+Hi all,
 
-echo $PATH output:
-/sbin:/system/bin:/system/xbin
+I've been having trouble building WireGuard on Solus since its December
+snapshots. Earlier snapshots (e.g. November) still build without a
+problem, even on new kernels. Does this have to do with Solus kernel
+builds, or am I overlooking something?
 
-
-I have /system/bin/ip. Take a look at the screenshot.
-https://pasteboard.co/H3Y2f0k.png
-
-
-Ps: error on last version looks like the second screenshot.
-https://pasteboard.co/H3Y3h5r.png
-
---f403043ded0cbd444605634af6e8
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><div class=3D"gmail_extra"><div style=3D"font-family=
-:sans-serif" dir=3D"auto">echo $PATH output:</div><div dir=3D"auto" style=
-=3D""><div dir=3D"auto" style=3D"font-family:sans-serif">/sbin:/system/bin:=
-/system/xbin</div><div dir=3D"auto" style=3D"font-family:sans-serif"><br></=
-div><div dir=3D"auto" style=3D"font-family:sans-serif"><br></div><div dir=
-=3D"auto" style=3D"font-family:sans-serif">I have /system/bin/ip. Take a lo=
-ok at the screenshot.<br></div><div dir=3D"auto" style=3D""><font face=3D"s=
-ans-serif"><a href=3D"https://pasteboard.co/H3Y2f0k.png">https://pasteboard=
-.co/H3Y2f0k.png</a></font><br></div><div dir=3D"auto" style=3D""><font face=
-=3D"sans-serif"><br></font></div><div dir=3D"auto" style=3D""><font face=3D=
-"sans-serif"><br></font></div><div dir=3D"auto" style=3D"font-family:sans-s=
-erif">Ps: error on last version looks like the second screenshot.</div><div=
- dir=3D"auto" style=3D""><font face=3D"sans-serif"><a href=3D"https://paste=
-board.co/H3Y3h5r.png">https://pasteboard.co/H3Y3h5r.png</a></font><br></div=
-><div dir=3D"auto" style=3D"font-family:sans-serif"><br></div></div></div><=
-/div></div>
-
---f403043ded0cbd444605634af6e8--
+user@t450s-solus ~/bin/WireGuard-0.0.20180118/src $ make debug
+test -e include/generated/autoconf.h -a -e include/config/auto.conf ||
+(	\
+echo >&2;							\
+echo >&2 "  ERROR: Kernel configuration is invalid.";		\
+echo >&2 "         include/generated/autoconf.h or
+include/config/auto.conf are missing.";\
+echo >&2 "         Run 'make oldconfig && make prepare' on kernel src
+to fix it.";	\
+echo >&2 ;							\
+/bin/false)
+mkdir -p /home/user/bin/WireGuard-0.0.20180118/src/.tmp_versions ; rm
+-f /home/user/bin/WireGuard-0.0.20180118/src/.tmp_versions/*
+make -f ./scripts/Makefile.build obj=/home/user/bin/WireGuard-
+0.0.20180118/src
+make[2]: *** No rule to make target '/home/user/bin/WireGuard-
+0.0.20180118/src/main.o', needed by '/home/user/bin/WireGuard-
+0.0.20180118/src/wireguard.o'.  Stop.
+make[1]: *** [Makefile:1507: _module_/home/user/bin/WireGuard-
+0.0.20180118/src] Error 2
+make: *** [Makefile:39: module-debug] Error 2
