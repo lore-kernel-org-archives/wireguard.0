@@ -1,25 +1,23 @@
-Return-Path: saeidscorp@yahoo.com
+Return-Path: juniorjpdj@juniorjpdj.pl
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id af99dfed
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 49b4d518
  for <wireguard@lists.zx2c4.com>;
- Mon, 22 Jan 2018 21:04:58 +0000 (UTC)
-Received: from sonic305-21.consmr.mail.ir2.yahoo.com
- (sonic305-21.consmr.mail.ir2.yahoo.com [77.238.177.83])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 209ac24e
+ Tue, 23 Jan 2018 01:13:02 +0000 (UTC)
+Received: from s1.ct8.pl (cache1.ct8.pl [136.243.156.121])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 50dd1d66
  for <wireguard@lists.zx2c4.com>;
- Mon, 22 Jan 2018 21:04:58 +0000 (UTC)
-Received: from smtp173.mail.ir2.yahoo.com (EHLO scorpbook.localnet)
- ([46.228.39.40])
- by smtp410.mail.ir2.yahoo.com (JAMES SMTP Server ) with ESMTPA ID
- 0d7fc9413d7e2c726f9d1bdf1e05e13b for <wireguard@lists.zx2c4.com>;
- Mon, 22 Jan 2018 21:08:56 +0000 (UTC)
-From: Saeid Akbari <saeidscorp@yahoo.com>
+ Tue, 23 Jan 2018 01:13:02 +0000 (UTC)
+Subject: WireGuard porting to kernel 3.4
 To: wireguard@lists.zx2c4.com
-Subject: Channel/Tunnel bonding with wireguard
-Date: Tue, 23 Jan 2018 00:33:27 +0330
-Message-ID: <2657672.Dq05pOSN56@scorpbook>
+References: <2657672.Dq05pOSN56@scorpbook>
+From: JuniorJPDJ <wireguard@juniorjpdj.pl>
+Message-ID: <b95ffe9f-cfb6-fe98-5e86-5706e93db25f@juniorjpdj.pl>
+Date: Tue, 23 Jan 2018 02:16:48 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+In-Reply-To: <2657672.Dq05pOSN56@scorpbook>
+Content-Type: multipart/alternative;
+ boundary="------------EDF9E9DE572C7244F66AB11C"
+Sender: juniorjpdj@juniorjpdj.pl
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -29,32 +27,43 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi folks,
+This is a multi-part message in MIME format.
+--------------EDF9E9DE572C7244F66AB11C
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-I have been thinking about utilizing WireGuard on my VPS to act as a central 
-hub for combining my multiple slower connections and having a faster one. I 
-had a possible way of doing it in my mind, and finally today I did a little bit 
-of googling found this article (also learned the real name for the technique: 
-bonding):
+Hi,
 
-http://vrayo.com/how-to-set-up-a-bonding-vpn-connection-in-linux/
+Would it be hard to port WG to 3.4 kernel?
+Was there huge changes in networking or other used in WG stuff between 
+3.4 and 3.10?
 
-Since this approach uses a user-space daemon to relay around data, it would 
-incur some performance penalties compared to a kernel-mode driver like WG. So 
-it's probably not a good idea to use it on top of WG.
+It is very popular on a bit older android phones.
 
-The pure WG scheme I have in my mind goes something like this:
-- having a single swg0 interface on VPS.
-- having multiple interfaces on the client (cwg0, cwg1, ...), each configured 
-with a single peer, that is the VPS swg0 interface.
-- some iptables + ip rules fu to split and re-join the stream of IP packets.
+Thanks,
+JuniorJPDJ
 
-For the third part, I can think of statistic netfilter match for splitting the 
-packets. But there are other things around which I don't know much about; like 
-the qdiscs... so I'm not confident if I'm headed in the right direction...
+--------------EDF9E9DE572C7244F66AB11C
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 7bit
 
-Is this a good idea? What do you suggest? Is there any better way to do it?
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  </head>
+  <body text="#000000" bgcolor="#FFFFFF">
+    Hi,<br>
+    <br>
+    Would it be hard to port WG to 3.4 kernel?<br>
+    Was there huge changes in networking or other used in WG stuff
+    between 3.4 and 3.10?<br>
+    <br>
+    It is very popular on a bit older android phones.<br>
+    <br>
+    Thanks,<br>
+    JuniorJPDJ<br>
+    <span id="result_box" class="short_text" lang="en"><span class=""></span></span>
+  </body>
+</html>
 
-Thanks in Advance
-
-Saeid,
+--------------EDF9E9DE572C7244F66AB11C--
