@@ -1,31 +1,27 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: matthias@urlichs.de
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9cf71266
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0b8ce039
  for <wireguard@lists.zx2c4.com>;
- Thu, 25 Jan 2018 11:03:55 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5f455163
+ Thu, 25 Jan 2018 19:41:06 +0000 (UTC)
+Received: from netz.smurf.noris.de (mail.smurf.noris.de [213.95.149.21])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3a80d58c
  for <wireguard@lists.zx2c4.com>;
- Thu, 25 Jan 2018 11:03:54 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7ab5daf9
- for <wireguard@lists.zx2c4.com>;
- Thu, 25 Jan 2018 10:55:03 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id b2fe1ce9
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Thu, 25 Jan 2018 10:55:03 +0000 (UTC)
-Received: by mail-oi0-f42.google.com with SMTP id m83so4962097oik.8
- for <wireguard@lists.zx2c4.com>; Thu, 25 Jan 2018 03:08:14 -0800 (PST)
-MIME-Version: 1.0
-In-Reply-To: <CAMEMCsKxKHtn2ARFchYVTrj2r_ArHQ4DeqaaSYUh96ZKrVk3GA@mail.gmail.com>
-References: <CAMEMCsKxKHtn2ARFchYVTrj2r_ArHQ4DeqaaSYUh96ZKrVk3GA@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 25 Jan 2018 12:08:13 +0100
-Message-ID: <CAHmME9oZ=4fEB+CTPPXLz=b=HZCOkVy02dVfVh4=Ri=bH80UjQ@mail.gmail.com>
+ Thu, 25 Jan 2018 19:41:06 +0000 (UTC)
+Received: from [2001:780:107:0:1278:d2ff:fea3:d4a6]
+ by mail.vm.smurf.noris.de with esmtpsa
+ (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim 4.89)
+ (envelope-from <matthias@urlichs.de>) id 1eenS0-000Hu0-6S
+ for wireguard@lists.zx2c4.com; Thu, 25 Jan 2018 20:44:44 +0100
 Subject: Re: Bridging wg and normal interfaces?
-To: =?UTF-8?Q?Rafa=C5=82_Grasman?= <grasmanek94@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+To: wireguard@lists.zx2c4.com
+References: <CAMEMCsKxKHtn2ARFchYVTrj2r_ArHQ4DeqaaSYUh96ZKrVk3GA@mail.gmail.com>
+ <CAHmME9oZ=4fEB+CTPPXLz=b=HZCOkVy02dVfVh4=Ri=bH80UjQ@mail.gmail.com>
+From: Matthias Urlichs <matthias@urlichs.de>
+Message-ID: <a8a25aac-48bf-9491-6734-3fed0978d99d@urlichs.de>
+Date: Thu, 25 Jan 2018 20:44:43 +0100
+MIME-Version: 1.0
+In-Reply-To: <CAHmME9oZ=4fEB+CTPPXLz=b=HZCOkVy02dVfVh4=Ri=bH80UjQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -35,16 +31,15 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-WireGuard is layer 3, not layer 2, so bridging is not what you want.
+On 25.01.2018 12:08, Jason A. Donenfeld wrote:
+> WireGuard is layer 3, not layer 2, so bridging is not what you want.
 
-Instead, do ordinary IP routing between different subnets. As you
-appear to already have different subnets, this shouldn't be a problem.
+Though if you *do* want (or need) bridging, l2tp is your friend.
 
-If you'd like to overlap within the same subnet, there's always proxy
-arp, but I'd caution against that approach.
+See for example https://remote-lab.net/linux-l2tp-ethernet-pseudowires
 
-Lots of people run into this confusion about layer 2 vs layer 3. We
-can probably walk you through getting things rolling for your
-particular setup in #wireguard on Freenode, if you have IRC.
+How to change this example to go through wireguard is left as an
+exercise for the esteemed reader. ;-)
 
-Jason
+-- 
+-- Matthias Urlichs
