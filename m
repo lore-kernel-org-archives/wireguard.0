@@ -1,36 +1,22 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: gzxmx94@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 067e1328
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 312733c2
  for <wireguard@lists.zx2c4.com>;
- Wed, 24 Jan 2018 23:03:25 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id db005a88
+ Thu, 25 Jan 2018 10:19:27 +0000 (UTC)
+Received: from mail-wm0-f67.google.com (mail-wm0-f67.google.com [74.125.82.67])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b111044a
  for <wireguard@lists.zx2c4.com>;
- Wed, 24 Jan 2018 23:03:25 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bdefbdd6
- for <wireguard@lists.zx2c4.com>;
- Wed, 24 Jan 2018 22:54:34 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id f61d413b
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Wed, 24 Jan 2018 22:54:32 +0000 (UTC)
-Received: by mail-oi0-f47.google.com with SMTP id c8so4008751oiy.9
- for <wireguard@lists.zx2c4.com>; Wed, 24 Jan 2018 15:07:40 -0800 (PST)
+ Thu, 25 Jan 2018 10:19:27 +0000 (UTC)
+Received: by mail-wm0-f67.google.com with SMTP id f3so13933542wmc.1
+ for <wireguard@lists.zx2c4.com>; Thu, 25 Jan 2018 02:23:46 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <87lggngkih.fsf@fifthhorseman.net>
-References: <1516632145.2241.49.camel@inventati.org>
- <CAHmME9rEFgWHewhf8mC=7ec=NRdhqAJQtuG1ggby-Bzfd8zaaw@mail.gmail.com>
- <CAHmME9qY1rVUxsdkD+M91pZJNcncG+PrG-9ypK0YPvfb4k4_JA@mail.gmail.com>
- <CAHmME9o5N9P3aDV-Y+fm=qMqijMZQBryoP7XpkEEbwMbQJHmGA@mail.gmail.com>
- <87lggngkih.fsf@fifthhorseman.net>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 25 Jan 2018 00:07:39 +0100
-Message-ID: <CAHmME9qM8woaJ9-g0_xZW55qsWyMPKBX3L8rBxuoBwBoGytpXw@mail.gmail.com>
-Subject: Re: Trouble building WireGuard since December releases
-To: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-Content-Type: text/plain; charset="UTF-8"
-Cc: Kevin <anaknaga@inventati.org>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>
+Sender: gzxmx94@gmail.com
+From: =?UTF-8?Q?Rafa=C5=82_Grasman?= <grasmanek94@gmail.com>
+Date: Thu, 25 Jan 2018 11:23:45 +0100
+Message-ID: <CAMEMCsKxKHtn2ARFchYVTrj2r_ArHQ4DeqaaSYUh96ZKrVk3GA@mail.gmail.com>
+Subject: Bridging wg and normal interfaces?
+To: wireguard@lists.zx2c4.com
+Content-Type: multipart/alternative; boundary="f403045c2688c69a910563972cfa"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -40,26 +26,65 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Wed, Jan 24, 2018 at 7:49 PM, Daniel Kahn Gillmor
-<dkg@fifthhorseman.net> wrote:
->
-> On Mon 2018-01-22 17:07:38 +0100, Jason A. Donenfeld wrote:
-> > Ahh, small update. When building this, I noticed:
-> >
-> > Makefile:944: "Cannot use CONFIG_STACK_VALIDATION=y, please install
-> > libelf-dev, libelf-devel or elfutils-libelf-devel"
->
-> fwiw, debian had the same issue around libelf-dev with their kernel
-> source packaging, and treated it as a bug there, which was resolved in
-> the kernel package itself, rather than requiring additional build
-> dependencies of all kernel modules: https://bugs.debian.org/886474
+--f403045c2688c69a910563972cfa
+Content-Type: text/plain; charset="UTF-8"
 
-Seems like a sane resolution.
+Hello,
 
->
-> (this message is just about libelf-dev; i haven't followed the details
-> about objtool)
+I would like to bridge my LAN and WireGuard interfaces so I can make a
+site-to-site VPN with the gateway/router being at the other site.
 
-The detail about objtool is just that they forgot to include it in
-their headers, so when the build system tries to use it, it can't find
-it and fails. Simple problem with a simple solution, thankfully.
+But when using brctl to add wg0 to a bridge, the operation is not supported.
+
+This is the setup I am aiming for:
+
+Isolated VM virteth0 - preferably dhcp 172.16.0.2/24 from remote site
+(gateway 172.16.0.1/24)
+
+Switch VM - wg0 with 172.16.0.254/24 and eth0 with 192.168.1.254/24 (for
+internet access through gw 192.168.1.1/24) and virteth0 (manual, no ip, no
+dhcp), I want to bridge virteth0 and wg0.
+
+Remote machine with wg0 172.16.0.1/24 and a public ip on eth0 (e.g.
+11.22.33.44/32)
+
+both virteth0's are connected together on the host machine.
+
+Is this somehow possible with wireguard? As for now the Switch VM isn't a
+switch, it acts as a router which does work but is not something I want
+(and forces me to have a different ip on virteth0 on SwitchVM than wg0 has,
+this forces me to make everything look like it came from SwitchVM instead
+of the real addresses, because both the remote machine and Switch VM have
+to act as routers, I want only 1 router in this setup - the remote machine).
+
+Thanks in advance for your time and help :)
+
+--f403045c2688c69a910563972cfa
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hello,<div><br></div><div>I would like to bridge my LAN an=
+d WireGuard interfaces so I can make a site-to-site VPN with the gateway/ro=
+uter being at the other site.</div><div><br></div><div>But when using brctl=
+ to add wg0 to a bridge, the operation is not supported.</div><div><br></di=
+v><div>This is the setup I am aiming for:</div><div><br></div><div>Isolated=
+ VM virteth0 - preferably dhcp <a href=3D"http://172.16.0.2/24">172.16.0.2/=
+24</a> from remote site (gateway <a href=3D"http://172.16.0.1/24">172.16.0.=
+1/24</a>)</div><div><br></div><div>Switch VM - wg0 with <a href=3D"http://1=
+72.16.0.254/24">172.16.0.254/24</a> and eth0 with <a href=3D"http://192.168=
+.1.254/24">192.168.1.254/24</a> (for internet access through gw <a href=3D"=
+http://192.168.1.1/24">192.168.1.1/24</a>) and virteth0 (manual, no ip, no =
+dhcp), I want to bridge virteth0 and wg0.</div><div><br></div><div>Remote m=
+achine with wg0 <a href=3D"http://172.16.0.1/24">172.16.0.1/24</a> and a pu=
+blic ip on eth0 (e.g. <a href=3D"http://11.22.33.44/32">11.22.33.44/32</a>)=
+</div><div><br></div><div>both virteth0&#39;s are connected together on the=
+ host machine.</div><div><br></div><div>Is this somehow possible with wireg=
+uard? As for now the Switch VM isn&#39;t a switch, it acts as a router whic=
+h does work but is not something I want (and forces me to have a different =
+ip on virteth0 on SwitchVM than wg0 has, this forces me to make everything =
+look like it came from SwitchVM instead of the real addresses, because both=
+ the remote machine and Switch VM have to act as routers, I want only 1 rou=
+ter in this setup - the remote machine).</div><div><br></div><div>Thanks in=
+ advance for your time and help :)</div></div>
+
+--f403045c2688c69a910563972cfa--
