@@ -1,28 +1,27 @@
-Return-Path: lists@lonnie.abelbeck.com
+Return-Path: sedlmeyer@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cfd31750
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 52541ac7
  for <wireguard@lists.zx2c4.com>;
- Sat, 27 Jan 2018 15:56:08 +0000 (UTC)
-Received: from ibughas.pair.com (ibughas.pair.com [209.68.5.177])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 33e4970b
+ Sat, 27 Jan 2018 18:07:02 +0000 (UTC)
+Received: from mail-qk0-f193.google.com (mail-qk0-f193.google.com
+ [209.85.220.193])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1fd53abf
  for <wireguard@lists.zx2c4.com>;
- Sat, 27 Jan 2018 15:56:08 +0000 (UTC)
-Received: from ibughas.pair.com (localhost [127.0.0.1])
- by ibughas.pair.com (Postfix) with ESMTP id 7A34F1E30AD
- for <wireguard@lists.zx2c4.com>; Sat, 27 Jan 2018 11:00:44 -0500 (EST)
-Received: from macpro.priv.abelbeck.com (wsip-70-165-110-240.om.om.cox.net
- [70.165.110.240])
- (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
- (No client certificate requested)
- by ibughas.pair.com (Postfix) with ESMTPSA id F0D651E30AB
- for <wireguard@lists.zx2c4.com>; Sat, 27 Jan 2018 11:00:43 -0500 (EST)
-From: Lonnie Abelbeck <lists@lonnie.abelbeck.com>
-Content-Type: text/plain; charset=us-ascii
-Subject: FLOSS WEEKLY - Episode 468: WireGuard
-Message-Id: <3F07B7BA-0D5F-4A66-AECB-69AB894D40C3@lonnie.abelbeck.com>
-Date: Sat, 27 Jan 2018 10:00:42 -0600
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+ Sat, 27 Jan 2018 18:07:02 +0000 (UTC)
+Received: by mail-qk0-f193.google.com with SMTP id a5so949659qkg.10
+ for <wireguard@lists.zx2c4.com>; Sat, 27 Jan 2018 10:11:39 -0800 (PST)
+Return-Path: <sedlmeyer@gmail.com>
+Received: from Timothys-MBP.sedlmeyer.org
+ (pool-70-106-218-76.clppva.fios.verizon.net. [70.106.218.76])
+ by smtp.gmail.com with ESMTPSA id i31sm7179674qtb.5.2018.01.27.10.11.37
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Sat, 27 Jan 2018 10:11:38 -0800 (PST)
+From: Tim Sedlmeyer <tim@sedlmeyer.org>
+To: wireguard@lists.zx2c4.com
+Subject: [PATCH] tools: fix removing preshared keys failing on some platforms
+Date: Sat, 27 Jan 2018 13:11:36 -0500
+Message-Id: <20180127181136.88756-1-tim@sedlmeyer.org>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -32,8 +31,27 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-FYI, Jason gave another fine WireGuard talk ...
+errno is checked following fread of the preshared key file. fread doesn't set errno, so it shouldn't be checked. On the EdgeRouter ER-X when wg uses glibc instead of musl libc this incorrect check causes removal of preshared keys to fail. This patch removes the check of errno.
 
-Jan 24th 2018
-FLOSS WEEKLY - Episode 468: WireGuard
-https://twit.tv/shows/floss-weekly/episodes/468
+Signed-off-by: Tim Sedlmeyer <tim@sedlmeyer.org>
+---
+ src/tools/config.c | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/src/tools/config.c b/src/tools/config.c
+index 5ab6ece..0407b36 100644
+--- a/src/tools/config.c
++++ b/src/tools/config.c
+@@ -128,10 +128,6 @@ static bool parse_keyfile(uint8_t key[static WG_KEY_LEN], const char *path)
+ 	}
+ 
+ 	if (fread(dst, WG_KEY_LEN_BASE64 - 1, 1, f) != 1) {
+-		if (errno) {
+-			perror("fread");
+-			goto out;
+-		}
+ 		/* If we're at the end and we didn't read anything, we're /dev/null or an empty file. */
+ 		if (!ferror(f) && feof(f) && !ftell(f)) {
+ 			memset(key, 0, WG_KEY_LEN);
+-- 
+2.16.1
