@@ -1,27 +1,24 @@
-Return-Path: sedlmeyer@gmail.com
+Return-Path: joerg@higgsboson.tk
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 52541ac7
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5d1c1ddf
  for <wireguard@lists.zx2c4.com>;
- Sat, 27 Jan 2018 18:07:02 +0000 (UTC)
-Received: from mail-qk0-f193.google.com (mail-qk0-f193.google.com
- [209.85.220.193])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1fd53abf
+ Tue, 30 Jan 2018 12:02:20 +0000 (UTC)
+Received: from mail.thalheim.io (mail.thalheim.io [188.68.39.17])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a6fef622
  for <wireguard@lists.zx2c4.com>;
- Sat, 27 Jan 2018 18:07:02 +0000 (UTC)
-Received: by mail-qk0-f193.google.com with SMTP id a5so949659qkg.10
- for <wireguard@lists.zx2c4.com>; Sat, 27 Jan 2018 10:11:39 -0800 (PST)
-Return-Path: <sedlmeyer@gmail.com>
-Received: from Timothys-MBP.sedlmeyer.org
- (pool-70-106-218-76.clppva.fios.verizon.net. [70.106.218.76])
- by smtp.gmail.com with ESMTPSA id i31sm7179674qtb.5.2018.01.27.10.11.37
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Sat, 27 Jan 2018 10:11:38 -0800 (PST)
-From: Tim Sedlmeyer <tim@sedlmeyer.org>
+ Tue, 30 Jan 2018 12:02:20 +0000 (UTC)
+Received: from [172.20.134.52] (pat-131-254.wlan.net.ed.ac.uk [192.41.131.254])
+ by mail.thalheim.io (Postfix) with ESMTPSA id B9E8FA5C12
+ for <wireguard@lists.zx2c4.com>; Tue, 30 Jan 2018 12:07:15 +0000 (UTC)
+Subject: Re: WireGuard in systemd-networkd
 To: wireguard@lists.zx2c4.com
-Subject: [PATCH] tools: fix removing preshared keys failing on some platforms
-Date: Sat, 27 Jan 2018 13:11:36 -0500
-Message-Id: <20180127181136.88756-1-tim@sedlmeyer.org>
+References: <CAHmME9pJHQOTkOm4Cn6rt-ER14L8Pb54L2r3=T=4DphA0wNBTA@mail.gmail.com>
+From: =?UTF-8?Q?J=c3=b6rg_Thalheim?= <joerg@higgsboson.tk>
+Message-ID: <56cbfe68-5f8f-a60e-859e-a78f5a772d7f@higgsboson.tk>
+Date: Tue, 30 Jan 2018 12:07:14 +0000
+MIME-Version: 1.0
+In-Reply-To: <CAHmME9pJHQOTkOm4Cn6rt-ER14L8Pb54L2r3=T=4DphA0wNBTA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -31,27 +28,22 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-errno is checked following fread of the preshared key file. fread doesn't set errno, so it shouldn't be checked. On the EdgeRouter ER-X when wg uses glibc instead of musl libc this incorrect check causes removal of preshared keys to fail. This patch removes the check of errno.
+Wireguard support in networkd is now set in stone.
+systemd v237 was released three days ago.
 
-Signed-off-by: Tim Sedlmeyer <tim@sedlmeyer.org>
----
- src/tools/config.c | 4 ----
- 1 file changed, 4 deletions(-)
-
-diff --git a/src/tools/config.c b/src/tools/config.c
-index 5ab6ece..0407b36 100644
---- a/src/tools/config.c
-+++ b/src/tools/config.c
-@@ -128,10 +128,6 @@ static bool parse_keyfile(uint8_t key[static WG_KEY_LEN], const char *path)
- 	}
- 
- 	if (fread(dst, WG_KEY_LEN_BASE64 - 1, 1, f) != 1) {
--		if (errno) {
--			perror("fread");
--			goto out;
--		}
- 		/* If we're at the end and we didn't read anything, we're /dev/null or an empty file. */
- 		if (!ferror(f) && feof(f) && !ftell(f)) {
- 			memset(key, 0, WG_KEY_LEN);
--- 
-2.16.1
+On 2018-01-09 13:49, Jason A. Donenfeld wrote:
+> Hi folks,
+>
+> Thanks to the wonderful work of Jörg Thalheim, WireGuard is now
+> supported inside systemd-netword's .netdev files. The syntax should be
+> pretty similar to wg(8). Expect for this to be released as part of the
+> next release of systemd, where you'll then be able to read the man
+> pages for using it.
+>
+> Next up - anybody interested in providing support for NetworkManager?
+>
+> Jason
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
