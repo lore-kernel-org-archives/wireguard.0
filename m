@@ -1,23 +1,31 @@
-Return-Path: gregkh@linuxfoundation.org
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4ca7c900
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f1e95f19
  for <wireguard@lists.zx2c4.com>;
- Wed, 31 Jan 2018 08:58:19 +0000 (UTC)
-Received: from mail.linuxfoundation.org (mail.linuxfoundation.org
- [140.211.169.12])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d3ae8701
+ Wed, 31 Jan 2018 14:18:36 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 511a3de9
  for <wireguard@lists.zx2c4.com>;
- Wed, 31 Jan 2018 08:58:19 +0000 (UTC)
-Date: Wed, 31 Jan 2018 10:03:19 +0100
-From: Greg KH <gregkh@linuxfoundation.org>
-To: John Wayne <matrixman3077@gmail.com>
-Subject: Re: Wireguard backport to 2.6.3x kernels
-Message-ID: <20180131090319.GA7820@kroah.com>
-References: <CACwd1hYUb0aGFOQoDY30a0Gsu2E-OaSHF0319x-kGbTSwov9Hg@mail.gmail.com>
+ Wed, 31 Jan 2018 14:18:36 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 73c28265
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 31 Jan 2018 14:09:45 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id d937c934
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 31 Jan 2018 14:09:44 +0000 (UTC)
+Received: by mail-ot0-f171.google.com with SMTP id p36so13512583otd.10
+ for <wireguard@lists.zx2c4.com>; Wed, 31 Jan 2018 06:23:42 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
 In-Reply-To: <CACwd1hYUb0aGFOQoDY30a0Gsu2E-OaSHF0319x-kGbTSwov9Hg@mail.gmail.com>
-Cc: wireguard@lists.zx2c4.com
+References: <CACwd1hYUb0aGFOQoDY30a0Gsu2E-OaSHF0319x-kGbTSwov9Hg@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 31 Jan 2018 15:23:41 +0100
+Message-ID: <CAHmME9qShRtUKG0yrSe3fcH_1QLw7K80nsO6L9-u6ObBMW7gOw@mail.gmail.com>
+Subject: Re: Wireguard backport to 2.6.3x kernels
+To: John Wayne <matrixman3077@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -27,28 +35,14 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Wed, Jan 31, 2018 at 10:44:39AM +0200, John Wayne wrote:
-> Hi,
-> 
-> I am working on a project that involves some old MIPS and ARM based
-> custom boards.
-> Current SDKs for these boards are pretty messy and there is no
-> documentation about the
-> patches that were applied to the 2.6.3x kernels in order make them
-> work on these boards.
+Hi Igor,
 
-You can always just diff against the kernel.org release to see that.
+It's certainly possible to backport. At the moment I'm focused on
+moving the project forward with other tasks, so it's not a good use of
+my time, but if you'd like to give this a stab, I'd happily take
+non-invasive patches that only touch the compat/ directory. Just keep
+in mind that you'll need to support all kernels in between your target
+and the current minimum.
 
-> So my question is how painfully will it be to port wireguard to the
-> even more ancient 2.6.3x kernels?
-
-You shouldn't be running any device based on those old kernels exposed
-to the network as they are probably totally insecure.  Instead work on
-updating the kernel to something that was at least released in the past
-5 years.
-
-Wireguard support is the least of your problems here :)
-
-good luck!
-
-greg k-h
+Regards,
+Jason
