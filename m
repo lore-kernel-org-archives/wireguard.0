@@ -1,22 +1,20 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: larkwang@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f928611a
- for <wireguard@lists.zx2c4.com>; Fri, 2 Feb 2018 18:03:01 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fd0d2c53
- for <wireguard@lists.zx2c4.com>; Fri, 2 Feb 2018 18:03:01 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2ab5ba73
- for <wireguard@lists.zx2c4.com>; Fri, 2 Feb 2018 17:54:09 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 3812bcf7
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Fri, 2 Feb 2018 17:54:09 +0000 (UTC)
-Date: Fri, 02 Feb 2018 19:08:17 +0100
-To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: [ANNOUNCE] WireGuard Snapshot `0.0.20180202` Available
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3d9ba834
+ for <wireguard@lists.zx2c4.com>; Sat, 3 Feb 2018 14:11:12 +0000 (UTC)
+Received: from mail-vk0-f48.google.com (mail-vk0-f48.google.com
+ [209.85.213.48])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dda4f1e6
+ for <wireguard@lists.zx2c4.com>; Sat, 3 Feb 2018 14:11:12 +0000 (UTC)
+Received: by mail-vk0-f48.google.com with SMTP id e125so15209187vkh.13
+ for <wireguard@lists.zx2c4.com>; Sat, 03 Feb 2018 06:16:41 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Message-Id: <b97175b73367dbb3@frisell.zx2c4.com>
+From: Wang Jian <larkwang@gmail.com>
+Date: Sat, 3 Feb 2018 22:16:40 +0800
+Message-ID: <CAF75rJBF=DmWPYQ9+Fw3iejX2K9KBWAdsoqi-Q6OiG9e4n2e9w@mail.gmail.com>
+Subject: wireguard: neighbor table overflow problem
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,114 +24,79 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-Hello,
+While wireguard is not arp enabled device, I see neighbor table
+overflow in my wireguard setup.
 
-A new snapshot, `0.0.20180202`, has been tagged in the git repository.
+The problem is seen in the servers, that connect multiple satellite
+site together.
 
-Please note that this snapshot is, like the rest of the project at this point
-in time, experimental, and does not consitute a real release that would be
-considered secure and bug-free. WireGuard is generally thought to be fairly
-stable, and most likely will not crash your computer (though it may).
-However, as this is a pre-release snapshot, it comes with no guarantees, and
-its security is not yet to be depended on; it is not applicable for CVEs.
+Let's say wireguard server A has an internal interface eth0, which has
+address 10.4.0.40/24.  The gateway of satellite sites, such as
+10.200.0.0/22, 10.200.4.0/22, 10.200.8.0/22, have internal interface
+eth0, which has address 10.200.0.1, 10.200.4.1, 10.200.8.1,
+respectively.
 
-With all that said, if you'd like to test this snapshot out, there are a
-few relevent changes.
+Address 10.4.0.40/32 is assigned to the wg0 interface of server A,
+and 10.200.0.1/32, 10.200.4.1/32, 10.200.8.1/32 are assigned to wg0
+interface of satellite gateways respectively.
 
-== Changes ==
+We don't use p2p addresse scheme for wg0 interface. So when we ping
+other gateways from one gateway, or ping satellite gateways and host
+in satellite subnets from wireguard server A, the internal host ip
+address is used directly. This avoids policy routing or nat rules,
+makes setup simpler.
 
-  * curve25519-fiat32: uninline certain functions
-  
-  This results in much smaller code size and significanat speed gains on smaller
-  hardware.
-  
-  * poly1305: add poly-specific self-tests
-  
-  Poly is easy to get wrong, so we've added quite a few tests that examine
-  certain edge cases and places where other implementations of historically
-  failed.
-  
-  * tools: dedup secret normalization
-  * tools: share curve25519 implementations with kernel
-  * contrib: keygen-html: share curve25519 implementation with kernel
-  
-  There is now only one place where we ship 25519 code.
-  
-  * qemu: disable PIE for compilation
-  * qemu: disable AVX-512 in userland
-  * qemu: update base versions
-  
-  Test suite enhancements.
-  
-  * device: let udev know what kind of device we are
-  
-  This enables folks to query the device type via udev, which is what systemd's
-  networkctl uses.
-  
-  * tools: fread doesn't change errno
-  
-  This fixes clearing pre-shared keys on old glibc.
-  
-  * chacha20poly1305: use existing rol32 function
-  * chacha20poly1305: better buffer alignment
-  
-  Small enhancements.
-  
-  * curve25519: verify that specialized basepoint implementations are correct
-  
-  Since some implementations have a specialized function for computing
-  basepoints, it's important to do some basic sanity checking with them.
-  
-  * curve25519: replace hacl64 with fiat64
-  
-  For about 24 hours, fiat64 was faster.
-  
-  * curve25519: replace fiat64 with faster hacl64
-  
-  Then hacl64 caught up, so we moved back to it.
-  
-  * curve25519: break more things with more test cases
-  
-  These extra test cases help break the current "rfc7748_precomputed"
-  implementation, which we're not using here at the moment, but it is still
-  useful to ensure that we don't fall victim to the same bugs.
+Wireguard interface is NOARP, but we see repeatedly "neighbor table
+overflow" kernel message.
 
-As always, the source is available at https://git.zx2c4.com/WireGuard/ and
-information about the project is available at https://www.wireguard.com/ .
+ARP table just has a few entries (less than 10), miles away from overflowing.
 
-This snapshot is available in tarball form here:
-  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-0.0.20180202.tar.xz
-  SHA2-256: ee3415b482265ad9e8721aa746aaffdf311058a2d1a4d80e7b6d11bbbf71c722
-  BLAKE2b-256: 3a5629c52ae319072fcbe02fc555f559fcc36d8d3c7b770ccc03cf96272137d8
+Using "ip monitor" in wireguard server, we can see fast flushing messages
 
-If you're a snapshot package maintainer, please bump your package version. If
-you're a user, the WireGuard team welcomes any and all feedback on this latest
-snapshot.
+delete 10.200.x.x dev wg0 lladdr NOARP   <-- form 1
+delete 10.200.x.x dev wg0 lladdr bc:9c:31:d6:ab:1C NOARP  <-- form 2
+delete 10.200.x.x dev wg0 lladdr a0:36:9f:77:6b:6c NOARP   <-- form 3
 
-Finally, WireGuard development thrives on donations. By popular demand, we
-have a webpage for this: https://www.wireguard.com/donations/
+In form 1 message, no mac address.
+In form 2 message, mac address is partially correct, but last one or
+more bits are corrupted (sometimes unprintable).
+In form 3 message, mac address is correct and belongs to one of
+server's subnet neighbor.
 
-Thank you,
-Jason Donenfeld
+For an "ip monitor" session, the messages start from form 1, then
+randomly change between form 1, 2 or 3, in batch by batch pattern.
 
+So, this setup exposes two or more issues
+1. this wireguard setup triggers unexpected neighbor table behaviour,
+i.e. spurious overflow
+2. the "ip monitor" has bugs or kernel rtnetlink messages are incorrect
 
------BEGIN PGP SIGNATURE-----
+Currently, we can do little about this. Increasing neighbor table size
+and tuning aging parameters may reduce the kernel message frequency
+(not sure), but cannot eliminate the problem.
 
-iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAlp0qLQQHGphc29uQHp4
-MmM0LmNvbQAKCRBJ/HASpd4DrrWaD/4y2hqcHci3kRxHRq81H1govSp9bAJ9IPBL
-AF6Jc4S0MO1T6PSqr0mDeioDUJt3T3HIsLKjFscRgDfqmtLojaTDsdjfNHczVwSk
-3KkIe46ZNmlsyZI/G7MgkicRUhXKRpVsm0JahjybRyP91JGcCe2nvf9PezUEIY+v
-QRZkKGucwufD3MsfRyqm6tZC2UZoPjQzODa6MeEumlBhcdGPdN7eYCVf9j0GbzM0
-Fr5jUdoJaFxgkWrA6hoYiSeuw8XJxNrOVFmaIp9Tk2e1AWQe+nmh+yaQrYJbO+dH
-Vn4tL8To6s9OXAy6DTNEk8AetulL5ZlsQxVtV1pxNHUK4+RWsMHUpGgRSiXaaRKV
-EaPIgFUuoKSwt8oE24mN+uUYCO4VbY2338CMgMP8BYOtAmE1Q3YJFuFQ/P7gNZm6
-G4oPrE+reCkXrNb6KBw3LQeP/Qkr/v78keCpwnp0qeCcFqqCeoKjypTN7L40fnuz
-2MWw2Aek1Xl8juKfRJq+JMdg6NKB5hcbTOfYhuOEzbD9fmn0rxUQ72K3caKgM6eV
-4bw1bstd5Zj1BHYVIhWAdtFckN1gWAqTI1Rdhfu6QDyG2upHQVn1eO7vshdz7S6n
-WsSMsPM9v2p2eKnP9RukTLrn6n0U0SycfBdNMgFyXbsMwNM0uv0r/F0yAVdufMKV
-DDFHB7nkRQ==
-=OYS4
------END PGP SIGNATURE-----
+iproute2 and kernel versions as following:
+
+~# dpkg -l iproute2
+Desired=Unknown/Install/Remove/Purge/Hold
+| Status=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-pend
+|/ Err?=(none)/Reinst-required (Status,Err: uppercase=bad)
+||/ Name                        Version            Architecture
+Description
++++-===========================-==================-==================-===========================================================
+ii  iproute2                    3.16.0-2           amd64
+networking and traffic control tools
+
+~# uname -a
+Linux hostname 4.6.0-0.bpo.1-amd64 #1 SMP Debian 4.6.4-1~bpo8+1
+(2016-08-11) x86_64 GNU/Linux
+
+~# uname -a
+Linux hostname 4.7.0-0.bpo.1-amd64 #1 SMP Debian 4.7.8-1~bpo8+1
+(2016-10-19) x86_64 GNU/Linux
+
+~# uname -a
+Linux hostname 4.9.0-0.bpo.2-amd64 #1 SMP Debian 4.9.18-1~bpo8+1
+(2017-04-10) x86_64 GNU/Linux
