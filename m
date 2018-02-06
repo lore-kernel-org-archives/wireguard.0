@@ -1,23 +1,34 @@
-Return-Path: najoll@posteo.net
+Return-Path: matthias.ordner@noris.de
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7b671996
- for <wireguard@lists.zx2c4.com>; Tue, 6 Feb 2018 04:25:04 +0000 (UTC)
-Received: from mout01.posteo.de (mout01.posteo.de [185.67.36.65])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5fb7b5ac
- for <wireguard@lists.zx2c4.com>; Tue, 6 Feb 2018 04:25:04 +0000 (UTC)
-Received: from submission (posteo.de [89.146.220.130])
- by mout01.posteo.de (Postfix) with ESMTPS id B794220ED3
- for <wireguard@lists.zx2c4.com>; Tue,  6 Feb 2018 05:30:51 +0100 (CET)
-Received: from customer (localhost [127.0.0.1])
- by submission (posteo.de) with ESMTPSA id 3zbBNC24Clz9rxK
- for <wireguard@lists.zx2c4.com>; Tue,  6 Feb 2018 05:30:51 +0100 (CET)
-From: Nicholas Joll <najoll@posteo.net>
-Subject: Strange behaviour with interface name
-To: wireguard@lists.zx2c4.com
-Message-ID: <3cfc3270-9a30-a6ce-cf80-76e2d5f1fe21@posteo.net>
-Date: Tue, 6 Feb 2018 04:30:50 +0000
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 294d9dc2
+ for <wireguard@lists.zx2c4.com>; Tue, 6 Feb 2018 07:12:51 +0000 (UTC)
+Received: from mail01.noris.net (mail01.noris.net [62.128.1.221])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5f33dff3
+ for <wireguard@lists.zx2c4.com>; Tue, 6 Feb 2018 07:12:51 +0000 (UTC)
+Received: from zertificon-gw01.noris.net ([62.128.1.128])
+ by mail01.noris.net with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA256:256)
+ (Exim) (envelope-from <matthias.ordner@noris.de>) id 1eixWZ-0003VS-6A
+ for wireguard@lists.zx2c4.com; Tue, 06 Feb 2018 08:18:39 +0100
+Received: from zertificon-gw01.noris.net (localhost [127.0.0.1])
+ by zertificon-gw01.noris.net (Postfix) with ESMTP id 164311B08E8
+ for <wireguard@lists.zx2c4.com>; Tue,  6 Feb 2018 08:18:39 +0100 (CET)
+Received: from mailint1.office.noris.de (mailint1.office.noris.de [10.2.0.37])
+ by zertificon-gw01.noris.net (Postfix) with ESMTP id 9709E1B007A
+ for <wireguard@lists.zx2c4.com>; Tue,  6 Feb 2018 08:18:38 +0100 (CET)
+Received: from grp02vp.winzone.noris.de ([10.2.1.71] helo=oma.noris.net)
+ by mailint1.office.noris.de with esmtps (TLS1.2:RSA_AES_256_CBC_SHA256:256)
+ (Exim) (envelope-from <matthias.ordner@noris.de>) id 1eixWY-000PJX-Ic
+ for wireguard@lists.zx2c4.com; Tue, 06 Feb 2018 08:18:38 +0100
+Subject: Re: Strange behaviour with interface name
+To: <wireguard@lists.zx2c4.com>
+References: <3cfc3270-9a30-a6ce-cf80-76e2d5f1fe21@posteo.net>
+From: Matthias Ordner <matthias.ordner@noris.net>
+Message-ID: <3b15705b-4a8e-7137-7e5f-35c3dc9d3833@noris.net>
+Date: Tue, 6 Feb 2018 08:18:32 +0100
+In-Reply-To: <3cfc3270-9a30-a6ce-cf80-76e2d5f1fe21@posteo.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; protocol="application/x-pkcs7-signature";
+ micalg="sha-256"; boundary="----D235FD424F1AB1E89E90921D81F7C561"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -27,32 +38,194 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Dear all
+This is an S/MIME signed message
 
-A conf file called
+------D235FD424F1AB1E89E90921D81F7C561
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
 
-     wireguard-se1gb1.conf
+Hi Nicholas,
 
-generates, via the wq-quick command, an interface named thusly (note the
-missing the initial 'w'):
+> A conf file called
+>=20
+>  =C2=A0=C2=A0=C2=A0=C2=A0 wireguard-se1gb1.conf
+>=20
+> generates, via the wq-quick command, an interface named thusly (note the
+> missing the initial 'w'):
+>=20
+>  =C2=A0=C2=A0=C2=A0=C2=A0 ireguard-se1gb1.conf [sic]
 
-     ireguard-se1gb1.conf [sic]
+Interface name length on Linux is limited to 15 chars.
+So this is most likely caused by this commit:
+https://git.zx2c4.com/WireGuard/commit/?id=3Db4d5801a16f8619bc3a6111a2a6bd0=
+49abd149a3
 
-Nonetheless, the interface - which works - can be pulled down with
+Using shorter config file names avoids this "bug".
 
-     wg-quick down wireguard-se1gb1.conf
+Best regards
 
-(note the 'w' at the start of 'wireguard'). Renaming the conf file to
+Matthias
 
-     wireguard-seGb.conf
+=20
+Matthias Ordner
+Network & Security (ONS)=20
+noris network AG
+Thomas-Mann-Stra=C3=9Fe 16-20
+90471 N=C3=BCrnberg
+Deutschland
+Tel +49 911 9352 1325
+Fax +49 911 9352 100
 
-generates an interface that is named as expected.
+matthias.ordner@noris.de
+https://www.noris.de - Mehr Leistung als Standard
+Vorstand: Ingo Kraupa (Vorsitzender), Joachim Astel, J=C3=BCrgen St=C3=A4di=
+ng
+Vorsitzender des Aufsichtsrats: Stefan Schnabel - AG N=C3=BCrnberg HRB 1768=
+9
+=C2=A0
+=C2=A0
+=C2=A0
+=C2=A0
 
+------D235FD424F1AB1E89E90921D81F7C561
+Content-Type: application/x-pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
 
-Wireguard: 0.0.20180118-wg1~xenial
-OS: Linux Mint 18.3 Sylvia x86_64
-Kernel: 4.15.1-041501-generic
+MIIY9gYJKoZIhvcNAQcCoIIY5zCCGOMCAQExDzANBglghkgBZQMEAgEFADALBgkq
+hkiG9w0BBwGgghT6MIIFGjCCBAKgAwIBAgIQbRnqpxlPajMi5iIyeqpx3jANBgkq
+hkiG9w0BAQUFADCBrjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAlVUMRcwFQYDVQQH
+Ew5TYWx0IExha2UgQ2l0eTEeMBwGA1UEChMVVGhlIFVTRVJUUlVTVCBOZXR3b3Jr
+MSEwHwYDVQQLExhodHRwOi8vd3d3LnVzZXJ0cnVzdC5jb20xNjA0BgNVBAMTLVVU
+Ti1VU0VSRmlyc3QtQ2xpZW50IEF1dGhlbnRpY2F0aW9uIGFuZCBFbWFpbDAeFw0x
+MTA0MjgwMDAwMDBaFw0yMDA1MzAxMDQ4MzhaMIGTMQswCQYDVQQGEwJHQjEbMBkG
+A1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRowGAYD
+VQQKExFDT01PRE8gQ0EgTGltaXRlZDE5MDcGA1UEAxMwQ09NT0RPIENsaWVudCBB
+dXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMIIBIjANBgkqhkiG9w0B
+AQEFAAOCAQ8AMIIBCgKCAQEAkoSEW0tXmNReL4uk4UDIo1NYX2Zl8TJO958yfVXQ
+eExVt0KU4PkncQfFxmmkuTLE8UAakMwnVmJ/F7Vxaa7lIBvky2NeYMqiQfZq4aP/
+uN8fSG1lQ4wqLitjOHffsReswtqCAtbUMmrUZ28gE49cNfrlVICv2HEKHTcKAlBT
+bJUdqRAUtJmVWRIx/wmi0kzcUtve4kABW0ho3cVKtODtJB86r3FfB+OsvxQ7sCVx
+aD30D9YXWEYVgTxoi4uDD216IVfmNLDbMn7jSuGlUnJkJpFOpZIP/+CxYP0ab2hR
+mWONGoulzEKbm30iY9OpoPzOnpDfRBn0XFs1uhbzp5v/wQIDAQABo4IBSzCCAUcw
+HwYDVR0jBBgwFoAUiYJnfcSdJnAAS7RQSHzePa4Ebn0wHQYDVR0OBBYEFHoTTgB0
+W8Z4Y2QnwS/ioFu8ecV7MA4GA1UdDwEB/wQEAwIBBjASBgNVHRMBAf8ECDAGAQH/
+AgEAMBEGA1UdIAQKMAgwBgYEVR0gADBYBgNVHR8EUTBPME2gS6BJhkdodHRwOi8v
+Y3JsLnVzZXJ0cnVzdC5jb20vVVROLVVTRVJGaXJzdC1DbGllbnRBdXRoZW50aWNh
+dGlvbmFuZEVtYWlsLmNybDB0BggrBgEFBQcBAQRoMGYwPQYIKwYBBQUHMAKGMWh0
+dHA6Ly9jcnQudXNlcnRydXN0LmNvbS9VVE5BZGRUcnVzdENsaWVudF9DQS5jcnQw
+JQYIKwYBBQUHMAGGGWh0dHA6Ly9vY3NwLnVzZXJ0cnVzdC5jb20wDQYJKoZIhvcN
+AQEFBQADggEBAIXWvnhXVW0zf0RS/kLVBqgBA4CK+w2y/Uq/9q9BSfUbWsXSrRtz
+bj7pJnzmTJjBMCjfy/tCPKElPgp11tA9OYZm0aGbtU2bb68obB2v5ep0WqjascDx
+dXovnrqTecr+4pEeVnSy+I3T4ENyG+2P/WA5IEf7i686ZUg8mD2lJb+972DgSeUW
+yOs/Q4Pw4O4NwdPNM1+b0L1garM7/vrUyTo8H+2b/5tJM75CKTmD7jNpLoKdRU2o
+adqAGx490hpdfEeZpZsIbRKZhtZdVwcbpzC+S0lEuJB+ytF5OOu0M/qgOl0mWJ5h
+VRi0IdWZ1eBDQEIwvuql55TSsP7zdfl/bucwggTdMIIDxaADAgECAhBxkvvmGV+s
+TRKFdHE0ohinMA0GCSqGSIb3DQEBBQUAMHsxCzAJBgNVBAYTAkdCMRswGQYDVQQI
+DBJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNVBAcMB1NhbGZvcmQxGjAYBgNVBAoM
+EUNvbW9kbyBDQSBMaW1pdGVkMSEwHwYDVQQDDBhBQUEgQ2VydGlmaWNhdGUgU2Vy
+dmljZXMwHhcNMDQwMTAxMDAwMDAwWhcNMjgxMjMxMjM1OTU5WjCBrjELMAkGA1UE
+BhMCVVMxCzAJBgNVBAgTAlVUMRcwFQYDVQQHEw5TYWx0IExha2UgQ2l0eTEeMBwG
+A1UEChMVVGhlIFVTRVJUUlVTVCBOZXR3b3JrMSEwHwYDVQQLExhodHRwOi8vd3d3
+LnVzZXJ0cnVzdC5jb20xNjA0BgNVBAMTLVVUTi1VU0VSRmlyc3QtQ2xpZW50IEF1
+dGhlbnRpY2F0aW9uIGFuZCBFbWFpbDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCC
+AQoCggEBALI5haTyfatBO2JGN67NwWB1vDll+UoaR6K5zEjMapjVTTUZuaRC5c5J
+4oovHnzSMQfHTrSDZJ0uKdWiZMSFvYVRNXmkTmiQexx6pJKoF/KYFfKTzMmkMpW7
+DE8wvZigC4vlbhuiRvp4vKJvq1lepS/Pytptqi/rrKGzaqq3Lmc1i3nhHmmI4uZG
+zaCl6r4LznY6eg6b6vzaJ1s9cx8i5khhxkzzabGoLhu21DEgLLyCio6kDqXXiUP8
+FlqvHXHXEVnauocNr/rz4cLwpMVnjNbWVDreCqS6A3ezZcj9HtN0YqoYymiTHqGF
+fvVHZcv4TVcodNI0/zC27vZiMBSMLOsCAwEAAaOCAScwggEjMB8GA1UdIwQYMBaA
+FKARCiM+lvEH7OKvKe+CpX/QMKS0MB0GA1UdDgQWBBSJgmd9xJ0mcABLtFBIfN49
+rgRufTAOBgNVHQ8BAf8EBAMCAQYwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHSUEFjAU
+BggrBgEFBQcDAgYIKwYBBQUHAwQwEQYDVR0gBAowCDAGBgRVHSAAMHsGA1UdHwR0
+MHIwOKA2oDSGMmh0dHA6Ly9jcmwuY29tb2RvY2EuY29tL0FBQUNlcnRpZmljYXRl
+U2VydmljZXMuY3JsMDagNKAyhjBodHRwOi8vY3JsLmNvbW9kby5uZXQvQUFBQ2Vy
+dGlmaWNhdGVTZXJ2aWNlcy5jcmwwEQYJYIZIAYb4QgEBBAQDAgEGMA0GCSqGSIb3
+DQEBBQUAA4IBAQCdlcs8uH6lCcQevwvCx3aOOTyUxhCqTwzJ4KuEXYlU4GU7820c
+fDcsJVRfliH8N4SRnRXcFE+Bz1Qda2xFYMct+ZdRTPlmyjyggoymyPDi6dRK+ew/
+VsnddozDggFPbADzHhphdARHA6nGQFeRvGUixSdnT1fbZFrZjR+6hi/0Bq6cae3p
+9M8pF9jgSp8aIC+XTFG7RgfEijdOIOMJMWjHnsSLneh+EbwyaBCWEZhE2CpRYE2I
+63Q630MGMsg5Vow6EVLTQaRDA/Tt7zMn2zngFE4mydj1OeKJuJNdtykmQeqzm66D
+/Hd1yujKtf7iZUpjPkTE0MNeh3OpmByvfxV/MIIEMjCCAxqgAwIBAgIBATANBgkq
+hkiG9w0BAQUFADB7MQswCQYDVQQGEwJHQjEbMBkGA1UECAwSR3JlYXRlciBNYW5j
+aGVzdGVyMRAwDgYDVQQHDAdTYWxmb3JkMRowGAYDVQQKDBFDb21vZG8gQ0EgTGlt
+aXRlZDEhMB8GA1UEAwwYQUFBIENlcnRpZmljYXRlIFNlcnZpY2VzMB4XDTA0MDEw
+MTAwMDAwMFoXDTI4MTIzMTIzNTk1OVowezELMAkGA1UEBhMCR0IxGzAZBgNVBAgM
+EkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBwwHU2FsZm9yZDEaMBgGA1UECgwR
+Q29tb2RvIENBIExpbWl0ZWQxITAfBgNVBAMMGEFBQSBDZXJ0aWZpY2F0ZSBTZXJ2
+aWNlczCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAL5AnfRu4ep2hxxN
+RUSOvkbIgwadwSr+GB+O5AL686tdUIoWMQuaBtDFcCLNSS1UY8y2bmhGC1Pqy0wk
+wLxyTurxFa70VJoSCsN6sjNg4tqJVfMiWPPe3M/vg4aijJRPn2jymJBGhCfHdr/j
+zDUsi14HZGWCwEiwqJH5YZ92IFCokcdmtet4YgNW8IoaE+oxox6gmf049vYnMlhv
+B/VruPsUK6+3qszWY19zjNoFmag4qMsXeDZRrOme9Hg6jc8P2ULimAyrL58OAd7v
+n5lJ8S3frHRNG5i1R8XlKdH5kBjHYpy+g8cmez6KJcfA3Z3mNWgQIJ2P2N7Sw4Sc
+DV7oL8kCAwEAAaOBwDCBvTAdBgNVHQ4EFgQUoBEKIz6W8Qfs4q8p74Klf9AwpLQw
+DgYDVR0PAQH/BAQDAgEGMA8GA1UdEwEB/wQFMAMBAf8wewYDVR0fBHQwcjA4oDag
+NIYyaHR0cDovL2NybC5jb21vZG9jYS5jb20vQUFBQ2VydGlmaWNhdGVTZXJ2aWNl
+cy5jcmwwNqA0oDKGMGh0dHA6Ly9jcmwuY29tb2RvLm5ldC9BQUFDZXJ0aWZpY2F0
+ZVNlcnZpY2VzLmNybDANBgkqhkiG9w0BAQUFAAOCAQEACFb8AvCb6P+k+tZ7xkSA
+zk/ExfYAWMymtrwUSWgEdujm7l3sAg9g1o1QGE8mTgHj5rCl7r+8dFRBv/38ErjH
+T1r0iWAFf2C3BUrz9vHCv8S5dIa2LX1rzNLzRt0vxuBqw8M0Ayx9lt1awg6nCpnB
+BYurDC/zXDrPbDdVCYfeU0BsWO/8tqtlbgT2G9w84FoVxp7Z8VlIMCFlA2zs6SFz
+7JsDoeA3raAVGI/6ugLOpyypEBMs1OUIJqsil2D4kF501KKaU73yqWjgom7C12yx
+ow+ev+to51byrvLjKzg6CYG1a4XXvi3tPxq3smPi9WIsgtRqAEFQ8TmDn5XpNpaY
+bjCCBsEwggWpoAMCAQICEQCSxy8YG4dBC20HmtChtpReMA0GCSqGSIb3DQEBCwUA
+MIGXMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAw
+DgYDVQQHEwdTYWxmb3JkMRowGAYDVQQKExFDT01PRE8gQ0EgTGltaXRlZDE9MDsG
+A1UEAxM0Q09NT0RPIFJTQSBDbGllbnQgQXV0aGVudGljYXRpb24gYW5kIFNlY3Vy
+ZSBFbWFpbCBDQTAeFw0xNzA2MDkwMDAwMDBaFw0xODA2MDkyMzU5NTlaMIHDMRIw
+EAYDVQQHDAlOw7xybmJlcmcxEjAQBgNVBAgMCU7DvHJuYmVyZzELMAkGA1UEBhMC
+REUxITAfBgNVBAMMGG1hdHRoaWFzLm9yZG5lckBub3Jpcy5kZTElMCMGA1UECxMc
+KEUtTWFpbCBHYXRld2F5IENlcnRpZmljYXRlKTEZMBcGA1UEChMQbm9yaXMgbmV0
+d29yayBBRzEnMCUGCSqGSIb3DQEJARYYbWF0dGhpYXMub3JkbmVyQG5vcmlzLmRl
+MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAwVOC+Jct5tYQ3mPMZU39
+sxUcumo3mzo63AbBBy/Tlq/PlCdEF8ei61uzFjrf4+9VBPJN7SyBo93XgfEoUCuQ
+7bdtN2IHFHWFrGFYijEoD+QtFbrpALYfIaQiQxG17HJy+0xLVr8k3Ds9WoZl8j1L
+Ap6fSFLQoPBOxyc3hPY4px6xfPARCqmDBUU0kqQNE0Jawc3W9RUS+uc+p039TE2Y
+LNAvS6qHlGROBPmXMOvbTuYqPgDBn0krqUimvlmAA2WzqcoF8Qg7ppluhpYhbRE3
+zdGkD3z4vkHeFOmVwvdbaxfLIJbKWHUYxKtn17b1E3eB6+sGRZZQjtWlE7VFHu0m
+giIHZE4ioyls6KiKMSlLxtih2LqLcf1ilfbjwkqMkhob68qaHqgv1bNw6BLoqtOa
+P4c/2g+wiCzIcLaXFlN2OYCOlCSUlX6tj+9mv+x8qC/6h7ROEL9CtQg1PJOqFuCV
+QhAn0V/KEsuxbDFSHJusS5SJZcwukC1DR8RVeA3rBTVcSnextzXOMtu36+0IgE2F
+nFJk0sEbK/4PrkWrI+qBbRHhAuXnMrcSjjSHjf6/VBTabI4wL5xdJ11v8D+snj9n
+k1GRqSa4vq3sJEuVE8ZVscp7oEZEBrbTy4AnI85VfmLalsNi36W+oQI0KoWHNf9R
+PSgs9Y7cp5VlzZWftALl7ocCAwEAAaOCAdgwggHUMB8GA1UdIwQYMBaAFIKvbIz4
+xf6WYXzoHz0rcUhexIvAMB0GA1UdDgQWBBQUD6YJOzOzPqDqj0WSG72Bpycl6TAO
+BgNVHQ8BAf8EBAMCBaAwDAYDVR0TAQH/BAIwADAdBgNVHSUEFjAUBggrBgEFBQcD
+BAYIKwYBBQUHAwIwRgYDVR0gBD8wPTA7BgwrBgEEAbIxAQIBAwUwKzApBggrBgEF
+BQcCARYdaHR0cHM6Ly9zZWN1cmUuY29tb2RvLm5ldC9DUFMwWgYDVR0fBFMwUTBP
+oE2gS4ZJaHR0cDovL2NybC5jb21vZG9jYS5jb20vQ09NT0RPUlNBQ2xpZW50QXV0
+aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNybDCBiwYIKwYBBQUHAQEEfzB9
+MFUGCCsGAQUFBzAChklodHRwOi8vY3J0LmNvbW9kb2NhLmNvbS9DT01PRE9SU0FD
+bGllbnRBdXRoZW50aWNhdGlvbmFuZFNlY3VyZUVtYWlsQ0EuY3J0MCQGCCsGAQUF
+BzABhhhodHRwOi8vb2NzcC5jb21vZG9jYS5jb20wIwYDVR0RBBwwGoEYbWF0dGhp
+YXMub3JkbmVyQG5vcmlzLmRlMA0GCSqGSIb3DQEBCwUAA4IBAQAFjbjroaZfvDqB
+ANXpAKwCjLdGW06BXbktOI1OI85EgfKX2j97zVa3zkeIqy14KKLyMzxEtM19RmJ2
+Zsepr78LkKiS1s3MLznStIHZH+WN7QxyYxkkUIXQY43gw6GNWyy6BSTcdByn7Hem
+pooAO3kwvNPXUa2DIQuwTn3yins4TOVHbyQHbd9qhb6m9GgBoBpxndoWrSLy96Ps
+5t9Ao5OKU1H8dHqT1MlDo9M7ovFUpGUPP/Ddd7VHkXX/kzSd2FpoNJwmJnLNfuuy
+AN0Dm7Go48+WLiCDd8QAT3MOrN3uvB44SPbjJKR5cOo5a1pdP1rYxldskJ+S2Trc
+oecS4lCXMYIDwDCCA7wCAQEwga0wgZcxCzAJBgNVBAYTAkdCMRswGQYDVQQIExJH
+cmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNVBAcTB1NhbGZvcmQxGjAYBgNVBAoTEUNP
+TU9ETyBDQSBMaW1pdGVkMT0wOwYDVQQDEzRDT01PRE8gUlNBIENsaWVudCBBdXRo
+ZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEAkscvGBuHQQttB5rQobaU
+XjANBglghkgBZQMEAgEFAKCB5DAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwG
+CSqGSIb3DQEJBTEPFw0xODAyMDYwNzE4MzlaMC8GCSqGSIb3DQEJBDEiBCBCLbE3
+cuTev164BduZ4ssRV1fi8vHikGqf893/+Pcl8jB5BgkqhkiG9w0BCQ8xbDBqMAsG
+CWCGSAFlAwQBKjALBglghkgBZQMEARYwCwYJYIZIAWUDBAECMAoGCCqGSIb3DQMH
+MA4GCCqGSIb3DQMCAgIAgDANBggqhkiG9w0DAgIBQDAHBgUrDgMCBzANBggqhkiG
+9w0DAgIBKDANBgkqhkiG9w0BAQEFAASCAgC43TCovd88velAbguB1SWVhi3Lw0KY
+Q2fcGqxtgz3Y9caRAm39JG8oTyi+rRau46gNoxYT8txwkQTAufAX2L6ssN+tNvd9
+iTN24Dn7LcrGNHaQjdSA5sLO1d54hO7l74CmvoGIwaGHu1gI2tX8L1I6TbrLMBXf
+v0+LvdEqnbFe+O/ddMtpRqRMfm/8tN2ey6s1Z71J3+aK9H4qZ2ky1EJ+wbW7ISJY
+qL4S6hFaymZm6E4Izl1o+nuGGHLprQZTP7JgZKYrHyJR0unOuh5FViO9u09y7Bxy
+xOWFfBdTZw7X8tf2t4opTNth+LQL7AC0SAg5Dtd68yedWreLIozOxaHWeUu88rJ/
+rJSbnhOyj3lO1eZTGqRSgS7P3EBpodx0RvSxCCA5VghmLBm9jHS7ii4QLCVDgFge
+xVG0kk2pvAJm6PLPLuKgjP3dCJ0DxkfJN8K3pfCwbSxT+wYEkmm8bkr5aRXA7oBi
+NkvfnPsMifYBYmN2DpxrupsjWoPWbHfZSMo0I9uGitNILOdbakbLXVSrbdxwqPym
+bObzxb4Hcs/IwM61RAYl/ME8egG7dFiuQAw/3GOVWdasyC180RmREHT7SAxapGFt
+16yDqLxYwB0uP8N4BUdAQDr8uRD6iKTdBsIAJYtx39yjyqm6TaxkgJhU1wbnCDZ+
+R11WPbk+Ha8RjQ==
 
-Yours,
-
-Nick
+------D235FD424F1AB1E89E90921D81F7C561--
