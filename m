@@ -1,20 +1,18 @@
 Return-Path: jugs@protonmail.ch
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d39d5349
- for <wireguard@lists.zx2c4.com>; Thu, 8 Feb 2018 19:08:20 +0000 (UTC)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0da3fd99
+ for <wireguard@lists.zx2c4.com>; Thu, 8 Feb 2018 19:21:16 +0000 (UTC)
 Received: from mail3.protonmail.ch (mail3.protonmail.ch [185.70.40.25])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id edaed875
- for <wireguard@lists.zx2c4.com>; Thu, 8 Feb 2018 19:08:20 +0000 (UTC)
-Date: Thu, 08 Feb 2018 14:14:18 -0500
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fd9721f9
+ for <wireguard@lists.zx2c4.com>; Thu, 8 Feb 2018 19:21:15 +0000 (UTC)
+Date: Thu, 08 Feb 2018 14:27:16 -0500
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
 From: jugs <jugs@protonmail.ch>
-Cc: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
-Subject: Re: wg-quick systemd service does not work directly after boot
-Message-ID: <5KOTFDe17sagyWs3-jk_vBjCoyO5MvpXPA5Dyp6wjGl8EuDcki0nfOUxFbFpM4aPzeI93mpIdHaACKCUdB3CGQ==@protonmail.ch>
-In-Reply-To: <3e901b97-c67f-728b-332b-b301bb466dba@urlichs.de>
-References: <d2debbc5-fc31-2671-6790-0f33194b146f@posteo.de>
- <3e901b97-c67f-728b-332b-b301bb466dba@urlichs.de>
+Subject: WireGuard systemd-networkd routing configuration
+Message-ID: <XIxMOo0l_PgmGyuO-Ox9cPYnHADw82js4MoSGAFj84OReW2Dyj134oZzobkWc4ihQz5Xbnxzh3TZRZdlSYRINw==@protonmail.ch>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: multipart/alternative;
+ boundary="b1_fc90c9b9fea628dcd1c88540bdecb0b2"
 Reply-To: jugs <jugs@protonmail.ch>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -25,34 +23,84 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Or just use the IP address in the config?
+This is a multi-part message in MIME format.
 
-=E2=80=8B-jugs
+--b1_fc90c9b9fea628dcd1c88540bdecb0b2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-=E2=80=8B
+SGV5IGd1eXMsCgpHaXZlbiBXaXJlR3VhcmQgc3VwcG9ydCBpcyBpbiBzeXN0ZW1kIDIzNywgaXQg
+bWF5IGJlIHByZWZlcmFibGUgdG8gaGF2ZSBzeXN0ZW1kIG1hbmFnZSB0aGUgaW50ZXJmYWNlcyBv
+biBzb21lIGRpc3Ryb3MuCgpJJ20gaGF2aW5nIGlzc3VlcyByZWNyZWF0aW5nIHRoZSByb3V0aW5n
+IHRhYmxlIHdpdGggc3lzdGVtZC1uZXR3b3JrZCB0byBkbyBgQWxsb3dlZElQcz0wLjAuMC4wLzBg
+IGFrYSBzZXR0aW5nIHRoZSBkZWZhdWx0IHJvdXRlIGZvciBhbGwgc3lzdGVtIHRyYWZmaWMgdG8g
+dXNlIHRoZSB3ZzAgaW50ZXJmYWNlLiBJIHdvdWxkIGFwcHJlY2lhdGUgc29tZSBzdWdnZXN0aW9u
+cyBvbiBob3cgdG8gY2hhbmdlIG15IGNvbmZpZyB0byBtYWtlIHRoaXMgaGFwcGVuLiBJJ3ZlIHRy
+aWVkIHZhcmlvdXMgY29tYmluYXRpb25zIGZvciB0aGUgZGhjcC5uZXR3b3JrIGFuZCB0aGUgd2cu
+bmV0d29yayB3aXRoIG5vIHN1Y2Nlc3MuCgpCZWxvdyBpcyBteSBlcXVpdmFsZW50IGNvbmZpZyBh
+cyB0byBoYXZpbmcgbXkgd2cuY29uZiB3aXRoIGBBbGxvd2VkSVBzPTE5Mi4xNjguMTAwLjAvMjRg
+OgoKW21lQGhvc3QgbmV0d29ya10kIHB3ZAovZXRjL3N5c3RlbWQvbmV0d29yawpbbWVAaG9zdCBu
+ZXR3b3JrXSQgbGwKdG90YWwgMTJLCi1ydy1yLS0tLS0gMSByb290IHN5c3RlbWQtbmV0d29yayAz
+MDAgRmViICA3IDEyOjAwIDI1LXdpcmVndWFyZC5uZXRkZXYKLXJ3LXItLS0tLSAxIHJvb3Qgc3lz
+dGVtZC1uZXR3b3JrICA2MCBGZWIgIDcgMTI6MDAgNDAtZGhjcC5uZXR3b3JrCi1ydy1yLS0tLS0g
+MSByb290IHN5c3RlbWQtbmV0d29yayAxMDAgRmViICA3IDEyOjAwIDUwLXN0YXRpYy13Zy5uZXR3
+b3JrClttZUBob3N0IG5ldHdvcmtdJCBjYXQgMjUtd2lyZWd1YXJkLm5ldGRldgpbTmV0RGV2XQpO
+YW1lPXdnMApLaW5kPXdpcmVndWFyZAoKW1dpcmVHdWFyZF0KUHJpdmF0ZUtleT1BQkNERUZHPQpG
+d01hcms9NTE4MjAKCltXaXJlR3VhcmRQZWVyXQpQdWJsaWNLZXk9R0hJSktMTU5PUD0KQWxsb3dl
+ZElQcz0wLjAuMC4wLzAKRW5kcG9pbnQ9MS4yLjMuNDo1MTgyMAoKW21lQGhvc3QgbmV0d29ya10k
+IGNhdCA0MC1kaGNwLm5ldHdvcmsKW01hdGNoXQpOYW1lPWV0aDAKCltOZXR3b3JrXQpESENQPXll
+cwoKW0RIQ1BdClVzZUROUz1ubwoKW21lQGhvc3QgbmV0d29ya10kIGNhdCA1MC1zdGF0aWMtd2cu
+bmV0d29yawpbTWF0Y2hdCk5hbWU9d2cwCgpbTmV0d29ya10KQWRkcmVzcz0xOTIuMTY4LjEwMC4y
+LzMyCkROUz0xOTIuMTY4LjEwMC4xCgpbUm91dGVdCkRlc3RpbmF0aW9uPTE5Mi4xNjguMTAwLjAv
+MjQKCi1qdWdz
 
--------- Original Message --------
- On February 7, 2018 1:06 PM, Matthias Urlichs <matthias@urlichs.de> wrote:
 
->On 07.02.2018 12:54, Mytril wrote:
->>The interface cannot resolve the dynamic domain, because the internet
->> connection is not established at this moment.
->>But i have also only a workaround to create wg0. I also start the wg at
->> a later time.
->>So i think this is not a bug, but rather a problem with the order of
->> network connection startup.
->>
->Right. There cannot be a "correct" way of ordering wireguard vs. other
-> interfaces that works in all circumstances.
->
-> However, instead of sleeping, a dependency on network-online.target
-> might be more appropriate if wireguard needs to resolve a name.
->
->
->-- Matthias Urlichs
->
->
->WireGuard mailing list
->WireGuard@lists.zx2c4.com
->https://lists.zx2c4.com/mailman/listinfo/wireguard
->
+--b1_fc90c9b9fea628dcd1c88540bdecb0b2
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: base64
+
+PGRpdj5IZXkgZ3V5cyw8YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5HaXZlbiBXaXJlR3Vh
+cmQgc3VwcG9ydCBpcyBpbiBzeXN0ZW1kIDIzNywgaXQgbWF5IGJlIHByZWZlcmFibGUgdG8gaGF2
+ZSBzeXN0ZW1kIG1hbmFnZSB0aGUgaW50ZXJmYWNlcyBvbiBzb21lIGRpc3Ryb3MuPGJyPjwvZGl2
+PjxkaXY+PGJyPjwvZGl2PjxkaXY+SSdtIGhhdmluZyBpc3N1ZXMgcmVjcmVhdGluZyB0aGUgcm91
+dGluZyB0YWJsZSB3aXRoIHN5c3RlbWQtbmV0d29ya2QgdG8gZG8gYEFsbG93ZWRJUHM9MC4wLjAu
+MC8wYCBha2Egc2V0dGluZyB0aGUgZGVmYXVsdCByb3V0ZSBmb3IgYWxsIHN5c3RlbSB0cmFmZmlj
+IHRvIHVzZSB0aGUgd2cwIGludGVyZmFjZS4gSSB3b3VsZCBhcHByZWNpYXRlIHNvbWUgc3VnZ2Vz
+dGlvbnMgb24gaG93IHRvIGNoYW5nZSBteSBjb25maWcgdG8gbWFrZSB0aGlzIGhhcHBlbi4gSSd2
+ZSB0cmllZCB2YXJpb3VzIGNvbWJpbmF0aW9ucyBmb3IgdGhlIGRoY3AubmV0d29yayBhbmQgdGhl
+IHdnLm5ldHdvcmsgd2l0aCBubyBzdWNjZXNzLjxicj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2
+PkJlbG93IGlzIG15IGVxdWl2YWxlbnQgY29uZmlnIGFzIHRvIGhhdmluZyBteSB3Zy5jb25mIHdp
+dGggYEFsbG93ZWRJUHM9MTkyLjE2OC4xMDAuMC8yNGA6PGJyPjwvZGl2PjxkaXY+PGJyPjwvZGl2
+PjxkaXY+W21lQGhvc3QgbmV0d29ya10kIHB3ZDxicj48L2Rpdj48ZGl2Pi9ldGMvc3lzdGVtZC9u
+ZXR3b3JrPGJyPjwvZGl2PjxkaXY+W21lQGhvc3QgbmV0d29ya10kIGxsPGJyPjwvZGl2PjxkaXY+
+dG90YWwgMTJLPGJyPjwvZGl2PjxkaXY+LXJ3LXItLS0tLSAxIHJvb3Qgc3lzdGVtZC1uZXR3b3Jr
+IDMwMCBGZWImbmJzcDsgNyAxMjowMCAyNS13aXJlZ3VhcmQubmV0ZGV2PGJyPjwvZGl2PjxkaXY+
+LXJ3LXItLS0tLSAxIHJvb3Qgc3lzdGVtZC1uZXR3b3JrJm5ic3A7IDYwIEZlYiZuYnNwOyA3IDEy
+OjAwIDQwLWRoY3AubmV0d29yazxicj48L2Rpdj48ZGl2Pi1ydy1yLS0tLS0gMSByb290IHN5c3Rl
+bWQtbmV0d29yayAxMDAgRmViJm5ic3A7IDcgMTI6MDAgNTAtc3RhdGljLXdnLm5ldHdvcms8YnI+
+PC9kaXY+PGRpdj5bbWVAaG9zdCBuZXR3b3JrXSQgY2F0IDI1LXdpcmVndWFyZC5uZXRkZXY8YnI+
+PC9kaXY+PGRpdj5bTmV0RGV2XTxicj48L2Rpdj48ZGl2Pk5hbWU9d2cwPGJyPjwvZGl2PjxkaXY+
+S2luZD13aXJlZ3VhcmQ8YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5bV2lyZUd1YXJkXTxi
+cj48L2Rpdj48ZGl2PlByaXZhdGVLZXk9QUJDREVGRz08YnI+PC9kaXY+PGRpdj5Gd01hcms9NTE4
+MjA8YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5bV2lyZUd1YXJkUGVlcl08YnI+PC9kaXY+
+PGRpdj5QdWJsaWNLZXk9R0hJSktMTU5PUD08YnI+PC9kaXY+PGRpdj5BbGxvd2VkSVBzPTAuMC4w
+LjAvMDxicj48L2Rpdj48ZGl2PkVuZHBvaW50PTEuMi4zLjQ6NTE4MjA8YnI+PC9kaXY+PGRpdj48
+YnI+PC9kaXY+PGRpdj5bbWVAaG9zdCBuZXR3b3JrXSQgIGNhdCA0MC1kaGNwLm5ldHdvcms8YnI+
+PC9kaXY+PGRpdj5bTWF0Y2hdPGJyPjwvZGl2PjxkaXY+TmFtZT1ldGgwPGJyPjwvZGl2PjxkaXY+
+PGJyPjwvZGl2PjxkaXY+W05ldHdvcmtdPGJyPjwvZGl2PjxkaXY+REhDUD15ZXM8YnI+PC9kaXY+
+PGRpdj48YnI+PC9kaXY+PGRpdj5bREhDUF08YnI+PC9kaXY+PGRpdj5Vc2VETlM9bm88YnI+PC9k
+aXY+PGRpdj48YnI+PC9kaXY+PGRpdj5bbWVAaG9zdCBuZXR3b3JrXSQgIGNhdCA1MC1zdGF0aWMt
+d2cubmV0d29yazxicj48L2Rpdj48ZGl2PltNYXRjaF08YnI+PC9kaXY+PGRpdj5OYW1lPXdnMDxi
+cj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PltOZXR3b3JrXTxicj48L2Rpdj48ZGl2PkFkZHJl
+c3M9MTkyLjE2OC4xMDAuMi8zMjxicj48L2Rpdj48ZGl2PkROUz0xOTIuMTY4LjEwMC4xPC9kaXY+
+PGRpdj48YnI+PC9kaXY+PGRpdj5bUm91dGVdPGJyPjwvZGl2PjxkaXY+RGVzdGluYXRpb249MTky
+LjE2OC4xMDAuMC8yNDwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+PGJy
+PjwvZGl2PjxkaXYgY2xhc3M9InByb3Rvbm1haWxfc2lnbmF0dXJlX2Jsb2NrIj48ZGl2IGNsYXNz
+PSJwcm90b25tYWlsX3NpZ25hdHVyZV9ibG9jay11c2VyIj48ZGl2Pi1qdWdzPGJyPjwvZGl2Pjwv
+ZGl2PjxkaXYgY2xhc3M9InByb3Rvbm1haWxfc2lnbmF0dXJlX2Jsb2NrLXByb3RvbiBwcm90b25t
+YWlsX3NpZ25hdHVyZV9ibG9jay1lbXB0eSI+PGJyPjwvZGl2PjwvZGl2PjxkaXY+PGJyPjwvZGl2
+Pg==
+
+
+
+--b1_fc90c9b9fea628dcd1c88540bdecb0b2--
