@@ -1,24 +1,23 @@
-Return-Path: dkg@fifthhorseman.net
+Return-Path: eric@ericlight.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5033d7bb
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8cf08b15
  for <wireguard@lists.zx2c4.com>;
- Mon, 12 Feb 2018 05:20:24 +0000 (UTC)
-Received: from che.mayfirst.org (che.mayfirst.org [162.247.75.118])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8892fddc
+ Mon, 12 Feb 2018 07:17:22 +0000 (UTC)
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
+ [66.111.4.26])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1f79a016
  for <wireguard@lists.zx2c4.com>;
- Mon, 12 Feb 2018 05:20:24 +0000 (UTC)
-From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-To: Baptiste Jonglez <baptiste@bitsofnetworks.org>
-Subject: Re: Memleak with 0.0.20171221-5 on Debian stretch
-In-Reply-To: <20180211184312.GD12558@lud.localdomain>
-References: <20180211134837.GC12558@lud.localdomain>
- <87r2prs80x.fsf@fifthhorseman.net> <20180211184312.GD12558@lud.localdomain>
-Date: Sun, 11 Feb 2018 22:34:29 -0500
-Message-ID: <87zi4erid6.fsf@fifthhorseman.net>
+ Mon, 12 Feb 2018 07:17:22 +0000 (UTC)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+ by mailout.nyi.internal (Postfix) with ESMTP id 7918320BA8
+ for <wireguard@lists.zx2c4.com>; Mon, 12 Feb 2018 02:23:56 -0500 (EST)
+Message-Id: <1518420236.1268661.1267596392.738A262C@webmail.messagingengine.com>
+From: Eric Light <eric@ericlight.com>
+To: wireguard@lists.zx2c4.com
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Cc: wireguard@lists.zx2c4.com
+Content-Type: multipart/alternative; boundary="_----------=_151842023612686610"
+Date: Mon, 12 Feb 2018 20:23:56 +1300
+Subject: Starcraft over Wireguard ... :sideeye:
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -28,35 +27,153 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---=-=-=
-Content-Type: text/plain
+This is a multi-part message in MIME format.
 
-On Sun 2018-02-11 19:43:12 +0100, Baptiste Jonglez wrote:
-> On 11-02-18, Daniel Kahn Gillmor wrote:
->
->> i'm curious from the graph -- do you know what happened at the start of
->> week 6 where there's a sawtooth?
->
-> Actually, the amount of "slab_cache" didn't change at that point, it's
-> just the amount of application memory that dropped a bit.  I looked at the
-> logs, some userspace processes were being killed by the OOM-killer.
+--_----------=_151842023612686610
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
 
-ah right, this makes sense, i'd forgotten that these munin
-RAM-consumption graphs are "stacked".  Thanks for tracking down the
-oom-killer event anyway.
+Hi, awesome WG mailinglist!
 
-hopefully we can sort out the rest soon, thanks for raising it here.
+My 18 year-old has recently moved out of home, and we're starting to
+yearn for one of our traditional Starcraft matches.  I thought I should
+be able to do this easily with Wireguard.
+The idea, generally, is that one of us would start up a game, and
+Wireguard - with a side serving of ProxyARP and IP forwarding - would
+help make all the other computers see that game.  (or, at very worst,
+allow me to run a game that could be seen by his computer AND the other
+computers here).
+-=-=-=-=-=-=-=-=-=-=-=-=-
 
-           --dkg
+On his computer:  (LAN IP 192.168.1.x)
 
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
+> [Interface]
+> PrivateKey = {blah}=
+> ListenPort = 12457
+> Address = 192.168.88.3/24
+> 
+> [Peer]
+> PublicKey = {blah2}=
+> Endpoint = {my home}:12457
+> AllowedIPs = 0.0.0.0/0
+> 
 
------BEGIN PGP SIGNATURE-----
+On my computer:  (LAN IP 192.168.88.x)
 
-iHUEARYKAB0WIQTTaP514aqS9uSbmdJsHx7ezFD6UwUCWoELRQAKCRBsHx7ezFD6
-U65eAP9SqgIT2kg2Oj4Jhxyi+JJ4gARG4dGfaVdep6uz6jlC6gEA9u1T1kBkXBn9
-SFS/bvhFvMbX3Njogw5+jnSAS7RpSww=
-=5u+k
------END PGP SIGNATURE-----
---=-=-=--
+> [Interface]
+> PrivateKey = {blah3}=
+> ListenPort = 12457
+> Address = 192.168.88.2/32
+> 
+> [Peer]
+> PublicKey = {blah4}=
+> AllowedIPs = 192.168.88.3/32
+
+-=-=-=-=-=-=-=-=-=-=-=-=-
+
+But it turns out not to be so easy.  Starcraft sets up games over UDP
+5353 and UDP 6112, and originally I thought it was a problem with
+forwarding UDP packets.  However, I can see packets coming over the
+tunnel from his computer, but the packets are being forwarded to an
+address I don't know:
+> root@me:~# tcpdump -i home port 5353 or port 6112
+> tcpdump: verbose output suppressed, use -v or -vv for full
+> protocol decode> listening on home, link-type RAW (Raw IP), capture size 262144 bytes
+> 20:02:35.744726 IP 192.168.88.3.6112 > 37.244.23.109.3478: UDP,
+> length 10> 20:02:35.759142 IP 192.168.88.3.6112 > 37.244.23.109.3478: UDP,
+> length 10> 20:02:35.759157 IP 192.168.88.3.6112 > 37.244.23.109.3478: UDP,
+> length 10> 20:02:36.045323 IP 37.244.23.109.3478 > 192.168.88.3.6112: UDP,
+> length 19> 20:02:36.099993 IP 37.244.23.109.3478 > 192.168.88.3.6112: UDP,
+> length 19> 20:02:36.100005 IP 37.244.23.109.3478 > 192.168.88.3.6112: UDP,
+> length 19> 20:03:05.964077 IP 192.168.88.3.6112 > 37.244.23.109.3478: UDP,
+> length 10> 20:03:05.964118 IP 192.168.88.3.6112 > 37.244.23.109.3478: UDP,
+> length 10> 20:03:05.987761 IP 192.168.88.3.6112 > 37.244.23.109.3478: UDP,
+> length 10
+Any ideas where I can start looking?  I get similar behaviour whether I
+host the game on my computer or on his.
+Thanks in advance for any help you guys can offer!
+
+E
+
+--------------------------------------------
+Q: Why is this email five sentences or less?
+A: http://five.sentenc.es
+
+
+
+--_----------=_151842023612686610
+Content-Transfer-Encoding: 7bit
+Content-Type: text/html; charset="utf-8"
+
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<style type="text/css">p.MsoNormal,p.MsoNoSpacing{margin:0}</style>
+</head>
+<body><div>Hi, awesome WG mailinglist!<br></div>
+<div><br></div>
+<div>My 18 year-old has recently moved out of home, and we're starting to yearn for one of our traditional Starcraft matches.&nbsp; I thought I should be able to do this easily with Wireguard.<br></div>
+<div><br></div>
+<div><div>The idea, generally, is that one of us would start up a game, and Wireguard - with a side serving of ProxyARP and IP forwarding - would help make all the other computers see that game.&nbsp; (or, at very worst, allow me to run a game that could be seen by his computer AND the other computers here).<br></div>
+<div><br></div>
+</div>
+<div>-=-=-=-=-=-=-=-=-=-=-=-=-<br></div>
+<div><br></div>
+<div>On his computer:&nbsp; (LAN IP 192.168.1.x)<br></div>
+<div><br></div>
+<blockquote type="cite"><div><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;">[Interface]<br></span></div>
+<div><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;">PrivateKey = {blah}=<br></span></div>
+<div><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;">ListenPort = 12457<br></span></div>
+<div><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;">Address = 192.168.88.3/24<br></span></div>
+<div><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;"><br></span></div>
+<div><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;">[Peer]<br></span></div>
+<div><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;">PublicKey = {blah2}=<br></span></div>
+<div><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;">Endpoint = {my home}:12457<br></span></div>
+<div><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;">AllowedIPs = 0.0.0.0/0<br></span></div>
+<div><br></div>
+</blockquote><div><br></div>
+<div>On my computer:&nbsp; (LAN IP 192.168.88.x)<br></div>
+<div><br></div>
+<blockquote type="cite"><div><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;">[Interface]</span><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;"><br></span></div>
+<div><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;">PrivateKey = {blah3}=</span><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;"><br></span></div>
+<div><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;">ListenPort = 12457</span><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;"><br></span></div>
+<div><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;">Address = 192.168.88.2/32</span><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;"><br></span></div>
+<div><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;"><br></span></div>
+<div><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;">[Peer]</span><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;"><br></span></div>
+<div><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;">PublicKey = {blah4}=</span><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;"><br></span></div>
+<div><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;">AllowedIPs = 192.168.88.3/32</span><br></div>
+</blockquote><div><br></div>
+<div>-=-=-=-=-=-=-=-=-=-=-=-=-<br></div>
+<div><br></div>
+<div>But it turns out not to be so easy.&nbsp; Starcraft sets up games over UDP 5353 and UDP 6112, and originally I thought it was a problem with forwarding UDP packets.&nbsp; However, I can see packets coming over the tunnel from his computer, but the packets are being forwarded to an address I don't know:</div>
+<div><br></div>
+<blockquote type="cite"><div><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;">root@me:~# tcpdump -i home port 5353 or port 6112</span><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;"><br></span></div>
+<div><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;">tcpdump: verbose output suppressed, use -v or -vv for full protocol decode</span><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;"><br></span></div>
+<div><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;">listening on home, link-type RAW (Raw IP), capture size 262144 bytes</span><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;"><br></span></div>
+<div><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;">20:02:35.744726 IP 192.168.88.3.6112 &gt; 37.244.23.109.3478: UDP, length 10</span><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;"><br></span></div>
+<div><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;">20:02:35.759142 IP 192.168.88.3.6112 &gt; 37.244.23.109.3478: UDP, length 10</span><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;"><br></span></div>
+<div><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;">20:02:35.759157 IP 192.168.88.3.6112 &gt; 37.244.23.109.3478: UDP, length 10</span><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;"><br></span></div>
+<div><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;">20:02:36.045323 IP 37.244.23.109.3478 &gt; 192.168.88.3.6112: UDP, length 19</span><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;"><br></span></div>
+<div><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;">20:02:36.099993 IP 37.244.23.109.3478 &gt; 192.168.88.3.6112: UDP, length 19</span><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;"><br></span></div>
+<div><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;">20:02:36.100005 IP 37.244.23.109.3478 &gt; 192.168.88.3.6112: UDP, length 19</span><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;"><br></span></div>
+<div><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;">20:03:05.964077 IP 192.168.88.3.6112 &gt; 37.244.23.109.3478: UDP, length 10</span><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;"><br></span></div>
+<div><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;">20:03:05.964118 IP 192.168.88.3.6112 &gt; 37.244.23.109.3478: UDP, length 10</span><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;"><br></span></div>
+<div><span class="font" style="font-family: menlo, consolas, monospace, sans-serif;">20:03:05.987761 IP 192.168.88.3.6112 &gt; 37.244.23.109.3478: UDP, length 10</span><br></div>
+</blockquote><div><br></div>
+<div>Any ideas where I can start looking?&nbsp; I get similar behaviour whether I host the game on my computer or on his.<br></div>
+<div><br></div>
+<div>Thanks in advance for any help you guys can offer!<br></div>
+<div><br></div>
+<div>E</div>
+<div><br></div>
+<div id="sig66226376"><div class="signature">--------------------------------------------<br></div>
+<div class="signature">Q: Why is this email five sentences or less?<br></div>
+<div class="signature">A: http://five.sentenc.es<br></div>
+<div class="signature"><br></div>
+</div>
+<div><br></div>
+</body>
+</html>
+
+--_----------=_151842023612686610--
