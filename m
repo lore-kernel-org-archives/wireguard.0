@@ -1,25 +1,21 @@
-Return-Path: dkg@fifthhorseman.net
+Return-Path: asbjorn@asbjorn.st
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 209cc26a
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7b7373a7
  for <wireguard@lists.zx2c4.com>;
- Wed, 14 Feb 2018 20:57:38 +0000 (UTC)
-Received: from che.mayfirst.org (che.mayfirst.org [162.247.75.118])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a942d97f
+ Wed, 14 Feb 2018 21:18:28 +0000 (UTC)
+Received: from mail.asbjorn.biz (mail.asbjorn.biz [185.38.24.25])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4106fe80
  for <wireguard@lists.zx2c4.com>;
- Wed, 14 Feb 2018 20:57:38 +0000 (UTC)
-From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
- Max Moser <e1326252@student.tuwien.ac.at>
-Subject: Re: NetworkManager Plugin
-In-Reply-To: <CAHmME9qVoBkdu35n4aGdZ8nCH6ONZhcGb=WCGx2LGbyHgJMTSw@mail.gmail.com>
-References: <7d5325a3-fa07-f67f-a31e-aadd44458d41@student.tuwien.ac.at>
- <CAHmME9qVoBkdu35n4aGdZ8nCH6ONZhcGb=WCGx2LGbyHgJMTSw@mail.gmail.com>
-Date: Wed, 14 Feb 2018 14:47:20 -0500
-Message-ID: <87zi4bpd4n.fsf@fifthhorseman.net>
+ Wed, 14 Feb 2018 21:18:28 +0000 (UTC)
+To: wireguard@lists.zx2c4.com
+References: <1518420236.1268661.1267596392.738A262C@webmail.messagingengine.com>
+Subject: Re: Starcraft over Wireguard ... :sideeye:
+From: =?UTF-8?Q?Asbj=c3=b8rn_Sloth_T=c3=b8nnesen?= <wireguard@asbjorn.st>
+Message-ID: <6c70a794-6d9e-f9af-3c0d-ad4e16607a51@asbjorn.st>
+Date: Wed, 14 Feb 2018 21:24:51 +0000
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+In-Reply-To: <1518420236.1268661.1267596392.738A262C@webmail.messagingengine.com>
+Content-Type: text/plain; charset=utf-8
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -29,31 +25,20 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---=-=-=
-Content-Type: text/plain
+Hi Eric,
 
-On Wed 2018-02-14 16:28:59 +0100, Jason A. Donenfeld wrote:
+If the game requires the computers to be on the same LAN,
+complete with broadcast, multicast etc., you can run a layer
+2 network through WG, running a L2TPv3 tunnel on top of WG's
+layer 3 network.
 
-> This is wonderful news. I'm happy to work with you to make sure this
-> comes out perfectly, and maybe when it's finished we can submit it
-> upstream to NetworkManager, similar to how systemd-networkd now has
-> WireGuard support built-in.
+See ip-l2tp(8) for usage examples.
 
-last time i looked, network-manager included a local copy of a big chunk
-of systemd code.  so it's possible that a newer version of
-network-manager will already have the systemd-networkd code available to
-it, and you just need to hook into it correctly from the nm internals.
+It doesn't say in the man page, but if you set the L2TP MTU
+high like 1500 (to simulate standard LAN MTU), then the
+packets will be fragmented at the IP layer, so at the cost
+the fragmentation overhead you can even emulate a higher MTU.
 
-        --dkg
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEARYKAB0WIQTTaP514aqS9uSbmdJsHx7ezFD6UwUCWoSSSAAKCRBsHx7ezFD6
-U4qOAP9p2j4rTpqNp2u5zC3iMFRYFOh4yW/Wq3apdHvOU1E0rAD/ZkKPboJWjAI9
-uwlFs7YY9SrphjvRWFH/ynTg+OSIxwU=
-=fLwt
------END PGP SIGNATURE-----
---=-=-=--
+-- 
+Best regards
+Asbjørn Sloth Tønnesen
