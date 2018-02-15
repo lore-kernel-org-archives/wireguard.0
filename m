@@ -1,21 +1,35 @@
-Return-Path: benny.laib@protonmail.com
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 27a4a3c4
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a42227bd
  for <wireguard@lists.zx2c4.com>;
- Thu, 15 Feb 2018 13:00:27 +0000 (UTC)
-Received: from mail3.protonmail.ch (mail3.protonmail.ch [185.70.40.25])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7d1034e2
+ Thu, 15 Feb 2018 14:00:57 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ab1b689a
  for <wireguard@lists.zx2c4.com>;
- Thu, 15 Feb 2018 13:00:26 +0000 (UTC)
-Date: Thu, 15 Feb 2018 08:07:19 -0500
-To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
-From: Benni Laib <benny.laib@protonmail.com>
-Subject: Retrict Docker Container To VPN
-Message-ID: <4bQ1XlXd3ErIjCR3iQzp_qIlD9TBA7puQAuFeLekYWn2gq_cLvljPmZ2jprtiMJb7jWDysgW6QlCEog92tofkegIis83aDQpPFhqW5H_81c=@protonmail.com>
+ Thu, 15 Feb 2018 14:00:57 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 06e27f22
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 15 Feb 2018 13:52:05 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id da7419b6
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 15 Feb 2018 13:52:04 +0000 (UTC)
+Received: by mail-oi0-f41.google.com with SMTP id l124so6910165oib.0
+ for <wireguard@lists.zx2c4.com>; Thu, 15 Feb 2018 06:07:55 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="b1_998de2dd32eed53fe1d9631a8dddf397"
-Reply-To: Benni Laib <benny.laib@protonmail.com>
+In-Reply-To: <cba131ba-cd15-8bf4-cdd1-4d46ad774d41@student.tuwien.ac.at>
+References: <7d5325a3-fa07-f67f-a31e-aadd44458d41@student.tuwien.ac.at>
+ <CAHmME9qVoBkdu35n4aGdZ8nCH6ONZhcGb=WCGx2LGbyHgJMTSw@mail.gmail.com>
+ <CAFi5oX6LM+A=jbPmhffc4wT+pKmMg8xi=2ebSMg=s7Qg2AY_sw@mail.gmail.com>
+ <cba131ba-cd15-8bf4-cdd1-4d46ad774d41@student.tuwien.ac.at>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 15 Feb 2018 15:07:54 +0100
+Message-ID: <CAHmME9rZU8y8mjHhHkVJ9foRW8Wuk5QMoijMfVU=_4LHfg7F-w@mail.gmail.com>
+Subject: Re: NetworkManager Plugin
+To: Maximilian Moser <e1326252@student.tuwien.ac.at>
+Content-Type: text/plain; charset="UTF-8"
+Cc: Jordan DeBeer <debee1jp@gmail.com>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -25,37 +39,37 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-This is a multi-part message in MIME format.
+Hi Max,
 
---b1_998de2dd32eed53fe1d9631a8dddf397
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+On Thu, Feb 15, 2018 at 1:34 AM, Maximilian Moser
+<e1326252@student.tuwien.ac.at> wrote:
+> I actually just wanted to get this thesis over with and thought, why not
+> post the result to the mailing list
+> I'll probably focus more on the written part of the
+> thesis, so fixing the issues will probably have to wait a while on my part.
 
-SGkgdGhlcmUsCgpJIGFtIGN1cnJlbnRseSBzdHJ1Z2dsaW5nIHdpdGggc2V0dGluZyB1cCBhIERv
-Y2tlciBjb250YWluZXIgdGhhdCBjYW4gb25seSBhY2Nlc3MgdGhlIGludGVybmV0IHRocm91Z2gg
-YSBXaXJlR3VhcmQgdHVubmVsLiBBY2NvcmRpbmcgdG8gW3RoZSB3ZWJzaXRlXShodHRwczovL3d3
-dy53aXJlZ3VhcmQuY29tLyNyZWFkeS1mb3ItY29udGFpbmVycyksIHRoaXMgc2hvdWxkIGJlIHBv
-c3NpYmxlLCBidXQgSSBjYW4ndCBmaW5kIGFueXRoaW5nIG9uIGhvdyB0byBzZXQgaXQgdXAuCkNh
-biB5b3UgZ3V5cyBoZWxwIG1lIHdpdGggdGhhdCBhbmQgcGVyaGFwcyBwb2ludCBtZSB0byB1c2Vm
-dWwgaW5mb3JtYXRpb24/CgpUaGFuayB5b3UgdmVyeSBtdWNoIGluIGFkdmFuY2UsCkJlbmphbWlu
+I'm certainly not interested in "throw it over the fence" coding. I'm
+happy to work with you on "the acceptance and the possible prospect of
+this thing getting packaged for distros," as you wrote, but only if
+you're actually committed to maintaining it. It sounds to me like this
+is something in your mind that is "over with"? That's disapointing.
 
+> Regarding the issues... About some of them, I did know in one way or the
+> other.
+> So I'm somewhat excited about the acceptance and the possible prospect of
+> this thing getting packaged for distros :D
 
---b1_998de2dd32eed53fe1d9631a8dddf397
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: base64
+As I wrote earlier, this is going to require a lot of work to actually
+bring to fruition. The first priority should be entirely dispensing
+with the use of wg-quick. In order to aid these efforts, I spent some
+time writing a mini single-file-c library that you can drop into your
+project as a means for talking to the kernel and configuring devices
+directly:
 
-PGRpdj5IaSB0aGVyZSw8YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5JIGFtIGN1cnJlbnRs
-eSBzdHJ1Z2dsaW5nIHdpdGggc2V0dGluZyB1cCBhIERvY2tlciBjb250YWluZXIgdGhhdCBjYW4g
-b25seSBhY2Nlc3MgdGhlIGludGVybmV0IHRocm91Z2ggYSBXaXJlR3VhcmQgdHVubmVsLiBBY2Nv
-cmRpbmcgdG8gPGEgcmVsPSJub2ZvbGxvdyIgdGl0bGU9Imh0dHBzOi8vd3d3LndpcmVndWFyZC5j
-b20vI3JlYWR5LWZvci1jb250YWluZXJzIiBocmVmPSJodHRwczovL3d3dy53aXJlZ3VhcmQuY29t
-LyNyZWFkeS1mb3ItY29udGFpbmVycyI+dGhlIHdlYnNpdGU8L2E+LCB0aGlzIHNob3VsZCBiZSBw
-b3NzaWJsZSwgYnV0IEkgY2FuJ3QgZmluZCBhbnl0aGluZyBvbiBob3cgdG8gc2V0IGl0IHVwLiA8
-YnI+PC9kaXY+PGRpdj5DYW4geW91IGd1eXMgaGVscCBtZSB3aXRoIHRoYXQgYW5kIHBlcmhhcHMg
-cG9pbnQgbWUgdG8gdXNlZnVsIGluZm9ybWF0aW9uPzxicj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48
-ZGl2PlRoYW5rIHlvdSB2ZXJ5IG11Y2ggaW4gYWR2YW5jZSw8YnI+PC9kaXY+PGRpdj5CZW5qYW1p
-bjxicj48L2Rpdj4=
+https://git.zx2c4.com/WireGuard/tree/contrib/examples/embeddable-wg-library/README
 
+Should be pretty straight-forward to integrate. You'll basically only
+need to use the "wg_set_device" function, and perhaps the
+"wg_key_from_base64" function too.
 
-
---b1_998de2dd32eed53fe1d9631a8dddf397--
+Jason
