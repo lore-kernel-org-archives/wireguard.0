@@ -1,28 +1,29 @@
-Return-Path: e1326252@student.tuwien.ac.at
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0b05911d
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ca7ebe6c
  for <wireguard@lists.zx2c4.com>;
- Thu, 15 Feb 2018 14:28:58 +0000 (UTC)
-Received: from mail1.student.tuwien.ac.at (mail1.student.tuwien.ac.at
- [193.170.73.221])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fce24e13
+ Thu, 15 Feb 2018 14:35:20 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id adf4f34d
  for <wireguard@lists.zx2c4.com>;
- Thu, 15 Feb 2018 14:28:58 +0000 (UTC)
-Subject: Re: NetworkManager Plugin
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-References: <7d5325a3-fa07-f67f-a31e-aadd44458d41@student.tuwien.ac.at>
- <CAHmME9qVoBkdu35n4aGdZ8nCH6ONZhcGb=WCGx2LGbyHgJMTSw@mail.gmail.com>
- <CAFi5oX6LM+A=jbPmhffc4wT+pKmMg8xi=2ebSMg=s7Qg2AY_sw@mail.gmail.com>
- <cba131ba-cd15-8bf4-cdd1-4d46ad774d41@student.tuwien.ac.at>
- <CAHmME9rZU8y8mjHhHkVJ9foRW8Wuk5QMoijMfVU=_4LHfg7F-w@mail.gmail.com>
-From: Maximilian Moser <e1326252@student.tuwien.ac.at>
-Message-ID: <db120c3b-a9f3-6769-6baa-c3be86bbd78c@student.tuwien.ac.at>
-Date: Thu, 15 Feb 2018 15:35:53 +0100
+ Thu, 15 Feb 2018 14:35:20 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c9afedbe
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 15 Feb 2018 14:26:29 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 8edf635e
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 15 Feb 2018 14:26:29 +0000 (UTC)
+Received: by mail-oi0-f53.google.com with SMTP id t145so1380449oif.8
+ for <wireguard@lists.zx2c4.com>; Thu, 15 Feb 2018 06:42:20 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9rZU8y8mjHhHkVJ9foRW8Wuk5QMoijMfVU=_4LHfg7F-w@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Cc: Jordan DeBeer <debee1jp@gmail.com>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 15 Feb 2018 15:42:19 +0100
+Message-ID: <CAHmME9q5SW+K-1NGAFoFw7i-J6J-Nr55s5K6cYAY2B1VyR6cjw@mail.gmail.com>
+Subject: Single-file C Embeddable Library for WireGuard Device Configuration
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ =?UTF-8?B?VG9rZSBIw7hpbGFuZC1Kw7hyZ2Vuc2Vu?= <toke@toke.dk>
+Content-Type: text/plain; charset="UTF-8"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -32,60 +33,54 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hey Jason,
+Hi Toke & List,
 
+There's been some interest in integrating WireGuard configuration into
+various utilities, such as bird, babel, networkmanager, and more.
+Indeed shelling out to wg(8) is sub-par for core networking utilities,
+such as routing daemons. Unfortunately, Netlink is horrible in so many
+ways, and -- with the single exception of Joerg Thalheim's heroic
+hustle with systemd-networkd -- people tend to get discouraged pretty
+quickly when trying to do the WireGuard Netlink dance and importing
+Netlink library dependencies, and so forth. I'm still displeased about
+having to move away from a simpler API at the behest of upstream, but
+such is life.
 
->> I actually just wanted to get this thesis over with and thought, why not
->> post the result to the mailing list
->> I'll probably focus more on the written part of the
->> thesis, so fixing the issues will probably have to wait a while on my part.
-> I'm certainly not interested in "throw it over the fence" coding. I'm
-> happy to work with you on "the acceptance and the possible prospect of
-> this thing getting packaged for distros," as you wrote, but only if
-> you're actually committed to maintaining it. It sounds to me like this
-> is something in your mind that is "over with"? That's disapointing.
+In order to make things more pleasant, I've made a single-file C
+library, which is meant to be copy and pasted directly into your
+application, and then tweaked as needed. It currently exports a few
+simple methods for managing the device:
 
-Oh sorry, that wasn't my intention to say. What I meant is that I wanted 
-to get a working prototype ASAP, and if nobody is interested in it 
-anymore, that's that.
+int wg_set_device(wg_device_t *dev);
+int wg_get_device(wg_device_t **dev, const char *device_name);
+void wg_free_device(wg_device_t *dev);
+char *wg_list_device_names(void); /* first\0second\0third\0forth\0last\0\0 */
 
-However, this does not seem to be the case and I'll be glad to continue 
-development on it. :)
+And some helper methods for dealing with keys with constant-time algorithms:
 
+void wg_key_to_base64(wg_base64_string_key_t base64, const wg_key_t key);
+bool wg_key_from_base64(wg_key_t key, const wg_base64_string_key_t base64);
+bool wg_key_is_zero(const wg_key_t key);
 
-Max
+And some handy macro iterators:
 
+#define wg_for_each_device_name(__names, __name, __len)
+#define wg_for_each_peer(__dev, __peer)
+#define wg_for_each_allowedip(__peer, __allowedip)
 
-On 15/02/18 15:07, Jason A. Donenfeld wrote:
-> Hi Max,
->
-> On Thu, Feb 15, 2018 at 1:34 AM, Maximilian Moser
-> <e1326252@student.tuwien.ac.at> wrote:
->> I actually just wanted to get this thesis over with and thought, why not
->> post the result to the mailing list
->> I'll probably focus more on the written part of the
->> thesis, so fixing the issues will probably have to wait a while on my part.
-> I'm certainly not interested in "throw it over the fence" coding. I'm
-> happy to work with you on "the acceptance and the possible prospect of
-> this thing getting packaged for distros," as you wrote, but only if
-> you're actually committed to maintaining it. It sounds to me like this
-> is something in your mind that is "over with"? That's disapointing.
->
->> Regarding the issues... About some of them, I did know in one way or the
->> other.
->> So I'm somewhat excited about the acceptance and the possible prospect of
->> this thing getting packaged for distros :D
-> As I wrote earlier, this is going to require a lot of work to actually
-> bring to fruition. The first priority should be entirely dispensing
-> with the use of wg-quick. In order to aid these efforts, I spent some
-> time writing a mini single-file-c library that you can drop into your
-> project as a means for talking to the kernel and configuring devices
-> directly:
->
-> https://git.zx2c4.com/WireGuard/tree/contrib/examples/embeddable-wg-library/README
->
-> Should be pretty straight-forward to integrate. You'll basically only
-> need to use the "wg_set_device" function, and perhaps the
-> "wg_key_from_base64" function too.
->
-> Jason
+The README has more info here:
+
+https://git.zx2c4.com/WireGuard/tree/contrib/examples/embeddable-wg-library/README
+
+It only depends on libc, and compiles with pretty much any C compiler.
+
+I expect that some people might not need all the functionality, in
+which case, simply deleting what you don't need is an easy
+possibility. Others will need to change calling conventions or types
+or file descriptor management or memory allocators, and that's fine
+too. The point is that it's just a little chunk of nice code, from
+which you can craft your WireGuard integration.
+
+Enjoy!
+
+Jason
