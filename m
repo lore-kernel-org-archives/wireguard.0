@@ -1,30 +1,28 @@
-Return-Path: e1326252@student.tuwien.ac.at
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 66a0f379
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fe539370
  for <wireguard@lists.zx2c4.com>;
- Thu, 15 Feb 2018 14:50:53 +0000 (UTC)
-Received: from mail1.student.tuwien.ac.at (mail1.student.tuwien.ac.at
- [193.170.73.221])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9e5e11f5
+ Thu, 15 Feb 2018 16:19:47 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d1e2e054
  for <wireguard@lists.zx2c4.com>;
- Thu, 15 Feb 2018 14:50:53 +0000 (UTC)
-Subject: Re: NetworkManager Plugin
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-References: <7d5325a3-fa07-f67f-a31e-aadd44458d41@student.tuwien.ac.at>
- <CAHmME9qVoBkdu35n4aGdZ8nCH6ONZhcGb=WCGx2LGbyHgJMTSw@mail.gmail.com>
- <CAFi5oX6LM+A=jbPmhffc4wT+pKmMg8xi=2ebSMg=s7Qg2AY_sw@mail.gmail.com>
- <cba131ba-cd15-8bf4-cdd1-4d46ad774d41@student.tuwien.ac.at>
- <CAHmME9rZU8y8mjHhHkVJ9foRW8Wuk5QMoijMfVU=_4LHfg7F-w@mail.gmail.com>
- <db120c3b-a9f3-6769-6baa-c3be86bbd78c@student.tuwien.ac.at>
- <CAHmME9ryD5Heuchod1PSNdpZP5wDY0A=zWDkdv2D7SVn_GcEdQ@mail.gmail.com>
-From: Maximilian Moser <e1326252@student.tuwien.ac.at>
-Message-ID: <5b85fcc4-4091-ce5d-7f4f-6dcee645f81d@student.tuwien.ac.at>
-Date: Thu, 15 Feb 2018 15:57:49 +0100
+ Thu, 15 Feb 2018 16:19:47 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a44b1ae4
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 15 Feb 2018 16:10:55 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id c040e769
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 15 Feb 2018 16:10:55 +0000 (UTC)
+Received: by mail-oi0-f43.google.com with SMTP id y4so38813oix.2
+ for <wireguard@lists.zx2c4.com>; Thu, 15 Feb 2018 08:26:46 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9ryD5Heuchod1PSNdpZP5wDY0A=zWDkdv2D7SVn_GcEdQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Cc: Jordan DeBeer <debee1jp@gmail.com>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 15 Feb 2018 17:26:45 +0100
+Message-ID: <CAHmME9rR4BTDR+0qT4=GbTZVEJvTmB+M97wkXaC6VgJaQoMh9Q@mail.gmail.com>
+Subject: Google Summer of Code 2018 - WireGuard Projects
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -34,40 +32,25 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Since we're already listed on the NetworkManager page [1], it'd be a 
-shame to just drop it.
-Also, it would be kind of a waste having gone through all the pain of 
-getting a basic grasp on the workings of it all for nothing.
-Still, I'll gladly accept contributions ;)
+Hi folks,
 
-Oh right, maybe it'd be worth noting that Thomas Haller, one of the 
-NetworkManager guys, has spoken in favour of native NM wireguard 
-integration on the NM mailing list:
-> Hi Maximilian,
->
->
-> cool, thanks for letting us know.
->
-> I added a link tohttps://wiki.gnome.org/Projects/NetworkManager/VPN
->
->
-> I still think, it would be great to have wireguard support in
-> NetworkManager not via a VPN plugin. But that is for another day.
->
->
-> best,
-> Thomas
+WireGuard will be having a Google Summer of Code this summer via the
+Linux Foundation, following an extraordinarily successful one last
+summer. We'll hopefully be bringing on a few more students this
+summer. It's a great opportunity for students to learn some
+interesting aspects of engineering and cryptography, and a good
+opportunity for the project too.
 
--- Max
+Information is here: https://www.wireguard.com/gsoc/
 
+If you're a student or know a student, please get in touch with
+team@wireguard.com. We're looking to start working on student
+proposals as soon as possible.
 
-[1] 
-https://wiki.gnome.org/Projects/NetworkManager/VPN#VPN_Plugins_maintained_by_third_parties
+Finally, IF YOU ARE NOT A STUDENT, but you would like to help mentor
+one this summer, also be in touch. We're interested in mentors of all
+kinds, so don't hesitate to shoot us an email about it. It's generally
+a very rewarding experience.
 
-
-On 15/02/18 15:46, Jason A. Donenfeld wrote:
-> On Thu, Feb 15, 2018 at 3:35 PM, Maximilian Moser
-> <e1326252@student.tuwien.ac.at> wrote:
->> However, this does not seem to be the case and I'll be glad to continue
->> development on it. :)
-> Wonderful!
+Regards,
+Jason
