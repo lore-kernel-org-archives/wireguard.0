@@ -1,21 +1,35 @@
-Return-Path: jacob.schooley@gmail.com
+Return-Path: bounce+6f817a.2e38e-wireguard=lists.zx2c4.com@jbeta.is
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 09885dd6
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 18366e06
  for <wireguard@lists.zx2c4.com>;
- Wed, 14 Feb 2018 17:25:04 +0000 (UTC)
-Received: from mail-wm0-f44.google.com (mail-wm0-f44.google.com [74.125.82.44])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2397a28b
+ Fri, 16 Feb 2018 20:53:24 +0000 (UTC)
+Received: from rs224.mailgun.us (rs224.mailgun.us [209.61.151.224])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3e271ab0
  for <wireguard@lists.zx2c4.com>;
- Wed, 14 Feb 2018 17:25:04 +0000 (UTC)
-Received: by mail-wm0-f44.google.com with SMTP id o189so4430537wme.4
- for <wireguard@lists.zx2c4.com>; Wed, 14 Feb 2018 09:31:57 -0800 (PST)
+ Fri, 16 Feb 2018 20:53:24 +0000 (UTC)
+Sender: jarteaga@jbeta.is
+Received: by mail-pl0-f44.google.com with SMTP id f4so2310225plr.10
+ for <wireguard@lists.zx2c4.com>; Fri, 16 Feb 2018 13:00:32 -0800 (PST)
 MIME-Version: 1.0
-From: Jacob Schooley <jacob.schooley@gmail.com>
-Date: Wed, 14 Feb 2018 12:31:55 -0500
-Message-ID: <CAHjFYUJqNB6AYTe1GO7pQr39ed6m6uO=pFo_wB_N=V2Tn1a5Kg@mail.gmail.com>
-Subject: Running WireGuard on embedded devices with older kernel versions
-To: wireguard@lists.zx2c4.com
-Content-Type: multipart/alternative; boundary="f403045dcaded7551705652f7c05"
+In-Reply-To: <1518793634.23818.33.camel@gmx.de>
+References: <7d5325a3-fa07-f67f-a31e-aadd44458d41@student.tuwien.ac.at>
+ <CAHmME9qVoBkdu35n4aGdZ8nCH6ONZhcGb=WCGx2LGbyHgJMTSw@mail.gmail.com>
+ <CAFi5oX6LM+A=jbPmhffc4wT+pKmMg8xi=2ebSMg=s7Qg2AY_sw@mail.gmail.com>
+ <cba131ba-cd15-8bf4-cdd1-4d46ad774d41@student.tuwien.ac.at>
+ <CAHmME9rZU8y8mjHhHkVJ9foRW8Wuk5QMoijMfVU=_4LHfg7F-w@mail.gmail.com>
+ <db120c3b-a9f3-6769-6baa-c3be86bbd78c@student.tuwien.ac.at>
+ <CAHmME9ryD5Heuchod1PSNdpZP5wDY0A=zWDkdv2D7SVn_GcEdQ@mail.gmail.com>
+ <5b85fcc4-4091-ce5d-7f4f-6dcee645f81d@student.tuwien.ac.at>
+ <2a30ad28-1e5a-0fac-7db6-15b609e3b245@mmoya.org>
+ <CAHmME9oy2uhNfG4vXYHLK2eq36qZA_QWfrTnMrQJWis6sqDTag@mail.gmail.com>
+ <1518793634.23818.33.camel@gmx.de>
+From: Javier Arteaga <jarteaga@jbeta.is>
+Date: Fri, 16 Feb 2018 21:00:31 +0000
+Message-ID: <CA+D5fhPh3ENB01rQcnGBZ5nyosBL=NC9SKmUvAPdsqNWU7K79A@mail.gmail.com>
+Subject: Re: NetworkManager Plugin
+To: Max Moser <e1326252@student.tuwien.ac.at>
+Content-Type: text/plain; charset="UTF-8"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -25,54 +39,27 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---f403045dcaded7551705652f7c05
-Content-Type: text/plain; charset="UTF-8"
+Hi all,
 
-I have a few verizon mobile hotspots and think this would be a perfect
-place to implement wireguard. The only problem is the kernel versions
-included with these hotspots:
+First off, thanks for WireGuard and this effort!
 
-- Novatel 5510 and Pantech MHS291 (also the Pantech UML290 USB stick) run
-3.0.x
-- Novatel 6620 runs 3.4.0
+I've tested the NM plugin on my Arch/GNOME3 setup and it works for me
+too - congrats! I'm looking to get a bit more involved with the
+community, so it would be my pleasure to contribute something back.
 
-Also, I don't think they include CONFIG_NET_UDP_TUNNEL. Lots of proprietary
-modules so the kernel can't be replaced without Novatel's sources.
+On Thu, Feb 15, 2018 at 2:07 PM, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+> As I wrote earlier, this is going to require a lot of work to actually
+> bring to fruition. The first priority should be entirely dispensing
+> with the use of wg-quick. In order to aid these efforts, I spent some
+> time writing a mini single-file-c library that you can drop into your
+> project as a means for talking to the kernel and configuring devices
+> directly:
 
-These can be found pretty cheap on ebay and craigslist. I've heard the
-newer ones, Netgear 791 and Novatel 7730 run 3.10 or newer, but I haven't
-found any for a decent price.
+If nobody else is on this already then I'd like to take a stab at it.
 
-OpenVPN can be run on these, but maxes out around 10mbps due to CPU
-limitations.
+Otherwise, I'll figure out other ways to help get this upstreamed :)
 
-Is there any way to run wireguard on older kernels and without this config
-option?
+Cheers!
 
---f403045dcaded7551705652f7c05
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">I have a few verizon mobile hotspots and think this would =
-be a perfect place to implement wireguard. The only problem is the kernel v=
-ersions included with these hotspots:<div><br></div><div>- Novatel 5510 and=
- Pantech MHS291 (also the Pantech UML290 USB stick) run 3.0.x</div><div>- N=
-ovatel 6620 runs 3.4.0</div><div><br></div><div>Also, I don&#39;t think the=
-y include=20
-
-<span style=3D"color:rgb(51,51,51);font-family:&quot;Source Code Pro&quot;,=
-Menlo,Monaco,Consolas,&quot;Courier New&quot;,monospace;font-size:13.5px;fo=
-nt-style:normal;font-variant-ligatures:normal;font-variant-caps:normal;font=
--weight:400;letter-spacing:normal;text-align:left;text-indent:0px;text-tran=
-sform:none;white-space:nowrap;word-spacing:0px;background-color:rgb(245,245=
-,245);text-decoration-style:initial;text-decoration-color:initial;float:non=
-e;display:inline">CONFIG_NET_UDP_TUNNEL</span>. Lots of proprietary modules=
- so the kernel can&#39;t be replaced without Novatel&#39;s sources.</div><d=
-iv><br></div><div>These can be found pretty cheap on ebay and craigslist. I=
-&#39;ve heard the newer ones, Netgear 791 and Novatel 7730 run 3.10 or newe=
-r, but I haven&#39;t found any for a decent price.</div><div><br></div><div=
->OpenVPN can be run on these, but maxes out around 10mbps due to CPU limita=
-tions.</div><div><br></div><div>Is there any way to run wireguard on older =
-kernels and without this config option?</div></div>
-
---f403045dcaded7551705652f7c05--
+-- 
+Javier Arteaga
