@@ -1,31 +1,39 @@
 Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4e60f691
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d6c4b958
  for <wireguard@lists.zx2c4.com>;
- Fri, 16 Feb 2018 05:24:28 +0000 (UTC)
+ Fri, 16 Feb 2018 05:26:47 +0000 (UTC)
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e59a8b10
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ee128dc5
  for <wireguard@lists.zx2c4.com>;
- Fri, 16 Feb 2018 05:24:28 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 33d7d559
+ Fri, 16 Feb 2018 05:26:47 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9ed2082c
  for <wireguard@lists.zx2c4.com>;
- Fri, 16 Feb 2018 05:15:36 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 2920f298
+ Fri, 16 Feb 2018 05:17:56 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 12aacf84
  (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 16 Feb 2018 05:15:36 +0000 (UTC)
-Received: by mail-ot0-f182.google.com with SMTP id q12so1811254otg.10
- for <wireguard@lists.zx2c4.com>; Thu, 15 Feb 2018 21:31:32 -0800 (PST)
+ Fri, 16 Feb 2018 05:17:56 +0000 (UTC)
+Received: by mail-oi0-f53.google.com with SMTP id x21so1526090oie.13
+ for <wireguard@lists.zx2c4.com>; Thu, 15 Feb 2018 21:33:51 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <4bQ1XlXd3ErIjCR3iQzp_qIlD9TBA7puQAuFeLekYWn2gq_cLvljPmZ2jprtiMJb7jWDysgW6QlCEog92tofkegIis83aDQpPFhqW5H_81c=@protonmail.com>
-References: <4bQ1XlXd3ErIjCR3iQzp_qIlD9TBA7puQAuFeLekYWn2gq_cLvljPmZ2jprtiMJb7jWDysgW6QlCEog92tofkegIis83aDQpPFhqW5H_81c=@protonmail.com>
+In-Reply-To: <2a30ad28-1e5a-0fac-7db6-15b609e3b245@mmoya.org>
+References: <7d5325a3-fa07-f67f-a31e-aadd44458d41@student.tuwien.ac.at>
+ <CAHmME9qVoBkdu35n4aGdZ8nCH6ONZhcGb=WCGx2LGbyHgJMTSw@mail.gmail.com>
+ <CAFi5oX6LM+A=jbPmhffc4wT+pKmMg8xi=2ebSMg=s7Qg2AY_sw@mail.gmail.com>
+ <cba131ba-cd15-8bf4-cdd1-4d46ad774d41@student.tuwien.ac.at>
+ <CAHmME9rZU8y8mjHhHkVJ9foRW8Wuk5QMoijMfVU=_4LHfg7F-w@mail.gmail.com>
+ <db120c3b-a9f3-6769-6baa-c3be86bbd78c@student.tuwien.ac.at>
+ <CAHmME9ryD5Heuchod1PSNdpZP5wDY0A=zWDkdv2D7SVn_GcEdQ@mail.gmail.com>
+ <5b85fcc4-4091-ce5d-7f4f-6dcee645f81d@student.tuwien.ac.at>
+ <2a30ad28-1e5a-0fac-7db6-15b609e3b245@mmoya.org>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 16 Feb 2018 06:31:31 +0100
-Message-ID: <CAHmME9oZT+6ZpGETxp+_GQSTVB-a8BihEbC8YmcgXabDbGMx3A@mail.gmail.com>
-Subject: Re: Retrict Docker Container To VPN
-To: Benni Laib <benny.laib@protonmail.com>
+Date: Fri, 16 Feb 2018 06:33:50 +0100
+Message-ID: <CAHmME9oy2uhNfG4vXYHLK2eq36qZA_QWfrTnMrQJWis6sqDTag@mail.gmail.com>
+Subject: Re: NetworkManager Plugin
+To: Maykel Moya <mmoya@mmoya.org>
 Content-Type: text/plain; charset="UTF-8"
-Cc: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -35,20 +43,13 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Benni,
+On Thu, Feb 15, 2018 at 9:15 PM, Maykel Moya <mmoya@mmoya.org> wrote:
+> Wondering about the pic in slide 8 of
+> https://fosdem.org/2018/schedule/event/bulletinboard_dht/attachments/slides/2204/export/events/attachments/bulletinboard_dht/slides/2204/presentation.pdf
 
-You're probably looking for this document:
-https://www.wireguard.com/netns/
-
-Basically you do this:
-
-# ip link add wg0 type wireguard
-# ip link set wg0 netns PID
-
-Where "PID" is the PID of any process running in that Docker
-container. After that, you'll be able to see wg0 inside the Docker
-container, but not in the host. The only traffic that will leave the
-Docker container will then be encrypted packets sent to peer
-endpoints.
-
-Jason
+I think he's working on some wilder plugin that incorporates his DHT
+stuff, which is a separate effort from Max's. My personal preference
+is getting a lightweight but functional NetworkManager plugin out
+there for users, that doesn't come with the baggage or bells&whistles
+of the DHT. But for people using the DHT work, having the plugin for
+that is undoubtedly useful.
