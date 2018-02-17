@@ -1,30 +1,25 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: jmberi@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 27d48727
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 58ac85ac
  for <wireguard@lists.zx2c4.com>;
- Fri, 16 Feb 2018 22:19:52 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d0021e31
+ Sat, 17 Feb 2018 15:32:12 +0000 (UTC)
+Received: from mail-vk0-f42.google.com (mail-vk0-f42.google.com
+ [209.85.213.42])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e381d447
  for <wireguard@lists.zx2c4.com>;
- Fri, 16 Feb 2018 22:19:52 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2264d14e
- for <wireguard@lists.zx2c4.com>;
- Fri, 16 Feb 2018 22:11:01 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 50664860
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Fri, 16 Feb 2018 22:11:00 +0000 (UTC)
-Received: by mail-ot0-f179.google.com with SMTP id p8so1228775otf.2
- for <wireguard@lists.zx2c4.com>; Fri, 16 Feb 2018 14:27:01 -0800 (PST)
+ Sat, 17 Feb 2018 15:32:12 +0000 (UTC)
+Received: by mail-vk0-f42.google.com with SMTP id x135so1804489vkd.5
+ for <wireguard@lists.zx2c4.com>; Sat, 17 Feb 2018 07:39:27 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CAHjFYUJqNB6AYTe1GO7pQr39ed6m6uO=pFo_wB_N=V2Tn1a5Kg@mail.gmail.com>
-References: <CAHjFYUJqNB6AYTe1GO7pQr39ed6m6uO=pFo_wB_N=V2Tn1a5Kg@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 16 Feb 2018 23:27:00 +0100
-Message-ID: <CAHmME9oD3duOhD7sZ7h7+gjU2+WhUgqKKMOmvb7kSypwg+9o3g@mail.gmail.com>
-Subject: Re: Running WireGuard on embedded devices with older kernel versions
-To: Jacob Schooley <jacob.schooley@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+References: <CANcmUPE9PPfniYa5ejj180Wncth7i3qS0A-ZaG06X4bwkRn5qQ@mail.gmail.com>
+ <CAHmME9raXy8gjJ44MHso1WjU_QFz1_Z8Q12q2GauoBPGJSaSxg@mail.gmail.com>
+In-Reply-To: <CAHmME9raXy8gjJ44MHso1WjU_QFz1_Z8Q12q2GauoBPGJSaSxg@mail.gmail.com>
+From: Jonathan Beri <jmberi@gmail.com>
+Date: Sat, 17 Feb 2018 15:39:14 +0000
+Message-ID: <CANcmUPEyCiw694-aa32fbLJ5LTd-fMp0D7NtgteqRvLasfmNZQ@mail.gmail.com>
+Subject: Re: Cortex-m support
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Content-Type: multipart/alternative; boundary="001a1143f79e15105005656a44c3"
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -35,14 +30,47 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Jacob,
+--001a1143f79e15105005656a44c3
+Content-Type: text/plain; charset="UTF-8"
 
-Technically this could be done; there are other ways of hooking into
-the networking stack other than the udp tunnel API. However, in
-practice, my time is probably spent working for the future rather than
-the past. Supporting 26 (!!) versions of Linux, back to 3.10, was
-already quite the undertaking... But if you'd like to do this and send
-some code upstream, I'll take patches. Take a look at src/compat.h for
-some hints on how to proceed.
+Thanks Jason! Do you have a sense of the resource requirements? If that's a
+hard question to answer because of the OS coupling, what about the main app
+minus the OS-owned resources?
 
-Jason
+For comparison, I'm wondering if wiregaurd can run on a 200mhz cortex m4f,
+with 246KB of ram, with an LwIP ip stack + FreeRTOS. That's the typical IoT
+hardware we target.
+
+On Fri, Feb 16, 2018, 2:21 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+
+> Hi Jonathan,
+>
+> Currently it's quite coupled to Linux, but it doesn't have to be that
+> way for ever. Our cross platform implementations are coming along.
+>
+> Jason
+>
+
+--001a1143f79e15105005656a44c3
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Thanks Jason! Do you have a sense of the resource requirements? If that&#39=
+;s a hard question to answer because of the OS coupling, what about the mai=
+n app minus the OS-owned resources?<div><br></div><div>For comparison, I&#3=
+9;m wondering if wiregaurd can run on a 200mhz cortex m4f, with 246KB of ra=
+m, with an LwIP ip stack + FreeRTOS. That&#39;s the typical IoT hardware we=
+ target.<br><br><div class=3D"gmail_quote"><div dir=3D"ltr">On Fri, Feb 16,=
+ 2018, 2:21 PM Jason A. Donenfeld &lt;<a href=3D"mailto:Jason@zx2c4.com">Ja=
+son@zx2c4.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" sty=
+le=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">Hi Jon=
+athan,<br>
+<br>
+Currently it&#39;s quite coupled to Linux, but it doesn&#39;t have to be th=
+at<br>
+way for ever. Our cross platform implementations are coming along.<br>
+<br>
+Jason<br>
+</blockquote></div></div>
+
+--001a1143f79e15105005656a44c3--
