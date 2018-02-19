@@ -1,38 +1,24 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: johan@netsense.nl
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3042fb15
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6760437f
  for <wireguard@lists.zx2c4.com>;
- Sun, 18 Feb 2018 20:32:37 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 22c1782d
+ Mon, 19 Feb 2018 10:35:06 +0000 (UTC)
+Received: from mail.netsense.nl (pretsense.xs4all.nl [212.238.167.101])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e389bcab
  for <wireguard@lists.zx2c4.com>;
- Sun, 18 Feb 2018 20:32:37 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 613626ce
- for <wireguard@lists.zx2c4.com>;
- Sun, 18 Feb 2018 20:23:45 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 16abf50c
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Sun, 18 Feb 2018 20:23:45 +0000 (UTC)
-Received: by mail-ot0-f182.google.com with SMTP id w38so6939065ota.8
- for <wireguard@lists.zx2c4.com>; Sun, 18 Feb 2018 12:40:00 -0800 (PST)
-MIME-Version: 1.0
-In-Reply-To: <20180213131758.GA5242@lud.localdomain>
-References: <20180211134837.GC12558@lud.localdomain>
- <87r2prs80x.fsf@fifthhorseman.net>
- <20180211184312.GD12558@lud.localdomain>
- <CAHmME9pePGfg3VNRnerXM2qiCqQbM8YYpotS6k1zKv8rV7Sikg@mail.gmail.com>
- <20180212073501.GA5305@tuxmachine.localdomain>
- <20180212074255.GB5305@tuxmachine.localdomain>
- <CAHmME9pvBg3OHLwun3uqdoCqmQBxxmwh1y2jxWUcdOKyZynNsA@mail.gmail.com>
- <20180213131758.GA5242@lud.localdomain>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sun, 18 Feb 2018 21:39:59 +0100
-Message-ID: <CAHmME9po373r09jNYXVhJrEO6=LLW51bRztQzwVCO+JX4-=iiA@mail.gmail.com>
-Subject: Re: Memleak with 0.0.20171221-5 on Debian stretch
-To: Baptiste Jonglez <baptiste@bitsofnetworks.org>
-Content-Type: text/plain; charset="UTF-8"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+ Mon, 19 Feb 2018 10:35:06 +0000 (UTC)
+Received: from [IPv6:2001:984:f4a1:1:78dc:814c:66e9:3177] (unknown
+ [IPv6:2001:984:f4a1:1:78dc:814c:66e9:3177])
+ by mail.netsense.nl (Postfix) with ESMTPSA id 4A1AA95D8
+ for <wireguard@lists.zx2c4.com>; Mon, 19 Feb 2018 10:42:33 +0000 (UTC)
+From: Johan Henselmans <johan@netsense.nl>
+Content-Type: text/plain;
+	charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 11.3 \(3445.6.10\))
+Subject: Compiling wireguard-go on non linux platforms
+Message-Id: <2B0A40BA-F968-49BC-9845-33EE7226DE24@netsense.nl>
+Date: Mon, 19 Feb 2018 11:42:32 +0100
+To: wireguard@lists.zx2c4.com
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -42,8 +28,33 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-> Nice, thanks!  I'm looking forward to testing the next release then.
+It seems wireguard-go is not exactly cross-platfrom at the moment, this =
+is what happens at the moment when compiling os mac os:
 
-Let me know if the problem goes away with the snapshot I just released.
+go build -o wireguard-go
+# _/Users/johan/projecten/testdevel/go/examples/wireguard-go
+./main.go:94:11: undefined: CreateTUNFromFile
+./main.go:108:11: undefined: UAPIOpen
+./main.go:142:18: too many arguments in call to Daemonize
+	have (*os.ProcAttr)
+	want ()
+./main.go:165:15: undefined: UAPIListen
+./tun_darwin.go:178:2: cannot use device (type *NativeTUN) as type =
+TUNDevice in return argument:
+	*NativeTUN does not implement TUNDevice (missing File method)
+make: *** [wireguard-go] Error 2
 
-Jason
+
+(Darwin Kernel Version 17.5.0: Mon Jan 29 02:17:30 PST 2018; =
+root:xnu-4570.50.257~17/RELEASE_X86_64 x86_64)
+
+
+I noticed there was some discussion about not having a mac available to =
+test cross-platform code. I do.
+
+If there is anything I can do to help to make the code work =
+cross-platform, please let me know.
+
+Kind Regards,
+=20
+Johan Henselmans
