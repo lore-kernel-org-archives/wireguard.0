@@ -1,23 +1,31 @@
-Return-Path: rouven@czerwinskis.de
+Return-Path: patrick@synix.io
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9a5c9a90
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 044ab024
  for <wireguard@lists.zx2c4.com>;
- Tue, 20 Feb 2018 06:29:17 +0000 (UTC)
-Received: from margratgarlick.emantor.de (magratgarlick.emantor.de
- [78.46.208.201])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 68a680a2
+ Tue, 20 Feb 2018 08:56:58 +0000 (UTC)
+Received: from mail-wr0-f175.google.com (mail-wr0-f175.google.com
+ [209.85.128.175])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1e0a0011
  for <wireguard@lists.zx2c4.com>;
- Tue, 20 Feb 2018 06:29:16 +0000 (UTC)
-References: <20180220010520.GA38119@accordion.employees.org>
-From: Rouven Czerwinski <rouven@czerwinskis.de>
-To: Derek Fawcus <dfawcus+lists-wireguard@employees.org>
-Subject: Re: UDP checksums and inband control messages
-In-reply-to: <20180220010520.GA38119@accordion.employees.org>
-Date: Tue, 20 Feb 2018 07:36:25 +0100
-Message-ID: <87a7w4rwuu.fsf@czerwinskis.de>
+ Tue, 20 Feb 2018 08:56:58 +0000 (UTC)
+Received: by mail-wr0-f175.google.com with SMTP id m5so12233960wrg.1
+ for <wireguard@lists.zx2c4.com>; Tue, 20 Feb 2018 01:04:33 -0800 (PST)
+Return-Path: <patrick@synix.io>
+Received: from [127.0.0.1] ([213.152.161.219])
+ by smtp.gmail.com with ESMTPSA id r70sm31288226wmg.30.2018.02.20.01.04.30
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Tue, 20 Feb 2018 01:04:31 -0800 (PST)
+Content-Type: text/html; charset=utf-8
+From: Patrick Glandien <patrick@synix.io>
+To: "wireguard lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+Cc: "wireguard lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+In-Reply-To: <mailman.180.1519108159.2201.wireguard@lists.zx2c4.com>
+References: <mailman.180.1519108159.2201.wireguard@lists.zx2c4.com>
+Subject: Re: wireguard-go relative imports
+Message-ID: <local-f33257f5-3676@nylas-mail.nylas.com>
+Date: Tue, 20 Feb 2018 09:04:28 +0000
 MIME-Version: 1.0
-Content-Type: text/plain
-Cc: wireguard@lists.zx2c4.com
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -27,52 +35,17 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-
-Hello,
-
-Derek Fawcus <dfawcus+lists-wireguard@employees.org> writes:
-
-> I see from the code that currently the kernel UDP sockets
-> have checksums enabled.  I also note the message from
-> November speculating upon if in band control messages
-> should be added.
->
-> One thing I was pondering recently in the context of UDP tunnelling,
-> is that one doesn't really need to have UDP checksums on the
-> encapsulating packet, since they payload itself is eventually
-> protected by its IPv4 header checksum, and likewise its transport
-> payload being protected by its own TCP/UDP/etc checksum.
-> [OK - some exceptions, but valid to a first approximation]
-
-This is only correct for IPv4, IPv6 does not have a checksum field
-(coincidentally because all high level protocols implement their own
-checksum).
-
-> In the case of a crypto tunnel tunnel when using a
-> verified / authenticated crypto algorithm, any lower level
-> UDP checksum is even more redundent.
-
-Yes, but computing the UDP Checksum is really inexpensive in contrast to
-the authentication done on a packet with the correct checksum.
-
->
-> The one place where UDP checksums would stil seem to be useful
-> is for any in band control messages, if they were themselves
-> not covered by the crypto layer.  i.e. c.f. OpenVPN and
-> its payload vs control messages.
->
-> Which then got me to thinking that one could sort of cheat,
-> and use the checksum field in the UDP header as an indicator
-> of if the payload is control or data.  All zero bits for
-> data, none zero (including 0xffff) for control.
->
-> This would also have the advantage that if one is using a system
-> without support for h/w checksum offload, one gets to save a
-> bit of CPU;  however that may or may not be significant depending
-> upon just if/when packet memory if touched, and by which cores
-> in a system.  i.e. I'm pondering a non Linux kernel implementation.
->
-> So - thoughts?  Is it worth doing something like this for wireguard?
-
-Greetings,
-Rouven Czerwinski
+Dominik,<div><div><br></div><div>While relative imports are discouraged in =
+Go, I could see it making it sense in the context of highly sensitive code =
+such as wireguard.</div><div>The go dependency system, including `go get`, =
+don't guarantee as to whether the code is authentic (e.g. signed).=
+</div><div><br></div><div>This is a problem to the entire ecosystem of the =
+language as recently witnessed when someone replaced a commonly used go =
+package hosted on github&nbsp;after the user deleted his =
+account:&nbsp;https://redd.it/7vv9zz</div><div><br></div><div>I have not =
+looked into the wireguard-go code very much, but if it's merely meant to be=
+ a wireguard implementation in Go (not to be used as a library) - then =
+either relative import paths or top-level paths in an isolated go workspace=
+ would be sensible and should not be changed to the usual canonical URL =
+imports.</div><div><br></div><br><signature>=E2=80=94 Patrick =
+Glandien</signature><div id=3D"n1-quoted-text-marker"></div></div>
