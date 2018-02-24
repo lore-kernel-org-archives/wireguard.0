@@ -1,30 +1,31 @@
-Return-Path: barhom@netsat.se
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 42e89f41
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ecb3755d
  for <wireguard@lists.zx2c4.com>;
- Sat, 24 Feb 2018 10:54:08 +0000 (UTC)
-Received: from mail-io0-f176.google.com (mail-io0-f176.google.com
- [209.85.223.176])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b8d9f35f
+ Sat, 24 Feb 2018 12:34:29 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id df43a3f0
  for <wireguard@lists.zx2c4.com>;
- Sat, 24 Feb 2018 10:54:08 +0000 (UTC)
-Received: by mail-io0-f176.google.com with SMTP id q24so5167525ioh.8
- for <wireguard@lists.zx2c4.com>; Sat, 24 Feb 2018 03:02:14 -0800 (PST)
+ Sat, 24 Feb 2018 12:34:29 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 725ce63c
+ for <wireguard@lists.zx2c4.com>;
+ Sat, 24 Feb 2018 12:25:38 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 3ad9e197
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Sat, 24 Feb 2018 12:25:38 +0000 (UTC)
+Received: by mail-ot0-f177.google.com with SMTP id m22so339912otf.10
+ for <wireguard@lists.zx2c4.com>; Sat, 24 Feb 2018 04:42:36 -0800 (PST)
 MIME-Version: 1.0
+In-Reply-To: <BE93C582-5F9E-42A3-83AF-4C72BACCC03D@gmail.com>
 References: <BE93C582-5F9E-42A3-83AF-4C72BACCC03D@gmail.com>
- <CACTq0bQWCJurAzFh5yUvsoWt6LDdRdXZazK95-G+B7MiV6ArWg@mail.gmail.com>
- <1519466804.5080.1.camel@guerrier.com>
- <20dacbb8-236d-43a0-f277-44aa7de3ebee@dd-wrt.com>
- <B330F5FE-580C-47BE-94B0-ED3E5A266FD6@gmail.com>
- <8fffb6c4-a1c6-9dca-cbb5-826601ea607a@dd-wrt.com>
-In-Reply-To: <8fffb6c4-a1c6-9dca-cbb5-826601ea607a@dd-wrt.com>
-From: Ibrahim Tachijian <barhom@netsat.se>
-Date: Sat, 24 Feb 2018 11:02:03 +0000
-Message-ID: <CACTq0bQ=UDkRup002+FQkUBhzNKXEbTP2wGfj2vp_VWwtyjCZw@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Sat, 24 Feb 2018 13:42:34 +0100
+Message-ID: <CAHmME9rwGF6TqNmQekTW1oEcuf2wBULPOuMZbk56Fy2FxncAvA@mail.gmail.com>
 Subject: Re: Is this a valid wireguard application or a scam?
-To: Sebastian Gottschall <s.gottschall@dd-wrt.com>
-Content-Type: multipart/alternative; boundary="001a113fe3709b674b0565f335b4"
-Cc: wireguard@lists.zx2c4.com
+To: Thomas Munn <symgryph@gmail.com>
+Content-Type: multipart/alternative; boundary="94eb2c03c5c67eacfc0565f49c4f"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -34,189 +35,178 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---001a113fe3709b674b0565f335b4
+--94eb2c03c5c67eacfc0565f49c4f
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-I guess the article from appadvice is simply misinformed or wrong.
+Super sketchy, stay away. I'll look into it.
 
-On Sat, Feb 24, 2018, 11:39 Sebastian Gottschall <s.gottschall@dd-wrt.com>
-wrote:
+On Feb 24, 2018 06:19, "Thomas Munn" <symgryph@gmail.com> wrote:
 
-> but this one https://appadvice.com/app/blatu/1317522797
->
-> Am 24.02.2018 um 11:31 schrieb Henrique Carrega:
-> > Discription on App Store don=E2=80=99t mention wireguard
-> >
-> > Sent from my iPhone
-> >
-> >> On 24 Feb 2018, at 10:18, Sebastian Gottschall <s.gottschall@dd-wrt.co=
-m>
-> wrote:
-> >>
-> >>> Am 24.02.2018 um 11:06 schrieb Olivier Guerrier:
-> >>>> Le samedi 24 f=C3=A9vrier 2018 =C3=A0 09:44 +0000, Ibrahim Tachijian=
- a =C3=A9crit :
-> >>>> Says,
-> >>>>
-> >>>> Rule based shadowvpn client for iOS.
-> >>>>
-> >>>>> On Sat, Feb 24, 2018, 06:20 Thomas Munn <symgryph@gmail.com> wrote:
-> >>>>> 12:09 https://appadvice.com/app/blatu/1317522797
-> >>> This one says
-> >>>
-> >>> "Rule based WireGuard Client for iOS.
-> >>> WireGuard is an extremely simple yet fast and modern VPN that utilize=
-s
-> >>> state-of-the-art cryptography."
-> >> looks fake
-> >>> Oo
-> >>> --
-> >>> Olivier.
-> >>>
-> >>> _______________________________________________
-> >>> WireGuard mailing list
-> >>> WireGuard@lists.zx2c4.com
-> >>> https://lists.zx2c4.com/mailman/listinfo/wireguard
-> >>
-> >> --
-> >> Mit freundlichen Gr=C3=BCssen / Regards
-> >>
-> >> Sebastian Gottschall / CTO
-> >>
-> >> NewMedia-NET GmbH - DD-WRT
-> >> Firmensitz:  Stubenwaldallee 21a, 64625 Bensheim
-> >> Registergericht: Amtsgericht Darmstadt, HRB 25473
-> >> Gesch=C3=A4ftsf=C3=BChrer: Peter Steinh=C3=A4user, Christian Scheele
-> >> http://www.dd-wrt.com
-> >> email: s.gottschall@dd-wrt.com
-> >> Tel.: +496251-582650 / Fax: +496251-5826565
-> >>
-> >> _______________________________________________
-> >> WireGuard mailing list
-> >> WireGuard@lists.zx2c4.com
-> >> https://lists.zx2c4.com/mailman/listinfo/wireguard
->
->
-> --
-> Mit freundlichen Gr=C3=BCssen / Regards
->
-> Sebastian Gottschall / CTO
->
-> NewMedia-NET GmbH - DD-WRT
-> Firmensitz:  Stubenwaldallee 21a, 64625 Bensheim
-> Registergericht: Amtsgericht Darmstadt, HRB 25473
-> Gesch=C3=A4ftsf=C3=BChrer: Peter Steinh=C3=A4user, Christian Scheele
-> http://www.dd-wrt.com
-> email: s.gottschall@dd-wrt.com
-> Tel.: +496251-582650 / Fax: +496251-5826565
+> has anyone here heart of blatu which claims to be an IOS wireguard client?
+> 12:08 hard
+> 12:08 heard
+> 12:09 https://appadvice.com/app/blatu/1317522797
+> 12:09 https://itunes.apple.com/US/app/id1317522797?mt=8
+> 12:13 It claims to be a vpn that uses wireguard, but doesn't look very
+> wireguardy from the json they config?
+> 12:13 (fake fyi)
+> 12:13 [
+>   {
+>     "password" : "lalvdjaj",
+>     "endpointAddr" : "1.2.1.1",
+>     "endpointDns" : "",
+>     "remarks" : "",
+>     "selected" : true,
+>     "ipv4Addr" : "10.7.0.2",
+>     "ipv4AddrNetmask" : 24,
+>     "type" : "sv",
+>     "userToken" : "djdjdjdj",
+>     "endpointPort" : 555,
+>     "uuid" : "F5BE2448-8FDD-4413-9FB3-C66E9287242C"
+>   }
+> ]
 >
 > _______________________________________________
 > WireGuard mailing list
 > WireGuard@lists.zx2c4.com
 > https://lists.zx2c4.com/mailman/listinfo/wireguard
 >
+>
 
---001a113fe3709b674b0565f335b4
+--94eb2c03c5c67eacfc0565f49c4f
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-I guess the article from appadvice is simply misinformed or wrong.<br><br><=
-div class=3D"gmail_quote"><div dir=3D"ltr">On Sat, Feb 24, 2018, 11:39 Seba=
-stian Gottschall &lt;<a href=3D"mailto:s.gottschall@dd-wrt.com">s.gottschal=
-l@dd-wrt.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" styl=
-e=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">but thi=
-s one <a href=3D"https://appadvice.com/app/blatu/1317522797" rel=3D"norefer=
-rer" target=3D"_blank">https://appadvice.com/app/blatu/1317522797</a><br>
-<br>
-Am 24.02.2018 um 11:31 schrieb Henrique Carrega:<br>
-&gt; Discription on App Store don=E2=80=99t mention wireguard<br>
-&gt;<br>
-&gt; Sent from my iPhone<br>
-&gt;<br>
-&gt;&gt; On 24 Feb 2018, at 10:18, Sebastian Gottschall &lt;<a href=3D"mail=
-to:s.gottschall@dd-wrt.com" target=3D"_blank">s.gottschall@dd-wrt.com</a>&g=
-t; wrote:<br>
-&gt;&gt;<br>
-&gt;&gt;&gt; Am 24.02.2018 um 11:06 schrieb Olivier Guerrier:<br>
-&gt;&gt;&gt;&gt; Le samedi 24 f=C3=A9vrier 2018 =C3=A0 09:44 +0000, Ibrahim=
- Tachijian a =C3=A9crit :<br>
-&gt;&gt;&gt;&gt; Says,<br>
-&gt;&gt;&gt;&gt;<br>
-&gt;&gt;&gt;&gt; Rule based shadowvpn client for iOS.<br>
-&gt;&gt;&gt;&gt;<br>
-&gt;&gt;&gt;&gt;&gt; On Sat, Feb 24, 2018, 06:20 Thomas Munn &lt;<a href=3D=
-"mailto:symgryph@gmail.com" target=3D"_blank">symgryph@gmail.com</a>&gt; wr=
-ote:<br>
-&gt;&gt;&gt;&gt;&gt; 12:09 <a href=3D"https://appadvice.com/app/blatu/13175=
-22797" rel=3D"noreferrer" target=3D"_blank">https://appadvice.com/app/blatu=
-/1317522797</a><br>
-&gt;&gt;&gt; This one says<br>
-&gt;&gt;&gt;<br>
-&gt;&gt;&gt; &quot;Rule based WireGuard Client for iOS.<br>
-&gt;&gt;&gt; WireGuard is an extremely simple yet fast and modern VPN that =
-utilizes<br>
-&gt;&gt;&gt; state-of-the-art cryptography.&quot;<br>
-&gt;&gt; looks fake<br>
-&gt;&gt;&gt; Oo<br>
-&gt;&gt;&gt; --<br>
-&gt;&gt;&gt; Olivier.<br>
-&gt;&gt;&gt;<br>
-&gt;&gt;&gt; _______________________________________________<br>
-&gt;&gt;&gt; WireGuard mailing list<br>
-&gt;&gt;&gt; <a href=3D"mailto:WireGuard@lists.zx2c4.com" target=3D"_blank"=
->WireGuard@lists.zx2c4.com</a><br>
-&gt;&gt;&gt; <a href=3D"https://lists.zx2c4.com/mailman/listinfo/wireguard"=
- rel=3D"noreferrer" target=3D"_blank">https://lists.zx2c4.com/mailman/listi=
-nfo/wireguard</a><br>
-&gt;&gt;<br>
-&gt;&gt; --<br>
-&gt;&gt; Mit freundlichen Gr=C3=BCssen / Regards<br>
-&gt;&gt;<br>
-&gt;&gt; Sebastian Gottschall / CTO<br>
-&gt;&gt;<br>
-&gt;&gt; NewMedia-NET GmbH - DD-WRT<br>
-&gt;&gt; Firmensitz:=C2=A0 Stubenwaldallee 21a, 64625 Bensheim<br>
-&gt;&gt; Registergericht: Amtsgericht Darmstadt, HRB 25473<br>
-&gt;&gt; Gesch=C3=A4ftsf=C3=BChrer: Peter Steinh=C3=A4user, Christian Schee=
-le<br>
-&gt;&gt; <a href=3D"http://www.dd-wrt.com" rel=3D"noreferrer" target=3D"_bl=
-ank">http://www.dd-wrt.com</a><br>
-&gt;&gt; email: <a href=3D"mailto:s.gottschall@dd-wrt.com" target=3D"_blank=
-">s.gottschall@dd-wrt.com</a><br>
-&gt;&gt; Tel.: +496251-582650 / Fax: +496251-5826565<br>
-&gt;&gt;<br>
-&gt;&gt; _______________________________________________<br>
-&gt;&gt; WireGuard mailing list<br>
-&gt;&gt; <a href=3D"mailto:WireGuard@lists.zx2c4.com" target=3D"_blank">Wir=
-eGuard@lists.zx2c4.com</a><br>
-&gt;&gt; <a href=3D"https://lists.zx2c4.com/mailman/listinfo/wireguard" rel=
-=3D"noreferrer" target=3D"_blank">https://lists.zx2c4.com/mailman/listinfo/=
-wireguard</a><br>
-<br>
-<br>
---<br>
-Mit freundlichen Gr=C3=BCssen / Regards<br>
-<br>
-Sebastian Gottschall / CTO<br>
-<br>
-NewMedia-NET GmbH - DD-WRT<br>
-Firmensitz:=C2=A0 Stubenwaldallee 21a, 64625 Bensheim<br>
-Registergericht: Amtsgericht Darmstadt, HRB 25473<br>
-Gesch=C3=A4ftsf=C3=BChrer: Peter Steinh=C3=A4user, Christian Scheele<br>
-<a href=3D"http://www.dd-wrt.com" rel=3D"noreferrer" target=3D"_blank">http=
-://www.dd-wrt.com</a><br>
-email: <a href=3D"mailto:s.gottschall@dd-wrt.com" target=3D"_blank">s.gotts=
-chall@dd-wrt.com</a><br>
-Tel.: +496251-582650 / Fax: +496251-5826565<br>
-<br>
-_______________________________________________<br>
+<div dir=3D"auto"><div data-smartmail=3D"gmail_signature">Super sketchy, st=
+ay away. I&#39;ll look into it.</div></div><div class=3D"gmail_extra"><br><=
+div class=3D"gmail_quote">On Feb 24, 2018 06:19, &quot;Thomas Munn&quot; &l=
+t;<a href=3D"mailto:symgryph@gmail.com">symgryph@gmail.com</a>&gt; wrote:<b=
+r type=3D"attribution"><blockquote class=3D"gmail_quote" style=3D"margin:0 =
+0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex"><div style=3D"word-wr=
+ap:break-word"><span class=3D"m_1768013584494929277x-wrap" style=3D"word-wr=
+ap:break-word;display:block;margin-left:5px;padding-left:3px;padding-right:=
+5px;padding-bottom:1px;color:rgb(64,64,64);font-family:-webkit-standard;bac=
+kground-color:rgb(0,255,0)"><span class=3D"m_1768013584494929277x-message" =
+title=3D"12:08" style=3D"word-wrap:break-word">has anyone here heart of bla=
+tu which claims to be an IOS wireguard client?=C2=A0</span></span><div clas=
+s=3D"m_1768013584494929277IRC m_1768013584494929277message m_17680135844949=
+29277showIcons m_1768013584494929277outgoing m_1768013584494929277consecuti=
+ve" style=3D"word-wrap:break-word;background-color:lime;margin-left:0px;pad=
+ding-top:1px;padding-bottom:0px;padding-right:0px;color:rgb(64,64,64);font-=
+family:-webkit-standard;background-image:none!important"><span class=3D"m_1=
+768013584494929277x-wrap" style=3D"word-wrap:break-word;display:block;margi=
+n-left:5px;padding-left:3px;padding-right:5px;padding-bottom:1px"><span cla=
+ss=3D"m_1768013584494929277x-rtime" title=3D"24 Feb 2018" style=3D"word-wra=
+p:break-word;float:right;padding-left:10px;font-size:0.9em;margin-top:0.15e=
+m;color:rgb(184,184,184)">12:08=C2=A0</span><span class=3D"m_17680135844949=
+29277x-mark" style=3D"word-wrap:break-word;font-family:&#39;Lucida Grande&#=
+39;;letter-spacing:-0.2em;color:rgba(0,0,0,0.8)"></span><span class=3D"m_17=
+68013584494929277x-message" title=3D"12:08" style=3D"word-wrap:break-word">=
+hard=C2=A0</span></span><div class=3D"m_1768013584494929277IRC m_1768013584=
+494929277message m_1768013584494929277showIcons m_1768013584494929277outgoi=
+ng m_1768013584494929277consecutive" style=3D"word-wrap:break-word;margin-l=
+eft:0px;padding-top:1px;padding-bottom:0px;padding-right:0px;background-ima=
+ge:none!important"><span class=3D"m_1768013584494929277x-wrap" style=3D"wor=
+d-wrap:break-word;display:block;margin-left:5px;padding-left:3px;padding-ri=
+ght:5px;padding-bottom:1px"><span class=3D"m_1768013584494929277x-rtime" ti=
+tle=3D"24 Feb 2018" style=3D"word-wrap:break-word;float:right;padding-left:=
+10px;font-size:0.9em;margin-top:0.15em;color:rgb(184,184,184)">12:08=C2=A0<=
+/span><span class=3D"m_1768013584494929277x-mark" style=3D"word-wrap:break-=
+word;font-family:&#39;Lucida Grande&#39;;letter-spacing:-0.2em;color:rgba(0=
+,0,0,0.8)"></span><span class=3D"m_1768013584494929277x-message" title=3D"1=
+2:08" style=3D"word-wrap:break-word">heard=C2=A0</span></span><div class=3D=
+"m_1768013584494929277IRC m_1768013584494929277message m_176801358449492927=
+7showIcons m_1768013584494929277outgoing m_1768013584494929277consecutive" =
+style=3D"word-wrap:break-word;margin-left:0px;padding-top:1px;padding-botto=
+m:0px;padding-right:0px;background-image:none!important"><span class=3D"m_1=
+768013584494929277x-wrap" style=3D"word-wrap:break-word;display:block;margi=
+n-left:5px;padding-left:3px;padding-right:5px;padding-bottom:1px"><span cla=
+ss=3D"m_1768013584494929277x-rtime" title=3D"24 Feb 2018" style=3D"word-wra=
+p:break-word;float:right;padding-left:10px;font-size:0.9em;margin-top:0.15e=
+m;color:rgb(184,184,184)">12:09=C2=A0</span><span class=3D"m_17680135844949=
+29277x-mark" style=3D"word-wrap:break-word;font-family:&#39;Lucida Grande&#=
+39;;letter-spacing:-0.2em;color:rgba(0,0,0,0.8)"></span><span class=3D"m_17=
+68013584494929277x-message" title=3D"12:09" style=3D"word-wrap:break-word">=
+<a href=3D"https://appadvice.com/app/blatu/1317522797" title=3D"https://app=
+advice.com/app/blatu/1317522797" style=3D"word-wrap:break-word;color:inheri=
+t" target=3D"_blank">https://appadvice.com/<wbr>app/blatu/1317522797</a></s=
+pan></span><div class=3D"m_1768013584494929277IRC m_1768013584494929277mess=
+age m_1768013584494929277showIcons m_1768013584494929277outgoing m_17680135=
+84494929277consecutive" style=3D"word-wrap:break-word;margin-left:0px;paddi=
+ng-top:1px;padding-bottom:0px;padding-right:0px;background-image:none!impor=
+tant"><span class=3D"m_1768013584494929277x-wrap" style=3D"word-wrap:break-=
+word;display:block;margin-left:5px;padding-left:3px;padding-right:5px;paddi=
+ng-bottom:1px"><span class=3D"m_1768013584494929277x-rtime" title=3D"24 Feb=
+ 2018" style=3D"word-wrap:break-word;float:right;padding-left:10px;font-siz=
+e:0.9em;margin-top:0.15em;color:rgb(184,184,184)">12:09=C2=A0</span><span c=
+lass=3D"m_1768013584494929277x-mark" style=3D"word-wrap:break-word;font-fam=
+ily:&#39;Lucida Grande&#39;;letter-spacing:-0.2em;color:rgba(0,0,0,0.8)"></=
+span><span class=3D"m_1768013584494929277x-message" title=3D"12:09" style=
+=3D"word-wrap:break-word"><a href=3D"https://itunes.apple.com/US/app/id1317=
+522797?mt=3D8" title=3D"https://itunes.apple.com/US/app/id1317522797?mt=3D8=
+" style=3D"word-wrap:break-word;color:inherit" target=3D"_blank">https://it=
+unes.apple.<wbr>com/US/app/id1317522797?mt=3D8</a></span></span><div class=
+=3D"m_1768013584494929277IRC m_1768013584494929277message m_176801358449492=
+9277showIcons m_1768013584494929277outgoing m_1768013584494929277consecutiv=
+e" style=3D"word-wrap:break-word;margin-left:0px;padding-top:1px;padding-bo=
+ttom:0px;padding-right:0px;background-image:none!important"><span class=3D"=
+m_1768013584494929277x-wrap" style=3D"word-wrap:break-word;display:block;ma=
+rgin-left:5px;padding-left:3px;padding-right:5px;padding-bottom:1px"><span =
+class=3D"m_1768013584494929277x-rtime" title=3D"24 Feb 2018" style=3D"word-=
+wrap:break-word;float:right;padding-left:10px;font-size:0.9em;margin-top:0.=
+15em;color:rgb(184,184,184)">12:13=C2=A0</span><span class=3D"m_17680135844=
+94929277x-mark" style=3D"word-wrap:break-word;font-family:&#39;Lucida Grand=
+e&#39;;letter-spacing:-0.2em;color:rgba(0,0,0,0.8)"></span><span class=3D"m=
+_1768013584494929277x-message" title=3D"12:13" style=3D"word-wrap:break-wor=
+d">It claims to be a vpn that uses wireguard, but doesn&#39;t look very wir=
+eguardy from the json they config?=C2=A0</span></span><div class=3D"m_17680=
+13584494929277IRC m_1768013584494929277message m_1768013584494929277showIco=
+ns m_1768013584494929277outgoing m_1768013584494929277consecutive" style=3D=
+"word-wrap:break-word;margin-left:0px;padding-top:1px;padding-bottom:0px;pa=
+dding-right:0px;background-image:none!important"><span class=3D"m_176801358=
+4494929277x-wrap" style=3D"word-wrap:break-word;display:block;margin-left:5=
+px;padding-left:3px;padding-right:5px;padding-bottom:1px"><span class=3D"m_=
+1768013584494929277x-rtime" title=3D"24 Feb 2018" style=3D"word-wrap:break-=
+word;float:right;padding-left:10px;font-size:0.9em;margin-top:0.15em;color:=
+rgb(184,184,184)">12:13=C2=A0</span><span class=3D"m_1768013584494929277x-m=
+ark" style=3D"word-wrap:break-word;font-family:&#39;Lucida Grande&#39;;lett=
+er-spacing:-0.2em;color:rgba(0,0,0,0.8)"></span><span class=3D"m_1768013584=
+494929277x-message" title=3D"12:13" style=3D"word-wrap:break-word">(fake fy=
+i)=C2=A0</span></span><div class=3D"m_1768013584494929277IRC m_176801358449=
+4929277message m_1768013584494929277showIcons m_1768013584494929277outgoing=
+ m_1768013584494929277consecutive" style=3D"word-wrap:break-word;margin-lef=
+t:0px;padding-top:1px;padding-bottom:0px;padding-right:0px;background-image=
+:none!important"><span class=3D"m_1768013584494929277x-wrap" style=3D"word-=
+wrap:break-word;display:block;margin-left:5px;padding-left:3px;padding-righ=
+t:5px;padding-bottom:1px"><span class=3D"m_1768013584494929277x-rtime" titl=
+e=3D"24 Feb 2018" style=3D"word-wrap:break-word;float:right;padding-left:10=
+px;font-size:0.9em;margin-top:0.15em;color:rgb(184,184,184)">12:13=C2=A0</s=
+pan><span class=3D"m_1768013584494929277x-mark" style=3D"word-wrap:break-wo=
+rd;font-family:&#39;Lucida Grande&#39;;letter-spacing:-0.2em;color:rgba(0,0=
+,0,0.8)"></span><span class=3D"m_1768013584494929277x-message" title=3D"12:=
+13" style=3D"word-wrap:break-word">[<br style=3D"word-wrap:break-word">=C2=
+=A0 {<br style=3D"word-wrap:break-word">=C2=A0 =C2=A0 &quot;password&quot; =
+: &quot;lalvdjaj&quot;,<br style=3D"word-wrap:break-word">=C2=A0 =C2=A0 &qu=
+ot;endpointAddr&quot; : &quot;1.2.1.1&quot;,<br style=3D"word-wrap:break-wo=
+rd">=C2=A0 =C2=A0 &quot;endpointDns&quot; : &quot;&quot;,<br style=3D"word-=
+wrap:break-word">=C2=A0 =C2=A0 &quot;remarks&quot; : &quot;&quot;,<br style=
+=3D"word-wrap:break-word">=C2=A0 =C2=A0 &quot;selected&quot; : true,<br sty=
+le=3D"word-wrap:break-word">=C2=A0 =C2=A0 &quot;ipv4Addr&quot; : &quot;10.7=
+.0.2&quot;,<br style=3D"word-wrap:break-word">=C2=A0 =C2=A0 &quot;ipv4AddrN=
+etmask&quot; : 24,<br style=3D"word-wrap:break-word">=C2=A0 =C2=A0 &quot;ty=
+pe&quot; : &quot;sv&quot;,<br style=3D"word-wrap:break-word">=C2=A0 =C2=A0 =
+&quot;userToken&quot; : &quot;djdjdjdj&quot;,<br style=3D"word-wrap:break-w=
+ord">=C2=A0 =C2=A0 &quot;endpointPort&quot; : 555,<br style=3D"word-wrap:br=
+eak-word">=C2=A0 =C2=A0 &quot;uuid&quot; : &quot;F5BE2448-8FDD-4413-9FB3-<w=
+br>C66E9287242C&quot;<br style=3D"word-wrap:break-word">=C2=A0 }<br style=
+=3D"word-wrap:break-word">]</span></span></div></div></div></div></div></di=
+v></div></div><br>______________________________<wbr>_________________<br>
 WireGuard mailing list<br>
-<a href=3D"mailto:WireGuard@lists.zx2c4.com" target=3D"_blank">WireGuard@li=
-sts.zx2c4.com</a><br>
+<a href=3D"mailto:WireGuard@lists.zx2c4.com">WireGuard@lists.zx2c4.com</a><=
+br>
 <a href=3D"https://lists.zx2c4.com/mailman/listinfo/wireguard" rel=3D"noref=
-errer" target=3D"_blank">https://lists.zx2c4.com/mailman/listinfo/wireguard=
-</a><br>
-</blockquote></div>
+errer" target=3D"_blank">https://lists.zx2c4.com/<wbr>mailman/listinfo/wire=
+guard</a><br>
+<br></blockquote></div></div>
 
---001a113fe3709b674b0565f335b4--
+--94eb2c03c5c67eacfc0565f49c4f--
