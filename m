@@ -1,17 +1,17 @@
 Return-Path: s.gottschall@dd-wrt.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 53c82f5a
- for <wireguard@lists.zx2c4.com>; Mon, 5 Mar 2018 11:19:57 +0000 (UTC)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 81f672f8
+ for <wireguard@lists.zx2c4.com>; Mon, 5 Mar 2018 11:20:40 +0000 (UTC)
 Received: from webmail.newmedia-net.de (smtps.newmedia-net.de [185.84.6.167])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e76371a9
- for <wireguard@lists.zx2c4.com>; Mon, 5 Mar 2018 11:19:57 +0000 (UTC)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id db3daf5b
+ for <wireguard@lists.zx2c4.com>; Mon, 5 Mar 2018 11:20:40 +0000 (UTC)
 Subject: Re: Tunsafe Windows client for wireguard (not opensource yet they say
 To: wireguard@lists.zx2c4.com
 References: <41222FCF-F9F5-4FEC-AA71-73C48F4DA4BA@gmail.com>
  <CAHmME9r95cjSXK8YitGuHxFp0EfrMKhQEGXL5Ux=rMXLt=U5FA@mail.gmail.com>
 From: Sebastian Gottschall <s.gottschall@dd-wrt.com>
-Message-ID: <8f4c1033-d41c-e358-58f2-cd02618e5e82@dd-wrt.com>
-Date: Mon, 5 Mar 2018 12:29:10 +0100
+Message-ID: <9e0354b6-9f31-665c-fee1-db504572ce86@dd-wrt.com>
+Date: Mon, 5 Mar 2018 12:29:53 +0100
 MIME-Version: 1.0
 In-Reply-To: <CAHmME9r95cjSXK8YitGuHxFp0EfrMKhQEGXL5Ux=rMXLt=U5FA@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
@@ -24,10 +24,7 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-it isnt closed source. the sourcecode is provided as far as i have seen 
-and licensed under GPL
-but correct me if i'm wrong
-https://tunsafe.com/downloads/TunSafe-TAP-9.21.2-sources.zip
+nevermind. its just the tap source
 
 Am 05.03.2018 um 10:19 schrieb Jason A. Donenfeld:
 > Hi Henrique,
