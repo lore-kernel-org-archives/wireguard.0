@@ -1,29 +1,20 @@
-Return-Path: symgryph@gmail.com
+Return-Path: strigeus@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c6a3480c
- for <wireguard@lists.zx2c4.com>; Mon, 5 Mar 2018 22:31:04 +0000 (UTC)
-Received: from mail-qt0-f171.google.com (mail-qt0-f171.google.com
- [209.85.216.171])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fb6e7dfc
- for <wireguard@lists.zx2c4.com>; Mon, 5 Mar 2018 22:31:04 +0000 (UTC)
-Received: by mail-qt0-f171.google.com with SMTP id v90so22326385qte.12
- for <wireguard@lists.zx2c4.com>; Mon, 05 Mar 2018 14:40:21 -0800 (PST)
-Return-Path: <symgryph@gmail.com>
-Received: from [10.14.149.90] ([8.42.18.7])
- by smtp.gmail.com with ESMTPSA id m78sm2495150qke.8.2018.03.05.14.40.20
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 05 Mar 2018 14:40:20 -0800 (PST)
-From: Thomas Munn <symgryph@gmail.com>
-Content-Type: multipart/alternative;
- boundary=Apple-Mail-C6E14A04-BF44-42FD-B972-E1A0B81B2B7D
-Mime-Version: 1.0 (1.0)
-Date: Mon, 5 Mar 2018 17:40:19 -0500
-Subject: Re: WireGuard Digest, Vol 24, Issue 4
-Message-Id: <6E740604-EC34-4F3B-B790-A9A97C53A209@gmail.com>
-References: <mailman.1.1520247601.29698.wireguard@lists.zx2c4.com>
-In-Reply-To: <mailman.1.1520247601.29698.wireguard@lists.zx2c4.com>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c9801824
+ for <wireguard@lists.zx2c4.com>; Tue, 6 Mar 2018 01:35:44 +0000 (UTC)
+Received: from mail-ot0-f177.google.com (mail-ot0-f177.google.com
+ [74.125.82.177])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 620c9f42
+ for <wireguard@lists.zx2c4.com>; Tue, 6 Mar 2018 01:35:44 +0000 (UTC)
+Received: by mail-ot0-f177.google.com with SMTP id g97so16883738otg.13
+ for <wireguard@lists.zx2c4.com>; Mon, 05 Mar 2018 17:45:02 -0800 (PST)
+MIME-Version: 1.0
+From: Ludvig Strigeus <strigeus@gmail.com>
+Date: Tue, 6 Mar 2018 02:44:31 +0100
+Message-ID: <CAHT-BTRX+bgN8m7V95QqnKOD8g6vp3-+h_JozG5motqS0MLiZQ@mail.gmail.com>
+Subject: Re: Tunsafe Windows client for wireguard (not opensource yet they say
 To: wireguard@lists.zx2c4.com
+Content-Type: multipart/alternative; boundary="94eb2c1c1ce2493a530566b497f9"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -33,476 +24,310 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
+--94eb2c1c1ce2493a530566b497f9
+Content-Type: text/plain; charset="UTF-8"
 
---Apple-Mail-C6E14A04-BF44-42FD-B972-E1A0B81B2B7D
-Content-Type: text/plain;
-	charset=us-ascii
+Jason A. Donenfeld wrote:
+> Please stay away from this software, and generally be wary of >
+closed-source WireGuard implementations trying to fill the void.* This **>
+one was written by a community-unfriendly proprietary author*, and > we've
+got little way of ensuring protocol compliance or basic > security. *Especially
+from my discussions from him, it's clear what **> he's up to, and this
+seems like some nastiness.* Should I spend my time > reverse engineering
+this software and discovering zero-days? Probably > not a good use of my
+time, despite my usual love of this sort of thing.
+
+First of all could you change tone a little bit, personal attacks and
+rudeness do not have a place in those discussions unless you actually
+back them up with facts.
+
+Never once during our IRC chat did I say something negative about you,
+instead I wrote several times that WireGuard was fanastic and you're
+an inspiring person.
+
+I'd be happy to share IRC logs of our brief communication with this list
+to prove my point, but your attitude appears to be that everything that
+is not open source, and hosted under the WireGuard brand/webpage, is
+community-unfriendly and nasty. Is that what you mean by community
+unfriendly?
+
+I said that if I release TunSafe I probably want it under my own name,
+on my own website, where I'm free to develop the project in any
+direction I want, without pressure to release it as open source.
+I don't want to spend weeks or months building a client for it to end
+up on some semi-hidden place on wireguard.com just because you
+prefer Rust or Go, where my contribution may get diminished into
+nothing at all.
+
+How would you deal with Microsoft if they wanted to add a closed
+source implementation of WireGuard in Windows. Would they also
+be considered a community-unfriendly proprietary author with a
+clear agenda of nastiness?
+
+Is this how you envision how things would work should WireGuard
+become a future RFC / Internet Standard? The only accepted
+implementation would be that one from yourself? No companies
+would be allowed to implement it or take part in discussions?
+This is not how Internet protocols typically work.
+
+Given these constraints, I'm happy to participate in whatever
+protocol discussions or community related questions that I'm
+in the capacity to answer or contribute to.
+
+I totally understand your point about open source applications
+being easier to audit, especially important when it's related
+to security. I share this view, and will address it eventually,
+in some way. Either just the wireguard protocol layer or the
+whole UI too.
+
+Though, your behavior this past day has confirmed even more that
+I'm not interested in being a slave in a dictatorship. You've
+ignored my attempts at communications for 2 weeks. You ban me
+from #wireguard IRC even though I haven't talked there for weeks,
+but just because I'm in there and not being as much of a die-hard
+open-source evangelist as you are.
+
+Jason A. Donenfeld wrote:
+> This isn't the source code of tunsafe. This is the source code of the >
+OpenVPN Windows tuntap kernel driver, *which has been hacked up in **>
+various ways for tunsafe*. That's a super scary driver, by the way.
+
+Incorrect. The driver files are not modified at all. They still
+carry OpenVPN's codesigning signature. You can see this on the
+driver install prompt:
+https://tunsafe.com/img/quickstart-driver-confirm.png
+
+I agree that the driver is scary, I think I even found some
+potential OOB memory accesses in it from a quick glance. However,
+this is the best driver the community has at this point in time,
+and even your own userspace implementations of WG use it. I'd
+be happy to improve it but then I need an expensive driver
+codesigning certificate in order to load it into the kernel.
+
+/Ludde
+
+--94eb2c1c1ce2493a530566b497f9
+Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-what is the go and rust git uri?
+<div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr"><div><span sty=
+le=3D"font-family:monospace,monospace">Jason A. Donenfeld wrote:</span><br>=
+</div><span style=3D"font-family:monospace,monospace;color:rgb(0,0,0);white=
+-space:pre-wrap">&gt; Please stay away from this software, and generally be=
+ wary of
+</span><span style=3D"font-family:monospace,monospace;color:rgb(0,0,0);whit=
+e-space:pre-wrap">&gt; closed-source WireGuard implementations trying to fi=
+ll the void.<b> This
+</b></span><span style=3D"font-family:monospace,monospace;color:rgb(0,0,0);=
+white-space:pre-wrap"><b>&gt; one was written by a community-unfriendly pro=
+prietary author</b>, and
+</span><span style=3D"font-family:monospace,monospace;color:rgb(0,0,0);whit=
+e-space:pre-wrap">&gt; we&#39;ve got little way of ensuring protocol compli=
+ance or basic
+</span><span style=3D"font-family:monospace,monospace;color:rgb(0,0,0);whit=
+e-space:pre-wrap">&gt; security. <b>Especially from my discussions from him=
+, it&#39;s clear what
+</b></span><span style=3D"font-family:monospace,monospace;color:rgb(0,0,0);=
+white-space:pre-wrap"><b>&gt; he&#39;s up to, and this seems like some nast=
+iness.</b> Should I spend my time
+</span><span style=3D"font-family:monospace,monospace;color:rgb(0,0,0);whit=
+e-space:pre-wrap">&gt; reverse engineering this software and discovering ze=
+ro-days? Probably
+</span><span style=3D"font-family:monospace,monospace;color:rgb(0,0,0);whit=
+e-space:pre-wrap">&gt; not a good use of my time, despite my usual love of =
+this sort of</span><span style=3D"font-family:monospace,monospace;color:rgb=
+(0,0,0);white-space:pre-wrap"> thing.</span><div><font color=3D"#000000" fa=
+ce=3D"monospace, monospace"><span style=3D"white-space:pre-wrap"><br></span=
+></font></div><div><font color=3D"#000000" face=3D"monospace, monospace"><s=
+pan style=3D"white-space:pre-wrap">First of all could you change tone a lit=
+tle bit, personal attacks and</span></font></div><div><font color=3D"#00000=
+0" face=3D"monospace, monospace"><span style=3D"white-space:pre-wrap">ruden=
+ess do </span></font><span style=3D"white-space:pre-wrap;color:rgb(0,0,0);f=
+ont-family:monospace,monospace">not have a place in those discussions unles=
+s you actually</span></div><div><span style=3D"white-space:pre-wrap;color:r=
+gb(0,0,0);font-family:monospace,monospace">back them up </span><span style=
+=3D"white-space:pre-wrap;color:rgb(0,0,0);font-family:monospace,monospace">=
+with facts. </span></div><div><font color=3D"#000000" face=3D"monospace, mo=
+nospace"><span style=3D"white-space:pre-wrap"><br></span></font></div><div>=
+<font color=3D"#000000" face=3D"monospace, monospace"><span style=3D"white-=
+space:pre-wrap">Never once during our IRC chat did I say something negative=
+ about you,</span></font></div><div><font color=3D"#000000" face=3D"monospa=
+ce, monospace"><span style=3D"white-space:pre-wrap">instead I wrote several=
+ times that WireGuard was fanastic and you&#39;re</span></font></div><div><=
+font color=3D"#000000" face=3D"monospace, monospace"><span style=3D"white-s=
+pace:pre-wrap">an inspiring person. </span></font></div><div><font color=3D=
+"#000000" face=3D"monospace, monospace"><span style=3D"white-space:pre-wrap=
+"><br></span></font></div><div><font color=3D"#000000" face=3D"monospace, m=
+onospace"><span style=3D"white-space:pre-wrap">I&#39;d be happy to share IR=
+C logs of our brief communication with this list</span></font></div><div><f=
+ont color=3D"#000000" face=3D"monospace, monospace"><span style=3D"white-sp=
+ace:pre-wrap">to prove my point, but your </span></font><span style=3D"whit=
+e-space:pre-wrap;color:rgb(0,0,0);font-family:monospace,monospace">attitude=
+ appears to be that everything that</span></div><div><span style=3D"white-s=
+pace:pre-wrap;color:rgb(0,0,0);font-family:monospace,monospace">is not open=
+ source, and </span><span style=3D"white-space:pre-wrap;color:rgb(0,0,0);fo=
+nt-family:monospace,monospace">hosted under the WireGuard brand/webpage, is=
+</span></div><div><span style=3D"color:rgb(0,0,0);font-family:monospace,mon=
+ospace;white-space:pre-wrap">community-</span><span style=3D"color:rgb(0,0,=
+0);font-family:monospace,monospace;white-space:pre-wrap">unfriendly and nas=
+ty. Is that what you mean by community</span></div><div><span style=3D"colo=
+r:rgb(0,0,0);font-family:monospace,monospace;white-space:pre-wrap">unfriend=
+ly?</span></div><div><span style=3D"color:rgb(0,0,0);font-family:monospace,=
+monospace;white-space:pre-wrap"><br></span></div><div><span style=3D"color:=
+rgb(0,0,0);font-family:monospace,monospace;white-space:pre-wrap">I said tha=
+t if I release TunSafe I probably want it under my own </span><span style=
+=3D"color:rgb(0,0,0);font-family:monospace,monospace;white-space:pre-wrap">=
+name,</span><br></div><div><span style=3D"color:rgb(0,0,0);font-family:mono=
+space,monospace;white-space:pre-wrap">on my own website, where I&#39;m free=
+ to develop the project in any</span></div><div><span style=3D"color:rgb(0,=
+0,0);font-family:monospace,monospace;white-space:pre-wrap">direction I want=
+, without pressure to release it as open source. </span></div><div><span st=
+yle=3D"color:rgb(0,0,0);font-family:monospace,monospace;white-space:pre-wra=
+p">I</span><span style=3D"color:rgb(0,0,0);font-family:monospace,monospace;=
+white-space:pre-wrap"> don&#39;t want to spend weeks </span><span style=3D"=
+color:rgb(0,0,0);font-family:monospace,monospace;white-space:pre-wrap">or <=
+/span><span style=3D"color:rgb(0,0,0);font-family:monospace,monospace;white=
+-space:pre-wrap">months </span><span style=3D"color:rgb(0,0,0);font-family:=
+monospace,monospace;white-space:pre-wrap">building a </span><span style=3D"=
+color:rgb(0,0,0);font-family:monospace,monospace;white-space:pre-wrap">clie=
+nt for </span><span style=3D"color:rgb(0,0,0);font-family:monospace,monospa=
+ce;white-space:pre-wrap">it to end</span></div><div><font face=3D"monospace=
+, monospace"><span style=3D"color:rgb(0,0,0);white-space:pre-wrap">up on so=
+me semi-hidden </span><span style=3D"color:rgb(0,0,0);white-space:pre-wrap"=
+>place </span><span style=3D"color:rgb(0,0,0);white-space:pre-wrap">on </sp=
+an><a href=3D"http://wireguard.com" target=3D"_blank" style=3D"white-space:=
+pre-wrap">wireguard.com</a>=C2=A0just because you</font></div><div><font fa=
+ce=3D"monospace, monospace">prefer Rust or Go,=C2=A0</font><span style=3D"f=
+ont-family:monospace,monospace;color:rgb(0,0,0);white-space:pre-wrap">where=
+ </span><span style=3D"font-family:monospace,monospace;color:rgb(0,0,0);whi=
+te-space:pre-wrap">my contribution may </span><span style=3D"font-family:mo=
+nospace,monospace;color:rgb(0,0,0);white-space:pre-wrap">get diminished int=
+o</span></div><div><span style=3D"font-family:monospace,monospace;color:rgb=
+(0,0,0);white-space:pre-wrap">nothing at all. </span></div><div><br></div><=
+div><span style=3D"color:rgb(0,0,0);font-family:monospace,monospace;white-s=
+pace:pre-wrap">How would you deal with Microsoft if they wanted to add a cl=
+osed</span><br></div><div><span style=3D"color:rgb(0,0,0);font-family:monos=
+pace,monospace;white-space:pre-wrap">source implementation of WireGuard in =
+Windows. Would they also</span></div><div><span style=3D"color:rgb(0,0,0);f=
+ont-family:monospace,monospace;white-space:pre-wrap">be considered a commun=
+ity-unfriendly proprietary author with a </span></div><div><span style=3D"c=
+olor:rgb(0,0,0);font-family:monospace,monospace;white-space:pre-wrap">clear=
+ agenda of nastiness?</span></div><div><span style=3D"color:rgb(0,0,0);font=
+-family:monospace,monospace;white-space:pre-wrap"><br></span></div><div><sp=
+an style=3D"color:rgb(0,0,0);font-family:monospace,monospace;white-space:pr=
+e-wrap">Is this how you envision how things would work should WireGuard</sp=
+an></div><div><span style=3D"color:rgb(0,0,0);font-family:monospace,monospa=
+ce;white-space:pre-wrap">become a </span><span style=3D"color:rgb(0,0,0);fo=
+nt-family:monospace,monospace;white-space:pre-wrap">future RFC / Internet S=
+tandard? The only accepted</span></div><div><span style=3D"color:rgb(0,0,0)=
+;font-family:monospace,monospace;white-space:pre-wrap">implementation would=
+ be that one from yourself? No companies</span></div><div><span style=3D"co=
+lor:rgb(0,0,0);font-family:monospace,monospace;white-space:pre-wrap">would =
+be allowed to implement it or take part in discussions?</span></div><div><s=
+pan style=3D"color:rgb(0,0,0);font-family:monospace,monospace;white-space:p=
+re-wrap">This is not </span><span style=3D"color:rgb(0,0,0);font-family:mon=
+ospace,monospace;white-space:pre-wrap">how Internet protocols typically wor=
+k.</span></div><div><br></div><div><span style=3D"color:rgb(0,0,0);font-fam=
+ily:monospace,monospace;white-space:pre-wrap">Given these constraints, I&#3=
+9;m happy to participate in whatever </span><br></div><div><span style=3D"c=
+olor:rgb(0,0,0);font-family:monospace,monospace;white-space:pre-wrap">proto=
+col discussions or community related questions that I&#39;m </span></div><d=
+iv><span style=3D"color:rgb(0,0,0);font-family:monospace,monospace;white-sp=
+ace:pre-wrap">in the capacity to answer or contribute to.</span></div><div>=
+<br></div><div>
 
-Thomas J Munn
+<div style=3D"color:rgb(34,34,34);font-family:arial,sans-serif;font-size:sm=
+all;font-style:normal;font-variant-ligatures:normal;font-variant-caps:norma=
+l;font-weight:400;letter-spacing:normal;text-align:start;text-indent:0px;te=
+xt-transform:none;white-space:normal;word-spacing:0px;text-decoration-style=
+:initial;text-decoration-color:initial"><span style=3D"color:rgb(0,0,0);fon=
+t-family:monospace,monospace;white-space:pre-wrap">I totally understand you=
+r point about open source applications</span></div><div style=3D"color:rgb(=
+34,34,34);font-family:arial,sans-serif;font-size:small;font-style:normal;fo=
+nt-variant-ligatures:normal;font-variant-caps:normal;font-weight:400;letter=
+-spacing:normal;text-align:start;text-indent:0px;text-transform:none;white-=
+space:normal;word-spacing:0px;text-decoration-style:initial;text-decoration=
+-color:initial"><span style=3D"color:rgb(0,0,0);font-family:monospace,monos=
+pace;white-space:pre-wrap">being easier to audit, especially important when=
+ it&#39;s related</span></div><div style=3D"color:rgb(34,34,34);font-family=
+:arial,sans-serif;font-size:small;font-style:normal;font-variant-ligatures:=
+normal;font-variant-caps:normal;font-weight:400;letter-spacing:normal;text-=
+align:start;text-indent:0px;text-transform:none;white-space:normal;word-spa=
+cing:0px;text-decoration-style:initial;text-decoration-color:initial"><span=
+ style=3D"color:rgb(0,0,0);font-family:monospace,monospace;white-space:pre-=
+wrap">to security. I share this view, and will address it eventually,</span=
+></div><div style=3D"color:rgb(34,34,34);font-family:arial,sans-serif;font-=
+size:small;font-style:normal;font-variant-ligatures:normal;font-variant-cap=
+s:normal;font-weight:400;letter-spacing:normal;text-align:start;text-indent=
+:0px;text-transform:none;white-space:normal;word-spacing:0px;text-decoratio=
+n-style:initial;text-decoration-color:initial"><span style=3D"color:rgb(0,0=
+,0);font-family:monospace,monospace;white-space:pre-wrap">in some way. Eith=
+er just the wireguard protocol layer or the</span></div><div style=3D"color=
+:rgb(34,34,34);font-family:arial,sans-serif;font-size:small;font-style:norm=
+al;font-variant-ligatures:normal;font-variant-caps:normal;font-weight:400;l=
+etter-spacing:normal;text-align:start;text-indent:0px;text-transform:none;w=
+hite-space:normal;word-spacing:0px;text-decoration-style:initial;text-decor=
+ation-color:initial"><span style=3D"color:rgb(0,0,0);font-family:monospace,=
+monospace;white-space:pre-wrap">whole </span><span style=3D"color:rgb(0,0,0=
+);font-family:monospace,monospace;white-space:pre-wrap">UI too.</span></div=
+></div><div><span style=3D"color:rgb(0,0,0);font-family:monospace,monospace=
+;white-space:pre-wrap"><br></span></div><div><span style=3D"color:rgb(0,0,0=
+);font-family:monospace,monospace;white-space:pre-wrap">Though, your behavi=
+or this past day has confirmed even more that</span></div><div><span style=
+=3D"color:rgb(0,0,0);font-family:monospace,monospace;white-space:pre-wrap">=
+I&#39;m not </span><span style=3D"color:rgb(0,0,0);font-family:monospace,mo=
+nospace;white-space:pre-wrap">interested in being a slave in a dictatorship=
+. You&#39;ve</span></div><div><span style=3D"color:rgb(0,0,0);font-family:m=
+onospace,monospace;white-space:pre-wrap">ignored </span><span style=3D"colo=
+r:rgb(0,0,0);font-family:monospace,monospace;white-space:pre-wrap">my attem=
+pts at communications for 2 weeks. You ban me</span></div><div><span style=
+=3D"color:rgb(0,0,0);font-family:monospace,monospace;white-space:pre-wrap">=
+from #wireguard </span><span style=3D"color:rgb(0,0,0);font-family:monospac=
+e,monospace;white-space:pre-wrap">IRC even though I haven&#39;t talked ther=
+e for weeks,</span></div><div><span style=3D"color:rgb(0,0,0);font-family:m=
+onospace,monospace;white-space:pre-wrap">but just because I&#39;m in there =
+and not being as much of a </span><span style=3D"color:rgb(0,0,0);font-fami=
+ly:monospace,monospace;white-space:pre-wrap">die-hard</span></div><div><spa=
+n style=3D"color:rgb(0,0,0);font-family:monospace,monospace;white-space:pre=
+-wrap">open-source </span><span style=3D"color:rgb(0,0,0);font-family:monos=
+pace,monospace;white-space:pre-wrap">evangelist as you are.</span></div><di=
+v><br></div><div><span style=3D"font-family:monospace,monospace">Jason A. D=
+onenfeld wrote:</span><br></div><div><span style=3D"color:rgb(0,0,0);white-=
+space:pre-wrap;font-family:monospace,monospace">&gt; This isn&#39;t the sou=
+rce code of tunsafe. This is the source code of the
+</span><span style=3D"color:rgb(0,0,0);white-space:pre-wrap;font-family:mon=
+ospace,monospace">&gt; OpenVPN Windows tuntap kernel driver, </span><b styl=
+e=3D"color:rgb(0,0,0);white-space:pre-wrap;font-family:monospace,monospace"=
+>which has been hacked up in
+</b><b style=3D"color:rgb(0,0,0);white-space:pre-wrap;font-family:monospace=
+,monospace">&gt; various ways for tunsafe</b><span style=3D"color:rgb(0,0,0=
+);white-space:pre-wrap;font-family:monospace,monospace">. That&#39;s a supe=
+r scary driver, by the way.</span></div><div><div><font face=3D"monospace, =
+monospace"><br></font></div><div><font face=3D"monospace, monospace">
 
+Incorrect. The driver files are not modified at all. They still</font></div=
+><div><font face=3D"monospace, monospace">carry OpenVPN&#39;s codesigning s=
+ignature. You can see this on the</font></div><div><font face=3D"monospace,=
+ monospace">driver install prompt:</font></div><div><span style=3D"font-fam=
+ily:monospace,monospace"><a href=3D"https://tunsafe.com/img/quickstart-driv=
+er-confirm.png" target=3D"_blank">https://tunsafe.com/img/quicks<wbr>tart-d=
+river-confirm.png</a></span><br></div><div><span style=3D"font-family:monos=
+pace,monospace"><br></span></div><div><span style=3D"font-family:monospace,=
+monospace">I agree that the driver is scary, I think I even found some=C2=
+=A0</span></div><div><span style=3D"font-family:monospace,monospace">potent=
+ial OOB=C2=A0</span><span style=3D"font-family:monospace,monospace">memory =
+accesses in it from a quick glance. However,=C2=A0</span></div><div><span s=
+tyle=3D"font-family:monospace,monospace">this is the best driver the=C2=A0<=
+/span><span style=3D"font-family:monospace,monospace">community has at this=
+ point in time,</span></div><div><span style=3D"font-family:monospace,monos=
+pace">and even your own userspace=C2=A0</span><span style=3D"font-family:mo=
+nospace,monospace">implementations of WG use it. I&#39;d</span></div><div><=
+span style=3D"font-family:monospace,monospace">be happy to improve it but t=
+hen I need an expensive driver</span></div><div><font face=3D"monospace, mo=
+nospace">codesigning=C2=A0certificate in order to load it into the kernel.<=
+/font></div><div><font face=3D"monospace, monospace"><br></font></div></div=
+><div><font face=3D"monospace, monospace">/Ludde</font></div><div><br></div=
+></div>
+</div><br></div>
 
-> On Mar 5, 2018, at 06:00, wireguard-request@lists.zx2c4.com wrote:
->=20
-> Send WireGuard mailing list submissions to
->    wireguard@lists.zx2c4.com
->=20
-> To subscribe or unsubscribe via the World Wide Web, visit
->    https://lists.zx2c4.com/mailman/listinfo/wireguard
-> or, via email, send a message with subject or body 'help' to
->    wireguard-request@lists.zx2c4.com
->=20
-> You can reach the person managing the list at
->    wireguard-owner@lists.zx2c4.com
->=20
-> When replying, please edit your Subject line so it is more specific
-> than "Re: Contents of WireGuard digest..."
->=20
->=20
-> Today's Topics:
->=20
->   1. [ANNOUNCE] WireGuard Snapshot `0.0.20180304` Available
->      (Jason A. Donenfeld)
->   2. Tunsafe Windows client for wireguard (not opensource yet they
->      say (Henrique Carrega)
->   3. Re: Tunsafe Windows client for wireguard (not opensource yet
->      they say (Jason A. Donenfeld)
->=20
->=20
-> ----------------------------------------------------------------------
->=20
-> Message: 1
-> Date: Sun, 04 Mar 2018 18:54:23 +0100
-> From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-> To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
-> Subject: [ANNOUNCE] WireGuard Snapshot `0.0.20180304` Available
-> Message-ID: <b97b4ced2749b831@frisell.zx2c4.com>
-> Content-Type: text/plain; charset=3DUTF-8
->=20
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
->=20
-> Hello,
->=20
-> A new snapshot, `0.0.20180304`, has been tagged in the git repository.
->=20
-> Please note that this snapshot is, like the rest of the project at this po=
-int
-> in time, experimental, and does not consitute a real release that would be=
-
-> considered secure and bug-free. WireGuard is generally thought to be fairl=
-y
-> stable, and most likely will not crash your computer (though it may).
-> However, as this is a pre-release snapshot, it comes with no guarantees, a=
-nd
-> its security is not yet to be depended on; it is not applicable for CVEs.
->=20
-> With all that said, if you'd like to test this snapshot out, there are a
-> few relevent changes.
->=20
-> =3D=3D Changes =3D=3D
->=20
->  * NOTICE: off the grid
->=20
->  Do note that I'll be going off the grid from the end of this coming week u=
-ntil
->  April 1. This snapshot is expected to be fairly stable in the interim.
->=20
->  * queueing: skb_reset: mark as xnet
->=20
->  This allows cgroups to classify packets.
->=20
->  * contrib: embedded-wg-library: add ability to add and del interfaces
->  * contrib: embedded-wg-library: add key generation functions
->=20
->  The embeddable library gains a few extra tricks, for people implementing
->  plugins for various network managers.
->=20
->  * crypto: read only after init
->  * allowedips: fix comment style
->  * messages: MESSAGE_TOTAL is unused
->  * global: in gnu code, use un-underscored asm
->  * noise: fix function prototype
->=20
->  Small cleanups.
->=20
->  * compat: workaround netlink refcount bug
->=20
->  An upstream refcounting bug meant that in certain situations it became
->  impossible to unload the module. So, we work around it in the compat code=
-. The
->  problem has been fixed in 4.16.
->=20
->  * contrib: keygen-html: rewrite in pure javascript
->  * Revert "contrib: keygen-html: rewrite in pure javascript"
->=20
->  We nearly moved away from emscripten'ing the fiat32 code, but the resulta=
-nt
->  floating point javascript was just too terrifying.
->=20
->  * Kconfig: require DST_CACHE explicitly
->=20
->  Required for certain frankenkernels.
->=20
->  * compat: use correct -include path
->=20
->  Fixes certain out-of-tree build systems.
->=20
->  * noise: align static_identity keys
->=20
->  Gives us better alignment of private keys.
->=20
->  * wg-quick: if resolvconf/interface-order exists, use it
->  * wg-quick: if resolvconf/run/iface exists, use it
->=20
->  Better compatibility with Debian's resolvconf.
->=20
->  * contrib: add extract-handshakes kprobe example
->=20
->  Small utility for extracting ephemeral key data from the kernel's memory.=
- More
->  information can be found here:
->  https://lists.zx2c4.com/pipermail/wireguard/2018-February/002439.html
->=20
-> As always, the source is available at https://git.zx2c4.com/WireGuard/ and=
-
-> information about the project is available at https://www.wireguard.com/ .=
-
->=20
-> This snapshot is available in tarball form here:
->  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-0.0.20180304.tar.xz
->  SHA2-256: efb1652f0da67fb2731040439b6abb820a5e2f1bc177aa15c5dce68ea332778=
-7
->  BLAKE2b-256: 9b49122b546d334a431b12e5b62582a094db737f2497652e55b415570910=
-7c40
->=20
-> If you're a snapshot package maintainer, please bump your package version.=
- If
-> you're a user, the WireGuard team welcomes any and all feedback on this la=
-test
-> snapshot.
->=20
-> Finally, WireGuard development thrives on donations. By popular demand, we=
-
-> have a webpage for this: https://www.wireguard.com/donations/
->=20
-> Thank you,
-> Jason Donenfeld
->=20
->=20
-> -----BEGIN PGP SIGNATURE-----
->=20
-> iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAlqcMrsQHGphc29uQHp4
-> MmM0LmNvbQAKCRBJ/HASpd4DrndND/0ZkzKOnLdYS6NNX+qvdKhwQ4XeOznqAOEo
-> 22z9T/4NalrDe5X8I7LWIwN65KVpcGvoghi5AHI0k4QMGLwdtth+W5beLVhY/U6P
-> iS2TtdC/5Tp4ovP2ohRn+Ckz6fAP3d+TrV8YWnXi17zrGYjFXXGXSHI98C589Syz
-> FHyYB1Q1YiGB96wilYCdV+uc23esTTenUQudq/KwJV71I7XpuFVKAZ9uWli/1Jv1
-> HOk0TTglxDA3orqtPNP1WHxVuKasktvBy4MPNg3B2Ilbdvsmf3cuta1Pyr5ulX47
-> QwIlr+D+xBFeIbQVYQZsY5eqv6dvAbRcgvZnsxjTohO3X+9s3JTIoPkB+qssiSkT
-> yP9zhe7JRbLGd6Y+Ys68tKEJQAEtLnGqduj4Lwe0vfcMZ9ItlcsCG4ICxhSrbyIR
-> F3zKrVlVypWgwjzHOoa8jg7+XEzRfnTAoYHZLxRdV5oB3yQFXn+a41HNZF9BQl00
-> 65g9A5pBDxkcbiwkT884GtAt+bekbFSvb8+bYr0LgbgIt7DAW5z+fe09mlATv3W/
-> uJpateTM7irm8O3BDvxUh+GGIIqKMNbteUX8nRcPLwMqtJpgC5GCvocjbfJRXIt2
-> IwnYYPzvQfyDZz5HPQaaXmIInF+EZFBC310tCkwKk5T72+/+zJuGmMjF4EayplrG
-> SGQYvER10Q=3D=3D
-> =3DLTAE
-> -----END PGP SIGNATURE-----
->=20
->=20
-> ------------------------------
->=20
-> Message: 2
-> Date: Mon, 5 Mar 2018 08:26:23 +0000
-> From: Henrique Carrega <hcarrega@gmail.com>
-> To: wireguard@lists.zx2c4.com
-> Subject: Tunsafe Windows client for wireguard (not opensource yet they
->    say
-> Message-ID: <41222FCF-F9F5-4FEC-AA71-73C48F4DA4BA@gmail.com>
-> Content-Type: text/plain; charset=3D"us-ascii"
->=20
-> https://tunsafe.com/
->=20
-> https://reddit.com/r/VPN/comments/82183o/tunsafe_a_high_performance_wiregu=
-ard_vpn_client/
-> Sent from my iPhone
-> -------------- next part --------------
-> An HTML attachment was scrubbed...
-> URL: <http://lists.zx2c4.com/pipermail/wireguard/attachments/20180305/e7c2=
-813d/attachment-0001.html>
->=20
-> ------------------------------
->=20
-> Message: 3
-> Date: Mon, 5 Mar 2018 10:19:35 +0100
-> From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-> To: Henrique Carrega <hcarrega@gmail.com>
-> Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-> Subject: Re: Tunsafe Windows client for wireguard (not opensource yet
->    they say
-> Message-ID:
->    <CAHmME9r95cjSXK8YitGuHxFp0EfrMKhQEGXL5Ux=3DrMXLt=3DU5FA@mail.gmail.com=
->
-> Content-Type: text/plain; charset=3D"UTF-8"
->=20
-> Hi Henrique,
->=20
-> Thanks for posting this.
->=20
-> Please stay away from this software, and generally be wary of
-> closed-source WireGuard implementations trying to fill the void. This
-> one was written by a community-unfriendly proprietary author, and
-> we've got little way of ensuring protocol compliance or basic
-> security. Especially from my discussions from him, it's clear what
-> he's up to, and this seems like some nastiness. Should I spend my time
-> reverse engineering this software and discovering zero-days? Probably
-> not a good use of my time, despite my usual love of this sort of
-> thing.
->=20
-> One aspect of the WireGuard project is that we're taking development
-> very carefully and slowly, not jumping to premature releases, and
-> really studying every bit of what we produce in order to ship the
-> least-vulnerable and most-correct code we possibly can. We're still
-> shipping code -- it's not an approach that results in a complete
-> standstill -- but it does mean that in these intervening periods,
-> there will be propheteers and cowboys coming out of the woodwork to
-> fill the void.
->=20
-> It's quite easy to make a tiny tunneling protocol that's reasonably
-> fast and does a few things; if you look on Github there are hundreds.
-> It's quite another thing to write robust and secure software intend to
-> last for a long time. That's what we're working on here.
->=20
-> Fortunately we have two very nice projects that are rapidly
-> approaching maturity: one in Go and one in Rust. I fully welcome
-> future OSS authors into the project. When I'm back from visiting
-> family at the beginning of April, I think we'll be in a good place to
-> have a few first releases.
->=20
-> I'll also do what I can to see that people aren't peddling junk and
-> calling it wireguard, so as to reduce user confusion, but this of
-> course isn't a very easy endeavor. I'm open to suggestions on how to
-> approach this.
->=20
-> Regards,
-> Jason
->=20
->=20
-> ------------------------------
->=20
-> Subject: Digest Footer
->=20
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
->=20
->=20
-> ------------------------------
->=20
-> End of WireGuard Digest, Vol 24, Issue 4
-> ****************************************
-
---Apple-Mail-C6E14A04-BF44-42FD-B972-E1A0B81B2B7D
-Content-Type: text/html;
-	charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-
-<html><head><meta http-equiv=3D"content-type" content=3D"text/html; charset=3D=
-utf-8"></head><body dir=3D"auto">what is the go and rust git uri?<br><br><di=
-v id=3D"AppleMailSignature"><span style=3D"font-size: 13pt;">Thomas J Munn</=
-span><br><div><div><br></div></div></div><div><br>On Mar 5, 2018, at 06:00, <=
-a href=3D"mailto:wireguard-request@lists.zx2c4.com">wireguard-request@lists.=
-zx2c4.com</a> wrote:<br><br></div><blockquote type=3D"cite"><div><span>Send W=
-ireGuard mailing list submissions to</span><br><span> &nbsp; &nbsp;<a href=3D=
-"mailto:wireguard@lists.zx2c4.com">wireguard@lists.zx2c4.com</a></span><br><=
-span></span><br><span>To subscribe or unsubscribe via the World Wide Web, vi=
-sit</span><br><span> &nbsp; &nbsp;<a href=3D"https://lists.zx2c4.com/mailman=
-/listinfo/wireguard">https://lists.zx2c4.com/mailman/listinfo/wireguard</a><=
-/span><br><span>or, via email, send a message with subject or body 'help' to=
-</span><br><span> &nbsp; &nbsp;<a href=3D"mailto:wireguard-request@lists.zx2=
-c4.com">wireguard-request@lists.zx2c4.com</a></span><br><span></span><br><sp=
-an>You can reach the person managing the list at</span><br><span> &nbsp; &nb=
-sp;<a href=3D"mailto:wireguard-owner@lists.zx2c4.com">wireguard-owner@lists.=
-zx2c4.com</a></span><br><span></span><br><span>When replying, please edit yo=
-ur Subject line so it is more specific</span><br><span>than "Re: Contents of=
- WireGuard digest..."</span><br><span></span><br><span></span><br><span>Toda=
-y's Topics:</span><br><span></span><br><span> &nbsp;&nbsp;1. [ANNOUNCE] Wire=
-Guard Snapshot `0.0.20180304` Available</span><br><span> &nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;(Jason A. Donenfeld)</span><br><span> &nbsp;&nbsp;2. Tunsafe Wind=
-ows client for wireguard (not opensource yet they</span><br><span> &nbsp;&nb=
-sp;&nbsp;&nbsp;&nbsp;say (Henrique Carrega)</span><br><span> &nbsp;&nbsp;3. R=
-e: Tunsafe Windows client for wireguard (not opensource yet</span><br><span>=
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;they say (Jason A. Donenfeld)</span><br><span=
-></span><br><span></span><br><span>-----------------------------------------=
------------------------------</span><br><span></span><br><span>Message: 1</s=
-pan><br><span>Date: Sun, 04 Mar 2018 18:54:23 +0100</span><br><span>From: "J=
-ason A. Donenfeld" &lt;<a href=3D"mailto:Jason@zx2c4.com">Jason@zx2c4.com</a=
->&gt;</span><br><span>To: "WireGuard mailing list" &lt;<a href=3D"mailto:wir=
-eguard@lists.zx2c4.com">wireguard@lists.zx2c4.com</a>&gt;</span><br><span>Su=
-bject: [ANNOUNCE] WireGuard Snapshot `0.0.20180304` Available</span><br><spa=
-n>Message-ID: &lt;<a href=3D"mailto:b97b4ced2749b831@frisell.zx2c4.com">b97b=
-4ced2749b831@frisell.zx2c4.com</a>&gt;</span><br><span>Content-Type: text/pl=
-ain; charset=3DUTF-8</span><br><span></span><br><span>-----BEGIN PGP SIGNED M=
-ESSAGE-----</span><br><span>Hash: SHA256</span><br><span></span><br><span>He=
-llo,</span><br><span></span><br><span>A new snapshot, `0.0.20180304`, has be=
-en tagged in the git repository.</span><br><span></span><br><span>Please not=
-e that this snapshot is, like the rest of the project at this point</span><b=
-r><span>in time, experimental, and does not consitute a real release that wo=
-uld be</span><br><span>considered secure and bug-free. WireGuard is generall=
-y thought to be fairly</span><br><span>stable, and most likely will not cras=
-h your computer (though it may).</span><br><span>However, as this is a pre-r=
-elease snapshot, it comes with no guarantees, and</span><br><span>its securi=
-ty is not yet to be depended on; it is not applicable for CVEs.</span><br><s=
-pan></span><br><span>With all that said, if you'd like to test this snapshot=
- out, there are a</span><br><span>few relevent changes.</span><br><span></sp=
-an><br><span>=3D=3D Changes =3D=3D</span><br><span></span><br><span> &nbsp;*=
- NOTICE: off the grid</span><br><span></span><br><span> &nbsp;Do note that I=
-'ll be going off the grid from the end of this coming week until</span><br><=
-span> &nbsp;April 1. This snapshot is expected to be fairly stable in the in=
-terim.</span><br><span></span><br><span> &nbsp;* queueing: skb_reset: mark a=
-s xnet</span><br><span></span><br><span> &nbsp;This allows cgroups to classi=
-fy packets.</span><br><span></span><br><span> &nbsp;* contrib: embedded-wg-l=
-ibrary: add ability to add and del interfaces</span><br><span> &nbsp;* contr=
-ib: embedded-wg-library: add key generation functions</span><br><span></span=
-><br><span> &nbsp;The embeddable library gains a few extra tricks, for peopl=
-e implementing</span><br><span> &nbsp;plugins for various network managers.<=
-/span><br><span></span><br><span> &nbsp;* crypto: read only after init</span=
-><br><span> &nbsp;* allowedips: fix comment style</span><br><span> &nbsp;* m=
-essages: MESSAGE_TOTAL is unused</span><br><span> &nbsp;* global: in gnu cod=
-e, use un-underscored asm</span><br><span> &nbsp;* noise: fix function proto=
-type</span><br><span></span><br><span> &nbsp;Small cleanups.</span><br><span=
-></span><br><span> &nbsp;* compat: workaround netlink refcount bug</span><br=
-><span></span><br><span> &nbsp;An upstream refcounting bug meant that in cer=
-tain situations it became</span><br><span> &nbsp;impossible to unload the mo=
-dule. So, we work around it in the compat code. The</span><br><span> &nbsp;p=
-roblem has been fixed in 4.16.</span><br><span></span><br><span> &nbsp;* con=
-trib: keygen-html: rewrite in pure javascript</span><br><span> &nbsp;* Rever=
-t "contrib: keygen-html: rewrite in pure javascript"</span><br><span></span>=
-<br><span> &nbsp;We nearly moved away from emscripten'ing the fiat32 code, b=
-ut the resultant</span><br><span> &nbsp;floating point javascript was just t=
-oo terrifying.</span><br><span></span><br><span> &nbsp;* Kconfig: require DS=
-T_CACHE explicitly</span><br><span></span><br><span> &nbsp;Required for cert=
-ain frankenkernels.</span><br><span></span><br><span> &nbsp;* compat: use co=
-rrect -include path</span><br><span></span><br><span> &nbsp;Fixes certain ou=
-t-of-tree build systems.</span><br><span></span><br><span> &nbsp;* noise: al=
-ign static_identity keys</span><br><span></span><br><span> &nbsp;Gives us be=
-tter alignment of private keys.</span><br><span></span><br><span> &nbsp;* wg=
--quick: if resolvconf/interface-order exists, use it</span><br><span> &nbsp;=
-* wg-quick: if resolvconf/run/iface exists, use it</span><br><span></span><b=
-r><span> &nbsp;Better compatibility with Debian's resolvconf.</span><br><spa=
-n></span><br><span> &nbsp;* contrib: add extract-handshakes kprobe example</=
-span><br><span></span><br><span> &nbsp;Small utility for extracting ephemera=
-l key data from the kernel's memory. More</span><br><span> &nbsp;information=
- can be found here:</span><br><span> &nbsp;<a href=3D"https://lists.zx2c4.co=
-m/pipermail/wireguard/2018-February/002439.html">https://lists.zx2c4.com/pip=
-ermail/wireguard/2018-February/002439.html</a></span><br><span></span><br><s=
-pan>As always, the source is available at <a href=3D"https://git.zx2c4.com/W=
-ireGuard/">https://git.zx2c4.com/WireGuard/</a> and</span><br><span>informat=
-ion about the project is available at <a href=3D"https://www.wireguard.com/"=
->https://www.wireguard.com/</a> .</span><br><span></span><br><span>This snap=
-shot is available in tarball form here:</span><br><span> &nbsp;<a href=3D"ht=
-tps://git.zx2c4.com/WireGuard/snapshot/WireGuard-0.0.20180304.tar.xz">https:=
-//git.zx2c4.com/WireGuard/snapshot/WireGuard-0.0.20180304.tar.xz</a></span><=
-br><span> &nbsp;SHA2-256: efb1652f0da67fb2731040439b6abb820a5e2f1bc177aa15c5=
-dce68ea3327787</span><br><span> &nbsp;BLAKE2b-256: 9b49122b546d334a431b12e5b=
-62582a094db737f2497652e55b4155709107c40</span><br><span></span><br><span>If y=
-ou're a snapshot package maintainer, please bump your package version. If</s=
-pan><br><span>you're a user, the WireGuard team welcomes any and all feedbac=
-k on this latest</span><br><span>snapshot.</span><br><span></span><br><span>=
-Finally, WireGuard development thrives on donations. By popular demand, we</=
-span><br><span>have a webpage for this: <a href=3D"https://www.wireguard.com=
-/donations/">https://www.wireguard.com/donations/</a></span><br><span></span=
-><br><span>Thank you,</span><br><span>Jason Donenfeld</span><br><span></span=
-><br><span></span><br><span>-----BEGIN PGP SIGNATURE-----</span><br><span></=
-span><br><span>iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAlqcMrsQHGphc29uQ=
-Hp4</span><br><span>MmM0LmNvbQAKCRBJ/HASpd4DrndND/0ZkzKOnLdYS6NNX+qvdKhwQ4Xe=
-OznqAOEo</span><br><span>22z9T/4NalrDe5X8I7LWIwN65KVpcGvoghi5AHI0k4QMGLwdtth=
-+W5beLVhY/U6P</span><br><span>iS2TtdC/5Tp4ovP2ohRn+Ckz6fAP3d+TrV8YWnXi17zrGY=
-jFXXGXSHI98C589Syz</span><br><span>FHyYB1Q1YiGB96wilYCdV+uc23esTTenUQudq/KwJ=
-V71I7XpuFVKAZ9uWli/1Jv1</span><br><span>HOk0TTglxDA3orqtPNP1WHxVuKasktvBy4MP=
-Ng3B2Ilbdvsmf3cuta1Pyr5ulX47</span><br><span>QwIlr+D+xBFeIbQVYQZsY5eqv6dvAbR=
-cgvZnsxjTohO3X+9s3JTIoPkB+qssiSkT</span><br><span>yP9zhe7JRbLGd6Y+Ys68tKEJQA=
-EtLnGqduj4Lwe0vfcMZ9ItlcsCG4ICxhSrbyIR</span><br><span>F3zKrVlVypWgwjzHOoa8j=
-g7+XEzRfnTAoYHZLxRdV5oB3yQFXn+a41HNZF9BQl00</span><br><span>65g9A5pBDxkcbiwk=
-T884GtAt+bekbFSvb8+bYr0LgbgIt7DAW5z+fe09mlATv3W/</span><br><span>uJpateTM7ir=
-m8O3BDvxUh+GGIIqKMNbteUX8nRcPLwMqtJpgC5GCvocjbfJRXIt2</span><br><span>IwnYYP=
-zvQfyDZz5HPQaaXmIInF+EZFBC310tCkwKk5T72+/+zJuGmMjF4EayplrG</span><br><span>S=
-GQYvER10Q=3D=3D</span><br><span>=3DLTAE</span><br><span>-----END PGP SIGNATU=
-RE-----</span><br><span></span><br><span></span><br><span>------------------=
-------------</span><br><span></span><br><span>Message: 2</span><br><span>Dat=
-e: Mon, 5 Mar 2018 08:26:23 +0000</span><br><span>From: Henrique Carrega &lt=
-;<a href=3D"mailto:hcarrega@gmail.com">hcarrega@gmail.com</a>&gt;</span><br>=
-<span>To: <a href=3D"mailto:wireguard@lists.zx2c4.com">wireguard@lists.zx2c4=
-.com</a></span><br><span>Subject: Tunsafe Windows client for wireguard (not o=
-pensource yet they</span><br><span> &nbsp; &nbsp;say</span><br><span>Message=
--ID: &lt;<a href=3D"mailto:41222FCF-F9F5-4FEC-AA71-73C48F4DA4BA@gmail.com">4=
-1222FCF-F9F5-4FEC-AA71-73C48F4DA4BA@gmail.com</a>&gt;</span><br><span>Conten=
-t-Type: text/plain; charset=3D"us-ascii"</span><br><span></span><br><span><a=
- href=3D"https://tunsafe.com/">https://tunsafe.com/</a></span><br><span></sp=
-an><br><span><a href=3D"https://reddit.com/r/VPN/comments/82183o/tunsafe_a_h=
-igh_performance_wireguard_vpn_client/">https://reddit.com/r/VPN/comments/821=
-83o/tunsafe_a_high_performance_wireguard_vpn_client/</a></span><br><span>Sen=
-t from my iPhone</span><br><span>-------------- next part --------------</sp=
-an><br><span>An HTML attachment was scrubbed...</span><br><span>URL: &lt;<a h=
-ref=3D"http://lists.zx2c4.com/pipermail/wireguard/attachments/20180305/e7c28=
-13d/attachment-0001.html">http://lists.zx2c4.com/pipermail/wireguard/attachm=
-ents/20180305/e7c2813d/attachment-0001.html</a>&gt;</span><br><span></span><=
-br><span>------------------------------</span><br><span></span><br><span>Mes=
-sage: 3</span><br><span>Date: Mon, 5 Mar 2018 10:19:35 +0100</span><br><span=
->From: "Jason A. Donenfeld" &lt;<a href=3D"mailto:Jason@zx2c4.com">Jason@zx2=
-c4.com</a>&gt;</span><br><span>To: Henrique Carrega &lt;<a href=3D"mailto:hc=
-arrega@gmail.com">hcarrega@gmail.com</a>&gt;</span><br><span>Cc: WireGuard m=
-ailing list &lt;<a href=3D"mailto:wireguard@lists.zx2c4.com">wireguard@lists=
-.zx2c4.com</a>&gt;</span><br><span>Subject: Re: Tunsafe Windows client for w=
-ireguard (not opensource yet</span><br><span> &nbsp; &nbsp;they say</span><b=
-r><span>Message-ID:</span><br><span> &nbsp; &nbsp;&lt;<a href=3D"mailto:CAHm=
-ME9r95cjSXK8YitGuHxFp0EfrMKhQEGXL5Ux=3DrMXLt=3DU5FA@mail.gmail.com">CAHmME9r=
-95cjSXK8YitGuHxFp0EfrMKhQEGXL5Ux=3DrMXLt=3DU5FA@mail.gmail.com</a>&gt;</span=
-><br><span>Content-Type: text/plain; charset=3D"UTF-8"</span><br><span></spa=
-n><br><span>Hi Henrique,</span><br><span></span><br><span>Thanks for posting=
- this.</span><br><span></span><br><span>Please stay away from this software,=
- and generally be wary of</span><br><span>closed-source WireGuard implementa=
-tions trying to fill the void. This</span><br><span>one was written by a com=
-munity-unfriendly proprietary author, and</span><br><span>we've got little w=
-ay of ensuring protocol compliance or basic</span><br><span>security. Especi=
-ally from my discussions from him, it's clear what</span><br><span>he's up t=
-o, and this seems like some nastiness. Should I spend my time</span><br><spa=
-n>reverse engineering this software and discovering zero-days? Probably</spa=
-n><br><span>not a good use of my time, despite my usual love of this sort of=
-</span><br><span>thing.</span><br><span></span><br><span>One aspect of the W=
-ireGuard project is that we're taking development</span><br><span>very caref=
-ully and slowly, not jumping to premature releases, and</span><br><span>real=
-ly studying every bit of what we produce in order to ship the</span><br><spa=
-n>least-vulnerable and most-correct code we possibly can. We're still</span>=
-<br><span>shipping code -- it's not an approach that results in a complete</=
-span><br><span>standstill -- but it does mean that in these intervening peri=
-ods,</span><br><span>there will be propheteers and cowboys coming out of the=
- woodwork to</span><br><span>fill the void.</span><br><span></span><br><span=
->It's quite easy to make a tiny tunneling protocol that's reasonably</span><=
-br><span>fast and does a few things; if you look on Github there are hundred=
-s.</span><br><span>It's quite another thing to write robust and secure softw=
-are intend to</span><br><span>last for a long time. That's what we're workin=
-g on here.</span><br><span></span><br><span>Fortunately we have two very nic=
-e projects that are rapidly</span><br><span>approaching maturity: one in Go a=
-nd one in Rust. I fully welcome</span><br><span>future OSS authors into the p=
-roject. When I'm back from visiting</span><br><span>family at the beginning o=
-f April, I think we'll be in a good place to</span><br><span>have a few firs=
-t releases.</span><br><span></span><br><span>I'll also do what I can to see t=
-hat people aren't peddling junk and</span><br><span>calling it wireguard, so=
- as to reduce user confusion, but this of</span><br><span>course isn't a ver=
-y easy endeavor. I'm open to suggestions on how to</span><br><span>approach t=
-his.</span><br><span></span><br><span>Regards,</span><br><span>Jason</span><=
-br><span></span><br><span></span><br><span>------------------------------</s=
-pan><br><span></span><br><span>Subject: Digest Footer</span><br><span></span=
-><br><span>_______________________________________________</span><br><span>W=
-ireGuard mailing list</span><br><span><a href=3D"mailto:WireGuard@lists.zx2c=
-4.com">WireGuard@lists.zx2c4.com</a></span><br><span><a href=3D"https://list=
-s.zx2c4.com/mailman/listinfo/wireguard">https://lists.zx2c4.com/mailman/list=
-info/wireguard</a></span><br><span></span><br><span></span><br><span>-------=
------------------------</span><br><span></span><br><span>End of WireGuard Di=
-gest, Vol 24, Issue 4</span><br><span>**************************************=
-**</span><br></div></blockquote></body></html>=
-
---Apple-Mail-C6E14A04-BF44-42FD-B972-E1A0B81B2B7D--
+--94eb2c1c1ce2493a530566b497f9--
