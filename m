@@ -1,33 +1,22 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: ivanlapuz9@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9b25706e
- for <wireguard@lists.zx2c4.com>; Thu, 8 Mar 2018 17:54:14 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2bb8ef8d
- for <wireguard@lists.zx2c4.com>; Thu, 8 Mar 2018 17:54:13 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 76b4e84e
- for <wireguard@lists.zx2c4.com>; Thu, 8 Mar 2018 17:45:22 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 61434c2b
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>; Thu, 8 Mar 2018 17:45:22 +0000 (UTC)
-Received: by mail-oi0-f49.google.com with SMTP id g5so5018739oiy.8
- for <wireguard@lists.zx2c4.com>; Thu, 08 Mar 2018 10:03:52 -0800 (PST)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 602f717f
+ for <wireguard@lists.zx2c4.com>; Thu, 8 Mar 2018 18:13:29 +0000 (UTC)
+Received: from mail-qt0-f181.google.com (mail-qt0-f181.google.com
+ [209.85.216.181])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f68d6a83
+ for <wireguard@lists.zx2c4.com>; Thu, 8 Mar 2018 18:13:29 +0000 (UTC)
+Received: by mail-qt0-f181.google.com with SMTP id n12so7808124qtl.5
+ for <wireguard@lists.zx2c4.com>; Thu, 08 Mar 2018 10:23:08 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <7088098E-63F5-4ECB-A298-24444987482E@toke.dk>
-References: <87efku1vza.fsf@toke.dk>
- <CAHmME9qg=YXoKxEnikkJe1Li5Pq+yASPUhqN5PmGk6Fx=Y3-1Q@mail.gmail.com>
- <85FE1433-439D-439C-A61E-B17754707077@toke.dk>
- <CAHmME9p0aW2i-EcErua_Hkz-hZc12m47oLR9wvngu5ejVX=Q8A@mail.gmail.com>
- <87h8pqlbw4.fsf@toke.dk>
- <CAHmME9pgOGghWRv9bMtTvbxrQfNycK9EHEnBu=UQxOz6AQJ2qA@mail.gmail.com>
- <7088098E-63F5-4ECB-A298-24444987482E@toke.dk>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 8 Mar 2018 19:03:51 +0100
-Message-ID: <CAHmME9ojxMOoB5z4VJQbecTD+Y7VLK=K8=oTSDciofWLC6Q0fg@mail.gmail.com>
-Subject: Re: Another roaming problem
-To: =?UTF-8?B?VG9rZSBIw7hpbGFuZC1Kw7hyZ2Vuc2Vu?= <toke@toke.dk>
-Content-Type: text/plain; charset="UTF-8"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+In-Reply-To: <CABxXbAeQTGbiAEaFHK4RUTFGxt0A+KnCCmhJNU9XDivW5=SL-Q@mail.gmail.com>
+References: <CABxXbAeQTGbiAEaFHK4RUTFGxt0A+KnCCmhJNU9XDivW5=SL-Q@mail.gmail.com>
+From: Ivan Lapuz <ivanlapuz9@gmail.com>
+Date: Thu, 8 Mar 2018 10:23:07 -0800
+Message-ID: <CABxXbAc26Wyvjk=1s_K1+CmnuALgwTk_ZjiMVjt9z2Nb17h9Ag@mail.gmail.com>
+Subject: 
+To: wireguard@lists.zx2c4.com
+Content-Type: multipart/alternative; boundary="001a11402d2e711e150566eac48a"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -37,20 +26,15 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Thu, Mar 8, 2018 at 6:50 PM, Toke H=C3=B8iland-J=C3=B8rgensen <toke@toke=
-.dk> wrote:
-> Well, I do generally setup routing in a somewhat unusual manner.
->
-> I can try to capture some packet dumps tomorrow to poke into it a bit mor=
-e. Anything in particular I should look for?
+--001a11402d2e711e150566eac48a
+Content-Type: text/plain; charset="UTF-8"
 
-One thing to examine is when WireGuard calls
-`socket_clear_peer_endpoint_src'. This makes wireguard forget the
-source address that it should be using and fall back to the default.
-You could add a pr_info(...) call in this function. I have an inkling
-that I make calls to this function too zealously and in potentially
-unneeded places, such as on handshake transmission retries.
+Hi there pls can you help me how to set up correctly for my wireguard
+interface..thankyou
 
-I'm headed out of town super soon, so likely debugging this will have
-to wait until I'm back, but do let me know what you find, and we'll
-get this fixed up upon return.
+--001a11402d2e711e150566eac48a
+Content-Type: text/html; charset="UTF-8"
+
+<div dir="auto">Hi there pls can you help me how to set up correctly for my wireguard interface..thankyou</div>
+
+--001a11402d2e711e150566eac48a--
