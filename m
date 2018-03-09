@@ -1,26 +1,24 @@
-Return-Path: bruno@streamfeed.com
+Return-Path: matthias@urlichs.de
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6f136053
- for <wireguard@lists.zx2c4.com>; Fri, 9 Mar 2018 19:28:53 +0000 (UTC)
-Received: from mail-qk0-f176.google.com (mail-qk0-f176.google.com
- [209.85.220.176])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 88b6c91c
- for <wireguard@lists.zx2c4.com>; Fri, 9 Mar 2018 19:28:53 +0000 (UTC)
-Received: by mail-qk0-f176.google.com with SMTP id z184so3473905qkc.1
- for <wireguard@lists.zx2c4.com>; Fri, 09 Mar 2018 11:38:40 -0800 (PST)
-Return-Path: <bruno@streamfeed.com>
-Received: from [192.168.6.105] ([107.191.34.90])
- by smtp.gmail.com with ESMTPSA id f197sm1087911qka.3.2018.03.09.11.38.38
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Fri, 09 Mar 2018 11:38:39 -0800 (PST)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 50ee9d00
+ for <wireguard@lists.zx2c4.com>; Fri, 9 Mar 2018 21:25:24 +0000 (UTC)
+Received: from netz.smurf.noris.de (mail.smurf.noris.de [213.95.149.21])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2791d06c
+ for <wireguard@lists.zx2c4.com>; Fri, 9 Mar 2018 21:25:24 +0000 (UTC)
+Received: from [2001:780:107:0:1278:d2ff:fea3:d4a6]
+ by mail.vm.smurf.noris.de with esmtpsa
+ (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim 4.89)
+ (envelope-from <matthias@urlichs.de>) id 1euPfK-000BCe-N2
+ for wireguard@lists.zx2c4.com; Fri, 09 Mar 2018 22:35:02 +0100
+Subject: Re: Policy-based routing
 To: wireguard@lists.zx2c4.com
-From: Bruno <bruno@streamfeed.com>
-Subject: Policy-based routing
-Message-ID: <a81edfe2-2a49-c49a-ea7c-65e60639ecfe@streamfeed.com>
-Date: Fri, 9 Mar 2018 16:38:35 -0300
+References: <a81edfe2-2a49-c49a-ea7c-65e60639ecfe@streamfeed.com>
+From: Matthias Urlichs <matthias@urlichs.de>
+Message-ID: <9181ac49-897b-8412-84e9-1505cc261913@urlichs.de>
+Date: Fri, 9 Mar 2018 22:35:00 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <a81edfe2-2a49-c49a-ea7c-65e60639ecfe@streamfeed.com>
+Content-Type: text/plain; charset=utf-8
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -30,46 +28,13 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hello,
+Hi,
+> Is it possible to achieve that with wireguard? 
 
-I'm trying to set up a policy-based routing on a wireguard instance. I 
-didn't want to call it server, because it acts more like a proxy.
+You need to set up multiple wireguard interfaces (on different ports of
+course).
 
-Let's say I have 6 peers plus this wireguard server.
+Then you can use traditional Linux routing techniques.
 
-Peer 2  Peer 3   Peer 4
-  \/       \/       \/
-______________________
-|                     |
-| Wireguard "server"  |
-|                     |
-|_____________________|
-  \/       \/       \/
-Peer 5  Peer 6   Peer 7
-
-Wireguard "server"
-Address = 10.0.0.1/24
-
-Peers 2-7
-Address = 10.0.0.2-7/24, respectively.
-
-So, what I'm trying to do is route traffic to Peer 7, for example, if it 
-is coming from Peer 2. I can do it doing some `ip rule` and `ip route` 
-commands. However, wireguard seems to be blocking that traffic. So, I 
-want peers 5-7 act as gateways to the internet and I would choose it via 
-Linux environment.
-
-Peers 5-7 would be wireguard servers that would route all traffic to the 
-internet. So, on the wireguard instance (10.0.0.1/24, "server"), I have 
-to set allowed IPs to peers 5-7 as "0.0.0.0/0", correct? Does wireguard 
-accept that? On my tests it would just pick one as allowed IPs as 
-0.0.0.0/0 and set others to (none). Then, I couldn't reach traffic 
-neither from nor to that others peers.
-
-On the wireguard "server" I would set allowed-IPs to peers 2-4 as 
-10.0.0.2/32-10.0.0.4/32 as I don't need traffic going through it, just 
-coming from it.
-
-Is it possible to achieve that with wireguard?
-
-Thanks!
+-- 
+-- Matthias Urlichs
