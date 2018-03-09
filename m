@@ -1,21 +1,28 @@
-Return-Path: mdt@emdete.de
+Return-Path: toke@toke.dk
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 136a9767
- for <wireguard@lists.zx2c4.com>; Fri, 9 Mar 2018 13:18:47 +0000 (UTC)
-Received: from emdete.de (total-communication.vfnet.de [80.84.1.14])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 50693a04
- for <wireguard@lists.zx2c4.com>; Fri, 9 Mar 2018 13:18:46 +0000 (UTC)
-Received: from localhost (emdete.de [local])
- by emdete.de (OpenSMTPD) with ESMTPA id 9bcaf166
- for <wireguard@lists.zx2c4.com>; Fri, 9 Mar 2018 13:28:29 +0000 (UTC)
-Date: Fri, 09 Mar 2018 14:28:28 +0100
-From: "M. Dietrich" <mdt@emdete.de>
-Subject: UDP Socks5 Proxy
-To: wireguard@lists.zx2c4.com
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b765aa0f
+ for <wireguard@lists.zx2c4.com>; Fri, 9 Mar 2018 14:22:37 +0000 (UTC)
+Received: from mail.toke.dk (mail.toke.dk [52.28.52.200])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e0bcdbc1
+ for <wireguard@lists.zx2c4.com>; Fri, 9 Mar 2018 14:22:37 +0000 (UTC)
+From: Toke =?utf-8?Q?H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: Re: Another roaming problem
+In-Reply-To: <87efktzhmj.fsf@toke.dk>
+References: <87efku1vza.fsf@toke.dk>
+ <CAHmME9qg=YXoKxEnikkJe1Li5Pq+yASPUhqN5PmGk6Fx=Y3-1Q@mail.gmail.com>
+ <85FE1433-439D-439C-A61E-B17754707077@toke.dk>
+ <CAHmME9p0aW2i-EcErua_Hkz-hZc12m47oLR9wvngu5ejVX=Q8A@mail.gmail.com>
+ <87h8pqlbw4.fsf@toke.dk>
+ <CAHmME9pgOGghWRv9bMtTvbxrQfNycK9EHEnBu=UQxOz6AQJ2qA@mail.gmail.com>
+ <7088098E-63F5-4ECB-A298-24444987482E@toke.dk>
+ <CAHmME9ojxMOoB5z4VJQbecTD+Y7VLK=K8=oTSDciofWLC6Q0fg@mail.gmail.com>
+ <87efktzhmj.fsf@toke.dk>
+Date: Fri, 09 Mar 2018 15:32:20 +0100
+Message-ID: <87tvtpjp57.fsf@toke.dk>
 MIME-Version: 1.0
-Message-Id: <1520601759.eqcuj2h0io.astroid@morple.none>
-Content-Type: multipart/signed; protocol="application/pgp-signature";
- micalg=pgp-sha256; boundary="=-Rk0EZIs4IPOfa3TfqSKu"
+Content-Type: text/plain; charset=utf-8
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -25,49 +32,57 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---=-Rk0EZIs4IPOfa3TfqSKu
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
+Toke H=C3=B8iland-J=C3=B8rgensen <toke@toke.dk> writes:
 
-Hi,
+> "Jason A. Donenfeld" <Jason@zx2c4.com> writes:
+>
+>> On Thu, Mar 8, 2018 at 6:50 PM, Toke H=C3=B8iland-J=C3=B8rgensen <toke@t=
+oke.dk> wrote:
+>>> Well, I do generally setup routing in a somewhat unusual manner.
+>>>
+>>> I can try to capture some packet dumps tomorrow to poke into it a bit m=
+ore. Anything in particular I should look for?
+>>
+>> One thing to examine is when WireGuard calls
+>> `socket_clear_peer_endpoint_src'. This makes wireguard forget the
+>> source address that it should be using and fall back to the default.
+>> You could add a pr_info(...) call in this function. I have an inkling
+>> that I make calls to this function too zealously and in potentially
+>> unneeded places, such as on handshake transmission retries.
+>>
+>> I'm headed out of town super soon, so likely debugging this will have
+>> to wait until I'm back, but do let me know what you find, and we'll
+>> get this fixed up upon return.
+>
+> Well, completely failed to reproduce it; everything works as its
+> supposed to now (wireguard correctly picks the public IP as its source
+> address when replying to the client).
+>
+> Not sure if I have changed something in my setup or what is going on;
+> but at least I can roam now, so I'm happy ;)
 
-i would like to have one node using wireguard which is behind
-a proxy. i thought one could use some iptables magic to catch
-the udp packages and redirect those to use a socks5 proxy.
+Scratch that, it's still happening; just not straight away upon roaming.
+It is definitely a timeout thing; installed a kprobe on the function you
+mentioned and got this strack trace when it switches IP:
 
-would that be feasable? what piece of software could i use to
-turn the udp packages into a sock5 complient communication? i
-understood a 'udp associate' request is done and that gives back
-connection details and udp packages are then send to that
-connection (thats how i understood rfc1928).
+TIME(s)            FUNCTION
+104.999884129      socket_clear_peer_endpoint_src
+	socket_clear_peer_endpoint_src
+	expired_new_handshake
+	call_timer_fn
+	run_timer_softirq
+	__do_softirq
+	irq_exit
+	smp_apic_timer_interrupt
+	__irqentry_text_start
+	cpuidle_enter_state
+	do_idle
+	cpu_startup_entry
+	start_secondary
+	secondary_startup_64
 
-i searched the internet but did not find software that does
-that or even some kind of client lib that could be used.
 
-btw: i do not search for a high-speed-solution in the first
-place. a reliable, working solution will do.
+Think it may be related to powersave on the phone or something? Doesn't
+seem to happen with my laptop at least...
 
-M. Dietrich
-=
-
---=-Rk0EZIs4IPOfa3TfqSKu
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEE8ECycNYHT6atlYQywVmjQWUJtykFAlqii/wACgkQwVmjQWUJ
-tykFlw//f+UT4dBslzVKA7sBkaD6p8yAKX2wPBZCXDETV941kAwj5tc2ZBlFJUNd
-GfszU+bqP6xUbrUDDgPsAJ/8JoY/XUBeRNLOp1DRy/yOgNj+67D2xu1f7m5bYgTL
-V2mA/mXp3Oa/eqO66aBpJ178sWXL5/7eapJiOYlnIxk1iGq3X44JAnByelvpsPzQ
-AOsCyphEB+lYaX4A+UmovKw1QJHTUkOawVh8YCBa2n7B0cKGw8Gtb2i2Ra1pNPa9
-myBkuYRDwyXS0njqu8KFk0JTf3PZpImHlRPxF/YfVOK44r2O9Y/EJ+ZM5aiRWmZf
-cGFHV5nN9RADOyRc+BWCH+cH7o8MpsUcEgpjqzjDUCdMCCVRpHkXOspJ2Wc6l7s4
-/3XBjpSynM2LbW2JsArN0taB11tBUT7WholuHtn5w4v4mm5wWAjz+1keD2mBa6PB
-tIajff5oIJfXqlKRn5OjKPyUvn1eZcEzYXLzOd8JGsjnaDT5obWJjybYlR+cTZAl
-+zs+Xxjp+qF+JULE10XJKjgO3774nvJUW3X7ooHZdOPQq2xuno0cWttXI2gWR8Zz
-G5nBNirEyIgbRdANtLbzGPik+pTXVomfuEePThDbUGKDYY7thBAy6w1kuGZV25HC
-JPtTb5wDNWXPEWQyestutFi4aTAwx06P3SAGGmRUQjn84xrrxVw=
-=uyUv
------END PGP SIGNATURE-----
-
---=-Rk0EZIs4IPOfa3TfqSKu--
+-Toke
