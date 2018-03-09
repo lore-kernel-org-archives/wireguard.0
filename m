@@ -1,14 +1,19 @@
-Return-Path: toke@toke.dk
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 18119d99
- for <wireguard@lists.zx2c4.com>; Fri, 9 Mar 2018 14:36:51 +0000 (UTC)
-Received: from mail.toke.dk (mail.toke.dk [52.28.52.200])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4bd60be7
- for <wireguard@lists.zx2c4.com>; Fri, 9 Mar 2018 14:36:50 +0000 (UTC)
-From: Toke =?utf-8?Q?H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: Re: Another roaming problem
-In-Reply-To: <CAHmME9qsdSg4JBGrBNLA+2Mmkh7Te+YKb5ixSOSwrMJpbn=XXw@mail.gmail.com>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 229b7954
+ for <wireguard@lists.zx2c4.com>; Fri, 9 Mar 2018 14:38:50 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3c5ed5a3
+ for <wireguard@lists.zx2c4.com>; Fri, 9 Mar 2018 14:38:49 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8ec20921
+ for <wireguard@lists.zx2c4.com>; Fri, 9 Mar 2018 14:29:58 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 0a39800e
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>; Fri, 9 Mar 2018 14:29:57 +0000 (UTC)
+Received: by mail-oi0-f44.google.com with SMTP id c18so7115144oiy.9
+ for <wireguard@lists.zx2c4.com>; Fri, 09 Mar 2018 06:48:33 -0800 (PST)
+MIME-Version: 1.0
+In-Reply-To: <87efktjohg.fsf@toke.dk>
 References: <87efku1vza.fsf@toke.dk>
  <CAHmME9qg=YXoKxEnikkJe1Li5Pq+yASPUhqN5PmGk6Fx=Y3-1Q@mail.gmail.com>
  <85FE1433-439D-439C-A61E-B17754707077@toke.dk>
@@ -19,10 +24,13 @@ References: <87efku1vza.fsf@toke.dk>
  <CAHmME9ojxMOoB5z4VJQbecTD+Y7VLK=K8=oTSDciofWLC6Q0fg@mail.gmail.com>
  <87efktzhmj.fsf@toke.dk> <87tvtpjp57.fsf@toke.dk> <87o9jxjotf.fsf@toke.dk>
  <CAHmME9qsdSg4JBGrBNLA+2Mmkh7Te+YKb5ixSOSwrMJpbn=XXw@mail.gmail.com>
-Date: Fri, 09 Mar 2018 15:46:35 +0100
-Message-ID: <87efktjohg.fsf@toke.dk>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+ <87efktjohg.fsf@toke.dk>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Fri, 9 Mar 2018 15:48:32 +0100
+Message-ID: <CAHmME9oDvfxVeWePt09dUwipjGyF4UrVy3Rd_O0TFnD-Nmbctw@mail.gmail.com>
+Subject: Re: Another roaming problem
+To: =?UTF-8?B?VG9rZSBIw7hpbGFuZC1Kw7hyZ2Vuc2Vu?= <toke@toke.dk>
+Content-Type: text/plain; charset="UTF-8"
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -33,21 +41,7 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-"Jason A. Donenfeld" <Jason@zx2c4.com> writes:
+Neat script, looks pretty easy to use. The wg repo has a kprobes
+script too for extracting ephemeral keys from the kernel:
 
-> On Fri, Mar 9, 2018 at 3:39 PM, Toke H=C3=B8iland-J=C3=B8rgensen <toke@to=
-ke.dk> wrote:
->> And leaving it running a bit more, there is also a call from
->> expired_retransmit_handshake:
->
-> Yep! These are the two calls in timers.c.
-
-Right, cool. Kprobes are awesome, BTW (this was my first time trying this):
-
-https://github.com/iovisor/bcc/blob/master/examples/tracing/stacksnoop.py
-
-./stacksnoop.py socket_clear_peer_endpoint_src
-
-and presto; nice stack traces every time they are called :D
-
--Toke
+https://git.zx2c4.com/WireGuard/tree/contrib/examples/extract-handshakes
