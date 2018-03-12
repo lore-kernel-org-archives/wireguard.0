@@ -1,24 +1,26 @@
-Return-Path: saeidscorp@yahoo.com
+Return-Path: tuxmealux@protonmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cb40637f
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 58539e91
  for <wireguard@lists.zx2c4.com>;
- Mon, 12 Mar 2018 14:07:48 +0000 (UTC)
-Received: from sonic310-13.consmr.mail.ir2.yahoo.com
- (sonic310-13.consmr.mail.ir2.yahoo.com [77.238.177.34])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fe26e1c8
+ Mon, 12 Mar 2018 14:27:44 +0000 (UTC)
+Received: from mail4.protonmail.ch (mail4.protonmail.ch [185.70.40.27])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id edb78e74
  for <wireguard@lists.zx2c4.com>;
- Mon, 12 Mar 2018 14:07:48 +0000 (UTC)
-Received: from 88.202.186.116 (EHLO scorpbook.localnet) ([88.202.186.116])
- by smtp416.mail.ir2.yahoo.com (Oath Hermes SMTP Server) with ESMTPA ID
- 0f4761d8fad8ae430b59a72c41633d00 for <wireguard@lists.zx2c4.com>;
- Mon, 12 Mar 2018 14:17:52 +0000 (UTC)
-From: Saeid Akbari <saeidscorp@yahoo.com>
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Some potential bug in wg-quick re. fwmark and default route
-Date: Mon, 12 Mar 2018 17:47:10 +0330
-Message-ID: <4993616.ZASKD2KPVS@scorpbook>
+ Mon, 12 Mar 2018 14:27:44 +0000 (UTC)
+Date: Mon, 12 Mar 2018 10:37:40 -0400
+To: Matthias Urlichs <matthias@urlichs.de>
+From: Gianluca Gabrielli <tuxmealux@protonmail.com>
+Subject: Re: TCP Wireguard with socat
+Message-ID: <XPP6R4g8xCtXsMbJljJf5ScBfx_FobBsPY66Hr7AO3venYsjyGhk0fdjtDnczcQUsMn18vZgB-CLkFCO54Ny-0LnWogx_T48_MdNsNiFd-o=@protonmail.com>
+In-Reply-To: <88b9e6e0-1f38-1a20-3fac-372e96f847a3@urlichs.de>
+References: <utLzzyzPJsv-W3vVhU4Sdchg_5A07v9qCxR1DeJ5Wu7RzJHcje1cCEjtEWi4j0aCN05ozn9b4VYJQsLovvl6TGPp-kbZ_5kfpReEJHQQXGk=@protonmail.com>
+ <e0bff705-f328-0071-0fb7-0367d36f0074@urlichs.de>
+ <kvc0wmbZv_OgdINTzQhQnFxt0vFHFoqpVqYTFQkfPYOY_vqZHJN-bEvL9oJYuk-LJHubVyWlP2JCXTbRLK_9fGp7r298KveBFiOsF6P9r4Y=@protonmail.com>
+ <88b9e6e0-1f38-1a20-3fac-372e96f847a3@urlichs.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=UTF-8
+Cc: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+Reply-To: Gianluca Gabrielli <tuxmealux@protonmail.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -28,55 +30,19 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi,
+Do you have any link about documentation which explains this socat's behavi=
+or?
 
-Straight to the point :)
-Suppose the following scenario:
+SSH should does something similar when is used for tunneling, it just open =
+a TCP connection and then forwards everything through it, without wrapping =
+every single packet.
+BTW on this thread (https://superuser.com/questions/53103/udp-traffic-throu=
+gh-ssh-tunnel) they show how to perform UDP over TCP tunnel.
+I tried with Secure Socket Funneling (ssf), setting netcat listening on UDP=
+-mode (-u) on the server, and I was able to send strings to it from the cli=
+ent.
+Now I think it would just takes some time before starting to use wireguard =
+inside this tunnel.
 
-On a client system I have 2 interfaces:
-wg0 -> which has allowedips of 0.0.0.0; so it gets special treatment by wg-
-quick -> so `ip rule add not fwmark 51820 table 51820`
-wg1 -> which has a restrictive allowedips of 192.168.255.10/32 (not important)
-
-also each one have a FwMark set in their config file:
-wg0 -> 51800
-wg1 -> 51820
-
-Then: `wg-quick up wg0` and `wg-quick up wg1`
-
-Now the problem is, when I do `wg-quick down wg1` it also deletes the default 
-rules for wg0, as its fwmark is 51820 which belongs to table of wg0. I see 
-that this might seem a little bit weird to do, but why rely on hard-coded 
-numbers if we can use the ones provided by the user...
-
-So wouldn't be better if `add_default()` function first checks if fwmark is 
-present on device (thus config file) and use that as fwmark and table-id?
-
-Like what `del_if()` does, borrowing its code:
-
-```DEFAULT_TABLE=
-add_default() {
-	local fwmark
-	fwmark="$(wg show "$INTERFACE" fwmark)"
-	[[ $fwmark != off ]] && DEFAULT_TABLE=$(( fwmark )) # borrowed
-	if [[ -z $DEFAULT_TABLE ]]; then
-		DEFAULT_TABLE=51820
-		while [[ -n $(ip -4 route show table $DEFAULT_TABLE) || -n $(ip -6 route 
-show table $DEFAULT_TABLE) ]]; do
-			((DEFAULT_TABLE++))
-		done
-	fi```
-
-This way, default interface (the one having allowedips of 0.0.0.0) would 
-register its own fwmark, and bringing down other interfaces, doesn't delete 
-its rule.
-
-
-+ But another issue, `del_if()` seems to assume that the interface is used as 
-default route when a fwmark is present on it. This causes deletion of "from 
-all lookup main suppress_prefixlength 0" when bringing down a non-default 
-interface (in this scenario, wg1).
-
-Any ideas?
-
-Thanks.
+If someone of you want to make some tests on his own devices, I really appr=
+eciate if you'll share your finding with me.
