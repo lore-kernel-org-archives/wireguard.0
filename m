@@ -1,26 +1,23 @@
-Return-Path: matthias@urlichs.de
+Return-Path: jacob.schooley@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6428f027
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c5e65774
  for <wireguard@lists.zx2c4.com>;
- Mon, 12 Mar 2018 18:38:06 +0000 (UTC)
-Received: from netz.smurf.noris.de (mail.smurf.noris.de [213.95.149.21])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7a6b69fc
+ Tue, 13 Mar 2018 01:41:38 +0000 (UTC)
+Received: from mail-wr0-f173.google.com (mail-wr0-f173.google.com
+ [209.85.128.173])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 08a9636e
  for <wireguard@lists.zx2c4.com>;
- Mon, 12 Mar 2018 18:38:06 +0000 (UTC)
-Subject: Re: TCP Wireguard with socat
-To: Gianluca Gabrielli <tuxmealux@protonmail.com>
-References: <utLzzyzPJsv-W3vVhU4Sdchg_5A07v9qCxR1DeJ5Wu7RzJHcje1cCEjtEWi4j0aCN05ozn9b4VYJQsLovvl6TGPp-kbZ_5kfpReEJHQQXGk=@protonmail.com>
- <e0bff705-f328-0071-0fb7-0367d36f0074@urlichs.de>
- <kvc0wmbZv_OgdINTzQhQnFxt0vFHFoqpVqYTFQkfPYOY_vqZHJN-bEvL9oJYuk-LJHubVyWlP2JCXTbRLK_9fGp7r298KveBFiOsF6P9r4Y=@protonmail.com>
- <88b9e6e0-1f38-1a20-3fac-372e96f847a3@urlichs.de>
- <XPP6R4g8xCtXsMbJljJf5ScBfx_FobBsPY66Hr7AO3venYsjyGhk0fdjtDnczcQUsMn18vZgB-CLkFCO54Ny-0LnWogx_T48_MdNsNiFd-o=@protonmail.com>
-From: Matthias Urlichs <matthias@urlichs.de>
-Message-ID: <5e7ded44-d128-ed3a-c9e2-0b0480b4d89f@urlichs.de>
-Date: Mon, 12 Mar 2018 19:47:35 +0100
+ Tue, 13 Mar 2018 01:41:38 +0000 (UTC)
+Received: by mail-wr0-f173.google.com with SMTP id d10so5608308wrf.3
+ for <wireguard@lists.zx2c4.com>; Mon, 12 Mar 2018 18:51:49 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <XPP6R4g8xCtXsMbJljJf5ScBfx_FobBsPY66Hr7AO3venYsjyGhk0fdjtDnczcQUsMn18vZgB-CLkFCO54Ny-0LnWogx_T48_MdNsNiFd-o=@protonmail.com>
-Content-Type: text/plain; charset=utf-8
-Cc: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+Sender: jacob.schooley@gmail.com
+From: Jacob Schooley <jacob.schooley+wgvpn@gmail.com>
+Date: Mon, 12 Mar 2018 21:51:47 -0400
+Message-ID: <CAHjFYUJnEvhB27dKcUXLzj-KYK5U+gMLuQORNiiQwG2Zp8E9TQ@mail.gmail.com>
+Subject: Android app and command line
+To: wireguard@lists.zx2c4.com
+Content-Type: multipart/alternative; boundary="089e0824e40c62c8520567418020"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -30,26 +27,38 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On 12.03.2018 15:37, Gianluca Gabrielli wrote:
-> BTW on this thread (https://superuser.com/questions/53103/udp-traffic-through-ssh-tunnel) they show how to perform UDP over TCP tunnel.
+--089e0824e40c62c8520567418020
+Content-Type: text/plain; charset="UTF-8"
 
-Yeah, and in the comments people explain why this is a bad idea.
+There is an option in the Android app to enable wg and wg-quick, which will
+be extremely useful to me as most of my VPN stuff is taken care of with
+Tasker. There are two major bugs with this however.
 
-Look, this is fairly easy to understand. TCP is a byte stream. It does
-not know about packets; if you read from it you get N of the bytes the
-other side has written, no matter in what chunks. TUN/TAP on the other
-hand is a packet interface. It doesn't understand partial or aggregated
-packets – it wants exactly one complete packet per write() call.
+One is that the app doesn't automatically update the status of wireguard,
+so the switch inside the app won't flip if I use wg-quick up or down until
+I swipe off and reopen the app, and the quick settings toggle won't change.
 
-It's like pouring multiple cups of water at a time through a funnel. If
-you pour slowly enough, each distinct chunk of water arrives at the
-other end so that you can distinguish the original amounts, but if you
-pour too fast or if there's an obstruction in the flow the distinction
-gets lost and you lose packets (or, worse, the receiver sees additional
-gibberish at their end).
+The other is that if I run wg-quick up, then try to bring it down through
+the app or the quick settings toggle, it says "Error bringing down tunnel:
+Unable to configure tunnel (wg-quick returned 2)." So as of now it really
+doesn't work well with tasker because I can't bring it down manually if I
+need to.
 
-Just use ssf. It's a tool that's built to do the job right. socat is
-not, and it will not.
+--089e0824e40c62c8520567418020
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
--- 
--- Matthias Urlichs
+<div dir=3D"ltr">There is an option in the Android app to enable wg and wg-=
+quick, which will be extremely useful to me as most of my VPN stuff is take=
+n care of with Tasker. There are two major bugs with this however.<div><br>=
+</div><div>One is that the app doesn&#39;t automatically update the status =
+of wireguard, so the switch inside the app won&#39;t flip if I use wg-quick=
+ up or down until I swipe off and reopen the app, and the quick settings to=
+ggle won&#39;t change.</div><div><br></div><div>The other is that if I run =
+wg-quick up, then try to bring it down through the app or the quick setting=
+s toggle, it says &quot;Error bringing down tunnel: Unable to configure tun=
+nel (wg-quick returned 2).&quot; So as of now it really doesn&#39;t work we=
+ll with tasker because I can&#39;t bring it down manually if I need to.</di=
+v></div>
+
+--089e0824e40c62c8520567418020--
