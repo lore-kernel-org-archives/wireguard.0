@@ -1,28 +1,20 @@
-Return-Path: matthias@urlichs.de
+Return-Path: tuxmealux@protonmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 35f54779
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6cba3dea
  for <wireguard@lists.zx2c4.com>;
- Tue, 13 Mar 2018 13:34:00 +0000 (UTC)
-Received: from netz.smurf.noris.de (mail.smurf.noris.de [213.95.149.21])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 65464674
+ Tue, 13 Mar 2018 16:57:44 +0000 (UTC)
+Received: from mail4.protonmail.ch (mail4.protonmail.ch [185.70.40.27])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b11d2ffb
  for <wireguard@lists.zx2c4.com>;
- Tue, 13 Mar 2018 13:34:00 +0000 (UTC)
-Subject: Re: TCP Wireguard with socat
-To: Gianluca Gabrielli <tuxmealux@protonmail.com>
-References: <utLzzyzPJsv-W3vVhU4Sdchg_5A07v9qCxR1DeJ5Wu7RzJHcje1cCEjtEWi4j0aCN05ozn9b4VYJQsLovvl6TGPp-kbZ_5kfpReEJHQQXGk=@protonmail.com>
- <e0bff705-f328-0071-0fb7-0367d36f0074@urlichs.de>
- <kvc0wmbZv_OgdINTzQhQnFxt0vFHFoqpVqYTFQkfPYOY_vqZHJN-bEvL9oJYuk-LJHubVyWlP2JCXTbRLK_9fGp7r298KveBFiOsF6P9r4Y=@protonmail.com>
- <88b9e6e0-1f38-1a20-3fac-372e96f847a3@urlichs.de>
- <XPP6R4g8xCtXsMbJljJf5ScBfx_FobBsPY66Hr7AO3venYsjyGhk0fdjtDnczcQUsMn18vZgB-CLkFCO54Ny-0LnWogx_T48_MdNsNiFd-o=@protonmail.com>
- <5e7ded44-d128-ed3a-c9e2-0b0480b4d89f@urlichs.de>
- <2LLzGYJnMQQE8ZVLLI49kcqDj8mQIdytgKD08XsZHwPaBjfN8f3WkcJZA3j4XFXW6sS1UnXfCY2GyS2PIUSGJOfPUZweZQa-tnWcUcPKzFM=@protonmail.com>
-From: Matthias Urlichs <matthias@urlichs.de>
-Message-ID: <eedf9f8d-ec6a-0c64-37df-a59c15e26e26@urlichs.de>
-Date: Tue, 13 Mar 2018 14:43:48 +0100
+ Tue, 13 Mar 2018 16:57:44 +0000 (UTC)
+Date: Tue, 13 Mar 2018 13:07:44 -0400
+To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+From: Gianluca Gabrielli <tuxmealux@protonmail.com>
+Subject: Multiple peers
+Message-ID: <sw07RFheJeAt1YhiYncjYl7au2RKQqmg4fMvgZBN91qBmUxoSGX24JamLXZrSqMC0yvRvz3koe24Li8ini3tEP1h_3j5VF5IFrYwcOMXI0A=@protonmail.com>
 MIME-Version: 1.0
-In-Reply-To: <2LLzGYJnMQQE8ZVLLI49kcqDj8mQIdytgKD08XsZHwPaBjfN8f3WkcJZA3j4XFXW6sS1UnXfCY2GyS2PIUSGJOfPUZweZQa-tnWcUcPKzFM=@protonmail.com>
-Content-Type: text/plain; charset=utf-8
-Cc: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset=UTF-8
+Reply-To: Gianluca Gabrielli <tuxmealux@protonmail.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -32,20 +24,19 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On 13.03.2018 10:19, Gianluca Gabrielli wrote:
-> I'm wondering why we should prepend a length to each datagram. On the d=
-atagram's header the payload length is already present, should not be eno=
-ugh to reconstruct the original datagram after the stream has been unwrap=
-ped?
-Not really, because the datagram's payload length doesn't have to
-correspond to the frame length. Think malicious malformed packets, or
-networks with a minimum packet length, or protocols other than wireguard
-=E2=80=93 you shouldn't assume that no other data is transmitted on that =
-link.
+Hi everybody,
 
-Even if all that were true, or if you enfore that on the sending side,
-you'd still need a specialized unpacker on the receiving end. Easier to
-just use a tool that doesn't have any of these problems.
+I have five peers, and I want that each peer can talk with all the other pe=
+ers. Moreover let's say that one of these peer will acts as a server and as=
+ a gateway, while the other four will be only clients.=20
+I wonder if I need to copy/paste all peers' public key on all the other pee=
+rs' configuration, or I can just configure each peer to connect to the serv=
+er and then allow peers talking with other peers passing through this serve=
+r?
+(Something similar to client-to-client option on OpenVPN)
 
---=20
--- Matthias Urlichs
+I don't care about firewall rules to configure the server to NAT clients' c=
+onnections, my question is just about wireguard configuration.
+
+Cheers,
+Gianluca
