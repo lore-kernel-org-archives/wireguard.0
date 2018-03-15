@@ -1,23 +1,33 @@
-Return-Path: samuel@sholland.org
+Return-Path: germano.massullo@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7826f663
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f835babf
  for <wireguard@lists.zx2c4.com>;
- Thu, 15 Mar 2018 16:06:57 +0000 (UTC)
-Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com
- [66.111.4.29])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 82a0c756
+ Thu, 15 Mar 2018 17:45:08 +0000 (UTC)
+Received: from mail-wm0-f42.google.com (mail-wm0-f42.google.com [74.125.82.42])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8dc81e04
  for <wireguard@lists.zx2c4.com>;
- Thu, 15 Mar 2018 16:06:57 +0000 (UTC)
-Subject: Re: Lineage OS (Android) Support
-To: Paul <paul@makrotopia.org>, wireguard@lists.zx2c4.com
-References: <1520793735.1523.0@mail.makrotopia.org>
- <1520939702.663.1@mail.makrotopia.org>
-From: Samuel Holland <samuel@sholland.org>
-Message-ID: <445be82a-7c57-4661-c3fc-7ad79d42f6ea@sholland.org>
-Date: Thu, 15 Mar 2018 11:17:26 -0500
+ Thu, 15 Mar 2018 17:45:08 +0000 (UTC)
+Received: by mail-wm0-f42.google.com with SMTP id 139so12217991wmn.2
+ for <wireguard@lists.zx2c4.com>; Thu, 15 Mar 2018 10:55:39 -0700 (PDT)
+Return-Path: <germano.massullo@gmail.com>
+Received: from [192.168.1.100]
+ (host236-114-dynamic.183-80-r.retail.telecomitalia.it. [80.183.114.236])
+ by smtp.googlemail.com with ESMTPSA id r16sm2692750edb.22.2018.03.15.10.55.38
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Thu, 15 Mar 2018 10:55:38 -0700 (PDT)
+Subject: Re: Multiple peers
+To: wireguard@lists.zx2c4.com
+References: <sw07RFheJeAt1YhiYncjYl7au2RKQqmg4fMvgZBN91qBmUxoSGX24JamLXZrSqMC0yvRvz3koe24Li8ini3tEP1h_3j5VF5IFrYwcOMXI0A=@protonmail.com>
+ <2016b91a-4c7e-db4d-7e22-8a7efc9add39@mailbox.org>
+ <CAK_h9uH4JHMz5j+cZQ4GgO=n0Jqt-R7C+EQFGR5FXciCzV0qcA@mail.gmail.com>
+ <DNClgNFevIH4-VddLWQE3QEdOhoWlDxxkt7PnNoWioe2vEdvSYn0x7La779Fr3G7Y63W1hq_v07LHZ1lxpq7dNJ1R8rxzKr0raXHB0ymWXQ=@protonmail.com>
+From: Germano Massullo <germano.massullo@gmail.com>
+Message-ID: <174a708e-cd44-61b4-05af-cec192dd64d1@gmail.com>
+Date: Thu, 15 Mar 2018 18:55:37 +0100
 MIME-Version: 1.0
-In-Reply-To: <1520939702.663.1@mail.makrotopia.org>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <DNClgNFevIH4-VddLWQE3QEdOhoWlDxxkt7PnNoWioe2vEdvSYn0x7La779Fr3G7Y63W1hq_v07LHZ1lxpq7dNJ1R8rxzKr0raXHB0ymWXQ=@protonmail.com>
+Content-Type: text/plain; charset=iso-8859-15
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -27,53 +37,8 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hello,
+Hi Gianluca, you may want to read also this example I explained in Ninux
+mailing list
+https://www.mail-archive.com/wireless@ml.ninux.org/msg20983.html
 
-On 03/13/18 06:15, Paul wrote:
-> On So, Mär 11, 2018 at 7:42 PM, Paul <paul@makrotopia.org> wrote:
->> Hi all,
->>
->> I'm new to the list and hope this wasn't discussed in length here before. If
->> so, please give me a direction, I couldn't find anything related.
->>
->> For the last days I tried to find a Lineage OS [1] compatible kernel with
->> wireguard included, sadly there is none. Instead of installing a custom
->> kernel, could Lineage include the < 4000 lines of code in their build root?
->> Have there been any efforts on this?
->>
->> Thank you very much for all further information.
->>
->> Best regards,
->> Paul Spooren
->>
->> [1] http://lineageos.org/
-> 
-> I asked the Lineage OS maintainer of my current phone and he responded to use
-> the native VPN interface of Android. Are there any plans on that?
-
-Yes, support for using the Go implementation[1] with VpnService is in the works.
-The same app will support both the native and userspace implementations. It will
-prefer the native implementation if root access and the kernel module are
-available, and fall back to using VpnService otherwise.
-
->> https://developer.android.com/reference/android/net/VpnService.html
->>
->> That has many pros:
->> 1. runs on any Android 4.0+ device (NO root required)
->> 2. all VPN code (except network interface of course) is running in userspace
->> (in case of exploitation only VPN app is compromised)
->> 3. decoupled from OS and easy to upgrade
-
-Using the native implementation has its own benefits. It will generally be
-faster and more battery-efficient, and it supports having multiple tunnels up
-simultaneously. VpnService only allows one VPN to be active at a time.
-
-> Thanks for all further information!
-> 
-> Best,
-> Paul
-
-Regards,
-Samuel
-
-[1]: https://git.zx2c4.com/wireguard-go/
+Best regards
