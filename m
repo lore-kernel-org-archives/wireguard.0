@@ -1,28 +1,22 @@
-Return-Path: steve@erayd.net
+Return-Path: kedia.vikas@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c7e0e731
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 54beefbf
  for <wireguard@lists.zx2c4.com>;
- Thu, 15 Mar 2018 18:45:20 +0000 (UTC)
-Received: from mail-yw0-f173.google.com (mail-yw0-f173.google.com
- [209.85.161.173])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ba4483b9
+ Fri, 16 Mar 2018 01:56:34 +0000 (UTC)
+Received: from mail-oi0-f65.google.com (mail-oi0-f65.google.com
+ [209.85.218.65])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 450bd7d5
  for <wireguard@lists.zx2c4.com>;
- Thu, 15 Mar 2018 18:45:20 +0000 (UTC)
-Received: by mail-yw0-f173.google.com with SMTP id x197so5319952ywg.11
- for <wireguard@lists.zx2c4.com>; Thu, 15 Mar 2018 11:55:52 -0700 (PDT)
+ Fri, 16 Mar 2018 01:56:34 +0000 (UTC)
+Received: by mail-oi0-f65.google.com with SMTP id 20so342416oiq.5
+ for <wireguard@lists.zx2c4.com>; Thu, 15 Mar 2018 19:07:08 -0700 (PDT)
 MIME-Version: 1.0
-References: <NRNcntoOUgLRhHI2D7GnuCHirY9j2pMH83ET-HFr4qoamFy7aIIkR_ZVcKa0wTTbQ-SfhLEr5zih04Hs-FwFaj4UenOksFs8XCMp8yKnZEk=@protonmail.com>
- <db7326ed-e0f5-c1ee-ea61-30ef6d6fa3b3@sholland.org>
- <CAJQSx3Y3EXWhtHJGi40kjYiha9nZHYs4i8v9LbbdO4PHaGnDnw@mail.gmail.com>
- <8debf4cc-572f-2a75-39c6-e109ebb8e73b@sholland.org>
-In-Reply-To: <8debf4cc-572f-2a75-39c6-e109ebb8e73b@sholland.org>
-From: Steve Gilberd <steve@erayd.net>
-Date: Thu, 15 Mar 2018 18:55:40 +0000
-Message-ID: <CAJQSx3bx5w7TySnJX2GJa+PG+6sQW6G+E=RJ0+jwRxr9qReXaA@mail.gmail.com>
-Subject: Re: Allowed IPs Toggling
-To: Samuel Holland <samuel@sholland.org>
-Content-Type: multipart/alternative; boundary="94eb2c06148e64a3370567780ac3"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: Vikas <kedia.vikas@gmail.com>
+Date: Thu, 15 Mar 2018 19:07:07 -0700
+Message-ID: <CAPGejTe5nKoZfQbyZYfpz5GmiC+UAvkmnuTehKvXjzLxUeHbaw@mail.gmail.com>
+Subject: Cannot ping peer 1 from peer 2
+To: wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -32,147 +26,98 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---94eb2c06148e64a3370567780ac3
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Here is the config on peer 1 (Vmware VM running ubuntu 16.04):
+=================================================
 
- > WireGuard *does* support overlapping ranges of AllowedIPs on different
-peers. It
-> doesn't support having *identical* ranges of AllowedIPs on different
-peers,
-> which was the situation here. (You're correct, there's no concept of a
-metric.)
+vk@ubuntu /g/r/c/w/server> ifconfig ens33
+ens33     Link encap:Ethernet  HWaddr 00:0c:29:c8:6c:d5
+          inet addr:10.0.1.77  Bcast:10.0.1.255  Mask:255.255.255.0
+          inet6 addr: fe80::5b06:24b6:c9e4:954e/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:327949 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:87146 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:351155285 (351.1 MB)  TX bytes:12179516 (12.1 MB)
 
-Oh good - looks like I just misunderstood your ordinal email then; I
-thought you were saying that any situation with multiple routes to a single
-IP was unsupported. Thanks for clarifying :-).
 
-Cheers,
-Steve
+vk@ubuntu /g/r/c/w/server> more etc-wireguard-wg0.conf
+[Interface]
+Address = 10.100.1.1/24
+ListenPort = 51820
+PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A
+POSTROUTING -o ens33 -j MASQUERADE
+PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D
+POSTROUTING -o ens33 -j MASQUERADE
+PrivateKey = CPQLRq40QGY3+8yn2LlYb1x3zU/3/Ki+A4QjVYgbakY=
+SaveConfig = true
 
-On Fri, 16 Mar 2018, 07:51 Samuel Holland, <samuel@sholland.org> wrote:
+[Peer]
+PublicKey = uL8bs5596DJO7BMnrIVG5btvr4LTzlbx1ovwHe59NBc=
+AllowedIPs = 10.100.1.2/32
 
-> Hello,
->
-> On 03/15/18 13:39, Steve Gilberd wrote:
-> >> Allowed IPs is like a routing table; you can't have two routes for the
-> same
-> > set of IPs
-> >
-> > If this is the case, then wireguard does not have proper routing suppor=
-t.
-> >
-> > Normally, routing tables allow both multiple and overlapping routes
-> present.
-> > When making routing decisions, the most-specific route is chosen (e.g. =
-a
-> /29 is
-> > higher priority than a /24 which overlaps with it). If there are two
-> identical
-> > routes of the same size, then the one with the lowest routing metric is
-> used.
-> >
-> > I can understand not allowing identical routes of the same size, as
-> wireguard
-> > doesn't really have a concept of metric (although it could be useful fo=
-r
-> backup
-> > links). However, it really should allow overlapping routes of different
-> sizes.
-> > There's no ambiguity with routing decisions, and it's a standard featur=
-e
-> that I
-> > would normally expect any IP routing stack to have.
->
-> WireGuard *does* support overlapping ranges of AllowedIPs on different
-> peers. It
-> doesn't support having *identical* ranges of AllowedIPs on different peer=
-s,
-> which was the situation here. (You're correct, there's no concept of a
-> metric.)
->
-> > Cheers,
-> > Steve
->
-> Cheers,
-> Samuel
->
---=20
 
-Cheers,
+vk@ubuntu /g/r/c/w/server> ifconfig wg0
+wg0       Link encap:UNSPEC  HWaddr
+00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+          inet addr:10.100.1.1  P-t-P:10.100.1.1  Mask:255.255.255.0
+          UP POINTOPOINT RUNNING NOARP  MTU:1420  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:459 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
 
-*Steve Gilberd*
-Erayd LTD *=C2=B7* Consultant
-*Phone: +64 4 974-4229 **=C2=B7** Mob: +64 27 565-3237*
-*PO Box 10019 The Terrace, Wellington 6143, NZ*
 
---94eb2c06148e64a3370567780ac3
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-=C2=A0&gt;=C2=A0WireGuard *does* support overlapping ranges of AllowedIPs o=
-n different peers. It<br>&gt; doesn&#39;t support having *identical* ranges=
- of AllowedIPs on different peers,<br>&gt; which was the situation here. (Y=
-ou&#39;re correct, there&#39;s no concept of a metric.)<div><br></div><div>=
-Oh good - looks like I just misunderstood your ordinal email then; I though=
-t you were saying that any situation with multiple routes to a single IP wa=
-s unsupported. Thanks for clarifying :-).</div><div><br></div><div>Cheers,<=
-/div><div>Steve</div><div><br><div class=3D"gmail_quote"><div dir=3D"ltr">O=
-n Fri, 16 Mar 2018, 07:51 Samuel Holland, &lt;<a href=3D"mailto:samuel@shol=
-land.org">samuel@sholland.org</a>&gt; wrote:<br></div><blockquote class=3D"=
-gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-=
-left:1ex">Hello,<br>
-<br>
-On 03/15/18 13:39, Steve Gilberd wrote:<br>
-&gt;&gt;=C2=A0Allowed IPs is like a routing table; you can&#39;t have two r=
-outes for the same<br>
-&gt; set of=C2=A0IPs<br>
-&gt;<br>
-&gt; If this is the case, then wireguard does not have proper routing suppo=
-rt.<br>
-&gt;<br>
-&gt; Normally, routing tables allow both multiple and overlapping routes pr=
-esent.<br>
-&gt; When making routing decisions, the most-specific route is chosen (e.g.=
- a /29 is<br>
-&gt; higher priority than a /24 which overlaps with it). If there are two i=
-dentical<br>
-&gt; routes of the same size, then the one with the lowest routing metric i=
-s used.<br>
-&gt;<br>
-&gt; I can understand not allowing identical routes of the same size, as wi=
-reguard<br>
-&gt; doesn&#39;t really have a concept of metric (although it could be usef=
-ul for backup<br>
-&gt; links). However, it really should allow overlapping routes of differen=
-t sizes.<br>
-&gt; There&#39;s no ambiguity with routing decisions, and it&#39;s a standa=
-rd feature that I<br>
-&gt; would normally expect any IP routing stack to have.<br>
-<br>
-WireGuard *does* support overlapping ranges of AllowedIPs on different peer=
-s. It<br>
-doesn&#39;t support having *identical* ranges of AllowedIPs on different pe=
-ers,<br>
-which was the situation here. (You&#39;re correct, there&#39;s no concept o=
-f a metric.)<br>
-<br>
-&gt; Cheers,<br>
-&gt; Steve<br>
-<br>
-Cheers,<br>
-Samuel<br>
-</blockquote></div></div>-- <br><div dir=3D"ltr" class=3D"gmail_signature" =
-data-smartmail=3D"gmail_signature"><div dir=3D"ltr"><p dir=3D"ltr">Cheers,<=
-/p>
-<p dir=3D"ltr"><b>Steve Gilberd</b><br>
-<font color=3D"#666666">Erayd LTD=C2=A0</font><b><font color=3D"#666666">=
-=C2=B7</font></b><font color=3D"#666666">=C2=A0Consultant</font><br>
-<i><font color=3D"#666666">Phone: +64 4 974-4229=C2=A0</font></i><b><i><fon=
-t color=3D"#666666">=C2=B7</font></i></b><i><font color=3D"#666666">=C2=A0M=
-ob: +64 27 565-3237</font></i><br>
-<i><font color=3D"#666666">PO Box 10019 The Terrace, Wellington 6143, NZ</f=
-ont></i></p>
-</div></div>
+Here is the config on peer 2  (Vmware VM running ubuntu 18.04):
+==================================================
 
---94eb2c06148e64a3370567780ac3--
+root@ubuntu /g/r/c/w/client# ifconfig ens33
+ens33: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.0.1.71  netmask 255.255.255.0  broadcast 10.0.1.255
+        inet6 fe80::c4d7:35d6:306b:fc91  prefixlen 64  scopeid 0x20<link>
+        ether 00:0c:29:b6:bb:18  txqueuelen 1000  (Ethernet)
+        RX packets 532611  bytes 765847699 (765.8 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 71767  bytes 5458394 (5.4 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+
+root@ubuntu /g/r/c/w/client# more etc-wireguard-wg0.conf
+[Interface]
+Address = 10.100.1.2
+PrivateKey = AMZXJ1vBx6OOnZlbnYHuShTBAPuOzwCgweG73BS/4WY=
+
+[Peer]
+PublicKey = KNuvytvYu9NktxybaOHsCF11q96IGfc+dT/Dv8L6KB0=
+AllowedIPs = 0.0.0.0/0
+Endpoint = 10.0.1.77:51280
+
+
+root@ubuntu /g/r/c/w/client# ifconfig wg0
+wg0: flags=209<UP,POINTOPOINT,RUNNING,NOARP>  mtu 1420
+        inet 10.100.1.2  netmask 255.255.255.255  destination 10.100.1.2
+        unspec 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+txqueuelen 1000  (UNSPEC)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 10  bytes 1480 (1.4 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+
+root@ubuntu /g/r/c/w/client# ping 10.0.1.77
+PING 10.0.1.77 (10.0.1.77) 56(84) bytes of data.
+64 bytes from 10.0.1.77: icmp_seq=1 ttl=64 time=0.464 ms
+64 bytes from 10.0.1.77: icmp_seq=2 ttl=64 time=0.715 ms
+
+
+root@ubuntu /g/r/c/w/client# ping 10.100.1.1
+PING 10.100.1.1 (10.100.1.1) 56(84) bytes of data.
+^C
+--- 10.100.1.1 ping statistics ---
+3 packets transmitted, 0 received, 100% packet loss, time 2033ms
+
+
+What am I doing wrong?
+
+--
+VK
