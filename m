@@ -1,27 +1,25 @@
-Return-Path: smntov@gmail.com
+Return-Path: me.kalin@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f90874e7
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a65b4108
  for <wireguard@lists.zx2c4.com>;
- Thu, 22 Mar 2018 18:15:28 +0000 (UTC)
-Received: from mail-wm0-f52.google.com (mail-wm0-f52.google.com [74.125.82.52])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7f57e9ec
+ Thu, 22 Mar 2018 19:07:43 +0000 (UTC)
+Received: from mail-oi0-f47.google.com (mail-oi0-f47.google.com
+ [209.85.218.47])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9e75cf64
  for <wireguard@lists.zx2c4.com>;
- Thu, 22 Mar 2018 18:15:28 +0000 (UTC)
-Received: by mail-wm0-f52.google.com with SMTP id h76so17790445wme.4
- for <wireguard@lists.zx2c4.com>; Thu, 22 Mar 2018 11:26:52 -0700 (PDT)
-Return-Path: <smntov@gmail.com>
-Received: from debox ([37.26.147.170])
- by smtp.gmail.com with ESMTPSA id g4sm10236662wrd.1.2018.03.22.11.26.50
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 22 Mar 2018 11:26:51 -0700 (PDT)
-Message-ID: <1521743208.1840.55.camel@gmail.com>
-Subject: link disappears
-From: ST <smntov@gmail.com>
-To: wireguard@lists.zx2c4.com
-Date: Thu, 22 Mar 2018 20:26:48 +0200
-Content-Type: text/plain; charset="UTF-8"
-Mime-Version: 1.0
+ Thu, 22 Mar 2018 19:07:43 +0000 (UTC)
+Received: by mail-oi0-f47.google.com with SMTP id 126-v6so2366790oig.0
+ for <wireguard@lists.zx2c4.com>; Thu, 22 Mar 2018 12:19:08 -0700 (PDT)
+MIME-Version: 1.0
+References: <1521743208.1840.55.camel@gmail.com>
+In-Reply-To: <1521743208.1840.55.camel@gmail.com>
+From: Kalin KOZHUHAROV <me.kalin@gmail.com>
+Date: Thu, 22 Mar 2018 19:18:56 +0000
+Message-ID: <CAKXLc7eF4c_x-FcDT=_xoUCi2BQiU2faNkiJDFiSqDHYUi9AwQ@mail.gmail.com>
+Subject: Re: link disappears
+To: ST <smntov@gmail.com>
+Content-Type: multipart/alternative; boundary="001a1137314083f6730568052eda"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -31,61 +29,100 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hello,
+--001a1137314083f6730568052eda
+Content-Type: text/plain; charset="UTF-8"
 
-I'm new to networking in general and VPN in particular but need to setup
-infrastructure to be able to SSH easily to several people who are behind
-routers (NAT). After reading that WireGuard is super simple - I decided
-to give it try.
+On Thu, Mar 22, 2018, 19:27 ST <smntov@gmail.com> wrote:
 
-It indeed turned out to be simple till now. I setup a Debian virtual
-server with a public IP and configure it as follows:
+> Hello,
+>
+> I'm new to networking in general and VPN in particular but need to setup
+> infrastructure to be able to SSH easily to several people who are behind
+> routers (NAT). After reading that WireGuard is super simple - I decided
+> to give it try.
+>
+> It indeed turned out to be simple till now. I setup a Debian virtual
+> server with a public IP and configure it as follows:
+>
+> Server:
+>
+> # wg
+> interface: wg0
+>   public key: QMwhCacViCKcTrkevg5NxLnTEJDU1bTNgQp43rp7BHM=
+>   private key: (hidden)
+>   listening port: 12000
+>
+> peer: hiUdjmCK+iZf8wGEB+rYxMYYBF8QoOsm3nkF3asllRY=
+>   endpoint: 37.X.Y.Z:4488
+>   allowed ips: 10.8.8.9/32
 
-Server:
 
-# wg
-interface: wg0
-  public key: QMwhCacViCKcTrkevg5NxLnTEJDU1bTNgQp43rp7BHM=
-  private key: (hidden)
-  listening port: 12000
+Where is that port from?
 
-peer: hiUdjmCK+iZf8wGEB+rYxMYYBF8QoOsm3nkF3asllRY=
-  endpoint: 37.X.Y.Z:4488
-  allowed ips: 10.8.8.9/32
-  latest handshake: 17 minutes, 50 seconds ago
-  transfer: 30.94 KiB received, 22.03 KiB sent
-
-
-Node behind NAT:
-# wg
-interface: wg0
-  public key: hiUdjmCK+iZf8wGEB+rYxMYYBF8QoOsm3nkF3asllRY=
-  private key: (hidden)
-  listening port: 12000
-
-peer: QMwhCacViCKcTrkevg5NxLnTEJDU1bTNgQp43rp7BHM=
-  endpoint: 195.A.B.C:12000
-  allowed ips: 10.0.0.0/8
-  latest handshake: 19 minutes, 11 seconds ago
-  transfer: 20.70 KiB received, 35.57 KiB sent
-  persistent keepalive: every 25 seconds
 
 Is everything OK here?... At the beginning everything worked as expected
-- I could ping/SSH in both directions via the private 10.8.8.8 and
-10.8.8.9 addresses. Later I put my desktop into "hibernate mode" and
-after turning it on again could no longer use the link...
+> - I could ping/SSH in both directions via the private 10.8.8.8 and
+> 10.8.8.9 addresses. Later I put my desktop into "hibernate mode" and
+> after turning it on again could no longer use the link...
+>
 
-I tried to "ip link set wg0 down" and then "... up" - handshake time
-gets reseted, but I do not get the link back, "ip a" shows:
+I guess the NAT router in between dropped your connection by timeout.
+You either need to ping from behind-NAT first, to re-establish the tunnel,
+or if you want to do it both-ways setup portforwarding on the NAT.
 
-6: wg0: <POINTOPOINT,NOARP,UP,LOWER_UP> mtu 1420 qdisc noqueue state
-UNKNOWN group default 
-    link/none 
+Check the keepalive opions in wg, in case your NAT has only short memory.
 
-How can I revive this link, once the wg0 interface is already
-configured?
+Cheers,
+Kalin.
 
-(I have docker and virtualbox running on the desktop, each have its
-network interface... could they interfere with wg0?)
+--001a1137314083f6730568052eda
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thank you in advance!
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr">=
+On Thu, Mar 22, 2018, 19:27 ST &lt;<a href=3D"mailto:smntov@gmail.com">smnt=
+ov@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" styl=
+e=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">Hello,<=
+br>
+<br>
+I&#39;m new to networking in general and VPN in particular but need to setu=
+p<br>
+infrastructure to be able to SSH easily to several people who are behind<br=
+>
+routers (NAT). After reading that WireGuard is super simple - I decided<br>
+to give it try.<br>
+<br>
+It indeed turned out to be simple till now. I setup a Debian virtual<br>
+server with a public IP and configure it as follows:<br>
+<br>
+Server:<br>
+<br>
+# wg<br>
+interface: wg0<br>
+=C2=A0 public key: QMwhCacViCKcTrkevg5NxLnTEJDU1bTNgQp43rp7BHM=3D<br>
+=C2=A0 private key: (hidden)<br>
+=C2=A0 listening port: 12000<br>
+<br>
+peer: hiUdjmCK+iZf8wGEB+rYxMYYBF8QoOsm3nkF3asllRY=3D<br>
+=C2=A0 endpoint: 37.X.Y.Z:4488<br>
+=C2=A0 allowed ips: <a href=3D"http://10.8.8.9/32" rel=3D"noreferrer norefe=
+rrer" target=3D"_blank">10.8.8.9/32</a></blockquote></div></div><div dir=3D=
+"auto"><br></div><div dir=3D"auto"></div><div dir=3D"auto">Where is that po=
+rt from?</div><div dir=3D"auto"><br></div><div dir=3D"auto"><br></div><div =
+dir=3D"auto"><div class=3D"gmail_quote"><blockquote class=3D"gmail_quote" s=
+tyle=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">
+Is everything OK here?... At the beginning everything worked as expected<br=
+>
+- I could ping/SSH in both directions via the private 10.8.8.8 and<br>
+10.8.8.9 addresses. Later I put my desktop into &quot;hibernate mode&quot; =
+and<br>
+after turning it on again could no longer use the link...<br></blockquote><=
+/div></div><div dir=3D"auto"><br></div><div dir=3D"auto">I guess the NAT ro=
+uter in between dropped your connection by timeout.</div><div dir=3D"auto">=
+You either need to ping from behind-NAT first, to re-establish the tunnel, =
+or if you want to do it both-ways setup portforwarding on the NAT.</div><di=
+v dir=3D"auto"><br></div><div dir=3D"auto">Check the keepalive opions in wg=
+, in case your NAT has only short memory.</div><div dir=3D"auto"><br></div>=
+<div dir=3D"auto">Cheers,</div><div dir=3D"auto">Kalin.</div></div>
+
+--001a1137314083f6730568052eda--
