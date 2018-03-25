@@ -1,21 +1,20 @@
 Return-Path: smntov@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4af7956a
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ed431462
  for <wireguard@lists.zx2c4.com>;
- Sun, 25 Mar 2018 17:45:55 +0000 (UTC)
-Received: from mail-wr0-f180.google.com (mail-wr0-f180.google.com
- [209.85.128.180])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1177acd8
+ Sun, 25 Mar 2018 17:58:55 +0000 (UTC)
+Received: from mail-wm0-f50.google.com (mail-wm0-f50.google.com [74.125.82.50])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 408f5d18
  for <wireguard@lists.zx2c4.com>;
- Sun, 25 Mar 2018 17:45:55 +0000 (UTC)
-Received: by mail-wr0-f180.google.com with SMTP id p53so9147244wrc.10
- for <wireguard@lists.zx2c4.com>; Sun, 25 Mar 2018 10:57:42 -0700 (PDT)
+ Sun, 25 Mar 2018 17:58:55 +0000 (UTC)
+Received: by mail-wm0-f50.google.com with SMTP id t7so11492580wmh.5
+ for <wireguard@lists.zx2c4.com>; Sun, 25 Mar 2018 11:10:42 -0700 (PDT)
 Return-Path: <smntov@gmail.com>
-Message-ID: <1522000656.2044.8.camel@gmail.com>
+Message-ID: <1522001437.2044.11.camel@gmail.com>
 Subject: Re: add/remove a peer
 From: ST <smntov@gmail.com>
 To: Wang Jian <larkwang@gmail.com>
-Date: Sun, 25 Mar 2018 20:57:36 +0300
+Date: Sun, 25 Mar 2018 21:10:37 +0300
 In-Reply-To: <CAF75rJBe8amfHP__gQMzAf6cBj933c2yCg4wx4nA2hw98tcVXQ@mail.gmail.com>
 References: <1521919967.1921.32.camel@gmail.com>
  <CAF75rJBe8amfHP__gQMzAf6cBj933c2yCg4wx4nA2hw98tcVXQ@mail.gmail.com>
@@ -30,6 +29,7 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
+
 
 On Mon, 2018-03-26 at 00:43 +0800, Wang Jian wrote:
 > 2018-03-25 3:32 GMT+08:00 ST <smntov@gmail.com>:
@@ -75,3 +75,8 @@ I don't think it is implemented...
 Mr. Donenfeld - would this qualify as a feature request?
 
 Thank you!
+
+PS: if you have over 100 peers it is a bit a headache to find a free IP
+when adding a new peer. There is no reason WG could not scan through IPs
+it already knows and choose a free one, assign it in its own config file
+and print it out for passing to the remote peer...
