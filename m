@@ -1,29 +1,28 @@
 Return-Path: smntov@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 128fb15b
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fc791b4b
  for <wireguard@lists.zx2c4.com>;
- Mon, 26 Mar 2018 15:02:04 +0000 (UTC)
-Received: from mail-wr0-f175.google.com (mail-wr0-f175.google.com
- [209.85.128.175])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ef75d6c0
+ Mon, 26 Mar 2018 17:05:29 +0000 (UTC)
+Received: from mail-wr0-f176.google.com (mail-wr0-f176.google.com
+ [209.85.128.176])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c0df904a
  for <wireguard@lists.zx2c4.com>;
- Mon, 26 Mar 2018 15:02:04 +0000 (UTC)
-Received: by mail-wr0-f175.google.com with SMTP id u46so19294087wrc.11
- for <wireguard@lists.zx2c4.com>; Mon, 26 Mar 2018 08:13:57 -0700 (PDT)
+ Mon, 26 Mar 2018 17:05:28 +0000 (UTC)
+Received: by mail-wr0-f176.google.com with SMTP id l49so10554852wrl.4
+ for <wireguard@lists.zx2c4.com>; Mon, 26 Mar 2018 10:17:22 -0700 (PDT)
 Return-Path: <smntov@gmail.com>
-Message-ID: <1522077232.2044.31.camel@gmail.com>
-Subject: Re: add/remove a peer
+Received: from debox ([37.26.147.170])
+ by smtp.gmail.com with ESMTPSA id z12sm10821993wrg.20.2018.03.26.10.17.19
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 26 Mar 2018 10:17:21 -0700 (PDT)
+Message-ID: <1522084637.2044.53.camel@gmail.com>
+Subject: WG: ideas/features
 From: ST <smntov@gmail.com>
-To: Kalin KOZHUHAROV <me.kalin@gmail.com>
-Date: Mon, 26 Mar 2018 18:13:52 +0300
-In-Reply-To: <CAKXLc7e1cJ6E=KCMshe_=EOtnwTa-YpRwPe2RwW8vNkj3qzONw@mail.gmail.com>
-References: <1521919967.1921.32.camel@gmail.com>
- <CAF75rJBe8amfHP__gQMzAf6cBj933c2yCg4wx4nA2hw98tcVXQ@mail.gmail.com>
- <1522001437.2044.11.camel@gmail.com>
- <CAKXLc7e1cJ6E=KCMshe_=EOtnwTa-YpRwPe2RwW8vNkj3qzONw@mail.gmail.com>
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Date: Mon, 26 Mar 2018 20:17:17 +0300
 Content-Type: text/plain; charset="UTF-8"
 Mime-Version: 1.0
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -33,38 +32,55 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Sun, 2018-03-25 at 21:17 +0200, Kalin KOZHUHAROV wrote:
-> On Sun, Mar 25, 2018 at 8:10 PM, ST <smntov@gmail.com> wrote:
-> > PS: if you have over 100 peers it is a bit a headache to find a free IP
-> > when adding a new peer. There is no reason WG could not scan through IPs
-> > it already knows and choose a free one, assign it in its own config file
-> > and print it out for passing to the remote peer...
-> >
-> There is a reason, at least one, good one - it is called simplicity.
-> It is also hard to work when you are running out of disk space or
-> memory; do you expect WG to solve that for you?
+Hello,
 
-They are not related to WG at all.
+as I mentioned before I'm learning WireGuard and there are certain
+things that I need but didn't find them yet in the docs (either because
+I didn't read enough yet or because it's just not there). I'll list them
+here and you'll tell whether it is worth for a new feature or not; or
+whether I should continue reading...
 
-> Simply put, IP addressing schemes are not a part of WG, neither a requirement.
-> There are many ways to use WG and "assign random, free IP address and
-> send to a new peer" is too specific of a use case.
 
-No, sending to a peer is not what I asked - only assign a random free IP
-if no one is provided to `wg set peer ...`. That's it. Only locally and
-only internally. No keys distribution schemes or something. How to send
-it to the new peer is the problem of the sysadmin. Could be per
-encrypted email/https or whatever.
+1. Labels.
 
-> What happens when you run out of addresses?
+Is it possible to add an optional label to a peer to make it a bit more
+usable for humans (who tend not to remember IPs or keys). A label
+associated with a peer is just a string (could be a first/last name,
+email, "NY Office" or whatever). So if you read through the .conf file
+or query wg for that label - you can get the right IP to SSH to, if
+needed.
 
-You just give an error message "no more IPs are available, make one free
-or choose another IP range!"
+In the .conf file it could probably be realized through some sort of
+comments before each [Peer] section (didn't check whether # or something
+actually work). But querying wg from command line for a label is also
+handy...
 
-> How do you re-assign an IP address to a new peer?
 
-You delete the [Peer] with that IP from the .conf file (or `wg set wg0
-peer peer_pubkey remove`) and then `wg set peer allowed-ips
-old.ip.to.reassign/32 ...`
+2. Includes in .conf files.
 
-Thank you!
+Is it possible to include .conf files in the main wg0.conf file? Like:
+
+[Interface]
+...
+
+Include ./us_peers.conf
+Include ./eu_peers.conf
+
+[Peer]
+...
+
+This way you can group peers into pools, so there will be a bit more
+order/structure...
+
+But what I envision it for is easy maintenance of an N:N mesh of nodes
+where each node can communicate with all others. Each node's .conf file
+will consist of only 2 things: its own [Interface] with private data and
+one Include ./my_complete_mesh.conf with the public data of all [Peer]s.
+This single Include file can be put in a central location (or mirrored
+to several locations for failover) and all peers will pull it from there
+once in a while through a cron job or it can be pushed to them with
+rsync/ansible/ssh or whatever.
+
+What do you think?
+
+Thanks.
