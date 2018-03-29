@@ -1,23 +1,21 @@
-Return-Path: aranea@aixah.de
+Return-Path: volkswak@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 40dd654a
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 52e1f224
  for <wireguard@lists.zx2c4.com>;
- Mon, 26 Mar 2018 20:42:05 +0000 (UTC)
-Received: from wp260.webpack.hosteurope.de (wp260.webpack.hosteurope.de
- [80.237.133.29])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 96082c24
+ Thu, 29 Mar 2018 08:30:42 +0000 (UTC)
+Received: from mail-wm0-f45.google.com (mail-wm0-f45.google.com [74.125.82.45])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 827dc0fe
  for <wireguard@lists.zx2c4.com>;
- Mon, 26 Mar 2018 20:42:05 +0000 (UTC)
-Date: Mon, 26 Mar 2018 22:53:57 +0200
-From: Luis Ressel <aranea@aixah.de>
-To: Saeid Akbari <saeidscorp@yahoo.com>
-Subject: Re: Some potential bug in wg-quick re. fwmark and default route
-Message-ID: <20180326225357.4520db1c@vega.skynet.aixah.de>
-In-Reply-To: <4993616.ZASKD2KPVS@scorpbook>
-References: <4993616.ZASKD2KPVS@scorpbook>
+ Thu, 29 Mar 2018 08:30:42 +0000 (UTC)
+Received: by mail-wm0-f45.google.com with SMTP id a20so29238545wmd.1
+ for <wireguard@lists.zx2c4.com>; Thu, 29 Mar 2018 01:42:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: al so <volkswak@gmail.com>
+Date: Thu, 29 Mar 2018 01:42:54 -0700
+Message-ID: <CAJrqK=1h_MaeTGZ1nuP15W_PPHaXiaegke+tHnbyN+HWOiWFXA@mail.gmail.com>
+Subject: vpn management solution
+To: wireguard@lists.zx2c4.com
+Content-Type: multipart/alternative; boundary="94eb2c0d4d1817db810568891ca8"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -27,19 +25,18 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hello Saeid,
+--94eb2c0d4d1817db810568891ca8
+Content-Type: text/plain; charset="UTF-8"
 
-I'm sorry your inquiry has gone unanswered for two weeks; it was simply
-drowned by all the user questions. I'm glad I found it now, since you
-raise a few interesting points.
+Is there a site-site vpn management software solution with 50 sites/routers
+running wireguard?
 
-As you have discovered, wg-quick is very limited (being the wacky shell
-script that it is) and behaves oddly in some corner cases.
+--94eb2c0d4d1817db810568891ca8
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-I'm drawing a few diagrams right now to see if I can find a way to
-improve the add_route/add_default and del_if parts of wg-quick without
-increasing the overall complexity too much. Both of your suggestions are
-good ideas; if you have further input, that'd be much appreciated!
+<div dir=3D"ltr"><div class=3D"gmail_extra"><div class=3D"gmail_quote"><div=
+>Is there a site-site vpn management software solution with 50 sites/router=
+s running wireguard?=C2=A0</div></div><br></div></div>
 
-Cheers,
-Luis
+--94eb2c0d4d1817db810568891ca8--
