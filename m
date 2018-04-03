@@ -1,21 +1,17 @@
-Return-Path: tiraen@gmail.com
+Return-Path: vtol@gmx.net
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2a933be6
- for <wireguard@lists.zx2c4.com>;
- Tue, 27 Mar 2018 21:01:07 +0000 (UTC)
-Received: from mail-ua0-f169.google.com (mail-ua0-f169.google.com
- [209.85.217.169])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id eeed678c
- for <wireguard@lists.zx2c4.com>;
- Tue, 27 Mar 2018 21:01:07 +0000 (UTC)
-Received: by mail-ua0-f169.google.com with SMTP id q38so215833uad.5
- for <wireguard@lists.zx2c4.com>; Tue, 27 Mar 2018 14:13:10 -0700 (PDT)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cfcc4aea
+ for <wireguard@lists.zx2c4.com>; Tue, 3 Apr 2018 15:06:54 +0000 (UTC)
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 390f1501
+ for <wireguard@lists.zx2c4.com>; Tue, 3 Apr 2018 15:06:53 +0000 (UTC)
 MIME-Version: 1.0
-From: Tiraen <tiraen@gmail.com>
-Message-ID: <CANhj9oyqrDT-1BNe6ZFr=fAcW7+PJ+8GjvhTJP23vyjpJ8iO4w@mail.gmail.com>
-Subject: Question about peers count
+Message-ID: <trinity-d392f714-af63-4df5-a7bf-3bc24d3edf34-1522768786475@3c-app-gmx-bs64>
+From: vtol@gmx.net
 To: wireguard@lists.zx2c4.com
-Content-Type: multipart/alternative; boundary="94eb2c04c9a68457b205686b5bd0"
+Subject: wg-quick (script snippets) for OpenWRT/LEDE
+Content-Type: text/html; charset=UTF-8
+Date: Tue, 3 Apr 2018 17:19:46 +0200
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -24,45 +20,38 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Date: Tue, 27 Mar 2018 21:01:07 -0000
 
---94eb2c04c9a68457b205686b5bd0
-Content-Type: text/plain; charset="UTF-8"
+<html><head></head><body><div style="font-family: Verdana;font-size: 12.0px;"><div>Hi,</div>
 
-Good evening
+<div>&nbsp;</div>
 
-the question of such plan:
+<div>it appears that wg-quick is not provided for OpenWRT/LEDE.</div>
 
-Is the number of nodes that I can specify in configs be limited? Those if
-I'm using a software to organize a ptp network on a principle, for example
-500 minus 1 node, this will work?
+<div>&nbsp;</div>
 
+<div>The reason is not really clear to me. As far I understand wg-quick depends on BASH whilst the default shell in OpenWRT/LEDE is ASH.</div>
 
+<div>This however can be easily remidied by installing the BASH package from the OpenWRT/LEDE repo.</div>
 
--- 
-With best regards,
+<div>&nbsp;</div>
 
-Vyacheslav Yakushev,
+<div>OpenWRT/LEDE is utilising netifd for network configuration which is lacking th3 versatility of wg-quick with there script snippets</div>
 
-Unix system administrator
+<div>&nbsp;</div>
 
-https://t.me/kelewind
+<div>PRE_UP=( )<br/>
+POST_UP=( )<br/>
+PRE_DOWN=( )<br/>
+POST_DOWN=( )</div>
 
---94eb2c04c9a68457b205686b5bd0
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+<div>&nbsp;</div>
 
-<div dir=3D"ltr">Good evening<br><br>the question of such plan:<br><br>Is t=
-he number of nodes that I can specify in configs be limited? Those if I&#39=
-;m using a software to organize a ptp network on a principle, for example 5=
-00 minus 1 node, this will work?<br><br><br clear=3D"all"><div><br></div>--=
- <br><div class=3D"gmail_signature"><div dir=3D"ltr"><div><div dir=3D"ltr">=
-<div><div dir=3D"ltr"><div><span lang=3D"en"><span>With best</span> <span>r=
-egards,</span><br><br><span>Vyacheslav</span> <span>Yakushev</span><span>,<=
-/span><br><br><span>Unix</span> <span>system administrator<br></span><span>=
-</span><span></span><br><a href=3D"https://t.me/kelewind" target=3D"_blank"=
->https://t.me/kelewind</a><br><span></span></span><span lang=3D"en"><span><=
-/span></span></div></div></div></div></div></div></div>
-</div>
+<div>Is there a way to get those script snippets working in OpenWRT/LEDE as such is required in dynamic/split/kill-switch routing scenarios.</div>
 
---94eb2c04c9a68457b205686b5bd0--
+<div>&nbsp;</div>
+
+<div>OpenVPN provides a similar script functionality which is however not stripped on the OpenWRT/LEDE repo, respectively it does not require an extra tool package. I find it rather curious that the aforementioned script snippets are not part of wg but rather implemented in wg-quick which then is absent from OpenWRT/LEDE.</div>
+
+<div>&nbsp;</div>
+
+<div class="signature">&nbsp;</div></div></body></html>
