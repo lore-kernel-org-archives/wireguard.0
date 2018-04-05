@@ -1,23 +1,28 @@
-Return-Path: luci@createc.ro
+Return-Path: dkg@fifthhorseman.net
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 53e9bd84
- for <wireguard@lists.zx2c4.com>; Thu, 5 Apr 2018 12:46:03 +0000 (UTC)
-Received: from mail.intelterm.ro (174.15.122.86.static.cluj.rdsnet.ro
- [86.122.15.174])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6f8cdcc4
- for <wireguard@lists.zx2c4.com>; Thu, 5 Apr 2018 12:46:03 +0000 (UTC)
-Received: from [192.168.123.118] (unknown [188.24.75.96])
- by mail.intelterm.ro (Postfix) with ESMTPSA id 283D92218C77
- for <wireguard@lists.zx2c4.com>; Thu,  5 Apr 2018 15:59:11 +0300 (EEST)
-Subject: Re: ssh console hang
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c5c22664
+ for <wireguard@lists.zx2c4.com>; Thu, 5 Apr 2018 14:55:16 +0000 (UTC)
+Received: from che.mayfirst.org (che.mayfirst.org [162.247.75.118])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 283e28fe
+ for <wireguard@lists.zx2c4.com>; Thu, 5 Apr 2018 14:55:16 +0000 (UTC)
+From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
 To: wireguard@lists.zx2c4.com
-References: <b76eeb2c-9d82-3178-4b05-1d91e5bdff1b@createc.ro>
-From: Lucian Cristian <luci@createc.ro>
-Message-ID: <8b0fc0a4-54f5-97ce-9244-f0d5cfe1883f@createc.ro>
-Date: Thu, 5 Apr 2018 15:59:11 +0300
+Subject: Re: making wireguard work on RHEL7/etc.
+In-Reply-To: <20170627110812.GD3026@zx2c4.com>
+References: <alpine.LRH.2.20.1706241613350.14074@bcny.fcbq.bet>
+ <87o9tbuq7a.fsf@correspondwith.me>
+ <alpine.LRH.2.20.1706260917250.14074@bcny.fcbq.bet>
+ <CAHmME9p++Q0v6Ypt2Y5AFZO36hHnTKv7KBnWNnSk84V8YK+oJw@mail.gmail.com>
+ <alpine.LRH.2.20.1706261023540.14074@bcny.fcbq.bet>
+ <CAHmME9oHG6a1==KzrrfuvmkKoVJHhTtToP00qYtcKXEGDCnm8Q@mail.gmail.com>
+ <20170627073521.22a725fc@penny>
+ <alpine.LRH.2.20.1706270821440.17486@bcny.fcbq.bet>
+ <20170627113906.391bb9a6.andrej@kacian.sk> <20170627110812.GD3026@zx2c4.com>
+Date: Thu, 05 Apr 2018 11:08:20 -0400
+Message-ID: <87k1tly9ln.fsf@fifthhorseman.net>
 MIME-Version: 1.0
-In-Reply-To: <b76eeb2c-9d82-3178-4b05-1d91e5bdff1b@createc.ro>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain
+Cc: 894909@bugs.debian.org
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -27,27 +32,25 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On 05.04.2018 09:44, Lucian Cristian wrote:
-> Starting some time ago I get ssh console hangs when the screen is 
-> displaying lots of data (cat large file, compile something with lots 
-> of verbosity) I tried lowering the MTU of wg interface to 1380 or the 
-> MTU of the host but it's not helping. What can I try to do ?
-> I observed that the hang started to happen after I changed the routing 
-> protocol on the interface from RIP to OSPF, can this affect it because 
-> I don't see why it should ?
-> the topology is like this:
-> windows client - openwrt wg "client" (OSPF) - ubuntu wg "server" 
-> (OSPF) - cisco switch - VM linux host
+On Tue 2017-06-27 13:08:14 +0200, Jason A. Donenfeld wrote:
+> compat.h is a dumpster fire already. Tons of people use the RHEL kernel.
+> I think supporting it won't make an already gross cess pool any more
+> disgusting. It's a file of hacks; I might as well add another.
 >
-> Regards
->
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
+> (I probably won't add hacks, though, for the heaps of random custom
+> Android vendor kernels.)
 
-For the moment seems that moving to OSPF was the problem, the ubuntu 
-server has multiple vlans and OSPF was listening on all of them and the 
-routes were going randomly by the wrong path
+sorry to dredge this thread back up from the archives...
 
-Regards
+https://bugs.debian.org/894909 shows someone trying to build wireguard
+against the debian 8 ("jessie" aka "oldstable") 3.16 kernel saying that
+they needed a similar patch to make the kernel module build.
+
+I know that debian's kernel team does backport a lot of fixes to our
+supported older kernels, similar to older releases of RedHat.
+
+i'm asking over on #debian-kernel (on OFTC) to see whether there is some
+similar to RHEL_MAJOR or CONFIG_SUSE_KERNEL or UTS_UBUNTU_RELEASE_ABI
+that we can use for jessie.
+
+    --dkg
