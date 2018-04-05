@@ -1,33 +1,29 @@
-Return-Path: tim@sedlmeyer.us
+Return-Path: dkg@fifthhorseman.net
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id eaf86c36
- for <wireguard@lists.zx2c4.com>; Thu, 5 Apr 2018 15:53:44 +0000 (UTC)
-Received: from mail-it0-f68.google.com (mail-it0-f68.google.com
- [209.85.214.68])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0edf738d
- for <wireguard@lists.zx2c4.com>; Thu, 5 Apr 2018 15:53:44 +0000 (UTC)
-Received: by mail-it0-f68.google.com with SMTP id b5-v6so3395271itj.1
- for <wireguard@lists.zx2c4.com>; Thu, 05 Apr 2018 09:06:54 -0700 (PDT)
-Return-Path: <tim@sedlmeyer.us>
-Received: from mail-io0-f172.google.com (mail-io0-f172.google.com.
- [209.85.223.172])
- by smtp.gmail.com with ESMTPSA id z8-v6sm4531660itc.13.2018.04.05.09.06.52
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 05 Apr 2018 09:06:52 -0700 (PDT)
-Sender: Timothy Sedlmeyer <tim@sedlmeyer.us>
-Received: by mail-io0-f172.google.com with SMTP id o4so31244372iod.3
- for <wireguard@lists.zx2c4.com>; Thu, 05 Apr 2018 09:06:52 -0700 (PDT)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e63a7a25
+ for <wireguard@lists.zx2c4.com>; Thu, 5 Apr 2018 16:02:39 +0000 (UTC)
+Received: from che.mayfirst.org (che.mayfirst.org [162.247.75.118])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 486d8980
+ for <wireguard@lists.zx2c4.com>; Thu, 5 Apr 2018 16:02:39 +0000 (UTC)
+From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+To: wireguard@lists.zx2c4.com
+Subject: Re: making wireguard work on RHEL7/etc.
+In-Reply-To: <87k1tly9ln.fsf@fifthhorseman.net>
+References: <alpine.LRH.2.20.1706241613350.14074@bcny.fcbq.bet>
+ <87o9tbuq7a.fsf@correspondwith.me>
+ <alpine.LRH.2.20.1706260917250.14074@bcny.fcbq.bet>
+ <CAHmME9p++Q0v6Ypt2Y5AFZO36hHnTKv7KBnWNnSk84V8YK+oJw@mail.gmail.com>
+ <alpine.LRH.2.20.1706261023540.14074@bcny.fcbq.bet>
+ <CAHmME9oHG6a1==KzrrfuvmkKoVJHhTtToP00qYtcKXEGDCnm8Q@mail.gmail.com>
+ <20170627073521.22a725fc@penny>
+ <alpine.LRH.2.20.1706270821440.17486@bcny.fcbq.bet>
+ <20170627113906.391bb9a6.andrej@kacian.sk> <20170627110812.GD3026@zx2c4.com>
+ <87k1tly9ln.fsf@fifthhorseman.net>
+Date: Thu, 05 Apr 2018 12:15:44 -0400
+Message-ID: <87bmexy6hb.fsf@fifthhorseman.net>
 MIME-Version: 1.0
-In-Reply-To: <1a0ce6c1-4f62-509f-8d8e-9f0821d6f465@urlichs.de>
-References: <CADX+UFjEBcWRsL3SRv5_b0ezU0adcURqOJf=MvDbQkSXg3JRHg@mail.gmail.com>
- <1a0ce6c1-4f62-509f-8d8e-9f0821d6f465@urlichs.de>
-From: Tim Sedlmeyer <tim@sedlmeyer.org>
-Date: Thu, 5 Apr 2018 12:06:51 -0400
-Message-ID: <CAK_h9uGko4XWco9UVi2nRj7vMSj3tSKHyPhpPW32fZ5qbb4g3Q@mail.gmail.com>
-Subject: Re: Using WG for transport security in a p2p network
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+Cc: 894909@bugs.debian.org
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -37,49 +33,49 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Thu, Apr 5, 2018 at 3:13 AM, Matthias Urlichs <matthias@urlichs.de> wrote:
-> Hi,
+On Thu 2018-04-05 11:08:20 -0400, Daniel Kahn Gillmor wrote:
+> On Tue 2017-06-27 13:08:14 +0200, Jason A. Donenfeld wrote:
+>> compat.h is a dumpster fire already. Tons of people use the RHEL kernel.
+>> I think supporting it won't make an already gross cess pool any more
+>> disgusting. It's a file of hacks; I might as well add another.
+>>
+>> (I probably won't add hacks, though, for the heaps of random custom
+>> Android vendor kernels.)
 >
+> sorry to dredge this thread back up from the archives...
 >
-> Another option would be to run insecure QUIC or SCTP on top of WireGuard,
+> https://bugs.debian.org/894909 shows someone trying to build wireguard
+> against the debian 8 ("jessie" aka "oldstable") 3.16 kernel saying that
+> they needed a similar patch to make the kernel module build.
 >
-> You cannot run SCTP on the Internet anyway. Too many routers block anything
-> that's not TCP/UDP/ICMP.
+> I know that debian's kernel team does backport a lot of fixes to our
+> supported older kernels, similar to older releases of RedHat.
 >
-> I'm also wondering how easy this would be to program. It would clearly be
-> much
-> more heavyweight than simply opening a socket, but I guess it can be done
-> via
-> invocations of the `wg` or `wg-quick` tools.
->
-> Don't use the tools. There's a library around that you can use to do all of
-> the heavy lifting via netlink sockets. You'll also need the privilege to
-> assign addresses and routes to the WG interfaces.
->
-> Ideally we wouldn't need root
->
-> If you go the netlink route, you do need one process that has the
-> appropriate privilege, which means root at install time (but not runtime).
+> i'm asking over on #debian-kernel (on OFTC) to see whether there is some
+> similar to RHEL_MAJOR or CONFIG_SUSE_KERNEL or UTS_UBUNTU_RELEASE_ABI
+> that we can use for jessie.
 
-The process doesn't need full root permissions even at install time.
-Whatever process is going to create and manage
-the interfaces needs the CAP_NET_ADMIN capability.
+Ben Hutchings of the debian kernel team followed up there suggesting
+feature tests or autoconf-type checks:
 
->
->
-> Once the network is live, we'd need the transport protocol to be relatively
-> stable, or at least be easily upgradeable
->
-> Well, the WG wire protocol is supposed to be stable by now. Switching away
-> from it would require new code on your side anyway, so you can implement the
-> exact method of switching at that time.
->
-> --
-> -- Matthias Urlichs
->
->
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
->
+11:02 < dkg> https://bugs.debian.org/894909 suggests that some of the
+             backported fixes to 3.16 in jessie are getting in the way
+             of compiling wireguard.  the referenced upstream thread
+             shows that they worked around the problem for RHEL7 using
+             some redhat-specific #defines
+11:02 -zwiebelbot:#debian-kernel- Debian#894909: wireguard-dkms:
+                                  dev_recursion_level definition problem
+                                  - https://bugs.debian.org/894909
+11:02 < dkg> is there a comparable fix for older debian kernels?
+11:04 < dkg> they have tests for #if RHEL_MAJOR == 7
+11:04 < dkg> and #ifdef UTS_UBUNTU_RELEASE_ABI
+11:52 < bwh> dkg: I've been there, and the way to deal with this is autoconf-type checks
+11:55 < bwh> Well, either '#ifdef feature' or an autoconf-type check
+
+So i don't think there's a comparable #define we can use for the
+maintained debian kernels :/
+
+i don't know how dev_recursion_level works.  can we wrap the #define
+dev_recursion_level() 0 inside an #ifndef dev_recursion_level safely?
+
+           --dkg
