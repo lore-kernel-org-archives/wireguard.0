@@ -1,22 +1,27 @@
-Return-Path: matthias@urlichs.de
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 64a22f18
- for <wireguard@lists.zx2c4.com>; Thu, 5 Apr 2018 19:37:26 +0000 (UTC)
-Received: from netz.smurf.noris.de (mail.smurf.noris.de [213.95.149.21])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 66889138
- for <wireguard@lists.zx2c4.com>; Thu, 5 Apr 2018 19:37:26 +0000 (UTC)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ad6a8fc1
+ for <wireguard@lists.zx2c4.com>; Fri, 6 Apr 2018 17:46:38 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id efbbd2d5
+ for <wireguard@lists.zx2c4.com>; Fri, 6 Apr 2018 17:46:38 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d34ffe7c
+ for <wireguard@lists.zx2c4.com>; Fri, 6 Apr 2018 17:37:46 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 63b2244c
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>; Fri, 6 Apr 2018 17:37:46 +0000 (UTC)
+Received: by mail-ot0-f178.google.com with SMTP id 23-v6so2091001otj.0
+ for <wireguard@lists.zx2c4.com>; Fri, 06 Apr 2018 10:59:55 -0700 (PDT)
+MIME-Version: 1.0
+In-Reply-To: <CADX+UFjEBcWRsL3SRv5_b0ezU0adcURqOJf=MvDbQkSXg3JRHg@mail.gmail.com>
+References: <CADX+UFjEBcWRsL3SRv5_b0ezU0adcURqOJf=MvDbQkSXg3JRHg@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Fri, 6 Apr 2018 19:59:54 +0200
+Message-ID: <CAHmME9racrutSPmM_Oy6eHAx3B=ah1=xzchzb_msZ5F9Zf-rGA@mail.gmail.com>
 Subject: Re: Using WG for transport security in a p2p network
 To: Ximin Luo <ximin@dfinity.org>
-References: <CADX+UFjEBcWRsL3SRv5_b0ezU0adcURqOJf=MvDbQkSXg3JRHg@mail.gmail.com>
- <1a0ce6c1-4f62-509f-8d8e-9f0821d6f465@urlichs.de>
- <CADX+UFjb3MyJbPMpA78m2j4ygtGxxR-No6kFEV265mf55tT7bA@mail.gmail.com>
-From: Matthias Urlichs <matthias@urlichs.de>
-Message-ID: <cbd41498-1510-65a3-6ada-d570936eed45@urlichs.de>
-Date: Thu, 5 Apr 2018 21:49:31 +0200
-MIME-Version: 1.0
-In-Reply-To: <CADX+UFjb3MyJbPMpA78m2j4ygtGxxR-No6kFEV265mf55tT7bA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Cc: wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,23 +31,50 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On 05.04.2018 20:07, Ximin Luo wrote:
-> In the typical WG use-case this is not an issue because the network
-> admin controls both endpoints and can upgrade both simultaneously, but
-> this wouldn't be the case for our p2p network.
+Hi Ximin,
 
-Your p2p network would need to exchange v2 keys before upgrading. Thus,
-as soon as you know that an endpoint supports v2 you also try to connect
-to it that way. When the v2 connection succeeds, the other system knows
-that you have its new key, thus it can disable v1 connections from you
-(and vice versa).
+On Thu, Apr 5, 2018 at 5:22 AM, Ximin Luo <ximin@dfinity.org> wrote:
+> Our usage would indeed involve setting up and tearing down interfaces ~30
+> times
+> a week in an automated fashion, which might be "strange" going by the above.
 
-You'll need to pre-define a private IPv6 address range (with enough
-random bits in it that a collision with anybody's local address usage is
-unlikely) for your wireguard network. To facilitate upgrades, you can
-simply define two bits of that address range to be a rolling version
-number and you're basically done: you just route each subnet to the
-appropriate wireguard interface.
+No certainly not strange. Actually, there's no amount of setting up
+and tearing down that should be considered a bad thing. I have a
+script I run during development that sets up thousands of interfaces,
+each with hundreds of thousands of peers, connects them to each other,
+and then toggles everything up and down over and over. I have another
+script that just adds and removes interfaces really fast. The purpose
+is to stress test WireGuard to ensure it's resilient in these types of
+configurations. So... I think you should be good with a mere 30 a week
+;-).
 
--- 
--- Matthias Urlichs
+>
+> I'm also wondering how easy this would be to program. It would clearly be
+> much
+> more heavyweight than simply opening a socket, but I guess it can be done
+> via
+> invocations of the `wg` or `wg-quick` tools. Has anyone had any experience
+> with
+> this level of WG automation, could you share your thoughts? Would the
+> program
+> need any extra system-level privileges? Ideally we wouldn't need root, of
+> course - does that mean we're forced to wait for a userspace WG library such
+> as
+> wireguard-rs? I understand there is a performance penalty here, but I'd have
+> to
+> run benchmarks to know if this affects our use-case significantly.
+
+The overhead and performance penalty is minimal, and you should easily
+be able to get away with doing this. You can script it pretty easily
+using wg (it needs only CAP_NET_ADMIN), or if you want closer
+integration and more sophisticated priv separation, you could open the
+netlink socket, then drop privs, and use something like the
+embeddable-wg-library to automate everything:
+https://git.zx2c4.com/WireGuard/tree/contrib/examples/embeddable-wg-library
+
+
+Let me know if you have any more questions or ways in which I can help
+you guys out with the p2p protocol.
+
+Regards,
+Jason
