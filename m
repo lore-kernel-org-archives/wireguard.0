@@ -1,26 +1,24 @@
-Return-Path: smntov@gmail.com
+Return-Path: luis.dominguez@mtz.desoft.cu
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 014f5d2e
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 126a2be0
  for <wireguard@lists.zx2c4.com>;
- Tue, 10 Apr 2018 12:44:04 +0000 (UTC)
-Received: from mail-wm0-f53.google.com (mail-wm0-f53.google.com [74.125.82.53])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 981d90c4
+ Tue, 10 Apr 2018 13:02:39 +0000 (UTC)
+Received: from mx.desoft.cu (mx.desoft.cu [200.55.138.203])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 06d131bd
  for <wireguard@lists.zx2c4.com>;
- Tue, 10 Apr 2018 12:44:04 +0000 (UTC)
-Received: by mail-wm0-f53.google.com with SMTP id r82so23381419wme.0
- for <wireguard@lists.zx2c4.com>; Tue, 10 Apr 2018 05:57:50 -0700 (PDT)
-Return-Path: <smntov@gmail.com>
-Message-ID: <1523365067.9961.32.camel@gmail.com>
-Subject: Re: wg-ip, a tool to assign automatic ip addresses to wireguard
- interfaces
-From: ST <smntov@gmail.com>
-To: Christophe-Marie Duquesne <chmd@chmd.fr>
-Date: Tue, 10 Apr 2018 15:57:47 +0300
-In-Reply-To: <CAHLp1Yk8oz-agDoJzKuU1SK9zsFL7HKep02r-n3hNcrYffp-CQ@mail.gmail.com>
-References: <CAHLp1Yk8oz-agDoJzKuU1SK9zsFL7HKep02r-n3hNcrYffp-CQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Mime-Version: 1.0
-Cc: wireguard@lists.zx2c4.com
+ Tue, 10 Apr 2018 13:02:38 +0000 (UTC)
+Date: Tue, 10 Apr 2018 09:16:16 -0400 (CDT)
+From: =?utf-8?Q?Ing=2E_Luis_Felipe_Dom=C3=ADnguez?= Vega
+ <luis.dominguez@mtz.desoft.cu>
+To: Eric Light <eric@ericlight.com>
+Message-ID: <632862084.551608.1523366176107.JavaMail.zimbra@mtz.desoft.cu>
+In-Reply-To: <1523310199.2505184.1332166016.6F8F8F11@webmail.messagingengine.com>
+References: <1183404859.513012.1523305020741.JavaMail.zimbra@mtz.desoft.cu>
+ <1523310199.2505184.1332166016.6F8F8F11@webmail.messagingengine.com>
+Subject: Re: Working only one way
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: wireguard <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -30,68 +28,118 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-PS: you write that the "tool does not handle collisions", but does it
-recognize and/or warn about them? I.e. if a peer with the newly
-suggested IP exists already - will it warn?
+Jajajajaj sorry and sorry.. that's was the problem (the server interface wi=
+th .0), ufff now is working, thanks... I love this new VPN, is so easy to c=
+onfigure. I have a question, I'm new in WireGuard:
 
-For automation it would be nice to have some sort of "force" or
-"keep-trying" options, so the tool regenerates the keys trying to find a
-free IP and subsequently assigns it. With the enabled SaveConfig options
-the new IP will be saved in the config file...
+1 - Can I change the length (to 4096 bits for example) of private key? or i=
+s not neccesary, I am a little paranoic with this kind of security cipher.
 
 
-On Tue, 2018-04-10 at 14:32 +0200, Christophe-Marie Duquesne wrote:
-> Hi,
-> 
-> In an old thread [1], danrl suggested deriving node addresses from the
-> peer public keys. I liked this idea, so I wrote a tool to do it. It
-> works like this:
-> 
-> generate an ipv6 address from the default ipv6 subnet of the script
-> (fd1a:6126:2887::/48):
-> wg-ip -6 gen uymIRDopubn0XRLLRTymOvuK2iG90wRcXxhsb2EOYzg=
-> fd1a:6126:2887:17a1:2793:518a:7886:e8a4
-> 
-> generate an ipv4 address from the default ipv4 subnet of the script
-> (10.0.0.0/8):
-> wg-ip -4 gen uymIRDopubn0XRLLRTymOvuK2iG90wRcXxhsb2EOYzg=
-> 10.0.37.175
-> 
-> generate an ip address from a custom subnet (ip version inferred from prefix):
-> wg-ip --subnet 172.16.0.0/12 gen uymIRDopubn0XRLLRTymOvuK2iG90wRcXxhsb2EOYzg=
-> 172.16.37.175
-> 
-> assign an ip address to the selected interface and allowed ips to the
-> peers, all in the same subnet (existing allowed ips are preserved):
-> wg-ip [-4|-6|--subnet <subnet>] [dev wg0] apply
-> 
-> or just see which commands 'apply' would run
-> wg-ip [-4|-6|--subnet <subnet>] [dryrun]
-> 
-> Derivation algorithm: the bytes of the ip address are taken from the
-> beginning bytes of the sha256 hash of the corresponding pubkey, and
-> are masked with the network mask.
-> 
-> The tool does not handle collisions nor special addresses: The idea is
-> to pick a subnet large enough so that these cases are unlikely enough.
-> For ipv6, with a /48 prefix, that would be a 80 bits address space, so
-> birthday attacks say one needs about 2^40 peers until they reach a
-> significant risk of collision, which will fill the routing table well
-> before this even becomes a problem. For ipv4 with the 10.0.0.0/8, the
-> address space is 24 bits, so odds are still pretty good until 2^12
-> peers, but this time it is reachable. For my personal needs (about 10
-> peers) and for anyone with a network of less than 1000 peers (if my
-> maths are correct), it should be largely sufficient (collision
-> probability under 5%). Worst case, if you don't like the ip address
-> generated, just use another key pair.
-> 
-> It is written in bash, in the spirit of wg-quick. I am definitely open
-> to have it integrated in wireguard if people show interest.
-> 
-> https://github.com/chmduquesne/wg-ip
-> 
-> [1]: https://lists.zx2c4.com/pipermail/wireguard/2016-December/000812.html
+----- Mensaje original -----
+De: "Eric Light" <eric@ericlight.com>
+Para: "wireguard" <wireguard@lists.zx2c4.com>
+Enviados: Lunes, 9 de Abril 2018 17:43:19
+Asunto: Re: Working only one way
+
+Hi Luis,
+
+Welcome!
+
+I would change your server Interface address to .1/24; .0/24 would be the n=
+etwork address so would probably behave poorly.
+
+Then I'd change your client Interface address to a /24 as well.  I think be=
+cause the scope of that interface is /32, the routing table is probably not=
+ sending packets down your wireguard route.
+
+E
+
+--------------------------------------------
+Q: Why is this email five sentences or less?
+A: http://five.sentenc.es
+
+On Tue, 10 Apr 2018, at 08:17, Ing. Luis Felipe Dom=C3=ADnguez Vega wrote:
+> Hello people, i currently installed wireguard (So easy !!!!!!), but i=20
+> have a problem i have ping from server -> client, but not client ->=20
+> server, when in server I execute tcpdump -i empresa only i see ICMP=20
+> request and not response:=20
+>=20
+> Config server:=20
+> ************************************
+> [Interface]=20
+> Address =3D 10.11.2.0/24=20
+> SaveConfig =3D true=20
+> ListenPort =3D 51820=20
+> PrivateKey =3D --------=20
+>=20
+> [Peer]=20
+> PublicKey =3D hgwZKihI4axZZwoWPsucpX+rZMo6dEhnJgb7ulZmzDE=3D=20
+> AllowedIPs =3D 10.11.2.2/32=20
+> Endpoint =3D 192.168.0.215:59160
+>=20
+>=20
+> Config client:=20
+> ************************************
+> [Interface]
+> PrivateKey =3D --------=20
+> Address =3D 10.11.2.2/32
+>=20
+> [Peer]
+> PublicKey =3D v+5UJACf6odzR4ct0vPheVaaKpIdEMjqa9SECloq5CE=3D
+> Endpoint =3D 192.168.0.251:51820
+> AllowedIPs =3D 10.11.2.0/24
+>=20
+>=20
+>=20
+>=20
+> Routing in server:
+> ------------------
+> default via 192.168.0.254 dev enp1s0 onlink=20
+> 10.11.2.0/24 dev empresa proto kernel scope link src 10.11.2.0=20
+> 192.168.0.0/24 dev enp1s0 proto kernel scope link src 192.168.0.251
+>=20
+> Routing in client:
+> ------------------
+> default via 192.168.0.254 dev enp3s0 proto static metric 100=20
+> 10.8.0.0/24 via 10.11.0.57 dev enp5s0 proto static metric 100=20
+> 10.9.0.0/24 via 10.11.0.57 dev enp5s0 proto static metric 100=20
+> 10.11.0.0/24 dev enp5s0 proto kernel scope link src 10.11.0.61 metric 100=
+=20
+> 10.11.2.0/24 dev empresa-vpn scope link=20
+> 172.17.0.0/16 dev docker0 proto kernel scope link src 172.17.0.1=20
+> 192.168.0.0/24 dev enp3s0 proto kernel scope link src 192.168.0.215 metri=
+c 100=20
+> 192.168.44.0/24 via 10.11.0.254 dev enp5s0 proto static metric 100
+>=20
+>=20
+>=20
+>=20
+> --=20
+> Luis Felipe Dominguez Vega=20
+> System Administration in Desoft Matanzas | Mob: [ tel:+5353694785 |=20
+> +5353694785 ] | [ http://www.desoft.cu/ | www.desoft.cu ]=20
+> [ https://www.facebook.com/lfdominguez0104 |    ]=20
+> [ https://www.linkedin.com/in/luis-felipe-dom%C3%ADnguez-vega-47725794/=
+=20
+> |    ] [ https://twitter.com/LuisFelipeDV1 |    ]
+> XVII CONVENCI=C3=93N Y FERIA INTERNACIONAL: INFORM=C3=81TICA 2018. En La =
+Habana,=20
+> Cuba, del 19 al 23 de marzo
+>=20
 > _______________________________________________
 > WireGuard mailing list
 > WireGuard@lists.zx2c4.com
 > https://lists.zx2c4.com/mailman/listinfo/wireguard
+_______________________________________________
+WireGuard mailing list
+WireGuard@lists.zx2c4.com
+https://lists.zx2c4.com/mailman/listinfo/wireguard
+--=20
+Luis Felipe Dominguez Vega=20
+System Administration in Desoft Matanzas | Mob: [ tel:+5353694785 | +535369=
+4785 ] | [ http://www.desoft.cu/ | www.desoft.cu ]=20
+[ https://www.facebook.com/lfdominguez0104 |    ] [ https://www.linkedin.co=
+m/in/luis-felipe-dom%C3%ADnguez-vega-47725794/ |    ] [ https://twitter.com=
+/LuisFelipeDV1 |    ]
+XVII CONVENCIÓN Y FERIA INTERNACIONAL: INFORMÁTICA 2018. En La Habana, Cuba, del 19 al 23 de marzo
