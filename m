@@ -1,22 +1,21 @@
 Return-Path: smntov@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 452ade78
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 014f5d2e
  for <wireguard@lists.zx2c4.com>;
- Tue, 10 Apr 2018 12:35:23 +0000 (UTC)
-Received: from mail-wr0-f169.google.com (mail-wr0-f169.google.com
- [209.85.128.169])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8ad3ede6
+ Tue, 10 Apr 2018 12:44:04 +0000 (UTC)
+Received: from mail-wm0-f53.google.com (mail-wm0-f53.google.com [74.125.82.53])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 981d90c4
  for <wireguard@lists.zx2c4.com>;
- Tue, 10 Apr 2018 12:35:22 +0000 (UTC)
-Received: by mail-wr0-f169.google.com with SMTP id d1so12665517wrj.13
- for <wireguard@lists.zx2c4.com>; Tue, 10 Apr 2018 05:49:09 -0700 (PDT)
+ Tue, 10 Apr 2018 12:44:04 +0000 (UTC)
+Received: by mail-wm0-f53.google.com with SMTP id r82so23381419wme.0
+ for <wireguard@lists.zx2c4.com>; Tue, 10 Apr 2018 05:57:50 -0700 (PDT)
 Return-Path: <smntov@gmail.com>
-Message-ID: <1523364538.9961.27.camel@gmail.com>
+Message-ID: <1523365067.9961.32.camel@gmail.com>
 Subject: Re: wg-ip, a tool to assign automatic ip addresses to wireguard
  interfaces
 From: ST <smntov@gmail.com>
 To: Christophe-Marie Duquesne <chmd@chmd.fr>
-Date: Tue, 10 Apr 2018 15:48:58 +0300
+Date: Tue, 10 Apr 2018 15:57:47 +0300
 In-Reply-To: <CAHLp1Yk8oz-agDoJzKuU1SK9zsFL7HKep02r-n3hNcrYffp-CQ@mail.gmail.com>
 References: <CAHLp1Yk8oz-agDoJzKuU1SK9zsFL7HKep02r-n3hNcrYffp-CQ@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"
@@ -31,12 +30,14 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Christophe-Marie,
+PS: you write that the "tool does not handle collisions", but does it
+recognize and/or warn about them? I.e. if a peer with the newly
+suggested IP exists already - will it warn?
 
-I'm interested in it being integrated into WG, as it is exactly what I
-asked for in this list several weeks ago.
-
-Thank you!
+For automation it would be nice to have some sort of "force" or
+"keep-trying" options, so the tool regenerates the keys trying to find a
+free IP and subsequently assigns it. With the enabled SaveConfig options
+the new IP will be saved in the config file...
 
 
 On Tue, 2018-04-10 at 14:32 +0200, Christophe-Marie Duquesne wrote:
