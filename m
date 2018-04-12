@@ -1,20 +1,27 @@
-Return-Path: riccardo@rcrdbrt.com
+Return-Path: chm.duquesne@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 295a4db4
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1e785d27
  for <wireguard@lists.zx2c4.com>;
- Thu, 12 Apr 2018 08:55:33 +0000 (UTC)
-Received: from mail.rcrdbrt.com (rcrdbrt.com [45.32.6.71])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dd09c5d5
+ Thu, 12 Apr 2018 11:28:46 +0000 (UTC)
+Received: from mail-io0-f177.google.com (mail-io0-f177.google.com
+ [209.85.223.177])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id db981a47
  for <wireguard@lists.zx2c4.com>;
- Thu, 12 Apr 2018 08:55:33 +0000 (UTC)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Date: Thu, 12 Apr 2018 11:09:26 +0200
-From: Riccardo Berto <riccardo@rcrdbrt.com>
+ Thu, 12 Apr 2018 11:28:46 +0000 (UTC)
+Received: by mail-io0-f177.google.com with SMTP id s9so2410279ioc.3
+ for <wireguard@lists.zx2c4.com>; Thu, 12 Apr 2018 04:42:47 -0700 (PDT)
+MIME-Version: 1.0
+Sender: chm.duquesne@gmail.com
+In-Reply-To: <CAHLp1YndY6g+WdQbNOYdo5AdGR22doGZN0_cVc+f2pG=bn8F-Q@mail.gmail.com>
+References: <CAHLp1Yk8oz-agDoJzKuU1SK9zsFL7HKep02r-n3hNcrYffp-CQ@mail.gmail.com>
+ <CAHLp1YndY6g+WdQbNOYdo5AdGR22doGZN0_cVc+f2pG=bn8F-Q@mail.gmail.com>
+From: Christophe-Marie Duquesne <chmd@chmd.fr>
+Date: Thu, 12 Apr 2018 13:42:25 +0200
+Message-ID: <CAHLp1YkNypEBTK3MWN9hOgBt9p1jh1z76U0tdGTccbJ_PeA=Pw@mail.gmail.com>
+Subject: Re: wg-ip,
+ a tool to assign automatic ip addresses to wireguard interfaces
 To: wireguard@lists.zx2c4.com
-Subject: Troubleshooting WireGuard connections
-Message-ID: <c7a04eeded1bdf5a9b4f9cf1e5291a91@rcrdbrt.com>
+Content-Type: text/plain; charset="UTF-8"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -24,98 +31,34 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-WireGuard doesn't always work with my devices.
-I ran out of options for troubleshooting it so I'm writing here, hoping 
-for a stable solution. I see it's not a strict devel-only mailing list 
-but if I'm off-topic I apologize in advance and I'll fade-out in the 
-background, waiting for better times.
+Weird. Once again, I did not receive this answer and saw it on the
+online archive.
 
-Here's my problem: WireGuard "sometimes" works. I have a client that 
-always talks with the server without problems (the laptop, 10.0.0.4), it 
-always pings and trasfers data correctly. It just works as expected. I 
-have 2 others (Raspberry Pis: 10.0.0.2, 10.0.0.3) that don't work most 
-of the time. I tried enabling the PersistentKeepalive feature on those 
-and the WireGuard interface has some low traffic due to it but no chance 
-of pinging or having traffic with them 99 times out of 100. "tcpdump -i 
-wg0" shows ping requests, from both sides, but no answers.
-In the rare occasions they work, I can ping everyone from every client, 
-as expected with my configuration files.
+from https://lists.zx2c4.com/pipermail/wireguard/2018-April/002598.html:
+> > I could add this to the script, but I figured that for the number of
+> > peers I have and for the network ranges I am using, it is utterly
+> > pointless. How many peers do you intend to have?
+>
+> It will depend how popular the project will be. Theoretically it could
+> be 100'000 or even more peers. And for certain reasons I prefer to use
+> ip4.
 
-Also, with all the devices I tried both the new systemd-networkd's 
-WireGuard implementation and systemd's wg-quick@wg0.service method, as 
-well as testing manually with wg-quick. The systemd version is 238.
-Archlinux is running on every node and I'm using the latest publicly 
-available WireGuard snapshot as of writing this, 20180304.
+With this amount of peers, using such a method is a very, very bad
+idea. Even in the 10.0.0.0/8 range, so a 24 bits address space,
+generating pseudo-random ip addresses will not work. In that space,
+the probability of collision for a new peer is about 1-e^(- n^2/ 2^25)
+(see https://en.wikipedia.org/wiki/Birthday_problem#Approximations).
+- With n=2^12 (4096 peers), that is a 40% chance.
+- With n=2^13 (8192 peers), that is 85 %.
+- With n=2^14 (16384 peers), that is 99.9%
+- At n=2^15... My calculator already approximates this to 100%, and we
+are not even close to your target (32768 peers, we need to quadruple
+this to reach 100.000 peers).
+This means that randomly generating an address which does not collide
+with existing peers is increasingly more expensive, for each new peer.
+You will re-try more and more before you can generate a key pair that
+yields a non colliding ip address. This is simply not doable.
 
-
-#####################################
-# Server config (VPS on vultr.com): #
-#####################################
-[Interface]
-Address = 10.0.0.1/24
-SaveConfig = true
-ListenPort = 21
-PrivateKey = ------------
-
-[Peer]
-PublicKey = ------------
-AllowedIPs = 10.0.0.3/32
-Endpoint = Client1:51820
-PersistentKeepalive = 30
-
-[Peer]
-PublicKey = ------------
-AllowedIPs = 10.0.0.4/32
-Endpoint = Client3:51821
-
-[Peer]
-PublicKey = ------------
-AllowedIPs = 10.0.0.2/32
-Endpoint = Client2:21
-PersistentKeepalive = 30
-
-
-#####################################
-# Client 1 config (Raspberry Pi 3): #
-#####################################
-[Interface]
-Address = 10.0.0.3/24
-ListenPort = 51820
-PrivateKey = ------------
-
-[Peer]
-PublicKey = ------------
-AllowedIPs = 10.0.0.1/24
-Endpoint = VPS:21
-
-
-#####################################
-# Client 2 config (Raspberry Pi 3): #
-#####################################
-[Interface]
-Address = 10.0.0.2/24
-PrivateKey = ------------
-ListenPort = 21
-
-[Peer]
-PublicKey = ------------
-AllowedIPs = 10.0.0.1/24
-Endpoint = VPS:21
-
-
-##############################################
-# Client 3 config (personal laptop, x86_64): #
-##############################################
-[Interface]
-Address = 10.0.0.4/24
-ListenPort = 51821
-PrivateKey = ------------
-
-[Peer]
-PublicKey = ------------
-AllowedIPs = 10.0.0.0/24
-Endpoint = VPS:21
-
-
-
-Any help is appreciated.
+Long story short, you need a proper central server that will find the
+next ip address, or you need to stick to ipv6 (and in that case the
+address space makes it pointless to do that check).
