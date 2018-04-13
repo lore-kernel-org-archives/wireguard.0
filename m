@@ -1,19 +1,25 @@
-Return-Path: naulisreal@gmail.com
+Return-Path: eric@ericlight.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3fc13a34
- for <wireguard@lists.zx2c4.com>; Sun, 1 Apr 2018 07:14:54 +0000 (UTC)
-Received: from mail-wm0-f42.google.com (mail-wm0-f42.google.com [74.125.82.42])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e4a10497
- for <wireguard@lists.zx2c4.com>; Sun, 1 Apr 2018 07:14:54 +0000 (UTC)
-Received: by mail-wm0-f42.google.com with SMTP id f125so22357036wme.4
- for <wireguard@lists.zx2c4.com>; Sun, 01 Apr 2018 00:27:30 -0700 (PDT)
-MIME-Version: 1.0
-From: Jun Gyu Park <naulisreal@gmail.com>
-Date: Sun, 1 Apr 2018 16:27:29 +0900
-Message-ID: <CACf-YK=UBsAmk9V+3sZR+PcvqYU3tJgo4ASzw08XMJzZaNOvRQ@mail.gmail.com>
-Subject: Conflict with broadcom component.
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 01e3f63e
+ for <wireguard@lists.zx2c4.com>;
+ Fri, 13 Apr 2018 00:56:25 +0000 (UTC)
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com
+ [66.111.4.27])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ba638fda
+ for <wireguard@lists.zx2c4.com>;
+ Fri, 13 Apr 2018 00:56:25 +0000 (UTC)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+ by mailout.nyi.internal (Postfix) with ESMTP id 6FD7C21910
+ for <wireguard@lists.zx2c4.com>; Thu, 12 Apr 2018 21:10:30 -0400 (EDT)
+Message-Id: <1523581829.3693372.1336360384.737F2679@webmail.messagingengine.com>
+From: Eric Light <eric@ericlight.com>
 To: wireguard@lists.zx2c4.com
-Content-Type: multipart/alternative; boundary="001a11469032e67d610568c4676d"
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="_----------=_152358182936933721"
+Subject: Re: Question about peers count
+References: <CANhj9oyqrDT-1BNe6ZFr=fAcW7+PJ+8GjvhTJP23vyjpJ8iO4w@mail.gmail.com>
+In-Reply-To: <CANhj9oyqrDT-1BNe6ZFr=fAcW7+PJ+8GjvhTJP23vyjpJ8iO4w@mail.gmail.com>
+Date: Fri, 13 Apr 2018 13:10:29 +1200
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -23,127 +29,103 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---001a11469032e67d610568c4676d
-Content-Type: text/plain; charset="UTF-8"
+This is a multi-part message in MIME format.
 
-I installed Wireguard on my Asus router.
-Some sites work but others slow or do not response.
-I tried adjust MTU but no luck.
+--_----------=_152358182936933721
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
 
-Kernel makes following error messages.
+Hi Vyacheslav,
 
-Apr  1 16:17:43 kernel: ^[[0;33;41mBLOG ERROR blog_request :blog_key
-corruption when adding flow net_p=ffffffc0100cba60  dir=0
-old_key=0x20000091 new_key=0x20000092
-Apr  1 16:17:43 kernel: ^[[0m
-Apr  1 16:18:04 kernel: ^[[0;33;41mBLOG ERROR blog_request :blog_key
-corruption when adding flow net_p=ffffffc0100cba60  dir=0
-old_key=0x20000092 new_key=0x20000093
-Apr  1 16:18:04 kernel: ^[[0m
-Apr  1 16:18:05 kernel: ^[[0;33;41mBLOG ERROR blog_request :blog_key
-corruption when adding flow net_p=ffffffc0100cba60  dir=0
-old_key=0x20000093 new_key=0x20000094
-Apr  1 16:18:05 kernel: ^[[0m
-Apr  1 16:18:10 kernel: ^[[0;33;41mBLOG ERROR blog_request :blog_key
-corruption when adding flow net_p=ffffffc0100cba60  dir=0
-old_key=0x20000094 new_key=0x20000095
-Apr  1 16:18:10 kernel: ^[[0m
-Apr  1 16:18:11 kernel: ^[[0;33;41mBLOG ERROR blog_request :blog_key
-corruption when adding flow net_p=ffffffc0100cba60  dir=0
-old_key=0x20000095 new_key=0x20000096
-Apr  1 16:18:11 kernel: ^[[0m
-Apr  1 16:18:41 kernel: ^[[0;33;41mBLOG ERROR blog_request :blog_key
-corruption when deleting flowfor net_p=ffffffc0110eb010
-Apr  1 16:18:41 kernel: ^[[0m
-Apr  1 16:19:17 kernel: ^[[0;33;41mBLOG ERROR blog_request :blog_key
-corruption when deleting flowfor net_p=ffffffc0100cba60
-Apr  1 16:19:17 kernel: ^[[0m
-Apr  1 16:19:52 kernel: ^[[0;33;41mBLOG ERROR blog_request :blog_key
-corruption when deleting flowfor net_p=ffffffc0110eb010
-Apr  1 16:19:52 kernel: ^[[0m
-Apr  1 16:20:01 kernel: ^[[0;33;41mBLOG ERROR blog_request :blog_key
-corruption when deleting flowfor net_p=ffffffc0100cba60
-Apr  1 16:20:01 kernel: ^[[0m
-Apr  1 16:20:10 kernel: ^[[0;33;41mBLOG ERROR blog_request :blog_key
-corruption when deleting flowfor net_p=ffffffc0100cba60
-Apr  1 16:20:10 kernel: ^[[0m
-Apr  1 16:20:10 kernel: ^[[0;33;41mBLOG ERROR blog_request :blog_key
-corruption when deleting flowfor net_p=ffffffc0100cba60
-Apr  1 16:20:10 kernel: ^[[0m
-Apr  1 16:20:28 kernel: ^[[0;33;41mBLOG ERROR blog_request :blog_key
-corruption when deleting flowfor net_p=ffffffc0100cba60
-Apr  1 16:20:28 kernel: ^[[0m
-Apr  1 16:20:55 kernel: ^[[0;33;41mBLOG ERROR blog_request :blog_key
-corruption when deleting flowfor net_p=ffffffc0110eb010
-Apr  1 16:20:55 kernel: ^[[0m
+Yes - Wireguard can handle that easily.
 
-That codes in here.
-https://github.com/RMerl/asuswrt-merlin.ng/blob/master/release/src-rt-5.02hnd/kernel/linux-4.1/net/core/blog.c
+>From one of Jason's posts earlier in the month:  "I have a script I run
+during development that sets up thousands of interfaces, *each with
+**hundreds of thousands of peers* [...]"
+So ... you'll be fine  :)
 
-Can you guys review and tell what's wrong?
-I don't know computer code :(.
+E
 
---001a11469032e67d610568c4676d
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+--------------------------------------------
+Q: Why is this email five sentences or less?
+A: http://five.sentenc.es
 
-<div dir=3D"ltr">I installed Wireguard on my Asus router.<div>
 
-<div style=3D"color:rgb(34,34,34);font-family:arial,sans-serif;font-size:sm=
-all;font-style:normal;font-variant-ligatures:normal;font-variant-caps:norma=
-l;font-weight:400;letter-spacing:normal;text-align:start;text-indent:0px;te=
-xt-transform:none;white-space:normal;word-spacing:0px;text-decoration-style=
-:initial;text-decoration-color:initial">Some sites work but others slow or =
-do not response.</div><div style=3D"color:rgb(34,34,34);font-family:arial,s=
-ans-serif;font-size:small;font-style:normal;font-variant-ligatures:normal;f=
-ont-variant-caps:normal;font-weight:400;letter-spacing:normal;text-align:st=
-art;text-indent:0px;text-transform:none;white-space:normal;word-spacing:0px=
-;text-decoration-style:initial;text-decoration-color:initial">I tried adjus=
-t MTU but no luck.</div>
 
-<br></div><div>Kernel makes following error messages.</div><div><br></div><=
-div><div>Apr=C2=A0 1 16:17:43 kernel: ^[[0;33;41mBLOG ERROR blog_request :b=
-log_key corruption when adding flow net_p=3Dffffffc0100cba60=C2=A0 dir=3D0 =
-old_key=3D0x20000091 new_key=3D0x20000092</div><div>Apr=C2=A0 1 16:17:43 ke=
-rnel: ^[[0m</div><div>Apr=C2=A0 1 16:18:04 kernel: ^[[0;33;41mBLOG ERROR bl=
-og_request :blog_key corruption when adding flow net_p=3Dffffffc0100cba60=
-=C2=A0 dir=3D0 old_key=3D0x20000092 new_key=3D0x20000093</div><div>Apr=C2=
-=A0 1 16:18:04 kernel: ^[[0m</div><div>Apr=C2=A0 1 16:18:05 kernel: ^[[0;33=
-;41mBLOG ERROR blog_request :blog_key corruption when adding flow net_p=3Df=
-fffffc0100cba60=C2=A0 dir=3D0 old_key=3D0x20000093 new_key=3D0x20000094</di=
-v><div>Apr=C2=A0 1 16:18:05 kernel: ^[[0m</div><div>Apr=C2=A0 1 16:18:10 ke=
-rnel: ^[[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding f=
-low net_p=3Dffffffc0100cba60=C2=A0 dir=3D0 old_key=3D0x20000094 new_key=3D0=
-x20000095</div><div>Apr=C2=A0 1 16:18:10 kernel: ^[[0m</div><div>Apr=C2=A0 =
-1 16:18:11 kernel: ^[[0;33;41mBLOG ERROR blog_request :blog_key corruption =
-when adding flow net_p=3Dffffffc0100cba60=C2=A0 dir=3D0 old_key=3D0x2000009=
-5 new_key=3D0x20000096</div><div>Apr=C2=A0 1 16:18:11 kernel: ^[[0m</div><d=
-iv>Apr=C2=A0 1 16:18:41 kernel: ^[[0;33;41mBLOG ERROR blog_request :blog_ke=
-y corruption when deleting flowfor net_p=3Dffffffc0110eb010=C2=A0</div><div=
->Apr=C2=A0 1 16:18:41 kernel: ^[[0m</div><div>Apr=C2=A0 1 16:19:17 kernel: =
-^[[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowf=
-or net_p=3Dffffffc0100cba60=C2=A0</div><div>Apr=C2=A0 1 16:19:17 kernel: ^[=
-[0m</div><div>Apr=C2=A0 1 16:19:52 kernel: ^[[0;33;41mBLOG ERROR blog_reque=
-st :blog_key corruption when deleting flowfor net_p=3Dffffffc0110eb010=C2=
-=A0</div><div>Apr=C2=A0 1 16:19:52 kernel: ^[[0m</div><div>Apr=C2=A0 1 16:2=
-0:01 kernel: ^[[0;33;41mBLOG ERROR blog_request :blog_key corruption when d=
-eleting flowfor net_p=3Dffffffc0100cba60=C2=A0</div><div>Apr=C2=A0 1 16:20:=
-01 kernel: ^[[0m</div><div>Apr=C2=A0 1 16:20:10 kernel: ^[[0;33;41mBLOG ERR=
-OR blog_request :blog_key corruption when deleting flowfor net_p=3Dffffffc0=
-100cba60=C2=A0</div><div>Apr=C2=A0 1 16:20:10 kernel: ^[[0m</div><div>Apr=
-=C2=A0 1 16:20:10 kernel: ^[[0;33;41mBLOG ERROR blog_request :blog_key corr=
-uption when deleting flowfor net_p=3Dffffffc0100cba60=C2=A0</div><div>Apr=
-=C2=A0 1 16:20:10 kernel: ^[[0m</div><div>Apr=C2=A0 1 16:20:28 kernel: ^[[0=
-;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor n=
-et_p=3Dffffffc0100cba60=C2=A0</div><div>Apr=C2=A0 1 16:20:28 kernel: ^[[0m<=
-/div><div>Apr=C2=A0 1 16:20:55 kernel: ^[[0;33;41mBLOG ERROR blog_request :=
-blog_key corruption when deleting flowfor net_p=3Dffffffc0110eb010=C2=A0</d=
-iv><div>Apr=C2=A0 1 16:20:55 kernel: ^[[0m</div><div><br></div><div>That co=
-des in here.</div><div><a href=3D"https://github.com/RMerl/asuswrt-merlin.n=
-g/blob/master/release/src-rt-5.02hnd/kernel/linux-4.1/net/core/blog.c">http=
-s://github.com/RMerl/asuswrt-merlin.ng/blob/master/release/src-rt-5.02hnd/k=
-ernel/linux-4.1/net/core/blog.c</a></div><div><br></div><div>Can you guys r=
-eview and tell what&#39;s wrong?</div><div>I don&#39;t know computer code :=
-(.</div></div></div>
+On Wed, 28 Mar 2018, at 09:13, Tiraen wrote:
+> Good evening
+> 
+> the question of such plan:
+> 
+> Is the number of nodes that I can specify in configs be limited? Those
+> if I'm using a software to organize a ptp network on a principle, for
+> example 500 minus 1 node, this will work?> 
+> 
+> 
+> -- 
+> With best regards,
+>
+> Vyacheslav Yakushev,
+>
+> Unix system administrator
+>
+> https://t.me/kelewind> _________________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---001a11469032e67d610568c4676d--
+
+--_----------=_152358182936933721
+Content-Transfer-Encoding: 7bit
+Content-Type: text/html; charset="utf-8"
+
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<style type="text/css">p.MsoNormal,p.MsoNoSpacing{margin:0}</style>
+</head>
+<body><div>Hi <span lang="en"><span>Vyacheslav</span>,</span><br></div>
+<div><br></div>
+<div>Yes - Wireguard can handle that easily.<br></div>
+<div><br></div>
+<div>From one of Jason's posts earlier in the month:&nbsp; "I have a script I run during development that sets up thousands of interfaces, <b>each with </b><b>hundreds of thousands of peers</b> [...]"<br></div>
+<div><br></div>
+<div>So ... you'll be fine&nbsp; :)<br></div>
+<div><br></div>
+<div>E<br></div>
+<div><br></div>
+<div id="sig66226376"><div class="signature">--------------------------------------------<br></div>
+<div class="signature">Q: Why is this email five sentences or less?<br></div>
+<div class="signature">A: http://five.sentenc.es<br></div>
+<div class="signature"><br></div>
+</div>
+<div><br></div>
+<div><br></div>
+<div>On Wed, 28 Mar 2018, at 09:13, Tiraen wrote:<br></div>
+<blockquote type="cite"><div dir="ltr"><div>Good evening<br></div>
+<div><br></div>
+<div>the question of such plan:<br></div>
+<div><br></div>
+<div>Is the number of nodes that I can specify in configs be limited? Those if I'm using a software to organize a ptp network on a principle, for example 500 minus 1 node, this will work?<br></div>
+<div><br></div>
+<div><br></div>
+<div><br></div>
+<div>-- <br></div>
+<div><div dir="ltr"><div><div dir="ltr"><div><div dir="ltr"><div><span lang="en"><span>With best</span> <span>regards,</span><br><br><span>Vyacheslav</span> <span>Yakushev</span><span>,</span><br><br><span>Unix</span> <span>system administrator<br></span><span></span><span></span><br><a href="https://t.me/kelewind">https://t.me/kelewind</a><span></span></span><span lang="en"><span></span></span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div><u>_______________________________________________</u><br></div>
+<div>WireGuard mailing list<br></div>
+<div><a href="mailto:WireGuard@lists.zx2c4.com">WireGuard@lists.zx2c4.com</a><br></div>
+<div><a href="https://lists.zx2c4.com/mailman/listinfo/wireguard">https://lists.zx2c4.com/mailman/listinfo/wireguard</a><br></div>
+</blockquote><div><br></div>
+</body>
+</html>
+
+--_----------=_152358182936933721--
