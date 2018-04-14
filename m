@@ -1,24 +1,27 @@
-Return-Path: matthias@urlichs.de
+Return-Path: bruno@streamfeed.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bab6e4a7
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 755c7cd3
  for <wireguard@lists.zx2c4.com>;
- Sat, 14 Apr 2018 18:19:06 +0000 (UTC)
-Received: from netz.smurf.noris.de (mail.smurf.noris.de [213.95.149.21])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c662f315
+ Sat, 14 Apr 2018 18:30:15 +0000 (UTC)
+Received: from mail-qk0-f171.google.com (mail-qk0-f171.google.com
+ [209.85.220.171])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fae56020
  for <wireguard@lists.zx2c4.com>;
- Sat, 14 Apr 2018 18:19:06 +0000 (UTC)
-Subject: Re: Using WG for transport security in a p2p network
-To: Bruno Wolff III <bruno@wolff.to>
-References: <CADX+UFjEBcWRsL3SRv5_b0ezU0adcURqOJf=MvDbQkSXg3JRHg@mail.gmail.com>
- <1a0ce6c1-4f62-509f-8d8e-9f0821d6f465@urlichs.de>
- <20180414160147.GA14141@wolff.to>
-From: Matthias Urlichs <matthias@urlichs.de>
-Message-ID: <f0d98fa8-245f-1de1-2e90-9f84113d781a@urlichs.de>
-Date: Sat, 14 Apr 2018 20:33:14 +0200
+ Sat, 14 Apr 2018 18:30:15 +0000 (UTC)
+Received: by mail-qk0-f171.google.com with SMTP id f9so4598615qkm.12
+ for <wireguard@lists.zx2c4.com>; Sat, 14 Apr 2018 11:44:34 -0700 (PDT)
+Return-Path: <bruno@streamfeed.com>
+Subject: Re: Policy-based routing
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+References: <a81edfe2-2a49-c49a-ea7c-65e60639ecfe@streamfeed.com>
+ <CAHmME9r-ZHkhKjw+JTkF++t+9TBEnSv6AKF=FitQkg4V+a14dw@mail.gmail.com>
+From: Bruno <bruno@streamfeed.com>
+Message-ID: <8108c2eb-e407-9d6d-4c0c-d26eb7a2bc93@streamfeed.com>
+Date: Sat, 14 Apr 2018 15:44:28 -0300
 MIME-Version: 1.0
-In-Reply-To: <20180414160147.GA14141@wolff.to>
-Content-Type: text/plain; charset=utf-8
-Cc: wireguard@lists.zx2c4.com
+In-Reply-To: <CAHmME9r-ZHkhKjw+JTkF++t+9TBEnSv6AKF=FitQkg4V+a14dw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -28,21 +31,28 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On 14.04.2018 18:01, Bruno Wolff III wrote:
-> On Thu, Apr 05, 2018 at 09:13:03 +0200,
->  Matthias Urlichs <matthias@urlichs.de> wrote:
->> Hi,<https://tools.ietf.org/html/draft-hohendorf-secure-sctp-25>
->>>
->>> Another option would be to run insecure QUIC or SCTP on top of
->>> WireGuard,
->> You cannot run SCTP on the Internet anyway. Too many routers block
->> anything that's not TCP/UDP/ICMP.
+Hi Jason,
+
+Thanks for your input. I agree with you.
+
+But I could have the peers based on table routing and marking packets, 
+were all the traffic (0.0.0.0/0) would be routed based on the prior 
+conditions (tables and marking).
+
+I'm doing one interface per peer right now, but I thought it could be 
+possible to achieve the same results with just one interface.
+
+Bruno
+
+
+
+On 04/13/2018 11:09 PM, Jason A. Donenfeld wrote:
+> Hi Bruno,
 >
-> The tunnelled traffic is going to be UDP. If he controls everything
-> from the tunnel endpoints to the traffic endpoints he can make sure
-> SCTP isn't blocked.
-
-I know. That was kindof my point. Sorry if I didn't write that more clearly.
-
--- 
--- Matthias Urlichs
+> You can't set multiple peers to use 0.0.0.0/0 at the same time on the
+> same interface. How would it be able to choose which peer to send
+> traffic to then? Instead, if you want some kind of redundancy or
+> bonding, you can try using multiple interfaces, and then use whatever
+> traditional routing or load balancing tools that you ordinarily would.
+>
+> Jason
