@@ -1,27 +1,22 @@
-Return-Path: bruno@streamfeed.com
+Return-Path: luizluca@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 755c7cd3
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3488d3bc
  for <wireguard@lists.zx2c4.com>;
- Sat, 14 Apr 2018 18:30:15 +0000 (UTC)
-Received: from mail-qk0-f171.google.com (mail-qk0-f171.google.com
- [209.85.220.171])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fae56020
+ Sat, 14 Apr 2018 19:01:57 +0000 (UTC)
+Received: from mail-ot0-f178.google.com (mail-ot0-f178.google.com
+ [74.125.82.178])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 537a71d4
  for <wireguard@lists.zx2c4.com>;
- Sat, 14 Apr 2018 18:30:15 +0000 (UTC)
-Received: by mail-qk0-f171.google.com with SMTP id f9so4598615qkm.12
- for <wireguard@lists.zx2c4.com>; Sat, 14 Apr 2018 11:44:34 -0700 (PDT)
-Return-Path: <bruno@streamfeed.com>
-Subject: Re: Policy-based routing
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-References: <a81edfe2-2a49-c49a-ea7c-65e60639ecfe@streamfeed.com>
- <CAHmME9r-ZHkhKjw+JTkF++t+9TBEnSv6AKF=FitQkg4V+a14dw@mail.gmail.com>
-From: Bruno <bruno@streamfeed.com>
-Message-ID: <8108c2eb-e407-9d6d-4c0c-d26eb7a2bc93@streamfeed.com>
-Date: Sat, 14 Apr 2018 15:44:28 -0300
+ Sat, 14 Apr 2018 19:01:57 +0000 (UTC)
+Received: by mail-ot0-f178.google.com with SMTP id w2-v6so2369445otj.12
+ for <wireguard@lists.zx2c4.com>; Sat, 14 Apr 2018 12:16:16 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9r-ZHkhKjw+JTkF++t+9TBEnSv6AKF=FitQkg4V+a14dw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: Luiz Angelo Daros de Luca <luizluca@gmail.com>
+Date: Sat, 14 Apr 2018 19:16:04 +0000
+Message-ID: <CAJq09z7tm6Cz7RyiO0GTTS7V6oXTVGpdF_ss3eYJT_qMPE=GwA@mail.gmail.com>
+Subject: Sharing peer data
+To: wireguard@lists.zx2c4.com
+Content-Type: multipart/alternative; boundary="00000000000095271c0569d3d26e"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -31,28 +26,34 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Jason,
+--00000000000095271c0569d3d26e
+Content-Type: text/plain; charset="UTF-8"
 
-Thanks for your input. I agree with you.
+Hello,
 
-But I could have the peers based on table routing and marking packets, 
-were all the traffic (0.0.0.0/0) would be routed based on the prior 
-conditions (tables and marking).
+In a setup node A <> node B, node A <> node C, C might talk to B passing
+through A. Would it be possible that A could share B and C info (ip and
+pubkey) in other to them to talk to each other directly? It would be
+similar to ip redirect. Node A must be trusted by both for that.
 
-I'm doing one interface per peer right now, but I thought it could be 
-possible to achieve the same results with just one interface.
+Regards,
+-- 
 
-Bruno
+Luiz Angelo Daros de Luca
+luizluca@gmail.com
 
+--00000000000095271c0569d3d26e
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+Hello,<div><br></div><div>In a setup node A &lt;&gt; node B, node A &lt;&gt=
+; node C, C might talk to B passing through A. Would it be possible that A =
+could share B and C info (ip and pubkey) in other to them to talk to each o=
+ther directly? It would be similar to ip redirect. Node A must be trusted b=
+y both for that.</div><div><br></div><div>Regards,</div>-- <br><div dir=3D"=
+ltr" class=3D"gmail_signature" data-smartmail=3D"gmail_signature"><div dir=
+=3D"ltr"><p dir=3D"ltr">Luiz Angelo Daros de Luca<br>
+<a href=3D"mailto:luizluca@gmail.com">luizluca@gmail.com</a></p>
+</div></div>
 
-On 04/13/2018 11:09 PM, Jason A. Donenfeld wrote:
-> Hi Bruno,
->
-> You can't set multiple peers to use 0.0.0.0/0 at the same time on the
-> same interface. How would it be able to choose which peer to send
-> traffic to then? Instead, if you want some kind of redundancy or
-> bonding, you can try using multiple interfaces, and then use whatever
-> traditional routing or load balancing tools that you ordinarily would.
->
-> Jason
+--00000000000095271c0569d3d26e--
