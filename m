@@ -1,24 +1,27 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: riccardo@rcrdbrt.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1da8e40a
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2ed8c10e
  for <wireguard@lists.zx2c4.com>;
- Sat, 14 Apr 2018 02:26:10 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dc1a1b96
+ Sat, 14 Apr 2018 07:42:11 +0000 (UTC)
+Received: from mail.rcrdbrt.com (rcrdbrt.com [45.32.6.71])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id caa0ce04
  for <wireguard@lists.zx2c4.com>;
- Sat, 14 Apr 2018 02:26:10 +0000 (UTC)
-Date: Sat, 14 Apr 2018 04:40:21 +0200
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Roman Mamedov <rm.wg@romanrm.net>
-Subject: Re: Mixed MTU hosts on a network
-Message-ID: <20180414024017.GA14470@zx2c4.com>
-References: <20180316142547.2ecb70de@natsu>
- <CAHmME9rVba9Zzv65guftwxZcRGWBY0uaP=_GhHVnBz=8+L6Y3A@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-In-Reply-To: <CAHmME9rVba9Zzv65guftwxZcRGWBY0uaP=_GhHVnBz=8+L6Y3A@mail.gmail.com>
-Cc: Luis Ressel <aranea@aixah.de>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>
+ Sat, 14 Apr 2018 07:42:11 +0000 (UTC)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Date: Sat, 14 Apr 2018 09:56:21 +0200
+From: Riccardo Berto <riccardo@rcrdbrt.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: Re: Troubleshooting WireGuard connections
+In-Reply-To: <CAHmME9oFYswr1KjBGiP+2iMHDGYmZhpv_SovCMT3xxMMErK19A@mail.gmail.com>
+References: <628776a245ad4895630fd727c80e8bf1@rcrdbrt.com>
+ <CAHmME9rFZMXcjZgFQBrZHDCbqmYT+MdBEJmS6f6=5=F-7nrJBA@mail.gmail.com>
+ <33d0fd1f4c60919b98b50e2b9d04fe78@rcrdbrt.com>
+ <2c17e7ba2590353afa04fc1619d726c2@rcrdbrt.com>
+ <CAHmME9oFYswr1KjBGiP+2iMHDGYmZhpv_SovCMT3xxMMErK19A@mail.gmail.com>
+Message-ID: <9896807f0c6cbee1c7c99647a3c289cc@rcrdbrt.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -28,83 +31,53 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Sat, Apr 14, 2018 at 03:38:46AM +0200, Jason A. Donenfeld wrote:
-> 2) When we pad the packet payload. In this case, we pad it to the
-> nearest multiple of 16, but we don't let it exceed the device MTU.
-> This is skb_padding in send.c. This behavior seems like the bug in
-> your particular case, since what matters here is the route's MTU, not
-> the device MTU. For full 1412 size packets, the payload is presumably
-> being padded to 1424, since that's still less than the device MTU. In
-> order to test this theory, try setting your route MTU, as you've
-> described in your first email, to 1408 (which is a multiple of 16). If
-> this works, let me know, as it will be good motivation for fixing
-> skb_padding. If not, then it means there's a problem elsewhere to
-> investigate too.
+On 2018-04-14 03:26, Jason A. Donenfeld wrote:
+> Hi Riccardo,
 > 
-> I'm CC'ing Luis on this email, as he was working on the MTU code a while back.
+> Based on those tcpdump timestamps, it looks like the handshake
+> response happens nearly immediately after the handshake initiation.
+> Yet from your description, it appears only after many moments. In my
+> experience, tcpdump blocks like this when it has to do too many DNS
+> resolutions and the resolver is slow. You might get a more accurate
+> picture of what is going on if you additionally pass `-n` to tcpdump,
+> which should make the packets appear more instantaneously.
+> 
+> Jason
 
-I'm still playing with this, but something like the following might fix
-the issue, if you're interested in playing a bit.
+I used tne -n flag on tcpdump now and I'm having the exact same problem. 
+Now DNS servers aren't involved.
+It worked briefly the first time I tried. I was happily getting ICMP 
+requests and responses on the client. Then I stopped `ping 10.0.0.1` 
+and, without touching anything, ran it again and it hung.
 
-=~=~=~=~=~=~=
+#################
+# Client output #
+#################
+rpi3-two pi # ping 10.0.0.1
+PING 10.0.0.1 (10.0.0.1) 56(84) bytes of data.
+^C
+--- 10.0.0.1 ping statistics ---
+25 packets transmitted, 0 received, 100% packet loss, time 24954ms
 
-diff --git a/src/device.c b/src/device.c
-index 1614d61..3d18368 100644
---- a/src/device.c
-+++ b/src/device.c
-@@ -120,6 +120,7 @@ static netdev_tx_t xmit(struct sk_buff *skb, struct net_device *dev)
- 	struct sk_buff *next;
- 	struct sk_buff_head packets;
- 	sa_family_t family;
-+	u32 mtu;
- 	int ret;
 
- 	if (unlikely(skb_examine_untrusted_ip_hdr(skb) != skb->protocol)) {
-@@ -142,6 +143,8 @@ static netdev_tx_t xmit(struct sk_buff *skb, struct net_device *dev)
- 		goto err_peer;
- 	}
-
-+	mtu = dst_mtu(skb_dst(skb)) ?: skb->dev->mtu;
-+
- 	__skb_queue_head_init(&packets);
- 	if (!skb_is_gso(skb))
- 		skb->next = NULL;
-@@ -168,6 +171,8 @@ static netdev_tx_t xmit(struct sk_buff *skb, struct net_device *dev)
- 		 */
- 		skb_dst_drop(skb);
-
-+		PACKET_CB(skb)->mtu = mtu;
-+
- 		__skb_queue_tail(&packets, skb);
- 	} while ((skb = next) != NULL);
-
-diff --git a/src/queueing.h b/src/queueing.h
-index d5948f3..c507536 100644
---- a/src/queueing.h
-+++ b/src/queueing.h
-@@ -46,6 +46,7 @@ struct packet_cb {
- 	u64 nonce;
- 	struct noise_keypair *keypair;
- 	atomic_t state;
-+	u32 mtu;
- 	u8 ds;
- };
- #define PACKET_PEER(skb) (((struct packet_cb *)skb->cb)->keypair->entry.peer)
-diff --git a/src/send.c b/src/send.c
-index dddcc0b..e3b1ffd 100644
---- a/src/send.c
-+++ b/src/send.c
-@@ -116,11 +116,11 @@ static inline unsigned int skb_padding(struct sk_buff *skb)
- 	 * isn't strictly neccessary, but it's better to be cautious here, especially
- 	 * if that code ever changes.
- 	 */
--	unsigned int last_unit = skb->len % skb->dev->mtu;
-+	unsigned int last_unit = skb->len % PACKET_CB(skb)->mtu;
- 	unsigned int padded_size = (last_unit + MESSAGE_PADDING_MULTIPLE - 1) & ~(MESSAGE_PADDING_MULTIPLE - 1);
-
--	if (padded_size > skb->dev->mtu)
--		padded_size = skb->dev->mtu;
-+	if (padded_size > PACKET_CB(skb)->mtu)
-+		padded_size = PACKET_CB(skb)->mtu;
- 	return padded_size - last_unit;
- }
+#################
+# Server output #
+#################
+╭─root@rcrd-online /etc/wireguard
+╰─# tcpdump -vv -ni ens3 'port 51820'
+tcpdump: listening on ens3, link-type EN10MB (Ethernet), capture size 
+262144 bytes
+09:49:43.996538 IP (tos 0x0, ttl 52, id 25142, offset 0, flags [none], 
+proto UDP (17), length 176)
+     ---.51821 > ---.51820: [udp sum ok] UDP, length 148
+09:49:43.997138 IP (tos 0x88, ttl 64, id 42124, offset 0, flags [none], 
+proto UDP (17), length 120)
+     ---.51820 > ---.51821: [bad udp cksum 0x92e3 -> 0xb363!] UDP, length 
+92
+09:50:00.636714 IP (tos 0x0, ttl 52, id 26161, offset 0, flags [none], 
+proto UDP (17), length 176)
+     ---.51821 > ---.51820: [udp sum ok] UDP, length 148
+09:50:00.637240 IP (tos 0x88, ttl 64, id 48907, offset 0, flags [none], 
+proto UDP (17), length 120)
+     ---.51820 > ---.51821: [bad udp cksum 0x92e3 -> 0xefc7!] UDP, length 
+92
