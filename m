@@ -1,27 +1,29 @@
-Return-Path: smntov@gmail.com
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ddf4d319
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1a1df800
  for <wireguard@lists.zx2c4.com>;
- Sun, 15 Apr 2018 09:53:56 +0000 (UTC)
-Received: from mail-wr0-f175.google.com (mail-wr0-f175.google.com
- [209.85.128.175])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 402edd6a
+ Sun, 15 Apr 2018 13:54:25 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 263da70a
  for <wireguard@lists.zx2c4.com>;
- Sun, 15 Apr 2018 09:53:56 +0000 (UTC)
-Received: by mail-wr0-f175.google.com with SMTP id z73so18242481wrb.0
- for <wireguard@lists.zx2c4.com>; Sun, 15 Apr 2018 03:08:19 -0700 (PDT)
-Return-Path: <smntov@gmail.com>
-Message-ID: <1523786895.1990.5.camel@gmail.com>
-Subject: Re: Sharing peer data
-From: ST <smntov@gmail.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sun, 15 Apr 2018 13:08:15 +0300
-In-Reply-To: <CAHmME9qpEVW3AwDPCUSUA_A4DJi+oTGoMX4V3fVyHk7aXsAZ6Q@mail.gmail.com>
-References: <CAJq09z7tm6Cz7RyiO0GTTS7V6oXTVGpdF_ss3eYJT_qMPE=GwA@mail.gmail.com>
- <CAHmME9qpEVW3AwDPCUSUA_A4DJi+oTGoMX4V3fVyHk7aXsAZ6Q@mail.gmail.com>
+ Sun, 15 Apr 2018 13:54:25 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b6458237
+ for <wireguard@lists.zx2c4.com>;
+ Sun, 15 Apr 2018 13:45:33 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 234e92bc
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Sun, 15 Apr 2018 13:45:33 +0000 (UTC)
+Received: by mail-oi0-f41.google.com with SMTP id 126-v6so12252234oig.0
+ for <wireguard@lists.zx2c4.com>; Sun, 15 Apr 2018 07:08:49 -0700 (PDT)
+MIME-Version: 1.0
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Sun, 15 Apr 2018 16:08:48 +0200
+Message-ID: <CAHmME9owJaafkWfz8ruaKWqATmQ9gfoxNtZNyxRJFjyQgr7yvw@mail.gmail.com>
+Subject: PMTU Discovery Security Concerns
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
-Mime-Version: 1.0
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Cc: Luis Ressel <aranea@aixah.de>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -31,20 +33,56 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Sun, 2018-04-15 at 01:15 +0200, Jason A. Donenfeld wrote:
-> Hi Luiz,
-> 
-> You could indeed arrange for something like this, either directly --
-> if both IPs are accessible 
+Hi list,
 
-Which IPs do you mean here? Public IPs or private VPN IPs (i.e. those
-defined within WireGuard configuration)? I got an idea how to do that
-using SFTP... I'll write about it in a separate email...
+[CC'ing Luis, who's been working on this with me.]
 
-Just one question: let's assume B and C got the required information
-about each other's IPs/public keys from A. Will they now communicate
-directly without relying on A in whatever way?... It is important to
-know for the case when A is a server with metered paid traffic... Will
-the communication between B and C affect the traffic of A or not?
+I've more or less figured out how to do PMTU discovery (something
+along the lines of https://xn--4db.cc/WFHQzX2o/c inspired by the vti
+driver). I wonder, however, if this is safe to do.
 
-Thank you!
+The basic idea is that if you're talking to a WireGuard peer via its
+internal tunnel IP address, the kernel keeps some notion of what that
+internal IP address's PMTU is. Meanwhile, WireGuard itself is talking
+to that peer via its external endpoint IP address, and the kernel
+keeps some notion of what that external IP address's PMTU is. If the
+encrypted packets are larger than the external PMTU, well behaved
+networks will send ICMP messages, indicating that packets sent to that
+external endpoint IP should be smaller. This, however, doesn't have
+anything to do with what the user is trying to send internally, and so
+there will continue to be overly large packets sent.
+
+The way to fix it would be to relay the external endpoint PMTU to the
+internal tunnel PMTU. Then, when an external encrypted packet gets
+dropped due to being overly large, the ICMP message for that winds up
+affecting the internal tunneled IP address's PMTU, so that the next
+message it sends is smaller. All is well, packets flow, and TCP
+sessions no longer stall. This is generally how PMTU discovery works
+with network tunnels.
+
+The security problem is that those ICMP messages indicating we should
+send smaller packets are unauthenticated, since they're triggered by
+things external to the tunnel, rather than inside the tunnel. By
+propagating the information from those unauthenticated ICMP messages
+to state that concerns the inside of the tunnel, we're essentially
+enabling an unauthenticated state injection. This could enable some
+mischief. On the benign end of the spectrum, an attacker could launch
+a DoS attack by causing the sending end to use smaller and smaller
+packets. On the scarier end of the spectrum, an attacker could
+intelligently do this to change the size of packets and observe the
+way in which a data flow is rechunked, in order to infer something
+about the actual data being encrypted.
+
+These security concerns make me inclined to just simplistically
+declare, "PMTU discovery in tunnels can't be done securely with the
+existing Internet, so WireGuard doesn't support it." However,
+undoubtedly smart people have thought about this before, and perhaps
+they've come up with real solutions for this. Indeed I've come across
+various discussions of the matter in the IPsec RFCs. But at the
+present moment, I'm unsure what the most reasonable way forward is.
+
+So, I thought if anyone on the list has thought about this extensively
+before and would like to chime in with some wisdom, I'm all ears.
+
+Regards,
+Jason
