@@ -1,35 +1,25 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: luizluca@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4d19cad0
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 21ae611a
  for <wireguard@lists.zx2c4.com>;
- Sat, 14 Apr 2018 23:05:19 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 14468c2b
+ Sun, 15 Apr 2018 03:04:39 +0000 (UTC)
+Received: from mail-oi0-f44.google.com (mail-oi0-f44.google.com
+ [209.85.218.44])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 33cafae1
  for <wireguard@lists.zx2c4.com>;
- Sat, 14 Apr 2018 23:05:19 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 76ff00be
- for <wireguard@lists.zx2c4.com>;
- Sat, 14 Apr 2018 22:56:27 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 9078ea8a
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Sat, 14 Apr 2018 22:56:27 +0000 (UTC)
-Received: by mail-ot0-f173.google.com with SMTP id i5-v6so4179963oth.1
- for <wireguard@lists.zx2c4.com>; Sat, 14 Apr 2018 16:19:39 -0700 (PDT)
+ Sun, 15 Apr 2018 03:04:39 +0000 (UTC)
+Received: by mail-oi0-f44.google.com with SMTP id 26-v6so2089172ois.9
+ for <wireguard@lists.zx2c4.com>; Sat, 14 Apr 2018 20:19:00 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <9896807f0c6cbee1c7c99647a3c289cc@rcrdbrt.com>
-References: <628776a245ad4895630fd727c80e8bf1@rcrdbrt.com>
- <CAHmME9rFZMXcjZgFQBrZHDCbqmYT+MdBEJmS6f6=5=F-7nrJBA@mail.gmail.com>
- <33d0fd1f4c60919b98b50e2b9d04fe78@rcrdbrt.com>
- <2c17e7ba2590353afa04fc1619d726c2@rcrdbrt.com>
- <CAHmME9oFYswr1KjBGiP+2iMHDGYmZhpv_SovCMT3xxMMErK19A@mail.gmail.com>
- <9896807f0c6cbee1c7c99647a3c289cc@rcrdbrt.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sun, 15 Apr 2018 01:19:38 +0200
-Message-ID: <CAHmME9rUuheX=nHWfiNHj+gnZ2bJhu9up-TOR6TPKJk2n0fCmw@mail.gmail.com>
-Subject: Re: Troubleshooting WireGuard connections
-To: Riccardo Berto <riccardo@rcrdbrt.com>
-Content-Type: text/plain; charset="UTF-8"
+References: <CAJq09z7tm6Cz7RyiO0GTTS7V6oXTVGpdF_ss3eYJT_qMPE=GwA@mail.gmail.com>
+ <CAHmME9qpEVW3AwDPCUSUA_A4DJi+oTGoMX4V3fVyHk7aXsAZ6Q@mail.gmail.com>
+In-Reply-To: <CAHmME9qpEVW3AwDPCUSUA_A4DJi+oTGoMX4V3fVyHk7aXsAZ6Q@mail.gmail.com>
+From: Luiz Angelo Daros de Luca <luizluca@gmail.com>
+Date: Sun, 15 Apr 2018 03:18:49 +0000
+Message-ID: <CAJq09z7hoBZj-7CS+3dYQbvPrRd2Kq5yE66ryav7OjPOLyr_tw@mail.gmail.com>
+Subject: Re: Sharing peer data
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Content-Type: multipart/alternative; boundary="000000000000ffdad20569da9021"
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -40,14 +30,32 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Riccardo,
+--000000000000ffdad20569da9021
+Content-Type: text/plain; charset="UTF-8"
 
-That's a confusing result. The tcpdump also shows two sequences of
-completed handshakes happening, about 7 seconds apart. It might be
-best in the end to hop onto IRC next week, and we can debug this in
-real time. But based on the erratic behavior, my only guess remaining
-is that you've mixed up the public and private keys -- perhaps sharing
-a private key amongst hosts -- and so one session is interrupting the
-handshake of another? Hmm...
+Thanks Jason,
 
-Jason
+Yes, something very similar to tinc. I imagine having two or more
+static/known peers (redundancy) configured on every node. Once connected,
+they discover the others.
+
+It's good to know there is a GSoC for something like it.
+-- 
+
+Luiz Angelo Daros de Luca
+luizluca@gmail.com
+
+--000000000000ffdad20569da9021
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Thanks Jason,<div><br></div><div>Yes, something very similar to tinc. I ima=
+gine having two or more static/known peers (redundancy) configured on every=
+ node. Once connected, they discover the others.</div><div><br></div><div>I=
+t&#39;s good to know there is a GSoC for something like it.</div>-- <br><di=
+v dir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail_signature">=
+<div dir=3D"ltr"><p dir=3D"ltr">Luiz Angelo Daros de Luca<br>
+<a href=3D"mailto:luizluca@gmail.com">luizluca@gmail.com</a></p>
+</div></div>
+
+--000000000000ffdad20569da9021--
