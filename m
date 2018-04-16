@@ -1,33 +1,26 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: luizluca@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 54377de3
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c14e9768
  for <wireguard@lists.zx2c4.com>;
- Mon, 16 Apr 2018 00:59:10 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 98dd61c4
+ Mon, 16 Apr 2018 01:32:44 +0000 (UTC)
+Received: from mail-oi0-f45.google.com (mail-oi0-f45.google.com
+ [209.85.218.45])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2dcf4522
  for <wireguard@lists.zx2c4.com>;
- Mon, 16 Apr 2018 00:59:10 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 87e911b2
- for <wireguard@lists.zx2c4.com>;
- Mon, 16 Apr 2018 00:50:19 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 36ca2e88
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Mon, 16 Apr 2018 00:50:18 +0000 (UTC)
-Received: by mail-ot0-f177.google.com with SMTP id h8-v6so4551778otj.7
- for <wireguard@lists.zx2c4.com>; Sun, 15 Apr 2018 18:13:37 -0700 (PDT)
+ Mon, 16 Apr 2018 01:32:44 +0000 (UTC)
+Received: by mail-oi0-f45.google.com with SMTP id h11-v6so3764282oic.3
+ for <wireguard@lists.zx2c4.com>; Sun, 15 Apr 2018 18:47:12 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CA+bb15vcb+FVpg8cda9QxSDHED2ACjLiYp6nxBCi6BG9P0G4EA@mail.gmail.com>
-References: <CA+bb15uz7jkD2GZhSQANkH9JPi5Sq2g20wrm0avTRFiOMJ55iA@mail.gmail.com>
- <20180415235801.411a50af@natsu>
- <CAHmME9o=N+Qhnst=ep6Cax+rPNhJLRmP-Ha7E=bfVoJhUq9gXA@mail.gmail.com>
- <CA+bb15vcb+FVpg8cda9QxSDHED2ACjLiYp6nxBCi6BG9P0G4EA@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 16 Apr 2018 03:13:36 +0200
-Message-ID: <CAHmME9qTwbd6pR1jLsXVmTKJF4319ARta50ELDmVvaQviMrAsw@mail.gmail.com>
-Subject: Re: Why does 'allowed-ips' affect route selection behavior?
-To: "Patrick O'Sullivan" <irish@insaneirish.com>
-Content-Type: text/plain; charset="UTF-8"
+References: <CAJq09z7tm6Cz7RyiO0GTTS7V6oXTVGpdF_ss3eYJT_qMPE=GwA@mail.gmail.com>
+ <CAHmME9qpEVW3AwDPCUSUA_A4DJi+oTGoMX4V3fVyHk7aXsAZ6Q@mail.gmail.com>
+ <1523786895.1990.5.camel@gmail.com>
+In-Reply-To: <1523786895.1990.5.camel@gmail.com>
+From: Luiz Angelo Daros de Luca <luizluca@gmail.com>
+Date: Mon, 16 Apr 2018 01:47:01 +0000
+Message-ID: <CAJq09z6sHzLPkcCMmwOm0dyA2yS1CY0z-Mqgs9px04L8gMfdxA@mail.gmail.com>
+Subject: Re: Sharing peer data
+To: ST <smntov@gmail.com>
+Content-Type: multipart/alternative; boundary="0000000000008ad6850569ed665c"
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -38,17 +31,56 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Patrick,
+--0000000000008ad6850569ed665c
+Content-Type: text/plain; charset="UTF-8"
 
-> I suppose I was a victim of WireGuard's simplicity. I got it up and
-> running so quickly that I didn't bother to dig into the individual
-> components more than necessary at first. I ultimately may end up
-> foregoing wg-quick, but either way I now understand the mechanics to
-> accomplish what I want.
+>
+> Just one question: let's assume B and C got the required information
+> about each other's IPs/public keys from A. Will they now communicate
+> directly without relying on A in whatever way?... It is important to
+> know for the case when A is a server with metered paid traffic... Will
+> the communication between B and C affect the traffic of A or not?
 
-Since you know what you're doing, you're probably best served by
-getting rid of wg-quick and doing things manually. I suspect in the
-end the setup will be /simpler/ when done without wg-quick in the way.
-(wg-quick itself is just a silly bash script.)
 
-Jason
+In my point of view, it is something that all nodes must agree to accept (a
+non-default option). Of course, if node A wants to measure traffic, it
+ahould not allow it, forcing all traffic from B to C to pass through it.
+
+I imagine something like:
+
+Node A: hey node B, I noticed that you are sending traffic to another
+remote node (node C). You can continue to send traffic through me but, in
+parallel, could you please try to contact node C directly? It is currently
+using ip x.x.x.x and its pubkey is aaaaaa.
+-- 
+
+Luiz Angelo Daros de Luca
+luizluca@gmail.com
+
+--0000000000008ad6850569ed665c
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div class=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margi=
+n:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">Just one question=
+: let&#39;s assume B and C got the required information<br>
+about each other&#39;s IPs/public keys from A. Will they now communicate<br=
+>
+directly without relying on A in whatever way?... It is important to<br>
+know for the case when A is a server with metered paid traffic... Will<br>
+the communication between B and C affect the traffic of A or not?</blockquo=
+te></div><div><br></div><div>In my point of view, it is something that all =
+nodes must agree to accept (a non-default option). Of course, if node A wan=
+ts to measure traffic, it ahould not allow it, forcing all traffic from B t=
+o C to pass through it.</div><div><br></div><div>I imagine something like:<=
+/div><div><br></div><div>Node A: hey node B, I noticed that you are sending=
+ traffic to another remote node (node C). You can continue to send traffic =
+through me but, in parallel, could you please try to contact node C directl=
+y? It is currently using ip x.x.x.x and its pubkey is aaaaaa.</div><div cla=
+ss=3D"gmail_quote"></div>-- <br><div dir=3D"ltr" class=3D"gmail_signature" =
+data-smartmail=3D"gmail_signature"><div dir=3D"ltr"><p dir=3D"ltr">Luiz Ang=
+elo Daros de Luca<br>
+<a href=3D"mailto:luizluca@gmail.com">luizluca@gmail.com</a></p>
+</div></div>
+
+--0000000000008ad6850569ed665c--
