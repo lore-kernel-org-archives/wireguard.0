@@ -1,35 +1,28 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: smntov@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 186ab1f6
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cbc719b8
  for <wireguard@lists.zx2c4.com>;
- Mon, 16 Apr 2018 05:09:01 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3c2e2b01
+ Mon, 16 Apr 2018 07:54:23 +0000 (UTC)
+Received: from mail-wr0-f172.google.com (mail-wr0-f172.google.com
+ [209.85.128.172])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ccbde7f8
  for <wireguard@lists.zx2c4.com>;
- Mon, 16 Apr 2018 05:09:01 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d0a4ece9
- for <wireguard@lists.zx2c4.com>;
- Mon, 16 Apr 2018 05:00:09 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id b7e0ebd7
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Mon, 16 Apr 2018 05:00:09 +0000 (UTC)
-Received: by mail-oi0-f44.google.com with SMTP id n65-v6so167479oig.6
- for <wireguard@lists.zx2c4.com>; Sun, 15 Apr 2018 22:23:30 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <CAK_h9uGaQZ_djbWJTbTZ71uEw9KsXuqHCQ6QYSKqMWjgUeqieA@mail.gmail.com>
-References: <CAHmME9owJaafkWfz8ruaKWqATmQ9gfoxNtZNyxRJFjyQgr7yvw@mail.gmail.com>
- <CAK_h9uFHeYPaiPVBC+PQi-YOAOCbp6LVTsbM+r8cO4DNmp6RxA@mail.gmail.com>
- <CAHmME9p0Co58utbbd=xA3o2a_+X5YAejQ6qNROLCUczuJ6nqsw@mail.gmail.com>
- <CAK_h9uGaQZ_djbWJTbTZ71uEw9KsXuqHCQ6QYSKqMWjgUeqieA@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 16 Apr 2018 07:23:29 +0200
-Message-ID: <CAHmME9p7tcwyQEZ5M8NjW_qvEOaw1pzXKtYZ+t3iWWJZ8y=mOg@mail.gmail.com>
-Subject: Re: PMTU Discovery Security Concerns
-To: Tim Sedlmeyer <tim@sedlmeyer.org>
+ Mon, 16 Apr 2018 07:54:23 +0000 (UTC)
+Received: by mail-wr0-f172.google.com with SMTP id u46so23262222wrc.11
+ for <wireguard@lists.zx2c4.com>; Mon, 16 Apr 2018 01:08:53 -0700 (PDT)
+Return-Path: <smntov@gmail.com>
+Message-ID: <1523866128.1990.51.camel@gmail.com>
+Subject: Re: SFTP-based VPN bootstrapping with automatic collision-free IPs
+ assignment/peers' public data sharing
+From: ST <smntov@gmail.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Mon, 16 Apr 2018 11:08:48 +0300
+In-Reply-To: <CAHmME9rr7AJ_LGZt62vMAkAFh4Q304PTpHJ3WRug91Xw3Ewb9w@mail.gmail.com>
+References: <1523814593.1990.49.camel@gmail.com>
+ <CAHmME9rr7AJ_LGZt62vMAkAFh4Q304PTpHJ3WRug91Xw3Ewb9w@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Cc: Luis Ressel <aranea@aixah.de>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>
+Mime-Version: 1.0
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -39,36 +32,32 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Sun, Apr 15, 2018 at 7:51 PM, Tim Sedlmeyer <tim@sedlmeyer.org> wrote:
-> - Which allowed-ip do you use?
-> - If the allowed-ip is a network, which ip within it do you choose to ping?
-> - If you are connected to a single peer with an allowed-ip of 0.0.0.0/0 what
->   ip do you ping?
+Hi Jason,
 
-Yea, the actual IP discovery is a hurdle to figure out.
+thank you very much! It is indeed what I'm looking for. I'll try to
+learn how your script exactly works, just please tell me why and to what
+extent is it insecurely and what needs to be done to make it secure?
 
-> The allowed-ip isn't guaranteed to be on the same device as the peer so,
-> in the end you aren't measuring the mtu over the connection between peers
-> but the complete path to that allowed-ip which could involve more devices and
-> connections with smaller MTUs than between the peers themselves.
+Thank you!
 
-That's probably fine and even desirable, since we're looking for the
-PMTU along a certain route.
 
-> See RFC4821, RFC8085 and
-> https://tools.ietf.org/html/draft-ietf-tsvwg-datagram-plpmtud-01
-> for more info about PLMTUD.
->
-> https://datatracker.ietf.org/meeting/101/materials/slides-101-ipsecme-packetization-layer-path-mtu-discovery-01
-> has a quick overview of where IPsec stands with implementing it.
-
-Thanks for these. I followed the rabbit hole, and found [1], which
-seems to be the current latest and greatest from the IPsec people.
-It's probes inside the control plane. Reading the references, such as
-[2], it seems pretty unanimous that going anywhere near out-of-tunnel
-ICMP messages is a disaster, as I suggested in the original post here.
-That's useful confirmation, and I guess we'll indeed have to look at
-creative non-ICMP solutions for PMTUD to happen.
-
-[1] https://tools.ietf.org/html/draft-spiriyath-ipsecme-dynamic-ipsec-pmtu-01.html
-[2] https://tools.ietf.org/html/draft-roca-ipsecme-ptb-pts-attack-00
+On Mon, 2018-04-16 at 00:37 +0200, Jason A. Donenfeld wrote:
+> Hi ST,
+> 
+> It's a cool idea using the file system like that (the sticky bit would
+> make the permissions part work correctly, perhaps), though I wonder if
+> it's a bit complicated. If the model you're after is simply "server
+> allocates IPs for peers already known through some channel but with
+> unknown wireguard public keys", then maybe a better SSH-based
+> interface is a special user that is only allowed to run one program,
+> and that program does one thing: accepts as input a public key, and
+> outputs [without races] an allocated IP, endpoint, and the server's
+> public key. Under the hood that information could be stored in a
+> variety of ways. Alternatively, this could be its own protocol over
+> the wire or over TLS or over whatever the pre-established trust
+> mechanism is that the idea is based on. One of the earliest dirty bash
+> scripts for WireGuard did this (insecurely) over TCP --
+> https://git.zx2c4.com/WireGuard/tree/contrib/examples/ncat-client-server/server.sh
+> -- this is what's running on demo.wireguard.com.
+> 
+> Jason
