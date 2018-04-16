@@ -1,27 +1,35 @@
-Return-Path: luizluca@gmail.com
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c14e9768
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 186ab1f6
  for <wireguard@lists.zx2c4.com>;
- Mon, 16 Apr 2018 01:32:44 +0000 (UTC)
-Received: from mail-oi0-f45.google.com (mail-oi0-f45.google.com
- [209.85.218.45])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2dcf4522
+ Mon, 16 Apr 2018 05:09:01 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3c2e2b01
  for <wireguard@lists.zx2c4.com>;
- Mon, 16 Apr 2018 01:32:44 +0000 (UTC)
-Received: by mail-oi0-f45.google.com with SMTP id h11-v6so3764282oic.3
- for <wireguard@lists.zx2c4.com>; Sun, 15 Apr 2018 18:47:12 -0700 (PDT)
+ Mon, 16 Apr 2018 05:09:01 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d0a4ece9
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 16 Apr 2018 05:00:09 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id b7e0ebd7
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 16 Apr 2018 05:00:09 +0000 (UTC)
+Received: by mail-oi0-f44.google.com with SMTP id n65-v6so167479oig.6
+ for <wireguard@lists.zx2c4.com>; Sun, 15 Apr 2018 22:23:30 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAJq09z7tm6Cz7RyiO0GTTS7V6oXTVGpdF_ss3eYJT_qMPE=GwA@mail.gmail.com>
- <CAHmME9qpEVW3AwDPCUSUA_A4DJi+oTGoMX4V3fVyHk7aXsAZ6Q@mail.gmail.com>
- <1523786895.1990.5.camel@gmail.com>
-In-Reply-To: <1523786895.1990.5.camel@gmail.com>
-From: Luiz Angelo Daros de Luca <luizluca@gmail.com>
-Date: Mon, 16 Apr 2018 01:47:01 +0000
-Message-ID: <CAJq09z6sHzLPkcCMmwOm0dyA2yS1CY0z-Mqgs9px04L8gMfdxA@mail.gmail.com>
-Subject: Re: Sharing peer data
-To: ST <smntov@gmail.com>
-Content-Type: multipart/alternative; boundary="0000000000008ad6850569ed665c"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+In-Reply-To: <CAK_h9uGaQZ_djbWJTbTZ71uEw9KsXuqHCQ6QYSKqMWjgUeqieA@mail.gmail.com>
+References: <CAHmME9owJaafkWfz8ruaKWqATmQ9gfoxNtZNyxRJFjyQgr7yvw@mail.gmail.com>
+ <CAK_h9uFHeYPaiPVBC+PQi-YOAOCbp6LVTsbM+r8cO4DNmp6RxA@mail.gmail.com>
+ <CAHmME9p0Co58utbbd=xA3o2a_+X5YAejQ6qNROLCUczuJ6nqsw@mail.gmail.com>
+ <CAK_h9uGaQZ_djbWJTbTZ71uEw9KsXuqHCQ6QYSKqMWjgUeqieA@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Mon, 16 Apr 2018 07:23:29 +0200
+Message-ID: <CAHmME9p7tcwyQEZ5M8NjW_qvEOaw1pzXKtYZ+t3iWWJZ8y=mOg@mail.gmail.com>
+Subject: Re: PMTU Discovery Security Concerns
+To: Tim Sedlmeyer <tim@sedlmeyer.org>
+Content-Type: text/plain; charset="UTF-8"
+Cc: Luis Ressel <aranea@aixah.de>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -31,56 +39,36 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---0000000000008ad6850569ed665c
-Content-Type: text/plain; charset="UTF-8"
+On Sun, Apr 15, 2018 at 7:51 PM, Tim Sedlmeyer <tim@sedlmeyer.org> wrote:
+> - Which allowed-ip do you use?
+> - If the allowed-ip is a network, which ip within it do you choose to ping?
+> - If you are connected to a single peer with an allowed-ip of 0.0.0.0/0 what
+>   ip do you ping?
 
+Yea, the actual IP discovery is a hurdle to figure out.
+
+> The allowed-ip isn't guaranteed to be on the same device as the peer so,
+> in the end you aren't measuring the mtu over the connection between peers
+> but the complete path to that allowed-ip which could involve more devices and
+> connections with smaller MTUs than between the peers themselves.
+
+That's probably fine and even desirable, since we're looking for the
+PMTU along a certain route.
+
+> See RFC4821, RFC8085 and
+> https://tools.ietf.org/html/draft-ietf-tsvwg-datagram-plpmtud-01
+> for more info about PLMTUD.
 >
-> Just one question: let's assume B and C got the required information
-> about each other's IPs/public keys from A. Will they now communicate
-> directly without relying on A in whatever way?... It is important to
-> know for the case when A is a server with metered paid traffic... Will
-> the communication between B and C affect the traffic of A or not?
+> https://datatracker.ietf.org/meeting/101/materials/slides-101-ipsecme-packetization-layer-path-mtu-discovery-01
+> has a quick overview of where IPsec stands with implementing it.
 
+Thanks for these. I followed the rabbit hole, and found [1], which
+seems to be the current latest and greatest from the IPsec people.
+It's probes inside the control plane. Reading the references, such as
+[2], it seems pretty unanimous that going anywhere near out-of-tunnel
+ICMP messages is a disaster, as I suggested in the original post here.
+That's useful confirmation, and I guess we'll indeed have to look at
+creative non-ICMP solutions for PMTUD to happen.
 
-In my point of view, it is something that all nodes must agree to accept (a
-non-default option). Of course, if node A wants to measure traffic, it
-ahould not allow it, forcing all traffic from B to C to pass through it.
-
-I imagine something like:
-
-Node A: hey node B, I noticed that you are sending traffic to another
-remote node (node C). You can continue to send traffic through me but, in
-parallel, could you please try to contact node C directly? It is currently
-using ip x.x.x.x and its pubkey is aaaaaa.
--- 
-
-Luiz Angelo Daros de Luca
-luizluca@gmail.com
-
---0000000000008ad6850569ed665c
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div class=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margi=
-n:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">Just one question=
-: let&#39;s assume B and C got the required information<br>
-about each other&#39;s IPs/public keys from A. Will they now communicate<br=
->
-directly without relying on A in whatever way?... It is important to<br>
-know for the case when A is a server with metered paid traffic... Will<br>
-the communication between B and C affect the traffic of A or not?</blockquo=
-te></div><div><br></div><div>In my point of view, it is something that all =
-nodes must agree to accept (a non-default option). Of course, if node A wan=
-ts to measure traffic, it ahould not allow it, forcing all traffic from B t=
-o C to pass through it.</div><div><br></div><div>I imagine something like:<=
-/div><div><br></div><div>Node A: hey node B, I noticed that you are sending=
- traffic to another remote node (node C). You can continue to send traffic =
-through me but, in parallel, could you please try to contact node C directl=
-y? It is currently using ip x.x.x.x and its pubkey is aaaaaa.</div><div cla=
-ss=3D"gmail_quote"></div>-- <br><div dir=3D"ltr" class=3D"gmail_signature" =
-data-smartmail=3D"gmail_signature"><div dir=3D"ltr"><p dir=3D"ltr">Luiz Ang=
-elo Daros de Luca<br>
-<a href=3D"mailto:luizluca@gmail.com">luizluca@gmail.com</a></p>
-</div></div>
-
---0000000000008ad6850569ed665c--
+[1] https://tools.ietf.org/html/draft-spiriyath-ipsecme-dynamic-ipsec-pmtu-01.html
+[2] https://tools.ietf.org/html/draft-roca-ipsecme-ptb-pts-attack-00
