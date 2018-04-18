@@ -1,23 +1,30 @@
-Return-Path: chm.duquesne@gmail.com
+Return-Path: smntov@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4337a3de
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 836a934f
  for <wireguard@lists.zx2c4.com>;
- Wed, 18 Apr 2018 09:25:40 +0000 (UTC)
-Received: from mail-it0-f42.google.com (mail-it0-f42.google.com
- [209.85.214.42])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 646d474f
+ Wed, 18 Apr 2018 10:23:53 +0000 (UTC)
+Received: from mail-wr0-f182.google.com (mail-wr0-f182.google.com
+ [209.85.128.182])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id df6ca3d9
  for <wireguard@lists.zx2c4.com>;
- Wed, 18 Apr 2018 09:25:40 +0000 (UTC)
-Received: by mail-it0-f42.google.com with SMTP id l83-v6so592552ita.5
- for <wireguard@lists.zx2c4.com>; Wed, 18 Apr 2018 02:40:26 -0700 (PDT)
-MIME-Version: 1.0
-Sender: chm.duquesne@gmail.com
-From: Christophe-Marie Duquesne <chmd@chmd.fr>
-Date: Wed, 18 Apr 2018 11:40:05 +0200
-Message-ID: <CAHLp1Ym8ZaKjJOtuKspFHfgTh4Y4yNU5FFy=ZAfjcg0p9iWhyw@mail.gmail.com>
-Subject: Broadcast on wireguard
-To: wireguard@lists.zx2c4.com
+ Wed, 18 Apr 2018 10:23:53 +0000 (UTC)
+Received: by mail-wr0-f182.google.com with SMTP id s18-v6so3433702wrg.9
+ for <wireguard@lists.zx2c4.com>; Wed, 18 Apr 2018 03:38:39 -0700 (PDT)
+Return-Path: <smntov@gmail.com>
+Message-ID: <1524047914.9423.5.camel@gmail.com>
+Subject: Re: SFTP-based VPN bootstrapping with automatic collision-free IPs
+ assignment/peers' public data sharing
+From: ST <smntov@gmail.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 18 Apr 2018 13:38:34 +0300
+In-Reply-To: <CAHmME9qy5mNRNHM4qJc-kBVu1+5ryO8fY5sZfCLiXRvc+b9vmw@mail.gmail.com>
+References: <1523814593.1990.49.camel@gmail.com>
+ <CAHmME9rr7AJ_LGZt62vMAkAFh4Q304PTpHJ3WRug91Xw3Ewb9w@mail.gmail.com>
+ <1523995660.9423.4.camel@gmail.com>
+ <CAHmME9qy5mNRNHM4qJc-kBVu1+5ryO8fY5sZfCLiXRvc+b9vmw@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -27,22 +34,7 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi list,
+What uses unauthenticated TCP - your demo.wireguard.com script or DHCP?
 
-Maybe the answer is obvious to some of you, but I don't quite
-understand why wireguard does not support broadcasting, and I found no
-clear explanation in the archive. In fact, this [1] seems to indicate
-that implementing it would be doable, so I am wondering why this has
-not been done.
-
-Could anyone explain - roughly - why this is the case? Is it for
-security reasons? Performance? Complexity of implementation? Lack of
-interest?
-
-Another possibility could be that my question is just poorly asked or
-irrelevant, in that case I would also appreciate a hint :-)
-
-Best,
-Christophe-Marie
-
-[1]: https://lists.zx2c4.com/pipermail/wireguard/2016-December/000813.html
+On Wed, 2018-04-18 at 06:04 +0200, Jason A. Donenfeld wrote:
+> The problem is that it uses unauthenticated TCP.
