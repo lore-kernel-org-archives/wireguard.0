@@ -1,24 +1,25 @@
-Return-Path: lbeltrame@kde.org
+Return-Path: kedia.vikas@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1f635d06
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8831dd0e
  for <wireguard@lists.zx2c4.com>;
- Wed, 18 Apr 2018 21:12:33 +0000 (UTC)
-Received: from tsugumi.dennogumi.org (tsugumi.dennogumi.org [5.9.18.77])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3908a1bd
+ Wed, 18 Apr 2018 21:33:38 +0000 (UTC)
+Received: from mail-oi0-f42.google.com (mail-oi0-f42.google.com
+ [209.85.218.42])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id eba56e1e
  for <wireguard@lists.zx2c4.com>;
- Wed, 18 Apr 2018 21:12:32 +0000 (UTC)
-Sender: luca.beltrame@dennogumi.org
-From: Luca Beltrame <lbeltrame@kde.org>
-To: JuniorJPDJ <juniorjpdj@juniorjpdj.pl>
-Subject: Re: [HACK] UDP tunneling over TCP for WireGuard
-Date: Wed, 18 Apr 2018 23:12:30 +0200
-Message-ID: <2691203.H8StyC36JO@leon.lan>
-In-Reply-To: <f47035e6-8940-7f24-6d13-f645a76bc3a7@juniorjpdj.pl>
-References: <24602785.LeAoNilrza@aoi.marionegri.it>
- <f47035e6-8940-7f24-6d13-f645a76bc3a7@juniorjpdj.pl>
+ Wed, 18 Apr 2018 21:33:38 +0000 (UTC)
+Received: by mail-oi0-f42.google.com with SMTP id e23-v6so2982348oiy.1
+ for <wireguard@lists.zx2c4.com>; Wed, 18 Apr 2018 14:33:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="nextPart2789484.IBvMgNIKhy";
- micalg="pgp-sha512"; protocol="application/pgp-signature"
+In-Reply-To: <CAHmME9pHbB8JS9anHpMHXqzbF=Ei_9cw3iXBg8aTSZT59vwBPg@mail.gmail.com>
+References: <CAPGejTdkr5ERbLPR=94do2_w6GddCK4fOP62ofZ=VYuvSNJ40w@mail.gmail.com>
+ <CAHmME9pHbB8JS9anHpMHXqzbF=Ei_9cw3iXBg8aTSZT59vwBPg@mail.gmail.com>
+From: Vikas <kedia.vikas@gmail.com>
+Date: Wed, 18 Apr 2018 14:33:38 -0700
+Message-ID: <CAPGejTecZFFQ=+fH-1iT4iNQP07Giajcfce+ETe98UzE+k4nJg@mail.gmail.com>
+Subject: Re: On redhat 7.4 wireguard not working
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Content-Type: multipart/alternative; boundary="0000000000004b1f9a056a263521"
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -29,38 +30,54 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---nextPart2789484.IBvMgNIKhy
+--0000000000004b1f9a056a263521
+Content-Type: text/plain; charset="UTF-8"
+
+Thank you Jason. Your response is very appreciated along with your work on
+the wireguard project.
+
+1. Is there a minimum version of iproute2 that is needed?
+
+2. Can that be mention in the dependency.
+
+3. I installed from source and from the suggested rpm method at
+https://www.wireguard.com/install/ would it be possible to check for
+version for iproute2 and fail with a error message,
+
+Regards,
+
+Vikas
+
+
+
+--
+VK
+
+On Wed, Apr 18, 2018 at 2:10 PM, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+
+> You need a newer version of iproute2.
+>
+
+--0000000000004b1f9a056a263521
+Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="iso-8859-1"
 
-In data mercoled=EC 18 aprile 2018 21:29:11 CEST, hai scritto:
+<div dir=3D"ltr">Thank you Jason. Your response is very appreciated along w=
+ith your work on the wireguard project.<div><br></div><div>1. Is there a mi=
+nimum version of iproute2 that is needed?</div><div><br></div><div>2. Can t=
+hat be mention in the dependency.</div><div><br></div><div>3. I installed f=
+rom source and from the suggested rpm method at=C2=A0<a href=3D"https://www=
+.wireguard.com/install/">https://www.wireguard.com/install/</a> would it be=
+ possible to check for version for iproute2 and fail with a error message,<=
+/div><div><br></div><div>Regards,</div><div><br></div><div>Vikas</div><div>=
+<br></div></div><div class=3D"gmail_extra"><br clear=3D"all"><div><div clas=
+s=3D"gmail_signature" data-smartmail=3D"gmail_signature"><br>--<br>VK</div>=
+</div>
+<br><div class=3D"gmail_quote">On Wed, Apr 18, 2018 at 2:10 PM, Jason A. Do=
+nenfeld <span dir=3D"ltr">&lt;<a href=3D"mailto:Jason@zx2c4.com" target=3D"=
+_blank">Jason@zx2c4.com</a>&gt;</span> wrote:<br><blockquote class=3D"gmail=
+_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:=
+1ex">You need a newer version of iproute2.<br>
+</blockquote></div><br></div>
 
-> You can use this:
-> https://github.com/wangyu-/udp2raw-tunnel
-> instead of socat to avoid TCP over TCP effect.
-
-This is interesting . I'll give it a shot in the next few days and see how =
-it=20
-fares (and report back).
-
-=2D-=20
-Luca Beltrame - KDE Forums team
-GPG key ID: A29D259B
---nextPart2789484.IBvMgNIKhy
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part.
-Content-Transfer-Encoding: 7Bit
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEkxcLGs5Ymg3lt6kxjfYx/QIdsMUFAlrXtL4ACgkQjfYx/QId
-sMUpzQf9H3crzeauVrHvJjdYwnudXaZpEQwygvHRcDHu/0gCg9MTj+Bj8tozy2tR
-ZmzcD+aH2gha2nYt/zxqDkEEc0JF5Ov58CO8uk7N/m386NMg4qfS9g19TM4StdiD
-RmOMVUrSKLBj19ieMcULAfI9WKHDYU/fnY86PxVJoZXHAc4HFmNCG/tBY8tq/wQu
-OWq+2qAC08t8L2ge19v0SAkNRctW+/I80ifB0R7N7nJP2AWMcYU83lpx15ZVEj6p
-BB4Ewz4e/ZEZrdU9mpHyyImENzAZAuftkLfgV8RyHdmgJWe2spsOrTuZaNVipK+N
-dFb0RcF8o4n2o8odo/O/wteiECWifA==
-=NAue
------END PGP SIGNATURE-----
-
---nextPart2789484.IBvMgNIKhy--
+--0000000000004b1f9a056a263521--
