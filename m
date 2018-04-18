@@ -1,27 +1,31 @@
-Return-Path: matthias@urlichs.de
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 05b6e076
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 699ba4d3
  for <wireguard@lists.zx2c4.com>;
- Wed, 18 Apr 2018 21:08:28 +0000 (UTC)
-Received: from netz.smurf.noris.de (mail.smurf.noris.de [213.95.149.21])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 22799010
+ Wed, 18 Apr 2018 21:10:34 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b71f38fb
  for <wireguard@lists.zx2c4.com>;
- Wed, 18 Apr 2018 21:08:28 +0000 (UTC)
-Received: from [2001:780:107:0:1278:d2ff:fea3:d4a6]
- by mail.vm.smurf.noris.de with esmtpsa
- (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim 4.89)
- (envelope-from <matthias@urlichs.de>) id 1f8uIh-000GeA-9a
- for wireguard@lists.zx2c4.com; Wed, 18 Apr 2018 23:07:35 +0200
-Subject: Re: [HACK] UDP tunneling over TCP for WireGuard
-To: wireguard@lists.zx2c4.com
-References: <24602785.LeAoNilrza@aoi.marionegri.it>
- <CAK_h9uELREbrKdphB_oQNTNpQDGgucr4HZ6-RLqM-DKwJV73bg@mail.gmail.com>
-From: Matthias Urlichs <matthias@urlichs.de>
-Message-ID: <e1c2b089-399d-bb31-1fa7-01dac91f5bd1@urlichs.de>
-Date: Wed, 18 Apr 2018 23:07:34 +0200
+ Wed, 18 Apr 2018 21:10:33 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f05af897
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 18 Apr 2018 20:46:52 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 1a14c145
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 18 Apr 2018 20:46:52 +0000 (UTC)
+Received: by mail-ot0-f172.google.com with SMTP id m22-v6so3520711otf.8
+ for <wireguard@lists.zx2c4.com>; Wed, 18 Apr 2018 14:10:33 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAK_h9uELREbrKdphB_oQNTNpQDGgucr4HZ6-RLqM-DKwJV73bg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <CAPGejTdkr5ERbLPR=94do2_w6GddCK4fOP62ofZ=VYuvSNJ40w@mail.gmail.com>
+References: <CAPGejTdkr5ERbLPR=94do2_w6GddCK4fOP62ofZ=VYuvSNJ40w@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 18 Apr 2018 23:10:32 +0200
+Message-ID: <CAHmME9pHbB8JS9anHpMHXqzbF=Ei_9cw3iXBg8aTSZT59vwBPg@mail.gmail.com>
+Subject: Re: On redhat 7.4 wireguard not working
+To: Vikas <kedia.vikas@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -31,15 +35,4 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi,
-> /usr/bin/socat -t600 -T600 -d -d UDP4-LISTEN:51821 tcp4:ENDPOINT_IP:
-
-socat does not mark packet boundaries, which are essential. Thus, this
-will not and can never work reliably.
-
-Use a program that adds packet boundaries (i.e. packet length words, PPP
-encoding, whatever).
-socat alone cannot do this.
-
--- 
--- Matthias Urlichs
+You need a newer version of iproute2.
