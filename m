@@ -1,36 +1,27 @@
-Return-Path: germano.massullo@gmail.com
+Return-Path: baptiste@bitsofnetworks.org
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b9601ace
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5906e61b
  for <wireguard@lists.zx2c4.com>;
- Thu, 19 Apr 2018 17:09:32 +0000 (UTC)
-Received: from mail-wr0-f181.google.com (mail-wr0-f181.google.com
- [209.85.128.181])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7ba57493
+ Thu, 19 Apr 2018 17:28:23 +0000 (UTC)
+Received: from mails.bitsofnetworks.org (rezine.polyno.me [193.33.56.138])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bced9320
  for <wireguard@lists.zx2c4.com>;
- Thu, 19 Apr 2018 17:09:32 +0000 (UTC)
-Received: by mail-wr0-f181.google.com with SMTP id h3-v6so15997706wrh.5
- for <wireguard@lists.zx2c4.com>; Thu, 19 Apr 2018 10:09:38 -0700 (PDT)
-Return-Path: <germano.massullo@gmail.com>
-Received: from [192.168.1.100]
- (host109-187-dynamic.3-87-r.retail.telecomitalia.it. [87.3.187.109])
- by smtp.googlemail.com with ESMTPSA id w62sm4116409wmb.6.2018.04.19.10.09.36
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 19 Apr 2018 10:09:37 -0700 (PDT)
-Subject: Re: On redhat 7.4 wireguard not working
+ Thu, 19 Apr 2018 17:28:23 +0000 (UTC)
+Received: from [172.23.184.97] (helo=tuxmachine.localdomain)
+ by mails.bitsofnetworks.org with esmtps
+ (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.89)
+ (envelope-from <baptiste@bitsofnetworks.org>) id 1f9DMD-00020l-IF
+ for wireguard@lists.zx2c4.com; Thu, 19 Apr 2018 19:28:29 +0200
+Date: Thu, 19 Apr 2018 19:28:28 +0200
+From: Baptiste Jonglez <baptiste@bitsofnetworks.org>
 To: wireguard@lists.zx2c4.com
-References: <CAPGejTdkr5ERbLPR=94do2_w6GddCK4fOP62ofZ=VYuvSNJ40w@mail.gmail.com>
- <CAHmME9pHbB8JS9anHpMHXqzbF=Ei_9cw3iXBg8aTSZT59vwBPg@mail.gmail.com>
- <CAPGejTecZFFQ=+fH-1iT4iNQP07Giajcfce+ETe98UzE+k4nJg@mail.gmail.com>
- <CAPGejTe3b26qZA0vAXRJeqkuh8fwcnp1seKGhdfZ4yjH3r3jGw@mail.gmail.com>
- <93ffb22e-1c55-087d-1363-b6f56b643f47@createc.ro>
- <589e5d51-3feb-b514-8c26-ff18e7f7d11e@createc.ro>
-From: Germano Massullo <germano.massullo@gmail.com>
-Message-ID: <1bcdb881-1567-ddb9-0489-031b1703b21e@gmail.com>
-Date: Thu, 19 Apr 2018 19:09:36 +0200
+Subject: Re: Broadcast on wireguard
+Message-ID: <20180419172828.GB2001@tuxmachine.localdomain>
+References: <CAHLp1Ym8ZaKjJOtuKspFHfgTh4Y4yNU5FFy=ZAfjcg0p9iWhyw@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <589e5d51-3feb-b514-8c26-ff18e7f7d11e@createc.ro>
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="ADZbWkCsHQ7r3kzd"
+In-Reply-To: <CAHLp1Ym8ZaKjJOtuKspFHfgTh4Y4yNU5FFy=ZAfjcg0p9iWhyw@mail.gmail.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -40,37 +31,64 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-I am using Wireguard on CentOS 7.4 by many months
-iproute-3.10.0-87.el7.x86_64
-wireguard-dkms-0.0.20180413-1.el7.centos.noarch
-wireguard-tools-0.0.20180413-1.el7.centos.x86_64
 
-$ dkms status
-wireguard, 0.0.20180413, 3.10.0-693.21.1.el7.x86_64, x86_64: installed
+--ADZbWkCsHQ7r3kzd
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-In my system, Wireguard network interface is handled as a systemd service
+Hi,
 
-# systemctl status wg-quick@wg0.service
-● wg-quick@wg0.service - WireGuard via wg-quick(8) for wg0
-   Loaded: loaded (/usr/lib/systemd/system/wg-quick@.service; enabled;
-vendor preset: disabled)
-   Active: active (exited) since gio 2018-04-19 18:07:01 CEST; 1h 1min ago
-     Docs: man:wg-quick(8)
-           man:wg(8)
-           https://www.wireguard.com/
-           https://www.wireguard.com/quickstart/
-           https://git.zx2c4.com/WireGuard/about/src/tools/wg-quick.8
-           https://git.zx2c4.com/WireGuard/about/src/tools/wg.8
-  Process: 1059 ExecStart=/usr/bin/wg-quick up %i (code=exited,
-status=0/SUCCESS)
- Main PID: 1059 (code=exited, status=0/SUCCESS)
+On 18-04-18, Christophe-Marie Duquesne wrote:
+> Hi list,
+>=20
+> Maybe the answer is obvious to some of you, but I don't quite
+> understand why wireguard does not support broadcasting, and I found no
+> clear explanation in the archive. In fact, this [1] seems to indicate
+> that implementing it would be doable, so I am wondering why this has
+> not been done.
 
-apr 19 18:07:00 vpn systemd[1]: Starting WireGuard via wg-quick(8) for
-wg0...
-apr 19 18:07:00 vpn wg-quick[1059]: [#] ip link add wg0 type wireguard
-apr 19 18:07:01 vpn wg-quick[1059]: [#] wg setconf wg0 /dev/fd/63
-apr 19 18:07:01 vpn wg-quick[1059]: [#] ip address add **removed by me**
-dev wg0
-apr 19 18:07:01 vpn wg-quick[1059]: [#] ip link set mtu 1420 dev wg0
-apr 19 18:07:01 vpn wg-quick[1059]: [#] ip link set wg0 up
-apr 19 18:07:01 vpn systemd[1]: Started WireGuard via wg-quick(8) for wg0.
+This has been further discussed here:
+
+  https://lists.zx2c4.com/pipermail/wireguard/2017-April/001177.html
+
+As far as I remember, there was no major blocking point, it was more about
+making a design/UI decision.
+
+> Could anyone explain - roughly - why this is the case? Is it for
+> security reasons? Performance? Complexity of implementation? Lack of
+> interest?
+>=20
+> Another possibility could be that my question is just poorly asked or
+> irrelevant, in that case I would also appreciate a hint :-)
+>=20
+> Best,
+> Christophe-Marie
+>=20
+> [1]: https://lists.zx2c4.com/pipermail/wireguard/2016-December/000813.html
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--ADZbWkCsHQ7r3kzd
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEjVflzZuxNlVFbt5QvgHsIqBOLkYFAlrY0bcACgkQvgHsIqBO
+LkYkUA//ZwOhuFHWLYIgYON16uR1770G7zAcHJ1nmrJaR9l/QpYV/VyPaqpP2DqG
+wThteOcs/mTOcBa7RhYSmNOYzjFXFs/Ww1NuSvq2Gahqf9QSnEUafZoOO6WzR457
+BjZdOZA0SSsVEse1NIVXtLj8kAvzygLtg+u0ToiFFrIX9mqddlWfqKTpccMXKmLd
+ENoYmfPYX9FPUjPpY0VKLzFY7hwXmtqUW63GRTPnVilVA62opTbPhauEPlObwdYW
+J3ShxdIdLVjbOUE6XfP9Fs3thOxddwcnonjTcj1BHOf3zj/ULkVimHYa/a+TIUTv
+pzOTmu/yoTtFrDQO/PlqCW8KKfYxrbwwg+Zsas4KekOwjrkB+YIyuwJmMn3ZK1fn
+EYfXnccPj8gPzEC+hI+0y8VlT+9dSAqkkVAoNtg9vvV9gG1VNiri+a9GHyYmcR8h
+O4JZtcgsD6/6c7gUMxnSTiZZ2UifBHTeFuMsAc7ZDnGrJQAVYVjJTu/aHfscqSbk
+97FsIM15+yR3n+iB9fUjULixC4Bl3a0LJ1l4m5R21QxRNyQp4Ve+//4qDZqqrQSv
+Q5z4N+L4sGVC/DldTPjWoQsEDpQqTTH/DFQd3OZX2q8wjSde0uVkvu7x8jSIBrrg
+j4eEyfhVKEX+MaM3iXvEcowzrG68QhH5gvFHV+29IBDTyxb9RmU=
+=ssq5
+-----END PGP SIGNATURE-----
+
+--ADZbWkCsHQ7r3kzd--
