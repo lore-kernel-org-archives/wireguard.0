@@ -1,28 +1,30 @@
-Return-Path: riccardo@rcrdbrt.com
+Return-Path: bessonov.victor@e-queo.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 761c3625
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9ad66d9a
  for <wireguard@lists.zx2c4.com>;
- Fri, 20 Apr 2018 13:56:52 +0000 (UTC)
-Received: from mail.rcrdbrt.com (rcrdbrt.com [45.32.6.71])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3a203b4c
+ Fri, 20 Apr 2018 14:32:23 +0000 (UTC)
+Received: from mail-wr0-f175.google.com (mail-wr0-f175.google.com
+ [209.85.128.175])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id aa0f6223
  for <wireguard@lists.zx2c4.com>;
- Fri, 20 Apr 2018 13:56:52 +0000 (UTC)
+ Fri, 20 Apr 2018 14:32:23 +0000 (UTC)
+Received: by mail-wr0-f175.google.com with SMTP id o15-v6so23564288wro.11
+ for <wireguard@lists.zx2c4.com>; Fri, 20 Apr 2018 07:32:36 -0700 (PDT)
+Return-Path: <bessonov.victor@e-queo.com>
+Received: from ArchAdmin ([5.45.79.55])
+ by smtp.gmail.com with ESMTPSA id p1sm2756819edm.0.2018.04.20.07.32.34
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+ Fri, 20 Apr 2018 07:32:34 -0700 (PDT)
+Message-ID: <86d4ddc168ce2c5ac69bede349a44b50d68d6555.camel@e-queo.com>
+Subject: Problems with IP
+From: bessonov.victor@e-queo.com
+To: wireguard@lists.zx2c4.com
+Date: Fri, 20 Apr 2018 17:32:32 +0300
+Content-Type: multipart/signed; micalg="sha-256";
+ protocol="application/x-pkcs7-signature";
+ boundary="=-Of8htmQULuAONT9kjb6c"
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Date: Fri, 20 Apr 2018 15:57:02 +0200
-From: Riccardo Berto <riccardo@rcrdbrt.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: Re: Troubleshooting WireGuard connections
-In-Reply-To: <9896807f0c6cbee1c7c99647a3c289cc@rcrdbrt.com>
-References: <628776a245ad4895630fd727c80e8bf1@rcrdbrt.com>
- <CAHmME9rFZMXcjZgFQBrZHDCbqmYT+MdBEJmS6f6=5=F-7nrJBA@mail.gmail.com>
- <33d0fd1f4c60919b98b50e2b9d04fe78@rcrdbrt.com>
- <2c17e7ba2590353afa04fc1619d726c2@rcrdbrt.com>
- <CAHmME9oFYswr1KjBGiP+2iMHDGYmZhpv_SovCMT3xxMMErK19A@mail.gmail.com>
- <9896807f0c6cbee1c7c99647a3c289cc@rcrdbrt.com>
-Message-ID: <f541248bfc8b47975b34acbc1c7bfa9b@rcrdbrt.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -32,39 +34,117 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Sorry for the late answer, I've been busy with exams this week.
 
-I updated WireGuard to the latest snapshot 20180420 on both server and 
-peers.
+--=-Of8htmQULuAONT9kjb6c
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-I use unique key pairs for every host and I'm using the right 
-privkey/pubkey combo, I just checked manually via the `wg pubkey` 
-command.
-I also tried removing all the peers but one Raspberry Pi, I'm still 
-getting this weird output on the server from `tcpdump -vv -ni ens3 'port 
-51820'`:
+Hello! While trying to bring wg0 interface up, I am getting this error:
 
-15:45:49.138470 IP (tos 0x0, ttl 52, id 27235, offset 0, flags [none], 
-proto UDP (17), length 176)
-     raspberry-ip.51820 > server-ip.51820: [udp sum ok] UDP, length 148
-15:45:49.138883 IP (tos 0x88, ttl 64, id 2728, offset 0, flags [none], 
-proto UDP (17), length 120)
-     server-ip.51820 > raspberry-ip.51820: [bad udp cksum 0x92e3 -> 
-0x0eae!] UDP, length 92
-15:46:05.778398 IP (tos 0x0, ttl 52, id 27850, offset 0, flags [none], 
-proto UDP (17), length 176)
-     raspberry-ip.51820 > server-ip.51820: [udp sum ok] UDP, length 148
-15:46:05.778890 IP (tos 0x88, ttl 64, id 5807, offset 0, flags [none], 
-proto UDP (17), length 120)
-     server-ip.51820 > raspberry-ip.51820: [bad udp cksum 0x92e3 -> 
-0x85d0!] UDP, length 92
-15:46:22.419043 IP (tos 0x0, ttl 52, id 28761, offset 0, flags [none], 
-proto UDP (17), length 176)
-     raspberry-ip.51820 > server-ip.51820: [udp sum ok] UDP, length 148
-15:46:22.419748 IP (tos 0x88, ttl 64, id 8596, offset 0, flags [none], 
-proto UDP (17), length 120)
-     server-ip.51820 > raspberry-ip.51820: [bad udp cksum 0x92e3 -> 
-0x6d8c!] UDP, length 92
+[#] ip -4 rule add table main suppress_prefixlength 0
+Error: argument "suppress_prefixlength" is wrong: Failed to parse rule
+type
 
-Removing everything and simply adding the "always working" peer (my 
-laptop) in the server config makes it working perfectly fine.
+I've tried to run this instruction manually, result is still the same.
+The system runs CentOS 7 and properly updated.
+--=-Of8htmQULuAONT9kjb6c
+Content-Type: application/x-pkcs7-signature; name="smime.p7s"
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Transfer-Encoding: base64
+
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCEHIw
+ggVAMIIEKKADAgECAhEAmscpAD+NYjluo7XXnsKKajANBgkqhkiG9w0BAQsFADCBlzELMAkGA1UE
+BhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEaMBgG
+A1UEChMRQ09NT0RPIENBIExpbWl0ZWQxPTA7BgNVBAMTNENPTU9ETyBSU0EgQ2xpZW50IEF1dGhl
+bnRpY2F0aW9uIGFuZCBTZWN1cmUgRW1haWwgQ0EwHhcNMTgwNDEyMDAwMDAwWhcNMTkwNDEyMjM1
+OTU5WjArMSkwJwYJKoZIhvcNAQkBFhpiZXNzb25vdi52aWN0b3JAZS1xdWVvLmNvbTCCASIwDQYJ
+KoZIhvcNAQEBBQADggEPADCCAQoCggEBAMApBy3G9pDX7VaeUcoy7ujNq3ZQmhFaUnUg04C0nbzb
+cqmeiNMwmQJof7JnwAXan0t8pOZbq/d2EidASsbichY6bsxXO2x5xi4D5mvrZvvo1VDfTjqCAs3Y
+J+J9hrfrV29nG+NTgkXDDbMX1HPW50RpL1aSwjZF7dtUeQwXXDQF6zJFKtSAqkdOI96J1pkKJskr
+ZFGnG5f+7brSlD4wvITfyIKurFcn/R9dK1fP1hQ86KQP4k/d6vF3xSjTJ7p6JX43GmMnLyNqeigG
+wyHDuRMLj4YwkGHBbvrbBkV+YTI8SkdT62qIs1E67Ef9IuF374UdfZFRvTFPFebDTSLJvL8CAwEA
+AaOCAfAwggHsMB8GA1UdIwQYMBaAFIKvbIz4xf6WYXzoHz0rcUhexIvAMB0GA1UdDgQWBBRkiXJY
+aTTx870DkijHFcDpPQzfrjAOBgNVHQ8BAf8EBAMCBaAwDAYDVR0TAQH/BAIwADAgBgNVHSUEGTAX
+BggrBgEFBQcDBAYLKwYBBAGyMQEDBQIwEQYJYIZIAYb4QgEBBAQDAgUgMEYGA1UdIAQ/MD0wOwYM
+KwYBBAGyMQECAQEBMCswKQYIKwYBBQUHAgEWHWh0dHBzOi8vc2VjdXJlLmNvbW9kby5uZXQvQ1BT
+MFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9jcmwuY29tb2RvY2EuY29tL0NPTU9ET1JTQUNsaWVu
+dEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1haWxDQS5jcmwwgYsGCCsGAQUFBwEBBH8wfTBVBggr
+BgEFBQcwAoZJaHR0cDovL2NydC5jb21vZG9jYS5jb20vQ09NT0RPUlNBQ2xpZW50QXV0aGVudGlj
+YXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuY29tb2Rv
+Y2EuY29tMCUGA1UdEQQeMByBGmJlc3Nvbm92LnZpY3RvckBlLXF1ZW8uY29tMA0GCSqGSIb3DQEB
+CwUAA4IBAQBRrrq+emOdpRb8M5qI17R3tZYN9ueQfj5Gf6ztYMWXT7M4azK2A7AZYSWKkbndbA8u
+Y26u9HTbAvM/DyQWWbiT0q7E02TPVoDlOYcUCn99JoI/WF/e93CO7LgWfXVY/RR3hv0QD6awCYP0
+Qz27a/6BGrGm2G/MFm95T/jhMuWztamYxbrdDk8W4Uu+My6C3LwPRQNZZd/QzyH5WCy4DdYgSr1t
+yBjTr0owSNVsQBoo4ZF9lK9sq2e5/XjTB2Fp53ROZxF4KDAqMxgQ8/9GG6BOD9aLAYuBFbVm/YLM
+AfTVxt49MSC51nR60ubk5nYrwjQGN1nDxpY0NXwFbEbSLuIyMIIFQDCCBCigAwIBAgIRAJrHKQA/
+jWI5bqO1157CimowDQYJKoZIhvcNAQELBQAwgZcxCzAJBgNVBAYTAkdCMRswGQYDVQQIExJHcmVh
+dGVyIE1hbmNoZXN0ZXIxEDAOBgNVBAcTB1NhbGZvcmQxGjAYBgNVBAoTEUNPTU9ETyBDQSBMaW1p
+dGVkMT0wOwYDVQQDEzRDT01PRE8gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJl
+IEVtYWlsIENBMB4XDTE4MDQxMjAwMDAwMFoXDTE5MDQxMjIzNTk1OVowKzEpMCcGCSqGSIb3DQEJ
+ARYaYmVzc29ub3YudmljdG9yQGUtcXVlby5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEK
+AoIBAQDAKQctxvaQ1+1WnlHKMu7ozat2UJoRWlJ1INOAtJ2823KpnojTMJkCaH+yZ8AF2p9LfKTm
+W6v3dhInQErG4nIWOm7MVztsecYuA+Zr62b76NVQ3046ggLN2CfifYa361dvZxvjU4JFww2zF9Rz
+1udEaS9WksI2Re3bVHkMF1w0BesyRSrUgKpHTiPeidaZCibJK2RRpxuX/u260pQ+MLyE38iCrqxX
+J/0fXStXz9YUPOikD+JP3erxd8Uo0ye6eiV+NxpjJy8janooBsMhw7kTC4+GMJBhwW762wZFfmEy
+PEpHU+tqiLNROuxH/SLhd++FHX2RUb0xTxXmw00iyby/AgMBAAGjggHwMIIB7DAfBgNVHSMEGDAW
+gBSCr2yM+MX+lmF86B89K3FIXsSLwDAdBgNVHQ4EFgQUZIlyWGk08fO9A5IoxxXA6T0M364wDgYD
+VR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwIAYDVR0lBBkwFwYIKwYBBQUHAwQGCysGAQQBsjEB
+AwUCMBEGCWCGSAGG+EIBAQQEAwIFIDBGBgNVHSAEPzA9MDsGDCsGAQQBsjEBAgEBATArMCkGCCsG
+AQUFBwIBFh1odHRwczovL3NlY3VyZS5jb21vZG8ubmV0L0NQUzBaBgNVHR8EUzBRME+gTaBLhklo
+dHRwOi8vY3JsLmNvbW9kb2NhLmNvbS9DT01PRE9SU0FDbGllbnRBdXRoZW50aWNhdGlvbmFuZFNl
+Y3VyZUVtYWlsQ0EuY3JsMIGLBggrBgEFBQcBAQR/MH0wVQYIKwYBBQUHMAKGSWh0dHA6Ly9jcnQu
+Y29tb2RvY2EuY29tL0NPTU9ET1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1haWxD
+QS5jcnQwJAYIKwYBBQUHMAGGGGh0dHA6Ly9vY3NwLmNvbW9kb2NhLmNvbTAlBgNVHREEHjAcgRpi
+ZXNzb25vdi52aWN0b3JAZS1xdWVvLmNvbTANBgkqhkiG9w0BAQsFAAOCAQEAUa66vnpjnaUW/DOa
+iNe0d7WWDfbnkH4+Rn+s7WDFl0+zOGsytgOwGWElipG53WwPLmNurvR02wLzPw8kFlm4k9KuxNNk
+z1aA5TmHFAp/fSaCP1hf3vdwjuy4Fn11WP0Ud4b9EA+msAmD9EM9u2v+gRqxpthvzBZveU/44TLl
+s7WpmMW63Q5PFuFLvjMugty8D0UDWWXf0M8h+VgsuA3WIEq9bcgY069KMEjVbEAaKOGRfZSvbKtn
+uf140wdhaed0TmcReCgwKjMYEPP/RhugTg/WiwGLgRW1Zv2CzAH01cbePTEgudZ0etLm5OZ2K8I0
+BjdZw8aWNDV8BWxG0i7iMjCCBeYwggPOoAMCAQICEGqb4Tg7/ytrnwHV2binUlYwDQYJKoZIhvcN
+AQEMBQAwgYUxCzAJBgNVBAYTAkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNV
+BAcTB1NhbGZvcmQxGjAYBgNVBAoTEUNPTU9ETyBDQSBMaW1pdGVkMSswKQYDVQQDEyJDT01PRE8g
+UlNBIENlcnRpZmljYXRpb24gQXV0aG9yaXR5MB4XDTEzMDExMDAwMDAwMFoXDTI4MDEwOTIzNTk1
+OVowgZcxCzAJBgNVBAYTAkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNVBAcT
+B1NhbGZvcmQxGjAYBgNVBAoTEUNPTU9ETyBDQSBMaW1pdGVkMT0wOwYDVQQDEzRDT01PRE8gUlNB
+IENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMIIBIjANBgkqhkiG9w0B
+AQEFAAOCAQ8AMIIBCgKCAQEAvrOeV6wodnVAFsc4A5jTxhh2IVDzJXkLTLWg0X06WD6cpzEup/Y0
+dtmEatrQPTRI5Or1u6zf+bGBSyD9aH95dDSmeny1nxdlYCeXIoymMv6pQHJGNcIDpFDIMypVpVSR
+sivlJTRENf+RKwrB6vcfWlP8dSsE3Rfywq09N0ZfxcBa39V0wsGtkGWC+eQKiz4pBZYKjrc5NOpG
+9qrxpZxyb4o4yNNwTqzaaPpGRqXB7IMjtf7tTmU2jqPMLxFNe1VXj9XB1rHvbRikw8lBoNoSWY66
+nJN/VCJv5ym6Q0mdCbDKCMPybTjoNCQuelc0IAaO4nLUXk0BOSxSxt8kCvsUtQIDAQABo4IBPDCC
+ATgwHwYDVR0jBBgwFoAUu69+Aj36pvE8hI6t7jiY7NkyMtQwHQYDVR0OBBYEFIKvbIz4xf6WYXzo
+Hz0rcUhexIvAMA4GA1UdDwEB/wQEAwIBhjASBgNVHRMBAf8ECDAGAQH/AgEAMBEGA1UdIAQKMAgw
+BgYEVR0gADBMBgNVHR8ERTBDMEGgP6A9hjtodHRwOi8vY3JsLmNvbW9kb2NhLmNvbS9DT01PRE9S
+U0FDZXJ0aWZpY2F0aW9uQXV0aG9yaXR5LmNybDBxBggrBgEFBQcBAQRlMGMwOwYIKwYBBQUHMAKG
+L2h0dHA6Ly9jcnQuY29tb2RvY2EuY29tL0NPTU9ET1JTQUFkZFRydXN0Q0EuY3J0MCQGCCsGAQUF
+BzABhhhodHRwOi8vb2NzcC5jb21vZG9jYS5jb20wDQYJKoZIhvcNAQEMBQADggIBAHhcsoEoNE88
+7l9Wzp+XVuyPomsX9vP2SQgG1NgvNc3fQP7TcePo7EIMERoh42awGGsma65u/ITse2hKZHzT0CBx
+huhb6txM1n/y78e/4ZOs0j8CGpfb+SJA3GaBQ+394k+z3ZByWPQedXLL1OdK8aRINTsjk/H5Ns77
+zwbjOKkDamxlpZ4TKSDMKVmU/PUWNMKSTvtlenlxBhh7ETrN543j/Q6qqgCWgWuMAXijnRglp9fy
+adqGOncjZjaaSOGTTFB+E2pvOUtY+hPebuPtTbq7vODqzCM6ryEhNhzf+enm0zlpXK7q332nXttN
+tjv7VFNYG+I31gnMrwfHM5tdhYF/8v5UY5g2xANPECTQdu9vWPoqNSGDt87b3gXb1AiGGaI06vzg
+kejL580ul+9hz9D0S0U4jkhJiA7EuTecP/CFtR72uYRBcunwwH3fciPjviDDAI9SnC/2aPY8ydeh
+zuZutLbZdRJ5PDEJM/1tyZR2niOYihZ+FCbtf3D9mB12D4ln9icgc7CwaxpNSCPt8i/GqK2HsOgk
+L3VYnwtx7cJUmpvVdZ4ognzgXtgtdk3ShrtOS1iAN2ZBXFiRmjVzmehoMof06r1xub+85hFQzVxZ
+x5/bRaTKTlL8YXLI8nAbR9HWdFqzcOoB/hxfEyIQpx9/s81rgzdEZOofSlZHynoSMYIDyjCCA8YC
+AQEwga0wgZcxCzAJBgNVBAYTAkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNV
+BAcTB1NhbGZvcmQxGjAYBgNVBAoTEUNPTU9ETyBDQSBMaW1pdGVkMT0wOwYDVQQDEzRDT01PRE8g
+UlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEAmscpAD+NYjlu
+o7XXnsKKajANBglghkgBZQMEAgEFAKCCAe0wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkq
+hkiG9w0BCQUxDxcNMTgwNDIwMTQzMjMyWjAvBgkqhkiG9w0BCQQxIgQgw4djRbImYL8dmBTW6QG8
+3Se9ealMriBWtZDSJcNjhWYwgb4GCSsGAQQBgjcQBDGBsDCBrTCBlzELMAkGA1UEBhMCR0IxGzAZ
+BgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEaMBgGA1UEChMRQ09N
+T0RPIENBIExpbWl0ZWQxPTA7BgNVBAMTNENPTU9ETyBSU0EgQ2xpZW50IEF1dGhlbnRpY2F0aW9u
+IGFuZCBTZWN1cmUgRW1haWwgQ0ECEQCaxykAP41iOW6jtdeewopqMIHABgsqhkiG9w0BCRACCzGB
+sKCBrTCBlzELMAkGA1UEBhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UE
+BxMHU2FsZm9yZDEaMBgGA1UEChMRQ09NT0RPIENBIExpbWl0ZWQxPTA7BgNVBAMTNENPTU9ETyBS
+U0EgQ2xpZW50IEF1dGhlbnRpY2F0aW9uIGFuZCBTZWN1cmUgRW1haWwgQ0ECEQCaxykAP41iOW6j
+tdeewopqMA0GCSqGSIb3DQEBAQUABIIBAD4pQm9llSCTeACo6binXaO/SbzX/HeGDMFmBJeNj8T9
+LyMcEGTUR5jZH7i3MlwiLkel1kPnEOCdfXUZItIKPs+VIa/4NbWeOrxgMr49/YujWi3vS/vMvxXh
+moXJ5l7sFEGB60dqUbaBqHBb8V93BKTVav9Dfr7PnzOsDxvK4YDHMoC59CgfDSS+iG6Q179A1yop
++rWI5m5zGydXqRt+e1GMLtgA6ePvDrEoSDJaZU7AlQvFmdadtZUi79j76RIGPvxnFysLFBO8iE2k
+Tn3TmxztVMS5CDA0QDf5lDlfDKC0/KpVgF74rvujXOrsDbzk7idmSFFEZ54dsm2EGCe2sjsAAAAA
+AAA=
+
+
+--=-Of8htmQULuAONT9kjb6c--
