@@ -1,31 +1,30 @@
-Return-Path: riccardo@rcrdbrt.com
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e0379f5d
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ffc4a284
  for <wireguard@lists.zx2c4.com>;
- Fri, 20 Apr 2018 20:31:18 +0000 (UTC)
-Received: from mail.rcrdbrt.com (rcrdbrt.com [45.32.6.71])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a7cd9237
+ Fri, 20 Apr 2018 21:39:09 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c02a902d
  for <wireguard@lists.zx2c4.com>;
- Fri, 20 Apr 2018 20:31:18 +0000 (UTC)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Date: Fri, 20 Apr 2018 22:31:29 +0200
-From: Riccardo Berto <riccardo@rcrdbrt.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: Re: Troubleshooting WireGuard connections
-In-Reply-To: <CAHmME9okxTTCUtnJxCL9ERF1mFQN7_CzN4dM-sOL3KC4J6uBvA@mail.gmail.com>
-References: <628776a245ad4895630fd727c80e8bf1@rcrdbrt.com>
- <CAHmME9rFZMXcjZgFQBrZHDCbqmYT+MdBEJmS6f6=5=F-7nrJBA@mail.gmail.com>
- <33d0fd1f4c60919b98b50e2b9d04fe78@rcrdbrt.com>
- <2c17e7ba2590353afa04fc1619d726c2@rcrdbrt.com>
- <CAHmME9oFYswr1KjBGiP+2iMHDGYmZhpv_SovCMT3xxMMErK19A@mail.gmail.com>
- <9896807f0c6cbee1c7c99647a3c289cc@rcrdbrt.com>
- <f541248bfc8b47975b34acbc1c7bfa9b@rcrdbrt.com>
- <CAHmME9rtK1JvGs3JNYo4Jd9RPuTX9hx0cJy+a=7vEAJkVVa_ng@mail.gmail.com>
- <CAHmME9rDJT5bOJdUn_b9nrUgBbfUWYu2cpQXRhWuAHOGcVczsw@mail.gmail.com>
- <CAHmME9okxTTCUtnJxCL9ERF1mFQN7_CzN4dM-sOL3KC4J6uBvA@mail.gmail.com>
-Message-ID: <4135c3da139c0ca98fafc5fd20d11b18@rcrdbrt.com>
+ Fri, 20 Apr 2018 21:39:09 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 92b75392
+ for <wireguard@lists.zx2c4.com>;
+ Fri, 20 Apr 2018 21:15:28 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 8dc4a6cb
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Fri, 20 Apr 2018 21:15:27 +0000 (UTC)
+Received: by mail-ot0-f182.google.com with SMTP id 77-v6so5046666otd.4
+ for <wireguard@lists.zx2c4.com>; Fri, 20 Apr 2018 14:39:23 -0700 (PDT)
+MIME-Version: 1.0
+References: <1524220589.2059.27.camel@gmail.com>
+In-Reply-To: <1524220589.2059.27.camel@gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Fri, 20 Apr 2018 21:39:12 +0000
+Message-ID: <CAHmME9q_7DK67f=TakrRimX7fs_ZrKQrNP8wHoauj3r7GwRsyQ@mail.gmail.com>
+Subject: Re: Interface's Address is not saved when SaveConfig = true in config
+To: ST <smntov@gmail.com>
+Content-Type: multipart/alternative; boundary="0000000000007af541056a4e8545"
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -36,60 +35,113 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On 2018-04-20 21:51, Jason A. Donenfeld wrote:
-> Could you let me know which kernel the non-working rapsis are running?
-> Also, have you tried this over different internet connections and
-> experienced the same thing?
+--0000000000007af541056a4e8545
+Content-Type: text/plain; charset="UTF-8"
 
-I haven't tried this under different internet connection but one thing I 
-must add is that the laptop is under the same local network of the 
-raspberrys, they have the same gateway and the laptop works in 100% of 
-the cases I tried it, both while pinging from the raspberrys and not.
+Out of date iproute2?
 
-Parallel execution on the raspberry of `tcpdump -vv -ni eth0 'port 
-51820'` while pinging the server:
+Which distro? Version?
 
-22:26:50.084184 IP (tos 0x88, ttl 64, id 45462, offset 0, flags [none], 
-proto UDP (17), length 176)
-     192.168.1.155.51820 > server-ip.51820: [bad udp cksum 0xf657 -> 
-0xb3e7!] UDP, length 148
-22:26:50.186665 IP (tos 0x0, ttl 48, id 31466, offset 0, flags [none], 
-proto UDP (17), length 120)
-     server-ip.51820 > 192.168.1.155.51820: [udp sum ok] UDP, length 92
-22:26:50.187667 IP (tos 0x0, ttl 64, id 45466, offset 0, flags [none], 
-proto UDP (17), length 156)
-     192.168.1.155.51820 > server-ip.51820: [bad udp cksum 0xf643 -> 
-0x0316!] UDP, length 128
-22:26:51.098777 IP (tos 0x0, ttl 64, id 45520, offset 0, flags [none], 
-proto UDP (17), length 156)
-     192.168.1.155.51820 > server-ip.51820: [bad udp cksum 0xf643 -> 
-0x6049!] UDP, length 128
-22:26:52.138753 IP (tos 0x0, ttl 64, id 45595, offset 0, flags [none], 
-proto UDP (17), length 156)
-     192.168.1.155.51820 > server-ip.51820: [bad udp cksum 0xf643 -> 
-0x5608!] UDP, length 128
-22:26:53.178751 IP (tos 0x0, ttl 64, id 45691, offset 0, flags [none], 
-proto UDP (17), length 156)
-     192.168.1.155.51820 > server-ip.51820: [bad udp cksum 0xf643 -> 
-0x7eb3!] UDP, length 128
-22:26:54.218760 IP (tos 0x0, ttl 64, id 45734, offset 0, flags [none], 
-proto UDP (17), length 156)
-     192.168.1.155.51820 > server-ip.51820: [bad udp cksum 0xf643 -> 
-0x240c!] UDP, length 128
-22:27:05.259544 IP (tos 0x88, ttl 64, id 46342, offset 0, flags [none], 
-proto UDP (17), length 176)
-     192.168.1.155.51820 > server-ip.51820: [bad udp cksum 0xf657 -> 
-0x5a78!] UDP, length 148
-22:27:05.359976 IP (tos 0x0, ttl 48, id 33703, offset 0, flags [none], 
-proto UDP (17), length 120)
-     server-ip.51820 > 192.168.1.155.51820: [udp sum ok] UDP, length 92
-22:27:05.360960 IP (tos 0x0, ttl 64, id 46348, offset 0, flags [none], 
-proto UDP (17), length 60)
-     192.168.1.155.51820 > server-ip.51820: [bad udp cksum 0xf5e3 -> 
-0x7f66!] UDP, length 32
+--
+Sent from my telephone.
 
-192.168.1.155 listed there is the static IP address of the raspberry pi 
-in my local network.
+On Fri, Apr 20, 2018, 12:36 ST <smntov@gmail.com> wrote:
 
-Raspberry is running archlinuxarm with kernel: "Linux rpi3-two 
-4.14.34-1-ARCH #1 SMP Mon Apr 16 19:15:19 UTC 2018 armv7l GNU/Linux"
+> Hello,
+>
+> I have
+> ...
+> Address = 192.168.4.1/24
+> SaveConfig = true
+> in wg0.conf
+>
+> 1. if I add a peer with `wg set wg0 peer ...` WG doesn't add it
+> immediately to the wg0.conf file, only after I run `wg-quick down wg0`.
+> Why not? What happens if the system crashes unexpectedly?... The peer
+> will not be saved to the config file and the information will be lost.
+>
+>
+> 2. once I run `wg-quick down wg0` I get:
+>
+> Option "-all" is unknown, try "ip -help".
+> cat: /etc/resolvconf/run/interface/wg0: No such file or directory
+> [#] wg showconf wg0
+> sync: ignoring all arguments
+> [#] ip link delete dev wg0
+>
+> Now the wg0.conf is enhanced with the peer details that was added
+> through command line, but the Address = 192.168.4.1/24 disappears from
+> the config. So running `wg-quick up wg0` again doesn't assigns IP to the
+> wg0 interface... What's wrong?
+>
+> I'm using version:
+> apt list wireguard
+> wireguard/unstable,now 0.0.20180304-1 all [installed]
+>
+> Thank you!
+>
+>
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
+>
+
+--0000000000007af541056a4e8545
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto">Out of date iproute2?<div dir=3D"auto"><br></div><div dir=
+=3D"auto">Which distro? Version?<br><br><div data-smartmail=3D"gmail_signat=
+ure" dir=3D"auto">--<br>Sent from my telephone.<br></div></div></div><br><d=
+iv class=3D"gmail_quote"><div dir=3D"ltr">On Fri, Apr 20, 2018, 12:36 ST &l=
+t;<a href=3D"mailto:smntov@gmail.com">smntov@gmail.com</a>&gt; wrote:<br></=
+div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-lef=
+t:1px #ccc solid;padding-left:1ex">Hello,<br>
+<br>
+I have <br>
+...<br>
+Address =3D <a href=3D"http://192.168.4.1/24" rel=3D"noreferrer noreferrer"=
+ target=3D"_blank">192.168.4.1/24</a><br>
+SaveConfig =3D true<br>
+in wg0.conf<br>
+<br>
+1. if I add a peer with `wg set wg0 peer ...` WG doesn&#39;t add it<br>
+immediately to the wg0.conf file, only after I run `wg-quick down wg0`.<br>
+Why not? What happens if the system crashes unexpectedly?... The peer<br>
+will not be saved to the config file and the information will be lost.<br>
+<br>
+<br>
+2. once I run `wg-quick down wg0` I get:<br>
+<br>
+Option &quot;-all&quot; is unknown, try &quot;ip -help&quot;.<br>
+cat: /etc/resolvconf/run/interface/wg0: No such file or directory<br>
+[#] wg showconf wg0<br>
+sync: ignoring all arguments<br>
+[#] ip link delete dev wg0<br>
+<br>
+Now the wg0.conf is enhanced with the peer details that was added<br>
+through command line, but the Address =3D <a href=3D"http://192.168.4.1/24"=
+ rel=3D"noreferrer noreferrer" target=3D"_blank">192.168.4.1/24</a> disappe=
+ars from<br>
+the config. So running `wg-quick up wg0` again doesn&#39;t assigns IP to th=
+e<br>
+wg0 interface... What&#39;s wrong?<br>
+<br>
+I&#39;m using version:<br>
+apt list wireguard<br>
+wireguard/unstable,now 0.0.20180304-1 all [installed]<br>
+<br>
+Thank you!<br>
+<br>
+<br>
+_______________________________________________<br>
+WireGuard mailing list<br>
+<a href=3D"mailto:WireGuard@lists.zx2c4.com" target=3D"_blank" rel=3D"noref=
+errer">WireGuard@lists.zx2c4.com</a><br>
+<a href=3D"https://lists.zx2c4.com/mailman/listinfo/wireguard" rel=3D"noref=
+errer noreferrer" target=3D"_blank">https://lists.zx2c4.com/mailman/listinf=
+o/wireguard</a><br>
+</blockquote></div>
+
+--0000000000007af541056a4e8545--
