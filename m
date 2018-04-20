@@ -1,25 +1,28 @@
-Return-Path: toke@toke.dk
+Return-Path: smntov@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 527b75b5
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id eb136895
  for <wireguard@lists.zx2c4.com>;
- Fri, 20 Apr 2018 09:37:36 +0000 (UTC)
-Received: from mail.toke.dk (mail.toke.dk [52.28.52.200])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8184dd09
+ Fri, 20 Apr 2018 10:36:20 +0000 (UTC)
+Received: from mail-wr0-f169.google.com (mail-wr0-f169.google.com
+ [209.85.128.169])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e4879303
  for <wireguard@lists.zx2c4.com>;
- Fri, 20 Apr 2018 09:37:36 +0000 (UTC)
-From: Toke =?utf-8?Q?H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>
-To: George Walker <georgewalkeriv@gmail.com>,
- "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: Re: The case for anycast (contra move semantics for unicast
- AllowedIPs).
-In-Reply-To: <CAC92Z13zi6Gsq2CGwohZSEcF04Sa+m+WO3yCzWjXvn4DZuy-Rg@mail.gmail.com>
-References: <CAC92Z13zi6Gsq2CGwohZSEcF04Sa+m+WO3yCzWjXvn4DZuy-Rg@mail.gmail.com>
-Date: Fri, 20 Apr 2018 11:37:46 +0200
-Message-ID: <87wox2xlp1.fsf@toke.dk>
-MIME-Version: 1.0
-Content-Type: text/plain
-Cc: Juliusz Chroboczek <jch@irif.fr>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>
+ Fri, 20 Apr 2018 10:36:20 +0000 (UTC)
+Received: by mail-wr0-f169.google.com with SMTP id w3-v6so21690645wrg.2
+ for <wireguard@lists.zx2c4.com>; Fri, 20 Apr 2018 03:36:32 -0700 (PDT)
+Return-Path: <smntov@gmail.com>
+Received: from debox ([37.26.147.242])
+ by smtp.gmail.com with ESMTPSA id e50-v6sm10925134wre.4.2018.04.20.03.36.30
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Fri, 20 Apr 2018 03:36:30 -0700 (PDT)
+Message-ID: <1524220589.2059.27.camel@gmail.com>
+Subject: Interface's Address is not saved when SaveConfig = true in config
+From: ST <smntov@gmail.com>
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Date: Fri, 20 Apr 2018 13:36:29 +0300
+Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -29,48 +32,35 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-George Walker <georgewalkeriv@gmail.com> writes:
+Hello,
 
-> Hi Jason, Juliusz, Toke, Dave, et. al.,
->
-> A year ago we discussed Multicast addressing and the move semantics for
-> allowedIPs.
+I have 
+...
+Address = 192.168.4.1/24
+SaveConfig = true
+in wg0.conf
 
-Yeah, whatever happened to actually implementing that? :)
-
-> Recently, I've been mulling over move semantics and their
-> implication for WireGuard's support for anycast addressing.
->
-> Unlike Multicast addresses, there are no designated address ranges for
-> anycast: an anycast address is just a unicast address that's
-> advertised in more than one place. As I understand it, the move
-> semantics for allowedIPs preclude anycast addressing, as IP addresses
-> can only be assigned to one peer at a time. This makes me wonder if it
-> might be more correct to allow unicast allowedIPs to be assigned to
-> more than one peer, treating them as anycast in that case.
-
-That is not how anycasting works. You don't actually get more than one
-path to an anycast address, and you don't duplicate any packets
-(otherwise TCP would break, as you say). What anycast does is just that
-it announced the same address in multiple places *at the control plane*,
-and each router can then pick the closest path to that address and
-install that one route in its data plane.
-
-The AllowedIP configuration in WireGuard is the data plane configuration
-(i.e., it corresponds to the kernel FIB). So supporting anycast at that
-level doesn't make sense; you'll need to decide which peer gets your
-"anycast" traffic. To the extent that anycast makes sense as a concept
-at all on top of a VPN, you'd need to run some sort of control plane
-(e.g., a routing protocol; there's a WireGuard GSOC that looks into
-that) which would then configure appropriate AllowedIP configs into
-wireguard.
-
-> Also, if memory serves, move semantics account for a large proportion
-> of the troubleshooting requests that show up on this list, suggesting
-> to me that the status quo --elegant though it is!-- may not be
-> especially intuitive.
-
-This is probably a separate point that might be worth exploring further ;)
+1. if I add a peer with `wg set wg0 peer ...` WG doesn't add it
+immediately to the wg0.conf file, only after I run `wg-quick down wg0`.
+Why not? What happens if the system crashes unexpectedly?... The peer
+will not be saved to the config file and the information will be lost.
 
 
--Toke
+2. once I run `wg-quick down wg0` I get:
+
+Option "-all" is unknown, try "ip -help".
+cat: /etc/resolvconf/run/interface/wg0: No such file or directory
+[#] wg showconf wg0
+sync: ignoring all arguments
+[#] ip link delete dev wg0
+
+Now the wg0.conf is enhanced with the peer details that was added
+through command line, but the Address = 192.168.4.1/24 disappears from
+the config. So running `wg-quick up wg0` again doesn't assigns IP to the
+wg0 interface... What's wrong?
+
+I'm using version:
+apt list wireguard
+wireguard/unstable,now 0.0.20180304-1 all [installed]
+
+Thank you!
