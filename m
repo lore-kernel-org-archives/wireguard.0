@@ -1,32 +1,32 @@
 Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3e82fee6
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b8cc9d24
  for <wireguard@lists.zx2c4.com>;
- Fri, 20 Apr 2018 18:50:53 +0000 (UTC)
+ Fri, 20 Apr 2018 19:27:14 +0000 (UTC)
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 16c7963f
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id df8896a2
  for <wireguard@lists.zx2c4.com>;
- Fri, 20 Apr 2018 18:50:53 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f810c267
+ Fri, 20 Apr 2018 19:27:14 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 939d0e54
  for <wireguard@lists.zx2c4.com>;
- Fri, 20 Apr 2018 18:27:12 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 9c0668e8
+ Fri, 20 Apr 2018 19:03:34 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id fe16bfb7
  (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 20 Apr 2018 18:27:11 +0000 (UTC)
-Received: by mail-ot0-f170.google.com with SMTP id j27-v6so10530299ota.5
- for <wireguard@lists.zx2c4.com>; Fri, 20 Apr 2018 11:51:06 -0700 (PDT)
+ Fri, 20 Apr 2018 19:03:33 +0000 (UTC)
+Received: by mail-oi0-f51.google.com with SMTP id j10-v6so9000141oii.12
+ for <wireguard@lists.zx2c4.com>; Fri, 20 Apr 2018 12:27:28 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAK_h9uGCHrEU6uONmFW-coukMTXwZgpkenbbXnfaENpdJBJxJA@mail.gmail.com>
-References: <86d4ddc168ce2c5ac69bede349a44b50d68d6555.camel@e-queo.com>
- <c2634cf8-28bf-816f-fe91-6e988cc6bbdc@gmail.com>
- <CAHmME9pZtn8i5dFC1xPNj-9x3yE+zKy86JWDtVB_mgJxNo=cpw@mail.gmail.com>
- <CAK_h9uGCHrEU6uONmFW-coukMTXwZgpkenbbXnfaENpdJBJxJA@mail.gmail.com>
+In-Reply-To: <CADX+UFiHhwCrWk3t5PARVbTh9EcMMe=TjdUkZuQ4450J2eYvBQ@mail.gmail.com>
+References: <CADX+UFjEBcWRsL3SRv5_b0ezU0adcURqOJf=MvDbQkSXg3JRHg@mail.gmail.com>
+ <CAHmME9racrutSPmM_Oy6eHAx3B=ah1=xzchzb_msZ5F9Zf-rGA@mail.gmail.com>
+ <CADX+UFjjqvemqD38xvpa3GAFBWm2=39sb7dfBnvuAaQkzqwdRQ@mail.gmail.com>
+ <CADX+UFiHhwCrWk3t5PARVbTh9EcMMe=TjdUkZuQ4450J2eYvBQ@mail.gmail.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 20 Apr 2018 20:51:05 +0200
-Message-ID: <CAHmME9rFjtgthTA3uky=BmT4390jOgk99yQ_gumyxjuppyJoJg@mail.gmail.com>
-Subject: Re: Problems with IP
-To: Tim Sedlmeyer <tim@sedlmeyer.org>
+Date: Fri, 20 Apr 2018 21:27:27 +0200
+Message-ID: <CAHmME9rx25_zK+6QkgRfDjHE5Hy_T7tuyn_C=K5RSBSU0W2iwA@mail.gmail.com>
+Subject: Re: Using WG for transport security in a p2p network
+To: Ximin Luo <ximin@dfinity.org>
 Content-Type: text/plain; charset="UTF-8"
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
@@ -38,15 +38,23 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hey Tim,
+Hey Ximin,
 
-Oh, thanks for the info about RHEL 7.5. Perhaps the RPM then just
-needs a warning, "WARNING: some functionality of wg-quick will be
-unavailable in <7.5" or the like. We do this frequently in Gentoo
-ebuilds, but I'm not sure whether or not it's something generally done
-by RPMs. I'll defer to Joe on this.
+Nice to see that you're thinking through these issues in a concrete setting.
 
-Re:patch - I was thinking a patch for wg-quick rather than for
-iproute2, but it looks like that's not entirely necessary now.
+For a while I had some notions about allowing WireGuard to pop up
+initiaton messages from unauthenticated peers to userspace for userspace to
+then validate in one way or another asynchornously, followed by userspace
+adding that peer's key to the list of peers (or not), and initiating the
+handshake back the other way reusing the initial UDP port. This wouldn't add
+that much complexity and I think it'd be fairly reliable. However, I've held
+off on implementing it because I'm skepical that people would actually use it
+in a way that makes sense. For example, in your case, you already have some
+other aspect of the protocol which seeks to exchange this information; in
+that case, doing the exchange there makes most sense, since you can morph and
+change that for your particular requirements. In other words, I like the idea
+you presented in your follow up email. Does that seem like a okay solution for
+you? Or do you think you do have a compelling reason for adding the above
+semantics?
 
 Jason
