@@ -1,21 +1,21 @@
 Return-Path: smntov@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3aff6e42
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 96cc774e
  for <wireguard@lists.zx2c4.com>;
- Sat, 21 Apr 2018 18:57:12 +0000 (UTC)
-Received: from mail-wr0-f193.google.com (mail-wr0-f193.google.com
- [209.85.128.193])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 49d6072a
+ Tue, 24 Apr 2018 08:59:17 +0000 (UTC)
+Received: from mail-wr0-f195.google.com (mail-wr0-f195.google.com
+ [209.85.128.195])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d48c758f
  for <wireguard@lists.zx2c4.com>;
- Sat, 21 Apr 2018 18:57:12 +0000 (UTC)
-Received: by mail-wr0-f193.google.com with SMTP id s18-v6so30791402wrg.9
- for <wireguard@lists.zx2c4.com>; Sat, 21 Apr 2018 11:57:34 -0700 (PDT)
+ Tue, 24 Apr 2018 08:59:16 +0000 (UTC)
+Received: by mail-wr0-f195.google.com with SMTP id g21-v6so21012986wrb.8
+ for <wireguard@lists.zx2c4.com>; Tue, 24 Apr 2018 01:59:58 -0700 (PDT)
 Return-Path: <smntov@gmail.com>
-Message-ID: <1524337049.2059.29.camel@gmail.com>
+Message-ID: <1524560394.21032.73.camel@gmail.com>
 Subject: Re: Interface's Address is not saved when SaveConfig = true in config
 From: ST <smntov@gmail.com>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sat, 21 Apr 2018 21:57:29 +0300
+Date: Tue, 24 Apr 2018 11:59:54 +0300
 In-Reply-To: <CAHmME9q_7DK67f=TakrRimX7fs_ZrKQrNP8wHoauj3r7GwRsyQ@mail.gmail.com>
 References: <1524220589.2059.27.camel@gmail.com>
  <CAHmME9q_7DK67f=TakrRimX7fs_ZrKQrNP8wHoauj3r7GwRsyQ@mail.gmail.com>
@@ -33,6 +33,17 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 
 Debian 8 Jessie
 iproute2/oldstable,now 3.16.0-2 amd64
+
+1. So is the iproute2 version out of date?
+
+2. Is the issue with not saving new peers to the config file immediately as they are add but
+rather only on `wg-quick down wg0` related to the version being out of date?
+
+3. How are you going to implement SaveConfig = true once you add support for
+/etc/wireguard/conf.d/[interface.conf | peers.conf]? How do you know to which file
+should you save new peers?
+
+Thank you!
 
 
 On Fri, 2018-04-20 at 21:39 +0000, Jason A. Donenfeld wrote:
