@@ -1,37 +1,11 @@
-Return-Path: logcabin@fastmail.net
-Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e59c1943
- for <wireguard@lists.zx2c4.com>;
- Wed, 25 Apr 2018 12:39:52 +0000 (UTC)
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
- [66.111.4.26])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e438c90b
- for <wireguard@lists.zx2c4.com>;
- Wed, 25 Apr 2018 12:39:51 +0000 (UTC)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id 774D321B08
- for <wireguard@lists.zx2c4.com>; Wed, 25 Apr 2018 08:40:42 -0400 (EDT)
-Message-Id: <1524660042.4071569.1350220944.701B98B1@webmail.messagingengine.com>
-From: logcabin@fastmail.net
-To: wireguard@lists.zx2c4.com
+Return-Path: tom@tigera.io
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-References: <628776a245ad4895630fd727c80e8bf1@rcrdbrt.com>
- <CAHmME9rFZMXcjZgFQBrZHDCbqmYT+MdBEJmS6f6=5=F-7nrJBA@mail.gmail.com>
- <33d0fd1f4c60919b98b50e2b9d04fe78@rcrdbrt.com>
- <2c17e7ba2590353afa04fc1619d726c2@rcrdbrt.com>
- <CAHmME9oFYswr1KjBGiP+2iMHDGYmZhpv_SovCMT3xxMMErK19A@mail.gmail.com>
- <9896807f0c6cbee1c7c99647a3c289cc@rcrdbrt.com>
- <f541248bfc8b47975b34acbc1c7bfa9b@rcrdbrt.com>
- <CAHmME9rtK1JvGs3JNYo4Jd9RPuTX9hx0cJy+a=7vEAJkVVa_ng@mail.gmail.com>
- <CAHmME9rDJT5bOJdUn_b9nrUgBbfUWYu2cpQXRhWuAHOGcVczsw@mail.gmail.com>
- <CAHmME9okxTTCUtnJxCL9ERF1mFQN7_CzN4dM-sOL3KC4J6uBvA@mail.gmail.com>
- <4135c3da139c0ca98fafc5fd20d11b18@rcrdbrt.com>
- <ec6ebd88a3bedf31a721b887b7a5fdf9@rcrdbrt.com>
- <CAHmME9o2QrKz3rC9-h0i0KJrzgXkPksogL_EkSSitYwahjXW0g@mail.gmail.com>
-Subject: Re: Troubleshooting WireGuard connections
-Date: Wed, 25 Apr 2018 08:40:42 -0400
-In-Reply-To: <CAHmME9o2QrKz3rC9-h0i0KJrzgXkPksogL_EkSSitYwahjXW0g@mail.gmail.com>
+From: Tom Denham <tom@tigera.io>
+Date: Wed, 25 Apr 2018 10:54:06 -0700
+Message-ID: <CAJ5-c6WjxshZF7sE98Sk8XYr=9o5vRAiLQ+xCwq2Nidt8iPU8g@mail.gmail.com>
+Subject: Using WireGuard with Kubernetes
+To: WireGuard@lists.zx2c4.com
+Content-Type: multipart/alternative; boundary="00000000000043bb90056aaff6ce"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -41,16 +15,38 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Strange. I've been running WG on an RPI 3 with Raspbian (Stretch) with no problems. The Pi is reached via a squid proxy which tunnels out to a server in the US.
+--00000000000043bb90056aaff6ce
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Apr 25, 2018, at 7:51 AM, Jason A. Donenfeld wrote:
-> Hi Riccardo,
-> 
-> We really should debug this in real time. Perhaps pop into #wireguard
-> on Freenode?
-> 
-> Jason
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
+I was wondering if anyone had any experience using WireGuard with
+Kubernetes? I see that the WireGuard website says "Ready for Containers"
+but the model it describes sounds like it would work for adding WireGuard
+to a single container (putting the wg interface in the container itself).
+If I have many containers on a host, and many containers on a host, and I
+want them all to be able to communicate with each other using WireGuard,
+then I would need to create many different WireGuard interfaces and
+presumably they would all need their own independent config. It doesn't
+feel like this would scale to 100's of hosts and tens of thousands of
+containers.
+
+I'm interested in hearing people's thoughts and ideas on this
+Thanks
+Tom
+
+--00000000000043bb90056aaff6ce
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">I was wondering if anyone had any experience using WireGua=
+rd with Kubernetes? I see that the WireGuard website says &quot;Ready for C=
+ontainers&quot; but the model it describes sounds like it would work for ad=
+ding WireGuard to a single container (putting the wg interface in the conta=
+iner itself). If I have many containers on a host, and many containers on a=
+ host, and I want them all to be able to communicate with each other using =
+WireGuard, then I would need to create many different WireGuard interfaces =
+and presumably they would all need their own independent config. It doesn&#=
+39;t feel like this would scale to 100&#39;s of hosts and tens of thousands=
+ of containers.<div><br></div><div>I&#39;m interested in hearing people&#39=
+;s thoughts and ideas on this</div><div>Thanks</div><div>Tom</div></div>
+
+--00000000000043bb90056aaff6ce--
