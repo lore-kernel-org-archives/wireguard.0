@@ -1,23 +1,21 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: logcabin@fastmail.net
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b555fb03
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e59c1943
  for <wireguard@lists.zx2c4.com>;
- Wed, 25 Apr 2018 11:50:24 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8f170ac0
+ Wed, 25 Apr 2018 12:39:52 +0000 (UTC)
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
+ [66.111.4.26])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e438c90b
  for <wireguard@lists.zx2c4.com>;
- Wed, 25 Apr 2018 11:50:23 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 24240d52
- for <wireguard@lists.zx2c4.com>;
- Wed, 25 Apr 2018 11:26:43 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id a2dc4228
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Wed, 25 Apr 2018 11:26:43 +0000 (UTC)
-Received: by mail-ot0-f176.google.com with SMTP id g7-v6so15714218otj.11
- for <wireguard@lists.zx2c4.com>; Wed, 25 Apr 2018 04:51:14 -0700 (PDT)
+ Wed, 25 Apr 2018 12:39:51 +0000 (UTC)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id 774D321B08
+ for <wireguard@lists.zx2c4.com>; Wed, 25 Apr 2018 08:40:42 -0400 (EDT)
+Message-Id: <1524660042.4071569.1350220944.701B98B1@webmail.messagingengine.com>
+From: logcabin@fastmail.net
+To: wireguard@lists.zx2c4.com
 MIME-Version: 1.0
-In-Reply-To: <ec6ebd88a3bedf31a721b887b7a5fdf9@rcrdbrt.com>
+Content-Type: text/plain; charset="utf-8"
 References: <628776a245ad4895630fd727c80e8bf1@rcrdbrt.com>
  <CAHmME9rFZMXcjZgFQBrZHDCbqmYT+MdBEJmS6f6=5=F-7nrJBA@mail.gmail.com>
  <33d0fd1f4c60919b98b50e2b9d04fe78@rcrdbrt.com>
@@ -30,13 +28,10 @@ References: <628776a245ad4895630fd727c80e8bf1@rcrdbrt.com>
  <CAHmME9okxTTCUtnJxCL9ERF1mFQN7_CzN4dM-sOL3KC4J6uBvA@mail.gmail.com>
  <4135c3da139c0ca98fafc5fd20d11b18@rcrdbrt.com>
  <ec6ebd88a3bedf31a721b887b7a5fdf9@rcrdbrt.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 25 Apr 2018 13:51:13 +0200
-Message-ID: <CAHmME9o2QrKz3rC9-h0i0KJrzgXkPksogL_EkSSitYwahjXW0g@mail.gmail.com>
+ <CAHmME9o2QrKz3rC9-h0i0KJrzgXkPksogL_EkSSitYwahjXW0g@mail.gmail.com>
 Subject: Re: Troubleshooting WireGuard connections
-To: Riccardo Berto <riccardo@rcrdbrt.com>
-Content-Type: text/plain; charset="UTF-8"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Date: Wed, 25 Apr 2018 08:40:42 -0400
+In-Reply-To: <CAHmME9o2QrKz3rC9-h0i0KJrzgXkPksogL_EkSSitYwahjXW0g@mail.gmail.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -46,9 +41,16 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Riccardo,
+Strange. I've been running WG on an RPI 3 with Raspbian (Stretch) with no problems. The Pi is reached via a squid proxy which tunnels out to a server in the US.
 
-We really should debug this in real time. Perhaps pop into #wireguard
-on Freenode?
-
-Jason
+On Wed, Apr 25, 2018, at 7:51 AM, Jason A. Donenfeld wrote:
+> Hi Riccardo,
+> 
+> We really should debug this in real time. Perhaps pop into #wireguard
+> on Freenode?
+> 
+> Jason
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
