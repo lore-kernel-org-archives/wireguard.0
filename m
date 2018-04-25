@@ -1,21 +1,14 @@
-Return-Path: stunnel@attglobal.net
-Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 88ef761f
- for <wireguard@lists.zx2c4.com>;
- Wed, 25 Apr 2018 20:13:53 +0000 (UTC)
-Received: from dnvrco-cmomta01.email.rr.com (dnvrco-outbound-snat.email.rr.com
- [107.14.73.229])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 63370d9b
- for <wireguard@lists.zx2c4.com>;
- Wed, 25 Apr 2018 20:13:53 +0000 (UTC)
-To: wireguard@lists.zx2c4.com
-From: Eddie <stunnel@attglobal.net>
-Subject: RX Errors from Android Peer
-Message-ID: <b110c9fb-fbd7-0e7a-31a7-bfec934ad058@attglobal.net>
-Date: Wed, 25 Apr 2018 13:14:25 -0700
+Return-Path: martinmoen@gmail.com
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Reply-To: stunnel@attglobal.net
+In-Reply-To: <CAJ5-c6WjxshZF7sE98Sk8XYr=9o5vRAiLQ+xCwq2Nidt8iPU8g@mail.gmail.com>
+References: <CAJ5-c6WjxshZF7sE98Sk8XYr=9o5vRAiLQ+xCwq2Nidt8iPU8g@mail.gmail.com>
+From: Martin Eskdale Moen <martinmoen@gmail.com>
+Date: Wed, 25 Apr 2018 21:15:28 +0100
+Message-ID: <CAKiCHuNqght5YJQT2kBqsA82EFv-r+3BFgnbCPh27RR_kbYc2w@mail.gmail.com>
+Subject: Re: Using WireGuard with Kubernetes
+To: Tom Denham <tom@tigera.io>
+Content-Type: multipart/alternative; boundary="f403043e74100adad8056ab1f195"
+Cc: WireGuard mailing list <WireGuard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -25,29 +18,75 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Only found out about this project a few days ago and have been trying it 
-out.  Looks killer.
+--f403043e74100adad8056ab1f195
+Content-Type: text/plain; charset="UTF-8"
 
-Noticed that connecting from the Android app (0.4.0), yeah I know it's 
-only Alpha level, the wg0 interface on the Linux side (0.0.20180420) 
-reports RX errors:
+I've been doing some experiments with this. Not so much with kubes yet,
+that was next on the list.
+I think at the moment linking together the various network namespaces using
+a linux bridge should work.
+Not sure if I'm shooting myself in the foot at all using linux bridges.
+Reading over the docs of openvswitch vs linux bridge it seems the bridge is
+easier to understand and overall more useful.
 
-wg0: flags=209<UP,POINTOPOINT,RUNNING,NOARP>  mtu 1420
-         inet 192.168.150.1  netmask 255.255.255.255  destination 
-192.168.150.2
-         inet6 fe80::a615:c1b7:2533:52d9  prefixlen 64  scopeid 0x20<link>
-         unspec 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00 
-txqueuelen 1  (UNSPEC)
-         RX packets 7265  bytes 1049904 (1.0 MiB)
-         RX errors 168  dropped 10  overruns 0  frame 168
-         TX packets 8836  bytes 7561628 (7.2 MiB)
-         TX errors 3  dropped 0 overruns 0  carrier 0  collisions 0
+On Wed, Apr 25, 2018 at 6:54 PM, Tom Denham <tom@tigera.io> wrote:
 
-Running a similar test from another Linux laptop didn't show the same 
-symptoms.
+> I was wondering if anyone had any experience using WireGuard with
+> Kubernetes? I see that the WireGuard website says "Ready for Containers"
+> but the model it describes sounds like it would work for adding WireGuard
+> to a single container (putting the wg interface in the container itself).
+> If I have many containers on a host, and many containers on a host, and I
+> want them all to be able to communicate with each other using WireGuard,
+> then I would need to create many different WireGuard interfaces and
+> presumably they would all need their own independent config. It doesn't
+> feel like this would scale to 100's of hosts and tens of thousands of
+> containers.
+>
+> I'm interested in hearing people's thoughts and ideas on this
+> Thanks
+> Tom
+>
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
+>
+>
 
-I can try and capture the packets on the internet facing interface it 
-that might help.  If so, what information would you like reported back, 
-or I could just host/upload a raw capture file.
+--f403043e74100adad8056ab1f195
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Cheers.
+<div dir=3D"ltr"><div><div>I&#39;ve been doing some experiments with this. =
+Not so much with kubes yet, that was next on the list.<br></div>I think at =
+the moment linking together the various network namespaces using a linux br=
+idge should work.<br></div><div>Not sure if I&#39;m shooting myself in the =
+foot at all using linux bridges. Reading over the docs of openvswitch vs li=
+nux bridge it seems the bridge is easier to understand and overall more use=
+ful.<br></div><div class=3D"gmail_extra"><br><div class=3D"gmail_quote">On =
+Wed, Apr 25, 2018 at 6:54 PM, Tom Denham <span dir=3D"ltr">&lt;<a href=3D"m=
+ailto:tom@tigera.io" target=3D"_blank">tom@tigera.io</a>&gt;</span> wrote:<=
+br><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left=
+:1px #ccc solid;padding-left:1ex"><div dir=3D"ltr">I was wondering if anyon=
+e had any experience using WireGuard with Kubernetes? I see that the WireGu=
+ard website says &quot;Ready for Containers&quot; but the model it describe=
+s sounds like it would work for adding WireGuard to a single container (put=
+ting the wg interface in the container itself). If I have many containers o=
+n a host, and many containers on a host, and I want them all to be able to =
+communicate with each other using WireGuard, then I would need to create ma=
+ny different WireGuard interfaces and presumably they would all need their =
+own independent config. It doesn&#39;t feel like this would scale to 100&#3=
+9;s of hosts and tens of thousands of containers.<div><br></div><div>I&#39;=
+m interested in hearing people&#39;s thoughts and ideas on this</div><div>T=
+hanks</div><span class=3D"m_-8512209423325127063HOEnZb"><font color=3D"#888=
+888"><div>Tom</div></font></span></div>
+<br>______________________________<wbr>_________________<br>
+WireGuard mailing list<br>
+<a href=3D"mailto:WireGuard@lists.zx2c4.com" target=3D"_blank">WireGuard@li=
+sts.zx2c4.com</a><br>
+<a href=3D"https://lists.zx2c4.com/mailman/listinfo/wireguard" rel=3D"noref=
+errer" target=3D"_blank">https://lists.zx2c4.com/mailma<wbr>n/listinfo/wire=
+guard</a><br>
+<br></blockquote></div><br></div></div>
+
+--f403043e74100adad8056ab1f195--
