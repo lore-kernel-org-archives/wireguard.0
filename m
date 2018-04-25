@@ -1,25 +1,35 @@
-Return-Path: stunnel@attglobal.net
+Return-Path: riccardo@rcrdbrt.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9ad10347
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 81a4ae4f
  for <wireguard@lists.zx2c4.com>;
- Wed, 25 Apr 2018 22:27:51 +0000 (UTC)
-Received: from dnvrco-cmomta01.email.rr.com (dnvrco-outbound-snat.email.rr.com
- [107.14.73.230])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 14c4831b
+ Wed, 25 Apr 2018 22:55:21 +0000 (UTC)
+Received: from mail.rcrdbrt.com (rcrdbrt.com [45.32.6.71])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 962c5468
  for <wireguard@lists.zx2c4.com>;
- Wed, 25 Apr 2018 22:27:51 +0000 (UTC)
-Subject: Re: RX Errors from Android Peer
+ Wed, 25 Apr 2018 22:55:21 +0000 (UTC)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Date: Thu, 26 Apr 2018 00:56:12 +0200
+From: Riccardo Berto <riccardo@rcrdbrt.com>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-References: <b110c9fb-fbd7-0e7a-31a7-bfec934ad058@attglobal.net>
- <CAHmME9ovmNCJ4501TDpvtu9doci1Z34jS9N88csgNskxq4QrRg@mail.gmail.com>
-From: Eddie <stunnel@attglobal.net>
-Message-ID: <6e8c6b16-f131-6b45-9eee-f162a4f31099@attglobal.net>
-Date: Wed, 25 Apr 2018 15:28:40 -0700
-MIME-Version: 1.0
-In-Reply-To: <CAHmME9ovmNCJ4501TDpvtu9doci1Z34jS9N88csgNskxq4QrRg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Subject: Re: Troubleshooting WireGuard connections
+In-Reply-To: <CAHmME9o2QrKz3rC9-h0i0KJrzgXkPksogL_EkSSitYwahjXW0g@mail.gmail.com>
+References: <628776a245ad4895630fd727c80e8bf1@rcrdbrt.com>
+ <CAHmME9rFZMXcjZgFQBrZHDCbqmYT+MdBEJmS6f6=5=F-7nrJBA@mail.gmail.com>
+ <33d0fd1f4c60919b98b50e2b9d04fe78@rcrdbrt.com>
+ <2c17e7ba2590353afa04fc1619d726c2@rcrdbrt.com>
+ <CAHmME9oFYswr1KjBGiP+2iMHDGYmZhpv_SovCMT3xxMMErK19A@mail.gmail.com>
+ <9896807f0c6cbee1c7c99647a3c289cc@rcrdbrt.com>
+ <f541248bfc8b47975b34acbc1c7bfa9b@rcrdbrt.com>
+ <CAHmME9rtK1JvGs3JNYo4Jd9RPuTX9hx0cJy+a=7vEAJkVVa_ng@mail.gmail.com>
+ <CAHmME9rDJT5bOJdUn_b9nrUgBbfUWYu2cpQXRhWuAHOGcVczsw@mail.gmail.com>
+ <CAHmME9okxTTCUtnJxCL9ERF1mFQN7_CzN4dM-sOL3KC4J6uBvA@mail.gmail.com>
+ <4135c3da139c0ca98fafc5fd20d11b18@rcrdbrt.com>
+ <ec6ebd88a3bedf31a721b887b7a5fdf9@rcrdbrt.com>
+ <CAHmME9o2QrKz3rC9-h0i0KJrzgXkPksogL_EkSSitYwahjXW0g@mail.gmail.com>
+Message-ID: <cec5be754f0da45caa9360d547e2872d@rcrdbrt.com>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Reply-To: stunnel@attglobal.net
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -29,56 +39,13 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Jason,
+It's really great to hear that RPi3 can run WireGuard. That excludes the 
+architectural difference from the issues I'm having.
 
-Not sure I follow you.
+I tried to reach you on freenode in 2 occasions last week, I also 
+mentioned you but the channel wasn't active. I'm travelling atm and I'll 
+be afk until monday, so next week is good for you?
 
-The Android app, I thought, was designed to send all traffic out via the 
-tunnel.  It's configuration would be, in Linux format:
+Should I just mention you again and leave the IRC client open?
 
-[Interface]
-Address = 192.168.150.10/24
-DNS = 192.168.0.254
-PrivateKey = Android private key
-
-[Peer]
-PublicKey = Linux public key
-AllowedIPs = 0.0.0.0/0, ::/0
-Endpoint = MyServer.net:51820
-
-So all the traffic sent, should be from 192.168.150.10.  The 
-corresponding Linux configuration is:
-
-[Interface]
-PrivateKey = Linux private key
-ListenPort = 51820
-
-[Peer]
-PublicKey = Android public key
-AllowedIPs = 192.168.150.10/32
-
-[Peer]
-PublicKey = Laptop public key
-AllowedIPs = 192.168.150.11/32
-
-The RX errors go up immediately I connect and stop increasing when I 
-disconnect.  They are NOT random pokes at my server from script-kiddies, 
-which i would have thought would have been dropped silently.
-
-So, I don't see how the source IP wouldn't match the allowed-ip.
-
-Cheers.
-
-
-On 4/25/2018 2:18 PM, Jason A. Donenfeld wrote:
-> Hi Eddie,
->
-> Those RX frame errors are caused by the interface receiving packets
-> that have a source IP not included in the allowed-ips list of the
-> peer.
->
-> https://git.zx2c4.com/WireGuard/tree/src/receive.c#n351
->
-> Jason
->
->
+Thanks for the interest in my noob problem, though.
