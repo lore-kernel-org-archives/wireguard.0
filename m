@@ -1,23 +1,35 @@
-Return-Path: opensource@vdorst.com
+Return-Path: riccardo@rcrdbrt.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id eee64ec3
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9f7180d2
  for <wireguard@lists.zx2c4.com>;
- Thu, 26 Apr 2018 08:58:15 +0000 (UTC)
-Received: from smtp15.bhosted.nl (smtp15.bhosted.nl [94.124.121.26])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fd96be01
+ Thu, 26 Apr 2018 09:51:14 +0000 (UTC)
+Received: from mail.rcrdbrt.com (rcrdbrt.com [45.32.6.71])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7f03d63c
  for <wireguard@lists.zx2c4.com>;
- Thu, 26 Apr 2018 08:58:15 +0000 (UTC)
-Date: Thu, 26 Apr 2018 08:59:10 +0000
-Message-ID: <20180426085910.Horde.lkBbsqDOKlkg-Ah-LZ5UFW4@www.vdorst.com>
-From: =?utf-8?b?UmVuw6k=?= van Dorst <opensource@vdorst.com>
-To: wireguard@lists.zx2c4.com
-Subject: Re: RX Errors from Android Peer
-References: <b110c9fb-fbd7-0e7a-31a7-bfec934ad058@attglobal.net>
- <CAHmME9ovmNCJ4501TDpvtu9doci1Z34jS9N88csgNskxq4QrRg@mail.gmail.com>
- <6e8c6b16-f131-6b45-9eee-f162a4f31099@attglobal.net>
-In-Reply-To: <6e8c6b16-f131-6b45-9eee-f162a4f31099@attglobal.net>
-Content-Type: text/plain; charset=utf-8; format=flowed; DelSp=Yes
-MIME-Version: 1.0
+ Thu, 26 Apr 2018 09:51:14 +0000 (UTC)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Date: Thu, 26 Apr 2018 11:52:08 +0200
+From: Riccardo Berto <riccardo@rcrdbrt.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: Re: Troubleshooting WireGuard connections
+In-Reply-To: <CAHmME9o2QrKz3rC9-h0i0KJrzgXkPksogL_EkSSitYwahjXW0g@mail.gmail.com>
+References: <628776a245ad4895630fd727c80e8bf1@rcrdbrt.com>
+ <CAHmME9rFZMXcjZgFQBrZHDCbqmYT+MdBEJmS6f6=5=F-7nrJBA@mail.gmail.com>
+ <33d0fd1f4c60919b98b50e2b9d04fe78@rcrdbrt.com>
+ <2c17e7ba2590353afa04fc1619d726c2@rcrdbrt.com>
+ <CAHmME9oFYswr1KjBGiP+2iMHDGYmZhpv_SovCMT3xxMMErK19A@mail.gmail.com>
+ <9896807f0c6cbee1c7c99647a3c289cc@rcrdbrt.com>
+ <f541248bfc8b47975b34acbc1c7bfa9b@rcrdbrt.com>
+ <CAHmME9rtK1JvGs3JNYo4Jd9RPuTX9hx0cJy+a=7vEAJkVVa_ng@mail.gmail.com>
+ <CAHmME9rDJT5bOJdUn_b9nrUgBbfUWYu2cpQXRhWuAHOGcVczsw@mail.gmail.com>
+ <CAHmME9okxTTCUtnJxCL9ERF1mFQN7_CzN4dM-sOL3KC4J6uBvA@mail.gmail.com>
+ <4135c3da139c0ca98fafc5fd20d11b18@rcrdbrt.com>
+ <ec6ebd88a3bedf31a721b887b7a5fdf9@rcrdbrt.com>
+ <CAHmME9o2QrKz3rC9-h0i0KJrzgXkPksogL_EkSSitYwahjXW0g@mail.gmail.com>
+Message-ID: <19998b2a9837b44301c733a15fd63ad0@rcrdbrt.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -27,88 +39,58 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Eddie and Jason,
+On 2018-04-25 13:51, Jason A. Donenfeld wrote:
+> Hi Riccardo,
+> 
+> We really should debug this in real time. Perhaps pop into #wireguard
+> on Freenode?
+> 
+> Jason
 
-I seeing this too.
+I investigated the issue I was having with the 2 rpi3s and I finally got 
+it working somehow (aka without knowing exactly what I did wrong).
 
-On the server: WireGuard 0.0.20180420-2-g802b85c (Mips32r2)
+I've just arrived in my hometown and accessed a rpi2 that runs the alarm 
+system of my parents' house. I completely ignored the firewall and port 
+associations, I just configured a new WireGuard interface with my main 
+WireGuard hub as a peer and it worked flawlessly.
 
-peer: bHFjNUyfx141TvuNXUyIQ2BDAF57zfcpgdRd09UOlSg=
-   endpoint: <ipv4>:22649
-   allowed ips: 10.0.0.8/32, fd00::8/128, <ipv6 prefix/48>:fff8::/64
-   latest handshake: 17 minutes, 41 seconds ago
-   transfer: 3.07 MiB received, 18.78 MiB sent
+So I disabled the firewall on both the rpi3s, got someone to disable the 
+port associations of my apartment's router and managed to get both the 
+"randomly" working rpi3s to work in outgoing and incoming traffic! There 
+was a HUGE warm-up delay, though:
 
-wg0       Link encap:UNSPEC  HWaddr  
-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
-           inet addr:10.0.0.1  P-t-P:10.0.0.1  Mask:255.255.255.0
-           inet6 addr: fd00::1/64 Scope:Global
-           inet6 addr: <ipv6 prefix/48>:fff0::/60 Scope:Global
-           UP POINTOPOINT RUNNING NOARP  MTU:1440  Metric:1
-           RX packets:23629 errors:215 dropped:0 overruns:0 frame:215
-           TX packets:23885 errors:6 dropped:0 overruns:0 carrier:0
-           collisions:0 txqueuelen:0
-           RX bytes:3224980 (3.0 MiB)  TX bytes:19693516 (18.7 MiB)
+rpi3 pi # ping 10.0.0.1
+PING 10.0.0.1 (10.0.0.1) 56(84) bytes of data.
+64 bytes from 10.0.0.1: icmp_seq=238 ttl=64 time=98.8 ms
+64 bytes from 10.0.0.1: icmp_seq=239 ttl=64 time=97.2 ms
+64 bytes from 10.0.0.1: icmp_seq=240 ttl=64 time=97.3 ms
+64 bytes from 10.0.0.1: icmp_seq=241 ttl=64 time=97.1 ms
+64 bytes from 10.0.0.1: icmp_seq=242 ttl=64 time=98.1 ms
+64 bytes from 10.0.0.1: icmp_seq=243 ttl=64 time=97.0 ms
+64 bytes from 10.0.0.1: icmp_seq=244 ttl=64 time=97.2 ms
+64 bytes from 10.0.0.1: icmp_seq=245 ttl=64 time=97.5 ms
+64 bytes from 10.0.0.1: icmp_seq=246 ttl=64 time=97.1 ms
+64 bytes from 10.0.0.1: icmp_seq=247 ttl=64 time=97.1 ms
+64 bytes from 10.0.0.1: icmp_seq=248 ttl=64 time=97.2 ms
+^C
+--- 10.0.0.1 ping statistics ---
+248 packets transmitted, 11 received, 95% packet loss, time 256349ms
+rtt min/avg/max/mdev = 97.068/97.463/98.844/0.524 ms
 
+This got solved somehow by the `PersistentKeepalive` feature.
 
+I think the whole issue I was having was related to the firewall/port 
+associations and systemd's services start order that sometimes was right 
+and some other time wasn't, hence the randomly working peers. I really 
+don't know what I did wrong on the firewall side, though. Maybe it was 
+the port association thing that got my network confused.
 
-Latest Android client 0.4.0 on a Backberry DTEK50 android 6.0.1. So  
-fallback on userspace implementation.
+Ending morale: if you happen to have multiple peers on the same network, 
+be very well aware of what you are doing with the ports/firewalls.
 
-Address: 10.0.0.8/32, <ipv6 prefix/48>:fff8::1/64
-dns: 8.8.8.8
-Allowed IPS: ::/0, 0.0.0.0/0
-MTU: auto.
+I'm still having quite a lot of bad UDP checksums though, from every 
+peer. But the whole network works fine so I should just ignore them, 
+right?
 
-
-Before test
-wg0       Link encap:UNSPEC  HWaddr  
-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
-           inet addr:10.0.0.1  P-t-P:10.0.0.1  Mask:255.255.255.0
-           inet6 addr: fd00::1/64 Scope:Global
-           inet6 addr: <ipv6 prefix/48>:fff0::/60 Scope:Global
-           UP POINTOPOINT RUNNING NOARP  MTU:1440  Metric:1
-           RX packets:23714 errors:215 dropped:0 overruns:0 frame:215
-           TX packets:23996 errors:6 dropped:0 overruns:0 carrier:0
-           collisions:0 txqueuelen:0
-           RX bytes:3239760 (3.0 MiB)  TX bytes:19715932 (18.8 MiB)
-
-dmesg:
-wireguard: wg0: Sending handshake initiation to peer 6 (85d26a64)
-wireguard: wg0: Receiving handshake initiation from peer 6 (85d26a64)
-wireguard: wg0: Sending handshake response to peer 6 (85d26a64)
-wireguard: wg0: Keypair 93 created for peer 6
-wireguard: wg0: Keypair 91 destroyed for peer 6
-wireguard: wg0: Receiving keepalive packet from peer 6 (85d26a64)
-wireguard: wg0: Packet has unallowed src IP (8cd8bd50) from peer 6 (85d26a64)
-wireguard: wg0: Receiving keepalive packet from peer 6 (85d26a64)
-wireguard: wg0: Receiving keepalive packet from peer 6 (85d26a64)
-wireguard: wg0: Receiving keepalive packet from peer 6 (85d26a64)
-wireguard: wg0: Receiving handshake initiation from peer 6 (85d26a64)
-wireguard: wg0: Sending handshake response to peer 6 (85d26a64)
-wireguard: wg0: Keypair 94 created for peer 6
-wireguard: wg0: Keypair 92 destroyed for peer 6
-wireguard: wg0: Receiving keepalive packet from peer 6 (85d26a64)
-wireguard: wg0: Retrying handshake with peer 6 (85d26a64) because we  
-stopped hearing back after 15 seconds
-wireguard: wg0: Sending handshake initiation to peer 6 (85d26a64)
-wireguard: wg0: Receiving handshake response from peer 6 (85d26a64)
-
-
-After test:
-wg0       Link encap:UNSPEC  HWaddr  
-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
-           inet addr:10.0.0.1  P-t-P:10.0.0.1  Mask:255.255.255.0
-           inet6 addr: fd00::1/64 Scope:Global
-           inet6 addr: <ipv6 prefix/48>:fff0::/60 Scope:Global
-           UP POINTOPOINT RUNNING NOARP  MTU:1440  Metric:1
-           RX packets:26810 errors:216 dropped:0 overruns:0 frame:216
-           TX packets:26866 errors:6 dropped:0 overruns:0 carrier:0
-           collisions:0 txqueuelen:0
-           RX bytes:3674552 (3.5 MiB)  TX bytes:21719820 (20.7 MiB)
-
-Tunnel is working: test-ipv6.nl shows both my ISP ipv4 and ipv6 address.
-
-Greats,
-
-René van Dorst.
+Kudos to Jason for this awesome Virtual Private Network, I'm speechless.
