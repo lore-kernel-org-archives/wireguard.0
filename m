@@ -1,25 +1,23 @@
-Return-Path: stunnel@attglobal.net
+Return-Path: opensource@vdorst.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8bb8473e
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id eee64ec3
  for <wireguard@lists.zx2c4.com>;
- Thu, 26 Apr 2018 07:35:50 +0000 (UTC)
-Received: from dnvrco-cmomta03.email.rr.com (dnvrco-outbound-snat.email.rr.com
- [107.14.73.231])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fa0e2ea8
+ Thu, 26 Apr 2018 08:58:15 +0000 (UTC)
+Received: from smtp15.bhosted.nl (smtp15.bhosted.nl [94.124.121.26])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fd96be01
  for <wireguard@lists.zx2c4.com>;
- Thu, 26 Apr 2018 07:35:50 +0000 (UTC)
-Subject: Re: Cannot ping Windows machines on server network
-To: Kalin KOZHUHAROV <me.kalin@gmail.com>
-References: <9fa638b5-3f03-a35b-5341-8e7240193bd4@attglobal.net>
- <CAKXLc7f+5KTcNQfAfo-JhghJA=kyfj20F2fPyGU502L65-t0Eg@mail.gmail.com>
-From: Eddie <stunnel@attglobal.net>
-Message-ID: <869ea224-e7eb-85af-0297-a473bfb124a9@attglobal.net>
-Date: Thu, 26 Apr 2018 00:36:41 -0700
+ Thu, 26 Apr 2018 08:58:15 +0000 (UTC)
+Date: Thu, 26 Apr 2018 08:59:10 +0000
+Message-ID: <20180426085910.Horde.lkBbsqDOKlkg-Ah-LZ5UFW4@www.vdorst.com>
+From: =?utf-8?b?UmVuw6k=?= van Dorst <opensource@vdorst.com>
+To: wireguard@lists.zx2c4.com
+Subject: Re: RX Errors from Android Peer
+References: <b110c9fb-fbd7-0e7a-31a7-bfec934ad058@attglobal.net>
+ <CAHmME9ovmNCJ4501TDpvtu9doci1Z34jS9N88csgNskxq4QrRg@mail.gmail.com>
+ <6e8c6b16-f131-6b45-9eee-f162a4f31099@attglobal.net>
+In-Reply-To: <6e8c6b16-f131-6b45-9eee-f162a4f31099@attglobal.net>
+Content-Type: text/plain; charset=utf-8; format=flowed; DelSp=Yes
 MIME-Version: 1.0
-In-Reply-To: <CAKXLc7f+5KTcNQfAfo-JhghJA=kyfj20F2fPyGU502L65-t0Eg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Reply-To: stunnel@attglobal.net
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -29,25 +27,88 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Yes.  All the internal Windows machines are pingable from my server, all 
-other machines in the internal network.  Just not from a client 
-connected via wireguard.
+Hi Eddie and Jason,
 
-Cheers.
+I seeing this too.
+
+On the server: WireGuard 0.0.20180420-2-g802b85c (Mips32r2)
+
+peer: bHFjNUyfx141TvuNXUyIQ2BDAF57zfcpgdRd09UOlSg=
+   endpoint: <ipv4>:22649
+   allowed ips: 10.0.0.8/32, fd00::8/128, <ipv6 prefix/48>:fff8::/64
+   latest handshake: 17 minutes, 41 seconds ago
+   transfer: 3.07 MiB received, 18.78 MiB sent
+
+wg0       Link encap:UNSPEC  HWaddr  
+00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+           inet addr:10.0.0.1  P-t-P:10.0.0.1  Mask:255.255.255.0
+           inet6 addr: fd00::1/64 Scope:Global
+           inet6 addr: <ipv6 prefix/48>:fff0::/60 Scope:Global
+           UP POINTOPOINT RUNNING NOARP  MTU:1440  Metric:1
+           RX packets:23629 errors:215 dropped:0 overruns:0 frame:215
+           TX packets:23885 errors:6 dropped:0 overruns:0 carrier:0
+           collisions:0 txqueuelen:0
+           RX bytes:3224980 (3.0 MiB)  TX bytes:19693516 (18.7 MiB)
 
 
-On 4/25/2018 10:03 PM, Kalin KOZHUHAROV wrote:
-> On Thu, Apr 26, 2018 at 1:06 AM, Eddie <stunnel@attglobal.net> wrote:
->> They are pingable from the server and all other machines on the network.
->> There are no routing of firewall rules anywhere that call out these 2
->> machines either by IP or name.
->>
-> Are you sure they are pingable? By default Windows client boxes not
-> reply to ping.
->
-> The 1st answer that came up:
-> https://answers.microsoft.com/en-us/windows/forum/windows_7-networking/how-to-enable-ping-response-in-windows-7/5aff5f8d-f138-4c9a-8646-5b3a99f1cae6
->
-> Kalin.
->
->
+
+Latest Android client 0.4.0 on a Backberry DTEK50 android 6.0.1. So  
+fallback on userspace implementation.
+
+Address: 10.0.0.8/32, <ipv6 prefix/48>:fff8::1/64
+dns: 8.8.8.8
+Allowed IPS: ::/0, 0.0.0.0/0
+MTU: auto.
+
+
+Before test
+wg0       Link encap:UNSPEC  HWaddr  
+00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+           inet addr:10.0.0.1  P-t-P:10.0.0.1  Mask:255.255.255.0
+           inet6 addr: fd00::1/64 Scope:Global
+           inet6 addr: <ipv6 prefix/48>:fff0::/60 Scope:Global
+           UP POINTOPOINT RUNNING NOARP  MTU:1440  Metric:1
+           RX packets:23714 errors:215 dropped:0 overruns:0 frame:215
+           TX packets:23996 errors:6 dropped:0 overruns:0 carrier:0
+           collisions:0 txqueuelen:0
+           RX bytes:3239760 (3.0 MiB)  TX bytes:19715932 (18.8 MiB)
+
+dmesg:
+wireguard: wg0: Sending handshake initiation to peer 6 (85d26a64)
+wireguard: wg0: Receiving handshake initiation from peer 6 (85d26a64)
+wireguard: wg0: Sending handshake response to peer 6 (85d26a64)
+wireguard: wg0: Keypair 93 created for peer 6
+wireguard: wg0: Keypair 91 destroyed for peer 6
+wireguard: wg0: Receiving keepalive packet from peer 6 (85d26a64)
+wireguard: wg0: Packet has unallowed src IP (8cd8bd50) from peer 6 (85d26a64)
+wireguard: wg0: Receiving keepalive packet from peer 6 (85d26a64)
+wireguard: wg0: Receiving keepalive packet from peer 6 (85d26a64)
+wireguard: wg0: Receiving keepalive packet from peer 6 (85d26a64)
+wireguard: wg0: Receiving handshake initiation from peer 6 (85d26a64)
+wireguard: wg0: Sending handshake response to peer 6 (85d26a64)
+wireguard: wg0: Keypair 94 created for peer 6
+wireguard: wg0: Keypair 92 destroyed for peer 6
+wireguard: wg0: Receiving keepalive packet from peer 6 (85d26a64)
+wireguard: wg0: Retrying handshake with peer 6 (85d26a64) because we  
+stopped hearing back after 15 seconds
+wireguard: wg0: Sending handshake initiation to peer 6 (85d26a64)
+wireguard: wg0: Receiving handshake response from peer 6 (85d26a64)
+
+
+After test:
+wg0       Link encap:UNSPEC  HWaddr  
+00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+           inet addr:10.0.0.1  P-t-P:10.0.0.1  Mask:255.255.255.0
+           inet6 addr: fd00::1/64 Scope:Global
+           inet6 addr: <ipv6 prefix/48>:fff0::/60 Scope:Global
+           UP POINTOPOINT RUNNING NOARP  MTU:1440  Metric:1
+           RX packets:26810 errors:216 dropped:0 overruns:0 frame:216
+           TX packets:26866 errors:6 dropped:0 overruns:0 carrier:0
+           collisions:0 txqueuelen:0
+           RX bytes:3674552 (3.5 MiB)  TX bytes:21719820 (20.7 MiB)
+
+Tunnel is working: test-ipv6.nl shows both my ISP ipv4 and ipv6 address.
+
+Greats,
+
+René van Dorst.
