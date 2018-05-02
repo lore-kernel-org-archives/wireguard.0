@@ -1,20 +1,22 @@
-Return-Path: augustus_meyer@yahoo.de
+Return-Path: vtol@gmx.net
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a46e7f3f
- for <wireguard@lists.zx2c4.com>; Tue, 1 May 2018 06:50:56 +0000 (UTC)
-Received: from sonic306-19.consmr.mail.ir2.yahoo.com
- (sonic306-19.consmr.mail.ir2.yahoo.com [77.238.176.205])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a303da85
- for <wireguard@lists.zx2c4.com>; Tue, 1 May 2018 06:50:56 +0000 (UTC)
-Date: Tue, 1 May 2018 06:52:24 +0000 (UTC)
-From: reiner otto <augustus_meyer@yahoo.de>
-To: <wireguard@lists.zx2c4.com>
-Message-ID: <91522494.4338044.1525157544752@mail.yahoo.com>
-Subject: Why does it work ?
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ed8f142e
+ for <wireguard@lists.zx2c4.com>; Wed, 2 May 2018 16:46:51 +0000 (UTC)
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 87963bf0
+ for <wireguard@lists.zx2c4.com>; Wed, 2 May 2018 16:46:50 +0000 (UTC)
+Received: from [192.168.112.218] ([46.59.144.36]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LeRKD-1eYmgW44WD-00q7ek for
+ <wireguard@lists.zx2c4.com>; Wed, 02 May 2018 18:48:34 +0200
+From: =?UTF-8?B?0b3SieG2rOG4s+KEoA==?= <vtol@gmx.net>
+To: wireguard <wireguard@lists.zx2c4.com>
+Subject: WG via systemd (dis)advantage?
+Message-ID: <b4e58a27-df47-b47b-0191-80483db929a6@gmx.net>
+Date: Wed, 2 May 2018 18:48:32 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-References: <91522494.4338044.1525157544752.ref@mail.yahoo.com>
-Reply-To: reiner otto <augustus_meyer@yahoo.de>
+Content-Type: multipart/signed; protocol="application/pkcs7-signature";
+ micalg=sha-256; boundary="------------ms000801000608070408020004"
+Reply-To: vtol@gmx.net
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -24,87 +26,118 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Having found myself a solution to the problem described in https://lists.zx2c4.com/pipermail/wireguard/2018-April/002736.html,
-(I only want to tunnel all traffic destined to 1.2.3.4, the ubuntu-server, via wg from client, an openwrt-router. 
-Where 1.2.3.4 also is endpoint of tunnel. All other traffic via eth0 of client to the web.)
-I am not really happy with my solution, as I found it simply  by try-and-error. And the solution looks odd to me, because in essence
-it is the following sequence of statements in my rc.local, when starting wg on the client:
-...
-        /etc/wireguard/wireguard_up.sh
-        /etc/wireguard/wireguard_down.sh
-        /etc/wireguard/wireguard_up.sh 
+This is a cryptographically signed message in MIME format.
 
-Or, in other words, simple 
-        /etc/wireguard/wireguard_up.sh
-does not work. (After starting wg on client, wg does not show any received data.)
+--------------ms000801000608070408020004
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
 
+Debian kernel 4.15.11
+WG 0.0.20180420-1
 
-One difference I found between working and non-working in /proc/net/nf_conntrack:
-working:
-ipv4     2 udp      17 158 src=192.168.178.49 dst=1.2.3.4 sport=5555 dport=5555 packets=2615 bytes=384236 src=1.2.3.4 dst=192.168.178.49 sport=5555 dport=5555 packets=2414 bytes=447664 [ASSURED] mark=0 use=2
+Out of curiosity having WG configured/manged via systemd, which is=20
+working thus far as having the interface up and listening (also after=20
+rebooting the server).
 
+Now I was looking to manipulate the network interface with some=20
+post-up/post-down which though does not seems applicable with systemd,=20
+like it would be when managed through networking.service.
 
-not working:
-ipv4     2 udp      17 55 src=192.168.178.49 dst=1.2.3.4 sport=5555 dport=5555 packets=31 bytes=5456 [UNREPLIED] src=172.16.0.1 dst=172.16.18.31 sport=5555 dport=5555 packets=0 bytes=0 mark=0 use=15
+Hence, wondering whether I miss something about systemd or whether it is =
 
-192.168.178.49: IP of eth0 of my router/client (received via dhcp)
-172.16.0.1:	wg-ip of 1.2.3.4
-172.16.18.31:	wg-ip of client
+rather a bit of a disadvantage to configure/manage WG through systemd as =
 
-Not using wg-quick anywhere, the configurations of wg:
-server, wg0.conf:
-[Interface]
-ListenPort = 5555
-PrivateKey = ....
-
-[Peer]
-PublicKey = ....
-#No diffference whether using one of next two
-#AllowedIPs = 172.16.0.0/16
-AllowedIPs = 0.0.0.0/0
-
-server, wg_up.sh:
-ip link add wg0 type wireguard
-wg setconf wg0 /etc/wireguard/wg0.conf
-ip address add 172.16.0.1/16 dev wg0
-ip link set mtu 1420 dev wg0
-ip link set wg0 up
-
-server, wg_down.sh:
-ip link delete dev wg0
----------
-client, wg0.conf:
-[Interface]
-PrivateKey = ...
-ListenPort = 5555
-[Peer]
-PublicKey = ...
-AllowedIPs = 172.16.0.0/16
-Endpoint = 1.2.3.4:5555
-PersistentKeepalive = 25
-
-client, wg_up.sh:
-ip link add wg0 type wireguard
-wg setconf wg0 /etc/wireguard/wg0.conf
-ip address add 172.16.18.31/16 dev wg0
-ip link set mtu 1420 dev wg0
-ip link set wg0 up
-iptables -t nat -I POSTROUTING -o wg0 -j MASQUERADE
-iptables -t nat -A OUTPUT -d 1.2.3.4 -j DNAT --to-destination 172.16.0.1
-
-client, wg_down.sh:
-ip link delete dev wg0
-iptables -t nat -D POSTROUTING -o wg0 -j MASQUERADE
-iptables -t nat -D OUTPUT -d 1.2.3.4 -j DNAT --to-destination 172.16.0.1
+opposed to networking.service?
+What is the benefit of systemd vs. networking.service WG management?
 
 
-It looks like some important info secretly kept during
-        /etc/wireguard/wireguard_up.sh
-        /etc/wireguard/wireguard_down.sh
-so that next
-        /etc/wireguard/wireguard_up.sh
-succeeds. 
 
-Having got some feedback from different sources, that
-it is not possible to do, what I want, some insight into my "magic"
-appreciated :-)
+
+
+
+--------------ms000801000608070408020004
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Description: S/MIME Cryptographic Signature
+
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCC
+DKcwggXhMIIEyaADAgECAg8Cbt2Dn+cNP4QmgmDzkCQwDQYJKoZIhvcNAQELBQAwVjELMAkG
+A1UEBhMCQ0gxFTATBgNVBAoTDFN3aXNzU2lnbiBBRzEwMC4GA1UEAxMnU3dpc3NTaWduIFBl
+cnNvbmFsIFNpbHZlciBDQSAyMDE0IC0gRzIyMB4XDTE1MDcyODEzMTI0MVoXDTIwMDcyODEz
+MTI0MVowPTEdMBsGA1UECxMURW1haWwgVmFsaWRhdGVkIE9ubHkxHDAaBgNVBAMUE0VtYWls
+OiB2dG9sQGdteC5uZXQwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC5ASUjAK09
+ZNNidaYU+dqDFt9qDwYvCxByPGry3JbqFQBBWqTTEsHvzT+lnqGHqq+orjCtHqylQldPkDjo
+cplXz6cbsw4j8YHQXcMT5V9rEyFuq+doP6eOfsvwwXGR45Iuly9Aho4RGjfh80O0CPMCdP39
+yceF+dqVN1AQSElweHQUU49IY1IyZXQjoXaP8Qr2/6BlAEAT3XDZqeDwYKGUWWbVSdEhZKwG
+p0YyQrazaNMsC5BYFMW/rvzzw1Wa4ByoDgzjjLmr9ydW6oQeuYpCStjZzqlcRFCVCNXDAuyU
+EBYd5P16ESG4VhpQ8Mz9GVqNUZYw+zvZ3Js8KOd+wh+7AgMBAAGjggLDMIICvzAOBgNVHQ8B
+Af8EBAMCBLAwEwYDVR0lBAwwCgYIKwYBBQUHAwQwHQYDVR0OBBYEFHNiDG+WSt7wCElvgksu
+82Yv88f4MB8GA1UdIwQYMBaAFPDHozKRtevKtVh3FadOvhpdYUMlMIH/BgNVHR8EgfcwgfQw
+R6BFoEOGQWh0dHA6Ly9jcmwuc3dpc3NzaWduLm5ldC9GMEM3QTMzMjkxQjVFQkNBQjU1ODc3
+MTVBNzRFQkUxQTVENjE0MzI1MIGooIGloIGihoGfbGRhcDovL2RpcmVjdG9yeS5zd2lzc3Np
+Z24ubmV0L0NOPUYwQzdBMzMyOTFCNUVCQ0FCNTU4NzcxNUE3NEVCRTFBNUQ2MTQzMjUlMkNP
+PVN3aXNzU2lnbiUyQ0M9Q0g/Y2VydGlmaWNhdGVSZXZvY2F0aW9uTGlzdD9iYXNlP29iamVj
+dENsYXNzPWNSTERpc3RyaWJ1dGlvblBvaW50MGEGA1UdIARaMFgwVgYJYIV0AVkBAwEGMEkw
+RwYIKwYBBQUHAgEWO2h0dHA6Ly9yZXBvc2l0b3J5LnN3aXNzc2lnbi5jb20vU3dpc3NTaWdu
+LVNpbHZlci1DUC1DUFMucGRmMIHZBggrBgEFBQcBAQSBzDCByTBkBggrBgEFBQcwAoZYaHR0
+cDovL3N3aXNzc2lnbi5uZXQvY2dpLWJpbi9hdXRob3JpdHkvZG93bmxvYWQvRjBDN0EzMzI5
+MUI1RUJDQUI1NTg3NzE1QTc0RUJFMUE1RDYxNDMyNTBhBggrBgEFBQcwAYZVaHR0cDovL3Np
+bHZlci1wZXJzb25hbC1nMi5vY3NwLnN3aXNzc2lnbi5uZXQvRjBDN0EzMzI5MUI1RUJDQUI1
+NTg3NzE1QTc0RUJFMUE1RDYxNDMyNTAXBgNVHREEEDAOgQx2dG9sQGdteC5uZXQwDQYJKoZI
+hvcNAQELBQADggEBAAbOyN+VjfLdPkM7pWiiy0r2Zw0FqfJ0Mh0plsc9LHL/aF1Yaru+Ku7N
+DhCnT53sfgM4yqpczWq9M3ZqdV9QO6kWf2xuRqzgmeRYOaMq82zkKNdowVavWK5NnktRTmsk
+PT46eGpu46y0fq0xuogA01ji4RaIkNBx+dLAS24mfDDBwmJv64ge9Zw6cnz1Ov09jrDyH+ig
+VjcxHia5u3LKcRWvymIGY9NByDJouCbSFMYPZMzWtRvwG/myp0HmaQ+dlFPcGOTpNebyNiTr
+hl2IPEUrWC4JqJon4+H2WnQhmViJP43AZtSZY3OvU1Ya/KdMP7Hn2ctdbbO/vNuqN0v9avIw
+gga+MIIEpqADAgECAg8FRNZOrR7TNtUyQF0AuTYwDQYJKoZIhvcNAQELBQAwRzELMAkGA1UE
+BhMCQ0gxFTATBgNVBAoTDFN3aXNzU2lnbiBBRzEhMB8GA1UEAxMYU3dpc3NTaWduIFNpbHZl
+ciBDQSAtIEcyMB4XDTE0MDkxOTIwMzY0OVoXDTI5MDkxNTIwMzY0OVowVjELMAkGA1UEBhMC
+Q0gxFTATBgNVBAoTDFN3aXNzU2lnbiBBRzEwMC4GA1UEAxMnU3dpc3NTaWduIFBlcnNvbmFs
+IFNpbHZlciBDQSAyMDE0IC0gRzIyMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA
+yzmxOYX++smhvMODqQ5KLYRyHv9oxafEHewP16iLEx6z0RaLQNwPU28BPezoZLWX24O8qKjA
+hDhYXgMUK+bKMO8AsusTORmSRyohAOVyzcIxYg7MVir/d8RjjJjCb3jXtbbM6X0fM6aRBSr+
+0VLW9Oyc/k1MalLhhXZiu7lo5lJj/MEhkZJdGdjcgNEZ40kWVwIOGUSFqynJL/rGbWsKofb3
+/2thNRUmlJQCaSVdafe9XmuC2ZAMBvlDBSJJ6zbQIFpjEOM4IdV/FitBikZ68mfopNC6Hn8k
+J3WYlEktVsRUM5GdYvnVX95bqRWYnJRTwYDpCRcVtBuAKTKh0K8TpwIDAQABo4ICljCCApIw
+DgYDVR0PAQH/BAQDAgEGMBIGA1UdEwEB/wQIMAYBAf8CAQAwHQYDVR0OBBYEFPDHozKRtevK
+tVh3FadOvhpdYUMlMB8GA1UdIwQYMBaAFBegzcHkQbY6WzvLRZ29HMKY+oZYMIH/BgNVHR8E
+gfcwgfQwR6BFoEOGQWh0dHA6Ly9jcmwuc3dpc3NzaWduLm5ldC8xN0EwQ0RDMUU0NDFCNjNB
+NUIzQkNCNDU5REJEMUNDMjk4RkE4NjU4MIGooIGloIGihoGfbGRhcDovL2RpcmVjdG9yeS5z
+d2lzc3NpZ24ubmV0L0NOPTE3QTBDREMxRTQ0MUI2M0E1QjNCQ0I0NTlEQkQxQ0MyOThGQTg2
+NTglMkNPPVN3aXNzU2lnbiUyQ0M9Q0g/Y2VydGlmaWNhdGVSZXZvY2F0aW9uTGlzdD9iYXNl
+P29iamVjdENsYXNzPWNSTERpc3RyaWJ1dGlvblBvaW50MGEGA1UdIARaMFgwVgYJYIV0AVkB
+AwEGMEkwRwYIKwYBBQUHAgEWO2h0dHA6Ly9yZXBvc2l0b3J5LnN3aXNzc2lnbi5jb20vU3dp
+c3NTaWduLVNpbHZlci1DUC1DUFMucGRmMIHGBggrBgEFBQcBAQSBuTCBtjBkBggrBgEFBQcw
+AoZYaHR0cDovL3N3aXNzc2lnbi5uZXQvY2dpLWJpbi9hdXRob3JpdHkvZG93bmxvYWQvMTdB
+MENEQzFFNDQxQjYzQTVCM0JDQjQ1OURCRDFDQzI5OEZBODY1ODBOBggrBgEFBQcwAYZCaHR0
+cDovL29jc3Auc3dpc3NzaWduLm5ldC8xN0EwQ0RDMUU0NDFCNjNBNUIzQkNCNDU5REJEMUND
+Mjk4RkE4NjU4MA0GCSqGSIb3DQEBCwUAA4ICAQDDeadXt3utUWj1RIxBlSgBfHTWO2q8be+n
+1005mR1ojcoI2dBxsRk1k2+CxhxJuFHuTPlsCm/Ypfv++zBeANKUq8QSUbqqiqtq3RnXK0r3
+FrJrUc90Wymic96X/thPICF9aQywUOWNWIyALuUXHN1jeqrvBfnDaZ7kjHFiXELuOvLN4BLv
+i1zpzlMoMuyVCxlUoiGN+n9Qp0+8GXuya4wpP3c+yiPHaVpBnX1mMW96cXnaqWU663/XENUL
+X1QZfM43JSSEUNCvQDTCX5LiepHzL0JHG588QvvZX6W8cEWO76A5kPWheGzXwGdZGeEA3lz8
+eOhP3buskS5yi/zqR29DKLy7uY6UvvpQ3VCTG0wYtnb/w0cKWbTNbVXYarZfyS/BlDY+vq5A
+NQYg7eACTC00RQ5Dr6L02JAV5dDAm0RArjyPk1G8mWhzaXt1WJm31ARP3/GCcREde/wTHXdl
+VWPXUnJ83TFHhqeV2KwmcT0j5hI79H+alob+K+qg8yYNdcYWjDEg5xFHoeeparClsoEe3D3Q
+oeNu1fBmphx915KITQAHC3Hnc+dz5FRlafw3jfEeb3Dup2yzUkVnWdYFSLEh6Zco2dn0tKag
+ZyM2vGBHDlwof12TijG6jTE2FMd6Qp1vIMFsKvgWD2rZAJQyuz1VscXDoQ2xeXdUHeAzgn7u
+6jGCA2UwggNhAgEBMGkwVjELMAkGA1UEBhMCQ0gxFTATBgNVBAoTDFN3aXNzU2lnbiBBRzEw
+MC4GA1UEAxMnU3dpc3NTaWduIFBlcnNvbmFsIFNpbHZlciBDQSAyMDE0IC0gRzIyAg8Cbt2D
+n+cNP4QmgmDzkCQwDQYJYIZIAWUDBAIBBQCgggHNMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0B
+BwEwHAYJKoZIhvcNAQkFMQ8XDTE4MDUwMjE2NDgzMlowLwYJKoZIhvcNAQkEMSIEIGhCvk3g
+pOyW6s6LVFyiU7jYuBEcGXiT2aS0linQwt0vMGwGCSqGSIb3DQEJDzFfMF0wCwYJYIZIAWUD
+BAEqMAsGCWCGSAFlAwQBAjAKBggqhkiG9w0DBzAOBggqhkiG9w0DAgICAIAwDQYIKoZIhvcN
+AwICAUAwBwYFKw4DAgcwDQYIKoZIhvcNAwICASgweAYJKwYBBAGCNxAEMWswaTBWMQswCQYD
+VQQGEwJDSDEVMBMGA1UEChMMU3dpc3NTaWduIEFHMTAwLgYDVQQDEydTd2lzc1NpZ24gUGVy
+c29uYWwgU2lsdmVyIENBIDIwMTQgLSBHMjICDwJu3YOf5w0/hCaCYPOQJDB6BgsqhkiG9w0B
+CRACCzFroGkwVjELMAkGA1UEBhMCQ0gxFTATBgNVBAoTDFN3aXNzU2lnbiBBRzEwMC4GA1UE
+AxMnU3dpc3NTaWduIFBlcnNvbmFsIFNpbHZlciBDQSAyMDE0IC0gRzIyAg8Cbt2Dn+cNP4Qm
+gmDzkCQwDQYJKoZIhvcNAQEBBQAEggEAhhrvCbO4q5eKk9nZ7he7oWqlBl1/mB8p16J7rOBb
+jKlZpjo5tQskcPKVlp7fq5XTKwF2RYsTtkTGuH1vV7+Ec4U5WLPg3d/fM4/2VYuCnl6e4/59
+mzLnV3IIex0fuxsJQKkWU0ff8y05JhTr2wy0AsKR3tlpXoFjY8PE8TbyMOBFRqdc6jIKcAy4
+PK8yi74K7YtK2KOTFfmGJIPX+FbeAgkvlYcY+KDXCx57KI94dRBKPRUF+hPq6+c5fLdcAD+N
+s3VLt7S5HtG1JVkr94/KFO8di01Us+LAcKAMjuj9py7WCBSMS3s960jFEZ/xPsRY1lzT750/
+cvV9AEBDb7P24gAAAAAAAA==
+--------------ms000801000608070408020004--
