@@ -1,22 +1,19 @@
-Return-Path: vtol@gmx.net
+Return-Path: adorman@ironicdesign.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c138d42a
- for <wireguard@lists.zx2c4.com>; Thu, 3 May 2018 16:55:46 +0000 (UTC)
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e3a49307
- for <wireguard@lists.zx2c4.com>; Thu, 3 May 2018 16:55:46 +0000 (UTC)
-Received: from [192.168.112.218] ([46.59.177.151]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Mhhr5-1f0J4V0aaB-00MwlS for
- <wireguard@lists.zx2c4.com>; Thu, 03 May 2018 18:57:36 +0200
-From: =?UTF-8?B?0b3SieG2rOG4s+KEoA==?= <vtol@gmx.net>
-Subject: WG interface to ipv4
-To: wireguard <wireguard@lists.zx2c4.com>
-Message-ID: <73430f93-d7fa-777b-df24-ef4cb0021f0b@gmx.net>
-Date: Thu, 3 May 2018 18:57:36 +0200
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 78841ec8
+ for <wireguard@lists.zx2c4.com>; Thu, 3 May 2018 21:51:42 +0000 (UTC)
+Received: from rosalind.ironicdesign.com (rosalind.ironicdesign.com
+ [206.166.194.243])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b5be8a7d
+ for <wireguard@lists.zx2c4.com>; Thu, 3 May 2018 21:51:42 +0000 (UTC)
+To: wireguard@lists.zx2c4.com
+From: Andy Dorman <adorman@ironicdesign.com>
+Subject: wg0 packets not being routed?
+Message-ID: <8599540b-b761-57a1-a585-b4395f9bed96@ironicdesign.com>
+Date: Thu, 3 May 2018 16:53:33 -0500
 MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pkcs7-signature";
- micalg=sha-256; boundary="------------ms090200020108060404040507"
-Reply-To: vtol@gmx.net
+Content-Type: text/plain; charset=utf-8; format=flowed
+Cc: Ironic Design Development <devel@lists.ironicdesign.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,107 +23,105 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-This is a cryptographically signed message in MIME format.
+We are just getting started with Wireguard, so I apologize in advance 
+for any stupid mistakes I have made to cause this.
 
---------------ms090200020108060404040507
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: base64
-Content-Language: en-US
+I am trying to set up VPN traffic between a local debian server cluster 
+(allowed 192.168.99.x/24) and a Linode VM cluster (also debian, allowed 
+192.168.100.x/24).
 
-RGViaWFuIGtlcm5lbCA0LjE1LjExDQpXRyAwLjAuMjAxODA0MjAtMQ0KDQpIaQ0KDQpJcyB0
-aGVyZSBhIHdheSB0byBjb25zdHJhaW4gV0cgdG8gaXB2ND8gaXB2NiBpcyBkaXNhYmxlZCBv
-biB0aGUgc2VydmVyIA0KYW5kIHRoZSBXRyBpZmFjZSBoYXMgaW5kZWVkIGp1c3QgYXNzaWdu
-ZWQgYW4gaXB2NCBhZGRyZXNzIGJ1dCBuZXRzdGF0IA0KLXR1bHBuIGlzIHN0aWxsIHNob3dp
-bmcgdGhlIFdHIHBvcnQgb24gdXBkNj8NCg0KdWRwwqDCoMKgwqDCoMKgwqAgMMKgwqDCoMKg
-wqAgMCAwLjAuMC4wOjQ1MDY1wqDCoMKgwqDCoMKgwqDCoMKgwqAgMC4wLjAuMDoqDQp1ZHA2
-wqDCoMKgwqDCoMKgIDDCoMKgwqDCoMKgIDAgOjo6NDUwNjXCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqAgOjo6Kg0KDQpBbHNvIHdvbmRlcmluZyB3aHkgaXQgc2hvd2luZyB0aGUg
-d2lsZGNhcmQgYWRkcmVzcyBhbmQgbm90IHRoZSBzdWJuZXQgDQppcC4gQW5kIHRoZSBTdGF0
-ZSBkb2VzIG5vdCBzaG93IGFzIExJU1RFTi4gU2ltaWxhciBvdXRwdXQgd2l0aCBzcyAtdHVs
-cG4uDQoNCg0K
+I have set up wg0 on two servers in the local cluster to confirm I am 
+doing it correctly and I had no problem installing WG on the Linode 
+slice once I switched the kernel to grub2 and rebooted into the latest 
+AMD64 kernel with appropriate headers installed.
 
---------------ms090200020108060404040507
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Description: S/MIME Cryptographic Signature
+The problem is the Qwest edge router my local NOC connects through 
+complains with "Destination Net Unreachable" as shown here.
 
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCC
-DKcwggXhMIIEyaADAgECAg8Cbt2Dn+cNP4QmgmDzkCQwDQYJKoZIhvcNAQELBQAwVjELMAkG
-A1UEBhMCQ0gxFTATBgNVBAoTDFN3aXNzU2lnbiBBRzEwMC4GA1UEAxMnU3dpc3NTaWduIFBl
-cnNvbmFsIFNpbHZlciBDQSAyMDE0IC0gRzIyMB4XDTE1MDcyODEzMTI0MVoXDTIwMDcyODEz
-MTI0MVowPTEdMBsGA1UECxMURW1haWwgVmFsaWRhdGVkIE9ubHkxHDAaBgNVBAMUE0VtYWls
-OiB2dG9sQGdteC5uZXQwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC5ASUjAK09
-ZNNidaYU+dqDFt9qDwYvCxByPGry3JbqFQBBWqTTEsHvzT+lnqGHqq+orjCtHqylQldPkDjo
-cplXz6cbsw4j8YHQXcMT5V9rEyFuq+doP6eOfsvwwXGR45Iuly9Aho4RGjfh80O0CPMCdP39
-yceF+dqVN1AQSElweHQUU49IY1IyZXQjoXaP8Qr2/6BlAEAT3XDZqeDwYKGUWWbVSdEhZKwG
-p0YyQrazaNMsC5BYFMW/rvzzw1Wa4ByoDgzjjLmr9ydW6oQeuYpCStjZzqlcRFCVCNXDAuyU
-EBYd5P16ESG4VhpQ8Mz9GVqNUZYw+zvZ3Js8KOd+wh+7AgMBAAGjggLDMIICvzAOBgNVHQ8B
-Af8EBAMCBLAwEwYDVR0lBAwwCgYIKwYBBQUHAwQwHQYDVR0OBBYEFHNiDG+WSt7wCElvgksu
-82Yv88f4MB8GA1UdIwQYMBaAFPDHozKRtevKtVh3FadOvhpdYUMlMIH/BgNVHR8EgfcwgfQw
-R6BFoEOGQWh0dHA6Ly9jcmwuc3dpc3NzaWduLm5ldC9GMEM3QTMzMjkxQjVFQkNBQjU1ODc3
-MTVBNzRFQkUxQTVENjE0MzI1MIGooIGloIGihoGfbGRhcDovL2RpcmVjdG9yeS5zd2lzc3Np
-Z24ubmV0L0NOPUYwQzdBMzMyOTFCNUVCQ0FCNTU4NzcxNUE3NEVCRTFBNUQ2MTQzMjUlMkNP
-PVN3aXNzU2lnbiUyQ0M9Q0g/Y2VydGlmaWNhdGVSZXZvY2F0aW9uTGlzdD9iYXNlP29iamVj
-dENsYXNzPWNSTERpc3RyaWJ1dGlvblBvaW50MGEGA1UdIARaMFgwVgYJYIV0AVkBAwEGMEkw
-RwYIKwYBBQUHAgEWO2h0dHA6Ly9yZXBvc2l0b3J5LnN3aXNzc2lnbi5jb20vU3dpc3NTaWdu
-LVNpbHZlci1DUC1DUFMucGRmMIHZBggrBgEFBQcBAQSBzDCByTBkBggrBgEFBQcwAoZYaHR0
-cDovL3N3aXNzc2lnbi5uZXQvY2dpLWJpbi9hdXRob3JpdHkvZG93bmxvYWQvRjBDN0EzMzI5
-MUI1RUJDQUI1NTg3NzE1QTc0RUJFMUE1RDYxNDMyNTBhBggrBgEFBQcwAYZVaHR0cDovL3Np
-bHZlci1wZXJzb25hbC1nMi5vY3NwLnN3aXNzc2lnbi5uZXQvRjBDN0EzMzI5MUI1RUJDQUI1
-NTg3NzE1QTc0RUJFMUE1RDYxNDMyNTAXBgNVHREEEDAOgQx2dG9sQGdteC5uZXQwDQYJKoZI
-hvcNAQELBQADggEBAAbOyN+VjfLdPkM7pWiiy0r2Zw0FqfJ0Mh0plsc9LHL/aF1Yaru+Ku7N
-DhCnT53sfgM4yqpczWq9M3ZqdV9QO6kWf2xuRqzgmeRYOaMq82zkKNdowVavWK5NnktRTmsk
-PT46eGpu46y0fq0xuogA01ji4RaIkNBx+dLAS24mfDDBwmJv64ge9Zw6cnz1Ov09jrDyH+ig
-VjcxHia5u3LKcRWvymIGY9NByDJouCbSFMYPZMzWtRvwG/myp0HmaQ+dlFPcGOTpNebyNiTr
-hl2IPEUrWC4JqJon4+H2WnQhmViJP43AZtSZY3OvU1Ya/KdMP7Hn2ctdbbO/vNuqN0v9avIw
-gga+MIIEpqADAgECAg8FRNZOrR7TNtUyQF0AuTYwDQYJKoZIhvcNAQELBQAwRzELMAkGA1UE
-BhMCQ0gxFTATBgNVBAoTDFN3aXNzU2lnbiBBRzEhMB8GA1UEAxMYU3dpc3NTaWduIFNpbHZl
-ciBDQSAtIEcyMB4XDTE0MDkxOTIwMzY0OVoXDTI5MDkxNTIwMzY0OVowVjELMAkGA1UEBhMC
-Q0gxFTATBgNVBAoTDFN3aXNzU2lnbiBBRzEwMC4GA1UEAxMnU3dpc3NTaWduIFBlcnNvbmFs
-IFNpbHZlciBDQSAyMDE0IC0gRzIyMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA
-yzmxOYX++smhvMODqQ5KLYRyHv9oxafEHewP16iLEx6z0RaLQNwPU28BPezoZLWX24O8qKjA
-hDhYXgMUK+bKMO8AsusTORmSRyohAOVyzcIxYg7MVir/d8RjjJjCb3jXtbbM6X0fM6aRBSr+
-0VLW9Oyc/k1MalLhhXZiu7lo5lJj/MEhkZJdGdjcgNEZ40kWVwIOGUSFqynJL/rGbWsKofb3
-/2thNRUmlJQCaSVdafe9XmuC2ZAMBvlDBSJJ6zbQIFpjEOM4IdV/FitBikZ68mfopNC6Hn8k
-J3WYlEktVsRUM5GdYvnVX95bqRWYnJRTwYDpCRcVtBuAKTKh0K8TpwIDAQABo4ICljCCApIw
-DgYDVR0PAQH/BAQDAgEGMBIGA1UdEwEB/wQIMAYBAf8CAQAwHQYDVR0OBBYEFPDHozKRtevK
-tVh3FadOvhpdYUMlMB8GA1UdIwQYMBaAFBegzcHkQbY6WzvLRZ29HMKY+oZYMIH/BgNVHR8E
-gfcwgfQwR6BFoEOGQWh0dHA6Ly9jcmwuc3dpc3NzaWduLm5ldC8xN0EwQ0RDMUU0NDFCNjNB
-NUIzQkNCNDU5REJEMUNDMjk4RkE4NjU4MIGooIGloIGihoGfbGRhcDovL2RpcmVjdG9yeS5z
-d2lzc3NpZ24ubmV0L0NOPTE3QTBDREMxRTQ0MUI2M0E1QjNCQ0I0NTlEQkQxQ0MyOThGQTg2
-NTglMkNPPVN3aXNzU2lnbiUyQ0M9Q0g/Y2VydGlmaWNhdGVSZXZvY2F0aW9uTGlzdD9iYXNl
-P29iamVjdENsYXNzPWNSTERpc3RyaWJ1dGlvblBvaW50MGEGA1UdIARaMFgwVgYJYIV0AVkB
-AwEGMEkwRwYIKwYBBQUHAgEWO2h0dHA6Ly9yZXBvc2l0b3J5LnN3aXNzc2lnbi5jb20vU3dp
-c3NTaWduLVNpbHZlci1DUC1DUFMucGRmMIHGBggrBgEFBQcBAQSBuTCBtjBkBggrBgEFBQcw
-AoZYaHR0cDovL3N3aXNzc2lnbi5uZXQvY2dpLWJpbi9hdXRob3JpdHkvZG93bmxvYWQvMTdB
-MENEQzFFNDQxQjYzQTVCM0JDQjQ1OURCRDFDQzI5OEZBODY1ODBOBggrBgEFBQcwAYZCaHR0
-cDovL29jc3Auc3dpc3NzaWduLm5ldC8xN0EwQ0RDMUU0NDFCNjNBNUIzQkNCNDU5REJEMUND
-Mjk4RkE4NjU4MA0GCSqGSIb3DQEBCwUAA4ICAQDDeadXt3utUWj1RIxBlSgBfHTWO2q8be+n
-1005mR1ojcoI2dBxsRk1k2+CxhxJuFHuTPlsCm/Ypfv++zBeANKUq8QSUbqqiqtq3RnXK0r3
-FrJrUc90Wymic96X/thPICF9aQywUOWNWIyALuUXHN1jeqrvBfnDaZ7kjHFiXELuOvLN4BLv
-i1zpzlMoMuyVCxlUoiGN+n9Qp0+8GXuya4wpP3c+yiPHaVpBnX1mMW96cXnaqWU663/XENUL
-X1QZfM43JSSEUNCvQDTCX5LiepHzL0JHG588QvvZX6W8cEWO76A5kPWheGzXwGdZGeEA3lz8
-eOhP3buskS5yi/zqR29DKLy7uY6UvvpQ3VCTG0wYtnb/w0cKWbTNbVXYarZfyS/BlDY+vq5A
-NQYg7eACTC00RQ5Dr6L02JAV5dDAm0RArjyPk1G8mWhzaXt1WJm31ARP3/GCcREde/wTHXdl
-VWPXUnJ83TFHhqeV2KwmcT0j5hI79H+alob+K+qg8yYNdcYWjDEg5xFHoeeparClsoEe3D3Q
-oeNu1fBmphx915KITQAHC3Hnc+dz5FRlafw3jfEeb3Dup2yzUkVnWdYFSLEh6Zco2dn0tKag
-ZyM2vGBHDlwof12TijG6jTE2FMd6Qp1vIMFsKvgWD2rZAJQyuz1VscXDoQ2xeXdUHeAzgn7u
-6jGCA2UwggNhAgEBMGkwVjELMAkGA1UEBhMCQ0gxFTATBgNVBAoTDFN3aXNzU2lnbiBBRzEw
-MC4GA1UEAxMnU3dpc3NTaWduIFBlcnNvbmFsIFNpbHZlciBDQSAyMDE0IC0gRzIyAg8Cbt2D
-n+cNP4QmgmDzkCQwDQYJYIZIAWUDBAIBBQCgggHNMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0B
-BwEwHAYJKoZIhvcNAQkFMQ8XDTE4MDUwMzE2NTczNlowLwYJKoZIhvcNAQkEMSIEIKYeJugL
-oYTmsKsF+N+XwTjRCFRVn277dJCfOeNgEE/oMGwGCSqGSIb3DQEJDzFfMF0wCwYJYIZIAWUD
-BAEqMAsGCWCGSAFlAwQBAjAKBggqhkiG9w0DBzAOBggqhkiG9w0DAgICAIAwDQYIKoZIhvcN
-AwICAUAwBwYFKw4DAgcwDQYIKoZIhvcNAwICASgweAYJKwYBBAGCNxAEMWswaTBWMQswCQYD
-VQQGEwJDSDEVMBMGA1UEChMMU3dpc3NTaWduIEFHMTAwLgYDVQQDEydTd2lzc1NpZ24gUGVy
-c29uYWwgU2lsdmVyIENBIDIwMTQgLSBHMjICDwJu3YOf5w0/hCaCYPOQJDB6BgsqhkiG9w0B
-CRACCzFroGkwVjELMAkGA1UEBhMCQ0gxFTATBgNVBAoTDFN3aXNzU2lnbiBBRzEwMC4GA1UE
-AxMnU3dpc3NTaWduIFBlcnNvbmFsIFNpbHZlciBDQSAyMDE0IC0gRzIyAg8Cbt2Dn+cNP4Qm
-gmDzkCQwDQYJKoZIhvcNAQEBBQAEggEAnLrPfLgjw9cwCvD7SU+naVJQGKf8XR80sTa34rIl
-lA/AueOAycrM7qFgF1JuNO3NPR+xGmpnlaFiTHkPcNYqEq+emkFylHYaWIcMYKaiLAiYPXbb
-WXNoEZwzMytbwStM27aZaow169QRFGlQrQ390TRyPE9ZioU8Z3mInmGcVHmcGDr2vEqHi+lN
-wQSfYx/H43+3gGEt2FNa0EuJSluAvSXsdEPzThBGszVOczBMB4q8BdOg/QaoTVRPXpIdCCKH
-wzGHzyRzcY3wkTo07o3YRAEe4bVfzBs+SaGP8agqoIHSGIjY8pje83Xg47kDvR5pMFW0GRwN
-woDpVoGQm66nvAAAAAAAAA==
---------------ms090200020108060404040507--
+# ping 192.168.100.2
+PING 192.168.100.2 (192.168.100.2) 56(84) bytes of data.
+ From 65.152.242.37 icmp_seq=1 Destination Net Unreachable
+
+FYI, 65.152.242.37 is the IP of atl-edge-24.inet.qwest.net
+...
+
+The local and Linode servers have the wg0 interface configured as shown:
+
+local NOC servers
+========================
+Server at 192.168.99.7
+.............................
+interface: wg0
+   public key: 3piZKS+b1GFMwkAED3ZqIL02VLRfKCSRrfGKeyu1MXU=
+   private key: (hidden)
+   listening port: 53339
+
+peer: /RjZ+4Zx+4TIfp8a4tGj4mZQ+ZtQGxThHiXOID4aplQ=
+   endpoint: 206.166.195.227:53339
+   allowed ips: 192.168.99.2/32
+   latest handshake: 1 day, 23 minutes, 5 seconds ago
+   transfer: 4.03 KiB received, 4.05 KiB sent
+
+peer: eW8d4b4HBxY6szYsgI9V8kzkZqhWY4BaehSxkHaqBx0=
+   endpoint: 173.230.137.236:53339
+   allowed ips: 192.168.100.2/32
+
+Server at 192.168.99.2
+.............................
+interface: wg0
+   public key: /RjZ+4Zx+4TIfp8a4tGj4mZQ+ZtQGxThHiXOID4aplQ=
+   private key: (hidden)
+   listening port: 53339
+
+peer: 3piZKS+b1GFMwkAED3ZqIL02VLRfKCSRrfGKeyu1MXU=
+   endpoint: 206.166.194.234:53339
+   allowed ips: 192.168.99.7/32
+   latest handshake: 1 day, 21 minutes, 42 seconds ago
+   transfer: 4.05 KiB received, 4.03 KiB sent
+
+peer: eW8d4b4HBxY6szYsgI9V8kzkZqhWY4BaehSxkHaqBx0=
+   endpoint: 173.230.137.236:53339
+   allowed ips: 192.168.100.2/32
+
+Linode VM server
+========================
+interface: wg0
+   public key: eW8d4b4HBxY6szYsgI9V8kzkZqhWY4BaehSxkHaqBx0=
+   private key: (hidden)
+   listening port: 53339
+
+peer: /RjZ+4Zx+4TIfp8a4tGj4mZQ+ZtQGxThHiXOID4aplQ=
+   endpoint: 206.166.195.227:53339
+   allowed ips: 192.168.99.2/32
+
+peer: 3piZKS+b1GFMwkAED3ZqIL02VLRfKCSRrfGKeyu1MXU=
+   endpoint: 206.166.194.234:53339
+   allowed ips: 192.168.99.7/32
+
+
+As I said earlier, the two local NOC server can ping each other on the 
+192.168.99.x block just fine AND they can ping the public endpoint IP 
+(173.230.137.236) of the Linode server, but both get a "network 
+unreachable" error from 65.152.242.37 (atl-edge-24.inet.qwest.net) if 
+they try to ping the Linode server using the allowed IP, 192.168.100.2.
+
+It is as if the packets had the unroutable IP, 192.168.100.2, as their 
+destination instead of the endpoint, 172.230.137.236.
+
+So what have I missed?
+
+Thank you for Wireguard and any help anyone can provide to show me what 
+I am doing wrong.
+
+-- 
+Andy Dorman
+Ironic Design, Inc.
+AnteSpam.com
+
+CONFIDENTIALITY NOTICE: This message is for the named person's use only. 
+It may contain confidential, proprietary or legally privileged 
+information. No confidentiality or privilege is waived or lost by any 
+erroneous transmission. If you receive this message in error, please 
+immediately destroy it and notify the sender. You must not, directly or 
+indirectly, use, disclose, distribute, or copy any part of this message 
+if you are not the intended recipient.
