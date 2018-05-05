@@ -1,28 +1,31 @@
-Return-Path: chm.duquesne@gmail.com
+Return-Path: vtol@gmx.net
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 04462a08
- for <wireguard@lists.zx2c4.com>; Sat, 5 May 2018 17:31:22 +0000 (UTC)
-Received: from mail-it0-x229.google.com (mail-it0-x229.google.com
- [IPv6:2607:f8b0:4001:c0b::229])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bf7c79d8
- for <wireguard@lists.zx2c4.com>; Sat, 5 May 2018 17:31:22 +0000 (UTC)
-Received: by mail-it0-x229.google.com with SMTP id 70-v6so7044351ity.2
- for <wireguard@lists.zx2c4.com>; Sat, 05 May 2018 10:33:30 -0700 (PDT)
-MIME-Version: 1.0
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b2450904
+ for <wireguard@lists.zx2c4.com>; Sat, 5 May 2018 17:51:31 +0000 (UTC)
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8a372ca3
+ for <wireguard@lists.zx2c4.com>; Sat, 5 May 2018 17:51:31 +0000 (UTC)
+Received: from [192.168.112.218] ([134.101.155.225]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MbgWb-1evyQG3NKf-00J6WJ
+ for <wireguard@lists.zx2c4.com>; Sat, 05 May 2018 19:53:38 +0200
+Subject: Re: WG interface to ipv4
+To: wireguard <wireguard@lists.zx2c4.com>
+Cc: wireguard@lists.zx2c4.com
 References: <73430f93-d7fa-777b-df24-ef4cb0021f0b@gmx.net>
  <CAHmME9q-wmyXw7pyLRK3YLDZxCHgKaPbx2ZJe75Yrnb4BQzwCQ@mail.gmail.com>
  <8d2259a4-15cf-d036-7dd8-fb18e8311aac@gmx.net>
  <CAHmME9q3YF87P9u3WXuXPU9nUZtXPWmRS0raw_8p6Gy-CghJdg@mail.gmail.com>
  <493b3bdf-3cf0-5594-dd7e-4b9c8d84e74c@gmx.net>
  <CAKXLc7dZD1Qzx1q1fPPikXPvu+vAgCpKnBBiP_hKSiJOtTbxng@mail.gmail.com>
-In-Reply-To: <CAKXLc7dZD1Qzx1q1fPPikXPvu+vAgCpKnBBiP_hKSiJOtTbxng@mail.gmail.com>
-From: Christophe-Marie Duquesne <chmd@chmd.fr>
-Date: Sat, 05 May 2018 17:33:18 +0000
-Message-ID: <CAHLp1Y=S0EmJHJ5kKJMJnd=0==QqCGVX4HXrYV62H=Nk+nx96Q@mail.gmail.com>
-Subject: Re: WG interface to ipv4
-To: Kalin KOZHUHAROV <me.kalin@gmail.com>
-Content-Type: multipart/alternative; boundary="000000000000b4c7b3056b78d571"
-Cc: wireguard@lists.zx2c4.com
+ <CAHLp1Y=S0EmJHJ5kKJMJnd=0==QqCGVX4HXrYV62H=Nk+nx96Q@mail.gmail.com>
+From: =?UTF-8?B?0b3SieG2rOG4s+KEoA==?= <vtol@gmx.net>
+Message-ID: <1a630d88-d7f8-7437-89a2-786b3da5888c@gmx.net>
+Date: Sat, 5 May 2018 19:53:37 +0200
+MIME-Version: 1.0
+In-Reply-To: <CAHLp1Y=S0EmJHJ5kKJMJnd=0==QqCGVX4HXrYV62H=Nk+nx96Q@mail.gmail.com>
+Content-Type: multipart/signed; protocol="application/pkcs7-signature";
+ micalg=sha-256; boundary="------------ms060605000309000709020704"
+Reply-To: vtol@gmx.net
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -32,184 +35,122 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---000000000000b4c7b3056b78d571
-Content-Type: text/plain; charset="UTF-8"
+This is a cryptographically signed message in MIME format.
+
+--------------ms060605000309000709020704
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
 
-If wg was binding to a particular interface, I don't think it would be
-possible to support roaming scenarios. I have a travel wifi router, and I
-love the fact that it will automatically switch between connecting through
-the Ethernet interface or the USB tethering one.
+I am not asking to castrate WG in any way and suppose you are referring=20
+likely to WG clients when citing a roaming scenario, at least my servers =
 
-The need you describe is orthogonal to the role of wireguard. If you want
-to tightly control what wireguard is doing, you should use 1) good routing
-rules and 2) iptables to match these rules.
+are not roaming.
 
+And on a server I prefer tight control over what is happening with the=20
+network. Hence, it would be good to have an option (enhancing WG) in the =
 
-On Sat, May 5, 2018, 11:33 Kalin KOZHUHAROV <me.kalin@gmail.com> wrote:
+settings/configuration:
 
-> On Sat, May 5, 2018 at 10:18 AM, =D1=BD=D2=89=E1=B6=AC=E1=B8=B3=E2=84=A0 =
-<vtol@gmx.net> wrote:
-> > I like to keep things neat/controlled and any necessary open socket is
-> only
-> > sticking out like a sore (wondering why it is opened when not wanted
-> for).
-> > It would certainly instill more confidence in network security/control
-> if it
-> > would be possible to define which sockets are opened by WG, like other
-> apps
-> > do.
-> >
-> +1 !
+- choose ip protocol version - ipv4 or or ipv6 or both
+- bind WG to either iface(s) or subnet(s)
+
+I trust that such is available and common practice with other VPN apps.
+
+> If wg was binding to a particular interface, I don't think it would be =
+
+> possible to support roaming scenarios. I have a travel wifi router,=20
+> and I love the fact that it will automatically switch between=20
+> connecting through the Ethernet interface or the USB tethering one.
 >
-> > Which brings up the next point, I have asked previously twice about -
-> > wildcard ip 0.0.0.0 . How to bind WG to a particular iface/subnet, as  =
-a
-> > another matter of network security?
-> >
-> It is not possible AFAIK. I am not sure in the intrinsic workings, may
-> be it is not possible by design?
->
-> Hmm, should be, given that it only listens to UDP on a single IP
-> address (as configured on the wgX interface).
-> Well, one can configure multiple addresses to a single interface, but sti=
-ll
-> What about when we have more than one wgX interface, do they share memory=
-?
->
-> Certainly, the source lists it is binds to any interface:
-> https://git.zx2c4.com/WireGuard/tree/src/socket.c#n330
-> unconditionally.
->
-> So I guess we can use (from `man 7 socket`)
->
->        SO_BINDTODEVICE
->               Bind this socket to a particular device like =E2=80=9Ceth0=
-=E2=80=9D, as
-> specified in the passed interface name.  If  the
->               name  is an empty string or the option length is zero,
-> the socket device binding is removed.  The passed
->               option is a variable-length null-terminated interface
-> name string with the maximum size of IFNAMSIZ.  If
->               a socket is bound to an interface, only packets received
-> from that particular interface are processed by
->               the socket.  Note that this works only for some socket
-> types, particularly AF_INET sockets.  It  is  not
->               supported for packet sockets (use normal bind(2) there).
->
->               Before  Linux  3.8,  this socket option could be set,
-> but could not retrieved with getsockopt(2).  Since
->               Linux 3.8, it is readable.  The optlen argument should
-> contain the buffer size available to receive  the
->               device name and is recommended to be IFNAMSZ bytes.  The
-> real device name length is reported back in the
->               optlen argument.
->
-> Just a wild guess.
->
-> Cheers,
-> Kalin.
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
+> The need you describe is orthogonal to the role of wireguard. If you=20
+> want to tightly control what wireguard is doing, you should use 1)=20
+> good routing rules and 2) iptables to match these rules.
 >
 
---000000000000b4c7b3056b78d571
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"auto"><div>If wg was binding to a particular interface, I don&#=
-39;t think it would be possible to support roaming scenarios. I have a trav=
-el wifi router, and I love the fact that it will automatically switch betwe=
-en connecting through the Ethernet interface or the USB tethering one.<div =
-dir=3D"auto"><br></div><div dir=3D"auto">The need you describe is orthogona=
-l to the role of wireguard. If you want to tightly control what wireguard i=
-s doing, you should use 1) good routing rules and 2) iptables to match thes=
-e rules.</div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr">On Sat, M=
-ay 5, 2018, 11:33 Kalin KOZHUHAROV &lt;<a href=3D"mailto:me.kalin@gmail.com=
-">me.kalin@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quo=
-te" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex"=
->On Sat, May 5, 2018 at 10:18 AM, =D1=BD=D2=89=E1=B6=AC=E1=B8=B3=E2=84=A0 &=
-lt;<a href=3D"mailto:vtol@gmx.net" target=3D"_blank" rel=3D"noreferrer">vto=
-l@gmx.net</a>&gt; wrote:<br>
-&gt; I like to keep things neat/controlled and any necessary open socket is=
- only<br>
-&gt; sticking out like a sore (wondering why it is opened when not wanted f=
-or).<br>
-&gt; It would certainly instill more confidence in network security/control=
- if it<br>
-&gt; would be possible to define which sockets are opened by WG, like other=
- apps<br>
-&gt; do.<br>
-&gt;<br>
-+1 !<br>
-<br>
-&gt; Which brings up the next point, I have asked previously twice about -<=
-br>
-&gt; wildcard ip 0.0.0.0 . How to bind WG to a particular iface/subnet, as=
-=C2=A0 a<br>
-&gt; another matter of network security?<br>
-&gt;<br>
-It is not possible AFAIK. I am not sure in the intrinsic workings, may<br>
-be it is not possible by design?<br>
-<br>
-Hmm, should be, given that it only listens to UDP on a single IP<br>
-address (as configured on the wgX interface).<br>
-Well, one can configure multiple addresses to a single interface, but still=
-<br>
-What about when we have more than one wgX interface, do they share memory?<=
-br>
-<br>
-Certainly, the source lists it is binds to any interface:<br>
-<a href=3D"https://git.zx2c4.com/WireGuard/tree/src/socket.c#n330" rel=3D"n=
-oreferrer noreferrer" target=3D"_blank">https://git.zx2c4.com/WireGuard/tre=
-e/src/socket.c#n330</a><br>
-unconditionally.<br>
-<br>
-So I guess we can use (from `man 7 socket`)<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0SO_BINDTODEVICE<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Bind this socket to a part=
-icular device like =E2=80=9Ceth0=E2=80=9D, as<br>
-specified in the passed interface name.=C2=A0 If=C2=A0 the<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 name=C2=A0 is an empty str=
-ing or the option length is zero,<br>
-the socket device binding is removed.=C2=A0 The passed<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 option is a variable-lengt=
-h null-terminated interface<br>
-name string with the maximum size of IFNAMSIZ.=C2=A0 If<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 a socket is bound to an in=
-terface, only packets received<br>
-from that particular interface are processed by<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 the socket.=C2=A0 Note tha=
-t this works only for some socket<br>
-types, particularly AF_INET sockets.=C2=A0 It=C2=A0 is=C2=A0 not<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 supported for packet socke=
-ts (use normal bind(2) there).<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Before=C2=A0 Linux=C2=A0 3=
-.8,=C2=A0 this socket option could be set,<br>
-but could not retrieved with getsockopt(2).=C2=A0 Since<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Linux 3.8, it is readable.=
-=C2=A0 The optlen argument should<br>
-contain the buffer size available to receive=C2=A0 the<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 device name and is recomme=
-nded to be IFNAMSZ bytes.=C2=A0 The<br>
-real device name length is reported back in the<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 optlen argument.<br>
-<br>
-Just a wild guess.<br>
-<br>
-Cheers,<br>
-Kalin.<br>
-_______________________________________________<br>
-WireGuard mailing list<br>
-<a href=3D"mailto:WireGuard@lists.zx2c4.com" target=3D"_blank" rel=3D"noref=
-errer">WireGuard@lists.zx2c4.com</a><br>
-<a href=3D"https://lists.zx2c4.com/mailman/listinfo/wireguard" rel=3D"noref=
-errer noreferrer" target=3D"_blank">https://lists.zx2c4.com/mailman/listinf=
-o/wireguard</a><br>
-</blockquote></div></div></div>
+--------------ms060605000309000709020704
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Description: S/MIME Cryptographic Signature
 
---000000000000b4c7b3056b78d571--
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCC
+DKcwggXhMIIEyaADAgECAg8Cbt2Dn+cNP4QmgmDzkCQwDQYJKoZIhvcNAQELBQAwVjELMAkG
+A1UEBhMCQ0gxFTATBgNVBAoTDFN3aXNzU2lnbiBBRzEwMC4GA1UEAxMnU3dpc3NTaWduIFBl
+cnNvbmFsIFNpbHZlciBDQSAyMDE0IC0gRzIyMB4XDTE1MDcyODEzMTI0MVoXDTIwMDcyODEz
+MTI0MVowPTEdMBsGA1UECxMURW1haWwgVmFsaWRhdGVkIE9ubHkxHDAaBgNVBAMUE0VtYWls
+OiB2dG9sQGdteC5uZXQwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC5ASUjAK09
+ZNNidaYU+dqDFt9qDwYvCxByPGry3JbqFQBBWqTTEsHvzT+lnqGHqq+orjCtHqylQldPkDjo
+cplXz6cbsw4j8YHQXcMT5V9rEyFuq+doP6eOfsvwwXGR45Iuly9Aho4RGjfh80O0CPMCdP39
+yceF+dqVN1AQSElweHQUU49IY1IyZXQjoXaP8Qr2/6BlAEAT3XDZqeDwYKGUWWbVSdEhZKwG
+p0YyQrazaNMsC5BYFMW/rvzzw1Wa4ByoDgzjjLmr9ydW6oQeuYpCStjZzqlcRFCVCNXDAuyU
+EBYd5P16ESG4VhpQ8Mz9GVqNUZYw+zvZ3Js8KOd+wh+7AgMBAAGjggLDMIICvzAOBgNVHQ8B
+Af8EBAMCBLAwEwYDVR0lBAwwCgYIKwYBBQUHAwQwHQYDVR0OBBYEFHNiDG+WSt7wCElvgksu
+82Yv88f4MB8GA1UdIwQYMBaAFPDHozKRtevKtVh3FadOvhpdYUMlMIH/BgNVHR8EgfcwgfQw
+R6BFoEOGQWh0dHA6Ly9jcmwuc3dpc3NzaWduLm5ldC9GMEM3QTMzMjkxQjVFQkNBQjU1ODc3
+MTVBNzRFQkUxQTVENjE0MzI1MIGooIGloIGihoGfbGRhcDovL2RpcmVjdG9yeS5zd2lzc3Np
+Z24ubmV0L0NOPUYwQzdBMzMyOTFCNUVCQ0FCNTU4NzcxNUE3NEVCRTFBNUQ2MTQzMjUlMkNP
+PVN3aXNzU2lnbiUyQ0M9Q0g/Y2VydGlmaWNhdGVSZXZvY2F0aW9uTGlzdD9iYXNlP29iamVj
+dENsYXNzPWNSTERpc3RyaWJ1dGlvblBvaW50MGEGA1UdIARaMFgwVgYJYIV0AVkBAwEGMEkw
+RwYIKwYBBQUHAgEWO2h0dHA6Ly9yZXBvc2l0b3J5LnN3aXNzc2lnbi5jb20vU3dpc3NTaWdu
+LVNpbHZlci1DUC1DUFMucGRmMIHZBggrBgEFBQcBAQSBzDCByTBkBggrBgEFBQcwAoZYaHR0
+cDovL3N3aXNzc2lnbi5uZXQvY2dpLWJpbi9hdXRob3JpdHkvZG93bmxvYWQvRjBDN0EzMzI5
+MUI1RUJDQUI1NTg3NzE1QTc0RUJFMUE1RDYxNDMyNTBhBggrBgEFBQcwAYZVaHR0cDovL3Np
+bHZlci1wZXJzb25hbC1nMi5vY3NwLnN3aXNzc2lnbi5uZXQvRjBDN0EzMzI5MUI1RUJDQUI1
+NTg3NzE1QTc0RUJFMUE1RDYxNDMyNTAXBgNVHREEEDAOgQx2dG9sQGdteC5uZXQwDQYJKoZI
+hvcNAQELBQADggEBAAbOyN+VjfLdPkM7pWiiy0r2Zw0FqfJ0Mh0plsc9LHL/aF1Yaru+Ku7N
+DhCnT53sfgM4yqpczWq9M3ZqdV9QO6kWf2xuRqzgmeRYOaMq82zkKNdowVavWK5NnktRTmsk
+PT46eGpu46y0fq0xuogA01ji4RaIkNBx+dLAS24mfDDBwmJv64ge9Zw6cnz1Ov09jrDyH+ig
+VjcxHia5u3LKcRWvymIGY9NByDJouCbSFMYPZMzWtRvwG/myp0HmaQ+dlFPcGOTpNebyNiTr
+hl2IPEUrWC4JqJon4+H2WnQhmViJP43AZtSZY3OvU1Ya/KdMP7Hn2ctdbbO/vNuqN0v9avIw
+gga+MIIEpqADAgECAg8FRNZOrR7TNtUyQF0AuTYwDQYJKoZIhvcNAQELBQAwRzELMAkGA1UE
+BhMCQ0gxFTATBgNVBAoTDFN3aXNzU2lnbiBBRzEhMB8GA1UEAxMYU3dpc3NTaWduIFNpbHZl
+ciBDQSAtIEcyMB4XDTE0MDkxOTIwMzY0OVoXDTI5MDkxNTIwMzY0OVowVjELMAkGA1UEBhMC
+Q0gxFTATBgNVBAoTDFN3aXNzU2lnbiBBRzEwMC4GA1UEAxMnU3dpc3NTaWduIFBlcnNvbmFs
+IFNpbHZlciBDQSAyMDE0IC0gRzIyMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA
+yzmxOYX++smhvMODqQ5KLYRyHv9oxafEHewP16iLEx6z0RaLQNwPU28BPezoZLWX24O8qKjA
+hDhYXgMUK+bKMO8AsusTORmSRyohAOVyzcIxYg7MVir/d8RjjJjCb3jXtbbM6X0fM6aRBSr+
+0VLW9Oyc/k1MalLhhXZiu7lo5lJj/MEhkZJdGdjcgNEZ40kWVwIOGUSFqynJL/rGbWsKofb3
+/2thNRUmlJQCaSVdafe9XmuC2ZAMBvlDBSJJ6zbQIFpjEOM4IdV/FitBikZ68mfopNC6Hn8k
+J3WYlEktVsRUM5GdYvnVX95bqRWYnJRTwYDpCRcVtBuAKTKh0K8TpwIDAQABo4ICljCCApIw
+DgYDVR0PAQH/BAQDAgEGMBIGA1UdEwEB/wQIMAYBAf8CAQAwHQYDVR0OBBYEFPDHozKRtevK
+tVh3FadOvhpdYUMlMB8GA1UdIwQYMBaAFBegzcHkQbY6WzvLRZ29HMKY+oZYMIH/BgNVHR8E
+gfcwgfQwR6BFoEOGQWh0dHA6Ly9jcmwuc3dpc3NzaWduLm5ldC8xN0EwQ0RDMUU0NDFCNjNB
+NUIzQkNCNDU5REJEMUNDMjk4RkE4NjU4MIGooIGloIGihoGfbGRhcDovL2RpcmVjdG9yeS5z
+d2lzc3NpZ24ubmV0L0NOPTE3QTBDREMxRTQ0MUI2M0E1QjNCQ0I0NTlEQkQxQ0MyOThGQTg2
+NTglMkNPPVN3aXNzU2lnbiUyQ0M9Q0g/Y2VydGlmaWNhdGVSZXZvY2F0aW9uTGlzdD9iYXNl
+P29iamVjdENsYXNzPWNSTERpc3RyaWJ1dGlvblBvaW50MGEGA1UdIARaMFgwVgYJYIV0AVkB
+AwEGMEkwRwYIKwYBBQUHAgEWO2h0dHA6Ly9yZXBvc2l0b3J5LnN3aXNzc2lnbi5jb20vU3dp
+c3NTaWduLVNpbHZlci1DUC1DUFMucGRmMIHGBggrBgEFBQcBAQSBuTCBtjBkBggrBgEFBQcw
+AoZYaHR0cDovL3N3aXNzc2lnbi5uZXQvY2dpLWJpbi9hdXRob3JpdHkvZG93bmxvYWQvMTdB
+MENEQzFFNDQxQjYzQTVCM0JDQjQ1OURCRDFDQzI5OEZBODY1ODBOBggrBgEFBQcwAYZCaHR0
+cDovL29jc3Auc3dpc3NzaWduLm5ldC8xN0EwQ0RDMUU0NDFCNjNBNUIzQkNCNDU5REJEMUND
+Mjk4RkE4NjU4MA0GCSqGSIb3DQEBCwUAA4ICAQDDeadXt3utUWj1RIxBlSgBfHTWO2q8be+n
+1005mR1ojcoI2dBxsRk1k2+CxhxJuFHuTPlsCm/Ypfv++zBeANKUq8QSUbqqiqtq3RnXK0r3
+FrJrUc90Wymic96X/thPICF9aQywUOWNWIyALuUXHN1jeqrvBfnDaZ7kjHFiXELuOvLN4BLv
+i1zpzlMoMuyVCxlUoiGN+n9Qp0+8GXuya4wpP3c+yiPHaVpBnX1mMW96cXnaqWU663/XENUL
+X1QZfM43JSSEUNCvQDTCX5LiepHzL0JHG588QvvZX6W8cEWO76A5kPWheGzXwGdZGeEA3lz8
+eOhP3buskS5yi/zqR29DKLy7uY6UvvpQ3VCTG0wYtnb/w0cKWbTNbVXYarZfyS/BlDY+vq5A
+NQYg7eACTC00RQ5Dr6L02JAV5dDAm0RArjyPk1G8mWhzaXt1WJm31ARP3/GCcREde/wTHXdl
+VWPXUnJ83TFHhqeV2KwmcT0j5hI79H+alob+K+qg8yYNdcYWjDEg5xFHoeeparClsoEe3D3Q
+oeNu1fBmphx915KITQAHC3Hnc+dz5FRlafw3jfEeb3Dup2yzUkVnWdYFSLEh6Zco2dn0tKag
+ZyM2vGBHDlwof12TijG6jTE2FMd6Qp1vIMFsKvgWD2rZAJQyuz1VscXDoQ2xeXdUHeAzgn7u
+6jGCA2UwggNhAgEBMGkwVjELMAkGA1UEBhMCQ0gxFTATBgNVBAoTDFN3aXNzU2lnbiBBRzEw
+MC4GA1UEAxMnU3dpc3NTaWduIFBlcnNvbmFsIFNpbHZlciBDQSAyMDE0IC0gRzIyAg8Cbt2D
+n+cNP4QmgmDzkCQwDQYJYIZIAWUDBAIBBQCgggHNMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0B
+BwEwHAYJKoZIhvcNAQkFMQ8XDTE4MDUwNTE3NTMzN1owLwYJKoZIhvcNAQkEMSIEIOCTK0P+
+hrvzeqKjTiyr3eNRgjsO76LuTQ+K8jnifvBvMGwGCSqGSIb3DQEJDzFfMF0wCwYJYIZIAWUD
+BAEqMAsGCWCGSAFlAwQBAjAKBggqhkiG9w0DBzAOBggqhkiG9w0DAgICAIAwDQYIKoZIhvcN
+AwICAUAwBwYFKw4DAgcwDQYIKoZIhvcNAwICASgweAYJKwYBBAGCNxAEMWswaTBWMQswCQYD
+VQQGEwJDSDEVMBMGA1UEChMMU3dpc3NTaWduIEFHMTAwLgYDVQQDEydTd2lzc1NpZ24gUGVy
+c29uYWwgU2lsdmVyIENBIDIwMTQgLSBHMjICDwJu3YOf5w0/hCaCYPOQJDB6BgsqhkiG9w0B
+CRACCzFroGkwVjELMAkGA1UEBhMCQ0gxFTATBgNVBAoTDFN3aXNzU2lnbiBBRzEwMC4GA1UE
+AxMnU3dpc3NTaWduIFBlcnNvbmFsIFNpbHZlciBDQSAyMDE0IC0gRzIyAg8Cbt2Dn+cNP4Qm
+gmDzkCQwDQYJKoZIhvcNAQEBBQAEggEAblvkg9igVSGZ1j5UwGLOZeBv3W2RbSYF4wLlvR2Q
+V6HE2jTGzz5Dcrd0zFeUxzZKe3VypFaYaN2FgLdw7rV5Jvneo1xDbCSy/0k5Z1aF/9/dQeeF
+Zez7wPQyVojKbLXLHbU8hz+00cJIn3Dk0SMUOUJeglAASasUnAxxx5M4XtQO8TMDkxOEmj6N
+EV2l4cafxb4fwVImwneuC9a7HoYjB6oXpSyryJL12pe2wORMgpXkMzXGkYFQXwJrTddvdbiS
+/oyB2+ClO41Em0ObfZn5IZCntbcEWula8uOpS7/LmmCA0mR8Z/mosh7pQnSEVKyvg9pn/TLR
+ctSLIa4TkUx0iwAAAAAAAA==
+--------------ms060605000309000709020704--
