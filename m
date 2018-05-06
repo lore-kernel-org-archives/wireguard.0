@@ -1,21 +1,19 @@
-Return-Path: john@mib-infotech.co.nz
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0fd79998
- for <wireguard@lists.zx2c4.com>; Sun, 6 May 2018 21:35:35 +0000 (UTC)
-Received: from mail-pf0-x235.google.com (mail-pf0-x235.google.com
- [IPv6:2607:f8b0:400e:c00::235])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 59ceea55
- for <wireguard@lists.zx2c4.com>; Sun, 6 May 2018 21:35:35 +0000 (UTC)
-Received: by mail-pf0-x235.google.com with SMTP id o76so21241983pfi.5
- for <wireguard@lists.zx2c4.com>; Sun, 06 May 2018 14:37:52 -0700 (PDT)
-Return-Path: <john@mib-infotech.co.nz>
-Received: from [10.16.226.11] ([103.247.155.34])
- by smtp.gmail.com with ESMTPSA id f78sm45317173pfk.138.2018.05.06.14.37.48
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Sun, 06 May 2018 14:37:50 -0700 (PDT)
-Subject: Android Configuration File
-To: wireguard@lists.zx2c4.com
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b4d63ce9
+ for <wireguard@lists.zx2c4.com>; Sun, 6 May 2018 22:08:08 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9fe53195
+ for <wireguard@lists.zx2c4.com>; Sun, 6 May 2018 22:08:08 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7f691fb3
+ for <wireguard@lists.zx2c4.com>; Sun, 6 May 2018 22:10:03 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 50435441
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>; Sun, 6 May 2018 22:10:03 +0000 (UTC)
+Received: by mail-ot0-f173.google.com with SMTP id t1-v6so29971390oth.8
+ for <wireguard@lists.zx2c4.com>; Sun, 06 May 2018 15:10:25 -0700 (PDT)
+MIME-Version: 1.0
+In-Reply-To: <c568bd35-6449-ce60-d075-87ba3346964a@mib-infotech.co.nz>
 References: <73430f93-d7fa-777b-df24-ef4cb0021f0b@gmx.net>
  <CAHmME9q3YF87P9u3WXuXPU9nUZtXPWmRS0raw_8p6Gy-CghJdg@mail.gmail.com>
  <493b3bdf-3cf0-5594-dd7e-4b9c8d84e74c@gmx.net>
@@ -26,12 +24,14 @@ References: <73430f93-d7fa-777b-df24-ef4cb0021f0b@gmx.net>
  <dfcc55c3-795b-dfa2-7034-74b537519ea4@gmx.net>
  <7qQvJLeSZV3rJnkg9rIdA6yznDPzhIFVR_qUa0hBhmCdr_onJsjzXvKVIlp-ovJiRaX1eENGmtrtcZ_7xsHY7heX2qOvouN8pXTt_J3RurQ=@protonmail.ch>
  <d8bb14e2-43f6-812b-ad5d-3d7b143ae518@gmx.net>
-From: John Huttley <john@mib-infotech.co.nz>
-Message-ID: <c568bd35-6449-ce60-d075-87ba3346964a@mib-infotech.co.nz>
-Date: Mon, 7 May 2018 09:37:44 +1200
-MIME-Version: 1.0
-In-Reply-To: <d8bb14e2-43f6-812b-ad5d-3d7b143ae518@gmx.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
+ <c568bd35-6449-ce60-d075-87ba3346964a@mib-infotech.co.nz>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Mon, 7 May 2018 00:10:24 +0200
+Message-ID: <CAHmME9rMkeH0y_oQsFmNfergzkKJp8XZHGF_nmxGO1GS27QcWA@mail.gmail.com>
+Subject: Re: Android Configuration File
+To: John Huttley <john@mib-infotech.co.nz>
+Content-Type: text/plain; charset="UTF-8"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -41,25 +41,15 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-I'm just trying to set up the app to talk to my server.
-Its unclear what a "configuration file" is. I've presumed it was 
-wg-quick compatible.
+Hey John,
 
-wg1.conf
+Sorry about that. I actually fixed this a few days ago, but we haven't
+yet put out a new alpha release apk.
 
+https://git.zx2c4.com/wireguard-android/commit/?id=8ef4a2f2f0216d5bd716d990dbf89b80868b9103
 
-[Interface]
-     Address = 192.168.94.13/32
-       PrivateKey = SNIP
+I'll get something released soon that should fix this issue for you.
 
-[Peer]
-       PublicKey = SNIP
-       Endpoint = gatekeeper.hisdad.org:6678
-       AllowedIPs = 192.168.94.0/24, 192.168.95.0/24
+In the mean time, just remove the leading spaces of each line.
 
-Is a valid wg-quick file but the app flashes a "Invalid Virtual" or 
-something, just for a second.
-
-Whats the requirement?
-
---dad
+Jason
