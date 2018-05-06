@@ -1,13 +1,13 @@
 Return-Path: vtol@gmx.net
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 02115e26
- for <wireguard@lists.zx2c4.com>; Sun, 6 May 2018 07:29:08 +0000 (UTC)
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 880c6d3a
- for <wireguard@lists.zx2c4.com>; Sun, 6 May 2018 07:29:08 +0000 (UTC)
-Received: from [192.168.112.218] ([134.101.136.25]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MI8iw-1fBMWO3RmQ-003vAy
- for <wireguard@lists.zx2c4.com>; Sun, 06 May 2018 09:31:19 +0200
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 52d70a1b
+ for <wireguard@lists.zx2c4.com>; Sun, 6 May 2018 08:56:10 +0000 (UTC)
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1c4070a3
+ for <wireguard@lists.zx2c4.com>; Sun, 6 May 2018 08:56:10 +0000 (UTC)
+Received: from [192.168.112.218] ([134.101.136.25]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MSZ6u-1enikS321s-00RZve
+ for <wireguard@lists.zx2c4.com>; Sun, 06 May 2018 10:58:21 +0200
 Subject: Re: WG interface to ipv4
 To: wireguard <wireguard@lists.zx2c4.com>
 References: <73430f93-d7fa-777b-df24-ef4cb0021f0b@gmx.net>
@@ -15,17 +15,14 @@ References: <73430f93-d7fa-777b-df24-ef4cb0021f0b@gmx.net>
  <8d2259a4-15cf-d036-7dd8-fb18e8311aac@gmx.net>
  <CAHmME9q3YF87P9u3WXuXPU9nUZtXPWmRS0raw_8p6Gy-CghJdg@mail.gmail.com>
  <493b3bdf-3cf0-5594-dd7e-4b9c8d84e74c@gmx.net>
- <CAKXLc7dZD1Qzx1q1fPPikXPvu+vAgCpKnBBiP_hKSiJOtTbxng@mail.gmail.com>
- <CAHLp1Y=S0EmJHJ5kKJMJnd=0==QqCGVX4HXrYV62H=Nk+nx96Q@mail.gmail.com>
- <1a630d88-d7f8-7437-89a2-786b3da5888c@gmx.net>
- <CAHmME9o4PUH_+DNMC1cWPcRRfDvdeB0k_6bJMgsMMN8JSq51PA@mail.gmail.com>
+ <CAHmME9r5cwdfDaHCbO50UhREG9z2zv39y+32YYwAYJEfsGDgVA@mail.gmail.com>
 From: =?UTF-8?B?0b3SieG2rOG4s+KEoA==?= <vtol@gmx.net>
-Message-ID: <478568f1-c184-01bd-6e2a-db478c98efb8@gmx.net>
-Date: Sun, 6 May 2018 09:31:16 +0200
+Message-ID: <ad56c93f-5e36-e9a4-42c2-8632c7df86af@gmx.net>
+Date: Sun, 6 May 2018 10:58:19 +0200
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9o4PUH_+DNMC1cWPcRRfDvdeB0k_6bJMgsMMN8JSq51PA@mail.gmail.com>
+In-Reply-To: <CAHmME9r5cwdfDaHCbO50UhREG9z2zv39y+32YYwAYJEfsGDgVA@mail.gmail.com>
 Content-Type: multipart/signed; protocol="application/pkcs7-signature";
- micalg=sha-256; boundary="------------ms000705070205070606000308"
+ micalg=sha-256; boundary="------------ms050909090000080105070200"
 Reply-To: vtol@gmx.net
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -38,31 +35,66 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 
 This is a cryptographically signed message in MIME format.
 
---------------ms000705070205070606000308
+--------------ms050909090000080105070200
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
 Content-Language: en-US
 
 
-> I should point out that "other VPN apps are doing it" is mostly not a
-> motivation for adding a nob. We're trying to aim with WireGuard as
-> close to a nob-less security model as possible. This is indeed a
-> substantially different goal from other projects, many of which love
-> to add features and choices. On the other hand, WireGuard aims to look
-> at the complete system and tries to determine what set of parameters
-> always provide security in the model we're going for. For example,
-> most other VPN apps let you choose your "cipher suite". DES? Blowfish?
-> AES? XTEA? This project has a bit of a different focus. I realize this
-> might be less exciting to watch, but I do believe this approach will
-> nudge us a tiny bit closer to having secure software.
+> Why? Can you outline the threat model?
+>
+> As I mentioned earlier, to disable v6 socket creation, pass
+> ipv6.disable=3D1 on the kernel command line, or just unload the v6
+> module. If you're worried about the Linux v6 stack being a pile of
+> scary bugs, then you certainly want to be doing this already, and not
+> relying on simply disabling v6 routing within that network namespace,
+> which you're doing with the conf.default.disable_ipv6=3D1. In other
+> words, if you don't want v6 for reasons of attack surface, then you
+> should actually be disabling v6 properly.
 
-Added/enhanced (network) security is hardly an knob meant to excite, not =
+Any piece of software is flawed (threat model), proven by the various=20
+CVE and others yet to be discovered, that including Linux kernel and its =
 
-sure how you reach that conclusion.
+userland.
+
+ipv6 deployment/utilization is hardly a matter of black and white, i.e.=20
+turning it off/on during boot time. Some scenarios call for ipv6 to be=20
+available whilst others not and thus ipv6 routing is disabled whenever=20
+not needed in order to tailor mitigation of potential attack surfaces.=20
+Like ssh can be constrained to a particular ipv socket and so it can be=20
+set for ntp, dnsmasq, bind, unbound, just to name=C2=A0 a few.
+
+Why would WG take the high route and curtail user control of whether to=20
+open an ipv4 or ipv6 (someone else may not be keen on ipv4) socket, or bo=
+th?
+
+
+> Why is this a matter of network security? WireGuard will ignore
+> packets that don't have the correct authentication tag. If you're
+> receiving authentic packets, you're receiving authentic packets, and
+> the origin shouldn't matter, in terms of the packets' authenticity. In
+> other words, if an attacker has stolen a private key, this is the
+> problem to address.
+Why to offer a the broadest surface (0.0.0.0 - all IPv4 addresses on the =
+
+local machine and with the ipv6 socket open also those) for a potential=20
+attack in the first place and deprive the user of tailoring/binding WG=20
+deployment to the respective network layout?
+> Anyway, regardless of this, if you want to filter
+> out packets coming from a certain interface, a certain subnet, or any
+> other characteristics, use netfilter and make these preferences
+> explicit in your rules, rather than the implicit details of listening
+> sockets.
+
+I would not consider binding WG to a particular iface/subnet an implicit =
+
+choice but rather being explicit, but that is perhaps a matter of=20
+perspective then. Netfilter rules can easily get convoluted in complex=20
+scenarios.
 
 
 
---------------ms000705070205070606000308
+--------------ms050909090000080105070200
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -132,18 +164,18 @@ ZyM2vGBHDlwof12TijG6jTE2FMd6Qp1vIMFsKvgWD2rZAJQyuz1VscXDoQ2xeXdUHeAzgn7u
 6jGCA2UwggNhAgEBMGkwVjELMAkGA1UEBhMCQ0gxFTATBgNVBAoTDFN3aXNzU2lnbiBBRzEw
 MC4GA1UEAxMnU3dpc3NTaWduIFBlcnNvbmFsIFNpbHZlciBDQSAyMDE0IC0gRzIyAg8Cbt2D
 n+cNP4QmgmDzkCQwDQYJYIZIAWUDBAIBBQCgggHNMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0B
-BwEwHAYJKoZIhvcNAQkFMQ8XDTE4MDUwNjA3MzExNlowLwYJKoZIhvcNAQkEMSIEIIAfwKSM
-TvGH0HuRvoLSMLVNOOs31CD8GHwhXzkjfSb9MGwGCSqGSIb3DQEJDzFfMF0wCwYJYIZIAWUD
+BwEwHAYJKoZIhvcNAQkFMQ8XDTE4MDUwNjA4NTgxOVowLwYJKoZIhvcNAQkEMSIEIPnSKiom
+Vqjud+234Gsn5KjcioWLQrwK9155XKKnVXF3MGwGCSqGSIb3DQEJDzFfMF0wCwYJYIZIAWUD
 BAEqMAsGCWCGSAFlAwQBAjAKBggqhkiG9w0DBzAOBggqhkiG9w0DAgICAIAwDQYIKoZIhvcN
 AwICAUAwBwYFKw4DAgcwDQYIKoZIhvcNAwICASgweAYJKwYBBAGCNxAEMWswaTBWMQswCQYD
 VQQGEwJDSDEVMBMGA1UEChMMU3dpc3NTaWduIEFHMTAwLgYDVQQDEydTd2lzc1NpZ24gUGVy
 c29uYWwgU2lsdmVyIENBIDIwMTQgLSBHMjICDwJu3YOf5w0/hCaCYPOQJDB6BgsqhkiG9w0B
 CRACCzFroGkwVjELMAkGA1UEBhMCQ0gxFTATBgNVBAoTDFN3aXNzU2lnbiBBRzEwMC4GA1UE
 AxMnU3dpc3NTaWduIFBlcnNvbmFsIFNpbHZlciBDQSAyMDE0IC0gRzIyAg8Cbt2Dn+cNP4Qm
-gmDzkCQwDQYJKoZIhvcNAQEBBQAEggEAqU2mkHboTUXzEZLnm1a3LadwWWTTq3xxnWT0V7Hg
-g/EUTPeK3YgfNY6URsTWRnLMdlgVbYCuXUBzCGviariqWivN9CNdihv3Dsof9it5fZ4ZmRRM
-cLN+uB7LUZqCzNirZGXWa4kMmRF0R5bNSmKT2DruqYtC2g2jyVFk+sdiyODkJCKT4pxllC8d
-Yamm4YJbdF12RuA6ppmThHy1KPUKlcklxzgWqaPrvJw0P9iCT2Wx1S35BKye+j8umrO+Xw/M
-n7boUW8g6PaziRTVxoI0VpdOoHBdJJVqDTb9cRnQ+ROdlDHjFi+oz7DF5qkdjUreNqefAAsD
-6agbQJ/GgKVAcQAAAAAAAA==
---------------ms000705070205070606000308--
+gmDzkCQwDQYJKoZIhvcNAQEBBQAEggEAo6/oEQY7OTpoV/Ngu/L7rkcWTZC2Hw6yiaHQyw/n
+leT6lXYo4u4eJKTRdbaMS4LjXxvu9ud3kA77bAGGej5XHPR5p5s0NH4xJFpSg+lOms29kmpQ
+3Hq002k5cF9Cz7kAneKXlNuZaujtdpOx+Xg+RwM2d6irRYC7n5/+XBUrEtH4PnCxPtK3yG2E
+nmOiZmi1t8uLM72Qg8HodWssdwUn+PeEZY+wbZoFJrC+clVdMsQdi7fdFLKZQIrp0b+mjfMF
+Tj2eRYY5NZOfqRGcA9hq+Qjlj6w/adobhkGYJ1XQCoAkqkNoE/4kf0L1U4odwSEW62pltpj3
+6Q3XZWf7nG/h5wAAAAAAAA==
+--------------ms050909090000080105070200--
