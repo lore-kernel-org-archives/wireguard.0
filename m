@@ -1,24 +1,21 @@
 Return-Path: vtol@gmx.net
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4ebb8e5a
- for <wireguard@lists.zx2c4.com>; Mon, 7 May 2018 17:40:45 +0000 (UTC)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ed297ff1
+ for <wireguard@lists.zx2c4.com>; Mon, 7 May 2018 22:10:29 +0000 (UTC)
 Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 07ca4891
- for <wireguard@lists.zx2c4.com>; Mon, 7 May 2018 17:40:44 +0000 (UTC)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9abdedac
+ for <wireguard@lists.zx2c4.com>; Mon, 7 May 2018 22:10:29 +0000 (UTC)
 Received: from [192.168.112.193] ([84.46.42.142]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MY3Ho-1el21h3R0S-00UtoC for
- <wireguard@lists.zx2c4.com>; Mon, 07 May 2018 19:43:06 +0200
-Subject: Re: WG endpoint node exit to inet and DNS resolver
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M9wrU-1f9EnE0zkG-00B1aG for
+ <wireguard@lists.zx2c4.com>; Tue, 08 May 2018 00:12:52 +0200
 To: wireguard <wireguard@lists.zx2c4.com>
-References: <c940ea93-e022-27ba-f906-783b0a7d3c1a@gmx.net>
- <CAKXLc7cC7V7z2GTZr4q0rM4Ju8q9e7u50OkNRCbTsoYiaSskhg@mail.gmail.com>
 From: =?UTF-8?B?0b3SieG2rOG4s+KEoA==?= <vtol@gmx.net>
-Message-ID: <82e934fc-39f1-86ba-8fcb-4bf745206cd6@gmx.net>
-Date: Mon, 7 May 2018 19:43:03 +0200
+Subject: Android app
+Message-ID: <03358128-4d1c-d64f-5a90-5a7de94e0309@gmx.net>
+Date: Tue, 8 May 2018 00:12:50 +0200
 MIME-Version: 1.0
-In-Reply-To: <CAKXLc7cC7V7z2GTZr4q0rM4Ju8q9e7u50OkNRCbTsoYiaSskhg@mail.gmail.com>
 Content-Type: multipart/signed; protocol="application/pkcs7-signature";
- micalg=sha-256; boundary="------------ms010905010907040604050907"
+ micalg=sha-256; boundary="------------ms000608020208050203030801"
 Reply-To: vtol@gmx.net
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -31,63 +28,42 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 
 This is a cryptographically signed message in MIME format.
 
---------------ms010905010907040604050907
+--------------ms000608020208050203030801
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
 Content-Language: en-US
 
-
-> There are no "clients inside a WG tunnel", only traffic inside the tunn=
-el :-D
-
-Sure, till the point where you got a VPN inet gateway scenario with a wg =
-
-endpoint node to route other wg peers through to the inet. Most of those =
-
-VPN apps offering these days split DNS such as clients (routed peers) to =
-
-opt for their own DNS resolver or the endpoint node's (gateway) resolver =
-
-or even set a totally different external public upstream resolver (e.g.=20
-such as to be specified in the WG Android app)
-
-> On a standard linux, this is controlled by /etc/resolv.conf whether or
-> not there is VPN.
-> /etc/resolv.conf can be (mis-)managed by dhcp clients and other daemons=
-=2E
-
-Maybe a misunderstanding, it is not about controlling/manipulating a=20
-peer's resolv.conf or the DNS resolver of a peer but rather using it.
-
-> Not sure what you want to do here...=20
-
-A VPN inet gateway (wg endpoint node) to route other wg (remote) peers=20
-through to the inet.
-
-> Assuming your other end of the WG tunnel is say 192.168.120.1, then
-> you should add it as a default gw (and it should route your packets).
-> ip route add default via 192.168.120.1
-> (no need for `dev wg0` at the end I think)
->
-> Kalin.
-
-The gateway on the client side (wg remote peer to be routed to the inet) =
-
-is set to the subnet ip of the server/gateway (wg endpoint node peer=20
-handling the routing) and that is working fine for the subnet machines=20
-on the client side having a route to the gateway. However the route to=20
-the inet is dead ended at endpoint node (gateway).
-
-Default routing on the gateway (endpoint node) is though eth0 via the=20
-IPS's specified gateway, no issues there. Added the IPS's gateway as=20
-route to wg on the gateway but no inet for the routed peers. Perhaps a=20
-ip rule adding a routing table to wg will sort it. The namepsace=20
-solution somehow did not work out.
+4.9.0-6-amd64 #1 SMP Debian 4.9.88-1 as WG endpoint node
+WG 0.0.20180420-1
+DHCP no
+Firewall off (both ends, except unknown for the GSM provider in between)
+wg-quick not utilized
+Android 8.1.0 (security patch level april 2018) not rooted
+kernel 4.4.78
+wg app 0.4.2
 
 
+- establishing a connection is taking a long time > 1 min
+- connection/handshake showing on the debian side but neither peer is=20
+ping-able from the other. there is no indicator on the android end to=20
+determine whether the connection is actually established, at least not=20
+in the wg app.
+- connection still showing in debian=C2=A0 even 10 min after the android =
+peer=20
+disconnected
+- if the android peer fails to connect or the debain wg end shut down=20
+the lock key symbol is showing in the android status bar, somewhat=20
+misleading indicative that there is an actual connection in place whilst =
+
+it is not. slider in the wg app on android remains green colored on the=20
+right hand/edge whether the connection is active or not
+- in debian the port of the android peer is showing a different port=20
+than actually being used by the android app
+- connection state of the android peer showing as close in network tool
+- no connection status information in the android app
 
 
---------------ms010905010907040604050907
+--------------ms000608020208050203030801
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -157,18 +133,18 @@ ZyM2vGBHDlwof12TijG6jTE2FMd6Qp1vIMFsKvgWD2rZAJQyuz1VscXDoQ2xeXdUHeAzgn7u
 6jGCA2UwggNhAgEBMGkwVjELMAkGA1UEBhMCQ0gxFTATBgNVBAoTDFN3aXNzU2lnbiBBRzEw
 MC4GA1UEAxMnU3dpc3NTaWduIFBlcnNvbmFsIFNpbHZlciBDQSAyMDE0IC0gRzIyAg8Cbt2D
 n+cNP4QmgmDzkCQwDQYJYIZIAWUDBAIBBQCgggHNMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0B
-BwEwHAYJKoZIhvcNAQkFMQ8XDTE4MDUwNzE3NDMwM1owLwYJKoZIhvcNAQkEMSIEIHXZGTvE
-xXEbAZyYiGNFhIhfaNsK0UVXW/5bdlMSI+L8MGwGCSqGSIb3DQEJDzFfMF0wCwYJYIZIAWUD
+BwEwHAYJKoZIhvcNAQkFMQ8XDTE4MDUwNzIyMTI1MFowLwYJKoZIhvcNAQkEMSIEIK1+XGHt
+VGEHiW9+ce691k0F8jF4CRvSFdkNakc24L5qMGwGCSqGSIb3DQEJDzFfMF0wCwYJYIZIAWUD
 BAEqMAsGCWCGSAFlAwQBAjAKBggqhkiG9w0DBzAOBggqhkiG9w0DAgICAIAwDQYIKoZIhvcN
 AwICAUAwBwYFKw4DAgcwDQYIKoZIhvcNAwICASgweAYJKwYBBAGCNxAEMWswaTBWMQswCQYD
 VQQGEwJDSDEVMBMGA1UEChMMU3dpc3NTaWduIEFHMTAwLgYDVQQDEydTd2lzc1NpZ24gUGVy
 c29uYWwgU2lsdmVyIENBIDIwMTQgLSBHMjICDwJu3YOf5w0/hCaCYPOQJDB6BgsqhkiG9w0B
 CRACCzFroGkwVjELMAkGA1UEBhMCQ0gxFTATBgNVBAoTDFN3aXNzU2lnbiBBRzEwMC4GA1UE
 AxMnU3dpc3NTaWduIFBlcnNvbmFsIFNpbHZlciBDQSAyMDE0IC0gRzIyAg8Cbt2Dn+cNP4Qm
-gmDzkCQwDQYJKoZIhvcNAQEBBQAEggEAa+5l+MPo+cYSwPvNjZNZLBfUvPghMFBwPmnCycRD
-DsDobabaIaPy3Kz/pokI34ERgHVXTU8CvFfbyzCEzXLuv70fM0Rl0xXoe8D6zfXT55kYnfTR
-onfIr2oQyuZ8pi+CoK2pPT414MjuFUQx4aSXA6vYly/46ObAGOkBA9fs00cPhn4ujJ9rcJXD
-MpMZoHfzoZld35zQVVRiWU1xP3hRWwCET+6ZsSRVBLqQkjOTWiC5g/7FIBDK37oWtdNoQEk/
-IhTLLJ5xtfzfONUhUXSOnIZc8bvGSX/wPB4B3gUsBc338fp6bIK2TO43WiZFraTUE1lldvaW
-QPFnRbYDxelCqwAAAAAAAA==
---------------ms010905010907040604050907--
+gmDzkCQwDQYJKoZIhvcNAQEBBQAEggEAWC/vvmVTgRO6vVlLiGr5udwr3hiioOmD13nGfc0v
+usk4anY8qIGnSq4Cmha3yW2xVaMzFglY1uQcDpQAmxbMyHwV6i6BLGFjejHEKS5q1KhKSvSW
+kmTmfpftkU418z61t7ulbNj/pSfraAQPSCGIeQg9oVUPT1mUSinRXyD3tdQHkR6J+WgGuMC/
+nrfL4I/uAdi8T4RxsCK0PHxy+vOFO++YG0iGPHfe6NQM7Z7Y0h3+eXw6pPvmgQzFtoYFjSd8
+jru3AYzHVUA/nJ5OCta45WVH3aEeueRMZ5OqtbkAGmR7yFTGJAfnU27dEADnl/oJ+43EOmg1
+QvpWDEa9R6l5kAAAAAAAAA==
+--------------ms000608020208050203030801--
