@@ -1,35 +1,22 @@
-Return-Path: matthias@urlichs.de
+Return-Path: vtol@gmx.net
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3c34b684
- for <wireguard@lists.zx2c4.com>; Mon, 7 May 2018 09:36:10 +0000 (UTC)
-Received: from netz.smurf.noris.de (mail.vm.smurf.noris.de
- [IPv6:2001:780:107:8:83::])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 15cea8bd
- for <wireguard@lists.zx2c4.com>; Mon, 7 May 2018 09:36:09 +0000 (UTC)
-Received: from hyper1.noris.net ([62.128.1.62] helo=[10.6.0.3])
- by mail.vm.smurf.noris.de with esmtpsa
- (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim 4.89)
- (envelope-from <matthias@urlichs.de>) id 1fFcaM-000JYL-2m
- for wireguard@lists.zx2c4.com; Mon, 07 May 2018 11:37:34 +0200
-Subject: Re: WG interface to ipv4
-To: wireguard@lists.zx2c4.com
-References: <73430f93-d7fa-777b-df24-ef4cb0021f0b@gmx.net>
- <CAHmME9q3YF87P9u3WXuXPU9nUZtXPWmRS0raw_8p6Gy-CghJdg@mail.gmail.com>
- <493b3bdf-3cf0-5594-dd7e-4b9c8d84e74c@gmx.net>
- <CAHmME9r5cwdfDaHCbO50UhREG9z2zv39y+32YYwAYJEfsGDgVA@mail.gmail.com>
- <ad56c93f-5e36-e9a4-42c2-8632c7df86af@gmx.net>
- <4ZK0EJ5btb88Qoa6vz0bpYJHCbhF7h4Z-BBh0ARD4tdwxcwcmdGeUPFuiPrGcdTNmp8Q8p6t4c4vMo7vKwnEIrXdVe56ovqOhiBXi4PdPxs=@protonmail.ch>
- <825a636f-9311-688d-6f30-9ae8d12ea44a@gmx.net> <874ljk24jh.fsf@toke.dk>
- <6c7b92f1-bf66-811a-e571-9ea9b891b55d@gmx.net>
- <1uNBxmuVD4KO09MZhPvQ1xzIIpYoI-Z0AcrIP2sy2mGbSoPeWeUXq74U3YDaaJi1QmtPgujzFL6I6YDfZtJ1DGX-Dcy4qinOBT8R518GbIo=@protonmail.ch>
-From: Matthias Urlichs <matthias@urlichs.de>
-Message-ID: <715f859b-940e-a20d-5569-d24539595706@urlichs.de>
-Date: Mon, 7 May 2018 11:37:25 +0200
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3393f990
+ for <wireguard@lists.zx2c4.com>; Mon, 7 May 2018 11:18:59 +0000 (UTC)
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b730df87
+ for <wireguard@lists.zx2c4.com>; Mon, 7 May 2018 11:18:58 +0000 (UTC)
+Received: from [192.168.112.193] ([149.233.207.110]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MXq3L-1emmoU3ryp-00WpjI
+ for <wireguard@lists.zx2c4.com>; Mon, 07 May 2018 13:21:18 +0200
+To: wireguard <wireguard@lists.zx2c4.com>
+From: =?UTF-8?B?0b3SieG2rOG4s+KEoA==?= <vtol@gmx.net>
+Subject: WG endpoint node exit to inet and DNS resolver
+Message-ID: <c940ea93-e022-27ba-f906-783b0a7d3c1a@gmx.net>
+Date: Mon, 7 May 2018 13:21:17 +0200
 MIME-Version: 1.0
-In-Reply-To: <1uNBxmuVD4KO09MZhPvQ1xzIIpYoI-Z0AcrIP2sy2mGbSoPeWeUXq74U3YDaaJi1QmtPgujzFL6I6YDfZtJ1DGX-Dcy4qinOBT8R518GbIo=@protonmail.ch>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="Sgf03qela20T1oQ5vK3QZkZ5rXOfh0xhb"
+Content-Type: multipart/signed; protocol="application/pkcs7-signature";
+ micalg=sha-256; boundary="------------ms050205050008030504080801"
+Reply-To: vtol <vtol@gmx.net>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -39,72 +26,116 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---Sgf03qela20T1oQ5vK3QZkZ5rXOfh0xhb
-Content-Type: multipart/mixed; boundary="7vyb9cQPxAthDUzpajkkPjl7SAxlZmZg5";
- protected-headers="v1"
-From: Matthias Urlichs <matthias@urlichs.de>
-To: wireguard@lists.zx2c4.com
-Message-ID: <715f859b-940e-a20d-5569-d24539595706@urlichs.de>
-Subject: Re: WG interface to ipv4
-References: <73430f93-d7fa-777b-df24-ef4cb0021f0b@gmx.net>
- <CAHmME9q3YF87P9u3WXuXPU9nUZtXPWmRS0raw_8p6Gy-CghJdg@mail.gmail.com>
- <493b3bdf-3cf0-5594-dd7e-4b9c8d84e74c@gmx.net>
- <CAHmME9r5cwdfDaHCbO50UhREG9z2zv39y+32YYwAYJEfsGDgVA@mail.gmail.com>
- <ad56c93f-5e36-e9a4-42c2-8632c7df86af@gmx.net>
- <4ZK0EJ5btb88Qoa6vz0bpYJHCbhF7h4Z-BBh0ARD4tdwxcwcmdGeUPFuiPrGcdTNmp8Q8p6t4c4vMo7vKwnEIrXdVe56ovqOhiBXi4PdPxs=@protonmail.ch>
- <825a636f-9311-688d-6f30-9ae8d12ea44a@gmx.net> <874ljk24jh.fsf@toke.dk>
- <6c7b92f1-bf66-811a-e571-9ea9b891b55d@gmx.net>
- <1uNBxmuVD4KO09MZhPvQ1xzIIpYoI-Z0AcrIP2sy2mGbSoPeWeUXq74U3YDaaJi1QmtPgujzFL6I6YDfZtJ1DGX-Dcy4qinOBT8R518GbIo=@protonmail.ch>
-In-Reply-To: <1uNBxmuVD4KO09MZhPvQ1xzIIpYoI-Z0AcrIP2sy2mGbSoPeWeUXq74U3YDaaJi1QmtPgujzFL6I6YDfZtJ1DGX-Dcy4qinOBT8R518GbIo=@protonmail.ch>
+This is a cryptographically signed message in MIME format.
 
---7vyb9cQPxAthDUzpajkkPjl7SAxlZmZg5
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Content-Language: de-CH
+--------------ms050205050008030504080801
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: base64
+Content-Language: en-US
 
-On 07.05.2018 10:41, Jordan Glover wrote:
-> Pointing to go and rust implementations which are being
-> worked on will be much better.
-They still run in userspace.
+NC45LjAtNi1hbWQ2NCAjMSBTTVAgRGViaWFuIDQuOS44OC0xIGFzIFdHIGVuZHBvaW50IG5v
+ZGUNCldHIDAuMC4yMDE4MDQyMC0xDQpESENQIG5vDQpGaXJld2FsbCBvZmYgKGJvdGggc2Vy
+dmVyIGFuZCBjbGllbnQpDQp3Zy1xdWljayBub3QgdXRpbGl6ZWQNCg0KV2hpY2ggRE5TIHJl
+c29sdmVyIGlzIHV0aWxpemVkIGJ5IHRoZSBjbGllbnRzIGluc2lkZSBhIFdHIHR1bm5lbCwg
+dGhlIA0KY2xpZW50J3MgcmVzb2x2ZXIgb3IgdGhlIHNlcnZlcidzPyBBbmQgY2FuIHRoaXMg
+YmUgdHdlYWtlZCBpbiBXRz8NCg0KLS0tDQoNCkNsaWVudHMgYXJlIGNvbm5lY3RpbmcgdG8g
+dGhlIGVuZHBvaW50IG5vZGUgYW5kIHN1Ym5ldHMgZWFjaCBlbmQgYXJlIA0KcmVhY2hhYmxl
+IHRocm91Z2ggdGhlIHR1bm5lbC4gVGhlIHRyYWZmaWMgdG8gdGhlIGluZXQgZnJvbSB0aGUg
+V0cgDQpob3dldmVyIGlzIG5vdCBlc2NhcGluZyB2aWEgdGhlIHNlcnZlcidzIGRlZmF1bHQg
+cm91dGUuIEFkZGVkIHRoZSBJUFMncyANCmdhdGV3YXkgbm9kZSAoODEueC54LngpIHRvIHRo
+ZSBXRyBpZmFjZSBidXQgdGhhdCBkaWQgbm90IHByb3ZpZGUgaW5ldCANCmNvbm5lY3Rpb24g
+Zm9yIHRoZSBjb25uZWN0ZWQgY2xpZW50cy4NCg0KS2VybmVsIElQIHJvdXRpbmcgdGFibGUN
+CkRlc3RpbmF0aW9uwqDCoMKgwqAgR2F0ZXdhecKgwqDCoMKgwqDCoMKgwqAgR2VubWFza8Kg
+wqDCoMKgwqDCoMKgwqAgRmxhZ3MgTWV0cmljIFJlZsKgwqDCoCBVc2UgDQpJZmFjZQ0KMC4w
+LjAuMMKgwqDCoMKgwqDCoMKgwqAgODEueC54LnggwqDCoCAwLjAuMC4wwqDCoMKgwqDCoMKg
+wqDCoCBVR8KgwqDCoCAwwqDCoMKgwqDCoCAwIDAgZXRoMA0KODEueC54LnggwqDCoCAwLjAu
+MC4wwqDCoMKgwqDCoMKgwqDCoCAyNTUuMjU1LjI1NS4yNTUgVUjCoMKgwqAgMMKgwqDCoMKg
+wqAgMCAwIHdnMA0KMTkyLjE2OC4xMjAuMMKgwqAgMC4wLjAuMMKgwqDCoMKgwqDCoMKgwqAg
+MjU1LjI1NS4yNTUuMMKgwqAgVcKgwqDCoMKgIDAgMMKgwqDCoMKgwqDCoMKgIDAgd2cwDQoN
+Cg0KDQoNCg==
 
-That being said, I still don't see any reason for doing something in WG
-for which (a) there's no threat model, (b) a perfectly adequate and
-well-tested solution already exists, no matter whether the
-implementation is userspace, kernelspace, or inside a network card's
-firmware (well =E2=80=A6).
+--------------ms050205050008030504080801
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Description: S/MIME Cryptographic Signature
 
-Yes, ssh has a config option for that, but ssh runs on systems without
-kernel-level IP filters. Using WG on a machine that will forward IP
-packets but cannot do any firewalling is not a credible use case.
-
---=20
--- Matthias Urlichs
-
-
-
---7vyb9cQPxAthDUzpajkkPjl7SAxlZmZg5--
-
---Sgf03qela20T1oQ5vK3QZkZ5rXOfh0xhb
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEe156i1ZztbbthlARBsCEUtiHyJYFAlrwHlYACgkQBsCEUtiH
-yJbrZQ/9HGa5qOCbBJT4YIpvmHpgcjZbHLKSmh7u9TngtUX3wThltcNLvRdzC3fg
-ep5qyY5VPAGtSpyTTgWUqZ9ZbEQJZt60cJQLh8NXIIrsZA6s+i67BxbL6By46OKg
-dqb7qXvRneKlJv2OiBNaivSa1R60MI2QyuZD14tfg4tdXt4l2X0DObe1fGUAkuqO
-c37sHNB9SzuRISqDA9+upqRP9TQTLUtng93prPERgozyMap+EVQ9mALKr31U6zHE
-DDcIYitwPjbfTNdZQ4TQ5xnxzfOkwEJ5mRTU5Dc4BuHVgslSgJTWmG+DnnHtkNYE
-f7Q7Akngy42m0RIfVnWvAoQqI8/VQa7JtIJslY6nEh7M2vnM1JWaKZVCYWSAAHLJ
-Wle+B1t9IBNrGIQBYnJ9FF643KCpSgO8eb+/RT5LkU9t10E5+auwWqkpTkb5cyEN
-su9s2JmLlNyh2Ioj4i3rP8wP+CK81HX1Bt6oKkcGbjFkiFHj0hTBT0jW1Ny62aJ3
-I0WcSNwM4dnAMsjtkLPXGWtP2wzkR0vHKPKUSF4ypNHIB8Gt4uxlK+zIwJnDGzPs
-MNRwrF+1Fu5uEKJUyeKbrMSMIYL5V2c7uOKh3x7OQKbVFK7sXsGe31Wo+4mP8kpV
-h/Cidl8Flb5xi333LBUJYuMjJk95gAcai+EGdCJdizjo2ei3vZ0=
-=i12/
------END PGP SIGNATURE-----
-
---Sgf03qela20T1oQ5vK3QZkZ5rXOfh0xhb--
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCC
+DKcwggXhMIIEyaADAgECAg8Cbt2Dn+cNP4QmgmDzkCQwDQYJKoZIhvcNAQELBQAwVjELMAkG
+A1UEBhMCQ0gxFTATBgNVBAoTDFN3aXNzU2lnbiBBRzEwMC4GA1UEAxMnU3dpc3NTaWduIFBl
+cnNvbmFsIFNpbHZlciBDQSAyMDE0IC0gRzIyMB4XDTE1MDcyODEzMTI0MVoXDTIwMDcyODEz
+MTI0MVowPTEdMBsGA1UECxMURW1haWwgVmFsaWRhdGVkIE9ubHkxHDAaBgNVBAMUE0VtYWls
+OiB2dG9sQGdteC5uZXQwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC5ASUjAK09
+ZNNidaYU+dqDFt9qDwYvCxByPGry3JbqFQBBWqTTEsHvzT+lnqGHqq+orjCtHqylQldPkDjo
+cplXz6cbsw4j8YHQXcMT5V9rEyFuq+doP6eOfsvwwXGR45Iuly9Aho4RGjfh80O0CPMCdP39
+yceF+dqVN1AQSElweHQUU49IY1IyZXQjoXaP8Qr2/6BlAEAT3XDZqeDwYKGUWWbVSdEhZKwG
+p0YyQrazaNMsC5BYFMW/rvzzw1Wa4ByoDgzjjLmr9ydW6oQeuYpCStjZzqlcRFCVCNXDAuyU
+EBYd5P16ESG4VhpQ8Mz9GVqNUZYw+zvZ3Js8KOd+wh+7AgMBAAGjggLDMIICvzAOBgNVHQ8B
+Af8EBAMCBLAwEwYDVR0lBAwwCgYIKwYBBQUHAwQwHQYDVR0OBBYEFHNiDG+WSt7wCElvgksu
+82Yv88f4MB8GA1UdIwQYMBaAFPDHozKRtevKtVh3FadOvhpdYUMlMIH/BgNVHR8EgfcwgfQw
+R6BFoEOGQWh0dHA6Ly9jcmwuc3dpc3NzaWduLm5ldC9GMEM3QTMzMjkxQjVFQkNBQjU1ODc3
+MTVBNzRFQkUxQTVENjE0MzI1MIGooIGloIGihoGfbGRhcDovL2RpcmVjdG9yeS5zd2lzc3Np
+Z24ubmV0L0NOPUYwQzdBMzMyOTFCNUVCQ0FCNTU4NzcxNUE3NEVCRTFBNUQ2MTQzMjUlMkNP
+PVN3aXNzU2lnbiUyQ0M9Q0g/Y2VydGlmaWNhdGVSZXZvY2F0aW9uTGlzdD9iYXNlP29iamVj
+dENsYXNzPWNSTERpc3RyaWJ1dGlvblBvaW50MGEGA1UdIARaMFgwVgYJYIV0AVkBAwEGMEkw
+RwYIKwYBBQUHAgEWO2h0dHA6Ly9yZXBvc2l0b3J5LnN3aXNzc2lnbi5jb20vU3dpc3NTaWdu
+LVNpbHZlci1DUC1DUFMucGRmMIHZBggrBgEFBQcBAQSBzDCByTBkBggrBgEFBQcwAoZYaHR0
+cDovL3N3aXNzc2lnbi5uZXQvY2dpLWJpbi9hdXRob3JpdHkvZG93bmxvYWQvRjBDN0EzMzI5
+MUI1RUJDQUI1NTg3NzE1QTc0RUJFMUE1RDYxNDMyNTBhBggrBgEFBQcwAYZVaHR0cDovL3Np
+bHZlci1wZXJzb25hbC1nMi5vY3NwLnN3aXNzc2lnbi5uZXQvRjBDN0EzMzI5MUI1RUJDQUI1
+NTg3NzE1QTc0RUJFMUE1RDYxNDMyNTAXBgNVHREEEDAOgQx2dG9sQGdteC5uZXQwDQYJKoZI
+hvcNAQELBQADggEBAAbOyN+VjfLdPkM7pWiiy0r2Zw0FqfJ0Mh0plsc9LHL/aF1Yaru+Ku7N
+DhCnT53sfgM4yqpczWq9M3ZqdV9QO6kWf2xuRqzgmeRYOaMq82zkKNdowVavWK5NnktRTmsk
+PT46eGpu46y0fq0xuogA01ji4RaIkNBx+dLAS24mfDDBwmJv64ge9Zw6cnz1Ov09jrDyH+ig
+VjcxHia5u3LKcRWvymIGY9NByDJouCbSFMYPZMzWtRvwG/myp0HmaQ+dlFPcGOTpNebyNiTr
+hl2IPEUrWC4JqJon4+H2WnQhmViJP43AZtSZY3OvU1Ya/KdMP7Hn2ctdbbO/vNuqN0v9avIw
+gga+MIIEpqADAgECAg8FRNZOrR7TNtUyQF0AuTYwDQYJKoZIhvcNAQELBQAwRzELMAkGA1UE
+BhMCQ0gxFTATBgNVBAoTDFN3aXNzU2lnbiBBRzEhMB8GA1UEAxMYU3dpc3NTaWduIFNpbHZl
+ciBDQSAtIEcyMB4XDTE0MDkxOTIwMzY0OVoXDTI5MDkxNTIwMzY0OVowVjELMAkGA1UEBhMC
+Q0gxFTATBgNVBAoTDFN3aXNzU2lnbiBBRzEwMC4GA1UEAxMnU3dpc3NTaWduIFBlcnNvbmFs
+IFNpbHZlciBDQSAyMDE0IC0gRzIyMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA
+yzmxOYX++smhvMODqQ5KLYRyHv9oxafEHewP16iLEx6z0RaLQNwPU28BPezoZLWX24O8qKjA
+hDhYXgMUK+bKMO8AsusTORmSRyohAOVyzcIxYg7MVir/d8RjjJjCb3jXtbbM6X0fM6aRBSr+
+0VLW9Oyc/k1MalLhhXZiu7lo5lJj/MEhkZJdGdjcgNEZ40kWVwIOGUSFqynJL/rGbWsKofb3
+/2thNRUmlJQCaSVdafe9XmuC2ZAMBvlDBSJJ6zbQIFpjEOM4IdV/FitBikZ68mfopNC6Hn8k
+J3WYlEktVsRUM5GdYvnVX95bqRWYnJRTwYDpCRcVtBuAKTKh0K8TpwIDAQABo4ICljCCApIw
+DgYDVR0PAQH/BAQDAgEGMBIGA1UdEwEB/wQIMAYBAf8CAQAwHQYDVR0OBBYEFPDHozKRtevK
+tVh3FadOvhpdYUMlMB8GA1UdIwQYMBaAFBegzcHkQbY6WzvLRZ29HMKY+oZYMIH/BgNVHR8E
+gfcwgfQwR6BFoEOGQWh0dHA6Ly9jcmwuc3dpc3NzaWduLm5ldC8xN0EwQ0RDMUU0NDFCNjNB
+NUIzQkNCNDU5REJEMUNDMjk4RkE4NjU4MIGooIGloIGihoGfbGRhcDovL2RpcmVjdG9yeS5z
+d2lzc3NpZ24ubmV0L0NOPTE3QTBDREMxRTQ0MUI2M0E1QjNCQ0I0NTlEQkQxQ0MyOThGQTg2
+NTglMkNPPVN3aXNzU2lnbiUyQ0M9Q0g/Y2VydGlmaWNhdGVSZXZvY2F0aW9uTGlzdD9iYXNl
+P29iamVjdENsYXNzPWNSTERpc3RyaWJ1dGlvblBvaW50MGEGA1UdIARaMFgwVgYJYIV0AVkB
+AwEGMEkwRwYIKwYBBQUHAgEWO2h0dHA6Ly9yZXBvc2l0b3J5LnN3aXNzc2lnbi5jb20vU3dp
+c3NTaWduLVNpbHZlci1DUC1DUFMucGRmMIHGBggrBgEFBQcBAQSBuTCBtjBkBggrBgEFBQcw
+AoZYaHR0cDovL3N3aXNzc2lnbi5uZXQvY2dpLWJpbi9hdXRob3JpdHkvZG93bmxvYWQvMTdB
+MENEQzFFNDQxQjYzQTVCM0JDQjQ1OURCRDFDQzI5OEZBODY1ODBOBggrBgEFBQcwAYZCaHR0
+cDovL29jc3Auc3dpc3NzaWduLm5ldC8xN0EwQ0RDMUU0NDFCNjNBNUIzQkNCNDU5REJEMUND
+Mjk4RkE4NjU4MA0GCSqGSIb3DQEBCwUAA4ICAQDDeadXt3utUWj1RIxBlSgBfHTWO2q8be+n
+1005mR1ojcoI2dBxsRk1k2+CxhxJuFHuTPlsCm/Ypfv++zBeANKUq8QSUbqqiqtq3RnXK0r3
+FrJrUc90Wymic96X/thPICF9aQywUOWNWIyALuUXHN1jeqrvBfnDaZ7kjHFiXELuOvLN4BLv
+i1zpzlMoMuyVCxlUoiGN+n9Qp0+8GXuya4wpP3c+yiPHaVpBnX1mMW96cXnaqWU663/XENUL
+X1QZfM43JSSEUNCvQDTCX5LiepHzL0JHG588QvvZX6W8cEWO76A5kPWheGzXwGdZGeEA3lz8
+eOhP3buskS5yi/zqR29DKLy7uY6UvvpQ3VCTG0wYtnb/w0cKWbTNbVXYarZfyS/BlDY+vq5A
+NQYg7eACTC00RQ5Dr6L02JAV5dDAm0RArjyPk1G8mWhzaXt1WJm31ARP3/GCcREde/wTHXdl
+VWPXUnJ83TFHhqeV2KwmcT0j5hI79H+alob+K+qg8yYNdcYWjDEg5xFHoeeparClsoEe3D3Q
+oeNu1fBmphx915KITQAHC3Hnc+dz5FRlafw3jfEeb3Dup2yzUkVnWdYFSLEh6Zco2dn0tKag
+ZyM2vGBHDlwof12TijG6jTE2FMd6Qp1vIMFsKvgWD2rZAJQyuz1VscXDoQ2xeXdUHeAzgn7u
+6jGCA2UwggNhAgEBMGkwVjELMAkGA1UEBhMCQ0gxFTATBgNVBAoTDFN3aXNzU2lnbiBBRzEw
+MC4GA1UEAxMnU3dpc3NTaWduIFBlcnNvbmFsIFNpbHZlciBDQSAyMDE0IC0gRzIyAg8Cbt2D
+n+cNP4QmgmDzkCQwDQYJYIZIAWUDBAIBBQCgggHNMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0B
+BwEwHAYJKoZIhvcNAQkFMQ8XDTE4MDUwNzExMjExN1owLwYJKoZIhvcNAQkEMSIEINtlBhuN
+b+Ki5S2e7Fo2Kgwfi3K+/oAyjoZj0OpgTZwnMGwGCSqGSIb3DQEJDzFfMF0wCwYJYIZIAWUD
+BAEqMAsGCWCGSAFlAwQBAjAKBggqhkiG9w0DBzAOBggqhkiG9w0DAgICAIAwDQYIKoZIhvcN
+AwICAUAwBwYFKw4DAgcwDQYIKoZIhvcNAwICASgweAYJKwYBBAGCNxAEMWswaTBWMQswCQYD
+VQQGEwJDSDEVMBMGA1UEChMMU3dpc3NTaWduIEFHMTAwLgYDVQQDEydTd2lzc1NpZ24gUGVy
+c29uYWwgU2lsdmVyIENBIDIwMTQgLSBHMjICDwJu3YOf5w0/hCaCYPOQJDB6BgsqhkiG9w0B
+CRACCzFroGkwVjELMAkGA1UEBhMCQ0gxFTATBgNVBAoTDFN3aXNzU2lnbiBBRzEwMC4GA1UE
+AxMnU3dpc3NTaWduIFBlcnNvbmFsIFNpbHZlciBDQSAyMDE0IC0gRzIyAg8Cbt2Dn+cNP4Qm
+gmDzkCQwDQYJKoZIhvcNAQEBBQAEggEAVRGgF6YAoKOeh2oF95KReW2FEw3AULgDWWm1hP4g
+5dmnrD6MTYNapxJnUsglZb3VZsHDtnHfCinxZ6zVJaqSEquyf+8XABA9G/fa+q26J1G1Ghvq
+xzeW8bFVII+z9sYiVzRTrdPV1Qp3a47LT/aEvwHN+uIMMHGchPiIUOLVMUHike+cTGKX9YKw
+phFyXYb+KxNpnaJzWzp3R1aR+EBaXlx0GnUS2afLhONdxSmvfALqLZ09p4A691grN0dCkxkB
+5Shw+tPjqOgKMt/xbNMjY/NstH3Xqa2fvKUolw6hNpgxQ+nCnEwhfPv/peZQch3fvBMSMpcN
+xLOamCrJVhe8GwAAAAAAAA==
+--------------ms050205050008030504080801--
