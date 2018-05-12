@@ -1,14 +1,29 @@
-Return-Path: me@tombowdit.ch
+Return-Path: mail@53c70r.de
+Received: from krantz.zx2c4.com (localhost [127.0.0.1])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f67c8aa5
+ for <wireguard@lists.zx2c4.com>;
+ Sat, 12 May 2018 10:34:21 +0000 (UTC)
+Received: from mx1.mailbox.org (mx1.mailbox.org [80.241.60.212])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e3eba6d8
+ for <wireguard@lists.zx2c4.com>;
+ Sat, 12 May 2018 10:34:21 +0000 (UTC)
+Received: from smtp2.mailbox.org (smtp2.mailbox.org [80.241.60.241])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mx1.mailbox.org (Postfix) with ESMTPS id 73E024446E
+ for <wireguard@lists.zx2c4.com>; Sat, 12 May 2018 12:37:18 +0200 (CEST)
+Received: from smtp2.mailbox.org ([80.241.60.241])
+ by hefe.heinlein-support.de (hefe.heinlein-support.de [91.198.250.172])
+ (amavisd-new, port 10030)
+ with ESMTP id KLeRhKO1aWYi for <wireguard@lists.zx2c4.com>;
+ Sat, 12 May 2018 12:37:17 +0200 (CEST)
+To: wireguard@lists.zx2c4.com
+From: Silvan Nagl <mail@53c70r.de>
+Subject: Android Wireguard Unhandled Exception
+Message-ID: <e9550c58-81cd-f3f9-1549-8767c79d3be0@53c70r.de>
+Date: Sat, 12 May 2018 12:37:15 +0200
 MIME-Version: 1.0
-References: <4f19d150-ac6a-4996-a720-22fc5b04f160@email.android.com>
-In-Reply-To: <4f19d150-ac6a-4996-a720-22fc5b04f160@email.android.com>
-From: Tommy Bowditch <me@tombowdit.ch>
-Date: Sat, 12 May 2018 10:50:15 +0100
-Message-ID: <CAEm-Zo4iiT7ZSVPCXSRwbE8s4hPzKDFYsDmny7rAQJd5TK25vA@mail.gmail.com>
-Subject: Re: Delete me
-To: mrhat@cock.li
-Content-Type: multipart/alternative; boundary="000000000000a204f9056bff2eb9"
-Cc: WireGuard@lists.zx2c4.com
+Content-Type: multipart/mixed; boundary="------------DF45EBEF4BDECAD72F03F0F5"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -18,41 +33,120 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---000000000000a204f9056bff2eb9
-Content-Type: text/plain; charset="UTF-8"
+This is a multi-part message in MIME format.
+--------------DF45EBEF4BDECAD72F03F0F5
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 
-You can unsubscribe here: https://lists.zx2c4.com/mailman/listinfo/wireguard
+Hello,
 
-T
+herewith I want to announce a bug regarding to Androids Wireguard app.
+The bug occurs when trying to start the app while the phone is still in
+"lockdown mode". The lockdown mode was activated by my previous
+l2tp/ipsec setup which was enforcing the VPN to be always activated. So
+when I tried to start the Wireguard app the program crashed unhandled.
+After I turned of the previous VPN setup it worked like expected.
 
-On Sat, May 12, 2018 at 10:27 AM Giuseppe Piscitelli <mrhat@cock.li> wrote:
+Greetings
 
-> Please, delete my email address from your mailing list.
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
->
+Silvan
 
---000000000000a204f9056bff2eb9
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">You can unsubscribe here:=C2=A0<a href=3D"https://lists.zx=
-2c4.com/mailman/listinfo/wireguard">https://lists.zx2c4.com/mailman/listinf=
-o/wireguard</a><div><br></div><div>T</div></div><br><div class=3D"gmail_quo=
-te"><div dir=3D"ltr">On Sat, May 12, 2018 at 10:27 AM Giuseppe Piscitelli &=
-lt;<a href=3D"mailto:mrhat@cock.li">mrhat@cock.li</a>&gt; wrote:<br></div><=
-blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px=
- #ccc solid;padding-left:1ex"><div dir=3D"auto">Please, delete my email add=
-ress from your mailing list.</div>_________________________________________=
-______<br>
-WireGuard mailing list<br>
-<a href=3D"mailto:WireGuard@lists.zx2c4.com" target=3D"_blank">WireGuard@li=
-sts.zx2c4.com</a><br>
-<a href=3D"https://lists.zx2c4.com/mailman/listinfo/wireguard" rel=3D"noref=
-errer" target=3D"_blank">https://lists.zx2c4.com/mailman/listinfo/wireguard=
-</a><br>
-</blockquote></div>
+--------------DF45EBEF4BDECAD72F03F0F5
+Content-Type: text/plain; charset=UTF-8;
+ name="log"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+ filename="log"
 
---000000000000a204f9056bff2eb9--
+MDUtMTAgMTI6MzU6MzcuNDQ4ICA1MjU5IDEyMDQ0IEkgQWN0aXZpdHlNYW5hZ2VyOiBTVEFS
+VCB1MCB7YWN0PWFuZHJvaWQuaW50ZW50LmFjdGlvbi5NQUlOIGNhdD1bYW5kcm9pZC5pbnRl
+bnQuY2F0ZWdvcnkuTEFVTkNIRVJdIGZsZz0weDEwMjAwMDAwIGNtcD1jb20ud2lyZWd1YXJk
+LmFuZHJvaWQvLmFjdGl2aXR5Lk1haW5BY3Rpdml0eSBibmRzPVszMDcsMjE0OF1bNTgyLDI1
+NjBdfSBmcm9tIHVpZCAxMDAyNgowNS0xMCAxMjozNTozNy41MDYgIDUyNTkgMTIwNDQgSSBB
+Y3Rpdml0eU1hbmFnZXI6IFN0YXJ0IHByb2MgMjg4NDU6Y29tLndpcmVndWFyZC5hbmRyb2lk
+L3UwYTc3IGZvciBhY3Rpdml0eSBjb20ud2lyZWd1YXJkLmFuZHJvaWQvLmFjdGl2aXR5Lk1h
+aW5BY3Rpdml0eQowNS0xMCAxMjozNTozNy41OTAgIDMwMzcgIDM2NTkgRSBCdWZmZXJRdWV1
+ZVByb2R1Y2VyOiBbb3JnLmxpbmVhZ2Vvcy50cmVidWNoZXQvY29tLmFuZHJvaWQubGF1bmNo
+ZXIzLkxhdW5jaGVyIzBdIGRpc2Nvbm5lY3Q6IG5vdCBjb25uZWN0ZWQgKHJlcT0xKQowNS0x
+MCAxMjozNTozNy41OTEgIDU5OTQgIDYwNzkgVyBsaWJFR0wgIDogRUdMTmF0aXZlV2luZG93
+VHlwZSAweDdkM2IwOWEwMTAgZGlzY29ubmVjdCBmYWlsZWQKMDUtMTAgMTI6MzU6MzcuNjcw
+IDI4ODQ1IDI4ODQ1IEQgQW5kcm9pZFJ1bnRpbWU6IFNodXR0aW5nIGRvd24gVk0KMDUtMTAg
+MTI6MzU6MzcuNjcxIDI4ODQ1IDI4ODQ1IEUgQW5kcm9pZFJ1bnRpbWU6IEZBVEFMIEVYQ0VQ
+VElPTjogbWFpbgowNS0xMCAxMjozNTozNy42NzEgMjg4NDUgMjg4NDUgRSBBbmRyb2lkUnVu
+dGltZTogUHJvY2VzczogY29tLndpcmVndWFyZC5hbmRyb2lkLCBQSUQ6IDI4ODQ1CjA1LTEw
+IDEyOjM1OjM3LjY3MSAyODg0NSAyODg0NSBFIEFuZHJvaWRSdW50aW1lOiBqYXZhLmxhbmcu
+UnVudGltZUV4Y2VwdGlvbjogVW5hYmxlIHRvIHN0YXJ0IGFjdGl2aXR5IENvbXBvbmVudElu
+Zm97Y29tLndpcmVndWFyZC5hbmRyb2lkL2NvbS53aXJlZ3VhcmQuYW5kcm9pZC5hY3Rpdml0
+eS5NYWluQWN0aXZpdHl9OiBqYXZhLmxhbmcuSWxsZWdhbFN0YXRlRXhjZXB0aW9uOiBVbmF2
+YWlsYWJsZSBpbiBsb2NrZG93biBtb2RlCjA1LTEwIDEyOjM1OjM3LjY3MSAyODg0NSAyODg0
+NSBFIEFuZHJvaWRSdW50aW1lOiAJYXQgYW5kcm9pZC5hcHAuQWN0aXZpdHlUaHJlYWQucGVy
+Zm9ybUxhdW5jaEFjdGl2aXR5KEFjdGl2aXR5VGhyZWFkLmphdmE6MjgxNykKMDUtMTAgMTI6
+MzU6MzcuNjcxIDI4ODQ1IDI4ODQ1IEUgQW5kcm9pZFJ1bnRpbWU6IAlhdCBhbmRyb2lkLmFw
+cC5BY3Rpdml0eVRocmVhZC5oYW5kbGVMYXVuY2hBY3Rpdml0eShBY3Rpdml0eVRocmVhZC5q
+YXZhOjI4OTIpCjA1LTEwIDEyOjM1OjM3LjY3MSAyODg0NSAyODg0NSBFIEFuZHJvaWRSdW50
+aW1lOiAJYXQgYW5kcm9pZC5hcHAuQWN0aXZpdHlUaHJlYWQuLXdyYXAxMShVbmtub3duIFNv
+dXJjZTowKQowNS0xMCAxMjozNTozNy42NzEgMjg4NDUgMjg4NDUgRSBBbmRyb2lkUnVudGlt
+ZTogCWF0IGFuZHJvaWQuYXBwLkFjdGl2aXR5VGhyZWFkJEguaGFuZGxlTWVzc2FnZShBY3Rp
+dml0eVRocmVhZC5qYXZhOjE1OTMpCjA1LTEwIDEyOjM1OjM3LjY3MSAyODg0NSAyODg0NSBF
+IEFuZHJvaWRSdW50aW1lOiAJYXQgYW5kcm9pZC5vcy5IYW5kbGVyLmRpc3BhdGNoTWVzc2Fn
+ZShIYW5kbGVyLmphdmE6MTA1KQowNS0xMCAxMjozNTozNy42NzEgMjg4NDUgMjg4NDUgRSBB
+bmRyb2lkUnVudGltZTogCWF0IGFuZHJvaWQub3MuTG9vcGVyLmxvb3AoTG9vcGVyLmphdmE6
+MTY0KQowNS0xMCAxMjozNTozNy42NzEgMjg4NDUgMjg4NDUgRSBBbmRyb2lkUnVudGltZTog
+CWF0IGFuZHJvaWQuYXBwLkFjdGl2aXR5VGhyZWFkLm1haW4oQWN0aXZpdHlUaHJlYWQuamF2
+YTo2NTQxKQowNS0xMCAxMjozNTozNy42NzEgMjg4NDUgMjg4NDUgRSBBbmRyb2lkUnVudGlt
+ZTogCWF0IGphdmEubGFuZy5yZWZsZWN0Lk1ldGhvZC5pbnZva2UoTmF0aXZlIE1ldGhvZCkK
+MDUtMTAgMTI6MzU6MzcuNjcxIDI4ODQ1IDI4ODQ1IEUgQW5kcm9pZFJ1bnRpbWU6IAlhdCBj
+b20uYW5kcm9pZC5pbnRlcm5hbC5vcy5aeWdvdGUkTWV0aG9kQW5kQXJnc0NhbGxlci5ydW4o
+Wnlnb3RlLmphdmE6MjQwKQowNS0xMCAxMjozNTozNy42NzEgMjg4NDUgMjg4NDUgRSBBbmRy
+b2lkUnVudGltZTogCWF0IGNvbS5hbmRyb2lkLmludGVybmFsLm9zLlp5Z290ZUluaXQubWFp
+bihaeWdvdGVJbml0LmphdmE6NzY3KQowNS0xMCAxMjozNTozNy42NzEgMjg4NDUgMjg4NDUg
+RSBBbmRyb2lkUnVudGltZTogQ2F1c2VkIGJ5OiBqYXZhLmxhbmcuSWxsZWdhbFN0YXRlRXhj
+ZXB0aW9uOiBVbmF2YWlsYWJsZSBpbiBsb2NrZG93biBtb2RlCjA1LTEwIDEyOjM1OjM3LjY3
+MSAyODg0NSAyODg0NSBFIEFuZHJvaWRSdW50aW1lOiAJYXQgYW5kcm9pZC5vcy5QYXJjZWwu
+cmVhZEV4Y2VwdGlvbihQYXJjZWwuamF2YToxOTUwKQowNS0xMCAxMjozNTozNy42NzEgMjg4
+NDUgMjg4NDUgRSBBbmRyb2lkUnVudGltZTogCWF0IGFuZHJvaWQub3MuUGFyY2VsLnJlYWRF
+eGNlcHRpb24oUGFyY2VsLmphdmE6MTg4OCkKMDUtMTAgMTI6MzU6MzcuNjcxIDI4ODQ1IDI4
+ODQ1IEUgQW5kcm9pZFJ1bnRpbWU6IAlhdCBhbmRyb2lkLm5ldC5JQ29ubmVjdGl2aXR5TWFu
+YWdlciRTdHViJFByb3h5LnByZXBhcmVWcG4oSUNvbm5lY3Rpdml0eU1hbmFnZXIuamF2YTox
+OTAxKQowNS0xMCAxMjozNTozNy42NzEgMjg4NDUgMjg4NDUgRSBBbmRyb2lkUnVudGltZTog
+CWF0IGFuZHJvaWQubmV0LlZwblNlcnZpY2UucHJlcGFyZShWcG5TZXJ2aWNlLmphdmE6MTYw
+KQowNS0xMCAxMjozNTozNy42NzEgMjg4NDUgMjg4NDUgRSBBbmRyb2lkUnVudGltZTogCWF0
+IGNvbS53aXJlZ3VhcmQuYW5kcm9pZC5hY3Rpdml0eS5hLm9uQ3JlYXRlKFVua25vd24gU291
+cmNlOjY0KQowNS0xMCAxMjozNTozNy42NzEgMjg4NDUgMjg4NDUgRSBBbmRyb2lkUnVudGlt
+ZTogCWF0IGNvbS53aXJlZ3VhcmQuYW5kcm9pZC5hY3Rpdml0eS5NYWluQWN0aXZpdHkub25D
+cmVhdGUoVW5rbm93biBTb3VyY2U6MCkKMDUtMTAgMTI6MzU6MzcuNjcxIDI4ODQ1IDI4ODQ1
+IEUgQW5kcm9pZFJ1bnRpbWU6IAlhdCBhbmRyb2lkLmFwcC5BY3Rpdml0eS5wZXJmb3JtQ3Jl
+YXRlKEFjdGl2aXR5LmphdmE6Njk3NSkKMDUtMTAgMTI6MzU6MzcuNjcxIDI4ODQ1IDI4ODQ1
+IEUgQW5kcm9pZFJ1bnRpbWU6IAlhdCBhbmRyb2lkLmFwcC5JbnN0cnVtZW50YXRpb24uY2Fs
+bEFjdGl2aXR5T25DcmVhdGUoSW5zdHJ1bWVudGF0aW9uLmphdmE6MTIxMykKMDUtMTAgMTI6
+MzU6MzcuNjcxIDI4ODQ1IDI4ODQ1IEUgQW5kcm9pZFJ1bnRpbWU6IAlhdCBhbmRyb2lkLmFw
+cC5BY3Rpdml0eVRocmVhZC5wZXJmb3JtTGF1bmNoQWN0aXZpdHkoQWN0aXZpdHlUaHJlYWQu
+amF2YToyNzcwKQowNS0xMCAxMjozNTozNy42NzEgMjg4NDUgMjg4NDUgRSBBbmRyb2lkUnVu
+dGltZTogCS4uLiA5IG1vcmUKMDUtMTAgMTI6MzU6MzcuNjc3ICA1MjU5IDEyMDQ0IFcgQWN0
+aXZpdHlNYW5hZ2VyOiAgIEZvcmNlIGZpbmlzaGluZyBhY3Rpdml0eSBjb20ud2lyZWd1YXJk
+LmFuZHJvaWQvLmFjdGl2aXR5Lk1haW5BY3Rpdml0eQowNS0xMCAxMjozNTozNy42OTQgIDUy
+NTkgIDUyNzUgSSBBY3Rpdml0eU1hbmFnZXI6IFNob3dpbmcgY3Jhc2ggZGlhbG9nIGZvciBw
+YWNrYWdlIGNvbS53aXJlZ3VhcmQuYW5kcm9pZCB1MAowNS0xMCAxMjozNTozNy43NjYgIDUy
+NTkgIDczNjMgSSBPcGVuR0xSZW5kZXJlcjogSW5pdGlhbGl6ZWQgRUdMLCB2ZXJzaW9uIDEu
+NAowNS0xMCAxMjozNTozNy43NjYgIDUyNTkgIDczNjMgRCBPcGVuR0xSZW5kZXJlcjogU3dh
+cCBiZWhhdmlvciAxCjA1LTEwIDEyOjM1OjM3Ljc3NCAgNTI1OSAgNzM2MyBEIG1hbGlfd2lu
+c3lzOiBFR0xpbnQgbmV3X3dpbmRvd19zdXJmYWNlKGVnbF93aW5zeXNfZGlzcGxheSosIHZv
+aWQqLCBFR0xTdXJmYWNlLCBFR0xDb25maWcsIGVnbF93aW5zeXNfc3VyZmFjZSoqLCBlZ2xf
+Y29sb3JfYnVmZmVyX2Zvcm1hdCosIEVHTEJvb2xlYW4pIHJldHVybnMgMHgzMDAwLCAgWzE1
+OTB4NzQxXS1mb3JtYXQ6MQowNS0xMCAxMjozNTozOC4xODcgIDUyNTkgIDUyNzQgVyBBY3Rp
+dml0eU1hbmFnZXI6IEFjdGl2aXR5IHBhdXNlIHRpbWVvdXQgZm9yIEFjdGl2aXR5UmVjb3Jk
+ezliYmZjNzggdTAgY29tLndpcmVndWFyZC5hbmRyb2lkLy5hY3Rpdml0eS5NYWluQWN0aXZp
+dHkgdDI4OSBmfQowNS0xMCAxMjozNTozOC4yMzkgIDU5OTQgIDYwNzkgRCBtYWxpX3dpbnN5
+czogRUdMaW50IG5ld193aW5kb3dfc3VyZmFjZShlZ2xfd2luc3lzX2Rpc3BsYXkqLCB2b2lk
+KiwgRUdMU3VyZmFjZSwgRUdMQ29uZmlnLCBlZ2xfd2luc3lzX3N1cmZhY2UqKiwgZWdsX2Nv
+bG9yX2J1ZmZlcl9mb3JtYXQqLCBFR0xCb29sZWFuKSByZXR1cm5zIDB4MzAwMCwgIFsxNDQw
+eDI1NjBdLWZvcm1hdDoxCjA1LTEwIDEyOjM1OjM4Ljc1NCAgNTk5NCAgNjA3OSBXIE9wZW5H
+TFJlbmRlcmVyOiBJbmNvcnJlY3RseSBjYWxsZWQgYnVpbGRMYXllciBvbiBWaWV3OiBTaG9y
+dGN1dEFuZFdpZGdldENvbnRhaW5lciwgZGVzdHJveWluZyBsYXllci4uLgowNS0xMCAxMjoz
+NTo0My41ODAgMjc4NzcgMjc4NzcgRCBtdHBkICAgIDogUmVjZWl2ZWQgSEVMTE8gLT4gU2Vu
+ZGluZyBBQ0sKMDUtMTAgMTI6MzU6NDguNTMzICA1MjU5ICA1Mjc0IFcgQWN0aXZpdHlNYW5h
+Z2VyOiBBY3Rpdml0eSBkZXN0cm95IHRpbWVvdXQgZm9yIEFjdGl2aXR5UmVjb3JkezliYmZj
+NzggdTAgY29tLndpcmVndWFyZC5hbmRyb2lkLy5hY3Rpdml0eS5NYWluQWN0aXZpdHkgdDI4
+OSBmfQo=
+--------------DF45EBEF4BDECAD72F03F0F5--
