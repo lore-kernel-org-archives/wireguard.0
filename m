@@ -1,29 +1,23 @@
-Return-Path: aaronmdjones@gmail.com
+Return-Path: toke@toke.dk
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ac9b51ea
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d410c489
  for <wireguard@lists.zx2c4.com>;
- Sat, 12 May 2018 19:38:53 +0000 (UTC)
-Received: from mail-wr0-x22d.google.com (mail-wr0-x22d.google.com
- [IPv6:2a00:1450:400c:c0c::22d])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9c38bbe7
+ Sat, 12 May 2018 22:34:51 +0000 (UTC)
+Received: from mail.toke.dk (mail.toke.dk [52.28.52.200])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 00e0e1eb
  for <wireguard@lists.zx2c4.com>;
- Sat, 12 May 2018 19:38:52 +0000 (UTC)
-Received: by mail-wr0-x22d.google.com with SMTP id h5-v6so8398361wrm.4
- for <wireguard@lists.zx2c4.com>; Sat, 12 May 2018 12:41:53 -0700 (PDT)
-Return-Path: <aaronmdjones@gmail.com>
+ Sat, 12 May 2018 22:34:51 +0000 (UTC)
+From: Toke =?utf-8?Q?H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>
+To: neumann@cgws.de, Kalin KOZHUHAROV <me.kalin@gmail.com>
 Subject: Re: Need for HW-clock independent timestamps
-To: neumann@cgws.de
+In-Reply-To: <793381ba-b59d-50e4-6d7b-cbe9bef91ba1@cgws.de>
 References: <c1e04862-162f-eff9-7884-467f672608e2@cgws.de>
  <CAKXLc7capqT5oFinwT6Cj1-b2h5gKo+CG+WTLbFO+bG7pR7NsQ@mail.gmail.com>
  <793381ba-b59d-50e4-6d7b-cbe9bef91ba1@cgws.de>
-From: Aaron Jones <aaronmdjones@gmail.com>
-Message-ID: <489c2f57-574a-1223-9c4d-266904e52c94@gmail.com>
-Date: Sat, 12 May 2018 19:41:47 +0000
+Date: Sun, 13 May 2018 00:10:18 +0200
+Message-ID: <87po20wmnp.fsf@toke.dk>
 MIME-Version: 1.0
-In-Reply-To: <793381ba-b59d-50e4-6d7b-cbe9bef91ba1@cgws.de>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="YGPhLpxRJF9AosHoOGFZO4KzvY1pzFPC1"
+Content-Type: text/plain
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -34,70 +28,42 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---YGPhLpxRJF9AosHoOGFZO4KzvY1pzFPC1
-Content-Type: multipart/mixed; boundary="6AvMJhW9IB42rp8KmF8LiUkgBjKq6Ews6";
- protected-headers="v1"
-From: Aaron Jones <aaronmdjones@gmail.com>
-To: neumann@cgws.de
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Message-ID: <489c2f57-574a-1223-9c4d-266904e52c94@gmail.com>
-Subject: Re: Need for HW-clock independent timestamps
-References: <c1e04862-162f-eff9-7884-467f672608e2@cgws.de>
- <CAKXLc7capqT5oFinwT6Cj1-b2h5gKo+CG+WTLbFO+bG7pR7NsQ@mail.gmail.com>
- <793381ba-b59d-50e4-6d7b-cbe9bef91ba1@cgws.de>
-In-Reply-To: <793381ba-b59d-50e4-6d7b-cbe9bef91ba1@cgws.de>
+Axel Neumann <neumann@cgws.de> writes:
 
---6AvMJhW9IB42rp8KmF8LiUkgBjKq6Ews6
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: quoted-printable
+> Thanks a lot for your replies. But as you can see from my comments below
+> this all does not look like a valid option for many embedded use cases.
+> BTW, my background are community mesh networks which are maintained by
+> all kind of different individuals using a zoo of different device
+> types.
 
-On 12/05/18 19:29, Axel Neumann wrote:
-> You want WG to secure your network. So the suggestion can not be to ope=
-n
-> your network for a pretty insecure deamon in order to get WG working.
-> This would essentially allow attackers to a fake the ntp server and the=
-n
-> block WG forever.
+We had a long discussion on the issue of time on embedded routers with
+no RTC around the time support for DNSSEC was added to dnsmasq. The
+solution we ended up with in OpenWrt was that dnsmasq will run without
+validating signatures until NTP indicates that it has synced to a time
+server. See the --dnssec-no-timecheck and --dnssec-timestamp options to
+dnsmasq for details on how this works.
 
-Someone in a position to fake NTP (which needs bidirectional
-communication) is already in a position to block WG forever (by simply
-refusing to forward its packets).
+You're right, of course, that "just add an RTC" is not a solution...
 
-Additionally, there are a few very well-designed and secure NTP daemons
-out there (such as OpenNTPd).
+The analogue for a wireguard deployment would be to run NTP on the
+unsecured links and not configure the wireguard tunnels until NTP has
+synced. This has different security implications for a VPN than for
+dnssec, of course, but it could be doable. Depends on your setup how
+this is best done; you don't give enough details for me to have an
+informed opinion :)
 
---=20
-Aaron Jones
+> I would really appreciate if WG can further elaborate on this issue.
+> There are many real-life communities with embedded-device deployments
+> that would be looking forward to use WG.
+>
+> Could you also comment on the described approach (see again at the end
+> of the mail) of allowing (maybe as an alternative) a sequence number
+> instead of a timestamp?
 
+Can't comment on the security implications of this; but even if it is
+possible without degrading the security of the protocol, this is a
+non-trivial change at the protocol level; so if you want to deploy
+anything within the next ~6-12 months, I'd suggest finding a
+workaround...
 
-
-
---6AvMJhW9IB42rp8KmF8LiUkgBjKq6Ews6--
-
---YGPhLpxRJF9AosHoOGFZO4KzvY1pzFPC1
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
-
-iQIcBAEBCAAGBQJa90N+AAoJEIrwc3SIqzASZSoP/18k6mypu2aiJp40bipo7nfH
-TNtM7SZqt2zMDnXn6+5gfJMbIerD6aS3huFZjkiGfRtBVp5tu5TGjq8apB8U7GI8
-5c74hmnbliukcwrHV3oO/W/MZnuimv8mXmfuS/pJQiBHOTQUj8LZaItq7A8ZHWqc
-bDW1vOFokOZjo6sweqmx6xFWErUlPWfL1jDaIMTFJb2Nw4tjL14DcklQvfmxQ/Pq
-ensKwKwtXYuZHDpuOpIondSaJxc7az0HGlZ0N78yJI8kvLgt5/zh3OzKtIrv89qx
-KMxTPiFn0QecDKElm29rHp3C44twRY5W/g/gJDPsb2J+aNTSU9+HlNkmLkDPdEfD
-62OL7wKXRh1zdE4s3RV0T7cbaIQdRjiVzkX0fIwH1QyWHM32UZDx97+IpCSXxHsl
-vougNPfMn2Bnr2li9JFsryUnA7OybcCM+JgFcRTqF/iYmjAvxNccSdmHb0oiAQ9B
-IQtmOI7bupotog8ddIYMZ0pp4UuT1XcI/ENmO1nuXsuShAuyQ/UBNdFNL98IEW28
-spywPw3kvN6NQNMnwcnNciKDkE9w7A0aE1itlurm5v2mJEu2CsLxXBb5tQSjI+/z
-Zd1RRqFaPwJLm37o0HpCAXbAQIt3Sp4nzraZ3hGXFMNE/1XJw0qJ6/ANPDOhfyU1
-vq3KDdM6zQxB9IRzFfbM
-=TIp5
------END PGP SIGNATURE-----
-
---YGPhLpxRJF9AosHoOGFZO4KzvY1pzFPC1--
+-Toke
