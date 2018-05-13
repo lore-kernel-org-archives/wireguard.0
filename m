@@ -1,31 +1,24 @@
-Return-Path: matthias@urlichs.de
+Return-Path: toke@toke.dk
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 01265e3d
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8898bb86
  for <wireguard@lists.zx2c4.com>;
- Sun, 13 May 2018 06:09:14 +0000 (UTC)
-Received: from netz.smurf.noris.de (mail.vm.smurf.noris.de
- [IPv6:2001:780:107:8:83::])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1dd64a7e
+ Sun, 13 May 2018 12:32:44 +0000 (UTC)
+Received: from mail.toke.dk (mail.toke.dk [52.28.52.200])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cf5ee8eb
  for <wireguard@lists.zx2c4.com>;
- Sun, 13 May 2018 06:09:13 +0000 (UTC)
-Received: from [2001:780:107:0:1278:d2ff:fea3:d4a6]
- by mail.vm.smurf.noris.de with esmtpsa
- (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim 4.89)
- (envelope-from <matthias@urlichs.de>) id 1fHkEq-000JTY-A6
- for wireguard@lists.zx2c4.com; Sun, 13 May 2018 08:12:08 +0200
+ Sun, 13 May 2018 12:32:44 +0000 (UTC)
+From: Toke =?utf-8?Q?H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>
+To: reiner otto <augustus_meyer@yahoo.de>, neumann@cgws.de,
+ Kalin KOZHUHAROV <me.kalin@gmail.com>
 Subject: Re: Need for HW-clock independent timestamps
-To: wireguard@lists.zx2c4.com
-References: <c1e04862-162f-eff9-7884-467f672608e2@cgws.de>
- <CAKXLc7capqT5oFinwT6Cj1-b2h5gKo+CG+WTLbFO+bG7pR7NsQ@mail.gmail.com>
- <793381ba-b59d-50e4-6d7b-cbe9bef91ba1@cgws.de>
-From: Matthias Urlichs <matthias@urlichs.de>
-Message-ID: <c468bc7b-c1bf-b8db-1168-0ee7eef2f385@urlichs.de>
-Date: Sun, 13 May 2018 08:11:57 +0200
+In-Reply-To: <1324673763.992877.1526187430298@mail.yahoo.com>
+References: <1324673763.992877.1526187430298.ref@mail.yahoo.com>
+ <1324673763.992877.1526187430298@mail.yahoo.com>
+Date: Sun, 13 May 2018 14:35:36 +0200
+Message-ID: <87mux3wx5z.fsf@toke.dk>
 MIME-Version: 1.0
-In-Reply-To: <793381ba-b59d-50e4-6d7b-cbe9bef91ba1@cgws.de>
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="QNy7wSBuhOV6wfMf9uUHQlwiKZt2HKZFo"
+Content-Type: text/plain
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -35,155 +28,33 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---QNy7wSBuhOV6wfMf9uUHQlwiKZt2HKZFo
-Content-Type: multipart/mixed; boundary="UBEph3cljEYMqcUxWXBEhVOZGe84LM3xU";
- protected-headers="v1"
-From: Matthias Urlichs <matthias@urlichs.de>
-To: wireguard@lists.zx2c4.com
-Message-ID: <c468bc7b-c1bf-b8db-1168-0ee7eef2f385@urlichs.de>
-Subject: Re: Need for HW-clock independent timestamps
-References: <c1e04862-162f-eff9-7884-467f672608e2@cgws.de>
- <CAKXLc7capqT5oFinwT6Cj1-b2h5gKo+CG+WTLbFO+bG7pR7NsQ@mail.gmail.com>
- <793381ba-b59d-50e4-6d7b-cbe9bef91ba1@cgws.de>
-In-Reply-To: <793381ba-b59d-50e4-6d7b-cbe9bef91ba1@cgws.de>
+reiner otto <augustus_meyer@yahoo.de> writes:
 
---UBEph3cljEYMqcUxWXBEhVOZGe84LM3xU
-Content-Type: multipart/alternative;
- boundary="------------B3A05B48832E6D184C98595E"
-Content-Language: de-DE
-
-This is a multi-part message in MIME format.
---------------B3A05B48832E6D184C98595E
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-
-On 12.05.2018 21:29, Axel Neumann wrote:
-> Thanks a lot for your replies. But as you can see from my comments belo=
-w
-> this all does not look like a valid option for many embedded use cases.=
-
-> BTW, my background are community mesh networks which are maintained by
-> all kind of different individuals using a zoo of different device types=
-=2E
+> Having implemented this solution already, I consider it some type of
+> hack, as the standard time sync unfortunately happens very late in the
+> start of the services, after rc.local called. And the sync might take
+> quite some time.
 >
-> I would really appreciate if WG can further elaborate on this issue.
-> There are many real-life communities with embedded-device deployments
-> that would be looking forward to use WG.
->
-> Could you also comment on the described approach (see again at the end
-> of the mail) of allowing (maybe as an alternative) a sequence number
-> instead of a timestamp?
-What's the problem? the protocol documentation states
+> Which means, I had to "hack" the time sync immediately after WAN up,
+> and to be done in a single shot, before starting WG.
 
-> The server keeps track of the greatest timestamp received /per client/
-> and discards packets containing timestamps less than or equal to it.
+Yeah, messing init script order is going to be hackish. You'd want to
+add a hotplug script to react to when the NTP daemon syncs and apply
+config after that. See the dnsmasq hotplug script for an example:
 
-I just checked the C implementation; it does this check (and no others).
-In particular it doesn't check whether the timestamp field corresponds
-to anybody's idea of the current time.
+https://git.openwrt.org/?p=openwrt/openwrt.git;a=blob;f=package/network/services/dnsmasq/files/dnsmasqsec.hotplug;h=781d5337348bb8e927bd15f1caac94a5e7a9ba63;hb=HEAD
 
-Thus you don't need current time; you just need to seed a counter. I
-would thus add an option to wg.conf that, if present, sets the
-interface's current timestamp to some value and uses it as a counter
-instead of a timestamp.
+For WG it should be necessary to wait to configure the wg interfaces;
+they just won't validate correctly until time is fixed. So you could
+configure the interfaces in /etc/config/network and just have the
+hotplug script add the default route (or whatever your needs are).
 
-Then, when you set up your WG instance, you should immediately rewrite
-your wg.conf file (just add 2^32) so that a reboot doesn't DoS yourself.
-Additionally, when you acquire NTP sync, set the parameter to the
-TAI64N() of the current time. To be extra safe, repeat this every week
-or month or so.
+> However, as a real RTC is rather cheap, it might be a good idea, in
+> case of commercial apps, to ask the supplier of the device to be used
+> for the inclusion of a RTC. The more requests, the better the chances
+> to find more devices with RTC included.
 
-Can anybody think of problems with this solution?
+Sure, for people who are building their own hardware. Most people
+aren't, though...
 
---=20
--- Matthias Urlichs
-
-
---------------B3A05B48832E6D184C98595E
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-
-<html>
-  <head>
-    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf=
--8">
-  </head>
-  <body text=3D"#000000" bgcolor=3D"#FFFFFF">
-    <div class=3D"moz-cite-prefix">On 12.05.2018 21:29, Axel Neumann
-      wrote:<br>
-    </div>
-    <blockquote type=3D"cite"
-      cite=3D"mid:793381ba-b59d-50e4-6d7b-cbe9bef91ba1@cgws.de">
-      <pre wrap=3D"">Thanks a lot for your replies. But as you can see fr=
-om my comments below
-this all does not look like a valid option for many embedded use cases.
-BTW, my background are community mesh networks which are maintained by
-all kind of different individuals using a zoo of different device types.
-
-I would really appreciate if WG can further elaborate on this issue.
-There are many real-life communities with embedded-device deployments
-that would be looking forward to use WG.
-
-Could you also comment on the described approach (see again at the end
-of the mail) of allowing (maybe as an alternative) a sequence number
-instead of a timestamp?
-</pre>
-    </blockquote>
-    What's the problem? the protocol documentation states<br>
-    <br>
-    &gt; The server keeps track of the greatest timestamp received <em>pe=
-r
-      client</em> <br>
-    &gt; and discards packets containing timestamps less than or equal
-    to it.<br>
-    <br>
-    I just checked the C implementation; it does this check (and no
-    others). In particular it doesn't check whether the timestamp field
-    corresponds to anybody's idea of the current time.<br>
-    <br>
-    Thus you don't need current time; you just need to seed a counter. I
-    would thus add an option to wg.conf that, if present, sets the
-    interface's current timestamp to some value and uses it as a counter
-    instead of a timestamp.<br>
-    <br>
-    Then, when you set up your WG instance, you should immediately
-    rewrite your wg.conf file (just add 2^32) so that a reboot doesn't
-    DoS yourself. Additionally, when you acquire NTP sync, set the
-    parameter to the TAI64N() of the current time. To be extra safe,
-    repeat this every week or month or so.<br>
-    <br>
-    Can anybody think of problems with this solution?<br>
-    <br>
-    <pre class=3D"moz-signature" cols=3D"72">--=20
--- Matthias Urlichs</pre>
-  </body>
-</html>
-
---------------B3A05B48832E6D184C98595E--
-
---UBEph3cljEYMqcUxWXBEhVOZGe84LM3xU--
-
---QNy7wSBuhOV6wfMf9uUHQlwiKZt2HKZFo
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEr9eXgvO67AILKKGfcs+OXiW0wpMFAlr31zEACgkQcs+OXiW0
-wpP2eA//XCYdgK2E3iHowRyScxsmzc+ofIVJfWS0Ja5fGQ0BLbPMQ4jP8EB0id9z
-usJ6LxTyYhcVMI8mHo+8uI4YHmP/a1NdFtHwhE6BjMNosFsauAxCiOH4XZLakIO5
-Bp4MMZ6TenKtBP9f3tSfAiEumoUIeu5Z4S7IlmoOcjJDl36RA1GuBdZdaxfnycJ3
-s/VsTqeozfmuPyCkI2waFtPdEMWlL/xfpdmW5eCqYmEUGnMEjdHPdyFZwao0GH6s
-gp25qTp21JCdrJ5sLaxzH++xcJpcSx0cmgvxsGGZJAmD5LagcF1Dsn4V2ibZbaO7
-72gHA9OncEeHlDz2UH8sbmoYNzcgsHYbpyNttrQu8Q48vvuwYeKKB0aYSyGrpkj0
-OAOQBgsBH3vAbJlztb9Yw8YusNKiEVD54EssmoIuCPybkzGvwRDE0C+GHVRslVIh
-Q2W1527eH+vIumXYiTlA5j9o9UiyUEdkZVzXo+G1bl7yyMQvf2XsXkmu/5cwMMvv
-Cwu8G5VOj+H6s/OCQI9pKyeNmJq8Pz8GojIGYpEKViyEMDVTDYAH0MmglMv0/ncN
-wHZ6wtIcjQGGd5bxXeYZ7LJqt7ohQfqWWcGBsBqo/tz3h0hMhg5DKJ1pQXqRbNzm
-L2tKHu+qTUvXwAc/VNZJBt5SI5Rsx1vWk4ag2ygpmBTkt43uvTI=
-=RPEx
------END PGP SIGNATURE-----
-
---QNy7wSBuhOV6wfMf9uUHQlwiKZt2HKZFo--
+-Toke
