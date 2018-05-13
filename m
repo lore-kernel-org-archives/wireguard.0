@@ -1,26 +1,26 @@
-Return-Path: aaronmdjones@gmail.com
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a60790cf
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c18c11e9
  for <wireguard@lists.zx2c4.com>;
- Sun, 13 May 2018 15:14:55 +0000 (UTC)
-Received: from mail-wm0-x22a.google.com (mail-wm0-x22a.google.com
- [IPv6:2a00:1450:400c:c09::22a])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2c1ecafd
+ Sun, 13 May 2018 15:31:59 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fdae3e56
  for <wireguard@lists.zx2c4.com>;
- Sun, 13 May 2018 15:14:55 +0000 (UTC)
-Received: by mail-wm0-x22a.google.com with SMTP id f8-v6so10805246wmc.4
- for <wireguard@lists.zx2c4.com>; Sun, 13 May 2018 08:18:02 -0700 (PDT)
-Return-Path: <aaronmdjones@gmail.com>
-Subject: Re: Weekly summary
-To: =?UTF-8?Q?Adri=c3=a1n_Mih=c3=a1lko?= <adriankoooo@gmail.com>
-References: <CB13109D-773C-47E4-A34C-7E537372E2F9@gmail.com>
-From: Aaron Jones <aaronmdjones@gmail.com>
-Message-ID: <1af7697e-2012-d18f-b417-27e4f8071492@gmail.com>
-Date: Sun, 13 May 2018 15:18:00 +0000
+ Sun, 13 May 2018 15:31:59 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f2681d35
+ for <wireguard@lists.zx2c4.com>;
+ Sun, 13 May 2018 15:33:54 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id e67200b9
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Sun, 13 May 2018 15:33:54 +0000 (UTC)
+Date: Sun, 13 May 2018 17:35:03 +0200
+To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: [ANNOUNCE] WireGuard Snapshot `0.0.20180513` Available
 MIME-Version: 1.0
-In-Reply-To: <CB13109D-773C-47E4-A34C-7E537372E2F9@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset=UTF-8
+Message-Id: <b9930cca8bf4ec77@frisell.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -33,43 +33,107 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-On 13/05/18 15:10, Adrián Mihálko wrote:
-> Is there a way to subscribe only for a weekly summary on this
-> mailing list?
+Hello,
 
-There isn't an option for a weekly summary, but there is an option for
-a daily digest instead.
+A new snapshot, `0.0.20180513`, has been tagged in the git repository.
 
-If you wish, go to [0], punch your email address into the bottom text
-box, hit the "unsubscribe or edit options" button, and log in with
-your mailing list password (if you don't remember it, this page can
-send it to you). Then adjust the second option at the bottom ("Set
-Digest Mode").
+Please note that this snapshot is, like the rest of the project at this point
+in time, experimental, and does not consitute a real release that would be
+considered secure and bug-free. WireGuard is generally thought to be fairly
+stable, and most likely will not crash your computer (though it may).
+However, as this is a pre-release snapshot, it comes with no guarantees, and
+its security is not yet to be depended on; it is not applicable for CVEs.
 
-Alternatively, unsubscribe from the list and download monthly archives
-from [1]. Any decent MUA can open these.
+With all that said, if you'd like to test this snapshot out, there are a
+few relevent changes.
 
-[0] https://lists.zx2c4.com/mailman/listinfo/wireguard
-[1] https://lists.zx2c4.com/pipermail/wireguard/
+== Changes ==
 
-Regards,
-Aaron Jones
+  * keygen-html: add zip file example
+  
+  The alpha Android app now supports importing from .zip files, so the example
+  contrib code has been updated to show people how to trivially generate .zip
+  files from ... javascript. That's right, the WireGuard repo now contains some
+  more demo javascript.
+  
+  * qemu: retry on 404 in wget for kernel.org race
+  
+  Simple fix for build.wireguard.com's handling of new kernels.
+  
+  * embeddable-wg-library: zero attribute padding
+  
+  This imports 37c876b55a2c00424ccda5a300ab5fdec1d88b22 from upstream libmnl.
+  
+  * allowedips: add selftest for allowedips_walk_by_peer
+  * allowedips: use native endian on lookup
+  * allowedips: produce better assembly with unsigned arithmetic
+  * allowedips: simplify arithmetic
+  
+  A series of bitmath improvements make allowedips lookups sleeker and faster.
+  
+  * socket: use skb_put_data
+  
+  This follows 59ae1d127ac0ae404baf414c434ba2651b793f46 in the kernel.
+  
+  * chacha20poly1305: make gcc 8.1 happy
+  
+  GCC 8.1 does not know about the invariant `0 <= ctx->num < POLY1305_BLOCK_SIZE`.
+  This results in a warning that `memcpy(ctx->data + num, inp, len);` may
+  overflow the `data` field, which is correct for arbitrary values of `num`.
+  
+  To make the invariant explicit we ensure that `num` is in the required range.
+  An alternative would be to change `ctx->num` to a 4-bit bitfield at the point
+  of declaration.
+  
+  This changes the code from `test ebp, ebp; jz end` to `and ebp, 15; jz
+  end`, which have identical performance characteristics.
+  
+  * queueing: preserve pfmemalloc header bit
+  
+  Precautionary measure. Further work on this function goes on in the netdev
+  thread: https://marc.info/?l=linux-netdev&m=152607982125178&w=2
+  
+  * compat: handle RHEL 7.5's recent backports
+  * compat: don't clear header bits on RHEL
+  
+  WireGuard now supports RHEL's latest kernel, which involved fixing some pretty
+  major crashes and clashes with RHEL's backports.
+
+This snapshot contains commits from: Jason A. Donenfeld and Samuel Neves.
+
+As always, the source is available at https://git.zx2c4.com/WireGuard/ and
+information about the project is available at https://www.wireguard.com/ .
+
+This snapshot is available in tarball form here:
+  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-0.0.20180513.tar.xz
+  SHA2-256: 28a15c59f6710851587ebca76a335f1aaaa077aad052732e0959f2bae9ba8d5c
+  BLAKE2b-256: 24bbe3e6d382682138ccf0987f134b5786dc2c12e1a6aefc4a49dfd4aae6d48b
+
+If you're a snapshot package maintainer, please bump your package version. If
+you're a user, the WireGuard team welcomes any and all feedback on this latest
+snapshot.
+
+Finally, WireGuard development thrives on donations. By popular demand, we
+have a webpage for this: https://www.wireguard.com/donations/
+
+Thank you,
+Jason Donenfeld
+
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
 
-iQIbBAEBCAAGBQJa+FcZAAoJEIrwc3SIqzASENwP+JCbc/efO1Z82pNohulJRfE/
-IXbSXTmwptkVQ+l4QFuHzRlAqdhF3a1IPz1HqOw9s2KRhd6IvldCRFSC0KtujeNe
-12F8MXwaaXx2daG7bd+dn677uW5xwtD6nyENsnp8f2lkJ+jHOLWfSg73F5rrRqBT
-EAqjqHhuLurJum6jS4vKmJP7xS6mERlRFo91Xexwoi+eFjKrtTHqoityvNtRcnhs
-hwCjcL/LmL5R2U6rmggnzmIC5YNsvjv7f7mqSvaol1myWV8YZYTi1zM9vEJnziLv
-n0nsDp+9yPwEtK06JW0CsS+4XtN5r0SCIgG7aiXCihh9eS8EYQjtaEdJ7bo0MqYD
-KCvG1EFXfk86ZQC+XP9OiBg7/uzKkAqV3RYJU3adlaVL8mHvl9qWTqS4ME1L3cmF
-2toEjHQltmdjeHgC8BBLpoWaTvrbAAxxeE0XYCIGGatms9xd1+XzFWaujIsy6Rq/
-/Rc9sJwU1bE+v/6B4KgDHZCM1yffRuLL0XMBGCMjnEy0vgRqWdCpzkk04JdeMSz+
-ABJOdpx2c+Q27XgXB5M/zmyfCK+WbYXrwNVxIEMe12bjRzt4R4UfYAb8lGEDsqyj
-b4YRjoqS1Qhsj1sQGp7v1NCtP2gGA9yMhXOU9LuQ2rMBnnvRsCT1AvHW97JlWhXB
-Nc8JxMFYtCqzG0tviGs=
-=g4oE
+iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAlr4Wp0QHGphc29uQHp4
+MmM0LmNvbQAKCRBJ/HASpd4DrqOfEACbxvlKr0f7xrGpk0Jr8Z+OYCQokC8hxETF
+a8fQ1A3k3ptEDx67mBJGs76GgBghdI4OraZARSunT5z3e0BvqYneuLRDIJ4sw9mO
+gzEbTZCeSBikaDFsELhYpzKTfJfR3dgdT2dJY+KhkxsKePypiY9GY9lqoVz4mQi4
++tvhiXomOfG6+XHTTUY//ES7t4ifpD6deB+LMqORFlhWrD6iRUUVl77k8R7dlvNk
+qMfF+M7ee/Brjk3nRP6Ginq2I6OhkP8GBvf4bMH48oS0/0LFXhTl4YSYfIxj8oAQ
+zX7513By8vEaH9PlAqBgQrJLw3KALz0zi0TlKMbV0Kb+ORJLdyIlENBee2LVRdjR
+ppkXnHWd+A8hdacgc0jt9ei96bFr5YwJuJLqfXK19O/rW/R+3WmLewFKaHdRd+EZ
+VnhZjk8qs7yCtSLg47BSvEgmIa665ghelrKBRKIH3AYPmHGZGAXDwVX5QMD8LBHP
+WhVuhlOGR/Da2Ekygr0m5Oj0vopl6eW2VW4tTq1FSjrAIqlloUbILcKtyNdZ/65Q
+oIfqsynkcgj+K7dyIIZJXefdsE0UtE6gQAI+63Ajbg9GUk5zzZfPH5gysFqU5mmr
+8+UwLoGOD3MuzV+m0qWdCqUMI3Gc324j9D2cMg+dPyVToKRt4wPJE67yyH/qtHQR
+xDebWbUWbQ==
+=2oOa
 -----END PGP SIGNATURE-----
