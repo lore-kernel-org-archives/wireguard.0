@@ -1,29 +1,26 @@
-Return-Path: me.kalin@gmail.com
+Return-Path: eric@ericlight.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e6a3393f
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 32c0ae9c
  for <wireguard@lists.zx2c4.com>;
- Tue, 15 May 2018 20:49:21 +0000 (UTC)
-Received: from mail-ot0-x231.google.com (mail-ot0-x231.google.com
- [IPv6:2607:f8b0:4003:c0f::231])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 44a357cb
+ Tue, 15 May 2018 20:50:36 +0000 (UTC)
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
+ [66.111.4.26])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6cd678b2
  for <wireguard@lists.zx2c4.com>;
- Tue, 15 May 2018 20:49:21 +0000 (UTC)
-Received: by mail-ot0-x231.google.com with SMTP id l13-v6so1824680otk.9
- for <wireguard@lists.zx2c4.com>; Tue, 15 May 2018 13:49:36 -0700 (PDT)
+ Tue, 15 May 2018 20:50:36 +0000 (UTC)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+ by mailout.nyi.internal (Postfix) with ESMTP id 6C35122648
+ for <wireguard@lists.zx2c4.com>; Tue, 15 May 2018 16:50:36 -0400 (EDT)
+Message-Id: <1526417435.709029.1373298160.471617A2@webmail.messagingengine.com>
+From: Eric Light <eric@ericlight.com>
+To: wireguard@lists.zx2c4.com
 MIME-Version: 1.0
-In-Reply-To: <20180515202126.yw57deh6st5ebnk6@kowloon>
-References: <c1e04862-162f-eff9-7884-467f672608e2@cgws.de>
- <CAKXLc7capqT5oFinwT6Cj1-b2h5gKo+CG+WTLbFO+bG7pR7NsQ@mail.gmail.com>
- <793381ba-b59d-50e4-6d7b-cbe9bef91ba1@cgws.de>
- <489c2f57-574a-1223-9c4d-266904e52c94@gmail.com>
- <20180515202126.yw57deh6st5ebnk6@kowloon>
-From: Kalin KOZHUHAROV <me.kalin@gmail.com>
-Date: Tue, 15 May 2018 22:49:15 +0200
-Message-ID: <CAKXLc7drht4CVexsCTXwHe-Z_RyFghAhQsXom=z9dtQuxQU48Q@mail.gmail.com>
-Subject: Re: Need for HW-clock independent timestamps
-To: Devan Carpenter <mail@dvn.me>
-Content-Type: text/plain; charset="UTF-8"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="utf-8"
+Date: Wed, 16 May 2018 08:50:35 +1200
+Subject: Re: Multiple (client-)peers with same keys possible ?
+In-Reply-To: <267632710.2840000.1526409369057@mail.yahoo.com>
+References: <267632710.2840000.1526409369057.ref@mail.yahoo.com>
+ <267632710.2840000.1526409369057@mail.yahoo.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -33,49 +30,59 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Tue, May 15, 2018 at 10:21 PM, Devan Carpenter <mail@dvn.me> wrote:
-> Aaron Jones transcribed 3.1K bytes:
->> On 12/05/18 19:29, Axel Neumann wrote:
->> > You want WG to secure your network. So the suggestion can not be to open
->> > your network for a pretty insecure deamon in order to get WG working.
->> > This would essentially allow attackers to a fake the ntp server and then
->> > block WG forever.
->>
->> Someone in a position to fake NTP (which needs bidirectional
->> communication) is already in a position to block WG forever (by simply
->> refusing to forward its packets).
->>
->> Additionally, there are a few very well-designed and secure NTP daemons
->> out there (such as OpenNTPd).
->>
->
-> Using NTP is not a viable solution for a distributed mesh network. What
-> if the Internet is only accesible via WG, or what if the network is not
-> connected to the Internet at all?
->
-Why do you need the Internet at all?
-You can do as simple as plug a $20 GPS receiver (serial/USB) in any
-node and get precise time that is shared with others in the network.
-Heck, even go analog and use the Colorado WWV radio signal.
-Or go fancy and buy a dedicated Cesium-backed "private" NTP server.
+Hi Reiner!
 
-> It's not a trivial problem, but I think it would be benefecial to WireGuard as a project to not depend on
-> centralized time authority *if there is an option not to*.
->
-I wouldn't call universal time a "centralized authority", it is more
-of a well-agreed-upon concept.
-With a clear view of the sky and some math, you can use the stars (Sun
-incl.) even and nobody can ban you from knowing the time.
-It is not like say centralized DNS.
+I can't figure out how that would work, considering WG is based around crypto-key routing.  How would it know where to route a given packet?
 
-So, yes you need a method for obtaining the time at somewhat precise
-scale[1], but "NTP-to-I'net" is just one somewhat convenient method.
+Additionally, two sets of AllowedIPs=0.0.0.0/0 would imply two different default routes.
 
-[1]  Can anyone point me to the piece in code that shows that
-precision? In other words, how far apart can 2 peers' clocks be and
-still connect.
-I spend some time grepping, but couldn't find it... I guess it is
-connected to 'REJECT_AFTER_TIME = 180 * HZ;' ?
+I just don't see how that could function, tbh.  :)
 
-Cheers,
-Kalin.
+E
+
+--------------------------------------------
+Q: Why is this email five sentences or less?
+A: http://five.sentenc.es
+
+On Wed, 16 May 2018, at 06:36, reiner otto wrote:
+> Is it possible somehow, to define multiple (client-)peers to share the 
+> same keys ?
+> (Trading some loss of security for simpler distribution)
+> 
+> I.e. on server:
+> [Interface]
+> ListenPort = 5000
+> PrivateKey = ABCD ...XYZ
+> Address=172.16.0.1
+> 
+> [Peer]
+> PublicKey = 1234...7890
+> AllowedIPs = 172.16.0.0/16
+> 
+> 
+> client1:
+> [Interface]
+> PrivateKey = top...secret
+> ListenPort = 5000
+> Address = 172.16.0.2
+> [Peer]
+> PublicKey = everybodyknows
+> AllowedIPs = 0.0.0.0/0
+> Endpoint = 1.2.3.4
+> 
+> client2:
+> [Interface]
+> PrivateKey = top...secret
+> ListenPort = 5000
+> Address = 172.16.0.3
+> [Peer]
+> PublicKey = everybodyknows
+> AllowedIPs = 0.0.0.0/0
+> Endpoint = 1.2.3.4
+> ....
+> ....
+> ....
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
