@@ -1,27 +1,26 @@
-Return-Path: labawi-wg@matrix-dream.net
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 999c07c3
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 283a38f6
  for <wireguard@lists.zx2c4.com>;
- Tue, 15 May 2018 21:39:42 +0000 (UTC)
-Received: from matrix-dream.net (matrix2.matrix-dream.net
- [IPv6:2001:1608:10:3::a:8])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a03f9e75
+ Tue, 15 May 2018 22:54:22 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 83236d76
  for <wireguard@lists.zx2c4.com>;
- Tue, 15 May 2018 21:39:42 +0000 (UTC)
-Received: from ivan by matrix-dream.net with local (Exim 4.89)
- (envelope-from <labawi-wg@matrix-dream.net>) id 1fIhfn-0004y3-I4
- for wireguard@lists.zx2c4.com; Tue, 15 May 2018 22:39:55 +0100
-Date: Tue, 15 May 2018 22:39:55 +0100
-From: Ivan =?iso-8859-1?Q?Lab=E1th?= <labawi-wg@matrix-dream.net>
+ Tue, 15 May 2018 22:54:22 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0df28b16
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 15 May 2018 22:53:09 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id e2c3eff6
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 15 May 2018 22:53:09 +0000 (UTC)
+Date: Wed, 16 May 2018 00:54:36 +0200
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
 To: wireguard@lists.zx2c4.com
-Subject: Re: Multiple (client-)peers with same keys possible ?
-Message-ID: <20180515213955.GA19046@matrix-dream.net>
-References: <267632710.2840000.1526409369057.ref@mail.yahoo.com>
- <267632710.2840000.1526409369057@mail.yahoo.com>
- <1526417435.709029.1373298160.471617A2@webmail.messagingengine.com>
+Subject: [ANNOUNCE] Alpha Snapshots of WireGuard for Android and macOS
+Message-ID: <20180515225433.GA26432@zx2c4.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-In-Reply-To: <1526417435.709029.1373298160.471617A2@webmail.messagingengine.com>
+Content-Type: text/plain; charset=utf-8
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -31,94 +30,49 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi,
+Hey folks,
 
-as said, I don't concieve a reasonable way of using the same key.
-Wireguard routes and needs to identify and know its clients.
+We're gradually adding more platforms capable of running WireGuard, thanks to
+some still-buggy userspace code Mathias and I have been developing. Today you
+can try WireGuard on two new platforms: Android and macOS.
 
-That said, I don't see a reason why the clients couldn't have similar
-private keys.
+[NEW] WireGuard for Android
+---------------------------
+You can download the app from the Play Store or from F-Droid. It supports
+adding wg-quick(8)-style .conf files or .zips of them. The app uses the kernel
+module if available, which gives the best performance, stability, and battery
+life, and falls back to the userspace code if it's not available. Download at:
+https://play.google.com/store/apps/details?id=com.wireguard.android
 
-e.g.
+[NEW] WireGuard for macOS
+-------------------------
+You can install wg-quick, wg, and wireguard-go using Homebrew. Then you should
+be able to run `wg-quick up whatever` and familiar commands as you're used to.
+If you're setting up a network manually, you can run `wireguard-go utun3` in
+place of the usual Linux command `ip link add utun3 dev wireguard`. Install
+with the Homebrew command:
+$ brew install wireguard-tools
 
-Server:
+[FUTURE] WireGuard for ${YOUR_FAVORITE_PLATFORM}
+------------------------------------------------
+It's a work in progress, and we hope to have nice things to announce in the
+coming weeks. If you're interested in helping to develop support for a
+particular platform, please send us an email at team@wireguard.com.
 
-Private = PrivateKey
+[WORKHORSE] WireGuard for Linux
+-------------------------------
+The Linux kernel implementation remains the recommended and most complete
+WireGuard implementation, and we're actively working on upstreaming this code
+to kernel.org. Install instructions are available for every major distro on:
+https://www.wireguard.com/install/
 
-[Peer1]
-Pubkey = secret_to_public(notreallysecret..001)
-AllowedIPs = 172.16.0.1/16
+[DISCLAIMER] Alpha Warning for Security-related Software
+--------------------------------------------------------
+The new implementations for macOS and Android are alpha quality, at best, so
+keep expectations low. There are bugs. There may even be security issues, and
+we don't yet certify that this software does what we want it to do. Let us
+know as you encounter the inevitable nasty bugs. Consider this as "pre-release"
+software.
 
-[Peer2]
-Pubkey = secret_to_public(notreallysecret..002)
-AllowedIPs = 172.16.0.2/16
-
-
-I would carefully consider security consequences and possible
-alternatives before deploying such a scheme.
-
-Cheers,
-ivan
-
-
-On Wed, May 16, 2018 at 08:50:35AM +1200, Eric Light wrote:
-> Hi Reiner!
-> 
-> I can't figure out how that would work, considering WG is based around crypto-key routing.  How would it know where to route a given packet?
-> 
-> Additionally, two sets of AllowedIPs=0.0.0.0/0 would imply two different default routes.
-> 
-> I just don't see how that could function, tbh.  :)
-> 
-> E
-> 
-> --------------------------------------------
-> Q: Why is this email five sentences or less?
-> A: http://five.sentenc.es
-> 
-> On Wed, 16 May 2018, at 06:36, reiner otto wrote:
-> > Is it possible somehow, to define multiple (client-)peers to share the 
-> > same keys ?
-> > (Trading some loss of security for simpler distribution)
-> > 
-> > I.e. on server:
-> > [Interface]
-> > ListenPort = 5000
-> > PrivateKey = ABCD ...XYZ
-> > Address=172.16.0.1
-> > 
-> > [Peer]
-> > PublicKey = 1234...7890
-> > AllowedIPs = 172.16.0.0/16
-> > 
-> > 
-> > client1:
-> > [Interface]
-> > PrivateKey = top...secret
-> > ListenPort = 5000
-> > Address = 172.16.0.2
-> > [Peer]
-> > PublicKey = everybodyknows
-> > AllowedIPs = 0.0.0.0/0
-> > Endpoint = 1.2.3.4
-> > 
-> > client2:
-> > [Interface]
-> > PrivateKey = top...secret
-> > ListenPort = 5000
-> > Address = 172.16.0.3
-> > [Peer]
-> > PublicKey = everybodyknows
-> > AllowedIPs = 0.0.0.0/0
-> > Endpoint = 1.2.3.4
-> > ....
-> > ....
-> > ....
-> > _______________________________________________
-> > WireGuard mailing list
-> > WireGuard@lists.zx2c4.com
-> > https://lists.zx2c4.com/mailman/listinfo/wireguard
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
+Enjoy!
+Jason
