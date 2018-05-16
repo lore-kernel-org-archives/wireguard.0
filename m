@@ -1,25 +1,32 @@
-Return-Path: stefan.tatschner@gmail.com
+Return-Path: matthias@urlichs.de
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1759edda
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b16f5bf9
  for <wireguard@lists.zx2c4.com>;
- Wed, 16 May 2018 07:10:22 +0000 (UTC)
-Received: from mail-wr0-x242.google.com (mail-wr0-x242.google.com
- [IPv6:2a00:1450:400c:c0c::242])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f8c4707a
+ Wed, 16 May 2018 07:11:01 +0000 (UTC)
+Received: from netz.smurf.noris.de (mail.vm.smurf.noris.de
+ [IPv6:2001:780:107:8:83::])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 06d26a5f
  for <wireguard@lists.zx2c4.com>;
- Wed, 16 May 2018 07:10:22 +0000 (UTC)
-Received: by mail-wr0-x242.google.com with SMTP id a12-v6so2553792wrn.13
- for <wireguard@lists.zx2c4.com>; Wed, 16 May 2018 00:10:40 -0700 (PDT)
-Return-Path: <stefan.tatschner@gmail.com>
-Message-ID: <6f210e328bdca2d1a1ed1e3714b507ce571abc3f.camel@gmail.com>
-Subject: Re: [ANNOUNCE] Alpha Snapshots of WireGuard for Android and macOS
-From: Stefan Tatschner <stefan.tatschner@gmail.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>, wireguard@lists.zx2c4.com
-Date: Wed, 16 May 2018 09:10:38 +0200
-In-Reply-To: <20180515225433.GA26432@zx2c4.com>
-References: <20180515225433.GA26432@zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
-Mime-Version: 1.0
+ Wed, 16 May 2018 07:11:01 +0000 (UTC)
+Received: from [2001:780:107:0:1278:d2ff:fea3:d4a6]
+ by mail.vm.smurf.noris.de with esmtpsa
+ (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim 4.89)
+ (envelope-from <matthias@urlichs.de>) id 1fIqaS-000CYk-El
+ for wireguard@lists.zx2c4.com; Wed, 16 May 2018 09:11:01 +0200
+Subject: Re: Need for HW-clock independent timestamps
+To: wireguard@lists.zx2c4.com
+References: <c1e04862-162f-eff9-7884-467f672608e2@cgws.de>
+ <CAKXLc7capqT5oFinwT6Cj1-b2h5gKo+CG+WTLbFO+bG7pR7NsQ@mail.gmail.com>
+ <793381ba-b59d-50e4-6d7b-cbe9bef91ba1@cgws.de>
+ <489c2f57-574a-1223-9c4d-266904e52c94@gmail.com>
+ <20180515202126.yw57deh6st5ebnk6@kowloon>
+ <CAKXLc7drht4CVexsCTXwHe-Z_RyFghAhQsXom=z9dtQuxQU48Q@mail.gmail.com>
+From: Matthias Urlichs <matthias@urlichs.de>
+Message-ID: <80879e37-f981-434b-e7ea-b512ce202894@urlichs.de>
+Date: Wed, 16 May 2018 09:10:58 +0200
+MIME-Version: 1.0
+In-Reply-To: <CAKXLc7drht4CVexsCTXwHe-Z_RyFghAhQsXom=z9dtQuxQU48Q@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -29,57 +36,20 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Jason,
+On 15.05.2018 22:49, Kalin KOZHUHAROV wrote:
+> [1]  Can anyone point me to the piece in code that shows that
+> precision? In other words, how far apart can 2 peers' clocks be and
+> still connect.
 
-thanks for your hard work!
+Infinite.
 
-On Wed, 2018-05-16 at 00:54 +0200, Jason A. Donenfeld wrote:
-> [NEW] WireGuard for Android
-> ---------------------------
-> You can download the app from the Play Store or from F-Droid. It supports
-> adding wg-quick(8)-style .conf files or .zips of them. The app uses the kernel
-> module if available, which gives the best performance, stability, and battery
-> life, and falls back to the userspace code if it's not available. Download at:
-> https://play.google.com/store/apps/details?id=com.wireguard.android
+Seriously. The timestamp field is essentially a counter. It just counts
+up in rather large time-based increments and happens to be seeded with
+the current time, in the current implementation that is. If you forego
+all of that, seed it with one, and make sure that there'll never be a
+decrement (for instance by saving the current value + a trillion after
+every reboot – you don't reboot a router often enough to endanger your
+flash that way) you're all set.
 
-there seems to be sth. weird with the routing rules/tables. The wireguard routes
-are not set up properly on my phone.
-
-My wireguard network is 10.80.100.0/24, the wireguard server is 10.80.100.1, the
-phone is 10.80.100.27.
-
-On the phone:
-
-lux:/ # ip route
-10.80.100.0/24 dev tun0  proto kernel  scope link  src 10.80.100.27 
-10.160.151.136/29 dev rmnet_data0  proto kernel  scope link  src 10.160.151.139
-
-lux:/ # ip route get 10.80.100.1
-10.80.100.1 via 10.160.151.140 dev rmnet_data0  src 10.160.151.139  uid 0 
-    cache
-
-  -> wrong. this routes via the mobile radio device.
-
-lux:/ # ip route flush cache
-
-lux:/ # ip route get 10.80.100.1      
-10.80.100.1 via 10.160.151.140 dev rmnet_data0  src 10.160.151.139  uid 0 
-    cache
-
-How can I debug this further?
-
-
-I have an openvpn server on the same box, in another subnet. This works fine on
-the phone:
-
-lux:/ # ip route
-10.100.40.0/24 dev tun0  proto kernel  scope link  src 10.100.40.2 
-10.160.151.136/29 dev rmnet_data0  proto kernel  scope link  src 10.160.151.139 
-
-lux:/ # ip route get 10.80.100.1
-10.80.100.1 dev tun0  src 10.100.40.2  uid 0 
-    cache 
-
-  -> works, the wireguard subnet is routed via tun0.
-
-Stefan
+-- 
+-- Matthias Urlichs
