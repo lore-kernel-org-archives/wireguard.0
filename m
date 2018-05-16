@@ -1,23 +1,28 @@
-Return-Path: wireguard@ajs124.de
+Return-Path: matthias@urlichs.de
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bb98413b
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bbb817af
  for <wireguard@lists.zx2c4.com>;
- Wed, 16 May 2018 14:03:57 +0000 (UTC)
-Received: from mail.radical-dreamers.de (mail.radical-dreamers.de
- [144.76.172.186])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9cd43aa0
+ Wed, 16 May 2018 14:06:59 +0000 (UTC)
+Received: from netz.smurf.noris.de (mail.vm.smurf.noris.de
+ [IPv6:2001:780:107:8:83::])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0a67a39f
  for <wireguard@lists.zx2c4.com>;
- Wed, 16 May 2018 14:03:57 +0000 (UTC)
-Date: Wed, 16 May 2018 16:04:04 +0200
-From: ajs124 <wireguard@ajs124.de>
+ Wed, 16 May 2018 14:06:59 +0000 (UTC)
+Received: from [2001:780:107:0:1278:d2ff:fea3:d4a6]
+ by mail.vm.smurf.noris.de with esmtpsa
+ (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim 4.89)
+ (envelope-from <matthias@urlichs.de>) id 1fIx4q-000JnE-5H
+ for wireguard@lists.zx2c4.com; Wed, 16 May 2018 16:06:49 +0200
+Subject: Re: Cipher the private key in peers wg0.conf ?
 To: wireguard@lists.zx2c4.com
-Subject: Re: Multiple (client-)peers with same keys possible ?
-Message-ID: <20180516160404.2f58ad46@thinkpad>
-In-Reply-To: <896575027.3009605.1526448125867@mail.yahoo.com>
-References: <896575027.3009605.1526448125867.ref@mail.yahoo.com>
- <896575027.3009605.1526448125867@mail.yahoo.com>
+References: <392763090.3358208.1526475207903.ref@mail.yahoo.com>
+ <392763090.3358208.1526475207903@mail.yahoo.com>
+From: Matthias Urlichs <matthias@urlichs.de>
+Message-ID: <6e06ad4b-24f2-4d25-b52c-780f0f341d2e@urlichs.de>
+Date: Wed, 16 May 2018 16:06:46 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+In-Reply-To: <392763090.3358208.1526475207903@mail.yahoo.com>
+Content-Type: text/plain; charset=utf-8
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -27,24 +32,17 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Wed, 16 May 2018 05:22:05 +0000 (UTC)
-reiner otto <augustus_meyer@yahoo.de> wrote:
+On 16.05.2018 14:53, reiner otto wrote:
+> Actually, in wg0.conf the private key is defined in clear text. Which allows dump of physical disk to grab it
+> and to fake this client.
+So? If you have physical access to the peer's (unencrypted) disk you can
+do anything. Security is over.
+> Wouldn't it be safer, to cipher the private key somehow ?
+Where would you store the key for that?
 
-> Then individual keys for the clients, sigh.
-> 
-> Which leads to next question:
-> When adding a new client to the servers wg0.conf,
-> does it require a restart of wg, _OR_ is it safe to simply "edit" wg0.conf, adding the clients info ?
-> 
-> Cheers,
-> Reiner
-> 
->  
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
+If you need that kind of safety, encrypt the whole disk. Securing the
+private key doesn't help if you can simply subvert the binary that
+decrypts it.
 
-You don't need to restart, just use "wg addconf" or "wg setconf". Or if you
-don't (want to) use the ini config format, for some reason, using "wg
-set peer <base64-public-key>" directly should also work.
+-- 
+-- Matthias Urlichs
