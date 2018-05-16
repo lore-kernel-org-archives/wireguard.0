@@ -1,31 +1,26 @@
-Return-Path: stefan.tatschner@gmail.com
+Return-Path: toke@toke.dk
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 58805416
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4c867f12
  for <wireguard@lists.zx2c4.com>;
- Wed, 16 May 2018 07:39:15 +0000 (UTC)
-Received: from mail-wr0-x229.google.com (mail-wr0-x229.google.com
- [IPv6:2a00:1450:400c:c0c::229])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 39383b4c
+ Wed, 16 May 2018 09:38:07 +0000 (UTC)
+Received: from mail.toke.dk (mail.toke.dk [52.28.52.200])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0d0f5d2c
  for <wireguard@lists.zx2c4.com>;
- Wed, 16 May 2018 07:39:14 +0000 (UTC)
-Received: by mail-wr0-x229.google.com with SMTP id o4-v6so2680504wrm.0
- for <wireguard@lists.zx2c4.com>; Wed, 16 May 2018 00:39:33 -0700 (PDT)
-Return-Path: <stefan.tatschner@gmail.com>
-Received: from p200300CD373720006AF728FFFEB1F349.dip0.t-ipconnect.de
- (p200300CD373720006AF728FFFEB1F349.dip0.t-ipconnect.de.
- [2003:cd:3737:2000:6af7:28ff:feb1:f349])
- by smtp.gmail.com with ESMTPSA id d12-v6sm2081664wrg.2.2018.05.16.00.39.31
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
- Wed, 16 May 2018 00:39:31 -0700 (PDT)
-Message-ID: <84ae760324adc8302c3a98068d2f46304da6aae0.camel@gmail.com>
-Subject: Re: [ANNOUNCE] Alpha Snapshots of WireGuard for Android and macOS
-From: Stefan Tatschner <stefan.tatschner@gmail.com>
-To: wireguard@lists.zx2c4.com
-Date: Wed, 16 May 2018 09:39:30 +0200
-In-Reply-To: <955fe6b8-4e40-a3c3-c6a0-0050d3406913@urlichs.de>
-Content-Type: text/plain; charset="UTF-8"
-Mime-Version: 1.0
+ Wed, 16 May 2018 09:38:07 +0000 (UTC)
+From: Toke =?utf-8?Q?H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>
+To: Axel Neumann <neumann@cgws.de>, Matthias Urlichs <matthias@urlichs.de>,
+ wireguard@lists.zx2c4.com
+Subject: Re: Need for HW-clock independent timestamps
+In-Reply-To: <1FB166DA-4390-47BD-9CB0-8408C0691AC1@cgws.de>
+References: <c1e04862-162f-eff9-7884-467f672608e2@cgws.de>
+ <CAKXLc7capqT5oFinwT6Cj1-b2h5gKo+CG+WTLbFO+bG7pR7NsQ@mail.gmail.com>
+ <793381ba-b59d-50e4-6d7b-cbe9bef91ba1@cgws.de>
+ <c468bc7b-c1bf-b8db-1168-0ee7eef2f385@urlichs.de> <87k1s7wx30.fsf@toke.dk>
+ <1FB166DA-4390-47BD-9CB0-8408C0691AC1@cgws.de>
+Date: Wed, 16 May 2018 11:38:23 +0200
+Message-ID: <87h8n8ym7k.fsf@toke.dk>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -35,36 +30,54 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-> > On 16.05.2018 09:10, Stefan Tatschner wrote:
-> > How can I debug this further?
-> 
-> Check the output of "ip rule".
+Axel Neumann <neumann@cgws.de> writes:
 
-As a user I can't read anything useful out of this, since I don't known how
-wireguard android sets its fwmarks, etc. But here it is:
+> On 13.05.2018 14:37, Toke H=C3=B8iland-J=C3=B8rgensen wrote:> Matthias Ur=
+lichs
+> <matthias@urlichs.de> writes:
+>>
+>>> Can anybody think of problems with this solution?
+>>
+>> Well, the possibility of DOS if you set the counter too high,
+>
+> Correct me please, but skipping even many counter values should not be
+> a problem at all. So do you mean DOS in case your hit a wrap around of
+> the counter? IMO this can be easily prevented.
 
-lux:/ # ip rule
-0:	from all lookup local 
-10000:	from all fwmark 0xc0000/0xd0000 lookup legacy_system 
-10500:	from all oif dummy0 uidrange 0-0 lookup dummy0 
-10500:	from all oif rmnet_data0 uidrange 0-0 lookup rmnet_data0 
-11000:	from all iif tun0 lookup local_network 
-12000:	from all fwmark 0x0/0x20000 iif lo uidrange 0-99999 lookup tun0 
-12000:	from all fwmark 0xc0065/0xcffff lookup tun0 
-13000:	from all fwmark 0x10063/0x1ffff lookup local_network 
-13000:	from all fwmark 0x10064/0x1ffff lookup rmnet_data0 
-13000:	from all fwmark 0x10065/0x1ffff uidrange 0-99999 lookup tun0 
-13000:	from all fwmark 0x10065/0x1ffff uidrange 0-0 lookup tun0 
-14000:	from all oif dummy0 lookup dummy0 
-14000:	from all oif rmnet_data0 lookup rmnet_data0 
-14000:	from all oif tun0 uidrange 0-99999 lookup tun0 
-15000:	from all fwmark 0x0/0x10000 lookup legacy_system 
-16000:	from all fwmark 0x0/0x10000 lookup legacy_network 
-17000:	from all fwmark 0x0/0x10000 lookup local_network 
-19000:	from all fwmark 0x64/0x1ffff lookup rmnet_data0 
-21000:	from all fwmark 0x65/0x1ffff lookup rmnet_data0 
-22000:	from all fwmark 0x0/0xffff lookup rmnet_data0 
-23000:	from all fwmark 0x0/0xffff uidrange 0-0 lookup main 
-32000:	from all unreachable
+No I meant DOS if you fail to save state properly. I.e., I send seqno
+100000, lose my state, reboot, and re-initialise to seqno 100. I have
+now essentially locked myself out of the network until my seqno goes
+above 100000 again. Since I have no way of reliably detecting this
+condition, there is no straight-forward manual recovery possible.
 
-Stefan
+>> and the
+>> possibility of replay attacks if you fail to save the last state when
+>> you shut down comes to mind :)
+>
+> Where is that possibility? If you fail then you would send
+> handshake_initiation messages with an already outdated timestamp
+> field. Exactly what now happens by default with non-HWC equipped
+> devices after each reboot.
+
+You'd need to not only save your own seqno, but also the last seen seqno
+from every peer. Otherwise you're vulnerable to a replay attack after
+rebooting. And if you lose that state you are, well, vulnerable to a
+replay attack after rebooting :)
+
+>> (Not saying it's not possible to create a workable solution, just that
+>> it's not trivial and requires careful thought to not break the security
+>> assumptions of the protocol).
+>
+> I agree, but looking at the recent discussion (how to secure NTP as a
+> work around for for non-HWC devices) some of the assumptions made by
+> the current approach seem already quite questionable to me right now.
+> Like super-simple WG and firewall setup. Instead of two-lines
+> documentation you will likely need 2 pages plus some references for
+> further reading to other tools (like NTP) and also inherit related
+> problems. That does not sound like the WG philosophy to me.
+
+Oh, I totally agree that it would be good if a solution could be found
+to this. I'm just objecting to the assertion that "it's easy, just
+replace the timestamp with an increasing seqno".
+
+-Toke
