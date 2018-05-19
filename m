@@ -1,33 +1,26 @@
-Return-Path: matthias@urlichs.de
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 66935734
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c8181134
  for <wireguard@lists.zx2c4.com>;
- Thu, 17 May 2018 08:28:54 +0000 (UTC)
-Received: from netz.smurf.noris.de (mail.vm.smurf.noris.de
- [IPv6:2001:780:107:8:83::])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fc958a9c
+ Sat, 19 May 2018 00:30:44 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e3d6634d
  for <wireguard@lists.zx2c4.com>;
- Thu, 17 May 2018 08:28:54 +0000 (UTC)
-Subject: Re: Need for HW-clock independent timestamps
-To: Axel Neumann <neumann@cgws.de>, wireguard@lists.zx2c4.com
-References: <c1e04862-162f-eff9-7884-467f672608e2@cgws.de>
- <CAKXLc7capqT5oFinwT6Cj1-b2h5gKo+CG+WTLbFO+bG7pR7NsQ@mail.gmail.com>
- <793381ba-b59d-50e4-6d7b-cbe9bef91ba1@cgws.de>
- <489c2f57-574a-1223-9c4d-266904e52c94@gmail.com>
- <20180515202126.yw57deh6st5ebnk6@kowloon>
- <CAKXLc7drht4CVexsCTXwHe-Z_RyFghAhQsXom=z9dtQuxQU48Q@mail.gmail.com>
- <20C72316-B8FC-4515-8DC8-8BC82BF3864F@cgws.de>
- <CAJQSx3at0rGtjPrpch2mcCqeTQCZVwaiG1kSHBW19Nk4McJxGQ@mail.gmail.com>
- <1526528456.18498.0@mail.makrotopia.org> <20180517100325.1c542b1f@natsu>
- <748e7dbf-0238-6c81-ab18-83d6174405fe@urlichs.de>
- <AA544EA9-A23B-4F49-A468-617F5DF2B035@cgws.de>
-From: Matthias Urlichs <matthias@urlichs.de>
-Message-ID: <4ff8424c-b964-8003-99c6-ab8ee075846f@urlichs.de>
-Date: Thu, 17 May 2018 10:28:31 +0200
+ Sat, 19 May 2018 00:30:44 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d9528cc7
+ for <wireguard@lists.zx2c4.com>;
+ Sat, 19 May 2018 00:29:29 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id f1c717f5
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Sat, 19 May 2018 00:29:29 +0000 (UTC)
+Date: Sat, 19 May 2018 02:31:19 +0200
+To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: [ANNOUNCE] WireGuard Snapshot `0.0.20180519` Available
 MIME-Version: 1.0
-In-Reply-To: <AA544EA9-A23B-4F49-A468-617F5DF2B035@cgws.de>
-Content-Type: multipart/alternative;
- boundary="------------61EABDAFF2A4F26CE67992D3"
+Content-Type: text/plain; charset=UTF-8
+Message-Id: <b995742b9fe2915d@frisell.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -37,49 +30,122 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-This is a multi-part message in MIME format.
---------------61EABDAFF2A4F26CE67992D3
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On 17.05.2018 09:07, Axel Neumann wrote:
->> Wireguard's connection setup is a whole lot simpler than most other
-> But only if you ignore the implications coming with NTP transmissions.
+Hello,
 
-The implication is to require a monotonically increasing 96-bit value.
-Using NTP is one way to do that. There are obviously others which do not
-depend on external protocols and/or services.
+A new snapshot, `0.0.20180519`, has been tagged in the git repository.
 
--- 
--- Matthias Urlichs
+Please note that this snapshot is, like the rest of the project at this point
+in time, experimental, and does not consitute a real release that would be
+considered secure and bug-free. WireGuard is generally thought to be fairly
+stable, and most likely will not crash your computer (though it may).
+However, as this is a pre-release snapshot, it comes with no guarantees, and
+its security is not yet to be depended on; it is not applicable for CVEs.
+
+With all that said, if you'd like to test this snapshot out, there are a
+few relevent changes.
+
+== Changes ==
+
+  * chacha20poly1305: add mips32 implementation
+  
+  "The OpenWRT Commit" - this significantly speeds up performance on cheap
+  plastic MIPS routers, and presumably the remaining MIPS32r2 super computers
+  out there.
+  
+  * timers: reinitialize state on init
+  * timers: round up instead of down in slack_time
+  * timers: remove slack_time
+  * timers: clear send_keepalive timer on sending handshake response
+  * timers: no need to clear keepalive in persistent keepalive
+  
+  Andrew He and I have helped simplify the timers and remove some old warts,
+  making the whole system a bit easier to analyze.
+  
+  * tools: fix errno propagation and messages
+  
+  Error messages are now more coherent.
+  
+  * wg-quick: use invoking shell in auto rooting
+  
+  Rather than letting sudo use bash from PATH, we now have it use whatever bash
+  is currently executing the script.
+  
+  * device: remove allowedips before individual peers
+  
+  This avoids an O(n^2) traversal in favor of an O(n) one. Before systems with
+  many peers would grind when deleting the interface.
+  
+  * dns-hatchet: update paths
+  
+  Our reorganizing of the wg-quick bash paths was not sync'd with this patch,
+  resulting in some trivial problems for Fedora and OpenSUSE.
+  
+  * compat: backport for OpenSUSE 15
+  
+  Usual compat fixes.
+  
+  * wg-quick: add darwin implementation
+  
+  We released a Darwin implementation of wg-quick(8), to be used with the new
+  wireguard-go snapshot.
+  
+  * wg-quick: darwin: ensure socket directory exists
+  * wg-quick: darwin: remove v6 routes after shutdown
+  * wg-quick: darwin: bash correctness
+  * wg-quick: darwin: restore DNS on down
+  * wg-quick: darwin: use bash from environment and require bash 4+
+  * wg-quick: darwin: sometimes there are no network services
+  * wg-quick: darwin: avoid routing loop if no default
+  * wg-quick: darwin: networksetup does not like missing stdio
+  * wg-quick: darwin: reorder functions
+  * wg-quick: darwin: simpler inclusion check
+  
+  After a pretty intense first few days of the new macOS port, we've fixed a few
+  bugs and improved functionality of wg-quick(8).
+  
+  * ncat-client-server: add wg-quick variant
+  
+  We now have client-quick.sh that does the same as client.sh except it builds a
+  file for wg-quick(8), which can then be used in `wg-quick up demo`.
+
+This snapshot contains commits from: Jason A. Donenfeld and René van Dorst.
+
+As always, the source is available at https://git.zx2c4.com/WireGuard/ and
+information about the project is available at https://www.wireguard.com/ .
+
+This snapshot is available in tarball form here:
+  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-0.0.20180519.tar.xz
+  SHA2-256: 8846b3006c3f7e079bb38a4c985ccc2981e259f56c927b4cf47cbc1420e1c462
+  BLAKE2b-256: fc2089b0e941398423bc312d16664fa5af9eb00ca3a99eb5a4624443fc4d9f13
+
+If you're a snapshot package maintainer, please bump your package version. If
+you're a user, the WireGuard team welcomes any and all feedback on this latest
+snapshot.
+
+Finally, WireGuard development thrives on donations. By popular demand, we
+have a webpage for this: https://www.wireguard.com/donations/
+
+Thank you,
+Jason Donenfeld
 
 
---------------61EABDAFF2A4F26CE67992D3
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: 7bit
+-----BEGIN PGP SIGNATURE-----
 
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  </head>
-  <body text="#000000" bgcolor="#FFFFFF">
-    <div class="moz-cite-prefix">On 17.05.2018 09:07, Axel Neumann
-      wrote:<br>
-    </div>
-    <blockquote type="cite"
-      cite="mid:AA544EA9-A23B-4F49-A468-617F5DF2B035@cgws.de">
-      <blockquote type="cite" style="color: #000000;">
-        <pre wrap="">Wireguard's connection setup is a whole lot simpler than most other
-</pre>
-      </blockquote>
-      <pre wrap="">But only if you ignore the implications coming with NTP transmissions.</pre>
-    </blockquote>
-    <p>The implication is to require a monotonically increasing 96-bit
-      value. Using NTP is one way to do that. There are obviously others
-      which do not depend on external protocols and/or services.</p>
-    <pre class="moz-signature" cols="72">-- 
--- Matthias Urlichs</pre>
-  </body>
-</html>
-
---------------61EABDAFF2A4F26CE67992D3--
+iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAlr/cD0QHGphc29uQHp4
+MmM0LmNvbQAKCRBJ/HASpd4DrsA7D/9QR8EulAmL1pqA8EogZ+latTOQv0HubzqQ
+yeKextYH9+gG3RhHd3ojncraW8wc1alJruC4zWbc4Ozdk7fEvE8uwTbqb6pjRPV2
+A9QXPe+0BlAOluAY22oZP44zaFVeec7YHM7HtnWVgmdxQaNNwXNkkK0imuh4vL6H
+hL5sd0yZS1oZv4lNxbW2WvXgelrnHTA3amebM9dHAbVT/fiWRf1ZB2HssK2HpzLd
+e2qHvgNusvMeB/RIfviEyWSQuu6RwrmnJAdEU/7iB4YD1+WPZ4ksNuPWRN3jesD7
+mXIsHGhyEbkRIst5odvZ2Ojx7Ia//ARcAOG/Kf4Pmdoe/lPe81KMxY1OL7cNFN+Q
+pBwT2iZpeky3u3dxl+4Ekxes7ZAsjuDghXs4Yl5x5gckrTUviQI1qhd6lu6dpmgb
+dFX5mbkxToLPvF0Pg0coew6HmPf26XnGtEuxZT2wATlzSy9lB7sTjHKJsKCMm/Ex
+3ShjvGjh6GDpr/3H9xu2XWazxKcu51FBchAkOh15MvgTF2YkIVZ1NgjRoNNl3iok
+CMPg7C/52kOMvAWsuRf7Bj/2w/8U3TvDEI2rkL0kju2dNhLR+s1g+QfUgZwH55ie
+ZW7nM1qMis02HfpxSX0utPmFs8/PfRe5Z0N1qdRaY9JWabFOB7a6UqQHUXNMCSRu
+29okCyku8g==
+=kOMx
+-----END PGP SIGNATURE-----
