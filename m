@@ -1,26 +1,23 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: filippo@ml.filippo.io
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c8181134
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3ad103b1
  for <wireguard@lists.zx2c4.com>;
- Sat, 19 May 2018 00:30:44 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e3d6634d
+ Sun, 20 May 2018 18:56:10 +0000 (UTC)
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
+ [66.111.4.25])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9ad1a251
  for <wireguard@lists.zx2c4.com>;
- Sat, 19 May 2018 00:30:44 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d9528cc7
- for <wireguard@lists.zx2c4.com>;
- Sat, 19 May 2018 00:29:29 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id f1c717f5
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Sat, 19 May 2018 00:29:29 +0000 (UTC)
-Date: Sat, 19 May 2018 02:31:19 +0200
-To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: [ANNOUNCE] WireGuard Snapshot `0.0.20180519` Available
+ Sun, 20 May 2018 18:56:10 +0000 (UTC)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailout.nyi.internal (Postfix) with ESMTP id 1080321E50
+ for <wireguard@lists.zx2c4.com>; Sun, 20 May 2018 14:57:03 -0400 (EDT)
+Message-Id: <1526842622.607158.1378580648.4BA3B2F0@webmail.messagingengine.com>
+From: Filippo Valsorda <filippo@ml.filippo.io>
+To: wireguard@lists.zx2c4.com
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Message-Id: <b995742b9fe2915d@frisell.zx2c4.com>
+Content-Type: multipart/mixed; boundary="_----------=_15268426226071581"
+Subject: [PATCH] Adopt Go workspace best practices
+Date: Sun, 20 May 2018 14:57:02 -0400
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -30,122 +27,324 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+This is a multi-part message in MIME format.
 
-Hello,
+--_----------=_15268426226071581
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
 
-A new snapshot, `0.0.20180519`, has been tagged in the git repository.
+Relative imports break when the project is built from within GOPATH,
+where most Go developers prefer to develop:
 
-Please note that this snapshot is, like the rest of the project at this point
-in time, experimental, and does not consitute a real release that would be
-considered secure and bug-free. WireGuard is generally thought to be fairly
-stable, and most likely will not crash your computer (though it may).
-However, as this is a pre-release snapshot, it comes with no guarantees, and
-its security is not yet to be depended on; it is not applicable for CVEs.
+    device.go:10:2: local import "./ratelimiter" in non-local package
+    tun_darwin.go:10:2: local import "./rwcancel" in non-local package
+    noise-protocol.go:10:2: local import "./tai64n" in non-local package
+    cookie.go:10:2: local import "./xchacha20poly1305" in non-local package
 
-With all that said, if you'd like to test this snapshot out, there are a
-few relevent changes.
+On the other hand, the vendor folder is not supported outside of
+GOPATH, so it's unclear how/if that ever worked.
 
-== Changes ==
+Moreover, using go get instead of dep means that dependencies are not
+pinned, and HEAD is used instead, which makes builds unreproducible.
 
-  * chacha20poly1305: add mips32 implementation
-  
-  "The OpenWRT Commit" - this significantly speeds up performance on cheap
-  plastic MIPS routers, and presumably the remaining MIPS32r2 super computers
-  out there.
-  
-  * timers: reinitialize state on init
-  * timers: round up instead of down in slack_time
-  * timers: remove slack_time
-  * timers: clear send_keepalive timer on sending handshake response
-  * timers: no need to clear keepalive in persistent keepalive
-  
-  Andrew He and I have helped simplify the timers and remove some old warts,
-  making the whole system a bit easier to analyze.
-  
-  * tools: fix errno propagation and messages
-  
-  Error messages are now more coherent.
-  
-  * wg-quick: use invoking shell in auto rooting
-  
-  Rather than letting sudo use bash from PATH, we now have it use whatever bash
-  is currently executing the script.
-  
-  * device: remove allowedips before individual peers
-  
-  This avoids an O(n^2) traversal in favor of an O(n) one. Before systems with
-  many peers would grind when deleting the interface.
-  
-  * dns-hatchet: update paths
-  
-  Our reorganizing of the wg-quick bash paths was not sync'd with this patch,
-  resulting in some trivial problems for Fedora and OpenSUSE.
-  
-  * compat: backport for OpenSUSE 15
-  
-  Usual compat fixes.
-  
-  * wg-quick: add darwin implementation
-  
-  We released a Darwin implementation of wg-quick(8), to be used with the new
-  wireguard-go snapshot.
-  
-  * wg-quick: darwin: ensure socket directory exists
-  * wg-quick: darwin: remove v6 routes after shutdown
-  * wg-quick: darwin: bash correctness
-  * wg-quick: darwin: restore DNS on down
-  * wg-quick: darwin: use bash from environment and require bash 4+
-  * wg-quick: darwin: sometimes there are no network services
-  * wg-quick: darwin: avoid routing loop if no default
-  * wg-quick: darwin: networksetup does not like missing stdio
-  * wg-quick: darwin: reorder functions
-  * wg-quick: darwin: simpler inclusion check
-  
-  After a pretty intense first few days of the new macOS port, we've fixed a few
-  bugs and improved functionality of wg-quick(8).
-  
-  * ncat-client-server: add wg-quick variant
-  
-  We now have client-quick.sh that does the same as client.sh except it builds a
-  file for wg-quick(8), which can then be used in `wg-quick up demo`.
+This adds a Makefile that creates a local GOPATH with a symlink
+trick, so developing outside GOPATH still works. Not only that, but
+a system GOPATH is not required at all as long as the Makefile is used.
+And if the project is cloned in the right place in GOPATH all standard
+tools will work as expected.
 
-This snapshot contains commits from: Jason A. Donenfeld and René van Dorst.
+So all workflows should work just as weel or better. The only new
+requirement is dep, but that's unavoidable for reproducible builds.
 
-As always, the source is available at https://git.zx2c4.com/WireGuard/ and
-information about the project is available at https://www.wireguard.com/ .
+Finally, run goimports on all files to format import statements.
 
-This snapshot is available in tarball form here:
-  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-0.0.20180519.tar.xz
-  SHA2-256: 8846b3006c3f7e079bb38a4c985ccc2981e259f56c927b4cf47cbc1420e1c462
-  BLAKE2b-256: fc2089b0e941398423bc312d16664fa5af9eb00ca3a99eb5a4624443fc4d9f13
+--_----------=_15268426226071581
+Content-Disposition: attachment; filename="0001-Adopt-Go-workspace-best-practices.patch"
+Content-Id: <1526842557.606458.c3556fc9f02cb51ec08fe6564a44f6ea8d1308f1.1B27392C@content.messagingengine.com>
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; name="0001-Adopt-Go-workspace-best-practices.patch"
 
-If you're a snapshot package maintainer, please bump your package version. If
-you're a user, the WireGuard team welcomes any and all feedback on this latest
-snapshot.
+RnJvbSA2ZGQ3YWQ5NzQ3ZGZmNGMyMDRhMTY3ODI0NjZhMGIwOWE3OTE5YTE1
+IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBGaWxpcHBvIFZhbHNv
+cmRhIDxoaUBmaWxpcHBvLmlvPgpEYXRlOiBTdW4sIDIwIE1heSAyMDE4IDE0
+OjM0OjI0IC0wNDAwClN1YmplY3Q6IFtQQVRDSF0gQWRvcHQgR28gd29ya3Nw
+YWNlIGJlc3QgcHJhY3RpY2VzCgpSZWxhdGl2ZSBpbXBvcnRzIGJyZWFrIHdo
+ZW4gdGhlIHByb2plY3QgaXMgYnVpbHQgZnJvbSB3aXRoaW4gR09QQVRILAp3
+aGVyZSBtb3N0IEdvIGRldmVsb3BlcnMgcHJlZmVyIHRvIGRldmVsb3A6Cgog
+ICAgZGV2aWNlLmdvOjEwOjI6IGxvY2FsIGltcG9ydCAiLi9yYXRlbGltaXRl
+ciIgaW4gbm9uLWxvY2FsIHBhY2thZ2UKICAgIHR1bl9kYXJ3aW4uZ286MTA6
+MjogbG9jYWwgaW1wb3J0ICIuL3J3Y2FuY2VsIiBpbiBub24tbG9jYWwgcGFj
+a2FnZQogICAgbm9pc2UtcHJvdG9jb2wuZ286MTA6MjogbG9jYWwgaW1wb3J0
+ICIuL3RhaTY0biIgaW4gbm9uLWxvY2FsIHBhY2thZ2UKICAgIGNvb2tpZS5n
+bzoxMDoyOiBsb2NhbCBpbXBvcnQgIi4veGNoYWNoYTIwcG9seTEzMDUiIGlu
+IG5vbi1sb2NhbCBwYWNrYWdlCgpPbiB0aGUgb3RoZXIgaGFuZCwgdGhlIHZl
+bmRvciBmb2xkZXIgaXMgbm90IHN1cHBvcnRlZCBvdXRzaWRlIG9mCkdPUEFU
+SCwgc28gaXQncyB1bmNsZWFyIGhvdy9pZiB0aGF0IGV2ZXIgd29ya2VkLgoK
+TW9yZW92ZXIsIHVzaW5nIGdvIGdldCBpbnN0ZWFkIG9mIGRlcCBtZWFucyB0
+aGF0IGRlcGVuZGVuY2llcyBhcmUgbm90CnBpbm5lZCwgYW5kIEhFQUQgaXMg
+dXNlZCBpbnN0ZWFkLCB3aGljaCBtYWtlcyBidWlsZHMgdW5yZXByb2R1Y2li
+bGUuCgpUaGlzIGFkZHMgYSBNYWtlZmlsZSB0aGF0IGNyZWF0ZXMgYSBsb2Nh
+bCBHT1BBVEggd2l0aCBhIHN5bWxpbmsKdHJpY2ssIHNvIGRldmVsb3Bpbmcg
+b3V0c2lkZSBHT1BBVEggc3RpbGwgd29ya3MuIE5vdCBvbmx5IHRoYXQsIGJ1
+dAphIHN5c3RlbSBHT1BBVEggaXMgbm90IHJlcXVpcmVkIGF0IGFsbCBhcyBs
+b25nIGFzIHRoZSBNYWtlZmlsZSBpcyB1c2VkLgpBbmQgaWYgdGhlIHByb2pl
+Y3QgaXMgY2xvbmVkIGluIHRoZSByaWdodCBwbGFjZSBpbiBHT1BBVEggYWxs
+IHN0YW5kYXJkCnRvb2xzIHdpbGwgd29yayBhcyBleHBlY3RlZC4KClNvIGFs
+bCB3b3JrZmxvd3Mgc2hvdWxkIHdvcmsganVzdCBhcyB3ZWVsIG9yIGJldHRl
+ci4gVGhlIG9ubHkgbmV3CnJlcXVpcmVtZW50IGlzIGRlcCwgYnV0IHRoYXQn
+cyB1bmF2b2lkYWJsZSBmb3IgcmVwcm9kdWNpYmxlIGJ1aWxkcy4KCkZpbmFs
+bHksIHJ1biBnb2ltcG9ydHMgb24gYWxsIGZpbGVzIHRvIGZvcm1hdCBpbXBv
+cnQgc3RhdGVtZW50cy4KLS0tCiAuZ2l0aWdub3JlICAgICAgICAgICAgICAg
+ICAgICAgfCAgMSArCiBHb3BrZy5sb2NrICAgICAgICAgICAgICAgICAgICAg
+fCAzNiArKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKy0KIE1h
+a2VmaWxlICAgICAgICAgICAgICAgICAgICAgICB8IDE0ICsrKysrKysrKysr
+Ky0tCiBSRUFETUUubWQgICAgICAgICAgICAgICAgICAgICAgfCAxMyArKysr
+KysrKysrLS0tCiBjb25uLmdvICAgICAgICAgICAgICAgICAgICAgICAgfCAg
+MyArKy0KIGNvbm5fbGludXguZ28gICAgICAgICAgICAgICAgICB8ICA1ICsr
+Ky0tCiBjb29raWUuZ28gICAgICAgICAgICAgICAgICAgICAgfCAgNyArKysr
+LS0tCiBkZXZpY2UuZ28gICAgICAgICAgICAgICAgICAgICAgfCAgMyArKy0K
+IGdlbmVyYXRlLXZlbmRvci5zaCAgICAgICAgICAgICB8IDIwIC0tLS0tLS0t
+LS0tLS0tLS0tLS0tCiBrZGZfdGVzdC5nbyAgICAgICAgICAgICAgICAgICAg
+fCAgMyArKy0KIG5vaXNlLWhlbHBlcnMuZ28gICAgICAgICAgICAgICB8ICAz
+ICsrLQogbm9pc2UtcHJvdG9jb2wuZ28gICAgICAgICAgICAgIHwgIDcgKysr
+Ky0tLQogbm9pc2UtdHlwZXMuZ28gICAgICAgICAgICAgICAgIHwgIDEgKwog
+cmVjZWl2ZS5nbyAgICAgICAgICAgICAgICAgICAgIHwgIDcgKysrKy0tLQog
+cndjYW5jZWwvcndjYW5jZWxfdW5peC5nbyAgICAgIHwgIDMgKystCiBzZW5k
+LmdvICAgICAgICAgICAgICAgICAgICAgICAgfCAgNyArKysrLS0tCiB0dW5f
+ZGFyd2luLmdvICAgICAgICAgICAgICAgICAgfCAgNyArKysrLS0tCiB0dW5f
+bGludXguZ28gICAgICAgICAgICAgICAgICAgfCAgNyArKysrLS0tCiB0dW5f
+d2luZG93cy5nbyAgICAgICAgICAgICAgICAgfCAgNSArKystLQogdWFwaV9k
+YXJ3aW4uZ28gICAgICAgICAgICAgICAgIHwgIDMgKystCiB1YXBpX2xpbnV4
+LmdvICAgICAgICAgICAgICAgICAgfCAgNSArKystLQogdWFwaV93aW5kb3dz
+LmdvICAgICAgICAgICAgICAgIHwgIDMgKystCiB4Y2hhY2hhMjBwb2x5MTMw
+NS94Y2hhY2hhMjAuZ28gfCAgMSArCiAyMyBmaWxlcyBjaGFuZ2VkLCAxMDcg
+aW5zZXJ0aW9ucygrKSwgNTcgZGVsZXRpb25zKC0pCiBkZWxldGUgbW9kZSAx
+MDA3NTUgZ2VuZXJhdGUtdmVuZG9yLnNoCgpkaWZmIC0tZ2l0IGEvLmdpdGln
+bm9yZSBiLy5naXRpZ25vcmUKaW5kZXggNDMxOTkxYi4uZDc3NzU2ZSAxMDA2
+NDQKLS0tIGEvLmdpdGlnbm9yZQorKysgYi8uZ2l0aWdub3JlCkBAIC0xLDIg
+KzEsMyBAQAogd2lyZWd1YXJkLWdvCiB2ZW5kb3IKKy5HT1BBVEgKZGlmZiAt
+LWdpdCBhL0dvcGtnLmxvY2sgYi9Hb3BrZy5sb2NrCmluZGV4IDQ5NDU4Mjku
+LmNjYTUxZDIgMTAwNjQ0Ci0tLSBhL0dvcGtnLmxvY2sKKysrIGIvR29wa2cu
+bG9jawpAQCAtMSwxNiArMSw1MCBAQAotIyBUaGlzIHdhcyBnZW5lcmF0ZWQg
+YnkgLi9nZW5lcmF0ZS12ZW5kb3Iuc2gKKyMgVGhpcyBmaWxlIGlzIGF1dG9n
+ZW5lcmF0ZWQsIGRvIG5vdCBlZGl0OyBjaGFuZ2VzIG1heSBiZSB1bmRvbmUg
+YnkgdGhlIG5leHQgJ2RlcCBlbnN1cmUnLgorCisKK1tbcHJvamVjdHNdXQor
+ICBuYW1lID0gImdpdGh1Yi5jb20vTWljcm9zb2Z0L2dvLXdpbmlvIgorICBw
+YWNrYWdlcyA9IFsiLiJdCisgIHJldmlzaW9uID0gIjdkYTE4MGVlOTJkOGJk
+OGJiOGMzN2ZjNTYwZTY3M2U2NTU3YzM5MmYiCisgIHZlcnNpb24gPSAidjAu
+NC43IgorCiBbW3Byb2plY3RzXV0KICAgYnJhbmNoID0gIm1hc3RlciIKICAg
+bmFtZSA9ICJnb2xhbmcub3JnL3gvY3J5cHRvIgorICBwYWNrYWdlcyA9IFsK
+KyAgICAiYmxha2UycyIsCisgICAgImNoYWNoYTIwcG9seTEzMDUiLAorICAg
+ICJjdXJ2ZTI1NTE5IiwKKyAgICAiaW50ZXJuYWwvY2hhY2hhMjAiLAorICAg
+ICJwb2x5MTMwNSIKKyAgXQogICByZXZpc2lvbiA9ICIxYTU4MGIzZWZmNzgx
+NGZjOWI0MDYwMmZkMzUyNTZjNjNiNTBmNDkxIgogCiBbW3Byb2plY3RzXV0K
+ICAgYnJhbmNoID0gIm1hc3RlciIKICAgbmFtZSA9ICJnb2xhbmcub3JnL3gv
+bmV0IgorICBwYWNrYWdlcyA9IFsKKyAgICAiYnBmIiwKKyAgICAiaW50ZXJu
+YWwvaWFuYSIsCisgICAgImludGVybmFsL3NvY2tldCIsCisgICAgImlwdjQi
+LAorICAgICJpcHY2IgorICBdCiAgIHJldmlzaW9uID0gIjI0OTFjNWRlMzQ5
+MGZjZWQyZjZjZmYzNzYxMjdjNjY3ZWZlZWQ4NTciCiAKIFtbcHJvamVjdHNd
+XQogICBicmFuY2ggPSAibWFzdGVyIgogICBuYW1lID0gImdvbGFuZy5vcmcv
+eC9zeXMiCisgIHBhY2thZ2VzID0gWworICAgICJjcHUiLAorICAgICJ1bml4
+IiwKKyAgICAid2luZG93cyIsCisgICAgIndpbmRvd3MvcmVnaXN0cnkiCisg
+IF0KICAgcmV2aXNpb24gPSAiN2M4N2QxM2Y4ZTgzNWQyZmIzYTcwYTI5MTJj
+ODExZWQwYzFkMjQxYiIKIAorW3NvbHZlLW1ldGFdCisgIGFuYWx5emVyLW5h
+bWUgPSAiZGVwIgorICBhbmFseXplci12ZXJzaW9uID0gMQorICBpbnB1dHMt
+ZGlnZXN0ID0gIjRhYTMwNzY4NjEzNDNhY2Q2M2NhMWY0MGIyYzY3YzA1NThj
+ZGI4OWFjNWVhYjNmYzg1YTA2NmY1MWE1NzhjOWEiCisgIHNvbHZlci1uYW1l
+ID0gImdwcy1jZGNsIgorICBzb2x2ZXItdmVyc2lvbiA9IDEKZGlmZiAtLWdp
+dCBhL01ha2VmaWxlIGIvTWFrZWZpbGUKaW5kZXggZTFjNTNjNS4uY2NhOTcw
+ZiAxMDA2NDQKLS0tIGEvTWFrZWZpbGUKKysrIGIvTWFrZWZpbGUKQEAgLTgs
+MTUgKzgsMjUgQEAgJChlcnJvciBEbyBub3QgYnVpbGQgdGhpcyBmb3IgTGlu
+dXguIEluc3RlYWQgdXNlIHRoZSBMaW51eCBrZXJuZWwgbW9kdWxlLiBTZWUg
+d2kKIGVuZGlmCiBlbmRpZgogCitJTVBPUlRfUEFUSCA6PSBnaXQuengyYzQu
+Y29tL3dpcmVndWFyZC1nbworCiBhbGw6IHdpcmVndWFyZC1nbwogCi13aXJl
+Z3VhcmQtZ286ICQod2lsZGNhcmQgKi5nbykgJCh3aWxkY2FyZCAqLyouZ28p
+Ci0JZ28gYnVpbGQgLXYgLW8gJEAKK3dpcmVndWFyZC1nbzogJCh3aWxkY2Fy
+ZCAqLmdvKSAkKHdpbGRjYXJkICovKi5nbykgR29wa2cuKiAuR09QQVRILy5v
+aworCWNkICIkKFBXRCkvLkdPUEFUSC9zcmMvJChJTVBPUlRfUEFUSCkiICYm
+IEdPUEFUSD0iJChQV0QpLy5HT1BBVEgiIGRlcCBlbnN1cmUKKwlHT1BBVEg9
+IiQoUFdEKS8uR09QQVRIIiBnbyBidWlsZCAtdiAkKElNUE9SVF9QQVRIKQog
+CiBpbnN0YWxsOiB3aXJlZ3VhcmQtZ28KIAlAaW5zdGFsbCAtdiAtZCAiJChE
+RVNURElSKSQoQklORElSKSIgJiYgaW5zdGFsbCAtbSAwNzU1IC12IHdpcmVn
+dWFyZC1nbyAiJChERVNURElSKSQoQklORElSKS93aXJlZ3VhcmQtZ28iCiAK
+IGNsZWFuOgogCXJtIC1mIHdpcmVndWFyZC1nbworCXJtIC1yZiBiaW4gLkdP
+UEFUSAogCiAuUEhPTlk6IGNsZWFuIGluc3RhbGwKKworLkdPUEFUSC8ub2s6
+CisJQG1rZGlyIC1wICIuR09QQVRIL3NyYy8kKElNUE9SVF9QQVRIKSIKKwlA
+cm1kaXIgIi5HT1BBVEgvc3JjLyQoSU1QT1JUX1BBVEgpIgorCUBsbiAtcyAu
+Li8uLi8uLiAiLkdPUEFUSC9zcmMvJChJTVBPUlRfUEFUSCkiCisJQHRvdWNo
+ICRACmRpZmYgLS1naXQgYS9SRUFETUUubWQgYi9SRUFETUUubWQKaW5kZXgg
+NDk5ZmNjNS4uNzZiN2E4NyAxMDA2NDQKLS0tIGEvUkVBRE1FLm1kCisrKyBi
+L1JFQURNRS5tZApAQCAtNDQsMTYgKzQ0LDIzIEBAIFdvcmsgaW4gcHJvZ3Jl
+c3MsIGJ1dCBub3RoaW5nIHlldCB0byBzaGFyZS4KIAogIyMgQnVpbGRpbmcK
+IAotWW91IGNhbiBzYXRpc2Z5IGRlcGVuZGVuY2llcyB3aXRoIGVpdGhlciBg
+Z28gZ2V0IC1kIC12YCBvciBgZGVwIGVuc3VyZSAtdmVuZG9yLW9ubHlgLiBU
+aGVuIHJ1biBgbWFrZWAuIEFzIHRoaXMgaXMgYSBHbyBwcm9qZWN0LCBhIGBH
+T1BBVEhgIGlzIHJlcXVpcmVkLiBGb3IgZXhhbXBsZSwgd2lyZWd1YXJkLWdv
+IGNhbiBiZSBidWlsdCB3aXRoOgorTWFrZSBzdXJlIHlvdSBoYXZlIEdvIGFu
+ZCBgZGVwYCBpbnN0YWxsZWQsIHRoZW4gcnVuIGBtYWtlYC4KIAogYGBgCiAk
+IGdpdCBjbG9uZSBodHRwczovL2dpdC56eDJjNC5jb20vd2lyZWd1YXJkLWdv
+CiAkIGNkIHdpcmVndWFyZC1nbwotJCBleHBvcnQgR09QQVRIPSIkUFdEL2dv
+cGF0aCIKLSQgZ28gZ2V0IC1kIC12CiAkIG1ha2UKIGBgYAogCitPciwgd2l0
+aCBhIHByb3Blcmx5IHNldCB1cCBHT1BBVEgsIHJ1biBgZGVwIGVuc3VyZWAu
+CisKK2BgYAorJCBnaXQgY2xvbmUgaHR0cHM6Ly9naXQuengyYzQuY29tL3dp
+cmVndWFyZC1nbyAiJChnbyBlbnYgR09QQVRIKS9zcmMvZ2l0Lnp4MmM0LmNv
+bS93aXJlZ3VhcmQtZ28iCiskIGNkICIkKGdvIGVudiBHT1BBVEgpL3NyYy9n
+aXQuengyYzQuY29tL3dpcmVndWFyZC1nbyIKKyQgZGVwIGVuc3VyZQorJCBn
+byBidWlsZAorYGBgCisKICMjIExpY2Vuc2UKIAogICAgIFRoaXMgcHJvZ3Jh
+bSBpcyBmcmVlIHNvZnR3YXJlOyB5b3UgY2FuIHJlZGlzdHJpYnV0ZSBpdCBh
+bmQvb3IgbW9kaWZ5CmRpZmYgLS1naXQgYS9jb25uLmdvIGIvY29ubi5nbwpp
+bmRleCBkZWQ3NDE5Li4yOWQ5ZWExIDEwMDY0NAotLS0gYS9jb25uLmdvCisr
+KyBiL2Nvbm4uZ28KQEAgLTgsOSArOCwxMCBAQCBwYWNrYWdlIG1haW4KIAog
+aW1wb3J0ICgKIAkiZXJyb3JzIgorCSJuZXQiCisKIAkiZ29sYW5nLm9yZy94
+L25ldC9pcHY0IgogCSJnb2xhbmcub3JnL3gvbmV0L2lwdjYiCi0JIm5ldCIK
+ICkKIAogY29uc3QgKApkaWZmIC0tZ2l0IGEvY29ubl9saW51eC5nbyBiL2Nv
+bm5fbGludXguZ28KaW5kZXggZTUxMDVlMy4uYmE5YTkwMiAxMDA2NDQKLS0t
+IGEvY29ubl9saW51eC5nbworKysgYi9jb25uX2xpbnV4LmdvCkBAIC0xNiwx
+MyArMTYsMTQgQEAKIHBhY2thZ2UgbWFpbgogCiBpbXBvcnQgKAotCSIuL3J3
+Y2FuY2VsIgogCSJlcnJvcnMiCi0JImdvbGFuZy5vcmcveC9zeXMvdW5peCIK
+IAkibmV0IgogCSJzdHJjb252IgogCSJzeW5jIgogCSJ1bnNhZmUiCisKKwki
+Z2l0Lnp4MmM0LmNvbS93aXJlZ3VhcmQtZ28vcndjYW5jZWwiCisJImdvbGFu
+Zy5vcmcveC9zeXMvdW5peCIKICkKIAogdHlwZSBJUHY0U291cmNlIHN0cnVj
+dCB7CmRpZmYgLS1naXQgYS9jb29raWUuZ28gYi9jb29raWUuZ28KaW5kZXgg
+YzM5YWQyMi4uODYxZDk0MCAxMDA2NDQKLS0tIGEvY29va2llLmdvCisrKyBi
+L2Nvb2tpZS5nbwpAQCAtNywxMyArNywxNCBAQAogcGFja2FnZSBtYWluCiAK
+IGltcG9ydCAoCi0JIi4veGNoYWNoYTIwcG9seTEzMDUiCiAJImNyeXB0by9o
+bWFjIgogCSJjcnlwdG8vcmFuZCIKLQkiZ29sYW5nLm9yZy94L2NyeXB0by9i
+bGFrZTJzIgotCSJnb2xhbmcub3JnL3gvY3J5cHRvL2NoYWNoYTIwcG9seTEz
+MDUiCiAJInN5bmMiCiAJInRpbWUiCisKKwkiZ2l0Lnp4MmM0LmNvbS93aXJl
+Z3VhcmQtZ28veGNoYWNoYTIwcG9seTEzMDUiCisJImdvbGFuZy5vcmcveC9j
+cnlwdG8vYmxha2UycyIKKwkiZ29sYW5nLm9yZy94L2NyeXB0by9jaGFjaGEy
+MHBvbHkxMzA1IgogKQogCiB0eXBlIENvb2tpZUNoZWNrZXIgc3RydWN0IHsK
+ZGlmZiAtLWdpdCBhL2RldmljZS5nbyBiL2RldmljZS5nbwppbmRleCA1ZjQ2
+OGIyLi41OGQ3MWNlIDEwMDY0NAotLS0gYS9kZXZpY2UuZ28KKysrIGIvZGV2
+aWNlLmdvCkBAIC03LDExICs3LDEyIEBACiBwYWNrYWdlIG1haW4KIAogaW1w
+b3J0ICgKLQkiLi9yYXRlbGltaXRlciIKIAkicnVudGltZSIKIAkic3luYyIK
+IAkic3luYy9hdG9taWMiCiAJInRpbWUiCisKKwkiZ2l0Lnp4MmM0LmNvbS93
+aXJlZ3VhcmQtZ28vcmF0ZWxpbWl0ZXIiCiApCiAKIGNvbnN0ICgKZGlmZiAt
+LWdpdCBhL2dlbmVyYXRlLXZlbmRvci5zaCBiL2dlbmVyYXRlLXZlbmRvci5z
+aApkZWxldGVkIGZpbGUgbW9kZSAxMDA3NTUKaW5kZXggNTFkMGZmZi4uMDAw
+MDAwMAotLS0gYS9nZW5lcmF0ZS12ZW5kb3Iuc2gKKysrIC9kZXYvbnVsbApA
+QCAtMSwyMCArMCwwIEBACi0jIS9iaW4vYmFzaAotCi1lY2hvICIjIFRoaXMg
+d2FzIGdlbmVyYXRlZCBieSAuL2dlbmVyYXRlLXZlbmRvci5zaCIgPiBHb3Br
+Zy5sb2NrCi1lY2hvICIjIFRoaXMgd2FzIGdlbmVyYXRlZCBieSAuL2dlbmVy
+YXRlLXZlbmRvci5zaCIgPiBHb3BrZy50b21sCi0KLXdoaWxlIHJlYWQgLXIg
+cGFja2FnZTsgZG8KLQljYXQgPj4gR29wa2cubG9jayA8PC1fRU9GCi0JW1tw
+cm9qZWN0c11dCi0JICBicmFuY2ggPSAibWFzdGVyIgotCSAgbmFtZSA9ICIk
+cGFja2FnZSIKLQkgIHJldmlzaW9uID0gIiQoPCAiJEdPUEFUSC9zcmMvJHBh
+Y2thZ2UvLmdpdC9yZWZzL2hlYWRzL21hc3RlciIpIgotCi0JX0VPRgotCWNh
+dCA+PiBHb3BrZy50b21sIDw8LV9FT0YKLQlbW2NvbnN0cmFpbnRdXQotCSAg
+YnJhbmNoID0gIm1hc3RlciIKLQkgIG5hbWUgPSAiJHBhY2thZ2UiCi0KLQlf
+RU9GCi1kb25lIDwgPChzZWQgLW4gJ3MvLioiXChnb2xhbmcub3JnXC94XC9b
+Xi9dXCtcKVwvXD8uKiIuKi9cMS9wJyAqLmdvICovKi5nbyB8IHNvcnQgfCB1
+bmlxKQpkaWZmIC0tZ2l0IGEva2RmX3Rlc3QuZ28gYi9rZGZfdGVzdC5nbwpp
+bmRleCA4OTdhNWJkLi41YjJiNjgxIDEwMDY0NAotLS0gYS9rZGZfdGVzdC5n
+bworKysgYi9rZGZfdGVzdC5nbwpAQCAtOCw4ICs4LDkgQEAgcGFja2FnZSBt
+YWluCiAKIGltcG9ydCAoCiAJImVuY29kaW5nL2hleCIKLQkiZ29sYW5nLm9y
+Zy94L2NyeXB0by9ibGFrZTJzIgogCSJ0ZXN0aW5nIgorCisJImdvbGFuZy5v
+cmcveC9jcnlwdG8vYmxha2UycyIKICkKIAogdHlwZSBLREZUZXN0IHN0cnVj
+dCB7CmRpZmYgLS1naXQgYS9ub2lzZS1oZWxwZXJzLmdvIGIvbm9pc2UtaGVs
+cGVycy5nbwppbmRleCBjZTM5OGM0Li5mYWJkZGNhIDEwMDY0NAotLS0gYS9u
+b2lzZS1oZWxwZXJzLmdvCisrKyBiL25vaXNlLWhlbHBlcnMuZ28KQEAgLTEw
+LDkgKzEwLDEwIEBAIGltcG9ydCAoCiAJImNyeXB0by9obWFjIgogCSJjcnlw
+dG8vcmFuZCIKIAkiY3J5cHRvL3N1YnRsZSIKKwkiaGFzaCIKKwogCSJnb2xh
+bmcub3JnL3gvY3J5cHRvL2JsYWtlMnMiCiAJImdvbGFuZy5vcmcveC9jcnlw
+dG8vY3VydmUyNTUxOSIKLQkiaGFzaCIKICkKIAogLyogS0RGIHJlbGF0ZWQg
+ZnVuY3Rpb25zLgpkaWZmIC0tZ2l0IGEvbm9pc2UtcHJvdG9jb2wuZ28gYi9u
+b2lzZS1wcm90b2NvbC5nbwppbmRleCBjNmE5NWQ4Li5kMzY3MTAxIDEwMDY0
+NAotLS0gYS9ub2lzZS1wcm90b2NvbC5nbworKysgYi9ub2lzZS1wcm90b2Nv
+bC5nbwpAQCAtNywxMyArNywxNCBAQAogcGFja2FnZSBtYWluCiAKIGltcG9y
+dCAoCi0JIi4vdGFpNjRuIgogCSJlcnJvcnMiCisJInN5bmMiCisJInRpbWUi
+CisKKwkiZ2l0Lnp4MmM0LmNvbS93aXJlZ3VhcmQtZ28vdGFpNjRuIgogCSJn
+b2xhbmcub3JnL3gvY3J5cHRvL2JsYWtlMnMiCiAJImdvbGFuZy5vcmcveC9j
+cnlwdG8vY2hhY2hhMjBwb2x5MTMwNSIKIAkiZ29sYW5nLm9yZy94L2NyeXB0
+by9wb2x5MTMwNSIKLQkic3luYyIKLQkidGltZSIKICkKIAogY29uc3QgKApk
+aWZmIC0tZ2l0IGEvbm9pc2UtdHlwZXMuZ28gYi9ub2lzZS10eXBlcy5nbwpp
+bmRleCBmNGY1YTI3Li40YjE4NWI4IDEwMDY0NAotLS0gYS9ub2lzZS10eXBl
+cy5nbworKysgYi9ub2lzZS10eXBlcy5nbwpAQCAtMTAsNiArMTAsNyBAQCBp
+bXBvcnQgKAogCSJjcnlwdG8vc3VidGxlIgogCSJlbmNvZGluZy9oZXgiCiAJ
+ImVycm9ycyIKKwogCSJnb2xhbmcub3JnL3gvY3J5cHRvL2NoYWNoYTIwcG9s
+eTEzMDUiCiApCiAKZGlmZiAtLWdpdCBhL3JlY2VpdmUuZ28gYi9yZWNlaXZl
+LmdvCmluZGV4IDU2ZTY1ZTcuLjZkN2U4ZTIgMTAwNjQ0Ci0tLSBhL3JlY2Vp
+dmUuZ28KKysrIGIvcmVjZWl2ZS5nbwpAQCAtOSwxNCArOSwxNSBAQCBwYWNr
+YWdlIG1haW4KIGltcG9ydCAoCiAJImJ5dGVzIgogCSJlbmNvZGluZy9iaW5h
+cnkiCi0JImdvbGFuZy5vcmcveC9jcnlwdG8vY2hhY2hhMjBwb2x5MTMwNSIK
+LQkiZ29sYW5nLm9yZy94L25ldC9pcHY0IgotCSJnb2xhbmcub3JnL3gvbmV0
+L2lwdjYiCiAJIm5ldCIKIAkic3RyY29udiIKIAkic3luYyIKIAkic3luYy9h
+dG9taWMiCiAJInRpbWUiCisKKwkiZ29sYW5nLm9yZy94L2NyeXB0by9jaGFj
+aGEyMHBvbHkxMzA1IgorCSJnb2xhbmcub3JnL3gvbmV0L2lwdjQiCisJImdv
+bGFuZy5vcmcveC9uZXQvaXB2NiIKICkKIAogdHlwZSBRdWV1ZUhhbmRzaGFr
+ZUVsZW1lbnQgc3RydWN0IHsKZGlmZiAtLWdpdCBhL3J3Y2FuY2VsL3J3Y2Fu
+Y2VsX3VuaXguZ28gYi9yd2NhbmNlbC9yd2NhbmNlbF91bml4LmdvCmluZGV4
+IDczOWE4YzMuLmMwOGNhNjEgMTAwNjQ0Ci0tLSBhL3J3Y2FuY2VsL3J3Y2Fu
+Y2VsX3VuaXguZ28KKysrIGIvcndjYW5jZWwvcndjYW5jZWxfdW5peC5nbwpA
+QCAtNyw5ICs3LDEwIEBAIHBhY2thZ2UgcndjYW5jZWwKIAogaW1wb3J0ICgK
+IAkiZXJyb3JzIgotCSJnb2xhbmcub3JnL3gvc3lzL3VuaXgiCiAJIm9zIgog
+CSJzeXNjYWxsIgorCisJImdvbGFuZy5vcmcveC9zeXMvdW5peCIKICkKIAog
+dHlwZSBSV0NhbmNlbCBzdHJ1Y3QgewpkaWZmIC0tZ2l0IGEvc2VuZC5nbyBi
+L3NlbmQuZ28KaW5kZXggMjk5Mjc0ZC4uN2VhNTI1ZiAxMDA2NDQKLS0tIGEv
+c2VuZC5nbworKysgYi9zZW5kLmdvCkBAIC05LDEzICs5LDE0IEBAIHBhY2th
+Z2UgbWFpbgogaW1wb3J0ICgKIAkiYnl0ZXMiCiAJImVuY29kaW5nL2JpbmFy
+eSIKLQkiZ29sYW5nLm9yZy94L2NyeXB0by9jaGFjaGEyMHBvbHkxMzA1Igot
+CSJnb2xhbmcub3JnL3gvbmV0L2lwdjQiCi0JImdvbGFuZy5vcmcveC9uZXQv
+aXB2NiIKIAkibmV0IgogCSJzeW5jIgogCSJzeW5jL2F0b21pYyIKIAkidGlt
+ZSIKKworCSJnb2xhbmcub3JnL3gvY3J5cHRvL2NoYWNoYTIwcG9seTEzMDUi
+CisJImdvbGFuZy5vcmcveC9uZXQvaXB2NCIKKwkiZ29sYW5nLm9yZy94L25l
+dC9pcHY2IgogKQogCiAvKiBPdXRib3VuZCBmbG93CmRpZmYgLS1naXQgYS90
+dW5fZGFyd2luLmdvIGIvdHVuX2Rhcndpbi5nbwppbmRleCBkMmNkY2Q1Li41
+YzMwNmIxIDEwMDY0NAotLS0gYS90dW5fZGFyd2luLmdvCisrKyBiL3R1bl9k
+YXJ3aW4uZ28KQEAgLTcsMTYgKzcsMTcgQEAKIHBhY2thZ2UgbWFpbgogCiBp
+bXBvcnQgKAotCSIuL3J3Y2FuY2VsIgogCSJlbmNvZGluZy9iaW5hcnkiCiAJ
+ImVycm9ycyIKIAkiZm10IgotCSJnb2xhbmcub3JnL3gvbmV0L2lwdjYiCi0J
+ImdvbGFuZy5vcmcveC9zeXMvdW5peCIKIAkiaW8vaW91dGlsIgogCSJuZXQi
+CiAJIm9zIgogCSJ1bnNhZmUiCisKKwkiZ2l0Lnp4MmM0LmNvbS93aXJlZ3Vh
+cmQtZ28vcndjYW5jZWwiCisJImdvbGFuZy5vcmcveC9uZXQvaXB2NiIKKwki
+Z29sYW5nLm9yZy94L3N5cy91bml4IgogKQogCiBjb25zdCB1dHVuQ29udHJv
+bE5hbWUgPSAiY29tLmFwcGxlLm5ldC51dHVuX2NvbnRyb2wiCmRpZmYgLS1n
+aXQgYS90dW5fbGludXguZ28gYi90dW5fbGludXguZ28KaW5kZXggZjlhMjdk
+Ni4uZWI5YjE0MyAxMDA2NDQKLS0tIGEvdHVuX2xpbnV4LmdvCisrKyBiL3R1
+bl9saW51eC5nbwpAQCAtMTIsMTggKzEyLDE5IEBAIHBhY2thZ2UgbWFpbgog
+ICovCiAKIGltcG9ydCAoCi0JIi4vcndjYW5jZWwiCiAJImJ5dGVzIgogCSJl
+bmNvZGluZy9iaW5hcnkiCiAJImVycm9ycyIKIAkiZm10IgotCSJnb2xhbmcu
+b3JnL3gvbmV0L2lwdjYiCi0JImdvbGFuZy5vcmcveC9zeXMvdW5peCIKIAki
+bmV0IgogCSJvcyIKIAkic3RyY29udiIKIAkidGltZSIKIAkidW5zYWZlIgor
+CisJImdpdC56eDJjNC5jb20vd2lyZWd1YXJkLWdvL3J3Y2FuY2VsIgorCSJn
+b2xhbmcub3JnL3gvbmV0L2lwdjYiCisJImdvbGFuZy5vcmcveC9zeXMvdW5p
+eCIKICkKIAogY29uc3QgKApkaWZmIC0tZ2l0IGEvdHVuX3dpbmRvd3MuZ28g
+Yi90dW5fd2luZG93cy5nbwppbmRleCBjMTNjYTcyLi4yMjMzZjk4IDEwMDY0
+NAotLS0gYS90dW5fd2luZG93cy5nbworKysgYi90dW5fd2luZG93cy5nbwpA
+QCAtMTAsMTMgKzEwLDE0IEBAIGltcG9ydCAoCiAJImVuY29kaW5nL2JpbmFy
+eSIKIAkiZXJyb3JzIgogCSJmbXQiCi0JImdvbGFuZy5vcmcveC9zeXMvd2lu
+ZG93cyIKLQkiZ29sYW5nLm9yZy94L3N5cy93aW5kb3dzL3JlZ2lzdHJ5Igog
+CSJuZXQiCiAJInN5bmMiCiAJInN5c2NhbGwiCiAJInRpbWUiCiAJInVuc2Fm
+ZSIKKworCSJnb2xhbmcub3JnL3gvc3lzL3dpbmRvd3MiCisJImdvbGFuZy5v
+cmcveC9zeXMvd2luZG93cy9yZWdpc3RyeSIKICkKIAogLyogUmVsaWVzIG9u
+IHRoZSBPcGVuVlBOIFRBUC1XaW5kb3dzIGRyaXZlciAoTkRJUyA2IHZlcnNp
+b24pCmRpZmYgLS1naXQgYS91YXBpX2Rhcndpbi5nbyBiL3VhcGlfZGFyd2lu
+LmdvCmluZGV4IDIyODAyMWYuLjFjMjkzYzEgMTAwNjQ0Ci0tLSBhL3VhcGlf
+ZGFyd2luLmdvCisrKyBiL3VhcGlfZGFyd2luLmdvCkBAIC05LDEwICs5LDEx
+IEBAIHBhY2thZ2UgbWFpbgogaW1wb3J0ICgKIAkiZXJyb3JzIgogCSJmbXQi
+Ci0JImdvbGFuZy5vcmcveC9zeXMvdW5peCIKIAkibmV0IgogCSJvcyIKIAki
+cGF0aCIKKworCSJnb2xhbmcub3JnL3gvc3lzL3VuaXgiCiApCiAKIGNvbnN0
+ICgKZGlmZiAtLWdpdCBhL3VhcGlfbGludXguZ28gYi91YXBpX2xpbnV4Lmdv
+CmluZGV4IDJiNWI5YTAuLmEzYTU2ODUgMTAwNjQ0Ci0tLSBhL3VhcGlfbGlu
+dXguZ28KKysrIGIvdWFwaV9saW51eC5nbwpAQCAtNywxMyArNywxNCBAQAog
+cGFja2FnZSBtYWluCiAKIGltcG9ydCAoCi0JIi4vcndjYW5jZWwiCiAJImVy
+cm9ycyIKIAkiZm10IgotCSJnb2xhbmcub3JnL3gvc3lzL3VuaXgiCiAJIm5l
+dCIKIAkib3MiCiAJInBhdGgiCisKKwkiZ2l0Lnp4MmM0LmNvbS93aXJlZ3Vh
+cmQtZ28vcndjYW5jZWwiCisJImdvbGFuZy5vcmcveC9zeXMvdW5peCIKICkK
+IAogY29uc3QgKApkaWZmIC0tZ2l0IGEvdWFwaV93aW5kb3dzLmdvIGIvdWFw
+aV93aW5kb3dzLmdvCmluZGV4IDQxODA4ZjcuLmZjYTFkMTIgMTAwNjQ0Ci0t
+LSBhL3VhcGlfd2luZG93cy5nbworKysgYi91YXBpX3dpbmRvd3MuZ28KQEAg
+LTExLDkgKzExLDEwIEBAIHBhY2thZ2UgbWFpbgogCiBpbXBvcnQgKAogCSJm
+bXQiCisJIm5ldCIKKwogCSJnaXRodWIuY29tL01pY3Jvc29mdC9nby13aW5p
+byIKIAkiZ29sYW5nLm9yZy94L3N5cy93aW5kb3dzIgotCSJuZXQiCiApCiAK
+IGNvbnN0ICgKZGlmZiAtLWdpdCBhL3hjaGFjaGEyMHBvbHkxMzA1L3hjaGFj
+aGEyMC5nbyBiL3hjaGFjaGEyMHBvbHkxMzA1L3hjaGFjaGEyMC5nbwppbmRl
+eCBiZDI3ZjAyLi5kODJlOTc1IDEwMDY0NAotLS0gYS94Y2hhY2hhMjBwb2x5
+MTMwNS94Y2hhY2hhMjAuZ28KKysrIGIveGNoYWNoYTIwcG9seTEzMDUveGNo
+YWNoYTIwLmdvCkBAIC04LDYgKzgsNyBAQCBwYWNrYWdlIHhjaGFjaGEyMHBv
+bHkxMzA1CiAKIGltcG9ydCAoCiAJImVuY29kaW5nL2JpbmFyeSIKKwogCSJn
+b2xhbmcub3JnL3gvY3J5cHRvL2NoYWNoYTIwcG9seTEzMDUiCiApCiAKLS0g
+CjIuMTYuMwoK
 
-Finally, WireGuard development thrives on donations. By popular demand, we
-have a webpage for this: https://www.wireguard.com/donations/
-
-Thank you,
-Jason Donenfeld
-
-
------BEGIN PGP SIGNATURE-----
-
-iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAlr/cD0QHGphc29uQHp4
-MmM0LmNvbQAKCRBJ/HASpd4DrsA7D/9QR8EulAmL1pqA8EogZ+latTOQv0HubzqQ
-yeKextYH9+gG3RhHd3ojncraW8wc1alJruC4zWbc4Ozdk7fEvE8uwTbqb6pjRPV2
-A9QXPe+0BlAOluAY22oZP44zaFVeec7YHM7HtnWVgmdxQaNNwXNkkK0imuh4vL6H
-hL5sd0yZS1oZv4lNxbW2WvXgelrnHTA3amebM9dHAbVT/fiWRf1ZB2HssK2HpzLd
-e2qHvgNusvMeB/RIfviEyWSQuu6RwrmnJAdEU/7iB4YD1+WPZ4ksNuPWRN3jesD7
-mXIsHGhyEbkRIst5odvZ2Ojx7Ia//ARcAOG/Kf4Pmdoe/lPe81KMxY1OL7cNFN+Q
-pBwT2iZpeky3u3dxl+4Ekxes7ZAsjuDghXs4Yl5x5gckrTUviQI1qhd6lu6dpmgb
-dFX5mbkxToLPvF0Pg0coew6HmPf26XnGtEuxZT2wATlzSy9lB7sTjHKJsKCMm/Ex
-3ShjvGjh6GDpr/3H9xu2XWazxKcu51FBchAkOh15MvgTF2YkIVZ1NgjRoNNl3iok
-CMPg7C/52kOMvAWsuRf7Bj/2w/8U3TvDEI2rkL0kju2dNhLR+s1g+QfUgZwH55ie
-ZW7nM1qMis02HfpxSX0utPmFs8/PfRe5Z0N1qdRaY9JWabFOB7a6UqQHUXNMCSRu
-29okCyku8g==
-=kOMx
------END PGP SIGNATURE-----
+--_----------=_15268426226071581--
