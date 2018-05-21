@@ -1,33 +1,24 @@
-Return-Path: brunnre8@gmail.com
+Return-Path: joerg@higgsboson.tk
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1abe60d9
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 855911fb
  for <wireguard@lists.zx2c4.com>;
- Mon, 21 May 2018 12:35:04 +0000 (UTC)
-Received: from mail-wm0-x236.google.com (mail-wm0-x236.google.com
- [IPv6:2a00:1450:400c:c09::236])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7d0c0b13
+ Mon, 21 May 2018 12:45:05 +0000 (UTC)
+Received: from mail.thalheim.io (mail.thalheim.io [188.68.39.17])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 51e6b97f
  for <wireguard@lists.zx2c4.com>;
- Mon, 21 May 2018 12:35:04 +0000 (UTC)
-Received: by mail-wm0-x236.google.com with SMTP id m129-v6so26247118wmb.3
- for <wireguard@lists.zx2c4.com>; Mon, 21 May 2018 05:36:01 -0700 (PDT)
-Return-Path: <brunnre8@gmail.com>
-Received: from gmail.com (adsl-178-39-227-80.adslplus.ch. [178.39.227.80])
- by smtp.gmail.com with ESMTPSA id z7-v6sm7120734edr.6.2018.05.21.05.35.59
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
- Mon, 21 May 2018 05:35:59 -0700 (PDT)
-Date: Mon, 21 May 2018 14:35:58 +0200
-From: Reto Brunner <brunnre8@gmail.com>
+ Mon, 21 May 2018 12:45:05 +0000 (UTC)
+Received: from [129.215.90.191] (dhcp-90-191.inf.ed.ac.uk [129.215.90.191])
+ by mail.thalheim.io (Postfix) with ESMTPSA id C037D5E09
+ for <wireguard@lists.zx2c4.com>; Mon, 21 May 2018 12:46:02 +0000 (UTC)
+Subject: Re: [PATCH] Adopt Go workspace best practices
 To: wireguard@lists.zx2c4.com
-Subject: Re: WG: Need for HW-clock independent timestamps
-Message-ID: <20180521123558.qemdunuwgr4u7gsj@ghostArch.localdomain>
-References: <c1e04862-162f-eff9-7884-467f672608e2@cgws.de>
- <403fa228-40e5-cbe4-4135-15b71cf76553@cgws.de>
- <20180521112235.v2ksniasmd36kern@ghostArch.localdomain>
- <97874cad-ac60-5a88-a384-f036f9688668@cgws.de>
+References: <1526842622.607158.1378580648.4BA3B2F0@webmail.messagingengine.com>
+From: =?UTF-8?Q?J=c3=b6rg_Thalheim?= <joerg@higgsboson.tk>
+Message-ID: <8a3ad189-bef5-61cf-05a1-0801d6be6161@higgsboson.tk>
+Date: Mon, 21 May 2018 13:46:02 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-In-Reply-To: <97874cad-ac60-5a88-a384-f036f9688668@cgws.de>
+In-Reply-To: <1526842622.607158.1378580648.4BA3B2F0@webmail.messagingengine.com>
+Content-Type: text/plain; charset=utf-8
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -37,21 +28,41 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Mon, May 21, 2018 at 01:52:34PM +0200, Axel Neumann wrote:
-> yes, can be an option, but would only work in "normal" soft-shut-down
-> cases, not in case of a hard reset or power cycle. A not-so-uncommon
-> scenario for embedded home-network devices and community-network
-> deployments. Especially when considering the first choice of a  normal
-> user (desperately trying to fix its internet-via-WG tunnel connection):
-> Power cycle the device.
-But the same issue would be occurring if you used a counter instead.
-At one point you *have* to write a checkpoint somewhere.
 
-If you just want a single write cycle, then you loose the ability to graceful
-handle unexpected shutdowns.
 
-Even if you increment the counter by 10'000 when restoring it, who's to
-say the device hasn't been running for several weeks before the
-unexpected power cycle happened?
-Even the +10'000 counter would then already be way smaller than the
-*actual* counter from the servers perspective.
+On 2018-05-20 19:57, Filippo Valsorda wrote:
+> Relative imports break when the project is built from within GOPATH,
+> where most Go developers prefer to develop:
+>
+>     device.go:10:2: local import "./ratelimiter" in non-local package
+>     tun_darwin.go:10:2: local import "./rwcancel" in non-local package
+>     noise-protocol.go:10:2: local import "./tai64n" in non-local package
+>     cookie.go:10:2: local import "./xchacha20poly1305" in non-local package
+
+
+We also carry a patch for this in nixpkgs for that reason:
+https://github.com/NixOS/nixpkgs/commit/b599f672e44270d2c6154b7855ddec11e4d43a93#diff-b3f319067b7e71fdd1f6b94ef51a983aR17
+
+>
+> On the other hand, the vendor folder is not supported outside of
+> GOPATH, so it's unclear how/if that ever worked.
+>
+> Moreover, using go get instead of dep means that dependencies are not
+> pinned, and HEAD is used instead, which makes builds unreproducible.
+>
+> This adds a Makefile that creates a local GOPATH with a symlink
+> trick, so developing outside GOPATH still works. Not only that, but
+> a system GOPATH is not required at all as long as the Makefile is used.
+> And if the project is cloned in the right place in GOPATH all standard
+> tools will work as expected.
+>
+> So all workflows should work just as weel or better. The only new
+> requirement is dep, but that's unavoidable for reproducible builds.
+>
+> Finally, run goimports on all files to format import statements.
+>
+>
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
