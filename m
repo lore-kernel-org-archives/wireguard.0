@@ -1,25 +1,33 @@
-Return-Path: neumann@cgws.de
+Return-Path: brunnre8@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dd5a4216
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1abe60d9
  for <wireguard@lists.zx2c4.com>;
- Mon, 21 May 2018 12:30:37 +0000 (UTC)
-Received: from mail.dabax.net (mail.dabax.net [88.99.12.75])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c969f667
+ Mon, 21 May 2018 12:35:04 +0000 (UTC)
+Received: from mail-wm0-x236.google.com (mail-wm0-x236.google.com
+ [IPv6:2a00:1450:400c:c09::236])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7d0c0b13
  for <wireguard@lists.zx2c4.com>;
- Mon, 21 May 2018 12:30:37 +0000 (UTC)
-Subject: Re: WG: Need for HW-clock independent timestamps
-From: Axel Neumann <neumann@cgws.de>
+ Mon, 21 May 2018 12:35:04 +0000 (UTC)
+Received: by mail-wm0-x236.google.com with SMTP id m129-v6so26247118wmb.3
+ for <wireguard@lists.zx2c4.com>; Mon, 21 May 2018 05:36:01 -0700 (PDT)
+Return-Path: <brunnre8@gmail.com>
+Received: from gmail.com (adsl-178-39-227-80.adslplus.ch. [178.39.227.80])
+ by smtp.gmail.com with ESMTPSA id z7-v6sm7120734edr.6.2018.05.21.05.35.59
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+ Mon, 21 May 2018 05:35:59 -0700 (PDT)
+Date: Mon, 21 May 2018 14:35:58 +0200
+From: Reto Brunner <brunnre8@gmail.com>
 To: wireguard@lists.zx2c4.com
+Subject: Re: WG: Need for HW-clock independent timestamps
+Message-ID: <20180521123558.qemdunuwgr4u7gsj@ghostArch.localdomain>
 References: <c1e04862-162f-eff9-7884-467f672608e2@cgws.de>
  <403fa228-40e5-cbe4-4135-15b71cf76553@cgws.de>
  <20180521112235.v2ksniasmd36kern@ghostArch.localdomain>
  <97874cad-ac60-5a88-a384-f036f9688668@cgws.de>
-Message-ID: <53200162-b2fa-8f32-c52a-aae5a15b1605@cgws.de>
-Date: Mon, 21 May 2018 14:31:32 +0200
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 In-Reply-To: <97874cad-ac60-5a88-a384-f036f9688668@cgws.de>
-Content-Type: text/plain; charset=utf-8
-Reply-To: neumann@cgws.de
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -29,64 +37,21 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On 21.05.2018 13:52, Axel Neumann wrote:
-> On 21.05.2018 13:22, Reto Brunner wrote:
->> On Mon, May 21, 2018 at 12:07:38PM +0200, Axel Neumann wrote:
->>> entirely superfluous. As discussed earlier [3] it can be achieved with
->>> essentially one file-system write operation each boot.
->>
->> You might as well achieve the same with the timestamp.
->> Just add a pre-shutdown hook, which touches a file.
-> 
+On Mon, May 21, 2018 at 01:52:34PM +0200, Axel Neumann wrote:
 > yes, can be an option, but would only work in "normal" soft-shut-down
 > cases, not in case of a hard reset or power cycle. A not-so-uncommon
 > scenario for embedded home-network devices and community-network
 > deployments. Especially when considering the first choice of a  normal
 > user (desperately trying to fix its internet-via-WG tunnel connection):
 > Power cycle the device.
-> 
-> /axel
-> 
->> Restore the system clock to this upon boot (which may very well be off
->> but who cares).
->>
->> After the wg tunnel is back up, sync with any NTP server you trust and you
->> are back up and running.
->>
->> What is the advantage of doing it with a counter?
->> I fail to see the benefit.
+But the same issue would be occurring if you used a counter instead.
+At one point you *have* to write a checkpoint somewhere.
 
-Sorry, forgot to reply here: The advantage is that
-you could save a counter value in advance that is to-be-used after the
-NEXT reboot. It can be saved during boot or before WG starts (not during
-shut-down), so you are safe against unexpected hard resets.
+If you just want a single write cycle, then you loose the ability to graceful
+handle unexpected shutdowns.
 
-The (WG) boot procedure would be:
-1) Read saved_counter from disk (take zero first time) and memorize it
-as current_counter.
-2) Write saved_counter + NextBootOffset to disk.
-3) Use and incremented current_counter by +1 with each new WG handshake.
-
-Considering NextBootOffset = (2^16 * 10^9):
-With 1 WG handshake per ms the NextBootOffset would be exhausted every
-~1800 years.
-With 1 system reboot every ms the total 96bits counter range would
-overlap in ~9000 years.
-
-/axel
-
-
-
-
-
->> _______________________________________________
->> WireGuard mailing list
->> WireGuard@lists.zx2c4.com
->> https://lists.zx2c4.com/mailman/listinfo/wireguard
->>
-> 
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
-> 
+Even if you increment the counter by 10'000 when restoring it, who's to
+say the device hasn't been running for several weeks before the
+unexpected power cycle happened?
+Even the +10'000 counter would then already be way smaller than the
+*actual* counter from the servers perspective.
