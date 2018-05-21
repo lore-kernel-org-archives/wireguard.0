@@ -1,29 +1,30 @@
-Return-Path: matthias@urlichs.de
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6eeff9dd
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4e12646c
  for <wireguard@lists.zx2c4.com>;
- Mon, 21 May 2018 15:34:26 +0000 (UTC)
-Received: from netz.smurf.noris.de (mail.vm.smurf.noris.de
- [IPv6:2001:780:107:8:83::])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1364226e
+ Mon, 21 May 2018 21:34:46 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8019029d
  for <wireguard@lists.zx2c4.com>;
- Mon, 21 May 2018 15:34:25 +0000 (UTC)
-Subject: Re: WG: Need for HW-clock independent timestamps
-To: Bruno Wolff III <bruno@wolff.to>
-References: <c1e04862-162f-eff9-7884-467f672608e2@cgws.de>
- <403fa228-40e5-cbe4-4135-15b71cf76553@cgws.de>
- <20180521112235.v2ksniasmd36kern@ghostArch.localdomain>
- <97874cad-ac60-5a88-a384-f036f9688668@cgws.de>
- <20180521123558.qemdunuwgr4u7gsj@ghostArch.localdomain>
- <8fc246f8-7662-2fd2-f6ee-93d6802a37f0@urlichs.de>
- <20180521145618.GA3199@wolff.to>
-From: Matthias Urlichs <matthias@urlichs.de>
-Message-ID: <c1fb2c8b-12f1-7e98-8291-a63c1eb91682@urlichs.de>
-Date: Mon, 21 May 2018 17:34:42 +0200
+ Mon, 21 May 2018 21:34:46 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 907d1a27
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 21 May 2018 21:33:33 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id ec53216c
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 21 May 2018 21:33:32 +0000 (UTC)
+Received: by mail-oi0-f44.google.com with SMTP id v2-v6so14324548oif.3
+ for <wireguard@lists.zx2c4.com>; Mon, 21 May 2018 14:35:46 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20180521145618.GA3199@wolff.to>
-Content-Type: text/plain; charset=utf-8
-Cc: wireguard@lists.zx2c4.com
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Mon, 21 May 2018 23:35:45 +0200
+Message-ID: <CAHmME9rJonVbSRHCPy0W7Pr=vmJoMbVTHbGw0C1xwBze4Px7uA@mail.gmail.com>
+Subject: WireGuard for FreeBSD
+To: freebsd-ports@freebsd.org
+Content-Type: text/plain; charset="UTF-8"
+Cc: Brady OBrien <brady.obrien128@gmail.com>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -33,21 +34,61 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On 21.05.2018 16:56, Bruno Wolff III wrote:
-> If you want to go that route, you should just treat it as a two part
-> number. One for a boot count, that would get incremented every boot
-> and saved and a low order part that is reset to 0 at every boot.
-That'd work for me, though I prefer to use an opaque number /
-base64string-of-12-bytes that doesn't look like it means something.
-> Note that this scheme leaks information to the peer.
+[cross-posted to the WireGuard mailing list]
 
-Rebooting is likely to leak that information anyway, because the peer
-sees a period with no packets from you (also, it can't ping you)
-followed by a possibly-premature re-key (depending on how long your boot
-process takes).
+Hello FreeBSD Ports List,
 
-I might also wonder why you'd peer with somebody whom you don't trust
-not to collect and/or abuse the information that you just rebooted …
+I'm the author of WireGuard [1], a secure network tunnel protocol [2]
+and a set of implementations of it. It was originally designed for the
+Linux kernel, but we're now beginning to have implementations for
+other platforms. Recently, parts of the Internet got excited [3] when
+we put a Darwin version in Homebrew. The last few days Brian (CC'd)
+and I have been working on getting an implementation running on
+FreeBSD, and things are coming along pretty smoothly.
 
--- 
--- Matthias Urlichs
+I'm not entirely familiar with the ports/pkg adding process, and so I
+was hoping to find somebody who is part of the FreeBSD community to
+adopt WireGuard and help maintain packages for it. We currently have
+packages for many Linux distros [4], but FreeBSD will be the first
+open source BSD project. There are two packages to add:
+
+1. wireguard-tools, providing wg(8) and wg-quick(8)
+Runtime dependencies: bash, wireguard-go
+Buildtime dependencies: gmake, c compiler, libc
+Build: gmake -C src/tools WITH_WGQUICK=yes
+Install: gmake -C src/tools PREFIX=/usr/local install
+URL template: https://git.zx2c4.com/WireGuard/snapshot/WireGuard-VERSION.tar.xz
+
+2. wireguard-go
+Runtime dependencies: none
+Buildtime dependencies: gmake, go
+Build: export GOPATH=$(pwd)/gopath; go get -d; gmake
+Install: gmake PREFIX=/usr/local install
+URL template: https://git.zx2c4.com/wireguard-go/snapshot/wireguard-go-VERSION.tar.xz
+
+For reference, these two packages in Homebrew look like this:
+https://github.com/Homebrew/homebrew-core/blob/master/Formula/wireguard-tools.rb
+https://github.com/Homebrew/homebrew-core/blob/master/Formula/wireguard-go.rb
+
+And for your horror, I've made a please-dont-pipe-like-that
+copy-and-paste install script:
+# curl https://xn--4db.cc/0BwTeeYe | sh
+
+That script won't work as-is at the moment, since I haven't yet tagged
+tarballs with FreeBSD support, but in the coming days, I'll tag one
+that has this latest FreeBSD code in it. (In the meantime, you can run
+`# curl https://xn--4db.cc/0BwTeeYe | sh /dev/stdin --master` to get
+it from git master.) I was hoping that in the time between now and
+then, we might find somebody willing and interested in packaging this
+properly.
+
+Does this sound fun to anyone?
+
+Best regards,
+Jason
+
+
+[1] https://www.wireguard.com/
+[2] https://www.wireguard.com/papers/wireguard.pdf
+[3] http://latacora.singles/2018/05/16/there-will-be.html
+[4] https://www.wireguard.com/install/
