@@ -1,31 +1,24 @@
-Return-Path: brunnre8@gmail.com
+Return-Path: neumann@cgws.de
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2cbbeb36
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ab8e4450
  for <wireguard@lists.zx2c4.com>;
- Mon, 21 May 2018 11:21:44 +0000 (UTC)
-Received: from mail-wm0-x232.google.com (mail-wm0-x232.google.com
- [IPv6:2a00:1450:400c:c09::232])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2126dfce
+ Mon, 21 May 2018 11:51:40 +0000 (UTC)
+Received: from mail.dabax.net (mail.dabax.net [88.99.12.75])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 290f02c2
  for <wireguard@lists.zx2c4.com>;
- Mon, 21 May 2018 11:21:43 +0000 (UTC)
-Received: by mail-wm0-x232.google.com with SMTP id a137-v6so11686269wme.1
- for <wireguard@lists.zx2c4.com>; Mon, 21 May 2018 04:22:40 -0700 (PDT)
-Return-Path: <brunnre8@gmail.com>
-Received: from gmail.com (adsl-178-39-227-80.adslplus.ch. [178.39.227.80])
- by smtp.gmail.com with ESMTPSA id a20-v6sm7256594eda.82.2018.05.21.04.22.37
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
- Mon, 21 May 2018 04:22:37 -0700 (PDT)
-Date: Mon, 21 May 2018 13:22:35 +0200
-From: Reto Brunner <brunnre8@gmail.com>
-To: wireguard@lists.zx2c4.com
+ Mon, 21 May 2018 11:51:39 +0000 (UTC)
 Subject: Re: WG: Need for HW-clock independent timestamps
-Message-ID: <20180521112235.v2ksniasmd36kern@ghostArch.localdomain>
+To: wireguard@lists.zx2c4.com
 References: <c1e04862-162f-eff9-7884-467f672608e2@cgws.de>
  <403fa228-40e5-cbe4-4135-15b71cf76553@cgws.de>
+ <20180521112235.v2ksniasmd36kern@ghostArch.localdomain>
+From: Axel Neumann <neumann@cgws.de>
+Message-ID: <97874cad-ac60-5a88-a384-f036f9688668@cgws.de>
+Date: Mon, 21 May 2018 13:52:34 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-In-Reply-To: <403fa228-40e5-cbe4-4135-15b71cf76553@cgws.de>
+In-Reply-To: <20180521112235.v2ksniasmd36kern@ghostArch.localdomain>
+Content-Type: text/plain; charset=utf-8
+Reply-To: neumann@cgws.de
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -35,17 +28,33 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Mon, May 21, 2018 at 12:07:38PM +0200, Axel Neumann wrote:
-> entirely superfluous. As discussed earlier [3] it can be achieved with
-> essentially one file-system write operation each boot.
+On 21.05.2018 13:22, Reto Brunner wrote:
+> On Mon, May 21, 2018 at 12:07:38PM +0200, Axel Neumann wrote:
+>> entirely superfluous. As discussed earlier [3] it can be achieved with
+>> essentially one file-system write operation each boot.
+> 
+> You might as well achieve the same with the timestamp.
+> Just add a pre-shutdown hook, which touches a file.
 
-You might as well achieve the same with the timestamp.
-Just add a pre-shutdown hook, which touches a file.
-Restore the system clock to this upon boot (which may very well be off
-but who cares).
+yes, can be an option, but would only work in "normal" soft-shut-down
+cases, not in case of a hard reset or power cycle. A not-so-uncommon
+scenario for embedded home-network devices and community-network
+deployments. Especially when considering the first choice of a  normal
+user (desperately trying to fix its internet-via-WG tunnel connection):
+Power cycle the device.
 
-After the wg tunnel is back up, sync with any NTP server you trust and you
-are back up and running.
+/axel
 
-What is the advantage of doing it with a counter?
-I fail to see the benefit.
+> Restore the system clock to this upon boot (which may very well be off
+> but who cares).
+> 
+> After the wg tunnel is back up, sync with any NTP server you trust and you
+> are back up and running.
+> 
+> What is the advantage of doing it with a counter?
+> I fail to see the benefit.
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
+> 
