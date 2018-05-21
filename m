@@ -1,22 +1,31 @@
-Return-Path: neumann@cgws.de
+Return-Path: brunnre8@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ecc712e6
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2cbbeb36
  for <wireguard@lists.zx2c4.com>;
- Mon, 21 May 2018 10:06:44 +0000 (UTC)
-Received: from mail.dabax.net (mail.dabax.net [88.99.12.75])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6574a48f
+ Mon, 21 May 2018 11:21:44 +0000 (UTC)
+Received: from mail-wm0-x232.google.com (mail-wm0-x232.google.com
+ [IPv6:2a00:1450:400c:c09::232])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2126dfce
  for <wireguard@lists.zx2c4.com>;
- Mon, 21 May 2018 10:06:44 +0000 (UTC)
-Subject: Re: WG: Need for HW-clock independent timestamps
+ Mon, 21 May 2018 11:21:43 +0000 (UTC)
+Received: by mail-wm0-x232.google.com with SMTP id a137-v6so11686269wme.1
+ for <wireguard@lists.zx2c4.com>; Mon, 21 May 2018 04:22:40 -0700 (PDT)
+Return-Path: <brunnre8@gmail.com>
+Received: from gmail.com (adsl-178-39-227-80.adslplus.ch. [178.39.227.80])
+ by smtp.gmail.com with ESMTPSA id a20-v6sm7256594eda.82.2018.05.21.04.22.37
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+ Mon, 21 May 2018 04:22:37 -0700 (PDT)
+Date: Mon, 21 May 2018 13:22:35 +0200
+From: Reto Brunner <brunnre8@gmail.com>
 To: wireguard@lists.zx2c4.com
+Subject: Re: WG: Need for HW-clock independent timestamps
+Message-ID: <20180521112235.v2ksniasmd36kern@ghostArch.localdomain>
 References: <c1e04862-162f-eff9-7884-467f672608e2@cgws.de>
-From: Axel Neumann <neumann@cgws.de>
-Message-ID: <403fa228-40e5-cbe4-4135-15b71cf76553@cgws.de>
-Date: Mon, 21 May 2018 12:07:38 +0200
+ <403fa228-40e5-cbe4-4135-15b71cf76553@cgws.de>
 MIME-Version: 1.0
-In-Reply-To: <c1e04862-162f-eff9-7884-467f672608e2@cgws.de>
-Content-Type: text/plain; charset=utf-8
-Reply-To: neumann@cgws.de
+Content-Type: text/plain; charset=us-ascii
+In-Reply-To: <403fa228-40e5-cbe4-4135-15b71cf76553@cgws.de>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,39 +35,17 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hello,
+On Mon, May 21, 2018 at 12:07:38PM +0200, Axel Neumann wrote:
+> entirely superfluous. As discussed earlier [3] it can be achieved with
+> essentially one file-system write operation each boot.
 
-With regards to the subject, ...to discuss the demand and identify
-solutions for a "HW-clock INDEPENDENT WG solution", I've seen
-essentially three different suggestions so fare:
+You might as well achieve the same with the timestamp.
+Just add a pre-shutdown hook, which touches a file.
+Restore the system clock to this upon boot (which may very well be off
+but who cares).
 
-a) Buy and connect a HW clock.
-IMO: Often difficult considering available HW, budget, and skills.
+After the wg tunnel is back up, sync with any NTP server you trust and you
+are back up and running.
 
-b) Rely on the (HW) clock of somebody else,
-considering network time protocols (e.g. NTP, RFC867, RFC868,...) and
-related (security) implications (such as new dependencies on remote
-services, IP or DNS spoofing, firewall settings, boot-service order,
-...). Some experience [1] suggest to go for a).
-IMO: A concrete best practice would be good here but would likely
-overshoot the complexity and other-systems-dependencies of WG by magnitudes.
-
-c) Modify WG to use (time-independent) counter-based values to prevent
-replay-attacks.
-Paul [2] gave a pretty nice overview of the yet identified advantages
-and implications, suggesting that it requires only few and simple code
-changes, introduces no security drawbacks, could be fully compatible
-with existing protocol and implementations, and makes HWC or NTP
-entirely superfluous. As discussed earlier [3] it can be achieved with
-essentially one file-system write operation each boot.
-
-There have been many good comments for a) and b). Still, I'd be happy to
-elaborate the case of c), or a maybe a fourth idea, a bit further...
-What technical concerns do you see with c) or what suggestions would you
-make to somebody working out a patch?
-
-[1] https://lists.zx2c4.com/pipermail/wireguard/2018-May/002832.html
-[2] https://lists.zx2c4.com/pipermail/wireguard/2018-May/002875.html
-[3] https://lists.zx2c4.com/pipermail/wireguard/2018-May/002865.html
-
-/axel
+What is the advantage of doing it with a counter?
+I fail to see the benefit.
