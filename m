@@ -1,22 +1,29 @@
-Return-Path: mino@minux.it
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1a5bff54
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 948d7b9f
  for <wireguard@lists.zx2c4.com>;
- Tue, 22 May 2018 13:42:14 +0000 (UTC)
-Received: from mail-vk0-x22f.google.com (mail-vk0-x22f.google.com
- [IPv6:2607:f8b0:400c:c05::22f])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b565844d
+ Tue, 22 May 2018 15:49:37 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 20e2332c
  for <wireguard@lists.zx2c4.com>;
- Tue, 22 May 2018 13:42:13 +0000 (UTC)
-Received: by mail-vk0-x22f.google.com with SMTP id g72-v6so10911078vke.2
- for <wireguard@lists.zx2c4.com>; Tue, 22 May 2018 06:43:19 -0700 (PDT)
+ Tue, 22 May 2018 15:49:37 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 68143cae
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 22 May 2018 15:48:21 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 8c2f8511
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 22 May 2018 15:48:20 +0000 (UTC)
+Received: by mail-oi0-f43.google.com with SMTP id k5-v6so16657143oiw.0
+ for <wireguard@lists.zx2c4.com>; Tue, 22 May 2018 08:50:41 -0700 (PDT)
 MIME-Version: 1.0
-From: Giacomo Bernardi <mino@minux.it>
-Date: Tue, 22 May 2018 14:42:42 +0100
-Message-ID: <CABcNfLs4Z8uLu+Bn-3RCeAXkowB1ty0P_7hfGrAy_taS75CRdA@mail.gmail.com>
-Subject: Key distribution and rotation tools?
-To: wireguard@lists.zx2c4.com
-Content-Type: multipart/alternative; boundary="000000000000dba0af056ccb9946"
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Tue, 22 May 2018 17:50:39 +0200
+Message-ID: <CAHmME9pWK75RZAvTzMigCBH31g_ftr3d5c6yAsLTs-7nZyLCYg@mail.gmail.com>
+Subject: WireGuard for OpenBSD
+To: ports@openbsd.org
+Content-Type: text/plain; charset="UTF-8"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,52 +33,70 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---000000000000dba0af056ccb9946
-Content-Type: text/plain; charset="UTF-8"
+[cross-posted to the WireGuard mailing list]
 
-Hello list,
-I am aware that WireGuard does not include a mechanism to distribute and
-rotate pre-shared secrets by design [1].
+Hello OpenBSD Ports List,
 
-However, even discounting a full-blown PKI, in large deployments one needs
-to automate the generation/distribution/rotation of those pre-shared keys
-on endpoints.
+I sent a very similar email [0] to the FreeBSD ports list yesterday.
 
-I unsuccessfully scouted around for tools that would fit in this space, did
-I miss anything? Any suggestions?
+I'm the author of WireGuard [1], a secure network tunnel protocol [2]
+and a set of implementations of it. It was originally designed for the
+Linux kernel, but we're now beginning to have implementations for
+other platforms. Recently, parts of the Internet got excited [3] when
+we put a Darwin version in Homebrew. We've been working on getting an
+implementation running for OpenBSD, and things are coming along pretty
+smoothly.
 
-Thanks!
-Giacomo
+The ultimate goal in OpenBSD land is, of course, having this properly
+in the kernel like it is on Linux, but that's a long ways off, so I
+thought we should get rolling with this, since it's here now.
 
+I'm not entirely familiar with the ports/pkg adding process, and so I
+was hoping to find somebody who is part of the OpenBSD community to
+adopt WireGuard and help maintain packages for it. We currently have
+packages for many Linux distros [4], but not yet BSD ports. There are
+two packages to add:
 
+1. wireguard-tools, providing wg(8) and wg-quick(8)
+Runtime dependencies: bash, wireguard-go, libc
+Buildtime dependencies: gmake, c compiler, libc
+Fixup: sed -i 's/ -v / /g' src/tools/Makefile
+Build: gmake -C src/tools WITH_WGQUICK=yes
+Install: gmake -C src/tools PREFIX=/usr/local install
+URL template: https://git.zx2c4.com/WireGuard/snapshot/WireGuard-VERSION.tar.xz
 
-[1] "All issues of key distribution and pushed configurations are out of
-scope of WireGuard; these are issues much better left for other layers,
-lest we end up with the bloat of IKE or OpenVPN." (
-https://www.wireguard.com/#conceptual-overview)
+2. wireguard-go
+Runtime dependencies: none
+Buildtime dependencies: gmake, go
+Fixup: sed -i 's/ -v / /g' Makefile
+Build: export GOPATH=$(pwd)/gopath; go get -d; gmake
+Install: gmake PREFIX=/usr/local install
+URL template: https://git.zx2c4.com/wireguard-go/snapshot/wireguard-go-VERSION.tar.xz
 
---000000000000dba0af056ccb9946
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+For reference, these two packages in Homebrew look like this:
+https://github.com/Homebrew/homebrew-core/blob/master/Formula/wireguard-tools.rb
+https://github.com/Homebrew/homebrew-core/blob/master/Formula/wireguard-go.rb
 
-<div dir=3D"ltr"><div>Hello list,=C2=A0</div><div>I am aware that=C2=A0Wire=
-Guard does not include a mechanism to distribute and rotate pre-shared secr=
-ets=C2=A0<span style=3D"color:rgb(34,34,34);font-family:sans-serif;font-siz=
-e:13px;font-style:normal;font-variant-ligatures:normal;font-variant-caps:no=
-rmal;font-weight:400;letter-spacing:normal;text-align:start;text-indent:0px=
-;text-transform:none;white-space:normal;word-spacing:0px;background-color:r=
-gb(255,255,255);text-decoration-style:initial;text-decoration-color:initial=
-;float:none;display:inline">by design [1].</span></div><div><br></div><div>=
-However, even discounting a full-blown PKI, in large deployments one needs =
-to automate the generation/distribution/rotation of those pre-shared keys o=
-n endpoints.=C2=A0</div><div><br></div><div>I unsuccessfully scouted around=
- for tools that would fit in this space, did I miss anything? Any suggestio=
-ns?</div><div><br></div><div>Thanks!</div><div>Giacomo</div><div><br></div>=
-<div><br></div><div><br></div><div>[1] &quot;All issues of key distribution=
- and pushed configurations are out of scope of WireGuard; these are issues =
-much better left for other layers, lest we end up with the bloat of IKE or =
-OpenVPN.&quot; (<a href=3D"https://www.wireguard.com/#conceptual-overview">=
-https://www.wireguard.com/#conceptual-overview</a>)</div><div><br></div><di=
-v><br></div></div>
+And for your horror, I've made a please-dont-pipe-like-that
+copy-and-paste install script:
+# curl https://xn--4db.cc/IKuBc62Z | sh
 
---000000000000dba0af056ccb9946--
+That script won't work as-is at the moment, since I haven't yet tagged
+tarballs with OpenBSD support, but in the coming days, I'll tag one
+that has this latest OpenBSD code in it. (In the meantime, you can run
+`# curl https://xn--4db.cc/IKuBc62Z | sh /dev/stdin --master` to get
+it from git master. See demo.wireguard.com for another script for a
+little test server.) I was hoping that in the time between now and
+then, we might find somebody willing and interested in packaging this
+properly.
+
+Does this sound fun to anyone?
+
+Best regards,
+Jason
+
+[0] https://docs.freebsd.org/cgi/getmsg.cgi?fetch=116808+0+current/freebsd-ports
+[1] https://www.wireguard.com/
+[2] https://www.wireguard.com/papers/wireguard.pdf
+[3] http://latacora.singles/2018/05/16/there-will-be.html
+[4] https://www.wireguard.com/install/
