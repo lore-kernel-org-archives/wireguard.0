@@ -1,34 +1,22 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: nnet@fastmail.fm
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f856e19a
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f8e4b135
  for <wireguard@lists.zx2c4.com>;
- Wed, 23 May 2018 22:34:16 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9b5e1a8c
+ Wed, 23 May 2018 23:55:49 +0000 (UTC)
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
+ [66.111.4.28])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f6f8acfd
  for <wireguard@lists.zx2c4.com>;
- Wed, 23 May 2018 22:34:16 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c468ecbe
- for <wireguard@lists.zx2c4.com>;
- Wed, 23 May 2018 22:33:03 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id aa91e891
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Wed, 23 May 2018 22:33:03 +0000 (UTC)
-Received: by mail-ot0-f179.google.com with SMTP id m11-v6so27148244otf.3
- for <wireguard@lists.zx2c4.com>; Wed, 23 May 2018 15:35:32 -0700 (PDT)
+ Wed, 23 May 2018 23:55:49 +0000 (UTC)
+Message-Id: <1527119825.1012882.1382673952.168165E8@webmail.messagingengine.com>
+From: nnet <nnet@fastmail.fm>
+To: Jason Donenfeld <Jason@zx2c4.com>
 MIME-Version: 1.0
-References: <CAHmME9rJonVbSRHCPy0W7Pr=vmJoMbVTHbGw0C1xwBze4Px7uA@mail.gmail.com>
- <CAKYr3zzm6E_KNXA3acW7QcJWHh1gw3+Laxh2fN+AS3E0LPn0gg@mail.gmail.com>
- <CAHmME9q7Bcigcn5-sEK3=pnuyfDbxxc=HKg4qBCNe_Mj+cLjfg@mail.gmail.com>
- <05f62a24-2683-3a96-9885-9f51fede4649@higgsboson.tk>
-In-Reply-To: <05f62a24-2683-3a96-9885-9f51fede4649@higgsboson.tk>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 24 May 2018 00:35:20 +0200
-Message-ID: <CAHmME9oFQHorZwcbGSpmoGf8uMp6zLrSFrt37eAMg2i5NzTBrQ@mail.gmail.com>
-Subject: Re: WireGuard for FreeBSD
-To: =?UTF-8?Q?J=C3=B6rg_Thalheim?= <joerg@higgsboson.tk>
-Content-Type: multipart/alternative; boundary="000000000000138299056ce72754"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="utf-8"
+Subject: [wireguard-android] 'roaming' from LTE to WiFi with version
+ 0.0.20180523
+Date: Wed, 23 May 2018 16:57:05 -0700
+Cc: wireguard@lists.zx2c4.com
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -38,112 +26,90 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---000000000000138299056ce72754
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi Jason,
 
-On Thu, May 24, 2018, 00:22 J=C3=B6rg Thalheim <joerg@higgsboson.tk> wrote:
+Following up from IRC.=20
 
-> On 2018-05-22 02:44, Jason A. Donenfeld wrote:
-> > On Tue, May 22, 2018 at 2:33 AM, Outback Dingo <outbackdingo@gmail.com>
-> wrote:
-> > I too would prefer this, and maybe at some point down the line I'll
-> > put some real time and effort into porting WireGuard from the Linux
-> > kernel to kFreeBSD. But it's not the case that it's "not that hard";
-> > doing so will be a pretty serious undertaking. That's going to take a
-> > lot of time. Until that day arrives, what you speak of doesn't exist.
-> > What we have instead today is tons of hard work that's gone into
-> > bringing a userspace implementation.
-> >
-> > So please, don't derail the current efforts in favor of an effort that
-> > doesn't even exist at the moment.
->
-> Submitting ports here worked for me in the past:
->
->   https://bugs.freebsd.org/bugzilla/query.cgi
->
-> They are not picky usually. I am not using FreeBSD these days so.
->
+I've been looking for the WireGuard tunnel to move back to over WiFi from L=
+TE with wireguard-android Play version 0.0.20180523 and Android 8.1 May 5th=
+ Android Security Patch level. Here's a log extract from what I see with it:
 
-Looks like things are underway and mostly done now, with the remaining
-blocker being me tagging a snapshot, which I plan to do soon.
+05-23 14:30:50.215  3081  3209 D ConnectivityService: NetworkAgentInfo [WIF=
+I () - 115] EVENT_NETWORK_INFO_CHANGED, going from null to CONNECTING
+05-23 14:30:51.378  3081  3209 D ConnectivityService: NetworkAgentInfo [WIF=
+I () - 115] EVENT_NETWORK_INFO_CHANGED, going from CONNECTING to CONNECTED
+05-23 14:30:51.649  3081  3209 D ConnectivityService: Switching to new defa=
+ult network: NetworkAgentInfo{ ni{[type: WIFI[], ...
+05-23 14:30:51.667  3081  3209 D ConnectivityService: Lingering NetworkAgen=
+tInfo [MOBILE (LTE) - 114] for 30000ms
+05-23 14:30:51.668  3081  3209 D ConnectivityService: Sending DISCONNECTED =
+broadcast for type 0 NetworkAgentInfo [MOBILE (LTE) - 114] isDefaultNetwork=
+=3Dtrue
+05-23 14:30:51.669  3081  3209 D ConnectivityService: Sending CONNECTED bro=
+adcast for type 1 NetworkAgentInfo [WIFI () - 115] isDefaultNetwork=3Dtrue
+05-23 14:30:51.777  8674  9978 D WireGuard/GoBackend/wireguard: Failed to s=
+end authenticated packet to peer peer(AsMM=E2=80=A6SeWg)
+05-23 14:30:51.778  8674  9978 I chatty  : uid=3D10104(com.wireguard.androi=
+d) identical 1 line
+05-23 14:30:51.778  8674  9978 D WireGuard/GoBackend/wireguard: Failed to s=
+end authenticated packet to peer peer(AsMM=E2=80=A6SeWg)
+...
 
+It never recovers... I turn the tunnel off and back on to get a tunnel agai=
+n.=20
 
+I'm not having the same problem with (my own build) from tag 0.0.20180521. =
+It doesn't 'roam' immediately as is expected with non-sticky sockets, it fl=
+ows over WiFi it seems when the LTE interface is 'turned off' after a bit:
 
+05-23 15:51:53.189  1088  1246 D ConnectivityService: registerNetworkAgent =
+NetworkAgentInfo{ ni{[type: WIFI[], ...
+05-23 15:51:53.189  1088  1254 D ConnectivityService: NetworkAgentInfo [WIF=
+I () - 103] EVENT_NETWORK_INFO_CHANGED, going from null to CONNECTING
+05-23 15:51:54.382  1088  1254 D ConnectivityService: NetworkAgentInfo [WIF=
+I () - 103] EVENT_NETWORK_INFO_CHANGED, going from CONNECTING to CONNECTED
+05-23 15:51:54.384  1088  1254 D ConnectivityService: Adding iface wlan0 to=
+ network 103
+05-23 15:51:54.623  1088  1254 D ConnectivityService: NetworkAgentInfo [WIF=
+I () - 103] validation passed
+05-23 15:51:54.629  1088  1254 D ConnectivityService: Switching to new defa=
+ult network: NetworkAgentInfo{ ni{[type: WIFI[] ...
+05-23 15:51:54.663  1088  1254 D ConnectivityService: Lingering NetworkAgen=
+tInfo [MOBILE (LTE) - 102] for 30000ms
+05-23 15:51:54.670  1088  1254 D ConnectivityService: Sending DISCONNECTED =
+broadcast for type 0 NetworkAgentInfo [MOBILE (LTE) - 102] isDefaultNetwork=
+=3Dtrue
+05-23 15:51:54.672  1088  1254 D ConnectivityService: Sending CONNECTED bro=
+adcast for type 1 NetworkAgentInfo [WIFI () - 103] isDefaultNetwork=3Dtrue
+05-23 15:52:08.924  2520  2595 D WireGuard/GoBackend/wireguard: peer(dJuC=
+=E2=80=A61/Ws) - Sending handshake initiation
+05-23 15:52:09.173  1088  2592 D ConnectivityService: ConnectivityService N=
+etworkRequestInfo binderDied(NetworkRequest [ LISTEN id=3D29, [ Capabilitie=
+s: INTERNET&NOT_RESTRICTED&TRUSTED&FOREGROUND] ], android.os.BinderProxy@ba=
+e392b)
+05-23 15:52:13.459  1088  1561 D ConnectivityService: ConnectivityService N=
+etworkRequestInfo binderDied(NetworkRequest [ LISTEN id=3D28, [ Capabilitie=
+s: INTERNET&NOT_RESTRICTED&TRUSTED&FOREGROUND] ], android.os.BinderProxy@5e=
+c2cc4)
+05-23 15:52:13.946  2520  5094 D WireGuard/GoBackend/wireguard: peer(dJuC=
+=E2=80=A61/Ws) - Sending handshake initiation
+05-23 15:52:19.248  2520  4976 D WireGuard/GoBackend/wireguard: peer(dJuC=
+=E2=80=A61/Ws): Handshake did not complete after 5 seconds, retrying (try 2)
+05-23 15:52:19.249  2520  4976 D WireGuard/GoBackend/wireguard: peer(dJuC=
+=E2=80=A61/Ws) - Sending handshake initiation
+05-23 15:52:19.289  2520  4972 D WireGuard/GoBackend/wireguard: peer(dJuC=
+=E2=80=A61/Ws) - Received handshake response
+05-23 15:52:19.289  2520  4972 D WireGuard/GoBackend/wireguard: peer(dJuC=
+=E2=80=A61/Ws) - Sending keepalive packet
+05-23 15:52:24.623  1088  1254 D ConnectivityService: handleLingerComplete =
+for NetworkAgentInfo [MOBILE (LTE) - 102]
+05-23 15:52:24.624  1088  1254 D ConnectivityService: NetworkAgentInfo [MOB=
+ILE (LTE) - 102] got DISCONNECTED, was satisfying 11
 
+Thoughts on what's holding things up on the first non-sticky socket version=
+ 0.0.20180523? Perhaps the issue lies elsewhere?
 
-> > _______________________________________________
-> > WireGuard mailing list
-> > WireGuard@lists.zx2c4.com
-> > https://lists.zx2c4.com/mailman/listinfo/wireguard
->
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
->
+I'd be curious to see someone your or someone else's logs of what happens w=
+ith the latest 0.0.20180523 on going from LTE to WiFi.
 
---000000000000138299056ce72754
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><div data-smartmail=3D"gmail_signature"><br></div><b=
-r><div class=3D"gmail_quote"><div dir=3D"ltr">On Thu, May 24, 2018, 00:22 J=
-=C3=B6rg Thalheim &lt;<a href=3D"mailto:joerg@higgsboson.tk">joerg@higgsbos=
-on.tk</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"ma=
-rgin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">On 2018-05-22 =
-02:44, Jason A. Donenfeld wrote:<br>
-&gt; On Tue, May 22, 2018 at 2:33 AM, Outback Dingo &lt;<a href=3D"mailto:o=
-utbackdingo@gmail.com" target=3D"_blank" rel=3D"noreferrer">outbackdingo@gm=
-ail.com</a>&gt; wrote:<br>
-&gt; I too would prefer this, and maybe at some point down the line I&#39;l=
-l<br>
-&gt; put some real time and effort into porting WireGuard from the Linux<br=
->
-&gt; kernel to kFreeBSD. But it&#39;s not the case that it&#39;s &quot;not =
-that hard&quot;;<br>
-&gt; doing so will be a pretty serious undertaking. That&#39;s going to tak=
-e a<br>
-&gt; lot of time. Until that day arrives, what you speak of doesn&#39;t exi=
-st.<br>
-&gt; What we have instead today is tons of hard work that&#39;s gone into<b=
-r>
-&gt; bringing a userspace implementation.<br>
-&gt;<br>
-&gt; So please, don&#39;t derail the current efforts in favor of an effort =
-that<br>
-&gt; doesn&#39;t even exist at the moment.<br>
-<br>
-Submitting ports here worked for me in the past:<br>
-<br>
-=C2=A0 <a href=3D"https://bugs.freebsd.org/bugzilla/query.cgi" rel=3D"noref=
-errer noreferrer" target=3D"_blank">https://bugs.freebsd.org/bugzilla/query=
-.cgi</a><br>
-<br>
-They are not picky usually. I am not using FreeBSD these days so.<br></bloc=
-kquote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">Looks like=
- things are underway and mostly done now, with the remaining blocker being =
-me tagging a snapshot, which I plan to do soon.</div><div dir=3D"auto"><br>=
-</div><div dir=3D"auto"><br></div><div dir=3D"auto"><br></div><div dir=3D"a=
-uto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote"><blockquote cla=
-ss=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;pa=
-dding-left:1ex">
-<br>
-&gt; _______________________________________________<br>
-&gt; WireGuard mailing list<br>
-&gt; <a href=3D"mailto:WireGuard@lists.zx2c4.com" target=3D"_blank" rel=3D"=
-noreferrer">WireGuard@lists.zx2c4.com</a><br>
-&gt; <a href=3D"https://lists.zx2c4.com/mailman/listinfo/wireguard" rel=3D"=
-noreferrer noreferrer" target=3D"_blank">https://lists.zx2c4.com/mailman/li=
-stinfo/wireguard</a><br>
-<br>
-_______________________________________________<br>
-WireGuard mailing list<br>
-<a href=3D"mailto:WireGuard@lists.zx2c4.com" target=3D"_blank" rel=3D"noref=
-errer">WireGuard@lists.zx2c4.com</a><br>
-<a href=3D"https://lists.zx2c4.com/mailman/listinfo/wireguard" rel=3D"noref=
-errer noreferrer" target=3D"_blank">https://lists.zx2c4.com/mailman/listinf=
-o/wireguard</a><br>
-</blockquote></div></div></div>
-
---000000000000138299056ce72754--
+Thanks!
