@@ -1,22 +1,26 @@
-Return-Path: nnet@fastmail.fm
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f8e4b135
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 39259340
  for <wireguard@lists.zx2c4.com>;
- Wed, 23 May 2018 23:55:49 +0000 (UTC)
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
- [66.111.4.28])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f6f8acfd
+ Thu, 24 May 2018 00:59:47 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cf90770c
  for <wireguard@lists.zx2c4.com>;
- Wed, 23 May 2018 23:55:49 +0000 (UTC)
-Message-Id: <1527119825.1012882.1382673952.168165E8@webmail.messagingengine.com>
-From: nnet <nnet@fastmail.fm>
-To: Jason Donenfeld <Jason@zx2c4.com>
+ Thu, 24 May 2018 00:59:47 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 55c4fbbe
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 24 May 2018 00:58:33 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 7c87ac54
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 24 May 2018 00:58:33 +0000 (UTC)
+Date: Thu, 24 May 2018 03:01:02 +0200
+To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: [ANNOUNCE] WireGuard Snapshot `0.0.20180524` Available
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Subject: [wireguard-android] 'roaming' from LTE to WiFi with version
- 0.0.20180523
-Date: Wed, 23 May 2018 16:57:05 -0700
-Cc: wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset=UTF-8
+Message-Id: <b997e7df41623c27@frisell.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,90 +30,82 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Jason,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Following up from IRC.=20
+Hello,
 
-I've been looking for the WireGuard tunnel to move back to over WiFi from L=
-TE with wireguard-android Play version 0.0.20180523 and Android 8.1 May 5th=
- Android Security Patch level. Here's a log extract from what I see with it:
+A new snapshot, `0.0.20180524`, has been tagged in the git repository.
 
-05-23 14:30:50.215  3081  3209 D ConnectivityService: NetworkAgentInfo [WIF=
-I () - 115] EVENT_NETWORK_INFO_CHANGED, going from null to CONNECTING
-05-23 14:30:51.378  3081  3209 D ConnectivityService: NetworkAgentInfo [WIF=
-I () - 115] EVENT_NETWORK_INFO_CHANGED, going from CONNECTING to CONNECTED
-05-23 14:30:51.649  3081  3209 D ConnectivityService: Switching to new defa=
-ult network: NetworkAgentInfo{ ni{[type: WIFI[], ...
-05-23 14:30:51.667  3081  3209 D ConnectivityService: Lingering NetworkAgen=
-tInfo [MOBILE (LTE) - 114] for 30000ms
-05-23 14:30:51.668  3081  3209 D ConnectivityService: Sending DISCONNECTED =
-broadcast for type 0 NetworkAgentInfo [MOBILE (LTE) - 114] isDefaultNetwork=
-=3Dtrue
-05-23 14:30:51.669  3081  3209 D ConnectivityService: Sending CONNECTED bro=
-adcast for type 1 NetworkAgentInfo [WIFI () - 115] isDefaultNetwork=3Dtrue
-05-23 14:30:51.777  8674  9978 D WireGuard/GoBackend/wireguard: Failed to s=
-end authenticated packet to peer peer(AsMM=E2=80=A6SeWg)
-05-23 14:30:51.778  8674  9978 I chatty  : uid=3D10104(com.wireguard.androi=
-d) identical 1 line
-05-23 14:30:51.778  8674  9978 D WireGuard/GoBackend/wireguard: Failed to s=
-end authenticated packet to peer peer(AsMM=E2=80=A6SeWg)
-...
+Please note that this snapshot is, like the rest of the project at this point
+in time, experimental, and does not consitute a real release that would be
+considered secure and bug-free. WireGuard is generally thought to be fairly
+stable, and most likely will not crash your computer (though it may).
+However, as this is a pre-release snapshot, it comes with no guarantees, and
+its security is not yet to be depended on; it is not applicable for CVEs.
 
-It never recovers... I turn the tunnel off and back on to get a tunnel agai=
-n.=20
+With all that said, if you'd like to test this snapshot out, there are a
+few relevent changes.
 
-I'm not having the same problem with (my own build) from tag 0.0.20180521. =
-It doesn't 'roam' immediately as is expected with non-sticky sockets, it fl=
-ows over WiFi it seems when the LTE interface is 'turned off' after a bit:
+== Changes ==
 
-05-23 15:51:53.189  1088  1246 D ConnectivityService: registerNetworkAgent =
-NetworkAgentInfo{ ni{[type: WIFI[], ...
-05-23 15:51:53.189  1088  1254 D ConnectivityService: NetworkAgentInfo [WIF=
-I () - 103] EVENT_NETWORK_INFO_CHANGED, going from null to CONNECTING
-05-23 15:51:54.382  1088  1254 D ConnectivityService: NetworkAgentInfo [WIF=
-I () - 103] EVENT_NETWORK_INFO_CHANGED, going from CONNECTING to CONNECTED
-05-23 15:51:54.384  1088  1254 D ConnectivityService: Adding iface wlan0 to=
- network 103
-05-23 15:51:54.623  1088  1254 D ConnectivityService: NetworkAgentInfo [WIF=
-I () - 103] validation passed
-05-23 15:51:54.629  1088  1254 D ConnectivityService: Switching to new defa=
-ult network: NetworkAgentInfo{ ni{[type: WIFI[] ...
-05-23 15:51:54.663  1088  1254 D ConnectivityService: Lingering NetworkAgen=
-tInfo [MOBILE (LTE) - 102] for 30000ms
-05-23 15:51:54.670  1088  1254 D ConnectivityService: Sending DISCONNECTED =
-broadcast for type 0 NetworkAgentInfo [MOBILE (LTE) - 102] isDefaultNetwork=
-=3Dtrue
-05-23 15:51:54.672  1088  1254 D ConnectivityService: Sending CONNECTED bro=
-adcast for type 1 NetworkAgentInfo [WIFI () - 103] isDefaultNetwork=3Dtrue
-05-23 15:52:08.924  2520  2595 D WireGuard/GoBackend/wireguard: peer(dJuC=
-=E2=80=A61/Ws) - Sending handshake initiation
-05-23 15:52:09.173  1088  2592 D ConnectivityService: ConnectivityService N=
-etworkRequestInfo binderDied(NetworkRequest [ LISTEN id=3D29, [ Capabilitie=
-s: INTERNET&NOT_RESTRICTED&TRUSTED&FOREGROUND] ], android.os.BinderProxy@ba=
-e392b)
-05-23 15:52:13.459  1088  1561 D ConnectivityService: ConnectivityService N=
-etworkRequestInfo binderDied(NetworkRequest [ LISTEN id=3D28, [ Capabilitie=
-s: INTERNET&NOT_RESTRICTED&TRUSTED&FOREGROUND] ], android.os.BinderProxy@5e=
-c2cc4)
-05-23 15:52:13.946  2520  5094 D WireGuard/GoBackend/wireguard: peer(dJuC=
-=E2=80=A61/Ws) - Sending handshake initiation
-05-23 15:52:19.248  2520  4976 D WireGuard/GoBackend/wireguard: peer(dJuC=
-=E2=80=A61/Ws): Handshake did not complete after 5 seconds, retrying (try 2)
-05-23 15:52:19.249  2520  4976 D WireGuard/GoBackend/wireguard: peer(dJuC=
-=E2=80=A61/Ws) - Sending handshake initiation
-05-23 15:52:19.289  2520  4972 D WireGuard/GoBackend/wireguard: peer(dJuC=
-=E2=80=A61/Ws) - Received handshake response
-05-23 15:52:19.289  2520  4972 D WireGuard/GoBackend/wireguard: peer(dJuC=
-=E2=80=A61/Ws) - Sending keepalive packet
-05-23 15:52:24.623  1088  1254 D ConnectivityService: handleLingerComplete =
-for NetworkAgentInfo [MOBILE (LTE) - 102]
-05-23 15:52:24.624  1088  1254 D ConnectivityService: NetworkAgentInfo [MOB=
-ILE (LTE) - 102] got DISCONNECTED, was satisfying 11
+  * allowedips: set pointer to null before freeing
+  * ncat-client-server: do not always call sudo and use env bash
+  * qemu: bump default kernel for gcc 8.1
+  * compat: work around qcom 4.9 backports
+  
+  The usual fixes.
+  
+  * tools: fix OpenBSD build
+  * tools: always pass -v as first argument to install
+  
+  Portability changes.
+  
+  * wg-quick: darwin: rename namefile environment variable
+  * wg-quick: darwin: do not remove routes when no real interface
+  * wg-quick: freebsd: add new implementation
+  * wg-quick: openbsd: add new implementation
+  * wg-quick: support FreeBSD/Darwin search path
+  * wg-quick: better bash completion for non-renaming OSes
+  * wg-quick: allow enumeration of socket files
+  
+  We now support OpenBSD and FreeBSD, in addition to macOS.
 
-Thoughts on what's holding things up on the first non-sticky socket version=
- 0.0.20180523? Perhaps the issue lies elsewhere?
+This snapshot contains commits from: Jason A. Donenfeld and Filippo Valsorda.
 
-I'd be curious to see someone your or someone else's logs of what happens w=
-ith the latest 0.0.20180523 on going from LTE to WiFi.
+As always, the source is available at https://git.zx2c4.com/WireGuard/ and
+information about the project is available at https://www.wireguard.com/ .
 
-Thanks!
+This snapshot is available in tarball form here:
+  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-0.0.20180524.tar.xz
+  SHA2-256: 57614239c1f1a99a367f2c816153acda5bffada66a3b8e3b8215f1625784abc9
+  BLAKE2b-256: e41004df8d5a4ee867463e586822ee891fe3ff70eeb0b833d9ba2375f62cad3e
+
+If you're a snapshot package maintainer, please bump your package version. If
+you're a user, the WireGuard team welcomes any and all feedback on this latest
+snapshot.
+
+Finally, WireGuard development thrives on donations. By popular demand, we
+have a webpage for this: https://www.wireguard.com/donations/
+
+Thank you,
+Jason Donenfeld
+
+
+-----BEGIN PGP SIGNATURE-----
+
+iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAlsGDlQQHGphc29uQHp4
+MmM0LmNvbQAKCRBJ/HASpd4DruxiD/9oRkEyDCUlB11eFVmrtijMWPJOyolgfNm/
+6WIaAsM7A8+xQhphbnyHACLLS25pT8bXpDBC0FtvPeu9R1Y69VjG32d8L266QKqt
+vqt8rsRitonOL+zcvDuiB1JL0dgOGfPe9ghICKQCZiuiMoOASpREO7HDWslz+1Pq
+Hb14fx8TrQ8amE4iF3isjaHerFPnL92qresJ+2zVrf4u7jUCXJKAALVKWPOQYFfi
+8wsGBCORiytp5Fi63YJtBYdy92LCrqb3QjoUr4x2lS0LQkS/HlMkuQ4f4w30giIs
+jfqsRH3AKdzGAw0Ml3InFac+6yCnug8juTqQhHfsfpLlmDNNWr33RVnYi84yf+kv
+NCH19+pmqxrMmEVG6R0D79MO11TiL0mi2aKL23xGAuGq+TwFq0wpF2GW+fs+J47Z
+cSSkuPPZyweI1bFR5WvyykQhU0mq/KxriFDFZIeMQJzww0CrVFbY160SdNU9N1nC
+f/DDDuUOq6MxLRRQSLv5xBShbvEagsXZr6yR5AZd8a8L9cqWfnFKc9RXWTV2ePR5
+HufHY+RPXT6ARgCpUrKJXYI/PEWEop+qk5++d2SEC7UC1787D879F8ZnRcbarUN7
+Clb3nm2CxWwmFI+YSdIB6VIlE+B/MVskmGl70zKQTpEVJGBqbdKHWNs7U1VvlBgI
+Hq9p5R7ijA==
+=FvnJ
+-----END PGP SIGNATURE-----
