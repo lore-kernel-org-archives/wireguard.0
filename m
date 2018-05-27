@@ -1,29 +1,26 @@
-Return-Path: matthias@urlichs.de
+Return-Path: aaronmdjones@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 72065ebb
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 372f0809
  for <wireguard@lists.zx2c4.com>;
- Fri, 25 May 2018 16:04:59 +0000 (UTC)
-Received: from netz.smurf.noris.de (mail.vm.smurf.noris.de
- [IPv6:2001:780:107:8:83::])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2d242a2f
+ Sun, 27 May 2018 06:00:56 +0000 (UTC)
+Received: from mail-wm0-x235.google.com (mail-wm0-x235.google.com
+ [IPv6:2a00:1450:400c:c09::235])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 47e604c9
  for <wireguard@lists.zx2c4.com>;
- Fri, 25 May 2018 16:04:59 +0000 (UTC)
-Received: from [2001:780:107:0:1278:d2ff:fea3:d4a6]
- by mail.vm.smurf.noris.de with esmtpsa
- (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim 4.89)
- (envelope-from <matthias@urlichs.de>) id 1fMFDh-000EZe-AT
- for wireguard@lists.zx2c4.com; Fri, 25 May 2018 18:05:33 +0200
+ Sun, 27 May 2018 06:00:56 +0000 (UTC)
+Received: by mail-wm0-x235.google.com with SMTP id f8-v6so24209643wmc.4
+ for <wireguard@lists.zx2c4.com>; Sat, 26 May 2018 23:02:37 -0700 (PDT)
+Return-Path: <aaronmdjones@gmail.com>
 Subject: Re: Dead peer detection
-To: wireguard@lists.zx2c4.com
 References: <CAM3m09TdGPdAa6ksXPsYK48agkjbtaHSnSUPTiJ1-S6LDqwtRw@mail.gmail.com>
-From: Matthias Urlichs <matthias@urlichs.de>
-Message-ID: <2805c563-cf43-c1a8-665a-6c49033894e4@urlichs.de>
-Date: Fri, 25 May 2018 18:05:28 +0200
+To: Ryan Whelan <rcwhelan@gmail.com>
+From: Aaron Jones <aaronmdjones@gmail.com>
+Message-ID: <119b596d-fd43-01bf-32d0-9edb2928bcb1@gmail.com>
+Date: Sun, 27 May 2018 06:02:32 +0000
 MIME-Version: 1.0
 In-Reply-To: <CAM3m09TdGPdAa6ksXPsYK48agkjbtaHSnSUPTiJ1-S6LDqwtRw@mail.gmail.com>
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="pZjbKgBvBx8YOH6DXoA2L7nWir1GAnEfl"
+Content-Type: text/plain; charset=utf-8
+Cc: wireguard@lists.zx2c4.com
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -33,61 +30,45 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---pZjbKgBvBx8YOH6DXoA2L7nWir1GAnEfl
-Content-Type: multipart/mixed; boundary="RNUObSqXT5gRhTuEJJ7QORtIdMbAXKI6Z";
- protected-headers="v1"
-From: Matthias Urlichs <matthias@urlichs.de>
-To: wireguard@lists.zx2c4.com
-Message-ID: <2805c563-cf43-c1a8-665a-6c49033894e4@urlichs.de>
-Subject: Re: Dead peer detection
-References: <CAM3m09TdGPdAa6ksXPsYK48agkjbtaHSnSUPTiJ1-S6LDqwtRw@mail.gmail.com>
-In-Reply-To: <CAM3m09TdGPdAa6ksXPsYK48agkjbtaHSnSUPTiJ1-S6LDqwtRw@mail.gmail.com>
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
---RNUObSqXT5gRhTuEJJ7QORtIdMbAXKI6Z
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Content-Language: de-DE
+On 25/05/18 14:50, Ryan Whelan wrote:
+> I thought this conversation had been had in the past, but I can
+> not find it so forgive me if I'm rehashing something thats been 
+> discussed already.
+> 
+> How do you guys detect dead peers?  Actively via a ping or 
+> passively via the 'latest handshake' (once it gets past a certain 
+> age, you assume the peer is offline).  Are their other options?
 
-Hi,
-> How do you guys detect dead peers?  Actively via a ping or passively vi=
-a
-> the 'latest handshake' (once it gets past a certain age, you assume the=
+If no traffic is being exchanged, handshakes won't take place either,
+so you can't rely on just looking at that.
 
-> peer is offline).  Are their other options?
-You can't passively determine that a peer is offline, only that it isn't.=
+If you try to communicate with the peer, and the latest handshake is
+more than 3 minutes ago, it should be safe to assume the peer is gone;
+as handshakes occur (when there's traffic) every 2 minutes.
 
-It might just not have anything to send at the moment.
+Note that persistent keep-alive packets count as traffic.
 
-So, yes, ping it.
-
---=20
--- Matthias Urlichs
-
-
-
---RNUObSqXT5gRhTuEJJ7QORtIdMbAXKI6Z--
-
---pZjbKgBvBx8YOH6DXoA2L7nWir1GAnEfl
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+Regards,
+Aaron Jones
 
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
 
-iQIzBAEBCgAdFiEEr9eXgvO67AILKKGfcs+OXiW0wpMFAlsINEgACgkQcs+OXiW0
-wpOaDBAAmSt0ggjCZokGmL4yv+4nj7R5S2AEUFwh6eAeYsU7yo3VfbJKdQgMgXwj
-6RcNn8g5SPA3YjzE4vauFSgHx+G/w/FlKYCwX1ov0SIYtfuJQ4o9sG/iEW9cyX1f
-wbDxvWfHJBMVw4lWT3sYeAbcXc1YVQipdcegtU9QDlRH4O/X2RPSpcpkkx6NvI9L
-dkrTc8t3mABUxJvFC2zxhoSAAqqrdtJPrbjXbz/T2weOIJ7ziN3wVKoPtzFMLOwK
-OlSCASB0xlNtJdNK5Ds0Sfb8BbH7ni1LbfeqQ8hQp7IBfVyPfoBjT5Vf7+cN0AQT
-gm02TkI1S/d62h9GS1Ew/V1mF9X/ZVrR66lG4evT1plLByni3w3gzMEHAs/TnUH5
-o5cPgUoRl8CNFBYl10+OR7+BvBYmzOTKEMkYrd3J6fg7chC3R/Yc7AGvHWWnYgiC
-LK/rTsaDOMMpx/nADFZaXWQaLa1bJ26wAXIHo/febz95ppx3EJGCsJ2qW0FNNO7K
-B6A3Gs1xx/zRDohBX4RzK2bkjJf3eOLMsPbYJnSon2plJBEeEqrzslhjrGxfeoyD
-SNrzLo2mw60ub9EdpcavHCHfnIjs5Ff13CYudCIgoW8yvsowYVYdv73WnK0/amFH
-yWtwJ36rJgjDbqCjqCHvqKPWuJoCLbxlE5gDgMNhfA5FA+60vyA=
-=/M4m
+iQIcBAEBCAAGBQJbCknhAAoJEIrwc3SIqzAS2qUP/jzYcbNa8yJzys3nZwnYByJY
+x5MBR8EDZjdaUAdEaw+KEkOL78VoHG+NvQWQ62uLAdlv26S9EslfUSmDsI5XK8I/
+0b13WWJjnFORI7iSRpgDjVdnpMVkHxfVLIXHfBV6aFziJaysjzVyGBPGx/oHeuu4
+Rq7Qf+AppyTddibZurbRUqFBnQ7Li1oBV+sJe8rA+mJYxCG5C5G/8pYj30zL6MAi
+3gX2bllPCTTgQPjQvmMtFeQMnwH0hVqyh6b7xPx3Nivfdf8CthGp6cW63W07ilAE
+/mWaYKwGQyrYxhWHBytZETVfsfYOrea/LQZpUzjO+C6fF3HjU4fkpoKXkZZ41C4M
+UAgXyPF2MTdtQwQvJ3z4aT7j/8ho5itEY+2HRskq8XP4H7v+N1oFnAsG7cfyfU9l
+uvKekPPDW7ZcadOMyb33iV7CzLKgTPHCayUYOsU1lATUSAQBNyTEM6GqASbssB3D
+O5P2dPjMbRuMVPrvpryKRiB7LSxydFDAoUQ6V8HA3By42Jpr1NOvT28JCulBmpBq
+tiS4kpRNWQd72iB/v+oJ9CjJPstc+36TDdzir7i8Q03uAWi6aI2gdwRXNoQAfWbK
+hQfsFh3Y/OktSGuwHUlwBHdfcig4rZRJUyxZPWteMILUgwcW5+ywkgJfuyEoLffy
+NMmLf/J+Orv5fwCOh0uQ
+=IZNK
 -----END PGP SIGNATURE-----
-
---pZjbKgBvBx8YOH6DXoA2L7nWir1GAnEfl--
