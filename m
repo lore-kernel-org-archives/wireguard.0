@@ -1,26 +1,30 @@
-Return-Path: aaronmdjones@gmail.com
+Return-Path: john@mib-infotech.co.nz
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 372f0809
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4cb653b7
  for <wireguard@lists.zx2c4.com>;
- Sun, 27 May 2018 06:00:56 +0000 (UTC)
-Received: from mail-wm0-x235.google.com (mail-wm0-x235.google.com
- [IPv6:2a00:1450:400c:c09::235])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 47e604c9
+ Tue, 29 May 2018 05:33:29 +0000 (UTC)
+Received: from mail-pf0-x22e.google.com (mail-pf0-x22e.google.com
+ [IPv6:2607:f8b0:400e:c00::22e])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a60b8ec5
  for <wireguard@lists.zx2c4.com>;
- Sun, 27 May 2018 06:00:56 +0000 (UTC)
-Received: by mail-wm0-x235.google.com with SMTP id f8-v6so24209643wmc.4
- for <wireguard@lists.zx2c4.com>; Sat, 26 May 2018 23:02:37 -0700 (PDT)
-Return-Path: <aaronmdjones@gmail.com>
-Subject: Re: Dead peer detection
-References: <CAM3m09TdGPdAa6ksXPsYK48agkjbtaHSnSUPTiJ1-S6LDqwtRw@mail.gmail.com>
-To: Ryan Whelan <rcwhelan@gmail.com>
-From: Aaron Jones <aaronmdjones@gmail.com>
-Message-ID: <119b596d-fd43-01bf-32d0-9edb2928bcb1@gmail.com>
-Date: Sun, 27 May 2018 06:02:32 +0000
+ Tue, 29 May 2018 05:33:29 +0000 (UTC)
+Received: by mail-pf0-x22e.google.com with SMTP id v63-v6so6723167pfk.8
+ for <wireguard@lists.zx2c4.com>; Mon, 28 May 2018 22:35:25 -0700 (PDT)
+Return-Path: <john@mib-infotech.co.nz>
+Received: from [10.16.226.11] ([103.247.155.34])
+ by smtp.gmail.com with ESMTPSA id p24-v6sm64627523pfk.58.2018.05.28.22.35.21
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 28 May 2018 22:35:23 -0700 (PDT)
+Subject: Recommended Mini-VM image?
+To: wireguard@lists.zx2c4.com
+References: <CACW8NbAnCtceEQLqgJ6vaCHexH3dH_uq82TTPuYKeb-C55NM-Q@mail.gmail.com>
+From: John Huttley <john@mib-infotech.co.nz>
+Message-ID: <03090631-bb0c-5b54-a9ff-9d79021afea5@mib-infotech.co.nz>
+Date: Tue, 29 May 2018 17:35:18 +1200
 MIME-Version: 1.0
-In-Reply-To: <CAM3m09TdGPdAa6ksXPsYK48agkjbtaHSnSUPTiJ1-S6LDqwtRw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Cc: wireguard@lists.zx2c4.com
+In-Reply-To: <CACW8NbAnCtceEQLqgJ6vaCHexH3dH_uq82TTPuYKeb-C55NM-Q@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -30,45 +34,10 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi team,
+I want to run WG in a VM under windows with Virtual box or such.
 
-On 25/05/18 14:50, Ryan Whelan wrote:
-> I thought this conversation had been had in the past, but I can
-> not find it so forgive me if I'm rehashing something thats been 
-> discussed already.
-> 
-> How do you guys detect dead peers?  Actively via a ping or 
-> passively via the 'latest handshake' (once it gets past a certain 
-> age, you assume the peer is offline).  Are their other options?
-
-If no traffic is being exchanged, handshakes won't take place either,
-so you can't rely on just looking at that.
-
-If you try to communicate with the peer, and the latest handshake is
-more than 3 minutes ago, it should be safe to assume the peer is gone;
-as handshakes occur (when there's traffic) every 2 minutes.
-
-Note that persistent keep-alive packets count as traffic.
-
+I could use my Gentoo image, buts its 25Gb. Does anyone have an 
+"appliance" image?
 Regards,
-Aaron Jones
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
-
-iQIcBAEBCAAGBQJbCknhAAoJEIrwc3SIqzAS2qUP/jzYcbNa8yJzys3nZwnYByJY
-x5MBR8EDZjdaUAdEaw+KEkOL78VoHG+NvQWQ62uLAdlv26S9EslfUSmDsI5XK8I/
-0b13WWJjnFORI7iSRpgDjVdnpMVkHxfVLIXHfBV6aFziJaysjzVyGBPGx/oHeuu4
-Rq7Qf+AppyTddibZurbRUqFBnQ7Li1oBV+sJe8rA+mJYxCG5C5G/8pYj30zL6MAi
-3gX2bllPCTTgQPjQvmMtFeQMnwH0hVqyh6b7xPx3Nivfdf8CthGp6cW63W07ilAE
-/mWaYKwGQyrYxhWHBytZETVfsfYOrea/LQZpUzjO+C6fF3HjU4fkpoKXkZZ41C4M
-UAgXyPF2MTdtQwQvJ3z4aT7j/8ho5itEY+2HRskq8XP4H7v+N1oFnAsG7cfyfU9l
-uvKekPPDW7ZcadOMyb33iV7CzLKgTPHCayUYOsU1lATUSAQBNyTEM6GqASbssB3D
-O5P2dPjMbRuMVPrvpryKRiB7LSxydFDAoUQ6V8HA3By42Jpr1NOvT28JCulBmpBq
-tiS4kpRNWQd72iB/v+oJ9CjJPstc+36TDdzir7i8Q03uAWi6aI2gdwRXNoQAfWbK
-hQfsFh3Y/OktSGuwHUlwBHdfcig4rZRJUyxZPWteMILUgwcW5+ywkgJfuyEoLffy
-NMmLf/J+Orv5fwCOh0uQ
-=IZNK
------END PGP SIGNATURE-----
+-Dad
