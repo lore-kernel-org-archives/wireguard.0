@@ -1,26 +1,34 @@
-Return-Path: rcwhelan@gmail.com
+Return-Path: geno+dev@fireorbit.de
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 24c7c3d4
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e754beb2
  for <wireguard@lists.zx2c4.com>;
- Tue, 29 May 2018 14:09:54 +0000 (UTC)
-Received: from mail-qt0-x22d.google.com (mail-qt0-x22d.google.com
- [IPv6:2607:f8b0:400d:c0d::22d])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 14d5204a
+ Tue, 29 May 2018 18:03:00 +0000 (UTC)
+Received: from cetus.h.sum7.eu (cetus.h.sum7.eu [5.9.250.38])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8700b091
  for <wireguard@lists.zx2c4.com>;
- Tue, 29 May 2018 14:09:54 +0000 (UTC)
-Received: by mail-qt0-x22d.google.com with SMTP id g13-v6so18765429qth.8
- for <wireguard@lists.zx2c4.com>; Tue, 29 May 2018 07:11:53 -0700 (PDT)
+ Tue, 29 May 2018 18:02:59 +0000 (UTC)
+Received: from localhost (localhost-ipv6 [127.0.0.1])
+ by cetus.h.sum7.eu (Postfix) with ESMTP id 134D462227
+ for <wireguard@lists.zx2c4.com>; Tue, 29 May 2018 20:04:59 +0200 (CEST)
+Received: from cetus.h.sum7.eu ([127.0.0.1])
+ by localhost (cetus.h.sum7.eu [127.0.0.1]) (amavisd-new, port 10026)
+ with ESMTP id QZxUlmrcG_cT for <wireguard@lists.zx2c4.com>;
+ Tue, 29 May 2018 20:04:55 +0200 (CEST)
+Received: from [IPv6:2a01:4f8:160:44d0:1337:e7db:f329:bb5e] (unknown
+ [IPv6:2a01:4f8:160:44d0:1337:e7db:f329:bb5e])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by cetus.h.sum7.eu (Postfix) with ESMTPSA
+ for <wireguard@lists.zx2c4.com>; Tue, 29 May 2018 20:04:55 +0200 (CEST)
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: Martin/Geno <geno+dev@fireorbit.de>
+Subject: own interface address and peer address in same Subnet
+Message-ID: <d0fe533f-de71-9446-ec2b-0da8cd0548f9@fireorbit.de>
+Date: Tue, 29 May 2018 20:04:52 +0200
 MIME-Version: 1.0
-References: <CACW8NbAnCtceEQLqgJ6vaCHexH3dH_uq82TTPuYKeb-C55NM-Q@mail.gmail.com>
- <03090631-bb0c-5b54-a9ff-9d79021afea5@mib-infotech.co.nz>
-In-Reply-To: <03090631-bb0c-5b54-a9ff-9d79021afea5@mib-infotech.co.nz>
-From: Ryan Whelan <rcwhelan@gmail.com>
-Date: Tue, 29 May 2018 10:11:41 -0400
-Message-ID: <CAM3m09TWfZH-Je_49m6j4cCXF+Qqihw_nbY52BLP6rPHsEbQdQ@mail.gmail.com>
-Subject: Re: Recommended Mini-VM image?
-To: john@mib-infotech.co.nz
-Content-Type: multipart/alternative; boundary="000000000000e28ba3056d58d073"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="esw2b5nQdfwbBBl9ySCySXFVsqNzxib8R"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -30,56 +38,65 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---000000000000e28ba3056d58d073
-Content-Type: text/plain; charset="UTF-8"
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--esw2b5nQdfwbBBl9ySCySXFVsqNzxib8R
+Content-Type: multipart/mixed; boundary="OeEs1FG8lsAv2tWtwMtPkbSeqASigBik4";
+ protected-headers="v1"
+From: Martin/Geno <geno+dev@fireorbit.de>
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Message-ID: <d0fe533f-de71-9446-ec2b-0da8cd0548f9@fireorbit.de>
+Subject: own interface address and peer address in same Subnet
 
-I use buildroot (buildroot.org) to build linux for my WG devices.  The x86
-version ends up being ~20Mb in size and when bundling the userspace into
-the init in the kernel, it runs completely from memory.
-
-On Tue, May 29, 2018 at 1:36 AM John Huttley <john@mib-infotech.co.nz>
-wrote:
-
-> Hi team,
-> I want to run WG in a VM under windows with Virtual box or such.
->
-> I could use my Gentoo image, buts its 25Gb. Does anyone have an
-> "appliance" image?
-> Regards,
-> -Dad
->
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
->
-
---000000000000e28ba3056d58d073
-Content-Type: text/html; charset="UTF-8"
+--OeEs1FG8lsAv2tWtwMtPkbSeqASigBik4
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">I use buildroot (<a href=3D"http://buildroot.org">buildroo=
-t.org</a>) to build linux for my WG devices.=C2=A0 The x86 version ends up =
-being ~20Mb in size and when bundling the userspace into the init in the ke=
-rnel, it runs completely from memory.</div><br><div class=3D"gmail_quote"><=
-div dir=3D"ltr">On Tue, May 29, 2018 at 1:36 AM John Huttley &lt;<a href=3D=
-"mailto:john@mib-infotech.co.nz">john@mib-infotech.co.nz</a>&gt; wrote:<br>=
-</div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-l=
-eft:1px #ccc solid;padding-left:1ex">Hi team,<br>
-I want to run WG in a VM under windows with Virtual box or such.<br>
-<br>
-I could use my Gentoo image, buts its 25Gb. Does anyone have an <br>
-&quot;appliance&quot; image?<br>
-Regards,<br>
--Dad<br>
-<br>
-_______________________________________________<br>
-WireGuard mailing list<br>
-<a href=3D"mailto:WireGuard@lists.zx2c4.com" target=3D"_blank">WireGuard@li=
-sts.zx2c4.com</a><br>
-<a href=3D"https://lists.zx2c4.com/mailman/listinfo/wireguard" rel=3D"noref=
-errer" target=3D"_blank">https://lists.zx2c4.com/mailman/listinfo/wireguard=
-</a><br>
-</blockquote></div>
+Hi,
+i use at my wireguard 'server' ndp_proxy to announce - thats the reason
+why i could use the same interface address subnet, then the endpoint is i=
+n.
 
---000000000000e28ba3056d58d073--
+Example client configuration:
+
+[Interface]
+Address =3D 2a01:1337::3/64
+
+[Peer]
+AllowedIPs =3D 0.0.0.0/0,::/0
+PersistentKeepalive =3D 25
+Endpoint =3D [2a01:1337::2]:48574
+
+
+Is there a solution for this 'bug' - there should be a validation and
+exclude of endpoint addresses on the routing table fwmark
+
+A nice day
+ Geno
+
+
+--OeEs1FG8lsAv2tWtwMtPkbSeqASigBik4--
+
+--esw2b5nQdfwbBBl9ySCySXFVsqNzxib8R
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEExU2ivF9mZhtsbkpbnX08a/9gDGoFAlsNlkUACgkQnX08a/9g
+DGoaLhAAsw7105UEvq/H6+TH9tf8Bvj8MEHUW/JRhlUAGt5UIVfTvCvJsN8JkWAx
+gixtSoPuVaFM1K9jz+D8mlgmt0xSt/ZDn74O2HBJfelOyABdX0rp9p160Cscf0J4
+0y249326FFotq8ks9/eSAerLRcHbnTp2hr1M0dZtCApBqdtDOKJhCWmMLZgwEfg4
+uZfNM55XcHkSPjG4RQX+I0k4k8zzuvWsV+BphU72xFZIvs23wOelrOrp2jISjjkk
+d+piYFBuRf76sdEmHr7hH8+zdHg/3xMwN4EhIL2Mh/ah4OhU2EDY+UK+MtTjL0m7
+2GkCMQK3DZlfFBrYdQxZHGxBG/7q6RbilZ35rcCR3BBysr7Lq0L171pMuHmQMgwh
+dUK3v5/Du5QBmHlQ8cW5sH79Ulxb7GKbDJuoILVNozhfqf6Pvckt8Sz/JmaUcJ19
+DSyRJuqMjlFY8ZBIniJ8d92ggLAYKk9OuzPE2sXC2N9RJMsKBkRoSUf24RabIiqL
+NBfbyysmtZWp3QfSviM56SjpYRsvKtonL1HVFUGrxIyfrWIEnVgzRbToh7lANkV/
+FdfYqSxI1N830dN23qTZ1bzRnpZ0W1PsDrvqjtkajr3fI5JntzZvcfm6rjiM5sFg
+LJmGije71+3YsZo9oP96QZ1wI1E1I2GkS6rlihcGnovmBF1X81E=
+=9JwA
+-----END PGP SIGNATURE-----
+
+--esw2b5nQdfwbBBl9ySCySXFVsqNzxib8R--
