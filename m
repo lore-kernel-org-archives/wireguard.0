@@ -1,27 +1,29 @@
 Return-Path: pablo@netfilter.org
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 14152ef5
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 39a83fed
  for <wireguard@lists.zx2c4.com>;
- Wed, 30 May 2018 18:03:45 +0000 (UTC)
+ Wed, 30 May 2018 18:22:38 +0000 (UTC)
 Received: from mail.us.es (mail.us.es [193.147.175.20])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0bbe799c
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f1c061bb
  for <wireguard@lists.zx2c4.com>;
- Wed, 30 May 2018 18:03:45 +0000 (UTC)
+ Wed, 30 May 2018 18:22:38 +0000 (UTC)
 Received: from antivirus1-rhel7.int (unknown [192.168.2.11])
- by mail.us.es (Postfix) with ESMTP id E15EF172C6D
- for <wireguard@lists.zx2c4.com>; Wed, 30 May 2018 20:05:18 +0200 (CEST)
+ by mail.us.es (Postfix) with ESMTP id C7DF8174D13
+ for <wireguard@lists.zx2c4.com>; Wed, 30 May 2018 20:24:13 +0200 (CEST)
 Received: from antivirus1-rhel7.int (localhost [127.0.0.1])
- by antivirus1-rhel7.int (Postfix) with ESMTP id 38231DA81B
- for <wireguard@lists.zx2c4.com>; Wed, 30 May 2018 20:04:41 +0200 (CEST)
-Date: Wed, 30 May 2018 20:05:47 +0200
+ by antivirus1-rhel7.int (Postfix) with ESMTP id 13984DA81D
+ for <wireguard@lists.zx2c4.com>; Wed, 30 May 2018 20:23:36 +0200 (CEST)
+Date: Wed, 30 May 2018 20:24:42 +0200
 From: Pablo Neira Ayuso <pablo@netfilter.org>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>
 Subject: Re: Missing skb->dst with flow offloading
-Message-ID: <20180530180547.kn4cikprj7drhlc3@salvia>
+Message-ID: <20180530182442.wbgke26kaoau2du2@salvia>
 References: <CAHmME9que7BqU9sJcmtSpBoHTs8=kybvDZAT_Ai151qZQOCscA@mail.gmail.com>
+ <20180530180547.kn4cikprj7drhlc3@salvia>
+ <CAHmME9p-Wdsd7=BaQJSnPKyPc+xyQkdMLGUz48O5b7yVwAmHzg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-In-Reply-To: <CAHmME9que7BqU9sJcmtSpBoHTs8=kybvDZAT_Ai151qZQOCscA@mail.gmail.com>
+In-Reply-To: <CAHmME9p-Wdsd7=BaQJSnPKyPc+xyQkdMLGUz48O5b7yVwAmHzg@mail.gmail.com>
 Cc: Netdev <netdev@vger.kernel.org>, netfilter-devel@vger.kernel.org,
  Jaap Buurman <jaapbuurman@gmail.com>, openwrt-devel@lists.openwrt.org,
  WireGuard mailing list <wireguard@lists.zx2c4.com>,
@@ -35,32 +37,26 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Jason,
-
-On Wed, May 30, 2018 at 02:01:05AM +0200, Jason A. Donenfeld wrote:
+On Wed, May 30, 2018 at 08:14:42PM +0200, Jason A. Donenfeld wrote:
 > Hey Pablo,
 > 
-> Some OpenWRT people have reported to me that there's a crash when
-> enabling flow offloading, because I rely on skb_dst(skb) being
-> non-null in ndo_start_xmit. The fix in my code for this is very
-> simple:
+> On Wed, May 30, 2018 at 8:05 PM, Pablo Neira Ayuso <pablo@netfilter.org> wrote:
+> > If there a more drivers in-tree that need this, we may add
+> > skb_dst_set_noref() calls to _hook function in the flowtable codebase.
 > 
-> - mtu = dst_mtu(skb_dst(skb));
-> + dst = skb_dst(skb);
-> + mtu = dst ? dst_mtu(dst) : dev->mtu;
+> Can I, then, take that as an implicit acknowledgement that this
+> observed behavior on OpenWRT is to be expected with the current state
+> of events, and that I should patch my driver accordingly?
 > 
-> I can make this change, but I wanted to be certain first that omitting
-> the dst in the skb is intentional on your part. (If so, there might be
-> other drivers to fix as well.) In tracing this, it looks like a packet
-> that's forwarded from a flow offloaded interface to a virtual
-> interface gets diverted immediately via neigh_xmit, where it is then
-> passed to a virtual interface via dev_queue_xmit. I can't see anywhere
-> along this path a call to skb_dst_set. Perhaps this is intended, as
-> flow offloading is supposed to skip the routing table? Or is there an
-> oversight in the new flow offloading code?
-> 
-> I'd appreciate your input, so that I can make the appropriate change
-> -- or not -- to my code.
+> As one example of this in tree, take a look at vxlan -- it's using it
+> for the mtu/pmtu exactly as WireGuard does.
 
-If there a more drivers in-tree that need this, we may add
-skb_dst_set_noref() calls to _hook function in the flowtable codebase.
+May it crash the kernel because it's assuming is set? If so, then
+I'd appreciate if you send us a patch to
+netfilter-devel@vger.kernel.org.
+
+Please, use the nf-next.git tree to patch nf_flow_offload_ip_hook()
+and nf_flow_offload_ip6_hook(), it's rather late, we'll request a
+-stable submission for this if needed.
+
+Thanks.
