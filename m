@@ -1,24 +1,35 @@
-Return-Path: joe@solidadmin.com
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1ebd937a
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 108b3731
  for <wireguard@lists.zx2c4.com>;
- Wed, 30 May 2018 02:27:06 +0000 (UTC)
-Received: from conquer.yellowcord.com (conquer.yellowcord.com [45.55.224.114])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d1ca3db3
+ Wed, 30 May 2018 18:12:37 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fdea587d
  for <wireguard@lists.zx2c4.com>;
- Wed, 30 May 2018 02:27:06 +0000 (UTC)
-Received: from [64.53.190.244] (port=63690 helo=[192.168.1.146])
- by conquer.yellowcord.com with esmtpsa
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128) (Exim 4.91)
- (envelope-from <joe@solidadmin.com>) id 1fNqrN-0000GR-5p
- for wireguard@lists.zx2c4.com; Tue, 29 May 2018 21:29:09 -0500
-To: WireGuard Mailing List <wireguard@lists.zx2c4.com>
-From: Joe Doss <joe@solidadmin.com>
-Subject: atomic-wireguard: Fedora Atomic Host and Silverblue support
-Message-ID: <64ba52e4-98cf-cede-8852-a694038eb082@solidadmin.com>
-Date: Tue, 29 May 2018 21:29:08 -0500
+ Wed, 30 May 2018 18:12:37 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e7cab611
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 30 May 2018 18:11:23 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 7b9d1d08
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 30 May 2018 18:11:22 +0000 (UTC)
+Received: by mail-ot0-f182.google.com with SMTP id n3-v6so22230046ota.5
+ for <wireguard@lists.zx2c4.com>; Wed, 30 May 2018 11:14:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <20180530180547.kn4cikprj7drhlc3@salvia>
+References: <CAHmME9que7BqU9sJcmtSpBoHTs8=kybvDZAT_Ai151qZQOCscA@mail.gmail.com>
+ <20180530180547.kn4cikprj7drhlc3@salvia>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 30 May 2018 20:14:42 +0200
+Message-ID: <CAHmME9p-Wdsd7=BaQJSnPKyPc+xyQkdMLGUz48O5b7yVwAmHzg@mail.gmail.com>
+Subject: Re: Missing skb->dst with flow offloading
+To: Pablo Neira Ayuso <pablo@netfilter.org>
+Content-Type: text/plain; charset="UTF-8"
+Cc: Netdev <netdev@vger.kernel.org>, netfilter-devel@vger.kernel.org,
+ Jaap Buurman <jaapbuurman@gmail.com>, openwrt-devel@lists.openwrt.org,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ Felix Fietkau <nbd@nbd.name>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -28,69 +39,18 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hello there,
+Hey Pablo,
 
-I am the Fedora/RHEL/CentOS package maintainer for WireGuard and I have 
-seen at least one post on the mailing list and some random chatter on 
-IRC about supporting WireGuard on Project Atomic [1] based distros. 
-Specifically Fedora Atomic Host [2] and Silverblue [3]. Since I am 
-starting to work more with Fedora Atomic Host for my projects, I have 
-found a need to create a solution on my end.
+On Wed, May 30, 2018 at 8:05 PM, Pablo Neira Ayuso <pablo@netfilter.org> wrote:
+> If there a more drivers in-tree that need this, we may add
+> skb_dst_set_noref() calls to _hook function in the flowtable codebase.
 
-Like CoreOS, these distros are immutable and designed to run 
-containerized applications. Most of the file system on a Project Atomic 
-based distro is read-only. This makes the current wireguard-dkms RPM 
-impossible to use without substantial work on rpm-ostree [4]. To work 
-around this limitation, I have created atomic-wireguard [5] and 
-open-sourced it. Simply put, it builds the kernel module inside a 
-container and then it loads it on the host node.
+Can I, then, take that as an implicit acknowledgement that this
+observed behavior on OpenWRT is to be expected with the current state
+of events, and that I should patch my driver accordingly?
 
-Some comments and disclaimers to consider before you use this project:
+As one example of this in tree, take a look at vxlan -- it's using it
+for the mtu/pmtu exactly as WireGuard does.
 
-* It is much slower than using DKMS. It will add ~5 to 10min on your 
-boot time if the kernel module isn't built for your currently booted 
-kernel. Speeding this up is something I will be looking into soon.
-
-* It relies on having a working Internet connection during boot to pull 
-down the source and build the module for the current running kernel. 
-This most likely can be improved.
-
-* It probably has bugs. I wouldn't use this with production workloads 
-without ample testing on your end.
-
-* You can use the RPM on Fedora 28 Workstation. It will replace the 
-wireguard-dkms and wireguard-tools packages and the install instructions 
-are on the GitHub repo.
-
-* wg-quick isn't supported as my use-case doesn't use it. Instead, 
-atomic-wireguard makes use of the new WireGuard features in 
-systemd-networkd that comes with systemd 238 that ships with Fedora 28.
-
-* RHEL Atomic Host/CentOS Atomic Host support is going to take some 
-time. There are a handful of RPMs that have to mature a bit to get into 
-RHEL. Specifically systemd, podman, and container-selinux packages.
-
-* Updating to the most current WireGuard snapshot is faster since you 
-don't have to wait for me to make a new wireguard-dkms RPM. ;)
-
-This project should be a stopgap for getting WireGuard on a Project 
-Atomic based distro until we get upstream into the mainline kernel. All 
-of the source is up on GitHub and the RPM is on Copr [6]. PRs and GH 
-issues are welcome! Enjoy!
-
-Thanks,
-Joe
-
-[1] https://www.projectatomic.io/
-[2] https://getfedora.org/en/atomic/
-[3] https://teamsilverblue.org/
-[4] https://github.com/projectatomic/rpm-ostree/issues/1091
-[5] https://github.com/jdoss/atomic-wireguard
-[6] https://copr.fedorainfracloud.org/coprs/jdoss/atomic-wireguard/
-
-
--- 
-Joe Doss
-joe@solidadmin.com
-
-https://twitter.com/jdoss
+Regards,
+Jason
