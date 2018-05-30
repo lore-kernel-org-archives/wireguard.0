@@ -1,32 +1,32 @@
 Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f988d66d
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id eab25dec
  for <wireguard@lists.zx2c4.com>;
- Tue, 29 May 2018 23:59:04 +0000 (UTC)
+ Wed, 30 May 2018 00:04:28 +0000 (UTC)
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 967476e0
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f3a484c7
  for <wireguard@lists.zx2c4.com>;
- Tue, 29 May 2018 23:59:04 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5bb6c83e
+ Wed, 30 May 2018 00:04:27 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c2503386
  for <wireguard@lists.zx2c4.com>;
- Tue, 29 May 2018 23:57:51 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 47b3f57c
+ Wed, 30 May 2018 00:03:13 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 2ab0eb2f
  (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 29 May 2018 23:57:51 +0000 (UTC)
-Received: by mail-oi0-f51.google.com with SMTP id 11-v6so14723022ois.8
- for <wireguard@lists.zx2c4.com>; Tue, 29 May 2018 17:01:06 -0700 (PDT)
+ Wed, 30 May 2018 00:03:12 +0000 (UTC)
+Received: by mail-ot0-f178.google.com with SMTP id y10-v6so19093231otg.10
+ for <wireguard@lists.zx2c4.com>; Tue, 29 May 2018 17:06:28 -0700 (PDT)
 MIME-Version: 1.0
+In-Reply-To: <20180529234831.GA31695@xultrabook>
+References: <0e16dad4-2530-7da5-3481-dbebb7441d8b@attglobal.net>
+ <20180529234831.GA31695@xultrabook>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 30 May 2018 02:01:05 +0200
-Message-ID: <CAHmME9que7BqU9sJcmtSpBoHTs8=kybvDZAT_Ai151qZQOCscA@mail.gmail.com>
-Subject: Missing skb->dst with flow offloading
-To: Pablo Neira Ayuso <pablo@netfilter.org>
+Date: Wed, 30 May 2018 02:06:27 +0200
+Message-ID: <CAHmME9rYt1uLJ8PnFYZrh6BbYw+Ui13m0NSmGa0w1=d8YXYUHQ@mail.gmail.com>
+Subject: Re: Where to download old snapshots
+To: Tharre <tharre3@gmail.com>, Eddie <stunnel@attglobal.net>
 Content-Type: text/plain; charset="UTF-8"
-Cc: Netdev <netdev@vger.kernel.org>, netfilter-devel@vger.kernel.org,
- Jaap Buurman <jaapbuurman@gmail.com>, openwrt-devel@lists.openwrt.org,
- WireGuard mailing list <wireguard@lists.zx2c4.com>,
- Felix Fietkau <nbd@nbd.name>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -36,29 +36,20 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hey Pablo,
+On Wed, May 30, 2018 at 1:48 AM, Tharre <tharre3@gmail.com> wrote:
+> On 05/29, Eddie wrote:
+>> Where can I download a copy of those, as the repository only appears to hold
+>> the latest and minus one.
+>
+> The repo[0] shows snapshots till 0.0.20180202, no?
 
-Some OpenWRT people have reported to me that there's a crash when
-enabling flow offloading, because I rely on skb_dst(skb) being
-non-null in ndo_start_xmit. The fix in my code for this is very
-simple:
+Nope.
 
-- mtu = dst_mtu(skb_dst(skb));
-+ dst = skb_dst(skb);
-+ mtu = dst ? dst_mtu(dst) : dev->mtu;
+We don't support old snapshots. You shouldn't run old snapshots.
+Snapshots are snapshots, not releases. I hope it won't be long before
+this becomes a different type of project that doesn't only cut
+snapshots but rather real releases. But that isn't the case now. So
+for now, use an up-to-date operating system and an up-to-date
+snapshot, and you'll be fine. Otherwise you're on your own. Sorry!
 
-I can make this change, but I wanted to be certain first that omitting
-the dst in the skb is intentional on your part. (If so, there might be
-other drivers to fix as well.) In tracing this, it looks like a packet
-that's forwarded from a flow offloaded interface to a virtual
-interface gets diverted immediately via neigh_xmit, where it is then
-passed to a virtual interface via dev_queue_xmit. I can't see anywhere
-along this path a call to skb_dst_set. Perhaps this is intended, as
-flow offloading is supposed to skip the routing table? Or is there an
-oversight in the new flow offloading code?
-
-I'd appreciate your input, so that I can make the appropriate change
--- or not -- to my code.
-
-Regards,
 Jason
