@@ -1,28 +1,22 @@
-Return-Path: paul@mjr.org
+Return-Path: antonshpilevoy@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2c05f173
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8cc95f7e
  for <wireguard@lists.zx2c4.com>;
- Thu, 14 Jun 2018 19:45:59 +0000 (UTC)
-Received: from mjr.org (mjr.org [212.13.216.238])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c6d7fed5
+ Thu, 14 Jun 2018 23:22:54 +0000 (UTC)
+Received: from mail-wm0-x22a.google.com (mail-wm0-x22a.google.com
+ [IPv6:2a00:1450:400c:c09::22a])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6000466d
  for <wireguard@lists.zx2c4.com>;
- Thu, 14 Jun 2018 19:45:58 +0000 (UTC)
-Message-ID: <9d824fde3e070d0d1264a09425a3c4b5cd455560.camel@mjr.org>
-Subject: Re: Kernel lockup with (debian) 4.16.0-2-rt-amd64
-From: Paul Hedderly <paul@mjr.org>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 14 Jun 2018 20:49:54 +0100
-In-Reply-To: <CAHmME9okF00z8-9xPU=dm_vOrdf5gv4D+CpWtVXdu2oW+N-7zw@mail.gmail.com>
-References: <46bd903565f6b1114b1d9f6bafa7db77bf3b5090.camel@mjr.org>
- <CAHmME9rtHVwfSdy4DDFYmgw06zVerbN8oP88ZZ5ahoJB3PPTFw@mail.gmail.com>
- <CAHmME9qqBFU44wBQ2r3bWk8e7BpGQhY_U6oBg14SJA3Y05aC=A@mail.gmail.com>
- <CAHmME9qW8udKYrcdwgFK6qcabAJ8vDqijek0UcRmFTGTcUdznw@mail.gmail.com>
- <ae8cd01fb2f30682efbae8b2f8b9cd98aaaa9353.camel@mjr.org>
- <CAHmME9qU1OWW72PJ1q1=7pf+EYiPe8vdQX1V2f96Vi6WRmi9Ow@mail.gmail.com>
- <CAHmME9okF00z8-9xPU=dm_vOrdf5gv4D+CpWtVXdu2oW+N-7zw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Mime-Version: 1.0
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+ Thu, 14 Jun 2018 23:22:53 +0000 (UTC)
+Received: by mail-wm0-x22a.google.com with SMTP id v16-v6so644408wmh.5
+ for <wireguard@lists.zx2c4.com>; Thu, 14 Jun 2018 16:26:57 -0700 (PDT)
+MIME-Version: 1.0
+From: Anton Shpilevoy <antonshpilevoy@gmail.com>
+Date: Fri, 15 Jun 2018 04:26:35 +0500
+Message-ID: <CAEyvJ0dTyuN+76QShpTWvr6_6TWyhaJAS6RaU7x=cP4bquqLQQ@mail.gmail.com>
+Subject: problem with Mac OS
+To: wireguard@lists.zx2c4.com
+Content-Type: multipart/alternative; boundary="0000000000005845d0056ea26f9d"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -32,29 +26,58 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Wed, 2018-06-13 at 15:52 +0200, Jason A. Donenfeld wrote:
-> Hi Paul,
-> 
-> I got an -rt kernel up and running, enabled a bunch of nice debugging
-> options, and found a handful of problems, all of which were fixed by:
-> https://git.zx2c4.com/WireGuard/commit/?id=0f05452d043d8d047cf5d7987f
-> c2732b97d676e6
+--0000000000005845d0056ea26f9d
+Content-Type: text/plain; charset="UTF-8"
 
-Well just some feedback - I ran overnight on the -rt- kernel with no
-wireguard... and it was clean and normal in the morning. Worked for a
-couple of hours with and then fired up wireguard compiled from the
-above commit - and its been running 10 hours now with no issues
-whatsoever. dmesg nice and empty!
+stat: cannot read file system information for '0%#p': No such file or
+directory
+Mac version 10.13.4 (17E202), Kernel Version: Darwin 17.5.0
 
-So many thanks - I think you nailed that one!
+After simple
+brew install wireguard-tools
+sudo wg-quick up azirevpn-se1
+I'm getting:
+stat: cannot read file system information for '0%#p': No such file or
+directory
+/usr/local/bin/wg-quick: line 56: ((: (  File:
+"/private/etc/wireguard/azirevpn-se1.conf"
+ ...
+Inodes: Total: 9223372036854775807 Free: 9223372036853543267 & 0007) == 0:
+missing `)' (error token is ": "/private/etc/wireguard/azirevpn-se1.conf"
+...
+Inodes: Total: 9223372036854775807 Free: 9223372036853543267 & 0007) == 0")
+Warning: `/private/etc/wireguard/azirevpn-se1.conf' is world accessible
+[#] wireguard-go utun
+...
+INFO: (utun9) 2018/06/15 04:06:14 Starting wireguard-go version 0.0.20180613
+/usr/local/bin/wg-quick: line 101: File: "/var/run/wireguard/utun9.sock"
+...
+[#] rm -f /var/run/wireguard/azirevpn-se1.name
 
-> I realize the solution in that patch is a bit of a bummer, but at the
-> very least it keeps things from breaking now. I'll see if I can
-> improve it somewhere down the line.
+any workaround?
 
-Its great to get a stable system again - brilliant work.
+--0000000000005845d0056ea26f9d
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-I love wg - and having it on android (user-space only because its a new
-unrooted phone :( ) and Ubiquiti and LEDE... I'm sorted!
+<div dir=3D"ltr">stat: cannot read file system information for &#39;0%#p&#3=
+9;: No such file or directory<br><div><div>Mac version 10.13.4 (17E202), Ke=
+rnel Version: Darwin 17.5.0</div></div><div><br></div><div>After simple</di=
+v><div>brew install wireguard-tools=C2=A0</div><div>sudo wg-quick up azirev=
+pn-se1<br></div><div>I&#39;m getting:</div><div>stat: cannot read file syst=
+em information for &#39;0%#p&#39;: No such file or directory<br></div><div>=
+<div>/usr/local/bin/wg-quick: line 56: ((: (=C2=A0 File: &quot;/private/etc=
+/wireguard/azirevpn-se1.conf&quot;</div><div>=C2=A0...</div><div>Inodes: To=
+tal: 9223372036854775807 Free: 9223372036853543267 &amp; 0007) =3D=3D 0: mi=
+ssing `)&#39; (error token is &quot;: &quot;/private/etc/wireguard/azirevpn=
+-se1.conf&quot;</div><div>...</div><div>Inodes: Total: 9223372036854775807 =
+Free: 9223372036853543267 &amp; 0007) =3D=3D 0&quot;)<br></div><div>Warning=
+: `/private/etc/wireguard/azirevpn-se1.conf&#39; is world accessible</div><=
+div>[#] wireguard-go utun</div><div>...</div><div>INFO: (utun9) 2018/06/15 =
+04:06:14 Starting wireguard-go version 0.0.20180613<br></div><div>/usr/loca=
+l/bin/wg-quick: line 101: File: &quot;/var/run/wireguard/utun9.sock&quot;</=
+div><div>...</div><div>[#] rm -f /var/run/wireguard/<a href=3D"http://azire=
+vpn-se1.name">azirevpn-se1.name</a></div></div><div><br></div><div>any work=
+around?</div></div>
 
-The GSOC projects are also very exciting prospects... 
+--0000000000005845d0056ea26f9d--
