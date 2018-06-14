@@ -1,24 +1,27 @@
-Return-Path: bensammy2@yahoo.co.uk
+Return-Path: paul@mjr.org
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e17ceaa0
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2c05f173
  for <wireguard@lists.zx2c4.com>;
- Wed, 13 Jun 2018 23:10:00 +0000 (UTC)
-Received: from sonic303-21.consmr.mail.ir2.yahoo.com
- (sonic303-21.consmr.mail.ir2.yahoo.com [77.238.178.202])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 071700d3
+ Thu, 14 Jun 2018 19:45:59 +0000 (UTC)
+Received: from mjr.org (mjr.org [212.13.216.238])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c6d7fed5
  for <wireguard@lists.zx2c4.com>;
- Wed, 13 Jun 2018 23:10:00 +0000 (UTC)
-Date: Wed, 13 Jun 2018 23:13:54 +0000 (UTC)
-From: Ben Edmunds <bensammy2@yahoo.co.uk>
+ Thu, 14 Jun 2018 19:45:58 +0000 (UTC)
+Message-ID: <9d824fde3e070d0d1264a09425a3c4b5cd455560.camel@mjr.org>
+Subject: Re: Kernel lockup with (debian) 4.16.0-2-rt-amd64
+From: Paul Hedderly <paul@mjr.org>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Message-ID: <489114848.8341590.1528931634334@mail.yahoo.com>
-In-Reply-To: <CAHmME9oHtrhg=QnYrr0zUQLnLbH7qCiGA=zpWwDbnOnGHsKm3w@mail.gmail.com>
-References: <mailman.834.1528911815.2201.wireguard@lists.zx2c4.com>
- <CAHmME9oHtrhg=QnYrr0zUQLnLbH7qCiGA=zpWwDbnOnGHsKm3w@mail.gmail.com>
-Subject: Re: Building the android apk on osx (case sensitive)
-MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="----=_Part_8341589_350415213.1528931634331"
+Date: Thu, 14 Jun 2018 20:49:54 +0100
+In-Reply-To: <CAHmME9okF00z8-9xPU=dm_vOrdf5gv4D+CpWtVXdu2oW+N-7zw@mail.gmail.com>
+References: <46bd903565f6b1114b1d9f6bafa7db77bf3b5090.camel@mjr.org>
+ <CAHmME9rtHVwfSdy4DDFYmgw06zVerbN8oP88ZZ5ahoJB3PPTFw@mail.gmail.com>
+ <CAHmME9qqBFU44wBQ2r3bWk8e7BpGQhY_U6oBg14SJA3Y05aC=A@mail.gmail.com>
+ <CAHmME9qW8udKYrcdwgFK6qcabAJ8vDqijek0UcRmFTGTcUdznw@mail.gmail.com>
+ <ae8cd01fb2f30682efbae8b2f8b9cd98aaaa9353.camel@mjr.org>
+ <CAHmME9qU1OWW72PJ1q1=7pf+EYiPe8vdQX1V2f96Vi6WRmi9Ow@mail.gmail.com>
+ <CAHmME9okF00z8-9xPU=dm_vOrdf5gv4D+CpWtVXdu2oW+N-7zw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -29,46 +32,29 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-------=_Part_8341589_350415213.1528931634331
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Wed, 2018-06-13 at 15:52 +0200, Jason A. Donenfeld wrote:
+> Hi Paul,
+> 
+> I got an -rt kernel up and running, enabled a bunch of nice debugging
+> options, and found a handful of problems, all of which were fixed by:
+> https://git.zx2c4.com/WireGuard/commit/?id=0f05452d043d8d047cf5d7987f
+> c2732b97d676e6
 
- Thanks for that, ive switched the makefile to use gln and it all works now=
-.
+Well just some feedback - I ran overnight on the -rt- kernel with no
+wireguard... and it was clean and normal in the morning. Worked for a
+couple of hours with and then fired up wireguard compiled from the
+above commit - and its been running 10 hours now with no issues
+whatsoever. dmesg nice and empty!
 
-    On Wednesday, 13 June 2018, 23:08:30 BST, Jason A. Donenfeld <Jason@zx2=
-c4.com> wrote: =20
-=20
- > ln: illegal option -- r
->
-> usage: ln [-Ffhinsv] source_file [target_file]
->
->=C2=A0 =C2=A0 =C2=A0 =C2=A0 ln [-Ffhinsv] source_file ... target_dir
->
->=C2=A0 =C2=A0 =C2=A0 =C2=A0 link source_file target_file
+So many thanks - I think you nailed that one!
 
-The makefile uses options from coreutil's ln, which aren't available
-on macOS. Use Linux to build the app. If Mac support in the build
-system is really important to you and you have something useful you'd
-like to contribute, I suppose I can futz with the makefile to use
-simpler options to ln. Are you able to use Linux for development?
- =20
-------=_Part_8341589_350415213.1528931634331
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+> I realize the solution in that patch is a bit of a bummer, but at the
+> very least it keeps things from breaking now. I'll see if I can
+> improve it somewhere down the line.
 
-<html><head></head><body><div style="font-family:Helvetica Neue, Helvetica, Arial, sans-serif;font-size:13px;"><div style="font-family:Helvetica Neue, Helvetica, Arial, sans-serif;font-size:13px;"><div></div>
-        <div><span><span style="font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;">Thanks for that, ive switched the makefile to use gln and it all works now.</span></span><br></div><div><br></div>
-        
-        </div><div id="ydp622e06d4yahoo_quoted_9698684145" class="ydp622e06d4yahoo_quoted">
-            <div style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:13px;color:#26282a;">
-                
-                <div>
-                    On Wednesday, 13 June 2018, 23:08:30 BST, Jason A. Donenfeld &lt;Jason@zx2c4.com&gt; wrote:
-                </div>
-                <div><br></div>
-                <div><br></div>
-                <div><div dir="ltr">&gt; ln: illegal option -- r<br></div><div dir="ltr">&gt;<br></div><div dir="ltr">&gt; usage: ln [-Ffhinsv] source_file [target_file]<br></div><div dir="ltr">&gt;<br></div><div dir="ltr">&gt;&nbsp; &nbsp; &nbsp; &nbsp; ln [-Ffhinsv] source_file ... target_dir<br></div><div dir="ltr">&gt;<br></div><div dir="ltr">&gt;&nbsp; &nbsp; &nbsp; &nbsp; link source_file target_file<br></div><div dir="ltr"><br></div><div dir="ltr">The makefile uses options from coreutil's ln, which aren't available<br></div><div dir="ltr">on macOS. Use Linux to build the app. If Mac support in the build<br></div><div dir="ltr">system is really important to you and you have something useful you'd<br></div><div dir="ltr">like to contribute, I suppose I can futz with the makefile to use<br></div><div dir="ltr">simpler options to ln. Are you able to use Linux for development?<br></div></div>
-            </div>
-        </div></div></body></html>
-------=_Part_8341589_350415213.1528931634331--
+Its great to get a stable system again - brilliant work.
+
+I love wg - and having it on android (user-space only because its a new
+unrooted phone :( ) and Ubiquiti and LEDE... I'm sorted!
+
+The GSOC projects are also very exciting prospects... 
