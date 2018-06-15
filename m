@@ -1,29 +1,22 @@
-Return-Path: antonshpilevoy@gmail.com
+Return-Path: gbojsza@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7b869f11
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6d10b0f3
  for <wireguard@lists.zx2c4.com>;
- Fri, 15 Jun 2018 15:39:33 +0000 (UTC)
-Received: from mail-wm0-x230.google.com (mail-wm0-x230.google.com
- [IPv6:2a00:1450:400c:c09::230])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6ace48a9
+ Fri, 15 Jun 2018 20:23:21 +0000 (UTC)
+Received: from mail-pg0-x22f.google.com (mail-pg0-x22f.google.com
+ [IPv6:2607:f8b0:400e:c05::22f])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a47c30eb
  for <wireguard@lists.zx2c4.com>;
- Fri, 15 Jun 2018 15:39:33 +0000 (UTC)
-Received: by mail-wm0-x230.google.com with SMTP id p126-v6so4256198wmb.2
- for <wireguard@lists.zx2c4.com>; Fri, 15 Jun 2018 08:43:42 -0700 (PDT)
+ Fri, 15 Jun 2018 20:23:21 +0000 (UTC)
+Received: by mail-pg0-x22f.google.com with SMTP id r21-v6so4897994pgv.4
+ for <wireguard@lists.zx2c4.com>; Fri, 15 Jun 2018 13:27:31 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9orL-E8oMioLHf4yNWprrZ-=x73KgEk8xmJDQ5SxK77dw@mail.gmail.com>
-References: <CAEyvJ0dTyuN+76QShpTWvr6_6TWyhaJAS6RaU7x=cP4bquqLQQ@mail.gmail.com>
- <CAHmME9oLbsfdi2XO8DP+YP+hDT9DrdVD+BEpVpsGz-sQALTV_w@mail.gmail.com>
- <CAEyvJ0dSBkh+rZyZWBaxho9vkh1FDBDcEEfE_D6Ls0-UQoW40g@mail.gmail.com>
- <CAHmME9qXbhOE1Fu6Ft2MT6cGqN+AHpnwCF_WzgEJY7fsuERD5Q@mail.gmail.com>
- <CAEyvJ0fWcjQH6EU0VkfNa_0TKn1=xFiBSPjJjVJpT+zb0ea8CQ@mail.gmail.com>
- <CAHmME9orL-E8oMioLHf4yNWprrZ-=x73KgEk8xmJDQ5SxK77dw@mail.gmail.com>
-From: Anton Shpilevoy <antonshpilevoy@gmail.com>
-Date: Fri, 15 Jun 2018 20:43:19 +0500
-Message-ID: <CAEyvJ0e4a0cOqiAheb2z+OYngZRfPvs7gcw8UuuzqCLu+XuDvQ@mail.gmail.com>
-Subject: Re: problem with Mac OS
-To: wireguard@lists.zx2c4.com
-Content-Type: multipart/alternative; boundary="00000000000074c851056eb01437"
+From: Glen Bojsza <gbojsza@gmail.com>
+Date: Fri, 15 Jun 2018 16:27:09 -0400
+Message-ID: <CACW8NbD=B07z4WqgWv4+SP8P615Ois0_cCdk0d4viAGYp=Ki2w@mail.gmail.com>
+Subject: Ubuntu Error when trying to launch wireguard
+To: wireguard <wireguard@lists.zx2c4.com>
+Content-Type: multipart/alternative; boundary="0000000000008b9b38056eb40bfa"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -33,42 +26,114 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---00000000000074c851056eb01437
+--0000000000008b9b38056eb40bfa
 Content-Type: text/plain; charset="UTF-8"
 
-stat --version
-stat (GNU coreutils) 8.29
-Copyright (C) 2017 Free Software Foundation, Inc.
-License GPLv3+: GNU GPL version 3 or later <
-https://gnu.org/licenses/gpl.html>.
-This is free software: you are free to change and redistribute it.
-There is NO WARRANTY, to the extent permitted by law.
+I am trying to run wireguard server on Bionic ARM processor.
 
-Written by Michael Meskes.
+After following the installation instructions and creating my server config
+file I get the following error when I run
 
->>Jason A. Donenfeld  wrote: There's your problem. You've installed gnu
-coreutils to PATH.
+root@odroidxu4:~# wg-quick up wg0
 
-That was it. The problem is gone after
-brew uninstall coreutils
+Warning: `/etc/wireguard/wg0.conf' is world accessible
 
-Thank you again Jason.
+[#] ip link add wg0 type wireguard
 
---00000000000074c851056eb01437
+RTNETLINK answers: Operation not supported
+
+Unable to access interface: Protocol not supported
+
+[#] ip link delete dev wg0
+
+Cannot find device "wg0"
+
+
+I have followed these steps.
+
+sudo apt update && sudo apt upgrade
+sudo apt install software-properties-common
+sudo add-apt-repository ppa:wireguard/wireguard
+sudo apt-get update
+sudo apt-get install wireguard
+wg genkey | tee privatekey | wg pubkey > publickey
+
+Create w0.conf file
+
+Any help would be appreciated...I catch a plane tomorrow and was hoping to
+have this up and running to use while i am traveling.
+
+thanks,
+
+Glen
+
+--0000000000008b9b38056eb40bfa
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">stat --version<br>stat (GNU coreutils) 8.29<br>Copyright (=
-C) 2017 Free Software Foundation, Inc.<br>License GPLv3+: GNU GPL version 3=
- or later &lt;<a href=3D"https://gnu.org/licenses/gpl.html">https://gnu.org=
-/licenses/gpl.html</a>&gt;.<br>This is free software: you are free to chang=
-e and redistribute it.<br>There is NO WARRANTY, to the extent permitted by =
-law.<br><br>Written by Michael Meskes.<br><br>&gt;&gt;Jason A. Donenfeld=C2=
-=A0 wrote: There&#39;s your problem. You&#39;ve installed gnu coreutils to =
-PATH.<div><br></div><div>That was it. T<span style=3D"font-size:small;backg=
-round-color:rgb(255,255,255);text-decoration-style:initial;text-decoration-=
-color:initial;float:none;display:inline">he problem is gone after</span></d=
-iv><div>brew uninstall coreutils=C2=A0<br></div><div><br></div><div>Thank y=
-ou again Jason.=C2=A0</div></div>
+<div dir=3D"ltr">I am trying to run wireguard server on Bionic ARM processo=
+r.<div><br></div><div>After following the installation instructions and cre=
+ating my server config file I get the following error when I run=C2=A0</div=
+><div><br>
 
---00000000000074c851056eb01437--
+
+
+
+<span></span>
+
+
+
+
+
+<p class=3D"gmail-p1" style=3D"margin:0px;font-variant-numeric:normal;font-=
+variant-east-asian:normal;font-stretch:normal;line-height:normal"><font col=
+or=3D"#000000" face=3D"Menlo"><span style=3D"font-size:11px;font-variant-li=
+gatures:no-common-ligatures">root@odroidxu4:~# wg-quick up wg0</span></font=
+></p><p class=3D"gmail-p1" style=3D"margin:0px;font-variant-numeric:normal;=
+font-variant-east-asian:normal;font-stretch:normal;line-height:normal"><fon=
+t color=3D"#000000" face=3D"Menlo"><span style=3D"font-size:11px;font-varia=
+nt-ligatures:no-common-ligatures">Warning: `/etc/wireguard/wg0.conf&#39; is=
+ world accessible</span></font></p><p class=3D"gmail-p1" style=3D"margin:0p=
+x;font-variant-numeric:normal;font-variant-east-asian:normal;font-stretch:n=
+ormal;line-height:normal"><font color=3D"#000000" face=3D"Menlo"><span styl=
+e=3D"font-size:11px;font-variant-ligatures:no-common-ligatures">[#] ip link=
+ add wg0 type wireguard</span></font></p><p class=3D"gmail-p1" style=3D"mar=
+gin:0px;font-variant-numeric:normal;font-variant-east-asian:normal;font-str=
+etch:normal;line-height:normal"><font color=3D"#000000" face=3D"Menlo"><spa=
+n style=3D"font-size:11px;font-variant-ligatures:no-common-ligatures">RTNET=
+LINK answers: Operation not supported</span></font></p><p class=3D"gmail-p1=
+" style=3D"margin:0px;font-variant-numeric:normal;font-variant-east-asian:n=
+ormal;font-stretch:normal;line-height:normal"><font color=3D"#000000" face=
+=3D"Menlo"><span style=3D"font-size:11px;font-variant-ligatures:no-common-l=
+igatures">Unable to access interface: Protocol not supported</span></font><=
+/p><p class=3D"gmail-p1" style=3D"margin:0px;font-variant-numeric:normal;fo=
+nt-variant-east-asian:normal;font-stretch:normal;line-height:normal"><font =
+color=3D"#000000" face=3D"Menlo"><span style=3D"font-size:11px;font-variant=
+-ligatures:no-common-ligatures">[#] ip link delete dev wg0</span></font></p=
+><p class=3D"gmail-p1" style=3D"margin:0px;font-variant-numeric:normal;font=
+-variant-east-asian:normal;font-stretch:normal;line-height:normal"><font co=
+lor=3D"#000000" face=3D"Menlo"><span style=3D"font-size:11px;font-variant-l=
+igatures:no-common-ligatures">Cannot find device &quot;wg0&quot;</span></fo=
+nt></p><div><br></div><div><br></div><div>I have followed these steps.</div=
+><div><br></div><div><div>sudo apt update &amp;&amp; sudo apt upgrade</div>=
+<div>sudo apt install software-properties-common</div><div>sudo add-apt-rep=
+ository ppa:wireguard/wireguard</div><div>sudo apt-get update</div><div>sud=
+o apt-get install wireguard</div><div>wg genkey | tee privatekey | wg pubke=
+y &gt; publickey</div><div><br></div><div>Create w0.conf file</div></div><d=
+iv><br></div><div>Any help would be appreciated...I catch a plane tomorrow =
+and was hoping to have this up and running to use while i am traveling.</di=
+v><div><br></div><div>thanks,</div><div><br></div><div>Glen</div><p class=
+=3D"gmail-p1" style=3D"margin:0px;font-variant-numeric:normal;font-variant-=
+east-asian:normal;font-weight:normal;font-stretch:normal;font-size:11px;lin=
+e-height:normal;font-family:Menlo;color:rgb(0,0,0);background-color:rgb(255=
+,255,255)"><span class=3D"gmail-s1" style=3D"font-variant-ligatures:no-comm=
+on-ligatures"><br></span></p><p class=3D"gmail-p1" style=3D"margin:0px;font=
+-variant-numeric:normal;font-variant-east-asian:normal;font-weight:normal;f=
+ont-stretch:normal;font-size:11px;line-height:normal;font-family:Menlo;colo=
+r:rgb(0,0,0);background-color:rgb(255,255,255)"><span class=3D"gmail-s1" st=
+yle=3D"font-variant-ligatures:no-common-ligatures"><br></span></p>
+
+
+</div></div>
+
+--0000000000008b9b38056eb40bfa--
