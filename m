@@ -1,38 +1,29 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: antonshpilevoy@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ddb89aaa
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7b869f11
  for <wireguard@lists.zx2c4.com>;
- Fri, 15 Jun 2018 17:00:58 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 375f47a5
+ Fri, 15 Jun 2018 15:39:33 +0000 (UTC)
+Received: from mail-wm0-x230.google.com (mail-wm0-x230.google.com
+ [IPv6:2a00:1450:400c:c09::230])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6ace48a9
  for <wireguard@lists.zx2c4.com>;
- Fri, 15 Jun 2018 17:00:58 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d90de2c1
- for <wireguard@lists.zx2c4.com>;
- Fri, 15 Jun 2018 16:59:43 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 2548bd0d
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Fri, 15 Jun 2018 16:59:42 +0000 (UTC)
-Received: by mail-oi0-f50.google.com with SMTP id c128-v6so9392450oig.11
- for <wireguard@lists.zx2c4.com>; Fri, 15 Jun 2018 10:05:05 -0700 (PDT)
+ Fri, 15 Jun 2018 15:39:33 +0000 (UTC)
+Received: by mail-wm0-x230.google.com with SMTP id p126-v6so4256198wmb.2
+ for <wireguard@lists.zx2c4.com>; Fri, 15 Jun 2018 08:43:42 -0700 (PDT)
 MIME-Version: 1.0
-References: <46bd903565f6b1114b1d9f6bafa7db77bf3b5090.camel@mjr.org>
- <CAHmME9rtHVwfSdy4DDFYmgw06zVerbN8oP88ZZ5ahoJB3PPTFw@mail.gmail.com>
- <CAHmME9qqBFU44wBQ2r3bWk8e7BpGQhY_U6oBg14SJA3Y05aC=A@mail.gmail.com>
- <CAHmME9qW8udKYrcdwgFK6qcabAJ8vDqijek0UcRmFTGTcUdznw@mail.gmail.com>
- <ae8cd01fb2f30682efbae8b2f8b9cd98aaaa9353.camel@mjr.org>
- <CAHmME9qU1OWW72PJ1q1=7pf+EYiPe8vdQX1V2f96Vi6WRmi9Ow@mail.gmail.com>
- <CAHmME9okF00z8-9xPU=dm_vOrdf5gv4D+CpWtVXdu2oW+N-7zw@mail.gmail.com>
- <9d824fde3e070d0d1264a09425a3c4b5cd455560.camel@mjr.org>
-In-Reply-To: <9d824fde3e070d0d1264a09425a3c4b5cd455560.camel@mjr.org>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 15 Jun 2018 19:04:52 +0200
-Message-ID: <CAHmME9pkqA7_4zaC_u14O0FX1_9pV25MhnB-SBgnWgsi+gr0uA@mail.gmail.com>
-Subject: Re: Kernel lockup with (debian) 4.16.0-2-rt-amd64
-To: Paul Hedderly <paul@mjr.org>
-Content-Type: multipart/alternative; boundary="0000000000009a1890056eb13767"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+In-Reply-To: <CAHmME9orL-E8oMioLHf4yNWprrZ-=x73KgEk8xmJDQ5SxK77dw@mail.gmail.com>
+References: <CAEyvJ0dTyuN+76QShpTWvr6_6TWyhaJAS6RaU7x=cP4bquqLQQ@mail.gmail.com>
+ <CAHmME9oLbsfdi2XO8DP+YP+hDT9DrdVD+BEpVpsGz-sQALTV_w@mail.gmail.com>
+ <CAEyvJ0dSBkh+rZyZWBaxho9vkh1FDBDcEEfE_D6Ls0-UQoW40g@mail.gmail.com>
+ <CAHmME9qXbhOE1Fu6Ft2MT6cGqN+AHpnwCF_WzgEJY7fsuERD5Q@mail.gmail.com>
+ <CAEyvJ0fWcjQH6EU0VkfNa_0TKn1=xFiBSPjJjVJpT+zb0ea8CQ@mail.gmail.com>
+ <CAHmME9orL-E8oMioLHf4yNWprrZ-=x73KgEk8xmJDQ5SxK77dw@mail.gmail.com>
+From: Anton Shpilevoy <antonshpilevoy@gmail.com>
+Date: Fri, 15 Jun 2018 20:43:19 +0500
+Message-ID: <CAEyvJ0e4a0cOqiAheb2z+OYngZRfPvs7gcw8UuuzqCLu+XuDvQ@mail.gmail.com>
+Subject: Re: problem with Mac OS
+To: wireguard@lists.zx2c4.com
+Content-Type: multipart/alternative; boundary="00000000000074c851056eb01437"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -42,94 +33,42 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---0000000000009a1890056eb13767
+--00000000000074c851056eb01437
 Content-Type: text/plain; charset="UTF-8"
 
-Happy to hear it's working for you. I went asking for deeper answers, and
-this thread might interest you:
+stat --version
+stat (GNU coreutils) 8.29
+Copyright (C) 2017 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <
+https://gnu.org/licenses/gpl.html>.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
 
-https://marc.info/?l=linux-rt-users&m=152906766629953&w=2
-https://marc.info/?l=linux-rt-users&m=152907896201090&w=2
+Written by Michael Meskes.
 
-On Thu, Jun 14, 2018, 21:50 Paul Hedderly <paul@mjr.org> wrote:
+>>Jason A. Donenfeld  wrote: There's your problem. You've installed gnu
+coreutils to PATH.
 
-> On Wed, 2018-06-13 at 15:52 +0200, Jason A. Donenfeld wrote:
-> > Hi Paul,
-> >
-> > I got an -rt kernel up and running, enabled a bunch of nice debugging
-> > options, and found a handful of problems, all of which were fixed by:
-> > https://git.zx2c4.com/WireGuard/commit/?id=0f05452d043d8d047cf5d7987f
-> > c2732b97d676e6
->
-> Well just some feedback - I ran overnight on the -rt- kernel with no
-> wireguard... and it was clean and normal in the morning. Worked for a
-> couple of hours with and then fired up wireguard compiled from the
-> above commit - and its been running 10 hours now with no issues
-> whatsoever. dmesg nice and empty!
->
-> So many thanks - I think you nailed that one!
->
-> > I realize the solution in that patch is a bit of a bummer, but at the
-> > very least it keeps things from breaking now. I'll see if I can
-> > improve it somewhere down the line.
->
-> Its great to get a stable system again - brilliant work.
->
-> I love wg - and having it on android (user-space only because its a new
-> unrooted phone :( ) and Ubiquiti and LEDE... I'm sorted!
->
-> The GSOC projects are also very exciting prospects...
->
+That was it. The problem is gone after
+brew uninstall coreutils
 
---0000000000009a1890056eb13767
+Thank you again Jason.
+
+--00000000000074c851056eb01437
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"auto"><div data-smartmail=3D"gmail_signature">Happy to hear it&=
-#39;s working for you. I went asking for deeper answers, and this thread mi=
-ght interest you:</div><div data-smartmail=3D"gmail_signature" dir=3D"auto"=
-><br></div><div data-smartmail=3D"gmail_signature" dir=3D"auto"><a href=3D"=
-https://marc.info/?l=3Dlinux-rt-users&amp;m=3D152906766629953&amp;w=3D2">ht=
-tps://marc.info/?l=3Dlinux-rt-users&amp;m=3D152906766629953&amp;w=3D2</a><b=
-r></div><div data-smartmail=3D"gmail_signature" dir=3D"auto"><a href=3D"htt=
-ps://marc.info/?l=3Dlinux-rt-users&amp;m=3D152907896201090&amp;w=3D2">https=
-://marc.info/?l=3Dlinux-rt-users&amp;m=3D152907896201090&amp;w=3D2</a><br><=
-/div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr">On Thu, Jun 14, =
-2018, 21:50 Paul Hedderly &lt;<a href=3D"mailto:paul@mjr.org">paul@mjr.org<=
-/a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0=
- 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">On Wed, 2018-06-13 a=
-t 15:52 +0200, Jason A. Donenfeld wrote:<br>
-&gt; Hi Paul,<br>
-&gt; <br>
-&gt; I got an -rt kernel up and running, enabled a bunch of nice debugging<=
-br>
-&gt; options, and found a handful of problems, all of which were fixed by:<=
-br>
-&gt; <a href=3D"https://git.zx2c4.com/WireGuard/commit/?id=3D0f05452d043d8d=
-047cf5d7987f" rel=3D"noreferrer noreferrer" target=3D"_blank">https://git.z=
-x2c4.com/WireGuard/commit/?id=3D0f05452d043d8d047cf5d7987f</a><br>
-&gt; c2732b97d676e6<br>
-<br>
-Well just some feedback - I ran overnight on the -rt- kernel with no<br>
-wireguard... and it was clean and normal in the morning. Worked for a<br>
-couple of hours with and then fired up wireguard compiled from the<br>
-above commit - and its been running 10 hours now with no issues<br>
-whatsoever. dmesg nice and empty!<br>
-<br>
-So many thanks - I think you nailed that one!<br>
-<br>
-&gt; I realize the solution in that patch is a bit of a bummer, but at the<=
-br>
-&gt; very least it keeps things from breaking now. I&#39;ll see if I can<br=
->
-&gt; improve it somewhere down the line.<br>
-<br>
-Its great to get a stable system again - brilliant work.<br>
-<br>
-I love wg - and having it on android (user-space only because its a new<br>
-unrooted phone :( ) and Ubiquiti and LEDE... I&#39;m sorted!<br>
-<br>
-The GSOC projects are also very exciting prospects... <br>
-</blockquote></div>
+<div dir=3D"ltr">stat --version<br>stat (GNU coreutils) 8.29<br>Copyright (=
+C) 2017 Free Software Foundation, Inc.<br>License GPLv3+: GNU GPL version 3=
+ or later &lt;<a href=3D"https://gnu.org/licenses/gpl.html">https://gnu.org=
+/licenses/gpl.html</a>&gt;.<br>This is free software: you are free to chang=
+e and redistribute it.<br>There is NO WARRANTY, to the extent permitted by =
+law.<br><br>Written by Michael Meskes.<br><br>&gt;&gt;Jason A. Donenfeld=C2=
+=A0 wrote: There&#39;s your problem. You&#39;ve installed gnu coreutils to =
+PATH.<div><br></div><div>That was it. T<span style=3D"font-size:small;backg=
+round-color:rgb(255,255,255);text-decoration-style:initial;text-decoration-=
+color:initial;float:none;display:inline">he problem is gone after</span></d=
+iv><div>brew uninstall coreutils=C2=A0<br></div><div><br></div><div>Thank y=
+ou again Jason.=C2=A0</div></div>
 
---0000000000009a1890056eb13767--
+--00000000000074c851056eb01437--
