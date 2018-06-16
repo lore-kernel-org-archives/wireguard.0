@@ -1,22 +1,31 @@
-Return-Path: aleksandr.v.piskunov@gmail.com
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c9bc12ba
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 87205a27
  for <wireguard@lists.zx2c4.com>;
- Sat, 16 Jun 2018 09:22:59 +0000 (UTC)
-Received: from mail-it0-x243.google.com (mail-it0-x243.google.com
- [IPv6:2607:f8b0:4001:c0b::243])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 076209f1
+ Sat, 16 Jun 2018 12:56:41 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4c8d9791
  for <wireguard@lists.zx2c4.com>;
- Sat, 16 Jun 2018 09:22:59 +0000 (UTC)
-Received: by mail-it0-x243.google.com with SMTP id j135-v6so5968991itj.1
- for <wireguard@lists.zx2c4.com>; Sat, 16 Jun 2018 02:27:13 -0700 (PDT)
+ Sat, 16 Jun 2018 12:56:41 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9326d306
+ for <wireguard@lists.zx2c4.com>;
+ Sat, 16 Jun 2018 12:55:28 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id c8373027
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Sat, 16 Jun 2018 12:55:28 +0000 (UTC)
+Received: by mail-oi0-f48.google.com with SMTP id c6-v6so11164954oiy.0
+ for <wireguard@lists.zx2c4.com>; Sat, 16 Jun 2018 06:00:57 -0700 (PDT)
 MIME-Version: 1.0
-From: "Aleksandr V. Piskunov" <aleksandr.v.piskunov@gmail.com>
-Date: Sat, 16 Jun 2018 12:27:12 +0300
-Message-ID: <CACsX8BiJJyTc8kS-_u4eMrDLgyOoNxKvhFL8YF1M2mnkKBOxTg@mail.gmail.com>
-Subject: OpenWRT dynamic IP watchdog
-To: wireguard@lists.zx2c4.com
+References: <CACsX8BiJJyTc8kS-_u4eMrDLgyOoNxKvhFL8YF1M2mnkKBOxTg@mail.gmail.com>
+In-Reply-To: <CACsX8BiJJyTc8kS-_u4eMrDLgyOoNxKvhFL8YF1M2mnkKBOxTg@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Sat, 16 Jun 2018 15:00:45 +0200
+Message-ID: <CAHmME9ricuvsu=vpg4MQO0wBAXgoCdTSVMwP=BCd0Jt9Y3ZH+Q@mail.gmail.com>
+Subject: Re: OpenWRT dynamic IP watchdog
+To: aleksandr.v.piskunov@gmail.com
 Content-Type: text/plain; charset="UTF-8"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,62 +35,15 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-I'm using OpenWRT routers to connect several networks (most behind
-NAT) to the main one, with a public but dynamic IP. In order to keep
-WireGuard connections alive in case of sudden endpoint IP change, some
-kind of monitoring is required, so I adapted
-https://github.com/WireGuard/WireGuard/blob/master/contrib/examples/reresolve-dns/reresolve-dns.sh
-script to the specifics of OpenWRT networking system.
-Tested it for a few weeks with a several IP changes, server downtimes,
-etc.. seems to be working just fine.
+Hi Aleksandr,
 
-If any OpenWRT wireguard package maintainers are reading this, please
-review and consider for pushing to the wireguard-tools(?) package.
+Nice script. One question:
 
+>   [ ${idle_seconds} -lt 150 ] && return 0;
 
-#!/bin/sh
-# to be called from cron every 1..2 minutes
-. /lib/functions.sh
+Is there a reason why you went with 150? My original reresolve-dns.sh
+went with 135 (REKEY_AFTER_TIME + KEEPALIVE_TIMEOUT + REKEY_TIMEOUT).
+Did you find 150 matched network conditions better?
 
-check_peer_activity() {
-  local cfg=$1
-  local iface=$2
-  local public_key
-  local endpoint_host
-  local endpoint_port
-  local persistent_keepalive
-  local last_handshake
-  local idle_seconds
-
-  config_get public_key "${cfg}" "public_key"
-  config_get endpoint_host "${cfg}" "endpoint_host"
-  config_get endpoint_port "${cfg}" "endpoint_port"
-  config_get persistent_keepalive "${cfg}" "persistent_keepalive"
-
-  # only process peers with endpoints and keepalive set
-  [ -z ${endpoint_host} ] && return 0;
-  [ -z ${persistent_keepalive} ] && return 0;
-
-  # resolve endpoint and reconnect if not responding for too long
-  last_handshake=`wg show ${iface} latest-handshakes | grep
-${public_key} | awk '{print $2}'`
-  [ -z ${last_handshake} ] && return 0;
-  idle_seconds=$((`date +%s`-${last_handshake}))
-  [ ${idle_seconds} -lt 150 ] && return 0;
-  logger -t "wireguard_monitor" "${iface} endpoint
-${endpoint_host}:${endpoint_port} is not responding for
-${idle_seconds} seconds, trying to reconnect"
-  wg set ${iface} peer ${public_key} endpoint
-"${endpoint_host}:${endpoint_port}"
-}
-
-# query ubus for all active wireguard interfaces
-wg_ifaces=`ubus -S call network.interface dump | jsonfilter -e
-'@.interface[@.up=true]' | jsonfilter -a -e
-'@[@.proto="wireguard"].interface' | tr "\n" " "`
-
-# check every peer in every active wireguard interface
-config_load network
-for iface in $wg_ifaces; do
-  config_foreach check_peer_activity "wireguard_${iface}" "${iface}"
-done
+Regards,
+Jason
