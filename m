@@ -1,29 +1,31 @@
-Return-Path: tth@rfa.cz
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 81ecee7b
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bac8e902
  for <wireguard@lists.zx2c4.com>;
- Wed, 20 Jun 2018 17:14:05 +0000 (UTC)
-Received: from vodka.rfa.cz (vodka.rfa.cz [88.86.120.134])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b742e7a9
+ Wed, 20 Jun 2018 17:45:54 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 57cef0d8
  for <wireguard@lists.zx2c4.com>;
- Wed, 20 Jun 2018 17:14:05 +0000 (UTC)
-Received: from localhost (localhost [127.0.0.1])
- by vodka.rfa.cz (Postfix) with ESMTP id B320D90CC9
- for <wireguard@lists.zx2c4.com>; Wed, 20 Jun 2018 19:18:51 +0200 (CEST)
-Received: from vodka.rfa.cz ([127.0.0.1])
- by localhost (vodka.rfa.cz [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id V0xq-opf2jGK for <wireguard@lists.zx2c4.com>;
- Wed, 20 Jun 2018 19:18:50 +0200 (CEST)
-Received: from [192.168.0.129] (ip-89-177-116-30.net.upcbroadband.cz
- [89.177.116.30]) by vodka.rfa.cz (Postfix) with ESMTPSA id 9908290A68
- for <wireguard@lists.zx2c4.com>; Wed, 20 Jun 2018 19:18:50 +0200 (CEST)
-To: wireguard@lists.zx2c4.com
-From: Tomas Herceg <tth@rfa.cz>
-Subject: listen on specific IP only
-Message-ID: <8d3124af-de51-3253-8b89-02233566c4f9@rfa.cz>
-Date: Wed, 20 Jun 2018 19:18:48 +0200
+ Wed, 20 Jun 2018 17:45:54 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c9337448
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 20 Jun 2018 17:44:40 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id a5b0828c
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 20 Jun 2018 17:44:39 +0000 (UTC)
+Received: by mail-ot0-f169.google.com with SMTP id q17-v6so484077otg.2
+ for <wireguard@lists.zx2c4.com>; Wed, 20 Jun 2018 10:50:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
+References: <8d3124af-de51-3253-8b89-02233566c4f9@rfa.cz>
+In-Reply-To: <8d3124af-de51-3253-8b89-02233566c4f9@rfa.cz>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 20 Jun 2018 19:50:28 +0200
+Message-ID: <CAHmME9o1F6r6z8GMj3NqAWAM9-qybLfpOW=STbSso7hOdwFBqA@mail.gmail.com>
+Subject: Re: listen on specific IP only
+To: Tomas Herceg <tth@rfa.cz>
+Content-Type: text/plain; charset="UTF-8"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -33,37 +35,14 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Helo,
-is there a way to listen on specific IP/interface? i need it to use same 
-port for multiple applications - 53 for DNS and wireguard because of 
-firewall rules i can't controll. I have multiple IPs on the server each 
-for specific use. DNS recursor is listening only on private interfaces 
-and i want wireguard will be on public IP.
+We don't allow this in WireGuard by design.
 
-if i try
+However, you can easily work around this with iptables:
 
-ListenPort=53
+$ wg set wg0 listen-port 11153
+$ iptables -t nat -A PREROUTING .... -p udp --dport 53 -j REDIRECT
+--to-port 11153
 
-it fails with:
-Jun 20 19:12:52 athos wg-quick[19091]: RTNETLINK answers: Address 
-already in use
+Fill in the ... with --destination or --in-interface or whatever you want.
 
-but all my public IPs are not used with this port:
-
-netstat -tulpn |grep 53
-tcp        0      0 172.16.16.6:53          0.0.0.0:* 
-LISTEN      3372/pdns_recursor
-tcp        0      0 192.168.11.1:53         0.0.0.0:* 
-LISTEN      3372/pdns_recursor
-tcp        0      0 127.0.0.1:53            0.0.0.0:* 
-LISTEN      3372/pdns_recursor
-udp        0      0 172.16.16.6:53          0.0.0.0:* 
-        3372/pdns_recursor
-udp    30720      0 192.168.11.1:53         0.0.0.0:* 
-        3372/pdns_recursor
-udp        0      0 127.0.0.1:53            0.0.0.0:* 
-        3372/pdns_recursor
-
-is there any workaround for that for now? will some type of DNAT works?
-
-Thanks Tomas
+Jason
