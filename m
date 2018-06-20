@@ -1,30 +1,29 @@
-Return-Path: jacmet@gmail.com
+Return-Path: tth@rfa.cz
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 23ff7549
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 81ecee7b
  for <wireguard@lists.zx2c4.com>;
- Wed, 20 Jun 2018 13:04:46 +0000 (UTC)
-Received: from mail-wr0-x232.google.com (mail-wr0-x232.google.com
- [IPv6:2a00:1450:400c:c0c::232])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 672cb6fa
+ Wed, 20 Jun 2018 17:14:05 +0000 (UTC)
+Received: from vodka.rfa.cz (vodka.rfa.cz [88.86.120.134])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b742e7a9
  for <wireguard@lists.zx2c4.com>;
- Wed, 20 Jun 2018 13:04:45 +0000 (UTC)
-Received: by mail-wr0-x232.google.com with SMTP id l8-v6so1689371wrr.2
- for <wireguard@lists.zx2c4.com>; Wed, 20 Jun 2018 06:09:32 -0700 (PDT)
-Return-Path: <jacmet@gmail.com>
-Sender: Peter Korsgaard <jacmet@gmail.com>
-From: Peter Korsgaard <peter@korsgaard.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: Re: [ANNOUNCE] WireGuard Snapshot `0.0.20180613` Available
-References: <b9a234e9f09a7dc2@frisell.zx2c4.com>
- <87zhzpn49n.fsf@dell.be.48ers.dk>
- <CAHmME9rwrYOfjjkNTkum7_w05YLPU4P2GQowqdCOCj_rU0bUxg@mail.gmail.com>
-Date: Wed, 20 Jun 2018 15:09:28 +0200
-In-Reply-To: <CAHmME9rwrYOfjjkNTkum7_w05YLPU4P2GQowqdCOCj_rU0bUxg@mail.gmail.com>
- (Jason A. Donenfeld's message of "Wed, 20 Jun 2018 14:56:17 +0200")
-Message-ID: <87vaadmwon.fsf@dell.be.48ers.dk>
+ Wed, 20 Jun 2018 17:14:05 +0000 (UTC)
+Received: from localhost (localhost [127.0.0.1])
+ by vodka.rfa.cz (Postfix) with ESMTP id B320D90CC9
+ for <wireguard@lists.zx2c4.com>; Wed, 20 Jun 2018 19:18:51 +0200 (CEST)
+Received: from vodka.rfa.cz ([127.0.0.1])
+ by localhost (vodka.rfa.cz [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id V0xq-opf2jGK for <wireguard@lists.zx2c4.com>;
+ Wed, 20 Jun 2018 19:18:50 +0200 (CEST)
+Received: from [192.168.0.129] (ip-89-177-116-30.net.upcbroadband.cz
+ [89.177.116.30]) by vodka.rfa.cz (Postfix) with ESMTPSA id 9908290A68
+ for <wireguard@lists.zx2c4.com>; Wed, 20 Jun 2018 19:18:50 +0200 (CEST)
+To: wireguard@lists.zx2c4.com
+From: Tomas Herceg <tth@rfa.cz>
+Subject: listen on specific IP only
+Message-ID: <8d3124af-de51-3253-8b89-02233566c4f9@rfa.cz>
+Date: Wed, 20 Jun 2018 19:18:48 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -34,15 +33,37 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
->>>>> "Jason" == Jason A Donenfeld <Jason@zx2c4.com> writes:
+Helo,
+is there a way to listen on specific IP/interface? i need it to use same 
+port for multiple applications - 53 for DNS and wireguard because of 
+firewall rules i can't controll. I have multiple IPs on the server each 
+for specific use. DNS recursor is listening only on private interfaces 
+and i want wireguard will be on public IP.
 
- > Thanks for the report. Fixed here:
- > https://git.zx2c4.com/WireGuard/commit/?id=ed04799b1868f45e05d788e614b9b8cfa4fcab46
+if i try
 
-Thanks for the fast response. I've sent a patch to update the version in
-Buildroot:
+ListenPort=53
 
-https://patchwork.ozlabs.org/patch/932233/
+it fails with:
+Jun 20 19:12:52 athos wg-quick[19091]: RTNETLINK answers: Address 
+already in use
 
--- 
-Bye, Peter Korsgaard
+but all my public IPs are not used with this port:
+
+netstat -tulpn |grep 53
+tcp        0      0 172.16.16.6:53          0.0.0.0:* 
+LISTEN      3372/pdns_recursor
+tcp        0      0 192.168.11.1:53         0.0.0.0:* 
+LISTEN      3372/pdns_recursor
+tcp        0      0 127.0.0.1:53            0.0.0.0:* 
+LISTEN      3372/pdns_recursor
+udp        0      0 172.16.16.6:53          0.0.0.0:* 
+        3372/pdns_recursor
+udp    30720      0 192.168.11.1:53         0.0.0.0:* 
+        3372/pdns_recursor
+udp        0      0 127.0.0.1:53            0.0.0.0:* 
+        3372/pdns_recursor
+
+is there any workaround for that for now? will some type of DNAT works?
+
+Thanks Tomas
