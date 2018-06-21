@@ -1,34 +1,34 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: lists@lonnie.abelbeck.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c3464ab4
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b20d0825
  for <wireguard@lists.zx2c4.com>;
- Wed, 20 Jun 2018 23:42:32 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9ae5d931
+ Thu, 21 Jun 2018 00:17:31 +0000 (UTC)
+Received: from ibughas.pair.com (ibughas.pair.com [209.68.5.177])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c3e21f82
  for <wireguard@lists.zx2c4.com>;
- Wed, 20 Jun 2018 23:42:32 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2660062f
- for <wireguard@lists.zx2c4.com>;
- Wed, 20 Jun 2018 23:41:19 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 55f062b0
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Wed, 20 Jun 2018 23:41:18 +0000 (UTC)
-Received: by mail-ot0-f179.google.com with SMTP id a5-v6so1475723otf.12
- for <wireguard@lists.zx2c4.com>; Wed, 20 Jun 2018 16:47:22 -0700 (PDT)
-MIME-Version: 1.0
+ Thu, 21 Jun 2018 00:17:31 +0000 (UTC)
+Received: from ibughas.pair.com (localhost [127.0.0.1])
+ by ibughas.pair.com (Postfix) with ESMTP id 930BB1E3038
+ for <wireguard@lists.zx2c4.com>; Wed, 20 Jun 2018 20:22:21 -0400 (EDT)
+Received: from macpro.priv.abelbeck.com (wsip-70-184-211-148.om.om.cox.net
+ [70.184.211.148])
+ (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+ (No client certificate requested)
+ by ibughas.pair.com (Postfix) with ESMTPSA id 6505A1E3037
+ for <wireguard@lists.zx2c4.com>; Wed, 20 Jun 2018 20:22:21 -0400 (EDT)
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [ANNOUNCE] WireGuard Snapshot `0.0.20180620` Available
+From: Lonnie Abelbeck <lists@lonnie.abelbeck.com>
+In-Reply-To: <CAHmME9oP5tPNbyYECJN4wgcPc4zg3QE9n2edx_TQQmn5tCbWjA@mail.gmail.com>
+Date: Wed, 20 Jun 2018 19:22:20 -0500
+Message-Id: <3052A12F-768F-4E3B-AF68-77CB34D58D98@lonnie.abelbeck.com>
 References: <b9a4b41fbe912803@frisell.zx2c4.com>
  <8B706799-0A06-449B-960B-08C017C58412@lonnie.abelbeck.com>
  <CAHmME9r+uOOT_50zG3XQwB79reOhFBysE04=3=btubVQMdbuyQ@mail.gmail.com>
  <981DB695-E660-431D-B5E9-ABD2D1352F9F@lonnie.abelbeck.com>
-In-Reply-To: <981DB695-E660-431D-B5E9-ABD2D1352F9F@lonnie.abelbeck.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 21 Jun 2018 01:47:10 +0200
-Message-ID: <CAHmME9oP5tPNbyYECJN4wgcPc4zg3QE9n2edx_TQQmn5tCbWjA@mail.gmail.com>
-Subject: Re: [ANNOUNCE] WireGuard Snapshot `0.0.20180620` Available
-To: Lonnie Abelbeck <lists@lonnie.abelbeck.com>
-Content-Type: text/plain; charset="UTF-8"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+ <CAHmME9oP5tPNbyYECJN4wgcPc4zg3QE9n2edx_TQQmn5tCbWjA@mail.gmail.com>
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -38,35 +38,48 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hey Lonnie,
 
-Thanks for helping to debug this.
+> On Jun 20, 2018, at 6:47 PM, Jason A. Donenfeld <Jason@zx2c4.com> =
+wrote:
+>=20
+> Hey Lonnie,
+>=20
+> Thanks for helping to debug this.
+>=20
+> On Thu, Jun 21, 2018 at 12:37 AM Lonnie Abelbeck
+> <lists@lonnie.abelbeck.com> wrote:
+>> Hunk #1 only does the trick, though performance is ever so slightly =
+slower than before overall.
+>=20
+> It's good to hear that hunks #2 and #3 don't have much an effect,
+> though it does still seem to have _some_ effect.
+>=20
+> Looks like hunk 1 is rather worrisome though. Can you try out
+> https://=D7=90.cc/eaxxpxbB and let me know if it has any effect?
 
-On Thu, Jun 21, 2018 at 12:37 AM Lonnie Abelbeck
-<lists@lonnie.abelbeck.com> wrote:
-> Hunk #1 only does the trick, though performance is ever so slightly slowe=
-r than before overall.
+That patch, as is, is very bad
+--
+[SUM]   0.00-30.00  sec  1.26 GBytes   360 Mbits/sec   98             =
+sender
+[SUM]   0.00-30.03  sec  1.25 GBytes   358 Mbits/sec                  =
+receiver
 
-It's good to hear that hunks #2 and #3 don't have much an effect,
-though it does still seem to have _some_ effect.
+I then edited the patch to add back in local_bh_disable() / =
+local_bh_enable(), much better
+--
+[SUM]   0.00-30.00  sec  2.62 GBytes   751 Mbits/sec  1389             =
+sender
+[SUM]   0.00-30.00  sec  2.61 GBytes   748 Mbits/sec                  =
+receiver
 
-Looks like hunk 1 is rather worrisome though. Can you try out
-https://=D7=90.cc/eaxxpxbB and let me know if it has any effect?
+essentially back to 0.0.20180531 performance, hunk #1 from previous =
+patch and hunk #1 from the latest patch.
 
-> Is this issue because our project uses CONFIG_PREEMPT=3Dy ?
 
-Yes, generally, preemption is good for latency but bad for throughput.
-I was trying to make the queues a bit more preemption friendly, but
-this seemed to have killed performance, so I'll be revisiting this,
-because I don't want to make things worse than before.
+> Are you sure
+> the benchmark conditions were the same in other respects?
 
-I find it very strange that 20180531 is still faster than the last
-patch I sent you. The only other difference along the hot path,
-besides the last patch I sent you, between the two snapshots is
-https://git.zx2c4.com/WireGuard/patch/?id=3Db7b193f499d4acd8a620163ec358c08=
-30e856c9e
-and this is _removing_ code, so I'd think this would actually
-contribute to a speed increase, not a slight decrease. Are you sure
-the benchmark conditions were the same in other respects?
+Yes, quite sure, but there is some variation of the iperf3 results on =
+each run ... I perform a few runs and then pick a median sample.
 
-Jason
+Lonnie
