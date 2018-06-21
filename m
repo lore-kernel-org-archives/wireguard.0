@@ -1,22 +1,24 @@
-Return-Path: jonathan@jonathanhult.com
+Return-Path: phil@sunfi.sh
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 746b7b2b
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3b08dfc3
  for <wireguard@lists.zx2c4.com>;
- Mon, 18 Jun 2018 19:45:43 +0000 (UTC)
-Received: from mail-lf0-x22e.google.com (mail-lf0-x22e.google.com
- [IPv6:2a00:1450:4010:c07::22e])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e16f59c1
+ Thu, 21 Jun 2018 22:53:32 +0000 (UTC)
+Received: from mail4.protonmail.ch (mail4.protonmail.ch [185.70.40.27])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7c158e79
  for <wireguard@lists.zx2c4.com>;
- Mon, 18 Jun 2018 19:45:43 +0000 (UTC)
-Received: by mail-lf0-x22e.google.com with SMTP id y20-v6so26537069lfy.0
- for <wireguard@lists.zx2c4.com>; Mon, 18 Jun 2018 12:50:16 -0700 (PDT)
+ Thu, 21 Jun 2018 22:53:31 +0000 (UTC)
+Date: Thu, 21 Jun 2018 18:58:25 -0400
+To: Vivien Malerba <vmalerba@gmail.com>
+From: Phil Hofer <phil@sunfi.sh>
+Subject: Re: Future changes in crypto algorithms
+Message-ID: <XvD1gSzGsgLpt7iZIf60GLdHHUrx3l_WfkFWIeIKwNsWZOjqRQhe6ck7Vi42QDJF3ZmqbkOA-iUc9VKeN-isswjb8HpQ8Y_cph6AbY0klHI=@sunfi.sh>
+In-Reply-To: <CAEP1ZN=6aqe3B1sJNhDfB5c86emK+Gk2YJ9d-GaVVYuRzeXYGA@mail.gmail.com>
+References: <CAEP1ZN=6aqe3B1sJNhDfB5c86emK+Gk2YJ9d-GaVVYuRzeXYGA@mail.gmail.com>
 MIME-Version: 1.0
-From: Jonathan Hult <jonathan@jonathanhult.com>
-Date: Mon, 18 Jun 2018 15:49:48 -0400
-Message-ID: <CAAmL+SmFnHXTQTQ+PjYHei_HQ4bw5gQAasPnPve9uNUFaryFsw@mail.gmail.com>
-Subject: Is a hostname a valid value value for Endpoint?
-To: wireguard@lists.zx2c4.com
-Content-Type: multipart/alternative; boundary="000000000000d1a0dc056eefdf96"
+Content-Type: multipart/alternative;
+ boundary="b1_5d910cfdf6a7a220f3e47463f6c2ec68"
+Cc: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+Reply-To: Phil Hofer <phil@sunfi.sh>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,75 +28,108 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---000000000000d1a0dc056eefdf96
-Content-Type: text/plain; charset="UTF-8"
+This is a multi-part message in MIME format.
 
-Greetings,
+--b1_5d910cfdf6a7a220f3e47463f6c2ec68
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-I would like to know if a hostname is a valid value for *Endpoint*? Today,
-the documentation all seems to reference an IP address.
+QXZvaWRlZCBwcm90b2NvbCBuZWdvdGlhdGlvbiBkb2Vzbid0IGp1c3Qgc2ltcGxpZnkgdGhlIHBy
+b3RvY29sOyBpdCBwcmV2ZW50cyBkb3duZ3JhZGUgYXR0YWNrcy4KCklmIHRoZSBwcm90b2NvbCBz
+dXBwb3J0ZWQgdHdvIGNpcGhlcnN1aXRlcyBzaW11bHRhbmVvdXNseSwgYW5kIG9uZSBvZiB0aGVt
+IHdhcyBjb21wcm9taXNlZCwgdGhlbiBhdHRhY2tlcnMgd291bGQgcHJvYmFibHkgdHJ5IHRvIGZv
+cmNlIGRvd25ncmFkZXMgdG8gdGhlIGNvbXByb21pc2VkIGNpcGhlcnN1aXRlLiAoWW91IG1pZ2h0
+IGJlIGFibGUgdG8gcHJldmVudCB0aGlzIHRocm91Z2ggY29uZmlndXJhdGlvbiwgYnV0IHRoYXQg
+YWRkcyBmdXJ0aGVyIGNvbXBsZXhpdHkuKQoKSWYgeW91IGFjdHVhbGx5IG5lZWRlZCB0byBkZXBs
+b3kgdHdvIGluY29tcGF0aWJsZSB2ZXJzaW9ucyBvZiBXaXJlR3VhcmQsIHlvdSBjb3VsZCBoYXZl
+IG9uZSBub2RlIGxvYWQgYm90aCBrZXJuZWwgbW9kdWxlcyBhbmQgYnJpZGdlIHRoZSB0d28gbmV0
+d29ya3MuIFRoZW4sIHlvdSdkIHVwZ3JhZGUgYnkgaGF2aW5nIG5vZGVzIGdvIGZyb20gb25lIHNp
+ZGUgb2YgdGhlIG5ldHdvcmsgdG8gdGhlIG90aGVyLgoK4oCQ4oCQ4oCQ4oCQ4oCQ4oCQ4oCQIE9y
+aWdpbmFsIE1lc3NhZ2Ug4oCQ4oCQ4oCQ4oCQ4oCQ4oCQ4oCQCk9uIEp1bmUgMjEsIDIwMTggMzo1
+MyBQTSwgVml2aWVuIE1hbGVyYmEgPHZtYWxlcmJhQGdtYWlsLmNvbT4gd3JvdGU6Cgo+IEhpIQo+
+IE15IHVuZGVyc3RhbmRpbmcgaXMgdGhhdCB0aGUgY3J5cHRvIGFsZ29yaXRobXMgaGF2ZSBiZWVu
+IGNhcmVmdWxseSBjaG9zZW4gdG8gYXZvaWQgaGF2aW5nIHRvIGluY2x1ZGUgY2lwaGVycyBuZWdv
+dGlhdGlvbnM7IHdpdGggdGhlIGFzc3VtcHRpb24gdGhhdCBpbiBjYXNlIGEgd2Vha25lc3MgaXMg
+ZXZlciBmb3VuZCBpbiBvbmUgb2YgdGhlbSwgdGhlIGZhdWx0eSBhbGdvcml0aG1zIHdpbGwgYmUg
+InJlcGxhY2VkIiBhbmQgYWxsIHBlb3BsZSB3aWxsIGhhdmUgdG8gZG8gaXMgdXBkYXRlICh0aGUg
+d2hpdGUgcGFwZXIgc2F5cyAiSWYgaG9sZXMgYXJlIGZvdW5kIGluIHRoZSB1bmRlcmx5aW5nIHBy
+aW1pdGl2ZXMsIGFsbCBlbmRwb2ludHMgd2lsbCBiZSByZXF1aXJlZCB0byB1cGRhdGUiKS4KPgo+
+IEhvd2V2ZXIsIGZvciBhbnkgb3JnYW5pemF0aW9uIHdoaWNoIHdpbGwgdXNlIFdpcmVHdWFyZCwg
+ZXZlbiBpZiBhZG1pbnMgYXJlIHZlcnkgZWZmZWN0aXZlIGF0IGFwcGx5aW5nIHVwZGF0ZXMsIHVw
+ZGF0aW5nIGFsbCB0aGUgZW5kcG9pbnQgc3lzdGVtcyBzaW11bHRhbmVvdXNseSBpcyBub3QgcmVh
+bGlzdGljLiBBdCB0aGUgc2FtZSB0aW1lLCBpdCBtYXkgYmUgdGhlIGNhc2UgdGhhdCB0aGUgb3Jn
+YW5pemF0aW9uIGNhbid0IGFmZm9yZCB0aGUgZG93bnRpbWUsIGluIHdoaWNoIGNhc2UgdXNpbmcg
+V2lyZUd1YXJkIHdpbGwgc2ltcGx5IG5vdCBiZSBhbiBvcHRpb24sIHdoaWNoIGlzIHRvbyBiYWQu
+Cj4KPiBNYXliZSBpdCdzIHRvbyBlYXJseSB0byB0aGluayBhYm91dCB0aGlzIGF0IHRoZSB0aW1l
+LCBidXQgb3RoZXJ3aXNlIEkgdGhpbmsgaW5jbHVkaW5nIGEgbWVjaGFuaXNtIHdoaWNoIHdvdWxk
+IGluc3RydWN0IHRoZSBzeXN0ZW0gYXMgImZvciBub3csIHVzZSB0aGUgbmV3IGFsZ29yaXRobXMg
+YnV0IHN0aWxsIGFsbG93IGZvciB0aGUgb2xkIG9uZXMgaWYgdGhlIG5ldyBvbmVzIGZhaWwgd2hp
+bGUgSSB1cGRhdGUgYWxsIHRoZSBlbmRwb2ludHMiIHdvdWxkIGFuc3dlciB0aGUgcHJvYmxlbS4K
+Pgo+IERvbid0IGtub3cgaG93IHRvIGltcGxlbWVudCB0aGF0IGNvcnJlY3RseSB0aG91Z2gsIGJ1
+dCBJIGp1c3Qgd2FudGVkIHRvIGJyaW5nIHRoYXQgcG9pbnQgdG8gYXR0ZW50aW9uLgo+Cj4gQmVz
+dCByZWdhcmRzLAo+IFZpdmllbg==
 
-Today, Mullvad <https://mullvad.net/en/> currently sets *EndPoint* to a
-hostname (see here <https://api.mullvad.net/public/relays/wireguard/v1/>)
 
-In my case, my host is set to use a DNS server which routes VPN provider
-domains to a bad IP (in order to block them).
+--b1_5d910cfdf6a7a220f3e47463f6c2ec68
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-1. If *EndPoint* should never be a hostname, perhaps we should prevent (or
-at least warn) when it is found to be a hostname (instead of an IP address).
+PGRpdj5Bdm9pZGVkIHByb3RvY29sIG5lZ290aWF0aW9uIGRvZXNuJ3QganVzdCBzaW1wbGlmeSB0
+aGUgcHJvdG9jb2w7IGl0IHByZXZlbnRzIGRvd25ncmFkZSBhdHRhY2tzLjxicj48L2Rpdj48ZGl2
+Pjxicj48L2Rpdj48ZGl2PklmIHRoZSBwcm90b2NvbCBzdXBwb3J0ZWQgdHdvIGNpcGhlcnN1aXRl
+cyBzaW11bHRhbmVvdXNseSwgYW5kIG9uZSBvZiB0aGVtIHdhcyBjb21wcm9taXNlZCwgdGhlbiBh
+dHRhY2tlcnMgd291bGQgcHJvYmFibHkgdHJ5IHRvIGZvcmNlIGRvd25ncmFkZXMgdG8gdGhlIGNv
+bXByb21pc2VkIGNpcGhlcnN1aXRlLiAoWW91IG1pZ2h0IGJlIGFibGUgdG8gcHJldmVudCB0aGlz
+IHRocm91Z2ggY29uZmlndXJhdGlvbiwgYnV0IHRoYXQgYWRkcyBmdXJ0aGVyIGNvbXBsZXhpdHku
+KTxicj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PklmIHlvdSBhY3R1YWxseSBuZWVkZWQgdG8g
+ZGVwbG95IHR3byBpbmNvbXBhdGlibGUgdmVyc2lvbnMgb2YgV2lyZUd1YXJkLCB5b3UgY291bGQg
+aGF2ZSBvbmUgbm9kZSBsb2FkIGJvdGgga2VybmVsIG1vZHVsZXMgYW5kIGJyaWRnZSB0aGUgdHdv
+IG5ldHdvcmtzLiBUaGVuLCB5b3UnZCB1cGdyYWRlIGJ5IGhhdmluZyBub2RlcyBnbyBmcm9tIG9u
+ZSBzaWRlIG9mIHRoZSBuZXR3b3JrIHRvIHRoZSBvdGhlci48YnI+PC9kaXY+PGRpdj48YnI+PC9k
+aXY+PGRpdj7igJDigJDigJDigJDigJDigJDigJAgT3JpZ2luYWwgTWVzc2FnZSDigJDigJDigJDi
+gJDigJDigJDigJA8YnI+PC9kaXY+PGRpdj4gT24gSnVuZSAyMSwgMjAxOCAzOjUzIFBNLCBWaXZp
+ZW4gTWFsZXJiYSAmbHQ7dm1hbGVyYmFAZ21haWwuY29tJmd0OyB3cm90ZTo8YnI+PC9kaXY+PGRp
+dj4gPGJyPjwvZGl2PjxibG9ja3F1b3RlIGNsYXNzPSJwcm90b25tYWlsX3F1b3RlIiB0eXBlPSJj
+aXRlIj48ZGl2IGRpcj0ibHRyIj48ZGl2IHN0eWxlPSJmb250LWZhbWlseTphcmlhbCxoZWx2ZXRp
+Y2Esc2Fucy1zZXJpZiIgY2xhc3M9ImdtYWlsX2RlZmF1bHQiPkhpITxicj48L2Rpdj48ZGl2IHN0
+eWxlPSJmb250LWZhbWlseTphcmlhbCxoZWx2ZXRpY2Esc2Fucy1zZXJpZiIgY2xhc3M9ImdtYWls
+X2RlZmF1bHQiPk15IHVuZGVyc3RhbmRpbmcgaXMgdGhhdCB0aGUgY3J5cHRvIGFsZ29yaXRobXMg
+aGF2ZSBiZWVuIGNhcmVmdWxseSBjaG9zZW4gdG8gYXZvaWQgaGF2aW5nIHRvIGluY2x1ZGUgY2lw
+aGVycyBuZWdvdGlhdGlvbnM7IHdpdGggdGhlIGFzc3VtcHRpb24gdGhhdCBpbiBjYXNlIGEgd2Vh
+a25lc3MgaXMgZXZlciBmb3VuZCBpbiBvbmUgb2YgdGhlbSwgdGhlIGZhdWx0eSBhbGdvcml0aG1z
+IHdpbGwgYmUgInJlcGxhY2VkIiBhbmQgYWxsIHBlb3BsZSB3aWxsIGhhdmUgdG8gZG8gaXMgdXBk
+YXRlICh0aGUgd2hpdGUgcGFwZXIgc2F5cyAiSWYgaG9sZXMgYXJlIGZvdW5kIGluIHRoZSB1bmRl
+cmx5aW5nIHByaW1pdGl2ZXMsIGFsbCBlbmRwb2ludHMgd2lsbCBiZSByZXF1aXJlZCB0byB1cGRh
+dGUiKS48YnI+PC9kaXY+PGRpdiBzdHlsZT0iZm9udC1mYW1pbHk6YXJpYWwsaGVsdmV0aWNhLHNh
+bnMtc2VyaWYiIGNsYXNzPSJnbWFpbF9kZWZhdWx0Ij48YnI+PC9kaXY+PGRpdiBzdHlsZT0iZm9u
+dC1mYW1pbHk6YXJpYWwsaGVsdmV0aWNhLHNhbnMtc2VyaWYiIGNsYXNzPSJnbWFpbF9kZWZhdWx0
+Ij5Ib3dldmVyLCBmb3IgYW55IG9yZ2FuaXphdGlvbiB3aGljaCB3aWxsIHVzZSBXaXJlR3VhcmQs
+IGV2ZW4gaWYgYWRtaW5zIGFyZSB2ZXJ5IGVmZmVjdGl2ZSBhdCBhcHBseWluZyB1cGRhdGVzLCB1
+cGRhdGluZyBhbGwgdGhlIGVuZHBvaW50IHN5c3RlbXMgc2ltdWx0YW5lb3VzbHkgaXMgbm90IHJl
+YWxpc3RpYy4gQXQgdGhlIHNhbWUgdGltZSwgaXQgbWF5IGJlIHRoZSBjYXNlIHRoYXQgdGhlIG9y
+Z2FuaXphdGlvbiBjYW4ndCBhZmZvcmQgdGhlIGRvd250aW1lLCBpbiB3aGljaCBjYXNlIHVzaW5n
+IFdpcmVHdWFyZCB3aWxsIHNpbXBseSBub3QgYmUgYW4gb3B0aW9uLCB3aGljaCBpcyB0b28gYmFk
+Ljxicj48L2Rpdj48ZGl2IHN0eWxlPSJmb250LWZhbWlseTphcmlhbCxoZWx2ZXRpY2Esc2Fucy1z
+ZXJpZiIgY2xhc3M9ImdtYWlsX2RlZmF1bHQiPjxicj48L2Rpdj48ZGl2IHN0eWxlPSJmb250LWZh
+bWlseTphcmlhbCxoZWx2ZXRpY2Esc2Fucy1zZXJpZiIgY2xhc3M9ImdtYWlsX2RlZmF1bHQiPk1h
+eWJlIGl0J3MgdG9vIGVhcmx5IHRvIHRoaW5rIGFib3V0IHRoaXMgYXQgdGhlIHRpbWUsIGJ1dCBv
+dGhlcndpc2UgSSB0aGluayBpbmNsdWRpbmcgYSBtZWNoYW5pc20gd2hpY2ggd291bGQgaW5zdHJ1
+Y3QgdGhlIHN5c3RlbSBhcyAiZm9yIG5vdywgdXNlIHRoZSBuZXcgYWxnb3JpdGhtcyBidXQgc3Rp
+bGwgYWxsb3cgZm9yIHRoZSBvbGQgb25lcyBpZiB0aGUgbmV3IG9uZXMgZmFpbCB3aGlsZSBJIHVw
+ZGF0ZSBhbGwgdGhlIGVuZHBvaW50cyIgd291bGQgYW5zd2VyIHRoZSBwcm9ibGVtLjxicj48L2Rp
+dj48ZGl2IHN0eWxlPSJmb250LWZhbWlseTphcmlhbCxoZWx2ZXRpY2Esc2Fucy1zZXJpZiIgY2xh
+c3M9ImdtYWlsX2RlZmF1bHQiPjxicj48L2Rpdj48ZGl2IHN0eWxlPSJmb250LWZhbWlseTphcmlh
+bCxoZWx2ZXRpY2Esc2Fucy1zZXJpZiIgY2xhc3M9ImdtYWlsX2RlZmF1bHQiPkRvbid0IGtub3cg
+aG93IHRvIGltcGxlbWVudCB0aGF0IGNvcnJlY3RseSB0aG91Z2gsIGJ1dCBJIGp1c3Qgd2FudGVk
+IHRvIGJyaW5nIHRoYXQgcG9pbnQgdG8gYXR0ZW50aW9uLjxicj48L2Rpdj48ZGl2IHN0eWxlPSJm
+b250LWZhbWlseTphcmlhbCxoZWx2ZXRpY2Esc2Fucy1zZXJpZiIgY2xhc3M9ImdtYWlsX2RlZmF1
+bHQiPjxicj48L2Rpdj48ZGl2IHN0eWxlPSJmb250LWZhbWlseTphcmlhbCxoZWx2ZXRpY2Esc2Fu
+cy1zZXJpZiIgY2xhc3M9ImdtYWlsX2RlZmF1bHQiPkJlc3QgcmVnYXJkcyw8YnI+PC9kaXY+PGRp
+diBzdHlsZT0iZm9udC1mYW1pbHk6YXJpYWwsaGVsdmV0aWNhLHNhbnMtc2VyaWYiIGNsYXNzPSJn
+bWFpbF9kZWZhdWx0Ij5WaXZpZW48YnI+PC9kaXY+PGRpdiBzdHlsZT0iZm9udC1mYW1pbHk6YXJp
+YWwsaGVsdmV0aWNhLHNhbnMtc2VyaWYiIGNsYXNzPSJnbWFpbF9kZWZhdWx0Ij48YnI+PC9kaXY+
+PC9kaXY+PC9ibG9ja3F1b3RlPjxkaXY+PGJyPjwvZGl2Pg==
 
-2. If *EndPoint* can be a hostname, then I think we want to ensure DNS is
-set from the configuration file before attempting to connect. In the wg-quick
-script <https://git.zx2c4.com/WireGuard/tree/src/tools/wg-quick/linux.bash>,
-I updated the *cmd_up()* function to call *set_dns()* earlier on than it is
-currently called. This prevents my host's original DNS server from blocking
-anything.
 
-Jonathan
 
---000000000000d1a0dc056eefdf96
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div class=3D"gmail_default" style=3D""><font face=3D"geor=
-gia, serif" style=3D"" size=3D"2">Greetings,</font></div><div class=3D"gmai=
-l_default" style=3D""><font face=3D"georgia, serif" size=3D"2"><br></font><=
-/div><div class=3D"gmail_default" style=3D""><font face=3D"georgia, serif" =
-size=3D"2">I would like to know if a hostname is a valid value for=C2=A0<i>=
-Endpoint</i>? Today, the documentation all seems to reference an IP address=
-.</font></div><div class=3D"gmail_default" style=3D""><font face=3D"georgia=
-, serif" size=3D"2"><br></font></div><div class=3D"gmail_default" style=3D"=
-"><font face=3D"georgia, serif" size=3D"2">Today, <a href=3D"https://mullva=
-d.net/en/">Mullvad</a> currently sets <i>EndPoint</i> to a hostname=C2=A0(s=
-ee <a href=3D"https://api.mullvad.net/public/relays/wireguard/v1/">here</a>=
-<span style=3D"background-color:rgb(255,255,255);text-decoration-style:init=
-ial;text-decoration-color:initial;float:none;display:inline">)</span></font=
-></div><div class=3D"gmail_default" style=3D""><font face=3D"georgia, serif=
-" size=3D"2"><br></font></div><div class=3D"gmail_default" style=3D""><div =
-class=3D"gmail_default" style=3D"text-decoration-style:initial;text-decorat=
-ion-color:initial"><font face=3D"georgia, serif" size=3D"2">In my case, my =
-host is set to use a DNS server which routes VPN provider domains to a bad =
-IP (in order to block them).</font></div><div class=3D"gmail_default" style=
-=3D"text-decoration-style:initial;text-decoration-color:initial"><font face=
-=3D"georgia, serif" size=3D"2"><br></font></div><div class=3D"gmail_default=
-" style=3D"text-decoration-style:initial;text-decoration-color:initial"><fo=
-nt face=3D"georgia, serif" size=3D"2">1.=C2=A0</font><span style=3D"font-fa=
-mily:georgia,serif;font-size:small">If </span><i style=3D"font-family:georg=
-ia,serif;font-size:small">EndPoint</i><span style=3D"font-family:georgia,se=
-rif;font-size:small"> should never be a hostname, perhaps we should prevent=
- (or at least warn) when it is found to be a hostname (instead of an IP add=
-ress).</span></div></div><div class=3D"gmail_default" style=3D""><font face=
-=3D"georgia, serif" size=3D"2"><br></font></div><div class=3D"gmail_default=
-" style=3D""><font face=3D"georgia, serif" size=3D"2">2. If <i>EndPoint</i>=
- can be a hostname, then I think we want to ensure DNS is set from the conf=
-iguration file before attempting to connect. In the <a href=3D"https://git.=
-zx2c4.com/WireGuard/tree/src/tools/wg-quick/linux.bash">wg-quick script</a>=
-, I updated the <i>cmd_up()</i> function to call <i>set_dns()</i> earlier o=
-n than it is currently called. This prevents</font><span style=3D"font-fami=
-ly:georgia,serif;font-size:small">=C2=A0my host&#39;s original DNS server f=
-rom blocking anything.</span></div><div class=3D"gmail_default" style=3D"">=
-<font face=3D"georgia, serif" size=3D"2"><br></font></div><div class=3D"gma=
-il_default" style=3D""><font face=3D"georgia, serif" style=3D"" size=3D"2">=
-Jonathan</font></div></div>
-
---000000000000d1a0dc056eefdf96--
+--b1_5d910cfdf6a7a220f3e47463f6c2ec68--
