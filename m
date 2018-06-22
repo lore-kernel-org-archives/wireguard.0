@@ -1,28 +1,32 @@
-Return-Path: matthias@urlichs.de
+Return-Path: brunnre8@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fa5ee009
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a961d9dd
  for <wireguard@lists.zx2c4.com>;
- Fri, 22 Jun 2018 04:40:13 +0000 (UTC)
-Received: from netz.smurf.noris.de (mail.vm.smurf.noris.de
- [IPv6:2001:780:107:8:83::])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6259aac5
+ Fri, 22 Jun 2018 05:39:20 +0000 (UTC)
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com
+ [IPv6:2a00:1450:4864:20::536])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f5adf130
  for <wireguard@lists.zx2c4.com>;
- Fri, 22 Jun 2018 04:40:12 +0000 (UTC)
-Received: from [2001:780:107:0:1278:d2ff:fea3:d4a6]
- by mail.vm.smurf.noris.de with esmtpsa
- (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim 4.89)
- (envelope-from <matthias@urlichs.de>) id 1fWDw3-000K83-ML
- for wireguard@lists.zx2c4.com; Fri, 22 Jun 2018 06:44:36 +0200
-Subject: Re: Future changes in crypto algorithms
+ Fri, 22 Jun 2018 05:39:20 +0000 (UTC)
+Received: by mail-ed1-x536.google.com with SMTP id z21-v6so533991edr.9
+ for <wireguard@lists.zx2c4.com>; Thu, 21 Jun 2018 22:44:19 -0700 (PDT)
+Return-Path: <brunnre8@gmail.com>
+Received: from gmail.com (adsl-178-39-227-80.adslplus.ch. [178.39.227.80])
+ by smtp.gmail.com with ESMTPSA id c11-v6sm2927035eda.64.2018.06.21.22.44.16
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+ Thu, 21 Jun 2018 22:44:17 -0700 (PDT)
+Date: Fri, 22 Jun 2018 07:44:13 +0200
+From: Reto Brunner <brunnre8@gmail.com>
 To: wireguard@lists.zx2c4.com
-References: <CAEP1ZN=6aqe3B1sJNhDfB5c86emK+Gk2YJ9d-GaVVYuRzeXYGA@mail.gmail.com>
-From: Matthias Urlichs <matthias@urlichs.de>
-Message-ID: <04238df1-db3d-66b3-32ca-c2ca7cb655ec@urlichs.de>
-Date: Fri, 22 Jun 2018 06:44:34 +0200
+Subject: Re: PostUp/PreUp/PostDown/PreDown Dangerous?
+Message-ID: <20180622054413.54azzixsunbxdu35@ghostArch.localdomain>
+References: <CAHmME9qGuyr+aPA0xw5M0hf_NvUAZaBGvX9evzegowCASwgDFA@mail.gmail.com>
+ <CAHmME9qPwF-YdSKRhngVuL4JXrMD_1=nbP0jDUAejBxexsN3EA@mail.gmail.com>
+ <CAHmME9p6wS7BfWaa-0yHY-+T=ujqWVu_akkc1=XFO_rGAerY7A@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CAEP1ZN=6aqe3B1sJNhDfB5c86emK+Gk2YJ9d-GaVVYuRzeXYGA@mail.gmail.com>
-Content-Type: multipart/alternative;
- boundary="------------72AF8F21982B2E05E1B7EB65"
+Content-Type: text/plain; charset=us-ascii
+In-Reply-To: <CAHmME9p6wS7BfWaa-0yHY-+T=ujqWVu_akkc1=XFO_rGAerY7A@mail.gmail.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -32,69 +36,30 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-This is a multi-part message in MIME format.
---------------72AF8F21982B2E05E1B7EB65
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+On Fri, Jun 22, 2018 at 03:41:03AM +0200, Jason A. Donenfeld wrote:
+> The same thing applies to wg-quick(8) with
+> PostUp/PostDown/PreUp/PreDown. The question is how seriously we should
+> take the problem presented by this blog post. Namely, you can't trust
+> configuration files given to you by outside parties. Maybe you
+> shouldn't reconfigure your network without inspecting what those
+> reconfigurations are first. However, one could argue that code
+> execution is a bit beyond networking config.
 
-On 18.06.2018 14:08, Vivien Malerba wrote:
-> However, for any organization which will use WireGuard, even if admins
-> are very effective at applying updates, updating all the endpoint
-> systems simultaneously is not realistic. At the same time, it may be
-> the case that the organization can't afford the downtime, in which
-> case using WireGuard will simply not be an option, which is too bad.
+You should never run *any* config from the internet without inspecting
+it...
+Even if it isn't a reverse shell directly, you can still for example end
+up with questionable cipher suit choices in say openvpn or openssh if
+you just blindly do that.
 
-Fixing any crypto weakness will require kernel updates and configuration
-changes. A very easy config change, compared to all the other work you'd
-have to do if a flaw is discovered that forces a different crypto
-algorithm, is "use a second WG instance with a different UDP port".
+So please don't remove the hooks. They are very useful for many reasons
+and adding an additional knob will not make it any more secure.
 
-A script that monitors connections to the new WG instance and
-auto-disables the associated peer keys in the old instance is easy
-enough to write.
+As others already said those users anyhow just run random commands from
+$blog (heck they even copy / paste fork bombs and stuff like `rm -rf /*`)
 
-Problem solved, no downgrade attack possible.
-
--- 
--- Matthias Urlichs
+In my view the whole point of wg-quick is that it can do things like the
+post-up hook, to enter things like firewall rules etc.
 
 
---------------72AF8F21982B2E05E1B7EB65
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: 7bit
-
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  </head>
-  <body text="#000000" bgcolor="#FFFFFF">
-    <div class="moz-cite-prefix">On 18.06.2018 14:08, Vivien Malerba
-      wrote:<br>
-    </div>
-    <blockquote type="cite"
-cite="mid:CAEP1ZN=6aqe3B1sJNhDfB5c86emK+Gk2YJ9d-GaVVYuRzeXYGA@mail.gmail.com">
-      <div class="gmail_default"
-        style="font-family:arial,helvetica,sans-serif">However, for any
-        organization which will use WireGuard, even if admins are very
-        effective at applying updates, updating all the endpoint systems
-        simultaneously is not realistic. At the same time, it may be the
-        case that the organization can't afford the downtime, in which
-        case using WireGuard will simply not be an option, which is too
-        bad.</div>
-    </blockquote>
-    <p>Fixing any crypto weakness will require kernel updates and
-      configuration changes. A very easy config change, compared to all
-      the other work you'd have to do if a flaw is discovered that
-      forces a different crypto algorithm, is "use a second WG instance
-      with a different UDP port".</p>
-    <p>A script that monitors connections to the new WG instance and
-      auto-disables the associated peer keys in the old instance is easy
-      enough to write.</p>
-    <p>Problem solved, no downgrade attack possible.<br>
-    </p>
-    <pre class="moz-signature" cols="72">-- 
--- Matthias Urlichs</pre>
-  </body>
-</html>
-
---------------72AF8F21982B2E05E1B7EB65--
+Kind regards,
+Reto
