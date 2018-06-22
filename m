@@ -1,29 +1,28 @@
 Return-Path: matthias@urlichs.de
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 80a4b1d4
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fa5ee009
  for <wireguard@lists.zx2c4.com>;
- Fri, 22 Jun 2018 03:57:14 +0000 (UTC)
+ Fri, 22 Jun 2018 04:40:13 +0000 (UTC)
 Received: from netz.smurf.noris.de (mail.vm.smurf.noris.de
  [IPv6:2001:780:107:8:83::])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a45d8dbc
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6259aac5
  for <wireguard@lists.zx2c4.com>;
- Fri, 22 Jun 2018 03:57:14 +0000 (UTC)
+ Fri, 22 Jun 2018 04:40:12 +0000 (UTC)
 Received: from [2001:780:107:0:1278:d2ff:fea3:d4a6]
  by mail.vm.smurf.noris.de with esmtpsa
  (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim 4.89)
- (envelope-from <matthias@urlichs.de>) id 1fWDGV-000JiQ-Ki
- for wireguard@lists.zx2c4.com; Fri, 22 Jun 2018 06:01:39 +0200
-Subject: Re: PostUp/PreUp/PostDown/PreDown Dangerous?
+ (envelope-from <matthias@urlichs.de>) id 1fWDw3-000K83-ML
+ for wireguard@lists.zx2c4.com; Fri, 22 Jun 2018 06:44:36 +0200
+Subject: Re: Future changes in crypto algorithms
 To: wireguard@lists.zx2c4.com
-References: <CAHmME9qGuyr+aPA0xw5M0hf_NvUAZaBGvX9evzegowCASwgDFA@mail.gmail.com>
- <CAHmME9qPwF-YdSKRhngVuL4JXrMD_1=nbP0jDUAejBxexsN3EA@mail.gmail.com>
- <CAHmME9p6wS7BfWaa-0yHY-+T=ujqWVu_akkc1=XFO_rGAerY7A@mail.gmail.com>
+References: <CAEP1ZN=6aqe3B1sJNhDfB5c86emK+Gk2YJ9d-GaVVYuRzeXYGA@mail.gmail.com>
 From: Matthias Urlichs <matthias@urlichs.de>
-Message-ID: <ec7cad9e-c89c-fdad-0059-9cafef495233@urlichs.de>
-Date: Fri, 22 Jun 2018 06:01:38 +0200
+Message-ID: <04238df1-db3d-66b3-32ca-c2ca7cb655ec@urlichs.de>
+Date: Fri, 22 Jun 2018 06:44:34 +0200
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9p6wS7BfWaa-0yHY-+T=ujqWVu_akkc1=XFO_rGAerY7A@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <CAEP1ZN=6aqe3B1sJNhDfB5c86emK+Gk2YJ9d-GaVVYuRzeXYGA@mail.gmail.com>
+Content-Type: multipart/alternative;
+ boundary="------------72AF8F21982B2E05E1B7EB65"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -33,28 +32,69 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On 22.06.2018 03:41, Jason A. Donenfeld wrote:
-> So, the question we need to ask is whether this problem is important
-> enough that these useful features should be _removed_? Or if there's a
-> way to make them safer? Or if it just doesn't matter that much and we
-> shouldn't do anything.
+This is a multi-part message in MIME format.
+--------------72AF8F21982B2E05E1B7EB65
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 
-User is able to shoot themselves in the foot. Film at 11.
+On 18.06.2018 14:08, Vivien Malerba wrote:
+> However, for any organization which will use WireGuard, even if admins
+> are very effective at applying updates, updating all the endpoint
+> systems simultaneously is not realistic. At the same time, it may be
+> the case that the organization can't afford the downtime, in which
+> case using WireGuard will simply not be an option, which is too bad.
 
-Seriously. If you accept untrusted "secure" network configuration
-scripts from anybody without checking them, you deserve to lose. Also,
-OpenVPN config is somewhat more arcane+verbose than wireguard's, thus
-it's much harder to hide random script calls from even cursory glances
-in a wg config file.
+Fixing any crypto weakness will require kernel updates and configuration
+changes. A very easy config change, compared to all the other work you'd
+have to do if a flaw is discovered that forces a different crypto
+algorithm, is "use a second WG instance with a different UDP port".
 
-If we want to, we could emit a big fat warning and/or ask the user to
-confirm whenever their wg-quick script is newer than
-/etc/wireguard/.{NAME].warned (or we could copy the contents of the
-up/down script options to that file and warn when they've changed).
+A script that monitors connections to the new WG instance and
+auto-disables the associated peer keys in the old instance is easy
+enough to write.
 
-That being said, tools like systemd-networkd or NetworkManager do a good
-job of making that option (and thus wg-quick itself) unnecessary
-altogether, so I consider that to be a mostly-non-problem.
+Problem solved, no downgrade attack possible.
 
 -- 
 -- Matthias Urlichs
+
+
+--------------72AF8F21982B2E05E1B7EB65
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  </head>
+  <body text="#000000" bgcolor="#FFFFFF">
+    <div class="moz-cite-prefix">On 18.06.2018 14:08, Vivien Malerba
+      wrote:<br>
+    </div>
+    <blockquote type="cite"
+cite="mid:CAEP1ZN=6aqe3B1sJNhDfB5c86emK+Gk2YJ9d-GaVVYuRzeXYGA@mail.gmail.com">
+      <div class="gmail_default"
+        style="font-family:arial,helvetica,sans-serif">However, for any
+        organization which will use WireGuard, even if admins are very
+        effective at applying updates, updating all the endpoint systems
+        simultaneously is not realistic. At the same time, it may be the
+        case that the organization can't afford the downtime, in which
+        case using WireGuard will simply not be an option, which is too
+        bad.</div>
+    </blockquote>
+    <p>Fixing any crypto weakness will require kernel updates and
+      configuration changes. A very easy config change, compared to all
+      the other work you'd have to do if a flaw is discovered that
+      forces a different crypto algorithm, is "use a second WG instance
+      with a different UDP port".</p>
+    <p>A script that monitors connections to the new WG instance and
+      auto-disables the associated peer keys in the old instance is easy
+      enough to write.</p>
+    <p>Problem solved, no downgrade attack possible.<br>
+    </p>
+    <pre class="moz-signature" cols="72">-- 
+-- Matthias Urlichs</pre>
+  </body>
+</html>
+
+--------------72AF8F21982B2E05E1B7EB65--
