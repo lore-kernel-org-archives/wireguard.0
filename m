@@ -1,20 +1,18 @@
-Return-Path: adorman@ironicdesign.com
+Return-Path: matthias@urlichs.de
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 972c9fdd
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 463f407e
  for <wireguard@lists.zx2c4.com>;
- Fri, 22 Jun 2018 14:42:40 +0000 (UTC)
-Received: from ophelia.ironicdesign.com (ophelia.ironicdesign.com
- [206.166.194.242])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9b93e9ab
+ Fri, 22 Jun 2018 15:10:11 +0000 (UTC)
+Received: from netz.smurf.noris.de (mail.vm.smurf.noris.de
+ [IPv6:2001:780:107:8:83::])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a9eb29f4
  for <wireguard@lists.zx2c4.com>;
- Fri, 22 Jun 2018 14:42:40 +0000 (UTC)
-Received: from localhost (localhost [127.0.0.1])
- by ophelia.ironicdesign.com (Postfix) with QMQP id 2D40B20E008E
- for <wireguard@lists.zx2c4.com>; Fri, 22 Jun 2018 09:47:42 -0500 (CDT)
-Received: from [192.168.1.189] (unknown [136.53.4.130])
- (Authenticated sender: adorman@ironicdesign.com)
- by incoming.antespam.com (Postfix) with ESMTPSA id B72A620E0085
- for <wireguard@lists.zx2c4.com>; Fri, 22 Jun 2018 09:47:41 -0500 (CDT)
+ Fri, 22 Jun 2018 15:10:11 +0000 (UTC)
+Received: from [2001:780:107:0:1278:d2ff:fea3:d4a6]
+ by mail.vm.smurf.noris.de with esmtpsa
+ (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim 4.89)
+ (envelope-from <matthias@urlichs.de>) id 1fWNlg-0001gP-8w
+ for wireguard@lists.zx2c4.com; Fri, 22 Jun 2018 17:14:32 +0200
 Subject: Re: PostUp/PreUp/PostDown/PreDown Dangerous?
 To: wireguard@lists.zx2c4.com
 References: <CAHmME9qGuyr+aPA0xw5M0hf_NvUAZaBGvX9evzegowCASwgDFA@mail.gmail.com>
@@ -24,12 +22,12 @@ References: <CAHmME9qGuyr+aPA0xw5M0hf_NvUAZaBGvX9evzegowCASwgDFA@mail.gmail.com>
  <CgE9_flxwDk6vYs9xSAoTvLJp5qHdNF20xieK4syAMzldOBqEq5lZ3gZN77A7ambiqtFeuBfm-jXarYLMvcY4LAn1aC9ub1su871JPhDpUo=@protonmail.ch>
  <6645df4c-3f98-6df9-fc48-6748ad4d6c00@unstable.cc>
  <CAEypN9LgpCN_3Zt3H4YgUEtiJWFF7d-=H=jQoTH9DNUN3DX42w@mail.gmail.com>
-From: Andy Dorman <adorman@ironicdesign.com>
-Message-ID: <f90aecb6-f8bc-a03d-320e-9354b9071684@ironicdesign.com>
-Date: Fri, 22 Jun 2018 09:47:40 -0500
+From: Matthias Urlichs <matthias@urlichs.de>
+Message-ID: <4663e0b5-fe87-b26a-e87d-279305188976@urlichs.de>
+Date: Fri, 22 Jun 2018 17:14:31 +0200
 MIME-Version: 1.0
 In-Reply-To: <CAEypN9LgpCN_3Zt3H4YgUEtiJWFF7d-=H=jQoTH9DNUN3DX42w@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=utf-8
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -39,31 +37,24 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On 6/22/18 8:08 AM, Jacob Baines wrote:
-> There also seems to be an expectation that users should understand these 
-> config files. I'm not sure why that is. Excuse my speaking in 
-> generalities but a majority of users aren't going to understand how 
-> OpenVPN works, let alone how the configuration file affects the program. 
-> Many users (myself included) simply receive config files from our bosses 
-> or our IT guy and trust that they aren't malicious. Call me naive or 
-> foolish but I don't review every single file passed my way for malicious 
-> content.
+On 22.06.2018 15:08, Jacob Baines wrote:
+> Excuse my speaking in generalities but a majority of users aren't
+> going to understand how OpenVPN works, let alone how the configuration
+> file affects the program.
 
-We run an email security service and we MUST understand the action of 
-every line in the config files on our servers. Of course we also 
-carefully limit the applications on these servers so we have a limited 
-set of config files to deal with. ;-)
+Fortunately, WireGuard is a lot more approachable. All you really need
+is a basic understanding of PK crypto, i.e. you need a private key for
+yourself and the public key of whoever you want to talk with, both of
+which can be generated with very simple commands. You can learn how to
+set it up in half an hour.
 
-But I agree that perhaps the warning should be to either know what the 
-config is doing OR it should be from a trusted source (ie, your boss or 
-IT person or some other known, trusted entity).
-
-The main point about a warning for wg-quick is to try and help the 
-average user know that there can be a danger in the pre- and post- 
-commands so they will perhaps look twice before using a config that they 
-grabbed off an untrusted source.
+In contrast, understanding SSL and OpenVPN well enough to be able to
+generate a config file, let alone know how to debug it, takes a day –
+and then you don't know how to debug it. With WireGuard you need to
+answer three questions – do the endpoints see each others' packets? do
+the public keys match? are the remote IP addresses correct (plus routed
+to the WG network interface, not filtered, etc.)? If "yes", it'll work.
+Dead simple.
 
 -- 
-Andy Dorman
-Ironic Design, Inc.
-AnteSpam.com
+-- Matthias Urlichs
