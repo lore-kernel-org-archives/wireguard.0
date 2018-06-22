@@ -1,27 +1,25 @@
-Return-Path: logcabin@fastmail.net
+Return-Path: a@unstable.cc
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a8525fb5
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6ec4305c
  for <wireguard@lists.zx2c4.com>;
- Fri, 22 Jun 2018 01:50:37 +0000 (UTC)
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
- [66.111.4.26])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cae2200d
+ Fri, 22 Jun 2018 01:51:59 +0000 (UTC)
+Received: from s2.neomailbox.net (s2.neomailbox.net [5.148.176.60])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e68c688f
  for <wireguard@lists.zx2c4.com>;
- Fri, 22 Jun 2018 01:50:37 +0000 (UTC)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id C1AA821F37
- for <wireguard@lists.zx2c4.com>; Thu, 21 Jun 2018 21:55:35 -0400 (EDT)
-Message-Id: <1529632535.19086.1416445888.7A63B9D9@webmail.messagingengine.com>
-From: logcabin@fastmail.net
-To: wireguard@lists.zx2c4.com
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Subject: Re: PostUp/PreUp/PostDown/PreDown Dangerous?
-In-Reply-To: <CAHmME9p6wS7BfWaa-0yHY-+T=ujqWVu_akkc1=XFO_rGAerY7A@mail.gmail.com>
+ Fri, 22 Jun 2018 01:51:59 +0000 (UTC)
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
 References: <CAHmME9qGuyr+aPA0xw5M0hf_NvUAZaBGvX9evzegowCASwgDFA@mail.gmail.com>
  <CAHmME9qPwF-YdSKRhngVuL4JXrMD_1=nbP0jDUAejBxexsN3EA@mail.gmail.com>
  <CAHmME9p6wS7BfWaa-0yHY-+T=ujqWVu_akkc1=XFO_rGAerY7A@mail.gmail.com>
-Date: Thu, 21 Jun 2018 21:55:35 -0400
+From: Antonio Quartulli <a@unstable.cc>
+Subject: Re: PostUp/PreUp/PostDown/PreDown Dangerous?
+Message-ID: <a7989c95-0047-dfe9-e870-59db44fbb463@unstable.cc>
+Date: Fri, 22 Jun 2018 09:56:41 +0800
+MIME-Version: 1.0
+In-Reply-To: <CAHmME9p6wS7BfWaa-0yHY-+T=ujqWVu_akkc1=XFO_rGAerY7A@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Cc: baines.jacob@gmail.com
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -31,9 +29,9 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-I'm in favor of keeping the features. A competent sysadmin or netadmin should know not to put questionable material on their systems, or at the very least, try it on a test bed where it can't do any damage.
+Hi,
 
-On Thu, Jun 21, 2018, at 9:41 PM, Jason A. Donenfeld wrote:
+On 22/06/18 09:41, Jason A. Donenfeld wrote:
 > Hey list,
 > 
 > wg(8) is the main WireGuard configuration tool. It takes a fairly
@@ -71,9 +69,29 @@ On Thu, Jun 21, 2018, at 9:41 PM, Jason A. Donenfeld wrote:
 > shouldn't do anything.
 > 
 > Thoughts?
-> 
-> Jason
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+In case this might be useful: in OpenVPN there is an additional
+parameter called "--script-security" that requires to be set to a
+certain level before allowing configured scripts to be executed.
+
+Unfortunately there is no real protection against the clueless user, who
+can and will blindly enable that setting if asked by a $random VPN provider.
+
+However, I still believe (and hope) that forcing the user to enable a
+specific knob may raise the level of attention.
+
+Maybe something similar could be added as a command line parameter to
+wg/wg-quick so that it will execute the various
+PostUp/PreUp/PostDown/PreDown only if allowed to?
+
+
+Just as a side note: this is not a VPN specific problem, this is
+something users can end up with everytime they execute some binary with
+a configuration they have not inspected. So, be careful out there ;-)
+
+
+Cheers,
+
+
+-- 
+Antonio Quartulli
