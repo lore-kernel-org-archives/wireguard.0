@@ -1,23 +1,31 @@
-Return-Path: toke@toke.dk
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 30b8c7cb
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d44fa518
  for <wireguard@lists.zx2c4.com>;
- Mon, 25 Jun 2018 20:31:44 +0000 (UTC)
-Received: from mail.toke.dk (mail.toke.dk [IPv6:2001:470:dc45:1000::1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9ad3ae0b
+ Mon, 25 Jun 2018 23:44:40 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fdc4f856
  for <wireguard@lists.zx2c4.com>;
- Mon, 25 Jun 2018 20:31:44 +0000 (UTC)
-From: Toke =?utf-8?Q?H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>
-To: Adrian Sevcenco <adrian.sev@gmail.com>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: wg addconf :: AllowedIPs gets deleted with the additions of peers
-In-Reply-To: <ff54875a-3630-52bd-5f45-1b8e8a182ae7@gmail.com>
-References: <a989a217-9e18-5e5f-2a97-fa3ac81ccb87@gmail.com>
- <8736xaod3b.fsf@toke.dk> <ff54875a-3630-52bd-5f45-1b8e8a182ae7@gmail.com>
-Date: Mon, 25 Jun 2018 22:37:14 +0200
-Message-ID: <87woummwlh.fsf@toke.dk>
+ Mon, 25 Jun 2018 23:44:40 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 80d8590a
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 25 Jun 2018 23:43:26 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 028f7c19
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 25 Jun 2018 23:43:26 +0000 (UTC)
+Received: by mail-oi0-f48.google.com with SMTP id c6-v6so14257596oiy.0
+ for <wireguard@lists.zx2c4.com>; Mon, 25 Jun 2018 16:50:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20180624155124.GP30528@isi.edu>
+In-Reply-To: <20180624155124.GP30528@isi.edu>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Tue, 26 Jun 2018 01:49:56 +0200
+Message-ID: <CAHmME9rTmU6LTtadmDs__btxBC7S8K_GVKnn47F5TEZ6n3WF-Q@mail.gmail.com>
+Subject: Re: wireguard-tools: hard coded config paths in wg-quick
+To: calvin@isi.edu
+Content-Type: text/plain; charset="UTF-8"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -27,32 +35,12 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Adrian Sevcenco <adrian.sev@gmail.com> writes:
+Hi Calvin,
 
-> On 06/25/2018 10:55 PM, Toke H=C3=B8iland-J=C3=B8rgensen wrote:
->> Adrian Sevcenco <adrian.sev@gmail.com> writes:
->>=20
->>> Hi! It seems that AllowedIPs declaration gets erased when peers are
->>> added with addconf
->>=20
->> You can't have the same AllowedIPs for two different peers... :)
->
-> Err... so, it's a bug or a feature?
+That's a good suggestion, and probably something best handled by a
+small sed or replacement command in the homebrew formula, where you
+invoke the "brew path" command. Would you like to implement this and
+CC @zx2c4 on the github PR?
 
-A feature. The AllowedIPs controls which IP addresses will be routed to
-that peer. They refer to addresses inside the tunnel. So depending on
-your setup you'd specify the single IP you assign each peer, or possibly
-any subnets behind that peer you want routed through the tunnel.
-
-> If it is a feature how can i make server accept whatever ip get the=20
-> client(s) in various networks?
-
-Changing IPs *on the outside* of the tunnel will be accepted
-automatically. The Endpoint specifier is only the initial address; if a
-device changes its IP, it'll just keep sending packets from the new IP,
-and because they are authenticated by the crypto, the other peer will
-accept them and change its notion of what IP the other peer is
-reachable at automatically. So as long as only one peer changes its IP
-at a time, roaming mostly just works :)
-
--Toke
+Regards,
+Jason
