@@ -1,24 +1,27 @@
-Return-Path: toke@toke.dk
+Return-Path: s.gottschall@dd-wrt.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3400d8ae
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f77311d1
  for <wireguard@lists.zx2c4.com>;
- Tue, 26 Jun 2018 10:51:21 +0000 (UTC)
-Received: from mail.toke.dk (mail.toke.dk [IPv6:2001:470:dc45:1000::1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 419e8db0
+ Tue, 26 Jun 2018 13:27:01 +0000 (UTC)
+Received: from webmail.newmedia-net.de (smtps.newmedia-net.de
+ [IPv6:2a05:a1c0:0:de::167])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 25814c09
  for <wireguard@lists.zx2c4.com>;
- Tue, 26 Jun 2018 10:51:21 +0000 (UTC)
-From: Toke =?utf-8?Q?H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>
-To: Adrian Sevcenco <adrian.sev@gmail.com>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: wg addconf :: AllowedIPs gets deleted with the additions of peers
-In-Reply-To: <b4b972dc-7852-4b43-0015-2963437e1de3@gmail.com>
-References: <a989a217-9e18-5e5f-2a97-fa3ac81ccb87@gmail.com>
- <8736xaod3b.fsf@toke.dk> <ff54875a-3630-52bd-5f45-1b8e8a182ae7@gmail.com>
- <87woummwlh.fsf@toke.dk> <b4b972dc-7852-4b43-0015-2963437e1de3@gmail.com>
-Date: Tue, 26 Jun 2018 12:56:53 +0200
-Message-ID: <87o9fxn7d6.fsf@toke.dk>
+ Tue, 26 Jun 2018 13:27:01 +0000 (UTC)
+Subject: Re: src/crypto/curve25519-x86_64.h:1319: Error: no such instruction
+ while compiling in centos 6
+To: wireguard@lists.zx2c4.com
+References: <CAK+ZqRryNNWq1yhAQKbzOxTKrzRmO_gfM47F18YCGOiYcdumdg@mail.gmail.com>
+ <CAHmME9ooS8c-QmB6X_ySTZiYsK98vFQ-bpws6TJUUJ3sE-aCLQ@mail.gmail.com>
+ <CAK+ZqRqA4BkCLmxnuNfRtNByXaDYv1MpZB44PZrCM_Mx_ncNRw@mail.gmail.com>
+ <98b1fd4b-ebc9-b6b6-41e0-29a12e351335@powerneth.ro>
+From: Sebastian Gottschall <s.gottschall@dd-wrt.com>
+Message-ID: <620f1385-aaaf-8057-611b-794ecbd661eb@dd-wrt.com>
+Date: Tue, 26 Jun 2018 15:32:29 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <98b1fd4b-ebc9-b6b6-41e0-29a12e351335@powerneth.ro>
+Content-Type: multipart/alternative;
+ boundary="------------C191864A5C701D510CA06A92"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -28,54 +31,144 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Adrian Sevcenco <adrian.sev@gmail.com> writes:
+This is a multi-part message in MIME format.
+--------------C191864A5C701D510CA06A92
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-> On 06/25/2018 11:37 PM, Toke H=C3=B8iland-J=C3=B8rgensen wrote:
->> Adrian Sevcenco <adrian.sev@gmail.com> writes:
->>=20
->>> On 06/25/2018 10:55 PM, Toke H=C3=B8iland-J=C3=B8rgensen wrote:
->>>> Adrian Sevcenco <adrian.sev@gmail.com> writes:
->>>>
->>>>> Hi! It seems that AllowedIPs declaration gets erased when peers are
->>>>> added with addconf
->>>>
->>>> You can't have the same AllowedIPs for two different peers... :)
->>>
->>> Err... so, it's a bug or a feature?
->>=20
->> A feature. The AllowedIPs controls which IP addresses will be routed to
->> that peer. They refer to addresses inside the tunnel. So depending on
->> your setup you'd specify the single IP you assign each peer, or possibly
->> any subnets behind that peer you want routed through the tunnel.
-> Then, how can i set a default allow everything for each peer? Should i=20
-> make a different tunnel for each peer?
-
-Yes, if you want point-to-point links where all traffic is sent to a
-single other peer, you'll need separate interfaces.
-
-If you want a road warrior type setup, where client devices connect to a
-server and use that as a default gateway, you'd assign each client a
-single IP (inside the tunnel) and put that in each peer config's
-allowedips. The clients can then all have 0.0.0.0/0 as allowedip of the
-server.
-
-> But given your explanation i still feel that it is a bug that when an=20
-> AllowIPs is declared with the addition of a second peer the declaration=20
-> from the first peer gets erased ...
-
-Well, the UI can be surprising, sure, but the alternative would be to
-report an error if you try to set the same allowedIP on different peers,
-which is not necessarily better. And it's not a bug in that it is
-intentional behaviour ;)
-
-> It should be either a global setting per tunnel OR an individual setting=
-=20
-> per peer (in which case it should stay set)
-
-I think the point of confusion is that it is called 'allowedips', but it
-really means 'ips that are allowed from this peer *and* routed to this
-peer'. I.e., it is also a routing table. See
-https://www.wireguard.com/#cryptokey-routing
+try at least gcc 6 minimum. i dont know which kernel is used in centos 
+6. lowest kernel version i tested is 3.10
 
 
--Toke
+Sebastian
+
+
+Am 26.06.2018 um 08:10 schrieb Lucian Cristian:
+> On 26.06.2018 05:57, karthik kumar wrote:
+>> Hi,
+>>   I did see the yum repo already being there RPMs available. But we 
+>> use only centos 6 and are desperately looking for alternate of 
+>> strongswan :(
+>> Is there any other suggestion for me, other than Centos 7 ? Is it 
+>> worth trying to rebuild the kernel with 8.1 gcc ? Is there an option 
+>> like /--without-elliptic-curve/ that I can use ?
+>>
+>> Thanks
+>>
+>> On Tue, Jun 26, 2018 at 5:58 AM Jason A. Donenfeld <Jason@zx2c4.com 
+>> <mailto:Jason@zx2c4.com>> wrote:
+>>
+>>     Hello,
+>>
+>>     Please use CentOS 7.
+>>
+>>     Jason
+>>
+>>
+>>
+>> _______________________________________________
+>> WireGuard mailing list
+>> WireGuard@lists.zx2c4.com
+>> https://lists.zx2c4.com/mailman/listinfo/wireguard
+>
+> search the mailing list, I proposed a patch for centos 6, see if it's 
+> working, but you have to use elrepo kernels 
+> http://elrepo.org/linux/kernel/el6/x86_64/RPMS/
+>
+>
+> Regards
+>
+>
+>
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+
+--------------C191864A5C701D510CA06A92
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 8bit
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  </head>
+  <body text="#000000" bgcolor="#FFFFFF">
+    <p>try at least gcc 6 minimum. i dont know which kernel is used in
+      centos 6. lowest kernel version i tested is 3.10</p>
+    <p><br>
+    </p>
+    <p>Sebastian<br>
+    </p>
+    <br>
+    <div class="moz-cite-prefix">Am 26.06.2018 um 08:10 schrieb Lucian
+      Cristian:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:98b1fd4b-ebc9-b6b6-41e0-29a12e351335@powerneth.ro">
+      <div class="moz-cite-prefix">On 26.06.2018 05:57, karthik kumar
+        wrote:<br>
+      </div>
+      <blockquote type="cite"
+cite="mid:CAK+ZqRqA4BkCLmxnuNfRtNByXaDYv1MpZB44PZrCM_Mx_ncNRw@mail.gmail.com">
+        <div dir="ltr">Hi, 
+          <div>  I did see the yum repo already being there RPMs
+            available. But we use only centos 6 and are desperately
+            looking for alternate of strongswan :(</div>
+          <div>Is there any other suggestion for me, other than Centos 7
+            ? Is it worth trying to rebuild the kernel with 8.1 gcc ? Is
+            there an option like <i>--without-elliptic-curve</i> that I
+            can use ?<br>
+            <div>
+              <div><br>
+              </div>
+              <div>Thanks</div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="gmail_quote">
+          <div dir="ltr">On Tue, Jun 26, 2018 at 5:58 AM Jason A.
+            Donenfeld &lt;<a href="mailto:Jason@zx2c4.com"
+              target="_blank">Jason@zx2c4.com</a>&gt; wrote:<br>
+          </div>
+          <blockquote class="gmail_quote" style="margin:0 0 0
+            .8ex;border-left:1px #ccc solid;padding-left:1ex">Hello,<br>
+            <br>
+            Please use CentOS 7.<br>
+            <br>
+            Jason<br>
+          </blockquote>
+        </div>
+        <br>
+        <fieldset class="mimeAttachmentHeader"></fieldset>
+        <br>
+        <pre wrap="">_______________________________________________
+WireGuard mailing list
+<a class="moz-txt-link-abbreviated" href="mailto:WireGuard@lists.zx2c4.com">WireGuard@lists.zx2c4.com</a>
+<a class="moz-txt-link-freetext" href="https://lists.zx2c4.com/mailman/listinfo/wireguard">https://lists.zx2c4.com/mailman/listinfo/wireguard</a>
+</pre>
+      </blockquote>
+      <p>search the mailing list, I proposed a patch for centos 6, see
+        if it's working, but you have to use elrepo kernels <a
+          class="moz-txt-link-freetext"
+          href="http://elrepo.org/linux/kernel/el6/x86_64/RPMS/">http://elrepo.org/linux/kernel/el6/x86_64/RPMS/</a></p>
+      <p><br>
+      </p>
+      <p>Regards<br>
+      </p>
+      <br>
+      <fieldset class="mimeAttachmentHeader"></fieldset>
+      <br>
+      <pre wrap="">_______________________________________________
+WireGuard mailing list
+<a class="moz-txt-link-abbreviated" href="mailto:WireGuard@lists.zx2c4.com">WireGuard@lists.zx2c4.com</a>
+<a class="moz-txt-link-freetext" href="https://lists.zx2c4.com/mailman/listinfo/wireguard">https://lists.zx2c4.com/mailman/listinfo/wireguard</a>
+</pre>
+    </blockquote>
+    <br>
+  </body>
+</html>
+
+--------------C191864A5C701D510CA06A92--
