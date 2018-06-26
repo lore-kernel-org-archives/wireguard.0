@@ -1,29 +1,28 @@
-Return-Path: luci@powerneth.ro
+Return-Path: adrian.sev@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0a5edec7
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 28b2901c
  for <wireguard@lists.zx2c4.com>;
- Tue, 26 Jun 2018 06:04:53 +0000 (UTC)
-Received: from mail.intelterm.ro (174.15.122.86.static.cluj.rdsnet.ro
- [86.122.15.174])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e7532211
+ Tue, 26 Jun 2018 07:29:21 +0000 (UTC)
+Received: from mail-wm0-x235.google.com (mail-wm0-x235.google.com
+ [IPv6:2a00:1450:400c:c09::235])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2ecc7a9c
  for <wireguard@lists.zx2c4.com>;
- Tue, 26 Jun 2018 06:04:52 +0000 (UTC)
-Received: from [192.168.123.118] (unknown [188.24.107.151])
- by mail.intelterm.ro (Postfix) with ESMTPSA id D40992218C78
- for <wireguard@lists.zx2c4.com>; Tue, 26 Jun 2018 09:10:20 +0300 (EEST)
-Subject: Re: src/crypto/curve25519-x86_64.h:1319: Error: no such instruction
- while compiling in centos 6
-To: wireguard@lists.zx2c4.com
-References: <CAK+ZqRryNNWq1yhAQKbzOxTKrzRmO_gfM47F18YCGOiYcdumdg@mail.gmail.com>
- <CAHmME9ooS8c-QmB6X_ySTZiYsK98vFQ-bpws6TJUUJ3sE-aCLQ@mail.gmail.com>
- <CAK+ZqRqA4BkCLmxnuNfRtNByXaDYv1MpZB44PZrCM_Mx_ncNRw@mail.gmail.com>
-From: Lucian Cristian <luci@powerneth.ro>
-Message-ID: <98b1fd4b-ebc9-b6b6-41e0-29a12e351335@powerneth.ro>
-Date: Tue, 26 Jun 2018 09:10:20 +0300
+ Tue, 26 Jun 2018 07:29:21 +0000 (UTC)
+Received: by mail-wm0-x235.google.com with SMTP id p11-v6so613106wmc.4
+ for <wireguard@lists.zx2c4.com>; Tue, 26 Jun 2018 00:34:51 -0700 (PDT)
+Return-Path: <adrian.sev@gmail.com>
+Subject: Re: wg addconf :: AllowedIPs gets deleted with the additions of peers
+To: =?UTF-8?Q?Toke_H=c3=b8iland-J=c3=b8rgensen?= <toke@toke.dk>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
+References: <a989a217-9e18-5e5f-2a97-fa3ac81ccb87@gmail.com>
+ <8736xaod3b.fsf@toke.dk> <ff54875a-3630-52bd-5f45-1b8e8a182ae7@gmail.com>
+ <87woummwlh.fsf@toke.dk>
+From: Adrian Sevcenco <adrian.sev@gmail.com>
+Message-ID: <b4b972dc-7852-4b43-0015-2963437e1de3@gmail.com>
+Date: Tue, 26 Jun 2018 10:34:48 +0300
 MIME-Version: 1.0
-In-Reply-To: <CAK+ZqRqA4BkCLmxnuNfRtNByXaDYv1MpZB44PZrCM_Mx_ncNRw@mail.gmail.com>
-Content-Type: multipart/alternative;
- boundary="------------F3C92CB7F4418C5F9FB74A22"
+In-Reply-To: <87woummwlh.fsf@toke.dk>
+Content-Type: text/plain; charset=utf-8; format=flowed
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -33,106 +32,50 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-This is a multi-part message in MIME format.
---------------F3C92CB7F4418C5F9FB74A22
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+On 06/25/2018 11:37 PM, Toke H=C3=B8iland-J=C3=B8rgensen wrote:
+> Adrian Sevcenco <adrian.sev@gmail.com> writes:
+>=20
+>> On 06/25/2018 10:55 PM, Toke H=C3=B8iland-J=C3=B8rgensen wrote:
+>>> Adrian Sevcenco <adrian.sev@gmail.com> writes:
+>>>
+>>>> Hi! It seems that AllowedIPs declaration gets erased when peers are
+>>>> added with addconf
+>>>
+>>> You can't have the same AllowedIPs for two different peers... :)
+>>
+>> Err... so, it's a bug or a feature?
+>=20
+> A feature. The AllowedIPs controls which IP addresses will be routed to=
 
-On 26.06.2018 05:57, karthik kumar wrote:
-> Hi,
->   I did see the yum repo already being there RPMs available. But we 
-> use only centos 6 and are desperately looking for alternate of 
-> strongswan :(
-> Is there any other suggestion for me, other than Centos 7 ? Is it 
-> worth trying to rebuild the kernel with 8.1 gcc ? Is there an option 
-> like /--without-elliptic-curve/ that I can use ?
->
-> Thanks
->
-> On Tue, Jun 26, 2018 at 5:58 AM Jason A. Donenfeld <Jason@zx2c4.com 
-> <mailto:Jason@zx2c4.com>> wrote:
->
->     Hello,
->
->     Please use CentOS 7.
->
->     Jason
->
->
->
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
+> that peer. They refer to addresses inside the tunnel. So depending on
+> your setup you'd specify the single IP you assign each peer, or possibl=
+y
+> any subnets behind that peer you want routed through the tunnel.
+Then, how can i set a default allow everything for each peer? Should i=20
+make a different tunnel for each peer?
+But given your explanation i still feel that it is a bug that when an=20
+AllowIPs is declared with the addition of a second peer the declaration=20
+from the first peer gets erased ...
+It should be either a global setting per tunnel OR an individual setting =
 
-search the mailing list, I proposed a patch for centos 6, see if it's 
-working, but you have to use elrepo kernels 
-http://elrepo.org/linux/kernel/el6/x86_64/RPMS/
+per peer (in which case it should stay set)
 
+Thank you!!
+Adrian
 
-Regards
+>=20
+>> If it is a feature how can i make server accept whatever ip get the
+>> client(s) in various networks?
+>=20
+> Changing IPs *on the outside* of the tunnel will be accepted
+> automatically. The Endpoint specifier is only the initial address; if a=
 
+> device changes its IP, it'll just keep sending packets from the new IP,=
 
---------------F3C92CB7F4418C5F9FB74A22
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: 8bit
-
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  </head>
-  <body text="#000000" bgcolor="#FFFFFF">
-    <div class="moz-cite-prefix">On 26.06.2018 05:57, karthik kumar
-      wrote:<br>
-    </div>
-    <blockquote type="cite"
-cite="mid:CAK+ZqRqA4BkCLmxnuNfRtNByXaDYv1MpZB44PZrCM_Mx_ncNRw@mail.gmail.com">
-      <div dir="ltr">Hi, 
-        <div>  I did see the yum repo already being there RPMs
-          available. But we use only centos 6 and are desperately
-          looking for alternate of strongswan :(</div>
-        <div>Is there any other suggestion for me, other than Centos 7 ?
-          Is it worth trying to rebuild the kernel with 8.1 gcc ? Is
-          there an option like <i>--without-elliptic-curve</i> that I
-          can use ?<br>
-          <div>
-            <div><br>
-            </div>
-            <div>Thanks</div>
-          </div>
-        </div>
-      </div>
-      <br>
-      <div class="gmail_quote">
-        <div dir="ltr">On Tue, Jun 26, 2018 at 5:58 AM Jason A.
-          Donenfeld &lt;<a href="mailto:Jason@zx2c4.com" target="_blank"
-            moz-do-not-send="true">Jason@zx2c4.com</a>&gt; wrote:<br>
-        </div>
-        <blockquote class="gmail_quote" style="margin:0 0 0
-          .8ex;border-left:1px #ccc solid;padding-left:1ex">Hello,<br>
-          <br>
-          Please use CentOS 7.<br>
-          <br>
-          Jason<br>
-        </blockquote>
-      </div>
-      <!--'"--><br>
-      <fieldset class="mimeAttachmentHeader"></fieldset>
-      <br>
-      <pre wrap="">_______________________________________________
-WireGuard mailing list
-<a class="moz-txt-link-abbreviated" href="mailto:WireGuard@lists.zx2c4.com">WireGuard@lists.zx2c4.com</a>
-<a class="moz-txt-link-freetext" href="https://lists.zx2c4.com/mailman/listinfo/wireguard">https://lists.zx2c4.com/mailman/listinfo/wireguard</a>
-</pre>
-    </blockquote>
-    <p>search the mailing list, I proposed a patch for centos 6, see if
-      it's working, but you have to use elrepo kernels
-      <a class="moz-txt-link-freetext" href="http://elrepo.org/linux/kernel/el6/x86_64/RPMS/">http://elrepo.org/linux/kernel/el6/x86_64/RPMS/</a></p>
-    <p><br>
-    </p>
-    <p>Regards<br>
-    </p>
-  </body>
-</html>
-
---------------F3C92CB7F4418C5F9FB74A22--
+> and because they are authenticated by the crypto, the other peer will
+> accept them and change its notion of what IP the other peer is
+> reachable at automatically. So as long as only one peer changes its IP
+> at a time, roaming mostly just works :)
+>=20
+> -Toke
+>=20
