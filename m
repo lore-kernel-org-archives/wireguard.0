@@ -1,28 +1,26 @@
-Return-Path: luci@powerneth.ro
+Return-Path: samuel@sholland.org
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1f582c62
- for <wireguard@lists.zx2c4.com>; Tue, 3 Jul 2018 08:58:11 +0000 (UTC)
-Received: from mail.intelterm.ro (174.15.122.86.static.cluj.rdsnet.ro
- [86.122.15.174])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 72742969
- for <wireguard@lists.zx2c4.com>; Tue, 3 Jul 2018 08:58:10 +0000 (UTC)
-Received: from [192.168.123.118] (unknown [212.54.114.2])
- by mail.intelterm.ro (Postfix) with ESMTPSA id D609A2218C78
- for <wireguard@lists.zx2c4.com>; Tue,  3 Jul 2018 12:04:34 +0300 (EEST)
-Subject: Re: src/crypto/curve25519-x86_64.h:1319: Error: no such instruction
- while compiling in centos 6
-Cc: wireguard@lists.zx2c4.com
-References: <CAK+ZqRryNNWq1yhAQKbzOxTKrzRmO_gfM47F18YCGOiYcdumdg@mail.gmail.com>
- <CAHmME9ooS8c-QmB6X_ySTZiYsK98vFQ-bpws6TJUUJ3sE-aCLQ@mail.gmail.com>
- <CAK+ZqRqA4BkCLmxnuNfRtNByXaDYv1MpZB44PZrCM_Mx_ncNRw@mail.gmail.com>
- <98b1fd4b-ebc9-b6b6-41e0-29a12e351335@powerneth.ro>
- <CAHsAZcDjnM-6iwRHv7-fsEMBA=XuncR8yh+0vTdksiADb0=CuQ@mail.gmail.com>
-From: Lucian Cristian <luci@powerneth.ro>
-Message-ID: <c3f38297-e269-2ea3-7104-8572c2db8f13@powerneth.ro>
-Date: Tue, 3 Jul 2018 12:04:32 +0300
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1da52b8d
+ for <wireguard@lists.zx2c4.com>; Tue, 3 Jul 2018 18:05:45 +0000 (UTC)
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
+ [66.111.4.25])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5627a95a
+ for <wireguard@lists.zx2c4.com>; Tue, 3 Jul 2018 18:05:45 +0000 (UTC)
+Subject: Re: Android app whitelist/blacklist feature
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>, eric@bluelinelabs.com
+References: <CAMj-8hS_bJado86_1V9hCyW=+-jO6BDnk1WnZE0EQoDembViEw@mail.gmail.com>
+ <d939f3b9-ff51-4b94-fcdc-2e819a98459c@sholland.org>
+ <CAMj-8hQFk_UPJO4-KEH8YvK5NOBH5vu23Vu5JM2Gt0srMD_kEg@mail.gmail.com>
+ <CAHmME9qcXm65jFbGv24m-Pzx9c+nq2-D4y4kBkXk7W6u8HZLiw@mail.gmail.com>
+ <CAMj-8hSnvCpY7sZ6xcH=2_Va33M1YsZ97H66PrDSo5=BV9vyOw@mail.gmail.com>
+ <CAHmME9qQyw-GxJ-1mLNR_DaWspOO8Enc+gKWobvKUcLqZ-Phcg@mail.gmail.com>
+From: Samuel Holland <samuel@sholland.org>
+Message-ID: <72472182-2f17-ff6d-f76c-f0fa6c98d45e@sholland.org>
+Date: Tue, 3 Jul 2018 13:12:10 -0500
 MIME-Version: 1.0
-In-Reply-To: <CAHsAZcDjnM-6iwRHv7-fsEMBA=XuncR8yh+0vTdksiADb0=CuQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <CAHmME9qQyw-GxJ-1mLNR_DaWspOO8Enc+gKWobvKUcLqZ-Phcg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -32,54 +30,35 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On 03.07.2018 11:59, Vbook A1 wrote:
-> WARNING: if you want to use ELrepo kernel - make sure your server does
-> not have the Matrox G200 series video card! CentOS 6.x with kernel 4.x
-> will not boot on Matrox GPU.
->
-> On Tue, Jun 26, 2018 at 1:10 PM, Lucian Cristian <luci@powerneth.ro> wrote:
->> On 26.06.2018 05:57, karthik kumar wrote:
->>
->> Hi,
->>    I did see the yum repo already being there RPMs available. But we use only
->> centos 6 and are desperately looking for alternate of strongswan :(
->> Is there any other suggestion for me, other than Centos 7 ? Is it worth
->> trying to rebuild the kernel with 8.1 gcc ? Is there an option like
->> --without-elliptic-curve that I can use ?
->>
->> Thanks
->>
->> On Tue, Jun 26, 2018 at 5:58 AM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
->>> Hello,
->>>
->>> Please use CentOS 7.
->>>
->>> Jason
->>
->>
->> _______________________________________________
->> WireGuard mailing list
->> WireGuard@lists.zx2c4.com
->> https://lists.zx2c4.com/mailman/listinfo/wireguard
->>
->> search the mailing list, I proposed a patch for centos 6, see if it's
->> working, but you have to use elrepo kernels
->> http://elrepo.org/linux/kernel/el6/x86_64/RPMS/
->>
->>
->> Regards
->>
->>
->> _______________________________________________
->> WireGuard mailing list
->> WireGuard@lists.zx2c4.com
->> https://lists.zx2c4.com/mailman/listinfo/wireguard
->>
-I don't remember having trouble on a fujitsu rx300 with
+On 07/02/18 21:31, Jason A. Donenfeld wrote:
+> On Tue, Jul 3, 2018 at 4:27 AM Eric Kuck <eric@bluelinelabs.com> wrote:
+>> 
+>> I was originally thinking the new fragment would be a per-tunnel thing
+>> (set when you create the tunnel or edit it), but you’re right - making it
+>> a general setting likely makes a whole lot more sense. I can’t think of
+>> any use-cases for different tunnels handling different apps.
+> 
+> It might actually make most sense to make it a per-tunnel thing. We'd then 
+> have to introduce conf key called, "ExemptedApplications=" or something. 
+> Samuel - any thoughts on this?
 
-10:05.0 VGA compatible controller: Matrox Electronics Systems Ltd. MGA 
-G200e [Pilot] ServerEngines (SEP1) (rev 02)
+Right, trying to make it a global setting requires either some sort of
+out-of-band way to pass the information to wg-quick, or rewriting the
+configuration file every time the tunnel is brought up.
 
-but I've updated since then
+Since from netd's point of view, this is a per-network setting anyway, I agree
+it makes sense to configure it per-tunnel. ExemptedApplications works as a
+configuration key, though I prefer ExcludedApplications--the application isn't
+just not required to use the tunnel, it's not allowed to use the tunnel.
 
-Regards
+In that case, here are my UI suggestions:
+- Add a button in the editor that switches to a fragment or pops up a Dialog
+similar to a MultiSelectListPreference.
+- For consistency, checked means excluded -- everything defaults to unchecked.
+- The package names of excluded apps are put in the
+com.wireguard.config.Interface, and wg-quick handles package name to uid
+translation.
+
+How does that sound?
+
+Samuel
