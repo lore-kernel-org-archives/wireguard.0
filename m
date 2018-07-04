@@ -1,34 +1,20 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: stefan@agner.ch
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c522353f
- for <wireguard@lists.zx2c4.com>; Tue, 3 Jul 2018 18:10:56 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 08cb48cc
- for <wireguard@lists.zx2c4.com>; Tue, 3 Jul 2018 18:10:56 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 46ad714f
- for <wireguard@lists.zx2c4.com>; Tue, 3 Jul 2018 18:09:42 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id ff8319b1
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>; Tue, 3 Jul 2018 18:09:42 +0000 (UTC)
-Received: by mail-oi0-f51.google.com with SMTP id k12-v6so5684523oiw.8
- for <wireguard@lists.zx2c4.com>; Tue, 03 Jul 2018 11:17:24 -0700 (PDT)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dd8b918e
+ for <wireguard@lists.zx2c4.com>; Wed, 4 Jul 2018 21:05:18 +0000 (UTC)
+Received: from mail.kmu-office.ch (mail.kmu-office.ch [IPv6:2a02:418:6a02::a2])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4f76fcd4
+ for <wireguard@lists.zx2c4.com>; Wed, 4 Jul 2018 21:05:18 +0000 (UTC)
+Received: from webmail.kmu-office.ch (unknown [IPv6:2a02:418:6a02::a3])
+ by mail.kmu-office.ch (Postfix) with ESMTPSA id B0FAD5C015F
+ for <wireguard@lists.zx2c4.com>; Wed,  4 Jul 2018 23:11:52 +0200 (CEST)
 MIME-Version: 1.0
-References: <CAMj-8hS_bJado86_1V9hCyW=+-jO6BDnk1WnZE0EQoDembViEw@mail.gmail.com>
- <d939f3b9-ff51-4b94-fcdc-2e819a98459c@sholland.org>
- <CAMj-8hQFk_UPJO4-KEH8YvK5NOBH5vu23Vu5JM2Gt0srMD_kEg@mail.gmail.com>
- <CAHmME9qcXm65jFbGv24m-Pzx9c+nq2-D4y4kBkXk7W6u8HZLiw@mail.gmail.com>
- <CAMj-8hSnvCpY7sZ6xcH=2_Va33M1YsZ97H66PrDSo5=BV9vyOw@mail.gmail.com>
- <CAHmME9qQyw-GxJ-1mLNR_DaWspOO8Enc+gKWobvKUcLqZ-Phcg@mail.gmail.com>
- <72472182-2f17-ff6d-f76c-f0fa6c98d45e@sholland.org>
-In-Reply-To: <72472182-2f17-ff6d-f76c-f0fa6c98d45e@sholland.org>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 3 Jul 2018 20:17:11 +0200
-Message-ID: <CAHmME9qAUveJi6of9TMb_Owffsy-SX+4pQyDMHaz=6COE2CYxQ@mail.gmail.com>
-Subject: Re: Android app whitelist/blacklist feature
-To: Samuel Holland <samuel@sholland.org>
-Content-Type: text/plain; charset="UTF-8"
-Cc: Eric Kuck <eric@bluelinelabs.com>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset=US-ASCII
+Date: Wed, 04 Jul 2018 23:11:50 +0200
+From: Stefan Agner <stefan@agner.ch>
+To: wireguard@lists.zx2c4.com
+Subject: Android: TCP connection drop when disabling WiFi
+Message-ID: <fada85c8aea2e15480602784fba3eeeb@agner.ch>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -38,31 +24,31 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Tue, Jul 3, 2018 at 8:12 PM Samuel Holland <samuel@sholland.org> wrote:
-> Right, trying to make it a global setting requires either some sort of
-> out-of-band way to pass the information to wg-quick, or rewriting the
-> configuration file every time the tunnel is brought up.
->
-> Since from netd's point of view, this is a per-network setting anyway, I agree
-> it makes sense to configure it per-tunnel. ExemptedApplications works as a
-> configuration key, though I prefer ExcludedApplications--the application isn't
-> just not required to use the tunnel, it's not allowed to use the tunnel.
->
-> In that case, here are my UI suggestions:
-> - Add a button in the editor that switches to a fragment or pops up a Dialog
-> similar to a MultiSelectListPreference.
-> - For consistency, checked means excluded -- everything defaults to unchecked.
-> - The package names of excluded apps are put in the
-> com.wireguard.config.Interface, and wg-quick handles package name to uid
-> translation.
->
-> How does that sound?
+Hi,
 
-All of that sounds right-on to me, and I think you're right that
-ExcludedApplications is the better key.
+I am using WireGuard for Android v0.0.20180625 with the Go userspace
+backend. I am using a WiFi router with OpenWrt as Wireguard endpoint
+(WAN/internet address). Wireguard tunnels all traffic through the tunnel
+(Allowed IPs 0.0.0.0/0, ::/0). This works as expected: I can connect to
+the Internet through the tunnel no matter whether I am locally on the
+WiFi or connecting through 4G. Wireguard reconnects seamlessly.
 
-(This also provides a good basis for later adding a
-"ExcludeLocalNetwork" option.)
+Now what I hope is that my TCP connection stay alive when roaming from
+WiFi to 4G. Since Wireguard reconnects automatically and my public IP
+through the tunnel stays the same, I would expect that I can have a SSH
+connection open while roaming from WiFi to 4G and back. I am using the
+SSH client ConnectBot to connect to an (IPv6) server. When changing from
+4G to WiFi, the connection stays alive. However, when switching off WiFi
+(and hence change back to 4G) ConnectBot immediately reports "Host has
+disconnected.".
 
- Eric's git access should be all setup now, so we can watch the
-commits coming on in.
+It seems as if Android somehow drops all TCP connection when WiFi
+connection gets lost... Is this a known behavior? Anybody else observes
+the same behavior? It seems somewhat unfortunate as I would have hoped
+that Wireguard lets me keep sessions open...
+
+Also tried with a second SSH client, so it seems a common behavior. I am
+using a Nexus 6P with Stock Android 8.1.0.
+
+--
+Stefan
