@@ -1,32 +1,21 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: stunnel@attglobal.net
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 22fb3408
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 508c127b
  for <wireguard@lists.zx2c4.com>;
- Tue, 10 Jul 2018 20:51:53 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1eb89a45
+ Tue, 10 Jul 2018 22:12:49 +0000 (UTC)
+Received: from dnvrco-cmomta02.email.rr.com (dnvrco-outbound-snat.email.rr.com
+ [107.14.73.232])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7ae52e9f
  for <wireguard@lists.zx2c4.com>;
- Tue, 10 Jul 2018 20:51:53 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6a20bb8f
- for <wireguard@lists.zx2c4.com>;
- Tue, 10 Jul 2018 20:50:39 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id a2e8cba0
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Tue, 10 Jul 2018 20:50:39 +0000 (UTC)
-Received: by mail-oi0-f54.google.com with SMTP id k12-v6so45287156oiw.8
- for <wireguard@lists.zx2c4.com>; Tue, 10 Jul 2018 13:59:16 -0700 (PDT)
+ Tue, 10 Jul 2018 22:12:49 +0000 (UTC)
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: Eddie <stunnel@attglobal.net>
+Subject: Should wg-quick with SaveConfig accumulate IPv6 link-local addresses
+Message-ID: <2e6b4759-1acd-ddd3-2471-14ce932ac82a@attglobal.net>
+Date: Tue, 10 Jul 2018 15:20:09 -0700
 MIME-Version: 1.0
-References: <131640bf823f0fba0adf5985e2e8aa17@mail.gmail.com>
-In-Reply-To: <131640bf823f0fba0adf5985e2e8aa17@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 10 Jul 2018 22:59:05 +0200
-Message-ID: <CAHmME9r0rTCydGrf9cB474j1GOavzsdf8rDwLUhmMiK9FsTYbQ@mail.gmail.com>
-Subject: Re: Wireguard fails on recent updates for OpenWRT on Turris Omnia,
- but same versions work on other (Linksys) routers with same CPU
-To: mike@farmwald.com
-Content-Type: text/plain; charset="UTF-8"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Reply-To: stunnel@attglobal.net
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -36,8 +25,11 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Which versions are failing and which are succeeding?
+Not sure if this is intended behaviour, or not.
 
-What symptoms precisely do you mean when you use the word "fail"?
+Every time I start an interface using wg-quick with the SaveConfig = 
+true it reloads all the previous, saved, IPv6 link-local addresses plus 
+generates a new one.  So the first time the interface is started there 
+is 1 link-local address.  The next time, 2.  Then 3. Then 4, etc. etc.
 
-Which "Linksys" routers and "CPU"s do you specifically reference?
+Cheers.
