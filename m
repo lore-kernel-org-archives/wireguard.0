@@ -1,31 +1,24 @@
-Return-Path: mdlayher@gmail.com
+Return-Path: shawn@git.icu
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 43cf0603
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e1c7472e
  for <wireguard@lists.zx2c4.com>;
- Sat, 21 Jul 2018 19:10:36 +0000 (UTC)
-Received: from mail-io0-x233.google.com (mail-io0-x233.google.com
- [IPv6:2607:f8b0:4001:c06::233])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 73261515
+ Sat, 21 Jul 2018 05:59:17 +0000 (UTC)
+Received: from git.icu (git.icu [IPv6:2001:470:d:238::1])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d5588c1f
  for <wireguard@lists.zx2c4.com>;
- Sat, 21 Jul 2018 19:10:36 +0000 (UTC)
-Received: by mail-io0-x233.google.com with SMTP id z19-v6so12498220ioh.4
- for <wireguard@lists.zx2c4.com>; Sat, 21 Jul 2018 12:19:24 -0700 (PDT)
-Return-Path: <mdlayher@gmail.com>
-Received: from ?IPv6:2600:6c4a:787f:d200:44b8:21b0:bd5e:86f4?
- (2600-6c4a-787f-d200-44b8-21b0-bd5e-86f4.dhcp6.chtrptr.net.
- [2600:6c4a:787f:d200:44b8:21b0:bd5e:86f4])
- by smtp.gmail.com with ESMTPSA id r137-v6sm2656668ith.26.2018.07.21.12.19.22
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Sat, 21 Jul 2018 12:19:23 -0700 (PDT)
-To: wireguard@lists.zx2c4.com
-From: Matt Layher <mdlayher@gmail.com>
-Subject: wireguardnl: Go package for interacting with WireGuard via generic
- netlink
-Message-ID: <0f15823a-d527-f281-1d4b-735d227e3844@gmail.com>
-Date: Sat, 21 Jul 2018 15:19:22 -0400
+ Sat, 21 Jul 2018 05:59:17 +0000 (UTC)
+Received: from mail-ua0-f179.google.com (mail-ua0-f179.google.com
+ [209.85.217.179]) by git.icu (Postfix) with ESMTPSA id D01E923DFE
+ for <wireguard@lists.zx2c4.com>; Sat, 21 Jul 2018 06:08:00 +0000 (UTC)
+Received: by mail-ua0-f179.google.com with SMTP id k25-v6so8763980uao.11
+ for <wireguard@lists.zx2c4.com>; Fri, 20 Jul 2018 23:08:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
+From: Shawn Landden <shawn@git.icu>
+Date: Fri, 20 Jul 2018 23:07:49 -0700
+Message-ID: <CA+49okrJFL0AD57AG3snv_UgDqVhY7bh8j=N+sNaFS2peB7btA@mail.gmail.com>
+Subject: Re: some mips iperf3 tests
+To: wireguard@lists.zx2c4.com
+Content-Type: multipart/alternative; boundary="000000000000ff6fef05717c3ba2"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -35,35 +28,49 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi all!
+--000000000000ff6fef05717c3ba2
+Content-Type: text/plain; charset="UTF-8"
 
-I've heard quite a few good things about WireGuard and decided to try it 
-out at home today.  On top of that, I've done a lot of work with netlink 
-and generic netlink in Go, and decided to implement a Go package that 
-can use wireguard's generic netlink interface in the same way as the 
-"wg" tool.  To avoid confusion with "wireguard" or "wireguard-go", I've 
-chosen "wireguardnl" as the name:
+https://openwrt.org/toh/hwdata/gl.inet/gl.inet_gl-mt300n_v2
 
-https://github.com/mdlayher/wireguardnl
+MediaTek MT7628AN 580Mhz single core
 
-This was just a fun experiment for me (it works, but no tests yet), but 
-perhaps it'll be useful for someone who wants to inspect the kernel 
-module from a Go program (no support for changing settings as of now, 
-but that'd be fun!).
+with -march=24kc -O2
 
-While I'm here, I did have one inquiry about "WG_CMD_GET_DEVICE": after 
-working with a handful of generic netlink families, I was slightly 
-surprised to see that a request paired with "NLM_F_DUMP" doesn't return 
-a list of all WireGuard devices from the kernel.
+With 0.0.20180718
+receive
+[ ID] Interval           Transfer     Bandwidth       Retr
+[  4]   0.00-15.00  sec  64.7 MBytes  36.2 Mbits/sec  246             sender
+[  4]   0.00-15.00  sec  64.6 MBytes  36.1 Mbits/sec
+receiver
 
-Per the documentation, sending an interface index or name attribute 
-works just fine to retrieve a single device, but perhaps it'd be nice to 
-be able to just dump a list of all WireGuard devices when "NLM_F_DUMP" 
-and no attributes are specified.  For the time being, I can easily work 
-around this with my "Devices" method by attempting to query the kernel 
-for WireGuard device information about each of my network interfaces, 
-and then filter out the ones that return "ENOTSUP".
+send
+[ ID] Interval           Transfer     Bandwidth       Retr
+[  4]   0.00-15.00  sec   116 MBytes  65.0 Mbits/sec    2             sender
+[  4]   0.00-15.00  sec   115 MBytes  64.2 Mbits/sec
+receiver
 
-Thanks for WireGuard, it seems extremely promising so far!
+--000000000000ff6fef05717c3ba2
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-- Matt Layher
+<div dir=3D"ltr"><div><a href=3D"https://openwrt.org/toh/hwdata/gl.inet/gl.=
+inet_gl-mt300n_v2">https://openwrt.org/toh/hwdata/gl.inet/gl.inet_gl-mt300n=
+_v2</a><br></div><div><br></div><div>MediaTek MT7628AN=C2=A0580Mhz single c=
+ore<br></div><div><br></div><div>with -march=3D24kc -O2<br></div><div><br><=
+/div><div>With 0.0.20180718</div><div><div>receive</div><div>[ ID] Interval=
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Transfer=C2=A0 =C2=A0 =C2=A0Bandwi=
+dth=C2=A0 =C2=A0 =C2=A0 =C2=A0Retr</div><div>[=C2=A0 4]=C2=A0 =C2=A00.00-15=
+.00=C2=A0 sec=C2=A0 64.7 MBytes=C2=A0 36.2 Mbits/sec=C2=A0 246=C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0sender</div><div>[=C2=A0 4]=C2=A0 =C2=A0=
+0.00-15.00=C2=A0 sec=C2=A0 64.6 MBytes=C2=A0 36.1 Mbits/sec=C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 receiver</div><div><br></d=
+iv><div>send</div><div>[ ID] Interval=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0Transfer=C2=A0 =C2=A0 =C2=A0Bandwidth=C2=A0 =C2=A0 =C2=A0 =C2=A0Retr</di=
+v><div>[=C2=A0 4]=C2=A0 =C2=A00.00-15.00=C2=A0 sec=C2=A0 =C2=A0116 MBytes=
+=C2=A0 65.0 Mbits/sec=C2=A0 =C2=A0 2=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0sender</div><div>[=C2=A0 4]=C2=A0 =C2=A00.00-15.00=C2=A0 sec=C2=
+=A0 =C2=A0115 MBytes=C2=A0 64.2 Mbits/sec=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 receiver</div></div><div><br></div></div>
+
+--000000000000ff6fef05717c3ba2--
