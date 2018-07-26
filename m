@@ -1,28 +1,22 @@
-Return-Path: s.gottschall@dd-wrt.com
+Return-Path: jacob.schooley@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bf98f0b5
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f3df06d9
  for <wireguard@lists.zx2c4.com>;
- Tue, 24 Jul 2018 11:23:02 +0000 (UTC)
-Received: from webmail.newmedia-net.de (smtps.newmedia-net.de
- [IPv6:2a05:a1c0:0:de::167])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f46d7b77
+ Thu, 26 Jul 2018 16:03:09 +0000 (UTC)
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com
+ [IPv6:2a00:1450:4864:20::532])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ccb92f68
  for <wireguard@lists.zx2c4.com>;
- Tue, 24 Jul 2018 11:23:02 +0000 (UTC)
-Subject: Re: Wireguard fails on recent updates for OpenWRT on Turris Omnia,
- but same versions work on other (Linksys) routers with same CPU
-To: Steven Honson <steven@honson.id.au>, Aaron Jones
- <aaronmdjones@gmail.com>, mike@pmfarmwald.com, wireguard@lists.zx2c4.com
-References: <131640bf823f0fba0adf5985e2e8aa17@mail.gmail.com>
- <CAHmME9r0rTCydGrf9cB474j1GOavzsdf8rDwLUhmMiK9FsTYbQ@mail.gmail.com>
- <3980181ad4f2980831b273db734f7772@mail.gmail.com>
- <ac459db2-43e2-975e-decd-86a5066dde0d@gmail.com>
- <8F6E9B31-B1E3-4304-8DE0-2F5F5CFB9779@honson.id.au>
-From: Sebastian Gottschall <s.gottschall@dd-wrt.com>
-Message-ID: <98a0ed6b-9cb1-8ce3-b0fe-71701381fd44@dd-wrt.com>
-Date: Tue, 24 Jul 2018 13:32:10 +0200
+ Thu, 26 Jul 2018 16:03:09 +0000 (UTC)
+Received: by mail-ed1-x532.google.com with SMTP id h4-v6so1849268edi.6
+ for <wireguard@lists.zx2c4.com>; Thu, 26 Jul 2018 09:12:36 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <8F6E9B31-B1E3-4304-8DE0-2F5F5CFB9779@honson.id.au>
-Content-Type: text/plain; charset=utf-8; format=flowed
+From: Jacob Schooley <jacob.schooley+wgvpn@gmail.com>
+Date: Thu, 26 Jul 2018 12:12:22 -0400
+Message-ID: <CAHjFYUJp3A3Q_Jdqcn8XOnnYfsnMsF6x2FUM=AiAV=j0g8BY9w@mail.gmail.com>
+Subject: Cross compiling wireguard-go for ARM with utiliities
+To: wireguard@lists.zx2c4.com
+Content-Type: multipart/alternative; boundary="00000000000049a6a50571e943ec"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -32,51 +26,29 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-openwrt doesnt use kernel 4.4 anymore for a long time. as far as i know 
-it switched to 4.14 since some weeks
-however the original omnis turria openwrt fork uses 4.4, but with 
-different kernel configs. so you have to build wireguard
-using exact the same sourcebase including kernel config, which is used 
-in your omnis turria device
+--00000000000049a6a50571e943ec
+Content-Type: text/plain; charset="UTF-8"
 
+I'm trying to run wireguard on an old embedded device. I have a tun module
+for it, but the kernel is too old for the wireguard module, so I compiled
+wireguard-go and it runs and creates the interface. However, it looks like
+I need the the wg utility to configure the interface with the keys, and
+wg-quick to use a config file, but I can't seem to find a way to easily
+compile those without also compiling the module. Is there a way to do that?
+Or will I have to pull out my old raspberry pi and update it just to get
+those utilities?
 
-Am 24.07.2018 um 11:49 schrieb Steven Honson:
->> On 22 Jul 2018, at 11:02 pm, Aaron Jones <aaronmdjones@gmail.com> wrote:
->>
->> # cat /sys/module/wireguard/version
-> On LEDE 17.01.5 at least, `/sys/module/wireguard/version` doesn’t exist, I’m not sure if this is the same for the release candidates of OpenWrt 18.06.
->
-> Unfortunately `modinfo wireguard` doesn’t give any indication of the version either for me with LEDE 17.01.5:
->
-> # modinfo wireguard
-> module:		/lib/modules/4.4.140/wireguard.ko
-> alias:		net-pf-16-proto-16-family-wireguard
-> alias:		rtnl-link-wireguard
-> license:	GPL v2
-> depends:	udp_tunnel,ip6_udp_tunnel
->
-> If you have installed WireGuard from the LEDE/OpenWrt package repository, then `opkg info wireguard-tools` to check the tools, and `opkg info kmod-wireguard` to check the kernel module is one way to verify the version:
->
-> # opkg info wireguard-tools
-> Package: wireguard-tools
-> Version: 0.0.20180625-1
-> Depends: libc, libmnl, ip
-> Status: install ok installed
-> Section: net
-> ...
->
-> # opkg info kmod-wireguard
-> Package: kmod-wireguard
-> Version: 4.4.140+0.0.20180519-1
-> Depends: kernel (= 4.4.140-1-78acdb0e5133ba67c91f7694e305d1e7), kmod-udptunnel6, kmod-udptunnel4
-> Status: install ok installed
-> ...
->
-> Note that updates to the tools appear to be backported regularly to LEDE 17.01, but the kernel module appears to be as of the version available at the time of the release (17.01.5 in my case), so it isn’t unusual for these versions to not match as is the case here with mine. I’m not sure if the next release of OpenWrt will do a similar thing. It’d be nice if the kernel module updates were backported too.
->
-> Cheers,
-> Steven
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
+--00000000000049a6a50571e943ec
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">I&#39;m trying to run wireguard on an old embedded device.=
+ I have a tun module for it, but the kernel is too old for the wireguard mo=
+dule, so I compiled wireguard-go and it runs and creates the interface. How=
+ever, it looks like I need the the wg utility to configure the interface wi=
+th the keys, and wg-quick to use a config file, but I can&#39;t seem to fin=
+d a way to easily compile those without also compiling the module. Is there=
+ a way to do that? Or will I have to pull out my old raspberry pi and updat=
+e it just to get those utilities?</div>
+
+--00000000000049a6a50571e943ec--
