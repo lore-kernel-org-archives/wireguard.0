@@ -1,23 +1,22 @@
-Return-Path: martinmoen@gmail.com
+Return-Path: Jason@zx2c4.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id af41c2a7
- for <wireguard@lists.zx2c4.com>; Thu, 2 Aug 2018 14:40:19 +0000 (UTC)
-Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com
- [IPv6:2607:f8b0:4864:20::42e])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1edcbc0c
- for <wireguard@lists.zx2c4.com>; Thu, 2 Aug 2018 14:40:18 +0000 (UTC)
-Received: by mail-pf1-x42e.google.com with SMTP id y10-v6so1455678pfn.8
- for <wireguard@lists.zx2c4.com>; Thu, 02 Aug 2018 07:50:39 -0700 (PDT)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 67d19aec
+ for <wireguard@lists.zx2c4.com>; Fri, 3 Aug 2018 03:18:11 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 459f5ada
+ for <wireguard@lists.zx2c4.com>; Fri, 3 Aug 2018 03:18:11 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 32f0558b
+ for <wireguard@lists.zx2c4.com>; Fri, 3 Aug 2018 03:16:57 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id d43ccf0e
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Fri, 3 Aug 2018 03:16:57 +0000 (UTC)
+Date: Fri, 03 Aug 2018 05:28:31 +0200
+To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: [ANNOUNCE] WireGuard Snapshot `0.0.20180802` Available
 MIME-Version: 1.0
-References: <CAHmME9pUYSU-D3rxF_V4B8Lhqfg_xb3Yj++MuBKZ6TK4epCBFg@mail.gmail.com>
-In-Reply-To: <CAHmME9pUYSU-D3rxF_V4B8Lhqfg_xb3Yj++MuBKZ6TK4epCBFg@mail.gmail.com>
-From: Martin Eskdale Moen <martinmoen@gmail.com>
-Date: Thu, 2 Aug 2018 15:50:01 +0100
-Message-ID: <CAKiCHuO5Oe69bi4Lx8gYj85eaeJRHPD2jgcuCZUZse5E8R_zaA@mail.gmail.com>
-Subject: Re: Upstream Submission v1
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Content-Type: multipart/alternative; boundary="0000000000002fcaf1057274efe6"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset=UTF-8
+Message-Id: <15364b88a3473a28@frisell.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -27,81 +26,93 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---0000000000002fcaf1057274efe6
-Content-Type: text/plain; charset="UTF-8"
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Congrats Jason, I'm looking forward to seeing what they come up with but
-also seeing Wireguard being in mainline.
+Hello,
 
-On Tue, Jul 31, 2018 at 8:27 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+A new snapshot, `0.0.20180802`, has been tagged in the git repository.
 
-> Hey list,
->
-> I submitted patchset v1 of WireGuard to LKML a few minutes ago:
->
-> [0/3] https://marc.info/?l=linux-netdev&m=153306429108040&w=2
-> [1/3] https://marc.info/?l=linux-netdev&m=153306429908043&w=2
-> [2/3] https://marc.info/?l=linux-netdev&m=153306437408074&w=2
-> [3/3] https://marc.info/?l=linux-netdev&m=153306440208084&w=2
->
-> I'm pretty elated, as getting v1 out the door marks a major milestone.
->
-> I expect for the first submission to be mercilessly criticized from
-> all sorts of interesting and useful angles. There will most certainly
-> be a v2, and it will be better because of whatever intense criticism
-> received from v1. So hold on tight: a wild process is about to begin.
->
-> Regards,
-> Jason
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
->
+Please note that this snapshot is, like the rest of the project at this point
+in time, experimental, and does not consitute a real release that would be
+considered secure and bug-free. WireGuard is generally thought to be fairly
+stable, and most likely will not crash your computer (though it may).
+However, as this is a pre-release snapshot, it comes with no guarantees, and
+its security is not yet to be depended on; it is not applicable for CVEs.
 
---0000000000002fcaf1057274efe6
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+With all that said, if you'd like to test this snapshot out, there are a
+few relevent changes.
 
-<div dir=3D"ltr">Congrats Jason, I&#39;m looking forward to seeing what the=
-y come up with but also seeing Wireguard being in mainline.<br></div><br><d=
-iv class=3D"gmail_quote"><div dir=3D"ltr">On Tue, Jul 31, 2018 at 8:27 PM J=
-ason A. Donenfeld &lt;<a href=3D"mailto:Jason@zx2c4.com">Jason@zx2c4.com</a=
->&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0=
- 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">Hey list,<br>
-<br>
-I submitted patchset v1 of WireGuard to LKML a few minutes ago:<br>
-<br>
-[0/3] <a href=3D"https://marc.info/?l=3Dlinux-netdev&amp;m=3D15330642910804=
-0&amp;w=3D2" rel=3D"noreferrer" target=3D"_blank">https://marc.info/?l=3Dli=
-nux-netdev&amp;m=3D153306429108040&amp;w=3D2</a><br>
-[1/3] <a href=3D"https://marc.info/?l=3Dlinux-netdev&amp;m=3D15330642990804=
-3&amp;w=3D2" rel=3D"noreferrer" target=3D"_blank">https://marc.info/?l=3Dli=
-nux-netdev&amp;m=3D153306429908043&amp;w=3D2</a><br>
-[2/3] <a href=3D"https://marc.info/?l=3Dlinux-netdev&amp;m=3D15330643740807=
-4&amp;w=3D2" rel=3D"noreferrer" target=3D"_blank">https://marc.info/?l=3Dli=
-nux-netdev&amp;m=3D153306437408074&amp;w=3D2</a><br>
-[3/3] <a href=3D"https://marc.info/?l=3Dlinux-netdev&amp;m=3D15330644020808=
-4&amp;w=3D2" rel=3D"noreferrer" target=3D"_blank">https://marc.info/?l=3Dli=
-nux-netdev&amp;m=3D153306440208084&amp;w=3D2</a><br>
-<br>
-I&#39;m pretty elated, as getting v1 out the door marks a major milestone.<=
-br>
-<br>
-I expect for the first submission to be mercilessly criticized from<br>
-all sorts of interesting and useful angles. There will most certainly<br>
-be a v2, and it will be better because of whatever intense criticism<br>
-received from v1. So hold on tight: a wild process is about to begin.<br>
-<br>
-Regards,<br>
-Jason<br>
-_______________________________________________<br>
-WireGuard mailing list<br>
-<a href=3D"mailto:WireGuard@lists.zx2c4.com" target=3D"_blank">WireGuard@li=
-sts.zx2c4.com</a><br>
-<a href=3D"https://lists.zx2c4.com/mailman/listinfo/wireguard" rel=3D"noref=
-errer" target=3D"_blank">https://lists.zx2c4.com/mailman/listinfo/wireguard=
-</a><br>
-</blockquote></div>
+== Changes ==
 
---0000000000002fcaf1057274efe6--
+  * chacha20poly1305: selftest: split up test vector constants
+  
+  The test vectors are encoded as long strings -- really long strings -- and
+  apparently RFC821 doesn't like lines longer than 998.
+  https://cr.yp.to/smtp/message.html
+  
+  * queueing: keep reference to peer after setting atomic state bit
+  
+  This fixes a regression introduced when preparing the LKML submission.
+  
+  * allowedips: prevent double read in kref
+  * allowedips: avoid window of disappeared peer
+  * hashtables: document immediate zeroing semantics
+  * peer: ensure resources are freed when creation fails
+  * queueing: document double-adding and reference conditions
+  * queueing: ensure strictly ordered loads and stores
+  * cookie: returned keypair might disappear if rcu lock not held
+  * noise: free peer references on failure
+  * peer: ensure destruction doesn't race
+  
+  Various fixes, as well as lots of code comment documentation, for a
+  small variety of the less obvious aspects of object lifecycles,
+  focused on correctness.
+  
+  * allowedips: free root inside of RCU callback
+  * allowedips: use different macro names so as to avoid confusion
+  
+  These incorporate two suggestions from LKML.
+
+This snapshot contains commits from: Jason A. Donenfeld and Jann Horn.
+
+As always, the source is available at https://git.zx2c4.com/WireGuard/ and
+information about the project is available at https://www.wireguard.com/ .
+
+This snapshot is available in compressed tarball form here:
+  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-0.0.20180802.tar.xz
+  SHA2-256: cd1da34b377d58df760aadf69ced045081517570586fc2d4eed7f09f5d5a47c6
+  BLAKE2b-256: ff233c4193d28793b3352813b667b5173d25fbf08a2fa1836b1556628fe46749
+
+A PGP signature of that file decompressed is available here:
+  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-0.0.20180802.tar.asc
+  Signing key: AB9942E6D4A4CFC3412620A749FC7012A5DE03AE
+
+If you're a snapshot package maintainer, please bump your package version. If
+you're a user, the WireGuard team welcomes any and all feedback on this latest
+snapshot.
+
+Finally, WireGuard development thrives on donations. By popular demand, we
+have a webpage for this: https://www.wireguard.com/donations/
+
+Thank you,
+Jason Donenfeld
+
+
+-----BEGIN PGP SIGNATURE-----
+
+iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAltjy8MQHGphc29uQHp4
+MmM0LmNvbQAKCRBJ/HASpd4DrmPrEACNP6Ix59W+BrzSlhk9F6QAnd/QeADdYsOy
+7SCFSjUzN5WEj1QcFHeDWlphm3A+yw4HoLxXtb3v887ZJKhlb94RDtTg3Vmq8Lu0
+nJxMF/2og/eEo1uAuDx+YA1I7yvmpB3++uwKGdIoiVtnqQ90to4AcYjHFF4gsdvW
+JvaAeD9VXAq21eSnQQOlhqlMzBid1lsyTNh8jPIIMdBKQUu6I0lFA2y9H/K3i5xS
+5voza6AmZcd0UL4/Q7lX7FEkxs8ga29lJWdDov0yYhvkJcNGvzmj66rISz1OU3BL
+uGdJbpKAHBtYSNIg/DgN7QIwlDSt23A+15IX8ceux5q0vqeVAZkxJ72L+jvtctIm
+F3crvtkqnQ8RpsNwTcHy9CjYVvNu3f90XPWC3IjG15xL8WNljJR5Ib4gVS4ddFMR
+W9VNB8pC8EcIIKKxc/eipR9rSuyfuI1fRypJpUeOFeT1bAMhPHY6Z9gLeU9ZrNrl
+Ioo8KZ8D1pVdmEkcE3Fie2skYlYshRtbJih0GbwDiKJuLi3Xkq5VzmrPZhpSZyQP
+Ei6Z8fJORPF/EtKuBr1yjyZyhL0h8Uvt7G5wqG5dkWE026S0gi9q+OOdV/T6YdQo
+2+b+eTRgDDHY3q83HrvA87hOYI/vccATOtKClOKVvj4Xz9mfya7vKrLs/jzuO0vI
+D/fWcH7mmA==
+=AvEO
+-----END PGP SIGNATURE-----
