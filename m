@@ -1,20 +1,20 @@
-Return-Path: cbluth@gmail.com
+Return-Path: dmaroulidis@dimitrismaroulidis.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8ae4a2a5
- for <wireguard@lists.zx2c4.com>; Tue, 7 Aug 2018 12:52:11 +0000 (UTC)
-Received: from mail-ua0-x229.google.com (mail-ua0-x229.google.com
- [IPv6:2607:f8b0:400c:c08::229])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4d85611a
- for <wireguard@lists.zx2c4.com>; Tue, 7 Aug 2018 12:52:10 +0000 (UTC)
-Received: by mail-ua0-x229.google.com with SMTP id u11-v6so15933119uan.13
- for <wireguard@lists.zx2c4.com>; Tue, 07 Aug 2018 06:03:09 -0700 (PDT)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d3e779d7
+ for <wireguard@lists.zx2c4.com>; Mon, 6 Aug 2018 11:25:51 +0000 (UTC)
+Received: from mail-40132.protonmail.ch (mail-40132.protonmail.ch
+ [185.70.40.132])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b614e7dc
+ for <wireguard@lists.zx2c4.com>; Mon, 6 Aug 2018 11:25:51 +0000 (UTC)
+Date: Mon, 06 Aug 2018 11:36:29 +0000
+To: wireguard <wireguard@lists.zx2c4.com>
+From: Dimitris Maroulidis <dmaroulidis@dimitrismaroulidis.com>
+Subject: wg-quick on Ubuntu 18.04 LTS - resolvconf not available
+Message-ID: <WsBaWBF1nQ303SujTkOr2f1Yh2IYWjruNQDQCZfH34vg0YGpTIfAQ2O4x-6Yj1vsidG7pCaWXx7WYykdo_9J8qh-I5ropI0Kiwq0creV3qg=@dimitrismaroulidis.com>
 MIME-Version: 1.0
-From: Cobin Bluth <cbluth@gmail.com>
-Date: Tue, 7 Aug 2018 15:02:57 +0200
-Message-ID: <CAGvEgFF=XqAzNBu5VESeBqzAGe8FyW+Y=Q7=p6Tp7k-=G8DzAQ@mail.gmail.com>
-Subject: Accessing Network on each Wireguard Peer
-To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
-Content-Type: multipart/alternative; boundary="000000000000fb84a40572d80310"
+Content-Type: multipart/alternative;
+ boundary="b1_533f90dfe819c1d970a1927322d94fc5"
+Reply-To: Dimitris Maroulidis <dmaroulidis@dimitrismaroulidis.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -24,257 +24,50 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---000000000000fb84a40572d80310
-Content-Type: text/plain; charset="UTF-8"
+This is a multi-part message in MIME format.
 
-Hi Wireguard Fans,
+--b1_533f90dfe819c1d970a1927322d94fc5
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-Here is my wireguard setup, please see the following:
-https://gist.github.com/cbluth/d5bd1c5746c976fef73fb5ab4e67b355
-
-I have three physical nodes; Host1, Host2, Host3, all of which have a
-public interface.
-I would like to protect/encrypt the communications between all the hosts.
-I have a working setup of IPSec+vxlan, and I would like to migrate to
-wireguard.
-
-Each host runs kvm/libvirtd and hosts a number of virtual machine guests,
-each with its own network.
-Everything in my wireguard setup seems to be working well, and it seems
-quite fast.
-With this wireguard configuration, VM guests on Host1, located inside
-192.168.1.0/24, can ping guests located on Host2 (192.168.2.0/24) and Host3
-(192.168.3.0/24), and vice versa.
-
-The only thing that I cant get to work properly, is that I need to be able
-to reach any guest from Host1, because Host1 is my bastion entrypoint into
-the network; for example, Host1 itself cannot ping to guests on Host2, but
-guests on Host1 *CAN* ping guests on Host2. I can ping any virbr0 interface
-from any physical host, but I cannot ping the guests behind each virbr0 in
-the libvirt network.
-
-I assume it is an issue with routing, but I am not sure, and I am hoping
-that someone can assist me.
-But one thing that I have noticed is that the gateway to each peer's guest
-network is different between my vxlan configuration and what wireguard
-provides.
-
-Here are the working routes when my network is using ipsec+vxlan:
-
-*root@host1 ~ # route -n*
-*Kernel IP routing table*
-*Destination     Gateway         Genmask         Flags Metric Ref    Use
-Iface*
-*0.0.0.0         x.x.x.x         0.0.0.0         UG    0      0        0
-enp0s31f6*
-*x.x.x.x         0.0.0.0         255.255.255.255 UH    0      0        0
-enp0s31f6*
-*172.16.1.0      0.0.0.0         255.255.255.0   U     0      0        0
-vxlan0*
-*192.168.1.0     0.0.0.0         255.255.255.0   U     0      0        0
-virbr0*
-*192.168.2.0     172.16.1.2      255.255.255.0   UG    0      0        0
-vxlan0*
-*192.168.3.0     172.16.1.3      255.255.255.0   UG    0      0        0
-vxlan0*
-*192.168.4.0     172.16.1.4      255.255.255.0   UG    0      0        0
-vxlan0*
-*192.168.5.0     172.16.1.5      255.255.255.0   UG    0      0        0
-vxlan0*
-*192.168.6.0     172.16.0.6      255.255.255.0   UG    0      0        0
-vxlan0*
-*root@host1 ~ # *
+SGkgZXZlcnlvbmUsCgpJJ3ZlIG5vdGljZWQgdGhhdCB3Zy1xdWljayBjYW5ub3QgaW5pdGlhdGUg
+YSBuZXcgd2lyZWd1YXJkIGNvbm5lY3Rpb24gYmVjYXVzZSBpdCBmYWlscyBpbiB0aGUgc3RlcCB3
+aGVyZSBpdCBwdXNoZXMgRE5TIG5hbWVzZXJ2ZXJzIHRvIHRoZSBzeXN0ZW0gdmlhIHJlc29sdmNv
+bmYgLUEuIFRoZSBpc3N1ZSBoZXJlIGlzIHRoYXQgcmVzb2x2Y29uZiBpc24ndCBzaGlwcGVkIHdp
+dGggVWJ1bnR1IDE4LjA0LCBhbmQgRE5TIGNvbmZpZyBpcyBtYW5hZ2VkIGVpdGhlciBieSBzeXN0
+ZW1kLXJlc29sdmUgb24gc2VydmVycyBvciBkZXNrdG9wcyBhbmQgYnkgTmV0d29ya01hbmFnZXIg
+b24gZGVza3RvcHMuCgpJIHRoaW5rIHRoYXQgc3lzdGVtZC1yZXNvbHZlIHJ1bnMgaW5kZXBlbmRl
+bnRseSBmcm9tIE5ldHdvcmtNYW5hZ2VyIGFuZCBpZiB0aGUgbGF0dGVyIGlzIHVzZWQgZm9yIG5l
+dHdvcmtpbmcgbWFuYWdlbWVudCwgdGhlIGZvcm1lciwgYWxzbyBwcm92aWRlcyBETlMgcmVzb2x1
+dGlvbi4KCkFsc28sIEkndmUgbm90aWNlZCB0aGF0IGluc3RhbGxpbmcgcmVzb2x2Y29uZiBvciBv
+cGVucmVzb2x2IGFzIHdhcyByZXF1aXJlZCBpbiB0aGUgcGFzdCBieSB0aGUgd2lyZWd1YXJkIHBh
+Y2thZ2UsIGNhdXNlZCBETlMgcmVzb2x1dGlvbiBwcm9ibGVtcyB3aXRoIHRoZSBsb2NhbGhvc3Qg
+YW5kIERvY2tlciBjb250YWluZXJzLgoKRGltaXRyaXMgTWFyb3VsaWRpcwoKUEdQIEtleSBGaW5n
+ZXJwcmludDogMHg5QTNBRjlFMTcwRkM4NzBGQTM0MDZEMEE1MDc4OTJBNzhBREVDNzY5CgpNaW5p
+TG9jayBJRDogWXR4VXNpa0NoajMzUUVhdTVHQWNNekoyVUV3cFRySnJNb2NENHVVR2ROczdY
 
 
-Here are the routes after bringing up wireguard:
+--b1_533f90dfe819c1d970a1927322d94fc5
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-*root@host1 ~ # route -n*
-*Kernel IP routing table*
-*Destination     Gateway         Genmask         Flags Metric Ref    Use
-Iface*
-*0.0.0.0         x.x.x.x         0.0.0.0         UG    0      0        0
-enp0s31f6*
-*x.x.x.x         0.0.0.0         255.255.255.255 UH    0      0        0
-enp0s31f6*
-*172.16.1.0      0.0.0.0         255.255.255.0   U     0      0        0
-wg0*
-*192.168.1.0     0.0.0.0         255.255.255.0   U     0      0        0
-virbr0*
-*192.168.2.0     0.0.0.0         255.255.255.0   U     0      0        0
-wg0*
-*192.168.3.0     0.0.0.0         255.255.255.0   U     0      0        0
-wg0*
-*192.168.4.0     0.0.0.0         255.255.255.0   U     0      0        0
-wg0*
-*192.168.5.0     0.0.0.0         255.255.255.0   U     0      0        0
-wg0*
-*192.168.6.0     0.0.0.0         255.255.255.0   U     0      0        0
-wg0*
-*root@host1 ~ #*
+SGkgZXZlcnlvbmUsPGJyPjxicj5JJ3ZlIG5vdGljZWQgdGhhdCB3Zy1xdWljayBjYW5ub3QgaW5p
+dGlhdGUgYSBuZXcgd2lyZWd1YXJkIGNvbm5lY3Rpb24gYmVjYXVzZSBpdCBmYWlscyBpbiB0aGUg
+c3RlcCB3aGVyZSBpdCBwdXNoZXMgRE5TIG5hbWVzZXJ2ZXJzIHRvIHRoZSBzeXN0ZW0gdmlhIHJl
+c29sdmNvbmYgLUEuIFRoZSBpc3N1ZSBoZXJlIGlzIHRoYXQgcmVzb2x2Y29uZiBpc24ndCBzaGlw
+cGVkIHdpdGggVWJ1bnR1IDE4LjA0LCBhbmQgRE5TIGNvbmZpZyBpcyBtYW5hZ2VkIGVpdGhlciBi
+eSBzeXN0ZW1kLXJlc29sdmUgb24gc2VydmVycyBvciBkZXNrdG9wcyBhbmQgYnkgTmV0d29ya01h
+bmFnZXIgb24gZGVza3RvcHMuIDxicj48YnI+SSB0aGluayB0aGF0IHN5c3RlbWQtcmVzb2x2ZSBy
+dW5zIGluZGVwZW5kZW50bHkgZnJvbSBOZXR3b3JrTWFuYWdlciBhbmQgaWYgdGhlIGxhdHRlciBp
+cyB1c2VkIGZvciBuZXR3b3JraW5nIG1hbmFnZW1lbnQsIHRoZSBmb3JtZXIsIGFsc28gcHJvdmlk
+ZXMgRE5TIHJlc29sdXRpb24uIDxicj48YnI+QWxzbywgSSd2ZSBub3RpY2VkIHRoYXQgaW5zdGFs
+bGluZyByZXNvbHZjb25mIG9yIG9wZW5yZXNvbHYgYXMgd2FzIHJlcXVpcmVkIGluIHRoZSBwYXN0
+IGJ5IHRoZSB3aXJlZ3VhcmQgcGFja2FnZSwgY2F1c2VkIEROUyByZXNvbHV0aW9uIHByb2JsZW1z
+IHdpdGggdGhlIGxvY2FsaG9zdCBhbmQgRG9ja2VyIGNvbnRhaW5lcnMuIDxicj48YnI+RGltaXRy
+aXMgTWFyb3VsaWRpczxicj48YnI+UEdQIEtleSBGaW5nZXJwcmludDogMHg5QTNBRjlFMTcwRkM4
+NzBGQTM0MDZEMEE1MDc4OTJBNzhBREVDNzY5PGJyPjxicj5NaW5pTG9jayBJRDogWXR4VXNpa0No
+ajMzUUVhdTVHQWNNekoyVUV3cFRySnJNb2NENHVVR2ROczdY
 
 
-Here is a tracepath with wireguard installed/running.
 
-*root@host1 ~ # tracepath 192.168.2.1*
-* 1?: [LOCALHOST]                      pmtu 1420*
-* 1:  192.168.2.1                                           1.282ms reached*
-* 1:  192.168.2.1                                           1.069ms reached*
-*     Resume: pmtu 1420 hops 1 back 1 *
-*root@host1 ~ # tracepath 192.168.2.143*
-* 1?: [LOCALHOST]                      pmtu 1420*
-* 1:  172.16.1.2                                            0.754ms *
-* 1:  172.16.1.2                                            0.679ms *
-* 2:  no reply*
-* 3:  no reply*
-*^C*
-*root@host1 ~ #*
-
-To reiterate, the wireguard setup is working well, except pinging remote
-guests located on each peer.
-Is there something I am doing wrong? Is wireguard a good solution to my
-network scenario?
-
-Thanks,
-
--Cobin
-
---000000000000fb84a40572d80310
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div style=3D"color:rgb(33,33,33);font-size:13px">Hi Wireg=
-uard Fans,</div><div style=3D"color:rgb(33,33,33);font-size:13px"><br></div=
-><span style=3D"color:rgb(33,33,33);font-size:13px">Here is my wireguard se=
-tup, please see the following:</span><br style=3D"color:rgb(33,33,33);font-=
-size:13px"><a href=3D"https://gist.github.com/cbluth/d5bd1c5746c976fef73fb5=
-ab4e67b355" target=3D"_blank" style=3D"font-size:13px">https://gist.github.=
-com/cbluth/d5bd1c5746c976fef73fb5ab4e67b355</a><br style=3D"color:rgb(33,33=
-,33);font-size:13px"><br style=3D"color:rgb(33,33,33);font-size:13px"><span=
- style=3D"color:rgb(33,33,33);font-size:13px">I have three physical nodes; =
-Host1, Host2, Host3, all of which have a public interface.</span><br style=
-=3D"color:rgb(33,33,33);font-size:13px"><span style=3D"color:rgb(33,33,33);=
-font-size:13px">I would like to protect/encrypt the communications between =
-all the hosts.</span><br style=3D"color:rgb(33,33,33);font-size:13px"><span=
- style=3D"color:rgb(33,33,33);font-size:13px">I have a working setup of IPS=
-ec+vxlan, and I would like to migrate to wireguard.</span><div style=3D"col=
-or:rgb(33,33,33)"><br>Each host runs kvm/libvirtd and hosts a number of vir=
-tual machine guests, each with its own network.<br>Everything in my wiregua=
-rd setup seems to be working well, and it seems quite fast.<br>With this wi=
-reguard configuration, VM guests on Host1, located inside=C2=A0<a href=3D"h=
-ttp://192.168.1.0/24" target=3D"_blank" style=3D"font-size:13px">192.168.1.=
-0/24</a>, can ping guests located on Host2 (<a href=3D"http://192.168.2.0/2=
-4" target=3D"_blank" style=3D"font-size:13px">192.168.2.0/24</a>)=C2=A0and =
-Host3 (<a href=3D"http://192.168.3.0/24" target=3D"_blank" style=3D"font-si=
-ze:13px">192.168.3.0/24</a>), and vice versa.<br><br><div style=3D"font-siz=
-e:13px">The only thing that I cant get to work properly, is that I need to =
-be able to reach any guest from Host1, because Host1 is my bastion entrypoi=
-nt into the network; for example, Host1 itself cannot ping to guests on Hos=
-t2, but guests on Host1 *CAN* ping guests on Host2. I can ping any virbr0 i=
-nterface from any physical host, but I cannot ping the guests behind each v=
-irbr0 in the libvirt network.</div><div style=3D"font-size:13px"><br></div>=
-<div style=3D"font-size:13px">I assume it is an issue with routing, but I a=
-m not sure, and I am hoping that someone can assist me.<br>But one thing th=
-at I have noticed is that the gateway to each peer&#39;s guest network is d=
-ifferent between my vxlan configuration and what wireguard provides.<br><br=
->Here are the working routes when my network is using ipsec+vxlan:<br><br><=
-div><font face=3D"monospace"><b>root@host1 ~ # route -n</b></font></div><di=
-v><font face=3D"monospace"><b>Kernel IP routing table</b></font></div><div>=
-<font face=3D"monospace"><b>Destination=C2=A0 =C2=A0 =C2=A0Gateway=C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0Genmask=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Flags M=
-etric Ref=C2=A0 =C2=A0 Use Iface</b></font></div><div><font face=3D"monospa=
-ce"><b>0.0.0.0=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0x.x.x.x=C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A00.0.0.0=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0UG=C2=A0 =C2=A0 0=C2=
-=A0 =C2=A0 =C2=A0 0=C2=A0 =C2=A0 =C2=A0 =C2=A0 0 enp0s31f6</b></font></div>=
-<div><font face=3D"monospace"><b>x.x.x.x=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A00=
-.0.0.0=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0255.255.255.255 UH=C2=A0 =C2=A0 0=
-=C2=A0 =C2=A0 =C2=A0 0=C2=A0 =C2=A0 =C2=A0 =C2=A0 0 enp0s31f6</b></font></d=
-iv><div><font face=3D"monospace"><b>172.16.1.0=C2=A0 =C2=A0 =C2=A0 0.0.0.0=
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0255.255.255.0=C2=A0 =C2=A0U=C2=A0 =C2=A0 =
-=C2=A00=C2=A0 =C2=A0 =C2=A0 0=C2=A0 =C2=A0 =C2=A0 =C2=A0 0 vxlan0</b></font=
-></div><div><font face=3D"monospace"><b>192.168.1.0=C2=A0 =C2=A0 =C2=A00.0.=
-0.0=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0255.255.255.0=C2=A0 =C2=A0U=C2=A0 =C2=
-=A0 =C2=A00=C2=A0 =C2=A0 =C2=A0 0=C2=A0 =C2=A0 =C2=A0 =C2=A0 0 virbr0</b></=
-font></div><div><font face=3D"monospace"><b>192.168.2.0=C2=A0 =C2=A0 =C2=A0=
-172.16.1.2=C2=A0 =C2=A0 =C2=A0 255.255.255.0=C2=A0 =C2=A0UG=C2=A0 =C2=A0 0=
-=C2=A0 =C2=A0 =C2=A0 0=C2=A0 =C2=A0 =C2=A0 =C2=A0 0 vxlan0</b></font></div>=
-<div><font face=3D"monospace"><b>192.168.3.0=C2=A0 =C2=A0 =C2=A0172.16.1.3=
-=C2=A0 =C2=A0 =C2=A0 255.255.255.0=C2=A0 =C2=A0UG=C2=A0 =C2=A0 0=C2=A0 =C2=
-=A0 =C2=A0 0=C2=A0 =C2=A0 =C2=A0 =C2=A0 0 vxlan0</b></font></div><div><font=
- face=3D"monospace"><b>192.168.4.0=C2=A0 =C2=A0 =C2=A0172.16.1.4=C2=A0 =C2=
-=A0 =C2=A0 255.255.255.0=C2=A0 =C2=A0UG=C2=A0 =C2=A0 0=C2=A0 =C2=A0 =C2=A0 =
-0=C2=A0 =C2=A0 =C2=A0 =C2=A0 0 vxlan0</b></font></div><div><font face=3D"mo=
-nospace"><b>192.168.5.0=C2=A0 =C2=A0 =C2=A0172.16.1.5=C2=A0 =C2=A0 =C2=A0 2=
-55.255.255.0=C2=A0 =C2=A0UG=C2=A0 =C2=A0 0=C2=A0 =C2=A0 =C2=A0 0=C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 0 vxlan0</b></font></div><div><font face=3D"monospace"><b=
->192.168.6.0=C2=A0 =C2=A0 =C2=A0172.16.0.6=C2=A0 =C2=A0 =C2=A0 255.255.255.=
-0=C2=A0 =C2=A0UG=C2=A0 =C2=A0 0=C2=A0 =C2=A0 =C2=A0 0=C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 0 vxlan0</b></font></div><div><font face=3D"monospace"><b>root@host1=
- ~ #=C2=A0</b></font></div></div><div style=3D"font-size:13px"><br><br>Here=
- are the routes after bringing up wireguard:<br><br><div><b><font face=3D"m=
-onospace">root@host1 ~ # route -n</font></b></div><div><b><font face=3D"mon=
-ospace">Kernel IP routing table</font></b></div><div><b><font face=3D"monos=
-pace">Destination=C2=A0 =C2=A0 =C2=A0Gateway=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0Genmask=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Flags Metric Ref=C2=A0 =C2=A0 U=
-se Iface</font></b></div><div><b><font face=3D"monospace">0.0.0.0=C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0x.x.x.x=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A00.0.0.0=C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0UG=C2=A0 =C2=A0 0=C2=A0 =C2=A0 =C2=A0 0=C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 0 enp0s31f6</font></b></div><div><b><font face=3D"=
-monospace">x.x.x.x=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A00.0.0.0=C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0255.255.255.255 UH=C2=A0 =C2=A0 0=C2=A0 =C2=A0 =C2=A0 0=
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 0 enp0s31f6</font></b></div><div><b><font face=
-=3D"monospace">172.16.1.0=C2=A0 =C2=A0 =C2=A0 0.0.0.0=C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0255.255.255.0=C2=A0 =C2=A0U=C2=A0 =C2=A0 =C2=A00=C2=A0 =C2=A0 =
-=C2=A0 0=C2=A0 =C2=A0 =C2=A0 =C2=A0 0 wg0</font></b></div><div><b><font fac=
-e=3D"monospace">192.168.1.0=C2=A0 =C2=A0 =C2=A00.0.0.0=C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0255.255.255.0=C2=A0 =C2=A0U=C2=A0 =C2=A0 =C2=A00=C2=A0 =C2=A0 =
-=C2=A0 0=C2=A0 =C2=A0 =C2=A0 =C2=A0 0 virbr0</font></b></div><div><b><font =
-face=3D"monospace">192.168.2.0=C2=A0 =C2=A0 =C2=A00.0.0.0=C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0255.255.255.0=C2=A0 =C2=A0U=C2=A0 =C2=A0 =C2=A00=C2=A0 =C2=
-=A0 =C2=A0 0=C2=A0 =C2=A0 =C2=A0 =C2=A0 0 wg0</font></b></div><div><b><font=
- face=3D"monospace">192.168.3.0=C2=A0 =C2=A0 =C2=A00.0.0.0=C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0255.255.255.0=C2=A0 =C2=A0U=C2=A0 =C2=A0 =C2=A00=C2=A0 =C2=
-=A0 =C2=A0 0=C2=A0 =C2=A0 =C2=A0 =C2=A0 0 wg0</font></b></div><div><b><font=
- face=3D"monospace">192.168.4.0=C2=A0 =C2=A0 =C2=A00.0.0.0=C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0255.255.255.0=C2=A0 =C2=A0U=C2=A0 =C2=A0 =C2=A00=C2=A0 =C2=
-=A0 =C2=A0 0=C2=A0 =C2=A0 =C2=A0 =C2=A0 0 wg0</font></b></div><div><b><font=
- face=3D"monospace">192.168.5.0=C2=A0 =C2=A0 =C2=A00.0.0.0=C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0255.255.255.0=C2=A0 =C2=A0U=C2=A0 =C2=A0 =C2=A00=C2=A0 =C2=
-=A0 =C2=A0 0=C2=A0 =C2=A0 =C2=A0 =C2=A0 0 wg0</font></b></div><div><b><font=
- face=3D"monospace">192.168.6.0=C2=A0 =C2=A0 =C2=A00.0.0.0=C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0255.255.255.0=C2=A0 =C2=A0U=C2=A0 =C2=A0 =C2=A00=C2=A0 =C2=
-=A0 =C2=A0 0=C2=A0 =C2=A0 =C2=A0 =C2=A0 0 wg0</font></b></div><div><b><font=
- face=3D"monospace">root@host1 ~ #</font></b></div></div><div style=3D"font=
--size:13px"><br><br>Here is a tracepath with wireguard installed/running.<b=
-r><br><div><b><font face=3D"monospace">root@host1 ~ # tracepath 192.168.2.1=
-</font></b></div><div><b><font face=3D"monospace">=C2=A01?: [LOCALHOST]=C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 p=
-mtu 1420</font></b></div><div><b><font face=3D"monospace">=C2=A01:=C2=A0 19=
-2.168.2.1=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A01.282ms reached</font></b></div><div><b><font face=3D"monospac=
-e">=C2=A01:=C2=A0 192.168.2.1=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A01.069ms reached</font></b></div><div><b><=
-font face=3D"monospace">=C2=A0 =C2=A0 =C2=A0Resume: pmtu 1420 hops 1 back 1=
-=C2=A0</font></b></div><div><b><font face=3D"monospace">root@host1 ~ # trac=
-epath 192.168.2.143</font></b></div><div><b><font face=3D"monospace">=C2=A0=
-1?: [LOCALHOST]=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 pmtu 1420</font></b></div><div><b><font face=3D"monospace=
-">=C2=A01:=C2=A0 172.16.1.2=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 0.754ms=C2=A0</font></b></div><div><b><font=
- face=3D"monospace">=C2=A01:=C2=A0 172.16.1.2=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 0.679ms=C2=A0</font></=
-b></div><div><b><font face=3D"monospace">=C2=A02:=C2=A0 no reply</font></b>=
-</div><div><b><font face=3D"monospace">=C2=A03:=C2=A0 no reply</font></b></=
-div><div><b><font face=3D"monospace">^C</font></b></div><div><b><font face=
-=3D"monospace">root@host1 ~ #</font></b></div><br>To reiterate, the wiregua=
-rd setup is working well, except pinging remote guests located on each peer=
-.<br>Is there something I am doing wrong? Is wireguard a good solution to m=
-y network scenario?</div><div style=3D"font-size:13px"><br></div><div style=
-=3D"font-size:13px">Thanks,</div><div style=3D"font-size:13px"><br></div><d=
-iv style=3D"">-Cobin</div><div style=3D""><br></div><div style=3D""><br></d=
-iv></div></div>
-
---000000000000fb84a40572d80310--
+--b1_533f90dfe819c1d970a1927322d94fc5--
