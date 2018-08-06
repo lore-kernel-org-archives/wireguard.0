@@ -1,20 +1,21 @@
-Return-Path: dmaroulidis@dimitrismaroulidis.com
+Return-Path: grinapo@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d3e779d7
- for <wireguard@lists.zx2c4.com>; Mon, 6 Aug 2018 11:25:51 +0000 (UTC)
-Received: from mail-40132.protonmail.ch (mail-40132.protonmail.ch
- [185.70.40.132])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b614e7dc
- for <wireguard@lists.zx2c4.com>; Mon, 6 Aug 2018 11:25:51 +0000 (UTC)
-Date: Mon, 06 Aug 2018 11:36:29 +0000
-To: wireguard <wireguard@lists.zx2c4.com>
-From: Dimitris Maroulidis <dmaroulidis@dimitrismaroulidis.com>
-Subject: wg-quick on Ubuntu 18.04 LTS - resolvconf not available
-Message-ID: <WsBaWBF1nQ303SujTkOr2f1Yh2IYWjruNQDQCZfH34vg0YGpTIfAQ2O4x-6Yj1vsidG7pCaWXx7WYykdo_9J8qh-I5ropI0Kiwq0creV3qg=@dimitrismaroulidis.com>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c78f0231
+ for <wireguard@lists.zx2c4.com>; Mon, 6 Aug 2018 15:27:54 +0000 (UTC)
+Received: from mail-it0-x233.google.com (mail-it0-x233.google.com
+ [IPv6:2607:f8b0:4001:c0b::233])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 01c00e30
+ for <wireguard@lists.zx2c4.com>; Mon, 6 Aug 2018 15:27:54 +0000 (UTC)
+Received: by mail-it0-x233.google.com with SMTP id s7-v6so17994741itb.4
+ for <wireguard@lists.zx2c4.com>; Mon, 06 Aug 2018 08:38:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="b1_533f90dfe819c1d970a1927322d94fc5"
-Reply-To: Dimitris Maroulidis <dmaroulidis@dimitrismaroulidis.com>
+Sender: grinapo@gmail.com
+From: Peter Gervai <grin@grin.hu>
+Date: Mon, 6 Aug 2018 17:38:24 +0200
+Message-ID: <CAAWNVq8Cpsqyd66fObKNDYsK9sDE8b1YhEYaz-ZFTujvYeqOcw@mail.gmail.com>
+Subject: android: handling ipv6 literals
+To: wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -24,50 +25,14 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-This is a multi-part message in MIME format.
+Hello,
 
---b1_533f90dfe819c1d970a1927322d94fc5
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+Andoid client mess up ipv6 literals: input accept the - correct -
+[1234:5678::1]:12345 format, but on the next edit the field gets
+transformed to 1234:5678::1:12345 which obviously won't quite work.
 
-SGkgZXZlcnlvbmUsCgpJJ3ZlIG5vdGljZWQgdGhhdCB3Zy1xdWljayBjYW5ub3QgaW5pdGlhdGUg
-YSBuZXcgd2lyZWd1YXJkIGNvbm5lY3Rpb24gYmVjYXVzZSBpdCBmYWlscyBpbiB0aGUgc3RlcCB3
-aGVyZSBpdCBwdXNoZXMgRE5TIG5hbWVzZXJ2ZXJzIHRvIHRoZSBzeXN0ZW0gdmlhIHJlc29sdmNv
-bmYgLUEuIFRoZSBpc3N1ZSBoZXJlIGlzIHRoYXQgcmVzb2x2Y29uZiBpc24ndCBzaGlwcGVkIHdp
-dGggVWJ1bnR1IDE4LjA0LCBhbmQgRE5TIGNvbmZpZyBpcyBtYW5hZ2VkIGVpdGhlciBieSBzeXN0
-ZW1kLXJlc29sdmUgb24gc2VydmVycyBvciBkZXNrdG9wcyBhbmQgYnkgTmV0d29ya01hbmFnZXIg
-b24gZGVza3RvcHMuCgpJIHRoaW5rIHRoYXQgc3lzdGVtZC1yZXNvbHZlIHJ1bnMgaW5kZXBlbmRl
-bnRseSBmcm9tIE5ldHdvcmtNYW5hZ2VyIGFuZCBpZiB0aGUgbGF0dGVyIGlzIHVzZWQgZm9yIG5l
-dHdvcmtpbmcgbWFuYWdlbWVudCwgdGhlIGZvcm1lciwgYWxzbyBwcm92aWRlcyBETlMgcmVzb2x1
-dGlvbi4KCkFsc28sIEkndmUgbm90aWNlZCB0aGF0IGluc3RhbGxpbmcgcmVzb2x2Y29uZiBvciBv
-cGVucmVzb2x2IGFzIHdhcyByZXF1aXJlZCBpbiB0aGUgcGFzdCBieSB0aGUgd2lyZWd1YXJkIHBh
-Y2thZ2UsIGNhdXNlZCBETlMgcmVzb2x1dGlvbiBwcm9ibGVtcyB3aXRoIHRoZSBsb2NhbGhvc3Qg
-YW5kIERvY2tlciBjb250YWluZXJzLgoKRGltaXRyaXMgTWFyb3VsaWRpcwoKUEdQIEtleSBGaW5n
-ZXJwcmludDogMHg5QTNBRjlFMTcwRkM4NzBGQTM0MDZEMEE1MDc4OTJBNzhBREVDNzY5CgpNaW5p
-TG9jayBJRDogWXR4VXNpa0NoajMzUUVhdTVHQWNNekoyVUV3cFRySnJNb2NENHVVR2ROczdY
+A sidenote: pinging from the client could be useful (I have network
+tools installed, but without it it's hard to tell what's going on).
 
 
---b1_533f90dfe819c1d970a1927322d94fc5
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: base64
-
-SGkgZXZlcnlvbmUsPGJyPjxicj5JJ3ZlIG5vdGljZWQgdGhhdCB3Zy1xdWljayBjYW5ub3QgaW5p
-dGlhdGUgYSBuZXcgd2lyZWd1YXJkIGNvbm5lY3Rpb24gYmVjYXVzZSBpdCBmYWlscyBpbiB0aGUg
-c3RlcCB3aGVyZSBpdCBwdXNoZXMgRE5TIG5hbWVzZXJ2ZXJzIHRvIHRoZSBzeXN0ZW0gdmlhIHJl
-c29sdmNvbmYgLUEuIFRoZSBpc3N1ZSBoZXJlIGlzIHRoYXQgcmVzb2x2Y29uZiBpc24ndCBzaGlw
-cGVkIHdpdGggVWJ1bnR1IDE4LjA0LCBhbmQgRE5TIGNvbmZpZyBpcyBtYW5hZ2VkIGVpdGhlciBi
-eSBzeXN0ZW1kLXJlc29sdmUgb24gc2VydmVycyBvciBkZXNrdG9wcyBhbmQgYnkgTmV0d29ya01h
-bmFnZXIgb24gZGVza3RvcHMuIDxicj48YnI+SSB0aGluayB0aGF0IHN5c3RlbWQtcmVzb2x2ZSBy
-dW5zIGluZGVwZW5kZW50bHkgZnJvbSBOZXR3b3JrTWFuYWdlciBhbmQgaWYgdGhlIGxhdHRlciBp
-cyB1c2VkIGZvciBuZXR3b3JraW5nIG1hbmFnZW1lbnQsIHRoZSBmb3JtZXIsIGFsc28gcHJvdmlk
-ZXMgRE5TIHJlc29sdXRpb24uIDxicj48YnI+QWxzbywgSSd2ZSBub3RpY2VkIHRoYXQgaW5zdGFs
-bGluZyByZXNvbHZjb25mIG9yIG9wZW5yZXNvbHYgYXMgd2FzIHJlcXVpcmVkIGluIHRoZSBwYXN0
-IGJ5IHRoZSB3aXJlZ3VhcmQgcGFja2FnZSwgY2F1c2VkIEROUyByZXNvbHV0aW9uIHByb2JsZW1z
-IHdpdGggdGhlIGxvY2FsaG9zdCBhbmQgRG9ja2VyIGNvbnRhaW5lcnMuIDxicj48YnI+RGltaXRy
-aXMgTWFyb3VsaWRpczxicj48YnI+UEdQIEtleSBGaW5nZXJwcmludDogMHg5QTNBRjlFMTcwRkM4
-NzBGQTM0MDZEMEE1MDc4OTJBNzhBREVDNzY5PGJyPjxicj5NaW5pTG9jayBJRDogWXR4VXNpa0No
-ajMzUUVhdTVHQWNNekoyVUV3cFRySnJNb2NENHVVR2ROczdY
-
-
-
---b1_533f90dfe819c1d970a1927322d94fc5--
+Peter
