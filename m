@@ -1,29 +1,29 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: mdlayher@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e0243de8
- for <wireguard@lists.zx2c4.com>; Sat, 4 Aug 2018 22:31:18 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 65cf1a6f
- for <wireguard@lists.zx2c4.com>; Sat, 4 Aug 2018 22:31:18 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5b28f784
- for <wireguard@lists.zx2c4.com>; Sat, 4 Aug 2018 22:30:04 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 3d14a03d
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>; Sat, 4 Aug 2018 22:30:04 +0000 (UTC)
-Received: by mail-oi0-f49.google.com with SMTP id y207-v6so15963021oie.13
- for <wireguard@lists.zx2c4.com>; Sat, 04 Aug 2018 15:41:56 -0700 (PDT)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9e78887a
+ for <wireguard@lists.zx2c4.com>; Tue, 7 Aug 2018 18:05:51 +0000 (UTC)
+Received: from mail-io0-x243.google.com (mail-io0-x243.google.com
+ [IPv6:2607:f8b0:4001:c06::243])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5cf74000
+ for <wireguard@lists.zx2c4.com>; Tue, 7 Aug 2018 18:05:51 +0000 (UTC)
+Received: by mail-io0-x243.google.com with SMTP id i18-v6so14761570ioj.13
+ for <wireguard@lists.zx2c4.com>; Tue, 07 Aug 2018 11:16:52 -0700 (PDT)
+Return-Path: <mdlayher@gmail.com>
+Received: from ?IPv6:2600:6c4a:787f:d200:ec44:1bb4:3e36:7af8?
+ (2600-6c4a-787f-d200-ec44-1bb4-3e36-7af8.dhcp6.chtrptr.net.
+ [2600:6c4a:787f:d200:ec44:1bb4:3e36:7af8])
+ by smtp.gmail.com with ESMTPSA id o67-v6sm771211iod.66.2018.08.07.11.16.50
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Tue, 07 Aug 2018 11:16:50 -0700 (PDT)
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: Matt Layher <mdlayher@gmail.com>
+Subject: wireguardctrl: Go package that enables control of WireGuard devices
+ on multiple platforms
+Message-ID: <e0d214b0-d1b4-4708-7e91-989060fcaf97@gmail.com>
+Date: Tue, 7 Aug 2018 14:16:49 -0400
 MIME-Version: 1.0
-References: <55706f46-74db-9dfb-6cc7-93ce40f0d5c5@mib-infotech.co.nz>
- <CAHmME9p-GMKAt-c=w4HdRMEDE0RbY6ok84uSCdQ6pqmD6_DyCA@mail.gmail.com>
- <1a96593c-5954-ee6a-7f74-3ed34302735b@mib-infotech.co.nz>
-In-Reply-To: <1a96593c-5954-ee6a-7f74-3ed34302735b@mib-infotech.co.nz>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sun, 5 Aug 2018 00:41:45 +0200
-Message-ID: <CAHmME9rcUMnhhC+gLox4XOXccRhoaCEwi2B5i5GCZkR=-U1f=A@mail.gmail.com>
-Subject: Re: package seems to have lost netifrc script
-To: John Huttley <john@mib-infotech.co.nz>
-Content-Type: text/plain; charset="UTF-8"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -33,12 +33,34 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Sun, Aug 5, 2018 at 12:16 AM John Huttley <john@mib-infotech.co.nz> wrote:
->
-> I'm running default  stable netifrc-0.5.1. I guess this is in the 0.6.X
-> series.. (~amd64)
->
-> I'll keep running stable thanks and copy the script as required.
+Hi all,
 
-WireGuard is also in ~, by the way. But sure copying works. Also, I
-just opened https://bugs.gentoo.org/662808 for you.
+It's been a couple of weeks since my previous thread, so I wanted to 
+follow up with a new one now that my Go package has a new name and an 
+extended scope:
+
+https://github.com/mdlayher/wireguardctrl
+
+wireguardctrl is a Go package that abstracts away the WireGuard kernel, 
+userspace, and any future OS-specific interfaces.
+
+At this point, I've got all of the device and peer retrieval 
+functionality done, but I still need to implement device peer 
+configuration for both the kernel and userspace interfaces.  There are a 
+couple issues open around this topic.
+
+I think this package is at a point where I'd feel comfortable having 
+folks try it out and see what happens.  I've got some integration tests 
+hooked up in Travis CI for both the kernel and userspace modules, and it 
+seems to work well!  My next plan is to consider building some kind of 
+one-shot utility for setting up a tunnel by running a small program on 
+two machines.
+
+Thanks for your time, and feel free to reach out here or on IRC for any 
+questions.
+
+- Matt Layher
+
+PS: Jason, if you do end up making a language bindings page for the 
+website, I'd still like this package to be listed there!  I also found 
+the beginnings of a Python library today: https://github.com/apognu/wgctl.
