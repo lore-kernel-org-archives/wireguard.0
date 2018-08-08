@@ -1,27 +1,26 @@
 Return-Path: mdlayher@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9e78887a
- for <wireguard@lists.zx2c4.com>; Tue, 7 Aug 2018 18:05:51 +0000 (UTC)
-Received: from mail-io0-x243.google.com (mail-io0-x243.google.com
- [IPv6:2607:f8b0:4001:c06::243])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5cf74000
- for <wireguard@lists.zx2c4.com>; Tue, 7 Aug 2018 18:05:51 +0000 (UTC)
-Received: by mail-io0-x243.google.com with SMTP id i18-v6so14761570ioj.13
- for <wireguard@lists.zx2c4.com>; Tue, 07 Aug 2018 11:16:52 -0700 (PDT)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d7532169
+ for <wireguard@lists.zx2c4.com>; Wed, 8 Aug 2018 19:25:51 +0000 (UTC)
+Received: from mail-qt0-x22a.google.com (mail-qt0-x22a.google.com
+ [IPv6:2607:f8b0:400d:c0d::22a])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 45567946
+ for <wireguard@lists.zx2c4.com>; Wed, 8 Aug 2018 19:25:51 +0000 (UTC)
+Received: by mail-qt0-x22a.google.com with SMTP id d4-v6so3786968qtn.13
+ for <wireguard@lists.zx2c4.com>; Wed, 08 Aug 2018 12:37:00 -0700 (PDT)
 Return-Path: <mdlayher@gmail.com>
-Received: from ?IPv6:2600:6c4a:787f:d200:ec44:1bb4:3e36:7af8?
- (2600-6c4a-787f-d200-ec44-1bb4-3e36-7af8.dhcp6.chtrptr.net.
- [2600:6c4a:787f:d200:ec44:1bb4:3e36:7af8])
- by smtp.gmail.com with ESMTPSA id o67-v6sm771211iod.66.2018.08.07.11.16.50
+Received: from ?IPv6:2600:6c4a:787f:d200:415f:a489:a6c9:915b?
+ (2600-6c4a-787f-d200-415f-a489-a6c9-915b.dhcp6.chtrptr.net.
+ [2600:6c4a:787f:d200:415f:a489:a6c9:915b])
+ by smtp.gmail.com with ESMTPSA id f70-v6sm3166515qke.77.2018.08.08.12.36.58
  for <wireguard@lists.zx2c4.com>
  (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 07 Aug 2018 11:16:50 -0700 (PDT)
+ Wed, 08 Aug 2018 12:36:58 -0700 (PDT)
 To: WireGuard mailing list <wireguard@lists.zx2c4.com>
 From: Matt Layher <mdlayher@gmail.com>
-Subject: wireguardctrl: Go package that enables control of WireGuard devices
- on multiple platforms
-Message-ID: <e0d214b0-d1b4-4708-7e91-989060fcaf97@gmail.com>
-Date: Tue, 7 Aug 2018 14:16:49 -0400
+Subject: Kernel module sends infinite netlink messages on v0.0.20180802
+Message-ID: <8b63f0e3-3f0f-d028-59de-5eb08af2e26a@gmail.com>
+Date: Wed, 8 Aug 2018 15:36:57 -0400
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8; format=flowed
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
@@ -35,32 +34,92 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 
 Hi all,
 
-It's been a couple of weeks since my previous thread, so I wanted to 
-follow up with a new one now that my Go package has a new name and an 
-extended scope:
+While working on wireguardctrl, I found what I believe to be a bug with 
+the kernel module today.  I'm using v0.0.20180802.  At first I assumed 
+that my code was doing something wrong, but I'm able to make "wg show" 
+hang forever as well, so I believe this to be a problem with the kernel 
+module itself.
 
-https://github.com/mdlayher/wireguardctrl
+System information:
 
-wireguardctrl is a Go package that abstracts away the WireGuard kernel, 
-userspace, and any future OS-specific interfaces.
+matt@nerr-2:~$ dmesg | grep wireguard
+[ 1075.085912] wireguard: module verification failed: signature and/or 
+required key missing - tainting kernel
+[ 1075.086235] wireguard: WireGuard 0.0.20180802 loaded. See 
+www.wireguard.com for information.
+[ 1075.086235] wireguard: Copyright (C) 2015-2018 Jason A. Donenfeld 
+<Jason@zx2c4.com>. All Rights Reserved.
 
-At this point, I've got all of the device and peer retrieval 
-functionality done, but I still need to implement device peer 
-configuration for both the kernel and userspace interfaces.  There are a 
-couple issues open around this topic.
+matt@nerr-2:~$ uname -a
+Linux nerr-2 4.15.0-30-generic #32-Ubuntu SMP Thu Jul 26 17:42:43 UTC 
+2018 x86_64 x86_64 x86_64 GNU/Linux
 
-I think this package is at a point where I'd feel comfortable having 
-folks try it out and see what happens.  I've got some integration tests 
-hooked up in Travis CI for both the kernel and userspace modules, and it 
-seems to work well!  My next plan is to consider building some kind of 
-one-shot utility for setting up a tunnel by running a small program on 
-two machines.
+Here are the steps to reproduce the issue:
 
-Thanks for your time, and feel free to reach out here or on IRC for any 
-questions.
+Grab my "wgnlbug" Go source program and build it: 
+https://github.com/mdlayher/wireguardctrl/blob/master/cmd/wgnlbug/main.go
+
+$ go install github.com/mdlayher/wireguardctrl/cmd/wgnlbug
+
+Reset wg0 to a clean state:
+
+$ sudo ip link del dev wg0 && sudo ip link add dev wg0 type wireguard
+
+Attempt to add multiple peers with 511 addresses each (the actual CIDR 
+is hard-coded for both and doesn't seem to matter).  Note that you have 
+to Ctrl+C the program or it'll hang forever.
+
+$ sudo time ./bin/wgnlbug -n 2
+before: wg0
+^CCommand terminated by signal 2
+1.29user 2.62system 0:02.74elapsed 142%CPU (0avgtext+0avgdata 
+385236maxresident)k
+0inputs+0outputs (0major+98292minor)pagefaults 0swaps
+
+At this point, "wg show" appears to hang forever until something sends 
+it a KILL (kernel maybe?) as well:
+
+$ sudo time wg show
+Command terminated by signal 9
+20.88user 40.39system 1:03.31elapsed 96%CPU (0avgtext+0avgdata 
+12233204maxresident)k
+16128inputs+0outputs (92major+3058349minor)pagefaults 0swaps
+
+A look at strace reveals what appears to be an infinite stream of 
+multi-part netlink messages with identical sequence numbers:
+
+$ sudo strace wg show
+...
+recvmsg(3, {msg_name={sa_family=AF_NETLINK, nl_pid=0, 
+nl_groups=00000000}, msg_namelen=12, msg_iov=[{iov_base={{len=4072, 
+type=wireguard, flags=NLM_F_MULTI, seq=1533756618, pid=946}, 
+"\x00\x01\x00\x00\x06\x00\x06\x00\x00\x00\x00\x00\x08\x00\x07\x00\x00\x00\x00\x00\x08\x00\x01\x00\x81\x00\x00\x00\x08\x00\x02\x00"...}, 
+iov_len=4096}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 4072
+recvmsg(3, {msg_name={sa_family=AF_NETLINK, nl_pid=0, 
+nl_groups=00000000}, msg_namelen=12, msg_iov=[{iov_base={{len=4068, 
+type=wireguard, flags=NLM_F_MULTI, seq=1533756618, pid=946}, 
+"\x00\x01\x00\x00\xd0\x0f\x08\x00\xcc\x0f\x00\x00\x24\x00\x01\x00\xc6\x24\x8a\x34\xcc\x3c\x4a\x23\x00\xd4\x94\x8d\xec\x58\xc6\x7c"...}, 
+iov_len=4096}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 4068
+recvmsg(3, {msg_name={sa_family=AF_NETLINK, nl_pid=0, 
+nl_groups=00000000}, msg_namelen=12, msg_iov=[{iov_base={{len=4072, 
+type=wireguard, flags=NLM_F_MULTI, seq=1533756618, pid=946}, 
+"\x00\x01\x00\x00\x06\x00\x06\x00\x00\x00\x00\x00\x08\x00\x07\x00\x00\x00\x00\x00\x08\x00\x01\x00\x81\x00\x00\x00\x08\x00\x02\x00"...}, 
+iov_len=4096}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 4072
+recvmsg(3, {msg_name={sa_family=AF_NETLINK, nl_pid=0, 
+nl_groups=00000000}, msg_namelen=12, msg_iov=[{iov_base={{len=4068, 
+type=wireguard, flags=NLM_F_MULTI, seq=1533756618, pid=946}, 
+"\x00\x01\x00\x00\xd0\x0f\x08\x00\xcc\x0f\x00\x00\x24\x00\x01\x00\xc6\x24\x8a\x34\xcc\x3c\x4a\x23\x00\xd4\x94\x8d\xec\x58\xc6\x7c"...}, 
+iov_len=4096}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 4068
+recvmsg(3, ^C{msg_name={sa_family=AF_NETLINK, nl_pid=0, 
+nl_groups=00000000}, msg_namelen=12, msg_iov=[{iov_base={{len=4072, 
+type=wireguard, flags=NLM_F_MULTI, seq=1533756618, pid=946}, 
+"\x00\x01\x00\x00\x06\x00\x06\x00\x00\x00\x00\x00\x08\x00\x07\x00\x00\x00\x00\x00\x08\x00\x01\x00\x81\x00\x00\x00\x08\x00\x02\x00"...}, 
+iov_len=4096}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 4072
+--- SIGINT {si_signo=SIGINT, si_code=SI_KERNEL} ---
+strace: Process 946 detached
+
+Hope this is helpful.  If it isn't a kernel module problem, I'd be 
+curious to see what both my code and "wg" are doing that causes this.  
+It seems to be reproducible 100% of the time on my system.
 
 - Matt Layher
-
-PS: Jason, if you do end up making a language bindings page for the 
-website, I'd still like this package to be listed there!  I also found 
-the beginnings of a Python library today: https://github.com/apognu/wgctl.
