@@ -1,25 +1,26 @@
-Return-Path: em12345@web.de
+Return-Path: monsoon.cl@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c8a6fa61
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c0b66661
  for <wireguard@lists.zx2c4.com>;
- Fri, 10 Aug 2018 20:04:25 +0000 (UTC)
-Received: from mout.web.de (mout.web.de [212.227.15.3])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 93498b05
+ Fri, 10 Aug 2018 09:37:53 +0000 (UTC)
+Received: from mail-qk0-x229.google.com (mail-qk0-x229.google.com
+ [IPv6:2607:f8b0:400d:c09::229])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dff43490
  for <wireguard@lists.zx2c4.com>;
- Fri, 10 Aug 2018 20:04:24 +0000 (UTC)
-Received: from [10.44.44.64] ([178.21.50.57]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LpQjF-1gQIOP0mJx-00fF9t for
- <wireguard@lists.zx2c4.com>; Fri, 10 Aug 2018 22:15:48 +0200
-Subject: Re: Reflections on WireGuard Design Goals
-To: wireguard@lists.zx2c4.com
-References: <mailman.1318.1533866648.2201.wireguard@lists.zx2c4.com>
- <b66a15d1-c4f1-78a5-cf5a-4d2a4ca9ce54@pobox.com>
-From: em12345 <em12345@web.de>
-Message-ID: <1635651d-7119-8ffb-a829-617dc9b9bb0d@web.de>
-Date: Fri, 10 Aug 2018 22:15:44 +0200
+ Fri, 10 Aug 2018 09:37:53 +0000 (UTC)
+Received: by mail-qk0-x229.google.com with SMTP id n85-v6so5963574qke.8
+ for <wireguard@lists.zx2c4.com>; Fri, 10 Aug 2018 02:49:14 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <b66a15d1-c4f1-78a5-cf5a-4d2a4ca9ce54@pobox.com>
-Content-Type: text/plain; charset=utf-8
+References: <CAPyEcbmfaLgZ0z=9CKgYapQEzohovw9RxkEX3MKRhhXUawD+FA@mail.gmail.com>
+ <CAHmME9prEhVK7TBqsAB=Wb0w-VcoCSw0TS9O0RD-QKdNXnxmFQ@mail.gmail.com>
+In-Reply-To: <CAHmME9prEhVK7TBqsAB=Wb0w-VcoCSw0TS9O0RD-QKdNXnxmFQ@mail.gmail.com>
+From: Lejia Chen <monsoon.cl@gmail.com>
+Date: Fri, 10 Aug 2018 18:49:02 +0900
+Message-ID: <CAPyEcbn+7fzPNb6gKzjPXO2YLHJzC5KgM16ZSp8Ax-LqMefxPg@mail.gmail.com>
+Subject: Re: Fedora package: missing the make dependency
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Content-Type: multipart/alternative; boundary="00000000000007135e057311a872"
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -29,34 +30,36 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi,
+--00000000000007135e057311a872
+Content-Type: text/plain; charset="UTF-8"
 
-> From my point of view, the only thing which makes me uncomfortable about
-> wireguard is the lack of any second authentication factor. Your private
-> key is embedded in a plaintext file in your device (e.g. laptop), not
-> even protected with a passphrase.
+I am sure I am using Fedora Server 28 (not rawhide).
+I installed a same version (Fedora Server 28 x64, with the default software
+selection) on VirtualBox just now, updated all dependencies (sudo dnf
+update), and then installed Wireguard. Same problem occurred.
 
-Most VPN authentications are just authorizing the machine and not the
-user sitting in front of that machine.
+On Fri, Aug 10, 2018 at 10:17 AM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
 
-> Anyone who gains access to that
-> laptop is able to establish wireguard connections.
+> That's pretty strange. Are you using rawhide or something where maybe
+> they've temporarily broken the devel packages?
 >
-> Of course, it can be argued that the laptop holds other information
-> which is more valuable that the wireguard key, therefore you should
-> concentrate on properly securing the laptop itself (*). Furthermore,
 
-No matter how much keys, passwords or tokens have to be entered by the
-user sitting in front of that machine, any other user already on that
-machine, will gain sooner or later access to the tunnel. This user or
-attacker doesn't even need to see/know wireguard's private key nor does
-the attacker need root access. Think of a second user logged in on that
-machine.
+--00000000000007135e057311a872
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-It is definitely a bad idea to assume that the tunnel traffic of one
-"client" (in terms of wg's client key pair) comes from a specific user.
-Which also means that even multi factor VPN authentication still require
-all services inside the tunnel to ask for user authentication.
+<div dir=3D"ltr"><div><span style=3D"font-size:13px">I am sure I am using F=
+edora Server 28 (not rawhide).</span></div><div><span style=3D"font-size:13=
+px">I installed a same version (Fedora Server 28 x64, with the default=C2=
+=A0software selection)=C2=A0on VirtualBox just now, updated all dependencie=
+s (sudo dnf update), and then installed Wireguard. Same problem occurred.</=
+span></div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr">On Fri, Au=
+g 10, 2018 at 10:17 AM Jason A. Donenfeld &lt;<a href=3D"mailto:Jason@zx2c4=
+.com">Jason@zx2c4.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_qu=
+ote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex=
+">That&#39;s pretty strange. Are you using rawhide or something where maybe=
+<br>
+they&#39;ve temporarily broken the devel packages?<br>
+</blockquote></div>
 
-
-Emmanuel
+--00000000000007135e057311a872--
