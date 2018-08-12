@@ -1,31 +1,22 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: bounce+1a9445.bb0-wireguard=lists.zx2c4.com@poorlab.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0453c3d0
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0bde361c
  for <wireguard@lists.zx2c4.com>;
- Sun, 12 Aug 2018 08:01:42 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2c77430e
+ Sun, 12 Aug 2018 16:42:47 +0000 (UTC)
+Received: from m32-4.eu.mailgun.net (m32-4.eu.mailgun.net [141.193.32.4])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9fa7181f
  for <wireguard@lists.zx2c4.com>;
- Sun, 12 Aug 2018 08:01:42 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0a721fe7
- for <wireguard@lists.zx2c4.com>;
- Sun, 12 Aug 2018 08:00:28 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 61dd0dfb
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Sun, 12 Aug 2018 08:00:28 +0000 (UTC)
-Received: by mail-oi0-f50.google.com with SMTP id w126-v6so22469859oie.7
- for <wireguard@lists.zx2c4.com>; Sun, 12 Aug 2018 01:13:17 -0700 (PDT)
+ Sun, 12 Aug 2018 16:42:46 +0000 (UTC)
+Sender: coder@poorlab.com
+Received: by mail-qk0-f182.google.com with SMTP id 13-v6so9503756qkl.9
+ for <wireguard@lists.zx2c4.com>; Sun, 12 Aug 2018 09:54:22 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180810080617.20283-1-ahanins@gmail.com>
-In-Reply-To: <20180810080617.20283-1-ahanins@gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sun, 12 Aug 2018 01:13:06 -0700
-Message-ID: <CAHmME9pCdYSc5vLUJt_7xkCG9PLMkQE5qMMbrxQ9uCq0U0KL-Q@mail.gmail.com>
-Subject: Re: [PATCH 0/1] Fix broken inner checksums for non TCP/UDP protocols
-To: ahanins@gmail.com
+From: StarBrilliant <coder@poorlab.com>
+Date: Mon, 13 Aug 2018 02:53:44 +1000
+Message-ID: <CA+7UkwLpoa_n87PKghohdGc5JVpYJdjAB1a8NUpYjx35o5nPWw@mail.gmail.com>
+Subject: Fragmentation on UDP layer possible?
+To: wireguard@lists.zx2c4.com
 Content-Type: text/plain; charset="UTF-8"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -35,30 +26,31 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hey Andrejs,
+Hello Wireguard developers and uesrs,
 
-Thanks a lot for this patch and for the nice write-up. I'm still not
-sure, though, that I totally understand the checksumming semantics
-properly. I see that this basic pattern is used in tap.c and in a few
-other random drivers, but different places seem to do it differently
-from that too.
+Thank you for having built up this software!
 
-Your paranoid proposal at the end of your description would be
-something like this?
+Recently I found some problems transmitting large UDP packets at
+certain network environments.
 
-> if (skb->ip_summed == CHECKSUM_PARTIAL || !skb_checksum_setup(skb, true)) {
->    if (skb_checksum_help(skb))
->        return false;
-> }
+My network architecture consists of 2 layers (Wireguard + VXLAN) to
+enable mesh routing based on BGP and Babel routing protocols. To reach
+a minimum MTU of 1280 bytes required by IPv6, the network must be able
+to send and receive UDP datagrams of 1362 bytes. However some public
+Wi-Fi does not allow me to send UDP packets of this big. No matter I
+do fragmentation on my box with DF Flag on, or disable PMTUD with DF
+flag off, the firewall simply rejects any fragmented IP packet.
 
-And the bug you're pointing out is that skb_checksum_setup returns
--EPROTO in the case of GRE and such, because a child function,
-skb_checksum_setup_ip, only works for UDP/TCP?
+I know Wireguard can already do IP layer fragmentation. (Just set
+tunnel MTU >= 1441 then fragmentation will be turned on) But in this
+network condition we might need to solve the problem on UDP layer.
+OpenVPN supports UDP layer fragmentation through the "--fragment X"
+option. By specifying this option, UDP packets will be no more than X
+bytes. It adds an additional 4-byte overhead per fragment.
 
-Do you know why there exist these two separate functions in the first
-place, and what the preferred use cases are for each one? Also, do you
-know about the relative performance of them and how your patch or the
-paranoid variant above would impact that?
+My question is, is UDP layer fragmentation technically possible for
+Wireguard? If possible, will it introduce incompatibility to old
+clients? How much overhead might it have?
 
-Thanks,
-Jason
+
+And again, thank you!
