@@ -1,29 +1,22 @@
-Return-Path: gang.zhao.42@gmail.com
+Return-Path: finkandreas@web.de
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c8d90071
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ce31014b
  for <wireguard@lists.zx2c4.com>;
- Mon, 13 Aug 2018 15:01:07 +0000 (UTC)
-Received: from mail-pl0-x242.google.com (mail-pl0-x242.google.com
- [IPv6:2607:f8b0:400e:c01::242])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7f3c510b
+ Wed, 15 Aug 2018 07:05:09 +0000 (UTC)
+Received: from mout.web.de (mout.web.de [212.227.15.3])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ed4d579f
  for <wireguard@lists.zx2c4.com>;
- Mon, 13 Aug 2018 15:01:07 +0000 (UTC)
-Received: by mail-pl0-x242.google.com with SMTP id ba4-v6so7003590plb.11
- for <wireguard@lists.zx2c4.com>; Mon, 13 Aug 2018 08:12:53 -0700 (PDT)
-Return-Path: <gang.zhao.42@gmail.com>
-Received: from localhost.localdomain (li409-196.members.linode.com.
- [106.187.89.196])
- by smtp.gmail.com with ESMTPSA id s16-v6sm20806670pfm.114.2018.08.13.08.12.50
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
- Mon, 13 Aug 2018 08:12:51 -0700 (PDT)
-From: Zhao Gang <gang.zhao.42@gmail.com>
+ Wed, 15 Aug 2018 07:05:09 +0000 (UTC)
+Received: from localhost ([148.187.136.124]) by smtp.web.de (mrweb003
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MOAmi-1fmWf80zXY-005bcV for
+ <wireguard@lists.zx2c4.com>; Wed, 15 Aug 2018 09:17:06 +0200
+Date: Wed, 15 Aug 2018 09:17:00 +0200
+From: Andreas Fink <finkandreas@web.de>
 To: wireguard@lists.zx2c4.com
-Subject: [PATCH android] config: fix wrong Peer endpoint string format
-Date: Mon, 13 Aug 2018 23:12:42 +0800
-Message-Id: <1ddd5012b4e54c6381079ceab335576fcc530c60.1534172353.git.gang.zhao.42@gmail.com>
-In-Reply-To: <CAAWNVq8Cpsqyd66fObKNDYsK9sDE8b1YhEYaz-ZFTujvYeqOcw@mail.gmail.com>
-References: <CAAWNVq8Cpsqyd66fObKNDYsK9sDE8b1YhEYaz-ZFTujvYeqOcw@mail.gmail.com>
+Subject: Connection between two clients
+Message-ID: <20180815091700.0d1d5923@web.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -33,49 +26,58 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-When a tunnel is running, saving the tunnel's config with an IPv6 address endpoint like [::1]:42 would result in the wrong format ::1:42. This patch fixes it.
+Hello,
+I have a problem establishing a direct connection between two clients,
+my setup is the following:
 
-For endpoints with an IPv6 address(e.g. [::1]:42). Since the default endpoint InetSocketAddress is created unresolved, getEndpointString() returns "[::1]:42" (InetSocketAddress.getHostString() returns the literal hostname). After the endpoint is resolved, getEndpointString() returns "::1:42" (InetSocketAddress.getHostString() returns the IPv6 address without the square brackets). This inconsistent return values caused the above mentioned bug.
+Client1 <--> Server <--> Client2
 
-With this patch, function getEndpointString would return the right format string whether the endpoint is resolved or not. Also changed the function getResolvedEndpointString to call getEndpointString instead of making the string itself.
+i.e. I have a publicly reachable server, and two clients that are
+connected to the server. My configurations are:
 
-Signed-off-by: Zhao Gang <gang.zhao.42@gmail.com>
----
- app/src/main/java/com/wireguard/config/Peer.java | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+Server.conf
+[Interface]
+PrivateKey = ServerPrivateKey
+ListenPort = 51820
+Address = 192.168.12.1/24
+[Peer]
+PublicKey = Client1PublicKey
+AllowedIPs = 192.168.12.3/32
+[Peer]
+PublicKey = Client1PublicKey
+AllowedIPs = 192.168.12.2/32
 
-diff --git a/app/src/main/java/com/wireguard/config/Peer.java b/app/src/main/java/com/wireguard/config/Peer.java
-index 49c8b70..4c8703c 100644
---- a/app/src/main/java/com/wireguard/config/Peer.java
-+++ b/app/src/main/java/com/wireguard/config/Peer.java
-@@ -71,7 +71,11 @@ public class Peer {
-     private String getEndpointString() {
-         if (endpoint == null)
-             return null;
--        return String.format("%s:%d", endpoint.getHostString(), endpoint.getPort());
-+
-+        if (endpoint.getHostString().contains(":") && !endpoint.getHostString().contains("["))
-+            return String.format("[%s]:%d", endpoint.getHostString(), endpoint.getPort());
-+        else
-+            return String.format("%s:%d", endpoint.getHostString(), endpoint.getPort());
-     }
- 
-     public int getPersistentKeepalive() {
-@@ -102,13 +106,8 @@ public class Peer {
-             endpoint = new InetSocketAddress(endpoint.getHostString(), endpoint.getPort());
-         if (endpoint.isUnresolved())
-             throw new UnknownHostException(endpoint.getHostString());
--        if (endpoint.getAddress() instanceof Inet6Address)
--            return String.format("[%s]:%d",
--                    endpoint.getAddress().getHostAddress(),
--                    endpoint.getPort());
--        return String.format("%s:%d",
--                endpoint.getAddress().getHostAddress(),
--                endpoint.getPort());
-+
-+        return getEndpointString();
-     }
- 
-     public void parse(final String line) {
--- 
-2.18.0
+Client1.conf
+[Interface]
+PrivateKey = Client1PrivateKey
+ListenPort = 21003
+Address = 192.168.12.3/24
+[Peer]
+PublicKey = ServerPublicKey
+Endpoint = myserver.com:51820
+AllowedIPs = 192.168.12.1/24
+PersistentKeepalive = 25
+
+Client2.conf
+[Interface]
+PrivateKey = Client2PrivateKey
+ListenPort = 21002
+Address = 192.168.12.2/24
+[Peer]
+PublicKey = ServerPublicKey
+Endpoint = myserver.com:51820
+AllowedIPs = 192.168.12.1/24
+PersistentKeepalive = 25
+
+
+
+I am able to ping between client1 to server and client2 to server.
+However trying to ping client2 from client1 directly fails...
+Looking at the server with tcpdump I can see, that there is an incoming
+ping from 192.168.12.3 > 192.168.12.2, however there is nothing
+reaching at 192.168.12.2. The ping is not forwarded to 192.168.12.2.
+Do I need to setup iptables rules? What's the easiest way to get a
+direct connection between two clients?
+
+Cheers
+Andreas
