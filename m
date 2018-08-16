@@ -1,31 +1,24 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: me.kalin@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5f8e5df5
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c6bcd1b0
  for <wireguard@lists.zx2c4.com>;
- Thu, 16 Aug 2018 18:57:09 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 31af4789
+ Thu, 16 Aug 2018 19:28:23 +0000 (UTC)
+Received: from mail-oi0-x22d.google.com (mail-oi0-x22d.google.com
+ [IPv6:2607:f8b0:4003:c06::22d])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 873b9130
  for <wireguard@lists.zx2c4.com>;
- Thu, 16 Aug 2018 18:57:09 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bc2612fe
- for <wireguard@lists.zx2c4.com>;
- Thu, 16 Aug 2018 18:55:55 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 4e257a28
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>;
- Thu, 16 Aug 2018 18:55:55 +0000 (UTC)
-Received: by mail-oi0-f46.google.com with SMTP id q11-v6so9935806oic.12
- for <wireguard@lists.zx2c4.com>; Thu, 16 Aug 2018 12:09:19 -0700 (PDT)
+ Thu, 16 Aug 2018 19:28:23 +0000 (UTC)
+Received: by mail-oi0-x22d.google.com with SMTP id q11-v6so10096590oic.12
+ for <wireguard@lists.zx2c4.com>; Thu, 16 Aug 2018 12:40:34 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAAWNVq8Cpsqyd66fObKNDYsK9sDE8b1YhEYaz-ZFTujvYeqOcw@mail.gmail.com>
- <1ddd5012b4e54c6381079ceab335576fcc530c60.1534172353.git.gang.zhao.42@gmail.com>
-In-Reply-To: <1ddd5012b4e54c6381079ceab335576fcc530c60.1534172353.git.gang.zhao.42@gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 16 Aug 2018 12:09:07 -0700
-Message-ID: <CAHmME9oUA0JgspMdYNy96YyjeFQYA_cb59=4vd2t4C-eUrKOpQ@mail.gmail.com>
-Subject: Re: [PATCH android] config: fix wrong Peer endpoint string format
-To: gang.zhao.42@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+References: <20180815091700.0d1d5923@web.de>
+In-Reply-To: <20180815091700.0d1d5923@web.de>
+From: Kalin KOZHUHAROV <me.kalin@gmail.com>
+Date: Thu, 16 Aug 2018 21:40:20 +0200
+Message-ID: <CAKXLc7dAUQbM_v3xhTzzamQ=O10W1eiVkke6augaFSJZ9RhH_g@mail.gmail.com>
+Subject: Re: Connection between two clients
+To: Andreas Fink <finkandreas@web.de>
+Content-Type: multipart/alternative; boundary="000000000000cbcfbc0573929d04"
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -36,36 +29,28 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Hi Gang,
+--000000000000cbcfbc0573929d04
+Content-Type: text/plain; charset="UTF-8"
 
-Thanks for the patch, I'll merge the first hunk of this but not the
-second, because:
+Probanly a routing problem, check `ip route show` on (one) client and
+server.
 
-On Thu, Aug 16, 2018 at 11:58 AM Zhao Gang <gang.zhao.42@gmail.com> wrote:
-> -        return String.format("%s:%d", endpoint.getHostString(), endpoint.getPort());
-> +
-> +        if (endpoint.getHostString().contains(":") && !endpoint.getHostString().contains("["))
-> +            return String.format("[%s]:%d", endpoint.getHostString(), endpoint.getPort());
-> +        else
-> +            return String.format("%s:%d", endpoint.getHostString(), endpoint.getPort());
+Also you might need to enable ip forwarding on server (usually enabled on
+firewalls and routers). No iptables are not necessary if everything is one
+subnet.
 
-This seems like a fix for the bug. But:
+Cheers,
+Kalin.
 
-> -        if (endpoint.getAddress() instanceof Inet6Address)
-> -            return String.format("[%s]:%d",
-> -                    endpoint.getAddress().getHostAddress(),
-> -                    endpoint.getPort());
-> -        return String.format("%s:%d",
-> -                endpoint.getAddress().getHostAddress(),
-> -                endpoint.getPort());
+--000000000000cbcfbc0573929d04
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The purpose of the code here is to resolve the hostname to an IP
-address, and then return ip+port, with no hostnames in it. Replacing
-it with a call to the prior fixed function isn't the intended
-behavior.
+<div dir=3D"auto"><div>Probanly a routing problem, check `ip route show` on=
+ (one) client and server.</div><div dir=3D"auto"><br><div dir=3D"auto">Also=
+ you might need to enable ip forwarding on server (usually enabled on firew=
+alls and routers). No iptables are not necessary if everything is one subne=
+t.</div><div dir=3D"auto"><br></div><div dir=3D"auto">Cheers,<br><div dir=
+=3D"auto">Kalin.</div></div></div></div>
 
-I've committed your fix here as:
-https://git.zx2c4.com/wireguard-android/commit/?id=ace2a77bc9019d050112bed5a5d1eb2a3363d971
-
-Thanks again,
-Jason
+--000000000000cbcfbc0573929d04--
