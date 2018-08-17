@@ -1,22 +1,23 @@
-Return-Path: wireguard@eldondev.com
+Return-Path: finkandreas@web.de
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b0d26623
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id aba820ef
  for <wireguard@lists.zx2c4.com>;
- Thu, 16 Aug 2018 19:40:35 +0000 (UTC)
-Received: from npcomp.net (npcomp.net [69.61.8.91])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 12b91993
+ Fri, 17 Aug 2018 05:48:06 +0000 (UTC)
+Received: from mout.web.de (mout.web.de [212.227.15.3])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e6ccecd9
  for <wireguard@lists.zx2c4.com>;
- Thu, 16 Aug 2018 19:40:35 +0000 (UTC)
-Date: Thu, 16 Aug 2018 15:52:43 -0400
-From: Eldon <wireguard@eldondev.com>
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+ Fri, 17 Aug 2018 05:48:06 +0000 (UTC)
+Date: Fri, 17 Aug 2018 08:00:17 +0200
+From: Andreas Fink <finkandreas@web.de>
+To: Kalin KOZHUHAROV <me.kalin@gmail.com>
 Subject: Re: Connection between two clients
-Message-ID: <20180816195243.GC12438@npcomp.net>
+Message-ID: <20180817080017.14e12eda@web.de>
+In-Reply-To: <CAKXLc7dAUQbM_v3xhTzzamQ=O10W1eiVkke6augaFSJZ9RhH_g@mail.gmail.com>
 References: <20180815091700.0d1d5923@web.de>
  <CAKXLc7dAUQbM_v3xhTzzamQ=O10W1eiVkke6augaFSJZ9RhH_g@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-In-Reply-To: <CAKXLc7dAUQbM_v3xhTzzamQ=O10W1eiVkke6augaFSJZ9RhH_g@mail.gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,24 +27,22 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Here is some documentation on how some of this can be done:
+On Thu, 16 Aug 2018 21:40:20 +0200
+Kalin KOZHUHAROV <me.kalin@gmail.com> wrote:
 
-https://unix.stackexchange.com/questions/14056/what-is-kernel-ip-forwarding/14058#14058
-
-https://docs.fedoraproject.org/en-US/Fedora/18/html/Security_Guide/sect-Security_Guide-Firewalls-FORWARD_and_NAT_Rules.html
-
-On Thu, Aug 16, 2018 at 09:40:20PM +0200, Kalin KOZHUHAROV wrote:
 > Probanly a routing problem, check `ip route show` on (one) client and
 > server.
 > 
-> Also you might need to enable ip forwarding on server (usually enabled on
-> firewalls and routers). No iptables are not necessary if everything is one
-> subnet.
+> Also you might need to enable ip forwarding on server (usually
+> enabled on firewalls and routers). No iptables are not necessary if
+> everything is one subnet.
 > 
 > Cheers,
 > Kalin.
 
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
+Yes, the ip forwarding was the trick I was missing.
+Maybe it is worth adding a note in the documentation/quick start guide
+that this is needed for client-to-client communication through a server.
+
+Thank you
+Andreas
