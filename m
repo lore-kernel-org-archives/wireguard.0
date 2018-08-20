@@ -1,23 +1,19 @@
-Return-Path: finkandreas@web.de
+Return-Path: bruno@wolff.to
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id aba820ef
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 689ba219
  for <wireguard@lists.zx2c4.com>;
- Fri, 17 Aug 2018 05:48:06 +0000 (UTC)
-Received: from mout.web.de (mout.web.de [212.227.15.3])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e6ccecd9
+ Mon, 20 Aug 2018 04:31:07 +0000 (UTC)
+Received: from wolff.to (wolff.to [98.103.208.27])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with SMTP id 43ea416f
  for <wireguard@lists.zx2c4.com>;
- Fri, 17 Aug 2018 05:48:06 +0000 (UTC)
-Date: Fri, 17 Aug 2018 08:00:17 +0200
-From: Andreas Fink <finkandreas@web.de>
-To: Kalin KOZHUHAROV <me.kalin@gmail.com>
-Subject: Re: Connection between two clients
-Message-ID: <20180817080017.14e12eda@web.de>
-In-Reply-To: <CAKXLc7dAUQbM_v3xhTzzamQ=O10W1eiVkke6augaFSJZ9RhH_g@mail.gmail.com>
-References: <20180815091700.0d1d5923@web.de>
- <CAKXLc7dAUQbM_v3xhTzzamQ=O10W1eiVkke6augaFSJZ9RhH_g@mail.gmail.com>
+ Mon, 20 Aug 2018 04:31:07 +0000 (UTC)
+Date: Sun, 19 Aug 2018 23:40:22 -0500
+From: Bruno Wolff III <bruno@wolff.to>
+To: wireguard@lists.zx2c4.com
+Subject: Wireguard not building on pre-rc1 4.19 kernels (Fedora)
+Message-ID: <20180820044022.GA11783@wolff.to>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -27,22 +23,23 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Thu, 16 Aug 2018 21:40:20 +0200
-Kalin KOZHUHAROV <me.kalin@gmail.com> wrote:
-
-> Probanly a routing problem, check `ip route show` on (one) client and
-> server.
-> 
-> Also you might need to enable ip forwarding on server (usually
-> enabled on firewalls and routers). No iptables are not necessary if
-> everything is one subnet.
-> 
-> Cheers,
-> Kalin.
-
-Yes, the ip forwarding was the trick I was missing.
-Maybe it is worth adding a note in the documentation/quick start guide
-that this is needed for client-to-client communication through a server.
-
-Thank you
-Andreas
+[bruno@cerberus src]$ make KERNELDIR=/lib/modules/4.19.0-0.rc0.git6.1.fc30.x86_64/build clean all
+  CLEAN   /home/bruno/WireGuard/src/.tmp_versions
+  CLEAN   /home/bruno/WireGuard/src/tools/{wg,*.o,*.d}
+  CC [M]  /home/bruno/WireGuard/src/main.o
+In file included from <command-line>:
+/home/bruno/WireGuard/src/compat/compat.h:684:20: error: static declaration of ‘rng_is_initialized’ follows non-static declaration
+ static inline bool rng_is_initialized(void)
+                    ^~~~~~~~~~~~~~~~~~
+In file included from ./include/linux/net.h:22,
+                 from ./include/linux/skbuff.h:29,
+                 from ./include/linux/ip.h:20,
+                 from /home/bruno/WireGuard/src/compat/compat.h:640,
+                 from <command-line>:
+./include/linux/random.h:39:13: note: previous declaration of ‘rng_is_initialized’ was here
+ extern bool rng_is_initialized(void);
+             ^~~~~~~~~~~~~~~~~~
+make[2]: *** [scripts/Makefile.build:311: /home/bruno/WireGuard/src/main.o] Error 1
+make[1]: *** [Makefile:1514: _module_/home/bruno/WireGuard/src] Error 2
+make: *** [Makefile:36: module] Error 2
+[bruno@cerberus src]$ 
