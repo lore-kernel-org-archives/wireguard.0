@@ -1,29 +1,22 @@
-Return-Path: jorgeanton@gmail.com
+Return-Path: rm@romanrm.net
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5538226d
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 711b9a85
  for <wireguard@lists.zx2c4.com>;
- Sun, 26 Aug 2018 16:44:33 +0000 (UTC)
-Received: from mail-it0-x244.google.com (mail-it0-x244.google.com
- [IPv6:2607:f8b0:4001:c0b::244])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 28e3b555
+ Mon, 27 Aug 2018 12:00:57 +0000 (UTC)
+Received: from len.romanrm.net (len.romanrm.net [IPv6:2001:41d0:1:8055::1])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 18aeed56
  for <wireguard@lists.zx2c4.com>;
- Sun, 26 Aug 2018 16:44:33 +0000 (UTC)
-Received: by mail-it0-x244.google.com with SMTP id x79-v6so9633258ita.1
- for <wireguard@lists.zx2c4.com>; Sun, 26 Aug 2018 09:57:59 -0700 (PDT)
+ Mon, 27 Aug 2018 12:00:57 +0000 (UTC)
+Received: from natsu (unknown [IPv6:fd39::e9:9eff:fe8f:1bcf])
+ by len.romanrm.net (Postfix) with SMTP id E27AA20407
+ for <wireguard@lists.zx2c4.com>; Mon, 27 Aug 2018 12:14:26 +0000 (UTC)
+Date: Mon, 27 Aug 2018 17:14:26 +0500
+From: Roman Mamedov <rm@romanrm.net>
+To: wireguard@lists.zx2c4.com
+Subject: Getting IPv6 route advertisements to work over WG
+Message-ID: <20180827171426.7c4ec614@natsu>
 MIME-Version: 1.0
-References: <CAFafqTtD_Qk9pSZvurmg6tsWFyYLOarqJmA5bizpygxuOmPqbQ@mail.gmail.com>
- <CAHmME9qMGNfdJLNFAaPezOc11Wi9EGHRV-d2+jdYok1W-aL36Q@mail.gmail.com>
- <CAFafqTtNdm4odfYLpdR59wNjr5RBsJn3_YmkYW=-Yfty+0reLg@mail.gmail.com>
- <FDnMYYaLpOD43GpWKVYppC41gq5UDScWf4p0KxdLZY6roXjrrEhMGntqR81ot7tDKnn7SrXmaM5gYYWITnQfbUJYMYSjACH6DABIQWRkhaI=@protonmail.ch>
-In-Reply-To: <FDnMYYaLpOD43GpWKVYppC41gq5UDScWf4p0KxdLZY6roXjrrEhMGntqR81ot7tDKnn7SrXmaM5gYYWITnQfbUJYMYSjACH6DABIQWRkhaI=@protonmail.ch>
-From: Jorge AC <jorgeanton@gmail.com>
-Date: Sun, 26 Aug 2018 18:57:45 +0200
-Message-ID: <CAFafqTvyvNjtTNZA_EzoYcd=1r37T_rb1=v4M_uPg4tRpU8m+g@mail.gmail.com>
-Subject: Re: [PATCH 1012/1012] Support for unicode interface names: only '%',
- ':' and '/' must be avoided
-To: Golden_Miller83@protonmail.ch
-Content-Type: multipart/alternative; boundary="000000000000c1723105745982b4"
-Cc: wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset=US-ASCII
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -33,41 +26,55 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---000000000000c1723105745982b4
-Content-Type: text/plain; charset="UTF-8"
+Hello,
 
-Roger that.
+I am trying to get IPv6 link-local IPs and route advertisements to work over
+WG. The reason is not for the usual case of address autoconfiguration, but to
+use RA as a dynamic routing protocol of sorts, as it can distribute routes --
+or in case of WG (where routes need to be static in AllowedIPs), act as a
+keep-alive protocol.
 
-Anyone who may want/need it can use "ip link" directly without "wc-quick",
-anyway.
+Example use: a host can be connected to a network via a number of independent
+routers (and separate WG tunnel to each); in case one of the routers goes
+down, the route entry that it was sending via RA times out, so the host will
+automatically use the other one(s) to reach that network. It would look
+similar to this:
 
-Thanks again!
+# ip -6 route
+...
+fd00::/32 via fe80::be:a0ff:fe18:4aac dev wg1 proto ra metric 1024  expires 30sec pref medium
+fd00::/32 via fe80::e8:4fff:fe94:2d7f dev wg2 proto ra metric 1024  expires 119sec pref medium
+fd00::/32 via fe80::43:31ff:fec0:da97 dev wg3 proto ra metric 1024  expires 86360sec pref low
+...
 
-On Sun, Aug 26, 2018 at 1:18 PM Jordan Glover <Golden_Miller83@protonmail.ch>
-wrote:
+What works:
 
->
-> Wireguard aims to be simple and secure. The name of device is used to
-> identify it, not to make a gestures to anyone. All wg/wg-quick commands
-> are in latin (english).
->
->
+  * manually assigning link-local(LL) IPs on both sides of a WG tunnel
+    (fe80:[somethingrandom]/64 scope link);
+  * any normal communication over these LL IPs (assuming they are also present
+    in AllowedIPs);
+  * running RADVD with WG link as one of its interfaces;
+  * explicitly requesting and receiving a RA, via using 'rdisc6' while specifying the
+    other side's LL IP;
 
---000000000000c1723105745982b4
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+What doesn't:
 
-<div dir=3D"ltr"><div>Roger that.=C2=A0</div><div><br></div><div>Anyone who=
- may want/need it can use &quot;ip link&quot; directly without &quot;wc-qui=
-ck&quot;, anyway.</div><div><br></div><div>Thanks again!</div><div><br><div=
- class=3D"gmail_quote"><div dir=3D"ltr">On Sun, Aug 26, 2018 at 1:18 PM Jor=
-dan Glover &lt;<a href=3D"mailto:Golden_Miller83@protonmail.ch">Golden_Mill=
-er83@protonmail.ch</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote=
-" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);=
-padding-left:1ex"><br>
-Wireguard aims to be simple and secure. The name of device is used to<br>
-identify it, not to make a gestures to anyone. All wg/wg-quick commands<br>
-are in latin (english).=C2=A0<br><br>
-</blockquote></div></div></div>
+  * it appears multicast not supported, so anything involving
+    multicast, as in automatically requesting RAs on the kernel side, or
+    manually with 'rdisc6' but without specifying peer's LL:
 
---000000000000c1723105745982b4--
+      # rdisc6 wg3
+      Soliciting ff02::2 (ff02::2) on wg3...
+      Sending ICMPv6 packet: Required key not available
+
+I found discussion[1], but it is unclear what is the outcome. In any case, I
+would like to add my vote to please add some kind of multicast support, even
+if just as a dumb broadcast for now. It would work just fine for a lot of
+cases; don't know about others, but my WG networks tend to include at most 2-3
+hosts each (but there's a lot of independent networks).
+
+[1] https://lists.zx2c4.com/pipermail/wireguard/2017-April/001177.html
+
+-- 
+With respect,
+Roman
