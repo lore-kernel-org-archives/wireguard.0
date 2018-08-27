@@ -1,29 +1,29 @@
-Return-Path: bounce+1a9445.bb0-wireguard=lists.zx2c4.com@poorlab.com
+Return-Path: tharre3@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 21ed4129
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a720b25e
  for <wireguard@lists.zx2c4.com>;
- Mon, 27 Aug 2018 21:01:49 +0000 (UTC)
-Received: from m32-4.eu.mailgun.net (m32-4.eu.mailgun.net [141.193.32.4])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 84feade2
+ Mon, 27 Aug 2018 21:16:46 +0000 (UTC)
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com
+ [IPv6:2a00:1450:4864:20::22b])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d30cc214
  for <wireguard@lists.zx2c4.com>;
- Mon, 27 Aug 2018 21:01:49 +0000 (UTC)
-Sender: coder@poorlab.com
-Received: by mail-qt0-f178.google.com with SMTP id h4-v6so528841qtj.7
- for <wireguard@lists.zx2c4.com>; Mon, 27 Aug 2018 14:15:21 -0700 (PDT)
+ Mon, 27 Aug 2018 21:16:46 +0000 (UTC)
+Received: by mail-lj1-x22b.google.com with SMTP id s12-v6so383427ljj.0
+ for <wireguard@lists.zx2c4.com>; Mon, 27 Aug 2018 14:30:21 -0700 (PDT)
+Return-Path: <tharre3@gmail.com>
+Received: from localhost (h082218211111.host.wavenet.at. [82.218.211.111])
+ by smtp.gmail.com with ESMTPSA id b80-v6sm49575lfe.83.2018.08.27.14.30.18
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+ Mon, 27 Aug 2018 14:30:18 -0700 (PDT)
+Date: Mon, 27 Aug 2018 23:30:17 +0200
+From: Thomas Gschwantner <tharre3@gmail.com>
+To: wireguard@lists.zx2c4.com
+Subject: WireGuard GSoC 2018 Report
+Message-ID: <20180827212929.GA3633@xultrabook>
 MIME-Version: 1.0
-References: <20180827171426.7c4ec614@natsu>
- <8c7ad33a-b1bc-1993-e442-836230f4bf37@gmail.com>
- <20180827185329.1a7bb24a@natsu>
- <AM5PR0802MB2450F5F2541FA58DF48E5D28FF0B0@AM5PR0802MB2450.eurprd08.prod.outlook.com>
-In-Reply-To: <AM5PR0802MB2450F5F2541FA58DF48E5D28FF0B0@AM5PR0802MB2450.eurprd08.prod.outlook.com>
-From: StarBrilliant <coder@poorlab.com>
-Date: Tue, 28 Aug 2018 07:14:43 +1000
-Message-ID: <CA+7UkwLVf28f1zg2zNUZZ7NmzBQsu+3sx7XhvSb-DqCOm2pvqA@mail.gmail.com>
-Subject: Re: Getting IPv6 route advertisements to work over WG
-To: Roman Mamedov <rm@romanrm.net>,
- Riccardo Paolo Bestetti <riccardo.kyogre@live.it>
-Content-Type: text/plain; charset="UTF-8"
-Cc: wireguard@lists.zx2c4.com
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="2B/JsCI69OhZNC5r"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -33,97 +33,159 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On Tue, Aug 28, 2018 at 12:46 AM Riccardo Paolo Bestetti
-<riccardo.kyogre@live.it> wrote:
->
-> I laughed in my head. :)
->
-> For what my two cents are worth, L2 WireGuard would have its (limited) us=
-e cases, but nothing beats having a simple and effective mono-purpose proto=
-col like we do now. Everything else can be solved with OpenVPN or appropria=
-te SDN techniques running on top of WG.
 
+--2B/JsCI69OhZNC5r
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Hello,
+Hi there, my name is Thomas Gschwantner and this is my report for the work =
+I've
+done on WireGuard, for the GSoC 2018.
 
-At first, I would like to kindly invite you to search for images with
-keyword "three layer network design" (if you lucky to not have the
-painful experience of building a datacenter network,) so you would
-know what I am talking about.
+Before GSoC even started proper, Jason asked us to work on a small fix rega=
+rding
+the endianness of the trie used to store IPs in `allowedips.c`.  Previously,
+they'd be stored in network byte order (big endian), meaning on little endi=
+an
+system there would be unnecessary conversions.  The main point of this was
+probably to get everyone up and running in terms of setting up and working =
+with
+the WireGuard codebase.
 
-L2 WireGuard, if exists, can be very important for a "Core Layer" of a
-SD-WAN network to run. That is to say, any node may process an IP
-packet with any source or destination address, performing routing
-decision according to BGP or other routing protocols, and send the
-packet to any other node.
+The next task was developing and testing a replacement for the ring buffer
+implementation in the kernel ([ptr_ring.h]) that is lock-free.  For that we
+consulted a userspace implementation called [Concurrency Kit].  Since the t=
+ask
+was rather hard but would result in relatively little code, Jason suggested
+Jonathan Neusch=E4fer and I work on it separately at the start, merging the=
+ code
+later, which we did.  My own version, before any merging happened, can be f=
+ound
+[here][mpmc_premerge].
 
-Please keep in mind that, in this kind of network, any node must have
-an AllowedIPs=3D0.0.0.0, ::/0 to work. The trust model of a Core Layer
-network is that, spoofed IP address should already be checked at
-Access Layer so no other check need to be done. And we also have AEAD
-cipher so even if the attacker knows the IP address of our core
-router, they can not break in.
+The task proved challenging, because the concurrency kit implementation made
+heavy use of macros and uses different semantics for atomic operations and
+memory barriers than the linux kernel.  Another problem we ran into was ker=
+nel
+deadlocks, that only happened in specific situations while testing. We ulti=
+mately
+determined that the cause for them was unfortunate scheduling of the kthrea=
+ds by
+the kernel, that caused concurrent producers to be stuck waiting for each o=
+ther
+for a long time.  This was ultimately solved by disabling [preemption].
 
-In current version if WireGuard, in order to set up the Core Layer, we
-either need to:
-- Establish N*(N-1) WireGuard links across N nodes
-- Run network virtualization technologies on top of Wireguard like:
-VXLAN / NVGRE / Multicast GRE </del>(oops I forgot Wireguard does not
-support multicast)</del>
+While the performance of the final implementation was better when directly
+compared to the other one in regards to raw produce/consume performance, wh=
+en
+benchmarking WireGuard as a hole it performed the same or slightly worse.  =
+The
+reason for this is likely the way WireGuard processes packets, which consum=
+es
+items from the queue one-by-one. As a result, the [final version] has not b=
+een
+merged yet.  This may change in the future however, if the consumers can be=
+ made
+to run multithreaded.
 
-OpenVPN does not count since it sends all packets to the center, not
-considered as a mesh network.
+Next we worked on making WireGuard take advantage of [NAPI], a kernel inter=
+nal API
+designed to reduce the overhead of receiving packets.  I worked on this for=
+ some
+time, but Jonathan ended up being faster than me with his
+[solution][jonathan_napi].  My (naturally unfinished) version can be found
+[here][tharre_napi].  This tasks involved **a lot** of reading kernel
+code to figure out how NAPI works since all available documentation is eith=
+er
+outdated or simply nonexistent.  I also ended up doing a lot of benchmarkin=
+g,
+since many solutions we came up with had unfavourable performance
+characteristics.
 
+While working on this we also bumped into an interesting problem with the N=
+API,
+that involved [napi_hash], a hashtable used by [busy polling].  Because we =
+used
+one napi_struct per WireGuard peer, there was concern that this hashtable w=
+ould
+blow up in larger deployments.  I ended up solving this problem, after much
+research, in a [deceivingly simple commit][napi_busy_fix].
 
-Here comes the question: Do we really need a MAC layer for routing?
+Lastly, I worked on implementing a new socket option, `SO_ZERO_ON_FREE`, th=
+at
+would cause all sk_buffs to be securely zeroed out when freed.  While I got=
+ a
+simple version of this working very quickly, I could only make it work on
+`AF_UNIX` and `AF_INET`, but not on `AF_ALG` and other netlink sockets, whi=
+ch I
+assumed would be the primary usage for this option.  The reason for that wa=
+s, as
+I found out after much debugging and digging in crypto/, that the correspon=
+ding
+kernel code wasn't even using sk_buffs.  Instead, the code would lock the s=
+ocket
+directly, and then use [memcpy_to_msg] to copy the data to userspace.
 
-Remember the past when we set up GRE tunnels over IPsec, running BGP
-over it, we do not have MAC layer so we need to establish N*(N-1)
-tunnels between nodes. We used OpenNHRP to discovery and build up the
-tunnels automatically. This configuration is named DMVPN by Cisco and
-is kind of baseline implementation in terms of SD-WAN.
+The code for this can be found [here][skb_memzero], however it is not quite
+finished yet as I haven't been able to find a more general way of setting t=
+he
+`zero_on_free` bit on sk_buffs for all socket types yet.
 
-Since we need OpenNHRP discovery, the discovery overhead is no less
-than performing ARP / NDP. The MTU for this setup is 1406 with NAT
-traversal (may vary). Additionally the numerous tunnels does not share
-a common interface name so we need to generate firewall rules
-automatically or use wildcard if supported.
+# Conclusion
 
->From the fact that Linux performs routing by sending packets with the
-original L3 address, but modified L2 address, we need sort of L2
-mechanism for a mesh to share a same interface name. I think the
-easiest L2 we can have is a MAC layer. This only adds 14 bytes to MTU
-overhead and we still have 1440 bytes, much larger than 1406.
+Working on WireGuard definitely was a ton of fun and I also learned **a lot=
+**
+about kernel development.  Thanks a lot to Jason A. Donenfeld for providing
+mentorship, and his work on WireGuard in general, that made all of this
+possible.
 
-Also switching from L3 to L2 does not actually make Wireguard
-complicated. L2 is the same as L3, except for we changed IPv4 / IPv6
-header to MAC header. And we still can perform security check with
-AllowedMACs.
+Also check out the reports of my fellow GSoC students, Gauvain
+[Roussel-Tarbouriech] and [Jonathan Neusch=E4fer].
 
+[ptr_ring.h]: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linu=
+x.git/tree/include/linux/ptr_ring.h
+[Concurrency Kit]: http://concurrencykit.org/
+[mpmc_premerge]: https://git.zx2c4.com/WireGuard/log/?h=3Dtg/mpmc_ring
+[preemption]: https://git.zx2c4.com/WireGuard/commit/?h=3Dtg/mpmc-benchmark=
+&id=3D9ced23773059b0e96daba64dd12ac60327d0d14e
+[final version]: https://git.zx2c4.com/WireGuard/log/?h=3Dtg/mpmc-benchmark
+[napi]: https://wiki.linuxfoundation.org/networking/napi
+[jonathan_napi]: https://git.zx2c4.com/WireGuard/commit/?id=3D6008eacbf2c7a=
+5f31b0c9d5d0a629cbdfbb8f222
+[tharre_napi]: https://gist.githubusercontent.com/Tharre/11e11afb99ddb6095d=
+4de8269fe8ea72/raw/0da04f14634cfb3e7f7520307363d0a5dc6f2bfe/wireguard_gsoc_=
+napi.diff
+[napi_hash]: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux=
+=2Egit/tree/net/core/dev.c?id=3D7effaf06c3cdef6855e127886c7405b9ab62f90d#n1=
+97
+[busy polling]: https://netdevconf.org/2.1/slides/apr6/dumazet-BUSY-POLLING=
+-Netdev-2.1.pdf
+[napi_busy_fix]: https://git.zx2c4.com/WireGuard/commit/?id=3Dfe5f0f661797b=
+41648eac64b40e5038b25175047
+[memcpy_to_msg]: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/l=
+inux.git/tree/crypto/algif_hash.c#n226
+[skb_memzero]: https://git.zx2c4.com/linux-dev/commit/?h=3Dtg/skb_memzero
+[Roussel-Tarbouriech]: https://govanify.com/post/gsoc-wireguard/
+[Jonathan Neusch=E4fer]: https://gist.github.com/neuschaefer/e752af1bbdd057=
+704e02e282e3e082c5
 
-> <ot>
-> And about that, I think that out-of-band comms support would be a very ni=
-ce addition to the protocol. The tunnel could be initially established with=
- no tunnel addresses, but it could provide the ability for setup scripts on=
- each side to talk to each other to set up routing, addresses, firewalls, e=
-tc. This would allow more complex setups, but would avoid adding all the co=
-mplexity/edge cases/etc. to WireGuard.
-> </ot>
+--=20
+PGP fingerprint: 42CE 7698 D6A0 6129 AA16  EF5C 5431 BDE2 C8F0 B2F4
 
-The DMVPN example above is a perfect example for out-of-band comms. I
-think it is worse than having a MAC layer, seriously.
+--2B/JsCI69OhZNC5r
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
 
-On Mon, Aug 27, 2018 at 11:54 PM Roman Mamedov <rm@romanrm.net> wrote:
-> I know people run VXLAN or other L2 tunneling protocols over WG. I suppos=
-e
-> you can call that "viable" as in "it can work", but it's a horrible worka=
-round
-> for the lack of better solution, nothing more. For instance the overhead
-> reaches comical levels:
+iQEzBAABCAAdFiEEsuhqARgBY035sVClY1a5mXdUZMYFAluEbWcACgkQY1a5mXdU
+ZMYpMwf/bbqx1D8m7U0EN0IKcxI+k8JUlOViMUhrwiBDLysXZ6ung3g6Eu6BTnZk
+jrUVd5XSnC4PcdOqBhr7X6ELr9DDhZONYjn3DUFRLpIskrwiF5iXOUiprjtCVt05
+7tQp9WFoca3gpoyCShLNx0YOyy4CcT+F/yi49aygp3JCmAOU42t72YE9XZHxFLSd
+SnlpxnYHtlUFid0JFvzEUk0hkL+EVVodrp3nN4TUmFCXCdStrBLX+jbmcQOK2YW2
+r0eeKsEIw7ve1+E2xIlByeR90wCsq4wv8yGIjWUX5uXXAoIdejhK5dTx/1nKtEzR
+RS5E/xHLbE83X0ph2c5AwcL8sGIiMA==
+=3rpC
+-----END PGP SIGNATURE-----
 
-It reduces the inner MTU to 1390. I provide this value for convenience.
-
-
-Best regards,
-StarBrilliant
+--2B/JsCI69OhZNC5r--
