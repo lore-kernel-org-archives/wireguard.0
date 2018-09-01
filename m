@@ -1,27 +1,21 @@
-Return-Path: john@sager.me.uk
+Return-Path: mike@papersolve.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 56a54ca5
- for <wireguard@lists.zx2c4.com>; Sun, 2 Sep 2018 09:39:39 +0000 (UTC)
-Received: from mail70c50.megamailservers.eu (mail178c50.megamailservers.eu
- [91.136.10.188])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a9b7fea3
- for <wireguard@lists.zx2c4.com>; Sun, 2 Sep 2018 09:39:39 +0000 (UTC)
-Received: from mainserver.wc (97.83.2.81.in-addr.arpa [81.2.83.97])
- (authenticated bits=0)
- by mail70c50.megamailservers.eu (8.14.9/8.13.1) with ESMTP id w829rrUZ015136
- (version=TLSv1/SSLv3 cipher=AES128-GCM-SHA256 bits=128 verify=NO)
- for <wireguard@lists.zx2c4.com>; Sun, 2 Sep 2018 09:53:55 +0000
-Received: from [2001:8b0:cbe3:0:7950:de2:3bad:c7d2]
- by mainserver.wc with esmtp (Exim 4.86_2)
- (envelope-from <john@sager.me.uk>) id 1fwP4r-00026L-Gr
- for wireguard@lists.zx2c4.com; Sun, 02 Sep 2018 10:53:53 +0100
-To: Wireguard List <wireguard@lists.zx2c4.com>
-From: John Sager <john@sager.me.uk>
-Subject: I am adding Wireguard to the Bering-uClibc embedded Linux distro
-Message-ID: <214279b6-1aea-5a28-37c1-9c9875080f0f@sager.me.uk>
-Date: Sun, 2 Sep 2018 10:53:53 +0100
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f9d975c2
+ for <wireguard@lists.zx2c4.com>; Sat, 1 Sep 2018 23:24:05 +0000 (UTC)
+Received: from us-smtp-delivery-109.mimecast.com
+ (us-smtp-delivery-109.mimecast.com [216.205.24.109])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 39f0a755
+ for <wireguard@lists.zx2c4.com>; Sat, 1 Sep 2018 23:24:05 +0000 (UTC)
+From: Mike Russo <mike@PaperSolve.com>
+To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+Subject: Re: src/crypto/curve25519-x86_64.h:1319: Error: no such instruction
+ while compiling in centos 6
+Date: Sat, 1 Sep 2018 23:38:15 +0000
+Message-ID: <5060261aa6a7ea500351b98dde5087c887a98d91.camel@papersolve.com>
+In-Reply-To: <CAK+ZqRqA4BkCLmxnuNfRtNByXaDYv1MpZB44PZrCM_Mx_ncNRw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/alternative;
+ boundary="_000_5060261aa6a7ea500351b98dde5087c887a98d91camelpapersolve_"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -31,22 +25,76 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Bering-uClibc is an embedded Linux distribution targeted at firewalls &
-routers. I have been using this for my border router/firewall for several years:
+--_000_5060261aa6a7ea500351b98dde5087c887a98d91camelpapersolve_
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-https://bering-uclibc.zetam.org/wiki/Main_Page
+V2hpbGUgSSBkbyBkZWZpbml0ZWx5IHJlY29tbWVuZCB0aGVpciBzdWdnZXN0aW9uIHRvIHVzZSBD
+ZW50T1MgNyAob3IgdGFrZSB0aGlzIG9wcG9ydHVuaXR5IHRvIGdldCBvbiBhIGRpc3RybyBsaWtl
+IERlYmlhbiBvciBVYnVudHUgdGhhdCBzdXBwb3J0cyBlYXNpbHkgdXBncmFkaW5nIHRvIGEgbmV3
+IG1ham9yIHZlcnNpb24hKSBJIHdhcyBhYmxlIHRvIGdldCB0aGlzIHdvcmtpbmcgb24gbXkgQ2Vu
+dE9TIDYgc2VydmVyIHVzaW5nIHRoZSBwYXRjaCBmcm9tIEx1Y2lhbiBoZXJlOg0KaHR0cHM6Ly9s
+aXN0cy56eDJjNC5jb20vcGlwZXJtYWlsL3dpcmVndWFyZC8yMDE3LUp1bmUvMDAxNDQ0Lmh0bWwN
+ClRoaXMgcGF0Y2hlcyB2ZXJzaW9uIDIwMTcwNjEzIHdoaWNoIGlzIGRlZmluaXRlbHkgYW4gb2xk
+ZXIgdmVyc2lvbiBvZiBXaXJlZ3VhcmQsIGJ1dCB0aGUgbmV3IGNsaWVudCB3b3JrcyBqdXN0IGZp
+bmUgd2l0aCBpdC4gU28geW91J2QgaGF2ZSB0byBnbyBnZXQgdGhlIG9sZCByZWxlYXNlIGhlcmUg
+aHR0cHM6Ly9naXRodWIuY29tL1dpcmVHdWFyZC9XaXJlR3VhcmQvYXJjaGl2ZS8wLjAuMjAxNzA2
+MTMudGFyLmd6IHBhc3RlIHRoYXQgbWVzc2FnZSBpbnRvIGEgZmlsZSBjYWxsZWQgImM2cGF0Y2gi
+IG9yIHNvbWV0aGluZywgYW5kIHRoZW4gZG8gcGF0Y2ggLXAwIDwgYzZwYXRjaCBhYm92ZSB0aGUg
+ZGlyZWN0b3J5IHdoZXJlIHlvdSBleHRyYWN0ZWQgdGhlIC50YXIuZ3ouIFRoZW4gZm9sbG93IHRo
+ZSBpbnN0YWxsYXRpb24gaW5zdHJ1Y3Rpb25zIGFuZCBpdCBzaG91bGQgYnVpbGQgd2l0aCB0aGUg
+dmVyc2lvbiBvZiBnY2MgaW5zdGFsbGVkIG9uIENlbnRPUy02Lg0KT2gsIGJ1dCBmaXJzdCB5b3Un
+ZCBoYXZlIHRvIGluc3RhbGwgdGhlIGtlcm5lbC1sdCBhbmQga2VybmVsLWx0LWRldmVsIHBhY2th
+Z2VzIGZyb20gRUxSZXBvIGh0dHA6Ly9lbHJlcG8ub3JnL3Rpa2kva2VybmVsLWx0LiBJZiB3aXJl
+Z3VhcmQgaXMgbWVyZ2VkIGludG8gdGhlIG1haW5saW5lLCBwZXJoYXBzIGtlcm5lbC1tbCBwYWNr
+YWdlcyBmcm9tIGVscmVwbyB3aWxsIGNvbnRhaW4gaXQuDQpUaGVyZSBhcmUgYWxzbyBhIGNvdXBs
+ZSBvZiBtb2RpZmljYXRpb25zIHRvIHdnLXF1aWNrIChnZXQgcmlkIG9mICJsb2NhbCAtbiIsIGFu
+ZCB0aGUgY2hlY2sgdGhhdCB1c2VzIGlwIGZvciB0eXBlIG9mIGRldmljZSkgYnV0IGFmdGVyIHRo
+YXQgaXQgd29ya2VkIGdyZWF0LCBzZXJpb3VzbHkhIOKYug0KTm90IHN1cmUgaWYgdGhleSB3aWxs
+IGNvbnRpbnVlIHN1cHBvcnQgY29ubmVjdGluZyB0byBvbGRlciBzZXJ2ZXJzIGhvd2V2ZXIuDQoN
+Cg0KDQotLQ0KDQpNaWNoYWVsIFJ1c3NvLCBTeXN0ZW1zIEVuZ2luZWVyIFBhcGVyU29sdmUsIElu
+Yy4gMjY4IFdhdGNob2d1ZSBSb2FkIFN0YXRlbiBJc2xhbmQsIE5ZIDEwMzE0IFlvdXIgcmFuZG9t
+IHF1b3RlIGZvciB0b2RheTogT25lIG1hbidzIE1lZGUgaXMgYW5vdGhlciBtYW4ncyBQZXJzaWFu
+LiAtLSBHZW9yZ2UgTS4gQ29oYW4NCg==
+--_000_5060261aa6a7ea500351b98dde5087c887a98d91camelpapersolve_
+Content-Type: text/html; charset=UTF-8
+Content-ID: <2435CD894BB4D646985FCABE54D14270@stardatecomputer.com>
+Content-Transfer-Encoding: base64
 
-The software releases are at:
-
-https://sourceforge.net/projects/leaf/files/Bering-uClibc/
-
-I needed to build a VPN server to play with Wireguard so basing it on
-Bering-uClibc was an obvious choice. Having integrated it into my local
-build environment I have offered it to the Bering-uClibc developers and they
-are keen to include it. I'm still at the integration stage with them but it
-should be in the next release (v6.2) due out before the end of the year.
-Currently I am integrating the 0.0.20180809 release of Wireguard.
-
-regards,
-
-John Sager
+PGh0bWw+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIgY29udGVudD0i
+dGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjwvaGVhZD4NCjxib2R5Pg0KPGRpdj5XaGlsZSBJ
+IGRvIGRlZmluaXRlbHkgcmVjb21tZW5kIHRoZWlyIHN1Z2dlc3Rpb24gdG8gdXNlIENlbnRPUyA3
+IChvciB0YWtlIHRoaXMgb3Bwb3J0dW5pdHkgdG8gZ2V0IG9uIGEgZGlzdHJvIGxpa2UgRGViaWFu
+IG9yIFVidW50dSB0aGF0IHN1cHBvcnRzIGVhc2lseSB1cGdyYWRpbmcgdG8gYSBuZXcgbWFqb3Ig
+dmVyc2lvbiEpIEkNCjxpPndhczwvaT4gYWJsZSB0byBnZXQgdGhpcyB3b3JraW5nIG9uIG15IENl
+bnRPUyA2IHNlcnZlciB1c2luZyB0aGUgcGF0Y2ggZnJvbSBMdWNpYW4gaGVyZTo8L2Rpdj4NCjxk
+aXY+PGEgaHJlZj0iaHR0cHM6Ly9saXN0cy56eDJjNC5jb20vcGlwZXJtYWlsL3dpcmVndWFyZC8y
+MDE3LUp1bmUvMDAxNDQ0Lmh0bWwiPmh0dHBzOi8vbGlzdHMuengyYzQuY29tL3BpcGVybWFpbC93
+aXJlZ3VhcmQvMjAxNy1KdW5lLzAwMTQ0NC5odG1sPC9hPjwvZGl2Pg0KPGRpdj5UaGlzIHBhdGNo
+ZXMgdmVyc2lvbiAyMDE3MDYxMyB3aGljaCBpcyBkZWZpbml0ZWx5IGFuIG9sZGVyIHZlcnNpb24g
+b2YgV2lyZWd1YXJkLA0KPGk+YnV0PC9pPiB0aGUgbmV3IGNsaWVudCB3b3JrcyBqdXN0IGZpbmUg
+d2l0aCBpdC4gU28geW91J2QgaGF2ZSB0byBnbyBnZXQgdGhlIG9sZCByZWxlYXNlIGhlcmUNCjxh
+IGhyZWY9Imh0dHBzOi8vZ2l0aHViLmNvbS9XaXJlR3VhcmQvV2lyZUd1YXJkL2FyY2hpdmUvMC4w
+LjIwMTcwNjEzLnRhci5neiI+aHR0cHM6Ly9naXRodWIuY29tL1dpcmVHdWFyZC9XaXJlR3VhcmQv
+YXJjaGl2ZS8wLjAuMjAxNzA2MTMudGFyLmd6PC9hPiBwYXN0ZSB0aGF0IG1lc3NhZ2UgaW50byBh
+IGZpbGUgY2FsbGVkICZxdW90O2M2cGF0Y2gmcXVvdDsgb3Igc29tZXRoaW5nLCBhbmQgdGhlbiBk
+byBwYXRjaCAtcDAgJmx0OyBjNnBhdGNoIGFib3ZlIHRoZSBkaXJlY3RvcnkNCiB3aGVyZSB5b3Ug
+ZXh0cmFjdGVkIHRoZSAudGFyLmd6LiBUaGVuIGZvbGxvdyB0aGUgaW5zdGFsbGF0aW9uIGluc3Ry
+dWN0aW9ucyBhbmQgaXQgc2hvdWxkIGJ1aWxkIHdpdGggdGhlIHZlcnNpb24gb2YgZ2NjIGluc3Rh
+bGxlZCBvbiBDZW50T1MtNi4NCjwvZGl2Pg0KPGRpdj5PaCwgYnV0IGZpcnN0IHlvdSdkIGhhdmUg
+dG8gaW5zdGFsbCB0aGUga2VybmVsLWx0IGFuZCBrZXJuZWwtbHQtZGV2ZWwgcGFja2FnZXMgZnJv
+bSBFTFJlcG8NCjxhIGhyZWY9Imh0dHA6Ly9lbHJlcG8ub3JnL3Rpa2kva2VybmVsLWx0Ij5odHRw
+Oi8vZWxyZXBvLm9yZy90aWtpL2tlcm5lbC1sdDwvYT4uIElmIHdpcmVndWFyZCBpcyBtZXJnZWQg
+aW50byB0aGUgbWFpbmxpbmUsIHBlcmhhcHMga2VybmVsLW1sIHBhY2thZ2VzIGZyb20gZWxyZXBv
+IHdpbGwgY29udGFpbiBpdC48L2Rpdj4NCjxkaXY+VGhlcmUgYXJlIGFsc28gYSBjb3VwbGUgb2Yg
+bW9kaWZpY2F0aW9ucyB0byB3Zy1xdWljayAoZ2V0IHJpZCBvZiAmcXVvdDtsb2NhbCAtbiZxdW90
+OywgYW5kIHRoZSBjaGVjayB0aGF0IHVzZXMgaXAgZm9yIHR5cGUgb2YgZGV2aWNlKSBidXQgYWZ0
+ZXIgdGhhdCBpdCB3b3JrZWQgZ3JlYXQsIHNlcmlvdXNseSEg4pi6DQo8L2Rpdj4NCjxkaXY+Tm90
+IHN1cmUgaWYgdGhleSB3aWxsIGNvbnRpbnVlIHN1cHBvcnQgY29ubmVjdGluZyB0byBvbGRlciBz
+ZXJ2ZXJzIGhvd2V2ZXIuIDwvZGl2Pg0KPGRpdj48YnI+DQo8L2Rpdj4NCjxkaXY+PGJyPg0KPC9k
+aXY+DQo8ZGl2PjxzcGFuPg0KPHByZT48cHJlPi0tIDxicj48L3ByZT5NaWNoYWVsIFJ1c3NvLCBT
+eXN0ZW1zIEVuZ2luZWVyDQpQYXBlclNvbHZlLCBJbmMuDQoyNjggV2F0Y2hvZ3VlIFJvYWQNClN0
+YXRlbiBJc2xhbmQsIE5ZIDEwMzE0DQoNCllvdXIgcmFuZG9tIHF1b3RlIGZvciB0b2RheToNCk9u
+ZSBtYW4ncyBNZWRlIGlzIGFub3RoZXIgbWFuJ3MgUGVyc2lhbi4NCgkJLS0gR2VvcmdlIE0uIENv
+aGFuDQo8L3ByZT4NCjwvc3Bhbj48L2Rpdj4NCjwvYm9keT4NCjwvaHRtbD4NCg==
+--_000_5060261aa6a7ea500351b98dde5087c887a98d91camelpapersolve_--
