@@ -1,21 +1,20 @@
-Return-Path: mike@papersolve.com
+Return-Path: gunnar@meh.is
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f9d975c2
- for <wireguard@lists.zx2c4.com>; Sat, 1 Sep 2018 23:24:05 +0000 (UTC)
-Received: from us-smtp-delivery-109.mimecast.com
- (us-smtp-delivery-109.mimecast.com [216.205.24.109])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 39f0a755
- for <wireguard@lists.zx2c4.com>; Sat, 1 Sep 2018 23:24:05 +0000 (UTC)
-From: Mike Russo <mike@PaperSolve.com>
-To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
-Subject: Re: src/crypto/curve25519-x86_64.h:1319: Error: no such instruction
- while compiling in centos 6
-Date: Sat, 1 Sep 2018 23:38:15 +0000
-Message-ID: <5060261aa6a7ea500351b98dde5087c887a98d91.camel@papersolve.com>
-In-Reply-To: <CAK+ZqRqA4BkCLmxnuNfRtNByXaDYv1MpZB44PZrCM_Mx_ncNRw@mail.gmail.com>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3396949b
+ for <wireguard@lists.zx2c4.com>; Mon, 3 Sep 2018 11:09:20 +0000 (UTC)
+Received: from mail-io0-x22f.google.com (mail-io0-x22f.google.com
+ [IPv6:2607:f8b0:4001:c06::22f])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e955f668
+ for <wireguard@lists.zx2c4.com>; Mon, 3 Sep 2018 11:09:20 +0000 (UTC)
+Received: by mail-io0-x22f.google.com with SMTP id e12-v6so137016iok.12
+ for <wireguard@lists.zx2c4.com>; Mon, 03 Sep 2018 04:23:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="_000_5060261aa6a7ea500351b98dde5087c887a98d91camelpapersolve_"
+From: =?UTF-8?B?R3VubmFyIEd1w7B2YXLDsGFyc29u?= <gunnar@meh.is>
+Date: Mon, 3 Sep 2018 11:23:33 +0000
+Message-ID: <CAF9E_4r4J46wzqebb=RU7T95RAt7RiQjUMxr89W_+rDhyADaYQ@mail.gmail.com>
+Subject: Replies to incoming unicast from local network exits wrong interface
+To: wireguard@lists.zx2c4.com
+Content-Type: multipart/alternative; boundary="0000000000003374b90574f5c63e"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -25,76 +24,77 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---_000_5060261aa6a7ea500351b98dde5087c887a98d91camelpapersolve_
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+--0000000000003374b90574f5c63e
+Content-Type: text/plain; charset="UTF-8"
 
-V2hpbGUgSSBkbyBkZWZpbml0ZWx5IHJlY29tbWVuZCB0aGVpciBzdWdnZXN0aW9uIHRvIHVzZSBD
-ZW50T1MgNyAob3IgdGFrZSB0aGlzIG9wcG9ydHVuaXR5IHRvIGdldCBvbiBhIGRpc3RybyBsaWtl
-IERlYmlhbiBvciBVYnVudHUgdGhhdCBzdXBwb3J0cyBlYXNpbHkgdXBncmFkaW5nIHRvIGEgbmV3
-IG1ham9yIHZlcnNpb24hKSBJIHdhcyBhYmxlIHRvIGdldCB0aGlzIHdvcmtpbmcgb24gbXkgQ2Vu
-dE9TIDYgc2VydmVyIHVzaW5nIHRoZSBwYXRjaCBmcm9tIEx1Y2lhbiBoZXJlOg0KaHR0cHM6Ly9s
-aXN0cy56eDJjNC5jb20vcGlwZXJtYWlsL3dpcmVndWFyZC8yMDE3LUp1bmUvMDAxNDQ0Lmh0bWwN
-ClRoaXMgcGF0Y2hlcyB2ZXJzaW9uIDIwMTcwNjEzIHdoaWNoIGlzIGRlZmluaXRlbHkgYW4gb2xk
-ZXIgdmVyc2lvbiBvZiBXaXJlZ3VhcmQsIGJ1dCB0aGUgbmV3IGNsaWVudCB3b3JrcyBqdXN0IGZp
-bmUgd2l0aCBpdC4gU28geW91J2QgaGF2ZSB0byBnbyBnZXQgdGhlIG9sZCByZWxlYXNlIGhlcmUg
-aHR0cHM6Ly9naXRodWIuY29tL1dpcmVHdWFyZC9XaXJlR3VhcmQvYXJjaGl2ZS8wLjAuMjAxNzA2
-MTMudGFyLmd6IHBhc3RlIHRoYXQgbWVzc2FnZSBpbnRvIGEgZmlsZSBjYWxsZWQgImM2cGF0Y2gi
-IG9yIHNvbWV0aGluZywgYW5kIHRoZW4gZG8gcGF0Y2ggLXAwIDwgYzZwYXRjaCBhYm92ZSB0aGUg
-ZGlyZWN0b3J5IHdoZXJlIHlvdSBleHRyYWN0ZWQgdGhlIC50YXIuZ3ouIFRoZW4gZm9sbG93IHRo
-ZSBpbnN0YWxsYXRpb24gaW5zdHJ1Y3Rpb25zIGFuZCBpdCBzaG91bGQgYnVpbGQgd2l0aCB0aGUg
-dmVyc2lvbiBvZiBnY2MgaW5zdGFsbGVkIG9uIENlbnRPUy02Lg0KT2gsIGJ1dCBmaXJzdCB5b3Un
-ZCBoYXZlIHRvIGluc3RhbGwgdGhlIGtlcm5lbC1sdCBhbmQga2VybmVsLWx0LWRldmVsIHBhY2th
-Z2VzIGZyb20gRUxSZXBvIGh0dHA6Ly9lbHJlcG8ub3JnL3Rpa2kva2VybmVsLWx0LiBJZiB3aXJl
-Z3VhcmQgaXMgbWVyZ2VkIGludG8gdGhlIG1haW5saW5lLCBwZXJoYXBzIGtlcm5lbC1tbCBwYWNr
-YWdlcyBmcm9tIGVscmVwbyB3aWxsIGNvbnRhaW4gaXQuDQpUaGVyZSBhcmUgYWxzbyBhIGNvdXBs
-ZSBvZiBtb2RpZmljYXRpb25zIHRvIHdnLXF1aWNrIChnZXQgcmlkIG9mICJsb2NhbCAtbiIsIGFu
-ZCB0aGUgY2hlY2sgdGhhdCB1c2VzIGlwIGZvciB0eXBlIG9mIGRldmljZSkgYnV0IGFmdGVyIHRo
-YXQgaXQgd29ya2VkIGdyZWF0LCBzZXJpb3VzbHkhIOKYug0KTm90IHN1cmUgaWYgdGhleSB3aWxs
-IGNvbnRpbnVlIHN1cHBvcnQgY29ubmVjdGluZyB0byBvbGRlciBzZXJ2ZXJzIGhvd2V2ZXIuDQoN
-Cg0KDQotLQ0KDQpNaWNoYWVsIFJ1c3NvLCBTeXN0ZW1zIEVuZ2luZWVyIFBhcGVyU29sdmUsIElu
-Yy4gMjY4IFdhdGNob2d1ZSBSb2FkIFN0YXRlbiBJc2xhbmQsIE5ZIDEwMzE0IFlvdXIgcmFuZG9t
-IHF1b3RlIGZvciB0b2RheTogT25lIG1hbidzIE1lZGUgaXMgYW5vdGhlciBtYW4ncyBQZXJzaWFu
-LiAtLSBHZW9yZ2UgTS4gQ29oYW4NCg==
---_000_5060261aa6a7ea500351b98dde5087c887a98d91camelpapersolve_
-Content-Type: text/html; charset=UTF-8
-Content-ID: <2435CD894BB4D646985FCABE54D14270@stardatecomputer.com>
-Content-Transfer-Encoding: base64
+Hey,
 
-PGh0bWw+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIgY29udGVudD0i
-dGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjwvaGVhZD4NCjxib2R5Pg0KPGRpdj5XaGlsZSBJ
-IGRvIGRlZmluaXRlbHkgcmVjb21tZW5kIHRoZWlyIHN1Z2dlc3Rpb24gdG8gdXNlIENlbnRPUyA3
-IChvciB0YWtlIHRoaXMgb3Bwb3J0dW5pdHkgdG8gZ2V0IG9uIGEgZGlzdHJvIGxpa2UgRGViaWFu
-IG9yIFVidW50dSB0aGF0IHN1cHBvcnRzIGVhc2lseSB1cGdyYWRpbmcgdG8gYSBuZXcgbWFqb3Ig
-dmVyc2lvbiEpIEkNCjxpPndhczwvaT4gYWJsZSB0byBnZXQgdGhpcyB3b3JraW5nIG9uIG15IENl
-bnRPUyA2IHNlcnZlciB1c2luZyB0aGUgcGF0Y2ggZnJvbSBMdWNpYW4gaGVyZTo8L2Rpdj4NCjxk
-aXY+PGEgaHJlZj0iaHR0cHM6Ly9saXN0cy56eDJjNC5jb20vcGlwZXJtYWlsL3dpcmVndWFyZC8y
-MDE3LUp1bmUvMDAxNDQ0Lmh0bWwiPmh0dHBzOi8vbGlzdHMuengyYzQuY29tL3BpcGVybWFpbC93
-aXJlZ3VhcmQvMjAxNy1KdW5lLzAwMTQ0NC5odG1sPC9hPjwvZGl2Pg0KPGRpdj5UaGlzIHBhdGNo
-ZXMgdmVyc2lvbiAyMDE3MDYxMyB3aGljaCBpcyBkZWZpbml0ZWx5IGFuIG9sZGVyIHZlcnNpb24g
-b2YgV2lyZWd1YXJkLA0KPGk+YnV0PC9pPiB0aGUgbmV3IGNsaWVudCB3b3JrcyBqdXN0IGZpbmUg
-d2l0aCBpdC4gU28geW91J2QgaGF2ZSB0byBnbyBnZXQgdGhlIG9sZCByZWxlYXNlIGhlcmUNCjxh
-IGhyZWY9Imh0dHBzOi8vZ2l0aHViLmNvbS9XaXJlR3VhcmQvV2lyZUd1YXJkL2FyY2hpdmUvMC4w
-LjIwMTcwNjEzLnRhci5neiI+aHR0cHM6Ly9naXRodWIuY29tL1dpcmVHdWFyZC9XaXJlR3VhcmQv
-YXJjaGl2ZS8wLjAuMjAxNzA2MTMudGFyLmd6PC9hPiBwYXN0ZSB0aGF0IG1lc3NhZ2UgaW50byBh
-IGZpbGUgY2FsbGVkICZxdW90O2M2cGF0Y2gmcXVvdDsgb3Igc29tZXRoaW5nLCBhbmQgdGhlbiBk
-byBwYXRjaCAtcDAgJmx0OyBjNnBhdGNoIGFib3ZlIHRoZSBkaXJlY3RvcnkNCiB3aGVyZSB5b3Ug
-ZXh0cmFjdGVkIHRoZSAudGFyLmd6LiBUaGVuIGZvbGxvdyB0aGUgaW5zdGFsbGF0aW9uIGluc3Ry
-dWN0aW9ucyBhbmQgaXQgc2hvdWxkIGJ1aWxkIHdpdGggdGhlIHZlcnNpb24gb2YgZ2NjIGluc3Rh
-bGxlZCBvbiBDZW50T1MtNi4NCjwvZGl2Pg0KPGRpdj5PaCwgYnV0IGZpcnN0IHlvdSdkIGhhdmUg
-dG8gaW5zdGFsbCB0aGUga2VybmVsLWx0IGFuZCBrZXJuZWwtbHQtZGV2ZWwgcGFja2FnZXMgZnJv
-bSBFTFJlcG8NCjxhIGhyZWY9Imh0dHA6Ly9lbHJlcG8ub3JnL3Rpa2kva2VybmVsLWx0Ij5odHRw
-Oi8vZWxyZXBvLm9yZy90aWtpL2tlcm5lbC1sdDwvYT4uIElmIHdpcmVndWFyZCBpcyBtZXJnZWQg
-aW50byB0aGUgbWFpbmxpbmUsIHBlcmhhcHMga2VybmVsLW1sIHBhY2thZ2VzIGZyb20gZWxyZXBv
-IHdpbGwgY29udGFpbiBpdC48L2Rpdj4NCjxkaXY+VGhlcmUgYXJlIGFsc28gYSBjb3VwbGUgb2Yg
-bW9kaWZpY2F0aW9ucyB0byB3Zy1xdWljayAoZ2V0IHJpZCBvZiAmcXVvdDtsb2NhbCAtbiZxdW90
-OywgYW5kIHRoZSBjaGVjayB0aGF0IHVzZXMgaXAgZm9yIHR5cGUgb2YgZGV2aWNlKSBidXQgYWZ0
-ZXIgdGhhdCBpdCB3b3JrZWQgZ3JlYXQsIHNlcmlvdXNseSEg4pi6DQo8L2Rpdj4NCjxkaXY+Tm90
-IHN1cmUgaWYgdGhleSB3aWxsIGNvbnRpbnVlIHN1cHBvcnQgY29ubmVjdGluZyB0byBvbGRlciBz
-ZXJ2ZXJzIGhvd2V2ZXIuIDwvZGl2Pg0KPGRpdj48YnI+DQo8L2Rpdj4NCjxkaXY+PGJyPg0KPC9k
-aXY+DQo8ZGl2PjxzcGFuPg0KPHByZT48cHJlPi0tIDxicj48L3ByZT5NaWNoYWVsIFJ1c3NvLCBT
-eXN0ZW1zIEVuZ2luZWVyDQpQYXBlclNvbHZlLCBJbmMuDQoyNjggV2F0Y2hvZ3VlIFJvYWQNClN0
-YXRlbiBJc2xhbmQsIE5ZIDEwMzE0DQoNCllvdXIgcmFuZG9tIHF1b3RlIGZvciB0b2RheToNCk9u
-ZSBtYW4ncyBNZWRlIGlzIGFub3RoZXIgbWFuJ3MgUGVyc2lhbi4NCgkJLS0gR2VvcmdlIE0uIENv
-aGFuDQo8L3ByZT4NCjwvc3Bhbj48L2Rpdj4NCjwvYm9keT4NCjwvaHRtbD4NCg==
---_000_5060261aa6a7ea500351b98dde5087c887a98d91camelpapersolve_--
+I've been debugging the problem, that when I ssh from my desktop to my
+tunneled laptop's tunnel ip, the laptop receives it but replies to it over
+the local broadcast domain, instead of over the tunnel interface.
+
+I eventually tracked it down to this rule added by `wg-quick`:
+
+    32764:  from all lookup main suppress_prefixlength 0
+
+That rule means, use routing table `main` for all prefixes bigger than 0
+bits (default route).
+
+But the local network, is there, bigger than 0 bit mask, and gets
+selected...
+
+Even though the source ip is completely wrong!
+So while the reply ends up on the connecting computer, it doesn't know it
+should use the local broadcast domain to continue the conversation and
+sends the next ACK packet to the default gateway, which drops it due to not
+having seen a SYN-ACK (asymmetric routing).
+
+Solutions?
+
+Delete that IP-rule?
+Add an exception rule if the source ip is the tunnel interface ip?
+
+p.s. when i got ssh working, it works, sometimes, but sometimes i get
+multi-second lagspikes. But i haven't debugged that at all yet.
+
+~ Gunnar
+
+--0000000000003374b90574f5c63e
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><span style=3D"color:rgb(33,33,33);font-size:13px">Hey,</s=
+pan><div style=3D"color:rgb(33,33,33);font-size:13px"><br></div><div style=
+=3D"color:rgb(33,33,33);font-size:13px">I&#39;ve been debugging the problem=
+, that when I ssh from my desktop to my tunneled laptop&#39;s tunnel ip, th=
+e laptop receives it but replies to it over the local broadcast domain, ins=
+tead of over the tunnel interface.</div><div style=3D"color:rgb(33,33,33);f=
+ont-size:13px"><br></div><div style=3D"color:rgb(33,33,33);font-size:13px">=
+I eventually tracked it down to this rule added by `wg-quick`:</div><div st=
+yle=3D"color:rgb(33,33,33);font-size:13px"><br></div><div style=3D"color:rg=
+b(33,33,33);font-size:13px">=C2=A0 =C2=A0=C2=A032764:=C2=A0 from all lookup=
+ main suppress_prefixlength 0</div><div style=3D"color:rgb(33,33,33);font-s=
+ize:13px"><br></div><div style=3D"color:rgb(33,33,33);font-size:13px">That =
+rule means, use routing table `main` for all prefixes bigger than 0 bits (d=
+efault route).</div><div style=3D"color:rgb(33,33,33);font-size:13px"><br><=
+/div><div style=3D"color:rgb(33,33,33);font-size:13px">But the local networ=
+k, is there, bigger than 0 bit mask, and gets selected...</div><div style=
+=3D"color:rgb(33,33,33);font-size:13px"><br></div><div style=3D"color:rgb(3=
+3,33,33);font-size:13px">Even though the source ip is completely wrong!</di=
+v><div style=3D"color:rgb(33,33,33);font-size:13px">So while the reply ends=
+ up on the connecting computer, it doesn&#39;t know it should use the local=
+ broadcast domain to continue the conversation and sends the next ACK packe=
+t to the default gateway, which drops it due to not having seen a SYN-ACK (=
+asymmetric routing).</div><div style=3D"color:rgb(33,33,33);font-size:13px"=
+><br></div><div style=3D"color:rgb(33,33,33);font-size:13px">Solutions?</di=
+v><div style=3D"color:rgb(33,33,33);font-size:13px"><br></div><div style=3D=
+"color:rgb(33,33,33);font-size:13px">Delete that IP-rule?</div><div style=
+=3D"color:rgb(33,33,33);font-size:13px">Add an exception rule if the source=
+ ip is the tunnel interface ip?</div><div style=3D"color:rgb(33,33,33);font=
+-size:13px"><br></div><div style=3D"color:rgb(33,33,33);font-size:13px">p.s=
+. when i got ssh working, it works, sometimes, but sometimes i get multi-se=
+cond lagspikes. But i haven&#39;t debugged that at all yet.</div><div style=
+=3D"color:rgb(33,33,33);font-size:13px"><br></div><div style=3D"color:rgb(3=
+3,33,33);font-size:13px">~ Gunnar</div></div>
+
+--0000000000003374b90574f5c63e--
