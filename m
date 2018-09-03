@@ -1,20 +1,20 @@
-Return-Path: adriankoooo@gmail.com
+Return-Path: ju.orth@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a60b07dd
- for <wireguard@lists.zx2c4.com>; Sun, 2 Sep 2018 19:37:16 +0000 (UTC)
-Received: from mail-io0-x232.google.com (mail-io0-x232.google.com
- [IPv6:2607:f8b0:4001:c06::232])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b462beff
- for <wireguard@lists.zx2c4.com>; Sun, 2 Sep 2018 19:37:16 +0000 (UTC)
-Received: by mail-io0-x232.google.com with SMTP id v14-v6so14350766iob.4
- for <wireguard@lists.zx2c4.com>; Sun, 02 Sep 2018 12:51:36 -0700 (PDT)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 90f4321c
+ for <wireguard@lists.zx2c4.com>; Mon, 3 Sep 2018 16:02:43 +0000 (UTC)
+Received: from mail-io0-x229.google.com (mail-io0-x229.google.com
+ [IPv6:2607:f8b0:4001:c06::229])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 247e5175
+ for <wireguard@lists.zx2c4.com>; Mon, 3 Sep 2018 16:02:43 +0000 (UTC)
+Received: by mail-io0-x229.google.com with SMTP id q4-v6so772904iob.8
+ for <wireguard@lists.zx2c4.com>; Mon, 03 Sep 2018 09:17:09 -0700 (PDT)
 MIME-Version: 1.0
-From: =?UTF-8?B?QWRyacOhbiBNaWjDoWxrbw==?= <adriankoooo@gmail.com>
-Date: Sun, 2 Sep 2018 21:51:24 +0200
-Message-ID: <CA+Hw3eaWT76rB1eAEVM4DOMr_t3GkU07crF_aq8x8Vkww-DeZg@mail.gmail.com>
-Subject: Wireguard behind NAT
+From: Julian Orth <ju.orth@gmail.com>
+Date: Mon, 3 Sep 2018 18:16:58 +0200
+Message-ID: <CAHijbEWf1S0Tc+zxZBvmJ0xe5iBU00pOxikejetF8x33Qh=GcQ@mail.gmail.com>
+Subject: Setting the transit namespace at runtime
 To: wireguard@lists.zx2c4.com
-Content-Type: multipart/alternative; boundary="0000000000009127a20574e8c038"
+Content-Type: text/plain; charset="UTF-8"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -24,39 +24,34 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---0000000000009127a20574e8c038
-Content-Type: text/plain; charset="UTF-8"
+Hi,
 
-Is there any way to connect to Wireguard behind a Carrier-grade NAT?
+Each Wireguard device remembers the network namespace in which it was created.
+In the documentation this is called the birthplace namespace [1] but I'll be
+calling it the transit namespace.
 
-On SIDE_A I have a backup LTE connection, without proper public ip, only
-dynamic ip and I server with Wireguard.
+Let's say I create a Wireguard device `wg0` in a network namespace called
+`vpn`. Then I would like to be able to run
 
-SIDE_A = mobile LTE connection, without public IP, behind carrier grade NAT
-SIDE_A_SERVER = WIREGUARD (connecting to sideb.dyndns.org)
+# wg set wg0 transit-namespace /proc/1/ns/net
 
-SIDE_B = VDSL with public ip + ddns (sideb.dyndns.org)
-SIDE_B_SERVER = WIREGUARD (cannot connect to SIDE_A, because no public ip
-on SIDE_A)
+to change the Wireguard UDP socket to live in the init namespace.
 
+This has the following advantages over creating the device in the init
+namespace and then moving it to the `vpn` namespace:
 
-Best regards,
-Adrian
+* If multiple processes are creating Wireguard devices at the same time, then
+  their device namespaces are isolated as long as each process uses its own
+  network namespace. This means that there is no problem if two processes try
+  to create the `wg0` device at the same time.
+* The intention is for the `wg0` device to be used only within the `vpn`
+  namespace. It does not feel clean that the device has to live in the init
+  namespace for an arbitrarily short but non-zero amount of time. This also
+  leaks the existence of the `wg0` device to all processes living in the init
+  namespace.
 
---0000000000009127a20574e8c038
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Could such a feature be implemented?
 
-<div dir=3D"ltr">Is there any way to connect to Wireguard behind a Carrier-=
-grade NAT?=C2=A0<div><br></div><div>On SIDE_A I have a backup LTE connectio=
-n, without proper public ip, only dynamic ip and I server with Wireguard.=
-=C2=A0</div><div><br></div><div>SIDE_A =3D mobile LTE connection, without p=
-ublic IP, behind carrier grade NAT=C2=A0</div><div>SIDE_A_SERVER =3D WIREGU=
-ARD (connecting to <a href=3D"http://sideb.dyndns.org">sideb.dyndns.org</a>=
-)=C2=A0</div><div><br></div><div>SIDE_B =3D VDSL with public ip + ddns (<a =
-href=3D"http://sideb.dyndns.org">sideb.dyndns.org</a>)=C2=A0</div><div>SIDE=
-_B_SERVER =3D WIREGUARD (cannot connect to SIDE_A, because no public ip on =
-SIDE_A)=C2=A0</div><div><br></div><div><br></div><div>Best regards,=C2=A0</=
-div><div>Adrian</div></div>
+Julian
 
---0000000000009127a20574e8c038--
+[1] https://www.wireguard.com/netns/
