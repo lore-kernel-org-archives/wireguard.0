@@ -1,28 +1,20 @@
-Return-Path: ryan@testtoast.com
+Return-Path: adriankoooo@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e23e7e56
- for <wireguard@lists.zx2c4.com>;
- Thu, 30 Aug 2018 10:40:40 +0000 (UTC)
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
- [66.111.4.25])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d49ce823
- for <wireguard@lists.zx2c4.com>;
- Thu, 30 Aug 2018 10:40:40 +0000 (UTC)
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
- by mailout.nyi.internal (Postfix) with ESMTP id 8A2FA21E33
- for <wireguard@lists.zx2c4.com>; Thu, 30 Aug 2018 06:54:35 -0400 (EDT)
-Received: from [192.168.1.143] (180-150-21-37.cust.aussiebb.net
- [180.150.21.37])
- by mail.messagingengine.com (Postfix) with ESMTPA id C2BBCE4447
- for <wireguard@lists.zx2c4.com>; Thu, 30 Aug 2018 06:54:33 -0400 (EDT)
-From: Ryan Walklin <ryan@testtoast.com>
-Content-Type: multipart/alternative;
- boundary="Apple-Mail=_488820B3-F2D8-422C-8A56-8A7DA0EEE0A7"
-Mime-Version: 1.0 (Mac OS X Mail 11.5 \(3445.9.1\))
-Subject: TCP Tunneling (again sorry)
-Message-Id: <1D3625F5-E278-436F-B50E-0D65ADCACC1C@testtoast.com>
-Date: Thu, 30 Aug 2018 20:54:30 +1000
-To: wireguard@lists.zx2c4.com
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id aee24d6f
+ for <wireguard@lists.zx2c4.com>; Mon, 3 Sep 2018 10:14:35 +0000 (UTC)
+Received: from mail-io0-x233.google.com (mail-io0-x233.google.com
+ [IPv6:2607:f8b0:4001:c06::233])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5a8f0bfc
+ for <wireguard@lists.zx2c4.com>; Mon, 3 Sep 2018 10:14:35 +0000 (UTC)
+Received: by mail-io0-x233.google.com with SMTP id y12-v6so31466ioj.13
+ for <wireguard@lists.zx2c4.com>; Mon, 03 Sep 2018 03:28:59 -0700 (PDT)
+MIME-Version: 1.0
+From: =?UTF-8?B?QWRyacOhbiBNaWjDoWxrbw==?= <adriankoooo@gmail.com>
+Date: Mon, 3 Sep 2018 12:28:48 +0200
+Message-ID: <CA+Hw3eb7rEuDyuzq9dCj71KAYK3hRni0EDiz5j1ZpKjVwBo-Xg@mail.gmail.com>
+Subject: Wireguard behind NAT
+To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+Content-Type: multipart/alternative; boundary="0000000000005bce910574f502fe"
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -32,92 +24,59 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
+--0000000000005bce910574f502fe
+Content-Type: text/plain; charset="UTF-8"
 
---Apple-Mail=_488820B3-F2D8-422C-8A56-8A7DA0EEE0A7
+Is there any way to connect to Wireguard behind a Carrier-grade NAT?
+
+On SIDE_A I have a backup LTE connection, without proper public ip, only
+dynamic ip and I server with Wireguard.
+
+SIDE_A = mobile LTE connection, without public IP, behind carrier grade NAT
+SIDE_A_SERVER = WIREGUARD (connecting to sideb.dyndns.org)
+
+SIDE_B = VDSL with public ip + ddns (sideb.dyndns.org)
+SIDE_B_SERVER = WIREGUARD (cannot connect to SIDE_A, because no public ip
+on SIDE_A)
+
+I heard of Wireguard-P2P, but it's not running on headless server, because
+one of their component requires x11.
+
+
+Best regards,
+Adrian
+
+--0000000000005bce910574f502fe
+Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
 
-Hi,
+<span style=3D"color:rgb(49,49,49);word-spacing:1px;background-color:rgb(25=
+5,255,255)">Is there any way to connect to Wireguard behind a Carrier-grade=
+ NAT?=C2=A0</span><div style=3D"color:rgb(49,49,49);word-spacing:1px" dir=
+=3D"auto"><br></div><div style=3D"font-size:1rem;color:rgb(49,49,49);word-s=
+pacing:1px" dir=3D"auto">On SIDE_A I have a backup LTE connection, without =
+proper public ip, only dynamic ip and I server with Wireguard.=C2=A0</div><=
+div style=3D"color:rgb(49,49,49);word-spacing:1px" dir=3D"auto"><br></div><=
+div style=3D"font-size:1rem;color:rgb(49,49,49);word-spacing:1px" dir=3D"au=
+to">SIDE_A =3D mobile LTE connection, without public IP, behind carrier gra=
+de NAT=C2=A0</div><div style=3D"font-size:1rem;color:rgb(49,49,49);word-spa=
+cing:1px" dir=3D"auto">SIDE_A_SERVER =3D WIREGUARD (connecting to=C2=A0<a h=
+ref=3D"http://sideb.dyndns.org/" target=3D"_blank" style=3D"font-size:1rem"=
+>sideb.dyndns.org</a>)=C2=A0</div><div style=3D"color:rgb(49,49,49);word-sp=
+acing:1px" dir=3D"auto"><br></div><div style=3D"font-size:1rem;color:rgb(49=
+,49,49);word-spacing:1px" dir=3D"auto">SIDE_B =3D VDSL with public ip + ddn=
+s (<a href=3D"http://sideb.dyndns.org/" target=3D"_blank" style=3D"font-siz=
+e:1rem">sideb.dyndns.org</a>)=C2=A0</div><div style=3D"font-size:1rem;color=
+:rgb(49,49,49);word-spacing:1px" dir=3D"auto">SIDE_B_SERVER =3D WIREGUARD (=
+cannot connect to SIDE_A, because no public ip on SIDE_A)=C2=A0</div><div s=
+tyle=3D"color:rgb(49,49,49);word-spacing:1px" dir=3D"auto"><br></div><div s=
+tyle=3D"color:rgb(49,49,49);word-spacing:1px" dir=3D"auto">I heard of Wireg=
+uard-P2P, but it&#39;s not running on headless server, because one of their=
+ component requires x11.=C2=A0</div><div style=3D"color:rgb(49,49,49);word-=
+spacing:1px" dir=3D"auto"><br></div><div style=3D"color:rgb(49,49,49);word-=
+spacing:1px" dir=3D"auto"><br></div><div style=3D"font-size:1rem;color:rgb(=
+49,49,49);word-spacing:1px" dir=3D"auto">Best regards,=C2=A0</div><div styl=
+e=3D"font-size:1rem;color:rgb(49,49,49);word-spacing:1px" dir=3D"auto">Adri=
+an</div>
 
-I appreciate this is a bit of a noob question not directly related to =
-WireGuard and has been covered before, but I=E2=80=99m just hoping for a =
-bit of advice and clarity. I=E2=80=99ve got a WireGuard tunnel up and =
-running nicely between my MBP laptop and my Debian server at home and am =
-hoping to use it as a VPN while travelling.=20
-
-However I=E2=80=99ve found an issue when my laptop is behind work =
-firewalls which block UDP, and not wanting to be encountering this issue =
-overseas have been looking at tunnelling options. I have been using a =
-SOCKS proxy generated with OpenSSH up until now, but it=E2=80=99s =
-difficult to route all my laptop=E2=80=99s traffic via the proxy.
-
-I=E2=80=99m aware of SSF (https://securesocketfunneling.github.io/ssf =
-<https://securesocketfunneling.github.io/ssf>) and udp2raw =
-(https://github.com/wangyu-/udp2raw-tunnel/blob/master/doc/openvpn_guide.m=
-d =
-<https://github.com/wangyu-/udp2raw-tunnel/blob/master/doc/openvpn_guide.m=
-d>) which has been covered on this list before =
-(https://lists.zx2c4.com/pipermail/wireguard/2018-May/002915.html =
-<https://lists.zx2c4.com/pipermail/wireguard/2018-May/002915.html>) but =
-just wonder if anyone could comment on the specific security implication =
-of using minimal or no security on the TCP tunnel mechanism (which seems =
-poorly implemented by udp2raw particularly), and relying on the =
-underlying WireGuard encryption? Or is this crazy? Is there any other =
-satisfactory Unix-based mechanism to tunnel UDP over TCP?
-
-I feel like if I run a WireGuard tunnel through an encrypted SSF tunnel =
-I may as well just be using SSF by itself, however the ease of setting =
-the default route on my laptop with wg-quick is a great feature and I am =
-very impressed by the quality of WireGuard and the focus on security so =
-would like to continue using it if possible.
-
-Thanks,
-
-Ryan=
-
---Apple-Mail=_488820B3-F2D8-422C-8A56-8A7DA0EEE0A7
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html;
-	charset=utf-8
-
-<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; =
-charset=3Dutf-8"></head><body style=3D"word-wrap: break-word; =
--webkit-nbsp-mode: space; line-break: after-white-space;" =
-class=3D"">Hi,<div class=3D""><br class=3D""></div><div class=3D"">I =
-appreciate this is a bit of a noob question not directly related to =
-WireGuard and has been covered before, but I=E2=80=99m just hoping for a =
-bit of advice and clarity. I=E2=80=99ve got a WireGuard tunnel up and =
-running nicely between my MBP laptop and my Debian server at home and am =
-hoping to use it as a VPN while travelling.&nbsp;</div><div class=3D""><br=
- class=3D""></div><div class=3D"">However I=E2=80=99ve found an issue =
-when my laptop is behind work firewalls which block UDP, and not wanting =
-to be encountering this issue overseas have been looking at tunnelling =
-options. I have been using a SOCKS proxy generated with OpenSSH up until =
-now, but it=E2=80=99s difficult to route all my laptop=E2=80=99s traffic =
-via the proxy.</div><div class=3D""><br class=3D""></div><div =
-class=3D"">I=E2=80=99m aware of SSF (<a =
-href=3D"https://securesocketfunneling.github.io/ssf" =
-class=3D"">https://securesocketfunneling.github.io/ssf</a>) and udp2raw =
-(<a =
-href=3D"https://github.com/wangyu-/udp2raw-tunnel/blob/master/doc/openvpn_=
-guide.md" =
-class=3D"">https://github.com/wangyu-/udp2raw-tunnel/blob/master/doc/openv=
-pn_guide.md</a>) which has been covered on this list before (<a =
-href=3D"https://lists.zx2c4.com/pipermail/wireguard/2018-May/002915.html" =
-class=3D"">https://lists.zx2c4.com/pipermail/wireguard/2018-May/002915.htm=
-l</a>) but just wonder if anyone could comment on the specific security =
-implication of using minimal or no security on the TCP tunnel mechanism =
-(which seems poorly implemented by udp2raw particularly), and relying on =
-the underlying WireGuard encryption? Or is this crazy? Is there any =
-other satisfactory Unix-based mechanism to tunnel UDP over =
-TCP?</div><div class=3D""><br class=3D""></div><div class=3D"">I feel =
-like if I run a WireGuard tunnel through an encrypted SSF tunnel I may =
-as well just be using SSF by itself, however the ease of setting the =
-default route on my laptop with wg-quick is a great feature and I am =
-very impressed by the quality of WireGuard and the focus on security so =
-would like to continue using it if possible.</div><div class=3D""><br =
-class=3D""></div><div class=3D"">Thanks,</div><div class=3D""><br =
-class=3D""></div><div class=3D"">Ryan</div></body></html>=
-
---Apple-Mail=_488820B3-F2D8-422C-8A56-8A7DA0EEE0A7--
+--0000000000005bce910574f502fe--
