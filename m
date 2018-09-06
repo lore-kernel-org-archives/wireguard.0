@@ -1,30 +1,23 @@
-Return-Path: b.candler@pobox.com
+Return-Path: dennis.jackson@cs.ox.ac.uk
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bec2eb68
- for <wireguard@lists.zx2c4.com>; Thu, 6 Sep 2018 15:23:49 +0000 (UTC)
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id af63c03d
- for <wireguard@lists.zx2c4.com>; Thu, 6 Sep 2018 15:23:49 +0000 (UTC)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
- by pb-smtp2.pobox.com (Postfix) with ESMTP id 6DA21108E70
- for <wireguard@lists.zx2c4.com>; Thu,  6 Sep 2018 11:24:03 -0400 (EDT)
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
- by pb-smtp2.pobox.com (Postfix) with ESMTP id 671F6108E6F
- for <wireguard@lists.zx2c4.com>; Thu,  6 Sep 2018 11:24:03 -0400 (EDT)
-Received: from MacBook-Pro-2.local (unknown [185.45.97.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (No client certificate requested)
- by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8A943108E6D
- for <wireguard@lists.zx2c4.com>; Thu,  6 Sep 2018 11:24:02 -0400 (EDT)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8fd47489
+ for <wireguard@lists.zx2c4.com>; Thu, 6 Sep 2018 15:34:42 +0000 (UTC)
+Received: from relay14.mail.ox.ac.uk (relay14.mail.ox.ac.uk [163.1.2.162])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5d7478ce
+ for <wireguard@lists.zx2c4.com>; Thu, 6 Sep 2018 15:34:42 +0000 (UTC)
+Date: Thu, 6 Sep 2018 16:34:50 +0100
+From: Dennis Jackson <dennis.jackson@cs.ox.ac.uk>
+To: George Walker <georgewalkeriv@gmail.com>
 Subject: Re: Let's talk about obfuscation again
-To: wireguard@lists.zx2c4.com
-References: <mailman.1542.1536245115.2201.wireguard@lists.zx2c4.com>
-From: Brian Candler <b.candler@pobox.com>
-Message-ID: <2c0808aa-47da-9d1a-1c35-1aec3d0c9acc@pobox.com>
-Date: Thu, 6 Sep 2018 16:24:00 +0100
+Message-ID: <20180906163450.3f20480b@T-200>
+In-Reply-To: <706D2A48-7DAA-436A-BB99-2AE80822B524@gmail.com>
+References: <CA+7UkwLER55wRDfLT7gNH+cPwSW4ziD-L71HyPix_wXOKFsiWg@mail.gmail.com>
+ <20180906094330.273b07be@T-200>
+ <706D2A48-7DAA-436A-BB99-2AE80822B524@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <mailman.1542.1536245115.2201.wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ boundary="Sig_/59fWW6saf=jmJgaTL5xdRXk"; protocol="application/pgp-signature"
+Cc: wireguard@lists.zx2c4.com
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -34,16 +27,79 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-> Domain fronting seems like the stealthiest option to me (and if anyone has a reliable way to
-> detect domain fronting, I would love to hear about it!). But that doesn?t get you UDP (and NAT
-> traversal); perhaps VOIP/WebRTC mimicry could work?
+--Sig_/59fWW6saf=jmJgaTL5xdRXk
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-I think this is a game you can't win against a suitably motivated adversary.  Such an adversary can and will decode the payload to see if it makes sense.
+On Thu, 6 Sep 2018 17:19:57 +0200
+Fredrik Str=C3=B6mberg <stromberg@mullvad.net> wrote:
 
-For example: an apparently unencrypted VOIP/WebRTC stream, but one which contains "random" payload (i.e. which doesn't decode properly through the declared codec, or decodes to noise) may be interpreted as an encrypted phone call, and blocked on that basis alone, even if it's not obvious it contains data.
+>> First of all, censorship circumvention is an important societal
+>> problem to solve. It is also clearly outside of the scope of
+>> WireGuard. Any suggested protocol change with that motive will
+>> increase the complexity of the code base, which increases the risk
+>> of vulnerabilities. This would hurt all WireGuard users.
 
-It would also be massively inefficient.  On the one hand, you'd have to send a stream of padding packets when there is no data to send, to look like an idle phone/video call.  On the other hand, when you *do* have data to send, you would have to constrain your bandwidth so you don't burst above a level of traffic which such a call would normally generate.
+Amen!=20
 
-OK, so what about changing wireguard to use TCP and TLS on port 443? It's still going to look very anomolous compared to a "normal" web exchange.  Conceivably it might be mistaken for a websockets-based chat application or XMPP; but any adversary who wants to block wireguard is presumably going to want to block encrypted chat too.
+On Thu, 6 Sep 2018 10:45:24 -0400
+George Walker <georgewalkeriv@gmail.com> wrote:
 
-In summary: I think wireguard is a tool for connecting together island networks, over an untrusted but cooperative intermediate network.  I don't think it should turn into a tool for steganography or policy busting.
+> The objective of cleaning as described seems to be to make the
+> protocol indistinguishable from exchanging random payloads. But are
+> there any common protocols of commercial importance that are so
+> inscrutable? If I saw such random-looking UDP payloads on the wire I
+> would suspect malware c&c, file sharing (who remembers FreeNet?), or
+> a tunnel, depending on data volume and direction =E2=80=94nothing I would
+> hesitate to block (or flag as suspicious) if I were running a big
+> traffic classifier.
+
+There is a few different purposes served by this transform:=20
+
+a) By having a uniformly random stream, its much easier to plug in to
+various mimicry tools (as you suggest) since you know the input data
+doesn't contain any meaning. There's some good work from the Tor people
+on this kind of thing. For example, 'cleaned' traffic could be made to
+look like TLS, without doubly encrypting every packet with the TLS key,
+instead the UDP data can be passed through directly.=20
+
+b) From a surveillance perspective, it becomes harder to identify and
+record traffic. The classification goes from being "WG-VPN" to "???".
+This makes the analysts job a bit harder. Increasing labour costs is
+probably more painful for such entities than anything else.=20
+
+c) It forces a censor to move from a blacklisting approach  to a
+whitelisting approach. As you say, this won't stymie the great firewall
+of China but developing a rule to block traffic which looks "too
+random" without too many false positives requires a lot of resources
+and we can exploit this.=20
+
+Best,
+Dennis=20
+
+--=20
+PGP Fingerprint: 5B93 F0B9 D6A8 9BC1 546B C98C 6105 A775 8CD2 46AC
+
+--Sig_/59fWW6saf=jmJgaTL5xdRXk
+Content-Type: application/pgp-signature
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCAAGBQJbkUkaAAoJEGEFp3WM0kasiSEP/31a6ygSK++EH+2vtVDK/AxX
+6UJcHJgwXZEG1n+ZNpVJnvUvRyCDBokH+k7vq7keUkA28sJMUQJZ3d0Q+BpwRhuM
+uoRoM7GbQyxD+S3HRfeGiJYQPutSdGWOZJDPkaN2PWP0ZB28TikVsnpU6/yzifgc
+fezvQJeurFlG1Dx6EpA7K1NSqfw25sEXvEB0i6cqkS4VJc0VBT3f3+KQFtJeIL2E
+SuhzhhdnmrGAmep4t8Gbq1eIVGKOtOAq24WLAisFDE04dff0xHGW/PQssMjXU+VG
+0Rp59sSsyWAe2Xxzal+q3CtDRTFxYBocuZdORKmUG2C9dI4RAPo58YkW6crrxQxM
+hzy/eXEUXgWIjOVk5uF1xPK5vWOCC8WJ7sZ88vs5hUE8lczvjx8QA6U2qn32j4Tq
+AUu6pcC87khbC7qqSFjtz4P3ZPXcZNQ3J2C1s6xNQOBQiCUY/mv10DDrNnPCN1ui
+CkvZ10rxu+LihFX3etgnafDjx098E9vm2dtMGDkSvo0vzXGalrIsw22S8C83n48a
+9AMuKL1XD+3we9UmccZe88r5COwICzh0gIYqrglOHcgOeS3Pjxo+bJByXo9TOY/6
+yhXVh7NwwQoAhq1vqHZ9rQxXaPh422FNJbsaTrOT+y3iHWbfwXt/5S3hfbkhrGcR
+ge3AklRRE/O9jivympd9
+=uonM
+-----END PGP SIGNATURE-----
+
+--Sig_/59fWW6saf=jmJgaTL5xdRXk--
