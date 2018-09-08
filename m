@@ -1,21 +1,26 @@
-Return-Path: lanerussell@protonmail.com
+Return-Path: david.w.cowden@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d8346986
- for <wireguard@lists.zx2c4.com>; Thu, 6 Sep 2018 19:24:11 +0000 (UTC)
-Received: from mail2.protonmail.ch (mail2.protonmail.ch [185.70.40.22])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fda48f0f
- for <wireguard@lists.zx2c4.com>; Thu, 6 Sep 2018 19:24:11 +0000 (UTC)
-Date: Thu, 06 Sep 2018 19:24:19 +0000
-To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
-From: Lane Russell <lanerussell@protonmail.com>
-Subject: WireGuard behaviour with systemd-resolved
-Message-ID: <cV5DAOCAED7JqrQdKdDTbhoHYmuBbNUhSX_Z9L_TOup0l7o6fwLfCCKMwfhpCRa7f0SexsQjet9E88CuoabHwxzhPJ0-v_glPYIB-Mmtid0=@protonmail.com>
-In-Reply-To: <8FoWvrUYUmkjgZcMGqh1IHuiN4qsBZ0J-Lx0L9_G9KYNgRWxV5hgsKU1FvzVWFayxO8VRbAnQFB_6tPLYWSq90jugyDvS7ea8byrT2mwPS4=@protonmail.com>
-References: <8FoWvrUYUmkjgZcMGqh1IHuiN4qsBZ0J-Lx0L9_G9KYNgRWxV5hgsKU1FvzVWFayxO8VRbAnQFB_6tPLYWSq90jugyDvS7ea8byrT2mwPS4=@protonmail.com>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 40bc124e
+ for <wireguard@lists.zx2c4.com>; Sat, 8 Sep 2018 04:45:05 +0000 (UTC)
+Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com
+ [IPv6:2607:f8b0:4864:20::62b])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 08fc43f9
+ for <wireguard@lists.zx2c4.com>; Sat, 8 Sep 2018 04:45:05 +0000 (UTC)
+Received: by mail-pl1-x62b.google.com with SMTP id f1-v6so7435963plt.4
+ for <wireguard@lists.zx2c4.com>; Fri, 07 Sep 2018 21:45:31 -0700 (PDT)
+Return-Path: <david.w.cowden@gmail.com>
+Received: from dcx1.dcow.io (eero.static.monkeybrains.net. [199.116.72.162])
+ by smtp.gmail.com with ESMTPSA id y69-v6sm19775216pfd.36.2018.09.07.21.45.29
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+ Fri, 07 Sep 2018 21:45:29 -0700 (PDT)
+Date: Fri, 7 Sep 2018 21:45:27 -0700
+From: David Cowden <david.w.cowden@gmail.com>
+To: wireguard@lists.zx2c4.com
+Subject: Broadcasts over L3 tunnel
+Message-ID: <20180908044527.7dhejnj2yp257pdt@dcx1.dcow.io>
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="b1_ced0610b0fd567898cdc772ebfd8c7f7"
-Reply-To: Lane Russell <lanerussell@protonmail.com>
+Content-Type: text/plain; charset=us-ascii
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -25,47 +30,17 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-This is a multi-part message in MIME format.
+I've been playing around with wireguard and I'd really like to enable a
+scenario where a remote peer appears like they're on a LAN (at L3) somewhere
+so that e.g. mDNS broadcasts reach the remote peer. I can create all sorts of
+topologies where traffic can flow between the remote peer(s) and the LAN peers,
+but I'm hung up on getting the kernel to send broadcasts to the wireguard
+interface. If you put everything on the same subnet, you essentially end up
+with two conflicting entries in the LAN host's routing table: one that routes
+LAN traffic to the gateway for egress or if you're running on the gateway then
+egresses upstream, and a second entry telling the kernel that the same subnet is
+available across the wg interface.
 
---b1_ced0610b0fd567898cdc772ebfd8c7f7
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+Is a topology like this possible without hacking up some facade into L2?
 
-SSd2ZSBub3RpY2VkIHNvbWUgY29uY2VybmluZyBiZWhhdmlvdXIgdXNpbmcgV2lyZUd1YXJkIG9u
-IE1hbmphcm8gR05PTUUuIFdoZW4gdGhlIFdpcmVHdWFyZCBpbnRlcmZhY2UgaXMgYnJvdWdodCB1
-cCwgdGhlIHN5c3RlbSBzdGFydHMgdXNpbmcgdGhlIEROUyBzZXJ2ZXJzIHByb3ZpZGVkIGluIHRo
-ZSB3Zy1jbGllbnQuY29uZiBmaWxlLiBJbnRlcm1pdHRlbnRseSBob3dldmVyLCBpbnRlcm5hbCBE
-TlMgcmVjb3JkcyB3aWxsIHJlc29sdmUgdXNpbmcgdGhlaXIgcHVibGljIElQIGFkZHJlc3Nlcy4g
-VXNpbmcgdGNwZHVtcCwgSSdtIGFibGUgdG8gc2VlIHRoZSBzeXN0ZW0gaXMgdXNpbmcgOC44Ljgu
-OCBhbmQgOC44LjQuNCBmb3Igc29tZSBxdWVyaWVzLiBUaGVzZSBhZGRyZXNzZXMgYXJlIGNvbmZp
-Z3VyZWQgYXMgZmFsbGJhY2sgRE5TIHNlcnZlcnMgaW4gc3lzdGVtZC1yZXNvbHZlZC4gVGhleSB3
-ZXJlIGFjcXVpcmVkIHZpYSBESENQIGJlZm9yZSB0aGUgV2lyZUd1YXJkIGludGVyZmFjZSB3YXMg
-YnJvdWdodCB1cC4KCklzIHRoaXMgYW4gaXNzdWUgd2l0aCBXaXJlR3VhcmQsIG9yIHN5c3RlbWQt
-cmVzb2x2ZWQ/IEJhc2VkIG9uIHdoYXQgaW5mb3JtYXRpb24gSSdtIGFibGUgdG8gZmluZCwgaXQg
-YXBwZWFycyB0aGVyZSBhcmUgc29tZSBiaWcgY29uY2VybnMgd2l0aCBob3cgc3lzdGVtZC1yZXNv
-bHZlZCBoYW5kbGVzIEROUywgc28gSSdtIG1vcmUgaW5jbGluZWQgdG8gdGhpbmsgdGhlIGlzc3Vl
-IGxpZXMgdGhlcmUu
-
-
---b1_ced0610b0fd567898cdc772ebfd8c7f7
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: base64
-
-PGRpdj5JJ3ZlIG5vdGljZWQgc29tZSBjb25jZXJuaW5nIGJlaGF2aW91ciB1c2luZyBXaXJlR3Vh
-cmQgb24gTWFuamFybyBHTk9NRS4gV2hlbiB0aGUgV2lyZUd1YXJkIGludGVyZmFjZSBpcyBicm91
-Z2h0IHVwLCB0aGUgc3lzdGVtIHN0YXJ0cyB1c2luZyB0aGUgRE5TIHNlcnZlcnMgcHJvdmlkZWQg
-aW4gdGhlIHdnLWNsaWVudC5jb25mIGZpbGUuIEludGVybWl0dGVudGx5IGhvd2V2ZXIsIGludGVy
-bmFsIEROUyByZWNvcmRzIHdpbGwgcmVzb2x2ZSB1c2luZyB0aGVpciBwdWJsaWMgSVAgYWRkcmVz
-c2VzLiBVc2luZyB0Y3BkdW1wLCBJJ20gYWJsZSB0byBzZWUgdGhlIHN5c3RlbSBpcyB1c2luZyA4
-LjguOC44IGFuZCA4LjguNC40IGZvciBzb21lIHF1ZXJpZXMuIFRoZXNlIGFkZHJlc3NlcyBhcmUg
-Y29uZmlndXJlZCBhcyBmYWxsYmFjayBETlMgc2VydmVycyBpbiBzeXN0ZW1kLXJlc29sdmVkLiBU
-aGV5IHdlcmUgYWNxdWlyZWQgdmlhIERIQ1AgYmVmb3JlIHRoZSBXaXJlR3VhcmQgaW50ZXJmYWNl
-IHdhcyBicm91Z2h0IHVwLjxicj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PklzIHRoaXMgYW4g
-aXNzdWUgd2l0aCBXaXJlR3VhcmQsIG9yIHN5c3RlbWQtcmVzb2x2ZWQ/IEJhc2VkIG9uIHdoYXQg
-aW5mb3JtYXRpb24gSSdtIGFibGUgdG8gZmluZCwgaXQgYXBwZWFycyB0aGVyZSBhcmUgc29tZSBi
-aWcgY29uY2VybnMgd2l0aCBob3cgc3lzdGVtZC1yZXNvbHZlZCBoYW5kbGVzIEROUywgc28gSSdt
-IG1vcmUgaW5jbGluZWQgdG8gdGhpbmsgdGhlIGlzc3VlIGxpZXMgdGhlcmUuPGJyPjwvZGl2Pg==
-
-
-
---b1_ced0610b0fd567898cdc772ebfd8c7f7--
+David
