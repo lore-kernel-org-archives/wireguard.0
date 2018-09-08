@@ -1,25 +1,27 @@
 Return-Path: aaronmdjones@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d03538f9
- for <wireguard@lists.zx2c4.com>; Sat, 8 Sep 2018 14:02:51 +0000 (UTC)
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com
- [IPv6:2a00:1450:4864:20::42a])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a0a1bf7b
- for <wireguard@lists.zx2c4.com>; Sat, 8 Sep 2018 14:02:51 +0000 (UTC)
-Received: by mail-wr1-x42a.google.com with SMTP id w11-v6so17531489wrc.5
- for <wireguard@lists.zx2c4.com>; Sat, 08 Sep 2018 07:03:20 -0700 (PDT)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8360ae7c
+ for <wireguard@lists.zx2c4.com>; Sat, 8 Sep 2018 14:04:25 +0000 (UTC)
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com
+ [IPv6:2a00:1450:4864:20::444])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 11951b28
+ for <wireguard@lists.zx2c4.com>; Sat, 8 Sep 2018 14:04:25 +0000 (UTC)
+Received: by mail-wr1-x444.google.com with SMTP id a108-v6so17483061wrc.13
+ for <wireguard@lists.zx2c4.com>; Sat, 08 Sep 2018 07:04:54 -0700 (PDT)
 Return-Path: <aaronmdjones@gmail.com>
-Subject: Re: [PATCH 5/7] netlink: allow setting of transit net
+Subject: Re: [PATCH 6/7] tools: allow setting of transit net
 To: Julian Orth <ju.orth@gmail.com>
 References: <20180908121841.8372-1-ju.orth@gmail.com>
- <20180908121841.8372-6-ju.orth@gmail.com>
+ <20180908121841.8372-7-ju.orth@gmail.com>
 From: Aaron Jones <aaronmdjones@gmail.com>
-Message-ID: <a6d8b0be-1d69-c803-17f4-e23d49073c28@gmail.com>
-Date: Sat, 8 Sep 2018 14:03:17 +0000
+Message-ID: <1550cbf1-b5a4-d245-669d-9400245b1633@gmail.com>
+Date: Sat, 8 Sep 2018 14:04:51 +0000
 MIME-Version: 1.0
-In-Reply-To: <20180908121841.8372-6-ju.orth@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+In-Reply-To: <20180908121841.8372-7-ju.orth@gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="ZYvaselv1EQbmBKpWkucYCiENg8kqQ253"
+Cc: wireguard@lists.zx2c4.com
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -29,25 +31,77 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--ZYvaselv1EQbmBKpWkucYCiENg8kqQ253
+Content-Type: multipart/mixed; boundary="RcnSD3GW3Zv31SrFkfy5nHyzoVCK8oSD8";
+ protected-headers="v1"
+From: Aaron Jones <aaronmdjones@gmail.com>
+To: Julian Orth <ju.orth@gmail.com>
+Cc: wireguard@lists.zx2c4.com
+Message-ID: <1550cbf1-b5a4-d245-669d-9400245b1633@gmail.com>
+Subject: Re: [PATCH 6/7] tools: allow setting of transit net
+References: <20180908121841.8372-1-ju.orth@gmail.com>
+ <20180908121841.8372-7-ju.orth@gmail.com>
+In-Reply-To: <20180908121841.8372-7-ju.orth@gmail.com>
 
-Does this handle file descriptor 0 (unlikely, but perfectly valid) ?
+--RcnSD3GW3Zv31SrFkfy5nHyzoVCK8oSD8
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: quoted-printable
+
+On 08/09/18 12:18, Julian Orth wrote:
+> +static bool parse_transit_net(struct wgdevice *device, const char *arg=
+)
+> +{
+> +	/* U32 arg -> PID */
+> +	if (isdigit(*arg)) {
+> +		char *end;
+> +		unsigned long pid =3D strtoul(arg, &end, 10);
+> +		if (!*end && pid <=3D UINT32_MAX) {
+> +			device->transit_net_pid =3D pid;
+> +			device->flags |=3D WGDEVICE_HAS_TRANSIT_NET_PID;
+> +			return true;
+> +		}
+> +	}
+> +
+> +	/* Otherwise -> file path */
+> +	device->transit_net_fd =3D open(arg, O_RDONLY);
+> +	if (device->transit_net_fd >=3D 0) {
+> +		device->flags |=3D WGDEVICE_HAS_TRANSIT_NET_FD;
+> +		return true;
+> +	}
+> +
+> +	perror("fopen");
+> +	return false;
+> +}
+
+Wrong function name given to perror(3).
+
+
+
+--RcnSD3GW3Zv31SrFkfy5nHyzoVCK8oSD8--
+
+--ZYvaselv1EQbmBKpWkucYCiENg8kqQ253
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Comment: Using GnuPG with Thunderbird - https://www.enigmail.net/
 
-iQIzBAEBCgAdFiEEYKVBwe43zZh/jkxPivBzdIirMBIFAluT1qQACgkQivBzdIir
-MBKv2g/+Nvz3NmcakxPMzGAC07dXQiu4TVVjwFeGofUwgQmB5+wY6fy9Sqg+S+z6
-Fkz2Mnkste0o38JGz2320wAPmH6IYsKrtA5TGzaoNP8I+Gp2Uy9GqjDtUe2+tNnj
-hLdK2mucbE1Sp6MbBeTKyZi2ZD1VHaYcsFJupjPnL1wT7pVnVSnRjGwoEJjRT4VQ
-htgEh4YGtAGOWHYzFMxlZF/oKM6QHAZXTcAm6k1xMLk7TvXNpaTamuNYCl2DLwIf
-TpjxANzzd5itBcos95F0VKJtVlRJkbW0lIedaw3qyrjhIjM8rmxAF/pTGosMigcr
-KIXVcPKaZhB0y/kMh/fe7LFMIcBb9N62skJEHtpFX4AUjT+XQYGtzp2Z9iiVDooX
-kLn19X3EDgS5ln7LaNlprZnQaxjkHWhQa+X8xxDKyFVBRBJO4lQA72eT4ZjSDzbv
-JGRkLSHsvGmHg5qOji5mamZB+HgLZcImbKAp2MJaEkgU9G9M9U8OPICp5dVcv9dp
-1cY7E0qhhrBDyhda30VbuM+inOjEfqYHQ5ZaGGE530EN8oVE1eci421OcxdY/MTc
-mmJ8FOYxxYsxNwzPZsMHjIX1xGD6W87zG0kOKLDBBrJ64FBWe77kGMZ9R55Is5pc
-kfeTfDSR311OC4qHy4scudqNUyyh8WnySFziohCoOU9giypLNGQ=
-=2J95
+iQIzBAEBCgAdFiEEYKVBwe43zZh/jkxPivBzdIirMBIFAluT1wQACgkQivBzdIir
+MBKS0Q//aHyIGxzNRuXGRRLziqMPYmqq1NJozNVL7FiMHtvAGXaSzNgPgUiiM3Zw
+KdW6yzkQzBrHYMsZnrbcjC2UEY9bjGM4wRtIxv6/uxGw4A/vqOCJJVCSHyWisN+5
+N6jEUpJEAhNv+3EurmJxz7RUHxfuxFTtfcb1gkvy0bNP7+dWPw9E5Ws+CEcY/FYZ
+vHrGA20JyyXtjsZjhCz25umSf7odJ3Y0fIM033GIctLJNCoQq8yMkmGFNmIxgfvL
+J9cKN32PricxvXDdcQPX0OTMXc6AR63Ggitzu/Uxk+je6LHS1mww3AFCnkLL1kyu
+0MAgHKxg6QhmCrkqWEYDoXgCyGRuae5rSHLDTXc8/3RYpWIuQ6YffxFyxgthsPcH
++b4kLH6Yag4ubKXPd3kkjUDKEomBbogPcr0sg/vlubAEf7KXrxKI6jOuYoQNBN5G
+3KPEx1b9n0jQXMbYk0Kx8D+6TKREzSQ34yiPnPug1MKlVpj6LP+W05eiVQMk7A1m
+BR0vN45/uAOx38bohjFQ0romDVTxFOGii8k2RgNZR1mEBvaVM2WFmEgshBUWiiV4
+nUiwLqNZhPFEKDUu0mf2yrtUlfaTc6VWpcvX0pOqS78y1wbxIqVi6ZHiphdpuCpN
+qs34Cx14n9vW+vM+0f8b7yxLz+dgMAnTRstYD/V3R06UZAjTx6U=
+=QP1v
 -----END PGP SIGNATURE-----
+
+--ZYvaselv1EQbmBKpWkucYCiENg8kqQ253--
