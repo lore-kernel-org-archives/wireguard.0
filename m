@@ -1,25 +1,25 @@
-Return-Path: ju.orth@gmail.com
+Return-Path: aaronmdjones@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ef304a21
- for <wireguard@lists.zx2c4.com>; Sat, 8 Sep 2018 13:49:15 +0000 (UTC)
-Received: from mail-wm0-x242.google.com (mail-wm0-x242.google.com
- [IPv6:2a00:1450:400c:c09::242])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9959c331
- for <wireguard@lists.zx2c4.com>; Sat, 8 Sep 2018 13:49:15 +0000 (UTC)
-Received: by mail-wm0-x242.google.com with SMTP id b19-v6so17251660wme.3
- for <wireguard@lists.zx2c4.com>; Sat, 08 Sep 2018 06:49:44 -0700 (PDT)
-Return-Path: <ju.orth@gmail.com>
-Subject: Re: [PATCH 0/7] Allow changing the transit namespace
-To: Bruno Wolff III <bruno@wolff.to>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d03538f9
+ for <wireguard@lists.zx2c4.com>; Sat, 8 Sep 2018 14:02:51 +0000 (UTC)
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com
+ [IPv6:2a00:1450:4864:20::42a])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a0a1bf7b
+ for <wireguard@lists.zx2c4.com>; Sat, 8 Sep 2018 14:02:51 +0000 (UTC)
+Received: by mail-wr1-x42a.google.com with SMTP id w11-v6so17531489wrc.5
+ for <wireguard@lists.zx2c4.com>; Sat, 08 Sep 2018 07:03:20 -0700 (PDT)
+Return-Path: <aaronmdjones@gmail.com>
+Subject: Re: [PATCH 5/7] netlink: allow setting of transit net
+To: Julian Orth <ju.orth@gmail.com>
 References: <20180908121841.8372-1-ju.orth@gmail.com>
- <20180908133906.GA20780@wolff.to>
-From: Julian Orth <ju.orth@gmail.com>
-Message-ID: <a2392424-95eb-bd6a-a82e-39a2167a9902@gmail.com>
-Date: Sat, 8 Sep 2018 15:49:41 +0200
+ <20180908121841.8372-6-ju.orth@gmail.com>
+From: Aaron Jones <aaronmdjones@gmail.com>
+Message-ID: <a6d8b0be-1d69-c803-17f4-e23d49073c28@gmail.com>
+Date: Sat, 8 Sep 2018 14:03:17 +0000
 MIME-Version: 1.0
-In-Reply-To: <20180908133906.GA20780@wolff.to>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Cc: wireguard@lists.zx2c4.com
+In-Reply-To: <20180908121841.8372-6-ju.orth@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -29,25 +29,25 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-On 9/8/18 3:39 PM, Bruno Wolff III wrote:
-> On Sat, Sep 08, 2018 at 14:18:34 +0200,
->   Julian Orth <ju.orth@gmail.com> wrote:
->>
->> wg set <device> transit-net <pid|file-path>
->>
->> The distinction is made based on the format of the argument. If it is an
->> unsigned 32 bit integer, then it is interpreted as a process id.
->> Otherwise it is interpreted as a file path. /proc does not need to be
->> mounted to use the process id interpretation. To force the
->> interpretation as a file-path, use a ./ prefix.
-> 
-> Ambiguity is generally not a good idea (especially for security 
-> applications). It's not my decision, but I'd rather see the syntax make 
-> it clear what the type of the parameter is supposed to be.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-The syntax is based on a similar feature in iproute2:
+Does this handle file descriptor 0 (unlikely, but perfectly valid) ?
 
-ip link set <device> netns <pid|name>
+-----BEGIN PGP SIGNATURE-----
+Comment: Using GnuPG with Thunderbird - https://www.enigmail.net/
 
-The syntax of wg seems to generally follow the iproute2 syntax so I 
-tried to keep it consistent.
+iQIzBAEBCgAdFiEEYKVBwe43zZh/jkxPivBzdIirMBIFAluT1qQACgkQivBzdIir
+MBKv2g/+Nvz3NmcakxPMzGAC07dXQiu4TVVjwFeGofUwgQmB5+wY6fy9Sqg+S+z6
+Fkz2Mnkste0o38JGz2320wAPmH6IYsKrtA5TGzaoNP8I+Gp2Uy9GqjDtUe2+tNnj
+hLdK2mucbE1Sp6MbBeTKyZi2ZD1VHaYcsFJupjPnL1wT7pVnVSnRjGwoEJjRT4VQ
+htgEh4YGtAGOWHYzFMxlZF/oKM6QHAZXTcAm6k1xMLk7TvXNpaTamuNYCl2DLwIf
+TpjxANzzd5itBcos95F0VKJtVlRJkbW0lIedaw3qyrjhIjM8rmxAF/pTGosMigcr
+KIXVcPKaZhB0y/kMh/fe7LFMIcBb9N62skJEHtpFX4AUjT+XQYGtzp2Z9iiVDooX
+kLn19X3EDgS5ln7LaNlprZnQaxjkHWhQa+X8xxDKyFVBRBJO4lQA72eT4ZjSDzbv
+JGRkLSHsvGmHg5qOji5mamZB+HgLZcImbKAp2MJaEkgU9G9M9U8OPICp5dVcv9dp
+1cY7E0qhhrBDyhda30VbuM+inOjEfqYHQ5ZaGGE530EN8oVE1eci421OcxdY/MTc
+mmJ8FOYxxYsxNwzPZsMHjIX1xGD6W87zG0kOKLDBBrJ64FBWe77kGMZ9R55Is5pc
+kfeTfDSR311OC4qHy4scudqNUyyh8WnySFziohCoOU9giypLNGQ=
+=2J95
+-----END PGP SIGNATURE-----
