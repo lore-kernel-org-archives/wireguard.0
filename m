@@ -1,19 +1,19 @@
 Return-Path: ju.orth@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f477a1b1
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1bda54a1
  for <wireguard@lists.zx2c4.com>; Sat, 8 Sep 2018 12:18:54 +0000 (UTC)
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com
- [IPv6:2a00:1450:4864:20::441])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 64f56d7e
- for <wireguard@lists.zx2c4.com>; Sat, 8 Sep 2018 12:18:52 +0000 (UTC)
-Received: by mail-wr1-x441.google.com with SMTP id 20-v6so17332396wrb.12
- for <wireguard@lists.zx2c4.com>; Sat, 08 Sep 2018 05:19:21 -0700 (PDT)
+Received: from mail-wm0-x22c.google.com (mail-wm0-x22c.google.com
+ [IPv6:2a00:1450:400c:c09::22c])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4d4efd33
+ for <wireguard@lists.zx2c4.com>; Sat, 8 Sep 2018 12:18:53 +0000 (UTC)
+Received: by mail-wm0-x22c.google.com with SMTP id f21-v6so17083610wmc.5
+ for <wireguard@lists.zx2c4.com>; Sat, 08 Sep 2018 05:19:22 -0700 (PDT)
 Return-Path: <ju.orth@gmail.com>
 From: Julian Orth <ju.orth@gmail.com>
 To: wireguard@lists.zx2c4.com
-Subject: [PATCH 1/7] device: protect socket_init with device_update_lock
-Date: Sat,  8 Sep 2018 14:18:35 +0200
-Message-Id: <20180908121841.8372-2-ju.orth@gmail.com>
+Subject: [PATCH 2/7] device: rename creating_net to transit_net
+Date: Sat,  8 Sep 2018 14:18:36 +0200
+Message-Id: <20180908121841.8372-3-ju.orth@gmail.com>
 In-Reply-To: <20180908121841.8372-1-ju.orth@gmail.com>
 References: <20180908121841.8372-1-ju.orth@gmail.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
@@ -25,46 +25,113 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-`set_port` in netlink.c races with `open` in device.c. This can cause
-the following code flow:
-
-* thread 1: set_port: device is not up
-* thread 2: device is opened
-* thread 2: open: called and calls socket_init with the original port
-* thread 1: set_port: sets incoming_port to the new port and returns
-
-incoming_port is then inconsistent. While this is not particularly
-critical, it will become more critial when ste_port also sets the
-transit namespace.
 ---
- src/device.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ src/device.c | 20 ++++++++++----------
+ src/device.h |  4 ++--
+ src/socket.c |  8 ++++----
+ 3 files changed, 16 insertions(+), 16 deletions(-)
 
 diff --git a/src/device.c b/src/device.c
-index 255ad49..88c228b 100644
+index 88c228b..92aefc4 100644
 --- a/src/device.c
 +++ b/src/device.c
-@@ -53,17 +53,18 @@ static int open(struct net_device *dev)
- #endif
- #endif
- 
-+	mutex_lock(&wg->device_update_lock);
- 	ret = socket_init(wg, wg->incoming_port);
- 	if (ret < 0)
--		return ret;
--	mutex_lock(&wg->device_update_lock);
-+		goto out;
- 	list_for_each_entry (peer, &wg->peer_list, peer_list) {
- 		packet_send_staged_packets(peer);
- 		if (peer->persistent_keepalive_interval)
- 			packet_send_keepalive(peer);
- 	}
-+out:
+@@ -243,8 +243,8 @@ static void destruct(struct net_device *dev)
+ 	skb_queue_purge(&wg->incoming_handshakes);
+ 	free_percpu(dev->tstats);
+ 	free_percpu(wg->incoming_handshakes_worker);
+-	if (wg->have_creating_net_ref)
+-		put_net(wg->creating_net);
++	if (wg->have_transit_net_ref)
++		put_net(wg->transit_net);
  	mutex_unlock(&wg->device_update_lock);
--	return 0;
-+	return ret;
- }
  
- #if defined(CONFIG_PM_SLEEP) && !defined(CONFIG_ANDROID)
+ 	pr_debug("%s: Interface deleted\n", dev->name);
+@@ -296,7 +296,7 @@ static int newlink(struct net *src_net, struct net_device *dev,
+ 	int ret = -ENOMEM;
+ 	struct wireguard_device *wg = netdev_priv(dev);
+ 
+-	wg->creating_net = src_net;
++	wg->transit_net = src_net;
+ 	init_rwsem(&wg->static_identity.lock);
+ 	mutex_init(&wg->socket_update_lock);
+ 	mutex_init(&wg->device_update_lock);
+@@ -396,13 +396,13 @@ static int netdevice_notification(struct notifier_block *nb,
+ 	if (action != NETDEV_REGISTER || dev->netdev_ops != &netdev_ops)
+ 		return 0;
+ 
+-	if (dev_net(dev) == wg->creating_net && wg->have_creating_net_ref) {
+-		put_net(wg->creating_net);
+-		wg->have_creating_net_ref = false;
+-	} else if (dev_net(dev) != wg->creating_net &&
+-		   !wg->have_creating_net_ref) {
+-		wg->have_creating_net_ref = true;
+-		get_net(wg->creating_net);
++	if (dev_net(dev) == wg->transit_net && wg->have_transit_net_ref) {
++		put_net(wg->transit_net);
++		wg->have_transit_net_ref = false;
++	} else if (dev_net(dev) != wg->transit_net &&
++		   !wg->have_transit_net_ref) {
++		wg->have_transit_net_ref = true;
++		get_net(wg->transit_net);
+ 	}
+ 	return 0;
+ }
+diff --git a/src/device.h b/src/device.h
+index 2499782..4b7552c 100644
+--- a/src/device.h
++++ b/src/device.h
+@@ -40,7 +40,7 @@ struct wireguard_device {
+ 	struct net_device *dev;
+ 	struct crypt_queue encrypt_queue, decrypt_queue;
+ 	struct sock __rcu *sock4, *sock6;
+-	struct net *creating_net;
++	struct net *transit_net;
+ 	struct noise_static_identity static_identity;
+ 	struct workqueue_struct *handshake_receive_wq, *handshake_send_wq;
+ 	struct workqueue_struct *packet_crypt_wq;
+@@ -56,7 +56,7 @@ struct wireguard_device {
+ 	unsigned int num_peers, device_update_gen;
+ 	u32 fwmark;
+ 	u16 incoming_port;
+-	bool have_creating_net_ref;
++	bool have_transit_net_ref;
+ };
+ 
+ int device_init(void);
+diff --git a/src/socket.c b/src/socket.c
+index 2e9e44f..72f3e6a 100644
+--- a/src/socket.c
++++ b/src/socket.c
+@@ -384,18 +384,18 @@ int socket_init(struct wireguard_device *wg, u16 port)
+ retry:
+ #endif
+ 
+-	ret = udp_sock_create(wg->creating_net, &port4, &new4);
++	ret = udp_sock_create(wg->transit_net, &port4, &new4);
+ 	if (ret < 0) {
+ 		pr_err("%s: Could not create IPv4 socket\n", wg->dev->name);
+ 		return ret;
+ 	}
+ 	set_sock_opts(new4);
+-	setup_udp_tunnel_sock(wg->creating_net, new4, &cfg);
++	setup_udp_tunnel_sock(wg->transit_net, new4, &cfg);
+ 
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	if (ipv6_mod_enabled()) {
+ 		port6.local_udp_port = inet_sk(new4->sk)->inet_sport;
+-		ret = udp_sock_create(wg->creating_net, &port6, &new6);
++		ret = udp_sock_create(wg->transit_net, &port6, &new6);
+ 		if (ret < 0) {
+ 			udp_tunnel_sock_release(new4);
+ 			if (ret == -EADDRINUSE && !port && retries++ < 100)
+@@ -405,7 +405,7 @@ retry:
+ 			return ret;
+ 		}
+ 		set_sock_opts(new6);
+-		setup_udp_tunnel_sock(wg->creating_net, new6, &cfg);
++		setup_udp_tunnel_sock(wg->transit_net, new6, &cfg);
+ 	}
+ #endif
+ 
 -- 
 2.18.0
