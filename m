@@ -1,19 +1,21 @@
 Return-Path: ju.orth@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f5e267a6
- for <wireguard@lists.zx2c4.com>; Sat, 8 Sep 2018 12:18:34 +0000 (UTC)
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com
- [IPv6:2a00:1450:4864:20::42a])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id faa1e54a
- for <wireguard@lists.zx2c4.com>; Sat, 8 Sep 2018 12:18:34 +0000 (UTC)
-Received: by mail-wr1-x42a.google.com with SMTP id v17-v6so17340666wrr.9
- for <wireguard@lists.zx2c4.com>; Sat, 08 Sep 2018 05:19:03 -0700 (PDT)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f477a1b1
+ for <wireguard@lists.zx2c4.com>; Sat, 8 Sep 2018 12:18:54 +0000 (UTC)
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com
+ [IPv6:2a00:1450:4864:20::441])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 64f56d7e
+ for <wireguard@lists.zx2c4.com>; Sat, 8 Sep 2018 12:18:52 +0000 (UTC)
+Received: by mail-wr1-x441.google.com with SMTP id 20-v6so17332396wrb.12
+ for <wireguard@lists.zx2c4.com>; Sat, 08 Sep 2018 05:19:21 -0700 (PDT)
 Return-Path: <ju.orth@gmail.com>
 From: Julian Orth <ju.orth@gmail.com>
 To: wireguard@lists.zx2c4.com
-Subject: [PATCH 0/7] Allow changing the transit namespace
-Date: Sat,  8 Sep 2018 14:18:34 +0200
-Message-Id: <20180908121841.8372-1-ju.orth@gmail.com>
+Subject: [PATCH 1/7] device: protect socket_init with device_update_lock
+Date: Sat,  8 Sep 2018 14:18:35 +0200
+Message-Id: <20180908121841.8372-2-ju.orth@gmail.com>
+In-Reply-To: <20180908121841.8372-1-ju.orth@gmail.com>
+References: <20180908121841.8372-1-ju.orth@gmail.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -23,60 +25,46 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-This series allows users to change the transit namespace after the
-Wireguard device has been created. The transit namespace is the
-namespace in which the Wireguard UDP socket lives.
+`set_port` in netlink.c races with `open` in device.c. This can cause
+the following code flow:
 
-This allows Wireguard to be used in unprivileged containers [1]. This is
-based on the following observation:
+* thread 1: set_port: device is not up
+* thread 2: device is opened
+* thread 2: open: called and calls socket_init with the original port
+* thread 1: set_port: sets incoming_port to the new port and returns
 
-* Within the unprivileged container, the user has CAP_NET_ADMIN and can
-  create a Wireguard device.
-* In the init namespace, the user can create a UDP socket and bind to an
-  unprivileged port.
+incoming_port is then inconsistent. While this is not particularly
+critical, it will become more critial when ste_port also sets the
+transit namespace.
+---
+ src/device.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-Therefore, the following is possbile as an ordinary user:
-
-$ unshare -r -U
-$ export SAVED_PID=$$
-$ unshare -n
-$ ip link add wg0 type wireguard
-$ wg set wg0 transit-net $SAVED_PID
-
-wg(1) accepts the following new argument:
-
-wg set <device> transit-net <pid|file-path>
-
-The distinction is made based on the format of the argument. If it is an
-unsigned 32 bit integer, then it is interpreted as a process id.
-Otherwise it is interpreted as a file path. /proc does not need to be
-mounted to use the process id interpretation. To force the
-interpretation as a file-path, use a ./ prefix.
-
-[1] https://stgraber.org/2014/01/17/lxc-1-0-unprivileged-containers/
-
-Julian Orth (7):
-  device: protect socket_init with device_update_lock
-  device: rename creating_net to transit_net
-  device: store a copy of the device net
-  socket: allow modification of transit_net
-  netlink: allow setting of transit net
-  tools: allow setting of transit net
-  tests: add test for transit-net
-
- src/device.c           | 46 ++++++++++++++++++++++++-------------
- src/device.h           |  6 +++--
- src/netlink.c          | 52 ++++++++++++++++++++++++++++++++----------
- src/socket.c           | 18 ++++++++-------
- src/socket.h           |  6 ++---
- src/tests/netns.sh     | 40 ++++++++++++++++++++++++++++++++
- src/tools/config.c     | 32 ++++++++++++++++++++++++++
- src/tools/containers.h |  6 ++++-
- src/tools/ipc.c        |  4 ++++
- src/tools/man/wg.8     |  9 ++++++--
- src/tools/set.c        |  2 +-
- src/uapi/wireguard.h   | 12 +++++++---
- 12 files changed, 185 insertions(+), 48 deletions(-)
-
+diff --git a/src/device.c b/src/device.c
+index 255ad49..88c228b 100644
+--- a/src/device.c
++++ b/src/device.c
+@@ -53,17 +53,18 @@ static int open(struct net_device *dev)
+ #endif
+ #endif
+ 
++	mutex_lock(&wg->device_update_lock);
+ 	ret = socket_init(wg, wg->incoming_port);
+ 	if (ret < 0)
+-		return ret;
+-	mutex_lock(&wg->device_update_lock);
++		goto out;
+ 	list_for_each_entry (peer, &wg->peer_list, peer_list) {
+ 		packet_send_staged_packets(peer);
+ 		if (peer->persistent_keepalive_interval)
+ 			packet_send_keepalive(peer);
+ 	}
++out:
+ 	mutex_unlock(&wg->device_update_lock);
+-	return 0;
++	return ret;
+ }
+ 
+ #if defined(CONFIG_PM_SLEEP) && !defined(CONFIG_ANDROID)
 -- 
 2.18.0
