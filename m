@@ -1,28 +1,28 @@
 Return-Path: aaronmdjones@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9f61ee62
- for <wireguard@lists.zx2c4.com>; Sat, 8 Sep 2018 14:25:36 +0000 (UTC)
-Received: from mail-wm0-x244.google.com (mail-wm0-x244.google.com
- [IPv6:2a00:1450:400c:c09::244])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 312bdbe2
- for <wireguard@lists.zx2c4.com>; Sat, 8 Sep 2018 14:25:36 +0000 (UTC)
-Received: by mail-wm0-x244.google.com with SMTP id j192-v6so17243594wmj.1
- for <wireguard@lists.zx2c4.com>; Sat, 08 Sep 2018 07:26:05 -0700 (PDT)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 87712e39
+ for <wireguard@lists.zx2c4.com>; Sat, 8 Sep 2018 14:28:08 +0000 (UTC)
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com
+ [IPv6:2a00:1450:4864:20::441])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a62f596e
+ for <wireguard@lists.zx2c4.com>; Sat, 8 Sep 2018 14:28:07 +0000 (UTC)
+Received: by mail-wr1-x441.google.com with SMTP id u12-v6so17517800wrr.4
+ for <wireguard@lists.zx2c4.com>; Sat, 08 Sep 2018 07:28:37 -0700 (PDT)
 Return-Path: <aaronmdjones@gmail.com>
-Subject: Re: [PATCH 6/7] tools: allow setting of transit net
+Subject: Re: [PATCH 5/7] netlink: allow setting of transit net
 To: Julian Orth <ju.orth@gmail.com>
 References: <20180908121841.8372-1-ju.orth@gmail.com>
- <20180908121841.8372-7-ju.orth@gmail.com>
- <58f22c10-24ba-91a7-2d7e-2d9fc3b50565@gmail.com>
- <ae953bd6-eb42-647b-1b1a-8de8e0e0bb15@gmail.com>
+ <20180908121841.8372-6-ju.orth@gmail.com>
+ <a6d8b0be-1d69-c803-17f4-e23d49073c28@gmail.com>
+ <a5352639-fe6b-7417-dd44-3cf893dcd020@gmail.com>
 From: Aaron Jones <aaronmdjones@gmail.com>
-Message-ID: <e8ffc494-a0f4-a9e2-0e8f-9d3ac6b0e616@gmail.com>
-Date: Sat, 8 Sep 2018 14:25:58 +0000
+Message-ID: <cbd6d70d-9edd-996e-ed25-fde8cf530ba7@gmail.com>
+Date: Sat, 8 Sep 2018 14:28:34 +0000
 MIME-Version: 1.0
-In-Reply-To: <ae953bd6-eb42-647b-1b1a-8de8e0e0bb15@gmail.com>
+In-Reply-To: <a5352639-fe6b-7417-dd44-3cf893dcd020@gmail.com>
 Content-Type: multipart/signed; micalg=pgp-sha512;
  protocol="application/pgp-signature";
- boundary="oF1VekAll9q3cbG1mdnW3jqC5Ig8Ek1Nd"
+ boundary="szC8sZBeRZacNkJHr6jMNtKay9MJH7Puk"
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
@@ -34,50 +34,38 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
 This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---oF1VekAll9q3cbG1mdnW3jqC5Ig8Ek1Nd
-Content-Type: multipart/mixed; boundary="JDkpg0xIZaIKOUX69e2n8Iry7Ybeo8xuZ";
+--szC8sZBeRZacNkJHr6jMNtKay9MJH7Puk
+Content-Type: multipart/mixed; boundary="XWGO17JQgjg6VsZYckLu8JKWU9Yx3Nmlp";
  protected-headers="v1"
 From: Aaron Jones <aaronmdjones@gmail.com>
 To: Julian Orth <ju.orth@gmail.com>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Message-ID: <e8ffc494-a0f4-a9e2-0e8f-9d3ac6b0e616@gmail.com>
-Subject: Re: [PATCH 6/7] tools: allow setting of transit net
+Message-ID: <cbd6d70d-9edd-996e-ed25-fde8cf530ba7@gmail.com>
+Subject: Re: [PATCH 5/7] netlink: allow setting of transit net
 References: <20180908121841.8372-1-ju.orth@gmail.com>
- <20180908121841.8372-7-ju.orth@gmail.com>
- <58f22c10-24ba-91a7-2d7e-2d9fc3b50565@gmail.com>
- <ae953bd6-eb42-647b-1b1a-8de8e0e0bb15@gmail.com>
-In-Reply-To: <ae953bd6-eb42-647b-1b1a-8de8e0e0bb15@gmail.com>
+ <20180908121841.8372-6-ju.orth@gmail.com>
+ <a6d8b0be-1d69-c803-17f4-e23d49073c28@gmail.com>
+ <a5352639-fe6b-7417-dd44-3cf893dcd020@gmail.com>
+In-Reply-To: <a5352639-fe6b-7417-dd44-3cf893dcd020@gmail.com>
 
---JDkpg0xIZaIKOUX69e2n8Iry7Ybeo8xuZ
+--XWGO17JQgjg6VsZYckLu8JKWU9Yx3Nmlp
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-GB
 Content-Transfer-Encoding: quoted-printable
 
-On 08/09/18 14:18, Julian Orth wrote:
-> Even with clang's -Weverything I don't get a warning when I compile the=
-
-> following:
+On 08/09/18 14:20, Julian Orth wrote:
+> On 9/8/18 4:03 PM, Aaron Jones wrote:
+>> Does this handle file descriptor 0 (unlikely, but perfectly valid) ?
 >=20
-> #include <stdint.h>
->=20
-> int f(unsigned int i);
->=20
-> int f(unsigned int i)
-> {
-> =C2=A0=C2=A0=C2=A0=C2=A0return i <=3D UINT32_MAX;
-> }
+> I believe so.
 
-Interesting... I don't either (gcc 8, clang 8). Perhaps I've been
-spending too much time reading PVS-Studio reports.
-
-Still, the condition will always be true; sizeof(unsigned long) is
-sizeof(uint32_t) in this case.
+Ah, so it does; I misread the start of set_socket(). My apologies.
 
 
 
---JDkpg0xIZaIKOUX69e2n8Iry7Ybeo8xuZ--
+--XWGO17JQgjg6VsZYckLu8JKWU9Yx3Nmlp--
 
---oF1VekAll9q3cbG1mdnW3jqC5Ig8Ek1Nd
+--szC8sZBeRZacNkJHr6jMNtKay9MJH7Puk
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: OpenPGP digital signature
 Content-Disposition: attachment; filename="signature.asc"
@@ -85,19 +73,19 @@ Content-Disposition: attachment; filename="signature.asc"
 -----BEGIN PGP SIGNATURE-----
 Comment: Using GnuPG with Thunderbird - https://www.enigmail.net/
 
-iQIzBAEBCgAdFiEEYKVBwe43zZh/jkxPivBzdIirMBIFAluT2/YACgkQivBzdIir
-MBLgDw//RRpwYvnO7XDdk39WBXZGqyt9JQgzBe7phys74F7mcwYv2gWjgsLiPSae
-Fhgy1TbwazlQ4Wla76yYIE1w1S/cVvBOVjkY1v9eeodGvEvsXwwyXpoAAUeCWx1y
-SfwLH4TzlZGIPHPgvfYSxi91e+E5A4leWhh2FLUyl60ZbMPYUpFOH/Ht5Ylrgd6s
-DhC/F0Wa8LjTfDTpGoZMBLqoiRgWd6Ud8hhmNF6OdFbS7KERVSLkDPWnzBN4kcTd
-QlGczC+6dChcb0YJJ7DIleXNS4fx2xm5vCLNR58BvTbWDF2I3r/G4O1hOHQZ8XMz
-2RaLejZiaYNMGkmPlnSrrPc5uV2yjNjmHTphIYowUkFc/KBrDXF9QxkLGz+6IyAQ
-Gy3QZ4KNOqHU+Mvd1t9T+2Fvvw5BGWAxe23xeGuFL9CPSkWjohAYUndz7WaZlzYq
-/fXpYEUMvZhHOqLV+TBuRBzEsLRgKQtoXt15FmtiXkxVI7UT4cl4tcxivhFUV+Qe
-Sv55OK1eOmRcdTNxL6f9rg/7mN0l5TeDy7pdGVK/6wQ8DKP9obEcG+obHd0yJ/6L
-mYzewvvLkgqtislgH+SaFWK5++YORpbYbGnVdSmdL4/aPV8goVozlMLoPEh5tf0i
-tqUGeetXcsxOse3f3hX5f2iFo371o+5b1ZeQRdXsR+UXAiyrOKc=
-=n4pq
+iQIzBAEBCgAdFiEEYKVBwe43zZh/jkxPivBzdIirMBIFAluT3JIACgkQivBzdIir
+MBKu+BAAsSkAu00eINgl62AJl+LHE6zBMhd1EBoGyQMFuxyw1GNIQ8T4E68/H2zr
+NMro7Jrr6GFRa/SEf46zL1eWsLdgN+BHJx/72duyBkRktBSJTcBeQS3Y7u+PJD43
+GN9sovFagapo7bXFgtwLvCUcZ4u4ICvcg2VmGB81PizIYZoLuTDK670mf9kMY5Oy
+8wkyN3nDpLxtSxPQKDWovcVOB+thgx34/elFYuGUt7UTP47IjRnMsCPtyr/upLU2
+YNrgJmy515kpVwZFHZtKnaWxzcHlKdm4DNJrjCehfJ0GcxL8URjkaOH7kWInjWir
+3HtNQ6S87U04DX3mT4MCNokfe8l1q0XPfsMRNcGUHMGs2tpRmaDDck1xiOCKB8j0
+tg9C+FxmDWUrl1gTl76AuPua1//YtyFBifAyIBZQ4PtdN8RKs1KtZLnZMB0xnjDD
+TZsw/mBgD9V5aQ6iXrnU6a2+kyLnDjbSOgCsG81HvfDcCTq3rLVlc4etXAe7JtBH
+3ZWskFGBv+Q0FDAvUHfHrYnjRw25RJDnkKAeo+2bqEQAD17JhmmJk7kKjdvebnLf
+3k7059G5I7UZ1DN0/X5kq/AU/NhpKqdAYZ5YJJHSLxDTaDzpKc2ltdZA7ABJHsu4
+pDgeCXNtbmIiu2AQ7ADFpReKoojge2+zu0rK69F2b24hd/E3kWs=
+=Zrzc
 -----END PGP SIGNATURE-----
 
---oF1VekAll9q3cbG1mdnW3jqC5Ig8Ek1Nd--
+--szC8sZBeRZacNkJHr6jMNtKay9MJH7Puk--
