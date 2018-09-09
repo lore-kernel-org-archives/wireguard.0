@@ -1,19 +1,19 @@
 Return-Path: ju.orth@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0bd52ff6
- for <wireguard@lists.zx2c4.com>; Sun, 9 Sep 2018 15:13:55 +0000 (UTC)
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com
- [IPv6:2a00:1450:4864:20::42b])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5bf5d6d9
- for <wireguard@lists.zx2c4.com>; Sun, 9 Sep 2018 15:13:50 +0000 (UTC)
-Received: by mail-wr1-x42b.google.com with SMTP id s14-v6so10333486wrw.6
- for <wireguard@lists.zx2c4.com>; Sun, 09 Sep 2018 08:14:27 -0700 (PDT)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f044cc9e
+ for <wireguard@lists.zx2c4.com>; Sun, 9 Sep 2018 15:13:56 +0000 (UTC)
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com
+ [IPv6:2a00:1450:4864:20::42f])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ac20da70
+ for <wireguard@lists.zx2c4.com>; Sun, 9 Sep 2018 15:13:51 +0000 (UTC)
+Received: by mail-wr1-x42f.google.com with SMTP id k5-v6so19279571wre.10
+ for <wireguard@lists.zx2c4.com>; Sun, 09 Sep 2018 08:14:28 -0700 (PDT)
 Return-Path: <ju.orth@gmail.com>
 From: Julian Orth <ju.orth@gmail.com>
 To: wireguard@lists.zx2c4.com
-Subject: [PATCH v2 05/10] netlink: allow modification of transit net
-Date: Sun,  9 Sep 2018 17:13:57 +0200
-Message-Id: <20180909151402.6033-6-ju.orth@gmail.com>
+Subject: [PATCH v2 06/10] tools: allow modification of transit net
+Date: Sun,  9 Sep 2018 17:13:58 +0200
+Message-Id: <20180909151402.6033-7-ju.orth@gmail.com>
 In-Reply-To: <20180909151402.6033-1-ju.orth@gmail.com>
 References: <20180909151402.6033-1-ju.orth@gmail.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
@@ -25,143 +25,161 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-This commit adds two new arguments:
+The command is
 
-* WGDEVICE_A_TRANSIT_NETNS_PID
+wg set <device> [...] transit-netns <pid|file-path> [...]
 
-    The argument is a U32 process id that refers to a process whose
-    network namespace is to be used as the transit namespace.
+For example:
 
-* WGDEVICE_A_TRANSIT_NETNS_FD
-
-    The argument is a U32 file descriptor that refers to a network
-    namespace that is to be used as the transit namespace.
+wg set wg0 transit-netns 1
+wg set wg0 transit-netns /proc/1/ns/net
 ---
- src/netlink.c        | 52 ++++++++++++++++++++++++++++++++++----------
- src/uapi/wireguard.h | 12 +++++++---
- 2 files changed, 49 insertions(+), 15 deletions(-)
+ src/tools/config.c     | 32 ++++++++++++++++++++++++++++++++
+ src/tools/containers.h |  6 +++++-
+ src/tools/ipc.c        |  4 ++++
+ src/tools/man/wg.8     |  9 +++++++--
+ src/tools/set.c        |  2 +-
+ 5 files changed, 49 insertions(+), 4 deletions(-)
 
-diff --git a/src/netlink.c b/src/netlink.c
-index 73d9a74..f74c23a 100644
---- a/src/netlink.c
-+++ b/src/netlink.c
-@@ -24,7 +24,9 @@ static const struct nla_policy device_policy[WGDEVICE_A_MAX + 1] = {
- 	[WGDEVICE_A_FLAGS]		= { .type = NLA_U32 },
- 	[WGDEVICE_A_LISTEN_PORT]	= { .type = NLA_U16 },
- 	[WGDEVICE_A_FWMARK]		= { .type = NLA_U32 },
--	[WGDEVICE_A_PEERS]		= { .type = NLA_NESTED }
-+	[WGDEVICE_A_PEERS]		= { .type = NLA_NESTED },
-+	[WGDEVICE_A_TRANSIT_NETNS_PID]	= { .type = NLA_U32 },
-+	[WGDEVICE_A_TRANSIT_NETNS_FD]	= { .type = NLA_U32 },
- };
+diff --git a/src/tools/config.c b/src/tools/config.c
+index 93525fb..dffec76 100644
+--- a/src/tools/config.c
++++ b/src/tools/config.c
+@@ -14,6 +14,7 @@
+ #include <sys/socket.h>
+ #include <sys/stat.h>
+ #include <errno.h>
++#include <fcntl.h>
  
- static const struct nla_policy peer_policy[WGPEER_A_MAX + 1] = {
-@@ -302,19 +304,48 @@ static int get_device_done(struct netlink_callback *cb)
- 	return 0;
+ #include "config.h"
+ #include "containers.h"
+@@ -74,6 +75,30 @@ static inline bool parse_port(uint16_t *port, uint32_t *flags, const char *value
+ 	return ret == 0;
  }
  
--static int set_port(struct wireguard_device *wg, u16 port)
-+static int set_socket(struct wireguard_device *wg, struct nlattr **attrs)
++static bool parse_transit_netns(struct wgdevice *device, const char *arg)
++{
++	/* U32 arg -> PID */
++	if (isdigit(*arg)) {
++		char *end;
++		unsigned long pid = strtoul(arg, &end, 10);
++		if (!*end && pid <= UINT32_MAX) {
++			device->transit_netns_pid = pid;
++			device->flags |= WGDEVICE_HAS_TRANSIT_NETNS_PID;
++			return true;
++		}
++	}
++
++	/* Otherwise -> file path */
++	device->transit_netns_fd = open(arg, O_RDONLY);
++	if (device->transit_netns_fd >= 0) {
++		device->flags |= WGDEVICE_HAS_TRANSIT_NETNS_FD;
++		return true;
++	}
++
++	perror("open");
++	return false;
++}
++
+ static inline bool parse_fwmark(uint32_t *fwmark, uint32_t *flags, const char *value)
  {
- 	struct wireguard_peer *peer;
-+	struct nlattr *port_attr, *net_pid, *net_fd;
-+	u16 port;
-+	struct net *net = NULL;
-+	int ret = 0;
-+
-+	port_attr = attrs[WGDEVICE_A_LISTEN_PORT];
-+	net_pid = attrs[WGDEVICE_A_TRANSIT_NETNS_PID];
-+	net_fd = attrs[WGDEVICE_A_TRANSIT_NETNS_FD];
-+
-+	if (net_pid && net_fd)
-+		return -EINVAL;
-+	if (net_pid)
-+		net = get_net_ns_by_pid(nla_get_u32(net_pid));
-+	if (net_fd)
-+		net = get_net_ns_by_fd(nla_get_u32(net_fd));
-+	if (IS_ERR(net))
-+		return PTR_ERR(net);
-+	if (port_attr)
-+		port = nla_get_u16(port_attr);
-+	else
-+		port = wg->incoming_port;
-+
-+	if (wg->incoming_port == port && (!net || wg->transit_net == net))
-+		goto out;
- 
--	if (wg->incoming_port == port)
--		return 0;
- 	list_for_each_entry (peer, &wg->peer_list, peer_list)
- 		socket_clear_peer_endpoint_src(peer);
- 	if (!netif_running(wg->dev)) {
- 		wg->incoming_port = port;
--		return 0;
-+		if (net)
-+			device_set_nets(wg, wg->dev_net, net);
-+		goto out;
- 	}
--	return socket_init(wg, wg->transit_net, port);
-+	ret = socket_init(wg, net ? : wg->transit_net, port);
-+
-+out:
-+	if (net)
-+		put_net(net);
-+	return ret;
- }
- 
- static int set_allowedip(struct wireguard_peer *peer, struct nlattr **attrs)
-@@ -496,12 +527,9 @@ static int set_device(struct sk_buff *skb, struct genl_info *info)
- 			socket_clear_peer_endpoint_src(peer);
- 	}
- 
--	if (info->attrs[WGDEVICE_A_LISTEN_PORT]) {
--		ret = set_port(
--			wg, nla_get_u16(info->attrs[WGDEVICE_A_LISTEN_PORT]));
--		if (ret)
--			goto out;
--	}
-+	ret = set_socket(wg, info->attrs);
-+	if (ret)
-+		goto out;
- 
- 	if (info->attrs[WGDEVICE_A_FLAGS] &&
- 	    nla_get_u32(info->attrs[WGDEVICE_A_FLAGS]) &
-diff --git a/src/uapi/wireguard.h b/src/uapi/wireguard.h
-index 3d73ad7..21bf92e 100644
---- a/src/uapi/wireguard.h
-+++ b/src/uapi/wireguard.h
-@@ -72,9 +72,11 @@
-  * WG_CMD_SET_DEVICE
-  * -----------------
-  *
-- * May only be called via NLM_F_REQUEST. The command should contain the
-- * following tree of nested items, containing one but not both of
-- * WGDEVICE_A_IFINDEX and WGDEVICE_A_IFNAME:
-+ * May only be called via NLM_F_REQUEST. The command must contain the following
-+ * tree of nested items. Exactly one of WGDEVICE_A_IFINDEX and WGDEVICE_A_IFNAME
-+ * must be provided. All other top-level items are optional. At most one of
-+ * WGDEVICE_A_TRANSIT_NETNS_PID and WGDEVICE_A_TRANSIT_NETNS_FD may be provided.
-+ *
-  *
-  *    WGDEVICE_A_IFINDEX: NLA_U32
-  *    WGDEVICE_A_IFNAME: NLA_NUL_STRING, maxlen IFNAMESIZ - 1
-@@ -82,6 +84,8 @@
-  *                      peers should be removed prior to adding the list below.
-  *    WGDEVICE_A_PRIVATE_KEY: len WG_KEY_LEN, all zeros to remove
-  *    WGDEVICE_A_LISTEN_PORT: NLA_U16, 0 to choose randomly
-+ *    WGDEVICE_A_TRANSIT_NETNS_PID: NLA_U32
-+ *    WGDEVICE_A_TRANSIT_NETNS_FD: NLA_U32
-  *    WGDEVICE_A_FWMARK: NLA_U32, 0 to disable
-  *    WGDEVICE_A_PEERS: NLA_NESTED
-  *        0: NLA_NESTED
-@@ -154,6 +158,8 @@ enum wgdevice_attribute {
- 	WGDEVICE_A_LISTEN_PORT,
- 	WGDEVICE_A_FWMARK,
- 	WGDEVICE_A_PEERS,
-+	WGDEVICE_A_TRANSIT_NETNS_PID,
-+	WGDEVICE_A_TRANSIT_NETNS_FD,
- 	__WGDEVICE_A_LAST
+ 	unsigned long ret;
+@@ -392,6 +417,8 @@ static bool process_line(struct config_ctx *ctx, const char *line)
+ 	if (ctx->is_device_section) {
+ 		if (key_match("ListenPort"))
+ 			ret = parse_port(&ctx->device->listen_port, &ctx->device->flags, value);
++		else if (key_match("TransitNetns"))
++			ret = parse_transit_netns(ctx->device, value);
+ 		else if (key_match("FwMark"))
+ 			ret = parse_fwmark(&ctx->device->fwmark, &ctx->device->flags, value);
+ 		else if (key_match("PrivateKey")) {
+@@ -525,6 +552,11 @@ struct wgdevice *config_read_cmd(char *argv[], int argc)
+ 				goto error;
+ 			argv += 2;
+ 			argc -= 2;
++		} else if (!strcmp(argv[0], "transit-netns") && argc >= 2 && !peer) {
++			if (!parse_transit_netns(device, argv[1]))
++				goto error;
++			argv += 2;
++			argc -= 2;
+ 		} else if (!strcmp(argv[0], "fwmark") && argc >= 2 && !peer) {
+ 			if (!parse_fwmark(&device->fwmark, &device->flags, argv[1]))
+ 				goto error;
+diff --git a/src/tools/containers.h b/src/tools/containers.h
+index 455d998..c6dd6fe 100644
+--- a/src/tools/containers.h
++++ b/src/tools/containers.h
+@@ -58,7 +58,9 @@ enum {
+ 	WGDEVICE_HAS_PRIVATE_KEY = 1U << 1,
+ 	WGDEVICE_HAS_PUBLIC_KEY = 1U << 2,
+ 	WGDEVICE_HAS_LISTEN_PORT = 1U << 3,
+-	WGDEVICE_HAS_FWMARK = 1U << 4
++	WGDEVICE_HAS_FWMARK = 1U << 4,
++	WGDEVICE_HAS_TRANSIT_NETNS_PID = 1U << 5,
++	WGDEVICE_HAS_TRANSIT_NETNS_FD = 1U << 6,
  };
- #define WGDEVICE_A_MAX (__WGDEVICE_A_LAST - 1)
+ 
+ struct wgdevice {
+@@ -72,6 +74,8 @@ struct wgdevice {
+ 
+ 	uint32_t fwmark;
+ 	uint16_t listen_port;
++	uint32_t transit_netns_pid;
++	int transit_netns_fd;
+ 
+ 	struct wgpeer *first_peer, *last_peer;
+ };
+diff --git a/src/tools/ipc.c b/src/tools/ipc.c
+index e3ef789..aa82cb3 100644
+--- a/src/tools/ipc.c
++++ b/src/tools/ipc.c
+@@ -569,6 +569,10 @@ again:
+ 			mnl_attr_put(nlh, WGDEVICE_A_PRIVATE_KEY, sizeof(dev->private_key), dev->private_key);
+ 		if (dev->flags & WGDEVICE_HAS_LISTEN_PORT)
+ 			mnl_attr_put_u16(nlh, WGDEVICE_A_LISTEN_PORT, dev->listen_port);
++		if (dev->flags & WGDEVICE_HAS_TRANSIT_NETNS_PID)
++			mnl_attr_put_u32(nlh, WGDEVICE_A_TRANSIT_NETNS_PID, dev->transit_netns_pid);
++		if (dev->flags & WGDEVICE_HAS_TRANSIT_NETNS_FD)
++			mnl_attr_put_u32(nlh, WGDEVICE_A_TRANSIT_NETNS_FD, (uint32_t)dev->transit_netns_fd);
+ 		if (dev->flags & WGDEVICE_HAS_FWMARK)
+ 			mnl_attr_put_u32(nlh, WGDEVICE_A_FWMARK, dev->fwmark);
+ 		if (dev->flags & WGDEVICE_REPLACE_PEERS)
+diff --git a/src/tools/man/wg.8 b/src/tools/man/wg.8
+index 5bae7ca..d1f95f7 100644
+--- a/src/tools/man/wg.8
++++ b/src/tools/man/wg.8
+@@ -55,12 +55,17 @@ transfer-rx, transfer-tx, persistent-keepalive.
+ Shows the current configuration of \fI<interface>\fP in the format described
+ by \fICONFIGURATION FILE FORMAT\fP below.
+ .TP
+-\fBset\fP \fI<interface>\fP [\fIlisten-port\fP \fI<port>\fP] [\fIfwmark\fP \fI<fwmark>\fP] [\fIprivate-key\fP \fI<file-path>\fP] [\fIpeer\fP \fI<base64-public-key>\fP [\fIremove\fP] [\fIpreshared-key\fP \fI<file-path>\fP] [\fIendpoint\fP \fI<ip>:<port>\fP] [\fIpersistent-keepalive\fP \fI<interval seconds>\fP] [\fIallowed-ips\fP \fI<ip1>/<cidr1>\fP[,\fI<ip2>/<cidr2>\fP]...] ]...
++\fBset\fP \fI<interface>\fP [\fIlisten-port\fP \fI<port>\fP] [\fItransit-netns\fP \fI<pid|file-path>\fP] [\fIfwmark\fP \fI<fwmark>\fP] [\fIprivate-key\fP \fI<file-path>\fP] [\fIpeer\fP \fI<base64-public-key>\fP [\fIremove\fP] [\fIpreshared-key\fP \fI<file-path>\fP] [\fIendpoint\fP \fI<ip>:<port>\fP] [\fIpersistent-keepalive\fP \fI<interval seconds>\fP] [\fIallowed-ips\fP \fI<ip1>/<cidr1>\fP[,\fI<ip2>/<cidr2>\fP]...] ]...
+ Sets configuration values for the specified \fI<interface>\fP. Multiple
+ \fIpeer\fPs may be specified, and if the \fIremove\fP argument is given
+ for a peer, that peer is removed, not configured. If \fIlisten-port\fP
+ is not specified, the port will be chosen randomly when the
+-interface comes up. Both \fIprivate-key\fP and \fIpreshared-key\fP must
++interface comes up. If transit-netns is not specified, the network namespace
++through which encrypted packets are routed is the one in which the device
++was created. Otherwise the network namespace through which encrypted packets are
++routed is the one specified by the argument. If the argument is an unsigned
++32-bit integer, it is interpeted as a process id, otherwise it is interpreted as
++a file path. Both \fIprivate-key\fP and \fIpreshared-key\fP must
+ be a files, because command line arguments are not considered private on
+ most systems but if you are using
+ .BR bash (1),
+diff --git a/src/tools/set.c b/src/tools/set.c
+index d44fed9..37be9a0 100644
+--- a/src/tools/set.c
++++ b/src/tools/set.c
+@@ -18,7 +18,7 @@ int set_main(int argc, char *argv[])
+ 	int ret = 1;
+ 
+ 	if (argc < 3) {
+-		fprintf(stderr, "Usage: %s %s <interface> [listen-port <port>] [fwmark <mark>] [private-key <file path>] [peer <base64 public key> [remove] [preshared-key <file path>] [endpoint <ip>:<port>] [persistent-keepalive <interval seconds>] [allowed-ips <ip1>/<cidr1>[,<ip2>/<cidr2>]...] ]...\n", PROG_NAME, argv[0]);
++		fprintf(stderr, "Usage: %s %s <interface> [listen-port <port>] [transit-netns <pid|file path>] [fwmark <mark>] [private-key <file path>] [peer <base64 public key> [remove] [preshared-key <file path>] [endpoint <ip>:<port>] [persistent-keepalive <interval seconds>] [allowed-ips <ip1>/<cidr1>[,<ip2>/<cidr2>]...] ]...\n", PROG_NAME, argv[0]);
+ 		return 1;
+ 	}
+ 
 -- 
 2.18.0
