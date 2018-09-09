@@ -1,22 +1,22 @@
-Return-Path: mdt@emdete.de
+Return-Path: ju.orth@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7eb57481
- for <wireguard@lists.zx2c4.com>; Sat, 8 Sep 2018 19:53:36 +0000 (UTC)
-Received: from emdete.de (ip-109-41-67-146.web.vodafone.de [109.41.67.146])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2f507fa4
- for <wireguard@lists.zx2c4.com>; Sat, 8 Sep 2018 19:53:35 +0000 (UTC)
-Date: Sat, 08 Sep 2018 21:54:03 +0200
-From: "M. Dietrich" <mdt@emdete.de>
-Subject: Re: Routing to a network behind a node
-To: Steven Honson <steven@honson.id.au>
-References: <1536396708.rkbb1jpywa.astroid@morple.none>
- <4608FEAE-C918-4D38-9CE0-3712C91687C7@honson.id.au>
-In-Reply-To: <4608FEAE-C918-4D38-9CE0-3712C91687C7@honson.id.au>
-Message-Id: <1536434377.yoph6djrtc.astroid@morple.none>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5aba4e3b
+ for <wireguard@lists.zx2c4.com>; Sun, 9 Sep 2018 09:13:13 +0000 (UTC)
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com
+ [IPv6:2a00:1450:4864:20::441])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b3609ee6
+ for <wireguard@lists.zx2c4.com>; Sun, 9 Sep 2018 09:13:13 +0000 (UTC)
+Received: by mail-wr1-x441.google.com with SMTP id 20-v6so18778812wrb.12
+ for <wireguard@lists.zx2c4.com>; Sun, 09 Sep 2018 02:13:48 -0700 (PDT)
+Return-Path: <ju.orth@gmail.com>
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: Julian Orth <ju.orth@gmail.com>
+Subject: Should setting the listen-port require CAP_SYS_ADMIN in the socket
+ namespace?
+Message-ID: <dd90475d-b9be-95a7-d23d-9d9c89cb4f2c@gmail.com>
+Date: Sun, 9 Sep 2018 11:13:43 +0200
 MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature";
- micalg=pgp-sha256; boundary="=-yMi9JOa1xqif4qHYPR/d"
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,39 +26,76 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---=-yMi9JOa1xqif4qHYPR/d
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Hello list,
 
-Quotation from Steven Honson at September 8, 2018 12:23:
-> Have you added 172.16.0.0/24 to the AllowedIPs entry for the
-> 172.16.215.2 Peer on 172.16.215.1?
+Consider the following scenario:
 
-no - thank you for pointing me there. i now added an
-additional AllowedIPs line and it works!
+1. Sysadmin runs a hostile application `h1` in container `c1`.
+2. Sysadmin creates a Wireguard device `wg0` in the init namespace.
+3. Sysadmin moves `wg0` into `c1`.
+4. On the same server, a user wishes to sometimes run an application `a1` that
+    listens on a well-known unprivileged port in the init namespace.
 
-thank's,
-M. Dietrich
-=
+`h1` has a full set of capabilities in `c1`. This allows `h1` to listen on an
+arbitrary unprivileged port in the init namespace by setting the listen-port
+of `wg0`. This allows `h1` to block the usage of `a1`.
 
---=-yMi9JOa1xqif4qHYPR/d
-Content-Type: application/pgp-signature
+`h1` cannot gain access to the traffic of `a1` unless `a1` was also intending
+to use this port for a Wireguard device `wg1` and the private key of `wg1` is
+already known to `h1`.
 
------BEGIN PGP SIGNATURE-----
+Therefore: Should setting the listen-port require some capability in the
+network namespace of the socket?
 
-iQIzBAABCAAdFiEE8ECycNYHT6atlYQywVmjQWUJtykFAluUKNsACgkQwVmjQWUJ
-tyl1tg//V9KFV7pU4NIMhrvHiwguA3Uvuu/VOaDlovMcNjRFkm22+myLjXtQ4ZnR
-NFWTwBGTp4x+f6YrZlDGRaPWJXPHCA8Mkc3ZwFyhIN1WZcuUliz5nZ9ftsZRpZcU
-p4gU2xmcBjdttL7inDhWDqbR3HTDoFcgZEqoTwJ17K3cQNogPKOO+hIsLMkgG4VT
-ISTC5wnqcqAbtWct0ryXIWKR/dEKVg5ywDoQloWtedCtb3DIOSzGgRg9ZHSDa6jq
-IF0Sqdq1Oo6Lpmwj2Pd29Pmi0ImtPoZ5fRsMTta5DWghjcCHiDl3mTSjs5YcGVnl
-DUpUsCdIxH2ZMy76h5TrmQh5bDAIMQs/iEXJVbDcc9vBKL6rn9QftufD3GBgmwVn
-WD0Rd2ubvn6rYDWnYjK8Ohu45yzXJ7zRr+xMoo0HkZhpAdKk3mAjlRo2A0dnZFWP
-KkO7EMhYYhyiksGa/llZdms17Ydrt1Vlr3KeG7khLqx9f6P0AInVJvXnukuOgl0p
-tU2RTJ5NHPuO6qshB7u7nx7MXO2AS/Rl3Wv2V8bNzZvI2F46ndtQ3yrmpxUkZk5U
-P4qhUuDTPhuMKUKQkbPN5Yk1AHt/pyIa17zji5qPrsLpy9CsW9T4OO54oWAWdk9d
-jHSnBjPxoKLdlkv0rdxjs74ja14MVQnb+CQ+j2vPYd48mpcrYKI=
-=gfOF
------END PGP SIGNATURE-----
+setns(<fd>, CLONE_NEWNET) requires CAP_SYS_ADMIN in the user namespace of <fd>
+[1]. The leaves getting access to <fd>:
 
---=-yMi9JOa1xqif4qHYPR/d--
+* If the namespace of <fd> is mounted somewhere in the file system, then `h1`
+   might be able to open that file without any additional requirements. (If the
+   namespace was created via ip(1), then it is mounted at /run/netns/<name>.)
+* If /proc is mounted, opening /proc/<pid>/ns/net seems to require
+   CAP_SYS_PTRACE in /proc/<pid>/ns/user.
+
+I don't know if there are any other ways to get access to <fd> without help
+from outside `c1`.
+
+Running `c1` in a separate mount namespace with a separate / mount and a
+separate pid namespace might be sufficient to prevent access to <fd>. This is
+the case for Docker containers. Someone with a better overview of the
+namespace model might be able to answer the following question: Are network
+namespaces already considered insecure unless combined with mount and pid
+namespaces? (A mount namespace is probably required to hide /sys/class/net.)
+
+setns(<fd>, CLONE_NEWNET) is sufficient to create a socket in that network
+namespace but also gives the caller other abilities in that namespace.
+A less-powerful capability might therefore be better in the case of
+listen-port.
+
+Julian
+
+PS: This problem becomes more severe with the transit-net series because it
+     allows `h1` to create the socket in any network namespace it can refer to
+     via process id or file descriptor. Note that the CAP_SYS_PTRACE
+     requirement does not apply in this case because `h1` does not have to open
+     /proc/<pid>/ns/net.
+
+     This allows `h1` to gain network access by creating a Wireguard device and
+     moving the transit namespace to PID 1.
+
+     Once again, this might not a problem in containers with separate mount
+     namespaces, separate / mounts, and separate pid namespaces.
+
+     Since the selling point of the transit-net series is enabling users to
+     create working Wireguard devices without capabilities, it series will have
+     to be reworked as follows:
+
+     The caller has to prove that he already had access to intended transit
+     namespace. This can be done by passing matching UDP sockets into the
+     kernel. Unfortunately this makes it harder to use this feature from Bash
+     scripts alone.
+
+     I'll add this requirement in v2.
+
+[1] Not described in the man page. But see netns_install:
+ 
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/net/core/net_namespace.c?h=v4.18#n1126
