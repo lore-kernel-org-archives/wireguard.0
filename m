@@ -1,19 +1,19 @@
 Return-Path: ju.orth@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 20806fea
- for <wireguard@lists.zx2c4.com>; Sun, 9 Sep 2018 15:13:46 +0000 (UTC)
-Received: from mail-wm0-x229.google.com (mail-wm0-x229.google.com
- [IPv6:2a00:1450:400c:c09::229])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d59a9fc9
- for <wireguard@lists.zx2c4.com>; Sun, 9 Sep 2018 15:13:46 +0000 (UTC)
-Received: by mail-wm0-x229.google.com with SMTP id 207-v6so18767368wme.5
- for <wireguard@lists.zx2c4.com>; Sun, 09 Sep 2018 08:14:23 -0700 (PDT)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7fd25ec8
+ for <wireguard@lists.zx2c4.com>; Sun, 9 Sep 2018 15:13:47 +0000 (UTC)
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com
+ [IPv6:2a00:1450:4864:20::42d])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 71bb9972
+ for <wireguard@lists.zx2c4.com>; Sun, 9 Sep 2018 15:13:47 +0000 (UTC)
+Received: by mail-wr1-x42d.google.com with SMTP id w11-v6so19312413wrc.5
+ for <wireguard@lists.zx2c4.com>; Sun, 09 Sep 2018 08:14:24 -0700 (PDT)
 Return-Path: <ju.orth@gmail.com>
 From: Julian Orth <ju.orth@gmail.com>
 To: wireguard@lists.zx2c4.com
-Subject: [PATCH v2 01/10] device: protect socket_init with device_update_lock
-Date: Sun,  9 Sep 2018 17:13:53 +0200
-Message-Id: <20180909151402.6033-2-ju.orth@gmail.com>
+Subject: [PATCH v2 02/10] device: rename creating_net to transit_net
+Date: Sun,  9 Sep 2018 17:13:54 +0200
+Message-Id: <20180909151402.6033-3-ju.orth@gmail.com>
 In-Reply-To: <20180909151402.6033-1-ju.orth@gmail.com>
 References: <20180909151402.6033-1-ju.orth@gmail.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
@@ -25,46 +25,113 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-`set_port` in netlink.c races with `open` in device.c. This can cause
-the following code flow:
-
-* thread 1: set_port: device is not up
-* thread 2: device is opened
-* thread 2: open: called and calls socket_init with the original port
-* thread 1: set_port: sets incoming_port to the new port and returns
-
-incoming_port is then inconsistent. While this is not particularly
-critical, it will become more critial when ste_port also sets the
-transit namespace.
 ---
- src/device.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ src/device.c | 20 ++++++++++----------
+ src/device.h |  4 ++--
+ src/socket.c |  8 ++++----
+ 3 files changed, 16 insertions(+), 16 deletions(-)
 
 diff --git a/src/device.c b/src/device.c
-index 255ad49..88c228b 100644
+index 88c228b..92aefc4 100644
 --- a/src/device.c
 +++ b/src/device.c
-@@ -53,17 +53,18 @@ static int open(struct net_device *dev)
- #endif
- #endif
- 
-+	mutex_lock(&wg->device_update_lock);
- 	ret = socket_init(wg, wg->incoming_port);
- 	if (ret < 0)
--		return ret;
--	mutex_lock(&wg->device_update_lock);
-+		goto out;
- 	list_for_each_entry (peer, &wg->peer_list, peer_list) {
- 		packet_send_staged_packets(peer);
- 		if (peer->persistent_keepalive_interval)
- 			packet_send_keepalive(peer);
- 	}
-+out:
+@@ -243,8 +243,8 @@ static void destruct(struct net_device *dev)
+ 	skb_queue_purge(&wg->incoming_handshakes);
+ 	free_percpu(dev->tstats);
+ 	free_percpu(wg->incoming_handshakes_worker);
+-	if (wg->have_creating_net_ref)
+-		put_net(wg->creating_net);
++	if (wg->have_transit_net_ref)
++		put_net(wg->transit_net);
  	mutex_unlock(&wg->device_update_lock);
--	return 0;
-+	return ret;
- }
  
- #if defined(CONFIG_PM_SLEEP) && !defined(CONFIG_ANDROID)
+ 	pr_debug("%s: Interface deleted\n", dev->name);
+@@ -296,7 +296,7 @@ static int newlink(struct net *src_net, struct net_device *dev,
+ 	int ret = -ENOMEM;
+ 	struct wireguard_device *wg = netdev_priv(dev);
+ 
+-	wg->creating_net = src_net;
++	wg->transit_net = src_net;
+ 	init_rwsem(&wg->static_identity.lock);
+ 	mutex_init(&wg->socket_update_lock);
+ 	mutex_init(&wg->device_update_lock);
+@@ -396,13 +396,13 @@ static int netdevice_notification(struct notifier_block *nb,
+ 	if (action != NETDEV_REGISTER || dev->netdev_ops != &netdev_ops)
+ 		return 0;
+ 
+-	if (dev_net(dev) == wg->creating_net && wg->have_creating_net_ref) {
+-		put_net(wg->creating_net);
+-		wg->have_creating_net_ref = false;
+-	} else if (dev_net(dev) != wg->creating_net &&
+-		   !wg->have_creating_net_ref) {
+-		wg->have_creating_net_ref = true;
+-		get_net(wg->creating_net);
++	if (dev_net(dev) == wg->transit_net && wg->have_transit_net_ref) {
++		put_net(wg->transit_net);
++		wg->have_transit_net_ref = false;
++	} else if (dev_net(dev) != wg->transit_net &&
++		   !wg->have_transit_net_ref) {
++		wg->have_transit_net_ref = true;
++		get_net(wg->transit_net);
+ 	}
+ 	return 0;
+ }
+diff --git a/src/device.h b/src/device.h
+index 2499782..4b7552c 100644
+--- a/src/device.h
++++ b/src/device.h
+@@ -40,7 +40,7 @@ struct wireguard_device {
+ 	struct net_device *dev;
+ 	struct crypt_queue encrypt_queue, decrypt_queue;
+ 	struct sock __rcu *sock4, *sock6;
+-	struct net *creating_net;
++	struct net *transit_net;
+ 	struct noise_static_identity static_identity;
+ 	struct workqueue_struct *handshake_receive_wq, *handshake_send_wq;
+ 	struct workqueue_struct *packet_crypt_wq;
+@@ -56,7 +56,7 @@ struct wireguard_device {
+ 	unsigned int num_peers, device_update_gen;
+ 	u32 fwmark;
+ 	u16 incoming_port;
+-	bool have_creating_net_ref;
++	bool have_transit_net_ref;
+ };
+ 
+ int device_init(void);
+diff --git a/src/socket.c b/src/socket.c
+index 2e9e44f..72f3e6a 100644
+--- a/src/socket.c
++++ b/src/socket.c
+@@ -384,18 +384,18 @@ int socket_init(struct wireguard_device *wg, u16 port)
+ retry:
+ #endif
+ 
+-	ret = udp_sock_create(wg->creating_net, &port4, &new4);
++	ret = udp_sock_create(wg->transit_net, &port4, &new4);
+ 	if (ret < 0) {
+ 		pr_err("%s: Could not create IPv4 socket\n", wg->dev->name);
+ 		return ret;
+ 	}
+ 	set_sock_opts(new4);
+-	setup_udp_tunnel_sock(wg->creating_net, new4, &cfg);
++	setup_udp_tunnel_sock(wg->transit_net, new4, &cfg);
+ 
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	if (ipv6_mod_enabled()) {
+ 		port6.local_udp_port = inet_sk(new4->sk)->inet_sport;
+-		ret = udp_sock_create(wg->creating_net, &port6, &new6);
++		ret = udp_sock_create(wg->transit_net, &port6, &new6);
+ 		if (ret < 0) {
+ 			udp_tunnel_sock_release(new4);
+ 			if (ret == -EADDRINUSE && !port && retries++ < 100)
+@@ -405,7 +405,7 @@ retry:
+ 			return ret;
+ 		}
+ 		set_sock_opts(new6);
+-		setup_udp_tunnel_sock(wg->creating_net, new6, &cfg);
++		setup_udp_tunnel_sock(wg->transit_net, new6, &cfg);
+ 	}
+ #endif
+ 
 -- 
 2.18.0
