@@ -1,21 +1,23 @@
 Return-Path: ju.orth@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f044cc9e
- for <wireguard@lists.zx2c4.com>; Sun, 9 Sep 2018 15:13:56 +0000 (UTC)
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com
- [IPv6:2a00:1450:4864:20::42f])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ac20da70
- for <wireguard@lists.zx2c4.com>; Sun, 9 Sep 2018 15:13:51 +0000 (UTC)
-Received: by mail-wr1-x42f.google.com with SMTP id k5-v6so19279571wre.10
- for <wireguard@lists.zx2c4.com>; Sun, 09 Sep 2018 08:14:28 -0700 (PDT)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f25df2de
+ for <wireguard@lists.zx2c4.com>; Sun, 9 Sep 2018 15:13:57 +0000 (UTC)
+Received: from mail-wm0-x236.google.com (mail-wm0-x236.google.com
+ [IPv6:2a00:1450:400c:c09::236])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5cee8ca7
+ for <wireguard@lists.zx2c4.com>; Sun, 9 Sep 2018 15:13:52 +0000 (UTC)
+Received: by mail-wm0-x236.google.com with SMTP id j192-v6so18946102wmj.1
+ for <wireguard@lists.zx2c4.com>; Sun, 09 Sep 2018 08:14:29 -0700 (PDT)
 Return-Path: <ju.orth@gmail.com>
 From: Julian Orth <ju.orth@gmail.com>
 To: wireguard@lists.zx2c4.com
-Subject: [PATCH v2 06/10] tools: allow modification of transit net
-Date: Sun,  9 Sep 2018 17:13:58 +0200
-Message-Id: <20180909151402.6033-7-ju.orth@gmail.com>
+Subject: [PATCH v2 07/10] tests: add test for transit-net
+Date: Sun,  9 Sep 2018 17:13:59 +0200
+Message-Id: <20180909151402.6033-8-ju.orth@gmail.com>
 In-Reply-To: <20180909151402.6033-1-ju.orth@gmail.com>
 References: <20180909151402.6033-1-ju.orth@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -25,161 +27,60 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-The command is
-
-wg set <device> [...] transit-netns <pid|file-path> [...]
-
-For example:
-
-wg set wg0 transit-netns 1
-wg set wg0 transit-netns /proc/1/ns/net
 ---
- src/tools/config.c     | 32 ++++++++++++++++++++++++++++++++
- src/tools/containers.h |  6 +++++-
- src/tools/ipc.c        |  4 ++++
- src/tools/man/wg.8     |  9 +++++++--
- src/tools/set.c        |  2 +-
- 5 files changed, 49 insertions(+), 4 deletions(-)
+ src/tests/netns.sh | 40 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 40 insertions(+)
 
-diff --git a/src/tools/config.c b/src/tools/config.c
-index 93525fb..dffec76 100644
---- a/src/tools/config.c
-+++ b/src/tools/config.c
-@@ -14,6 +14,7 @@
- #include <sys/socket.h>
- #include <sys/stat.h>
- #include <errno.h>
-+#include <fcntl.h>
+diff --git a/src/tests/netns.sh b/src/tests/netns.sh
+index 568612c..4cc6b44 100755
+--- a/src/tests/netns.sh
++++ b/src/tests/netns.sh
+@@ -222,6 +222,46 @@ n1 wg set wg0 peer "$more_specific_key" remove
+ ip1 link del wg0
+ ip2 link del wg0
  
- #include "config.h"
- #include "containers.h"
-@@ -74,6 +75,30 @@ static inline bool parse_port(uint16_t *port, uint32_t *flags, const char *value
- 	return ret == 0;
- }
- 
-+static bool parse_transit_netns(struct wgdevice *device, const char *arg)
-+{
-+	/* U32 arg -> PID */
-+	if (isdigit(*arg)) {
-+		char *end;
-+		unsigned long pid = strtoul(arg, &end, 10);
-+		if (!*end && pid <= UINT32_MAX) {
-+			device->transit_netns_pid = pid;
-+			device->flags |= WGDEVICE_HAS_TRANSIT_NETNS_PID;
-+			return true;
-+		}
-+	}
++# Test using transit namespace. We now change the topology to this with transit-netns of $ns1 wg0 = $ns0
++# ┌──────────────────────┐    ┌───────────────────────┐     ┌────────────────────────────────────────┐
++# │    $ns1 namespace    │    │     $ns0 namespace    │     │             $ns2 namespace             │
++# │                      │    │                       │     │                                        │
++# │  ┌─────┐             │    │ ┌──────┐              │     │  ┌─────┐            ┌─────┐            │
++# │  │ wg0 │             │    │ │vethrs│──────────────┼─────┼──│veths│────────────│ wg0 │            │
++# │  ├─────┴──────────┐  │    │ ├──────┴────────────┐ │     │  ├─────┴──────────┐ ├─────┴──────────┐ │
++# │  │192.168.241.1/24│  │    │ │10.0.0.1/24        │ │     │  │10.0.0.100/24   │ │192.168.241.2/24│ │
++# │  │fd00::1/24      │  │    │ │SNAT:192.168.1.0/24│ │     │  │                │ │fd00::2/24      │ │
++# │  └────────────────┘  │    │ └───────────────────┘ │     │  └────────────────┘ └────────────────┘ │
++# └──────────────────────┘    └───────────────────────┘     └────────────────────────────────────────┘
 +
-+	/* Otherwise -> file path */
-+	device->transit_netns_fd = open(arg, O_RDONLY);
-+	if (device->transit_netns_fd >= 0) {
-+		device->flags |= WGDEVICE_HAS_TRANSIT_NETNS_FD;
-+		return true;
-+	}
++ip1 link add dev wg0 type wireguard
++ip2 link add dev wg0 type wireguard
++configure_peers
++n1 wg set wg0 transit-netns /run/netns/$netns0
 +
-+	perror("open");
-+	return false;
-+}
++ip0 link add vethrs type veth peer name veths
++ip0 link set veths netns $netns2
++ip0 link set vethrs up
++ip0 addr add 10.0.0.1/24 dev vethrs
++ip2 addr add 10.0.0.100/24 dev veths
++ip1 route add default dev wg0
++ip2 link set veths up
++waitiface $netns0 vethrs
++waitiface $netns2 veths
 +
- static inline bool parse_fwmark(uint32_t *fwmark, uint32_t *flags, const char *value)
- {
- 	unsigned long ret;
-@@ -392,6 +417,8 @@ static bool process_line(struct config_ctx *ctx, const char *line)
- 	if (ctx->is_device_section) {
- 		if (key_match("ListenPort"))
- 			ret = parse_port(&ctx->device->listen_port, &ctx->device->flags, value);
-+		else if (key_match("TransitNetns"))
-+			ret = parse_transit_netns(ctx->device, value);
- 		else if (key_match("FwMark"))
- 			ret = parse_fwmark(&ctx->device->fwmark, &ctx->device->flags, value);
- 		else if (key_match("PrivateKey")) {
-@@ -525,6 +552,11 @@ struct wgdevice *config_read_cmd(char *argv[], int argc)
- 				goto error;
- 			argv += 2;
- 			argc -= 2;
-+		} else if (!strcmp(argv[0], "transit-netns") && argc >= 2 && !peer) {
-+			if (!parse_transit_netns(device, argv[1]))
-+				goto error;
-+			argv += 2;
-+			argc -= 2;
- 		} else if (!strcmp(argv[0], "fwmark") && argc >= 2 && !peer) {
- 			if (!parse_fwmark(&device->fwmark, &device->flags, argv[1]))
- 				goto error;
-diff --git a/src/tools/containers.h b/src/tools/containers.h
-index 455d998..c6dd6fe 100644
---- a/src/tools/containers.h
-+++ b/src/tools/containers.h
-@@ -58,7 +58,9 @@ enum {
- 	WGDEVICE_HAS_PRIVATE_KEY = 1U << 1,
- 	WGDEVICE_HAS_PUBLIC_KEY = 1U << 2,
- 	WGDEVICE_HAS_LISTEN_PORT = 1U << 3,
--	WGDEVICE_HAS_FWMARK = 1U << 4
-+	WGDEVICE_HAS_FWMARK = 1U << 4,
-+	WGDEVICE_HAS_TRANSIT_NETNS_PID = 1U << 5,
-+	WGDEVICE_HAS_TRANSIT_NETNS_FD = 1U << 6,
- };
- 
- struct wgdevice {
-@@ -72,6 +74,8 @@ struct wgdevice {
- 
- 	uint32_t fwmark;
- 	uint16_t listen_port;
-+	uint32_t transit_netns_pid;
-+	int transit_netns_fd;
- 
- 	struct wgpeer *first_peer, *last_peer;
- };
-diff --git a/src/tools/ipc.c b/src/tools/ipc.c
-index e3ef789..aa82cb3 100644
---- a/src/tools/ipc.c
-+++ b/src/tools/ipc.c
-@@ -569,6 +569,10 @@ again:
- 			mnl_attr_put(nlh, WGDEVICE_A_PRIVATE_KEY, sizeof(dev->private_key), dev->private_key);
- 		if (dev->flags & WGDEVICE_HAS_LISTEN_PORT)
- 			mnl_attr_put_u16(nlh, WGDEVICE_A_LISTEN_PORT, dev->listen_port);
-+		if (dev->flags & WGDEVICE_HAS_TRANSIT_NETNS_PID)
-+			mnl_attr_put_u32(nlh, WGDEVICE_A_TRANSIT_NETNS_PID, dev->transit_netns_pid);
-+		if (dev->flags & WGDEVICE_HAS_TRANSIT_NETNS_FD)
-+			mnl_attr_put_u32(nlh, WGDEVICE_A_TRANSIT_NETNS_FD, (uint32_t)dev->transit_netns_fd);
- 		if (dev->flags & WGDEVICE_HAS_FWMARK)
- 			mnl_attr_put_u32(nlh, WGDEVICE_A_FWMARK, dev->fwmark);
- 		if (dev->flags & WGDEVICE_REPLACE_PEERS)
-diff --git a/src/tools/man/wg.8 b/src/tools/man/wg.8
-index 5bae7ca..d1f95f7 100644
---- a/src/tools/man/wg.8
-+++ b/src/tools/man/wg.8
-@@ -55,12 +55,17 @@ transfer-rx, transfer-tx, persistent-keepalive.
- Shows the current configuration of \fI<interface>\fP in the format described
- by \fICONFIGURATION FILE FORMAT\fP below.
- .TP
--\fBset\fP \fI<interface>\fP [\fIlisten-port\fP \fI<port>\fP] [\fIfwmark\fP \fI<fwmark>\fP] [\fIprivate-key\fP \fI<file-path>\fP] [\fIpeer\fP \fI<base64-public-key>\fP [\fIremove\fP] [\fIpreshared-key\fP \fI<file-path>\fP] [\fIendpoint\fP \fI<ip>:<port>\fP] [\fIpersistent-keepalive\fP \fI<interval seconds>\fP] [\fIallowed-ips\fP \fI<ip1>/<cidr1>\fP[,\fI<ip2>/<cidr2>\fP]...] ]...
-+\fBset\fP \fI<interface>\fP [\fIlisten-port\fP \fI<port>\fP] [\fItransit-netns\fP \fI<pid|file-path>\fP] [\fIfwmark\fP \fI<fwmark>\fP] [\fIprivate-key\fP \fI<file-path>\fP] [\fIpeer\fP \fI<base64-public-key>\fP [\fIremove\fP] [\fIpreshared-key\fP \fI<file-path>\fP] [\fIendpoint\fP \fI<ip>:<port>\fP] [\fIpersistent-keepalive\fP \fI<interval seconds>\fP] [\fIallowed-ips\fP \fI<ip1>/<cidr1>\fP[,\fI<ip2>/<cidr2>\fP]...] ]...
- Sets configuration values for the specified \fI<interface>\fP. Multiple
- \fIpeer\fPs may be specified, and if the \fIremove\fP argument is given
- for a peer, that peer is removed, not configured. If \fIlisten-port\fP
- is not specified, the port will be chosen randomly when the
--interface comes up. Both \fIprivate-key\fP and \fIpreshared-key\fP must
-+interface comes up. If transit-netns is not specified, the network namespace
-+through which encrypted packets are routed is the one in which the device
-+was created. Otherwise the network namespace through which encrypted packets are
-+routed is the one specified by the argument. If the argument is an unsigned
-+32-bit integer, it is interpeted as a process id, otherwise it is interpreted as
-+a file path. Both \fIprivate-key\fP and \fIpreshared-key\fP must
- be a files, because command line arguments are not considered private on
- most systems but if you are using
- .BR bash (1),
-diff --git a/src/tools/set.c b/src/tools/set.c
-index d44fed9..37be9a0 100644
---- a/src/tools/set.c
-+++ b/src/tools/set.c
-@@ -18,7 +18,7 @@ int set_main(int argc, char *argv[])
- 	int ret = 1;
- 
- 	if (argc < 3) {
--		fprintf(stderr, "Usage: %s %s <interface> [listen-port <port>] [fwmark <mark>] [private-key <file path>] [peer <base64 public key> [remove] [preshared-key <file path>] [endpoint <ip>:<port>] [persistent-keepalive <interval seconds>] [allowed-ips <ip1>/<cidr1>[,<ip2>/<cidr2>]...] ]...\n", PROG_NAME, argv[0]);
-+		fprintf(stderr, "Usage: %s %s <interface> [listen-port <port>] [transit-netns <pid|file path>] [fwmark <mark>] [private-key <file path>] [peer <base64 public key> [remove] [preshared-key <file path>] [endpoint <ip>:<port>] [persistent-keepalive <interval seconds>] [allowed-ips <ip1>/<cidr1>[,<ip2>/<cidr2>]...] ]...\n", PROG_NAME, argv[0]);
- 		return 1;
- 	}
- 
++n1 wg set wg0 peer "$pub2" endpoint 10.0.0.100:2 persistent-keepalive 1
++n1 ping -W 1 -c 1 192.168.241.2
++n2 ping -W 1 -c 1 192.168.241.1
++[[ $(n2 wg show wg0 endpoints) == "$pub1	10.0.0.1:1" ]]
++# Demonstrate n2 can still send packets to n1, since persistent-keepalive will prevent connection tracking entry from expiring (to see entries: `n0 conntrack -L`).
++pp sleep 3
++n2 ping -W 1 -c 1 192.168.241.1
++
++ip0 link del vethrs
++
++ip1 link del wg0
++ip2 link del wg0
++
+ # Test using NAT. We now change the topology to this:
+ # ┌────────────────────────────────────────┐    ┌────────────────────────────────────────────────┐     ┌────────────────────────────────────────┐
+ # │             $ns1 namespace             │    │                 $ns0 namespace                 │     │             $ns2 namespace             │
 -- 
 2.18.0
