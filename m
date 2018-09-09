@@ -1,19 +1,19 @@
 Return-Path: ju.orth@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id de98dfc7
- for <wireguard@lists.zx2c4.com>; Sun, 9 Sep 2018 15:13:49 +0000 (UTC)
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com
- [IPv6:2a00:1450:4864:20::430])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2998aca8
- for <wireguard@lists.zx2c4.com>; Sun, 9 Sep 2018 15:13:49 +0000 (UTC)
-Received: by mail-wr1-x430.google.com with SMTP id v17-v6so19279256wrr.9
- for <wireguard@lists.zx2c4.com>; Sun, 09 Sep 2018 08:14:26 -0700 (PDT)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0bd52ff6
+ for <wireguard@lists.zx2c4.com>; Sun, 9 Sep 2018 15:13:55 +0000 (UTC)
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com
+ [IPv6:2a00:1450:4864:20::42b])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5bf5d6d9
+ for <wireguard@lists.zx2c4.com>; Sun, 9 Sep 2018 15:13:50 +0000 (UTC)
+Received: by mail-wr1-x42b.google.com with SMTP id s14-v6so10333486wrw.6
+ for <wireguard@lists.zx2c4.com>; Sun, 09 Sep 2018 08:14:27 -0700 (PDT)
 Return-Path: <ju.orth@gmail.com>
 From: Julian Orth <ju.orth@gmail.com>
 To: wireguard@lists.zx2c4.com
-Subject: [PATCH v2 04/10] socket: allow modification of transit_net
-Date: Sun,  9 Sep 2018 17:13:56 +0200
-Message-Id: <20180909151402.6033-5-ju.orth@gmail.com>
+Subject: [PATCH v2 05/10] netlink: allow modification of transit net
+Date: Sun,  9 Sep 2018 17:13:57 +0200
+Message-Id: <20180909151402.6033-6-ju.orth@gmail.com>
 In-Reply-To: <20180909151402.6033-1-ju.orth@gmail.com>
 References: <20180909151402.6033-1-ju.orth@gmail.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
@@ -25,148 +25,143 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
----
- src/device.c  |  8 +++++---
- src/netlink.c |  2 +-
- src/socket.c  | 18 ++++++++++--------
- src/socket.h  |  6 +++---
- 4 files changed, 19 insertions(+), 15 deletions(-)
+This commit adds two new arguments:
 
-diff --git a/src/device.c b/src/device.c
-index 71c0662..2b7286b 100644
---- a/src/device.c
-+++ b/src/device.c
-@@ -54,7 +54,7 @@ static int open(struct net_device *dev)
- #endif
- 
- 	mutex_lock(&wg->device_update_lock);
--	ret = socket_init(wg, wg->incoming_port);
-+	ret = socket_init(wg, wg->transit_net, wg->incoming_port);
- 	if (ret < 0)
- 		goto out;
- 	list_for_each_entry (peer, &wg->peer_list, peer_list) {
-@@ -112,7 +112,7 @@ static int stop(struct net_device *dev)
- 	}
- 	mutex_unlock(&wg->device_update_lock);
- 	skb_queue_purge(&wg->incoming_handshakes);
--	socket_reinit(wg, NULL, NULL);
-+	socket_reinit(wg, NULL, NULL, NULL);
- 	return 0;
- }
- 
-@@ -228,7 +228,7 @@ static void destruct(struct net_device *dev)
- 	rtnl_unlock();
- 	mutex_lock(&wg->device_update_lock);
- 	wg->incoming_port = 0;
--	socket_reinit(wg, NULL, NULL);
-+	socket_reinit(wg, NULL, NULL, NULL);
- 	allowedips_free(&wg->peer_allowedips, &wg->device_update_lock);
- 	/* The final references are cleared in the below calls to destroy_workqueue. */
- 	peer_remove_all(wg);
-@@ -398,7 +398,9 @@ static int netdevice_notification(struct notifier_block *nb,
- 	if (action != NETDEV_REGISTER || dev->netdev_ops != &netdev_ops)
- 		return 0;
- 
-+	mutex_lock(&wg->device_update_lock);
- 	device_set_nets(wg, dev_net(dev), wg->transit_net);
-+	mutex_unlock(&wg->device_update_lock);
- 
- 	return 0;
- }
+* WGDEVICE_A_TRANSIT_NETNS_PID
+
+    The argument is a U32 process id that refers to a process whose
+    network namespace is to be used as the transit namespace.
+
+* WGDEVICE_A_TRANSIT_NETNS_FD
+
+    The argument is a U32 file descriptor that refers to a network
+    namespace that is to be used as the transit namespace.
+---
+ src/netlink.c        | 52 ++++++++++++++++++++++++++++++++++----------
+ src/uapi/wireguard.h | 12 +++++++---
+ 2 files changed, 49 insertions(+), 15 deletions(-)
+
 diff --git a/src/netlink.c b/src/netlink.c
-index 0bd2b97..73d9a74 100644
+index 73d9a74..f74c23a 100644
 --- a/src/netlink.c
 +++ b/src/netlink.c
-@@ -314,7 +314,7 @@ static int set_port(struct wireguard_device *wg, u16 port)
+@@ -24,7 +24,9 @@ static const struct nla_policy device_policy[WGDEVICE_A_MAX + 1] = {
+ 	[WGDEVICE_A_FLAGS]		= { .type = NLA_U32 },
+ 	[WGDEVICE_A_LISTEN_PORT]	= { .type = NLA_U16 },
+ 	[WGDEVICE_A_FWMARK]		= { .type = NLA_U32 },
+-	[WGDEVICE_A_PEERS]		= { .type = NLA_NESTED }
++	[WGDEVICE_A_PEERS]		= { .type = NLA_NESTED },
++	[WGDEVICE_A_TRANSIT_NETNS_PID]	= { .type = NLA_U32 },
++	[WGDEVICE_A_TRANSIT_NETNS_FD]	= { .type = NLA_U32 },
+ };
+ 
+ static const struct nla_policy peer_policy[WGPEER_A_MAX + 1] = {
+@@ -302,19 +304,48 @@ static int get_device_done(struct netlink_callback *cb)
+ 	return 0;
+ }
+ 
+-static int set_port(struct wireguard_device *wg, u16 port)
++static int set_socket(struct wireguard_device *wg, struct nlattr **attrs)
+ {
+ 	struct wireguard_peer *peer;
++	struct nlattr *port_attr, *net_pid, *net_fd;
++	u16 port;
++	struct net *net = NULL;
++	int ret = 0;
++
++	port_attr = attrs[WGDEVICE_A_LISTEN_PORT];
++	net_pid = attrs[WGDEVICE_A_TRANSIT_NETNS_PID];
++	net_fd = attrs[WGDEVICE_A_TRANSIT_NETNS_FD];
++
++	if (net_pid && net_fd)
++		return -EINVAL;
++	if (net_pid)
++		net = get_net_ns_by_pid(nla_get_u32(net_pid));
++	if (net_fd)
++		net = get_net_ns_by_fd(nla_get_u32(net_fd));
++	if (IS_ERR(net))
++		return PTR_ERR(net);
++	if (port_attr)
++		port = nla_get_u16(port_attr);
++	else
++		port = wg->incoming_port;
++
++	if (wg->incoming_port == port && (!net || wg->transit_net == net))
++		goto out;
+ 
+-	if (wg->incoming_port == port)
+-		return 0;
+ 	list_for_each_entry (peer, &wg->peer_list, peer_list)
+ 		socket_clear_peer_endpoint_src(peer);
+ 	if (!netif_running(wg->dev)) {
  		wg->incoming_port = port;
- 		return 0;
+-		return 0;
++		if (net)
++			device_set_nets(wg, wg->dev_net, net);
++		goto out;
  	}
--	return socket_init(wg, port);
-+	return socket_init(wg, wg->transit_net, port);
+-	return socket_init(wg, wg->transit_net, port);
++	ret = socket_init(wg, net ? : wg->transit_net, port);
++
++out:
++	if (net)
++		put_net(net);
++	return ret;
  }
  
  static int set_allowedip(struct wireguard_peer *peer, struct nlattr **attrs)
-diff --git a/src/socket.c b/src/socket.c
-index 72f3e6a..73dadcd 100644
---- a/src/socket.c
-+++ b/src/socket.c
-@@ -354,7 +354,7 @@ static inline void set_sock_opts(struct socket *sock)
- 	sk_set_memalloc(sock->sk);
- }
- 
--int socket_init(struct wireguard_device *wg, u16 port)
-+int socket_init(struct wireguard_device *wg, struct net *net, u16 port)
- {
- 	int ret;
- 	struct udp_tunnel_sock_cfg cfg = {
-@@ -384,18 +384,18 @@ int socket_init(struct wireguard_device *wg, u16 port)
- retry:
- #endif
- 
--	ret = udp_sock_create(wg->transit_net, &port4, &new4);
-+	ret = udp_sock_create(net, &port4, &new4);
- 	if (ret < 0) {
- 		pr_err("%s: Could not create IPv4 socket\n", wg->dev->name);
- 		return ret;
+@@ -496,12 +527,9 @@ static int set_device(struct sk_buff *skb, struct genl_info *info)
+ 			socket_clear_peer_endpoint_src(peer);
  	}
- 	set_sock_opts(new4);
--	setup_udp_tunnel_sock(wg->transit_net, new4, &cfg);
-+	setup_udp_tunnel_sock(net, new4, &cfg);
  
- #if IS_ENABLED(CONFIG_IPV6)
- 	if (ipv6_mod_enabled()) {
- 		port6.local_udp_port = inet_sk(new4->sk)->inet_sport;
--		ret = udp_sock_create(wg->transit_net, &port6, &new6);
-+		ret = udp_sock_create(net, &port6, &new6);
- 		if (ret < 0) {
- 			udp_tunnel_sock_release(new4);
- 			if (ret == -EADDRINUSE && !port && retries++ < 100)
-@@ -405,16 +405,16 @@ retry:
- 			return ret;
- 		}
- 		set_sock_opts(new6);
--		setup_udp_tunnel_sock(wg->transit_net, new6, &cfg);
-+		setup_udp_tunnel_sock(net, new6, &cfg);
- 	}
- #endif
+-	if (info->attrs[WGDEVICE_A_LISTEN_PORT]) {
+-		ret = set_port(
+-			wg, nla_get_u16(info->attrs[WGDEVICE_A_LISTEN_PORT]));
+-		if (ret)
+-			goto out;
+-	}
++	ret = set_socket(wg, info->attrs);
++	if (ret)
++		goto out;
  
--	socket_reinit(wg, new4 ? new4->sk : NULL, new6 ? new6->sk : NULL);
-+	socket_reinit(wg, net, new4 ? new4->sk : NULL, new6 ? new6->sk : NULL);
- 	return 0;
- }
- 
--void socket_reinit(struct wireguard_device *wg, struct sock *new4,
--		   struct sock *new6)
-+void socket_reinit(struct wireguard_device *wg, struct net *net,
-+		   struct sock *new4, struct sock *new6)
- {
- 	struct sock *old4, *old6;
- 
-@@ -427,6 +427,8 @@ void socket_reinit(struct wireguard_device *wg, struct sock *new4,
- 	rcu_assign_pointer(wg->sock6, new6);
- 	if (new4)
- 		wg->incoming_port = ntohs(inet_sk(new4)->inet_sport);
-+	if (net && wg->transit_net != net)
-+		device_set_nets(wg, wg->dev_net, net);
- 	mutex_unlock(&wg->socket_update_lock);
- 	synchronize_rcu_bh();
- 	synchronize_net();
-diff --git a/src/socket.h b/src/socket.h
-index d873ffa..8419ee9 100644
---- a/src/socket.h
-+++ b/src/socket.h
-@@ -11,9 +11,9 @@
- #include <linux/if_vlan.h>
- #include <linux/if_ether.h>
- 
--int socket_init(struct wireguard_device *wg, u16 port);
--void socket_reinit(struct wireguard_device *wg, struct sock *new4,
--		   struct sock *new6);
-+int socket_init(struct wireguard_device *wg, struct net *net, u16 port);
-+void socket_reinit(struct wireguard_device *wg, struct net *net,
-+		   struct sock *new4, struct sock *new6);
- int socket_send_buffer_to_peer(struct wireguard_peer *peer, void *data,
- 			       size_t len, u8 ds);
- int socket_send_skb_to_peer(struct wireguard_peer *peer, struct sk_buff *skb,
+ 	if (info->attrs[WGDEVICE_A_FLAGS] &&
+ 	    nla_get_u32(info->attrs[WGDEVICE_A_FLAGS]) &
+diff --git a/src/uapi/wireguard.h b/src/uapi/wireguard.h
+index 3d73ad7..21bf92e 100644
+--- a/src/uapi/wireguard.h
++++ b/src/uapi/wireguard.h
+@@ -72,9 +72,11 @@
+  * WG_CMD_SET_DEVICE
+  * -----------------
+  *
+- * May only be called via NLM_F_REQUEST. The command should contain the
+- * following tree of nested items, containing one but not both of
+- * WGDEVICE_A_IFINDEX and WGDEVICE_A_IFNAME:
++ * May only be called via NLM_F_REQUEST. The command must contain the following
++ * tree of nested items. Exactly one of WGDEVICE_A_IFINDEX and WGDEVICE_A_IFNAME
++ * must be provided. All other top-level items are optional. At most one of
++ * WGDEVICE_A_TRANSIT_NETNS_PID and WGDEVICE_A_TRANSIT_NETNS_FD may be provided.
++ *
+  *
+  *    WGDEVICE_A_IFINDEX: NLA_U32
+  *    WGDEVICE_A_IFNAME: NLA_NUL_STRING, maxlen IFNAMESIZ - 1
+@@ -82,6 +84,8 @@
+  *                      peers should be removed prior to adding the list below.
+  *    WGDEVICE_A_PRIVATE_KEY: len WG_KEY_LEN, all zeros to remove
+  *    WGDEVICE_A_LISTEN_PORT: NLA_U16, 0 to choose randomly
++ *    WGDEVICE_A_TRANSIT_NETNS_PID: NLA_U32
++ *    WGDEVICE_A_TRANSIT_NETNS_FD: NLA_U32
+  *    WGDEVICE_A_FWMARK: NLA_U32, 0 to disable
+  *    WGDEVICE_A_PEERS: NLA_NESTED
+  *        0: NLA_NESTED
+@@ -154,6 +158,8 @@ enum wgdevice_attribute {
+ 	WGDEVICE_A_LISTEN_PORT,
+ 	WGDEVICE_A_FWMARK,
+ 	WGDEVICE_A_PEERS,
++	WGDEVICE_A_TRANSIT_NETNS_PID,
++	WGDEVICE_A_TRANSIT_NETNS_FD,
+ 	__WGDEVICE_A_LAST
+ };
+ #define WGDEVICE_A_MAX (__WGDEVICE_A_LAST - 1)
 -- 
 2.18.0
