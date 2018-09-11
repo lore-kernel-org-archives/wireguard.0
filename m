@@ -1,21 +1,21 @@
 Return-Path: ju.orth@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6597302a
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3d1d6e45
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 11 Sep 2018 19:12:37 +0000 (UTC)
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com
+ [IPv6:2a00:1450:4864:20::42f])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 31b6c05c
  for <wireguard@lists.zx2c4.com>;
  Tue, 11 Sep 2018 19:12:36 +0000 (UTC)
-Received: from mail-wm0-x22d.google.com (mail-wm0-x22d.google.com
- [IPv6:2a00:1450:400c:c09::22d])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 22fee0b3
- for <wireguard@lists.zx2c4.com>;
- Tue, 11 Sep 2018 19:12:35 +0000 (UTC)
-Received: by mail-wm0-x22d.google.com with SMTP id q8-v6so2131376wmq.4
- for <wireguard@lists.zx2c4.com>; Tue, 11 Sep 2018 12:13:28 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id z96-v6so27199018wrb.8
+ for <wireguard@lists.zx2c4.com>; Tue, 11 Sep 2018 12:13:29 -0700 (PDT)
 Return-Path: <ju.orth@gmail.com>
 From: Julian Orth <ju.orth@gmail.com>
 To: wireguard@lists.zx2c4.com
-Subject: [PATCH v3 01/12] device: protect socket_init with device_update_lock
-Date: Tue, 11 Sep 2018 21:13:00 +0200
-Message-Id: <20180911191311.25373-2-ju.orth@gmail.com>
+Subject: [PATCH v3 02/12] netlink: check for CAP_NET_ADMIN manually
+Date: Tue, 11 Sep 2018 21:13:01 +0200
+Message-Id: <20180911191311.25373-3-ju.orth@gmail.com>
 In-Reply-To: <20180911191311.25373-1-ju.orth@gmail.com>
 References: <20180911191311.25373-1-ju.orth@gmail.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
@@ -27,46 +27,56 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-`set_port` in netlink.c races with `open` in device.c. This can cause
-the following code flow:
-
-* thread 1: set_port: device is not up
-* thread 2: device is opened
-* thread 2: open: called and calls socket_init with the original port
-* thread 1: set_port: sets incoming_port to the new port and returns
-
-incoming_port is then inconsistent. While this is not particularly
-critical, it will become more critial when ste_port also sets the
-transit namespace.
 ---
- src/device.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ src/netlink.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/src/device.c b/src/device.c
-index 255ad49..88c228b 100644
---- a/src/device.c
-+++ b/src/device.c
-@@ -53,17 +53,18 @@ static int open(struct net_device *dev)
- #endif
- #endif
+diff --git a/src/netlink.c b/src/netlink.c
+index 0bd2b97..a857aff 100644
+--- a/src/netlink.c
++++ b/src/netlink.c
+@@ -172,9 +172,12 @@ static int get_device_start(struct netlink_callback *cb)
+ 	int ret = nlmsg_parse(cb->nlh, GENL_HDRLEN + genl_family.hdrsize, attrs,
+ 			      genl_family.maxattr, device_policy, NULL);
+ 	struct wireguard_device *wg;
++	struct net *dev_net = sock_net(cb->skb->sk);
  
-+	mutex_lock(&wg->device_update_lock);
- 	ret = socket_init(wg, wg->incoming_port);
  	if (ret < 0)
--		return ret;
--	mutex_lock(&wg->device_update_lock);
-+		goto out;
- 	list_for_each_entry (peer, &wg->peer_list, peer_list) {
- 		packet_send_staged_packets(peer);
- 		if (peer->persistent_keepalive_interval)
- 			packet_send_keepalive(peer);
- 	}
-+out:
- 	mutex_unlock(&wg->device_update_lock);
--	return 0;
-+	return ret;
- }
+ 		return ret;
++	if (!netlink_ns_capable(cb->skb, dev_net->user_ns, CAP_NET_ADMIN))
++		return -EPERM;
+ 	cb->args[2] = (long)kzalloc(sizeof(struct allowedips_cursor),
+ 				    GFP_KERNEL);
+ 	if (unlikely(!cb->args[2]))
+@@ -477,7 +480,15 @@ out:
+ static int set_device(struct sk_buff *skb, struct genl_info *info)
+ {
+ 	int ret;
+-	struct wireguard_device *wg = lookup_interface(info->attrs, skb);
++	struct wireguard_device *wg;
++	struct net *dev_net = sock_net(skb->sk);
++
++	if (!netlink_ns_capable(skb, dev_net->user_ns, CAP_NET_ADMIN)) {
++		ret = -EPERM;
++		goto out_nodev;
++	}
++
++	wg = lookup_interface(info->attrs, skb);
  
- #if defined(CONFIG_PM_SLEEP) && !defined(CONFIG_ANDROID)
+ 	if (IS_ERR(wg)) {
+ 		ret = PTR_ERR(wg);
+@@ -580,12 +591,10 @@ struct genl_ops genl_ops[] = {
+ 		.dumpit = get_device_dump,
+ 		.done = get_device_done,
+ 		.policy = device_policy,
+-		.flags = GENL_UNS_ADMIN_PERM
+ 	}, {
+ 		.cmd = WG_CMD_SET_DEVICE,
+ 		.doit = set_device,
+ 		.policy = device_policy,
+-		.flags = GENL_UNS_ADMIN_PERM
+ 	}
+ };
+ 
 -- 
 2.18.0
