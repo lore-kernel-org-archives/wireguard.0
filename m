@@ -1,26 +1,21 @@
-Return-Path: Jason@zx2c4.com
+Return-Path: ju.orth@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5951a8fa
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id af9c6792
  for <wireguard@lists.zx2c4.com>;
- Tue, 11 Sep 2018 00:56:17 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7acfbfc4
+ Tue, 11 Sep 2018 19:12:35 +0000 (UTC)
+Received: from mail-wm0-x231.google.com (mail-wm0-x231.google.com
+ [IPv6:2a00:1450:400c:c09::231])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0e77bdc6
  for <wireguard@lists.zx2c4.com>;
- Tue, 11 Sep 2018 00:56:17 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e6f02901
- for <wireguard@lists.zx2c4.com>;
- Tue, 11 Sep 2018 00:40:28 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 2211c7ad
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Tue, 11 Sep 2018 00:40:28 +0000 (UTC)
-Date: Mon, 10 Sep 2018 18:56:59 -0600
-To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: [ANNOUNCE] WireGuard Snapshot `0.0.20180910` Available
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Message-Id: <154ef634456ff903@frisell.zx2c4.com>
+ Tue, 11 Sep 2018 19:12:35 +0000 (UTC)
+Received: by mail-wm0-x231.google.com with SMTP id 207-v6so2109588wme.5
+ for <wireguard@lists.zx2c4.com>; Tue, 11 Sep 2018 12:13:27 -0700 (PDT)
+Return-Path: <ju.orth@gmail.com>
+From: Julian Orth <ju.orth@gmail.com>
+To: wireguard@lists.zx2c4.com
+Subject: [PATCH v3 00/12] Allow changing the transit namespace
+Date: Tue, 11 Sep 2018 21:12:59 +0200
+Message-Id: <20180911191311.25373-1-ju.orth@gmail.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -30,83 +25,115 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+This is v3 of [1] and [2].
 
-Hello,
+The main reason for v2 was that v1 contained a serious vulnerability
+that allowed any process to create a socket in any network namespace.
+The solution in v2 was to ask the process to provide proof that he
+already has access to UDP sockets in the desired transit namespace. I
+believe that this method is sound, however, I do not think that it is
+particularly clean.
 
-A new snapshot, `0.0.20180910`, has been tagged in the git repository.
+Therefore I have implemented another solution to the vulnerability in
+v1 which I believe is useful independently of the transit-netns feature.
 
-Please note that this snapshot is, like the rest of the project at this point
-in time, experimental, and does not consitute a real release that would be
-considered secure and bug-free. WireGuard is generally thought to be fairly
-stable, and most likely will not crash your computer (though it may).
-However, as this is a pre-release snapshot, it comes with no guarantees, and
-its security is not yet to be depended on; it is not applicable for CVEs.
+Let's assume the following axioms:
 
-With all that said, if you'd like to test this snapshot out, there are a
-few relevent changes.
+* In order to access/modify the Wireguard UDP socket, the caller must
+    * currently reside in the transit namespace or
+    * have CAP_NET_ADMIN in the transit namespace
+* In order to access/modify the Wireguard device, the caller must have
+  CAP_NET_ADMIN in the namespace of the Wireguard device
 
-== Changes ==
+Consider the following scenario:
 
-  * curve25519: arm: do not modify sp directly
-  * compat: support neon.h on old kernels
-  * compat: arch-namespace certain includes
-  * compat: move simd.h from crypto to compat since it's going upstream
-  
-  This fixes a decent amount of compat breakage and thumb2-mode breakage
-  introduced by our move to Zinc.
-  
-  * crypto: use CRYPTOGAMS license
-  
-  Rather than using code from OpenSSL, use code directly from AndyP.
-  
-  * poly1305: rewrite self tests from scratch
-  * poly1305: switch to donna
-  
-  This makes our C Poly1305 implementation a bit more intensely tested and also
-  faster, especially on 64-bit systems. It also sets the stage for moving to a
-  HACL* implementation when that's ready.
+* Alice is in network namespace `n1` which belongs to user namespace
+  `u1`.
+* Alice has no capabilities in `u1`.
+* Alice creates a user namespace `u2` and a network namespace `n2`
+  (whose user namespace is `u2`).
+* Alice therefore has CAP_NET_ADMIN in `u2`.
+* Alice creates a Wireguard device `wg0` in `n2`.
+* Alice now wishes to set the transit namespace of `wg0` to `n1`.
 
-This snapshot contains commits from: Jason A. Donenfeld.
+If we look at the axioms above, then it is clear that there is only one
+way for her to accomplish this:
 
-As always, the source is available at https://git.zx2c4.com/WireGuard/ and
-information about the project is available at https://www.wireguard.com/ .
+* Alice must modify `wg0` while residing in `n1`.
 
-This snapshot is available in compressed tarball form here:
-  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-0.0.20180910.tar.xz
-  SHA2-256: 43481ac82d4889491e1ae761d4ef10688410975cc861db5d2ac1845ac62eae39
-  BLAKE2b-256: 501aba93c8144cd77b0aeac3f6e98aab82200f86e4339ff48a9f3e70d3048063
+Therefore, Alice executes the following command while residing in `n1`:
 
-A PGP signature of that file decompressed is available here:
-  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-0.0.20180910.tar.asc
-  Signing key: AB9942E6D4A4CFC3412620A749FC7012A5DE03AE
+wg --netns n2 set wg0 transit-net n1
 
-If you're a snapshot package maintainer, please bump your package version. If
-you're a user, the WireGuard team welcomes any and all feedback on this latest
-snapshot.
+In addition to the features of v1, this version adds the orthogonal
+feature displayed above: It allows the user to specify the namespace in
+which Wireguard should look up the device to operate on.
 
-Finally, WireGuard development thrives on donations. By popular demand, we
-have a webpage for this: https://www.wireguard.com/donations/
+As shown in the following Bash script, the combination of these features
+allows the usage of Wireguard in unprivileged containers:
 
-Thank you,
-Jason Donenfeld
+#!/bin/bash
 
+rm -f pipe
+mkfifo pipe
 
------BEGIN PGP SIGNATURE-----
+{
+    read pid < pipe
+    wg --netns "$pid" set wg0 transit-netns $$
+    rm pipe
+} &
 
-iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAluXEeEQHGphc29uQHp4
-MmM0LmNvbQAKCRBJ/HASpd4DrqtJD/4kJoUwH+DDoRCaevjVOCPVLcWQyvLx8Gcf
-bmof3fKvtU7aeeaAopE4uo/ZK2iYRnKgsJY6mzH/oRLb1xpqKoYeuhDyUNh7j+Ay
-cUYZugYMf+9/YKGr94/4rwYfTzZz+cmtRj9X1Zqc+IV8K4UpZuemllzdvtTybuii
-I24MatrLUs8oX5Os20inDvg0uuUxePRyZi4d1rfDv88OhNArw4vYALcgHlv1Ipye
-geDijtPRIlxURA3Obo/kalTbfCKJb654GNGIxWCws+xbucclt12FUhjxzWVmuRWP
-k86Bl8Uw5E5bNsaBlSQombZWbvkWHtWqNvw5i/QDfEs5uApdn03ElCahnyiFwdTB
-I32uxTvYtLiMy+pIj3xQnQDIG5SOoHWhSROhPKfVmW4fxJilQhREZgDe/1lWAE1G
-E4A1xKysknnSjAO8l2bvq9p1o81kz6E5la/yYzZDHMkeFJCg1O9OG58BeO/AIxRV
-ElkF06SahasleXM893UfPKCwfPXBY8VP/90KJR2OUzoNoLC09Rs/xjvm7psBcDYW
-k1o8K5hrsbUZ3PLcfSHiyuxsqN11JWKMZ0b/M2OFZg6pYt8QwKsmrt1BOj0kTRR9
-Pfe6u7nh2pW2qhiC4663dYVChe3pztOP5Hk3G+A03WRZDcout13TKJKVji6PmBaO
-cOShbVty9A==
-=9Js6
------END PGP SIGNATURE-----
+unshare -r -U -n -- bash <<EOF
+    wg-quick up ./wg0.conf
+    echo \$$ > pipe
+    ping -c1 wireguard.com
+EOF
+
+The code using transit-credentials can be applied on top of these
+changes if it is considered useful.
+
+Julian Orth (12):
+  device: protect socket_init with device_update_lock
+  netlink: check for CAP_NET_ADMIN manually
+  netlink: allow specifying the device namespace
+  netlink: restrict access to the UDP socket
+  device: rename creating_net to transit_net
+  device: store a copy of the device net
+  socket: allow modification of transit_net
+  netlink: allow modification of transit net
+  tools: add framework for shared options
+  tools: allow specifying the device namespace
+  tools: allow modification of transit net
+  tests: add test for transit-net
+
+[1] v1: https://lists.zx2c4.com/pipermail/wireguard/2018-September/003322.html
+[2] v2: https://lists.zx2c4.com/pipermail/wireguard/2018-September/003344.html
+
+ src/device.c            |  44 +++++++-----
+ src/device.h            |   6 +-
+ src/netlink.c           | 150 ++++++++++++++++++++++++++++++++--------
+ src/socket.c            |  18 ++---
+ src/socket.h            |   6 +-
+ src/tests/netns.sh      |  40 +++++++++++
+ src/tools/config.c      |   8 +++
+ src/tools/containers.h  |  22 +++++-
+ src/tools/genkey.c      |   3 +-
+ src/tools/ipc.c         |  26 +++++--
+ src/tools/ipc.h         |   7 +-
+ src/tools/man/wg.8      |   9 ++-
+ src/tools/netns.c       |  62 +++++++++++++++++
+ src/tools/netns.h       |  18 +++++
+ src/tools/pubkey.c      |   3 +-
+ src/tools/set.c         |   6 +-
+ src/tools/setconf.c     |   4 +-
+ src/tools/show.c        |  35 +++++++---
+ src/tools/showconf.c    |   4 +-
+ src/tools/subcommands.h |  14 ++--
+ src/tools/wg.c          |  64 +++++++++++++++--
+ src/uapi/wireguard.h    |  39 ++++++++++-
+ 22 files changed, 483 insertions(+), 105 deletions(-)
+ create mode 100644 src/tools/netns.c
+ create mode 100644 src/tools/netns.h
+
+-- 
+2.18.0
