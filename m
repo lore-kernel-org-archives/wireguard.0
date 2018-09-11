@@ -1,21 +1,23 @@
 Return-Path: ju.orth@gmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id af9c6792
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6597302a
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 11 Sep 2018 19:12:36 +0000 (UTC)
+Received: from mail-wm0-x22d.google.com (mail-wm0-x22d.google.com
+ [IPv6:2a00:1450:400c:c09::22d])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 22fee0b3
  for <wireguard@lists.zx2c4.com>;
  Tue, 11 Sep 2018 19:12:35 +0000 (UTC)
-Received: from mail-wm0-x231.google.com (mail-wm0-x231.google.com
- [IPv6:2a00:1450:400c:c09::231])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0e77bdc6
- for <wireguard@lists.zx2c4.com>;
- Tue, 11 Sep 2018 19:12:35 +0000 (UTC)
-Received: by mail-wm0-x231.google.com with SMTP id 207-v6so2109588wme.5
- for <wireguard@lists.zx2c4.com>; Tue, 11 Sep 2018 12:13:27 -0700 (PDT)
+Received: by mail-wm0-x22d.google.com with SMTP id q8-v6so2131376wmq.4
+ for <wireguard@lists.zx2c4.com>; Tue, 11 Sep 2018 12:13:28 -0700 (PDT)
 Return-Path: <ju.orth@gmail.com>
 From: Julian Orth <ju.orth@gmail.com>
 To: wireguard@lists.zx2c4.com
-Subject: [PATCH v3 00/12] Allow changing the transit namespace
-Date: Tue, 11 Sep 2018 21:12:59 +0200
-Message-Id: <20180911191311.25373-1-ju.orth@gmail.com>
+Subject: [PATCH v3 01/12] device: protect socket_init with device_update_lock
+Date: Tue, 11 Sep 2018 21:13:00 +0200
+Message-Id: <20180911191311.25373-2-ju.orth@gmail.com>
+In-Reply-To: <20180911191311.25373-1-ju.orth@gmail.com>
+References: <20180911191311.25373-1-ju.orth@gmail.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -25,115 +27,46 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-This is v3 of [1] and [2].
+`set_port` in netlink.c races with `open` in device.c. This can cause
+the following code flow:
 
-The main reason for v2 was that v1 contained a serious vulnerability
-that allowed any process to create a socket in any network namespace.
-The solution in v2 was to ask the process to provide proof that he
-already has access to UDP sockets in the desired transit namespace. I
-believe that this method is sound, however, I do not think that it is
-particularly clean.
+* thread 1: set_port: device is not up
+* thread 2: device is opened
+* thread 2: open: called and calls socket_init with the original port
+* thread 1: set_port: sets incoming_port to the new port and returns
 
-Therefore I have implemented another solution to the vulnerability in
-v1 which I believe is useful independently of the transit-netns feature.
+incoming_port is then inconsistent. While this is not particularly
+critical, it will become more critial when ste_port also sets the
+transit namespace.
+---
+ src/device.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-Let's assume the following axioms:
-
-* In order to access/modify the Wireguard UDP socket, the caller must
-    * currently reside in the transit namespace or
-    * have CAP_NET_ADMIN in the transit namespace
-* In order to access/modify the Wireguard device, the caller must have
-  CAP_NET_ADMIN in the namespace of the Wireguard device
-
-Consider the following scenario:
-
-* Alice is in network namespace `n1` which belongs to user namespace
-  `u1`.
-* Alice has no capabilities in `u1`.
-* Alice creates a user namespace `u2` and a network namespace `n2`
-  (whose user namespace is `u2`).
-* Alice therefore has CAP_NET_ADMIN in `u2`.
-* Alice creates a Wireguard device `wg0` in `n2`.
-* Alice now wishes to set the transit namespace of `wg0` to `n1`.
-
-If we look at the axioms above, then it is clear that there is only one
-way for her to accomplish this:
-
-* Alice must modify `wg0` while residing in `n1`.
-
-Therefore, Alice executes the following command while residing in `n1`:
-
-wg --netns n2 set wg0 transit-net n1
-
-In addition to the features of v1, this version adds the orthogonal
-feature displayed above: It allows the user to specify the namespace in
-which Wireguard should look up the device to operate on.
-
-As shown in the following Bash script, the combination of these features
-allows the usage of Wireguard in unprivileged containers:
-
-#!/bin/bash
-
-rm -f pipe
-mkfifo pipe
-
-{
-    read pid < pipe
-    wg --netns "$pid" set wg0 transit-netns $$
-    rm pipe
-} &
-
-unshare -r -U -n -- bash <<EOF
-    wg-quick up ./wg0.conf
-    echo \$$ > pipe
-    ping -c1 wireguard.com
-EOF
-
-The code using transit-credentials can be applied on top of these
-changes if it is considered useful.
-
-Julian Orth (12):
-  device: protect socket_init with device_update_lock
-  netlink: check for CAP_NET_ADMIN manually
-  netlink: allow specifying the device namespace
-  netlink: restrict access to the UDP socket
-  device: rename creating_net to transit_net
-  device: store a copy of the device net
-  socket: allow modification of transit_net
-  netlink: allow modification of transit net
-  tools: add framework for shared options
-  tools: allow specifying the device namespace
-  tools: allow modification of transit net
-  tests: add test for transit-net
-
-[1] v1: https://lists.zx2c4.com/pipermail/wireguard/2018-September/003322.html
-[2] v2: https://lists.zx2c4.com/pipermail/wireguard/2018-September/003344.html
-
- src/device.c            |  44 +++++++-----
- src/device.h            |   6 +-
- src/netlink.c           | 150 ++++++++++++++++++++++++++++++++--------
- src/socket.c            |  18 ++---
- src/socket.h            |   6 +-
- src/tests/netns.sh      |  40 +++++++++++
- src/tools/config.c      |   8 +++
- src/tools/containers.h  |  22 +++++-
- src/tools/genkey.c      |   3 +-
- src/tools/ipc.c         |  26 +++++--
- src/tools/ipc.h         |   7 +-
- src/tools/man/wg.8      |   9 ++-
- src/tools/netns.c       |  62 +++++++++++++++++
- src/tools/netns.h       |  18 +++++
- src/tools/pubkey.c      |   3 +-
- src/tools/set.c         |   6 +-
- src/tools/setconf.c     |   4 +-
- src/tools/show.c        |  35 +++++++---
- src/tools/showconf.c    |   4 +-
- src/tools/subcommands.h |  14 ++--
- src/tools/wg.c          |  64 +++++++++++++++--
- src/uapi/wireguard.h    |  39 ++++++++++-
- 22 files changed, 483 insertions(+), 105 deletions(-)
- create mode 100644 src/tools/netns.c
- create mode 100644 src/tools/netns.h
-
+diff --git a/src/device.c b/src/device.c
+index 255ad49..88c228b 100644
+--- a/src/device.c
++++ b/src/device.c
+@@ -53,17 +53,18 @@ static int open(struct net_device *dev)
+ #endif
+ #endif
+ 
++	mutex_lock(&wg->device_update_lock);
+ 	ret = socket_init(wg, wg->incoming_port);
+ 	if (ret < 0)
+-		return ret;
+-	mutex_lock(&wg->device_update_lock);
++		goto out;
+ 	list_for_each_entry (peer, &wg->peer_list, peer_list) {
+ 		packet_send_staged_packets(peer);
+ 		if (peer->persistent_keepalive_interval)
+ 			packet_send_keepalive(peer);
+ 	}
++out:
+ 	mutex_unlock(&wg->device_update_lock);
+-	return 0;
++	return ret;
+ }
+ 
+ #if defined(CONFIG_PM_SLEEP) && !defined(CONFIG_ANDROID)
 -- 
 2.18.0
