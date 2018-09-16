@@ -1,25 +1,28 @@
-Return-Path: toke@toke.dk
+Return-Path: lanerussell@protonmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 12364389
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0081e220
  for <wireguard@lists.zx2c4.com>;
- Sun, 16 Sep 2018 17:45:39 +0000 (UTC)
-Received: from mail.toke.dk (mail.toke.dk [52.28.52.200])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4185363d
+ Sun, 16 Sep 2018 18:07:44 +0000 (UTC)
+Received: from mail-40132.protonmail.ch (mail-40132.protonmail.ch
+ [185.70.40.132])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7732420b
  for <wireguard@lists.zx2c4.com>;
- Sun, 16 Sep 2018 17:45:38 +0000 (UTC)
-From: Toke =?utf-8?Q?H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>
-To: Lane Russell <lanerussell@protonmail.com>,
- David Cowden <david.w.cowden@gmail.com>
+ Sun, 16 Sep 2018 18:07:44 +0000 (UTC)
+Date: Sun, 16 Sep 2018 18:09:09 +0000
+To: toke@toke.dk, david.w.cowden@gmail.com
+From: Lane Russell <lanerussell@protonmail.com>
 Subject: Re: Configure WireGuard for Roaming Between IPv4, IPv6
-In-Reply-To: <jbnB37pGZpZyPR34uyzg8hAsh9mvscgKeDF24wj3jh_h2q7PjAFmqwOKTzINMcNv4P6fsHfR3n3Slyfd2TfdpNkQz-zWHI_Yj84S8Rk0uPw=@protonmail.com>
+Message-ID: <Ea_ThlFNfnz6b5yIEpIB8ZPryiwewgFtSFd-PyXbPB5vQZQ91Es-IjDzPAbJxuux3Zr8pTAtwC9X0M3GXw08pVyqrDIOQBnxIdmiS_-6y8Y=@protonmail.com>
+In-Reply-To: <87pnxd8hcz.fsf@toke.dk>
 References: <cLOCDzwe4IyvMeayGnJqwGcbyBRfTtha5e0S0zJ33t_4tNCutwD-Krje6NTotKw_lIJdZT7ldacMCg7Rv-m3UuEzS-diWg3-5Z3VE2J_thk=@protonmail.com>
  <CAD=29B_P0eF7f3m5cKfxmm0hy8KqVA1dgfmagcotz84eqO_nvQ@mail.gmail.com>
  <jbnB37pGZpZyPR34uyzg8hAsh9mvscgKeDF24wj3jh_h2q7PjAFmqwOKTzINMcNv4P6fsHfR3n3Slyfd2TfdpNkQz-zWHI_Yj84S8Rk0uPw=@protonmail.com>
-Date: Sun, 16 Sep 2018 19:47:08 +0200
-Message-ID: <87pnxd8hcz.fsf@toke.dk>
+ <87pnxd8hcz.fsf@toke.dk>
 MIME-Version: 1.0
-Content-Type: text/plain
-Cc: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+Content-Type: multipart/alternative;
+ boundary="b1_02ded7205ed87c585c2ba0916aeb89ae"
+Cc: wireguard@lists.zx2c4.com
+Reply-To: Lane Russell <lanerussell@protonmail.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -29,26 +32,76 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-Lane Russell <lanerussell@protonmail.com> writes:
+This is a multi-part message in MIME format.
 
-> Thanks so much for setting me straight. I've gotten IPv6 working over
-> my IPv4 tunnels to ensure that IPv6 traffic can't leak out while I'm
-> using Wireguard. Since my ISP uses SLAAC to hand out /56s, I have a
-> /64 pointed at the local subnet where my VPN server is. From there,
-> the VPN clients use my ULA prefix to talk to the server. The server
-> masquerades these ULA addresses to its global address.
+--b1_02ded7205ed87c585c2ba0916aeb89ae
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-Why are you using masquerading? Kinda defeats the whole point of IPv6,
-doesn't it? :)
+U2luY2UgdGhpcyBpcyBhIGhvbWUgc2V0dXAgYW5kIG15IC81NiBtaWdodCAod2lsbCkgY2hhbmdl
+IGF0IHNvbWUgcG9pbnQsIEkgZG9uJ3Qgd2FudCB0byBoYXZlIHRvIHJlY29uZmlndXJlIG15IHJv
+dXRlciwgc2VydmVyLCBhbmQgY2xpZW50cy4gVW5sZXNzIHRoZXJlJ3MgYSB3YXkgdG8gZHluYW1p
+Y2FsbHkgcmVjb25maWd1cmUgdGhlc2UgZGV2aWNlcyBpbiBzdWNoIGEgc2l0dWF0aW9uPwoKLS0t
+LS0tLS0gT3JpZ2luYWwgTWVzc2FnZSAtLS0tLS0tLQpPbiBTZXAgMTYsIDIwMTgsIDEyOjQ3IFBN
+LCBUb2tlIEjDuGlsYW5kLUrDuHJnZW5zZW4gd3JvdGU6Cgo+IExhbmUgUnVzc2VsbCA8bGFuZXJ1
+c3NlbGxAcHJvdG9ubWFpbC5jb20+IHdyaXRlczoKPgo+PiBUaGFua3Mgc28gbXVjaCBmb3Igc2V0
+dGluZyBtZSBzdHJhaWdodC4gSSd2ZSBnb3R0ZW4gSVB2NiB3b3JraW5nIG92ZXIKPj4gbXkgSVB2
+NCB0dW5uZWxzIHRvIGVuc3VyZSB0aGF0IElQdjYgdHJhZmZpYyBjYW4ndCBsZWFrIG91dCB3aGls
+ZSBJJ20KPj4gdXNpbmcgV2lyZWd1YXJkLiBTaW5jZSBteSBJU1AgdXNlcyBTTEFBQyB0byBoYW5k
+IG91dCAvNTZzLCBJIGhhdmUgYQo+PiAvNjQgcG9pbnRlZCBhdCB0aGUgbG9jYWwgc3VibmV0IHdo
+ZXJlIG15IFZQTiBzZXJ2ZXIgaXMuIEZyb20gdGhlcmUsCj4+IHRoZSBWUE4gY2xpZW50cyB1c2Ug
+bXkgVUxBIHByZWZpeCB0byB0YWxrIHRvIHRoZSBzZXJ2ZXIuIFRoZSBzZXJ2ZXIKPj4gbWFzcXVl
+cmFkZXMgdGhlc2UgVUxBIGFkZHJlc3NlcyB0byBpdHMgZ2xvYmFsIGFkZHJlc3MuCj4KPiBXaHkg
+YXJlIHlvdSB1c2luZyBtYXNxdWVyYWRpbmc/IEtpbmRhIGRlZmVhdHMgdGhlIHdob2xlIHBvaW50
+IG9mIElQdjYsCj4gZG9lc24ndCBpdD8gOikKPgo+IFlvdSBjYW4ganVzdCBwaWNrIGEgcHVibGlj
+IC82NCBmcm9tIHlvdXIgc3VibmV0IGFuZCBhc3NpZ24gdGhhdCBmb3IgdXNlCj4gaW5zaWRlIHRo
+ZSB0dW5uZWwsIHRoZW4gZ2l2ZSB5b3VyIGNsaWVudHMgYWRkcmVzc2VzIGZyb20gdGhhdCBhbmQg
+dXNlCj4gbm9ybWFsIHJvdXRpbmcgb24gdGhlIHdpcmVndWFyZCBzZXJ2ZXIuIFlvdSdsbCBoYXZl
+IHRvIGdldCB0aGUgcHJlZml4Cj4gcm91dGVkIHRvIHlvdXIgd2lyZWd1YXJkIHNlcnZlciwgb2Yg
+Y291cnNlOyBlaXRoZXIgc2V0IHRoYXQgdXAgbWFudWFsbHksCj4gb3IgdXNlIHNvbWV0aGluZyBs
+aWtlIERIQ1AgcHJlZml4IGRlbGVnYXRpb24sIG9yIGEgcm91dGluZyBkYWVtb24uLi4KPgo+IElm
+IHlvdSBkb24ndCB3YW50IHRvIHVzZSBhIHdob2xlIC82NCAoYnV0IHJlYWxseSwgdGhlcmUncyBu
+byByZWFzb24geW91Cj4gc2hvdWxkbid0IGJlIGFibGUgdG8pLCB5b3UgY2FuIGFsc28gdXNlIC8x
+MjgncyBpbnNpZGUgdGhlIHR1bm5lbCBhbmQKPiBqdXN0IHJvdXRlIHRob3NlIGZyb20geW91ciBn
+YXRld2F5IHRvIHlvdXIgd2lyZWd1YXJkIHNlcnZlci4KPgo+IC1Ub2tl
 
-You can just pick a public /64 from your subnet and assign that for use
-inside the tunnel, then give your clients addresses from that and use
-normal routing on the wireguard server. You'll have to get the prefix
-routed to your wireguard server, of course; either set that up manually,
-or use something like DHCP prefix delegation, or a routing daemon...
 
-If you don't want to use a whole /64 (but really, there's no reason you
-shouldn't be able to), you can also use /128's inside the tunnel and
-just route those from your gateway to your wireguard server.
+--b1_02ded7205ed87c585c2ba0916aeb89ae
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: base64
 
--Toke
+U2luY2UgdGhpcyBpcyBhIGhvbWUgc2V0dXAgYW5kIG15IC81NiBtaWdodCAod2lsbCkgY2hhbmdl
+IGF0IHNvbWUgcG9pbnQsIEkgZG9uJ3Qgd2FudCB0byBoYXZlIHRvIHJlY29uZmlndXJlIG15IHJv
+dXRlciwgc2VydmVyLCBhbmQgY2xpZW50cy4gVW5sZXNzIHRoZXJlJ3MgYSB3YXkgdG8gZHluYW1p
+Y2FsbHkgcmVjb25maWd1cmUgdGhlc2UgZGV2aWNlcyBpbiBzdWNoIGEgc2l0dWF0aW9uPzxicj48
+YnI+PGJyPjxicj48YnI+PGJyPjxicj4tLS0tLS0tLSBPcmlnaW5hbCBNZXNzYWdlIC0tLS0tLS0t
+PGJyPk9uIFNlcCAxNiwgMjAxOCwgMTI6NDcgUE0sIFRva2UgSMO4aWxhbmQtSsO4cmdlbnNlbiA8
+IHRva2VAdG9rZS5kaz4gd3JvdGU6PGJsb2NrcXVvdGUgY2xhc3M9InByb3Rvbm1haWxfcXVvdGUi
+Pjxicj48cCBkaXI9Imx0ciI+TGFuZSBSdXNzZWxsICZsdDs8YSBocmVmPSJtYWlsdG86bGFuZXJ1
+c3NlbGxAcHJvdG9ubWFpbC5jb20iPmxhbmVydXNzZWxsQHByb3Rvbm1haWwuY29tPC9hPiZndDsg
+d3JpdGVzOjwvcD4NCjxwIGRpcj0ibHRyIj4mZ3Q7IFRoYW5rcyBzbyBtdWNoIGZvciBzZXR0aW5n
+IG1lIHN0cmFpZ2h0LiBJJ3ZlIGdvdHRlbiBJUHY2IHdvcmtpbmcgb3Zlcjxicj4NCiZndDsgbXkg
+SVB2NCB0dW5uZWxzIHRvIGVuc3VyZSB0aGF0IElQdjYgdHJhZmZpYyBjYW4ndCBsZWFrIG91dCB3
+aGlsZSBJJ208YnI+DQomZ3Q7IHVzaW5nIFdpcmVndWFyZC4gU2luY2UgbXkgSVNQIHVzZXMgU0xB
+QUMgdG8gaGFuZCBvdXQgLzU2cywgSSBoYXZlIGE8YnI+DQomZ3Q7IC82NCBwb2ludGVkIGF0IHRo
+ZSBsb2NhbCBzdWJuZXQgd2hlcmUgbXkgVlBOIHNlcnZlciBpcy4gRnJvbSB0aGVyZSw8YnI+DQom
+Z3Q7IHRoZSBWUE4gY2xpZW50cyB1c2UgbXkgVUxBIHByZWZpeCB0byB0YWxrIHRvIHRoZSBzZXJ2
+ZXIuIFRoZSBzZXJ2ZXI8YnI+DQomZ3Q7IG1hc3F1ZXJhZGVzIHRoZXNlIFVMQSBhZGRyZXNzZXMg
+dG8gaXRzIGdsb2JhbCBhZGRyZXNzLjwvcD4NCjxwIGRpcj0ibHRyIj5XaHkgYXJlIHlvdSB1c2lu
+ZyBtYXNxdWVyYWRpbmc/IEtpbmRhIGRlZmVhdHMgdGhlIHdob2xlIHBvaW50IG9mIElQdjYsPGJy
+Pg0KZG9lc24ndCBpdD8gOik8L3A+DQo8cCBkaXI9Imx0ciI+WW91IGNhbiBqdXN0IHBpY2sgYSBw
+dWJsaWMgLzY0IGZyb20geW91ciBzdWJuZXQgYW5kIGFzc2lnbiB0aGF0IGZvciB1c2U8YnI+DQpp
+bnNpZGUgdGhlIHR1bm5lbCwgdGhlbiBnaXZlIHlvdXIgY2xpZW50cyBhZGRyZXNzZXMgZnJvbSB0
+aGF0IGFuZCB1c2U8YnI+DQpub3JtYWwgcm91dGluZyBvbiB0aGUgd2lyZWd1YXJkIHNlcnZlci4g
+WW91J2xsIGhhdmUgdG8gZ2V0IHRoZSBwcmVmaXg8YnI+DQpyb3V0ZWQgdG8geW91ciB3aXJlZ3Vh
+cmQgc2VydmVyLCBvZiBjb3Vyc2U7IGVpdGhlciBzZXQgdGhhdCB1cCBtYW51YWxseSw8YnI+DQpv
+ciB1c2Ugc29tZXRoaW5nIGxpa2UgREhDUCBwcmVmaXggZGVsZWdhdGlvbiwgb3IgYSByb3V0aW5n
+IGRhZW1vbi4uLjwvcD4NCjxwIGRpcj0ibHRyIj5JZiB5b3UgZG9uJ3Qgd2FudCB0byB1c2UgYSB3
+aG9sZSAvNjQgKGJ1dCByZWFsbHksIHRoZXJlJ3Mgbm8gcmVhc29uIHlvdTxicj4NCnNob3VsZG4n
+dCBiZSBhYmxlIHRvKSwgeW91IGNhbiBhbHNvIHVzZSAvMTI4J3MgaW5zaWRlIHRoZSB0dW5uZWwg
+YW5kPGJyPg0KanVzdCByb3V0ZSB0aG9zZSBmcm9tIHlvdXIgZ2F0ZXdheSB0byB5b3VyIHdpcmVn
+dWFyZCBzZXJ2ZXIuPC9wPg0KPHAgZGlyPSJsdHIiPi1Ub2tlPGJyPg0KPC9wPg0KPC9kaXY+
+
+
+
+--b1_02ded7205ed87c585c2ba0916aeb89ae--
