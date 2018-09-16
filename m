@@ -1,21 +1,24 @@
-Return-Path: lanerussell@protonmail.com
+Return-Path: labawi-wg@matrix-dream.net
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4c83df3f
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d09bea21
  for <wireguard@lists.zx2c4.com>;
- Sun, 16 Sep 2018 16:53:37 +0000 (UTC)
-Received: from mail1.protonmail.ch (mail1.protonmail.ch [185.70.40.18])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 70da30c2
+ Sun, 16 Sep 2018 16:53:53 +0000 (UTC)
+Received: from mail1.matrix-dream.net (mail1.matrix-dream.net
+ [IPv6:2a0a:51c0::71])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1f6e6b3a
  for <wireguard@lists.zx2c4.com>;
- Sun, 16 Sep 2018 16:53:36 +0000 (UTC)
-Date: Sun, 16 Sep 2018 16:55:01 +0000
-To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
-From: Lane Russell <lanerussell@protonmail.com>
-Subject: Re: WireGuard behaviour with systemd-resolved
-Message-ID: <ejY2FU6JhHBYSgVt8dGCYCuAyuUldTGZI3QraptiEX5D20xGgpiFl76ED148XiEmX1bi1yGnblvwYfTBOkyXeUsfUs80h-zs55mI6Wzrojo=@protonmail.com>
+ Sun, 16 Sep 2018 16:53:52 +0000 (UTC)
+Date: Sun, 16 Sep 2018 16:54:58 +0000
+From: Ivan =?iso-8859-1?Q?Lab=E1th?= <labawi-wg@matrix-dream.net>
+To: Raffaele Spazzoli <rspazzol@redhat.com>
+Subject: Re: what to do when the peers use different IPs to transmit and
+ receive
+Message-ID: <20180916165458.GA31165@matrix-dream.net>
+References: <CACOeLq+PG-SFUhSZUejCVWc+uMnBq1ATRwUFFLQZBTCU6JMSew@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="b1_7395699a98fe6017c18f29646deddc45"
-Reply-To: Lane Russell <lanerussell@protonmail.com>
+Content-Type: text/plain; charset=us-ascii
+In-Reply-To: <CACOeLq+PG-SFUhSZUejCVWc+uMnBq1ATRwUFFLQZBTCU6JMSew@mail.gmail.com>
+Cc: wireguard@lists.zx2c4.com
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -25,48 +28,18 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
-This is a multi-part message in MIME format.
+Hi,
 
---b1_7395699a98fe6017c18f29646deddc45
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+On Sun, Sep 16, 2018 at 08:21:02AM -0400, Raffaele Spazzoli wrote:
+> ... then the IP that a  node uses for its outbound
+> connection is not the same that its peer need to use for its inbound
+> connections.
 
-SSdtIG5vdCBzdXJlIG9mIHRoZSBwcm9wZXIgd2F5IHRvIHJlc29sdmUgdGhpcyBpc3N1ZSB3aXRo
-IHN5c3RlbWQtcmVzb2x2ZWQsIGJ1dCBJIHdhcyBhYmxlIHRvIGdldCB0byBhIG1vcmUgY29tZm9y
-dGFibGUgcG9zaXRpb24gaW4gbXkgY2FzZSBieSBkaXNhYmxpbmcgc3lzdGVtZC1yZXNvbHZlZCBh
-bmQgbWFudWFsbHkgY29uZmlndXJpbmcgbXkgRE5TIHNlcnZlcnMgaW4gL2V0Yy9yZXNvbHYuY29u
-Zi4gU2luY2UgdGhlIG1hY2hpbmUgaW4gcXVlc3Rpb24gYWx3YXlzIHNlbmRzIGFsbCB0cmFmZmlj
-IG92ZXIgdGhlIFZQTiwgSSBzdGF0aWNhbGx5IHNldCB0aGUgSVAgb2YgdGhlIFdpcmVHdWFyZCBz
-ZXJ2ZXIgaW4gdGhlIHdnLXF1aWNrIGNvbmZpZyBmaWxlIHNvIEkgd291bGRuJ3QgaGF2ZSB0byBo
-YXZlIHB1YmxpYyBETlMgaW4gL2V0Yy9yZXNvbHYuY29uZi4KCkl0IGFwcGVhcnMgdGhhdCBzb21l
-IHRlc3RpbmcgaXMgbmVlZGVkIHdpdGggV2lyZUd1YXJkL3dnLXF1aWNrIG9uIHN5c3RlbXMgdXNp
-bmcgc3lzdGVtZC1yZXNvbHZlZC4gSSdtIGhhcHB5IHRvIGhlbHAgdGVzdCwgYnV0IEknbSBub3Qg
-dmVyeSBmYW1pbGlhciB3aXRoIHN5c3RlbWQtcmVzb2x2ZWQncyBpbm5lciB3b3JraW5ncywgc28g
-SSBtYXkgYmUgb2YgbGltaXRlZCB1c2Uu
+Who uses what for whose connection? You lost me here.
+Looks like a broken network to me. Does TCP even work?
 
+Anyway, SNAT/DNAT should be able to fix things up, if you want to go
+that route.
 
---b1_7395699a98fe6017c18f29646deddc45
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: base64
-
-PGRpdj5JJ20gbm90IHN1cmUgb2YgdGhlIHByb3BlciB3YXkgdG8gcmVzb2x2ZSB0aGlzIGlzc3Vl
-IHdpdGggc3lzdGVtZC1yZXNvbHZlZCwgYnV0IEkgd2FzIGFibGUgdG8gZ2V0IHRvIGEgbW9yZSBj
-b21mb3J0YWJsZSBwb3NpdGlvbiBpbiBteSBjYXNlIGJ5IGRpc2FibGluZyBzeXN0ZW1kLXJlc29s
-dmVkIGFuZCBtYW51YWxseSBjb25maWd1cmluZyBteSBETlMgc2VydmVycyBpbiAvZXRjL3Jlc29s
-di5jb25mLiBTaW5jZSB0aGUgbWFjaGluZSBpbiBxdWVzdGlvbiBhbHdheXMgc2VuZHMgYWxsIHRy
-YWZmaWMgb3ZlciB0aGUgVlBOLCBJIHN0YXRpY2FsbHkgc2V0IHRoZSBJUCBvZiB0aGUgV2lyZUd1
-YXJkIHNlcnZlciBpbiB0aGUgd2ctcXVpY2sgY29uZmlnIGZpbGUgc28gSSB3b3VsZG4ndCBoYXZl
-IHRvIGhhdmUgcHVibGljIEROUyBpbiAvZXRjL3Jlc29sdi5jb25mLjxicj48L2Rpdj48ZGl2IGNs
-YXNzPSJwcm90b25tYWlsX3NpZ25hdHVyZV9ibG9jayBwcm90b25tYWlsX3NpZ25hdHVyZV9ibG9j
-ay1lbXB0eSI+PGRpdiBjbGFzcz0icHJvdG9ubWFpbF9zaWduYXR1cmVfYmxvY2stdXNlciBwcm90
-b25tYWlsX3NpZ25hdHVyZV9ibG9jay1lbXB0eSI+PGJyPjwvZGl2PjxkaXYgY2xhc3M9InByb3Rv
-bm1haWxfc2lnbmF0dXJlX2Jsb2NrLXByb3RvbiBwcm90b25tYWlsX3NpZ25hdHVyZV9ibG9jay1l
-bXB0eSI+PGJyPjwvZGl2PjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+SXQgYXBwZWFycyB0aGF0
-IHNvbWUgdGVzdGluZyBpcyBuZWVkZWQgd2l0aCBXaXJlR3VhcmQvd2ctcXVpY2sgb24gc3lzdGVt
-cyB1c2luZyBzeXN0ZW1kLXJlc29sdmVkLiBJJ20gaGFwcHkgdG8gaGVscCB0ZXN0LCBidXQgSSdt
-IG5vdCB2ZXJ5IGZhbWlsaWFyIHdpdGggc3lzdGVtZC1yZXNvbHZlZCdzIGlubmVyIHdvcmtpbmdz
-LCBzbyBJIG1heSBiZSBvZiBsaW1pdGVkIHVzZS48YnI+PC9kaXY+
-
-
-
---b1_7395699a98fe6017c18f29646deddc45--
+Regards,
+Ivan
