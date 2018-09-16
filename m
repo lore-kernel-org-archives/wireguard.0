@@ -1,22 +1,25 @@
-Return-Path: rspazzol@redhat.com
+Return-Path: lanerussell@protonmail.com
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id febfb129
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a062f5ca
  for <wireguard@lists.zx2c4.com>;
- Sun, 16 Sep 2018 12:19:35 +0000 (UTC)
-Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com
- [209.85.208.177])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6c35ab0c
+ Sun, 16 Sep 2018 16:39:13 +0000 (UTC)
+Received: from mail1.protonmail.ch (mail1.protonmail.ch [185.70.40.18])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 999d1d55
  for <wireguard@lists.zx2c4.com>;
- Sun, 16 Sep 2018 12:19:35 +0000 (UTC)
-Received: by mail-lj1-f177.google.com with SMTP id l15-v6so10879986lji.6
- for <wireguard@lists.zx2c4.com>; Sun, 16 Sep 2018 05:21:04 -0700 (PDT)
+ Sun, 16 Sep 2018 16:39:12 +0000 (UTC)
+Date: Sun, 16 Sep 2018 16:40:36 +0000
+To: David Cowden <david.w.cowden@gmail.com>
+From: Lane Russell <lanerussell@protonmail.com>
+Subject: Re: Configure WireGuard for Roaming Between IPv4, IPv6
+Message-ID: <jbnB37pGZpZyPR34uyzg8hAsh9mvscgKeDF24wj3jh_h2q7PjAFmqwOKTzINMcNv4P6fsHfR3n3Slyfd2TfdpNkQz-zWHI_Yj84S8Rk0uPw=@protonmail.com>
+In-Reply-To: <CAD=29B_P0eF7f3m5cKfxmm0hy8KqVA1dgfmagcotz84eqO_nvQ@mail.gmail.com>
+References: <cLOCDzwe4IyvMeayGnJqwGcbyBRfTtha5e0S0zJ33t_4tNCutwD-Krje6NTotKw_lIJdZT7ldacMCg7Rv-m3UuEzS-diWg3-5Z3VE2J_thk=@protonmail.com>
+ <CAD=29B_P0eF7f3m5cKfxmm0hy8KqVA1dgfmagcotz84eqO_nvQ@mail.gmail.com>
 MIME-Version: 1.0
-From: Raffaele Spazzoli <rspazzol@redhat.com>
-Date: Sun, 16 Sep 2018 08:21:02 -0400
-Message-ID: <CACOeLq+PG-SFUhSZUejCVWc+uMnBq1ATRwUFFLQZBTCU6JMSew@mail.gmail.com>
-Subject: what to do when the peers use different IPs to transmit and receive
-To: wireguard@lists.zx2c4.com
-Content-Type: multipart/alternative; boundary="00000000000011a16e0575fc17d7"
+Content-Type: multipart/alternative;
+ boundary="b1_14cfce204fc9254c177ebfdcf7479cba"
+Cc: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+Reply-To: Lane Russell <lanerussell@protonmail.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -26,111 +29,198 @@ List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 
---00000000000011a16e0575fc17d7
-Content-Type: text/plain; charset="UTF-8"
+This is a multi-part message in MIME format.
 
-Hi,
+--b1_14cfce204fc9254c177ebfdcf7479cba
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-I am trying to build an encrypted tunnel between two Kubernetes clusters.
-The distribution of Kubernetes that I use is OpenShift, so I'll make my
-examples in OpenShift although the problem that I'm seeing is really more
-general.
+VGhhbmtzIHNvIG11Y2ggZm9yIHNldHRpbmcgbWUgc3RyYWlnaHQuIEkndmUgZ290dGVuIElQdjYg
+d29ya2luZyBvdmVyIG15IElQdjQgdHVubmVscyB0byBlbnN1cmUgdGhhdCBJUHY2IHRyYWZmaWMg
+Y2FuJ3QgbGVhayBvdXQgd2hpbGUgSSdtIHVzaW5nIFdpcmVndWFyZC4gU2luY2UgbXkgSVNQIHVz
+ZXMgU0xBQUMgdG8gaGFuZCBvdXQgLzU2cywgSSBoYXZlIGEgLzY0IHBvaW50ZWQgYXQgdGhlIGxv
+Y2FsIHN1Ym5ldCB3aGVyZSBteSBWUE4gc2VydmVyIGlzLiBGcm9tIHRoZXJlLCB0aGUgVlBOIGNs
+aWVudHMgdXNlIG15IFVMQSBwcmVmaXggdG8gdGFsayB0byB0aGUgc2VydmVyLiBUaGUgc2VydmVy
+IG1hc3F1ZXJhZGVzIHRoZXNlIFVMQSBhZGRyZXNzZXMgdG8gaXRzIGdsb2JhbCBhZGRyZXNzLgoK
+Rm9yIGFueW9uZSBpbnRlcmVzdGVkIGluIHRoZSBjb25maWcgSSdtIHVzaW5nLCBwbGVhc2UgbG9v
+ayBiZWxvdy4gSSBoYWQgdG8gZW5hYmxlIElQdjYgZm9yd2FyZGluZyBvbiB0aGUgd2lyZWd1YXJk
+IHNlcnZlci4gSW4gVWJ1bnR1IChhbmQgcHJvYmFibHkgb3RoZXIgZGlzdHJvcyksIHRoaXMgZGlz
+YWJsZXMgU3RhdGVsZXNzIEFkZHJlc3MgQXV0b2NvbmZpZ3VyYXRpb24gYmFzZWQgb24gUm91dGVy
+IEFkdmVydGlzZW1lbnRzIG9uIHRoZSBzZXJ2ZXIsIHdoaWNoIHdvdWxkIGhhdmUgcHJldmVudGVk
+IHRoZSBzZXJ2ZXIgZnJvbSBnZXR0aW5nIGEgZ2xvYmFsIElQdjYgYWRkcmVzcyBmcm9tIG15IElT
+UC4gVG8gZW5hYmxlIElQdjYgZm9yd2FyZGluZyBhbmQgU0xBQUMsIEkgYWxzbyBoYWQgdG8gYWRk
+IHRoZSBmb2xsb3dpbmcgdG8gbXkgL2V0Yy9uZXR3b3JrL2ludGVyZmFjZXMgZmlsZSB0byBhY2Nl
+cHQgcm91dGVyIGFkdmVydGlzZW1lbnRzIGV2ZW4gd2l0aCBJUHY2IGZvcndhcmRpbmcgdHVybmVk
+IG9uOgoKaWZhY2UgZW5zMyBpbmV0NiBhdXRvCiAgICAgICAgYWNjZXB0X3JhIDIKClNFUlZFUjoK
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KW0ludGVyZmFjZV0KQWRkcmVzcyA9IFguWC5YLlgv
+MjQsIGZkWFg6WFhYWDpYWFhYOlhYWFg6OjEvNjQKTGlzdGVuUG9ydCA9IFBPUlQKUHJpdmF0ZUtl
+eSA9IEtFWQoKW1BlZXJdCiMgUEVFUiBOQU1FClB1YmxpY0tleSA9IEtFWQpBbGxvd2VkSVBzID0g
+WC5YLlguWC8zMiwgZmRYWDpYWFhYOlhYWFg6WFhYWDo6Mi8xMjgKLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0KCkNMSUVOVDoKLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KW0ludGVyZmFjZV0K
+QWRkcmVzcyA9IFguWC5YLjIvMzIsIGZkWFg6WFhYWDpYWFhYOlhYWFg6OjIvMTI4ClByaXZhdGVL
+ZXkgPSBLRVkKRE5TID0gWC5YLlguWCwgWC5YLlguWAoKW1BlZXJdClB1YmxpY0tleSA9IEtFWQpB
+bGxvd2VkSVBzID0gMC4wLjAuMC8wLCA6Oi8wCkVuZHBvaW50ID0gU0VSVkVSOlBPUlQKUGVyc2lz
+dGVudEtlZXBhbGl2ZSA9IDIxCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCgrigJDigJDigJDi
+gJDigJDigJDigJAgT3JpZ2luYWwgTWVzc2FnZSDigJDigJDigJDigJDigJDigJDigJAKT24gU2F0
+dXJkYXksIFNlcHRlbWJlciAxNSwgMjAxOCA1OjQxIFBNLCBEYXZpZCBDb3dkZW4gPGRhdmlkLncu
+Y293ZGVuQGdtYWlsLmNvbT4gd3JvdGU6Cgo+IEkgaGF2ZW4ndCBhY3R1YWxseSB0cmllZCB0aGF0
+IHNwZWNpZmljIHNjZW5hcmlvIGJ1dCBJIGRvbid0IHNlZSB3aHkgdGhlIHR1bm5lbCB3b3VsZG4n
+dCAiY29tZSB1cCIuIEkgbWVhbiByZWFsbHkgaXQncyB1cCB3aGVuIHRoZSBpbnRlcmZhY2UgaXMg
+dXAgYW5kIHRoZSB0dW5uZWwgImNvbm5lY3Rpb24iIChpdCdzIFVEUCkgaXNuJ3QgYWN0dWFsbHkg
+ImVzdGFibGlzaGVkIiAoaW4gYSBOQVQvZmlyZXdhbGwgc2Vuc2UpIHVubGVzcyBkYXRhIGlzIHNl
+bnQuIFlvdSBjYW4gaGF2ZSBhbiBpbnRlcmZhY2UgY29uZmlndXJlZCBmb3IgSVB2NiBvbiBhbiAi
+SVB2NCBvbmx5IiBuZXR3b3JrLCBpdCBqdXN0IHdvbid0IGdldCByZXNwb25zZXMgdG8gaXRzIHJv
+dXRlciBzb2xpY2l0YXRpb25zIHNvIHRoZSBrZXJuZWwgKExpbnV4LCBhdCBsZWFzdC0tQlNEcyBk
+byB0aGlzIGluIHVzZXJzcGFjZSkgd29uJ3QgY29uZmlndXJlIHJvdXRlcyBmb3IgSVB2NiB0cmFm
+ZmljLiBJZiB5b3UgbG9vayBhdCB5b3VyIHBoeXNpY2FsIGludGVyZmFjZXMsIHlvdSdsbCBwcm9i
+YWJseSBub3RpY2UgdGhleSBhbGwgaGF2ZSBJUHY2IGxpbmstbG9jYWwgYWRkcmVzc2VzIHVubGVz
+cyB5b3UndmUgYWN0dWFsbHkgdHVybmVkIG9mZiBJUHY2IHN1cHBvcnQgaW4gdGhlIGtlcm5lbAo+
+Cj4gVGhlIHJlYXNvbiB5b3VyIElQdjYgdHJhZmZpYyBnb2VzIG91dCB1bmVuY3J5cHRlZCBvbiBk
+dWFsIHN0YWNrIG5ldHdvcmtzIGlzIGJlY2F1c2UgdGhlIGRlZmF1bHQgcm91dGUgZm9yIElQdjYg
+dHJhZmZpYyBpcyBub3QgdGhlIFdpcmVndWFyZCBpbnRlcmZhY2UsIGJ1dCByYXRoZXIgb25lIG9m
+IHRoZSBwaHlzaWNhbCBvbmVzLiBBbGwgeW91IG5lZWQgdG8gZG8gdG8gc2VuZCB5b3VyIElQdjYg
+dHJhZmZpYyB0aHJvdWdoIHRoZSB0dW5uZWwgaXMgY29uZmlndXJlIHRoZSBpbnRlcmZhY2UgdG8g
+YmUgcGFydCBvZiB0aGUgSVB2NiBuZXR3b3JrIHlvdSdyZSB0cnlpbmcgdG8gcmVhY2gsIGFuZCBv
+ZiBjb3Vyc2UgYWxsb3cgYW4gSVB2NiBhZGRyZXNzIGZyb20gdGhlIGNsaWVudCBpbiB0aGUgc2Vy
+dmVyIGNvbmZpZy4gSW4gZmFjdCwgaWYgeW91IGNvbmZpZ3VyZSB5b3VyIGludGVyZmFjZSB3aXRo
+IElQdjYgYWRkcmVzcyhzKSBhbmQgYSByb3V0ZSBwb2ludGluZyBhdCB0aGUgd2cgaW50ZXJmYWNl
+LCB5b3UgY2FuIGV2ZW4gc2VuZCBJUHY2IHRyYWZmaWMgb24gYW4gSVB2NCBvbmx5IHR1bm5lbCBw
+cm92aWRlZCB5b3VyIHNlcnZlciBjYW4gcm91dGUgSVB2NiB0cmFmZmljLiBJZiB5b3UncmUgdXNp
+bmcgd2ctcXVpY2ssIHNpbXBseSBhZGRpbmcgYW4gSVB2NiBhZGRyZXNzIHRvIHRoZSBpbnRlcmZh
+Y2UgYW5kIGFsbG93aW5nIGFsbCBJUHY2IHRyYWZmaWMgZnJvbSB0aGUgc2VydmVyIHBlZXIgd291
+bGQgc3VmZmljZS4KPgo+IE9uIFNhdCwgU2VwIDE1LCAyMDE4IGF0IDExOjAxIEFNIExhbmUgUnVz
+c2VsbCA8bGFuZXJ1c3NlbGxAcHJvdG9ubWFpbC5jb20+IHdyb3RlOgo+Cj4+IFdoYXQgaXMgdGhl
+IGJlc3QgcHJhY3RpY2UgZm9yIGNvbmZpZ3VyaW5nIFdpcmVndWFyZCB0byB3b3JrIG92ZXIgZGl2
+ZXJzZSBuZXR3b3JrcywgaW5jbHVkaW5nIElQdjQtb25seSwgSVB2Ni1vbmx5LCBhbmQgZHVhbC1z
+dGFjaz8KPj4KPj4gRm9yIGV4YW1wbGUsIG15IGN1cnJlbnQgY29uZmlndXJhdGlvbiBvbmx5IGRl
+YWxzIHdpdGggSVB2NC4gV2hlbiBJIHJvYW0gZnJvbSBhbiBJUHY0LW9ubHkgbmV0d29yayB0byBh
+IGR1YWwtc3RhY2ssIG15IGRldmljZSByb3V0ZXMgSVB2NCB0cmFmZmljIG92ZXIgdGhlIFdpcmVH
+dWFyZCBpbnRlcmZhY2UsIGJ1dCBJUHY2IHRyYWZmaWMgZ29lcyBvdXQgdW5lbmNyeXB0ZWQuCj4+
+Cj4+IE15IFZQTiBzZXJ2ZXIgaXMgSVB2Ni1jYXBhYmxlLCBzbyBJIGNvdWxkIGVuYWJsZSBpdC4g
+SG93ZXZlciwgd2lsbCB0aGUgY2xpZW50IHR1bm5lbCBmYWlsIHRvIGNvbWUgdXAgb24gYW4gSVB2
+NC1vbmx5IG5ldHdvcmsgaWYgdGhlIGNvbmZpZyBjb250YWlucyBJUHY2IGFkZHJlc3Nlcz8KPj4g
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18KPj4gV2lyZUd1
+YXJkIG1haWxpbmcgbGlzdAo+PiBXaXJlR3VhcmRAbGlzdHMuengyYzQuY29tCj4+IGh0dHBzOi8v
+bGlzdHMuengyYzQuY29tL21haWxtYW4vbGlzdGluZm8vd2lyZWd1YXJk
 
-The nodes that comprise the cluster in OpenShift have an IP in what we'll
-call the enterprise network. Also they establish between each other an SDN.
-The SDN will have a separate CIDR from the enterprise network and the pods
-that OpenShift starts receive an SDN IP. Each node manages a subnet of the
-SDN CIDR.
 
-What I'd like to do is to make the IPs of two different OpenShift SDNs
-routable over and encrypted tunnel.
+--b1_14cfce204fc9254c177ebfdcf7479cba
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-In my design each node of cluster A sees as its VPN peers the nodes of
-cluster B. So this creates a sort of a meshed VPN.
+PGRpdj5UaGFua3Mgc28gbXVjaCBmb3Igc2V0dGluZyBtZSBzdHJhaWdodC4gSSd2ZSBnb3R0ZW4g
+SVB2NiB3b3JraW5nIG92ZXIgbXkgSVB2NCB0dW5uZWxzIHRvIGVuc3VyZSB0aGF0IElQdjYgdHJh
+ZmZpYyBjYW4ndCBsZWFrIG91dCB3aGlsZSBJJ20gdXNpbmcgV2lyZWd1YXJkLiBTaW5jZSBteSBJ
+U1AgdXNlcyBTTEFBQyB0byBoYW5kIG91dCAvNTZzLCBJIGhhdmUgYSAvNjQgcG9pbnRlZCBhdCB0
+aGUgbG9jYWwgc3VibmV0IHdoZXJlIG15IFZQTiBzZXJ2ZXIgaXMuIEZyb20gdGhlcmUsIHRoZSBW
+UE4gY2xpZW50cyB1c2UgbXkgVUxBIHByZWZpeCB0byB0YWxrIHRvIHRoZSBzZXJ2ZXIuIFRoZSBz
+ZXJ2ZXIgbWFzcXVlcmFkZXMgdGhlc2UgVUxBIGFkZHJlc3NlcyB0byBpdHMgZ2xvYmFsIGFkZHJl
+c3MuPGJyPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+Rm9yIGFueW9uZSBpbnRlcmVzdGVkIGlu
+IHRoZSBjb25maWcgSSdtIHVzaW5nLCBwbGVhc2UgbG9vayBiZWxvdy4gSSBoYWQgdG8gZW5hYmxl
+IElQdjYgZm9yd2FyZGluZyBvbiB0aGUgd2lyZWd1YXJkIHNlcnZlci4gSW4gVWJ1bnR1IChhbmQg
+cHJvYmFibHkgb3RoZXIgZGlzdHJvcyksIHRoaXMgZGlzYWJsZXMgU3RhdGVsZXNzIEFkZHJlc3Mg
+QXV0b2NvbmZpZ3VyYXRpb24mbmJzcDtiYXNlZCBvbiBSb3V0ZXIgQWR2ZXJ0aXNlbWVudHMgb24g
+dGhlIHNlcnZlciwgd2hpY2ggd291bGQgaGF2ZSBwcmV2ZW50ZWQgdGhlIHNlcnZlciBmcm9tIGdl
+dHRpbmcgYSBnbG9iYWwgSVB2NiBhZGRyZXNzIGZyb20gbXkgSVNQLiBUbyBlbmFibGUgSVB2NiBm
+b3J3YXJkaW5nIGFuZCBTTEFBQywgSSBhbHNvIGhhZCB0byBhZGQgdGhlIGZvbGxvd2luZyB0byBt
+eSAvZXRjL25ldHdvcmsvaW50ZXJmYWNlcyBmaWxlIHRvIGFjY2VwdCByb3V0ZXIgYWR2ZXJ0aXNl
+bWVudHMgZXZlbiB3aXRoIElQdjYgZm9yd2FyZGluZyB0dXJuZWQgb246PGJyPjwvZGl2PjxkaXY+
+PGJyPjwvZGl2PjxkaXY+aWZhY2UgZW5zMyBpbmV0NiBhdXRvPGJyPjwvZGl2PjxkaXY+Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IGFjY2VwdF9yYSAyPGJyPjwvZGl2
+PjxkaXY+PGJyPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+U0VSVkVSOjxicj48L2Rpdj48ZGl2
+Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tPGJyPjwvZGl2PjxkaXY+W0ludGVyZmFjZV08YnI+
+PC9kaXY+PGRpdj5BZGRyZXNzID0gWC5YLlguWC8yNCwgZmRYWDpYWFhYOlhYWFg6WFhYWDo6MS82
+NDxicj48L2Rpdj48ZGl2Pkxpc3RlblBvcnQgPSBQT1JUPGJyPjwvZGl2PjxkaXY+UHJpdmF0ZUtl
+eSA9IEtFWTxicj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PjxkaXY+W1BlZXJdPGJyPjwvZGl2
+PjxkaXY+IyBQRUVSIE5BTUU8YnI+PC9kaXY+PC9kaXY+PGRpdj5QdWJsaWNLZXkgPSBLRVk8YnI+
+PC9kaXY+PGRpdj5BbGxvd2VkSVBzID0gWC5YLlguWC8zMiwgZmRYWDpYWFhYOlhYWFg6WFhYWDo6
+Mi8xMjg8YnI+PC9kaXY+PGRpdj4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLTxicj48L2Rpdj48
+ZGl2Pjxicj48L2Rpdj48ZGl2PkNMSUVOVDo8YnI+PC9kaXY+PGRpdj4tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLTxicj48L2Rpdj48ZGl2PltJbnRlcmZhY2VdPGJyPjwvZGl2PjxkaXY+QWRkcmVz
+cyA9IFguWC5YLjIvMzIsIGZkWFg6WFhYWDpYWFhYOlhYWFg6OjIvMTI4PGJyPjwvZGl2PjxkaXY+
+UHJpdmF0ZUtleSA9IEtFWTxicj48L2Rpdj48ZGl2PkROUyA9IFguWC5YLlgsIFguWC5YLlg8YnI+
+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5bUGVlcl08YnI+PC9kaXY+PGRpdj5QdWJsaWNLZXkg
+PSBLRVk8YnI+PC9kaXY+PGRpdj5BbGxvd2VkSVBzID0gMC4wLjAuMC8wLCA6Oi8wPGJyPjwvZGl2
+PjxkaXY+RW5kcG9pbnQgPSBTRVJWRVI6UE9SVDxicj48L2Rpdj48ZGl2PlBlcnNpc3RlbnRLZWVw
+YWxpdmUgPSAyMTxicj48L2Rpdj48ZGl2Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tPGJyPjwv
+ZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXYgY2xhc3M9InByb3Rvbm1haWxf
+c2lnbmF0dXJlX2Jsb2NrIHByb3Rvbm1haWxfc2lnbmF0dXJlX2Jsb2NrLWVtcHR5Ij48ZGl2IGNs
+YXNzPSJwcm90b25tYWlsX3NpZ25hdHVyZV9ibG9jay11c2VyIHByb3Rvbm1haWxfc2lnbmF0dXJl
+X2Jsb2NrLWVtcHR5Ij48YnI+PC9kaXY+PGRpdiBjbGFzcz0icHJvdG9ubWFpbF9zaWduYXR1cmVf
+YmxvY2stcHJvdG9uIHByb3Rvbm1haWxfc2lnbmF0dXJlX2Jsb2NrLWVtcHR5Ij48YnI+PC9kaXY+
+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj7igJDigJDigJDigJDigJDigJDigJAgT3JpZ2luYWwg
+TWVzc2FnZSDigJDigJDigJDigJDigJDigJDigJA8YnI+PC9kaXY+PGRpdj5PbiBTYXR1cmRheSwg
+U2VwdGVtYmVyIDE1LCAyMDE4IDU6NDEgUE0sIERhdmlkIENvd2RlbiAmbHQ7ZGF2aWQudy5jb3dk
+ZW5AZ21haWwuY29tJmd0OyB3cm90ZTo8YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGJsb2NrcXVv
+dGUgdHlwZT0iY2l0ZSIgY2xhc3M9InByb3Rvbm1haWxfcXVvdGUiPjxkaXY+PGRpdiBkaXI9ImF1
+dG8iPkkgaGF2ZW4ndCBhY3R1YWxseSB0cmllZCB0aGF0IHNwZWNpZmljIHNjZW5hcmlvIGJ1dCBJ
+IGRvbid0IHNlZSB3aHkgdGhlIHR1bm5lbCB3b3VsZG4ndCAiY29tZSB1cCIuIEkgbWVhbiByZWFs
+bHkgaXQncyB1cCB3aGVuIHRoZSBpbnRlcmZhY2UgaXMgdXAgYW5kIHRoZSB0dW5uZWwgImNvbm5l
+Y3Rpb24iIChpdCdzIFVEUCkgaXNuJ3QgYWN0dWFsbHkgImVzdGFibGlzaGVkIiAoaW4gYSBOQVQv
+ZmlyZXdhbGwgc2Vuc2UpIHVubGVzcyBkYXRhIGlzIHNlbnQuIFlvdSBjYW4gaGF2ZSBhbiBpbnRl
+cmZhY2UgY29uZmlndXJlZCBmb3IgSVB2NiBvbiBhbiAiSVB2NCBvbmx5IiBuZXR3b3JrLCBpdCBq
+dXN0IHdvbid0IGdldCByZXNwb25zZXMgdG8gaXRzIHJvdXRlciBzb2xpY2l0YXRpb25zIHNvIHRo
+ZSBrZXJuZWwgKExpbnV4LCBhdCBsZWFzdC0tQlNEcyBkbyB0aGlzIGluIHVzZXJzcGFjZSkgd29u
+J3QgY29uZmlndXJlIHJvdXRlcyBmb3IgSVB2NiB0cmFmZmljLiBJZiB5b3UgbG9vayBhdCB5b3Vy
+IHBoeXNpY2FsIGludGVyZmFjZXMsIHlvdSdsbCBwcm9iYWJseSBub3RpY2UgdGhleSBhbGwgaGF2
+ZSBJUHY2IGxpbmstbG9jYWwgYWRkcmVzc2VzIHVubGVzcyB5b3UndmUgYWN0dWFsbHkgdHVybmVk
+IG9mZiBJUHY2IHN1cHBvcnQgaW4gdGhlIGtlcm5lbDxicj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48
+ZGl2IGRpcj0iYXV0byI+VGhlIHJlYXNvbiB5b3VyIElQdjYgdHJhZmZpYyBnb2VzIG91dCB1bmVu
+Y3J5cHRlZCBvbiBkdWFsIHN0YWNrIG5ldHdvcmtzIGlzIGJlY2F1c2UgdGhlIGRlZmF1bHQgcm91
+dGUgZm9yIElQdjYgdHJhZmZpYyBpcyBub3QgdGhlIFdpcmVndWFyZCBpbnRlcmZhY2UsIGJ1dCBy
+YXRoZXIgb25lIG9mIHRoZSBwaHlzaWNhbCBvbmVzLiBBbGwgeW91IG5lZWQgdG8gZG8gdG8gc2Vu
+ZCB5b3VyIElQdjYgdHJhZmZpYyB0aHJvdWdoIHRoZSB0dW5uZWwgaXMgY29uZmlndXJlIHRoZSBp
+bnRlcmZhY2UgdG8gYmUgcGFydCBvZiB0aGUgSVB2NiBuZXR3b3JrIHlvdSdyZSB0cnlpbmcgdG8g
+cmVhY2gsIGFuZCBvZiBjb3Vyc2UgYWxsb3cgYW4gSVB2NiBhZGRyZXNzIGZyb20gdGhlIGNsaWVu
+dCBpbiB0aGUgc2VydmVyIGNvbmZpZy4gSW4gZmFjdCwgaWYgeW91IGNvbmZpZ3VyZSB5b3VyIGlu
+dGVyZmFjZSB3aXRoIElQdjYgYWRkcmVzcyhzKSBhbmQgYSByb3V0ZSBwb2ludGluZyBhdCB0aGUg
+d2cgaW50ZXJmYWNlLCB5b3UgY2FuIGV2ZW4gc2VuZCBJUHY2IHRyYWZmaWMgb24gYW4gSVB2NCBv
+bmx5IHR1bm5lbCBwcm92aWRlZCB5b3VyIHNlcnZlciBjYW4gcm91dGUgSVB2NiB0cmFmZmljLiBJ
+ZiB5b3UncmUgdXNpbmcgd2ctcXVpY2ssIHNpbXBseSBhZGRpbmcgYW4gSVB2NiBhZGRyZXNzIHRv
+IHRoZSBpbnRlcmZhY2UgYW5kIGFsbG93aW5nIGFsbCBJUHY2IHRyYWZmaWMgZnJvbSB0aGUgc2Vy
+dmVyIHBlZXIgd291bGQgc3VmZmljZS48YnI+PC9kaXY+PC9kaXY+PGRpdiBkaXI9ImF1dG8iPjxi
+cj48L2Rpdj48ZGl2PjxkaXYgY2xhc3M9ImdtYWlsX3F1b3RlIj48ZGl2IGRpcj0ibHRyIj5PbiBT
+YXQsIFNlcCAxNSwgMjAxOCBhdCAxMTowMSBBTSBMYW5lIFJ1c3NlbGwgJmx0OzxhIGhyZWY9Im1h
+aWx0bzpsYW5lcnVzc2VsbEBwcm90b25tYWlsLmNvbSIgdGFyZ2V0PSJfYmxhbmsiPmxhbmVydXNz
+ZWxsQHByb3Rvbm1haWwuY29tPC9hPiZndDsgd3JvdGU6PGJyPjwvZGl2PjxibG9ja3F1b3RlIGNs
+YXNzPSJnbWFpbF9xdW90ZSIgc3R5bGU9Im1hcmdpbjowIDAgMCAuOGV4O2JvcmRlci1sZWZ0OjFw
+eCAjY2NjIHNvbGlkO3BhZGRpbmctbGVmdDoxZXgiPjxkaXY+V2hhdCBpcyB0aGUgYmVzdCBwcmFj
+dGljZSBmb3IgY29uZmlndXJpbmcgV2lyZWd1YXJkIHRvIHdvcmsgb3ZlciBkaXZlcnNlIG5ldHdv
+cmtzLCBpbmNsdWRpbmcgSVB2NC1vbmx5LCBJUHY2LW9ubHksIGFuZCBkdWFsLXN0YWNrPzxicj48
+L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PkZvciBleGFtcGxlLCBteSBjdXJyZW50IGNvbmZpZ3Vy
+YXRpb24gb25seSBkZWFscyB3aXRoIElQdjQuIFdoZW4gSSByb2FtIGZyb20gYW4gSVB2NC1vbmx5
+IG5ldHdvcmsgdG8gYSBkdWFsLXN0YWNrLCBteSBkZXZpY2Ugcm91dGVzIElQdjQgdHJhZmZpYyBv
+dmVyIHRoZSBXaXJlR3VhcmQgaW50ZXJmYWNlLCBidXQgSVB2NiB0cmFmZmljIGdvZXMgb3V0IHVu
+ZW5jcnlwdGVkLjxicj48L2Rpdj48ZGl2IGNsYXNzPSJtXy04ODE5NDkwODg1OTM0NDEzNTQ1bV8t
+OTAzMTg1ODExNTMxNjQwODY4MnByb3Rvbm1haWxfc2lnbmF0dXJlX2Jsb2NrIG1fLTg4MTk0OTA4
+ODU5MzQ0MTM1NDVtXy05MDMxODU4MTE1MzE2NDA4NjgycHJvdG9ubWFpbF9zaWduYXR1cmVfYmxv
+Y2stZW1wdHkiPjxkaXYgY2xhc3M9Im1fLTg4MTk0OTA4ODU5MzQ0MTM1NDVtXy05MDMxODU4MTE1
+MzE2NDA4NjgycHJvdG9ubWFpbF9zaWduYXR1cmVfYmxvY2stdXNlciBtXy04ODE5NDkwODg1OTM0
+NDEzNTQ1bV8tOTAzMTg1ODExNTMxNjQwODY4MnByb3Rvbm1haWxfc2lnbmF0dXJlX2Jsb2NrLWVt
+cHR5Ij48YnI+PC9kaXY+PGRpdiBjbGFzcz0ibV8tODgxOTQ5MDg4NTkzNDQxMzU0NW1fLTkwMzE4
+NTgxMTUzMTY0MDg2ODJwcm90b25tYWlsX3NpZ25hdHVyZV9ibG9jay1wcm90b24gbV8tODgxOTQ5
+MDg4NTkzNDQxMzU0NW1fLTkwMzE4NTgxMTUzMTY0MDg2ODJwcm90b25tYWlsX3NpZ25hdHVyZV9i
+bG9jay1lbXB0eSI+PGJyPjwvZGl2PjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+TXkgVlBOIHNl
+cnZlciBpcyBJUHY2LWNhcGFibGUsIHNvIEkgY291bGQgZW5hYmxlIGl0LiBIb3dldmVyLCB3aWxs
+IHRoZSBjbGllbnQgdHVubmVsIGZhaWwgdG8gY29tZSB1cCBvbiBhbiBJUHY0LW9ubHkgbmV0d29y
+ayBpZiB0aGUgY29uZmlnIGNvbnRhaW5zIElQdjYgYWRkcmVzc2VzPzxicj48L2Rpdj48ZGl2Pl9f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fPGJyPjwvZGl2Pjxk
+aXY+V2lyZUd1YXJkIG1haWxpbmcgbGlzdDxicj48L2Rpdj48ZGl2PjxhIGhyZWY9Im1haWx0bzpX
+aXJlR3VhcmRAbGlzdHMuengyYzQuY29tIiB0YXJnZXQ9Il9ibGFuayI+V2lyZUd1YXJkQGxpc3Rz
+Lnp4MmM0LmNvbTwvYT48YnI+PC9kaXY+PGRpdj48YSBocmVmPSJodHRwczovL2xpc3RzLnp4MmM0
+LmNvbS9tYWlsbWFuL2xpc3RpbmZvL3dpcmVndWFyZCIgcmVsPSJub3JlZmVycmVyIiB0YXJnZXQ9
+Il9ibGFuayI+aHR0cHM6Ly9saXN0cy56eDJjNC5jb20vbWFpbG1hbi9saXN0aW5mby93aXJlZ3Vh
+cmQ8L2E+PGJyPjwvZGl2PjwvYmxvY2txdW90ZT48L2Rpdj48L2Rpdj48L2Jsb2NrcXVvdGU+PGRp
+dj48YnI+PC9kaXY+
 
-Wireguard fits very well this series of requirements, but I have an issue.
-
-Normally the nodes of a cluster are not directly exposed to the internet.
-This is for security reasons. Whether the cluster is in the cloud or on
-premise, normally what customers do is to use private internal addresses.
-To access the cluster one can use VIPs. Especially in the cloud Kubernetes
-makes it easy to create VIPs in an automated fashion. VIP are public IPs
-that can be used to loadbalanced backed services. UDP VIPS are supported.
-
-So if we assume that the two clusters that we want to connect using
-wireguard are in two different geographies and can only be talk over the
-internet and through VIPs, then the IP that a  node uses for its outbound
-connection is not the same that its peer need to use for its inbound
-connections.
-
-Each node can have a dedicated VIP that peers need to use for its inbound
-connection and then it will use the node's private IP for its outbound
-connection.
-
-In this situation wiregaurd assumes that the peer has changed IP (built-in
-roaming feature) and it updates the peer endpoint value. This doesn't work
-for my setup.
-
-What can I do to fix this issue?
-Or alternatively would it be reasonable to add a flag to make a peer
-configuration immutable?
 
 
-
-Thanks,
-Raffaele
-
-Raffaele Spazzoli
-Senior Architect - OpenShift <https://www.openshift.com>, Containers
-and PaaS Practice <https://www.redhat.com/en/services/consulting/paas>
-Tel: +1 216-258-7717
-
---00000000000011a16e0575fc17d7
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>Hi,</div><div><br></div><div>I am trying to build an =
-encrypted tunnel between two Kubernetes clusters.</div><div>The distributio=
-n of Kubernetes that I use is OpenShift, so I&#39;ll make my examples in Op=
-enShift although the problem that I&#39;m seeing is really more general.</d=
-iv><div><br></div><div>The nodes that comprise the cluster in OpenShift hav=
-e an IP in what we&#39;ll call the enterprise network. Also they establish =
-between each other an SDN. The SDN will have a separate CIDR from the enter=
-prise network and the pods that OpenShift starts receive an SDN IP. Each no=
-de manages a subnet of the SDN CIDR.</div><div><br></div><div>What I&#39;d =
-like to do is to make the IPs of two different OpenShift SDNs routable over=
- and encrypted tunnel.</div><div><br></div><div>In my design each node of c=
-luster A sees as its VPN peers the nodes of cluster B. So this creates a so=
-rt of a meshed VPN.=C2=A0</div><div><br></div><div>Wireguard fits very well=
- this series of requirements, but I have an issue.</div><div><br></div><div=
->Normally the nodes of a cluster are not directly exposed to the internet. =
-This is for security reasons. Whether the cluster is in the cloud or on pre=
-mise, normally what customers do is to use private internal addresses. To a=
-ccess the cluster one can use VIPs. Especially in the cloud Kubernetes make=
-s it easy to create VIPs in an automated fashion. VIP are public IPs that c=
-an be used to loadbalanced backed services. UDP VIPS are supported.</div><d=
-iv><br></div><div>So if we assume that the two clusters that we want to con=
-nect using wireguard are in two different geographies and can only be talk =
-over the internet and through VIPs, then the IP that a=C2=A0 node uses for =
-its outbound connection is not the same that its peer need to use for its i=
-nbound connections.=C2=A0</div><div><br></div><div>Each node can have a ded=
-icated VIP that peers need to use for its inbound connection and then it wi=
-ll use the node&#39;s private IP for its outbound connection.</div><div><br=
-></div><div>In this situation wiregaurd assumes that the peer has changed I=
-P (built-in roaming feature) and it updates the peer endpoint value. This d=
-oesn&#39;t work for my setup.</div><div><br></div><div>What can I do to fix=
- this issue?</div><div>Or alternatively would it be reasonable to add a fla=
-g to make a peer configuration immutable?</div><div><br></div><div><br></di=
-v><br clear=3D"all"><div><div class=3D"gmail_signature" data-smartmail=3D"g=
-mail_signature"><div dir=3D"ltr"><div><div dir=3D"ltr"><div><div dir=3D"ltr=
-"><div><div dir=3D"ltr"><div><div dir=3D"ltr"><div><div dir=3D"ltr"><div><d=
-iv dir=3D"ltr">Thanks,<div>Raffaele</div><div><br></div><div>Raffaele Spazz=
-oli</div><div>Senior Architect - <a href=3D"https://www.openshift.com" targ=
-et=3D"_blank">OpenShift</a>, <a href=3D"https://www.redhat.com/en/services/=
-consulting/paas" target=3D"_blank">Containers and=C2=A0PaaS Practice</a></d=
-iv><div>Tel: +1 216-258-7717</div><div><br></div><div><br></div></div></div=
-></div></div></div></div></div></div></div></div></div></div></div></div></=
-div>
-</div>
-
---00000000000011a16e0575fc17d7--
+--b1_14cfce204fc9254c177ebfdcf7479cba--
