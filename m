@@ -2,73 +2,74 @@ Return-Path: <SRS0=l6+B=MO=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=0.9 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
-	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,
 	NORMAL_HTTP_TO_IP,SPF_PASS,URI_TRY_3LD,WEIRD_PORT autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DCA44C43143
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  2 Oct 2018 03:06:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B051C00449
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  2 Oct 2018 03:06:41 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 31DA92083F
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  2 Oct 2018 03:06:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id E90C82083F
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  2 Oct 2018 03:06:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oeDM0Fgo"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 31DA92083F
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=cipherdyne-org.20150623.gappssmtp.com header.i=@cipherdyne-org.20150623.gappssmtp.com header.b="hPBFoWFy"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org E90C82083F
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=cipherdyne.org
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1049f1c0;
-	Tue, 2 Oct 2018 03:06:17 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4b1c222e;
+	Tue, 2 Oct 2018 03:06:18 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b481d8bc
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 402d7af9
  for <wireguard@lists.zx2c4.com>;
- Tue, 25 Sep 2018 16:27:39 +0000 (UTC)
-Received: from mail-it1-x142.google.com (mail-it1-x142.google.com
- [IPv6:2607:f8b0:4864:20::142])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 16459bc4
+ Tue, 25 Sep 2018 20:22:52 +0000 (UTC)
+Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com
+ [IPv6:2a00:1450:4864:20::244])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 11a6983f
  for <wireguard@lists.zx2c4.com>;
- Tue, 25 Sep 2018 16:27:39 +0000 (UTC)
-Received: by mail-it1-x142.google.com with SMTP id w200-v6so7874396itc.4
- for <wireguard@lists.zx2c4.com>; Tue, 25 Sep 2018 09:30:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ Tue, 25 Sep 2018 20:22:51 +0000 (UTC)
+Received: by mail-lj1-x244.google.com with SMTP id q127-v6so23021946ljq.11
+ for <wireguard@lists.zx2c4.com>; Tue, 25 Sep 2018 13:25:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=cipherdyne-org.20150623.gappssmtp.com; s=20150623;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=MQxCiGTzVGH2P1TDva0sAoMRUlSF86iRCAL4q1vjiOg=;
- b=oeDM0FgoRm9BCXfOi6HMFswWDUDESpeSFiNSsBzRdnpvJEtqCACHUzodw2EXiJIAvl
- GpzcCeGhEMBJTztwy3/ipVsXWhbRSTEy7PFSDEs7+6OC5GX42v+wkfobQ3MkZ/LCc8+x
- +pvV7L7zoXJN0PkpKAkQo49f8ZJSpd5GYwDQPPl+PVsSCb2p/8m/aeIUVyKpmT487Ec5
- m3BQPx/bor7yEAE84rWNBIpCB8Svn1JsseOE/YwU2EF3bgikSyg8H3MFizICqpLRXFoc
- +kDW2mPGZlATV77y9hzmCpAsIvVBFhOeE/dSpegbqZC3tt+JOrBT7n90Iaub5oiXdFBG
- ZWNw==
+ :cc; bh=jEGi0Ha+A22RTbmuwiu+GvkyctMUq2MvBXT8pgShXMw=;
+ b=hPBFoWFyeknFc+UigKyOsDpVuoCLbv6sY0R0a2U8uB8wAlWubTemLQZGhFzm92PIEd
+ dK64OlElnLFJ8MD0c/UaBpZKY1s8gPTM5xCjKKqLI0yXiJ2iR+T1gYKHXoRT91qHrrQs
+ jfTE6zRG34PyAXNh6ga3u3/kCSEbECIiSdIDRkmmrhdV4zNtIDcZuTXfPZh87Er1Iu2q
+ 6Q1TYztQPogc3xATMO9O98ea/XnF9g0J6HJ14KT4i15YCqqhE4wDTF1ZD15TawpPuGac
+ dCJ0s+Wzz0ANkvl7TeJWQhQphdXJ4wht1zoiztxMUWkvcY66ih2F4LxmyPR+6LRGYSzx
+ Z5ZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=MQxCiGTzVGH2P1TDva0sAoMRUlSF86iRCAL4q1vjiOg=;
- b=UAzmXFlYwJQamx6wmo6zEP5UIzXXouPBaryRvNEx4hU7wT7kQrJBCpvWrY+CU3Em5m
- 2d+abB31Us+05ZmMR3fzAiWksleHRa0Fe4Di8XPnqhSmcrxn7P0JMLz1PJ6yHhzmLYtI
- XbyyxfqGu66NB2g9X2XTOlC+DRHRmPatqJ8GLxhveu1bHWMtVqDK8ppRoKvk+L0JIHrr
- HUCWLXHl6NcMW6xjWpR+b1jxiK5/dSqx0PWyFslQ85dbIRiokqtu0E6qtN4Vh86P8fnz
- Frt8o5UM74cjiPVjMuexIO5eIaH6uR1nQz2Cdzq0sLIhHzK9LmmrADM45/sB7bOgolPp
- bm+g==
-X-Gm-Message-State: ABuFfohosPMBBPp5PDzmGBUqS442tATnLj3crFcX0JJn/V62qg49TGWg
- gv2t8ePjEe8QSz03fqWY1XMoAOCKCQtjYf+B3TcvQtED
-X-Google-Smtp-Source: ACcGV61iNmqwtx8i21XyGClPkFf/McbMjyyU8/iRKWfEAr+RdaOBETC8DTHRtL5Hq/EhyZLILGUbSCly/pGUaiphNik=
-X-Received: by 2002:a24:8dc6:: with SMTP id
- w189-v6mr1535055itd.69.1537893015361; 
- Tue, 25 Sep 2018 09:30:15 -0700 (PDT)
+ bh=jEGi0Ha+A22RTbmuwiu+GvkyctMUq2MvBXT8pgShXMw=;
+ b=XhmUR932d8qLRC6cioOBkL9OzkB+Z65w1gI+ii/lAuRxpGkkVQD8dSa5De4G4jCWie
+ iinCg/cFjH8Iudu3gGAFsgObZK6RRjFz1unvGtaHeJP+i1KQgx+3Fou/0fOUz/6fK3vw
+ EHXWFJAkYLYQlDMrqI6EdwrhA/HbaP+L+noCZKagTfFiaOATfbm3Eka3cswMlZT3+TSe
+ Ukdf5mSFMoGigGHys5QGz/hp6EiZ1NRN0p0KWa6SKEsFGh9/3iofYkCTIsFX6B+qhZo6
+ xpguMF7hWmfy7FJuhwb+JqGPcQ91bjhY709hwxlyyT9vhJ75IAWk24sjz22BSmdbauNB
+ /Lqw==
+X-Gm-Message-State: ABuFfoiFFjlLPGv5Ji/LR/0A+Uh2RC1gNvx+OrP/nOciSMG1dJD1qaYu
+ ha9HRdysnfUSVyBoYdHkMDl3IDbA/DB3lOc5i4B4Fw==
+X-Google-Smtp-Source: ACcGV60xMzC1+DrnIzEdYbCCHuoubknfJlEuzQvy/Bsa7zNfK/fUvJdyDqJ20aM5g4w99LhjrjnQYXu910dASH+fzs8=
+X-Received: by 2002:a2e:2e18:: with SMTP id
+ u24-v6mr2149011lju.77.1537907127944; 
+ Tue, 25 Sep 2018 13:25:27 -0700 (PDT)
 MIME-Version: 1.0
 References: <CAKVinOU6xpbJNfCPAecX7kOgk_PbCzThYtER9d3ax1h6k3DGTw@mail.gmail.com>
  <CA+7UkwJ2UsVZMwnc_vZzDU0W-cBWjEKffTE5uBn9yqrBC0zmMQ@mail.gmail.com>
-In-Reply-To: <CA+7UkwJ2UsVZMwnc_vZzDU0W-cBWjEKffTE5uBn9yqrBC0zmMQ@mail.gmail.com>
-From: Breus Blaauwendraad <b.blaauwendraad@gmail.com>
-Date: Tue, 25 Sep 2018 18:29:46 +0200
-Message-ID: <CACVet5Hm5HFDtNgTpk2q2r_8Qzt3xTH4sb63RcuyDTj7vdPacA@mail.gmail.com>
+ <CAKVinOXXqMDRZcjVbOS4-iMBONdiYKaho8e3tEAZO+JKOZ_Gxw@mail.gmail.com>
+In-Reply-To: <CAKVinOXXqMDRZcjVbOS4-iMBONdiYKaho8e3tEAZO+JKOZ_Gxw@mail.gmail.com>
+From: Michael Rash <mbr@cipherdyne.org>
+Date: Tue, 25 Sep 2018 16:25:16 -0400
+Message-ID: <CABv+sEfYcEWFPEVcoa_74r2QX_Rw0em=DQfu+FB+UErjgaOwJQ@mail.gmail.com>
 Subject: Re: [feature request] To support "Wireguard over raw TCP"
-To: coder@poorlab.com
+To: kexianbin@diyism.com
 X-Mailman-Approved-At: Tue, 02 Oct 2018 05:06:16 +0200
 Cc: wireguard@lists.zx2c4.com
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -82,219 +83,172 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============2711936639707932533=="
+Content-Type: multipart/mixed; boundary="===============5477362668760612220=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============2711936639707932533==
-Content-Type: multipart/alternative; boundary="000000000000e21ccf0576b49e1f"
+--===============5477362668760612220==
+Content-Type: multipart/alternative; boundary="0000000000000f1f5f0576b7e8b6"
 
---000000000000e21ccf0576b49e1f
+--0000000000000f1f5f0576b7e8b6
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hello StarBrilliant,
+On Tue, Sep 25, 2018 at 12:06 PM KeXianbin(http://diyism.com) <
+kexianbin@diyism.com> wrote:
 
-I think that what Kexianbin is trying to make clear is that it would be
-nice if  native TCP support would be added in WireGuard.
-He (probably) currently uses udp2raw as an alternative, because an UDP-only
-VPN is sadly enough not working in every situation.
-With him, there have been others pitching ideas on how to wrap the
-WireGuard UDP traffic in TCP, which in my opinion, is a poor idea.
-
-So, why would UDP for a VPN service not be enough?
-
-First of all, most VPN traffic obfuscation techniques require a TCP
-connection instead of UDP.
-VPN usage is particularly useful in countries were Internet censorship is
-applied.
-Since obfuscating VPN traffic comes with performance overhead, wrapping the
-UDP in TCP and obfuscating this would kill the performance advantage
-WireGuard has over other protocols.
-
-However, what is arguably more important: various corporate firewalls
-(hotels/restaurants/offices) are known to block UDP (for random ports
-besides the standard DNS 53 port etc.).
-In these instances, it would be useful to have the possibility to build a
-fall back to TCP instead of UDP in a VPN service (or even the protocol
-itself).
-
-Also, various researchers I have spoken to told me that sometimes they need
-a more reliable (TCP) connection, which is then more important than the
-speed UDP provides.
-
-I'm looking into the possibilities to deploy the WireGuard VPN protocol for
-an existing VPN service currently using OpenVPN, but I keep stumbling on
-the problem that WIreGuard does not support TCP.
-I (think I) have read all posts regarding TCP for WireGuard, but it seems
-that there do not exists a good way to tackle this problem.
-
-Could someone tell whether or not TCP would be a future additional option
-for WireGuard, and why (not)?
-
-Also, do you think there actually does exist a neat and fitting solution
-for the problems I described?
-
-Kind regards,
-
-Breus Blaauwendraad
-
-
-On Tue, 25 Sep 2018 at 17:54, StarBrilliant <coder@poorlab.com> wrote:
-
-> On Tue, Sep 25, 2018 at 1:17 PM KeXianbin(http://diyism.com)
-> <kexianbin@diyism.com> wrote:
-> >
-> > Currently, I'm using udp2raw-tunnel to transform wireguard udp traffic
-> into raw tcp (config files as follows),
-> > It's very stable on my home network than using wireguard alone,
-> > But if we can integrate RAW TCP feature into wireguard, it would
-> significantly improve performance and stability for end users.
-> >
-> >
-> > from:
-> https://gist.github.com/diyism/1b80903a83776675031c73ae499438d8#file-wire=
-guard_config-txt-L145
-> >
-> > $wget
-> https://github.com/wangyu-/udp2raw-tunnel/releases/download/20180830.2/ud=
-p2raw_binaries.tar.gz
-> > $tar xzvf udp2raw_binaries.tar.gz
-> > $sudo cp udp2raw_amd64 /usr/bin/
-> > $sudo udp2raw_amd64 -c -l127.0.0.2:24448 -r<server ip>:24447 -a
-> > $cat /etc/wireguard/wg0.conf
-> > [Interface]
-> > PrivateKey =3D <client privkey>
-> > Address =3D 10.0.0.3/32
-> > ListenPort =3D 24447
-> > MTU =3D 1300
-> > PostUp =3D ip route add 10.0.0.0/24 dev wg0 && wg set wg0 peer <server
-> pubkey> allowed-ips 0.0.0.0/0
-> > PostDown =3D ip route del 10.0.0.0/24
-> >
-> > [Peer]
-> > #10.0.0.1
-> > PublicKey =3D <server pubkey>
-> > Endpoint =3D 127.0.0.2:24448
-> > #AllowedIPs =3D 0.0.0.0/0
-> >
-> > $sudo wg-quick down wg0 ; sudo wg-quick up wg0
-> > $ping 10.0.0.1
-> > 64 bytes from 10.0.0.1: icmp_seq=3D2113 ttl=3D64 time=3D183 ms
-> > $sudo ip route add 104.24.0.0/16 dev wg0
-> > $ping myip.ipip.net
-> > PING myip.ipip.net (104.24.20.50) 56(84) bytes of data.
-> > 64 bytes from 104.24.20.50 (104.24.20.50): icmp_seq=3D1 ttl=3D60 time=
+> Thanks for the info.
+>
+> On Sep 25, 2018 23:53, "StarBrilliant" <coder@poorlab.com> wrote:
+>
+>> On Tue, Sep 25, 2018 at 1:17 PM KeXianbin(http://diyism.com)
+>> <kexianbin@diyism.com> wrote:
+>> >
+>> > Currently, I'm using udp2raw-tunnel to transform wireguard udp traffic
+>> into raw tcp (config files as follows),
+>> > It's very stable on my home network than using wireguard alone,
+>> > But if we can integrate RAW TCP feature into wireguard, it would
+>> significantly improve performance and stability for end users.
+>> >
+>> >
+>> > from:
+>> https://gist.github.com/diyism/1b80903a83776675031c73ae499438d8#file-wir=
+eguard_config-txt-L145
+>> >
+>> > $wget
+>> https://github.com/wangyu-/udp2raw-tunnel/releases/download/20180830.2/u=
+dp2raw_binaries.tar.gz
+>> > $tar xzvf udp2raw_binaries.tar.gz
+>> > $sudo cp udp2raw_amd64 /usr/bin/
+>> > $sudo udp2raw_amd64 -c -l127.0.0.2:24448 -r<server ip>:24447 -a
+>> > $cat /etc/wireguard/wg0.conf
+>> > [Interface]
+>> > PrivateKey =3D <client privkey>
+>> > Address =3D 10.0.0.3/32
+>> > ListenPort =3D 24447
+>> > MTU =3D 1300
+>> > PostUp =3D ip route add 10.0.0.0/24 dev wg0 && wg set wg0 peer <server
+>> pubkey> allowed-ips 0.0.0.0/0
+>> > PostDown =3D ip route del 10.0.0.0/24
+>> >
+>> > [Peer]
+>> > #10.0.0.1
+>> > PublicKey =3D <server pubkey>
+>> > Endpoint =3D 127.0.0.2:24448
+>> > #AllowedIPs =3D 0.0.0.0/0
+>> >
+>> > $sudo wg-quick down wg0 ; sudo wg-quick up wg0
+>> > $ping 10.0.0.1
+>> > 64 bytes from 10.0.0.1: icmp_seq=3D2113 ttl=3D64 time=3D183 ms
+>> > $sudo ip route add 104.24.0.0/16 dev wg0
+>> > $ping myip.ipip.net
+>> > PING myip.ipip.net (104.24.20.50) 56(84) bytes of data.
+>> > 64 bytes from 104.24.20.50 (104.24.20.50): icmp_seq=3D1 ttl=3D60 time=
 =3D185 ms
-> > $curl http://myip.ipip.net
-> > IP=EF=BC=9A<server ip>
-> >
-> > #take care, "MTU =3D 1300" in wg0.conf is needed when wireguard over
-> udp2raw, or else most https requests will be blocked because of mtu probl=
-em.
+>> > $curl http://myip.ipip.net
+>> > IP=EF=BC=9A<server ip>
+>> >
+>> > #take care, "MTU =3D 1300" in wg0.conf is needed when wireguard over
+>> udp2raw, or else most https requests will be blocked because of mtu prob=
+lem.
+>>
+>>
+>> Hello Kexianbin,
+>>
+>> This is an UNOFFICIAL response to your question. (But I think the
+>> official developers may have similar answers.)
+>>
+>> Wireguard probably will not accept an official integration to udp2raw.
+>> The reasons are:
+>>
+>> 1) Wireguard wants to keep their kernel part code minimized, therefore
+>> easy for security auditing, and less bugs.The UDP protocol is actually
+>> very simple and straightforward. (By the way, if you intended to use
+>> Wireguard in China, be informed that this is a protocol that is very
+>> easy to block by the ISP.)
+>>
+>> 2) I have read the source code of udp2raw. To be frank, the code is of
+>> very low quality. For this reason, I don't think udp2raw would be
+>> integrated into Wireguard unless it's rewritten.
+>>
+>> 3) Udp2raw is not suitable for everyone or for every country. For
+>> example udp2raw may have problems passing middleboxes, which is common
+>> among satellite ISPs in Oceania. Middleboxes break and resemble TCP
+>> segments thus make udp2raw literally unusable. Also it is not
+>> congestion friendly (by design), so a massive deployment may affect
+>> the global Internet ecology.
+>>
 >
+Let me also add (unofficially of course) that stealth against active
+scanning is also an important goal achieved by Wireguard's usage of UDP,
+and switching to TCP would break this. If TCP is required, then integration
+options with third party tools such as udp2raw-tunnel will always be there.
+Wireguard should not have to directly support those options, and rather
+should stick to its current compelling design.
+
+--Mike
+
+
+
+
 >
-> Hello Kexianbin,
->
-> This is an UNOFFICIAL response to your question. (But I think the
-> official developers may have similar answers.)
->
-> Wireguard probably will not accept an official integration to udp2raw.
-> The reasons are:
->
-> 1) Wireguard wants to keep their kernel part code minimized, therefore
-> easy for security auditing, and less bugs.The UDP protocol is actually
-> very simple and straightforward. (By the way, if you intended to use
-> Wireguard in China, be informed that this is a protocol that is very
-> easy to block by the ISP.)
->
-> 2) I have read the source code of udp2raw. To be frank, the code is of
-> very low quality. For this reason, I don't think udp2raw would be
-> integrated into Wireguard unless it's rewritten.
->
-> 3) Udp2raw is not suitable for everyone or for every country. For
-> example udp2raw may have problems passing middleboxes, which is common
-> among satellite ISPs in Oceania. Middleboxes break and resemble TCP
-> segments thus make udp2raw literally unusable. Also it is not
-> congestion friendly (by design), so a massive deployment may affect
-> the global Internet ecology.
->
-> However the good news is, Wireguard provides an open control interface
-> (see https://www.wireguard.com/xplatform/ ). By utilizing this
-> interface, we can develop an alternate frontend application other than
-> the official command "wg", that automatically sets up the kernel
-> Wireguard kernel part and a userland udp2raw part, packaged as one
-> application.
->
->
-> My words for Wireguard developers:
->
-> 1) In case you may not know the udp2raw protocol, here is a
-> description. Some ISPs in certain countries have strange QoS strategy
-> that deprioritize UDP packets during network congestion, resulting a
-> 50% loss rate or more for UDP. The udp2raw protocol simulates a
-> three-way TCP handshake and add TCP header to UDP packets so they will
-> not be dropped. This protocol does not do congestion control or rate
-> control, neither does it understand any TCP semantics. It's a dirty
-> hack for dirty ISP, not suitable for everyone, but overwhelmingly
-> useful in certain countries.
->
-> 2) Wireguard currently does not support binding to localhost. This is
-> required for any third-party plugins upon Wireguard to work. We might
-> need to consider binding to localhost an important feature to go in
-> the near future.
->
->
-> Best regards,
-> StarBrilliant
+>> However the good news is, Wireguard provides an open control interface
+>> (see https://www.wireguard.com/xplatform/ ). By utilizing this
+>> interface, we can develop an alternate frontend application other than
+>> the official command "wg", that automatically sets up the kernel
+>> Wireguard kernel part and a userland udp2raw part, packaged as one
+>> application.
+>>
+>>
+>> My words for Wireguard developers:
+>>
+>> 1) In case you may not know the udp2raw protocol, here is a
+>> description. Some ISPs in certain countries have strange QoS strategy
+>> that deprioritize UDP packets during network congestion, resulting a
+>> 50% loss rate or more for UDP. The udp2raw protocol simulates a
+>> three-way TCP handshake and add TCP header to UDP packets so they will
+>> not be dropped. This protocol does not do congestion control or rate
+>> control, neither does it understand any TCP semantics. It's a dirty
+>> hack for dirty ISP, not suitable for everyone, but overwhelmingly
+>> useful in certain countries.
+>>
+>> 2) Wireguard currently does not support binding to localhost. This is
+>> required for any third-party plugins upon Wireguard to work. We might
+>> need to consider binding to localhost an important feature to go in
+>> the near future.
+>>
+>>
+>> Best regards,
+>> StarBrilliant
+>>
 > _______________________________________________
 > WireGuard mailing list
 > WireGuard@lists.zx2c4.com
 > https://lists.zx2c4.com/mailman/listinfo/wireguard
 >
 
---000000000000e21ccf0576b49e1f
+
+--=20
+Michael Rash | Founder
+http://www.cipherdyne.org/
+Key fingerprint =3D 53EA 13EA 472E 3771 894F  AC69 95D8 5D6B A742 839F
+
+--0000000000000f1f5f0576b7e8b6
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div>Hello StarBrilliant,</div><div><br></div><div>I think=
- that what=20
-Kexianbin is trying to make clear is that it would be nice if=C2=A0 native =
-TCP support would be added in WireGuard.</div><div>He (probably) currently =
-uses udp2raw as an alternative, because an UDP-only VPN is sadly enough not=
- working in every situation.</div><div>With him, there have been others pit=
-ching ideas on how to wrap the WireGuard UDP traffic in TCP, which in my op=
-inion, is a poor idea.</div><div><br></div><div>So, why would UDP for a VPN=
- service not be enough?<br></div><div><br></div><div>First of all, most VPN=
- traffic obfuscation techniques require a TCP connection instead of UDP. <b=
-r></div><div>VPN usage is particularly useful in countries were Internet ce=
-nsorship is applied.<br></div><div>Since obfuscating VPN traffic comes with=
- performance overhead, wrapping the UDP in TCP and obfuscating this would k=
-ill the performance advantage WireGuard has over other protocols.<br></div>=
-<div><br></div><div>However, what is arguably more important: various corpo=
-rate firewalls (hotels/restaurants/offices) are known to block UDP (for ran=
-dom ports besides the standard DNS 53 port etc.).=C2=A0</div><div>In these =
-instances, it would be useful to have the possibility to build a fall back =
-to TCP instead of UDP in a VPN service (or even the protocol itself).<br></=
-div><div><br></div><div>Also, various researchers I have spoken to told me =
-that sometimes they need a more reliable (TCP) connection, which is then mo=
-re important than the speed UDP provides.</div><div><br></div><div>I&#39;m =
-looking into the possibilities to deploy the WireGuard VPN protocol for an =
-existing VPN service currently using OpenVPN, but I keep stumbling on the p=
-roblem that WIreGuard does not support TCP.</div><div>I (think I) have read=
- all posts regarding TCP for WireGuard, but it seems that there do not exis=
-ts a good way to tackle this problem.</div><div><br></div><div>Could someon=
-e tell whether or not TCP would be a future additional option for WireGuard=
-, and why (not)?</div><div><br></div><div>Also, do you think there actually=
- does exist a neat and fitting solution for the problems I described?</div>=
-<div><br></div><div>Kind regards,</div><div><br></div><div>Breus Blaauwendr=
-aad<br></div><div><br></div></div><br><div class=3D"gmail_quote"><div dir=
-=3D"ltr">On Tue, 25 Sep 2018 at 17:54, StarBrilliant &lt;<a href=3D"mailto:=
-coder@poorlab.com">coder@poorlab.com</a>&gt; wrote:<br></div><blockquote cl=
-ass=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;p=
-adding-left:1ex">On Tue, Sep 25, 2018 at 1:17 PM KeXianbin(<a href=3D"http:=
-//diyism.com" rel=3D"noreferrer" target=3D"_blank">http://diyism.com</a>)<b=
-r>
+<div dir=3D"ltr"><br><br><div class=3D"gmail_quote"><div dir=3D"ltr">On Tue=
+, Sep 25, 2018 at 12:06 PM KeXianbin(<a href=3D"http://diyism.com">http://d=
+iyism.com</a>) &lt;<a href=3D"mailto:kexianbin@diyism.com">kexianbin@diyism=
+.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"mar=
+gin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex"><div dir=3D"aut=
+o">Thanks for the info.=C2=A0</div><div class=3D"gmail_extra"><br><div clas=
+s=3D"gmail_quote">On Sep 25, 2018 23:53, &quot;StarBrilliant&quot; &lt;<a h=
+ref=3D"mailto:coder@poorlab.com" target=3D"_blank">coder@poorlab.com</a>&gt=
+; wrote:<br type=3D"attribution"><blockquote class=3D"gmail_quote" style=3D=
+"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">On Tue, Sep=
+ 25, 2018 at 1:17 PM KeXianbin(<a href=3D"http://diyism.com" rel=3D"norefer=
+rer" target=3D"_blank">http://diyism.com</a>)<br>
 &lt;<a href=3D"mailto:kexianbin@diyism.com" target=3D"_blank">kexianbin@diy=
 ism.com</a>&gt; wrote:<br>
 &gt;<br>
@@ -385,7 +339,18 @@ example udp2raw may have problems passing middleboxes, which is common<br>
 among satellite ISPs in Oceania. Middleboxes break and resemble TCP<br>
 segments thus make udp2raw literally unusable. Also it is not<br>
 congestion friendly (by design), so a massive deployment may affect<br>
-the global Internet ecology.<br>
+the global Internet ecology.<br></blockquote></div></div></blockquote><div>=
+<br></div><div>Let me also add (unofficially of course) that stealth agains=
+t active scanning is also an important goal achieved by Wireguard&#39;s usa=
+ge of UDP, and switching to TCP would break this. If TCP is required, then =
+integration options with third party tools such as udp2raw-tunnel will alwa=
+ys be there. Wireguard should not have to directly support those options, a=
+nd rather should stick to its current compelling design.</div><div><br></di=
+v><div>--Mike</div><div><br></div><div><br></div><div>=C2=A0</div><blockquo=
+te class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc so=
+lid;padding-left:1ex"><div class=3D"gmail_extra"><div class=3D"gmail_quote"=
+><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1=
+px #ccc solid;padding-left:1ex">
 <br>
 However the good news is, Wireguard provides an open control interface<br>
 (see <a href=3D"https://www.wireguard.com/xplatform/" rel=3D"noreferrer" ta=
@@ -418,6 +383,7 @@ the near future.<br>
 <br>
 Best regards,<br>
 StarBrilliant<br>
+</blockquote></div></div>
 _______________________________________________<br>
 WireGuard mailing list<br>
 <a href=3D"mailto:WireGuard@lists.zx2c4.com" target=3D"_blank">WireGuard@li=
@@ -425,11 +391,15 @@ sts.zx2c4.com</a><br>
 <a href=3D"https://lists.zx2c4.com/mailman/listinfo/wireguard" rel=3D"noref=
 errer" target=3D"_blank">https://lists.zx2c4.com/mailman/listinfo/wireguard=
 </a><br>
-</blockquote></div>
+</blockquote></div><br clear=3D"all"><div><br></div>-- <br><div dir=3D"ltr"=
+ class=3D"gmail_signature" data-smartmail=3D"gmail_signature"><div dir=3D"l=
+tr">Michael Rash | Founder<br><a href=3D"http://www.cipherdyne.org/" target=
+=3D"_blank">http://www.cipherdyne.org/</a><br>Key fingerprint =3D 53EA 13EA=
+ 472E 3771 894F=C2=A0 AC69 95D8 5D6B A742 839F<br></div></div></div>
 
---000000000000e21ccf0576b49e1f--
+--0000000000000f1f5f0576b7e8b6--
 
---===============2711936639707932533==
+--===============5477362668760612220==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -440,4 +410,4 @@ WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---===============2711936639707932533==--
+--===============5477362668760612220==--
