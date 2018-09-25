@@ -2,63 +2,52 @@ Return-Path: <SRS0=0td0=MH=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,T_DKIM_INVALID,
-	URIBL_BLOCKED,URI_TRY_3LD autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED,USER_AGENT_MUTT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CA8AFC43382
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 25 Sep 2018 15:53:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CC94C43382
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 25 Sep 2018 21:17:28 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id DE0AF2098A
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 25 Sep 2018 15:53:09 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=poorlab.com header.i=@poorlab.com header.b="CKhUCHxW"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org DE0AF2098A
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=poorlab.com
+	by mail.kernel.org (Postfix) with ESMTPS id A4F3320877
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 25 Sep 2018 21:17:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A4F3320877
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=matrix-dream.net
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 05fcfe40;
-	Tue, 25 Sep 2018 15:50:30 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9381dab9;
+	Tue, 25 Sep 2018 21:14:31 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 732043db
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 883731bd
  for <wireguard@lists.zx2c4.com>;
- Tue, 25 Sep 2018 15:50:26 +0000 (UTC)
-Received: from m32-4.eu.mailgun.net (m32-4.eu.mailgun.net [141.193.32.4])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e1c25d6d
+ Tue, 25 Sep 2018 21:14:29 +0000 (UTC)
+Received: from mail1.matrix-dream.net (mail1.matrix-dream.net
+ [IPv6:2a0a:51c0::71])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e3bbf5e2
  for <wireguard@lists.zx2c4.com>;
- Tue, 25 Sep 2018 15:50:25 +0000 (UTC)
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=poorlab.com; q=dns/txt;
- s=mailo; t=1537890781; h=Content-Transfer-Encoding: Content-Type: Cc:
- To: Subject: Message-ID: Date: From: In-Reply-To: References:
- MIME-Version: Sender; bh=N5OHeShFDZBNQ+5hQ+lY98Fj4y/8rET8n4rzmXbNOT8=;
- b=CKhUCHxWjSPrn3j5r2vjctEyJ2IxBUohRRqQwwcgW9qFUT95nYviu51QaiUvVxfkw1K2Boil
- z4KTXS5+Fde8ClDLnLAhO6VESq5ErdzM4SkLj8c0++5yJgCIwOTU/vXF4+A27sASXacwwFX1
- HHOovrY1YLKYkihADaGlaO7PgWo=
-X-Mailgun-Sending-Ip: 141.193.32.4
-X-Mailgun-Sid: WyJkNWMyNiIsICJ3aXJlZ3VhcmRAbGlzdHMuengyYzQuY29tIiwgImJiMCJd
-Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com
- [209.85.222.177])
- by mxa.mailgun.org with ESMTP id 5baa59db.7f726456f230-smtp-out-n02;
- Tue, 25 Sep 2018 15:52:59 -0000 (UTC)
-Received: by mail-qk1-f177.google.com with SMTP id q20-v6so9445325qkc.12
- for <wireguard@lists.zx2c4.com>; Tue, 25 Sep 2018 08:52:59 -0700 (PDT)
-X-Gm-Message-State: ABuFfojj3DoASsZ9K9bcBfYHMLNhPHdcmjujBw9JWVA5uZXbF1JOVxDh
- WDEEtUxxW3mv4wxa0nQ1WH3Fv2obtv112V3mDXg=
-X-Google-Smtp-Source: ACcGV60o+TJqp/h7Hi+C+6OUq0WKwJIkjNy2zdwwD+PBEJCUrWZWyeNEC8gKavjKkxFB4jO+KPeAf/iS+owLJNSSnx4=
-X-Received: by 2002:a37:d117:: with SMTP id
- s23-v6mr1213644qki.130.1537890778411; 
- Tue, 25 Sep 2018 08:52:58 -0700 (PDT)
+ Tue, 25 Sep 2018 21:14:28 +0000 (UTC)
+Received: from ivan by mail1.matrix-dream.net with local (Exim 4.91)
+ (envelope-from <labawi-wg@matrix-dream.net>)
+ id 1g4uhA-0006BK-Bd; Tue, 25 Sep 2018 21:16:36 +0000
+Date: Tue, 25 Sep 2018 21:16:36 +0000
+From: Ivan =?iso-8859-1?Q?Lab=E1th?= <labawi-wg@matrix-dream.net>
+To: Raffaele Spazzoli <rspazzol@redhat.com>
+Subject: Re: what to do when the peers use different IPs to transmit and
+ receive
+Message-ID: <20180925211636.GB23521@matrix-dream.net>
+References: <CACOeLq+PG-SFUhSZUejCVWc+uMnBq1ATRwUFFLQZBTCU6JMSew@mail.gmail.com>
+ <20180916165458.GA31165@matrix-dream.net>
+ <CACOeLqLN5vc7O9_VwGhipycVE5Yi+phDKKwf2U4VPzZM00KeMw@mail.gmail.com>
+ <CACOeLq+GseaDTZaOKD3qA_pPoT0_xRFAgqip2+KEkxTeG1Mw=Q@mail.gmail.com>
+ <20180917091635.GB5016@matrix-dream.net>
+ <CACOeLqLB8zbarowwTZFrxTkHyAk=B_cT_OruWDwAi6FvHjGi-Q@mail.gmail.com>
 MIME-Version: 1.0
-References: <CAKVinOU6xpbJNfCPAecX7kOgk_PbCzThYtER9d3ax1h6k3DGTw@mail.gmail.com>
-In-Reply-To: <CAKVinOU6xpbJNfCPAecX7kOgk_PbCzThYtER9d3ax1h6k3DGTw@mail.gmail.com>
-From: StarBrilliant <coder@poorlab.com>
-Date: Wed, 26 Sep 2018 01:52:21 +1000
-X-Gmail-Original-Message-ID: <CA+7UkwJ2UsVZMwnc_vZzDU0W-cBWjEKffTE5uBn9yqrBC0zmMQ@mail.gmail.com>
-Message-ID: <CA+7UkwJ2UsVZMwnc_vZzDU0W-cBWjEKffTE5uBn9yqrBC0zmMQ@mail.gmail.com>
-Subject: Re: [feature request] To support "Wireguard over raw TCP"
-To: wireguard@lists.zx2c4.com
+Content-Disposition: inline
+In-Reply-To: <CACOeLqLB8zbarowwTZFrxTkHyAk=B_cT_OruWDwAi6FvHjGi-Q@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Cc: wireguard@lists.zx2c4.com
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -70,80 +59,103 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-T24gVHVlLCBTZXAgMjUsIDIwMTggYXQgMToxNyBQTSBLZVhpYW5iaW4oaHR0cDovL2RpeWlzbS5j
-b20pCjxrZXhpYW5iaW5AZGl5aXNtLmNvbT4gd3JvdGU6Cj4KPiBDdXJyZW50bHksIEknbSB1c2lu
-ZyB1ZHAycmF3LXR1bm5lbCB0byB0cmFuc2Zvcm0gd2lyZWd1YXJkIHVkcCB0cmFmZmljIGludG8g
-cmF3IHRjcCAoY29uZmlnIGZpbGVzIGFzIGZvbGxvd3MpLAo+IEl0J3MgdmVyeSBzdGFibGUgb24g
-bXkgaG9tZSBuZXR3b3JrIHRoYW4gdXNpbmcgd2lyZWd1YXJkIGFsb25lLAo+IEJ1dCBpZiB3ZSBj
-YW4gaW50ZWdyYXRlIFJBVyBUQ1AgZmVhdHVyZSBpbnRvIHdpcmVndWFyZCwgaXQgd291bGQgc2ln
-bmlmaWNhbnRseSBpbXByb3ZlIHBlcmZvcm1hbmNlIGFuZCBzdGFiaWxpdHkgZm9yIGVuZCB1c2Vy
-cy4KPgo+Cj4gZnJvbTogaHR0cHM6Ly9naXN0LmdpdGh1Yi5jb20vZGl5aXNtLzFiODA5MDNhODM3
-NzY2NzUwMzFjNzNhZTQ5OTQzOGQ4I2ZpbGUtd2lyZWd1YXJkX2NvbmZpZy10eHQtTDE0NQo+Cj4g
-JHdnZXQgaHR0cHM6Ly9naXRodWIuY29tL3dhbmd5dS0vdWRwMnJhdy10dW5uZWwvcmVsZWFzZXMv
-ZG93bmxvYWQvMjAxODA4MzAuMi91ZHAycmF3X2JpbmFyaWVzLnRhci5nego+ICR0YXIgeHp2ZiB1
-ZHAycmF3X2JpbmFyaWVzLnRhci5nego+ICRzdWRvIGNwIHVkcDJyYXdfYW1kNjQgL3Vzci9iaW4v
-Cj4gJHN1ZG8gdWRwMnJhd19hbWQ2NCAtYyAtbDEyNy4wLjAuMjoyNDQ0OCAtcjxzZXJ2ZXIgaXA+
-OjI0NDQ3IC1hCj4gJGNhdCAvZXRjL3dpcmVndWFyZC93ZzAuY29uZgo+IFtJbnRlcmZhY2VdCj4g
-UHJpdmF0ZUtleSA9IDxjbGllbnQgcHJpdmtleT4KPiBBZGRyZXNzID0gMTAuMC4wLjMvMzIKPiBM
-aXN0ZW5Qb3J0ID0gMjQ0NDcKPiBNVFUgPSAxMzAwCj4gUG9zdFVwID0gaXAgcm91dGUgYWRkIDEw
-LjAuMC4wLzI0IGRldiB3ZzAgJiYgd2cgc2V0IHdnMCBwZWVyIDxzZXJ2ZXIgcHVia2V5PiBhbGxv
-d2VkLWlwcyAwLjAuMC4wLzAKPiBQb3N0RG93biA9IGlwIHJvdXRlIGRlbCAxMC4wLjAuMC8yNAo+
-Cj4gW1BlZXJdCj4gIzEwLjAuMC4xCj4gUHVibGljS2V5ID0gPHNlcnZlciBwdWJrZXk+Cj4gRW5k
-cG9pbnQgPSAxMjcuMC4wLjI6MjQ0NDgKPiAjQWxsb3dlZElQcyA9IDAuMC4wLjAvMAo+Cj4gJHN1
-ZG8gd2ctcXVpY2sgZG93biB3ZzAgOyBzdWRvIHdnLXF1aWNrIHVwIHdnMAo+ICRwaW5nIDEwLjAu
-MC4xCj4gNjQgYnl0ZXMgZnJvbSAxMC4wLjAuMTogaWNtcF9zZXE9MjExMyB0dGw9NjQgdGltZT0x
-ODMgbXMKPiAkc3VkbyBpcCByb3V0ZSBhZGQgMTA0LjI0LjAuMC8xNiBkZXYgd2cwCj4gJHBpbmcg
-bXlpcC5pcGlwLm5ldAo+IFBJTkcgbXlpcC5pcGlwLm5ldCAoMTA0LjI0LjIwLjUwKSA1Nig4NCkg
-Ynl0ZXMgb2YgZGF0YS4KPiA2NCBieXRlcyBmcm9tIDEwNC4yNC4yMC41MCAoMTA0LjI0LjIwLjUw
-KTogaWNtcF9zZXE9MSB0dGw9NjAgdGltZT0xODUgbXMKPiAkY3VybCBodHRwOi8vbXlpcC5pcGlw
-Lm5ldAo+IElQ77yaPHNlcnZlciBpcD4KPgo+ICN0YWtlIGNhcmUsICJNVFUgPSAxMzAwIiBpbiB3
-ZzAuY29uZiBpcyBuZWVkZWQgd2hlbiB3aXJlZ3VhcmQgb3ZlciB1ZHAycmF3LCBvciBlbHNlIG1v
-c3QgaHR0cHMgcmVxdWVzdHMgd2lsbCBiZSBibG9ja2VkIGJlY2F1c2Ugb2YgbXR1IHByb2JsZW0u
-CgoKSGVsbG8gS2V4aWFuYmluLAoKVGhpcyBpcyBhbiBVTk9GRklDSUFMIHJlc3BvbnNlIHRvIHlv
-dXIgcXVlc3Rpb24uIChCdXQgSSB0aGluayB0aGUKb2ZmaWNpYWwgZGV2ZWxvcGVycyBtYXkgaGF2
-ZSBzaW1pbGFyIGFuc3dlcnMuKQoKV2lyZWd1YXJkIHByb2JhYmx5IHdpbGwgbm90IGFjY2VwdCBh
-biBvZmZpY2lhbCBpbnRlZ3JhdGlvbiB0byB1ZHAycmF3LgpUaGUgcmVhc29ucyBhcmU6CgoxKSBX
-aXJlZ3VhcmQgd2FudHMgdG8ga2VlcCB0aGVpciBrZXJuZWwgcGFydCBjb2RlIG1pbmltaXplZCwg
-dGhlcmVmb3JlCmVhc3kgZm9yIHNlY3VyaXR5IGF1ZGl0aW5nLCBhbmQgbGVzcyBidWdzLlRoZSBV
-RFAgcHJvdG9jb2wgaXMgYWN0dWFsbHkKdmVyeSBzaW1wbGUgYW5kIHN0cmFpZ2h0Zm9yd2FyZC4g
-KEJ5IHRoZSB3YXksIGlmIHlvdSBpbnRlbmRlZCB0byB1c2UKV2lyZWd1YXJkIGluIENoaW5hLCBi
-ZSBpbmZvcm1lZCB0aGF0IHRoaXMgaXMgYSBwcm90b2NvbCB0aGF0IGlzIHZlcnkKZWFzeSB0byBi
-bG9jayBieSB0aGUgSVNQLikKCjIpIEkgaGF2ZSByZWFkIHRoZSBzb3VyY2UgY29kZSBvZiB1ZHAy
-cmF3LiBUbyBiZSBmcmFuaywgdGhlIGNvZGUgaXMgb2YKdmVyeSBsb3cgcXVhbGl0eS4gRm9yIHRo
-aXMgcmVhc29uLCBJIGRvbid0IHRoaW5rIHVkcDJyYXcgd291bGQgYmUKaW50ZWdyYXRlZCBpbnRv
-IFdpcmVndWFyZCB1bmxlc3MgaXQncyByZXdyaXR0ZW4uCgozKSBVZHAycmF3IGlzIG5vdCBzdWl0
-YWJsZSBmb3IgZXZlcnlvbmUgb3IgZm9yIGV2ZXJ5IGNvdW50cnkuIEZvcgpleGFtcGxlIHVkcDJy
-YXcgbWF5IGhhdmUgcHJvYmxlbXMgcGFzc2luZyBtaWRkbGVib3hlcywgd2hpY2ggaXMgY29tbW9u
-CmFtb25nIHNhdGVsbGl0ZSBJU1BzIGluIE9jZWFuaWEuIE1pZGRsZWJveGVzIGJyZWFrIGFuZCBy
-ZXNlbWJsZSBUQ1AKc2VnbWVudHMgdGh1cyBtYWtlIHVkcDJyYXcgbGl0ZXJhbGx5IHVudXNhYmxl
-LiBBbHNvIGl0IGlzIG5vdApjb25nZXN0aW9uIGZyaWVuZGx5IChieSBkZXNpZ24pLCBzbyBhIG1h
-c3NpdmUgZGVwbG95bWVudCBtYXkgYWZmZWN0CnRoZSBnbG9iYWwgSW50ZXJuZXQgZWNvbG9neS4K
-Ckhvd2V2ZXIgdGhlIGdvb2QgbmV3cyBpcywgV2lyZWd1YXJkIHByb3ZpZGVzIGFuIG9wZW4gY29u
-dHJvbCBpbnRlcmZhY2UKKHNlZSBodHRwczovL3d3dy53aXJlZ3VhcmQuY29tL3hwbGF0Zm9ybS8g
-KS4gQnkgdXRpbGl6aW5nIHRoaXMKaW50ZXJmYWNlLCB3ZSBjYW4gZGV2ZWxvcCBhbiBhbHRlcm5h
-dGUgZnJvbnRlbmQgYXBwbGljYXRpb24gb3RoZXIgdGhhbgp0aGUgb2ZmaWNpYWwgY29tbWFuZCAi
-d2ciLCB0aGF0IGF1dG9tYXRpY2FsbHkgc2V0cyB1cCB0aGUga2VybmVsCldpcmVndWFyZCBrZXJu
-ZWwgcGFydCBhbmQgYSB1c2VybGFuZCB1ZHAycmF3IHBhcnQsIHBhY2thZ2VkIGFzIG9uZQphcHBs
-aWNhdGlvbi4KCgpNeSB3b3JkcyBmb3IgV2lyZWd1YXJkIGRldmVsb3BlcnM6CgoxKSBJbiBjYXNl
-IHlvdSBtYXkgbm90IGtub3cgdGhlIHVkcDJyYXcgcHJvdG9jb2wsIGhlcmUgaXMgYQpkZXNjcmlw
-dGlvbi4gU29tZSBJU1BzIGluIGNlcnRhaW4gY291bnRyaWVzIGhhdmUgc3RyYW5nZSBRb1Mgc3Ry
-YXRlZ3kKdGhhdCBkZXByaW9yaXRpemUgVURQIHBhY2tldHMgZHVyaW5nIG5ldHdvcmsgY29uZ2Vz
-dGlvbiwgcmVzdWx0aW5nIGEKNTAlIGxvc3MgcmF0ZSBvciBtb3JlIGZvciBVRFAuIFRoZSB1ZHAy
-cmF3IHByb3RvY29sIHNpbXVsYXRlcyBhCnRocmVlLXdheSBUQ1AgaGFuZHNoYWtlIGFuZCBhZGQg
-VENQIGhlYWRlciB0byBVRFAgcGFja2V0cyBzbyB0aGV5IHdpbGwKbm90IGJlIGRyb3BwZWQuIFRo
-aXMgcHJvdG9jb2wgZG9lcyBub3QgZG8gY29uZ2VzdGlvbiBjb250cm9sIG9yIHJhdGUKY29udHJv
-bCwgbmVpdGhlciBkb2VzIGl0IHVuZGVyc3RhbmQgYW55IFRDUCBzZW1hbnRpY3MuIEl0J3MgYSBk
-aXJ0eQpoYWNrIGZvciBkaXJ0eSBJU1AsIG5vdCBzdWl0YWJsZSBmb3IgZXZlcnlvbmUsIGJ1dCBv
-dmVyd2hlbG1pbmdseQp1c2VmdWwgaW4gY2VydGFpbiBjb3VudHJpZXMuCgoyKSBXaXJlZ3VhcmQg
-Y3VycmVudGx5IGRvZXMgbm90IHN1cHBvcnQgYmluZGluZyB0byBsb2NhbGhvc3QuIFRoaXMgaXMK
-cmVxdWlyZWQgZm9yIGFueSB0aGlyZC1wYXJ0eSBwbHVnaW5zIHVwb24gV2lyZWd1YXJkIHRvIHdv
-cmsuIFdlIG1pZ2h0Cm5lZWQgdG8gY29uc2lkZXIgYmluZGluZyB0byBsb2NhbGhvc3QgYW4gaW1w
-b3J0YW50IGZlYXR1cmUgdG8gZ28gaW4KdGhlIG5lYXIgZnV0dXJlLgoKCkJlc3QgcmVnYXJkcywK
-U3RhckJyaWxsaWFudApfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fXwpXaXJlR3VhcmQgbWFpbGluZyBsaXN0CldpcmVHdWFyZEBsaXN0cy56eDJjNC5jb20KaHR0
-cHM6Ly9saXN0cy56eDJjNC5jb20vbWFpbG1hbi9saXN0aW5mby93aXJlZ3VhcmQK
+Hi,
+
+I guess SNAT-ing on the destination node should work.
+
+Still, without a compelling use case, it seems
+like a broken network to me. You will have packets
+in transit with an unroutable/incorrect source address,
+among other possible issues. ICMP signalling won't work.
+I think TCP wouldn't work with such a setup, or even
+most udp protocols.
+
+Do you use other services over this type of network?
+
+Also, please note that iptables rules can affect network performance,
+especially if there are many of them and haphazardly placed.
+For debugging iptables rules I would suggest adding -v, so you can see
+the number of matched packets (caveats apply in NAT).
+
+Regards,
+Ivan Lab=E1th
+
+
+On Mon, Sep 17, 2018 at 07:10:05AM -0400, Raffaele Spazzoli wrote:
+> Ivan,
+> =
+
+> sorry for the formatting, it seemed right on my email editor (gmail).
+> I cannot do SNAT at the source because the packet would be dropped if it
+> didn't come from the actual IP of the VM.
+> So I am doing SNAT at the destination. why do you say I am doing it wrong?
+> I know it would be ideal to do it at the source, but should it work when
+> done at the destination?
+> =
+
+> Thanks,
+> Raffaele
+> =
+
+> Raffaele Spazzoli
+> Senior Architect - OpenShift <https://www.openshift.com>, Containers
+> and PaaS Practice <https://www.redhat.com/en/services/consulting/paas>
+> Tel: +1 216-258-7717
+> =
+
+> =
+
+> =
+
+> On Mon, Sep 17, 2018 at 5:16 AM, Ivan Lab=E1th <labawi-wg@matrix-dream.ne=
+t>
+> wrote:
+> =
+
+> > On Sun, Sep 16, 2018 at 07:08:58PM -0400, Raffaele Spazzoli wrote:
+> > > sh-4.2# iptables -t nat -n -L Chain PREROUTING (policy ACCEPT) target
+> > prot
+> > > opt source destination Chain INPUT (policy ACCEPT) target prot opt so=
+urce
+> > > destination SNAT udp -- 10.128.2.10 0.0.0.0/0 udp dpt:5555 to:
+> > > 192.168.99.12:5555 SNAT udp -- 10.128.1.94 0.0.0.0/0 udp dpt:5555 to:
+> > > 192.168.99.14:5555 SNAT udp -- 10.130.0.136 0.0.0.0/0 udp dpt:5555 to:
+> > > 192.168.99.13:5555 SNAT udp -- 10.129.1.158 0.0.0.0/0 udp dpt:5555 to:
+> > > 192.168.99.15:5555 SNAT udp -- 10.131.0.199 0.0.0.0/0 udp dpt:5555 to:
+> > > 192.168.99.7:5555 SNAT udp -- 10.129.2.217 0.0.0.0/0 udp dpt:5555 to:
+> > > 192.168.99.6:5555 Chain OUTPUT (policy ACCEPT) target prot opt source
+> > > destination Chain POSTROUTING (policy ACCEPT) target prot opt source
+> > > destination
+> >
+> > Please try to have no or reasonable line wrapping.
+> >
+> > If you are applying SNAT on your source node, you are setting
+> > the source address, which should be set to the reachable address
+> > for the replies to come to. In your case VIP.
+> > If you are setting it on the destination, you are IMO doing it wrong.
+> >
+> > Same thing applies to TCP and most typical protocol, nothing special
+> > about wireguard here.
+> >
+> > If you have a middlebox doing DNAT, it would normaly be expected
+> > for it or something else to do SNAT in the reverse direction.
+> > Or, if your node has both adresses assigned, then it might be
+> > a case of improperly set source address on outgoing packets
+> > (e.g. your routing might need tuning).
+> >
+> > Regards,
+> > Ivan
+> > _______________________________________________
+> > WireGuard mailing list
+> > WireGuard@lists.zx2c4.com
+> > https://lists.zx2c4.com/mailman/listinfo/wireguard
+> >
+_______________________________________________
+WireGuard mailing list
+WireGuard@lists.zx2c4.com
+https://lists.zx2c4.com/mailman/listinfo/wireguard
