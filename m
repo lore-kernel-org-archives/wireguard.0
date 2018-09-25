@@ -2,58 +2,44 @@ Return-Path: <SRS0=0td0=MH=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_PASS,
-	T_DKIM_INVALID,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B6D1C43382
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 25 Sep 2018 03:20:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E17CAC43382
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 25 Sep 2018 05:20:57 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 7C2852145D
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 25 Sep 2018 03:20:49 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="VLxntztG"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 7C2852145D
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id B8AF720877
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 25 Sep 2018 05:20:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org B8AF720877
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=romanrm.net
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id efe6c207;
-	Tue, 25 Sep 2018 03:18:15 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9e4ef11a;
+	Tue, 25 Sep 2018 05:18:21 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9e4f88f3
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 95e60af8
  for <wireguard@lists.zx2c4.com>;
- Tue, 25 Sep 2018 03:18:12 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 58817a53
+ Tue, 25 Sep 2018 05:18:19 +0000 (UTC)
+Received: from len.romanrm.net (len.romanrm.net [91.121.75.85])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9455d7e4
  for <wireguard@lists.zx2c4.com>;
- Tue, 25 Sep 2018 03:18:12 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c7888d71;
- Tue, 25 Sep 2018 03:02:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=subject:to
- :references:from:message-id:date:mime-version:in-reply-to
- :content-type:content-transfer-encoding; s=mail; bh=EKDBxj4cnrsD
- eFlZ4h6urcv6OMM=; b=VLxntztGX5DdXMbn42Hl442N/fqZV3Hxqe0OZ05KGvvY
- htv3SdxxY9OxLZvYodtzU/Sx7iJc3gOphuIvPZGdg/jB2H3JcT2JYanwuKBpN8qS
- U5LnVrpajFAN2wB6f7IH9oiZk+sSxMuzB4MiGdC0yuVxejVByaL86We/rDdwNkAL
- MVVbMz8aO2/Dx9XAqkf9Jt4eKPSR0Zo6fRgn4qQrnzrVhfHtHodhOQz1NjTnpdbL
- WvOsSe807IVQZ8SSxlk3Nwx2CIesLD2ZM/Ao3A24O2GctBB85ywRAvlDWGl5ooJP
- cFGwHZmVJExJ5Y1XZ3ppmoutIV0Xpf3HaHptv3NAZw==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 1de5d4f4
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO); 
- Tue, 25 Sep 2018 03:02:23 +0000 (UTC)
-Subject: Re: [PATCH] Fix transport message length check
-To: Chris Branch <cbranch@cloudflare.com>, wireguard@lists.zx2c4.com
-References: <20180920122853.33762-1-cbranch@cloudflare.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Message-ID: <af2e1b70-1fd9-01c5-67f0-f039549e6476@zx2c4.com>
-Date: Tue, 25 Sep 2018 05:20:43 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+ Tue, 25 Sep 2018 05:18:19 +0000 (UTC)
+Received: from natsu (unknown [IPv6:fd39::e99e:8f1b:cfc9:ccb8])
+ by len.romanrm.net (Postfix) with SMTP id 2826120083;
+ Tue, 25 Sep 2018 05:20:52 +0000 (UTC)
+Date: Tue, 25 Sep 2018 10:20:51 +0500
+From: Roman Mamedov <rm@romanrm.net>
+To: "Aaron W. Swenson" <aaron@grandmasfridge.org>
+Subject: Re: IPv6 Not Getting Past Server
+Message-ID: <20180925102051.025c281f@natsu>
+In-Reply-To: <20180922195522.GA25561@gengoff>
+References: <20180922195522.GA25561@gengoff>
+X-Mailer: Claws Mail 3.11.1 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-In-Reply-To: <20180920122853.33762-1-cbranch@cloudflare.com>
-Content-Language: en-US
+Cc: wireguard@lists.zx2c4.com
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -65,43 +51,59 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hey Chris,
-
-On 9/20/18 2:28 PM, Chris Branch wrote:
-> wireguard-go has a bad length check in its transport message handling.
-> Although it cannot be exploited because of another length check earlier in the
-> function, this should be fixed regardless.
-> 
-> ---
->   receive.go | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/receive.go b/receive.go
-> index 6b6543c..cbc3fd1 100644
-> --- a/receive.go
-> +++ b/receive.go
-> @@ -146,7 +146,7 @@ func (device *Device) RoutineReceiveIncoming(IP int, bind Bind) {
->   
->   			// check size
->   
-> -			if len(packet) < MessageTransportType {
-> +			if len(packet) < MessageTransportSize {
->   				continue
->   			}
->   
-> 
-
-
-Nice catch! Fixed in master. I'll probably have a new snapshot out not 
-before too long.
-
-Jason
-_______________________________________________
-WireGuard mailing list
-WireGuard@lists.zx2c4.com
-https://lists.zx2c4.com/mailman/listinfo/wireguard
+T24gU2F0LCAyMiBTZXAgMjAxOCAxNTo1NToyMiAtMDQwMAoiQWFyb24gVy4gU3dlbnNvbiIgPGFh
+cm9uQGdyYW5kbWFzZnJpZGdlLm9yZz4gd3JvdGU6Cgo+IEnigJltIGdvaW5nIHRvIHVzZSB0aGUg
+b2ZmaWNpYWwgZG9jdW1lbnRhdGlvbiBJUCBhZGRyZXNzZXMuIEkgYW0gdXNpbmcgcmVhbCBJUHY2
+Cj4gYWRkcmVzc2VzIGFuZCBub3QgdXNpbmcgTkFUNjYuIE5hdHVyYWxseSwgTkFUIGlzIGJlaW5n
+IHVzZWQgZm9yIElQdjQuIEhlcmUgYXJlCj4gdGhlIGRlZmluaXRpb25zIEnigJltIHVzaW5nOgo+
+IAo+ICAgICBTZXJ2ZXIgUHVibGljIElQdjY6IDIwMDE6REI4OjpERUFEOkYwMEQvNjQKPiAgICAg
+U2VydmVyIFB1YmxpYyBJUHY0OiAxOTIuMC4yLjEKPiAgICAgUm91dGVkIC8xMTY6IDIwMDE6REI4
+OjpCRUVGOjMwMDAvMTE2CgpBcmUgeW91IHN1cmUgeW91IGhhdmUgYSAqcm91dGVkKiBzdWJuZXQg
+ZnJvbSB5b3VyIElTUD8gTW9yZW92ZXIsIGRvZXMKdGhpcyAvMTE2IGxpZSB3aXRoaW4gdGhlIGFi
+b3ZlIC82ND8gKGluIHlvdXIgb2JmdXNjYXRlZCBleGFtcGxlIGl0IGRvZXMpCgpJdCBjb3VsZCBi
+ZSB0aGF0IHlvdXIgcHJvdmlkZXIgZ2l2ZXMgeW91IG5vdCBhIHJvdXRlZCBzdWJuZXQsIGJ1dCBh
+biBvbi1saW5rCm9uZSBpbnN0ZWFkLiBJbiB3aGljaCBjYXNlIHlvdSBjYW4gdXNlIElQcyBmcm9t
+IGl0IG9uIHlvdXIgc2VydmVyIGRpcmVjdGx5LApidXQgY2FuJ3Qgcm91dGUgaXQgc29tZXdoZXJl
+IGVsc2UgKGJlY2F1c2UgdGhlIHVwc3RyZWFtIHJvdXRlciBleHBlY3RzIGFsbCBJUHMKdG8gYmUg
+cmVhY2hhYmxlIGRpcmVjdGx5IG9uIHRoZSBzYW1lIGxpbmsgdGhhdCBpdCBoYXMgdG8geW91ciBz
+ZXJ2ZXIpLgoKT25lIHdvcmthcm91bmQgaXMgdG8gc2V0IHVwIG5kcHBkLCB3aGljaCB0dXJucyBh
+biBvbi1saW5rIHN1Ym5ldCBpbnRvIHJvdXRlZDoKaHR0cHM6Ly9naXRodWIuY29tL0RhbmllbEFk
+b2xmc3Nvbi9uZHBwZApCdXQgaW4gbXkgZXhwZXJpZW5jZSBpdCBkb2VzIG5vdCB3b3JrIG9uIGFs
+bCBJU1BzL2hvc3RzLgoKCj4gICAgIFNlcnZlciBXaXJlZ3VhcmQgSVB2NjogMjAwMTpEQjg6OkJF
+RUY6MzAwMQo+ICAgICBTZXJ2ZXIgV2lyZWd1YXJkIElQdjQ6IDEwLjAuMC4xCj4gICAgIENsaWVu
+dCBXaXJlZ3VhcmQgSVB2NjogMjAwMTpEQjg6OkJFRUY6MzAwMgo+ICAgICBDbGllbnQgV2lyZWd1
+YXJkIElQdjQ6IDEwLjAuMC4yCgpZb3UgZGlkbid0IHBvc3QgeW91ciBXaXJlR3VhcmQncyBBbGxv
+d2VkSVBzIHNldHRpbmcsIGJ1dCBJIHRlbmQgdG8gYXNzdW1lCmV2ZXJ5dGhpbmcgaXMgZmluZSB0
+aGVyZS4gSnVzdCBkb24ndCBmb3JnZXQgdGhhdCB0byByb3V0ZSB0byB0aGUgb3V0c2lkZSB3b3Js
+ZApBbGxvd2VkSVBzIG9uIHRoZSBjbGllbnQgbXVzdCBjb250YWluIDo6LzAgZm9yIHRoZSBzZXJ2
+ZXIuCgo+IEkgY2FuIHBpbmcgdGhlIG91dHNpZGUgd29ybGQgdGhyb3VnaCBJUHY0IGp1c3QgZmlu
+ZS4gSG93ZXZlciwgd2l0aCBJUHY2IEkgY2FuCj4gb25seSBwaW5nIHRoZSBzZXJ2ZXLigJlzIElQ
+djYgYWRkcmVzc2VzICgyMDAxOkRCODo6QkVFRjozMDAxIGFuZAo+IDIwMDE6REI4OjpERUFEOkYw
+MEQpLiBUaGUgb3V0c2lkZSB3b3JsZCBzdGF5cyBvdXQgb2YgcmVhY2guIFRoZSBwYWNrZXRzIGFy
+ZSBqdXN0Cj4gZHJvcHBlZC4gSeKAmW0gbm90IGdldHRpbmcgbmV0d29yayB1bnJlYWNoYWJsZSBv
+ciBhbnkgb3RoZXIgZXJyb3IgbWVzc2FnZSBiYWNrLgoKUnVuIHRjcGR1bXAgb24gdGhlIHNlcnZl
+ciBib3RoIG9uIHRoZSBXRyBzaWRlIGFuZCBvbiB0aGUgb3V0Z29pbmcgaW50ZXJmYWNlLAphbmQg
+eW91J2xsIGJlIGFibGUgdG8gc2F5IG1vcmUgcHJlY2lzZWx5IHdoZXJlIG9yIGJ5IHdob20gdGhl
+eSBhcmUgZHJvcHBlZC4KCj4gV2hlbiBJIGVuYWJsZWQgZm9yd2FyZGluZyBmb3IgSVB2NiBvbiB0
+aGUgc2VydmVyLCBJIGRpZCBoYXZlIHRvIG1hbnVhbGx5IGFkZAo+IHRoZSByb3V0ZSBzbyB0aGF0
+IElQdjYgd291bGQgY29udGludWUgd29ya2luZyBvbiB0aGUgc2VydmVyCj4gKGlwIC1yIHJvdXRl
+IGFkZCBkZWZhdWx0IGZlODA6OjEpLgoKVGhpcyBpcyBiZWNhdXNlIHRoZSBkZWZhdWx0IGJlaGF2
+aW9yIGlzIHN1Y2ggdGhhdCBlbmFibGluZyByb3V0aW5nIHByZWNsdWRlcwphY2NlcHRpbmcgUm91
+dGUgQWR2ZXJ0aXNlbWVudHMgZnJvbSB1cHN0cmVhbSByb3V0ZXJzLCBzbyB5b3UgbG9zdCB0aGUg
+cm91dGUKeW91IHdlcmUgZ2V0dGluZyB2aWEgdGhvc2UuIFRvIGtlZXAgYWNjZXB0aW5nIHRoZW0s
+IHNldCBhY2NlcHRfcmEgdG8gMgooZWNobyAyID4gL3Byb2Mvc3lzL25ldC9pcHY2L2NvbmYvZXRo
+WC9hY2NlcHRfcmEpCgo+IEkgY2FuIFNTSCBpbnRvIHRoZSBzZXJ2ZXIsIGFuZCBwaW5nIHRoZQo+
+IG91dHNpZGUgd29ybGQgbm8gcHJvYmxlbS4gQW5kLCB0aGUgb3V0c2lkZSB3b3JsZCBjYW4gcmVh
+Y2ggbXkgc2VydmVyIHZpYSBJUHY2Cj4ganVzdCBmaW5lLCB0b28uCgpUcnkgYWRkaW5nIG9uZSBv
+ZiB0aGUgSVBzIHlvdSB3YW50ZWQgdG8gcm91dGUgaW50byBXRyBkaXJlY3RseSB0byBzZXJ2ZXIn
+cwp1cGxpbmsgaW50ZXJmYWNlIGFuZCBzZWUgaWYgaXQgYmVjb21lcyBwaW5nYWJsZSBmcm9tIHRo
+ZSBvdXRzaWRlIHdvcmxkLiBJZiBzbywKdGhhdCB3b3VsZCBjb25maXJtIChpZiBhIGxpdHRsZSBi
+aXQpIHRoZSBub24tcm91dGVkIHN1Ym5ldCBoeXBvdGhlc2lzLgoKLS0gCldpdGggcmVzcGVjdCwK
+Um9tYW4KX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18KV2ly
+ZUd1YXJkIG1haWxpbmcgbGlzdApXaXJlR3VhcmRAbGlzdHMuengyYzQuY29tCmh0dHBzOi8vbGlz
+dHMuengyYzQuY29tL21haWxtYW4vbGlzdGluZm8vd2lyZWd1YXJkCg==
