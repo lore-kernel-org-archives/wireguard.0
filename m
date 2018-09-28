@@ -7,67 +7,62 @@ X-Spam-Status: No, score=-0.3 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 60C26C64EB9
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E7765C64EB8
 	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  2 Oct 2018 03:06:42 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id F34C42083F
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  2 Oct 2018 03:06:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 7A01F2083F
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  2 Oct 2018 03:06:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="n7bIMSkT"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org F34C42083F
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iBBY9c6u"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 7A01F2083F
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 826b4faf;
-	Tue, 2 Oct 2018 03:06:20 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3af719e4;
+	Tue, 2 Oct 2018 03:06:21 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9c7adcc7
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9a4d58bb
  for <wireguard@lists.zx2c4.com>;
- Thu, 27 Sep 2018 07:08:17 +0000 (UTC)
-Received: from mail-vk1-xa44.google.com (mail-vk1-xa44.google.com
- [IPv6:2607:f8b0:4864:20::a44])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0915ad7a
+ Fri, 28 Sep 2018 15:00:05 +0000 (UTC)
+Received: from mail-it1-x136.google.com (mail-it1-x136.google.com
+ [IPv6:2607:f8b0:4864:20::136])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 29ade310
  for <wireguard@lists.zx2c4.com>;
- Thu, 27 Sep 2018 07:08:17 +0000 (UTC)
-Received: by mail-vk1-xa44.google.com with SMTP id h200-v6so350733vke.5
- for <wireguard@lists.zx2c4.com>; Thu, 27 Sep 2018 00:11:06 -0700 (PDT)
+ Fri, 28 Sep 2018 15:00:05 +0000 (UTC)
+Received: by mail-it1-x136.google.com with SMTP id p129-v6so2933890ite.3
+ for <wireguard@lists.zx2c4.com>; Fri, 28 Sep 2018 08:03:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :content-transfer-encoding;
- bh=se9u1UWS+tR4plsSjXe5pwZOoYL1jB2nG01LLRxL/6M=;
- b=n7bIMSkToQEyFxfD2ZJsoHW7b1ig10lhloem9TaeqmhNU/8LPBd5KSec9T9/iBCYqw
- GHPXliHYyf3SsMjK4W5F+hnfpjUucBw9rX0Xt2OFedZiWTpfWFIITuu+D4ICBbxvvKOB
- DD52qXmQ4FZCwbdE5uA4wwT2cbjc9C0x5TPl/KcP4Wj9svCGhKhpqYhNjUwnHuuTQ4KO
- f8eyDII8vd/1Bm2b2AAh9PnXpx6n8ul52iZvRcfYwBrIbq9zZvsQfQf1at23LHXBQuw3
- h2au1xGyPQ+5rLrt40imD8Jkjnf8XNrJwPcpYyIUe2MqCOXpdLO3KX2tHgxSRvEAyCPx
- t6Qw==
+ h=mime-version:from:date:message-id:subject:to;
+ bh=jOC8ZI1v2V4PF1ojqqIYOjifRS1yYxslhdhmQiFxDcU=;
+ b=iBBY9c6uL/IOWUvP0MqlSnJTnHtpDfLzjubALJCiu5qXrLV6fPLQYGjSDa8K3rwIT4
+ O4iqRQpXk510h4tHOLW6WrF/YNxIdx1Z6NqrhRAY3ycJM/OmfbXzezy4vNHy3wlL6z7y
+ ZolyBFaXmGmXDNCw3IWhVKdPUTaKd52KK0iPE+gl7ysdFYTiWvIiSEkcq6sRVA0Mf2T1
+ GMexwm1/Z+w102GvV5FMCdxNExj/eFDJt7kVwv0GJdOjLo/6mJY0gj9JcQPrEq1dCoht
+ kKfSKMDzBZyycDtvXpWudjHltKEG0v4qA7HgYQQDmvKPiiZWl6gkkjFtU3d+2otTpB1/
+ 4QJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:content-transfer-encoding;
- bh=se9u1UWS+tR4plsSjXe5pwZOoYL1jB2nG01LLRxL/6M=;
- b=Ytfvgc9ChvhW+zWHNyyncduPto6Pjr9r0CW9a0OeqCplYGEl5v9Rgrnp4P8Mqh2SGB
- nBkTARHy3Kbaj9Wio+p7xg42e7JO9Qmq/Jw1MrIptNzvJ8DoMOr5c1sYSzOReHpggb5k
- I4f8DIr67QaZfljAwrxO+YURVDGU5DyUH4vWacf/fTbZkvteCx8RANU79bSRCSFbiNad
- YttMVLsjcivWRdrDUl+IIWowwts8KycTBEC2MSE0sPugjKnn7YBZv+cJHaEgMUiuB6/P
- HM8AtulD3xX/e/9NcX46xgMiz4surW2vqqI+8Ct+YfiJUN2GaDwONVtXrp5XdEOJsg+D
- 6yvQ==
-X-Gm-Message-State: ABuFfojalGbOXxEJkTCHTs9jMHc5KhSxUNGrAQ5HoYnXiFrT2yufC0lz
- AOlRsqeKcTNI6eYhK3Fx79M18C59wOI59nohbNmRNur2
-X-Google-Smtp-Source: ACcGV60vbmTNse0c8dhLgsbEv5KqxVtbWLABBQ2oVxpxP0mPQNoaJB0U8Plv4s8sDj56T8nIg1HMxYPrKTHF4PFizQI=
-X-Received: by 2002:a1f:c2d4:: with SMTP id
- s203-v6mr1680592vkf.36.1538032265068; 
- Thu, 27 Sep 2018 00:11:05 -0700 (PDT)
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=jOC8ZI1v2V4PF1ojqqIYOjifRS1yYxslhdhmQiFxDcU=;
+ b=fKj4Xby9fbikQ8+ZqF3kmMATfP1gsXhTOWEwj4pJAkxP1BJvJ3Y8gL9LDHqha902Kx
+ hN2QvgPMnJp/4zHJdL+BJuMh7FqJo1tls7wq8Algi6phSA5bB9pZbo/n7hyz5DAtyqRO
+ ogTy8Vy7AJVjaakiQ8ih4giwDnP8+1EwrdbZO8iItN0ZtpEZJ8fcMLaNnaBIg7eKNNKL
+ hG16zgJEMzdEo/oLy9+ux9KidOs+KCD4J397hpqVTTJM6D/PWV3uAoONHaQhDu1bHJrH
+ ZzSCtGujSeg8kdSGbvAtdJwSR37kGtKJTyzApKGm9rEUo5Jl+rM/ZYtbFlhlGKhF8TUU
+ odKg==
+X-Gm-Message-State: ABuFfojjTxy0jYZG+LBBfSS9BiNhacW9oYmMY8qDE87B0gaE2SikmaVs
+ 89u+mgi3YsWAqd4qLaAPngcziioDD2zVVZzFpJnDWzmL
+X-Google-Smtp-Source: ACcGV63m1l63QN1UfnNWngWOGa3VQZ3Lgy2YphpqhmLKJkhFu0hoqhKsOX50wehw6AB5S0iG6brduD+B/OfhA4XnqJw=
+X-Received: by 2002:a24:c8c3:: with SMTP id
+ w186-v6mr1736189itf.115.1538146983357; 
+ Fri, 28 Sep 2018 08:03:03 -0700 (PDT)
 MIME-Version: 1.0
-References: <CA+Vb7hpWG4DEfSFe_S1rajsuiVJkkfJ9Y29-tSWYnserOeGssQ@mail.gmail.com>
-In-Reply-To: <CA+Vb7hpWG4DEfSFe_S1rajsuiVJkkfJ9Y29-tSWYnserOeGssQ@mail.gmail.com>
-From: Philipp Richter <richterphilipp.pops@gmail.com>
-Date: Thu, 27 Sep 2018 09:10:53 +0200
-Message-ID: <CA+Vb7hr=cGpHkOH3i+uQ=W_a-0QKGB_ffahYSRtiB1T21Dndfw@mail.gmail.com>
-Subject: Re: Implicit declaration of function 'read_cpuid_part', asm/simd.h:
- No such file or directory with 0.0.20180925 on arm kernel 3.10.107
+From: Heath Borders <heath.borders@gmail.com>
+Date: Fri, 28 Sep 2018 10:02:52 -0500
+Message-ID: <CAEy7hVPn++92XRedQg2OSwK0OAoqds6b15U2iHjePrWie1qrKw@mail.gmail.com>
+Subject: bash_completion errors when installed with homebrew
 To: wireguard@lists.zx2c4.com
 X-Mailman-Approved-At: Tue, 02 Oct 2018 05:06:16 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -81,77 +76,53 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-SSB0ZXN0ZWQgdGhlIGxhdGVzdCBjb21taXQgNmYwOTRkY2ExNzAzOGE0OGYzZjAxOTMxYzZiODBk
-NjUxMWE4Njk2NwoKQW5kIHdpdGggdGhhdCBpdCBjb21wbGFpbnMgb25seSBhYm91dCBtaXNzaW5n
-IGFzbS9zaW1kLmgKClJlZ2FyZHMsClBoaWxpcHAgUmljaHRlcgpPbiBUaHUsIDI3IFNlcCAyMDE4
-IGF0IDA4OjU0LCBQaGlsaXBwIFJpY2h0ZXIKPHJpY2h0ZXJwaGlsaXBwLnBvcHNAZ21haWwuY29t
-PiB3cm90ZToKPgo+IEhlbGxvLAo+Cj4gaXQncyBtZSBhZ2FpbiB3aXRoIG15IHN1cGVyIGFuY2ll
-bnQga2VybmVsICpzaWdoKgo+Cj4gSSdtIGdldHRpbmcgdGhlc2UgZXJyb3JzIHdpdGggdGhlIDAu
-MC4yMDE4MDkyNSBzbmFwc2hvdCA6Cj4KPiBES01TIG1ha2UubG9nIGZvciB3aXJlZ3VhcmQtMC4w
-LjIwMTgwOTI1IGZvciBrZXJuZWwgMy4xMC4xMDctMi1BUkNIIChhcm12N2wpCj4gVGh1IFNlcCAy
-NyAwODo0NDoxOCBDRVNUIDIwMTgKPiBtYWtlOiBFbnRlcmluZyBkaXJlY3RvcnkgJy91c3Ivc3Jj
-L2xpbnV4LTMuMTAuMTA3LTItQVJDSCcKPiAgTEQgICAgICAvdmFyL2xpYi9ka21zL3dpcmVndWFy
-ZC8wLjAuMjAxODA5MjUvYnVpbGQvYnVpbHQtaW4ubwo+ICBDQyBbTV0gIC92YXIvbGliL2RrbXMv
-d2lyZWd1YXJkLzAuMC4yMDE4MDkyNS9idWlsZC9tYWluLm8KPiAgQ0MgW01dICAvdmFyL2xpYi9k
-a21zL3dpcmVndWFyZC8wLjAuMjAxODA5MjUvYnVpbGQvbm9pc2Uubwo+ICBDQyBbTV0gIC92YXIv
-bGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE4MDkyNS9idWlsZC9kZXZpY2Uubwo+ICBDQyBbTV0g
-IC92YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE4MDkyNS9idWlsZC9wZWVyLm8KPiAgQ0Mg
-W01dICAvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8wLjAuMjAxODA5MjUvYnVpbGQvdGltZXJzLm8K
-PiAgQ0MgW01dICAvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8wLjAuMjAxODA5MjUvYnVpbGQvcXVl
-dWVpbmcubwo+ICBDQyBbTV0gIC92YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE4MDkyNS9i
-dWlsZC9zZW5kLm8KPiAgQ0MgW01dICAvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8wLjAuMjAxODA5
-MjUvYnVpbGQvcmVjZWl2ZS5vCj4gIENDIFtNXSAgL3Zhci9saWIvZGttcy93aXJlZ3VhcmQvMC4w
-LjIwMTgwOTI1L2J1aWxkL3NvY2tldC5vCj4gIENDIFtNXSAgL3Zhci9saWIvZGttcy93aXJlZ3Vh
-cmQvMC4wLjIwMTgwOTI1L2J1aWxkL2hhc2h0YWJsZXMubwo+ICBDQyBbTV0gIC92YXIvbGliL2Rr
-bXMvd2lyZWd1YXJkLzAuMC4yMDE4MDkyNS9idWlsZC9hbGxvd2VkaXBzLm8KPiAgQ0MgW01dICAv
-dmFyL2xpYi9ka21zL3dpcmVndWFyZC8wLjAuMjAxODA5MjUvYnVpbGQvcmF0ZWxpbWl0ZXIubwo+
-ICBDQyBbTV0gIC92YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE4MDkyNS9idWlsZC9jb29r
-aWUubwo+ICBDQyBbTV0gIC92YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE4MDkyNS9idWls
-ZC9uZXRsaW5rLm8KPiAgQ0MgW01dICAvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8wLjAuMjAxODA5
-MjUvYnVpbGQvY3J5cHRvL3ppbmMvY2hhY2hhMjAvY2hhY2hhMjAubwo+ICBBUyBbTV0gIC92YXIv
-bGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE4MDkyNS9idWlsZC9jcnlwdG8vemluYy9jaGFjaGEy
-MC9jaGFjaGEyMC1hcm0ubwo+ICBDQyBbTV0gIC92YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4y
-MDE4MDkyNS9idWlsZC9jcnlwdG8vemluYy9wb2x5MTMwNS9wb2x5MTMwNS5vCj4gIEFTIFtNXSAg
-L3Zhci9saWIvZGttcy93aXJlZ3VhcmQvMC4wLjIwMTgwOTI1L2J1aWxkL2NyeXB0by96aW5jL3Bv
-bHkxMzA1L3BvbHkxMzA1LWFybS5vCj4gIENDIFtNXSAgL3Zhci9saWIvZGttcy93aXJlZ3VhcmQv
-MC4wLjIwMTgwOTI1L2J1aWxkL2NyeXB0by96aW5jL2NoYWNoYTIwcG9seTEzMDUubwo+ICBDQyBb
-TV0gIC92YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE4MDkyNS9idWlsZC9jcnlwdG8vemlu
-Yy9ibGFrZTJzL2JsYWtlMnMubwo+IEluIGZpbGUgaW5jbHVkZWQgZnJvbQo+IC92YXIvbGliL2Rr
-bXMvd2lyZWd1YXJkLzAuMC4yMDE4MDkyNS9idWlsZC9jcnlwdG8vemluYy9jaGFjaGEyMC9jaGFj
-aGEyMC5jOjIwOgo+IC92YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE4MDkyNS9idWlsZC9j
-cnlwdG8vemluYy9jaGFjaGEyMC9jaGFjaGEyMC1hcm0tZ2x1ZS5oOgo+IEluIGZ1bmN0aW9uIOKA
-mGNoYWNoYTIwX2ZwdV9pbml04oCZOgo+IC92YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE4
-MDkyNS9idWlsZC9jcnlwdG8vemluYy9jaGFjaGEyMC9jaGFjaGEyMC1hcm0tZ2x1ZS5oOjMwOjEw
-Ogo+IGVycm9yOiBpbXBsaWNpdCBkZWNsYXJhdGlvbiBvZiBmdW5jdGlvbiDigJhyZWFkX2NwdWlk
-X3BhcnTigJk7IGRpZCB5b3UKPiBtZWFuIOKAmHJlYWRfY3B1aWRfZXh04oCZPyBbLVdlcnJvcj1p
-bXBsaWNpdC1mdW5jdGlvbi1kZWNsYXJhdGlvbl0KPiAgc3dpdGNoIChyZWFkX2NwdWlkX3BhcnQo
-KSkgewo+ICAgICAgICAgIF5+fn5+fn5+fn5+fn5+fgo+ICAgICAgICAgIHJlYWRfY3B1aWRfZXh0
-Cj4gIENDIFtNXSAgL3Zhci9saWIvZGttcy93aXJlZ3VhcmQvMC4wLjIwMTgwOTI1L2J1aWxkL2Ny
-eXB0by96aW5jL2N1cnZlMjU1MTkvY3VydmUyNTUxOS5vCj4gY2MxOiBzb21lIHdhcm5pbmdzIGJl
-aW5nIHRyZWF0ZWQgYXMgZXJyb3JzCj4gbWFrZVsxXTogKioqIFtzY3JpcHRzL01ha2VmaWxlLmJ1
-aWxkOjMwOToKPiAvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8wLjAuMjAxODA5MjUvYnVpbGQvY3J5
-cHRvL3ppbmMvY2hhY2hhMjAvY2hhY2hhMjAub10KPiBFcnJvciAxCj4gbWFrZVsxXTogKioqIFdh
-aXRpbmcgZm9yIHVuZmluaXNoZWQgam9icy4uLi4KPiBJbiBmaWxlIGluY2x1ZGVkIGZyb20KPiAv
-dmFyL2xpYi9ka21zL3dpcmVndWFyZC8wLjAuMjAxODA5MjUvYnVpbGQvY3J5cHRvL3ppbmMvY3Vy
-dmUyNTUxOS9jdXJ2ZTI1NTE5LmM6MjU6Cj4gL3Zhci9saWIvZGttcy93aXJlZ3VhcmQvMC4wLjIw
-MTgwOTI1L2J1aWxkL2NyeXB0by96aW5jL2N1cnZlMjU1MTkvY3VydmUyNTUxOS1hcm0tZ2x1ZS5o
-Ojg6MTA6Cj4gZmF0YWwgZXJyb3I6IGFzbS9zaW1kLmg6IE5vIHN1Y2ggZmlsZSBvciBkaXJlY3Rv
-cnkKPiAjaW5jbHVkZSA8YXNtL3NpbWQuaD4KPiAgICAgICAgICBefn5+fn5+fn5+fn4KPiBjb21w
-aWxhdGlvbiB0ZXJtaW5hdGVkLgo+IG1ha2VbMV06ICoqKiBbc2NyaXB0cy9NYWtlZmlsZS5idWls
-ZDozMDg6Cj4gL3Zhci9saWIvZGttcy93aXJlZ3VhcmQvMC4wLjIwMTgwOTI1L2J1aWxkL2NyeXB0
-by96aW5jL2N1cnZlMjU1MTkvY3VydmUyNTUxOS5vXQo+IEVycm9yIDEKPiBtYWtlOiAqKiogW01h
-a2VmaWxlOjEyMzM6Cj4gX21vZHVsZV8vdmFyL2xpYi9ka21zL3dpcmVndWFyZC8wLjAuMjAxODA5
-MjUvYnVpbGRdIEVycm9yIDIKPiBtYWtlOiBMZWF2aW5nIGRpcmVjdG9yeSAnL3Vzci9zcmMvbGlu
-dXgtMy4xMC4xMDctMi1BUkNIJwo+Cj4KPiBJIHVuZGVyc3RhbmQgaWYgaXQncyBqdXN0IG5vIHBv
-c3NpYmxlIGFueW1vcmUgdG8gc3VwcG9ydCBzdWNoIGFuY2llbnQKPiBzb2Z0d2FyZS4gSW5zdGVh
-ZCBvZiBjb2xsZWN0aW5nIGR1c3QgaXQgc2VydmVzIGFzIGEgbmljZSB3aXJlZ3VhcmQKPiBlbmRw
-b2ludCA6KQo+Cj4gV2lyZWd1YXJkIGhhcyBiZWVuIGFtYXppbmcgc28gZmFyLCB0aGFua3MgZm9y
-IHN1Y2ggZ3JlYXQgc29mdHdhcmUuCj4KPiBCZXN0IFJlZ2FyZHMsCj4gUGhpbGlwcCBSaWNodGVy
-Cl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fCldpcmVHdWFy
-ZCBtYWlsaW5nIGxpc3QKV2lyZUd1YXJkQGxpc3RzLnp4MmM0LmNvbQpodHRwczovL2xpc3RzLnp4
-MmM0LmNvbS9tYWlsbWFuL2xpc3RpbmZvL3dpcmVndWFyZAo=
+I installed wireguard with homebrew thusly:
+```
+brew install wireguard-tools
+```
+
+I'm also using brew's bash completion in my `.bash_profile` and `.bashrc`:
+```
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+  . $(brew --prefix)/etc/bash_completion
+fi
+```
+
+After installing wireguard, when I open a new terminal, I see the
+following errors:
+```
+-bash: complete: nosort: invalid option name
+-bash: complete: nosort: invalid option name
+```
+
+I've traced these errors back to the following commands using `set -x`:
+```
+++++ complete -o nosort -F _wg_completion wg
+-bash: complete: nosort: invalid option name
+++++ complete -o filenames -o nosort -F _wg_quick_completion wg-quick
+-bash: complete: nosort: invalid option name
+```
+
+I'm running macOS High Sierra, which runs bash version
+`3.2.57(1)-release`, which doesn't support the `nosort` option. I'd
+rather not upgrade my entire terminal to bash `4.4.23(1)-release` that
+wireguard installs as a dependency.
+
+I filed an issue with homebrew as well:
+https://github.com/Homebrew/homebrew-core/issues/32535
+
+Thanks!
+
+-Heath Borders
+heath.borders@gmail.com
+Twitter: heathborders
+http://heath-tech.blogspot.com
+_______________________________________________
+WireGuard mailing list
+WireGuard@lists.zx2c4.com
+https://lists.zx2c4.com/mailman/listinfo/wireguard
