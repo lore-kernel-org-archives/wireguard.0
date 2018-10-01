@@ -2,68 +2,39 @@ Return-Path: <SRS0=l6+B=MO=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.3 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
-	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7765C64EB8
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  2 Oct 2018 03:06:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A774DC43143
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  2 Oct 2018 03:06:43 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 7A01F2083F
+	by mail.kernel.org (Postfix) with ESMTPS id 129722083F
 	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  2 Oct 2018 03:06:42 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iBBY9c6u"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 7A01F2083F
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 129722083F
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=bernhard-ehlers.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3af719e4;
-	Tue, 2 Oct 2018 03:06:21 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 91138b45;
+	Tue, 2 Oct 2018 03:06:22 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9a4d58bb
- for <wireguard@lists.zx2c4.com>;
- Fri, 28 Sep 2018 15:00:05 +0000 (UTC)
-Received: from mail-it1-x136.google.com (mail-it1-x136.google.com
- [IPv6:2607:f8b0:4864:20::136])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 29ade310
- for <wireguard@lists.zx2c4.com>;
- Fri, 28 Sep 2018 15:00:05 +0000 (UTC)
-Received: by mail-it1-x136.google.com with SMTP id p129-v6so2933890ite.3
- for <wireguard@lists.zx2c4.com>; Fri, 28 Sep 2018 08:03:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=jOC8ZI1v2V4PF1ojqqIYOjifRS1yYxslhdhmQiFxDcU=;
- b=iBBY9c6uL/IOWUvP0MqlSnJTnHtpDfLzjubALJCiu5qXrLV6fPLQYGjSDa8K3rwIT4
- O4iqRQpXk510h4tHOLW6WrF/YNxIdx1Z6NqrhRAY3ycJM/OmfbXzezy4vNHy3wlL6z7y
- ZolyBFaXmGmXDNCw3IWhVKdPUTaKd52KK0iPE+gl7ysdFYTiWvIiSEkcq6sRVA0Mf2T1
- GMexwm1/Z+w102GvV5FMCdxNExj/eFDJt7kVwv0GJdOjLo/6mJY0gj9JcQPrEq1dCoht
- kKfSKMDzBZyycDtvXpWudjHltKEG0v4qA7HgYQQDmvKPiiZWl6gkkjFtU3d+2otTpB1/
- 4QJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=jOC8ZI1v2V4PF1ojqqIYOjifRS1yYxslhdhmQiFxDcU=;
- b=fKj4Xby9fbikQ8+ZqF3kmMATfP1gsXhTOWEwj4pJAkxP1BJvJ3Y8gL9LDHqha902Kx
- hN2QvgPMnJp/4zHJdL+BJuMh7FqJo1tls7wq8Algi6phSA5bB9pZbo/n7hyz5DAtyqRO
- ogTy8Vy7AJVjaakiQ8ih4giwDnP8+1EwrdbZO8iItN0ZtpEZJ8fcMLaNnaBIg7eKNNKL
- hG16zgJEMzdEo/oLy9+ux9KidOs+KCD4J397hpqVTTJM6D/PWV3uAoONHaQhDu1bHJrH
- ZzSCtGujSeg8kdSGbvAtdJwSR37kGtKJTyzApKGm9rEUo5Jl+rM/ZYtbFlhlGKhF8TUU
- odKg==
-X-Gm-Message-State: ABuFfojjTxy0jYZG+LBBfSS9BiNhacW9oYmMY8qDE87B0gaE2SikmaVs
- 89u+mgi3YsWAqd4qLaAPngcziioDD2zVVZzFpJnDWzmL
-X-Google-Smtp-Source: ACcGV63m1l63QN1UfnNWngWOGa3VQZ3Lgy2YphpqhmLKJkhFu0hoqhKsOX50wehw6AB5S0iG6brduD+B/OfhA4XnqJw=
-X-Received: by 2002:a24:c8c3:: with SMTP id
- w186-v6mr1736189itf.115.1538146983357; 
- Fri, 28 Sep 2018 08:03:03 -0700 (PDT)
-MIME-Version: 1.0
-From: Heath Borders <heath.borders@gmail.com>
-Date: Fri, 28 Sep 2018 10:02:52 -0500
-Message-ID: <CAEy7hVPn++92XRedQg2OSwK0OAoqds6b15U2iHjePrWie1qrKw@mail.gmail.com>
-Subject: bash_completion errors when installed with homebrew
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 77f634fe
+ for <wireguard@lists.zx2c4.com>; Mon, 1 Oct 2018 07:08:12 +0000 (UTC)
+Received: from wild.uberspace.de (wild.uberspace.de [185.26.156.86])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8d03728a
+ for <wireguard@lists.zx2c4.com>; Mon, 1 Oct 2018 07:08:12 +0000 (UTC)
+Received: (qmail 10550 invoked from network); 1 Oct 2018 07:11:27 -0000
+Received: from unknown (HELO imac.lan) (85.222.214.21)
+ by wild.uberspace.de with SMTP; 1 Oct 2018 07:11:27 -0000
+From: Bernhard Ehlers <wg@bernhard-ehlers.de>
+Mime-Version: 1.0 (Mac OS X Mail 11.5 \(3445.9.1\))
+Subject: WireGuard on OS X with bash v3
+Message-Id: <510D56E8-45DD-4FBE-876D-115B0D52F1B1@bernhard-ehlers.de>
+Date: Mon, 1 Oct 2018 09:11:25 +0200
 To: wireguard@lists.zx2c4.com
+X-Mailer: Apple Mail (2.3445.9.1)
 X-Mailman-Approved-At: Tue, 02 Oct 2018 05:06:16 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
@@ -76,53 +47,73 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-I installed wireguard with homebrew thusly:
-```
-brew install wireguard-tools
-```
-
-I'm also using brew's bash completion in my `.bash_profile` and `.bashrc`:
-```
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-  . $(brew --prefix)/etc/bash_completion
-fi
-```
-
-After installing wireguard, when I open a new terminal, I see the
-following errors:
-```
--bash: complete: nosort: invalid option name
--bash: complete: nosort: invalid option name
-```
-
-I've traced these errors back to the following commands using `set -x`:
-```
-++++ complete -o nosort -F _wg_completion wg
--bash: complete: nosort: invalid option name
-++++ complete -o filenames -o nosort -F _wg_quick_completion wg-quick
--bash: complete: nosort: invalid option name
-```
-
-I'm running macOS High Sierra, which runs bash version
-`3.2.57(1)-release`, which doesn't support the `nosort` option. I'd
-rather not upgrade my entire terminal to bash `4.4.23(1)-release` that
-wireguard installs as a dependency.
-
-I filed an issue with homebrew as well:
-https://github.com/Homebrew/homebrew-core/issues/32535
-
-Thanks!
-
--Heath Borders
-heath.borders@gmail.com
-Twitter: heathborders
-http://heath-tech.blogspot.com
-_______________________________________________
-WireGuard mailing list
-WireGuard@lists.zx2c4.com
-https://lists.zx2c4.com/mailman/listinfo/wireguard
+SSBjYW4gdW5kZXJzdGFuZCwgdGhhdCB0aGUgZGV2cyBkb27igJl0IHdhbnQgdG8gdXNlIHRoZSBv
+bGQgYmFzaCB2MyB1c2VkIGJ5IEFwcGxlLgpCdXQgZnJvbSBhIHVzZXJzIHBvc3Qgb2YgdmlldyBp
+dOKAmXMgbm90IHRoYXQgbmljZSwgdGhhdCB0aGUgaW5zdGFsbGF0aW9uIG9mIGEgbmV3ZXIgYmFz
+aAppcyBuZWVkZWQuCgpTbyBJIGhhZCBhIGxvb2sgYXQgdGhlIHdnLXF1aWNrIGZvciBEYXJ3aW4u
+IFRoZSBvbmx5IGNoYW5nZXMgbmVlZGVkIHRvIHN1cHBvcnQKYm90aCBiYXNoIHZlcnNpb25zIGlz
+IHRvIGdldCByaWQgb2YgdGhlIGFzc29jaWF0aXZlIGFycmF5IFNFUlZJQ0VfRE5TIGFuZCB0bwpo
+YW5kbGUgQkFTSFBJRCBmb3IgdjMuCgpIZXJlIG15IGNoYW5nZXMsIGZvciBtZSB0aGV5IGFyZSB3
+b3JraW5nIHF1aXRlIGZpbmU6CgpkaWZmIC0tZ2l0IGEvc3JjL3Rvb2xzL3dnLXF1aWNrL2Rhcndp
+bi5iYXNoIGIvc3JjL3Rvb2xzL3dnLXF1aWNrL2Rhcndpbi5iYXNoCmluZGV4IDMwZjM1NDEuLjE3
+MGNhZWQgMTAwNzU1Ci0tLSBhL3NyYy90b29scy93Zy1xdWljay9kYXJ3aW4uYmFzaAorKysgYi9z
+cmMvdG9vbHMvd2ctcXVpY2svZGFyd2luLmJhc2gKQEAgLTM4LDggKzM4LDYgQEAgZGllKCkgewog
+CWV4aXQgMQogfQogCi1bWyAke0JBU0hfVkVSU0lORk9bMF19IC1nZSA0IF1dIHx8IGRpZSAiVmVy
+c2lvbiBtaXNtYXRjaDogYmFzaCAke0JBU0hfVkVSU0lORk9bMF19IGRldGVjdGVkLCB3aGVuIGJh
+c2ggNCsgcmVxdWlyZWQiCi0KIENPTkZJR19TRUFSQ0hfUEFUSFM9KCAvZXRjL3dpcmVndWFyZCAv
+dXNyL2xvY2FsL2V0Yy93aXJlZ3VhcmQgKQogCiBwYXJzZV9vcHRpb25zKCkgewpAQCAtMjAwLDIy
+ICsxOTgsMzcgQEAgY29sbGVjdF9lbmRwb2ludHMoKSB7CiAJZG9uZSA8IDwod2cgc2hvdyAiJFJF
+QUxfSU5URVJGQUNFIiBlbmRwb2ludHMpCiB9CiAKLWRlY2xhcmUgLUEgU0VSVklDRV9ETlMKK2Rl
+Y2xhcmUgLWEgU0VSVklDRV9ETlNfS0VZCitkZWNsYXJlIC1hIFNFUlZJQ0VfRE5TX1ZBTAorCiBj
+b2xsZWN0X25ld19zZXJ2aWNlX2RucygpIHsKKwlsb2NhbCBvbGRfa2V5IG9sZF92YWwKIAlsb2Nh
+bCBzZXJ2aWNlIGdldF9yZXNwb25zZQotCWxvY2FsIC1BIGZvdW5kX3NlcnZpY2VzCisJbG9jYWwg
+aWR4CisKKwlvbGRfa2V5PSgiJHtTRVJWSUNFX0ROU19LRVlbQF19IikKKwlvbGRfdmFsPSgiJHtT
+RVJWSUNFX0ROU19WQUxbQF19IikKKwlTRVJWSUNFX0ROU19LRVk9KCkKKwlTRVJWSUNFX0ROU19W
+QUw9KCkKIAl7IHJlYWQgLXIgXyAmJiB3aGlsZSByZWFkIC1yIHNlcnZpY2U7IGRvCiAJCVtbICRz
+ZXJ2aWNlID09ICIqIiogXV0gJiYgc2VydmljZT0iJHtzZXJ2aWNlOjF9IgotCQlmb3VuZF9zZXJ2
+aWNlc1siJHNlcnZpY2UiXT0xCi0JCVtbIC1uICR7U0VSVklDRV9ETlNbIiRzZXJ2aWNlIl19IF1d
+ICYmIGNvbnRpbnVlCi0JCWdldF9yZXNwb25zZT0iJChjbWQgbmV0d29ya3NldHVwIC1nZXRkbnNz
+ZXJ2ZXJzICIkc2VydmljZSIpIgotCQlbWyAkZ2V0X3Jlc3BvbnNlID09ICoiICIqIF1dICYmIGdl
+dF9yZXNwb25zZT0iRW1wdHkiCi0JCVtbIC1uICRnZXRfcmVzcG9uc2UgXV0gJiYgU0VSVklDRV9E
+TlNbIiRzZXJ2aWNlIl09IiRnZXRfcmVzcG9uc2UiCisJCWdldF9yZXNwb25zZT0iIgorCQlmb3Ig
+aWR4IGluICIkeyFvbGRfa2V5W0BdfSI7IGRvCisJCQlpZiBbWyAkc2VydmljZSA9ICR7b2xkX2tl
+eVskaWR4XX0gXV07IHRoZW4KKwkJCQlnZXRfcmVzcG9uc2U9IiR7b2xkX3ZhbFskaWR4XX0iCisJ
+CQkJdW5zZXQgb2xkX2tleVskaWR4XQorCQkJCWJyZWFrCisJCQlmaQorCQlkb25lCisJCWlmIFtb
+IC16ICRnZXRfcmVzcG9uc2UgXV07IHRoZW4KKwkJCWdldF9yZXNwb25zZT0iJChjbWQgbmV0d29y
+a3NldHVwIC1nZXRkbnNzZXJ2ZXJzICIkc2VydmljZSIpIgorCQkJW1sgJGdldF9yZXNwb25zZSA9
+PSAqIiAiKiBdXSAmJiBnZXRfcmVzcG9uc2U9IkVtcHR5IgorCQlmaQorCQlpZiBbWyAtbiAkZ2V0
+X3Jlc3BvbnNlIF1dOyB0aGVuCisJCQlTRVJWSUNFX0ROU19LRVkrPSgiJHNlcnZpY2UiKQorCQkJ
+U0VSVklDRV9ETlNfVkFMKz0oIiRnZXRfcmVzcG9uc2UiKQorCQlmaQogCWRvbmU7IH0gPCA8KG5l
+dHdvcmtzZXR1cCAtbGlzdGFsbG5ldHdvcmtzZXJ2aWNlcykKLQotCWZvciBzZXJ2aWNlIGluICIk
+eyFTRVJWSUNFX0ROU1tAXX0iOyBkbwotCQlbWyAtbiAke2ZvdW5kX3NlcnZpY2VzWyIkc2Vydmlj
+ZSJdfSBdXSB8fCB1bnNldCBTRVJWSUNFX0ROU1siJHNlcnZpY2UiXQotCWRvbmUKIH0KIAogc2V0
+X2VuZHBvaW50X2RpcmVjdF9yb3V0ZSgpIHsKQEAgLTI3Miw3ICsyODUsNyBAQCBzZXRfZW5kcG9p
+bnRfZGlyZWN0X3JvdXRlKCkgewogc2V0X2RucygpIHsKIAljb2xsZWN0X25ld19zZXJ2aWNlX2Ru
+cwogCWxvY2FsIHNlcnZpY2UgcmVzcG9uc2UKLQlmb3Igc2VydmljZSBpbiAiJHshU0VSVklDRV9E
+TlNbQF19IjsgZG8KKwlmb3Igc2VydmljZSBpbiAiJHtTRVJWSUNFX0ROU19LRVlbQF19IjsgZG8K
+IAkJd2hpbGUgcmVhZCAtciByZXNwb25zZTsgZG8KIAkJCVtbICRyZXNwb25zZSA9PSAqRXJyb3Iq
+IF1dICYmIGVjaG8gIiRyZXNwb25zZSIgPiYyCiAJCWRvbmUgPCA8KGNtZCBuZXR3b3Jrc2V0dXAg
+LXNldGRuc3NlcnZlcnMgIiRzZXJ2aWNlIiAiJHtETlNbQF19IikKQEAgLTI4MCwxMSArMjkzLDEx
+IEBAIHNldF9kbnMoKSB7CiB9CiAKIGRlbF9kbnMoKSB7Ci0JbG9jYWwgc2VydmljZSByZXNwb25z
+ZQotCWZvciBzZXJ2aWNlIGluICIkeyFTRVJWSUNFX0ROU1tAXX0iOyBkbworCWxvY2FsIGlkeCBy
+ZXNwb25zZQorCWZvciBpZHggaW4gIiR7IVNFUlZJQ0VfRE5TX0tFWVtAXX0iOyBkbwogCQl3aGls
+ZSByZWFkIC1yIHJlc3BvbnNlOyBkbwogCQkJW1sgJHJlc3BvbnNlID09ICpFcnJvciogXV0gJiYg
+ZWNobyAiJHJlc3BvbnNlIiA+JjIKLQkJZG9uZSA8IDwoY21kIG5ldHdvcmtzZXR1cCAtc2V0ZG5z
+c2VydmVycyAiJHNlcnZpY2UiICR7U0VSVklDRV9ETlNbIiRzZXJ2aWNlIl19IHx8IHRydWUpCisJ
+CWRvbmUgPCA8KGNtZCBuZXR3b3Jrc2V0dXAgLXNldGRuc3NlcnZlcnMgIiR7U0VSVklDRV9ETlNf
+S0VZWyRpZHhdfSIgJHtTRVJWSUNFX0ROU19WQUxbJGlkeF19IHx8IHRydWUpCiAJZG9uZQogfQog
+CkBAIC0yOTIsNiArMzA1LDcgQEAgbW9uaXRvcl9kYWVtb24oKSB7CiAJZWNobyAiWytdIEJhY2tn
+cm91bmRpbmcgcm91dGUgbW9uaXRvciIgPiYyCiAJKHRyYXAgJ2RlbF9yb3V0ZXM7IGRlbF9kbnM7
+IGV4aXQgMCcgSU5UIFRFUk0gRVhJVAogCWV4ZWMgPi9kZXYvbnVsbCAyPiYxCisJW1sgJHtCQVNI
+X1ZFUlNJTkZPWzBdfSAtZ2UgNCBdXSB8fCBCQVNIUElEPSQoc2ggLWMgJ2VjaG8gJFBQSUQnKQog
+CWxvY2FsIGV2ZW50IHBpZD0kQkFTSFBJRAogCVtbICR7I0ROU1tAXX0gLWd0IDAgXV0gJiYgdHJh
+cCBzZXRfZG5zIEFMUk0KIAkjIFRPRE86IHRoaXMgc2hvdWxkIGFsc28gY2hlY2sgdG8gc2VlIGlm
+IHRoZSBlbmRwb2ludCBhY3R1YWxseSBjaGFuZ2VzCgpfX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fXwpXaXJlR3VhcmQgbWFpbGluZyBsaXN0CldpcmVHdWFyZEBs
+aXN0cy56eDJjNC5jb20KaHR0cHM6Ly9saXN0cy56eDJjNC5jb20vbWFpbG1hbi9saXN0aW5mby93
+aXJlZ3VhcmQK
