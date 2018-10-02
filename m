@@ -2,39 +2,65 @@ Return-Path: <SRS0=l6+B=MO=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_PASS
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A774DC43143
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  2 Oct 2018 03:06:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E6E8C64EB5
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  2 Oct 2018 03:06:44 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 129722083F
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  2 Oct 2018 03:06:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 129722083F
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=bernhard-ehlers.de
+	by mail.kernel.org (Postfix) with ESMTPS id C48F62083F
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  2 Oct 2018 03:06:43 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=cipherdyne-org.20150623.gappssmtp.com header.i=@cipherdyne-org.20150623.gappssmtp.com header.b="HRwXhIsM"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org C48F62083F
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=cipherdyne.org
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 91138b45;
-	Tue, 2 Oct 2018 03:06:22 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7aa7c706;
+	Tue, 2 Oct 2018 03:06:23 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 77f634fe
- for <wireguard@lists.zx2c4.com>; Mon, 1 Oct 2018 07:08:12 +0000 (UTC)
-Received: from wild.uberspace.de (wild.uberspace.de [185.26.156.86])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8d03728a
- for <wireguard@lists.zx2c4.com>; Mon, 1 Oct 2018 07:08:12 +0000 (UTC)
-Received: (qmail 10550 invoked from network); 1 Oct 2018 07:11:27 -0000
-Received: from unknown (HELO imac.lan) (85.222.214.21)
- by wild.uberspace.de with SMTP; 1 Oct 2018 07:11:27 -0000
-From: Bernhard Ehlers <wg@bernhard-ehlers.de>
-Mime-Version: 1.0 (Mac OS X Mail 11.5 \(3445.9.1\))
-Subject: WireGuard on OS X with bash v3
-Message-Id: <510D56E8-45DD-4FBE-876D-115B0D52F1B1@bernhard-ehlers.de>
-Date: Mon, 1 Oct 2018 09:11:25 +0200
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5c0ffecb
+ for <wireguard@lists.zx2c4.com>; Tue, 2 Oct 2018 02:52:54 +0000 (UTC)
+Received: from mail-yw1-xc29.google.com (mail-yw1-xc29.google.com
+ [IPv6:2607:f8b0:4864:20::c29])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4b85b663
+ for <wireguard@lists.zx2c4.com>; Tue, 2 Oct 2018 02:52:54 +0000 (UTC)
+Received: by mail-yw1-xc29.google.com with SMTP id m129-v6so206354ywc.1
+ for <wireguard@lists.zx2c4.com>; Mon, 01 Oct 2018 19:52:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=cipherdyne-org.20150623.gappssmtp.com; s=20150623;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=xw8CM3XnScy2HnD5gVwM4byY22xoTtprzM7PBCotsK8=;
+ b=HRwXhIsM3UeFiLgdENMuU1GLzuYkrXo2aNyupryrpL+dQVxLFxCYoJY+D91NeyTzYR
+ aPjC5tKu9dRozNbiSlAp6DvySBu3JnjNhEXnbOUdKiLe74XTv4yQsYkDsRFrK2Y26dbr
+ xWqOKAMlzhcLIVZD8AfDnGJqFojOaKtkKpmxob2VorH1kOciCNXlgvTWdRAgmOKQv2LI
+ 0aRixYN9tMQcGCTOueDjHF5FCgTQP26dM3+adSBWlD9YV88xRVD/2QhXMlrPNx2tPsDe
+ dkaxRjiR8qC7p+3nBzP2M/Mu7Q9iTyHKpK0qzqhdvTS1Nur29RNAJk5Io05B3z37CZFh
+ gU9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=xw8CM3XnScy2HnD5gVwM4byY22xoTtprzM7PBCotsK8=;
+ b=rxLHe2kDCqyI/3KiSuAykr4gEJzpQ7/BnyETv2xcetTh4Py/47HiiWBtfX7CDOywm8
+ pNbWtMW0phw2eprDwwfF1kRQe19aflyQ2yheO/TpDY5ugqnCSdGpLbrkdvx1qigm3mg9
+ +x6xaZRLEeRH5Kv51ppTCY3ivLiNRYt4TqEOYoU73ExpTlVF7FmIBBPN5CXnGvtBWU2s
+ o0+hWuwJqUCBWVBUS0GVtaTYmCPxks6rJRJdRtAxvpijPlg2zroryTT6kg89+NbxpULO
+ a6yBA8dVwrgoWGfunTnuJy+eDhKKAUk7/C2kLXpo52UwuNzMaTNB9h0I39XqxpJd5Ban
+ CLUA==
+X-Gm-Message-State: ABuFfoh7uxBvQRAMO0YuVaILB2CJr7FQiJBRjT4oTHKEuJHUzsvUxXUF
+ Csj3B0nhjtyYY2INpIPvtjyv1LOy/rMU39ixWsBhIZP0bR8=
+X-Google-Smtp-Source: ACcGV61np7zCvNkcGXRkKwPDfjn95T2H9yNC0XwR2P6R3x7+qZF98dXOJqI5atrXaOukxhPo4dOZiw7PNUdXsWScejI=
+X-Received: by 2002:a81:b209:: with SMTP id q9-v6mr7692402ywh.45.1538448771450; 
+ Mon, 01 Oct 2018 19:52:51 -0700 (PDT)
+MIME-Version: 1.0
+From: Michael Rash <mbr@cipherdyne.org>
+Date: Mon, 1 Oct 2018 22:52:40 -0400
+Message-ID: <CABv+sEesH3EX8Uz8TR7Pemj1vsbExJ0rVQ8=SUmXE=SRTEZ2QA@mail.gmail.com>
+Subject: macOS, a Linux VM, and Wireguard
 To: wireguard@lists.zx2c4.com
-X-Mailer: Apple Mail (2.3445.9.1)
 X-Mailman-Approved-At: Tue, 02 Oct 2018 05:06:16 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
@@ -47,73 +73,54 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: multipart/mixed; boundary="===============1145761116635747545=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-SSBjYW4gdW5kZXJzdGFuZCwgdGhhdCB0aGUgZGV2cyBkb27igJl0IHdhbnQgdG8gdXNlIHRoZSBv
-bGQgYmFzaCB2MyB1c2VkIGJ5IEFwcGxlLgpCdXQgZnJvbSBhIHVzZXJzIHBvc3Qgb2YgdmlldyBp
-dOKAmXMgbm90IHRoYXQgbmljZSwgdGhhdCB0aGUgaW5zdGFsbGF0aW9uIG9mIGEgbmV3ZXIgYmFz
-aAppcyBuZWVkZWQuCgpTbyBJIGhhZCBhIGxvb2sgYXQgdGhlIHdnLXF1aWNrIGZvciBEYXJ3aW4u
-IFRoZSBvbmx5IGNoYW5nZXMgbmVlZGVkIHRvIHN1cHBvcnQKYm90aCBiYXNoIHZlcnNpb25zIGlz
-IHRvIGdldCByaWQgb2YgdGhlIGFzc29jaWF0aXZlIGFycmF5IFNFUlZJQ0VfRE5TIGFuZCB0bwpo
-YW5kbGUgQkFTSFBJRCBmb3IgdjMuCgpIZXJlIG15IGNoYW5nZXMsIGZvciBtZSB0aGV5IGFyZSB3
-b3JraW5nIHF1aXRlIGZpbmU6CgpkaWZmIC0tZ2l0IGEvc3JjL3Rvb2xzL3dnLXF1aWNrL2Rhcndp
-bi5iYXNoIGIvc3JjL3Rvb2xzL3dnLXF1aWNrL2Rhcndpbi5iYXNoCmluZGV4IDMwZjM1NDEuLjE3
-MGNhZWQgMTAwNzU1Ci0tLSBhL3NyYy90b29scy93Zy1xdWljay9kYXJ3aW4uYmFzaAorKysgYi9z
-cmMvdG9vbHMvd2ctcXVpY2svZGFyd2luLmJhc2gKQEAgLTM4LDggKzM4LDYgQEAgZGllKCkgewog
-CWV4aXQgMQogfQogCi1bWyAke0JBU0hfVkVSU0lORk9bMF19IC1nZSA0IF1dIHx8IGRpZSAiVmVy
-c2lvbiBtaXNtYXRjaDogYmFzaCAke0JBU0hfVkVSU0lORk9bMF19IGRldGVjdGVkLCB3aGVuIGJh
-c2ggNCsgcmVxdWlyZWQiCi0KIENPTkZJR19TRUFSQ0hfUEFUSFM9KCAvZXRjL3dpcmVndWFyZCAv
-dXNyL2xvY2FsL2V0Yy93aXJlZ3VhcmQgKQogCiBwYXJzZV9vcHRpb25zKCkgewpAQCAtMjAwLDIy
-ICsxOTgsMzcgQEAgY29sbGVjdF9lbmRwb2ludHMoKSB7CiAJZG9uZSA8IDwod2cgc2hvdyAiJFJF
-QUxfSU5URVJGQUNFIiBlbmRwb2ludHMpCiB9CiAKLWRlY2xhcmUgLUEgU0VSVklDRV9ETlMKK2Rl
-Y2xhcmUgLWEgU0VSVklDRV9ETlNfS0VZCitkZWNsYXJlIC1hIFNFUlZJQ0VfRE5TX1ZBTAorCiBj
-b2xsZWN0X25ld19zZXJ2aWNlX2RucygpIHsKKwlsb2NhbCBvbGRfa2V5IG9sZF92YWwKIAlsb2Nh
-bCBzZXJ2aWNlIGdldF9yZXNwb25zZQotCWxvY2FsIC1BIGZvdW5kX3NlcnZpY2VzCisJbG9jYWwg
-aWR4CisKKwlvbGRfa2V5PSgiJHtTRVJWSUNFX0ROU19LRVlbQF19IikKKwlvbGRfdmFsPSgiJHtT
-RVJWSUNFX0ROU19WQUxbQF19IikKKwlTRVJWSUNFX0ROU19LRVk9KCkKKwlTRVJWSUNFX0ROU19W
-QUw9KCkKIAl7IHJlYWQgLXIgXyAmJiB3aGlsZSByZWFkIC1yIHNlcnZpY2U7IGRvCiAJCVtbICRz
-ZXJ2aWNlID09ICIqIiogXV0gJiYgc2VydmljZT0iJHtzZXJ2aWNlOjF9IgotCQlmb3VuZF9zZXJ2
-aWNlc1siJHNlcnZpY2UiXT0xCi0JCVtbIC1uICR7U0VSVklDRV9ETlNbIiRzZXJ2aWNlIl19IF1d
-ICYmIGNvbnRpbnVlCi0JCWdldF9yZXNwb25zZT0iJChjbWQgbmV0d29ya3NldHVwIC1nZXRkbnNz
-ZXJ2ZXJzICIkc2VydmljZSIpIgotCQlbWyAkZ2V0X3Jlc3BvbnNlID09ICoiICIqIF1dICYmIGdl
-dF9yZXNwb25zZT0iRW1wdHkiCi0JCVtbIC1uICRnZXRfcmVzcG9uc2UgXV0gJiYgU0VSVklDRV9E
-TlNbIiRzZXJ2aWNlIl09IiRnZXRfcmVzcG9uc2UiCisJCWdldF9yZXNwb25zZT0iIgorCQlmb3Ig
-aWR4IGluICIkeyFvbGRfa2V5W0BdfSI7IGRvCisJCQlpZiBbWyAkc2VydmljZSA9ICR7b2xkX2tl
-eVskaWR4XX0gXV07IHRoZW4KKwkJCQlnZXRfcmVzcG9uc2U9IiR7b2xkX3ZhbFskaWR4XX0iCisJ
-CQkJdW5zZXQgb2xkX2tleVskaWR4XQorCQkJCWJyZWFrCisJCQlmaQorCQlkb25lCisJCWlmIFtb
-IC16ICRnZXRfcmVzcG9uc2UgXV07IHRoZW4KKwkJCWdldF9yZXNwb25zZT0iJChjbWQgbmV0d29y
-a3NldHVwIC1nZXRkbnNzZXJ2ZXJzICIkc2VydmljZSIpIgorCQkJW1sgJGdldF9yZXNwb25zZSA9
-PSAqIiAiKiBdXSAmJiBnZXRfcmVzcG9uc2U9IkVtcHR5IgorCQlmaQorCQlpZiBbWyAtbiAkZ2V0
-X3Jlc3BvbnNlIF1dOyB0aGVuCisJCQlTRVJWSUNFX0ROU19LRVkrPSgiJHNlcnZpY2UiKQorCQkJ
-U0VSVklDRV9ETlNfVkFMKz0oIiRnZXRfcmVzcG9uc2UiKQorCQlmaQogCWRvbmU7IH0gPCA8KG5l
-dHdvcmtzZXR1cCAtbGlzdGFsbG5ldHdvcmtzZXJ2aWNlcykKLQotCWZvciBzZXJ2aWNlIGluICIk
-eyFTRVJWSUNFX0ROU1tAXX0iOyBkbwotCQlbWyAtbiAke2ZvdW5kX3NlcnZpY2VzWyIkc2Vydmlj
-ZSJdfSBdXSB8fCB1bnNldCBTRVJWSUNFX0ROU1siJHNlcnZpY2UiXQotCWRvbmUKIH0KIAogc2V0
-X2VuZHBvaW50X2RpcmVjdF9yb3V0ZSgpIHsKQEAgLTI3Miw3ICsyODUsNyBAQCBzZXRfZW5kcG9p
-bnRfZGlyZWN0X3JvdXRlKCkgewogc2V0X2RucygpIHsKIAljb2xsZWN0X25ld19zZXJ2aWNlX2Ru
-cwogCWxvY2FsIHNlcnZpY2UgcmVzcG9uc2UKLQlmb3Igc2VydmljZSBpbiAiJHshU0VSVklDRV9E
-TlNbQF19IjsgZG8KKwlmb3Igc2VydmljZSBpbiAiJHtTRVJWSUNFX0ROU19LRVlbQF19IjsgZG8K
-IAkJd2hpbGUgcmVhZCAtciByZXNwb25zZTsgZG8KIAkJCVtbICRyZXNwb25zZSA9PSAqRXJyb3Iq
-IF1dICYmIGVjaG8gIiRyZXNwb25zZSIgPiYyCiAJCWRvbmUgPCA8KGNtZCBuZXR3b3Jrc2V0dXAg
-LXNldGRuc3NlcnZlcnMgIiRzZXJ2aWNlIiAiJHtETlNbQF19IikKQEAgLTI4MCwxMSArMjkzLDEx
-IEBAIHNldF9kbnMoKSB7CiB9CiAKIGRlbF9kbnMoKSB7Ci0JbG9jYWwgc2VydmljZSByZXNwb25z
-ZQotCWZvciBzZXJ2aWNlIGluICIkeyFTRVJWSUNFX0ROU1tAXX0iOyBkbworCWxvY2FsIGlkeCBy
-ZXNwb25zZQorCWZvciBpZHggaW4gIiR7IVNFUlZJQ0VfRE5TX0tFWVtAXX0iOyBkbwogCQl3aGls
-ZSByZWFkIC1yIHJlc3BvbnNlOyBkbwogCQkJW1sgJHJlc3BvbnNlID09ICpFcnJvciogXV0gJiYg
-ZWNobyAiJHJlc3BvbnNlIiA+JjIKLQkJZG9uZSA8IDwoY21kIG5ldHdvcmtzZXR1cCAtc2V0ZG5z
-c2VydmVycyAiJHNlcnZpY2UiICR7U0VSVklDRV9ETlNbIiRzZXJ2aWNlIl19IHx8IHRydWUpCisJ
-CWRvbmUgPCA8KGNtZCBuZXR3b3Jrc2V0dXAgLXNldGRuc3NlcnZlcnMgIiR7U0VSVklDRV9ETlNf
-S0VZWyRpZHhdfSIgJHtTRVJWSUNFX0ROU19WQUxbJGlkeF19IHx8IHRydWUpCiAJZG9uZQogfQog
-CkBAIC0yOTIsNiArMzA1LDcgQEAgbW9uaXRvcl9kYWVtb24oKSB7CiAJZWNobyAiWytdIEJhY2tn
-cm91bmRpbmcgcm91dGUgbW9uaXRvciIgPiYyCiAJKHRyYXAgJ2RlbF9yb3V0ZXM7IGRlbF9kbnM7
-IGV4aXQgMCcgSU5UIFRFUk0gRVhJVAogCWV4ZWMgPi9kZXYvbnVsbCAyPiYxCisJW1sgJHtCQVNI
-X1ZFUlNJTkZPWzBdfSAtZ2UgNCBdXSB8fCBCQVNIUElEPSQoc2ggLWMgJ2VjaG8gJFBQSUQnKQog
-CWxvY2FsIGV2ZW50IHBpZD0kQkFTSFBJRAogCVtbICR7I0ROU1tAXX0gLWd0IDAgXV0gJiYgdHJh
-cCBzZXRfZG5zIEFMUk0KIAkjIFRPRE86IHRoaXMgc2hvdWxkIGFsc28gY2hlY2sgdG8gc2VlIGlm
-IHRoZSBlbmRwb2ludCBhY3R1YWxseSBjaGFuZ2VzCgpfX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fXwpXaXJlR3VhcmQgbWFpbGluZyBsaXN0CldpcmVHdWFyZEBs
-aXN0cy56eDJjNC5jb20KaHR0cHM6Ly9saXN0cy56eDJjNC5jb20vbWFpbG1hbi9saXN0aW5mby93
-aXJlZ3VhcmQK
+--===============1145761116635747545==
+Content-Type: multipart/alternative; boundary="00000000000087228b05773604b7"
+
+--00000000000087228b05773604b7
+Content-Type: text/plain; charset="UTF-8"
+
+Hi,
+
+This might be of some mild interest (includes a configuration utility) for
+anyone who wants to run the Wireguard kernel module from a Linux VM on a
+Mac and use it to send everything from the Mac over Wireguard:
+
+https://github.com/mrash/Wireguard-macOS-LinuxVM
+
+All comments welcome.
+
+Thanks,
+
+--Mike
+
+--00000000000087228b05773604b7
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><div><br></div>Hi,<div><br></div><div>Thi=
+s might be of some mild interest (includes a configuration utility) for any=
+one who wants to run the Wireguard kernel module from a Linux VM on a Mac a=
+nd use it to send everything from the Mac over Wireguard:</div><div><br></d=
+iv><div><a href=3D"https://github.com/mrash/Wireguard-macOS-LinuxVM">https:=
+//github.com/mrash/Wireguard-macOS-LinuxVM</a></div><div><br></div><div>All=
+ comments welcome.</div><div><br></div><div>Thanks,</div><div><br></div><di=
+v>--Mike</div></div></div>
+
+--00000000000087228b05773604b7--
+
+--===============1145761116635747545==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
+_______________________________________________
+WireGuard mailing list
+WireGuard@lists.zx2c4.com
+https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--===============1145761116635747545==--
