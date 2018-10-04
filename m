@@ -2,73 +2,61 @@ Return-Path: <SRS0=SlID=MQ=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_MUTT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C97EC64EBC
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  4 Oct 2018 15:54:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 12E02C64EB8
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  4 Oct 2018 18:56:19 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id C300020652
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  4 Oct 2018 15:54:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 47A072084D
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  4 Oct 2018 18:56:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DfU6ji+y"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org C300020652
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=linuxfoundation.org
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="IlHqm4bS"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 47A072084D
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 22a3c71a;
-	Thu, 4 Oct 2018 15:53:47 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 19361307;
+	Thu, 4 Oct 2018 18:55:57 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7817fb8a
- for <wireguard@lists.zx2c4.com>; Thu, 4 Oct 2018 15:53:44 +0000 (UTC)
-Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com
- [IPv6:2607:f8b0:4864:20::82f])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fdebadb4
- for <wireguard@lists.zx2c4.com>; Thu, 4 Oct 2018 15:53:44 +0000 (UTC)
-Received: by mail-qt1-x82f.google.com with SMTP id q40-v6so10438561qte.0
- for <wireguard@lists.zx2c4.com>; Thu, 04 Oct 2018 08:54:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linuxfoundation.org; s=google;
- h=date:from:to:subject:message-id:mail-followup-to:mime-version
- :content-disposition:user-agent;
- bh=SAmTJeQXxtn8ByjFWtoyEPZAcJk0HwzY/A7kY/szN8c=;
- b=DfU6ji+yfj26VHGPWTywBvbvlkaGcETCY+W0ZsIDANZrRFGQZK285usnjVXIbRGJA6
- iI2P/78yObJCMaJkgtWm68kRr0M9796UEdXVarBnCda7MvqjYSt2xzW0IcmzC5s6zjlD
- 7KkwR4NFGS7eDkZH3DLFeU4MDe1AqPJwJC6qo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:subject:message-id:mail-followup-to
- :mime-version:content-disposition:user-agent;
- bh=SAmTJeQXxtn8ByjFWtoyEPZAcJk0HwzY/A7kY/szN8c=;
- b=c0T+eaHd1ytiuNlXWJuz9Nrk4IKqTsuDv9II/kAhwaxuXZq2pOXVHJyFK5wUQFG9k4
- xWWtaMakq2vUeJ3CmAGX8aoWheELbZMoZnmAKaIU1iw14ESL7Bi2kMj+Abj8S7qNts9J
- gxD7fi+IuyZr3js+P6Cn/sfBG49PV2zvihfBQkKCIiJE4KDh6E7TQgELcWdsS9MgbkF1
- MM5cuAYLKeWf/yEmxAdAx3iKb1FZOJp9qVI7MoLZIyusznz2WURX0HoWXFJg2VN7rmAQ
- SUb2YAvsEdRLqKJr4vROrREGA7bTfF7fy8+ewMqmKABHImUTDNRY32raTUbIx3qOQ3RQ
- YINw==
-X-Gm-Message-State: ABuFfohN5Wm3PwTJSMX+pX1j1th1O979qHU6CQlH0gTxi9JrGmhUiUTm
- /lchSFHn79+F0RWzoo9jMnHgD8gA85bKpA==
-X-Google-Smtp-Source: ACcGV61ujsAJHrazfvdUChxMqzkOueuan8/2rjYbDYfDlhdBwmTjJtZwHyvODJ9s/TjS3APHdrWT5Q==
-X-Received: by 2002:a0c:d8ba:: with SMTP id
- q55-v6mr5973144qvj.80.1538668442183; 
- Thu, 04 Oct 2018 08:54:02 -0700 (PDT)
-Received: from puremoods (192-0-230-179.cpe.teksavvy.com. [192.0.230.179])
- by smtp.gmail.com with ESMTPSA id h4-v6sm2270077qkg.95.2018.10.04.08.54.01
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
- Thu, 04 Oct 2018 08:54:01 -0700 (PDT)
-Date: Thu, 4 Oct 2018 11:53:59 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: wireguard@lists.zx2c4.com
-Subject: Sending just ssh traffic via wg
-Message-ID: <20181004155359.GA5957@puremoods>
-Mail-Followup-To: wireguard@lists.zx2c4.com
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1627f030
+ for <wireguard@lists.zx2c4.com>; Thu, 4 Oct 2018 18:55:54 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4446234a
+ for <wireguard@lists.zx2c4.com>; Thu, 4 Oct 2018 18:55:54 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 06c76b43
+ for <wireguard@lists.zx2c4.com>; Thu, 4 Oct 2018 18:55:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :references:in-reply-to:from:date:message-id:subject:to
+ :content-type; s=mail; bh=ZnJG6pCtLBEO8q2cXTY1t79RtP0=; b=IlHqm4
+ bS6m5nfjH4b8fdqf9FFgcgUkqsQOqm2NNNrZxc0/mAcLujwg+rqCY2JpaU0hVmT3
+ I9+1rqvRxqZcsDsH1c9r/ImhjvI/UmSdTVXmhV6qMGOKEkJrfNokFRmEFwoD3+Mz
+ NEitAyHpl5YD+sbFh1xQqNFuCpW9828lYab9JhARsdmPauT9Yv5NuAmmEogfZk6D
+ g3GKUAGv2ByHtl9ezIt7MMPwAsu5j4DYWRHgxAOP7XFjDD0hNtWpxz3ocX6bKNfr
+ freRUxJKIEf4PNV3WC08mJFmf20PJ/hEAwc/oyvvA+kPygqRh9Z2R4yHecsn/rF4
+ PelVIP36SFkAA1+g==
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 3a5c62c7
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
+ for <wireguard@lists.zx2c4.com>; Thu, 4 Oct 2018 18:55:54 +0000 (UTC)
+Received: by mail-ot1-f46.google.com with SMTP id 36-v6so10220309oth.11
+ for <wireguard@lists.zx2c4.com>; Thu, 04 Oct 2018 11:56:14 -0700 (PDT)
+X-Gm-Message-State: ABuFfogIY+48DMUrc4TOeYIVn3trg0XOjb5DDGL3lqH/4IFmThxBFGHW
+ FoapKYePv7T0gCZ9ofjMRfyNVS4h+6U+8ojBI04=
+X-Google-Smtp-Source: ACcGV61Np4rKlamHN1vM7trqXC+OSgexU39/m6Qp6XeKgfPwqt6ypoe7VXdrSCz1MWlLAClEYKQMElaHLOPzCNWxV3k=
+X-Received: by 2002:a9d:42c3:: with SMTP id c3-v6mr4674468otj.54.1538679372531; 
+ Thu, 04 Oct 2018 11:56:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Disposition: inline
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20181004155359.GA5957@puremoods>
+In-Reply-To: <20181004155359.GA5957@puremoods>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 4 Oct 2018 20:56:00 +0200
+X-Gmail-Original-Message-ID: <CAHmME9rt2irKq1JFkkWdNLKFTJapCKopkUCpnyXugN=dUWqW=A@mail.gmail.com>
+Message-ID: <CAHmME9rt2irKq1JFkkWdNLKFTJapCKopkUCpnyXugN=dUWqW=A@mail.gmail.com>
+Subject: Re: Sending just ssh traffic via wg
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -85,17 +73,40 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi, all:
+Hey Konstantin,
 
-I'm trying to figure out the right PostUP/PostDown incantations to send
-just ssh traffic (on port tcp/22) via the wg tunnel, but I'm having a
-bit of a hard time. I should be able to do this with --set-mark for
-iptables/PREROUTING and a fwmark ip route rule, but it doesn't appear to
-be working as described in many guides I've consulted.
+When you're doing policy routing with packets that are being forwarded
+by the system -- a router, for example -- then the prerouting table is
+sufficient. But for locally generated packets, you have to use the
+OUTPUT table and also probably MASQUERADE. I just reproduced
+everything here and confirm this works:
 
-Has anyone done something like this before?
+ip route add default dev wg0 table 2468
+ip rule add fwmark 1234 table 2468
+wg set wg0 peer [...] allowed-ips 0.0.0.0/0
+sysctl net.ipv4.conf.wg0.rp_filter=0
+iptables -t nat -A POSTROUTING -p tcp --dport 22 -m addrtype
+--src-type LOCAL -j MASQUERADE
+iptables -t mangle -A OUTPUT -p tcp --dport 22 -j MARK --set-mark 1234
 
--K
+That works pretty well for me. If you don't want to disable rp_filter,
+you can do a little dance of setting and restoring the connmark in
+egress and ingress so that incoming packets are matched against that
+routing table too.
+
+Alternatively, if your goal is actually to just send certain processes
+through the tunnel, you have three more options:
+- Network namespaces, and then `ip netns exec chicken ssh 1.2.3.4 ...`
+- VRFs, and then `ip vrf exec chicken ssh 1.2.3.4 ...`
+- Cgroups and net_cls.
+
+All three work well and are differently convenient depending on your
+needs. I wrote up the netns stuff on wireguard.com/netns/ but haven't
+gotten around to documenting VRFs and cgroups with wireguard, but they
+in fact should work the same as for every other situation that uses
+those, so any old tutorial will do.
+
+Jason
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
