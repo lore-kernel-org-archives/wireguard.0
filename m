@@ -1,80 +1,51 @@
-Return-Path: <SRS0=6kAx=MR=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=PPAX=MS=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_MUTT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD560C00449
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  5 Oct 2018 21:01:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 033A0C00449
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  6 Oct 2018 02:43:41 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 3C2E5213A2
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  5 Oct 2018 21:01:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 24B1920834
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  6 Oct 2018 02:43:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NuUnT9w+"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 3C2E5213A2
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=linuxfoundation.org
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="shn4On3A"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 24B1920834
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e064495c;
-	Fri, 5 Oct 2018 21:01:27 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c7e75451;
+	Sat, 6 Oct 2018 02:43:09 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fd3f4403
- for <wireguard@lists.zx2c4.com>; Fri, 5 Oct 2018 21:01:24 +0000 (UTC)
-Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com
- [IPv6:2607:f8b0:4864:20::72c])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6bf5a495
- for <wireguard@lists.zx2c4.com>; Fri, 5 Oct 2018 21:01:24 +0000 (UTC)
-Received: by mail-qk1-x72c.google.com with SMTP id q5-v6so8811673qki.6
- for <wireguard@lists.zx2c4.com>; Fri, 05 Oct 2018 14:01:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linuxfoundation.org; s=google;
- h=date:from:to:cc:subject:message-id:mail-followup-to:references
- :mime-version:content-disposition:in-reply-to:user-agent;
- bh=0pNP8YUm9+Y6h+a8QozHdJD2zjN86bTYIVM5z3NCPdc=;
- b=NuUnT9w+6UzrkvixzwggKzbqh8jvx7gn7IZ9OA7zfZ3EyPvsTw9jpmAO/Q9Xq5KldQ
- 3/i48af7qjen+84bLBEbpze1tCG5a9sSB5GN8ccL5tZ/WOSKBxhfPUAkmejnm2HYcUoE
- njCKM1bHUO5ORFrUEH0dQ7+QCHW+Uy/S6I24s=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id
- :mail-followup-to:references:mime-version:content-disposition
- :in-reply-to:user-agent;
- bh=0pNP8YUm9+Y6h+a8QozHdJD2zjN86bTYIVM5z3NCPdc=;
- b=GzzebC2mrY077iT83qG3EbxCozFDKQBoCoSP/+u3m1pLFbUk2sd4X9GIiOn9RpU9cz
- wHT8oG8MFAkIcluv+ZoviJMBRt2ZJYuTbCTTCkkr8O3MaWZdpKjWFUdKwvsGBZ85SMxQ
- PNEy9UAhkP7rqPUG7bhok7rxaG+uTB9xF8df6orreiP/E52QPF1hcJpU+qeq382D3ubJ
- rUqYhHN0rGjai4cZy9VY9QEWsb72tMXczYOifBiMW530i3gm8yKwEUbWc/KxOqz5FnCa
- W4oHZx8VyWskG79ErdcOtyLzhlTTzGxr8P1VkxF43hx6mOCNbFZed/hypgySOvsiSp/3
- ++2Q==
-X-Gm-Message-State: ABuFfoiiqNEl71YdTGsSMoHOSEJO8PQDxHtAfZduhqJzbdrhFQ5k8kOu
- ju+bgheSLDZLhaD8Rr+PW33lDg==
-X-Google-Smtp-Source: ACcGV62f5NxEPKo3rF7xfhIIlAC4TinKeRTSiyGJmJ62FjLyFmu/Hx1eCl75G3TdV7VZeN95lOrSsw==
-X-Received: by 2002:a37:9f85:: with SMTP id
- i127-v6mr10754492qke.113.1538773311289; 
- Fri, 05 Oct 2018 14:01:51 -0700 (PDT)
-Received: from chatter ([184.75.214.131])
- by smtp.gmail.com with ESMTPSA id s52-v6sm5870367qts.5.2018.10.05.14.01.50
- (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
- Fri, 05 Oct 2018 14:01:50 -0700 (PDT)
-Date: Fri, 5 Oct 2018 17:01:48 -0400
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Matthias Urlichs <matthias@urlichs.de>
-Subject: Re: Sending just ssh traffic via wg
-Message-ID: <20181005210148.GA24357@chatter>
-Mail-Followup-To: Matthias Urlichs <matthias@urlichs.de>,
- wireguard@lists.zx2c4.com
-References: <20181004155359.GA5957@puremoods>
- <CAHmME9rt2irKq1JFkkWdNLKFTJapCKopkUCpnyXugN=dUWqW=A@mail.gmail.com>
- <874le0d82v.fsf@toke.dk> <20181005155328.GB22501@puremoods>
- <81a33d58-8810-7f56-6193-ed6543a62915@urlichs.de>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f54460dd
+ for <wireguard@lists.zx2c4.com>; Sat, 6 Oct 2018 02:43:07 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4b175402
+ for <wireguard@lists.zx2c4.com>; Sat, 6 Oct 2018 02:43:07 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 02f22217
+ for <wireguard@lists.zx2c4.com>; Sat, 6 Oct 2018 02:43:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=date:to:from
+ :subject:mime-version:content-type; s=mail; bh=QXR8MlB5V+pvbbAB1
+ Qyo3pHyKmc=; b=shn4On3AglyY8WcE9SpKTfsfpGwNLswWxpNZVAaDZ12BTNrSh
+ TfiGzHn6pXVYAWB55jsfC4MoreeyIU3H7RR5NjMcqaaxYcvBeVtGL+mOflXTxIJC
+ JfZiEuP8JWAC/O1Tf5nbTkPKsV9GEFufPDPMLh+M+tC+x0dgJ964w1XgbkSr2hVy
+ iZMbVlgF2jQEdaH0eM/5QJFM6lP3esBFIr2JDMCGGRaf7ew5zd2dscmtLh1D+XL6
+ G9+mn+oNBjZLqwrgICWaAVum/RVCXSf3XQC+LWyVRLPcGDIKTfOaqwzJDtDEZA6z
+ nZyZaKz42pu64Y6jetFMJahfE2tcq782GZ75w==
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id d45a298a
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Sat, 6 Oct 2018 02:43:07 +0000 (UTC)
+Date: Sat, 06 Oct 2018 04:43:30 +0200
+To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: [ANNOUNCE] WireGuard Snapshot `0.0.20181006` Available
 MIME-Version: 1.0
-In-Reply-To: <81a33d58-8810-7f56-6193-ed6543a62915@urlichs.de>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Cc: wireguard@lists.zx2c4.com
+Message-Id: <6b30b44a408f5199@frisell.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -86,94 +57,121 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============5205776009487421183=="
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
---===============5205776009487421183==
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="2fHTh5uZTiUOsy+g"
-Content-Disposition: inline
+Hello,
 
+A new snapshot, `0.0.20181006`, has been tagged in the git repository.
 
---2fHTh5uZTiUOsy+g
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Please note that this snapshot is, like the rest of the project at this point
+in time, experimental, and does not consitute a real release that would be
+considered secure and bug-free. WireGuard is generally thought to be fairly
+stable, and most likely will not crash your computer (though it may).
+However, as this is a pre-release snapshot, it comes with no guarantees, and
+its security is not yet to be depended on; it is not applicable for CVEs.
 
-On Fri, Oct 05, 2018 at 06:32:44PM +0200, Matthias Urlichs wrote:
->On 05.10.18 17:53, Konstantin Ryabitsev wrote:
->> But should the admin need to bring up the OpenVPN link
->
->This may be a stupid question, but why do you need OpenVPN any more, if
->you have Wireguard?
+With all that said, if you'd like to test this snapshot out, there are a
+few relevant changes.
 
-Because it's already there? :)
+== Changes ==
 
-Furthermore, some members of our IT team use macs (gasp!) and for them=20
-it would be much easier to continue to use OpenVPN than to set up=20
-wireguard-go.
+  * Account for big-endian 2^26 conversion in Poly1305.
+  * Account for big-endian NEON in Curve25519.
+  * Fix macros in big-endian AArch64 code so that this will actually run there
+    at all.
+  * Prefer if (IS_ENABLED(...)) over ifdef mazes when possible.
+  * Call simd_relax() within any preempt-disabling glue code every once in a
+    while so as not to increase latency if folks pass in super long buffers.
+  * Prefer compiler-defined architecture macros in assembly code, which puts us
+    in closer alignment with upstream CRYPTOGAMS code, and is cleaner.
+  * Non-static symbols are prefixed with wg_ to avoid polluting the global
+    namespace.
+  * Return a bool from simd_relax() indicating whether or not we were
+    rescheduled.
+  * Reflect the proper simd conditions on arm.
+  * Do not reorder lines in Kbuild files for the simd asm-generic addition,
+    since we don't want to cause merge conflicts.
+  * WARN() if the selftests fail in Zinc, since if this is an initcall, it won't
+    block module loading, so we want to be loud.
+  * Document some interdependencies beside include statements.
+  * Add missing static statement to fpu init functions.
+  * Use union in chacha to access state words as a flat matrix, instead of
+    casting a struct to a u8 and hoping all goes well. Then, by passing around
+    that array as a struct for as long as possible, we can update counter[0]
+    instead of state[12] in the generic blocks, which makes it clearer what's
+    happening.
+  * Remove __aligned(32) for chacha20_ctx since we no longer use vmovdqa on x86,
+    and the other implementations do not require that kind of alignment either.
+  * Submit patch to ARM tree for adjusting RiscPC's cflags to be -march=armv3 so
+    that we can build code that uses umull.
+  * Allow CONFIG_ARM[64] to imply [!]CONFIG_64BIT, and use zinc arch config
+    variables consistently throughout.
+  * Document rationale for the 2^26->2^64/32 conversion in code comments.
+  * Convert all of remaining BUG_ON to WARN_ON.
+  * Replace `bxeq lr` with `reteq lr` in ARM assembler to be compatible with old
+    ISAs via the macro in <asm/assembler.h>.
+  * Do not allow WireGuard to be a built-in if IPv6 is a module.
+  * Writeback the base register and reorder multiplications in the NEON x25519
+    implementation.
+  * Try all combinations of different implementations in selftests, so that
+    potential bugs are more immediately unearthed.
+  * Self tests and SIMD glue code work with #include, which lets the compiler
+    optimize these. Previously these files were .h, because they were included,
+    but a simple grep of the kernel tree shows 259 other files that carry out
+    this same pattern. Only they prefer to instead name the files with a .c
+    instead of a .h, so we now follow the convention.
+  * Support many more platforms in QEMU, especially big endian ones.
+  * Kernels < 3.17 don't have read_cpuid_part, so fix building there.
 
->I'd set up a simple server-side login page that allows people to use
->their user+pass+TOTP to enable non-SSH traffic on "their" link for the
->next N minutes, with an easily-clickable Refresh button (and a
->browser-based notification that the timeout is imminent), plus a small
->(=3D easily-verified-to-be-correct) backend that enables/disables your
->link's iptables rules. Problem solved.
+This snapshot contains commits from: Jason A. Donenfeld and Nathan Chancellor.
 
-Well, not quite. OpenVPN requires 2-factor validation each time there is=20
-a renegotiation -- so even if an attacker steals the private key and=20
-username/password of the administrator, they won't be able to establish=20
-a new session without having the TOTP secret as well. In the situation=20
-you describe, we create a window during which an attacker *would* be=20
-able to establish a VPN connection if they have the wireguard private=20
-key. We can make this window very short, but this would probably greatly=20
-annoy sysadmins, who will not enjoy needing to have a browser window=20
-open so they can re-validate. If we make this window sufficiently long=20
-not to annoy sysadmins, then this weakens our setup.
+As always, the source is available at https://git.zx2c4.com/WireGuard/ and
+information about the project is available at https://www.wireguard.com/ .
 
-Furthermore, doing what you suggest would require writing a webapp and=20
-having some kind of queueing system for the backend process to read and=20
-adjust firewalls based on the data in the queue. It's a pretty=20
-complicated setup that seems orthogonal to the simplicity offered by=20
-WireGuard.
+This snapshot is available in compressed tarball form here:
+  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-0.0.20181006.tar.xz
+  SHA2-256: 9fe7cd5767eda65647463ec29ed707f917f4a77babaaf247adc4be7acaab4665
+  BLAKE2b-256: 36bf22455e948a436820fe3701d6c932eb3df9a39df88a8983f1b05b2a281f69
 
-I've actually considered something like this -- to elevate their access=20
-privileges, an admin would need to simply ssh into the wireguard vpn=20
-server using their wireguard connection. A backend process could react=20
-to the ssh session being established and would apply additional firewall=20
-rules to give more access to that peer address. When that ssh session=20
-terminates, the same process would then drop these firewall rules back=20
-to their "ssh only" level. However, this still seems hacky and I would=20
-rather wait for Jason to come up with a More Proper way to do 2-factor,=20
-especially since the OpenVPN tunnel is already set up and functioning,=20
-so I don't have to invent anything to get what we need.
+A PGP signature of that file decompressed is available here:
+  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-0.0.20181006.tar.asc
+  Signing key: AB9942E6D4A4CFC3412620A749FC7012A5DE03AE
 
--K
+If you're a snapshot package maintainer, please bump your package version. If
+you're a user, the WireGuard team welcomes any and all feedback on this latest
+snapshot.
 
---2fHTh5uZTiUOsy+g
-Content-Type: application/pgp-signature; name="signature.asc"
+Finally, WireGuard development thrives on donations. By popular demand, we
+have a webpage for this: https://www.wireguard.com/donations/
+
+Thank you,
+Jason Donenfeld
+
 
 -----BEGIN PGP SIGNATURE-----
 
-iHUEABYIAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCW7fROwAKCRC2xBzjVmSZ
-bOLuAP4xebYn6zzzzrN4pusxy39mvgKr/k8gmtiv785xkezgGAEAvTBL35X91sOO
-K04HXbsq02i6luZhilSO7SvL284+yA4=
-=LNpz
+iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAlu4IUUQHGphc29uQHp4
+MmM0LmNvbQAKCRBJ/HASpd4Drk2cEADG9ohn34/4DYH2Ix7eVF7gi9AjAIPULMsk
+danY2JasKYyvmwPQcAKm95mSE459h3hPkx7NUfsCYx/a680TOH6JDslPeM2Xg1pd
+G9Ot0KByvwNZT9pzeyvl+iJ3bNbX+apABxPvi+0Y1L9M3KBS2zYCg+Hwp0bps8vh
+paFN53kfbXKRUTX9sR8tua1/bdVF5HiypApoOLuzhoVyBNRzP8zHpYP5tWtkXVUf
+WCcFjWVLtL6uu1u1TXvg3SoNEz6GxzP8mrHXPntwJw31sdbgyGiuGlHAyWS5q70B
+HFuENwKHmL+TXStFFR+fxu39RJtw815Jmo3wHo/P93itCqURscd0S+/mZel4M0Nb
+MzbguRXChl0BPBN5N0JPOwX2RwFHqv3wqorOvFZvYzUvMYQRlyxEF1oE4eOlRhDi
+8IgcoM2o8hOw7Y/8Ap6RGHV7Vs31L0J/gymJc4Au0yNHgqpNDiQweQWd4K01Kn9m
+hKvfe4SmbxAyeOjCK4y3GYuCqPC1rBaQKeFXu0CcEomjxwqk+IYO4JX4mz2na7Ze
+K8EUa8Gfl2PM9GQitg0VsZohIzix4IPYRySAS63aLJ3yPXeH9aes6qNfPvb9uiM0
+sJt+sl+BPEPz6Ac8N7V/aPSVE6x/69a8zN2I+EDYpxMLMivKz7gLF1FCLsSY30n8
+a1KYXxi0xQ==
+=AmrD
 -----END PGP SIGNATURE-----
-
---2fHTh5uZTiUOsy+g--
-
---===============5205776009487421183==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
-
---===============5205776009487421183==--
