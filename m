@@ -7,68 +7,68 @@ X-Spam-Status: No, score=-5.3 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_PASS,
 	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 99768C65C1D
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  7 Oct 2018 14:13:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2570FC676D4
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  7 Oct 2018 14:13:08 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 3D16F20882
+	by mail.kernel.org (Postfix) with ESMTPS id B84F020882
 	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  7 Oct 2018 14:13:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ohh/Maa9"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 3D16F20882
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MVTnsNty"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org B84F020882
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a142c254;
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9cd33241;
 	Sun, 7 Oct 2018 14:11:36 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id db7b7c27
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a80be445
  for <wireguard@lists.zx2c4.com>; Sun, 7 Oct 2018 14:11:34 +0000 (UTC)
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com
- [IPv6:2a00:1450:4864:20::344])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b23a753c
- for <wireguard@lists.zx2c4.com>; Sun, 7 Oct 2018 14:11:20 +0000 (UTC)
-Received: by mail-wm1-x344.google.com with SMTP id 185-v6so5880053wmt.2
- for <wireguard@lists.zx2c4.com>; Sun, 07 Oct 2018 07:12:00 -0700 (PDT)
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com
+ [IPv6:2a00:1450:4864:20::433])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a37840fb
+ for <wireguard@lists.zx2c4.com>; Sun, 7 Oct 2018 14:11:21 +0000 (UTC)
+Received: by mail-wr1-x433.google.com with SMTP id e4-v6so18044819wrs.0
+ for <wireguard@lists.zx2c4.com>; Sun, 07 Oct 2018 07:12:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=from:to:cc:subject:date:message-id:in-reply-to:references
  :mime-version:content-transfer-encoding;
- bh=DdYnhls9yLDEcU/rX7aDvP+jfYx7NaN/ejZjrfFSP8s=;
- b=ohh/Maa9SnD/1BKyFLnirBiKel3a3U2/eZVDCDbCjED0hoFiUs6w+oloj8o5xpILSz
- RqECnUNd21dEzBSgqCJtLpufhA0ZQpoqIj9xNsQvKiyuqNCNTl2RDpCkDVA/VsRmvlLN
- UalGiZ80xxULd4bjYs+Rjh/q2Q/wgzP+O/ikvcDzogPWnFm9aAUGJVIxF+OFVGTD80cW
- DnkildYca+c6yifoN/F7bvR25CzXlYQo1oV48EAanLNmtkiOkHv/WxT5TuaqQI6WUPko
- xB8zbXDyCKX9Q9xzf2eyrbkApV5+uHwHmQCryMODC4GFHWwgmianEWbPZ8A+ocSZV2Ns
- K/jA==
+ bh=NyQT3/s0n1bLyl+09LCmuV2JPKFOqBX9FMtdoHR8KJc=;
+ b=MVTnsNtyUfoPFHJ0Wcpd75RdOPyRwwYKEcU6JDsqhvqnDxO/vKWFImuw7Bzvu2+Wjp
+ nhQ2WqVmRWe2Dt4gTeTSh0OH5RLotqS2N9boPavGijhRTb8H3Z7/DHZqfAsfw+ZybPKw
+ ouxTArAfL2C2U4Y6w6wsvmadiWKTncvBlcmmX7k6rDq+bkFku9FTVovXm7ACKuHImblN
+ E8i9J9GhNrWpYn8lK/rcWMY4t76xvsmjOTsE5+/wTgOiDLtLYgjDLoPsXJtSZFciTHNi
+ goH3gSZNJzRtKiHQLQ8zy2/x3zU6jj6J3a3TKwCKiRewuTwxRaeS4g6bdY+QJuzaW0t1
+ hMeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
  :references:mime-version:content-transfer-encoding;
- bh=DdYnhls9yLDEcU/rX7aDvP+jfYx7NaN/ejZjrfFSP8s=;
- b=r7CXnMWFavtbqN5Uis3cXFlkVE5LttSnlp9/5DjFw/OGN3mQ7duAq1pFPPykJ0xtyV
- bnrEtCm8Ln2RM5idjtDOihSqhuJUhdf8Pxc/il/7iXoMNyDUZBntQSfLrOXtSctwtso+
- 2vHVw/Xs5+r3/vUOVKw9wUBPpvChvAYvv+TFFAIeKSI96EgeaMSwAoh5h9FAH4UETcwE
- PPyzjlR7klncjDZ9fnZIK4XQSOXVFzDMHIrVKCZ3tUPUh3pbhA7msRFUEREm5RzzRbaF
- rP1mHbI/ojlZV87myLXm3LZBEAA2hMMyKUt0GkyfHFrvFPToL36bEmcUv22f+cqu/jMQ
- ZBqw==
-X-Gm-Message-State: ABuFfojcj7xIjg+NtNG4jtrSgDLr/ek0uJ134OIx0djM94eqyz6dtt0I
- lQxWhzm+/HftixY77NXGOLGWzRky
-X-Google-Smtp-Source: ACcGV61CjU9b3w33hgSIedllMRCeRfjUeuYNcDkyjlaYePu31w+CRjVAlNKvlo0MtW1M1IUg0qkB+g==
-X-Received: by 2002:a1c:8942:: with SMTP id
- l63-v6mr13355080wmd.66.1538921519274; 
- Sun, 07 Oct 2018 07:11:59 -0700 (PDT)
+ bh=NyQT3/s0n1bLyl+09LCmuV2JPKFOqBX9FMtdoHR8KJc=;
+ b=QNUcE5QI9nmnzdlO34bg7Pt76jxMDIUFDx1BHFg0zpjQCXplhN3y23JHbvsPm6jnG6
+ afn3kFxwzTYi76MA2q8snvrAvltv+S9npeeAX/vPtZouABOgZ1zjpO5aVdtdTpJc0ls3
+ hR+KcbhJHoPNjzFqwm0NA6/h7QM5hYGC67bdcKHr/JC6rfK5CZKulEu3g84NRAlEknMt
+ 2K7/wKIKsmRrAYYnxR+2NbRP5ywhCG1pJV8RpqRyrMyFwqclf3nJgeQNfDJu643zGFI8
+ tjDgH/wzQURFAJTkl6oFPF5wkJK4xLCwvNbdEH24By9/Lg6L60OIpDJsmApQAf0FYEA9
+ NLeA==
+X-Gm-Message-State: ABuFfogPv1+POTDi09+EBSqre9F3ZnkWUCqg141uvNMvnbqP+q3Vr3Fd
+ EqhcKazYVLaOHwmtkIWQWu0Stt8l
+X-Google-Smtp-Source: ACcGV60703+MnR+Gb7w/U/7DqjNw2+QF94AiCoIcOJRcIjK5WbUQtjEUEav87ZobTX/3di+jVXfPeQ==
+X-Received: by 2002:adf:90a2:: with SMTP id
+ i31-v6mr12774093wri.77.1538921520239; 
+ Sun, 07 Oct 2018 07:12:00 -0700 (PDT)
 Received: from localhost.localdomain
  (p200300C55F2A9600228984FFFE70D494.dip0.t-ipconnect.de.
  [2003:c5:5f2a:9600:2289:84ff:fe70:d494])
- by smtp.gmail.com with ESMTPSA id w72-v6sm28940116wrc.52.2018.10.07.07.11.58
+ by smtp.gmail.com with ESMTPSA id w72-v6sm28940116wrc.52.2018.10.07.07.11.59
  (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Sun, 07 Oct 2018 07:11:58 -0700 (PDT)
+ Sun, 07 Oct 2018 07:11:59 -0700 (PDT)
 From: Julian Orth <ju.orth@gmail.com>
 To: wireguard@lists.zx2c4.com
-Subject: [PATCH v4 08/12] netlink: allow modification of transit net
-Date: Sun,  7 Oct 2018 16:11:35 +0200
-Message-Id: <20181007141139.26310-9-ju.orth@gmail.com>
+Subject: [PATCH v4 09/12] tools: add framework for shared options
+Date: Sun,  7 Oct 2018 16:11:36 +0200
+Message-Id: <20181007141139.26310-10-ju.orth@gmail.com>
 X-Mailer: git-send-email 2.19.0
 In-Reply-To: <20181007141139.26310-1-ju.orth@gmail.com>
 References: <20181007141139.26310-1-ju.orth@gmail.com>
@@ -89,146 +89,264 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This commit adds two new attributes of which at most one may be
-provided:
-
-* WGDEVICE_A_TRANSIT_NETNS_PID: NLA_U32
-* WGDEVICE_A_TRANSIT_NETNS_FD: NLA_U32
-
-The transit namespace is then set to this namespace. The caller must
-either be in this namespace or have CAP_NET_ADMIN in it.
 ---
- src/netlink.c        | 48 +++++++++++++++++++++++++++++++-------------
- src/uapi/wireguard.h | 14 +++++++++----
- 2 files changed, 44 insertions(+), 18 deletions(-)
+ src/tools/containers.h  |  3 +++
+ src/tools/genkey.c      |  3 ++-
+ src/tools/pubkey.c      |  3 ++-
+ src/tools/set.c         |  3 ++-
+ src/tools/setconf.c     |  3 ++-
+ src/tools/show.c        |  3 ++-
+ src/tools/showconf.c    |  3 ++-
+ src/tools/subcommands.h | 14 ++++++-----
+ src/tools/wg.c          | 56 +++++++++++++++++++++++++++++++++++------
+ 9 files changed, 72 insertions(+), 19 deletions(-)
 
-diff --git a/src/netlink.c b/src/netlink.c
-index b6a66dd..1029b62 100644
---- a/src/netlink.c
-+++ b/src/netlink.c
-@@ -27,6 +27,8 @@ static const struct nla_policy device_policy[WGDEVICE_A_MAX + 1] = {
- 	[WGDEVICE_A_PEERS]		= { .type = NLA_NESTED },
- 	[WGDEVICE_A_DEV_NETNS_PID]	= { .type = NLA_U32 },
- 	[WGDEVICE_A_DEV_NETNS_FD]	= { .type = NLA_U32 },
-+	[WGDEVICE_A_TRANSIT_NETNS_PID]	= { .type = NLA_U32 },
-+	[WGDEVICE_A_TRANSIT_NETNS_FD]	= { .type = NLA_U32 },
- };
+diff --git a/src/tools/containers.h b/src/tools/containers.h
+index 619094e..cd757e4 100644
+--- a/src/tools/containers.h
++++ b/src/tools/containers.h
+@@ -15,6 +15,9 @@
  
- static const struct nla_policy peer_policy[WGPEER_A_MAX + 1] = {
-@@ -353,23 +355,44 @@ static int get_device_done(struct netlink_callback *cb)
- 	return 0;
+ #include "../uapi/wireguard.h"
+ 
++struct wgoptions {
++};
++
+ struct wgallowedip {
+ 	uint16_t family;
+ 	union {
+diff --git a/src/tools/genkey.c b/src/tools/genkey.c
+index e50d64b..d286cc0 100644
+--- a/src/tools/genkey.c
++++ b/src/tools/genkey.c
+@@ -52,11 +52,12 @@ static inline ssize_t get_random_bytes(uint8_t *out, size_t len)
+ 	return ret;
  }
  
--static int set_port(struct wireguard_device *wg, u16 port)
-+static int set_socket(struct wireguard_device *wg, struct nlattr **attrs)
+-int genkey_main(int argc, char *argv[])
++int genkey_main(int argc, char *argv[], struct wgoptions *options)
  {
- 	struct wireguard_peer *peer;
--	int ret;
-+	struct nlattr *port_attr = attrs[WGDEVICE_A_LISTEN_PORT];
-+	u16 port;
-+	struct net *net = NULL;
-+	int ret = 0;
-+
-+	net = get_attr_net(attrs[WGDEVICE_A_TRANSIT_NETNS_PID],
-+			attrs[WGDEVICE_A_TRANSIT_NETNS_FD]);
-+	if (IS_ERR(net))
-+		return PTR_ERR(net);
-+	if (port_attr)
-+		port = nla_get_u16(port_attr);
-+	else
-+		port = wg->incoming_port;
+ 	uint8_t key[WG_KEY_LEN];
+ 	char base64[WG_KEY_LEN_BASE64];
+ 	struct stat stat;
++	(void)options;
  
--	ret = test_socket_net_capable(wg->transit_net);
-+	ret = test_socket_net_capable(net ? : wg->transit_net);
- 	if (ret)
--		return ret;
--	if (wg->incoming_port == port)
--		return 0;
-+		goto out;
-+
-+	if (wg->incoming_port == port && (!net || wg->transit_net == net))
-+		goto out;
-+
- 	list_for_each_entry (peer, &wg->peer_list, peer_list)
- 		wg_socket_clear_peer_endpoint_src(peer);
- 	if (!netif_running(wg->dev)) {
- 		wg->incoming_port = port;
--		return 0;
-+		if (net)
-+			wg_device_set_nets(wg, wg->dev_net, net);
-+		goto out;
- 	}
--	return wg_socket_init(wg, wg->transit_net, port);
-+	ret = wg_socket_init(wg, net ? : wg->transit_net, port);
-+
-+out:
-+	if (net)
-+		put_net(net);
-+	return ret;
+ 	if (argc != 1) {
+ 		fprintf(stderr, "Usage: %s %s\n", PROG_NAME, argv[0]);
+diff --git a/src/tools/pubkey.c b/src/tools/pubkey.c
+index cf8e256..08a3e9a 100644
+--- a/src/tools/pubkey.c
++++ b/src/tools/pubkey.c
+@@ -11,11 +11,12 @@
+ #include "encoding.h"
+ #include "subcommands.h"
+ 
+-int pubkey_main(int argc, char *argv[])
++int pubkey_main(int argc, char *argv[], struct wgoptions *options)
+ {
+ 	uint8_t key[WG_KEY_LEN];
+ 	char base64[WG_KEY_LEN_BASE64];
+ 	int trailing_char;
++	(void)options;
+ 
+ 	if (argc != 1) {
+ 		fprintf(stderr, "Usage: %s %s\n", PROG_NAME, argv[0]);
+diff --git a/src/tools/set.c b/src/tools/set.c
+index 9d84ccd..4e90940 100644
+--- a/src/tools/set.c
++++ b/src/tools/set.c
+@@ -12,10 +12,11 @@
+ #include "ipc.h"
+ #include "subcommands.h"
+ 
+-int set_main(int argc, char *argv[])
++int set_main(int argc, char *argv[], struct wgoptions *options)
+ {
+ 	struct wgdevice *device = NULL;
+ 	int ret = 1;
++	(void)options;
+ 
+ 	if (argc < 3) {
+ 		fprintf(stderr, "Usage: %s %s <interface> [listen-port <port>] [fwmark <mark>] [private-key <file path>] [peer <base64 public key> [remove] [preshared-key <file path>] [endpoint <ip>:<port>] [persistent-keepalive <interval seconds>] [allowed-ips <ip1>/<cidr1>[,<ip2>/<cidr2>]...] ]...\n", PROG_NAME, argv[0]);
+diff --git a/src/tools/setconf.c b/src/tools/setconf.c
+index 7135e85..8133bdd 100644
+--- a/src/tools/setconf.c
++++ b/src/tools/setconf.c
+@@ -13,7 +13,7 @@
+ #include "ipc.h"
+ #include "subcommands.h"
+ 
+-int setconf_main(int argc, char *argv[])
++int setconf_main(int argc, char *argv[], struct wgoptions *options)
+ {
+ 	struct wgdevice *device = NULL;
+ 	struct config_ctx ctx;
+@@ -21,6 +21,7 @@ int setconf_main(int argc, char *argv[])
+ 	char *config_buffer = NULL;
+ 	size_t config_buffer_len = 0;
+ 	int ret = 1;
++	(void)options;
+ 
+ 	if (argc != 3) {
+ 		fprintf(stderr, "Usage: %s %s <interface> <configuration filename>\n", PROG_NAME, argv[0]);
+diff --git a/src/tools/show.c b/src/tools/show.c
+index b50af2a..1ebe6e2 100644
+--- a/src/tools/show.c
++++ b/src/tools/show.c
+@@ -377,10 +377,11 @@ static bool ugly_print(struct wgdevice *device, const char *param, bool with_int
+ 	return true;
  }
  
- static int set_allowedip(struct wireguard_peer *peer, struct nlattr **attrs)
-@@ -566,12 +589,9 @@ static int set_device(struct sk_buff *skb, struct genl_info *info)
- 			wg_socket_clear_peer_endpoint_src(peer);
+-int show_main(int argc, char *argv[])
++int show_main(int argc, char *argv[], struct wgoptions *options)
+ {
+ 	int ret = 0;
+ 
++	(void)options;
+ 	COMMAND_NAME = argv[0];
+ 
+ 	if (argc > 3) {
+diff --git a/src/tools/showconf.c b/src/tools/showconf.c
+index 777e022..1de65b0 100644
+--- a/src/tools/showconf.c
++++ b/src/tools/showconf.c
+@@ -18,7 +18,7 @@
+ #include "ipc.h"
+ #include "subcommands.h"
+ 
+-int showconf_main(int argc, char *argv[])
++int showconf_main(int argc, char *argv[], struct wgoptions *options)
+ {
+ 	char base64[WG_KEY_LEN_BASE64];
+ 	char ip[INET6_ADDRSTRLEN];
+@@ -26,6 +26,7 @@ int showconf_main(int argc, char *argv[])
+ 	struct wgpeer *peer;
+ 	struct wgallowedip *allowedip;
+ 	int ret = 1;
++	(void)options;
+ 
+ 	if (argc != 2) {
+ 		fprintf(stderr, "Usage: %s %s <interface>\n", PROG_NAME, argv[0]);
+diff --git a/src/tools/subcommands.h b/src/tools/subcommands.h
+index 2a7e36e..6707ead 100644
+--- a/src/tools/subcommands.h
++++ b/src/tools/subcommands.h
+@@ -6,12 +6,14 @@
+ #ifndef SUBCOMMANDS_H
+ #define SUBCOMMANDS_H
+ 
++#include "containers.h"
++
+ extern const char *PROG_NAME;
+-int show_main(int argc, char *argv[]);
+-int showconf_main(int argc, char *argv[]);
+-int set_main(int argc, char *argv[]);
+-int setconf_main(int argc, char *argv[]);
+-int genkey_main(int argc, char *argv[]);
+-int pubkey_main(int argc, char *argv[]);
++int show_main(int argc, char *argv[], struct wgoptions *);
++int showconf_main(int argc, char *argv[], struct wgoptions *);
++int set_main(int argc, char *argv[], struct wgoptions *);
++int setconf_main(int argc, char *argv[], struct wgoptions *);
++int genkey_main(int argc, char *argv[], struct wgoptions *);
++int pubkey_main(int argc, char *argv[], struct wgoptions *);
+ 
+ #endif
+diff --git a/src/tools/wg.c b/src/tools/wg.c
+index 4c24ff0..f70b5c5 100644
+--- a/src/tools/wg.c
++++ b/src/tools/wg.c
+@@ -6,14 +6,17 @@
+ #include <stddef.h>
+ #include <stdio.h>
+ #include <string.h>
++#include <stdbool.h>
++#include <getopt.h>
+ 
+ #include "subcommands.h"
++#include "containers.h"
+ 
+ const char *PROG_NAME;
+ 
+ static const struct {
+ 	const char *subcommand;
+-	int (*function)(int, char**);
++	int (*function)(int, char**, struct wgoptions *);
+ 	const char *description;
+ } subcommands[] = {
+ 	{ "show", show_main, "Shows the current configuration and device information" },
+@@ -35,26 +38,65 @@ static void show_usage(FILE *file)
+ 	fprintf(file, "You may pass `--help' to any of these subcommands to view usage.\n");
+ }
+ 
++static bool parse_options(int argc, char *argv[], struct wgoptions *options)
++{
++	int ch;
++	struct option opts[] = {
++		{
++			.name = "help",
++			.val = 'h',
++		},
++		{
++			0
++		}
++	};
++	(void)options;
++
++	setenv("POSIXLY_CORRECT", "", 0);
++
++	while ((ch = getopt_long(argc, argv, "h", opts, NULL)) != -1) {
++		switch (ch) {
++		case '?':
++			return false;
++		case 'h':
++			show_usage(stdout);
++			exit(0);
++		}
++	}
++
++	return true;
++}
++
+ int main(int argc, char *argv[])
+ {
++	struct wgoptions options = { };
++
+ 	PROG_NAME = argv[0];
+ 
+-	if (argc == 2 && (!strcmp(argv[1], "-h") || !strcmp(argv[1], "--help") || !strcmp(argv[1], "help"))) {
++	if (argc == 2 && !strcmp(argv[1], "help")) {
+ 		show_usage(stdout);
+ 		return 0;
  	}
  
--	if (info->attrs[WGDEVICE_A_LISTEN_PORT]) {
--		ret = set_port(wg,
--			nla_get_u16(info->attrs[WGDEVICE_A_LISTEN_PORT]));
--		if (ret)
--			goto out;
--	}
-+	ret = set_socket(wg, info->attrs);
-+	if (ret)
-+		goto out;
+-	if (argc == 1) {
++	if (!parse_options(argc, argv, &options)) {
++		show_usage(stderr);
++		return 1;
++	}
++
++	argv += optind;
++	argc -= optind;
++
++	if (argc == 0) {
+ 		static char *new_argv[] = { "show", NULL };
+-		return show_main(1, new_argv);
++		return show_main(1, new_argv, &options);
+ 	}
  
- 	if (info->attrs[WGDEVICE_A_FLAGS] &&
- 	    nla_get_u32(info->attrs[WGDEVICE_A_FLAGS]) &
-diff --git a/src/uapi/wireguard.h b/src/uapi/wireguard.h
-index 4f60a02..d6173e6 100644
---- a/src/uapi/wireguard.h
-+++ b/src/uapi/wireguard.h
-@@ -88,16 +88,18 @@
-  * May only be called via NLM_F_REQUEST. The command must contain the following
-  * tree of nested items. Exactly one of WGDEVICE_A_IFINDEX and WGDEVICE_A_IFNAME
-  * must be provided. All other top-level items are optional. At most one of
-- * WGDEVICE_A_DEV_NETNS_PID and WGDEVICE_A_DEV_NETNS_FD may be provided.
-+ * WGDEVICE_A_TRANSIT_NETNS_PID and WGDEVICE_A_TRANSIT_NETNS_FD may be provided.
-+ * At most one of WGDEVICE_A_DEV_NETNS_PID and WGDEVICE_A_DEV_NETNS_FD may be
-+ * provided.
-  *
-  * If WGDEVICE_A_DEV_NETNS_PID/FD is provided, the Wireguard device is looked up
-  * in this network namespace. Otherwise it is looked up in the network namespace
-  * of the netlink socket. The caller must have CAP_NET_ADMIN in the namespace of
-  * the Wireguard device.
-  *
-- * If WGDEVICE_A_LISTEN_PORT is provided and the calling process is not in the
-- * transit namespace, then the calling process must have CAP_NET_ADMIN the
-- * transit namespace.
-+ * If WGDEVICE_A_TRANSIT_NETNS_PID/FD and/or WGDEVICE_A_LISTEN_PORT are provided
-+ * and the calling process is not in the transit namespace, then the calling
-+ * process must have CAP_NET_ADMIN the transit namespace.
-  *
-  *    WGDEVICE_A_IFINDEX: NLA_U32
-  *    WGDEVICE_A_IFNAME: NLA_NUL_STRING, maxlen IFNAMESIZ - 1
-@@ -107,6 +109,8 @@
-  *    WGDEVICE_A_LISTEN_PORT: NLA_U16, 0 to choose randomly
-  *    WGDEVICE_A_DEV_NETNS_PID: NLA_U32
-  *    WGDEVICE_A_DEV_NETNS_FD: NLA_U32
-+ *    WGDEVICE_A_TRANSIT_NETNS_PID: NLA_U32
-+ *    WGDEVICE_A_TRANSIT_NETNS_FD: NLA_U32
-  *    WGDEVICE_A_FWMARK: NLA_U32, 0 to disable
-  *    WGDEVICE_A_PEERS: NLA_NESTED
-  *        0: NLA_NESTED
-@@ -181,6 +185,8 @@ enum wgdevice_attribute {
- 	WGDEVICE_A_PEERS,
- 	WGDEVICE_A_DEV_NETNS_PID,
- 	WGDEVICE_A_DEV_NETNS_FD,
-+	WGDEVICE_A_TRANSIT_NETNS_PID,
-+	WGDEVICE_A_TRANSIT_NETNS_FD,
- 	__WGDEVICE_A_LAST
- };
- #define WGDEVICE_A_MAX (__WGDEVICE_A_LAST - 1)
+ 	for (size_t i = 0; i < sizeof(subcommands) / sizeof(subcommands[0]); ++i) {
+-		if (!strcmp(argv[1], subcommands[i].subcommand))
+-			return subcommands[i].function(argc - 1, argv + 1);
++		if (!strcmp(argv[0], subcommands[i].subcommand))
++			return subcommands[i].function(argc, argv, &options);
+ 	}
+ 
+-	fprintf(stderr, "Invalid subcommand: `%s'\n", argv[1]);
++	fprintf(stderr, "Invalid subcommand: `%s'\n", argv[0]);
+ 	show_usage(stderr);
+ 	return 1;
+ }
 -- 
 2.19.0
 
