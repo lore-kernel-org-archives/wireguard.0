@@ -2,76 +2,74 @@ Return-Path: <SRS0=x3Nk=MT=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+X-Spam-Status: No, score=-2.3 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
 	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 614B9C65C1D
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D0199C65C33
 	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  7 Oct 2018 14:13:03 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id E011A20882
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  7 Oct 2018 14:13:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 6AB7C20882
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  7 Oct 2018 14:13:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lyVIkVWQ"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org E011A20882
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kwnbcR3w"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 6AB7C20882
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5e2d5747;
-	Sun, 7 Oct 2018 14:11:15 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 20b00ba6;
+	Sun, 7 Oct 2018 14:11:16 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 93666a21
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6cda3797
  for <wireguard@lists.zx2c4.com>; Sun, 7 Oct 2018 14:11:14 +0000 (UTC)
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com
- [IPv6:2a00:1450:4864:20::331])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3dc6dfae
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com
+ [IPv6:2a00:1450:4864:20::333])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 92a63bc8
  for <wireguard@lists.zx2c4.com>; Sun, 7 Oct 2018 14:11:14 +0000 (UTC)
-Received: by mail-wm1-x331.google.com with SMTP id 189-v6so5715341wmw.2
+Received: by mail-wm1-x333.google.com with SMTP id 206-v6so5710035wmb.5
  for <wireguard@lists.zx2c4.com>; Sun, 07 Oct 2018 07:11:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding;
- bh=KSMUJJoDzcvsEX+J7VwBQmboLtYbzMUEk6OX/H6uysM=;
- b=lyVIkVWQ7KjRUXyzs99BOW5IYrcw/pM5GVZIPHT75WpifWJ52XDE3y/uKwrUHEfHuu
- 8d38+RuST2l+8/u8YHuPasVenENoozkNNCF8S8TiJ7kcXdImlOM5Z18TzWcZr4HHm1sz
- Wdwm9MsKcE3Ko4CMIZtUDO/2D42UP5qo1NDfnNRM+L2dPNVYs2r7NAKqeCDYk0aYl/0p
- LA+3MSXrZuMw8LtiAuWkSRk959TS7HnKtL+HiZEZSHa+tcHQQkenM3IrlNoitS5rLJ23
- oDGi6gAsDAJeEhAwcvgRNfgSSCTut1Qhq31BzvWX/Yfv2laa2C1niYb5nYoOn1sRJMrQ
- HTtw==
+ h=from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=L69SNNap7Afn2vvutcRxGzj8U9NpH1dTLC8u8R8bTIM=;
+ b=kwnbcR3wSPUKz5STei+vcFS0W3TCOmff+zlE1sxGxPTee6LUVFWgxpzzcsrg9ZGQWi
+ UZkY/fdlMPdHjNqtpFyKbgURsIwg0YKPK2ad/RQdZMC8DMBSFjuIgrT0/8BnN1O/kp2v
+ 8HVQ1KV2sVEv+YEvXbGE6ECQtfuRTqxEqd9zWOzKFc2uQVd4MGQk8Z0BQGiB00V9ojj7
+ dV9zCLahG+QtwQVVuKIUbkoab15ibzLBjYOnEOo6BFxm+qNEwFTflSeMyxdngSfJn4Pk
+ Lx3eLvbbZnn/Uy80DvoPsWi/ab26oVVmpkWWnKPq7oRLxjm1O6ZIAe+jzrjg/Mui428L
+ Fn8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
- :references:mime-version:content-transfer-encoding;
- bh=KSMUJJoDzcvsEX+J7VwBQmboLtYbzMUEk6OX/H6uysM=;
- b=NS+vyj74lpbBvEt8+V2RmO1NKrm5XzCTyqOUqc2w3o+rDRE5mvWmp5lCEg4/5DN8mz
- 3yZqgQTegA+hjLaEIT+eZcCQAgla/XEXpNjTZFhSD9WotFuMpt5Os6ZWXDz7nqKEKd8D
- H2F8Y33CurhN4oSX4oTp3y2qXn4GkkvMwHikqtZYs9CkHk36dPUFrY9+KTr2xD0hxMSU
- YoNKL+thUhwi1L/geBm/7luu7TLquAFTelyEhO143aZ+KtZseSh77Npit6CcTyu7LWzK
- NCGfWFfUmHYEFJqSWFFxCBnuji1RS26LzLtxtmFP3Uij8CQhv83cNszZszwQO8FAcasS
- 70RQ==
-X-Gm-Message-State: ABuFfoh0MpUmV8G6HHd+NCYMxGVa93+0qop103NgQf/PfYV6+guXHZFl
- rSGuomCv9KC2XRuFHzrQVznhljSb
-X-Google-Smtp-Source: ACcGV62Zva4bo3uaGtLNuNg+93WgCdnJVgnYhFOLOF+Eo/LsR/HpfW54J9a9Skjx0MvluhVVtTEpww==
-X-Received: by 2002:a1c:b157:: with SMTP id
- a84-v6mr12078665wmf.18.1538921512178; 
- Sun, 07 Oct 2018 07:11:52 -0700 (PDT)
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=L69SNNap7Afn2vvutcRxGzj8U9NpH1dTLC8u8R8bTIM=;
+ b=icM597P1pZ8nt4GA0t/P500Ywt80wqOvNu2wc3XsbPu6dxyB4iLPdzybbPxfjeG+qz
+ WcRFWQlXy3flzOkRPfgVnqocxsVNbmb0e3wq/Qx4xjD6Fa8dPBf+KQGDEtuXSTd9MxfA
+ HSqwswD2jlZnkBNeZEICgS9RUxFDsye1QsjOTpHGGlonn18BkN7nuY4W9+5VYBZ43UWK
+ ISuB9O1OtKvSdl6HyXT5CuQnK3STTFt7MkgCKYJxZezSvD8iPvhkcAuluUzwGBWtPVwm
+ fKA42QWI5bV/CyBh1QuifLbrxMF1F7TZuyP+KyUU9Cf9V4fcQjnsJTv/FLZRUtIZA/q0
+ Jdew==
+X-Gm-Message-State: ABuFfojghaZioNdr6qfu9DDRgJe+AwGTppuDdBux17Qv63S6NfnFoC87
+ 4YdHbIc9c0VL6cmqT51jbcsl/rh4
+X-Google-Smtp-Source: ACcGV62sc+0AWckgG4PdrAuGPyFV3d7kdDMxldE1D0YZKd/TmU+sfS777glAVxL6oVmHGz7Neo/mWQ==
+X-Received: by 2002:a1c:8bcc:: with SMTP id
+ n195-v6mr13644006wmd.118.1538921511124; 
+ Sun, 07 Oct 2018 07:11:51 -0700 (PDT)
 Received: from localhost.localdomain
  (p200300C55F2A9600228984FFFE70D494.dip0.t-ipconnect.de.
  [2003:c5:5f2a:9600:2289:84ff:fe70:d494])
- by smtp.gmail.com with ESMTPSA id w72-v6sm28940116wrc.52.2018.10.07.07.11.51
+ by smtp.gmail.com with ESMTPSA id w72-v6sm28940116wrc.52.2018.10.07.07.11.49
  (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Sun, 07 Oct 2018 07:11:51 -0700 (PDT)
+ Sun, 07 Oct 2018 07:11:50 -0700 (PDT)
 From: Julian Orth <ju.orth@gmail.com>
 To: wireguard@lists.zx2c4.com
-Subject: [PATCH v4 01/12] device: protect socket_init with device_update_lock
-Date: Sun,  7 Oct 2018 16:11:28 +0200
-Message-Id: <20181007141139.26310-2-ju.orth@gmail.com>
+Subject: [PATCH v4 00/12] Allow changing the transit namespace
+Date: Sun,  7 Oct 2018 16:11:27 +0200
+Message-Id: <20181007141139.26310-1-ju.orth@gmail.com>
 X-Mailer: git-send-email 2.19.0
-In-Reply-To: <20181007141139.26310-1-ju.orth@gmail.com>
-References: <20181007141139.26310-1-ju.orth@gmail.com>
 MIME-Version: 1.0
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
@@ -89,47 +87,54 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-`set_port` in netlink.c races with `open` in device.c. This can cause
-the following code flow:
+Hello list,
 
-* thread 1: set_port: device is not up
-* thread 2: device is opened
-* thread 2: open: called and calls socket_init with the original port
-* thread 1: set_port: sets incoming_port to the new port and returns
+This series is simply v3 [1] rebased on master.
 
-incoming_port is then inconsistent. While this is not particularly
-critical, it will become more critial when ste_port also sets the
-transit namespace.
----
- src/device.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+Julian
 
-diff --git a/src/device.c b/src/device.c
-index 72b93c7..49f9634 100644
---- a/src/device.c
-+++ b/src/device.c
-@@ -53,17 +53,18 @@ static int open(struct net_device *dev)
- #endif
- #endif
- 
-+	mutex_lock(&wg->device_update_lock);
- 	ret = wg_socket_init(wg, wg->incoming_port);
- 	if (ret < 0)
--		return ret;
--	mutex_lock(&wg->device_update_lock);
-+		goto out;
- 	list_for_each_entry (peer, &wg->peer_list, peer_list) {
- 		wg_packet_send_staged_packets(peer);
- 		if (peer->persistent_keepalive_interval)
- 			wg_packet_send_keepalive(peer);
- 	}
-+out:
- 	mutex_unlock(&wg->device_update_lock);
--	return 0;
-+	return ret;
- }
- 
- #if defined(CONFIG_PM_SLEEP) && !defined(CONFIG_ANDROID)
+[1] https://lists.zx2c4.com/pipermail/wireguard/2018-September/003358.html
+
+Julian Orth (12):
+  device: protect socket_init with device_update_lock
+  netlink: check for CAP_NET_ADMIN manually
+  netlink: allow specifying the device namespace
+  netlink: restrict access to the UDP socket
+  device: rename creating_net to transit_net
+  device: store a copy of the device net
+  socket: allow modification of transit_net
+  netlink: allow modification of transit net
+  tools: add framework for shared options
+  tools: allow specifying the device namespace
+  tools: allow modification of transit net
+  tests: add test for transit-net
+
+ src/device.c            |  44 +++++++-----
+ src/device.h            |   6 +-
+ src/netlink.c           | 150 ++++++++++++++++++++++++++++++++--------
+ src/socket.c            |  18 ++---
+ src/socket.h            |   6 +-
+ src/tests/netns.sh      |  40 +++++++++++
+ src/tools/config.c      |   8 +++
+ src/tools/containers.h  |  22 +++++-
+ src/tools/genkey.c      |   3 +-
+ src/tools/ipc.c         |  26 +++++--
+ src/tools/ipc.h         |   7 +-
+ src/tools/man/wg.8      |   9 ++-
+ src/tools/netns.c       |  62 +++++++++++++++++
+ src/tools/netns.h       |  18 +++++
+ src/tools/pubkey.c      |   3 +-
+ src/tools/set.c         |   6 +-
+ src/tools/setconf.c     |   4 +-
+ src/tools/show.c        |  35 +++++++---
+ src/tools/showconf.c    |   4 +-
+ src/tools/subcommands.h |  14 ++--
+ src/tools/wg.c          |  64 +++++++++++++++--
+ src/uapi/wireguard.h    |  39 ++++++++++-
+ 22 files changed, 483 insertions(+), 105 deletions(-)
+ create mode 100644 src/tools/netns.c
+ create mode 100644 src/tools/netns.h
+
 -- 
 2.19.0
 
