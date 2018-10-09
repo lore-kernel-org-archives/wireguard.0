@@ -6,58 +6,52 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 96BD1ECDFDF
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  9 Oct 2018 19:19:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6944C43441
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  9 Oct 2018 22:29:32 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id C3947213A2
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  9 Oct 2018 19:19:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 0A8F021479
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  9 Oct 2018 22:29:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="UFftrYrs"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org C3947213A2
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=newmedia-net.de header.i=@newmedia-net.de header.b="huI00vvs"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 0A8F021479
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=newmedia-net.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ed309174;
-	Tue, 9 Oct 2018 19:18:13 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7672045b;
+	Tue, 9 Oct 2018 22:28:33 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ec72963c
- for <wireguard@lists.zx2c4.com>; Tue, 9 Oct 2018 19:18:11 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fbad573d
- for <wireguard@lists.zx2c4.com>; Tue, 9 Oct 2018 19:18:11 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 88aaa4f8
- for <wireguard@lists.zx2c4.com>; Tue, 9 Oct 2018 19:18:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=L74d4/MvEqf1fF4Mv6cLvq0+9Sc=; b=UFftrY
- rs4v6SmzJGuXgplelXfJv+JmmAWf1MsRWPtEZeQ5DmpfgGEnHygWPn4g/6bA+xbs
- SaqchWoGiAbwr+7+Ok7xGCYtDGNlLO9SYcLgWoej/CeyZSi6xj9NsNz8OewHS6pe
- eaL0O6wj+Ko0tRFFsch4obAoCEpCJrdLzfYiHaFvXyMUFJeICI+0twymoT8lM1YT
- WEcxh06EH+jwu5/aKraL9SrrJjazbXboVwepaBHK8F0vtrCfYFg0Esa9mNAzP9Ix
- O7A1vBLaunFkScJM5CDOQax2UDp0/9DddLXxDoPlRtiZ/8pSUhwHWicU9VhWLPI4
- zEbMV9pNoKbMMuoQ==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 2fc0319d
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
- for <wireguard@lists.zx2c4.com>; Tue, 9 Oct 2018 19:18:11 +0000 (UTC)
-Received: by mail-ot1-f42.google.com with SMTP id i12-v6so2871088otl.1
- for <wireguard@lists.zx2c4.com>; Tue, 09 Oct 2018 12:19:07 -0700 (PDT)
-X-Gm-Message-State: ABuFfoj9YQqDOxqaCEYEb/kwOWrhHkkjRYXv6iWg5N7Da3M8vb1Ojv/b
- RviOTr/82Ef0uhtpo9mkp4zC+LxaxPXbjgNBvHo=
-X-Google-Smtp-Source: ACcGV62gfIwI44Wzjee0RVO3tm9Q9PBQ8wv2Qu+7XdzbnKkQ+CKFD+2bSEX4a4qbo0dSwD9JNpjLLiXnMKNVWWZTSS0=
-X-Received: by 2002:a9d:1d47:: with SMTP id m65mr18922803otm.199.1539112746826; 
- Tue, 09 Oct 2018 12:19:06 -0700 (PDT)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c32d2033
+ for <wireguard@lists.zx2c4.com>; Tue, 9 Oct 2018 22:28:31 +0000 (UTC)
+Received: from webmail.newmedia-net.de (smtps.newmedia-net.de
+ [IPv6:2a05:a1c0:0:de::167])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8f9d2033
+ for <wireguard@lists.zx2c4.com>; Tue, 9 Oct 2018 22:28:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=newmedia-net.de; s=mikd; 
+ h=Content-Transfer-Encoding:Content-Type:In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:Subject;
+ bh=jrLKDBLNoUrI6b7WFXrWK27mHLHnb0ta0G1tssYBruQ=; 
+ b=huI00vvsl+QDxYmfUZNB0eYygplDytCwlm8mtD2tjJwFmYZ6sNAr2iGkSbiLWZRB2h8s0rnbgHZPSjpYkfGocN2HegYbMnFjVqLc8SMOAyu2ZJMkSsTZ5Syc7+s8MXQ8Bw850cgrCiLTQvd5HQNKYihvL3VXhFItEmbyjJVP1tE=;
+Subject: Re: [ANNOUNCE] WireGuard Snapshot `0.0.20181007` Available
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ David Kricker <logcabin@fastmail.net>
+References: <6b314daa5d672a51@frisell.zx2c4.com>
+ <8j30b7w3yIgg5rmXSRUNlDH8yquzSydWwqfdQrnRe-T7mK5e_lYfD2v5IKjgHVAcWptoOVXZ_wENwJ1i733Yn45_TjlMg7Tf_WmW7Dkeuco=@protonmail.ch>
+ <CAHmME9qboTvSU1+bu8Oi-zwBp8f6UWnfaGb-NEtfsnvnJUL66w@mail.gmail.com>
+ <1538952235.1510043.1533890536.493A745F@webmail.messagingengine.com>
+ <CAHmME9pbcPFghexTJnZz0kqJvTwa_bxpnox1vho8rMTQWd_pCQ@mail.gmail.com>
+From: Sebastian Gottschall <s.gottschall@newmedia-net.de>
+Message-ID: <a276382e-b6c7-bd7d-2e70-23f81177876c@newmedia-net.de>
+Date: Wed, 10 Oct 2018 00:29:21 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.2.1
 MIME-Version: 1.0
-References: <163f39a3-0fb5-3645-b6bd-3ddd797c158b@yahoo.com>
- <796625c4-d114-1b5f-ea79-97b91e682549@newmedia-net.de>
-In-Reply-To: <796625c4-d114-1b5f-ea79-97b91e682549@newmedia-net.de>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 9 Oct 2018 21:18:54 +0200
-X-Gmail-Original-Message-ID: <CAHmME9oKzPdrGRibiA7_gB=qZP4qcKkN35-ZAoFkSEeV-wDXyw@mail.gmail.com>
-Message-ID: <CAHmME9oKzPdrGRibiA7_gB=qZP4qcKkN35-ZAoFkSEeV-wDXyw@mail.gmail.com>
-Subject: Re: Wireguard not coming up on DD-wrt
-To: s.gottschall@newmedia-net.de
+In-Reply-To: <CAHmME9pbcPFghexTJnZz0kqJvTwa_bxpnox1vho8rMTQWd_pCQ@mail.gmail.com>
+X-Received: from [2003:c9:3f4e:a100:7435:9154:a523:7781]
+ by webmail.newmedia-net.de with esmtpsa (TLSv1:AES128-SHA:128)
+ (Exim 4.72) (envelope-from <s.gottschall@newmedia-net.de>)
+ id 1gA0VJ-0001HM-TN; Wed, 10 Oct 2018 00:29:26 +0200
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
@@ -70,26 +64,34 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="utf-8"; Format="flowed"
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Tue, Oct 9, 2018 at 6:30 PM Sebastian Gottschall
-<s.gottschall@newmedia-net.de> wrote:
->
-> just to make sure. since i'm updating wireguard in dd-wrt very often to the latest state of art code from git.
-
-Do not do this. Rather, use snapshots. If you're distributing builds
-based on git master, you're putting your users at unnecessary risk.
-The only safe and acceptable distribution of WireGuard is using the
-latest snapshot tarball. When you use git master, you're not getting
-the "latest state of art code", you're getting "jason's 5am
-force-pushes and wacky ideas pre-codereview." On the other hand, when
-you use snapshots, you're getting code that I've spent some time
-reviewing and double checking to make sure it won't murder kittens and
-related atrocities.
-_______________________________________________
-WireGuard mailing list
-WireGuard@lists.zx2c4.com
-https://lists.zx2c4.com/mailman/listinfo/wireguard
+aSBkbyBub3QgdXNlIHRoZSBkZWZpbmVkIG1hc3Rlci4gaSBqdXN0IGNoZWNrb3V0IHRoZSBnaXQg
+cmV2aXNpb25zIApkZWZpbmVkIGJ5IHlvdXIgc25hcHNob3RzLiBidXQgc2luY2UgeW91IHJlbGVh
+c2Ugc25hcHNob3RzwqAgMiB0aW1lcyBwZXIgCndlZWsgc29tZXRpbWVzIGl0cyBzdGlsbCBlbmRz
+IHVwIG9uIGEgaGVhdnkgY2hhbmdpbmcgbW9kdWxlCmJ1dCB0aGF0IHNob3VsZCBub3QgYmUgdGhl
+IHRvcGljIGhlcmUuIHRoZSB0b3BpYyBpcyB3aGF0IGxlYWRzIHdpcmVndWFyZCAKdG8gZmFpbCBv
+biBoaXMgc3lzdGVtLiBzbyB3ZSBuZWVkIHRvIHRyYWNrIGRvd24gZmlyc3Qgd2hpY2ggaGFyZHdh
+cmUgaGUgCmlzIHVzaW5nIHNpbmNlIGkgZG8gc3VwcG9ydCBhbG90IG9mIGRldmljZXMgd2l0aCBh
+bG90IG9mIGRpZmZlcmVudCBjcHUgCnBsYXRmb3Jtcy4gc28gcGxlYXNlIHN0YXkgb24gdG9waWMg
+YW5kIGRvIG5vdCBzcGVjdWxhdGUgdG9vIG11Y2gKCgpBbSAwOS4xMC4yMDE4IHVtIDIxOjE4IHNj
+aHJpZWIgSmFzb24gQS4gRG9uZW5mZWxkOgo+IE9uIFR1ZSwgT2N0IDksIDIwMTggYXQgNjozMCBQ
+TSBTZWJhc3RpYW4gR290dHNjaGFsbAo+IDxzLmdvdHRzY2hhbGxAbmV3bWVkaWEtbmV0LmRlPiB3
+cm90ZToKPj4ganVzdCB0byBtYWtlIHN1cmUuIHNpbmNlIGknbSB1cGRhdGluZyB3aXJlZ3VhcmQg
+aW4gZGQtd3J0IHZlcnkgb2Z0ZW4gdG8gdGhlIGxhdGVzdCBzdGF0ZSBvZiBhcnQgY29kZSBmcm9t
+IGdpdC4KPiBEbyBub3QgZG8gdGhpcy4gUmF0aGVyLCB1c2Ugc25hcHNob3RzLiBJZiB5b3UncmUg
+ZGlzdHJpYnV0aW5nIGJ1aWxkcwo+IGJhc2VkIG9uIGdpdCBtYXN0ZXIsIHlvdSdyZSBwdXR0aW5n
+IHlvdXIgdXNlcnMgYXQgdW5uZWNlc3Nhcnkgcmlzay4KPiBUaGUgb25seSBzYWZlIGFuZCBhY2Nl
+cHRhYmxlIGRpc3RyaWJ1dGlvbiBvZiBXaXJlR3VhcmQgaXMgdXNpbmcgdGhlCj4gbGF0ZXN0IHNu
+YXBzaG90IHRhcmJhbGwuIFdoZW4geW91IHVzZSBnaXQgbWFzdGVyLCB5b3UncmUgbm90IGdldHRp
+bmcKPiB0aGUgImxhdGVzdCBzdGF0ZSBvZiBhcnQgY29kZSIsIHlvdSdyZSBnZXR0aW5nICJqYXNv
+bidzIDVhbQo+IGZvcmNlLXB1c2hlcyBhbmQgd2Fja3kgaWRlYXMgcHJlLWNvZGVyZXZpZXcuIiBP
+biB0aGUgb3RoZXIgaGFuZCwgd2hlbgo+IHlvdSB1c2Ugc25hcHNob3RzLCB5b3UncmUgZ2V0dGlu
+ZyBjb2RlIHRoYXQgSSd2ZSBzcGVudCBzb21lIHRpbWUKPiByZXZpZXdpbmcgYW5kIGRvdWJsZSBj
+aGVja2luZyB0byBtYWtlIHN1cmUgaXQgd29uJ3QgbXVyZGVyIGtpdHRlbnMgYW5kCj4gcmVsYXRl
+ZCBhdHJvY2l0aWVzLgo+Cl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fCldpcmVHdWFyZCBtYWlsaW5nIGxpc3QKV2lyZUd1YXJkQGxpc3RzLnp4MmM0LmNvbQpo
+dHRwczovL2xpc3RzLnp4MmM0LmNvbS9tYWlsbWFuL2xpc3RpbmZvL3dpcmVndWFyZAo=
