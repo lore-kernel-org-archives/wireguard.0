@@ -1,58 +1,74 @@
-Return-Path: <SRS0=TwOG=MV=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=xsnz=MW=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=0.7 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FORGED_YAHOO_RCVD,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6944C43441
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  9 Oct 2018 22:29:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A9C76C43441
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 10 Oct 2018 06:01:04 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 0A8F021479
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  9 Oct 2018 22:29:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 0617621479
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 10 Oct 2018 06:01:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=newmedia-net.de header.i=@newmedia-net.de header.b="huI00vvs"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 0A8F021479
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=newmedia-net.de
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="p6DzzUMS"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 0617621479
+Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=yahoo.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7672045b;
-	Tue, 9 Oct 2018 22:28:33 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3e5521e9;
+	Wed, 10 Oct 2018 05:59:47 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c32d2033
- for <wireguard@lists.zx2c4.com>; Tue, 9 Oct 2018 22:28:31 +0000 (UTC)
-Received: from webmail.newmedia-net.de (smtps.newmedia-net.de
- [IPv6:2a05:a1c0:0:de::167])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8f9d2033
- for <wireguard@lists.zx2c4.com>; Tue, 9 Oct 2018 22:28:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=newmedia-net.de; s=mikd; 
- h=Content-Transfer-Encoding:Content-Type:In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:Subject;
- bh=jrLKDBLNoUrI6b7WFXrWK27mHLHnb0ta0G1tssYBruQ=; 
- b=huI00vvsl+QDxYmfUZNB0eYygplDytCwlm8mtD2tjJwFmYZ6sNAr2iGkSbiLWZRB2h8s0rnbgHZPSjpYkfGocN2HegYbMnFjVqLc8SMOAyu2ZJMkSsTZ5Syc7+s8MXQ8Bw850cgrCiLTQvd5HQNKYihvL3VXhFItEmbyjJVP1tE=;
-Subject: Re: [ANNOUNCE] WireGuard Snapshot `0.0.20181007` Available
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
- David Kricker <logcabin@fastmail.net>
-References: <6b314daa5d672a51@frisell.zx2c4.com>
- <8j30b7w3yIgg5rmXSRUNlDH8yquzSydWwqfdQrnRe-T7mK5e_lYfD2v5IKjgHVAcWptoOVXZ_wENwJ1i733Yn45_TjlMg7Tf_WmW7Dkeuco=@protonmail.ch>
- <CAHmME9qboTvSU1+bu8Oi-zwBp8f6UWnfaGb-NEtfsnvnJUL66w@mail.gmail.com>
- <1538952235.1510043.1533890536.493A745F@webmail.messagingengine.com>
- <CAHmME9pbcPFghexTJnZz0kqJvTwa_bxpnox1vho8rMTQWd_pCQ@mail.gmail.com>
-From: Sebastian Gottschall <s.gottschall@newmedia-net.de>
-Message-ID: <a276382e-b6c7-bd7d-2e70-23f81177876c@newmedia-net.de>
-Date: Wed, 10 Oct 2018 00:29:21 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.2.1
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9c2e24a9
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 10 Oct 2018 05:59:43 +0000 (UTC)
+Received: from sonic304-21.consmr.mail.ir2.yahoo.com
+ (sonic304-21.consmr.mail.ir2.yahoo.com [77.238.179.146])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bcd30a4b
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 10 Oct 2018 05:59:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
+ t=1539151242; bh=7UYcQaAKwABs7xc8etULYOH52EjHXaUDpVMq/gv1EXA=;
+ h=Subject:References:To:From:Date:In-Reply-To:From:Subject;
+ b=p6DzzUMS/QFwV0iXu+Sg+CwX621r/i2Mpx4c3FMFlpoH+RjrNIPb1sw1eY0RaxradjHwtBp48ZFPmxCboAdjzbN784LyQBpmtBeBvikLwh3VDLMDcaJKQOKTF8IQ6y5H5Ap+HtixcEHhfW0SjkUGZjYBbBAArsF4uHGn3UANATb7G11ogBVJEyJed0siNNVdZgCDBrkApNfql2ARMVa3Q8gevsjOc3BiY0cSNgoqviSyMwHcELQ13kvYaIQOeHNwAE7u1sWcF/5XVdxX2lo9fBKTcvw2eirppsEMhz8mJy7BTL8Nl3KCEQAQOuMc+0JE/QV6nupPgDyKghHRlXm+3g==
+X-YMail-OSG: YDEiVVoVM1kP0OrRPT9vPgkBq5ShN9IZ76zwHm3CeciG0_CKIbXha.yfLFUBRyS
+ 3wrbn_FVpdWnDOkp3ZRdf6AcjMJKTquHZ9S58pW_yG0TcztyvICJoEAcPABpQTP9vpZmLOaTJJnL
+ R8_Kg.KyhJkj.lfiliM_Nt.JSwd_nMPwU8mYvqjJFvy9.QUZiQT5OlW_Cqw6PmcV6q8.QzyiD98b
+ 024WKdw66LQKWFA1fIpLvlV4XRnAN1grvmfSWYT.zutoXq_B_0GJ3xlJMpoCTwFWFGd0i0bs1xnk
+ FEA8clug6Z.W2gRkHV_dYKNVPZF2nXwm9WqX5BSviV9sjamWzsWNshgzBufn1VZQOM_mrStdc9yK
+ 7pehESgTWp0.RFyS1j3lKCqtsJqKEMQyuWD8nLets.dW14fbkkRMFKf0bwLBBN1atuM.cX3UO_po
+ rDKAkQIGPs.aU4dTZzpRn6OYPRPjfCaRItVOHrfIDehXhzsJD8EG.MEoizCdcORxcYSp_4PZIifW
+ BHUoJWKajnAFlaed2Ts4LOmjRpMvqOt176r97CI2VTyzVAp_34udxRBDmEy42VBSan4myPd.YMUg
+ GByXfZZ1ntxFlryxpS3xbJN48xGEVR_lMuQNKi_AV.YOqpJxU.alLVmpwVposIgrr_ff7vNxfHbo
+ Y4XPW4OQdhJnigorMSQCy86lhn1tbOrrvTRkiatCN9WJwZF2lur3bjIEUil5E4E9AanR9J7yGzE.
+ drITeuWphRD1pcV74Dbtf6Qk.eKD2jF4Vv9H68rgxMRMfcUPQB2sCexbAuN1uAAJjgkJUoEriaKx
+ anHdaviiTy6A5TQ9.mQfAlFoB3Soy_y_syJaifTew1PvHtQzMluiehjme8UM6FtoDAjBj1q_W95j
+ 875oi4a33ysujJIDMXwlYmBMcM74wXx93gTTKhsDijHPnjRuN171WUFUFfXSgX1lnvOdzxVNXwSl
+ LR3REaiNeZJfDw._F6fCBNsepp_pbT13qwVY4ZnWsAAz_WyGiOlFG34EFGmTqEOQuFzhwAnt.n9D
+ FPDL._MHoGvKKdY3KD.SV22__M.RDhZED.ka2BV9cF9BTGn6APMw-
+Received: from sonic.gate.mail.ne1.yahoo.com by
+ sonic304.consmr.mail.ir2.yahoo.com with HTTP; Wed, 10 Oct 2018 06:00:42 +0000
+Received: from 82-197-199-141.dsl.cambrium.nl (EHLO [192.168.20.251])
+ ([82.197.199.141])
+ by smtp413.mail.ir2.yahoo.com (Oath Hermes SMTP Server) with ESMTPA ID
+ 82b7289526d736620b4640f682390162 for <wireguard@lists.zx2c4.com>;
+ Wed, 10 Oct 2018 06:00:37 +0000 (UTC)
+Subject: Re: Wireguard not coming up on DD-wrt
+References: <163f39a3-0fb5-3645-b6bd-3ddd797c158b@yahoo.com>
+ <796625c4-d114-1b5f-ea79-97b91e682549@newmedia-net.de>
+To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+From: "Dennis van J." <dennis_20@yahoo.com>
+Message-ID: <18dc8d48-b5e9-7ce6-844b-d43af06c6af7@yahoo.com>
+Date: Wed, 10 Oct 2018 08:00:34 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9pbcPFghexTJnZz0kqJvTwa_bxpnox1vho8rMTQWd_pCQ@mail.gmail.com>
-X-Received: from [2003:c9:3f4e:a100:7435:9154:a523:7781]
- by webmail.newmedia-net.de with esmtpsa (TLSv1:AES128-SHA:128)
- (Exim 4.72) (envelope-from <s.gottschall@newmedia-net.de>)
- id 1gA0VJ-0001HM-TN; Wed, 10 Oct 2018 00:29:26 +0200
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+In-Reply-To: <796625c4-d114-1b5f-ea79-97b91e682549@newmedia-net.de>
+Content-Language: nl
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -64,34 +80,310 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset="utf-8"; Format="flowed"
+Content-Type: multipart/mixed; boundary="===============0729723043672361054=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-aSBkbyBub3QgdXNlIHRoZSBkZWZpbmVkIG1hc3Rlci4gaSBqdXN0IGNoZWNrb3V0IHRoZSBnaXQg
-cmV2aXNpb25zIApkZWZpbmVkIGJ5IHlvdXIgc25hcHNob3RzLiBidXQgc2luY2UgeW91IHJlbGVh
-c2Ugc25hcHNob3RzwqAgMiB0aW1lcyBwZXIgCndlZWsgc29tZXRpbWVzIGl0cyBzdGlsbCBlbmRz
-IHVwIG9uIGEgaGVhdnkgY2hhbmdpbmcgbW9kdWxlCmJ1dCB0aGF0IHNob3VsZCBub3QgYmUgdGhl
-IHRvcGljIGhlcmUuIHRoZSB0b3BpYyBpcyB3aGF0IGxlYWRzIHdpcmVndWFyZCAKdG8gZmFpbCBv
-biBoaXMgc3lzdGVtLiBzbyB3ZSBuZWVkIHRvIHRyYWNrIGRvd24gZmlyc3Qgd2hpY2ggaGFyZHdh
-cmUgaGUgCmlzIHVzaW5nIHNpbmNlIGkgZG8gc3VwcG9ydCBhbG90IG9mIGRldmljZXMgd2l0aCBh
-bG90IG9mIGRpZmZlcmVudCBjcHUgCnBsYXRmb3Jtcy4gc28gcGxlYXNlIHN0YXkgb24gdG9waWMg
-YW5kIGRvIG5vdCBzcGVjdWxhdGUgdG9vIG11Y2gKCgpBbSAwOS4xMC4yMDE4IHVtIDIxOjE4IHNj
-aHJpZWIgSmFzb24gQS4gRG9uZW5mZWxkOgo+IE9uIFR1ZSwgT2N0IDksIDIwMTggYXQgNjozMCBQ
-TSBTZWJhc3RpYW4gR290dHNjaGFsbAo+IDxzLmdvdHRzY2hhbGxAbmV3bWVkaWEtbmV0LmRlPiB3
-cm90ZToKPj4ganVzdCB0byBtYWtlIHN1cmUuIHNpbmNlIGknbSB1cGRhdGluZyB3aXJlZ3VhcmQg
-aW4gZGQtd3J0IHZlcnkgb2Z0ZW4gdG8gdGhlIGxhdGVzdCBzdGF0ZSBvZiBhcnQgY29kZSBmcm9t
-IGdpdC4KPiBEbyBub3QgZG8gdGhpcy4gUmF0aGVyLCB1c2Ugc25hcHNob3RzLiBJZiB5b3UncmUg
-ZGlzdHJpYnV0aW5nIGJ1aWxkcwo+IGJhc2VkIG9uIGdpdCBtYXN0ZXIsIHlvdSdyZSBwdXR0aW5n
-IHlvdXIgdXNlcnMgYXQgdW5uZWNlc3Nhcnkgcmlzay4KPiBUaGUgb25seSBzYWZlIGFuZCBhY2Nl
-cHRhYmxlIGRpc3RyaWJ1dGlvbiBvZiBXaXJlR3VhcmQgaXMgdXNpbmcgdGhlCj4gbGF0ZXN0IHNu
-YXBzaG90IHRhcmJhbGwuIFdoZW4geW91IHVzZSBnaXQgbWFzdGVyLCB5b3UncmUgbm90IGdldHRp
-bmcKPiB0aGUgImxhdGVzdCBzdGF0ZSBvZiBhcnQgY29kZSIsIHlvdSdyZSBnZXR0aW5nICJqYXNv
-bidzIDVhbQo+IGZvcmNlLXB1c2hlcyBhbmQgd2Fja3kgaWRlYXMgcHJlLWNvZGVyZXZpZXcuIiBP
-biB0aGUgb3RoZXIgaGFuZCwgd2hlbgo+IHlvdSB1c2Ugc25hcHNob3RzLCB5b3UncmUgZ2V0dGlu
-ZyBjb2RlIHRoYXQgSSd2ZSBzcGVudCBzb21lIHRpbWUKPiByZXZpZXdpbmcgYW5kIGRvdWJsZSBj
-aGVja2luZyB0byBtYWtlIHN1cmUgaXQgd29uJ3QgbXVyZGVyIGtpdHRlbnMgYW5kCj4gcmVsYXRl
-ZCBhdHJvY2l0aWVzLgo+Cl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fCldpcmVHdWFyZCBtYWlsaW5nIGxpc3QKV2lyZUd1YXJkQGxpc3RzLnp4MmM0LmNvbQpo
-dHRwczovL2xpc3RzLnp4MmM0LmNvbS9tYWlsbWFuL2xpc3RpbmZvL3dpcmVndWFyZAo=
+This is a multi-part message in MIME format.
+--===============0729723043672361054==
+Content-Type: multipart/alternative;
+ boundary="------------9314B98189E0C46ADFDCC476"
+Content-Language: nl
+
+This is a multi-part message in MIME format.
+--------------9314B98189E0C46ADFDCC476
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+
+Hi Sebastian,
+
+I took care of the FW problems. An iptables --list shows that the udp
+port is open.
+
+DD-wrt is running using: Firmware:DD-WRT v3.0-r36645 std (08/19/18).
+
+Cheers,
+
+Dennis
+
+
+Op 9-10-2018 om 18:29 schreef Sebastian Gottschall:
+>
+> just to make sure. since i'm updating wireguard in dd-wrt very often
+> to the latest state of art code from git. which dd-wrt version did you
+> use for establishing the connection?
+>
+> did you also take care about usual firewall problems? by default the
+> the firewall is closed on wan, so no inbound connection is possible
+>
+>
+> Sebastian
+>
+> Am 09.10.2018 um 17:06 schrieb Dennis van J.:
+>>
+>> Hi all,
+>>
+>> I have setup Wireguard on a Gentoo box, compiled it into the kernel
+>> using instructions on the wireguard website. Got my mobile to connect
+>> using 4G to this box fine, so I wanted to test further with a friend
+>> of mine who has a DD-wrt installation on his router. Wireguard is
+>> integrated into the DD-wrt build, we set it up, but the tunnel does
+>> not come up. On the server I only see this:
+>>
+>> Oct  9 16:45:34 omega kernel: [178809.449718] wireguard: wg0:
+>> Receiving handshake initiation from peer 10 (x.169.86.x:22300)
+>> Oct  9 16:45:34 omega kernel: [178809.449721] wireguard: wg0: Sending
+>> handshake response to peer 10 (x.169.86.x:22300)
+>> Oct  9 16:45:34 omega kernel: [178809.450130] wireguard: wg0: Keypair
+>> 32179 destroyed for peer 10
+>> Oct  9 16:45:34 omega kernel: [178809.450131] wireguard: wg0: Keypair
+>> 32180 created for peer 10
+>> Oct  9 16:45:39 omega kernel: [178814.519668] wireguard: wg0:
+>> Receiving handshake initiation from peer 10 (x.169.86.x:22300)
+>> Oct  9 16:45:39 omega kernel: [178814.519671] wireguard: wg0: Sending
+>> handshake response to peer 10 (x.169.86.x:22300)
+>> Oct  9 16:45:39 omega kernel: [178814.520062] wireguard: wg0: Keypair
+>> 32180 destroyed for peer 10
+>> Oct  9 16:45:39 omega kernel: [178814.520063] wireguard: wg0: Keypair
+>> 32181 created for peer 10
+>> Oct  9 16:45:44 omega kernel: [178819.579701] wireguard: wg0:
+>> Receiving handshake initiation from peer 10 (x.169.86.x:22300)
+>> Oct  9 16:45:44 omega kernel: [178819.579704] wireguard: wg0: Sending
+>> handshake response to peer 10 (x.169.86.x:22300)
+>> Oct  9 16:45:44 omega kernel: [178819.580094] wireguard: wg0: Keypair
+>> 32181 destroyed for peer 10
+>> Oct  9 16:45:44 omega kernel: [178819.580095] wireguard: wg0: Keypair
+>> 32182 created for peer 10
+>> Oct  9 16:45:50 omega kernel: [178824.910142] wireguard: wg0:
+>> Receiving handshake initiation from peer 10 (x.169.86.x:22300)
+>> Oct  9 16:45:50 omega kernel: [178824.910145] wireguard: wg0: Sending
+>> handshake response to peer 10 (x.169.86.x:22300)
+>> Oct  9 16:45:50 omega kernel: [178824.910535] wireguard: wg0: Keypair
+>> 32182 destroyed for peer 10
+>> Oct  9 16:45:50 omega kernel: [178824.910536] wireguard: wg0: Keypair
+>> 32183 created for peer 10
+>> Oct  9 16:45:55 omega kernel: [178829.950001] wireguard: wg0:
+>> Receiving handshake initiation from peer 10 (x.169.86.x:22300)
+>> Oct  9 16:45:55 omega kernel: [178829.950003] wireguard: wg0: Sending
+>> handshake response to peer 10 (x.169.86.x:22300)
+>> Oct  9 16:45:55 omega kernel: [178829.950406] wireguard: wg0: Keypair
+>> 32183 destroyed for peer 10
+>> Oct  9 16:45:55 omega kernel: [178829.950407] wireguard: wg0: Keypair
+>> 32184 created for peer 10
+>>
+>> Port on the server is open (since the 4G test works). We can reach
+>> the 22300 port on his side. Checked the pub/private keys as well.
+>>
+>> wg show on server:
+>>
+>> interface: wg0
+>>   public key: <pubkey server>
+>>   private key: (hidden)
+>>   listening port: 51820
+>>
+>> peer: <pubkey of mobile>
+>>   endpoint: x.200.39.x:8971
+>>   allowed ips: 0.0.0.0/0
+>>   latest handshake: 8 hours, 1 minute, 43 seconds ago
+>>   transfer: 384.24 KiB received, 2.74 MiB sent
+>>
+>> peer: <pubkey of dd-wrt>
+>>   endpoint: x.169.86.x:22300
+>>   allowed ips: 192.168.1.0/24, 10.100.0.3/32
+>>   transfer: 2.00 MiB received, 1.24 MiB sent
+>>
+>> On DD-wrt router:
+>>
+>> interface: oet1
+>>   public key: <pubkey dd-wrt>
+>>   private key: (hidden)
+>>   listening port: 22300
+>>
+>> peer: <pubkey of server>
+>>   endpoint: x.197.199.x:51820
+>>   allowed ips: 0.0.0.0/0
+>>   transfer: 0 B received, 777.43 KiB sent
+>>   persistent keepalive: every 25 seconds
+>>
+>> We are trying to get logging to work on that DD-wrt box, that should
+>> contain some more clues but maybe any of you have an idea?
+>>
+>> Cheers,
+>>
+>> Dennis
+>>
+>>
+>>
+>> _______________________________________________
+>> WireGuard mailing list
+>> WireGuard@lists.zx2c4.com
+>> https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+
+--------------9314B98189E0C46ADFDCC476
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 8bit
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  </head>
+  <body text="#000000" bgcolor="#FFFFFF">
+    <p><font face="Verdana">Hi Sebastian,</font></p>
+    <p><font face="Verdana">I took care of the FW problems. An iptables
+        --list shows that the udp port is open. <br>
+      </font></p>
+    <p><font face="Verdana">DD-wrt is running using: Firmware:<a
+          title="About"> DD-WRT v3.0-r36645 std (08/19/18).</a></font></p>
+    <p><font face="Verdana"><a title="About">Cheers,</a></font></p>
+    <p><font face="Verdana"><a title="About">Dennis<br>
+        </a></font></p>
+    <br>
+    <div class="moz-cite-prefix">Op 9-10-2018 om 18:29 schreef Sebastian
+      Gottschall:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:796625c4-d114-1b5f-ea79-97b91e682549@newmedia-net.de">
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <p>just to make sure. since i'm updating wireguard in dd-wrt very
+        often to the latest state of art code from git. which dd-wrt
+        version did you use for establishing the connection?</p>
+      <p>did you also take care about usual firewall problems? by
+        default the the firewall is closed on wan, so no inbound
+        connection is possible</p>
+      <p><br>
+      </p>
+      <p>Sebastian<br>
+      </p>
+      <div class="moz-cite-prefix">Am 09.10.2018 um 17:06 schrieb Dennis
+        van J.:<br>
+      </div>
+      <blockquote type="cite"
+        cite="mid:163f39a3-0fb5-3645-b6bd-3ddd797c158b@yahoo.com">
+        <meta http-equiv="content-type" content="text/html;
+          charset=utf-8">
+        <p><font face="Verdana">Hi all,</font></p>
+        <p><font face="Verdana">I have setup Wireguard on a Gentoo box,
+            compiled it into the kernel using instructions on the
+            wireguard website. Got my mobile to connect using 4G to this
+            box fine, so I wanted to test further with a friend of mine
+            who has a DD-wrt installation on his router. Wireguard is
+            integrated into the DD-wrt build, we set it up, but the
+            tunnel does not come up. On the server I only see this:</font></p>
+        <p><font face="Verdana">Oct  9 16:45:34 omega kernel:
+            [178809.449718] wireguard: wg0: Receiving handshake
+            initiation from peer 10 (x.169.86.x:22300)<br>
+            Oct  9 16:45:34 omega kernel: [178809.449721] wireguard:
+            wg0: Sending handshake response to peer 10
+            (x.169.86.x:22300)<br>
+            Oct  9 16:45:34 omega kernel: [178809.450130] wireguard:
+            wg0: Keypair 32179 destroyed for peer 10<br>
+            Oct  9 16:45:34 omega kernel: [178809.450131] wireguard:
+            wg0: Keypair 32180 created for peer 10<br>
+            Oct  9 16:45:39 omega kernel: [178814.519668] wireguard:
+            wg0: Receiving handshake initiation from peer 10
+            (x.169.86.x:22300)<br>
+            Oct  9 16:45:39 omega kernel: [178814.519671] wireguard:
+            wg0: Sending handshake response to peer 10
+            (x.169.86.x:22300)<br>
+            Oct  9 16:45:39 omega kernel: [178814.520062] wireguard:
+            wg0: Keypair 32180 destroyed for peer 10<br>
+            Oct  9 16:45:39 omega kernel: [178814.520063] wireguard:
+            wg0: Keypair 32181 created for peer 10<br>
+            Oct  9 16:45:44 omega kernel: [178819.579701] wireguard:
+            wg0: Receiving handshake initiation from peer 10
+            (x.169.86.x:22300)<br>
+            Oct  9 16:45:44 omega kernel: [178819.579704] wireguard:
+            wg0: Sending handshake response to peer 10
+            (x.169.86.x:22300)<br>
+            Oct  9 16:45:44 omega kernel: [178819.580094] wireguard:
+            wg0: Keypair 32181 destroyed for peer 10<br>
+            Oct  9 16:45:44 omega kernel: [178819.580095] wireguard:
+            wg0: Keypair 32182 created for peer 10<br>
+            Oct  9 16:45:50 omega kernel: [178824.910142] wireguard:
+            wg0: Receiving handshake initiation from peer 10
+            (x.169.86.x:22300)<br>
+            Oct  9 16:45:50 omega kernel: [178824.910145] wireguard:
+            wg0: Sending handshake response to peer 10
+            (x.169.86.x:22300)<br>
+            Oct  9 16:45:50 omega kernel: [178824.910535] wireguard:
+            wg0: Keypair 32182 destroyed for peer 10<br>
+            Oct  9 16:45:50 omega kernel: [178824.910536] wireguard:
+            wg0: Keypair 32183 created for peer 10<br>
+            Oct  9 16:45:55 omega kernel: [178829.950001] wireguard:
+            wg0: Receiving handshake initiation from peer 10
+            (x.169.86.x:22300)<br>
+            Oct  9 16:45:55 omega kernel: [178829.950003] wireguard:
+            wg0: Sending handshake response to peer 10
+            (x.169.86.x:22300)<br>
+            Oct  9 16:45:55 omega kernel: [178829.950406] wireguard:
+            wg0: Keypair 32183 destroyed for peer 10<br>
+            Oct  9 16:45:55 omega kernel: [178829.950407] wireguard:
+            wg0: Keypair 32184 created for peer 10<br>
+          </font></p>
+        <p><font face="Verdana">Port on the server is open (since the 4G
+            test works). We can reach the 22300 port on his side.
+            Checked the pub/private keys as well.</font></p>
+        <p><font face="Verdana">wg show on server:</font></p>
+        <p><font face="Verdana">interface: wg0<br>
+              public key: &lt;pubkey server&gt;<br>
+              private key: (hidden)<br>
+              listening port: 51820<br>
+            <br>
+            peer: &lt;pubkey of mobile&gt;<br>
+              endpoint: x.200.39.x:8971<br>
+              allowed ips: 0.0.0.0/0<br>
+              latest handshake: 8 hours, 1 minute, 43 seconds ago<br>
+              transfer: 384.24 KiB received, 2.74 MiB sent<br>
+            <br>
+            peer: &lt;pubkey of dd-wrt&gt;<br>
+              endpoint: x.169.86.x:22300<br>
+              allowed ips: 192.168.1.0/24, 10.100.0.3/32<br>
+              transfer: 2.00 MiB received, 1.24 MiB sent</font></p>
+        <p><font face="Verdana">On DD-wrt router:</font></p>
+        <p><font face="Verdana">interface: oet1<br>
+              public key: &lt;pubkey dd-wrt&gt;<br>
+              private key: (hidden)<br>
+              listening port: 22300<br>
+            <br>
+            peer: &lt;pubkey of server&gt;<br>
+              endpoint: x.197.199.x:51820<br>
+              allowed ips: 0.0.0.0/0<br>
+              transfer: 0 B received, 777.43 KiB sent<br>
+              persistent keepalive: every 25 seconds<br>
+          </font></p>
+        <p><font face="Verdana">We are trying to get logging to work on
+            that DD-wrt box, that should contain some more clues but
+            maybe any of you have an idea?</font></p>
+        <p><font face="Verdana">Cheers,</font></p>
+        <p><font face="Verdana">Dennis<br>
+          </font></p>
+        <p><font face="Verdana"><br>
+          </font></p>
+        <br>
+        <fieldset class="mimeAttachmentHeader"></fieldset>
+        <pre class="moz-quote-pre" wrap="">_______________________________________________
+WireGuard mailing list
+<a class="moz-txt-link-abbreviated" href="mailto:WireGuard@lists.zx2c4.com" moz-do-not-send="true">WireGuard@lists.zx2c4.com</a>
+<a class="moz-txt-link-freetext" href="https://lists.zx2c4.com/mailman/listinfo/wireguard" moz-do-not-send="true">https://lists.zx2c4.com/mailman/listinfo/wireguard</a>
+</pre>
+      </blockquote>
+    </blockquote>
+    <br>
+  </body>
+</html>
+
+--------------9314B98189E0C46ADFDCC476--
+
+--===============0729723043672361054==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
+_______________________________________________
+WireGuard mailing list
+WireGuard@lists.zx2c4.com
+https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--===============0729723043672361054==--
