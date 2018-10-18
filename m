@@ -6,50 +6,64 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C270ECDE42
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 18 Oct 2018 00:38:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 574C9C5ACCC
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 18 Oct 2018 16:37:04 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 38E7B21470
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 18 Oct 2018 00:37:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 780772145D
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 18 Oct 2018 16:37:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="D8HfuJJ9"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 38E7B21470
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="qEcFUvCd"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 780772145D
 Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id de25d98d;
-	Thu, 18 Oct 2018 00:35:51 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 927e8fc2;
+	Thu, 18 Oct 2018 16:35:00 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b2bdb323
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0c17f963
  for <wireguard@lists.zx2c4.com>;
- Thu, 18 Oct 2018 00:35:48 +0000 (UTC)
+ Thu, 18 Oct 2018 16:34:57 +0000 (UTC)
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 54c443c1
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id df9e3c56
  for <wireguard@lists.zx2c4.com>;
- Thu, 18 Oct 2018 00:35:48 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ccf85616
+ Thu, 18 Oct 2018 16:34:57 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id eac92afd
  for <wireguard@lists.zx2c4.com>;
- Thu, 18 Oct 2018 00:35:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=date:to:from
- :subject:mime-version:content-type; s=mail; bh=sbkCmSqoGjdeBBTSU
- ffXndxsChI=; b=D8HfuJJ9r9aAi8QQdDBzUkJTo5eWpJGqx/HNpcuAnKMikTNud
- TROG08cwEkRA7EyXOamSe8Qxuu0fK4vQyHUyVAoyym2UXk4jIOY5YCjYUQhIuJsu
- vXA1GhIkjdciLZBX/DHZVVjMOXHe2GAIg37DK/rLV+N/JnWWYlwIVQCPbutPZR0r
- FYMWIiqaWYlFDow7JfPfERKamVqACOku2HWKS0bbUYHePQ9erwD3HixUXHEb7ctc
- 04HspgeiolTGxFyw5LdU024Vpo3IKlpZzfpVU5hswLb37AYgpE3y6ZzRdPZ6inI5
- RpaLdEZoed1PcssoT6Ew9ZuVv5Aw4rtOuTIDA==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 9ad1f4ac
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ Thu, 18 Oct 2018 16:34:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :references:in-reply-to:from:date:message-id:subject:to:cc
+ :content-type; s=mail; bh=iGQPnXT3yT+6/GFmTiS+X6Q62z0=; b=qEcFUv
+ Cd8FPEZDez0oIzap6D3jtYbIrUxJgB4XFX4dGkeQFqKxUvBee31WofHoFa35tIUI
+ Y0t6dpJ0o5wlJZm1qtRLaFN2LcOe0VxBaE0ZAr6Lfze8ltVil8Wx8dDEEu4nGpCa
+ UdGvJilOTHrO+qXSe/enjstBOWHGfNXVjTVYcECxIbLvORyTGUD9uxRrPDmOZiDH
+ zrjcRdf2fdu7ww2KnnCQanlmF6y0WH4ExTDyX7Tywp3k6maFqiZGOm2vAjiKXkYT
+ Kv1Ox5Kjddslu11JU6aCq2LNOU21kaiwK/UwMiwGiO0L1e1nWzgdx0/LCH+c4nm5
+ GguGutjK5giTHSKA==
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 48291b67
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 18 Oct 2018 00:35:45 +0000 (UTC)
-Date: Thu, 18 Oct 2018 02:37:41 +0200
-To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: [ANNOUNCE] WireGuard Snapshot `0.0.20181018` Available
+ Thu, 18 Oct 2018 16:34:57 +0000 (UTC)
+Received: by mail-ot1-f42.google.com with SMTP id o21so30361209otb.13
+ for <wireguard@lists.zx2c4.com>; Thu, 18 Oct 2018 09:36:58 -0700 (PDT)
+X-Gm-Message-State: ABuFfoh6zHtODRUukzuRLQhI0af807yhZNDQ9Qk0KerMNAVx3SrJ4M99
+ /LpkTHDWD414hCx+tC/Pt015pPMOTY8KZICEu5U=
+X-Google-Smtp-Source: ACcGV604y87Kxa3DpcJiud3q+erEXXVanjOdeoQEuaeVnkGG49YweWsZ0G+izo1tyZLoFGKhDJ9SyuylQHIk8VA69HU=
+X-Received: by 2002:a9d:30c2:: with SMTP id r2mr18939918otg.143.1539880618124; 
+ Thu, 18 Oct 2018 09:36:58 -0700 (PDT)
 MIME-Version: 1.0
-Message-Id: <6b34a5e81df1ea96@frisell.zx2c4.com>
+References: <20180810080617.20283-1-ahanins@gmail.com>
+ <CAHmME9pCdYSc5vLUJt_7xkCG9PLMkQE5qMMbrxQ9uCq0U0KL-Q@mail.gmail.com>
+ <fef438a2-f085-b3fd-4d8e-041b5c62c030@gmail.com>
+In-Reply-To: <fef438a2-f085-b3fd-4d8e-041b5c62c030@gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 18 Oct 2018 18:36:47 +0200
+X-Gmail-Original-Message-ID: <CAHmME9o3uu6ZN7ptuDorWJ5C0B1LMnU7Qf6V2NN0Kdv20WBggg@mail.gmail.com>
+Message-ID: <CAHmME9o3uu6ZN7ptuDorWJ5C0B1LMnU7Qf6V2NN0Kdv20WBggg@mail.gmail.com>
+Subject: Re: [PATCH 0/1] Fix broken inner checksums for non TCP/UDP protocols
+To: ahanins@gmail.com
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -66,121 +80,12 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi Andrey,
 
-Hello,
+Circling back to this now. In light of the questions I raised, do you
+think I should proceed with this patch, or are you reworking?
 
-A new snapshot, `0.0.20181018`, has been tagged in the git repository.
-
-Please note that this snapshot is, like the rest of the project at this point
-in time, experimental, and does not consitute a real release that would be
-considered secure and bug-free. WireGuard is generally thought to be fairly
-stable, and most likely will not crash your computer (though it may).
-However, as this is a pre-release snapshot, it comes with no guarantees, and
-its security is not yet to be depended on; it is not applicable for CVEs.
-
-With all that said, if you'd like to test this snapshot out, there are a
-few relevant changes.
-
-== Changes ==
-
-  * compat: don't output for grep errors
-  * compat: look in Kbuild and Makefile since they differ based on arch
-  * create-patch: blacklist instead of whitelist
-  
-  This should solve the last of the compat issues introduced with the revamped
-  build system and upstream changes.
-  
-  * qemu: kill after 20 minutes
-  
-  Our test suite now accounts for hangs.
-  
-  * global: prefix functions used in callbacks with wg_
-  * global: rename struct wireguard_ to struct wg_
-  * global: more nits
-  * timers: avoid using control statements in macro
-  * allowedips: remove control statement from macro by rewriting
-  * device: use textual error labels always
-  * global: give if statements brackets and other cleanups
-  * main: change module description
-  * main: get rid of unloaded debug message
-  
-  Stylistic cleanups from upstream.
-  
-  * netlink: do not stuff index into nla type
-  
-  It's not used for anything, and LKML doesn't like the type being used as an
-  index value. Technically this changes UAPI, but in practice nobody used this,
-  and if they did use it for anything, that thing was probably broken anyway.
-  
-  * allowedips: swap endianness early on
-  
-  Otherwise if gcc's optimizer is able to look far in but not overly far
-  in, we wind up with "warning: 'key' may be used uninitialized in this
-  function [-Wmaybe-uninitialized]".
-  
-  * tools: use libc's endianness macro if no compiler macro
-  * tools: compile on gnu99
-  
-  This lets us be compiled with ancient gcc.
-  
-  * tools: don't fail if a netlink interface dump is inconsistent
-  
-  Netlink returns NLM_F_DUMP_INTR if the set of all tunnels changed
-  during the dump. That's unfortunate, but is pretty common on busy
-  systems that are adding and removing tunnels all the time. Rather
-  than retrying, potentially indefinitely, we just work with the
-  partial results.
-  
-  
-  * tools: wg-quick: wait for interface to disappear on freebsd
-  
-  This should improve init scripts that restart tunnels using wg-quick.
-
-This snapshot contains commits from: Jason A. Donenfeld, Davide Garberi, and 
-Arnd Bergmann.
-
-As always, the source is available at https://git.zx2c4.com/WireGuard/ and
-information about the project is available at https://www.wireguard.com/ .
-
-This snapshot is available in compressed tarball form here:
-  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-0.0.20181018.tar.xz
-  SHA2-256: af05824211b27cbeeea2b8d6b76be29552c0d80bfe716471215e4e43d259e327
-  BLAKE2b-256: b4cf187d3448e577d8c47f114156ebc2ad183d058fa64f0ef9e431095237669f
-
-A PGP signature of that file decompressed is available here:
-  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-0.0.20181018.tar.asc
-  Signing key: AB9942E6D4A4CFC3412620A749FC7012A5DE03AE
-
-If you're a snapshot package maintainer, please bump your package version. If
-you're a user, the WireGuard team welcomes any and all feedback on this latest
-snapshot.
-
-Finally, WireGuard development thrives on donations. By popular demand, we
-have a webpage for this: https://www.wireguard.com/donations/
-
-Thank you,
-Jason Donenfeld
-
-
------BEGIN PGP SIGNATURE-----
-
-iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAlvH1csQHGphc29uQHp4
-MmM0LmNvbQAKCRBJ/HASpd4Drr4BD/4/ich9CAiiiNszyTkF1LrMzUgzU7KjtWSm
-s/Q8udkHp0dcx4PZl5EFFoZ75PlunCCjIK2i7J/Mjs+yxh+1VjZoA0Yo2rHa0QPe
-oqb1BA3vC3j9S8aKRlXgsZnIhm6mpbCdUxY/gx691DUlXFgS4KdjJDdgkg1f7JhK
-95X7VZBGgtfyA+ZpJWxbJ+hKoogD11zRR1EO+er9tQFKhnxU7uD6cwMog8Ge/WGh
-k0ZxuFbSm++WX+D2zYXig8Kz76Bb12ejdIMeG9nxKzLloLxesJ26OkAAs1UfDw3P
-6ti1W10anglBMWF8s3Sf8a5z404D2SwR47f3Iq018Q1BbckGKJrq0mdPZlAdbx3d
-XRnmDkb6jrLFZwDRJpYhRRT9Zl6xNCzSMgo7EaYuCfTWJVjQ050a/2FGy6AHUxPx
-jc/71/YPDEjAGHk46uG0pwVejxfCms5n9w1cW+/hoVEorb2QQzBPOMLmsFgyyqd2
-TLbSGrgm++8pRnjyMFTQ8sKSg+z0SDOaidSeBH+bip5wMFUbUVWUXlnJSRg2X7/7
-phrwVjvmyZbfWOep7/xF1blhkVBvjFd8rIZ36aK7hmif/AQpORQBd9f4GySmPO/Y
-8lkhkI9fYhgnihNpZQ+bm886HxXJKem+NsQtYAqcUsJgp0cFveBNLY9TH46uYI89
-0vjf2a+Mjw==
-=LN/J
------END PGP SIGNATURE-----
+Jason
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
