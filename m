@@ -2,70 +2,62 @@ Return-Path: <SRS0=JcDs=NP=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
-	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_PASS,
-	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A251C32789
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  4 Nov 2018 17:21:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A249AC32789
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  4 Nov 2018 17:26:05 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id E5B462081B
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  4 Nov 2018 17:21:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 3A0ED2082D
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  4 Nov 2018 17:26:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OTD7xpfg"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org E5B462081B
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="BwGf3lGc"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 3A0ED2082D
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 21aa7f62;
-	Sun, 4 Nov 2018 17:17:04 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e093494e;
+	Sun, 4 Nov 2018 17:21:56 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7ae14951
- for <wireguard@lists.zx2c4.com>; Sun, 4 Nov 2018 17:14:42 +0000 (UTC)
-Received: from mail-vs1-xe2d.google.com (mail-vs1-xe2d.google.com
- [IPv6:2607:f8b0:4864:20::e2d])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id da73e07d
- for <wireguard@lists.zx2c4.com>; Sun, 4 Nov 2018 17:14:42 +0000 (UTC)
-Received: by mail-vs1-xe2d.google.com with SMTP id e126so3783895vsc.9
- for <wireguard@lists.zx2c4.com>; Sun, 04 Nov 2018 09:18:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=5Xj1K7fgFeKW8/afyu8eZju/NavJgsqTEAntt2rQHEE=;
- b=OTD7xpfgzRKjk8IPj+hY0/neJinPwb1YSEItNN5gCsUT63RBkM7KBTH1KsWCULx5N0
- ESywFWY1yRatpp22F0ZCFxusU1XnV51hxrj4xbd9MDPXt3LN5p45fb+1sNLt3uB01zZI
- 6Lh6CuAzTVnC00UF83iK0eNIZ2GZmHRt8rBYy+KelyHtlV8VoJP2KzcT+EuFNwT7fA0u
- JdynlJ5YG3QaNXzhSXon9yoQ5ao0u/V5UVsNO6J1BJqPeCcSL/CtaEcxVWQ8KXKP+gU1
- uiO8bWSq0Xm6CszUkMf/CntMI7Nll7XMISEP/C+NAKs775S4x22C5RNdDDHXbGdUWJa2
- R4lA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=5Xj1K7fgFeKW8/afyu8eZju/NavJgsqTEAntt2rQHEE=;
- b=M+OZ+DNL/COxNaqUHYOtbM75Wn35ksKaSQDwSCdZqiQiuUzrcZYCGaXHtJ/MhEF0Ly
- D56M2OLXCzfo62gSHLXQjnsG8+dYP3Sb85PolESMTK5pgfFngfbb8eeSCnI9uXZmrN6D
- HaReR3z5cUBa9lcrq44ho155AZEToNavVzLcNyj5soazr8El5YMcHyZhuxxSW2g7DmXW
- llqausI0UaRqQfD8JZlutod0RvgUIPuksHA6GyAIsQOpw+TsdWM9neKt8h5+yoto7JKn
- VfKjWBl4V9iOZaAmEyTanXD5aB1hDPUKcGp3oW6Ku2TjZa2sJJwr8jVnbQ/FEvxCYFZo
- raIA==
-X-Gm-Message-State: AGRZ1gJTkB7l60EN6ZoRhiET/WwthWxXclDZ/jT3hfF3mU8CiMiCM4WZ
- uqJhm2BKrbW1X0KoNZbzO/hOhqLg3TOti62HWwd3Eg==
-X-Google-Smtp-Source: AJdET5d7tuCxussA30yNFm4MKUXHmDpSsHgBZUtj2BfMVjorvFq5VzfeWttmvP/V6zpUzd4u+ANh/4CXz3kRfdc6BAE=
-X-Received: by 2002:a67:d59d:: with SMTP id m29mr7901047vsj.139.1541351928483; 
- Sun, 04 Nov 2018 09:18:48 -0800 (PST)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f580b2f0
+ for <wireguard@lists.zx2c4.com>; Sun, 4 Nov 2018 17:21:55 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e58d3e03
+ for <wireguard@lists.zx2c4.com>; Sun, 4 Nov 2018 17:21:55 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2b1ad714
+ for <wireguard@lists.zx2c4.com>; Sun, 4 Nov 2018 17:21:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :references:in-reply-to:from:date:message-id:subject:to:cc
+ :content-type; s=mail; bh=aLJVhC50mvVrsoYAwYSkbiidpsI=; b=BwGf3l
+ GcKYhKVooym6cMuqpCWfOW0EApiyHZzackrrctttGk6UtvblBpmMOPcIGIZSE0LA
+ Rmx+MjrlxcrZdpxzUjLLNOMzvDDjCTGQjQpmx/S0j3vxuw7HRTh4AojsTj6J7jC1
+ DlNOPlJbr2RdKIMTqn51wIgaiLpa0A+Dvxx3BLZAmVzWq25OCf74fnIGboak2JQb
+ aVG9V2mUUe3SNZaihKxbprv3P3fClJM22BOiFcPQFcFVMflB/6kLNb2Ll9oIdhdr
+ fJv/t+ZwvmekwTCNTWzcwoZU2UITT+ur+0bqUFvbQJn5yQYoZt/tf7/YK1Mt/iJT
+ 0tS2zRepEnQf5QAQ==
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id f8a7faac
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Sun, 4 Nov 2018 17:21:55 +0000 (UTC)
+Received: by mail-ot1-f46.google.com with SMTP id 40so5701551oth.4
+ for <wireguard@lists.zx2c4.com>; Sun, 04 Nov 2018 09:26:02 -0800 (PST)
+X-Gm-Message-State: AGRZ1gK+Wo96hjGUXNwuO+fRMF7XenYJfZ2l9wZth3doKRcml8MokZpP
+ cezEtC9LbqvezJZ7IDDZdhN5qV3xLzbr1j1s6FQ=
+X-Google-Smtp-Source: AJdET5ersAFqyrQQs6nJyqfBKf4lLalMwNi/mgs1+he0i6WO5Dfo6hsYvv3G1g3lCXOrbvA4uH/6TOd8xSJyIuMu1m0=
+X-Received: by 2002:a9d:fef:: with SMTP id m44mr12547335otd.225.1541352362007; 
+ Sun, 04 Nov 2018 09:26:02 -0800 (PST)
 MIME-Version: 1.0
-References: <CAD6UttB+_G4RY-TwyJ7w6rX-wKqqRqds0B9hMVvFPfjNHvwtgg@mail.gmail.com>
-In-Reply-To: <CAD6UttB+_G4RY-TwyJ7w6rX-wKqqRqds0B9hMVvFPfjNHvwtgg@mail.gmail.com>
-From: Tushar Pankaj <tushar.s.pankaj@gmail.com>
-Date: Sun, 4 Nov 2018 11:18:37 -0600
-Message-ID: <CANO=1yKaU=8wkaSZffR7qb3EQwHUcUWbPb6-2zLQ0YZoAkpjFQ@mail.gmail.com>
-Subject: Re: Google Play can't Download through Kernel module backend
-To: Love4Taylor <love4taylor.me@gmail.com>
-X-Mailman-Approved-At: Sun, 04 Nov 2018 18:17:02 +0100
-Cc: wireguard@lists.zx2c4.com
+References: <523fbb0f-934e-4ba0-0948-718c9e1844a1@hfnet.de>
+In-Reply-To: <523fbb0f-934e-4ba0-0948-718c9e1844a1@hfnet.de>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Sun, 4 Nov 2018 18:25:50 +0100
+X-Gmail-Original-Message-ID: <CAHmME9rm838UB=stvUPZkOVe1SuDQFNOvAyPHU7dhQscnCOahA@mail.gmail.com>
+Message-ID: <CAHmME9rm838UB=stvUPZkOVe1SuDQFNOvAyPHU7dhQscnCOahA@mail.gmail.com>
+Subject: Re: WireGuard Android: Cached resolved host
+To: hf@hfnet.de
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -77,130 +69,21 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============3790972895873314889=="
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============3790972895873314889==
-Content-Type: multipart/alternative; boundary="0000000000002bd4970579d9f6e7"
+t's mostly this way to prevent DNS lookup failures during the network
+connectivity changes, such as turning on and off and on a tunnel
+really fast. I agree the current implementation's behavior is
+suboptimal though. Probably instead we should invalidate based on the
+TTL.
 
---0000000000002bd4970579d9f6e7
-Content-Type: text/plain; charset="UTF-8"
-
-I've had this issue too, which I reported to Jason. It seems that when I'm
-connected via the kernel module, HTTPS has issues (but nothing else). When
-I'm connected via the Go backend, this isn't the case.
-
-Thanks,
-Tushar Pankaj
-
-On Sun, Nov 4, 2018, 11:16 Love4Taylor <love4taylor.me@gmail.com wrote:
-
-> Hi,
-> I recently discovered that when I use the Kernel module backend,
-> Google Play will always be stuck in Downloading, I got the following
-> logcat, but everything works fine when using Go module backend
-> (Android VPN).
->
-> D DownloadManager: [558] Starting
-> W DownloadManager: [514] Stop requested with status HTTP_DATA_ERROR:
-> SSL handshake aborted: ssl=0x766f2a4008: I/O error during system call,
-> Connection reset by peer
-> D DownloadManager: [514] Finished with status WAITING_TO_RETR
->
-> D DownloadManager: [558] Starting
-> W DownloadManager: [555] Stop requested with status HTTP_DATA_ERROR:
-> failed to connect to r1---sn-3qqp-ioqsl.gvt1.com/27.85.180.172 (port
-> 443) from /10.0.0.101 (port 49253) after 20000ms
-> D DownloadManager: [555] Finished with status HTTP_DATA_ERROR
->
-> I think it should not be a server problem, even if I use the free
-> server provided by TunSafe, it is the same problem. It seems that the
-> DownloadManager called by Google Play has not passed Wireguard at
-> all(10.0.0.101 is my LAN IP). Then I did the following test.
-> Kernel module backend + Router blocks Google domain name: Google Play
-> stuck in Downloading, the log is the same as above.
-> Go module backend + Router blocks Google domain name: Everything works
-> fine, no error log.
-> Kernel module backend + Router does not block Google domain name:
-> Everything works fine, no error log.
->
-> My Phones: OG Pixel/Nexus6 (Both are Android 9)
-> The link is route etc. on my phone: http://ix.io/1n8q
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
->
-
---0000000000002bd4970579d9f6e7
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div>I&#39;ve had this issue too, which I reported to Jas=
-on. It seems that when I&#39;m connected via the kernel module, HTTPS has i=
-ssues (but nothing else). When I&#39;m connected via the Go backend, this i=
-sn&#39;t the case.<br><br><div data-smartmail=3D"gmail_signature">Thanks,<b=
-r>Tushar Pankaj</div><br><div class=3D"gmail_quote"><div dir=3D"ltr">On Sun=
-, Nov 4, 2018, 11:16 Love4Taylor &lt;<a href=3D"mailto:love4taylor.me@gmail=
-.com">love4taylor.me@gmail.com</a> wrote:<br></div><blockquote class=3D"gma=
-il_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-lef=
-t:1ex">Hi,<br>
-I recently discovered that when I use the Kernel module backend,<br>
-Google Play will always be stuck in Downloading, I got the following<br>
-logcat, but everything works fine when using Go module backend<br>
-(Android VPN).<br>
-<br>
-D DownloadManager: [558] Starting<br>
-W DownloadManager: [514] Stop requested with status HTTP_DATA_ERROR:<br>
-SSL handshake aborted: ssl=3D0x766f2a4008: I/O error during system call,<br=
->
-Connection reset by peer<br>
-D DownloadManager: [514] Finished with status WAITING_TO_RETR<br>
-<br>
-D DownloadManager: [558] Starting<br>
-W DownloadManager: [555] Stop requested with status HTTP_DATA_ERROR:<br>
-failed to connect to <a href=3D"http://r1---sn-3qqp-ioqsl.gvt1.com/27.85.18=
-0.172" rel=3D"noreferrer noreferrer" target=3D"_blank">r1---sn-3qqp-ioqsl.g=
-vt1.com/27.85.180.172</a> (port<br>
-443) from /<a href=3D"http://10.0.0.101" rel=3D"noreferrer noreferrer" targ=
-et=3D"_blank">10.0.0.101</a> (port 49253) after 20000ms<br>
-D DownloadManager: [555] Finished with status HTTP_DATA_ERROR<br>
-<br>
-I think it should not be a server problem, even if I use the free<br>
-server provided by TunSafe, it is the same problem. It seems that the<br>
-DownloadManager called by Google Play has not passed Wireguard at<br>
-all(10.0.0.101 is my LAN IP). Then I did the following test.<br>
-Kernel module backend + Router blocks Google domain name: Google Play<br>
-stuck in Downloading, the log is the same as above.<br>
-Go module backend + Router blocks Google domain name: Everything works<br>
-fine, no error log.<br>
-Kernel module backend + Router does not block Google domain name:<br>
-Everything works fine, no error log.<br>
-<br>
-My Phones: OG Pixel/Nexus6 (Both are Android 9)<br>
-The link is route etc. on my phone: <a href=3D"http://ix.io/1n8q" rel=3D"no=
-referrer noreferrer" target=3D"_blank">http://ix.io/1n8q</a><br>
-_______________________________________________<br>
-WireGuard mailing list<br>
-<a href=3D"mailto:WireGuard@lists.zx2c4.com" target=3D"_blank" rel=3D"noref=
-errer">WireGuard@lists.zx2c4.com</a><br>
-<a href=3D"https://lists.zx2c4.com/mailman/listinfo/wireguard" rel=3D"noref=
-errer noreferrer" target=3D"_blank">https://lists.zx2c4.com/mailman/listinf=
-o/wireguard</a><br>
-</blockquote></div></div></div>
-
---0000000000002bd4970579d9f6e7--
-
---===============3790972895873314889==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
+The code in question lives at
+app/src/main/java/com/wireguard/config/InetEndpoint.java if you want
+to take a stab at fixing it.
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
-
---===============3790972895873314889==--
