@@ -2,122 +2,69 @@ Return-Path: <SRS0=JcDs=NP=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65E25C32789
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  4 Nov 2018 09:56:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20FD1C32789
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  4 Nov 2018 11:42:25 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 799072081C
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  4 Nov 2018 09:56:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 62F162082A
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  4 Nov 2018 11:42:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (4096-bit key) header.d=urlichs.de header.i=@urlichs.de header.b="S5z0LHiO"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 799072081C
-Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=urlichs.de
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pYphCM0a"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 62F162082A
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 03c77ae7;
-	Sun, 4 Nov 2018 09:52:38 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4fdaa456;
+	Sun, 4 Nov 2018 11:38:01 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 75828bd7
- for <wireguard@lists.zx2c4.com>; Sun, 4 Nov 2018 09:52:35 +0000 (UTC)
-Received: from netz.smurf.noris.de (2001:780:107:8:83::
- [IPv6:2001:780:107:8:83::])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 827fa854
- for <wireguard@lists.zx2c4.com>; Sun, 4 Nov 2018 09:52:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=urlichs.de; 
- s=20160512;
- h=Content-Transfer-Encoding:Content-Type:In-Reply-To:
- MIME-Version:Date:Message-ID:From:References:To:Subject:Sender:Reply-To:Cc:
- Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
- List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=FtUGBeA1imS1nzx/UlePNvZF0JrAkbUIbIo5JD6zTCM=; b=S5z0LHiO/v56ek5IVLp5L7RQeo
- 3G8GNLCLIvSoOFh/FXUyQeNQg/PXHlK8EyNwcgrEgxtpCttJfJTZ8uapYflkl9OBdlBr2t6c/WahG
- f75IYENb8HjX+jnso+Iq4Ndm2+lJ+0Ms5Gz1bUB6N3Z8k7Y6w702uazVfw1TZzh1/06UIkPLuaNKq
- gGGQ+KFyVT5oea3wWX45tlh1Rc8j5/PmWEBY0jLX30yJCQlN85QJGnvum0Rs/0WdZv4f+ajYJNtRy
- tlMjD+HRU2n5bf+Urd+OLgzqW07u2asHdAPQ0n2T/hOoZfpYO7d/7Jjaf085lpxSepG2YbCn5Nyif
- YvBw4iOUYvqIzGcTt8YLyga0zZIXqxhlFgabcLQrJzYGp8ociWOZ7ejXOZXzV1EYMa3f5dZMDmAgP
- rjP8vFNOOLha9rh6xk4CA2mcpCNTFmRWxDZ82xSO+15N/2fZNowFzXNnOjEvaVuKCXgVI5N82Dzgi
- 6mLfLSnYYDhISftWqCq217SfisS8FeR3GwWRuqOfkTQkIv9Vpk40BU6cbKQ0RHpxAUzKbKv79ubX+
- g/q3W0sA7Z2Ko+ihSPoKVVLsLUkpsxiTR3qRL/xJQYvbiBLlzRigg6MLgGiYQiO/dIYDIzB0g4x9G
- 0nfceZS0AJso4YCvyFYTrmaAKX7YSYdSTB31SGN1s=;
-Received: from [2001:780:107:0:1278:d2ff:fea3:d4a6]
- by mail.vm.smurf.noris.de with esmtpsa
- (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim 4.89)
- (envelope-from <matthias@urlichs.de>) id 1gJF7p-000ILZ-5C
- for wireguard@lists.zx2c4.com; Sun, 04 Nov 2018 10:55:21 +0100
-Subject: Re: match on wg packets and redirect
-To: wireguard@lists.zx2c4.com
-References: <22f7e0cd-b0cd-aa6b-29dc-18ef2d689c2b@gmail.com>
-From: Matthias Urlichs <matthias@urlichs.de>
-Openpgp: id=AFD79782F3BAEC020B28A19F72CF8E5E25B4C293
-Autocrypt: addr=matthias@urlichs.de; prefer-encrypt=mutual; keydata=
- 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
-Message-ID: <5aca2956-74fa-2d24-a3b8-b02e997d0fa8@urlichs.de>
-Date: Sun, 4 Nov 2018 10:55:20 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.2.1
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c5f59a24
+ for <wireguard@lists.zx2c4.com>; Sun, 4 Nov 2018 11:37:57 +0000 (UTC)
+Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com
+ [IPv6:2607:f8b0:4864:20::32b])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 79f973b8
+ for <wireguard@lists.zx2c4.com>; Sun, 4 Nov 2018 11:37:57 +0000 (UTC)
+Received: by mail-ot1-x32b.google.com with SMTP id f24so5510672otl.5
+ for <wireguard@lists.zx2c4.com>; Sun, 04 Nov 2018 03:42:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=xmZSGUdrgeZZb9gl8czyDx8Ke/te84kwvCnpIZumBO0=;
+ b=pYphCM0aB+CxRAl8TYpDVYgy475dNkl+RcoJjFKrtzB2EHDUQKjw15vtiZIOn9q0pV
+ jbUc459EPNyZ96Unbg/4l2mqKon6L/NXIWqCWCgrms+sP4hExwd8AlLyGiFT1h4Pawb1
+ crGjIRGCYfnsvV/5lCyU5epYkQEXNDXz38DCcoziW+Gb8gWO4mFEMdidw4738v91uu80
+ zNUglXUnEnfRoxAUMydlYARkkpBv+59XfflwIilvO35KogaQZ3O4OycVQgVbWMtGxS8X
+ wbIp943TpZFvJUdQFeQlMZI8sorDf/+yLoHQD7vF9ipOachDx/dk5xxKIbqGPgme97IM
+ 288w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=xmZSGUdrgeZZb9gl8czyDx8Ke/te84kwvCnpIZumBO0=;
+ b=j44aZOzjIo4Uhu5QIg8cVJxDBvzvZ85Rw4Qm0PNEUOI/TpkkxteUCNUWUwQ3uxmRC8
+ GAdIzM4N8GHwE27ctPCs8tQMX99pMyAIizbtbUhoa1hCABW0yMUth5pwNQbY+BvACW3W
+ UMWHJW9EzNRVmpE7qPVJsWzQedC88L0V1ZzASovPWaPPCOJ1b6g419lm/1APjIxEPDgj
+ xJMBKLt5/+1K4oeiEMwC16ok2UKZ8y6z8RiQ7RqME9u38CevEgVlEtqIQzQzbz1PdzwM
+ f/MtQJHh+muawFXrRnUc4cql4zcHZQMkbR0fA++iY8rplMzvMl0DDFnroceYwtNcvriZ
+ Xwbw==
+X-Gm-Message-State: AGRZ1gItfsItnOMQkrGUMfWf+zBk8zMoAYKKpa9p6HKoG7Pa//Q7LyPa
+ pOkca+IpiNTWQUOzCF3c322ZVS/AbZBTnFdjBwM=
+X-Google-Smtp-Source: AJdET5fS7wqCZsOZWUyzQbguF38ES+j7GLxv2sTnnTbxBjMxNtsqXWkWfLBtAipQUr00e5PlZ2RA5Q8EPDrfElcsit4=
+X-Received: by 2002:a9d:3cae:: with SMTP id z43mr11305050otc.159.1541331721968; 
+ Sun, 04 Nov 2018 03:42:01 -0800 (PST)
 MIME-Version: 1.0
+References: <22f7e0cd-b0cd-aa6b-29dc-18ef2d689c2b@gmail.com>
 In-Reply-To: <22f7e0cd-b0cd-aa6b-29dc-18ef2d689c2b@gmail.com>
-Content-Language: de-DE
-X-Smurf-Spam-Score: 0.0 (/)
-X-Smurf-Whitelist: +relay_from_hosts
+From: Kalin KOZHUHAROV <me.kalin@gmail.com>
+Date: Sun, 4 Nov 2018 12:41:49 +0100
+Message-ID: <CAKXLc7e5ddvAskcDyFON=qapYfdKjd2rLYFnaoxrE1Y5yh=Vew@mail.gmail.com>
+Subject: Re: match on wg packets and redirect
+To: adrian.sev@gmail.com
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -129,15 +76,31 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-T24gMDQuMTEuMTggMTA6MDksIEFkcmlhbiBTZXZjZW5jbyB3cm90ZToKPiBIaSEgSXMgdGhlcmUg
-YSB3YXkgdG8gdXNlIGlwdGFibGVzIHRvIG1hdGNoIHdpcmVndWFyZCBwYWNrZXRzIGluY29taW5n
-Cj4gb24gNDQzIGFuZCB0aGUgcmVkaXJlY3QgdGhlbSB0byB0aGUgYWN0dWFsIHBvcnQ/CgpKdXN0
-IGNvbmZpZ3VyZSB3aXJlZ3VhcmQgdG8gdXNlIHBvcnQgNDQzIOKApgoKLS0gCi0tIE1hdHRoaWFz
-IFVybGljaHMKCl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-CldpcmVHdWFyZCBtYWlsaW5nIGxpc3QKV2lyZUd1YXJkQGxpc3RzLnp4MmM0LmNvbQpodHRwczov
-L2xpc3RzLnp4MmM0LmNvbS9tYWlsbWFuL2xpc3RpbmZvL3dpcmVndWFyZAo=
+On Sun, Nov 4, 2018 at 10:10 AM Adrian Sevcenco <adrian.sev@gmail.com> wrote:
+>
+> Hi! Is there a way to use iptables to match wireguard packets incoming
+> on 443 and the redirect them to the actual port?
+>
+> In many hotels/hostels and other free wifi it seems that only 80+443 is
+> allowed but amazingly both tcp and udp...
+>
+Should be, just don't try to match "wg packets", match instead your
+(other) endpoint IP address and port.
+
+And why would you even need to do that?
+If you have an endpoint (in cloud, home, etc.) with address 1.2.3.4
+and port 443, just connect to that, no iptables should be needed.
+
+And you can still use the same ip to host a https website (it uses tcp) :^D
+
+Cheers,
+Kalin.
+_______________________________________________
+WireGuard mailing list
+WireGuard@lists.zx2c4.com
+https://lists.zx2c4.com/mailman/listinfo/wireguard
