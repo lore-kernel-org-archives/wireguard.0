@@ -1,73 +1,69 @@
-Return-Path: <SRS0=jCTu=NU=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=kIRS=NV=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
 	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_PASS,
+	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E5A2CC43441
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  9 Nov 2018 16:14:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9F25C43441
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 10 Nov 2018 04:57:46 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 472BA20818
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  9 Nov 2018 16:14:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 2177620818
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 10 Nov 2018 04:57:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ONFvAP4C"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 472BA20818
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WppyGTGr"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 2177620818
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c1599746;
-	Fri, 9 Nov 2018 16:09:41 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d9abdec9;
+	Sat, 10 Nov 2018 04:52:40 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e4e92f6b
- for <wireguard@lists.zx2c4.com>; Fri, 9 Nov 2018 02:53:14 +0000 (UTC)
-Received: from mail-yw1-xc30.google.com (mail-yw1-xc30.google.com
- [IPv6:2607:f8b0:4864:20::c30])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f67e25f4
- for <wireguard@lists.zx2c4.com>; Fri, 9 Nov 2018 02:53:14 +0000 (UTC)
-Received: by mail-yw1-xc30.google.com with SMTP id i65-v6so662471ywc.5
- for <wireguard@lists.zx2c4.com>; Thu, 08 Nov 2018 18:57:54 -0800 (PST)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 24de0875
+ for <wireguard@lists.zx2c4.com>;
+ Sat, 10 Nov 2018 04:52:39 +0000 (UTC)
+Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com
+ [IPv6:2607:f8b0:4864:20::d36])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a8a5d08a
+ for <wireguard@lists.zx2c4.com>;
+ Sat, 10 Nov 2018 04:52:38 +0000 (UTC)
+Received: by mail-io1-xd36.google.com with SMTP id f12-v6so2816193iog.0
+ for <wireguard@lists.zx2c4.com>; Fri, 09 Nov 2018 20:57:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=lbLyGXy+NK+HeTw2twwsB+8tPULR857j1dm0Thtwj4c=;
- b=ONFvAP4Cc6FeGBVxkPFdcMERgAt+ejgfjwN3S8s2fCN3gCtcGxXGoh0LPuZJ/5q1Ob
- 6fvAh7LrzGAq6FCL8yI86wdOGMdTFxlQhtCKDo4mTkZd3JHAjUZX7K+5fZyRTS9YvQF6
- +oJFdLCzTfOyY3KLMRiJDSDQmGaulB4IKpD5fmYkDq2zVSg1+ctZxiUeuPHJ6G+T1dXS
- oUZY0q4Ma+GifU2GJI/8AG108+MsHauMZblwz4XnIHpMMuIJoHk/UIHvexhW/oRs/Mbt
- pvJeM0NOez34zl2APwmL4ZMTx8lZ2IjedPj3G6cGbKYd4Abz8q51mRisV1zCBwuqgIAQ
- VYHg==
+ h=mime-version:from:date:message-id:subject:to;
+ bh=hd8KEseovn6nM3CWZBN+JU0hvbpjisqxDC7CozWBISk=;
+ b=WppyGTGrBuxKoDCGHuI60tTqoimM+HG9ERqAhgzfpu73KuXGIfRxrUvPiVCZ4nX/VR
+ gRNb+Vql8EEGP8BXOiHlf+sARnuZ1Qr4wrSBqNrzINyI/r1h1bLwCHpYFJjrqzwN5FZA
+ 6ikgxWobsxt/nzYOgL/zxgo11VQxdkh1yjE2UjE4ZOUb5Ax+ajB0CAxHMuTLwJEdPEM8
+ 8yz+ue7kbJmdBKEOyZ8XJ2JMtRyR1f6VIfs2zSe+CsbCsGd+V2yZjfehIP08q5uFc5Au
+ r5rYP70kQhVVcMi49K+cuggaQpDGemS+BKHKOkJkNH5gT8h5HepliZy0veimbUGJa9w3
+ QhBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=lbLyGXy+NK+HeTw2twwsB+8tPULR857j1dm0Thtwj4c=;
- b=jAdVZiRXP8fY2HRWptIMyVNEpAMWiLH/GtQw5fJMNA4/qweW59Kqm4RevNjSM4V/dx
- j4cubfuS9xok8JX9mC92uEwRM/zGKF/pG+MwcrOEv9wyOa4rcFA6gfaaCJZjPrnRy7zY
- AMmUYCO3dTfmOYW9d/KbJJsjx2je42WWnfz/TsWMKofPdT+pYdxF5LD1Bk1vlIBReQY3
- 4hD8+Cch0X+P3YVSROZvQ3vEeN389IlJk+Ul/josXy2amR4OQnfZjXm5p9OJPoi5uGoo
- LFAY8BDnUf/rxezXRJMSkksl8gZTz3cI5BJnCtaDRiepojuGLbSyiwV8kNYxXN1nGRpE
- yOcA==
-X-Gm-Message-State: AGRZ1gJawZjmju+U4OL3RLH3qDzSUC6g8g00KybMtOT3h+5BSitYgdrV
- v1kBspJjikpYqBOkKq9E4XL1ATXY8OpIKU59JjeLKo+N
-X-Google-Smtp-Source: AJdET5c4JytugfHFDOp9o10ooxq/e24OszBoThp2RidLQGxZYJSyhmu6SjXUbh23XEAIV9psrvC6Yy0UZrDekd7qBQ0=
-X-Received: by 2002:a37:18d5:: with SMTP id 82mr6625302qky.65.1541732273129;
- Thu, 08 Nov 2018 18:57:53 -0800 (PST)
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=hd8KEseovn6nM3CWZBN+JU0hvbpjisqxDC7CozWBISk=;
+ b=U6CmohlTCuTZLRgQBPXeY3eah5pvmkkRPSE7nI6njqbhGXOvBbtOh1YCHDUJmPVRTW
+ j6ynF8JmMgz40TH3132gM8Es8evSky+UYBC7lGsnJvbU+ZkyHD1cqaPNp4AEU3XpogRe
+ q8CDyqgmZv2ZUk+cKhBPGBuQ6SYE8l4Qfv73rZUB2wyJjnJ8NDCSSndwo/dRM3nDPaTN
+ s7pYiPEhBMUcYnDrlUhbxb//V/tcwymv8GFG9M/4IN8kB0/a9eOQPropCCMPUrVzRUbu
+ pZPJHNzEShU+6PKnr/WF1WH8k+qkHssGYm+Q+5YaxFMRRjYXyQE/tGvqxsXvvtjnHejv
+ 9w7A==
+X-Gm-Message-State: AGRZ1gLnrxp3zA3Skfxz1+9Zj/mHG3XRYzH/cIL5IPbNQ7UsfLMOZkWJ
+ 6HJdpHkbG6D3duOLtq4T9Vb4zEh5jznYyD737ph17g==
+X-Google-Smtp-Source: AJdET5fLwhMPC9m7aQAUy5Dc6AUN+aRe1qZ7ogRlsFRnYC8lwNLO57OYO290/tNvn8XXDBG82LGWDlAy2bqiOi/5vX0=
+X-Received: by 2002:a6b:440c:: with SMTP id
+ r12-v6mr9381529ioa.35.1541825845731; 
+ Fri, 09 Nov 2018 20:57:25 -0800 (PST)
 MIME-Version: 1.0
-References: <87h8grrulr.fsf@taht.net>
-In-Reply-To: <87h8grrulr.fsf@taht.net>
-From: Dave Taht <dave.taht@gmail.com>
-Date: Thu, 8 Nov 2018 18:57:40 -0800
-Message-ID: <CAA93jw7UyGfQCL8FhAPo2sCUUZNG==nWcQNRKW-9vqcDoVsWjQ@mail.gmail.com>
-Subject: Re: [Babel-users] ipv6 tunnels and babel's source specific routing
-To: =?UTF-8?Q?Dave_T=C3=A4ht?= <dave@taht.net>
-X-Mailman-Approved-At: Fri, 09 Nov 2018 17:09:39 +0100
-Cc: babel-users <babel-users@lists.alioth.debian.org>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: Edward Vielmetti <edward.vielmetti@gmail.com>
+Date: Fri, 9 Nov 2018 23:56:47 -0500
+Message-ID: <CAPRZce2R2W+WkXm26Jo2RTmTkyG=rO7tc2jFf0s7-4pxPESTqw@mail.gmail.com>
+Subject: how to diagnose lengthy ping times through a complex network stack
+To: wireguard@lists.zx2c4.com
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -79,109 +75,82 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: multipart/mixed; boundary="===============1156627357789697127=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-SSBmaWd1cmVkIG91dCB0aGUgZmlyc3QgdHdvIGJpdHMgb2YgdXNpbmcgc291cmNlIHNwZWNpZmlj
-IHJvdXRpbmcgZm9yCmlwdjYgd2l0aCB3aXJlZ3VhcmQuLi4KClRoZSBmaXJzdCB0cmljayB3YXMg
-dG8gd2F0Y2ggd2hhdCB3Zy1xdWljayB3YW50ZWQgdG8gZG8gYW5kIGNoYW5nZSBpdC4KU28gSSBz
-ZXR1cCBteSB2cG4gY2xpZW50IChkZWVwIHdpdGhpbgpteSBuZXR3b3JrKSB0aHVzbHk6CgpbSW50
-ZXJmYWNlXQojQWRkcmVzcyA9IDI2MDA6ODIxMTplMDAxOjkzMDA6OjIvNjAKTGlzdGVuUG9ydCA9
-IDUxODIwClByaXZhdGVLZXkgPSBuZXZlcnlvdW1pbmQKCltQZWVyXQpQdWJsaWNLZXkgPSBub3Rk
-b2luZ3RoYXQKQWxsb3dlZElQcyA9IDI2MDA6ODIxMTplMDAxOjkzMDA6Oi82MCwgOjovMApFbmRw
-b2ludCA9IHR1bi50YWh0Lm5ldDo1MTgyMAoKVGhpcyB0ZWxscyB3aXJlZ3VhcmQgdG8gbGV0IGFu
-eSBpcHY2IGFkZHJlc3MgdGhyb3VnaCBhbmQgdHJlYXQgaXQgbGlrZQphIGRlZmF1bHQgcm91dGUu
-IFdlIGRvbid0IHJlYWxseSB3YW50IHRoaXMgYnV0IEkgZml4IHRoaXMgbGF0ZXIuCgpUaGUgc2Vy
-dmVyIGlzIHNldHVwIHNpbWlsYXJseSwgYnV0IG5vIDo6LzAgYW5kIGFuIGFkZHJlc3Mgb2YgOjox
-LzYwCgpUaGVuIEkgY2hhbmdlZCB0aGUgZGVmYXVsdCBzdGFydHVwIHRvIGxvb2sgbGlrZSB0aGlz
-OgoKIyEvYmluL3NoCmlwIGxpbmsgYWRkIHdnMCB0eXBlIHdpcmVndWFyZAp3ZyBzZXRjb25mIHdn
-MCAvZXRjL3dpcmVndWFyZC93ZzAuY29uZgojIHByZWZlcnJlZF9sZnQgMCBtYWtlcyBzdXJlIHlv
-dSBkb24ndCB1c2UgdGhpcyBhZGRyZXNzIGZvciBhbnl0aGluZwp5b3UgZG9uJ3QgZXhwbGljaXRs
-eSBiaW5kIHRvCiMgT3RoZXJ3aXNlICpiZWNhdXNlKiBpdCBpcyBzdGF0aWMsIHdpdGggYSBwcmVm
-ZXJyZWRfbGZ0IG9mIGZvcmV2ZXIsCml0IGdldHMgY2hvc2VuIGFzCiMgYSBkZWZhdWx0IGlwdjYg
-YWRkciBvdmVyIHRoZSBkeW5hbWljIGlwdjYgYWRkcmVzc2VzLiBJIG9ubHkgd2FudCB0aGUgdnBu
-IGZvcgojIHNwZWNpZmljIHRvb2xzLi4uCmlwIGFkZHJlc3MgYWRkIDI2MDA6ODIxMTplMDAxOjkz
-MDA6OjIvNjAgZGV2IHdnMCBwcmVmZXJyZWRfbGZ0IDAKaXAgbGluayBzZXQgbXR1IDE0MjAgZGV2
-IHdnMAppcCBsaW5rIHNldCB3ZzAgdXAKaXAgcm91dGUgYWRkIDI2MDA6ODIxMTplMDAxOjkzMDA6
-Oi82MCBkZXYgd2cwCiMgdGhlIGRlZmF1bHQgbGluZSBnZW5lcmF0ZWQgYnkgd2ctcXVpY2sgaW5z
-ZXJ0cyBhIGRlZmF1bHQgcm91dGUgZm9yIGV2ZXJ5dGhpbmcKIyB3aGljaCBkaXNhYmxlcyBteSBu
-YXRpdmUgaXB2NiBhZGRycyBhbmQgcm91dGluZwojIFRoZSB0cmljayAtIG5vdGUgdGhlIGZyb20g
-YW5kIHRoZSBwcm90bwppcCAtNiByb3V0ZSBhZGQgOjovMCBmcm9tIDI2MDA6ODIxMTplMDAxOjkz
-MDA6Oi82MCBkZXYgd2cwIHByb3RvIDQ4Cgp0aGVuIEkgc2V0dXAgYmFiZWxkLmNvbmYgdG8gaGF2
-ZQoKcmVkaXN0cmlidXRlIHByb3RvIDQ4IGFsbG93Cgp3aGljaCBleHBvcnRzIHRoYXQgImZyb20g
-ZGVmYXVsdCIgdG8gdGhlIHJlc3Qgb2YgbXkgbmV0d29yayB3aXRob3V0CmRvaW5nIGEgZGVmYXVs
-dCBkZWZhdWx0IHJvdXRlIHRoYXQgUkEgcGlja3MgdXAKCkkgY2FuIHRoZW4gZG8gc3R1ZmYgYW55
-d2hlcmUgZWxzZSBvbiBteSBuZXQgKHJ1bm5pbmcgYmFiZWwgcmZjNjEyMzZiaXMpICwgbGlrZQoK
-aXAgYWRkcmVzcyBhZGQgMjYwMDo4MjExOmUwMDE6OTMwMTo6MS82NCBkZXYgd2hpY2hldmVyIHBy
-ZWZlcnJlZF9sZnQgMAoKd2hpY2ggZ2l2ZXMgbWUgYSB2YWxpZF9sZnQgb2YgZm9yZXZlci4uLiBh
-bmQKCnRoaXMgbGV0cyBtZSB1c2UgbXkgbmF0aXZlLCBkeW5hbWljLCBpcHY2IGlwcyBmcm9tIGNv
-bWNhc3QgaW4gdGhlIGdlbmVyYWwgY2FzZSwKYW5kIHRoZSB2cG4gdHVubmVsJ2QgaXB2NiBhZGRy
-ZXNzIHJhbmdlcyBvbmx5IHdoZW4gSSBleHBsaWNpdGx5IHNwZWNpZnkgaXQuCgpJIGhhdmUgbm8g
-aWRlYSBpZiBkaGNwdjYtcGQgY2FuIGJlIGNvbmZpZ3VyZWQgKHdpdGggYSB2YWxpZF9sZnQgb2Yg
-YQpsb3QsIGNvbnN0YW50bHkgcmVuZXdlZCwgYW5kIGEgcHJlZmVlcmVkIG9mIDApIHRoaXMgd2F5
-IG9yIGhuZXRkLCBvcgppZiB0aGVyZSB3YXMgc29tZSBiZXR0ZXIgd2F5CnRvIGRlcHJpb3JpdGl6
-ZSBhIGdpdmVuIHNldCBvZiBpcHY2IGFkZHJzLCBidXQuLi4KCk5vdyB0aGF0IEkgaGF2ZSBhIHdo
-b2xlIC81NiBJIGNhbiBmaW5hbGx5IGZpZGRsZSBtb3JlIHdpdGggaG5ldGQKYWdhaW4uIFRoaXMg
-YWxzbyBnaXZlcyBtZSBjaGVhcCBmYWlsb3ZlciBpZiBvbmUgb2YgbXkgZ3dzIGdvZXMgZG93bi4u
-LgoKT24gVGh1LCBOb3YgOCwgMjAxOCBhdCAzOjU3IFBNIERhdmUgVGFodCA8ZGF2ZUB0YWh0Lm5l
-dD4gd3JvdGU6Cj4KPgo+IE5vdyB0aGF0IEkgY2FuIHVzZSB0aGUgcmZjNjEyNmJpcyB2ZXJzaW9u
-IG9mIGJhYmVsJ3Mgc291cmNlIHNwZWNpZmljCj4gcm91dGluZy4uLgo+Cj4gYW5kIHdpcmVndWFy
-ZCBpcyBsb29raW5nIHN0YWJsZXIgYW5kIHN0YWJsZXIuLi4KPgo+IEknZCBsaWtlIHRvIGNvbWUg
-dXAgd2l0aCBzb21lIHJlbGlhYmxlIHN1YnNldCBvZiB0aGUgZm9sbG93aW5nCj4gaWRlYS4KPgo+
-IEkndmUgaGFkIHRoaXMgbGlub2RlIGlwdjYvNTYgZm9yIGFnZXMuIEkgdXNlZCB0byB1c2UgaHVy
-cmljYW5lIGZvcgo+IHN0YXRpYyBpcHY2J3MgdW50aWwgbmV0ZmxpeCBzdGFydGVkIGJsb2NraW5n
-IHRoYXQuIGNvbWNhc3QgZHluYW1pYyBpcHY2Cj4gaXMgYSByZWFsIHBpdGEuIE15IGhvcGUgd2Fz
-LCB3aXRoIGEgd2hvbGUgLzU2IHRoYXQgSSBjb3VsZCBhY3R1YWxseSBydW4KPiBhIG1haWwgc2Vy
-dmVyIG9uIG15IHNpZGUgb2YgaXQgKGF0IGxlYXN0KSwgYW5kIGRvbGUgb3V0IHBvcnRpb25zIG9m
-IHRoZQo+IC81NiB0byBvdGhlciBib3hlcyBib3RoIG9uIG15IGNhbXB1cyBsYW4sIGJvYXQsIGxh
-cHRvcCwgZXRjIC0gYW55IHBsYWNlCj4gSSBuZWVkIGl0Li4uLgo+Cj4gc29tZXdoZXJlIGFsb25n
-IHRoZSB3YXkgSSB3YW50ZWQgdG8gZ2V0IGEgd2lyZWd1YXJkIHR1bm5lbCB3aXRoIGEgYmFiZWwK
-PiAiZnJvbSIgcm91dGUgdXAuCj4KPiBNeSB0aGlua2luZyBpcyB3ZWlyZCwgaW4gdGhhdCBJJ2Qg
-bGlrZSB0byBydW4gdGhlIHR1bm5lbC81NiB0bwo+IHR1bi50YWh0Lm5ldCBmcm9tIGNlcmVzLnRh
-aHQubmV0IChkeW5hbWljIGlwdjYgaXApCj4KPiBJJ2QgbGlrZSB0byBicmVhayBvdXQgaW5kaXZp
-ZHVhbCAvNjBzLCBzbywgZm9yIGV4YW1wbGUsIG15IGJvYXQgKHJ1bm5pbmcKPiB3aXJlZ3VhcmQg
-b3ZlciBhIGNlbGwgcGhvbmUsIG92ZXIgaXB2NiEhKSB3b3VsZCBoYXZlIGl0J3Mgb3duIC82MCB0
-bwo+IGFkZHJlc3MgZXZlcnkgcm91dGVyIGluIGl0Li4uIGFuZCBpbiB0aGF0IGNhc2UgSSBkbyBO
-T1Qgd2FudCB0byB0b3VjaCBpdAo+IGRvd24gaW4gdGhlIGNsb3VkIChiZWNhdXNlIG15IHBob25l
-IGlzIGd1YXJ1bnRlZWQgdG8gaGF2ZSBpcHY2KSwgSSB3YW50Cj4gaXQgdG8gZ28gdG8gbXkgZHlu
-YW1pYyBkbnMgaXB2NiBhZGRyZXNzIGZvciBjZXJlcy4KPgo+IEkgdHJpZWQgdG8gZG8gdGhpcyBx
-dWl0ZSBzb21lIHRpbWUgYWdvIGluIHdpcmVndWFyZCdzIGV2b2x1dGlvbi4KPgo+IE1vc3Qgb2Yg
-dGhlIGV4YW1wbGVzIG91dCB0aGVyZSBhcmUgZm9yIHNlbmRpbmcgKmFsbCogeW91ciB0cmFmZmlj
-IHZpYQo+IHdpcmVndWFyZCB0aHJvdWdoIGEgZGVmYXVsdCBndywgd2hlcmUgd2hhdCBJIHdhbnQg
-aXMganVzdCB0aGUgaXB2Ni81Ngo+IGFkZHJzIEkndmUgZXhwb3J0ZWQgdG8gYXV0b21hZ2ljYWxs
-eSBnbyB0aHJvdWdoIHRoZSB2cG4uIGUuZy4gSSdkIGJpbmQKPiB0aGUgaG91c2UgbWFpbCBzZXJ2
-ZXIgdG8gdGhlIHZwbiBhZGRyZXNzIG9mIHdoYXRldmVyOjozLzY0LCBjYW1wdXMKPiBzZXJ2ZXIg
-YXQgd2hhdGV2ZXI6MjA6OjMvNjQsIGJvYXQgc3NoIHNlcnZlciBhdCB3aGF0ZXZlcjozMDo6bmV2
-ZXJ5b3VtaW5kLzY0Cj4KPiBXaGVuIGRvaW5nIHRoYXQgbm9ybWFsbHkgeW91J2QgZG8gc29tZXRo
-aW5nIGxpa2UKPgo+IGlwIC02IHJvdXRlIGRlZmF1bHQgZnJvbSB2cG46YWRkOnJlc3M6Oi81NiB2
-aWEgZGV2IHdpcmVndWFyZHZwbgo+Cj4KPiBJZiBJIGNhbiBwb3NzaWJseSBtYWtlIGFueXRoaW5n
-IG1vcmUgY29tcGxpY2F0ZWQhISEgaXQgd291bGQgYmUgZ3JlYXQgdG8KPiBiZSBhYmxlIGFsd2F5
-cyBnbyBkaXJlY3RseSB0byB0aGUgaXB2NiBjZXJlcyBhbmQgZmFsbCBiYWNrIHRvIHRoZSAoaXB2
-NCkKPiBjbG91ZC4uLiBhbm5vdW5jaW5nIHRvIHRoZSByZXN0IG9mIG15IGJveGVzICh2aWEgYmFi
-ZWwpIHdoZXJlIEkgYW0uLi4KPgo+IHR1bi50YWh0Lm5ldCBoYXMgdGhlIC81Ngo+Cj4gY2FtcHVz
-IDEgbmVlZHMgYXQgbGVhc3QgYSA2MCwgbWF5YmUgZXZlbiBhIDU4Lgo+Cj4gbGFiIG5lZWRzIGEg
-NjAKPgo+IGJvYXQgd2FycmlvcnMgKGhhbGYgZG96ZW4gYm94ZXMsIGEgLzYyPykgKHllcywgdGhp
-cyBpcyBleGNlc3NpdmUgYnV0IEkKPiBjYW4ndCBnZXQgZGhjcHY2LXBkIG91dCBvZiB0aGUgcGhv
-bmUsIGFuZCBJIGhhdmUgbXVsdGlwbGUgcm91dGVycyBvbgo+IGJvYXJkIGJlY2F1c2UgdGhhdCdz
-IHRoZSB3b3JrIEkgZG8pCj4KPiByb2FkIHdhcnJpb3JzCj4gbGFwdG9wIC0gbmVlZHMgYSBtb2Jp
-bGUgMTI4PyBCdXQgSSBkb24ndCB3YW50IGl0IHRvIHRyeSB0byBjb25uZWN0IG92ZXIKPiB0aGUg
-dnBuIG92ZXIgdGhlIHZwbi4uLi4KPgo+IHNvIHRoYXQncyB0aGUgY3JhenkgcXVlc3Rpb24uIEkg
-ZG9uJ3QgdGhpbmsgSSd2ZSBkZXNjcmliZWQgaXQgd2VsbCBlbm91Z2guCj4KPiBzbyBxdWljayBh
-bmQgc2xpZ2h0bHkgbGVzcyBxdWVzdGlvbiAtIGhvdydzIGFuZHJvaWQgd29ya2luZyBhbmQgZG9l
-cyB3aXJlZ3VhcmQgb24KPiBhbmRyb2lkIHdvcmsgb3ZlciBpcHY2PyBDYW4gYSBhbmRyb2lkIHRl
-dGhlciBhdCBsZWFzdCwgZXhwb3J0IFJBPwo+Cj4gYWx0ZXJuYXRpdmVseSBhbnlvbmUga25vdyBv
-ZiBhIGdvb2QgdXNiIHN0aWNrIGZvciBjZWxsPwo+Cj4gUFMgSSB1c2VkIHRvIGRvIHRoaXMgc29y
-dCBvZiBjcmF6eSBzdHVmZiB3aXRoIHRpbmMsIGJ1dC4uLgo+Cj4gUFBTIHllcywgbXkgYm9hdCBy
-dW5zIGJhYmVsLiBJdCB3b3VsZCBiZSBhd2Vzb21lIGlmIG1vcmUgYm9hdHMgcmFuIGFkaG9jCj4g
-d2lmaSwgYmFiZWwsIGFuZCBobmV0ZC4gVkhGIHN1Y2tzIGNvbXBhcmVkIHRvIHdpZmkuIEEgcGlj
-b3N0YXRpb24gb24gdGhlCj4gbWFzdCBoYXMgYWJvdXQgMjAgbWlsZSByYW5nZS4KPgo+Cj4gX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18KPiBCYWJlbC11c2Vy
-cyBtYWlsaW5nIGxpc3QKPiBCYWJlbC11c2Vyc0BhbGlvdGgtbGlzdHMuZGViaWFuLm5ldAo+IGh0
-dHBzOi8vYWxpb3RoLWxpc3RzLmRlYmlhbi5uZXQvY2dpLWJpbi9tYWlsbWFuL2xpc3RpbmZvL2Jh
-YmVsLXVzZXJzCgoKCi0tIAoKRGF2ZSBUw6RodApDVE8sIFRla0xpYnJlLCBMTEMKaHR0cDovL3d3
-dy50ZWtsaWJyZS5jb20KVGVsOiAxLTgzMS0yMDUtOTc0MApfX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fXwpXaXJlR3VhcmQgbWFpbGluZyBsaXN0CldpcmVHdWFy
-ZEBsaXN0cy56eDJjNC5jb20KaHR0cHM6Ly9saXN0cy56eDJjNC5jb20vbWFpbG1hbi9saXN0aW5m
-by93aXJlZ3VhcmQK
+--===============1156627357789697127==
+Content-Type: multipart/alternative; boundary="000000000000d72b0f057a484da5"
+
+--000000000000d72b0f057a484da5
+Content-Type: text/plain; charset="UTF-8"
+
+I have a network with several machines in it all running Wireguard.
+
+The latest device I've added to this assemblage is a virtual machine
+provisioned under OpenStack. It has 4 ThunderX cores (2 Ghz armv8)
+subdivided off of 96-core machine. What I notice is slow network
+performance through the Wireguard interface - 200 ms round trip VPN ping
+times to a machine in the same data center, compared to 1 ms when
+I don't go through the VPN, and only 45 ms when I use a different
+machine in the same data center to an even slower Raspberry Pi 2 in my
+attic.
+
+I don't claim to be an OpenStack expert, and I know there is some
+considerable complexity hiding in its network stack that might not
+be visible within the VM that I'm running.
+
+I guess the question is, what's the best way to start to make sense of
+network performance within Wireguard (and if anyone knows the answer,
+also within OpenStack?!).
+
+thanks
+
+Ed
+
+-- 
+Edward Vielmetti +1 734 330 2465
+edward.vielmetti@gmail.com
+
+--000000000000d72b0f057a484da5
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">I have a network with several machines in it all running W=
+ireguard.=C2=A0<div><br></div><div>The latest device I&#39;ve added to this=
+ assemblage is a virtual machine</div><div>provisioned under OpenStack. It =
+has 4 ThunderX cores (2 Ghz armv8)</div><div>subdivided off of 96-core mach=
+ine. What I notice is slow network</div><div>performance through the Wiregu=
+ard interface - 200 ms round trip VPN ping</div><div>times to a machine in =
+the same data center, compared to 1 ms when</div><div>I don&#39;t go throug=
+h the VPN, and only 45 ms when I use a different</div><div>machine in the s=
+ame data center to an even slower Raspberry Pi 2 in my attic.</div><div><br=
+></div><div>I don&#39;t claim to be an OpenStack expert, and I know there i=
+s some</div><div>considerable complexity hiding in its network stack that m=
+ight not</div><div>be visible within the VM that I&#39;m running.=C2=A0</di=
+v><div><br></div><div>I guess the question is, what&#39;s the best way to s=
+tart to make sense of</div><div>network performance within Wireguard (and i=
+f anyone knows the answer,</div><div>also within OpenStack?!).=C2=A0</div><=
+div><br></div><div>thanks</div><div><br></div><div>Ed<br clear=3D"all"><div=
+><br></div>-- <br><div dir=3D"ltr" class=3D"m_8796955196307804975gmail_sign=
+ature" data-smartmail=3D"gmail_signature"><span>Edward Vielmetti=C2=A0<span=
+ id=3D"m_8796955196307804975gc-number-1038" class=3D"m_8796955196307804975g=
+c-cs-link" title=3D"Call with Google Voice"><span id=3D"gc-number-1049" cla=
+ss=3D"gc-cs-link" title=3D"Call with Google Voice">+1 734 330 2465</span></=
+span></span><div><a href=3D"mailto:edward.vielmetti@gmail.com" target=3D"_b=
+lank">edward.vielmetti@gmail.com</a></div><div><br></div></div></div></div>
+
+--000000000000d72b0f057a484da5--
+
+--===============1156627357789697127==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
+_______________________________________________
+WireGuard mailing list
+WireGuard@lists.zx2c4.com
+https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--===============1156627357789697127==--
