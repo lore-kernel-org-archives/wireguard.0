@@ -1,72 +1,55 @@
-Return-Path: <SRS0=tDKf=NY=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=jLHU=N2=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
-	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_PASS,
-	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81761C43441
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 13 Nov 2018 19:25:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57BB1C43441
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 15 Nov 2018 20:10:40 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id C7A20223C8
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 13 Nov 2018 19:25:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 8ED6E20858
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 15 Nov 2018 20:10:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="paZFaHrP"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org C7A20223C8
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="ZYwY8Vxp"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 8ED6E20858
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 26521a5b;
-	Tue, 13 Nov 2018 19:19:28 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 65bf65a3;
+	Thu, 15 Nov 2018 20:05:07 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2c662182
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 13e2c89e
  for <wireguard@lists.zx2c4.com>;
- Tue, 13 Nov 2018 19:19:27 +0000 (UTC)
-Received: from mail-it1-x12f.google.com (mail-it1-x12f.google.com
- [IPv6:2607:f8b0:4864:20::12f])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 467814bf
+ Thu, 15 Nov 2018 20:05:04 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 28c0bacc
  for <wireguard@lists.zx2c4.com>;
- Tue, 13 Nov 2018 19:19:26 +0000 (UTC)
-Received: by mail-it1-x12f.google.com with SMTP id m34-v6so20091601iti.1
- for <wireguard@lists.zx2c4.com>; Tue, 13 Nov 2018 11:24:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
- bh=hBp/cs9GA4NaTXXe9JDW/7x/2SFQXyHm9QsAxWn9Mtg=;
- b=paZFaHrP0KMguX0ZJ37+xGTkfGpG/v4CKOfoyQpeYXbnIC2PyxHvip65xOS2mkxms1
- AKraJwQA6MFDyANxIZcH9xGC5rTOPtxm66J7mcjezwZy+76+TqNWbmOUozvZ5xdYH13z
- rq6L3gnl99EaZ30G+04SoJp30doNV0nqj6rzgQk46+TtGTd4TmOUGH5pWlc+XTkUhprr
- sB5oiZV07/MJIqod6ZquReOqS82DpYwyhMoT4EnL4G96k5ulyEW1G2WOwOT88917pSB3
- lwtOY9t10aMvlaMMQbOrHJfQY9O5Bgejrnw3ESZECYJVap7l5M8WOGDqYh86tRwBiWuf
- JlkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to;
- bh=hBp/cs9GA4NaTXXe9JDW/7x/2SFQXyHm9QsAxWn9Mtg=;
- b=lG43Q917mi3Xg0VbEUVZaB7bco2gEKc1y9y9GIrWId4RI5HrTN9vq+3lkWGHTvloXs
- d6ZDG5HpGLAEXkXRfwEKB7dKq4cSyRc3H4ae5Ph8pk7NMvVQbhRvk36fYYuBYapLwdgV
- Jum+4rUvIrOgHc25d289HGmJkL4DrRnkNX7QHkkm+wBi9vWqvIuK3kzUm0VQwRBlY13z
- TkPVurKNcr8+qf1ZxKN8vgNTaSVehbUvZdSyT/SnF7SSarQs/wcEPYXDfZZgvHSrLW1d
- RxIj2hImgD0AYawjza4mJPeXC1xf/+h1rj3dmg9VU1D1pitp0fWLKEhZ2fqvOFfhuA/Z
- V2Hg==
-X-Gm-Message-State: AGRZ1gJDGyvw5+20Eyo+9YcQe0RAjhn95CMrXfAu0aFgIkTPfL1TduWP
- gY3mFZlijFBXUNuP2ykcUQM2NhH1325OQo6iXBzQCA==
-X-Google-Smtp-Source: AJdET5ekAehyC7oCcfpxK8gUgajdzRlGyEDqPL4Z8I/6jwlgSzTWZeB4aM0w4t50eojkaZ/LRyTHXfZOAckELDXq+Mw=
-X-Received: by 2002:a02:5953:: with SMTP id
- p80-v6mr6149641jab.111.1542137080898; 
- Tue, 13 Nov 2018 11:24:40 -0800 (PST)
+ Thu, 15 Nov 2018 20:05:04 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0bc161a8
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 15 Nov 2018 20:05:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=date:to:from
+ :subject:mime-version:content-type; s=mail; bh=DleMHzPrp5MB2vw3d
+ 4WGUzgQcRo=; b=ZYwY8Vxpcbm4rD4sEt6GSHIrcP02NwZj3j93JRYgkvey6PZCU
+ eNZRvT8jtQ18DVjoQeNigE3RAQbAdK6fbGb2TwwBD9432M7gW9IaV0NITL88f2QH
+ BJncW4BBfWr9P4DjCmj4rlr5X34/E3S04smQxMnMbT/gVyQk1Xk9CsF+jg/EnEqJ
+ JpYmP06bRIDmmf9Z4tdx6Oti8RrPRzFyApjrR09bm9oWrx//xFwnKpCCR+ox7lkf
+ Z8eG+UDQo2bMy+Cc8QdQmeRmZQvSZl8TP91g7MzLhaajNPbm0CW5JsDZQYUzniky
+ 4sVppY8+Eoi8y8QxCfEESzPlNL4NX5BVoy03Q==
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 04dd9bc3
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 15 Nov 2018 20:05:04 +0000 (UTC)
+Date: Thu, 15 Nov 2018 12:10:33 -0800
+To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: [ANNOUNCE] WireGuard Snapshot `0.0.20181115` Available
 MIME-Version: 1.0
-References: <CAPRZce2R2W+WkXm26Jo2RTmTkyG=rO7tc2jFf0s7-4pxPESTqw@mail.gmail.com>
-In-Reply-To: <CAPRZce2R2W+WkXm26Jo2RTmTkyG=rO7tc2jFf0s7-4pxPESTqw@mail.gmail.com>
-From: Edward Vielmetti <edward.vielmetti@gmail.com>
-Date: Tue, 13 Nov 2018 14:24:02 -0500
-Message-ID: <CAPRZce1JNxoegq1ipopd1RMe47JRNXCYj9n+DsAzAA8Q-uZW4Q@mail.gmail.com>
-Subject: Re: how to diagnose lengthy ping times through a complex network stack
-To: wireguard@lists.zx2c4.com
+Message-Id: <aab2892f08745edf@frisell.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -78,134 +61,101 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============5499651636074615190=="
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============5499651636074615190==
-Content-Type: multipart/alternative; boundary="000000000000e6eba9057a90c4a8"
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
---000000000000e6eba9057a90c4a8
-Content-Type: text/plain; charset="UTF-8"
+Hello,
 
-Replying to my own email -
+A new snapshot, `0.0.20181115`, has been tagged in the git repository.
 
-This latency problem I reported was not Wireguard's fault.
-What happened was that one of the floating IP addresses
-that was assigned to the VM was attached to an OpenStack
-controller that had been provisioned in the wrong data center.
-Amazingly the whole setup did continue to work, but the
-ping times reflected pessimal routing, with the ping from
-New Jersey to New Jersey going via Tokyo.
+Please note that this snapshot is, like the rest of the project at this point
+in time, experimental, and does not consitute a real release that would be
+considered secure and bug-free. WireGuard is generally thought to be fairly
+stable, and most likely will not crash your computer (though it may).
+However, as this is a pre-release snapshot, it comes with no guarantees, and
+its security is not yet to be depended on; it is not applicable for CVEs.
 
-No individual component was anywhere near as slow as the
-speed of light under the Pacific Ocean.
+With all that said, if you'd like to test this snapshot out, there are a
+few relevant changes.
 
-Note to self: if you can't debug the problem within the virtual
-machine, start to look at the physical machines that provide
-the virtual machines, and make sure you know what (and where)
-they are.
+== Changes ==
 
-Ed
+  * Zinc no longer ships generated assembly code. Rather, we now
+    bundle in the original perlasm generator for it. The primary purpose
+    of this snapshot is to get testing of this.
+  * Clarify the peer removal logic and make lifetimes more precise.
+  * Use READ_ONCE for is_valid and is_dead.
+  * No need to use atomic when the recounter is mutex protected.
+  * Fix up macros and annotations in allowedips.
+  * Increment drop counter when staged packets are dropped.
+  * Use static constants instead of enums for 64-bit values in selftest.
+  * Mark large constants as ULL in poly1305-donna64.
+  * Fix sparse warnings in allowedips debugging code.
+  * Do not use wg_peer_get_maybe_zero in timer callbacks, since we now can
+    carefully control the lifetime of these functions and ensure they never
+    execute after dropping the last reference.
+  * Cleanup hashing in ratelimiter.
+  * Do not guard timer removals, since del_timer is always okay.
+  * We now check for PM_AUTOSLEEP, which makes the clear*on-suspend decision a
+    bit more general.
+  * Set csum_level to ~0, since the poly1305 authenticator certainly means
+    that no data was modified in transit.
+  * Use CHECKSUM_PARTIAL check for skb_checksum_help instead of
+    skb_checksum_setup check.
+  * wg.8: specify that wg(8) shows runtime info too
+  * wg.8: AllowedIPs isn't actually required
+  * keygen-html: add missing glue macro
+  * wg-quick: android: do not choke on empty allowed-ips
 
-On Fri, Nov 9, 2018 at 11:56 PM Edward Vielmetti <edward.vielmetti@gmail.com>
-wrote:
+This snapshot contains commits from: Jason A. Donenfeld, Samuel Neves, and 
+Andrejs Hanins.
 
-> I have a network with several machines in it all running Wireguard.
->
-> The latest device I've added to this assemblage is a virtual machine
-> provisioned under OpenStack. It has 4 ThunderX cores (2 Ghz armv8)
-> subdivided off of 96-core machine. What I notice is slow network
-> performance through the Wireguard interface - 200 ms round trip VPN ping
-> times to a machine in the same data center, compared to 1 ms when
-> I don't go through the VPN, and only 45 ms when I use a different
-> machine in the same data center to an even slower Raspberry Pi 2 in my
-> attic.
->
-> I don't claim to be an OpenStack expert, and I know there is some
-> considerable complexity hiding in its network stack that might not
-> be visible within the VM that I'm running.
->
-> I guess the question is, what's the best way to start to make sense of
-> network performance within Wireguard (and if anyone knows the answer,
-> also within OpenStack?!).
->
-> thanks
->
-> Ed
->
-> --
-> Edward Vielmetti +1 734 330 2465
-> edward.vielmetti@gmail.com
->
->
+As always, the source is available at https://git.zx2c4.com/WireGuard/ and
+information about the project is available at https://www.wireguard.com/ .
 
--- 
-Edward Vielmetti +1 734 330 2465
-edward.vielmetti@gmail.com
+This snapshot is available in compressed tarball form here:
+  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-0.0.20181115.tar.xz
+  SHA2-256: 11292c7e86fce6fb0d9fd170389d2afc609bda963a7faf1fd713e11c2af53085
+  BLAKE2b-256: a49d76514c73f7c901a8fc1e75dc0f561f60d9ff16a8b5a879d92bc2ea89b29b
 
---000000000000e6eba9057a90c4a8
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+A PGP signature of that file decompressed is available here:
+  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-0.0.20181115.tar.asc
+  Signing key: AB9942E6D4A4CFC3412620A749FC7012A5DE03AE
 
-<div dir=3D"ltr">Replying to my own=C2=A0email -<div><br></div><div>This la=
-tency problem I reported was not Wireguard&#39;s fault.</div><div>What happ=
-ened was that one of the floating IP addresses</div><div>that was assigned =
-to the VM was attached to an OpenStack</div><div>controller that had been p=
-rovisioned in the wrong data center.</div><div>Amazingly the whole setup di=
-d continue to work, but the</div><div>ping times reflected pessimal routing=
-, with the ping from=C2=A0</div><div>New Jersey to New Jersey going via Tok=
-yo.</div><div><br></div><div>No individual component was anywhere near as s=
-low as the</div><div>speed of light under the Pacific Ocean.</div><div><br>=
-</div><div>Note to self: if you can&#39;t debug the problem within the virt=
-ual</div><div>machine, start to look at the physical machines that provide<=
-/div><div>the virtual machines, and make sure you know what (and where)</di=
-v><div>they are.</div><div><br></div><div>Ed</div></div><br><div class=3D"g=
-mail_quote"><div dir=3D"ltr">On Fri, Nov 9, 2018 at 11:56 PM Edward Vielmet=
-ti &lt;<a href=3D"mailto:edward.vielmetti@gmail.com">edward.vielmetti@gmail=
-.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"mar=
-gin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex"><div dir=3D"ltr=
-">I have a network with several machines in it all running Wireguard.=C2=A0=
-<div><br></div><div>The latest device I&#39;ve added to this assemblage is =
-a virtual machine</div><div>provisioned under OpenStack. It has 4 ThunderX =
-cores (2 Ghz armv8)</div><div>subdivided off of 96-core machine. What I not=
-ice is slow network</div><div>performance through the Wireguard interface -=
- 200 ms round trip VPN ping</div><div>times to a machine in the same data c=
-enter, compared to 1 ms when</div><div>I don&#39;t go through the VPN, and =
-only 45 ms when I use a different</div><div>machine in the same data center=
- to an even slower Raspberry Pi 2 in my attic.</div><div><br></div><div>I d=
-on&#39;t claim to be an OpenStack expert, and I know there is some</div><di=
-v>considerable complexity hiding in its network stack that might not</div><=
-div>be visible within the VM that I&#39;m running.=C2=A0</div><div><br></di=
-v><div>I guess the question is, what&#39;s the best way to start to make se=
-nse of</div><div>network performance within Wireguard (and if anyone knows =
-the answer,</div><div>also within OpenStack?!).=C2=A0</div><div><br></div><=
-div>thanks</div><div><br></div><div>Ed<br clear=3D"all"><div><br></div>-- <=
-br><div dir=3D"ltr" class=3D"m_-3700059037923505429m_8796955196307804975gma=
-il_signature" data-smartmail=3D"gmail_signature"><span>Edward Vielmetti=C2=
-=A0<span id=3D"m_-3700059037923505429m_8796955196307804975gc-number-1038" c=
-lass=3D"m_-3700059037923505429m_8796955196307804975gc-cs-link" title=3D"Cal=
-l with Google Voice"><span id=3D"m_-3700059037923505429gc-number-1049" clas=
-s=3D"m_-3700059037923505429gc-cs-link" title=3D"Call with Google Voice">+1 =
-734 330 2465</span></span></span><div><a href=3D"mailto:edward.vielmetti@gm=
-ail.com" target=3D"_blank">edward.vielmetti@gmail.com</a></div><div><br></d=
-iv></div></div></div>
-</blockquote></div><br clear=3D"all"><div><br></div>-- <br><div dir=3D"ltr"=
- class=3D"gmail_signature" data-smartmail=3D"gmail_signature">Edward Vielme=
-tti=C2=A0+1 734 330 2465<div><a href=3D"mailto:edward.vielmetti@gmail.com" =
-target=3D"_blank">edward.vielmetti@gmail.com</a></div><div><br></div></div>
+If you're a snapshot package maintainer, please bump your package version. If
+you're a user, the WireGuard team welcomes any and all feedback on this latest
+snapshot.
 
---000000000000e6eba9057a90c4a8--
+Finally, WireGuard development thrives on donations. By popular demand, we
+have a webpage for this: https://www.wireguard.com/donations/
 
---===============5499651636074615190==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+Thank you,
+Jason Donenfeld
 
+
+-----BEGIN PGP SIGNATURE-----
+
+iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAlvt0q8QHGphc29uQHp4
+MmM0LmNvbQAKCRBJ/HASpd4DruXJEACd6G1Z7hAvbQ+ZgYdj8u60AZlh+2j89Nyg
+o9qPrfc5rPZ0a1lq8vhxHMUX/tPe1wYh0unXAoDL3EuCi9ZhBQ5oSSIk8m77ea2Z
++Fu4zlFPTFhHznfbD0gAiheh9MOmffJQc9Yv1rEO0ycqHlR8rBPilLLAZhxDVvA8
+i9ybtY8YH8pRz8AKvoZaK5sdQzSch+SUrBwrEza4EXkRFXSAx6SWbUf0KjythSUb
+AlTWI74hAuWIOMFTXzOskriKo+6WueE3Xwkl74MaqAUGL6UEfF37o5bhLFVAW2bU
+wj31CiaOndaXV7BDq6W/+txR2ZRPw3Szxt00PIRNHZsugzXxsQ7zac9R0x/sMJ6d
+nRLteHYeQvg73B1QbLLKg6UE4Q1uKEyXDHFhEK/mXOq8bNJOO34Nc09YkJgSg9J+
+pcZqbn484GOMfGIm9w7WllwmYau3V6BtrcJvFBtjGHjMHhAL5mKirGYLk03EnV/Z
+sPel9h/QsvAeN+QtkegpJHEnrGqq9Rhj3b3jgHA1MOkxbpX3UprPWIMt4xeU64lq
+FggKaT7rZkDGmtWfnlVJxLiwHj5wlKajm7AVh3bfvKinvg0YHGRWCoN5EMmzAOtv
+Jp40uZXvs48PV4OelUUPOeCbqyqHMDG7Goi2n/wtdvgk9bBL+++12hK00DvV/27d
+/wX3DQxk4g==
+=vTRZ
+-----END PGP SIGNATURE-----
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
-
---===============5499651636074615190==--
