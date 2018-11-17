@@ -2,67 +2,60 @@ Return-Path: <SRS0=YVay=N6=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.7 required=3.0 tests=FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,
+	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BD5FAC43441
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 19 Nov 2018 19:02:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3064FC04EBA
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 19 Nov 2018 19:07:24 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 029E120851
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 19 Nov 2018 19:02:24 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="rHddAR4D"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 029E120851
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id C466F20685
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 19 Nov 2018 19:07:23 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org C466F20685
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=gmx.net
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 86294c2b;
-	Mon, 19 Nov 2018 18:56:22 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6f459344;
+	Mon, 19 Nov 2018 19:01:21 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f2028591
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 312e1221
  for <wireguard@lists.zx2c4.com>;
- Mon, 19 Nov 2018 18:56:18 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4ef11956
+ Sat, 17 Nov 2018 15:55:19 +0000 (UTC)
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 679e8031
  for <wireguard@lists.zx2c4.com>;
- Mon, 19 Nov 2018 18:56:18 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cd80e5a9
- for <wireguard@lists.zx2c4.com>;
- Mon, 19 Nov 2018 18:56:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=iv7vfBSvs3bzG37r4URpS+AAFsA=; b=rHddAR
- 4DiREtWpgihO5s/asSuR7V9WQMj4EM24VjgqAzgPTpoVA+KF+z2JL6LBkmp+BRK1
- ihaOFbydtrhEaSAmiYFFM2rRveojyhqjHs5cZBWbNu8PYATqXCB27/Q8ZSpG9Cte
- sjmF996z+f8dFjr6tAQHHm0pWAzt+IVDHo+VWpVf3AzC9Tw5MQE+GJSTVcX4DBVP
- bng2yf6GnVEH98hkdr5Ixa+0ksiXGl+eplS884xrBImoK37IyVNeki/8YpCN2+Y4
- lWatklfdnJdeaotIWcVqTKxrcj+4CJFIk9YARjy6TBTdTM/+QZWTl41AOe+1uXRa
- yBdLFMLG61Wr2nmw==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 54389d7c
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Mon, 19 Nov 2018 18:56:18 +0000 (UTC)
-Received: by mail-ot1-f53.google.com with SMTP id g27so28651380oth.6
- for <wireguard@lists.zx2c4.com>; Mon, 19 Nov 2018 11:02:19 -0800 (PST)
-X-Gm-Message-State: AGRZ1gKFlC1RdwYQGzo62Y6I9gd5ojk9DzL91cQlqGiu4u1GAJTpiH+n
- YHmvj3uTrqmlJdAdtVRcrmI+rBe9osOLo7e4Io4=
-X-Google-Smtp-Source: AJdET5eAHEqxbuzkncK+Mu8WygZEfcOZYmZPzEcbDEuM2EskcQyp9PDRByCeldURiHcws3mtee+KeRs0GRpCc1VGblM=
-X-Received: by 2002:a9d:837:: with SMTP id 52mr13184227oty.143.1542654139061; 
- Mon, 19 Nov 2018 11:02:19 -0800 (PST)
-MIME-Version: 1.0
-References: <aab31593d316f5de@frisell.zx2c4.com>
- <VE1tYzOPCJK4AHXvf6wzqzseITkoWAV3A_3BoPB5C8OhHHGDTmldi2DLkFtiljNrdHKAr6UYea2Z-qT56WEom5upq12Mr4-KpX7CKNDts6g=@protonmail.ch>
-In-Reply-To: <VE1tYzOPCJK4AHXvf6wzqzseITkoWAV3A_3BoPB5C8OhHHGDTmldi2DLkFtiljNrdHKAr6UYea2Z-qT56WEom5upq12Mr4-KpX7CKNDts6g=@protonmail.ch>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 19 Nov 2018 20:02:07 +0100
-X-Gmail-Original-Message-ID: <CAHmME9puWPwmOjRYcEmmFAf2KMM2KyDiV4EJPHRBBXkNSBrZqg@mail.gmail.com>
-Message-ID: <CAHmME9puWPwmOjRYcEmmFAf2KMM2KyDiV4EJPHRBBXkNSBrZqg@mail.gmail.com>
-Subject: Re: [ANNOUNCE] WireGuard Snapshot `0.0.20181119` Available
-To: Jordan Glover <Golden_Miller83@protonmail.ch>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+ Sat, 17 Nov 2018 15:55:19 +0000 (UTC)
+Received: from [10.0.0.20] ([193.81.35.23]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MRSeC-1fzsKV0oJ6-00SbfF; Sat, 17
+ Nov 2018 17:01:03 +0100
+From: Robert Walli <rwalli@gmx.net>
+Mime-Version: 1.0 (Mac OS X Mail 12.1 \(3445.101.1\))
+Date: Sat, 17 Nov 2018 17:01:01 +0100
+Subject: Android key-icon in statusbar
+Message-Id: <8365521A-0DE2-44B0-BFDF-5AAB82054756@gmx.net>
+To: wireguard@lists.zx2c4.com
+X-Mailer: Apple Mail (2.3445.101.1)
+X-Provags-ID: V03:K1:PHlExXvhVQzGBEUGOOzjFIQ6KOHtSkVUDewvz1adveVOIdiGS9W
+ pwSfWXlkpq4VIzerK/g/PujzHOFgMIKLQ1ql0G/obETLK94mpC+Y1ChgYOLhAgHL33mmu6V
+ YyYvTb1ccnSQY/SGz6t8DYvKWUkCzViUTu50qMTz9AcgYXN7H0crd4IwN8H4DkL/YBAnFBK
+ EJ1KHqfP1IpXpd70OH/Og==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:dlns3kj61hs=:hyEoSX2bPb4Vrfb2AsSZfQ
+ tJp+ruMz0XABGJUGFo8NtjOdSQjNU87WSAI98lHMPWtksyOUfLSeszRKooeQoit5X7eV89/ml
+ QIX3sAIhF8FSpOdI0YzeO9uxkXJBqhjDjaKqbY3zCuEI/RuyE7yFSiZ2Ex4LKrslzElHZ2+DI
+ c5QwcfTGlpB0s1uldqSzieylBIMXM5h5LCVEmvqB3OwEDW+ubV5LRccd+HC46UA7emHjDVgdo
+ /7mM6bQq8jEHgHZo6jZeYJCq9vf01Zsj0JhcxLtuefmbP8eSnZ/eIcTevg4zFbOW/o+Qp/cgG
+ q15/qvosNg4Uib5WGIlDqYk2LekHOagyPP3wXjPZVm7HXSjtVxfRCGwzZ3qr8HB4jKUxbeyvl
+ v124B+IXBpHIibv3S2UJsBuH1eCF8709GzT4arjhoX6PySJVnrbftHQXNWbnE9NtXtNYSE4bQ
+ xPlQ84+3h8p6Z3RKEAIl2fzWc+/uLiCcZO6SJEIhiEIwvTL2jTiDOmw0xVZspo1dNfda9Qu44
+ AI79h3rKHax5aUR5yAGQ0Pi2XX9v0BxZxhOTnQ0DtWfXqsH9bEe1h0C3YvJaWeibKObyrL/3h
+ I1JW47En6XlQc1MpGqY4Hxt4zYLM/yKtEf+12WwqVeEHTetFmt1H9LJsL83Mn/rHqW1Q3JAHJ
+ isIQa3Bevo9QsiPgGjLCr5LUg7C5FQ9b6403u/ur/6mqu/T/TEGkVBWj8pDYanz0oDQa6p6ZU
+ gB3cXVM0dUHqh+KF66F+JQiZMHwCg21r101ebCXMF6mGRvehForGbEetBaQ5sDXaoyqxE3Bjb
+ dL+54Re1gmDvvTH7A3LSmTWN5KQVZem45oK5QbqlJXYr/dodfyw9wv4QSRixuP5kaEcYOuQhB
+ wx3HDCy72I9uSYiDk+Zh/RqZ28sLyI22KZjVHhcd3/ikrKbYh2sHEh68oGs58Q
+X-Mailman-Approved-At: Mon, 19 Nov 2018 20:01:18 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -74,33 +67,16 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Jordan,
-On Mon, Nov 19, 2018 at 7:04 PM Jordan Glover
-<Golden_Miller83@protonmail.ch> wrote:
->
-> It fails to build for me (doing in-kernel build with Linux 4.20rc3 and WireGuard/contrib/kernel-tree/create-patch.sh) with below message:
->
->
-> make[2]: *** No rule to make target 'net/wireguard/crypto/zinc/chacha20/chacha20-x86_64.o', needed by 'net/wireguard/built-in.a'.  Stop.
->
-> There is also following warn when applying wireguard patch:
->
-> diff: /WireGuard/src/**/*.S_shipped: No such file or directory
-
-Ugh, sorry. This keeps happening: neglecting the jerry rig scripts,
-because they're not in src/. I need to either move those into src/ or
-add them to the CI so that this doesn't happen again.
-
-https://git.zx2c4.com/WireGuard/patch/?id=37466fb996ea174cddd3d836c2f49c53b10648ad
-should fix it.
-
-Jason
-_______________________________________________
-WireGuard mailing list
-WireGuard@lists.zx2c4.com
-https://lists.zx2c4.com/mailman/listinfo/wireguard
+SGVsbG8hCgpJ4oCZdiBpbnN0YWxsZWQgd2lyZWd1YXJkLWFwcCBmcm9tIHBsYXkgc3RvcmUgb24g
+YW5kcm9pZCA4LjEuCklmIHVzaW5nIHRoZSB1c2Vyc3BhY2UgdmVyc2lvbiBpIGdldCBhICJrZXkt
+aWNvbiIgaW4gdGhlIHN0YXR1cy1iYXIgd2hlbiBhIHR1bm5lbCBpcyBhY3RpdmUuClN3aXRjaGlu
+ZyB0byB0aGUga2VybmVsIHZlcnNpb24gdGhlIGljb24gaXMgbm90IHdvcmtpbmcgYW55IG1vcmUu
+CgpBbnkgc3VnZXN0aW9ucz8KClJvYmVydApfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX19fXwpXaXJlR3VhcmQgbWFpbGluZyBsaXN0CldpcmVHdWFyZEBsaXN0cy56
+eDJjNC5jb20KaHR0cHM6Ly9saXN0cy56eDJjNC5jb20vbWFpbG1hbi9saXN0aW5mby93aXJlZ3Vh
+cmQK
