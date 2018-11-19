@@ -7,43 +7,43 @@ X-Spam-Status: No, score=-0.7 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	HTML_MESSAGE,MAILING_LIST_MULTI,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB99FC65BAF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F867C64EB1
 	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  6 Dec 2018 23:13:35 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 46A3820989
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  6 Dec 2018 23:13:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id D7B6020989
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  6 Dec 2018 23:13:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="RwokH7to"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 46A3820989
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="Ljo133Wn"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org D7B6020989
 Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=protonmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 36040257;
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 04fe4687;
 	Thu, 6 Dec 2018 23:05:19 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 07726494
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4d73d01f
  for <wireguard@lists.zx2c4.com>;
- Tue, 20 Nov 2018 05:26:12 +0000 (UTC)
-Received: from mail-40136.protonmail.ch (mail-40136.protonmail.ch
- [185.70.40.136])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5bb671f0
+ Mon, 19 Nov 2018 21:26:53 +0000 (UTC)
+Received: from mail-40133.protonmail.ch (mail-40133.protonmail.ch
+ [185.70.40.133])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 53eaf26d
  for <wireguard@lists.zx2c4.com>;
- Tue, 20 Nov 2018 05:26:12 +0000 (UTC)
-Date: Tue, 20 Nov 2018 05:32:09 +0000
+ Mon, 19 Nov 2018 21:26:52 +0000 (UTC)
+Date: Mon, 19 Nov 2018 21:32:42 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
- s=default; t=1542691931;
- bh=N6UzkBMId5tGjyGOWRB1LsfTFWeeJzHUu4EHMNhy54U=;
+ s=default; t=1542663168;
+ bh=sjGYRZIgtesSQ9h6MZR3sh9sDD9eW9saLfLcmaefc+A=;
  h=Date:To:From:Reply-To:Subject:Feedback-ID:From;
- b=RwokH7toJikg4S87XGNMCVJvfEqhTeK6VsTazAlmxhDCGPHaA8CLjcOGt3CtWobkq
- biYMNKm9XQLLvukJkJ57MBotEu/AbqpdcGcHFNePMumsR/ZTzvSsfO1mWRpxywgAOa
- hjVgTMX6yLsStrbEXXqMKTAzpFPDnrV0EBBodR9o=
+ b=Ljo133WnzK1TVJhDYkq6fWQx6KxVyKw+RLscEr3NQkOft0+T/anP7AnNYGtsQ3RzH
+ 67H5hFpbzjTLCkPDJgb55sTCGCJeFo8l30aZLIykTJuD86EgOrRdn4x0oB/WUA8U7w
+ rWTIoj5MdusdTwJ3N7qo4s20V0wm/kJ3DfTcNfZE=
 To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
 From: DARANGH <darangh@protonmail.com>
 Subject: Problems with kernel 4.15 on Ubuntu Bionic & Xenial to use wireguard
  dkms
-Message-ID: <yhOEntUhW9Wi4z-1KZGSZ9_aZWfoThyA5G38azfKjd-ZCJ7O1eoqmGVVRND0TcgR5cb6JXkUXKV0xng9NY9NR0MAsRuAq_GKBpfsknG5ujI=@protonmail.com>
+Message-ID: <egbmZuULI6vfih2dIYR3LpQ9u0mA9lgL56fCPDra2q3dwsmCgQkfjCgmIoDyYf4OHdcgRc_3MhHWEyA7ieKKzI8Qe28JwxDYkzwWV5hU5zU=@protonmail.com>
 Feedback-ID: I8SD0p0GTtyTBTc1-E-EH46uGA06cZdLaEwcd0xFf8usCe4PWat-6OCwTeNJcoaHbnuxNtlDN-jLf1plKvLdwQ==:Ext:ProtonMail
 MIME-Version: 1.0
 X-Mailman-Approved-At: Fri, 07 Dec 2018 00:05:18 +0100
@@ -59,67 +59,135 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============2384801135503554040=="
+Content-Type: multipart/mixed; boundary="===============7335362199357337217=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
 This is a multi-part message in MIME format.
 
---===============2384801135503554040==
+--===============7335362199357337217==
 Content-Type: multipart/alternative;
-	boundary="b1_f6134e1e1e359e8376020cd5fb3a8fca"
+	boundary="b1_e7ea770be1ff255c53a9abcd01d10c0b"
 
 This is a multi-part message in MIME format.
 
---b1_f6134e1e1e359e8376020cd5fb3a8fca
+--b1_e7ea770be1ff255c53a9abcd01d10c0b
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: base64
 
-SGVsbG8sCgpJIHBvc3QgdGhpcyBzZWNvbmQgbWVzc2FnZSB0byB0ZWxsIHlvdSB0aGF0IFdpcmVH
-dWFyZCBTbmFwc2hvdCBgMC4wLjIwMTgxMTE5YCBzb2x2ZWQgbXkgZGttcyBwcm9ibGVtIG9uIExp
-bnV4TWludCAxOSAhCkl0IHdvcmtzIHBlcmZlY3RseSBub3chIE1hbnkgdGhhbmtzICEgOi0pCkp1
-c3Qgb25lIHF1ZXN0aW9uIDogSSBjYW4ndCBmaW5kIGFuICJhbnN3ZXIiIGJ1dHRvbiBpbiB0aGUg
-bWFpbGxpc3Qgd2ViIHBhZ2UgdG8gYW5zd2VyIHRvIGFuIGV4aXN0aW5nIHRocmVhZC4uLiBEaWQg
-SSBtaXNzIHNvbWV0aGluZz8KUmVnYXJkcywKCkRvbS4gSAoKLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQpNYXJyZSBkZSBsYSBjZW5zdXJlPyBNYXJyZSBkJ8Oq
-dHJlIHBpc3TDqSBwYXIgeW91dHViZT8KUGFzc2V6IMOgIHBlZXJ0dWJlICEgOi0pCmh0dHBzOi8v
-am9pbnBlZXJ0dWJlLm9yZy9mci8KaHR0cHM6Ly9wZWVydHViZS5wbC9hY2NvdW50cy9hZGFtLnF1
-ZXIvdmlkZW9zCgpTZW50IHdpdGggW1Byb3Rvbk1haWxdKGh0dHBzOi8vcHJvdG9ubWFpbC5jb20p
-IFNlY3VyZSBFbWFpbC4=
+SGVsbG8sCgpJJ20gYSBmcmVuY2ggV2lyZWd1YXJkIHVzZXIgKHNpbmNlIHNlcHRlbWJlciAyMDE4
+KS4gRXZlcnl0aGluZyB3YXMgZmluZSB1bnRpbCB0aGlzIG1vcm5pbmcuLi4KTXkgc3lzdGVtIGlz
+IExpbnV4TWludCAxOSAoVGFyYSksIGFuZCBJJ3ZlIGp1c3QgcHJvY2VlZCB0byBhbiB1cGRhdGUg
+b2YgbXkgc3lzdGVtLi4uLgpTbywgdGhpcyBuZXcgdXBkYXRlIHByb3ZpZGVzICd3aXJlZ3VhcmQt
+ZGttcyAwLjAuMjAxODExMTUtMScgYW5kICd3aXJlZ3VhcmQtdG9vbHMgMC4wLjIwMTgxMTE1LTEn
+LgpJdCBzZWVtcyB0aGVyZSdzIGEgcHJvYmxlbSBpbiB0aGlzIG1vZHVsZSwgb25jZSBjb21waWxl
+ZCBmb3IgdGhlIGN1cnJlbnQga2VybmVsLi4uCkFzIEkgY2FuIHJlYWQgaW4gc29tZSBvdGhlciB1
+c2VycyBtYWlscywgdGhlIHJlc3VsdApvZiAibW9kcHJvYmUgd2lyZWd1YXJkIiBpcyA6Cm1vZHBy
+b2JlOiBFUlJPUjogY291bGQgbm90IGluc2VydCAnd2lyZWd1YXJkJzogVW5rbm93biBzeW1ib2wg
+aW4gbW9kdWxlLCBvciB1bmtub3duIHBhcmFtZXRlciAoc2VlIGRtZXNnKQoKdGhlbiBkbWVzZyBn
+aXZlcyA6ClsgMzc4MC44NDU2NzJdIHdpcmVndWFyZDogVW5rbm93biBzeW1ib2wgcG9seTEzMDVf
+YmxvY2tzX2F2eCAoZXJyIDApCgpbIDM3ODAuODQ1NzMzXSB3aXJlZ3VhcmQ6IFVua25vd24gc3lt
+Ym9sIHBvbHkxMzA1X2VtaXRfYXZ4IChlcnIgMCkKClsgMzc4MC44NDU3OTNdIHdpcmVndWFyZDog
+VW5rbm93biBzeW1ib2wgcG9seTEzMDVfYmxvY2tzX2F2eDUxMiAoZXJyIDApCgpbIDM3ODAuODQ1
+ODYyXSB3aXJlZ3VhcmQ6IFVua25vd24gc3ltYm9sIGNoYWNoYTIwX2F2eDUxMnZsIChlcnIgMCkK
+ClsgMzc4MC44NDU5NjddIHdpcmVndWFyZDogVW5rbm93biBzeW1ib2wgY2hhY2hhMjBfYXZ4MiAo
+ZXJyIDApCgpbIDM3ODAuODQ2MDU0XSB3aXJlZ3VhcmQ6IFVua25vd24gc3ltYm9sIHBvbHkxMzA1
+X2Jsb2Nrc19hdngyIChlcnIgMCkKClsgMzc4MC44NDYxMzBdIHdpcmVndWFyZDogVW5rbm93biBz
+eW1ib2wgY2hhY2hhMjBfYXZ4NTEyIChlcnIgMCkKClRoZSBwcm9ibGVtIHNlZW1zIHRvIGJlIHRo
+ZSBzYW1lIHRoYXQgVG9zaCBhbmQgRWdiZXJ0IGhhdmUgcmVwb3J0ZWQuLi4KSSd2ZSBhbHNvIHJl
+Ym9vdGVkLCBidXQgZG9lcyBub3Qgc29sdmUgdGhlIHByb2JsZW0uLi4KCk15IGtlcm5lbCB2ZXJz
+aW9uIDogLT4gdW5hbWUgLWEgOgpMaW51eCBub0NvbXAgNC4xNS4wLTM5LWdlbmVyaWMgIzQyLVVi
+dW50dSBTTVAgVHVlIE9jdCAyMyAxNTo0ODowMSBVVEMgMjAxOCB4ODZfNjQgeDg2XzY0IHg4Nl82
+NCBHTlUvTGludXgKCkknbSByZWFsbHkgYSBuZXdiaWUgY29uY2VybmluZyBrZXJuZWwgYW5kIG1v
+ZHVsZXMuLi4gc28sIEkgZG9uJ3QgcmVhbGx5IGtub3cgaG93IHRvIGhlbHAgdG8gZmluZCB0aGUg
+c29sdXRpb24uLi4KYnV0IEknbSBoYXBweSB0aGlzIG1haWxsaXN0IGV4aXN0cyAhClNvLCB0aGFu
+a3MgZm9yIHRoaXMgam9iLCAoYW5kIGhvcGUgYSBzb2x1dGlvbiB3aWxsIGJlIGZvdW5kIHNvb24g
+Oi0pKQoKUmVnYXJkcyAhCgpEb20uIEguCgotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tCk1hcnJlIGRlIGxhIGNlbnN1cmU/IE1hcnJlIGQnw6p0cmUgcGlzdMOp
+IHBhciB5b3V0dWJlPwpQYXNzZXogw6AgcGVlcnR1YmUgISA6LSkKaHR0cHM6Ly9qb2lucGVlcnR1
+YmUub3JnL2ZyLwpodHRwczovL3BlZXJ0dWJlLnBsL2FjY291bnRzL2FkYW0ucXVlci92aWRlb3MK
+ClNlbnQgd2l0aCBbUHJvdG9uTWFpbF0oaHR0cHM6Ly9wcm90b25tYWlsLmNvbSkgU2VjdXJlIEVt
+YWlsLg==
 
 
---b1_f6134e1e1e359e8376020cd5fb3a8fca
+--b1_e7ea770be1ff255c53a9abcd01d10c0b
 Content-Type: text/html; charset=UTF-8
 Content-Transfer-Encoding: base64
 
-PGRpdj5IZWxsbyw8YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5JIHBvc3QgdGhpcyBzZWNv
-bmQgbWVzc2FnZSB0byB0ZWxsIHlvdSB0aGF0IFdpcmVHdWFyZCBTbmFwc2hvdCBgMC4wLjIwMTgx
-MTE5YCBzb2x2ZWQgbXkgZGttcyBwcm9ibGVtIG9uIExpbnV4TWludCAxOSAhIDxicj48L2Rpdj48
-ZGl2Pkl0IHdvcmtzIHBlcmZlY3RseSBub3chIE1hbnkgdGhhbmtzICEgOi0pPGJyPjwvZGl2Pjxk
-aXY+SnVzdCBvbmUgcXVlc3Rpb24gOiBJIGNhbid0IGZpbmQgYW4gImFuc3dlciIgYnV0dG9uIGlu
-IHRoZSBtYWlsbGlzdCB3ZWIgcGFnZSB0byBhbnN3ZXIgdG8gYW4gZXhpc3RpbmcgdGhyZWFkLi4u
-IERpZCBJIG1pc3Mgc29tZXRoaW5nPzxicj48L2Rpdj48ZGl2PlJlZ2FyZHMsPGJyPjwvZGl2Pjxk
-aXY+PGJyPjwvZGl2PjxkaXY+RG9tLiBIPGJyPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXYgY2xh
-c3M9InByb3Rvbm1haWxfc2lnbmF0dXJlX2Jsb2NrIj48ZGl2IGNsYXNzPSJwcm90b25tYWlsX3Np
-Z25hdHVyZV9ibG9jay11c2VyIj48cCBzdHlsZT0ibWFyZ2luLWJvdHRvbTowY207bGluZS1oZWln
-aHQ6MTAwJTsiPjxicj48L3A+PGRpdj4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tPGJyPjwvZGl2PjxkaXY+PGk+TWFycmUgZGUgbGEgY2Vuc3VyZT8gTWFycmUg
-ZCfDqnRyZSBwaXN0w6kgcGFyIHlvdXR1YmU/PC9pPjxicj48L2Rpdj48ZGl2PjxpPlBhc3NleiDD
-oCBwZWVydHViZSAhIDotKTwvaT48YnI+PC9kaXY+PGRpdj48YSBocmVmPSJodHRwczovL2pvaW5w
-ZWVydHViZS5vcmcvZnIvIj5odHRwczovL2pvaW5wZWVydHViZS5vcmcvZnIvPC9hPjxicj48L2Rp
-dj48ZGl2PjxhIGhyZWY9Imh0dHBzOi8vcGVlcnR1YmUucGwvYWNjb3VudHMvYWRhbS5xdWVyL3Zp
-ZGVvcyI+aHR0cHM6Ly9wZWVydHViZS5wbC9hY2NvdW50cy9hZGFtLnF1ZXIvdmlkZW9zPC9hPjxi
-cj48L2Rpdj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2IGNsYXNzPSJwcm90b25tYWlsX3NpZ25h
-dHVyZV9ibG9jay1wcm90b24iPlNlbnQgd2l0aCA8YSB0YXJnZXQ9Il9ibGFuayIgaHJlZj0iaHR0
-cHM6Ly9wcm90b25tYWlsLmNvbSI+UHJvdG9uTWFpbDwvYT4gU2VjdXJlIEVtYWlsLjxicj48L2Rp
-dj48L2Rpdj48ZGl2Pjxicj48L2Rpdj4=
+PGRpdj5IZWxsbyw8YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5JJ20gYSBmcmVuY2ggV2ly
+ZWd1YXJkIHVzZXIgKHNpbmNlIHNlcHRlbWJlciAyMDE4KS4gRXZlcnl0aGluZyB3YXMgZmluZSB1
+bnRpbCB0aGlzIG1vcm5pbmcuLi48YnI+PC9kaXY+PGRpdj5NeSBzeXN0ZW0gaXMgTGludXhNaW50
+IDE5IChUYXJhKSwgYW5kIEkndmUganVzdCBwcm9jZWVkIHRvIGFuIHVwZGF0ZSBvZiBteSBzeXN0
+ZW0uLi4uPGJyPjwvZGl2PjxkaXY+U28sIHRoaXMgbmV3IHVwZGF0ZSBwcm92aWRlcyAnd2lyZWd1
+YXJkLWRrbXMgMC4wLjIwMTgxMTE1LTEnIGFuZCAnd2lyZWd1YXJkLXRvb2xzIDAuMC4yMDE4MTEx
+NS0xJy48YnI+PC9kaXY+PGRpdj5JdCBzZWVtcyB0aGVyZSdzIGEgcHJvYmxlbSBpbiB0aGlzIG1v
+ZHVsZSwgb25jZSBjb21waWxlZCBmb3IgdGhlIGN1cnJlbnQga2VybmVsLi4uIDxicj48L2Rpdj48
+ZGl2PkFzIEkgY2FuIHJlYWQgaW4gc29tZSBvdGhlciB1c2VycyBtYWlscywgdGhlIHJlc3VsdDxi
+cj48L2Rpdj48ZGl2PjxzcGFuIHN0eWxlPSJjb2xvcjpyZ2IoMzQsIDM0LCAzNCkiPm9mICJtb2Rw
+cm9iZSB3aXJlZ3VhcmQiIGlzIDo8L3NwYW4+PGJyPjwvZGl2PjxkaXY+PHNwYW4gc3R5bGU9ImNv
+bG9yOnJnYigxMDQsIDI5LCAyNSkiPm1vZHByb2JlOiBFUlJPUjogY291bGQgbm90IGluc2VydCAn
+d2lyZWd1YXJkJzogVW5rbm93biBzeW1ib2wgaW4gbW9kdWxlLCBvciB1bmtub3duIHBhcmFtZXRl
+ciAoc2VlIGRtZXNnKTwvc3Bhbj48YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj48c3BhbiBz
+dHlsZT0iY29sb3I6cmdiKDM0LCAzNCwgMzQpIj50aGVuIGRtZXNnIGdpdmVzIDo8L3NwYW4+PGJy
+PjwvZGl2PjxkaXY+PHNwYW4gc3R5bGU9ImNvbG9yOnJnYigxMDQsIDI5LCAyNSkiPlsgMzc4MC44
+NDU2NzJdIHdpcmVndWFyZDogVW5rbm93biBzeW1ib2wgcG9seTEzMDVfYmxvY2tzX2F2eCAoZXJy
+IDApPC9zcGFuPjxzcGFuIHN0eWxlPSJjb2xvcjpyZ2IoMTA0LCAyOSwgMjUpIj48YnI+PC9zcGFu
+PjwvZGl2PjxkaXY+PHNwYW4gc3R5bGU9ImNvbG9yOnJnYigxMDQsIDI5LCAyNSkiPlsgMzc4MC44
+NDU3MzNdIHdpcmVndWFyZDogVW5rbm93biBzeW1ib2wgcG9seTEzMDVfZW1pdF9hdnggKGVyciAw
+KTwvc3Bhbj48c3BhbiBzdHlsZT0iY29sb3I6cmdiKDEwNCwgMjksIDI1KSI+PGJyPjwvc3Bhbj48
+L2Rpdj48ZGl2PjxzcGFuIHN0eWxlPSJjb2xvcjpyZ2IoMTA0LCAyOSwgMjUpIj5bIDM3ODAuODQ1
+NzkzXSB3aXJlZ3VhcmQ6IFVua25vd24gc3ltYm9sIHBvbHkxMzA1X2Jsb2Nrc19hdng1MTIgKGVy
+ciAwKTwvc3Bhbj48c3BhbiBzdHlsZT0iY29sb3I6cmdiKDEwNCwgMjksIDI1KSI+PGJyPjwvc3Bh
+bj48L2Rpdj48ZGl2PjxzcGFuIHN0eWxlPSJjb2xvcjpyZ2IoMTA0LCAyOSwgMjUpIj5bIDM3ODAu
+ODQ1ODYyXSB3aXJlZ3VhcmQ6IFVua25vd24gc3ltYm9sIGNoYWNoYTIwX2F2eDUxMnZsIChlcnIg
+MCk8L3NwYW4+PHNwYW4gc3R5bGU9ImNvbG9yOnJnYigxMDQsIDI5LCAyNSkiPjxicj48L3NwYW4+
+PC9kaXY+PGRpdj48c3BhbiBzdHlsZT0iY29sb3I6cmdiKDEwNCwgMjksIDI1KSI+WyAzNzgwLjg0
+NTk2N10gd2lyZWd1YXJkOiBVbmtub3duIHN5bWJvbCBjaGFjaGEyMF9hdngyIChlcnIgMCk8L3Nw
+YW4+PHNwYW4gc3R5bGU9ImNvbG9yOnJnYigxMDQsIDI5LCAyNSkiPjxicj48L3NwYW4+PC9kaXY+
+PGRpdj48c3BhbiBzdHlsZT0iY29sb3I6cmdiKDEwNCwgMjksIDI1KSI+WyAzNzgwLjg0NjA1NF0g
+d2lyZWd1YXJkOiBVbmtub3duIHN5bWJvbCBwb2x5MTMwNV9ibG9ja3NfYXZ4MiAoZXJyIDApPC9z
+cGFuPjxzcGFuIHN0eWxlPSJjb2xvcjpyZ2IoMTA0LCAyOSwgMjUpIj48YnI+PC9zcGFuPjwvZGl2
+PjxkaXY+PHNwYW4gc3R5bGU9ImNvbG9yOnJnYigxMDQsIDI5LCAyNSkiPlsgMzc4MC44NDYxMzBd
+IHdpcmVndWFyZDogVW5rbm93biBzeW1ib2wgY2hhY2hhMjBfYXZ4NTEyIChlcnIgMCk8L3NwYW4+
+PHNwYW4gc3R5bGU9ImNvbG9yOnJnYigxMDQsIDI5LCAyNSkiPjxicj48L3NwYW4+PC9kaXY+PGRp
+dj48YnI+PC9kaXY+PGRpdj5UaGUgcHJvYmxlbSBzZWVtcyB0byBiZSB0aGUgc2FtZSB0aGF0IFRv
+c2ggYW5kIEVnYmVydCBoYXZlIHJlcG9ydGVkLi4uIDxicj48L2Rpdj48ZGl2PkkndmUgYWxzbyBy
+ZWJvb3RlZCwgYnV0IGRvZXMgbm90IHNvbHZlIHRoZSBwcm9ibGVtLi4uPGJyPjwvZGl2PjxkaXY+
+PGJyPjwvZGl2PjxkaXY+TXkga2VybmVsIHZlcnNpb24gOiAtJmd0OyB1bmFtZSAtYSA6PGJyPjwv
+ZGl2PjxkaXY+PHNwYW4gc3R5bGU9ImNvbG9yOnJnYigxMDQsIDI5LCAyNSkiPkxpbnV4IG5vQ29t
+cCA0LjE1LjAtMzktZ2VuZXJpYyAjNDItVWJ1bnR1IFNNUCBUdWUgT2N0IDIzIDE1OjQ4OjAxIFVU
+QyAyMDE4IHg4Nl82NCB4ODZfNjQgeDg2XzY0IEdOVS9MaW51eDwvc3Bhbj48YnI+PC9kaXY+PGRp
+dj48YnI+PC9kaXY+PGRpdj48c3BhbiBzdHlsZT0iY29sb3I6cmdiKDM0LCAzNCwgMzQpIj5JJ20g
+cmVhbGx5IGEgbmV3YmllIGNvbmNlcm5pbmcga2VybmVsIGFuZCBtb2R1bGVzLi4uIHNvLCBJIGRv
+bid0IHJlYWxseSBrbm93IGhvdyB0byBoZWxwIHRvIGZpbmQgdGhlIHNvbHV0aW9uLi4uPC9zcGFu
+Pjxicj48L2Rpdj48ZGl2PjxzcGFuIHN0eWxlPSJjb2xvcjpyZ2IoMzQsIDM0LCAzNCkiPmJ1dCBJ
+J20gaGFwcHkgdGhpcyBtYWlsbGlzdCBleGlzdHMgITwvc3Bhbj48YnI+PC9kaXY+PGRpdj48c3Bh
+biBzdHlsZT0iY29sb3I6cmdiKDM0LCAzNCwgMzQpIj5TbywgdGhhbmtzIGZvciB0aGlzIGpvYiwg
+KGFuZCBob3BlIGEgc29sdXRpb24gd2lsbCBiZSBmb3VuZCBzb29uIDotKSk8L3NwYW4+PGJyPjwv
+ZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+PHNwYW4gc3R5bGU9ImNvbG9yOnJnYigzNCwgMzQsIDM0
+KSI+UmVnYXJkcyAhPC9zcGFuPjxicj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PjxzcGFuIHN0
+eWxlPSJjb2xvcjpyZ2IoMzQsIDM0LCAzNCkiPkRvbS4gSC48L3NwYW4+PGJyPjwvZGl2PjxwcmU+
+PGk+PHNwYW4gc3R5bGU9ImNvbG9yOnJnYigxMDQsIDI5LCAyNSkiPjwvc3Bhbj48L2k+PGJyPjwv
+cHJlPjxkaXYgY2xhc3M9InByb3Rvbm1haWxfc2lnbmF0dXJlX2Jsb2NrIj48ZGl2IGNsYXNzPSJw
+cm90b25tYWlsX3NpZ25hdHVyZV9ibG9jay11c2VyIj48cCBzdHlsZT0ibWFyZ2luLWJvdHRvbTow
+Y207bGluZS1oZWlnaHQ6MTAwJTsiPjxicj48L3A+PGRpdj4tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tPGJyPjwvZGl2PjxkaXY+PGk+TWFycmUgZGUgbGEgY2Vu
+c3VyZT8gTWFycmUgZCfDqnRyZSBwaXN0w6kgcGFyIHlvdXR1YmU/PC9pPjxicj48L2Rpdj48ZGl2
+PjxpPlBhc3NleiDDoCBwZWVydHViZSAhIDotKTwvaT48YnI+PC9kaXY+PGRpdj48YSBocmVmPSJo
+dHRwczovL2pvaW5wZWVydHViZS5vcmcvZnIvIj5odHRwczovL2pvaW5wZWVydHViZS5vcmcvZnIv
+PC9hPjxicj48L2Rpdj48ZGl2PjxhIGhyZWY9Imh0dHBzOi8vcGVlcnR1YmUucGwvYWNjb3VudHMv
+YWRhbS5xdWVyL3ZpZGVvcyI+aHR0cHM6Ly9wZWVydHViZS5wbC9hY2NvdW50cy9hZGFtLnF1ZXIv
+dmlkZW9zPC9hPjxicj48L2Rpdj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2IGNsYXNzPSJwcm90
+b25tYWlsX3NpZ25hdHVyZV9ibG9jay1wcm90b24iPlNlbnQgd2l0aCA8YSB0YXJnZXQ9Il9ibGFu
+ayIgaHJlZj0iaHR0cHM6Ly9wcm90b25tYWlsLmNvbSI+UHJvdG9uTWFpbDwvYT4gU2VjdXJlIEVt
+YWlsLjxicj48L2Rpdj48L2Rpdj48ZGl2Pjxicj48L2Rpdj4=
 
 
 
---b1_f6134e1e1e359e8376020cd5fb3a8fca--
+--b1_e7ea770be1ff255c53a9abcd01d10c0b--
 
 
---===============2384801135503554040==
+--===============7335362199357337217==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -130,5 +198,5 @@ WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---===============2384801135503554040==--
+--===============7335362199357337217==--
 
