@@ -2,59 +2,85 @@ Return-Path: <SRS0=YVay=N6=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.3 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,FREEMAIL_REPLYTO_END_DIGIT,
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E6821C43441
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 19 Nov 2018 20:57:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C16DC43441
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 19 Nov 2018 21:47:21 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 3A1502075B
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 19 Nov 2018 20:57:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 4835A20823
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 19 Nov 2018 21:47:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=protonmail.ch header.i=@protonmail.ch header.b="xWmqG6Xn"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 3A1502075B
-Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=protonmail.ch
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=mib-infotech-co-nz.20150623.gappssmtp.com header.i=@mib-infotech-co-nz.20150623.gappssmtp.com header.b="CohMUrNr"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 4835A20823
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=mib-infotech.co.nz
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 75d9b62d;
-	Mon, 19 Nov 2018 20:51:04 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c0a43ef7;
+	Mon, 19 Nov 2018 21:41:16 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 63b437db
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cc0eee5b
  for <wireguard@lists.zx2c4.com>;
- Mon, 19 Nov 2018 20:51:01 +0000 (UTC)
-Received: from mail-40130.protonmail.ch (mail-40130.protonmail.ch
- [185.70.40.130])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e6986bc7
+ Mon, 19 Nov 2018 21:41:13 +0000 (UTC)
+Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com
+ [IPv6:2607:f8b0:4864:20::52e])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 79fef415
  for <wireguard@lists.zx2c4.com>;
- Mon, 19 Nov 2018 20:51:01 +0000 (UTC)
-Date: Mon, 19 Nov 2018 20:56:51 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.ch;
- s=default; t=1542661017;
- bh=4wUA5da2+H793JIY+hiGPPvgpC/H1rDr4ibtznNxMxg=;
- h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:
- Feedback-ID:From;
- b=xWmqG6Xn77+1ZjvYW1y+g9Iv9LHBAQCUPKvfsFNoTN7owpb2DHDqRFOC40B0fXl9s
- 9JV1Kuq9r6D8ULYvtEDeQmqT0f4tpn9wdSbi1OnjYz3xTWoDHRN2hATQvH84IRGQlt
- sMDoJiKgaSJP6Tq1yAIYejGVU/xVNOxzQM7bcPtg=
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-From: Jordan Glover <Golden_Miller83@protonmail.ch>
-Subject: Re: [ANNOUNCE] WireGuard Snapshot `0.0.20181119` Available
-Message-ID: <eWVtNeoI7uCtRrv_h9amEYo3gqiIRS6Zc1TtaAJOfF3Bz6sgNSauZ5pcUqyHDOlv2j5krKlXyVbxkerb8SMp9BrKMAsS9UDCvb2rh51iLAs=@protonmail.ch>
-In-Reply-To: <CAHmME9puWPwmOjRYcEmmFAf2KMM2KyDiV4EJPHRBBXkNSBrZqg@mail.gmail.com>
-References: <aab31593d316f5de@frisell.zx2c4.com>
- <VE1tYzOPCJK4AHXvf6wzqzseITkoWAV3A_3BoPB5C8OhHHGDTmldi2DLkFtiljNrdHKAr6UYea2Z-qT56WEom5upq12Mr4-KpX7CKNDts6g=@protonmail.ch>
- <CAHmME9puWPwmOjRYcEmmFAf2KMM2KyDiV4EJPHRBBXkNSBrZqg@mail.gmail.com>
-Feedback-ID: QEdvdaLhFJaqnofhWA-dldGwsuoeDdDw7vz0UPs8r8sanA3bIt8zJdf4aDqYKSy4gJuZ0WvFYJtvq21y6ge_uQ==:Ext:ProtonMail
+ Mon, 19 Nov 2018 21:41:13 +0000 (UTC)
+Received: by mail-pg1-x52e.google.com with SMTP id t13so5752400pgr.11
+ for <wireguard@lists.zx2c4.com>; Mon, 19 Nov 2018 13:47:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mib-infotech-co-nz.20150623.gappssmtp.com; s=20150623;
+ h=subject:to:references:from:message-id:date:user-agent:mime-version
+ :in-reply-to:content-transfer-encoding:content-language;
+ bh=gULWseEpPs0Tsa7o4CIJd9U8PA95T4YzOx906mTOwhc=;
+ b=CohMUrNr0EQ8JwMN9CRJcB1gvVUuupaP5XOsUWIZCS5RoUVbl84pqu5M2U+n525YLn
+ 8BkXTec74QxxMU0o6x7MNLwBwPibd11Lkhbz+3fYknbhF4YpI0ZQcMdTI1STDUcKySuM
+ nOMGbKfbqAQdZJLxaftvSup2z7ZSw8AiLCZDdLw6AL+yJYr+JeH2Br4WXQuz5vyJFASH
+ 4qhusEet0MIpcYjIIGO51GYXvX4lB5DR7X2l9tKTuT/NbnmZhyzC2GZNbmcsvEyWRcdV
+ WsTDJ3i54w0+f+2NitizL5T/Ibf0VO3uooWtLINZY0aiAQh0R9/XhmWI1FhK518yI8BN
+ tc2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:subject:to:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-transfer-encoding
+ :content-language;
+ bh=gULWseEpPs0Tsa7o4CIJd9U8PA95T4YzOx906mTOwhc=;
+ b=Qy0rDH6XQ00ReqiE9XhA5W+Lb20kpWRIw6tXXBJXANXy4k/jfAJBomNrvPBZQ50BRp
+ 9phrIHv04PBerFl8T5q+9d+9tf2Gqf6bfS93aBCoiZstbi2GK8NAWvPEzaHEY+xMakIW
+ FS2E0n0MMzUmIwDSGiIbBacAqT/ahMY5sgRX1aKBaOcMl7qAQveSITFt5uoaC4wKAFEO
+ fO1PL0hxeNY153rzXbUeVG7qUKeuLTBMUracqPs6glFA+dsB+x9ufsdomVYo7n+myKz0
+ oDPl52h21Y7qDL5AyRKETVgHsvdmMwRy+6jOnDYu8O9PrVncn8MAF1zPjaPmE5SvpbDY
+ NEDw==
+X-Gm-Message-State: AGRZ1gIsxKvc2AAxI/f656DqSIt51/Jv/U1FgeGCCaH77uwSwxPITULc
+ V28kJPUku/Ycf1wNDNa2cUnEksODbCI=
+X-Google-Smtp-Source: AJdET5dl6xkDvJNS09y5xakSNa0KinOBm4PQTPby1WgS9vyKou9CLj/1fRXW3b+PgYttSG/zh2lDqg==
+X-Received: by 2002:a63:f710:: with SMTP id x16mr21901389pgh.322.1542664034553; 
+ Mon, 19 Nov 2018 13:47:14 -0800 (PST)
+Received: from [10.16.226.11] ([103.247.155.34])
+ by smtp.gmail.com with ESMTPSA id o7sm5499738pfb.34.2018.11.19.13.47.12
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 19 Nov 2018 13:47:13 -0800 (PST)
+Subject: Re: Seeking suggestions for a WG port to use with restrictive public
+ wifi networks
+To: wireguard@lists.zx2c4.com
+References: <CAO_nJAZ5fSSFtH1p8Ad=FD22ic9_kDAMkhWpL4vTxDh=4g3J8g@mail.gmail.com>
+ <020DC45A-7CA9-49E5-9A14-6300306F5476@lonnie.abelbeck.com>
+From: John Huttley <john@mib-infotech.co.nz>
+Message-ID: <903807da-82a3-f97c-5ba3-510eca9af84f@mib-infotech.co.nz>
+Date: Tue, 20 Nov 2018 10:47:10 +1300
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:60.0) Gecko/20100101
+ Thunderbird/60.2.1
 MIME-Version: 1.0
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+In-Reply-To: <020DC45A-7CA9-49E5-9A14-6300306F5476@lonnie.abelbeck.com>
+Content-Language: en-US
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
-Reply-To: Jordan Glover <Golden_Miller83@protonmail.ch>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -63,34 +89,33 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Monday, November 19, 2018 8:02 PM, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+And also 4433 which is used by DTLS
 
-> Hi Jordan,
-> On Mon, Nov 19, 2018 at 7:04 PM Jordan Glover
-> Golden_Miller83@protonmail.ch wrote:
->
-> > It fails to build for me (doing in-kernel build with Linux 4.20rc3 and WireGuard/contrib/kernel-tree/create-patch.sh) with below message:
-> > make[2]: *** No rule to make target 'net/wireguard/crypto/zinc/chacha20/chacha20-x86_64.o', needed by 'net/wireguard/built-in.a'. Stop.
-> > There is also following warn when applying wireguard patch:
-> > diff: /WireGuard/src/**/*.S_shipped: No such file or directory
->
-> Ugh, sorry. This keeps happening: neglecting the jerry rig scripts,
-> because they're not in src/. I need to either move those into src/ or
-> add them to the CI so that this doesn't happen again.
->
-> https://git.zx2c4.com/WireGuard/patch/?id=37466fb996ea174cddd3d836c2f49c53b10648ad
-> should fix it.
->
-> Jason
+https://wiki.wireshark.org/DTLS
 
-I can confirm that above fix works. Thank you.
+--dad
 
-Jordan
+On 20/11/18 9:53 AM, Lonnie Abelbeck wrote:
+>> On Nov 19, 2018, at 2:33 PM, John <graysky@archlinux.us> wrote:
+>>
+>> Should I stick with the "standard" udp service ports for my
+>> trial-and-error based approach?  Wikipedia has an article that lists
+>> many of these (List_of_TCP_and_UDP_port_numbers).  Any suggestions are
+>> welcomed.
+> Possibly: UDP/500 (IPSec IKE) or UDP/4500 (IPSec NAT-T)
+>
+>
+> Lonnie
+>
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
