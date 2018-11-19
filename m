@@ -2,144 +2,91 @@ Return-Path: <SRS0=YVay=N6=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AAA23C43441
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 19 Nov 2018 08:56:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A2C5CC43441
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 19 Nov 2018 09:58:01 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 9408820823
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 19 Nov 2018 08:56:31 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (4096-bit key) header.d=urlichs.de header.i=@urlichs.de header.b="V80dZQM6"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 9408820823
-Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=urlichs.de
+	by mail.kernel.org (Postfix) with ESMTPS id EAB4620817
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 19 Nov 2018 09:58:00 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org EAB4620817
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=t0x0sh.org
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ad66fd53;
-	Mon, 19 Nov 2018 08:50:05 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 387bc26e;
+	Mon, 19 Nov 2018 09:52:00 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9d664b82
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 76c59709
  for <wireguard@lists.zx2c4.com>;
- Mon, 19 Nov 2018 08:50:03 +0000 (UTC)
-Received: from netz.smurf.noris.de (2001:780:107:8:83::
- [IPv6:2001:780:107:8:83::])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 477c7d98
+ Mon, 19 Nov 2018 09:51:58 +0000 (UTC)
+Received: from relay9-d.mail.gandi.net (relay9-d.mail.gandi.net
+ [217.70.183.199])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 66dc05bb
  for <wireguard@lists.zx2c4.com>;
- Mon, 19 Nov 2018 08:50:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=urlichs.de; 
- s=20160512;
- h=Content-Transfer-Encoding:Content-Type:In-Reply-To:
- MIME-Version:Date:Message-ID:From:References:To:Subject:Sender:Reply-To:Cc:
- Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
- List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=6eK1l4Tbn03uY+vLF5KrpdyaemGPwwbRdkWho4nENnM=; b=V80dZQM6bduRQYKcmfMpI36TaB
- t74798VBKGzeUBaTF6XsmDWMv4qvF1CoD7gkE+7+ZrfZo5fxFUxCe8PKvowadR8AlGFf0s5rWYWPw
- mWEti7updHzvGMhPJIwbolOr/tNSgp5vJjGZMRxghJR3QITTPXG9Xari+DleT6sz5l1TIrycCe15p
- T2O4ef/nJ3H0anEM47fmR5X2eRJrwXB1C1CAEZxqux5CbMidFrah+PqAtES+h0w71Z6X4TwZOvCzC
- WKG2yVUvgZFadz0MgyxEofRjCwf4e+wo6rKSzMX9q0ofQRh9EfEAftdcT2cPv6aiSjcvFpVIZgHww
- LPHzyIawQO7E7tefX/7wcP6B2vx+QiVGx8kscNLTLxDrmPS/uoBtFQ8PVbbut3nqjLc/JiuD8WJrN
- S6hRzfm2h36MzLZtkpcoEhPjzZEjaclyJzF1+3SvNduQMWM5/6D9xlnd0n9fDhSIv6P1bH42aGnDb
- JHBQTaBU/hKMWnELxtklvFwXIa1pdePbawGijzr49WaQOZ+dwt/nCKEWueAsryqKNpyc+X0v2KR3H
- hy+DyRzx4pWg/lns7a2MWDc9wLwHlbWBMUi611tn9EEtAybm3v8gK7h5O412IMy8yC7/mXk1DGQQs
- BjBdU3S2LgtT0XU6F09Ai62CYvyP6n4WPBnkaFfkc=;
-Received: from hyper1.noris.net ([62.128.1.62] helo=[10.6.0.3])
- by mail.vm.smurf.noris.de with esmtpsa
- (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim 4.89)
- (envelope-from <matthias@urlichs.de>) id 1gOfKJ-000MC6-Ax
- for wireguard@lists.zx2c4.com; Mon, 19 Nov 2018 09:54:39 +0100
-Subject: Re: Traffic on port 53 fails on LTE but works on WiFi
+ Mon, 19 Nov 2018 09:51:58 +0000 (UTC)
+X-Originating-IP: 46.193.66.13
+Received: from [10.188.77.148] (eth-east-parth2-46-193-66-13.wb.wifirst.net
+ [46.193.66.13]) (Authenticated sender: tosh@t0x0sh.org)
+ by relay9-d.mail.gandi.net (Postfix) with ESMTPSA id 09FE6FF812
+ for <wireguard@lists.zx2c4.com>; Mon, 19 Nov 2018 09:57:54 +0000 (UTC)
+Subject: Problem to load wireguard LKM in Archlinux
 To: wireguard@lists.zx2c4.com
 References: <CAO_nJAZRTXB424FKTew726LUieeAtpj1crXucf2deoQXVyw__w@mail.gmail.com>
- <1542611942.d09p50zvb2.astroid@morple.none>
-From: Matthias Urlichs <matthias@urlichs.de>
+From: Tosh <tosh@t0x0sh.org>
 Openpgp: preference=signencrypt
-Autocrypt: addr=matthias@urlichs.de; prefer-encrypt=mutual; keydata=
- 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
-Message-ID: <69b87340-f599-454a-3c46-7a153767e400@urlichs.de>
-Date: Mon, 19 Nov 2018 09:54:38 +0100
+Autocrypt: addr=tosh@t0x0sh.org; prefer-encrypt=mutual; keydata=
+ xsFNBFfB1mUBEAC0wp46pr3nGOpa/glGeDe3FRuFKj/dnBfccGB0Ir9XrLphZjxvw7ZjWMmI
+ 2UwCxX5NoUyqCPxZzoUKQ9hlJCAYTsIkdpCsbPR6inXXIo6uiULM9w67NvLtsUWBc4S03N5Y
+ v1xz71/MgHXMLzLSitJQgsT0ah4nKt50xbywbGErDVclPFpkUfe+NGcj0CmBJXecXnCuq3Xq
+ 5R0k3VJhFIHfKLkuqX229uISMn4v8W2rF72dbfJ5eaQMZxiY9t/lLAxH9CxHzAlnA+PCt9dp
+ jaaARZdG7MdpDD4bBBCYW0cTy3+gJZkWniyVwBHzBTg2+NK39NafiDE5TwqGvP4o7GBzkcTM
+ Pcz1Zjf3fmz+Sj7jj6NhwPIO8i7qAre53EP1KPS/iFZSG6cho+oDqUOTxkaH5Azitb1Z97Zd
+ KpPqth/9CUFD4454NM8syqx6Gy7V68F5sZDG1cYcPB5gpW6IsJKgMFG+ARp+jqic3TVTv3wW
+ 3BZUlRPpawAaXBEVwqujQA9TgJZO5bzWbVp0vC5RiaPm6bmHO6CWjOQq94q//QIa7pILgC+i
+ h0iut73yFFEfoe90f5mX0Y4jEOfw24ib4qfZca0DfuWFLXGA8iKTD2m2txptrV4ptmy6i/b0
+ knq8tv8nEt/4QBbUMM89geiOrB1tFJIrxBo2/vWvZQWxXdgbBQARAQABzRh0MHgwc2ggPHRv
+ c2hAdDB4MHNoLm9yZz7CwZMEEwEIAD0CGwMECwkIBwUVCgkICwUWAgMBAAIeAQIXgBYhBJt5
+ d1QA4iPH/JDlxuXZGy8L1TxqBQJapUsbBQkExKg2AAoJEOXZGy8L1TxqtK4P/2LJjVkvYW6r
+ Xcf+dYCDQWFcgKNyQ8VD+Hq8zQX6PXTlia6t7hru/a94G7e1sS3b0ry9mzcReLJ9C9QGaoc8
+ EAYdTpGJ9SBvxovXbz0dJR67RlhHJgqXurrkA9BoyOTXZx3LCbsSK6DaQa7Gi77vTH0Zq3O/
+ vF1BriognbdRFoLeTmvMjeUyBk6tZyRJDoiXyr5Uc5EZj/seEKlTgpz1cUOBrLbwiKtO9XWE
+ lSm4JQ6YNz3PNK0p+40rFDgBBgRMDsS7/DVeHhHEym770dqnmAu6Ex6b07+3DtLCcs5vsN/+
+ G1lKI9sJ1OKVFSStgMSapDqHK+Ijza8heVi5kdQUjLHAJy1repQx6PD3kZlQ48V++DYml0e/
+ 47e818J9BLZ/XHyDk8LylUue5AROd/sSDVYVhqCiKm4K8J0XxGe7e/DsTXRe6u7JtbQl0Gdn
+ K6f2qSUGKF7jmZGJDmhEzdbuYJC2MQxpFt6q6jIbTBHi7KuW1za3I1K4s7NQqsbEX9STm7DF
+ uAOwpOZGeqPqD/3DPHEfh4qgy3KjuY8z7qwQC9KJIfxECqq/6010TGMlFK+EDvk95CSnPkq5
+ bH4Iw71e2Wz+qQyY37fR8O1pPE+yCRcjoIs8hFGo/2ddRkwwxILKnxy0SCeshZkeNg3gOBRs
+ T1mF+ebxHeTt4V8+KPNFli2vzsFNBFfB1mUBEADTetzMYXT9504VIteAC/Kv0Ei7QWyjKgwN
+ jGu8Sbr1JewLl4SKvruyQZcaNukMaEUEYga7GP1TXJbDWfMRa8/Ap11E9Wmt+GkVzCucViOc
+ x4FVC+Ares9teSnw8tl4XlW9Uxv/yvVXt6hxgWLR7Vw+TSLI+mJBL42OeogT9JgGcJu2u1R9
+ XfwzJFf7QQoxKYWijZcCYAzViR5zUZ6WiYEahZ9fc2tR4/dkgGUBS2Uwcgaa+W7wplP7uukg
+ NSH17DCoXYnWfSSw76ZguBcQgc2ENOla7NMxY4y6cwP4vbv8mhHGt6Kla6ZWMcAiVyKEoYD8
+ wDsGKqN8gGVr4/wQ15nfab7GzyIA7CWCItw6o8QEy+WK9iX3DQlrwFgc33+Pvd/bVYB+qYij
+ NWt7HL/+z/MIAT5yeuiZBkolAD+XG2AXr9WEgw1ARwr+gJHNLA8e7JpHkBhS2EVKBtGfWHmr
+ 4zqA89pLrpEHOVklTYZtHGaJ7oky4Mf+crSk0w4MIEUbOEZY02bMM3ch1EwFvJVvGERqUoOl
+ l0rxE9eSg8YZLKOOfQngsUQnWNg7aUHzj9tCRGAIa83MHwpqYlxNDtIAKtfJjk76Ow5Bwfkm
+ JJjAddHx0Lc3QjmwM+uyiE3Iq38Ut7VABjJSTWXyDVITDSchzLwRAAxC0IJ+ONsEFWpeshxA
+ HwARAQABwsF8BBgBCAAmAhsMFiEEm3l3VADiI8f8kOXG5dkbLwvVPGoFAlqlS0gFCQTEqGMA
+ CgkQ5dkbLwvVPGrMcQ/9HrBEkg2OeY7FFvvCi/xXiHphVfuoNLBrwdwF5GoYpQIyfMUqDXJg
+ QEr/jgOVKkrknsAgj4tnYXYr85qcWei30tgPjiYXY74LYIADWSzu5KklqfccLPALgrPlyaoL
+ BfVfCYhK4oAbaZP+7QfNNKXcBtrC6p7U1suZs9DKKjmqP3jge9+d3S9AoDEW/VyyQM0B1kdH
+ pOeAfkLH3deT0r2LGDEBldRMmUrKRLKf/7kbYVNp8ajRLJf0D6wq3Vh3KPiYIucI656Z+uDX
+ YuyDent1n06XxmCxBITlqkuvs/Y9plYH3cQw3DJhL+YguvSXFZiBUkrTj6JuaJwen3X7kskG
+ /KSt4s8PRzDOpcsA2Rsu6eNlufo6B+V5WcQloTsd7SSAD3K6387d+nwzBZ5JkJxZX9gUnmhA
+ 4+OI0C7Nty789PgNI04DSbmmfl/ZpIyIGsBYbWNb56OQ+TrpNCxi6JBFqctDLwJVsVFNkAW6
+ eiSt/fIK0HQvmV6qf0gE/uXmGmfWGLwXUIhv4apBfljGea/R1hGAdYTkV/fpzz37gCKnxB9g
+ 17S86zZCn2EndvYm3ZjnJISzTDwb22IbYSLCVjuO5VRHgVyAJ3DrVcSVdhNI2AAfvQWrWtrf
+ 4FHvBVBS30v97l0S8gPzE6kYuHvUl4Fbk8/bGx2/lIxSvoymhiXCArw=
+Message-ID: <41797799-8633-d195-54cb-ca3f38fbd371@t0x0sh.org>
+Date: Mon, 19 Nov 2018 10:57:43 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.3.0
+ Thunderbird/60.3.1
 MIME-Version: 1.0
-In-Reply-To: <1542611942.d09p50zvb2.astroid@morple.none>
-Content-Language: de-CH
-X-Smurf-Spam-Score: 0.0 (/)
-X-Smurf-Whitelist: +relay_from_hosts
+In-Reply-To: <CAO_nJAZRTXB424FKTew726LUieeAtpj1crXucf2deoQXVyw__w@mail.gmail.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -151,22 +98,99 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: multipart/mixed; boundary="===============7139023293508744726=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-T24gMTkuMTEuMTggMDg6MzIsIE0uIERpZXRyaWNoIHdyb3RlOgo+IFZvZGFmb25lIGJsb2NrcyBV
-RFAgdHJhZmZpYyBvbiBwb3J0IDUzIGluIExURS4KVGhleSBkb24ndCBibG9jayBpdCDigJMgdGhl
-eSByZWRpcmVjdCBpdCB0byB0aGVpciBETlMgcHJveHkuCj4gbm90IGV2ZW4gdGhlIGhhbmRzaGFr
-ZSBnb2VzIHRocm91Z2guIE5vdCBzdXJlIGFib3V0IHRoZSBjYXVzZQo+IGZvciB0aGF0LCBtYXli
-ZSB0aGV5IHdhbnQgdG8gY29udHJvbCB5b3VyIEROUyB0aGF0IHdheS4KClJlZGlyZWN0aW5nIHBv
-cnQgNTMgdG8gdGhlaXIgRE5TIChwcmVzdW1hYmx5IG9uZSBjbG9zZSB0byB0aGVpciBMVEUKZW5k
-cG9pbnQpIGlzIHJlYXNvbmFibGUsIHRoYXQgc2hvdWxkIGltcHJvdmUgc3BlZWQuCgpUaGUgcmVh
-c29uIHRoZXNlIHByb3ZpZGVycyBibG9jayBVRFAgYWx0b2dldGhlciBpcyBzaW1wbGUg4oCTIFAy
-UCBmaWxlCnNoYXJpbmcgYW5kIHNpbWlsYXIgc2hlbmFuaWdhbnMuCgpJcyB0aGF0IGNvbXBsZXRl
-IGJsb2NrIGluIHRoZSB0ZXJtcytjb25kaXRpb25zPyBJZiBub3QsIGFubm95IHRoZWlyIHN1cHBv
-cnQuCgotLSAKLS0gTWF0dGhpYXMgVXJsaWNocwoKX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX18KV2lyZUd1YXJkIG1haWxpbmcgbGlzdApXaXJlR3VhcmRAbGlz
-dHMuengyYzQuY29tCmh0dHBzOi8vbGlzdHMuengyYzQuY29tL21haWxtYW4vbGlzdGluZm8vd2ly
-ZWd1YXJkCg==
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--===============7139023293508744726==
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="wkkGzcmK27OV5rzT24uD82Cv7La7fUog3"
+
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--wkkGzcmK27OV5rzT24uD82Cv7La7fUog3
+Content-Type: multipart/mixed; boundary="tVvrc19RsajXNNJaFyNnBywPIpCjeN0Gv";
+ protected-headers="v1"
+From: Tosh <tosh@t0x0sh.org>
+To: wireguard@lists.zx2c4.com
+Message-ID: <41797799-8633-d195-54cb-ca3f38fbd371@t0x0sh.org>
+Subject: Problem to load wireguard LKM in Archlinux
+References: <CAO_nJAZRTXB424FKTew726LUieeAtpj1crXucf2deoQXVyw__w@mail.gmail.com>
+In-Reply-To: <CAO_nJAZRTXB424FKTew726LUieeAtpj1crXucf2deoQXVyw__w@mail.gmail.com>
+
+--tVvrc19RsajXNNJaFyNnBywPIpCjeN0Gv
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: base64
+Content-Language: en-US
+
+SGVsbG8sCgpJJ20gdXNpbmcgV2lyZWd1YXJkIG9uIEFyY2hMaW51eCBzaW5jZSBhIGxvbmcg
+dGltZSwgYW5kIHRvZGF5IEkgaGF2ZQpzb21lIHRyb3VibGVzIHRvIHN0YXJ0IG15IFZQTi4g
+SGVyZSBpcyB0aGUgbG9nIG9mIGRtZWcgd2hlbiBJIHRyeSB0bwonbW9kcHJvYmUgd2lyZWd1
+YXJkJyA6Cgp3aXJlZ3VhcmQ6IFVua25vd24gc3ltYm9sIHBvbHkxMzA1X2Jsb2Nrc19hdngg
+KGVycgotMinCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAKd2lyZWd1YXJkOiBVbmtub3duIHN5bWJvbCBw
+b2x5MTMwNV9lbWl0X2F2eCAoZXJyCi0yKcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAKd2lyZWd1
+YXJkOiBVbmtub3duIHN5bWJvbCBwb2x5MTMwNV9ibG9ja3NfYXZ4NTEyIChlcnIKLTIpwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgCndpcmVndWFyZDogVW5rbm93biBzeW1ib2wgY2hhY2hhMjBfYXZ4NTEydmwg
+KGVycgotMinCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgCndpcmVndWFyZDogVW5rbm93biBzeW1i
+b2wgY2hhY2hhMjBfYXZ4MiAoZXJyIC0yKQp3aXJlZ3VhcmQ6IFVua25vd24gc3ltYm9sIHBv
+bHkxMzA1X2Jsb2Nrc19hdngyIChlcnIKLTIpwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoAp3aXJlZ3VhcmQ6
+IFVua25vd24gc3ltYm9sIGNoYWNoYTIwX2F2eDUxMiAoZXJyIC0yKQoKSSBkaWQgYSBNQUog
+b2YgbXkgc3lzdGVtIHllc3RlcmRheSwgYnV0IHdpcmVndWFyZCB3YXNuJ3QgdXBncmFkZWQs
+IHNvIEkKZG9uJ3Qga25vdyB3aGVyZSB0aGUgcHJvYmxlbSBjb21lIGZyb20uLi5TZWVtcyBh
+IExLTSByZWxhdGVkIHRvIGNyeXB0bwppcyBtaXNzaW5nLCBidXQgSSBkb24ndCBrbm93IHdo
+aWNoIG9uZSBpcy4KCk15IGtlcm5lbCBpcyA0LjE5LjItYXJjaDEtMS1BUkNILCBhbmQgbXkg
+d2lyZWd1YXJkIHBhY2thZ2VzIGFyZSA6CgotIGNvbW11bml0eS93aXJlZ3VhcmQtZGttcyAw
+LjAuMjAxODExMTUtMQoKLSBjb21tdW5pdHkvd2lyZWd1YXJkLXRvb2xzIDAuMC4yMDE4MTEx
+NS0xCgpUaGFua3MgZm9yIHlvdXIgd29yaywKCi0tIAotVE9TSC0KCklmIHlvdSBuZWVkIHBy
+aXZhY3kgeW91IGNhbiBlbmNyeXB0IHlvdXIgbWFpbHMgd2l0aCBteSBHUEcga2V5Ogo5Qjc5
+IDc3NTQgMDBFMiAyM0M3IEZDOTAgIEU1QzYgRTVEOSAxQjJGIDBCRDUgM0M2QQoK
+
+--tVvrc19RsajXNNJaFyNnBywPIpCjeN0Gv--
+
+--wkkGzcmK27OV5rzT24uD82Cv7La7fUog3
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEm3l3VADiI8f8kOXG5dkbLwvVPGoFAlvyiSIACgkQ5dkbLwvV
+PGoiqA/8D+E299CrMKzPztUTQnlAMIg7y7Qh3QCtMQiSO1yilLmXQRidIm7095EB
+OymVFkzCz3bldNo2gz7es09X5Jh7TZfql4bwUEUSTJFXOygJRXedjuKmv/ukGK9F
+Fi7FuWy5SKMnJWYMN+MWdKjzTIqFkj4faU1E3jLorwup1Md/pBfHQFM1a/k1WhZ4
+/H1sZg+qVENF6Pxrhx72CeATaraiSPy7ELBgmmnT9Q0Np5MZ/fim8UlRBalgPh3j
+gGIxZ6m7py5+uuuAZ82/1eXhtz3w+0TughH4/aXGnH7sMRrfkX1C1WxjtRypecaa
+mnYXkGbP8qECx17iO0oTN1t7pz3IhhSrNkBsbDeEhUDEGA33eMPBne7OfVHRGSoF
+HIYp8OFpGqpdy51uqcJ0E381dDWS4doCi1kXQVceUZzpdCY1/jc9OQIWrqRCy5Qc
+a2k16mFB08TX+33T+n/vtG4subigfC3E9gEwqgfYpF3i/T7cxlwz/oQEtNUJXMCp
+vT6b4q16TXv9v6su4nMw+ehevCGRWJsLijYI23DdIqL1JUQCteax1Y1vqaWZlIAt
+AfhleTk1TJJsn1ksCauXrFv8tdm+uxUb7ttt5beKnXd/5SyrBnhYY7D6FNbUZFgs
+ecdHmxr0+a1iLUtZjNctPFnFgspm4ttg4+ISKNJ4IG8fNYuPJXA=
+=r2mQ
+-----END PGP SIGNATURE-----
+
+--wkkGzcmK27OV5rzT24uD82Cv7La7fUog3--
+
+--===============7139023293508744726==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
+_______________________________________________
+WireGuard mailing list
+WireGuard@lists.zx2c4.com
+https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--===============7139023293508744726==--
