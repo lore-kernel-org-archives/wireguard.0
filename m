@@ -2,75 +2,68 @@ Return-Path: <SRS0=YVay=N6=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_PASS,
-	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_PASS
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A81FC43610
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 19 Nov 2018 15:11:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1966C43441
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 19 Nov 2018 15:25:35 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id AE7492086A
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 19 Nov 2018 15:11:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 51584206BB
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 19 Nov 2018 15:25:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=archlinux-us.20150623.gappssmtp.com header.i=@archlinux-us.20150623.gappssmtp.com header.b="zB8wzRTx"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org AE7492086A
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=archlinux.us
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZC/oBjyK"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 51584206BB
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ded4f4d4;
-	Mon, 19 Nov 2018 15:05:17 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f4bc0473;
+	Mon, 19 Nov 2018 15:19:33 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d8b20f63
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0f9578ed
  for <wireguard@lists.zx2c4.com>;
- Mon, 19 Nov 2018 14:59:01 +0000 (UTC)
-Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com
- [IPv6:2607:f8b0:4864:20::231])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 681c2747
+ Mon, 19 Nov 2018 15:19:32 +0000 (UTC)
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com
+ [IPv6:2a00:1450:4864:20::52e])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b2114dcb
  for <wireguard@lists.zx2c4.com>;
- Mon, 19 Nov 2018 14:59:00 +0000 (UTC)
-Received: by mail-oi1-x231.google.com with SMTP id p82-v6so25466490oih.11
- for <wireguard@lists.zx2c4.com>; Mon, 19 Nov 2018 07:05:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=archlinux-us.20150623.gappssmtp.com; s=20150623;
- h=mime-version:in-reply-to:references:from:date:message-id:subject:to
- :cc; bh=qA8RNiUGFZycMA+2o5KwhvK8pdeGAY343CP9/QerVjU=;
- b=zB8wzRTx7Gv5wU4C3VCcAmyYcbkZ0NlbrZ4RyJXV9xJ9qXK8jP4fwUaeNfewbsPlz0
- Wqx5cbHPUXZBGHtPvuvr1ooU83bndmHciwcGv9qC1Qfl3dxm1B2nsV/zhyO04kPlK+vR
- agGIMbDRItmTSEd8K+X9EqnBjoTcL9rvLscPqFKfWM66HN1yRDPAt6UxUUgBDFrttJCQ
- VR4/udjkQqb/e3P7L7EQOn8T2V5Pk0Kw5Y9Vq8PigG/ND6vE1ENV+6eBrzjNVQC6X294
- lQ37OODXg8kFxTRPOJtuoHs8DeuKY9CZrzVcVAqTocbvoI4Qoir8vtpNNHvFqUPP6jQB
- v1NQ==
+ Mon, 19 Nov 2018 15:19:32 +0000 (UTC)
+Received: by mail-ed1-x52e.google.com with SMTP id z28so2610191edi.8
+ for <wireguard@lists.zx2c4.com>; Mon, 19 Nov 2018 07:25:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=cZC4qKE8FFA+b4IjuO7vUFbeY6TIykfMZ69cDVlFL5U=;
+ b=ZC/oBjyKqrecHnYlyBf8KJyXK44NCfX23bTTdWLOMlKmfFCiT0IHzpVz6MRWQP57QX
+ q5k6cJHYqAEfZJXM92oEEd6VsyrHiyBaX5jI7K8q6SbaMXN0fAg3jClksOvHBYp+wVpV
+ K3SIOL7ZIK50Mb5P0DFqOFgvYqewihtPstJ36Lj+6C7jO1gyvILQAtrlYlqW1zxY/SGJ
+ e124kMzoBtWlenk/SEBbyb7WKbxs7WmsaHGOdthzIcMP++cr7KNS3YrSVbNUBUdfiIFT
+ SpJOkQ6YSY39XWI8p/Nk7ge2EZRYN16DZzkBpk3GPJwBJaxOx5cRpl1sPubiAOMwRzod
+ tdcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:in-reply-to:references:from:date
- :message-id:subject:to:cc;
- bh=qA8RNiUGFZycMA+2o5KwhvK8pdeGAY343CP9/QerVjU=;
- b=jA2A6zPsnYzfnPJF/pKjGG2g0eNws70gYS550s+8ClOSqUBkxBOOuaYtvooARUhT1W
- XTVfqEl/Qxf5bXHk9u17g9BYrKUFUp5LRnQjzkRXu9eJ6nQBXEhOQtTKAptlB0fdoWQA
- wm/Qp4cgGnL9AAisTPNmnDr4zH1JVa4AXonsAk5XCcNtem0Wb1e8KiQ5QfyFMMXe7ByQ
- 7qW/wltuBFyqXTC8jm6+rFN0i2YgmVsihd2IWydWpM9jdOgRueilyJMY6hXj6DzKt9iw
- sXqR4/5/kkuEz26tUPLA72a8mbRmg0Epqk63C9T+Wmp90e7WmjueEm52BJT0XGP7NpNF
- w7yg==
-X-Gm-Message-State: AGRZ1gLdJToNnH9lyACIhwC+S/Ilzqx+Ux+uVmbRPCCXJiv5BPb44m7f
- P7rbnVWgAuXq8yyX8jCnDPZL9Cj0dWKDkJFs8s5+qs/y
-X-Google-Smtp-Source: AJdET5eIusmJZJ0A+G2rzjSSN1LcY6HI4tqrE2l3Xy1+kP2Ygbn2IWDJDYvZiY8x15N9bdZv1KlR4ydEuym9d59Y5qQ=
-X-Received: by 2002:aca:ec55:: with SMTP id k82mr6460895oih.55.1542639899444; 
- Mon, 19 Nov 2018 07:04:59 -0800 (PST)
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=cZC4qKE8FFA+b4IjuO7vUFbeY6TIykfMZ69cDVlFL5U=;
+ b=XMov0QvL1+Vpx4Ldaepzlo/+c0SrlR4N/IFb1JYUWPQdRxQpCnO1ZHziOmAZR71hdM
+ wV2ILpXZCkwh3IGoMVewTmmlSl4JNg6kqeCkGC3ZxpZaiRZdtxGJ/AycDlr2yk+KEXAg
+ J31B5c9DfIyL8BN3/SxRy28J+EmmNAXYWns0geXa/3LEm6GmSX/g1es9Yh3ZVT6JEsG2
+ qttITwlPXPGeoqF3DtZMcGHxDYbQsSYYJD/k9erU1k3FZkI4P3K5xTIYPbe4TEC5w78Y
+ 8szJptf9IeV2c2KedGDd5+QnemOdyV9p3dfjrT3bUOgNq6kjw0ALpJNNoKmNml9OEPZ+
+ ZomQ==
+X-Gm-Message-State: AGRZ1gLX0gBXzsejW5H6pf0gV9Y9DfPufRH96WGmcT06bn7x2XOukpmg
+ iE10/JP6Zwbwxmcs34Dnz8h3VRPy8zRHPqPLBVRjlA==
+X-Google-Smtp-Source: AJdET5eJOTWiY1pjfLaWOlU4M0/quFAaYizPrUl0AWI1hu3zEheHcEOvw5ZhLd9fh1qZDYf3TNXjPWO8bmHXdv4l1DY=
+X-Received: by 2002:a17:906:4ed9:: with SMTP id
+ i25-v6mr16875737ejv.75.1542641130591; 
+ Mon, 19 Nov 2018 07:25:30 -0800 (PST)
 MIME-Version: 1.0
-Received: by 2002:a4a:2f0d:0:0:0:0:0 with HTTP; Mon, 19 Nov 2018 07:04:58
- -0800 (PST)
-In-Reply-To: <41797799-8633-d195-54cb-ca3f38fbd371@t0x0sh.org>
-References: <CAO_nJAZRTXB424FKTew726LUieeAtpj1crXucf2deoQXVyw__w@mail.gmail.com>
- <41797799-8633-d195-54cb-ca3f38fbd371@t0x0sh.org>
-From: John <graysky@archlinux.us>
-Date: Mon, 19 Nov 2018 10:04:58 -0500
-Message-ID: <CAO_nJAb5zoW+YRtt4BvB9YJzBm9w3DmXnuyGZ=362E3G7ofcQA@mail.gmail.com>
-Subject: Re: Problem to load wireguard LKM in Archlinux
-To: Tosh <tosh@t0x0sh.org>
-X-Mailman-Approved-At: Mon, 19 Nov 2018 16:05:15 +0100
-Cc: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+From: Jacob Schooley <jacob.schooley+wgvpn@gmail.com>
+Date: Mon, 19 Nov 2018 08:25:18 -0700
+Message-ID: <CAHjFYUKdWpEjv2xyHjV15=kpbAMSxyDbGFkD93BMG7xJ09cfWA@mail.gmail.com>
+Subject: Re: Traffic on port 53 fails on LTE but works on WiFi
+To: wireguard@lists.zx2c4.com
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -82,111 +75,132 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============8289337772222292139=="
+Content-Type: multipart/mixed; boundary="===============2641761852736291827=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============8289337772222292139==
-Content-Type: multipart/alternative; boundary="000000000000392688057b05d7ef"
+--===============2641761852736291827==
+Content-Type: multipart/alternative; boundary="0000000000009adaf0057b062093"
 
---000000000000392688057b05d7ef
+--0000000000009adaf0057b062093
 Content-Type: text/plain; charset="UTF-8"
 
-Are you certain that the dkms rebuild was triggered?  Seems like like it
-was not.  Perhaps manually trigger it and reboot.
+Finally, something I can actually help with.
 
-On Monday, November 19, 2018, Tosh <tosh@t0x0sh.org> wrote:
+Yes, Verizon is actively blocking data through port 53.
 
-> Hello,
+Back in 2015 I discovered by accident that VPN traffic through port 53 on
+Verizon was not monitored by whatever they use to calculate data usage.
+Even better, it worked on deactivated sim cards for a few months after they
+were deactivated. Basically this meant I could dig around in the local
+Verizon store's dumpster every few months to find sim cards, pop them into
+a portable hotspot, and use a VPN over 53 for completely free, unthrottled
+data on Verizon without even having an account with them. I was a broke
+high school student and my parents wouldn't allow me to have service on my
+phone at the time so this was a life saver.
+
+Fast forward to a couple months ago, someone else gets root on the mifi
+6620L, finds the loophole, and decides to sell mifi's with a VPN client or
+proxy installed that redirected everything through port 53. Basically
+resulting in a seamless experience for free unlimited data. These hacked
+devices sold for $300+ on eBay. Of course, after it was in the wild Verizon
+started DPIing port 53 and now nothing gets through.
+
+
+
+On 11/19/18, John <graysky@archlinux.us> wrote:
+> I have a simple WireGuard VPN setup I use running WG on a home Linux
+> box and connecting to it with several iOS clients. The server peer is
+> setup on port 53 since a the networkadmins of some remote WiFi
+> networks my mobile devices seems to block udp traffic on higher ports.
+> Encrypted connections work fine on WiFi as I have setup, but do _not_
+> work when I connect via LTE (Verizon supplying the data). On LTE, I
+> am no longer able to transfer data to/from the server peer but I can
+> handshake with it.
 >
-> I'm using Wireguard on ArchLinux since a long time, and today I have
-> some troubles to start my VPN. Here is the log of dmeg when I try to
-> 'modprobe wireguard' :
+> If I inspect the output of `sudo wg` on the server peer, I see the
+> endpoint IP address changes to reflect my Verizon LTE IP and the time
+> since the last handshake reset to a few seconds which is consistent
+> with my ability to connect to the WireGuard peer server.
 >
-> wireguard: Unknown symbol poly1305_blocks_avx (err
-> -2)
-> wireguard: Unknown symbol poly1305_emit_avx (err
-> -2)
-> wireguard: Unknown symbol poly1305_blocks_avx512 (err
-> -2)
-> wireguard: Unknown symbol chacha20_avx512vl (err
-> -2)
-> wireguard: Unknown symbol chacha20_avx2 (err -2)
-> wireguard: Unknown symbol poly1305_blocks_avx2 (err
-> -2)
-> wireguard: Unknown symbol chacha20_avx512 (err -2)
+> I am unable to transfer data (pull up a web site or check email etc).
+> It's as/if Verizon is blocking my data flow on port 53. If I change
+> the port from 53 to 123, it seems to work fine although I do not have
+> universal connectivity on the various WiFi networks I visit on port
+> 123. The optimal port would be 53 for my use case.
 >
-> I did a MAJ of my system yesterday, but wireguard wasn't upgraded, so I
-> don't know where the problem come from...Seems a LKM related to crypto
-> is missing, but I don't know which one is.
->
-> My kernel is 4.19.2-arch1-1-ARCH, and my wireguard packages are :
->
-> - community/wireguard-dkms 0.0.20181115-1
->
-> - community/wireguard-tools 0.0.20181115-1
->
-> Thanks for your work,
->
-> --
-> -TOSH-
->
-> If you need privacy you can encrypt your mails with my GPG key:
-> 9B79 7754 00E2 23C7 FC90  E5C6 E5D9 1B2F 0BD5 3C6A
->
+> So the questions:
+> 1) What can I try on the server peer side to diagnose?
+> 2) Do people feel that Verizon is actively blocking the connection on port
+> 53?
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
 >
 
--- 
-Sent from Gmail Mobile
-
---000000000000392688057b05d7ef
+--0000000000009adaf0057b062093
 Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: base64
+Content-Transfer-Encoding: quoted-printable
 
-QXJlIHlvdSBjZXJ0YWluIHRoYXQgdGhlIGRrbXMgcmVidWlsZCB3YXMgdHJpZ2dlcmVkP8KgIFNl
-ZW1zIGxpa2UgbGlrZSBpdCB3YXMgbm90LsKgIFBlcmhhcHMgbWFudWFsbHkgdHJpZ2dlciBpdCBh
-bmQgcmVib290Ljxicj48YnI+T24gTW9uZGF5LCBOb3ZlbWJlciAxOSwgMjAxOCwgVG9zaCAmbHQ7
-PGEgaHJlZj0ibWFpbHRvOnRvc2hAdDB4MHNoLm9yZyI+dG9zaEB0MHgwc2gub3JnPC9hPiZndDsg
-d3JvdGU6PGJyPjxibG9ja3F1b3RlIGNsYXNzPSJnbWFpbF9xdW90ZSIgc3R5bGU9Im1hcmdpbjow
-IDAgMCAuOGV4O2JvcmRlci1sZWZ0OjFweCAjY2NjIHNvbGlkO3BhZGRpbmctbGVmdDoxZXgiPkhl
-bGxvLDxicj4NCjxicj4NCkkmIzM5O20gdXNpbmcgV2lyZWd1YXJkIG9uIEFyY2hMaW51eCBzaW5j
-ZSBhIGxvbmcgdGltZSwgYW5kIHRvZGF5IEkgaGF2ZTxicj4NCnNvbWUgdHJvdWJsZXMgdG8gc3Rh
-cnQgbXkgVlBOLiBIZXJlIGlzIHRoZSBsb2cgb2YgZG1lZyB3aGVuIEkgdHJ5IHRvPGJyPg0KJiMz
-OTttb2Rwcm9iZSB3aXJlZ3VhcmQmIzM5OyA6PGJyPg0KPGJyPg0Kd2lyZWd1YXJkOiBVbmtub3du
-IHN5bWJvbCBwb2x5MTMwNV9ibG9ja3NfYXZ4IChlcnI8YnI+DQotMinCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqA8d2JyPsKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoDx3YnI+wqDCoMKg
-wqDCoMKgPGJyPg0Kd2lyZWd1YXJkOiBVbmtub3duIHN5bWJvbCBwb2x5MTMwNV9lbWl0X2F2eCAo
-ZXJyPGJyPg0KLTIpwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgPHdicj7CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqA8d2JyPsKgwqDCoMKgwqDCoMKgwqA8YnI+DQp3aXJlZ3VhcmQ6IFVu
-a25vd24gc3ltYm9sIHBvbHkxMzA1X2Jsb2Nrc19hdng1MTIgKGVycjxicj4NCi0yKcKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoDx3YnI+wqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgPHdi
-cj7CoMKgwqA8YnI+DQp3aXJlZ3VhcmQ6IFVua25vd24gc3ltYm9sIGNoYWNoYTIwX2F2eDUxMnZs
-IChlcnI8YnI+DQotMinCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqA8d2JyPsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoDx3YnI+wqDCoMKgwqDCoMKgwqDCoDxicj4NCndpcmVndWFyZDog
-VW5rbm93biBzeW1ib2wgY2hhY2hhMjBfYXZ4MiAoZXJyIC0yKTxicj4NCndpcmVndWFyZDogVW5r
-bm93biBzeW1ib2wgcG9seTEzMDVfYmxvY2tzX2F2eDIgKGVycjxicj4NCi0yKcKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoDx3YnI+wqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgPHdicj7C
-oMKgwqDCoMKgPGJyPg0Kd2lyZWd1YXJkOiBVbmtub3duIHN5bWJvbCBjaGFjaGEyMF9hdng1MTIg
-KGVyciAtMik8YnI+DQo8YnI+DQpJIGRpZCBhIE1BSiBvZiBteSBzeXN0ZW0geWVzdGVyZGF5LCBi
-dXQgd2lyZWd1YXJkIHdhc24mIzM5O3QgdXBncmFkZWQsIHNvIEk8YnI+DQpkb24mIzM5O3Qga25v
-dyB3aGVyZSB0aGUgcHJvYmxlbSBjb21lIGZyb20uLi5TZWVtcyBhIExLTSByZWxhdGVkIHRvIGNy
-eXB0bzxicj4NCmlzIG1pc3NpbmcsIGJ1dCBJIGRvbiYjMzk7dCBrbm93IHdoaWNoIG9uZSBpcy48
-YnI+DQo8YnI+DQpNeSBrZXJuZWwgaXMgNC4xOS4yLWFyY2gxLTEtQVJDSCwgYW5kIG15IHdpcmVn
-dWFyZCBwYWNrYWdlcyBhcmUgOjxicj4NCjxicj4NCi0gY29tbXVuaXR5L3dpcmVndWFyZC1ka21z
-IDAuMC4yMDE4MTExNS0xPGJyPg0KPGJyPg0KLSBjb21tdW5pdHkvd2lyZWd1YXJkLXRvb2xzIDAu
-MC4yMDE4MTExNS0xPGJyPg0KPGJyPg0KVGhhbmtzIGZvciB5b3VyIHdvcmssPGJyPg0KPGJyPg0K
-LS0gPGJyPg0KLVRPU0gtPGJyPg0KPGJyPg0KSWYgeW91IG5lZWQgcHJpdmFjeSB5b3UgY2FuIGVu
-Y3J5cHQgeW91ciBtYWlscyB3aXRoIG15IEdQRyBrZXk6PGJyPg0KOUI3OSA3NzU0IDAwRTIgMjND
-NyBGQzkwwqAgRTVDNiBFNUQ5IDFCMkYgMEJENSAzQzZBPGJyPg0KPGJyPg0KPC9ibG9ja3F1b3Rl
-Pjxicj48YnI+LS0gPGJyPlNlbnQgZnJvbSBHbWFpbCBNb2JpbGU8YnI+DQo=
---000000000000392688057b05d7ef--
+<div dir=3D"auto"><div dir=3D"auto">Finally, something I can actually help =
+with.=C2=A0</div><div dir=3D"auto"><br></div><div dir=3D"auto">Yes, Verizon=
+ is actively blocking data through port 53.=C2=A0</div><div dir=3D"auto"><b=
+r></div><div dir=3D"auto">Back in 2015 I discovered by accident that VPN tr=
+affic through port 53 on Verizon was not monitored by whatever they use to =
+calculate data usage. Even better, it worked on deactivated sim cards for a=
+ few months after they were deactivated. Basically this meant I could dig a=
+round in the local Verizon store&#39;s dumpster every few months to find si=
+m cards, pop them into a portable hotspot, and use a VPN over 53 for comple=
+tely free, unthrottled data on Verizon without even having an account with =
+them. I was a broke high school student and my parents wouldn&#39;t allow m=
+e to have service on my phone at the time so this was a life saver.=C2=A0</=
+div><div dir=3D"auto"><br></div><div dir=3D"auto">Fast forward to a couple =
+months ago, someone else gets root on the mifi 6620L, finds the loophole, a=
+nd decides to sell mifi&#39;s with a VPN client or proxy installed that red=
+irected everything through port 53. Basically resulting in a seamless exper=
+ience for free unlimited data. These hacked devices sold for $300+ on eBay.=
+ Of course, after it was in the wild Verizon started DPIing port 53 and now=
+ nothing gets through.=C2=A0</div><div dir=3D"auto"><br></div><div dir=3D"a=
+uto"><br></div><div dir=3D"auto"><br></div>On 11/19/18, John &lt;<a href=3D=
+"mailto:graysky@archlinux.us" target=3D"_blank" rel=3D"noreferrer">graysky@=
+archlinux.us</a>&gt; wrote:<div dir=3D"auto">&gt; I have a simple WireGuard=
+ VPN setup I use running WG on a home Linux</div><div dir=3D"auto">&gt; box=
+ and connecting to it with several iOS clients.  The server peer is</div><d=
+iv dir=3D"auto">&gt; setup on port 53 since a the networkadmins of some rem=
+ote WiFi</div><div dir=3D"auto">&gt; networks my mobile devices seems to bl=
+ock udp traffic on higher ports.</div><div dir=3D"auto">&gt; Encrypted conn=
+ections work fine on WiFi as I have setup, but do _not_</div><div dir=3D"au=
+to">&gt; work when I connect via LTE (Verizon supplying the data).  On LTE,=
+ I</div><div dir=3D"auto">&gt; am no longer able to transfer data to/from t=
+he server peer but I can</div><div dir=3D"auto">&gt; handshake with it.</di=
+v><div dir=3D"auto">&gt;</div><div dir=3D"auto">&gt; If I inspect the outpu=
+t of `sudo wg` on the server peer, I see the</div><div dir=3D"auto">&gt; en=
+dpoint IP address changes to reflect my Verizon LTE IP and the time</div><d=
+iv dir=3D"auto">&gt; since the last handshake reset to a few seconds which =
+is consistent</div><div dir=3D"auto">&gt; with my ability to connect to the=
+ WireGuard peer server.</div><div dir=3D"auto">&gt;</div><div dir=3D"auto">=
+&gt; I am unable to transfer data (pull up a web site or check email etc).<=
+/div><div dir=3D"auto">&gt; It&#39;s as/if Verizon is blocking my data flow=
+ on port 53.  If I change</div><div dir=3D"auto">&gt; the port from 53 to 1=
+23, it seems to work fine although I do not have</div><div dir=3D"auto">&gt=
+; universal connectivity on the various WiFi networks I visit on port</div>=
+<div dir=3D"auto">&gt; 123.  The optimal port would be 53 for my use case.<=
+/div><div dir=3D"auto">&gt;</div><div dir=3D"auto">&gt; So the questions:</=
+div><div dir=3D"auto">&gt; 1) What can I try on the server peer side to dia=
+gnose?</div><div dir=3D"auto">&gt; 2) Do people feel that Verizon is active=
+ly blocking the connection on port</div><div dir=3D"auto">&gt; 53?</div><di=
+v dir=3D"auto">&gt; _______________________________________________</div><d=
+iv dir=3D"auto">&gt; WireGuard mailing list</div><div dir=3D"auto">&gt; <a =
+href=3D"mailto:WireGuard@lists.zx2c4.com" target=3D"_blank" rel=3D"noreferr=
+er">WireGuard@lists.zx2c4.com</a></div><div dir=3D"auto">&gt; <a href=3D"ht=
+tps://lists.zx2c4.com/mailman/listinfo/wireguard" target=3D"_blank" rel=3D"=
+noreferrer">https://lists.zx2c4.com/mailman/listinfo/wireguard</a></div><di=
+v dir=3D"auto">&gt;</div></div>
 
---===============8289337772222292139==
+--0000000000009adaf0057b062093--
+
+--===============2641761852736291827==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -197,4 +211,4 @@ WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---===============8289337772222292139==--
+--===============2641761852736291827==--
