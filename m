@@ -2,82 +2,63 @@ Return-Path: <SRS0=YVay=N6=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.7 required=3.0 tests=FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,
+	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C16DC43441
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 19 Nov 2018 21:47:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8DB9C43441
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 19 Nov 2018 23:00:54 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 4835A20823
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 19 Nov 2018 21:47:20 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=mib-infotech-co-nz.20150623.gappssmtp.com header.i=@mib-infotech-co-nz.20150623.gappssmtp.com header.b="CohMUrNr"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 4835A20823
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=mib-infotech.co.nz
+	by mail.kernel.org (Postfix) with ESMTPS id 3F8452080C
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 19 Nov 2018 23:00:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 3F8452080C
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=gmx.net
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c0a43ef7;
-	Mon, 19 Nov 2018 21:41:16 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b56bda3d;
+	Mon, 19 Nov 2018 22:54:50 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cc0eee5b
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3df81c07
  for <wireguard@lists.zx2c4.com>;
- Mon, 19 Nov 2018 21:41:13 +0000 (UTC)
-Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com
- [IPv6:2607:f8b0:4864:20::52e])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 79fef415
+ Mon, 19 Nov 2018 22:54:48 +0000 (UTC)
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8800aea9
  for <wireguard@lists.zx2c4.com>;
- Mon, 19 Nov 2018 21:41:13 +0000 (UTC)
-Received: by mail-pg1-x52e.google.com with SMTP id t13so5752400pgr.11
- for <wireguard@lists.zx2c4.com>; Mon, 19 Nov 2018 13:47:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mib-infotech-co-nz.20150623.gappssmtp.com; s=20150623;
- h=subject:to:references:from:message-id:date:user-agent:mime-version
- :in-reply-to:content-transfer-encoding:content-language;
- bh=gULWseEpPs0Tsa7o4CIJd9U8PA95T4YzOx906mTOwhc=;
- b=CohMUrNr0EQ8JwMN9CRJcB1gvVUuupaP5XOsUWIZCS5RoUVbl84pqu5M2U+n525YLn
- 8BkXTec74QxxMU0o6x7MNLwBwPibd11Lkhbz+3fYknbhF4YpI0ZQcMdTI1STDUcKySuM
- nOMGbKfbqAQdZJLxaftvSup2z7ZSw8AiLCZDdLw6AL+yJYr+JeH2Br4WXQuz5vyJFASH
- 4qhusEet0MIpcYjIIGO51GYXvX4lB5DR7X2l9tKTuT/NbnmZhyzC2GZNbmcsvEyWRcdV
- WsTDJ3i54w0+f+2NitizL5T/Ibf0VO3uooWtLINZY0aiAQh0R9/XhmWI1FhK518yI8BN
- tc2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-transfer-encoding
- :content-language;
- bh=gULWseEpPs0Tsa7o4CIJd9U8PA95T4YzOx906mTOwhc=;
- b=Qy0rDH6XQ00ReqiE9XhA5W+Lb20kpWRIw6tXXBJXANXy4k/jfAJBomNrvPBZQ50BRp
- 9phrIHv04PBerFl8T5q+9d+9tf2Gqf6bfS93aBCoiZstbi2GK8NAWvPEzaHEY+xMakIW
- FS2E0n0MMzUmIwDSGiIbBacAqT/ahMY5sgRX1aKBaOcMl7qAQveSITFt5uoaC4wKAFEO
- fO1PL0hxeNY153rzXbUeVG7qUKeuLTBMUracqPs6glFA+dsB+x9ufsdomVYo7n+myKz0
- oDPl52h21Y7qDL5AyRKETVgHsvdmMwRy+6jOnDYu8O9PrVncn8MAF1zPjaPmE5SvpbDY
- NEDw==
-X-Gm-Message-State: AGRZ1gIsxKvc2AAxI/f656DqSIt51/Jv/U1FgeGCCaH77uwSwxPITULc
- V28kJPUku/Ycf1wNDNa2cUnEksODbCI=
-X-Google-Smtp-Source: AJdET5dl6xkDvJNS09y5xakSNa0KinOBm4PQTPby1WgS9vyKou9CLj/1fRXW3b+PgYttSG/zh2lDqg==
-X-Received: by 2002:a63:f710:: with SMTP id x16mr21901389pgh.322.1542664034553; 
- Mon, 19 Nov 2018 13:47:14 -0800 (PST)
-Received: from [10.16.226.11] ([103.247.155.34])
- by smtp.gmail.com with ESMTPSA id o7sm5499738pfb.34.2018.11.19.13.47.12
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 19 Nov 2018 13:47:13 -0800 (PST)
-Subject: Re: Seeking suggestions for a WG port to use with restrictive public
- wifi networks
+ Mon, 19 Nov 2018 22:54:48 +0000 (UTC)
+Received: from [10.0.0.20] ([193.81.35.23]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MQih7-1g1U7h2Z81-00Tz4L; Tue, 20
+ Nov 2018 00:00:48 +0100
+Mime-Version: 1.0 (Mac OS X Mail 12.1 \(3445.101.1\))
+Subject: Re: Android key-icon in statusbar
+From: Robert Walli <rwalli@gmx.net>
+X-Priority: 3
+In-Reply-To: <362749885.10996.1542657892449@office.mailbox.org>
+Date: Tue, 20 Nov 2018 00:00:46 +0100
+Message-Id: <F88F15D7-FF7C-40C2-A84F-0B04F00E4BCA@gmx.net>
+References: <8365521A-0DE2-44B0-BFDF-5AAB82054756@gmx.net>
+ <362749885.10996.1542657892449@office.mailbox.org>
 To: wireguard@lists.zx2c4.com
-References: <CAO_nJAZ5fSSFtH1p8Ad=FD22ic9_kDAMkhWpL4vTxDh=4g3J8g@mail.gmail.com>
- <020DC45A-7CA9-49E5-9A14-6300306F5476@lonnie.abelbeck.com>
-From: John Huttley <john@mib-infotech.co.nz>
-Message-ID: <903807da-82a3-f97c-5ba3-510eca9af84f@mib-infotech.co.nz>
-Date: Tue, 20 Nov 2018 10:47:10 +1300
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:60.0) Gecko/20100101
- Thunderbird/60.2.1
-MIME-Version: 1.0
-In-Reply-To: <020DC45A-7CA9-49E5-9A14-6300306F5476@lonnie.abelbeck.com>
-Content-Language: en-US
+X-Mailer: Apple Mail (2.3445.101.1)
+X-Provags-ID: V03:K1:PZmmk9hCuooFavnNIokCNlziDjwmw3OzwbVP2paVyDNwKXWuiLm
+ NIrOr9L1kkn+eaoZkhiwZUmvTM7JC850Kxdaj1sIHokRGS9sL9I2VdtLBp1xhPFxrq8r1LW
+ ydpMknfqVAJb4qynccY0AFdb30b7Eofi0BHLhT5c+czMQ0Zi8hCi7w8PUQUDbeqcyc51Bxp
+ 8599R25+TvOHiDEVwxDag==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:vQnQdMpnuLo=:FwHZD3gTrDrXezUWX08Y5Z
+ cs8zuu6AhcQ/vzfnppFt+nVDnv2uPzcxka9dg0tE8LInauijgtzDCHlLMRN3lJxUWmPbhSgJW
+ 3DppnWEQBd2BNgkT1s8mWTjHY4CLzQtp//ioOYfS4OFkun74qx1+7wQIduF9GNabfdr3OauHZ
+ 9gu+/cJ1QoId/iPkNTUMOYBPDOwBqhaszzuynp6FmlkGhEY73EkjZ9QQYLLI3080iO23bIDs/
+ RS8tZWJ+707QMtzw7EfMqUJ7UM2NNOL4ZSUOR7f5LKtuzkRn6eBNEiH53O4fST1Cht4hvgaBg
+ qm/IRXf7Gy/MJvmtcf4yutS51NMjqroHHgoo8O6OVTjqKGhmdEAdhDsl/Qz2LhmFMT1+yeGJX
+ RXxLKXwbKZ1T6qf3yh6fyUMk4xhH3up44H/f3Mvd/FIlIaPiGl1nlJeA4FU7ngUln3IOSAQ3m
+ MrvoAgKayllMPEDUjBbXdGkWcXRWaw0qNQc4G7e9lpGItDchRtF/8RZErLZp+exqyIRKBdVHI
+ QtR04Mf1gBQA3U+MS2uHJhrBRhMPNR0Z74NLDbWY7vpERK6NQso4EIDcmdRl6GvLOdVT0LFF4
+ a2mesTUthFQZfpDvjGNsWCJ7h9EDuyOvZPt7ZXMhr5Ph5nplHDog2OScI3p+JYPux5+jrN0Ox
+ p4EKDapBK2c+UgH3WrGFLmXIkuaBRY9lsgWW61Swita5vGDEAx7VMPL+icVoMkLapQW6OaMUP
+ nRX65BM1DMHgEie7A7LsFBIzxisGPwg1NsRPrefQozY2VmIrU/pYK6O6o8UJyH67QdkhZVh1r
+ 5mJSNQG6oGqvsErkaxQv8L9VkgfksuUxzKUdV/66my4igT/45M9HUschVBJvfkBqUWOMxrue8
+ XLIHn5L4bHnykSFeEtQiX9aelCqxskUmKuG4PhzPpyE6e12UOqcoAsEhqMbWft
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -89,34 +70,28 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-And also 4433 which is used by DTLS
-
-https://wiki.wireshark.org/DTLS
-
---dad
-
-On 20/11/18 9:53 AM, Lonnie Abelbeck wrote:
->> On Nov 19, 2018, at 2:33 PM, John <graysky@archlinux.us> wrote:
->>
->> Should I stick with the "standard" udp service ports for my
->> trial-and-error based approach?  Wikipedia has an article that lists
->> many of these (List_of_TCP_and_UDP_port_numbers).  Any suggestions are
->> welcomed.
-> Possibly: UDP/500 (IPSec IKE) or UDP/4500 (IPSec NAT-T)
->
->
-> Lonnie
->
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
-_______________________________________________
-WireGuard mailing list
-WireGuard@lists.zx2c4.com
-https://lists.zx2c4.com/mailman/listinfo/wireguard
+Cgo+IE9uIDE5LjExLjIwMTgsIGF0IDIxOjA0LCBuaWNvbGFzQGVpc2Z1bmtlLmNvbSB3cm90ZToK
+PiAKPiBIZWxsbywKPiAKPj4gSeKAmXYgaW5zdGFsbGVkIHdpcmVndWFyZC1hcHAgZnJvbSBwbGF5
+IHN0b3JlIG9uIGFuZHJvaWQgOC4xLgo+PiBJZiB1c2luZyB0aGUgdXNlcnNwYWNlIHZlcnNpb24g
+aSBnZXQgYSAia2V5LWljb24iIGluIHRoZSBzdGF0dXMtYmFyIHdoZW4gYSB0dW5uZWwgaXMgYWN0
+aXZlLgo+PiBTd2l0Y2hpbmcgdG8gdGhlIGtlcm5lbCB2ZXJzaW9uIHRoZSBpY29uIGlzIG5vdCB3
+b3JraW5nIGFueSBtb3JlLgo+IAo+IHRoZSB1c2Vyc3BhY2UgdmVyc2lvbiB1c2VzIHRoZSBuYXRp
+dmUgQW5kcm9pZCBWUE4tQVBJLCB3aGljaCBhbHdheXMgc2hvd3MgdGhlIGtleSBpY29uIGZvciBz
+ZWN1cml0eSByZWFzb25zLgo+IAo+IFRoZSBrZXJuZWwgdmVyc2lvbiBkb2Vzbid0IHVzZSB0aGlz
+IEFQSSBiZWNhdXNlLCB3ZWxsLCBpdCB1c2VzIHRoZSBrZXJuZWwgbW9kdWxlLiBUaGF0J3Mgd2h5
+IHRoZSBrZXkgaWNvbiBpc24ndCBzaG93bi4KPiAKCgpTb3JyeSwgaeKAmW0gYSBuZXcgdG8gdGhp
+cyBhbmQgZGlkIG5vdCBrbm93IGl0LgoKSSBoYXZlIGFub3RoZXIgcHJvYmxlbSB3aGlsZSB0ZXN0
+aW5nOgpNeSBST00gaGFzIG5vIHdpcmVndWFyZC1zdXBwb3J0IHNvIEkgaGFkIHRvIGNvbXBpbGUg
+bXlzZWxmLgpEaXJ0eSBmbGFzaGluZyBiYWNrIHRvIG9yaWdpbmFsIChBSUNQKSBST00gY2F1c2Vk
+IHN0b2NrIG9uIHRoZSBsb2Nrc2NyZWVuLgoKSXMgdGhlcmUgYW55IG9wdGlvbiB0byBmb3JjZSBh
+bmRyb2lkIHRvIHVzZSB0aGUgdXNlcnNwYWNlLXZlcnNpb24gdG8gdGVzdCBib3RoIHZlcnNpb24g
+d2l0aG91dCBlcmFzaW5nIHRoZSB3aG9sZSBmbGFzaD8KV2hhdCBmaWxlcyBzaG91bGQgaSByZW1v
+dmUgaW4gb3JkZXIgdG8gYXZvaWQgdGhlIGxvY2tzY3JlZW4gaXNzdWU/CgpUaGFuayB5b3UgaW4g
+YWR2YW5jZSwKClJvYmVydAoKIApfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fXwpXaXJlR3VhcmQgbWFpbGluZyBsaXN0CldpcmVHdWFyZEBsaXN0cy56eDJjNC5j
+b20KaHR0cHM6Ly9saXN0cy56eDJjNC5jb20vbWFpbG1hbi9saXN0aW5mby93aXJlZ3VhcmQK
