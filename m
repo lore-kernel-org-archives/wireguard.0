@@ -2,66 +2,55 @@ Return-Path: <SRS0=90jI=OP=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.3 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,USER_AGENT_MUTT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.7 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	HTML_MESSAGE,MAILING_LIST_MULTI,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31EDCC04EB8
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  6 Dec 2018 17:42:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB99FC65BAF
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  6 Dec 2018 23:13:35 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 225C920892
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  6 Dec 2018 17:42:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 46A3820989
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  6 Dec 2018 23:13:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (4096-bit key) header.d=urlichs.de header.i=@urlichs.de header.b="PGxVMnq5"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 225C920892
-Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=urlichs.de
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="RwokH7to"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 46A3820989
+Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=protonmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3ed805e6;
-	Thu, 6 Dec 2018 17:34:12 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 36040257;
+	Thu, 6 Dec 2018 23:05:19 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 25b4493f
- for <wireguard@lists.zx2c4.com>; Thu, 6 Dec 2018 17:34:10 +0000 (UTC)
-Received: from netz.smurf.noris.de (mail.smurf.noris.de [213.95.149.21])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 01df8743
- for <wireguard@lists.zx2c4.com>; Thu, 6 Dec 2018 17:34:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=urlichs.de; 
- s=20160512;
- h=Content-Type:MIME-Version:Message-ID:Subject:To:From:Date:
- Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:Content-Description:
- Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
- In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive;
- bh=5iXJdIhfJCp2sQTuucNSiIuouqQdB11p6rWmPIPeuAU=; b=PGxVMnq522pe6+lZ6nnukbQ3Uj
- hfyG5OpLahk3NSuxbkLYCSYIgDU3dET4B8bQiVYjbcvVPMDMm7XrYKXnehxlzTyCTofkmqMDrtlO0
- sGd8OgF3fxucl6sv8kgNj1JBj5vP+QF5IN1gJ6WHFOL/zDGJDZ0Y8UeGVR+q3vwpxWw5Gk+b0G1EJ
- EGOSAC/NtjUbDRf68QyVZc7xhKgTmP5Pb34n/JGZKMjzJk74DoQzr+KB4aFcqYa/1Ghn9ARHaxQra
- mImZQHlsZ9kcv7QbDr+z9s5HIONzJ0jkm7spE21krH1R6DveUJ26zQT0Zcuev9ot558dQJUyc05YW
- QNnkDlRP9Q8R9vuzW0CAohXqcuCro7SnB/nXM/00W4iXPGrf/dnGKY3Ig2p60pzZtBabbtDDWeF27
- P7Ffe5tdleZ2H6NdRVPRSWvR18n7LorBAC94cKDsMbUDPvsGBuqGdvh5lXcZHyrl9Ytuz6qUYYVU3
- rDic+UUB8epx0+FfOh06AYneYJli1YV6ugobMgwsYdahORUpEoZMa89fYRriNTyFuHmBUbw9RWdKV
- PgPLA8R46awAAzKE05VV2QTpnTPx1YLw0oe49zBxHQaFlBUMBABe0p25Vuvcz43ndCaNqv6KB+BJ8
- p4CtlSBeXI+DbfRjO/FryjIDDClUYbW+Q1oEpRo94=;
-Received: from desk.s.smurf.noris.de ([10.107.0.5])
- by mail.vm.smurf.noris.de with smtp (Exim 4.89)
- (envelope-from <matthias@urlichs.de>) id 1gUxeO-0005Tl-Dh
- for wireguard@lists.zx2c4.com; Thu, 06 Dec 2018 18:41:24 +0100
-Received: (nullmailer pid 7016 invoked by uid 501);
- Thu, 06 Dec 2018 17:41:05 -0000
-Date: Thu, 6 Dec 2018 18:41:05 +0100
-From: Matthias Urlichs <matthias@urlichs.de>
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Option to fwmark incoming packets?
-Message-ID: <20181206174105.GA6666@desk.s.smurf.noris.de>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 07726494
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 20 Nov 2018 05:26:12 +0000 (UTC)
+Received: from mail-40136.protonmail.ch (mail-40136.protonmail.ch
+ [185.70.40.136])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5bb671f0
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 20 Nov 2018 05:26:12 +0000 (UTC)
+Date: Tue, 20 Nov 2018 05:32:09 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+ s=default; t=1542691931;
+ bh=N6UzkBMId5tGjyGOWRB1LsfTFWeeJzHUu4EHMNhy54U=;
+ h=Date:To:From:Reply-To:Subject:Feedback-ID:From;
+ b=RwokH7toJikg4S87XGNMCVJvfEqhTeK6VsTazAlmxhDCGPHaA8CLjcOGt3CtWobkq
+ biYMNKm9XQLLvukJkJ57MBotEu/AbqpdcGcHFNePMumsR/ZTzvSsfO1mWRpxywgAOa
+ hjVgTMX6yLsStrbEXXqMKTAzpFPDnrV0EBBodR9o=
+To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+From: DARANGH <darangh@protonmail.com>
+Subject: Problems with kernel 4.15 on Ubuntu Bionic & Xenial to use wireguard
+ dkms
+Message-ID: <yhOEntUhW9Wi4z-1KZGSZ9_aZWfoThyA5G38azfKjd-ZCJ7O1eoqmGVVRND0TcgR5cb6JXkUXKV0xng9NY9NR0MAsRuAq_GKBpfsknG5ujI=@protonmail.com>
+Feedback-ID: I8SD0p0GTtyTBTc1-E-EH46uGA06cZdLaEwcd0xFf8usCe4PWat-6OCwTeNJcoaHbnuxNtlDN-jLf1plKvLdwQ==:Ext:ProtonMail
 MIME-Version: 1.0
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Smurf-Spam-Score: 0.0 (/)
-X-Smurf-Whitelist: +relay_from_hosts
+X-Mailman-Approved-At: Fri, 07 Dec 2018 00:05:18 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
+Reply-To: DARANGH <darangh@protonmail.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -70,62 +59,67 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============7914314394603680461=="
+Content-Type: multipart/mixed; boundary="===============2384801135503554040=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
+This is a multi-part message in MIME format.
 
---===============7914314394603680461==
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="KsGdsel6WgEHnImy"
-Content-Disposition: inline
+--===============2384801135503554040==
+Content-Type: multipart/alternative;
+	boundary="b1_f6134e1e1e359e8376020cd5fb3a8fca"
+
+This is a multi-part message in MIME format.
+
+--b1_f6134e1e1e359e8376020cd5fb3a8fca
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
+
+SGVsbG8sCgpJIHBvc3QgdGhpcyBzZWNvbmQgbWVzc2FnZSB0byB0ZWxsIHlvdSB0aGF0IFdpcmVH
+dWFyZCBTbmFwc2hvdCBgMC4wLjIwMTgxMTE5YCBzb2x2ZWQgbXkgZGttcyBwcm9ibGVtIG9uIExp
+bnV4TWludCAxOSAhCkl0IHdvcmtzIHBlcmZlY3RseSBub3chIE1hbnkgdGhhbmtzICEgOi0pCkp1
+c3Qgb25lIHF1ZXN0aW9uIDogSSBjYW4ndCBmaW5kIGFuICJhbnN3ZXIiIGJ1dHRvbiBpbiB0aGUg
+bWFpbGxpc3Qgd2ViIHBhZ2UgdG8gYW5zd2VyIHRvIGFuIGV4aXN0aW5nIHRocmVhZC4uLiBEaWQg
+SSBtaXNzIHNvbWV0aGluZz8KUmVnYXJkcywKCkRvbS4gSAoKLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQpNYXJyZSBkZSBsYSBjZW5zdXJlPyBNYXJyZSBkJ8Oq
+dHJlIHBpc3TDqSBwYXIgeW91dHViZT8KUGFzc2V6IMOgIHBlZXJ0dWJlICEgOi0pCmh0dHBzOi8v
+am9pbnBlZXJ0dWJlLm9yZy9mci8KaHR0cHM6Ly9wZWVydHViZS5wbC9hY2NvdW50cy9hZGFtLnF1
+ZXIvdmlkZW9zCgpTZW50IHdpdGggW1Byb3Rvbk1haWxdKGh0dHBzOi8vcHJvdG9ubWFpbC5jb20p
+IFNlY3VyZSBFbWFpbC4=
 
 
---KsGdsel6WgEHnImy
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+--b1_f6134e1e1e359e8376020cd5fb3a8fca
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-Hi,
+PGRpdj5IZWxsbyw8YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5JIHBvc3QgdGhpcyBzZWNv
+bmQgbWVzc2FnZSB0byB0ZWxsIHlvdSB0aGF0IFdpcmVHdWFyZCBTbmFwc2hvdCBgMC4wLjIwMTgx
+MTE5YCBzb2x2ZWQgbXkgZGttcyBwcm9ibGVtIG9uIExpbnV4TWludCAxOSAhIDxicj48L2Rpdj48
+ZGl2Pkl0IHdvcmtzIHBlcmZlY3RseSBub3chIE1hbnkgdGhhbmtzICEgOi0pPGJyPjwvZGl2Pjxk
+aXY+SnVzdCBvbmUgcXVlc3Rpb24gOiBJIGNhbid0IGZpbmQgYW4gImFuc3dlciIgYnV0dG9uIGlu
+IHRoZSBtYWlsbGlzdCB3ZWIgcGFnZSB0byBhbnN3ZXIgdG8gYW4gZXhpc3RpbmcgdGhyZWFkLi4u
+IERpZCBJIG1pc3Mgc29tZXRoaW5nPzxicj48L2Rpdj48ZGl2PlJlZ2FyZHMsPGJyPjwvZGl2Pjxk
+aXY+PGJyPjwvZGl2PjxkaXY+RG9tLiBIPGJyPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXYgY2xh
+c3M9InByb3Rvbm1haWxfc2lnbmF0dXJlX2Jsb2NrIj48ZGl2IGNsYXNzPSJwcm90b25tYWlsX3Np
+Z25hdHVyZV9ibG9jay11c2VyIj48cCBzdHlsZT0ibWFyZ2luLWJvdHRvbTowY207bGluZS1oZWln
+aHQ6MTAwJTsiPjxicj48L3A+PGRpdj4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tPGJyPjwvZGl2PjxkaXY+PGk+TWFycmUgZGUgbGEgY2Vuc3VyZT8gTWFycmUg
+ZCfDqnRyZSBwaXN0w6kgcGFyIHlvdXR1YmU/PC9pPjxicj48L2Rpdj48ZGl2PjxpPlBhc3NleiDD
+oCBwZWVydHViZSAhIDotKTwvaT48YnI+PC9kaXY+PGRpdj48YSBocmVmPSJodHRwczovL2pvaW5w
+ZWVydHViZS5vcmcvZnIvIj5odHRwczovL2pvaW5wZWVydHViZS5vcmcvZnIvPC9hPjxicj48L2Rp
+dj48ZGl2PjxhIGhyZWY9Imh0dHBzOi8vcGVlcnR1YmUucGwvYWNjb3VudHMvYWRhbS5xdWVyL3Zp
+ZGVvcyI+aHR0cHM6Ly9wZWVydHViZS5wbC9hY2NvdW50cy9hZGFtLnF1ZXIvdmlkZW9zPC9hPjxi
+cj48L2Rpdj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2IGNsYXNzPSJwcm90b25tYWlsX3NpZ25h
+dHVyZV9ibG9jay1wcm90b24iPlNlbnQgd2l0aCA8YSB0YXJnZXQ9Il9ibGFuayIgaHJlZj0iaHR0
+cHM6Ly9wcm90b25tYWlsLmNvbSI+UHJvdG9uTWFpbDwvYT4gU2VjdXJlIEVtYWlsLjxicj48L2Rp
+dj48L2Rpdj48ZGl2Pjxicj48L2Rpdj4=
 
-I seem to require firewalling some peers' incoming traffic with special rul=
-es.
 
-While it's certainly possible to add a bunch of iptables/nftables rules to
-classify traffic from the WG interface (just mirror the peers' AllowedIP
-entries =E2=80=A6) this is redundant (thus possibly inconsistent) and bad f=
-or
-performance.
 
-How about a per-peer "fwmark" setting that marks that peer's incoming packe=
-ts?
+--b1_f6134e1e1e359e8376020cd5fb3a8fca--
 
---=20
--- Matthias Urlichs
 
---KsGdsel6WgEHnImy
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEr9eXgvO67AILKKGfcs+OXiW0wpMFAlwJXy4ACgkQcs+OXiW0
-wpP0fRAAwFSOxmtIe/a3eVLyBMgdJD+DD/92Du9Y4+lZFryd1GqytdHfC4agctnN
-k0jbTdWl3suxO7dpo64bfm/Yaen/JXP0mPIr/9+XuJLFH7w/3TAGH21IjrAhlUnO
-0ivoCFk4HH6HdnwsMI88eUTZZWg7Pvveibv5I+ohu6aZm1g61lZdFX1AB4wWsXkL
-5KrwkH6nzM8SAd61yU15SKrMdB/qJHxp96v+klr+hQnjYblKn0nv/ekq3gAos9XM
-Ye1OxNBEfR1V6s5U16O+R6iJekvGXSnIgqwK8jSc4WcDxBgcx6gXCb4kehNaSq4x
-u1X9zb1ICpdYVg6VgHgZVdk+Mzej3xsIaItkafOPh08XyK6jwTbucqpcjx6W5bXK
-BpRlvribx8bFL0e0sIP3cUZRBk4LsLbW780ADEMKFOumb+aD/fFv5b6jRliRTYwk
-tR1/AqVwlpM8ABlB5z5nhuwTxosxYVCvRnsg9RK81hq4JbpejAGKTF90iC2hSnKs
-wyESNBuli70tQAQ7bNJZKKaUu0HPcvE2XuJzuCPRFADQUiRoehvbHQVba6CMutuR
-pgOKm9QjI+WM0j0L7DyCHHTm4Gw+ibrcCzp9yyPGa9WgtYz8kL2/kOHlvmOKGHo6
-w+sINLeTugBAo1+AgckDS6iUEtNWWA6nuLL2uP7HszuUPbeobqU=
-=mNvu
------END PGP SIGNATURE-----
-
---KsGdsel6WgEHnImy--
-
---===============7914314394603680461==
+--===============2384801135503554040==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -136,4 +130,5 @@ WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---===============7914314394603680461==--
+--===============2384801135503554040==--
+
