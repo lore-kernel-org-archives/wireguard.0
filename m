@@ -2,87 +2,144 @@ Return-Path: <SRS0=ZlE4=N7=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	HTML_MESSAGE,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 25B91C43441
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 20 Nov 2018 03:40:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5BC7CC43610
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 20 Nov 2018 08:04:03 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 7341620870
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 20 Nov 2018 03:40:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 7341620870
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=dkisselev.net
+	by mail.kernel.org (Postfix) with ESMTPS id 25780206BB
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 20 Nov 2018 08:03:23 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (4096-bit key) header.d=urlichs.de header.i=@urlichs.de header.b="vddskL7/"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 25780206BB
+Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=urlichs.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a0669faf;
-	Tue, 20 Nov 2018 03:34:40 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f9d9a885;
+	Tue, 20 Nov 2018 07:57:01 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e6f11c02
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e54465ac
  for <wireguard@lists.zx2c4.com>;
- Tue, 20 Nov 2018 03:34:39 +0000 (UTC)
-Received: from NAM05-CO1-obe.outbound.protection.outlook.com
- (mail-oln040092013088.outbound.protection.outlook.com [40.92.13.88])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 388ae075
+ Tue, 20 Nov 2018 07:56:57 +0000 (UTC)
+Received: from netz.smurf.noris.de (2001:780:107:8:83::
+ [IPv6:2001:780:107:8:83::])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5a7139d5
  for <wireguard@lists.zx2c4.com>;
- Tue, 20 Nov 2018 03:34:39 +0000 (UTC)
-Received: from DM3NAM05FT054.eop-nam05.prod.protection.outlook.com
- (10.152.98.56) by DM3NAM05HT095.eop-nam05.prod.protection.outlook.com
- (10.152.99.25) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.1339.3; Tue, 20 Nov
- 2018 03:40:38 +0000
-Received: from CY4PR14MB1141.namprd14.prod.outlook.com (10.152.98.58) by
- DM3NAM05FT054.mail.protection.outlook.com (10.152.98.168) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.1339.3 via Frontend Transport; Tue, 20 Nov 2018 03:40:38 +0000
-Received: from CY4PR14MB1141.namprd14.prod.outlook.com
- ([fe80::f02b:6744:6edc:27dc]) by CY4PR14MB1141.namprd14.prod.outlook.com
- ([fe80::f02b:6744:6edc:27dc%5]) with mapi id 15.20.1294.048; Tue, 20 Nov 2018
- 03:40:38 +0000
-From: Denis Kisselev <denis@dkisselev.net>
-To: John Smith <johnsmith1@riseup.net>, WireGuard List
- <wireguard@lists.zx2c4.com>
-Subject: RE: WireGuard server and multiple clients
-Thread-Topic: WireGuard server and multiple clients
-Thread-Index: AQHUgDsbitRaQIO0tEizvs7iiZkoQaVYAytr
-Date: Tue, 20 Nov 2018 03:40:38 +0000
-Message-ID: <CY4PR14MB1141B76AC8CD7C2944938FA2A2D90@CY4PR14MB1141.namprd14.prod.outlook.com>
-References: <09ef4c2c-a445-1183-d4c6-1a6ca0e0cb41@riseup.net>
-In-Reply-To: <09ef4c2c-a445-1183-d4c6-1a6ca0e0cb41@riseup.net>
-Accept-Language: en-US, en-CA
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-incomingtopheadermarker: OriginalChecksum:38DDC5F54E4F196EEC8C6BD0CEB072926FF95617DC694D00B2F37529AA20015E;
- UpperCasedChecksum:B41F3694404A6FFDF5AF775011CE8010F2EC55512BA09C6F817729939060E136;
- SizeAsReceived:7043; Count:46
-x-ms-exchange-messagesentrepresentingtype: 1
-x-tmn: [ZNMeK7JTKVSbhSKfGM1KE0b8TGxe/bf4]
-x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1; DM3NAM05HT095;
- 6:THQsOjipueaQBkQBPHFSXBqjG+tnbPdQiG3lKG1yp3K3FXyhq9n+xJPw2ww6wPs4HycxFtA8Y3QplxvhRgPTHrSKtEmL6kJ5jxcJkuc4rn3PQEjlgrA0TJp7Elk/Ok6yavuCMQC7JxXeuUmbal9eYQ5Fixzv2LsmfJEIq9DPqczHKYUnB/lRfrkgdhRoidMxmfpMO6du5hXIaR2wzm41PayfPPJIPTQHWjyZRegwpODACHJnGg5v2gLqzAg/q9AI5pJSPvINkVQyRVslYiY+gISgLvw1m1p6OiPtG3aYhqT/XYKwj7JKopGOUcal+5OwsFGtMxVcwGN+AolOEjcBBTzhncCOxqnXtUOeBa0P16cjAYOSWB7cZPErlnUSwehHIRvxXbjUj4usXO7GtV3DsDaMwhDmaK+WYswk1t9X7oGijkmGQZc9r7od/c5QcctVRmGFJdYUm3UBfoOlNSmeFg==;
- 5:zWp/WUG80lrSFgxNq8lzWnuWBAIDDPr7fVudwWZtVlf3tQZEdq0+WtDUHTafcHYxN6Eb/gAIt4k/Ys/3ada7Lxs1DFQU/ncamYsBo3EEMT3ul+t+kl7TG42keqcrn3LZLZ7JU7FbQPwvsc2W5nJEVjQSqFcSzDXLUHN9wmIZdME=;
- 7:tVcqG+TMckCQQ0C4RSNERjeOcl7IY4ypS1D2AqgfdhbLYrHV4e843grFVm81JPv1a+iSoM7eJ3cpzJNmFQmxCC9EqlDyyWy5w8PvP/q9/1Qhs/uiX2AhHD5rYRvsWI/Sxzwqn20S0PDHxE4hd0+8jQ==
-x-incomingheadercount: 46
-x-eopattributedmessage: 0
-x-microsoft-antispam: BCL:0; PCL:0;
- RULEID:(2390098)(7020095)(201702061078)(5061506573)(5061507331)(1603103135)(2017031320274)(2017031324274)(2017031323274)(2017031322404)(1603101475)(1601125500)(1701031045);
- SRVR:DM3NAM05HT095; 
-x-ms-traffictypediagnostic: DM3NAM05HT095:
-x-exchange-antispam-report-cfa-test: BCL:0; PCL:0; RULEID:(4566010)(82015058);
- SRVR:DM3NAM05HT095; BCL:0; PCL:0; RULEID:; SRVR:DM3NAM05HT095; 
-x-microsoft-antispam-message-info: ZvT1cBeH5DgXf+uggrgq0S8xeRbiWuYizskXPAkTrh1VO17zkniRH9PCx0xqxens
+ Tue, 20 Nov 2018 07:56:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=urlichs.de; 
+ s=20160512;
+ h=Content-Transfer-Encoding:Content-Type:In-Reply-To:
+ MIME-Version:Date:Message-ID:From:References:To:Subject:Sender:Reply-To:Cc:
+ Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+ Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+ List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=o+pAHZ96tU5cfDGVWrPs03bQPKBdersOa3pxmS6+W/Q=; b=vddskL7/jEhVRKeSiEJrj5t7G7
+ gsdx1jI9/5cIaV6zIslJ5fzviVCCkolCSZ+gp65MKvI+d/O6JFAs6xEuWd5jTjN+NtWE6x1psSj8m
+ dyK9YkOyREZgIjjaStB17biLy69lkN5b3StzovLzI1g6jpjIwKXNxc0e3mBaH3uM+wlgDf/ySOuwR
+ d2VN5e7Y+zNxxkIplYVQBSOTvHDEEAwiJ9pcMPL0C9wtYUctccIpKxgW8pBG+HydIh4Dev73tDlrX
+ SmLE/cMoct1p/r/OYoaZbPNsRP2rl2lJcRG8AzST56Nko5zu13hcsjc54kINfuckIb1TlG2AQmN4r
+ als12HHjAG//VtLZb/9lUkbKujNpWybZFTEC+0GJ00dOQbfI4QTcf7mj8AMUv9YQwMyjVnfvzQXvz
+ cmMZ7/rLj7v88+8wAuLUDTj0xgcgWmVbGYIFbAF6zsuNXJ/cgFm0yXvw9nTpqouaamvoKFWOjh4xA
+ hmv+VNRvEQLBxdu7ovbZCV40Ye8TqBaJ5f6tqjffkFFwR7Lut6VUrODbzo82JJhPvKU2+6Ow0Zcib
+ NnWjdIE/q0FHj97QujfIANhOc0OyqXxuNgPpQLtETcbBLzSX7c8pUR7lvUSOXGlK3U0V1/jm6vYRy
+ o6X5D+2USNrHkRrglYvB/JlPiOXTDyeSxijSfFXLg=;
+Received: from hyper1.noris.net ([62.128.1.62] helo=[10.6.0.3])
+ by mail.vm.smurf.noris.de with esmtpsa
+ (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim 4.89)
+ (envelope-from <matthias@urlichs.de>) id 1gP0ye-000Aso-Lf
+ for wireguard@lists.zx2c4.com; Tue, 20 Nov 2018 09:01:44 +0100
+Subject: Re: Android key-icon in statusbar
+To: wireguard@lists.zx2c4.com
+References: <8365521A-0DE2-44B0-BFDF-5AAB82054756@gmx.net>
+From: Matthias Urlichs <matthias@urlichs.de>
+Openpgp: preference=signencrypt
+Autocrypt: addr=matthias@urlichs.de; prefer-encrypt=mutual; keydata=
+ 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
+Message-ID: <c7544a66-b80f-1188-c0ef-cd062baa9d84@urlichs.de>
+Date: Tue, 20 Nov 2018 09:01:43 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.3.0
 MIME-Version: 1.0
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 5dab7a8a-ebdc-4bd9-9cfd-67cde50b170b
-X-MS-Exchange-CrossTenant-Network-Message-Id: bddd57a9-2ed5-4b2e-ff22-08d64e99f02d
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 5dab7a8a-ebdc-4bd9-9cfd-67cde50b170b
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Nov 2018 03:40:38.5392 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Internet
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM3NAM05HT095
+In-Reply-To: <8365521A-0DE2-44B0-BFDF-5AAB82054756@gmx.net>
+Content-Language: de-CH
+X-Smurf-Spam-Score: 0.0 (/)
+X-Smurf-Whitelist: +relay_from_hosts
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -94,206 +151,20 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============4095776477170618245=="
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============4095776477170618245==
-Content-Language: en-US
-Content-Type: multipart/alternative;
-	boundary="_000_CY4PR14MB1141B76AC8CD7C2944938FA2A2D90CY4PR14MB1141namp_"
-
---_000_CY4PR14MB1141B76AC8CD7C2944938FA2A2D90CY4PR14MB1141namp_
-Content-Type: text/plain; charset="Windows-1252"
-Content-Transfer-Encoding: quoted-printable
-
-Nope,
-
-
-
-Wireguard should work with multiple clients by default. You just have to ma=
-nually add the public key and assign an IP for each one.
-
-
-
-Whether any specific configuration is =93recommended=94 really depends on y=
-our exact use-case and assessment of the other options that are available t=
-o you.
-
-Wireguard can be a great VPN to let friends and family connect to you, but =
-so can OpenVPN or even Hamachi.
-
-
-
-Commercial WG VPN=92s are still sparse primarily because the project is sti=
-ll relatively young. The providers need to write custom integrations to tie=
- wireguard servers into their billing and client key generation systems, an=
-d many may not trust it yet because the codebase is evolving so much.
-
-
-
-
-
-
-
-
-
-________________________________
-From: WireGuard <wireguard-bounces@lists.zx2c4.com> on behalf of John Smith=
- <johnsmith1@riseup.net>
-Sent: Monday, November 19, 2018 9:30:00 AM
-To: WireGuard List
-Subject: WireGuard server and multiple clients
-
-Hello,
-
-If I were to set up a WireGuard server and have multiple clients
-connecting to it, is there anything I need to be aware of? Specifically,
-I am looking to understand if this is recommended as I already see
-commercial offering of WireGuard - but not by all providers - so I was
-wondering if there are any caveats to this approach.
-
-For added context, I was managing a VPN server for my family and friends
-but now I am considering switching to WireGuard.
-
-Thanks.
-
-- J Smith
-_______________________________________________
-WireGuard mailing list
-WireGuard@lists.zx2c4.com
-https://nam03.safelinks.protection.outlook.com/?url=3Dhttps%3A%2F%2Flists.z=
-x2c4.com%2Fmailman%2Flistinfo%2Fwireguard&amp;data=3D02%7C01%7C%7C682833c00=
-bdb4550ea6008d64e523de3%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C636782=
-512459091879&amp;sdata=3DKARAdd2N0g93ovqzUe8adi3ek%2FOWBZRTWQHllLVO8qs%3D&a=
-mp;reserved=3D0
-
---_000_CY4PR14MB1141B76AC8CD7C2944938FA2A2D90CY4PR14MB1141namp_
-Content-Type: text/html; charset="Windows-1252"
-Content-Transfer-Encoding: quoted-printable
-
-<html>
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DWindows-1=
-252">
-<meta name=3D"Generator" content=3D"Microsoft Exchange Server">
-<!-- converted from text --><style><!-- .EmailQuote { margin-left: 1pt; pad=
-ding-left: 4pt; border-left: #800000 2px solid; } --></style>
-</head>
-<body>
-<style>
-<!--
-@font-face
-	{font-family:"Cambria Math"}
-@font-face
-	{font-family:Calibri}
-p.x_MsoNormal, li.x_MsoNormal, div.x_MsoNormal
-	{margin:0in;
-	margin-bottom:.0001pt;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif}
-a:x_link, span.x_MsoHyperlink
-	{color:blue;
-	text-decoration:underline}
-a:x_visited, span.x_MsoHyperlinkFollowed
-	{color:#954F72;
-	text-decoration:underline}
-p.x_MsoListParagraph, li.x_MsoListParagraph, div.x_MsoListParagraph
-	{margin-top:0in;
-	margin-right:0in;
-	margin-bottom:0in;
-	margin-left:.5in;
-	margin-bottom:.0001pt;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif}
-.x_MsoChpDefault
-	{}
-@page WordSection1
-	{margin:1.0in 1.0in 1.0in 1.0in}
-div.x_WordSection1
-	{}
--->
-</style>
-<div lang=3D"EN-US" link=3D"blue" vlink=3D"#954F72">
-<div class=3D"x_WordSection1">
-<p class=3D"x_MsoNormal">Nope,</p>
-<p class=3D"x_MsoNormal">&nbsp;</p>
-<p class=3D"x_MsoNormal">Wireguard should work with multiple clients by def=
-ault. You just have to manually add the public key and assign an IP for eac=
-h one.</p>
-<p class=3D"x_MsoNormal">&nbsp;</p>
-<p class=3D"x_MsoNormal">Whether any specific configuration is =93recommend=
-ed=94 really depends on your exact use-case and assessment of the other opt=
-ions that are available to you.</p>
-<p class=3D"x_MsoNormal">Wireguard can be a great VPN to let friends and fa=
-mily connect to you, but so can OpenVPN or even Hamachi.</p>
-<p class=3D"x_MsoNormal">&nbsp;</p>
-<p class=3D"x_MsoNormal">Commercial WG VPN=92s are still sparse primarily b=
-ecause the project is still relatively young. The providers need to write c=
-ustom integrations to tie wireguard servers into their billing and client k=
-ey generation systems, and many may
- not trust it yet because the codebase is evolving so much.</p>
-<p class=3D"x_MsoNormal">&nbsp;</p>
-<p class=3D"x_MsoNormal">&nbsp;</p>
-<p class=3D"x_MsoNormal">&nbsp;</p>
-<p class=3D"x_MsoNormal">&nbsp;</p>
-</div>
-<hr tabindex=3D"-1" style=3D"display:inline-block; width:98%">
-<div id=3D"x_divRplyFwdMsg" dir=3D"ltr"><font face=3D"Calibri, sans-serif" =
-color=3D"#000000" style=3D"font-size:11pt"><b>From:</b> WireGuard &lt;wireg=
-uard-bounces@lists.zx2c4.com&gt; on behalf of John Smith &lt;johnsmith1@ris=
-eup.net&gt;<br>
-<b>Sent:</b> Monday, November 19, 2018 9:30:00 AM<br>
-<b>To:</b> WireGuard List<br>
-<b>Subject:</b> WireGuard server and multiple clients</font>
-<div>&nbsp;</div>
-</div>
-</div>
-<font size=3D"2"><span style=3D"font-size:11pt;">
-<div class=3D"PlainText">Hello,<br>
-<br>
-If I were to set up a WireGuard server and have multiple clients<br>
-connecting to it, is there anything I need to be aware of? Specifically,<br=
->
-I am looking to understand if this is recommended as I already see<br>
-commercial offering of WireGuard - but not by all providers - so I was<br>
-wondering if there are any caveats to this approach.<br>
-<br>
-For added context, I was managing a VPN server for my family and friends<br=
->
-but now I am considering switching to WireGuard.<br>
-<br>
-Thanks.<br>
-<br>
-- J Smith<br>
-_______________________________________________<br>
-WireGuard mailing list<br>
-WireGuard@lists.zx2c4.com<br>
-<a href=3D"https://nam03.safelinks.protection.outlook.com/?url=3Dhttps%3A%2=
-F%2Flists.zx2c4.com%2Fmailman%2Flistinfo%2Fwireguard&amp;amp;data=3D02%7C01=
-%7C%7C682833c00bdb4550ea6008d64e523de3%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7=
-C1%7C0%7C636782512459091879&amp;amp;sdata=3DKARAdd2N0g93ovqzUe8adi3ek%2FOWB=
-ZRTWQHllLVO8qs%3D&amp;amp;reserved=3D0">https://nam03.safelinks.protection.=
-outlook.com/?url=3Dhttps%3A%2F%2Flists.zx2c4.com%2Fmailman%2Flistinfo%2Fwir=
-eguard&amp;amp;data=3D02%7C01%7C%7C682833c00bdb4550ea6008d64e523de3%7C84df9=
-e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C636782512459091879&amp;amp;sdata=3DKA=
-RAdd2N0g93ovqzUe8adi3ek%2FOWBZRTWQHllLVO8qs%3D&amp;amp;reserved=3D0</a><br>
-</div>
-</span></font>
-</body>
-</html>
-
---_000_CY4PR14MB1141B76AC8CD7C2944938FA2A2D90CY4PR14MB1141namp_--
-
---===============4095776477170618245==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
-_______________________________________________
-WireGuard mailing list
-WireGuard@lists.zx2c4.com
-https://lists.zx2c4.com/mailman/listinfo/wireguard
-
---===============4095776477170618245==--
+T24gMTcuMTEuMTggMTc6MDEsIFJvYmVydCBXYWxsaSB3cm90ZToKPiBJ4oCZdiBpbnN0YWxsZWQg
+d2lyZWd1YXJkLWFwcCBmcm9tIHBsYXkgc3RvcmUgb24gYW5kcm9pZCA4LjEuCj4gSWYgdXNpbmcg
+dGhlIHVzZXJzcGFjZSB2ZXJzaW9uIGkgZ2V0IGEgImtleS1pY29uIiBpbiB0aGUgc3RhdHVzLWJh
+ciB3aGVuIGEgdHVubmVsIGlzIGFjdGl2ZS4KPiBTd2l0Y2hpbmcgdG8gdGhlIGtlcm5lbCB2ZXJz
+aW9uIHRoZSBpY29uIGlzIG5vdCB3b3JraW5nIGFueSBtb3JlLgoKVGhlIGtleSBpbiB0aGUgc3Rh
+dHVzIGJhciBpcyBkaXNwbGF5ZWQgYnkgQW5kcm9pZCB3aGVuZXZlciBhIFZQTi1pc2gKcHJvZ3Jh
+bSByZWRpcmVjdHMgcGFja2V0cyB0byB1c2Vyc3BhY2UuCgpXaXRoIGluLWtlcm5lbCByb3V0aW5n
+IHRoZXJlIGlzIG5vIHN1Y2ggdGhpbmcsIHNvIHRoZSBrZXkgc2hvdWxkIGJlCnJlcGxpY2F0ZWQg
+YnkgdGhlIGNvbnRyb2xsaW5nIGFwcC4KCi0tIAotLSBNYXR0aGlhcyBVcmxpY2hzCgpfX19fX19f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXwpXaXJlR3VhcmQgbWFpbGlu
+ZyBsaXN0CldpcmVHdWFyZEBsaXN0cy56eDJjNC5jb20KaHR0cHM6Ly9saXN0cy56eDJjNC5jb20v
+bWFpbG1hbi9saXN0aW5mby93aXJlZ3VhcmQK
