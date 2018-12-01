@@ -2,56 +2,110 @@ Return-Path: <SRS0=90jI=OP=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	HTML_MESSAGE,MAILING_LIST_MULTI,MIME_HTML_MOSTLY,SPF_PASS autolearn=ham
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A33C8C65BAF
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  6 Dec 2018 23:13:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 781C8C04EB8
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  6 Dec 2018 23:13:39 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 64B1720989
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  6 Dec 2018 23:13:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 64B1720989
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=pianetapex.it
+	by mail.kernel.org (Postfix) with ESMTPS id 628A420989
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  6 Dec 2018 23:13:38 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=xaker.ru header.i=@xaker.ru header.b="WcY+UxQY";
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=xaker.ru header.i=@xaker.ru header.b="WcY+UxQY"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 628A420989
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=xaker.ru
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id be5923e5;
-	Thu, 6 Dec 2018 23:05:21 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 827428dc;
+	Thu, 6 Dec 2018 23:05:23 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d047a8bf
- for <wireguard@lists.zx2c4.com>;
- Sun, 25 Nov 2018 18:28:01 +0000 (UTC)
-Received: from mail-io1-f50.google.com (mail-io1-f50.google.com
- [209.85.166.50])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 59ac760a
- for <wireguard@lists.zx2c4.com>;
- Sun, 25 Nov 2018 18:28:00 +0000 (UTC)
-Received: by mail-io1-f50.google.com with SMTP id m19so12189483ioh.3
- for <wireguard@lists.zx2c4.com>; Sun, 25 Nov 2018 10:34:48 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=ZXBurzIBaqlTi88E+QacpwOdJEfwkZTRTWm8mMd0KhY=;
- b=gvbuclQsREcBvCQOXgavezjeJ0Strhz1DmVp34eeH/NZPsdHHoBYyLM++OhwpuxV0D
- oIhBis0eCx17hNgFTZeEhiWFT5uTnoFGCInca5EVYXbyHp/qZt6GTwFeYuYvuTWyH1CX
- QaA1CyY0MzvD3kDP3klfc+q+iuug7A9Lpmj3p0lPhOGylVQK6B+KUApPoAYitPAlhbpx
- e8i45ZRT0RSXW4ps9UgTsZG+aMcQ5pzkcvFBtzaIOlzLqbDxESjkOxf8+OqRuf6+ZXMG
- mIm85UiwEAbE8iYCRVaPF4M1TjXFb49XW3Ir6u/hP+NH5fEjHKknWdZWGa2Gt+CVjDBw
- KDrA==
-X-Gm-Message-State: AA+aEWYpJa7i10hnYz2ztBzpC/v1SgKDVjVKWJLhbJK9KlYXynb2O4gc
- FoYcdFjxMD04IUO2/kgq9hj60HTd4T7OWuueeh0cYsLZ
-X-Google-Smtp-Source: AFSGD/VUvBL8HFt94PXRjT00wLYHa/vbtQTje1yX3i2QZkgaaGxn33/PcYbQKg0w16oxCbW72D9Tszout7PqGTnNeoc=
-X-Received: by 2002:a6b:ea05:: with SMTP id m5mr16428870ioc.97.1543170887191; 
- Sun, 25 Nov 2018 10:34:47 -0800 (PST)
-MIME-Version: 1.0
-From: Andrea <andre@pianetapex.it>
-Date: Sun, 25 Nov 2018 19:34:34 +0100
-Message-ID: <CAB7V4qPuiLvwpOB=F2WZaam9Vhv7TziFpAX9VUPkb2nobL99Rw@mail.gmail.com>
-Subject: Android client doesn't connect
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 28a33825
+ for <wireguard@lists.zx2c4.com>; Sat, 1 Dec 2018 13:17:59 +0000 (UTC)
+Received: from forward100j.mail.yandex.net (forward100j.mail.yandex.net
+ [IPv6:2a02:6b8:0:801:2::100])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3e22f80c
+ for <wireguard@lists.zx2c4.com>; Sat, 1 Dec 2018 13:17:59 +0000 (UTC)
+Received: from mxback14g.mail.yandex.net (mxback14g.mail.yandex.net
+ [IPv6:2a02:6b8:0:1472:2741:0:8b7:93])
+ by forward100j.mail.yandex.net (Yandex) with ESMTP id D4BE42080121
+ for <wireguard@lists.zx2c4.com>; Sat,  1 Dec 2018 16:25:24 +0300 (MSK)
+Received: from smtp3p.mail.yandex.net (smtp3p.mail.yandex.net
+ [2a02:6b8:0:1472:2741:0:8b6:8])
+ by mxback14g.mail.yandex.net (nwsmtp/Yandex) with ESMTP id OBcWHFo21J-POnumwSv;
+ Sat, 01 Dec 2018 16:25:24 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xaker.ru; s=mail;
+ t=1543670724; bh=yAuaOs+4EgCDZ9rnjXq5o0A/C3GOsILNue6cpVkkS5I=;
+ h=To:From:Subject:Message-ID:Date;
+ b=WcY+UxQY0MO1EGlluwe49x8B63H6zFZdqOo+qzMKmrFwG//1vnzw5xluAy65c7YxM
+ ykedDp7WhCyXvUkrF8nTv97+fazKn/A9y7FnchbN7sxDvtWMmZdYgC4DM2g4/Ks+1r
+ jHaYs8MGyCekOE8wWkAbw2jc1P5t89P2zzUml0DI=
+Received: by smtp3p.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id
+ jO0PtqrLUB-PO6KSZ2g; Sat, 01 Dec 2018 16:25:24 +0300
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (Client certificate not present)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xaker.ru; s=mail;
+ t=1543670724; bh=yAuaOs+4EgCDZ9rnjXq5o0A/C3GOsILNue6cpVkkS5I=;
+ h=To:From:Subject:Message-ID:Date;
+ b=WcY+UxQY0MO1EGlluwe49x8B63H6zFZdqOo+qzMKmrFwG//1vnzw5xluAy65c7YxM
+ ykedDp7WhCyXvUkrF8nTv97+fazKn/A9y7FnchbN7sxDvtWMmZdYgC4DM2g4/Ks+1r
+ jHaYs8MGyCekOE8wWkAbw2jc1P5t89P2zzUml0DI=
+Authentication-Results: smtp3p.mail.yandex.net; dkim=pass header.i=@xaker.ru
 To: wireguard@lists.zx2c4.com
-X-Mailman-Approved-At: Fri, 07 Dec 2018 00:05:17 +0100
+From: Oleg Chernovskiy <kanedias@xaker.ru>
+Subject: Wireguard Android stops working after ~30 minutes
+Openpgp: preference=signencrypt
+Autocrypt: addr=kanedias@xaker.ru; prefer-encrypt=mutual; keydata=
+ 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
+Message-ID: <7b2c25fc-923a-023f-0b03-f896537d444e@xaker.ru>
+Date: Sat, 1 Dec 2018 16:25:16 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.3.1
+MIME-Version: 1.0
+X-Mailman-Approved-At: Fri, 07 Dec 2018 00:05:18 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -63,573 +117,79 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============8534104999207836889=="
+Content-Type: multipart/mixed; boundary="===============7298398289459082931=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============8534104999207836889==
-Content-Type: multipart/alternative; boundary="0000000000008f115b057b81787a"
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--===============7298398289459082931==
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="v6M7mz5lR8qpQZ5JKIGHg61EZjpkhwRlx"
 
---0000000000008f115b057b81787a
-Content-Type: text/plain; charset="UTF-8"
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--v6M7mz5lR8qpQZ5JKIGHg61EZjpkhwRlx
+Content-Type: multipart/mixed; boundary="qvWCUW08O8CuAH8RINQGaAn0GxO5LO97d";
+ protected-headers="v1"
+From: Oleg Chernovskiy <kanedias@xaker.ru>
+To: wireguard@lists.zx2c4.com
+Message-ID: <7b2c25fc-923a-023f-0b03-f896537d444e@xaker.ru>
+Subject: Wireguard Android stops working after ~30 minutes
 
- This is the conf file on Android:
-[Interface]
-Address = 192.168.2.1/32
-PrivateKey = xxxxxxxxxxxxxxxxxxxxxxxxx
-
-[Peer]
-Endpoint = my_public_ip:443
-PublicKey = xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-When I enable the client, on the server there are no connections (I can see
-the firewall logs and nothing is happening).
-Down here there is the client log.
-Thanks!
-Andrea
-
-
-11-25 19:22:10.256 16216 16216 I am_on_paused_called:
-[0,com.wireguard.android.activity.MainActivity,performPause]
-11-25 19:22:10.281 16216 16216 I auditd  : type=1400 audit(0.0:252499):
-avc: denied { read } for comm="RenderThread"
-name="u:object_r:vendor_default_prop:s0" dev="tmpfs" ino=23691
-scontext=u:r:untrusted_app:s0:c158,c256,c512,c768
-tcontext=u:object_r:vendor_default_prop:s0 tclass=file permissive=0
-11-25 19:22:10.281 16216 16216 W RenderThread: type=1400 audit(0.0:252499):
-avc: denied { read } for name="u:object_r:vendor_default_prop:s0"
-dev="tmpfs" ino=23691 scontext=u:r:untrusted_app:s0:c158,c256,c512,c768
-tcontext=u:object_r:vendor_default_prop:s0 tclass=file permissive=0
-11-25 19:22:10.287 16216 16295 E libc    : Access denied finding property
-"vendor.debug.egl.swapinterval"
-11-25 19:22:10.289 16216 16216 I am_on_stop_called:
-[0,com.wireguard.android.activity.MainActivity,STOP_ACTIVITY_ITEM]
-11-25 19:22:19.151 16216 16216 I am_on_restart_called:
-[0,com.wireguard.android.activity.MainActivity,performRestartActivity]
-11-25 19:22:19.153 16216 16216 I am_on_start_called:
-[0,com.wireguard.android.activity.MainActivity,handleStartActivity]
-11-25 19:22:19.154 16216 16216 I am_on_resume_called:
-[0,com.wireguard.android.activity.MainActivity,RESUME_ACTIVITY]
-11-25 19:22:19.174 16216 16303 D DecorView:
-onWindowFocusChangedFromViewRoot hasFocus: true, DecorView@38eb1b4
-[MainActivity]
-11-25 19:22:19.161 16216 16216 I auditd  : type=1400 audit(0.0:252505):
-avc: denied { read } for comm="RenderThread"
-name="u:object_r:vendor_default_prop:s0" dev="tmpfs" ino=23691
-scontext=u:r:untrusted_app:s0:c158,c256,c512,c768
-tcontext=u:object_r:vendor_default_prop:s0 tclass=file permissive=0
-11-25 19:22:19.161 16216 16216 W RenderThread: type=1400 audit(0.0:252505):
-avc: denied { read } for name="u:object_r:vendor_default_prop:s0"
-dev="tmpfs" ino=23691 scontext=u:r:untrusted_app:s0:c158,c256,c512,c768
-tcontext=u:object_r:vendor_default_prop:s0 tclass=file permissive=0
-11-25 19:22:19.175 16216 16295 E libc    : Access denied finding property
-"vendor.debug.egl.changepixelformat"
-11-25 19:22:19.182 16216 16295 E libc    : Access denied finding property
-"vendor.debug.egl.swapinterval"
-11-25 19:22:19.171 16216 16216 W RenderThread: type=1400 audit(0.0:252506):
-avc: denied { read } for name="u:object_r:vendor_default_prop:s0"
-dev="tmpfs" ino=23691 scontext=u:r:untrusted_app:s0:c158,c256,c512,c768
-tcontext=u:object_r:vendor_default_prop:s0 tclass=file permissive=0
-11-25 19:22:19.171 16216 16216 I auditd  : type=1400 audit(0.0:252506):
-avc: denied { read } for comm="RenderThread"
-name="u:object_r:vendor_default_prop:s0" dev="tmpfs" ino=23691
-scontext=u:r:untrusted_app:s0:c158,c256,c512,c768
-tcontext=u:object_r:vendor_default_prop:s0 tclass=file permissive=0
-11-25 19:22:20.791 16216 16216 I auditd  : type=1400 audit(0.0:252507):
-avc: denied { read } for comm="RenderThread"
-name="u:object_r:vendor_default_prop:s0" dev="tmpfs" ino=23691
-scontext=u:r:untrusted_app:s0:c158,c256,c512,c768
-tcontext=u:object_r:vendor_default_prop:s0 tclass=file permissive=0
-11-25 19:22:20.791 16216 16216 W RenderThread: type=1400 audit(0.0:252507):
-avc: denied { read } for name="u:object_r:vendor_default_prop:s0"
-dev="tmpfs" ino=23691 scontext=u:r:untrusted_app:s0:c158,c256,c512,c768
-tcontext=u:object_r:vendor_default_prop:s0 tclass=file permissive=0
-11-25 19:22:20.800 16216 16295 E libc    : Access denied finding property
-"vendor.debug.egl.swapinterval"
-11-25 19:22:20.813 16216 16295 E libc    : Access denied finding property
-"vendor.debug.egl.swapinterval"
-11-25 19:22:20.801 16216 16216 W RenderThread: type=1400 audit(0.0:252508):
-avc: denied { read } for name="u:object_r:vendor_default_prop:s0"
-dev="tmpfs" ino=23691 scontext=u:r:untrusted_app:s0:c158,c256,c512,c768
-tcontext=u:object_r:vendor_default_prop:s0 tclass=file permissive=0
-11-25 19:22:20.811 16216 16216 W RenderThread: type=1400 audit(0.0:252509):
-avc: denied { read } for name="u:object_r:vendor_default_prop:s0"
-dev="tmpfs" ino=23691 scontext=u:r:untrusted_app:s0:c158,c256,c512,c768
-tcontext=u:object_r:vendor_default_prop:s0 tclass=file permissive=0
-11-25 19:22:20.819 16216 16295 E libc    : Access denied finding property
-"vendor.debug.egl.swapinterval"
-11-25 19:22:20.821 16216 16216 W RenderThread: type=1400 audit(0.0:252510):
-avc: denied { read } for name="u:object_r:vendor_default_prop:s0"
-dev="tmpfs" ino=23691 scontext=u:r:untrusted_app:s0:c158,c256,c512,c768
-tcontext=u:object_r:vendor_default_prop:s0 tclass=file permissive=0
-11-25 19:22:20.833 16216 16295 E libc    : Access denied finding property
-"vendor.debug.egl.swapinterval"
-11-25 19:22:20.851 16216 16295 E libc    : Access denied finding property
-"vendor.debug.egl.swapinterval"
-11-25 19:22:20.841 16216 16216 W RenderThread: type=1400 audit(0.0:252511):
-avc: denied { read } for name="u:object_r:vendor_default_prop:s0"
-dev="tmpfs" ino=23691 scontext=u:r:untrusted_app:s0:c158,c256,c512,c768
-tcontext=u:object_r:vendor_default_prop:s0 tclass=file permissive=0
-11-25 19:22:20.851 16216 16216 W RenderThread: type=1400 audit(0.0:252512):
-avc: denied { read } for name="u:object_r:vendor_default_prop:s0"
-dev="tmpfs" ino=23691 scontext=u:r:untrusted_app:s0:c158,c256,c512,c768
-tcontext=u:object_r:vendor_default_prop:s0 tclass=file permissive=0
-11-25 19:22:20.865 16216 16295 E libc    : Access denied finding property
-"vendor.debug.egl.swapinterval"
-11-25 19:22:20.871 16216 16216 W RenderThread: type=1400 audit(0.0:252513):
-avc: denied { read } for name="u:object_r:vendor_default_prop:s0"
-dev="tmpfs" ino=23691 scontext=u:r:untrusted_app:s0:c158,c256,c512,c768
-tcontext=u:object_r:vendor_default_prop:s0 tclass=file permissive=0
-11-25 19:22:20.883 16216 16295 E libc    : Access denied finding property
-"vendor.debug.egl.swapinterval"
-11-25 19:22:21.037 16216 16295 I chatty  : uid=10158(com.wireguard.android)
-RenderThread identical 9 lines
-11-25 19:22:21.052 16216 16295 E libc    : Access denied finding property
-"vendor.debug.egl.swapinterval"
-11-25 19:22:20.851 16216 16216 I chatty  : uid=10158(com.wireguard.android)
-identical 5 lines
-11-25 19:22:20.871 16216 16216 I auditd  : type=1400 audit(0.0:252513):
-avc: denied { read } for comm="RenderThread"
-name="u:object_r:vendor_default_prop:s0" dev="tmpfs" ino=23691
-scontext=u:r:untrusted_app:s0:c158,c256,c512,c768
-tcontext=u:object_r:vendor_default_prop:s0 tclass=file permissive=0
-11-25 19:22:21.699 16216 16216 I menu_item_selected: [0,Settings]
-11-25 19:22:21.700 16216 16295 E libc    : Access denied finding property
-"vendor.debug.egl.swapinterval"
-11-25 19:22:21.718 16216 16295 E libc    : Access denied finding property
-"vendor.debug.egl.swapinterval"
-11-25 19:22:21.733 16216 16295 E libc    : Access denied finding property
-"vendor.debug.egl.swapinterval"
-11-25 19:22:21.739 16216 16216 I am_on_paused_called:
-[0,com.wireguard.android.activity.MainActivity,performPause]
-11-25 19:22:21.747 16216 16295 E libc    : Access denied finding property
-"vendor.debug.egl.swapinterval"
-11-25 19:22:21.750 16216 16216 W ActivityThread: handleWindowVisibility: no
-activity for token android.os.BinderProxy@d3bad7b
-11-25 19:22:21.753 16216 16216 I am_on_create_called:
-[0,com.wireguard.android.activity.SettingsActivity,performCreate]
-11-25 19:22:21.761 16216 16216 I am_on_start_called:
-[0,com.wireguard.android.activity.SettingsActivity,handleStartActivity]
-11-25 19:22:21.761 16216 16216 I am_on_resume_called:
-[0,com.wireguard.android.activity.SettingsActivity,RESUME_ACTIVITY]
-11-25 19:22:21.763 16216 16295 E libc    : Access denied finding property
-"vendor.debug.egl.swapinterval"
-11-25 19:22:21.772 16216 16303 D DecorView:
-onWindowFocusChangedFromViewRoot hasFocus: true, DecorView@9b22e86
-[SettingsActivity]
-11-25 19:22:21.777 16216 16295 E libc    : Access denied finding property
-"vendor.debug.egl.changepixelformat"
-11-25 19:22:21.780 16216 16295 E libc    : Access denied finding property
-"vendor.debug.egl.swapinterval"
-11-25 19:22:21.796 16216 16295 I chatty  : uid=10158(com.wireguard.android)
-RenderThread identical 2 lines
-11-25 19:22:21.797 16216 16295 E libc    : Access denied finding property
-"vendor.debug.egl.swapinterval"
-11-25 19:22:21.815 16216 16295 E libc    : Access denied finding property
-"vendor.debug.egl.swapinterval"
-11-25 19:22:21.821 16216 16216 I auditd  : type=1400 audit(0.0:252535):
-avc: denied { read } for comm="RenderThread"
-name="u:object_r:vendor_default_prop:s0" dev="tmpfs" ino=23691
-scontext=u:r:untrusted_app:s0:c158,c256,c512,c768
-tcontext=u:object_r:vendor_default_prop:s0 tclass=file permissive=0
-11-25 19:22:21.821 16216 16216 W RenderThread: type=1400 audit(0.0:252535):
-avc: denied { read } for name="u:object_r:vendor_default_prop:s0"
-dev="tmpfs" ino=23691 scontext=u:r:untrusted_app:s0:c158,c256,c512,c768
-tcontext=u:object_r:vendor_default_prop:s0 tclass=file permissive=0
-11-25 19:22:21.833 16216 16295 E libc    : Access denied finding property
-"vendor.debug.egl.swapinterval"
-11-25 19:22:21.841 16216 16216 W RenderThread: type=1400 audit(0.0:252536):
-avc: denied { read } for name="u:object_r:vendor_default_prop:s0"
-dev="tmpfs" ino=23691 scontext=u:r:untrusted_app:s0:c158,c256,c512,c768
-tcontext=u:object_r:vendor_default_prop:s0 tclass=file permissive=0
-11-25 19:22:21.849 16216 16295 E libc    : Access denied finding property
-"vendor.debug.egl.swapinterval"
-11-25 19:22:21.865 16216 16295 E libc    : Access denied finding property
-"vendor.debug.egl.swapinterval"
-11-25 19:22:21.851 16216 16216 W RenderThread: type=1400 audit(0.0:252537):
-avc: denied { read } for name="u:object_r:vendor_default_prop:s0"
-dev="tmpfs" ino=23691 scontext=u:r:untrusted_app:s0:c158,c256,c512,c768
-tcontext=u:object_r:vendor_default_prop:s0 tclass=file permissive=0
-11-25 19:22:21.871 16216 16216 W RenderThread: type=1400 audit(0.0:252538):
-avc: denied { read } for name="u:object_r:vendor_default_prop:s0"
-dev="tmpfs" ino=23691 scontext=u:r:untrusted_app:s0:c158,c256,c512,c768
-tcontext=u:object_r:vendor_default_prop:s0 tclass=file permissive=0
-11-25 19:22:21.882 16216 16295 E libc    : Access denied finding property
-"vendor.debug.egl.swapinterval"
-11-25 19:22:21.899 16216 16295 E libc    : Access denied finding property
-"vendor.debug.egl.swapinterval"
-11-25 19:22:21.891 16216 16216 W RenderThread: type=1400 audit(0.0:252539):
-avc: denied { read } for name="u:object_r:vendor_default_prop:s0"
-dev="tmpfs" ino=23691 scontext=u:r:untrusted_app:s0:c158,c256,c512,c768
-tcontext=u:object_r:vendor_default_prop:s0 tclass=file permissive=0
-11-25 19:22:21.915 16216 16295 E libc    : Access denied finding property
-"vendor.debug.egl.swapinterval"
-11-25 19:22:22.066 16216 16295 I chatty  : uid=10158(com.wireguard.android)
-RenderThread identical 9 lines
-11-25 19:22:22.083 16216 16295 E libc    : Access denied finding property
-"vendor.debug.egl.swapinterval"
-11-25 19:22:21.871 16216 16216 I chatty  : uid=10158(com.wireguard.android)
-identical 3 lines
-11-25 19:22:21.891 16216 16216 I auditd  : type=1400 audit(0.0:252539):
-avc: denied { read } for comm="RenderThread"
-name="u:object_r:vendor_default_prop:s0" dev="tmpfs" ino=23691
-scontext=u:r:untrusted_app:s0:c158,c256,c512,c768
-tcontext=u:object_r:vendor_default_prop:s0 tclass=file permissive=0
-11-25 19:22:22.216 16216 16216 I am_on_stop_called:
-[0,com.wireguard.android.activity.MainActivity,STOP_ACTIVITY_ITEM]
-11-25 19:22:24.291 16216 16216 I auditd  : type=1400 audit(0.0:252551):
-avc: denied { read } for comm="RenderThread"
-name="u:object_r:vendor_default_prop:s0" dev="tmpfs" ino=23691
-scontext=u:r:untrusted_app:s0:c158,c256,c512,c768
-tcontext=u:object_r:vendor_default_prop:s0 tclass=file permissive=0
-11-25 19:22:24.291 16216 16216 W RenderThread: type=1400 audit(0.0:252551):
-avc: denied { read } for name="u:object_r:vendor_default_prop:s0"
-dev="tmpfs" ino=23691 scontext=u:r:untrusted_app:s0:c158,c256,c512,c768
-tcontext=u:object_r:vendor_default_prop:s0 tclass=file permissive=0
-11-25 19:22:24.306 16216 16295 E libc    : Access denied finding property
-"vendor.debug.egl.swapinterval"
-11-25 19:22:24.320 16216 16295 E libc    : Access denied finding property
-"vendor.debug.egl.swapinterval"
-11-25 19:22:24.311 16216 16216 W RenderThread: type=1400 audit(0.0:252552):
-avc: denied { read } for name="u:object_r:vendor_default_prop:s0"
-dev="tmpfs" ino=23691 scontext=u:r:untrusted_app:s0:c158,c256,c512,c768
-tcontext=u:object_r:vendor_default_prop:s0 tclass=file permissive=0
-11-25 19:22:24.332 16216 16295 E libc    : Access denied finding property
-"vendor.debug.egl.swapinterval"
-11-25 19:22:24.321 16216 16216 W RenderThread: type=1400 audit(0.0:252553):
-avc: denied { read } for name="u:object_r:vendor_default_prop:s0"
-dev="tmpfs" ino=23691 scontext=u:r:untrusted_app:s0:c158,c256,c512,c768
-tcontext=u:object_r:vendor_default_prop:s0 tclass=file permissive=0
-11-25 19:22:24.347 16216 16295 E libc    : Access denied finding property
-"vendor.debug.egl.swapinterval"
-11-25 19:22:24.341 16216 16216 W RenderThread: type=1400 audit(0.0:252554):
-avc: denied { read } for name="u:object_r:vendor_default_prop:s0"
-dev="tmpfs" ino=23691 scontext=u:r:untrusted_app:s0:c158,c256,c512,c768
-tcontext=u:object_r:vendor_default_prop:s0 tclass=file permissive=0
-11-25 19:22:24.363 16216 16295 E libc    : Access denied finding property
-"vendor.debug.egl.swapinterval"
-11-25 19:22:24.351 16216 16216 W RenderThread: type=1400 audit(0.0:252555):
-avc: denied { read } for name="u:object_r:vendor_default_prop:s0"
-dev="tmpfs" ino=23691 scontext=u:r:untrusted_app:s0:c158,c256,c512,c768
-tcontext=u:object_r:vendor_default_prop:s0 tclass=file permissive=0
-11-25 19:22:24.379 16216 16295 E libc    : Access denied finding property
-"vendor.debug.egl.swapinterval"
-11-25 19:22:25.265 16216 16295 I chatty  : uid=10158(com.wireguard.android)
-RenderThread identical 21 lines
-11-25 19:22:25.279 16216 16295 E libc    : Access denied finding property
-"vendor.debug.egl.swapinterval"
-11-25 19:22:25.301 16216 16216 W RenderThread: type=1400 audit(0.0:252580):
-avc: denied { read } for name="u:object_r:vendor_default_prop:s0"
-dev="tmpfs" ino=23691 scontext=u:r:untrusted_app:s0:c158,c256,c512,c768
-tcontext=u:object_r:vendor_default_prop:s0 tclass=file permissive=0
-11-25 19:22:25.296 16216 16295 E libc    : Access denied finding property
-"vendor.debug.egl.swapinterval"
-11-25 19:22:25.313 16216 16295 E libc    : Access denied finding property
-"vendor.debug.egl.swapinterval"
-11-25 19:22:25.321 16216 16216 W RenderThread: type=1400 audit(0.0:252581):
-avc: denied { read } for name="u:object_r:vendor_default_prop:s0"
-dev="tmpfs" ino=23691 scontext=u:r:untrusted_app:s0:c158,c256,c512,c768
-tcontext=u:object_r:vendor_default_prop:s0 tclass=file permissive=0
-11-25 19:22:25.329 16216 16295 E libc    : Access denied finding property
-"vendor.debug.egl.swapinterval"
-11-25 19:22:25.346 16216 16295 E libc    : Access denied finding property
-"vendor.debug.egl.swapinterval"
-11-25 19:22:25.331 16216 16216 W RenderThread: type=1400 audit(0.0:252582):
-avc: denied { read } for name="u:object_r:vendor_default_prop:s0"
-dev="tmpfs" ino=23691 scontext=u:r:untrusted_app:s0:c158,c256,c512,c768
-tcontext=u:object_r:vendor_default_prop:s0 tclass=file permissive=0
-11-25 19:22:25.362 16216 16295 E libc    : Access denied finding property
-"vendor.debug.egl.swapinterval"
-11-25 19:22:25.351 16216 16216 W RenderThread: type=1400 audit(0.0:252583):
-avc: denied { read } for name="u:object_r:vendor_default_prop:s0"
-dev="tmpfs" ino=23691 scontext=u:r:untrusted_app:s0:c158,c256,c512,c768
-tcontext=u:object_r:vendor_default_prop:s0 tclass=file permissive=0
-11-25 19:22:25.371 16216 16216 W RenderThread: type=1400 audit(0.0:252584):
-avc: denied { read } for name="u:object_r:vendor_default_prop:s0"
-dev="tmpfs" ino=23691 scontext=u:r:untrusted_app:s0:c158,c256,c512,c768
-tcontext=u:object_r:vendor_default_prop:s0 tclass=file permissive=0
-11-25 19:22:25.380 16216 16295 E libc    : Access denied finding property
-"vendor.debug.egl.swapinterval"
-
---0000000000008f115b057b81787a
-Content-Type: text/html; charset="UTF-8"
+--qvWCUW08O8CuAH8RINQGaAn0GxO5LO97d
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
 
-<div dir=3D"ltr">
-<div>This is the conf file on Android:</div><div>[Interface]<br>Address =3D=
- <a href=3D"http://192.168.2.1/32" target=3D"_blank">192.168.2.1/32</a><br>=
-PrivateKey =3D xxxxxxxxxxxxxxxxxxxxxxxxx<br><br>[Peer]<br>Endpoint =3D my_p=
-ublic_ip:443<br>PublicKey =3D xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</div><d=
-iv><br></div><div>When I enable the client, on the server there are no conn=
-ections (I can see the firewall logs and nothing is happening).</div><div>D=
-own here there is the client log.</div><div>Thanks!<br></div><div>Andrea</d=
-iv><div><br></div><div><br></div><div>11-25 19:22:10.256 16216 16216 I am_o=
-n_paused_called: [0,com.wireguard.android.activity.MainActivity,performPaus=
-e]<br>11-25
- 19:22:10.281 16216 16216 I auditd=C2=A0 : type=3D1400 audit(0.0:252499): a=
-vc:=20
-denied { read } for comm=3D&quot;RenderThread&quot; name=3D&quot;u:object_r=
-:vendor_default_prop:s0&quot; dev=3D&quot;tmpfs&quot; ino=3D23691 scontext=
-=3Du:r:untrusted_app:s0:c158,c256,c512,c768 tcontext=3Du:object_r:vendor_de=
-fault_prop:s0 tclass=3Dfile permissive=3D0<br>11-25 19:22:10.281 16216 1621=
-6 W RenderThread: type=3D1400 audit(0.0:252499): avc: denied { read } for n=
-ame=3D&quot;u:object_r:vendor_default_prop:s0&quot; dev=3D&quot;tmpfs&quot;=
- ino=3D23691 scontext=3Du:r:untrusted_app:s0:c158,c256,c512,c768 tcontext=
-=3Du:object_r:vendor_default_prop:s0 tclass=3Dfile permissive=3D0<br>11-25 =
-19:22:10.287 16216 16295 E libc=C2=A0=C2=A0=C2=A0 : Access denied finding p=
-roperty &quot;vendor.debug.egl.swapinterval&quot;<br>11-25 19:22:10.289 162=
-16 16216 I am_on_stop_called: [0,com.wireguard.android.activity.MainActivit=
-y,STOP_ACTIVITY_ITEM]<br>11-25 19:22:19.151 16216 16216 I am_on_restart_cal=
-led: [0,com.wireguard.android.activity.MainActivity,performRestartActivity]=
-<br>11-25 19:22:19.153 16216 16216 I am_on_start_called: [0,com.wireguard.a=
-ndroid.activity.MainActivity,handleStartActivity]<br>11-25 19:22:19.154 162=
-16 16216 I am_on_resume_called: [0,com.wireguard.android.activity.MainActiv=
-ity,RESUME_ACTIVITY]<br>11-25 19:22:19.174 16216 16303 D DecorView: onWindo=
-wFocusChangedFromViewRoot hasFocus: true, DecorView@38eb1b4[MainActivity]<b=
-r>11-25
- 19:22:19.161 16216 16216 I auditd=C2=A0 : type=3D1400 audit(0.0:252505): a=
-vc:=20
-denied { read } for comm=3D&quot;RenderThread&quot; name=3D&quot;u:object_r=
-:vendor_default_prop:s0&quot; dev=3D&quot;tmpfs&quot; ino=3D23691 scontext=
-=3Du:r:untrusted_app:s0:c158,c256,c512,c768 tcontext=3Du:object_r:vendor_de=
-fault_prop:s0 tclass=3Dfile permissive=3D0<br>11-25 19:22:19.161 16216 1621=
-6 W RenderThread: type=3D1400 audit(0.0:252505): avc: denied { read } for n=
-ame=3D&quot;u:object_r:vendor_default_prop:s0&quot; dev=3D&quot;tmpfs&quot;=
- ino=3D23691 scontext=3Du:r:untrusted_app:s0:c158,c256,c512,c768 tcontext=
-=3Du:object_r:vendor_default_prop:s0 tclass=3Dfile permissive=3D0<br>11-25 =
-19:22:19.175 16216 16295 E libc=C2=A0=C2=A0=C2=A0 : Access denied finding p=
-roperty &quot;vendor.debug.egl.changepixelformat&quot;<br>11-25 19:22:19.18=
-2 16216 16295 E libc=C2=A0=C2=A0=C2=A0 : Access denied finding property &qu=
-ot;vendor.debug.egl.swapinterval&quot;<br>11-25 19:22:19.171 16216 16216 W =
-RenderThread: type=3D1400 audit(0.0:252506): avc: denied { read } for name=
-=3D&quot;u:object_r:vendor_default_prop:s0&quot; dev=3D&quot;tmpfs&quot; in=
-o=3D23691 scontext=3Du:r:untrusted_app:s0:c158,c256,c512,c768 tcontext=3Du:=
-object_r:vendor_default_prop:s0 tclass=3Dfile permissive=3D0<br>11-25
- 19:22:19.171 16216 16216 I auditd=C2=A0 : type=3D1400 audit(0.0:252506): a=
-vc:=20
-denied { read } for comm=3D&quot;RenderThread&quot; name=3D&quot;u:object_r=
-:vendor_default_prop:s0&quot; dev=3D&quot;tmpfs&quot; ino=3D23691 scontext=
-=3Du:r:untrusted_app:s0:c158,c256,c512,c768 tcontext=3Du:object_r:vendor_de=
-fault_prop:s0 tclass=3Dfile permissive=3D0<br>11-25
- 19:22:20.791 16216 16216 I auditd=C2=A0 : type=3D1400 audit(0.0:252507): a=
-vc:=20
-denied { read } for comm=3D&quot;RenderThread&quot; name=3D&quot;u:object_r=
-:vendor_default_prop:s0&quot; dev=3D&quot;tmpfs&quot; ino=3D23691 scontext=
-=3Du:r:untrusted_app:s0:c158,c256,c512,c768 tcontext=3Du:object_r:vendor_de=
-fault_prop:s0 tclass=3Dfile permissive=3D0<br>11-25 19:22:20.791 16216 1621=
-6 W RenderThread: type=3D1400 audit(0.0:252507): avc: denied { read } for n=
-ame=3D&quot;u:object_r:vendor_default_prop:s0&quot; dev=3D&quot;tmpfs&quot;=
- ino=3D23691 scontext=3Du:r:untrusted_app:s0:c158,c256,c512,c768 tcontext=
-=3Du:object_r:vendor_default_prop:s0 tclass=3Dfile permissive=3D0<br>11-25 =
-19:22:20.800 16216 16295 E libc=C2=A0=C2=A0=C2=A0 : Access denied finding p=
-roperty &quot;vendor.debug.egl.swapinterval&quot;<br>11-25 19:22:20.813 162=
-16 16295 E libc=C2=A0=C2=A0=C2=A0 : Access denied finding property &quot;ve=
-ndor.debug.egl.swapinterval&quot;<br>11-25 19:22:20.801 16216 16216 W Rende=
-rThread: type=3D1400 audit(0.0:252508): avc: denied { read } for name=3D&qu=
-ot;u:object_r:vendor_default_prop:s0&quot; dev=3D&quot;tmpfs&quot; ino=3D23=
-691 scontext=3Du:r:untrusted_app:s0:c158,c256,c512,c768 tcontext=3Du:object=
-_r:vendor_default_prop:s0 tclass=3Dfile permissive=3D0<br>11-25 19:22:20.81=
-1 16216 16216 W RenderThread: type=3D1400 audit(0.0:252509): avc: denied { =
-read } for name=3D&quot;u:object_r:vendor_default_prop:s0&quot; dev=3D&quot=
-;tmpfs&quot; ino=3D23691 scontext=3Du:r:untrusted_app:s0:c158,c256,c512,c76=
-8 tcontext=3Du:object_r:vendor_default_prop:s0 tclass=3Dfile permissive=3D0=
-<br>11-25 19:22:20.819 16216 16295 E libc=C2=A0=C2=A0=C2=A0 : Access denied=
- finding property &quot;vendor.debug.egl.swapinterval&quot;<br>11-25 19:22:=
-20.821 16216 16216 W RenderThread: type=3D1400 audit(0.0:252510): avc: deni=
-ed { read } for name=3D&quot;u:object_r:vendor_default_prop:s0&quot; dev=3D=
-&quot;tmpfs&quot; ino=3D23691 scontext=3Du:r:untrusted_app:s0:c158,c256,c51=
-2,c768 tcontext=3Du:object_r:vendor_default_prop:s0 tclass=3Dfile permissiv=
-e=3D0<br>11-25 19:22:20.833 16216 16295 E libc=C2=A0=C2=A0=C2=A0 : Access d=
-enied finding property &quot;vendor.debug.egl.swapinterval&quot;<br>11-25 1=
-9:22:20.851 16216 16295 E libc=C2=A0=C2=A0=C2=A0 : Access denied finding pr=
-operty &quot;vendor.debug.egl.swapinterval&quot;<br>11-25 19:22:20.841 1621=
-6 16216 W RenderThread: type=3D1400 audit(0.0:252511): avc: denied { read }=
- for name=3D&quot;u:object_r:vendor_default_prop:s0&quot; dev=3D&quot;tmpfs=
-&quot; ino=3D23691 scontext=3Du:r:untrusted_app:s0:c158,c256,c512,c768 tcon=
-text=3Du:object_r:vendor_default_prop:s0 tclass=3Dfile permissive=3D0<br>11=
--25 19:22:20.851 16216 16216 W RenderThread: type=3D1400 audit(0.0:252512):=
- avc: denied { read } for name=3D&quot;u:object_r:vendor_default_prop:s0&qu=
-ot; dev=3D&quot;tmpfs&quot; ino=3D23691 scontext=3Du:r:untrusted_app:s0:c15=
-8,c256,c512,c768 tcontext=3Du:object_r:vendor_default_prop:s0 tclass=3Dfile=
- permissive=3D0<br>11-25 19:22:20.865 16216 16295 E libc=C2=A0=C2=A0=C2=A0 =
-: Access denied finding property &quot;vendor.debug.egl.swapinterval&quot;<=
-br>11-25 19:22:20.871 16216 16216 W RenderThread: type=3D1400 audit(0.0:252=
-513): avc: denied { read } for name=3D&quot;u:object_r:vendor_default_prop:=
-s0&quot; dev=3D&quot;tmpfs&quot; ino=3D23691 scontext=3Du:r:untrusted_app:s=
-0:c158,c256,c512,c768 tcontext=3Du:object_r:vendor_default_prop:s0 tclass=
-=3Dfile permissive=3D0<br>11-25 19:22:20.883 16216 16295 E libc=C2=A0=C2=A0=
-=C2=A0 : Access denied finding property &quot;vendor.debug.egl.swapinterval=
-&quot;<br>11-25 19:22:21.037 16216 16295 I chatty=C2=A0 : uid=3D10158(com.w=
-ireguard.android) RenderThread identical 9 lines<br>11-25 19:22:21.052 1621=
-6 16295 E libc=C2=A0=C2=A0=C2=A0 : Access denied finding property &quot;ven=
-dor.debug.egl.swapinterval&quot;<br>11-25 19:22:20.851 16216 16216 I chatty=
-=C2=A0 : uid=3D10158(com.wireguard.android) identical 5 lines<br>11-25
- 19:22:20.871 16216 16216 I auditd=C2=A0 : type=3D1400 audit(0.0:252513): a=
-vc:=20
-denied { read } for comm=3D&quot;RenderThread&quot; name=3D&quot;u:object_r=
-:vendor_default_prop:s0&quot; dev=3D&quot;tmpfs&quot; ino=3D23691 scontext=
-=3Du:r:untrusted_app:s0:c158,c256,c512,c768 tcontext=3Du:object_r:vendor_de=
-fault_prop:s0 tclass=3Dfile permissive=3D0<br>11-25 19:22:21.699 16216 1621=
-6 I menu_item_selected: [0,Settings]<br>11-25 19:22:21.700 16216 16295 E li=
-bc=C2=A0=C2=A0=C2=A0 : Access denied finding property &quot;vendor.debug.eg=
-l.swapinterval&quot;<br>11-25 19:22:21.718 16216 16295 E libc=C2=A0=C2=A0=
-=C2=A0 : Access denied finding property &quot;vendor.debug.egl.swapinterval=
-&quot;<br>11-25 19:22:21.733 16216 16295 E libc=C2=A0=C2=A0=C2=A0 : Access =
-denied finding property &quot;vendor.debug.egl.swapinterval&quot;<br>11-25 =
-19:22:21.739 16216 16216 I am_on_paused_called: [0,com.wireguard.android.ac=
-tivity.MainActivity,performPause]<br>11-25 19:22:21.747 16216 16295 E libc=
-=C2=A0=C2=A0=C2=A0 : Access denied finding property &quot;vendor.debug.egl.=
-swapinterval&quot;<br>11-25 19:22:21.750 16216 16216 W ActivityThread: hand=
-leWindowVisibility: no activity for token android.os.BinderProxy@d3bad7b<br=
->11-25 19:22:21.753 16216 16216 I am_on_create_called: [0,com.wireguard.and=
-roid.activity.SettingsActivity,performCreate]<br>11-25 19:22:21.761 16216 1=
-6216 I am_on_start_called: [0,com.wireguard.android.activity.SettingsActivi=
-ty,handleStartActivity]<br>11-25 19:22:21.761 16216 16216 I am_on_resume_ca=
-lled: [0,com.wireguard.android.activity.SettingsActivity,RESUME_ACTIVITY]<b=
-r>11-25 19:22:21.763 16216 16295 E libc=C2=A0=C2=A0=C2=A0 : Access denied f=
-inding property &quot;vendor.debug.egl.swapinterval&quot;<br>11-25 19:22:21=
-.772 16216 16303 D DecorView: onWindowFocusChangedFromViewRoot hasFocus: tr=
-ue, DecorView@9b22e86[SettingsActivity]<br>11-25 19:22:21.777 16216 16295 E=
- libc=C2=A0=C2=A0=C2=A0 : Access denied finding property &quot;vendor.debug=
-.egl.changepixelformat&quot;<br>11-25 19:22:21.780 16216 16295 E libc=C2=A0=
-=C2=A0=C2=A0 : Access denied finding property &quot;vendor.debug.egl.swapin=
-terval&quot;<br>11-25 19:22:21.796 16216 16295 I chatty=C2=A0 : uid=3D10158=
-(com.wireguard.android) RenderThread identical 2 lines<br>11-25 19:22:21.79=
-7 16216 16295 E libc=C2=A0=C2=A0=C2=A0 : Access denied finding property &qu=
-ot;vendor.debug.egl.swapinterval&quot;<br>11-25 19:22:21.815 16216 16295 E =
-libc=C2=A0=C2=A0=C2=A0 : Access denied finding property &quot;vendor.debug.=
-egl.swapinterval&quot;<br>11-25
- 19:22:21.821 16216 16216 I auditd=C2=A0 : type=3D1400 audit(0.0:252535): a=
-vc:=20
-denied { read } for comm=3D&quot;RenderThread&quot; name=3D&quot;u:object_r=
-:vendor_default_prop:s0&quot; dev=3D&quot;tmpfs&quot; ino=3D23691 scontext=
-=3Du:r:untrusted_app:s0:c158,c256,c512,c768 tcontext=3Du:object_r:vendor_de=
-fault_prop:s0 tclass=3Dfile permissive=3D0<br>11-25 19:22:21.821 16216 1621=
-6 W RenderThread: type=3D1400 audit(0.0:252535): avc: denied { read } for n=
-ame=3D&quot;u:object_r:vendor_default_prop:s0&quot; dev=3D&quot;tmpfs&quot;=
- ino=3D23691 scontext=3Du:r:untrusted_app:s0:c158,c256,c512,c768 tcontext=
-=3Du:object_r:vendor_default_prop:s0 tclass=3Dfile permissive=3D0<br>11-25 =
-19:22:21.833 16216 16295 E libc=C2=A0=C2=A0=C2=A0 : Access denied finding p=
-roperty &quot;vendor.debug.egl.swapinterval&quot;<br>11-25 19:22:21.841 162=
-16 16216 W RenderThread: type=3D1400 audit(0.0:252536): avc: denied { read =
-} for name=3D&quot;u:object_r:vendor_default_prop:s0&quot; dev=3D&quot;tmpf=
-s&quot; ino=3D23691 scontext=3Du:r:untrusted_app:s0:c158,c256,c512,c768 tco=
-ntext=3Du:object_r:vendor_default_prop:s0 tclass=3Dfile permissive=3D0<br>1=
-1-25 19:22:21.849 16216 16295 E libc=C2=A0=C2=A0=C2=A0 : Access denied find=
-ing property &quot;vendor.debug.egl.swapinterval&quot;<br>11-25 19:22:21.86=
-5 16216 16295 E libc=C2=A0=C2=A0=C2=A0 : Access denied finding property &qu=
-ot;vendor.debug.egl.swapinterval&quot;<br>11-25 19:22:21.851 16216 16216 W =
-RenderThread: type=3D1400 audit(0.0:252537): avc: denied { read } for name=
-=3D&quot;u:object_r:vendor_default_prop:s0&quot; dev=3D&quot;tmpfs&quot; in=
-o=3D23691 scontext=3Du:r:untrusted_app:s0:c158,c256,c512,c768 tcontext=3Du:=
-object_r:vendor_default_prop:s0 tclass=3Dfile permissive=3D0<br>11-25 19:22=
-:21.871 16216 16216 W RenderThread: type=3D1400 audit(0.0:252538): avc: den=
-ied { read } for name=3D&quot;u:object_r:vendor_default_prop:s0&quot; dev=
-=3D&quot;tmpfs&quot; ino=3D23691 scontext=3Du:r:untrusted_app:s0:c158,c256,=
-c512,c768 tcontext=3Du:object_r:vendor_default_prop:s0 tclass=3Dfile permis=
-sive=3D0<br>11-25 19:22:21.882 16216 16295 E libc=C2=A0=C2=A0=C2=A0 : Acces=
-s denied finding property &quot;vendor.debug.egl.swapinterval&quot;<br>11-2=
-5 19:22:21.899 16216 16295 E libc=C2=A0=C2=A0=C2=A0 : Access denied finding=
- property &quot;vendor.debug.egl.swapinterval&quot;<br>11-25 19:22:21.891 1=
-6216 16216 W RenderThread: type=3D1400 audit(0.0:252539): avc: denied { rea=
-d } for name=3D&quot;u:object_r:vendor_default_prop:s0&quot; dev=3D&quot;tm=
-pfs&quot; ino=3D23691 scontext=3Du:r:untrusted_app:s0:c158,c256,c512,c768 t=
-context=3Du:object_r:vendor_default_prop:s0 tclass=3Dfile permissive=3D0<br=
->11-25 19:22:21.915 16216 16295 E libc=C2=A0=C2=A0=C2=A0 : Access denied fi=
-nding property &quot;vendor.debug.egl.swapinterval&quot;<br>11-25 19:22:22.=
-066 16216 16295 I chatty=C2=A0 : uid=3D10158(com.wireguard.android) RenderT=
-hread identical 9 lines<br>11-25 19:22:22.083 16216 16295 E libc=C2=A0=C2=
-=A0=C2=A0 : Access denied finding property &quot;vendor.debug.egl.swapinter=
-val&quot;<br>11-25 19:22:21.871 16216 16216 I chatty=C2=A0 : uid=3D10158(co=
-m.wireguard.android) identical 3 lines<br>11-25
- 19:22:21.891 16216 16216 I auditd=C2=A0 : type=3D1400 audit(0.0:252539): a=
-vc:=20
-denied { read } for comm=3D&quot;RenderThread&quot; name=3D&quot;u:object_r=
-:vendor_default_prop:s0&quot; dev=3D&quot;tmpfs&quot; ino=3D23691 scontext=
-=3Du:r:untrusted_app:s0:c158,c256,c512,c768 tcontext=3Du:object_r:vendor_de=
-fault_prop:s0 tclass=3Dfile permissive=3D0<br>11-25 19:22:22.216 16216 1621=
-6 I am_on_stop_called: [0,com.wireguard.android.activity.MainActivity,STOP_=
-ACTIVITY_ITEM]<br>11-25
- 19:22:24.291 16216 16216 I auditd=C2=A0 : type=3D1400 audit(0.0:252551): a=
-vc:=20
-denied { read } for comm=3D&quot;RenderThread&quot; name=3D&quot;u:object_r=
-:vendor_default_prop:s0&quot; dev=3D&quot;tmpfs&quot; ino=3D23691 scontext=
-=3Du:r:untrusted_app:s0:c158,c256,c512,c768 tcontext=3Du:object_r:vendor_de=
-fault_prop:s0 tclass=3Dfile permissive=3D0<br>11-25 19:22:24.291 16216 1621=
-6 W RenderThread: type=3D1400 audit(0.0:252551): avc: denied { read } for n=
-ame=3D&quot;u:object_r:vendor_default_prop:s0&quot; dev=3D&quot;tmpfs&quot;=
- ino=3D23691 scontext=3Du:r:untrusted_app:s0:c158,c256,c512,c768 tcontext=
-=3Du:object_r:vendor_default_prop:s0 tclass=3Dfile permissive=3D0<br>11-25 =
-19:22:24.306 16216 16295 E libc=C2=A0=C2=A0=C2=A0 : Access denied finding p=
-roperty &quot;vendor.debug.egl.swapinterval&quot;<br>11-25 19:22:24.320 162=
-16 16295 E libc=C2=A0=C2=A0=C2=A0 : Access denied finding property &quot;ve=
-ndor.debug.egl.swapinterval&quot;<br>11-25 19:22:24.311 16216 16216 W Rende=
-rThread: type=3D1400 audit(0.0:252552): avc: denied { read } for name=3D&qu=
-ot;u:object_r:vendor_default_prop:s0&quot; dev=3D&quot;tmpfs&quot; ino=3D23=
-691 scontext=3Du:r:untrusted_app:s0:c158,c256,c512,c768 tcontext=3Du:object=
-_r:vendor_default_prop:s0 tclass=3Dfile permissive=3D0<br>11-25 19:22:24.33=
-2 16216 16295 E libc=C2=A0=C2=A0=C2=A0 : Access denied finding property &qu=
-ot;vendor.debug.egl.swapinterval&quot;<br>11-25 19:22:24.321 16216 16216 W =
-RenderThread: type=3D1400 audit(0.0:252553): avc: denied { read } for name=
-=3D&quot;u:object_r:vendor_default_prop:s0&quot; dev=3D&quot;tmpfs&quot; in=
-o=3D23691 scontext=3Du:r:untrusted_app:s0:c158,c256,c512,c768 tcontext=3Du:=
-object_r:vendor_default_prop:s0 tclass=3Dfile permissive=3D0<br>11-25 19:22=
-:24.347 16216 16295 E libc=C2=A0=C2=A0=C2=A0 : Access denied finding proper=
-ty &quot;vendor.debug.egl.swapinterval&quot;<br>11-25 19:22:24.341 16216 16=
-216 W RenderThread: type=3D1400 audit(0.0:252554): avc: denied { read } for=
- name=3D&quot;u:object_r:vendor_default_prop:s0&quot; dev=3D&quot;tmpfs&quo=
-t; ino=3D23691 scontext=3Du:r:untrusted_app:s0:c158,c256,c512,c768 tcontext=
-=3Du:object_r:vendor_default_prop:s0 tclass=3Dfile permissive=3D0<br>11-25 =
-19:22:24.363 16216 16295 E libc=C2=A0=C2=A0=C2=A0 : Access denied finding p=
-roperty &quot;vendor.debug.egl.swapinterval&quot;<br>11-25 19:22:24.351 162=
-16 16216 W RenderThread: type=3D1400 audit(0.0:252555): avc: denied { read =
-} for name=3D&quot;u:object_r:vendor_default_prop:s0&quot; dev=3D&quot;tmpf=
-s&quot; ino=3D23691 scontext=3Du:r:untrusted_app:s0:c158,c256,c512,c768 tco=
-ntext=3Du:object_r:vendor_default_prop:s0 tclass=3Dfile permissive=3D0<br>1=
-1-25 19:22:24.379 16216 16295 E libc=C2=A0=C2=A0=C2=A0 : Access denied find=
-ing property &quot;vendor.debug.egl.swapinterval&quot;<br>11-25 19:22:25.26=
-5 16216 16295 I chatty=C2=A0 : uid=3D10158(com.wireguard.android) RenderThr=
-ead identical 21 lines<br>11-25 19:22:25.279 16216 16295 E libc=C2=A0=C2=A0=
-=C2=A0 : Access denied finding property &quot;vendor.debug.egl.swapinterval=
-&quot;<br>11-25 19:22:25.301 16216 16216 W RenderThread: type=3D1400 audit(=
-0.0:252580): avc: denied { read } for name=3D&quot;u:object_r:vendor_defaul=
-t_prop:s0&quot; dev=3D&quot;tmpfs&quot; ino=3D23691 scontext=3Du:r:untruste=
-d_app:s0:c158,c256,c512,c768 tcontext=3Du:object_r:vendor_default_prop:s0 t=
-class=3Dfile permissive=3D0<br>11-25 19:22:25.296 16216 16295 E libc=C2=A0=
-=C2=A0=C2=A0 : Access denied finding property &quot;vendor.debug.egl.swapin=
-terval&quot;<br>11-25 19:22:25.313 16216 16295 E libc=C2=A0=C2=A0=C2=A0 : A=
-ccess denied finding property &quot;vendor.debug.egl.swapinterval&quot;<br>=
-11-25 19:22:25.321 16216 16216 W RenderThread: type=3D1400 audit(0.0:252581=
-): avc: denied { read } for name=3D&quot;u:object_r:vendor_default_prop:s0&=
-quot; dev=3D&quot;tmpfs&quot; ino=3D23691 scontext=3Du:r:untrusted_app:s0:c=
-158,c256,c512,c768 tcontext=3Du:object_r:vendor_default_prop:s0 tclass=3Dfi=
-le permissive=3D0<br>11-25 19:22:25.329 16216 16295 E libc=C2=A0=C2=A0=C2=
-=A0 : Access denied finding property &quot;vendor.debug.egl.swapinterval&qu=
-ot;<br>11-25 19:22:25.346 16216 16295 E libc=C2=A0=C2=A0=C2=A0 : Access den=
-ied finding property &quot;vendor.debug.egl.swapinterval&quot;<br>11-25 19:=
-22:25.331 16216 16216 W RenderThread: type=3D1400 audit(0.0:252582): avc: d=
-enied { read } for name=3D&quot;u:object_r:vendor_default_prop:s0&quot; dev=
-=3D&quot;tmpfs&quot; ino=3D23691 scontext=3Du:r:untrusted_app:s0:c158,c256,=
-c512,c768 tcontext=3Du:object_r:vendor_default_prop:s0 tclass=3Dfile permis=
-sive=3D0<br>11-25 19:22:25.362 16216 16295 E libc=C2=A0=C2=A0=C2=A0 : Acces=
-s denied finding property &quot;vendor.debug.egl.swapinterval&quot;<br>11-2=
-5 19:22:25.351 16216 16216 W RenderThread: type=3D1400 audit(0.0:252583): a=
-vc: denied { read } for name=3D&quot;u:object_r:vendor_default_prop:s0&quot=
-; dev=3D&quot;tmpfs&quot; ino=3D23691 scontext=3Du:r:untrusted_app:s0:c158,=
-c256,c512,c768 tcontext=3Du:object_r:vendor_default_prop:s0 tclass=3Dfile p=
-ermissive=3D0<br>11-25 19:22:25.371 16216 16216 W RenderThread: type=3D1400=
- audit(0.0:252584): avc: denied { read } for name=3D&quot;u:object_r:vendor=
-_default_prop:s0&quot; dev=3D&quot;tmpfs&quot; ino=3D23691 scontext=3Du:r:u=
-ntrusted_app:s0:c158,c256,c512,c768 tcontext=3Du:object_r:vendor_default_pr=
-op:s0 tclass=3Dfile permissive=3D0<br>11-25 19:22:25.380 16216 16295 E libc=
-=C2=A0=C2=A0=C2=A0 : Access denied finding property &quot;vendor.debug.egl.=
-swapinterval&quot;<div class=3D"gmail-adL"><br></div></div>
+Hi guys,
 
-</div>
 
---0000000000008f115b057b81787a--
+I'm facing following issue: once I establish WG connection on Android it =
+works fine for 10-20 minutes.
 
---===============8534104999207836889==
+then the phone becomes locked and sleeps, and then after it wakes up, the=
+ tunnel no longer works.
+
+
+May the fact that I'm using DNS name of my host instead of IP be the case=
+?
+
+Does wireguard-android maintain any connections cached?
+
+
+Thanks,
+
+Oleg
+
+
+
+--qvWCUW08O8CuAH8RINQGaAn0GxO5LO97d--
+
+--v6M7mz5lR8qpQZ5JKIGHg61EZjpkhwRlx
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEJ6n/bKfqQh2It3nOMcyiiOKXbBEFAlwCi8EACgkQMcyiiOKX
+bBHpQQ/9EaERkOABgmph6cuLNnMlOwPQSS04qkuS+Xr+gYIY0ZzoSaVIi04bOtg1
+YYqQ2AtLBCtAr7hPVZzPN1Ruw3nBl/gRNX8+pmtLHgEr7nUB9Jun0ryA07kwjo43
+LKrcpsXEvHc0z6VhgbLLa62aO8MvwyDU1VH6sXnu4TO/gZhvLQ9eJh9JRi47iuAv
+K1LBDjQuh3mewbLys+5G1Qi0uRlCV60vbFKNs4JNlXbh4CpuXq/SO/54k/JPcAyu
+r9J5yd0jEJh/QoTqfzTXQo8qMfWpXxgabbG//Bhbd77XP+zvgB/HExBArqNB6KCW
+lk6GWDeFGoLll98ul3+XA21Gwe1BRb3tk3Ez+Oe1fY7ksD2FGQyFgfVE79SP2oQg
+Zug7rZJYc4D7hVFFINFLOh5IavKZLfTuRebepwZ7S4rLMdrrExg7hmel1Zhb253E
+nW7ZvjqME3NR+8em7SZumox4EDD5wCkBN2EJytM90Ezz+t9hDDgiwLB8T3zL5kG+
+X3Puwd/DSq66pgT0WSLf6GtT41NOJgH2Akc/g1EjsSsHnCFOICdmf2KDnhieLh8M
+DR8fo6IxiPubZ3lEp20aeI+VjF+SROYABEkT6aLaXpzslgRygVcSwY8dHJjyiwbC
+OJFiw/tj7pdEkShFc8xILTe0PuyUFP1geDeqZ5UkNrVcuSSMw50=
+=WYR4
+-----END PGP SIGNATURE-----
+
+--v6M7mz5lR8qpQZ5JKIGHg61EZjpkhwRlx--
+
+--===============7298398289459082931==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -640,4 +200,4 @@ WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---===============8534104999207836889==--
+--===============7298398289459082931==--
