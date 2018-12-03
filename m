@@ -6,45 +6,45 @@ X-Spam-Status: No, score=0.3 required=3.0 tests=DKIM_ADSP_ALL,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65F2AC04EB9
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  3 Dec 2018 13:11:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B2B3C04EB9
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  3 Dec 2018 13:14:17 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 48C3F20878
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  3 Dec 2018 13:11:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id C6F13206B7
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  3 Dec 2018 13:14:16 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=toke.dk header.i=@toke.dk header.b="B1siK0Cc"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 48C3F20878
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=toke.dk header.i=@toke.dk header.b="uyTPF1Xv"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org C6F13206B7
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=toke.dk
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id aa9e1287;
-	Mon, 3 Dec 2018 13:03:47 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 71335f40;
+	Mon, 3 Dec 2018 13:06:28 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4585c8e0
- for <wireguard@lists.zx2c4.com>; Mon, 3 Dec 2018 13:03:45 +0000 (UTC)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id db82fb5e
+ for <wireguard@lists.zx2c4.com>; Mon, 3 Dec 2018 13:06:27 +0000 (UTC)
 Received: from mail.toke.dk (mail.toke.dk [IPv6:2a00:7660:6da:2001::664])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3f5e2753
- for <wireguard@lists.zx2c4.com>; Mon, 3 Dec 2018 13:03:44 +0000 (UTC)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c3639c71
+ for <wireguard@lists.zx2c4.com>; Mon, 3 Dec 2018 13:06:26 +0000 (UTC)
 From: Toke =?utf-8?Q?H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=toke.dk; s=20161023;
- t=1543842685; bh=StvS4i9aMepKMSYxnC3MR5WvH0jdshLgupCnVx0MwA0=;
+ t=1543842849; bh=BBm9gz2shVQWInPzWXEAThwdcfYewo8Z/7qzPyFAyyk=;
  h=From:To:Subject:In-Reply-To:References:Date:From;
- b=B1siK0CcHooVWQingc/0TTR+0HTLeNbiBHMHAaQmDHTsHQpTsig2Ud321fWMQCS0I
- 67skUT7J+MteJTd/a9g7P5wQwzhM61ULBjouJmPengmnm2VmTa6wU7UejmTOUMey1x
- xypUfmrWt6m0RwXlhyizmK/+hnvwQKtYPLkF/DYvxGUhbG2bI6+tMM9SOHBDW8JUUR
- 5cO5Y662EvyyrRWIMahamrSmOlaOn7z7UsjhaWt/6mDqvISMIxncl3KxKkP7JxacNp
- 9p+7yyOEWbHcImX0r80wtCJIeIjL9YmwG0xbcPg1rrb3oXHlZDWxfzVqfcccyM4ruD
- L3eQSoI76JrdQ==
-To: Davide Depau <davide@depau.eu>,
+ b=uyTPF1XvGnRyRx61eI0x7o8R+nh/T5WlkjAsdkjXvazCUHEgCfV0vHkrYOd5mLa5c
+ Tt56aZB9KzxO6vXX6B3sOzR7KQRn10LODkmrug+xlkWhawWcD/GUjdxd4xFJjVZTzP
+ Gm2dpk29lX01zlGBl3hrrEH2eLnRpNKmltcISYrO2ndMdz2yyT01vpZPjAg8QeUH2q
+ mK9YHHXLdON2K9cvFIPCwcdARedzII0rNBS2ri2ZjGGcFgMdtZCQvLCjJ0/AUXMuvm
+ ZSOj7UNQWI1c1MSDGfyoyeBXhYYoBEpJqM6D+1qJiRD0OQJAj2N5IZy3PbbK77laxd
+ 8jzCsYbx4x6ig==
+To: Matthias Urlichs <matthias@urlichs.de>,
  WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: Multiple endpoints with same public key
-In-Reply-To: <CAMp63jULeauEWi7KZzkOPTP+mphjo1FB-4=Mv6n4K3B1=kCT6w@mail.gmail.com>
-References: <CAMp63jULeauEWi7KZzkOPTP+mphjo1FB-4=Mv6n4K3B1=kCT6w@mail.gmail.com>
-Date: Mon, 03 Dec 2018 15:11:23 +0200
+Subject: Re: Host routes =?utf-8?Q?=E2=80=93?= ARP on wireguard interfaces?
+In-Reply-To: <8f102b9a-c476-24b7-c800-d4abdb4318d1@urlichs.de>
+References: <8f102b9a-c476-24b7-c800-d4abdb4318d1@urlichs.de>
+Date: Mon, 03 Dec 2018 15:14:06 +0200
 X-Clacks-Overhead: GNU Terry Pratchett
-Message-ID: <87k1kqkb5w.fsf@toke.dk>
+Message-ID: <87h8fukb1d.fsf@toke.dk>
 MIME-Version: 1.0
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
@@ -57,33 +57,27 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Davide Depau <davide@depau.eu> writes:
-
-> A few days ago I was struggling with a very slow connection and I was
-> wondering whether WireGuard can support this setup (please see attached
-> graph).
->
-> There is a WireGuard server (the port it's listening on is reachable from
-> the outside), then one client with two interfaces connected to the Internet
-> with two different IP addresses.
->
-> Is it possible to have *one* WireGuard interface on the client, which sends
-> packets to the server through both interfaces in a round-robin fashion? I
-> would expect the server to detect the client (identified by the public key)
-> is sending packets from multiple endpoints, and send packets to both
-> endpoints.
-
-I think this would be better solved at a higher layer: Run two tunnels
-(to two different port numbers on the server, for instance), and have
-the kernel do ECMP routing across both wireguard interfaces...
-
--Toke
-_______________________________________________
-WireGuard mailing list
-WireGuard@lists.zx2c4.com
-https://lists.zx2c4.com/mailman/listinfo/wireguard
+TWF0dGhpYXMgVXJsaWNocyA8bWF0dGhpYXNAdXJsaWNocy5kZT4gd3JpdGVzOgoKPiBIaSwKPgo+
+IE15IHByb2JsZW06IEkgaGF2ZSBhIGNvdXBsZSBvZiBob3N0IHJvdXRlcyB3aXRoaW4gbXkgbmV0
+d29yayB0aGF0IHBvaW50Cj4gdG8gYSBzZXJ2aWNlJ3MgImN1cnJlbnQgbWFzdGVyIi4gV2hlbiB0
+aGF0IG1hY2hpbmUgZ29lcyBkb3duLCBJIG5lZWQgdG8KPiBhdXRvbWF0aWNhbGx5IHJlZGlyZWN0
+IGl0cyBhZGRyZXNzIHRvIGEgZGlmZmVyZW50IGdhdGV3YXkuIFRoYXQncyBlYXN5IOKAkwo+IGxv
+b2t1cCB0aGUgbmV4dGhvcCBmb3IgdGhlICJyZWFsIiBzZXJ2ZXIgYWRkcmVzcyBhbmQgY2hhbmdl
+IHRoZSBob3N0Cj4gcm91dGUg4oCTIGV4Y2VwdCB3aGVuIHRoZSBkZXN0aW5hdGlvbiBpcyBvbiB3
+aXJlZ3VhcmQgYW5kIG5lZWRzIHRvIGJlCj4gKHJlKWRpcmVjdGVkIHRvIGEgKGRpZmZlcmVudCkg
+cGVlci4KPgo+IE15IHByZWZlcnJlZCBzb2x1dGlvbiBmb3IgdGhpcyAoYW5kIGFsc28gdGhlIG9u
+ZSB0aGF0IGlzIG1vc3QgaW50dWl0aXZlCj4gSU1ITykgd291bGQgYmUgc29tZSBzb3J0IG9mIHBz
+ZXVkby1BUlAg4oCTIGp1c3QgZW5vdWdoIHRvIG1ha2UgImlwIHJvdXRlCj4gYWRkIEZPTyB2aWEg
+QkFSIiB3b3JrLCAnQkFSJyBiZWluZyBhIGhvc3QgYWRkcmVzcyB0aGF0J3MgYXNzb2NpYXRlZCB3
+aXRoCj4gZXhhY3RseSBvbmUgd2lyZWd1YXJkIHBlZXIuCj4KPiBUaG91Z2h0cz8KCkknbSBub3Qg
+c3VyZSBJIHF1aXRlIHVuZGVyc3RhbmQgd2hhdCBpdCBpcyB5b3UgYXJlIHRyeWluZyB0byBhY2hp
+ZXZlOwp3aHkgY2FuJ3QganVzdCB5b3UgcmVjb25maWd1cmUgdGhlIHdpcmVndWFyZCBpbnRlcmZh
+Y2UgdG8gcm91dGUgdGhlIElQCnRvIHRoZSByaWdodCBwZWVyPwoKLVRva2UKX19fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18KV2lyZUd1YXJkIG1haWxpbmcgbGlz
+dApXaXJlR3VhcmRAbGlzdHMuengyYzQuY29tCmh0dHBzOi8vbGlzdHMuengyYzQuY29tL21haWxt
+YW4vbGlzdGluZm8vd2lyZWd1YXJkCg==
