@@ -1,49 +1,63 @@
-Return-Path: <SRS0=2DBL=OO=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=90jI=OP=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE2A3C04EB9
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  5 Dec 2018 13:59:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 66C33C64EB1
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  6 Dec 2018 16:19:16 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 039EF2084C
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  5 Dec 2018 13:59:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 039EF2084C
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=lonnie.abelbeck.com
+	by mail.kernel.org (Postfix) with ESMTPS id 9B46920700
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  6 Dec 2018 16:19:15 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="wMl0cnyx"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 9B46920700
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 332e554f;
-	Wed, 5 Dec 2018 13:51:41 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 693c3974;
+	Thu, 6 Dec 2018 16:11:02 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c1c2a04a
- for <wireguard@lists.zx2c4.com>; Wed, 5 Dec 2018 13:51:38 +0000 (UTC)
-Received: from ibughas.pair.com (ibughas.pair.com [209.68.5.177])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 61ec009e
- for <wireguard@lists.zx2c4.com>; Wed, 5 Dec 2018 13:51:38 +0000 (UTC)
-Received: from ibughas.pair.com (localhost [127.0.0.1])
- by ibughas.pair.com (Postfix) with ESMTP id 8061B1E301B;
- Wed,  5 Dec 2018 08:59:40 -0500 (EST)
-Received: from macpro.priv.abelbeck.com (wsip-174-76-218-225.om.om.cox.net
- [174.76.218.225])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by ibughas.pair.com (Postfix) with ESMTPSA id 471731E3011;
- Wed,  5 Dec 2018 08:59:40 -0500 (EST)
-Mime-Version: 1.0 (Mac OS X Mail 11.5 \(3445.9.1\))
-Subject: Re: sysctl of Alpine standard 3.8.1 doesn't support option -r.
-From: Lonnie Abelbeck <lists@lonnie.abelbeck.com>
-In-Reply-To: <CAMbARA6yEQvHEL+X-1+pfOPePu_1ULLLZdr81wC7SW65j=ep+w@mail.gmail.com>
-Date: Wed, 5 Dec 2018 07:59:39 -0600
-Message-Id: <F1235903-2773-425E-97B1-45D981E4751E@lonnie.abelbeck.com>
-References: <CAMbARA6yEQvHEL+X-1+pfOPePu_1ULLLZdr81wC7SW65j=ep+w@mail.gmail.com>
-To: Du Felix <boost.subscribing@gmail.com>
-X-Mailer: Apple Mail (2.3445.9.1)
-Cc: wireguard@lists.zx2c4.com
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cac1c95d
+ for <WireGuard@lists.zx2c4.com>; Thu, 6 Dec 2018 16:11:00 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b24d99b0
+ for <WireGuard@lists.zx2c4.com>; Thu, 6 Dec 2018 16:11:00 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e41ff9f6
+ for <WireGuard@lists.zx2c4.com>; Thu, 6 Dec 2018 16:11:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :references:in-reply-to:from:date:message-id:subject:to:cc
+ :content-type; s=mail; bh=FlafmP5PLrfh/YPDsYzZKp1tSBs=; b=wMl0cn
+ yx8RL4jk2VoJuYUNdPEStiZaR1AxNIgV8azS9YNi2ghxV1g4jolK/YAt+x34mgLk
+ CTOpVTSd1iUIBIMvihDWf8WSdquEFBEmyblDsnESpLn56sFtlq3sb/2qqgFYdRqg
+ AwrQXxR1Mt4mHT07Qgkgha16TqTHKJoE8Os4EwJjtwoAsfzOI7okkd7nz590kL7J
+ HnS8m32CaD3GzaVZNGKHUR5fXc3SiiIbaON+NQOK2lm6eGpDQ5hbOp9V/11C17Xf
+ JfK2EN2a/Zs0XZpkJuh6wFqWz2vF5Vg45RwkkJBP1oO34jkTJOFpFD+w+Xu/metP
+ 4p4yOnAHi0OBU6Og==
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 85e6b077
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <WireGuard@lists.zx2c4.com>; Thu, 6 Dec 2018 16:10:59 +0000 (UTC)
+Received: by mail-oi1-f172.google.com with SMTP id w13so831526oiw.9
+ for <WireGuard@lists.zx2c4.com>; Thu, 06 Dec 2018 08:19:10 -0800 (PST)
+X-Gm-Message-State: AA+aEWbxQSMMcdKjsh2Wp6NvgHOycJ1h6rjJxVBbjT7v9cPijfFrwkzW
+ XrUnlTbNXAWQB4bxdwpf06Vt5ac16KQkK8YUIVQ=
+X-Google-Smtp-Source: AFSGD/XOCJBWA2dPRR2488eC81zYGnz2xM0Cgfh7ZtviF6y/wqLsVqo6uh20v3T6SS3SA/Oczz2YCFhfHvjY3rBdMPY=
+X-Received: by 2002:aca:c650:: with SMTP id w77mr16555691oif.122.1544113149719; 
+ Thu, 06 Dec 2018 08:19:09 -0800 (PST)
+MIME-Version: 1.0
+References: <CAMhRzNT3Ss4P4h4AFxiZLKcmEG59=sXYFDdFgmnpF9MMWOA0vQ@mail.gmail.com>
+In-Reply-To: <CAMhRzNT3Ss4P4h4AFxiZLKcmEG59=sXYFDdFgmnpF9MMWOA0vQ@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 6 Dec 2018 17:18:58 +0100
+X-Gmail-Original-Message-ID: <CAHmME9p7dkgEroU0orBkv9gTVw046TySyhgbrwhpDy9_CJuMJg@mail.gmail.com>
+Message-ID: <CAHmME9p7dkgEroU0orBkv9gTVw046TySyhgbrwhpDy9_CJuMJg@mail.gmail.com>
+Subject: Re: wireguard-go foreground mode broken on Linux
+To: cbranch@cloudflare.com
+Cc: WireGuard mailing list <WireGuard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -60,47 +74,9 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
+Thanks, nice catch. Let me know if this fixes it for you:
 
-> On Dec 3, 2018, at 1:28 AM, Du Felix <boost.subscribing@gmail.com> wrote:
-> 
-> I use alpine standard 3.8.1, which has kernel 4.14.82-0-vanilla.
-> When I start wireguard as client peer with wg-quick up client, It says:
->  
-> [#] ip link add client type wireguard
-> [#] wg setconf client /dev/fd/63
-> [#] ip address add 10.0.0.4/24 dev client
-> [#] ip link set mtu 1420 dev client
-> [#] ip link set client up
-> [#] resolvconf -a client -m 0 -x
-> [#] wg set client fwmark 51820
-> [#] ip -4 route add 0.0.0.0/0 dev client table 51820
-> [#] ip -4 rule add not fwmark 51820 table 51820
-> [#] ip -4 rule add table main suppress_prefixlength 0
-> sysctl: unrecognized option: r
-> BusyBox v1.29.3 (2018-11-21 11:45:56 UTC) multi-call binary.
-> 
-> Usage: sysctl -p [-enq] [FILE...] / [-enqaw] [KEY[=VALUE]]...
-> 
-> Show/set kernel parameters
-> 
->     -p    Set values from FILEs (default /etc/sysctl.conf)
->     -e    Don't warn about unknown keys
->     -n    Don't show key names
->     -q      Quiet
->     -a    Show all values
->     -w    Set values
-
-In your "wg-quick" script, try changing the line:
--- from --
-done < <(sysctl -a -r '^net\.ipv4.conf\.[^ .=]+\.rp_filter$')
--- to --
-done < <(sysctl -a 2>/dev/null | sed -n -r 's#^(net\.ipv4.conf\.[^ .=]+\.rp_filter).*$#\1#p')
---
-
-Lonnie
-
-
-
+https://git.zx2c4.com/wireguard-go/commit/?id=651744561e9e31197d8ebb59f97ab3dae3c39687
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
