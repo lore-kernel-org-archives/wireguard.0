@@ -2,57 +2,75 @@ Return-Path: <SRS0=90jI=OP=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	HTML_MESSAGE,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.7 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1308C04EB8
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  6 Dec 2018 23:14:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F259DC04EB8
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  6 Dec 2018 23:14:41 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 7321E20989
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  6 Dec 2018 23:14:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 7321E20989
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=wenarab.com
+	by mail.kernel.org (Postfix) with ESMTPS id 8915720989
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  6 Dec 2018 23:14:41 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jF56/+Qx"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 8915720989
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id be593170;
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 28b703e5;
 	Thu, 6 Dec 2018 23:05:25 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b14c36e5
- for <wireguard@lists.zx2c4.com>; Wed, 5 Dec 2018 15:52:54 +0000 (UTC)
-Received: from mail-ua1-f68.google.com (mail-ua1-f68.google.com
- [209.85.222.68])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1dfc5e31
- for <wireguard@lists.zx2c4.com>; Wed, 5 Dec 2018 15:52:54 +0000 (UTC)
-Received: by mail-ua1-f68.google.com with SMTP id z23so7285562uam.1
- for <wireguard@lists.zx2c4.com>; Wed, 05 Dec 2018 08:00:57 -0800 (PST)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2da2258f
+ for <wireguard@lists.zx2c4.com>; Thu, 6 Dec 2018 00:12:06 +0000 (UTC)
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com
+ [IPv6:2a00:1450:4864:20::535])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 527da4de
+ for <wireguard@lists.zx2c4.com>; Thu, 6 Dec 2018 00:12:06 +0000 (UTC)
+Received: by mail-ed1-x535.google.com with SMTP id b14so18584120edt.6
+ for <wireguard@lists.zx2c4.com>; Wed, 05 Dec 2018 16:20:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:content-transfer-encoding:mime-version:subject:message-id:date
+ :to; bh=seJ4VzJ5MZl8s7zot8Qp2eqT08AHBeLWNfMbonJ+Gus=;
+ b=jF56/+QxrudhpzTDleUsMuKu/GsEwIPZZZG5o84c+H+IG9oJA/Fi6oP98k5nK3t25K
+ wJNNH6w0FhiBNtzoHpp5eSjE5MoCSCgvdQrTPZimnM+3EPUBu3oaMjFRVCOXvK7VdNd2
+ Syof6+TIPRzPRF4zE5+KuvEa+E/mSN1RsYL2AIISasHtguuaQ31eBbxls78sYu7bMPtW
+ LV0khh/0ovPo8Fi3jJgSedKMlein9AKh0D2VLlHD7kAry5vOqJEePo6OCPSHhP/G5QTU
+ Y9YQ+mRSV667ByQJMWzz6upnz0heirsieLFMSwURH3WUoqkdwFrubZA1JVDwa1SLtThT
+ dkVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to;
- bh=oM0slyHf6tCPlDW0pz3eyT74lTU6Ew71viRH/4Eb6Fw=;
- b=BavlhLLbGyEBCLwKeJA7XVy553x4tqGHAeR0gCEdcO9PHTdkMZO1cyl2O73RFIsJNP
- rj4EggdK5fMtZmr36LF9K68JhxEbz/9Fzzu4rOgm+kyCEM+nbj/Yf+ENGOgSKHxuLJjJ
- xyVAMpYTmZDUJZSBLNhWOptflxF3hW1rQIH1Lf5Lb1LuwL3nSBwynzoOsr86Uayiy2sf
- 4DE36e60QUDK9nGqoR4APIuPwQACArKJqZwmhAnTfS9SRjB2T6osNJ0m6kVM4a/FNF4n
- PVrWf6Ja+7Xp9wiaam05m8+HHIFS5ZFKL75qqrK8/2QjHObMFlF7ivnO1bDTMYACkwd4
- yCHg==
-X-Gm-Message-State: AA+aEWZ/10jzG2ato35ve0dTMohOKBnqbOYSjWtdbW8WiLcYSDqCUnjh
- XCZeUprJpyBWAxhkdWEy29WtrrsrqLy9gBajkjhNgQ==
-X-Google-Smtp-Source: AFSGD/UAVdFeZ5LWqzShWFpfPKWHdRMYFv+S4MR3AIxJTcZjTnJXoxWX9nFEKT9Oq4w/tu+Nwl6lQ0EiI8njDiTpPY8=
-X-Received: by 2002:ab0:145:: with SMTP id 63mr11663012uak.128.1544025656550; 
- Wed, 05 Dec 2018 08:00:56 -0800 (PST)
-MIME-Version: 1.0
-References: <CADjxVNr0PnZm8ckYtSToOrgkn5DkJUAEqMKZyKULN8avNRcfQQ@mail.gmail.com>
-In-Reply-To: <CADjxVNr0PnZm8ckYtSToOrgkn5DkJUAEqMKZyKULN8avNRcfQQ@mail.gmail.com>
-From: Gawen ARAB <g@wenarab.com>
-Date: Wed, 5 Dec 2018 16:59:06 +0100
-Message-ID: <CADjxVNrBuT9n9KEEvoOvVe6jkaza5pjZ4RrhiKrp61qp3POJ9A@mail.gmail.com>
-Subject: [PATCH] contrib: handles peer version in embed-wireguard
+ h=x-gm-message-state:from:content-transfer-encoding:mime-version
+ :subject:message-id:date:to;
+ bh=seJ4VzJ5MZl8s7zot8Qp2eqT08AHBeLWNfMbonJ+Gus=;
+ b=pYevneL+GUwpGzKT6l1YlqCL4cXTVa/74qHqxvhq5o/7nZpVVDsISRWa22YG7icQ3L
+ hM2Wy7q5iUmMhduzLHKu7NKqeblygCgy7Mna2HubFj+eau0RR32LfG0DWhTnktLV7wf7
+ IpgvIw7/dAIm/JLeYRSRcc40bvb2gPconHvFkfN7tlvqTAO2uvB1amA2coNn+cNGeelG
+ +u9AsEGROlMmX0xOhhTGBJAb7qiiXANhqZ69yfaDv2zLJp7rRulQpiNU6q3pI7E3JhO6
+ DDI9lGFEKTDhAtVCTQpCCG48WP61ncfISkk9P4Pw+59D3Z6ca49Ohh6n2/CfShQ+yHEy
+ 1f3w==
+X-Gm-Message-State: AA+aEWYaS6b2STr3CWjlAcNugan2iPb78ae4bVtGvMFmrh7e4ahoxIsR
+ kd7aVqAvzxCAOu8V2fHuRRAQ70eBvdQikw==
+X-Google-Smtp-Source: AFSGD/VNAgNn22VVVEDI/wir0dm7F167zFyltin4Esrq5dBYaXFxgBVHOFkzVhM/h4lkayqZVtlIkg==
+X-Received: by 2002:a17:906:6898:: with SMTP id
+ n24-v6mr19861257ejr.189.1544055610255; 
+ Wed, 05 Dec 2018 16:20:10 -0800 (PST)
+Received: from [192.168.0.27] (188-141-65-102.dynamic.upc.ie. [188.141.65.102])
+ by smtp.googlemail.com with ESMTPSA id
+ r8-v6sm3358179ejb.52.2018.12.05.16.20.09
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Wed, 05 Dec 2018 16:20:09 -0800 (PST)
+From: Graham Agnew <graham.agnew@gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 11.5 \(3445.9.1\))
+Subject: wg troubles on ubuntu 14.04, MacOS and iOS
+Message-Id: <FFA4EA44-FDE2-4BC5-9C96-2A15277F0A20@gmail.com>
+Date: Thu, 6 Dec 2018 00:20:05 +0000
 To: wireguard@lists.zx2c4.com
-X-Mailman-Approved-At: Fri, 07 Dec 2018 00:05:18 +0100
+X-Mailer: Apple Mail (2.3445.9.1)
+X-Mailman-Approved-At: Fri, 07 Dec 2018 00:05:17 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -64,147 +82,39 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============3962499512604777084=="
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============3962499512604777084==
-Content-Type: multipart/alternative; boundary="000000000000c86a2b057c487c89"
-
---000000000000c86a2b057c487c89
-Content-Type: text/plain; charset="UTF-8"
-
-Commit bc84ba3a inserted a peer version placeholder. Embeddable
-wireguard did not handle the flag WGPEER_A_PROTOCOL_VERSION and printed
-the following warning:
-
-    Warning: one or more unrecognized netlink attributes
-
-This commit adds the field 'protocol_version' to the structure
-'wg_peer'. It is equal to 0 if no protocol version were defined.
----
- contrib/examples/embeddable-wg-library/wireguard.c | 5 +++++
- contrib/examples/embeddable-wg-library/wireguard.h | 1 +
- 2 files changed, 6 insertions(+)
-
-diff --git a/contrib/examples/embeddable-wg-library/wireguard.c
-b/contrib/examples/embeddable-wg-library/wireguard.c
-index f0bdb5f..9610c50 100644
---- a/contrib/examples/embeddable-wg-library/wireguard.c
-+++ b/contrib/examples/embeddable-wg-library/wireguard.c
-@@ -66,6 +66,7 @@ enum wgpeer_attribute {
-        WGPEER_A_RX_BYTES,
-        WGPEER_A_TX_BYTES,
-        WGPEER_A_ALLOWEDIPS,
-+       WGPEER_A_PROTOCOL_VERSION,
-        __WGPEER_A_LAST
- };
-
-@@ -1326,6 +1327,10 @@ static int parse_peer(const struct nlattr
-*attr, void *data)
-                break;
-        case WGPEER_A_ALLOWEDIPS:
-                return mnl_attr_parse_nested(attr, parse_allowedips, peer);
-+       case WGPEER_A_PROTOCOL_VERSION:
-+               if (!mnl_attr_validate(attr, MNL_TYPE_U32))
-+                       peer->protocol_version = mnl_attr_get_u32(attr);
-+               break;
-        default:
-                warn_unrecognized("netlink");
-        }
-diff --git a/contrib/examples/embeddable-wg-library/wireguard.h
-b/contrib/examples/embeddable-wg-library/wireguard.h
-index e9210a4..2cee9ac 100644
---- a/contrib/examples/embeddable-wg-library/wireguard.h
-+++ b/contrib/examples/embeddable-wg-library/wireguard.h
-@@ -49,6 +49,7 @@ typedef struct wg_peer {
-        struct timespec last_handshake_time;
-        uint64_t rx_bytes, tx_bytes;
-        uint16_t persistent_keepalive_interval;
-+       uint32_t protocol_version;
-
-        struct wg_allowedip *first_allowedip, *last_allowedip;
-        struct wg_peer *next_peer;
---
-2.19.2
-
---000000000000c86a2b057c487c89
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div class=3D"gmail_quote" dir=3D"auto"><div dir=3D"ltr">=
-Commit bc84ba3a inserted a peer version placeholder. Embeddable<br></div>
-wireguard did not handle the flag WGPEER_A_PROTOCOL_VERSION and printed<br>
-the following warning:<br>
-<br>
-=C2=A0 =C2=A0 Warning: one or more unrecognized netlink attributes<br>
-<br>
-This commit adds the field &#39;protocol_version&#39; to the structure<br>
-&#39;wg_peer&#39;. It is equal to 0 if no protocol version were defined.<br=
->
----<br>
-=C2=A0contrib/examples/embeddable-wg-library/wireguard.c | 5 +++++<br>
-=C2=A0contrib/examples/embeddable-wg-library/wireguard.h | 1 +<br>
-=C2=A02 files changed, 6 insertions(+)<br>
-<br>
-diff --git a/contrib/examples/embeddable-wg-library/wireguard.c<br>
-b/contrib/examples/embeddable-wg-library/wireguard.c<br>
-index f0bdb5f..9610c50 100644<br>
---- a/contrib/examples/embeddable-wg-library/wireguard.c<br>
-+++ b/contrib/examples/embeddable-wg-library/wireguard.c<br>
-@@ -66,6 +66,7 @@ enum wgpeer_attribute {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 WGPEER_A_RX_BYTES,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 WGPEER_A_TX_BYTES,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 WGPEER_A_ALLOWEDIPS,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0WGPEER_A_PROTOCOL_VERSION,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 __WGPEER_A_LAST<br>
-=C2=A0};<br>
-<br>
-@@ -1326,6 +1327,10 @@ static int parse_peer(const struct nlattr<br>
-*attr, void *data)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 case WGPEER_A_ALLOWEDIPS:<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return mnl_attr_par=
-se_nested(attr, parse_allowedips, peer);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0case WGPEER_A_PROTOCOL_VERSION:<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!mnl_attr_valid=
-ate(attr, MNL_TYPE_U32))<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0peer-&gt;protocol_version =3D mnl_attr_get_u32(attr);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 default:<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 warn_unrecognized(&=
-quot;netlink&quot;);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-diff --git a/contrib/examples/embeddable-wg-library/wireguard.h<br>
-b/contrib/examples/embeddable-wg-library/wireguard.h<br>
-index e9210a4..2cee9ac 100644<br>
---- a/contrib/examples/embeddable-wg-library/wireguard.h<br>
-+++ b/contrib/examples/embeddable-wg-library/wireguard.h<br>
-@@ -49,6 +49,7 @@ typedef struct wg_peer {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 struct timespec last_handshake_time;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 uint64_t rx_bytes, tx_bytes;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 uint16_t persistent_keepalive_interval;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0uint32_t protocol_version;<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 struct wg_allowedip *first_allowedip, *last_all=
-owedip;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 struct wg_peer *next_peer;<br>
---<br>
-2.19.2<br>
-</div></div>
-
---000000000000c86a2b057c487c89--
-
---===============3962499512604777084==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
-_______________________________________________
-WireGuard mailing list
-WireGuard@lists.zx2c4.com
-https://lists.zx2c4.com/mailman/listinfo/wireguard
-
---===============3962499512604777084==--
+SGksCgpJIGluc3RhbGxlZCBXaXJlZ3VhcmQgb24gVWJ1bnR1IDE0LjA0IHVzaW5nIHRoZSBQUEEg
+b24gTGF1bmNocGFkIGFuZCB0aGUgd2lyZWd1YXJkLXRvb2xzIG9uIG15IE1hYy4gIEkgY2FuIGdl
+dCBpdCB0byB3b3JrIHdpdGggYSB2ZXJ5IHNpbXBsZSBzZXR1cCBhbmQgdXNpbmcgd2ctcXVpY2sg
+b3Ig4oCcd2cgc2V0Y29uZuKAnS4gIEl04oCZcyByZWFsbHkgZ3JlYXQgaG93IHNpbXBsZSBpdCBp
+cy4KCkkgZG9u4oCZdCBoYXZlIGFzIG11Y2ggbHVjayB3aXRoIHRoZSBjb21tYW5kIGxpbmUg4oCc
+d2cgc2V04oCdOyBpdCBkb2VzbuKAmXQgbGlrZSBwYXJhbWV0ZXJzIGxpa2UgYWxsb3dlZC1pcHMg
+YW5kIHN1Y2guICBJcyB0aGlzIGEga25vd24gaXNzdWU/ICBBbmFseXNpbmcgd2ctcXVpY2ssIGl0
+IGxvb2tzIGxpa2UgaXQgcGlwZXMgdGhlIGNvbmZpZ3VyYXRpb24gaW50byB0aGUgIndnIHNldGNv
+bmbigJ0gY29tbWFuZC4gCgpJ4oCZbSBhbHNvIGhhdmluZyBwcm9ibGVtcyB3aGVuIEkgaGF2ZSB0
+d28gcGVlcnMuICBJIGhhdmUgIkFsbG93ZWRJUHMgPSAwLjAuMC4wLzAiIGZvciBib3RoIGluIHRo
+ZSAuY29uZiBmaWxlLCBidXQgdGhpcyBpcyBvbmx5IGFwcGxpZWQgdG8gdGhlIHNlY29uZCBwZWVy
+LiAgVGhlIGZpcnN0IHBlZXIgaGFzIOKAnChub25lKeKAnSBzaG93biBhcyBpdHMgQWxsb3dlZElQ
+cyB3aXRoIG9idmlvdXMgY29uc2VxdWVuY2VzLiAgSXMgdGhpcyBhbHNvIGEga25vd24gaXNzdWU/
+ICBJIHdhcyB0cnlpbmcgdG8gYWRkIG15IGlQaG9uZSBhcyBhIHNlY29uZCBwZWVyIHVzaW5nIHRo
+ZSBUZXN0RmxpZ2h0IGFwcC4gIEkgY291bGRu4oCZdCBnZXQgdGhpcyB0byB3b3JrLCBldmVuIHdo
+ZW4gSSB0cmllZCB0byBtYWtlIGEgc2Vjb25kIGludGVyZmFjZSBvbiB0aGUgVWJ1bnR1IHNlcnZl
+ciBhcyBhIHdvcmthcm91bmQuICBJcyB0aGVyZSBhIHdheSB0byBkaWFnbm9zZSB0aGUgaXNzdWU/
+CgpJ4oCZbSBhbHNvIHVuc3VyZSBob3cgdGhlIEFsbG93ZWRJUHMgc2V0dGluZyBpcyBtZWFudCB0
+byB3b3JrLiAgSW5pdGlhbGx5IEkgdGhvdWdodCBpdCB3YXMgYSBsaXN0IG9mIGFkZHJlc3NlcyB0
+aGUgcGVlciB3YXMgYWxsb3dlZCB0byBjb25uZWN0IHRvLCBidXQgdGhlIGRvY3VtZW50YXRpb24g
+c2VlbXMgdG8gc3VnZ2VzdCBpdOKAmXMgYSBsaXN0IHRoYXQgdGhlIHBlZXIgY2FuIGNvbm5lY3Qg
+ZnJvbS4gIE9yIGlzIGl0IGEgcmFuZ2Ugb2Ygc291cmNlIElQcyB0aGF0IHRoZSByZWNlaXZlciB3
+aWxsIGFjY2VwdCBwYWNrZXRzIGZyb20/ICBVc2luZyAwLjAuMC4wLzAgc2VlbXMgdG8gbWVzcyB1
+cCBteSBuZXR3b3JrIGNvbmZpZ3VyYXRpb24sIHJvdXRpbmcgdGFibGVzIGV0YyBhbmQgSSB3b25k
+ZXIgaWYgaXTigJlzIHNvbWUg4oCcc21hcnRz4oCdIGluIHdnLXF1aWNrIEkgaGF2ZW7igJl0IHVu
+ZGVyc3Rvb2QuCgpBcG9sb2dpZXMgaWYgdGhlc2UgYXJlIG5vb2IgcXVlc3Rpb25zIHRoYXQgc3Rl
+bSBmcm9tIGEgbGFjayBvZiBrbm93bGVkZ2UuICBJIGZlZWwgSSBuZWVkIHRvIGdldCBkZWVwZXIg
+aW50byBpcHRhYmxlcyBldGMgdG8gZnVsbHkgdW5kZXJzdGFuZCB0aGlzLgoKQ2hlZXJzLApHcmEK
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18KV2lyZUd1YXJk
+IG1haWxpbmcgbGlzdApXaXJlR3VhcmRAbGlzdHMuengyYzQuY29tCmh0dHBzOi8vbGlzdHMuengy
+YzQuY29tL21haWxtYW4vbGlzdGluZm8vd2lyZWd1YXJkCg==
