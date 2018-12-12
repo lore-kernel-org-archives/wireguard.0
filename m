@@ -2,53 +2,75 @@ Return-Path: <SRS0=QZLZ=PK=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FB8EC43387
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  2 Jan 2019 18:01:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 22881C43387
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  2 Jan 2019 18:02:17 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id A512A218D3
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  2 Jan 2019 18:01:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id B9314218D3
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  2 Jan 2019 18:02:16 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=is.fucking.moe header.i=@is.fucking.moe header.b="jMMc8ebN"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A512A218D3
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=is.fucking.moe
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kcJs2YBZ"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org B9314218D3
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id feeb9aae;
-	Wed, 2 Jan 2019 17:58:37 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1352a543;
+	Wed, 2 Jan 2019 17:59:35 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id df6162b1
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e08cc2d5
  for <wireguard@lists.zx2c4.com>;
- Thu, 13 Dec 2018 00:59:55 +0000 (UTC)
-Received: from mail.fucking.moe (metallia.fatalsyntax.com [96.43.143.187])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 13352490
+ Wed, 12 Dec 2018 13:19:42 +0000 (UTC)
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com
+ [IPv6:2a00:1450:4864:20::435])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id daee4315
  for <wireguard@lists.zx2c4.com>;
- Thu, 13 Dec 2018 00:59:55 +0000 (UTC)
-Received: from [10.42.0.10] (cpe-65-30-197-210.wi.res.rr.com [65.30.197.210])
- by mail.fucking.moe (Postfix) with ESMTPSA id D5C8210E86DE
- for <wireguard@lists.zx2c4.com>; Wed, 12 Dec 2018 19:08:54 -0600 (CST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=is.fucking.moe;
- s=moe-mail; t=1544663334;
- bh=r8OuTT6pMXOrpzY0gb4TJ/W5BlmxYgKXdi6OWyhbOnE=;
- h=To:From:Subject:Date;
- b=jMMc8ebNph1uHoe4WRxGQkoVRwv84foWVHQ8TkKs9zBJGTAKiinPQMug2wQRINzjD
- nZ6x5Ym5Nxga3F+xA5AS0wSxDo2odKE4XfRfK/PY/AJiN1XD5WZzmKxSXl21T2pB9h
- F3BDe3GdLXxAwKYTIO6l+Y84b79uXYVJHbL01gl0=
+ Wed, 12 Dec 2018 13:19:42 +0000 (UTC)
+Received: by mail-wr1-x435.google.com with SMTP id 96so17720714wrb.2
+ for <wireguard@lists.zx2c4.com>; Wed, 12 Dec 2018 05:28:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:content-transfer-encoding:mime-version:subject:message-id:date
+ :to; bh=f0i596agavnR8VahN5Sxh3MkVKz1nUG8neIAIQ+AoV0=;
+ b=kcJs2YBZJdruOdGBqPm1rj9vs5tVxQz6tr8YZQ/7pSGQkkJsLaJAzyu0YQHYx5nbh1
+ Krd3dOxNr7zNPzqk+zLVXNXdl/YQ5LjR6e3IYrSsk/ExQvxM1PN0qPzwXjwY1sDDyjoK
+ k3FaPAG2HuLA9i2hc6V75rnAuOaZsxENpVNDHJ0BHXmhzElFWdmJ/f40yoH+5QdgNjTZ
+ hrvUIOu3gkSK4vW95c0fHcKn/ommRcRig0lU6arUocx0SK441BAg6pEWpDQbjJ/GrJG5
+ 7tahTAW9Hk8rqAV8JwvXXkA8qp20dGQmj0EAzKhSxQkFZQkwT6JiYGLLGAN+j5hlJlbD
+ MmzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:content-transfer-encoding:mime-version
+ :subject:message-id:date:to;
+ bh=f0i596agavnR8VahN5Sxh3MkVKz1nUG8neIAIQ+AoV0=;
+ b=Zy+SnNTUy09Ll/ozMKqZq1+j+wZjNWmgSjn4/Xqdu4uDGUqJDayRTtoKyuNaUSZ2bj
+ DQZrbDfZW154LoU1WBwXCW1sb2nuAwfAzu9REpWz2DjpvJfELEPbnc1H64yQmX8dihBP
+ ZfOQ/9l/w4+vekGpfrlmWriTzoIagwurbqIjNHp+myTw57Jv5Sguctt7REWiviv3agwH
+ XtHK50XpRa8tBCfabI3/ADV3f1MiK/2jjcQXvyRq2OJYg0tPNu/nUtP77XCmvNp6tFjB
+ bgNXC6b+Fyc/oLTQzWayQx11P3o/vEblGwvzrqB3aWPnesseaxrDTRZfAOuUgu1FLcis
+ xgCQ==
+X-Gm-Message-State: AA+aEWbb9XiKeHdSttQRP/lYXNS+ZdwxJ4xKJNX7v15vC1wR5/5Mqs8z
+ QD4Afl28vkaOutHC/01vkZgcpNrVax0=
+X-Google-Smtp-Source: AFSGD/XMr4dNqLz0uO8IN0xEt9bjO2hpe4tjy6nx4QG3vWw5FCIF65+gTA/XDVjkLd3UCda6q9VcHQ==
+X-Received: by 2002:a5d:448f:: with SMTP id j15mr16274722wrq.108.1544621316081; 
+ Wed, 12 Dec 2018 05:28:36 -0800 (PST)
+Received: from [192.168.1.35] ([62.4.55.54])
+ by smtp.gmail.com with ESMTPSA id e142sm5213787wmf.46.2018.12.12.05.28.35
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Wed, 12 Dec 2018 05:28:35 -0800 (PST)
+From: Jack Ivanov <e601809@gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 12.1 \(3445.101.1\))
+Subject: iOS On Demand configuration
+Message-Id: <6E7B68BA-590C-49B7-9C8E-91097ED58396@gmail.com>
+Date: Wed, 12 Dec 2018 14:28:34 +0100
 To: wireguard@lists.zx2c4.com
-From: Robert Straw <drbawb@is.fucking.moe>
-Subject: Issue w/ TCP Performance
-Message-ID: <66bc7435-b74e-2c01-06ef-0564a6f37d9c@is.fucking.moe>
-Date: Wed, 12 Dec 2018 19:10:02 -0600
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.3.3
-MIME-Version: 1.0
-Content-Language: en-US
-X-Mailman-Approved-At: Wed, 02 Jan 2019 18:58:35 +0100
+X-Mailer: Apple Mail (2.3445.101.1)
+X-Mailman-Approved-At: Wed, 02 Jan 2019 18:59:32 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -60,96 +82,16 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset="utf-8"; Format="flowed"
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-R3JlZXRpbmdzLAoKSSBhbSBydW5uaW5nIGludG8gYSByYXRoZXIgc3RyYW5nZSBpc3N1ZSByZTog
-V2lyZUd1YXJkIHBlcmZvcm1hbmNlLiBJIApoYXZlIGEgbGluayB3aGljaCBJJ20gZXhwZWN0aW5n
-IHRvIHNhdHVyYXRlIGF0IH4yMDArTWJwcyBvciBzby4gV2UgY2FuIApzZWUgdGhhdCBhbiBpcGVy
-ZiB0byB0aGUgc2VydmVyJ3MgcHVibGljIElQIGV2ZXJ5dGhpbmcgd29ya3MgYXMgZXhwZWN0ZWQ6
-CgpbwqAgNV0gbG9jYWwgNDUueHh4Lnh4eC54eHggcG9ydCA0MzQ1OCBjb25uZWN0ZWQgdG8gNjUu
-eHh4Lnh4eC54eHggcG9ydCA1MjAxClsgSURdIEludGVydmFswqDCoMKgwqDCoMKgwqDCoMKgwqAg
-VHJhbnNmZXLCoMKgwqDCoCBCaXRyYXRlIFJldHLCoCBDd25kClvCoCA1XcKgwqAgMC4wMC0xLjAw
-wqDCoCBzZWPCoCAyMC40IE1CeXRlc8KgwqAgMTcxIE1iaXRzL3NlYyAwwqDCoCAyLjA4IE1CeXRl
-cwpbwqAgNV3CoMKgIDEuMDAtMi4wMMKgwqAgc2VjwqAgMzAuMCBNQnl0ZXPCoMKgIDI1MiBNYml0
-cy9zZWMgMcKgwqAgMS45MyBNQnl0ZXMKW8KgIDVdwqDCoCAyLjAwLTMuMDHCoMKgIHNlY8KgIDMy
-LjUgTUJ5dGVzwqDCoCAyNzEgTWJpdHMvc2VjIDDCoMKgIDIuMTAgTUJ5dGVzClvCoCA1XcKgwqAg
-My4wMS00LjAxwqDCoCBzZWPCoCAzMS4yIE1CeXRlc8KgwqAgMjYyIE1iaXRzL3NlYyAwwqDCoCAy
-LjI0IE1CeXRlcwpbwqAgNV3CoMKgIDQuMDEtNS4wMMKgwqAgc2VjwqAgMzIuNSBNQnl0ZXPCoMKg
-IDI3NSBNYml0cy9zZWMgMMKgwqAgMi4zNiBNQnl0ZXMKW8KgIDVdwqDCoCA1LjAwLTYuMDDCoMKg
-IHNlY8KgIDM1LjAgTUJ5dGVzwqDCoCAyOTQgTWJpdHMvc2VjIDHCoMKgIDIuMzggTUJ5dGVzClvC
-oCA1XcKgwqAgNi4wMC03LjAwwqDCoCBzZWPCoCAzNy41IE1CeXRlc8KgwqAgMzE0IE1iaXRzL3Nl
-YyAwwqDCoCAyLjQwIE1CeXRlcwpbwqAgNV3CoMKgIDcuMDAtOC4wMMKgwqAgc2VjwqAgMzYuMiBN
-Qnl0ZXPCoMKgIDMwNCBNYml0cy9zZWMgMMKgwqAgMi40MSBNQnl0ZXMKW8KgIDVdwqDCoCA4LjAw
-LTkuMDHCoMKgIHNlY8KgIDM2LjIgTUJ5dGVzwqDCoCAzMDIgTWJpdHMvc2VjIDDCoMKgIDIuNDIg
-TUJ5dGVzClvCoCA1XcKgwqAgOS4wMS0xMC4wMMKgIHNlY8KgIDM3LjUgTUJ5dGVzwqDCoCAzMTYg
-TWJpdHMvc2VjIDDCoMKgIDIuNDQgTUJ5dGVzCi0gLSAtIC0gLSAtIC0gLSAtIC0gLSAtIC0gLSAt
-IC0gLSAtIC0gLSAtIC0gLSAtIC0KWyBJRF0gSW50ZXJ2YWzCoMKgwqDCoMKgwqDCoMKgwqDCoCBU
-cmFuc2ZlcsKgwqDCoMKgIEJpdHJhdGUgUmV0cgpbwqAgNV3CoMKgIDAuMDAtMTAuMDDCoCBzZWPC
-oMKgIDMyOSBNQnl0ZXPCoMKgIDI3NiBNYml0cy9zZWMgMsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oCBzZW5kZXIKW8KgIDVdwqDCoCAwLjAwLTEwLjA3wqAgc2VjwqDCoCAzMjkgTUJ5dGVzwqDCoCAy
-NzQgTWJpdHMvc2VjwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAKcmVjZWl2ZXIK
-CmlwZXJmIERvbmUuCgoKSG93ZXZlciBpZiBJIGluc3RlYWQgdXNlIGEgV2lyZUd1YXJkIHR1bm5l
-bCBJJ20gb25seSBzZWVpbmcgYWJvdXQgCjUwTWJpdC9zLCBhIG1lcmUgZnJhY3Rpb24gb2YgbXkg
-bGluayBzcGVlZDoKCkNvbm5lY3RpbmcgdG8gaG9zdCAxMC40My4wLjEsIHBvcnQgNTIwMQpbwqAg
-NV0gbG9jYWwgMTAuNDMuMC4yIHBvcnQgMzk1MjggY29ubmVjdGVkIHRvIDEwLjQzLjAuMSBwb3J0
-IDUyMDEKWyBJRF0gSW50ZXJ2YWzCoMKgwqDCoMKgwqDCoMKgwqDCoCBUcmFuc2ZlcsKgwqDCoMKg
-IEJpdHJhdGUgUmV0csKgIEN3bmQKW8KgIDVdwqDCoCAwLjAwLTEuMDDCoMKgIHNlY8KgIDIuODkg
-TUJ5dGVzwqAgMjQuMiBNYml0cy9zZWMgMMKgwqDCoCAyMzIgS0J5dGVzClvCoCA1XcKgwqAgMS4w
-MC0yLjAwwqDCoCBzZWPCoCA3LjQ4IE1CeXRlc8KgIDYyLjYgTWJpdHMvc2VjIDPCoMKgwqAgMzU5
-IEtCeXRlcwpbwqAgNV3CoMKgIDIuMDAtMy4wMMKgwqAgc2VjwqAgNy4zNiBNQnl0ZXPCoCA2Mi4w
-IE1iaXRzL3NlYyAwwqDCoMKgIDQxOCBLQnl0ZXMKW8KgIDVdwqDCoCAzLjAwLTQuMDDCoMKgIHNl
-Y8KgIDUuMjEgTUJ5dGVzwqAgNDMuNiBNYml0cy9zZWMgNcKgwqDCoCAyMjcgS0J5dGVzClvCoCA1
-XcKgwqAgNC4wMC01LjAxwqDCoCBzZWPCoCA0LjQxIE1CeXRlc8KgIDM2LjcgTWJpdHMvc2VjIDLC
-oMKgwqAgMjQ0IEtCeXRlcwpbwqAgNV3CoMKgIDUuMDEtNi4wMMKgwqAgc2VjwqAgNS4wMyBNQnl0
-ZXPCoCA0Mi42IE1iaXRzL3NlYyAwwqDCoMKgIDI1OCBLQnl0ZXMKW8KgIDVdwqDCoCA2LjAwLTcu
-MDDCoMKgIHNlY8KgIDQuNDggTUJ5dGVzwqAgMzcuNiBNYml0cy9zZWMgM8KgwqDCoCAyMDYgS0J5
-dGVzClvCoCA1XcKgwqAgNy4wMC04LjAwwqDCoCBzZWPCoCA0LjQxIE1CeXRlc8KgIDM3LjAgTWJp
-dHMvc2VjIDDCoMKgwqAgMjM2IEtCeXRlcwpbwqAgNV3CoMKgIDguMDAtOS4wMcKgwqAgc2VjwqAg
-NC40MSBNQnl0ZXPCoCAzNi43IE1iaXRzL3NlYyAwwqDCoMKgIDI1NSBLQnl0ZXMKW8KgIDVdwqDC
-oCA5LjAxLTEwLjAwwqAgc2VjwqAgNC45NyBNQnl0ZXPCoCA0Mi4xIE1iaXRzL3NlYyAwwqDCoMKg
-IDI2MyBLQnl0ZXMKLSAtIC0gLSAtIC0gLSAtIC0gLSAtIC0gLSAtIC0gLSAtIC0gLSAtIC0gLSAt
-IC0gLQpbIElEXSBJbnRlcnZhbMKgwqDCoMKgwqDCoMKgwqDCoMKgIFRyYW5zZmVywqDCoMKgwqAg
-Qml0cmF0ZSBSZXRyClvCoCA1XcKgwqAgMC4wMC0xMC4wMMKgIHNlY8KgIDUwLjcgTUJ5dGVzwqAg
-NDIuNSBNYml0cy9zZWMgMTPCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgc2VuZGVyClvCoCA1XcKg
-wqAgMC4wMC0xMC4wNMKgIHNlY8KgIDQ5LjkgTUJ5dGVzwqAgNDEuNiBNYml0cy9zZWPCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIApyZWNlaXZlcgoKaXBlcmYgRG9uZS4KCgpXaGF0
-IEkgZmluZCBtb3N0IGludGVyZXN0aW5nIHRob3VnaCBpcyB0aGF0IGlmIEkgdXNlIGBpcGVyZmAg
-aW4gVURQIG1vZGUgCmFuZCBzZXQgdGhlIHRhcmdldCByYXRlIHRvIHJvdWdobHkgbXkgbGluayBz
-cGVlZCBJIGdldCB0aGUgZXhwZWN0ZWQgbGluZSAKc3BlZWRzLCB3aXRoIG1pbmltYWwgbG9zcyBv
-biBlaXRoZXIgZW5kOgoKQ29ubmVjdGluZyB0byBob3N0IDEwLjQzLjAuMSwgcG9ydCA1MjAxClvC
-oCA1XSBsb2NhbCAxMC40My4wLjIgcG9ydCA1MDQ3NiBjb25uZWN0ZWQgdG8gMTAuNDMuMC4xIHBv
-cnQgNTIwMQpbIElEXSBJbnRlcnZhbMKgwqDCoMKgwqDCoMKgwqDCoMKgIFRyYW5zZmVywqDCoMKg
-wqAgQml0cmF0ZSBUb3RhbCBEYXRhZ3JhbXMKW8KgIDVdwqDCoCAwLjAwLTEuMDHCoMKgIHNlY8Kg
-IDIzLjEgTUJ5dGVzwqDCoCAxOTEgTWJpdHMvc2VjIDE3NjgzClvCoCA1XcKgwqAgMS4wMS0yLjAw
-wqDCoCBzZWPCoCAyMi4zIE1CeXRlc8KgwqAgMTkwIE1iaXRzL3NlYyAxNzEyNwpbwqAgNV3CoMKg
-IDIuMDAtMy4wMMKgwqAgc2VjwqAgMjYuMSBNQnl0ZXPCoMKgIDIxOSBNYml0cy9zZWMgMTk5OTUK
-W8KgIDVdwqDCoCAzLjAwLTQuMDDCoMKgIHNlY8KgIDIzLjggTUJ5dGVzwqDCoCAyMDAgTWJpdHMv
-c2VjIDE4MjU4ClvCoCA1XcKgwqAgNC4wMC01LjAwwqDCoCBzZWPCoCAyMy44IE1CeXRlc8KgwqAg
-MTk5IE1iaXRzL3NlYyAxODIyMApbwqAgNV3CoMKgIDUuMDAtNi4wMMKgwqAgc2VjwqAgMjMuOSBN
-Qnl0ZXPCoMKgIDIwMSBNYml0cy9zZWMgMTgzNTYKW8KgIDVdwqDCoCA2LjAwLTcuMDDCoMKgIHNl
-Y8KgIDIzLjggTUJ5dGVzwqDCoCAyMDAgTWJpdHMvc2VjIDE4Mjc1ClvCoCA1XcKgwqAgNy4wMC04
-LjAwwqDCoCBzZWPCoCAyMy44IE1CeXRlc8KgwqAgMjAwIE1iaXRzL3NlYyAxODI2MgpbwqAgNV3C
-oMKgIDguMDAtOS4wMMKgwqAgc2VjwqAgMjMuNyBNQnl0ZXPCoMKgIDE5OSBNYml0cy9zZWMgMTgx
-NzAKW8KgIDVdwqDCoCA5LjAwLTEwLjAwwqAgc2VjwqAgMjMuNiBNQnl0ZXPCoMKgIDE5OCBNYml0
-cy9zZWMgMTgxMjUKLSAtIC0gLSAtIC0gLSAtIC0gLSAtIC0gLSAtIC0gLSAtIC0gLSAtIC0gLSAt
-IC0gLQpbIElEXSBJbnRlcnZhbMKgwqDCoMKgwqDCoMKgwqDCoMKgIFRyYW5zZmVywqDCoMKgwqAg
-Qml0cmF0ZSBKaXR0ZXLCoMKgwqAgTG9zdC9Ub3RhbCBEYXRhZ3JhbXMKW8KgIDVdwqDCoCAwLjAw
-LTEwLjAwwqAgc2VjwqDCoCAyMzggTUJ5dGVzwqDCoCAyMDAgTWJpdHMvc2VjIDAuMDAwIG1zwqAg
-MC8xODI0NzEgCigwJSnCoCBzZW5kZXIKW8KgIDVdwqDCoCAwLjAwLTEwLjA5wqAgc2VjwqDCoCAy
-MzggTUJ5dGVzwqDCoCAxOTggTWJpdHMvc2VjIDAuMTA1IG1zwqAgMC8xODI0NjcgCigwJSnCoCBy
-ZWNlaXZlcgoKaXBlcmYgRG9uZS4KCi0tLQoKVW5mb3J0dW5hdGVseSBtb3N0IG9mIG15IHVzZWNh
-c2VzIGZvciBXaXJlR3VhcmQgaW52b2x2ZSBidWxrIFRDUCAKdHJhbnNmZXJzIGJldHdlZW4gaG9z
-dHMuIERvZXMgYW55b25lIGhhdmUgYW55IGlkZWEgYXMgdG8gd2h5IGEgVENQIApzdHJlYW0gb3Zl
-ciBhIFdpcmVHdWFyZCBWUE4gd291bGQgYmUgc28gc2xvdywgYnV0IGEgVURQIHN0cmVhbSB3b3Jr
-cyBhcyAKZXhwZWN0ZWQ/IEkgYW0gdXNpbmcgdmVyc2lvbiBgMC4wLjIwMTgxMTE5YCBvZiB0aGUg
-bW9kdWxlIGJ1aWx0IGFnYWluc3QgCmtlcm5lbCA0LjE5LjguQWxsIG15IG5ldC5pcHY0IHNldHRp
-bmdzIGFyZSBzZXQgdG8gdGhlIGRlZmF1bHRzIEkgCmJlbGlldmUuIChBbHNvIGp1c3QgRllJIEkg
-ZG9uJ3Qgc2VlbSB0byBiZSBzYXR1cmF0aW5nIHRoZSBDUFUgb3IgCmFueXRoaW5nOiBJIGNhbiBk
-byBtdWx0aXBsZSBnaWdhYml0cyBvZiBUQ1AgdGhyb3VnaCB0aGUgdHVubmVsIHdoZW4gdGhlIApw
-YWNrZXRzIGRvbid0IGhhdmUgdG8gdHJhdmVyc2UgdGhlIFdBTiBvbiB0aGUgbGVzcyBwb3dlcmZ1
-bCBub2RlLikKClRoYW5rcywKUm9iCgpfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fXwpXaXJlR3VhcmQgbWFpbGluZyBsaXN0CldpcmVHdWFyZEBsaXN0cy56eDJj
-NC5jb20KaHR0cHM6Ly9saXN0cy56eDJjNC5jb20vbWFpbG1hbi9saXN0aW5mby93aXJlZ3VhcmQK
+SGkgZXZlcnlib2R5LAoKSeKAmW0ganVzdCBjdXJpb3VzLCBpcyBpdCBwb3NzaWJsZSB0byBjb25m
+aWd1cmUgb24tZGVtYW5kIG1vZGUgb24gV2lyZUd1YXJkIGlPUyB2aWEgY29uZmlndXJhdGlvbiBm
+aWxlcyBvciBhcHBsZSBwcm9maWxlcz8gSSBrbm93IGl04oCZcyBwb3NzaWJsZSB0byBkbyBtYW51
+YWxseSB2aWEgdGhlIGFwcCBzZXR0aW5ncywgYnV0IEnigJltIGxvb2tpbmcgZm9yIGFuIGF1dG9t
+YXRpYyB3YXkuCgpUaGFua3MhCgotLSAKQmVzdCBSZWdhcmRzLApKYWNrCl9fX19fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fCldpcmVHdWFyZCBtYWlsaW5nIGxpc3QK
+V2lyZUd1YXJkQGxpc3RzLnp4MmM0LmNvbQpodHRwczovL2xpc3RzLnp4MmM0LmNvbS9tYWlsbWFu
+L2xpc3RpbmZvL3dpcmVndWFyZAo=
