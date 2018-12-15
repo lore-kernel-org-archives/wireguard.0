@@ -7,69 +7,69 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_PASS,
 	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 301E1C43444
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB2F5C43612
 	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 15 Dec 2018 16:57:54 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id B8850206C2
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 15 Dec 2018 16:57:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 460DC206C2
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 15 Dec 2018 16:57:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fo3RjYgv"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org B8850206C2
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S9cYA3T1"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 460DC206C2
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 465cb498;
-	Sat, 15 Dec 2018 16:56:31 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f3c9e1aa;
+	Sat, 15 Dec 2018 16:56:32 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c629df4b
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2e1e5684
+ for <wireguard@lists.zx2c4.com>;
+ Sat, 15 Dec 2018 16:56:30 +0000 (UTC)
+Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com
+ [IPv6:2a00:1450:4864:20::542])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5ebf4275
  for <wireguard@lists.zx2c4.com>;
  Sat, 15 Dec 2018 16:56:29 +0000 (UTC)
-Received: from mail-ed1-x543.google.com (mail-ed1-x543.google.com
- [IPv6:2a00:1450:4864:20::543])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 638390ca
- for <wireguard@lists.zx2c4.com>;
- Sat, 15 Dec 2018 16:56:28 +0000 (UTC)
-Received: by mail-ed1-x543.google.com with SMTP id x30so7444972edx.2
- for <wireguard@lists.zx2c4.com>; Sat, 15 Dec 2018 08:56:34 -0800 (PST)
+Received: by mail-ed1-x542.google.com with SMTP id g19so807937edy.8
+ for <wireguard@lists.zx2c4.com>; Sat, 15 Dec 2018 08:56:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=from:to:cc:subject:date:message-id:in-reply-to:references
  :mime-version:content-transfer-encoding;
- bh=k4v3pJheyGPu7O39qGdzh58TXWzNLSSkvk9Ag3dArDk=;
- b=Fo3RjYgvCVqizSfaXZbFlgVs2DM380H6vcvh26LD9lchtuw4NSAGrUuiXbp/PJ0Bue
- 3jywUmKkiEtWI+/f0G1/C6fU/NSq7+XmfmolEMVXfSI7Yhui1QUC8KNX7A/lBHvSb5pS
- XQXtkgyDaZH8FRqhcHORXwbO4aVLNXxDfv+ooc0yTJTvAeWhBH8p63troKIp0wlTShX0
- X9Go+fmFbm4VrMmpWKRdyCm5NMQoCnZF0xf+/GTnM+yVHcT/sZ1ovDC1JgGTv6O5Wkfw
- nd/BjzxP/Jx+BbVGUwptjbJH5dPPTmr7vbxVui+w2V2D4B4nNl1BXIK5AedQ0y+hn6Nq
- zyHw==
+ bh=CMqQzdip9UBEVyuUzMD9kQ1e9eR0/iDRYK+HiZ9mBOY=;
+ b=S9cYA3T12l7vg3cZgAG7HpcebVBbOlSeojfPRHeCKFVupfKyWCpJygze31iHEDsb3I
+ qFWvX4tvZIZ89qSO7HTiTGdHRGkdaXDTHHJP/JFo3FUFeoYCv5Ey9xvvEQlvA9btLYHH
+ yiUOvo4YArbiKMb23G+t5yIYHxLBkz0t0wnC7MPDoaCVix8KVXUeeTTgSE0JCw9hjRRl
+ cyRaQDo8U8zADMkuk5rlRkDzQ6KAimrLZkglS51eXDWN9z2P8AsrOYSyZr/VDHKXLHts
+ xNq8Q0QZx/BU8m6/mltmnxvPB+9z/qDMzL9XyQFgMz9BYj9adkuvR7bs+Lq0Iy2kYAVT
+ amAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
  :references:mime-version:content-transfer-encoding;
- bh=k4v3pJheyGPu7O39qGdzh58TXWzNLSSkvk9Ag3dArDk=;
- b=HCjrLqREWVf/gL0tRKzCBAfjc+kQlqdGJp6StB2IO0ouOW3P9wUS7teShmixntAcEU
- AfV4zQJceM2xfYcDU/tpnpQjmx6KgNSPmsmrD1SddBuVYy5iCO3hgs8hXh/15SKcalcm
- e7nUqj3plr8hM936bBCW6eOyuWn6VWRS4x9a7JO0UTTJxp+pZLYcZtg7VuTvadJk/gwe
- MuhtQsQrnOcq33hKkXp9CouyuIr3T0AJlL7XT5+bXkRynJoLN1DxhtHLR9Y/9+V5SCl5
- cV5RN5BRggCZtmTmH+Ej2LA1nk3DBN3MSO0xZc+G6uyMmoOTB2nFxNnolFatm7HhNb7v
- Zvsw==
-X-Gm-Message-State: AA+aEWaF+4sDzIAx2dXklE5XoZTI4GYf9ukwj5iOiyeGqN8EJS9AjhQ6
- 8oOcHGeK5fZUuxNW5flNgLIn+JGz
-X-Google-Smtp-Source: AFSGD/WmR7kSuVnDvGNhd85LLG0GTwUIX5eu4uK/SBDH5zAQTPo4MrEWBjU5RJQs7PBVMsid9DIivQ==
-X-Received: by 2002:a50:ba3d:: with SMTP id g58mr6975313edc.35.1544892993358; 
- Sat, 15 Dec 2018 08:56:33 -0800 (PST)
+ bh=CMqQzdip9UBEVyuUzMD9kQ1e9eR0/iDRYK+HiZ9mBOY=;
+ b=kaVRqmt1zdHSy9CarIS9mXA+o5TyJ6FoQa0hgpq3vgoaphdH7K5UbtNA9xrFennQE+
+ msiw3VlnsvnDqp67t7XDlstESMK4j6W/o/ZHu5LJUdmVmBWFtGFbe1RHPFkHYvt5Xw+Q
+ 8cFHakSsp5Lk4gXH7C7u5Z6wu+QBATYEs++owxONGh6M2tvI+7ElNoeDkGZm3lRf2+Xr
+ yOpFgsGOaRZNQ9olpiGnPzUM1/RpXZB+cTeSJ4yCm3O7qttOb9FNBj49zUNp64pJCZxY
+ luU4rMss5Oko1vbRi3Z1fJNEAeZIdwaK7vISJIzn/v8Q3AcmOE1EhpeXdQQHLZg+AiiT
+ 1jSA==
+X-Gm-Message-State: AA+aEWaqaXBOczeY5szsk7Jt6C+F/rBqZ0KX3Jr9D7e7ki2WtfrXQ85b
+ tOddWfei1VYB/SdAzYO723pipG7P
+X-Google-Smtp-Source: AFSGD/VWfGBYzBB/zj4tzGL5gYeqEaNGHYBtvPao2Kt+jO/xh/NtHNGIqgkrLa7ouE9ifCr7Y5Jwzg==
+X-Received: by 2002:a50:8b41:: with SMTP id l59mr7023556edl.44.1544892994338; 
+ Sat, 15 Dec 2018 08:56:34 -0800 (PST)
 Received: from localhost.localdomain
  (p200300C55F2A9600228984FFFE70D494.dip0.t-ipconnect.de.
  [2003:c5:5f2a:9600:2289:84ff:fe70:d494])
- by smtp.gmail.com with ESMTPSA id q50sm2356015edd.66.2018.12.15.08.56.32
+ by smtp.gmail.com with ESMTPSA id q50sm2356015edd.66.2018.12.15.08.56.33
  (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Sat, 15 Dec 2018 08:56:32 -0800 (PST)
+ Sat, 15 Dec 2018 08:56:33 -0800 (PST)
 From: Julian Orth <ju.orth@gmail.com>
 To: wireguard@lists.zx2c4.com
-Subject: [PATCH v5 05/11] device: store a copy of the device net
-Date: Sat, 15 Dec 2018 17:56:07 +0100
-Message-Id: <20181215165613.5486-6-ju.orth@gmail.com>
+Subject: [PATCH v5 06/11] socket: allow modification of transit_net
+Date: Sat, 15 Dec 2018 17:56:08 +0100
+Message-Id: <20181215165613.5486-7-ju.orth@gmail.com>
 X-Mailer: git-send-email 2.19.2
 In-Reply-To: <20181215165613.5486-1-ju.orth@gmail.com>
 References: <20181215165613.5486-1-ju.orth@gmail.com>
@@ -90,94 +90,139 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This eliminates the need for have_transit_net_ref because
-have_transit_net_ref == true if and only if dev_net != transit_net.
 ---
- src/device.c | 27 +++++++++++++++++----------
- src/device.h |  4 +++-
- 2 files changed, 20 insertions(+), 11 deletions(-)
+ src/device.c  |  6 +++---
+ src/netlink.c |  2 +-
+ src/socket.c  | 18 ++++++++++--------
+ src/socket.h  |  6 +++---
+ 4 files changed, 17 insertions(+), 15 deletions(-)
 
 diff --git a/src/device.c b/src/device.c
-index ae4b9ad..0c0c17b 100644
+index 0c0c17b..18b4587 100644
 --- a/src/device.c
 +++ b/src/device.c
-@@ -251,7 +251,7 @@ static void wg_destruct(struct net_device *dev)
- 	skb_queue_purge(&wg->incoming_handshakes);
- 	free_percpu(dev->tstats);
- 	free_percpu(wg->incoming_handshakes_worker);
--	if (wg->have_transit_net_ref)
-+	if (wg->transit_net != wg->dev_net)
- 		put_net(wg->transit_net);
+@@ -53,7 +53,7 @@ static int wg_open(struct net_device *dev)
+ #endif
+ #endif
+ 
+-	ret = wg_socket_init(wg, wg->incoming_port);
++	ret = wg_socket_init(wg, wg->transit_net, wg->incoming_port);
+ 	if (ret < 0)
+ 		return ret;
+ 	mutex_lock(&wg->device_update_lock);
+@@ -118,7 +118,7 @@ static int wg_stop(struct net_device *dev)
+ 	}
  	mutex_unlock(&wg->device_update_lock);
- 
-@@ -304,7 +304,9 @@ static int wg_newlink(struct net *src_net, struct net_device *dev,
- 	struct wg_device *wg = netdev_priv(dev);
- 	int ret = -ENOMEM;
- 
--	wg->transit_net = src_net;
-+	wg->dev_net = NULL;
-+	wg->transit_net = NULL;
-+	wg_device_set_nets(wg,  dev_net(dev), src_net);
- 	init_rwsem(&wg->static_identity.lock);
- 	mutex_init(&wg->socket_update_lock);
- 	mutex_init(&wg->device_update_lock);
-@@ -406,14 +408,8 @@ static int wg_netdevice_notification(struct notifier_block *nb,
- 	if (action != NETDEV_REGISTER || dev->netdev_ops != &netdev_ops)
- 		return 0;
- 
--	if (dev_net(dev) == wg->transit_net && wg->have_transit_net_ref) {
--		put_net(wg->transit_net);
--		wg->have_transit_net_ref = false;
--	} else if (dev_net(dev) != wg->transit_net &&
--		   !wg->have_transit_net_ref) {
--		wg->have_transit_net_ref = true;
--		get_net(wg->transit_net);
--	}
-+	wg_device_set_nets(wg, dev_net(dev), wg->transit_net);
-+
+ 	skb_queue_purge(&wg->incoming_handshakes);
+-	wg_socket_reinit(wg, NULL, NULL);
++	wg_socket_reinit(wg, NULL, NULL, NULL);
  	return 0;
  }
  
-@@ -459,3 +455,14 @@ void wg_device_uninit(void)
- #endif
- 	rcu_barrier_bh();
+@@ -236,7 +236,7 @@ static void wg_destruct(struct net_device *dev)
+ 	rtnl_unlock();
+ 	mutex_lock(&wg->device_update_lock);
+ 	wg->incoming_port = 0;
+-	wg_socket_reinit(wg, NULL, NULL);
++	wg_socket_reinit(wg, NULL, NULL, NULL);
+ 	wg_allowedips_free(&wg->peer_allowedips, &wg->device_update_lock);
+ 	/* The final references are cleared in the below calls to destroy_workqueue. */
+ 	wg_peer_remove_all(wg);
+diff --git a/src/netlink.c b/src/netlink.c
+index 8d22230..e0f3632 100644
+--- a/src/netlink.c
++++ b/src/netlink.c
+@@ -362,7 +362,7 @@ static int set_port(struct wg_device *wg, u16 port)
+ 		wg->incoming_port = port;
+ 		return 0;
+ 	}
+-	return wg_socket_init(wg, port);
++	return wg_socket_init(wg, wg->transit_net, port);
  }
-+
-+void wg_device_set_nets(struct wg_device *wg, struct net *dev_net,
-+			struct net *transit_net)
-+{
-+	if (wg->transit_net != wg->dev_net)
-+		put_net(wg->transit_net);
-+	wg->dev_net = dev_net;
-+	wg->transit_net = transit_net;
-+	if (wg->transit_net != wg->dev_net)
-+		get_net(wg->transit_net);
-+}
-diff --git a/src/device.h b/src/device.h
-index be54d4a..e1d4e84 100644
---- a/src/device.h
-+++ b/src/device.h
-@@ -41,6 +41,7 @@ struct wg_device {
- 	struct crypt_queue encrypt_queue, decrypt_queue;
- 	struct sock __rcu *sock4, *sock6;
- 	struct net *transit_net;
-+	struct net *dev_net;
- 	struct noise_static_identity static_identity;
- 	struct workqueue_struct *handshake_receive_wq, *handshake_send_wq;
- 	struct workqueue_struct *packet_crypt_wq;
-@@ -56,10 +57,11 @@ struct wg_device {
- 	unsigned int num_peers, device_update_gen;
- 	u32 fwmark;
- 	u16 incoming_port;
--	bool have_transit_net_ref;
- };
  
- int wg_device_init(void);
- void wg_device_uninit(void);
-+void wg_device_set_nets(struct wg_device *wg, struct net *dev_net,
-+			struct net *transit_net);
+ static int set_allowedip(struct wg_peer *peer, struct nlattr **attrs)
+diff --git a/src/socket.c b/src/socket.c
+index 75e4114..1ac065f 100644
+--- a/src/socket.c
++++ b/src/socket.c
+@@ -352,7 +352,7 @@ static void set_sock_opts(struct socket *sock)
+ 	sk_set_memalloc(sock->sk);
+ }
  
- #endif /* _WG_DEVICE_H */
+-int wg_socket_init(struct wg_device *wg, u16 port)
++int wg_socket_init(struct wg_device *wg, struct net *net, u16 port)
+ {
+ 	int ret;
+ 	struct udp_tunnel_sock_cfg cfg = {
+@@ -382,18 +382,18 @@ int wg_socket_init(struct wg_device *wg, u16 port)
+ retry:
+ #endif
+ 
+-	ret = udp_sock_create(wg->transit_net, &port4, &new4);
++	ret = udp_sock_create(net, &port4, &new4);
+ 	if (ret < 0) {
+ 		pr_err("%s: Could not create IPv4 socket\n", wg->dev->name);
+ 		return ret;
+ 	}
+ 	set_sock_opts(new4);
+-	setup_udp_tunnel_sock(wg->transit_net, new4, &cfg);
++	setup_udp_tunnel_sock(net, new4, &cfg);
+ 
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	if (ipv6_mod_enabled()) {
+ 		port6.local_udp_port = inet_sk(new4->sk)->inet_sport;
+-		ret = udp_sock_create(wg->transit_net, &port6, &new6);
++		ret = udp_sock_create(net, &port6, &new6);
+ 		if (ret < 0) {
+ 			udp_tunnel_sock_release(new4);
+ 			if (ret == -EADDRINUSE && !port && retries++ < 100)
+@@ -403,16 +403,16 @@ retry:
+ 			return ret;
+ 		}
+ 		set_sock_opts(new6);
+-		setup_udp_tunnel_sock(wg->transit_net, new6, &cfg);
++		setup_udp_tunnel_sock(net, new6, &cfg);
+ 	}
+ #endif
+ 
+-	wg_socket_reinit(wg, new4 ? new4->sk : NULL, new6 ? new6->sk : NULL);
++	wg_socket_reinit(wg, net, new4 ? new4->sk : NULL, new6 ? new6->sk : NULL);
+ 	return 0;
+ }
+ 
+-void wg_socket_reinit(struct wg_device *wg, struct sock *new4,
+-		      struct sock *new6)
++void wg_socket_reinit(struct wg_device *wg, struct net *net,
++		      struct sock *new4, struct sock *new6)
+ {
+ 	struct sock *old4, *old6;
+ 
+@@ -425,6 +425,8 @@ void wg_socket_reinit(struct wg_device *wg, struct sock *new4,
+ 	rcu_assign_pointer(wg->sock6, new6);
+ 	if (new4)
+ 		wg->incoming_port = ntohs(inet_sk(new4)->inet_sport);
++	if (net && wg->transit_net != net)
++		wg_device_set_nets(wg, wg->dev_net, net);
+ 	mutex_unlock(&wg->socket_update_lock);
+ 	synchronize_rcu_bh();
+ 	synchronize_net();
+diff --git a/src/socket.h b/src/socket.h
+index 9d3e8e1..2db1f86 100644
+--- a/src/socket.h
++++ b/src/socket.h
+@@ -11,9 +11,9 @@
+ #include <linux/if_vlan.h>
+ #include <linux/if_ether.h>
+ 
+-int wg_socket_init(struct wg_device *wg, u16 port);
+-void wg_socket_reinit(struct wg_device *wg, struct sock *new4,
+-		      struct sock *new6);
++int wg_socket_init(struct wg_device *wg, struct net *net, u16 port);
++void wg_socket_reinit(struct wg_device *wg, struct net *net,
++		      struct sock *new4, struct sock *new6);
+ int wg_socket_send_buffer_to_peer(struct wg_peer *peer, void *data,
+ 				  size_t len, u8 ds);
+ int wg_socket_send_skb_to_peer(struct wg_peer *peer, struct sk_buff *skb,
 -- 
 2.19.2
 
