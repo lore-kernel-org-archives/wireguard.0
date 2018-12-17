@@ -6,67 +6,65 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EE489C43387
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 17 Dec 2018 08:49:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E653C43387
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 17 Dec 2018 08:50:46 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 49C322084D
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 17 Dec 2018 08:49:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id CD9732084D
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 17 Dec 2018 08:50:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=diyism.com header.i=@diyism.com header.b="XuTathT6"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 49C322084D
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=diyism.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="X3PmF1+y"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org CD9732084D
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c578761e;
-	Mon, 17 Dec 2018 08:48:47 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 45f40482;
+	Mon, 17 Dec 2018 08:50:26 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6bf8de3d
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4bbdce3b
  for <wireguard@lists.zx2c4.com>;
- Mon, 17 Dec 2018 08:48:45 +0000 (UTC)
-Received: from mail-vs1-xe36.google.com (mail-vs1-xe36.google.com
- [IPv6:2607:f8b0:4864:20::e36])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ec4773a5
+ Mon, 17 Dec 2018 08:50:22 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5ca0a43d
  for <wireguard@lists.zx2c4.com>;
- Mon, 17 Dec 2018 08:48:45 +0000 (UTC)
-Received: by mail-vs1-xe36.google.com with SMTP id h78so7207731vsi.6
- for <wireguard@lists.zx2c4.com>; Mon, 17 Dec 2018 00:49:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=diyism.com; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=dpjpy7aCgOsfcOrrsratOvZeXrwtTRFftBQTtUpK9mg=;
- b=XuTathT6wud36koaYPnYw75ONAPrHxFG2pc7T6mgF0WvAWo0YX7iunGpc9xUHTKiRA
- CRoCgTB10IVI7qbsfkPZut2wjFWjrMiLacbO3JXpn7rYy7CPSQrkpBPnUItv9/C1EFAG
- lzcAn45ARk3gJBsBDznpoT03DhDWOE0+ux5Vs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=dpjpy7aCgOsfcOrrsratOvZeXrwtTRFftBQTtUpK9mg=;
- b=HDeiuDLp5GZxlWqD87NfnKnB0RJR8NyRAIkJsn9eWZtsfoTogFA2rVxuYqdXRKFkXq
- 4q0pNHJlPaK6xHRiVtttYpymifBOxL1LFVuMDQDv708yBBLWrMLNR/v+zlX0KRIDTYyM
- L+7Vymh0Y3s+r2bdRxV7NURuZOsifIMIrxCGfzIh5TqYdfspv+ZLPe+rnQTmTWZ/LMbu
- YRpMcKj7OXBzyAQFzBRNwkFVoR3wOrQyrTi4VuNMChGC7VOi9YPy9xEdSINbOUD16sZN
- ugVRnoDa289qPQgjrLxTfUMMLcJuek/VKku7rWHEc+iE+9ZM+/URHpBor/SWL5bwex6O
- IGjw==
-X-Gm-Message-State: AA+aEWY8zb55RQBlyH73E5Br8zgaWTUQ5o3IPhwxS1wnrEDdPVuDG/hC
- bnr5+3JWgxFZeeGMcUlINC1+/JIb0GJu9zwK5PRdQkXnIbG4zKVd
-X-Google-Smtp-Source: AFSGD/XIreOCdif1ngApPHdsreC5kwCyFVK9xBdOlh6NLUV0s2gRp26o8j2tLK8TtjEJw9JYL0S1BjsWyVgJCsMjcSM=
-X-Received: by 2002:a67:4a48:: with SMTP id x69mr5662035vsa.93.1545036542766; 
- Mon, 17 Dec 2018 00:49:02 -0800 (PST)
+ Mon, 17 Dec 2018 08:50:22 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3f4e8394
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 17 Dec 2018 08:41:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :references:in-reply-to:from:date:message-id:subject:to:cc
+ :content-type; s=mail; bh=lEQtgDefkDP+oNckfAz4Cv7lwWA=; b=X3PmF1
+ +yVTQLSGBxYxkxdnc4U7AJPCBpsrJNBLJVmWfs3SY09CYTd8GrYHaLeDLDv1OpKm
+ 5mLzm7N4k2et9Hfpb4YrPxpOp9WPyp1qidLeApm0M/X8TimbyHo9J1GrxQUSK+Gf
+ 7U87/hCNiwdOeBFLuQ1WWcAoBN89E3eS1wDCNXlElycLa+08GnPbMB+nHT5+OReo
+ qJ8Knj6cWH3KNKGN+hp17NivgufYM8b47dIeWRXQ1yXnb2KIGD+Dpthx3cK0vmo9
+ S3de7E71xkoXc8qz5fv8cUmDEY1IzjEq3d5rld/T8+bX1TUXbtd20ab21GLtEdi+
+ GVJQgAexoy8CJc7Q==
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 156f75e3
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 17 Dec 2018 08:41:08 +0000 (UTC)
+Received: by mail-ot1-f43.google.com with SMTP id s5so11420236oth.7
+ for <wireguard@lists.zx2c4.com>; Mon, 17 Dec 2018 00:50:40 -0800 (PST)
+X-Gm-Message-State: AA+aEWYuUei/XyZGiVW69gU5M7jazzqRZOgU9hbPIMUR67hqooFr0EBj
+ ijtQ9knCw+q/BzPioM8nFZr6GDFotJb9m2AZC/c=
+X-Google-Smtp-Source: AFSGD/VN9Agz7rCS4t2S6tBlOBrtpyIbRN8iTKYePx5awuXOboVUW7LyHejHw++9O0frqdRRv5XBCbe3mfSF8opIt4A=
+X-Received: by 2002:a9d:14e:: with SMTP id 72mr9394022otu.54.1545036640063;
+ Mon, 17 Dec 2018 00:50:40 -0800 (PST)
 MIME-Version: 1.0
 References: <CAKVinOVZ1nVJh8LvqGme5C27+R=AFBOxPKS22ckO7TEHsbc4-A@mail.gmail.com>
  <CAHmME9pzif4L4okrDMZdsLb73oXegaMvGHXKkY3twbw_wkYnug@mail.gmail.com>
  <CAKVinOXBxdFrTAiMaDmdE63iYO-rjBSAmBj5mb3QZ52zkmzoRQ@mail.gmail.com>
  <CAKVinOW_6qGYFT52LurdowOuaMD_fL=+WbTfSqr2qSspCkLoRA@mail.gmail.com>
 In-Reply-To: <CAKVinOW_6qGYFT52LurdowOuaMD_fL=+WbTfSqr2qSspCkLoRA@mail.gmail.com>
-From: "KeXianbin(http://diyism.com)" <kexianbin@diyism.com>
-Date: Mon, 17 Dec 2018 16:49:24 +0800
-Message-ID: <CAKVinOX5fnvdv1sBvxq=aV3+UpM-g9CnAU9rMu7zrx-WQ9rzVg@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Mon, 17 Dec 2018 09:50:28 +0100
+X-Gmail-Original-Message-ID: <CAHmME9qc=R5nT-KTyi6JZ_oZFPXk8k9cjTJgu-HWDZo9hniObA@mail.gmail.com>
+Message-ID: <CAHmME9qc=R5nT-KTyi6JZ_oZFPXk8k9cjTJgu-HWDZo9hniObA@mail.gmail.com>
 Subject: Re: [Question or Feature Request] Any wg1.conf option to limit peer
  IP as 1-to-1?
-To: Jason@zx2c4.com
+To: "KeXianbin(http://diyism.com)" <kexianbin@diyism.com>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
@@ -79,44 +77,87 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-U29ycnksCgpJIGZvdW5kIHRoZSBkZWZpbml0aW9uIGluIG1hbnVhbDoKQWxsb3dlZElQcyDigJQg
-YSBjb21tYS1zZXBhcmF0ZWQgbGlzdCBvZiBJUCAodjQgb3IgdjYpIGFkZHJlc3NlcyB3aXRoIENJ
-RFIgbWFza3MKZnJvbSB3aGljaCBpbmNvbWluZyB0cmFmZmljIGZvciB0aGlzIHBlZXIgaXMgYWxs
-b3dlZCBhbmQgdG8gd2hpY2gKb3V0Z29pbmcgdHJhZmZpYyBmb3IgdGhpcyBwZWVyIGlzIGRpcmVj
-dGVkCgpmcm9tOiBodHRwczovL21hbnBhZ2VzLmRlYmlhbi5vcmcvdW5zdGFibGUvd2lyZWd1YXJk
-LXRvb2xzL3dnLjguZW4uaHRtbAoKT24gTW9uLCBEZWMgMTcsIDIwMTggYXQgNDoxMCBQTSBLZVhp
-YW5iaW4oaHR0cDovL2RpeWlzbS5jb20pCjxrZXhpYW5iaW5AZGl5aXNtLmNvbT4gd3JvdGU6Cj4K
-PiBJdCBzZWVtcyB0aGF0ICJBbGxvd2VkSVBzIiBoYXZlIG5vdGhpbmcgdG8gZG8gd2l0aCByZWZ1
-c2luZyB1bndhbnR0ZWQgcGVlcidzIElQLgo+IEl0IG9ubHkgc3BlY2lmZXMgdGhlIG91dGdvaW5n
-IHRhcmdldCBJUHMsCj4gRm9yIGV4YW1wbGUsICBJIHNvbWV0aW1lcyBzZXQgIkFsbG93ZWRJUHM9
-MjE2LjU4LjAuMC8xOCIgdG8gZW5hYmxlIG1lCj4gdG8gdmlzaXQgaHR0cHM6Ly93d3cuZ29vZ2xl
-LmNvbSB0aHJvdWdoIHRoZSBpbnRlcm5ldCBvZiB0aGUgcGVlcgo+ICIxMC4xLjAuMyIuCj4gT24g
-TW9uLCBEZWMgMTcsIDIwMTggYXQgMzo1MyBQTSBLZVhpYW5iaW4oaHR0cDovL2RpeWlzbS5jb20p
-Cj4gPGtleGlhbmJpbkBkaXlpc20uY29tPiB3cm90ZToKPiA+Cj4gPiBPbiBteSBtYWNoaW5lKDEw
-LjEuMC4xKSwgZG9lcyB0aGUgb3B0aW9uICJBbGxvd2VkSVBzID0gMTAuMS4wLjMvMzIiIGluCj4g
-PiB3ZzEuY29uZiB0YWtlIGVmZmVjdHMgaW4gYm90aCBpbnB1dCBhbmQgb3VwdXQgZGlyZWN0aW9u
-cz8KPiA+IEl0IHNlZW1zIHRoYXQgIkFsbG93ZWRJUHMgPSAxMC4xLjAuMy8zMiIgb25seSBhZGRl
-ZCBpcCByb3V0ZSBydWxlCj4gPiAiMTAuMS4wLjMgZGV2IHdnMSAgc2NvcGUgbGluayIgb24gbXkg
-c2lkZSwKPiA+IGNhbiBpdCBwcmV2ZW50IHRoZSBwZWVyIHRvIHNlbmQgcGFja2V0cyB0byBteSAx
-MC4xLjAuMTo4MCBmcm9tIDEwLjEuMC40Pwo+ID4gT24gTW9uLCBEZWMgMTcsIDIwMTggYXQgMzo0
-MCBQTSBKYXNvbiBBLiBEb25lbmZlbGQgPEphc29uQHp4MmM0LmNvbT4gd3JvdGU6Cj4gPiA+Cj4g
-PiA+IE9uIE1vbiwgRGVjIDE3LCAyMDE4IGF0IDI6NDIgQU0gS2VYaWFuYmluKGh0dHA6Ly9kaXlp
-c20uY29tKQo+ID4gPiA8a2V4aWFuYmluQGRpeWlzbS5jb20+IHdyb3RlOgo+ID4gPiA+IEFsbG93
-ZWRJUHMgPSAxMC4xLjAuMy8zMgo+ID4gPiA+IFsuLi5dCj4gPiA+ID4gSWYgSSB3YW50IHRvIGxp
-bWl0IHRoZSBwZWVyIHRvIGEgZml4ZWQgSVAgMTAuMS4wLjMsIGFueSB3ZzEuY29uZgo+ID4gPiA+
-IE9QVElPTiB0byBjb25maWcgaXQ/Cj4gPiA+ID4KPiA+ID4gPiBDdXJyZW50bHksICB0aGUgcGVl
-ciBjYW4gc2V0IGFueSBJUCwgZm9yIGV4YW1wbGUgMTAuMS4wLjQsIGFuZCBjYW4KPiA+ID4gPiBz
-ZW5kIHBhY2tldHMgdG8gbXkgaHR0cDovLzEwLjEuMC4xOjgwIGZyb20gMTAuMS4wLjQuCj4gPiA+
-Cj4gPiA+IFNldHRpbmcgdGhhdCBwZWVyJ3MgYWxsb3dlZGlwcyB0byAxMC4xLjAuMy8zMiBzaG91
-bGQgYWNjb21wbGlzaAo+ID4gPiBleGFjdGx5IHdoYXQgeW91IHdhbnQ7IHRoYXQgcGVlciBpcyBf
-b25seV8gYWxsb3dlZCB0byBzZW5kIHBhY2tldHMgYXMKPiA+ID4gdGhhdCBJUC4gSWYgdGhlIHBl
-ZXIgYXR0ZW1wdHMgdG8gc2VuZCBwYWNrZXRzIGFzIDEwLjEuMC40LCBXaXJlR3VhcmQKPiA+ID4g
-c2hvdWxkIHJlamVjdCB0aG9zZSBwYWNrZXRzLiBJZiBpdCBkb2Vzbid0LCB0aGF0IHNvdW5kcyBs
-aWtlIGEgbWFqb3IKPiA+ID4gYnVnLgpfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fXwpXaXJlR3VhcmQgbWFpbGluZyBsaXN0CldpcmVHdWFyZEBsaXN0cy56eDJj
-NC5jb20KaHR0cHM6Ly9saXN0cy56eDJjNC5jb20vbWFpbG1hbi9saXN0aW5mby93aXJlZ3VhcmQK
+On Mon, Dec 17, 2018 at 9:10 AM KeXianbin(http://diyism.com)
+<kexianbin@diyism.com> wrote:
+>
+> It seems that "AllowedIPs" have nothing to do with refusing unwantted peer's IP.
+> It only specifes the outgoing target IPs,
+
+It should also refuse unwanted, as you wrote. From src/tests/netns.sh,
+we have this section:
+
+n1 wg set wg0 peer "$pub2" allowed-ips 192.168.241.0/24
+exec 4< <(n1 ncat -l -u -p 1111)
+ncat_pid=$!
+waitncatudp $netns1
+n2 ncat -u 192.168.241.1 1111 <<<"X"
+read -r -N 1 -t 1 out <&4 && [[ $out == "X" ]]
+kill $ncat_pid
+more_specific_key="$(pp wg genkey | pp wg pubkey)"
+n1 wg set wg0 peer "$more_specific_key" allowed-ips 192.168.241.2/32
+n2 wg set wg0 listen-port 9997
+exec 4< <(n1 ncat -l -u -p 1111)
+ncat_pid=$!
+waitncatudp $netns1
+n2 ncat -u 192.168.241.1 1111 <<<"X"
+! read -r -N 1 -t 1 out <&4 || false
+kill $ncat_pid
+n1 wg set wg0 peer "$more_specific_key" remove
+[[ $(n1 wg show wg0 endpoints) == "$pub2        [::1]:9997" ]]
+
+Would you propose a more specific test to reach the case you're experiencing?
+
+I also tried to reproduce your situation manually between two real
+computers without success:
+
+cannonball ~ # ip link add wg0 type wireguard
+cannonball ~ # wg set wg0 private-key <(wg genkey)
+
+thinkpad ~ # ip link add wg0 type wireguard
+thinkpad ~ # wg set wg0 private-key <(wg genkey) listen-port 51820
+peer fFLm5F2YxzkH0IB1p+r6NUwNqKw3sp09NtVdoWO1lHA= allowed-ips
+10.1.0.3/32
+
+cannonball ~ # wg set wg0 peer
+YKuR7SRtK4YsF//lqFNp4dSOYdAa6VTNvKFulgC0Vy4= allowed-ips 0.0.0.0/0
+endpoint 10.10.13.100:51820
+
+thinkpad ~ # ip address add 10.1.0.1/24 dev wg0
+thinkpad ~ # ip link set up dev wg0
+
+cannonball ~ # ip address add 10.1.0.3/24 dev wg0
+cannonball ~ # ip link set up dev wg0
+
+cannonball ~ # ping -q -c 1 10.1.0.1
+PING 10.1.0.1 (10.1.0.1) 56(84) bytes of data.
+
+--- 10.1.0.1 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 3.492/3.492/3.492/0.000 ms
+
+cannonball ~ # ip address flush dev wg0
+cannonball ~ # ip address add 10.1.0.4/24 dev wg0
+cannonball ~ # ping -q -c 1 10.1.0.1
+PING 10.1.0.1 (10.1.0.1) 56(84) bytes of data.
+
+--- 10.1.0.1 ping statistics ---
+1 packets transmitted, 0 received, 100% packet loss, time 0ms
+
+thinkpad ~ # dmesg | grep unallowed
+[17084.651723] wireguard: wg0: Packet has unallowed src IP (10.1.0.4)
+from peer 1 (10.10.13.108:47686)
+
+Therefore, I'm seeing the expected behavior. Can you show a similar
+sequence that demonstrates the bug you're reporting?
+
+Thanks,
+Jason
+_______________________________________________
+WireGuard mailing list
+WireGuard@lists.zx2c4.com
+https://lists.zx2c4.com/mailman/listinfo/wireguard
