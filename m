@@ -6,58 +6,64 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C679C43387
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  2 Jan 2019 18:20:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03EA0C43387
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  2 Jan 2019 18:27:30 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id B46AC218FC
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  2 Jan 2019 18:20:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 7FE7C218FC
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  2 Jan 2019 18:27:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="pWJUqxTH"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org B46AC218FC
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=bod.org header.i=@bod.org header.b="BikJRtnU"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 7FE7C218FC
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=bod.org
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ebc4e305;
-	Wed, 2 Jan 2019 18:18:18 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fa2f9bca;
+	Wed, 2 Jan 2019 18:24:44 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 461833e4
- for <wireguard@lists.zx2c4.com>; Wed, 2 Jan 2019 18:18:15 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c38bb101
- for <wireguard@lists.zx2c4.com>; Wed, 2 Jan 2019 18:18:15 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0107ed2c
- for <wireguard@lists.zx2c4.com>; Wed, 2 Jan 2019 18:09:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=W4G+B9+F3jcPWoXpjVoIAQNsh+4=; b=pWJUqx
- THtK6kiIbU0JiQqLk7ZIOE+c3TKMLn4f2fz6V6P+YcNS4skRS3dD4hVPyXAysbPK
- /GDQb6acziM5YVsXwL+QKX1nsfKZfA4xQDqGUyv4QKf36XesAfkCmAG/ZfPQixoA
- NiG6cXNjPzuJXF4t5ZtbvWYtgW7kZNYDts66CHtJ+rTPEjOvSSDWGco+uZ84++4b
- mKFRyr1UjGt2TsQ5hngkyzfkdIFQR3SZLJd422EjGXiosN8y77rmM/+1kg+DkRFs
- xmGp+1smxmeccSfFovsKihYm9b1UzKg/l755pjMh9wAAz01zdlYtku8prtr7RkEl
- NK0gZNs27/wP694A==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id aa8ebafd
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 2 Jan 2019 18:09:01 +0000 (UTC)
-Received: by mail-ot1-f49.google.com with SMTP id 40so27389450oth.4
- for <wireguard@lists.zx2c4.com>; Wed, 02 Jan 2019 10:20:40 -0800 (PST)
-X-Gm-Message-State: AJcUukelDmfC3WFZFvh6Q7T4plKNrsOwPgEFl55WuuzcA4dZslwg9ofQ
- BOr+u2i0BKYaWOMaDsBxHZQ1xQhLoPaaC/Sg5Dg=
-X-Google-Smtp-Source: ALg8bN6qxuFfhBvs9Oe67EHdoBa1cXmHz9jiF5+8G2XmApdy5+myfTvg6YRfdBH2XXcYD+v/N92Ui4aKxWtPkyFMASo=
-X-Received: by 2002:a9d:7e87:: with SMTP id m7mr33420068otp.225.1546453239446; 
- Wed, 02 Jan 2019 10:20:39 -0800 (PST)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d252d154
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 17 Dec 2018 04:25:26 +0000 (UTC)
+Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com
+ [IPv6:2607:f8b0:4864:20::d29])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f3afe324
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 17 Dec 2018 04:25:26 +0000 (UTC)
+Received: by mail-io1-xd29.google.com with SMTP id w21so9034946ioc.1
+ for <wireguard@lists.zx2c4.com>; Sun, 16 Dec 2018 20:25:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bod.org; s=default;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=mHTgQAH+13bsKVpLVdO6nITrAQExOZTZFP9tdkbU/Oc=;
+ b=BikJRtnUI6VA9eoUTunL7l+ZYI7TQc4HMsw5eYKXFI29jGZofSJyRPtAVe811Ok/7J
+ 2kohgvqSZ+3Be/srV0H2zM2W/8JVZxOm/xBVgGyVwGylZXNFRdb8ARtBkV5mHAX8L10v
+ AjGSFcC393c56cjwX1WtkwGze5O4y246gwszr246bsksmYTOfx7T/+YWr9VOHebi4zR+
+ PO3o3n7nRQVRfHkSNxwXISOzfsggFlm+GwIs2fd5hMFSACpzSD8DbswKDjQm/m+RpyKt
+ nNLWm+joFqPqdUorZM8EMkoyPDOqNtiIUK9azThhItZSQ7ZagOr7dw9onSAfZzzN41oQ
+ yuMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=mHTgQAH+13bsKVpLVdO6nITrAQExOZTZFP9tdkbU/Oc=;
+ b=pbgJDnr7uMIHO1HS7D3vccBteJzkY3Hd1LlVCt4KLadKAK/AaxCsjsW5XfbcOVmSya
+ YdQquUlj0viqRB2hik+IWgBJ+XXa5Z7r57uI65mRJSSA4QJLCD+oONmKS+6kxpXYhkIY
+ p3DELvw7NlyQbzi7B6XjcbJ2+z39UAYYOlf8v49i7bTJKIM6omqLdXI4wXewo7t9yEqC
+ 4TQ/KUavc2hN+l8Bk65qwcakudumpZz5b5JMyRMPdG4nJHOY+i0+XRwOWZ90dKBto4a6
+ 5pnJZOVsMeawUedRx0i9NSfkV4twSp0Q10wpDMDVA2qXyDsYuO1Tnw4hzK5Gvo4XjZ5M
+ u2uA==
+X-Gm-Message-State: AA+aEWaoJLNvS6qVXw5r/yC50TNdeAb6KZxBnk7hYtn/oIUu0/gi/lr5
+ NAb98R+ebjTqrmsyBMyhJplKIKQr8pyysR+tn9K08IVZrqrFfQ==
+X-Google-Smtp-Source: AFSGD/VJ/UAItg/jjbfwjF3JlZu/t4eq3KcBS1FZkv8mjKQmuM78orICbz9XF98qdpFWDS9uQpZyPDg33J+cNQIG/iI=
+X-Received: by 2002:a6b:919:: with SMTP id t25mr9586817ioi.207.1545020741839; 
+ Sun, 16 Dec 2018 20:25:41 -0800 (PST)
 MIME-Version: 1.0
-References: <478b9a56-d09e-5908-f253-a32985898072@1n6.org.uk>
-In-Reply-To: <478b9a56-d09e-5908-f253-a32985898072@1n6.org.uk>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 2 Jan 2019 19:20:28 +0100
-X-Gmail-Original-Message-ID: <CAHmME9oHGSXyhaRHPWM4B9=haKBFrNV5K7NwDWJPiW0jKfgi9A@mail.gmail.com>
-Message-ID: <CAHmME9oHGSXyhaRHPWM4B9=haKBFrNV5K7NwDWJPiW0jKfgi9A@mail.gmail.com>
-Subject: Re: Understanding Protocol / State Machine
-To: Iain Douglas <wireguard@1n6.org.uk>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: Paul Chambers <bod@bod.org>
+Date: Sun, 16 Dec 2018 20:25:31 -0800
+Message-ID: <CALfMqR4usxbVu4V5j+b-v0WCbwN-gUZvdz+ewz3Z7u7v3htV=A@mail.gmail.com>
+Subject: Access to existing services on host,
+ Wireguard for new outbound connections
+To: wireguard@lists.zx2c4.com
+X-Mailman-Approved-At: Wed, 02 Jan 2019 19:24:43 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -74,22 +80,43 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Wed, Jan 2, 2019 at 7:03 PM Iain Douglas <wireguard@1n6.org.uk> wrote:
-> 1. Handshake < 119 seconds ago the link takes ~ 15 seconds to recover
-> 2. Handshake between 120 and 179 seconds ago - 1st packet is lost then
-> link recovers
-> 3. Handshake >=180 second ago - link just works as normal.
+Sorry if this has been asked and answered - List archives and Googling
+have turned up all kinds of semi-related information, but frankly,
+taken en masse it's more confusing than helpful.
 
-For 1, it's hitting the timeout of detecting the dead peer before
-reestablishing the handshake, since it still believes it has a valid
-session.
-For 2, it's the same as 1, except that when sending packets when your
-current session is older than two minutes, it will start trying to
-create a new one. The way to think of this that sessions live
-optimally for only 2 minutes and maximally for 3.
-For 3, the current session is unusable and already cleared from
-memory, since it expired after 3 minutes, and so a new session is
-established before the packet is sent.
+I have a VPS running services that I continue to need to access (ssh,
+zabbix agent, etc.) while any new outbound connections originating on
+that host should go out over the wireguard VPN interface.
+
+In other words, established/related traffic to inbound connections to
+the public IP of the host should go back out the interface it arrived
+on (not the default route), while new outbound connections originating
+on the host should follow the default route (i.e. exit via the
+wireguard interface)
+
+My experiments are complicated by not being able to SSH into the VPS
+when wg-quick switches the default route, kind of a circular
+problem... I'm resorting to writing scripts that bring up the VPN, try
+something, then log information into files, then bring down the VPN
+connection again. Pretty tedious.
+
+One idea I haven't tried yet is if I use an iptables match for
+'related,established' traffic in the outbound table to set a fwmark,
+and use an 'ip route' rule to use that fwmark to switch to a table
+that's a copy of the routes/default route before wg-quick changed the
+routing.
+
+I've seen examples that use an 'ip rule' to set a fwmark on outbound
+traffic originating from the public wan interface, and 'ip route'
+rules to switch to another table for that traffic, which contains a
+copy of the ip routes before the default route was switched. But that
+technique doesn't seem to be working for me, and given the debugging
+challenges, I'm having a hard time figuring out why.
+
+Doesn't seem like a strange thing to want to do; any advice would be
+much appreciated.
+
+- Paul
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
