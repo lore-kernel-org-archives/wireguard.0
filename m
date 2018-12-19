@@ -2,81 +2,68 @@ Return-Path: <SRS0=QZLZ=PK=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_PASS,
+	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 04311C43387
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  2 Jan 2019 18:30:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 94C1EC43387
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  2 Jan 2019 18:46:46 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 65E4E21871
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  2 Jan 2019 18:30:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 36B8F218D3
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  2 Jan 2019 18:46:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=jakemoroni.com header.i=@jakemoroni.com header.b="BhBwCgA1";
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yiBbrVzp"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 65E4E21871
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=jakemoroni.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qZouuqUb"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 36B8F218D3
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 02322e17;
-	Wed, 2 Jan 2019 18:27:56 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1d7314c1;
+	Wed, 2 Jan 2019 18:44:09 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0ef62843
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 44486563
  for <wireguard@lists.zx2c4.com>;
- Sun, 30 Dec 2018 00:13:25 +0000 (UTC)
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
- [66.111.4.25])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 99400155
+ Wed, 19 Dec 2018 14:14:57 +0000 (UTC)
+Received: from mail-vk1-xa35.google.com (mail-vk1-xa35.google.com
+ [IPv6:2607:f8b0:4864:20::a35])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 54f1a983
  for <wireguard@lists.zx2c4.com>;
- Sun, 30 Dec 2018 00:13:24 +0000 (UTC)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.nyi.internal (Postfix) with ESMTP id 4A1252108A
- for <wireguard@lists.zx2c4.com>; Sat, 29 Dec 2018 19:15:20 -0500 (EST)
-Received: from web3 ([10.202.2.213])
- by compute3.internal (MEProxy); Sat, 29 Dec 2018 19:15:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jakemoroni.com;
- h=message-id:from:to:mime-version:content-transfer-encoding
- :content-type:date:subject; s=fm2; bh=pf+TLZNUJ90V45s3bLgXK5MRQh
- TPzVfnqT2H7oY5zTE=; b=BhBwCgA1r/pKrH3CTYBWZLqjtQdPpWEEHJrK6+dCey
- /ApEbMs1cZWiYHJR5+r0KwQamlfoThV61tGjcx4sbcOswMiFUU1a+UN1TKsT3v1R
- 42SmImU1+hgDKq1TIxF5wGj0N4ZfWWPBxB0kLkU5qxuxRqZsB7q2jb8DBbYr4LV2
- r5+rX4zPLTQ8O56maVkNIZCCzwFPd3uisfR5hNCd/D217YuQc9Y8CVtKB93hyoeT
- jbPL6bDOWKO9WUdKZHR+WaKpbhbxLUw/pezdNVN3zTQNt+FDA2JvRahockl+YTZn
- w4L3beXqQedg9f15zb/7chp5Z93dYz+YCPXyEh5fQcKQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=content-transfer-encoding:content-type
- :date:from:message-id:mime-version:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=pf+TLZ
- NUJ90V45s3bLgXK5MRQhTPzVfnqT2H7oY5zTE=; b=yiBbrVzpvzM6P4wY5EMR56
- o3/lBW8r9rjeh/Pdg7lcYsZMmHe93IZrriAXP626RZoa3umgVB9aKTzC7AQYDCd3
- JoSOWZpejLV4+sUzuIk02vYWRu3DFA5UUrNJPTuPEn1GikX4LdwTSRtYQ16YDxzR
- n7wrW0dsPtItGddRrTQGHm9i2KOs6qxqm0OCfyOXGMPyCwI9Y78xaop4GefoVjvM
- SVWDWle9svQW32XX7rc/ASpSlBP9OLy6Y1Na5hAGz7S7IDRP07z9QqSv5aPedo+B
- Zxuh/0Ut9Nk/K1KUIGlrJnDMhKMjYN8b24dOyzwi7W3M7cPVfklrMfEGuz0t+IZA
- ==
-X-ME-Sender: <xms:Fw4oXIg_TS82SenPVgqT4UFg2be14sO1WKVU1RWzS8VRfxBdTaKZeA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedtledrtdelgddvudculddtuddrgedtkedrtddtmd
- cutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfhuthen
- uceurghilhhouhhtmecufedttdenucenucfjughrpefkhffvggfgtgfofffusehtjeertd
- ertdejnecuhfhrohhmpedflfgrtghosgcuufdrucfoohhrohhnihdfuceomhgrihhlsehj
- rghkvghmohhrohhnihdrtghomheqnecurfgrrhgrmhepmhgrihhlfhhrohhmpehmrghilh
- esjhgrkhgvmhhorhhonhhirdgtohhmnecuvehluhhsthgvrhfuihiivgeptd
-X-ME-Proxy: <xmx:Fw4oXNUpA84b4PX2PBO0kvd6nBzl5JVonczMdRZyMsXfugZ3bA_cBA>
- <xmx:Fw4oXC03SeRgKr4tNDIA3YoP-KvaLs-tLUIA6rvC9QlZuVVzIv58vA>
- <xmx:Fw4oXLGLzrar-8SWHIB3mTmMF_7K09xvjdFVROB4QZlPWggyb9y_tQ>
- <xmx:GA4oXF8Ee4SuhMwYSPQvY5y2fhA87XKMRE9QGiRt-Ci3kOVb5s45vQ>
-Received: by mailuser.nyi.internal (Postfix, from userid 99)
- id 873939E564; Sat, 29 Dec 2018 19:15:19 -0500 (EST)
-Message-Id: <1546128919.1294828.1620911976.12CFA382@webmail.messagingengine.com>
-From: "Jacob S. Moroni" <mail@jakemoroni.com>
-To: wireguard@lists.zx2c4.com
+ Wed, 19 Dec 2018 14:14:57 +0000 (UTC)
+Received: by mail-vk1-xa35.google.com with SMTP id h128so4516560vkg.11
+ for <wireguard@lists.zx2c4.com>; Wed, 19 Dec 2018 06:15:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=A8lbaRuCf1awx/aRsvwQgXUEGinGt7zhg2b6yfdli5U=;
+ b=qZouuqUbuu9jH+0jGUaUDQmYOhgNXhUpKKlB/CHpBXE+p16iiRndA5xICjQ/C8Ls88
+ wzDRnFnh/lfR9TXBQ6K+08Mpegwy5lluASU0egCHpz8+dcn4PZpUgF/2u2F9XjDO8pF0
+ osj6wnJZTsSaspxQWLQv1YDyoto4bolcTX48/uZTfLNqr3YVJLiBHaN6Q1q7o37RAysj
+ XoL5tnGAw3ffmQGHRG7pUoTaLFMpgDiDbqbeIYMHnovSW9BHW3hdiVmR1xRGKz6GTmy1
+ odP3b3tyYoO69/YhlOJtxgVYLegZsLVyzO0ga5/cgCrkFzYm3ieOsbTHMruw1rcBDoNh
+ ka/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=A8lbaRuCf1awx/aRsvwQgXUEGinGt7zhg2b6yfdli5U=;
+ b=EZGkDn9gfHgneK6rhtcw8AgJ4paNu5SM+HViCLQg5FXCaFvnODkH6AfXNsyQjWsMnJ
+ 7/PSIPJQUZlcQpMkMoIPib6Bq2L1gtkx2SJibqFZUvcxppBtQPnh+n7lawWrAQjo0N/G
+ HAS+L2+J0aYK/UHfc7UXEf6WldUnTbegY4hcQ5YvVD6bQdaOnfaMyjiWiUSxJaTMURgT
+ Fa+3fyuQYWKUEf+pbZ7RIdZfnkcOlxjO5Vzpj3AvqPr82XX9mOjbgOkqoy6NC5ruxlms
+ UKRUCPcVDiaNRC8hOXHv1OKDG0I+n9DzK+f1mcTy2Gnx6HjsRF7dsW8YJutuHRqHOOaf
+ rEUQ==
+X-Gm-Message-State: AA+aEWY1h8iRgM8+zNVSY7DxKXdIATAvfOW7287zo0bGKNIzLvknfkE2
+ VDJ3ElmdQpoJsf0xBeaEzaD7n21CDQ4yCuQWBbw78RP2
+X-Google-Smtp-Source: AFSGD/U5yOiJj/qoA26UFVQPlh5gYcQwhsBdqjz2gBDjxHHnNInAgDurQrr2F2omA1/4vDcy0bmgUXxcjmCGHwYV3v0=
+X-Received: by 2002:a1f:82c2:: with SMTP id e185mr9408334vkd.22.1545228931224; 
+ Wed, 19 Dec 2018 06:15:31 -0800 (PST)
 MIME-Version: 1.0
-X-Mailer: MessagingEngine.com Webmail Interface - ajax-2f590f9a
-Date: Sat, 29 Dec 2018 19:15:19 -0500
-Subject: WireGuard iOS Client Issue
-X-Mailman-Approved-At: Wed, 02 Jan 2019 19:27:55 +0100
+From: Subin Abid <subinabid@gmail.com>
+Date: Wed, 19 Dec 2018 19:45:18 +0530
+Message-ID: <CAOAvjy2V3WBFOtKp6dKztFh3gYHwW4=sfnz_ZxtRvDM=9fwQpw@mail.gmail.com>
+Subject: Google Chromecast
+To: wireguard@lists.zx2c4.com
+X-Mailman-Approved-At: Wed, 02 Jan 2019 19:44:09 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -88,94 +75,48 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="===============4506288160534350230=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
+--===============4506288160534350230==
+Content-Type: multipart/alternative; boundary="0000000000008ad82c057d60a536"
+
+--0000000000008ad82c057d60a536
+Content-Type: text/plain; charset="UTF-8"
+
 Hello,
 
-I'm experiencing a small issue with the WireGuard iOS client (beta, from
-the App Store), but I'm not really sure if the issue is with the WireGuard
-client or iOS itself.
+Android device (using Home app) cannot connect to chromecast while the
+device is connected to VPN. Is anyone else facing this problem?
 
-Sorry if this is verbose; it's kind of cumbersome to explain.
-
-Basically, what I found is that if there's, for example, a website being
-hosted on the same IP as the VPN server, any access to the site (on the
-client) will fail while connected to the VPN. What's interesting is that it
-always fails while using the "always on" mode, but _sometimes_ works if
-using "on demand" mode.
-
-I'm no iOS developer, but a cursory search leads me to believe that
-the two ways of handling VPNs on iOS are fundamentally different.
-
-For example, when using "on demand" mode, certain Apple services
-will bypass the VPN, but this will not occur if using "always on" mode.
-
-I have absolutely no idea how the routing works on iOS, but my best
-guess is that maybe any accesses to the same IP as the VPN server
-are handled explicitly outside of the tunnel and this is somehow breaking
-things if you try to access the server by any means other than the VPN
-client?
-
-My setup:
-
-- Linux server behind NAT with ports 80, 443, and UDP 51820 forwarded.
-- WireGuard server running on Linux server.
-- Web server also running on same Linux server.
-- Hairpin route on the router to allow devices on the LAN to access
-  the website via it's public IP.
-- Masquerade rule and IP forwarding enabled on the Linux server to
-  allow WireGuard clients to access the LAN and Internet.
-- iPhone 8 (T-Mo) running the latest WireGuard client app from the App Store.
-- "On Demand" option disabled.
-
-What works:
-
-- When VPN is disabled and the phone is on LTE, I can access the website
-  via its public IP without issue.
-- When VPN is disabled and the phone is on LAN, I can access the website
-  via both its public and private LAN IP.
-- I can connect to the VPN server without issue both from LTE and from
-  LAN.
-- When VPN is enabled, I can access any public IP through the VPN from
-  both LAN and LTE (except the server's, sort of...).
-- When VPN is enabled, I can access the website from the server's LAN IP.
-
-The issue:
-
-- When VPN is enabled, I can't access the website from the server's
-  public IP.
-
-My tests:
-
-- I ran Wireshark on the server's wg0 interface while attempting to
-  ping various IPs from the iPhone while it was connected to the VPN.
-- I was able to ping _any_ IP from the iPhone without issue.
-- I can see the ICMP messages on Wireshark for every IP that I
-  ping _except_ for when I ping the server's public IP.
-
-So, the fact that pinging any IP worked, and I can see them all
-in Wireshark except for when I ping the server's IP leads me to
-believe that those messages are being routed outside of the tunnel,
-which itself seems kind of obvious, but doesn't explain why accesses
-to the website don't work.
-
-Thoughts?
-
-As a side note, apart from this issue, the WireGuard iOS client has been
-working very well. I'm using a mixture of T-Mobile LTE and WiFi, and I haven't
-had any issues switching back and forth.
-
-Also, WiFi calling works through the VPN, which might seem obvious, but was
-impressive to me since WiFi calling barely works on a regular LAN WiFi connection...
-
-Thanks,
 -- 
-  Jacob S. Moroni
-  mail@jakemoroni.com
+Subin Abid
+
+--0000000000008ad82c057d60a536
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div class=3D"gmail_default" style=3D"font-family:arial,he=
+lvetica,sans-serif">Hello,</div><div class=3D"gmail_default" style=3D"font-=
+family:arial,helvetica,sans-serif"><br></div><div class=3D"gmail_default" s=
+tyle=3D"font-family:arial,helvetica,sans-serif">Android device (using Home =
+app) cannot connect to chromecast while the device is connected to VPN. Is =
+anyone else facing this problem?</div><div><br></div>-- <br><div dir=3D"ltr=
+" class=3D"gmail_signature" data-smartmail=3D"gmail_signature"><div dir=3D"=
+ltr">Subin Abid=C2=A0<div><br></div></div></div></div>
+
+--0000000000008ad82c057d60a536--
+
+--===============4506288160534350230==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--===============4506288160534350230==--
