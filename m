@@ -2,64 +2,70 @@ Return-Path: <SRS0=QZLZ=PK=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,
+	MIME_HTML_MOSTLY,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A025EC43387
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  2 Jan 2019 19:27:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 508D6C43387
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  2 Jan 2019 19:29:11 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id EC241218D3
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  2 Jan 2019 19:27:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id C3FFB218D3
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  2 Jan 2019 19:29:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=me.com header.i=@me.com header.b="UwCuwEsI"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org EC241218D3
-Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=me.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G0tzkc1N"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org C3FFB218D3
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cbf9d094;
-	Wed, 2 Jan 2019 19:25:12 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c4ca3b01;
+	Wed, 2 Jan 2019 19:26:03 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a89e1411
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 26c7f823
  for <wireguard@lists.zx2c4.com>;
- Tue, 25 Dec 2018 11:53:38 +0000 (UTC)
-Received: from mr85p00im-ztdg06021701.me.com (mr85p00im-ztdg06021701.me.com
- [17.58.23.196])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5ceabaad
+ Thu, 20 Dec 2018 04:55:28 +0000 (UTC)
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com
+ [IPv6:2a00:1450:4864:20::231])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3cd4caf1
  for <wireguard@lists.zx2c4.com>;
- Tue, 25 Dec 2018 11:53:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=04042017;
- t=1545738897; bh=teO9PkSYZ485Q8Lq3N/o+kJ4+QVPkN5f7doHx335q5k=;
- h=To:From:Subject:Message-ID:Date:MIME-Version:Content-Type;
- b=UwCuwEsIZh0kpo+EKVQr0l/Yv1RIWKYYEfTHr2cUYr4SFq4XkMk4wsSA6kSsBRQqy
- 3gzLQjcix4eMLClG/k/eBHsP20CQtPEzRg6wXX5Io0jdj87KmMQYWj0TbeOzm7QG7E
- 5UNqJqarkEjbXrRILrQMHOytDVHRQ66CmAA2K7HY4nlKLoSz5JuO8+5gRrvj8FzeQn
- 9coojjE0aTmFd8RyzeFe9mbp51zEO7IxCbXpGt+44Lo12XBAzhp7Odu2aBjLX4AZ9c
- 7VzvntKoF1F3kbXU/paY+9n9e0ODxDqLaam5QlW9NETRUAFg6HPCjrnziGv7Zyz3cL
- 6RhA9ZrPHF5dQ==
-Received: from brigid.local (unknown [75.3.244.127])
- by mr85p00im-ztdg06021701.me.com (Postfix) with ESMTPSA id 8E201A00058;
- Tue, 25 Dec 2018 11:54:57 +0000 (UTC)
-To: wireguard@lists.zx2c4.com
-From: Shankar Ramamoorthy <shankar@me.com>
-Subject: Problems on MacOS (Mojave)
-Message-ID: <17359ea7-e029-bfac-10d5-213faa7b2c0e@me.com>
-Date: Tue, 25 Dec 2018 03:54:56 -0800
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
- Gecko/20100101 Thunderbird/60.3.3
+ Thu, 20 Dec 2018 04:55:28 +0000 (UTC)
+Received: by mail-lj1-x231.google.com with SMTP id g11-v6so368482ljk.3
+ for <wireguard@lists.zx2c4.com>; Wed, 19 Dec 2018 20:56:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=2gn9yaGDRUxyRJSAR9WdUjKYdLlsM4AxcvHhG29wOtM=;
+ b=G0tzkc1Nea7s3AMgJf90eGkwL3ZGa5rl46/+GVsz49NcUUfn4GGRAYXoGoERr8hxtH
+ Kzf6pKZNzQ5Vy9CBxL6dx089UKSeJTKWD43DEU5kyvlLs2w2GA4bJgcJ0WiJTOe7QK0K
+ bwv3jUX7jSvW4runsHyQudEDSQhB2bAorsJynNoU6Xug748jvXbFFnhKpDbxlwf/Wq4F
+ 423D7A3PQB28OfXMVHL02OApZ0/t0lJnKpq9kjF9t898ZxtgAmNXKAa5WO7fC5F9ZWiQ
+ /rHw7O3B5tHjE1Hl2FLSHIA+yHX9u3sfNWM/f+mx4MZlMzDppaAgvSCGFse1AHI15PmJ
+ Eoxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=2gn9yaGDRUxyRJSAR9WdUjKYdLlsM4AxcvHhG29wOtM=;
+ b=cbg2iLxkAqiUW06+qD8WVteAHY3u8QiOgyZ1PAzh84rcu8QdkibxKcMVY8GEbbVOhL
+ OdIuO0gkBVT5lEBPWfF7R9zu2Yd8WW9E8GTr3zHT2AS1w8RR39TR6uJOCmtwBsBrIPbL
+ 2O27Li1MH4r+xB8wnOY1EEESOw2MNwLLvurjqQS9aiRHyJ3fHdhlLNAs+hATrfcnkXrm
+ //bqvJQTW8N8TLn7D8bCXzTXUtAoP3d5CFdkCN9W0CJYlat0QcRc8qcBUdCdZgTDZoG3
+ Ei223tzRi+8PjCBVl6b+MsWOo2uUVJv5NTb66pnfNkV21NRSsYX6Tr1tlVLthHJjFoH2
+ 66Mg==
+X-Gm-Message-State: AA+aEWYTatozL7odTIWDSxQNO8zCkAtrr6613oTBoG0XYrk31XlvHtoc
+ 9J9BZkMM/Of5VKaqW2echnUsmJWzR1jghFAEEeRzNC+6kpqlgg==
+X-Google-Smtp-Source: AFSGD/U+g6IU+Ps0yy4aRO/o9ifLQM1dPzvVqIwfqf7kbzj1PiZTnbAuXXw8ZC5+XLOuWQiqAhiPjGhnwqZ3+IykdtA=
+X-Received: by 2002:a2e:21a9:: with SMTP id
+ h41-v6mr14003854lji.103.1545281766272; 
+ Wed, 19 Dec 2018 20:56:06 -0800 (PST)
 MIME-Version: 1.0
-Content-Language: en-US
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2018-12-25_07:, , signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=1
- malwarescore=0
- phishscore=0 bulkscore=0 spamscore=0 clxscore=1011 mlxscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1807170000 definitions=main-1812250108
-X-Mailman-Approved-At: Wed, 02 Jan 2019 20:25:10 +0100
+From: xin li <sadoneli@gmail.com>
+Date: Thu, 20 Dec 2018 12:55:24 +0800
+Message-ID: <CADZPQWi0+5dh-zK4Tdn_qyyvizfVtBNtUkKMxL6f_VaP9HVHYQ@mail.gmail.com>
+Subject: BLOG ERROR blog_request error on ASUS router with kernel 4.1.27
+To: wireguard@lists.zx2c4.com
+X-Mailman-Approved-At: Wed, 02 Jan 2019 20:26:02 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -71,73 +77,637 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: multipart/mixed; boundary="===============4504862425266455082=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-SW5zdGFsbGVkIFdpcmVndWFyZCB2aWEgTWFjUG9ydHMgb24gbWFjaGluZSBydW5uaW5nIG1hY09T
-IE1vamF2ZSAxMC4xNC4yLgoKSXQgd29ya2VkIHRoZSB2ZXJ5IGZpcnN0IHRpbWUsIGJ1dCBoYXZl
-bid0IGJlZW4gYWJsZSB0byBnZXQgaXQgdG8gd29yawpzaW5jZS4KCkFueSBoZWxwIG9yIHN1Z2dl
-c3Rpb25zIGFwcHJlY2lhdGVkLiBHb3J5IGRldGFpbHMgYmVsb3cuCgpNYWNoaW5lczogMTkyLjE2
-OC4xMS40NCAobWFjb3MsIDE5Mi4xNjguMS4yKSBhbmQgMTkyLjE2OC4xMS4xNSAoRGViaWFuLAox
-OTIuMTY4LjEuMSkKCkkga25vdyB0aGF0IFdpcmVndWFyZCBvbiB0aGUgRGViaWFuIGJveCBpcyB3
-b3JraW5nIHByb3Blcmx5IGJlY2F1c2UgSQpjYW4gY29ubmVjdCB0byBpdCBmcm9tIGEgZGlmZmVy
-ZW50IHBlZXIuCgptYWNvcyBjb25maWc6CltJbnRlcmZhY2VdCkFkZHJlc3MgPSAxOTIuMTY4LjEu
-Mi8yNApQcml2YXRlS2V5ID0ga0piV0xWWDZ0aitQeFY5ZUtUWjBnNGFrSGlQRk9yZVV3c3FzRHJS
-WEptbz0KTGlzdGVuUG9ydCA9IDIyMDAKCltQZWVyXQpQdWJsaWNLZXkgPSBIK1JMaW93Uk9qMTQz
-WGpuL1A4N1I0cWNTbXQrWDdST2FQVnpYWXJZYjFVPQpBbGxvd2VkSVBzID0gMC4wLjAuMC8wLCA6
-Oi8wCkVuZHBvaW50ID0gMTkyLjE2OC4xMS4xNToyMjAwCiMgVGhpcyBpcyBmb3IgaWYgeW914oCZ
-cmUgYmVoaW5kIGEgTkFUIGFuZCB3YW50IHRoZSBjb25uZWN0aW9uIHRvIGJlIGtlcHQKYWxpdmUu
-ClBlcnNpc3RlbnRLZWVwYWxpdmUgPSAyNQoKRGViaWFuIGNvbmZpZzoKW0ludGVyZmFjZV0KUHJp
-dmF0ZUtleSA9IHVNWnp5NDU4aHdlZWh5RmZENFBlbkt3c0gxL2JLSFNuMGF5T1dMa25sMlU9Ckxp
-c3RlblBvcnQgPSAyMjAwCgpbUGVlcl0KUHVibGljS2V5ID0gdU0zT3lrRjk0SW9yM0NuUnVkTjZB
-d0g0ek5xTjhWaDdDd2N1d1FhQ3QzRT0KQWxsb3dlZElQcyA9IDAuMC4wLjAvMApFbmRwb2ludCA9
-IDE5Mi4xNjguMTEuNDQ6MjIwMAojIFRoaXMgaXMgZm9yIGlmIHlvdeKAmXJlIGJlaGluZCBhIE5B
-VCBhbmQgd2FudCB0aGUgY29ubmVjdGlvbiB0byBiZSBrZXB0CmFsaXZlLgpQZXJzaXN0ZW50S2Vl
-cGFsaXZlID0gMjUKCk91dHB1dCBvZiAic3VkbyB3Zy1xdWljayB1cCB+Ly5jb25maWcvd2lyZWd1
-YXJkL3dnMC5jb25mIjoKSU5GTzogKHV0dW4xKSAyMDE4LzEyLzI1IDAzOjQ3OjM1IFN0YXJ0aW5n
-IHdpcmVndWFyZC1nbyB2ZXJzaW9uIDAuMC4yMDE4MTIyMgpbK10gSW50ZXJmYWNlIGZvciB3ZzAg
-aXMgdXR1bjEKWyNdIHdnIHNldGNvbmYgdXR1bjEgL2Rldi9mZC82MwpbI10gaWZjb25maWcgdXR1
-bjEgaW5ldCAxOTIuMTY4LjEuMi8yNCAxOTIuMTY4LjEuMiBhbGlhcwpbI10gaWZjb25maWcgdXR1
-bjEgdXAKWyNdIHJvdXRlIC1xIC1uIGFkZCAtaW5ldDYgOjovMSAtaW50ZXJmYWNlIHV0dW4xCnJv
-dXRlOiB3cml0aW5nIHRvIHJvdXRpbmcgc29ja2V0OiBOZXR3b3JrIGlzIHVucmVhY2hhYmxlClsj
-XSByb3V0ZSAtcSAtbiBhZGQgLWluZXQ2IDgwMDA6Oi8xIC1pbnRlcmZhY2UgdXR1bjEKcm91dGU6
-IHdyaXRpbmcgdG8gcm91dGluZyBzb2NrZXQ6IE5ldHdvcmsgaXMgdW5yZWFjaGFibGUKWyNdIHJv
-dXRlIC1xIC1uIGFkZCAtaW5ldCAwLjAuMC4wLzEgLWludGVyZmFjZSB1dHVuMQpbI10gcm91dGUg
-LXEgLW4gYWRkIC1pbmV0IDEyOC4wLjAuMC8xIC1pbnRlcmZhY2UgdXR1bjEKWyNdIHJvdXRlIC1x
-IC1uIGFkZCAtaW5ldCAxOTIuMTY4LjExLjE1IC1nYXRld2F5IDE5Mi4xNjguMTEuMQpbK10gQmFj
-a2dyb3VuZGluZyByb3V0ZSBtb25pdG9yCgppZmNvbmZpZyBmb3IgdXR1bjAgYW5kIHV0dW4xOgp1
-dHVuMDogZmxhZ3M9ODA1MDxQT0lOVE9QT0lOVCxSVU5OSU5HLE1VTFRJQ0FTVD4gbXR1IDIwMDAK
-wqDCoMKgIGluZXQ2IGZlODA6OjY0MzE6MTM4ZDozNTMwOmM2OTYldXR1bjAgcHJlZml4bGVuIDY0
-IHNjb3BlaWQgMHhiCsKgwqDCoCBpbmV0IDE5Mi4xNjguMS4yIC0tPiAxOTIuMTY4LjEuMSBuZXRt
-YXNrIDB4ZmZmZmZmMDAKwqDCoMKgIG5kNiBvcHRpb25zPTIwMTxQRVJGT1JNTlVELERBRD4KdXR1
-bjE6IGZsYWdzPTgwNTE8VVAsUE9JTlRPUE9JTlQsUlVOTklORyxNVUxUSUNBU1Q+IG10dSAxNDIw
-CsKgwqDCoCBpbmV0IDE5Mi4xNjguMS4yIC0tPiAxOTIuMTY4LjEuMiBuZXRtYXNrIDB4ZmZmZmZm
-MDAKCk91dHB1dCBvZiAibmV0c3RhdCAtYW4gfCBncmVwIHV0dW4iOgpuZXRzdGF0IC1ybiB8IGdy
-ZXAgdXR1bgowLzHCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgdXR1bjHCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoCBVU2PCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIDY3wqDCoMKgwqDCoMKg
-wqAgMMKgwqAKdXR1bjHCoMKgwqDCoMKgwqAKMTI4LjAvMcKgwqDCoMKgwqDCoMKgwqDCoMKgwqAg
-dXR1bjHCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBVU2PCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqAgMsKgwqDCoMKgwqDCoMKgIDDCoMKgCnV0dW4xwqDCoMKgwqDCoMKgCjE5Mi4xNjguMS4ywqDC
-oMKgwqDCoMKgwqAgMTkyLjE2OC4xLjLCoMKgwqDCoMKgwqDCoCBVSMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgIDDCoMKgwqDCoMKgwqDCoCAwwqDCoAp1dHVuMcKgwqDCoMKgwqDCoApkZWZhdWx0
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoCBmZTgwOjoldXR1bjDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oApVR2NJwqDCoMKgwqDCoMKgwqDCoMKgIHV0dW4wwqDCoMKgwqDCoMKgCmZlODA6OiV1dHVuMC82
-NMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBmZTgwOjo2
-NDMxOjEzOGQ6MzUzMDpjNjk2JXV0dW4wClVjScKgwqDCoMKgwqDCoMKgwqDCoMKgIHV0dW4wwqDC
-oMKgwqDCoMKgCmZlODA6OjY0MzE6MTM4ZDozNTMwOmM2OTYldXR1bjDCoMKgwqDCoMKgwqDCoMKg
-IGxpbmsjMTHCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAK
-VUhMScKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgbG8wwqDCoMKgwqDCoMKgCmZmMDE6OiV1dHVuMC8z
-MsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBmZTgwOjo2
-NDMxOjEzOGQ6MzUzMDpjNjk2JXV0dW4wClVtQ0nCoMKgwqDCoMKgwqDCoMKgwqAgdXR1bjDCoMKg
-wqDCoMKgwqAKZmYwMjo6JXV0dW4wLzMywqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgIGZlODA6OjY0MzE6MTM4ZDozNTMwOmM2OTYldXR1bjAKVW1DScKgwqDC
-oMKgwqDCoMKgwqDCoCB1dHVuMMKgwqDCoMKgCgpCb3RoICJwaW5nIDE5Mi4xNjguMS4xIiBhbmQg
-InBpbmcgMTkyLjE2OC4xLjIiIHJlcG9ydCBSZXF1ZXN0IHRpbWVvdXQuCgpJJ20gYWxzbyBub3Qg
-YWJsZSB0byBnZXQgcmlkIG9mIHRoZSB1dHVuMCBpbnRlcmZhY2UsIHdoaWNoIGRpZCBub3QgZXhp
-c3QKYmVmb3JlIFdpcmVndWFyZCBJIHRoaW5rLgpTaGFua2FyCl9fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fCldpcmVHdWFyZCBtYWlsaW5nIGxpc3QKV2lyZUd1
-YXJkQGxpc3RzLnp4MmM0LmNvbQpodHRwczovL2xpc3RzLnp4MmM0LmNvbS9tYWlsbWFuL2xpc3Rp
-bmZvL3dpcmVndWFyZAo=
+--===============4504862425266455082==
+Content-Type: multipart/alternative; boundary="000000000000c1b459057d6cf238"
+
+--000000000000c1b459057d6cf238
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+I=E2=80=99am using ASUS GT-AC5300 router, which is broadcom based platform.=
+ I build
+my own firmware from ASUS  GT-AC5300  GPL source code with wireguard
+support in kernel. Wireguard works on my router and the speed is really
+fast, However, there are two problem emerged during the configuration and
+running.
+
+1. When making keys=EF=BC=8C Bus error happened every time. So I have to ma=
+ke my
+client key on server side.
+admin@GT-AC5300:/tmp/home/root# umask 077
+admin@GT-AC5300:/tmp/home/root# wg genkey > private-key
+admin@GT-AC5300:/tmp/home/root# wg pubkey < private-key > public-key
+Bus error
+
+2. while wireguard running, sometimes it disconnect happened and I
+can,t access VPN network=EF=BC=8Cthe flowing message emerged:
+41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02c552380  dir=3D0 old_key=3D0x20000384 new_key=3D0x2000038a
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02c552380  dir=3D0 old_key=3D0x2000038a new_key=3D0x200003ae
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02b3dddd0  dir=3D0 old_key=3D0x20000433 new_key=3D0x20000436
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02b3dddd0  dir=3D0 old_key=3D0x20000436 new_key=3D0x20000469
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02b3dddd0  dir=3D0 old_key=3D0x20000469 new_key=3D0x2000046a
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02b3dddd0  dir=3D0 old_key=3D0x2000046a new_key=3D0x2000046b
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02b3dddd0  dir=3D0 old_key=3D0x2000046b new_key=3D0x2000046c
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02b3dddd0  dir=3D0 old_key=3D0x2000046c new_key=3D0x2000046d
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02b3dddd0  dir=3D0 old_key=3D0x2000046d new_key=3D0x2000046e
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02b3dddd0  dir=3D0 old_key=3D0x2000046e new_key=3D0x20000471
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02b3dddd0  dir=3D0 old_key=3D0x20000471 new_key=3D0x20000472
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02b3dddd0  dir=3D0 old_key=3D0x20000472 new_key=3D0x20000477
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02b3dddd0  dir=3D0 old_key=3D0x20000477 new_key=3D0x20000479
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02b3dddd0  dir=3D0 old_key=3D0x20000479 new_key=3D0x2000047a
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02b3dddd0  dir=3D0 old_key=3D0x2000047a new_key=3D0x2000047b
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02b3dddd0  dir=3D0 old_key=3D0x2000047b new_key=3D0x2000047c
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02b3dddd0  dir=3D0 old_key=3D0x2000047c new_key=3D0x20000499
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02b3dddd0  dir=3D0 old_key=3D0x20000499 new_key=3D0x20000562
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02c552380
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02b3dddd0  dir=3D0 old_key=3D0x20000562 new_key=3D0x20000569
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02b3dddd0  dir=3D0 old_key=3D0x20000569 new_key=3D0x2000056d
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02ac08010  dir=3D0 old_key=3D0x2000058f new_key=3D0x20000590
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02ac08010  dir=3D0 old_key=3D0x20000590 new_key=3D0x20000591
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02ac08010  dir=3D0 old_key=3D0x20000591 new_key=3D0x20000592
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02ac08010  dir=3D0 old_key=3D0x20000592 new_key=3D0x20000594
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02ac08010  dir=3D0 old_key=3D0x20000594 new_key=3D0x20000595
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02ac08010  dir=3D0 old_key=3D0x20000595 new_key=3D0x20000596
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02ac08010  dir=3D0 old_key=3D0x20000596 new_key=3D0x20000598
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02ac08010  dir=3D0 old_key=3D0x20000598 new_key=3D0x20000599
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02ac08010  dir=3D0 old_key=3D0x20000599 new_key=3D0x2000059a
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02ac08010  dir=3D0 old_key=3D0x2000059a new_key=3D0x2000059b
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02ac08010  dir=3D0 old_key=3D0x2000059b new_key=3D0x2000059c
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02ac08010  dir=3D0 old_key=3D0x2000059c new_key=3D0x2000059d
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02ac08010  dir=3D0 old_key=3D0x2000059d new_key=3D0x2000059e
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02ac08010  dir=3D0 old_key=3D0x2000059e new_key=3D0x200005a0
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02ac08010  dir=3D0 old_key=3D0x200005a0 new_key=3D0x200005a1
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02ac08010  dir=3D0 old_key=3D0x200005a1 new_key=3D0x200005a2
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02c552380
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02e981010  dir=3D0 old_key=3D0x20000604 new_key=3D0x20000605
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02e981010  dir=3D0 old_key=3D0x20000605 new_key=3D0x20000606
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02e981010  dir=3D0 old_key=3D0x20000606 new_key=3D0x20000607
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02e981010  dir=3D0 old_key=3D0x20000607 new_key=3D0x2000060a
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02e981010  dir=3D0 old_key=3D0x2000060a new_key=3D0x2000060c
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02e981010  dir=3D0 old_key=3D0x2000060c new_key=3D0x2000060e
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02e981010  dir=3D0 old_key=3D0x2000060e new_key=3D0x2000060f
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02b3dddd0
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02b3dddd0
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02b3dddd0
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02b3dddd0
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02b3dddd0
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02b3dddd0
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02b27c010  dir=3D0 old_key=3D0x20000683 new_key=3D0x20000684
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02b3dddd0
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02b27c010  dir=3D0 old_key=3D0x20000684 new_key=3D0x20000693
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02c4796f0  dir=3D0 old_key=3D0x200006cd new_key=3D0x200006db
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02b3dddd0
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02c4796f0  dir=3D0 old_key=3D0x200006db new_key=3D0x200006e3
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02b3dddd0
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02c4796f0  dir=3D0 old_key=3D0x200006e3 new_key=3D0x200006e9
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02c4796f0  dir=3D0 old_key=3D0x200006e9 new_key=3D0x200006ea
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02c4796f0  dir=3D0 old_key=3D0x200006ea new_key=3D0x200006eb
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02c4796f0  dir=3D0 old_key=3D0x200006eb new_key=3D0x200006ec
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02c4796f0  dir=3D0 old_key=3D0x200006ec new_key=3D0x200006ed
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02c4796f0  dir=3D0 old_key=3D0x200006ed new_key=3D0x200006ee
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02c4796f0  dir=3D0 old_key=3D0x200006ee new_key=3D0x200006ef
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02c4796f0  dir=3D0 old_key=3D0x200006ef new_key=3D0x200006f0
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02c4796f0  dir=3D0 old_key=3D0x200006f0 new_key=3D0x200006f1
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02c4796f0  dir=3D0 old_key=3D0x200006f1 new_key=3D0x200006f2
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow
+net_p=3Dffffffc02c4796f0  dir=3D0 old_key=3D0x200006f2 new_key=3D0x200006f3
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02b3dddd0
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02ac08010
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02ac08010
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02ac08010
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02ac08010
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02ac08010
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02ac08010
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02ac08010
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02ac08010
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02ac08010
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02ac08010
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02ac08010
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02ac08010
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02ac08010
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02ac08010
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02ac08010
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02e981010
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02e981010
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02e981010
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02e981010
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02ac08010
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02e981010
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02e981010
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02e981010
+[0m
+ERR: rdpa_cpu_tx_port_enet_lan#223: rdpa_cpu_tx_port_enet_lan failed.
+rdd_rc=3D120 tx_rdd_error_count=3D1
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02b27c010
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02c4796f0
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02b3dddd0
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02b3dddd0
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02c4796f0
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02c4796f0
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02c4796f0
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02c4796f0
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02c4796f0
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02c4796f0
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02c4796f0
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02c4796f0
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02c4796f0
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02c4796f0
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02c4796f0
+[0m
+[0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor
+net_p=3Dffffffc02c4796f0
+[0m
+
+-------------------------------------------------------
+I don't know how to code and how to solve this
+But I do know how to build a embedded firmware from source code (openwrt,
+asuswrt ...), and configure vpn on it.
+If there is any way to solve this, I would very like to do some testing
+
+--000000000000c1b459057d6cf238
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr">I=E2=80=99am using ASUS =
+GT-AC5300 router, which is broadcom based platform. I build my own firmware=
+ from ASUS=C2=A0
+
+GT-AC5300=C2=A0 GPL source code with wireguard support in kernel. Wireguard=
+ works on my router and the speed is really fast, However, there are two pr=
+oblem emerged during the configuration and running.</div><div dir=3D"ltr"><=
+div><br></div><div>1. When making keys=EF=BC=8C
+
+Bus error=C2=A0happened every time. So I have to make my client key on serv=
+er side.<br><div><div><div>admin@GT-AC5300:/tmp/home/root# umask 077</div><=
+div>admin@GT-AC5300:/tmp/home/root# wg genkey &gt; private-key</div><div>ad=
+min@GT-AC5300:/tmp/home/root# wg pubkey &lt; private-key &gt; public-key</d=
+iv><div>Bus error</div></div><div><br></div><div>2. while wireguard running=
+, sometimes it disconnect happened and I can,t=C2=A0access VPN=C2=A0network=
+=EF=BC=8Cthe=C2=A0flowing=C2=A0message emerged:</div><div><div>41mBLOG ERRO=
+R blog_request :blog_key corruption when adding flow net_p=3Dffffffc02c5523=
+80=C2=A0 dir=3D0 old_key=3D0x20000384 new_key=3D0x2000038a</div><div> [0m</=
+div><div> [0;33;41mBLOG ERROR blog_request :blog_key corruption when adding=
+ flow net_p=3Dffffffc02c552380=C2=A0 dir=3D0 old_key=3D0x2000038a new_key=
+=3D0x200003ae</div><div> [0m</div><div> [0;33;41mBLOG ERROR blog_request :b=
+log_key corruption when adding flow net_p=3Dffffffc02b3dddd0=C2=A0 dir=3D0 =
+old_key=3D0x20000433 new_key=3D0x20000436</div><div> [0m</div><div> [0;33;4=
+1mBLOG ERROR blog_request :blog_key corruption when adding flow net_p=3Dfff=
+fffc02b3dddd0=C2=A0 dir=3D0 old_key=3D0x20000436 new_key=3D0x20000469</div>=
+<div> [0m</div><div> [0;33;41mBLOG ERROR blog_request :blog_key corruption =
+when adding flow net_p=3Dffffffc02b3dddd0=C2=A0 dir=3D0 old_key=3D0x2000046=
+9 new_key=3D0x2000046a</div><div> [0m</div><div> [0;33;41mBLOG ERROR blog_r=
+equest :blog_key corruption when adding flow net_p=3Dffffffc02b3dddd0=C2=A0=
+ dir=3D0 old_key=3D0x2000046a new_key=3D0x2000046b</div><div> [0m</div><div=
+> [0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow ne=
+t_p=3Dffffffc02b3dddd0=C2=A0 dir=3D0 old_key=3D0x2000046b new_key=3D0x20000=
+46c</div><div> [0m</div><div> [0;33;41mBLOG ERROR blog_request :blog_key co=
+rruption when adding flow net_p=3Dffffffc02b3dddd0=C2=A0 dir=3D0 old_key=3D=
+0x2000046c new_key=3D0x2000046d</div><div> [0m</div><div> [0;33;41mBLOG ERR=
+OR blog_request :blog_key corruption when adding flow net_p=3Dffffffc02b3dd=
+dd0=C2=A0 dir=3D0 old_key=3D0x2000046d new_key=3D0x2000046e</div><div> [0m<=
+/div><div> [0;33;41mBLOG ERROR blog_request :blog_key corruption when addin=
+g flow net_p=3Dffffffc02b3dddd0=C2=A0 dir=3D0 old_key=3D0x2000046e new_key=
+=3D0x20000471</div><div> [0m</div><div> [0;33;41mBLOG ERROR blog_request :b=
+log_key corruption when adding flow net_p=3Dffffffc02b3dddd0=C2=A0 dir=3D0 =
+old_key=3D0x20000471 new_key=3D0x20000472</div><div> [0m</div><div> [0;33;4=
+1mBLOG ERROR blog_request :blog_key corruption when adding flow net_p=3Dfff=
+fffc02b3dddd0=C2=A0 dir=3D0 old_key=3D0x20000472 new_key=3D0x20000477</div>=
+<div> [0m</div><div> [0;33;41mBLOG ERROR blog_request :blog_key corruption =
+when adding flow net_p=3Dffffffc02b3dddd0=C2=A0 dir=3D0 old_key=3D0x2000047=
+7 new_key=3D0x20000479</div><div> [0m</div><div> [0;33;41mBLOG ERROR blog_r=
+equest :blog_key corruption when adding flow net_p=3Dffffffc02b3dddd0=C2=A0=
+ dir=3D0 old_key=3D0x20000479 new_key=3D0x2000047a</div><div> [0m</div><div=
+> [0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow ne=
+t_p=3Dffffffc02b3dddd0=C2=A0 dir=3D0 old_key=3D0x2000047a new_key=3D0x20000=
+47b</div><div> [0m</div><div> [0;33;41mBLOG ERROR blog_request :blog_key co=
+rruption when adding flow net_p=3Dffffffc02b3dddd0=C2=A0 dir=3D0 old_key=3D=
+0x2000047b new_key=3D0x2000047c</div><div> [0m</div><div> [0;33;41mBLOG ERR=
+OR blog_request :blog_key corruption when adding flow net_p=3Dffffffc02b3dd=
+dd0=C2=A0 dir=3D0 old_key=3D0x2000047c new_key=3D0x20000499</div><div> [0m<=
+/div><div> [0;33;41mBLOG ERROR blog_request :blog_key corruption when addin=
+g flow net_p=3Dffffffc02b3dddd0=C2=A0 dir=3D0 old_key=3D0x20000499 new_key=
+=3D0x20000562</div><div> [0m</div><div> [0;33;41mBLOG ERROR blog_request :b=
+log_key corruption when deleting flowfor net_p=3Dffffffc02c552380=C2=A0</di=
+v><div> [0m</div><div> [0;33;41mBLOG ERROR blog_request :blog_key corruptio=
+n when adding flow net_p=3Dffffffc02b3dddd0=C2=A0 dir=3D0 old_key=3D0x20000=
+562 new_key=3D0x20000569</div><div> [0m</div><div> [0;33;41mBLOG ERROR blog=
+_request :blog_key corruption when adding flow net_p=3Dffffffc02b3dddd0=C2=
+=A0 dir=3D0 old_key=3D0x20000569 new_key=3D0x2000056d</div><div> [0m</div><=
+div> [0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow=
+ net_p=3Dffffffc02ac08010=C2=A0 dir=3D0 old_key=3D0x2000058f new_key=3D0x20=
+000590</div><div> [0m</div><div> [0;33;41mBLOG ERROR blog_request :blog_key=
+ corruption when adding flow net_p=3Dffffffc02ac08010=C2=A0 dir=3D0 old_key=
+=3D0x20000590 new_key=3D0x20000591</div><div> [0m</div><div> [0;33;41mBLOG =
+ERROR blog_request :blog_key corruption when adding flow net_p=3Dffffffc02a=
+c08010=C2=A0 dir=3D0 old_key=3D0x20000591 new_key=3D0x20000592</div><div> [=
+0m</div><div> [0;33;41mBLOG ERROR blog_request :blog_key corruption when ad=
+ding flow net_p=3Dffffffc02ac08010=C2=A0 dir=3D0 old_key=3D0x20000592 new_k=
+ey=3D0x20000594</div><div> [0m</div><div> [0;33;41mBLOG ERROR blog_request =
+:blog_key corruption when adding flow net_p=3Dffffffc02ac08010=C2=A0 dir=3D=
+0 old_key=3D0x20000594 new_key=3D0x20000595</div><div> [0m</div><div> [0;33=
+;41mBLOG ERROR blog_request :blog_key corruption when adding flow net_p=3Df=
+fffffc02ac08010=C2=A0 dir=3D0 old_key=3D0x20000595 new_key=3D0x20000596</di=
+v><div> [0m</div><div> [0;33;41mBLOG ERROR blog_request :blog_key corruptio=
+n when adding flow net_p=3Dffffffc02ac08010=C2=A0 dir=3D0 old_key=3D0x20000=
+596 new_key=3D0x20000598</div><div> [0m</div><div> [0;33;41mBLOG ERROR blog=
+_request :blog_key corruption when adding flow net_p=3Dffffffc02ac08010=C2=
+=A0 dir=3D0 old_key=3D0x20000598 new_key=3D0x20000599</div><div> [0m</div><=
+div> [0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow=
+ net_p=3Dffffffc02ac08010=C2=A0 dir=3D0 old_key=3D0x20000599 new_key=3D0x20=
+00059a</div><div> [0m</div><div> [0;33;41mBLOG ERROR blog_request :blog_key=
+ corruption when adding flow net_p=3Dffffffc02ac08010=C2=A0 dir=3D0 old_key=
+=3D0x2000059a new_key=3D0x2000059b</div><div> [0m</div><div> [0;33;41mBLOG =
+ERROR blog_request :blog_key corruption when adding flow net_p=3Dffffffc02a=
+c08010=C2=A0 dir=3D0 old_key=3D0x2000059b new_key=3D0x2000059c</div><div> [=
+0m</div><div> [0;33;41mBLOG ERROR blog_request :blog_key corruption when ad=
+ding flow net_p=3Dffffffc02ac08010=C2=A0 dir=3D0 old_key=3D0x2000059c new_k=
+ey=3D0x2000059d</div><div> [0m</div><div> [0;33;41mBLOG ERROR blog_request =
+:blog_key corruption when adding flow net_p=3Dffffffc02ac08010=C2=A0 dir=3D=
+0 old_key=3D0x2000059d new_key=3D0x2000059e</div><div> [0m</div><div> [0;33=
+;41mBLOG ERROR blog_request :blog_key corruption when adding flow net_p=3Df=
+fffffc02ac08010=C2=A0 dir=3D0 old_key=3D0x2000059e new_key=3D0x200005a0</di=
+v><div> [0m</div><div> [0;33;41mBLOG ERROR blog_request :blog_key corruptio=
+n when adding flow net_p=3Dffffffc02ac08010=C2=A0 dir=3D0 old_key=3D0x20000=
+5a0 new_key=3D0x200005a1</div><div> [0m</div><div> [0;33;41mBLOG ERROR blog=
+_request :blog_key corruption when adding flow net_p=3Dffffffc02ac08010=C2=
+=A0 dir=3D0 old_key=3D0x200005a1 new_key=3D0x200005a2</div><div> [0m</div><=
+div> [0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting fl=
+owfor net_p=3Dffffffc02c552380=C2=A0</div><div> [0m</div><div> [0;33;41mBLO=
+G ERROR blog_request :blog_key corruption when adding flow net_p=3Dffffffc0=
+2e981010=C2=A0 dir=3D0 old_key=3D0x20000604 new_key=3D0x20000605</div><div>=
+ [0m</div><div> [0;33;41mBLOG ERROR blog_request :blog_key corruption when =
+adding flow net_p=3Dffffffc02e981010=C2=A0 dir=3D0 old_key=3D0x20000605 new=
+_key=3D0x20000606</div><div> [0m</div><div> [0;33;41mBLOG ERROR blog_reques=
+t :blog_key corruption when adding flow net_p=3Dffffffc02e981010=C2=A0 dir=
+=3D0 old_key=3D0x20000606 new_key=3D0x20000607</div><div> [0m</div><div> [0=
+;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow net_p=
+=3Dffffffc02e981010=C2=A0 dir=3D0 old_key=3D0x20000607 new_key=3D0x2000060a=
+</div><div> [0m</div><div> [0;33;41mBLOG ERROR blog_request :blog_key corru=
+ption when adding flow net_p=3Dffffffc02e981010=C2=A0 dir=3D0 old_key=3D0x2=
+000060a new_key=3D0x2000060c</div><div> [0m</div><div> [0;33;41mBLOG ERROR =
+blog_request :blog_key corruption when adding flow net_p=3Dffffffc02e981010=
+=C2=A0 dir=3D0 old_key=3D0x2000060c new_key=3D0x2000060e</div><div> [0m</di=
+v><div> [0;33;41mBLOG ERROR blog_request :blog_key corruption when adding f=
+low net_p=3Dffffffc02e981010=C2=A0 dir=3D0 old_key=3D0x2000060e new_key=3D0=
+x2000060f</div><div> [0m</div><div> [0;33;41mBLOG ERROR blog_request :blog_=
+key corruption when deleting flowfor net_p=3Dffffffc02b3dddd0=C2=A0</div><d=
+iv> [0m</div><div> [0;33;41mBLOG ERROR blog_request :blog_key corruption wh=
+en deleting flowfor net_p=3Dffffffc02b3dddd0=C2=A0</div><div> [0m</div><div=
+> [0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowf=
+or net_p=3Dffffffc02b3dddd0=C2=A0</div><div> [0m</div><div> [0;33;41mBLOG E=
+RROR blog_request :blog_key corruption when deleting flowfor net_p=3Dffffff=
+c02b3dddd0=C2=A0</div><div> [0m</div><div> [0;33;41mBLOG ERROR blog_request=
+ :blog_key corruption when deleting flowfor net_p=3Dffffffc02b3dddd0=C2=A0<=
+/div><div> [0m</div><div> [0;33;41mBLOG ERROR blog_request :blog_key corrup=
+tion when deleting flowfor net_p=3Dffffffc02b3dddd0=C2=A0</div><div> [0m</d=
+iv><div> [0;33;41mBLOG ERROR blog_request :blog_key corruption when adding =
+flow net_p=3Dffffffc02b27c010=C2=A0 dir=3D0 old_key=3D0x20000683 new_key=3D=
+0x20000684</div><div> [0m</div><div> [0;33;41mBLOG ERROR blog_request :blog=
+_key corruption when deleting flowfor net_p=3Dffffffc02b3dddd0=C2=A0</div><=
+div> [0m</div><div> [0;33;41mBLOG ERROR blog_request :blog_key corruption w=
+hen adding flow net_p=3Dffffffc02b27c010=C2=A0 dir=3D0 old_key=3D0x20000684=
+ new_key=3D0x20000693</div><div> [0m</div><div> [0;33;41mBLOG ERROR blog_re=
+quest :blog_key corruption when adding flow net_p=3Dffffffc02c4796f0=C2=A0 =
+dir=3D0 old_key=3D0x200006cd new_key=3D0x200006db</div><div> [0m</div><div>=
+ [0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfo=
+r net_p=3Dffffffc02b3dddd0=C2=A0</div><div> [0m</div><div> [0;33;41mBLOG ER=
+ROR blog_request :blog_key corruption when adding flow net_p=3Dffffffc02c47=
+96f0=C2=A0 dir=3D0 old_key=3D0x200006db new_key=3D0x200006e3</div><div> [0m=
+</div><div> [0;33;41mBLOG ERROR blog_request :blog_key corruption when dele=
+ting flowfor net_p=3Dffffffc02b3dddd0=C2=A0</div><div> [0m</div><div> [0;33=
+;41mBLOG ERROR blog_request :blog_key corruption when adding flow net_p=3Df=
+fffffc02c4796f0=C2=A0 dir=3D0 old_key=3D0x200006e3 new_key=3D0x200006e9</di=
+v><div> [0m</div><div> [0;33;41mBLOG ERROR blog_request :blog_key corruptio=
+n when adding flow net_p=3Dffffffc02c4796f0=C2=A0 dir=3D0 old_key=3D0x20000=
+6e9 new_key=3D0x200006ea</div><div> [0m</div><div> [0;33;41mBLOG ERROR blog=
+_request :blog_key corruption when adding flow net_p=3Dffffffc02c4796f0=C2=
+=A0 dir=3D0 old_key=3D0x200006ea new_key=3D0x200006eb</div><div> [0m</div><=
+div> [0;33;41mBLOG ERROR blog_request :blog_key corruption when adding flow=
+ net_p=3Dffffffc02c4796f0=C2=A0 dir=3D0 old_key=3D0x200006eb new_key=3D0x20=
+0006ec</div><div> [0m</div><div> [0;33;41mBLOG ERROR blog_request :blog_key=
+ corruption when adding flow net_p=3Dffffffc02c4796f0=C2=A0 dir=3D0 old_key=
+=3D0x200006ec new_key=3D0x200006ed</div><div> [0m</div><div> [0;33;41mBLOG =
+ERROR blog_request :blog_key corruption when adding flow net_p=3Dffffffc02c=
+4796f0=C2=A0 dir=3D0 old_key=3D0x200006ed new_key=3D0x200006ee</div><div> [=
+0m</div><div> [0;33;41mBLOG ERROR blog_request :blog_key corruption when ad=
+ding flow net_p=3Dffffffc02c4796f0=C2=A0 dir=3D0 old_key=3D0x200006ee new_k=
+ey=3D0x200006ef</div><div> [0m</div><div> [0;33;41mBLOG ERROR blog_request =
+:blog_key corruption when adding flow net_p=3Dffffffc02c4796f0=C2=A0 dir=3D=
+0 old_key=3D0x200006ef new_key=3D0x200006f0</div><div> [0m</div><div> [0;33=
+;41mBLOG ERROR blog_request :blog_key corruption when adding flow net_p=3Df=
+fffffc02c4796f0=C2=A0 dir=3D0 old_key=3D0x200006f0 new_key=3D0x200006f1</di=
+v><div> [0m</div><div> [0;33;41mBLOG ERROR blog_request :blog_key corruptio=
+n when adding flow net_p=3Dffffffc02c4796f0=C2=A0 dir=3D0 old_key=3D0x20000=
+6f1 new_key=3D0x200006f2</div><div> [0m</div><div> [0;33;41mBLOG ERROR blog=
+_request :blog_key corruption when adding flow net_p=3Dffffffc02c4796f0=C2=
+=A0 dir=3D0 old_key=3D0x200006f2 new_key=3D0x200006f3</div><div> [0m</div><=
+div> [0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting fl=
+owfor net_p=3Dffffffc02b3dddd0=C2=A0</div><div> [0m</div><div> [0;33;41mBLO=
+G ERROR blog_request :blog_key corruption when deleting flowfor net_p=3Dfff=
+fffc02ac08010=C2=A0</div><div> [0m</div><div> [0;33;41mBLOG ERROR blog_requ=
+est :blog_key corruption when deleting flowfor net_p=3Dffffffc02ac08010=C2=
+=A0</div><div> [0m</div><div> [0;33;41mBLOG ERROR blog_request :blog_key co=
+rruption when deleting flowfor net_p=3Dffffffc02ac08010=C2=A0</div><div> [0=
+m</div><div> [0;33;41mBLOG ERROR blog_request :blog_key corruption when del=
+eting flowfor net_p=3Dffffffc02ac08010=C2=A0</div><div> [0m</div><div> [0;3=
+3;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor net=
+_p=3Dffffffc02ac08010=C2=A0</div><div> [0m</div><div> [0;33;41mBLOG ERROR b=
+log_request :blog_key corruption when deleting flowfor net_p=3Dffffffc02ac0=
+8010=C2=A0</div><div> [0m</div><div> [0;33;41mBLOG ERROR blog_request :blog=
+_key corruption when deleting flowfor net_p=3Dffffffc02ac08010=C2=A0</div><=
+div> [0m</div><div> [0;33;41mBLOG ERROR blog_request :blog_key corruption w=
+hen deleting flowfor net_p=3Dffffffc02ac08010=C2=A0</div><div> [0m</div><di=
+v> [0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flow=
+for net_p=3Dffffffc02ac08010=C2=A0</div><div> [0m</div><div> [0;33;41mBLOG =
+ERROR blog_request :blog_key corruption when deleting flowfor net_p=3Dfffff=
+fc02ac08010=C2=A0</div><div> [0m</div><div> [0;33;41mBLOG ERROR blog_reques=
+t :blog_key corruption when deleting flowfor net_p=3Dffffffc02ac08010=C2=A0=
+</div><div> [0m</div><div> [0;33;41mBLOG ERROR blog_request :blog_key corru=
+ption when deleting flowfor net_p=3Dffffffc02ac08010=C2=A0</div><div> [0m</=
+div><div> [0;33;41mBLOG ERROR blog_request :blog_key corruption when deleti=
+ng flowfor net_p=3Dffffffc02ac08010=C2=A0</div><div> [0m</div><div> [0;33;4=
+1mBLOG ERROR blog_request :blog_key corruption when deleting flowfor net_p=
+=3Dffffffc02ac08010=C2=A0</div><div> [0m</div><div> [0;33;41mBLOG ERROR blo=
+g_request :blog_key corruption when deleting flowfor net_p=3Dffffffc02ac080=
+10=C2=A0</div><div> [0m</div><div> [0;33;41mBLOG ERROR blog_request :blog_k=
+ey corruption when deleting flowfor net_p=3Dffffffc02e981010=C2=A0</div><di=
+v> [0m</div><div> [0;33;41mBLOG ERROR blog_request :blog_key corruption whe=
+n deleting flowfor net_p=3Dffffffc02e981010=C2=A0</div><div> [0m</div><div>=
+ [0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfo=
+r net_p=3Dffffffc02e981010=C2=A0</div><div> [0m</div><div> [0;33;41mBLOG ER=
+ROR blog_request :blog_key corruption when deleting flowfor net_p=3Dffffffc=
+02e981010=C2=A0</div><div> [0m</div><div> [0;33;41mBLOG ERROR blog_request =
+:blog_key corruption when deleting flowfor net_p=3Dffffffc02ac08010=C2=A0</=
+div><div> [0m</div><div> [0;33;41mBLOG ERROR blog_request :blog_key corrupt=
+ion when deleting flowfor net_p=3Dffffffc02e981010=C2=A0</div><div> [0m</di=
+v><div> [0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting=
+ flowfor net_p=3Dffffffc02e981010=C2=A0</div><div> [0m</div><div> [0;33;41m=
+BLOG ERROR blog_request :blog_key corruption when deleting flowfor net_p=3D=
+ffffffc02e981010=C2=A0</div><div> [0m</div><div>ERR: rdpa_cpu_tx_port_enet_=
+lan#223: rdpa_cpu_tx_port_enet_lan failed. rdd_rc=3D120 tx_rdd_error_count=
+=3D1</div><div> [0;33;41mBLOG ERROR blog_request :blog_key corruption when =
+deleting flowfor net_p=3Dffffffc02b27c010=C2=A0</div><div> [0m</div><div> [=
+0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor =
+net_p=3Dffffffc02c4796f0=C2=A0</div><div> [0m</div><div> [0;33;41mBLOG ERRO=
+R blog_request :blog_key corruption when deleting flowfor net_p=3Dffffffc02=
+b3dddd0=C2=A0</div><div> [0m</div><div> [0;33;41mBLOG ERROR blog_request :b=
+log_key corruption when deleting flowfor net_p=3Dffffffc02b3dddd0=C2=A0</di=
+v><div> [0m</div><div> [0;33;41mBLOG ERROR blog_request :blog_key corruptio=
+n when deleting flowfor net_p=3Dffffffc02c4796f0=C2=A0</div><div> [0m</div>=
+<div> [0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting f=
+lowfor net_p=3Dffffffc02c4796f0=C2=A0</div><div> [0m</div><div> [0;33;41mBL=
+OG ERROR blog_request :blog_key corruption when deleting flowfor net_p=3Dff=
+ffffc02c4796f0=C2=A0</div><div> [0m</div><div> [0;33;41mBLOG ERROR blog_req=
+uest :blog_key corruption when deleting flowfor net_p=3Dffffffc02c4796f0=C2=
+=A0</div><div> [0m</div><div> [0;33;41mBLOG ERROR blog_request :blog_key co=
+rruption when deleting flowfor net_p=3Dffffffc02c4796f0=C2=A0</div><div> [0=
+m</div><div> [0;33;41mBLOG ERROR blog_request :blog_key corruption when del=
+eting flowfor net_p=3Dffffffc02c4796f0=C2=A0</div><div> [0m</div><div> [0;3=
+3;41mBLOG ERROR blog_request :blog_key corruption when deleting flowfor net=
+_p=3Dffffffc02c4796f0=C2=A0</div><div> [0m</div><div> [0;33;41mBLOG ERROR b=
+log_request :blog_key corruption when deleting flowfor net_p=3Dffffffc02c47=
+96f0=C2=A0</div><div> [0m</div><div> [0;33;41mBLOG ERROR blog_request :blog=
+_key corruption when deleting flowfor net_p=3Dffffffc02c4796f0=C2=A0</div><=
+div> [0m</div><div> [0;33;41mBLOG ERROR blog_request :blog_key corruption w=
+hen deleting flowfor net_p=3Dffffffc02c4796f0=C2=A0</div><div> [0m</div><di=
+v> [0;33;41mBLOG ERROR blog_request :blog_key corruption when deleting flow=
+for net_p=3Dffffffc02c4796f0=C2=A0</div><div> [0m</div><div> [0;33;41mBLOG =
+ERROR blog_request :blog_key corruption when deleting flowfor net_p=3Dfffff=
+fc02c4796f0=C2=A0</div><div> [0m</div></div><div><br></div><div>-----------=
+--------------------------------------------</div><div>I don&#39;t know how=
+ to code and how to solve this</div></div></div><div>But I do know how to b=
+uild a embedded firmware from source code (openwrt, asuswrt ...), and confi=
+gure vpn on it.=C2=A0</div><div>If there is any way to solve this, I would =
+very like to do some testing=C2=A0</div><div><br></div></div></div></div>
+
+--000000000000c1b459057d6cf238--
+
+--===============4504862425266455082==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
+_______________________________________________
+WireGuard mailing list
+WireGuard@lists.zx2c4.com
+https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--===============4504862425266455082==--
