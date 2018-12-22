@@ -1,66 +1,69 @@
-Return-Path: <SRS0=9Sn0=O5=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=CAqW=O7=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=0.8 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_PASS,
+	URI_HEX autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 18BA5C43387
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 20 Dec 2018 01:04:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 07994C43387
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 22 Dec 2018 05:28:34 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 40C922084A
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 20 Dec 2018 01:04:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 4B76821939
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 22 Dec 2018 05:28:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="pRVoi/BL"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 40C922084A
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cTkjnE9/"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 4B76821939
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 82be5808;
-	Thu, 20 Dec 2018 01:04:09 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f19a3b37;
+	Sat, 22 Dec 2018 05:27:36 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 50d61aa7
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f28def4a
  for <wireguard@lists.zx2c4.com>;
- Thu, 20 Dec 2018 01:04:07 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3f5bbac0
+ Sat, 22 Dec 2018 05:02:58 +0000 (UTC)
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com
+ [IPv6:2a00:1450:4864:20::42a])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5efd7f8e
  for <wireguard@lists.zx2c4.com>;
- Thu, 20 Dec 2018 01:04:07 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 770c1d00
- for <wireguard@lists.zx2c4.com>;
- Thu, 20 Dec 2018 00:54:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to
- :content-type; s=mail; bh=IJsm8tYshdhDEsgB4FDxmTjdfOU=; b=pRVoi/
- BLvmzMDGUb7GMfDo3hThsYd/00q8Dql8Qv/zWhyOy2R1JcyHou7GN7/7xCC4Dahn
- sdQO3zLxh6VlibyVTHr/P5QSzaP2S/wZ34cDbmwQOcBTwwPekPdOrl5Kja6bKS1K
- hjk0dV/rdma2K2Ajk7eUsiC815u25xNiHv2a0ahSNc4MUAQs/nC1NWU7kK2k5YZE
- UQOy1Ru6oIPtinSFIwssmcnJiDFzc7vlbC95b9cig/17I1T0BYlD0xOcFe3Edk8t
- g9Ly6X8xDLLzxHOQt7w4R9F0zBpS9JQ2Ar+KPazmL1Wbg71IcENxx/7INFeEIW2A
- rI3Uw8/YjaeEleRw==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 9085a3ae
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Thu, 20 Dec 2018 00:54:53 +0000 (UTC)
-Received: by mail-ot1-f42.google.com with SMTP id t5so64908otk.1
- for <wireguard@lists.zx2c4.com>; Wed, 19 Dec 2018 17:04:46 -0800 (PST)
-X-Gm-Message-State: AA+aEWb7OfK3TKmahAjLfBxFiP6NiR1PGZjsXKgC/uRaXKd/T7o+U4U3
- XznUgm0BDTXHzOuVhXW2OQ5N/n487mrtUtHg1Bw=
-X-Google-Smtp-Source: AFSGD/UZCah3jgoFSwK8rD8A+dKRMjphuiTru1auiLjvMjkjkTVhM3atffZYCiSh2aADSAfR9QG2atSNpYYAnI1k74Y=
-X-Received: by 2002:a9d:7e87:: with SMTP id m7mr17925292otp.225.1545267885615; 
- Wed, 19 Dec 2018 17:04:45 -0800 (PST)
+ Sat, 22 Dec 2018 05:02:58 +0000 (UTC)
+Received: by mail-wr1-x42a.google.com with SMTP id r10so7147008wrs.10
+ for <wireguard@lists.zx2c4.com>; Fri, 21 Dec 2018 21:03:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=nvYMMlmRIDT+V0EluGq8cbdfekNL274Mz/fPsSAaBaU=;
+ b=cTkjnE9/E/VVH2VyRZNSImDJa0kqYz4LtaGsx0IMpTla7zshmE1Du84z3yucqIT7TJ
+ F5HzlyB/RBNuKfCCI0Ge0DvyTZJjfIt2GKxf7Il2zp014AgQXy+5LKAeYKpp83XK9aBX
+ uK5i0PsrPZ5o537bDb9DADRFrTfNK12JldfjyBccG8/3FR71+wLEvqoR+pL57UcTPLwq
+ 2g/ocCFLo9aGMggeKhtO6HzYgWQA3P0fxIWKxb8fpHDg4n0Iamz9yQu+BekkYmF8JvOL
+ PnoZI2QsxN9x9cLhSVDKg6uejgQrUj1VUUOX00eBfYGAG7Li3ycAH5MaDu3WnmLihk7N
+ 6TJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=nvYMMlmRIDT+V0EluGq8cbdfekNL274Mz/fPsSAaBaU=;
+ b=AxCE1B0oqH998EpyEN9srVxSn8VECuExSrSmzFd54Ft0PH2dE3JcdAX9J0/4NE/FTx
+ tSBlpeKR88Mqm0F67yPZqDxrsiF4/mbrp0ARRAuUq7uCthxg+2aWOEEE5+ILX3GLqrSu
+ 0vjGL7JGzdvk7pF/EnO2H3uKc9Ad4KyNi2wWNBIj+S/BxypjAsxlySBoFISTGSLZpKTC
+ mCl0Xq8uGvKShOL9F+AoYXFognAg8BtTjLS/Pi9v9Y8bGnlrKlmjehwVGSXcroETd3jS
+ CkUfJmKnew6+BWriS68kjt43TCSs8IIgveGdfyzMBKGFqUTBheX761/MET9kzXtFsz0D
+ eoUg==
+X-Gm-Message-State: AJcUukfkHxpKTvMutwpt1tQMFyEMSv+kDbY7OrQmdaGuOzhgxr73vlT9
+ ZCjlKZOwM6amBfL1Mc5XzL4ED3qis4f6NJ07Dcg2e19p
+X-Google-Smtp-Source: ALg8bN55FzwHAfX0pw5kK9ZwssClvIMu2ISikXT0qeGdmpyvxHruG5aru24HiuyfIxc6xeLGnvb3BqDgHPSRcvnRN6Q=
+X-Received: by 2002:adf:9484:: with SMTP id 4mr4683356wrr.98.1545455032214;
+ Fri, 21 Dec 2018 21:03:52 -0800 (PST)
 MIME-Version: 1.0
-References: <CAHmME9p5bjmP8qSapvf1vmiMAk3BAkONjwXev3O_QtGYM=k3QQ@mail.gmail.com>
-In-Reply-To: <CAHmME9p5bjmP8qSapvf1vmiMAk3BAkONjwXev3O_QtGYM=k3QQ@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 20 Dec 2018 02:04:34 +0100
-X-Gmail-Original-Message-ID: <CAHmME9ojT3jdxfiK6kQUn2PBtMyE_t=mf=y9vGcJazVFWnCuew@mail.gmail.com>
-Message-ID: <CAHmME9ojT3jdxfiK6kQUn2PBtMyE_t=mf=y9vGcJazVFWnCuew@mail.gmail.com>
-Subject: WireGuard for iOS - now in the App Store
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: Jason Edson <jaysonedson@gmail.com>
+Date: Fri, 21 Dec 2018 21:03:41 -0800
+Message-ID: <CAH0N1aTX3SYqGLER1nkWaGmCUqjFSyHbx6jj_mpN2pEh+fcZww@mail.gmail.com>
+Subject: Android 3.18 inline kernel build failure
+To: wireguard@lists.zx2c4.com
+X-Mailman-Approved-At: Sat, 22 Dec 2018 06:27:35 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -72,89 +75,73 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="===============4377497937242597226=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi everybody,
+--===============4377497937242597226==
+Content-Type: multipart/alternative; boundary="000000000000362aac057d954ab1"
 
-Thanks to all of the extremely useful feedback we've received during
-the TestFlight of WireGuard for iOS, Roopesh, Eric, and I have now
-released a beta into the App Store itself:
+--000000000000362aac057d954ab1
+Content-Type: text/plain; charset="UTF-8"
 
-https://itunes.apple.com/us/app/wireguard/id1441195209?ls=1&mt=8
-Depending on your region and Apple's caching semantics, this link
-might take some unknown amount of time to begin working.
+When building with the latest source that the wireguard importer script
+fetches (http://WireGuard-0.0.20181218.zip) I am getting this error:
 
-Apple requested a video of the app running on a physical device during
-their review of the app, showing that it works. For the curiosity of
-non-iPhone folks, you can see it here:
-https://data.zx2c4.com/wireguard-ios-app-store-review.mp4 . It's more
-or less the same interface as on Android and is designed to be as
-simple and "system-like" as possible, while still exposing all of the
-features and flexibility of WireGuard.
+  AS      net/wireguard/crypto/zinc/chacha20/chacha20-arm64.o
+fixdep: error opening config file:
+../../../../../../kernel/google/marlin/net/wireguard/crypto/zinc/chacha20/chacha20-arm64.S:
+No such file or directory
+make[3]: ***
+[/media/otherhd/benzorom/kernel/google/marlin/scripts/Makefile.build:301:
+net/wireguard/crypto/zinc/chacha20/chacha20-arm64.o] Error 2
 
-Please do keep the feedback coming. At the moment, I'm especially
-interested in reports of people transitioning between mobile and WiFi
-when using T-Mobile's network within the US. But generally, all bug
-reports, complete with the exported log, are very welcome, as we
-continue to refine these beta releases.
+I'm assuming that it's trying to go to the wrong path with ../ but I can't
+figure it out and so I don't know where to look in the wireguard source. I
+can remove the importer script and go back to an old version (ex
+http://WireGuard-0.0.20181119.zip) and all is well.
 
-As before, if you're interested in doing development on this app,
-please get in touch with team@wireguard.com. Likewise, we're always
-looking for a helping hand with a variety of tasks, including but not
-limited to:
-- iOS
-- macOS
-- Android
-- Windows
-- Web development (wireguard.com could use some love)
-- Various kernels
-- So forth
+Any help would be appreciated.
 
-Enjoy,
 Jason
 
-On Mon, Nov 5, 2018 at 10:27 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
->
-> Hey folks,
->
-> For the last few weeks, Roopesh and I have been hard at work on the
-> WireGuard for iOS app. Today we're happy to share a
-> likely-buggy-and-broken TestFlight that you can run on your phone:
-> <https://testflight.apple.com/join/63I19SDT>. As usual, use at your
-> own risk, especially since it's alpha quality.
->
-> Please let us know about any bugs as you find them -- you can send
-> them to me or to team@wireguard.com. Our current TODO list lives here
-> [1], linked via the main project TODO list [2], and if you're an iOS
-> person and want to contribute code, we'd be happy to have you on
-> board.
->
-> The app costs $3.99 and requires an email address to sign up; we
-> manage all your tunnels for you in the cloud. JUST KIDDING! Like the
-> rest of WireGuard, the iOS app is free and open source [3]. I make
-> this rather tasteless joke, because of the rather surprising
-> quantities of people encouraging me to do the iOS stuff as proprietary
-> paid software, because "apple users will pay" or because "open source
-> is cool, but iphone folks don't care about it so you can get away with
-> charging" or because "none of the other vpn players are doing open
-> source mobile implementations" or even because "apple is more likely
-> to accept paid software into its app store" and so on and so forth.
-> But, as usual, I much prefer for this to be a community project than a
-> closed one, and so like everything else, it's FLOSS.
->
-> Enjoy! And do let us know about the bugs as you run into them. I'm
-> sure there are plenty.
->
-> Regards,
-> Jason
->
-> [1] https://docs.google.com/document/d/1BnzImOF8CkungFnuRlWhnEpY2OmEHSckat62aZ6LYGY
-> [2] https://www.wireguard.com/todo/
-> [3] https://git.zx2c4.com/wireguard-ios/
+--000000000000362aac057d954ab1
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div cl=
+ass=3D"gmail_default" style=3D"font-size:small">When building with the late=
+st source that the wireguard importer script fetches (<a href=3D"http://Wir=
+eGuard-0.0.20181218.zip">http://WireGuard-0.0.20181218.zip</a>) I am gettin=
+g this error:</div><div class=3D"gmail_default" style=3D"font-size:small"><=
+br></div><div class=3D"gmail_default" style=3D"font-size:small"><div class=
+=3D"gmail_default">=C2=A0 AS=C2=A0 =C2=A0 =C2=A0 net/wireguard/crypto/zinc/=
+chacha20/chacha20-arm64.o</div><div class=3D"gmail_default">fixdep: error o=
+pening config file: ../../../../../../kernel/google/marlin/net/wireguard/cr=
+ypto/zinc/chacha20/chacha20-arm64.S: No such file or directory</div><div cl=
+ass=3D"gmail_default">make[3]: *** [/media/otherhd/benzorom/kernel/google/m=
+arlin/scripts/Makefile.build:301: net/wireguard/crypto/zinc/chacha20/chacha=
+20-arm64.o] Error 2</div><div class=3D"gmail_default"><br></div><div class=
+=3D"gmail_default">I&#39;m assuming that it&#39;s trying to go to the wrong=
+ path with ../ but I can&#39;t figure it out and so I don&#39;t know where =
+to look in the wireguard source. I can remove the importer script and go ba=
+ck to an old version (ex=C2=A0<a href=3D"http://WireGuard-0.0.20181119.zip"=
+>http://WireGuard-0.0.20181119.zip</a>) and all is well.</div><div class=3D=
+"gmail_default"><br></div><div class=3D"gmail_default">Any help would be ap=
+preciated.</div><div class=3D"gmail_default"><br></div><div class=3D"gmail_=
+default">Jason</div></div></div></div></div></div>
+
+--000000000000362aac057d954ab1--
+
+--===============4377497937242597226==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--===============4377497937242597226==--
