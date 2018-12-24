@@ -2,68 +2,64 @@ Return-Path: <SRS0=QZLZ=PK=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
-	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_PASS,
-	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 94C1EC43387
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  2 Jan 2019 18:46:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F830C43387
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  2 Jan 2019 18:48:53 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 36B8F218D3
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  2 Jan 2019 18:46:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id A2638218D3
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  2 Jan 2019 18:48:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qZouuqUb"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 36B8F218D3
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b="TLDPI3F2"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A2638218D3
+Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=icloud.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1d7314c1;
-	Wed, 2 Jan 2019 18:44:09 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9f9a4f5c;
+	Wed, 2 Jan 2019 18:46:01 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 44486563
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a364ca7a
  for <wireguard@lists.zx2c4.com>;
- Wed, 19 Dec 2018 14:14:57 +0000 (UTC)
-Received: from mail-vk1-xa35.google.com (mail-vk1-xa35.google.com
- [IPv6:2607:f8b0:4864:20::a35])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 54f1a983
+ Mon, 24 Dec 2018 13:45:28 +0000 (UTC)
+Received: from st43p00im-ztfb10071701.me.com (st43p00im-ztfb10071701.me.com
+ [17.58.63.173])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1099fe7b
  for <wireguard@lists.zx2c4.com>;
- Wed, 19 Dec 2018 14:14:57 +0000 (UTC)
-Received: by mail-vk1-xa35.google.com with SMTP id h128so4516560vkg.11
- for <wireguard@lists.zx2c4.com>; Wed, 19 Dec 2018 06:15:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=A8lbaRuCf1awx/aRsvwQgXUEGinGt7zhg2b6yfdli5U=;
- b=qZouuqUbuu9jH+0jGUaUDQmYOhgNXhUpKKlB/CHpBXE+p16iiRndA5xICjQ/C8Ls88
- wzDRnFnh/lfR9TXBQ6K+08Mpegwy5lluASU0egCHpz8+dcn4PZpUgF/2u2F9XjDO8pF0
- osj6wnJZTsSaspxQWLQv1YDyoto4bolcTX48/uZTfLNqr3YVJLiBHaN6Q1q7o37RAysj
- XoL5tnGAw3ffmQGHRG7pUoTaLFMpgDiDbqbeIYMHnovSW9BHW3hdiVmR1xRGKz6GTmy1
- odP3b3tyYoO69/YhlOJtxgVYLegZsLVyzO0ga5/cgCrkFzYm3ieOsbTHMruw1rcBDoNh
- ka/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=A8lbaRuCf1awx/aRsvwQgXUEGinGt7zhg2b6yfdli5U=;
- b=EZGkDn9gfHgneK6rhtcw8AgJ4paNu5SM+HViCLQg5FXCaFvnODkH6AfXNsyQjWsMnJ
- 7/PSIPJQUZlcQpMkMoIPib6Bq2L1gtkx2SJibqFZUvcxppBtQPnh+n7lawWrAQjo0N/G
- HAS+L2+J0aYK/UHfc7UXEf6WldUnTbegY4hcQ5YvVD6bQdaOnfaMyjiWiUSxJaTMURgT
- Fa+3fyuQYWKUEf+pbZ7RIdZfnkcOlxjO5Vzpj3AvqPr82XX9mOjbgOkqoy6NC5ruxlms
- UKRUCPcVDiaNRC8hOXHv1OKDG0I+n9DzK+f1mcTy2Gnx6HjsRF7dsW8YJutuHRqHOOaf
- rEUQ==
-X-Gm-Message-State: AA+aEWY1h8iRgM8+zNVSY7DxKXdIATAvfOW7287zo0bGKNIzLvknfkE2
- VDJ3ElmdQpoJsf0xBeaEzaD7n21CDQ4yCuQWBbw78RP2
-X-Google-Smtp-Source: AFSGD/U5yOiJj/qoA26UFVQPlh5gYcQwhsBdqjz2gBDjxHHnNInAgDurQrr2F2omA1/4vDcy0bmgUXxcjmCGHwYV3v0=
-X-Received: by 2002:a1f:82c2:: with SMTP id e185mr9408334vkd.22.1545228931224; 
- Wed, 19 Dec 2018 06:15:31 -0800 (PST)
-MIME-Version: 1.0
-From: Subin Abid <subinabid@gmail.com>
-Date: Wed, 19 Dec 2018 19:45:18 +0530
-Message-ID: <CAOAvjy2V3WBFOtKp6dKztFh3gYHwW4=sfnz_ZxtRvDM=9fwQpw@mail.gmail.com>
-Subject: Google Chromecast
+ Mon, 24 Dec 2018 13:45:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
+ s=04042017; t=1545659201;
+ bh=3nyNAlTLrzndJuA1uLV7o6TDBV/CACt4jKeBxVS51qo=;
+ h=From:Content-Type:Mime-Version:Date:Subject:Message-Id:To;
+ b=TLDPI3F2o0iz7POo5sKPG6RsDzZVUyw3mWm7+tfdPSZSI5+V6WP38XdhNPW6fCKla
+ MqmvtHPRMI6PnLDUy6VZ0I34XnrlvcK5pyIQ4YJjw/iN20tKZqwWu0bhWGIjdSZVH1
+ QuEBoZotGKYope0B3ROfTBtXCTuK9gNdtFvQbwA3hSG0cCNANJ7D5nPMJgfQXG7otc
+ /PMCbEyjwo6/a39If7TdfxCgoPJ0JDJmlpG446Nj3OMKEy0H96ZZxx6Doc3ECUor7Q
+ glSt6RWv5H8CT0tDa2422ifEQ0ppl/zKhuDLeo7DWf0g4cmxI8F9xrcWhxJseRwdwW
+ PKFTlNw8fV/Ow==
+Received: from retgrover.fritz.box
+ (HSI-KBW-078-042-189-083.hsi3.kabel-badenwuerttemberg.de [78.42.189.83])
+ by st43p00im-ztfb10071701.me.com (Postfix) with ESMTPSA id 390C2AC016E;
+ Mon, 24 Dec 2018 13:46:41 +0000 (UTC)
+From: Sterrenboer <sterrenboer@icloud.com>
+Mime-Version: 1.0 (Mac OS X Mail 12.2 \(3445.102.3\))
+Date: Mon, 24 Dec 2018 14:46:39 +0100
+Subject: Re: sysctl of Alpine standard 3.8.1 doesn't support option -r.
+Message-Id: <92AA4920-D2F5-4F15-9BAB-9FFCBB6066F7@icloud.com>
 To: wireguard@lists.zx2c4.com
-X-Mailman-Approved-At: Wed, 02 Jan 2019 19:44:09 +0100
+X-Mailer: Apple Mail (2.3445.102.3)
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2018-12-24_08:, , signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=1
+ malwarescore=0
+ phishscore=0 bulkscore=0 spamscore=0 clxscore=1011 mlxscore=0
+ mlxlogscore=465 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1807170000 definitions=main-1812240122
+X-Mailman-Approved-At: Wed, 02 Jan 2019 19:45:59 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -75,48 +71,22 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============4506288160534350230=="
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============4506288160534350230==
-Content-Type: multipart/alternative; boundary="0000000000008ad82c057d60a536"
-
---0000000000008ad82c057d60a536
-Content-Type: text/plain; charset="UTF-8"
-
-Hello,
-
-Android device (using Home app) cannot connect to chromecast while the
-device is connected to VPN. Is anyone else facing this problem?
-
--- 
-Subin Abid
-
---0000000000008ad82c057d60a536
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div class=3D"gmail_default" style=3D"font-family:arial,he=
-lvetica,sans-serif">Hello,</div><div class=3D"gmail_default" style=3D"font-=
-family:arial,helvetica,sans-serif"><br></div><div class=3D"gmail_default" s=
-tyle=3D"font-family:arial,helvetica,sans-serif">Android device (using Home =
-app) cannot connect to chromecast while the device is connected to VPN. Is =
-anyone else facing this problem?</div><div><br></div>-- <br><div dir=3D"ltr=
-" class=3D"gmail_signature" data-smartmail=3D"gmail_signature"><div dir=3D"=
-ltr">Subin Abid=C2=A0<div><br></div></div></div></div>
-
---0000000000008ad82c057d60a536--
-
---===============4506288160534350230==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
-_______________________________________________
-WireGuard mailing list
-WireGuard@lists.zx2c4.com
-https://lists.zx2c4.com/mailman/listinfo/wireguard
-
---===============4506288160534350230==--
+SGkgRHUsIExvbm5pZSwgSmFzb24gCgpUbyBnZXQgd2ctcXVpY2sgd29ya2luZyBvbiBteSBhbHBp
+bmUgZWRnZSwgSSBoYWQgdG8gaW5zdGFsbCAKCi0gYmFzaCBmb3IgL2Jpbi9iYXNoCi0gcHJvY3Bz
+IGZvciBzeXN0Y3RsCi0gb3BlbnJlc29sdiBmb3IgZG5zCi0gaXByb3V0ZTIgZm9yIC9zYmluL2lw
+CgpJIHN1c3BlY3QgdGhhdCBpdCBpcyB0aGUgc2FtZSBvbiAzLjguMS4gSSBkb27igJl0IGtub3cg
+d2h5IHRoZSB3aXJlZ3VhcmQtdG9vbHMgcGFja2FnZSBkb2VzIG5vdCBkZXBlbmQgb24gdGhlbSwg
+YXMgd2ctcXVpY2sgZG9lcyBub3Qgd29yayB3aXRob3V0IHRoZW0uICBJIGd1ZXNzIHRoYXQgdGhl
+IHJlYXNvbiBpcyB0aGF0IHRoZSB3ZyBiaW5hcnkgaXRzZWxmIGRvZXMgbm90IGRlcGVuZCBvbiB0
+aGVt4oCmLiBmb3JtYWxseS4gIElmIHRoYXQgaXMgdGhlIGNhc2UsIHRoZW4gbWF5YmUgaXQgd291
+bGQgbWFrZSBzZW5zZSBpZiB3Zy1xdWljayBpcyBpdHMgb3duIHBhY2thZ2UsIHdoaWNoIGNhbiB0
+aGVuIGhhdmUgaXRzIG93biBkZXBlbmRlbmNpZXMuCgpUaGFua3MgZm9yIHRoZSBhd2Vzb21lIHdv
+cmsgb24gd2lyZWd1YXJkICYgaGFwcHkgaG9saWRheXMuCgpDaGVlcnMsClN0ZXJyZW5ib2VyCl9f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fCldpcmVHdWFyZCBt
+YWlsaW5nIGxpc3QKV2lyZUd1YXJkQGxpc3RzLnp4MmM0LmNvbQpodHRwczovL2xpc3RzLnp4MmM0
+LmNvbS9tYWlsbWFuL2xpc3RpbmZvL3dpcmVndWFyZAo=
