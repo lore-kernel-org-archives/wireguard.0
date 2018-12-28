@@ -1,89 +1,69 @@
-Return-Path: <SRS0=sk/S=PE=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=mIIS=PF=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_PASS
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5EFCCC43387
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 27 Dec 2018 19:23:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B1D6C43387
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 28 Dec 2018 10:28:32 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id EA5B1208E4
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 27 Dec 2018 19:23:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 2FF7C20874
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 28 Dec 2018 10:28:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=sholland.org header.i=@sholland.org header.b="Y0YsBNlR";
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gXfRE0o5"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org EA5B1208E4
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=sholland.org
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=chmd-fr.20150623.gappssmtp.com header.i=@chmd-fr.20150623.gappssmtp.com header.b="DoLMAezF"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 2FF7C20874
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=chmd.fr
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a72c8b53;
-	Thu, 27 Dec 2018 19:21:47 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8ef4498d;
+	Fri, 28 Dec 2018 10:26:30 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id edae9b61
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 012c3029
  for <wireguard@lists.zx2c4.com>;
- Thu, 27 Dec 2018 19:21:45 +0000 (UTC)
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
- [66.111.4.25])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a449a313
+ Fri, 28 Dec 2018 10:26:28 +0000 (UTC)
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com
+ [IPv6:2a00:1450:4864:20::52f])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6fb0bd32
  for <wireguard@lists.zx2c4.com>;
- Thu, 27 Dec 2018 19:21:45 +0000 (UTC)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
- by mailout.nyi.internal (Postfix) with ESMTP id 04A142207F;
- Thu, 27 Dec 2018 14:23:24 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute5.internal (MEProxy); Thu, 27 Dec 2018 14:23:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sholland.org; h=
- subject:to:references:from:message-id:date:mime-version
- :in-reply-to:content-type:content-transfer-encoding; s=fm1; bh=H
- x9E+Ac4Z7IZRxBVja37KrYC+fKNxjjTf5HsIeyXedQ=; b=Y0YsBNlRUBB+Y37OG
- VGPxuPMBELMHwnDQyY6ChqqZj8PsFDvzTzapxY40OzLxVGZWWQsQC7whVFz3jKmV
- zy1Hqmb1Rfmui/eAlrB+VGv5S3m+gstJFIwR5aXnJz8oG/SknKFDgdKitpa/O95z
- 1gFxqOfCAZH1iJ5ntV5XxNf4I8G9YQbjsNSgwjelsUxtXUlKXpkcX6s1k4xOf8n0
- EgThkWQfVLbn3WzrtbD3nUJelHOK55Bsi2rcvVM6UkkmAMycRFizm+iiaiIAeDb/
- i56Ygp67cSoyTSuLyjZG8LgjUzcDbwbTSU/XwoZ+ll1l5TvLjCaqpSG4E+hwIJ8o
- XFVyw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=content-transfer-encoding:content-type
- :date:from:in-reply-to:message-id:mime-version:references
- :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm1; bh=Hx9E+Ac4Z7IZRxBVja37KrYC+fKNxjjTf5HsIeyXe
- dQ=; b=gXfRE0o5srFTu3qPCm1+d93gFL7N5X9RBMjcs0atG2OGdIejM1b6PU7vW
- rCb7ffDymCoUCfd6xghUazTYrPZLJ1uDrljAUc4GrMEfvS6XutSmEzr+KXmmF7Ur
- 7S7iebec4eAOt93yRimaPw3s3UJ97hQntxcJVv2BtYoyYN4c5OVmfGCgET/8VXHS
- /BcyddOBjTCDBkVKomXP3xOrQP/B+kBpop7IAu3hlMZjiUVhabClJtleGoZwdPxO
- 8lfORwj9xNm9ANeO13uDPo5Go6Plngap8h1S0q41+KmAu6hCUKbUoyBrFRCoF8GQ
- 9NNjMmHy1MT3fVV7GMVJJL7qfghHg==
-X-ME-Sender: <xms:qyYlXA4MaBQBsKiQ3xmxhgbEZt2oc9CYPXYJ6iQomVoa5wV0YJ37aQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedtledrtdefgdeifeculddtuddrgedtkedrtddtmd
- cutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfhuthen
- uceurghilhhouhhtmecufedttdenucenucfjughrpefuvfhfhffkffgfgggjtgfgsehtje
- ertddtfeejnecuhfhrohhmpefurghmuhgvlhcujfholhhlrghnugcuoehsrghmuhgvlhes
- shhhohhllhgrnhgurdhorhhgqeenucfkphepleelrdduleekrdduleelrddugeegnecurf
- grrhgrmhepmhgrihhlfhhrohhmpehsrghmuhgvlhesshhhohhllhgrnhgurdhorhhgnecu
- vehluhhsthgvrhfuihiivgeptd
-X-ME-Proxy: <xmx:qyYlXNs9W4D7eeNxb6ksr6GGI2rSXwPGMDoWetL27jmo7vuqY1P0CQ>
- <xmx:qyYlXE9W1m-3iQYOm41cpi2gAAxlgugcMZSkjNwqU_PgM3aDE6S-Ug>
- <xmx:qyYlXHnVnbh2qVc3vw5GpgARCrFDyXLJYcL69A4fHzRjXDKV1ozxgA>
- <xmx:qyYlXJ1Q_RZ7kG-UBHThvwmhNsucn_wfhyVduvrRc1ENkfuKSKegjQ>
-Received: from [192.168.17.162] (unknown [99.198.199.144])
- by mail.messagingengine.com (Postfix) with ESMTPA id 56058100E5;
- Thu, 27 Dec 2018 14:23:23 -0500 (EST)
-Subject: Re: Behaviour of multiple Allowed-IPs 0.0.0.0/0 or ::0/0?
-To: "Rene 'Renne' Bartsch, B.Sc. Informatics" <ml@bartschnet.de>,
- wireguard@lists.zx2c4.com
-References: <443f1c88-5c11-36cb-859c-c7105d68cd19@bartschnet.de>
-From: Samuel Holland <samuel@sholland.org>
-Message-ID: <a9fe85ff-8d0a-be05-59a8-6775ab392933@sholland.org>
-Date: Thu, 27 Dec 2018 13:23:22 -0600
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+ Fri, 28 Dec 2018 10:26:28 +0000 (UTC)
+Received: by mail-ed1-x52f.google.com with SMTP id f23so17214772edb.3
+ for <wireguard@lists.zx2c4.com>; Fri, 28 Dec 2018 02:28:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=chmd-fr.20150623.gappssmtp.com; s=20150623;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=tFa0qlzpnVKl+zARubISScHEcHHdm78WHsVSMcuH5sc=;
+ b=DoLMAezFz9qDeFzHyuoEFykVK5pMnH35Qe6PQ/JKov2DKYkmteMULR0ui9aL5BLFHo
+ X3+LEDX4TlwggUcuZcBhhXWdT2gP9t419fnsLV6LPZwYtEj268MQvlSFv5lBmIP9kVgh
+ CMmPVTHOSzGdBc5HGqm/91WqP1xfesbQTwifo2LTvq0p7comoCdZgsBqraqC1a5B3RjQ
+ 9t0fn22HpAGXKrlOkzyPueDutcNFOGE6SLhBwXFyOhuUAtpwsZOD6rGhdLrOpqPFI+h1
+ sbCkmwte21qbEC7MP7BPtL/u3DuwsVqvgr3oq9KRIF7eiOBAsqDOrzSUOux815zkTSnh
+ 4l9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=tFa0qlzpnVKl+zARubISScHEcHHdm78WHsVSMcuH5sc=;
+ b=lDDa4NuVTpPP48cC3wTyeQ1OksJGVoBSRAGZADahRWGC2JwQqSMd9ICW/yweAyAtPs
+ vzgp57JpmpSQ+wGTUpGtLDBuevFhMmmSIB6G2OZ9hQmZ544HniuoEDZfL9oEgvblKGic
+ B9+TmGLpG7bkuvA8qA7W1vZSiSfBjm+ACzzEdzQOQunrtAfgV4+bMYbjZCofe6y0JhK+
+ KHkcI6mb20HHSQWcsq+GMtBHNe+goEzfDdZQJPPouzSk5fyIlUBvKZLQo/lS7ElLYHdY
+ d2uxngyJzLK1UL8ax8RhhxBojP5Q/Z2TCyEQ3Hd6xLQflgfbfjYPoh0Ej+8bCt+/TD1z
+ iQCA==
+X-Gm-Message-State: AA+aEWYZv2VLhjsOFzwnt/RCflEBA5RK0s+o6nuys/F8BIKqv1P+o5sQ
+ lrUwejzKqCIy6Gm380BZYjeEAZlc917geR14+q1mKs2e
+X-Google-Smtp-Source: AFSGD/XGfUZuAE+uLxerXyVlfLoGRlQo2e97QcsIqOYBHiqR1yNb2rQP9GLyFye4N6UOThQD4O46cP8OcgtwFifEWZ8=
+X-Received: by 2002:a05:6402:1816:: with SMTP id
+ g22mr22440735edy.191.1545992890044; 
+ Fri, 28 Dec 2018 02:28:10 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <443f1c88-5c11-36cb-859c-c7105d68cd19@bartschnet.de>
-Content-Language: en-US
+From: Christophe-Marie Duquesne <chmd@chmd.fr>
+Date: Fri, 28 Dec 2018 11:27:59 +0100
+Message-ID: <CAHLp1YkibRSvohY9FJ5G+FXaEw4tFU52rLsbWLSP8oiL0K=rhQ@mail.gmail.com>
+Subject: [Android app] Can't connect to a chromecast when wireguard is running
+To: wireguard <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -95,39 +75,63 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="===============2352488946798012335=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On 12/27/18 10:27, Rene 'Renne' Bartsch, B.Sc. Informatics wrote:
-> how does Wireguard behave with multiple peers with Allowed-IPs 0.0.0.0/0 or 
-> ::0/0?
+--===============2352488946798012335==
+Content-Type: multipart/alternative; boundary="0000000000000953ff057e128532"
 
-That's not allowed. To quote the WireGuard homepage: "when sending packets, the
-list of allowed IPs behaves as a sort of routing table, and when receiving
-packets, the list of allowed IPs behaves as a sort of access control list."
+--0000000000000953ff057e128532
+Content-Type: text/plain; charset="UTF-8"
 
-If two peers had the same network "0.0.0.0/0" in AllowedIPs, how would you
-choose which peer to send packets to? You can't, so WireGuard prohibits
-duplicating AllowedIPs networks across peers. If you add "0.0.0.0/0" to the
-AllowedIPs of one peer, it is removed from the AllowedIPs of every other peer.
-(So the end result is that the last peer in the configuration file ends up with
-the AllowedIPs of 0.0.0.0/0).
+Hi!
 
-If you have static allocation of internal IP addresses, then you don't want
-AllowedIPs of 0.0.0.0/0. If Host A is always assigned IP 10.1.2.3, then its
-AllowedIPs only need to be 10.1.2.3. Host B can have AllowedIPs of 10.1.2.4 etc.
-and they don't overlap.
+I have been using the android app for a while now (non rooted phone,
+android 8.0, I installed the app from the play store). It works very well.
 
-On the other hand, if you want to do dynamic routing or multipath, the best
-solution for now is to have a separate WireGuard interface for each peer. Then
-you can use 0.0.0.0/0, because routing decisions are made at the kernel routing
-layer, not by WireGuard.
+I am here to report a little problem: I find myself unable to use a
+chromecast while wireguard is running. I tried to exclude Spotify and
+Google home from the applications tunneled by wireguard, but that doesn't
+work.
 
-Hope that helps,
-Samuel
+The application which notifies me about the chromecast status is "Google
+play services". However, this particular app is not part of the list of
+applications I can exclude from being tunneled by wireguard.
+
+Has anyone experienced a similar problem? How did you solve it?
+
+Best,
+Christophe-Marie
+
+--0000000000000953ff057e128532
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Hi!</div><div><br></div><div>I have been using the an=
+droid app for a while now (non rooted phone, android 8.0, I installed the a=
+pp from the play store). It works very well.</div><div><br></div><div>I am =
+here to report a little problem: I find myself unable to use a chromecast w=
+hile wireguard is running. I tried to exclude Spotify and Google home from =
+the applications tunneled by wireguard, but that doesn&#39;t work.</div><di=
+v><br></div><div>The application which notifies me about the chromecast sta=
+tus is &quot;Google play services&quot;. However, this particular app is no=
+t part of the list of applications I can exclude from being tunneled by wir=
+eguard.</div><div><br></div><div>Has anyone experienced a similar problem? =
+How did you solve it?</div><div><br></div><div>Best,</div><div>Christophe-M=
+arie<br></div></div>
+
+--0000000000000953ff057e128532--
+
+--===============2352488946798012335==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--===============2352488946798012335==--
