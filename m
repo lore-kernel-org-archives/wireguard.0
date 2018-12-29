@@ -2,64 +2,60 @@ Return-Path: <SRS0=I5vT=PG=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 82161C43387
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 29 Dec 2018 13:50:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40882C43387
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 29 Dec 2018 14:13:39 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id A686E21019
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 29 Dec 2018 13:50:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id AA69020855
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 29 Dec 2018 14:13:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (4096-bit key) header.d=bartschnet.de header.i=@bartschnet.de header.b="IgC/stvi"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A686E21019
+	dkim=fail reason="signature verification failed" (4096-bit key) header.d=bartschnet.de header.i=@bartschnet.de header.b="BoiUL4nH"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org AA69020855
 Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=bartschnet.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 05093a06;
-	Sat, 29 Dec 2018 13:48:12 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c98bc711;
+	Sat, 29 Dec 2018 14:11:44 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c6b7ebeb
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 148f25c2
  for <wireguard@lists.zx2c4.com>;
- Sat, 29 Dec 2018 13:48:11 +0000 (UTC)
+ Sat, 29 Dec 2018 14:11:43 +0000 (UTC)
 Received: from mail.core-networks.de (mail.core-networks.de
  [IPv6:2001:1bc0:d::4:9])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0d8093e4
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 34f5b9a6
  for <wireguard@lists.zx2c4.com>;
- Sat, 29 Dec 2018 13:48:11 +0000 (UTC)
+ Sat, 29 Dec 2018 14:11:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=bartschnet.de; s=2018030201; h=Content-Transfer-Encoding:MIME-Version:Date:
- Message-ID:From:To:Subject:content-disposition;
- bh=Dafn3yH+bJastzHSP5axH1TWioqCKag3XqMp/15ppmE=; b=IgC/stvieW2Qd9MR8+5JVkQpUP
- 3yEKws1O9pZOOJcnNy1J7DW9bqaVwHdmnwDCKbBvKtZ9hBO8jI59yb0tM3P/ySsc7DAdVOLxLmp4D
- XvUQzVnXk//JbxxrwaJM0+xGLhWQ6IZ9v+iR7loHx4zPPzMRXLSauSF3/IclCTOInBnBs2Yr7zbYm
- luTRm/HFe3eTiYAzHUM6lQkG+o5nhsQu6dx1qIgjv3S4Yv8O/MhsOl4z8phsANZ1dRCNzTA6Yonz+
- pqIB34i51JigDGEZ8XomUzWNmb1a5KeaCxzdRPvLtrumjfLHU5JWTWb51m2OPa2OLk00Q5o7Uw0Y6
- ENSzvPj6MOH5P7tSFikNfQuTJhrRUgm0G2gQHXtunXB6R5nWAt0zOszZKKoL5MPDCIKLgSe550faO
- sMvm6yNtja22CjyjLRHS1cVGRTp0UKsXzURtjuhN+MOWht38Lvw/3+YZBEFOWh2CD+qZ3ZjnBnpci
- 7P85pZ4JjlPq3JKUgAJm6J3g0FcPvbyFXwWzpVfGrb1vIjCP5tM+l12baolXXZvC1mZdCJggoTeS3
- w4NflO/9esY2k3tck1uUv/0Oyh9y04gbz6oz3OdLB1xRa4zYkfcBvsvyIdr+ytwmxFFlZlQ7veIr+
- 9Y49Lyk3EaJx8uMbKQnlCcDvPQMyiXcutyPcJYZao=;
+ Message-ID:Subject:From:To:content-disposition;
+ bh=9kFA0pUjdkVglPMzGN5LufPFMD5GyXUrX9cfmsP+DWM=; b=BoiUL4nHzKhMbq2Gle1NQVXIOn
+ w++H8USruH2GBCaPu8Y66qBBtnuuDB1iyZ9mMUg22JZGdBv30gVEsUchS7UOLA2IL4P8deAioAAH0
+ 7K7AKB5IYAO9aAd7p2UHCUioT/+hwN/dQqhnczh0q2otcO0TbUjgNJEna0RcQtjA+Hf0qwMDaI2dQ
+ Wvn+5yAc8sMiQIgnIzka4dM9L0MG8knM28mB0nsLoWv+k75y9h4jGO8EZNwC95HJGGvFobyl80otQ
+ tOMJzVnyx5DASo8ojoNmrx+zxL5dkDKSqPyVMxrDJWaimW/pbf37PsAWkB+pX0iMu5VzWIxb32+gk
+ c617/4AlgtS0GBSh8hP8ph94EolqzHip4xbfKGXvKD3ci3FxhNpeipSRC3iFuz7glY6sjDuuFYQLE
+ f5XeQIh6wrOb4CVfLgicljfQJSDnEvULU8iL1Fee6oaQa4wJ6DHaOGK+Hna343Ft3YiccU6Oshwot
+ TNNnj7cuMKTeBYQ0zp2gy7WX/uxF7oT9FP+fRVjEBseXxmLLjY8YjLPID4FNrrYTKRgpkE4KjAbrO
+ JPXCvA8/BUyYKFhP9jnyR2NtxM3QpRc1VRmY82JFc0XQVu5GiRbG4WV1CRZ9C2hRWTS1b6Gm32aYV
+ 88PFwi+AM5mR5iLLvx0aPMjlL1k06+SfEmcROGhG8=;
 Received: from localhost (localhost [127.0.0.1])
- by mail.core-networks.de id 1gdF03-0001v0-3b
+ by mail.core-networks.de id 1gdFMr-0002gk-O1
  with ESMTPSA (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
- for wireguard@lists.zx2c4.com; Sat, 29 Dec 2018 14:50:01 +0100
-Subject: Re: Android and Manjaro road warriors behind dynamic IP
- addresses/Carrier Grade NAT?
+ for wireguard@lists.zx2c4.com; Sat, 29 Dec 2018 15:13:35 +0100
 To: wireguard@lists.zx2c4.com
-References: <52b0449f-930a-87b0-e3f2-42d3f251e9cf@bartschnet.de>
- <d00751e2-569b-f1fb-a4dc-6cd9000c8269@activezone.de>
 From: "Rene 'Renne' Bartsch, B.Sc. Informatics" <ml@bartschnet.de>
-Message-ID: <fb40366a-6e67-e155-48a8-89a8714dff19@bartschnet.de>
-Date: Sat, 29 Dec 2018 14:49:56 +0100
+Subject: wg-quick: Add option TableDefaultGW
+Message-ID: <7f951f5b-eef5-9d3b-37e4-c48a5823b05f@bartschnet.de>
+Date: Sat, 29 Dec 2018 15:13:32 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.4.0
 MIME-Version: 1.0
-In-Reply-To: <d00751e2-569b-f1fb-a4dc-6cd9000c8269@activezone.de>
-Content-Language: en-US
+Content-Language: de-DE
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -76,63 +72,28 @@ Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Markus,
+Hi,
 
-that's what I thought about, too. It means to add another authentication system (SSH) and fiddle around on Android smartphones.
+We're in the situation in which we want to use the default routing table but need another routing table
+for a policy-based routing of public static IP-Adresses with a wireguard default gateway in the VPN.
+"Table <uint|name>" is no option as it would create all routes in the new table.
 
-Is there any way for Wireguard peers with static IP addresses to push endpoint information of all connected peers to all other peers?
-Or at least a hook which allows to dump changing endpoints into a file in real-time?
+My current idea is to use
 
-The optimal solution would be to integrate something like https://github.com/manuels/wireguard-p2p (DHT + hole punching techniques) into Wireguard itself.
+PostUp =  wg set %i peer <pubkey> allowed-ips ::/0, 0.0.0.0/0
+PostUp =  ip -4 route add default dev %i table <uint|name>"
+PostUp =  ip -6 route add default dev %i table <uint|name>"
+PreDown = ip -4 route del default dev %i table <uint|name>"
+PreDown = ip -6 route del default dev %i table <uint|name>"
 
-Addressing by public keys and resolving IP-addresses/ports by a DHT would even make Wireguard John-Doe-compatible. ;-)
+and use "ip rule"-statements in PostUp/PreDown.
+
+To simplify such a VPN setup with a default gateway I suggest a wg-quick option "TableDefaultGW <uint|name>"
+which adds a routing table for the default gateway only.
 
 Regards,
 
 Renne
-
-
-
-Am 29.12.18 um 13:53 schrieb Markus Grundmann:
-> Hi Renne,
-> 
-> for this reason I use a jump server based on SSH in the middle of the
-> nodes.
-> 
-> <snip>
-> [authorized_keys]
-> no-port-forwarding,no-X11-forwarding,command="~/bin/poll .my-ip ; cat
-> ~/.remote-ip" ssh-rsa AAAAB3N ...
-> </snap>
-> 
-> After you have received the IP addresses you can use "wg" to set the new
-> endpoint address on both nodes. The small script named "/bin/poll" uses
-> the environment variables of SSH to wrote the current IP into a file.
-> 
-> Best regards,
-> Markus
-> 
-> On 29.12.18 13:16, Rene 'Renne' Bartsch, B.Sc. Informatics wrote:
->> Hi,
->>
->> we have Android and Manjaro road warriors which are often behind
->> internet sockets with dynamic IP addresses AND Carrier Grade NAT.
->>
->> Does anyone know a trick how to initiate a direct Wireguard connection
->> between to road warriors without knowing their endpoint IP addresses/ports?
->>
->> Regards,
->>
->> Renne
->> _______________________________________________
->> WireGuard mailing list
->> WireGuard@lists.zx2c4.com
->> https://lists.zx2c4.com/mailman/listinfo/wireguard
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
-> 
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
