@@ -2,65 +2,65 @@ Return-Path: <SRS0=V5/A=PL=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=0.2 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
-	DKIM_INVALID,DKIM_SIGNED,FORGED_YAHOO_RCVD,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_PASS,
+	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C67EDC43387
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  3 Jan 2019 16:17:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 90D0EC43387
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  3 Jan 2019 22:37:46 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 257E0208E3
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  3 Jan 2019 16:17:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id D8854208E3
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  3 Jan 2019 22:37:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="LoqCySNa"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 257E0208E3
-Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=yahoo.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kq8urrij"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org D8854208E3
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3255dfef;
-	Thu, 3 Jan 2019 16:15:11 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 23a20817;
+	Thu, 3 Jan 2019 22:34:55 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5b5a8300
- for <wireguard@lists.zx2c4.com>; Thu, 3 Jan 2019 16:15:07 +0000 (UTC)
-Received: from sonic306-47.consmr.mail.gq1.yahoo.com
- (sonic306-47.consmr.mail.gq1.yahoo.com [98.137.68.110])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c4a34825
- for <wireguard@lists.zx2c4.com>; Thu, 3 Jan 2019 16:15:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
- t=1546532257; bh=FbGX7uW0FIIBEVCZaX+Q+L1iSYT3L8IuU/Ha03rNi30=;
- h=Date:From:To:Subject:References:From:Subject;
- b=LoqCySNaw6YJcNDOAMhZrQhbC39enTpbotqYNxP+ICByRG2nH50QAVqaDyGi5uQU1+T4nJw8zgtyzk+MMaFz18se8YnDJ9/CLEkvv9wPfKmOv2kaRlf5AkmAYibaasfU5IqcqUs9PUTSwrSu2unUiieCV7iwCDltc5nvfN7uq6LGl/m5GDZlMDarUDTelE0qjxZkMIi5WI0Yp740PAkbzOrzfqI4NTVlwQvrDB7MBUktDaQIE3c+3OiIlUv7pGAcfNBEnPePHxmY7hQDYBBRPHnlsWjGILcHYzibvtvEG5c1NSty92Y9Y8o8CgmoHyvFGmQVXbRLbzpXexfi/AnLVw==
-X-YMail-OSG: 3uecURgVM1m0HueQotUuPPnW0uiW.t6xp.FJOXhg8Xpn7jdItixQjc3wJgOwft9
- m0p7QYeWB7WgSt0xcsMnzOGuHrQJMb3RulNFqmKksssVuqvfrKRqzS.0ja8X6D5eMQRmrR_6qvhG
- ebQ9D5bdIYgU51wxhI_WDfqPXjIqYhKq1Tgrv9e7yf15cCVE9VulQtDTC7mRryvost5qVllMxPPp
- lRtCsxELe69SjioBOPB4eWG.fUmWIvZXl4yyMfSWRzAU2e2uVa82smmEeJihMshOy7RlWNcdHMRT
- lDbiPT5KahHvIIkDdudlsjrnGgxDxHwHgydSsBqV1VhW.VQ_bWb4c5gFWw36InevFqB1INMmXlFD
- RMsmYm8glMPlrzxmxeTnWoy44fL1tju74MF5qA98k3MidYspZFUJEwz1UgHsWYfsD0FIOMJTv7xG
- kXKr.NbuNHTS4ewNM3RyOP2C.rUHae6A9R6lG3bDhmHw7Q6BYaFjymHcrYEN9ZFrj1gCRhbO4Vc1
- OKM0aQUmPUvqnNEUyuZlCrOEElo.bhVYZXHwCIm3LCCUw5rTomUOF2mcPGodUVqsmzvQWfU7_OVg
- VxIvXt3SabmDgE3OEhsMpJ1pBt5mPeowpIf4dR2tvigRKWq8xRMPaTC2pQ7MMW8limzSxRnphcXV
- 5XygS3kjyUGU7D.MaKHOn3xpYtgXagRZzPigErlyl__nipW3PK5gykBi3e3a6CI_A5hNommpbeco
- MU0sZxkNy.b2OSpvvppittQmzZp6_fIlfZXp7iJ15Lh2L40Q_ZYmhP1xFcEZC9Hqe3q8XyT2TxPl
- vG0xZdEgLYysqjoJe_nK7lISUZApmNy3nINA.BLjjXci8kCBJH2MLj.j.Cg.KtNeqlGymnroYPlN
- M9WaGBGgIrgyrW4541WTcR6fM9uf05P1JiwVdCHihFMhEEPR.1ywtep9zTtKyhEuNrDwfrGdhWHO
- NAQ1wDhqA6fb6Brm5N_LmUkKgqiScUWSHLYJpBMJZv6RfcLscTK.PHEMH_KpHnpqp.R_XIdoxmFJ
- iXhZUMlCN.CW76oNOujRLGCrZEaiv_XmDf0xRiDPI39NbE3tC.7pJGXwK6XLl48sCgerXyrUQxVv
- tGBk9nCfTdHo_Hw9vSePNaIl.9iAX4wR8UN0H94s1A5ubgQHbKGlwNew45tiAnq53msLyxYV5oai
- SaxIXXP3dI28zvXNGU1h3u_0-
-Received: from sonic.gate.mail.ne1.yahoo.com by
- sonic306.consmr.mail.gq1.yahoo.com with HTTP; Thu, 3 Jan 2019 16:17:37 +0000
-Date: Thu, 3 Jan 2019 16:15:32 +0000 (UTC)
-From: Jose Marinez <jedi_papi@yahoo.com>
-To: wireguard@lists.zx2c4.com
-Message-ID: <1545022781.13682832.1546532132906@mail.yahoo.com>
-Subject: ExcludedApplication UI for Wireguard iOS
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 224a01c7
+ for <WireGuard@lists.zx2c4.com>; Thu, 3 Jan 2019 22:34:53 +0000 (UTC)
+Received: from mail-it1-x135.google.com (mail-it1-x135.google.com
+ [IPv6:2607:f8b0:4864:20::135])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 03633ef9
+ for <WireGuard@lists.zx2c4.com>; Thu, 3 Jan 2019 22:34:52 +0000 (UTC)
+Received: by mail-it1-x135.google.com with SMTP id i145so47464473ita.4
+ for <WireGuard@lists.zx2c4.com>; Thu, 03 Jan 2019 14:37:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=MzS2Lhdwnl+2/lCXXMeUGzEOEgGAVQ/oi3Zr66nVvwI=;
+ b=kq8urrijXt5PhAdQjyUHUA1QSjqlBf74WElxhZIwP3UaVyyZPHgtiREJ4C/6ClV8X9
+ Jx7Cdig/xA/BJ/A2t8rzExVyOu/eheTg7s9XgKt+27vAr0Vbv2Zd+XFrpxRfLwYGvHAL
+ 4c/VwicO+oRZpjm2o8D8lY7CNuqvg8XUV0iMbAzgCNQK9wA1FUNb/ktPIAveQDgabImy
+ IfOQT8JDZR9rfdgUcQFoAd3X+b8g8dUlRZAV8HdTBnNhyOs/ZqnXxarNnkdSLN4bkDvF
+ nC4cCqkNLEkZMGAE/YQtWd2FjWgIoFN28MY2ukxWJUbuzX4GjbUGQzaVYOBUIlvhd6u8
+ vxmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=MzS2Lhdwnl+2/lCXXMeUGzEOEgGAVQ/oi3Zr66nVvwI=;
+ b=mGNiYDpFaSwcQ3jGoUeOR+JZhfbL9dZqVhsDGs26E+S+zrtbNncUYqbvPPLB5Yjkxc
+ MCVcZpeUNSubvyaPnrL/LT6NbBR5iaL71vRx7hR0GF8EJoXx5L3KyO44ZOhJy9yfgVYr
+ bC7OqpE3SGSL5KzFQcxbzatOGct8GCnZyb5Qg8LesEEMfmPjTt64Et7+GW4P6G294zTt
+ F+nOJyuBUdMIAKEoT6bywLg5sZke2UPJGpKik2AD7H6dFYpHHpWUJgCfq+ChsB52q4yR
+ WDjxCR8zzILjCnGH99l2RwXWAelicBUA9NMe4pcMRmo0b6VLtIByzgx9+KKGrR5iprZR
+ SP7A==
+X-Gm-Message-State: AA+aEWYbbZvrNRzQIs4t6yvyUp+iHKvrj+b5feQ7sElZ2Cy+fXsob0T4
+ wjCQ7GyTyat9t/qiMBXxOP5xE4hG6m07WK06L0lsLGTS
+X-Google-Smtp-Source: AFSGD/Ws8FdeAEpqGZHvJdG5Mogcmzy84Ask4khBO9EbYVH3LvaPcxhC1h5Ot94dfYg9xojSPqz4DCKA0XIUq5frsjc=
+X-Received: by 2002:a24:8a44:: with SMTP id v65mr31418305itd.67.1546555043699; 
+ Thu, 03 Jan 2019 14:37:23 -0800 (PST)
 MIME-Version: 1.0
-References: <1545022781.13682832.1546532132906.ref@mail.yahoo.com>
-X-Mailer: WebService/1.1.12857 YahooMailIosMobile Raven/44013 CFNetwork/976
- Darwin/18.2.0
+From: Edward Vielmetti <edward.vielmetti@gmail.com>
+Date: Thu, 3 Jan 2019 17:36:45 -0500
+Message-ID: <CAPRZce1x-TLHiZ=nU9s0_aYcWZdf_hTbcXYg+ZkAjD1F_=X9ng@mail.gmail.com>
+Subject: Wireguard + anycast
+To: WireGuard@lists.zx2c4.com
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -72,33 +72,62 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============0751016228303577221=="
+Content-Type: multipart/mixed; boundary="===============0320471888911245776=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============0751016228303577221==
-Content-Type: multipart/alternative; 
-	boundary="----=_Part_13682831_203693505.1546532132905"
-Content-Length: 988
+--===============0320471888911245776==
+Content-Type: multipart/alternative; boundary="000000000000016682057e956819"
 
-------=_Part_13682831_203693505.1546532132905
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+--000000000000016682057e956819
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Jason,
-I checked the iOS Todo list and noticed that there's no mention of an iOS excluded application list ala Android. Would you mind adding it to the list?
+A little thought experiment which I haven't tried yet.
 
-Thanks,Jose
-------=_Part_13682831_203693505.1546532132905
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Using anycast, a single IP address can be routed to multiple machines in a
+data center or around the world.
 
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"><head><!--[if gte mso 9]><xml><o:OfficeDocumentSettings><o:AllowPNG/><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml><![endif]--></head><body>
-Hi Jason,<div><br></div><div>I checked the iOS Todo list and noticed that there's no mention of an iOS excluded application list ala Android. Would you mind adding it to the list?<br><br>Thanks,<div>Jose</div></div>
-</body></html>
-------=_Part_13682831_203693505.1546532132905--
+Is it at all possible that anycast and Wireguard would play together
+nicely? In particular, is it plausible that you could give a client an
+anycast address of a server to use as its endpoint, and that when it picked
+the correct / closest one that it would do the right thing?
 
---===============0751016228303577221==
+The naive approach would be to have all of the anycast devices share the
+same private/public key pair, but that has a bad smell. And I don't know
+what would happen if your routing changed in mid-connection.
+
+(anycast is the technology used to give name servers a single global
+address, like Google's 8.8.8.8 DNS)
+
+-- 
+Edward Vielmetti +1 734 330 2465
+edward.vielmetti@gmail.com
+
+--000000000000016682057e956819
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">A little thought experiment which I haven&#39;t tried yet.=
+<div><br></div><div>Using anycast, a single IP address can be routed to mul=
+tiple machines in a data center or around the world.</div><div><br></div><d=
+iv>Is it at all possible that anycast and Wireguard would play together nic=
+ely? In particular, is it plausible that you could give a client an anycast=
+ address of a server to use as its endpoint, and that when it picked the co=
+rrect / closest one that it would do the right thing?</div><div><br></div><=
+div>The naive approach would be to have all of the anycast devices share th=
+e same private/public key pair, but that has a bad smell. And I don&#39;t k=
+now what would happen if your routing changed in mid-connection.</div><div>=
+<br></div><div>(anycast is the technology used to give name servers a singl=
+e global address, like Google&#39;s 8.8.8.8 DNS)<br clear=3D"all"><div><br>=
+</div>-- <br><div dir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"g=
+mail_signature"><span>Edward Vielmetti=C2=A0<span id=3D"gc-number-93" class=
+=3D"gc-cs-link" title=3D"Call with Google Voice">+1 734 330 2465</span></sp=
+an><div><a href=3D"mailto:edward.vielmetti@gmail.com" target=3D"_blank">edw=
+ard.vielmetti@gmail.com</a></div><div><br></div></div></div></div>
+
+--000000000000016682057e956819--
+
+--===============0320471888911245776==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -109,4 +138,4 @@ WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---===============0751016228303577221==--
+--===============0320471888911245776==--
