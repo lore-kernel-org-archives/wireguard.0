@@ -2,71 +2,76 @@ Return-Path: <SRS0=MnxW=PQ=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+X-Spam-Status: No, score=-1.3 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
 	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_PASS,
-	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_MUTT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D03F1C43387
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  8 Jan 2019 02:03:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 554B1C43612
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  8 Jan 2019 02:03:14 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 2580B20665
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  8 Jan 2019 02:03:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id E5C9E20665
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  8 Jan 2019 02:03:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sgjF04XZ"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 2580B20665
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="s1ZpyHl/"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org E5C9E20665
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4aa8a280;
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 15315338;
 	Tue, 8 Jan 2019 02:00:06 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e52fd514
- for <wireguard@lists.zx2c4.com>; Thu, 3 Jan 2019 06:39:55 +0000 (UTC)
-Received: from mail-vs1-xe32.google.com (mail-vs1-xe32.google.com
- [IPv6:2607:f8b0:4864:20::e32])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e66c29a6
- for <wireguard@lists.zx2c4.com>; Thu, 3 Jan 2019 06:39:54 +0000 (UTC)
-Received: by mail-vs1-xe32.google.com with SMTP id e7so20223345vsc.2
- for <wireguard@lists.zx2c4.com>; Wed, 02 Jan 2019 22:42:23 -0800 (PST)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c3ffe237
+ for <wireguard@lists.zx2c4.com>; Mon, 7 Jan 2019 10:54:30 +0000 (UTC)
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com
+ [IPv6:2a00:1450:4864:20::442])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 003d5f84
+ for <wireguard@lists.zx2c4.com>; Mon, 7 Jan 2019 10:54:30 +0000 (UTC)
+Received: by mail-wr1-x442.google.com with SMTP id j2so42834189wrw.1
+ for <wireguard@lists.zx2c4.com>; Mon, 07 Jan 2019 02:57:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=/YWNgKoidYFpE5yHO7LIRHRyK+evOztH8479Mpa7kxc=;
- b=sgjF04XZckt8xoB1YZxey+rJGDBu/JviviLkJieSxtSm2+ylJV6jHijEwI+CS2+bDK
- wh4Z3qOZ1/BEgk0q/qWz3PqmoG2QZSaoMT8miKRUfJTF29tDVRUKuZdu3y6AEbA9z+7o
- z1lBrP8/tZ+kKkw5DLPUni/h2A5yv8zGx0kZV8Gc5hPsOVwkVcDSrWgek1fVIdPrlNcD
- I9c9N+LsLxvJqlRAaWgP3jRvLus0kBA29UKY1ljs0rXO6Cig072VdUtEuq6ZUYj1p07L
- jKgyaWoM/P8d9fFkEgXMJ2P6CqdHrpZufy7F+WGloy6H7+6BXR7ZgtHJ32oz4GIeB63t
- AaWg==
+ h=date:from:to:subject:message-id:mime-version:content-disposition
+ :user-agent; bh=AZHEvQRR0enlQ9zitU6/9TWtpIlSgKGZgx0tcSL+GBs=;
+ b=s1ZpyHl/i2wovKlEC/EgrcXENrcUtJf0s6aggD+4UNckU/S1r+88BIji9uBSQu+aat
+ Sx7s56olFy9ZopBu+Jhd03oa6RuUTpgixiKl/PqDS7ScLssmJft51T23V/GTUlEyZCR0
+ UygKb3lAm2sLkEjOsXOU7RlNgkouwQXlWIIheb00uGd39itV0ujtSwkBJKMpOHzuN27P
+ pxxS4pjAhmLlGWdcTxHOalu1eOiuduS03VcvSzJ4dtxoNtZ1fcntxQmSdBwq2cIdsWfR
+ Wdx89Z43njz4a0Z/0XMI77ZnX5XYzAnBFFOF7jPvGKLiw54ugQgbZ+puFUuGL10EuhHj
+ FYHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=/YWNgKoidYFpE5yHO7LIRHRyK+evOztH8479Mpa7kxc=;
- b=Xi/GlmHQXCnIgAZHwDq/hmBhRa+y10/NSm66YQ4qm+sXEYFyWltUX+KyFsN3Mtoe3h
- mRoDbwh+jzL2qKRL6B3zh3dAvhzUINNcpqlj5da/XOJTKlwz0bsEnrPXffW3hjV0XGqp
- PvQ6R87JQp5xmfNqoQdkLFGnw6/HA9SlByjsm16dqXVGP5PO74Ue2J6/nAemfqo46p/j
- C+3Q3lOadLDB5m3EsKUBDvDWnqVg24wn4+yCx1+F15HbUjAPxdf/5/TBkLO9DkGFjGrd
- DNV6X5fjRVmGRw44o2bOSD5rCur/k34QuRxtLRE6LWTdHq6hyPZgY7E4U3jdQGP0x7gs
- qt2Q==
-X-Gm-Message-State: AA+aEWaE/za2/zCUQXX+FORulVT6VdMkzjSCo6C6vsKmMIcS8rMJ2kc9
- oS6qgthXQceYE9yshYVQq3P5/pJkuw8DWGotjMY=
-X-Google-Smtp-Source: ALg8bN45J7/14EPCT/3Cp6zmIlhN8pz0k/kO0Ha3qygRs+suqV4fMrsM3IwwdcrpSLj/3PH6iQd3rjF18wHT9emI6d0=
-X-Received: by 2002:a67:6d42:: with SMTP id i63mr18703625vsc.158.1546497742061; 
- Wed, 02 Jan 2019 22:42:22 -0800 (PST)
+ h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+ :content-disposition:user-agent;
+ bh=AZHEvQRR0enlQ9zitU6/9TWtpIlSgKGZgx0tcSL+GBs=;
+ b=p/ChHOd4sL/sUQJ3GRhKI43TK35AOIUCpp8WEEVLZTBTUcMA3cPjfBpH4QBIBANOy4
+ UYajKxhre+AmSnPlKIj/3qmJzqlypbTlQXYE1gGsYO/yPJcvaxReSs4g1UmLpFKZKvK4
+ 8B6olbyQzMD9lcBDk+qBdk8YUQTHH/ul4QZKnTMLeN8Acaz50l3HeWi36irD+1nFHHM2
+ UUmY36rDOh38ynXEzGN0d1sJYlJPw1Mzh4M53CSEXmeInBOvdA8hbOfcNOwcvbUfhbDo
+ XQXPdSY21qdYFRGFuIxuWuRBXjdfM1SwMbwSTVpgI5pPblzzq4wL8WTBn/VYeIR0h/J/
+ hE+Q==
+X-Gm-Message-State: AJcUukdXhJ6t7pLOkiQAjqFp+aRXhlkzdusWn8Zx+9c8aO2e2+Q3bB1s
+ wh69bwcrYW6ITPMe4KwJlJ6qISAg
+X-Google-Smtp-Source: ALg8bN6sx7SQAeuffiKN/twsbIuRDC0xTRiLxD9a/ztyQSLnFIElWfx//Qe/hcV0OGB9pMxx4TrDlA==
+X-Received: by 2002:adf:9422:: with SMTP id 31mr54805976wrq.106.1546858649438; 
+ Mon, 07 Jan 2019 02:57:29 -0800 (PST)
+Received: from gmail.com (cpc1-cmbg19-2-0-cust946.5-4.cable.virginm.net.
+ [82.27.183.179])
+ by smtp.gmail.com with ESMTPSA id c13sm52277961wrb.38.2019.01.07.02.57.28
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+ Mon, 07 Jan 2019 02:57:28 -0800 (PST)
+Date: Mon, 7 Jan 2019 10:57:27 +0000
+From: Raf Czlonka <rczlonka@gmail.com>
+To: wireguard@lists.zx2c4.com
+Subject: Correct capitalisation of IPsec
+Message-ID: <20190107105727.GH51930@gmail.com>
 MIME-Version: 1.0
-References: <CAOAvjy2V3WBFOtKp6dKztFh3gYHwW4=sfnz_ZxtRvDM=9fwQpw@mail.gmail.com>
- <CAKiCHuOeimfJ3y7k1PWxxN_YXSs8AFA8L7++4C3XFAMLjNM21A@mail.gmail.com>
-In-Reply-To: <CAKiCHuOeimfJ3y7k1PWxxN_YXSs8AFA8L7++4C3XFAMLjNM21A@mail.gmail.com>
-From: Subin Abid <subinabid@gmail.com>
-Date: Thu, 3 Jan 2019 12:10:29 +0530
-Message-ID: <CAOAvjy2h_1xHvAUH5BOyCz+Fa_aBkrTDxcsvzgg9XrYnVNHe4Q@mail.gmail.com>
-Subject: Re: Google Chromecast
-To: Martin Eskdale Moen <martinmoen@gmail.com>
+Content-Disposition: inline
+User-Agent: Mutt/1.11.1 (2018-12-01)
 X-Mailman-Approved-At: Tue, 08 Jan 2019 03:00:05 +0100
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -78,117 +83,52 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============7612773255745480611=="
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============7612773255745480611==
-Content-Type: multipart/alternative; boundary="0000000000008fc5cc057e8810b1"
+Hi all,
 
---0000000000008fc5cc057e8810b1
-Content-Type: text/plain; charset="UTF-8"
+A quick diff to correct the capitalisation of IPsec in the main Git
+repository[0].
 
-Hi Martin,
+Capitalisation on the website itself[1], will also need changing.
 
-Yes, I am.
+[0] https://git.zx2c4.com/WireGuard/
+[1] https://www.wireguard.com/
 
-I came across this message on the thread -  "The network settings for the
-peer has a checkbox 'Exclude Private IPs';
-You need it enabled so that your phone and Chromecast can talk to
-each other on the private network rather than going through the VPN tunnel.
-"
+Regards,
 
-Let me try this and i will give a feedback ASAP
+Raf
 
-
-On Thu, Jan 3, 2019 at 2:43 AM Martin Eskdale Moen <martinmoen@gmail.com>
-wrote:
-
-> Are you routing all your traffic through the VPN?
->
-> On Wed, Jan 2, 2019 at 6:47 PM Subin Abid <subinabid@gmail.com> wrote:
->
->> Hello,
->>
->> Android device (using Home app) cannot connect to chromecast while the
->> device is connected to VPN. Is anyone else facing this problem?
->>
->> --
->> Subin Abid
->>
->> _______________________________________________
->> WireGuard mailing list
->> WireGuard@lists.zx2c4.com
->> https://lists.zx2c4.com/mailman/listinfo/wireguard
->>
->
-
--- 
-Subin Abid
-Mob : +91 - 94808 42431
-
---0000000000008fc5cc057e8810b1
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><div class=3D"gmail_default" style=3D"fon=
-t-family:arial,helvetica,sans-serif">Hi Martin,=C2=A0</div><div class=3D"gm=
-ail_default" style=3D"font-family:arial,helvetica,sans-serif"><br></div><di=
-v class=3D"gmail_default" style=3D"font-family:arial,helvetica,sans-serif">=
-Yes, I am. </div><div class=3D"gmail_default" style=3D"font-family:arial,he=
-lvetica,sans-serif"><br></div><div class=3D"gmail_default" style=3D"font-fa=
-mily:arial,helvetica,sans-serif">I came across this message on the thread -=
-=C2=A0 &quot;The network settings for the peer has a checkbox &#39;Exclude =
-Private IPs&#39;;=C2=A0</div><div class=3D"gmail_default" style=3D"font-fam=
-ily:arial,helvetica,sans-serif">You need it enabled so that your phone and =
-Chromecast can talk to=C2=A0</div><div class=3D"gmail_default" style=3D"fon=
-t-family:arial,helvetica,sans-serif">each other on the private network rath=
-er than going through the VPN tunnel. &quot;</div><div class=3D"gmail_defau=
-lt" style=3D"font-family:arial,helvetica,sans-serif"><br></div><div class=
-=3D"gmail_default" style=3D"font-family:arial,helvetica,sans-serif">Let me =
-try this and i will give a feedback ASAP=C2=A0=C2=A0</div><div class=3D"gma=
-il_default" style=3D"font-family:arial,helvetica,sans-serif"><br></div></di=
-v></div><br><div class=3D"gmail_quote"><div dir=3D"ltr">On Thu, Jan 3, 2019=
- at 2:43 AM Martin Eskdale Moen &lt;<a href=3D"mailto:martinmoen@gmail.com"=
->martinmoen@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_qu=
-ote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,20=
-4);padding-left:1ex"><div dir=3D"ltr">Are you routing all your traffic thro=
-ugh the VPN?<br></div><br><div class=3D"gmail_quote"><div dir=3D"ltr">On We=
-d, Jan 2, 2019 at 6:47 PM Subin Abid &lt;<a href=3D"mailto:subinabid@gmail.=
-com" target=3D"_blank">subinabid@gmail.com</a>&gt; wrote:<br></div><blockqu=
-ote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px=
- solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr"><div class=3D"gm=
-ail_default" style=3D"font-family:arial,helvetica,sans-serif">Hello,</div><=
-div class=3D"gmail_default" style=3D"font-family:arial,helvetica,sans-serif=
-"><br></div><div class=3D"gmail_default" style=3D"font-family:arial,helveti=
-ca,sans-serif">Android device (using Home app) cannot connect to chromecast=
- while the device is connected to VPN. Is anyone else facing this problem?<=
-/div><div><br></div>-- <br><div dir=3D"ltr" class=3D"gmail-m_-5177944161126=
-197582gmail-m_5468736971009718748gmail_signature"><div dir=3D"ltr">Subin Ab=
-id=C2=A0<div><br></div></div></div></div>
-_______________________________________________<br>
-WireGuard mailing list<br>
-<a href=3D"mailto:WireGuard@lists.zx2c4.com" target=3D"_blank">WireGuard@li=
-sts.zx2c4.com</a><br>
-<a href=3D"https://lists.zx2c4.com/mailman/listinfo/wireguard" rel=3D"noref=
-errer" target=3D"_blank">https://lists.zx2c4.com/mailman/listinfo/wireguard=
-</a><br>
-</blockquote></div>
-</blockquote></div><br clear=3D"all"><div><br></div>-- <br><div dir=3D"ltr"=
- class=3D"gmail_signature"><div dir=3D"ltr">Subin Abid=C2=A0<div>Mob=C2=A0:=
- +91 - 94808 42431=C2=A0</div></div></div>
-
---0000000000008fc5cc057e8810b1--
-
---===============7612773255745480611==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
+diff --git a/README.md b/README.md
+index 08f8827..b8301e2 100644
+--- a/README.md
++++ b/README.md
+@@ -1,7 +1,7 @@
+ # WireGuard &mdash; fast, modern, secure kernel VPN tunnel
+ #### by [Jason A. Donenfeld](mailto:Jason@zx2c4.com) of [Edge Security](https://www.edgesecurity.com/)
+ 
+-WireGuard is a novel VPN that runs inside the Linux Kernel and utilizes **state-of-the-art cryptography**. It aims to be faster, simpler, leaner, and more useful than IPSec, while avoiding the massive headache. It intends to be considerably more performant than OpenVPN. WireGuard is designed as a general purpose VPN for running on embedded interfaces and super computers alike, fit for many different circumstances. It runs over UDP.
++WireGuard is a novel VPN that runs inside the Linux Kernel and utilizes **state-of-the-art cryptography**. It aims to be faster, simpler, leaner, and more useful than IPsec, while avoiding the massive headache. It intends to be considerably more performant than OpenVPN. WireGuard is designed as a general purpose VPN for running on embedded interfaces and super computers alike, fit for many different circumstances. It runs over UDP.
+ 
+ **More information may be found at [WireGuard.com](https://www.wireguard.com/).**
+ 
+diff --git a/src/Kconfig b/src/Kconfig
+index cc2ba9f..3a68884 100644
+--- a/src/Kconfig
++++ b/src/Kconfig
+@@ -11,7 +11,7 @@ config WIREGUARD
+ 	select KERNEL_MODE_NEON if CPU_V7
+ 	default m
+ 	help
+-	  WireGuard is a secure, fast, and easy to use replacement for IPSec
++	  WireGuard is a secure, fast, and easy to use replacement for IPsec
+ 	  that uses modern cryptography and clever networking tricks. It's
+ 	  designed to be fairly general purpose and abstract enough to fit most
+ 	  use cases, while at the same time remaining extremely simple to
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
-
---===============7612773255745480611==--
