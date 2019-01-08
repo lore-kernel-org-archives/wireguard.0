@@ -7,65 +7,64 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1AE9C43387
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  8 Jan 2019 07:41:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7BB9C43387
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  8 Jan 2019 08:01:54 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id F2FE021855
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  8 Jan 2019 07:41:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 6D272218A3
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  8 Jan 2019 08:01:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aI4z0bCT"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org F2FE021855
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lY9tQmPf"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 6D272218A3
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ed099d83;
-	Tue, 8 Jan 2019 07:37:58 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e1d083fb;
+	Tue, 8 Jan 2019 07:58:45 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5c1fc76d
- for <wireguard@lists.zx2c4.com>; Tue, 8 Jan 2019 07:37:56 +0000 (UTC)
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com
- [IPv6:2607:f8b0:4864:20::62f])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3a458e15
- for <wireguard@lists.zx2c4.com>; Tue, 8 Jan 2019 07:37:56 +0000 (UTC)
-Received: by mail-pl1-x62f.google.com with SMTP id g9so1477651plo.3
- for <wireguard@lists.zx2c4.com>; Mon, 07 Jan 2019 23:41:02 -0800 (PST)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d78f7238
+ for <wireguard@lists.zx2c4.com>; Tue, 8 Jan 2019 07:58:44 +0000 (UTC)
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com
+ [IPv6:2607:f8b0:4864:20::42a])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1702c818
+ for <wireguard@lists.zx2c4.com>; Tue, 8 Jan 2019 07:58:43 +0000 (UTC)
+Received: by mail-pf1-x42a.google.com with SMTP id g62so1518690pfd.12
+ for <wireguard@lists.zx2c4.com>; Tue, 08 Jan 2019 00:01:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
  :cc:content-transfer-encoding;
- bh=ofLLymjmWpSVfMi65oSwqiurfTja96pUS3eGtWfWqMQ=;
- b=aI4z0bCT1onaeEen16+asVhan9UUp7haD/Z0yTJwkfEY8HomPd+UaXpreurL/qS9Mx
- ZnJIVI/qc7i0dG+DkwLjYgUpeOdsnOzUXudy+bGmRe4L+mF78XmET7uKHdIc6XIrxiRU
- VMZJOQT6Sc3UlXexGoKZ0u3McCmXeg8/pzlVsfxP5Jgw4kBRtlvPsfb7fgeyylVejB2z
- +IkFTewqh/QxUQC/vf/7m/MVMDEXDKiFUBUBfT9D7Xy9RMpW9yFTXwgdj9G0JQfudFzB
- hIPI1gzliujIi2lgwxhCulBAK4vGh+BTuHQwN7FYS0dhJRZpg0I6/rd6r7/V4DPKJiwJ
- Wufg==
+ bh=nW40f9O8mHm7BN3nEU1rAjM4xNXTueF9E8L0W7ToD4Q=;
+ b=lY9tQmPfwYjuUws2q3EZDwtNEQFs9VMjXpeNEd6ZrX5Y0m6MpLWczCH1H+Bm2DQ09y
+ HeTycXH006AtqPZE19r6SiPgjysgDXIAO2JXwf3yiZolqo8uWR5/p4EWcuOhOGZF4WMU
+ m35JCEBt/XEL1cZBVdaQPaHmScp0he33uTbUkmaxrMPKscg8SpA32TbiETOcpiwgs+B+
+ VMaj1URe1hsMwX6uM8k7H3Xjcak4wF8AAbaYMQOumQh4Fbbpj9F/igjq/nk05bXzHHul
+ HYYPc+HiGBzDnwT1lv4Cd/urnPkq1/ML0M7LZu7Qzu15rtKfcQZuYonrxHG840Y/Hb2U
+ 9hHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc:content-transfer-encoding;
- bh=ofLLymjmWpSVfMi65oSwqiurfTja96pUS3eGtWfWqMQ=;
- b=XAtBhj5IS3zHtuCkjZLun0wmoC9sLM1tabPQpEwxqYPyFnoR6n5Bg9/GoTUo7+Ib5I
- +raMeaFcwYZmvWgZ04wEpD+H5Vg2fX+iqOkeWF+oTiN3W/gAsunFqnrae2ByNcvLsfbU
- 6BhRMwjEWoA86qZmql+v1OImoYDyRiMrZr3HKMzzYKT4g1g5XtRk1R2BIRtP2+SkoVzd
- WjRZqmrzgba0a6TjITeTvZkaOqldl8mTUqLERFyx53U77sZtTP4XW/3N7EYoyYZnnnvI
- B/uOTkkbKxxIdXLYaUox8K7aocmjM6l41MghumWxSKs6XiL3KnNL82hA2V4813/z/ZCN
- 43DA==
-X-Gm-Message-State: AJcUukdgckPs+vcPCjspgebykfSFQwj7UX0vfcZ88H1BM691e6Lfgvss
- haH/J+hs02gL0gXgSEJH4JUluQ+AZQjPvfaxFJg=
-X-Google-Smtp-Source: ALg8bN635Dj1KuPcI3+uoFRuxgJdZPsbqnQ60jUaFQ7KveFnzhyrErt9WaEBrOK/QOLO7oTJssZGCLSILPukA7vLmjY=
-X-Received: by 2002:a17:902:4827:: with SMTP id
- s36mr695956pld.168.1546933261208; 
- Mon, 07 Jan 2019 23:41:01 -0800 (PST)
+ bh=nW40f9O8mHm7BN3nEU1rAjM4xNXTueF9E8L0W7ToD4Q=;
+ b=Ko2q8Tlwo+ZLJd80NkJxXnqifo1+lTcUgQFVEXycUAQ4HEq76WVKyPTlOCNexOvKg7
+ RJw5jSfpHezXIJryeL2avWA384YyIbJZ5VxO2bwignn+IQiNrJBM9ytlAGP5KrYkA7/+
+ ZdCuN0Geu5TLXl+016Psxt2ylJfYN+omnJXe+9xO7LFKejGTxd+I25SYuUN7RaIuq5LW
+ ls/4nF2/TzCwXaHtvN9dRrLsGbjfrMHjmvYd/ClcXUWmrFzyQ1eEbxBTm1yxOjA8+GfN
+ UJGaszvgzoT90wdMRl4TqCYZNSSVR7EMWrzqGxBz1mlP2rMt2sstubQb0KBD/3Q89A5q
+ f8Bg==
+X-Gm-Message-State: AJcUukdVxKi9diskKuZl5ye4VYyxBJ/WNhSUrMxrygRYurWNrJz4rE+g
+ WLy0n6l1vBIffnbF7eDWii595zjY6BscaVqkm+U=
+X-Google-Smtp-Source: ALg8bN6CftZL0+tzL5ny7RWyvdpmm+vdmfKe636QDZlku/uoptQJToTMZrapLGff4gD5xuscwCfcbZ0IJP9Ic7Aazdw=
+X-Received: by 2002:a62:184e:: with SMTP id 75mr748998pfy.28.1546934509503;
+ Tue, 08 Jan 2019 00:01:49 -0800 (PST)
 MIME-Version: 1.0
-References: <7a88c5bb-30c7-64ff-36bb-ea560448ec53@gmail.com>
-In-Reply-To: <7a88c5bb-30c7-64ff-36bb-ea560448ec53@gmail.com>
+References: <CAGCGytL90oVSVe_VNKszSynq_gvNzKGwORk8LEacXMANVaD2zA@mail.gmail.com>
+In-Reply-To: <CAGCGytL90oVSVe_VNKszSynq_gvNzKGwORk8LEacXMANVaD2zA@mail.gmail.com>
 From: Kalin KOZHUHAROV <me.kalin@gmail.com>
-Date: Tue, 8 Jan 2019 08:40:49 +0100
-Message-ID: <CAKXLc7eKJFUFPi0gRXfYFbsM-T1-CyygNzbeHx5RcSrAGanYyg@mail.gmail.com>
-Subject: Re: DNS tunneling only
-To: =?UTF-8?Q?Mario_Garc=C3=ADa?= <mariogdlt@gmail.com>
+Date: Tue, 8 Jan 2019 09:01:38 +0100
+Message-ID: <CAKXLc7cRqa+22pVnJvErGMpBd1-TWXNrjzfQE3q2=uqbnFq2Cw@mail.gmail.com>
+Subject: Re: issue with certain apps + wireguard
+To: Arpit Gupta <g.arpit@gmail.com>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
@@ -78,19 +77,60 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-T24gVHVlLCBKYW4gOCwgMjAxOSBhdCAzOjI1IEFNIE1hcmlvIEdhcmPDrWEgPG1hcmlvZ2RsdEBn
-bWFpbC5jb20+IHdyb3RlOgo+IElzIGl0IHBvc3NpYmxlIHRvIHR1bm5lbCBETlMgcmVxdWVzdHMg
-b25seSBmcm9tIHRoZSBjbGllbnQgdG8gdGhlCj4gd2lyZWd1YXJkIHNlcnZlcj8KPgpZZXMuLi4g
-ZWFzeSwgaWYgeW91IHdhbnQgdGhlIHJlc3BvbnNlcyB0byB0aG9zZSByZXF1ZXN0cyBnb2luZyB0
-aHJvdWdoCnRoZSB0dW5uZWwgYXMgd2VsbC4KCkl0IGlzIGp1c3QgYSB0dW5uZWwsIHdoYXQgeW91
-IHB1dCBpbiB0aGVyZSBpcyB1cCB0byB5b3UuIFNvIGFkZCBhCnJvdXRlIHRvIHlvdXIgRE5TIHNl
-cnZlciBvbmx5IHZpYSB0aGUgdHVubmVsLCBsZWF2ZSB0aGUgZGVmYXVsdCByb3V0ZQphcyBpdCBp
-cy4KCkFuZCBubywgdGhlcmUgaXMgbm8gbWFnaWMgYnV0dG9uIHRoYXQgd2lsbCBkbyBleGFjdGx5
-IHRoYXQuCgpLYWxpbi4KX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX18KV2lyZUd1YXJkIG1haWxpbmcgbGlzdApXaXJlR3VhcmRAbGlzdHMuengyYzQuY29tCmh0
-dHBzOi8vbGlzdHMuengyYzQuY29tL21haWxtYW4vbGlzdGluZm8vd2lyZWd1YXJkCg==
+On Tue, Jan 8, 2019 at 3:22 AM Arpit Gupta <g.arpit@gmail.com> wrote:
+> A new user here. Recently setup wireguard to run on my pi 3 + pi hole. I am noticing some interesting behavior with certain apps.
+>
+Apps running where? Name your hosts (fakename if you prefer) for clarity.
+
+> When using Google Duo on my android phone it would not work if wireguard was configured in split tunnel mode. When i enabled all traffic via wireguard it worked fine.
+>
+"android phone"? How does it connect to where?
+
+> Downloading app updates my phone when on wireguard would not work regardless if it was split tunnel or all traffic was being routed via wireguard. Interestingly installing an app did not have any issue.
+>
+Is there wireguard tunnel starting from "phone" (end ending where?), or no?
+
+> Another issue i noticed is when i try to open lets say a pdf attachment in my browser from gmail it gets stuck in downloading state. I then turn off wireguard and then it works fine.
+
+> I am noob in the matters of VPN, security, network etc so i wanted to see if people had thoughts on how i can debug this further to determine if this is an issue with the wireguard app on my phone vs the peer running on my pi and if there are certain types of apps i should add to my exclude list. Right now i have added google duo and play store to it.
+>
+For a start, get one or two levels below "Google store", "app" and so
+on. Test with simple tools, possibly platform agnostic (ping,
+wget/curl).
+In IP networks, data travels in packets, apps talk via sockets and
+send those packets. Packet flow can be observed via Wireshark
+(tcpdump, thsark) and can be recorded in a packet capture (pcap file).
+Linux networking is flexible enough to allow non-working
+configurations (or working not in the way one thinks);
+examining/sharing (running) configurations is a key point (`ip addr;
+ip route; wg; cat /etc/resolv.conf; ping -c3 8.8.8.8` commands run as
+root might help).
+
+> I have confirmed pi hole is not causing issues as when i disable wireguard applications are working fine and still using pi hole dns.
+>
+Since you have "working" and "non-working" state (i.e. when you
+"enable wireguard"), compare (diff) the two and try to understand what
+changes (execute the commands and record their output in a text file
+before and after:
+<reboot>
+bash -c "ip addr; ip route; wg; cat /etc/resolv.conf; ping -c3
+8.8.8.8" >test.good 2>&1
+<enable wireguard>
+bash -c "ip addr; ip route; wg; cat /etc/resolv.conf; ping -c3
+8.8.8.8" >test.bad 2>&1
+
+Then compare test.{good,bad} with a diff utility (diff, sdiff,
+gvimdiff, etc.). When you have more than one host involved, do that
+for each host before/after.
+
+Cheers,
+Kalin.
+_______________________________________________
+WireGuard mailing list
+WireGuard@lists.zx2c4.com
+https://lists.zx2c4.com/mailman/listinfo/wireguard
