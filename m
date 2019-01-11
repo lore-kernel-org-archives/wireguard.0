@@ -1,52 +1,72 @@
-Return-Path: <SRS0=NI3H=PS=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=OwtD=PT=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C6D3EC43387
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 10 Jan 2019 21:40:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E756C43387
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 11 Jan 2019 05:27:03 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 112F3206B7
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 10 Jan 2019 21:40:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 112F3206B7
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=attglobal.net
+	by mail.kernel.org (Postfix) with ESMTPS id D72FE20872
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 11 Jan 2019 05:27:02 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TWhXudHl"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org D72FE20872
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b1330c8e;
-	Thu, 10 Jan 2019 21:36:47 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c87bbded;
+	Fri, 11 Jan 2019 05:23:20 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 05b12dfa
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 083dd4a7
  for <wireguard@lists.zx2c4.com>;
- Thu, 10 Jan 2019 21:36:45 +0000 (UTC)
-Received: from dnvrco-cmomta01.email.rr.com (dnvrco-outbound-snat.email.rr.com
- [107.14.73.230])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b8efe04c
+ Fri, 11 Jan 2019 05:23:18 +0000 (UTC)
+Received: from mail-it1-x136.google.com (mail-it1-x136.google.com
+ [IPv6:2607:f8b0:4864:20::136])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 336785fb
  for <wireguard@lists.zx2c4.com>;
- Thu, 10 Jan 2019 21:36:45 +0000 (UTC)
-Received: from [192.168.0.2] ([172.117.201.217]) by cmsmtp with ESMTP
- id hi3cgknBxP088hi3fgBNmO; Thu, 10 Jan 2019 21:40:11 +0000
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-From: Eddie <stunnel@attglobal.net>
-Subject: iOS Version Not Connecting
-X-Clacks-Overhead: GNU Terry Pratchett
-Message-ID: <19e65ec5-c0bf-8442-9ed6-066a707eba0f@attglobal.net>
-Date: Thu, 10 Jan 2019 13:40:06 -0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.4.0
+ Fri, 11 Jan 2019 05:23:18 +0000 (UTC)
+Received: by mail-it1-x136.google.com with SMTP id h193so1454820ita.5
+ for <wireguard@lists.zx2c4.com>; Thu, 10 Jan 2019 21:26:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=j0QiP5GfnjZUFDkS1GyZQrfNPQGuSzFXUZ05kg6njfM=;
+ b=TWhXudHlh1HGd7TrvG7Aso/vJHM2RzoTXC7W1brmMXXOBU2y26QNb4cQ3Q+jJGyR2m
+ HvplDqEz/dU5EdgFihwYzoiONIOuKPaS4td9qJEYg4SAXhRnRWtiC4IUnxjnC0QIb9dg
+ MZsA8X5X/x2dLhEPOBM9QMnZzyVIEChaizyEsJO0N4DbOqRSCRJWo88/wBpe2xRD8+fD
+ 4WKoIN/GqsR7G4/2w4ugYw9Bsn0etanyOZ1D7XP6N9/NtCikeRI6JHYzDnWC3LzVfmzQ
+ 5OpfCf75mXvoqeeNJVsTpKg/yZUicFiMhmFs3ICimqclokNUBn8N1jknxu/E3JIMGUhe
+ vVPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=j0QiP5GfnjZUFDkS1GyZQrfNPQGuSzFXUZ05kg6njfM=;
+ b=YwONUmrO9ADZsoeycszY+1QUalTWXFK77J4nVJLKH7UFFIQQuFsHavwP2dSMg7vm/c
+ ekalQe7GQd5nRauT0yCPT/trbIfRmmweluWMnLpG2D/7fRZPvovtMhKk69sjTlwqGrRw
+ wk8EvebV+TFvoo9GT8NsdGHM7E/vuT2PHcLGSlDpw5cJ3EUGZX0d/oqIKyR6dd0QRJ0m
+ CDWmtJuMVKH+/5FaNQjxgdVpvYKA6z6W0mgyaNqMZ0JeCRl/0uM9eHMU1RVNxzobG7hC
+ Eoh6k50FXkF05CCWm3ssCpYGkDjn5qXvSgmFAl/axY4G770INmBY5/VuhPgL/8NAtPSl
+ HZSw==
+X-Gm-Message-State: AJcUukfBHGqTZG/0UQK/BemXq18CF8zXjIzCnxh/K2tFm6yga9iiGYDA
+ xXrwHBMOTEeC9c/MBYmpg6ogHOXpXNJluFHJhhYwebjo+Gc=
+X-Google-Smtp-Source: ALg8bN55xkjxET18bck62uEzPL+ipU39jtmjdTYWWnIasUZGh08NjsnvY2V/okOwqHJBl/NRm7XVK9dMe6izFkMUFcY=
+X-Received: by 2002:a02:4958:: with SMTP id z85mr9723092jaa.6.1547184405929;
+ Thu, 10 Jan 2019 21:26:45 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="------------C8E57BA6BDE1294129EC42BE"
-Content-Language: en-US
-X-CMAE-Envelope: MS4wfKTf+BmiEtapTBf5nRo7BYl+XiBldK2eUwr3+FINfkqGiQw86rGu3glqfF6TBYUh+n7ampQ1BChkadWAkmO5Ga2sPTCnhRFPH9hxKtJSGdeiV7jku9W4
- aZjA8E0sJ6630WBFkGTYKcfPZLxKpGdYt7oV73w93z5w6m38WQbunr4LDqIjr7bS0hvKYBe29YKcZg==
+From: Edward Vielmetti <edward.vielmetti@gmail.com>
+Date: Fri, 11 Jan 2019 00:26:06 -0500
+Message-ID: <CAPRZce230SKkA+GJHarc9xomOkfF87-MDN+PXjmTMtXUMT9cUQ@mail.gmail.com>
+Subject: ChaCha20Poly1305 is slow on ARM64
+To: wireguard@lists.zx2c4.com
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
-Reply-To: stunnel@attglobal.net
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -55,159 +75,77 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
+Content-Type: multipart/mixed; boundary="===============0113412701201020561=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This is a multi-part message in MIME format.
---------------C8E57BA6BDE1294129EC42BE
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+--===============0113412701201020561==
+Content-Type: multipart/alternative; boundary="000000000000eae3e4057f27f06d"
 
-I'm trying to connect from both an iPhone and an iPad to my Linux server 
-and neither connect.
+--000000000000eae3e4057f27f06d
+Content-Type: text/plain; charset="UTF-8"
 
-Checking on the phone, via a Google "What's my IP" still continues to 
-show the same IPv6 address assigned by my carrier.  Also, running "wg" 
-on my Linux server doesn't show any connected client for the assigned IP.
+There's a note from Jason at
+   https://github.com/golang/go/issues/29440
+   https://github.com/golang/go/issues/22809
+with information about the slow performance of ChaCha20Poly1305
+on 64-bit Arm systems using the Go standard libraries.
 
-I've attached the logs from the iPhone.
+In an effort to get support to remedy this problem,
+it would be super helpful to have access to any
+of the following:
 
-I also connect to the server from an Android tablet, and that works 
-correctly.
+- copies of bug reports that reference the slow or
+battery inefficient behavior on arm64 devices
+- some estimate of the potential benefit of improved
+performance, measured in some way that's
+easy to understand (% longer battery life?
+% faster?)
 
-Cheers,
-Eddie
+I'm not in a position to write the better code, but
+perhaps I can help get it merged.
 
---------------C8E57BA6BDE1294129EC42BE
-Content-Type: text/plain; charset=UTF-8;
- name="wireguard-log-2019-01-10T212504Z.txt"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment;
- filename="wireguard-log-2019-01-10T212504Z.txt"
+thanks
 
-MjAxOS0wMS0xMCAxMzoxMDozOC44MTgxODQ6IFtBUFBdIEFwcCB2ZXJzaW9uOiAwLjAuMjAx
-OTAxMDcgKDEpOyBHbyBiYWNrZW5kIHZlcnNpb246IDAuMC4yMDE4MTIyMg0KMjAxOS0wMS0x
-MCAxMzoxMDo1MS44OTUxMzc6IFtBUFBdIHN0YXJ0QWN0aXZhdGlvbjogRW50ZXJpbmcgKHR1
-bm5lbDogQm9nb0xpbnV4KQ0KMjAxOS0wMS0xMCAxMzoxMDo1MS44OTczMjk6IFtBUFBdIHN0
-YXJ0QWN0aXZhdGlvbjogU3RhcnRpbmcgdHVubmVsDQoyMDE5LTAxLTEwIDEzOjEwOjUxLjg5
-ODY3OTogW0FQUF0gc3RhcnRBY3RpdmF0aW9uOiBTdWNjZXNzDQoyMDE5LTAxLTEwIDEzOjEw
-OjUxLjkxNDIyODogW0FQUF0gVHVubmVsICdCb2dvTGludXgnIGNvbm5lY3Rpb24gc3RhdHVz
-IGNoYW5nZWQgdG8gJ2Nvbm5lY3RpbmcnDQoyMDE5LTAxLTEwIDEzOjEwOjUyLjEzNDc0Mjog
-W05FVF0gQXBwIHZlcnNpb246IDAuMC4yMDE5MDEwNyAoMSk7IEdvIGJhY2tlbmQgdmVyc2lv
-bjogMC4wLjIwMTgxMjIyDQoyMDE5LTAxLTEwIDEzOjEwOjUyLjEzNTYzMjogW05FVF0gU3Rh
-cnRpbmcgdHVubmVsIGZyb20gdGhlIGFwcA0KMjAxOS0wMS0xMCAxMzoxMDo1Ni44OTg3MTk6
-IFtBUFBdIFN0YXR1cyB1cGRhdGUgbm90aWZpY2F0aW9uIHRpbWVvdXQgZm9yIHR1bm5lbCAn
-Qm9nb0xpbnV4Jy4gVHVubmVsIHN0YXR1cyBpcyBub3cgJ2Nvbm5lY3RpbmcnLg0KMjAxOS0w
-MS0xMCAxMzoxMDo1Ny43MDMyNTk6IFtBUFBdIFR1bm5lbCAnQm9nb0xpbnV4JyBjb25uZWN0
-aW9uIHN0YXR1cyBjaGFuZ2VkIHRvICdjb25uZWN0ZWQnDQoyMDE5LTAxLTEwIDEzOjEwOjU3
-LjY4MDA2MzogW05FVF0gVHVubmVsIGludGVyZmFjZSBpcyB1dHVuMg0KMjAxOS0wMS0xMCAx
-MzoxMDo1Ny42ODE5MjI6IFtORVRdIEROUzY0OiBtYXBwZWQgMTcyLjExNy4yMDEuMjE3IHRv
-IGl0c2VsZi4NCjIwMTktMDEtMTAgMTM6MTA6NTcuNjg0NDkzOiBbTkVUXSBBdHRhY2hpbmcg
-dG8gaW50ZXJmYWNlDQoyMDE5LTAxLTEwIDEzOjEwOjU3LjY4NzgyNTogW05FVF0gUm91dGlu
-ZTogZGVjcnlwdGlvbiB3b3JrZXIgLSBzdGFydGVkDQoyMDE5LTAxLTEwIDEzOjEwOjU3LjY4
-ODI4NDogW05FVF0gUm91dGluZTogaGFuZHNoYWtlIHdvcmtlciAtIHN0YXJ0ZWQNCjIwMTkt
-MDEtMTAgMTM6MTA6NTcuNjg4NTIxOiBbTkVUXSBSb3V0aW5lOiBkZWNyeXB0aW9uIHdvcmtl
-ciAtIHN0YXJ0ZWQNCjIwMTktMDEtMTAgMTM6MTA6NTcuNjg4NzExOiBbTkVUXSBSb3V0aW5l
-OiBoYW5kc2hha2Ugd29ya2VyIC0gc3RhcnRlZA0KMjAxOS0wMS0xMCAxMzoxMDo1Ny42ODg5
-MDM6IFtORVRdIFJvdXRpbmU6IGVuY3J5cHRpb24gd29ya2VyIC0gc3RhcnRlZA0KMjAxOS0w
-MS0xMCAxMzoxMDo1Ny42ODkwNDA6IFtORVRdIFJvdXRpbmU6IGVuY3J5cHRpb24gd29ya2Vy
-IC0gc3RhcnRlZA0KMjAxOS0wMS0xMCAxMzoxMDo1Ny42ODkxODA6IFtORVRdIFJvdXRpbmU6
-IGRlY3J5cHRpb24gd29ya2VyIC0gc3RhcnRlZA0KMjAxOS0wMS0xMCAxMzoxMDo1Ny42ODkz
-MDc6IFtORVRdIFJvdXRpbmU6IGhhbmRzaGFrZSB3b3JrZXIgLSBzdGFydGVkDQoyMDE5LTAx
-LTEwIDEzOjEwOjU3LjY4OTQzMDogW05FVF0gUm91dGluZTogZXZlbnQgd29ya2VyIC0gc3Rh
-cnRlZA0KMjAxOS0wMS0xMCAxMzoxMDo1Ny42ODk1NTI6IFtORVRdIFJvdXRpbmU6IGRlY3J5
-cHRpb24gd29ya2VyIC0gc3RhcnRlZA0KMjAxOS0wMS0xMCAxMzoxMDo1Ny42ODk2NTE6IFtO
-RVRdIFJvdXRpbmU6IGhhbmRzaGFrZSB3b3JrZXIgLSBzdGFydGVkDQoyMDE5LTAxLTEwIDEz
-OjEwOjU3LjY4OTc3MTogW05FVF0gUm91dGluZTogZGVjcnlwdGlvbiB3b3JrZXIgLSBzdGFy
-dGVkDQoyMDE5LTAxLTEwIDEzOjEwOjU3LjY5MDI1OTogW05FVF0gUm91dGluZTogZW5jcnlw
-dGlvbiB3b3JrZXIgLSBzdGFydGVkDQoyMDE5LTAxLTEwIDEzOjEwOjU3LjY5MDM4NDogW05F
-VF0gUm91dGluZTogaGFuZHNoYWtlIHdvcmtlciAtIHN0YXJ0ZWQNCjIwMTktMDEtMTAgMTM6
-MTA6NTcuNjkwNTE4OiBbTkVUXSBSb3V0aW5lOiBlbmNyeXB0aW9uIHdvcmtlciAtIHN0YXJ0
-ZWQNCjIwMTktMDEtMTAgMTM6MTA6NTcuNjkwNjQxOiBbTkVUXSBSb3V0aW5lOiBkZWNyeXB0
-aW9uIHdvcmtlciAtIHN0YXJ0ZWQNCjIwMTktMDEtMTAgMTM6MTA6NTcuNjkwNzY2OiBbTkVU
-XSBSb3V0aW5lOiBoYW5kc2hha2Ugd29ya2VyIC0gc3RhcnRlZA0KMjAxOS0wMS0xMCAxMzox
-MDo1Ny42OTA5MjU6IFtORVRdIFJvdXRpbmU6IFRVTiByZWFkZXIgLSBzdGFydGVkDQoyMDE5
-LTAxLTEwIDEzOjEwOjU3LjY5MTA4NjogW05FVF0gUm91dGluZTogZW5jcnlwdGlvbiB3b3Jr
-ZXIgLSBzdGFydGVkDQoyMDE5LTAxLTEwIDEzOjEwOjU3LjY5MTIwODogW05FVF0gUm91dGlu
-ZTogZW5jcnlwdGlvbiB3b3JrZXIgLSBzdGFydGVkDQoyMDE5LTAxLTEwIDEzOjEwOjU3LjY5
-MTQyMDogW05FVF0gVUFQSTogVXBkYXRpbmcgcHJpdmF0ZSBrZXkNCjIwMTktMDEtMTAgMTM6
-MTA6NTcuNjkyMzkxOiBbTkVUXSBVQVBJOiBSZW1vdmluZyBhbGwgcGVlcnMNCjIwMTktMDEt
-MTAgMTM6MTA6NTcuNjkyNDk4OiBbTkVUXSBVQVBJOiBUcmFuc2l0aW9uIHRvIHBlZXIgY29u
-ZmlndXJhdGlvbg0KMjAxOS0wMS0xMCAxMzoxMDo1Ny42OTM3MDA6IFtORVRdIHBlZXIocnJB
-eeKApkxIeFUpIC0gVUFQSTogQ3JlYXRlZA0KMjAxOS0wMS0xMCAxMzoxMDo1Ny42OTM4MDc6
-IFtORVRdIHBlZXIocnJBeeKApkxIeFUpIC0gVUFQSTogVXBkYXRpbmcgZW5kcG9pbnQNCjIw
-MTktMDEtMTAgMTM6MTA6NTcuNjk2NTUwOiBbTkVUXSBwZWVyKHJyQXnigKZMSHhVKSAtIFVB
-UEk6IFVwZGF0aW5nIHBlcnNpc3RlbnQga2VlcGFsaXZlIGludGVydmFsDQoyMDE5LTAxLTEw
-IDEzOjEwOjU3LjY5NzM0NDogW05FVF0gUm91dGluZTogcmVjZWl2ZSBpbmNvbWluZyBJUHY2
-IC0gc3RhcnRlZA0KMjAxOS0wMS0xMCAxMzoxMDo1Ny42OTc1ODQ6IFtORVRdIFJvdXRpbmU6
-IHJlY2VpdmUgaW5jb21pbmcgSVB2NCAtIHN0YXJ0ZWQNCjIwMTktMDEtMTAgMTM6MTA6NTcu
-Njk3NzQwOiBbTkVUXSBVRFAgYmluZCBoYXMgYmVlbiB1cGRhdGVkDQoyMDE5LTAxLTEwIDEz
-OjEwOjU3LjY5Nzg0MjogW05FVF0gcGVlcihyckF54oCmTEh4VSkgLSBTdGFydGluZy4uLg0K
-MjAxOS0wMS0xMCAxMzoxMDo1Ny42OTgwNjg6IFtORVRdIHBlZXIocnJBeeKApkxIeFUpIC0g
-Um91dGluZTogbm9uY2Ugd29ya2VyIC0gc3RhcnRlZA0KMjAxOS0wMS0xMCAxMzoxMDo1Ny42
-OTgxOTA6IFtORVRdIHBlZXIocnJBeeKApkxIeFUpIC0gUm91dGluZTogc2VxdWVudGlhbCBy
-ZWNlaXZlciAtIHN0YXJ0ZWQNCjIwMTktMDEtMTAgMTM6MTA6NTcuNjk4Mjk2OiBbTkVUXSBw
-ZWVyKHJyQXnigKZMSHhVKSAtIFJvdXRpbmU6IHNlcXVlbnRpYWwgc2VuZGVyIC0gc3RhcnRl
-ZA0KMjAxOS0wMS0xMCAxMzoxMDo1Ny42OTg0NzU6IFtORVRdIERldmljZSBzdGFydGVkDQoy
-MDE5LTAxLTEwIDEzOjExOjAxLjg5ODMyNzogW0FQUF0gU3RhdHVzIHVwZGF0ZSBub3RpZmlj
-YXRpb24gdGltZW91dCBmb3IgdHVubmVsICdCb2dvTGludXgnLiBUdW5uZWwgc3RhdHVzIGlz
-IG5vdyAnY29ubmVjdGVkJy4NCjIwMTktMDEtMTAgMTM6MTU6MTkuMTcxNDIzOiBbQVBQXSBU
-dW5uZWwgJ0JvZ29MaW51eCcgY29ubmVjdGlvbiBzdGF0dXMgY2hhbmdlZCB0byAnY29ubmVj
-dGVkJw0KMjAxOS0wMS0xMCAxMzoxNjoxNC4wMDE0OTc6IFtBUFBdIFR1bm5lbCAnQm9nb0xp
-bnV4JyBjb25uZWN0aW9uIHN0YXR1cyBjaGFuZ2VkIHRvICdjb25uZWN0ZWQnDQoyMDE5LTAx
-LTEwIDEzOjIwOjA5LjE0MTcyNTogW0FQUF0gVHVubmVsICdCb2dvTGludXgnIGNvbm5lY3Rp
-b24gc3RhdHVzIGNoYW5nZWQgdG8gJ2Rpc2Nvbm5lY3RpbmcnDQoyMDE5LTAxLTEwIDEzOjIw
-OjA5LjUxNDE5MzogW05FVF0gTmV0d29yayBjaGFuZ2UgZGV0ZWN0ZWQgd2l0aCBzYXRpc2Zp
-ZWQgcm91dGUgYW5kIGludGVyZmFjZSBvcmRlciBbcGRwX2lwMF0NCjIwMTktMDEtMTAgMTM6
-MjA6MDkuNTE3MzEwOiBbTkVUXSBETlM2NDogbWFwcGVkIDE3Mi4xMTcuMjAxLjIxNyB0byBp
-dHNlbGYuDQoyMDE5LTAxLTEwIDEzOjIwOjA5LjUxODA4MjogW05FVF0gVUFQSTogVHJhbnNp
-dGlvbiB0byBwZWVyIGNvbmZpZ3VyYXRpb24NCjIwMTktMDEtMTAgMTM6MjA6MDkuNTE4Mzc0
-OiBbTkVUXSBwZWVyKHJyQXnigKZMSHhVKSAtIFVBUEk6IFVwZGF0aW5nIGVuZHBvaW50DQoy
-MDE5LTAxLTEwIDEzOjIwOjA5LjUxODY1NzogW05FVF0gQmluZGluZyBzb2NrZXRzIHRvIGlu
-dGVyZmFjZSAyDQoyMDE5LTAxLTEwIDEzOjIwOjE0LjE5Njg5MTogW0FQUF0gVHVubmVsICdC
-b2dvTGludXgnIGNvbm5lY3Rpb24gc3RhdHVzIGNoYW5nZWQgdG8gJ2Rpc2Nvbm5lY3RlZCcN
-CjIwMTktMDEtMTAgMTM6MjA6MTQuMTQ5MDUwOiBbTkVUXSBTdG9wcGluZyB0dW5uZWwNCjIw
-MTktMDEtMTAgMTM6MjA6MTQuMTQ5NzQzOiBbTkVUXSBEZXZpY2UgY2xvc2luZw0KMjAxOS0w
-MS0xMCAxMzoyMDoxNC4xNTA1MDc6IFtORVRdIFJvdXRpbmU6IGV2ZW50IHdvcmtlciAtIHN0
-b3BwZWQNCjIwMTktMDEtMTAgMTM6MjA6MTQuMTUwODE0OiBbTkVUXSBSb3V0aW5lOiByZWNl
-aXZlIGluY29taW5nIElQdjQgLSBzdG9wcGVkDQoyMDE5LTAxLTEwIDEzOjIwOjE0LjE1MTcw
-MTogW05FVF0gUm91dGluZTogVFVOIHJlYWRlciAtIHN0b3BwZWQNCjIwMTktMDEtMTAgMTM6
-MjA6MTQuMTUxOTQzOiBbTkVUXSBSb3V0aW5lOiByZWNlaXZlIGluY29taW5nIElQdjYgLSBz
-dG9wcGVkDQoyMDE5LTAxLTEwIDEzOjIwOjE0LjE1MjMwMzogW05FVF0gUm91dGluZTogaGFu
-ZHNoYWtlIHdvcmtlciAtIHN0b3BwZWQNCjIwMTktMDEtMTAgMTM6MjA6MTQuMTUyNTYyOiBb
-TkVUXSBwZWVyKHJyQXnigKZMSHhVKSAtIFN0b3BwaW5nLi4uDQoyMDE5LTAxLTEwIDEzOjIw
-OjE0LjE1Mjg2MzogW05FVF0gcGVlcihyckF54oCmTEh4VSkgLSBSb3V0aW5lOiBub25jZSB3
-b3JrZXIgLSBzdG9wcGVkDQoyMDE5LTAxLTEwIDEzOjIwOjE0LjE1MzA4MTogW05FVF0gcGVl
-cihyckF54oCmTEh4VSkgLSBSb3V0aW5lOiBzZXF1ZW50aWFsIHNlbmRlciAtIHN0b3BwZWQN
-CjIwMTktMDEtMTAgMTM6MjA6MTQuMTUzMjc5OiBbTkVUXSBSb3V0aW5lOiBlbmNyeXB0aW9u
-IHdvcmtlciAtIHN0b3BwZWQNCjIwMTktMDEtMTAgMTM6MjA6MTQuMTUzNDcyOiBbTkVUXSBS
-b3V0aW5lOiBlbmNyeXB0aW9uIHdvcmtlciAtIHN0b3BwZWQNCjIwMTktMDEtMTAgMTM6MjA6
-MTQuMTUzNjYwOiBbTkVUXSBSb3V0aW5lOiBoYW5kc2hha2Ugd29ya2VyIC0gc3RvcHBlZA0K
-MjAxOS0wMS0xMCAxMzoyMDoxNC4xNTM5MjI6IFtORVRdIFJvdXRpbmU6IGVuY3J5cHRpb24g
-d29ya2VyIC0gc3RvcHBlZA0KMjAxOS0wMS0xMCAxMzoyMDoxNC4xNTQxMzQ6IFtORVRdIFJv
-dXRpbmU6IGhhbmRzaGFrZSB3b3JrZXIgLSBzdG9wcGVkDQoyMDE5LTAxLTEwIDEzOjIwOjE0
-LjE1NDM5MDogW05FVF0gUm91dGluZTogaGFuZHNoYWtlIHdvcmtlciAtIHN0b3BwZWQNCjIw
-MTktMDEtMTAgMTM6MjA6MTQuMTU0NjYzOiBbTkVUXSBSb3V0aW5lOiBkZWNyeXB0aW9uIHdv
-cmtlciAtIHN0b3BwZWQNCjIwMTktMDEtMTAgMTM6MjA6MTQuMTU0ODY1OiBbTkVUXSBSb3V0
-aW5lOiBlbmNyeXB0aW9uIHdvcmtlciAtIHN0b3BwZWQNCjIwMTktMDEtMTAgMTM6MjA6MTQu
-MTU1MTE0OiBbTkVUXSBSb3V0aW5lOiBoYW5kc2hha2Ugd29ya2VyIC0gc3RvcHBlZA0KMjAx
-OS0wMS0xMCAxMzoyMDoxNC4xNTU1Mjg6IFtORVRdIFJvdXRpbmU6IGVuY3J5cHRpb24gd29y
-a2VyIC0gc3RvcHBlZA0KMjAxOS0wMS0xMCAxMzoyMDoxNC4xNTYwODk6IFtORVRdIFJvdXRp
-bmU6IGVuY3J5cHRpb24gd29ya2VyIC0gc3RvcHBlZA0KMjAxOS0wMS0xMCAxMzoyMDoxNC4x
-NTYzNDM6IFtORVRdIFJvdXRpbmU6IGRlY3J5cHRpb24gd29ya2VyIC0gc3RvcHBlZA0KMjAx
-OS0wMS0xMCAxMzoyMDoxNC4xNTY1NTk6IFtORVRdIFJvdXRpbmU6IGRlY3J5cHRpb24gd29y
-a2VyIC0gc3RvcHBlZA0KMjAxOS0wMS0xMCAxMzoyMDoxNC4xNTY4MjM6IFtORVRdIFJvdXRp
-bmU6IGhhbmRzaGFrZSB3b3JrZXIgLSBzdG9wcGVkDQoyMDE5LTAxLTEwIDEzOjIwOjE0LjE1
-NzA1ODogW05FVF0gUm91dGluZTogZGVjcnlwdGlvbiB3b3JrZXIgLSBzdG9wcGVkDQoyMDE5
-LTAxLTEwIDEzOjIwOjE0LjE1NzMyNDogW05FVF0gUm91dGluZTogZGVjcnlwdGlvbiB3b3Jr
-ZXIgLSBzdG9wcGVkDQoyMDE5LTAxLTEwIDEzOjIwOjE0LjE1NzU2NDogW05FVF0gUm91dGlu
-ZTogZGVjcnlwdGlvbiB3b3JrZXIgLSBzdG9wcGVkDQoyMDE5LTAxLTEwIDEzOjIwOjE0LjE1
-Nzc4NjogW05FVF0gcGVlcihyckF54oCmTEh4VSkgLSBSb3V0aW5lOiBzZXF1ZW50aWFsIHJl
-Y2VpdmVyIC0gc3RvcHBlZA0KMjAxOS0wMS0xMCAxMzoyMDoxNC4xNTgxMDQ6IFtORVRdIElu
-dGVyZmFjZSBjbG9zZWQNCjIwMTktMDEtMTAgMTM6MjQ6NTkuODM0NzM0OiBbQVBQXSBUdW5u
-ZWwgJ0JvZ29MaW51eCcgY29ubmVjdGlvbiBzdGF0dXMgY2hhbmdlZCB0byAnZGlzY29ubmVj
-dGVkJw0K
---------------C8E57BA6BDE1294129EC42BE
+Ed
+
+-- 
+Edward Vielmetti +1 734 330 2465
+edward.vielmetti@gmail.com
+
+--000000000000eae3e4057f27f06d
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr">There&#=
+39;s a note from Jason at<div>=C2=A0 =C2=A0<a href=3D"https://github.com/go=
+lang/go/issues/29440">https://github.com/golang/go/issues/29440</a></div><d=
+iv>=C2=A0 =C2=A0<a href=3D"https://github.com/golang/go/issues/22809">https=
+://github.com/golang/go/issues/22809</a></div><div>with information about t=
+he slow performance of=C2=A0ChaCha20Poly1305</div><div>on 64-bit Arm system=
+s using the Go standard libraries.</div><div><br></div><div>In an effort to=
+ get support to remedy this problem,</div><div>it would be super helpful to=
+ have access to any</div><div>of the following:</div><div><br></div><div>- =
+copies of bug reports that reference the slow or</div><div>battery ineffici=
+ent behavior on arm64 devices</div><div>- some estimate of the potential be=
+nefit of improved</div><div>performance, measured in some way that&#39;s</d=
+iv><div>easy to understand (% longer battery life?</div><div>% faster?)</di=
+v><div><br></div><div>I&#39;m not in a position to write the better code, b=
+ut</div><div>perhaps I can help get it merged.</div><div><br></div><div>tha=
+nks</div><div><br></div><div>Ed</div><div><div><br></div>-- <br><div dir=3D=
+"ltr" class=3D"gmail_signature"><span>Edward Vielmetti=C2=A0<span id=3D"gma=
+il-gc-number-2161" class=3D"gmail-gc-cs-link" title=3D"Call with Google Voi=
+ce"><span id=3D"gmail-gc-number-2162" class=3D"gmail-gc-cs-link" title=3D"C=
+all with Google Voice"><span id=3D"gmail-gc-number-2163" class=3D"gmail-gc-=
+cs-link" title=3D"Call with Google Voice"><span id=3D"gc-number-2164" class=
+=3D"gc-cs-link" title=3D"Call with Google Voice">+1 734 330 2465</span></sp=
+an></span></span></span><div><a href=3D"mailto:edward.vielmetti@gmail.com" =
+target=3D"_blank">edward.vielmetti@gmail.com</a></div><div><br></div></div>=
+</div></div></div></div></div>
+
+--000000000000eae3e4057f27f06d--
+
+--===============0113412701201020561==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -218,4 +156,4 @@ WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---------------C8E57BA6BDE1294129EC42BE--
+--===============0113412701201020561==--
