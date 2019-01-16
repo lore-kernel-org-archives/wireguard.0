@@ -2,126 +2,77 @@ Return-Path: <SRS0=1SvS=PY=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.3 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,USER_AGENT_MUTT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EB0EC43387
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 16 Jan 2019 18:45:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3ABF9C43387
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 16 Jan 2019 20:25:46 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id B419420840
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 16 Jan 2019 18:44:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 8AD1520840
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 16 Jan 2019 20:25:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=mib-infotech-co-nz.20150623.gappssmtp.com header.i=@mib-infotech-co-nz.20150623.gappssmtp.com header.b="Zs343d/d"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org B419420840
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=mib-infotech.co.nz
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K0wU+CRv"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 8AD1520840
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6793157f;
-	Wed, 16 Jan 2019 18:40:30 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a3295d1a;
+	Wed, 16 Jan 2019 20:21:31 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2a156ff9
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 776d7dc3
  for <wireguard@lists.zx2c4.com>;
- Wed, 16 Jan 2019 18:40:27 +0000 (UTC)
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com
- [IPv6:2607:f8b0:4864:20::630])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 24c52af3
+ Wed, 16 Jan 2019 20:21:29 +0000 (UTC)
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com
+ [IPv6:2a00:1450:4864:20::32c])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1bfec5c4
  for <wireguard@lists.zx2c4.com>;
- Wed, 16 Jan 2019 18:40:27 +0000 (UTC)
-Received: by mail-pl1-x630.google.com with SMTP id e11so3409681plt.11
- for <wireguard@lists.zx2c4.com>; Wed, 16 Jan 2019 10:44:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mib-infotech-co-nz.20150623.gappssmtp.com; s=20150623;
- h=subject:to:references:from:openpgp:autocrypt:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=VQHM32y93enWEBN2Y7aRrcaXmf50OdB5ACAgjCtOZRk=;
- b=Zs343d/dQYV1W2GliE/hqtUC9uThbA6nGBT/9zvpfBeQY3h5D1VH3/afwI7YpqbLcB
- EvdTLfNnWx5iQcjF+c43Swf28cnUaZcTv0sv1LJSX8TzEhVexFbz/pbi5B3Rs+tssw/w
- tZkF5zfDAoMPcvrdnvV4gJVKE6hGfD61cmhn00pV9TrPFTSWNj+s6VL5Qgtzku0biz1R
- hrW2eLRLEgqxUG7TotnOl6DzYKEoSXH6l13V5xq8bBjLVmYltBS1CuP3X6v8ZZRarXzi
- qX1PbVU00MeqOctWIMt8YxllR23zJH/+tdpQyCu0DSqQhzvrvwP/9AEKLti8/NZMQxI4
- gYwA==
+ Wed, 16 Jan 2019 20:21:29 +0000 (UTC)
+Received: by mail-wm1-x32c.google.com with SMTP id y185so1924822wmd.1
+ for <wireguard@lists.zx2c4.com>; Wed, 16 Jan 2019 12:25:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to:user-agent;
+ bh=Nc0f7yshq8qL7bBiTxa6BNXPeepMZMGghAxeryPIG40=;
+ b=K0wU+CRvm3Qpb22Zpv27Gd6bQrx1PaaH1EsV6VgwbuAjlAf6m0GzPmTFvJkDeQ0HrT
+ xu7IkGK9lKIaQ2OHdG1+nTsWGl29pH41SusLW9kevHeudQx1TZe39/b9fgrZkT1/CSc1
+ vU2K1L9YfKlK+N6NH1AYhiLy8UsDU5QG04DGTGYxGqhNXIetKp4rg6+SIctxrwFeO+dY
+ U75lJBszJnYgA5B2gXaU7e19vLEm5dA9MSQnQqnFh/B6/JAIdE8pMOJ0h9/qhzz7LWX7
+ azyYrJIQ+MQWSRgffzbvLkX6JnXUDRTIpV+3EO8ke2PgLIWwWfAcySPvLxVt8sPsA3b+
+ YT9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:references:from:openpgp:autocrypt
- :message-id:date:user-agent:mime-version:in-reply-to
- :content-language:content-transfer-encoding;
- bh=VQHM32y93enWEBN2Y7aRrcaXmf50OdB5ACAgjCtOZRk=;
- b=JCn5ZN4OhAxsD4GUgwdwg54cL3MXDothbMNaEZwKqsQ98JBTze0Qtvb8naoGyUMPM/
- reKujT9Moo1DEaXbHZKP6ddbW5y3kSVznEJFBLEFRWSw4mcWVT1MnckbEpAyIPe9t+d2
- 2qOo0EQUj91A4VssHig6Ul3dakzIwcZSEiBHoFBLSAvREHJ4sTd3ZO531g4xDdQvgBs1
- FEgBzQiOF+kVLhQew2lpYUxYK4PfWAzNDj6H8mnEsCsxm4MVhZ8DZkqelXnQpCjyifXM
- mXymo8ut4xiqmXJv5tO/6MaI6QDV3mh2yU2jQ/9BBxwdcXQuYXqlpUgYz2boKXTNA1Jm
- 7k4w==
-X-Gm-Message-State: AJcUukcF4Z9FnBsM6faSDN56p6l9lQ3N525hm8D6EA0iUAS4pLK8ayVH
- S/sj5UnSDPvVNUA8ZzrRti1IWgxMbiw=
-X-Google-Smtp-Source: ALg8bN4rl9oSpQDPARQZhnI9Wb/plJ/dKUNtWdkZLyt4yz6hTH+/d1aCfM+JlPG8olA1j9GdSAYnYQ==
-X-Received: by 2002:a17:902:9a8b:: with SMTP id
- w11mr11128738plp.121.1547664277078; 
- Wed, 16 Jan 2019 10:44:37 -0800 (PST)
-Received: from [192.168.95.203] ([210.54.33.48])
- by smtp.googlemail.com with ESMTPSA id d68sm9535971pfa.64.2019.01.16.10.44.35
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Wed, 16 Jan 2019 10:44:36 -0800 (PST)
-Subject: Re: WireGuard roaming behind a load balancer
-To: wireguard@lists.zx2c4.com
-References: <CABbM=Lk6WQGctp7Z3YBYBcq9CKwRn-KWC-e8DeHxvYF+Cda8Og@mail.gmail.com>
-From: John Huttley <john@mib-infotech.co.nz>
-Openpgp: preference=signencrypt
-Autocrypt: addr=john@mib-infotech.co.nz; prefer-encrypt=mutual; keydata=
- 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
- RIzTdUXOFJroFiGQ
-Message-ID: <a6036478-50de-4b7e-01f8-a21c6f302876@mib-infotech.co.nz>
-Date: Thu, 17 Jan 2019 07:44:32 +1300
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.4.0
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to:user-agent;
+ bh=Nc0f7yshq8qL7bBiTxa6BNXPeepMZMGghAxeryPIG40=;
+ b=UYzAu66HfI1wde57tsxbQE/1ibe1952TxrUGE8P5y3olAxaXX4MU+pL2Iq4Tm42Lf/
+ CrakT8OOvUMRm+Neet+tahM8WCxBh9/IqnLV2ecKqiACiZXqK6x1RlxogtQuYzxqU3IN
+ xyvUJ/g8hXC4iTbVmPOiqUDa0GCu+Nbv389Ckh7iTBzBnyaRK78Y0tVuFFaEFSLnIe9J
+ 3MKOb/TBfZJtvBIO4VN3hK/U95cdJtKSREtDpalFAkNVHkTx6bpMJIdLVmYOIGRMSNEM
+ 01JZEoCxIcSQQgKgEPLr0OfqBX9+sJQ7kVvUj+W9AU4RM2ebIVmnTxuzLJsusatWxPSY
+ XD1g==
+X-Gm-Message-State: AJcUukcd2G+DnVRj5PF3mPiR1tvZpG5+TZXVBnLjOSRUlGvLw2BJYa4b
+ WatKsPMIsAAMUUg9sGwPna0=
+X-Google-Smtp-Source: ALg8bN6Nrk1d0AmMyAJgqzIC2QJJpaQslDTVCxhJuyubsJsXO+bk9DdWId3De4Pwt6X/Z3koasuWJA==
+X-Received: by 2002:a1c:9a4c:: with SMTP id c73mr9271809wme.35.1547670339663; 
+ Wed, 16 Jan 2019 12:25:39 -0800 (PST)
+Received: from localhost (h082218219015.host.wavenet.at. [82.218.219.15])
+ by smtp.gmail.com with ESMTPSA id s66sm30461807wmf.34.2019.01.16.12.25.38
+ (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+ Wed, 16 Jan 2019 12:25:38 -0800 (PST)
+Date: Wed, 16 Jan 2019 21:25:37 +0100
+From: Tharre <tharre3@gmail.com>
+To: John Accoun <jsonacc@gmail.com>
+Subject: Re: how would one go about building an admin frontend?
+Message-ID: <20190116202537.GA4712@xultrabook.lan>
+References: <CALLpx3RrfNM7Brf0m-9eEMbRiHneUWK00fNorUAn948asC6jSg@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CABbM=Lk6WQGctp7Z3YBYBcq9CKwRn-KWC-e8DeHxvYF+Cda8Og@mail.gmail.com>
-Content-Language: en-US
+In-Reply-To: <CALLpx3RrfNM7Brf0m-9eEMbRiHneUWK00fNorUAn948asC6jSg@mail.gmail.com>
+User-Agent: Mutt/1.11.2 (2019-01-07)
+Cc: wireguard@lists.zx2c4.com
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -133,50 +84,85 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="===============8409856015558030932=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-If you are using an F5 LTM load balancer,
 
-Set a keepalive timeout  on  wireguard.
-Assign a UDP profile with a timeout greater than the wireguard keepalive
-Assign the Profile to the UDP VIP
---John
-
+--===============8409856015558030932==
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="tThc/1wpZn/ma/RB"
+Content-Disposition: inline
 
 
-On 16/01/2019 4:45 AM, pdub wrote:
-> Greetings,
-> 
-> WireGuard is a really cool project! Thanks!
-> 
-> With WireGuard's native roaming support, I have a question about just
-> how stateful/stateless the roaming is. Here's a hypothetical situation:
-> 
-> Let's say WireGuard is being used to tunnel into a location and is
-> served behind a load balancer for high availability. If both nodes have
-> identical WireGuard config files at the start of WireGuard (and, for
-> simplicity, let's assume the configurations don't change). If one node
-> dies, the load balancer will automatically start sending packets to the
-> standby node running WireGuard (perhaps existing on the same subnet as
-> the other node, but with a different IP).
-> 
-> In a sense, the server-side "peer" has just roamed from machine to
-> another, but the public/Internet IP address didn't change (because that
-> is assigned to the load balancer itself). Will this work with WireGuard
-> today?
-> 
-> TIA
-> 
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
-> 
+--tThc/1wpZn/ma/RB
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On 01/11, John Accoun wrote:
+> I red the 'Web App provisioning Server' which I believe describes a
+> possible solution for this use case. But I am confused with the whole data
+> storage thing. Where do configuarations live? Are the configuration files
+> at /etc/whireguard/ the source of truth? If I edit these when is the list
+> of peers refreshed?
+
+I assume you're referring to [0]?
+
+/etc/wireguard is only relevant for wg-quick, if you edit files there
+your changes will only take effect once you down/up your interface with
+wg-quick.
+
+So you obviously don't want to do it that way.
+
+> The above mentioned document suggests shelling out to command line tools.
+> Is this the recommended way. Does a general purpose library for managing
+> wireguard config exist?
+
+I'm not sure where you read that? In any case, you can control wireguard
+via netlink[1], and there is also a embeddable library[2] in C
+available.
+
+There also probably exists a netlink library for $YOUR_FAVORITE_LANG.
+
+Regards,
+Tharre
+
+[0] https://docs.google.com/document/d/1_3Id-0vVXlXHFB7eT6fnfXoe9ppJoS8pY7R=
+_uCtEZG4
+[1] See man 7 rtnetlink
+[2] https://git.zx2c4.com/WireGuard/tree/contrib/examples/embeddable-wg-lib=
+rary/wireguard.c
+
+--=20
+PGP fingerprint: 42CE 7698 D6A0 6129 AA16  EF5C 5431 BDE2 C8F0 B2F4
+
+--tThc/1wpZn/ma/RB
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCAAdFiEEsuhqARgBY035sVClY1a5mXdUZMYFAlw/kz4ACgkQY1a5mXdU
+ZMbVGAf+IG0tkei4MshxpB76RJ2Rd5BrlUfNJ00mIPPuYzQp3zV1IaC4HFRBXcc7
+CvGck3RoXGdKnBxTbr4os8HuTJtTQEAW3bVkpA8N2HDVcL0ZScug/MYP86hhG8+i
+FYdy4XvpF8+pbYPwBNUkoDGcncsgQZqLvIdX7hpfH0UehGm20K8YDf7to/16LG0y
+3pFxlcHVndGrKlc2giyeR+f24Pu1ZsQb+uxJvVuB7B1jTfa0QfFeB2k35fUgO/dL
+xVYC+VeVhGO8l0vIWEHPp4QSbCY3f0yZh66BsFcZBHnnyAFtOmVWYdx0LRRKBWB6
+DdFxl7lG4cNBwXYbt3/zfWzOCIb6TQ==
+=JsCW
+-----END PGP SIGNATURE-----
+
+--tThc/1wpZn/ma/RB--
+
+--===============8409856015558030932==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--===============8409856015558030932==--
