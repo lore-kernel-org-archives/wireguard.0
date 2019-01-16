@@ -6,63 +6,68 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_PASS
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22A42C43387
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B11EEC43444
 	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 16 Jan 2019 16:36:25 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 9F0BA20657
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 16 Jan 2019 16:36:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 3E11220657
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 16 Jan 2019 16:36:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=pdub-net.20150623.gappssmtp.com header.i=@pdub-net.20150623.gappssmtp.com header.b="LVvlgi3F"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 9F0BA20657
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=pdub.net
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=archlinux-us.20150623.gappssmtp.com header.i=@archlinux-us.20150623.gappssmtp.com header.b="pUC65Bh5"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 3E11220657
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=archlinux.us
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 20fdc210;
-	Wed, 16 Jan 2019 16:32:11 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f4a67be0;
+	Wed, 16 Jan 2019 16:32:12 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 02ca0fd5
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0d5554cb
  for <wireguard@lists.zx2c4.com>;
- Tue, 15 Jan 2019 16:41:33 +0000 (UTC)
-Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com
- [IPv6:2607:f8b0:4864:20::b30])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c70c34be
+ Wed, 16 Jan 2019 15:48:39 +0000 (UTC)
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com
+ [IPv6:2607:f8b0:4864:20::32d])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 51c90a96
  for <wireguard@lists.zx2c4.com>;
- Tue, 15 Jan 2019 16:41:32 +0000 (UTC)
-Received: by mail-yb1-xb30.google.com with SMTP id t16so1283998ybk.10
- for <wireguard@lists.zx2c4.com>; Tue, 15 Jan 2019 08:45:36 -0800 (PST)
+ Wed, 16 Jan 2019 15:48:39 +0000 (UTC)
+Received: by mail-ot1-x32d.google.com with SMTP id 32so7975984ota.12
+ for <wireguard@lists.zx2c4.com>; Wed, 16 Jan 2019 07:52:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=pdub-net.20150623.gappssmtp.com; s=20150623;
- h=mime-version:from:date:message-id:subject:to;
- bh=5GvErlq2fz2gURPLpzXvmo5Gjw0uiud2M6cfuYQLTIg=;
- b=LVvlgi3FfMNL16I/Qh8QBsv4sjJNsJUDdMPKaHY7E9vfCQScouUfEnkCEHj8VFWe9I
- w8OeezILgTiA2dNkk0GCosMXwkUwr+X+ZuixIw/jX57U9o0uglw2WqHDA3ls5NbKTT9x
- oDI4D/RyLmgX1nwCbLnTJAwly7C+IqhqZILbQXe6zJWxwopFHzrfugMczvBXnN1LDQ74
- AT95RS3UJcHlSOsO6Rh9ac3JOq3QLltNYcHFEZhrIljRuJXQ3lgmsoyZ6F7uSgf2JgSs
- tKTxUzNC60MqRnvHBjS7DKf+PusC/jCNvGW0T2820PAxde1TjZfPLxIfUi31AwqQExPp
- MWFg==
+ d=archlinux-us.20150623.gappssmtp.com; s=20150623;
+ h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+ bh=pP7TH77P9zuInob5Ghzndh03FllxTGAeAp/oPx61PpU=;
+ b=pUC65Bh5saXA6+0ref+onacnq7PqhhCnbyBpsfaHqSGGZmtEH4uSZp2XjK5nzGUHye
+ Yh0P6YY/bjaMG8/d0RGsFIANu22ToTFfV4HOGQw04oYRyGxpcoM8NP644ukaWsp8i7eZ
+ x33xqAjB39uEApNFPoPL4TIjypN6F2nfUEE3vQQE7aybJvgWmtDjf9yhlDsRnl6NbTXA
+ 6fCQqrPMLWlps+lVYBDZtvcvBAURM4s3guVE590nRtq4VRDIM1t+XDdU++Le+LCpMkwn
+ gR/hTnug+MXIohrwdxWYRRMM2w2aYmeHu9evCUxcFPxrGzhsebis4m3oshp/ljbu1EFT
+ yj8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=5GvErlq2fz2gURPLpzXvmo5Gjw0uiud2M6cfuYQLTIg=;
- b=WD0fRQUU7t7pVTTL3pe4rL/howSajfSA2q4owCeAYcgHN/fXPG3lEmy5Y41LfFAIU0
- dXIHm0BgcIOCXZNcTVzI5LN4UCY3sGdu6/coZj9PtththELY80SlKUIVrKv6Ym/lDGWp
- bvhix1tkIGY9yyj5J/ukqVIqjVP7G0e/+UyOSB313L4o27ro3pZ4fA2ySP6AezvjfrTY
- VO3DvuTfONtmqlGgFEoWWmdRy04X12HvK9uk5ZASSDy/I9C5z+A/31ws1f+bqVVxXexQ
- GW6QJxaB0xWjQ7l+4tNY8zD4vPKI9X57/+OKQ0kZZdP2IEP6dDfmQXUlZtlf8aHOm5qI
- c5Rg==
-X-Gm-Message-State: AJcUuke5RKWlyogmikvF8Rt90sGSkizUTOOCi3QItYa95QarKUHMAt6b
- o8eX2e0KwI+VIbkOU7NPEk5GfoskbQXs0InKucSFaFv/9bo=
-X-Google-Smtp-Source: ALg8bN4YX9vq2yRUCVsFh5s9xgKzNYTjE7AUXLe5Wnbvs3x6GKs2tm+LlmyTB/a9d2UPrUOLH1ug7sKU8mKX3i9uIXw=
-X-Received: by 2002:a25:81d1:: with SMTP id n17mr3677411ybm.382.1547570735178; 
- Tue, 15 Jan 2019 08:45:35 -0800 (PST)
+ h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+ :message-id:subject:to;
+ bh=pP7TH77P9zuInob5Ghzndh03FllxTGAeAp/oPx61PpU=;
+ b=e2jplcop4TVTHRUGpPid0PzrCsIarOFEVQZT4pleSJY43YQXHO8J+/ye8BWUZSGncM
+ 4wTCDQhwznZSRELcBKeg8AgZK3MEA7Ge/JBa3fKsuzNUScmuFfxZ8ZHQ7pX5sEpBa8pT
+ JbnYRXDz7Q9u5TkArPXEiqQvkx6bQR+BM4RY/Sx5p18ccNpXaAvvAWQeucRAkKBsianm
+ WKcxuj9SUFDaWqJFN8Jc+wvlh2edDglwzJhVKwQ5L+Swrua9rcmEoQ3QwYOJz+vHvzqR
+ XZ/x74J16hqYwg3G1X1IGn0Bt1Ir2U5tNYHWJWfSjE1DUvJ9Qep31mJ06CoIK38r/wr6
+ IV7Q==
+X-Gm-Message-State: AJcUukeiuMNCAOlD7+AkvT8aXn/zj+aRXnjGUT6dgNougJQWXikENZat
+ vCwTEjp3iLJuBeNNqAkMb/25QdO846bbkl6hUWMXHs/W
+X-Google-Smtp-Source: ALg8bN53jwJVsXrPgOmssiI7IqzEpgiVeKMPgk+jAldGajHisKxjxGPFKPQyF483Ri8XMioR9+KwubBJQR9qdnq2kEo=
+X-Received: by 2002:a9d:4d17:: with SMTP id n23mr5598060otf.66.1547653969450; 
+ Wed, 16 Jan 2019 07:52:49 -0800 (PST)
 MIME-Version: 1.0
-From: pdub <pdub@pdub.net>
-Date: Tue, 15 Jan 2019 11:45:23 -0500
-Message-ID: <CABbM=Lk6WQGctp7Z3YBYBcq9CKwRn-KWC-e8DeHxvYF+Cda8Og@mail.gmail.com>
-Subject: WireGuard roaming behind a load balancer
-To: wireguard@lists.zx2c4.com
+Received: by 2002:a4a:2f0d:0:0:0:0:0 with HTTP; Wed, 16 Jan 2019 07:52:48
+ -0800 (PST)
+In-Reply-To: <20190116153913.GB19179@pure.paranoia.local>
+References: <20190116153913.GB19179@pure.paranoia.local>
+From: John <graysky@archlinux.us>
+Date: Wed, 16 Jan 2019 10:52:48 -0500
+Message-ID: <CAO_nJAYgvq-+2mVdVu2qoo7yFEiX9LHnaaEk0CDGhngBZ+Kagg@mail.gmail.com>
+Subject: Re: Logging remote connecting IP
+To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
 X-Mailman-Approved-At: Wed, 16 Jan 2019 17:32:07 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
@@ -75,60 +80,67 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============1059947084320040045=="
+Content-Type: multipart/mixed; boundary="===============1039764041235615203=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============1059947084320040045==
-Content-Type: multipart/alternative; boundary="000000000000ef7bd8057f81e3d3"
+--===============1039764041235615203==
+Content-Type: multipart/alternative; boundary="00000000000015ad07057f954528"
 
---000000000000ef7bd8057f81e3d3
+--00000000000015ad07057f954528
 Content-Type: text/plain; charset="UTF-8"
 
-Greetings,
+Enable the debug option when building should print to dmesg.
 
-WireGuard is a really cool project! Thanks!
+On Wednesday, January 16, 2019, Konstantin Ryabitsev <
+konstantin@linuxfoundation.org> wrote:
 
-With WireGuard's native roaming support, I have a question about just how
-stateful/stateless the roaming is. Here's a hypothetical situation:
+> Hello:
+>
+> For auditing purposes, I would like to be able to log the remote
+> endpoint IP for each wg connection on the server side. What's the best
+> way to do this, preferably using syslog?
+>
+> Best,
+> -K
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
+>
 
-Let's say WireGuard is being used to tunnel into a location and is served
-behind a load balancer for high availability. If both nodes have identical
-WireGuard config files at the start of WireGuard (and, for simplicity,
-let's assume the configurations don't change). If one node dies, the load
-balancer will automatically start sending packets to the standby node
-running WireGuard (perhaps existing on the same subnet as the other node,
-but with a different IP).
 
-In a sense, the server-side "peer" has just roamed from machine to another,
-but the public/Internet IP address didn't change (because that is assigned
-to the load balancer itself). Will this work with WireGuard today?
+-- 
+Sent from Gmail Mobile
 
-TIA
-
---000000000000ef7bd8057f81e3d3
+--00000000000015ad07057f954528
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div>Greetings,</div><div><br></div><div>WireGuard is a re=
-ally cool project! Thanks!</div><div><br></div><div>With WireGuard&#39;s na=
-tive roaming support, I have a question about just how stateful/stateless t=
-he roaming is. Here&#39;s a hypothetical situation:</div><div><br></div><di=
-v>Let&#39;s say WireGuard is being used to tunnel into a location and is se=
-rved behind a load balancer for high availability. If both nodes have ident=
-ical WireGuard config files at the start of WireGuard (and, for simplicity,=
- let&#39;s assume the configurations don&#39;t change). If one node dies, t=
-he load balancer will automatically start sending packets to the standby no=
-de running WireGuard (perhaps existing on the same subnet as the other node=
-, but with a different IP).</div><div><br></div><div>In a sense, the server=
--side &quot;peer&quot; has just roamed from machine to another, but the pub=
-lic/Internet IP address didn&#39;t change (because that is assigned to the =
-load balancer itself). Will this work with WireGuard today?</div><div><br><=
-/div><div>TIA<br></div></div>
+Enable the debug option when building should print to dmesg.<br><br>On Wedn=
+esday, January 16, 2019, Konstantin Ryabitsev &lt;<a href=3D"mailto:konstan=
+tin@linuxfoundation.org">konstantin@linuxfoundation.org</a>&gt; wrote:<br><=
+blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px=
+ #ccc solid;padding-left:1ex">Hello:<br>
+<br>
+For auditing purposes, I would like to be able to log the remote<br>
+endpoint IP for each wg connection on the server side. What&#39;s the best<=
+br>
+way to do this, preferably using syslog?<br>
+<br>
+Best,<br>
+-K<br>
+______________________________<wbr>_________________<br>
+WireGuard mailing list<br>
+<a href=3D"mailto:WireGuard@lists.zx2c4.com">WireGuard@lists.zx2c4.com</a><=
+br>
+<a href=3D"https://lists.zx2c4.com/mailman/listinfo/wireguard" target=3D"_b=
+lank">https://lists.zx2c4.com/<wbr>mailman/listinfo/wireguard</a><br>
+</blockquote><br><br>-- <br>Sent from Gmail Mobile<br>
 
---000000000000ef7bd8057f81e3d3--
+--00000000000015ad07057f954528--
 
---===============1059947084320040045==
+--===============1039764041235615203==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -139,4 +151,4 @@ WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---===============1059947084320040045==--
+--===============1039764041235615203==--
