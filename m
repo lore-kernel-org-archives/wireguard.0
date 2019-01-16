@@ -2,55 +2,60 @@ Return-Path: <SRS0=u0A/=QA=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-1.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	HTML_MESSAGE,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 06FACC282C5
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 24 Jan 2019 04:00:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B7B1EC282C3
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 24 Jan 2019 04:00:30 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 16FDE2184C
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 24 Jan 2019 04:00:01 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="iGHHBfjP"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 16FDE2184C
-Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=protonmail.com
+	by mail.kernel.org (Postfix) with ESMTPS id 1276D2184C
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 24 Jan 2019 04:00:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 1276D2184C
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=familie-schwamborn.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6e17af71;
-	Thu, 24 Jan 2019 03:54:38 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b40c46db;
+	Thu, 24 Jan 2019 03:55:19 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 26c114ae
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6eaa58ea
  for <wireguard@lists.zx2c4.com>;
- Sun, 20 Jan 2019 21:33:34 +0000 (UTC)
-Received: from mail-40132.protonmail.ch (mail-40132.protonmail.ch
- [185.70.40.132])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2a3ba290
+ Wed, 16 Jan 2019 21:25:37 +0000 (UTC)
+Received: from 4.mo179.mail-out.ovh.net (4.mo179.mail-out.ovh.net
+ [46.105.36.149])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f52004b6
  for <wireguard@lists.zx2c4.com>;
- Sun, 20 Jan 2019 21:33:34 +0000 (UTC)
-Date: Sun, 20 Jan 2019 21:38:10 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
- s=default; t=1548020293;
- bh=UulnDaqC1cghSwO3NQ5Ny5N6BmbcG7wiB7TjUBc6zJ0=;
- h=Date:To:From:Reply-To:Subject:Feedback-ID:From;
- b=iGHHBfjP1RRwKHNMLpGwHnvCIy8m75IpYjR6/APfe51a8pw8VF8e1ATNaLK24K2SW
- brFvTAsgJU+a1wJ0Sy/Nw7NRa0QTYh7QbGbTqfFebXHqb/8AGLaeJm/a8xCHtlqT51
- fDHsW2WpyFZ9r7T8SR9RgDhzJUwgpji/V916bkZY=
-To: wireguard@lists.zx2c4.com
-From: Allen Walker <eawalker@protonmail.com>
-Subject: Using OPENVPN Client (UDP port 1194) on top of wireguard - packets
- corrupt
-Message-ID: <c_FUpjUVAFaFWrfz97DeqRpOcM3uLdpa3ylizfNa3ceIzcB5qpDmKvKXb4VD7jfPsTUt17ji91aVxBqHXDdu0IBC4Y1xCZZXMPCyrj6GneM=@protonmail.com>
-Feedback-ID: ViZvbooCqCMmn5p3fVDdXMuvSyRK9Uu31c7gZUWiC-jDKoTLPQ7jpyhEigX8WS0zAQRK3OAx6LqJiT8sdGf6VQ==:Ext:ProtonMail
+ Wed, 16 Jan 2019 21:25:37 +0000 (UTC)
+Received: from player690.ha.ovh.net (unknown [10.109.143.72])
+ by mo179.mail-out.ovh.net (Postfix) with ESMTP id 6D98111074D
+ for <wireguard@lists.zx2c4.com>; Wed, 16 Jan 2019 22:29:49 +0100 (CET)
+Received: from familie-schwamborn.com (p4FC47FA1.dip0.t-ipconnect.de
+ [79.196.127.161])
+ (Authenticated sender: fabian@familie-schwamborn.com)
+ by player690.ha.ovh.net (Postfix) with ESMTPSA id DA5C519D6C38;
+ Wed, 16 Jan 2019 21:29:47 +0000 (UTC)
+Subject: Re: Optional DNS-Check or Ping-test for the Android App
+To: David Cowden <dcow@eero.com>
+References: <4844f7fa-6e60-4fe3-30b3-e9f87952235b@familie-schwamborn.com>
+ <CACN7iOBjmzC9Ft3JRObFFABuuAbdVjD7UkaXxYcXtLE9n4WKMw@mail.gmail.com>
+From: Fabian Schwamborn <fabian@familie-schwamborn.com>
+Message-ID: <012090d9-5191-9741-12e0-bd7352307aa0@familie-schwamborn.com>
+Date: Wed, 16 Jan 2019 22:29:44 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.4.0
 MIME-Version: 1.0
-X-Mailman-Approved-At: Thu, 24 Jan 2019 04:54:37 +0100
+In-Reply-To: <CACN7iOBjmzC9Ft3JRObFFABuuAbdVjD7UkaXxYcXtLE9n4WKMw@mail.gmail.com>
+X-Ovh-Tracer-Id: 11695003809630185039
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedtledrgeehgdduhedvucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucesvcftvggtihhpihgvnhhtshculddquddttddm
+X-Mailman-Approved-At: Thu, 24 Jan 2019 04:55:18 +0100
+Cc: wireguard@lists.zx2c4.com
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
-Reply-To: Allen Walker <eawalker@protonmail.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -59,23 +64,191 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="===============4923757331349012303=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-My router is set to route everything thru my wireguard vpn. My windows 
-machine (a lan client) can run openvpn client but there are issues as 
-when I copy large files, specifically mp4s via scp or ftp, the files are 
-inevitably corrupted. My guess is that the clients OPENVPN UDP packets 
-are getting invariably corrupted when going thru the router and 
-wireguard (my router routes are configured via wg-quick). Any ideas on 
-how to prevent such packet corruption from the clients openvpn connection?
+This is a multi-part message in MIME format.
+--===============4923757331349012303==
+Content-Type: multipart/alternative;
+ boundary="------------8B775635DC3AB67470D54EA4"
 
-Thanks
+This is a multi-part message in MIME format.
+--------------8B775635DC3AB67470D54EA4
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+I think you misunderstood me. Most broadband providers don't offer fixed 
+IPv4. Due to privacy considerations, even under IPv6 on normal 
+connections, addresses will always change. (prefix) As soon as an 
+address changes and my dynamic DNS system registers it, an IPsec or 
+OpenVPN client on my phone can reconnect. (This happens once a week).
+The Wireguard app simply lacks a monitor to see if the IP address has 
+changed. Therefore a ttl in the DNS was introduced .... (After a 
+registered loss of the connection - also shown in the log - no DNS 
+request is executed and the tunnel breaks down permanently.)
+
+I think these are the most common scenarios with OpenWRT routers ...
+
+Having a DNS entry does not mean that it always points to a static ip, 
+so when a tunnel disconnects, the Android-app itself (userspace) should 
+handle this like many other existing VPN-Clients do by a re-query of the 
+DNS entry...
+
+My question is, is there any opinion on such an implementation? Should i 
+try to implement it into the android app and provide the code? 
+(Unfortunately i am not a good android app-developer)
+
+
+Am 16.01.2019 um 21:57 schrieb David Cowden:
+> You need to setup dns for your home site then use that to connect. Or 
+> you need to synchronize the endpoint out of band. I can't imagine this 
+> is something wg wants to tackle--this is a general problem all 
+> software encounters.
+>
+> On Tue, Jan 15, 2019 at 10:52 PM Fabian Schwamborn 
+> <fabian@familie-schwamborn.com <mailto:fabian@familie-schwamborn.com>> 
+> wrote:
+>
+>     Hello,
+>
+>     I have a suggestion for improving the Android app or would like to
+>     ask if such a change would be desirable in general (e.g. pull
+>     request):
+>
+>     I'm using Wireguard as a connection between my home router and my
+>     mobile phone, but unfortunately I don't have a fixed IP address.
+>     As soon as the IP address changes, the app does not reconnect.
+>     (Happens once a week)
+>
+>     Is it possible to integrate a function into the app, that pings
+>     through the tunnel so that you can perform a keep-alive check and
+>     reconnect the tunnel completely after a failure (including DNS
+>     request)?
+>
+>     Is it conceivable, to implement a DNS-check function in the app?
+>     (E.g. like the existing example DNS check script for Linux works?)
+>
+>     Then the app would have the same functionality as my previous
+>     IP-Sec client. This would also allow better coverage of failover
+>     IP scenarios.
+>
+>
+>     Best Regards
+>
+>     Fabian
+>
+>     _______________________________________________
+>     WireGuard mailing list
+>     WireGuard@lists.zx2c4.com <mailto:WireGuard@lists.zx2c4.com>
+>     https://lists.zx2c4.com/mailman/listinfo/wireguard
+>
+
+
+--------------8B775635DC3AB67470D54EA4
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 8bit
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body text="#000000" bgcolor="#FFFFFF">
+    <p>I think you misunderstood me. Most broadband providers don't
+      offer fixed IPv4. Due to privacy considerations, even under IPv6
+      on normal connections, addresses will always change. (prefix) As
+      soon as an address changes and my dynamic DNS system registers it,
+      an IPsec or OpenVPN client on my phone can reconnect. (This
+      happens once a week).<br>
+      The Wireguard app simply lacks a monitor to see if the IP address
+      has changed. Therefore a ttl in the DNS was introduced .... (After
+      a registered loss of the connection - also shown in the log - no
+      DNS request is executed and the tunnel breaks down permanently.)</p>
+    <p>I think these are the most common scenarios with OpenWRT routers
+      ...<br>
+    </p>
+    <p>Having a DNS entry does not mean that it always points to a
+      static ip, so when a tunnel disconnects, the Android-app itself
+      (userspace) should handle this like many other existing
+      VPN-Clients do by a re-query of the DNS entry...</p>
+    <p>My question is, is there any opinion on such an implementation?
+      Should i try to implement it into the android app and provide the
+      code? (Unfortunately i am not a good android app-developer)<br>
+    </p>
+    <p><br>
+    </p>
+    <div class="moz-cite-prefix">Am 16.01.2019 um 21:57 schrieb David
+      Cowden:<br>
+    </div>
+    <blockquote type="cite"
+cite="mid:CACN7iOBjmzC9Ft3JRObFFABuuAbdVjD7UkaXxYcXtLE9n4WKMw@mail.gmail.com">
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <div dir="ltr">You need to setup dns for your home site then use
+        that to connect. Or you need to synchronize the endpoint out of
+        band. I can't imagine this is something wg wants to tackle--this
+        is a general problem all software encounters.<br>
+      </div>
+      <br>
+      <div class="gmail_quote">
+        <div dir="ltr" class="gmail_attr">On Tue, Jan 15, 2019 at 10:52
+          PM Fabian Schwamborn &lt;<a
+            href="mailto:fabian@familie-schwamborn.com"
+            moz-do-not-send="true">fabian@familie-schwamborn.com</a>&gt;
+          wrote:<br>
+        </div>
+        <blockquote class="gmail_quote" style="margin:0px 0px 0px
+          0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+          <div bgcolor="#FFFFFF">
+            <p class="MsoNormal">Hello,</p>
+            <p class="MsoNormal"> </p>
+            <p class="MsoNormal">I have a suggestion for improving the
+              Android app or would like to ask if such a change would be
+              desirable in general (e.g. pull request):</p>
+            <p class="MsoNormal">I'm using Wireguard as a connection
+              between my home router and my mobile phone, but
+              unfortunately I don't have a fixed IP address. As soon as
+              the IP address changes, the app does not reconnect.
+              (Happens once a week)<br>
+            </p>
+            <p class="MsoNormal">Is it possible to integrate a function
+              into the app, that pings through the tunnel so that you
+              can perform a keep-alive check and reconnect the tunnel
+              completely after a failure (including DNS request)?</p>
+            <p class="MsoNormal">Is it conceivable, to implement a
+              DNS-check function in the app? (E.g. like the existing
+              example DNS check script for Linux works?)</p>
+            <p class="MsoNormal">Then the app would have the same
+              functionality as my previous IP-Sec client. This would
+              also allow better coverage of failover IP scenarios.</p>
+            <p class="MsoNormal"><br>
+            </p>
+            <p class="MsoNormal">Best Regards  </p>
+            <p class="MsoNormal">Fabian</p>
+          </div>
+          _______________________________________________<br>
+          WireGuard mailing list<br>
+          <a href="mailto:WireGuard@lists.zx2c4.com" target="_blank"
+            moz-do-not-send="true">WireGuard@lists.zx2c4.com</a><br>
+          <a href="https://lists.zx2c4.com/mailman/listinfo/wireguard"
+            rel="noreferrer" target="_blank" moz-do-not-send="true">https://lists.zx2c4.com/mailman/listinfo/wireguard</a><br>
+        </blockquote>
+      </div>
+    </blockquote>
+    <br>
+  </body>
+</html>
+
+--------------8B775635DC3AB67470D54EA4--
+
+--===============4923757331349012303==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--===============4923757331349012303==--
