@@ -1,77 +1,70 @@
-Return-Path: <SRS0=yuiU=P2=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=LuSS=P6=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4196BC43387
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 18 Jan 2019 08:20:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86633C37122
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 22 Jan 2019 00:56:17 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 469882087E
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 18 Jan 2019 08:20:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id D54972085A
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 22 Jan 2019 00:56:16 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=mullvad-net.20150623.gappssmtp.com header.i=@mullvad-net.20150623.gappssmtp.com header.b="owkvwgNs"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 469882087E
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=mullvad.net
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=yahoo.ca header.i=@yahoo.ca header.b="Oa23JlRP"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org D54972085A
+Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=yahoo.ca
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1e97ca8a;
-	Fri, 18 Jan 2019 08:15:34 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1f8c3909;
+	Tue, 22 Jan 2019 00:51:22 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9a551239
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 31987303
  for <wireguard@lists.zx2c4.com>;
- Fri, 18 Jan 2019 08:15:32 +0000 (UTC)
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com
- [IPv6:2a00:1450:4864:20::32f])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5e23e4fd
+ Mon, 21 Jan 2019 23:33:54 +0000 (UTC)
+Received: from sonic306-22.consmr.mail.ne1.yahoo.com
+ (sonic306-22.consmr.mail.ne1.yahoo.com [66.163.189.84])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b1541472
  for <wireguard@lists.zx2c4.com>;
- Fri, 18 Jan 2019 08:15:32 +0000 (UTC)
-Received: by mail-wm1-x32f.google.com with SMTP id f188so3570317wmf.5
- for <wireguard@lists.zx2c4.com>; Fri, 18 Jan 2019 00:19:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mullvad-net.20150623.gappssmtp.com; s=20150623;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :content-transfer-encoding;
- bh=cjErFhbFNo82CnPMsg727OZpkQrZCwxLfu0OtAdXmZ4=;
- b=owkvwgNsIz1g/71qhmdUokYzRgWAy4XxsxN69vok+VFv7Izu9wODSMsubgdZ/QvsLM
- Z3qSe1kDJT4BcR/F3pt+Gt3NmDntvmpP0I0lrMEaq3ET/jv8vJZlQDYl6eCDmmu/8P2T
- 8lDdVXDUVl6EutQEwSSDMA5a54REtryyxIcIm++gNNqmLN19D/Pg91ed8nRXSRxS8dX4
- JoVc4I46kE/pewH4RDUHJ8HgaXmrCZCBDj2+5LV8maUAjF4ZQ/gGtPXi89w3L/Fvk0tY
- MlrM2wp4wzV0ReStL9xtemOFg6vck6Srq3a6GLTkqReY5F6/iVbg5XwCMjjiBOkMq+M3
- IWrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:content-transfer-encoding;
- bh=cjErFhbFNo82CnPMsg727OZpkQrZCwxLfu0OtAdXmZ4=;
- b=ae+HK1AnnbSzw5xsCJx0o2B7zBkVaIPQ3GtPZ3rHUiu8cdo3aUbh069vsg6BZJ3bf4
- ghNf3rEzrTPcRARft6+sp6E0JMMinBHVoaH02hwifkVv50vi6rvLvVCV4Fap/BnES6oF
- QtgJti5RQPY/iauZddwVSD71azIBmOQT8qw/Ed/Ll9OpovFxBMoJ/Mq03a5kN78MxCzD
- HcExaVkxAErHKQMpTFAD0jJelse97rh/GAuHBMb4h35Y0zQqMt1RlktJ/V3zxlMheXD4
- jewKqiKzjJ/5sP2L5qf4KQReAUMU8pkg8Pm0DINO//RRQwNi0e7e6xEr/UOfHdSQN1Vj
- Fiwg==
-X-Gm-Message-State: AJcUukekiwXSfDtggRdrxxm4hnUv6mHukXsPiRiXkgh8yr/kbprrFJ5i
- VykVqAmQPGyk6+lUCtLB6sixULmm6QIy1AczBq5QB/gEOdyb4A==
-X-Google-Smtp-Source: ALg8bN6DnjdKiCuSZ6UUgDTtmeAEXchasTGpi6lD+S8nrjuBm8A9mF/JSkI6Y2XTHlhL5gMWnhomcT8SV4F006aokQI=
-X-Received: by 2002:a1c:bd86:: with SMTP id n128mr14694381wmf.22.1547799594836; 
- Fri, 18 Jan 2019 00:19:54 -0800 (PST)
+ Mon, 21 Jan 2019 23:33:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.ca; s=s2048;
+ t=1548113926; bh=fN6mAyFXL0LMIYfaW0mmjtRF/NJUMUxzxXzaNebS+/8=;
+ h=From:To:Cc:Subject:Date:From:Subject;
+ b=Oa23JlRPyZgvXsbnzhmYY2foAyS4btn1ZlR+nMTf9l8FEYpmkTvCwfBc6oo1vRI8MvZ8/XaL5fvBlCq2BVYhLpRWa0tY/LiaOfJ/bb56+d5y7rfA3DlnKzgw7wZw03Fzc9DjMDZqEFCZmo+lwyTV5hL8bvFhVoVfS6oyZKrVThRLh8+IzQGGGI9KfQA+H9vjU/vlGvXVXnvSF7q33C0rtw5Bo/tzx7aj3jGbQpG7pPE1iYR/8TLBlY1OBCelhOwIRbVXlY7oyIVbXXcP3ZZNYEneS2exdrVGPzWlD/uj0gLUMTkVhslIjar/2RZG+BNbGlXB4aRjiUyR1xGNfD3mlA==
+X-YMail-OSG: h2fGrYoVM1kKiSavzDIxwI2o.K.bEcKHOHfxWLslbBARuuiRMddQpY6zfT3yhMt
+ DQrbwmXhKLExzTZUNJDYE96mSb5VsVSWGQfZFd7ZVGfV30JJhoPKFb.WvMEbqXqnhyhcNFxKeNxG
+ hROAuel27bhfmJH3oCHBbS0dRDP0eEexVWNwpZ5lJmXK040RDYDjIGIrq9iL1RJtiztvXFBAXg2d
+ 0hJRiUuhG1i7mjhRPHqun0b2UriQ9X.oneW2uldzUose4_kjZ3E0MXutoZU6KONaouHPkre6CBbV
+ ovX.bzcULl46KrdSu6gTMfnOGIHjnNSDjk5PArmEryAMYLImrn_odzUPxDJ0TY2OmZEJuXjkh4Mq
+ YwH7MYkzYOduWoTwdU7XK_u.igOF0EjmbBFt82lPY.J.fLStqgEjl7OKdFwAzXDI4cNlBoF9qklc
+ 57nDc9JfPNEZy0GF7sknPGQMl2vEMvmzBt1iLgdEFXimD7kz4n_ts0PZRQnYcqHTSvl9X_pDTTpw
+ eUoiOhKtSLgi.IwJ0gKVJw0EiJicEd7G4iUI_Au1rYj3YfjxuQ37WiQc2H1cqVyasV7hwHc5mOnL
+ M_IWmx0U_luSbyNBucXh7OL.oUq_ZEYUzbPiOyzqXNsndjc9jNwudhPIBHZMzfQ5X.QzcHxeLse3
+ AkVpdGuxecf8fdZrVM7DN0YikXPnz0iaD1ES2l3FG.B8U9lD1PHGAU_6DwdmyC9YBwQ0xa8BT6sZ
+ btlnuKXE9XBOIWau4HpvMocAAV6QprBuT4pFSmeSf3x3s97yUbMho7PX8ppi60JZS5SoYVVZPhpD
+ jzYwPwVl2Vz5pe9LUiyLzAtLvClJtDN3F3QncIAKNyWrbJt.NW3i5uGxDDS9TQc90sRAsUFwO5aK
+ 3iSNLI9Otj7PcK4LbjcsW_V.Mdbt6x8OdJ9ssv0.ziWoh25tQ5G7jSZX9wTZynWPgfMTlVA9YpGP
+ hsukKQhP1NSJvpbA7KIvA4MJIgaoIJLvknOONUvvayc9dHKxOTrlxZVi0B.lq9ZDICp9cypVIATU
+ RXrx1bbpS9aTfw0DrLiS6H1eksuwf0h3Zm8nj1w--
+Received: from sonic.gate.mail.ne1.yahoo.com by
+ sonic306.consmr.mail.ne1.yahoo.com with HTTP; Mon, 21 Jan 2019 23:38:46 +0000
+Received: from pink.alxu.ca (EHLO localhost.localdomain) ([198.98.62.56])
+ by smtp421.mail.ne1.yahoo.com (Oath Hermes SMTP Server) with ESMTPA ID
+ f153e4accb73679a09346c4e663a1ba8; 
+ Mon, 21 Jan 2019 23:38:44 +0000 (UTC)
+From: "Alex Xu (Hello71)" <alex_y_xu@yahoo.ca>
+To: wireguard@lists.zx2c4.com
+Subject: [PATCH] %i is not a valid format specifier
+Date: Mon, 21 Jan 2019 18:38:40 -0500
+Message-Id: <20190121233840.6401-1-alex_y_xu@yahoo.ca>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-References: <CANTUoec=rCy0fcW1ukUfYQLsj73sJ3CAPFMu+sgHxZMxF=__NA@mail.gmail.com>
- <CAOAVeL0Hv343JWU1m06p-WaspsNFpB6Tnw6EdYr=LdMVQLM0AQ@mail.gmail.com>
- <CANTUoecyXtor1+craGG0dacSvnCewT55Fcwqwfho9f0SvH=iqg@mail.gmail.com>
- <CAOAVeL32OBbhyzrJ-z6nLYMUUJsOFOSVNpbo4wdQN3zV=6yndw@mail.gmail.com>
- <CANTUoedLSxrRoDBbiCOYn-xoXT-nAyw-ccfq6kJWThJ9QnmAXA@mail.gmail.com>
- <470369034.543038.1547656460486@mail.yahoo.com>
-In-Reply-To: <470369034.543038.1547656460486@mail.yahoo.com>
-From: =?UTF-8?Q?Fredrik_Str=C3=B6mberg?= <stromberg@mullvad.net>
-Date: Fri, 18 Jan 2019 09:19:42 +0100
-Message-ID: <CANTUoedKsjKTU8a+R82ay4XsU9vcfZy2dyTHogbAPfL+brnNHQ@mail.gmail.com>
-Subject: Re: WireGuard deployment considerations for improved privacy
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+X-Mailman-Approved-At: Tue, 22 Jan 2019 01:51:21 +0100
+Cc: "Alex Xu \(Hello71\)" <alex_y_xu@yahoo.ca>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -83,38 +76,54 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Wed, Jan 16, 2019 at 5:34 PM Jose Marinez <jedi_papi@yahoo.com> wrote:
-> I appreciate this proposition as well as your summary for the current state of Wireguard for this particular case. I agree with you wholeheartedly that before the mass adoption of Wireguard happens these use cases should be addressed properly. I'd love to hear what Jason has to say about this and what he proposes.
->
-I agree. Let's see what Jason says.
-
-> I too have been thinking about all the edge cases for Wireguard. My approach has been to look at it from a penetration test perspective. Reality is that Wireguard doesn't live in isolation. As a system - hardware, OS and all it's settings + Wireguard - connected to the Internet and a user(s) presents many hostile dynamics.
->
-> Ultimately, whatever solution emerges needs to supplement the goals and features of Wireguard, otherwise it deafts the purpose.
->
-> Would it make sense to create a small group to tackle this and other use cases - scaling, simplicity, etc? On my end, I'm not a cryptologist, but I can write software that would test the security of any system. I'm sure other members of this list have a ton of skills and experience to bring to this.
->
-> Here's a list of things I'd like to see and would be willing to participate/create if they don't exist yet:
->
-> 1. A honeypot server with public logs for a small team to gather and record real-time traffic as an authorized user of the server - root.
-> 2. A test suite that goes through all the domain specific scenarios from the results of #1 and provides a verification at the end once completed.
-> 3. Provide feedback from all this back to Jason for enhancements, etc. in upstream Wireguard.
->
-Honestly I'm very focused on the two issues I brought up. Those are
-the most important things we don't see a clear solution to yet.
-
-Well, we'd also like userspace to be notified of new handshakes, and
-be able to reply to the kernel module whether it's a known pubkey or
-not. Or something. That's a different discussion though.
-
-Cheers,
-Fredrik
-_______________________________________________
-WireGuard mailing list
-WireGuard@lists.zx2c4.com
-https://lists.zx2c4.com/mailman/listinfo/wireguard
+LS0tCiBhcHAvc3JjL21haW4vcmVzL3ZhbHVlcy9zdHJpbmdzLnhtbCB8IDggKysrKy0tLS0KIDEg
+ZmlsZSBjaGFuZ2VkLCA0IGluc2VydGlvbnMoKyksIDQgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0
+IGEvYXBwL3NyYy9tYWluL3Jlcy92YWx1ZXMvc3RyaW5ncy54bWwgYi9hcHAvc3JjL21haW4vcmVz
+L3ZhbHVlcy9zdHJpbmdzLnhtbAppbmRleCA3MmI4MTUzLi4zNzUxY2IwIDEwMDY0NAotLS0gYS9h
+cHAvc3JjL21haW4vcmVzL3ZhbHVlcy9zdHJpbmdzLnhtbAorKysgYi9hcHAvc3JjL21haW4vcmVz
+L3ZhbHVlcy9zdHJpbmdzLnhtbApAQCAtMTIzLDggKzEyMyw4IEBACiAgICAgPHN0cmluZyBuYW1l
+PSJzZXRfZXhjbHVzaW9ucyI+U2V0IEV4Y2x1c2lvbnM8L3N0cmluZz4KICAgICA8c3RyaW5nIG5h
+bWU9InNldHRpbmdzIj5TZXR0aW5nczwvc3RyaW5nPgogICAgIDxzdHJpbmcgbmFtZT0ic2hlbGxf
+ZXhpdF9zdGF0dXNfcmVhZF9lcnJvciI+U2hlbGwgY2Fubm90IHJlYWQgZXhpdCBzdGF0dXM8L3N0
+cmluZz4KLSAgICA8c3RyaW5nIG5hbWU9InNoZWxsX21hcmtlcl9jb3VudF9lcnJvciI+U2hlbGwg
+ZXhwZWN0ZWQgNCBtYXJrZXJzLCByZWNlaXZlZCAlaTwvc3RyaW5nPgotICAgIDxzdHJpbmcgbmFt
+ZT0ic2hlbGxfc3RhcnRfZXJyb3IiPlNoZWxsIGZhaWxlZCB0byBzdGFydDogJWk8L3N0cmluZz4K
+KyAgICA8c3RyaW5nIG5hbWU9InNoZWxsX21hcmtlcl9jb3VudF9lcnJvciI+U2hlbGwgZXhwZWN0
+ZWQgNCBtYXJrZXJzLCByZWNlaXZlZCAlZDwvc3RyaW5nPgorICAgIDxzdHJpbmcgbmFtZT0ic2hl
+bGxfc3RhcnRfZXJyb3IiPlNoZWxsIGZhaWxlZCB0byBzdGFydDogJWQ8L3N0cmluZz4KICAgICA8
+c3RyaW5nIG5hbWU9InRvZ2dsZV9lcnJvciI+RXJyb3IgdG9nZ2xpbmcgV2lyZUd1YXJkIHR1bm5l
+bDogJXM8L3N0cmluZz4KICAgICA8c3RyaW5nIG5hbWU9InRvb2xzX2luc3RhbGxlcl9hbHJlYWR5
+Ij53ZyBhbmQgd2ctcXVpY2sgYXJlIGFscmVhZHkgaW5zdGFsbGVkPC9zdHJpbmc+CiAgICAgPHN0
+cmluZyBuYW1lPSJ0b29sc19pbnN0YWxsZXJfZmFpbHVyZSI+VW5hYmxlIHRvIGluc3RhbGwgY29t
+bWFuZC1saW5lIHRvb2xzIChubyByb290Pyk8L3N0cmluZz4KQEAgLTEzNywxNCArMTM3LDE0IEBA
+CiAgICAgPHN0cmluZyBuYW1lPSJ0b29sc19pbnN0YWxsZXJfd29ya2luZyI+SW5zdGFsbGluZyB3
+ZyBhbmQgd2ctcXVpY2s8L3N0cmluZz4KICAgICA8c3RyaW5nIG5hbWU9InRvb2xzX3VuYXZhaWxh
+YmxlX2Vycm9yIj5SZXF1aXJlZCB0b29scyB1bmF2YWlsYWJsZTwvc3RyaW5nPgogICAgIDxzdHJp
+bmcgbmFtZT0idHVuX2NyZWF0ZV9lcnJvciI+VW5hYmxlIHRvIGNyZWF0ZSB0dW4gZGV2aWNlPC9z
+dHJpbmc+Ci0gICAgPHN0cmluZyBuYW1lPSJ0dW5uZWxfY29uZmlnX2Vycm9yIj5VbmFibGUgdG8g
+Y29uZmlndXJlIHR1bm5lbCAod2ctcXVpY2sgcmV0dXJuZWQgJWkpPC9zdHJpbmc+CisgICAgPHN0
+cmluZyBuYW1lPSJ0dW5uZWxfY29uZmlnX2Vycm9yIj5VbmFibGUgdG8gY29uZmlndXJlIHR1bm5l
+bCAod2ctcXVpY2sgcmV0dXJuZWQgJWQpPC9zdHJpbmc+CiAgICAgPHN0cmluZyBuYW1lPSJ0dW5u
+ZWxfY3JlYXRlX2Vycm9yIj5VbmFibGUgdG8gY3JlYXRlIHR1bm5lbDogJXM8L3N0cmluZz4KICAg
+ICA8c3RyaW5nIG5hbWU9InR1bm5lbF9jcmVhdGVfc3VjY2VzcyI+U3VjY2Vzc2Z1bGx5IGNyZWF0
+ZWQgdHVubmVsIOKAnCVz4oCdPC9zdHJpbmc+CiAgICAgPHN0cmluZyBuYW1lPSJ0dW5uZWxfZXJy
+b3JfYWxyZWFkeV9leGlzdHMiPlR1bm5lbCDigJwlc+KAnSBhbHJlYWR5IGV4aXN0czwvc3RyaW5n
+PgogICAgIDxzdHJpbmcgbmFtZT0idHVubmVsX2Vycm9yX2ludmFsaWRfbmFtZSI+SW52YWxpZCBu
+YW1lPC9zdHJpbmc+CiAgICAgPHN0cmluZyBuYW1lPSJ0dW5uZWxfbGlzdF9wbGFjZWhvbGRlciI+
+QWRkIGEgdHVubmVsIHVzaW5nIHRoZSBibHVlIGJ1dHRvbjwvc3RyaW5nPgogICAgIDxzdHJpbmcg
+bmFtZT0idHVubmVsX25hbWUiPlR1bm5lbCBOYW1lPC9zdHJpbmc+Ci0gICAgPHN0cmluZyBuYW1l
+PSJ0dW5uZWxfb25fZXJyb3IiPlVuYWJsZSB0byB0dXJuIHR1bm5lbCBvbiAod2dUdXJuT24gcmV0
+dXJuZWQgJWkpPC9zdHJpbmc+CisgICAgPHN0cmluZyBuYW1lPSJ0dW5uZWxfb25fZXJyb3IiPlVu
+YWJsZSB0byB0dXJuIHR1bm5lbCBvbiAod2dUdXJuT24gcmV0dXJuZWQgJWQpPC9zdHJpbmc+CiAg
+ICAgPHN0cmluZyBuYW1lPSJ0dW5uZWxfcmVuYW1lX2Vycm9yIj5VbmFibGUgdG8gcmVuYW1lIHR1
+bm5lbDogJXM8L3N0cmluZz4KICAgICA8c3RyaW5nIG5hbWU9InR1bm5lbF9yZW5hbWVfc3VjY2Vz
+cyI+U3VjY2Vzc2Z1bGx5IHJlbmFtZWQgdHVubmVsIHRvIOKAnCVz4oCdPC9zdHJpbmc+CiAgICAg
+PHN0cmluZyBuYW1lPSJ0eXBlX25hbWVfZ29fdXNlcnNwYWNlIj5HbyB1c2Vyc3BhY2U8L3N0cmlu
+Zz4KLS0gCjIuMjAuMQoKX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX18KV2lyZUd1YXJkIG1haWxpbmcgbGlzdApXaXJlR3VhcmRAbGlzdHMuengyYzQuY29tCmh0
+dHBzOi8vbGlzdHMuengyYzQuY29tL21haWxtYW4vbGlzdGluZm8vd2lyZWd1YXJkCg==
