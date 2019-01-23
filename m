@@ -1,68 +1,69 @@
-Return-Path: <SRS0=LuSS=P6=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=esD3=P7=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
 	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_PASS,
+	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CFAAC282C3
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 22 Jan 2019 21:46:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3AE9C282C0
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 23 Jan 2019 13:21:06 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 043AB20866
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 22 Jan 2019 21:46:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 0686521848
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 23 Jan 2019 13:21:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=yahoo.ca header.i=@yahoo.ca header.b="VWjfnDwb"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 043AB20866
-Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=yahoo.ca
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SHVRCTAQ"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 0686521848
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d685fe73;
-	Tue, 22 Jan 2019 21:41:03 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 378c100b;
+	Wed, 23 Jan 2019 13:15:43 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f645fc34
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d8bf0239
  for <wireguard@lists.zx2c4.com>;
- Tue, 22 Jan 2019 21:41:01 +0000 (UTC)
-Received: from sonic306-4.consmr.mail.bf2.yahoo.com
- (sonic306-4.consmr.mail.bf2.yahoo.com [74.6.132.43])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 456189d9
+ Wed, 23 Jan 2019 13:15:41 +0000 (UTC)
+Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com
+ [IPv6:2607:f8b0:4864:20::832])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f2c6f720
  for <wireguard@lists.zx2c4.com>;
- Tue, 22 Jan 2019 21:41:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.ca; s=s2048;
- t=1548193560; bh=S5/RWwxliC3y+/08d5VMJZtTyxEx1dE3T4QqJU2qA0s=;
- h=From:Subject:To:Date:From:Subject;
- b=VWjfnDwbFDL8hHQwY2h0I+K/os6m3wYL+INwN+jNeZdIHhxBNT6/XJC7WZUOJWgTkZyYAOlsjsZlJs8IbdCKszW11Fk3tloocCGbpRtMq8WelVkNVqIkiWI5EeTKnKj1eVwJqRspKMjrKhN9TlFLSXRXu+eJ4raZG5FxR4YR/6cUd5ciPnLm/vVPpLMGv6+HP9whRC+BN2htOf9dLTf1PdUDc9lB1VrFMacKIJQyOk3D4oT8cb6TWbAAuHJ1QOSNvVzRnhcyI/zoDhB0f3biLI/3zRqt1N6+qOk/whCX4mDsXwA7c2y4IMsS0URuL7DboWCXsGpjBnWxLMJCP30W1w==
-X-YMail-OSG: Nc6IxJ4VM1ntenR.VIQS2l_p41PEYCkY9PgQfs7gArDHEysIAlq.6nCWQ4.7vTL
- r.V7BdbDogZHt.FWiy1wDbAj1ZAPuPZdpoVb9.z0Q6BBvVLrmM.47idGZYpWhZeLz7JiPqhKgdis
- h4jsO126n8a2A3avoNFh95n.wroLztGMBobPLl_f6YxdCorC_UR_YzbgkALTFL54Qa8aOpNd3Ilx
- KdXEGzrt.CXM7Yee9P6tQWBUyFA7dkW0K_6kM9B74f2f8pw6X1EP_UK_vfKl7RfF08cf8jJkdea4
- _ZHxbnjaXuzjax5IOUHh15urMzk1T7w5GpZOWGs1MZNRCZKo4isDhHCb0HBaDN9gWDqhYyJTufz6
- GZjT8wHHCndqFsiknyKtYaPbFmAHKVGgSEUmzvYUzTNutBwrliMQ9PPCUbj.T0fq9fkf.BESFjCt
- F7g2OG_UgFs8Kp3JRp4W4lsmNjZboaBxia3IRJfA_5yPca.tNJQp98iAmjgWOvKRxA.0Ma92gwVK
- PqCVLL6wlc2gfFzRU.aMepZcgGchnePKh.0wdeqi5HlQXHEfjCTpsiBFFccxxamQ6Xw3U8bDeABa
- UcJQe7Y3mEP4C2JkP.AGruJs3GsD5DkUu9xrW9I0XPJfNi7k.rEtuEO5k0jL4My6X9WmMKFLCdLG
- 1JewEAYFK0HgvVuYy5q.RL.EVwiyVgaRtgoQ3uKT.gryWgeb.A2KSYshw4rHYK0iGhVwTV_ViiwN
- ZZ88xdt8DhaXvDF_Pescu4zlo5ews9v2eZuG1B_me2982ss_5_hClz0HN3tB99KJcRaaj.SN.Xux
- t16LIDpfEC8Xxdk.PEVzdJpT3XHHDPGuOEPSFLVc4V9gLytR2nUn1M4SLv9TlfKMie5agrWSNJbm
- vSZVjew68h5Okrbv0GpUqIXdkXbpjRZqfzXenYNWki.4IjwiZweUPRj.9iB2jx6Dy8PSl1zfplxl
- uGzPQRjTXVq5.1qNo4kpsAhBdFAbvDsuRgcagr4RPkuXhqsLGGrrQhS0rsBN06GPzfpIx4VUUOeX
- o0PL.xL4iS_rhSI0aJvjx32mJWm2yBnnrIkZhv_g-
-Received: from sonic.gate.mail.ne1.yahoo.com by
- sonic306.consmr.mail.bf2.yahoo.com with HTTP; Tue, 22 Jan 2019 21:46:00 +0000
-Received: from pink.alxu.ca (EHLO localhost) ([198.98.62.56])
- by smtp410.mail.bf1.yahoo.com (Oath Hermes SMTP Server) with ESMTPA ID
- 652f75762b7f44ac72218d6d8dbb6d9d for <wireguard@lists.zx2c4.com>;
- Tue, 22 Jan 2019 21:45:55 +0000 (UTC)
+ Wed, 23 Jan 2019 13:15:41 +0000 (UTC)
+Received: by mail-qt1-x832.google.com with SMTP id i7so2220744qtj.10
+ for <wireguard@lists.zx2c4.com>; Wed, 23 Jan 2019 05:20:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=HDaNVIC+w/GzFckuTUccXDuQdjq/wDYIOjrCEHO0js0=;
+ b=SHVRCTAQrCHZsf5cXWSYcRBjtVjFZutbvMuul8VX9ZXsFUu9OwA09TYwSXq+la6WCK
+ 6m//uyHX98/gqEnL5fv0+N/gqQq1oF0o+jwAAqX6kRDmZKKHNMllYJEfAF5nme/vsaei
+ TZxPbXcVCE638OxgHPgOZyuj0kllyHiTIbsvhdSYw1L1dpERefbQhTTewNlc1ENOWZTf
+ g5S/bdW9nVAh63uJEgJ57LCzqVDqcD2xTX3COo88FWkGEBJEq57P//FuUPb1cse2JyL3
+ UOCGmBAxCGTZaGNuQxHylhM5iMCqYVogArPsdQCE+0qtmqWS2gh5Y0AthzhKbFVJT+++
+ hYYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=HDaNVIC+w/GzFckuTUccXDuQdjq/wDYIOjrCEHO0js0=;
+ b=Jtc7zkj4Q5UYYiFeOh2vULt9b2zY2z1I0MfeAmjEh4iwrDf/daxRN63HivmO2VYR4X
+ VQvUYpqH29ssn0B0jNcT5JhY62r3xjlKFEcO0Yi7LevYHGPreD/TvOzS0oSHjT86Esfu
+ xxbkbW8pEJZ+5hp89ieEpF+d9GbL+raReHFoz9+05MM6L7k63nZ8jXBzIvxQNlwbudGR
+ LEVAl9X8/fVUaDNVv8IZtodDJlRZmFwlX0kL17nHSiy0PPiRikVy9atBcmsx/E+p36Ot
+ coDcsbVjLYofHAJ3vrcQhNx+i/p9DaD/yrO68hFEx1VS3/AyEgScRhsiKktSci61fM7N
+ dOcw==
+X-Gm-Message-State: AJcUukce37BGlKSHmWqVihZ4Aw7FIDnj2VThvBmwYBvUVMemfmi/UhT8
+ gd3EfPAAVyifO8oQk+JTS+2gkK4nDf1lPw3+U4KD2A==
+X-Google-Smtp-Source: ALg8bN5mBQVn9Nx9nj1p7j9brCrC7EpeFePOGeDfxWjZyBs0WWPgN5K0POUsBJtsUdMH8ajiLlwZFdKv0ndlqbfxKy4=
+X-Received: by 2002:a0c:99d9:: with SMTP id y25mr1859959qve.133.1548249645379; 
+ Wed, 23 Jan 2019 05:20:45 -0800 (PST)
 MIME-Version: 1.0
-From: Alex Xu <alex_y_xu@yahoo.ca>
-Subject: [bug] wireguard-android does not correctly add resolved IPv6 endpoints
-To: wireguard@lists.zx2c4.com
-Message-ID: <154819355461.7369.7953485802650364220@pink.alxu.ca>
-User-Agent: alot/0.8
-Date: Tue, 22 Jan 2019 21:45:54 +0000
+From: Laszlo KERTESZ <laszlo.kertesz@gmail.com>
+Date: Wed, 23 Jan 2019 15:20:33 +0200
+Message-ID: <CANcuY=rHWH7=yOXSv5iMcnN_8tsX4_MAJdorsTZLfuF7ZD1j7g@mail.gmail.com>
+Subject: Clients lose connection until the interface is restarted somehow if
+ server changes IP address
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -74,36 +75,54 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="===============7744146884184843250=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-description:
+--===============7744146884184843250==
+Content-Type: multipart/alternative; boundary="00000000000022f3f305801ff63c"
 
-Using wireguard android 2018.12.18 on an IPv6-only network, it is not
-possible to use a DNS name for an endpoint.
+--00000000000022f3f305801ff63c
+Content-Type: text/plain; charset="UTF-8"
 
-steps to reproduce:
+Hi,
 
-1. create a tunnel. set the endpoint to example.com:12345
-2. bring up the tunnel
+I have a wireguard server that runs on a computer that has a dynamic real
+ip address. It also has a dynamic DNS address that is updated if the IP
+changes.
+The clients connecting to it work but if the ip address is changed, they
+will still try to connect the old IP address. If i restart the wireguard
+interface (ip link up/down etc) the connection is established again.
 
-expected results:
+The solution would be that in case of connection loss the DNS name to be
+updated periodically instead of just trying the old address.
+Can this be done?
 
-the tunnel is brought up (in this case it won't actually work because
-example.com is not a wireguard server, but it will be brought up)
+--00000000000022f3f305801ff63c
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-actual results:
+<div dir=3D"ltr"><div>Hi,</div><div><br></div><div>I have a wireguard serve=
+r that runs on a computer that has a dynamic real ip address. It also has a=
+ dynamic DNS address that is updated if the IP changes.</div><div>The clien=
+ts connecting to it work but if the ip address is changed, they will still =
+try to connect the old IP address. If i restart the wireguard interface (ip=
+ link up/down etc) the connection is established again.</div><div><br></div=
+><div>The solution would be that in case of connection loss the DNS name to=
+ be updated periodically instead of just trying the old address.</div><div>=
+Can this be done?<br></div></div>
 
-In the log, there is this error:
+--00000000000022f3f305801ff63c--
 
-WireGuard/GoBackend/wg0: Failed to set endpoint: x:x:x:x::1:40257
+--===============7744146884184843250==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-additional information:
-
-entering the same IP address with square brackets works fine.
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--===============7744146884184843250==--
