@@ -2,68 +2,68 @@ Return-Path: <SRS0=u0A/=QA=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CA75C282C2
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 24 Jan 2019 02:03:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D603DC282C0
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 24 Jan 2019 02:05:22 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id E5160217D7
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 24 Jan 2019 02:03:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 6F219218A1
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 24 Jan 2019 02:05:22 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=archlinux-us.20150623.gappssmtp.com header.i=@archlinux-us.20150623.gappssmtp.com header.b="f/4WGLtP"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org E5160217D7
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=archlinux.us
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="buIyZvVH"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 6F219218A1
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cb295fac;
-	Thu, 24 Jan 2019 01:58:36 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7cb89528;
+	Thu, 24 Jan 2019 02:00:12 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6e2b6169
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4b9cc5e3
  for <wireguard@lists.zx2c4.com>;
- Wed, 23 Jan 2019 21:02:52 +0000 (UTC)
-Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com
- [IPv6:2607:f8b0:4864:20::333])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b740b838
+ Wed, 23 Jan 2019 22:45:21 +0000 (UTC)
+Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com
+ [IPv6:2607:f8b0:4864:20::52e])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6c725a30
  for <wireguard@lists.zx2c4.com>;
- Wed, 23 Jan 2019 21:02:51 +0000 (UTC)
-Received: by mail-ot1-x333.google.com with SMTP id 81so3285930otj.2
- for <wireguard@lists.zx2c4.com>; Wed, 23 Jan 2019 13:07:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=archlinux-us.20150623.gappssmtp.com; s=20150623;
+ Wed, 23 Jan 2019 22:45:21 +0000 (UTC)
+Received: by mail-pg1-x52e.google.com with SMTP id s198so1751370pgs.2
+ for <wireguard@lists.zx2c4.com>; Wed, 23 Jan 2019 14:50:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=mime-version:from:date:message-id:subject:to;
- bh=6IUgYG4BY0F3TS+IYmV507MQ8fMeoAfA//CxD5jI9dc=;
- b=f/4WGLtPmJN2FZUDanOymgpVkWrwHndbiNekHFSMrvOHR3TAgYSoVTb13kleSnVw9K
- l9YaXQjyzDuVsScMPUjg8cJrB4bb9lYRo5PmY1OoAj3axv5JgSKWPfdjwnXmPbFN3K69
- 0RY/nkqRyE75sT94w4DNY4oqw82PtBv8qZLfl6m4koiQjs0AzL6n6Bg49KvL2R4Xextf
- cRTK3flzmuBGehoHphPTb9bWynt2OAxB7s09ba2aNtool2/mb4zsKXJ2h83PC2o/m7tR
- vX56/LCpegwHRZY7JULzY+a1NrcfP7IWWBJSG6hYEYvxmQm1qu5gLm3HqLNLRi9co8kG
- SbYg==
+ bh=Mo/VTElfLV0EgnP5j2zawBKw4E/lezydXANs5qmsSig=;
+ b=buIyZvVHHDvs4OEzM6OgX9rJerEs9bV15ISr7Q4YbPKHNbDzKvVewiNZ24sBFj0gXW
+ YKeij8CHbfhDrfKaI7sYM7dqJcUK82n7pmkT08edXM2cpXlL0wqy54oQhvzGHtTGeUO2
+ um4NIpHnzrUlmW1cLV+v/OugbNunTKsVgqabtuWfYQMDj6COl5qfC8r4roBbvY1M+GZ5
+ Wy3LZwP1lhr6VTZPHmXLYwFn2A8c2xOlyDPuBef1fRa2Tu+/JhvkCJXaZn5eb8ZN/Yg7
+ z0ZQZN6m99nVlT71y9OE1So3ykK829tyGH4xxYdGpv0pq2Io14vGVI7ayzf/ul3LE0MO
+ pXyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=6IUgYG4BY0F3TS+IYmV507MQ8fMeoAfA//CxD5jI9dc=;
- b=dKlXUTZePeEzEzGpJNE/l+Vvr2PgR240d7jSBVDpKld2LTemy/cWfJqnvLci3U7pwB
- nEZ+ZUEdTE0iqRxxaJgG8uaMFIOo5AJChfBiOtzmInZTCX9MoXUHpU4RlaQ3Wc+in+cJ
- iYr+CGd30X/Jh8RkYedO1cgxHjfbpBAVkXjcPoeEMFMzfHc4YKmawqN+86RHzu5JFCt/
- 66Umc1YAEofC2zffhZ29TCKeh5hYnYg3oLl6iQG2ccQOkNQj5v/BreVdZWBrfN6PXai+
- 5K6mzzjFclRKHDPx4rs70MU+iiS/MZHCoyOmz+4BaoZtzdx+Ttb3jvGOtCgGd4dfL5hO
- FUMA==
-X-Gm-Message-State: AJcUukfQe0tz2l+N9EaVdMvIT24X48Ygl1mfP6pfg+qrLt9JG8eUKXVh
- EoHf7oQgxvI2brfntWRfv0EiNaCBIeuswV7jTO6gYzrWO7I=
-X-Google-Smtp-Source: ALg8bN56ET5DRfbS1mSGdM+VI95/DhieN192icxmn4/FtpF2RnnIs6aq7IOkAc5rDGGh2Ycwnk+76zn4q2ZWFoAuElI=
-X-Received: by 2002:a9d:2666:: with SMTP id a93mr2395499otb.235.1548277678199; 
- Wed, 23 Jan 2019 13:07:58 -0800 (PST)
+ bh=Mo/VTElfLV0EgnP5j2zawBKw4E/lezydXANs5qmsSig=;
+ b=MCfqCOb8SAK5TCFx4qaEwln2TjqNG4M7AMruVy9Ewvh8Nt/aX+0T+q3HFeor2seTeD
+ u8j5Ww0Yvcs+NION/IreUJNdNyIpTU/EPeFCocp4CEm2N1yLwWpUU/ToiUT/SsYh3lhP
+ niiSOJVYBr4ivF6Z5PJwH9xZXjW0P6OhPQoXkflgDvvhpsgaieFWi+xfvLNsXqbzryFq
+ 0mzlNYOj/581yvzwkxIq3sV97n6rNkxriVbXUqwUnRmRM5KHTXgGfMcFYfdsBtuuWmRJ
+ NTFncIV9SkJgH6Ft2i+j2AUQ5OupyxWwEXUkaPrlhh4xGgnntUIr7kpAfpHjMDhOcEnX
+ LYMA==
+X-Gm-Message-State: AJcUukciLokokZepaHDrjWm2BhKA+Kd0XBqz0WPONarsO1sl22BjME+/
+ N4MWZlFP7mYKwIaEiq0XFrcaG4HC6l3E+3QPFvtrAq76
+X-Google-Smtp-Source: ALg8bN6uLn6GgofjhFYQks3MQU+r/Sl+IG1TkE/M+D6Fl2zGECaT3tX78TJcfw4Br2MqvrB1TBBIO/PtlDQ4QB6lmIk=
+X-Received: by 2002:a63:dc0c:: with SMTP id s12mr3772443pgg.398.1548283828493; 
+ Wed, 23 Jan 2019 14:50:28 -0800 (PST)
 MIME-Version: 1.0
-From: John <graysky@archlinux.us>
-Date: Wed, 23 Jan 2019 16:07:47 -0500
-Message-ID: <CAO_nJAbgfQ7DY+v40P1tpgHX84HVA=85jvd3-vaEJi8d0kGNcg@mail.gmail.com>
-Subject: Build error on ARM device due to ld flags
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-X-Mailman-Approved-At: Thu, 24 Jan 2019 02:58:34 +0100
+From: Yegor Ievlev <koops1997@gmail.com>
+Date: Thu, 24 Jan 2019 01:48:59 +0300
+Message-ID: <CAMwURuCj4O2rik1kWeA22x7ovHxfGNTEyk_aNsTwc9yYbihvbw@mail.gmail.com>
+Subject: WireGuard obfuscation using shadowsocks
+To: wireguard@lists.zx2c4.com
+X-Mailman-Approved-At: Thu, 24 Jan 2019 03:00:11 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -80,85 +80,23 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-I am running Arch ARM (aarch64) on an ODROID-C2 using gcc v8.2.1.
-Arch ARM which ships with the following LDFLAGS as defaults,
-"-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now"
+Recently there was discussion about obfuscation to avoid restrictive
+firewalls. The conclusion apparently was that WG devs should add
+support for pluggable transports. This is a good idea, but for now you
+can just use shadowsocks-libev:
 
-When I build wireguard on this device as shown below, I get this error
-but am unsure why:
+On server:
 
-ld: unrecognized option '-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now'
-ld: use the --help option for usage information
-make[2]: *** [scripts/Makefile.build:393:
-/scratch/WireGuard-0.0.20190123/src/wireguard.o] Error 1
-make[1]: *** [Makefile:1358:
-_module_/scratch/WireGuard-0.0.20190123/src] Error 2
-make: *** [Makefile:36: module] Error 2
+ss-server -s 0.0.0.0 -s ::0 -p 443 -k shadowsocks-password -m
+aes-128-gcm -U # change to lowercase u if you want to be able to
+connect to the server over TCP too.
 
-If I remove the '-Wl' switch from the distro default, it builds
-without error.  Any advice is appreciated.
+On client:
 
-Complete build log and my FLAGS:
+ss-tunnel -s shadowsocks-server -p 443 -l 51820 -L
+wireguard-server:51820 -k shadowsocks-password -m aes-128-gcm -U
 
-% export CPPFLAGS="-D_FORTIFY_SOURCE=2"
-% export CFLAGS="-march=armv8-a -O2 -pipe -fstack-protector-strong -fno-plt"
-% export CXXFLAGS="-march=armv8-a -O2 -pipe -fstack-protector-strong -fno-plt"
-% export LDFLAGS="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now"
-% export DEBUG_CFLAGS="-g -fvar-tracking-assignments"
-% export DEBUG_CXXFLAGS="-g -fvar-tracking-assignments"
-
-% cd WireGuard-0.0.20190123
-% make -j5 -C src
-make: Entering directory '/scratch/WireGuard-0.0.20190123/src'
-  CC      /scratch/WireGuard-0.0.20190123/src/tools/wg.o
-  CC      /scratch/WireGuard-0.0.20190123/src/tools/config.o
-  CC      /scratch/WireGuard-0.0.20190123/src/tools/show.o
-  CC      /scratch/WireGuard-0.0.20190123/src/tools/terminal.o
-  CC      /scratch/WireGuard-0.0.20190123/src/tools/ipc.o
-  CC      /scratch/WireGuard-0.0.20190123/src/tools/mnlg.o
-  CC      /scratch/WireGuard-0.0.20190123/src/tools/encoding.o
-  CC      /scratch/WireGuard-0.0.20190123/src/tools/curve25519.o
-  CC      /scratch/WireGuard-0.0.20190123/src/tools/setconf.o
-  CC      /scratch/WireGuard-0.0.20190123/src/tools/genkey.o
-  CC      /scratch/WireGuard-0.0.20190123/src/tools/showconf.o
-  CC      /scratch/WireGuard-0.0.20190123/src/tools/pubkey.o
-  CC      /scratch/WireGuard-0.0.20190123/src/tools/set.o
-  CC [M]  /scratch/WireGuard-0.0.20190123/src/main.o
-  CC [M]  /scratch/WireGuard-0.0.20190123/src/device.o
-  CC [M]  /scratch/WireGuard-0.0.20190123/src/noise.o
-  CC [M]  /scratch/WireGuard-0.0.20190123/src/peer.o
-  CC [M]  /scratch/WireGuard-0.0.20190123/src/timers.o
-  CC [M]  /scratch/WireGuard-0.0.20190123/src/queueing.o
-  CC [M]  /scratch/WireGuard-0.0.20190123/src/send.o
-  CC [M]  /scratch/WireGuard-0.0.20190123/src/receive.o
-  CC [M]  /scratch/WireGuard-0.0.20190123/src/socket.o
-  CC [M]  /scratch/WireGuard-0.0.20190123/src/hashtables.o
-  CC [M]  /scratch/WireGuard-0.0.20190123/src/allowedips.o
-  CC [M]  /scratch/WireGuard-0.0.20190123/src/ratelimiter.o
-  CC [M]  /scratch/WireGuard-0.0.20190123/src/cookie.o
-  CC [M]  /scratch/WireGuard-0.0.20190123/src/netlink.o
-  CC [M]  /scratch/WireGuard-0.0.20190123/src/crypto/zinc/chacha20/chacha20.o
-  PERLASM /scratch/WireGuard-0.0.20190123/src/crypto/zinc/chacha20/chacha20-arm64.S
-  CC [M]  /scratch/WireGuard-0.0.20190123/src/crypto/zinc/poly1305/poly1305.o
-  PERLASM /scratch/WireGuard-0.0.20190123/src/crypto/zinc/poly1305/poly1305-arm64.S
-  CC [M]  /scratch/WireGuard-0.0.20190123/src/crypto/zinc/chacha20poly1305.o
-  CC [M]  /scratch/WireGuard-0.0.20190123/src/crypto/zinc/blake2s/blake2s.o
-  CC [M]  /scratch/WireGuard-0.0.20190123/src/crypto/zinc/curve25519/curve25519.o
-  LD      /scratch/WireGuard-0.0.20190123/src/tools/wg
-  CC [M]  /scratch/WireGuard-0.0.20190123/src/compat/siphash/siphash.o
-  CC [M]  /scratch/WireGuard-0.0.20190123/src/compat/dst_cache/dst_cache.o
-  CC [M]  /scratch/WireGuard-0.0.20190123/src/compat/udp_tunnel/udp_tunnel.o
-  AS [M]  /scratch/WireGuard-0.0.20190123/src/crypto/zinc/chacha20/chacha20-arm64.o
-  AS [M]  /scratch/WireGuard-0.0.20190123/src/crypto/zinc/poly1305/poly1305-arm64.o
-  LD [M]  /scratch/WireGuard-0.0.20190123/src/wireguard.o
-ld: unrecognized option '-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now'
-ld: use the --help option for usage information
-make[2]: *** [scripts/Makefile.build:393:
-/scratch/WireGuard-0.0.20190123/src/wireguard.o] Error 1
-make[1]: *** [Makefile:1358:
-_module_/scratch/WireGuard-0.0.20190123/src] Error 2
-make: *** [Makefile:36: module] Error 2
-make: Leaving directory '/scratch/WireGuard-0.0.20190123/src'
+Connect WireGuard to 127.0.0.1:51820. Done.
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
