@@ -2,68 +2,54 @@ Return-Path: <SRS0=esD3=P7=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
-	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_PASS,
-	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3AE9C282C0
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 23 Jan 2019 13:21:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BEABC282C0
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 23 Jan 2019 13:40:30 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 0686521848
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 23 Jan 2019 13:21:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id B9FE120870
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 23 Jan 2019 13:40:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SHVRCTAQ"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 0686521848
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="uTrwBBOU"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org B9FE120870
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 378c100b;
-	Wed, 23 Jan 2019 13:15:43 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8b838493;
+	Wed, 23 Jan 2019 13:35:24 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d8bf0239
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a61a6968
  for <wireguard@lists.zx2c4.com>;
- Wed, 23 Jan 2019 13:15:41 +0000 (UTC)
-Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com
- [IPv6:2607:f8b0:4864:20::832])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f2c6f720
+ Wed, 23 Jan 2019 13:35:21 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bff5bde4
  for <wireguard@lists.zx2c4.com>;
- Wed, 23 Jan 2019 13:15:41 +0000 (UTC)
-Received: by mail-qt1-x832.google.com with SMTP id i7so2220744qtj.10
- for <wireguard@lists.zx2c4.com>; Wed, 23 Jan 2019 05:20:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=HDaNVIC+w/GzFckuTUccXDuQdjq/wDYIOjrCEHO0js0=;
- b=SHVRCTAQrCHZsf5cXWSYcRBjtVjFZutbvMuul8VX9ZXsFUu9OwA09TYwSXq+la6WCK
- 6m//uyHX98/gqEnL5fv0+N/gqQq1oF0o+jwAAqX6kRDmZKKHNMllYJEfAF5nme/vsaei
- TZxPbXcVCE638OxgHPgOZyuj0kllyHiTIbsvhdSYw1L1dpERefbQhTTewNlc1ENOWZTf
- g5S/bdW9nVAh63uJEgJ57LCzqVDqcD2xTX3COo88FWkGEBJEq57P//FuUPb1cse2JyL3
- UOCGmBAxCGTZaGNuQxHylhM5iMCqYVogArPsdQCE+0qtmqWS2gh5Y0AthzhKbFVJT+++
- hYYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=HDaNVIC+w/GzFckuTUccXDuQdjq/wDYIOjrCEHO0js0=;
- b=Jtc7zkj4Q5UYYiFeOh2vULt9b2zY2z1I0MfeAmjEh4iwrDf/daxRN63HivmO2VYR4X
- VQvUYpqH29ssn0B0jNcT5JhY62r3xjlKFEcO0Yi7LevYHGPreD/TvOzS0oSHjT86Esfu
- xxbkbW8pEJZ+5hp89ieEpF+d9GbL+raReHFoz9+05MM6L7k63nZ8jXBzIvxQNlwbudGR
- LEVAl9X8/fVUaDNVv8IZtodDJlRZmFwlX0kL17nHSiy0PPiRikVy9atBcmsx/E+p36Ot
- coDcsbVjLYofHAJ3vrcQhNx+i/p9DaD/yrO68hFEx1VS3/AyEgScRhsiKktSci61fM7N
- dOcw==
-X-Gm-Message-State: AJcUukce37BGlKSHmWqVihZ4Aw7FIDnj2VThvBmwYBvUVMemfmi/UhT8
- gd3EfPAAVyifO8oQk+JTS+2gkK4nDf1lPw3+U4KD2A==
-X-Google-Smtp-Source: ALg8bN5mBQVn9Nx9nj1p7j9brCrC7EpeFePOGeDfxWjZyBs0WWPgN5K0POUsBJtsUdMH8ajiLlwZFdKv0ndlqbfxKy4=
-X-Received: by 2002:a0c:99d9:: with SMTP id y25mr1859959qve.133.1548249645379; 
- Wed, 23 Jan 2019 05:20:45 -0800 (PST)
+ Wed, 23 Jan 2019 13:35:21 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d3c8e10d
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 23 Jan 2019 13:26:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=date:to:from
+ :subject:mime-version:content-type; s=mail; bh=mwKydrzEqtlWouvGZ
+ AuGlUEVzoY=; b=uTrwBBOUboujNpF7GOyJRMFpRW/fS3B3XcV8SynssrFtF2xBi
+ pTM68naHwh9us+r5T07XVtoa+vlcN+Kzv2xSN1nmMLVDrxEChPXCViHLiTsoS4Iv
+ V2r5EGdQr8BsrD1Ih+FTIAyg2yrF3lzqSTs7UE5Xvm94lKfAvR7HRJNf0ymSXmF7
+ /wnC5k6oYDF0QympCOZOyCvtsZPj2SRl6uBaCcwGWad4IeigRgPFncK8/EeawN8P
+ 6sVa2fapczW5qPjMJHHKDZM0ZNty8HgblGPK47Gi/9B4iebfF2yXu8Vz3nZyLKK5
+ jEkceBcvTojh1ZdpisM9Of7Cpen6/eOHITTCA==
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 7695bf23
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 23 Jan 2019 13:26:07 +0000 (UTC)
+Date: Wed, 23 Jan 2019 14:40:24 +0100
+To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: [ANNOUNCE] WireGuard Snapshot `0.0.20190123` Available
 MIME-Version: 1.0
-From: Laszlo KERTESZ <laszlo.kertesz@gmail.com>
-Date: Wed, 23 Jan 2019 15:20:33 +0200
-Message-ID: <CANcuY=rHWH7=yOXSv5iMcnN_8tsX4_MAJdorsTZLfuF7ZD1j7g@mail.gmail.com>
-Subject: Clients lose connection until the interface is restarted somehow if
- server changes IP address
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Message-Id: <71390d502a8c6962@frisell.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -75,54 +61,94 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============7744146884184843250=="
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============7744146884184843250==
-Content-Type: multipart/alternative; boundary="00000000000022f3f305801ff63c"
-
---00000000000022f3f305801ff63c
-Content-Type: text/plain; charset="UTF-8"
-
-Hi,
-
-I have a wireguard server that runs on a computer that has a dynamic real
-ip address. It also has a dynamic DNS address that is updated if the IP
-changes.
-The clients connecting to it work but if the ip address is changed, they
-will still try to connect the old IP address. If i restart the wireguard
-interface (ip link up/down etc) the connection is established again.
-
-The solution would be that in case of connection loss the DNS name to be
-updated periodically instead of just trying the old address.
-Can this be done?
-
---00000000000022f3f305801ff63c
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>Hi,</div><div><br></div><div>I have a wireguard serve=
-r that runs on a computer that has a dynamic real ip address. It also has a=
- dynamic DNS address that is updated if the IP changes.</div><div>The clien=
-ts connecting to it work but if the ip address is changed, they will still =
-try to connect the old IP address. If i restart the wireguard interface (ip=
- link up/down etc) the connection is established again.</div><div><br></div=
-><div>The solution would be that in case of connection loss the DNS name to=
- be updated periodically instead of just trying the old address.</div><div>=
-Can this be done?<br></div></div>
-
---00000000000022f3f305801ff63c--
-
---===============7744146884184843250==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
-_______________________________________________
-WireGuard mailing list
-WireGuard@lists.zx2c4.com
-https://lists.zx2c4.com/mailman/listinfo/wireguard
-
---===============7744146884184843250==--
+LS0tLS1CRUdJTiBQR1AgU0lHTkVEIE1FU1NBR0UtLS0tLQpIYXNoOiBTSEEyNTYKCkhlbGxvLAoK
+QSBuZXcgc25hcHNob3QsIGAwLjAuMjAxOTAxMjNgLCBoYXMgYmVlbiB0YWdnZWQgaW4gdGhlIGdp
+dCByZXBvc2l0b3J5LgoKUGxlYXNlIG5vdGUgdGhhdCB0aGlzIHNuYXBzaG90IGlzLCBsaWtlIHRo
+ZSByZXN0IG9mIHRoZSBwcm9qZWN0IGF0IHRoaXMgcG9pbnQKaW4gdGltZSwgZXhwZXJpbWVudGFs
+LCBhbmQgZG9lcyBub3QgY29uc3RpdHV0ZSBhIHJlYWwgcmVsZWFzZSB0aGF0IHdvdWxkIGJlCmNv
+bnNpZGVyZWQgc2VjdXJlIGFuZCBidWctZnJlZS4gV2lyZUd1YXJkIGlzIGdlbmVyYWxseSB0aG91
+Z2h0IHRvIGJlIGZhaXJseQpzdGFibGUsIGFuZCBtb3N0IGxpa2VseSB3aWxsIG5vdCBjcmFzaCB5
+b3VyIGNvbXB1dGVyICh0aG91Z2ggaXQgbWF5KS4KSG93ZXZlciwgYXMgdGhpcyBpcyBhIHByZS1y
+ZWxlYXNlIHNuYXBzaG90LCBpdCBjb21lcyB3aXRoIG5vIGd1YXJhbnRlZXMsIGFuZAppdHMgc2Vj
+dXJpdHkgaXMgbm90IHlldCB0byBiZSBkZXBlbmRlZCBvbjsgaXQgaXMgbm90IGFwcGxpY2FibGUg
+Zm9yIENWRXMuCgpXaXRoIGFsbCB0aGF0IHNhaWQsIGlmIHlvdSdkIGxpa2UgdG8gdGVzdCB0aGlz
+IHNuYXBzaG90IG91dCwgdGhlcmUgYXJlIGEKZmV3IHJlbGV2YW50IGNoYW5nZXMuCgo9PSBDaGFu
+Z2VzID09CgogICogdG9vbHM6IGN1cnZlMjU1MTk6IGhhbmRsZSB1bmFsaWduZWQgbG9hZHMvc3Rv
+cmVzIHNhZmVseQogIAogIFRoaXMgc2hvdWxkIGZpeCBzcG9yYWRpYyBjcmFzaGVzIHdpdGggYHdn
+IHB1YmtleWAgb24gY2VydGFpbiBhcmNoaXRlY3R1cmVzLgogIAogICogbmV0bGluazogYXV0aCBz
+b2NrZXQgY2hhbmdlcyBhZ2FpbnN0IG5hbWVzcGFjZSBvZiBzb2NrZXQKICAKICBJbiBXaXJlR3Vh
+cmQsIHRoZSB1bmRlcmx5aW5nIFVEUCBzb2NrZXQgbGl2ZXMgaW4gdGhlIG5hbWVzcGFjZSB3aGVy
+ZSB0aGUKICBpbnRlcmZhY2Ugd2FzIGNyZWF0ZWQgYW5kIGRvZXNuJ3QgbW92ZSBpZiB0aGUgaW50
+ZXJmYWNlIGlzIG1vdmVkLiBUaGlzCiAgYWxsb3dzIG9uZSB0byBjcmVhdGUgdGhlIGludGVyZmFj
+ZSBpbiBzb21lIHByaXZpbGVnZWQgcGxhY2UgdGhhdCBoYXMKICBJbnRlcm5ldCBhY2Nlc3MsIGFu
+ZCB0aGVuIG1vdmUgaXQgaW50byBhIGNvbnRhaW5lciBuYW1lc3BhY2UgdGhhdCBvbmx5CiAgaGFz
+IHRoZSBXaXJlR3VhcmQgaW50ZXJmYWNlIGZvciBlZ3Jlc3MuIENvbnNpZGVyIHRoZSBmb2xsb3dp
+bmcKICBzaXR1YXRpb246CiAgCiAgMS4gSW50ZXJmYWNlIGNyZWF0ZWQgaW4gbmFtZXNwYWNlIEEu
+IFNvY2tldCB0aGVyZWZvcmUgbGl2ZXMgaW4gbmFtZXNwYWNlIEEuCiAgMi4gSW50ZXJmYWNlIG1v
+dmVkIHRvIG5hbWVzcGFjZSBCLiBTb2NrZXQgcmVtYWlucyBpbiBuYW1lc3BhY2UgQS4KICAzLiBO
+YW1lc3BhY2UgQiBub3cgaGFzIGFjY2VzcyB0byB0aGUgaW50ZXJmYWNlIGFuZCBjaGFuZ2VzIHRo
+ZSBsaXN0ZW4KICAgICBwb3J0IGFuZC9vciBmd21hcmsgb2Ygc29ja2V0LiBDaGFuZ2UgaXMgcmVm
+bGVjdGVkIGluIG5hbWVzcGFjZSBBLgogIAogIFRoaXMgYmVoYXZpb3IgaXMgYXJndWFibHkgX2Zp
+bmVfIGFuZCBwZXJoYXBzIGV2ZW4gZXhwZWN0ZWQgb3IKICBhY2NlcHRhYmxlLiBCdXQgdGhlcmUn
+cyBhbHNvIGFuIGFyZ3VtZW50IHRvIGJlIG1hZGUgdGhhdCBCIHNob3VsZCBoYXZlCiAgQSdzIGNy
+ZWQgdG8gZG8gc28uIFNvLCB0aGlzIHBhdGNoIGFkZHMgYSBzaW1wbGUgbnNfY2FwYWJsZSBjaGVj
+ay4KICAKICAqIHJhdGVsaW1pdGVyOiBidWlsZCB0ZXN0cyB3aXRoICFJUFY2CiAgCiAgU2hvdWxk
+IHJlZW5hYmxlIGJ1aWxkaW5nIGluIGRlYnVnIG1vZGUgZm9yIHN5c3RlbXMgd2l0aG91dCBJUHY2
+LgogIAogICogbm9pc2U6IHJlcGxhY2UgZ2V0bnN0aW1lb2ZkYXk2NCB3aXRoIGt0aW1lX2dldF9y
+ZWFsX3RzNjQKICAqIHJhdGVsaW1pdGVyOiB0b3RhbHJhbV9wYWdlcyBpcyBub3cgYSBmdW5jdGlv
+bgogICogcWVtdTogZW5hYmxlIEZQIG9uIE1JUFMKICAKICBMaW51eCA1LjAgc3VwcG9ydC4KICAK
+ICAqIGtleWdlbi1odG1sOiBicmluZyBiYWNrIHB1cmUgamF2YXNjcmlwdCBpbXBsZW1lbnRhdGlv
+bgogIAogIEJlbm/DrnQgVmlndWllciBoYXMgcHJvb2ZzIHRoYXQgdmFsdWVzIHdpbGwgc3RheSB3
+ZWxsIHdpdGhpbiAyXjUzLiBXZQogIGFsc28gaGF2ZSBhbiBpbXByb3ZlZCBjYXJyeSBmdW5jdGlv
+biB0aGF0J3MgbXVjaCBzaW1wbGVyLiBQcm9iYWJseSBtb3JlCiAgY29uc3RhbnQgdGltZSB0aGFu
+IGVtc2NyaXB0ZW4ncyA2NC1iaXQgaW50ZWdlcnMuCiAgCiAgKiBjb250cmliOiBpbnRyb2R1Y2Ug
+c2ltcGxlIGhpZ2hsaWdodGVyIGxpYnJhcnkKICAKICBUaGlzIGlzIHRoZSBoaWdobGlnaHRlciBs
+aWJyYXJ5IGJlaW5nIHVzZWQgaW46CiAgLSBodHRwczovL3R3aXR0ZXIuY29tL0VkZ2VTZWN1cml0
+eS9zdGF0dXMvMTA4NTI5NDY4MTAwMzQ1NDQ2NQogIC0gaHR0cHM6Ly90d2l0dGVyLmNvbS9FZGdl
+U2VjdXJpdHkvc3RhdHVzLzEwODE5NTMyNzgyNDg3OTYxNjUKICAKICBJdCdzIGluY2x1ZGVkIGhl
+cmUgYXMgYSBjb250cmliIGV4YW1wbGUsIHNvIHRoYXQgb3RoZXJzIGNhbiBwYXN0ZSBpdCBpbnRv
+CiAgdGhlaXIgb3duIEdVSSBjbGllbnRzIGZvciBoYXZpbmcgdGhlIHNhbWUgc3RyaWN0bHkgdmFs
+aWRhdGluZyBoaWdobGlnaHRpbmcuCiAgCiAgKiBuZXRsaW5rOiB1c2UgX19rZXJuZWxfdGltZXNw
+ZWMgZm9yIGhhbmRzaGFrZSB0aW1lCiAgCiAgVGhpcyByZWFkaWVzIHVzIGZvciBZMjAzOC4gU2Vl
+IGh0dHBzOi8vbHduLm5ldC9BcnRpY2xlcy83NzY0MzUvIGZvciBtb3JlIGluZm8uCgpUaGlzIHNu
+YXBzaG90IGNvbnRhaW5zIGNvbW1pdHMgZnJvbTogSmFzb24gQS4gRG9uZW5mZWxkLgoKQXMgYWx3
+YXlzLCB0aGUgc291cmNlIGlzIGF2YWlsYWJsZSBhdCBodHRwczovL2dpdC56eDJjNC5jb20vV2ly
+ZUd1YXJkLyBhbmQKaW5mb3JtYXRpb24gYWJvdXQgdGhlIHByb2plY3QgaXMgYXZhaWxhYmxlIGF0
+IGh0dHBzOi8vd3d3LndpcmVndWFyZC5jb20vIC4KClRoaXMgc25hcHNob3QgaXMgYXZhaWxhYmxl
+IGluIGNvbXByZXNzZWQgdGFyYmFsbCBmb3JtIGhlcmU6CiAgaHR0cHM6Ly9naXQuengyYzQuY29t
+L1dpcmVHdWFyZC9zbmFwc2hvdC9XaXJlR3VhcmQtMC4wLjIwMTkwMTIzLnRhci54egogIFNIQTIt
+MjU2OiBlZGQxM2M3NjMxYWYxNjllMzgzODYyMWIxYTFiZmYzZWY3M2NmN2JjNzc4ZWVjMmJkNTVm
+N2MxMDg5ZmZkZjliCiAgQkxBS0UyYi0yNTY6IDIxNmViYWZjNGUzZjg5MDYxNjE5NTQwMDNjMGFm
+ZTQzMTcxZDhkNDEzNjFjZmViNjRmYjQyYmNmOTc1NjcwOTMKCkEgUEdQIHNpZ25hdHVyZSBvZiB0
+aGF0IGZpbGUgZGVjb21wcmVzc2VkIGlzIGF2YWlsYWJsZSBoZXJlOgogIGh0dHBzOi8vZ2l0Lnp4
+MmM0LmNvbS9XaXJlR3VhcmQvc25hcHNob3QvV2lyZUd1YXJkLTAuMC4yMDE5MDEyMy50YXIuYXNj
+CiAgU2lnbmluZyBrZXk6IEFCOTk0MkU2RDRBNENGQzM0MTI2MjBBNzQ5RkM3MDEyQTVERTAzQUUK
+CklmIHlvdSdyZSBhIHNuYXBzaG90IHBhY2thZ2UgbWFpbnRhaW5lciwgcGxlYXNlIGJ1bXAgeW91
+ciBwYWNrYWdlIHZlcnNpb24uIElmCnlvdSdyZSBhIHVzZXIsIHRoZSBXaXJlR3VhcmQgdGVhbSB3
+ZWxjb21lcyBhbnkgYW5kIGFsbCBmZWVkYmFjayBvbiB0aGlzIGxhdGVzdApzbmFwc2hvdC4KCkZp
+bmFsbHksIFdpcmVHdWFyZCBkZXZlbG9wbWVudCB0aHJpdmVzIG9uIGRvbmF0aW9ucy4gQnkgcG9w
+dWxhciBkZW1hbmQsIHdlCmhhdmUgYSB3ZWJwYWdlIGZvciB0aGlzOiBodHRwczovL3d3dy53aXJl
+Z3VhcmQuY29tL2RvbmF0aW9ucy8KClRoYW5rIHlvdSwKSmFzb24gRG9uZW5mZWxkCgoKLS0tLS1C
+RUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSkVCQUVCQ0FBdUZpRUVxNWxDNXRTa3o4TkJKaUNu
+U2Z4d0VxWGVBNjRGQWx4SWJyWVFIR3BoYzI5dVFIcDQKTW1NMExtTnZiUUFLQ1JCSi9IQVNwZDRE
+cmxOT0Qvd1BkNFRqUmVjRGswYWlsbnJKekpmMEFKTE01bW5BNGt6MwpNTUQ3eTJ0K2dSMzRYZEtX
+akNUTzJHbFRWLy9EdkdMRUpYdG9MSm1JVGhlTEFaN2EyMzk5STNEd2xBS2JaS21zCnI1VnQ3QW1q
+WjEwOXVCRW4yTHBHemt2YkdrTUJlbUtUU3NOcWEwd0dPL2gzZ0pqN1FGNUFiVTZaOGNuY1BkR0EK
+dWpDV3FQN2YvUjZVUzcxd1EvM2c5Ky9aRnpyVHBIVDJNaExNS2JPdzQ5ZDl0em9FWGg0bnJ2VGlq
+NWZQbldwaQpjRXhBVnRIRXlmcy9WLzcybXFOZVRxbzc3VGhpcTQwSUtxNFFlQmNxeVY3U3hlWVp6
+Um1zMzkvWXQ0YUs3V2MyClhHMzQ4SGtWNW5lL3RDWGZva0gzMmZySVhtQ1NXZlorK2t2Uk5QNmZC
+NzR6OXFnRVdEd0IyYXZ4NCtzZC9DRWYKcElHN0JNY3lnT0xlSlBORjEyWXAyL3dJREJnNVlKNThQ
+Z3ZVMzJoazNrRWVpY1Q1NCszeDRVMzF3VVpuQllCVwoydDRROGU5b00yR2tVTWpnbE9SL01XUkda
+UHZLZGlITm5KVFA3Z2o2azJ4Rkg2YlNkSFZHcGZ0b0VKK1NaSjFiCjFUenlOZGYwckYvOENlSVl6
+ZEdpby9PMDB6MjJIbHlRdHpHSTkzQlMwQ2RKWWwxQ2ZnSXY5ZDJzcmdHLzgrNHMKcUZVbk5aYW4y
+UEtmRzZYYVZFaXJQUzQxSzd5d2xVbFNaZ25JVlZDWVMyOEkwTFhlZVhXOEZ5WkJYL1BOeGtJMQp0
+cjNDaDRNMWk5NVM1VjV3ZnpQbjlOdC82WXNsakduVUhvQzY5LzE1UTdHSjVuSDNNQkFDRFVsRk9x
+ZXkrejlkCmlwaElJbTVvRGc9PQo9TFk0SAotLS0tLUVORCBQR1AgU0lHTkFUVVJFLS0tLS0KX19f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18KV2lyZUd1YXJkIG1h
+aWxpbmcgbGlzdApXaXJlR3VhcmRAbGlzdHMuengyYzQuY29tCmh0dHBzOi8vbGlzdHMuengyYzQu
+Y29tL21haWxtYW4vbGlzdGluZm8vd2lyZWd1YXJkCg==
