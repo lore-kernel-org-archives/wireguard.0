@@ -7,63 +7,67 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
 	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_PASS,
 	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE918C282C3
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 24 Jan 2019 04:01:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03232C282C3
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 24 Jan 2019 05:14:36 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 702AE2184C
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 24 Jan 2019 04:01:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 4BCFC217D7
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 24 Jan 2019 05:14:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W5Z7ODGC"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 702AE2184C
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W7L22kcS"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 4BCFC217D7
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 69fba1f2;
-	Thu, 24 Jan 2019 03:56:30 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d906a4b7;
+	Thu, 24 Jan 2019 05:09:24 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 67cd47e0
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e91e909c
  for <wireguard@lists.zx2c4.com>;
- Thu, 17 Jan 2019 07:57:27 +0000 (UTC)
-Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com
- [IPv6:2607:f8b0:4864:20::72d])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ca038282
+ Thu, 24 Jan 2019 05:09:21 +0000 (UTC)
+Received: from mail-yw1-xc33.google.com (mail-yw1-xc33.google.com
+ [IPv6:2607:f8b0:4864:20::c33])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 96e11691
  for <wireguard@lists.zx2c4.com>;
- Thu, 17 Jan 2019 07:57:27 +0000 (UTC)
-Received: by mail-qk1-x72d.google.com with SMTP id q8so5537191qke.1
- for <wireguard@lists.zx2c4.com>; Thu, 17 Jan 2019 00:01:43 -0800 (PST)
+ Thu, 24 Jan 2019 05:09:21 +0000 (UTC)
+Received: by mail-yw1-xc33.google.com with SMTP id d190so1908566ywd.12
+ for <wireguard@lists.zx2c4.com>; Wed, 23 Jan 2019 21:14:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=10My75Y59h8QIdMRmxQOLqDmeH6rmcLFo9NVCjXrTI8=;
- b=W5Z7ODGC7ZQho3ygjtEo/YswI8NBYfLSEpj/g6tOnRRx08B90Rkbb74egMl4K0DoyN
- irZ2dSlmaJ+2JYUnpycE0dgIwltI8G16t1ctWCw3IwROk3KCdO78DnXLWz4QyKW2yUrH
- CPxxOb383XlqzwBlmw77rDTVRNiwAMVvjfXIRjmVFuG/y00rKaZ9j2XkK0w7h81eMNng
- f0uaYx3OmtyfsV+kz/VMBp00V+Og2+QaHCcorR6l82s3n89MHRMglkUh9MdFfIjwxDAJ
- Ixs88m1Ih0bdm742KI7NQOg6gxvoWv9IhDtTUOl41bl/65fvvSCCXKOuQYdDOcPN9I04
- Galw==
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=n9ZMMvZUvR7IZpaJVzf6bGoZAeBNWUW+ThZFLeuEQ+c=;
+ b=W7L22kcSd2Trzp/UECyQf7w3hrI0EqiV6+CWAUE8zJq9rtYef8jsL/O9LBux+SzYFz
+ x66IgdCqGe1uNUi9zm/vpt6kCdZkoqEkTzCPoL+bPA1mw0w1WZPE2F3QxJbunqVtqDjJ
+ +DoY1z73ijqEubT15blcKawWA7Y6RvddFogBOYYndL2gOCS6x76mqS3/xruIQIACm9It
+ xcbrGBDI2+64J5l5fr4oNNRgjPtQzZTI4Clz1rvLzmFsCv4P69Sx9dLGZwqY9qXVXHeU
+ gKRuk2ByW69uunX5ET0ICoTcX4+pW1DGQBtVWi4AJ3VtkBoJUjCAiNWM3INzD1kXBD1u
+ AiKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=10My75Y59h8QIdMRmxQOLqDmeH6rmcLFo9NVCjXrTI8=;
- b=eJNJVSam06185Ecubas5Um0ZqAkVnAYPN+1lutrMRLu/g0k1zlSLUPT3NW5s3bfTbA
- J7p4LfWXzDi/VecrHdvvTvEm5OO2yXwBDv2y9z7mTL1FEjUNkaprhILYniuXaafx+G/s
- uywOykqv6PLNwyhwnZvCczXPHvNABIcmF0n5IOKcjHHZr/nNhV2a0nraNACfD32Zs/2v
- PnARIEEyfAtuE4A8nqpIHHTTGpuvHdELLzase9wnX4xBtZc93f6KHMKtlhLFHV+5WB3s
- Fld6rCMmMBj1ewkdYisw7RohF8pxjKeY+iLGIuJnIQLt6qTkzIHL4qlDObOOVr/v656A
- lQYg==
-X-Gm-Message-State: AJcUuke8pjh9+MRE/j1goQL6dBQIKKpS5MIzFX5lUwZX84gfuU2u/2lX
- P/a+g0U0E/pmJ6yHnT+bN6zfIs1Mj+r6nlJtbvZ+Yw==
-X-Google-Smtp-Source: ALg8bN5HjuOTln3wy1uL0oHdjTIf4bVuYJmvspINA0Wi/7hrVbz/ZVBvNmDd837q4Bp9LC83GYzUqtVEniY22x8uY58=
-X-Received: by 2002:ae9:eb94:: with SMTP id b142mr9832664qkg.227.1547712103173; 
- Thu, 17 Jan 2019 00:01:43 -0800 (PST)
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=n9ZMMvZUvR7IZpaJVzf6bGoZAeBNWUW+ThZFLeuEQ+c=;
+ b=DGhrWPodqDCkKLohmT5TXtGbrnPa069+GLSx/22UXBr2uwvIpBSXGRDcrD/NL/nHNw
+ T26TFm9OSDQ+bRs0j/uzUdQ2oupNNpavgY+RSGH5sxAfpCXa4d6uBSZI1CMAD9CAR3UH
+ ae26RfHO7o5bjYFOd6g8ASm2i77qoLo9M2t1CoW+bv2UwdX5/89INP5eO/B2imBeRAtm
+ l74IBmoyucP+vYlrMG5VHRYyYM421JjB8FMU0A0n7P3cyZ0eiuAun2BKbT7qra/lAgwt
+ P7MH4gNr2PHyGwtPq7U09y3o1D/YVuTmvTyDFmVwWrkc7IEc/blMO6TpGZMI3vKHYe3u
+ gQUA==
+X-Gm-Message-State: AJcUukf38GNx9yqsUORHU5KpAOlwIVrX4X7zMXQq1+2+1JjaxeZm7HOW
+ m2e5RDjQ/KO2XrifI/bcmVxdtYlc2DoI5fVKECc=
+X-Google-Smtp-Source: ALg8bN4af5Gm2UMHyM8YLhUNG1PeCZQ+5Geg5DZOPccHYBqs5SknozH4aRa5AUYt/rKHPvwNGvHNs21UOQC15rlgTKk=
+X-Received: by 2002:a81:728a:: with SMTP id n132mr5038930ywc.182.1548306870345; 
+ Wed, 23 Jan 2019 21:14:30 -0800 (PST)
 MIME-Version: 1.0
-From: Felix Green <itaylorswift365@gmail.com>
-Date: Thu, 17 Jan 2019 16:01:32 +0800
-Message-ID: <CAFTQ+t-pvm9_Z+mZNgNbterG6XnotpRa6tBogn73LYfT2UE5ug@mail.gmail.com>
-Subject: =?UTF-8?Q?Can=E2=80=99t_use_WireGuard_app_on_my_iPhone?=
-To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
-X-Mailman-Approved-At: Thu, 24 Jan 2019 04:56:29 +0100
+References: <c_FUpjUVAFaFWrfz97DeqRpOcM3uLdpa3ylizfNa3ceIzcB5qpDmKvKXb4VD7jfPsTUt17ji91aVxBqHXDdu0IBC4Y1xCZZXMPCyrj6GneM=@protonmail.com>
+In-Reply-To: <c_FUpjUVAFaFWrfz97DeqRpOcM3uLdpa3ylizfNa3ceIzcB5qpDmKvKXb4VD7jfPsTUt17ji91aVxBqHXDdu0IBC4Y1xCZZXMPCyrj6GneM=@protonmail.com>
+From: Grant Haywood <mrgranthaywood@gmail.com>
+Date: Wed, 23 Jan 2019 22:14:18 -0700
+Message-ID: <CAPayrd5bfuDmL+FvVxzONyKBB4UU-h0zzCOpMgdrG=+VVJA26g@mail.gmail.com>
+Subject: Re: Using OPENVPN Client (UDP port 1194) on top of wireguard -
+ packets corrupt
+To: Allen Walker <eawalker@protonmail.com>
+Cc: wireguard@lists.zx2c4.com
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -75,54 +79,75 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============2935853609769685553=="
+Content-Type: multipart/mixed; boundary="===============4234882145326226946=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============2935853609769685553==
-Content-Type: multipart/alternative; boundary="0000000000001fd506057fa2ced6"
+--===============4234882145326226946==
+Content-Type: multipart/alternative; boundary="00000000000002a53c05802d4983"
 
---0000000000001fd506057fa2ced6
+--00000000000002a53c05802d4983
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-I=E2=80=99ve been using WireGuard on my Linux device for a year, and things=
- work
-pretty well. Sometimes I need to use WireGuard on my iOS device, however,
-with the same config file it just can=E2=80=99t connect on my iPhone. The l=
-og file
-shows that =E2=80=9C*peer(8Zu4=E2=80=A6jy0g) - Failed to send handshake ini=
-tiation write
-udp4 0.0.0.0:53244->server ip :port : sendto: no route to host*=E2=80=9D. T=
-his
-should be the problem, and WireGuard app doesn=E2=80=99t ask for system net=
-work
-permission while connecting. So the iOS itself may block WireGuard packets
-from being sent out. (This problem just happens on my iPhone and everything
-is okay on my iPad cause iPad iOS(WiFi version) doesn=E2=80=99t have networ=
-k
-permission policy.) Is there any solution for it?
+I do this all the time, not with windows and not on a router, but openvpn
+over wg has never really been a problem for me
 
---0000000000001fd506057fa2ced6
+On Wed, Jan 23, 2019 at 9:01 PM Allen Walker <eawalker@protonmail.com>
+wrote:
+
+> My router is set to route everything thru my wireguard vpn. My windows
+> machine (a lan client) can run openvpn client but there are issues as
+> when I copy large files, specifically mp4s via scp or ftp, the files are
+> inevitably corrupted. My guess is that the clients OPENVPN UDP packets
+> are getting invariably corrupted when going thru the router and
+> wireguard (my router routes are configured via wg-quick). Any ideas on
+> how to prevent such packet corruption from the clients openvpn connection?
+>
+> Thanks
+>
+>
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
+>
+
+--00000000000002a53c05802d4983
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"auto">I=E2=80=99ve been using WireGuard on my Linux device for =
-a year, and things work pretty well. Sometimes I need to use WireGuard on m=
-y iOS device, however, with the same config file it just can=E2=80=99t conn=
-ect on my iPhone. The log file shows that =E2=80=9C<span style=3D"font-size=
-:12pt;font-family:Helvetica"><b>peer(8Zu4=E2=80=A6jy0g) - Failed to send ha=
-ndshake initiation write udp4 0.0.0.0:53244-&gt;server ip :port : sendto: n=
-o route to host</b>=E2=80=9D. This should be the problem, and WireGuard app=
- doesn=E2=80=99t ask for system network permission while connecting. So the=
- iOS itself may block WireGuard packets from being sent out. (This problem =
-just happens on my iPhone and everything is okay on my iPad cause iPad iOS(=
-WiFi version) doesn=E2=80=99t have network permission policy.) Is there any=
- solution for it?</span></div>
+<div dir=3D"ltr">I do this all the time, not with windows and not on a rout=
+er, but openvpn over wg has never really been a problem for me<br></div><br=
+><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, J=
+an 23, 2019 at 9:01 PM Allen Walker &lt;<a href=3D"mailto:eawalker@protonma=
+il.com">eawalker@protonmail.com</a>&gt; wrote:<br></div><blockquote class=
+=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
+b(204,204,204);padding-left:1ex">My router is set to route everything thru =
+my wireguard vpn. My windows <br>
+machine (a lan client) can run openvpn client but there are issues as <br>
+when I copy large files, specifically mp4s via scp or ftp, the files are <b=
+r>
+inevitably corrupted. My guess is that the clients OPENVPN UDP packets <br>
+are getting invariably corrupted when going thru the router and <br>
+wireguard (my router routes are configured via wg-quick). Any ideas on <br>
+how to prevent such packet corruption from the clients openvpn connection?<=
+br>
+<br>
+Thanks<br>
+<br>
+<br>
+_______________________________________________<br>
+WireGuard mailing list<br>
+<a href=3D"mailto:WireGuard@lists.zx2c4.com" target=3D"_blank">WireGuard@li=
+sts.zx2c4.com</a><br>
+<a href=3D"https://lists.zx2c4.com/mailman/listinfo/wireguard" rel=3D"noref=
+errer" target=3D"_blank">https://lists.zx2c4.com/mailman/listinfo/wireguard=
+</a><br>
+</blockquote></div>
 
---0000000000001fd506057fa2ced6--
+--00000000000002a53c05802d4983--
 
---===============2935853609769685553==
+--===============4234882145326226946==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -133,4 +158,4 @@ WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---===============2935853609769685553==--
+--===============4234882145326226946==--
