@@ -2,68 +2,43 @@ Return-Path: <SRS0=HYXs=QB=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED
+X-Spam-Status: No, score=-9.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_PASS,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0CF81C282C3
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 25 Jan 2019 00:00:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AFF8CC282C3
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 25 Jan 2019 01:52:19 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 8F2A0218A6
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 25 Jan 2019 00:00:58 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="0FLf5xTf"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 8F2A0218A6
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id 03ED5218CD
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 25 Jan 2019 01:52:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 03ED5218CD
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=pallas.us
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c6269a2f;
-	Thu, 24 Jan 2019 23:55:41 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f95b990e;
+	Fri, 25 Jan 2019 01:47:01 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b1f8592b
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8f32dc44
  for <wireguard@lists.zx2c4.com>;
- Thu, 24 Jan 2019 23:55:40 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d089b7d1
+ Fri, 25 Jan 2019 01:46:58 +0000 (UTC)
+Received: from telperion.info (2600:3c01::f03c:91ff:fe96:a052
+ [IPv6:2600:3c01::f03c:91ff:fe96:a052])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0c6337c7
  for <wireguard@lists.zx2c4.com>;
- Thu, 24 Jan 2019 23:55:40 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4e0d70de
- for <wireguard@lists.zx2c4.com>;
- Thu, 24 Jan 2019 23:46:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=eBMF75ddgi+109sbi7fDHvn71RU=; b=0FLf5x
- Tf0wANkLT1U/Z+h22zc3hdZv7aeXimNtStcREg8qkSR2rlKxy3Hk8VRmmPG+lNCy
- pVPgZbpoSz765ZrRkiG5TlDRe+Dv2ZHSVEMIgoYhsHO2M0CElQ4VAEswIccQRR+Q
- NnLRyfecg0OzusGklHBtdYz0J0r95zWncN45sbgC9EbvhHuHP9cgRWX0TOu8PFGE
- FWLmUW8bnIu+a86JiMDK6/EOgcf0YAXvn6bGWX+pifu7Kl/0C/64e+ojWxFJH46J
- P5vevsYZKqxanOqNXReSdcwiojgcP4wLFWgFyAoLKGKvGpeNvIDhYSq0ep+DVhaC
- kbgqc5cOa+yjcpNw==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id bbf5c76f
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Thu, 24 Jan 2019 23:46:26 +0000 (UTC)
-Received: by mail-ot1-f51.google.com with SMTP id 32so6903364ota.12
- for <wireguard@lists.zx2c4.com>; Thu, 24 Jan 2019 16:00:56 -0800 (PST)
-X-Gm-Message-State: AJcUukcjLkf2XyXcsH/9G9eILdzwDexoRosTlH56gf90S8gV7zcRd0jY
- 1IeiabuJjadvVy9WXkFmmrz+yeYOZ1QJsfHHtac=
-X-Google-Smtp-Source: ALg8bN5zSbPVJLMPExZn6ddkODy9SgvSDyRVKGOBObUCJ857vdtTJ/YnBrSMchuJOkf9vJ+W0Aj2roQyIGmr9f5Mm0w=
-X-Received: by 2002:a9d:7e87:: with SMTP id m7mr6443702otp.225.1548374455629; 
- Thu, 24 Jan 2019 16:00:55 -0800 (PST)
-MIME-Version: 1.0
-References: <8ae75832-91dd-428e-9b04-a48cec019bf6@pallas.us>
- <ca5e0871-c55a-c8cd-eac1-4cf4603f7c48@pallas.us>
- <20190124235913.GA21643@zx2c4.com>
-In-Reply-To: <20190124235913.GA21643@zx2c4.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 25 Jan 2019 01:00:44 +0100
-X-Gmail-Original-Message-ID: <CAHmME9oSPTCvsnEy9nMfMtzWGVC9wWKwgpQbUCxKjA_2AvdtfQ@mail.gmail.com>
-Message-ID: <CAHmME9oSPTCvsnEy9nMfMtzWGVC9wWKwgpQbUCxKjA_2AvdtfQ@mail.gmail.com>
-Subject: Re: Long outage when changing private key
-To: Derrick Lyndon Pallas <derrick@pallas.us>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+ Fri, 25 Jan 2019 01:46:58 +0000 (UTC)
+Received: from localhost (localhost [127.0.0.1]) (uid 500)
+ by telperion.info with local; Thu, 24 Jan 2019 17:53:42 -0800
+ id 0000000000049044.000000005C4A6C26.00006C52
+From: Derrick Pallas <derrick@pallas.us>
+To: wireguard@lists.zx2c4.com
+Subject: [PATCH 1/2] peer: add wg_peer_reset_keys
+Date: Thu, 24 Jan 2019 17:53:38 -0800
+Message-Id: <20190125015339.27684-1-derrick@pallas.us>
+X-Mailer: git-send-email 2.19.2
+Mime-Version: 1.0
+X-Mime-Autoconverted: from 8bit to 7bit by courier 0.75
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -80,16 +55,55 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Fri, Jan 25, 2019 at 12:59 AM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
-> @@ -539,6 +539,7 @@ static int wg_set_device(struct sk_buff *skb, struct genl_info *info)
->                                          peer_list) {
->                         if (!wg_noise_precompute_static_static(peer))
->                                 wg_peer_remove(peer);
-else
-> +                       wg_noise_keypairs_clear(&peer->keypairs);
->                 }
->                 wg_cookie_checker_precompute_device_keys(&wg->cookie_checker);
->                 up_write(&wg->static_identity.lock);
+This function will clear the key state for the peer and reset its handshake
+timer.  This is useful, for instance, if it is known that the current key
+material is bad.  Currently, this happens when the private key is changed.
+
+Signed-off-by: Derrick Pallas <derrick@pallas.us>
+---
+ src/peer.c | 14 ++++++++++++++
+ src/peer.h |  1 +
+ 2 files changed, 15 insertions(+)
+
+diff --git a/src/peer.c b/src/peer.c
+index 020a97b..49af31f 100644
+--- a/src/peer.c
++++ b/src/peer.c
+@@ -87,6 +87,20 @@ struct wg_peer *wg_peer_get_maybe_zero(struct wg_peer *peer)
+ 	return peer;
+ }
+ 
++void wg_peer_reset_keys(struct wg_peer *peer)
++{
++	if (unlikely(!peer))
++		return;
++	lockdep_assert_held(&peer->device->device_update_lock);
++
++	wg_noise_handshake_clear(&peer->handshake);
++	wg_noise_keypairs_clear(&peer->keypairs);
++	wg_cookie_checker_precompute_peer_keys(peer);
++	atomic64_set(&peer->last_sent_handshake,
++		ktime_get_boot_fast_ns() -
++			(u64)(REKEY_TIMEOUT + 1) * NSEC_PER_SEC);
++}
++
+ /* We have a separate "remove" function make sure that all active places where
+  * a peer is currently operating will eventually come to an end and not pass
+  * their reference onto another context.
+diff --git a/src/peer.h b/src/peer.h
+index 2e04262..3800e6f 100644
+--- a/src/peer.h
++++ b/src/peer.h
+@@ -78,5 +78,6 @@ static inline struct wg_peer *wg_peer_get(struct wg_peer *peer)
+ void wg_peer_put(struct wg_peer *peer);
+ void wg_peer_remove(struct wg_peer *peer);
+ void wg_peer_remove_all(struct wg_device *wg);
++void wg_peer_reset_keys(struct wg_peer *peer);
+ 
+ #endif /* _WG_PEER_H */
+-- 
+2.19.2
+
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
