@@ -2,62 +2,66 @@ Return-Path: <SRS0=kH4x=QG=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	HTML_MESSAGE,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BD34DC282D7
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 30 Jan 2019 15:46:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 05FB5C282D7
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 30 Jan 2019 16:55:48 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 59B4521473
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 30 Jan 2019 15:46:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 59B4521473
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=wenarab.com
+	by mail.kernel.org (Postfix) with ESMTPS id 4129A2086C
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 30 Jan 2019 16:55:47 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (4096-bit key) header.d=bartschnet.de header.i=@bartschnet.de header.b="gtQUrpoi"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 4129A2086C
+Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=bartschnet.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 720ba292;
-	Wed, 30 Jan 2019 15:40:33 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3040d96c;
+	Wed, 30 Jan 2019 16:49:46 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8d85ce61
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a1e47bfe
  for <wireguard@lists.zx2c4.com>;
- Wed, 30 Jan 2019 15:40:32 +0000 (UTC)
-Received: from mail-vs1-f51.google.com (mail-vs1-f51.google.com
- [209.85.217.51])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d459ac8a
+ Wed, 30 Jan 2019 16:49:44 +0000 (UTC)
+Received: from mail.core-networks.de (mail.core-networks.de
+ [IPv6:2001:1bc0:d::4:9])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1b5f04fc
  for <wireguard@lists.zx2c4.com>;
- Wed, 30 Jan 2019 15:40:32 +0000 (UTC)
-Received: by mail-vs1-f51.google.com with SMTP id x28so14499043vsh.12
- for <wireguard@lists.zx2c4.com>; Wed, 30 Jan 2019 07:46:31 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to;
- bh=kUh5d/z4cfarBZHgt5hKU5/ZlZXElz5T1fZw/Wd+p8c=;
- b=AnpnZ9QiVSEBzseWsuS5bpcDarAHljjyRNUri6fDzplskYQ5TjFLaFpyjRukuwxeBy
- fZ28BerbQphxMOFOki6skd7fPMLgMEmmGU5G/aezzypEwTmdnkxNj3P5QrnYzFwlzk9O
- GRjLHmRC/HFCFsCkeDVp02IV5Ob0cJ1UoqGRo3tdMAB3CeiZRTTAJpsNJg9J4DG3wANU
- mlJ6jS+LCS0lpQXpg5yTVxt0diAj8/LYWWdQsEcpsIf+a5oCZ7Xo7bMU7E0JR1cv0hMm
- /+UM95fI5w0g79sQVjbDcZuvg8kiZiJIgRGA1gEXLW1ioXu2oAD+fkRZpVolVi4RtRIP
- Mjgg==
-X-Gm-Message-State: AJcUukenhWes+AbE/GoIIyYMNa6B17WdFpfAOvWfgaOtjBeNuNki4TmD
- SUT6x34QODXtXOAb0s7tAJubFNC4z7DvwVC3xn82lp2cKRg=
-X-Google-Smtp-Source: ALg8bN5LjIePu6XB1aTqxEZZkM2fOWZ+tWWfpkh4PMXketVkj9qr7q2QLCIsS+bsGaTCkdjxDszw6eFtfK8OSTUrVYI=
-X-Received: by 2002:a05:6102:cb:: with SMTP id
- u11mr13557343vsp.68.1548863190649; 
- Wed, 30 Jan 2019 07:46:30 -0800 (PST)
-MIME-Version: 1.0
-References: <CADjxVNq-PPTrzd9qDZK+ZFF8v70eme8n87xBK-77e=PNMGCQwg@mail.gmail.com>
- <CAJQSx3aQLGT9Hr=3NNTnrvq2JJCqiJ2vkV092n_zCN2LNjP-1Q@mail.gmail.com>
- <CADjxVNrNNbRpanwm4ZEOLbY_e4FEohP=2YzpQFXe28JiHzj-yQ@mail.gmail.com>
-In-Reply-To: <CADjxVNrNNbRpanwm4ZEOLbY_e4FEohP=2YzpQFXe28JiHzj-yQ@mail.gmail.com>
-From: Gawen ARAB <g@wenarab.com>
-Date: Wed, 30 Jan 2019 16:46:19 +0100
-Message-ID: <CADjxVNp8JsMGfULG7pzJt3Cjbn9RzXyFmA1kx+vggr4J03nHcw@mail.gmail.com>
+ Wed, 30 Jan 2019 16:49:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=bartschnet.de; s=2018030201; h=Content-Transfer-Encoding:MIME-Version:Date:
+ Message-ID:From:To:Subject:content-disposition;
+ bh=tYl6B3I1WyaDGwSVd8SFpHAFyvgEo6w1tkWJwoitkWU=; b=gtQUrpoi3yRaOSF4YNtDw+xNOo
+ XADM3RvOK5qzrtRrAYM+6L1QPWRy8YcVFee1HHqkFzEovEXc/vvsb6W93a4ifOWXqU3Uv1pSwm4kv
+ ahEv44BmmDke+CLJSZ24XxYukfmP5oL+rNGVV2a/d4z6f8FjnC6oBMnsQTIOzBYSX4KWPSxo54z4j
+ MrOeKFB755OX3poXO5IDva38ktwVpjytq7SUW4bHG6oXgDZE+tZ8HWdM/Orvi2BV4W/QKaX//Hsv5
+ Q5bGt/pKF6rIuvnqDf6mXj9FM6KFcOUqlSq6sc2jZyIeSwYvty+UPVhPOCU/MY7n/pSIl5w63dhJG
+ 5BxF50n/S+fOS22su7skk0rpLRfnpo92HrmNMlneehioVfRE2kCljWbJeXKWRGo1ThVHwOrn+vToa
+ 0f1/zVtAK2SNSsLHcMpd5Kk3QVaYH8YqK5KDpV6qLLW9R3X6/NRUpn1aZRNeRsYcptkDN8VyunG0I
+ cGSlCH6m02+UuOFt1E8CgNZjmsFXgdraz2mlj0Kc7rZjMxHeQLC//VrO1AThlLfJWpl+RVidfn65V
+ N7t+LA18yXN6sDNgcbDgfFYb8MqtNsUelH5oJOq5vEw/YT5wUriff8uRWJqIhbtG15HuI0eH6ojcE
+ +uuoPaq2b2DvI49geHEhJYzdbBSI3aIHJYZItrFgg=;
+Received: from localhost (localhost [127.0.0.1])
+ by mail.core-networks.de id 1got9H-0000q4-Q6
+ with ESMTPSA (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+ for wireguard@lists.zx2c4.com; Wed, 30 Jan 2019 17:55:41 +0100
 Subject: Re: wirehub - decentralized, peer-to-peer and secure overlay networks
  built with WireGuard
 To: wireguard@lists.zx2c4.com
+References: <CADjxVNq-PPTrzd9qDZK+ZFF8v70eme8n87xBK-77e=PNMGCQwg@mail.gmail.com>
+ <CAJQSx3aQLGT9Hr=3NNTnrvq2JJCqiJ2vkV092n_zCN2LNjP-1Q@mail.gmail.com>
+ <CADjxVNrNNbRpanwm4ZEOLbY_e4FEohP=2YzpQFXe28JiHzj-yQ@mail.gmail.com>
+ <CADjxVNp8JsMGfULG7pzJt3Cjbn9RzXyFmA1kx+vggr4J03nHcw@mail.gmail.com>
+From: "Rene 'Renne' Bartsch, B.Sc. Informatics" <ml@bartschnet.de>
+Message-ID: <49a6d952-5f2e-afce-e503-47fbebba8ac0@bartschnet.de>
+Date: Wed, 30 Jan 2019 17:55:37 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.4.0
+MIME-Version: 1.0
+In-Reply-To: <CADjxVNp8JsMGfULG7pzJt3Cjbn9RzXyFmA1kx+vggr4J03nHcw@mail.gmail.com>
+Content-Language: de-DE
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -69,57 +73,36 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============3714859456910107451=="
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============3714859456910107451==
-Content-Type: multipart/alternative; boundary="00000000000048d12e0580aed05d"
 
---00000000000048d12e0580aed05d
-Content-Type: text/plain; charset="UTF-8"
 
-Hey Rene,
+Am 30.01.19 um 16:46 schrieb Gawen ARAB:
+> Hey Rene,
+> 
+>  > I suggest to use a cryptographically generated IPv6 address (128-bit hash of Wiregurad public key with first n bits replaced by a Wireguard-specific IPv6 prefix)
+>  > for routing and management purposes. Adding a reverse-lookup IPv6-address -> Wireguard public key via DHT would allow a public IPv6 overlay network
+>  > with authorization via firewall rules. Nodes should also be able to announce their subnets via DHT.
+> 
+> I agree. I plan to use the subnet ORCHID as defined by RFC 4843.
+> See command `wh orchid`.
+> 
 
-> I suggest to use a cryptographically generated IPv6 address (128-bit hash
-of Wiregurad public key with first n bits replaced by a Wireguard-specific
-IPv6 prefix)
-> for routing and management purposes. Adding a reverse-lookup IPv6-address
--> Wireguard public key via DHT would allow a public IPv6 overlay network
-> with authorization via firewall rules. Nodes should also be able to
-announce their subnets via DHT.
+Great! :-)
 
-I agree. I plan to use the subnet ORCHID as defined by RFC 4843.
-See command `wh orchid`.
+RFC 4843 has been obsoleted by RFC 7343. Please use RFC 7343 instead and re-use as much cryptographic code of Wireguard as possible to reduce possible bugs and weaknesses.
 
-Cheers,
-Gawen
+I suggest to omit the custom UDP protocol and libpcap by adding an ORCHIDv2 address to the wireguard network device and run the DHT via a port of the ORCHIDv2 address.
+That way you can easily calculate the ORCHIDv2 address of a peer from the public key and connect the DHT.
 
---00000000000048d12e0580aed05d
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div dir=3D"ltr">Hey Rene,<br><br>&gt; I suggest to use a =
-cryptographically generated IPv6 address (128-bit hash of Wiregurad public =
-key with first n bits replaced by a Wireguard-specific IPv6 prefix)<br>&gt;=
- for routing and management purposes. Adding a reverse-lookup IPv6-address =
--&gt; Wireguard public key via DHT would allow a public IPv6 overlay networ=
-k<br>&gt; with authorization via firewall rules. Nodes should also be able =
-to announce their subnets via DHT.<br><br>I agree. I plan to use the subnet=
- ORCHID as defined by RFC 4843.</div><div dir=3D"ltr">See command `wh orchi=
-d`.<br><br>Cheers,<br>Gawen</div></div>
+Regards,
 
---00000000000048d12e0580aed05d--
-
---===============3714859456910107451==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
+Renne
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
-
---===============3714859456910107451==--
