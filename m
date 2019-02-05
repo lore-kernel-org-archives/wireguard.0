@@ -2,44 +2,69 @@ Return-Path: <SRS0=tjuz=QY=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	HTML_MESSAGE,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED autolearn=ham
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MIME_HTML_MOSTLY,SIGNED_OFF_BY,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ADB9FC10F00
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 17 Feb 2019 01:30:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D3C4C4360F
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 17 Feb 2019 01:30:31 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 3B14C21B69
+	by mail.kernel.org (Postfix) with ESMTPS id C6D0121B69
 	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 17 Feb 2019 01:30:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 3B14C21B69
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=anatoli.ws
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c0z77SOE"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org C6D0121B69
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dccf4ecb;
-	Sun, 17 Feb 2019 01:22:15 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 651cbb61;
+	Sun, 17 Feb 2019 01:22:16 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8218edbb
- for <wireguard@lists.zx2c4.com>; Mon, 4 Feb 2019 16:44:15 +0000 (UTC)
-Received: from p3plsmtpa09-07.prod.phx3.secureserver.net
- (p3plsmtpa09-07.prod.phx3.secureserver.net [173.201.193.236])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f8f75330
- for <wireguard@lists.zx2c4.com>; Mon, 4 Feb 2019 16:44:14 +0000 (UTC)
-Received: from [10.101.10.10] ([177.54.157.114]) by :SMTPAUTH: with ESMTPSA
- id qhSJgUYKwod8qqhSNgffdF; Mon, 04 Feb 2019 09:50:52 -0700
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-From: Anatoli <me@anatoli.ws>
-Subject: BUG: unable to handle kernel NULL pointer dereference at .. (linux
- 3.13)
-Message-ID: <71ef4a71-19fe-8d4e-c3a2-f704ad8e8b67@anatoli.ws>
-Date: Mon, 4 Feb 2019 13:50:46 -0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.4.0
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 40681595
+ for <wireguard@lists.zx2c4.com>; Tue, 5 Feb 2019 07:57:05 +0000 (UTC)
+Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com
+ [IPv6:2607:f8b0:4864:20::e44])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 387401dc
+ for <wireguard@lists.zx2c4.com>; Tue, 5 Feb 2019 07:57:05 +0000 (UTC)
+Received: by mail-vs1-xe44.google.com with SMTP id t17so1601932vsc.8
+ for <wireguard@lists.zx2c4.com>; Tue, 05 Feb 2019 00:03:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+ bh=I42hH+4dIPU3RMI2w6z6o30xrktro86P2dSHrZsYb3k=;
+ b=c0z77SOEN7IzT9S7MKoEAOkouo/uZEt/ewOErJs3yu04ITmimNeGiqwonGcuVKWl4/
+ WVOsF1m4FpKihUTEDmDfxEZNPUyMZBQktrf9k6L9qfEVZt42cxaRxptH0CvS0q/g53FI
+ zrrhlUtKIerhwvHn/YjKqjKs91gC/Q0nV6gj00szwPbDKUNSLOpR/I3G7pYJ5fgAxvkG
+ 4JQA4KMksSHhsbKSwKubfADq+h83thoKrt5p+iwHlSIrswNh0xMIEUiwkLNyAFNK69e2
+ O8iIq4kyw2iWwb6UTgNc+3te92WpWuEkhnP18F777R3p31pKL7QGpIsAs0+VAVwpt2gg
+ 0WlQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to;
+ bh=I42hH+4dIPU3RMI2w6z6o30xrktro86P2dSHrZsYb3k=;
+ b=EpChhz05S7QcIOFsyJg7p4DfaiH6oV8Ck4DVPkUTUA25svclXJYc62Zp9co8tgzbVo
+ N7a4Y9KYJcDIv5L0pU+hkJHWPzOqQwG2mXmi5xo336YyXxfVbE7pF8PDTSkHPOfTxLax
+ KpYbO4LAGNaW3rt1aoVLyJERyr7GM2dNu7ApR+erQop92voXwd0EsRID9tchQq6TIC44
+ gGVfNdYU65xtaIdoq74lJONUXgBXqf8Jx61dqiFRB0YtrHjSzckm0MCpPsJW9WmoclOc
+ yVCzfZza+hbBLam6ye2gNMsdnSLTt8h1qr7EbvTPvUGMJSnLXajAwQvnE9m/q6kvm+7Y
+ 01vw==
+X-Gm-Message-State: AHQUAua6xWxA2TOK4GF76ZTLHytZh5MG8KhYqJo4KeRqSymnG8bew+L4
+ byYoCUf+Ib+fxoVx09KsUSi31JnEkdJmMRHp4HKjSRaa
+X-Google-Smtp-Source: AHgI3IYYHF2LXN+i22h8dSh/UDX4gYxgTyX+JFLIDAkVxoXBFnMPSILGZrRZTkVS3c4EyLJdqbDFa9gwpo+54hB/1/Q=
+X-Received: by 2002:a67:b44:: with SMTP id 65mr1464981vsl.77.1549353827987;
+ Tue, 05 Feb 2019 00:03:47 -0800 (PST)
 MIME-Version: 1.0
-Content-Language: es-AR
-X-CMAE-Envelope: MS4wfLGhZ5E307q+PlHEWnaZowQ5/rLGw1KA5lHCqqvuobkTO9mIz5LO2qhxPJHZEgbDLcWPlUabds13zba/FaXEsArrVTVcyUrh7qmik8zIHaylyyxO5uBO
- GV/fyr6S8xfz3D5XURZAFmKGWkvnvo8LXdoNLjijEUrbQpL28K8TX0Z+
+References: <20190123050425.1130-1-donkeysnore@gmail.com>
+In-Reply-To: <20190123050425.1130-1-donkeysnore@gmail.com>
+From: donkey snore <donkeysnore@gmail.com>
+Date: Tue, 5 Feb 2019 17:00:38 +0900
+Message-ID: <CAELRk9DGWFqxreCuCPe91bOt_pQ6Rh_Z2p6k+4cCN-x+bXPXWQ@mail.gmail.com>
+Subject: Re: [PATCH] Cleanup include redundancy
+To: wireguard@lists.zx2c4.com
 X-Mailman-Approved-At: Sun, 17 Feb 2019 02:22:13 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
@@ -52,423 +77,1158 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============7009716939091652763=="
+Content-Type: multipart/mixed; boundary="===============6556913857433270622=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This is a multi-part message in MIME format.
---===============7009716939091652763==
-Content-Type: multipart/alternative;
- boundary="------------9033E3AE737DBA50F91A88AA"
-Content-Language: es-AR
+--===============6556913857433270622==
+Content-Type: multipart/alternative; boundary="0000000000008c74090581210cac"
 
-This is a multi-part message in MIME format.
---------------9033E3AE737DBA50F91A88AA
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+--0000000000008c74090581210cac
+Content-Type: text/plain; charset="UTF-8"
 
-Hi,
+This commit refers to todo list in
+https://www.wireguard.com/todo/#fixup-includes. There are include
+redundancy in wireguard and this commit consist of cleanup.  Finding
+redundancy is analyzed  by using dependencies graph that doxygen produced.
+And fix it until there are no redundancy. I'm not sure if it is the right
+approach for this issue. Let me know what you think :)
 
-I'm trying to make WG work on Ubuntu 14.04.5, but got a driver bug 
-apparently.
+On Wed, 23 Jan 2019 at 14:07, donkeysnore <donkeysnore@gmail.com> wrote:
 
-WG was installed this way: sudo add-apt-repository 
-ppa:wireguard/wireguard && sudo apt update && sudo apt install wireguard
+> Signed-off-by: donkeysnore <donkeysnore@gmail.com>
+> ---
+>  src/allowedips.c                    |  1 -
+>  src/cookie.c                        |  6 ------
+>  src/crypto/zinc/blake2s/blake2s.c   |  3 ---
+>  src/crypto/zinc/chacha20/chacha20.c |  1 -
+>  src/crypto/zinc/poly1305/poly1305.c |  1 -
+>  src/device.c                        |  3 ---
+>  src/device.h                        |  3 ---
+>  src/hashtables.c                    |  2 --
+>  src/main.c                          |  2 --
+>  src/messages.h                      |  1 -
+>  src/netlink.c                       |  2 --
+>  src/noise.c                         |  5 -----
+>  src/noise.h                         |  3 ---
+>  src/peer.c                          |  5 -----
+>  src/peer.h                          |  5 -----
+>  src/queueing.h                      |  4 ----
+>  src/receive.c                       |  7 -------
+>  src/send.c                          |  4 ----
+>  src/socket.c                        |  5 -----
+>  src/timers.c                        |  2 --
+>  src/tools/config.c                  |  3 ---
+>  src/tools/curve25519.c              |  1 -
+>  src/tools/encoding.h                |  1 -
+>  src/tools/genkey.c                  |  1 -
+>  src/tools/ipc.c                     | 10 ----------
+>  src/tools/set.c                     |  1 -
+>  src/tools/setconf.c                 |  1 -
+>  src/tools/show.c                    |  8 --------
+>  src/tools/showconf.c                |  5 -----
+>  29 files changed, 96 deletions(-)
+>
+> diff --git a/src/allowedips.c b/src/allowedips.c
+> index 30b66f4..ace5ac7 100644
+> --- a/src/allowedips.c
+> +++ b/src/allowedips.c
+> @@ -3,7 +3,6 @@
+>   * Copyright (C) 2015-2019 Jason A. Donenfeld <Jason@zx2c4.com>. All
+> Rights Reserved.
+>   */
+>
+> -#include "allowedips.h"
+>  #include "peer.h"
+>
+>  struct allowedips_node {
+> diff --git a/src/cookie.c b/src/cookie.c
+> index 97ab28a..f4095dc 100644
+> --- a/src/cookie.c
+> +++ b/src/cookie.c
+> @@ -3,16 +3,10 @@
+>   * Copyright (C) 2015-2019 Jason A. Donenfeld <Jason@zx2c4.com>. All
+> Rights Reserved.
+>   */
+>
+> -#include "cookie.h"
+>  #include "peer.h"
+> -#include "device.h"
+> -#include "messages.h"
+>  #include "ratelimiter.h"
+>  #include "timers.h"
+>
+> -#include <zinc/blake2s.h>
+> -#include <zinc/chacha20poly1305.h>
+> -
+>  #include <net/ipv6.h>
+>  #include <crypto/algapi.h>
+>
+> diff --git a/src/crypto/zinc/blake2s/blake2s.c
+> b/src/crypto/zinc/blake2s/blake2s.c
+> index b881db0..c0c88ee 100644
+> --- a/src/crypto/zinc/blake2s/blake2s.c
+> +++ b/src/crypto/zinc/blake2s/blake2s.c
+> @@ -12,12 +12,9 @@
+>  #include <zinc/blake2s.h>
+>  #include "../selftest/run.h"
+>
+> -#include <linux/types.h>
+>  #include <linux/string.h>
+> -#include <linux/kernel.h>
+>  #include <linux/module.h>
+>  #include <linux/init.h>
+> -#include <linux/bug.h>
+>  #include <asm/unaligned.h>
+>
+>  typedef union {
+> diff --git a/src/crypto/zinc/chacha20/chacha20.c
+> b/src/crypto/zinc/chacha20/chacha20.c
+> index b4763c8..6859c83 100644
+> --- a/src/crypto/zinc/chacha20/chacha20.c
+> +++ b/src/crypto/zinc/chacha20/chacha20.c
+> @@ -10,7 +10,6 @@
+>  #include <zinc/chacha20.h>
+>  #include "../selftest/run.h"
+>
+> -#include <linux/kernel.h>
+>  #include <linux/module.h>
+>  #include <linux/init.h>
+>  #include <linux/vmalloc.h>
+> diff --git a/src/crypto/zinc/poly1305/poly1305.c
+> b/src/crypto/zinc/poly1305/poly1305.c
+> index 7d373b9..c476719 100644
+> --- a/src/crypto/zinc/poly1305/poly1305.c
+> +++ b/src/crypto/zinc/poly1305/poly1305.c
+> @@ -11,7 +11,6 @@
+>  #include "../selftest/run.h"
+>
+>  #include <asm/unaligned.h>
+> -#include <linux/kernel.h>
+>  #include <linux/string.h>
+>  #include <linux/module.h>
+>  #include <linux/init.h>
+> diff --git a/src/device.c b/src/device.c
+> index 98c05bc..e1f6bb0 100644
+> --- a/src/device.c
+> +++ b/src/device.c
+> @@ -6,15 +6,12 @@
+>  #include "queueing.h"
+>  #include "socket.h"
+>  #include "timers.h"
+> -#include "device.h"
+>  #include "ratelimiter.h"
+> -#include "peer.h"
+>  #include "messages.h"
+>
+>  #include <linux/module.h>
+>  #include <linux/rtnetlink.h>
+>  #include <linux/inet.h>
+> -#include <linux/netdevice.h>
+>  #include <linux/inetdevice.h>
+>  #include <linux/if_arp.h>
+>  #include <linux/icmp.h>
+> diff --git a/src/device.h b/src/device.h
+> index b85638c..c53c463 100644
+> --- a/src/device.h
+> +++ b/src/device.h
+> @@ -8,13 +8,10 @@
+>
+>  #include "noise.h"
+>  #include "allowedips.h"
+> -#include "hashtables.h"
+>  #include "cookie.h"
+>
+> -#include <linux/types.h>
+>  #include <linux/netdevice.h>
+>  #include <linux/workqueue.h>
+> -#include <linux/mutex.h>
+>  #include <linux/net.h>
+>  #include <linux/ptr_ring.h>
+>
+> diff --git a/src/hashtables.c b/src/hashtables.c
+> index 18cac91..242f27d 100644
+> --- a/src/hashtables.c
+> +++ b/src/hashtables.c
+> @@ -3,9 +3,7 @@
+>   * Copyright (C) 2015-2019 Jason A. Donenfeld <Jason@zx2c4.com>. All
+> Rights Reserved.
+>   */
+>
+> -#include "hashtables.h"
+>  #include "peer.h"
+> -#include "noise.h"
+>
+>  static struct hlist_head *pubkey_bucket(struct pubkey_hashtable *table,
+>                                         const u8
+> pubkey[NOISE_PUBLIC_KEY_LEN])
+> diff --git a/src/main.c b/src/main.c
+> index 4b5b58e..7aa3e97 100644
+> --- a/src/main.c
+> +++ b/src/main.c
+> @@ -4,8 +4,6 @@
+>   */
+>
+>  #include "version.h"
+> -#include "device.h"
+> -#include "noise.h"
+>  #include "queueing.h"
+>  #include "ratelimiter.h"
+>  #include "netlink.h"
+> diff --git a/src/messages.h b/src/messages.h
+> index 3cfd1c5..c8d6d76 100644
+> --- a/src/messages.h
+> +++ b/src/messages.h
+> @@ -10,7 +10,6 @@
+>  #include <zinc/chacha20poly1305.h>
+>  #include <zinc/blake2s.h>
+>
+> -#include <linux/kernel.h>
+>  #include <linux/param.h>
+>  #include <linux/skbuff.h>
+>
+> diff --git a/src/netlink.c b/src/netlink.c
+> index bdd3150..0bac1d0 100644
+> --- a/src/netlink.c
+> +++ b/src/netlink.c
+> @@ -4,11 +4,9 @@
+>   */
+>
+>  #include "netlink.h"
+> -#include "device.h"
+>  #include "peer.h"
+>  #include "socket.h"
+>  #include "queueing.h"
+> -#include "messages.h"
+>  #include "uapi/wireguard.h"
+>  #include <linux/if.h>
+>  #include <net/genetlink.h>
+> diff --git a/src/noise.c b/src/noise.c
+> index e629307..1efddd8 100644
+> --- a/src/noise.c
+> +++ b/src/noise.c
+> @@ -3,12 +3,7 @@
+>   * Copyright (C) 2015-2019 Jason A. Donenfeld <Jason@zx2c4.com>. All
+> Rights Reserved.
+>   */
+>
+> -#include "noise.h"
+> -#include "device.h"
+> -#include "peer.h"
+> -#include "messages.h"
+>  #include "queueing.h"
+> -#include "hashtables.h"
+>
+>  #include <linux/rcupdate.h>
+>  #include <linux/slab.h>
+> diff --git a/src/noise.h b/src/noise.h
+> index 8e5cc0a..7ad0cfc 100644
+> --- a/src/noise.h
+> +++ b/src/noise.h
+> @@ -5,14 +5,11 @@
+>  #ifndef _WG_NOISE_H
+>  #define _WG_NOISE_H
+>
+> -#include "messages.h"
+>  #include "hashtables.h"
+>
+> -#include <linux/types.h>
+>  #include <linux/spinlock.h>
+>  #include <linux/atomic.h>
+>  #include <linux/rwsem.h>
+> -#include <linux/mutex.h>
+>  #include <linux/ktime.h>
+>  #include <linux/kref.h>
+>
+> diff --git a/src/peer.c b/src/peer.c
+> index 020a97b..778c4fc 100644
+> --- a/src/peer.c
+> +++ b/src/peer.c
+> @@ -3,14 +3,9 @@
+>   * Copyright (C) 2015-2019 Jason A. Donenfeld <Jason@zx2c4.com>. All
+> Rights Reserved.
+>   */
+>
+> -#include "peer.h"
+> -#include "device.h"
+>  #include "queueing.h"
+>  #include "timers.h"
+> -#include "hashtables.h"
+> -#include "noise.h"
+>
+> -#include <linux/kref.h>
+>  #include <linux/lockdep.h>
+>  #include <linux/rcupdate.h>
+>  #include <linux/list.h>
+> diff --git a/src/peer.h b/src/peer.h
+> index f3cf255..996afe6 100644
+> --- a/src/peer.h
+> +++ b/src/peer.h
+> @@ -7,13 +7,8 @@
+>  #define _WG_PEER_H
+>
+>  #include "device.h"
+> -#include "noise.h"
+> -#include "cookie.h"
+>
+> -#include <linux/types.h>
+>  #include <linux/netfilter.h>
+> -#include <linux/spinlock.h>
+> -#include <linux/kref.h>
+>  #include <net/dst_cache.h>
+>
+>  struct wg_device;
+> diff --git a/src/queueing.h b/src/queueing.h
+> index d2866aa..ae35660 100644
+> --- a/src/queueing.h
+> +++ b/src/queueing.h
+> @@ -7,10 +7,6 @@
+>  #define _WG_QUEUEING_H
+>
+>  #include "peer.h"
+> -#include <linux/types.h>
+> -#include <linux/skbuff.h>
+> -#include <linux/ip.h>
+> -#include <linux/ipv6.h>
+>
+>  struct wg_device;
+>  struct wg_peer;
+> diff --git a/src/receive.c b/src/receive.c
+> index 693ec57..a7db35e 100644
+> --- a/src/receive.c
+> +++ b/src/receive.c
+> @@ -4,17 +4,10 @@
+>   */
+>
+>  #include "queueing.h"
+> -#include "device.h"
+> -#include "peer.h"
+>  #include "timers.h"
+> -#include "messages.h"
+> -#include "cookie.h"
+>  #include "socket.h"
+>
+>  #include <linux/simd.h>
+> -#include <linux/ip.h>
+> -#include <linux/ipv6.h>
+> -#include <linux/udp.h>
+>  #include <net/ip_tunnels.h>
+>
+>  /* Must be called with bh disabled. */
+> diff --git a/src/send.c b/src/send.c
+> index b0df5c7..c928367 100644
+> --- a/src/send.c
+> +++ b/src/send.c
+> @@ -5,11 +5,7 @@
+>
+>  #include "queueing.h"
+>  #include "timers.h"
+> -#include "device.h"
+> -#include "peer.h"
+>  #include "socket.h"
+> -#include "messages.h"
+> -#include "cookie.h"
+>
+>  #include <linux/simd.h>
+>  #include <linux/uio.h>
+> diff --git a/src/socket.c b/src/socket.c
+> index 652d798..d93df29 100644
+> --- a/src/socket.c
+> +++ b/src/socket.c
+> @@ -3,16 +3,11 @@
+>   * Copyright (C) 2015-2019 Jason A. Donenfeld <Jason@zx2c4.com>. All
+> Rights Reserved.
+>   */
+>
+> -#include "device.h"
+>  #include "peer.h"
+>  #include "socket.h"
+>  #include "queueing.h"
+> -#include "messages.h"
+>
+>  #include <linux/ctype.h>
+> -#include <linux/net.h>
+> -#include <linux/if_vlan.h>
+> -#include <linux/if_ether.h>
+>  #include <linux/inetdevice.h>
+>  #include <net/udp_tunnel.h>
+>  #include <net/ipv6.h>
+> diff --git a/src/timers.c b/src/timers.c
+> index ee16c56..f2ad4f6 100644
+> --- a/src/timers.c
+> +++ b/src/timers.c
+> @@ -4,8 +4,6 @@
+>   */
+>
+>  #include "timers.h"
+> -#include "device.h"
+> -#include "peer.h"
+>  #include "queueing.h"
+>  #include "socket.h"
+>
+> diff --git a/src/tools/config.c b/src/tools/config.c
+> index 5d15356..360721b 100644
+> --- a/src/tools/config.c
+> +++ b/src/tools/config.c
+> @@ -8,15 +8,12 @@
+>  #include <ctype.h>
+>  #include <netdb.h>
+>  #include <stdio.h>
+> -#include <stdlib.h>
+>  #include <string.h>
+>  #include <unistd.h>
+> -#include <sys/socket.h>
+>  #include <sys/stat.h>
+>  #include <errno.h>
+>
+>  #include "config.h"
+> -#include "containers.h"
+>  #include "ipc.h"
+>  #include "encoding.h"
+>
+> diff --git a/src/tools/curve25519.c b/src/tools/curve25519.c
+> index 7949933..609ff6e 100644
+> --- a/src/tools/curve25519.c
+> +++ b/src/tools/curve25519.c
+> @@ -5,7 +5,6 @@
+>
+>  #include "curve25519.h"
+>
+> -#include <stdint.h>
+>  #include <string.h>
+>
+>  #ifndef __BYTE_ORDER__
+> diff --git a/src/tools/encoding.h b/src/tools/encoding.h
+> index f977ee9..41a2fb2 100644
+> --- a/src/tools/encoding.h
+> +++ b/src/tools/encoding.h
+> @@ -7,7 +7,6 @@
+>  #define ENCODING_H
+>
+>  #include <stdbool.h>
+> -#include <stdint.h>
+>  #include "containers.h"
+>
+>  #define WG_KEY_LEN_BASE64 ((((WG_KEY_LEN) + 2) / 3) * 4 + 1)
+> diff --git a/src/tools/genkey.c b/src/tools/genkey.c
+> index 65711e1..c3d2642 100644
+> --- a/src/tools/genkey.c
+> +++ b/src/tools/genkey.c
+> @@ -6,7 +6,6 @@
+>  #include <errno.h>
+>  #include <stdio.h>
+>  #include <unistd.h>
+> -#include <sys/types.h>
+>  #include <sys/stat.h>
+>  #include <string.h>
+>  #include <fcntl.h>
+> diff --git a/src/tools/ipc.c b/src/tools/ipc.c
+> index da31eff..e22a9a5 100644
+> --- a/src/tools/ipc.c
+> +++ b/src/tools/ipc.c
+> @@ -11,34 +11,24 @@
+>  #include <linux/genetlink.h>
+>  #include "mnlg.h"
+>  #endif
+> -#include <netinet/in.h>
+> -#include <sys/socket.h>
+> -#include <net/if.h>
+>  #include <errno.h>
+> -#include <stdbool.h>
+>  #include <stddef.h>
+>  #include <stdio.h>
+> -#include <stdlib.h>
+>  #include <string.h>
+>  #include <ctype.h>
+>  #include <unistd.h>
+> -#include <time.h>
+>  #include <dirent.h>
+>  #include <signal.h>
+>  #include <netdb.h>
+>  #include <limits.h>
+> -#include <sys/types.h>
+>  #include <sys/ioctl.h>
+> -#include <sys/types.h>
+>  #include <sys/stat.h>
+>  #include <sys/un.h>
+>  #include <arpa/inet.h>
+>
+>  #include "ipc.h"
+> -#include "containers.h"
+>  #include "encoding.h"
+>  #include "curve25519.h"
+> -#include "../uapi/wireguard.h"
+>
+>  #define SOCK_PATH RUNSTATEDIR "/wireguard/"
+>  #define SOCK_SUFFIX ".sock"
+> diff --git a/src/tools/set.c b/src/tools/set.c
+> index 19f4b92..f50f368 100644
+> --- a/src/tools/set.c
+> +++ b/src/tools/set.c
+> @@ -4,7 +4,6 @@
+>   */
+>
+>  #include <stdio.h>
+> -#include <stdlib.h>
+>  #include <string.h>
+>
+>  #include "containers.h"
+> diff --git a/src/tools/setconf.c b/src/tools/setconf.c
+> index 8211ebd..7a0295a 100644
+> --- a/src/tools/setconf.c
+> +++ b/src/tools/setconf.c
+> @@ -5,7 +5,6 @@
+>
+>  #include <stddef.h>
+>  #include <stdio.h>
+> -#include <stdlib.h>
+>  #include <string.h>
+>
+>  #include "containers.h"
+> diff --git a/src/tools/show.c b/src/tools/show.c
+> index ba6f115..870860d 100644
+> --- a/src/tools/show.c
+> +++ b/src/tools/show.c
+> @@ -5,20 +5,12 @@
+>
+>  #include <arpa/inet.h>
+>  #include <inttypes.h>
+> -#include <netinet/in.h>
+> -#include <sys/socket.h>
+> -#include <net/if.h>
+> -#include <stdbool.h>
+>  #include <stddef.h>
+> -#include <stdint.h>
+> -#include <stdlib.h>
+>  #include <stdio.h>
+>  #include <string.h>
+>  #include <errno.h>
+> -#include <time.h>
+>  #include <netdb.h>
+>
+> -#include "containers.h"
+>  #include "ipc.h"
+>  #include "terminal.h"
+>  #include "encoding.h"
+> diff --git a/src/tools/showconf.c b/src/tools/showconf.c
+> index ad76b7f..a57985f 100644
+> --- a/src/tools/showconf.c
+> +++ b/src/tools/showconf.c
+> @@ -4,16 +4,11 @@
+>   */
+>
+>  #include <arpa/inet.h>
+> -#include <netinet/in.h>
+> -#include <sys/socket.h>
+> -#include <net/if.h>
+>  #include <stddef.h>
+>  #include <stdio.h>
+>  #include <string.h>
+> -#include <stdlib.h>
+>  #include <netdb.h>
+>
+> -#include "containers.h"
+>  #include "encoding.h"
+>  #include "ipc.h"
+>  #include "subcommands.h"
+> --
+> 2.17.1
+>
+>
 
-Then, the following commands were executed (mixed with syslog output):
+--0000000000008c74090581210cac
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-$ lsb_release -a
-Distributor ID:    Ubuntu
-Description:    Ubuntu 14.04.5 LTS
-Release:    14.04
-Codename:    trusty
+<div dir=3D"ltr"><div dir=3D"ltr">This commit refers to todo list in=C2=A0<=
+a href=3D"https://www.wireguard.com/todo/#fixup-includes">https://www.wireg=
+uard.com/todo/#fixup-includes</a>. There are include redundancy in wireguar=
+d and this commit consist of cleanup.=C2=A0 Finding redundancy is analyzed=
+=C2=A0 by using dependencies graph that doxygen produced. And fix it until =
+there are no redundancy. I&#39;m not sure if it is the right approach for t=
+his issue. Let me know what you think :)</div></div><br><div class=3D"gmail=
+_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, 23 Jan 2019 at 14:07,=
+ donkeysnore &lt;<a href=3D"mailto:donkeysnore@gmail.com">donkeysnore@gmail=
+.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"mar=
+gin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1=
+ex">Signed-off-by: donkeysnore &lt;<a href=3D"mailto:donkeysnore@gmail.com"=
+ target=3D"_blank">donkeysnore@gmail.com</a>&gt;<br>
+---<br>
+=C2=A0src/allowedips.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 |=C2=A0 1 -<br>
+=C2=A0src/cookie.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 6 ------<br>
+=C2=A0src/crypto/zinc/blake2s/blake2s.c=C2=A0 =C2=A0|=C2=A0 3 ---<br>
+=C2=A0src/crypto/zinc/chacha20/chacha20.c |=C2=A0 1 -<br>
+=C2=A0src/crypto/zinc/poly1305/poly1305.c |=C2=A0 1 -<br>
+=C2=A0src/device.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 3 ---<br>
+=C2=A0src/device.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 3 ---<br>
+=C2=A0src/hashtables.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 |=C2=A0 2 --<br>
+=C2=A0src/main.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 2 --<br>
+=C2=A0src/messages.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 |=C2=A0 1 -<br>
+=C2=A0src/netlink.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 2 --<br>
+=C2=A0src/noise.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 5 -----<br>
+=C2=A0src/noise.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 3 ---<br>
+=C2=A0src/peer.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 5 -----<br>
+=C2=A0src/peer.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 5 -----<br>
+=C2=A0src/queueing.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 |=C2=A0 4 ----<br>
+=C2=A0src/receive.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 7 -------<br>
+=C2=A0src/send.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 4 ----<br>
+=C2=A0src/socket.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 5 -----<br>
+=C2=A0src/timers.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 2 --<br>
+=C2=A0src/tools/config.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 |=C2=A0 3 ---<br>
+=C2=A0src/tools/curve25519.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 |=C2=A0 1 -<br>
+=C2=A0src/tools/encoding.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 |=C2=A0 1 -<br>
+=C2=A0src/tools/genkey.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 |=C2=A0 1 -<br>
+=C2=A0src/tools/ipc.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0| 10 ----------<br>
+=C2=A0src/tools/set.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 1 -<br>
+=C2=A0src/tools/setconf.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0|=C2=A0 1 -<br>
+=C2=A0src/tools/show.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 |=C2=A0 8 --------<br>
+=C2=A0src/tools/showconf.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 |=C2=A0 5 -----<br>
+=C2=A029 files changed, 96 deletions(-)<br>
+<br>
+diff --git a/src/allowedips.c b/src/allowedips.c<br>
+index 30b66f4..ace5ac7 100644<br>
+--- a/src/allowedips.c<br>
++++ b/src/allowedips.c<br>
+@@ -3,7 +3,6 @@<br>
+=C2=A0 * Copyright (C) 2015-2019 Jason A. Donenfeld &lt;<a href=3D"mailto:J=
+ason@zx2c4.com" target=3D"_blank">Jason@zx2c4.com</a>&gt;. All Rights Reser=
+ved.<br>
+=C2=A0 */<br>
+<br>
+-#include &quot;allowedips.h&quot;<br>
+=C2=A0#include &quot;peer.h&quot;<br>
+<br>
+=C2=A0struct allowedips_node {<br>
+diff --git a/src/cookie.c b/src/cookie.c<br>
+index 97ab28a..f4095dc 100644<br>
+--- a/src/cookie.c<br>
++++ b/src/cookie.c<br>
+@@ -3,16 +3,10 @@<br>
+=C2=A0 * Copyright (C) 2015-2019 Jason A. Donenfeld &lt;<a href=3D"mailto:J=
+ason@zx2c4.com" target=3D"_blank">Jason@zx2c4.com</a>&gt;. All Rights Reser=
+ved.<br>
+=C2=A0 */<br>
+<br>
+-#include &quot;cookie.h&quot;<br>
+=C2=A0#include &quot;peer.h&quot;<br>
+-#include &quot;device.h&quot;<br>
+-#include &quot;messages.h&quot;<br>
+=C2=A0#include &quot;ratelimiter.h&quot;<br>
+=C2=A0#include &quot;timers.h&quot;<br>
+<br>
+-#include &lt;zinc/blake2s.h&gt;<br>
+-#include &lt;zinc/chacha20poly1305.h&gt;<br>
+-<br>
+=C2=A0#include &lt;net/ipv6.h&gt;<br>
+=C2=A0#include &lt;crypto/algapi.h&gt;<br>
+<br>
+diff --git a/src/crypto/zinc/blake2s/blake2s.c b/src/crypto/zinc/blake2s/bl=
+ake2s.c<br>
+index b881db0..c0c88ee 100644<br>
+--- a/src/crypto/zinc/blake2s/blake2s.c<br>
++++ b/src/crypto/zinc/blake2s/blake2s.c<br>
+@@ -12,12 +12,9 @@<br>
+=C2=A0#include &lt;zinc/blake2s.h&gt;<br>
+=C2=A0#include &quot;../selftest/run.h&quot;<br>
+<br>
+-#include &lt;linux/types.h&gt;<br>
+=C2=A0#include &lt;linux/string.h&gt;<br>
+-#include &lt;linux/kernel.h&gt;<br>
+=C2=A0#include &lt;linux/module.h&gt;<br>
+=C2=A0#include &lt;linux/init.h&gt;<br>
+-#include &lt;linux/bug.h&gt;<br>
+=C2=A0#include &lt;asm/unaligned.h&gt;<br>
+<br>
+=C2=A0typedef union {<br>
+diff --git a/src/crypto/zinc/chacha20/chacha20.c b/src/crypto/zinc/chacha20=
+/chacha20.c<br>
+index b4763c8..6859c83 100644<br>
+--- a/src/crypto/zinc/chacha20/chacha20.c<br>
++++ b/src/crypto/zinc/chacha20/chacha20.c<br>
+@@ -10,7 +10,6 @@<br>
+=C2=A0#include &lt;zinc/chacha20.h&gt;<br>
+=C2=A0#include &quot;../selftest/run.h&quot;<br>
+<br>
+-#include &lt;linux/kernel.h&gt;<br>
+=C2=A0#include &lt;linux/module.h&gt;<br>
+=C2=A0#include &lt;linux/init.h&gt;<br>
+=C2=A0#include &lt;linux/vmalloc.h&gt;<br>
+diff --git a/src/crypto/zinc/poly1305/poly1305.c b/src/crypto/zinc/poly1305=
+/poly1305.c<br>
+index 7d373b9..c476719 100644<br>
+--- a/src/crypto/zinc/poly1305/poly1305.c<br>
++++ b/src/crypto/zinc/poly1305/poly1305.c<br>
+@@ -11,7 +11,6 @@<br>
+=C2=A0#include &quot;../selftest/run.h&quot;<br>
+<br>
+=C2=A0#include &lt;asm/unaligned.h&gt;<br>
+-#include &lt;linux/kernel.h&gt;<br>
+=C2=A0#include &lt;linux/string.h&gt;<br>
+=C2=A0#include &lt;linux/module.h&gt;<br>
+=C2=A0#include &lt;linux/init.h&gt;<br>
+diff --git a/src/device.c b/src/device.c<br>
+index 98c05bc..e1f6bb0 100644<br>
+--- a/src/device.c<br>
++++ b/src/device.c<br>
+@@ -6,15 +6,12 @@<br>
+=C2=A0#include &quot;queueing.h&quot;<br>
+=C2=A0#include &quot;socket.h&quot;<br>
+=C2=A0#include &quot;timers.h&quot;<br>
+-#include &quot;device.h&quot;<br>
+=C2=A0#include &quot;ratelimiter.h&quot;<br>
+-#include &quot;peer.h&quot;<br>
+=C2=A0#include &quot;messages.h&quot;<br>
+<br>
+=C2=A0#include &lt;linux/module.h&gt;<br>
+=C2=A0#include &lt;linux/rtnetlink.h&gt;<br>
+=C2=A0#include &lt;linux/inet.h&gt;<br>
+-#include &lt;linux/netdevice.h&gt;<br>
+=C2=A0#include &lt;linux/inetdevice.h&gt;<br>
+=C2=A0#include &lt;linux/if_arp.h&gt;<br>
+=C2=A0#include &lt;linux/icmp.h&gt;<br>
+diff --git a/src/device.h b/src/device.h<br>
+index b85638c..c53c463 100644<br>
+--- a/src/device.h<br>
++++ b/src/device.h<br>
+@@ -8,13 +8,10 @@<br>
+<br>
+=C2=A0#include &quot;noise.h&quot;<br>
+=C2=A0#include &quot;allowedips.h&quot;<br>
+-#include &quot;hashtables.h&quot;<br>
+=C2=A0#include &quot;cookie.h&quot;<br>
+<br>
+-#include &lt;linux/types.h&gt;<br>
+=C2=A0#include &lt;linux/netdevice.h&gt;<br>
+=C2=A0#include &lt;linux/workqueue.h&gt;<br>
+-#include &lt;linux/mutex.h&gt;<br>
+=C2=A0#include &lt;linux/net.h&gt;<br>
+=C2=A0#include &lt;linux/ptr_ring.h&gt;<br>
+<br>
+diff --git a/src/hashtables.c b/src/hashtables.c<br>
+index 18cac91..242f27d 100644<br>
+--- a/src/hashtables.c<br>
++++ b/src/hashtables.c<br>
+@@ -3,9 +3,7 @@<br>
+=C2=A0 * Copyright (C) 2015-2019 Jason A. Donenfeld &lt;<a href=3D"mailto:J=
+ason@zx2c4.com" target=3D"_blank">Jason@zx2c4.com</a>&gt;. All Rights Reser=
+ved.<br>
+=C2=A0 */<br>
+<br>
+-#include &quot;hashtables.h&quot;<br>
+=C2=A0#include &quot;peer.h&quot;<br>
+-#include &quot;noise.h&quot;<br>
+<br>
+=C2=A0static struct hlist_head *pubkey_bucket(struct pubkey_hashtable *tabl=
+e,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 const u8=
+ pubkey[NOISE_PUBLIC_KEY_LEN])<br>
+diff --git a/src/main.c b/src/main.c<br>
+index 4b5b58e..7aa3e97 100644<br>
+--- a/src/main.c<br>
++++ b/src/main.c<br>
+@@ -4,8 +4,6 @@<br>
+=C2=A0 */<br>
+<br>
+=C2=A0#include &quot;version.h&quot;<br>
+-#include &quot;device.h&quot;<br>
+-#include &quot;noise.h&quot;<br>
+=C2=A0#include &quot;queueing.h&quot;<br>
+=C2=A0#include &quot;ratelimiter.h&quot;<br>
+=C2=A0#include &quot;netlink.h&quot;<br>
+diff --git a/src/messages.h b/src/messages.h<br>
+index 3cfd1c5..c8d6d76 100644<br>
+--- a/src/messages.h<br>
++++ b/src/messages.h<br>
+@@ -10,7 +10,6 @@<br>
+=C2=A0#include &lt;zinc/chacha20poly1305.h&gt;<br>
+=C2=A0#include &lt;zinc/blake2s.h&gt;<br>
+<br>
+-#include &lt;linux/kernel.h&gt;<br>
+=C2=A0#include &lt;linux/param.h&gt;<br>
+=C2=A0#include &lt;linux/skbuff.h&gt;<br>
+<br>
+diff --git a/src/netlink.c b/src/netlink.c<br>
+index bdd3150..0bac1d0 100644<br>
+--- a/src/netlink.c<br>
++++ b/src/netlink.c<br>
+@@ -4,11 +4,9 @@<br>
+=C2=A0 */<br>
+<br>
+=C2=A0#include &quot;netlink.h&quot;<br>
+-#include &quot;device.h&quot;<br>
+=C2=A0#include &quot;peer.h&quot;<br>
+=C2=A0#include &quot;socket.h&quot;<br>
+=C2=A0#include &quot;queueing.h&quot;<br>
+-#include &quot;messages.h&quot;<br>
+=C2=A0#include &quot;uapi/wireguard.h&quot;<br>
+=C2=A0#include &lt;linux/if.h&gt;<br>
+=C2=A0#include &lt;net/genetlink.h&gt;<br>
+diff --git a/src/noise.c b/src/noise.c<br>
+index e629307..1efddd8 100644<br>
+--- a/src/noise.c<br>
++++ b/src/noise.c<br>
+@@ -3,12 +3,7 @@<br>
+=C2=A0 * Copyright (C) 2015-2019 Jason A. Donenfeld &lt;<a href=3D"mailto:J=
+ason@zx2c4.com" target=3D"_blank">Jason@zx2c4.com</a>&gt;. All Rights Reser=
+ved.<br>
+=C2=A0 */<br>
+<br>
+-#include &quot;noise.h&quot;<br>
+-#include &quot;device.h&quot;<br>
+-#include &quot;peer.h&quot;<br>
+-#include &quot;messages.h&quot;<br>
+=C2=A0#include &quot;queueing.h&quot;<br>
+-#include &quot;hashtables.h&quot;<br>
+<br>
+=C2=A0#include &lt;linux/rcupdate.h&gt;<br>
+=C2=A0#include &lt;linux/slab.h&gt;<br>
+diff --git a/src/noise.h b/src/noise.h<br>
+index 8e5cc0a..7ad0cfc 100644<br>
+--- a/src/noise.h<br>
++++ b/src/noise.h<br>
+@@ -5,14 +5,11 @@<br>
+=C2=A0#ifndef _WG_NOISE_H<br>
+=C2=A0#define _WG_NOISE_H<br>
+<br>
+-#include &quot;messages.h&quot;<br>
+=C2=A0#include &quot;hashtables.h&quot;<br>
+<br>
+-#include &lt;linux/types.h&gt;<br>
+=C2=A0#include &lt;linux/spinlock.h&gt;<br>
+=C2=A0#include &lt;linux/atomic.h&gt;<br>
+=C2=A0#include &lt;linux/rwsem.h&gt;<br>
+-#include &lt;linux/mutex.h&gt;<br>
+=C2=A0#include &lt;linux/ktime.h&gt;<br>
+=C2=A0#include &lt;linux/kref.h&gt;<br>
+<br>
+diff --git a/src/peer.c b/src/peer.c<br>
+index 020a97b..778c4fc 100644<br>
+--- a/src/peer.c<br>
++++ b/src/peer.c<br>
+@@ -3,14 +3,9 @@<br>
+=C2=A0 * Copyright (C) 2015-2019 Jason A. Donenfeld &lt;<a href=3D"mailto:J=
+ason@zx2c4.com" target=3D"_blank">Jason@zx2c4.com</a>&gt;. All Rights Reser=
+ved.<br>
+=C2=A0 */<br>
+<br>
+-#include &quot;peer.h&quot;<br>
+-#include &quot;device.h&quot;<br>
+=C2=A0#include &quot;queueing.h&quot;<br>
+=C2=A0#include &quot;timers.h&quot;<br>
+-#include &quot;hashtables.h&quot;<br>
+-#include &quot;noise.h&quot;<br>
+<br>
+-#include &lt;linux/kref.h&gt;<br>
+=C2=A0#include &lt;linux/lockdep.h&gt;<br>
+=C2=A0#include &lt;linux/rcupdate.h&gt;<br>
+=C2=A0#include &lt;linux/list.h&gt;<br>
+diff --git a/src/peer.h b/src/peer.h<br>
+index f3cf255..996afe6 100644<br>
+--- a/src/peer.h<br>
++++ b/src/peer.h<br>
+@@ -7,13 +7,8 @@<br>
+=C2=A0#define _WG_PEER_H<br>
+<br>
+=C2=A0#include &quot;device.h&quot;<br>
+-#include &quot;noise.h&quot;<br>
+-#include &quot;cookie.h&quot;<br>
+<br>
+-#include &lt;linux/types.h&gt;<br>
+=C2=A0#include &lt;linux/netfilter.h&gt;<br>
+-#include &lt;linux/spinlock.h&gt;<br>
+-#include &lt;linux/kref.h&gt;<br>
+=C2=A0#include &lt;net/dst_cache.h&gt;<br>
+<br>
+=C2=A0struct wg_device;<br>
+diff --git a/src/queueing.h b/src/queueing.h<br>
+index d2866aa..ae35660 100644<br>
+--- a/src/queueing.h<br>
++++ b/src/queueing.h<br>
+@@ -7,10 +7,6 @@<br>
+=C2=A0#define _WG_QUEUEING_H<br>
+<br>
+=C2=A0#include &quot;peer.h&quot;<br>
+-#include &lt;linux/types.h&gt;<br>
+-#include &lt;linux/skbuff.h&gt;<br>
+-#include &lt;linux/ip.h&gt;<br>
+-#include &lt;linux/ipv6.h&gt;<br>
+<br>
+=C2=A0struct wg_device;<br>
+=C2=A0struct wg_peer;<br>
+diff --git a/src/receive.c b/src/receive.c<br>
+index 693ec57..a7db35e 100644<br>
+--- a/src/receive.c<br>
++++ b/src/receive.c<br>
+@@ -4,17 +4,10 @@<br>
+=C2=A0 */<br>
+<br>
+=C2=A0#include &quot;queueing.h&quot;<br>
+-#include &quot;device.h&quot;<br>
+-#include &quot;peer.h&quot;<br>
+=C2=A0#include &quot;timers.h&quot;<br>
+-#include &quot;messages.h&quot;<br>
+-#include &quot;cookie.h&quot;<br>
+=C2=A0#include &quot;socket.h&quot;<br>
+<br>
+=C2=A0#include &lt;linux/simd.h&gt;<br>
+-#include &lt;linux/ip.h&gt;<br>
+-#include &lt;linux/ipv6.h&gt;<br>
+-#include &lt;linux/udp.h&gt;<br>
+=C2=A0#include &lt;net/ip_tunnels.h&gt;<br>
+<br>
+=C2=A0/* Must be called with bh disabled. */<br>
+diff --git a/src/send.c b/src/send.c<br>
+index b0df5c7..c928367 100644<br>
+--- a/src/send.c<br>
++++ b/src/send.c<br>
+@@ -5,11 +5,7 @@<br>
+<br>
+=C2=A0#include &quot;queueing.h&quot;<br>
+=C2=A0#include &quot;timers.h&quot;<br>
+-#include &quot;device.h&quot;<br>
+-#include &quot;peer.h&quot;<br>
+=C2=A0#include &quot;socket.h&quot;<br>
+-#include &quot;messages.h&quot;<br>
+-#include &quot;cookie.h&quot;<br>
+<br>
+=C2=A0#include &lt;linux/simd.h&gt;<br>
+=C2=A0#include &lt;linux/uio.h&gt;<br>
+diff --git a/src/socket.c b/src/socket.c<br>
+index 652d798..d93df29 100644<br>
+--- a/src/socket.c<br>
++++ b/src/socket.c<br>
+@@ -3,16 +3,11 @@<br>
+=C2=A0 * Copyright (C) 2015-2019 Jason A. Donenfeld &lt;<a href=3D"mailto:J=
+ason@zx2c4.com" target=3D"_blank">Jason@zx2c4.com</a>&gt;. All Rights Reser=
+ved.<br>
+=C2=A0 */<br>
+<br>
+-#include &quot;device.h&quot;<br>
+=C2=A0#include &quot;peer.h&quot;<br>
+=C2=A0#include &quot;socket.h&quot;<br>
+=C2=A0#include &quot;queueing.h&quot;<br>
+-#include &quot;messages.h&quot;<br>
+<br>
+=C2=A0#include &lt;linux/ctype.h&gt;<br>
+-#include &lt;linux/net.h&gt;<br>
+-#include &lt;linux/if_vlan.h&gt;<br>
+-#include &lt;linux/if_ether.h&gt;<br>
+=C2=A0#include &lt;linux/inetdevice.h&gt;<br>
+=C2=A0#include &lt;net/udp_tunnel.h&gt;<br>
+=C2=A0#include &lt;net/ipv6.h&gt;<br>
+diff --git a/src/timers.c b/src/timers.c<br>
+index ee16c56..f2ad4f6 100644<br>
+--- a/src/timers.c<br>
++++ b/src/timers.c<br>
+@@ -4,8 +4,6 @@<br>
+=C2=A0 */<br>
+<br>
+=C2=A0#include &quot;timers.h&quot;<br>
+-#include &quot;device.h&quot;<br>
+-#include &quot;peer.h&quot;<br>
+=C2=A0#include &quot;queueing.h&quot;<br>
+=C2=A0#include &quot;socket.h&quot;<br>
+<br>
+diff --git a/src/tools/config.c b/src/tools/config.c<br>
+index 5d15356..360721b 100644<br>
+--- a/src/tools/config.c<br>
++++ b/src/tools/config.c<br>
+@@ -8,15 +8,12 @@<br>
+=C2=A0#include &lt;ctype.h&gt;<br>
+=C2=A0#include &lt;netdb.h&gt;<br>
+=C2=A0#include &lt;stdio.h&gt;<br>
+-#include &lt;stdlib.h&gt;<br>
+=C2=A0#include &lt;string.h&gt;<br>
+=C2=A0#include &lt;unistd.h&gt;<br>
+-#include &lt;sys/socket.h&gt;<br>
+=C2=A0#include &lt;sys/stat.h&gt;<br>
+=C2=A0#include &lt;errno.h&gt;<br>
+<br>
+=C2=A0#include &quot;config.h&quot;<br>
+-#include &quot;containers.h&quot;<br>
+=C2=A0#include &quot;ipc.h&quot;<br>
+=C2=A0#include &quot;encoding.h&quot;<br>
+<br>
+diff --git a/src/tools/curve25519.c b/src/tools/curve25519.c<br>
+index 7949933..609ff6e 100644<br>
+--- a/src/tools/curve25519.c<br>
++++ b/src/tools/curve25519.c<br>
+@@ -5,7 +5,6 @@<br>
+<br>
+=C2=A0#include &quot;curve25519.h&quot;<br>
+<br>
+-#include &lt;stdint.h&gt;<br>
+=C2=A0#include &lt;string.h&gt;<br>
+<br>
+=C2=A0#ifndef __BYTE_ORDER__<br>
+diff --git a/src/tools/encoding.h b/src/tools/encoding.h<br>
+index f977ee9..41a2fb2 100644<br>
+--- a/src/tools/encoding.h<br>
++++ b/src/tools/encoding.h<br>
+@@ -7,7 +7,6 @@<br>
+=C2=A0#define ENCODING_H<br>
+<br>
+=C2=A0#include &lt;stdbool.h&gt;<br>
+-#include &lt;stdint.h&gt;<br>
+=C2=A0#include &quot;containers.h&quot;<br>
+<br>
+=C2=A0#define WG_KEY_LEN_BASE64 ((((WG_KEY_LEN) + 2) / 3) * 4 + 1)<br>
+diff --git a/src/tools/genkey.c b/src/tools/genkey.c<br>
+index 65711e1..c3d2642 100644<br>
+--- a/src/tools/genkey.c<br>
++++ b/src/tools/genkey.c<br>
+@@ -6,7 +6,6 @@<br>
+=C2=A0#include &lt;errno.h&gt;<br>
+=C2=A0#include &lt;stdio.h&gt;<br>
+=C2=A0#include &lt;unistd.h&gt;<br>
+-#include &lt;sys/types.h&gt;<br>
+=C2=A0#include &lt;sys/stat.h&gt;<br>
+=C2=A0#include &lt;string.h&gt;<br>
+=C2=A0#include &lt;fcntl.h&gt;<br>
+diff --git a/src/tools/ipc.c b/src/tools/ipc.c<br>
+index da31eff..e22a9a5 100644<br>
+--- a/src/tools/ipc.c<br>
++++ b/src/tools/ipc.c<br>
+@@ -11,34 +11,24 @@<br>
+=C2=A0#include &lt;linux/genetlink.h&gt;<br>
+=C2=A0#include &quot;mnlg.h&quot;<br>
+=C2=A0#endif<br>
+-#include &lt;netinet/in.h&gt;<br>
+-#include &lt;sys/socket.h&gt;<br>
+-#include &lt;net/if.h&gt;<br>
+=C2=A0#include &lt;errno.h&gt;<br>
+-#include &lt;stdbool.h&gt;<br>
+=C2=A0#include &lt;stddef.h&gt;<br>
+=C2=A0#include &lt;stdio.h&gt;<br>
+-#include &lt;stdlib.h&gt;<br>
+=C2=A0#include &lt;string.h&gt;<br>
+=C2=A0#include &lt;ctype.h&gt;<br>
+=C2=A0#include &lt;unistd.h&gt;<br>
+-#include &lt;time.h&gt;<br>
+=C2=A0#include &lt;dirent.h&gt;<br>
+=C2=A0#include &lt;signal.h&gt;<br>
+=C2=A0#include &lt;netdb.h&gt;<br>
+=C2=A0#include &lt;limits.h&gt;<br>
+-#include &lt;sys/types.h&gt;<br>
+=C2=A0#include &lt;sys/ioctl.h&gt;<br>
+-#include &lt;sys/types.h&gt;<br>
+=C2=A0#include &lt;sys/stat.h&gt;<br>
+=C2=A0#include &lt;sys/un.h&gt;<br>
+=C2=A0#include &lt;arpa/inet.h&gt;<br>
+<br>
+=C2=A0#include &quot;ipc.h&quot;<br>
+-#include &quot;containers.h&quot;<br>
+=C2=A0#include &quot;encoding.h&quot;<br>
+=C2=A0#include &quot;curve25519.h&quot;<br>
+-#include &quot;../uapi/wireguard.h&quot;<br>
+<br>
+=C2=A0#define SOCK_PATH RUNSTATEDIR &quot;/wireguard/&quot;<br>
+=C2=A0#define SOCK_SUFFIX &quot;.sock&quot;<br>
+diff --git a/src/tools/set.c b/src/tools/set.c<br>
+index 19f4b92..f50f368 100644<br>
+--- a/src/tools/set.c<br>
++++ b/src/tools/set.c<br>
+@@ -4,7 +4,6 @@<br>
+=C2=A0 */<br>
+<br>
+=C2=A0#include &lt;stdio.h&gt;<br>
+-#include &lt;stdlib.h&gt;<br>
+=C2=A0#include &lt;string.h&gt;<br>
+<br>
+=C2=A0#include &quot;containers.h&quot;<br>
+diff --git a/src/tools/setconf.c b/src/tools/setconf.c<br>
+index 8211ebd..7a0295a 100644<br>
+--- a/src/tools/setconf.c<br>
++++ b/src/tools/setconf.c<br>
+@@ -5,7 +5,6 @@<br>
+<br>
+=C2=A0#include &lt;stddef.h&gt;<br>
+=C2=A0#include &lt;stdio.h&gt;<br>
+-#include &lt;stdlib.h&gt;<br>
+=C2=A0#include &lt;string.h&gt;<br>
+<br>
+=C2=A0#include &quot;containers.h&quot;<br>
+diff --git a/src/tools/show.c b/src/tools/show.c<br>
+index ba6f115..870860d 100644<br>
+--- a/src/tools/show.c<br>
++++ b/src/tools/show.c<br>
+@@ -5,20 +5,12 @@<br>
+<br>
+=C2=A0#include &lt;arpa/inet.h&gt;<br>
+=C2=A0#include &lt;inttypes.h&gt;<br>
+-#include &lt;netinet/in.h&gt;<br>
+-#include &lt;sys/socket.h&gt;<br>
+-#include &lt;net/if.h&gt;<br>
+-#include &lt;stdbool.h&gt;<br>
+=C2=A0#include &lt;stddef.h&gt;<br>
+-#include &lt;stdint.h&gt;<br>
+-#include &lt;stdlib.h&gt;<br>
+=C2=A0#include &lt;stdio.h&gt;<br>
+=C2=A0#include &lt;string.h&gt;<br>
+=C2=A0#include &lt;errno.h&gt;<br>
+-#include &lt;time.h&gt;<br>
+=C2=A0#include &lt;netdb.h&gt;<br>
+<br>
+-#include &quot;containers.h&quot;<br>
+=C2=A0#include &quot;ipc.h&quot;<br>
+=C2=A0#include &quot;terminal.h&quot;<br>
+=C2=A0#include &quot;encoding.h&quot;<br>
+diff --git a/src/tools/showconf.c b/src/tools/showconf.c<br>
+index ad76b7f..a57985f 100644<br>
+--- a/src/tools/showconf.c<br>
++++ b/src/tools/showconf.c<br>
+@@ -4,16 +4,11 @@<br>
+=C2=A0 */<br>
+<br>
+=C2=A0#include &lt;arpa/inet.h&gt;<br>
+-#include &lt;netinet/in.h&gt;<br>
+-#include &lt;sys/socket.h&gt;<br>
+-#include &lt;net/if.h&gt;<br>
+=C2=A0#include &lt;stddef.h&gt;<br>
+=C2=A0#include &lt;stdio.h&gt;<br>
+=C2=A0#include &lt;string.h&gt;<br>
+-#include &lt;stdlib.h&gt;<br>
+=C2=A0#include &lt;netdb.h&gt;<br>
+<br>
+-#include &quot;containers.h&quot;<br>
+=C2=A0#include &quot;encoding.h&quot;<br>
+=C2=A0#include &quot;ipc.h&quot;<br>
+=C2=A0#include &quot;subcommands.h&quot;<br>
+-- <br>
+2.17.1<br>
+<br>
+</blockquote></div>
 
-$ uname -a
-Linux l 3.13.0-165-generic #215-Ubuntu SMP Wed Jan 16 11:46:47 UTC 2019 
-x86_64 x86_64 x86_64 GNU/Linux
+--0000000000008c74090581210cac--
 
-$ apt search wireguard
-wireguard/trusty,now 0.0.20190123-wg1~trusty all [installed]
-wireguard-dkms/trusty,now 0.0.20190123-wg1~trusty all [installed,automatic]
-wireguard-tools/trusty,now 0.0.20190123-wg1~trusty amd64 
-[installed,automatic]
-
-
-
-$ wg genkey | tee privatekey | wg pubkey > publickey
-
-$ sudo ip link add dev wg0 type wireguard
-
-Feb  4 13:20:37 l kernel: [  248.082139] wireguard: module verification 
-failed: signature and/or  required key missing - tainting kernel
-Feb  4 13:20:37 l kernel: [  248.082815] wireguard: WireGuard 
-0.0.20190123 loaded. See www.wireguard.com for information.
-Feb  4 13:20:37 l kernel: [  248.082816] wireguard: Copyright (C) 
-2015-2019 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
-
-
-$ sudo ip addr add 10.0.0.1/24 dev wg0
-$ sudo wg set wg0 listen-port 500 private-key ./privatekey
-$ sudo ip link set wg0 up
-
-Feb  4 13:22:12 l kernel: [  342.791370] BUG: unable to handle kernel 
-NULL pointer dereference at 0000000000000018
-Feb  4 13:22:12 l kernel: [  342.791635] IP: [<ffffffffa036d7ec>] 
-wg_socket_init+0x13c/0x3f0 [wireguard]
-Feb  4 13:22:12 l kernel: [  342.791861] PGD 80000000b2899067 PUD 
-b2a0d067 PMD 0
-Feb  4 13:22:12 l kernel: [  342.792043] Oops: 0000 [#1] SMP
-Feb  4 13:22:12 l kernel: [  342.792162] Modules linked in: 
-wireguard(OX) ip_tunnel iptable_mangle xt_nat iptable_nat nf_nat_ipv4 
-ipt_REJECT xt_tcpmss xt_tcpudp xt_LOG xt_limit nf_conntrack_ipv4 
-nf_defrag_ipv4 xt_owner xt_recent xt_set xt_conntrack iptable_filter 
-ip_tables ip_set_hash_ip ip_set nfnetlink bridge stp llc intel_rapl 
-e1000e x86_pkg_temp_thermal intel_powerclamp r8169 mii kvm_intel ptp 
-gpio_ich ipmi_devintf lpc_ich pps_core joydev shpchp kvm 
-crct10dif_pclmul ipmi_si crc32_pclmul ghash_clmulni_intel 
-nf_conntrack_sip nf_conntrack_tftp xt_multiport x_tables nf_nat_ftp 
-nf_nat nf_conntrack_ftp nf_conntrack coretemp lp nls_iso8859_1 parport 
-dm_crypt raid10 raid456 async_raid6_recov async_memcpy async_pq 
-async_xor xor async_tx raid6_pq raid0 multipath linear raid1 hid_generic 
-aesni_intel snd_pcsp aes_x86_64 glue_helper snd_pcm lrw snd_page_alloc 
-gf128mul snd_timer ablk_helper usbhid ahci snd cryptd soundcore libahci 
-hid wmi mac_hid
-Feb  4 13:22:12 l kernel: [  342.795383] CPU: 6 PID: 3154 Comm: ip 
-Tainted: G           OX 3.13.0-165-generic #215-Ubuntu
-Feb  4 13:22:12 l kernel: [  342.795650] Hardware name: IBM IBM System 
-x3100 M4
-Feb  4 13:22:12 l kernel: [  342.795957] task: ffff88021cb0b000 ti: 
-ffff8800af964000 task.ti: ffff8800af964000
-Feb  4 13:22:12 l kernel: [  342.796192] RIP: 0010:[<ffffffffa036d7ec>]  
-[<ffffffffa036d7ec>] wg_socket_init+0x13c/0x3f0 [wireguard]
-Feb  4 13:22:12 l kernel: [  342.796497] RSP: 0018:ffff8800af9656e0  
-EFLAGS: 00010202
-Feb  4 13:22:12 l kernel: [  342.796665] RAX: 0000000000000000 RBX: 
-ffff88021b300880 RCX: 000000007fbae3ff
-Feb  4 13:22:12 l kernel: [  342.796894] RDX: ffff88021b300880 RSI: 
-ffff880221d7f980 RDI: ffffffff81cded00
-Feb  4 13:22:12 l kernel: [  342.797120] RBP: ffff8800af965798 R08: 
-ffff88023fd94690 R09: 0000000000000004
-Feb  4 13:22:12 l kernel: [  342.797344] R10: ffff88023fd94688 R11: 
-ffffc90004e0ca8c R12: 0000000000000065
-Feb  4 13:22:12 l kernel: [  342.797568] R13: 0000000000000000 R14: 
-ffff8800af96573c R15: 00000000000001f4
-Feb  4 13:22:12 l kernel: [  342.797794] FS: 00007f34c4d92740(0000) 
-GS:ffff88023fd80000(0000) knlGS:0000000000000000
-Feb  4 13:22:12 l kernel: [  342.798050] CS:  0010 DS: 0000 ES: 0000 
-CR0: 0000000080050033
-Feb  4 13:22:12 l kernel: [  342.798230] CR2: 0000000000000018 CR3: 
-00000000af87a000 CR4: 0000000000160770
-Feb  4 13:22:12 l kernel: [  342.798455] Stack:
-Feb  4 13:22:12 l kernel: [  342.798520]  ffff8800af965750 
-ffff880221d7f980 0000000000000000 ffff88021b300880
-Feb  4 13:22:12 l kernel: [  342.798784]  ffffffff8162bd01 
-ffffffffa036c340 0000000000000002 0000000000000000
-Feb  4 13:22:12 l kernel: [  342.799046]  0000000000000000 
-0000000000000000 0000f40100000000 0000000a00000001
-Feb  4 13:22:12 l kernel: [  342.799309] Call Trace:
-Feb  4 13:22:12 l kernel: [  342.806648] [<ffffffff8162bd01>] ? 
-skb_copy_and_csum_dev+0xb1/0xc0
-Feb  4 13:22:12 l kernel: [  342.814226] [<ffffffffa036c340>] ? 
-send6+0x340/0x340 [wireguard]
-Feb  4 13:22:12 l kernel: [  342.821781] [<ffffffffa0367a2a>] 
-wg_open+0x5a/0xe0 [wireguard]
-Feb  4 13:22:12 l kernel: [  342.829201] [<ffffffff8163f942>] 
-__dev_open+0xc2/0x140
-Feb  4 13:22:12 l kernel: [  342.836477] [<ffffffff8163fc53>] 
-__dev_change_flags+0xa3/0x180
-Feb  4 13:22:12 l kernel: [  342.843676] [<ffffffff8163fd59>] 
-dev_change_flags+0x29/0x60
-Feb  4 13:22:12 l kernel: [  342.850884] [<ffffffff8164f176>] 
-do_setlink+0x2f6/0x9a0
-Feb  4 13:22:12 l kernel: [  342.857911] [<ffffffff8139c442>] ? 
-nla_parse+0x32/0x120
-Feb  4 13:22:12 l kernel: [  342.864767] [<ffffffff8164fd1a>] 
-rtnl_newlink+0x3ba/0x620
-Feb  4 13:22:12 l kernel: [  342.871445] [<ffffffff81161923>] ? 
-__alloc_pages_nodemask+0x1a3/0xb90
-Feb  4 13:22:12 l kernel: [  342.878020] [<ffffffff812e5f7e>] ? 
-security_capable+0x1e/0x20
-Feb  4 13:22:12 l kernel: [  342.884415] [<ffffffff81077e29>] ? 
-ns_capable+0x29/0x50
-Feb  4 13:22:12 l kernel: [  342.890633] [<ffffffff8164c718>] 
-rtnetlink_rcv_msg+0x98/0x250
-Feb  4 13:22:12 l kernel: [  342.896710] [<ffffffff811afc88>] ? 
-__kmalloc_node_track_caller+0x58/0x2b0
-Feb  4 13:22:12 l kernel: [  342.902695] [<ffffffff8162c98e>] ? 
-__alloc_skb+0x7e/0x2b0
-Feb  4 13:22:12 l kernel: [  342.908496] [<ffffffff8164c680>] ? 
-rtnetlink_rcv+0x30/0x30
-Feb  4 13:22:12 l kernel: [  342.914122] [<ffffffff8166b0ab>] 
-netlink_rcv_skb+0xab/0xc0
-Feb  4 13:22:12 l kernel: [  342.919616] [<ffffffff8164c678>] 
-rtnetlink_rcv+0x28/0x30
-Feb  4 13:22:12 l kernel: [  342.924963] [<ffffffff8166a7a0>] 
-netlink_unicast+0xe0/0x1b0
-Feb  4 13:22:12 l kernel: [  342.930172] [<ffffffff8166ab7e>] 
-netlink_sendmsg+0x30e/0x680
-Feb  4 13:22:12 l kernel: [  342.935225] [<ffffffff81623251>] 
-sock_sendmsg+0x91/0xc0
-Feb  4 13:22:12 l kernel: [  342.940134] [<ffffffff811bd526>] ? 
-__mem_cgroup_commit_charge+0x156/0x3d0
-Feb  4 13:22:12 l kernel: [  342.944970] [<ffffffff81622f2e>] ? 
-move_addr_to_kernel.part.14+0x1e/0x60
-Feb  4 13:22:12 l kernel: [  342.949771] [<ffffffff81623d81>] ? 
-move_addr_to_kernel+0x21/0x30
-Feb  4 13:22:12 l kernel: [  342.954457] [<ffffffff81623659>] 
-___sys_sendmsg+0x389/0x3a0
-Feb  4 13:22:12 l kernel: [  342.959123] [<ffffffff81621ecf>] ? 
-sock_destroy_inode+0x2f/0x40
-Feb  4 13:22:12 l kernel: [  342.963784] [<ffffffff817487d4>] ? 
-__do_page_fault+0x214/0x570
-Feb  4 13:22:12 l kernel: [  342.968464] [<ffffffff811dffdd>] ? 
-dput+0xad/0x190
-Feb  4 13:22:12 l kernel: [  342.973110] [<ffffffff811e94e4>] ? 
-mntput+0x24/0x40
-Feb  4 13:22:12 l kernel: [  342.977642] [<ffffffff811cab81>] ? 
-__fput+0x181/0x260
-Feb  4 13:22:12 l kernel: [  342.982066] [<ffffffff81624462>] 
-__sys_sendmsg+0x42/0x80
-Feb  4 13:22:12 l kernel: [  342.986430] [<ffffffff816244b2>] 
-SyS_sendmsg+0x12/0x20
-Feb  4 13:22:12 l kernel: [  342.990694] [<ffffffff8174d3bc>] 
-system_call_fastpath+0x26/0x2b
-Feb  4 13:22:12 l kernel: [  342.994897] Code: 7f 48 8b 78 20 e8 65 7e 
-2b e1 48 8b bb 50 02 00 00 48 8b b5 50 ff ff ff 48 8d 95 60 ff ff ff e8 
-8b dd 01 00 48 8b 05 9c 44 9b e1 <48> 83 78 18 00 0f 84 87 01 00 00 48 
-8b 95 50 ff ff ff 48 8b bb
-Feb  4 13:22:12 l kernel: [  343.008678] RIP [<ffffffffa036d7ec>] 
-wg_socket_init+0x13c/0x3f0 [wireguard]
-Feb  4 13:22:12 l kernel: [  343.013245]  RSP <ffff8800af9656e0>
-Feb  4 13:22:12 l kernel: [  343.017746] CR2: 0000000000000018
-Feb  4 13:22:12 l kernel: [  343.022234] ---[ end trace 7a6ac50ecd32399e 
-]---
-
-
-Any idea what could be the problem?
-
-Regards,
-Anatoli
-
---------------9033E3AE737DBA50F91A88AA
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: 8bit
-
-<html>
-  <head>
-
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  </head>
-  <body smarttemplateinserted="true">
-    <div id="smartTemplate4-template">
-      <div style="font-size:10.0pt;font-family:Verdana,Arial"> Hi,<br>
-        <br>
-        I'm trying to make WG work on Ubuntu 14.04.5, but got a driver
-        bug apparently.<br>
-        <br>
-        WG was installed this way: <font face="Courier New">sudo
-          add-apt-repository ppa:wireguard/wireguard &amp;&amp; sudo apt
-          update &amp;&amp; sudo apt install wireguard<br>
-        </font><br>
-        Then, the following commands were executed (mixed with syslog
-        output):<br>
-        <br>
-        <font face="Courier New">$ lsb_release -a<br>
-          Distributor ID:    Ubuntu<br>
-          Description:    Ubuntu 14.04.5 LTS<br>
-          Release:    14.04<br>
-          Codename:    trusty<br>
-          <br>
-          $ uname -a<br>
-          Linux l 3.13.0-165-generic #215-Ubuntu SMP Wed Jan 16 11:46:47
-          UTC 2019 x86_64 x86_64 x86_64 GNU/Linux<br>
-          <br>
-          $ apt search wireguard<br>
-          wireguard/trusty,now 0.0.20190123-wg1~trusty all [installed]<br>
-          wireguard-dkms/trusty,now 0.0.20190123-wg1~trusty all
-          [installed,automatic]<br>
-          wireguard-tools/trusty,now 0.0.20190123-wg1~trusty amd64
-          [installed,automatic]<br>
-          <br>
-          <br>
-          <br>
-          $ wg genkey | tee privatekey | wg pubkey &gt; publickey<br>
-          <br>
-          $ sudo ip link add dev wg0 type wireguard<br>
-          <br>
-          Feb  4 13:20:37 l kernel: [  248.082139] wireguard: module
-          verification failed: signature and/or  required key missing -
-          tainting kernel<br>
-          Feb  4 13:20:37 l kernel: [  248.082815] wireguard: WireGuard
-          0.0.20190123 loaded. See <a class="moz-txt-link-abbreviated" href="http://www.wireguard.com">www.wireguard.com</a> for information.<br>
-          Feb  4 13:20:37 l kernel: [  248.082816] wireguard: Copyright
-          (C) 2015-2019 Jason A. Donenfeld <a class="moz-txt-link-rfc2396E" href="mailto:Jason@zx2c4.com">&lt;Jason@zx2c4.com&gt;</a>. All
-          Rights Reserved.<br>
-          <br>
-          <br>
-          $ sudo ip addr add 10.0.0.1/24 dev wg0<br>
-          $ sudo wg set wg0 listen-port 500 private-key ./privatekey<br>
-          $ sudo ip link set wg0 up<br>
-          <br>
-          Feb  4 13:22:12 l kernel: [  342.791370] BUG: unable to handle
-          kernel NULL pointer dereference at 0000000000000018<br>
-          Feb  4 13:22:12 l kernel: [  342.791635] IP:
-          [&lt;ffffffffa036d7ec&gt;] wg_socket_init+0x13c/0x3f0
-          [wireguard]<br>
-          Feb  4 13:22:12 l kernel: [  342.791861] PGD 80000000b2899067
-          PUD b2a0d067 PMD 0<br>
-          Feb  4 13:22:12 l kernel: [  342.792043] Oops: 0000 [#1] SMP<br>
-          Feb  4 13:22:12 l kernel: [  342.792162] Modules linked in:
-          wireguard(OX) ip_tunnel iptable_mangle xt_nat iptable_nat
-          nf_nat_ipv4 ipt_REJECT xt_tcpmss xt_tcpudp xt_LOG xt_limit
-          nf_conntrack_ipv4 nf_defrag_ipv4 xt_owner xt_recent xt_set
-          xt_conntrack iptable_filter ip_tables ip_set_hash_ip ip_set
-          nfnetlink bridge stp llc intel_rapl e1000e
-          x86_pkg_temp_thermal intel_powerclamp r8169 mii kvm_intel ptp
-          gpio_ich ipmi_devintf lpc_ich pps_core joydev shpchp kvm
-          crct10dif_pclmul ipmi_si crc32_pclmul ghash_clmulni_intel
-          nf_conntrack_sip nf_conntrack_tftp xt_multiport x_tables
-          nf_nat_ftp nf_nat nf_conntrack_ftp nf_conntrack coretemp lp
-          nls_iso8859_1 parport dm_crypt raid10 raid456
-          async_raid6_recov async_memcpy async_pq async_xor xor async_tx
-          raid6_pq raid0 multipath linear raid1 hid_generic aesni_intel
-          snd_pcsp aes_x86_64 glue_helper snd_pcm lrw snd_page_alloc
-          gf128mul snd_timer ablk_helper usbhid ahci snd cryptd
-          soundcore libahci hid wmi mac_hid<br>
-          Feb  4 13:22:12 l kernel: [  342.795383] CPU: 6 PID: 3154
-          Comm: ip Tainted: G           OX 3.13.0-165-generic
-          #215-Ubuntu<br>
-          Feb  4 13:22:12 l kernel: [  342.795650] Hardware name: IBM
-          IBM System x3100 M4<br>
-          Feb  4 13:22:12 l kernel: [  342.795957] task:
-          ffff88021cb0b000 ti: ffff8800af964000 task.ti:
-          ffff8800af964000<br>
-          Feb  4 13:22:12 l kernel: [  342.796192] RIP:
-          0010:[&lt;ffffffffa036d7ec&gt;]  [&lt;ffffffffa036d7ec&gt;]
-          wg_socket_init+0x13c/0x3f0 [wireguard]<br>
-          Feb  4 13:22:12 l kernel: [  342.796497] RSP:
-          0018:ffff8800af9656e0  EFLAGS: 00010202<br>
-          Feb  4 13:22:12 l kernel: [  342.796665] RAX: 0000000000000000
-          RBX: ffff88021b300880 RCX: 000000007fbae3ff<br>
-          Feb  4 13:22:12 l kernel: [  342.796894] RDX: ffff88021b300880
-          RSI: ffff880221d7f980 RDI: ffffffff81cded00<br>
-          Feb  4 13:22:12 l kernel: [  342.797120] RBP: ffff8800af965798
-          R08: ffff88023fd94690 R09: 0000000000000004<br>
-          Feb  4 13:22:12 l kernel: [  342.797344] R10: ffff88023fd94688
-          R11: ffffc90004e0ca8c R12: 0000000000000065<br>
-          Feb  4 13:22:12 l kernel: [  342.797568] R13: 0000000000000000
-          R14: ffff8800af96573c R15: 00000000000001f4<br>
-          Feb  4 13:22:12 l kernel: [  342.797794] FS: 
-          00007f34c4d92740(0000) GS:ffff88023fd80000(0000)
-          knlGS:0000000000000000<br>
-          Feb  4 13:22:12 l kernel: [  342.798050] CS:  0010 DS: 0000
-          ES: 0000 CR0: 0000000080050033<br>
-          Feb  4 13:22:12 l kernel: [  342.798230] CR2: 0000000000000018
-          CR3: 00000000af87a000 CR4: 0000000000160770<br>
-          Feb  4 13:22:12 l kernel: [  342.798455] Stack:<br>
-          Feb  4 13:22:12 l kernel: [  342.798520]  ffff8800af965750
-          ffff880221d7f980 0000000000000000 ffff88021b300880<br>
-          Feb  4 13:22:12 l kernel: [  342.798784]  ffffffff8162bd01
-          ffffffffa036c340 0000000000000002 0000000000000000<br>
-          Feb  4 13:22:12 l kernel: [  342.799046]  0000000000000000
-          0000000000000000 0000f40100000000 0000000a00000001<br>
-          Feb  4 13:22:12 l kernel: [  342.799309] Call Trace:<br>
-          Feb  4 13:22:12 l kernel: [  342.806648] 
-          [&lt;ffffffff8162bd01&gt;] ? skb_copy_and_csum_dev+0xb1/0xc0<br>
-          Feb  4 13:22:12 l kernel: [  342.814226] 
-          [&lt;ffffffffa036c340&gt;] ? send6+0x340/0x340 [wireguard]<br>
-          Feb  4 13:22:12 l kernel: [  342.821781] 
-          [&lt;ffffffffa0367a2a&gt;] wg_open+0x5a/0xe0 [wireguard]<br>
-          Feb  4 13:22:12 l kernel: [  342.829201] 
-          [&lt;ffffffff8163f942&gt;] __dev_open+0xc2/0x140<br>
-          Feb  4 13:22:12 l kernel: [  342.836477] 
-          [&lt;ffffffff8163fc53&gt;] __dev_change_flags+0xa3/0x180<br>
-          Feb  4 13:22:12 l kernel: [  342.843676] 
-          [&lt;ffffffff8163fd59&gt;] dev_change_flags+0x29/0x60<br>
-          Feb  4 13:22:12 l kernel: [  342.850884] 
-          [&lt;ffffffff8164f176&gt;] do_setlink+0x2f6/0x9a0<br>
-          Feb  4 13:22:12 l kernel: [  342.857911] 
-          [&lt;ffffffff8139c442&gt;] ? nla_parse+0x32/0x120<br>
-          Feb  4 13:22:12 l kernel: [  342.864767] 
-          [&lt;ffffffff8164fd1a&gt;] rtnl_newlink+0x3ba/0x620<br>
-          Feb  4 13:22:12 l kernel: [  342.871445] 
-          [&lt;ffffffff81161923&gt;] ?
-          __alloc_pages_nodemask+0x1a3/0xb90<br>
-          Feb  4 13:22:12 l kernel: [  342.878020] 
-          [&lt;ffffffff812e5f7e&gt;] ? security_capable+0x1e/0x20<br>
-          Feb  4 13:22:12 l kernel: [  342.884415] 
-          [&lt;ffffffff81077e29&gt;] ? ns_capable+0x29/0x50<br>
-          Feb  4 13:22:12 l kernel: [  342.890633] 
-          [&lt;ffffffff8164c718&gt;] rtnetlink_rcv_msg+0x98/0x250<br>
-          Feb  4 13:22:12 l kernel: [  342.896710] 
-          [&lt;ffffffff811afc88&gt;] ?
-          __kmalloc_node_track_caller+0x58/0x2b0<br>
-          Feb  4 13:22:12 l kernel: [  342.902695] 
-          [&lt;ffffffff8162c98e&gt;] ? __alloc_skb+0x7e/0x2b0<br>
-          Feb  4 13:22:12 l kernel: [  342.908496] 
-          [&lt;ffffffff8164c680&gt;] ? rtnetlink_rcv+0x30/0x30<br>
-          Feb  4 13:22:12 l kernel: [  342.914122] 
-          [&lt;ffffffff8166b0ab&gt;] netlink_rcv_skb+0xab/0xc0<br>
-          Feb  4 13:22:12 l kernel: [  342.919616] 
-          [&lt;ffffffff8164c678&gt;] rtnetlink_rcv+0x28/0x30<br>
-          Feb  4 13:22:12 l kernel: [  342.924963] 
-          [&lt;ffffffff8166a7a0&gt;] netlink_unicast+0xe0/0x1b0<br>
-          Feb  4 13:22:12 l kernel: [  342.930172] 
-          [&lt;ffffffff8166ab7e&gt;] netlink_sendmsg+0x30e/0x680<br>
-          Feb  4 13:22:12 l kernel: [  342.935225] 
-          [&lt;ffffffff81623251&gt;] sock_sendmsg+0x91/0xc0<br>
-          Feb  4 13:22:12 l kernel: [  342.940134] 
-          [&lt;ffffffff811bd526&gt;] ?
-          __mem_cgroup_commit_charge+0x156/0x3d0<br>
-          Feb  4 13:22:12 l kernel: [  342.944970] 
-          [&lt;ffffffff81622f2e&gt;] ?
-          move_addr_to_kernel.part.14+0x1e/0x60<br>
-          Feb  4 13:22:12 l kernel: [  342.949771] 
-          [&lt;ffffffff81623d81&gt;] ? move_addr_to_kernel+0x21/0x30<br>
-          Feb  4 13:22:12 l kernel: [  342.954457] 
-          [&lt;ffffffff81623659&gt;] ___sys_sendmsg+0x389/0x3a0<br>
-          Feb  4 13:22:12 l kernel: [  342.959123] 
-          [&lt;ffffffff81621ecf&gt;] ? sock_destroy_inode+0x2f/0x40<br>
-          Feb  4 13:22:12 l kernel: [  342.963784] 
-          [&lt;ffffffff817487d4&gt;] ? __do_page_fault+0x214/0x570<br>
-          Feb  4 13:22:12 l kernel: [  342.968464] 
-          [&lt;ffffffff811dffdd&gt;] ? dput+0xad/0x190<br>
-          Feb  4 13:22:12 l kernel: [  342.973110] 
-          [&lt;ffffffff811e94e4&gt;] ? mntput+0x24/0x40<br>
-          Feb  4 13:22:12 l kernel: [  342.977642] 
-          [&lt;ffffffff811cab81&gt;] ? __fput+0x181/0x260<br>
-          Feb  4 13:22:12 l kernel: [  342.982066] 
-          [&lt;ffffffff81624462&gt;] __sys_sendmsg+0x42/0x80<br>
-          Feb  4 13:22:12 l kernel: [  342.986430] 
-          [&lt;ffffffff816244b2&gt;] SyS_sendmsg+0x12/0x20<br>
-          Feb  4 13:22:12 l kernel: [  342.990694] 
-          [&lt;ffffffff8174d3bc&gt;] system_call_fastpath+0x26/0x2b<br>
-          Feb  4 13:22:12 l kernel: [  342.994897] Code: 7f 48 8b 78 20
-          e8 65 7e 2b e1 48 8b bb 50 02 00 00 48 8b b5 50 ff ff ff 48 8d
-          95 60 ff ff ff e8 8b dd 01 00 48 8b 05 9c 44 9b e1 &lt;48&gt;
-          83 78 18 00 0f 84 87 01 00 00 48 8b 95 50 ff ff ff 48 8b bb<br>
-          Feb  4 13:22:12 l kernel: [  343.008678] RIP 
-          [&lt;ffffffffa036d7ec&gt;] wg_socket_init+0x13c/0x3f0
-          [wireguard]<br>
-          Feb  4 13:22:12 l kernel: [  343.013245]  RSP
-          &lt;ffff8800af9656e0&gt;<br>
-          Feb  4 13:22:12 l kernel: [  343.017746] CR2: 0000000000000018<br>
-          Feb  4 13:22:12 l kernel: [  343.022234] ---[ end trace
-          7a6ac50ecd32399e ]---<br>
-        </font><br>
-        <br>
-        Any idea what could be the problem?<br>
-        <br>
-        Regards,<br>
-        Anatoli<br>
-      </div>
-    </div>
-  </body>
-</html>
-
---------------9033E3AE737DBA50F91A88AA--
-
---===============7009716939091652763==
+--===============6556913857433270622==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -479,4 +1239,4 @@ WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---===============7009716939091652763==--
+--===============6556913857433270622==--
