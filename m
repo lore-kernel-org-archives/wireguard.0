@@ -2,61 +2,69 @@ Return-Path: <SRS0=tjuz=QY=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	HTML_MESSAGE,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED autolearn=ham
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0E18C10F04
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 17 Feb 2019 03:34:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8B1DC43381
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 17 Feb 2019 03:58:17 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 46E8721738
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 17 Feb 2019 03:34:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 46E8721738
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=kerr.net
+	by mail.kernel.org (Postfix) with ESMTPS id 18E0B2196F
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 17 Feb 2019 03:58:16 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="Zp/J2M6l"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 18E0B2196F
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ea48f0a4;
-	Sun, 17 Feb 2019 03:25:35 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c44bc7f7;
+	Sun, 17 Feb 2019 03:49:35 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 89f5b573
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 45a1177a
  for <wireguard@lists.zx2c4.com>;
- Sun, 17 Feb 2019 02:55:38 +0000 (UTC)
-Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com
- [209.85.210.46])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ac799d97
+ Sun, 17 Feb 2019 03:49:33 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 44f983cd
  for <wireguard@lists.zx2c4.com>;
- Sun, 17 Feb 2019 02:55:38 +0000 (UTC)
-Received: by mail-ot1-f46.google.com with SMTP id n8so22984013otl.6
- for <wireguard@lists.zx2c4.com>; Sat, 16 Feb 2019 19:03:51 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=wKECTBiY5xMG4Vd20Wtq4UwygBkTxDWWgFoIUNm0JTA=;
- b=cQMMBwDsg98V8lgbJ7Zj+15osV8vkPddN9cLjBJDQkjh65485gtMkCSgoUgmUT8/YQ
- cuI5SzrMDU3c8r+5xG8nehG8r0QQLpTzeKbP9Czbhe9J0c2mzq56HTeCWgVsBpGTqjAH
- z4EDJuzxPKDyLU0SudXDpBUsh2lrtQkTwK6K8hynbXgQGimSjQSpBh/0QeoeLulDrAw7
- OAtHweex7nBGfbEkOfzf5R9iQ3q2YdvjsFvMc09YeBZqYpQqvSRu43oSfFzL8QALKupu
- vbkRiwBmwOJ2tyLj41lc/Ta+/5xbc4XZl1n+giMKlinJwZ61aEVT6pB9JlVVFMNuPgLZ
- JUQA==
-X-Gm-Message-State: AHQUAuZZMWTfcrJxwgZlfLHeIXyGndp1SKUtj1Crryza6FtMYcRd45ip
- BeaWV8S/sKX+EI8QVQ8XnRplfSsxyIva5NJFgJHl1NlW
-X-Google-Smtp-Source: AHgI3IbowzgMeMpallgFMtpdDn3EhjdenRzW4NP2aYs+cyysluhM5tlO1nPVtmZFVjwValq38dgep0nFAgX+QSZjejw=
-X-Received: by 2002:a9d:37e1:: with SMTP id x88mr10605347otb.85.1550372631326; 
- Sat, 16 Feb 2019 19:03:51 -0800 (PST)
+ Sun, 17 Feb 2019 03:49:33 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 594166cc
+ for <wireguard@lists.zx2c4.com>;
+ Sun, 17 Feb 2019 03:40:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :references:in-reply-to:from:date:message-id:subject:to:cc
+ :content-type; s=mail; bh=FNva1vArpsAWJUVd4znwFOrHwCg=; b=Zp/J2M
+ 6l+GdoHcG+UNYT6T/hU/ynIW1owKvpdGZpTl3dRchg0n3JbqOVuvspcHyKN3fXAh
+ HK3YWoTJy2hyxHTKANjEUJ920S1x0HEepbbH3R4fAYdEHWfzgLFlhAMcx+CCg6Fi
+ wBB+Ep6DSpsXcawTMWqGqyw70EBPunazIoE2+igHBRT4NDKjuqztjNZlD6MxkEe/
+ VAC5jetRTFQrqthuu57PaHXYYvPFLF6tLIpU2V6Hivn3wB7Fpl6XzE1tmHOnNoUb
+ XlfuGLeVBFkddubQYcgrUSxDd0C/bp4kCwDmkfMOoFGFogFJPfWzqCWz3sGc6XoG
+ SGE+C4Cpnw5Wcu8g==
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 32c4648d
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Sun, 17 Feb 2019 03:40:18 +0000 (UTC)
+Received: by mail-ot1-f45.google.com with SMTP id 98so23144170oty.1
+ for <wireguard@lists.zx2c4.com>; Sat, 16 Feb 2019 19:57:47 -0800 (PST)
+X-Gm-Message-State: AHQUAuZJAvsJl5oGOuLScIJ8umra/q94F9+DosdioTwYUzTdkbz23kBa
+ Xc9ld51XuBMzUV2TJyc3DFGLt/KMNCvG3/0dtNo=
+X-Google-Smtp-Source: AHgI3Ibh2/TQNn2rrKvW/zG/gpJu0aK/xPchD+h9HMvDqqAAff+oZLfgTLFh2fA28uM9sMHR+VG6b801atxyUqa05F0=
+X-Received: by 2002:aca:4506:: with SMTP id s6mr10629725oia.115.1550375866564; 
+ Sat, 16 Feb 2019 19:57:46 -0800 (PST)
 MIME-Version: 1.0
-References: <8_iPFshR7GasRS24vRTFKp3pG-UGxQLluTaoZZeAO-UlYBTQ2nCHNlMniuKWz9tWpWPbbXS8Br3SxRpCjcruohwFw8PD83jko2lrf3E7hq4=@wieliczko.ninja>
-In-Reply-To: <8_iPFshR7GasRS24vRTFKp3pG-UGxQLluTaoZZeAO-UlYBTQ2nCHNlMniuKWz9tWpWPbbXS8Br3SxRpCjcruohwFw8PD83jko2lrf3E7hq4=@wieliczko.ninja>
-From: David Kerr <david@kerr.net>
-Date: Sat, 16 Feb 2019 22:03:40 -0500
-Message-ID: <CAJJxGdG2G+busk12y==dZOL2__+C1T6nQy+tGRJM=M65-SuZ5Q@mail.gmail.com>
-Subject: Re: DNS name resolution should not be done during configuration
- parsing.
-To: Eryk Wieliczko <eryk@wieliczko.ninja>
-X-Mailman-Approved-At: Sun, 17 Feb 2019 04:25:33 +0100
-Cc: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+References: <71ef4a71-19fe-8d4e-c3a2-f704ad8e8b67@anatoli.ws>
+ <CAHmME9oWg6E0PyQP0-uTC-WfN4gkYhUrd+gYTT390CnfT8ufZw@mail.gmail.com>
+ <4fa3479d-bb82-033f-c177-3269ddb8f011@anatoli.ws>
+In-Reply-To: <4fa3479d-bb82-033f-c177-3269ddb8f011@anatoli.ws>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Sun, 17 Feb 2019 04:57:35 +0100
+X-Gmail-Original-Message-ID: <CAHmME9q_-Vwij4YacxF4utTk7mVZ3HvKSexysj45TEwGKMUm-Q@mail.gmail.com>
+Message-ID: <CAHmME9q_-Vwij4YacxF4utTk7mVZ3HvKSexysj45TEwGKMUm-Q@mail.gmail.com>
+Subject: Re: BUG: unable to handle kernel NULL pointer dereference at ..
+ (linux 3.13)
+To: Anatoli <me@anatoli.ws>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -68,140 +76,21 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============5705907540615776376=="
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============5705907540615776376==
-Content-Type: multipart/alternative; boundary="000000000000f5ca2a05820e41c7"
+Hi Anatoli,
 
---000000000000f5ca2a05820e41c7
-Content-Type: text/plain; charset="UTF-8"
+Thanks for the .ko. I've fixed the compat backport here:
 
-Erik, see here for a proposed fix.  No response from the WireGuard team
-yet.
+https://git.zx2c4.com/WireGuard/commit/?id=e7348a19a45f4f1311df6266b654c7fc8d50f976
 
-https://lists.zx2c4.com/pipermail/wireguard/2019-January/003842.html
+You can either apply that yourself, wait for a new snapshot, or reenable IPv6.
 
-Recently I had a power outage and both my gateway and cable modem went
-offline. On power recovery both devices start up, but the gateway completes
-startup before the cable modem completes its protocol negotiations, so
-initially the external network (eth0) is not functional.  That comes online
-say one minute later and all is well.
-
-Except that all is not well.  Wireguard failed to start up because I have
-Endpoint=<a URL> instead of a IP address.  And because external interface
-is not live yet, DNS lookup fails and Wireguard does not gracefully handle
-it.  This is really important because Wireguard may be my only way into my
-local network.
-
-As work-around I replaced the URL with the IP address... but that is not a
-long term solution if the endpoint is not a static IP address.
-
-Wireguard needs to handle the situation where external network may not have
-stabilized at the time it starts up.  The above link proposed a fix.
-
-David
-
-On Sat, Feb 16, 2019 at 8:35 PM Eryk Wieliczko <eryk@wieliczko.ninja> wrote:
-
-> Hello everyone!
->
-> If you use a DNS address as an endpoint and there is no internet
-> connection, WireGuard will hang for two minutes and then exit with error.
->
-> IMO the expected behavior should be the same as in OpenVPN:
-> WireGuard starts immediately and patiently tries to resolve the DNS until
-> it succeeds.
->
-> Thus, WireGuard should resolve the DNS just before connecting to the
-> server. And just keep trying and trying without any timeouts.
->
-> I'd like to install WireGuard on technician's computers and there is no
-> guarantee that they will start phone tethering within 2 minutes of starting
-> their machine. OpenVPN would pass this scenario.
->
-> What do you think?
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
->
--- 
-David Kerr Sent from Gmail Mobile
-
---000000000000f5ca2a05820e41c7
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div><div dir=3D"auto">Erik, see here for a proposed fix.=C2=A0 No response=
- from the WireGuard team yet.=C2=A0</div><div dir=3D"auto"><br></div><div d=
-ir=3D"auto"><div dir=3D"auto"><a href=3D"https://lists.zx2c4.com/pipermail/=
-wireguard/2019-January/003842.html">https://lists.zx2c4.com/pipermail/wireg=
-uard/2019-January/003842.html</a></div><div dir=3D"auto"><br></div><div dir=
-=3D"auto"><div class=3D"gmail_default" style=3D"font-size:17px;font-family:=
-verdana,sans-serif" dir=3D"auto">Recently I had a power outage and both my =
-gateway and cable modem went offline. On power recovery both devices start =
-up, but the gateway completes startup before the cable modem completes its =
-protocol negotiations, so initially the external network (eth0) is not func=
-tional.=C2=A0 That comes online say one minute later and all is well.</div>=
-<div class=3D"gmail_default" style=3D"font-size:17px;font-family:verdana,sa=
-ns-serif" dir=3D"auto"><br></div><div class=3D"gmail_default" style=3D"font=
--size:17px;font-family:verdana,sans-serif" dir=3D"auto">Except that all is =
-not well.=C2=A0 Wireguard failed to start up because I have Endpoint=3D&lt;=
-a URL&gt; instead of a IP address.=C2=A0 And because external interface is =
-not live yet, DNS lookup fails and Wireguard does not gracefully handle it.=
-=C2=A0 This is really important because Wireguard may be my only way into m=
-y local network.</div><div class=3D"gmail_default" style=3D"font-size:17px;=
-font-family:verdana,sans-serif" dir=3D"auto"><br></div><div class=3D"gmail_=
-default" style=3D"font-size:17px;font-family:verdana,sans-serif" dir=3D"aut=
-o">As work-around I replaced the URL with the IP address... but that is not=
- a long term solution if the endpoint is not a static=C2=A0IP address.</div=
-><div class=3D"gmail_default" style=3D"font-size:17px;font-family:verdana,s=
-ans-serif" dir=3D"auto"><br></div><div class=3D"gmail_default" style=3D"fon=
-t-size:17px;font-family:verdana,sans-serif" dir=3D"auto">Wireguard needs to=
- handle the situation where external network may not have stabilized at the=
- time it starts up.=C2=A0 The above link proposed a fix.=C2=A0</div><div cl=
-ass=3D"gmail_default" style=3D"font-size:17px;font-family:verdana,sans-seri=
-f" dir=3D"auto"><br></div><div class=3D"gmail_default" style=3D"font-size:1=
-7px;font-family:verdana,sans-serif" dir=3D"auto">David</div></div></div></d=
-iv><div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr=
-">On Sat, Feb 16, 2019 at 8:35 PM Eryk Wieliczko &lt;eryk@wieliczko.ninja&g=
-t; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 =
-.8ex;border-left:1px #ccc solid;padding-left:1ex"><div>Hello everyone!</div=
-><div><br></div><div>If you use a DNS address as an endpoint and there is n=
-o internet connection, WireGuard will hang for two minutes and then exit wi=
-th error.<br></div><div><br></div><div>IMO the expected behavior should be =
-the same as in OpenVPN:<br></div><div>WireGuard starts immediately and pati=
-ently tries to resolve the DNS until it succeeds.<br></div><div><br></div><=
-div>Thus, WireGuard should resolve the DNS just before connecting to the se=
-rver. And just keep trying and trying without any timeouts.<br></div><div><=
-br></div><div>I&#39;d like to install WireGuard on technician&#39;s compute=
-rs and there is no guarantee that they will start phone tethering within 2 =
-minutes of starting their machine. OpenVPN would pass this scenario.<br></d=
-iv><div><br></div><div>What do you think?<br></div>________________________=
-_______________________<br>
-WireGuard mailing list<br>
-<a href=3D"mailto:WireGuard@lists.zx2c4.com" target=3D"_blank">WireGuard@li=
-sts.zx2c4.com</a><br>
-<a href=3D"https://lists.zx2c4.com/mailman/listinfo/wireguard" rel=3D"noref=
-errer" target=3D"_blank">https://lists.zx2c4.com/mailman/listinfo/wireguard=
-</a><br>
-</blockquote></div></div>-- <br><div dir=3D"ltr" class=3D"gmail_signature" =
-data-smartmail=3D"gmail_signature">David Kerr
-Sent from Gmail Mobile</div>
-
---000000000000f5ca2a05820e41c7--
-
---===============5705907540615776376==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
+Jason
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
-
---===============5705907540615776376==--
