@@ -2,52 +2,59 @@ Return-Path: <SRS0=tjuz=QY=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=0.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	HTML_MESSAGE,MAILING_LIST_MULTI,MISSING_HEADERS,SPF_PASS,URIBL_BLOCKED
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.3 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_MUTT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 56996C43381
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 17 Feb 2019 20:35:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C7844C43381
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 17 Feb 2019 20:44:32 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 98B9D218A1
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 17 Feb 2019 20:35:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 98B9D218A1
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=anatoli.ws
+	by mail.kernel.org (Postfix) with ESMTPS id 6189A2184A
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 17 Feb 2019 20:44:32 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=tomli.me header.i=@tomli.me header.b="DLVURLEV"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 6189A2184A
+Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=tomli.me
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 11f5e2e7;
-	Sun, 17 Feb 2019 20:26:56 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 37d1ae62;
+	Sun, 17 Feb 2019 20:35:55 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id de992b4c
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7b5c2760
  for <wireguard@lists.zx2c4.com>;
- Sun, 17 Feb 2019 03:56:17 +0000 (UTC)
-Received: from p3plsmtpa11-02.prod.phx3.secureserver.net
- (p3plsmtpa11-02.prod.phx3.secureserver.net [68.178.252.103])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 700cb9af
+ Sun, 17 Feb 2019 20:35:52 +0000 (UTC)
+Received: from tomli.me (tomli.me [IPv6:2a00:1a28:1157:199::5a76])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0c82a6e9
  for <wireguard@lists.zx2c4.com>;
- Sun, 17 Feb 2019 03:56:17 +0000 (UTC)
-Received: from [10.101.100.10] ([177.54.157.114]) by :SMTPAUTH: with ESMTPSA
- id vDgpgGTHJ8LgOvDgrgDowk; Sat, 16 Feb 2019 21:04:30 -0700
-Subject: Re: BUG: unable to handle kernel NULL pointer dereference at ..
- (linux 3.13)
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-References: <71ef4a71-19fe-8d4e-c3a2-f704ad8e8b67@anatoli.ws>
- <CAHmME9oWg6E0PyQP0-uTC-WfN4gkYhUrd+gYTT390CnfT8ufZw@mail.gmail.com>
- <4fa3479d-bb82-033f-c177-3269ddb8f011@anatoli.ws>
- <CAHmME9q_-Vwij4YacxF4utTk7mVZ3HvKSexysj45TEwGKMUm-Q@mail.gmail.com>
-From: Anatoli <me@anatoli.ws>
-Message-ID: <ed9df661-4e03-5638-dace-7eeae5b4cd8c@anatoli.ws>
-Date: Sun, 17 Feb 2019 01:04:09 -0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.4.0
+ Sun, 17 Feb 2019 20:35:51 +0000 (UTC)
+Received: from tomli.me (localhost [127.0.0.1])
+ by tomli.me (OpenSMTPD) with ESMTP id a90cbc51;
+ Sun, 17 Feb 2019 20:44:09 +0000 (UTC)
+X-HELO: localhost.localdomain
+Authentication-Results: tomli.me; auth=pass (login) smtp.auth=tomli
+Received: from Unknown (HELO localhost.localdomain)
+ (2402:f000:1:1501:200:5efe:7b76:78da)
+ by tomli.me (qpsmtpd/0.95) with ESMTPSA (DHE-RSA-CHACHA20-POLY1305 encrypted);
+ Sun, 17 Feb 2019 20:44:09 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=tomli.me;
+ h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to;
+ s=1490979754; bh=Ogd+io1yuXNPyMlAST8jZfAGC83VKH2oBe1YUV/hXDs=;
+ b=DLVURLEVt25SJvoKAZBqeA916BW6xvl9QHxKSIE81XoA6ixOXr/tanwTwNixQRIQHJZ5upxs7JyMrzs5sMl5Cnxq++9SYPe/WDkR56jli6e0N0ntSqMEQU8wMU4KUP/SMaCmi8VS6HGY3/nfwA5Erco4qXU16d5Pm0jYEOvbfsfCF84jdlQ75vu8w8B6TZGEqdVP3gs7B+yfE9M8iXjrxU2uXwquKefX8N6v3RfJp2BnjBYofrrYuCyoYqEDAw7OkyyvyTxEvviQG24leWO6YxuegcMX3WwaM5dSTpqRa7Z3txxYuMSn94neEGQQpP9irGDAAOkOLNhSmvCqg3sJ8w==
+Date: Mon, 18 Feb 2019 04:44:02 +0800
+From: Tom Li <tomli@tomli.me>
+To: Roman Mamedov <rm@romanrm.net>
+Subject: Re: Logical cores / SMT with WireGuard
+Message-ID: <20190217204401.GA26054@localhost.localdomain>
+References: <735c8b20-c92b-2403-1557-32187b130a8f@icloud.com>
+ <20190217160136.6138076b@natsu>
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9q_-Vwij4YacxF4utTk7mVZ3HvKSexysj45TEwGKMUm-Q@mail.gmail.com>
-Content-Language: es-AR
-X-CMAE-Envelope: MS4wfO8YGeor/IvPSxd3uNZRDNCCzQOcLlH6AJiejfUX6Z9UgYBf5Xts/gnkiUJWHl80oZFjPR0IfCMupKVqqY8yzXkpEGliJos1fq+Q2Mrgg1VWXS1OJRiF
- p2gJyVBzd5koVrsCc87MNE2idJwS9EuMTC8gI6rhGLxUtbyEugfY6kzfZgS2x8WtchFh0qSAIN672Q==
-X-Mailman-Approved-At: Sun, 17 Feb 2019 21:26:55 +0100
+Content-Disposition: inline
+In-Reply-To: <20190217160136.6138076b@natsu>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Cc: wireguard@lists.zx2c4.com
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -59,112 +66,57 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============8732109032940966852=="
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This is a multi-part message in MIME format.
---===============8732109032940966852==
-Content-Type: multipart/alternative;
- boundary="------------11B7B2B7A79449937C957F9B"
-Content-Language: es-AR
+On Sun, Feb 17, 2019 at 04:01:36PM +0500, Roman Mamedov wrote:
+> On Thu, 14 Feb 2019 18:02:26 +0000
+> Lee Yates <rainmakerraw@icloud.com> wrote:
+> 
+> Sorry, hit "send" before reading the rest of your message.
+> 
+> > the router runs headless and is awkward to get a monitor to so I can access
+> > the BIOS.
+> 
+> You can toggle it without needing the BIOS.
+> It is possible to disable SMT from grub, with Linux kernel boot arguments.
+> It even seems possible to disable/enable it without a reboot.
+> See https://www.golinuxhub.com/2018/01/how-to-disable-or-enable-hyper.html
 
-This is a multi-part message in MIME format.
---------------11B7B2B7A79449937C957F9B
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Hi all.
 
-Jason,
+The information provided by the original link is out-of-date, it works, but
+it's tedious and easy to make a mistake and disable the wrong logical CPU. The
+new Linux kernel with L1TF fixes has introduced a SMT kill switch, which is the
+standard interface to control SMT.
 
-Thanks for a quick fix! If you plan to release a new snapshot in the 
-near future, I guess I'll wait for it.
+It's located at
 
-Regards,
-Anatoli
+    /sys/devices/system/cpu/smt/control
 
-*From:* Jason A. Donenfeld <Jason@zx2c4.com>
-*Sent:* Sunday, February 17, 2019 00:57
-*To:* Anatoli <me@anatoli.ws>
-*Cc:* Wireguard Mailing List <wireguard@lists.zx2c4.com>
-*Subject:* Re: BUG: unable to handle kernel NULL pointer dereference at 
-.. (linux 3.13)
+You can disable SMT by,
 
-Hi Anatoli,
+    echo "off" > /sys/devices/system/cpu/smt/control
 
-Thanks for the .ko. I've fixed the compat backport here:
+enable it by,
 
-https://git.zx2c4.com/WireGuard/commit/?id=e7348a19a45f4f1311df6266b654c7fc8d50f976
+    echo "on" > /sys/devices/system/cpu/smt/control
 
-You can either apply that yourself, wait for a new snapshot, or reenable IPv6.
+Or permanently disable it until reboot,
 
-Jason
+    echo "forceoff" > /sys/devices/system/cpu/smt/control.
 
+More information is available at,
 
+    https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/admin-guide/l1tf.rst
 
+I hope it helps.
 
---------------11B7B2B7A79449937C957F9B
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: 7bit
-
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body smarttemplateinserted="true">
-    <div id="smartTemplate4-quoteHeader">
-      <div style="font-size:10.0pt;font-family:Verdana,Arial">Jason,<br>
-        <br>
-        Thanks for a quick fix! If you plan to release a new snapshot in
-        the near future, I guess I'll wait for it.<br>
-        <br>
-        Regards,<br>
-        Anatoli<br>
-        <br>
-      </div>
-      <div style="border:none;border-top:solid #B5C4DF
-        1.0pt;padding:3.0pt 0cm 0cm
-0cm;font-size:10.0pt;font-family:&quot;Tahoma&quot;,&quot;sans-serif&quot;"><b>From:</b>
-        Jason A. Donenfeld <a class="moz-txt-link-rfc2396E" href="mailto:Jason@zx2c4.com">&lt;Jason@zx2c4.com&gt;</a><br>
-        <b>Sent:</b> Sunday, February 17, 2019 00:57<br>
-        <b>To:</b> Anatoli <a class="moz-txt-link-rfc2396E" href="mailto:me@anatoli.ws">&lt;me@anatoli.ws&gt;</a><br>
-        <b>Cc:</b> Wireguard Mailing List
-        <a class="moz-txt-link-rfc2396E" href="mailto:wireguard@lists.zx2c4.com">&lt;wireguard@lists.zx2c4.com&gt;</a><br>
-        <b>Subject:</b> Re: BUG: unable to handle kernel NULL pointer
-        dereference at .. (linux 3.13)<br>
-      </div>
-      <br>
-    </div>
-    <div class="replaced-blockquote"
-cite="mid:CAHmME9q_-Vwij4YacxF4utTk7mVZ3HvKSexysj45TEwGKMUm-Q@mail.gmail.com"
-      type="cite">
-      <pre class="moz-quote-pre" wrap="">Hi Anatoli,
-
-Thanks for the .ko. I've fixed the compat backport here:
-
-<a class="moz-txt-link-freetext" href="https://git.zx2c4.com/WireGuard/commit/?id=e7348a19a45f4f1311df6266b654c7fc8d50f976">https://git.zx2c4.com/WireGuard/commit/?id=e7348a19a45f4f1311df6266b654c7fc8d50f976</a>
-
-You can either apply that yourself, wait for a new snapshot, or reenable IPv6.
-
-Jason
-
-
-</pre>
-    </div>
-    <br>
-  </body>
-</html>
-
---------------11B7B2B7A79449937C957F9B--
-
---===============8732109032940966852==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
+Cheers,
+Tom Li
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
-
---===============8732109032940966852==--
