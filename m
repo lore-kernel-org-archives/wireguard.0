@@ -6,54 +6,93 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_PASS
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89B17C4360F
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Feb 2019 23:03:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AE26C43381
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Feb 2019 23:03:55 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 253C02176F
+	by mail.kernel.org (Postfix) with ESMTPS id A2A812176F
 	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Feb 2019 23:03:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=wieliczko.ninja header.i=@wieliczko.ninja header.b="JF9K0Uko"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 253C02176F
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=wieliczko.ninja
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="iaUanXNC"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A2A812176F
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=yogotech.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dfb89f25;
-	Mon, 18 Feb 2019 22:53:54 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 07829885;
+	Mon, 18 Feb 2019 22:54:15 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 68ddfdf6
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c88bc37d
  for <wireguard@lists.zx2c4.com>;
- Sun, 17 Feb 2019 12:39:24 +0000 (UTC)
-Received: from mail1.protonmail.ch (mail1.protonmail.ch [185.70.40.18])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ed977be2
+ Sun, 17 Feb 2019 05:48:01 +0000 (UTC)
+Received: from NAM01-BN3-obe.outbound.protection.outlook.com
+ (mail-oln040092000065.outbound.protection.outlook.com [40.92.0.65])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id de57f667
  for <wireguard@lists.zx2c4.com>;
- Sun, 17 Feb 2019 12:39:24 +0000 (UTC)
-Date: Sun, 17 Feb 2019 12:47:36 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wieliczko.ninja;
- s=protonmail; t=1550407659;
- bh=f0tdUye25PNOYHwDhZMzM3l2wqKO4PZZPeispsUUrvI=;
- h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:
- Feedback-ID:From;
- b=JF9K0Uko48v6R2HdYq9qElA5yMjq/H9oTT5pmYI3SOctBWOpQFDGzAp+Y9E0ZBR2q
- xMYsuyBXrkDYhXxTUFDLB18ZGGFFBZLXUep847qG5PsAI8uD62eTGRlLtpPjXFnz/6
- Z8VrU7R9YwyhpH1LylHYR4KNiXHXfPlPBeqv0XgA=
-To: David Kerr <david@kerr.net>
-From: Eryk Wieliczko <eryk@wieliczko.ninja>
-Subject: Re: DNS name resolution should not be done during configuration
- parsing.
-Message-ID: <e9LcGQI1EZfQ2-VENJX6PnLGuxlapIvUHMP4v7HW5f_L1oDnH7MsGnfLxTk1K6tACrwA0GHhbsHKqHHqFIFt1bPRFAElCXcaI6KXlR8alDQ=@wieliczko.ninja>
-In-Reply-To: <CAJJxGdG2G+busk12y==dZOL2__+C1T6nQy+tGRJM=M65-SuZ5Q@mail.gmail.com>
-References: <8_iPFshR7GasRS24vRTFKp3pG-UGxQLluTaoZZeAO-UlYBTQ2nCHNlMniuKWz9tWpWPbbXS8Br3SxRpCjcruohwFw8PD83jko2lrf3E7hq4=@wieliczko.ninja>
- <CAJJxGdG2G+busk12y==dZOL2__+C1T6nQy+tGRJM=M65-SuZ5Q@mail.gmail.com>
-Feedback-ID: uBwOhQgAUjO-mCE4v8RZ81RKX0ASW5ZgKh4bYtmyPYWTuWTyJ1pXSKwKpskmlyjfvo8TDukOEh7ekSlJK3Gk3A==:Ext:ProtonMail
+ Sun, 17 Feb 2019 05:48:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=PbYsHHcakOM3dpfq3NpGIJzG0UJHrytn4s5Zf4LRujU=;
+ b=iaUanXNCGkO3aWMpiL68i3W7K25Z2YPmdnK3BG3etDaEyZ4mhdb/OA01xTz2ROgA064W8AAfWA9ibe6c/hGa21j2SbNemRXjrgal2GYRISB6O3OiFHxDWubuB0Qya5uZv3CdckEOF7Qut2wSe19fZ6fZdIWU+aJr6RHDr5buaME5emt0JNcsq/85pBu7t9QAtPn4SNiScSFYft/pcpOhlhHTE0DCEzmBs4AfAptON3CNJww8eNUTLcnxAOl4CjhwXMBAlLIk8QJAv6lCaBSJaf1sU1qjqVkAfU3L7nEo4v283n/s1yfy2g9EqCiHHo0eWxmqtzGu4cbBxZj6wle2cQ==
+Received: from SN1NAM01FT005.eop-nam01.prod.protection.outlook.com
+ (10.152.64.51) by SN1NAM01HT171.eop-nam01.prod.protection.outlook.com
+ (10.152.65.162) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.20.1580.10; Sun, 17 Feb
+ 2019 05:56:15 +0000
+Received: from MWHPR20MB1245.namprd20.prod.outlook.com (10.152.64.52) by
+ SN1NAM01FT005.mail.protection.outlook.com (10.152.65.22) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ 15.20.1580.10 via Frontend Transport; Sun, 17 Feb 2019 05:56:15 +0000
+Received: from MWHPR20MB1245.namprd20.prod.outlook.com
+ ([fe80::14e2:419e:b515:921c]) by MWHPR20MB1245.namprd20.prod.outlook.com
+ ([fe80::14e2:419e:b515:921c%10]) with mapi id 15.20.1622.018; Sun, 17 Feb
+ 2019 05:56:15 +0000
+From: Nate Williams <nate@yogotech.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>, Nate Williams <nate@yogotech.com>
+Subject: Re: Wireguard-go on FreeBSD - Not working until the interface (wg0)
+ is set into promiscuous mode
+Thread-Topic: Wireguard-go on FreeBSD - Not working until the interface (wg0)
+ is set into promiscuous mode
+Thread-Index: AQHUvmgLm3kSS0yxK0mput6GEXPkaaXjUvOAgAA7JIc=
+Date: Sun, 17 Feb 2019 05:56:15 +0000
+Message-ID: <MWHPR20MB124594346E8D2C2A6D605439E9620@MWHPR20MB1245.namprd20.prod.outlook.com>
+References: <MWHPR20MB1245664BA43F11A3368F1D8BE96F0@MWHPR20MB1245.namprd20.prod.outlook.com>,
+ <CAHmME9r=rUwZpwW_Q4wYaV-LBGf5YSxgD8dJW-uf2JKEuSXRrg@mail.gmail.com>
+In-Reply-To: <CAHmME9r=rUwZpwW_Q4wYaV-LBGf5YSxgD8dJW-uf2JKEuSXRrg@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-incomingtopheadermarker: OriginalChecksum:4A1ADD7C9FB0D0D423A14CE42E87791DBF62398886CE2744015F6F7510D8CA87;
+ UpperCasedChecksum:62078E29FDFC6197AE532ABD592964AD5A0B2CC96F4F01293324074EB1DD6D2F;
+ SizeAsReceived:7185; Count:46
+x-ms-exchange-messagesentrepresentingtype: 2
+x-tmn: [Cswagf5eUXrgp1GErOf7IrVA6vwfrlP6]
+x-ms-publictraffictype: Email
+x-incomingheadercount: 46
+x-eopattributedmessage: 0
+x-microsoft-antispam: BCL:0; PCL:0;
+ RULEID:(2390118)(7020095)(201702061078)(5061506573)(5061507331)(1603103135)(2017031320274)(2017031322404)(2017031323274)(2017031324274)(1601125500)(1603101475)(1701031045);
+ SRVR:SN1NAM01HT171; 
+x-ms-traffictypediagnostic: SN1NAM01HT171:
+x-exchange-antispam-report-cfa-test: BCL:0; PCL:0; RULEID:(4566010)(82015058);
+ SRVR:SN1NAM01HT171; BCL:0; PCL:0; RULEID:; SRVR:SN1NAM01HT171; 
+x-microsoft-antispam-message-info: W7PgQNYIY31cmQ6366peDMntbr/8WZEswCv7F+ZBO9u1TQwx9DpyFjOZePhWqW3R
 MIME-Version: 1.0
-X-Mailman-Approved-At: Mon, 18 Feb 2019 23:53:53 +0100
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 24fd1209-d934-423e-a578-ee886993c07f
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7b5b4e69-fa17-4498-7d4b-08d6949ca0c2
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 24fd1209-d934-423e-a578-ee886993c07f
+X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Feb 2019 05:56:15.0672 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Internet
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN1NAM01HT171
+X-Mailman-Approved-At: Mon, 18 Feb 2019 23:54:13 +0100
 Cc: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
-Reply-To: Eryk Wieliczko <eryk@wieliczko.ninja>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -62,157 +101,89 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============4363843978097927865=="
+Content-Type: multipart/mixed; boundary="===============8662091414551256816=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This is a multi-part message in MIME format.
-
---===============4363843978097927865==
+--===============8662091414551256816==
+Content-Language: en-US
 Content-Type: multipart/alternative;
-	boundary="b1_56962b3690289b86393e6d9418ea00ee"
+	boundary="_000_MWHPR20MB124594346E8D2C2A6D605439E9620MWHPR20MB1245namp_"
 
-This is a multi-part message in MIME format.
+--_000_MWHPR20MB124594346E8D2C2A6D605439E9620MWHPR20MB1245namp_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
---b1_56962b3690289b86393e6d9418ea00ee
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-
-VGhhdCBmaXggaXMgYSBoYWNrLiBUaGVyZSBzaW1wbHkgc2hvdWxkbid0IGJlIEFOWSBjaGVja2lu
-ZyBpZiB0aGUgZG9tYWluL3BvcnQgaXMgY29ycmVjdCBpbiBjb25maWcuYy4KSWYgc29tZW9uZSB3
-YW50cyB0byB1c2UgIm5vbmV4aXN0ZW50ZG9tYWluLm5vbmV4aXN0ZW50aG9zdC5ub25leGlzdGVu
-dHRsZDo0MTM0MiIsIFdpcmVHdWFyZCBzaG91bGQgbm90IGNvbXBsYWluIGFib3V0IGl0LgoKT2Yg
-Y291cnNlLCBpdCBzaG91bGQgc3RpbGwgY2hlY2sgaWYgdGhlIHBvcnQgbnVtYmVyIGlzIDwgNjU1
-MzUuIEJ1dCBsZWF2ZSB0aGUgZG9tYWluIGFsb25lIGFuZCBjaGVjayBpdCBvbmx5IGR1cmluZyBj
-b25uZWN0aW9uLgoK4oCQ4oCQ4oCQ4oCQ4oCQ4oCQ4oCQIE9yaWdpbmFsIE1lc3NhZ2Ug4oCQ4oCQ
-4oCQ4oCQ4oCQ4oCQ4oCQCk9uIFN1bmRheSwgRmVicnVhcnkgMTcsIDIwMTkgNDowMyBBTSwgRGF2
-aWQgS2VyciA8ZGF2aWRAa2Vyci5uZXQ+IHdyb3RlOgoKPiBFcmlrLCBzZWUgaGVyZSBmb3IgYSBw
-cm9wb3NlZCBmaXguICBObyByZXNwb25zZSBmcm9tIHRoZSBXaXJlR3VhcmQgdGVhbSB5ZXQuCj4K
-PiBodHRwczovL2xpc3RzLnp4MmM0LmNvbS9waXBlcm1haWwvd2lyZWd1YXJkLzIwMTktSmFudWFy
-eS8wMDM4NDIuaHRtbAo+Cj4gUmVjZW50bHkgSSBoYWQgYSBwb3dlciBvdXRhZ2UgYW5kIGJvdGgg
-bXkgZ2F0ZXdheSBhbmQgY2FibGUgbW9kZW0gd2VudCBvZmZsaW5lLiBPbiBwb3dlciByZWNvdmVy
-eSBib3RoIGRldmljZXMgc3RhcnQgdXAsIGJ1dCB0aGUgZ2F0ZXdheSBjb21wbGV0ZXMgc3RhcnR1
-cCBiZWZvcmUgdGhlIGNhYmxlIG1vZGVtIGNvbXBsZXRlcyBpdHMgcHJvdG9jb2wgbmVnb3RpYXRp
-b25zLCBzbyBpbml0aWFsbHkgdGhlIGV4dGVybmFsIG5ldHdvcmsgKGV0aDApIGlzIG5vdCBmdW5j
-dGlvbmFsLiAgVGhhdCBjb21lcyBvbmxpbmUgc2F5IG9uZSBtaW51dGUgbGF0ZXIgYW5kIGFsbCBp
-cyB3ZWxsLgo+Cj4gRXhjZXB0IHRoYXQgYWxsIGlzIG5vdCB3ZWxsLiAgV2lyZWd1YXJkIGZhaWxl
-ZCB0byBzdGFydCB1cCBiZWNhdXNlIEkgaGF2ZSBFbmRwb2ludD08YSBVUkw+IGluc3RlYWQgb2Yg
-YSBJUCBhZGRyZXNzLiAgQW5kIGJlY2F1c2UgZXh0ZXJuYWwgaW50ZXJmYWNlIGlzIG5vdCBsaXZl
-IHlldCwgRE5TIGxvb2t1cCBmYWlscyBhbmQgV2lyZWd1YXJkIGRvZXMgbm90IGdyYWNlZnVsbHkg
-aGFuZGxlIGl0LiAgVGhpcyBpcyByZWFsbHkgaW1wb3J0YW50IGJlY2F1c2UgV2lyZWd1YXJkIG1h
-eSBiZSBteSBvbmx5IHdheSBpbnRvIG15IGxvY2FsIG5ldHdvcmsuCj4KPiBBcyB3b3JrLWFyb3Vu
-ZCBJIHJlcGxhY2VkIHRoZSBVUkwgd2l0aCB0aGUgSVAgYWRkcmVzcy4uLiBidXQgdGhhdCBpcyBu
-b3QgYSBsb25nIHRlcm0gc29sdXRpb24gaWYgdGhlIGVuZHBvaW50IGlzIG5vdCBhIHN0YXRpYyBJ
-UCBhZGRyZXNzLgo+Cj4gV2lyZWd1YXJkIG5lZWRzIHRvIGhhbmRsZSB0aGUgc2l0dWF0aW9uIHdo
-ZXJlIGV4dGVybmFsIG5ldHdvcmsgbWF5IG5vdCBoYXZlIHN0YWJpbGl6ZWQgYXQgdGhlIHRpbWUg
-aXQgc3RhcnRzIHVwLiAgVGhlIGFib3ZlIGxpbmsgcHJvcG9zZWQgYSBmaXguCj4KPiBEYXZpZAo+
-Cj4gT24gU2F0LCBGZWIgMTYsIDIwMTkgYXQgODozNSBQTSBFcnlrIFdpZWxpY3prbyA8ZXJ5a0B3
-aWVsaWN6a28ubmluamE+IHdyb3RlOgo+Cj4+IEhlbGxvIGV2ZXJ5b25lIQo+Pgo+PiBJZiB5b3Ug
-dXNlIGEgRE5TIGFkZHJlc3MgYXMgYW4gZW5kcG9pbnQgYW5kIHRoZXJlIGlzIG5vIGludGVybmV0
-IGNvbm5lY3Rpb24sIFdpcmVHdWFyZCB3aWxsIGhhbmcgZm9yIHR3byBtaW51dGVzIGFuZCB0aGVu
-IGV4aXQgd2l0aCBlcnJvci4KPj4KPj4gSU1PIHRoZSBleHBlY3RlZCBiZWhhdmlvciBzaG91bGQg
-YmUgdGhlIHNhbWUgYXMgaW4gT3BlblZQTjoKPj4gV2lyZUd1YXJkIHN0YXJ0cyBpbW1lZGlhdGVs
-eSBhbmQgcGF0aWVudGx5IHRyaWVzIHRvIHJlc29sdmUgdGhlIEROUyB1bnRpbCBpdCBzdWNjZWVk
-cy4KPj4KPj4gVGh1cywgV2lyZUd1YXJkIHNob3VsZCByZXNvbHZlIHRoZSBETlMganVzdCBiZWZv
-cmUgY29ubmVjdGluZyB0byB0aGUgc2VydmVyLiBBbmQganVzdCBrZWVwIHRyeWluZyBhbmQgdHJ5
-aW5nIHdpdGhvdXQgYW55IHRpbWVvdXRzLgo+Pgo+PiBJJ2QgbGlrZSB0byBpbnN0YWxsIFdpcmVH
-dWFyZCBvbiB0ZWNobmljaWFuJ3MgY29tcHV0ZXJzIGFuZCB0aGVyZSBpcyBubyBndWFyYW50ZWUg
-dGhhdCB0aGV5IHdpbGwgc3RhcnQgcGhvbmUgdGV0aGVyaW5nIHdpdGhpbiAyIG1pbnV0ZXMgb2Yg
-c3RhcnRpbmcgdGhlaXIgbWFjaGluZS4gT3BlblZQTiB3b3VsZCBwYXNzIHRoaXMgc2NlbmFyaW8u
-Cj4+Cj4+IFdoYXQgZG8geW91IHRoaW5rPwo+PiBfX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fXwo+PiBXaXJlR3VhcmQgbWFpbGluZyBsaXN0Cj4+IFdpcmVHdWFy
-ZEBsaXN0cy56eDJjNC5jb20KPj4gaHR0cHM6Ly9saXN0cy56eDJjNC5jb20vbWFpbG1hbi9saXN0
-aW5mby93aXJlZ3VhcmQKPgo+IC0tCj4gRGF2aWQgS2VyciBTZW50IGZyb20gR21haWwgTW9iaWxl
+I'll test it in the next couple of days and get back to you.
 
 
---b1_56962b3690289b86393e6d9418ea00ee
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: base64
+Nate
+________________________________
+From: Jason A. Donenfeld <Jason@zx2c4.com>
+Sent: Saturday, February 16, 2019 7:24 PM
+To: Nate Williams
+Cc: wireguard@lists.zx2c4.com
+Subject: Re: Wireguard-go on FreeBSD - Not working until the interface (wg0=
+) is set into promiscuous mode
 
-PGRpdj5UaGF0IGZpeCBpcyBhIGhhY2suIFRoZXJlIHNpbXBseSBzaG91bGRuJ3QgYmUgQU5ZIGNo
-ZWNraW5nIGlmIHRoZSBkb21haW4vcG9ydCBpcyBjb3JyZWN0IGluIGNvbmZpZy5jLjxicj48L2Rp
-dj48ZGl2PklmIHNvbWVvbmUgd2FudHMgdG8gdXNlICJub25leGlzdGVudGRvbWFpbi5ub25leGlz
-dGVudGhvc3Qubm9uZXhpc3RlbnR0bGQ6NDEzNDIiLCBXaXJlR3VhcmQgc2hvdWxkIG5vdCBjb21w
-bGFpbiBhYm91dCBpdC48YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5PZiBjb3Vyc2UsIGl0
-IHNob3VsZCBzdGlsbCBjaGVjayBpZiB0aGUgcG9ydCBudW1iZXIgaXMgJmx0OyA2NTUzNS4gQnV0
-IGxlYXZlIHRoZSBkb21haW4gYWxvbmUgYW5kIGNoZWNrIGl0IG9ubHkgZHVyaW5nIGNvbm5lY3Rp
-b24uPGJyPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+4oCQ4oCQ4oCQ4oCQ4oCQ4oCQ4oCQIE9y
-aWdpbmFsIE1lc3NhZ2Ug4oCQ4oCQ4oCQ4oCQ4oCQ4oCQ4oCQPGJyPjwvZGl2PjxkaXY+IE9uIFN1
-bmRheSwgRmVicnVhcnkgMTcsIDIwMTkgNDowMyBBTSwgRGF2aWQgS2VyciAmbHQ7ZGF2aWRAa2Vy
-ci5uZXQmZ3Q7IHdyb3RlOjxicj48L2Rpdj48ZGl2PiA8YnI+PC9kaXY+PGJsb2NrcXVvdGUgdHlw
-ZT0iY2l0ZSIgY2xhc3M9InByb3Rvbm1haWxfcXVvdGUiPjxkaXY+PGRpdiBkaXI9ImF1dG8iPkVy
-aWssIHNlZSBoZXJlIGZvciBhIHByb3Bvc2VkIGZpeC4mbmJzcDsgTm8gcmVzcG9uc2UgZnJvbSB0
-aGUgV2lyZUd1YXJkIHRlYW0geWV0LiZuYnNwOzxicj48L2Rpdj48ZGl2IGRpcj0iYXV0byI+PGJy
-PjwvZGl2PjxkaXYgZGlyPSJhdXRvIj48ZGl2IGRpcj0iYXV0byI+PGEgaHJlZj0iaHR0cHM6Ly9s
-aXN0cy56eDJjNC5jb20vcGlwZXJtYWlsL3dpcmVndWFyZC8yMDE5LUphbnVhcnkvMDAzODQyLmh0
-bWwiPmh0dHBzOi8vbGlzdHMuengyYzQuY29tL3BpcGVybWFpbC93aXJlZ3VhcmQvMjAxOS1KYW51
-YXJ5LzAwMzg0Mi5odG1sPC9hPjxicj48L2Rpdj48ZGl2IGRpcj0iYXV0byI+PGJyPjwvZGl2Pjxk
-aXYgZGlyPSJhdXRvIj48ZGl2IHN0eWxlPSJmb250LXNpemU6MTdweDtmb250LWZhbWlseTp2ZXJk
-YW5hLHNhbnMtc2VyaWYiIGRpcj0iYXV0byI+UmVjZW50bHkgSSBoYWQgYSBwb3dlciBvdXRhZ2Ug
-YW5kIGJvdGggbXkgZ2F0ZXdheSBhbmQgY2FibGUgbW9kZW0gd2VudCBvZmZsaW5lLiBPbiBwb3dl
-ciByZWNvdmVyeSBib3RoIGRldmljZXMgc3RhcnQgdXAsIGJ1dCB0aGUgZ2F0ZXdheSBjb21wbGV0
-ZXMgc3RhcnR1cCBiZWZvcmUgdGhlIGNhYmxlIG1vZGVtIGNvbXBsZXRlcyBpdHMgcHJvdG9jb2wg
-bmVnb3RpYXRpb25zLCBzbyBpbml0aWFsbHkgdGhlIGV4dGVybmFsIG5ldHdvcmsgKGV0aDApIGlz
-IG5vdCBmdW5jdGlvbmFsLiZuYnNwOyBUaGF0IGNvbWVzIG9ubGluZSBzYXkgb25lIG1pbnV0ZSBs
-YXRlciBhbmQgYWxsIGlzIHdlbGwuPGJyPjwvZGl2PjxkaXYgc3R5bGU9ImZvbnQtc2l6ZToxN3B4
-O2ZvbnQtZmFtaWx5OnZlcmRhbmEsc2Fucy1zZXJpZiIgZGlyPSJhdXRvIj48YnI+PC9kaXY+PGRp
-diBzdHlsZT0iZm9udC1zaXplOjE3cHg7Zm9udC1mYW1pbHk6dmVyZGFuYSxzYW5zLXNlcmlmIiBk
-aXI9ImF1dG8iPkV4Y2VwdCB0aGF0IGFsbCBpcyBub3Qgd2VsbC4mbmJzcDsgV2lyZWd1YXJkIGZh
-aWxlZCB0byBzdGFydCB1cCBiZWNhdXNlIEkgaGF2ZSBFbmRwb2ludD0mbHQ7YSBVUkwmZ3Q7IGlu
-c3RlYWQgb2YgYSBJUCBhZGRyZXNzLiZuYnNwOyBBbmQgYmVjYXVzZSBleHRlcm5hbCBpbnRlcmZh
-Y2UgaXMgbm90IGxpdmUgeWV0LCBETlMgbG9va3VwIGZhaWxzIGFuZCBXaXJlZ3VhcmQgZG9lcyBu
-b3QgZ3JhY2VmdWxseSBoYW5kbGUgaXQuJm5ic3A7IFRoaXMgaXMgcmVhbGx5IGltcG9ydGFudCBi
-ZWNhdXNlIFdpcmVndWFyZCBtYXkgYmUgbXkgb25seSB3YXkgaW50byBteSBsb2NhbCBuZXR3b3Jr
-Ljxicj48L2Rpdj48ZGl2IHN0eWxlPSJmb250LXNpemU6MTdweDtmb250LWZhbWlseTp2ZXJkYW5h
-LHNhbnMtc2VyaWYiIGRpcj0iYXV0byI+PGJyPjwvZGl2PjxkaXYgc3R5bGU9ImZvbnQtc2l6ZTox
-N3B4O2ZvbnQtZmFtaWx5OnZlcmRhbmEsc2Fucy1zZXJpZiIgZGlyPSJhdXRvIj5BcyB3b3JrLWFy
-b3VuZCBJIHJlcGxhY2VkIHRoZSBVUkwgd2l0aCB0aGUgSVAgYWRkcmVzcy4uLiBidXQgdGhhdCBp
-cyBub3QgYSBsb25nIHRlcm0gc29sdXRpb24gaWYgdGhlIGVuZHBvaW50IGlzIG5vdCBhIHN0YXRp
-YyZuYnNwO0lQIGFkZHJlc3MuPGJyPjwvZGl2PjxkaXYgc3R5bGU9ImZvbnQtc2l6ZToxN3B4O2Zv
-bnQtZmFtaWx5OnZlcmRhbmEsc2Fucy1zZXJpZiIgZGlyPSJhdXRvIj48YnI+PC9kaXY+PGRpdiBz
-dHlsZT0iZm9udC1zaXplOjE3cHg7Zm9udC1mYW1pbHk6dmVyZGFuYSxzYW5zLXNlcmlmIiBkaXI9
-ImF1dG8iPldpcmVndWFyZCBuZWVkcyB0byBoYW5kbGUgdGhlIHNpdHVhdGlvbiB3aGVyZSBleHRl
-cm5hbCBuZXR3b3JrIG1heSBub3QgaGF2ZSBzdGFiaWxpemVkIGF0IHRoZSB0aW1lIGl0IHN0YXJ0
-cyB1cC4mbmJzcDsgVGhlIGFib3ZlIGxpbmsgcHJvcG9zZWQgYSBmaXguJm5ic3A7PGJyPjwvZGl2
-PjxkaXYgc3R5bGU9ImZvbnQtc2l6ZToxN3B4O2ZvbnQtZmFtaWx5OnZlcmRhbmEsc2Fucy1zZXJp
-ZiIgZGlyPSJhdXRvIj48YnI+PC9kaXY+PGRpdiBzdHlsZT0iZm9udC1zaXplOjE3cHg7Zm9udC1m
-YW1pbHk6dmVyZGFuYSxzYW5zLXNlcmlmIiBkaXI9ImF1dG8iPkRhdmlkPGJyPjwvZGl2PjwvZGl2
-PjwvZGl2PjwvZGl2PjxkaXY+PGRpdj48YnI+PC9kaXY+PGRpdiBjbGFzcz0iZ21haWxfcXVvdGUi
-PjxkaXYgZGlyPSJsdHIiPk9uIFNhdCwgRmViIDE2LCAyMDE5IGF0IDg6MzUgUE0gRXJ5ayBXaWVs
-aWN6a28gJmx0O2VyeWtAd2llbGljemtvLm5pbmphJmd0OyB3cm90ZTo8YnI+PC9kaXY+PGJsb2Nr
-cXVvdGUgY2xhc3M9ImdtYWlsX3F1b3RlIiBzdHlsZT0ibWFyZ2luOjAgMCAwIC44ZXg7Ym9yZGVy
-LWxlZnQ6MXB4ICNjY2Mgc29saWQ7cGFkZGluZy1sZWZ0OjFleCI+PGRpdj5IZWxsbyBldmVyeW9u
-ZSE8YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5JZiB5b3UgdXNlIGEgRE5TIGFkZHJlc3Mg
-YXMgYW4gZW5kcG9pbnQgYW5kIHRoZXJlIGlzIG5vIGludGVybmV0IGNvbm5lY3Rpb24sIFdpcmVH
-dWFyZCB3aWxsIGhhbmcgZm9yIHR3byBtaW51dGVzIGFuZCB0aGVuIGV4aXQgd2l0aCBlcnJvci48
-YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5JTU8gdGhlIGV4cGVjdGVkIGJlaGF2aW9yIHNo
-b3VsZCBiZSB0aGUgc2FtZSBhcyBpbiBPcGVuVlBOOjxicj48L2Rpdj48ZGl2PldpcmVHdWFyZCBz
-dGFydHMgaW1tZWRpYXRlbHkgYW5kIHBhdGllbnRseSB0cmllcyB0byByZXNvbHZlIHRoZSBETlMg
-dW50aWwgaXQgc3VjY2VlZHMuPGJyPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+VGh1cywgV2ly
-ZUd1YXJkIHNob3VsZCByZXNvbHZlIHRoZSBETlMganVzdCBiZWZvcmUgY29ubmVjdGluZyB0byB0
-aGUgc2VydmVyLiBBbmQganVzdCBrZWVwIHRyeWluZyBhbmQgdHJ5aW5nIHdpdGhvdXQgYW55IHRp
-bWVvdXRzLjxicj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PkknZCBsaWtlIHRvIGluc3RhbGwg
-V2lyZUd1YXJkIG9uIHRlY2huaWNpYW4ncyBjb21wdXRlcnMgYW5kIHRoZXJlIGlzIG5vIGd1YXJh
-bnRlZSB0aGF0IHRoZXkgd2lsbCBzdGFydCBwaG9uZSB0ZXRoZXJpbmcgd2l0aGluIDIgbWludXRl
-cyBvZiBzdGFydGluZyB0aGVpciBtYWNoaW5lLiBPcGVuVlBOIHdvdWxkIHBhc3MgdGhpcyBzY2Vu
-YXJpby48YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5XaGF0IGRvIHlvdSB0aGluaz88YnI+
-PC9kaXY+PGRpdj5fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-Xzxicj48L2Rpdj48ZGl2PiBXaXJlR3VhcmQgbWFpbGluZyBsaXN0PGJyPjwvZGl2PjxkaXY+IDxh
-IGhyZWY9Im1haWx0bzpXaXJlR3VhcmRAbGlzdHMuengyYzQuY29tIiB0YXJnZXQ9Il9ibGFuayI+
-V2lyZUd1YXJkQGxpc3RzLnp4MmM0LmNvbTwvYT48YnI+PC9kaXY+PGRpdj4gPGEgaHJlZj0iaHR0
-cHM6Ly9saXN0cy56eDJjNC5jb20vbWFpbG1hbi9saXN0aW5mby93aXJlZ3VhcmQiIHJlbD0ibm9y
-ZWZlcnJlciIgdGFyZ2V0PSJfYmxhbmsiPmh0dHBzOi8vbGlzdHMuengyYzQuY29tL21haWxtYW4v
-bGlzdGluZm8vd2lyZWd1YXJkPC9hPjxicj48L2Rpdj48L2Jsb2NrcXVvdGU+PC9kaXY+PC9kaXY+
-PGRpdj4tLSA8YnI+PC9kaXY+PGRpdiBkaXI9Imx0ciIgZGF0YS1zbWFydG1haWw9ImdtYWlsX3Np
-Z25hdHVyZSI+RGF2aWQgS2Vycg0KU2VudCBmcm9tIEdtYWlsIE1vYmlsZTxicj48L2Rpdj48L2Js
-b2NrcXVvdGU+PGRpdj48YnI+PC9kaXY+
+That's odd. Does this fix it for you?
 
+https://git.zx2c4.com/WireGuard/commit/?id=3D7c833642dfa342218602ab18e7091e=
+86408d2982
 
+--_000_MWHPR20MB124594346E8D2C2A6D605439E9620MWHPR20MB1245namp_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
---b1_56962b3690289b86393e6d9418ea00ee--
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+>
+<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
+ttom:0;} </style>
+</head>
+<body dir=3D"ltr">
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0);">
+I'll test it in the next couple of days and get back to you.</div>
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0);">
+<br>
+</div>
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0);">
+<br>
+</div>
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0);">
+Nate</div>
+<div id=3D"appendonsend"></div>
+<hr style=3D"display:inline-block;width:98%" tabindex=3D"-1">
+<div id=3D"divRplyFwdMsg" dir=3D"ltr"><font face=3D"Calibri, sans-serif" st=
+yle=3D"font-size:11pt" color=3D"#000000"><b>From:</b> Jason A. Donenfeld &l=
+t;Jason@zx2c4.com&gt;<br>
+<b>Sent:</b> Saturday, February 16, 2019 7:24 PM<br>
+<b>To:</b> Nate Williams<br>
+<b>Cc:</b> wireguard@lists.zx2c4.com<br>
+<b>Subject:</b> Re: Wireguard-go on FreeBSD - Not working until the interfa=
+ce (wg0) is set into promiscuous mode</font>
+<div>&nbsp;</div>
+</div>
+<div class=3D"BodyFragment"><font size=3D"2"><span style=3D"font-size:11pt;=
+">
+<div class=3D"PlainText">That's odd. Does this fix it for you?<br>
+<br>
+<a href=3D"https://git.zx2c4.com/WireGuard/commit/?id=3D7c833642dfa34221860=
+2ab18e7091e86408d2982">https://git.zx2c4.com/WireGuard/commit/?id=3D7c83364=
+2dfa342218602ab18e7091e86408d2982</a><br>
+</div>
+</span></font></div>
+</body>
+</html>
 
+--_000_MWHPR20MB124594346E8D2C2A6D605439E9620MWHPR20MB1245namp_--
 
---===============4363843978097927865==
+--===============8662091414551256816==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -223,5 +194,4 @@ WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---===============4363843978097927865==--
-
+--===============8662091414551256816==--
