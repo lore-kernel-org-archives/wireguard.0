@@ -2,53 +2,61 @@ Return-Path: <SRS0=e3Y3=QZ=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BF6CFC43381
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Feb 2019 14:56:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F48AC43381
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Feb 2019 23:01:27 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 090C921479
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Feb 2019 14:56:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 090C921479
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=lonnie.abelbeck.com
+	by mail.kernel.org (Postfix) with ESMTPS id D1DEF21900
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Feb 2019 23:01:26 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=wieliczko.ninja header.i=@wieliczko.ninja header.b="1K5E0Q5J"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org D1DEF21900
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=wieliczko.ninja
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cf2fcd34;
-	Mon, 18 Feb 2019 14:47:43 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 81bb5c50;
+	Mon, 18 Feb 2019 22:52:57 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2f18dca0
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1e618396
  for <wireguard@lists.zx2c4.com>;
- Mon, 18 Feb 2019 14:47:40 +0000 (UTC)
-Received: from ibughas.pair.com (ibughas.pair.com [209.68.5.177])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 947b9ca5
+ Sun, 17 Feb 2019 13:06:52 +0000 (UTC)
+Received: from mail1.protonmail.ch (mail1.protonmail.ch [185.70.40.18])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0384f4f8
  for <wireguard@lists.zx2c4.com>;
- Mon, 18 Feb 2019 14:47:40 +0000 (UTC)
-Received: from ibughas.pair.com (localhost [127.0.0.1])
- by ibughas.pair.com (Postfix) with ESMTP id 49DBC1E305A;
- Mon, 18 Feb 2019 09:56:05 -0500 (EST)
-Received: from [10.4.1.148] (wsip-70-184-211-81.om.om.cox.net [70.184.211.81])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256
- bits)) (No client certificate requested)
- by ibughas.pair.com (Postfix) with ESMTPSA id 09E651E3040;
- Mon, 18 Feb 2019 09:56:04 -0500 (EST)
-Mime-Version: 1.0 (Mac OS X Mail 12.2 \(3445.102.3\))
-Subject: Re: dynamic reload of configuration file
-From: Lonnie Abelbeck <lists@lonnie.abelbeck.com>
-In-Reply-To: <CACOeLqLEo2mX3AXvEPcG6EAOdwQf+PW3BvfKvYFPzsu6vLp5GQ@mail.gmail.com>
-Date: Mon, 18 Feb 2019 08:56:03 -0600
-Message-Id: <3C0540CA-7490-48CA-8EF6-EDC95DC3E64B@lonnie.abelbeck.com>
-References: <CACOeLqLQjM1AQPpi31F_Fxvv02tFgD+27qFGjnLnW8KFcy66Kw@mail.gmail.com>
- <1550417524.ondhfeso9t.astroid@morple.none>
- <CACOeLqLEo2mX3AXvEPcG6EAOdwQf+PW3BvfKvYFPzsu6vLp5GQ@mail.gmail.com>
-To: Raffaele Spazzoli <rspazzol@redhat.com>
-X-Mailer: Apple Mail (2.3445.102.3)
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+ Sun, 17 Feb 2019 13:06:52 +0000 (UTC)
+Date: Sun, 17 Feb 2019 13:15:07 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wieliczko.ninja;
+ s=protonmail; t=1550409308;
+ bh=crzMDWf/TEggFKqT65jqKx2Abdqx50K2gIBvSOOCZvA=;
+ h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:
+ Feedback-ID:From;
+ b=1K5E0Q5Jpf65ha5aa5Z7eVpNcIiFEemzMP0DgT1XxOQ/2e7TLDnBnnLk5eFGl2KLD
+ JjqKqMd1k2Ay2ccWPbzkUX0FduET+BZkArQdxFDIuBnGtVqxNJLMBYbZMmqHD1qcHL
+ S9Y+79yuK8oYLZZM5b1JaXoorLipC3c5l9Uf1u6E=
+To: "noloader@gmail.com" <noloader@gmail.com>
+From: Eryk Wieliczko <eryk@wieliczko.ninja>
+Subject: Re: DNS name resolution should not be done during configuration
+ parsing.
+Message-ID: <qtitL38P5VIptTV36IWKsoa4vWvlZyqhe3DFCyki22NSub1EVaaRJAg0NAKtFYKi68OwXXPKJH_firCbnX-X2-UCuFsKhruaQueFmouHj3k=@wieliczko.ninja>
+In-Reply-To: <CAH8yC8nz5wwL=xKipUwUtrMqQJ5fHcWAdwzrMpX0Hxck+gO0kQ@mail.gmail.com>
+References: <8_iPFshR7GasRS24vRTFKp3pG-UGxQLluTaoZZeAO-UlYBTQ2nCHNlMniuKWz9tWpWPbbXS8Br3SxRpCjcruohwFw8PD83jko2lrf3E7hq4=@wieliczko.ninja>
+ <CAJJxGdG2G+busk12y==dZOL2__+C1T6nQy+tGRJM=M65-SuZ5Q@mail.gmail.com>
+ <CAH8yC8=2pjH3VbxaeJ-sTSnV64-KxKK3AHA7K_EEANX5_g02Mw@mail.gmail.com>
+ <CHanFQf0BHc_tN8WFKYbpEbjSNMTveoCt1-zENLXnF_XJpdYLN4ywKtkwQ9mjdEYd55O4fQyMNHwRozH7Qi30CjTkiuUO_nPsHNLe_D5EyI=@wieliczko.ninja>
+ <CAH8yC8nz5wwL=xKipUwUtrMqQJ5fHcWAdwzrMpX0Hxck+gO0kQ@mail.gmail.com>
+Feedback-ID: uBwOhQgAUjO-mCE4v8RZ81RKX0ASW5ZgKh4bYtmyPYWTuWTyJ1pXSKwKpskmlyjfvo8TDukOEh7ekSlJK3Gk3A==:Ext:ProtonMail
+MIME-Version: 1.0
+X-Mailman-Approved-At: Mon, 18 Feb 2019 23:52:56 +0100
+Cc: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
+Reply-To: Eryk Wieliczko <eryk@wieliczko.ninja>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -57,82 +65,40 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Raffaele, typing "wg help" should answer many of your questions:
---
-# wg help
-Usage: wg <cmd> [<args>]
-
-Available subcommands:
-  show: Shows the current configuration and device information
-  showconf: Shows the current configuration of a given WireGuard interface, for use with `setconf'
-  set: Change the current configuration, add peers, remove peers, or change peers
-  setconf: Applies a configuration file to a WireGuard interface
-  addconf: Appends a configuration file to a WireGuard interface
-  genkey: Generates a new private key and writes it to stdout
-  genpsk: Generates a new preshared key and writes it to stdout
-  pubkey: Reads a private key from stdin and writes a public key to stdout
-You may pass `--help' to any of these subcommands to view usage.
---
-
---
-# wg set --help
-Usage: wg set <interface> [listen-port <port>] [fwmark <mark>] [private-key <file path>] [peer <base64 public key> [remove] [preshared-key <file path>] [endpoint <ip>:<port>] [persistent-keepalive <interval seconds>] [allowed-ips <ip1>/<cidr1>[,<ip2>/<cidr2>]...] ]...
---
-
-Lonnie
-
-
-> On Feb 18, 2019, at 7:51 AM, Raffaele Spazzoli <rspazzol@redhat.com> wrote:
-> 
-> Samuel,
-> 
-> I read that section of the docs. it doesn't explain the behavior of those commands on an already "warm" wireguard device (i.e. while the device is in up state).
-> 
-> M. Dietrich,
-> 
-> the add conf may work when adding a node, but I also need something when removing a node of the mesh.
-> 
-> two questions:
-> 1. If initialize a wireguard device with a configuration file and then update the file will the configuration be updated?
-> 2. if I run the set-conf command on an already initialized wiredguard device, will the configuration be updated without losing the current (and still existing after the new configuration) connections?
-> 
-> Thanks,
-> Raffaele
-> 
-> Raffaele Spazzoli
-> Senior Architect - OpenShift, Containers and PaaS Practice
-> Tel: +1 216-258-7717
-> 
-> 
-> 
-> 
-> On Sun, Feb 17, 2019 at 12:38 PM M. Dietrich <mdt@emdete.de> wrote:
-> Quotation from Raffaele Spazzoli at Februar 17, 2019 16:21:
-> > I'm using wireguard to build a VPN mesh. The nodes of the mesh are dynamic
-> > and can come and go at any time. Is there a way to reconfigure a wireguard
-> > device without restarting it or losing the current connections?
-> 
-> yes.
-> 
-> > If yes, how can it be done?
-> 
-> other way around: configure wireguard with the `wg` command
-> and  that is persisted to the configuration file.
-> 
-> on restart the file is read and your config applied.
-> 
-> M. Dietrich
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
-
-_______________________________________________
-WireGuard mailing list
-WireGuard@lists.zx2c4.com
-https://lists.zx2c4.com/mailman/listinfo/wireguard
+WW91IGFyZSByaWdodCwgSSBnb3QgY29uZnVzZWQuCkkgdGhvdWdodCB0aGF0IHRoaXMgd291bGQg
+YmUgc29tZXRoaW5nIHRoYXQgX3RoZSB1c2VyXyB3b3VsZCBoYXZlIHRvIHNldCB1cC4gUGxlYXNl
+IGZvcmdpdmUgbXkgaWdub3JhbmNlLiA6LSkKClNpbmNlIHRoZXNlIHNjcmlwdHMgYXJlIGluc3Rh
+bGxlZCBieSBXRyBhbmQgbm90IGJ5IGEgdXNlciwgdGhpcyBzb2x1dGlvbiB3b3VsZCBiZSBmaW5l
+LgoKCgoKSXNuJ3QgaXQgdGhlIGNhc2UgdGhhdCBjdXJyZW50bHkgV0cgaXMgcGVyZm9ybWluZyBE
+TlMgYm90aCBkdXJpbmcgY29uZmlndXJhdGlvbiBBTkQgZHVyaW5nIGNvbm5lY3Rpb24gc2V0dXA/
+IEkgc2VlIHRoYXQgdGhlcmUgaXMgX2dldGFkZHJpbmZvXyBpbiBpcGMuYy4uLgpNYXliZSBqdXN0
+IHJlbW92aW5nIGFsbCBnZXRhZGRyaW5mbyBmcm9tIGNvbmZpZy5jIHdvdWxkIGJlIGVub3VnaCB0
+byBmaXggdGhpcz8KCuKAkOKAkOKAkOKAkOKAkOKAkOKAkCBPcmlnaW5hbCBNZXNzYWdlIOKAkOKA
+kOKAkOKAkOKAkOKAkOKAkApPbiBTdW5kYXksIEZlYnJ1YXJ5IDE3LCAyMDE5IDI6MDcgUE0sIEpl
+ZmZyZXkgV2FsdG9uIDxub2xvYWRlckBnbWFpbC5jb20+IHdyb3RlOgoKPiBPbiBTdW4sIEZlYiAx
+NywgMjAxOSBhdCA3OjQwIEFNIEVyeWsgV2llbGljemtvIGVyeWtAd2llbGljemtvLm5pbmphIHdy
+b3RlOgo+Cj4gPiA+IEZvcmdpdmUgbXkgaWdub3JhbmNlLi4uIFNob3VsZCBpbml0IGp1c3QgcmV0
+cnkgdGhlIHNlcnZpY2Ugc3RhcnQ/Cj4gPiA+IFNvbWV0aGluZyBsaWtlIHRoaXMgKGZyb20gU3lz
+dGVtZCk6Cj4gPiA+IFtVbml0XQo+ID4gPiBTdGFydExpbWl0SW50ZXJ2YWw9MzYwCj4gPiA+IFN0
+YXJ0TGltaXRCdXJzdD01Cj4gPiA+IFRoZSBzdGF0ZW1lbnRzIGFib3ZlIHNheSB0byByZXRyeSA1
+IHRpbWVzIHdpdGhpbiAzNjAgc2Vjb25kcy4KPiA+ID4gQ29uZmlndXJpbmcgc3VjaCB0aGluZ3Mg
+aXMgYW4gYWRkaXRpb25hbCB1bm5lY2Vzc2FyeSBzdGVwLiBPcGVuVlBOL3RpbmMgZG9uJ3QgcmVx
+dWlyZSBzdWNoIGhhY2tzLiBPbmNlIHlvdSBzdGFydCBPcGVuVlBOLCBpdCdzIGdvbm5hIHdvcmsg
+dW50aWwgdGhlIHNlcnZlciBkaWVzIG9mIG9sZCBhZ2UuIDotKQo+Cj4gSSBoYXZlIHRvIGFkbWl0
+IEkgZG9uJ3QgcXVpdGUgdW5kZXJzdGFuZCBjYWxsaW5nIGl0ICJ1bm5lY2Vzc2FyeSIuCj4KPiBU
+aGVyZSBzZWVtcyB0byBiZSB0d28gdXNlIGNhc2VzIChtYXliZSBtb3JlPyk6IG1hbnVhbCBzdGFy
+dCBhbmQgYXV0bwo+IHN0YXJ0LiBUaGUgYXV0byBzdGFydCBjYXNlIGlzIHVzdWFsbHkgaGFuZGxl
+ZCBieSBpbml0IHNjcmlwdHMuIEluaXQKPiBzY3JpcHRzIHVzdWFsbHkgcmV0cnkuCj4KPiBJJ20g
+bm90IHRocm93aW5nIHN0b25lcywgYnV0IEkgaGF2ZSB0byBhc2suLi4gV2h5IG5vdCB1c2UgdGhl
+IHRvb2xzCj4gYXZhaWxhYmxlIGluc3RlYWQgb2YgYWRkaW5nIGhhY2tzIG9uIHRvcCBvZiBoYWNr
+cz8gVGhlIGhhY2tzIGxpa2VseQo+IG1ha2UgdGhlIGNvZGUgYnJpdHRsZS4gQnkgdGhlIHRpbWUg
+V2lyZWdhdXJkIGdldHMgdG8gc3VwcG9ydGluZyBBSVgsCj4gRHJhZ29uZmx5LCBIdXJkLCBTb2xh
+cmlzIGFuZCBvdGhlciBVbml4IHBlcnNvbmFsaXRpZXMgbm8gb25lIHdpbGwgd2FudAo+IHRvIHRv
+dWNoIGl0Lgo+Cj4gSmVmZgoKCl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fCldpcmVHdWFyZCBtYWlsaW5nIGxpc3QKV2lyZUd1YXJkQGxpc3RzLnp4MmM0LmNv
+bQpodHRwczovL2xpc3RzLnp4MmM0LmNvbS9tYWlsbWFuL2xpc3RpbmZvL3dpcmVndWFyZAo=
