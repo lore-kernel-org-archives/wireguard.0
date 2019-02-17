@@ -2,97 +2,79 @@ Return-Path: <SRS0=e3Y3=QZ=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_PASS
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC1FEC10F01
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Feb 2019 23:03:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 81867C4360F
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Feb 2019 23:03:56 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 852442176F
+	by mail.kernel.org (Postfix) with ESMTPS id 1459720578
 	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 18 Feb 2019 23:03:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="sdBw8nNS"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 852442176F
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=yogotech.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nEmwG0Tj"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 1459720578
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 509ad4df;
-	Mon, 18 Feb 2019 22:54:20 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5e1a2028;
+	Mon, 18 Feb 2019 22:54:28 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c47a50b9
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 33c76376
  for <wireguard@lists.zx2c4.com>;
- Sun, 17 Feb 2019 05:49:38 +0000 (UTC)
-Received: from NAM01-BN3-obe.outbound.protection.outlook.com
- (mail-oln040092000036.outbound.protection.outlook.com [40.92.0.36])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dee0a35f
+ Sun, 17 Feb 2019 04:00:32 +0000 (UTC)
+Received: from mail-it1-x12b.google.com (mail-it1-x12b.google.com
+ [IPv6:2607:f8b0:4864:20::12b])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 64956ca5
  for <wireguard@lists.zx2c4.com>;
- Sun, 17 Feb 2019 05:49:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qcIJvc5oj8tuSrTHj+TORp1oYOF2S8F2VPHuioDLcE4=;
- b=sdBw8nNSfDk7A62vDPLRAYduzTC2VufWitjiB1IMH94iYQfCnLfhTtzgWSujBFNdQcNhyBy3DNolIndFbQLpgpBsiZCN681JtwHkpZEtK1UYESdOMTKZd33IRL9eK1W6egbbqOFUg018AvP2AUUU/nPwTqd3AUPb+E9K/dnj/ClltttbecvIfPgaMWN5Gpi9sFWQi7L++P5hj0TIDRWSMJXxaieD7Ff3GQd7Pb0WdzFbfiSvy0Pa1ig02gXW8fDVHRxi3RBnIBsJ5bt8gZ+C+EfAdQyeRsNi4ACsFIJkGxsoXK5SlwWsZqI9FT8MCElzoXlnWhleX85hVEu+dE8tqw==
-Received: from SN1NAM01FT005.eop-nam01.prod.protection.outlook.com
- (10.152.64.53) by SN1NAM01HT186.eop-nam01.prod.protection.outlook.com
- (10.152.65.149) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.20.1580.10; Sun, 17 Feb
- 2019 05:57:51 +0000
-Received: from MWHPR20MB1245.namprd20.prod.outlook.com (10.152.64.52) by
- SN1NAM01FT005.mail.protection.outlook.com (10.152.65.22) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
- 15.20.1580.10 via Frontend Transport; Sun, 17 Feb 2019 05:57:51 +0000
-Received: from MWHPR20MB1245.namprd20.prod.outlook.com
- ([fe80::14e2:419e:b515:921c]) by MWHPR20MB1245.namprd20.prod.outlook.com
- ([fe80::14e2:419e:b515:921c%10]) with mapi id 15.20.1622.018; Sun, 17 Feb
- 2019 05:57:51 +0000
-From: Nate Williams <nate@yogotech.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>, Nate Williams <nate@yogotech.com>
-Subject: Re: Wireguard-go on FreeBSD - Not working until the interface (wg0)
- is set into promiscuous mode
-Thread-Topic: Wireguard-go on FreeBSD - Not working until the interface (wg0)
- is set into promiscuous mode
-Thread-Index: AQHUvmgLm3kSS0yxK0mput6GEXPkaaXjUvOAgAA7fAI=
-Date: Sun, 17 Feb 2019 05:57:51 +0000
-Message-ID: <MWHPR20MB124531834D34A2CAE289D231E9620@MWHPR20MB1245.namprd20.prod.outlook.com>
-References: <MWHPR20MB1245664BA43F11A3368F1D8BE96F0@MWHPR20MB1245.namprd20.prod.outlook.com>,
- <CAHmME9r=rUwZpwW_Q4wYaV-LBGf5YSxgD8dJW-uf2JKEuSXRrg@mail.gmail.com>
-In-Reply-To: <CAHmME9r=rUwZpwW_Q4wYaV-LBGf5YSxgD8dJW-uf2JKEuSXRrg@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-incomingtopheadermarker: OriginalChecksum:F37BB5591CC138DB66A1517FE197EB8414AC055C86B81C7AD2F6D66E4B31AF26;
- UpperCasedChecksum:F523D1B6F38DF1FA4998138618E19A58845486C2165EFB95CAEE621FDE89C138;
- SizeAsReceived:7186; Count:46
-x-ms-exchange-messagesentrepresentingtype: 2
-x-tmn: [IIyFMESEugvmAjV2TheeBfiqg2b6KNjN]
-x-ms-publictraffictype: Email
-x-incomingheadercount: 46
-x-eopattributedmessage: 0
-x-microsoft-antispam: BCL:0; PCL:0;
- RULEID:(2390118)(7020095)(201702061078)(5061506573)(5061507331)(1603103135)(2017031320274)(2017031322404)(2017031323274)(2017031324274)(1601125500)(1603101475)(1701031045);
- SRVR:SN1NAM01HT186; 
-x-ms-traffictypediagnostic: SN1NAM01HT186:
-x-exchange-antispam-report-cfa-test: BCL:0; PCL:0; RULEID:(4566010)(82015058);
- SRVR:SN1NAM01HT186; BCL:0; PCL:0; RULEID:; SRVR:SN1NAM01HT186; 
-x-microsoft-antispam-message-info: h7PTJisQrU10ASfTV2Ed1xOSbePh80GQGym509D8dBxPEBNuB11JpsnTQGqF6s7p
+ Sun, 17 Feb 2019 04:00:32 +0000 (UTC)
+Received: by mail-it1-x12b.google.com with SMTP id f10so10173471ita.4
+ for <wireguard@lists.zx2c4.com>; Sat, 16 Feb 2019 20:08:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:reply-to:from:date:message-id
+ :subject:to:cc:content-transfer-encoding;
+ bh=8g6emL5WycQ9FEqZuyKjkDYGnS/sLmesFyIKbUCh16o=;
+ b=nEmwG0TjowUGSDN4qyYVPjLBp/nMDnezH/9l05Oodq81dkeKOFqNmNrpOfO2wVNdHA
+ YhIxFDJ3z3nfeVJPrdlShm4sQ1FnWA9bnDeS3jdPRpVqg/eOj9NMnWvqcSBVQGMR8I+1
+ L8OnlPF6wx5YTwb/UVvqVg+pxNgq2+86gh3j/OOBoBKcVEkdD36C0DLz8GpxEpVSFd2O
+ HXliQOxCa7vk01lb0i7Z/AqTe1poWXL3lYS30FH1YmYCeWGLUu0/kMXxi8gmw9Whg/oG
+ dBIUGxtry3FgO82KMwEzpUxhgwGi3SBDwJUpMEXhbNGf6E58RAat1jVCmR6hD9Hdedde
+ e3iw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
+ :from:date:message-id:subject:to:cc:content-transfer-encoding;
+ bh=8g6emL5WycQ9FEqZuyKjkDYGnS/sLmesFyIKbUCh16o=;
+ b=YzJ5eBEzol26bSpeobSrKqLG+3QTHyS3TioZnXatROSIy6IfUV/YPjHPDzYBxLxmkm
+ Gn9a8zZP6ov/sc1UU4AHiQajqLEs0gtjVmQaF4DqOjuTnz2QbtHctSeouHw3onpv+t8a
+ rv/pU1T5YGaMTdoNqTz2J/RutLmLuAF1fAUT/UGSRdAd1u+s6elbCAQlVQgrKoOC8Zbe
+ OL9hvH98qmihHFxh+vY9+LVdoVCzhynDNKxaP4B4o2npX+iFmceUspcRE8afnTmMmycv
+ iBgT8WP4UUQ5AwPMGGWrmhzGINoFoNJE3oJgr0VfJ38P8a1ID1xCnyHvlZr/+Ng19d24
+ Vz7w==
+X-Gm-Message-State: AHQUAuZPQcKDLGtwzPN0dYR45sniUCfT+AiR4QXZh74i90L4qI4myvrU
+ zDHM4vEeGNoO5MBDRk9ch23BgLeO5pCoZ3BcAwKYa7s3
+X-Google-Smtp-Source: AHgI3IZOo9i27REYkB9gfLSiYbmMVDCL+n2UeiQq+CbFLBBmDUm8IEsl2CN4XiYs/yXsl09C2xcgg+c+zeZYjgv6tPs=
+X-Received: by 2002:a24:3a12:: with SMTP id m18mr1493323itm.5.1550376526003;
+ Sat, 16 Feb 2019 20:08:46 -0800 (PST)
 MIME-Version: 1.0
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 24fd1209-d934-423e-a578-ee886993c07f
-X-MS-Exchange-CrossTenant-Network-Message-Id: 66433b0c-48df-4380-21b6-08d6949cda53
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 24fd1209-d934-423e-a578-ee886993c07f
-X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Feb 2019 05:57:51.6742 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Internet
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN1NAM01HT186
-X-Mailman-Approved-At: Mon, 18 Feb 2019 23:54:18 +0100
+References: <8_iPFshR7GasRS24vRTFKp3pG-UGxQLluTaoZZeAO-UlYBTQ2nCHNlMniuKWz9tWpWPbbXS8Br3SxRpCjcruohwFw8PD83jko2lrf3E7hq4=@wieliczko.ninja>
+ <CAJJxGdG2G+busk12y==dZOL2__+C1T6nQy+tGRJM=M65-SuZ5Q@mail.gmail.com>
+In-Reply-To: <CAJJxGdG2G+busk12y==dZOL2__+C1T6nQy+tGRJM=M65-SuZ5Q@mail.gmail.com>
+From: Jeffrey Walton <noloader@gmail.com>
+Date: Sat, 16 Feb 2019 23:08:25 -0500
+Message-ID: <CAH8yC8=2pjH3VbxaeJ-sTSnV64-KxKK3AHA7K_EEANX5_g02Mw@mail.gmail.com>
+Subject: Re: DNS name resolution should not be done during configuration
+ parsing.
+To: David Kerr <david@kerr.net>
+X-Mailman-Approved-At: Mon, 18 Feb 2019 23:54:27 +0100
 Cc: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
+Reply-To: noloader@gmail.com
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -101,97 +83,36 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============6581008152178613691=="
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============6581008152178613691==
-Content-Language: en-US
-Content-Type: multipart/alternative;
-	boundary="_000_MWHPR20MB124531834D34A2CAE289D231E9620MWHPR20MB1245namp_"
-
---_000_MWHPR20MB124531834D34A2CAE289D231E9620MWHPR20MB1245namp_
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-I'm not using wg-quick, so it's unlikely that this will fix things.
-
-
-Nate
-________________________________
-From: Jason A. Donenfeld <Jason@zx2c4.com>
-Sent: Saturday, February 16, 2019 7:24 PM
-To: Nate Williams
-Cc: wireguard@lists.zx2c4.com
-Subject: Re: Wireguard-go on FreeBSD - Not working until the interface (wg0=
-) is set into promiscuous mode
-
-That's odd. Does this fix it for you?
-
-https://git.zx2c4.com/WireGuard/commit/?id=3D7c833642dfa342218602ab18e7091e=
-86408d2982
-
---_000_MWHPR20MB124531834D34A2CAE289D231E9620MWHPR20MB1245namp_
-Content-Type: text/html; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-<html>
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+On Sat, Feb 16, 2019 at 10:35 PM David Kerr <david@kerr.net> wrote:
 >
-<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
-ttom:0;} </style>
-</head>
-<body dir=3D"ltr">
-<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
- color: rgb(0, 0, 0);">
-I'm not using wg-quick, so it's unlikely that this will fix things.</div>
-<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
- color: rgb(0, 0, 0);">
-<br>
-</div>
-<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
- color: rgb(0, 0, 0);">
-<br>
-</div>
-<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
- color: rgb(0, 0, 0);">
-Nate</div>
-<div id=3D"appendonsend"></div>
-<hr style=3D"display:inline-block;width:98%" tabindex=3D"-1">
-<div id=3D"divRplyFwdMsg" dir=3D"ltr"><font face=3D"Calibri, sans-serif" st=
-yle=3D"font-size:11pt" color=3D"#000000"><b>From:</b> Jason A. Donenfeld &l=
-t;Jason@zx2c4.com&gt;<br>
-<b>Sent:</b> Saturday, February 16, 2019 7:24 PM<br>
-<b>To:</b> Nate Williams<br>
-<b>Cc:</b> wireguard@lists.zx2c4.com<br>
-<b>Subject:</b> Re: Wireguard-go on FreeBSD - Not working until the interfa=
-ce (wg0) is set into promiscuous mode</font>
-<div>&nbsp;</div>
-</div>
-<div class=3D"BodyFragment"><font size=3D"2"><span style=3D"font-size:11pt;=
-">
-<div class=3D"PlainText">That's odd. Does this fix it for you?<br>
-<br>
-<a href=3D"https://git.zx2c4.com/WireGuard/commit/?id=3D7c833642dfa34221860=
-2ab18e7091e86408d2982">https://git.zx2c4.com/WireGuard/commit/?id=3D7c83364=
-2dfa342218602ab18e7091e86408d2982</a><br>
-</div>
-</span></font></div>
-</body>
-</html>
+> Erik, see here for a proposed fix.  No response from the WireGuard team yet.
+>
+> https://lists.zx2c4.com/pipermail/wireguard/2019-January/003842.html
+>
+> Recently I had a power outage and both my gateway and cable modem went offline. On power recovery both devices start up, but the gateway completes startup before the cable modem completes its protocol negotiations, so initially the external network (eth0) is not functional.  That comes online say one minute later and all is well.
+>
+> Except that all is not well.  Wireguard failed to start up because I have Endpoint=<a URL> instead of a IP address.  And because external interface is not live yet, DNS lookup fails and Wireguard does not gracefully handle it.  This is really important because Wireguard may be my only way into my local network.
+>
+> As work-around I replaced the URL with the IP address... but that is not a long term solution if the endpoint is not a static IP address.
+>
+> Wireguard needs to handle the situation where external network may not have stabilized at the time it starts up.  The above link proposed a fix.
 
---_000_MWHPR20MB124531834D34A2CAE289D231E9620MWHPR20MB1245namp_--
+Forgive my ignorance... Should init just retry the service start?
+Something like this (from Systemd):
 
---===============6581008152178613691==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+    [Unit]
+    StartLimitInterval=360
+    StartLimitBurst=5
 
+The statements above say to retry 5 times within 360 seconds.
+
+Jeff
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
-
---===============6581008152178613691==--
