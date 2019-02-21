@@ -2,149 +2,83 @@ Return-Path: <SRS0=i+YM=Q4=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_PASS,
-	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	HTML_MESSAGE,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A03D5C00319
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 21 Feb 2019 07:59:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CBDFC43381
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 21 Feb 2019 12:29:29 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id EBCE22086A
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 21 Feb 2019 07:59:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id DAB192085A
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 21 Feb 2019 12:29:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (4096-bit key) header.d=urlichs.de header.i=@urlichs.de header.b="TVIU2bLD"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org EBCE22086A
-Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=urlichs.de
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=fastmail.net header.i=@fastmail.net header.b="IYHQRdMs";
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="En8EY9w2"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org DAB192085A
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=fastmail.net
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 06cc4b6e;
-	Thu, 21 Feb 2019 07:51:04 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 58cb4393;
+	Thu, 21 Feb 2019 12:20:28 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9e71b4a6
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2ff7a391
  for <wireguard@lists.zx2c4.com>;
- Thu, 21 Feb 2019 07:50:59 +0000 (UTC)
-Received: from netz.smurf.noris.de (dispatch.smurf.noris.de
- [IPv6:2001:780:107:b::b])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f1169d9e
+ Thu, 21 Feb 2019 12:20:26 +0000 (UTC)
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
+ [66.111.4.26])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 695f5a44
  for <wireguard@lists.zx2c4.com>;
- Thu, 21 Feb 2019 07:50:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=urlichs.de; 
- s=20160512;
- h=Content-Type:In-Reply-To:MIME-Version:Date:Message-ID:From:
- References:To:Subject:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID
- :Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:
- Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe
- :List-Post:List-Owner:List-Archive;
- bh=9aTWUvQ5HNOtAYXEQJ6U07RdsX/8mbyHdjmJoJz0n3s=; b=TVIU2bLDMsvnG1I2ft0pw3Mge5
- aqIJYAUYfwbi7dCpodG0EqbWorgIC17jcxwmTIj+XXc5mhRU5cdLCoFAUr3Qa1zFPA7Qhk/aA7zj1
- mthE+LOFusXtjT4Q4zlYLJiZoELe0DnlLc0I1GacJ15QS9Xuv7BMpZUKAFFkvoWMOZLpDpLQQFfQe
- xuPE+3rd8hbA4RTRBv2pLMaO/25GX2c+Oms3zHX2N0sjn38cuLZ8rwYQauRPEd4Zp156u/Nb+BEpd
- eMIn/YMbcsa+HZAVRu8LXnk9GyLZoGUR0mzJjrjUGRBDq/1PxqCaTpXfmpdB+bpAuQfr0u2O8EJSQ
- 8Qnh82Pm6OY8f2w8JdaTf5NnWM/CLqngGPOltm1SYmrnyg+tUTaG3lqnkIa0aO9epatZPVh3QCRDS
- mN1+UnApqcUcF5c/Ff8Ex+NqZJNcCukJs60c+ILLvhjr50m9OdPFRAZhQYVeJ7rpsWQLnFWI1432z
- niWNmmLECstwSAOwYxbhHz9zobKQDja4qoliL9qwIZO0+VCiXLmhAg9CR0mq0q7NG9XVVXsBIYQuA
- jdrjWo46P2Fh49l2v9J5mY3GRwzJ/eMeGQPCvBenbpbHeZ5K2Sx4zyxnAAjZ5DK4zJdGNKhzGGPKJ
- HvRmlvcr6TDDWtqpGigsmtyEcRMuQgyNGrcppaCFs=;
-Received: from [2001:780:107:2:5::] by mail.vm.smurf.noris.de with esmtpsa
- (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim 4.89)
- (envelope-from <matthias@urlichs.de>) id 1gwjGc-000GZt-QQ
- for wireguard@lists.zx2c4.com; Thu, 21 Feb 2019 08:59:39 +0100
-Subject: Re: DNS name resolution should not be done during configuration
- parsing.
+ Thu, 21 Feb 2019 12:20:26 +0000 (UTC)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id 02A8120A82
+ for <wireguard@lists.zx2c4.com>; Thu, 21 Feb 2019 07:28:59 -0500 (EST)
+Received: from imap6 ([10.202.2.56])
+ by compute4.internal (MEProxy); Thu, 21 Feb 2019 07:28:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.net; h=
+ message-id:in-reply-to:references:date:from:to:subject
+ :content-type; s=fm2; bh=sqdR85jqYuiGpdmUH9LekqOWaVvNOQhLp3Jt1o+
+ fYKI=; b=IYHQRdMs9IaRLcJcp0HVUvvJHj9oTFmsaz0CelgtO9yWMF5dk7s8u4y
+ LvskxxLmzgbuWJqnv0c75OuyE3Vd9Sy/y4UawofZN1+VGZGDXH1ZZAV1MUd7uMbN
+ B9CRCwAkt909UM3AgLKZf9PwKZ4xZD+pc/d8oLLQdpGHF7LAYDqSJY4pUzxOnTAg
+ O18lkgfk08RuF6Zz8jLxHtWc8i9FlG0qg5KyTyW9YftR/TlSV5z14vLd11FCcUjY
+ n8hPpFLRhO6+fa8st99RlLHNZW8U5Wyicd9fbO+88DuYOmOsKw4KyCGFkNJAS33I
+ av5bYA0FxkS1XGxKtXWY56RD/JZ6N6g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=content-type:date:from:in-reply-to
+ :message-id:references:subject:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=sqdR85jqYuiGpdmUH
+ 9LekqOWaVvNOQhLp3Jt1o+fYKI=; b=En8EY9w2o0Y+ZiVriPPQJYA7jxivo9OCD
+ wH7X3gYW2snFe3y5WtkIojALLyOf2mNnPTROAWcSEsUcsgxJKpnIaINFhP74sEYj
+ 4PGP2ndKmrdGYl+0oOVyNbuOLb2W4K3zNQB7CTqUeUqYIQFImWv9dS1DMBwwNdC4
+ Fws8UsYgKte90KDI1l2zg+u1BMeORGJDbQYMsgYj1FsZsRBb54CWB38SW+HirxOV
+ Bk5sK3qHULkY7Q9i3xOG4GuZ3cDjVc8mmB4wYsFiRmfPV1lzrJYeoP3fQlea3ZiT
+ IMCxcsublJ2OtjTek2hllUEd6/en2uHVALIdHtKMR1eis+j81YGSw==
+X-ME-Sender: <xms:ipluXBovaYXhAzFCo2O-i6NdVT9jbJiubBNwqyOGQWorjrZ15o69QA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedutddrtdekgdegvdculddtuddrgedtledrtddtmd
+ cutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfhuthen
+ uceurghilhhouhhtmecufedttdenucenucfjughrpefofgfkjghffffhvffutgesrgdtre
+ erreertdenucfhrhhomheplhhoghgtrggsihhnsehfrghsthhmrghilhdrnhgvthenucff
+ ohhmrghinhepiiigvdgtgedrtghomhenucfrrghrrghmpehmrghilhhfrhhomheplhhogh
+ gtrggsihhnsehfrghsthhmrghilhdrnhgvthenucevlhhushhtvghrufhiiigvpedt
+X-ME-Proxy: <xmx:ipluXH5fN-c36qcI07HnnNVISjSKxYtiMgJeMjs4-9YB6uFUF53fOQ>
+ <xmx:ipluXJPJMUDs-r-50rd05TBiMA4eev0VxcczIlYZXq4yyCPSdlhRDw>
+ <xmx:ipluXBPvz2zqKdKpa3bwHWWhuj1qH427PaHwbhm5_JY2o0HZgrwang>
+ <xmx:ipluXMBdEVV5lEwHi5fnfSpSWliys4Kxir6FVeuaaRbNZYVvjQrRCg>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 6F75A82678; Thu, 21 Feb 2019 07:28:58 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.5-895-g0d23ba6-fmstable-20190213v1
+X-Me-Personality: 15697833
+Message-Id: <ac5a35ae-7efb-4143-bf61-a687f6cee8a8@www.fastmail.com>
+In-Reply-To: <CAGCGyt+bsxa-aRoETJFTwvOZ1eb=Q_AemZUwufN_7RYicnnKaw@mail.gmail.com>
+References: <CAGCGyt+bsxa-aRoETJFTwvOZ1eb=Q_AemZUwufN_7RYicnnKaw@mail.gmail.com>
+Date: Thu, 21 Feb 2019 07:28:58 -0500
+From: logcabin@fastmail.net
 To: wireguard@lists.zx2c4.com
-References: <8_iPFshR7GasRS24vRTFKp3pG-UGxQLluTaoZZeAO-UlYBTQ2nCHNlMniuKWz9tWpWPbbXS8Br3SxRpCjcruohwFw8PD83jko2lrf3E7hq4=@wieliczko.ninja>
- <CAJJxGdG2G+busk12y==dZOL2__+C1T6nQy+tGRJM=M65-SuZ5Q@mail.gmail.com>
- <CAH8yC8=2pjH3VbxaeJ-sTSnV64-KxKK3AHA7K_EEANX5_g02Mw@mail.gmail.com>
- <8f46738a-35bd-8d48-ab0a-aa0c9ed40e8d@trustiosity.com>
- <dda16c02-171c-6b44-8258-fda8d65d0543@urlichs.de>
- <ce051517-9325-824c-3299-ba08138e7912@ironai.com>
-From: Matthias Urlichs <matthias@urlichs.de>
-Openpgp: preference=signencrypt
-Autocrypt: addr=matthias@urlichs.de; prefer-encrypt=mutual; keydata=
- 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
-Message-ID: <ed8879bd-4a2e-662a-b908-6b31354e64c2@urlichs.de>
-Date: Thu, 21 Feb 2019 08:59:36 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.5.1
-MIME-Version: 1.0
-In-Reply-To: <ce051517-9325-824c-3299-ba08138e7912@ironai.com>
-Content-Language: en-US
-X-Smurf-Spam-Score: 0.0 (/)
-X-Smurf-Whitelist: +relay_from_hosts
+Subject: Re: upgrading raspberry pi required me to re install wireguard
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -156,108 +90,99 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============1860586497871468053=="
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============6673903817746462242=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This is a multi-part message in MIME format.
---===============1860586497871468053==
+--===============6673903817746462242==
 Content-Type: multipart/alternative;
- boundary="------------8DD70D81B17802AF90EA8630"
-Content-Language: en-US
+ boundary=e465c574f50441bd9d858ebd27e9bef3
 
-This is a multi-part message in MIME format.
---------------8DD70D81B17802AF90EA8630
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+--e465c574f50441bd9d858ebd27e9bef3
+Content-Type: text/plain
 
-On 19.02.19 16:45, Vincent Wiemann wrote:
-> A kernel VPN module should not depend
-> on a user space daemon for doing regular checks or a daemon running at
-> all.
+Yes, the kernel did get updated, causing the wg module dependencies to get out of sync. A reboot after the update should solve this, otherwise you may need to run the package's preinst script to get the modules back in sync. Should be no need to reinstall the wg packages.
 
-It doesn't. You only need userspace when the external IP address changes
-*and* the other side either doesn't initiate a link to us, or can no
-longer reach us due to firewall or NAT issues. This is already orders of
-magnitude better than OpenVPN.
+On Thu, Feb 21, 2019, at 2:14 AM, Arpit Gupta wrote:
+> Hi All
+> 
+> I am running raspberry pi v3 and ran apt-get update and upgrade commands to get upto date. It also ended up updating the kernel i think. I should have paid more attention to what all was getting updated.
+> 
+> After the update wireguard was not running and upon debugging i found that the wireguard kernel module was no longer present. So i uninstalled all wireguard packages and installed them again and the module showed up and on reboot system was back to normal. What i was curious was how should one go about doing os/kernel updates in future in order to avoid this issue?
+> 
+> I am running
+> Linux raspberrypi 4.14.98-v7+ #1200 SMP Tue Feb 12 20:27:48 GMT 2019 armv7l GNU/Linux
+> No LSB modules are available.
+> Distributor ID: Raspbian
+> Description: Raspbian GNU/Linux 9.8 (stretch)
+> Release: 9.8
+> Codename: stretch
+> 
+> ii wireguard 0.0.20190123-1 all fast, modern, secure kernel VPN tunnel (metapackage)
+> ii wireguard-dkms 0.0.20190123-1 all fast, modern, secure kernel VPN tunnel (DKMS version)
+> ii wireguard-tools 0.0.20190123-1 armhf fast, modern, secure kernel VPN tunnel (userland utilities)
+> 
+> --
+> Arpit
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
+> 
 
-DNS is a complex protocol that's nontrivial to implement securely,
-DNSSEC even more so. You do not want that in the kernel. I'd wager a
-large chunk of money that neither does Linus Torvalds.
+--e465c574f50441bd9d858ebd27e9bef3
+Content-Type: text/html
+Content-Transfer-Encoding: quoted-printable
 
->     One could build up on
->     https://www.kernel.org/doc/Documentation/networking/dns_resolver.txt ,
->     but it's a lot of work and shouldn't be a goal before WireGuard becomes
->     an upstream kernel module.
+<!DOCTYPE html><html><head><title></title><style type=3D"text/css">p.Mso=
+Normal,p.MsoNoSpacing{margin:0}</style></head><body><div style=3D"font-f=
+amily:Arial;">Yes, the kernel did get updated, causing the wg module dep=
+endencies to get out of sync. A reboot after the update should solve thi=
+s, otherwise you may need to run the package's preinst script to get the=
+ modules back in sync. Should be no need to reinstall the wg packages.<b=
+r></div><div style=3D"font-family:Arial;"><br></div><div style=3D"font-f=
+amily:Arial;">On Thu, Feb 21, 2019, at 2:14 AM, Arpit Gupta wrote:<br></=
+div><blockquote type=3D"cite" id=3D"fastmail-quoted"><div dir=3D"ltr"><d=
+iv dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div style=3D"font-fami=
+ly:Arial;">Hi All<br></div><div><br></div><div>I am running raspberry pi=
+ v3 and ran apt-get update and upgrade commands to get upto date. It als=
+o ended up updating the kernel i think. I should have paid more attentio=
+n to what all was getting updated.<br></div><div><br></div><div>After th=
+e update wireguard was not running and upon debugging i found that the w=
+ireguard kernel module was no longer present. So i uninstalled all wireg=
+uard packages and installed them again and the module showed up and on r=
+eboot system was back to normal. What i was curious was how should one g=
+o about doing os/kernel updates in future in order to avoid this issue?<=
+br></div><div><br></div><div>I am running<br></div><div>Linux raspberryp=
+i 4.14.98-v7+ #1200 SMP Tue Feb 12 20:27:48 GMT 2019 armv7l GNU/Linux<br=
+></div><div><div>No LSB modules are available.<br></div><div>Distributor=
+ ID:<span style=3D"white-space:pre;"> </span>Raspbian<br></div><div>Desc=
+ription:<span style=3D"white-space:pre;"> </span>Raspbian GNU/Linux 9.8 =
+(stretch)<br></div><div>Release:<span style=3D"white-space:pre;"> </span=
+>9.8<br></div><div>Codename:<span style=3D"white-space:pre;"> </span>str=
+etch<br></div><div><br></div><div><div>ii&nbsp; wireguard&nbsp; &nbsp; &=
+nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;0.0.=
+20190123-1&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;all&nbs=
+p; &nbsp; &nbsp; &nbsp; &nbsp; fast, modern, secure kernel VPN tunnel (m=
+etapackage)<br></div><div>ii&nbsp; wireguard-dkms&nbsp; &nbsp; &nbsp; &n=
+bsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 0.0.20190123-1&nbsp; &nbsp; &nbs=
+p; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;all&nbsp; &nbsp; &nbsp; &nbsp; &nbs=
+p; fast, modern, secure kernel VPN tunnel (DKMS version)<br></div><div>i=
+i&nbsp; wireguard-tools&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; =
+&nbsp; &nbsp;0.0.20190123-1&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nb=
+sp; &nbsp;armhf&nbsp; &nbsp; &nbsp; &nbsp; fast, modern, secure kernel V=
+PN tunnel (userland utilities)<br></div></div><div><br></div><div><div c=
+lass=3D"fastmail-quoted-gmail_signature" dir=3D"ltr"><div dir=3D"ltr"><d=
+iv>--<br></div><div style=3D"font-family:Arial;">Arpit<br></div></div></=
+div></div></div></div></div></div></div><div>___________________________=
+____________________<br></div><div>WireGuard mailing list<br></div><div>=
+WireGuard@lists.zx2c4.com<br></div><div>https://lists.zx2c4.com/mailman/=
+listinfo/wireguard<br></div><div><br></div></blockquote><div style=3D"fo=
+nt-family:Arial;"><br></div></body></html>
+--e465c574f50441bd9d858ebd27e9bef3--
 
-    I'm pretty sure that's the way to go long-term.
-
-Umm … you might want to read that. It specifies upcalling to userspace.
-How is that better than running a WG daemon?
-
-We'd also lose flexibility. I might want to teach that WG daemon to get
-the new address from somewhere else, like a secure connection to a VPN
-server (given that DNS timeouts might be too long), or to use that
-netlink callback to trigger an alert or to activate a fallback connection.
-
--- 
--- Matthias Urlichs
-
-
---------------8DD70D81B17802AF90EA8630
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: 8bit
-
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body text="#000000" bgcolor="#FFFFFF">
-    <div class="moz-cite-prefix">On 19.02.19 16:45, Vincent Wiemann
-      wrote:<br>
-    </div>
-    <blockquote type="cite"
-      cite="mid:ce051517-9325-824c-3299-ba08138e7912@ironai.com">
-      <pre class="moz-quote-pre" wrap="">A kernel VPN module should not depend
-on a user space daemon for doing regular checks or a daemon running at
-all.</pre>
-    </blockquote>
-    <p>It doesn't. You only need userspace when the external IP address
-      changes *and* the other side either doesn't initiate a link to us,
-      or can no longer reach us due to firewall or NAT issues. This is
-      already orders of magnitude better than OpenVPN.<br>
-    </p>
-    <p>DNS is a complex protocol that's nontrivial to implement
-      securely, DNSSEC even more so. You do not want that in the kernel.
-      I'd wager a large chunk of money that neither does Linus Torvalds.<br>
-    </p>
-    <blockquote>
-      <blockquote type="cite" style="color: #000000;">
-        <pre class="moz-quote-pre" wrap="">One could build up on
-<a class="moz-txt-link-freetext" href="https://www.kernel.org/doc/Documentation/networking/dns_resolver.txt">https://www.kernel.org/doc/Documentation/networking/dns_resolver.txt</a> ,
-but it's a lot of work and shouldn't be a goal before WireGuard becomes
-an upstream kernel module.
-</pre>
-      </blockquote>
-      <pre class="moz-quote-pre" wrap="">I'm pretty sure that's the way to go long-term.
-</pre>
-    </blockquote>
-    <p>Umm … you might want to read that. It specifies upcalling to
-      userspace. How is that better than running a WG daemon?</p>
-    <p>We'd also lose flexibility. I might want to teach that WG daemon
-      to get the new address from somewhere else, like a secure
-      connection to a VPN server (given that DNS timeouts might be too
-      long), or to use that netlink callback to trigger an alert or to
-      activate a fallback connection.<br>
-    </p>
-    <pre class="moz-signature" cols="72">-- 
--- Matthias Urlichs</pre>
-  </body>
-</html>
-
---------------8DD70D81B17802AF90EA8630--
-
---===============1860586497871468053==
+--===============6673903817746462242==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -268,4 +193,4 @@ WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---===============1860586497871468053==--
+--===============6673903817746462242==--
