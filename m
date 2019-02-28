@@ -2,72 +2,42 @@ Return-Path: <SRS0=YN3W=RD=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
-	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D56AC43381
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 28 Feb 2019 18:45:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B43BEC43381
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 28 Feb 2019 18:49:20 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id A06EF2133D
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 28 Feb 2019 18:45:48 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hng2qA7V"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A06EF2133D
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	by mail.kernel.org (Postfix) with ESMTPS id 40D52218B0
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 28 Feb 2019 18:49:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 40D52218B0
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=romanrm.net
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 685fa503;
-	Thu, 28 Feb 2019 18:35:38 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e4f923ae;
+	Thu, 28 Feb 2019 18:39:35 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 28eac976
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c9e75145
  for <wireguard@lists.zx2c4.com>;
- Thu, 28 Feb 2019 18:35:36 +0000 (UTC)
-Received: from mail-ua1-x92b.google.com (mail-ua1-x92b.google.com
- [IPv6:2607:f8b0:4864:20::92b])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 00223798
+ Thu, 28 Feb 2019 18:39:33 +0000 (UTC)
+Received: from len.romanrm.net (len.romanrm.net [91.121.75.85])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 17cf625e
  for <wireguard@lists.zx2c4.com>;
- Thu, 28 Feb 2019 18:35:36 +0000 (UTC)
-Received: by mail-ua1-x92b.google.com with SMTP id s26so9278865uao.9
- for <wireguard@lists.zx2c4.com>; Thu, 28 Feb 2019 10:45:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
- bh=uJbv8MbuHno3IsIADrJvm2buFuQMHpPAm/ZLdSPcII8=;
- b=hng2qA7Vef29xGV0zQUmkQe2BITz4ri3Tj0tk7IdL6HfihdQSQ+apEzfXo9FD+xwtH
- xu4QPtVPVoKZ9IQyvaXGjv5Fp7PZElsq7M5EsGQY+eQY1KFLLDI+Gr6JNyCmXOLgEnqE
- ubv5o6Bvt/FLadgfsEmmkFXwdTPZ7ibR/77E5qsZmW2aQIPJrMatmQcKtHhKLosvgNY/
- BVLp2ErzNSEFj1YdZfP1T4blHcnNz5SFCbZDHFxOMZgN2clCS5jShO25YPt8oelB1QIj
- Kxmi1CTlTZk1wRyOv6N0NvxO4bSztwPfwkB2aD3q2hfbGWsCmAZ6UykJkloc4L+USxKM
- NC1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to;
- bh=uJbv8MbuHno3IsIADrJvm2buFuQMHpPAm/ZLdSPcII8=;
- b=CLy14dIk7Y/uBirVK2Li1+0BOm2u7i+1dy1+VGWsMOssBhYTAvndGcTocFif7RSppU
- sU3fUQZ3Lp40kMpSouNjpQabcQpCLUvCxHYCO3QgwTVuvl9qkq1ga/8r7Ai8+21ARneZ
- KBb3BjqIczwRIpxSvz4CToGLMr/z2xCv9Y2kGUa25UnFEDeHt+xx0bY2B/faEqUgZYe3
- 0XmNg9amLJgOpN4e//Pmtve4tvUhpBPnnwtZaSHN46npC53LgjjT5viJy6e1U91LSMhq
- rS3Wu8p4XGZHpkzTH+HtK0KDzfDPvVLXWlGw36uUX3rsiZr5kSwK/REfvaxDJnHKaa/H
- bX8Q==
-X-Gm-Message-State: APjAAAU9+d2C7BiuIAbdqOfQd4WVUTh+Fot4od5kIwYIP8IWWbXfmS1I
- 64X6Yh6HUT31bG3K94XxD1BHVOtbJXHWt+uqDrMWXw==
-X-Google-Smtp-Source: APXvYqwr1yP/xKgTqPTCjSm024HMVZEaZXUIVj6D8s87/I/1dmfTeeBtZ6ug1dxQvpq4XybGbHwdepUOz6I5Z/CLS8E=
-X-Received: by 2002:a05:6102:408:: with SMTP id
- d8mr399157vsq.189.1551379519057; 
- Thu, 28 Feb 2019 10:45:19 -0800 (PST)
+ Thu, 28 Feb 2019 18:39:33 +0000 (UTC)
+Received: from natsu (unknown [IPv6:fd39::e99e:8f1b:cfc9:ccb8])
+ by len.romanrm.net (Postfix) with SMTP id BDD1820394;
+ Thu, 28 Feb 2019 18:49:13 +0000 (UTC)
+Date: Thu, 28 Feb 2019 23:49:13 +0500
+From: Roman Mamedov <rm@romanrm.net>
+To: "STR ." <strykar@hotmail.com>
+Subject: Re: Help calculate MTU, ISP's 1448
+Message-ID: <20190228234913.61927412@natsu>
+In-Reply-To: <DM6PR12MB3401FF1DE04A62EAD84F2C74BB7B0@DM6PR12MB3401.namprd12.prod.outlook.com>
+References: <DM6PR12MB3401FF1DE04A62EAD84F2C74BB7B0@DM6PR12MB3401.namprd12.prod.outlook.com>
 MIME-Version: 1.0
-References: <304c3849-35d1-3312-1670-e7a8469a01fe@post.com>
-In-Reply-To: <304c3849-35d1-3312-1670-e7a8469a01fe@post.com>
-From: Reuben Martin <reuben.m.work@gmail.com>
-Date: Thu, 28 Feb 2019 12:45:07 -0600
-Message-ID: <CALJ2VGZo9HYKyJt1=Or+DOhJgbOs1gs=XMECCLdfxN-dS325-Q@mail.gmail.com>
-Subject: Re: Openresolv package is a requirement and should be added to
- install docs
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Cc: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -79,59 +49,50 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============4117991943783554652=="
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============4117991943783554652==
-Content-Type: multipart/alternative; boundary="0000000000002538d60582f8b1b8"
+On Tue, 26 Feb 2019 12:39:50 +0000
+"STR ." <strykar@hotmail.com> wrote:
 
---0000000000002538d60582f8b1b8
-Content-Type: text/plain; charset="UTF-8"
+> I have Fiber to our apartment complex basement, from there Cat6 runs to
+> each apartment. The ISP/apartment service provider suggests an MTU of
+> 1448, which I set for the PPPoE interface on my OpenWRT router.
 
-On Thu, Feb 28, 2019, 12:29 PM F <finalcountdown@post.com> wrote:
+It could be that your ISP meant this as the pre-PPPoE MTU, so 1448 on ethX
+link, but 1440 inside PPPoE.
 
-> Learnt how to get WG working here
-> https://github.com/StreisandEffect/streisand/issues/1434 and it
-> describes how the openresolv package is needed to get WG to connect
->
+> I read 
+> https://lists.zx2c4.com/pipermail/wireguard/2017-December/002201.html
+> which comes to (assuming 1500 byte MTU) to 60 bytes (IPv6) to 80 bytes less to account for Wireguard protocol overhead.
+> 
+> Using this info, I tried an MTU of both (1448-80=1368) and (1448-
+> 60=1388).
+> As my ISP assigns only IPv4, I expected an MTU of 1388 to work, which I
+> set on the Wireguard interface in OpenWRT.
+> 
+> However, when set to 1388, almost everything works except any Google
+> related sites like Maps, Gmail, YT etc.
+> When set to 1368, everything works and it's the way I have it setup
+> right now.
 
-That may be a requirement in the context that document was written for. But
-that is not a requirement for wireguard.
+Try 1380 for a bit.
 
->
+> What am I missing here?
+> Why won't Google sites load via my WG VPN when the MTU is set to 1388?
+> 
+> If it helps, I host the WG server on Google's cloud platform and was
+> informed that GCP has an MTU of 1460 bytes.
 
---0000000000002538d60582f8b1b8
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Are you setting the same (lower of the two maximums) MTU on both ends of the
+wireguard tunnel? (You should)
 
-<div dir=3D"auto"><div><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D=
-"gmail_attr">On Thu, Feb 28, 2019, 12:29 PM F &lt;<a href=3D"mailto:finalco=
-untdown@post.com">finalcountdown@post.com</a>&gt; wrote:<br></div><blockquo=
-te class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc so=
-lid;padding-left:1ex">Learnt how to get WG working here<br>
-<a href=3D"https://github.com/StreisandEffect/streisand/issues/1434" rel=3D=
-"noreferrer noreferrer" target=3D"_blank">https://github.com/StreisandEffec=
-t/streisand/issues/1434</a> and it<br>
-describes how the openresolv package is needed to get WG to connect<br></bl=
-ockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">That may=
- be a requirement in the context that document was written for. But that is=
- not a requirement for wireguard.</div><div dir=3D"auto"><div class=3D"gmai=
-l_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;borde=
-r-left:1px #ccc solid;padding-left:1ex">
-</blockquote></div></div></div>
-
---0000000000002538d60582f8b1b8--
-
---===============4117991943783554652==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
+-- 
+With respect,
+Roman
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
-
---===============4117991943783554652==--
