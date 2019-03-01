@@ -2,81 +2,84 @@ Return-Path: <SRS0=/nf9=RE=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CF1BC4360F
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  1 Mar 2019 10:09:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13B8BC43381
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  1 Mar 2019 10:09:05 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id F3BD62186A
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  1 Mar 2019 10:09:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org F3BD62186A
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=pineview.net
+	by mail.kernel.org (Postfix) with ESMTPS id 64E612186A
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  1 Mar 2019 10:09:04 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=nord-west.org header.i=@nord-west.org header.b="D8b0dtL7"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 64E612186A
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=nord-west.org
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 02482de4;
-	Fri, 1 Mar 2019 09:59:14 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 77d5ba53;
+	Fri, 1 Mar 2019 09:59:15 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6e304656
- for <wireguard@lists.zx2c4.com>;
- Fri, 22 Feb 2019 22:55:16 +0000 (UTC)
-Received: from mail.pineview.net (mail.pineview.net [203.33.246.11])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8f37e389
- for <wireguard@lists.zx2c4.com>;
- Fri, 22 Feb 2019 22:55:15 +0000 (UTC)
-Received: from HigherTime.pineview.net (HigherTime.pineview.net
- [203.33.246.58])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (No client certificate requested)
- by mail.pineview.net (Postfix) with ESMTPSA id EDA2E80197;
- Sat, 23 Feb 2019 09:34:11 +1030 (ACDT)
-Subject: Re: upgrading raspberry pi required me to re install wireguard
-To: Emanuele Bernardi <e.berna@posteo.net>, wireguard@lists.zx2c4.com
-References: <CAGCGyt+bsxa-aRoETJFTwvOZ1eb=Q_AemZUwufN_7RYicnnKaw@mail.gmail.com>
- <ac5a35ae-7efb-4143-bf61-a687f6cee8a8@www.fastmail.com>
- <CAGCGytJE5bzXiXB8Go6aHk5OLT0D-m2AnKbRt=Nv1giEVrpsjA@mail.gmail.com>
- <9e6f49da-bf09-ab90-dba7-ac5587863a31@pallas.us>
- <62f9f029-605b-f2a5-5388-658233c2a72b@posteo.net>
-From: Mike O'Connor <mike@pineview.net>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 56cd250f
+ for <wireguard@lists.zx2c4.com>; Fri, 1 Mar 2019 09:26:07 +0000 (UTC)
+Received: from mail.schafweide.org (mail.schafweide.org
+ [IPv6:2a03:4000:34:19b::1])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 578c8c30
+ for <wireguard@lists.zx2c4.com>; Fri, 1 Mar 2019 09:26:06 +0000 (UTC)
+Received: from [IPv6:2001:67c:18e8:2:3e97:eff:fed0:2655] (unknown
+ [IPv6:2001:67c:18e8:2:3e97:eff:fed0:2655])
+ by mail.schafweide.org (Postfix) with ESMTPSA id C5B451300C9A
+ for <wireguard@lists.zx2c4.com>; Fri,  1 Mar 2019 10:35:50 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nord-west.org;
+ s=default; t=1551432950; h=from:from:sender:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=fW5V5/q0mfQX5wxt3zaF1MTvW/2GWagAXF8CmGCSBkY=;
+ b=D8b0dtL72Tusb/MSir4F5HR2TQRAElrbXJm0Za7B/xXQN9cbwOD+jzNqBrS5KHam85zfdE
+ bHFYMgQvVUejzJZFEyc2dJ2F/LKTB7tZIl4yXnSOZr1VKwRdl2mr1N4bhwvxanSknsJqYi
+ 5IgKqfvBqJfaspOfVkjzGQFRQzHjYng=
+Subject: Re: Openresolv package is a requirement and should be added to
+ install docs
+References: <304c3849-35d1-3312-1670-e7a8469a01fe@post.com>
+ <CALJ2VGZo9HYKyJt1=Or+DOhJgbOs1gs=XMECCLdfxN-dS325-Q@mail.gmail.com>
+To: wireguard@lists.zx2c4.com
+From: Bjoern Franke <bjo@nord-west.org>
 Openpgp: preference=signencrypt
-Autocrypt: addr=mike@pineview.net; prefer-encrypt=mutual; keydata=
- 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
-Message-ID: <97e86da6-6ebf-e448-8188-5cc053eb5da8@pineview.net>
-Date: Sat, 23 Feb 2019 09:34:11 +1030
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
- Gecko/20100101 Thunderbird/60.5.1
+Autocrypt: addr=bjo@nord-west.org; prefer-encrypt=mutual; keydata=
+ mQENBFj8f44BCADSkS8pPGOlEr8kZwAxF1WD9+RbIs+owDMcXH9aBk4FhNuFvZ0I0/d2rl8h
+ zINV+5u7LLSCUTi97c9n4UN747Jvbnn80ZrIvg3d7wDGIPeL9qFZ/vN6XK6p5h2cJOwA4cj6
+ fUIZvODsj0nAuclylHJlrDuONue87BRR9UieDDhuQNjFWSXMiLPqN0rUAgntKCv2a7KNswJM
+ bmvqwaR2/UxJVNW/Ez6FYlRn8N4zGMwHgS2/KHyJ0by0CGvY7XCR94+S4xKR4fdseWs1vs0S
+ Nd641LaJ544zmuJYd/2NfFmqnXkwuY2qrUjMdt/OLXENChwUDCMevUZ2sm0ACJ9bv0t1ABEB
+ AAG0IUJqb2VybiBGcmFua2UgPGJqb0Bub3JkLXdlc3Qub3JnPokBVwQTAQgAQQIbAwUJBaOa
+ gAULCQgHAgYVCAkKCwIEFgIDAQIeAQIXgBYhBOdPquv6Ji+vRgIQqvz+YSc+9H1/BQJbM8fW
+ AhkBAAoJEPz+YSc+9H1/PzEH/2cLGRR6UKyAzBtMV12btaAeXDgYPS8AgTwaJymtJeXriHOq
+ KoHzUzipuAy+LaeO9ZXhiXSZ83IqTfv5MOd8O67VhB6ZbNH1JtRM1or9I+Mpzm+eKfyVwU4A
+ OImP/ttNbkzTHNhcaws/d6jbuMPHFHyziSU96iedrPwwSqHXPkhjYQYjnJlIEFUVDGihRsFe
+ ixpeKCKQs61YvgiBquElchuhmid9BrNi1P2wxD8/M3oYOfsIwvyj9EZSInT19eJR+JClvgVu
+ fjhnOzRhiOJLnNQiLsyTBqiksD9Lodwsz837tpdxEKA/POOUn5Aa4ySCy4mcilDuSKNzYb2A
+ UjCoJle5AQ0EWPx/jgEIAK9L7ZOOraHYnb4KuftIlSXwxJeezaqta2CEz1B48W3iKXUiKiVH
+ EacdtFvk8q1UcxFxv27xZaMUygiKjwdxRtaqchKut+Az/9TimqHz/kx1eyBav4YtNZC2Krsp
+ UozyKnj2707Jl1K85vxpt4BNg5VbBuv8WgjJxITTM/sJSH+QDs5yxumyAOZtyWzle//Bh21y
+ jGoc1Cprl1pRpqo+2gYkFCWjuooNf1r+DYJm91EyurmU+mh00GCGDIwY/EFWSzQ6bjPWjoWy
+ sretGhNiFyWt5CnkxMK+/XVA3UVLAq8IZDf2bv0vrrW6MkxvehPexZgW/AMNnFWdj7+WseR8
+ kbsAEQEAAYkBPAQYAQgAJhYhBOdPquv6Ji+vRgIQqvz+YSc+9H1/BQJY/H+OAhsMBQkFo5qA
+ AAoJEPz+YSc+9H1/29cIAJrSqoK2dpxcQy1d4RbrHrfeAmbllOUX8f9tGFKiF10AhqQjgiuc
+ p+Q0xXHA1f62EDk/Xb+zxGScGJIQB/ViXKSZxpsMMIMCXWakUowh00TNj+oTVs1VLJtZKFc3
+ eqWs13Gc5ThkvsIO5hobbkY5fEDQYBXdZKfRt73oNjwi0iy/oEHuC2eUWmeh2/iq0G38uLKZ
+ tSMWv28PnkX3etOxJc4U0E0r7oTyGNRGc8+VHH8adoOccsEq4JLBg362laM7tcK4ILkgcgBe
+ ZSq85EuLjjI9cD69S/siNv2lCBcB153OnjaG+5KzIz3v/Bf+jnVmIMIpmQeJuVM3chWzuagg qow=
+Message-ID: <7ce0835e-4d0e-8c33-55c0-b8ff648af380@nord-west.org>
+Date: Fri, 1 Mar 2019 10:35:48 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.5.1
 MIME-Version: 1.0
-In-Reply-To: <62f9f029-605b-f2a5-5388-658233c2a72b@posteo.net>
-Content-Language: en-US
+In-Reply-To: <CALJ2VGZo9HYKyJt1=Or+DOhJgbOs1gs=XMECCLdfxN-dS325-Q@mail.gmail.com>
+Content-Language: de-DE
 X-Mailman-Approved-At: Fri, 01 Mar 2019 10:59:11 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
@@ -94,28 +97,18 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On 22/2/19 11:05 pm, Emanuele Bernardi wrote:
-> I'm very interesting about make it work with dkms, could you please
-> explain the process? thanks
-> Emanuele
->
-> On 22/02/19 00:29, Derrick Lyndon Pallas wrote:
->>
->> I just use DKMS to do it. Check out WireGuard to /usr/src, ln -s
->> WireGuard/src WireGuard-0, dkms add WireGuard/0. If it's not auto
->> building, have you tried dkms install WireGuard/0? ~D
->>
-The Wireguard source on github has a file in the src directory called
-dkms.conf, this when configured using dkms cli tool will automatically
-build a new Wireguard kernel module each time the package management
-installs a new kernel.
+On 28.02.19 19:45, Reuben Martin wrote:
 
-https://help.ubuntu.com/community/DKMS
+> 
+> 
+> That may be a requirement in the context that document was written for.
+> But that is not a requirement for wireguard.
+
+wg-quick is also a part of wireguard.
 
 
-Cheers
 
-Mike
+
 
 _______________________________________________
 WireGuard mailing list
