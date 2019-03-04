@@ -2,79 +2,66 @@ Return-Path: <SRS0=972F=RL=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_NEOMUTT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_PASS
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE407C4360F
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  8 Mar 2019 15:26:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A92EBC43381
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  8 Mar 2019 15:26:39 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 26F6D20868
+	by mail.kernel.org (Postfix) with ESMTPS id E870A20868
 	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  8 Mar 2019 15:26:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=bytedance-com.20150623.gappssmtp.com header.i=@bytedance-com.20150623.gappssmtp.com header.b="boPj7zu1"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 26F6D20868
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=bytedance.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=wades-im.20150623.gappssmtp.com header.i=@wades-im.20150623.gappssmtp.com header.b="x9IFdfRD"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org E870A20868
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=wades.im
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id feac6b80;
-	Fri, 8 Mar 2019 15:15:51 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 82c37900;
+	Fri, 8 Mar 2019 15:15:53 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9c3623a4
- for <wireguard@lists.zx2c4.com>; Sat, 2 Mar 2019 04:14:35 +0000 (UTC)
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com
- [IPv6:2607:f8b0:4864:20::62e])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 913cb3fa
- for <wireguard@lists.zx2c4.com>; Sat, 2 Mar 2019 04:14:35 +0000 (UTC)
-Received: by mail-pl1-x62e.google.com with SMTP id bj4so12427175plb.7
- for <wireguard@lists.zx2c4.com>; Fri, 01 Mar 2019 20:24:29 -0800 (PST)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id da0592ad
+ for <wireguard@lists.zx2c4.com>; Mon, 4 Mar 2019 16:51:26 +0000 (UTC)
+Received: from mail-ua1-x935.google.com (mail-ua1-x935.google.com
+ [IPv6:2607:f8b0:4864:20::935])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 86331b7e
+ for <wireguard@lists.zx2c4.com>; Mon, 4 Mar 2019 16:51:26 +0000 (UTC)
+Received: by mail-ua1-x935.google.com with SMTP id e15so5044580uam.3
+ for <wireguard@lists.zx2c4.com>; Mon, 04 Mar 2019 09:01:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance-com.20150623.gappssmtp.com; s=20150623;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to:user-agent;
- bh=0arviE4tyOOY8snJ3N4Jj5f/RuC4prYKrzpOQ6dhxxg=;
- b=boPj7zu1sIvs2MS/4vgqBT45W7KrM3b8tUNtxka9+BoWUP+MyV0cnGn91uVar1vO/c
- fReaewW/540iKkovO5uDMQpWqtqcG1RgEm1xR0G+MwOHXrg3BBx2rnN0S518CwTN6clH
- LoOdURRyKXg8uK7q5BUZ/5vfuupxMSGckDCUyNYC9zCDnWQVwMskCntvBEO9HrRbrCTY
- nwqaxxrfhHB1veRg59LFiNQic/mIE0++8lfnP+1qQ5pV2IK9A7wT0OggrlK/j2ASA5zJ
- oMjmWVbZOvoNeTpLInQPCoy/yhz8oFuXyTU6nnwPQPyq0EUn1koSDWDxDzPopJ/3iPQP
- 7M9g==
+ d=wades-im.20150623.gappssmtp.com; s=20150623;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=t85DAgqeA8SpJUtYRM2/JENrChGx8MLZWnQs8zC1FdY=;
+ b=x9IFdfRDDD9MHiRsqDgdIOmpgCnWrQ5XMOzF8K4hc5mikpJWGwN1umNoi+yW5P/Upn
+ 0YA8oIMRb8a0vG06TI5dSTEp39C3kukHgIVCfDeX2QwvCPgPlwCa/1FNcoY3VZVpUt+t
+ ajLC2MVkLNG7AH+G3S30qjsxchyCpimB8jKbTjClXddWlhPTPyhD4kRFfTA5YHEzDBLx
+ DivPb5/f5YzAaVmSXRst6lcm0a5O2vyxyhMDZTuvExambrtADLitY/nXs9q5aaZVX5rJ
+ lo9dlCoAOoRHP20tyUCvEOgWmOXuCEmpFsizqvFOt9dsx5lfFhTUOBIdYrwpd8m/FNW3
+ UhHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to:user-agent;
- bh=0arviE4tyOOY8snJ3N4Jj5f/RuC4prYKrzpOQ6dhxxg=;
- b=PEYwWtQVHkeiN9D4XmSfvFk1EY0gykKj+1HJyo0+DIl9YsWwSVbwECvuUalsEmPKOT
- +8bIQAyFd6rwaUhwWQUVqLm3lBbguIcYet22a178rTcXwi4gRSHx7VZvkxrX5mkJsJDS
- JhO4NdYnMH73jRD4BbN+9MwozUq1diCSUydUMOhAsp72nNs17fG/2z2PjO7ny65jHLlE
- hhyOf+b35gbZgtKVByaj5tkAXJhvfHySoCTMSlC3iahtWk1PFlIrVNDUn375M9zxcQSa
- N8CvMJGOWtBaOLZEGi4nJTd2rD03d+j7pbT3mNpK1/U8554Tqsy3+mOLAcBaPw+Zudn5
- tVSw==
-X-Gm-Message-State: APjAAAXxT6udvZY2IitvaTPQA7tJPJRyf1MBY87YDzvwIjPHul9ToWJ9
- 0iPoyuLo0CNkj64oG1VkjXRvQA==
-X-Google-Smtp-Source: APXvYqxN+ZkbvTqtER10DarDpnYPXcEGYYWYVTa4LXAm/qorIxWcSTiMTLDT+ylIad+Cx7Fu4sMF+w==
-X-Received: by 2002:a17:902:10e:: with SMTP id 14mr8912122plb.14.1551500668537; 
- Fri, 01 Mar 2019 20:24:28 -0800 (PST)
-Received: from bytedancedeMacBook-Air.local ([47.74.135.127])
- by smtp.gmail.com with ESMTPSA id l5sm31105272pfi.97.2019.03.01.20.24.24
- (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
- Fri, 01 Mar 2019 20:24:27 -0800 (PST)
-Date: Sat, 2 Mar 2019 12:24:21 +0800
-From: Xiaozhou Liu <liuxiaozhou@bytedance.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: Single CPU core bottleneck caused by high site-to-site traffic
-Message-ID: <20190302042419.gv3ldcooxzbf4veq@bytedancedeMacBook-Air.local>
-References: <20190228190512.6209-1-kallisti5@unixzen.com>
- <CAHmME9rQ-cKSV8o-sg3fJU4Uu6r5daC=Hx4mC-4OKGA8Z8hg7w@mail.gmail.com>
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=t85DAgqeA8SpJUtYRM2/JENrChGx8MLZWnQs8zC1FdY=;
+ b=a/F8NKWeTV6LVRaHvfDqSzmeYObRhL6vu5JBx+l9q32X8aJ+qIldAurjc3Ms2unw03
+ MYo4VjBKhhjiSVEp98Wt0S0TuVZi3njhU/TERxwCSnvibnFyAhxNriAAsf2oilFne6F7
+ VBRbviSgmCsv2C0Pu7pUOl8p8kPqCaSXQ9Sv2ad6gWwV+i2+prsqnbZR0SbSJM75Wke8
+ nuE73BR5JP/z8C8hSuQTM+TYCsXPC/oXeLoSkEeMEBGmemjBiSbmDtoBSicnsc9D7WhX
+ dtUvqfVFF6lrV4FgtM4mq0ZuThson8/3f3UUH/MUEQXuK+ZIrbQpqXVxtkbNN8EpXh8Z
+ 55Zg==
+X-Gm-Message-State: APjAAAWPxZwkiIpE/mkLy74d5GU0xkj4qQrWlu1yY85qs3SygxTyBNeC
+ J097ffwHOqmXFzrOBU8bHrf8suOhrsIaiOc/J/s1D7Kn
+X-Google-Smtp-Source: APXvYqyQcvRalIKgxXJ5Mk/3sg7yT1k9D6YzG0S9YqYcxxq06+jpgI0P+F2XF2QqYKbbJ7mAIuWygdyFXfH3RluM9fM=
+X-Received: by 2002:ab0:3445:: with SMTP id a5mr9945475uaq.130.1551718896755; 
+ Mon, 04 Mar 2019 09:01:36 -0800 (PST)
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <CAHmME9rQ-cKSV8o-sg3fJU4Uu6r5daC=Hx4mC-4OKGA8Z8hg7w@mail.gmail.com>
-User-Agent: NeoMutt/20180323
+From: Wade Simmons <wade@wades.im>
+Date: Mon, 4 Mar 2019 12:01:25 -0500
+Message-ID: <CAF63tRoybmhewSoPwuX+uLxiRxXU=FOLa4vzYWi1CU9NZj19qw@mail.gmail.com>
+Subject: wireguard-ios license
+To: wireguard@lists.zx2c4.com
 X-Mailman-Approved-At: Fri, 08 Mar 2019 16:15:49 +0100
-Cc: duanxiongchun@bytedance.com, wangdongdong.6@bytedance.com,
- zhangyongsu@bytedance.com, wireguard@lists.zx2c4.com, wangjian@bytedance.com
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -86,46 +73,62 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="===============3692482256083573190=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Jason and the list,
+--===============3692482256083573190==
+Content-Type: multipart/alternative; boundary="000000000000a1e7f8058347b5f7"
 
-Here at our corporate network we run some inner site-to-site VPNs using
-WireGuard. Thanks for giving out such a beautiful software to the world.
+--000000000000a1e7f8058347b5f7
+Content-Type: text/plain; charset="UTF-8"
 
-Recently we encountered some noticeable network latency during peak traffic
-time. Although the traffic is pretty huge, the WireGuard box is far from
-running out of any of its resources: CPU, memory, network bandwidth, etc.
+Most of the files in wireguard-ios have the MIT license specified in their
+header, but there are a few files that specify GPL:
 
-It turns out that the bottleneck is caused by the single UDP connection
-between the sites, which cannot be routed to different CPU cores by RSS
-on receiving. The total CPU usage is not high, but one of the cores can
-reach 100%.
+    wireguard-go-bridge/wireguard.h
+    wireguard-go-bridge/Makefile
+    WireGuard/WireGuard/Crypto/x25519.c
+    WireGuard/Shared/Model/key.h
+    WireGuard/Shared/Model/key.c
+    WireGuard/WireGuard/UI/macOS/View/highlighter.h
+    WireGuard/WireGuard/UI/macOS/View/highlighter.c
 
-Maybe we can improve this by:
-
-  embedding more endpoints in one peer so that the VPN tunnel can run
-  multiple UDP flows instead of one. Hence, the single huge UDP flow is
-  effectively broken down to some smaller ones which can be received by
-  multiple queues of the NIC and then later processed by more CPU cores.
-  It will not break current users because the single UDP connection is
-  still provided as the default configuration.
-
-It is also possible to set up multiple wg interfaces and more connections
-explicitly. But it would make the network administration much more complex.
-
-We are planning to make a working demo of this idea but we would like to
-hear from you first.
-
-Any idea or comment is appreciated.
-
+I assume that these are incorrect as the root README and COPYING files
+specify MIT, but I wanted to double check here first. Can anyone verify or
+fix these headers?
 
 Thanks,
-Xiaozhou
+Wade Simmons
+
+--000000000000a1e7f8058347b5f7
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><div>Most of the files in wireguard-ios h=
+ave the MIT license specified in their header, but there are a few files th=
+at specify GPL:</div><div><br></div><div><div>=C2=A0 =C2=A0 wireguard-go-br=
+idge/wireguard.h</div><div>=C2=A0 =C2=A0 wireguard-go-bridge/Makefile</div>=
+<div>=C2=A0 =C2=A0 WireGuard/WireGuard/Crypto/x25519.c</div><div>=C2=A0 =C2=
+=A0 WireGuard/Shared/Model/key.h</div><div>=C2=A0 =C2=A0 WireGuard/Shared/M=
+odel/key.c</div><div>=C2=A0 =C2=A0 WireGuard/WireGuard/UI/macOS/View/highli=
+ghter.h</div><div>=C2=A0 =C2=A0 WireGuard/WireGuard/UI/macOS/View/highlight=
+er.c</div></div><div><br></div><div>I assume that these are incorrect as th=
+e root README and COPYING files specify MIT, but I wanted to double check h=
+ere first. Can anyone verify or fix these headers?</div><div><br></div><div=
+>Thanks,</div><div>Wade Simmons</div></div></div>
+
+--000000000000a1e7f8058347b5f7--
+
+--===============3692482256083573190==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--===============3692482256083573190==--
