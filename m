@@ -2,54 +2,73 @@ Return-Path: <SRS0=xbiu=RJ=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	HTML_MESSAGE,MAILING_LIST_MULTI,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_PASS
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D995BC43381
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  6 Mar 2019 10:32:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C99CC43381
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  6 Mar 2019 15:59:57 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id C1F8020661
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  6 Mar 2019 10:32:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 7566B20675
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  6 Mar 2019 15:59:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="aevEjbx8"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org C1F8020661
-Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=protonmail.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nYJOcEzS"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 7566B20675
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4e6c7e58;
-	Wed, 6 Mar 2019 10:21:45 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ac2464de;
+	Wed, 6 Mar 2019 15:49:10 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 54f7cb3d
- for <wireguard@lists.zx2c4.com>; Wed, 6 Mar 2019 10:21:43 +0000 (UTC)
-Received: from mail-40133.protonmail.ch (mail-40133.protonmail.ch
- [185.70.40.133])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 48dcff65
- for <wireguard@lists.zx2c4.com>; Wed, 6 Mar 2019 10:21:43 +0000 (UTC)
-Date: Wed, 06 Mar 2019 10:32:04 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
- s=default; t=1551868329;
- bh=r6X2o12+zhxrg1oF88B6ye1zwFJ4yZu3elLlkLBOFs0=;
- h=Date:To:From:Reply-To:Subject:In-Reply-To:References:Feedback-ID:
- From;
- b=aevEjbx8ECq+TP62nDlH5jFoOqZzUAs0tD/O7QbgjzSlyBmQ2vzcOYfxkXOLTS6by
- jCVL714djTAoy+fnmLhQA/USlr6ldsU1kDh3a+O/NtmB6YR4y0LVEENmPaAYUFdWJg
- SFEG64gVkb4Rvw/p99RzR+HWBCjy4SspWl53nWUM=
-To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
-From: kolargol <kolargol@protonmail.com>
-Subject: Re: iOS WG Battery Life
-Message-ID: <m0TuqDHkAYGdhWF5GpR41VFR2CyQ13kQakLz3a1iM22qOCiC97dq40L2GVvnR-YL8mQFUQuBntkZjx8w9R2mgBZoW5fkAXYe3a8i4k004Ik=@protonmail.com>
-In-Reply-To: <zk1gAdr9rlJCh4vzh4DYSc11v_Ja4r_9xYurdAcwFsa50g2zMxHskd5Nb0leXZKUZrCqV3YIZFI5pNYptUGXTyQBIl5zWoF_N306lQKO_tg=@protonmail.com>
-References: <zk1gAdr9rlJCh4vzh4DYSc11v_Ja4r_9xYurdAcwFsa50g2zMxHskd5Nb0leXZKUZrCqV3YIZFI5pNYptUGXTyQBIl5zWoF_N306lQKO_tg=@protonmail.com>
-Feedback-ID: BeuBiSQcqsr-Krwtcv9IekhH3G8BPby93wz9So6BEG3RLXEAsJdmMzmwNOSrHC8ToF3fQqLPAjlqXY7tyhxFEQ==:Ext:ProtonMail
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cd192b46
+ for <wireguard@lists.zx2c4.com>; Wed, 6 Mar 2019 15:49:05 +0000 (UTC)
+Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com
+ [IPv6:2607:f8b0:4864:20::72d])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 79a10fbb
+ for <wireguard@lists.zx2c4.com>; Wed, 6 Mar 2019 15:49:05 +0000 (UTC)
+Received: by mail-qk1-x72d.google.com with SMTP id h28so7066321qkk.7
+ for <wireguard@lists.zx2c4.com>; Wed, 06 Mar 2019 07:59:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=OYY+aDRExFf74CLENKmhkF0zP9WKXL0cFlXle+Sg2U8=;
+ b=nYJOcEzSaKnRPBkP0Krh4l3wj9/1n48W8FwAwnNkWopf393GiWM2zolcDkejK4hg+d
+ Oxa81Mfb9hiFOWSqmrMpVymqvDwHyPUoMuEtq8aQ6aMHUW82AujNYmZ/qjviPaVDGz0U
+ Ag9Zkx+Q8IU0ikY+2cVQouZIVuET5Mvdn+dD5hKIHr531M7ILFBb3a5ceNhTQJjhPxUe
+ 8MYHn0N7cAtmr/ovCFpe14xNBw2/ETcJXBTSTuh4SkDXXfnWb5FHCOkJRkvcGl3ZVCTI
+ TVC1ocKUwW4g9gdh7TzeoczCaaJ1EnxYXjdIsUDGUantctSyk+Pf+rgpx1JpxTvuSx1i
+ ujww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=OYY+aDRExFf74CLENKmhkF0zP9WKXL0cFlXle+Sg2U8=;
+ b=qlVZ/pnb5MCnBe52IjgSf8dqWtVwqEthMBSUExxpcywXv87EEtm0J9iT7imbcSVsvn
+ d94nWiS+eUbnXGcX0PV3XCqnSoQr71SHe/AeU18dwGdQ178QbjvSbNfW6PpGp7RdYLY9
+ DbLTNjfkUEKapG2IaL0fWxrdDrK7leCuDMy594o4a+GvLTZySPjWVMw33G3ATLXYJmL0
+ 7L2sLvsD4EurRvuddVsDphDdzKtt5DTHlwhbEKIWvxumH6fROpKMNDIjtq/UESCMfZVV
+ u8gwhmB2+j1K/itMOi/RHGblRa3fCBOB0zEHrhXouV1AY4R/ym9gMv4TdPLdZ10/2xCn
+ HnXQ==
+X-Gm-Message-State: APjAAAW74uf60VrBu8ryG01hFWre3PuQAJFcND+CY9JVbONJNjxrFe58
+ /ZQkhjF+HCtDUy0T+acVpkYd56tUgIhV05ENq81kpYN7
+X-Google-Smtp-Source: APXvYqzbFADqhrUL5rk597KMu7CootD/nFbTOFqiuqUFCuCEITsWktNEXAUnzag23qmw5NPLYNMtw5OLjngx4il4UrA=
+X-Received: by 2002:ae9:ed0c:: with SMTP id c12mr5981609qkg.306.1551887973405; 
+ Wed, 06 Mar 2019 07:59:33 -0800 (PST)
 MIME-Version: 1.0
+References: <CAGCGytLuf1Lhm-oQrL+ACOJw0wMu3wcXPOS0qufRWo1w47RQ+g@mail.gmail.com>
+ <3053f293b7e9a34a733c2b5b314e2d8a620682db.camel@airmail.cc>
+In-Reply-To: <3053f293b7e9a34a733c2b5b314e2d8a620682db.camel@airmail.cc>
+From: Arpit Gupta <g.arpit@gmail.com>
+Date: Wed, 6 Mar 2019 07:59:22 -0800
+Message-ID: <CAGCGyt+gvYDHR3KHi+HRc2pCnyLbefV3h=OmfSOqhfdR564p0w@mail.gmail.com>
+Subject: Re: cant connect to wireguard when router connected to a vpn service
+To: XRP <xrp@airmail.cc>
+Cc: wireguard@lists.zx2c4.com
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
-Reply-To: kolargol <kolargol@protonmail.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -58,95 +77,161 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============4711084082829604991=="
+Content-Type: multipart/mixed; boundary="===============7770222015439826466=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This is a multi-part message in MIME format.
+--===============7770222015439826466==
+Content-Type: multipart/alternative; boundary="00000000000062d8b705836f1395"
 
---===============4711084082829604991==
-Content-Type: multipart/alternative;
-	boundary="b1_398631f1a494110a937475c80f810926"
+--00000000000062d8b705836f1395
+Content-Type: text/plain; charset="UTF-8"
 
-This is a multi-part message in MIME format.
+Tried changing the allowed ip's to what was suggested and it did not work.
+Same behavior as before. Also my configs were working as expected before i
+had my router connected to a vpn service.
 
---b1_398631f1a494110a937475c80f810926
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+It required me to add the following route policy for my vpn client on my
+router
 
-QWZ0ZXIgZmV3IGRheXMgb2YgdGVzdGluZyBhbmQgZGlnZ2luZyBpIGZvdW5kIG5vdGhpbmcgd3Jv
-bmcgd2l0aCBXaXJlR3VhcmQuLi4gaXQgdHVybmVkIG91dCB0aGF0IGZvciBzb21lIHJlYXNvbiBh
-ZnRlciB1c2luZyBXaXJlR3VhcmQsIFdpRmkgQ2FsbGluZyBhbmQvb3IgVm9MVEUgc3RhcnRlZCB0
-byBnbyBjcmF6eSBhbmQgZWF0IHVwIGJhdHRlcnkuCkFmdGVyIGRpc2FibGluZyBib3RoIGZlYXR1
-cmVzIGFuZCB3aXRoIFdHIGluIERhbWFuZCBtb2RlIChhbHdheXMgb24pIGFuZCA4aCBiYXR0ZXJ5
-IGRyb3BwZWQgc2hvY2tpbmcgMiUgLi4uCgpub3csIHlvdS9JIGNhbiBkaXNtaXNzIHRoYXQgcmVw
-b3J0IG9yIHRyeSB0byBmaW5kIHdoeSBXaS1GaSBDYWxsaW5nIGFuZCBWb0xURSBnb2luZyBjcmF6
-eSB3aXRoIHdpcmVndWFyZCBlbmFibGVkLiBJdCBtaWdodCBiZSBidWcgaW4gaU9TLCBidWcgaW4g
-VC1Nb2JpbGUgaW1wbGVtZW50YXRpb24sIGJ1ZyBpbiBDRk5ldHdvcmssIG9yIHZwbiBleHRlbnNp
-b24sIHdobyBrbm93cy4gSWYgeW91IGhhdmUgaWRlYXMgYWJvdXQgdGhhdCBsZXQgbWUga25vdy4K
-CnRoYW5rcyBhbGwgZm9yIGxpc3RlbmluZy4KX18Ka29sYXJnb2wKClNlbnQgd2l0aCBbUHJvdG9u
-TWFpbF0oaHR0cHM6Ly9wcm90b25tYWlsLmNvbSkgU2VjdXJlIEVtYWlsLgoK4oCQ4oCQ4oCQ4oCQ
-4oCQ4oCQ4oCQIE9yaWdpbmFsIE1lc3NhZ2Ug4oCQ4oCQ4oCQ4oCQ4oCQ4oCQ4oCQCk9uIFRodXJz
-ZGF5LCBGZWJydWFyeSAyOCwgMjAxOSAxOjA3IFBNLCBrb2xhcmdvbCA8a29sYXJnb2xAcHJvdG9u
-bWFpbC5jb20+IHdyb3RlOgoKPiBIaQo+Cj4gVGhhbmtzIGZvciBncmVhdCB3b3JrIHdpdGggV2ly
-ZWd1YXJkLCBpdCdzIGZyZXNoIGJyZWV6ZSBvZiBhaXIgY29tcGFyZWQgb24geWVhcnMgc3BlbmQg
-b24gT3BlblZQTi4uLgo+Cj4gSSBhbSB0ZXN0aW5nIFdHIG9uIHZhcml1cyBPU2VzIGFuZCBkZXZp
-Y2VzIGFuZCBJIGhhdmUgbm90ZWQgc2V2ZXJlIGJhdHRlcnkgZHJhaW4gb24gaU9TICgxMi4yLCBp
-UGhvbmUgOCkuIFR5cGljYWxseSBiYXR0ZXJ5IGRyb3BzIDQwJSBkdXJpbmcgbmlnaHQtdGltZSAo
-dGhhdCBpcyA3IGhvdXJzIG9mIGluYWN0aXZpdHkgb24gdGhlIHBob25lKSB3aGVuIFdpcmVHdWFy
-ZCBpcyBlbmdhZ2VkLgo+IElzIHRoaXMgc29tZSBraW5kIG9mIGtub3duIGlzc3VlPyBJIGRpZCBu
-b3QgaGFkIGNoYW5jZSB0byB0ZXN0IHByZXZpb3VzIGlPUyB2ZXJzaW9uIHdpdGhvdXQgU0lNRCBD
-aGFDaGEyMCBzdXBwb3J0IHNvIGkgY2Fubm90IHRlbGwgaWYgaXQgaXMgYmVjb3VzZSBvZiB0aGUg
-bGFzdCB1cGRhdGUuCj4KPiBBbnl0aGluZyBpIGNhbiBkbyB0byB0cmFjayBpc3N1ZSBoZXJlPwo+
-Cj4gdGhhbmtzLAo+IGtvbGFyZ29s
+Source IP: 192.168.1.0/24, Destination: 0.0.0.0 will go throuh the VPN. So
+if it matters if i connected to wireguard using the ip address of the ISP
+vs the IP address of the VPN?
 
 
---b1_398631f1a494110a937475c80f810926
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: base64
-
-PGRpdj5BZnRlciBmZXcgZGF5cyBvZiB0ZXN0aW5nIGFuZCBkaWdnaW5nIGkgZm91bmQgbm90aGlu
-ZyB3cm9uZyB3aXRoIFdpcmVHdWFyZC4uLiBpdCB0dXJuZWQgb3V0IHRoYXQgZm9yIHNvbWUgcmVh
-c29uIGFmdGVyIHVzaW5nIFdpcmVHdWFyZCwgV2lGaSBDYWxsaW5nIGFuZC9vciBWb0xURSBzdGFy
-dGVkIHRvIGdvIGNyYXp5IGFuZCBlYXQgdXAgYmF0dGVyeS4gPGJyPjwvZGl2PjxkaXY+QWZ0ZXIg
-ZGlzYWJsaW5nIGJvdGggZmVhdHVyZXMgYW5kIHdpdGggV0cgaW4gRGFtYW5kIG1vZGUgKGFsd2F5
-cyBvbikgYW5kIDhoIGJhdHRlcnkgZHJvcHBlZCBzaG9ja2luZyAyJSAuLi48YnI+PC9kaXY+PGRp
-dj48YnI+PC9kaXY+PGRpdj5ub3csIHlvdS9JIGNhbiBkaXNtaXNzIHRoYXQgcmVwb3J0IG9yIHRy
-eSB0byBmaW5kIHdoeSBXaS1GaSBDYWxsaW5nIGFuZCBWb0xURSBnb2luZyBjcmF6eSB3aXRoIHdp
-cmVndWFyZCBlbmFibGVkLiBJdCBtaWdodCBiZSBidWcgaW4gaU9TLCBidWcgaW4gVC1Nb2JpbGUg
-aW1wbGVtZW50YXRpb24sIGJ1ZyBpbiBDRk5ldHdvcmssIG9yIHZwbiBleHRlbnNpb24sIHdobyBr
-bm93cy4gSWYgeW91IGhhdmUgaWRlYXMgYWJvdXQgdGhhdCBsZXQgbWUga25vdy48YnI+PC9kaXY+
-PGRpdj48YnI+PC9kaXY+PGRpdj50aGFua3MgYWxsIGZvciBsaXN0ZW5pbmcuPGJyPjwvZGl2Pjxk
-aXYgY2xhc3M9InByb3Rvbm1haWxfc2lnbmF0dXJlX2Jsb2NrIj48ZGl2IGNsYXNzPSJwcm90b25t
-YWlsX3NpZ25hdHVyZV9ibG9jay11c2VyIj48ZGl2Pl9fPGJyPjwvZGl2PjxkaXY+a29sYXJnb2w8
-YnI+PC9kaXY+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdiBjbGFzcz0icHJvdG9ubWFpbF9zaWdu
-YXR1cmVfYmxvY2stcHJvdG9uIj5TZW50IHdpdGggPGEgaHJlZj0iaHR0cHM6Ly9wcm90b25tYWls
-LmNvbSIgdGFyZ2V0PSJfYmxhbmsiPlByb3Rvbk1haWw8L2E+IFNlY3VyZSBFbWFpbC48YnI+PC9k
-aXY+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj7igJDigJDigJDigJDigJDigJDigJAgT3JpZ2lu
-YWwgTWVzc2FnZSDigJDigJDigJDigJDigJDigJDigJA8YnI+PC9kaXY+PGRpdj4gT24gVGh1cnNk
-YXksIEZlYnJ1YXJ5IDI4LCAyMDE5IDE6MDcgUE0sIGtvbGFyZ29sICZsdDtrb2xhcmdvbEBwcm90
-b25tYWlsLmNvbSZndDsgd3JvdGU6PGJyPjwvZGl2PjxkaXY+IDxicj48L2Rpdj48YmxvY2txdW90
-ZSBjbGFzcz0icHJvdG9ubWFpbF9xdW90ZSIgdHlwZT0iY2l0ZSI+PGRpdj5IaTxicj48L2Rpdj48
-ZGl2Pjxicj48L2Rpdj48ZGl2PlRoYW5rcyBmb3IgZ3JlYXQgd29yayB3aXRoIFdpcmVndWFyZCwg
-aXQncyBmcmVzaCBicmVlemUgb2YgYWlyIGNvbXBhcmVkIG9uIHllYXJzIHNwZW5kIG9uIE9wZW5W
-UE4uLi48YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5JIGFtIHRlc3RpbmcgV0cgb24gdmFy
-aXVzIE9TZXMgYW5kIGRldmljZXMgYW5kIEkgaGF2ZSBub3RlZCBzZXZlcmUgYmF0dGVyeSBkcmFp
-biBvbiBpT1MgKDEyLjIsIGlQaG9uZSA4KS4gVHlwaWNhbGx5IGJhdHRlcnkgZHJvcHMgNDAlIGR1
-cmluZyBuaWdodC10aW1lICh0aGF0IGlzIDcgaG91cnMgb2YgaW5hY3Rpdml0eSBvbiB0aGUgcGhv
-bmUpIHdoZW4gV2lyZUd1YXJkIGlzIGVuZ2FnZWQuIDxicj48L2Rpdj48ZGl2PklzIHRoaXMgc29t
-ZSBraW5kIG9mIGtub3duIGlzc3VlPyBJIGRpZCBub3QgaGFkIGNoYW5jZSB0byB0ZXN0IHByZXZp
-b3VzIGlPUyB2ZXJzaW9uIHdpdGhvdXQgU0lNRCBDaGFDaGEyMCBzdXBwb3J0IHNvIGkgY2Fubm90
-IHRlbGwgaWYgaXQgaXMgYmVjb3VzZSBvZiB0aGUgbGFzdCB1cGRhdGUuPGJyPjwvZGl2PjxkaXY+
-PGJyPjwvZGl2PjxkaXY+QW55dGhpbmcgaSBjYW4gZG8gdG8gdHJhY2sgaXNzdWUgaGVyZT88YnI+
-PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj50aGFua3MsPGJyPjwvZGl2PjxkaXY+a29sYXJnb2w8
-YnI+PC9kaXY+PC9ibG9ja3F1b3RlPjxkaXY+PGJyPjwvZGl2Pg==
+--
+Arpit
 
 
+On Wed, Mar 6, 2019 at 1:18 AM XRP <xrp@airmail.cc> wrote:
 
---b1_398631f1a494110a937475c80f810926--
+> On Wed, 2019-03-06 at 08:40 +0000, Arpit Gupta wrote:
+> > On my server my conf is
+> >
+> > [Interface]
+> > Address = 192.168.100.1/32
+> > PostUp = iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o
+> > %i -j
+> > ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+> > PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD
+> > -o %i
+> > -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
+> > ListenPort = 54930
+> > PrivateKey = xxxxx
+> >
+> > [Peer]
+> > PublicKey = xxxx
+> > AllowedIPs = 192.168.100.2/32
+> >
+> >
+> > on my client my config is
+> >
+> > [Interface]
+> > Address = 192.168.100.2
+> > PrivateKey = xxxxx
+> > ListenPort = 21841
+> > DNS = 192.168.1.63
+> >
+> > [Peer]
+> > PublicKey = xxxx
+> > Endpoint = ddns:xxx
+> > AllowedIPs = 192.168.1.0/24
+> >
+> > # This is for if you're behind a NAT and
+> > # want the connection to be kept alive.
+> > PersistentKeepalive = 25
+>
+> Try changing AllowedIPs in the client config to:
+> AllowedIPs = 192.168.100.1/32,192.168.1.0/24
+>
+> Also, if you want to masquerade the traffic to the internet you need to
+> add 0.0.0.0./0 to the client or change the destination IP to the server
+> node via a NAT rule, otherwise it's going to be rejected because the IP
+> packet doesn't have an AllowedIP address, I think. (The source needs to
+> match, so either 192.168.100.1/32 or 192.168.1.0/24). My guess is
+> that's why you couldn't complete the handshake.
+>
+>
 
+--00000000000062d8b705836f1395
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
---===============4711084082829604991==
+<div dir=3D"ltr">Tried changing the allowed ip&#39;s to what was suggested =
+and it did not work. Same behavior as before. Also my configs were working =
+as expected before i had my router connected to a vpn service.<div><br></di=
+v><div>It required me to add the following route policy for my vpn client o=
+n my router</div><div><br></div><div>Source IP: <a href=3D"http://192.168.1=
+.0/24">192.168.1.0/24</a>, Destination: 0.0.0.0 will go throuh the VPN. So =
+if it matters if i connected to wireguard using the ip address of the ISP v=
+s the IP address of the VPN?</div><div><br></div><div><br clear=3D"all"><di=
+v><div dir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail_signat=
+ure"><div dir=3D"ltr"><div>--</div>Arpit</div></div></div><br></div></div><=
+br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed,=
+ Mar 6, 2019 at 1:18 AM XRP &lt;xrp@airmail.cc&gt; wrote:<br></div><blockqu=
+ote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px=
+ solid rgb(204,204,204);padding-left:1ex">On Wed, 2019-03-06 at 08:40 +0000=
+, Arpit Gupta wrote:<br>
+&gt; On my server my conf is<br>
+&gt; <br>
+&gt; [Interface]<br>
+&gt; Address =3D <a href=3D"http://192.168.100.1/32" rel=3D"noreferrer" tar=
+get=3D"_blank">192.168.100.1/32</a><br>
+&gt; PostUp =3D iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o=
+<br>
+&gt; %i -j<br>
+&gt; ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE<br>
+&gt; PostDown =3D iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD<=
+br>
+&gt; -o %i<br>
+&gt; -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE<br>
+&gt; ListenPort =3D 54930<br>
+&gt; PrivateKey =3D xxxxx<br>
+&gt; <br>
+&gt; [Peer]<br>
+&gt; PublicKey =3D xxxx<br>
+&gt; AllowedIPs =3D <a href=3D"http://192.168.100.2/32" rel=3D"noreferrer" =
+target=3D"_blank">192.168.100.2/32</a><br>
+&gt; <br>
+&gt; <br>
+&gt; on my client my config is<br>
+&gt; <br>
+&gt; [Interface]<br>
+&gt; Address =3D 192.168.100.2<br>
+&gt; PrivateKey =3D xxxxx<br>
+&gt; ListenPort =3D 21841<br>
+&gt; DNS =3D 192.168.1.63<br>
+&gt; <br>
+&gt; [Peer]<br>
+&gt; PublicKey =3D xxxx<br>
+&gt; Endpoint =3D ddns:xxx<br>
+&gt; AllowedIPs =3D <a href=3D"http://192.168.1.0/24" rel=3D"noreferrer" ta=
+rget=3D"_blank">192.168.1.0/24</a><br>
+&gt; <br>
+&gt; # This is for if you&#39;re behind a NAT and<br>
+&gt; # want the connection to be kept alive.<br>
+&gt; PersistentKeepalive =3D 25<br>
+<br>
+Try changing AllowedIPs in the client config to:<br>
+AllowedIPs =3D <a href=3D"http://192.168.100.1/32,192.168.1.0/24" rel=3D"no=
+referrer" target=3D"_blank">192.168.100.1/32,192.168.1.0/24</a><br>
+<br>
+Also, if you want to masquerade the traffic to the internet you need to<br>
+add 0.0.0.0./0 to the client or change the destination IP to the server<br>
+node via a NAT rule, otherwise it&#39;s going to be rejected because the IP=
+<br>
+packet doesn&#39;t have an AllowedIP address, I think. (The source needs to=
+<br>
+match, so either <a href=3D"http://192.168.100.1/32" rel=3D"noreferrer" tar=
+get=3D"_blank">192.168.100.1/32</a> or <a href=3D"http://192.168.1.0/24" re=
+l=3D"noreferrer" target=3D"_blank">192.168.1.0/24</a>). My guess is<br>
+that&#39;s why you couldn&#39;t complete the handshake.<br>
+<br>
+</blockquote></div>
+
+--00000000000062d8b705836f1395--
+
+--===============7770222015439826466==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -157,5 +242,4 @@ WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---===============4711084082829604991==--
-
+--===============7770222015439826466==--
