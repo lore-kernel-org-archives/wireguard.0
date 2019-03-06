@@ -7,62 +7,63 @@ X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
 	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_PASS
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C99CC43381
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  6 Mar 2019 15:59:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34C75C43381
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  6 Mar 2019 16:21:09 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 7566B20675
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  6 Mar 2019 15:59:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id BCEED20684
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  6 Mar 2019 16:21:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nYJOcEzS"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 7566B20675
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="URKL6fWV"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org BCEED20684
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ac2464de;
-	Wed, 6 Mar 2019 15:49:10 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c908c5da;
+	Wed, 6 Mar 2019 16:10:38 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cd192b46
- for <wireguard@lists.zx2c4.com>; Wed, 6 Mar 2019 15:49:05 +0000 (UTC)
-Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com
- [IPv6:2607:f8b0:4864:20::72d])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 79a10fbb
- for <wireguard@lists.zx2c4.com>; Wed, 6 Mar 2019 15:49:05 +0000 (UTC)
-Received: by mail-qk1-x72d.google.com with SMTP id h28so7066321qkk.7
- for <wireguard@lists.zx2c4.com>; Wed, 06 Mar 2019 07:59:34 -0800 (PST)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d64f2144
+ for <wireguard@lists.zx2c4.com>; Wed, 6 Mar 2019 16:10:35 +0000 (UTC)
+Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com
+ [IPv6:2607:f8b0:4864:20::831])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e8b5b7ea
+ for <wireguard@lists.zx2c4.com>; Wed, 6 Mar 2019 16:10:35 +0000 (UTC)
+Received: by mail-qt1-x831.google.com with SMTP id v10so13450377qtp.8
+ for <wireguard@lists.zx2c4.com>; Wed, 06 Mar 2019 08:21:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=OYY+aDRExFf74CLENKmhkF0zP9WKXL0cFlXle+Sg2U8=;
- b=nYJOcEzSaKnRPBkP0Krh4l3wj9/1n48W8FwAwnNkWopf393GiWM2zolcDkejK4hg+d
- Oxa81Mfb9hiFOWSqmrMpVymqvDwHyPUoMuEtq8aQ6aMHUW82AujNYmZ/qjviPaVDGz0U
- Ag9Zkx+Q8IU0ikY+2cVQouZIVuET5Mvdn+dD5hKIHr531M7ILFBb3a5ceNhTQJjhPxUe
- 8MYHn0N7cAtmr/ovCFpe14xNBw2/ETcJXBTSTuh4SkDXXfnWb5FHCOkJRkvcGl3ZVCTI
- TVC1ocKUwW4g9gdh7TzeoczCaaJ1EnxYXjdIsUDGUantctSyk+Pf+rgpx1JpxTvuSx1i
- ujww==
+ :cc; bh=+qBHyuoIWxBC+nqit23CS9gppkjHRgL+nNs2t7V1UsU=;
+ b=URKL6fWVOnMZppxmnhwVghAKslVGhg8jk1j6y+4Fazi9A6vsdvrkpxo4VMcA2zoK44
+ Ao1mY8FTcrgbX9LOl7oj69qlZV8TD8BuDdPwOgRTCPaCXRxIgKG2D559WOabkh00WK7i
+ cpIJ1ZycecmaLKclt154FeoPdoBObTIy1/UPJCpeUroIi6vuE6VYQeqON7741FxDhjsT
+ GakfdsanOHcQMZPKh5/Q6uUQM1hpArRAy6rfW2Q8cXqsB4fT6VJp0sApFumt9LMYdhHv
+ lfLdCbWLqe6U0gXjJpvEVXdkNqqT1bW8h/hbZWLVJnbYzog8sw3IMOGhRD2tt26FPG2a
+ qcdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=OYY+aDRExFf74CLENKmhkF0zP9WKXL0cFlXle+Sg2U8=;
- b=qlVZ/pnb5MCnBe52IjgSf8dqWtVwqEthMBSUExxpcywXv87EEtm0J9iT7imbcSVsvn
- d94nWiS+eUbnXGcX0PV3XCqnSoQr71SHe/AeU18dwGdQ178QbjvSbNfW6PpGp7RdYLY9
- DbLTNjfkUEKapG2IaL0fWxrdDrK7leCuDMy594o4a+GvLTZySPjWVMw33G3ATLXYJmL0
- 7L2sLvsD4EurRvuddVsDphDdzKtt5DTHlwhbEKIWvxumH6fROpKMNDIjtq/UESCMfZVV
- u8gwhmB2+j1K/itMOi/RHGblRa3fCBOB0zEHrhXouV1AY4R/ym9gMv4TdPLdZ10/2xCn
- HnXQ==
-X-Gm-Message-State: APjAAAW74uf60VrBu8ryG01hFWre3PuQAJFcND+CY9JVbONJNjxrFe58
- /ZQkhjF+HCtDUy0T+acVpkYd56tUgIhV05ENq81kpYN7
-X-Google-Smtp-Source: APXvYqzbFADqhrUL5rk597KMu7CootD/nFbTOFqiuqUFCuCEITsWktNEXAUnzag23qmw5NPLYNMtw5OLjngx4il4UrA=
-X-Received: by 2002:ae9:ed0c:: with SMTP id c12mr5981609qkg.306.1551887973405; 
- Wed, 06 Mar 2019 07:59:33 -0800 (PST)
+ bh=+qBHyuoIWxBC+nqit23CS9gppkjHRgL+nNs2t7V1UsU=;
+ b=NtmAS/Og4AL3ClnK798ojnEDHYZCfz9ZbgEk7GehAqP8RlT6g7GU5b7NLakCs1UZIG
+ iqriSFIjxGz2vP8EZinfdzndXxSodx5Zy9/eMzPTMwwgrOWqdc/53TM4oCkFLqpbVM1Q
+ DrsQNsTLCrgZwWq2CQQPw3WFnGeIIS20DsUniU+klYW+ANOmpsVWGedZBK6FSPZpbeYz
+ V7TfX5o91v2EEuqwqr1SqTmE/BoSQi833Bz+DPjFu8qraHGBKXycWTBS8se4bmEy4CtV
+ BQeaKbZYLyMI47w2YhmrPEAjXcFLV2z4aoIdgxFgiyIr/mWzkEK13+AWftRdJ2PrMIzB
+ U2UA==
+X-Gm-Message-State: APjAAAVM72zLbOAavLf6VM9JzyRbgFdApPE+AQpY67bOxYM24Hh2KZmX
+ R9NpUG2f5RTFVWkjdbv5k3l2qNR+Z2H+RZAy7WGNPLHr
+X-Google-Smtp-Source: APXvYqznFMQ8Ef6KluoKeNpsljOvWZnf6nIAP82vkAzdIjO32oJnq/rzwscmj+igZgj+b7AYq8Hvti73Jf/Fxz7MKMo=
+X-Received: by 2002:a0c:ae78:: with SMTP id z53mr6834637qvc.235.1551889264003; 
+ Wed, 06 Mar 2019 08:21:04 -0800 (PST)
 MIME-Version: 1.0
 References: <CAGCGytLuf1Lhm-oQrL+ACOJw0wMu3wcXPOS0qufRWo1w47RQ+g@mail.gmail.com>
  <3053f293b7e9a34a733c2b5b314e2d8a620682db.camel@airmail.cc>
-In-Reply-To: <3053f293b7e9a34a733c2b5b314e2d8a620682db.camel@airmail.cc>
+ <CAGCGyt+gvYDHR3KHi+HRc2pCnyLbefV3h=OmfSOqhfdR564p0w@mail.gmail.com>
+In-Reply-To: <CAGCGyt+gvYDHR3KHi+HRc2pCnyLbefV3h=OmfSOqhfdR564p0w@mail.gmail.com>
 From: Arpit Gupta <g.arpit@gmail.com>
-Date: Wed, 6 Mar 2019 07:59:22 -0800
-Message-ID: <CAGCGyt+gvYDHR3KHi+HRc2pCnyLbefV3h=OmfSOqhfdR564p0w@mail.gmail.com>
+Date: Wed, 6 Mar 2019 08:20:53 -0800
+Message-ID: <CAGCGyt+cKUuaSh8pSATmRSUGpaeyc0rKvSoF_sABPO-hsJ5HAQ@mail.gmail.com>
 Subject: Re: cant connect to wireguard when router connected to a vpn service
 To: XRP <xrp@airmail.cc>
 Cc: wireguard@lists.zx2c4.com
@@ -77,101 +78,130 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============7770222015439826466=="
+Content-Type: multipart/mixed; boundary="===============8911169448818833896=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============7770222015439826466==
-Content-Type: multipart/alternative; boundary="00000000000062d8b705836f1395"
+--===============8911169448818833896==
+Content-Type: multipart/alternative; boundary="0000000000004fd18b05836f60d9"
 
---00000000000062d8b705836f1395
+--0000000000004fd18b05836f60d9
 Content-Type: text/plain; charset="UTF-8"
 
-Tried changing the allowed ip's to what was suggested and it did not work.
-Same behavior as before. Also my configs were working as expected before i
-had my router connected to a vpn service.
+Got it working :).
 
-It required me to add the following route policy for my vpn client on my
-router
+Did not need to change any client or server settings. However needed to add
+another policy rule in my vpn client. Rule states
 
-Source IP: 192.168.1.0/24, Destination: 0.0.0.0 will go throuh the VPN. So
-if it matters if i connected to wireguard using the ip address of the ISP
-vs the IP address of the VPN?
+Source: wireguard server
+destination: 192.168.100.0/24 (so any of my wireguard clients)
+interface: WAN
 
-
+So this way wireguard traffic does not go through the VPN.
 --
 Arpit
 
 
-On Wed, Mar 6, 2019 at 1:18 AM XRP <xrp@airmail.cc> wrote:
+On Wed, Mar 6, 2019 at 7:59 AM Arpit Gupta <g.arpit@gmail.com> wrote:
 
-> On Wed, 2019-03-06 at 08:40 +0000, Arpit Gupta wrote:
-> > On my server my conf is
-> >
-> > [Interface]
-> > Address = 192.168.100.1/32
-> > PostUp = iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o
-> > %i -j
-> > ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
-> > PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD
-> > -o %i
-> > -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
-> > ListenPort = 54930
-> > PrivateKey = xxxxx
-> >
-> > [Peer]
-> > PublicKey = xxxx
-> > AllowedIPs = 192.168.100.2/32
-> >
-> >
-> > on my client my config is
-> >
-> > [Interface]
-> > Address = 192.168.100.2
-> > PrivateKey = xxxxx
-> > ListenPort = 21841
-> > DNS = 192.168.1.63
-> >
-> > [Peer]
-> > PublicKey = xxxx
-> > Endpoint = ddns:xxx
-> > AllowedIPs = 192.168.1.0/24
-> >
-> > # This is for if you're behind a NAT and
-> > # want the connection to be kept alive.
-> > PersistentKeepalive = 25
+> Tried changing the allowed ip's to what was suggested and it did not work.
+> Same behavior as before. Also my configs were working as expected before i
+> had my router connected to a vpn service.
 >
-> Try changing AllowedIPs in the client config to:
-> AllowedIPs = 192.168.100.1/32,192.168.1.0/24
+> It required me to add the following route policy for my vpn client on my
+> router
 >
-> Also, if you want to masquerade the traffic to the internet you need to
-> add 0.0.0.0./0 to the client or change the destination IP to the server
-> node via a NAT rule, otherwise it's going to be rejected because the IP
-> packet doesn't have an AllowedIP address, I think. (The source needs to
-> match, so either 192.168.100.1/32 or 192.168.1.0/24). My guess is
-> that's why you couldn't complete the handshake.
+> Source IP: 192.168.1.0/24, Destination: 0.0.0.0 will go throuh the VPN.
+> So if it matters if i connected to wireguard using the ip address of the
+> ISP vs the IP address of the VPN?
 >
 >
+> --
+> Arpit
+>
+>
+> On Wed, Mar 6, 2019 at 1:18 AM XRP <xrp@airmail.cc> wrote:
+>
+>> On Wed, 2019-03-06 at 08:40 +0000, Arpit Gupta wrote:
+>> > On my server my conf is
+>> >
+>> > [Interface]
+>> > Address = 192.168.100.1/32
+>> > PostUp = iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o
+>> > %i -j
+>> > ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+>> > PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD
+>> > -o %i
+>> > -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
+>> > ListenPort = 54930
+>> > PrivateKey = xxxxx
+>> >
+>> > [Peer]
+>> > PublicKey = xxxx
+>> > AllowedIPs = 192.168.100.2/32
+>> >
+>> >
+>> > on my client my config is
+>> >
+>> > [Interface]
+>> > Address = 192.168.100.2
+>> > PrivateKey = xxxxx
+>> > ListenPort = 21841
+>> > DNS = 192.168.1.63
+>> >
+>> > [Peer]
+>> > PublicKey = xxxx
+>> > Endpoint = ddns:xxx
+>> > AllowedIPs = 192.168.1.0/24
+>> >
+>> > # This is for if you're behind a NAT and
+>> > # want the connection to be kept alive.
+>> > PersistentKeepalive = 25
+>>
+>> Try changing AllowedIPs in the client config to:
+>> AllowedIPs = 192.168.100.1/32,192.168.1.0/24
+>>
+>> Also, if you want to masquerade the traffic to the internet you need to
+>> add 0.0.0.0./0 to the client or change the destination IP to the server
+>> node via a NAT rule, otherwise it's going to be rejected because the IP
+>> packet doesn't have an AllowedIP address, I think. (The source needs to
+>> match, so either 192.168.100.1/32 or 192.168.1.0/24). My guess is
+>> that's why you couldn't complete the handshake.
+>>
+>>
 
---00000000000062d8b705836f1395
+--0000000000004fd18b05836f60d9
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">Tried changing the allowed ip&#39;s to what was suggested =
-and it did not work. Same behavior as before. Also my configs were working =
-as expected before i had my router connected to a vpn service.<div><br></di=
-v><div>It required me to add the following route policy for my vpn client o=
-n my router</div><div><br></div><div>Source IP: <a href=3D"http://192.168.1=
-.0/24">192.168.1.0/24</a>, Destination: 0.0.0.0 will go throuh the VPN. So =
-if it matters if i connected to wireguard using the ip address of the ISP v=
-s the IP address of the VPN?</div><div><br></div><div><br clear=3D"all"><di=
-v><div dir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail_signat=
-ure"><div dir=3D"ltr"><div>--</div>Arpit</div></div></div><br></div></div><=
-br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed,=
- Mar 6, 2019 at 1:18 AM XRP &lt;xrp@airmail.cc&gt; wrote:<br></div><blockqu=
-ote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px=
- solid rgb(204,204,204);padding-left:1ex">On Wed, 2019-03-06 at 08:40 +0000=
-, Arpit Gupta wrote:<br>
+<div dir=3D"ltr">Got it working :).<div><br></div><div>Did not need to chan=
+ge any client or server settings. However needed to add another policy rule=
+ in my vpn client. Rule states</div><div><br></div><div>Source: wireguard s=
+erver</div><div>destination: <a href=3D"http://192.168.100.0/24">192.168.10=
+0.0/24</a> (so any of my wireguard clients)</div><div>interface: WAN</div><=
+div><br></div><div>So this way wireguard traffic does not go through the VP=
+N.=C2=A0<br clear=3D"all"><div><div dir=3D"ltr" class=3D"gmail_signature" d=
+ata-smartmail=3D"gmail_signature"><div dir=3D"ltr"><div>--</div>Arpit</div>=
+</div></div><br></div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr"=
+ class=3D"gmail_attr">On Wed, Mar 6, 2019 at 7:59 AM Arpit Gupta &lt;<a hre=
+f=3D"mailto:g.arpit@gmail.com">g.arpit@gmail.com</a>&gt; wrote:<br></div><b=
+lockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-le=
+ft:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr">Tried chan=
+ging the allowed ip&#39;s to what was suggested and it did not work. Same b=
+ehavior as before. Also my configs were working as expected before i had my=
+ router connected to a vpn service.<div><br></div><div>It required me to ad=
+d the following route policy for my vpn client on my router</div><div><br><=
+/div><div>Source IP: <a href=3D"http://192.168.1.0/24" target=3D"_blank">19=
+2.168.1.0/24</a>, Destination: 0.0.0.0 will go throuh the VPN. So if it mat=
+ters if i connected to wireguard using the ip address of the ISP vs the IP =
+address of the VPN?</div><div><br></div><div><br clear=3D"all"><div><div di=
+r=3D"ltr" class=3D"gmail-m_6695934501888018956gmail_signature"><div dir=3D"=
+ltr"><div>--</div>Arpit</div></div></div><br></div></div><br><div class=3D"=
+gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Mar 6, 2019 at 1=
+:18 AM XRP &lt;xrp@airmail.cc&gt; wrote:<br></div><blockquote class=3D"gmai=
+l_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,20=
+4,204);padding-left:1ex">On Wed, 2019-03-06 at 08:40 +0000, Arpit Gupta wro=
+te:<br>
 &gt; On my server my conf is<br>
 &gt; <br>
 &gt; [Interface]<br>
@@ -228,10 +258,11 @@ l=3D"noreferrer" target=3D"_blank">192.168.1.0/24</a>). My guess is<br>
 that&#39;s why you couldn&#39;t complete the handshake.<br>
 <br>
 </blockquote></div>
+</blockquote></div>
 
---00000000000062d8b705836f1395--
+--0000000000004fd18b05836f60d9--
 
---===============7770222015439826466==
+--===============8911169448818833896==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -242,4 +273,4 @@ WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---===============7770222015439826466==--
+--===============8911169448818833896==--
