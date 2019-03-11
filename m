@@ -2,124 +2,74 @@ Return-Path: <SRS0=tKTr=RX=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_PASS,
+	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E790C43381
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 20 Mar 2019 22:24:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BD9CC10F05
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 20 Mar 2019 22:24:11 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 3447C2184E
+	by mail.kernel.org (Postfix) with ESMTPS id B748C2184E
 	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 20 Mar 2019 22:24:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 3447C2184E
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=olle-orks.org
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YRZ9pKnm"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org B748C2184E
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 54b3c89c;
-	Wed, 20 Mar 2019 22:22:12 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 65615647;
+	Wed, 20 Mar 2019 22:22:31 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2d24f37e
- for <wireguard@lists.zx2c4.com>; Mon, 4 Mar 2019 15:28:18 +0000 (UTC)
-Received: from mx1.mailbox.org (mx1.mailbox.org
- [IPv6:2001:67c:2050:104:0:1:25:1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 57e15f8e
- for <wireguard@lists.zx2c4.com>; Mon, 4 Mar 2019 15:28:18 +0000 (UTC)
-Received: from smtp1.mailbox.org (smtp1.mailbox.org [80.241.60.240])
- (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
- (No client certificate requested)
- by mx1.mailbox.org (Postfix) with ESMTPS id B46B24C368
- for <wireguard@lists.zx2c4.com>; Mon,  4 Mar 2019 16:38:28 +0100 (CET)
-X-Virus-Scanned: amavisd-new at heinlein-support.de
-Received: from smtp1.mailbox.org ([80.241.60.240])
- by spamfilter01.heinlein-hosting.de (spamfilter01.heinlein-hosting.de
- [80.241.56.115]) (amavisd-new, port 10030)
- with ESMTP id R7eeskuVhgyZ for <wireguard@lists.zx2c4.com>;
- Mon,  4 Mar 2019 16:38:11 +0100 (CET)
-To: wireguard@lists.zx2c4.com
-From: Sven Grunewaldt <strayer@olle-orks.org>
-Subject: Issues with multiuser macOS
-Openpgp: preference=signencrypt
-Autocrypt: addr=strayer@olle-orks.org; keydata=
- mQINBFrZHKMBEADDF64tWxYm/f/o1vvAeTy6dAQt3Bve7jy6zUUYdS/OVKCr2KAQYbdTWbqg
- 0AAxNRnHB6x6HSMpuG8FfvGpIaaG8hYJh3naRUNo/5YySBHl/tRUx03aoDas9yS4ik0WWgac
- MLa3CdX2DAyfUuIbTqDv9TNJyrIayZuANY0r7PXVSl1u6ViEaruNOhYEDvcvBDfJ+YPjNlU7
- /LpEXifK8b7H/opI8XrW/5IQUgTTL+r7YWeQHiae7HdiHhG1R0zZ0MhqLbFthgYO8XphcUhg
- Cyy/NO+H+iBJwUIWP8JoD3eFlNfX/D4573RV7HFJJ7wzhYwXYtNw2jPvafEOcMFAedFzPAka
- 6x7k38HxfjrSuhq6EOzVv2hCg7LDLLnfJruD9ADdpuCjA9pjQN37Ny1QhcX0spue7qeewnul
- GmNhRWREg42khMMqmhSiv4yxzvIfpVnVoDK08TYgYMiQQc+J0piHPZwGWO+iTYKOCox8vj3i
- mAt22OFK8bpAdAcW8WCPOudmkEf/u3y6Vlg2EUvmwX2zvPL4UjFkWHFymVYqTD4iuPxMUspl
- tire71dMbvT4wlZYVeWp2M/zAvCQd5pOT+EC6Od+fui99roxi/toQxXxj4N9VN6z1ZpI1BCZ
- 2Zq5FKkm1vw6EWcUut/dIw10daVGGlKDYxLNB/hUZPRe5OZmNQARAQABtCdTdmVuIEdydW5l
- d2FsZHQgPHN0cmF5ZXJAb2xsZS1vcmtzLm9yZz6JAlcEEwEKAEECGwEFCwkIBwMFFQoJCAsF
- FgIDAQACHgECF4ACGQEWIQRfQjmP9iFIrVOxW0yQCLyv27GQRgUCXGvr+wUJA3QC2AAKCRCQ
- CLyv27GQRgX5EACHKikyzS0MrEUi58yUONZ/zUPZS/MlF5YBzg7rgRJ5nACh/o0hgPqz188a
- ZFd3UBfYQpYINgsC8gt3yHBL7XgjU6Lm1asy2jwHovqgxw0gKWDiQ9apWv8S5xR9NfrzIaOl
- VAo1Ls/cFlBPmtnKT1P43muJpxKe4UXl0S5m1ys8u8BiZ7Fr/AByiWN7SVAOExGTciLt0KGN
- pMEHEiTSGA6olZvwW5mwDNlft8xCFrAxsEZkpCOd9eiOuYavNnkEMLg4649kbciqpoE6nW/l
- qRpEhWnmqwtpbxS3jr+t6NT6bz9KlG3yXN4KuIURMF5zqndZqHnSHqu1ocf4wCioWld1dtuO
- RVGK7tBFhjaOec3k/6OVNklr8RWmfzgZ2x25uvSQ+m2dwWk74Au0vaAEp8RY/JJvkg8ACrXN
- OXIi7b9oDsevOLoQQBxmaNtArDnA9XDebCfy8DLmZflRpsCep1biuYfYvQtrSEDW7xZ41OS4
- LcNgRmlexsdftpfDcLKauyWAzejDRGoQVC8XMx0i8CP15Oz/xvAKHkyi3D3el5y7vqx0X0PC
- Qy8+e1BuGanG9XeHsykNRZv4OiKebNwXvEBmqPyyntYjSL+0oYrIIF7neEOMpoMVvq2O42p6
- A3JDwlfWEv/fR5IaIUkqlmpYwna0HLimDpo0lFwnCXBABSWlF7kCDQRa2SBuARAAtoFr2yqU
- UbcJvjRor7fSrt3zMxOEog6dE+mpfBRItS0cpfSMot1vIqegP+npIRz/MOG7MGOi8bhPBJD7
- zF30QgcfT6bR4lMlDvrOxCiv4oTVccZ7rnHWniH1mObcABNrKpt3ELF1F7+ovaDvkiU+fQt9
- ktVW0KYjxtUj6JsP6fxgShrhGNkWodHsOYHrNn/tVuHmhDlHUNak3p0IARgNXKu4NJwWiJlb
- iksCrdbVbcb3a3xBv+NseS4XjgNrtXbUmbEmW/3ose3jpqMvuFp1vBZB1JyOF5lKko6FQ/3r
- WtRlhIvO7uHOuNV1q//xSkGvQpPEv+/loAf1fv0ogu+K1nSYS1OiWg2fjuXkWTlERb/b2DFn
- /mD8t7qCTbJm3izbYu39riZ5ugAzDpOrci4T0JF3qpCgLqvoZcSf5ZnlS4Hks6ZM0mmA5EzC
- WlHzAv2/OL1FW4zB5h4Kt6A0qMC/9Bta3njC4X8AuCfAVEEAdtYX0LWPrh8RVuPnqGTGbDMv
- enir7oEGAVj/yp9SEKyA4hBN3tA2VdgC/2J8H0sCnA+DWTX+HXempGU6sXWBHQ2Ezew1McJs
- 4PneXgAEa1SGyytEEsE43x4bGd3tFiTaoPLrqawucNFxlcZIkUtHE9FnDyicfsswqf+P1D1R
- It1dHLAujy+BsA8+eYdriPct1OEAEQEAAYkEcgQYAQoAJgIbAhYhBF9COY/2IUitU7FbTJAI
- vK/bsZBGBQJca+wOBQkCgBmgAkDBdCAEGQEKAB0WIQR7CFI10vgrFXMZdD9xftqVGz3NWAUC
- WtkgbgAKCRBxftqVGz3NWIJyD/4pxey/plMfFFnjEbyFNHi8FPMP2RmVBXXr+i6TVCzNfVnI
- mABUsyXT63skbXc0Gyp8+8EcyPViaSlUdo5mOBtT1J6p6b+MJmQbKnH2NOG1wp82yDKmLOkW
- ZlGZA4cLqkW+w502wVs2TYM8bL6/oSEc+tmsurKlp7VYUKmf/+LZF/gSBspxF4PMj6AMFawk
- HsVIfoEP5u0Xu0hXuJm4xOj6/KTyKLwLWUhIX2c+l6G77Q/7bA+I3hQBPk665ZRwC0/2Fkvk
- Be7N85d5zHZB8Tk2dnOQnvN89TmuuNsg5RhJMUYY980GRkdRfEGoJOHIDajgF5qaQLGE9/25
- trvToy8xgKhLAy13jEAErcB+XFmU3A1YCP4tkvjFcRub6aI1klxE1AHyN4853NHju53bSR9m
- C3vL4OZpRDzr+cFSII7eqSdLeo4yW0dbhMb1Pv48PMJzYnvc/tlUhUvceE4KDEeJ4r31H2HL
- 7sT4AEBDQ+5abJgqvvcTXQKbFwpaTOKKEX2luFRihJd55rAaRb6U/E/KTY7i0EKdcICmnFug
- LeBOQAZjU0KpuO8BPxhlqw1QFRjhMYp4J9/W0hNU8HTsLYo3P4bpCohRH4qcaYuB2oYIU09a
- PC2HTW2OmZCIr9eOy4PskaL0AFK8Ymt+WSaoBx2d1/g6KlzoKhxUnOocVp5a5gkQkAi8r9ux
- kEZqfRAAknAFwFKqgDCmte5MZhNNITe5Y227fa4iuQz0zQrO6aiXibHZIHQ4uA5Sh29zNeri
- pRAEOelKsZe7r0ETG/hfzO2tj1PvGxG1uhoyGUznDsI90fRPaP8a3N61DccJ3y2W+3kAwfjD
- uC5DVYpWuiy8oDmC0EeuNc4oI7bJL0tCzL0nmMPHwBrNXIrzv7IeiN8NL1U1FkAFUXw/oGTz
- Lj9h8VvtJ8ZLmtduKM954oCx9IrRIEreGBylNd5HKbH2CPR4ENTn34b9rPg6YdZuH5stj+nY
- pNeKqik22a2oxJvYtway7b3Z+MQ0S4aeeIGlt96p3dOhOkGiynYAXMiM/CJUWgC6ei8Q8/6Q
- 1FmOqt/0ZXKKJS1uMUTyxUOOZ+/jVgTyFfju5x/ABr/2ShLs3IRZOjKi9m9DPn5GOxHazExu
- LEqWnAbjQUWIUBrTXVV8iDLe2MMCpG3AAfLzF6UtMMzSBj8dEjuwUAwGHhXWxTWaeweu2o+t
- y4TbGaisgzN4/gYtgah/qFdivtJ7WkxhZtIlmEsnjNcDeuuH6qu7pZ93lHy3z7MAfTJO+nhy
- fKNldnIvS5SFKetuvQXnTEFTmoF03+KrKumB4bu1924ePRf2fI7DHPODohcpSgcezMPYejKi
- YEj6tX8YtaFJIyirvyY8TJEQF4/VWgJfWOULGi9lBlS5Ag0EWtkgqQEQAOIb2lzmKOzF87vS
- GhIcnH1QYrvremebLbIYPZp9YTsVUXe/WSc90V1QFpM5d6P5tW7eoiD0fIcaCYr4jV5G3z1L
- 9P7cbb3LFdwKE7kHST85fPtxHoaTuTIxWmfvtdVpZRViFDgdZT3p1wA9fBiyvyEb++UkVXbq
- 6kuOxqlqLupnemfpfyZibn9yeu3gY2ODm2RW+Dg8wyHDZRGAg6S9VbFTMd2qNC1V84EDIwY2
- VDH99XvoMyKEWEcO62TGM3SzU0w9IybYuBnLWUfwt5qHi7PM2s/RKeZvlnpO5mwU5fxfDqJo
- MVUTU/dL/jmRed6ThVYURFsWP1Q9JpcMmWftFSMlfAY1K3wFf/924pvinhyRxvcChV1aydp9
- baJg7gIkg6NDcOs2o0mak7NfHwX3uAHENlQMP2xvRKAYd/g31PS2KDCv/a9UV5PBURm3WoGF
- CgfEj9GR4yVOeOgmx6II5NynshRYBJUD8WSTf5dmKMDgi148K1c66BtiueIq0KZis2N81h0l
- Z058YCJ5BAfwSZ2svXqnIEGvXcRFZyA10dNEpBBSRIJVHBiq0c0CPA2TyUkSZNXWBxwKysPO
- XOh3qQylmv9ATm8VEUzDKoa/YpXfUIDgsfKtmR2Xym98s3CX0pCJnW69RnYqpJDtzHyo2Ooo
- 5wJCxNGlAnkN/bMOWvIvABEBAAGJAjwEGAEKACYCGwwWIQRfQjmP9iFIrVOxW0yQCLyv27GQ
- RgUCXGvsDgUJAoAZZQAKCRCQCLyv27GQRkqrD/9060BDG4vv5025YpxgaZ3L+sJ2yAo2aHhn
- vznTnNEaGC1/sHHrhRsZWiqmJyWKN2e9XRcTqBymhHRRODx1dOaIM7Zy6IggonV9h6d1YGSQ
- jFEJGiCjlps/6VhnwNV/exAPMNHyIsp/dT/zCEi2Ni1+Dnr0wEHATxei1WLAXyj8nwunyzeX
- frzAWyr7SYFcpffVezJviYYsgpljQrRgmtBRnCKv6BI4ziFUb6kB55f0V/bgROGZdwBx3EMy
- D8vcwUuGiLJSCHc1foyTzp5mN/ttj6dNw8llhpLhIIUvS0IWPd4x98djG4MsaXjl/CPCaS2i
- w54cwRPCd31rYKqa7tncsU6bNEWNO4/OaIjfjg2+FsNAC4Q4lynd5I5oi/3PfHdpNLOjwkfg
- otObMh7NpgqtN4Bu9BI7pesK2e3tfsNQSLA7pXaW70bKR82dADj/Mj0m5lrp9fi8ftUVYu+n
- ke0nWEUTgsZdMRXktN8AW1YpGHYdp9QDQ2WC9DE8jRbrgj0Z+I67K4HTeFrXQQsxNausZGXw
- 7XAHqgiSYrY2ILYU4kviGUbfgf/11z0Tf+uf2u5OaUdFaLUWxPhyKTriviVdcUC0aobpn7VU
- SyPRoo3Jjn16n3qyaRnpJAFIO6lczxn4/I8bo7wAmcQzr3DyoAc8nkHBlYQk6SBrDxZVsLhp fw==
-Message-ID: <e7136b08-09ec-e273-ff72-a3f5105d9ab7@olle-orks.org>
-Date: Mon, 4 Mar 2019 16:27:59 +0100
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 97215df1
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 11 Mar 2019 16:12:56 +0000 (UTC)
+Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com
+ [IPv6:2607:f8b0:4864:20::833])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 502a15ac
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 11 Mar 2019 16:12:56 +0000 (UTC)
+Received: by mail-qt1-x833.google.com with SMTP id d2so5701594qti.11
+ for <wireguard@lists.zx2c4.com>; Mon, 11 Mar 2019 09:24:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=lJ/FtBhGTryFO8mgqDIxrXoHmLP+rxHE/V4g98EJClM=;
+ b=YRZ9pKnmYPptzZm6+/jlgYQqqGpWma2yPGgUUeOGqtwKbfv2NleoRxIOqw/UHndYjV
+ uDcp8OStEky0GMA0QwTNZjK/9qD6En7CW0Rg45NAidskJYiN/gjxLqjhBWuNxWpbcRwO
+ mf4WUW2NRxdouVrUXEtq4RxzeVJEhX2bujauSObIP3EynIiCN0U8o7QlX1qLtAAtdq5P
+ DShRRKxtA8OrnRTiru9Vp3TtbXolT44pB8MeByoGPMo7d32oQIJTbMYTdQcBI2T86Ddt
+ Rpm9tNjkP+j0GBpzAAStJF1ezn1O+FRfKq8tCePjhH013NTLJAmick/mUQINrU5TQEKM
+ ZwcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=lJ/FtBhGTryFO8mgqDIxrXoHmLP+rxHE/V4g98EJClM=;
+ b=gAV1yBPMeRq+h5rXNFt8f3saGOWkKt0fL8FjCCqmSA+UgNbmvoxReS1ZG6xjDednBX
+ n024qv+F0yHVddiyyS8xvvQVcpnsv1hEAQj+wn6+feEmL55MXcOzu8fa2OK3v7LaxAqE
+ HM7xa9reumo9iaXrHFSdr2XV8KlNZdtcEQ0w0nl0vsJjEDeqLc95HkNVywV1GpkhfNIN
+ ZvaCRO0lOA34WIug0m0RgKkVzT/J2k6yHhItKH+k3Ue8QD3540eek95WGCvoBHNfwSGF
+ Z6LkXC8M24o23ZTWxHnMpkEM9D5gi0GAygBRjp/gLqpS1c4oG71iLmS/gNb8qPvzD3AX
+ bjrQ==
+X-Gm-Message-State: APjAAAXGEA06wdgWaaTEiEcVPzrVpgGdSeZOyxdHHpPVlw999yc6bZHB
+ AV7lyt60cFKznfOTfafHMMhlqGRof8UDh3z0KF8=
+X-Google-Smtp-Source: APXvYqxxnzkGfe+m1IG+/vNhi+NsuNgrsEJisEMp5j8cgnS/Qq1HyvLLqNggWLMeqEWL2/WzOQTQAqNAHfzW5RdrQJk=
+X-Received: by 2002:ac8:2415:: with SMTP id c21mr24365706qtc.93.1552321443408; 
+ Mon, 11 Mar 2019 09:24:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Language: de-DE
-X-Mailman-Approved-At: Wed, 20 Mar 2019 23:22:12 +0100
+References: <CAJwvAosHFogtuPL09C9ek4bz6A7vW76mzKymL11iWs+9F7Ep_Q@mail.gmail.com>
+ <CAKXLc7cerFqi1dACAfL3gRx53E9u0n709rd=Wu-0uCbFtJOiRA@mail.gmail.com>
+ <CAJwvAotKEmjTOd0U9vMX0taZYTc4YKygnKX5sw79ySgdXc0ebg@mail.gmail.com>
+In-Reply-To: <CAJwvAotKEmjTOd0U9vMX0taZYTc4YKygnKX5sw79ySgdXc0ebg@mail.gmail.com>
+From: Scott Lipcon <slipcon@gmail.com>
+Date: Mon, 11 Mar 2019 12:23:52 -0400
+Message-ID: <CAJwvAov9roSCgWf-op-dY+N7cwoeTvUx--NHDbz7dx=3goaZ9A@mail.gmail.com>
+Subject: Re: performance query
+To: Kalin KOZHUHAROV <me.kalin@gmail.com>
+X-Mailman-Approved-At: Wed, 20 Mar 2019 23:22:29 +0100
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -131,33 +81,233 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="===============4015659877603769329=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
+--===============4015659877603769329==
+Content-Type: multipart/alternative; boundary="000000000000362d920583d40054"
 
-I'm testing the official macOS application for Wireguard and seem to
-have a problem in my setup. Is it to be expected to loose configured
-tunnels when logging out? I have two users on my MacBook, one for work
-and one for private use and always log out when switching users because
-some programs (e.g. LittleSnitch) get confused when two users are logged
-in at the same time. When I do log in back to my private account, all
-configured profiles are gone.
+--000000000000362d920583d40054
+Content-Type: text/plain; charset="UTF-8"
 
-Another thing, that is probably more of a feature request than an issue,
-is that I'd love to create system-wide tunnels. Logging out and
-switching to another user always disconnects the tunnel, but I actually
-do have a tunnel that is used in both profiles. I can duplicate the
-config, but then I'm not sure what would happen if I may end up being
-logged in to both profiles. I assume it makes more sense to solves this
-particular problem with a custom launchd process and wg-quick, instead
-of using the UI.
+Just to provide a followup, in case anyone is interested - The office
+router is a Sonicwall TZ 500.   Disabling DPI on the zone in question
+caused the performance to dramatically increase.... 655Mbit for no VPN, and
+about 600 via Wireguard.... thanks for the tip to look at the firewall.
 
-Kind regards,
-Sven Grunewaldt
+Scott
+
+
+On Fri, Mar 1, 2019 at 11:08 PM Scott Lipcon <slipcon@gmail.com> wrote:
+
+> Thanks for the suggestions - I'll need to do some more experimentation
+> when I get back in the office, but I think you're on to something, perhaps
+> with the router at Location B in my examples.    I did a straight UDP speed
+> test with iperf3, and that worked fine - over 500Mbit/sec - there shouldn't
+> be anything funny with MTU going on, nor any IPv6... however I did two
+> additional tests:
+>
+> At my main location, I've got another "low end" box on the same local
+> network as the "server" - this one is an intel Atom CPU - with that I was
+> able to get about 585Mbit/sec (compared to the 930-940 without wireguard).
+>
+>
+> I've got a 3rd location available - actually a low end VM on AWS - this
+> one gets around 300Mbit unencrypted, and actually tested above that via
+> wireguard - I assume thats just normal fluctuation, but seems to point the
+> finger to something specific at location B, my office.    I'll continue to
+> investigate and update if I figure anything out... it'll probably be at
+> least a week before I get anywhere though, due to work travel.
+>
+> Thanks again,
+> Scott
+>
+>
+> On Fri, Mar 1, 2019 at 5:18 AM Kalin KOZHUHAROV <me.kalin@gmail.com>
+> wrote:
+>
+>> On Fri, Mar 1, 2019 at 11:11 AM Scott Lipcon <slipcon@gmail.com> wrote:
+>> >
+>> > I've been experimenting a bit with Wireguard on several ubuntu systems,
+>> and am not seeing the performance I'd expect based on the numbers at
+>> https://www.wireguard.com/performance/
+>> >
+>> > I'm wondering if there is a configuration setting i'm missing or any
+>> better way to debug this.
+>> >
+>> > Testing between two locations - both have nominally 1Gbit internet
+>> connections from the same provider.
+>> >
+>> > At location A:
+>> > 1) Ubuntu 18.04 "server" - i7-4790K CPU @ 4.00GHz
+>> > 2) Ubuntu 16.04 client - i5-3470 CPU @ 3.20GHz
+>> >
+>> > At location B:
+>> > 3) Ubuntu 18.04 client - Celeron N2808  @ 1.58GHz
+>> > 4) Ubuntu 18.04 client - Virtual Machine - Xeon(R) Gold 6126 CPU @
+>> 2.60GHz
+>> >
+>> >
+>> > Using iperf3 for all tests, with 8 threads, but that doesn't seem to
+>> matter significantly.
+>> >
+>> > Between 1 & 2, via gigabit LAN - 940 Mbit/sec.
+>> > Between 1 & 2, via WireGuard - 585 Mbit/sec
+>> > - I might have expected a bit higher, but this is certainly acceptable.
+>> >
+>> > Between 3 and 1, direct iperf3 - 580 Mbit/sec
+>> > Between 3 and 1, WireGuard - 73 Mbit/sec
+>> >
+>> > At this point I was guessing WireGuard was CPU limited on this little
+>> Celeron, so I set up the Xeon VM (#4):
+>> >
+>> > Between 4 and 1, direct iperf3 - ~600 Mbit/sec
+>> > Between 4 and 1, WireGuard - 80 Mbit/sec
+>> >
+>> > In other words, the much faster VM is only a tiny bit faster that the
+>> celeron.
+>> >
+>> > Any suggestions?
+>>
+>> A lot can go wrong speed-wise "on the Internet"...
+>>
+>> What sits in between those hosts that you have control of (routers,
+>> switches, firewalls...)?
+>> IPv6 involved at all?
+>> ISP having throttling policy for "UDP we don't understand"?
+>> Play with the MTU, you might be hitting some fragmentation issues that
+>> a weak router is not handling fast enough.
+>> Play with Wireshark (new 3.0 even has support for wireguard
+>> protocol!), capture some traffic, look for any transmission errors.
+>>
+>> Cheers,
+>> Kalin.
+>>
+>
+
+--000000000000362d920583d40054
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div class=3D"gmail_default" style=3D"font-family:arial,he=
+lvetica,sans-serif">Just to provide a followup, in case anyone is intereste=
+d - The office router is a Sonicwall TZ 500.=C2=A0 =C2=A0Disabling DPI on t=
+he zone in question caused the performance to dramatically increase.... 655=
+Mbit for no VPN, and about 600 via Wireguard.... thanks for the tip to look=
+ at the firewall.</div><div class=3D"gmail_default" style=3D"font-family:ar=
+ial,helvetica,sans-serif"><br></div><div class=3D"gmail_default" style=3D"f=
+ont-family:arial,helvetica,sans-serif">Scott</div><div class=3D"gmail_defau=
+lt" style=3D"font-family:arial,helvetica,sans-serif"><br></div></div><br><d=
+iv class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Mar =
+1, 2019 at 11:08 PM Scott Lipcon &lt;<a href=3D"mailto:slipcon@gmail.com">s=
+lipcon@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" =
+style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pa=
+dding-left:1ex"><div dir=3D"ltr"><div class=3D"gmail_default" style=3D"font=
+-family:arial,helvetica,sans-serif">Thanks for the suggestions - I&#39;ll n=
+eed to do some more experimentation when I get back in the office, but I th=
+ink you&#39;re on to something, perhaps with the router at Location B in my=
+ examples.=C2=A0 =C2=A0 I did a straight UDP speed test with iperf3, and th=
+at worked fine - over 500Mbit/sec - there shouldn&#39;t be anything funny w=
+ith MTU going on, nor any IPv6... however I did two additional tests:</div>=
+<div class=3D"gmail_default" style=3D"font-family:arial,helvetica,sans-seri=
+f"><br></div><div class=3D"gmail_default" style=3D"font-family:arial,helvet=
+ica,sans-serif">At my main location, I&#39;ve got another &quot;low end&quo=
+t; box on the same local network as the &quot;server&quot; - this one is an=
+ intel Atom CPU - with that I was able to get about 585Mbit/sec (compared t=
+o the 930-940 without wireguard).=C2=A0 =C2=A0=C2=A0</div><div class=3D"gma=
+il_default" style=3D"font-family:arial,helvetica,sans-serif"><br></div><div=
+ class=3D"gmail_default" style=3D"font-family:arial,helvetica,sans-serif">I=
+&#39;ve got a 3rd location available - actually a low end VM on AWS - this =
+one gets around 300Mbit unencrypted, and actually tested above that via wir=
+eguard - I assume thats just normal fluctuation, but seems to point the fin=
+ger to something specific at location B, my office.=C2=A0 =C2=A0 I&#39;ll c=
+ontinue to investigate and update if I figure anything out... it&#39;ll pro=
+bably be at least a week before I get anywhere though, due to work travel.<=
+/div><div class=3D"gmail_default" style=3D"font-family:arial,helvetica,sans=
+-serif"><br></div><div class=3D"gmail_default" style=3D"font-family:arial,h=
+elvetica,sans-serif">Thanks again,</div><div class=3D"gmail_default" style=
+=3D"font-family:arial,helvetica,sans-serif">Scott</div><div class=3D"gmail_=
+default" style=3D"font-family:arial,helvetica,sans-serif"><br></div></div><=
+br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Fri,=
+ Mar 1, 2019 at 5:18 AM Kalin KOZHUHAROV &lt;<a href=3D"mailto:me.kalin@gma=
+il.com" target=3D"_blank">me.kalin@gmail.com</a>&gt; wrote:<br></div><block=
+quote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1=
+px solid rgb(204,204,204);padding-left:1ex">On Fri, Mar 1, 2019 at 11:11 AM=
+ Scott Lipcon &lt;<a href=3D"mailto:slipcon@gmail.com" target=3D"_blank">sl=
+ipcon@gmail.com</a>&gt; wrote:<br>
+&gt;<br>
+&gt; I&#39;ve been experimenting a bit with Wireguard on several ubuntu sys=
+tems, and am not seeing the performance I&#39;d expect based on the numbers=
+ at <a href=3D"https://www.wireguard.com/performance/" rel=3D"noreferrer" t=
+arget=3D"_blank">https://www.wireguard.com/performance/</a><br>
+&gt;<br>
+&gt; I&#39;m wondering if there is a configuration setting i&#39;m missing =
+or any better way to debug this.<br>
+&gt;<br>
+&gt; Testing between two locations - both have nominally 1Gbit internet con=
+nections from the same provider.<br>
+&gt;<br>
+&gt; At location A:<br>
+&gt; 1) Ubuntu 18.04 &quot;server&quot; - i7-4790K CPU @ 4.00GHz<br>
+&gt; 2) Ubuntu 16.04 client - i5-3470 CPU @ 3.20GHz<br>
+&gt;<br>
+&gt; At location B:<br>
+&gt; 3) Ubuntu 18.04 client - Celeron N2808=C2=A0 @ 1.58GHz<br>
+&gt; 4) Ubuntu 18.04 client - Virtual Machine - Xeon(R) Gold 6126 CPU @ 2.6=
+0GHz<br>
+&gt;<br>
+&gt;<br>
+&gt; Using iperf3 for all tests, with 8 threads, but that doesn&#39;t seem =
+to matter significantly.<br>
+&gt;<br>
+&gt; Between 1 &amp; 2, via gigabit LAN - 940 Mbit/sec.<br>
+&gt; Between 1 &amp; 2, via WireGuard - 585 Mbit/sec<br>
+&gt; - I might have expected a bit higher, but this is certainly acceptable=
+.<br>
+&gt;<br>
+&gt; Between 3 and 1, direct iperf3 - 580 Mbit/sec<br>
+&gt; Between 3 and 1, WireGuard - 73 Mbit/sec<br>
+&gt;<br>
+&gt; At this point I was guessing WireGuard was CPU limited on this little =
+Celeron, so I set up the Xeon VM (#4):<br>
+&gt;<br>
+&gt; Between 4 and 1, direct iperf3 - ~600 Mbit/sec<br>
+&gt; Between 4 and 1, WireGuard - 80 Mbit/sec<br>
+&gt;<br>
+&gt; In other words, the much faster VM is only a tiny bit faster that the =
+celeron.<br>
+&gt;<br>
+&gt; Any suggestions?<br>
+<br>
+A lot can go wrong speed-wise &quot;on the Internet&quot;...<br>
+<br>
+What sits in between those hosts that you have control of (routers,<br>
+switches, firewalls...)?<br>
+IPv6 involved at all?<br>
+ISP having throttling policy for &quot;UDP we don&#39;t understand&quot;?<b=
+r>
+Play with the MTU, you might be hitting some fragmentation issues that<br>
+a weak router is not handling fast enough.<br>
+Play with Wireshark (new 3.0 even has support for wireguard<br>
+protocol!), capture some traffic, look for any transmission errors.<br>
+<br>
+Cheers,<br>
+Kalin.<br>
+</blockquote></div>
+</blockquote></div>
+
+--000000000000362d920583d40054--
+
+--===============4015659877603769329==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--===============4015659877603769329==--
