@@ -2,44 +2,40 @@ Return-Path: <SRS0=zPJk=RR=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.5 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED,USER_AGENT_MUTT autolearn=ham
+X-Spam-Status: No, score=-6.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E9E4C43381
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 14 Mar 2019 04:09:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 904BFC43381
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 14 Mar 2019 05:16:01 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id E73282087C
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 14 Mar 2019 04:09:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org E73282087C
+	by mail.kernel.org (Postfix) with ESMTPS id DD2622085A
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 14 Mar 2019 05:16:00 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org DD2622085A
 Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=wolff.to
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a779dcfd;
-	Thu, 14 Mar 2019 03:57:50 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ff12781b;
+	Thu, 14 Mar 2019 05:04:32 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3b5fc501
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c5f38cad
  for <wireguard@lists.zx2c4.com>;
- Thu, 14 Mar 2019 03:57:49 +0000 (UTC)
+ Thu, 14 Mar 2019 05:04:31 +0000 (UTC)
 Received: from wolff.to (wolff.to [98.103.208.27])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with SMTP id caf7d280
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with SMTP id c159c33d
  for <wireguard@lists.zx2c4.com>;
- Thu, 14 Mar 2019 03:57:48 +0000 (UTC)
-Received: (qmail 8478 invoked by uid 500); 14 Mar 2019 04:08:32 -0000
-Date: Wed, 13 Mar 2019 23:08:32 -0500
+ Thu, 14 Mar 2019 05:04:31 +0000 (UTC)
+Received: (qmail 9791 invoked by uid 500); 14 Mar 2019 05:15:14 -0000
 From: Bruno Wolff III <bruno@wolff.to>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: Re: Pre 5.1-rc1 build issue
-Message-ID: <20190314040832.GA8382@wolff.to>
-References: <20190313183818.GA4501@wolff.to> <20190313185259.GA4579@wolff.to>
- <CAHmME9pfdqfW_7+_vWcN-YJcJcG7hFpBWpw8251Y_Nv5v5FxFg@mail.gmail.com>
+To: wireguard@lists.zx2c4.com
+Subject: [PATCH] net/netfilter/nf_nat_core.h was removed by
+ d2c5c103b1337f590b7edf1509a6e294bdf22402
+Date: Thu, 14 Mar 2019 00:14:52 -0500
+Message-Id: <20190314051452.9746-1-bruno@wolff.to>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-Content-Disposition: inline
-In-Reply-To: <CAHmME9pfdqfW_7+_vWcN-YJcJcG7hFpBWpw8251Y_Nv5v5FxFg@mail.gmail.com>
-User-Agent: Mutt/1.11.3 (2019-02-01)
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -51,33 +47,34 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Wed, Mar 13, 2019 at 14:44:33 -0600,
-  "Jason A. Donenfeld" <Jason@zx2c4.com> wrote:
->On Wed, Mar 13, 2019 at 12:53 PM Bruno Wolff III <bruno@wolff.to> wrote:
->> I got something that seems to be working. So I'm good until the real fixes
->> are ready.
->
->Perhaps your [fake?!] fixes could become the real fixes if you ran
->`git send-email` to the mailing list?
+It looks like net/netfilter/nf_nat_core.h isn't needed any more and things
+seemed to work without it.
+---
+ src/compat/compat.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-I'll look at what I did to make sure I didn't make an unwanted rcu change. 
-From Paul's talk it looks like there is a bit of a merger of a couple 
-of rcu types to keep developers from getting confused and I think the 
-unknown functions (that used to be known) should now call the non _bh 
-version.
+diff --git a/src/compat/compat.h b/src/compat/compat.h
+index 7a61e4c1a5cd..2dcdbaeb0ad6 100644
+--- a/src/compat/compat.h
++++ b/src/compat/compat.h
+@@ -792,7 +792,9 @@ struct __kernel_timespec {
+ #include <net/ipv6.h>
+ #include <net/icmp.h>
+ #include <net/netfilter/nf_conntrack.h>
++#if LINUX_VERSION_CODE < KERNEL_VERSION(5, 1, 0)
+ #include <net/netfilter/nf_nat_core.h>
++#endif
+ static inline void new_icmp_send(struct sk_buff *skb_in, int type, int code, __be32 info)
+ {
+ 	enum ip_conntrack_info ctinfo;
+-- 
+2.21.0
 
-For the network include file I didn't include it any more. The correct 
-fix is probably an ifdef based on kernel version or something like 
-that.
-
-So it might be useful to look at the changes I did, but I would be wary 
-of committing them as is. It'll take me maybe an hour to double check 
-and try it again on another system.
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
