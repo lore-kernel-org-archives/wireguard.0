@@ -2,87 +2,54 @@ Return-Path: <SRS0=tKTr=RX=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
-	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_PASS,
+	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 563D7C43381
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 20 Mar 2019 22:42:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11C00C43381
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 20 Mar 2019 22:43:56 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id D6460218AE
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 20 Mar 2019 22:42:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 788F5218AE
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 20 Mar 2019 22:43:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rnPzEtcR"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org D6460218AE
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=anatoli.ws header.i=@anatoli.ws header.b="FwrmLspi"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 788F5218AE
+Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=anatoli.ws
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7999ca01;
-	Wed, 20 Mar 2019 22:41:46 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a1337455;
+	Wed, 20 Mar 2019 22:42:52 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 080c06f7
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cde392a0
  for <wireguard@lists.zx2c4.com>;
- Tue, 19 Mar 2019 15:16:36 +0000 (UTC)
-Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com
- [IPv6:2607:f8b0:4864:20::541])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3f2811a5
+ Mon, 18 Mar 2019 20:54:41 +0000 (UTC)
+Received: from out-mx.anatoli.ws (out-mx.anatoli.ws [177.54.157.124])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0e667298
  for <wireguard@lists.zx2c4.com>;
- Tue, 19 Mar 2019 15:16:35 +0000 (UTC)
-Received: by mail-pg1-x541.google.com with SMTP id h8so14066550pgp.6
- for <wireguard@lists.zx2c4.com>; Tue, 19 Mar 2019 08:16:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:to:subject:thread-topic:thread-index:date:message-id
- :accept-language:content-language:content-id
- :content-transfer-encoding:mime-version;
- bh=CQ2WJMFDuAuUyf9KULhq/gNkr4F61MEnr/9J6PIKs6k=;
- b=rnPzEtcRE5Nw60XRz9BCfNXP4Ha3H/93zjX7+qJW4GBCr9etMwSPspPbi8VMMGdHS+
- fDoMOxahzK5BjLQOupGvvlgQZPHqdd5XFgR5eIc7VdjVO54jaakrUnLlLkht9FAi/eLS
- tvyjhOYvdSfbt2MPbenZ9+ZhbyTdXNABX1NqFM218TYNmTM3K8kOwVb32KeJpAQUQUI5
- nt0cfpTAeBcPHlSrg1nRubNVqtmFARWilnazcb8n/COVuhFuijMUMkoUtyXdj2qB3rJ0
- KHnavkpEkZgwncSjx++bap4BpHGbDUdy8ObvM7Y78b4+dWVa3iXAEUYEB6qlQq9O8IK9
- 2wuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:subject:thread-topic:thread-index:date
- :message-id:accept-language:content-language:content-id
- :content-transfer-encoding:mime-version;
- bh=CQ2WJMFDuAuUyf9KULhq/gNkr4F61MEnr/9J6PIKs6k=;
- b=KzfnFOu8t2ay6jyee8Mgvgs5zv73livIFofD7bXP9+z+G7vU2LqRKQKmevp0XJla/O
- g/Zod2XlBLFlZ0uAwcsfmrvmN6+LL+Jnb+6fUB6yaOy1ku4qn16H2Ray6ahrgHxKLS9z
- q+IG6QNKh95wmnzRKHW+v+loAU2EJX0GVOB5PMLTbaMO0XLV9JJk1zbz7UxSOjSrqZ+S
- MQhjd6x41Hm1mYtxa0f0vPRL8v3AnlXbna0WUpakwwZazvzFz9M/UHx0+eAs3F0NhZrO
- uqMR+2g6UOwxxKgBWt2qBQqucSOOM+Ovm2J4l2Zg1lIBd2kKkXTra2Ml8RYXtO0h+Iu1
- YZfw==
-X-Gm-Message-State: APjAAAXHeq0vRn/X+4qicctv7+ei5wPxLP/dKeot2Rkw8UOErSN+SdFx
- 7JqucIl0lgxhqr33sVHWLVP/bNxu
-X-Google-Smtp-Source: APXvYqzxB66wE2gVjRZ5F2nj8mb6+nAArrEZ3eXEoOUnBUlfSqUSJxg/lYGgViu5i7vOnObtPbl3PA==
-X-Received: by 2002:a62:6d81:: with SMTP id i123mr2444365pfc.235.1553008605022; 
- Tue, 19 Mar 2019 08:16:45 -0700 (PDT)
-Received: from HK2PR04MB3586.apcprd04.prod.outlook.com ([52.98.85.245])
- by smtp.gmail.com with ESMTPSA id q86sm36772967pfi.171.2019.03.19.08.16.43
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 19 Mar 2019 08:16:44 -0700 (PDT)
-From: Michael Lam <michael.mc.lam@gmail.com>
-To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
-Subject: Wireguard-Go security
-Thread-Topic: Wireguard-Go security
-Thread-Index: AQHU3mbARA6s7cRIy0SexYAG3U9lXw==
-X-MS-Exchange-MessageSentRepresentingType: 1
-Date: Tue, 19 Mar 2019 15:16:40 +0000
-Message-ID: <1E650988-A618-4131-BC8E-711D601A20B0@gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-Exchange-Organization-SCL: -1
-X-MS-TNEF-Correlator: 
-X-MS-Exchange-Organization-RecordReviewCfmType: 0
-Content-ID: <2B931F5C2141BD4A9F9275B0D1FF6B0C@apcprd04.prod.outlook.com>
-MIME-Version: 1.0
-X-Mailman-Approved-At: Wed, 20 Mar 2019 23:41:43 +0100
+ Mon, 18 Mar 2019 20:54:41 +0000 (UTC)
+Received: from [192.168.0.1] (unknown [192.168.0.1])
+ by out-mx.oprbox.com (Postfix) with ESMTPSA id AA5671E0016A
+ for <wireguard@lists.zx2c4.com>; Mon, 18 Mar 2019 20:54:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=anatoli.ws;
+ s=5s7aopj1ad; t=1552942484;
+ bh=a7g+/ybTgMlmWJuq0ytKReDd+jDnuWXEL/zw0MzgbS0=;
+ h=To:From:Subject:Date;
+ b=FwrmLspizlUPwlLl/F4ZwNrd3LncPGyhNf36R7nHy060VnGB3P8ntFUdASPILjHKU
+ WkCDdmUpV4c5IX6FaMwYdLmwWxNXN12zvU95LRGMQt1q0G9ZAyz8kk+Bf5I8jaVvtI
+ EZKK0cK2SbmevS8T2km/9qAawnLKpJYxRlpyY8zTWeJltATNdC9rslOjCaYeC9eDB4
+ D2h4jAzlVpAgrP5u/amndqIr2UFmMfp6Q39he/Is2vFUtxD3DMYo0Z2aD4bHaqknnb
+ 2waOjRlSp+wKj/SqB18M4Rjy9I38eNWiEyPgBl9a7rLHmZ6D9K1yloW0vrcgNt4lyq
+ Ub/JvxlQrgzlw==
+To: wireguard@lists.zx2c4.com
+From: Anatoli <me@anatoli.ws>
+Subject: iOS push notification issues
+Message-ID: <8de1afbc-d8c6-a474-c101-29840744f753@anatoli.ws>
+Date: Mon, 18 Mar 2019 17:54:42 -0300
+Mime-Version: 1.0
+Content-Language: es-AR
+X-Mailman-Approved-At: Wed, 20 Mar 2019 23:42:51 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -94,29 +61,130 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="===============1356470536530178517=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi all,
+This is a multi-part message in MIME format.
+--===============1356470536530178517==
+Content-Type: multipart/alternative;
+ boundary="------------65B6419C1D8C62243DFBD45C"
+Content-Language: es-AR
 
-Just a suggestion, I would really love to run Wireguard-go (in OpenBSD) 
-with root privilege dropped. Any chance this get implemented?
+This is a multi-part message in MIME format.
+--------------65B6419C1D8C62243DFBD45C
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-I also tried to simply start wireguard-go on OpenBSD with a normal user.
-However it won't start due to the fact that it is trying to set the
-Tunnel MTU during startup with a tun1 device already created.
+Hi Jason, all.
 
-If that can be by-passed some-how (maybe fail-continue) then it may
-also work. Obviously I also tried to ensure that the /dev/tun1 permission
-is correct and the /var/run/wireguard directory permission is correct
-before trying out.
+I have detected some issues with iOS push notifications with WG while 
+the device is in sleep mode (screen turned off).
 
-Rgds,
+First of all, in spite of having KeepAlive set to 10-30 seconds, iOS 
+devices don't send keepalive packets at all while the screen is turned 
+off. The only thing that is more or less always received on the server 
+is the handshake, every 170 seconds.
 
-Michael
+It appears that from time to time WG@iOS is not receiving communications 
+from the server – the device doesn't respond to any incoming connections 
+(over the tunnel).
+
+Due to this, the incoming push notifications don't reach the device via 
+the tunnel: I see on the server incoming connections from WhatsApp and 
+Apple servers, the WG@server tries to forward them to the device, on the 
+underlying iface I see outgoing WG UDP packets to the client, but no 
+reply from it.
+
+The device awakes some moment later (probably for the handshake), WG@iOS 
+communicates with WG@server, iOS establishes a connection to the APNS 
+and receives the notifications. The effect is that the notifications 
+enter with a delay (up to 2-3 min) and some incoming calls are lost 
+(i.e. not answered on time due to lack of notification).
+
+Also, sometimes iOS devices are trying to connect to 17.0.0.0/8 network 
+(which belongs to Apple and is related to APNS) /outside/ the tunnel. 
+After this connection fails (due to the firewall not allowing anything 
+outside VPN), the devices start disconnecting from the WiFi.
+
+Any idea why this happens? I know there are issues with iOS devices 
+entering sleep, this is a huge problem for OpenVPN Connect app. WG on 
+iOS somehow manages to work during sleep, but not always. Most (about 
+80%) of the notifications are received correctly during sleep, but some 
+fail.
+
+Regards,
+Anatoli
+
+--------------65B6419C1D8C62243DFBD45C
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 8bit
+
+<html>
+  <head>
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  </head>
+  <body smarttemplateinserted="true">
+    <div id="smartTemplate4-template">
+      <div style="font-size:10.0pt;font-family:Verdana,Arial"> Hi Jason,
+        all.<br>
+        <br>
+        I have detected some issues with iOS push notifications with WG
+        while the device is in sleep mode (screen turned off).<br>
+        <br>
+        First of all, in spite of having KeepAlive set to 10-30 seconds,
+        iOS devices don't send keepalive packets at all while the screen
+        is turned off. The only thing that is more or less always
+        received on the server is the handshake, every 170 seconds.<br>
+        <br>
+        It appears that from time to time WG@iOS is not receiving
+        communications from the server – the device doesn't respond to
+        any incoming connections (over the tunnel).<br>
+        <br>
+        Due to this, the incoming push notifications don't reach the
+        device via the tunnel: I see on the server incoming connections
+        from WhatsApp and Apple servers, the WG@server tries to forward
+        them to the device, on the underlying iface I see outgoing WG
+        UDP packets to the client, but no reply from it.<br>
+        <br>
+        The device awakes some moment later (probably for the
+        handshake), WG@iOS communicates with WG@server, iOS establishes
+        a connection to the APNS and receives the notifications. The
+        effect is that the notifications enter with a delay (up to 2-3
+        min) and some incoming calls are lost (i.e. not answered on time
+        due to lack of notification).<br>
+        <br>
+        Also, sometimes iOS devices are trying to connect to 17.0.0.0/8
+        network (which belongs to Apple and is related to APNS) <i>outside</i>
+        the tunnel. After this connection fails (due to the firewall not
+        allowing anything outside VPN), the devices start disconnecting
+        from the WiFi.<br>
+        <br>
+        Any idea why this happens? I know there are issues with iOS
+        devices entering sleep, this is a huge problem for OpenVPN
+        Connect app. WG on iOS somehow manages to work during sleep, but
+        not always. Most (about 80%) of the notifications are received
+        correctly during sleep, but some fail.<br>
+        <br>
+        Regards,<br>
+        Anatoli<br>
+      </div>
+    </div>
+  </body>
+</html>
+
+--------------65B6419C1D8C62243DFBD45C--
+
+--===============1356470536530178517==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--===============1356470536530178517==--
