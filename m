@@ -2,54 +2,74 @@ Return-Path: <SRS0=gmne=R2=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	HTML_MESSAGE,MAILING_LIST_MULTI,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_PASS
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FF34C43381
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 23 Mar 2019 00:06:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CE06BC43381
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 23 Mar 2019 00:06:25 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id F2B5C218A1
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 23 Mar 2019 00:06:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 4D1ED218A1
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 23 Mar 2019 00:06:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="l58BxNOq"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org F2B5C218A1
-Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=protonmail.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UTtC0ubi"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 4D1ED218A1
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 62bc7c94;
-	Sat, 23 Mar 2019 00:05:27 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f5f4f1dd;
+	Sat, 23 Mar 2019 00:05:47 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5080e65e
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1d4bd1a8
  for <wireguard@lists.zx2c4.com>;
- Thu, 21 Mar 2019 12:34:44 +0000 (UTC)
-Received: from mail-40130.protonmail.ch (mail-40130.protonmail.ch
- [185.70.40.130])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7941aee9
+ Thu, 21 Mar 2019 02:37:58 +0000 (UTC)
+Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com
+ [IPv6:2607:f8b0:4864:20::d2e])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8eb61022
  for <wireguard@lists.zx2c4.com>;
- Thu, 21 Mar 2019 12:34:43 +0000 (UTC)
-Date: Thu, 21 Mar 2019 12:35:05 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
- s=default; t=1553171707;
- bh=jx6EE8gDr1AJTMw6U2RUpzwYJykkqj6vsz0QeeN8znY=;
- h=Date:To:From:Reply-To:Subject:Feedback-ID:From;
- b=l58BxNOqQFXvYpuKy4K4zLJuHCs3noBC1m7S8YQrHRuiHvZH+88QAS4cDCC0yDNwg
- cxflxTclfhe+tRg+3MLgqN4y6oRDpMx+A86mXoALV9hIPC6lXJQO+9yTDtKXPXizh9
- 39/dpd1E7IrFGzyLqJohKMCWUK3VebR7Y+DL2aXU=
-To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
-From: David Weinberger <cubicalpie@protonmail.com>
-Subject: Dealing with large number of IPv4 clients
-Message-ID: <1RaAYaEHv_QRKUXdQO3U-bVTh2ZRb_kfhN62pX42RFyL_Jq_Y0Shl1V2t8s665ddlQpXQ80NBzQ4Bi5CUql18GkiZbunLbtDX1qz6yZbWkw=@protonmail.com>
-Feedback-ID: rZquK6HTsdyV6ewC9qNg_g4-T1xP5ggv1zNRcHFHnkAuntFn6eyLlkwRFFAnuKfNGIW3i-saATWf1Y7huZlIZg==:Ext:ProtonMail
+ Thu, 21 Mar 2019 02:37:58 +0000 (UTC)
+Received: by mail-io1-xd2e.google.com with SMTP id c4so4021457ioh.9
+ for <wireguard@lists.zx2c4.com>; Wed, 20 Mar 2019 19:38:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+ bh=oaAi6s3HKQc0qRR8bsYeeRLQdTuCwSLlOmN/yclIoDQ=;
+ b=UTtC0ubiut4HLgzBshgiSsWYRXfbcx+bMywaRWpzQSM8RYlvrFWFyYmzXgKQTbC63i
+ dwl1/PyoB3ORpksPPIwsSYjcP6/vldQOpVX/SWiA0nsDTXI3j2Bg+mm2SFaWX+vsCwLJ
+ TlIAq2+p0CJ6XmQODIK2xmItMyC7XN31y/xYhSiWf9ZWkaTC41TGfEElqOGkiQ91nVSM
+ 4bBbNSxbmC1hEEK3pxjpCjuXKkUCcOkdHYc7Zu1zNeE9MEa1YlLJCS0OmcG5SUXnMng1
+ 5ipWinkUk4U5O2X2wDgPReNz0y7iBIgrs1M5C/zhmO6z7kGt37Hq33JIDIpqQrynaHgT
+ Gt1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to;
+ bh=oaAi6s3HKQc0qRR8bsYeeRLQdTuCwSLlOmN/yclIoDQ=;
+ b=C7lOKyGMr2Qy/YHZ789jPWn1F4OekkGHbDPRrEWA59Vu1SuPev6uogM8LnpnfddGbf
+ 5ADOggCAqO2jyOzSx5/uxxI8fkSraOY4RV6DuEGa9WAa/IHsIGVp29j/SEbRJ58Blr+G
+ hihI2BF5q29uNtfHKXvSwwU4MWrZN0W4+GbjriHIvg3tVHqhlgfcYMNQqZ8T07yqA3xT
+ Mx7KpLZV6h+0Xtw2kCtv39XZI5QNAzXunpEUziIgSfMC/xCaodRb/CpH/q3MJOpFAoMb
+ heEs4zpnwA91mqD9HSDnQx/0/mLqoeAl4/OF2IIM0UTz35ZXZugyXPPOgv4OuEiGCz83
+ qj0Q==
+X-Gm-Message-State: APjAAAWX//2vK7rcB9bTKI0CWYj9OgSXFBvTi3c4g3jq3GkLBrurZsbk
+ 19zNw4FSK0DXrx26fcAAkrJIowrallPmfUzEXgNMbQ==
+X-Google-Smtp-Source: APXvYqyMSzF3GXl+mXjqY4mWB/3j/WYf352HeI2ZKW0+moDwyk/U8jh8/YU7GUemt0IGhICkynjt/OOyKL86P0+uJfQ=
+X-Received: by 2002:a6b:7417:: with SMTP id s23mr1065401iog.2.1553135899978;
+ Wed, 20 Mar 2019 19:38:19 -0700 (PDT)
 MIME-Version: 1.0
-X-Mailman-Approved-At: Sat, 23 Mar 2019 01:05:26 +0100
+References: <mailman.1098.1553121386.19426.wireguard@lists.zx2c4.com>
+In-Reply-To: <mailman.1098.1553121386.19426.wireguard@lists.zx2c4.com>
+From: Vick Lee <confundo360@gmail.com>
+Date: Wed, 20 Mar 2019 19:38:08 -0700
+Message-ID: <CAB+PNJfPig2O5kC71nzp-KVWQqbWMoYpPcboSwWCHGOBFpcV1A@mail.gmail.com>
+Subject: Re: Issues with multiuser macOS (Sven Grunewaldt)
+To: wireguard@lists.zx2c4.com
+X-Mailman-Approved-At: Sat, 23 Mar 2019 01:05:45 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
-Reply-To: David Weinberger <cubicalpie@protonmail.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -58,58 +78,85 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============1944504999105903917=="
+Content-Type: multipart/mixed; boundary="===============1984442855578263743=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This is a multi-part message in MIME format.
+--===============1984442855578263743==
+Content-Type: multipart/alternative; boundary="0000000000009b32a1058491a166"
 
---===============1944504999105903917==
-Content-Type: multipart/alternative;
-	boundary="b1_9af9a9a2e6a6eb2f0471606a5d292ab8"
+--0000000000009b32a1058491a166
+Content-Type: text/plain; charset="UTF-8"
 
-This is a multi-part message in MIME format.
+>
+> Hi,
+>
+> I'm testing the official macOS application for Wireguard and seem to
+> have a problem in my setup. Is it to be expected to loose configured
+> tunnels when logging out? I have two users on my MacBook, one for work
+> and one for private use and always log out when switching users because
+> some programs (e.g. LittleSnitch) get confused when two users are logged
+> in at the same time. When I do log in back to my private account, all
+> configured profiles are gone.
+>
+> Another thing, that is probably more of a feature request than an issue,
+> is that I'd love to create system-wide tunnels. Logging out and
+> switching to another user always disconnects the tunnel, but I actually
+> do have a tunnel that is used in both profiles. I can duplicate the
+> config, but then I'm not sure what would happen if I may end up being
+> logged in to both profiles. I assume it makes more sense to solves this
+> particular problem with a custom launchd process and wg-quick, instead
+> of using the UI.
+>
+> Kind regards,
+> Sven Grunewaldt
+>
+>
+Can confirm that account switching will clear all saved tunnel
+configurations for all users. Hope this is not intended by design.
+Currently, I have to re-import each time account switching on macOS.
 
---b1_9af9a9a2e6a6eb2f0471606a5d292ab8
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+--0000000000009b32a1058491a166
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-RGVhciB3aXJlZ3VhcmQgdGVhbSwKCldlIGFyZSBhIFZQTiBzZXJ2aWNlIHByb3ZpZGVyIHRyeWlu
-ZyB0byBvZmZlciB3aXJlZ3VhcmQgdG8gb3VyIGN1c3RvbWVycy4KCkdpdmVuIHRoZSBsYXJnZSB1
-c2VyIGJhc2UsIHdlIHBsYW4gdG8gbGVhc2UgSVBzIGF1dG9tYXRpY2FsbHkgdXNpbmcgYSBjdXN0
-b20gdXBwZXIgbGF5ZXIgc2VydmljZSBiZWZvcmUgdXNlcnMgY2FuIGNvbm5lY3QsIGJ1dCB3ZSBj
-YW4gbm90IHNlZW1zIHRvIGZpbmQgYSBwcm9wZXIgb3Bwb3J0dW5pdHkgdG8gcmVjbGFpbSB0aG9z
-ZSBJUHMuIE9uY2UgYWxsb2NhdGVkLCBpdCBzZWVtcyB3aXJlZ3VhcmQgYXNzdW1lcyB0aGUgY2xp
-ZW50IGNhbiB1c2UgdGhlIElQIGZvcmV2ZXIsIHNpbmNlIHRoZXJlIGlzIG5vIGV4cGxpY2l0IGRp
-c2Nvbm5lY3Rpb24uCgpXaGF0J3MgdGhlIHByb3BlciB3YXkgdG8gZGVhbCB3aXRoIGxhcmdlIG51
-bWJlciBvZiBJUHY0IGNsaWVudHM/CgooV2UncmUgYXdhcmUgb2YgdGhlIHdnLWR5bmFtaWMgcHJv
-amVjdCwgYnV0IGl0IHNlZW1zIGl0J3MgSVB2NiBvbmx5LikKClJlZ2FyZHMu
+<div dir=3D"ltr"><br><div class=3D"gmail_quote"><blockquote class=3D"gmail_=
+quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1=
+ex">
+<br>
+Hi,<br>
+<br>
+I&#39;m testing the official macOS application for Wireguard and seem to<br=
+>
+have a problem in my setup. Is it to be expected to loose configured<br>
+tunnels when logging out? I have two users on my MacBook, one for work<br>
+and one for private use and always log out when switching users because<br>
+some programs (e.g. LittleSnitch) get confused when two users are logged<br=
+>
+in at the same time. When I do log in back to my private account, all<br>
+configured profiles are gone.<br>
+<br>
+Another thing, that is probably more of a feature request than an issue,<br=
+>
+is that I&#39;d love to create system-wide tunnels. Logging out and<br>
+switching to another user always disconnects the tunnel, but I actually<br>
+do have a tunnel that is used in both profiles. I can duplicate the<br>
+config, but then I&#39;m not sure what would happen if I may end up being<b=
+r>
+logged in to both profiles. I assume it makes more sense to solves this<br>
+particular problem with a custom launchd process and wg-quick, instead<br>
+of using the UI.<br>
+<br>
+Kind regards,<br>
+Sven Grunewaldt<br>
+<br></blockquote><div><br></div><div>Can confirm that account switching wil=
+l clear all saved tunnel configurations for all users. Hope this is not int=
+ended by design. Currently, I have to re-import each time account switching=
+ on macOS.<br></div></div></div>
 
+--0000000000009b32a1058491a166--
 
---b1_9af9a9a2e6a6eb2f0471606a5d292ab8
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: base64
-
-PGRpdj5EZWFyIHdpcmVndWFyZCB0ZWFtLDxicj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2Pldl
-IGFyZSBhIFZQTiBzZXJ2aWNlIHByb3ZpZGVyIHRyeWluZyB0byBvZmZlciB3aXJlZ3VhcmQgdG8g
-b3VyIGN1c3RvbWVycy48YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5HaXZlbiB0aGUgbGFy
-Z2UgdXNlciBiYXNlLCB3ZSBwbGFuIHRvIGxlYXNlIElQcyBhdXRvbWF0aWNhbGx5IHVzaW5nIGEg
-Y3VzdG9tIHVwcGVyIGxheWVyIHNlcnZpY2UgYmVmb3JlIHVzZXJzIGNhbiBjb25uZWN0LCBidXQg
-d2UgY2FuIG5vdCBzZWVtcyB0byBmaW5kIGEgcHJvcGVyIG9wcG9ydHVuaXR5IHRvIHJlY2xhaW0g
-dGhvc2UgSVBzLiBPbmNlIGFsbG9jYXRlZCwgaXQgc2VlbXMgd2lyZWd1YXJkIGFzc3VtZXMgdGhl
-IGNsaWVudCBjYW4gdXNlIHRoZSBJUCBmb3JldmVyLCBzaW5jZSB0aGVyZSBpcyBubyBleHBsaWNp
-dCBkaXNjb25uZWN0aW9uLjxicj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PldoYXQncyB0aGUg
-cHJvcGVyIHdheSB0byBkZWFsIHdpdGggbGFyZ2UgbnVtYmVyIG9mJm5ic3A7SVB2NCBjbGllbnRz
-PyA8YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj4oV2UncmUgYXdhcmUgb2YgdGhlIHdnLWR5
-bmFtaWMgcHJvamVjdCwgYnV0IGl0IHNlZW1zIGl0J3MgSVB2NiBvbmx5Lik8YnI+PC9kaXY+PGRp
-dj48YnI+PC9kaXY+PGRpdj5SZWdhcmRzLjwvZGl2Pg==
-
-
-
---b1_9af9a9a2e6a6eb2f0471606a5d292ab8--
-
-
---===============1944504999105903917==
+--===============1984442855578263743==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -120,5 +167,4 @@ WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---===============1944504999105903917==--
-
+--===============1984442855578263743==--
