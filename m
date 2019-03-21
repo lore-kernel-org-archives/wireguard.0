@@ -2,56 +2,96 @@ Return-Path: <SRS0=gmne=R2=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_PASS
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E99ACC10F03
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 23 Mar 2019 00:00:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D89B2C43381
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 23 Mar 2019 00:00:45 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 6990C213F2
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 23 Mar 2019 00:00:39 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=anatoli.ws header.i=@anatoli.ws header.b="qk0lrXkA"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 6990C213F2
-Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=anatoli.ws
+	by mail.kernel.org (Postfix) with ESMTPS id 14236213F2
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 23 Mar 2019 00:00:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 14236213F2
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=colinfinck.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4f8863e9;
-	Fri, 22 Mar 2019 23:59:47 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 111778d5;
+	Sat, 23 Mar 2019 00:00:07 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 212cd015
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1372ef8d
  for <wireguard@lists.zx2c4.com>;
- Thu, 21 Mar 2019 06:07:29 +0000 (UTC)
-Received: from out-mx.anatoli.ws (out-mx.anatoli.ws [177.54.157.124])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 98506c7e
+ Thu, 21 Mar 2019 07:32:24 +0000 (UTC)
+Received: from wp221.webpack.hosteurope.de (wp221.webpack.hosteurope.de
+ [IPv6:2a01:488:42:1000:50ed:84e4::])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2b7bafb2
  for <wireguard@lists.zx2c4.com>;
- Thu, 21 Mar 2019 06:07:29 +0000 (UTC)
-Received: from [192.168.0.1] (unknown [192.168.0.1])
- by out-mx.oprbox.com (Postfix) with ESMTPSA id D31A21E0016A
- for <wireguard@lists.zx2c4.com>; Thu, 21 Mar 2019 06:07:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=anatoli.ws;
- s=5s7aopj1ad; t=1553148471;
- bh=HPuHZS2AJnrOPxq664XCVjtKAOuYa8vhni2lfsEQ+PM=;
- h=Subject:To:References:From:Date:In-Reply-To;
- b=qk0lrXkAe3qI74NURLm1L620iiku33zzTZWz8N7fnMEiYur6yD3krtJhRRpCVMMJU
- Os8TLyjaa4FYPfg1+hgwaK+Oujv/d3mNy2///aIIxaRUb4UXTpAWmHt7qySNeel/xW
- dxdWCMCqaQtoiXMiD2I8Cik1ocJTG/XeMltGOoOzU2axn7CKfliwOjxGvA2EDXeETQ
- UDwgnA//Y41lvuMe8KGyQ+revMVDWlWsDPH6BxornUlAq3N4RJvZOpxlKqXQjJyh1P
- uV/dJfjUPlTul8hpO5ex7Lf8Rh7eXtFO8DMJu+nOldGhDDKn1laxVhgn/8E3o7AI1u
- qRNIMmArvk71Q==
-Subject: Re: VPN - excluding local IPs
-To: wireguard@lists.zx2c4.com
-References: <18914224.dsVBvaN9Bx@bot>
-From: Anatoli <me@anatoli.ws>
-Message-ID: <0e8f7579-de29-e847-0431-3c6fb32b05bb@anatoli.ws>
-Date: Thu, 21 Mar 2019 03:07:49 -0300
-Mime-Version: 1.0
-In-Reply-To: <18914224.dsVBvaN9Bx@bot>
-Content-Language: en-US
-X-Mailman-Approved-At: Sat, 23 Mar 2019 00:59:46 +0100
+ Thu, 21 Mar 2019 07:32:24 +0000 (UTC)
+Received: from xdsl-78-34-96-230.nc.de ([78.34.96.230] helo=[10.24.0.101]);
+ authenticated
+ by wp221.webpack.hosteurope.de running ExIM with esmtpsa
+ (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ id 1h6sBt-0002iX-HK; Thu, 21 Mar 2019 08:32:41 +0100
+Subject: Re: [PATCH] wg-quick: Unset the DNS first, then delete the WireGuard
+ interface.
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+References: <20190314115612.2412-1-mail@colinfinck.de>
+ <CAHmME9prfELb2_V+aPfPyUkNv_eKcmt3K_s5HA9RCaDbH-YaHQ@mail.gmail.com>
+From: Colin Finck <mail@colinfinck.de>
+Openpgp: preference=signencrypt
+Autocrypt: addr=mail@colinfinck.de; prefer-encrypt=mutual; keydata=
+ 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
+Message-ID: <4632add0-2696-c47e-0f85-cfbae1b6d0ea@colinfinck.de>
+Date: Thu, 21 Mar 2019 08:32:38 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.0
+MIME-Version: 1.0
+In-Reply-To: <CAHmME9prfELb2_V+aPfPyUkNv_eKcmt3K_s5HA9RCaDbH-YaHQ@mail.gmail.com>
+X-bounce-key: webpack.hosteurope.de;mail@colinfinck.de;1553153568;f07505fe;
+X-HE-SMSGID: 1h6sBt-0002iX-HK
+X-Mailman-Approved-At: Sat, 23 Mar 2019 01:00:05 +0100
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -63,165 +103,77 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============7520632225990841494=="
+Content-Type: multipart/mixed; boundary="===============5814315070799643193=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This is a multi-part message in MIME format.
---===============7520632225990841494==
-Content-Type: multipart/alternative;
- boundary="------------11CD60B0B7BBAD20F68AC567"
-Content-Language: en-US
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--===============5814315070799643193==
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="ummCzLK7jY9FNJLJsY38ygCFC0TzIZnPT"
 
-This is a multi-part message in MIME format.
---------------11CD60B0B7BBAD20F68AC567
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--ummCzLK7jY9FNJLJsY38ygCFC0TzIZnPT
+Content-Type: multipart/mixed; boundary="HcCssnklKzwxYMNdKuq4qS4BGwLnJZlsi";
+ protected-headers="v1"
+From: Colin Finck <mail@colinfinck.de>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Message-ID: <4632add0-2696-c47e-0f85-cfbae1b6d0ea@colinfinck.de>
+Subject: Re: [PATCH] wg-quick: Unset the DNS first, then delete the WireGuard
+ interface.
+References: <20190314115612.2412-1-mail@colinfinck.de>
+ <CAHmME9prfELb2_V+aPfPyUkNv_eKcmt3K_s5HA9RCaDbH-YaHQ@mail.gmail.com>
+In-Reply-To: <CAHmME9prfELb2_V+aPfPyUkNv_eKcmt3K_s5HA9RCaDbH-YaHQ@mail.gmail.com>
 
-Andreas,
+--HcCssnklKzwxYMNdKuq4qS4BGwLnJZlsi
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Check the Table option here: 
-https://git.zx2c4.com/WireGuard/about/src/tools/man/wg-quick.8.
+Hi Jason,
 
-wg-quick adds some routes and rules, you can see them with: ip rule show 
-(check the line containing fwmark, it ends with the routing table 
-number) and then check the routes in the corresponding table with: ip 
-route show table xxx. Basically, if you omit the Table option, wg-quick 
-will add the necessary routes to send all traffic via the tunnel when 
-you specify AllowedIPs = 0.0.0.0/0. You can add routes to your local 
-networks/devices for connections to them to go outside the tunnel in the 
-PostUp option in the wg-quick config.
+Am 20.03.2019 um 23:55 schrieb Jason A. Donenfeld:
+> Your patch seems basic and reasonable enough. However, I don't know
+> how to reproduce the error you're getting. Usually resolvconf doesn't
+> care if the interface is there or not. What OS/configuration is this
+> for you?
 
-Regards,
-Anatoli
-
-*From:* Andreas Hatzl <andreas@hatzl.org>
-*Sent:* Thursday, February 21, 2019 12:08
-*To:* Wireguard Mailing List <wireguard@lists.zx2c4.com>
-*Subject:* VPN - excluding local IPs
-
-Hi,
-
-I have successfully set up a wireguard VPN between my notebook (Manjaro behind
-NAT) and my virtual server (ubuntu 18.04). The only "issue" left is that I
-can't connect to local devices on the client while using wireguard. Is there a
-way to exclude an IP range from using wireguard?
-
-my client config:
-[Interface]
-Address = 10.x.y.z/32
-PrivateKey = xyz
-
-[Peer]
-PublicKey =xyz
-Endpoint = xyz:51820
-AllowedIPs = 0.0.0.0/0
-PersistentKeepalive = 21
-
-I am aware that the solution for this has most likely been posted a lot of
-times but I can't find anything on the Wireguard page or Google.
-
-It would be great if somebody could help me with this.
-
-Thanks
-
-Andreas
+This is resolvconf from systemd-resolved, running on a custom Linux with
+kernel 4.14.x.
+"resolvconf --version" reports "systemd 239".
 
 
-_______________________________________________
-WireGuard mailing list
-WireGuard@lists.zx2c4.com
-https://lists.zx2c4.com/mailman/listinfo/wireguard
+- Colin
 
 
+--HcCssnklKzwxYMNdKuq4qS4BGwLnJZlsi--
 
---------------11CD60B0B7BBAD20F68AC567
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: 7bit
+--ummCzLK7jY9FNJLJsY38ygCFC0TzIZnPT
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body smarttemplateinserted="true">
-    <div id="smartTemplate4-quoteHeader">
-      <div style="font-size:10.0pt;font-family:Verdana,Arial">Andreas,<br>
-        <br>
-        Check the <font face="Courier New">Table</font> option here:
-        <a class="moz-txt-link-freetext" href="https://git.zx2c4.com/WireGuard/about/src/tools/man/wg-quick.8">https://git.zx2c4.com/WireGuard/about/src/tools/man/wg-quick.8</a>.<br>
-        <br>
-        wg-quick adds some routes and rules, you can see them with: <font
-          face="Courier New">ip rule show</font> (check the line
-        containing <font face="Courier New">fwmark</font>, it ends with
-        the routing table number) and then check the routes in the
-        corresponding table with: <font face="Courier New">ip route
-          show table xxx</font>. Basically, if you omit the <font
-          face="Courier New">Table</font> option, wg-quick will add the
-        necessary routes to send all traffic via the tunnel when you
-        specify <font face="Courier New">AllowedIPs = 0.0.0.0/0</font>.
-        You can add routes to your local networks/devices for
-        connections to them to go outside the tunnel in the <font
-          face="Courier New">PostUp</font> option in the wg-quick
-        config.<br>
-        <br>
-        Regards,<br>
-        Anatoli<br>
-        <br>
-      </div>
-      <div style="border:none;border-top:solid #B5C4DF
-        1.0pt;padding:3.0pt 0cm 0cm
-0cm;font-size:10.0pt;font-family:&quot;Tahoma&quot;,&quot;sans-serif&quot;"><b>From:</b>
-        Andreas Hatzl <a class="moz-txt-link-rfc2396E" href="mailto:andreas@hatzl.org">&lt;andreas@hatzl.org&gt;</a><br>
-        <b>Sent:</b> Thursday, February 21, 2019 12:08<br>
-        <b>To:</b> Wireguard Mailing List
-        <a class="moz-txt-link-rfc2396E" href="mailto:wireguard@lists.zx2c4.com">&lt;wireguard@lists.zx2c4.com&gt;</a><br>
-        <b>Subject:</b> VPN - excluding local IPs<br>
-      </div>
-      <br>
-    </div>
-    <div class="replaced-blockquote" cite="mid:18914224.dsVBvaN9Bx@bot"
-      type="cite">
-      <pre class="moz-quote-pre" wrap="">Hi,
+-----BEGIN PGP SIGNATURE-----
 
-I have successfully set up a wireguard VPN between my notebook (Manjaro behind 
-NAT) and my virtual server (ubuntu 18.04). The only "issue" left is that I 
-can't connect to local devices on the client while using wireguard. Is there a 
-way to exclude an IP range from using wireguard? 
+iQIzBAEBCAAdFiEENLXXTejc76VQ9g3AG6dOcEVroakFAlyTPhoACgkQG6dOcEVr
+oal8Qw/+KQEvu4gwTygrg1f45leYl9BhK9ckPfQL9sZkZnnRoUKnwTJDYRpA+Ged
+mlwevWmqVZDnkBPSZr9rr0MHiZJCN+K1GbJFE+pj9Jj6CcJ1HmEI1Ye/TZ59eC+0
+b2UiuB3jfjgREraOIVN7L3+xs/bFZ2svRSM2Gsw+0rCR5w/A+AO97Q+wGDAlaaxp
+D19CgR/7gE+Pr1l8k/MOy0n1FGSKWUwurKBIQo6mf/AIeoprsc1M8wuAuijQczZw
+rXc5f7KtNG30TlceIU8H8xuF+HJW3UoaTWtD4JwGVvNlcW4MRF5hSONZEYe+LEDL
+fqcGMc+Hts1dp8kZSF1cMukHAb3jQGSxqONfF7XE7DnosTNF95UyuW+IzMuY6O7I
+zh1FMa/JSh2cThNDXhLOVHqxBi+7ZmWM+BRBbUDmm6DSCKDCR1y74MbYZC8/hUs4
+stHhDzHpTX0kb8O9txpQKpa+wQVJEkebVMcSdK4PP0zITBPMHgmHfb+kQTkZHiWN
+PYKCdXn4Kwz19wJKrRE97etPQxy/VJn3mwNcjsTl5kjM+imwWBmrsvJ28mmMjXVu
+Jxg7AlWcHBEqWS3Yr4mZ77m9YhFdU9PykpDKhXOdAwxVmFCswr8SrBq0qo+ExLm1
+ZICh03NUzD9SoLvF8rhJBVfasZ4Y1QAFq2/cQlkeu5eZkONh9XM=
+=O6ma
+-----END PGP SIGNATURE-----
 
-my client config:
-[Interface]
-Address = 10.x.y.z/32
-PrivateKey = xyz
+--ummCzLK7jY9FNJLJsY38ygCFC0TzIZnPT--
 
-[Peer]
-PublicKey =xyz
-Endpoint = xyz:51820
-AllowedIPs = 0.0.0.0/0
-PersistentKeepalive = 21
-
-I am aware that the solution for this has most likely been posted a lot of 
-times but I can't find anything on the Wireguard page or Google.
-
-It would be great if somebody could help me with this.
-
-Thanks
-
-Andreas
-
-
-_______________________________________________
-WireGuard mailing list
-<a class="moz-txt-link-abbreviated" href="mailto:WireGuard@lists.zx2c4.com">WireGuard@lists.zx2c4.com</a>
-<a class="moz-txt-link-freetext" href="https://lists.zx2c4.com/mailman/listinfo/wireguard">https://lists.zx2c4.com/mailman/listinfo/wireguard</a>
-</pre>
-    </div>
-    <br>
-  </body>
-</html>
-
---------------11CD60B0B7BBAD20F68AC567--
-
---===============7520632225990841494==
+--===============5814315070799643193==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -232,4 +184,4 @@ WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---===============7520632225990841494==--
+--===============5814315070799643193==--
