@@ -2,84 +2,75 @@ Return-Path: <SRS0=gmne=R2=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A6B0C43381
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 23 Mar 2019 00:05:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0AF72C4360F
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 23 Mar 2019 00:05:13 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id B4AA2218A1
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 23 Mar 2019 00:05:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 734D4218A1
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 23 Mar 2019 00:05:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=demfloro.ru header.i=@demfloro.ru header.b="FKUqvGgB"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org B4AA2218A1
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=demfloro.ru
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=joonix-se.20150623.gappssmtp.com header.i=@joonix-se.20150623.gappssmtp.com header.b="ay+D+3Yw"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 734D4218A1
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=joonix.se
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e3fca9d7;
-	Sat, 23 Mar 2019 00:03:42 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 55d8acd7;
+	Sat, 23 Mar 2019 00:04:35 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1b2758f0
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d2df6cd2
  for <wireguard@lists.zx2c4.com>;
- Thu, 21 Mar 2019 18:49:54 +0000 (UTC)
-Received: from mx.demfloro.ru (demfloro.ru [IPv6:2a00:d880:5:aad::7682])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 61b0b377
+ Thu, 21 Mar 2019 16:50:34 +0000 (UTC)
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com
+ [IPv6:2a00:1450:4864:20::236])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4c7374fa
  for <wireguard@lists.zx2c4.com>;
- Thu, 21 Mar 2019 18:49:54 +0000 (UTC)
-Received: from fire.localdomain (unknown [IPv6:2001:470:28:88::100])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- (Authenticated sender: demfloro)
- by mx.demfloro.ru (Postfix) with ESMTPSA id 44QG7b496dz9ky4;
- Thu, 21 Mar 2019 18:50:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=demfloro.ru; s=032019; 
- t=1553194219;
- h=from:from:sender:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=6JKiTBs4ZeFQYcq801C2q+TgfAvwd5YaRqrpxT3xMk4=;
- b=FKUqvGgBU6q8/yHWSS3ePIYYhGcrmxPAop4uq8m5ABeFIcXDYC9HJGQRe9f+RzvV0spH0S
- vSO0zB3YHRUWrlvaLA95vHXXrOv2LwmY3Vo5vizuyIOsHiPKp02tG71a887K2E5vCy+J0w
- uD8GM7dvOlsY+r4dTwyHk+37aYh+TwmmhlfcisB0IXxdp189rUfZ4oW+efPzySzuruh/co
- QpbhvAKFtTUFzPOkXA6VwuDFY0qbUs11dkfeh9sTF4NheCp9tDbEsXDnHJlgZE9apzFMFK
- fthuE72y6vDJXNLt3S9OVjN4tA4hwPrleQCx2opqBlM5/m4nv8zj+z3TqBCUgQ==
-Date: Thu, 21 Mar 2019 21:50:09 +0300
-From: Dmitrii Tcvetkov <demfloro@demfloro.ru>
-To: Andreas Hatzl <andreas@hatzl.org>
-Subject: Re: VPN - excluding local IPs
-Message-ID: <20190321215009.6f70500c@fire.localdomain>
-In-Reply-To: <18914224.dsVBvaN9Bx@bot>
-References: <18914224.dsVBvaN9Bx@bot>
-MIME-Version: 1.0
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=demfloro.ru;
- s=arc032019; t=1553194219;
- h=from:from:sender:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=6JKiTBs4ZeFQYcq801C2q+TgfAvwd5YaRqrpxT3xMk4=;
- b=UWG4SsNeTzCYfQ3eZPa9tid1SsXfoLMVgHcYK+gBlvEjRCFqNr33dI3Lu/lYAH3Mem2sb0
- UAqKXRfzrXFxk6PajAuFRC1I4u6OW0IV+1XfP37jIDIz5HK7I610KuW+Ryn0D/V6UkBpu8
- gD6Jj9Z/yJdGoktaJ4B4aph+QWWg0+lMj/ByjkLLeH2rmAKucHPwJMbnGCC7C5L9MTMKiy
- fbnhFfbFGAf8Og1W8DuUcSke49sISZYJnjvOoWI9trV1tk2HYQfriHmsM2D9kVP9SQWR7s
- BCU1hIBUYor1YpgqAbmKvmvwfyGQ2GxEIc4aecNIXqJV/iAIEZ+DNqgKdnja/Q==
-ARC-Seal: i=1; s=arc032019; d=demfloro.ru; t=1553194219; a=rsa-sha256; cv=none;
- b=bpKFgCbj3smRLsFq4gN4GJA8uYmCY0gJSW7XIbp5AO9FU2frXd3O3iZRVjO13fYnyhJ3Ob
- eBKrI2mwVXrfM8Gu1cd9Yz3J7nGCIA9Zt9jjossmtSCGcyvf0IyKbJpADPMO/VAwI6zuLe
- Cd3p4yjs0MQioMOlVkrIUYGwfYmMuRU4u2DTWOFgrFPWreWmuCMCyqMgvegB9ulfy19BVx
- g/3KZH+QGwsIAbcxgxcQV/P7vjB3kIqUd7KWfxVDAobE8Jbgn5et73K61cFSbzsOi3t/xw
- ZBWIQPr1qEFySYPSn7E+a3d8qnt1ICFjQGUvD9vKIj02G+K6mKtnFQuM4Jf0pw==
-ARC-Authentication-Results: i=1; mx.demfloro.ru;
- auth=pass smtp.auth=demfloro smtp.mailfrom=demfloro@demfloro.ru
-X-Mailman-Approved-At: Sat, 23 Mar 2019 01:03:40 +0100
-Cc: wireguard@lists.zx2c4.com
+ Thu, 21 Mar 2019 16:50:34 +0000 (UTC)
+Received: by mail-lj1-x236.google.com with SMTP id t13so5882466lji.2
+ for <wireguard@lists.zx2c4.com>; Thu, 21 Mar 2019 09:51:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=joonix-se.20150623.gappssmtp.com; s=20150623;
+ h=from:mime-version:subject:message-id:date:to;
+ bh=EPqbhR6rqNv9EFeLcaqA2tKAjyMBX55cVl94z4BMhVw=;
+ b=ay+D+3YwNG+irLKiHHNpatTGD6rJZIxMRvtbNB3O1xXOoN/WJERCVuKPQ+Nfa4sScr
+ LLQfssDOi+QMdVtj1dk4h6pI2s7G8UWOR307wn6/16j7x3L2zEy/KToXEX+FRFNOzLKP
+ hiiz/3KaDk1PflYwkUc5fJeK+KIeqgSuViYxTbMd5FUtuTXKqVJ7VqoYJPQN6p6vcDEX
+ 6DTi6BHnOLEF3XAWBHTGpJ59b2LlRizL7p5U/B2X6+udSGCDoWYT6WeF5H5a1fJe97Ap
+ S4LyFsD0wnClt3jCOZfRjq3VT0fFkVWHKZSBL8f3jmXd0hLuQElHXFPmn9CZE3XE0kwR
+ s17w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:mime-version:subject:message-id:date:to;
+ bh=EPqbhR6rqNv9EFeLcaqA2tKAjyMBX55cVl94z4BMhVw=;
+ b=bxJhj0/2XGHm4Xlo4r3nlvevdvFArQzwr9t/TI2ewJGagX/vwA8e0WY/zMPE1r9NhE
+ 5NZyH5etWkB5MlsizwmMA3hfleqoS3wcf9FsIlj8ynnysg1f/mazbJdTGwZNj2QbW6qJ
+ Nt5th/Zcn0nVXvFTvgTFB+sK2M8SNO97cnAhBXXKy5vTA8AYc3i5CV8vBxrb6IusLEeE
+ 6Xvs5+3mSPAfyisqnmytnNlXeoOqkrNYNu24MqnAx0AmxF8XaCuOjvbB0JH2uBbyjXcc
+ +HM+eMOp5iEuYrJVFTgcZd6C5dVgYlznpiSKj9XDS5pJbQDx9hCJbna/s6URPu5Rom0F
+ euow==
+X-Gm-Message-State: APjAAAWbq8Pq4auFEWFJ4JnNe5fZpTwpNpksWr4DBGVPexEfjO+gM+Px
+ ZiJNCIk+LNfaHsL+zKTCtOCLHc1wX7LwFQ==
+X-Google-Smtp-Source: APXvYqyBK3riS7F+eosh1yj7calsQK2zQkKEOW/aIW6mQrObEPv8BTYy1TAix3Ed6DTAsTJoTCHtaw==
+X-Received: by 2002:a2e:904b:: with SMTP id n11mr2599692ljg.57.1553187058287; 
+ Thu, 21 Mar 2019 09:50:58 -0700 (PDT)
+Received: from [10.80.0.245] (h-154-138.A353.priv.bahnhof.se. [37.123.154.138])
+ by smtp.gmail.com with ESMTPSA id v26sm939739lja.60.2019.03.21.09.50.57
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Thu, 21 Mar 2019 09:50:57 -0700 (PDT)
+From: =?utf-8?Q?Johnny_Bergstr=C3=B6m?= <johnny@joonix.se>
+Mime-Version: 1.0 (Mac OS X Mail 12.2 \(3445.102.3\))
+Subject: a couple of unrelated questions
+Message-Id: <16381132-7BBB-43B3-AF62-EBB055B79015@joonix.se>
+Date: Thu, 21 Mar 2019 17:50:56 +0100
+To: wireguard@lists.zx2c4.com
+X-Mailer: Apple Mail (2.3445.102.3)
+X-Mailman-Approved-At: Sat, 23 Mar 2019 01:04:33 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -91,103 +82,100 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="===============3886341808066272314=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Thu, 21 Feb 2019 16:08:50 +0100
-Andreas Hatzl <andreas@hatzl.org> wrote:
 
-> Hi,
-> 
-> I have successfully set up a wireguard VPN between my notebook
-> (Manjaro behind NAT) and my virtual server (ubuntu 18.04). The only
-> "issue" left is that I can't connect to local devices on the client
-> while using wireguard. Is there a way to exclude an IP range from
-> using wireguard? 
-> 
-> my client config:
-> [Interface]
-> Address = 10.x.y.z/32
-> PrivateKey = xyz
-> 
-> [Peer]
-> PublicKey =xyz
-> Endpoint = xyz:51820
-> AllowedIPs = 0.0.0.0/0
-> PersistentKeepalive = 21
-> 
-> I am aware that the solution for this has most likely been posted a
-> lot of times but I can't find anything on the Wireguard page or
-> Google.
-> 
-> It would be great if somebody could help me with this.
-> 
-> Thanks
-> 
-> Andreas
-
-That's odd, if I understood correctly, your setup looks kinda this, if
-not, please correct me:
-
-|---------|
-|notebook |
-|---------|
-172.16.0.2/24 private
-10.0.0.0.2/24 inside tunnel
+--===============3886341808066272314==
+Content-Type: multipart/alternative;
+	boundary="Apple-Mail=_86E251B3-3C71-4265-A346-4C88511B32B7"
 
 
--------------------|
-Example LAN device |
--------------------|
-172.16.0.3/24 private
+--Apple-Mail=_86E251B3-3C71-4265-A346-4C88511B32B7
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
+
+Hello,
+
+I=E2=80=99m currently developing a couple of services which will use =
+Wireguard as its core enabler.
+While looking for somewhere to ask questions or post issues I found this =
+list, so here it goes:
+
+1. Why not enable issue tracking on Github (and preferably not "only a =
+mirror")? It would be much easier for someone like me to follow known =
+problems and questions as most other open source projects are on the =
+same platform. I would expect more contributions to your project would =
+be the result.
+
+2.1 Why block building with Go on linux like this: =
+https://github.com/WireGuard/wireguard-go/blob/master/donotuseon_linux.go =
+<https://github.com/WireGuard/wireguard-go/blob/master/donotuseon_linux.go=
+>=20
+Kernel module is preferred, but there are still use cases where you want =
+the Go version even when it=E2=80=99s linux behind the scenes.
+
+2.2 Would you accept a pull request for refactoring the Go version to =
+become a re-usable module? E.g. not have everything in package main.
+
+3. Are there plans on a custom URL handler for the Android and iOS for =
+easily importing a config?
+As opposed to the steps involved in first then going into the app and =
+importing.
 
 
-        private 172.16.0.1/24
-     |--------------------|
------|   router with NAT  |-------------
-     |--------------------|
-          2.3.4.5 public
+Thank you for a great project!
 
+Johnny=
 
-1.2.3.4 public
-10.0.0.1/24 inside tunnel
------------------|
-WireGuard server |
------------------|
+--Apple-Mail=_86E251B3-3C71-4265-A346-4C88511B32B7
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
 
-So in this example before connecting to VPN notebook would have:
-direct route to 172.16.0.0/24
-default route via 172.16.0.1
+<html><body style=3D"word-wrap: break-word; -webkit-nbsp-mode: space; =
+-webkit-line-break: after-white-space;" class=3D"">Hello,<div =
+class=3D""><br class=3D""></div><div class=3D"">I=E2=80=99m currently =
+developing a couple of services which will use Wireguard as its core =
+enabler.</div><div class=3D"">While looking for somewhere to ask =
+questions or post issues I found this list, so here it goes:</div><div =
+class=3D""><br class=3D""></div><div class=3D"">1. Why not enable issue =
+tracking on Github (and preferably not "only a mirror")? It would be =
+much easier for someone like me to follow known problems and questions =
+as most other open source projects are on the same platform. I would =
+expect more contributions to your project would be the result.</div><div =
+class=3D""><br class=3D""></div><div class=3D"">2.1 Why block building =
+with Go on linux like this:&nbsp;<a =
+href=3D"https://github.com/WireGuard/wireguard-go/blob/master/donotuseon_l=
+inux.go" =
+class=3D"">https://github.com/WireGuard/wireguard-go/blob/master/donotuseo=
+n_linux.go</a>&nbsp;</div><div class=3D"">Kernel module is preferred, =
+but there are still use cases where you want the Go version even when =
+it=E2=80=99s linux behind the scenes.</div><div class=3D""><br =
+class=3D""></div><div class=3D"">2.2 Would you accept a pull request for =
+refactoring the Go version to become a re-usable module? E.g. not have =
+everything in package main.</div><div class=3D""><br class=3D""></div><div=
+ class=3D"">3. Are there plans on a custom URL handler for the Android =
+and iOS for easily importing a config?</div><div class=3D"">As opposed =
+to the steps involved in first then going into the app and =
+importing.</div><div class=3D""><br class=3D""></div><div class=3D""><br =
+class=3D""></div><div class=3D"">Thank you for a great =
+project!</div><div class=3D""><br class=3D""></div><div =
+class=3D"">Johnny</div></body></html>=
 
-After connecting to VPN, assuming that VPN setup overrides default
-route:
-direct route to 172.16.0.0/24
-direct route to 10.0.0.0/24
-static route to 1.2.3.4 via 172.16.0.1 (for encrypted WG traffic)
-default route via 10.0.0.1
+--Apple-Mail=_86E251B3-3C71-4265-A346-4C88511B32B7--
 
-In that case there would not be any problem for notebook to communicate
-with "example LAN device" unless firewall on the notebook or the "LAN
-device" interferes.
+--===============3886341808066272314==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-As far as I know there is no straightforward way to exclude networks
-from AllowedIPs, but you can enumerate all public IPv4 prefixes, like
-Android WireGuard client does:
-
-200.0.0.0/5,172.64.0.0/10,172.128.0.0/9,12.0.0.0/6,16.0.0.0/4,11.0.0.0/8,
-32.0.0.0/3,128.0.0.0/3,196.0.0.0/6,64.0.0.0/2,172.0.0.0/12,194.0.0.0/7,
-192.160.0.0/13,192.0.0.0/9,192.170.0.0/15,160.0.0.0/5,192.128.0.0/11,
-193.0.0.0/8,208.0.0.0/4,192.172.0.0/14,176.0.0.0/4,192.169.0.0/16,
-0.0.0.0/5,174.0.0.0/7,192.176.0.0/12,192.192.0.0/10,8.0.0.0/7,
-172.32.0.0/11,173.0.0.0/8,168.0.0.0/6
-
-But if you just replace 0.0.0.0/0 with this in AllowedIPs line without
-fixing routing then WireGuard will just reject packets which don't
-belong to these prefixes. Network stack of the notebook should route
-packets to the LAN, AllowedIPs is more of a precaution in this case.
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--===============3886341808066272314==--
