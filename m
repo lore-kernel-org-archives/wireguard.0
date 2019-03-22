@@ -6,57 +6,65 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5B7EC43381
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 23 Mar 2019 00:02:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FB18C43381
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 23 Mar 2019 00:03:35 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 41253213F2
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 23 Mar 2019 00:02:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 022B5213F2
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 23 Mar 2019 00:03:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=comcastmailservice.net header.i=@comcastmailservice.net header.b="WJoPUxhV"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 41253213F2
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=jgibbons.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=archlinux-us.20150623.gappssmtp.com header.i=@archlinux-us.20150623.gappssmtp.com header.b="Kt0OqAS5"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 022B5213F2
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=archlinux.us
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f37b640b;
-	Sat, 23 Mar 2019 00:01:10 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b8e7ec75;
+	Sat, 23 Mar 2019 00:02:44 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fc9a1437
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2ab2e29a
  for <wireguard@lists.zx2c4.com>;
- Thu, 21 Mar 2019 01:01:49 +0000 (UTC)
-Received: from resqmta-po-02v.sys.comcast.net (resqmta-po-02v.sys.comcast.net
- [IPv6:2001:558:fe16:19:96:114:154:161])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 986ae59b
+ Fri, 22 Mar 2019 19:24:27 +0000 (UTC)
+Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com
+ [IPv6:2607:f8b0:4864:20::233])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 408836ff
  for <wireguard@lists.zx2c4.com>;
- Thu, 21 Mar 2019 01:01:49 +0000 (UTC)
-Received: from resomta-po-05v.sys.comcast.net ([96.114.154.229])
- by resqmta-po-02v.sys.comcast.net with ESMTP
- id 6khIhgj9TFWKM6m5whEXWg; Thu, 21 Mar 2019 01:02:08 +0000
+ Fri, 22 Mar 2019 19:24:27 +0000 (UTC)
+Received: by mail-oi1-x233.google.com with SMTP id j132so2595351oib.2
+ for <wireguard@lists.zx2c4.com>; Fri, 22 Mar 2019 12:25:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=comcastmailservice.net; s=20180828_2048; t=1553130128;
- bh=3K8PC5tbF2ZwtJHIXdj/klRzg9u5+53R/8Cz0NgDlGA=;
- h=Received:Received:From:Content-Type:Mime-Version:Subject:
- Message-Id:Date:To;
- b=WJoPUxhVS8vxBcShb6rlRPW159XeogSgcI9DJ1QwNFQiRaMmkzC26iMB3/xl2Qnwy
- KsZGrJlPfH51eP58RfBnrWUyUDIDYhCDkKnvdSdWanlqziU6GL3CYXP4zJFjRVcbfE
- CJu/hwl9vZXwdTmD4rrpFOP4oCxmoc8tfGSDIvUGdEoKkd529sPEIWGiI+rX1zmSbY
- cBkSNSXb2bArowK5Tkw3gJbSwI4AqzrvXAn+9Ba+7zdnzB4KKAoeanXJfduNQdsBcQ
- QME66slElDnWnEz3O2Fr+Rxy8R4JtK10yDUknUltJVXgeFP60aP+RpL/YMTaAP/g+k
- 1vLvHgNMpiBpQ==
-Received: from [192.168.141.12] ([108.20.200.126])
- by resomta-po-05v.sys.comcast.net with ESMTPA
- id 6m5mhdgSm5czH6m5phP397; Thu, 21 Mar 2019 01:02:06 +0000
-X-Xfinity-VAAS: gggruggvucftvghtrhhoucdtuddrgedutddrieejgddvlecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucevohhmtggrshhtqdftvghsihdpqfgfvfdppffquffrtefokffrnecuuegrihhlohhuthemuceftddtnecunecujfgurhephfgtgfgguffkfffvofesthhqmhdthhdtvdenucfhrhhomhepkhgrrhhoghcuoehkrghrohhgsehjghhisggsohhnshdrtghomheqnecukfhppedutdekrddvtddrvddttddruddvieenucfrrghrrghmpehhvghloheplgduledvrdduieekrddugedurdduvdgnpdhinhgvthepuddtkedrvddtrddvtddtrdduvdeipdhmrghilhhfrhhomhepkhgrrhhoghesjhhgihgssghonhhsrdgtohhmpdhrtghpthhtohepfihirhgvghhurghrugeslhhishhtshdriiigvdgtgedrtghomhenucevlhhushhtvghrufhiiigvpedt
-X-Xfinity-VMeta: sc=0;st=legit
-From: karog <karog@jgibbons.com>
-Mime-Version: 1.0 (Mac OS X Mail 12.2 \(3445.102.3\))
-Subject: Traffic routing with pf
-Message-Id: <D4AEDD34-6DEF-4C4A-8542-ECCD260428E1@jgibbons.com>
-Date: Wed, 20 Mar 2019 21:01:58 -0400
-To: wireguard@lists.zx2c4.com
-X-Mailer: Apple Mail (2.3445.102.3)
-X-Mailman-Approved-At: Sat, 23 Mar 2019 01:01:10 +0100
+ d=archlinux-us.20150623.gappssmtp.com; s=20150623;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=KLzXNJkEXgNd47vanq9iHvMcaPsO3u3VyRElhzluOCc=;
+ b=Kt0OqAS5+FcSETKW+Z3yKMc9MkNbL+9uD7Y9lGxb732iLhm40xga+5QpI+DNPNJ8/q
+ qZ3C84iHstt8XqEZ5MjRXh0vhO5xM0tqQ8fOVZiHCjiXz/bTT1aExy5bKna/8fuiouf3
+ QQ9p84srBkMFamtQXGtDBMXohyp7yP7uJPxSGDj6u2xaZ7+5vTJqVlyCWJfNNykzgkxS
+ NmQ17aHYbo3ra7DJT81BfrEBoIZ3Hy7bow99S4l/TNh250C4rb005Cy1gGbUu8PlYQLu
+ 9dVXzOb/9WlYwS8+OOTf+o1JNsojPxaITWBz9KAv1O2ScL1gSd9U3gALJJp7xKhEBuHH
+ hGXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=KLzXNJkEXgNd47vanq9iHvMcaPsO3u3VyRElhzluOCc=;
+ b=lsaZGidJ1TT0wn19wHGEhHRxPvpz0f7emnfV+lBMIrD/3zFm/P6ChFXUl296UxZTZH
+ 0oSSD6qtYK15Qf8eSQ7NtsRZoxae6pxuRSwTZTUL/HCpkkguXM0PTxlCwZp0m0S7xF68
+ 6UZe1jtxmLbNpM+tUyK/VFME8A5DWgu11PfinduTRy8QTVEnSz7fuLhvnK8/XCEvecxo
+ mbD4MVRxV6jJBjmY2JZBbaw4sdsyX3tv2BUARapcohqeAOulpWVNLU81JXu62WHIJ5f7
+ HE6SJD4kLcgtrG4x3QsfaMQnN7vj+Tbr8qs+RIDRF8D/JqtRjZbGxYxU4MYVwt1ZabgA
+ rrhA==
+X-Gm-Message-State: APjAAAV2qQXdBbpN4445UVjrd0x7LkvtsDMZQx22Di4LQaCDXkVVoHFW
+ pUzrivHnxbFZIAPU7693oHHeQzeIlsVWEzzuCToX8RccXBo=
+X-Google-Smtp-Source: APXvYqy9qo3lakBuv1ooK+5vtQeigPOxR9ObEkhNol2UVxSzR6rx4maKz791B2123pNWK5Ah2AZnPe+H3CrlZXCwyMo=
+X-Received: by 2002:aca:54c3:: with SMTP id i186mr3048082oib.16.1553282701643; 
+ Fri, 22 Mar 2019 12:25:01 -0700 (PDT)
+MIME-Version: 1.0
+From: John <graysky@archlinux.us>
+Date: Fri, 22 Mar 2019 15:24:51 -0400
+Message-ID: <CAO_nJAYPMoBNaKqNW10TRQSKA2EV_-9XqOhJmPmNVm4OuedOAw@mail.gmail.com>
+Subject: TestFlight is no longer accepting testers ... new link needed?
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ "Jason A. Donenfeld" <Jason@zx2c4.com>
+X-Mailman-Approved-At: Sat, 23 Mar 2019 01:02:42 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -73,28 +81,9 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Marc,
-
-You might only need to turn on ip forwarding. As a command try:
-
-To read the current value:
-
-sysctl net.inet.ip.forwarding
-
-To set the value:
-
-sudo sysctl net.inet.ip.forwarding=1
-
-To set it on boot, create the file
-
-/private/etc/sysctl.conf
-
-with contents
-
-net.inet.ip.forwarding=1
-
-
-You will also need a route on your router to direct packets with destination on your wireguard subnet to go the the Mac Mini's ip address.
+Is TestFlight for the iOS app no longer active?  Looking to get the
+latest build of the iOS client in hopes it is more robust for me (I
+see 0.0.20190319-5 a few days ago).
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
