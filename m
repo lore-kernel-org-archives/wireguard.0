@@ -2,51 +2,52 @@ Return-Path: <SRS0=Yiz6=SI=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_PASS
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89B85C10F06
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  6 Apr 2019 11:56:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 01C6DC282DC
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  6 Apr 2019 11:56:52 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 4701F2173C
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  6 Apr 2019 11:56:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 9139E2173C
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  6 Apr 2019 11:56:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=poczta.onet.pl header.i=@poczta.onet.pl header.b="aueYu4DL"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 4701F2173C
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=poczta.onet.pl header.i=@poczta.onet.pl header.b="NPZ6b6aN"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 9139E2173C
 Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=poczta.onet.pl
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 087092b0;
-	Sat, 6 Apr 2019 11:54:21 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 61124b10;
+	Sat, 6 Apr 2019 11:54:22 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0fe64f09
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 621538e4
  for <wireguard@lists.zx2c4.com>;
- Wed, 27 Mar 2019 14:47:16 +0000 (UTC)
+ Fri, 29 Mar 2019 14:35:07 +0000 (UTC)
 Received: from smtpo31.poczta.onet.pl (smtpo45.poczta.onet.pl
  [213.180.142.176])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ea9985fe
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d021d755
  for <wireguard@lists.zx2c4.com>;
- Wed, 27 Mar 2019 14:47:16 +0000 (UTC)
+ Fri, 29 Mar 2019 14:35:07 +0000 (UTC)
 Received: from [192.168.4.198] (ekg125.neoplus.adsl.tpnet.pl [83.21.174.125])
  (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128
  bits)) (No client certificate requested)
  (Authenticated sender: namiltd@poczta.onet.pl)
- by smtp.poczta.onet.pl (Onet) with ESMTPSA id 44TrTf0ww6z1XRwqn
- for <wireguard@lists.zx2c4.com>; Wed, 27 Mar 2019 15:48:21 +0100 (CET)
+ by smtp.poczta.onet.pl (Onet) with ESMTPSA id 44W4710RXTz1XS0lD
+ for <wireguard@lists.zx2c4.com>; Fri, 29 Mar 2019 15:36:28 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=poczta.onet.pl;
- s=2011; t=1553698102;
- bh=4A/uMRQZ1phK7RyaJwJ2bpHsegUw7dfUb6bNh8+fq3k=;
+ s=2011; t=1553870189;
+ bh=7IkMLx+4KwVEE+poWI7lW6KyWv4tlk3XFnjrx7OH8rY=;
  h=Subject:From:To:References:Date:In-Reply-To:From;
- b=aueYu4DLosSlQLBQvwmM2kOp7OTh8Q15sHx/tKdYkXXbaKjb89HWPlkXHt7spldmd
- blSz+YLwlz6EWN5oeedSzL/wE3afj2FzHx9YoHgS4esd7WaNRbAnLk97XOLldsW2Qt
- 2iLtZxfIgCdCd04NBkC+SxizZgYHD+2DDonJp7Ms=
+ b=NPZ6b6aNI/xQ9aAjTfKH1fk6jSv0umaLKTyrz6RUyDbJcVnzoZBvP0kTjlTOaK+aP
+ enXobRrYdWldZKS8lphE6SONe+yEl3Db4Hoavv0HP6rgA+mwO1l5thY98FZ5PA48qo
+ Vy81OedOkUB8u++6xHNyOjcCFzWuL/6p0NI2tTkA=
 Subject: Re: [PATCH] centos 6 compatibility
 From: =?UTF-8?Q?Mieczys=c5=82aw_Nalewaj?= <namiltd@poczta.onet.pl>
 To: wireguard@lists.zx2c4.com
 References: <dd1d1bde-dd6b-6f36-e08f-3552ee0686a2@poczta.onet.pl>
+ <c3e6e9e7-40c6-def5-df0c-cc9fc0740301@poczta.onet.pl>
 Openpgp: preference=signencrypt
 Autocrypt: addr=namiltd@poczta.onet.pl; keydata=
  mQINBFyXkrgBEADihv8ijjqliSeEbUTVzFV0XSUx4WsuE3+pHAjU/3mH66SOlHF7lzl5CKwk
@@ -91,12 +92,13 @@ Autocrypt: addr=namiltd@poczta.onet.pl; keydata=
  XgOybeU1mTlqyTTzELTalEjETnwIoEyiqD6ze3YgSXpDB/woymX9gQoMKnU1SGRh+0Qn4Eq6
  FD39QLPLs/EBAk97rTBtb8oLviMJJMDjZCsfWjMx5WuK83jjlJ3ky31CZ5Vc2ZuNF88ZShVz
  iBrYQ0dx7oB+Grv9oil139Vy18xlraDVw+eikTtNx0zBI543xkU5G/tCbHEpWoj8C/Y=
-Message-ID: <c3e6e9e7-40c6-def5-df0c-cc9fc0740301@poczta.onet.pl>
-Date: Wed, 27 Mar 2019 15:48:22 +0100
+Message-ID: <a5e21f8d-da02-c52f-83a8-3a50e1bdaf94@poczta.onet.pl>
+Date: Fri, 29 Mar 2019 15:36:28 +0100
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
  Thunderbird/60.6.1
 MIME-Version: 1.0
-In-Reply-To: <dd1d1bde-dd6b-6f36-e08f-3552ee0686a2@poczta.onet.pl>
+In-Reply-To: <c3e6e9e7-40c6-def5-df0c-cc9fc0740301@poczta.onet.pl>
+Content-Type: multipart/mixed; boundary="------------B7D3787D915951597EFCB7DE"
 Content-Language: pl
 X-ONET_PL-MDA-SEGREGATION: 0
 X-Mailman-Approved-At: Sat, 06 Apr 2019 13:54:19 +0200
@@ -111,119 +113,36 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============4977039806574447318=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
 This is a multi-part message in MIME format.
---===============4977039806574447318==
+--------------B7D3787D915951597EFCB7DE
 Content-Type: multipart/alternative;
- boundary="------------3FB4340561AA034DDFAC4FF8"
-Content-Language: pl
+ boundary="------------139275C65C9E9C69C79968C0"
 
-This is a multi-part message in MIME format.
---------------3FB4340561AA034DDFAC4FF8
+
+--------------139275C65C9E9C69C79968C0
 Content-Type: text/plain; charset=iso-8859-2
 Content-Transfer-Encoding: 8bit
 
-Is there any chance to add this code?
+New, improved version of patch for WireGuard Centos6 compatibility.
 
-W dniu 2019-03-03 o 14:30, namiltd@poczta.onet.pl pisze:
-> ---
-> src/crypto/zinc/blake2s/blake2s.c | 17 +++++++++++++++++
-> src/socket.c                      |  7 +++++++
-> 2 files changed, 24 insertions(+)
+W dniu 2019-03-27 o 15:48, Mieczys³aw Nalewaj pisze:
+> Is there any chance to add this code?
 >
-> diff --git a/src/crypto/zinc/blake2s/blake2s.c
-> b/src/crypto/zinc/blake2s/blake2s.c
-> index b881db0..60b7763 100644
-> --- a/src/crypto/zinc/blake2s/blake2s.c
-> +++ b/src/crypto/zinc/blake2s/blake2s.c
-> @@ -19,9 +19,16 @@
-> #include <linux/init.h>
-> #include <linux/bug.h>
-> #include <asm/unaligned.h>
-> +#define GCC_VERSION (__GNUC__ * 10000 \
-> +            + __GNUC_MINOR__ * 100 \
-> +            + __GNUC_PATCHLEVEL__)
+> W dniu 2019-03-03 o 14:30, namiltd@poczta.onet.pl pisze:
+>> ---
+>> src/crypto/zinc/blake2s/blake2s.c | 17 +++++++++++++++++
+>> src/socket.c                      |  7 +++++++
+>> 2 files changed, 24 insertions(+)
+>> ....
+>>        .ipv6_v6only = true
 >
-> +#if GCC_VERSION > 40407
-> typedef union {
->     struct {
-> +#else
-> +typedef struct {
-> +#endif
->         u8 digest_length;
->         u8 key_length;
->         u8 fanout;
-> @@ -33,8 +40,10 @@ typedef union {
->         u8 inner_length;
->         u8 salt[8];
->         u8 personal[8];
-> +#if GCC_VERSION > 40407
->     };
->     __le32 words[8];
-> +#endif
-> } __packed blake2s_param;
 >
-> static const u32 blake2s_iv[8] = {
-> @@ -74,9 +83,17 @@ static inline void blake2s_init_param(struct
-> blake2s_state *state,
-> {
->     int i;
->
-> +#if GCC_VERSION <= 40407
-> +    const __le32 *words;
-> +    words = (const __le32 *)param;
-> +#endif
->     memset(state, 0, sizeof(*state));
->     for (i = 0; i < 8; ++i)
-> +#if GCC_VERSION > 40407
->         state->h[i] = blake2s_iv[i] ^ le32_to_cpu(param->words[i]);
-> +#else
-> +        state->h[i] = blake2s_iv[i] ^ le32_to_cpu(words[i]);
-> +#endif
-> }
->
-> void blake2s_init(struct blake2s_state *state, const size_t outlen)
-> diff --git a/src/socket.c b/src/socket.c
-> index 652d798..dfc98d3 100644
-> --- a/src/socket.c
-> +++ b/src/socket.c
-> @@ -16,6 +16,9 @@
-> #include <linux/inetdevice.h>
-> #include <net/udp_tunnel.h>
-> #include <net/ipv6.h>
-> +#define GCC_VERSION (__GNUC__ * 10000 \
-> +            + __GNUC_MINOR__ * 100 \
-> +            + __GNUC_PATCHLEVEL__)
->
-> static int send4(struct wg_device *wg, struct sk_buff *skb,
->          struct endpoint *endpoint, u8 ds, struct dst_cache *cache)
-> @@ -363,7 +366,9 @@ int wg_socket_init(struct wg_device *wg, u16 port)
->     struct socket *new4 = NULL, *new6 = NULL;
->     struct udp_port_cfg port4 = {
->         .family = AF_INET,
-> +#if GCC_VERSION > 40407
->         .local_ip.s_addr = htonl(INADDR_ANY),
-> +#endif
->         .local_udp_port = htons(port),
->         .use_udp_checksums = true
->     };
-> @@ -371,7 +376,9 @@ int wg_socket_init(struct wg_device *wg, u16 port)
->     int retries = 0;
->     struct udp_port_cfg port6 = {
->         .family = AF_INET6,
-> +#if GCC_VERSION > 40407
->         .local_ip6 = IN6ADDR_ANY_INIT,
-> +#endif
->         .use_udp6_tx_checksums = true,
->         .use_udp6_rx_checksums = true,
->         .ipv6_v6only = true
 
 
-
---------------3FB4340561AA034DDFAC4FF8
+--------------139275C65C9E9C69C79968C0
 Content-Type: text/html; charset=iso-8859-2
 Content-Transfer-Encoding: 8bit
 
@@ -233,204 +152,99 @@ Content-Transfer-Encoding: 8bit
       charset=ISO-8859-2">
   </head>
   <body text="#000000" bgcolor="#FFFFFF">
-    <div class="moz-cite-prefix"><span class="tlid-translation
-        translation" lang="en"><span title="" class="">Is there any
-          chance to add this code?</span></span></div>
-    <div class="moz-cite-prefix"><span class="tlid-translation
-        translation" lang="en"><span title="" class=""><br>
-        </span></span></div>
-    <div class="moz-cite-prefix">W dniu 2019-03-03 o 14:30,
-      <a class="moz-txt-link-abbreviated" href="mailto:namiltd@poczta.onet.pl">namiltd@poczta.onet.pl</a> pisze:<br>
+    <div class="moz-cite-prefix">New, improved version of patch for
+      WireGuard Centos6 compatibility.<br>
+    </div>
+    <div class="moz-cite-prefix"><br>
+    </div>
+    <div class="moz-cite-prefix">W dniu 2019-03-27 o 15:48, Mieczys³aw
+      Nalewaj pisze:<br>
     </div>
     <blockquote type="cite"
-      cite="mid:dd1d1bde-dd6b-6f36-e08f-3552ee0686a2@poczta.onet.pl">---
-      <br>
-      src/crypto/zinc/blake2s/blake2s.c | 17 +++++++++++++++++
-      <br>
-      src/socket.c                      |  7 +++++++
-      <br>
-      2 files changed, 24 insertions(+)
-      <br>
-      <br>
-      diff --git a/src/crypto/zinc/blake2s/blake2s.c
-      b/src/crypto/zinc/blake2s/blake2s.c
-      <br>
-      index b881db0..60b7763 100644
-      <br>
-      --- a/src/crypto/zinc/blake2s/blake2s.c
-      <br>
-      +++ b/src/crypto/zinc/blake2s/blake2s.c
-      <br>
-      @@ -19,9 +19,16 @@
-      <br>
-      #include &lt;linux/init.h&gt;
-      <br>
-      #include &lt;linux/bug.h&gt;
-      <br>
-      #include &lt;asm/unaligned.h&gt;
-      <br>
-      +#define GCC_VERSION (__GNUC__ * 10000 \
-      <br>
-      +            + __GNUC_MINOR__ * 100 \
-      <br>
-      +            + __GNUC_PATCHLEVEL__)
-      <br>
-      <br>
-      +#if GCC_VERSION &gt; 40407
-      <br>
-      typedef union {
-      <br>
-          struct {
-      <br>
-      +#else
-      <br>
-      +typedef struct {
-      <br>
-      +#endif
-      <br>
-              u8 digest_length;
-      <br>
-              u8 key_length;
-      <br>
-              u8 fanout;
-      <br>
-      @@ -33,8 +40,10 @@ typedef union {
-      <br>
-              u8 inner_length;
-      <br>
-              u8 salt[8];
-      <br>
-              u8 personal[8];
-      <br>
-      +#if GCC_VERSION &gt; 40407
-      <br>
-          };
-      <br>
-          __le32 words[8];
-      <br>
-      +#endif
-      <br>
-      } __packed blake2s_param;
-      <br>
-      <br>
-      static const u32 blake2s_iv[8] = {
-      <br>
-      @@ -74,9 +83,17 @@ static inline void blake2s_init_param(struct
-      blake2s_state *state,
-      <br>
-      {
-      <br>
-          int i;
-      <br>
-      <br>
-      +#if GCC_VERSION &lt;= 40407
-      <br>
-      +    const __le32 *words;
-      <br>
-      +    words = (const __le32 *)param;
-      <br>
-      +#endif
-      <br>
-          memset(state, 0, sizeof(*state));
-      <br>
-          for (i = 0; i &lt; 8; ++i)
-      <br>
-      +#if GCC_VERSION &gt; 40407
-      <br>
-              state-&gt;h[i] = blake2s_iv[i] ^
-      le32_to_cpu(param-&gt;words[i]);
-      <br>
-      +#else
-      <br>
-      +        state-&gt;h[i] = blake2s_iv[i] ^ le32_to_cpu(words[i]);
-      <br>
-      +#endif
-      <br>
-      }
-      <br>
-      <br>
-      void blake2s_init(struct blake2s_state *state, const size_t
-      outlen)
-      <br>
-      diff --git a/src/socket.c b/src/socket.c
-      <br>
-      index 652d798..dfc98d3 100644
-      <br>
-      --- a/src/socket.c
-      <br>
-      +++ b/src/socket.c
-      <br>
-      @@ -16,6 +16,9 @@
-      <br>
-      #include &lt;linux/inetdevice.h&gt;
-      <br>
-      #include &lt;net/udp_tunnel.h&gt;
-      <br>
-      #include &lt;net/ipv6.h&gt;
-      <br>
-      +#define GCC_VERSION (__GNUC__ * 10000 \
-      <br>
-      +            + __GNUC_MINOR__ * 100 \
-      <br>
-      +            + __GNUC_PATCHLEVEL__)
-      <br>
-      <br>
-      static int send4(struct wg_device *wg, struct sk_buff *skb,
-      <br>
-               struct endpoint *endpoint, u8 ds, struct dst_cache
-      *cache)
-      <br>
-      @@ -363,7 +366,9 @@ int wg_socket_init(struct wg_device *wg, u16
-      port)
-      <br>
-          struct socket *new4 = NULL, *new6 = NULL;
-      <br>
-          struct udp_port_cfg port4 = {
-      <br>
-              .family = AF_INET,
-      <br>
-      +#if GCC_VERSION &gt; 40407
-      <br>
-              .local_ip.s_addr = htonl(INADDR_ANY),
-      <br>
-      +#endif
-      <br>
-              .local_udp_port = htons(port),
-      <br>
-              .use_udp_checksums = true
-      <br>
-          };
-      <br>
-      @@ -371,7 +376,9 @@ int wg_socket_init(struct wg_device *wg, u16
-      port)
-      <br>
-          int retries = 0;
-      <br>
-          struct udp_port_cfg port6 = {
-      <br>
-              .family = AF_INET6,
-      <br>
-      +#if GCC_VERSION &gt; 40407
-      <br>
-              .local_ip6 = IN6ADDR_ANY_INIT,
-      <br>
-      +#endif
-      <br>
-              .use_udp6_tx_checksums = true,
-      <br>
-              .use_udp6_rx_checksums = true,
-      <br>
-              .ipv6_v6only = true
-      <br>
+      cite="mid:c3e6e9e7-40c6-def5-df0c-cc9fc0740301@poczta.onet.pl">
+      <meta http-equiv="Content-Type" content="text/html;
+        charset=ISO-8859-2">
+      <div class="moz-cite-prefix"><span class="tlid-translation
+          translation" lang="en"><span title="" class="">Is there any
+            chance to add this code?</span></span></div>
+      <div class="moz-cite-prefix"><span class="tlid-translation
+          translation" lang="en"><span title="" class=""><br>
+          </span></span></div>
+      <div class="moz-cite-prefix">W dniu 2019-03-03 o 14:30, <a
+          class="moz-txt-link-abbreviated"
+          href="mailto:namiltd@poczta.onet.pl" moz-do-not-send="true">namiltd@poczta.onet.pl</a>
+        pisze:<br>
+      </div>
+      <blockquote type="cite"
+        cite="mid:dd1d1bde-dd6b-6f36-e08f-3552ee0686a2@poczta.onet.pl">---
+        <br>
+        src/crypto/zinc/blake2s/blake2s.c | 17 +++++++++++++++++ <br>
+        src/socket.c                      |  7 +++++++ <br>
+        2 files changed, 24 insertions(+) <br>
+        ....</blockquote>
+    </blockquote>
+    <blockquote type="cite"
+      cite="mid:c3e6e9e7-40c6-def5-df0c-cc9fc0740301@poczta.onet.pl">
+      <blockquote type="cite"
+        cite="mid:dd1d1bde-dd6b-6f36-e08f-3552ee0686a2@poczta.onet.pl">
+               .ipv6_v6only = true <br>
+      </blockquote>
+      <p><br>
+      </p>
     </blockquote>
     <p><br>
     </p>
   </body>
 </html>
 
---------------3FB4340561AA034DDFAC4FF8--
+--------------139275C65C9E9C69C79968C0--
 
---===============4977039806574447318==
+--------------B7D3787D915951597EFCB7DE
+Content-Type: text/plain; charset=UTF-8;
+ name="wireguard.diff"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename="wireguard.diff"
+
+diff -ruN master/src/socket.c master-centos6/src/socket.c
+--- master/src/socket.c	2019-03-29 15:10:20.000000000 +0100
++++ master-centos6/src/socket.c	2019-03-29 15:10:31.000000000 +0100
+@@ -16,6 +16,9 @@
+ #include <linux/inetdevice.h>
+ #include <net/udp_tunnel.h>
+ #include <net/ipv6.h>
++#define GCC_VERSION (__GNUC__ * 10000 \
++		    + __GNUC_MINOR__ * 100 \
++		    + __GNUC_PATCHLEVEL__)
+ 
+ static int send4(struct wg_device *wg, struct sk_buff *skb,
+ 		 struct endpoint *endpoint, u8 ds, struct dst_cache *cache)
+@@ -363,7 +366,11 @@
+ 	struct socket *new4 = NULL, *new6 = NULL;
+ 	struct udp_port_cfg port4 = {
+ 		.family = AF_INET,
++#if GCC_VERSION == 40407
++		{.local_ip.s_addr = htonl(INADDR_ANY)},
++#else
+ 		.local_ip.s_addr = htonl(INADDR_ANY),
++#endif
+ 		.local_udp_port = htons(port),
+ 		.use_udp_checksums = true
+ 	};
+@@ -371,7 +378,11 @@
+ 	int retries = 0;
+ 	struct udp_port_cfg port6 = {
+ 		.family = AF_INET6,
++#if GCC_VERSION == 40407
++		{.local_ip6 = IN6ADDR_ANY_INIT},
++#else
+ 		.local_ip6 = IN6ADDR_ANY_INIT,
++#endif
+ 		.use_udp6_tx_checksums = true,
+ 		.use_udp6_rx_checksums = true,
+ 		.ipv6_v6only = true
+
+--------------B7D3787D915951597EFCB7DE
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -441,4 +255,4 @@ WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---===============4977039806574447318==--
+--------------B7D3787D915951597EFCB7DE--
