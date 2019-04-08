@@ -1,70 +1,67 @@
-Return-Path: <SRS0=0s16=S3=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=zOjE=TG=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_PASS,
+	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08FCBC43218
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 25 Apr 2019 19:16:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7648EC04A6B
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  6 May 2019 20:28:39 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id A4BBC206BA
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 25 Apr 2019 19:16:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id BAB3120830
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  6 May 2019 20:28:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="IInc3NKc"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A4BBC206BA
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lj+TE8tj"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org BAB3120830
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5dfeb069;
-	Thu, 25 Apr 2019 19:16:04 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 98553544;
+	Mon, 6 May 2019 20:28:37 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7ccd309e
- for <wireguard@lists.zx2c4.com>;
- Thu, 25 Apr 2019 19:16:02 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 723892f3
- for <wireguard@lists.zx2c4.com>;
- Thu, 25 Apr 2019 19:16:02 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ea9ab9d8
- for <wireguard@lists.zx2c4.com>;
- Thu, 25 Apr 2019 18:49:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type:content-transfer-encoding; s=mail; bh=Ne2aHS23wxeI
- bLlOQ+sDPBg9Nlk=; b=IInc3NKcoFhZ1JuYGVPlqW9s1hdgzNOWNIlJ5CwCoUH0
- iXs3CNIFfbPjvCsCtOkbE6WGl8qP6DX56RQVkZMFjOz+bxSQHz5GNgjc8i4UfpDq
- 95p9e3OXNZwqbqhDgQj42jTZTbzhCjfeWBiFNKAXWf6rQpqAmHCG/huVgl6/Cbfr
- cx7+7Pf8JAUjJZY2vzOnW+sARSJaG/zla0jgj73CsOG9+3qdHO1dN6KQdpIejG52
- t9idnrv2NVDDNhOBpPAfGXRv6dTADKIAm75XIJv27n/2M14F86z1PDC5awkMYpeL
- izfge+kVBUyv7tZocaFSind/b88JqRiHFh0qHBuqjQ==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id d3308fd3
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Thu, 25 Apr 2019 18:49:53 +0000 (UTC)
-Received: by mail-ot1-f46.google.com with SMTP id u17so553558otj.1
- for <wireguard@lists.zx2c4.com>; Thu, 25 Apr 2019 12:16:01 -0700 (PDT)
-X-Gm-Message-State: APjAAAW62IbnKWJRS7b29+JcQibsBeUcqRysEp1Rbmu7DsHdvQMt9Ag/
- +1skmllKT1P0NPCRuo4tQ7IYUUXLanDuJ1eufic=
-X-Google-Smtp-Source: APXvYqwEKXLjvNf73tXWCn4fE15N1ZBemmNWJYpM7tGCaX9VIVYPMvS5krwWO10UDpEZ32rPbEgxlDSOsSS8b+phpeQ=
-X-Received: by 2002:a9d:7d0e:: with SMTP id v14mr25773387otn.225.1556219760383; 
- Thu, 25 Apr 2019 12:16:00 -0700 (PDT)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4726bfb3
+ for <wireguard@lists.zx2c4.com>; Mon, 8 Apr 2019 12:30:35 +0000 (UTC)
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com
+ [IPv6:2a00:1450:4864:20::134])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bfe432e1
+ for <wireguard@lists.zx2c4.com>; Mon, 8 Apr 2019 12:30:35 +0000 (UTC)
+Received: by mail-lf1-x134.google.com with SMTP id a28so9327633lfo.7
+ for <wireguard@lists.zx2c4.com>; Mon, 08 Apr 2019 05:33:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=rhI0sN3trUF0MW7b6zRrfBBsYrcoawTw0Hp1lsN7T/M=;
+ b=Lj+TE8tj8kyr5+MO85grVfHwO8JdkniUtaacoFb1O4Hw+GYezb0meR7ZkFgz7oYxAL
+ 87Ks/TKQ5AOhIPi40r67NSwGKO8EpkTt2N2H9PO8bLmBj093p7kSV7Em11PffguFhiGx
+ nSiOuiLD/rVEzY65YDv1l1ckneHJaNbbB4sI0sY8RsIwldUyIKGhKDIS52uGrOIbbznv
+ /2Mqj/wT4n8qtAptRuCtuZaFFxD6yYeHj4CV5b3NmWkkEzflEeBWLlZTBOQCYdfZwCY3
+ oN9NxIybBpJQYXcSNn2etBoLAfzjtFLRfYgym3DizhMfEQGIxJyoXgg0eNfEriiriWUy
+ FSYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=rhI0sN3trUF0MW7b6zRrfBBsYrcoawTw0Hp1lsN7T/M=;
+ b=Ud54uOK4kCFOuNxBr3y0OOMX1MP9yCpXfwnfaMNt+fPmihMM9kEBQa4lJ6qfV4QS2P
+ OeF6TDMWhh3PTEn+3ukninz/1QhhWkZXkht+AI+zOsFonjG6MEAffwqNnoN57B6rzOs7
+ E/tu+uucT7+OaWIlTx6cwE3aTe3IBXoFtYtxc5mvR9lqFJm0oRXNFyzXDtNDxa6i2LQY
+ s3FTITy5nzxunotb5jsDOWP8MXDN5SePxlagChftGsSkuuFoTykvIgx7lznoOxTmmLpL
+ HIaoBTvQoahIxTRnpcChfeRiOaLG9ScvASqsPG4qCY3JKRgNdL+rYlTcVHGiAfHmbN1o
+ NabQ==
+X-Gm-Message-State: APjAAAWEZ6qNVE7D5bYPVMtC+WxGlYAbW30M/y8WU8wM5nkFAIdqcweP
+ buKe9ly2dYMvFX55nWNaA3xTzqTK0EfnW7YZDTHTH1wI
+X-Google-Smtp-Source: APXvYqwTz8b76Mjjp1jHHz8yjMG5euje7vhTxW6e36V/YtcD6WLNC1BrNeX+7I9YWBJOkUPC8h93SKgPyX2DNWEUIEg=
+X-Received: by 2002:a19:f010:: with SMTP id p16mr8034984lfc.43.1554726796551; 
+ Mon, 08 Apr 2019 05:33:16 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAHwDNp2KzB7ivO7Y770kRgq60SPsxOjVhVdGtbEVjz0jsy23jg@mail.gmail.com>
- <CAHwDNp3k2pDb-x-Q4yJgHwsJGwVZ3YsO9Y18rhM1FOzGDh+Q-g@mail.gmail.com>
-In-Reply-To: <CAHwDNp3k2pDb-x-Q4yJgHwsJGwVZ3YsO9Y18rhM1FOzGDh+Q-g@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 25 Apr 2019 21:15:49 +0200
-X-Gmail-Original-Message-ID: <CAHmME9qWzM=qWMKSgD2_SwkiHUj4VubPDjyKyDYmSVa2=rjmKQ@mail.gmail.com>
-Message-ID: <CAHmME9qWzM=qWMKSgD2_SwkiHUj4VubPDjyKyDYmSVa2=rjmKQ@mail.gmail.com>
-Subject: Re: Table=off behavior (not adding any route *at all*)
-To: Alex Davies <alex@davz.net>, Bernhard Froehlich <decke@freebsd.org>
-Cc: Alex Davies <adavies@jumptrading.com>, ad@opnsense.org,
- WireGuard mailing list <wireguard@lists.zx2c4.com>,
- Simon Stace <sstace@jumptrading.com>
+From: Denis Kolegov <d.n.kolegov@gmail.com>
+Date: Mon, 8 Apr 2019 19:33:25 +0700
+Message-ID: <CACoviyOw7FPD1eNkYv=C7LhpOk43F67MgcLKLyy7cSdUCHPESQ@mail.gmail.com>
+Subject: WireGuard private key renewal
+To: wireguard@lists.zx2c4.com
+X-Mailman-Approved-At: Mon, 06 May 2019 22:28:35 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -76,110 +73,47 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="===============2739564015423904176=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Alex,
+--===============2739564015423904176==
+Content-Type: multipart/alternative; boundary="0000000000006e6b760586040a47"
 
-On Thu, Apr 25, 2019 at 2:01 PM Alex Davies <alex@davz.net> wrote:
->
-> Hi,
->
-> We have been trying to use WireGuard on FreeBSD (we are using the WG plugin inside the open source opnsense.org software). These run FreeBSD 11.2-RELEASE-p9-HBSD (OPNsense 19.7.a_288-amd64).
->
-> We noticed that by default (i.e. no Table=) wireguard-go wg0 adds default routes (as two /31's) as expected. However, if table=off, we get no route at all - not even to the VPN peer.
->
-> The announcement for the Table= option[1] stated:
->
->   In collaboration with Luis Ressel, wg-quick(8) grew an option! We generally
->   do not like to add things to wg-quick or allow feature-creep, but this was
->   basic enough and mostly involves disabling functionality. Specifically,
->   wg-quick now accepts a Table= parameter with these semantics:
->
->     ~ Table=auto (default) selects the current behaviour
->     ~ Table=off disables creation of routes from allowed ips altogether
->     ~ All other values are passed through to "ip route add"'s table option
->
->   This should enable people to do basic policy routing. It also matches the
->   functionality provided by LEDE/OpenWRT's uci config as well as NixOS's
->   networking configuration.
->
-> Ignoring the "creation of routes from allowed ips", it does not even add the subnet defined in [Interface]. netstat -r | grep wg returns nothing.
->
-> As a concrete example, if I take the trivial config at https://wiki.archlinux.org/index.php/WireGuard:
->
-> [Interface]
-> Address = 10.200.200.2/24
-> PrivateKey = [FOO's PRIVATE KEY]
-> DNS = 10.200.200.1
->
-> [Peer]
-> PublicKey = [SERVER PUBLICKEY]
-> PresharedKey = [PRE-SHARED KEY]
-> AllowedIPs = 0.0.0.0/0, ::/0
-> Endpoint = my.ddns.address.com:51820
->
-> I would (naively) expect this:
-> Table=auto: inject route for 10.200.200.2/24 *and* 0.0.0.0/0 via wg0
-> Table=off: inject route for 10.200.200.2/24 *only* via wg0
->
-> What actually happens is:
-> Table=auto: as above/expected
-> Table=off: no route out wg0
->
-> This mean with Table=off, you are in the extremely confusing situation that you cant even ping the other peer.
->
-> Testing on Linux (Kernel 4.15.0-1032-aws inside a 18.04 AMI (public AMI - ami-07dc734dc14746eab)) shows that the behavior is different - its as I expect for both Table values. With this wg0.conf:
->
-> root@ip-172-31-39-185:~# cat /etc/wireguard/wg0.conf
-> [Interface]
-> Address = 192.168.2.1/24
-> PrivateKey = eEIwdXp8jKV9/2MEwxYBqQLu4TZqBv9YWvG9fbMuaG4=
-> Table = off
->
-> [Peer]
-> PublicKey = pHQfWzLAUM85vDO6+MZAneBYhapOHUkPAuxr0lJdZlY=
-> AllowedIPs = 0.0.0.0/0
-> Endpoint = 18.130.138.71:51820
->
-> I get this route:
->
-> root@ip-172-31-39-185:~# ip route show | grep wg0
-> 192.168.2.0/24 dev wg0 proto kernel scope link src 192.168.2.1
->
-> Note the /24 route (as expected). With Table undefined or set to auto, I get the 0.0.0.0 route (also as expected).
->
-> I dont know much about FreeBSD, but I launched a test EC2 instance (FreeBSD 12.0-RELEASE based on public ami-0d244633039d93966 with kernel reported as 12.0-RELEASE-p3) and I think I see the same thing (i.e. no /24 route):
->
-> root@freebsd:/etc/wireguard # netstat -rn | grep wg0
-> 192.168.2.5        link#3             UH          wg0
-> fe80::%wg0/64                     link#3                        U           wg0
-> fe80::1427:e888:767c:dce1%wg0     link#3                        UHS         lo0
-> root@freebsd:/etc/wireguard # ping 192.168.2.5
->
-> Somebody more expert than me can comment on whether this is expected or not. At the very least, hopefully this post is useful for somebody else.  For our specific problem, we have fixed this by putting a static route in for the "Address" subnet across wg0.
->
-> -Alex
->
-> [1] https://lists.zx2c4.com/pipermail/wireguard/2017-December/002231.html
+--0000000000006e6b760586040a47
+Content-Type: text/plain; charset="UTF-8"
 
-Sounds like a FreeBSD bug. I've CC'd the maintainer there. We're
-adding the IP address with the subnet, via:
+Hello All.
 
-ifconfig "$INTERFACE" inet "$1" "${1%%/*}" alias
+What is a suggested way to update a WireGuard private key without packet
+loss?
+There is no packet loss during session key rotation, but is it possible to
+update private key (received via oob channel) using existing mechanism?
 
-In your case, this expands to something like,
+Thanks.
 
-ifconfig wg0 inet 192.168.2.5/24 192.168.2.5 alias
+--0000000000006e6b760586040a47
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Bernard - is there a FreeBSD reason why this wouldn't add the
-automatic subnet route? Also, rather than using ${1%%/*}, is there a
-way for us to just specify the interface directly?
+<div dir=3D"auto"><div dir=3D"ltr">Hello All.<div><br></div><div>What is a =
+suggested way to update a WireGuard private key without packet loss?</div><=
+div dir=3D"auto">There is no packet loss during session key rotation, but i=
+s it possible to update private key (received via oob channel) using existi=
+ng mechanism?</div><div dir=3D"auto"><br></div><div dir=3D"auto">Thanks.</d=
+iv></div></div>
 
-Jason
+--0000000000006e6b760586040a47--
+
+--===============2739564015423904176==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--===============2739564015423904176==--
