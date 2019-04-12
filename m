@@ -2,68 +2,71 @@ Return-Path: <SRS0=rxz1=SO=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
-	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED3B9C10F0E
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 12 Apr 2019 10:18:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 442FAC10F0E
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 12 Apr 2019 17:00:20 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 43D7F2083E
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 12 Apr 2019 10:18:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 830E52082E
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 12 Apr 2019 17:00:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KOCYBA2/"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 43D7F2083E
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="V/WVxkAQ"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 830E52082E
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=gmx.net
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 86ad8bb0;
-	Fri, 12 Apr 2019 10:18:03 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9c56a7b0;
+	Fri, 12 Apr 2019 17:00:02 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id be8dc992
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 16524725
  for <wireguard@lists.zx2c4.com>;
- Fri, 12 Apr 2019 10:18:01 +0000 (UTC)
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com
- [IPv6:2607:f8b0:4864:20::629])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d6b0bfaa
+ Fri, 12 Apr 2019 17:00:00 +0000 (UTC)
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d410754d
  for <wireguard@lists.zx2c4.com>;
- Fri, 12 Apr 2019 10:18:01 +0000 (UTC)
-Received: by mail-pl1-x629.google.com with SMTP id t16so4924854plo.0
- for <wireguard@lists.zx2c4.com>; Fri, 12 Apr 2019 03:18:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=xsd3vSFh5NyDEzrnOzYmSsZYf4Jn66z1+Q9vCY/RjuM=;
- b=KOCYBA2/hj0CGhCKwh9ReyY3z6uFuRWp8McXFbT/W4e20kh6+D++SkUhejnU6Et7JN
- v4oStwOU5L9FjAGjH8CFXmVzaS8jiPRMI2uIS6AFDnXUDAz2tTBL0FMZhunhayLD0Pp1
- eYQ9onpxhtFf9q2mBRgngp5fNL6NmahXILKLClvmhF2WEBdqYk4q7HYLroEaonOz0v/q
- Tm067Fxskr+JzCBavHM1/bzJQGE33oQURODU6hT7FXO+RXUtuft7sGJMgsRtVWK0oYs3
- sdbi9uuaA/xJosvwKC/RRkL2l+W0++m+9+cwJc/7Ga5TSo+ta9EAgLEf7mFGwJsChxwz
- 21Pg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=xsd3vSFh5NyDEzrnOzYmSsZYf4Jn66z1+Q9vCY/RjuM=;
- b=sAN0hGmyHtQO11f4OEOtIjKrMVTlenk32EObtQEGu462RXt1YjLSFOGRa/7f3nEewx
- FJ+Rjh1aANRui/E3nQMG4K0v+pn+vcuzPeaDfEPuQM3o7UdUf8b8Tk25BUyTf8lg8N+7
- NUXTq3D1kVbuGfPOFi3sq5cOlYkvgzT4oVl4EdWMuLIEjh/YfKN7XfNsWz5IQkXoexri
- ndIc/6ixn1zYiUXv6Pb+MiwUhufsi0iQBEIChh0j72HxVcB7wK3w4POATYYlOi/Xi1vr
- D2lImsPiSzrBLFDSbxTFwgKx6okiTItiynRQECltY7gLC9u54nhj+0uwMURugXukGbmi
- nHFA==
-X-Gm-Message-State: APjAAAX48VzA8YRxiNlVeT0IwSV2d6Vo8bx83Dv3nU8S7+s2Je3EDBdE
- NEcfilAvkxNLpidLSys2dW6GB2BQ61PtGJY814I=
-X-Google-Smtp-Source: APXvYqzMOmGqLdnHH2t7ePEwdO4XR2PuCFrWi2az2w+SMU6w7rtfbN9e1f9rH9KMyu8qGDOQtG+0RdxL8eoupMWgj0w=
-X-Received: by 2002:a17:902:d83:: with SMTP id
- 3mr32125740plv.125.1555064280556; 
- Fri, 12 Apr 2019 03:18:00 -0700 (PDT)
-MIME-Version: 1.0
-From: Feng Li <lifeng1519@gmail.com>
-Date: Fri, 12 Apr 2019 18:17:34 +0800
-Message-ID: <CAEK8JBC_xtDeKo-tswwU+cXBvCdUmWZPYrcrV_Az6NcJZ3Rf6g@mail.gmail.com>
-Subject: ipset-dns combined with wg-quick
-To: Jason@zx2c4.com, wireguard@lists.zx2c4.com
+ Fri, 12 Apr 2019 17:00:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+ s=badeba3b8450; t=1555088398;
+ bh=AaY7R4P/caiGHpiG4cksEJPRJVxf/deWIIlj6ndVQAI=;
+ h=X-UI-Sender-Class:From:Date:Subject:To;
+ b=V/WVxkAQQ7L9S8ie5kXrHuOv0HOQ3CGl/5EOKM7DsFcV/DANflpLA7S99ciZ71mJa
+ nmFNrfRkWs9jdAK5cwiVLodLjJqiLsPwCI7RaFLOTOcZc4kjj+gCy5MDDUGrBFGZbV
+ vBAyEFcTjUcaQoEE4Qhmnxd0l5sfQ0/HloFXLqj4=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [10.0.0.20] ([62.47.183.173]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MEsXW-1h4bXo3H0E-00G0fN; Fri, 12
+ Apr 2019 18:59:58 +0200
+From: Robert Walli <rwalli@gmx.net>
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.8\))
+Date: Fri, 12 Apr 2019 18:59:56 +0200
+Subject: compile error on WireGuard Kernel/ROM Integration
+Message-Id: <068214E5-B780-4A6C-AE79-BD772177EBCB@gmx.net>
+To: wireguard@lists.zx2c4.com
+X-Mailer: Apple Mail (2.3445.104.8)
+X-Provags-ID: V03:K1:oxNeCyG7qTWdwF32Bt28SHZIBbVPC//7yfoscyx4ZewR/FjSyEi
+ Rai3HS4LCnly9JtScE/l/j1+WilJlGF1cyVP8BjihvbNMxlpWpCDp7jsVIHP+AOp48Q2SOZ
+ aToi5rh63cIS/hewo+rEGw5YY2Ak8egVu9cleJlFAikUYiLbnIwPjyZFoyhNFdESEvQpVlP
+ zsJ8ap6xPVuBR9Ew9Ch3A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:FWFSpTX1PMw=:33+4Ol9FYYkBafWmStv7tF
+ O4jlrXnVr5z/mzYSNmVJ3p0kWXxa+6rRwM1o03lRwJt1LCC5t9elh8Nh5iRhm6go1dftcvEG2
+ vuAW1C00woMaS4sWyvbZ8/+ClDMdTTiR7lRyPV/UbJnsovFLudihy+r/M4/YcUG34W96oL0b2
+ pr8Hg1+DXo3lfDn9WLmPEmj8gm+BzwWlE6Ybko+hhFfHjt8dYAXN5RLuUuityM7Jb36gTPjgc
+ ktwDuvlH5npiY2JZbFQ9fiX9aitoSQoWKOzLyY/YN5V3g6egb0tJW60kjArGFvivDWmyadPzs
+ 6cWCYu3giddNJcnmyrhQRBNYv8z/mR2nmXOoWJ1Dv4S58428hz3yWkGzCVR9nk1VotIx9UFmk
+ K+hkgGFYg8oXP/8cUkB3QxshtbbEoGnkT1ucB9VKpC3FGJuNDxkX0Qb7KI2OyCVi+Xg7Qj3h/
+ PaalgN3oPOd66IrDnu02JkF/P+jzWaEGHTmu7lIfa//zQry1eScCoLG6v7Hy5b5KuFjbIueQ8
+ PMhY4orCWeCrrrXdAPX1C3rjK99gK0/CFRb1gFgkqXYegzYBf/pBnegQA+BpB37aWXVrMCcKs
+ MX575ZBxDmfFQmbrj1EIm8YnFp30RHqlIxwqUbgPma8g/+jHrkgS9KusJjgJi+c16/gpkaaS0
+ XUnOauMdxHOo0ceOHqai7e3iYmen0TKVaE5lPlHZjCXxDoSMc1LKczx0hDaVdUoerZIVsVW4i
+ fKRHdNHEFAbmxIKgDAIFktMAlbVbeJJPz/fKDkikU343RYURlapGd/JB5Ofv0f2DpnESDs/+w
+ UeFunaAAyDgMa6r5B/F+9tCxN6ZPif+eeuTRTLXceMMXLk6Fn8mYEjKmJDb+ROfXppqq8Y5g6
+ uqxOsdhYHDYzFJqL96q323TtMar/3rB0vqHADIg23N409b4KjNnSbeHOCiYuLyrzCjx28zPfC
+ 1TuOhAGS7uQ==
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -80,63 +83,19 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello Jason,
+Hello!
 
-I have tried `wg-quick`, it works well but it will pass through all
-traffic to the peer.
-And I found you have created a small project called "ipset-dns"[1],
-which is good for routing traffics by domains.
+I got an error compiling wireguard for android 9 kernel 3.10.108 for trlte:
+---
+net/wireguard/compat/udp_tunnel/udp_tunnel.c:87:26: warning: assignment from incompatible pointer type
+error, forbidden warning: udp_tunnel.c:87
+---
+tried with rom- and kernel integration as described on: https://forum.xda-developers.com/android/development/wireguard-rom-integration-t3711635
+with LineageOS and Resurrection Remix OS.
 
-However, if I combined it with `wg-quick`, it will not work.
-The network will connect timeout. And I found the ipset-dns did works well.
-So I guess the question is the route table related.
-But I'm not familiar with it.
+any suggestions how to solve this problem?
 
-The ultimate aim is like this:
-If I want to route google.com/twitter.com/facebook.com to the peer,
-just add the domains in the dnsmasq.conf.
-
-The related command looks like this, the marks and route table maybe
-have some conflicts.
-```
-+ sets youtube 1
-+ iptables -t mangle -D PREROUTING -m set --set youtube dst,src -j
-MARK --set-mark 1
-+ ipset -X youtube
-+ ipset -N youtube iphash
-+ iptables -t mangle -A PREROUTING -m set --set youtube dst,src -j
-MARK --set-mark 1
---set option deprecated, please use --match-set
-+ routes 1 wg0
-+ echo 0
-+ ip route flush table 1
-+ ip rule del table 1
-+ ip rule add fwmark 1 table 1 priority 1000
-+ ip route add default via 10.0.0.2 table 1
-+ killall ipset-dns
-+ ipset-dns youtube '' 1919 8.8.8.8
-+ killall -SIGHUP dnsmasq
-
-
-[#] ip link add wg0 type wireguard
-[#] wg setconf wg0 /dev/fd/63
-[#] ip address add 10.0.0.4/24 dev wg0
-[#] ip link set mtu 1420 up dev wg0
-[#] mount `8.8.8.8' /etc/resolv.conf
-[#] wg set wg0 fwmark 51820
-[#] ip -4 route add 0.0.0.0/0 dev wg0 table 51820
-[#] ip -4 rule add not fwmark 51820 table 51820
-[#] ip -4 rule add table main suppress_prefixlength 0
-[#] iptables -A FORWARD -i eth0 -j ACCEPT; iptables -A FORWARD -o eth0
--j ACCEPT;iptables -t nat -A POSTROUTING -o wg0 -j MASQUERADE
-```
-Could you give me some helps?
-Thanks.
-
-[1]: https://git.zx2c4.com/ipset-dns/tree/README.md
--- 
-Thanks and Best Regards,
-Feng Li(Alex)
+Robert
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
