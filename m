@@ -1,75 +1,69 @@
-Return-Path: <SRS0=IIoP=SP=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=/lAp=SQ=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51635C10F11
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 13 Apr 2019 07:14:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03BD8C10F13
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 14 Apr 2019 08:54:58 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 8D30420869
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 13 Apr 2019 07:14:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 2CC2F206B6
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 14 Apr 2019 08:54:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="kN0qRpZl"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 8D30420869
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=gmx.net
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="QSsFwd1y"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 2CC2F206B6
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a3573a25;
-	Sat, 13 Apr 2019 07:14:43 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7329d580;
+	Sun, 14 Apr 2019 08:54:55 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c3ece3b0
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c175751c
  for <wireguard@lists.zx2c4.com>;
- Sat, 13 Apr 2019 07:14:41 +0000 (UTC)
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 68f3f049
+ Sun, 14 Apr 2019 08:54:53 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ef119fd3
  for <wireguard@lists.zx2c4.com>;
- Sat, 13 Apr 2019 07:14:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1555139678;
- bh=5un5ZtP2GzEXSAR34gAM+6JZdnXSdlK9/CnvjpFJFn4=;
- h=X-UI-Sender-Class:Subject:From:In-Reply-To:Date:Cc:References:To;
- b=kN0qRpZlpo/NRk9PMoBSFa8X5kP0Mh7IBf9HGrTJA/PkKKgmBjP5ts0iUlOg0kbB4
- oE08CZ7GY9tXRwJ9CBvX4t8DXHedqrUWlE8qSUbiGPYrJLbTOqsWsfPzh6G+Em664D
- uaz2qB3hpPO2kKgdNaCxYnTEDux/TaHPFdmQz1D0=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [10.0.0.20] ([62.47.183.173]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lfppu-1gVT3k1Rko-00pKQA; Sat, 13
- Apr 2019 09:14:38 +0200
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.8\))
-Subject: Re: compile error on WireGuard Kernel/ROM Integration
-From: Robert Walli <rwalli@gmx.net>
-In-Reply-To: <CAHmME9ojqhKDRGkEqmaP-bCXPjgpjwRKKvQL1Z9Gu+bx018jyQ@mail.gmail.com>
-Date: Sat, 13 Apr 2019 09:14:36 +0200
-Message-Id: <A989EC48-2676-4C2A-8F1E-D9782F8D3B18@gmx.net>
+ Sun, 14 Apr 2019 08:54:53 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d9e615a1
+ for <wireguard@lists.zx2c4.com>;
+ Sun, 14 Apr 2019 08:30:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :references:in-reply-to:from:date:message-id:subject:to:cc
+ :content-type; s=mail; bh=R6+UnRqmAOXwvSXaKAolK0QALrQ=; b=QSsFwd
+ 1y1phUyslT98Ua1Hmfj7P2slDFBIoW1A40rhwhIdVKx8wIwPwPCSZeTpJ8t5RavV
+ sIX1cYdS60oGQy73rbQivqFYesS4A8/gEwoHQwK8xMTYED7VwnFzf2F1LcfqG1w/
+ naRHFfPib4D2EF1CCx7aT9/88RImT/fIXAOwgosh9tpEzJnJ5iJqp4OMiF8wUJp0
+ +phOo5ZC5c2+OJ822ow1+aA3TFq7x5Ii5RwdBCKh1ZG9gZSVQy3KHcc9d+y6305Y
+ 6oUhLKzIwIKVaZvyaECH1eA2TNRIlX9Rl5TNvfuuKp4ZLwiVGq258LIU3l6IOtR6
+ 75yem1kKRccas4Ww==
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id e8eec0cf
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Sun, 14 Apr 2019 08:30:12 +0000 (UTC)
+Received: by mail-ot1-f51.google.com with SMTP id k21so11988051otf.1
+ for <wireguard@lists.zx2c4.com>; Sun, 14 Apr 2019 01:54:52 -0700 (PDT)
+X-Gm-Message-State: APjAAAUlbUm1Ht+35joSj63ok/wMztJJmkOiGjh6sjJ82r8tRAjmQTM4
+ 213ZaSYGQSNkid1/522vMSiPlJbwt4MEIutQ850=
+X-Google-Smtp-Source: APXvYqxkg71i/91CWq/u0ZvG4sl0LjlCAgQrwR+vDQWO/oIqZZHhBE7gpJzZgiBW1xGzH4pNEXg042/8YqAAJMjivW0=
+X-Received: by 2002:a05:6830:1481:: with SMTP id
+ s1mr43242170otq.321.1555232091791; 
+ Sun, 14 Apr 2019 01:54:51 -0700 (PDT)
+MIME-Version: 1.0
 References: <068214E5-B780-4A6C-AE79-BD772177EBCB@gmx.net>
  <CAHmME9ojqhKDRGkEqmaP-bCXPjgpjwRKKvQL1Z9Gu+bx018jyQ@mail.gmail.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-X-Mailer: Apple Mail (2.3445.104.8)
-X-Provags-ID: V03:K1:NmYvO4lhAfAhknYGHK6cd05fp3X+5VRkNC5OffmgTxFqz/gBeAV
- NQQd6PLOByaxo2MWrs7LGQ6gNvxPazimJmo2QAWOkg9aDo0PH+LJpRBuFGpi0PikKCtyJ27
- YU0Gui32RxqfHzRbePgXeCJn+I1k4pTRSIzJFkwplIqDp9RlWcBEabhPDqZAc/xxmVqHK+H
- fNPXHo8Hzfiq8XlQI06WQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:fP4Qusg0+1I=:T+YsRXMgBZVVdBW66Bs1p2
- 76EMR3kMhT//e/dx1/15yqy+lRUSUcFyhvFqZofGmkScT2PuXXJAYTpUdM7SnSxs9vbWLOId8
- b0Gnah7mjALgVuuVNOu5ODBDcT/mCyM+05dAcTP1ui6DA46lo0clt2776cWx4CZfYCisr4RrV
- VAtKFsi9RJ5pxEz2J5+TmUxK5tBV/pAgu67pQztvAVHr8SrVSJWcCmSBUECYWfqNo1FKmqgoa
- FqWGJWSZmbEIgX3VRp4g+WRMglz0gWMyjdLYsvcd9rN7016b1dlG5IeDbSawC7Aq7pnBFlF4n
- JtwB513qVyKpnfGXSg/8ON3cRHRBjU+z3Qv78fmpTDn6bwzh2IieULjIWs3ReiMN/T2iK+HCa
- ZOM1w8MeRy9lUyb5qEEUwb/qkYgNw+qi7ijyKz1ZTGWwg34VjVbVjZo4PVf2p00q0Jqm8a1ep
- GvG5LJEaGSeNqy0Mf8FhxdfXfKrZzOja4JJ2FyBUUFz043fYjvzimVBvfd9utpMWg128reynb
- MckOATIPUQvhRBm/oTS9/PMnKATdsskSZYRT8PNzp+m/JBLdrxO6o4gsIa8zQky4KM5tL617J
- 9ZmeywmG620CVGTvi1FV3fDfjGGzn6uGHznKOz4l7wwFaN1ue/9LvUkTn29Aug2HGJdKb5CBg
- UzwVYUceUWXV/H6+kniEZPHqcAn5jMWir0ya7ob7OmInjr9Ntie8gGmVO4MPnGF/oPbI7EZrQ
- Lp8exFiEWmOkx0CqHFRToSwwJC384oGzH14NEA7KcbZtNmOMeX70gYnuPt3mjjSCZQPAmCs72
- 5LGOnDXFw+96zUOclMmTpHwwxJBNI/+2dCwI/SiXoy+rTABKEqcryX7ntWGbcDgtqICfmBczg
- gd9hpSp9Z7153a33YTQEorW1NCD1InLt6aBoRV10UmLLwQr4JkCPSd/HMC8v8iqs2vEwkiczZ
- 6/n+ZxssbQQ==
+ <A989EC48-2676-4C2A-8F1E-D9782F8D3B18@gmx.net>
+In-Reply-To: <A989EC48-2676-4C2A-8F1E-D9782F8D3B18@gmx.net>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Sun, 14 Apr 2019 10:54:40 +0200
+X-Gmail-Original-Message-ID: <CAHmME9oax4=RVQhKaJtaJbAXSq42DFw+QT8fxA2onoymq8ziUw@mail.gmail.com>
+Message-ID: <CAHmME9oax4=RVQhKaJtaJbAXSq42DFw+QT8fxA2onoymq8ziUw@mail.gmail.com>
+Subject: Re: compile error on WireGuard Kernel/ROM Integration
+To: Robert Walli <rwalli@gmx.net>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
@@ -87,13 +81,12 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
+Looks like some terrible vendor made random backports that aren't a
+part of kernel.org's sock.h:
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/include/net/sock.h?h=linux-3.10.y
 
-
-> On 13.04.2019, at 02:17, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
-> 
-> Link to kernel sources?
-
-Tried diffrent kernels eg.: https://github.com/mobspyguy/android_kernel_samsung_apq8084
+Apply this to your kernel, and things _might_ work without exploding:
+https://xn--4db.cc/AGC0Ssj6/diff
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
