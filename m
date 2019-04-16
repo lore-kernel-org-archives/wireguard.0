@@ -6,44 +6,51 @@ X-Spam-Status: No, score=-0.9 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	HTML_MESSAGE,MAILING_LIST_MULTI,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BCDFFC04AAB
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  6 May 2019 20:38:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5745BC04AAE
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  6 May 2019 20:38:01 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 4B8CD206BF
+	by mail.kernel.org (Postfix) with ESMTPS id DA14B206BF
 	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  6 May 2019 20:38:00 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 4B8CD206BF
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=xakeps.dk
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org DA14B206BF
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=zarzycki.org
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5655714a;
-	Mon, 6 May 2019 20:35:07 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d543e541;
+	Mon, 6 May 2019 20:35:08 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5a97676a
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ea3d65d2
  for <wireguard@lists.zx2c4.com>;
- Thu, 11 Apr 2019 07:07:36 +0000 (UTC)
-Received: from forward400p.mail.yandex.net (forward400p.mail.yandex.net
- [IPv6:2a02:6b8:0:1472:2741:0:8b7:105])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c00009df
+ Tue, 16 Apr 2019 00:30:25 +0000 (UTC)
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com
+ [209.85.128.52])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ebea5e9d
  for <wireguard@lists.zx2c4.com>;
- Thu, 11 Apr 2019 07:07:36 +0000 (UTC)
-Received: from mxback10j.mail.yandex.net (mxback10j.mail.yandex.net
- [IPv6:2a02:6b8:0:1619::113])
- by forward400p.mail.yandex.net (Yandex) with ESMTP id C9E8E1BC153B
- for <wireguard@lists.zx2c4.com>; Thu, 11 Apr 2019 10:07:33 +0300 (MSK)
-Received: from localhost (localhost [::1])
- by mxback10j.mail.yandex.net (nwsmtp/Yandex) with ESMTP id eSBDRRopAX-7WFCBLWL;
- Thu, 11 Apr 2019 10:07:33 +0300
-Received: by iva3-bb39b28eb4f4.qloud-c.yandex.net with HTTP;
- Thu, 11 Apr 2019 10:07:32 +0300
-From: admin@xakeps.dk
-To: wireguard@lists.zx2c4.com
-Subject: RX errors and dropped packets on server interface
+ Tue, 16 Apr 2019 00:30:25 +0000 (UTC)
+Received: by mail-wm1-f52.google.com with SMTP id v14so22713047wmf.2
+ for <wireguard@lists.zx2c4.com>; Mon, 15 Apr 2019 17:30:24 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=hzY7/XS1CM28+8p/B5flt7OZ6fG8dCrYif4NSCs5++c=;
+ b=ZJwmunsKsn3S1PnBTpMrfPtMAGVPJ7x7FlQYzzFNtin+Qqct3/nZmrdnqKqVmU5sRr
+ 6lcvH24bC7DuFrtWEv/Z2fnKxrTKUx7nrM51X+jYQG1Yw0O1IyvBzrQSpW7olMMADFMh
+ Tv7Gwl8Fh7duoNtYQpfnT468EiE8+wfHrdj89wcrYiehJXAP2UpBnOwtX5QeAmJWlNRE
+ TGusMmg6phOr685NRZXaRFZlqyZhSu0orvVdhohOr4AvdzJKyq1yGrQqtyyihBlh1Qj1
+ 2CdceIV0LSH+ycipl3Wox0ybfm/0xzZUQocgYUqTpFxlZ/tEP4i16suMB8knhrftMBeS
+ aaTg==
+X-Gm-Message-State: APjAAAUr1aJwJIasnEjSY6q+WyWymNNtStQFjq/MJShomhB8oCfmIHgL
+ FGAvl8qciEwjj0rG7PYuhygttIZT/fLI0cmUXabD5c0e
+X-Google-Smtp-Source: APXvYqzwZfS0S7fRmVDeFE682c+keRApJ7giAFeWbbhVVy6RUIyy8aiaHFPHWNRKNizDvAvlnFdc6qHL7pZNmT9tw8k=
+X-Received: by 2002:a7b:c446:: with SMTP id l6mr25240184wmi.80.1555374623941; 
+ Mon, 15 Apr 2019 17:30:23 -0700 (PDT)
 MIME-Version: 1.0
-X-Mailer: Yamail [ http://yandex.ru ] 5.0
-Date: Thu, 11 Apr 2019 09:07:32 +0200
-Message-Id: <3938491554966452@iva3-bb39b28eb4f4.qloud-c.yandex.net>
+From: Benjamin Zarzycki <ben@zarzycki.org>
+Date: Mon, 15 Apr 2019 17:30:12 -0700
+Message-ID: <CALt6Z-Z2WvbZ8ru0W9Xqtgkmt_Oqwpq03=k1Y3r-BQPtXnbddA@mail.gmail.com>
+Subject: macOS/darwin kernel module (kext)
+To: wireguard@lists.zx2c4.com
 X-Mailman-Approved-At: Mon, 06 May 2019 22:35:06 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
@@ -56,58 +63,56 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============1356290153838786629=="
+Content-Type: multipart/mixed; boundary="===============8575550708701879561=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============1356290153838786629==
-Content-Transfer-Encoding: base64
-Content-Type: text/html; charset=utf-8
+--===============8575550708701879561==
+Content-Type: multipart/alternative; boundary="000000000000f3ebe005869adf43"
 
-PGRpdiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94aHRtbCI+TXkgd2lyZWd1YXJkIHNl
-cnZlciBpbnRlcmZhY2UgcmVwb3J0cyBoaWdoIHJ4IGVycm9yIHJhdGUgYW5kIGRyb3BwZWQgcGFj
-a2V0cyByYXRlLjwvZGl2PjxkaXYgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGh0bWwi
-Pk15IHNlcnZlciBjb25maWc6PC9kaXY+PGRpdiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMTk5
-OS94aHRtbCI+W0ludGVyZmFjZV08YnIgLz5BZGRyZXNzID0gMTAuMS4wLjEvMjQsIGZkMTA6MTox
-OjoxLzY0PGJyIC8+TGlzdGVuUG9ydCA9ICZsdDtvbW1pdGVkJmd0OzxiciAvPlByaXZhdGVLZXkg
-PSAmbHQ7b21taXRlZCZndDs8YnIgLz5Qb3N0VXAgPSBpcHRhYmxlcyAtdCBuYXQgLUEgUE9TVFJP
-VVRJTkcgLW8gZXRoMCAtaiBNQVNRVUVSQURFOyBpcDZ0YWJsZXMgLXQgbmF0IC1BIFBPU1RST1VU
-SU5HIC1vIGV0aDAgLWogTUFTUVVFUkFERTxiciAvPlBvc3REb3duID0gaXB0YWJsZXMgLXQgbmF0
-IC1EIFBPU1RST1VUSU5HIC1vIGV0aDAgLWogTUFTUVVFUkFERTsgaXA2dGFibGVzIC10IG5hdCAt
-RCBQT1NUUk9VVElORyAtbyBldGgwIC1qIE1BU1FVRVJBREU8YnIgLz48YnIgLz5bUGVlcl08YnIg
-Lz5QdWJsaWNLZXkgPSAmbHQ7b21taXRlZCZndDs8YnIgLz5BbGxvd2VkSVBzID0gMTAuMS4wLjIv
-MzIsIGZkMTA6MToxOjE6OjIvMTI4PGJyIC8+PGJyIC8+TXkgY2xpZW50IGNvbmZpZzo8L2Rpdj48
-ZGl2IHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hodG1sIj5bSW50ZXJmYWNlXTxiciAv
-PlByaXZhdGVLZXkgPSAmbHQ7b21taXRlZCZndDs8YnIgLz5BZGRyZXNzID0gMTAuMS4wLjIvMjQs
-ZmQxMDoxOjE6MTo6Mi82NDxiciAvPkROUyA9IDEyNy4wLjAuMTxiciAvPjxiciAvPltQZWVyXTxi
-ciAvPlB1YmxpY0tleSA9ICZsdDtvbW1pdGVkJmd0OzxiciAvPkVuZHBvaW50ID0gJmx0O29tbWl0
-ZWQmZ3Q7PGJyIC8+QWxsb3dlZElQcyA9IDAuMC4wLjAvMCw6Oi8wPC9kaXY+PGRpdiB4bWxucz0i
-aHR0cDovL3d3dy53My5vcmcvMTk5OS94aHRtbCI+wqA8L2Rpdj48ZGl2IHhtbG5zPSJodHRwOi8v
-d3d3LnczLm9yZy8xOTk5L3hodG1sIj5JJ20gc3RhcnRpbmcgc2VydmVyIGFuZCBjbGllbnQgdXNp
-bmcgd2ctcXVpY2sgdXAgJmx0O25hbWUmZ3Q7PC9kaXY+PGRpdiB4bWxucz0iaHR0cDovL3d3dy53
-My5vcmcvMTk5OS94aHRtbCI+PGJyIC8+Q29tbWFuZCBpcCAtcyBsaW5rIHNob3cgb24gc2VydmVy
-IHNpZGUgc2hvd3MsIHRoYXQgd2lyZWd1YXJkIGludGVyZmFjZSBoYXMgaGlnaCBSWCBlcnJvciBy
-YXRlLCBkcm9wcGVkIHBhY2tldHMgYW5kIFRYIGVycm9yczwvZGl2PjxkaXYgeG1sbnM9Imh0dHA6
-Ly93d3cudzMub3JnLzE5OTkveGh0bWwiPlJYIGVycm9ycyBhbmQgZHJvcHBlZCBwYWNrZXRzIHJp
-c2VzLCBUWCBlcnJvcnMgY29uc3RhbnRseSBzdGF5cyBhdCByYW5kb20oPykgdmFsdWUuPC9kaXY+
-PGRpdiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94aHRtbCI+T3RoZXIgaW50ZXJmYWNl
-cyBoYXZlIG5vIGlzc3Vlcy48L2Rpdj48ZGl2IHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5
-L3hodG1sIj7CoDwvZGl2PjxkaXYgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGh0bWwi
-PlNlcnZlcjo8L2Rpdj48ZGl2IHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hodG1sIj53
-ZzA6ICZsdDtQT0lOVE9QT0lOVCxOT0FSUCxVUCxMT1dFUl9VUCZndDsgbXR1IDE0MjAgcWRpc2Mg
-bm9xdWV1ZSBzdGF0ZSBVTktOT1dOIG1vZGUgREVGQVVMVCBncm91cCBkZWZhdWx0IHFsZW4gMTwv
-ZGl2PjxkaXYgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGh0bWwiPkNsaWVudDo8L2Rp
-dj48ZGl2IHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hodG1sIj53ZzA6ICZsdDtQT0lO
-VE9QT0lOVCxOT0FSUCxVUCxMT1dFUl9VUCZndDsgbXR1IDE0MjAgcWRpc2Mgbm9xdWV1ZSBzdGF0
-ZSBVTktOT1dOIG1vZGUgREVGQVVMVCBncm91cCBkZWZhdWx0IHFsZW4gMTAwMDwvZGl2PjxkaXYg
-eG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGh0bWwiPsKgPC9kaXY+PGRpdiB4bWxucz0i
-aHR0cDovL3d3dy53My5vcmcvMTk5OS94aHRtbCI+SSdtIHBlcnNvbmFsbHkgZXhwZXJpZW5jaW5n
-IHJhbmRvbSBwYWNrZXQgbG9zcy48L2Rpdj48ZGl2IHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8x
-OTk5L3hodG1sIj7CoDwvZGl2PjxkaXYgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGh0
-bWwiPkknbSBkb24ndCBrbm93LCB3aGF0IHNob3VsZCBpIGRvIHRvIGRlYnVnIGFuZCBmaXggdGhp
-cy48L2Rpdj4=
+--000000000000f3ebe005869adf43
+Content-Type: text/plain; charset="UTF-8"
 
---===============1356290153838786629==
+Hi Folks,
+
+I'm new to the mailing list and community.  If I missed some rules or
+otherwise commit a faux pas, please let me know.
+
+I searched the mailing list archives and didn't find any discussion of a
+MacOS/darwin kernel module (kext) for WireGuard.  I see it was implemented
+using Apple's Network Extension API in the wireguard-ios repository and
+there's the wireguard-go implementation as well.
+
+I'm not an expert. Would anyone care to share their thoughts/opinions on
+using Darwin's Network Kernel Extensions to implement WireGuard?
+
+Thanks,
+Ben
+
+--000000000000f3ebe005869adf43
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr">Hi Folk=
+s,<div><br></div><div>I&#39;m new to the mailing list and community.=C2=A0 =
+If I missed some rules or otherwise commit a faux pas, please let me know.<=
+/div><div><br></div><div>I searched the mailing list archives and didn&#39;=
+t find any discussion of a MacOS/darwin kernel module (kext) for WireGuard.=
+=C2=A0 I see it was implemented using=C2=A0<span style=3D"color:rgb(0,0,0);=
+white-space:pre-wrap">Apple&#39;s Network Extension API in the </span><font=
+ color=3D"#000000"><span style=3D"white-space:pre-wrap">wireguard-ios repos=
+itory and there&#39;s the wireguard-go implementation as well</span></font>=
+<span style=3D"white-space:pre-wrap;color:rgb(0,0,0)">.</span></div><div><f=
+ont color=3D"#000000"><span style=3D"white-space:pre-wrap"><br></span></fon=
+t></div><div><font color=3D"#000000"><span style=3D"white-space:pre-wrap">I=
+&#39;m not an expert.  Would anyone care to share their thoughts/opinions o=
+n using Darwin&#39;s Network Kernel Extensions to implement WireGuard?</spa=
+n></font></div><div><br></div><div>Thanks,</div><div>Ben</div></div></div><=
+/div></div>
+
+--000000000000f3ebe005869adf43--
+
+--===============8575550708701879561==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -118,4 +123,4 @@ WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---===============1356290153838786629==--
+--===============8575550708701879561==--
