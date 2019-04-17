@@ -7,70 +7,63 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
 	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C8B4C28D1D
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  6 Jun 2019 09:36:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7508EC04AB5
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  6 Jun 2019 09:38:51 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id A4D0620684
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  6 Jun 2019 09:36:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 1279C20693
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  6 Jun 2019 09:38:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FN5rZB14"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A4D0620684
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WkgYwzDE"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 1279C20693
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 863a8a7d;
-	Thu, 6 Jun 2019 09:36:08 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8c8d888b;
+	Thu, 6 Jun 2019 09:37:07 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2e94d186
- for <wireguard@lists.zx2c4.com>; Mon, 3 Jun 2019 18:05:06 +0000 (UTC)
-Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com
- [IPv6:2607:f8b0:4864:20::736])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 644afe77
- for <wireguard@lists.zx2c4.com>; Mon, 3 Jun 2019 18:05:06 +0000 (UTC)
-Received: by mail-qk1-x736.google.com with SMTP id a27so1029023qkk.5
- for <wireguard@lists.zx2c4.com>; Mon, 03 Jun 2019 11:05:06 -0700 (PDT)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fc4ea3d9
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 17 Apr 2019 07:32:48 +0000 (UTC)
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com
+ [IPv6:2607:f8b0:4864:20::22c])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 576cb981
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 17 Apr 2019 07:32:48 +0000 (UTC)
+Received: by mail-oi1-x22c.google.com with SMTP id v84so19226254oif.4
+ for <wireguard@lists.zx2c4.com>; Wed, 17 Apr 2019 00:32:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
- bh=3hinAkBctEXbK2Ml8Rim9KFpN07r+rTz9cbvZzk2Mh4=;
- b=FN5rZB14nnAZIRnIzU3N99Jh56QKl3vxXczDhqimBs9glG6XZSRZDp1zUppBBlcf57
- VAyy6WQy1fnuOyFAdZStISPuVYb0NdwbEn1/EV5CzRL7Zy8/InCd6/igUxnxHgpjNhuj
- qPn2+2xqkSMs86if5YTuGD0pOvW3matmbL6GZ9NCyhiFz+Ar540QGZ+KFAcRb8rzfa10
- 0YzDtvObBV1Ne5wlQPEJKLm7jHuGY0oBgBkbf1Ulz0nEmne/vmtpzEqRxDlOV+HZwbxE
- roiNqYOQgI5zwiZE4VN4z18hVAOG/PKE0OypWgv8fd1GihFCEKnLC/iKye/N5tpfW6/7
- f8kQ==
+ h=mime-version:from:date:message-id:subject:to;
+ bh=vtXqMd/MDinvtZmmHcihdVWOcz4+IgMG45JEPm4Sen0=;
+ b=WkgYwzDEjd3OrGcXB0jCEGvZoTh8T9+XeNz5BPfPGxu+brrkShcfWHtkIvuwafz+pa
+ 9WnHaaAhIQ8c6vwHEoLO/RlOa/TGxHMbiXKeTRB4vgfKx/qOsoLUyUOVpIgyjulGnggw
+ G3/KsGBQppPg83TFzHcCNg7UgsVH3xzcKIJQSczHS7iDQk3s+G8L6NyTeNMF8OwsIdYE
+ av8Qo6M/IR3hAAJVRg44U61axz5KAqTVbPaCsfRCBPdEJG7QsbLwJiemSYz/C2UVtVvv
+ zfNUhv3KSzPUugVAYL95mwC5Iz04N/7jdwi/g4Xq7MNNVxMmYMfEaSTXjIZwDrLU1ISk
+ I3KA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to;
- bh=3hinAkBctEXbK2Ml8Rim9KFpN07r+rTz9cbvZzk2Mh4=;
- b=axrpTpf7NeLndWha6BfworuXqUQv4gTUBIXpPN1GXgnxGFj19y7RAo5n3oNN6Vd6Ry
- KAFicblrPfcUuhIiqa2ZhC86AWLqVS7zbPGgCFjwYv+PuiKKhKedw/+GPVKguecwwgFS
- 8fNzaTc8zINkjF7ETyaMpDGuQhb4iDq694LdlDhsxdF8S1c46yXt4AaJKerVCIpnB+nj
- kDn6IBfOx+WF2Wdf8pvLU2FpGt87kQQ8e8uf4jgWrZEJ+X4On3aRvXnoQv2+ClsmznZA
- OENyBGlvQW/vDk6qgB7hhKfWWsdkzFwl8uT2+6XxB8M4w5z3U8F9vpw+k2ICsVxjJl6F
- 2S6Q==
-X-Gm-Message-State: APjAAAVJGx5hmRJua3hg7brXE4EothJOaZiF5Y8O+EzlKhVwjm22SHWB
- /y5s3cUNeoB9ImCu+k69xBJbjNF0D8/5OH13XQk=
-X-Google-Smtp-Source: APXvYqy/u5UyzkSef7sBe5wVNtVp/JwqUTFZ1PWAnzKTlDytq9RYT6p9Vz5AFMwOBWlNfA1sdERAP/cqJkdHX0NXNtM=
-X-Received: by 2002:a37:2f87:: with SMTP id v129mr4308643qkh.151.1559585106115; 
- Mon, 03 Jun 2019 11:05:06 -0700 (PDT)
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=vtXqMd/MDinvtZmmHcihdVWOcz4+IgMG45JEPm4Sen0=;
+ b=M6wxMTHhNySkrYZwIv6vKTrhG7IiaeI47J/dg3G+mYmCQcujKAUh8oPmmhKILfH0P3
+ NVl30XeI3jP2MLDgcSY4RQu6cZLMHla9+akrSbdBHpja8lS2kNVHNHqjY3YvTejQFEvb
+ KI+icgiUljMp5Ryxy1G6OBg1Y2KedtGX7LwdC5tFxpcdnaNkyuC+t3KLPdWhpccE+OPv
+ 5dGlz1Jjy0BNj74jFRFcFzdr9KlfhhFarBKpNvc5EQXvcMJe5MliXgGBY5iLnKJ8yt6s
+ yY/nePM2LghcaQ2HaHOieqrMDGXVMM/fOz2TYIkU2Mps6W5nOpu023Jo192KbSlxyHdW
+ wylQ==
+X-Gm-Message-State: APjAAAXoW4mcMSFvTl65HnOVMApLO3vtCPtlLnyz3wkRSYErHec+gtGc
+ QckTB1ClVoT3v3L1buHnFo9/5V4f2/FyoAEYUm1K3g==
+X-Google-Smtp-Source: APXvYqwE+XRAXRVWcObG4XsM0Pm7kaNuAQoHGpUa/pyWxxEE8Wt4614GuUmQ5dkC/1H7BKvp2/rUtouvJEx2vI1ulcY=
+X-Received: by 2002:aca:60c2:: with SMTP id u185mr27201191oib.99.1555486366853; 
+ Wed, 17 Apr 2019 00:32:46 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAGyAFMV=HvOYDRSB7eRpBDp-47wX2vie8JPgp48in1fH+eXn=A@mail.gmail.com>
- <CAFHpkQFVpN-+Uoc6QsLmD8hjwEC7Ba1Q2SP4SuS_EMu_PT=3nw@mail.gmail.com>
- <7bdf712d-4e0c-0667-c9eb-1bdd862b1e40@sf.lists.topphemmelig.net>
- <bfead88f-3e91-6d49-ea70-e73f626468f1@nikhef.nl>
- <CAGyAFMW10tUVswPa8NfVieUJMm1oX1BFQaa9a0GP3NmgWpRshg@mail.gmail.com>
- <CAGyAFMWODccNnD+yby7HrOUfdDFaceC3AX70+jG9_hL9vF=q+A@mail.gmail.com>
-In-Reply-To: <CAGyAFMWODccNnD+yby7HrOUfdDFaceC3AX70+jG9_hL9vF=q+A@mail.gmail.com>
-From: Lev Stipakov <lstipakov@gmail.com>
-Date: Mon, 3 Jun 2019 21:04:53 +0300
-Message-ID: <CAGyAFMUqqjF67DDdr+BQXvFU515_zK=fDehUJH1TF+zjyjuiAA@mail.gmail.com>
-Subject: Re: [Openvpn-devel] Wintun performance results
-To: openvpn-devel <openvpn-devel@lists.sourceforge.net>,
- wireguard@lists.zx2c4.com
-X-Mailman-Approved-At: Thu, 06 Jun 2019 11:36:07 +0200
+From: bhashkar prakash Singh <singh.bhashkar@gmail.com>
+Date: Wed, 17 Apr 2019 13:02:36 +0530
+Message-ID: <CACX7Ny6=bmREXiq6x25s-MA=eAiV4P554=7gNn6CTPR76OAirg@mail.gmail.com>
+Subject: Wiregaurd integration to private project
+To: wireguard@lists.zx2c4.com
+X-Mailman-Approved-At: Thu, 06 Jun 2019 11:37:05 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -82,52 +75,44 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============3239693521800776973=="
+Content-Type: multipart/mixed; boundary="===============3329930450956974823=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============3239693521800776973==
-Content-Type: multipart/alternative; boundary="0000000000003f4325058a6f348c"
+--===============3329930450956974823==
+Content-Type: multipart/alternative; boundary="0000000000005971060586b4e4e0"
 
---0000000000003f4325058a6f348c
+--0000000000005971060586b4e4e0
 Content-Type: text/plain; charset="UTF-8"
 
 Hi,
 
-Here you can get the latest binary of openvpn3 test Windows client with
-both wintun and tap-windows6 support.
+I want to integrate Wireguard to my confidential project. I see Wireguard
+source code is under GPLv2, if I add any patch to Wiregaurd source code to
+work with my confidentail project, do I need to publish complete source
+code along with my project source code ?
 
-https://ci.appveyor.com/project/openvpn/openvpn3/build/artifacts
+Any other pointer how I can start work to integrate Wireguard in my project
+will be highly appreciated.
 
-To use it with wintun, open admin command prompt and run:
+Thanks & Regards,
+Bhashkar
 
-> cli.exe -w profile.ovpn
-
-To use tap-windows6, just omit "-w" switch.
-
-Please note that this is a development tool first of all, not a client to
-be consumed by most of users.
-
--Lev
-
---0000000000003f4325058a6f348c
+--0000000000005971060586b4e4e0
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div dir=3D"ltr">Hi,<div><br></div><div>Here you can get t=
-he latest binary of openvpn3 test Windows client with both wintun and tap-w=
-indows6 support.</div><div><br></div><div><a href=3D"https://ci.appveyor.co=
-m/project/openvpn/openvpn3/build/artifacts">https://ci.appveyor.com/project=
-/openvpn/openvpn3/build/artifacts</a>=C2=A0</div><div><br></div><div>To use=
- it with wintun, open admin command prompt and run:</div><div><br></div><di=
-v>&gt; cli.exe -w profile.ovpn<br></div><div><br></div><div>To use tap-wind=
-ows6, just omit &quot;-w&quot; switch.</div><div><br></div><div>Please note=
- that this is a development tool first of all, not a client to be consumed =
-by most of users.=C2=A0</div><div><br></div><div>-Lev</div></div></div>
+<div dir=3D"ltr">Hi,<div><br></div><div>I want to integrate Wireguard to my=
+ confidential project. I see Wireguard source code is under GPLv2, if I add=
+ any patch to Wiregaurd source code to work with my confidentail project, d=
+o I need to publish complete source code along with my project source code =
+?</div><div><br></div><div>Any other pointer how I can start work to integr=
+ate Wireguard in my project will be highly appreciated.</div><div><br></div=
+><div>Thanks &amp; Regards,</div><div>Bhashkar</div></div>
 
---0000000000003f4325058a6f348c--
+--0000000000005971060586b4e4e0--
 
---===============3239693521800776973==
+--===============3329930450956974823==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -138,4 +123,4 @@ WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---===============3239693521800776973==--
+--===============3329930450956974823==--
