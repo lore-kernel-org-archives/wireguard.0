@@ -2,79 +2,51 @@ Return-Path: <SRS0=zOjE=TG=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.7 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.2 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,FREEMAIL_REPLYTO_END_DIGIT,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 627DEC04A6B
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  6 May 2019 20:29:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3565DC04A6B
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  6 May 2019 20:37:54 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id DFE1D20830
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  6 May 2019 20:29:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 572DE206BF
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  6 May 2019 20:37:53 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=jerde-org.20150623.gappssmtp.com header.i=@jerde-org.20150623.gappssmtp.com header.b="TI8j0+1a"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org DFE1D20830
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=jerde.org
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="UiFgB49b"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 572DE206BF
+Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=protonmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6935bba2;
-	Mon, 6 May 2019 20:28:42 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5a443d5a;
+	Mon, 6 May 2019 20:28:43 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f5165f3f
- for <wireguard@lists.zx2c4.com>;
- Fri, 19 Apr 2019 02:07:40 +0000 (UTC)
-Received: from mail-it1-x133.google.com (mail-it1-x133.google.com
- [IPv6:2607:f8b0:4864:20::133])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8e37f678
- for <wireguard@lists.zx2c4.com>;
- Fri, 19 Apr 2019 02:07:40 +0000 (UTC)
-Received: by mail-it1-x133.google.com with SMTP id a190so6325479ite.4
- for <wireguard@lists.zx2c4.com>; Thu, 18 Apr 2019 19:07:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=jerde-org.20150623.gappssmtp.com; s=20150623;
- h=from:content-transfer-encoding:mime-version:subject:message-id:date
- :to; bh=jI5yewqZmuGCfH35565mFYqmwsdX3ekWK3G23cg5UzU=;
- b=TI8j0+1auJ1FjktVAWkKkmTREbof8MZLngQMD83tyCUYI5ne+BjRqz7dc4agnJh1ph
- GSRocW1wR2vMiAHtrCgh2vmc3PvdJ36K8nPMVzxXZel5ugEq+TaKGdUFvKBNIqAuRbfP
- XcS/tEP+sQQsM+xbVyJ5WtqimXf9Rcf5qqnBUseNE502/vXAzxVzN8SRr1dAYSVgNhDX
- Wx2tmP9DPp3pgQNLUuQzdi0LSMuNNwK1aH6VZIiIDwKGLjM9ziVBXOWFnQivr4nGIQPJ
- 6+gd4RqTLDPOz1cj2P9IMrHWqESsTTiUkEucWu1FNTDu+lH6M5OXxsaq8DtEP4MjX8ds
- OYog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:from:content-transfer-encoding:mime-version
- :subject:message-id:date:to;
- bh=jI5yewqZmuGCfH35565mFYqmwsdX3ekWK3G23cg5UzU=;
- b=TWx9/ezhdxyve1ve44Jw8aXDtJ2tYf6ypYMyub8zzJ1ZeQByi+h9r/F9hQTvQbjKR1
- xETy9dGRjeJg1s8Z5YPsGoDFIk80gNDD7Az8kzHekiM2Ny9PQ4vPjizljrqS9I1axD8M
- E9XGyp/v3TriHmryAcQOWLg8tfAXDOGYkV0ZJvwwsdt2uxDF71B0wcj8h0CUjWgtfRzR
- QyXESeX6KDZXo3M+BPjHuZj9hW5dk0FvIC41aCtCR3FYrq5sZR2kosVlmhwILceNTRnl
- 3hDYD9BcKcAHnL84tXmXQKiutCBNZQYtI4Pmtv4Kgbgk60CYaoWwkA+m+SiYFLTvP0g/
- sHgw==
-X-Gm-Message-State: APjAAAX56ZuRkaf4Y6q0D5qrg8SEy6ZS408oOKm8rudfYak9PxhJLLDT
- k8uBbcll9aLcyjhZGQDB3rRNR/dtBuE=
-X-Google-Smtp-Source: APXvYqzx3Eb2ga25rxConDtcigKXK84qZTzu3gJ7bfquPUUG1DSiHYPCUH6Z7FBg3UMFWOAZm/4zWQ==
-X-Received: by 2002:a24:f949:: with SMTP id l70mr1148174ith.116.1555639659272; 
- Thu, 18 Apr 2019 19:07:39 -0700 (PDT)
-Received: from [10.2.10.100] (c-107-2-122-17.hsd1.mn.comcast.net.
- [107.2.122.17])
- by smtp.gmail.com with ESMTPSA id k203sm879683itb.0.2019.04.18.19.07.38
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 18 Apr 2019 19:07:38 -0700 (PDT)
-From: Erik Jerde <erik@jerde.org>
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.8\))
-Subject: Tunnels not coming up on reboot
-Message-Id: <7F8E9113-9721-4AEC-984E-7291AEA9F75D@jerde.org>
-Date: Thu, 18 Apr 2019 21:07:37 -0500
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4e1dcf7e
+ for <wireguard@lists.zx2c4.com>; Wed, 1 May 2019 20:23:11 +0000 (UTC)
+Received: from mail1.protonmail.ch (mail1.protonmail.ch [185.70.40.18])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 19b056ed
+ for <wireguard@lists.zx2c4.com>; Wed, 1 May 2019 20:23:10 +0000 (UTC)
+Date: Wed, 01 May 2019 20:23:08 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+ s=default; t=1556742189;
+ bh=I29HiibFj3OEbBw1X/UfTn7LRurSyaMX1Zu0cxXuEFU=;
+ h=Date:To:From:Reply-To:Subject:Feedback-ID:From;
+ b=UiFgB49bhQwwVdiS6Bxd3ayGmMfslO5gx4XzyqsFPOeb8OuVdiMQjiHb2+7c0Z1mj
+ 5Uca9c7bHHoiRm/Y7I9Xly6+r7fjWdldYE53T/Pi+AYJfJd2dsfSQamXCcN4d4ZiP5
+ UEDIISznMoSY0GwKZfjXvyJ1wuB4GGMRzHFjOy8E=
 To: wireguard@lists.zx2c4.com
-X-Mailer: Apple Mail (2.3445.104.8)
+From: Proton <dr.morgan.00@protonmail.com>
+Subject: With WG on Router: Apple iCloud Auth Issues
+Message-ID: <C3816F08-7F84-44FC-91B4-41FF2BEF4C77@protonmail.com>
+Feedback-ID: 2trPGghQ7XcqFV8MopMfdxHMaGpjRWR4NBk6-hy7E7_fBHneP8YmQvUCyEYdpk7Zd5zB74JK7TAShs4Bb_QSgg==:Ext:ProtonMail
+MIME-Version: 1.0
 X-Mailman-Approved-At: Mon, 06 May 2019 22:28:35 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
+Reply-To: Proton <dr.morgan.00@protonmail.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -88,25 +60,48 @@ Content-Transfer-Encoding: base64
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-SeKAmXZlIGdvdCB0d28gVk1zIHJ1bm5pbmcgVWJ1bnR1IDE4LjEwIHdpdGggd2lyZWd1YXJkIDAu
-MC4yMDE5MDQwNi13ZzF+Y29zbWljIGluc3RhbGxlZC4gIEnigJl2ZSBlbmFibGVkIHRoZSBXaXJl
-Z3VhcmQgaW50ZXJmYWNlIHRvIGNvbWUgdXAgd2l0aCB0aGUgc3lzdGVtY3RsIGVuYWJsZSB3Zy1x
-dWlja0B3ZzAuc2VydmljZSBvbiBib3RoIHN5c3RlbXMuICBUaGUgaW50ZXJmYWNlIGdvZXMgdXAg
-YW5kIGRvd24gYXMgZXhwZWN0ZWQgd2hlbiB1c2luZyB0aGUgc3lzdGVtY3RsIHN0YXJ0IGFuZCBz
-dG9wIGNvbW1hbmRzLiAgTXkgcHJvYmxlbSBpcyB0aGF0IHdoZW4gZWl0aGVyIG9mIHRoZSBWTXMg
-YXJlIHJlYm9vdGVkIHRoZSB0dW5uZWxzIGRvIG5vdCBjb21lIGJhY2sgdXAuICBUaGUgV0cgY29t
-bWFuZCBzaG93cyB0aGF0IHRoZSBpbnRlcmZhY2UgaXMgdXAgYnV0IHRoZXJl4oCZcyBubyBoYW5k
-c2hha2UvdHJhbnNmZXIvZXRjLiAgT24gdGhlIHN5c3RlbSB0aGF0IHdhcyByZWJvb3RlZCBpZiBJ
-IGlzc3VlIGEgc3lzdGVtY3RsIHN0b3AgdGhlbiBzdGFydCBjb21tYW5kIHRoZSB0dW5uZWwgY29t
-ZXMgcmlnaHQgdXAgYW5kIHBlcmZvcm1zIGFzIGV4cGVjdGVkLgoKSeKAmW0gcHJldHR5IGdyZWVu
-IHdpdGggc3lzdGVtY3RsIGJ1dCB0aGlzIHJlbWluZHMgbWUgb2YgcHJvYmxlbXMgSeKAmXZlIHNl
-ZW4gd2l0aCBvdGhlciBkYWVtb25zIHRoYXQgZGlkbuKAmXQgaGF2ZSBhbGwgb2YgdGhlaXIgbmVl
-ZHMgYmVpbmcgbWV0IGJlZm9yZSB0aGV5IHN0YXJ0ZWQuICBJbiB0aGUgb2xkIGRheXMgb2YgaW5p
-dC5kIEkgY291bGQgZml4IHRoaXMgYnV0IG5vdyBJ4oCZbSBraW5kYSBzdHVjay4gIE15IC5zZXJ2
-aWNlIGZpbGUgaXMgc2hvd2luZyBBZnRlcj1uZXR3b3JrLW9ubGluZS50YXJnZXQgbnNzLWxvb2t1
-cC50YXJnZXQgYW5kIFdhbnRzPW5ldHdvcmstb25saW5lLnRhcmdldCBuc3MtbG9va3VwLnRhcmdl
-dC4gIElzIHRoZXJlIHNvbWV0aGluZyBtb3JlIHRoYXQgc2hvdWxkIGJlIGluIHRoZXJlPyAgQW55
-IGlkZWFzIG9mIHdoYXQgZWxzZSBtaWdodCBiZSBjYXVzaW5nIHRoZSB0dW5uZWwgdG8gbm90IGNv
-bWUgdXA/CgpUaGFua3MhCkVyaWsKCl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fCldpcmVHdWFyZCBtYWlsaW5nIGxpc3QKV2lyZUd1YXJkQGxpc3RzLnp4MmM0
-LmNvbQpodHRwczovL2xpc3RzLnp4MmM0LmNvbS9tYWlsbWFuL2xpc3RpbmZvL3dpcmVndWFyZAo=
+SGVsbG8gYWxsISBNeSBmaXJzdCBwb3N0IDopIEkgaGF2ZSB0d28gbGludXggc3lzdGVtcyAoVWJ1
+bnR1IDE4LjA0LjIpIHNldCB1cCBhcyByb3V0ZXJzOgoKIE9uZSBpcyBydW5uaW5nIHRoZSBsYXRl
+c3QgbWFpbmxpbmUgT3BlblZQTiBhcHQgcGFja2FnZSBjb25uZWN0aW5nIHRvIEFpclZQTiAoaGF2
+ZSBhbHNvIHVzZWQgUHJvdG9uVlBOKS4gSSBleHBlcmllbmNlIG5vIGlzc3VlcyB3aXRoIGFueSBp
+bnRlcm5ldCBpbnRlcmFjdGlvbnMuIE15IGlPUyBhbmQgTWFjT1MgKGxhdGVzdCB2ZXJzaW9ucykg
+d29yayBwZXJmZWN0bHkgZm9yIFdlYiwgZW1haWwgKGltYXAsIHNtdHApLCBtZXNzYWdpbmcsIGlD
+bG91ZCBEcml2ZSwgZXRjLi4gVGhlc2UgZW5kcG9pbnQgbWFjaGluZXMgb24gdGhlIGxvY2FsIExB
+TiBhcmUgbm90LCB0aGVtc2VsdmVzLCBydW5uaW5nIGFueSBWUE4gc29mdHdhcmUuIFRoZSByb3V0
+ZXIgaXMgYWxzbyBydW5uaW5nIFBpaG9sZSBkb21haW4gbmFtZSBmaWx0ZXJpbmcuIExpZmUgaXMg
+Z29vZC4KCiBUaGUgb3RoZXIgaXMgcnVubmluZyB0aGUgbGF0ZXN0IFdpcmVndWFyZCBhcHQvZGVi
+IHBhY2thZ2UuIEkgaW5pdGlhbGx5IHJhbiBpdCBjb25uZWN0ZWQgdG8gYW4gQWxnbyBpbnN0YW5j
+ZSBvbiBhIGRyb3BsZXQgQCBEaWdpdGFsIE9jZWFuLiBJIHJlY2VudGx5IGFsc28gdHJpZWQgaXQg
+b24gQ3J5cHRvc3Rvcm0ncyBXaXJlZ3VhcmQgb2ZmZXJpbmcuIEkgaGF2ZSB1c2VkIG5vcm1hbCBl
+eHRlcm5hbCBETlMsIGRuc2NyeXB0LXByb3h5LCBhbmQgdGhlIHByb3h5IHdpdGggZG5zbWFzcSBo
+b3N0L2RvbWFpbiBmaWx0ZXJpbmcuIEV2ZXJ5dGhpbmcgd29ya3MgKmdyZWF0KiBleGNlcHQsIGlu
+IGFsbCBjb25maWd1cmF0aW9uLCBteSBNYWNPUyBzeXN0ZW1zIG9uIHRoZSBMQU4gY2Fubm90IHNl
+bmQgb3IgcmVjZWl2ZSAoaW1hcCkgZW1haWwgZm9yICpBcHBsZSogYWNjb3VudHMgKEBpY2xvdWQu
+Y29tIGFuZCBAbWFjLmNvbSkuIEFsdGhvdWdoLCBQcm90b25tYWlsLmNvbSBhbmQgZ21haWwuY29t
+IGltYXAgYWNjb3VudHMgd29yayB3aXRoIG5vIGlzc3Vlcy4gVGhlIE5vdGVzIGFuZCBDYWxlbmRh
+ciBhcHBzIG9uIHRoZSBNYWMgd29yayBmaW5lIGFuZCBzeW5jIHN1Y2Nlc3NmdWxseS4gVGhlIEFw
+cGxlIGVtYWlsIGNvbm5lY3Rpb25zIGp1c3Qgc3BpbiB1bnRpbCB0aGV5IHVsdGltYXRlbHkgdGlt
+ZSBvdXQuICBJIGV2ZW4gdHJpZWQgYW4gYWx0ZXJuYXRpdmUgZW1haWwgY2xpZW50IChTcGFyayks
+IGJ1dCB0aGUgYXBwLXNwZWNpZmljIHBhc3N3b3JkIEFwcGxlIHByb3ZpZGVkIGZvciB0aGUgYXBw
+IHdvdWxkIG5vdCBhdXRoZW50aWNhdGUsIHdpdGggYmVoYXZpb3IgdmVyeSBzaW1pbGFyIHRvIHRo
+ZSBlbWFpbCBzZXJ2ZXJzLiBUaGVyZeKAmXMgYW4gb2J2aW91cyBwYXR0ZXJuIGVtZXJnaW5nIGhl
+cmUgOikgLSBzb21ldGhpbmcgYWJvdXQgV2lyZWd1YXJkIGlzIGJsb2NraW5nIEFwcGxl4oCZcyBp
+Q2xvdWQgYXV0aGVudGljYXRpb24gcHJvY2VzcywgYWx0aG91Z2ggSSBkb27igJl0IGtub3cgd2h5
+IE5vdGVzIGFuZCBDYWxlbmRhciBjb250aW51ZSB0byB3b3JrLCB0YmguIEnigJl2ZSBzZWFyY2hl
+ZCB0aGUgV2ViLCBhbmQgdHJ1bHkgdGhvdWdodCBzb21ldGhpbmcgd291bGQgcG9wIHVwIGltbWVk
+aWF0ZWx5LCBnaXZlbiB0aGF0IFdpcmVndWFyZCBoYXMgaU9TIGFuZCBNYWNPUyBjbGllbnQgYXBw
+cyBpbiB0aGVpciByZXNwZWN0aXZlIEFwcCBTdG9yZXMsIGJ1dCBub3RoaW5nIHN1cmZhY2VkLiBJ
+ICpyZWFsbHkqIHdhbnQgdG8gdXNlIFdpcmVndWFyZCBhcyBteSBWUE4gc29sdXRpb24gKEnigJlt
+IHRveWluZyB3aXRoIGRldmVsb3BpbmcgYSBwZXJzb25hbCBhcHBsaWFuY2UgdXNpbmcgVlBOIGZ1
+bmN0aW9uYWxpdHkpLCBidXQgdGhpcyBBcHBsZSBpc3N1ZSBpcyBhIHNob3cgc3RvcHBlci4gU3Vy
+ZWx5LCBnaXZlbiB0aGUgQXBwbGUgYXBwcyB0aGF0IHlvdSBoYXZlIGRldmVsb3BlZCwgdGhlcmUg
+bXVzdCBiZSBzb21ldGhpbmcgZWxzZSBJIG5lZWQgdG8gZG8gd2l0aCBteSBjb25maWd1cmF0aW9u
+IHRvIGZpeCB0aGlzLgoKQW55IGFzc2lzdGFuY2UgeW91IGFsbCBjYW4gcHJvdmlkZSB3b3VsZCBi
+ZSAqZ3JlYXRseSogYXBwcmVjaWF0ZWQuIEnigJltIG1vcmUgdGhhbiBoYXBweSB0byBkb25hdGUg
+dG8gdGhlIHByb2plY3QsIGV0Yy4gLSBidXQgSSBuZWVkIHRoaXMgYWxsIHRvIOKAnGp1c3Qgd29y
+a+KAnS4gV2lyZWd1YXJkIGlzIHNpbXBseSB0aGUgbW9zdCBlbGVnYW50IFZQTiBzb2x1dGlvbiBJ
+4oCZdmUgZXZlciBzZWVuLCBzbyBJ4oCZbSByZWFsbHkgcm9vdGluZyBmb3IgeW91ciBzdWNjZXNz
+IQoKLUJlc3QgQ2FyZQogIERhdmlkCgoKX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX18KV2lyZUd1YXJkIG1haWxpbmcgbGlzdApXaXJlR3VhcmRAbGlzdHMuengy
+YzQuY29tCmh0dHBzOi8vbGlzdHMuengyYzQuY29tL21haWxtYW4vbGlzdGluZm8vd2lyZWd1YXJk
+Cg==
