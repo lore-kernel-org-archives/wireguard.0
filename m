@@ -2,74 +2,49 @@ Return-Path: <SRS0=sgLz=TL=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
-	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_PASS,
-	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 35C79C04AB1
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 11 May 2019 11:34:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AF6BBC04AB1
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 11 May 2019 13:08:15 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 8B6CA216C4
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 11 May 2019 11:34:34 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZJZKXRCc"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 8B6CA216C4
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	by mail.kernel.org (Postfix) with ESMTPS id 0B3972173B
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 11 May 2019 13:08:14 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 0B3972173B
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=cyphar.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7da97e64;
-	Sat, 11 May 2019 11:34:33 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6b5083e8;
+	Sat, 11 May 2019 13:07:57 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7550504b
- for <wireguard@lists.zx2c4.com>;
- Sat, 11 May 2019 11:34:31 +0000 (UTC)
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com
- [IPv6:2a00:1450:4864:20::12e])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6490165b
- for <wireguard@lists.zx2c4.com>;
- Sat, 11 May 2019 11:34:31 +0000 (UTC)
-Received: by mail-lf1-x12e.google.com with SMTP id v18so5926150lfi.1
- for <wireguard@lists.zx2c4.com>; Sat, 11 May 2019 04:34:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=cGqRcPufAOnoqqz5aCeEj120V2Bp8N6WWmHt8dB78HE=;
- b=ZJZKXRCcp9Jr/Kt2xxlFQV7NdWdrO419lVFdvnY6hljZFJ8EuDNvcbQtxesxmuLMac
- QbSeu/uXFOPehyQSNEKgkUCOGiPYYWk6Tx8WE1tpiCeDPPrG6BJwkxsbNVR8l3fyQATV
- k26maUJ5H87GiaeIcqDOhjc+sJyZ5ZniXC1wesjFxn+b4/iskszS7EazonDSTZhdwBdB
- 0rIkdzWL1PnygqjHuTvtAaES4a2pbb4l4WYvLwtLmEZBq70KRGUtnGIDaMq2sEjXcVH5
- op9gLyxlujMuFAt9ZMIYhuVMuSUUoIpFdl+oN9MRHuyWKn1SHcHt3M21hbSAL2TmiO/L
- y9ug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=cGqRcPufAOnoqqz5aCeEj120V2Bp8N6WWmHt8dB78HE=;
- b=AlTzYpa0pFtcB+w5pN0gX5HlbLeMBa/HGnaQn54A4bEDDNA0AZwTzF00hgliLQrxfk
- byThGoPawC12r7YlO2RC7DVMoaKDs6RkDLDKzmmoDomknw5iU0D+pr3a7NpiExMqKT+l
- E0UAGFat8SGIrQJ2EuoV8ghD7uZQkmxm0ZpMkXH9EPEncswDheZOe0rmr1SMwZRpcm+G
- 6Q5rHOWRQrmtr6kNHzpvAGAhx4nXK09tWd/BTzLV8/Pr5eVmYbfp5tDNQfEJrzQdSB8Z
- 7ijAzyJa5tkD7oBwhonCjXEC7CXrOtCiyXb4DXUesmcHzdeRNQJS1UA5moAyqEBF3e6l
- qelg==
-X-Gm-Message-State: APjAAAVnQQhIicHI8/7iDOUxlkhhXEWixTgu6NI4aOYmPZUhEhkxl3TQ
- UTBGkKEO4zJ80NqU9JlxeRhHZTdiCG3x5hiBJXs=
-X-Google-Smtp-Source: APXvYqwUChq6damtRk55oUf7Zrcp9KIH86TIkJanlMOZ7DkRYuzWyCnloYhuthUSUfLp5ojcv0hYa+nQ3bgZ79OFz2Q=
-X-Received: by 2002:a19:4811:: with SMTP id v17mr2625804lfa.10.1557574469109; 
- Sat, 11 May 2019 04:34:29 -0700 (PDT)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9bfbdd9a
+ for <wireguard@lists.zx2c4.com>; Mon, 6 May 2019 21:08:54 +0000 (UTC)
+Received: from mx2.mailbox.org (mx2a.mailbox.org
+ [IPv6:2001:67c:2050:104:0:2:25:2])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2ead80bb
+ for <wireguard@lists.zx2c4.com>; Mon, 6 May 2019 21:08:54 +0000 (UTC)
+Received: from smtp2.mailbox.org (smtp2.mailbox.org
+ [IPv6:2001:67c:2050:105:465:1:2:0])
+ (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+ (No client certificate requested)
+ by mx2.mailbox.org (Postfix) with ESMTPS id BFE13A1038
+ for <wireguard@lists.zx2c4.com>; Mon,  6 May 2019 23:08:52 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at heinlein-support.de
+Received: from smtp2.mailbox.org ([80.241.60.241])
+ by gerste.heinlein-support.de (gerste.heinlein-support.de [91.198.250.173])
+ (amavisd-new, port 10030)
+ with ESMTP id iqpPFk-vxE-9 for <wireguard@lists.zx2c4.com>;
+ Mon,  6 May 2019 23:08:33 +0200 (CEST)
+Date: Tue, 7 May 2019 07:08:27 +1000
+From: Aleksa Sarai <cyphar@cyphar.com>
+To: wireguard@lists.zx2c4.com
+Subject: Overlapping AllowedIPs Configuration
+Message-ID: <20190506210827.2h4nzjxjpmwg7kpa@yavin>
 MIME-Version: 1.0
-References: <20190510115445.GA29887@sita-dell>
- <CAJ6XMjFxfm=0L2URLzn8pkZY1y4zU+mskgd7ykRKOjXSza4tSA@mail.gmail.com>
- <CAJ6XMjH23+k+hu0AighRFX4352O1r332mhd28p=+tw3n0T4+ZQ@mail.gmail.com>
- <20190511010857.GA15995@sita-dell>
-In-Reply-To: <20190511010857.GA15995@sita-dell>
-From: Steve Dodd <steved424@gmail.com>
-Date: Sat, 11 May 2019 12:34:18 +0100
-Message-ID: <CAJ6XMjFeO6uZRPts7w20qvkHoN7kZC6R4cH8s9BwF0nTU6rpCg@mail.gmail.com>
-Subject: Re: Fwd: bypassing wireguard using firejail
-To: Sitaram Chamarty <sitaramc@gmail.com>
-Cc: wireguard@lists.zx2c4.com
+X-Mailman-Approved-At: Sat, 11 May 2019 15:07:56 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -81,121 +56,110 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============7346294604073332494=="
+Content-Type: multipart/mixed; boundary="===============5031711449869283312=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============7346294604073332494==
-Content-Type: multipart/alternative; boundary="000000000000f14d3905889b107a"
 
---000000000000f14d3905889b107a
-Content-Type: text/plain; charset="UTF-8"
-
-On Sat, 11 May 2019 at 02:09, Sitaram Chamarty <sitaramc@gmail.com> wrote:
-
-> On Fri, May 10, 2019 at 05:18:39PM +0100, Steve Dodd wrote:
->
+--===============5031711449869283312==
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="ml4xynxb7agtwmtn"
+Content-Disposition: inline
 
 
-> > I'm not 100% clear on your setup .. Have you got a network namespace set
-> > up? If not, you haven't got much security anyway, I suspect. It turns out
-> > it's not too hard .. you're welcome to my hacky scripts if you're
-> > interested.
->
-> I don't think it has anything to do with my wireguard setup.
->
-
-Network namespaces are worth looking into - it's what I used to avoid
-things "escaping" the VPN. They literally can't see any other interfaces,
-get their own routing table, etc.
-
-Hacky scripts:
-
-setup: https://pastebin.com/TChbUfL5
-teardown: https://pastebin.com/ghYGJQEw
-runas: https://pastebin.com/h9vEvryt (this needs to be run by sudo - edit
-sudoers appropriately)
-
-WG website has gory details:
-
-https://www.wireguard.com/netns/
-
-
-> If you meant firejail setup, it is when I use "--net" (which,
-> according to the manpage, "Enable[s] a new network namespace and
-> connect[s] it to this ethernet interface", that the bypass
-> happens.
->
-
-I was meaning setting up a namespace before running firejail .. I actually
-find it's tidier and avoids confusion about default routes, etc. Then the
-interesting question would be if firejail could break out of that
-namespace, and if so how to stop it.
-
-
-> Some other tool, if it's running as root or is suid root, can
-> still bypass wireguard, regardless of how it is setup.
->
-
-I suspect that can be prevented - on modern systems being root isn't
-necessarily the be-all and end-all. Capabilities and namespaces can still
-be used to  constrain applications in lots of ways.
-
-S.
-
---000000000000f14d3905889b107a
-Content-Type: text/html; charset="UTF-8"
+--ml4xynxb7agtwmtn
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div di=
-r=3D"ltr"><div dir=3D"ltr">On Sat, 11 May 2019 at 02:09, Sitaram Chamarty &=
-lt;<a href=3D"mailto:sitaramc@gmail.com">sitaramc@gmail.com</a>&gt; wrote:<=
-br></div><div class=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex">On Fri, May 10, 2019 at 05:18:39PM +0100, Steve Dodd wrote:<br><=
-/blockquote><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"mar=
-gin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1=
-ex">&gt; I&#39;m not 100% clear on your setup .. Have you got a network nam=
-espace set<br>
-&gt; up? If not, you haven&#39;t got much security anyway, I suspect. It tu=
-rns out<br>
-&gt; it&#39;s not too hard .. you&#39;re welcome to my hacky scripts if you=
-&#39;re<br>
-&gt; interested.<br>
-<br>
-I don&#39;t think it has anything to do with my wireguard setup.<br></block=
-quote><div><br></div><div>Network namespaces are worth looking into - it&#3=
-9;s what I used to avoid things &quot;escaping&quot; the VPN. They literall=
-y can&#39;t see any other interfaces, get their own routing table, etc.</di=
-v><div>=C2=A0</div><div>Hacky scripts:</div><div><br></div><div>setup:=C2=
-=A0<a href=3D"https://pastebin.com/TChbUfL5">https://pastebin.com/TChbUfL5<=
-/a></div><div>teardown: <a href=3D"https://pastebin.com/ghYGJQEw">https://p=
-astebin.com/ghYGJQEw</a><br></div><div>runas:=C2=A0<a href=3D"https://paste=
-bin.com/h9vEvryt">https://pastebin.com/h9vEvryt</a> (this needs to be run b=
-y sudo - edit sudoers appropriately)</div><div><br></div><div>WG website ha=
-s gory details:</div><div><br></div><div><a href=3D"https://www.wireguard.c=
-om/netns/">https://www.wireguard.com/netns/</a><br></div><div>=C2=A0</div><=
-blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-l=
-eft:1px solid rgb(204,204,204);padding-left:1ex">
-If you meant firejail setup, it is when I use &quot;--net&quot; (which,<br>
-according to the manpage, &quot;Enable[s] a new network namespace and<br>
-connect[s] it to this ethernet interface&quot;, that the bypass<br>
-happens.<br></blockquote><div><br></div><div>I was meaning setting up a nam=
-espace before running firejail .. I actually find it&#39;s tidier and avoid=
-s confusion about default routes, etc. Then the interesting question would =
-be if firejail could break out of that namespace, and if so how to stop it.=
-</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0p=
-x 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">So=
-me other tool, if it&#39;s running as root or is suid root, can<br>
-still bypass wireguard, regardless of how it is setup.<br></blockquote><div=
-><br></div><div>I suspect that can be prevented - on modern systems being r=
-oot isn&#39;t necessarily the be-all and end-all. Capabilities and namespac=
-es can still be used to=C2=A0 constrain applications in lots of ways.</div>=
-<div><br></div><div>S.</div></div></div></div></div></div></div>
+Hi all,
 
---000000000000f14d3905889b107a--
+I just found out that WireGuard apparently allows you to configure an
+interface that has peers with overlapping AllowedIPs ranges -- which
+obviously won't work with cryptokey routing -- but additionally is
+strange since I feel this should cause an error when configuring the
+interface.
 
---===============7346294604073332494==
+In my case, I accidentally used /32 when generating the IPv6 addresses
+of my clients and ended up with a config like:
+
+  [Interface]
+  Address =3D 10.13.37.1/32,fd00:dead:beef:cafe::1/64
+  ListenPort =3D 51820
+  PrivateKey =3D [key]
+
+  # Peer A.
+  [Peer]
+  PublicKey =3D [pub]
+  PreSharedKey =3D [psk]
+  AllowedIPs =3D 10.13.40.1/32,fd00:dead:beef:1000::/32
+
+  # Peer B.
+  [Peer]
+  PublicKey =3D [pub]
+  PreSharedKey =3D [psk]
+  AllowedIPs =3D 10.13.41.1/32,fd00:dead:beef:1001::/32
+
+This config is wrong (because both peers have overlapping addresses
+specified for AllowedIPs), but wireguard will happily accept it:
+
+  % wg-quick up wg-foo
+  [#] ip link add wg-yavin type wireguard
+  [#] wg setconf wg-yavin /dev/fd/63
+  [#] ip address add 10.13.37.1/32 dev wg-yavin
+  [#] ip address add fd00:dead:beef:cafe::1/64 dev wg-yavin
+  [#] ip link set mtu 1420 up dev wg-yavin
+  [#] ip route add fd42:dead::/32 dev wg-yavin
+  [#] ip route add 10.13.41.1/32 dev wg-yavin
+  [#] ip route add 10.13.40.1/32 dev wg-yavin
+
+This configuration results in only one of the peers actually being given
+the IPv6 range, but I feel like "wg setconf" should've rejected this
+configuration.
+
+  % wg
+  interface: wg-foo
+    public key: [pub]
+    private key: (hidden)
+    listening port: 51820
+
+  peer: [peer A]
+    preshared key: (hidden)
+    allowed ips: 10.13.40.1/32
+
+  peer: [peer B]
+    preshared key: (hidden)
+    allowed ips: 10.13.41.1/32, fd42:dead::/32
+
+--=20
+Aleksa Sarai
+Senior Software Engineer (Containers)
+SUSE Linux GmbH
+<https://www.cyphar.com/>
+
+--ml4xynxb7agtwmtn
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEb6Gz4/mhjNy+aiz1Snvnv3Dem58FAlzQokgACgkQSnvnv3De
+m5+ijxAAkP5TEer9ELT06psCAMYPFKo00F68NyW0jvDXZwU78MdvOnb6bmCmKS7+
+EjfQeT3ODJHey31SVyo3aNykYiI8ZV+ISyVqFefILNlbN0eW/dkR/5OW/BlrSAfA
+9LOO3pe4DDCLHf3KNVWiCzPL/TDEe7qiD7UAmbGhX1EzQDiJGk59dvr5JUmsdJ1k
+xxRTsc0vL3AMMCRtpO9U0cFGkFK2OBukFTwWtdqKtKynXMiSqBz6rL79wqXuanlJ
+1kLtBwwX5FDGtoLo1iolRCso1Hha0EI/35efXjNCGXm9qzVZE4Y/dGahwf4u1tmW
+JIW/kokIV9usI1TQdK+9q/OOD4KzXBk/uQBdiyEAtrl0fwweauvHQho8Gr8SB5dm
+X78ovA5ZvsIzy2mepXdEUucxB8llFvki3GrIiaIuRvrbDwVvs9Iin0hQs5efP32a
+niy5RvXn2almtzLVmsGLWgqfNA3I0OC1FrPylrwck2FCKzYsji1AwJp6CbaIkpPg
+Yq1MoXd79mNjlswOZZshV8yGGLN+IM6ohLGspWfvLXWrtsy4RlpRuis4uGw8PPeW
+CTcncgwxnzMpbFbInI6oH2oaGaBoBMTZ+mFcFxUTdIYRTqoF3YUH7V4KvDD2Anbu
+HctKlc2bZU4cAX3Gr8WLAls9DRr2HNb+fCwQ0PtNLso6RabstNw=
+=Tqps
+-----END PGP SIGNATURE-----
+
+--ml4xynxb7agtwmtn--
+
+--===============5031711449869283312==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -206,4 +170,4 @@ WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---===============7346294604073332494==--
+--===============5031711449869283312==--
