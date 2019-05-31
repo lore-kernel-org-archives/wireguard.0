@@ -3,133 +3,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FB26C04AB6
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 31 May 2019 07:56:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB590C04AB6
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 31 May 2019 16:46:12 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id EAC7326542
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 31 May 2019 07:56:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id ED90226C61
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 31 May 2019 16:46:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=posteo.net header.i=@posteo.net header.b="GFdy8t/x"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org EAC7326542
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=posteo.net
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="h3LFDHVE"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org ED90226C61
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ee438634;
-	Fri, 31 May 2019 07:56:34 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ac90f745;
+	Fri, 31 May 2019 16:46:10 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 030307ba
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 881be246
  for <wireguard@lists.zx2c4.com>;
- Fri, 31 May 2019 07:56:32 +0000 (UTC)
-Received: from mout01.posteo.de (mout01.posteo.de [185.67.36.65])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0414dfbb
+ Fri, 31 May 2019 16:46:08 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 486dfb24
  for <wireguard@lists.zx2c4.com>;
- Fri, 31 May 2019 07:56:31 +0000 (UTC)
-Received: from submission (posteo.de [89.146.220.130]) 
- by mout01.posteo.de (Postfix) with ESMTPS id 6C1E5160065
- for <wireguard@lists.zx2c4.com>; Fri, 31 May 2019 09:56:30 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.net; s=2017;
- t=1559289390; bh=EwOI/dZczLfQdvk3I5mR/eHISICG3EyPMmrNluWTvrg=;
- h=Subject:To:From:Openpgp:Autocrypt:Date:From;
- b=GFdy8t/xLN3zRNyreQXGlenOHbIK5QtEqmRSV5Ij0NHsaJmWRUf6Z4lFuLKn8Id0f
- HcjdLjT+t13ZsUvrH4CYPmuHCy5sDpqBEQ0TIzuT0Ponm1Ix5oYZDh3YwjKYLT6sj+
- VSSzAgOJAhJ7wMIh/AlfEuJiEI259CsE+pKHJUSmEhmADBs5t/A/wxHR0JqcpFJbZ4
- GEKsNXudERmrhTIKrR2XWvqO+wM/pSsRs1hqmrFkavrJ46EKmwq6i7x5WZ7trhDa3G
- FSsLMB2P0CAdef9bzDO5wyb0h/Va2sYgc0lDAKHuNZdioLAQF2whZAyxOtoKpVNjsy
- W+A7t9iexewlg==
-Received: from customer (localhost [127.0.0.1])
- by submission (posteo.de) with ESMTPSA id 45FcGP2dC5z6tmF
- for <wireguard@lists.zx2c4.com>; Fri, 31 May 2019 09:56:29 +0200 (CEST)
-Subject: Re: debian module install fail
-To: wireguard@lists.zx2c4.com
-References: <e7ad6598-4b9d-dde3-749a-a3bbeaeb2159@posteo.net>
-From: Emanuele Bernardi <e.berna@posteo.net>
-Openpgp: preference=signencrypt
-Autocrypt: addr=e.berna@posteo.net; prefer-encrypt=mutual; keydata=
- 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
-Message-ID: <0d23d6c0-7f7a-c891-c637-59405b801bc3@posteo.net>
-Date: Fri, 31 May 2019 09:56:28 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
+ Fri, 31 May 2019 16:46:08 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e17fd6de
+ for <wireguard@lists.zx2c4.com>;
+ Fri, 31 May 2019 16:15:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=date:to:from
+ :subject:mime-version:content-type; s=mail; bh=f6/D0A6WiEtEwQfdS
+ nW7urgEXWk=; b=h3LFDHVEVT0YnMrVj82ULQa+hD3GPLoYhcb/hdfYpKTVH3W2w
+ DKk++OIyFHWbwi1bdI9IBA+ulVqbeP/CQ1lA5p0/lSWXUv1lJqDUoyqJtNwAwfuh
+ AZBFcc1InunuooOt9kwuGDWiwK6dHIAnyvGrnmECh7YGK14wERXNqaHoJAyyU7By
+ ETL3oOkuKgQGkdy9CqJncbj0N8CROkt16StzTSG5jv+Dcj9AQfT6XihJjLU8QRy/
+ 1UAjchr5aE8Tr+i0b+IYbz0OEJWB8L7GiBlyMhaIQKTbm5f0mmir4+Cu7sr9GC+j
+ kVVrn2WSki4q77C0i9E4dtNxSMIai/loNharw==
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id a564b5c0
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Fri, 31 May 2019 16:15:23 +0000 (UTC)
+Date: Fri, 31 May 2019 18:46:03 +0200
+To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: [ANNOUNCE] WireGuard Snapshot `0.0.20190531` Available
 MIME-Version: 1.0
-In-Reply-To: <e7ad6598-4b9d-dde3-749a-a3bbeaeb2159@posteo.net>
-Content-Language: en-US
+Message-Id: <85eb7b00357c5cb2@frisell.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -141,109 +61,150 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============4315376503435723468=="
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This is a multi-part message in MIME format.
---===============4315376503435723468==
-Content-Type: multipart/alternative;
- boundary="------------2816A2235D55F6BFA35579EA"
-Content-Language: en-US
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-This is a multi-part message in MIME format.
---------------2816A2235D55F6BFA35579EA
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Hello,
 
-Actually was the secure boot enabled.. sorry.
+A new snapshot, `0.0.20190531`, has been tagged in the git repository.
 
-Emanuele
+Please note that this snapshot is, like the rest of the project at this point
+in time, experimental, and does not constitute a real release that would be
+considered secure and bug-free. WireGuard is generally thought to be fairly
+stable, and most likely will not crash your computer (though it may).
+However, as this is a pre-release snapshot, it comes with no guarantees, and
+its security is not yet to be depended on; it is not applicable for CVEs.
 
-On 5/31/19 9:46 AM, Emanuele Bernardi wrote:
-> Hi, i normally compile wireguard in my debian machine. Having to
-> change my laptop i tried to recompile it and on the make module-install i
-> get this error:
->
->  INSTALL /home/lele/Downloads/tmp/test/WireGuard/src/wireguard.ko
->   DEPMOD  4.19.0-5-amd64
-> Warning: modules_install: missing 'System.map' file. Skipping depmod.
-> depmod -a
->
-> All the dependencies are installed as listed on the wireguard page.
-> some suggestions?
->
-> Thanks
-> Emanuele
->
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
+With all that said, if you'd like to test this snapshot out, there are a
+few relevant changes.
+
+== Changes ==
+
+  * tools: add wincompat layer to wg(8)
+  
+  Consistent with a lot of the Windows work we've been doing this last cycle,
+  wg(8) now supports the WireGuard for Windows app by talking through a named
+  pipe. You can compile this as `PLATFORM=windows make -C src/tools` with mingw.
+  Because programming things for Windows is pretty ugly, we've done this via a
+  separate standalone wincompat layer, so that we don't pollute our pretty *nix
+  utility.
+  
+  * compat: udp_tunnel: force cast sk_data_ready
+  
+  This is a hack to work around broken Android kernel wrapper scripts.
+  
+  * wg-quick: freebsd: workaround SIOCGIFSTATUS race in FreeBSD kernel
+  
+  FreeBSD had a number of kernel race conditions, some of which we can vaguely
+  work around. These are in the process of being fixed upstream, but probably
+  people won't update for a while.
+  
+  * wg-quick: make darwin and freebsd path search strict like linux
+  
+  Correctness.
+  
+  * socket: set ignore_df=1 on xmit
+  
+  This was intended from early on but didn't work on IPv6 without the ignore_df
+  flag. It allows sending fragments over IPv6.
+  
+  * qemu: use newer iproute2 and kernel
+  * qemu: build iproute2 with libmnl support
+  * qemu: do not check for alignment with ubsan
+  
+  The QEMU build system has been improved to compile newer versions. Linking
+  against libmnl gives us better error messages. As well, enabling the alignment
+  check on x86 UBSAN isn't realistic.
+  
+  * wg-quick: look up existing routes properly
+  * wg-quick: specify protocol to ip(8), because of inconsistencies
+  
+  The route inclusion check was wrong prior, and Linux 5.1 made it break
+  entirely. This makes a better invocation of `ip route show match`.
+  
+  * netlink: use new strict length types in policy for 5.2
+  * kbuild: account for recent upstream changes
+  * zinc: arm64: use cpu_get_elf_hwcap accessor for 5.2
+  
+  The usual churn of changes required for the upcoming 5.2.
+  
+  * timers: add jitter on ack failure reinitiation
+  
+  Correctness tweak in the timer system.
+  
+  * blake2s,chacha: latency tweak
+  * blake2s: shorten ssse3 loop
+  
+  In every odd-numbered round, instead of operating over the state
+      x00 x01 x02 x03
+      x05 x06 x07 x04
+      x10 x11 x08 x09
+      x15 x12 x13 x14
+  we operate over the rotated state
+      x03 x00 x01 x02
+      x04 x05 x06 x07
+      x09 x10 x11 x08
+      x14 x15 x12 x13
+  The advantage here is that this requires no changes to the 'x04 x05 x06 x07'
+  row, which is in the critical path. This results in a noticeable latency
+  improvement of roughly R cycles, for R diagonal rounds in the primitive. As
+  well, the blake2s AVX implementation is now SSSE3 and considerably shorter.
+  
+  * tools: allow setting WG_ENDPOINT_RESOLUTION_RETRIES
+  
+  System integrators can now specify things like
+  WG_ENDPOINT_RESOLUTION_RETRIES=infinity when building wg(8)-based init
+  scripts and services, or 0, or any other integer.
+
+This snapshot contains commits from: Jason A. Donenfeld, Samuel Neves, and 
+Joe Holden.
+
+As always, the source is available at https://git.zx2c4.com/WireGuard/ and
+information about the project is available at https://www.wireguard.com/ .
+
+This snapshot is available in compressed tarball form here:
+  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-0.0.20190531.tar.xz
+  SHA2-256: 8b0280322ec4c46fd1a786af4db0c4d0c600053542c4563582baac478e4127b1
+  BLAKE2b-256: aacf7222915d00fa9b4f091a3b1c6b2f5dc296f767b1d92da213e53e99795eaf
+
+A PGP signature of that file decompressed is available here:
+  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-0.0.20190531.tar.asc
+  Signing key: AB9942E6D4A4CFC3412620A749FC7012A5DE03AE
+
+If you're a snapshot package maintainer, please bump your package version. If
+you're a user, the WireGuard team welcomes any and all feedback on this latest
+snapshot.
+
+Finally, WireGuard development thrives on donations. By popular demand, we
+have a webpage for this: https://www.wireguard.com/donations/
+
+Thank you,
+Jason Donenfeld
 
 
---------------2816A2235D55F6BFA35579EA
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: 8bit
+-----BEGIN PGP SIGNATURE-----
 
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body text="#000000" bgcolor="#FFFFFF">
-    <font size="-1"><font face="Liberation Mono">Actually was the secure
-        boot enabled.. sorry.<br>
-        <br>
-        Emanuele<br>
-      </font></font><br>
-    <div class="moz-cite-prefix">On 5/31/19 9:46 AM, Emanuele Bernardi
-      wrote:<br>
-    </div>
-    <blockquote type="cite"
-      cite="mid:e7ad6598-4b9d-dde3-749a-a3bbeaeb2159@posteo.net">
-      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-      <font size="-1"><font face="Liberation Mono">Hi, i normally
-          compile wireguard in my debian machine. Having to change my
-          laptop i tried to recompile it and on the make module-install
-          i <br>
-          get this error: <br>
-          <br>
-           INSTALL
-          /home/lele/Downloads/tmp/test/WireGuard/src/wireguard.ko<br>
-            DEPMOD  4.19.0-5-amd64<br>
-          Warning: modules_install: missing 'System.map' file. Skipping
-          depmod.<br>
-          depmod -a<br>
-          <br>
-          All the dependencies are installed as listed on the wireguard
-          page.<br>
-          some suggestions?<br>
-          <br>
-          Thanks<br>
-          Emanuele<br>
-        </font></font> <br>
-      <fieldset class="mimeAttachmentHeader"></fieldset>
-      <pre class="moz-quote-pre" wrap="">_______________________________________________
-WireGuard mailing list
-<a class="moz-txt-link-abbreviated" href="mailto:WireGuard@lists.zx2c4.com">WireGuard@lists.zx2c4.com</a>
-<a class="moz-txt-link-freetext" href="https://lists.zx2c4.com/mailman/listinfo/wireguard">https://lists.zx2c4.com/mailman/listinfo/wireguard</a>
-</pre>
-    </blockquote>
-    <br>
-  </body>
-</html>
-
---------------2816A2235D55F6BFA35579EA--
-
---===============4315376503435723468==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
+iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAlzxWjAQHGphc29uQHp4
+MmM0LmNvbQAKCRBJ/HASpd4DrnZUD/9Z4WqAOh3Ule6iis8v0Agpe88fvqIgrvoo
+tjsQZ8sjXIUnrM/B8TfHcI2YlI6d0Q9mB83Ql2ybHqCPQxRv8j37glhce9yq+h9g
+5gYg4SHW1HzJhqLyiGKwRVxvmMo5oKrl2/c9sSuZkXq8OhGrWLX89qR/p9a7NADT
+ddtBLqqwq4QPRR2m97Or4KHF7BqCOA0958TZsaTu5CU6e2/9EO3Da1BV5+MKluwg
+8bacyLUHPFDg0zJIMBkscjwFGJnddrQnai5XfTXSH40FKGN/OJcWokxvYElzNXeQ
+q+TxzE2ZsLOjVM2Lsml0Mt8lOGCSSLNfBEhJBS6htLVEjRtI4lS0KdrCgdyH1WsG
+3KNc8XzkFmTFHQ2QmMuKKMy/4LUuC9EGtSYJGVAiwt3BQesyh4RBlzlNwshgVOJx
+7GYR/IZQ7YJvol0WqVC9GzudHHbWXcM+er6vtCkBZUVY6CArRphWYfQm50LUbGxo
+9I178KEdOnZhdYwyfPNnYcNDXHFoUhqpyK/qQXHab2eHeIoQJdSymO/VGLh9GO12
+Otuec3BwZMPqEQlDdUuFPH22v/htcJVejKk9pF0DKxXgqB0NR5X59SashIru+33l
+NEYnOz2bg4PZhnsPEIbnCAbLtvQRv0BzSknO2MUaiLi61Krgz1Gc8ChqUZltubC/
+Gknv9Oznug==
+=fYEC
+-----END PGP SIGNATURE-----
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
-
---===============4315376503435723468==--
