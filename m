@@ -6,47 +6,48 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B412C04AB6
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 31 May 2019 07:46:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FB26C04AB6
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 31 May 2019 07:56:47 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 6C7E12652F
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 31 May 2019 07:46:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id EAC7326542
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 31 May 2019 07:56:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=posteo.net header.i=@posteo.net header.b="YdXTXWd8"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 6C7E12652F
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=posteo.net header.i=@posteo.net header.b="GFdy8t/x"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org EAC7326542
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=posteo.net
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3f23f77b;
-	Fri, 31 May 2019 07:46:36 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ee438634;
+	Fri, 31 May 2019 07:56:34 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9d2ae8e6
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 030307ba
  for <wireguard@lists.zx2c4.com>;
- Fri, 31 May 2019 07:46:32 +0000 (UTC)
-Received: from mout02.posteo.de (mout02.posteo.de [185.67.36.66])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 60f71a6a
+ Fri, 31 May 2019 07:56:32 +0000 (UTC)
+Received: from mout01.posteo.de (mout01.posteo.de [185.67.36.65])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0414dfbb
  for <wireguard@lists.zx2c4.com>;
- Fri, 31 May 2019 07:46:32 +0000 (UTC)
+ Fri, 31 May 2019 07:56:31 +0000 (UTC)
 Received: from submission (posteo.de [89.146.220.130]) 
- by mout02.posteo.de (Postfix) with ESMTPS id 55A752400E5
- for <wireguard@lists.zx2c4.com>; Fri, 31 May 2019 09:46:31 +0200 (CEST)
+ by mout01.posteo.de (Postfix) with ESMTPS id 6C1E5160065
+ for <wireguard@lists.zx2c4.com>; Fri, 31 May 2019 09:56:30 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.net; s=2017;
- t=1559288791; bh=fF8esyjAtMk7oGwBWbX6WEKYj2J48KJjNFY9TX2aw5A=;
- h=To:From:Subject:Openpgp:Autocrypt:Date:From;
- b=YdXTXWd8onoKjYhhsDZBbXe6PbFz9l+vlz/fHK+Z3mnUb4D9lCZ1oi1XbSHTESYLa
- 00aBqUM99WfoFwPBU0IqoyqutSlBUuDUfP6lpLu+t65pff7jHs9s/BdbcvOgK0a6sS
- BwSRnLgppXQO1fJC595VeW9wof1QnW0gjiHnfmYhFm2gW7lWtZE+oTnbhlvaxpBRsx
- PovZj9dwVDyNFdS6dw8XmkIsr7w5d/aR+IPPlsPP2rEJNDVQfQVtOP+d+UIlgf6J2b
- K88Hwdj59PN+RG78q3ASzka/Pox7qi98sQ/58VGvfU+PV466RZGj3Axax6/J+2so3B
- 9kyRZxFkMUjsw==
+ t=1559289390; bh=EwOI/dZczLfQdvk3I5mR/eHISICG3EyPMmrNluWTvrg=;
+ h=Subject:To:From:Openpgp:Autocrypt:Date:From;
+ b=GFdy8t/xLN3zRNyreQXGlenOHbIK5QtEqmRSV5Ij0NHsaJmWRUf6Z4lFuLKn8Id0f
+ HcjdLjT+t13ZsUvrH4CYPmuHCy5sDpqBEQ0TIzuT0Ponm1Ix5oYZDh3YwjKYLT6sj+
+ VSSzAgOJAhJ7wMIh/AlfEuJiEI259CsE+pKHJUSmEhmADBs5t/A/wxHR0JqcpFJbZ4
+ GEKsNXudERmrhTIKrR2XWvqO+wM/pSsRs1hqmrFkavrJ46EKmwq6i7x5WZ7trhDa3G
+ FSsLMB2P0CAdef9bzDO5wyb0h/Va2sYgc0lDAKHuNZdioLAQF2whZAyxOtoKpVNjsy
+ W+A7t9iexewlg==
 Received: from customer (localhost [127.0.0.1])
- by submission (posteo.de) with ESMTPSA id 45Fc2t5DWLz9rxS
- for <wireguard@lists.zx2c4.com>; Fri, 31 May 2019 09:46:30 +0200 (CEST)
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+ by submission (posteo.de) with ESMTPSA id 45FcGP2dC5z6tmF
+ for <wireguard@lists.zx2c4.com>; Fri, 31 May 2019 09:56:29 +0200 (CEST)
+Subject: Re: debian module install fail
+To: wireguard@lists.zx2c4.com
+References: <e7ad6598-4b9d-dde3-749a-a3bbeaeb2159@posteo.net>
 From: Emanuele Bernardi <e.berna@posteo.net>
-Subject: debian module install fail
 Openpgp: preference=signencrypt
 Autocrypt: addr=e.berna@posteo.net; prefer-encrypt=mutual; keydata=
  mQINBFkZxFkBEADJXOtgcBTqKx5Nz8/54fMAzBrg9Rsvf0TKzAFTEUf4+EI3NLVTyyvEvk93
@@ -122,11 +123,12 @@ Autocrypt: addr=e.berna@posteo.net; prefer-encrypt=mutual; keydata=
  E8MhXvrHtT1cM8TpbHLcnXJX6qIBdhdXAx9jd98aXRXzK4S2F6GJay+6RUR9j+VZUe6vvrLz
  g98pFdl4uaGUR8Oqx6ZK8iIAbhd+El07PoWEhJihf7opNtGbJJw/oc7ZSLoPL9xJifvQlmB6
  VBvGzk7Uj32uf6OP8ioA6vR3cwn001XbpEhQFhE+0ngo
-Message-ID: <e7ad6598-4b9d-dde3-749a-a3bbeaeb2159@posteo.net>
-Date: Fri, 31 May 2019 09:46:30 +0200
+Message-ID: <0d23d6c0-7f7a-c891-c637-59405b801bc3@posteo.net>
+Date: Fri, 31 May 2019 09:56:28 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.7.0
 MIME-Version: 1.0
+In-Reply-To: <e7ad6598-4b9d-dde3-749a-a3bbeaeb2159@posteo.net>
 Content-Language: en-US
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
@@ -139,71 +141,101 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============2682750392346388924=="
+Content-Type: multipart/mixed; boundary="===============4315376503435723468=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
 This is a multi-part message in MIME format.
---===============2682750392346388924==
+--===============4315376503435723468==
 Content-Type: multipart/alternative;
- boundary="------------54CA7EE943CC76F90BCFF277"
+ boundary="------------2816A2235D55F6BFA35579EA"
 Content-Language: en-US
 
 This is a multi-part message in MIME format.
---------------54CA7EE943CC76F90BCFF277
+--------------2816A2235D55F6BFA35579EA
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-Hi, i normally compile wireguard in my debian machine. Having to change
-my laptop i tried to recompile it and on the make module-install i
-get this error:
+Actually was the secure boot enabled.. sorry.
 
- INSTALL /home/lele/Downloads/tmp/test/WireGuard/src/wireguard.ko
-  DEPMOD  4.19.0-5-amd64
-Warning: modules_install: missing 'System.map' file. Skipping depmod.
-depmod -a
-
-All the dependencies are installed as listed on the wireguard page.
-some suggestions?
-
-Thanks
 Emanuele
 
---------------54CA7EE943CC76F90BCFF277
+On 5/31/19 9:46 AM, Emanuele Bernardi wrote:
+> Hi, i normally compile wireguard in my debian machine. Having to
+> change my laptop i tried to recompile it and on the make module-install i
+> get this error:
+>
+>  INSTALL /home/lele/Downloads/tmp/test/WireGuard/src/wireguard.ko
+>   DEPMOD  4.19.0-5-amd64
+> Warning: modules_install: missing 'System.map' file. Skipping depmod.
+> depmod -a
+>
+> All the dependencies are installed as listed on the wireguard page.
+> some suggestions?
+>
+> Thanks
+> Emanuele
+>
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+
+--------------2816A2235D55F6BFA35579EA
 Content-Type: text/html; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
 <html>
   <head>
-
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   </head>
   <body text="#000000" bgcolor="#FFFFFF">
-    <font size="-1"><font face="Liberation Mono">Hi, i normally compile
-        wireguard in my debian machine. Having to change my laptop i
-        tried to recompile it and on the make module-install i <br>
-        get this error: <br>
+    <font size="-1"><font face="Liberation Mono">Actually was the secure
+        boot enabled.. sorry.<br>
         <br>
-         INSTALL
-        /home/lele/Downloads/tmp/test/WireGuard/src/wireguard.ko<br>
-          DEPMOD  4.19.0-5-amd64<br>
-        Warning: modules_install: missing 'System.map' file. Skipping
-        depmod.<br>
-        depmod -a<br>
-        <br>
-        All the dependencies are installed as listed on the wireguard
-        page.<br>
-        some suggestions?<br>
-        <br>
-        Thanks<br>
         Emanuele<br>
-      </font></font>
+      </font></font><br>
+    <div class="moz-cite-prefix">On 5/31/19 9:46 AM, Emanuele Bernardi
+      wrote:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:e7ad6598-4b9d-dde3-749a-a3bbeaeb2159@posteo.net">
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <font size="-1"><font face="Liberation Mono">Hi, i normally
+          compile wireguard in my debian machine. Having to change my
+          laptop i tried to recompile it and on the make module-install
+          i <br>
+          get this error: <br>
+          <br>
+           INSTALL
+          /home/lele/Downloads/tmp/test/WireGuard/src/wireguard.ko<br>
+            DEPMOD  4.19.0-5-amd64<br>
+          Warning: modules_install: missing 'System.map' file. Skipping
+          depmod.<br>
+          depmod -a<br>
+          <br>
+          All the dependencies are installed as listed on the wireguard
+          page.<br>
+          some suggestions?<br>
+          <br>
+          Thanks<br>
+          Emanuele<br>
+        </font></font> <br>
+      <fieldset class="mimeAttachmentHeader"></fieldset>
+      <pre class="moz-quote-pre" wrap="">_______________________________________________
+WireGuard mailing list
+<a class="moz-txt-link-abbreviated" href="mailto:WireGuard@lists.zx2c4.com">WireGuard@lists.zx2c4.com</a>
+<a class="moz-txt-link-freetext" href="https://lists.zx2c4.com/mailman/listinfo/wireguard">https://lists.zx2c4.com/mailman/listinfo/wireguard</a>
+</pre>
+    </blockquote>
+    <br>
   </body>
 </html>
 
---------------54CA7EE943CC76F90BCFF277--
+--------------2816A2235D55F6BFA35579EA--
 
---===============2682750392346388924==
+--===============4315376503435723468==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -214,4 +246,4 @@ WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---===============2682750392346388924==--
+--===============4315376503435723468==--
