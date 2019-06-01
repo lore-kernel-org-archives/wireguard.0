@@ -2,50 +2,90 @@ Return-Path: <SRS0=pslF=UA=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3737C28CC1
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  1 Jun 2019 11:36:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB0BDC28CC3
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  1 Jun 2019 23:50:22 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 0CD5F270D7
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  1 Jun 2019 11:36:44 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="nT07P1i0"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 0CD5F270D7
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id D96EC277DF
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  1 Jun 2019 23:50:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org D96EC277DF
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=53c70r.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 681e66d0;
-	Sat, 1 Jun 2019 11:36:43 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 97f7c1f0;
+	Sat, 1 Jun 2019 23:50:20 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4833fa31
- for <wireguard@lists.zx2c4.com>; Sat, 1 Jun 2019 11:36:41 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ccff5100
- for <wireguard@lists.zx2c4.com>; Sat, 1 Jun 2019 11:36:41 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 91892f85
- for <wireguard@lists.zx2c4.com>; Sat, 1 Jun 2019 11:05:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=date:to:from
- :subject:mime-version:content-type; s=mail; bh=CYpLANxBqeR8VGOZn
- VPIiwiU3Kk=; b=nT07P1i0YFD+Cw/nj/vEzIW+TPG2iOBhD4pfvgMan2x7IyTSu
- u68unvmBPQQ8+8kJdNJTat9SRjoVJeHLLbJVxq3fDWmOcUSWWuXSa3UBPUWwKwqt
- K3tBZiLTNkLbZhd5SEcAKBL7OmWzx95Rt36VGo2cMf/nfwSKA2Nino6jRnNc0LOW
- CqyeWb/zmfbyyeJoAwSnh0V6/Bw3/fxL8SEILoEtPzk7Nv4dSeJeU7fo2/6v9AyP
- fLfXNmxQ6YSL8iyHR5yCGykkTFfAGagnJwjpMG2GTU/XCTrN5jSGpSmkcWnNfMLE
- e6FekTj+7H7faKXwyhfHaNOhiERvSmpulJhbw==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id e2c4fe22
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sat, 1 Jun 2019 11:05:50 +0000 (UTC)
-Date: Sat, 01 Jun 2019 13:36:39 +0200
-To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: [ANNOUNCE] WireGuard Snapshot `0.0.20190601` Available
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 36c99433
+ for <wireguard@lists.zx2c4.com>; Sat, 1 Jun 2019 23:50:17 +0000 (UTC)
+Received: from mx2.mailbox.org (mx2.mailbox.org [80.241.60.215])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id efa3f229
+ for <wireguard@lists.zx2c4.com>; Sat, 1 Jun 2019 23:50:17 +0000 (UTC)
+Received: from smtp1.mailbox.org (smtp1.mailbox.org [80.241.60.240])
+ (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+ (No client certificate requested)
+ by mx2.mailbox.org (Postfix) with ESMTPS id B6278A0134
+ for <wireguard@lists.zx2c4.com>; Sun,  2 Jun 2019 01:50:15 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at heinlein-support.de
+Received: from smtp1.mailbox.org ([80.241.60.240])
+ by spamfilter02.heinlein-hosting.de (spamfilter02.heinlein-hosting.de
+ [80.241.56.116]) (amavisd-new, port 10030)
+ with ESMTP id ca9U_qV7ADB9 for <wireguard@lists.zx2c4.com>;
+ Sun,  2 Jun 2019 01:50:14 +0200 (CEST)
+From: Silvan Nagl <mail@53c70r.de>
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Openpgp: preference=signencrypt
+Autocrypt: addr=mail@53c70r.de; keydata=
+ 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
+Subject: wg-quick up automation fails
+Message-ID: <b46b6815-347b-1410-51df-db52c7386313@53c70r.de>
+Date: Sun, 2 Jun 2019 01:49:21 +0200
 MIME-Version: 1.0
-Message-Id: <85ebbb5e0c1dc1e4@frisell.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -57,82 +97,123 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="===============2917453616749361398=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--===============2917453616749361398==
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="qgufJkXrtXiRfksBYpL6eWLsqT8oFeWz9"
 
-Hello,
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--qgufJkXrtXiRfksBYpL6eWLsqT8oFeWz9
+Content-Type: multipart/mixed; boundary="iZtqO3UAHO6nwJt1XPn9Y17LaxkzIMnPG";
+ protected-headers="v1"
+From: Silvan Nagl <mail@53c70r.de>
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Message-ID: <b46b6815-347b-1410-51df-db52c7386313@53c70r.de>
+Subject: wg-quick up automation fails
 
-A new snapshot, `0.0.20190601`, has been tagged in the git repository.
+--iZtqO3UAHO6nwJt1XPn9Y17LaxkzIMnPG
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
 
-Please note that this snapshot is, like the rest of the project at this point
-in time, experimental, and does not constitute a real release that would be
-considered secure and bug-free. WireGuard is generally thought to be fairly
-stable, and most likely will not crash your computer (though it may).
-However, as this is a pre-release snapshot, it comes with no guarantees, and
-its security is not yet to be depended on; it is not applicable for CVEs.
+G'day,
 
-With all that said, if you'd like to test this snapshot out, there are a
-few relevant changes.
+i recently upgrade WireGuard to the latest shipped Debian version
+(0.0.20190406-1) and noticed my wg-quick created interface did not come
+up as usual anymore. (Also tried the git master branch) I tried to
+single command trough wg-quick's automation to reproduce the error;
 
-== Changes ==
+automatic:
 
-  * compat: don't call xgetbv on cpus with no XSAVE
-  
-  There was an issue with the backport compat layer in yesterday's snapshot,
-  causing issues on certain (mostly Atom) Intel chips on kernels older than
-  4.2, due to the use of xgetbv without checking cpu flags for xsave support.
-  This manifested itself simply at module load time. Indeed it's somewhat tricky
-  to support 33 different kernel versions (3.10+), plus weird distro
-  frankenkernels.
+[#] ip link add Y type wireguard
+[#] wg setconf Y /dev/fd/63
+[#] ip address add X.X.X.X/32 dev Y
+[#] ip address add fc00::XXXX/128 dev Y
+[#] ip link set mtu XXXX up dev Y
+[#] resolvconf -a tun.Y -m 0 -x
+[#] wg set Y fwmark 51820
+[#] ip -6 route add ::/0 dev Y table 51820
+RTNETLINK answers: No such device
+[#] resolvconf -d tun.Y
+[#] ip link delete dev Y
 
-This snapshot contains commits from: Jason A. Donenfeld.
+manual:
 
-As always, the source is available at https://git.zx2c4.com/WireGuard/ and
-information about the project is available at https://www.wireguard.com/ .
+> ip link add Y type wireguard
 
-This snapshot is available in compressed tarball form here:
-  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-0.0.20190601.tar.xz
-  SHA2-256: 7528461824a0174bd7d4f15e68d8f0ce9a8ea318411502b80759438e8ef65568
-  BLAKE2b-256: 24819b8077fb3da083f549eab23be4e1fa32584810c4a2050dafaac9e0b8fbf7
+> wg setconf Y <(wg-quick strip /etc/wireguard/Y.conf)
 
-A PGP signature of that file decompressed is available here:
-  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-0.0.20190601.tar.asc
-  Signing key: AB9942E6D4A4CFC3412620A749FC7012A5DE03AE
+> ip address add X.X.X.X/32 dev Y
 
-If you're a snapshot package maintainer, please bump your package version. If
-you're a user, the WireGuard team welcomes any and all feedback on this latest
-snapshot.
+> ip address add fc00::XXXX/128 dev Y
 
-Finally, WireGuard development thrives on donations. By popular demand, we
-have a webpage for this: https://www.wireguard.com/donations/
+> ip link set mtu 1268 up dev Y
 
-Thank you,
-Jason Donenfeld
+> resolvconf -a tun.X -m 0 -x
 
+> wg set Y fwmark 51820
+
+> ip -6 route add ::/0 dev Y table 51820
+
+< RTNETLINK answers: No such device
+
+(MTU may be to low here so i set it higher again)
+
+> ip link set mtu 1420 up dev Y
+
+> ip -6 route add ::/0 dev Y table 51820 (works now)
+
+breaks up @ this point because of error handling...
+
+Additionally it could be possible the MTU isn't set correctly.
+
+
+Greetings,
+
+53c70r
+
+
+
+--iZtqO3UAHO6nwJt1XPn9Y17LaxkzIMnPG--
+
+--qgufJkXrtXiRfksBYpL6eWLsqT8oFeWz9
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAlzyYzoQHGphc29uQHp4
-MmM0LmNvbQAKCRBJ/HASpd4DruUAEADKX34C+K/6lIG35zdf1E+ujIlmOuzTdftq
-tN0j6SmeodbSN1Krr2nmRH5He8PBjhhaVLIw7HdH8P+wYeoXiqARIfGGI39xno9n
-HQyfiMc9KQlAZ8ezm8BmSWKkGMZvD7oTOlMWvY+vpBzu0UOFlJIzbQ36iMZ2sdnv
-gP9wK+pGYKhWuUvBFvtEHejH2UyRFE879b6WXHhWUZxqjUuNE/xISdyw+sJdK5P1
-sGBc9M85UB90ewk2/w968ZAd8EX6NCrtbtPpJxS4UwSl88RxHLZWTLZPPcR7nhTn
-/CzNBHATJvWoWXBGSW2STG3PqYQ1X/O5ZaansRL6PzM5FMwU15H+n16LQYCcJgYc
-6rXoWvw37cIrS5SbFcJqhVAG+ElbtVfNksfgXHrgvPSd+ENgqfm6q6479W+eME/t
-pGDY9l1Fuzn8KsfP1rEH8lhiwI8a96PWraDl0ANpz1A5wLXpKfIBp1ST1xbUiKMg
-4gTmNCr9M1tf/N4YjQmXao/+whpe1NCPhelb0PHthUsi/3chq7E0yyGTWsY57wz/
-A53/k6BNxgC9WTthbC2DOGRZhLeevnule5HmV7O2IUNFcwlycCKEhitJGbjNTClg
-c0uOcNvByqwEz0QwulsBskfqkaJOsGZfDzD/bBbLlotawJUwsunnoM0Wsvugn6ST
-4SUjd0PlKw==
-=jWln
+iQIzBAEBCAAdFiEEQpT5YDzZ7uyx9O7LykgGkpeSnhIFAlzzDwkACgkQykgGkpeS
+nhICww//TJdGvTdT/PQ5O1OFtKqV0THMSy5D2pnULhqRUxQfm6WlUnj2ycgozvP7
+sEcs/AF2yDRwxmV0L21cnTjzRpyGnV9KDZf+/lPJNjeDnDBNDtkr6eZGzwPPa2ov
+Sp7sdDZDuiRMy8s1Si4vhtFrGGeDXEJM7Hhz1XCXq0NZUrIGvF4YAXQ31snQ2Qw2
+rTdhrLbs4fDGn8Mazir5unQ6EEPZbxv+1dqHKrSen3rLiV1zXk0H+du175bGz4Qy
+AHCy5935Nt+VG2CyTLk596k8T4mdsO/SEstDFm6PhsaOKyhlaN1AR80HiQT7iql8
+J9F5cz6pHf/iLNZ9epNAeqDWKDoyS6baGomSJ0vs3EMkIjpRfvRKoDn6BCt8nA5/
+9qadNUeNYN5J1G2qpJCrwSMI6W9/ASUmP7zKS23PkW0JEbPWdzuHSu3LiQVh6A0q
+ZehGT1fZoE6hmiyNOYYz8lmXM2tc9xdwWDUsCtPxkuMMn/+U9YozOQbEZk3cNtzr
+OnnJBe1o3ywsf8x76XKkoGFvbV056MQUUqkmuzHZjxG+4YhJ98sarVQES5pnhTtt
+vC9cgb5W6saS2vhaKPhyFRYckW4Bk7SzDzUgnJMnLN8dfPWLbGvL/nSzK6hsNGg6
+0Ek6LgV3akHn60BPHNZGaEwdRTt2o5ueTLMc9TKSH7G4WtklRyE=
+=dGwr
 -----END PGP SIGNATURE-----
+
+--qgufJkXrtXiRfksBYpL6eWLsqT8oFeWz9--
+
+--===============2917453616749361398==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--===============2917453616749361398==--
