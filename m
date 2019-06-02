@@ -6,40 +6,42 @@ X-Spam-Status: No, score=-1.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C0B5C282DC
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  2 Jun 2019 10:28:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 934F5C282DC
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  2 Jun 2019 10:39:39 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 734FA20859
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  2 Jun 2019 10:28:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 734FA20859
+	by mail.kernel.org (Postfix) with ESMTPS id 359C2275D9
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  2 Jun 2019 10:39:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 359C2275D9
 Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=53c70r.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e86a7345;
-	Sun, 2 Jun 2019 10:28:10 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9ec286b7;
+	Sun, 2 Jun 2019 10:39:22 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cda2059e
- for <wireguard@lists.zx2c4.com>; Sun, 2 Jun 2019 10:28:08 +0000 (UTC)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 94801f82
+ for <wireguard@lists.zx2c4.com>; Sun, 2 Jun 2019 10:39:20 +0000 (UTC)
 Received: from mx1.mailbox.org (mx1.mailbox.org [80.241.60.212])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 034df683
- for <wireguard@lists.zx2c4.com>; Sun, 2 Jun 2019 10:28:07 +0000 (UTC)
-Received: from smtp1.mailbox.org (smtp1.mailbox.org
- [IPv6:2001:67c:2050:105:465:1:1:0])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5ae27d9f
+ for <wireguard@lists.zx2c4.com>; Sun, 2 Jun 2019 10:39:19 +0000 (UTC)
+Received: from smtp2.mailbox.org (smtp2.mailbox.org
+ [IPv6:2001:67c:2050:105:465:1:2:0])
  (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
  (No client certificate requested)
- by mx1.mailbox.org (Postfix) with ESMTPS id C06444F729;
- Sun,  2 Jun 2019 12:28:06 +0200 (CEST)
+ by mx1.mailbox.org (Postfix) with ESMTPS id 4F5BE4E41F
+ for <wireguard@lists.zx2c4.com>; Sun,  2 Jun 2019 12:39:19 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at heinlein-support.de
-Received: from smtp1.mailbox.org ([80.241.60.240])
- by spamfilter03.heinlein-hosting.de (spamfilter03.heinlein-hosting.de
- [80.241.56.117]) (amavisd-new, port 10030)
- with ESMTP id Uu7ZexP6bYJo; Sun,  2 Jun 2019 12:28:03 +0200 (CEST)
+Received: from smtp2.mailbox.org ([80.241.60.241])
+ by spamfilter01.heinlein-hosting.de (spamfilter01.heinlein-hosting.de
+ [80.241.56.115]) (amavisd-new, port 10030)
+ with ESMTP id GjOyaMeztg9A for <wireguard@lists.zx2c4.com>;
+ Sun,  2 Jun 2019 12:39:13 +0200 (CEST)
 Subject: Re: wg-quick up automation fails
-To: XRP <xrp@airmail.cc>
+To: wireguard@lists.zx2c4.com
 References: <b46b6815-347b-1410-51df-db52c7386313@53c70r.de>
  <49c02779bfc7c9109e6083d24b88244bb3411ef1.camel@airmail.cc>
+ <125a5194-c3c3-a409-3673-e2c752c398bf@53c70r.de>
 From: Silvan Nagl <mail@53c70r.de>
 Openpgp: preference=signencrypt
 Autocrypt: addr=mail@53c70r.de; keydata=
@@ -85,12 +87,11 @@ Autocrypt: addr=mail@53c70r.de; keydata=
  Y9ikLGQKN+s/1G5jm/QbK5BKTWQmGLd54acPiDrAo3baSC4Ix2Qw+Eu3H9Lp9xBjC5EdxqoG
  aJPj4jG9PbldcR+y9hCcf/h9VcN2/KFC5UZCfwwIiSQLpQlLfc66lZKefccX7AKkjDCEv/WN
  3wENw+yXgVxiQzeXaGniknvPMkYbVy9TLTZGnxKxSiagGMIkUT1t/nA61Qeztw==
-Message-ID: <125a5194-c3c3-a409-3673-e2c752c398bf@53c70r.de>
-Date: Sun, 2 Jun 2019 12:27:28 +0200
+Message-ID: <978138c3-3366-72f0-3950-3e33e5eeefe5@53c70r.de>
+Date: Sun, 2 Jun 2019 12:38:38 +0200
 MIME-Version: 1.0
-In-Reply-To: <49c02779bfc7c9109e6083d24b88244bb3411ef1.camel@airmail.cc>
+In-Reply-To: <125a5194-c3c3-a409-3673-e2c752c398bf@53c70r.de>
 Content-Language: en-US
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -107,63 +108,79 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
+Hi again,
 
-as i already mentioned the problem persists on master branch for me.
+i just noticed my default interface has MTU 1348 so when i am connected
+to this one and use wg-quick it will break. Disconnecting from it first
+and than using wg-quick will set higher MTUs on the WireGuard interface
+so it wont break for ipv6.
 
 Greetings,
 
 53c70r
 
-On 6/2/19 8:32 AM, XRP wrote:
-> On Sun, 2019-06-02 at 01:49 +0200, Silvan Nagl wrote:
->> G'day,
->>
->> i recently upgrade WireGuard to the latest shipped Debian version
->> (0.0.20190406-1) and noticed my wg-quick created interface did not
->> come
->> up as usual anymore. (Also tried the git master branch) I tried to
->> single command trough wg-quick's automation to reproduce the error;
->>
->> automatic:
->>
->> [#] ip link add Y type wireguard
->> [#] wg setconf Y /dev/fd/63
->> [#] ip address add X.X.X.X/32 dev Y
->> [#] ip address add fc00::XXXX/128 dev Y
->> [#] ip link set mtu XXXX up dev Y
->> [#] resolvconf -a tun.Y -m 0 -x
->> [#] wg set Y fwmark 51820
->> [#] ip -6 route add ::/0 dev Y table 51820
->> RTNETLINK answers: No such device
->> [#] resolvconf -d tun.Y
->> [#] ip link delete dev Y
->>
->> manual:
->>
->>> ip link add Y type wireguard
->>> wg setconf Y <(wg-quick strip /etc/wireguard/Y.conf)
->>> ip address add X.X.X.X/32 dev Y
->>> ip address add fc00::XXXX/128 dev Y
->>> ip link set mtu 1268 up dev Y
->>> resolvconf -a tun.X -m 0 -x
->>> wg set Y fwmark 51820
->>> ip -6 route add ::/0 dev Y table 51820
->> < RTNETLINK answers: No such device
->>
->> (MTU may be to low here so i set it higher again)
->>
->>> ip link set mtu 1420 up dev Y
->>> ip -6 route add ::/0 dev Y table 51820 (works now)
->> breaks up @ this point because of error handling...
->>
->> Additionally it could be possible the MTU isn't set correctly.
-> I had a similar problem where I got a "RTNETLINK answers: No such
-> device" error. After that I tried to use the wg-quick version in the
-> master branch and that fixed my problem. I hope that helps.
+On 6/2/19 12:27 PM, Silvan Nagl wrote:
+> Hi,
 >
-> (MTU for IPv6 must be 1280 bytes at least.)
+> as i already mentioned the problem persists on master branch for me.
 >
+> Greetings,
+>
+> 53c70r
+>
+> On 6/2/19 8:32 AM, XRP wrote:
+>> On Sun, 2019-06-02 at 01:49 +0200, Silvan Nagl wrote:
+>>> G'day,
+>>>
+>>> i recently upgrade WireGuard to the latest shipped Debian version
+>>> (0.0.20190406-1) and noticed my wg-quick created interface did not
+>>> come
+>>> up as usual anymore. (Also tried the git master branch) I tried to
+>>> single command trough wg-quick's automation to reproduce the error;
+>>>
+>>> automatic:
+>>>
+>>> [#] ip link add Y type wireguard
+>>> [#] wg setconf Y /dev/fd/63
+>>> [#] ip address add X.X.X.X/32 dev Y
+>>> [#] ip address add fc00::XXXX/128 dev Y
+>>> [#] ip link set mtu XXXX up dev Y
+>>> [#] resolvconf -a tun.Y -m 0 -x
+>>> [#] wg set Y fwmark 51820
+>>> [#] ip -6 route add ::/0 dev Y table 51820
+>>> RTNETLINK answers: No such device
+>>> [#] resolvconf -d tun.Y
+>>> [#] ip link delete dev Y
+>>>
+>>> manual:
+>>>
+>>>> ip link add Y type wireguard
+>>>> wg setconf Y <(wg-quick strip /etc/wireguard/Y.conf)
+>>>> ip address add X.X.X.X/32 dev Y
+>>>> ip address add fc00::XXXX/128 dev Y
+>>>> ip link set mtu 1268 up dev Y
+>>>> resolvconf -a tun.X -m 0 -x
+>>>> wg set Y fwmark 51820
+>>>> ip -6 route add ::/0 dev Y table 51820
+>>> < RTNETLINK answers: No such device
+>>>
+>>> (MTU may be to low here so i set it higher again)
+>>>
+>>>> ip link set mtu 1420 up dev Y
+>>>> ip -6 route add ::/0 dev Y table 51820 (works now)
+>>> breaks up @ this point because of error handling...
+>>>
+>>> Additionally it could be possible the MTU isn't set correctly.
+>> I had a similar problem where I got a "RTNETLINK answers: No such
+>> device" error. After that I tried to use the wg-quick version in the
+>> master branch and that fixed my problem. I hope that helps.
+>>
+>> (MTU for IPv6 must be 1280 bytes at least.)
+>>
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
