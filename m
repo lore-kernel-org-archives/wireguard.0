@@ -1,4 +1,4 @@
-Return-Path: <SRS0=pslF=UA=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=NVpv=UB=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
@@ -6,38 +6,41 @@ X-Spam-Status: No, score=-1.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB0BDC28CC3
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  1 Jun 2019 23:50:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C0B5C282DC
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  2 Jun 2019 10:28:39 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id D96EC277DF
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  1 Jun 2019 23:50:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org D96EC277DF
+	by mail.kernel.org (Postfix) with ESMTPS id 734FA20859
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  2 Jun 2019 10:28:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 734FA20859
 Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=53c70r.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 97f7c1f0;
-	Sat, 1 Jun 2019 23:50:20 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e86a7345;
+	Sun, 2 Jun 2019 10:28:10 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 36c99433
- for <wireguard@lists.zx2c4.com>; Sat, 1 Jun 2019 23:50:17 +0000 (UTC)
-Received: from mx2.mailbox.org (mx2.mailbox.org [80.241.60.215])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id efa3f229
- for <wireguard@lists.zx2c4.com>; Sat, 1 Jun 2019 23:50:17 +0000 (UTC)
-Received: from smtp1.mailbox.org (smtp1.mailbox.org [80.241.60.240])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cda2059e
+ for <wireguard@lists.zx2c4.com>; Sun, 2 Jun 2019 10:28:08 +0000 (UTC)
+Received: from mx1.mailbox.org (mx1.mailbox.org [80.241.60.212])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 034df683
+ for <wireguard@lists.zx2c4.com>; Sun, 2 Jun 2019 10:28:07 +0000 (UTC)
+Received: from smtp1.mailbox.org (smtp1.mailbox.org
+ [IPv6:2001:67c:2050:105:465:1:1:0])
  (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
  (No client certificate requested)
- by mx2.mailbox.org (Postfix) with ESMTPS id B6278A0134
- for <wireguard@lists.zx2c4.com>; Sun,  2 Jun 2019 01:50:15 +0200 (CEST)
+ by mx1.mailbox.org (Postfix) with ESMTPS id C06444F729;
+ Sun,  2 Jun 2019 12:28:06 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at heinlein-support.de
 Received: from smtp1.mailbox.org ([80.241.60.240])
- by spamfilter02.heinlein-hosting.de (spamfilter02.heinlein-hosting.de
- [80.241.56.116]) (amavisd-new, port 10030)
- with ESMTP id ca9U_qV7ADB9 for <wireguard@lists.zx2c4.com>;
- Sun,  2 Jun 2019 01:50:14 +0200 (CEST)
+ by spamfilter03.heinlein-hosting.de (spamfilter03.heinlein-hosting.de
+ [80.241.56.117]) (amavisd-new, port 10030)
+ with ESMTP id Uu7ZexP6bYJo; Sun,  2 Jun 2019 12:28:03 +0200 (CEST)
+Subject: Re: wg-quick up automation fails
+To: XRP <xrp@airmail.cc>
+References: <b46b6815-347b-1410-51df-db52c7386313@53c70r.de>
+ <49c02779bfc7c9109e6083d24b88244bb3411ef1.camel@airmail.cc>
 From: Silvan Nagl <mail@53c70r.de>
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Openpgp: preference=signencrypt
 Autocrypt: addr=mail@53c70r.de; keydata=
  mQINBFrikXsBEADnFTHdO1nEZ1n2Kvbvf7Uk3+qiCtPP82ZuiZS9DHJEDz2+ZpCau7hNk74d
@@ -82,10 +85,12 @@ Autocrypt: addr=mail@53c70r.de; keydata=
  Y9ikLGQKN+s/1G5jm/QbK5BKTWQmGLd54acPiDrAo3baSC4Ix2Qw+Eu3H9Lp9xBjC5EdxqoG
  aJPj4jG9PbldcR+y9hCcf/h9VcN2/KFC5UZCfwwIiSQLpQlLfc66lZKefccX7AKkjDCEv/WN
  3wENw+yXgVxiQzeXaGniknvPMkYbVy9TLTZGnxKxSiagGMIkUT1t/nA61Qeztw==
-Subject: wg-quick up automation fails
-Message-ID: <b46b6815-347b-1410-51df-db52c7386313@53c70r.de>
-Date: Sun, 2 Jun 2019 01:49:21 +0200
+Message-ID: <125a5194-c3c3-a409-3673-e2c752c398bf@53c70r.de>
+Date: Sun, 2 Jun 2019 12:27:28 +0200
 MIME-Version: 1.0
+In-Reply-To: <49c02779bfc7c9109e6083d24b88244bb3411ef1.camel@airmail.cc>
+Content-Language: en-US
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -97,123 +102,69 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============2917453616749361398=="
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---===============2917453616749361398==
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="qgufJkXrtXiRfksBYpL6eWLsqT8oFeWz9"
+Hi,
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---qgufJkXrtXiRfksBYpL6eWLsqT8oFeWz9
-Content-Type: multipart/mixed; boundary="iZtqO3UAHO6nwJt1XPn9Y17LaxkzIMnPG";
- protected-headers="v1"
-From: Silvan Nagl <mail@53c70r.de>
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Message-ID: <b46b6815-347b-1410-51df-db52c7386313@53c70r.de>
-Subject: wg-quick up automation fails
-
---iZtqO3UAHO6nwJt1XPn9Y17LaxkzIMnPG
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Content-Language: en-US
-
-G'day,
-
-i recently upgrade WireGuard to the latest shipped Debian version
-(0.0.20190406-1) and noticed my wg-quick created interface did not come
-up as usual anymore. (Also tried the git master branch) I tried to
-single command trough wg-quick's automation to reproduce the error;
-
-automatic:
-
-[#] ip link add Y type wireguard
-[#] wg setconf Y /dev/fd/63
-[#] ip address add X.X.X.X/32 dev Y
-[#] ip address add fc00::XXXX/128 dev Y
-[#] ip link set mtu XXXX up dev Y
-[#] resolvconf -a tun.Y -m 0 -x
-[#] wg set Y fwmark 51820
-[#] ip -6 route add ::/0 dev Y table 51820
-RTNETLINK answers: No such device
-[#] resolvconf -d tun.Y
-[#] ip link delete dev Y
-
-manual:
-
-> ip link add Y type wireguard
-
-> wg setconf Y <(wg-quick strip /etc/wireguard/Y.conf)
-
-> ip address add X.X.X.X/32 dev Y
-
-> ip address add fc00::XXXX/128 dev Y
-
-> ip link set mtu 1268 up dev Y
-
-> resolvconf -a tun.X -m 0 -x
-
-> wg set Y fwmark 51820
-
-> ip -6 route add ::/0 dev Y table 51820
-
-< RTNETLINK answers: No such device
-
-(MTU may be to low here so i set it higher again)
-
-> ip link set mtu 1420 up dev Y
-
-> ip -6 route add ::/0 dev Y table 51820 (works now)
-
-breaks up @ this point because of error handling...
-
-Additionally it could be possible the MTU isn't set correctly.
-
+as i already mentioned the problem persists on master branch for me.
 
 Greetings,
 
 53c70r
 
-
-
---iZtqO3UAHO6nwJt1XPn9Y17LaxkzIMnPG--
-
---qgufJkXrtXiRfksBYpL6eWLsqT8oFeWz9
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEQpT5YDzZ7uyx9O7LykgGkpeSnhIFAlzzDwkACgkQykgGkpeS
-nhICww//TJdGvTdT/PQ5O1OFtKqV0THMSy5D2pnULhqRUxQfm6WlUnj2ycgozvP7
-sEcs/AF2yDRwxmV0L21cnTjzRpyGnV9KDZf+/lPJNjeDnDBNDtkr6eZGzwPPa2ov
-Sp7sdDZDuiRMy8s1Si4vhtFrGGeDXEJM7Hhz1XCXq0NZUrIGvF4YAXQ31snQ2Qw2
-rTdhrLbs4fDGn8Mazir5unQ6EEPZbxv+1dqHKrSen3rLiV1zXk0H+du175bGz4Qy
-AHCy5935Nt+VG2CyTLk596k8T4mdsO/SEstDFm6PhsaOKyhlaN1AR80HiQT7iql8
-J9F5cz6pHf/iLNZ9epNAeqDWKDoyS6baGomSJ0vs3EMkIjpRfvRKoDn6BCt8nA5/
-9qadNUeNYN5J1G2qpJCrwSMI6W9/ASUmP7zKS23PkW0JEbPWdzuHSu3LiQVh6A0q
-ZehGT1fZoE6hmiyNOYYz8lmXM2tc9xdwWDUsCtPxkuMMn/+U9YozOQbEZk3cNtzr
-OnnJBe1o3ywsf8x76XKkoGFvbV056MQUUqkmuzHZjxG+4YhJ98sarVQES5pnhTtt
-vC9cgb5W6saS2vhaKPhyFRYckW4Bk7SzDzUgnJMnLN8dfPWLbGvL/nSzK6hsNGg6
-0Ek6LgV3akHn60BPHNZGaEwdRTt2o5ueTLMc9TKSH7G4WtklRyE=
-=dGwr
------END PGP SIGNATURE-----
-
---qgufJkXrtXiRfksBYpL6eWLsqT8oFeWz9--
-
---===============2917453616749361398==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
+On 6/2/19 8:32 AM, XRP wrote:
+> On Sun, 2019-06-02 at 01:49 +0200, Silvan Nagl wrote:
+>> G'day,
+>>
+>> i recently upgrade WireGuard to the latest shipped Debian version
+>> (0.0.20190406-1) and noticed my wg-quick created interface did not
+>> come
+>> up as usual anymore. (Also tried the git master branch) I tried to
+>> single command trough wg-quick's automation to reproduce the error;
+>>
+>> automatic:
+>>
+>> [#] ip link add Y type wireguard
+>> [#] wg setconf Y /dev/fd/63
+>> [#] ip address add X.X.X.X/32 dev Y
+>> [#] ip address add fc00::XXXX/128 dev Y
+>> [#] ip link set mtu XXXX up dev Y
+>> [#] resolvconf -a tun.Y -m 0 -x
+>> [#] wg set Y fwmark 51820
+>> [#] ip -6 route add ::/0 dev Y table 51820
+>> RTNETLINK answers: No such device
+>> [#] resolvconf -d tun.Y
+>> [#] ip link delete dev Y
+>>
+>> manual:
+>>
+>>> ip link add Y type wireguard
+>>> wg setconf Y <(wg-quick strip /etc/wireguard/Y.conf)
+>>> ip address add X.X.X.X/32 dev Y
+>>> ip address add fc00::XXXX/128 dev Y
+>>> ip link set mtu 1268 up dev Y
+>>> resolvconf -a tun.X -m 0 -x
+>>> wg set Y fwmark 51820
+>>> ip -6 route add ::/0 dev Y table 51820
+>> < RTNETLINK answers: No such device
+>>
+>> (MTU may be to low here so i set it higher again)
+>>
+>>> ip link set mtu 1420 up dev Y
+>>> ip -6 route add ::/0 dev Y table 51820 (works now)
+>> breaks up @ this point because of error handling...
+>>
+>> Additionally it could be possible the MTU isn't set correctly.
+> I had a similar problem where I got a "RTNETLINK answers: No such
+> device" error. After that I tried to use the wg-quick version in the
+> master branch and that fixed my problem. I hope that helps.
+>
+> (MTU for IPv6 must be 1280 bytes at least.)
+>
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
-
---===============2917453616749361398==--
