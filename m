@@ -2,93 +2,69 @@ Return-Path: <SRS0=O0ly=UR=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+X-Spam-Status: No, score=-0.3 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B6EAC31E5D
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Jun 2019 15:10:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A7F79C31E5B
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Jun 2019 15:13:56 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 88746213F2
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Jun 2019 15:10:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 491E2213F2
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Jun 2019 15:13:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=labo.rs header.i=@labo.rs header.b="bBesbBP7";
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kQ5jW/S4"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 88746213F2
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=labo.rs
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bghuJgMo"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 491E2213F2
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d41561bf;
-	Tue, 18 Jun 2019 15:10:41 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id db59e861;
+	Tue, 18 Jun 2019 15:13:39 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7a6346b5
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a4a1fd29
  for <wireguard@lists.zx2c4.com>;
- Fri, 14 Jun 2019 21:14:44 +0000 (UTC)
-Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com
- [66.111.4.29])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4dcf4aff
+ Sat, 15 Jun 2019 16:10:47 +0000 (UTC)
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com
+ [IPv6:2a00:1450:4864:20::333])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7abc0249
  for <wireguard@lists.zx2c4.com>;
- Fri, 14 Jun 2019 21:14:44 +0000 (UTC)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
- by mailout.nyi.internal (Postfix) with ESMTP id 9D828220BA;
- Fri, 14 Jun 2019 17:14:43 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute5.internal (MEProxy); Fri, 14 Jun 2019 17:14:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=labo.rs; h=
- subject:to:cc:references:from:message-id:date:mime-version
- :in-reply-to:content-type:content-transfer-encoding; s=fm3; bh=8
- AmKJJRxJtgiNZbA6EOap0N1RpRPjLWsKMvGCLLCPHw=; b=bBesbBP77o9yVfknz
- rVb43NlcBEC3t5IVZpL6WH5goFiEi4HoBJRCWDDgc+kSKd4PdZvLOogSNuShzsNU
- KGTeeCpj9Mur21aBVjeWyDhUxV3X2HHvbxoyctFzXlO4RAAMICqRusfQ39r1QQ4e
- TD1UloziURipgocVNh0YEO1LnxbgqXtxlZhxF65JuLc6UW6n5t39B7QsdgXffIDJ
- hYzSljmOeMAr4AFDhTXxQoQs/oaT4QzOtkuYfJEDSH06fopvcVA5+xUg2syXAYxt
- CiPHM+/R4efcWMZvCy66A/MP1NkyUwT0M+lWA9cV24fyrxvClgKUIDjFvFbgKJEl
- 24Owg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-transfer-encoding:content-type
- :date:from:in-reply-to:message-id:mime-version:references
- :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm3; bh=8AmKJJRxJtgiNZbA6EOap0N1RpRPjLWsKMvGCLLCP
- Hw=; b=kQ5jW/S42U9GofCGUKn1G2QqjsWXOVfrvzmbQIvFishtbY6n7WcmMiGER
- kqMl/TKMZlcDyTFn40w60FtfzDLvYcYqvgM3vtfMmI99pFE0dErLwoZAF8iK9Lid
- iaFr2E0sDCUtqGTBMLHB4vb2NCkZ1Ja6tARYlSmxCHNjYea/ZTccDlGw5PFbREx3
- bJRLUznOccwpzTCTyxig/2xrlo75h8p/6CuEE6X3FFBXoBfJM0CwI3pwzplIp2KB
- KVhl2QAwswJ2h0yZjSh1EMc80/zvrLb80Cc89vq1zuhSYFjoTRE2wKksmJ6U9bnr
- DL4nvxjpTHBQjHbBt/o+Oqv9iqhpw==
-X-ME-Sender: <xms:QQ4EXQnXZhbIK5ptNCkV__FaT5kyUxvovImWkVG28uqx40SFTLlHsA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduuddrudeiuddgudeivdcutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
- necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
- enucfjughrpefuvfhfhffkffgfgggjtgfgsehtjeertddtfeejnecuhfhrohhmpefkvhgr
- nhgpnfgrsgojthhhuceofihgsehlrggsohdrrhhsqeenucffohhmrghinhepiiigvdgtge
- drtghomhenucfkphepudekhedrudelgedrvdefledrkedunecurfgrrhgrmhepmhgrihhl
- fhhrohhmpeifgheslhgrsghordhrshenucevlhhushhtvghrufhiiigvpedt
-X-ME-Proxy: <xmx:QQ4EXXGuJhF6FnTkUtWGh-fuYUFcB546kc6G5cVQmLTW6PmvV8Bhgg>
- <xmx:QQ4EXTVLZbIvz5HfHp0KjiCEfmqnHRlHEwIIP24DXqZGjWfGkDUyOg>
- <xmx:QQ4EXZSD6uoBJCDfye9k3eDAYYAUaruW9v1PNi3rDVKl0E9CKIrvfw>
- <xmx:Qw4EXa7jYkOGJsJGLMcDU0DzIRePHYJQuWviISWjEOZB8YRbuO7WvQ>
-Received: from [0.0.0.0] (lada.labath.rs [185.194.239.81])
- by mail.messagingengine.com (Postfix) with ESMTPA id F33B98005A;
- Fri, 14 Jun 2019 17:14:40 -0400 (EDT)
-Subject: Re: RFC: wg syncpeers wg0 wireguard.conf
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
- Lonnie Abelbeck <lists@lonnie.abelbeck.com>, Luis Ressel <aranea@aixah.de>,
- Steven Honson <steven@honson.id.au>
-References: <6BFBD58C-ACC2-45FD-9986-63CEA1143BA6@lonnie.abelbeck.com>
- <CAHmME9r3QVVWRu=36Yx6wmfuHm5CCA3Dg+JdZknpnNAmnj=ATQ@mail.gmail.com>
- <CAHmME9qpp5pkP3RAENJfWjdaL61T7J1C5dDLCM+OM-U_DxRz_Q@mail.gmail.com>
-From: =?UTF-8?Q?Ivan_Lab=c3=a1th?= <wg@labo.rs>
-Message-ID: <43a193a5-bc33-3c12-37f6-d461ee5ef18a@labo.rs>
-Date: Fri, 14 Jun 2019 23:14:39 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
+ Sat, 15 Jun 2019 16:10:47 +0000 (UTC)
+Received: by mail-wm1-x333.google.com with SMTP id s15so5070863wmj.3
+ for <wireguard@lists.zx2c4.com>; Sat, 15 Jun 2019 09:10:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=Xb7NCZp09yJzWUAVjP6uPzYaA60WQOt3k8t2EdmOOgE=;
+ b=bghuJgMoMMfLGx583zdN9Fj8xaFdIjDIu1DbkizsoraBmyBMzSnx8NtTVJn86sMrKR
+ WFkg8ngGU7OaI+YjAVoVtqwq2qSD7SvkPJmZz+7ZtsGCWzo1pG6FD8NAADmqHPY9NKnC
+ QBKSRVj8yp/D5ve4E9k48Vesfcx5+ioZts+1ueD/ruwlhzwx82M7TYJgG88JxqgIBKMF
+ 0FkKWYSHagohXvQLGMtME15obxmMGRVisg63SReZZ15A/FvIgvEhbVIXPDBahlZ1FWmH
+ Y7b1FINr8uQtCGaY58+6NQh6n3jpexBvHn1m5BmZOseZaon6zWQ2mVdg6FT38gxQtfX+
+ i02A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=Xb7NCZp09yJzWUAVjP6uPzYaA60WQOt3k8t2EdmOOgE=;
+ b=lO24i+Tbla+gQVfevhQJREx+F+ZIU+KXTqvGtcnTChtN66Dy/W6fB7EPdcgxrR9TTp
+ BeQYh8P8xDdlxUV1JjPPsbNMGZWTmsuibVDlSlijo2EtSmzDlwiV0juB/k2gnzTelL9B
+ HbFnM3Bv/4QsEq2QZav7pkUikg97AbIqrUW7HF2SY/wVkZxUh6qZ0U1lJ/GR3L/cPCp1
+ RY923DblWiaJwzrc1OctmA7h56nkfU7Tu15tn+9xZy1RXX6TDXijA99yApcFq3ZJb0Xe
+ NkzdCqtU2oQSNlG6R6MfWWXbL2CxF+W929DwmB5ajbUxG8WRqBkgToFIaW5I+gxBdvb+
+ USFw==
+X-Gm-Message-State: APjAAAWeLMCqRnVEOe9ALOcCbYdzCFgZNtFoCqxJCsapNaCBrswZdrVk
+ NfAM441FqkwxbHSo1z7pPfNHU2IFCJ3sz9nrqg9o18gI
+X-Google-Smtp-Source: APXvYqypqK0VL27mW5DAN3KBS6ZqbAjvsbDDeKCvh9jkpOlRhRe/lo64LhEee7EJd55/mi0Fm8E+kDzDKk0O4Jr/phQ=
+X-Received: by 2002:a1c:6641:: with SMTP id a62mr6528803wmc.175.1560615044612; 
+ Sat, 15 Jun 2019 09:10:44 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9qpp5pkP3RAENJfWjdaL61T7J1C5dDLCM+OM-U_DxRz_Q@mail.gmail.com>
-Content-Language: en-US
-X-Mailman-Approved-At: Tue, 18 Jun 2019 17:10:39 +0200
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: Andriy Perev Ortkin <irherder@gmail.com>
+Date: Sat, 15 Jun 2019 19:10:34 +0300
+Message-ID: <CABwq4PiyPwjPL+RPVcWZYy66j4gaVRc3OHEA6Aqm_SbL=9VFAQ@mail.gmail.com>
+Subject: commit 99895f27f3d63d2e92a5c1c411205ae70f2a5ca breaks build on arm64
+To: wireguard@lists.zx2c4.com
+Content-Type: multipart/mixed; boundary="0000000000005dcf63058b5f0155"
+X-Mailman-Approved-At: Tue, 18 Jun 2019 17:13:38 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -100,89 +76,55 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
+--0000000000005dcf63058b5f0155
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-walk_remove_by_peer does seem inefficient. Judging by the stack, I guess
-it walks the tree looking for addresses from a specific peer. That would
-be roughly O(A log A) operations for A addresses, in total O(N A log A)
-if removing all of them.
+commit https://git.zx2c4.com/WireGuard/commit/?id=3D799895f27f3d63d2e92a5c1=
+c411205ae70f2a5ca
+breaks out of tree module build on arm64 , kernel 5.1.10
+strangely when building x86_64 everything is fine
 
-A simple fix would be to know what you want to remove. Then you can find
-it fast in the search tree. Does showing peer configuration also scan
-the entire tree? If you need to store a list of addresses associated
-with a peer (seems like a good idea), memory needed should be no more
-and probably less than the tree itself.
+  CC [M]  /home/asavah/kross/src/WireGuard/src/main.o
+In file included from /home/asavah/kross/src/WireGuard/src/compat/compat.h:=
+824,
+                 from <command-line>:
+./include/linux/timekeeping.h:67:8: error: unknown type name =E2=80=98ktime=
+_t=E2=80=99
+   67 | extern ktime_t ktime_get(void);
+      |        ^~~~~~~
 
-I can explain an algorithm, or tell you how to fix it, but I'm not
-saying I will code it (yet).
+The following patch fixes the issue, however I have no idea why x86_64
+builds fine and arm64 does not,
+neither I'm sure that the patch is right, it fixed the issue for me tho.
 
+--0000000000005dcf63058b5f0155
+Content-Type: application/octet-stream; name="001-ktime.patch"
+Content-Disposition: attachment; filename="001-ktime.patch"
+Content-Transfer-Encoding: base64
+Content-ID: <f_jwxpvjdu0>
+X-Attachment-Id: f_jwxpvjdu0
 
-WRT setconf/addconf/syncconf
+ZGlmZiAtLWdpdCBhL3NyYy9jb21wYXQvY29tcGF0LmggYi9zcmMvY29tcGF0L2NvbXBhdC5oCmlu
+ZGV4IDYxNGY0NTguLjViYTliNjcgMTAwNjQ0Ci0tLSBhL3NyYy9jb21wYXQvY29tcGF0LmgKKysr
+IGIvc3JjL2NvbXBhdC9jb21wYXQuaApAQCAtODIxLDYgKzgyMSw3IEBAIHN0YXRpYyBpbmxpbmUg
+dm9pZCBza2JfbWFya19ub3Rfb25fbGlzdChzdHJ1Y3Qgc2tfYnVmZiAqc2tiKQogI2lmIExJTlVY
+X1ZFUlNJT05fQ09ERSA8IEtFUk5FTF9WRVJTSU9OKDMsIDE3LCAwKQogI2luY2x1ZGUgPGxpbnV4
+L2hydGltZXIuaD4KICNlbHNlCisjaW5jbHVkZSA8bGludXgva3RpbWUuaD4KICNpbmNsdWRlIDxs
+aW51eC90aW1la2VlcGluZy5oPgogI2VuZGlmCiBzdGF0aWMgaW5saW5lIHM2NCBfX291cl9rdGlt
+ZV9nZXRfY29hcnNlX2Jvb3R0aW1lKHZvaWQpCg==
+--0000000000005dcf63058b5f0155
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-From a user point of view, I do not see a reason to disconnect peers
-which are not modified when changing confguration. It seems excessive
-and not quite useful.
-
-After reading wg man page [1], I do have questions about what these
-commands do.
-
-1) When setconf-ing an interface without optional parameters, and the
-interface was configured with a non-default values, do they remain or
-are they reset to defaults?
-I guess either would be fine as long as it is consistent. Both interface
-and peer configuration.
-
-a) Listen port - if not specified, I would leave as is. It has already
-been chosen (perhaps) randomly.
-
-2) If a peer is connected and the configured endpoint changes, does the
-endpoint change? Does the peer get disconnected?
-If a peer has roamed, you edit another peer and run setconf, it doesn't
-seems nice to disconnect the roaming peers. OTOH, if you want change the
-address (e.g. to a another valid one), it would be nice if the peers
-moved to the new addresses in a reasonable time.
-
-3) Regarding addconf - after reading the man page, I'm not sure what the
-intent is, or what does it do.
-a) It says only one interface section can be in a file, is changing the
-interface configuration permitted? If not, it should probably be called
-addpeers.
-b) Are multiple definitions of the same peer permitted? If so, what is
-the result - can I split the definitions, or are the previous ones
-discarded? What about ips, are they summed or overriden?
-
-Regards,
-Ivan
-
-[1] https://git.zx2c4.com/WireGuard/about/src/tools/man/wg.8
-
-
-On 14. 6. 2019 20:09, Jason A. Donenfeld wrote:
-> Hey Lonnie,
-> 
-> If your changes are user-facing, it's probably not a good idea to
-> create confusion by introducing distro-specific subcommands.
-> 
-> I'm leaning toward Steven's suggestion of nixing addconf and making
-> setconf behave like syncconf. But two hurdles remain:
-> 
-> - walk_remove_by_peer is very inefficient. That *must* be to be
-> improved for this to be feasible. There's some interesting algorithms
-> programming in allowedips.c to be tackled for that. Maybe
-> node->peer_list can be used. (CC'ing Ivan in case he wants to put his
-> mind to work on that.)
-> - A decision needs to be made on consistency: do we want to read back
-> the end result and compare it? Or will that kind of looping logic lead
-> to other types of DoS or latency spikes?
-> 
-> Jason
-> 
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--0000000000005dcf63058b5f0155--
