@@ -1,65 +1,69 @@
-Return-Path: <SRS0=cR9O=U2=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=Sp06=U3=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.3 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73037C48BD7
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 27 Jun 2019 14:26:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3F5AC4321A
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 28 Jun 2019 12:02:24 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 9B8C220828
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 27 Jun 2019 14:26:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 015722086D
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 28 Jun 2019 12:02:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="JxYSLkT/"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 9B8C220828
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HYebKZ8e"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 015722086D
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 41c6cb0b;
-	Thu, 27 Jun 2019 14:26:27 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 20db8c40;
+	Fri, 28 Jun 2019 12:02:06 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c16344a6
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3b65902f
  for <wireguard@lists.zx2c4.com>;
- Thu, 27 Jun 2019 14:26:24 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 410b2a4d
+ Wed, 26 Jun 2019 13:19:10 +0000 (UTC)
+Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com
+ [IPv6:2607:f8b0:4864:20::331])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4482a7f4
  for <wireguard@lists.zx2c4.com>;
- Thu, 27 Jun 2019 14:26:24 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1670280a
- for <wireguard@lists.zx2c4.com>;
- Thu, 27 Jun 2019 13:52:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :from:date:message-id:subject:to:content-type; s=mail; bh=A5iq/G
- XLDN4+ZlYWM7zR43baYho=; b=JxYSLkT/odFzMLMNH0offblsphVWOlOohbryK9
- 9i9DUj6l3T0SMHsKan+8YYzBkcde+8K1jZxya2I6TBAXxKdQf8JMcsd0BPorg1z9
- XkoKRvACON7p3jNH7808rJJrdvRY45vuh/mRCby6ooK3QXfDvj+M8RcVKx5YNiIq
- 4icoRr6z0tZMTneAVcSBhHbk1om/FJCizCmFmv3swLSKaicVaJiXYo0SGPBTStiJ
- opS+UrEHm41SZ8E5tsWAmv4RTW1q8Et58bIL68QO+NUHStNJglsGdZXdHwpNkBXT
- XzAz6E7XIALXZSa3P9Mrdon5F5LTgenhi38fZXviFo+8SZYQ==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 003aa463
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Thu, 27 Jun 2019 13:52:13 +0000 (UTC)
-Received: by mail-ot1-f48.google.com with SMTP id o101so2149765ota.8
- for <wireguard@lists.zx2c4.com>; Thu, 27 Jun 2019 07:26:24 -0700 (PDT)
-X-Gm-Message-State: APjAAAWaZO7+SKaLHBbOvfdclnGiJ8k8Bs9G9MNaMBUC2LD55+tX5IBA
- jICmSDfIzbErblaj/K53aq5H1cXyWI4FSJhLs7o=
-X-Google-Smtp-Source: APXvYqw2ObCgC5YiYkCEmZbO4QNyYgEFC6GqhEGOTxrdglZXd4wsn5jBBZPRBBYWwFOH5eybSlkX58U5oDKu2EVQjZE=
-X-Received: by 2002:a05:6830:2148:: with SMTP id
- r8mr3705008otd.179.1561645583390; 
- Thu, 27 Jun 2019 07:26:23 -0700 (PDT)
+ Wed, 26 Jun 2019 13:19:10 +0000 (UTC)
+Received: by mail-ot1-x331.google.com with SMTP id b7so2421696otl.11
+ for <wireguard@lists.zx2c4.com>; Wed, 26 Jun 2019 06:19:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=4+mKZWVVgbqg9OE6OH610jW9VIJ/8hBaW0PjRAhjGKI=;
+ b=HYebKZ8e+gNhbW/hNnZsBuarZGkqum1Cmx+HetFXLcS8EqRUXE9lkWfNuusxtAgMMZ
+ LERSoR2EUzK+xUAQ16keUJx/AH9BCJvexdffjGsQGBjOroyVWbwKlFi97IqqXeypcFE9
+ 5DWQ72wdTB2e4IPEtXgT9hBb0rR80nDZ6kGh8Ny6SxRVs40c76K8JAyD27FpQmXx6fW2
+ lALI+sXwqBAeV81SBYPv+P38OyfkTQvGLTGiVVI/aaX+OI7JM+41HVop/zuE6s00VYqU
+ dlK62mYLQP2k6A9aGlxKohHXPloMR1IoGET/6dfrFndpNRXfkCeoOzQv+URq76DvNRdg
+ tvvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=4+mKZWVVgbqg9OE6OH610jW9VIJ/8hBaW0PjRAhjGKI=;
+ b=QgOinKW1zi7HCo1aLoi3VVB258Z88ejd2evK9NABmL28fsNnVR3keqpyrmClTjaphR
+ iP8UVsMtDk5DllQV7rJfrnuFpzYWKfkyqPP677yq6zAtOiDrv11NPYoTcM8wTEYqLel9
+ 7NPHe6TDpPE29WffKyp1TJFJCQWyXpvIPdToN3TbdkN3tqLrDLDWznAKTZk+N/4NUltR
+ UpiLyNBE+QwazcmWERbmNu0hwCPJIp4cSAH6AzUVZewS2bCBZoOMTpci4LhUcrr3obKW
+ ga2bOvxBOJvmJfpW80GLKpf9NZrjAOFZCQ5JWT2NhAceoKUYFGg9GZgLOwx1yQyRw4mk
+ eVgQ==
+X-Gm-Message-State: APjAAAWgT36+kUYK0/FfO2nJq+xNfC4bxSRT+Car52f2eobBqJclZxvX
+ yT7hadRxjhJBIYoeZBTiU1rTFD7nkdL+16v3L/JQZrWU2o4=
+X-Google-Smtp-Source: APXvYqwiKvgimJA5lqYwbQv5+Fwz1JiKVN/BD3S8u7Y/lpp3dMBxBwifq7Am3DGYftDr2DN30WbthXlJt1Tw45ZTwts=
+X-Received: by 2002:a9d:7203:: with SMTP id u3mr3231875otj.313.1561555150259; 
+ Wed, 26 Jun 2019 06:19:10 -0700 (PDT)
 MIME-Version: 1.0
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 27 Jun 2019 16:26:12 +0200
-X-Gmail-Original-Message-ID: <CAHmME9o2Hixoo_XawTGjHoVmuV5h=VxdfN+3i9Lyc_eRuA_60A@mail.gmail.com>
-Message-ID: <CAHmME9o2Hixoo_XawTGjHoVmuV5h=VxdfN+3i9Lyc_eRuA_60A@mail.gmail.com>
-Subject: Deterministic Cryptographically Authenticated Network Signatures on
- Windows NLA
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: Michael <gravitygrazer@gmail.com>
+Date: Wed, 26 Jun 2019 15:18:59 +0200
+Message-ID: <CADXv92b2P79-OJBzK+aXhKFr3k_VqZkkkAuZOg5dALui8aNTiA@mail.gmail.com>
+Subject: RHEL8 package install or build fail
+To: wireguard@lists.zx2c4.com
+X-Mailman-Approved-At: Fri, 28 Jun 2019 14:02:05 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -71,117 +75,95 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="===============7856298478774936147=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
+--===============7856298478774936147==
+Content-Type: multipart/alternative; boundary="000000000000074bf3058c39e449"
 
-Recently there's been a decent amount of Windows reverse engineering
-and research in order to come up with some rather simple but important
-results. I figure it might be useful to document parts of this
-somewhere.
+--000000000000074bf3058c39e449
+Content-Type: text/plain; charset="UTF-8"
 
-On Windows, when an interface connects to an endpoint, it generates a
-"Network Signature", which is supposed to uniquely identify a network.
-This is done through the conjunction of the nla and network list
-services, and the kernel. For wifi, it uses aspects about the AP and
-SSID. For wwan, it uses details from there. And in general, for layer
-2 connections, it hashes the mac address of the default gateway.  This
-is sort of a terrible way to identify a network, since mac addresses
-can be spoofed. It looks like Microsoft has toyed with trying to make
-this less bad, with various papers and patents and whatnot for
-"authenticated dhcp" with some fancy/dated crypto, but it doesn't
-appear that these have gone anywhere. For layer 3 networks, nla
-doesn't really know what to do and so winds up just hashing the GUID
-of the NetCfgInstanceId for the interface. This means that every
-particular layer 3 interface instance implies only a single network.
+folks, current wireguard seems not to install or build on RHEL 8.0
 
-This Network Signature stuff matters because Windows will
-automatically fiddle with firewall rules based on which network you're
-connected to. Forge a network, and you can perhaps get a victim to
-have a more permissive firewall.
+(1) via yum and the wireguard repo at
+https://copr-be.cloud.fedoraproject.org/results/jdoss/wireguard/epel-7-$basearch/
 
-For WireGuard, we're using Wintun interfaces [1]. We could roll with a
-single interface, which then would have the same Network Signature and
-hence firewall settings, no matter which WireGuard peers its hooked up
-with. Or, we could have a new interface for every new connection
-event, but this means adding an unbounded amount of garbage to the
-registry and cluttering people's interface names with things like
-"Local Area Connection 28912", because this is the 28912th time you've
-used WireGuard. Neither is so ideal.
+[root@<>]# yum install wireguard-dkms wireguard-tools
+...
+Copr repo for wireguard owned by jdoss
+          1.7 kB/s | 3.5 kB     00:01
+Error:
+ Problem 1: conflicting requests
+  - nothing provides dkms needed by
+wireguard-dkms-1:0.0.20190601-1.el7.noarch
+ Problem 2: package wireguard-tools-1:0.0.20190601-1.el7.x86_64 requires
+wireguard-dkms, but none of the providers can be installed
 
-Since Wintun is a layer 3 interface, it turns out "all" we need to do
-is deterministically generate the GUID at adapter installation time. I
-couldn't find any documented way of doing this. After reversing 3
-kernel drivers and 5 userland DLLs, I found that Windows is using a
-certain registry value as a sort of temporary storage in between two
-phases that it runs serially. By using the super old and ugly
-SetupAPI, we're actually able to split these phases up, so that we can
-modify this registry key before the next phase sees it. This is sort
-of like exploiting a race condition, except we're able to entirely
-pause the race while making our modifications, so we have 100%
-reliability. This winds up looking something like:
+and (2) building without much trying albeit -
 
-CallClassInstaller(DIF_REGISTER_COINSTALLERS)
-key = OpenDevRegKey(DICS_FLAG_GLOBAL, DIREG_DRV)
-key.SetString("NetSetupAnticipatedInstanceId", deterministicGUID)
-CallClassInstaller(DIF_INSTALLINTERFACES)
+[root@<> src]# make
+  CC [M]  /root/WireGuard/src/main.o
+In file included from <command-line>:
+/root/WireGuard/src/compat/compat.h:828:20: error: redefinition of
+'skb_mark_not_on_list'
+ static inline void skb_mark_not_on_list(struct sk_buff *skb)
+                    ^~~~~~~~~~~~~~~~~~~~
+In file included from /root/WireGuard/src/compat/compat.h:787,
+                 from <command-line>:
+./include/linux/skbuff.h:1362:20: note: previous definition of
+'skb_mark_not_on_list' was here
+ static inline void skb_mark_not_on_list(struct sk_buff *skb)
+                    ^~~~~~~~~~~~~~~~~~~~
 
-At the time of writing, other than our own source code, there are no
-hits for NetSetupAnticipatedInstanceId on Google, Bing, Yandex, or
-Baidu, so this might be the first description of such a technique.
+Thanks in advance for hints,
 
-So, now that we can control the GUID and hence the NetworkSignature,
-we have to decide what determines a network. It turns out that in
-WireGuard, we can do this with much higher cryptographic assurance
-than any of the crazy "authenticated dhcp" proposals of Microsoft.
-Specifically, we know our own interface public key, the public keys of
-everyone we're willing to talk to, and which IP addresses we'll accept
-from those peers. If that doesn't perfectly define a network, I don't
-know what else does.
+-- Mike
 
-Therefore, we sort the public keys, and sort the allowed IPs for each
-one, and then hash together a big block that looks like:
+--000000000000074bf3058c39e449
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
- label || len(interface name) || interface name ||
- interface public key || number of peers ||
- peer public key || number of peer allowed ips ||
- len(allowed ip string) || allowed ip/cidr in canonical string notation ||
- len(allowed ip string) || allowed ip/cidr in canonical string notation ||
- len(allowed ip string) || allowed ip/cidr in canonical string notation ||
- ...
- peer public key || number of peer allowed ips ||
- len(allowed ip string) || allowed ip/cidr in canonical string notation ||
- len(allowed ip string) || allowed ip/cidr in canonical string notation ||
- len(allowed ip string) || allowed ip/cidr in canonical string notation ||
- ...
- ...
+<div dir=3D"ltr"><div>folks, current wireguard seems not to install or buil=
+d on RHEL 8.0</div><div><br></div><div>(1) via yum and the wireguard repo a=
+t=C2=A0<a href=3D"https://copr-be.cloud.fedoraproject.org/results/jdoss/wir=
+eguard/epel-7-$basearch/">https://copr-be.cloud.fedoraproject.org/results/j=
+doss/wireguard/epel-7-$basearch/</a><br></div><div><br></div><div>[root@&lt=
+;&gt;]# yum install wireguard-dkms wireguard-tools<br>...<br>Copr repo for =
+wireguard owned by jdoss =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 1.7 kB/s | 3.5 kB =C2=A0 =C2=A0 00:0=
+1 =C2=A0 =C2=A0<br>Error: <br>=C2=A0Problem 1: conflicting requests<br>=C2=
+=A0 - nothing provides dkms needed by wireguard-dkms-1:0.0.20190601-1.el7.n=
+oarch<br>=C2=A0Problem 2: package wireguard-tools-1:0.0.20190601-1.el7.x86_=
+64 requires wireguard-dkms, but none of the providers can be installed<br><=
+/div><div><br></div><div>and (2) building without much trying albeit -=C2=
+=A0</div><div><br></div><div>[root@&lt;&gt; src]# make<br>=C2=A0 CC [M] =C2=
+=A0/root/WireGuard/src/main.o<br>In file included from &lt;command-line&gt;=
+:<br>/root/WireGuard/src/compat/compat.h:828:20: error: redefinition of &#3=
+9;skb_mark_not_on_list&#39;<br>=C2=A0static inline void skb_mark_not_on_lis=
+t(struct sk_buff *skb)<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 ^~~~~~~~~~~~~~~~~~~~<br>In file included from /root/Wi=
+reGuard/src/compat/compat.h:787,<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0from &lt;command-line&gt;:<br>./include/linux/skbuf=
+f.h:1362:20: note: previous definition of &#39;skb_mark_not_on_list&#39; wa=
+s here<br>=C2=A0static inline void skb_mark_not_on_list(struct sk_buff *skb=
+)<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+^~~~~~~~~~~~~~~~~~~~<br></div><div><br></div><div>Thanks in advance for hin=
+ts,</div><div><br></div><div>-- Mike</div><div><br></div></div>
 
-We pick a stable encoding for each of those elements (32-bit little
-endian integers, canonical IP address strings, well-known label
-identifier, etc), pass it all to BLAKE2, and mint ourselves a fully
-network-determined GUID.
+--000000000000074bf3058c39e449--
 
-Hopefully this should eliminate a class of firewall attacks on Windows
-systems when using WireGuard. Perhaps this post will help others out
-somewhere down the line.
+--===============7856298478774936147==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-By the way, since Windows security is pretty complex and hard to get
-right -- and hard to even keep all of it in your head at the same time
--- we're maintaining an attacksurface.md [2] file, which evolves over
-time to contain our latest understanding. Hopefully this will help
-people point out where we're wrong, and also what areas we've
-neglected to consider. If something there piques your interest, don't
-hesitate to get in touch with security {at} wireguard ^dot^ com.
-
-Regards,
-Jason
-
-[1] https://www.wintun.net/
-[2] https://git.zx2c4.com/wireguard-windows/about/attacksurface.md
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--===============7856298478774936147==--
