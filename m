@@ -1,56 +1,52 @@
-Return-Path: <SRS0=80Oe=VC=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=olyW=VF=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.3 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=0.5 required=3.0 tests=DKIM_ADSP_ALL,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D208C46499
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  5 Jul 2019 12:38:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 70715C606AF
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  8 Jul 2019 11:36:53 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id A0447218A3
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  5 Jul 2019 12:38:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 562322064A
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  8 Jul 2019 11:36:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=kent-dobias.com header.i=@kent-dobias.com header.b="Ds35/s0v"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A0447218A3
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=kent-dobias.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=toke.dk header.i=@toke.dk header.b="ceR2YVTc"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 562322064A
+Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=toke.dk
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 50a1d6bf;
-	Fri, 5 Jul 2019 12:38:19 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 74a75e00;
+	Mon, 8 Jul 2019 11:36:50 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 74d4e633
- for <wireguard@lists.zx2c4.com>; Wed, 3 Jul 2019 16:42:24 +0000 (UTC)
-Received: from mail.kent-dobias.com (mail.kent-dobias.com [5.2.75.74])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cd352082
- for <wireguard@lists.zx2c4.com>; Wed, 3 Jul 2019 16:42:24 +0000 (UTC)
-Received: from [192.168.1.2] (unknown [10.9.0.3])
- by mail.kent-dobias.com (Postfix) with ESMTPSA id 8082C6CE5C
- for <wireguard@lists.zx2c4.com>; Wed,  3 Jul 2019 12:42:22 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=kent-dobias.com;
- s=dkim; t=1562172142;
- bh=eenygffEdvbC9/I2W7/9pqXhlU1H4Eu+uzpPX1rnhHE=;
- h=Subject:To:References:From:Date:In-Reply-To;
- b=Ds35/s0v1g4aWbIJZfoTVL+mTk8NjQIEtfFJ2Y3ugbnhy9SbqlCSsRVLUPoXvbNRa
- axYOF6QUxHlPQ/egiyxgaBCJbkzmb2TqdgnH1rBi9giWhPp2ZUi3xHScaC+PJwoLbq
- FDI3Wgb9Bw+bKHXSvDJaMmxZYx2UmpDZYHdn4cyE=
-Subject: Re: [ANNOUNCE] WireGuard Snapshot `0.0.20190702` Available
-To: wireguard@lists.zx2c4.com
-References: <59eba07cc65097ac@frisell.zx2c4.com>
-From: Jaron Kent-Dobias <jaron-wireguard@kent-dobias.com>
-Openpgp: preference=signencrypt
-Message-ID: <409b0e32-575c-020f-63c8-e5a4052fff70@kent-dobias.com>
-Date: Wed, 3 Jul 2019 12:42:20 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.2
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 87850ad9
+ for <wireguard@lists.zx2c4.com>; Mon, 8 Jul 2019 11:36:48 +0000 (UTC)
+Received: from mail.toke.dk (mail.toke.dk [IPv6:2a00:7660:6da:2001::664])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 97a42069
+ for <wireguard@lists.zx2c4.com>; Mon, 8 Jul 2019 11:36:45 +0000 (UTC)
+From: Toke =?utf-8?Q?H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=toke.dk; s=20161023;
+ t=1562585801; bh=4GT/3/A3tvjnXw41l6yshQ0xJq2/0Lt3CXmrqFu+6g4=;
+ h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+ b=ceR2YVTc4gfX6/bT7xGgG5mCQDgRJ2OH7o5rrkt6/7czANLAqX2kcmoUeW7J6s70B
+ hXshWoQiEtW2butnA37THUq1mfoosNsa/I7Y/0DcHOfJ5+JYJMYwO4EFFtgo2AuXTJ
+ sTzdvibkZWpWoyjplzq+e79gvgbEfa+mQuz5jaYVGl9rLMN1mck1u8z8+13xwpLt0Y
+ SnwMEku9wHE7o+n1do8gpe6Z/8OGP3auoyK4SUOAOTbwuhPTwxij66U1fgh/t3ea24
+ Zaa6qmchHtm4ZC76dL4mfRkRYdJqHuoUr9B8IjPmSvsRqpBJyLU13uYr1j0sQEEexz
+ G3bCeCZRLIRNw==
+To: Janne =?utf-8?Q?He=C3=9F?= <janne@hess.ooo>, bird-users@network.cz
+Subject: Re: Introduce Wireguard support to bird
+In-Reply-To: <121dc434-986e-91a9-591d-47948289a34c@hess.ooo>
+References: <524c0c7c670e5525c2911bdde2b1211a@hess.ooo>
+ <87pnnp59a3.fsf@toke.dk> <121dc434-986e-91a9-591d-47948289a34c@hess.ooo>
+Date: Mon, 08 Jul 2019 13:36:41 +0200
+X-Clacks-Overhead: GNU Terry Pratchett
+Message-ID: <87muhozrjq.fsf@toke.dk>
 MIME-Version: 1.0
-In-Reply-To: <59eba07cc65097ac@frisell.zx2c4.com>
-Content-Language: en-US
-X-Mailman-Approved-At: Fri, 05 Jul 2019 14:38:18 +0200
+Cc: wireguard@lists.zx2c4.com
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -62,168 +58,49 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-> Hello,
-> 
-> A new snapshot, `0.0.20190702`, has been tagged in the git repository.
-> 
-> Please note that this snapshot is, like the rest of the project at this point
-> in time, experimental, and does not constitute a real release that would be
-> considered secure and bug-free. WireGuard is generally thought to be fairly
-> stable, and most likely will not crash your computer (though it may).
-> However, as this is a pre-release snapshot, it comes with no guarantees, and
-> its security is not yet to be depended on; it is not applicable for CVEs.
-> 
-> With all that said, if you'd like to test this snapshot out, there are a
-> few relevant changes.
-> 
-> == Changes ==
-> 
->   * curve25519: not all linkers support bmi2 and adx
-> 
->   This should allow WireGuard to build on older toolchains.
-> 
->   * qemu: show signal when failing
-> 
->   This was useful in tracking down upstream armeb bugs such as:
->   http://lists.infradead.org/pipermail/linux-arm-kernel/2019-May/655926.html
-> 
->   * wg-quick: darwin: support being called from launchd
-> 
->   We now ship a sample launchd file, for folks who would like to run WireGuard
->   on macOS servers with some form of automation. Most users are still advised to
->   use the GUI app from the App Store.
-> 
->   * compat: some kernels weirdly backport prandom_u32_max
->   * compat: unify custom function prefix/suffix
->   * compat: rhel backported list modifications
-> 
->   Usual maintance of our compat layer for existing platforms and kernels.
-> 
->   * compat: support RHEL8's skb_mark_not_on_list backport
-> 
->   We now support RHEL8/CentOS8's kernel.
-> 
->   * global: switch to coarse ktime
-> 
->   Our prior use of fast ktime before meant that sometimes, depending on how
->   broken the motherboard was, we'd wind up calling into the HPET slow path. Here
->   we move to coarse ktime which is always super speedy. In the process we had to
->   fix the resolution of the clock, as well as introduce a new interface for it,
->   landing in 5.3. Older kernels fall back to a fast-enough mechanism based on
->   jiffies.
-> 
->   https://lore.kernel.org/lkml/tip-e3ff9c3678b4d80e22d2557b68726174578eaf52@git.kernel.org/
->   https://lore.kernel.org/lkml/20190621203249.3909-3-Jason@zx2c4.com/
-> 
->   * netlink: cast struct over cb->args for type safety
-> 
->   This follow recent upstream changes such as:
-> 
->   https://lore.kernel.org/lkml/20190628144022.31376-1-Jason@zx2c4.com/
-> 
->   * peer: use LIST_HEAD macro
-> 
->   Style nit.
-> 
->   * receive: queue dead packets to napi queue instead of empty rx_queue
-> 
->   This mitigates a WARN_ON being triggered by the workqueue code. It was quite
->   hard to trigger, except sporadically, or reliably with a PC Engines ALIX, an
->   extremely slow board with an AMD LX800 that Ryan Whelan of Axatrax was kind
->   enough to mail me.
-> 
-> This snapshot contains commits from: Jason A. Donenfeld.
-> 
-> As always, the source is available at https://git.zx2c4.com/WireGuard/ and
-> information about the project is available at https://www.wireguard.com/ .
-> 
-> This snapshot is available in compressed tarball form here:
->   https://git.zx2c4.com/WireGuard/snapshot/WireGuard-0.0.20190702.tar.xz
->   SHA2-256: 1a1311bc71abd47a72c47d918be3bacc486b3de90734661858af75cc990dbaac
->   BLAKE2b-256: 3b8668eed4c11c3d5995f23152c645ee40017ab84c8b15ce5f84015730290c9f
-> 
-> A PGP signature of that file decompressed is available here:
->   https://git.zx2c4.com/WireGuard/snapshot/WireGuard-0.0.20190702.tar.asc
->   Signing key: AB9942E6D4A4CFC3412620A749FC7012A5DE03AE
-> 
-> If you're a snapshot package maintainer, please bump your package version. If
-> you're a user, the WireGuard team welcomes any and all feedback on this latest
-> snapshot.
-> 
-> Finally, WireGuard development thrives on donations. By popular demand, we
-> have a webpage for this: https://www.wireguard.com/donations/
-> 
-> Thank you,
-> Jason Donenfeld
-> 
-> 
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
-> 
-
-The new snapshot is causing build failures for my android kernel. A log
-follows. I'm using the manifest drop-in described on the XDA forums [1].
-The kernel source is here [2].
-
-Jaron
-
-[1]
-https://forum.xda-developers.com/android/development/wireguard-rom-integration-t3711635
-[2] https://github.com/boulzordev/android_kernel_motorola_msm8937
-
->   CC      net/wireguard/device.o
-> In file included from <built-in>:2:
-> ./../../../../../../kernel/motorola/msm8953/net/wireguard/compat/compat.h:410:21: error: use of undeclared identifier 'HZ_TO_USEC_NUM'
->         return div_u64(j * HZ_TO_USEC_NUM, HZ_TO_USEC_DEN) * 1000;
->                            ^
-> ./../../../../../../kernel/motorola/msm8953/net/wireguard/compat/compat.h:410:37: error: use of undeclared identifier 'HZ_TO_USEC_DEN'
->         return div_u64(j * HZ_TO_USEC_NUM, HZ_TO_USEC_DEN) * 1000;
->                                            ^
-> 2 errors generated.
-> make[3]: *** [/home/pants/dev/lineage-microg-docker-volumes/src/LINEAGE_16_0/kernel/motorola/msm8953/scripts/Makefile.build:271: net/wireguard/main.o] Error 1
-> make[3]: *** Waiting for unfinished jobs....
-> In file included from <built-in>:2:
-> ./../../../../../../kernel/motorola/msm8953/net/wireguard/compat/compat.h:410:21: error: use of undeclared identifier 'HZ_TO_USEC_NUM'
->         return div_u64(j * HZ_TO_USEC_NUM, HZ_TO_USEC_DEN) * 1000;
->                            ^
-> ./../../../../../../kernel/motorola/msm8953/net/wireguard/compat/compat.h:410:37: error: use of undeclared identifier 'HZ_TO_USEC_DEN'
->         return div_u64(j * HZ_TO_USEC_NUM, HZ_TO_USEC_DEN) * 1000;
->                                            ^
-> 2 errors generated.
-> make[3]: *** [/home/pants/dev/lineage-microg-docker-volumes/src/LINEAGE_16_0/kernel/motorola/msm8953/scripts/Makefile.build:271: net/wireguard/noise.o] Error 1
-> In file included from <built-in>:2:
-> ./../../../../../../kernel/motorola/msm8953/net/wireguard/compat/compat.h:410:21: error: use of undeclared identifier 'HZ_TO_USEC_NUM'
->         return div_u64(j * HZ_TO_USEC_NUM, HZ_TO_USEC_DEN) * 1000;
->                            ^
-> ./../../../../../../kernel/motorola/msm8953/net/wireguard/compat/compat.h:410:37: error: use of undeclared identifier 'HZ_TO_USEC_DEN'
->         return div_u64(j * HZ_TO_USEC_NUM, HZ_TO_USEC_DEN) * 1000;
->                                            ^
-> 2 errors generated.
-> make[3]: *** [/home/pants/dev/lineage-microg-docker-volumes/src/LINEAGE_16_0/kernel/motorola/msm8953/scripts/Makefile.build:271: net/wireguard/device.o] Error 1
-> make[2]: *** [/home/pants/dev/lineage-microg-docker-volumes/src/LINEAGE_16_0/kernel/motorola/msm8953/scripts/Makefile.build:416: net/wireguard] Error 2
-> make[2]: *** Waiting for unfinished jobs....
-> make[1]: *** [/home/pants/dev/lineage-microg-docker-volumes/src/LINEAGE_16_0/kernel/motorola/msm8953/Makefile:988: net] Error 2
-> make[1]: Leaving directory '/home/pants/dev/lineage-microg-docker-volumes/src/LINEAGE_16_0/out/target/product/potter/obj/KERNEL_OBJ'
-> make: *** [Makefile:145: sub-make] Error 2
-> make: Leaving directory '/home/pants/dev/lineage-microg-docker-volumes/src/LINEAGE_16_0/kernel/motorola/msm8953'
-> [ 46% 1325/2823] AAPT2 link /home/pants/dev/lineage-microg-do.../product/potter/obj/APPS/Dialer_intermediates/package-res.apk
-> warn: removing resource com.android.dialer:string/main_send_feedback without required default value.
-> warn: removing resource com.android.dialer:string/now without required default value.
-> warn: removing resource com.android.dialer:string/spam_notification_dialog_was_not_spam_action_text without required default value.
-> warn: removing resource com.android.dialer:string/spam_notification_not_spam_action_text without required default value.
-> warn: removing resource com.android.dialer:string/spam_notification_spam_call_expanded_text without required default value.
-> ninja: build stopped: subcommand failed.
-> 12:08:33 ninja failed with: exit status 1
-> 
-> #### failed to build some targets (25:53 (mm:ss)) ####
-_______________________________________________
-WireGuard mailing list
-WireGuard@lists.zx2c4.com
-https://lists.zx2c4.com/mailman/listinfo/wireguard
+SmFubmUgSGXDnyA8amFubmVAaGVzcy5vb28+IHdyaXRlczoKCj4gT24gNi84LzE5IDEyOjE4IEFN
+LCBUb2tlIEjDuGlsYW5kLUrDuHJnZW5zZW4gd3JvdGU6Cj4+IEphbm5lIEhlw58gPGphbm5lQGhl
+c3Mub29vPiB3cml0ZXM6Cj4+IAo+Pj4gSGV5IGV2ZXJ5b25lLAo+Pj4KPj4+IGFzIGFkdmVydGlz
+ZWQsIEkgaGF2ZSBjb21wbGV0ZWQgdGhlIFdpcmVndWFyZCBzdXBwb3J0Lgo+Pj4gWW91IG1pZ2h0
+IHNlZSB0aGF0IEkgYW0gbm90IHJlYWxseSBhIEMgZXhwZXJ0LCBidXQgSSBob3BlIHRoZSBjb2Rl
+IGlzIGdvb2QgZW5vdWdoLgo+Pj4gSWYgeW91IG5lZWQgbWUgdG8gY2hhbmdlIGFueXRoaW5nIG9y
+IGhhdmUgYWRkaXRpb25hbCBxdWVzdGlvbnMsIGp1c3QKPj4+IGxldCBtZSBrbm93Lgo+PiAKPj4g
+SGkgSmFubmUKPj4gCj4+IEF3ZXNvbWUgdGhhdCB5b3UgaGF2ZSB0YWtlbiB0aGUgdGltZSB0byBp
+bXBsZW1lbnQgdGhpcyEKPj4gCj4+IEknbGwgbGV0IHRoZSBCaXJkIG1haW50YWluZXJzIGNvbW1l
+bnQgb24gdGhlIGFwcHJvYWNoIG9mIGVtYmVkZGluZyB0aGUKPj4gd2lyZWd1YXJkIG5ldGxpbmsg
+bGlicmFyeTsgYnV0IEkgaGF2ZSB0d28gb3RoZXIgY29uY2VybnM6Cj4+IAo+PiAtIEFzIGZhciBh
+cyBJIGNhbiB0ZWxsIHRoZXJlJ3Mgbm90aGluZyBwcmV2ZW50aW5nIEJpcmQgZnJvbSByZW1vdmlu
+Zwo+PiAgICBBbGxvd2VkSVBzIHRoYXQgaXQgZGlkIG5vdCBpdHNlbGYgaW5zdGFsbCBmcm9tIGFu
+IGludGVyZmFjZSwgcmlnaHQ/Cj4+IAo+PiAtIFRoZSBhbGdvcml0aG0gaXMgYmFzaWNhbGx5IE8o
+UCpNKk4pIGZvciBpbnNlcnRpbmcgTiByb3V0ZXMgb24gYW4KPj4gICAgaW50ZXJmYWNlIHdpdGgg
+UCBwZWVycyB0aGF0IGVhY2ggaGF2ZSBNIGV4aXN0aW5nIEFsbG93ZWRJUHMuIFRoYXQgaXMKPj4g
+ICAgbm90IGdvaW5nIHRvIHNjYWxlIHZlcnkgZmFyIDovCj4+IAo+PiAtVG9rZQo+PiAKPgo+IEhp
+IFRva2UsCj4KPiB0aGFua3MgZm9yIHlvdXIgcmV2aWV3Lgo+Cj4gWW91ciBmaXJzdCBvYnNlcnZh
+dGlvbiBpcyBjb3JyZWN0LiBEdWUgdG8gZGlmZmVyZW5jZXMgaW4gc2VtYW50aWNzLCB0aGlzIAo+
+IGNhbm5vdCBiZSBpbXBsZW1lbnRlZCBpbiB0aGUgc2FtZSB3YXkgaXQgaXMgaW1wbGVtZW50ZWQg
+aW4gdGhlIEtSVCAKPiBwcm90b2NvbCBiZWNhdXNlIEFsbG93ZWRJUHMgZG9uJ3QgaGF2ZSBhIG5v
+dGlvbiBvZiB0aGUgcHJvdG8gZmllbGQuCgpZZWFoLCBub3Qgc3VyZSB3aGF0IGEgZ29vZCB3YXkg
+dG8gaGFuZGxlIHRoYXQgbWlnaHQgYmUuIFlvdSBjb3VsZCBhZGQKdGhpcyBjYXBhYmlsaXR5IHRv
+IHRoZSB1cHN0cmVhbSB3aXJlZ3VhcmQ/IAoKPiBBZGRyZXNzaW5nIHlvdXIgc2Vjb25kIHBvaW50
+LCB0aGUgV2lyZUd1YXJkIG5ldGxpbmsgaW50ZXJmYWNlIGFuZCAKPiBsaWJyYXJ5IG9ubHkgb2Zm
+ZXIgYW5kIHVuZGVyc3RhbmQgdGhlIHBlZXJzIGFuZCBhbGxvd2VkIElQcyBhcyBhIGxpbmtlZCAK
+PiBsaXN0Lgo+IEFzIHdlIG9ubHkgZ2V0IGVhY2ggcm91dGUgc2VwZXJhdGVseSwgd2UgY2Fubm90
+IHByb2Nlc3MgbXVsdGlwbGUgcm91dGVzIAo+IGluIG9uZSBydW4uIFdlJ3JlIG9wZW4gdG8gc3Vn
+Z2VzdGlvbnMgYW5kIHBhdGNoZXMuCgpXZWxsLCB0aGVyZSBhcmUgYSBjb3VwbGUgb2Ygb3B0aW9u
+cywgSSBndWVzczoKCi0gRml4IHRoZSB3aXJlZ3VhcmQgbmV0bGluayBpbnRlcmZhY2UgdG8gd29y
+ayBiZXR0ZXIgd2l0aAogIGluc2VydGlvbi9kZWxldGlvbiBzZW1hbnRpY3MuCgotIENhY2hlIHRo
+ZSBrZXJuZWwgcmVzcG9uc2UgaW4gYSBkYXRhIHN0cnVjdHVyZSB0aGF0IGFsbG93cyBtb3JlCiAg
+ZWZmaWNpZW50IGxvb2t1cHMuCgoKQmVmb3JlIGRvaW5nIGFueSBvZiB0aGlzLCB5b3UgbWF5IHdh
+bnQgdG8gd2FpdCBmb3IgZmVlZGJhY2sgb24gd2hldGhlcgp0aGlzIGFwcHJvYWNoIHRvIGFkZGlu
+ZyB0aGUgc3VwcG9ydCBpcyB0aGUgcmlnaHQgd2F5IHRvIGdvLiBQZXJzb25hbGx5LApJIHRlbmQg
+dG8gdGhpbmsgdGhhdCB0aGUgInJpZ2h0IiB3YXkgdG8gYWRkIHRoZSBzdXBwb3J0IGlzIGJ5Cmlu
+dHJvZHVjaW5nIGEgbmV3ICd3aXJlZ3VhcmQnIHByb3RvY29sIHR5cGUgdG8gQmlyZC4gQnV0IHRo
+YXQncyB1cCB0bwpPbmRyZWogZXQgYWwsIG9mIGNvdXJzZSA6KQoKLVRva2UKX19fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18KV2lyZUd1YXJkIG1haWxpbmcgbGlz
+dApXaXJlR3VhcmRAbGlzdHMuengyYzQuY29tCmh0dHBzOi8vbGlzdHMuengyYzQuY29tL21haWxt
+YW4vbGlzdGluZm8vd2lyZWd1YXJkCg==
