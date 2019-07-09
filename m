@@ -1,66 +1,42 @@
 Return-Path: <SRS0=Af8f=VO=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
-X-Spam-Level: *
-X-Spam-Status: No, score=1.2 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_IMAGE_ONLY_08,HTML_IMAGE_RATIO_06,
-	HTML_MESSAGE,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Level: 
+X-Spam-Status: No, score=0.3 required=3.0 tests=BOGUS_MIME_VERSION,
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CF20C76192
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7F3FC76196
 	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jul 2019 20:43:13 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id F0CC12184E
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jul 2019 20:43:12 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=chrisbox.org header.i=@chrisbox.org header.b="kjksljsl"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org F0CC12184E
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=chrisbox.org
+	by mail.kernel.org (Postfix) with ESMTPS id 812162184E
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jul 2019 20:43:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 812162184E
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=msgden.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b9534a9a;
-	Wed, 17 Jul 2019 20:42:05 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4374dfea;
+	Wed, 17 Jul 2019 20:42:54 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b00ce3cb
- for <wireguard@lists.zx2c4.com>;
- Sat, 29 Jun 2019 10:38:30 +0000 (UTC)
-Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com
- [IPv6:2607:f8b0:4864:20::52a])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8d95e2cd
- for <wireguard@lists.zx2c4.com>;
- Sat, 29 Jun 2019 10:38:30 +0000 (UTC)
-Received: by mail-pg1-x52a.google.com with SMTP id 196so3728049pgc.6
- for <wireguard@lists.zx2c4.com>; Sat, 29 Jun 2019 03:38:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=chrisbox.org; s=google;
- h=mime-version:from:date:message-id:subject:to;
- bh=hV2mQSowAUlLyBOPTNEnQObJcsZ8tVN+8JUcbnSUH8Y=;
- b=kjksljslaMHmL2Vtx8151+JM/rYqQkjr4ALrbWK2JSPa4m/Ck/ZU3RcimlPb13iw9y
- qOoILocvFLqqCyBJosr9qu7784D7fcihxnF01WjZOJ8M9JY4ptFuXAPDBJRhOJMxMq4k
- y/Y/DLe2CwLx1E6IbBXT+vj9VQH2AFlwzyVMM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=hV2mQSowAUlLyBOPTNEnQObJcsZ8tVN+8JUcbnSUH8Y=;
- b=Nw8EZNqlZ84AmoOfpj8vBl1pREvrocEP2mUhI2ziyc75GHeY3qcLQlv5VJKdjFR9wE
- CkI0kFuJJcUlx69AcPsTI+fUfIiRnA9vZDutyrXyBirhKXNnSOd+p7ID8teTU4y/bqQi
- uM0yyg0tfQpPaSPvKI+Vl1N5eFWJE+mTQo8qqL68smx0Iww4HaemBD3JrlPrVIgS0iby
- bchn2VUygLbWLu2eVyEJaa90vkGWoX3fHjmZGauitOmLXv1wsp76n00WGckP+WCchLIN
- /1DgcAIbmPcGBbEwtX5x1Fx/73ZutwIYo4ylCL864Ou74fiJmw68fQObl6wi3mgl/K6z
- viiA==
-X-Gm-Message-State: APjAAAXmFxZUJ1yl9BoScNOil7gzijyNFpBR89WzPvYCI1ejVtNuSA5C
- JhCGkEatRsxir3YodXajSCSj3gJKOulQC4rKSjjTr/zPgow=
-X-Google-Smtp-Source: APXvYqzqQVpqn9GFTRZR9yRntupuoKJLvP92Jx+bu7QdSCBRwRdVgnGCc4AQipGlDVEk2u9L5OI69Tu5ObDf1cBEWLQ=
-X-Received: by 2002:a65:6089:: with SMTP id t9mr13644700pgu.170.1561804708841; 
- Sat, 29 Jun 2019 03:38:28 -0700 (PDT)
-MIME-Version: 1.0
-From: Christopher Bachner <hello@chrisbox.org>
-Date: Sat, 29 Jun 2019 12:38:01 +0200
-Message-ID: <CAKJniYRn7ZkV9tGOpK=mZoDb24TfMyq44zgE0c5uPo+Ac-sZsA@mail.gmail.com>
-Subject: Speed on Raspberry Pi 4
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-X-Mailman-Approved-At: Wed, 17 Jul 2019 22:42:04 +0200
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 13dd5b28
+ for <wireguard@lists.zx2c4.com>; Tue, 9 Jul 2019 22:05:46 +0000 (UTC)
+Received: from exit1-us.msgsafe.io (exit1-us.msgsafe.io [104.131.125.206])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4e1c04d3
+ for <wireguard@lists.zx2c4.com>; Tue, 9 Jul 2019 22:05:46 +0000 (UTC)
+Received: from exit1-us.msgsafe.io (exit1-us.msgsafe.io [104.131.125.206])
+ by exit1-us.msgsafe.io (Postfix) with ESMTP id 0CBC440911
+ for <wireguard@lists.zx2c4.com>; Tue,  9 Jul 2019 22:05:46 +0000 (UTC)
+X-Msgsafe-Uuid: 1d9c2c4a-5629-4052-8528-41da45b6c04f
+To: wireguard@lists.zx2c4.com <wireguard@lists.zx2c4.com>
+From: Ian Blackburn <iblackburn@msgden.com>
+Subject: Significant packet loss on a wg interface
+Content-Type: multipart/mixed; boundary="9e535bd040094c5aaf6b5d126366da3a"
+Mime-Version: 1.1 (msgsafe.io)
+Message-Id: <20190709220546.0CBC440911@exit1-us.msgsafe.io>
+Date: Tue,  9 Jul 2019 22:05:46 +0000 (UTC)
+X-Mailman-Approved-At: Wed, 17 Jul 2019 22:42:54 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -72,243 +48,100 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============3752361885607276818=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============3752361885607276818==
-Content-Type: multipart/related; boundary="000000000000e15104058c73fed2"
+--9e535bd040094c5aaf6b5d126366da3a
+Mime-Version: 1.0
+Content-Type: multipart/alternative; boundary="bf2aa4e861084a5dbb4c7b0ce620b1d6"
 
---000000000000e15104058c73fed2
-Content-Type: multipart/alternative; boundary="000000000000e15102058c73fed1"
-
---000000000000e15102058c73fed1
-Content-Type: text/plain; charset="UTF-8"
+--bf2aa4e861084a5dbb4c7b0ce620b1d6
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="ascii"
+Mime-Version: 1.0
 
 Hello,
 
-I got a Raspberry Pi 4 with 4GB Ram.
+I've been evaluating the use of Wireguard to replace a setup that uses
+OpenVPN. Initial tests look promising in terms of system resources required
+(much less CPU than OpenVPN), but I'm encountering a fair amount of packet
+loss and I can't see why.
 
-I ran some benchmarks. With pure iperf3 I get 950 Mbit/s.
+The scenario is a public API endpoint that devices ping with a reasonably
+hefty payload. The payload is received by nginx which proxies it over a tunnel
+(via public network) to a server downstream.
 
-With wireguard in the same network I can only get max 750 Mbit/s (which in
-itself is already great).
+Wiregard version is 0.0.20190406-1,
 
-In htop I can see that one of the 4 cores is running at 99%. So I assume
-that is the bottleneck.
+The test server is an Intel i5-4460 running Debian, with 4.19.0-5-amd64
+kernel.
 
-[image: image.png]
+load average: 2.18, 2.12, 2.12  
+%Cpu(s): 25.2 us, 3.0 sy, 0.0 ni, 68.3 id, 0.0 wa, 0.0 hi, 3.5 si, 0.0 st
 
-Is there a way to improve this? I assume it does not matter which side is
-the server and which is the client?
+So basically, the traffic isn't exceptionally heavy and it is pretty stable in
+terms of volume, and the machine is not doing anything else.
 
-Thanks,
+Looking at the wg0 interface, I see it dropping a fair amount of RX packets.
+Doing some maths with /sys/class/net/wg0/statistics, it shows the interface is
+receiving about 600KB/sec and around 5000pps. The RX dropped counter is rising
+at about 120-150pps (between 2-3%) and this is show up as an error to the
+sender which then has to explicitly retry (this is how I became aware of the
+problem in the first place).
 
-Christopher
+The underlying eth0 interface isn't seeing a single packet dropped or any
+errors.
 
---000000000000e15102058c73fed1
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+eth0 mtu is 1500, wg0 mtu is 1420 (haven't touched these).
 
-<div dir=3D"ltr">Hello,<div><br></div><div>I got a Raspberry Pi 4 with 4GB =
-Ram.=C2=A0</div><div><br></div><div>I ran some benchmarks. With pure iperf3=
- I get 950 Mbit/s.</div><div><br></div><div>With wireguard in the same netw=
-ork I can only get max 750 Mbit/s (which in itself is already great).</div>=
-<div><br></div><div>In htop I can see that one of the 4 cores is running at=
- 99%. So I assume that is the bottleneck.</div><div><br></div><div><div><im=
-g src=3D"cid:ii_jxhe4ain0" alt=3D"image.png" width=3D"531" height=3D"141"><=
-br></div></div><div><br></div><div>Is there a way to improve this? I assume=
- it does not matter which side is the server and which is the client?</div>=
-<div><br></div><div>Thanks,</div><div><br></div><div>Christopher</div></div=
->
+I've tried raising txqueuelen, raising net.core.rmem_max and
+net.core.rmem_default to stupidly high values with 0 difference.
 
---000000000000e15102058c73fed1--
+I've tried setting net.ipv4.tcp_rmem='16384 33554432 67108864, increasing
+net.core.netdev_max_backlog and net.ipv4.udp_mem but nothing changes. So
+rather than try even more random changes, I'm wondering if anybody recognizes
+the symptoms, and what the fix is? I think that covers it, but feel free to
+ask for other metrics.
 
---000000000000e15104058c73fed2
-Content-Type: image/png; name="image.png"
-Content-Disposition: inline; filename="image.png"
-Content-Transfer-Encoding: base64
-Content-ID: <ii_jxhe4ain0>
-X-Attachment-Id: ii_jxhe4ain0
+The exact same machine using OpenVPN dropped nothing (although user cpu was
+closer to 60%).
 
-iVBORw0KGgoAAAANSUhEUgAAAhMAAACNCAYAAAANUPg+AAAgAElEQVR4Ae2df2wcx5Xnv00xobTO
-mkNGw2T9Q8MVaY+UrOWRABonnSUHEwUOyGwQw4MFKMRArM2FGCInwLc+GwiwEHV/LCBvjByEhISS
-O/sPBRKwYGDv2SPYCG8Q/VjOQvRKbdmxSZvychSLxpIKOdJpVxxzxD5U9fTP+cGe4bT46zsA3d1V
-r15VfYZyF1+9ek9JpX6nzedyyM3PYy6bxcF3wrh1tAP8kAAJkAAJkAAJkIAXAnWAkpdTzDsvDSlD
-AiRAAiRAAiRAAoJAHaDlSWjmHdGQAAmQAAmQAAmQgFcC0jKh2yZomfAKjXIkQAIkQAIkQAIWAWmZ
-0G0TtExYWHhHAiRAAiRAAiTglQB9JrySohwJkAAJkAAJkEBRAvSZKIqFhSRAAiRAAiRAAl4J0DLh
-lRTlSIAESIAESIAEihLY8MMf/qBvYWEB4id3J4d/nNyMz//pV0WF11KhotyDV+rvwVe0LP6lxMQo
-Qz783Sj8x8F/F/x3wX8Xhf8u1nuJzTJhRZxY71A4fxIgARIgARIgAe8E1pzPhLLzMM5PTmLS+Dl/
-GDsVIzCXdzCUJAESIAESIIHVREBR6vGj+i/j7Q1fxtv1f4pv29594bqALBPzUZSdOHze9p6cnMSJ
-7qW9J+ste4S/cSY2fecNPLRvC/BhHy6/+prP388nON61F0cuGQG5fO6O6kmABEiABNYtAfGiPqZs
-MOd/QZvB3y443z9eZEwFJW6Uuj/FW8oXrVrlDn5z5wZ+qel9Pax8CU9jDocWsnhiQyOeU76It7Qs
-xNbki3XAb+7ckm017RKOPH4fjoiFxc7DOJfosXRWeWezTFixMKvUVbSZ8sDzCL/0LrbgFUxfLyrC
-QhIgARIgARJYlQS+XfdlHKu7g58tzODJO3/Et7XP8VhdI35kswp4kfEyeW3h/8k+RD/i59AC8PQG
-q68/xwZgIYcxLYerC7pGYa34Lxs24v6F2+aiw0tflco4fCYqbbyYvKI8hdChJ3DzWAQfJcYXE2c9
-CZAACZAACawaAorSgP9cB1xYuIW38tYBaLfxG2zA03kLgheZaif8kXYbF7ABD9p3KOrqEVbqsaUO
-uIY7gLIJT+Nz/Ez7vNpuPLVzWCY8tahASNNew8QLf4nPPnWaeypQQVESIAESIAESWKEE6nE/7uAP
-tlecpuVwZuEOIF/q4i3vRaba6Qnd1udt7RYuYCOO1TXK7Y6j2gb8j7ovOhc7lnhN72w+E5b3RE17
-oDISIAESIAESWLME8pYB24JCn2od/hzAR/KhvMxYlWyeVDbifszhaL5vTcvib3NZU5vYXnls4Rae
-dPlvmAI1vKm3e0oUsKhhR1RFAiRAAiRAAmuLQBb/jI14uu5PENb+A2Oalnd2FM6Yd/JT9SLjnYrD
-CVM6YOr9ujUIuefqPsfP7vi7vWH067BMGIW8kgAJkAAJkAAJlCcgtjR+decWHtzwJRyr26gLK3P4
-2cIdPFe3gH8F4EWmfC/OWumEmS8SpzT+94Zm/KeFGzi4kDMFhZ+G2N64tnADUJrxdp04tuE8+WEK
-1+jGYZmokU6qIQESIAESIIF1QcC9tSAmLbYXsHBbWirEsxeZamBp2r/jHxY24rm6BoS1O2Z/Typf
-wmPiiCg24Zi0TtySi4rnNvwJfpn792q6WrSNwzJhdwhdtCUFSIAESIAESIAEHASs0xultxe8yDiU
-VvAgrBV/VSesEP8BKI0A5qWFxNp2qUBZBaL1dln6TNhp8J4ESIAESIAEvBPQtx02AnLbofgbdTEZ
-YdV4TvxlrwnHScuZstgopF+EIo6mGv4aekwJ0b8IZBWWFgLdERQyBsXtYmpqUuZYTNREo0tJ07Pv
-4sHttsLNfdjxUh+Aq5g+9l0eG7Wh4S0JkAAJkMDqIuCIbCn9EmYKgkN5kRGzFgGmRHwIFF+HyO0T
-udAwECnCwXLGjHHxpKIfCT2k6c6fH2m38Bs04rm6ZkDKlraWGCqrvfruMzH76qOYrXZ0bEcCJEAC
-JEACK5jA2EIGTy4yPi8yQoVw1vxl7o/4ZQl9by38EW+VqBPFsj4f+dKLvjKqKq7yNQJmxaNhAxIg
-ARIgARIggVVHQBhU1uBnK3oS1/TMocwauga/X06JBEiABEigWgL2rKHXEj3YWq0iWzsllTqjzefm
-kZvPYS47h4PvhHHraIdNhLckQAIkQAIkQAIkUJqAr7k5SnfLGhIgARIgARIggbVCgD4Ta+Wb5DxI
-gARIgARIYJkIrFGficVpKqE6fOEXdagPlQ7VJc4Dv1IfcOSld2umDPm4fyeM57X6u2HMj1cSIAES
-MAis28WEAYBXEiABEiABEiCBpRGoKxEbY2lal7G1svMwzk9O6ic5xJWnOZbx22DXJEACJEACd4uA
-orRgz4Fe9PaKny5sUyzLe8ueA7JMjMV+mmMy/7480W3JVjPe+qU199alOwrmzcEIJi74uYz5BMe7
-9uLIJT/78DZ3SpEACZAACawPAsq2LsSjIQBpJAdOY1TT30FWucEhA3XwFIanqn9HWTqtvoK79yMC
-FYMD42jvjiHaGcZoYhRKyx7sjwDq4Gk5AE27hCOP34cjYmGx8zDOJXqMgVV9vTvhtNGHyy+8Jgep
-PPZzPBJT0Qq/FxRVM2FDEiABEiABEqiIgLAK7N4lFhKFH200gf5Rq1xYCWKxbqDKBUWpvpqbAsCN
-GUxpU2i+ofcnZfdHEEgnl7R4sUZf/M53nwkRTvvyq/pCQg5h5DimrwP3fv17xUfEUhIgARIgARJY
-ZQSkVSCQRjKZXnTk06mLSCOApuZFRYsKlO2rsRktSguaG4HM7AwQ7kBEjOv0WFFdtSpccz4TtQJD
-PSRAAiRAAiTghYCibENHJICMOgJPr+xgM0Ry8Go+5foaO51EOhBBLB6T2x1DqWZ0RkNIJ60tl2r6
-9NLG5TNxNzwo2tGwGch+MO5lfJQhARIgARIggRVNINwZRSijYjA1DYQXH2q4I4JARsWQp5WHU1+5
-vjRtFAnbfsq2rl6E0kn0j1bvm+HsvfRTvbML51PpZtXXBH7Qh3tF+nH1/eqVsCUJkAAJkAAJrAAC
-wrlRuEqkkylMaRpK/UluOUyKQQsHTF2+kil47UvoFP1FQ8I5s4oVSyWDysu6LBNVaKigiXGqI3v2
-J/jsU/8XLhUMjaIkQAIkQAIkUBEBu3PjyUX++rc7YYpFQXcsjlZ1ECeHpzz1WUlfYitEbG9k1EGg
-M45e6Re69BMk5QZ613wmNn3nDTy4Hcie/T7G3nyv3JhYRwIkQAIkQAIrn4B0bsxAHansr39tahgX
-00CgtR0ttlgQZSdcQV/GVsjQTEfeOjGAZDqAyP7dZbtYSqXLMlHKQLOULgBxHPShfVuAD/u4kFga
-SrYmARIgARJYIQTCbfpR0EgsjohrTNF4HFFXvAmXSEWPXvsaC+7GrpC+jYL2biAzgRnR02wGVXt9
-ehip7z4TelyJvXIh4Tgi6mFwFCEBEiABEiCBlUpgNNEPW/gIOUzdNwKOoFXu8ev+DJafhb1eOE3q
-ca+S6E9Y2r30ZWyFQB2UMSVa2gEEmiBPoOZjUNj7quW9yzJRS9UiZOcj+Oo39upKt/dhx0t9jg78
-j4Tp6I4PJEACJEACJHDXCZgLBLNn4Rg5YEbINIrFYkDEh6j2E+7Uj4TKUyUAplNDUFtjEFYSPSpn
-ZdsxlYzDtEz44Q6pae/hs5cexWeVjIiyJEACJEACJLBKCdgdLY0pFLMqGHX2q6ZNYfhkP4bthWXu
-3X25+6lUX5muFq2qM7wk9KvxtGg7CpAACZAACZAACZCAJOA6zeGHfWI5SG9FT+KanjmUWUOX4wtg
-nyRAAiRAAiuUgD1r6LVED7bWYJxKKnVGm8/NIzefw1w2i4PvPIxbRztqoJoqSIAESIAESIAE1gMB
-0zKh2yTWimViPXx1nCMJkAAJkAAJrAwC9JlYGd8DR0ECJEACJEACq5bAhr/+4bN9CwsLED+5Ozn8
-4+RmfP5Pv1q1E/I6cCVUhy/8nYK63wML+bzv7raKcg9eqb8HX9Gy+Bd3Zf6ZMuTD343Cfxxr9d9F
-4UxZQgIkIAiYlgkdB09z8NeCBEiABEiABEigMgJrzmdC2XkY5ycn9ZMc4srTHJX9RlCaBEiABEhg
-VRIQQa/2HOhFb6/46cI2W96Plj0HZJmYmP00x2T+fXmie2nGhHwETCWfNnVpyorRN8Npm5VXMX3s
-uz5nDf0Ex7v24sglOpSa2HlDAiRAAiRQcwLO1OKW+nRyAIlRDTKDZzwKPYuHVW/cGXLG82JXdzRN
-e/vg7v2IQMXgwDjau2OIdoYxmhiFyFK6PwKog6elek27hCOP34cjYmGx8zDOJXoW63bR+nwETA1+
-nebQLvwYly9Y4xDZQx869H8A3xcUVp+8IwESIAESIAH/CIjw2KcLwmOL/jRtFIl+K8eGMQZ9EdKI
-WZmFyygtf5ULCSTRn9en64ijC/rCpTmff2NKm0Jz3hfQyNcRSCdlvo7yPVRfa/pM6DaJ2lsm3EOb
-S7yCm9iChvvcNXwmARIgARIggbVPQL7gd4WA9MWKXvAiXLY9+RfGRqBmgFBb2ILW2IyWfI6PjFip
-yNTlaSRP+5eXQ3R+930m7m9DgzVt3pEACZAACZDA+iIgX/AZqCO1fcGPnU4iHYggFtcTfg2lmtEZ
-DSGdLG41qSV0330m3IMNfOsZNFw/gasj7ho+kwAJkAAJkMBqJBCSmTmj+aHb/RjcszGtEhkV49Pu
-2kqfmyF2NjIT+l6Je0tFbIuE0kn0j/rvP+i7z4RA43TCFA6YL+O25v/kKv1aKE8CJEACJEAClRBw
-Z+4UpyZi0TgONA/i5PBUoapgO1oDQDqZwtQS34PhTuHYmYFaZFUi/CmiIeHLUVvrR+GE9JJ6/eLf
-aQ6h3+6EqTzwPB4+pOLes9/H2JvvlRoXy0mABEiABEhg1RGYTg1BbY0h0tqOltR0wYIh3BFBIKNi
-aInveONUR0YdKvC7kCdIoiFk1EGgM45eeZQkA3XwVIFsrQDX6Yr8O83hHqj26U8x9SHQ8LUnscl2
-BtYtx2cSIAESIAESWG0ENG0KM6WiKrfsge53uTSrhLB+REOQi4Vi1g9psRALlpmOvHViAMl0AJH9
-u33DmT/N4a9lwrfRUzEJkAAJkAAJrCACwirQJiwBN2aKWyWQxpUlWCXE9kUsIvdJim6jiJgSu0IZ
-qEMpoLkRyMxCeFTMzGZ8pXRXfCbsMxD+Ew9uB24O0m/CzoX3JEACJEACq5+A7sdQeBRTf8kLa8JI
-0XgUxsyN7QsIx8mEMz6FHldCHCktrBPtjZgSUAfldkZLO4BAE5pFZT4GhdFPra+++0w0PfuuXDxY
-Az+HP7wYwewSHU8sfbwjARIgARIggeUhIB0uhaXA+IgXfZEgVdJXAmkkU6WPcIjFgDAmFPuYp0BE
-ZSiK3l7j7IguLU6QXGnTj4QO5vsw/Dei8Tgg+vbRGTO/mPDPZ2L21UcxW4wMy0iABEiABEhglROY
-Gj6J/uHFJyECTjntDIVthL/F8Ml+FFNXrs7UNOrsw1Mbs/HSbugzsTR+bE0CJEACJEAC655APgKm
-f5aJ5SG8FT2Ja3rmUGYNXZ6vgL2SAAmQAAmsSAL2rKHXEj3YWoNRKsOpM1oul0Nufh5z2SwOvvMw
-bh3tqIFqqiABEiABEiABElgPBO56nIn1AJVzJAESIAESIIH1RCC/mGCcifX0pXOuJEACJEACJFBL
-Ai7LRC1Vr2xdSqgOX/hFHepDpdOuK8o9eKU+gB+VidRJGfIp9Zu+Gn83Ss2F5SRAAiRQjoDLMlFO
-lHUkQAIkQAIkQAIkUEjAZZlY/Zk8lZ2HcX5yUj/JIa48zVH4rbOEBEiABEhgzREQga32HOhFb6/4
-6cI2m1VdBNcSZeJjP80xmX9fnugubaX3Asr3CJj2QVipyEUUzP/qYxTMT3C8ay+OXFr9iyM7P96T
-AAmQAAmsXAJmuGsZbfK0I2y2GSY7P3wRsTIx6v0dJTOBxkXK8eIfoW+keT8iUDE4MI727hiinWGM
-JkYhQnnvjwDq4GnZWNMu4cjj9+GIWFjsPIxziZ7iSisodUXArKBlhaKK8gi++o29FbaiOAmQAAmQ
-AAmsfAKOcNeu4cqFBKww2/qiI44ueF9QaNooEkXCdOu6GjE7AzS3BfIJxqbQnM9cKse1P4JAOulb
-+nExXdNnwjX3mj9u7Po7BDefwx8Gz9VcNxWSAAmQAAmQwHISCO7ej0ggjWQyXTAMEUrbkbRrbARq
-Bgi1hQtkKykwFzDpi9ZCobEZLfkcHxmxwgh36OM6vYRUpR4GZfpMeJCtWkRRnsJX9m1B9uxx+JsE
-teohsiEJkAAJkAAJVEVAbEF0RAIyI6i/r2zX8ORCIQN1RO917HQS6UAEsbie8Gso1YzOaAjppHPL
-xaWlJo8un4ma6CxQEvhBH+69fgIfJ94HGFyzgA8LSIAESIAEVi8BmXY8o0Jm6/RkbGiWGcEzEzNV
-T9q0SmRUjOcTkbq3QsT2SkhkMa3AN6PaAZmWCe9uIJV1pTzwPFq2Azd/9zJuM+14ZfAoTQIkQAIk
-sKIJCOfGXSEgfTGFKY/vOLn4QAYTxiqgmhkG29EaKN2v8KWIhtJI+ry9YQzdtEwYBbW8SqfLA8+g
-4cM+jF3wa7lSyxFTFwmQAAmQAAl4I2B3bjzp8a9/41RHRh2y/By8deeQCndEEMioGCqyryJPfkRD
-yKiDQGccvfIISAbq4Kkl9ekYgOvBtEy4ymvz2NGD4OarmP7t67XRRy0kQAIkQAIksFIIuHwWFhuW
-iPUQDUG+5E8OTy0mXrJ+MWuIse0yNNOhWycGBpBMBxDZv7ukzqVW+GqZCHxdPwoaPKQi6Brpg0dV
-PAi/4024OuUjCZAACZAACdSIQLhNj/oQicURcemMxuOI2uJNiG2HWETsSySxlIWE6EZaJZDGxWJW
-CbntIqwQKaC9G8hMQHpmzGaARtcga/hoxpmooU5T1eyrj2LWfNJv9MBV8DlolatTPpIACZAACZBA
-jQmII5+jLp163AcgOWCdoNDLhGNF0nlE1NVWPBrbIKVkDatERh1xBMUSbY1tF6iDcjujpR1AoAnN
-orJJj0FRpMuaFPlqmajJCKmEBEiABEiABFYpAfPUhRh/KIre3qhjJvZImEK2eRHrgWGVSKbyRzhs
-2sKd+pFQeaoEwHRqCGprDMJKAmklKWLKsLVfym1+MbEUFZW11S78GJcvVNaG0iRAAiRAAiSwGgho
-ownYA1Vq2hSGT/Zj2MPgvcgWs4YYqt11XvQZbZd6zTtgLlUN25MACZAACZAACaxXAv6e5lg2qlvR
-k7imZw5l1tBl+xbYMQmQAAmQwMojYM8aei3Rg601GKIynDqj5XI5zM/PI5vN4uA7D+PWUYaprAFb
-qiABEiABEiCBdUGA2xzr4mvmJEmABEiABEjAPwJcTPjHlppJgARIgARIYF0QkIuJ9RjoWgnV4Qu/
-qEN9SCn5RXuS2fTfcPtrryO3qYweLzJbcvhf//M2friljB7KLJlPyS+bFSRAAiRAAlUTkIuJ0q+v
-qvWyIQmQAAmQAAmQwDohsOa2OZSdh3F+clI/ySGuPM2xTn6VOU0SIAES8J+AyK/Re2APWpTV+2e4
-/TTHZP59eaJ7afPxNWiVSD/+8KFn0HD9BD7+eysFedOz7+JBkZZ8MIIJX7KJfoLjXXtx5NJ63MDx
-/x8TeyABEiABPwmIF7aRx6I/4Q5YDZjhqfODENkxS+W7sGTTZohrEZK6O6Zn3Rw8ZaUON0JZ26NS
-2ucpsnF2RAJIJ602ln5DsvrsnOa8TVUq7OMTxV5kZNTN7hhEKhDjY5+Tpl3CkcfvwxERgnvnYZxL
-9BhiVV/lYsL3V+7mJxC4/2Xc/lTEDn8KjdurHi8bkgAJkAAJrFECxkseahJqJlqQPEtM23h5Gy9H
-vU0MB1C4oHCEsi7GLNCK9mAKU1Pi3bQN+bxdxST1snAbQiIstS0qtTvipXzZx7qBCtN964uEG0gO
-nJI5N2Qa8XgUsc4ZM5+HFxmDoUhPPjhgLXq2dXVh25iVL6T0JKur8ddn4r5WaZWY/nALGu7LD7Dj
-m2g424fp69UNmK1IgARIgATWHgH58oy1YmJwAKdSMs9lwSTNxUE6icSo/mewNjWMi2kg0NpesPUQ
-3L0fkUAayWTaqau5CeJlq6YDaJJZsEQqzjY0ykWMU9R4MvoulmDLkBHX6dRFpGHTa68scS90t7eK
-jKJXzORdmjaKETUDhNqwTVFkEi8vMrv3F1pcRLejiYSpu8QwllR8V05zZH5/Dvd+/XtyoIGvh3BT
-HZf3DS1/YQ5eZBPd8dK71s+zTznrXngemwwZcf/A8whL+Z+jaRXvXZmT5A0JkAAJrGMC4uWZ6D8p
-s12WxBBsh/7OtUwDpkVBWhmslqJcbEmIl78lbdWLu/EraYTawrIw3NaIiXF9EdPYHHQKiifZdwYT
-44UJthzCweaKM32LHBozNwA0NjsWRM0i02dmVqYQ9yKjjxFIX7QsEo6x+fjgr2XCGPjI/8XN7d9E
-0wPPoyV4BplrRoV+tdKSR3D5hUfx3ot9uLm9DztsCwpsfgYPfWMCHx87gezmJ7DlQCumxD32opEB
-O51A+UQCJEACa5GAsCggg9m84UKa9ONRQFWRcVkDwp1RhDIqhopk1zTRjF1BWvzl37IHuxonUG6d
-ILN1ZsrLCL26nIqRUisYs3PnzdiIikwgglj3brmgEFsa0VAG6pC1MFhUxsXH2YO/T776TGxsCQGY
-APA6/u3sQXzlWwA+OI4525wU5RF89Rt7kT37fcxqebOV9pqUv3ffN9GkvI5MXv7m717GHP4GwBbg
-g58gc6294hWgrWvekgAJkAAJrFICum+Avi2Swm50R6yJiLpdIZiOku5zCkGZ53sWwBhG1F3oEH+Q
-ToxA2BzaLTXmnWH9sDtempU2Pw69TDhgWgsAu1y5e7Fdc2pgHLu7Y4jFxWQsh1Gj3WIy+rxuYCZv
-PNF9LAwvzOodQ43+y13lYkIH7cZdrlnldXPqGTQcegI3f/s+NE3D3DQQDOpfW8NmoGHfr7Fjn1uv
-fZ/rKrKTVn126v0SX7slwzsSIAESIIE1SKC9E/FII9S8k6PSYs1R+jYIv4F0EifzfhVWbeHd9PgE
-GoWvxsi0fDeJ7YaIdKSYMoWDu3cVOF6alQDsTpj6IieO1jInTOxtjXu9XQRQB9E/PAV5siQexy6b
-Hi8yQCPkLs0UMDV8Ev3DhtNqo9GVL1ebZcLfMx3apz/F2As/LTmJcsdE/V3mlBwSK0iABEiABFYS
-gZlZZBBCJGKdepDDy5v3J8T2R7gDkYDYHvC2zyD+2j8p3rglPoZzZEYd8uTAqDuERhAVDqGpaUzl
-Le4l1Mti+wJILCTEZzTRD3T1IhrpwLbUaYwhCOlcmU7KxUZRGel4EdKdSq21kNTn939slgm/uyql
-fxzZ60BQOGheeK2UEMtJgARIgATWO4HpcUxkIojcsE49CCTSvJ/3Zwh3iO11IBKLFxwtjcbjiCIt
-XCy8f7w6XnrXWESyGdLXUq6GrOqZWXGaI29pmPYgI3xAoiHdqXS0MD6Hpbn2dzbLRO2VbwxuAaav
-4HaZlZmmvYfMB1cR3NeH1sde9ymIVe3nRo0kQAIkQAJ3l4A40ZC6mEYkGkXXtjF5PFSY/vfbAklN
-Jfrhfo3qsSlgBq0SWwi4MePJaiAdKtPJ8qdMbBhEX1Gbv4atSt+6EGsdYV1wBOOagVw35K0Qo5om
-416I0yjIqHnH0MVlxImY08k2xKNRHNgzUzKQl31Mtbq3WSaWYTMh2IZNioLbb/4lPsYbeCimYkfM
-NrUP+3D5VVorbER4SwIkQAJrloARgdKcYCCK3t4oAMt5UPgnDKAL8Wgcskq+mwfMuBNm26Xc5I9o
-TiMsA1ml7VGqXHoLxiwdJwcKtkTEVob0+3S1F49ykXRqEOiOQbee5IUci44ppBaV0f03BmZEhM8Y
-em1OqdaipMgAalBks0zU3mdi9tVHIfxli33cdWJBcfnNYpKAduHHuHzBqLP7XryGiRe42DDI8EoC
-JEACq5mA8BNwWxWKzcfu8Fis3l3mli/Xj72uZU95x0vRj13e3a/9WSwYhk/2o5R3xmL1QpcXGSm3
-iB+IfVy1urfFmVgGy0StZkE9JEACJEACJFBDApbj5UiBlaGG3awZVbYImBpqb5tYLk5b0ZO4pmcO
-ZdbQ5foS2C8JkAAJrFoChhWgVAKxVTsxERdD2YnD5/Xs2tcSPdhag8kow6kzWi6Xw/x8DtnsHA6+
-8zBuHWVIyRqwpQoSIAESIAESWBcEHJaJdTFjTpIESIAESIAESKCmBOgzUVOcVEYCJEACJEAC64+A
-wzKxdnwm1t8XyRmTAAmQAAmQwHIRqAMU6Oc4jOtyDYX9kgAJkAAJkAAJrEYCdYBxisO4rsZpWGNW
-dh7G+UndS3VSXHmaw4LDOxIgARIggZIERJbN3gN7ZArwkkJroMJ+mkO+JycncaJ7aeEhHBEwl6aq
-NOFN33kDD+3bYgqIdONjb75nPtf+5hMc79qLI5e4cVN7ttRIAiRAAstLQA+PrefgECPJ2DNrKi0y
-jXfkhjNktRGpMp0sHi1TpBkX4auLpRk3U3k7IlJaDMqNx5DyImPIlruW02NkFQ1kVAyestKgu+eu
-aZdw5PH7cEQcE915GOcSPeW69FTniIDpx6u36dl38eD2q5g+FsFnn+o9iMVF62PfZR4OT18RhUiA
-BEiABAwCxsvUWBToL9AYDmCwZC4K0UbPl1F8ISF1h9sK0owbL2eoSaiZaEHiMNHOy3i8yBjzK3f1
-rCfQivZgClNTIqbENhkSvJzeWtT56jOhKE+hcTuQPfsTcyEhBi1CZ09c8GPpUgsk1EECJEACJLAS
-CchU3btkFi0zF4ee8hsIiJTfSqF9XbxMO39K2h4AAAaISURBVKMhab1IjBZ/7xh6M6oV7VK2i7Vi
-YnAAp1Iit3nhx2gnEncZut3j8SJTqLmwxJMekYo9o0JNB/Q05EJNuA2NcjFUqLOWJXfFZ6Ih2F5y
-zMJysePZp4rWCwvGjheexyblEfzZC+8i/J1HIMteehc7xI+sK/zlKaqMhSRAAiRAAqubgEwHDqSv
-jJnzMP/yln+Nm8XyRr6Au6MIpZMlrRZSsEiacZGBM9F/sny2UC/j8SLjHHbxpwr0jF9J62nI5Vqi
-ERPj+mKosTlYXHcNSh1xJmr9Wta01/BvZ68C2/uw46U38GcPlOghnz3UPR8jhflcvqJh36/x0NfO
-4OMXI3jvxe9jGs/goR98z92MzyRAAiRAAmuRgPjLGxnM5g0FchsiHgVUFRnY/hrPzz24ez8iUDF4
-2lp8FMMi04xnJvKpvotJlCjzMh4vMiXUO4or0TN2BelQG7a17MGuxirm5ejY24PvcSbElsZ7x04g
-iy0IHlKlRUFYGIzP3PRV4xbKA88jnF90KMoj2BgEstPjZj2un8DHf/8ybmsaNO09ZD4QC5VvoqmI
-actqxDsSIAESIIG1RkD3Z9C3IU7bXhPmPENRxCKAOmQ5Ipp1thvDspG+WF7O1qTo7aLjEf4VLSI1
-eJkxF9VcWFhKT9DMcT6GEbURbR1NwMQ4pgtV1LzEV58JY7TapyJt+KO6NeE6ICwMxoJibioNbG7F
-RgAbI0+gAVtwb+QvjKbO6/QVuZAwCmVbhLDxfqOEVxIgARIggTVPoL0TcflSPlV6GyKdRDIdQCTW
-iW1l/uAM7tbTjNt2TirH52U8XmS89OxRz/T4BBpDYotjWqYun7kBBJqavfRQlcxd8ZkwRiasCZ+9
-9Cj+8KFYUPToFoXJCWTzCwJhiZgePAF87UlsRDsaNgPZqfeN5rySAAmQAAmsZwIzs3I7IxIBkgO2
-hYRrC8BANHZ6EGomhGj37hLOmS1obw3A7nhptPV09TIeLzJeOqtQj3AEPbmYz4eXfj3KSMuELnv3
-ImDatzZw7QqycgDfQ2PwDDIjb+MmnkBAWhuuIjtZeiYbW8Q54zTmrpWWYQ0JkAAJkMAaITA9jomM
-+N/+FYxq1skMad4v4vMg0oinhlRkAhHEOsOFEIo4XhYKlSnxMh4vMmW6MKtqpcdUWNsbaZnQVdY+
-Aqb0gXCd1BBlW/ZtQfbscczKX4ZxZK9vwb0HDqLhg7dxW/pCAEHxXGahUKintmCojQRIgARIYGUR
-kIuDi2kgFEXXNt2hX/gP7BfBpkr4PIi/0E8l9TYH9rQ4JiQdL9MXS2+VOKQLH7yMx4uMXbMIMNXb
-24verm32YrlVkVpk7s1NAeDGDKZsCy2HEh8f6v3MzSF8JT76/c+x46U+xxRuDkbMOBNi62NuGghu
-B6ZVfUtjTj2D7L5n0HD9DIyTHFKBPBVi6bLrcXTABxIgARIggTVJQBtNYABdiEfj6I3qUzQCWJWa
-sGgz2HwAsYgV3Mp0vEyWPulhRI409Qai6JWdZqAO6tssXsbjRUb0IY6ymj6UZqfWjVc9VgvXXaN/
-PhPKcOqMNp/LITc/j7lsFn/9zsO4dbTDNYLlfRQnO77633+N4HQfLr/6WtnB6KFBv4XfMpx2WU6s
-JAESIIH1TEAPkX0DyYHTji2T9cbECKf9r39zP545ZW0dVcphWXwmKh0k5UmABEiABEigVgSEBWBJ
-jpe1Gsga0uOrz8TycdqKnsQ1MGvo8n0D7JkESIAEVioB4ccwfLK/fFTMlTr4GozLnjX0WqIHW2uh
-czh1VpvPzSM3n0M2O4eDK3CbowbzpAoSIAESIAESIAGfCNgsE0D1uyU+jY5qSYAESIAESIAEVjwB
-m8+EONfBDwmQAAmQAAmQAAlURsBmmah9nInKhkJpEiABEiABEiCB1UjAZpm4exEwVyMojpkESIAE
-SIAESKA4AZtlgj4TxRGxlARIgARIgARIoBwBm2WinBjrSIAESIAESIAESKA4AYdlorgIS0mABEiA
-BEiABEigNAGHZYKnOUqDYg0JkAAJkAAJkEBxAg7LBONMFIfEUhIgARIgARIggdIEHJaJ0mKsIQES
-IAESIAESIIHiBByWieIiLCUBEiABEiABEiCB0gQclgn6TJQGxRoSIAESIAESIIHiBByWCfpMFIfE
-UhIgARIgARIggdIEHJaJ0mKsIQESIAESIAESIIHiBByWieIiLCUBEiABEiABEiCB0gT+P1G5T3+O
-u+KKAAAAAElFTkSuQmCC
---000000000000e15104058c73fed2--
+Thanks,  
+Ian.  
 
---===============3752361885607276818==
+\-- Sent using MsgSafe.io's Free Plan Private, encrypted, online communication
+For everyone. https://www.msgsafe.io
+
+
+
+--bf2aa4e861084a5dbb4c7b0ce620b1d6
+Content-Transfer-Encoding: 7bit
+Content-Type: text/html; charset="ascii"
+Mime-Version: 1.0
+
+<p>Hello,</p>
+<p>I've been evaluating the use of Wireguard to replace a setup that uses OpenVPN. Initial tests look promising in terms of system resources required (much less CPU than OpenVPN), but I'm encountering a fair amount of packet loss and I can't see why.</p>
+<p>The scenario is a public API endpoint that devices ping with a reasonably hefty payload. The payload is received by nginx which proxies it over a tunnel (via public network) to a server downstream.</p>
+<p>Wiregard version is 0.0.20190406-1,</p>
+<p>The test server is an Intel i5-4460 running Debian, with 4.19.0-5-amd64 kernel.</p>
+<p>load average: 2.18, 2.12, 2.12<br>%Cpu(s): 25.2 us,  3.0 sy,  0.0 ni, 68.3 id,  0.0 wa,  0.0 hi,  3.5 si,  0.0 st</p>
+<p>So basically, the traffic isn't exceptionally heavy and it is pretty stable in terms of volume, and the machine is not doing anything else.</p>
+<p>Looking at the wg0 interface, I see it dropping a fair amount of RX packets. Doing some maths with /sys/class/net/wg0/statistics, it shows the interface is receiving about 600KB/sec and around 5000pps. The RX dropped counter is rising at about 120-150pps (between 2-3%) and this is show up as an error to the sender which then has to explicitly retry (this is how I became aware of the problem in the first place).&nbsp;</p>
+<p>The underlying eth0 interface isn't seeing a single packet dropped or any errors.</p>
+<p>eth0 mtu is 1500, wg0 mtu is 1420 (haven't touched these).</p>
+<p>I've tried raising txqueuelen, raising net.core.rmem_max and net.core.rmem_default to stupidly high values with 0 difference.</p>
+<p>I've tried setting net.ipv4.tcp_rmem='16384 33554432 67108864, increasing net.core.netdev_max_backlog and net.ipv4.udp_mem but nothing changes. So rather than try even more random changes, I'm wondering if anybody recognizes the symptoms, and what the fix is? I think that covers it, but feel free to ask for other metrics.</p>
+<p>The exact same machine using OpenVPN dropped nothing (although user cpu was closer to 60%).</p>
+<p>Thanks,<br>Ian.<br></p>
+<br><br></div>--</div>
+<div>Sent using <a href='https:/www.msgsafe.io/?utm_source=msgsafe&utm_medium=email&utm_campaign=freemailsignature'>MsgSafe.io</a>'s Free Plan</div>
+<div>Private, encrypted, online communication</div>
+<div>For everyone. <a href='https:/www.msgsafe.io/?utm_source=msgsafe&utm_medium=email&utm_campaign=freemailsignature'>www.msgsafe.io</a></div>
+
+
+--bf2aa4e861084a5dbb4c7b0ce620b1d6--
+
+--9e535bd040094c5aaf6b5d126366da3a
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -319,4 +152,4 @@ WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---===============3752361885607276818==--
+--9e535bd040094c5aaf6b5d126366da3a--
