@@ -7,73 +7,47 @@ X-Spam-Status: No, score=-6.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BA1B4C76195
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jul 2019 20:49:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 754B5C76192
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jul 2019 20:49:21 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 2658121872
+	by mail.kernel.org (Postfix) with ESMTPS id DA92D21872
 	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jul 2019 20:49:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=bytedance-com.20150623.gappssmtp.com header.i=@bytedance-com.20150623.gappssmtp.com header.b="fff4Ln2l"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 2658121872
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=bytedance.com
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=niij.org header.i=@niij.org header.b="GT972rya"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org DA92D21872
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=niij.org
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8ef382cc;
-	Wed, 17 Jul 2019 20:44:58 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3df47ba9;
+	Wed, 17 Jul 2019 20:46:10 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 77461a46
- for <wireguard@lists.zx2c4.com>; Tue, 2 Jul 2019 09:12:16 +0000 (UTC)
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com
- [IPv6:2607:f8b0:4864:20::436])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a488b358
- for <wireguard@lists.zx2c4.com>; Tue, 2 Jul 2019 09:12:16 +0000 (UTC)
-Received: by mail-pf1-x436.google.com with SMTP id c85so7957614pfc.1
- for <wireguard@lists.zx2c4.com>; Tue, 02 Jul 2019 02:12:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance-com.20150623.gappssmtp.com; s=20150623;
- h=message-id:from:to:cc:subject:date:mime-version
- :content-transfer-encoding;
- bh=VgWfifiHCD/phmqwLS5k745THafqkI9vQ0B5GBipJog=;
- b=fff4Ln2l108LfuB5KwCAk7Gc/2HadLCzNqBpMFKMbkvIbBFgRACrY9aLIdzxvpmLpB
- 37OaAnLohzdoZ6R4a3VoU0/hmMqfIYBoUuRchmTT9KQL+GtlAcEKqfq/HF+kSGwf8dcg
- 6UBnnrMewpgIg+KHK3Q8wULNM8Jc0qvTxVMKdWjGY8HvHJKziJyzYg6wtNqrYDSabOMp
- QCHm3FQNHQFVa7ZTwUNEcalyVU6TkePdSGLoO9d5hXWtr4RyIOOuOHZC9BnXRl3/0TTN
- 5wqHAv1ixTSOAX72RgWhxqsPPKjlO1et11HQ2BYJe9mbK7jsLXw7dJQc67YscSOkiN0O
- YHRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:message-id:from:to:cc:subject:date:mime-version
- :content-transfer-encoding;
- bh=VgWfifiHCD/phmqwLS5k745THafqkI9vQ0B5GBipJog=;
- b=VgsJ13iLUM7+AbeBOVm71nIhvYXVd1UfsPVTZ/ffuGMI8YSMo3rALB+LZuxxiKKN/u
- n0BN4zm29+zd6+Mn0b45mckXFJwyfPitneNd8IN8eFlwnnQg59hz4n207I7hKTVHZqL8
- l3VZxOkCGMAAQXwG8F/6eIliuUp2nyYBZge6ohbGKJHqzNliWekmm5zbya56N3Lxo1rR
- oqhLE1nQSfCqT49qjYIYzrXMjV+YWDA4whf4hZPHgOMXMvn2dwlprp43SFzPVwcRop/6
- Hrv0e/zgNtZxO3moiqPx+8gxpdaOdbPL8JEF5KLgBd5MtzSCxk6rFpdYylpi6gZY0jG2
- 2Q0Q==
-X-Gm-Message-State: APjAAAW4k/UIT3JElzZfm+W99TSAle5C9xh+E/rj7aCJtz9FSQG4CPRI
- sUHnTsB2WlVCZ8ydENWvzNQ/TTgmd1rVwQ==
-X-Google-Smtp-Source: APXvYqzqDl1LQlB7NVnA/Hfu5qEDRxdGWPoiSfp2+s8VHPGpj4PDSL5+eRrkc+bo9utfAeg++DANBA==
-X-Received: by 2002:a17:90a:3688:: with SMTP id
- t8mr4259873pjb.35.1562058735689; 
- Tue, 02 Jul 2019 02:12:15 -0700 (PDT)
-Received: from bogon.bytedance.net ([61.120.150.75])
- by smtp.gmail.com with ESMTPSA id j16sm1520406pjz.31.2019.07.02.02.12.12
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
- Tue, 02 Jul 2019 02:12:14 -0700 (PDT)
-Message-ID: <5d1b1fee.1c69fb81.3719e.5260@mx.google.com>
-X-Google-Original-Message-ID: <20190702091205.32716-1-liuhaichao>
-From: liuhaichao@bytedance.com
-X-Google-Original-From: liuhaichao
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 00c338bd
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 15 Jul 2019 23:48:52 +0000 (UTC)
+Received: from toam.niij.org (niij.org [78.46.88.12])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6938ce3b
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 15 Jul 2019 23:48:52 +0000 (UTC)
+Received: by toam.niij.org (Postfix, from userid 1000)
+ id B0F6E9CC068B; Tue, 16 Jul 2019 01:48:51 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=niij.org; s=tuom;
+ t=1563234531; bh=+49eQpZJcOHo4gHEb0/R7ue8nY0l2p952RkTU5RNwsg=;
+ h=From:To:Cc:Subject:Date:From;
+ b=GT972ryaUWGMqfzanMr7vzndlJaJ+KD+0u7o8U/t6APCCPNK5cMfdRauJyhpiVXTu
+ 2bT796srr6FMLChWaIG0rGxdurdY0olrkefvDA3e0HunonZXmPBqR6n77IpX+srNRA
+ jjtaQEWcbGGBOxQK0HZaXE/Xvkgi63WZaPdzAyeA=
+From: Michael Zeltner <m@niij.org>
 To: wireguard@lists.zx2c4.com
-Subject: [PATCH] rwcancel: error should be provided by Unix function
-Date: Tue,  2 Jul 2019 17:12:05 +0800
-X-Mailer: git-send-email 2.19.1
+Subject: [PATCH] tun: openbsd: Don't change MTU when it's already the expected
+ size
+Date: Mon, 15 Jul 2019 19:46:35 -0400
+Message-Id: <20190715234634.13018-1-m@niij.org>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-X-Mailman-Approved-At: Wed, 17 Jul 2019 22:44:56 +0200
-Cc: liuhaichao <liuhaichao@bytedance.com>
+X-Mailman-Approved-At: Wed, 17 Jul 2019 22:46:10 +0200
+Cc: Michael Zeltner <m@niij.org>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -90,37 +64,40 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-From: liuhaichao <liuhaichao@bytedance.com>
-
-Change-Id: I7df1f9e0ce43dbe9c415e834757385dad2398707
+Allows for running wireguard-go as non-root user
 ---
- rwcancel/rwcancel.go | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tun/tun_openbsd.go | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/rwcancel/rwcancel.go b/rwcancel/rwcancel.go
-index 62397c2..3abfd0a 100644
---- a/rwcancel/rwcancel.go
-+++ b/rwcancel/rwcancel.go
-@@ -92,7 +92,7 @@ func (rw *RWCancel) Read(p []byte) (n int, err error) {
- 			return n, err
- 		}
- 		if !rw.ReadyRead() {
--			return 0, errors.New("fd closed")
-+			continue
- 		}
+diff --git a/tun/tun_openbsd.go b/tun/tun_openbsd.go
+index 1e6191f..bdca231 100644
+--- a/tun/tun_openbsd.go
++++ b/tun/tun_openbsd.go
+@@ -173,12 +173,21 @@ func CreateTUNFromFile(file *os.File, mtu int) (Device, error) {
+ 
+ 	go tun.routineRouteListener(tunIfindex)
+ 
+-	err = tun.setMTU(mtu)
++	var cur_mtu int
++	cur_mtu, err = tun.MTU()
+ 	if err != nil {
+ 		tun.Close()
+ 		return nil, err
  	}
+ 
++	if cur_mtu != mtu {
++		err = tun.setMTU(mtu)
++		if err != nil {
++			tun.Close()
++			return nil, err
++		}
++	}
++
+ 	return tun, nil
  }
-@@ -104,7 +104,7 @@ func (rw *RWCancel) Write(p []byte) (n int, err error) {
- 			return n, err
- 		}
- 		if !rw.ReadyWrite() {
--			return 0, errors.New("fd closed")
-+			continue
- 		}
- 	}
- }
+ 
 -- 
-2.19.1
+2.21.0
 
 _______________________________________________
 WireGuard mailing list
