@@ -2,52 +2,43 @@ Return-Path: <SRS0=Af8f=VO=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 754B5C76192
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jul 2019 20:49:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B58DC7618F
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jul 2019 20:50:58 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id DA92D21872
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jul 2019 20:49:20 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=niij.org header.i=@niij.org header.b="GT972rya"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org DA92D21872
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=niij.org
+	by mail.kernel.org (Postfix) with ESMTPS id 97AFA21872
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jul 2019 20:50:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 97AFA21872
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=romanrm.net
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3df47ba9;
-	Wed, 17 Jul 2019 20:46:10 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2e923882;
+	Wed, 17 Jul 2019 20:50:30 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 00c338bd
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6c202735
  for <wireguard@lists.zx2c4.com>;
- Mon, 15 Jul 2019 23:48:52 +0000 (UTC)
-Received: from toam.niij.org (niij.org [78.46.88.12])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6938ce3b
+ Wed, 17 Jul 2019 20:50:28 +0000 (UTC)
+Received: from len.romanrm.net (len.romanrm.net [91.121.75.85])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bb7e1574
  for <wireguard@lists.zx2c4.com>;
- Mon, 15 Jul 2019 23:48:52 +0000 (UTC)
-Received: by toam.niij.org (Postfix, from userid 1000)
- id B0F6E9CC068B; Tue, 16 Jul 2019 01:48:51 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=niij.org; s=tuom;
- t=1563234531; bh=+49eQpZJcOHo4gHEb0/R7ue8nY0l2p952RkTU5RNwsg=;
- h=From:To:Cc:Subject:Date:From;
- b=GT972ryaUWGMqfzanMr7vzndlJaJ+KD+0u7o8U/t6APCCPNK5cMfdRauJyhpiVXTu
- 2bT796srr6FMLChWaIG0rGxdurdY0olrkefvDA3e0HunonZXmPBqR6n77IpX+srNRA
- jjtaQEWcbGGBOxQK0HZaXE/Xvkgi63WZaPdzAyeA=
-From: Michael Zeltner <m@niij.org>
-To: wireguard@lists.zx2c4.com
-Subject: [PATCH] tun: openbsd: Don't change MTU when it's already the expected
- size
-Date: Mon, 15 Jul 2019 19:46:35 -0400
-Message-Id: <20190715234634.13018-1-m@niij.org>
-X-Mailer: git-send-email 2.21.0
+ Wed, 17 Jul 2019 20:50:28 +0000 (UTC)
+Received: from natsu (unknown [IPv6:fd39::e99e:8f1b:cfc9:ccb8])
+ by len.romanrm.net (Postfix) with SMTP id CCD3520283;
+ Wed, 17 Jul 2019 20:50:27 +0000 (UTC)
+Date: Thu, 18 Jul 2019 01:50:27 +0500
+From: Roman Mamedov <rm@romanrm.net>
+To: Christopher Bachner <hello@chrisbox.org>
+Subject: Re: Speed on Raspberry Pi 4
+Message-ID: <20190718015027.00e6010f@natsu>
+In-Reply-To: <CAKJniYRn7ZkV9tGOpK=mZoDb24TfMyq44zgE0c5uPo+Ac-sZsA@mail.gmail.com>
+References: <CAKJniYRn7ZkV9tGOpK=mZoDb24TfMyq44zgE0c5uPo+Ac-sZsA@mail.gmail.com>
 MIME-Version: 1.0
-X-Mailman-Approved-At: Wed, 17 Jul 2019 22:46:10 +0200
-Cc: Michael Zeltner <m@niij.org>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -64,41 +55,28 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Allows for running wireguard-go as non-root user
----
- tun/tun_openbsd.go | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+On Sat, 29 Jun 2019 12:38:01 +0200
+Christopher Bachner <hello@chrisbox.org> wrote:
 
-diff --git a/tun/tun_openbsd.go b/tun/tun_openbsd.go
-index 1e6191f..bdca231 100644
---- a/tun/tun_openbsd.go
-+++ b/tun/tun_openbsd.go
-@@ -173,12 +173,21 @@ func CreateTUNFromFile(file *os.File, mtu int) (Device, error) {
- 
- 	go tun.routineRouteListener(tunIfindex)
- 
--	err = tun.setMTU(mtu)
-+	var cur_mtu int
-+	cur_mtu, err = tun.MTU()
- 	if err != nil {
- 		tun.Close()
- 		return nil, err
- 	}
- 
-+	if cur_mtu != mtu {
-+		err = tun.setMTU(mtu)
-+		if err != nil {
-+			tun.Close()
-+			return nil, err
-+		}
-+	}
-+
- 	return tun, nil
- }
- 
+> In htop I can see that one of the 4 cores is running at 99%. So I assume
+> that is the bottleneck.
+> 
+> Is there a way to improve this? I assume it does not matter which side is
+> the server and which is the client?
+
+You can see that the load from WireGuard encryption is about 42-43% per each
+core. But the thing is, one of them (the 1st) also gets to process interrupt
+load from the NIC, and that consumes the rest of it, causing the bottleneck. In
+theory, if you could limit WG to run encryption on all cores EXCEPT the first
+one, then maaaaybe...
+
+Another way would be to use a NIC which is capable of splitting interrupt load
+across multiple CPU cores. But I believe the RPi one can't do that, and no USB
+NICs can.
+
 -- 
-2.21.0
-
+With respect,
+Roman
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
