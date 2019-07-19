@@ -2,49 +2,50 @@ Return-Path: <SRS0=ZLx+=WB=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3418DC0650F
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Aug 2019 18:46:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E570EC0650F
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Aug 2019 18:46:11 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 81911216B7
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Aug 2019 18:46:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 826ED214C6
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Aug 2019 18:46:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=syseleven.de header.i=@syseleven.de header.b="Z7p6n6gS"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 81911216B7
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=syseleven.de header.i=@syseleven.de header.b="S+SDj086"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 826ED214C6
 Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=syseleven.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 01e768ff;
-	Mon, 5 Aug 2019 18:46:04 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 722c0332;
+	Mon, 5 Aug 2019 18:46:11 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3dbccde3
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b4f75e31
  for <wireguard@lists.zx2c4.com>;
- Wed, 17 Jul 2019 22:41:41 +0000 (UTC)
+ Fri, 19 Jul 2019 16:44:16 +0000 (UTC)
 Received: from smtp01.syseleven.net (smtp01.syseleven.net [77.247.83.123])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 61bf3ab0
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bba982a1
  for <wireguard@lists.zx2c4.com>;
- Wed, 17 Jul 2019 22:41:41 +0000 (UTC)
+ Fri, 19 Jul 2019 16:44:15 +0000 (UTC)
 Received: from 127.0.0.1 (localhost [127.0.0.1])
- by smtp01.syseleven.net (Postfix) with ESMTPSA id 4B4CF2460320;
- Thu, 18 Jul 2019 00:41:38 +0200 (CEST)
+ by smtp01.syseleven.net (Postfix) with ESMTPSA id 0CEB22461AAA;
+ Fri, 19 Jul 2019 18:44:13 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=syseleven.de;
- s=2015n001; t=1563403299;
- bh=XfdjoeKqx0lZhuKx3vPQwF8h2mTUDHkJlVv0H1ey33w=;
+ s=2015n001; t=1563554654;
+ bh=K+qGUTTeYv8oT/oc6w59cAKCEflZJZgAe1Go0oQjkYY=;
  h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
- b=Z7p6n6gSQIRM9aegUPDSSblgA9t57IaDeRWXK+++S0mZmmZ3xYiQ+u+KFe0jqOa7Z
- jtPwhpOmZu8dCj4j5Jr7fS0XC6S//4GsMeUMbDLvKLOS2NDVtNvVotX959JEZ9T/Gn
- yDVezFHBZGR+9mgveeUeBbXMRWxL9j2XZ3WgbHLQ=
+ b=S+SDj086tTz23kE5xf37lTUArbGo2FfFs1FM98HYk9eEvBtDDBgXgqpg1jin3qMMD
+ PPq70Gh7ylkBQriZM0uAbwcgq3wEZkEV1aCmBR0CUkX6TR0wfIPXzgXkQt/Sj/WK7f
+ jM5ZWhOwORA2ukcmSugjS4P0FGvH7jeJEkRj6Z98=
 Subject: Re: Wireguard in OpenVZ with NETIF_F_VIRTUAL feature
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>
 References: <e332179c-68e7-46f4-1f4c-7c6b899b0864@syseleven.de>
  <CAHmME9pYWcA_AJ6-UFqq-hUVdXfSadkBWQpg68ee=_R-ttgthA@mail.gmail.com>
  <CAHmME9qATuY5us=Tb9rDXpDqM2yC-14os1=_26q3zfXv0RvJ2g@mail.gmail.com>
+ <fc83f1a4-2523-5e6a-1647-d5e5535074ae@syseleven.de>
+ <CAHmME9q4kfAkrt=t65Y2cpUTmabFVmUPh2ughjy=+zb4WnAoqA@mail.gmail.com>
 From: Benedikt Braunger <b.braunger@syseleven.de>
 Openpgp: preference=signencrypt
 Autocrypt: addr=b.braunger@syseleven.de; prefer-encrypt=mutual; keydata=
@@ -121,13 +122,13 @@ Autocrypt: addr=b.braunger@syseleven.de; prefer-encrypt=mutual; keydata=
  EPEKhvtzFQl0XrXS+HVaAnT3taRmFzCz7lN76uisaHKsrVlBmXdySN2Cm1/9o4L7MdB2on8b
  aTYa890BSBoraOKF1W+1CO+QZP0uiICipwTUolGODuP//cU64BXkd4RMDbAjCLsza9gxIaU5
  uB6t8/cxsrVujviAiaYUX3X+Wyz62tfuWX9roT+3lV8G8wyd
-Message-ID: <fc83f1a4-2523-5e6a-1647-d5e5535074ae@syseleven.de>
-Date: Thu, 18 Jul 2019 00:41:37 +0200
+Message-ID: <e1aa01a0-8da7-37e8-4a86-1a4bcbd3c947@syseleven.de>
+Date: Fri, 19 Jul 2019 18:44:12 +0200
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9qATuY5us=Tb9rDXpDqM2yC-14os1=_26q3zfXv0RvJ2g@mail.gmail.com>
+In-Reply-To: <CAHmME9q4kfAkrt=t65Y2cpUTmabFVmUPh2ughjy=+zb4WnAoqA@mail.gmail.com>
 X-Virus-Scanned: clamav-milter 0.100.3 at milter01.syseleven.net
 X-Virus-Status: Clean
-X-Mailman-Approved-At: Mon, 05 Aug 2019 20:46:03 +0200
+X-Mailman-Approved-At: Mon, 05 Aug 2019 20:46:09 +0200
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
@@ -140,59 +141,22 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-SGkgSmFzb24sCgp0aGFua3MgdmVyeSBtdWNoIGZvciB5b3VyIGlucHV0LiBZZXMgSSBhbHNvIHJl
-YWxpemVkIHRoYXQgdGhlCk5FVElGX0ZfVklSVFVBTCBpcyBhIFZpcnR1b3p6byBzcGVjaWZpYyB0
-aGluZyBhbmQgYWxtb3N0IGxvc3QgaG9wZSB3aXRoCnRoaXMuCgpIb3dldmVyIHdpdGggeW91ciBw
-YXRjaCBhcHBsaWVkIEkgZ2V0IGEgZmFpbHVyZSBhdCBka21zIGJ1aWxkIGFuZCBsb3RzCm9mIHdh
-cm5pbmdzIGluIHRoZSBsb2cgdGhhdCBORVRJRl9GX0xMVFggaXMgcmVkZWZpbmVkLgpJJ20gbm90
-IGZhbWlsaWFyIHdpdGggREtNUyBzdHVmZiBidXQgSSBqdXN0IHdyb3RlIGFyb3VuZCB0aGlzIGFu
-ZCBnb3QgYQp3b3JraW5nIHNvbHV0aW9uIHdpdGg6CgpkaWZmIC0tZ2l0IGEvdXNyL3NyYy93aXJl
-Z3VhcmQtMC4wLjIwMTkwNzAyL2NvbXBhdC9jb21wYXQuaApiL3Vzci9zcmMvd2lyZWd1YXJkLTAu
-MC4yMDE5MDcwMi9jb21wYXQvY29tcGF0LmgucGF0Y2hlZAppbmRleCAyMzlmYTU4Li4wYzYxZWRl
-IDEwMDY0NAotLS0gYS91c3Ivc3JjL3dpcmVndWFyZC0wLjAuMjAxOTA3MDIvY29tcGF0L2NvbXBh
-dC5oCisrKyBiL3Vzci9zcmMvd2lyZWd1YXJkLTAuMC4yMDE5MDcwMi9jb21wYXQvY29tcGF0Lmgu
-cGF0Y2hlZApAQCAtODQ0LDYgKzg0NCwxMCBAQCBzdGF0aWMgaW5saW5lIHZvaWQgc2tiX21hcmtf
-bm90X29uX2xpc3Qoc3RydWN0CnNrX2J1ZmYgKnNrYikKwqAjZGVmaW5lIGNwdV9oYXZlX25hbWVk
-X2ZlYXR1cmUobmFtZSkgKGVsZl9od2NhcCAmIChIV0NBUF8gIyMgbmFtZSkpCsKgI2VuZGlmCgor
-I2lmZGVmIENPTkZJR19WRQorI2RlZmluZSBORVRJRl9GX0xMVFhfVklSVCAoTkVUSUZfRl9MTFRY
-IHwgTkVUSUZfRl9WSVJUVUFMKQorI2VuZGlmCisKwqAvKiBodHRwczovL2dpdGh1Yi5jb20vQ2xh
-bmdCdWlsdExpbnV4L2xpbnV4L2lzc3Vlcy83ICovCsKgI2lmIGRlZmluZWQoIF9fY2xhbmdfXykg
-JiYgKCFkZWZpbmVkKENPTkZJR19DTEFOR19WRVJTSU9OKSB8fApDT05GSUdfQ0xBTkdfVkVSU0lP
-TiA8IDgwMDAwKQrCoCNpbmNsdWRlIDxsaW51eC9idWcuaD4KCgpkaWZmIC0tZ2l0IGEvdXNyL3Ny
-Yy93aXJlZ3VhcmQtMC4wLjIwMTkwNzAyL2RldmljZS5jCmIvdXNyL3NyYy93aXJlZ3VhcmQtMC4w
-LjIwMTkwNzAyL2RldmljZS5jLnBhdGNoZWQKaW5kZXggZDE3ZGJmNy4uOGJkMWU4YSAxMDA2NDQK
-LS0tIGEvdXNyL3NyYy93aXJlZ3VhcmQtMC4wLjIwMTkwNzAyL2RldmljZS5jCisrKyBiL3Vzci9z
-cmMvd2lyZWd1YXJkLTAuMC4yMDE5MDcwMi9kZXZpY2UuYy5wYXRjaGVkCkBAIC0yODEsNyArMjgx
-LDExIEBAIHN0YXRpYyB2b2lkIHdnX3NldHVwKHN0cnVjdCBuZXRfZGV2aWNlICpkZXYpCsKgI2Vs
-c2UKwqDCoMKgwqDCoMKgwqAgZGV2LT50eF9xdWV1ZV9sZW4gPSAwOwrCoCNlbmRpZgorI2lmZGVm
-IE5FVElGX0ZfTExUWF9WSVJUCivCoMKgwqDCoMKgwqAgZGV2LT5mZWF0dXJlcyB8PSBORVRJRl9G
-X0xMVFhfVklSVDsKKyNlbHNlCsKgwqDCoMKgwqDCoMKgIGRldi0+ZmVhdHVyZXMgfD0gTkVUSUZf
-Rl9MTFRYOworI2VuZGlmCsKgwqDCoMKgwqDCoMKgIGRldi0+ZmVhdHVyZXMgfD0gV0dfTkVUREVW
-X0ZFQVRVUkVTOwrCoMKgwqDCoMKgwqDCoCBkZXYtPmh3X2ZlYXR1cmVzIHw9IFdHX05FVERFVl9G
-RUFUVVJFUzsKwqDCoMKgwqDCoMKgwqAgZGV2LT5od19lbmNfZmVhdHVyZXMgfD0gV0dfTkVUREVW
-X0ZFQVRVUkVTOwoKQWRkaW5nIGEgd2lyZWd1YXJkIGludGVyZmFjZSBpbnNpZGUgdGhlIGNvbnRh
-aW5lciB0aGVuIHdvcmtzISBJJ2xsIHNldHVwCmEgd29ya2luZyB0dW5uZWwgdG9tb3Jyb3cgYW5k
-IGRvIHNvbWUgdGVzdGluZyB3aXRoIFZpcnR1b3p6byBMaW51eCBidXQgSQpkb24ndCBleHBlY3Qg
-YW55IGZ1cnRoZXIgY29tcGxpY2F0aW9ucy4KCklmIHRoaXMgaXMgdGhlIHdob2xlIHRoaW5nIHdo
-aWNoIGlzIG5lZWRlZCB0byBzdXBwb3J0IFZpcnR1b3p6byBMaW51eCwKbWF5IHRoaXMgZ2V0IG1l
-cmdlZD8KClRoYW5rcyBhbmQgcmVnYXJkcywKQmVuaQoKQW0gMTcuMDcuMTkgdW0gMjM6MDAgc2No
-cmllYiBKYXNvbiBBLiBEb25lbmZlbGQ6Cj4gQ2FuIHlvdSBsZXQgbWUga25vdyBpZiBhIHBhdGNo
-IGxpa2UgdGhpcyBkb2VzIHRoZSB0cmljaz8KPgo+IGRpZmYgLS1naXQgYS9zcmMvY29tcGF0L2Nv
-bXBhdC5oIGIvc3JjL2NvbXBhdC9jb21wYXQuaAo+IGluZGV4IDYyODg1NTAwLi5kMjg2NTdjYiAx
-MDA2NDQKPiAtLS0gYS9zcmMvY29tcGF0L2NvbXBhdC5oCj4gKysrIGIvc3JjL2NvbXBhdC9jb21w
-YXQuaAo+IEBAIC04NDQsNiArODQ0LDEwIEBAIHN0YXRpYyBpbmxpbmUgdm9pZCBza2JfbWFya19u
-b3Rfb25fbGlzdChzdHJ1Y3QKPiBza19idWZmICpza2IpCj4gICNkZWZpbmUgY3B1X2hhdmVfbmFt
-ZWRfZmVhdHVyZShuYW1lKSAoZWxmX2h3Y2FwICYgKEhXQ0FQXyAjIyBuYW1lKSkKPiAgI2VuZGlm
-Cj4KPiArI2lmZGVmIENPTkZJR19WRQo+ICsjZGVmaW5lIE5FVElGX0ZfTExUWCAoTkVUSUZfRl9M
-TFRYIHwgTkVUSUZfRl9WSVJUVUFMKQo+ICsjZW5kaWYKPiArCj4gIC8qIGh0dHBzOi8vZ2l0aHVi
-LmNvbS9DbGFuZ0J1aWx0TGludXgvbGludXgvaXNzdWVzLzcgKi8KPiAgI2lmIGRlZmluZWQoIF9f
-Y2xhbmdfXykgJiYgKCFkZWZpbmVkKENPTkZJR19DTEFOR19WRVJTSU9OKSB8fAo+IENPTkZJR19D
-TEFOR19WRVJTSU9OIDwgODAwMDApCj4gICNpbmNsdWRlIDxsaW51eC9idWcuaD4KCl9fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fCldpcmVHdWFyZCBtYWlsaW5n
-IGxpc3QKV2lyZUd1YXJkQGxpc3RzLnp4MmM0LmNvbQpodHRwczovL2xpc3RzLnp4MmM0LmNvbS9t
-YWlsbWFuL2xpc3RpbmZvL3dpcmVndWFyZAo=
+Works like a charm! I can compile without any problems and I get
+2Gbits/s out of the box between to containers on different hosts.
+
+Thanks a lot!
+Beni
+
+Am 19.07.19 um 17:25 schrieb Jason A. Donenfeld:
+> How's this look?
+> https://git.zx2c4.com/WireGuard/commit/?id=08f1bfe29a08d9f10f9fa4c47e07a3501a4a8c8a
+
+_______________________________________________
+WireGuard mailing list
+WireGuard@lists.zx2c4.com
+https://lists.zx2c4.com/mailman/listinfo/wireguard
