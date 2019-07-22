@@ -2,79 +2,68 @@ Return-Path: <SRS0=QHSY=WV=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.4 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,
-	MIME_HTML_MOSTLY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.3 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D224C3A5A1
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 25 Aug 2019 15:34:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 31FECC3A5A3
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 25 Aug 2019 15:34:50 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id B3E36206DD
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 25 Aug 2019 15:34:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id CAF10206DD
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 25 Aug 2019 15:34:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=lindenberg.one header.i=@lindenberg.one header.b="Cy2Iy+op"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org B3E36206DD
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=lindenberg.one
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k3k2VYpY"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org CAF10206DD
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9a6ba964;
-	Sun, 25 Aug 2019 15:31:51 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dea8db15;
+	Sun, 25 Aug 2019 15:32:30 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 63b9d236
- for <wireguard@lists.zx2c4.com>; Tue, 6 Aug 2019 13:18:34 +0000 (UTC)
-Received: from mailarchive.lindenberg.one (mailarchive.lindenberg.one
- [62.113.211.160])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 06cb5c66
- for <wireguard@lists.zx2c4.com>; Tue, 6 Aug 2019 13:18:34 +0000 (UTC)
-Received: from Alex (unknown [192.168.177.5])
- (using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- (Authenticated sender: news@lindenberg.one)
- by mailarchive.lindenberg.one (Postfix) with ESMTPSA id CB812280080;
- Tue,  6 Aug 2019 15:18:31 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lindenberg.one;
- s=dkim180429; t=1565097511;
- h=from:sender:reply-to:subject:date:message-id:to:cc:mime-version:content-type:content-transfer-encoding:resent-to:resent-cc:resent-from:resent-sender:resent-message-id:in-reply-to:references:list-id:list-owner:list-unsubscribe:list-subscribe:list-post;
- bh=R1FfmNGUtkxWkB3HUa8SMzb9GSnAzI3gOFLLDbU35js=;
- b=Cy2Iy+opfP4ee05dUSyHsyWRQhCwkVENqVXhdydAscBfxPQ+jra4sh+sEolEezQ5/JCJsB
- 03uQ/Vu9g9k4LXuRrB0izAROMR27CuzcoXY55B3nM6iTJeTjhKaT/EQuPb/ScYeVSmGFHJ
- lq/HtuFtwKSzP/F+XdjFu0FdplsC2B2+iW0lvCLFt1eYwtcSeNbUVeZ+c+Rl3rM3Cw3Plk
- +F/0GnJOBqrkMEBCikJ9+oD8Ct8SKHhYQubneM1pO519Sc4afYOjf2OPT4myjfpdUfHVE7
- GY0bC2a3EEgKU1DW8VdJjQAdbwUOkm45xjGtFyg9pAhWSMBOMjAYUXGoLl4s3A==
-From: "Joachim Lindenberg" <wireguard@lindenberg.one>
-To: "'David Kerr'" <david@kerr.net>,
-	<boerner@t-online.de>
-References: <5549622.se0SCevcK7@majestix.boerner.local>
- <CAJJxGdF0y798ra2HwNZdJ_OpRnUG3H7Wb2bo7sWhLz0iK6fOKg@mail.gmail.com>
- <2995139.DOlZOuy8Ws@majestix.boerner.local>
- <CAJJxGdG501kTbza+nNhfPhEOJPb9E97LEaZf-E7TeeAF6cH8Dg@mail.gmail.com>
-In-Reply-To: <CAJJxGdG501kTbza+nNhfPhEOJPb9E97LEaZf-E7TeeAF6cH8Dg@mail.gmail.com>
-Subject: RE: Wireguard command line tools for Android
-Date: Tue, 6 Aug 2019 15:18:31 +0200
-Message-ID: <003301d54c59$7190e820$54b2b860$@lindenberg.one>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0398078a
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 22 Jul 2019 05:09:29 +0000 (UTC)
+Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com
+ [IPv6:2607:f8b0:4864:20::333])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 26932da5
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 22 Jul 2019 05:09:28 +0000 (UTC)
+Received: by mail-ot1-x333.google.com with SMTP id q20so38839573otl.0
+ for <wireguard@lists.zx2c4.com>; Sun, 21 Jul 2019 22:09:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=xWTjyFYquhL08aA1J0jhjHL9D1rC4cxrMt7g7ZVF+AU=;
+ b=k3k2VYpYAoW0evN+83cOBjmB37sEHe9KBLMlQ6/3wE7CQH+zGMqcgnM8epMh16fVWB
+ iG7bwfKqrD1bTRqV6DvQVXSHDx1CmyqIt3kDeIl7cv4jW3XY+1TlbjHgY2kIus3qc4S/
+ ZUZq6IZpjb+FH1dUY+54QphgnJzurpYjpEPq52q7GhbKVu6jZh+P/oQ8YBOtSABeiFH0
+ 8BDCx5MebPXIEZvXj45SJOu3D+bJ0Liq6JsXCbdLl1DaxKBcWOhYu9BddNlvSb06m6Jp
+ +4YEzsphZVtk50Cq/hiKAvAaepc+sprtZ/Aq7M7VXF/Ln488qu+VsSh3Ly32zUWTNWBq
+ Q8xA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=xWTjyFYquhL08aA1J0jhjHL9D1rC4cxrMt7g7ZVF+AU=;
+ b=XE8scUbqoMNEBFY4xHJhpovAyeUTKW8skCGttNDhwKAlmsUO9VG3MoKhA1rbNzyWUS
+ BvOCAcySgCstoDPP6UQRs07rv8dXDDfUmd4UdGsqXD5of06e9XSgjq0r5qANIa9xzSL1
+ 9Ghsyg00vhHCLVfRWPjLMx3wiyAlLn6A/9timrxUeUZ+eDvp4aOHmNEGVxHO+RCkrWLY
+ +h6OPoDCxT7JrUASGBrO33gzo+sIsIkHXfqzOm8du4xz1hHTr7dXJbuDGYydRRmkLpaS
+ HMDldMvPvPgFyHdN4Iun6igOtS0jsDOTzbuxGmTjjHwYD3bOdJloaSO4qdzxxemCVlj+
+ bONw==
+X-Gm-Message-State: APjAAAUYGEMMl+KbF6KenDB9neDhmY0Bigz9E71SoQGdUiuESv92Ksw1
+ mzQ/fkSUEmFKyu/VvwGZnfR5Fo6QkRFkoENgyNKoCOgjbIAYbw==
+X-Google-Smtp-Source: APXvYqzhoFqkMqm01guPjADEiquB5GuSYIUno85O9uQ5SJbV9LC3e7B9obiuqcor8hZJVpA1eIR3XuQs4Ck+wxwQCes=
+X-Received: by 2002:a9d:3e87:: with SMTP id b7mr8242726otc.157.1563772167871; 
+ Sun, 21 Jul 2019 22:09:27 -0700 (PDT)
 MIME-Version: 1.0
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQL39P+BrZ8dwDopoz7+IVTRmoXD1QDaN8h9AfdccsEBazGEUwIZzwIO
-Content-Language: en-de
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=lindenberg.one; 
- s=dkim180429; t=1565097511;
- h=from:sender:reply-to:subject:date:message-id:to:cc:mime-version:content-type:content-transfer-encoding:resent-to:resent-cc:resent-from:resent-sender:resent-message-id:in-reply-to:references:list-id:list-owner:list-unsubscribe:list-subscribe:list-post;
- bh=R1FfmNGUtkxWkB3HUa8SMzb9GSnAzI3gOFLLDbU35js=;
- b=0BoLyIe9/ey73/Gv7Kb/wUqnUPRKXANkqIYEVRBNR8rNEm7zKKjjKMjoG6tY2EysBFVC5n
- L36Ios2QldyMg4zHnGZypNIfCMIU5PvHgMsFiD53lezB8ei23ntjij3Sa+ImGDMdcVM0qb
- u8mBSR+0Ugcm6F6zoE9+pPgvRd4oTtFNnoPo3nbrjRb9yWukRhc2wq5KX0SXtOz2b/nhMt
- xX94j3qGPm8QU4sG+8mXGfK0MSG8+/RM4p3m+FXX2a/4Gafu8jXvP6YiDVSTtYq3KGb+Wl
- 4FzJ/DGsqwq9D/6yACkri4lPJ8vPDQt8PJ5zf1dw9MppRYqwoYCbSIzglT6dnQ==
-ARC-Seal: i=1; s=dkim180429; d=lindenberg.one; t=1565097511; a=rsa-sha256;
- cv=none;
- b=FPk5xYrPfCaODl89TOfu4GkFP+BCoSagydQQPD0GBfFxIiOhJI1XG3GgcnYBzFN5Hpw3lAVZCzcl6Ia4+veGf02i1fpUQJfT/PfVVsn5dlMmpzDaHhF3z7KK5rDy92D/JnUCFACgF/ebG66EKnfyOy7XYL+cy5bZkaTDYs/fnkXT+6PDYQYvjtFRGIwdky8X7hrb5KjKc7txnZojLZUCLFU/EtmL4QynSHkli5N8DXx19Dt7/WKpkZ8PWXYX2x8mDyweKZ+1jcu16+hDVf5Orkqd/xIRNgP62WxKKsbVBd9izhwu445U05xujxhsq9rP4U654vVOrOLd9V8iUdNA9A==
-ARC-Authentication-Results: i=1; auth=pass smtp.auth=news@lindenberg.one
- smtp.mailfrom=news@lindenberg.one
-X-Mailman-Approved-At: Sun, 25 Aug 2019 17:31:49 +0200
-Cc: wireguard@lists.zx2c4.com
+From: trulyliu <trulyliu@gmail.com>
+Date: Mon, 22 Jul 2019 13:09:17 +0800
+Message-ID: <CANNc_DSMxv5NhrNnKkVp+yYGEmDm48Db=8VsB_S0N4RVai1jUQ@mail.gmail.com>
+Subject: Ryzen 3000 CPU soft lockup
+To: wireguard@lists.zx2c4.com
+X-Mailman-Approved-At: Sun, 25 Aug 2019 17:32:28 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -86,498 +75,204 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============4174938241148102383=="
+Content-Type: multipart/mixed; boundary="===============1380186094860438136=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This is a multipart message in MIME format.
+--===============1380186094860438136==
+Content-Type: multipart/alternative; boundary="000000000000936108058e3e1462"
 
---===============4174938241148102383==
-Content-Type: multipart/alternative;
-	boundary="----=_NextPart_000_0034_01D54C6A.351B3EC0"
-Content-Language: en-de
+--000000000000936108058e3e1462
+Content-Type: text/plain; charset="UTF-8"
 
-This is a multipart message in MIME format.
+I just upgrade my cpu to Ryzen 3700x, my mainboard is Asus B450-I.  I have
+updated the latest bios.
+After upgarde, wireguard constantly cause CPU soft lockup.
 
-------=_NextPart_000_0034_01D54C6A.351B3EC0
-Content-Type: text/plain;
-	charset="utf-8"
+[   79.397005] wireguard: WireGuard 0.0.20190601 loaded. See
+www.wireguard.com for information.
+[   79.397005] wireguard: Copyright (C) 2015-2019 Jason A. Donenfeld <
+Jason@zx2c4.com>. All Rights Reserved.
+[  224.295881] watchdog: BUG: soft lockup - CPU#2 stuck for 22s!
+[kworker/u64:4:304]
+[  224.295884] Modules linked in: wireguard(OE) ip6_udp_tunnel udp_tunnel
+rfcomm pci_stub vboxpci(OE) vboxnetadp(OE) vboxnetflt(OE) vboxdrv(OE)
+xt_nat xt_tcpudp veth ipt_MASQUERADE nf_nat_masquerade_ipv4 nf_conntrack_n
+etlink nfnetlink xfrm_user xfrm_algo iptable_nat nf_conntrack_ipv4
+nf_defrag_ipv4 nf_nat_ipv4 xt_addrtype iptable_filter xt_conntrack nf_nat
+nf_conntrack libcrc32c br_netfilter bridge stp llc aufs overlay cmac bnep
+snd
+_hda_codec_hdmi binfmt_misc nls_iso8859_1 edac_mce_amd
+snd_hda_codec_realtek snd_hda_codec_generic kvm snd_hda_intel arc4
+snd_hda_codec irqbypass snd_hda_core crct10dif_pclmul snd_hwdep
+crc32_pclmul snd_pcm ghash_clmul
+ni_intel snd_seq_midi r8822be(C) snd_seq_midi_event pcbc snd_rawmidi btusb
+snd_seq btrtl aesni_intel mac80211 btbcm btintel snd_seq_device snd_timer
+bluetooth
+[  224.295921]  aes_x86_64 eeepc_wmi asus_wmi crypto_simd sparse_keymap snd
+glue_helper video wmi_bmof joydev input_leds ecdh_generic cryptd cfg80211
+soundcore shpchp wmi mac_hid nvidia_uvm(OE) sch_fq_codel msr parport
+_pc ppdev lp sunrpc parport ip_tables x_tables autofs4 btrfs xor
+zstd_compress raid6_pq hid_generic usbhid hid nvidia_drm(POE)
+nvidia_modeset(POE) nvidia(POE) drm_kms_helper syscopyarea sysfillrect
+sysimgblt fb_sys_fop
+s drm igb ipmi_devintf ipmi_msghandler nvme dca i2c_algo_bit i2c_piix4 ahci
+ptp nvme_core pps_core libahci gpio_amdpt gpio_generic
+[  224.295952] CPU: 2 PID: 304 Comm: kworker/u64:4 Tainted: P         C OE
+   4.15.0-54-generic #58-Ubuntu
+[  224.295953] Hardware name: System manufacturer System Product Name/ROG
+STRIX B450-I GAMING, BIOS 2501 07/12/2019
+[  224.295961] Workqueue: wg-kex-wg0 wg_packet_handshake_send_worker
+[wireguard]
+[  224.295965] RIP: 0010:get_random_u32+0x24/0xe0
+[  224.295967] RSP: 0018:ffffa20888307ca8 EFLAGS: 00000203 ORIG_RAX:
+ffffffffffffff11
+[  224.295968] RAX: 00000000ffffffff RBX: ffff921d74985ac8 RCX:
+0000000000000000
+[  224.295969] RDX: 000000000000000a RSI: 00000000fffffe01 RDI:
+ffffffffc2386d02
+[  224.295970] RBP: ffffa20888307cc0 R08: ffffffffc23a8ca0 R09:
+ffffa20888307c58
+[  224.295971] R10: 0000000000000000 R11: 02d4998003202790 R12:
+ffff921cb5720000
+[  224.295972] R13: ffff921cb5730000 R14: ffff921d74985ad0 R15:
+ffffa20888307e0c
+[  224.295973] FS:  0000000000000000(0000) GS:ffff921e3e280000(0000)
+knlGS:0000000000000000
+[  224.295974] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  224.295975] CR2: 00007ffbffff3308 CR3: 000000074f19c000 CR4:
+0000000000340ee0
+[  224.295976] Call Trace:
+[  224.295982]  ? wg_index_hashtable_insert+0x71/0x110 [wireguard]
+[  224.295985]  wg_index_hashtable_insert+0x62/0x110 [wireguard]
+[  224.295988]  wg_noise_handshake_create_initiation+0x2d2/0x2f0
+[wireguard]
+[  224.295992]  wg_packet_send_handshake_initiation+0x8c/0x130 [wireguard]
+[  224.295995]  wg_packet_handshake_send_worker+0x19/0x30 [wireguard]
+[  224.295998]  process_one_work+0x1de/0x410
+[  224.295999]  worker_thread+0x32/0x410
+[  224.296001]  kthread+0x121/0x140
+[  224.296003]  ? process_one_work+0x410/0x410
+[  224.296005]  ? kthread_create_worker_on_cpu+0x70/0x70
+[  224.296008]  ret_from_fork+0x22/0x40
+[  224.296009] Code: 1f 84 00 00 00 00 00 0f 1f 44 00 00 55 48 89 e5 41 54
+53 48 83 ec 08 0f 1f 44 00 00 ba 0a 00 00 00 eb 05 ba 0a 00 00 00 0f c7 f0
+<72> 46 83 ea 01 75 f6 48 8b 75 08 48 c7 c2 b0 52 30 ba 48 c7 c7
+
+Kernel version: Linux 5.0.0-20-generic
+I also tried WireGuard 0.0.20190702, the same CPU lockup.
+I know this maybe the bug of CPU or kernel itself.
+But this lockup only occurs in wireguard,  If stop wireguard, the CPU soft
+lockup disappear.
+
+Could anyone look into this issue?
+
+
+
+
+-- 
+trulyliu@gmail.com
+
+--000000000000936108058e3e1462
+Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Unfortunately changing IP-Addresses on subscriber lines is very common =
-in Germany, unless you pay extra money for a =E2=80=9Cstatic=E2=80=9D =
-IP. I definitely support Thomas=C2=B4 request to renew the binding via =
-DNS when the tunnel is broken.
+<div dir=3D"ltr">I just upgrade my cpu to Ryzen 3700x, my mainboard is Asus=
+ B450-I.=C2=A0 I have updated the latest bios.<div>After upgarde, wireguard=
+ constantly cause CPU soft lockup.<br></div><div><br></div><div><span style=
+=3D"font-family:monospace"><span style=3D"color:rgb(0,0,0)">[ =C2=A0=C2=A07=
+9.397005] wireguard: WireGuard 0.0.20190601 loaded. See <a href=3D"http://w=
+ww.wireguard.com">www.wireguard.com</a> for information.
+</span><br>[ =C2=A0=C2=A079.397005] wireguard: Copyright (C) 2015-2019 Jaso=
+n A. Donenfeld &lt;<a href=3D"mailto:Jason@zx2c4.com">Jason@zx2c4.com</a>&g=
+t;. All Rights Reserved.
+<br>[ =C2=A0224.295881] watchdog: BUG: soft lockup - CPU#2 stuck for 22s! [=
+kworker/u64:4:304]
+<br>[ =C2=A0224.295884] Modules linked in: wireguard(OE) ip6_udp_tunnel udp=
+_tunnel rfcomm pci_stub vboxpci(OE) vboxnetadp(OE) vboxnetflt(OE) vboxdrv(O=
+E) xt_nat xt_tcpudp veth ipt_MASQUERADE nf_nat_masquerade_ipv4 nf_conntrack=
+_n<br>etlink nfnetlink xfrm_user xfrm_algo iptable_nat nf_conntrack_ipv4 nf=
+_defrag_ipv4 nf_nat_ipv4 xt_addrtype iptable_filter xt_conntrack nf_nat nf_=
+conntrack libcrc32c br_netfilter bridge stp llc aufs overlay cmac bnep snd<=
+br>_hda_codec_hdmi binfmt_misc nls_iso8859_1 edac_mce_amd snd_hda_codec_rea=
+ltek snd_hda_codec_generic kvm snd_hda_intel arc4 snd_hda_codec irqbypass s=
+nd_hda_core crct10dif_pclmul snd_hwdep crc32_pclmul snd_pcm ghash_clmul<br>=
+ni_intel snd_seq_midi r8822be(C) snd_seq_midi_event pcbc snd_rawmidi btusb =
+snd_seq btrtl aesni_intel mac80211 btbcm btintel snd_seq_device snd_timer b=
+luetooth
+<br>[ =C2=A0224.295921] =C2=A0aes_x86_64 eeepc_wmi asus_wmi crypto_simd spa=
+rse_keymap snd glue_helper video wmi_bmof joydev input_leds ecdh_generic cr=
+yptd cfg80211 soundcore shpchp wmi mac_hid nvidia_uvm(OE) sch_fq_codel msr =
+parport<br>_pc ppdev lp sunrpc parport ip_tables x_tables autofs4 btrfs xor=
+ zstd_compress raid6_pq hid_generic usbhid hid nvidia_drm(POE) nvidia_modes=
+et(POE) nvidia(POE) drm_kms_helper syscopyarea sysfillrect sysimgblt fb_sys=
+_fop<br>s drm igb ipmi_devintf ipmi_msghandler nvme dca i2c_algo_bit i2c_pi=
+ix4 ahci ptp nvme_core pps_core libahci gpio_amdpt gpio_generic
+<br>[ =C2=A0224.295952] CPU: 2 PID: 304 Comm: kworker/u64:4 Tainted: P =C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0C OE =C2=A0=C2=A0=C2=A04.15.0-=
+54-generic #58-Ubuntu
+<br>[ =C2=A0224.295953] Hardware name: System manufacturer System Product N=
+ame/ROG STRIX B450-I GAMING, BIOS 2501 07/12/2019
+<br>[ =C2=A0224.295961] Workqueue: wg-kex-wg0 wg_packet_handshake_send_work=
+er [wireguard]
+<br>[ =C2=A0224.295965] RIP: 0010:get_random_u32+0x24/0xe0
+<br>[ =C2=A0224.295967] RSP: 0018:ffffa20888307ca8 EFLAGS: 00000203 ORIG_RA=
+X: ffffffffffffff11
+<br>[ =C2=A0224.295968] RAX: 00000000ffffffff RBX: ffff921d74985ac8 RCX: 00=
+00000000000000
+<br>[ =C2=A0224.295969] RDX: 000000000000000a RSI: 00000000fffffe01 RDI: ff=
+ffffffc2386d02
+<br>[ =C2=A0224.295970] RBP: ffffa20888307cc0 R08: ffffffffc23a8ca0 R09: ff=
+ffa20888307c58
+<br>[ =C2=A0224.295971] R10: 0000000000000000 R11: 02d4998003202790 R12: ff=
+ff921cb5720000
+<br>[ =C2=A0224.295972] R13: ffff921cb5730000 R14: ffff921d74985ad0 R15: ff=
+ffa20888307e0c
+<br>[ =C2=A0224.295973] FS: =C2=A00000000000000000(0000) GS:ffff921e3e28000=
+0(0000) knlGS:0000000000000000
+<br>[ =C2=A0224.295974] CS: =C2=A00010 DS: 0000 ES: 0000 CR0: 0000000080050=
+033
+<br>[ =C2=A0224.295975] CR2: 00007ffbffff3308 CR3: 000000074f19c000 CR4: 00=
+00000000340ee0
+<br>[ =C2=A0224.295976] Call Trace:
+<br>[ =C2=A0224.295982] =C2=A0? wg_index_hashtable_insert+0x71/0x110 [wireg=
+uard]
+<br>[ =C2=A0224.295985] =C2=A0wg_index_hashtable_insert+0x62/0x110 [wiregua=
+rd]
+<br>[ =C2=A0224.295988] =C2=A0wg_noise_handshake_create_initiation+0x2d2/0x=
+2f0 [wireguard]
+<br>[ =C2=A0224.295992] =C2=A0wg_packet_send_handshake_initiation+0x8c/0x13=
+0 [wireguard]
+<br>[ =C2=A0224.295995] =C2=A0wg_packet_handshake_send_worker+0x19/0x30 [wi=
+reguard]
+<br>[ =C2=A0224.295998] =C2=A0process_one_work+0x1de/0x410
+<br>[ =C2=A0224.295999] =C2=A0worker_thread+0x32/0x410
+<br>[ =C2=A0224.296001] =C2=A0kthread+0x121/0x140
+<br>[ =C2=A0224.296003] =C2=A0? process_one_work+0x410/0x410
+<br>[ =C2=A0224.296005] =C2=A0? kthread_create_worker_on_cpu+0x70/0x70
+<br>[ =C2=A0224.296008] =C2=A0ret_from_fork+0x22/0x40
+<br>[ =C2=A0224.296009] Code: 1f 84 00 00 00 00 00 0f 1f 44 00 00 55 48 89 =
+e5 41 54 53 48 83 ec 08 0f 1f 44 00 00 ba 0a 00 00 00 eb 05 ba 0a 00 00 00 =
+0f c7 f0 &lt;72&gt; 46 83 ea 01 75 f6 48 8b 75 08 48 c7 c2 b0 52 30 ba 48 c=
+7 c7 <br>
+<br></span><div>Kernel version:=C2=A0<span style=3D"color:rgb(0,0,0);font-f=
+amily:monospace">Linux 5.0.0-20-generic</span></div><div>I also tried=C2=A0=
+<span style=3D"color:rgb(0,0,0);font-family:monospace">WireGuard 0.0.201907=
+02, the same CPU lockup.</span><br></div><div><span style=3D"color:rgb(0,0,=
+0);font-family:monospace">I know this maybe the bug of CPU or kernel itself=
+.</span></div><div><span style=3D"color:rgb(0,0,0);font-family:monospace">B=
+ut this lockup only occurs in wireguard,=C2=A0 If stop wireguard, the CPU s=
+oft lockup disappear.</span></div><div><br></div><div>Could anyone look int=
+o this issue?</div><div><br></div><div><br></div><div><span style=3D"color:=
+rgb(0,0,0);font-family:monospace"><br></span></div><div><span style=3D"colo=
+r:rgb(0,0,0);font-family:monospace"><br></span></div>-- <br><div dir=3D"ltr=
+" class=3D"gmail_signature" data-smartmail=3D"gmail_signature"><a href=3D"m=
+ailto:trulyliu@gmail.com" target=3D"_blank">trulyliu@gmail.com</a><br></div=
+></div></div>
 
-Thanks, Joachim
+--000000000000936108058e3e1462--
 
-=20
-
-From: WireGuard <wireguard-bounces@lists.zx2c4.com> On Behalf Of David =
-Kerr
-Sent: Dienstag, 6. August 2019 14:34
-To: boerner@t-online.de
-Cc: wireguard@lists.zx2c4.com
-Subject: Re: Wireguard command line tools for Android
-
-=20
-
-Hi Tom,
-
-  Yes I have a stable IP external address.  Under normal circumstances =
-it only changes if I change device (the MAC address) that requests the =
-dhcp lease.  Thus I only have to deal with roaming (changing IPs) on my =
-client device(s) not the server.  I have never heard of a ISP that =
-changes an assigned IP address every 24 hours, its pretty unfriendly =
-practice.  Normally client devices request renewal of the specific IP =
-address it was previously assigned, so your ISP is explicitly refusing =
-to renew that and causing the client to request a new IP.  I would be =
-seeking a new ISP in your situation.
-
-=20
-
-David
-
-=20
-
-On Tue, Aug 6, 2019 at 3:17 AM <boerner@t-online.de =
-<mailto:boerner@t-online.de> > wrote:
-
-Hi David,
-
-Thanks for your elaborate answer!
-
-=20
-
-Yes, your assumption is right - my clients connect to a URL that =
-resolves to an internal address when inside my local LAN. The idea was =
-to keep traffic internal whenever possible.=20
-
-I have now followed your suggestion and have my VPN URL always resolved =
-to the external IP address so the address won't change when =
-leaving/entering the local network.
-
-For me, this solves a part of my issue but not all of it.=20
-
-My router is assigned a new external address (both IPv4 and IPv6) every =
-24 h, and obviously this invalidates the public IP adresses known by the =
-server and the client simultaneously, as they are identical for the =
-clients connected to the local network. That makes the handshake fail, =
-and "wg" on the server shows that it is still looking for its endpoints =
-at the old address. The same is true for the clients.
-
-Disconnecting/reconnecting the clients fixes the tunnel until the next =
-address change, because then Wireguard looks for the DNS record instead =
-of using its stored address information. I think it would be a good =
-feature if Wireguard could refresh its endpoint addresses automatically =
-when an endpoint is not reachable anymore.
-
-=20
-
-How does it work on your side? Have you a constant external IP address?
-
-=20
-
-Thomas
-
-=20
-
-=20
-
-Am Montag, 5. August 2019, 23:28:41 CEST schrieb David Kerr:
-
-I assume you have set the client configs to connect to something like " =
-<http://vpn.example.com> vpn.example.com:<port>" . How does DNS resolve =
-this when inside your local LAN?  Does it resolve to the same public IP =
-address that your DSL router is connected to, or does it resolve to an =
-internal address like 192.168.1.1?
-
-=20
-
-The way I have this working is to ensure that my VPN URL always resolves =
-to the external IP address, even when I am inside my home network.  To =
-do that I had to update my DNS server configuration to make sure that my =
-VPN URL is always resolved by an external DNS provider... I have my own =
-custom network gateway/router and set dnsmasq.static to include the =
-line...
-
-=20
-
-server=3D/ <http://vpn.example.com/8.8.8.8> vpn.example.com/8.8.8.8
-
-=20
-
-Now this works for me because my wireguard server is running on my =
-custom gateway/router... no NAT forwarding to an internal host running =
-wireguard.  If you are running wireguard on an internal server then you =
-also need to make sure that your firewall rules don't block connections =
-to your external interface from your local LAN and do the right NATing =
--- which is probably not permitted by default.  I forget how to do this, =
-but I'm sure google will find some instructions.
-
-=20
-
-David
-
-=20
-
-=20
-
-=20
-
-=20
-
-On Mon, Aug 5, 2019 at 2:57 PM < <mailto:boerner@t-online.de> =
-boerner@t-online.de> wrote:
-
-Hey all,
-
-I've recently set up my private VPN with Wireguard. I am running my =
-local server behind a DSL router with a variable public IP address, =
-accessible via dyndns and NAT, and several mobile clients (Android, =
-Notebooks).=20
-Everything is working fine so far, except of one issue that I would like =
-discuss here:=20
-Roaming doesn't work reliably when a device leaves or re-enters the home =
-LAN, nor when the public IP address is changed by my ISP. The reason =
-seems clear to me: In these cases both peers change their IP address =
-simultaneously whereas the Wireguard protocol relies on only one address =
-changing at a time.
-
-My approach would be to shut down Wireguard on the clients as long as =
-they are connected to their home network locally and to bring up the =
-tunnel only when they leave the home network. Besides the roaming issue =
-it  would be desirable to use the local connection when it is available =
-rather than to take the detour over the internet. And it  should be done =
-automatically so users need not remember to switch on/off VPN all the =
-time.
-My idea was to use Tasker to perform something like wg-quick up|down =
-tun1 accordingly, but the Wireguard command line tools wg and wg-quick =
-don't seem to be available (anymore). In older forum posts I've seen =
-that you can install them from the app settings, but in my version =
-(v0.0.20190708) this option is not available.
-
-Does anybody know about another solution? Or, as a question to the =
-developers, would it be a big deal to bring back the command line =
-feature?
-
-Thanks, Tom
-
-
-
-
-_______________________________________________
-WireGuard mailing list
- <mailto:WireGuard@lists.zx2c4.com> WireGuard@lists.zx2c4.com
- <https://lists.zx2c4.com/mailman/listinfo/wireguard> =
-https://lists.zx2c4.com/mailman/listinfo/wireguard
-
-=20
-
-
-------=_NextPart_000_0034_01D54C6A.351B3EC0
-Content-Type: text/html;
-	boundary="----=_NextPart_000_B4B4_01D54C69.DAC99A20";
-	charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" =
-xmlns:o=3D"urn:schemas-microsoft-com:office:office" =
-xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" =
-xmlns=3D"http://www.w3.org/TR/REC-html40"><head><meta =
-http-equiv=3DContent-Type content=3D"text/html; charset=3Dutf-8"><meta =
-name=3DGenerator content=3D"Microsoft Word 15 (filtered =
-medium)"><style><!--
-/* Font Definitions */
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:Verdana;
-	panose-1:2 11 6 4 3 5 4 4 2 4;}
-@font-face
-	{font-family:"Noto Sans";}
-@font-face
-	{font-family:"verdana\,sans-serif";}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0cm;
-	margin-bottom:.0001pt;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:blue;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:purple;
-	text-decoration:underline;}
-p.msonormal0, li.msonormal0, div.msonormal0
-	{mso-style-name:msonormal;
-	mso-margin-top-alt:auto;
-	margin-right:0cm;
-	mso-margin-bottom-alt:auto;
-	margin-left:0cm;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-span.E-MailFormatvorlage18
-	{mso-style-type:personal-reply;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-size:10.0pt;}
-@page WordSection1
-	{size:612.0pt 792.0pt;
-	margin:70.85pt 70.85pt 2.0cm 70.85pt;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]--></head><body lang=3Den-DE link=3Dblue =
-vlink=3Dpurple><div class=3DWordSection1><p class=3DMsoNormal><span =
-lang=3DEN-US style=3D'mso-fareast-language:EN-US'>Unfortunately changing =
-IP-Addresses on subscriber lines is very common in Germany, unless you =
-pay extra money for a =E2=80=9Cstatic=E2=80=9D IP. I definitely support =
-Thomas=C2=B4 request to renew the binding via DNS when the tunnel is =
-broken.<o:p></o:p></span></p><p class=3DMsoNormal><span lang=3DEN-US =
-style=3D'mso-fareast-language:EN-US'>Thanks, =
-Joachim<o:p></o:p></span></p><p class=3DMsoNormal><span lang=3DEN-US =
-style=3D'mso-fareast-language:EN-US'><o:p>&nbsp;</o:p></span></p><p =
-class=3DMsoNormal><b><span lang=3DEN-US>From:</span></b><span =
-lang=3DEN-US> WireGuard &lt;wireguard-bounces@lists.zx2c4.com&gt; <b>On =
-Behalf Of </b>David Kerr<br><b>Sent:</b> Dienstag, 6. August 2019 =
-14:34<br><b>To:</b> boerner@t-online.de<br><b>Cc:</b> =
-wireguard@lists.zx2c4.com<br><b>Subject:</b> Re: Wireguard command line =
-tools for Android<o:p></o:p></span></p><p class=3DMsoNormal><span =
-lang=3DDE><o:p>&nbsp;</o:p></span></p><div><div><p =
-class=3DMsoNormal><span lang=3DDE =
-style=3D'font-family:"Verdana",sans-serif'>Hi =
-Tom,<o:p></o:p></span></p></div><div><p class=3DMsoNormal><span =
-lang=3DDE style=3D'font-family:"Verdana",sans-serif'>&nbsp; Yes I have a =
-stable IP external address.&nbsp; Under normal circumstances it only =
-changes if I change device (the MAC address) that requests the dhcp =
-lease.&nbsp; Thus I only have to deal with roaming (changing IPs) on my =
-client device(s) not the server.&nbsp; I have never heard of a ISP that =
-changes an assigned IP address every 24 hours, its pretty unfriendly =
-practice.&nbsp; Normally client devices request renewal of the specific =
-IP address it was previously assigned, so your ISP is explicitly =
-refusing to renew that and causing the client to request a new IP.&nbsp; =
-I would be seeking a new ISP in your =
-situation.<o:p></o:p></span></p></div><div><p class=3DMsoNormal><span =
-lang=3DDE =
-style=3D'font-family:"Verdana",sans-serif'><o:p>&nbsp;</o:p></span></p></=
-div><div><p class=3DMsoNormal><span lang=3DDE =
-style=3D'font-family:"Verdana",sans-serif'>David<o:p></o:p></span></p></d=
-iv></div><p class=3DMsoNormal><span =
-lang=3DDE><o:p>&nbsp;</o:p></span></p><div><div><p =
-class=3DMsoNormal><span lang=3DDE>On Tue, Aug 6, 2019 at 3:17 AM &lt;<a =
-href=3D"mailto:boerner@t-online.de">boerner@t-online.de</a>&gt; =
-wrote:<o:p></o:p></span></p></div><blockquote =
-style=3D'border:none;border-left:solid #CCCCCC 1.0pt;padding:0cm 0cm 0cm =
-6.0pt;margin-left:4.8pt;margin-top:5.0pt;margin-right:0cm;margin-bottom:5=
-.0pt'><div><p style=3D'margin:0cm;margin-bottom:.0001pt'><span lang=3DDE =
-style=3D'font-size:10.0pt;font-family:"Noto Sans"'>Hi =
-David,<o:p></o:p></span></p><p =
-style=3D'margin:0cm;margin-bottom:.0001pt'><span lang=3DDE =
-style=3D'font-size:10.0pt;font-family:"Noto Sans"'>Thanks for your =
-elaborate answer!<o:p></o:p></span></p><p =
-style=3D'margin:0cm;margin-bottom:.0001pt'><span lang=3DDE =
-style=3D'font-size:10.0pt;font-family:"Noto =
-Sans"'>&nbsp;<o:p></o:p></span></p><p =
-style=3D'margin:0cm;margin-bottom:.0001pt'><span lang=3DDE =
-style=3D'font-size:10.0pt;font-family:"Noto Sans"'>Yes, your assumption =
-is right - my clients connect to a URL that resolves to an internal =
-address when inside my local LAN. The idea was to keep traffic internal =
-whenever possible. <o:p></o:p></span></p><p =
-style=3D'margin:0cm;margin-bottom:.0001pt'><span lang=3DDE =
-style=3D'font-size:10.0pt;font-family:"Noto Sans"'>I have now followed =
-your suggestion and have my VPN URL always resolved to the external IP =
-address so the address won't change when leaving/entering the local =
-network.<o:p></o:p></span></p><p =
-style=3D'margin:0cm;margin-bottom:.0001pt'><span lang=3DDE =
-style=3D'font-size:10.0pt;font-family:"Noto Sans"'>For me, this solves a =
-part of my issue but not all of it. <o:p></o:p></span></p><p =
-style=3D'margin:0cm;margin-bottom:.0001pt'><span lang=3DDE =
-style=3D'font-size:10.0pt;font-family:"Noto Sans"'>My router is assigned =
-a new external address (both IPv4 and IPv6) every 24 h, and obviously =
-this invalidates the public IP adresses known by the server and the =
-client simultaneously, as they are identical for the clients connected =
-to the local network. That makes the handshake fail, and &quot;wg&quot; =
-on the server shows that it is still looking for its endpoints at the =
-old address. The same is true for the clients.<o:p></o:p></span></p><p =
-style=3D'margin:0cm;margin-bottom:.0001pt'><span lang=3DDE =
-style=3D'font-size:10.0pt;font-family:"Noto =
-Sans"'>Disconnecting/reconnecting the clients fixes the tunnel until the =
-next address change, because then Wireguard looks for the DNS record =
-instead of using its stored address information. I think it would be a =
-good feature if Wireguard could refresh its endpoint addresses =
-automatically when an endpoint is not reachable =
-anymore.<o:p></o:p></span></p><p =
-style=3D'margin:0cm;margin-bottom:.0001pt'><span lang=3DDE =
-style=3D'font-size:10.0pt;font-family:"Noto =
-Sans"'>&nbsp;<o:p></o:p></span></p><p =
-style=3D'margin:0cm;margin-bottom:.0001pt'><span lang=3DDE =
-style=3D'font-size:10.0pt;font-family:"Noto Sans"'>How does it work on =
-your side? Have you a constant external IP =
-address?<o:p></o:p></span></p><p =
-style=3D'margin:0cm;margin-bottom:.0001pt'><span lang=3DDE =
-style=3D'font-size:10.0pt;font-family:"Noto =
-Sans"'>&nbsp;<o:p></o:p></span></p><p =
-style=3D'margin:0cm;margin-bottom:.0001pt'><span lang=3DDE =
-style=3D'font-size:10.0pt;font-family:"Noto =
-Sans"'>Thomas<o:p></o:p></span></p><p =
-style=3D'margin:0cm;margin-bottom:.0001pt'><span lang=3DDE =
-style=3D'font-size:10.0pt;font-family:"Noto =
-Sans"'>&nbsp;<o:p></o:p></span></p><p =
-style=3D'margin:0cm;margin-bottom:.0001pt'><span lang=3DDE =
-style=3D'font-size:10.0pt;font-family:"Noto =
-Sans"'>&nbsp;<o:p></o:p></span></p><p =
-style=3D'margin:0cm;margin-bottom:.0001pt'><span lang=3DDE =
-style=3D'font-size:10.0pt;font-family:"Noto Sans"'>Am Montag, 5. August =
-2019, 23:28:41 CEST schrieb David Kerr:<o:p></o:p></span></p><p =
-style=3D'mso-margin-top-alt:9.0pt;margin-right:30.0pt;margin-bottom:0cm;m=
-argin-left:30.0pt;margin-bottom:.0001pt'><span lang=3DDE =
-style=3D'font-size:10.0pt;font-family:"verdana\,sans-serif"'>I assume =
-you have set the client configs to connect to something like =
-&quot;</span><span lang=3DDE style=3D'font-size:10.0pt;font-family:"Noto =
-Sans"'><a href=3D"http://vpn.example.com" target=3D"_blank"><span =
-style=3D'font-family:"verdana\,sans-serif";color:#2980B9'>vpn.example.com=
-</span></a></span><span lang=3DDE =
-style=3D'font-size:10.0pt;font-family:"verdana\,sans-serif"'>:&lt;port&gt=
-;&quot; . How does DNS resolve this when inside your local LAN?&nbsp; =
-Does it resolve to the same public IP address that your DSL router is =
-connected to, or does it resolve to an internal address like =
-192.168.1.1?</span><span lang=3DDE =
-style=3D'font-size:10.0pt;font-family:"Noto =
-Sans"'><o:p></o:p></span></p><p =
-style=3D'mso-margin-top-alt:0cm;margin-right:30.0pt;margin-bottom:0cm;mar=
-gin-left:30.0pt;margin-bottom:.0001pt'><span lang=3DDE =
-style=3D'font-size:10.0pt;font-family:"Noto =
-Sans"'><o:p>&nbsp;</o:p></span></p><p =
-style=3D'mso-margin-top-alt:0cm;margin-right:30.0pt;margin-bottom:0cm;mar=
-gin-left:30.0pt;margin-bottom:.0001pt'><span lang=3DDE =
-style=3D'font-size:10.0pt;font-family:"verdana\,sans-serif"'>The way I =
-have this working is to ensure that my VPN URL always resolves to the =
-external IP address, even when I am inside my home network.&nbsp; To do =
-that I had to update my DNS server configuration to make sure that my =
-VPN URL is always resolved by an external DNS&nbsp;provider... I have my =
-own custom network gateway/router and set dnsmasq.static to include the =
-line...</span><span lang=3DDE =
-style=3D'font-size:10.0pt;font-family:"Noto =
-Sans"'><o:p></o:p></span></p><p =
-style=3D'mso-margin-top-alt:0cm;margin-right:30.0pt;margin-bottom:0cm;mar=
-gin-left:30.0pt;margin-bottom:.0001pt'><span lang=3DDE =
-style=3D'font-size:10.0pt;font-family:"Noto =
-Sans"'><o:p>&nbsp;</o:p></span></p><p =
-style=3D'mso-margin-top-alt:0cm;margin-right:30.0pt;margin-bottom:0cm;mar=
-gin-left:30.0pt;margin-bottom:.0001pt'><span lang=3DDE =
-style=3D'font-size:10.0pt;font-family:"verdana\,sans-serif"'>server=3D/</=
-span><span lang=3DDE style=3D'font-size:10.0pt;font-family:"Noto =
-Sans"'><a href=3D"http://vpn.example.com/8.8.8.8" =
-target=3D"_blank"><span =
-style=3D'font-family:"verdana\,sans-serif";color:#2980B9'>vpn.example.com=
-/8.8.8.8</span></a><o:p></o:p></span></p><p =
-style=3D'mso-margin-top-alt:0cm;margin-right:30.0pt;margin-bottom:0cm;mar=
-gin-left:30.0pt;margin-bottom:.0001pt'><span lang=3DDE =
-style=3D'font-size:10.0pt;font-family:"Noto =
-Sans"'><o:p>&nbsp;</o:p></span></p><p =
-style=3D'mso-margin-top-alt:0cm;margin-right:30.0pt;margin-bottom:0cm;mar=
-gin-left:30.0pt;margin-bottom:.0001pt'><span lang=3DDE =
-style=3D'font-size:10.0pt;font-family:"verdana\,sans-serif"'>Now this =
-works for me because my wireguard server is running on my custom =
-gateway/router... no NAT forwarding to an internal host running =
-wireguard.&nbsp; If you are running wireguard on an internal server then =
-you also need to make sure that your firewall rules don't block =
-connections to your external interface from your local LAN and do the =
-right NATing -- which is probably not permitted by default.&nbsp; I =
-forget how to do this, but I'm sure google will find some =
-instructions.</span><span lang=3DDE =
-style=3D'font-size:10.0pt;font-family:"Noto =
-Sans"'><o:p></o:p></span></p><p =
-style=3D'mso-margin-top-alt:0cm;margin-right:30.0pt;margin-bottom:0cm;mar=
-gin-left:30.0pt;margin-bottom:.0001pt'><span lang=3DDE =
-style=3D'font-size:10.0pt;font-family:"Noto =
-Sans"'><o:p>&nbsp;</o:p></span></p><p =
-style=3D'mso-margin-top-alt:0cm;margin-right:30.0pt;margin-bottom:0cm;mar=
-gin-left:30.0pt;margin-bottom:.0001pt'><span lang=3DDE =
-style=3D'font-size:10.0pt;font-family:"verdana\,sans-serif"'>David</span>=
-<span lang=3DDE style=3D'font-size:10.0pt;font-family:"Noto =
-Sans"'><o:p></o:p></span></p><p =
-style=3D'mso-margin-top-alt:0cm;margin-right:30.0pt;margin-bottom:0cm;mar=
-gin-left:30.0pt;margin-bottom:.0001pt'><span lang=3DDE =
-style=3D'font-size:10.0pt;font-family:"Noto =
-Sans"'><o:p>&nbsp;</o:p></span></p><p =
-style=3D'mso-margin-top-alt:0cm;margin-right:30.0pt;margin-bottom:0cm;mar=
-gin-left:30.0pt;margin-bottom:.0001pt'><span lang=3DDE =
-style=3D'font-size:10.0pt;font-family:"Noto =
-Sans"'><o:p>&nbsp;</o:p></span></p><p =
-style=3D'mso-margin-top-alt:0cm;margin-right:30.0pt;margin-bottom:0cm;mar=
-gin-left:30.0pt;margin-bottom:.0001pt'><span lang=3DDE =
-style=3D'font-size:10.0pt;font-family:"Noto =
-Sans"'><o:p>&nbsp;</o:p></span></p><p =
-style=3D'mso-margin-top-alt:0cm;margin-right:30.0pt;margin-bottom:12.0pt;=
-margin-left:30.0pt'><span lang=3DDE =
-style=3D'font-size:10.0pt;font-family:"Noto =
-Sans"'><o:p>&nbsp;</o:p></span></p><p =
-style=3D'mso-margin-top-alt:0cm;margin-right:30.0pt;margin-bottom:0cm;mar=
-gin-left:30.0pt;margin-bottom:.0001pt'><span lang=3DDE =
-style=3D'font-size:10.0pt;font-family:"Noto Sans"'>On Mon, Aug 5, 2019 =
-at 2:57 PM &lt;<a href=3D"mailto:boerner@t-online.de" =
-target=3D"_blank"><span =
-style=3D'color:#2980B9'>boerner@t-online.de</span></a>&gt; =
-wrote:<o:p></o:p></span></p><p =
-style=3D'mso-margin-top-alt:0cm;margin-right:30.0pt;margin-bottom:0cm;mar=
-gin-left:33.75pt;margin-bottom:.0001pt'><span lang=3DDE =
-style=3D'font-size:10.0pt;font-family:"Noto Sans"'>Hey all,<br><br>I've =
-recently set up my private VPN with Wireguard. I am running my local =
-server behind a DSL router with a variable public IP address, accessible =
-via dyndns and NAT, and several mobile clients (Android, Notebooks). =
-<br>Everything is working fine so far, except of one issue that I would =
-like discuss here: <br>Roaming doesn't work reliably when a device =
-leaves or re-enters the home LAN, nor when the public IP address is =
-changed by my ISP. The reason seems clear to me: In these cases both =
-peers change their IP address simultaneously whereas the Wireguard =
-protocol relies on only one address changing at a time.<br><br>My =
-approach would be to shut down Wireguard on the clients as long as they =
-are connected to their home network locally and to bring up the tunnel =
-only when they leave the home network. Besides the roaming issue =
-it&nbsp; would be desirable to use the local connection when it is =
-available rather than to take the detour over the internet. And it&nbsp; =
-should be done automatically so users need not remember to switch on/off =
-VPN all the time.<br>My idea was to use Tasker to perform something like =
-wg-quick up|down tun1 accordingly, but the Wireguard command line tools =
-wg and wg-quick don't seem to be available (anymore). In older forum =
-posts I've seen that you can install them from the app settings, but in =
-my version (v0.0.20190708) this option is not available.<br><br>Does =
-anybody know about another solution? Or, as a question to the =
-developers, would it be a big deal to bring back the command line =
-feature?<br><br>Thanks, =
-Tom<br><br><br><br><br>_______________________________________________<br=
->WireGuard mailing list<br><a href=3D"mailto:WireGuard@lists.zx2c4.com" =
-target=3D"_blank"><span =
-style=3D'color:#2980B9'>WireGuard@lists.zx2c4.com</span></a><br><a =
-href=3D"https://lists.zx2c4.com/mailman/listinfo/wireguard" =
-target=3D"_blank"><span =
-style=3D'color:#2980B9'>https://lists.zx2c4.com/mailman/listinfo/wireguar=
-d</span></a><o:p></o:p></span></p><p =
-style=3D'mso-margin-top-alt:0cm;margin-right:0cm;margin-bottom:12.0pt;mar=
-gin-left:0cm'><span lang=3DDE =
-style=3D'font-size:10.0pt;font-family:"Noto =
-Sans"'><o:p>&nbsp;</o:p></span></p></div></blockquote></div></div></body>=
-</html>
-------=_NextPart_000_0034_01D54C6A.351B3EC0--
-
-
---===============4174938241148102383==
+--===============1380186094860438136==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -588,5 +283,4 @@ WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---===============4174938241148102383==--
-
+--===============1380186094860438136==--
