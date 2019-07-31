@@ -2,79 +2,76 @@ Return-Path: <SRS0=EGLd=WR=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-8.3 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B23EC3A59E
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 Aug 2019 15:43:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E020C41514
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 Aug 2019 15:43:09 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id ED7CE22DA7
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 Aug 2019 15:43:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id A770722DA7
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 Aug 2019 15:43:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=bytedance-com.20150623.gappssmtp.com header.i=@bytedance-com.20150623.gappssmtp.com header.b="n+yXov5n"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org ED7CE22DA7
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=bytedance.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Mt/FA6DX"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A770722DA7
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 067ff480;
-	Wed, 21 Aug 2019 15:43:06 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fdd4ed5e;
+	Wed, 21 Aug 2019 15:43:07 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ca558f10
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id eb64c6f6
  for <wireguard@lists.zx2c4.com>;
- Wed, 31 Jul 2019 02:57:35 +0000 (UTC)
-Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com
- [IPv6:2607:f8b0:4864:20::541])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6e8f9e6f
+ Wed, 31 Jul 2019 13:36:31 +0000 (UTC)
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com
+ [IPv6:2a00:1450:4864:20::533])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fe1ea62c
  for <wireguard@lists.zx2c4.com>;
- Wed, 31 Jul 2019 02:57:34 +0000 (UTC)
-Received: by mail-pg1-x541.google.com with SMTP id l21so31123141pgm.3
- for <wireguard@lists.zx2c4.com>; Tue, 30 Jul 2019 19:57:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance-com.20150623.gappssmtp.com; s=20150623;
- h=message-id:from:to:cc:subject:date:mime-version
- :content-transfer-encoding;
- bh=gLpJ/WZuoj1qSxdokKMqzDRbzyzPE9nOJLFNDqrM1Ts=;
- b=n+yXov5nAoaUcVe5O+/GjEB/CDzn55zbEHoTM0NPSBDj+ZtBpStvslITbu0Co9nr5U
- 4+nNv87ZIqnvtHn0jJP2xxiPBgoE3ycGSCqDfcMurjSGyEd0ORbkcSQugEm5j/ne/1QZ
- MfTZMxwzVOGOigLXe8fXvVZKUVjZ+g5aqPNGUN9j59nRw3Ec0E/tMVbWsTrTcGQWn/jZ
- IOAlbJdfJFrVxgros9N6C/vGPdIYJCykci3Meisqs4uLjyPBP+lVxgMCfyhMiEYii5aO
- FgKxZbl6II2DK44RNvdemuF8gXzwjMM3InpoWBpvV/flTAjbIpodqWXwrt3+gxMh+hxj
- w4mg==
+ Wed, 31 Jul 2019 13:36:31 +0000 (UTC)
+Received: by mail-ed1-x533.google.com with SMTP id p15so65689744eds.8
+ for <wireguard@lists.zx2c4.com>; Wed, 31 Jul 2019 06:36:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=message-id:date:to:from:subject:mime-version;
+ bh=zL4wSdIeIK87TV3Kx1x6+oDhuLAb6skVxZ/14AQAXPU=;
+ b=Mt/FA6DX13gCWD6U6KJtfBbTmvzKVTIBkipfQyth0h7pa/sH6u+NPAQfs6WE84NgER
+ URXIEiD0EVSzzNCOqpytpOUy52vx6Bu1OGH0awMKCYd9nUfV539qPE1jNYm6jX5HOGor
+ hBze8Rm8c6L8b194nOMDuBXq/lUwJ3U3gKT7QOpZjVQK1ZCP7mkYmMoRE91Uaa/qKuHE
+ zb6FOKssa5gGmmagATG6vdF182yZckVpHuP1impJeFEHkatSNUZ06HvMtKcC67IWIjCU
+ oAaTUYQUGMq4pHEro+Y4hGkVxleq/Kj/n8+X0wiwoTp4Ea0cetoVyVUGAl3yoih+M/nI
+ BfSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:message-id:from:to:cc:subject:date:mime-version
- :content-transfer-encoding;
- bh=gLpJ/WZuoj1qSxdokKMqzDRbzyzPE9nOJLFNDqrM1Ts=;
- b=qUJ7kswOueXFl4IKQ/iP2cMkaKo1cu9IQWo7V1B09X5hW0YZlCNob/gcQMi1uInhLr
- A85ME8No3riWPd339pr3aWdOGWLsvJqnOhbCNd7jwRvivlPf17inh0Sd1ARbxMJeWixU
- A/zBpESdytqAGGfUDffMNCaI4iF7vyYhdfepiBcJZfJjsxmNSu5ZSWkd0hhn7pQNZk2j
- LOuVrGyTXkJ9zCKGeCSNCbaGNGzWo6itvAqNVb77fl1DIQa1Pr9CtptRdEkupuS3MCs+
- Ouhco64jZ1y3cSRS8ana1RDxbtU3fdF7zt6cBAQ0kq7n8gCHdsGXcqprHDKs+053rT6E
- cJFQ==
-X-Gm-Message-State: APjAAAUpz/1609nPxuxzqcAtb3+CLDU3t5IX83/bo5kpefQDyv6beGZf
- nmfNv8QbGWs8fT29+F1fcjdemyQOHCGs/Q==
-X-Google-Smtp-Source: APXvYqxt4fCXitlE+3ibtH96bjGUxrzS+TwnqkEviiA2OOaFsSJP1N7Ha5ELYw+nzbdxTpgAVxqzwA==
-X-Received: by 2002:a63:f857:: with SMTP id v23mr86671243pgj.228.1564541853744; 
- Tue, 30 Jul 2019 19:57:33 -0700 (PDT)
-Received: from bogon.bytedance.net ([61.120.150.75])
- by smtp.gmail.com with ESMTPSA id f6sm68174368pga.50.2019.07.30.19.57.30
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
- Tue, 30 Jul 2019 19:57:33 -0700 (PDT)
-Message-ID: <5d41039d.1c69fb81.343ad.3704@mx.google.com>
-X-Google-Original-Message-ID: <20190731025716.19532-1-liuhaichao>
-From: liuhaichao@bytedance.com
-X-Google-Original-From: liuhaichao
-To: wireguard@lists.zx2c4.com
-Subject: [PATCH] device: make locks more efficient
-Date: Wed, 31 Jul 2019 10:57:16 +0800
-X-Mailer: git-send-email 2.19.1
-MIME-Version: 1.0
+ h=x-gm-message-state:message-id:date:to:from:subject:mime-version;
+ bh=zL4wSdIeIK87TV3Kx1x6+oDhuLAb6skVxZ/14AQAXPU=;
+ b=goQIWvSdvOdQQxESah3FxSefgOWNMe09fom3A6guzEFvfcZ0uOe8FZvclKDuPaInYY
+ sHHd6ETxjCxL1tQIvt6yhEcqcNjeO9UIpvuwc6sp889BHhuoB6ElYAVr/Ox2GHEVJmQW
+ ls65k/65btWAlhAKceDn0SfgP3eIUOIPdXEaK5Q3vPfFdG3nfarUEG/wv+G4/vaeOL3i
+ HNrnPRVPazTo2OfnqGHi/1rAaBQ216Ub7g/pQKEirS6QzGb69nxclrpZpjQcp7A+CVTr
+ V/DuD703CcQ4R3kcc5AL+rt/+8xUF2P0zz+QnlpRZgGzfNSiqndbtWweOr6p/Du5uhX4
+ dBXg==
+X-Gm-Message-State: APjAAAUP92YH+4Qnc/ehsrnCwK0iS6IUV4tUuP7W2utPWgS7/eNXTgbC
+ LvSMVc0LAifT5HtdD0Ru21uSnUEf
+X-Google-Smtp-Source: APXvYqzgAlEXkQDhuWZ97vAlzh1lVuBTgnakGEGcERaLMoVMlRrZxicgg3qihGj1jd7qG6JdbqRtnw==
+X-Received: by 2002:a50:f5f5:: with SMTP id x50mr104939033edm.89.1564580189830; 
+ Wed, 31 Jul 2019 06:36:29 -0700 (PDT)
+Received: from localhost ([188.252.197.229])
+ by smtp.gmail.com with ESMTPSA id j7sm17502091eda.97.2019.07.31.06.36.28
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Wed, 31 Jul 2019 06:36:29 -0700 (PDT)
+Message-ID: <5d41995d.1c69fb81.35aae.ce0c@mx.google.com>
+Date: Wed, 31 Jul 2019 06:36:29 -0700 (PDT)
+To: <wireguard@lists.zx2c4.com>
+From: <nsajko@gmail.com>
+Subject: [PATCH] device: in setZero, keep arr alive after being written to
+Mime-Version: 1.0
+Content-Type: multipart/mixed;
+ boundary=530fd78f2c674b7c43f9e84d0c5f04a774553677ef189bd6eeb37c73b140
 X-Mailman-Approved-At: Wed, 21 Aug 2019 17:43:05 +0200
-Cc: liuhaichao <liuhaichao@bytedance.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -86,41 +83,65 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-From: liuhaichao <liuhaichao@bytedance.com>
+--530fd78f2c674b7c43f9e84d0c5f04a774553677ef189bd6eeb37c73b140
+Content-Type: multipart/alternative;
+ boundary=8f9dfc53cbb54087cc4c3f7ef2e8044198f2a81ed740104c783477c2d258
 
-Change-Id: I515c38e9911d4baeb4c2a45249c18a371864f8e1
----
- device/uapi.go | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+--8f9dfc53cbb54087cc4c3f7ef2e8044198f2a81ed740104c783477c2d258
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
 
-diff --git a/device/uapi.go b/device/uapi.go
-index 99cb421..c8499e2 100644
---- a/device/uapi.go
-+++ b/device/uapi.go
-@@ -283,12 +283,12 @@ func (device *Device) IpcSetOperation(socket *bufio.Reader) *IPCError {
- 				logDebug.Println(peer, "- UAPI: Updating endpoint")
+This is to prevent dead store elimination.
+
+See the discussion at
+golang/go#33325 .
+
+diff --git a/device/noise-helpers.go b/device/noise-helpers.go
+index f5e4b4b..29430da 100644
+--- a/device/noise-helpers.go
++++ b/device/noise-helpers.go
+@@ -10,6 +10,7 @@ import (
+ 	"crypto/rand"
+ 	"crypto/subtle"
+ 	"hash"
++	"runtime"
  
- 				err := func() error {
--					peer.Lock()
--					defer peer.Unlock()
- 					endpoint, err := CreateEndpoint(value)
- 					if err != nil {
- 						return err
- 					}
-+					peer.Lock()
-+					defer peer.Unlock()
- 					peer.endpoint = endpoint
- 					return nil
- 				}()
--- 
-2.19.1
+ 	"golang.org/x/crypto/blake2s"
+ 	"golang.org/x/crypto/curve25519"
+@@ -69,11 +70,16 @@ func isZero(val []byte) bool {
+ 	return acc =3D=3D 1
+ }
+ 
+-/* This function is not used as pervasively as it should because this is m=
+ostly impossible in Go at the moment */
++/* This function is not used as pervasively as it should */
+ func setZero(arr []byte) {
+ 	for i :=3D range arr {
+ 		arr[i] =3D 0
+ 	}
++
++	// This should keep arr's backing array live and thus prevent dead store
++	// elimination, according to discussion at
++	// https://github.com/golang/go/issues/33325 .
++	runtime.KeepAlive(arr)
+ }
+ 
+ func (sk *NoisePrivateKey) clamp() {
+
+--8f9dfc53cbb54087cc4c3f7ef2e8044198f2a81ed740104c783477c2d258--
+
+--530fd78f2c674b7c43f9e84d0c5f04a774553677ef189bd6eeb37c73b140
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--530fd78f2c674b7c43f9e84d0c5f04a774553677ef189bd6eeb37c73b140--
