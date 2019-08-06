@@ -2,67 +2,51 @@ Return-Path: <SRS0=QHSY=WV=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.5 required=3.0 tests=FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6D53C3A5A1
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 25 Aug 2019 15:23:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4A14C3A5A1
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 25 Aug 2019 15:29:28 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id E2413206DD
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 25 Aug 2019 15:23:03 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="U4Xo2gcQ"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org E2413206DD
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id 29BD5206DD
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 25 Aug 2019 15:29:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 29BD5206DD
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=t-online.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 63090bd1;
-	Sun, 25 Aug 2019 15:22:51 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 574c1201;
+	Sun, 25 Aug 2019 15:29:27 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 87603f06
- for <wireguard@lists.zx2c4.com>;
- Sun, 25 Aug 2019 15:22:49 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f11d4cc7
- for <wireguard@lists.zx2c4.com>;
- Sun, 25 Aug 2019 15:22:49 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d90197c8
- for <wireguard@lists.zx2c4.com>;
- Sun, 25 Aug 2019 14:41:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=lAHdNNRYHONbX3q+ZNzXsDrgzGg=; b=U4Xo2g
- cQbh63QcDyZ66D7N/ReJ2pgO34mZvfye59JTiyD2m2E74jdJNXS06Wl11FZUEMgC
- 0U9q8FVuUu7GJMmSa44Riftpre5rMK/sXlPZ2mFndVDFSG+QrYPAYNrnLNqEB3Ed
- qRWk23qn+qAQ5aQB9yh1UcKvCW08ss6+F/aYqJDUfZ1oRrZsb+GxaBzwuHtmNtK8
- JhnZ9TTggJNq+3ofdawNV6R/jRbeu9YYYADETEM3gckxf+4bfUHyB3n47xNpmjjs
- VauCxFWHxzbN4jlCAcs8mMyLe3BuiEC0RPrW7x8GsI/zLmcfpQ3hwKLxaJcnMBKO
- PlZs2qztoJzLp/dA==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 70addf22
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Sun, 25 Aug 2019 14:41:00 +0000 (UTC)
-Received: by mail-ot1-f47.google.com with SMTP id m24so12944562otp.12
- for <wireguard@lists.zx2c4.com>; Sun, 25 Aug 2019 08:22:48 -0700 (PDT)
-X-Gm-Message-State: APjAAAUKLoXmkOLQPiuekowRNC7ONJXJDuKeRs3PCZdACkiDgWEerchj
- e5Uf4rgr05CnLmaLBPdSgcj0FO7XOThgjiKV9pI=
-X-Google-Smtp-Source: APXvYqydYFTHmVCdCvwP8WUqx92496/kcHoVmPGcm+1qUfBmLJrK1FssLaLaQr6rPA6aEwt/nbpol1uKLrJB4nhL9dg=
-X-Received: by 2002:a05:6830:10c7:: with SMTP id
- z7mr11962887oto.243.1566746567555; 
- Sun, 25 Aug 2019 08:22:47 -0700 (PDT)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c8c26edc
+ for <wireguard@lists.zx2c4.com>; Tue, 6 Aug 2019 07:17:52 +0000 (UTC)
+Received: from mailout11.t-online.de (mailout11.t-online.de [194.25.134.85])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 19f0d939
+ for <wireguard@lists.zx2c4.com>; Tue, 6 Aug 2019 07:17:51 +0000 (UTC)
+Received: from fwd22.aul.t-online.de (fwd22.aul.t-online.de [172.20.26.127])
+ by mailout11.t-online.de (Postfix) with SMTP id 8160242650C1;
+ Tue,  6 Aug 2019 09:17:50 +0200 (CEST)
+Received: from majestix.boerner.local
+ (VmQQKEZ6ghUnhRUop26iHwn0PdAqznHWVIODMB9n7NBpqR6RFGc5hhNdj2oHvGtw4Z@[79.252.222.102])
+ by fwd22.t-online.de
+ with (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384 encrypted)
+ esmtp id 1hutjC-0qjoYa0; Tue, 6 Aug 2019 09:17:50 +0200
+From: boerner@t-online.de
+To: David Kerr <david@kerr.net>
+Subject: Re: Wireguard command line tools for Android
+Date: Tue, 06 Aug 2019 09:17:49 +0200
+Message-ID: <2995139.DOlZOuy8Ws@majestix.boerner.local>
+In-Reply-To: <CAJJxGdF0y798ra2HwNZdJ_OpRnUG3H7Wb2bo7sWhLz0iK6fOKg@mail.gmail.com>
+References: <5549622.se0SCevcK7@majestix.boerner.local>
+ <CAJJxGdF0y798ra2HwNZdJ_OpRnUG3H7Wb2bo7sWhLz0iK6fOKg@mail.gmail.com>
 MIME-Version: 1.0
-References: <5d625420.1c69fb81.9f8e7.70a4@mx.google.com>
-In-Reply-To: <5d625420.1c69fb81.9f8e7.70a4@mx.google.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sun, 25 Aug 2019 09:22:36 -0600
-X-Gmail-Original-Message-ID: <CAHmME9rDLvQQNd0VO5_rrNMakxaXuYt9hKij+tqOJ5aOur3gQQ@mail.gmail.com>
-Message-ID: <CAHmME9rDLvQQNd0VO5_rrNMakxaXuYt9hKij+tqOJ5aOur3gQQ@mail.gmail.com>
-Subject: Re: [PATCH] tun: darwin: fix panic: close of closed channel
-To: liuhaichao@bytedance.com
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+X-ID: VmQQKEZ6ghUnhRUop26iHwn0PdAqznHWVIODMB9n7NBpqR6RFGc5hhNdj2oHvGtw4Z
+X-TOI-MSGID: cdd323d9-7dc5-401c-becc-78fd043b59e4
+X-Mailman-Approved-At: Sun, 25 Aug 2019 17:29:26 +0200
+Cc: wireguard@lists.zx2c4.com
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -74,16 +58,305 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="===============1944781063688212061=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-I was under the impression this was fixed with
-https://git.zx2c4.com/wireguard-go/commit/?id=6d78f895579b114c93bd493ad8d61316fc5dd15a
+This is a multi-part message in MIME format.
 
-What precisely is the bug you're seeing?
+--===============1944781063688212061==
+Content-Type: multipart/alternative; boundary="nextPart3390253.Z4xdH0xLF1"
+Content-Transfer-Encoding: 7Bit
+
+This is a multi-part message in MIME format.
+
+--nextPart3390253.Z4xdH0xLF1
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="iso-8859-1"
+
+Hi David,
+Thanks for your elaborate answer!
+
+Yes, your assumption is right - my clients connect to a URL that resolves to an internal address when inside my local LAN. The idea was to keep traffic internal whenever possible. 
+I have now followed your suggestion and have my VPN URL always resolved to the external IP address so the address won't change when leaving/entering  the local network.
+For me, this solves a part of my issue but not all of it. 
+My router is assigned a new external address (both IPv4 and IPv6) every 24 h, and obviously this invalidates the public IP adresses known by the server and the client simultaneously, as they are identical for the clients connected to the local network. That makes the handshake fail, and "wg" on the server shows that it is still looking for its endpoints at the old address. The same is true for the clients.
+Disconnecting/reconnecting the clients fixes the tunnel until the next address change, because then Wireguard looks for the DNS record instead of using its stored address information. I think it would be a good feature if Wireguard could refresh its endpoint addresses automatically when an endpoint is not reachable anymore.
+
+How does it work on your side? Have you a constant external IP address?
+
+Thomas
+
+
+Am Montag, 5. August 2019, 23:28:41 CEST schrieb David Kerr:
+
+
+I assume you have set the client configs to connect to something like "vpn.example.com[1]:<port>" . How does DNS resolve this when inside your local LAN?  Does it resolve to the same public IP address that your DSL router is connected to, or does it resolve to an internal address like 192.168.1.1?
+
+
+The way I have this working is to ensure that my VPN URL always resolves to the external IP address, even when I am inside my home network.  To do that I had to update my DNS server configuration to make sure that my VPN URL is always resolved by an external DNS provider... I have my own custom network gateway/router and set dnsmasq.static to include the line...
+
+
+server=/vpn.example.com/8.8.8.8[2]
+
+
+
+Now this works for me because my wireguard server is running on my custom gateway/router... no NAT forwarding to an internal host running wireguard.  If you are running wireguard on an internal server then you also need to make sure that your firewall rules don't block connections to your external interface from your local LAN and do the right NATing -- which is probably not permitted by default.  I forget how to do this, but I'm sure google will find some instructions.
+
+
+David
+
+
+
+
+
+
+
+
+
+On Mon, Aug 5, 2019 at 2:57 PM <boerner@t-online.de[3]> wrote:
+
+
+Hey all,
+
+I've recently set up my private VPN with Wireguard. I am running my local server behind a DSL router with a variable public IP address, accessible via dyndns and NAT, and several mobile clients (Android, Notebooks). Everything is working fine so far, except of one issue that I would like discuss here: Roaming doesn't work reliably when a device leaves or re-enters the home LAN, nor when the public IP address is changed by my ISP. The reason seems clear to me: In these cases both peers change their IP address simultaneously whereas the Wireguard protocol relies on only one address changing at a time.
+
+My approach would be to shut down Wireguard on the clients as long as they are connected to their home network locally and to bring up the tunnel only when they leave the home network. Besides the roaming issue it  would be desirable to use the local connection when it is available rather than to take the detour over the internet. And it  should be done automatically so users need not remember to switch on/off VPN all the time.My idea was to use Tasker to perform something like wg-quick up|down tun1 accordingly, but the Wireguard command line tools wg and wg-quick don't seem to be available (anymore). In older forum posts I've seen that you can install them from the app settings, but in my version (v0.0.20190708) this option is not available.
+
+Does anybody know about another solution? Or, as a question to the developers, would it be a big deal to bring back the command line feature?
+
+Thanks, Tom
+
+
+
+
+_______________________________________________WireGuard mailing list
+
+WireGuard@lists.zx2c4.com[4]
+https://lists.zx2c4.com/mailman/listinfo/wireguard[5]
+
+
+
+
+--------
+[1] http://vpn.example.com
+[2] http://vpn.example.com/8.8.8.8
+[3] mailto:boerner@t-online.de
+[4] mailto:WireGuard@lists.zx2c4.com
+[5] https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--nextPart3390253.Z4xdH0xLF1
+Content-Transfer-Encoding: base64
+Content-Type: text/html; charset="iso-8859-1"
+
+PCFET0NUWVBFIEhUTUwgUFVCTElDICItLy9XM0MvL0RURCBIVE1MIDQuMC8vRU4iICJodHRwOi8v
+d3d3LnczLm9yZy9UUi9SRUMtaHRtbDQwL3N0cmljdC5kdGQiPgo8aHRtbD48aGVhZD48bWV0YSBu
+YW1lPSJxcmljaHRleHQiIGNvbnRlbnQ9IjEiIC8+PHN0eWxlIHR5cGU9InRleHQvY3NzIj4KcCwg
+bGkgeyB3aGl0ZS1zcGFjZTogcHJlLXdyYXA7IH0KPC9zdHlsZT48L2hlYWQ+PGJvZHkgc3R5bGU9
+IiBmb250LWZhbWlseTonTm90byBTYW5zJzsgZm9udC1zaXplOjEwcHQ7IGZvbnQtd2VpZ2h0OjQw
+MDsgZm9udC1zdHlsZTpub3JtYWw7Ij4KPHAgc3R5bGU9IiBtYXJnaW4tdG9wOjBweDsgbWFyZ2lu
+LWJvdHRvbTowcHg7IG1hcmdpbi1sZWZ0OjBweDsgbWFyZ2luLXJpZ2h0OjBweDsgLXF0LWJsb2Nr
+LWluZGVudDowOyB0ZXh0LWluZGVudDowcHg7IC1xdC11c2VyLXN0YXRlOjA7Ij5IaSBEYXZpZCw8
+L3A+CjxwIHN0eWxlPSIgbWFyZ2luLXRvcDowcHg7IG1hcmdpbi1ib3R0b206MHB4OyBtYXJnaW4t
+bGVmdDowcHg7IG1hcmdpbi1yaWdodDowcHg7IC1xdC1ibG9jay1pbmRlbnQ6MDsgdGV4dC1pbmRl
+bnQ6MHB4OyAtcXQtdXNlci1zdGF0ZTowOyI+VGhhbmtzIGZvciB5b3VyIGVsYWJvcmF0ZSBhbnN3
+ZXIhPC9wPgo8cCBzdHlsZT0iLXF0LXBhcmFncmFwaC10eXBlOmVtcHR5OyBtYXJnaW4tdG9wOjBw
+eDsgbWFyZ2luLWJvdHRvbTowcHg7IG1hcmdpbi1sZWZ0OjBweDsgbWFyZ2luLXJpZ2h0OjBweDsg
+LXF0LWJsb2NrLWluZGVudDowOyB0ZXh0LWluZGVudDowcHg7ICI+Jm5ic3A7PC9wPgo8cCBzdHls
+ZT0iIG1hcmdpbi10b3A6MHB4OyBtYXJnaW4tYm90dG9tOjBweDsgbWFyZ2luLWxlZnQ6MHB4OyBt
+YXJnaW4tcmlnaHQ6MHB4OyAtcXQtYmxvY2staW5kZW50OjA7IHRleHQtaW5kZW50OjBweDsgLXF0
+LXVzZXItc3RhdGU6MDsiPlllcywgeW91ciBhc3N1bXB0aW9uIGlzIHJpZ2h0IC0gbXkgY2xpZW50
+cyBjb25uZWN0IHRvIGEgVVJMIHRoYXQgcmVzb2x2ZXMgdG8gYW4gaW50ZXJuYWwgYWRkcmVzcyB3
+aGVuIGluc2lkZSBteSBsb2NhbCBMQU4uIFRoZSBpZGVhIHdhcyB0byBrZWVwIHRyYWZmaWMgaW50
+ZXJuYWwgd2hlbmV2ZXIgcG9zc2libGUuIDwvcD4KPHAgc3R5bGU9IiBtYXJnaW4tdG9wOjBweDsg
+bWFyZ2luLWJvdHRvbTowcHg7IG1hcmdpbi1sZWZ0OjBweDsgbWFyZ2luLXJpZ2h0OjBweDsgLXF0
+LWJsb2NrLWluZGVudDowOyB0ZXh0LWluZGVudDowcHg7IC1xdC11c2VyLXN0YXRlOjA7Ij5JIGhh
+dmUgbm93IGZvbGxvd2VkIHlvdXIgc3VnZ2VzdGlvbiBhbmQgaGF2ZSBteSBWUE4gVVJMIGFsd2F5
+cyByZXNvbHZlZCB0byB0aGUgZXh0ZXJuYWwgSVAgYWRkcmVzcyBzbyB0aGUgYWRkcmVzcyB3b24n
+dCBjaGFuZ2Ugd2hlbiBsZWF2aW5nL2VudGVyaW5nICB0aGUgbG9jYWwgbmV0d29yay48L3A+Cjxw
+IHN0eWxlPSIgbWFyZ2luLXRvcDowcHg7IG1hcmdpbi1ib3R0b206MHB4OyBtYXJnaW4tbGVmdDow
+cHg7IG1hcmdpbi1yaWdodDowcHg7IC1xdC1ibG9jay1pbmRlbnQ6MDsgdGV4dC1pbmRlbnQ6MHB4
+OyAtcXQtdXNlci1zdGF0ZTowOyI+Rm9yIG1lLCB0aGlzIHNvbHZlcyBhIHBhcnQgb2YgbXkgaXNz
+dWUgYnV0IG5vdCBhbGwgb2YgaXQuIDwvcD4KPHAgc3R5bGU9IiBtYXJnaW4tdG9wOjBweDsgbWFy
+Z2luLWJvdHRvbTowcHg7IG1hcmdpbi1sZWZ0OjBweDsgbWFyZ2luLXJpZ2h0OjBweDsgLXF0LWJs
+b2NrLWluZGVudDowOyB0ZXh0LWluZGVudDowcHg7IC1xdC11c2VyLXN0YXRlOjA7Ij5NeSByb3V0
+ZXIgaXMgYXNzaWduZWQgYSBuZXcgZXh0ZXJuYWwgYWRkcmVzcyAoYm90aCBJUHY0IGFuZCBJUHY2
+KSBldmVyeSAyNCBoLCBhbmQgb2J2aW91c2x5IHRoaXMgaW52YWxpZGF0ZXMgdGhlIHB1YmxpYyBJ
+UCBhZHJlc3NlcyBrbm93biBieSB0aGUgc2VydmVyIGFuZCB0aGUgY2xpZW50IHNpbXVsdGFuZW91
+c2x5LCBhcyB0aGV5IGFyZSBpZGVudGljYWwgZm9yIHRoZSBjbGllbnRzIGNvbm5lY3RlZCB0byB0
+aGUgbG9jYWwgbmV0d29yay4gVGhhdCBtYWtlcyB0aGUgaGFuZHNoYWtlIGZhaWwsIGFuZCAmcXVv
+dDt3ZyZxdW90OyBvbiB0aGUgc2VydmVyIHNob3dzIHRoYXQgaXQgaXMgc3RpbGwgbG9va2luZyBm
+b3IgaXRzIGVuZHBvaW50cyBhdCB0aGUgb2xkIGFkZHJlc3MuIFRoZSBzYW1lIGlzIHRydWUgZm9y
+IHRoZSBjbGllbnRzLjwvcD4KPHAgc3R5bGU9IiBtYXJnaW4tdG9wOjBweDsgbWFyZ2luLWJvdHRv
+bTowcHg7IG1hcmdpbi1sZWZ0OjBweDsgbWFyZ2luLXJpZ2h0OjBweDsgLXF0LWJsb2NrLWluZGVu
+dDowOyB0ZXh0LWluZGVudDowcHg7IC1xdC11c2VyLXN0YXRlOjA7Ij5EaXNjb25uZWN0aW5nL3Jl
+Y29ubmVjdGluZyB0aGUgY2xpZW50cyBmaXhlcyB0aGUgdHVubmVsIHVudGlsIHRoZSBuZXh0IGFk
+ZHJlc3MgY2hhbmdlLCBiZWNhdXNlIHRoZW4gV2lyZWd1YXJkIGxvb2tzIGZvciB0aGUgRE5TIHJl
+Y29yZCBpbnN0ZWFkIG9mIHVzaW5nIGl0cyBzdG9yZWQgYWRkcmVzcyBpbmZvcm1hdGlvbi4gSSB0
+aGluayBpdCB3b3VsZCBiZSBhIGdvb2QgZmVhdHVyZSBpZiBXaXJlZ3VhcmQgY291bGQgcmVmcmVz
+aCBpdHMgZW5kcG9pbnQgYWRkcmVzc2VzIGF1dG9tYXRpY2FsbHkgd2hlbiBhbiBlbmRwb2ludCBp
+cyBub3QgcmVhY2hhYmxlIGFueW1vcmUuPC9wPgo8cCBzdHlsZT0iLXF0LXBhcmFncmFwaC10eXBl
+OmVtcHR5OyBtYXJnaW4tdG9wOjBweDsgbWFyZ2luLWJvdHRvbTowcHg7IG1hcmdpbi1sZWZ0OjBw
+eDsgbWFyZ2luLXJpZ2h0OjBweDsgLXF0LWJsb2NrLWluZGVudDowOyB0ZXh0LWluZGVudDowcHg7
+ICI+Jm5ic3A7PC9wPgo8cCBzdHlsZT0iIG1hcmdpbi10b3A6MHB4OyBtYXJnaW4tYm90dG9tOjBw
+eDsgbWFyZ2luLWxlZnQ6MHB4OyBtYXJnaW4tcmlnaHQ6MHB4OyAtcXQtYmxvY2staW5kZW50OjA7
+IHRleHQtaW5kZW50OjBweDsgLXF0LXVzZXItc3RhdGU6MDsiPkhvdyBkb2VzIGl0IHdvcmsgb24g
+eW91ciBzaWRlPyBIYXZlIHlvdSBhIGNvbnN0YW50IGV4dGVybmFsIElQIGFkZHJlc3M/PC9wPgo8
+cCBzdHlsZT0iLXF0LXBhcmFncmFwaC10eXBlOmVtcHR5OyBtYXJnaW4tdG9wOjBweDsgbWFyZ2lu
+LWJvdHRvbTowcHg7IG1hcmdpbi1sZWZ0OjBweDsgbWFyZ2luLXJpZ2h0OjBweDsgLXF0LWJsb2Nr
+LWluZGVudDowOyB0ZXh0LWluZGVudDowcHg7ICI+Jm5ic3A7PC9wPgo8cCBzdHlsZT0iIG1hcmdp
+bi10b3A6MHB4OyBtYXJnaW4tYm90dG9tOjBweDsgbWFyZ2luLWxlZnQ6MHB4OyBtYXJnaW4tcmln
+aHQ6MHB4OyAtcXQtYmxvY2staW5kZW50OjA7IHRleHQtaW5kZW50OjBweDsgLXF0LXVzZXItc3Rh
+dGU6MDsiPlRob21hczwvcD4KPHAgc3R5bGU9Ii1xdC1wYXJhZ3JhcGgtdHlwZTplbXB0eTsgbWFy
+Z2luLXRvcDowcHg7IG1hcmdpbi1ib3R0b206MHB4OyBtYXJnaW4tbGVmdDowcHg7IG1hcmdpbi1y
+aWdodDowcHg7IC1xdC1ibG9jay1pbmRlbnQ6MDsgdGV4dC1pbmRlbnQ6MHB4OyAiPiZuYnNwOzwv
+cD4KPHAgc3R5bGU9Ii1xdC1wYXJhZ3JhcGgtdHlwZTplbXB0eTsgbWFyZ2luLXRvcDowcHg7IG1h
+cmdpbi1ib3R0b206MHB4OyBtYXJnaW4tbGVmdDowcHg7IG1hcmdpbi1yaWdodDowcHg7IC1xdC1i
+bG9jay1pbmRlbnQ6MDsgdGV4dC1pbmRlbnQ6MHB4OyAiPiZuYnNwOzwvcD4KPHAgc3R5bGU9IiBt
+YXJnaW4tdG9wOjBweDsgbWFyZ2luLWJvdHRvbTowcHg7IG1hcmdpbi1sZWZ0OjBweDsgbWFyZ2lu
+LXJpZ2h0OjBweDsgLXF0LWJsb2NrLWluZGVudDowOyB0ZXh0LWluZGVudDowcHg7IC1xdC11c2Vy
+LXN0YXRlOjA7Ij5BbSBNb250YWcsIDUuIEF1Z3VzdCAyMDE5LCAyMzoyODo0MSBDRVNUIHNjaHJp
+ZWIgRGF2aWQgS2Vycjo8YnIgLz48L3A+CjxwIHN0eWxlPSIgbWFyZ2luLXRvcDoxMnB4OyBtYXJn
+aW4tYm90dG9tOjBweDsgbWFyZ2luLWxlZnQ6NDBweDsgbWFyZ2luLXJpZ2h0OjQwcHg7IC1xdC1i
+bG9jay1pbmRlbnQ6MDsgdGV4dC1pbmRlbnQ6MHB4OyAtcXQtdXNlci1zdGF0ZTowOyI+PHNwYW4g
+c3R5bGU9IiBmb250LWZhbWlseTondmVyZGFuYSxzYW5zLXNlcmlmJzsiPkkgYXNzdW1lIHlvdSBo
+YXZlIHNldCB0aGUgY2xpZW50IGNvbmZpZ3MgdG8gY29ubmVjdCB0byBzb21ldGhpbmcgbGlrZSAm
+cXVvdDs8L3NwYW4+PGEgaHJlZj0iaHR0cDovL3Zwbi5leGFtcGxlLmNvbSI+PHNwYW4gc3R5bGU9
+IiBmb250LWZhbWlseTondmVyZGFuYSxzYW5zLXNlcmlmJzsgdGV4dC1kZWNvcmF0aW9uOiB1bmRl
+cmxpbmU7IGNvbG9yOiMyOTgwYjk7Ij52cG4uZXhhbXBsZS5jb208L3NwYW4+PC9hPjxzcGFuIHN0
+eWxlPSIgZm9udC1mYW1pbHk6J3ZlcmRhbmEsc2Fucy1zZXJpZic7Ij46Jmx0O3BvcnQmZ3Q7JnF1
+b3Q7IC4gSG93IGRvZXMgRE5TIHJlc29sdmUgdGhpcyB3aGVuIGluc2lkZSB5b3VyIGxvY2FsIExB
+Tj+gIERvZXMgaXQgcmVzb2x2ZSB0byB0aGUgc2FtZSBwdWJsaWMgSVAgYWRkcmVzcyB0aGF0IHlv
+dXIgRFNMIHJvdXRlciBpcyBjb25uZWN0ZWQgdG8sIG9yIGRvZXMgaXQgcmVzb2x2ZSB0byBhbiBp
+bnRlcm5hbCBhZGRyZXNzIGxpa2UgMTkyLjE2OC4xLjE/PC9zcGFuPjwvcD4KPHAgc3R5bGU9IiBt
+YXJnaW4tdG9wOjBweDsgbWFyZ2luLWJvdHRvbTowcHg7IG1hcmdpbi1sZWZ0OjQwcHg7IG1hcmdp
+bi1yaWdodDo0MHB4OyAtcXQtYmxvY2staW5kZW50OjA7IHRleHQtaW5kZW50OjBweDsgLXF0LXVz
+ZXItc3RhdGU6MDsiPjxzcGFuIHN0eWxlPSIgZm9udC1mYW1pbHk6J3ZlcmRhbmEsc2Fucy1zZXJp
+Zic7Ij48YnIgLz48L3NwYW4+PC9wPgo8cCBzdHlsZT0iIG1hcmdpbi10b3A6MHB4OyBtYXJnaW4t
+Ym90dG9tOjBweDsgbWFyZ2luLWxlZnQ6NDBweDsgbWFyZ2luLXJpZ2h0OjQwcHg7IC1xdC1ibG9j
+ay1pbmRlbnQ6MDsgdGV4dC1pbmRlbnQ6MHB4OyAtcXQtdXNlci1zdGF0ZTowOyI+PHNwYW4gc3R5
+bGU9IiBmb250LWZhbWlseTondmVyZGFuYSxzYW5zLXNlcmlmJzsiPlRoZSB3YXkgSSBoYXZlIHRo
+aXMgd29ya2luZyBpcyB0byBlbnN1cmUgdGhhdCBteSBWUE4gVVJMIGFsd2F5cyByZXNvbHZlcyB0
+byB0aGUgZXh0ZXJuYWwgSVAgYWRkcmVzcywgZXZlbiB3aGVuIEkgYW0gaW5zaWRlIG15IGhvbWUg
+bmV0d29yay6gIFRvIGRvIHRoYXQgSSBoYWQgdG8gdXBkYXRlIG15IEROUyBzZXJ2ZXIgY29uZmln
+dXJhdGlvbiB0byBtYWtlIHN1cmUgdGhhdCBteSBWUE4gVVJMIGlzIGFsd2F5cyByZXNvbHZlZCBi
+eSBhbiBleHRlcm5hbCBETlOgcHJvdmlkZXIuLi4gSSBoYXZlIG15IG93biBjdXN0b20gbmV0d29y
+ayBnYXRld2F5L3JvdXRlciBhbmQgc2V0IGRuc21hc3Euc3RhdGljIHRvIGluY2x1ZGUgdGhlIGxp
+bmUuLi48L3NwYW4+PC9wPgo8cCBzdHlsZT0iIG1hcmdpbi10b3A6MHB4OyBtYXJnaW4tYm90dG9t
+OjBweDsgbWFyZ2luLWxlZnQ6NDBweDsgbWFyZ2luLXJpZ2h0OjQwcHg7IC1xdC1ibG9jay1pbmRl
+bnQ6MDsgdGV4dC1pbmRlbnQ6MHB4OyAtcXQtdXNlci1zdGF0ZTowOyI+PHNwYW4gc3R5bGU9IiBm
+b250LWZhbWlseTondmVyZGFuYSxzYW5zLXNlcmlmJzsiPjxiciAvPjwvc3Bhbj48L3A+CjxwIHN0
+eWxlPSIgbWFyZ2luLXRvcDowcHg7IG1hcmdpbi1ib3R0b206MHB4OyBtYXJnaW4tbGVmdDo0MHB4
+OyBtYXJnaW4tcmlnaHQ6NDBweDsgLXF0LWJsb2NrLWluZGVudDowOyB0ZXh0LWluZGVudDowcHg7
+IC1xdC11c2VyLXN0YXRlOjA7Ij48c3BhbiBzdHlsZT0iIGZvbnQtZmFtaWx5Oid2ZXJkYW5hLHNh
+bnMtc2VyaWYnOyI+c2VydmVyPS88L3NwYW4+PGEgaHJlZj0iaHR0cDovL3Zwbi5leGFtcGxlLmNv
+bS84LjguOC44Ij48c3BhbiBzdHlsZT0iIGZvbnQtZmFtaWx5Oid2ZXJkYW5hLHNhbnMtc2VyaWYn
+OyB0ZXh0LWRlY29yYXRpb246IHVuZGVybGluZTsgY29sb3I6IzI5ODBiOTsiPnZwbi5leGFtcGxl
+LmNvbS84LjguOC44PC9zcGFuPjwvYT48c3BhbiBzdHlsZT0iIGZvbnQtZmFtaWx5Oid2ZXJkYW5h
+LHNhbnMtc2VyaWYnOyI+PGJyIC8+PC9zcGFuPjwvcD4KPHAgc3R5bGU9IiBtYXJnaW4tdG9wOjBw
+eDsgbWFyZ2luLWJvdHRvbTowcHg7IG1hcmdpbi1sZWZ0OjQwcHg7IG1hcmdpbi1yaWdodDo0MHB4
+OyAtcXQtYmxvY2staW5kZW50OjA7IHRleHQtaW5kZW50OjBweDsgLXF0LXVzZXItc3RhdGU6MDsi
+PjxzcGFuIHN0eWxlPSIgZm9udC1mYW1pbHk6J3ZlcmRhbmEsc2Fucy1zZXJpZic7Ij48YnIgLz48
+L3NwYW4+PC9wPgo8cCBzdHlsZT0iIG1hcmdpbi10b3A6MHB4OyBtYXJnaW4tYm90dG9tOjBweDsg
+bWFyZ2luLWxlZnQ6NDBweDsgbWFyZ2luLXJpZ2h0OjQwcHg7IC1xdC1ibG9jay1pbmRlbnQ6MDsg
+dGV4dC1pbmRlbnQ6MHB4OyAtcXQtdXNlci1zdGF0ZTowOyI+PHNwYW4gc3R5bGU9IiBmb250LWZh
+bWlseTondmVyZGFuYSxzYW5zLXNlcmlmJzsiPk5vdyB0aGlzIHdvcmtzIGZvciBtZSBiZWNhdXNl
+IG15IHdpcmVndWFyZCBzZXJ2ZXIgaXMgcnVubmluZyBvbiBteSBjdXN0b20gZ2F0ZXdheS9yb3V0
+ZXIuLi4gbm8gTkFUIGZvcndhcmRpbmcgdG8gYW4gaW50ZXJuYWwgaG9zdCBydW5uaW5nIHdpcmVn
+dWFyZC6gIElmIHlvdSBhcmUgcnVubmluZyB3aXJlZ3VhcmQgb24gYW4gaW50ZXJuYWwgc2VydmVy
+IHRoZW4geW91IGFsc28gbmVlZCB0byBtYWtlIHN1cmUgdGhhdCB5b3VyIGZpcmV3YWxsIHJ1bGVz
+IGRvbid0IGJsb2NrIGNvbm5lY3Rpb25zIHRvIHlvdXIgZXh0ZXJuYWwgaW50ZXJmYWNlIGZyb20g
+eW91ciBsb2NhbCBMQU4gYW5kIGRvIHRoZSByaWdodCBOQVRpbmcgLS0gd2hpY2ggaXMgcHJvYmFi
+bHkgbm90IHBlcm1pdHRlZCBieSBkZWZhdWx0LqAgSSBmb3JnZXQgaG93IHRvIGRvIHRoaXMsIGJ1
+dCBJJ20gc3VyZSBnb29nbGUgd2lsbCBmaW5kIHNvbWUgaW5zdHJ1Y3Rpb25zLjwvc3Bhbj48L3A+
+CjxwIHN0eWxlPSIgbWFyZ2luLXRvcDowcHg7IG1hcmdpbi1ib3R0b206MHB4OyBtYXJnaW4tbGVm
+dDo0MHB4OyBtYXJnaW4tcmlnaHQ6NDBweDsgLXF0LWJsb2NrLWluZGVudDowOyB0ZXh0LWluZGVu
+dDowcHg7IC1xdC11c2VyLXN0YXRlOjA7Ij48c3BhbiBzdHlsZT0iIGZvbnQtZmFtaWx5Oid2ZXJk
+YW5hLHNhbnMtc2VyaWYnOyI+PGJyIC8+PC9zcGFuPjwvcD4KPHAgc3R5bGU9IiBtYXJnaW4tdG9w
+OjBweDsgbWFyZ2luLWJvdHRvbTowcHg7IG1hcmdpbi1sZWZ0OjQwcHg7IG1hcmdpbi1yaWdodDo0
+MHB4OyAtcXQtYmxvY2staW5kZW50OjA7IHRleHQtaW5kZW50OjBweDsgLXF0LXVzZXItc3RhdGU6
+MDsiPjxzcGFuIHN0eWxlPSIgZm9udC1mYW1pbHk6J3ZlcmRhbmEsc2Fucy1zZXJpZic7Ij5EYXZp
+ZDwvc3Bhbj48L3A+CjxwIHN0eWxlPSIgbWFyZ2luLXRvcDowcHg7IG1hcmdpbi1ib3R0b206MHB4
+OyBtYXJnaW4tbGVmdDo0MHB4OyBtYXJnaW4tcmlnaHQ6NDBweDsgLXF0LWJsb2NrLWluZGVudDow
+OyB0ZXh0LWluZGVudDowcHg7IC1xdC11c2VyLXN0YXRlOjA7Ij48c3BhbiBzdHlsZT0iIGZvbnQt
+ZmFtaWx5Oid2ZXJkYW5hLHNhbnMtc2VyaWYnOyI+PGJyIC8+PC9zcGFuPjwvcD4KPHAgc3R5bGU9
+IiBtYXJnaW4tdG9wOjBweDsgbWFyZ2luLWJvdHRvbTowcHg7IG1hcmdpbi1sZWZ0OjQwcHg7IG1h
+cmdpbi1yaWdodDo0MHB4OyAtcXQtYmxvY2staW5kZW50OjA7IHRleHQtaW5kZW50OjBweDsgLXF0
+LXVzZXItc3RhdGU6MDsiPjxzcGFuIHN0eWxlPSIgZm9udC1mYW1pbHk6J3ZlcmRhbmEsc2Fucy1z
+ZXJpZic7Ij48YnIgLz48L3NwYW4+PC9wPgo8cCBzdHlsZT0iIG1hcmdpbi10b3A6MHB4OyBtYXJn
+aW4tYm90dG9tOjBweDsgbWFyZ2luLWxlZnQ6NDBweDsgbWFyZ2luLXJpZ2h0OjQwcHg7IC1xdC1i
+bG9jay1pbmRlbnQ6MDsgdGV4dC1pbmRlbnQ6MHB4OyAtcXQtdXNlci1zdGF0ZTowOyI+PHNwYW4g
+c3R5bGU9IiBmb250LWZhbWlseTondmVyZGFuYSxzYW5zLXNlcmlmJzsiPjxiciAvPjwvc3Bhbj48
+L3A+CjxwIHN0eWxlPSIgbWFyZ2luLXRvcDowcHg7IG1hcmdpbi1ib3R0b206MHB4OyBtYXJnaW4t
+bGVmdDo0MHB4OyBtYXJnaW4tcmlnaHQ6NDBweDsgLXF0LWJsb2NrLWluZGVudDowOyB0ZXh0LWlu
+ZGVudDowcHg7IC1xdC11c2VyLXN0YXRlOjA7Ij48c3BhbiBzdHlsZT0iIGZvbnQtZmFtaWx5Oid2
+ZXJkYW5hLHNhbnMtc2VyaWYnOyI+PGJyIC8+PC9zcGFuPjxiciAvPjwvcD4KPHAgc3R5bGU9IiBt
+YXJnaW4tdG9wOjBweDsgbWFyZ2luLWJvdHRvbTowcHg7IG1hcmdpbi1sZWZ0OjQwcHg7IG1hcmdp
+bi1yaWdodDo0MHB4OyAtcXQtYmxvY2staW5kZW50OjA7IHRleHQtaW5kZW50OjBweDsgLXF0LXVz
+ZXItc3RhdGU6MDsiPk9uIE1vbiwgQXVnIDUsIDIwMTkgYXQgMjo1NyBQTSAmbHQ7PGEgaHJlZj0i
+bWFpbHRvOmJvZXJuZXJAdC1vbmxpbmUuZGUiPjxzcGFuIHN0eWxlPSIgdGV4dC1kZWNvcmF0aW9u
+OiB1bmRlcmxpbmU7IGNvbG9yOiMyOTgwYjk7Ij5ib2VybmVyQHQtb25saW5lLmRlPC9zcGFuPjwv
+YT4mZ3Q7IHdyb3RlOjxiciAvPjwvcD4KPHAgc3R5bGU9IiBtYXJnaW4tdG9wOjBweDsgbWFyZ2lu
+LWJvdHRvbTowcHg7IG1hcmdpbi1sZWZ0OjQ1cHg7IG1hcmdpbi1yaWdodDo0MHB4OyAtcXQtYmxv
+Y2staW5kZW50OjA7IHRleHQtaW5kZW50OjBweDsgLXF0LXVzZXItc3RhdGU6MDsiPkhleSBhbGws
+PGJyIC8+PGJyIC8+SSd2ZSByZWNlbnRseSBzZXQgdXAgbXkgcHJpdmF0ZSBWUE4gd2l0aCBXaXJl
+Z3VhcmQuIEkgYW0gcnVubmluZyBteSBsb2NhbCBzZXJ2ZXIgYmVoaW5kIGEgRFNMIHJvdXRlciB3
+aXRoIGEgdmFyaWFibGUgcHVibGljIElQIGFkZHJlc3MsIGFjY2Vzc2libGUgdmlhIGR5bmRucyBh
+bmQgTkFULCBhbmQgc2V2ZXJhbCBtb2JpbGUgY2xpZW50cyAoQW5kcm9pZCwgTm90ZWJvb2tzKS4g
+PGJyIC8+RXZlcnl0aGluZyBpcyB3b3JraW5nIGZpbmUgc28gZmFyLCBleGNlcHQgb2Ygb25lIGlz
+c3VlIHRoYXQgSSB3b3VsZCBsaWtlIGRpc2N1c3MgaGVyZTogPGJyIC8+Um9hbWluZyBkb2Vzbid0
+IHdvcmsgcmVsaWFibHkgd2hlbiBhIGRldmljZSBsZWF2ZXMgb3IgcmUtZW50ZXJzIHRoZSBob21l
+IExBTiwgbm9yIHdoZW4gdGhlIHB1YmxpYyBJUCBhZGRyZXNzIGlzIGNoYW5nZWQgYnkgbXkgSVNQ
+LiBUaGUgcmVhc29uIHNlZW1zIGNsZWFyIHRvIG1lOiBJbiB0aGVzZSBjYXNlcyBib3RoIHBlZXJz
+IGNoYW5nZSB0aGVpciBJUCBhZGRyZXNzIHNpbXVsdGFuZW91c2x5IHdoZXJlYXMgdGhlIFdpcmVn
+dWFyZCBwcm90b2NvbCByZWxpZXMgb24gb25seSBvbmUgYWRkcmVzcyBjaGFuZ2luZyBhdCBhIHRp
+bWUuPGJyIC8+PGJyIC8+TXkgYXBwcm9hY2ggd291bGQgYmUgdG8gc2h1dCBkb3duIFdpcmVndWFy
+ZCBvbiB0aGUgY2xpZW50cyBhcyBsb25nIGFzIHRoZXkgYXJlIGNvbm5lY3RlZCB0byB0aGVpciBo
+b21lIG5ldHdvcmsgbG9jYWxseSBhbmQgdG8gYnJpbmcgdXAgdGhlIHR1bm5lbCBvbmx5IHdoZW4g
+dGhleSBsZWF2ZSB0aGUgaG9tZSBuZXR3b3JrLiBCZXNpZGVzIHRoZSByb2FtaW5nIGlzc3VlIGl0
+oCB3b3VsZCBiZSBkZXNpcmFibGUgdG8gdXNlIHRoZSBsb2NhbCBjb25uZWN0aW9uIHdoZW4gaXQg
+aXMgYXZhaWxhYmxlIHJhdGhlciB0aGFuIHRvIHRha2UgdGhlIGRldG91ciBvdmVyIHRoZSBpbnRl
+cm5ldC4gQW5kIGl0oCBzaG91bGQgYmUgZG9uZSBhdXRvbWF0aWNhbGx5IHNvIHVzZXJzIG5lZWQg
+bm90IHJlbWVtYmVyIHRvIHN3aXRjaCBvbi9vZmYgVlBOIGFsbCB0aGUgdGltZS48YnIgLz5NeSBp
+ZGVhIHdhcyB0byB1c2UgVGFza2VyIHRvIHBlcmZvcm0gc29tZXRoaW5nIGxpa2Ugd2ctcXVpY2sg
+dXB8ZG93biB0dW4xIGFjY29yZGluZ2x5LCBidXQgdGhlIFdpcmVndWFyZCBjb21tYW5kIGxpbmUg
+dG9vbHMgd2cgYW5kIHdnLXF1aWNrIGRvbid0IHNlZW0gdG8gYmUgYXZhaWxhYmxlIChhbnltb3Jl
+KS4gSW4gb2xkZXIgZm9ydW0gcG9zdHMgSSd2ZSBzZWVuIHRoYXQgeW91IGNhbiBpbnN0YWxsIHRo
+ZW0gZnJvbSB0aGUgYXBwIHNldHRpbmdzLCBidXQgaW4gbXkgdmVyc2lvbiAodjAuMC4yMDE5MDcw
+OCkgdGhpcyBvcHRpb24gaXMgbm90IGF2YWlsYWJsZS48YnIgLz48YnIgLz5Eb2VzIGFueWJvZHkg
+a25vdyBhYm91dCBhbm90aGVyIHNvbHV0aW9uPyBPciwgYXMgYSBxdWVzdGlvbiB0byB0aGUgZGV2
+ZWxvcGVycywgd291bGQgaXQgYmUgYSBiaWcgZGVhbCB0byBicmluZyBiYWNrIHRoZSBjb21tYW5k
+IGxpbmUgZmVhdHVyZT88YnIgLz48YnIgLz5UaGFua3MsIFRvbTxiciAvPjxiciAvPjxiciAvPjxi
+ciAvPjxiciAvPl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+PGJyIC8+V2lyZUd1YXJkIG1haWxpbmcgbGlzdDxiciAvPjxhIGhyZWY9Im1haWx0bzpXaXJlR3Vh
+cmRAbGlzdHMuengyYzQuY29tIj48c3BhbiBzdHlsZT0iIHRleHQtZGVjb3JhdGlvbjogdW5kZXJs
+aW5lOyBjb2xvcjojMjk4MGI5OyI+V2lyZUd1YXJkQGxpc3RzLnp4MmM0LmNvbTwvc3Bhbj48L2E+
+PGJyIC8+PGEgaHJlZj0iaHR0cHM6Ly9saXN0cy56eDJjNC5jb20vbWFpbG1hbi9saXN0aW5mby93
+aXJlZ3VhcmQiPjxzcGFuIHN0eWxlPSIgdGV4dC1kZWNvcmF0aW9uOiB1bmRlcmxpbmU7IGNvbG9y
+OiMyOTgwYjk7Ij5odHRwczovL2xpc3RzLnp4MmM0LmNvbS9tYWlsbWFuL2xpc3RpbmZvL3dpcmVn
+dWFyZDwvc3Bhbj48L2E+PGJyIC8+PC9wPgo8cCBzdHlsZT0iIG1hcmdpbi10b3A6MHB4OyBtYXJn
+aW4tYm90dG9tOjBweDsgbWFyZ2luLWxlZnQ6MHB4OyBtYXJnaW4tcmlnaHQ6MHB4OyAtcXQtYmxv
+Y2staW5kZW50OjA7IHRleHQtaW5kZW50OjBweDsgLXF0LXVzZXItc3RhdGU6MDsiPjxiciAvPjxi
+ciAvPjwvcD48L2JvZHk+PC9odG1sPg==
+
+
+--nextPart3390253.Z4xdH0xLF1--
+
+
+
+
+--===============1944781063688212061==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--===============1944781063688212061==--
+
+
+
