@@ -2,81 +2,52 @@ Return-Path: <SRS0=QHSY=WV=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.5 required=3.0 tests=FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50657C3A5A1
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4783C3A5A4
 	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 25 Aug 2019 15:29:31 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id E6873206DD
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 25 Aug 2019 15:29:30 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="key not found in DNS" (0-bit key) header.d=davidlane.io header.i=@davidlane.io header.b="AFtg2TlC";
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hEuiD9y6"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org E6873206DD
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=davidlane.io
+	by mail.kernel.org (Postfix) with ESMTPS id 73A5F206DD
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 25 Aug 2019 15:29:31 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 73A5F206DD
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=t-online.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ae694e2a;
-	Sun, 25 Aug 2019 15:29:29 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2221a6ad;
+	Sun, 25 Aug 2019 15:29:30 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fadc9e76
- for <wireguard@lists.zx2c4.com>; Tue, 6 Aug 2019 15:17:02 +0000 (UTC)
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
- [66.111.4.26])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fede22ba
- for <wireguard@lists.zx2c4.com>; Tue, 6 Aug 2019 15:17:02 +0000 (UTC)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.nyi.internal (Postfix) with ESMTP id 0EBA921D28
- for <wireguard@lists.zx2c4.com>; Tue,  6 Aug 2019 11:17:02 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute3.internal (MEProxy); Tue, 06 Aug 2019 11:17:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=davidlane.io; h=
- content-type:content-transfer-encoding:from:mime-version:date
- :subject:message-id:to; s=fm2; bh=033szGoXAYdCbWMewZDmkXmEzUiTR/
- 0eZAQ+0PvA1aw=; b=AFtg2TlCzrx/HgmZyQCPAy2AiXWTb9tGbLJ+Pf5IbuzJYv
- MUirOUj7BZEIvr502BemXMZPQhtZQmKVKF48mKid7/i2Sbuj4sWaULXdff9uoR17
- T67AOspz6JXuiCJZHKzfd6+gfxhn69oLBCAlEHYFfrNfL7CMQGMPeOfqjkrFUcUM
- nTSrlKXvJLuwRMYkTDWSzBuEUWyhJBUiHgy5zRDMDqmK+qWFl5FUgTzjrOabWini
- sFee5tMJlO86oBgrVKCk7iHALqFemgxKEZcembkZF635mNrLEGU/E5E5JCyJdmMt
- ZVbpRggJe/39in27vGSCKt7TtQJU1250968gkHtA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=content-transfer-encoding:content-type
- :date:from:message-id:mime-version:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=033szG
- oXAYdCbWMewZDmkXmEzUiTR/0eZAQ+0PvA1aw=; b=hEuiD9y672+XJIp3UHWpOp
- /IJFrrQwy4bEIEvJVUbZsRFEynaFMn/DDat3CAIiPas3Eaq71rjvIfUbpPNtvjJU
- Sw7XV4x35/DWbEN4Bn8fdEWuflyXuWDhhT/9xZFnHHSfGYHEow2bzB4FOrYlWtnD
- +k00wMVYz9nYEIsAXJ/p0su8911mu55C8/tp3bAc+ZvzfXqfhel42oqcmOM8wflI
- MULvKZURLNCmS2UIgGqDeur0mtWSJi030ajEIJ1bmQqgWQTOLjmONBIttOUTRzGo
- KaouHTGOBFU77VS/BviWVMKDdTKrSMnaVrgQDm7vPv7lD3QWSjJqhYHqhD4niU0A
- ==
-X-ME-Sender: <xms:7ZlJXV9FUMVpAsfaiMGRQyKgYCMuscM17ZXt8HM0SwsPahqht6VImQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduvddruddutddgkeeiucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucenucfjughrpegtgffhggffuffkvffosehtqhhmtd
- hhtdejnecuhfhrohhmpeffrghvihguucfnrghnvgcuoegurghvihgusegurghvihgulhgr
- nhgvrdhioheqnecuffhomhgrihhnpeiggidrgiiggienucfkphepudekkedrudeifedrge
- dvrddvudegnecurfgrrhgrmhepmhgrihhlfhhrohhmpegurghvihgusegurghvihgulhgr
- nhgvrdhiohenucevlhhushhtvghrufhiiigvpedt
-X-ME-Proxy: <xmx:7ZlJXVL1XXYFNIq-faitEU4MLcUDsQPskJFlK1Go-O0OfAYY8JlhcQ>
- <xmx:7ZlJXRtG8mPruY5E2o5WgNsDkt8Y1Rmod6rY6GQz-Ee5bBe338Y74Q>
- <xmx:7ZlJXWlKqpwrYJslTYfkZQKK_TCK10B3b6Sp3NS6Zv6BxNRsqOPpCQ>
- <xmx:7ZlJXcYaAv6kt08BUVQ4ZWbjQKRGYQGqJiD9gtsb35d8MRKclKMoXg>
-Received: from [192.168.1.2] (unknown [188.163.42.214])
- by mail.messagingengine.com (Postfix) with ESMTPA id 39D273800A0
- for <wireguard@lists.zx2c4.com>; Tue,  6 Aug 2019 11:17:01 -0400 (EDT)
-From: David Lane <david@davidlane.io>
-Mime-Version: 1.0 (1.0)
-Date: Tue, 6 Aug 2019 18:16:58 +0300
-Subject: Wireguard not working on iOS 13 Beta
-Message-Id: <75AC1513-1F06-44D0-9700-06AE7FC814D0@davidlane.io>
-To: wireguard@lists.zx2c4.com
-X-Mailer: iPad Mail (17A5547d)
-X-Mailman-Approved-At: Sun, 25 Aug 2019 17:29:25 +0200
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a743a36e
+ for <wireguard@lists.zx2c4.com>; Fri, 9 Aug 2019 08:47:23 +0000 (UTC)
+Received: from mailout05.t-online.de (mailout05.t-online.de [194.25.134.82])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 38d5545f
+ for <wireguard@lists.zx2c4.com>; Fri, 9 Aug 2019 08:47:21 +0000 (UTC)
+Received: from fwd32.aul.t-online.de (fwd32.aul.t-online.de [172.20.26.144])
+ by mailout05.t-online.de (Postfix) with SMTP id 8292C4265291;
+ Fri,  9 Aug 2019 10:47:20 +0200 (CEST)
+Received: from asterix.boerner.vpn
+ (SgZK14ZeQhfGHXqv1mBPkp5udMx3EEGYai4KKvO0f4IaddkM3m6EyruJJIyrnqoZjL@[84.157.52.12])
+ by fwd32.t-online.de
+ with (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384 encrypted)
+ esmtp id 1hw0YS-0h5B5M0; Fri, 9 Aug 2019 10:47:20 +0200
+Date: Fri, 09 Aug 2019 10:47:18 +0200
+User-Agent: K-9 Mail for Android
+In-Reply-To: <6910a3cab7c5cdfe32de3b61095c7cc47e0702b2.camel@gmail.com>
+References: <5549622.se0SCevcK7@majestix.boerner.local>
+ <6910a3cab7c5cdfe32de3b61095c7cc47e0702b2.camel@gmail.com>
+MIME-Version: 1.0
+Subject: Re: Wireguard command line tools for Android
+To: =?UTF-8?Q?Ya=C4=9Fmur_Oymak?= <yagmur.oymak@gmail.com>, boerner@t-online.de,
+ wireguard@lists.zx2c4.com
+From: =?ISO-8859-1?Q?Thomas_B=F6rner?= <boerner@t-online.de>
+Message-ID: <ADD7E5C3-E762-47A5-BBE1-9328D7C8DA52@t-online.de>
+X-ID: SgZK14ZeQhfGHXqv1mBPkp5udMx3EEGYai4KKvO0f4IaddkM3m6EyruJJIyrnqoZjL
+X-TOI-MSGID: bf72a9ff-91ee-41c8-ae64-2134e3d65786
+X-Mailman-Approved-At: Sun, 25 Aug 2019 17:29:26 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -88,81 +59,96 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: multipart/mixed; boundary="===============8340935899436140267=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-SGkgZXZlcnlvbmUsCgpXaXJlZ3VhcmQgaGFzbid0IHdvcmtlZCBzaW5jZSBJIGluc3RhbGxlZCB0
-aGUgaU9TIDEzIGJldGEgb24gbXkgaVBhZCAoMjAxNyBQcm8sIDEyLjkiKS4KCkhlcmUncyB0aGUg
-bG9nIGZyb20gY29ubmVjdGluZyBhbmQgZGlzY29ubmVjdGluZyBmcm9tIG15IGlQYWQ6Cj4gMjAx
-OS0wOC0wNiAxNzo1NDoxNS4wNDk0Nzc6IFtORVRdIEFwcCB2ZXJzaW9uOiAwLjAuMjAxOTA2MDkg
-KDExKTsgR28gYmFja2VuZCB2ZXJzaW9uOiAwLjAuMjAxOTA1MTcKPiAyMDE5LTA4LTA2IDE3OjU0
-OjE1LjMwMjk4NDogW05FVF0gU3RhcnRpbmcgdHVubmVsIGZyb20gdGhlIE9TIGRpcmVjdGx5LCBy
-YXRoZXIgdGhhbiB0aGUgYXBwCj4gMjAxOS0wOC0wNiAxNzo1NDoxNS40NDYzNDU6IFtORVRdIFR1
-bm5lbCBpbnRlcmZhY2UgaXMgdXR1bjIKPiAyMDE5LTA4LTA2IDE3OjU0OjE1LjQ0ODY3NzogW05F
-VF0gRE5TNjQ6IG1hcHBlZCBYWFguWFguWFhYLjIyNiB0byBpdHNlbGYuCj4gMjAxOS0wOC0wNiAx
-Nzo1NDoxNS40NDk3OTU6IFtORVRdIEF0dGFjaGluZyB0byBpbnRlcmZhY2UKPiAyMDE5LTA4LTA2
-IDE3OjU0OjE1LjQ1MTIwNTogW05FVF0gUm91dGluZTogZW5jcnlwdGlvbiB3b3JrZXIgLSBzdGFy
-dGVkCj4gMjAxOS0wOC0wNiAxNzo1NDoxNS40NTEyNjY6IFtORVRdIFJvdXRpbmU6IGVuY3J5cHRp
-b24gd29ya2VyIC0gc3RhcnRlZAo+IDIwMTktMDgtMDYgMTc6NTQ6MTUuNDUyODQzOiBbTkVUXSBS
-b3V0aW5lOiBkZWNyeXB0aW9uIHdvcmtlciAtIHN0YXJ0ZWQKPiAyMDE5LTA4LTA2IDE3OjU0OjE1
-LjQ1NDgwMTogW05FVF0gUm91dGluZTogaGFuZHNoYWtlIHdvcmtlciAtIHN0YXJ0ZWQKPiAyMDE5
-LTA4LTA2IDE3OjU0OjE1LjQ1NzcyNTogW05FVF0gUm91dGluZTogaGFuZHNoYWtlIHdvcmtlciAt
-IHN0YXJ0ZWQKPiAyMDE5LTA4LTA2IDE3OjU0OjE1LjQ2MjgwNDogW05FVF0gUm91dGluZTogZGVj
-cnlwdGlvbiB3b3JrZXIgLSBzdGFydGVkCj4gMjAxOS0wOC0wNiAxNzo1NDoxNS40NjQwNDU6IFtO
-RVRdIFJvdXRpbmU6IFRVTiByZWFkZXIgLSBzdGFydGVkCj4gMjAxOS0wOC0wNiAxNzo1NDoxNS40
-Njc0NzQ6IFtORVRdIFJvdXRpbmU6IGV2ZW50IHdvcmtlciAtIHN0YXJ0ZWQKPiAyMDE5LTA4LTA2
-IDE3OjU0OjE1LjQ4Mjc5NjogW05FVF0gVUFQSTogVXBkYXRpbmcgcHJpdmF0ZSBrZXkKPiAyMDE5
-LTA4LTA2IDE3OjU0OjE1LjQ4MzE4NDogW05FVF0gVUFQSTogUmVtb3ZpbmcgYWxsIHBlZXJzCj4g
-MjAxOS0wOC0wNiAxNzo1NDoxNS40ODM5NTg6IFtORVRdIFVBUEk6IFRyYW5zaXRpb24gdG8gcGVl
-ciBjb25maWd1cmF0aW9uCj4gMjAxOS0wOC0wNiAxNzo1NDoxNS40ODYwMDQ6IFtORVRdIHBlZXIo
-QUFBQeKApkFBQUEpIC0gVUFQSTogVXBkYXRpbmcgZW5kcG9pbnQKPiAyMDE5LTA4LTA2IDE3OjU0
-OjE1LjQ4OTQ4MzogW05FVF0gcGVlcihBQUFB4oCmQUFBQSkgLSBVQVBJOiBVcGRhdGluZyBwZXJz
-aXN0ZW50IGtlZXBhbGl2ZSBpbnRlcnZhbAo+IDIwMTktMDgtMDYgMTc6NTQ6MTUuNDg5OTYyOiBb
-TkVUXSBwZWVyKEFBQUHigKZBQUFBKSAtIFVBUEk6IFJlbW92aW5nIGFsbCBhbGxvd2VkaXBzCj4g
-MjAxOS0wOC0wNiAxNzo1NDoxNS40OTA1NzY6IFtORVRdIHBlZXIoQUFBQeKApkFBQUEpIC0gVUFQ
-STogQWRkaW5nIGFsbG93ZWRpcAo+IDIwMTktMDgtMDYgMTc6NTQ6MTUuNDkxODc2OiBbTkVUXSBw
-ZWVyKEFBQUHigKZBQUFBKSAtIFVBUEk6IEFkZGluZyBhbGxvd2VkaXAKPiAyMDE5LTA4LTA2IDE3
-OjU0OjE1LjQ5NDU1NzogW05FVF0gUm91dGluZTogcmVjZWl2ZSBpbmNvbWluZyBJUHY0IC0gc3Rh
-cnRlZAo+IDIwMTktMDgtMDYgMTc6NTQ6MTUuNDk2Mzk3OiBbTkVUXSBSb3V0aW5lOiByZWNlaXZl
-IGluY29taW5nIElQdjYgLSBzdGFydGVkCj4gMjAxOS0wOC0wNiAxNzo1NDoxNS40OTgwMDA6IFtO
-RVRdIFVEUCBiaW5kIGhhcyBiZWVuIHVwZGF0ZWQKPiAyMDE5LTA4LTA2IDE3OjU0OjE1LjQ5OTk3
-NDogW05FVF0gRGV2aWNlIHN0YXJ0ZWQKPiAyMDE5LTA4LTA2IDE3OjU0OjE2LjMzNjI5ODogW05F
-VF0gTmV0d29yayBjaGFuZ2UgZGV0ZWN0ZWQgd2l0aCBzYXRpc2ZpZWQgcm91dGUgYW5kIGludGVy
-ZmFjZSBvcmRlciBbZW4wLCB1dHVuMl0KPiAyMDE5LTA4LTA2IDE3OjU0OjE2LjMzNzEwMzogW05F
-VF0gRE5TNjQ6IG1hcHBlZCBYWFguWFguWFhYLjIyNiB0byBpdHNlbGYuCj4gMjAxOS0wOC0wNiAx
-Nzo1NDoxNi4zMzgyOTI6IFtORVRdIFVBUEk6IFRyYW5zaXRpb24gdG8gcGVlciBjb25maWd1cmF0
-aW9uCj4gMjAxOS0wOC0wNiAxNzo1NDoxNi4zNDA4NDI6IFtORVRdIHBlZXIoQUFBQeKApkFBQUEp
-IC0gVUFQSTogVXBkYXRpbmcgZW5kcG9pbnQKPiAyMDE5LTA4LTA2IDE3OjU0OjE2LjM0MTk4Njog
-W05FVF0gUm91dGluZTogcmVjZWl2ZSBpbmNvbWluZyBJUHY0IC0gc3RvcHBlZAo+IDIwMTktMDgt
-MDYgMTc6NTQ6MTYuMzQzOTgwOiBbTkVUXSBSb3V0aW5lOiByZWNlaXZlIGluY29taW5nIElQdjYg
-LSBzdG9wcGVkCj4gMjAxOS0wOC0wNiAxNzo1NDoxNi4zNDYwODQ6IFtORVRdIFJvdXRpbmU6IHJl
-Y2VpdmUgaW5jb21pbmcgSVB2NCAtIHN0YXJ0ZWQKPiAyMDE5LTA4LTA2IDE3OjU0OjE2LjM0Nzg1
-MDogW05FVF0gUm91dGluZTogcmVjZWl2ZSBpbmNvbWluZyBJUHY2IC0gc3RhcnRlZAo+IDIwMTkt
-MDgtMDYgMTc6NTQ6MTYuMzUzNDAzOiBbTkVUXSBVRFAgYmluZCBoYXMgYmVlbiB1cGRhdGVkCj4g
-MjAxOS0wOC0wNiAxNzo1NDozNC43NjY4MDE6IFtORVRdIE5ldHdvcmsgY2hhbmdlIGRldGVjdGVk
-IHdpdGggc2F0aXNmaWVkIHJvdXRlIGFuZCBpbnRlcmZhY2Ugb3JkZXIgW2VuMF0KPiAyMDE5LTA4
-LTA2IDE3OjU0OjM0Ljc2NzM1NjogW05FVF0gRE5TNjQ6IG1hcHBlZCBYWFguWFguWFhYLjIyNiB0
-byBpdHNlbGYuCj4gMjAxOS0wOC0wNiAxNzo1NDozNC43Njg1NTQ6IFtORVRdIFVBUEk6IFRyYW5z
-aXRpb24gdG8gcGVlciBjb25maWd1cmF0aW9uCj4gMjAxOS0wOC0wNiAxNzo1NDozNC43NzA0NzE6
-IFtORVRdIHBlZXIoQUFBQeKApkFBQUEpIC0gVUFQSTogVXBkYXRpbmcgZW5kcG9pbnQKPiAyMDE5
-LTA4LTA2IDE3OjU0OjM0Ljc3Mjk4MTogW05FVF0gUm91dGluZTogcmVjZWl2ZSBpbmNvbWluZyBJ
-UHY0IC0gc3RvcHBlZAo+IDIwMTktMDgtMDYgMTc6NTQ6MzQuNzc0NTQyOiBbTkVUXSBSb3V0aW5l
-OiByZWNlaXZlIGluY29taW5nIElQdjYgLSBzdG9wcGVkCj4gMjAxOS0wOC0wNiAxNzo1NDozNC43
-Nzg1MDQ6IFtORVRdIFJvdXRpbmU6IHJlY2VpdmUgaW5jb21pbmcgSVB2NCAtIHN0YXJ0ZWQKPiAy
-MDE5LTA4LTA2IDE3OjU0OjM0Ljc3ODcxMjogW05FVF0gUm91dGluZTogcmVjZWl2ZSBpbmNvbWlu
-ZyBJUHY2IC0gc3RhcnRlZAo+IDIwMTktMDgtMDYgMTc6NTQ6MzQuNzgwNTg0OiBbTkVUXSBVRFAg
-YmluZCBoYXMgYmVlbiB1cGRhdGVkCj4gMjAxOS0wOC0wNiAxNzo1NDozNS4wNzYzNjk6IFtORVRd
-IFN0b3BwaW5nIHR1bm5lbAo+IDIwMTktMDgtMDYgMTc6NTQ6MzUuMDc2NDc5OiBbTkVUXSBEZXZp
-Y2UgY2xvc2luZwo+IDIwMTktMDgtMDYgMTc6NTQ6MzUuMDc5MDg3OiBbTkVUXSBSb3V0aW5lOiBU
-VU4gcmVhZGVyIC0gc3RvcHBlZAoKCkkgcmFuIHRjcGR1bXAgb24gbXkgVWJ1bnR1IFZQUywgYnV0
-IGl0IGRpZG4ndCBzZWUgYW55IHBhY2tldHMuCk9uIG15IEFuZHJvaWQgcGhvbmUsIGV2ZXJ5dGhp
-bmcgd29ya3MgZmluZS4KCkZvciB3aGF0IGl0J3Mgd29ydGgsIEkndmUgZ290IGJvdGggSVB2NCAm
-IElQdjYgc2V0dXAgaW4gbXkgY29uZmlnczoKPiBbUGVlcl0KPiBQdWJsaWNLZXkgPSBbcmVkYWN0
-ZWRdCj4gQWxsb3dlZElQcyA9IDEwLjAuMC4yLzMyLCBmZGRjOjg2ZTc6ZDMzOjk3NjU6OjIvMTI4
-Cj4gRW5kcG9pbnQgPSBYWC5YWFguWFhYLlhYOjE1Njg1CgpUaGFua3MgaW4gYWR2YW5jZSBmb3Ig
-YW55IGhlbHAhCgpCZXN0LAoKRGF2aWQKX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX18KV2lyZUd1YXJkIG1haWxpbmcgbGlzdApXaXJlR3VhcmRAbGlzdHMuengy
-YzQuY29tCmh0dHBzOi8vbGlzdHMuengyYzQuY29tL21haWxtYW4vbGlzdGluZm8vd2lyZWd1YXJk
-Cg==
+--===============8340935899436140267==
+Content-Type: multipart/alternative; boundary="----OPN7418JKC19NP0YDPSETYCMS1SCJI"
+Content-Transfer-Encoding: 7bit
+
+------OPN7418JKC19NP0YDPSETYCMS1SCJI
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+Thanks for the clarification!
+But this also means that a Tasker workaround would not be feasible for a c=
+ommon user=2E
+Thus, =C2=A0renewing the binding via DNS when the tunnel is broken would b=
+e most desirable, as I already proposed=2E
+
+
+Am 7=2E August 2019 12:52:19 MESZ schrieb "Ya=C4=9Fmur Oymak" <yagmur=2Eoy=
+mak@gmail=2Ecom>:
+>On Sat, 2019-07-27 at 18:01 +0200, boerner@t-online=2Ede wrote:
+>> My idea was to use Tasker to perform something like wg-quick up|down
+>> tun1 accordingly, but the Wireguard command line tools wg and wg-
+>> quick don't seem to be available (anymore)=2E In older forum posts I've
+>> seen that you can install them from the app settings, but in my
+>> version (v0=2E0=2E20190708) this option is not available=2E
+>>=20
+>> Does anybody know about another solution? Or, as a question to the
+>> developers, would it be a big deal to bring back the command line
+>> feature?
+>
+>Hey,
+>
+>The command line tools were not removed=2E If you are using the Go
+>userspace backend (the app will indicate this in settings, together
+>with the version information) they will not be available=2E The tools
+>control the kernel backend and require root access=2E Thus they are only
+>available if you are running a custom kernel with WireGuard support and
+>have root access=2E
+>
+>--
+>Yagmur Oymak
+
+--=20
+Diese Nachricht wurde von meinem Android-Ger=C3=A4t mit K-9 Mail gesendet=
+=2E
+------OPN7418JKC19NP0YDPSETYCMS1SCJI
+Content-Type: text/html;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<html><head></head><body>Thanks for the clarification!<br>But this also mea=
+ns that a Tasker workaround would not be feasible for a common user=2E<br>T=
+hus, =C2=A0renewing the binding via DNS when the tunnel is broken would be =
+most desirable, as I already proposed=2E<br><br><br><div class=3D"gmail_quo=
+te">Am 7=2E August 2019 12:52:19 MESZ schrieb "Ya=C4=9Fmur Oymak" &lt;yagmu=
+r=2Eoymak@gmail=2Ecom&gt;:<blockquote class=3D"gmail_quote" style=3D"margin=
+: 0pt 0pt 0pt 0=2E8ex; border-left: 1px solid rgb(204, 204, 204); padding-l=
+eft: 1ex;">
+<pre class=3D"k9mail">On Sat, 2019-07-27 at 18:01 +0200, boerner@t-online=
+=2Ede wrote:<br><blockquote class=3D"gmail_quote" style=3D"margin: 0pt 0pt =
+1ex 0=2E8ex; border-left: 1px solid #729fcf; padding-left: 1ex;">My idea wa=
+s to use Tasker to perform something like wg-quick up|down<br>tun1 accordin=
+gly, but the Wireguard command line tools wg and wg-<br>quick don't seem to=
+ be available (anymore)=2E In older forum posts I've<br>seen that you can i=
+nstall them from the app settings, but in my<br>version (v0=2E0=2E20190708)=
+ this option is not available=2E<br><br>Does anybody know about another sol=
+ution? Or, as a question to the<br>developers, would it be a big deal to br=
+ing back the command line<br>feature?<br></blockquote><br>Hey,<br><br>The c=
+ommand line tools were not removed=2E If you are using the Go<br>userspace =
+backend (the app will indicate this in settings, together<br>with the versi=
+on information) they will not be available=2E The tools<br>control the kern=
+el backend and require root access=2E Thus they are only<br>available if yo=
+u are running a custom kernel with WireGuard support and<br>have root acces=
+s=2E<br><br>--<br>Yagmur Oymak<br><br><br></pre></blockquote></div><br>-- <=
+br>Diese Nachricht wurde von meinem Android-Ger=C3=A4t mit K-9 Mail gesende=
+t=2E</body></html>
+------OPN7418JKC19NP0YDPSETYCMS1SCJI--
+
+--===============8340935899436140267==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
+_______________________________________________
+WireGuard mailing list
+WireGuard@lists.zx2c4.com
+https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--===============8340935899436140267==--
