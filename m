@@ -3,90 +3,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CD80C3A5A1
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 25 Aug 2019 15:51:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A0F8C3A5A3
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 25 Aug 2019 15:51:11 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 1D36C2080C
+	by mail.kernel.org (Postfix) with ESMTPS id 995792080C
 	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 25 Aug 2019 15:51:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=dontlookhere.net header.i=@dontlookhere.net header.b="R3VenhIP"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 1D36C2080C
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=dontlookhere.net
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=damon-at.20150623.gappssmtp.com header.i=@damon-at.20150623.gappssmtp.com header.b="NvHJHgk9"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 995792080C
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=damon.at
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1ebd3d9f;
-	Sun, 25 Aug 2019 15:41:28 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 70ef2a92;
+	Sun, 25 Aug 2019 15:41:29 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6e0bd206
- for <wireguard@lists.zx2c4.com>; Fri, 2 Aug 2019 23:27:06 +0000 (UTC)
-Received: from buffalo.birch.relay.mailchannels.net
- (buffalo.birch.relay.mailchannels.net [23.83.209.24])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a2cbd45b
- for <wireguard@lists.zx2c4.com>; Fri, 2 Aug 2019 23:27:05 +0000 (UTC)
-X-Sender-Id: dreamhost|x-authsender|max@dontlookhere.net
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
- by relay.mailchannels.net (Postfix) with ESMTP id 8874E5021C6
- for <wireguard@lists.zx2c4.com>; Fri,  2 Aug 2019 23:27:04 +0000 (UTC)
-Received: from pdx1-sub0-mail-a69.g.dreamhost.com
- (100-96-11-214.trex.outbound.svc.cluster.local [100.96.11.214])
- (Authenticated sender: dreamhost)
- by relay.mailchannels.net (Postfix) with ESMTPA id CAE6C501D02
- for <wireguard@lists.zx2c4.com>; Fri,  2 Aug 2019 23:27:03 +0000 (UTC)
-X-Sender-Id: dreamhost|x-authsender|max@dontlookhere.net
-Received: from pdx1-sub0-mail-a69.g.dreamhost.com ([TEMPUNAVAIL].
- [64.90.62.162]) (using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384)
- by 0.0.0.0:2500 (trex/5.17.5); Fri, 02 Aug 2019 23:27:04 +0000
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|max@dontlookhere.net
-X-MailChannels-Auth-Id: dreamhost
-X-Imminent-Bubble: 2edb51885a635825_1564788424338_3047694298
-X-MC-Loop-Signature: 1564788424338:2048612686
-X-MC-Ingress-Time: 1564788424337
-Received: from pdx1-sub0-mail-a69.g.dreamhost.com (localhost [127.0.0.1])
- by pdx1-sub0-mail-a69.g.dreamhost.com (Postfix) with ESMTP id DB0E484B27
- for <wireguard@lists.zx2c4.com>; Fri,  2 Aug 2019 16:26:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=dontlookhere.net; h=
- mime-version:reply-to:from:date:message-id:subject:to
- :content-type; s=dontlookhere.net; bh=CJZiZtoj/H34l7fyItF/hX7FIm
- k=; b=R3VenhIPauV+B8vX60twfIZGHoxkVbOf0v9fPIsHK1y2FMsXPQbIKgrKd1
- nAYyi/LscEQfFQLW5ihu57Z+thy03RtSWkh5FYxcSFF/p2b5hBdm5LNrRniKFWpb
- vfpS85toGCTMUzNKE/ksrssSyb7e5QKOo8lVLNge77dNjvv/Q=
-Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com
- [209.85.222.176])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (No client certificate requested)
- (Authenticated sender: max@dontlookhere.net)
- by pdx1-sub0-mail-a69.g.dreamhost.com (Postfix) with ESMTPSA id 8BBCC84AFB
- for <wireguard@lists.zx2c4.com>; Fri,  2 Aug 2019 16:26:59 -0700 (PDT)
-Received: by mail-qk1-f176.google.com with SMTP id r21so56180755qke.2
- for <wireguard@lists.zx2c4.com>; Fri, 02 Aug 2019 16:26:59 -0700 (PDT)
-X-Gm-Message-State: APjAAAUuEajsLj/Tzw7KYfhTHkdZg1cbNo9IBnVI5exRjshNzZx5eH6Z
- 0TyV9RSjqRoVODRaOu+nEO8Lh7Kb9pvsGyuWkhQ=
-X-Google-Smtp-Source: APXvYqwZSdTIz4cBDTGUcKAhSpVxjDUK8kTVu+XG0im0DPyS+eif0aDEqrtIQz482klgiiwDKbs5jVr9HJUgqgre+ko=
-X-Received: by 2002:a05:620a:13ad:: with SMTP id
- m13mr85152790qki.469.1564788418426; 
- Fri, 02 Aug 2019 16:26:58 -0700 (PDT)
-MIME-Version: 1.0
-X-DH-BACKEND: pdx1-sub0-mail-a69
-From: Max <max@dontlookhere.net>
-Date: Fri, 2 Aug 2019 19:26:22 -0400
-X-Gmail-Original-Message-ID: <CAEKBwLpTru7RTSkcc02gkp_=n4iN=wn7m5i0noUfRQyvdS73BA@mail.gmail.com>
-Message-ID: <CAEKBwLpTru7RTSkcc02gkp_=n4iN=wn7m5i0noUfRQyvdS73BA@mail.gmail.com>
-Subject: Bind WG to listen on specific interface instead of 0.0.0.0
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b374f642
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 15 Aug 2019 09:41:49 +0000 (UTC)
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com
+ [IPv6:2a00:1450:4864:20::231])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b32e0338
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 15 Aug 2019 09:41:49 +0000 (UTC)
+Received: by mail-lj1-x231.google.com with SMTP id t3so1672337ljj.12
+ for <wireguard@lists.zx2c4.com>; Thu, 15 Aug 2019 02:41:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=damon-at.20150623.gappssmtp.com; s=20150623;
+ h=from:content-transfer-encoding:mime-version:subject:message-id:date
+ :to; bh=D7E9+ayvj7klIU4OYhog9lvrD08WTXI/lQ+knADv8zA=;
+ b=NvHJHgk9qNegOQXHdHI1OP607NPgxxj84KF44wA/+0HqVf+KECQSwtP1yf8xjVWNFB
+ rYUfqzYYyK2KM5HZZd5l7xDxrO1VE2C/jHmNGYYevzWOHxosQ5Bblhj1Blo5wNfAJVIg
+ j3RhcOgnZSaRswVsb/jiMUPu1IQD4Cezy6vV08RxRecLZSI0xHsm+XCjAsIsunvMhvZG
+ WW0fgODilvOIiGi61GUmTFLQL8NxAWO345ntgQh03e9Y+kdolkQtH1a0dpGAUBPmGs1m
+ 4/6xN2jVOPdzn0uraMiYbzFdZmXL1txYC/EEJbKgHntsQFfL5KWNpjmq0tKkZ8rM1sfe
+ TyMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:content-transfer-encoding:mime-version
+ :subject:message-id:date:to;
+ bh=D7E9+ayvj7klIU4OYhog9lvrD08WTXI/lQ+knADv8zA=;
+ b=Mn95w7wqQUWiURGiyROnpkBx8wFGyqoz4beuoxdqomOQuWiNo9WSNs8MCyPloV/adD
+ IHKTk/hxslLIQ24Zk/x5STesHWWMrIQkC3QNPzy4dKBMiOrnSZS7EwzPsP7rIzCIRJb1
+ loAXrSvm84KKCAhAz14/+qNzMO1BtW1HuG5Fl1AyZvSKx1dHin5+rsmLDke0GDs/0io0
+ z4Ame2UpORrIlnv91bdtSZtN/F0XBX2NG97sU/zSWZfbkJkuEYsM4rMLQotSxKa+acBf
+ 5OrZY2JhINwMp4AKiT+4unEvNNiv4KAHzVWZ1p13rzqtIloEuIxzRF9/y4RnFnbz4pQi
+ rc7A==
+X-Gm-Message-State: APjAAAUj8HhyRtrDqnUruZVLuT8yfkqj80CA82S/dcXQmtYAo8LHDIhg
+ sXQFbMt2qxMMx4tPzrFLuuWx/ZBfFFo=
+X-Google-Smtp-Source: APXvYqy6LPuGRcpHHvrD3Xzzwqypm7N8nnYzH3t7XepI3pVQkVSAwt99ECma/9JfVktbrgrufuyw4w==
+X-Received: by 2002:a2e:968e:: with SMTP id q14mr2053154lji.195.1565862106993; 
+ Thu, 15 Aug 2019 02:41:46 -0700 (PDT)
+Received: from [192.168.100.169] (x5271796a.dyn.telefonica.de.
+ [82.113.121.106])
+ by smtp.gmail.com with ESMTPSA id r68sm356806lff.52.2019.08.15.02.41.45
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Thu, 15 Aug 2019 02:41:46 -0700 (PDT)
+From: Damon <msg@damon.at>
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
+Subject: Kernel panic on Linux 5.2.7 using Wireguard 0.0.20190702 on Fedora 30
+Message-Id: <CB3F0797-D792-4883-8098-D57AA951715B@damon.at>
+Date: Thu, 15 Aug 2019 11:41:44 +0200
 To: wireguard@lists.zx2c4.com
-X-VR-OUT-STATUS: OK
-X-VR-OUT-SCORE: 0
-X-VR-OUT-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeduvddruddttddgvdehucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuggftfghnshhusghstghrihgsvgdpffftgfetoffjqffuvfenuceurghilhhouhhtmecufedttdenucenucfjughrpeggrhfhfffkuffvtgesrgdtreertddtjeenucfhrhhomhepofgrgicuoehmrgigseguohhnthhlohhokhhhvghrvgdrnhgvtheqnecukfhppedvtdelrdekhedrvddvvddrudejieenucfrrghrrghmpehmohguvgepshhmthhppdhhvghlohepmhgrihhlqdhqkhduqdhfudejiedrghhoohhglhgvrdgtohhmpdhinhgvthepvddtledrkeehrddvvddvrddujeeipdhrvghtuhhrnhdqphgrthhhpeforgiguceomhgrgiesughonhhtlhhoohhkhhgvrhgvrdhnvghtqedpmhgrihhlfhhrohhmpehmrgigseguohhnthhlohhokhhhvghrvgdrnhgvthdpnhhrtghpthhtohepfihirhgvghhurghrugeslhhishhtshdriiigvdgtgedrtghomhenucevlhhushhtvghrufhiiigvpedt
+X-Mailer: Apple Mail (2.3445.104.11)
 X-Mailman-Approved-At: Sun, 25 Aug 2019 17:41:26 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
-Reply-To: max@dontlookhere.net
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -95,70 +83,80 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============7266938441712433444=="
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============7266938441712433444==
-Content-Type: multipart/alternative; boundary="000000000000d43cc8058f2ab12c"
+Hey guys,
 
---000000000000d43cc8058f2ab12c
-Content-Type: text/plain; charset="UTF-8"
+I'm using wireguard-dkms 1:0.0.20190702-1.fc30 on Fedora 30. If I send data through the tunnel as part of a long lasting task, I run into a kernel panic. This behavior is reproducible, even though the panic only occurs after some time. The peer is also running Fedora 30 with the same Wireguard version. Both systems are up-to-date.
 
-Hello,
-  I'm very much enjoying WireGuard.  Thanks for all the hardwork!
-I am currently running WG on a high port but would like to use it on port
-53.  It currently will not load on 53, I think because my system has
-systemd-resolved running that is bound to 53 on localhost only.
+I've attached the kernel panic log. I'm happy to provide any additional information, if necessary.
 
-I've tried a bit of Google-ing, I've read through the man pages for wg and
-wg-quick I don't seen an option to restrict the interfaces or IPs on which
-wg tries to bind [the port].
+Best,
+Damon
 
-Is there something I'm missing or some other solution?  I'd rather not have
-to remove systemd-resolved.  I did stop systemd-resolved and start wg on
-port 53 which gets wg running but breaks local DNS resolution.
-
-Thanks,
-    Max
-
---000000000000d43cc8058f2ab12c
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div class=3D"gmail_default" style=3D"font-family:monospac=
-e,monospace">Hello,</div><div class=3D"gmail_default" style=3D"font-family:=
-monospace,monospace">=C2=A0 I&#39;m very much enjoying WireGuard.=C2=A0 Tha=
-nks for all the hardwork!</div><div class=3D"gmail_default" style=3D"font-f=
-amily:monospace,monospace">I am currently running WG on a high port but wou=
-ld like to use it on port 53.=C2=A0 It currently will not load on 53, I thi=
-nk because my system has systemd-resolved running that is bound to 53 on lo=
-calhost only.</div><div class=3D"gmail_default" style=3D"font-family:monosp=
-ace,monospace"><br></div><div class=3D"gmail_default" style=3D"font-family:=
-monospace,monospace">I&#39;ve tried a bit of Google-ing, I&#39;ve read thro=
-ugh the man pages for wg and wg-quick I don&#39;t seen an option to restric=
-t the interfaces or IPs on which wg tries to bind [the port].=C2=A0=C2=A0</=
-div><div class=3D"gmail_default" style=3D"font-family:monospace,monospace">=
-<br></div><div class=3D"gmail_default" style=3D"font-family:monospace,monos=
-pace">Is there something I&#39;m missing or some other solution?=C2=A0 I&#3=
-9;d rather not have to remove systemd-resolved.=C2=A0 I did stop systemd-re=
-solved and start wg on port 53 which gets wg running but breaks local DNS r=
-esolution.</div><div class=3D"gmail_default" style=3D"font-family:monospace=
-,monospace"><br></div><div class=3D"gmail_default" style=3D"font-family:mon=
-ospace,monospace">Thanks,</div><div class=3D"gmail_default" style=3D"font-f=
-amily:monospace,monospace">=C2=A0 =C2=A0 Max</div></div>
-
---000000000000d43cc8058f2ab12c--
-
---===============7266938441712433444==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
+[ 5094.906244] BUG: unable to handle page fault for address: ffff8f584996c000
+[ 5094.913136] #PF: supervisor write access in kernel mode
+[ 5094.918373] #PF: error_code(0x0002) - not-present page
+[ 5094.923515] PGD ce001067 P4D ce001067 PUD ce005067 PMD 10996b063 PTE 0
+[ 5094.930061] Oops: 0002 [#1] SMP NOPTI
+[ 5094.933739] CPU: 1 PID: 10041 Comm: kworker/1:1 Tainted: G           OE     5.2.7-200.fc30.x86_64 #1
+[ 5094.942882] Hardware name: PC Engines apu2/apu2, BIOS v4.9.0.4 04/03/2019
+[ 5094.949698] Workqueue: wg-crypt-wg-i1 wg_packet_tx_worker [wireguard]
+[ 5094.956157] RIP: 0010:__memset+0x24/0x30
+[ 5094.960091] Code: 90 90 90 90 90 90 0f 1f 44 00 00 49 89 f9 48 89 d1 83 e2 07 48 c1 e9 03 40 0f b6 f6 48 b8 01 01 01 01 01 01 01 01 48 0f af c6 <f3> 48 ab 89 d1 f3 aa 4c 89 c8 c3 90 49 89 f9 40 88 f0 48 89 d1 f3
+[ 5094.978841] RSP: 0018:ffffa42d82157a38 EFLAGS: 00010216
+[ 5094.984076] RAX: 0000000000000000 RBX: 00000000fffffffe RCX: 000000001ffdf000
+[ 5094.991219] RDX: 0000000000000006 RSI: 0000000000000000 RDI: ffff8f584996bffa
+[ 5094.998359] RBP: ffff8f586408f000 R08: 0000000000000000 R09: ffff8f5849864002
+[ 5095.005501] R10: ffff8f5849860000 R11: 000000000000007c R12: ffff8f585aa563c0
+[ 5095.012641] R13: 000000000000000b R14: 0000000000535049 R15: ffff8f5846f33100
+[ 5095.019776] FS:  0000000000000000(0000) GS:ffff8f586aa80000(0000) knlGS:0000000000000000
+[ 5095.027869] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[ 5095.033623] CR2: ffff8f584996c000 CR3: 0000000118614000 CR4: 00000000000406e0
+[ 5095.040764] Call Trace:
+[ 5095.043242]  cdc_ncm_fill_tx_frame+0x597/0x700 [cdc_ncm]
+[ 5095.048572]  cdc_mbim_tx_fixup+0x181/0x230 [cdc_mbim]
+[ 5095.053642]  usbnet_start_xmit+0x62/0x700 [usbnet]
+[ 5095.058450]  dev_hard_start_xmit+0x8d/0x1e0
+[ 5095.062658]  sch_direct_xmit+0x140/0x300
+[ 5095.066597]  __dev_queue_xmit+0x571/0x980
+[ 5095.070621]  ip_finish_output2+0x2c8/0x580
+[ 5095.074758]  ? nf_confirm+0xcc/0xf0 [nf_conntrack]
+[ 5095.079559]  ? ip_finish_output+0x139/0x270
+[ 5095.083755]  ip_output+0x71/0xf0
+[ 5095.086998]  ? ip_finish_output2+0x580/0x580
+[ 5095.091279]  iptunnel_xmit+0x163/0x210
+[ 5095.095056]  send4+0x128/0x3a0 [wireguard]
+[ 5095.099182]  wg_socket_send_skb_to_peer+0x98/0xb0 [wireguard]
+[ 5095.104957]  wg_packet_tx_worker+0xa3/0x210 [wireguard]
+[ 5095.110197]  process_one_work+0x19d/0x380
+[ 5095.114219]  worker_thread+0x50/0x3b0
+[ 5095.117895]  kthread+0xfb/0x130
+[ 5095.121048]  ? process_one_work+0x380/0x380
+[ 5095.125240]  ? kthread_park+0x80/0x80
+[ 5095.128919]  ret_from_fork+0x22/0x40
+[ 5095.132506] Modules linked in: nf_conntrack_netlink xt_addrtype br_netfilter ccm 8021q garp mrp xt_MASQUERADE nf_conntrack_netbios_ns nf_conntrack_broadcast xt_CT bridge stp llc wireguard(OE) ip6_udp_tunnel udp_tunnel ip6t_rpfilter ip6t_REJECT nf_reject_ipv6 ipt_REJECi
+[ 5095.132661]  crc32c_intel mmc_core
+[ 5095.223417] CR2: ffff8f584996c000
+[ 5095.226751] ---[ end trace cbcf3c94fa645e9e ]---
+[ 5095.231383] RIP: 0010:__memset+0x24/0x30
+[ 5095.235313] Code: 90 90 90 90 90 90 0f 1f 44 00 00 49 89 f9 48 89 d1 83 e2 07 48 c1 e9 03 40 0f b6 f6 48 b8 01 01 01 01 01 01 01 01 48 0f af c6 <f3> 48 ab 89 d1 f3 aa 4c 89 c8 c3 90 49 89 f9 40 88 f0 48 89 d1 f3
+[ 5095.254092] RSP: 0018:ffffa42d82157a38 EFLAGS: 00010216
+[ 5095.259327] RAX: 0000000000000000 RBX: 00000000fffffffe RCX: 000000001ffdf000
+[ 5095.266466] RDX: 0000000000000006 RSI: 0000000000000000 RDI: ffff8f584996bffa
+[ 5095.273608] RBP: ffff8f586408f000 R08: 0000000000000000 R09: ffff8f5849864002
+[ 5095.280743] R10: ffff8f5849860000 R11: 000000000000007c R12: ffff8f585aa563c0
+[ 5095.287882] R13: 000000000000000b R14: 0000000000535049 R15: ffff8f5846f33100
+[ 5095.295019] FS:  0000000000000000(0000) GS:ffff8f586aa80000(0000) knlGS:0000000000000000
+[ 5095.303111] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[ 5095.308863] CR2: ffff8f584996c000 CR3: 0000000118614000 CR4: 00000000000406e0
+[ 5095.315999] Kernel panic - not syncing: Fatal exception in interrupt
+[ 5095.322397] Kernel Offset: 0x2f000000 from 0xffffffff81000000 (relocation range: 0xffffffff80000000-0xffffffffbfffffff)
+[ 5095.333183] ---[ end Kernel panic - not syncing: Fatal exception in interrupt ]---
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
-
---===============7266938441712433444==--
