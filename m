@@ -2,93 +2,68 @@ Return-Path: <SRS0=sGqt=WP=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.3 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C0B8C3A59D
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 19 Aug 2019 12:07:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D325C3A5A0
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 19 Aug 2019 17:39:30 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id DF15C2086C
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 19 Aug 2019 12:07:00 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org DF15C2086C
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=activezone.de
+	by mail.kernel.org (Postfix) with ESMTPS id 6A9D320578
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 19 Aug 2019 17:39:29 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ULjk8sdL"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 6A9D320578
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dce09adc;
-	Mon, 19 Aug 2019 12:06:43 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 59ece286;
+	Mon, 19 Aug 2019 17:39:00 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bee44a8f
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cbe6cb38
  for <wireguard@lists.zx2c4.com>;
- Mon, 19 Aug 2019 12:06:41 +0000 (UTC)
-Received: from vintage.nbg1-dc1.freebsdcloud.com
- (vintage.nbg1-dc1.freebsdcloud.com [159.69.229.98])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 552f77b1
+ Mon, 19 Aug 2019 07:26:46 +0000 (UTC)
+Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com
+ [IPv6:2607:f8b0:4864:20::72d])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cc707ff0
  for <wireguard@lists.zx2c4.com>;
- Mon, 19 Aug 2019 12:06:39 +0000 (UTC)
-Received: from [10.5.0.4] (vip153-vl251.fc.activezone.de [212.224.121.153])
- (authenticated bits=0)
- by vintage.nbg1-dc1.freebsdcloud.com (8.15.2/8.15.2) with ESMTPSA id
- x7JC6bgF094650
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO)
- for <wireguard@lists.zx2c4.com>; Mon, 19 Aug 2019 14:06:38 +0200 (CEST)
- (envelope-from markus@activezone.de)
-X-Authentication-Warning: vintage.nbg1-dc1.freebsdcloud.com: Host
- vip153-vl251.fc.activezone.de [212.224.121.153] claimed to be [10.5.0.4]
-To: wireguard@lists.zx2c4.com
-From: Markus Grundmann <markus@activezone.de>
-Subject: Debian 4.9.0.9-amd64 :: DMKS failed
-Openpgp: preference=signencrypt
-Autocrypt: addr=markus@activezone.de; prefer-encrypt=mutual; keydata=
- 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
-Message-ID: <a8490bd3-e273-6431-6ca5-5fc4bba0ce19@activezone.de>
-Date: Mon, 19 Aug 2019 14:06:37 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+ Mon, 19 Aug 2019 07:26:46 +0000 (UTC)
+Received: by mail-qk1-x72d.google.com with SMTP id s14so632881qkm.4
+ for <wireguard@lists.zx2c4.com>; Mon, 19 Aug 2019 00:26:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=RkWwTwTzyouRcFKCyTjSTzjlU7znOmOPblDON/uDXl0=;
+ b=ULjk8sdLRs/TKhZmj+wgYN2lUEAO38hsdb01jctzy7AaEozCXZ7mhdB73euHQqtMNo
+ kZ1wp6OMkt4OxouUfnC4Q/9VwybYeBoulIf1q5QR7EtcnaJdh3QZjyaz683wWCj55QYj
+ 4tTym/8d2B58vyJALtJCk12+RBi9ZWJKGutECvpy6AUWZr2k672FkI4pgDEB3ivBNCaR
+ eJtajGL2ar8ZIKYBqOP4ginCTcKffvqsHXOJW535sArzv7GCk82oeCe09bjUxMBE2oW7
+ 8+aDs6z7T+l+y5c2GAjSxeuCg459cmyNiLZmzDwEopiPwY5+2VeD5bpH2gxl+lgvdo8Q
+ sUkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=RkWwTwTzyouRcFKCyTjSTzjlU7znOmOPblDON/uDXl0=;
+ b=ob7r/wJlcP018g8O5ApJQlWUk+PT0Q8UWU7aNL2/vEusnXg0mspPlopESE1nkqX97C
+ x49LottzMmJgiW6HiYo1oKMDQbsSA9ls5+CYEAC093dBTETZE2RSTeamFRcvNVv9Ssjk
+ H6cGRpYH9g1UkHARt9arGSQdiyXie8hC8MfoXWDbxMG6O/anK+rJNuJrS8SfgG3QCynQ
+ xwEb+UHlodqYpZncoAOwRSddETFXmRNxi3oj9GuWSygVKb2HX/OajBounhvOS3KbVoa7
+ PCYrX7Z2TvGvl/jpxeIH/JqCN+zHqqOWEtiC5wr7efJphLHFUGmOIfMO0K3iGSQX/3S8
+ KR8g==
+X-Gm-Message-State: APjAAAWVH3CcaFRLkwuli5bd4O6dL1kkit6JTdeCmMIVtZAN+ZzoO54+
+ qQ/t7A78isS3JDRtOpNGtASrWDIsL0egUOLC9ydLQJicvYxAkA==
+X-Google-Smtp-Source: APXvYqw0Z59XKNMsMbNZ9trVUrzeB8TZWP2bw6JNEGZlERmjemJZVvhEFZURdKMSqFt8+xGek+C0GNIbaMilsUNDgnU=
+X-Received: by 2002:a37:6555:: with SMTP id z82mr18844437qkb.319.1566199605390; 
+ Mon, 19 Aug 2019 00:26:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Language: de-DE
+From: Lev Stipakov <lstipakov@gmail.com>
+Date: Mon, 19 Aug 2019 10:26:34 +0300
+Message-ID: <CAGyAFMWzGbheVD6iOm=UZxbkmHOWCPHq7QzCi3_BpGbZT4f2kA@mail.gmail.com>
+Subject: Volatile in Wintun
+To: wireguard@lists.zx2c4.com
+X-Mailman-Approved-At: Mon, 19 Aug 2019 19:38:59 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -100,88 +75,91 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: multipart/mixed; boundary="===============3574063018208563222=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-VGhpcyBpcyBhIG5ldyBkZWJpYW4gVk0gcnVubmluZyBvbiBCSFlWRS4gQWZ0ZXIgdGhlIGluc3Rh
-bGxhdGlvbiBhbmQKdXBncmFkaW5nIG9wZXJhdGluZyBzeXN0ZW0gdGhlIGZvbGxvd2luZyBES01T
-IGZhaWxzLgoKSW5zdGFsbGF0aW9uIHByb2NlZHVyZToKMSkgTW9kaWZ5aW5nIHRoZSBmaWxlcyBk
-ZXNjcmliZWQgb24gd2lyZWd1YXJkLmNvbQoyKSBhcHQgdXBkYXRlCjMpIGFwdCBpbnN0YWxsIHdp
-cmVndWFyZAoKW0ZBSUxdCgovLyBMaW51eCByYXNwaXZtIDQuOS4wLTktYW1kNjQgIzEgU01QIERl
-YmlhbiA0LjkuMTY4LTErZGViOXU1CigyMDE5LTA4LTExKSB4ODZfNjQgR05VL0xpbnV4CgojIyMg
-TWFudWFsIHJlbW92aW5nIG9mICd3aXJlZ3VhcmQtZGttcycKCnJvb3RAcmFzcGl2bTovIyBhcHQg
-cmVtb3ZlIHdpcmVndWFyZC1ka21zClJlYWRpbmcgcGFja2FnZSBsaXN0cy4uLiBEb25lCkJ1aWxk
-aW5nIGRlcGVuZGVuY3kgdHJlZQpSZWFkaW5nIHN0YXRlIGluZm9ybWF0aW9uLi4uIERvbmUKVGhl
-IGZvbGxvd2luZyBwYWNrYWdlcyB3ZXJlIGF1dG9tYXRpY2FsbHkgaW5zdGFsbGVkIGFuZCBhcmUg
-bm8gbG9uZ2VyCnJlcXVpcmVkOgogIGRrbXMgZmFrZXJvb3QgZ2NjIGxpYmZha2Vyb290IGxpbnV4
-LWhlYWRlcnMtYW1kNjQgc3VkbyB3aXJlZ3VhcmQtdG9vbHMKVXNlICdhcHQgYXV0b3JlbW92ZScg
-dG8gcmVtb3ZlIHRoZW0uClRoZSBmb2xsb3dpbmcgcGFja2FnZXMgd2lsbCBiZSBSRU1PVkVEOgog
-IHdpcmVndWFyZC1ka21zCjAgdXBncmFkZWQsIDAgbmV3bHkgaW5zdGFsbGVkLCAxIHRvIHJlbW92
-ZSBhbmQgMCBub3QgdXBncmFkZWQuCkFmdGVyIHRoaXMgb3BlcmF0aW9uLCAxLDc4MCBrQiBkaXNr
-IHNwYWNlIHdpbGwgYmUgZnJlZWQuCkRvIHlvdSB3YW50IHRvIGNvbnRpbnVlPyBbWS9uXSBZCihS
-ZWFkaW5nIGRhdGFiYXNlIC4uLiA2NDY5NiBmaWxlcyBhbmQgZGlyZWN0b3JpZXMgY3VycmVudGx5
-IGluc3RhbGxlZC4pClJlbW92aW5nIHdpcmVndWFyZC1ka21zICgwLjAuMjAxOTA3MDItMSkgLi4u
-CgotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KRGVsZXRpbmcgbW9kdWxlIHZlcnNpb246
-IDAuMC4yMDE5MDcwMgpjb21wbGV0ZWx5IGZyb20gdGhlIERLTVMgdHJlZS4KLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tCkRvbmUuCgojIyMgVHJ5IHRvIHJlaW5zdGFsbCAnd2lyZWd1YXJk
-LWRrbXMnCgpyb290QHJhc3Bpdm06LyMgYXB0IGluc3RhbGwgd2lyZWd1YXJkLWRrbXMKUmVhZGlu
-ZyBwYWNrYWdlIGxpc3RzLi4uIERvbmUKQnVpbGRpbmcgZGVwZW5kZW5jeSB0cmVlClJlYWRpbmcg
-c3RhdGUgaW5mb3JtYXRpb24uLi4gRG9uZQpUaGUgZm9sbG93aW5nIE5FVyBwYWNrYWdlcyB3aWxs
-IGJlIGluc3RhbGxlZDoKICB3aXJlZ3VhcmQtZGttcwowIHVwZ3JhZGVkLCAxIG5ld2x5IGluc3Rh
-bGxlZCwgMCB0byByZW1vdmUgYW5kIDAgbm90IHVwZ3JhZGVkLgpOZWVkIHRvIGdldCAyNjMga0Ig
-b2YgYXJjaGl2ZXMuCkFmdGVyIHRoaXMgb3BlcmF0aW9uLCAxLDc4MCBrQiBvZiBhZGRpdGlvbmFs
-IGRpc2sgc3BhY2Ugd2lsbCBiZSB1c2VkLgpHZXQ6MSBodHRwOi8vZGViLmRlYmlhbi5vcmcvZGVi
-aWFuIHVuc3RhYmxlL21haW4gYW1kNjQgd2lyZWd1YXJkLWRrbXMKYWxsIDAuMC4yMDE5MDcwMi0x
-IFsyNjMga0JdCkZldGNoZWQgMjYzIGtCIGluIDBzICgzLDI0NiBrQi9zKQpTZWxlY3RpbmcgcHJl
-dmlvdXNseSB1bnNlbGVjdGVkIHBhY2thZ2Ugd2lyZWd1YXJkLWRrbXMuCihSZWFkaW5nIGRhdGFi
-YXNlIC4uLiA2NDU1MyBmaWxlcyBhbmQgZGlyZWN0b3JpZXMgY3VycmVudGx5IGluc3RhbGxlZC4p
-ClByZXBhcmluZyB0byB1bnBhY2sgLi4uL3dpcmVndWFyZC1ka21zXzAuMC4yMDE5MDcwMi0xX2Fs
-bC5kZWIgLi4uClVucGFja2luZyB3aXJlZ3VhcmQtZGttcyAoMC4wLjIwMTkwNzAyLTEpIC4uLgpT
-ZXR0aW5nIHVwIHdpcmVndWFyZC1ka21zICgwLjAuMjAxOTA3MDItMSkgLi4uCkxvYWRpbmcgbmV3
-IHdpcmVndWFyZC0wLjAuMjAxOTA3MDIgREtNUyBmaWxlcy4uLgpCdWlsZGluZyBmb3IgNC45LjAt
-OS1hbWQ2NApCdWlsZGluZyBpbml0aWFsIG1vZHVsZSBmb3IgNC45LjAtOS1hbWQ2NAovLwovLyBF
-UlJPUgovLwpFcnJvciEgQmFkIHJldHVybiBzdGF0dXMgZm9yIG1vZHVsZSBidWlsZCBvbiBrZXJu
-ZWw6IDQuOS4wLTktYW1kNjQgKHg4Nl82NCkKQ29uc3VsdCAvdmFyL2xpYi9ka21zL3dpcmVndWFy
-ZC8wLjAuMjAxOTA3MDIvYnVpbGQvbWFrZS5sb2cgZm9yIG1vcmUKaW5mb3JtYXRpb24uCi8vCi8v
-CgojIyMgSSB0cnkgdG8gYnVpbGQgbWFudWFsIGJ1dCBtYWtlIGZhaWxzLiBFcnJvcjogImhzaXBo
-YXNoX2tleV90IHVua25vd24iLgoKIyAvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8wLjAuMjAxOTA3
-MDIvYnVpbGQjIG1ha2UKCnZlcj0iI2RlZmluZSBXSVJFR1VBUkRfVkVSU0lPTiBcIlwiIiAmJiBc
-ClsgIiQoY2F0IHZlcnNpb24uaCAyPi9kZXYvbnVsbCkiICE9ICIkdmVyIiBdICYmIFwKZWNobyAi
-JHZlciIgPiB2ZXJzaW9uLmggfHwgdHJ1ZQogIENDIFtNXSAgL3Zhci9saWIvZGttcy93aXJlZ3Vh
-cmQvMC4wLjIwMTkwNzAyL2J1aWxkL3JhdGVsaW1pdGVyLm8KL3Zhci9saWIvZGttcy93aXJlZ3Vh
-cmQvMC4wLjIwMTkwNzAyL2J1aWxkL3JhdGVsaW1pdGVyLmM6MjU6ODogZXJyb3I6CnVua25vd24g
-dHlwZSBuYW1lIOKAmGhzaXBoYXNoX2tleV904oCZCiBzdGF0aWMgaHNpcGhhc2hfa2V5X3Qga2V5
-OwogICAgICAgIF5+fn5+fn5+fn5+fn5+Ci92YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE5
-MDcwMi9idWlsZC9yYXRlbGltaXRlci5jOiBJbiBmdW5jdGlvbgrigJh3Z19yYXRlbGltaXRlcl9h
-bGxvd+KAmToKL3Zhci9saWIvZGttcy93aXJlZ3VhcmQvMC4wLjIwMTkwNzAyL2J1aWxkL3JhdGVs
-aW1pdGVyLmM6MTA5OjIyOiBlcnJvcjoKaW1wbGljaXQgZGVjbGFyYXRpb24gb2YgZnVuY3Rpb24g
-4oCYaHNpcGhhc2hfMnUzMuKAmQpbLVdlcnJvcj1pbXBsaWNpdC1mdW5jdGlvbi1kZWNsYXJhdGlv
-bl0KICAgYnVja2V0ID0gJnRhYmxlX3Y0W2hzaXBoYXNoXzJ1MzIobmV0X3dvcmQsIGlwLCAma2V5
-KSAmCiAgICAgICAgICAgICAgICAgICAgICBefn5+fn5+fn5+fn5+Ci92YXIvbGliL2RrbXMvd2ly
-ZWd1YXJkLzAuMC4yMDE5MDcwMi9idWlsZC9yYXRlbGltaXRlci5jOjExNjoyMjogZXJyb3I6Cmlt
-cGxpY2l0IGRlY2xhcmF0aW9uIG9mIGZ1bmN0aW9uIOKAmGhzaXBoYXNoXzN1MzLigJkKWy1XZXJy
-b3I9aW1wbGljaXQtZnVuY3Rpb24tZGVjbGFyYXRpb25dCiAgIGJ1Y2tldCA9ICZ0YWJsZV92Nlto
-c2lwaGFzaF8zdTMyKG5ldF93b3JkLCBpcCA+PiAzMiwgaXAsICZrZXkpICYKICAgICAgICAgICAg
-ICAgICAgICAgIF5+fn5+fn5+fn5+fn4KY2MxOiBzb21lIHdhcm5pbmdzIGJlaW5nIHRyZWF0ZWQg
-YXMgZXJyb3JzCi91c3Ivc3JjL2xpbnV4LWhlYWRlcnMtNC45LjAtOS1jb21tb24vc2NyaXB0cy9N
-YWtlZmlsZS5idWlsZDozMDk6IHJlY2lwZQpmb3IgdGFyZ2V0ICcvdmFyL2xpYi9ka21zL3dpcmVn
-dWFyZC8wLjAuMjAxOTA3MDIvYnVpbGQvcmF0ZWxpbWl0ZXIubycgZmFpbGVkCm1ha2VbNF06ICoq
-KiBbL3Zhci9saWIvZGttcy93aXJlZ3VhcmQvMC4wLjIwMTkwNzAyL2J1aWxkL3JhdGVsaW1pdGVy
-Lm9dCkVycm9yIDEKL3Vzci9zcmMvbGludXgtaGVhZGVycy00LjkuMC05LWNvbW1vbi9NYWtlZmls
-ZToxNTQ0OiByZWNpcGUgZm9yIHRhcmdldAonX21vZHVsZV8vdmFyL2xpYi9ka21zL3dpcmVndWFy
-ZC8wLjAuMjAxOTA3MDIvYnVpbGQnIGZhaWxlZAptYWtlWzNdOiAqKiogW19tb2R1bGVfL3Zhci9s
-aWIvZGttcy93aXJlZ3VhcmQvMC4wLjIwMTkwNzAyL2J1aWxkXSBFcnJvciAyCk1ha2VmaWxlOjE1
-MjogcmVjaXBlIGZvciB0YXJnZXQgJ3N1Yi1tYWtlJyBmYWlsZWQKbWFrZVsyXTogKioqIFtzdWIt
-bWFrZV0gRXJyb3IgMgpNYWtlZmlsZTo4OiByZWNpcGUgZm9yIHRhcmdldCAnYWxsJyBmYWlsZWQK
-bWFrZVsxXTogKioqIFthbGxdIEVycm9yIDIKTWFrZWZpbGU6MzI6IHJlY2lwZSBmb3IgdGFyZ2V0
-ICdtb2R1bGUnIGZhaWxlZAptYWtlOiAqKiogW21vZHVsZV0gRXJyb3IgMgoKCi0tIApCZXN0IHJl
-Z2FyZHMsCk1hcmt1cwoKQmV0dGVyIFByaXZhY3kgd2l0aCBQR1AgZW5jcnlwdGVkIE1haWw6IGh0
-dHA6Ly9hY3RpdmV6b25lLmRlL3BncC8KRmluZ2VycHJpbnQ6IDU4QzUgOEJBRiA2RkNFIEIyNEYg
-MTg4MSBCNUI4IEYyQTggRTFEMCA0ODRCIDAwNTQKVGhyZWVtYSBJRDogN1pSRVQySlkKCuKAnldl
-ciBkaWUgRnJlaWhlaXQgYXVmZ2lidCB1bSBTaWNoZXJoZWl0IHp1IGdld2lubmVuLAogZGVyIHdp
-cmQgYW0gRW5kZSBiZWlkZXMgdmVybGllcmVuLuKAnCAtLSBCZW5qYW1pbiBGcmFua2xpbgpfX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXwpXaXJlR3VhcmQgbWFp
-bGluZyBsaXN0CldpcmVHdWFyZEBsaXN0cy56eDJjNC5jb20KaHR0cHM6Ly9saXN0cy56eDJjNC5j
-b20vbWFpbG1hbi9saXN0aW5mby93aXJlZ3VhcmQK
+--===============3574063018208563222==
+Content-Type: multipart/alternative; boundary="0000000000002070b005907343e7"
+
+--0000000000002070b005907343e7
+Content-Type: text/plain; charset="UTF-8"
+
+Hi,
+
+I am working on Wintun support for OpenVPN..
+
+I am a bit unsure about the purpose of volatile in Wintun.
+
+According to https://en.cppreference.com/w/cpp/atomic/memory_order,
+volatile ensures that accesses are not reordered within the thread of
+execution, but order is not guaranteed to be observed by another thread.
+
+On the other hand, Visual Studio generates memory barriers while accessing
+volatile objects and targeting non-ARM architectures
+https://docs.microsoft.com/en-us/cpp/cpp/volatile-cpp?view=vs-2019#microsoft-specific.
+However, it also says that "for architectures other than ARM we strongly
+recommend that you specify /volatile:iso, and use explicit synchronization
+primitives and compiler intrinsics when you are dealing with memory that is
+shared across threads."
+
+A few question I would like to ask:
+
+- Is guarantee that accesses are not reordered within the thread of
+execution is enough?
+
+- Do we rely on Microsoft-specific behavior of volatile for non-ARM
+architecture?
+
+- Could reordering performed in ARM be a problem? If yes, shouldn't we
+(wintun and client app) use memory fences to synchronize accesses between
+threads? In openvpn3 we use C++11 so we were thinking about
+std::atomic_long with acquire/release semantics.
+
+-- 
+-Lev
+
+--0000000000002070b005907343e7
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hi,<div><br></div><div><div>I am working on Wintun support=
+ for OpenVPN..</div><div><br></div><div>I am a bit unsure about the purpose=
+ of volatile in Wintun.</div><div><br></div><div>According to=C2=A0<a href=
+=3D"https://en.cppreference.com/w/cpp/atomic/memory_order" target=3D"_blank=
+">https://en.cppreference.com/w/cpp/atomic/memory_order</a>, volatile ensur=
+es that accesses are not reordered within the thread of execution, but orde=
+r is not guaranteed to be observed by another thread.</div><div><br></div><=
+div>On the other hand, Visual Studio generates memory barriers while access=
+ing volatile objects and targeting non-ARM architectures=C2=A0<a href=3D"ht=
+tps://docs.microsoft.com/en-us/cpp/cpp/volatile-cpp?view=3Dvs-2019#microsof=
+t-specific" target=3D"_blank">https://docs.microsoft.com/en-us/cpp/cpp/vola=
+tile-cpp?view=3Dvs-2019#microsoft-specific</a>. However, it also says that =
+&quot;for architectures other than ARM we strongly recommend that you speci=
+fy /volatile:iso, and use explicit synchronization primitives and compiler =
+intrinsics when you are dealing with memory that is shared across threads.&=
+quot;</div><div><br></div><div>A few question I would like to ask:</div><di=
+v><br></div><div>- Is guarantee that accesses are not reordered within the =
+thread of execution is enough?</div><div><br></div><div>- Do we rely on Mic=
+rosoft-specific behavior of volatile for non-ARM architecture?</div><div><b=
+r></div><div>- Could reordering performed in ARM be a problem? If yes, shou=
+ldn&#39;t we (wintun and client app) use memory fences to synchronize acces=
+ses between threads? In openvpn3 we use C++11 so we were thinking about std=
+::atomic_long with acquire/release semantics.</div></div><div><div><br></di=
+v>-- <br><div dir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail=
+_signature">-Lev</div></div></div>
+
+--0000000000002070b005907343e7--
+
+--===============3574063018208563222==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
+_______________________________________________
+WireGuard mailing list
+WireGuard@lists.zx2c4.com
+https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--===============3574063018208563222==--
