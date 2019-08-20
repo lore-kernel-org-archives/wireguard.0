@@ -1,83 +1,77 @@
 Return-Path: <SRS0=QHSY=WV=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.3 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Level: **
+X-Spam-Status: No, score=2.7 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,PI_HELLO,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C414DC3A5A4
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 25 Aug 2019 15:37:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C06CC3A5A4
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 25 Aug 2019 15:37:34 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 5E36B2080C
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 25 Aug 2019 15:37:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id A59972080C
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 25 Aug 2019 15:37:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=ownmail.net header.i=@ownmail.net header.b="P5fJ+wdW";
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mGorJaPo"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 5E36B2080C
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=ownmail.net
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NmeQcEJO"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A59972080C
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4514f340;
-	Sun, 25 Aug 2019 15:36:25 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1c8c4905;
+	Sun, 25 Aug 2019 15:36:45 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4dc2219e
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 78e42e2a
  for <wireguard@lists.zx2c4.com>;
- Thu, 25 Jul 2019 22:38:20 +0000 (UTC)
-Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com
- [64.147.123.24])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9f5b162d
+ Tue, 20 Aug 2019 04:49:43 +0000 (UTC)
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com
+ [IPv6:2607:f8b0:4864:20::442])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7b0034d3
  for <wireguard@lists.zx2c4.com>;
- Thu, 25 Jul 2019 22:38:20 +0000 (UTC)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.west.internal (Postfix) with ESMTP id E7150604
- for <wireguard@lists.zx2c4.com>; Thu, 25 Jul 2019 18:38:18 -0400 (EDT)
-Received: from imap25 ([10.202.2.75])
- by compute3.internal (MEProxy); Thu, 25 Jul 2019 18:38:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ownmail.net; h=
- mime-version:message-id:date:from:to:subject:content-type; s=
- fm1; bh=USfUCTYiNH82YIV8a8J2xU+bCukXun5h764ZbrhvtFs=; b=P5fJ+wdW
- llm9+X5YaCYhs4QEVhUw7nunwIf9zv8Lwki/1wJ44/YN0WS4sKzqx8ZSCffICFYM
- Spkzh5ilJ+WSDNZcPibmN4C0dmYs6xXyQ9rq7luztgSNcvG3qf6xYTf/7nT6tjNY
- qV9Tnp2FTh2AArT+j4lCgKLPcgAPMWdub7Njms/MWk+0+EJUQzzH2DHkzkB3LTAt
- OSUPpSpqWAmpuMNd1JtFvgFR6lBFuMUmOT7sKdD3blHGUa4JfF5g7c4MzNh4FIVg
- 8I8zVYsbny4HvWHo6bkq3LGJMGpNP95esYR13xMdvYsRkrI2qK9m6xLmtJSshQ6Q
- pS/BBgWUkgZ0UQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=content-type:date:from:message-id
- :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm3; bh=USfUCTYiNH82YIV8a8J2xU+bCukXu
- n5h764ZbrhvtFs=; b=mGorJaPo14hkF/2h+iil9QTV1dyUelmTfIGt9LVyiESHa
- ycwNXjwpXK/SjmMT9hFaDCVumM9FCNck7uSXi9WCLJnT/gtlHTELEKzA0eYTA181
- DVeHfWPy5bdxaWmO0ABpjEuZcBWHvu6dfDZU9HbuVmKNRocTF2nQL+jHYc9TGICS
- Al6m/JhlBhKSE4xA23VCQh27CkQjNHyCZhsILT10DdF7z1VVyA0bSAgxZ5LUGp3O
- Ogd9XiYlK70OjJ/V9yJs8cFWF6lLoeCscKwSy9fVa1wkPABCVfwaZDGV1gSQwaMZ
- 0dKcu4rfwkuQfFZDcqQh4dgFDeu2no13q/XGEwHig==
-X-ME-Sender: <xms:Wi86Xa8wqHYt6kEACPKYBFpXKlfBk0aVi6QtX0F69LQqrlIIpOnwWw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduvddrkeefgdduudcutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkfffhvffutgesthdtredtre
- ertdenucfhrhhomhepfdfkghhorhcuofgrrhhtihhnohhvshhkihdfuceoihhgohhrseho
- fihnmhgrihhlrdhnvghtqeenucfrrghrrghmpehmrghilhhfrhhomhepihhgohhrsehofi
- hnmhgrihhlrdhnvghtnecuvehluhhsthgvrhfuihiivgeptd
-X-ME-Proxy: <xmx:Wi86XaIYFWBlEIRbCce4JlqYecplnECMQ0ofC3FvzBfl2sTLCVqzBA>
- <xmx:Wi86XREOoKJyF58wq6CMRnoZaWDKeAdSMsgcPhuSjRA8872lhbZOtw>
- <xmx:Wi86XWy2H_Sffh177oa_zvzVynvZuQk0cqLoZW4BcgHB18GuWxnH1Q>
- <xmx:Wi86Xb5LcDtOBGQwbShm39bjE1ySTZTUtEMWJ-J3NshRSTvaUBHkJA>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 2CE53BC00D7; Thu, 25 Jul 2019 18:38:18 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.1.6-736-gdfb8e44-fmstable-20190718v2
-Mime-Version: 1.0
-Message-Id: <beaf5d99-cca4-4980-a1d8-ba0444117a4a@www.fastmail.com>
-Date: Thu, 25 Jul 2019 18:38:16 -0400
-From: "Igor Martinovski" <igor@ownmail.net>
+ Tue, 20 Aug 2019 04:49:43 +0000 (UTC)
+Received: by mail-pf1-x442.google.com with SMTP id w26so2578444pfq.12
+ for <wireguard@lists.zx2c4.com>; Mon, 19 Aug 2019 21:49:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:content-transfer-encoding:mime-version:subject:message-id:date
+ :to; bh=MB4MsVKo624OPDNgCmUCdVIyj44zbbRZ14TfbnUwYt8=;
+ b=NmeQcEJOHEk0lSOkqATacy9HiXbk11crkVDRVBQlJGJyha/cJTV6hUfgvADGKKtPRM
+ wwyUfeqyZcAdsIMSqL+k+vVZw3H4FdcFFkQYKkAl9oFlGz08s3EzJHSDv82Bxj+9zRCp
+ nW4DG0eRebJrleniBv5HT4bDF2VzxCgUHSjxau2TUFhUZxPKJXUa1IACq5WEm4qenvMg
+ 2MZ33Fqrx4k3dVcKQLg16ZAdN5O0zUB4b8VQwNFY3LJ4ke2vLFT2Yo2QF1DOd0jqLFZR
+ 6yw961kdq8RMTUomG1EDtzypJ9Cig34P35guAi98QukflBfMzsakDjza9k52jl5X7hct
+ /MHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:content-transfer-encoding:mime-version
+ :subject:message-id:date:to;
+ bh=MB4MsVKo624OPDNgCmUCdVIyj44zbbRZ14TfbnUwYt8=;
+ b=UZ9LVhq8Pvm6iBpBiQhymIAkyObzMCpFIIaPLHxCE2JlnvIiczBGw7treCJk75ON2J
+ vLcdNTjnbtFgYnhjDcdgpLYmrC2x8vnLcP5IGwQgZYWcwuI7ZZOCopMHKaUy6n3tNLxb
+ hFiJF1uicerunSLAa/PWL51uJ+Qz56pD9Svcy5XkcNUrCB9SwHZgd1/iFPGFCCLCYimn
+ L88Hkq3LpXm0DYS9imcr9ziVCVxyU1Y6Lr6xvGFeId12qvglLdlKSRwgxzRJI8hHkwjc
+ uS5v8iLM0C6FmdPkhUIYf+RBz6DGkRupvwPgfEamxx9zz6CvQdt6tnfnP40EZTP1uJEN
+ Fjlw==
+X-Gm-Message-State: APjAAAW48LJglgyEY05seDY3DbNv0VngrxiRF2gcZyrRKnOsl/79mSUY
+ YE4KF5IR26oVSm80fYsucJL/qI0W0xE=
+X-Google-Smtp-Source: APXvYqyFovFnavWRWxqEViaUW8UERWElZ2ymlrAjGjzqNQTNs2A3MnRge+yS/KnL1NmcFv6iM37sow==
+X-Received: by 2002:a63:6a4a:: with SMTP id f71mr7739229pgc.409.1566276582498; 
+ Mon, 19 Aug 2019 21:49:42 -0700 (PDT)
+Received: from [10.0.1.6] (c-73-70-224-13.hsd1.ca.comcast.net. [73.70.224.13])
+ by smtp.gmail.com with ESMTPSA id
+ j6sm35113908pje.11.2019.08.19.21.49.40
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 19 Aug 2019 21:49:41 -0700 (PDT)
+From: Ian Morris Nieves <imnieves@gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
+Subject: hello all
+Message-Id: <69D20D0F-66B1-4327-B401-C97C0B291C04@gmail.com>
+Date: Mon, 19 Aug 2019 21:49:37 -0700
 To: wireguard@lists.zx2c4.com
-Subject: Feature Request: Add "include" directive to config file
-X-Mailman-Approved-At: Sun, 25 Aug 2019 17:36:17 +0200
+X-Mailer: Apple Mail (2.3445.104.11)
+X-Mailman-Approved-At: Sun, 25 Aug 2019 17:36:44 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -89,37 +83,23 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-It would be nice if the config parser could support an include directive such that each peer configuration can be kept in a separate file. 
-
-This would allow easier management of a large number of peers. It would also serve as a way of having a friendly name for each peer or peers by the file name.
-
-Sample below:
-
-[Interface]
-Address = 10.22.22.2/24
-PrivateKey = ...
-
-
-[Peer]
-PublicKey =...
-AllowedIPs = 0.0.0.0/0
-Endpoint = ...
-
-# append a config file
-include='/usr/local/etc/wireguard/family.conf'
-
-# include all files in this directory
-include='/usr/local/etc/wireguard/friends/'
-
-
--- 
-  Igor M.
-_______________________________________________
-WireGuard mailing list
-WireGuard@lists.zx2c4.com
-https://lists.zx2c4.com/mailman/listinfo/wireguard
+aGkgYWxsLCBteSBuYW1lIGlzIElhbiBNb3JyaXMgTmlldmVzLiAgSSBhbSBvbiBkYXkgMiBvZiBt
+eSB3ZyB0cmlwLgppIGhhdmUgYSBzaW1wbGUgdHVubmVsIGdvaW5nIGJldHdlZW4gYW4gb3N4IHNl
+cnZlciBhbmQgYW4gb3N4IGNsaWVudC4KCmkgYW0gdXNpbmcgdGhlIG9zeCBhcHAgaW4gdGhlIGFw
+cCBzdG9yZS4KCnF1ZXN0aW9uLCBpcyB0aGlzIGFwcCBpbnRlbmRlZCBwcmltYXJpbHkgYXMgYSBj
+bGllbnQgKGFuZCBub3QgYSBzZXJ2ZXIpPwppIGFzayBiZWNhdXNlIGkgd2FzIHVuYWJsZSB0byBm
+aW5kIGFueSAuY29uZiBvdXRwdXQgZnJvbSB0aGUgR1VJ4oCmIGkgd291bGQgbmVlZCBzdWNoIC5j
+b25mIG91dHB1dCB0byBsYXVuY2ggd2cgdmlhIGxhdW5jaGQgYXQgc3lzdGVtIHN0YXJ0dXDigKYg
+ZXNwZWNpYWxseSBzaW5jZSB0aGUgZ3VpIGhhcyBubyDigJxsYXVuY2ggYXQgc3RhcnR1cOKAnSBj
+aGVja2JveC4KCmFuZCBzbyBpdCBzZWVtcyB0aGF0IEkgY2FuIHVzZSB0aGUgYXBwIG9uIHRoZSBj
+bGllbnQgc2lkZSwgYnV0IGZvciB0aGUgc2VydmVyIEkgYW0gZ29pbmcgdG8gbmVlZCB0byBzdGFy
+dCB1c2luZyB0aGUgd2cgY29tbWFuZCBsaW5l4oCmIGlzIHRoYXQgYWJvdXQgY29ycmVjdD8KCmVp
+dGhlciB3YXksIHdoZXJlIGlzIHRoZSBvc3ggYXBwIHN0b3JpbmcgdGhlIHR1bm5lbCBkYXRhPwoK
+QmVzdCwKSWFuCl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+CldpcmVHdWFyZCBtYWlsaW5nIGxpc3QKV2lyZUd1YXJkQGxpc3RzLnp4MmM0LmNvbQpodHRwczov
+L2xpc3RzLnp4MmM0LmNvbS9tYWlsbWFuL2xpc3RpbmZvL3dpcmVndWFyZAo=
