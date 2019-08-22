@@ -1,52 +1,64 @@
-Return-Path: <SRS0=EGLd=WR=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=Jxxz=WS=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C20DC3A59E
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 Aug 2019 15:43:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 82914C3A59D
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 22 Aug 2019 08:55:23 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 2ECF222DA7
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 21 Aug 2019 15:43:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 9BAE4205ED
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 22 Aug 2019 08:55:22 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=airmail.cc header.i=@airmail.cc header.b="y9xtNJy9"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 2ECF222DA7
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=airmail.cc
+	dkim=fail reason="signature verification failed" (4096-bit key) header.d=bartschnet.de header.i=@bartschnet.de header.b="CJDCjz9k"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 9BAE4205ED
+Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=bartschnet.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e8825da2;
-	Wed, 21 Aug 2019 15:43:08 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 01bd0438;
+	Thu, 22 Aug 2019 08:55:05 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c92e4ad9
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 17fdcd99
  for <wireguard@lists.zx2c4.com>;
- Wed, 21 Aug 2019 03:52:58 +0000 (UTC)
-Received: from cock.li (cock.li [IPv6:2a06:1700:0:b::c0cc])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 052df015
+ Thu, 22 Aug 2019 08:55:03 +0000 (UTC)
+Received: from mail.core-networks.de (mail.core-networks.de
+ [IPv6:2001:1bc0:d::4:9])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 11e490ef
  for <wireguard@lists.zx2c4.com>;
- Wed, 21 Aug 2019 03:52:58 +0000 (UTC)
+ Thu, 22 Aug 2019 08:55:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=bartschnet.de; s=2018030201; h=Content-Transfer-Encoding:MIME-Version:Date:
+ Message-ID:From:To:Subject:content-disposition;
+ bh=XqIB6JB9MmQNiNuoMIFpseS7xU5niPg4iw85OnujevM=; b=CJDCjz9kW2XL2fBJxwJECs8b67
+ A6zYIT0ncqdRRmshYi4a37oYXlrK+GkTpgEF4Ve9xPVHoXuaI8fS5NcHgMtCfR28i0G1xHKT7kD39
+ kc4czFrD+nazH0wSBq507PJedVeuVL+MYMK/utvfPlmJgB9EHS5Jaj7PDP6oOzdOFOGp35atNQWyh
+ X+PAzMozQC1Kr0+gnex/d46oNQ0p5PWJSjr9juL6r7g61Eds2Wptg0ndkTsNVHSqsmOkp88McchSQ
+ J6KDpxC390yHHN568Dls4C5K9sPyFuoS5XBOlAHttdptLEknbwA4oNMuX8u+H9X/dpYz3pXTN2QCC
+ pWkG5o9mIPxXkB2PPSRN27sqd8rOzyKlwrJUw5FRz7gCWW0R/rQvF5DKKgQblmS7jtwlnvhukcZ4d
+ gSjqOHpJVqX39eUxRuSk1K7MsFq+quaOW2cTFNBi7PALqhAKhlNmyubUCYCypjk9CFLo5bm5HkYU8
+ L2IlrymugAVVjODWu3V3CQfWv8Gxw6fbcmj/j+LFxOgB34MTTTbFCZ2nhudRmzdC0AaZfBz+7cOXh
+ ekgk0nPzRNcroKeFJ0FCpzOHlvHjbAxdAfTeL1eUttLT31uRqbwLJVKfjmZPepnO3OXqI59vuIi3R
+ affYpH+u3kpQHlkJr8auMvMflqj5GZdgc+AMszNXA=;
+Received: from localhost (localhost [127.0.0.1])
+ by mail.core-networks.de id 1i0irz-000294-8E
+ with ESMTPSA (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+ for wireguard@lists.zx2c4.com; Thu, 22 Aug 2019 10:55:01 +0200
+Subject: Re: Support FIDO2/CTAP2 security tokens as keystore
 To: wireguard@lists.zx2c4.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=airmail.cc; s=mail;
- t=1566359575; bh=qe0vvK/4Uqua3vVLOPO8hPHB5rthgpNd1nW8wiCupVM=;
- h=To:From:Subject:Date:From;
- b=y9xtNJy9EKZ+4w+EO2bKHH6VDXf05rGV+zxXYlv8PK9phE153vnthAfpM0BenDFN6
- bzDaaOxow9CPEtLv8CIQeG/k3arlykIKptSPItqSwsEyKXOvHwOUHKjbcJDSzU30Rj
- I8cc/tiDNYFnoF4ihS4v9cjrvQrfbWkNy5Cteqsa9z5j1hMQR3VtP6EErwRDU/bppJ
- nAl0oQ1MsXrrnoQixQn14fICQ5oVV0gFO995J0aaH2UW5kJv1JxFvU0wKjY5nmfava
- uON1wB5xhlVQJhhdnvvm0UMF4mGoYo18jUwiNA2id3ty0ed3O7Cc58QDrCBgyzr/BW
- kW7dT4dPZlzsA==
-From: Mikkmar <mikkmar@airmail.cc>
-Subject: [PATCH] Makefile: rework kernel version logic
-Message-ID: <8f2456ea-9f59-96c5-1053-1567f28a7a2c@airmail.cc>
-Date: Wed, 21 Aug 2019 06:52:50 +0300
+References: <9ecf3b0f-a73f-52a3-b7b8-3b96a7e67eab@bartschnet.de>
+ <20190818170928.ps2fymkisd4giefv@feather.localdomain>
+From: "Rene 'Renne' Bartsch, B.Sc. Informatics" <ml@bartschnet.de>
+Message-ID: <c8accebb-1a7f-7b3e-26b5-2d0b13347fb3@bartschnet.de>
+Date: Thu, 22 Aug 2019 10:54:56 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
+In-Reply-To: <20190818170928.ps2fymkisd4giefv@feather.localdomain>
 Content-Language: en-US
-X-Mailman-Approved-At: Wed, 21 Aug 2019 17:43:05 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -58,50 +70,44 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-From 9a959c2a542d3c7f584e26dca2673dd7dd1ef8fb Mon Sep 17 00:00:00 2001
-From: Mikk <mikkmar@airmail.cc>
-Date: Wed, 21 Aug 2019 06:48:02 +0300
-Subject: [PATCH] Makefile: rework kernel version logic
 
-This makes depmod actually work when building/installing the module for
-a kernel other than the currently running one
+Am 18.08.19 um 19:09 schrieb Reto:
+> For starters, storing stuff on a hard disc is certainly not "quite 
+> insecure".
+> Are you aware that you can encrypt discs / partions / files?
 
-Signed-off-by: Mikk <mikkmar@airmail.cc>
----
- src/Makefile | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+Anyone with access to the running machine or malicious software can read 
+the keys on hard-disk.
 
-diff --git a/src/Makefile b/src/Makefile
-index 24b2ba0..d0d6c4d 100644
---- a/src/Makefile
-+++ b/src/Makefile
-@@ -2,7 +2,8 @@
- #
- # Copyright (C) 2015-2019 Jason A. Donenfeld <Jason@zx2c4.com>. All
-Rights Reserved.
+How do you de-crypt the encrypted disk on a headless machine which has 
+to reboot autonomously on error conditions?
 
--KERNELDIR ?= /lib/modules/$(shell uname -r)/build
-+KVER ?= $(shell uname -r)
-+KERNELDIR ?= /lib/modules/$(KVER)/build
- PREFIX ?= /usr
- DESTDIR ?=
- SRCDIR ?= $(PREFIX)/src
-@@ -45,7 +46,7 @@ clean:
+> Wireguard also allows you to set the private key on the fly, so you can feed it
+> for example secrets stored in pass (gpg encrypted), which you *can* decrypt with
+> a yubikey already.
+>
+> Are you speaking specifically about wg-quick?
+> In that case the manpage already shows you how to feed wg encrypted secrets
+>
+>> Or, perhaps it is desirable to store private keys in encrypted form, such as  through
+>> use of pass(1):
+>> 	PostUp = wg set %i private-key <(pass WireGuard/private-keys/%i
 
- module-install:
- 	@$(MAKE) -C $(KERNELDIR) M=$(PWD) modules_install
--	$(DEPMOD) -a
-+	$(DEPMOD) -a $(KVER)
+The point of security-tokens is you never get access to the private key.
 
- install: module-install tools-install
+Instead you pass the stream-cipher encrypted with the public key to the 
+security token
 
--- 
-2.23.0
+to be de-crypted by the security token.
+
+Regards,
+
+Renne
 
 _______________________________________________
 WireGuard mailing list
