@@ -6,62 +6,63 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BCC07C3A5A3
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 25 Aug 2019 16:00:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78587C3A5A1
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 25 Aug 2019 18:36:01 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 574502070B
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 25 Aug 2019 16:00:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id B0A992173E
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 25 Aug 2019 18:36:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="kdKsU13S"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 574502070B
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="FDpfmihA"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org B0A992173E
 Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0eff4be8;
-	Sun, 25 Aug 2019 15:59:56 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1468cd24;
+	Sun, 25 Aug 2019 18:35:43 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 808ed0d5
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 38056d1f
  for <wireguard@lists.zx2c4.com>;
- Sun, 25 Aug 2019 15:59:55 +0000 (UTC)
+ Sun, 25 Aug 2019 18:35:42 +0000 (UTC)
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4e262063
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3abf8401
  for <wireguard@lists.zx2c4.com>;
- Sun, 25 Aug 2019 15:59:50 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id eefa7b73
+ Sun, 25 Aug 2019 18:35:42 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 632a220b
  for <wireguard@lists.zx2c4.com>;
- Sun, 25 Aug 2019 15:18:01 +0000 (UTC)
+ Sun, 25 Aug 2019 17:53:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
  :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=Y1KnNgamOVoBARIqb8WjjYKT8LA=; b=kdKsU1
- 3S8CfjoxdZ4TJdpq6Bk1qJuFMjuh2t3nStZ83m/6xg5Gisbap0ys9iD0vCPITnWK
- 7Zg/DVhy0loh0pbivBKe5eDDeyRaAPIKB7xFT9DuT0beu1aulQwQ5lgI9aUaj35k
- 4dnHYrWkVEZmo+/Tqs6gkKcXZFE7DYxI8nEAdilNIgWn1JD3/wNwL7I1tBD3v6/Y
- FHc0ktU9sbOF0syJapWaxwKGKJs29t6Xc40BB/9KQXsrEehzigqd2cRic3LEz7qS
- yRS5JrVP/GA+yKgkSPDS6ql14IlEYykHQMmw8ZAlfJRFAgZ9O2jEokIW0+tStdyX
- plzIF5zSn6+rO/Lw==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 564a9922
+ :content-type; s=mail; bh=jvftyj3/V3YSGn4LMfstYOdYIjU=; b=FDpfmi
+ hA0KS15KQMmnzTRwMQK2dquM6HfmdSF+mf3fX2u0By/U28YsZGEAV8P6VpCFz5F2
+ mrcYLyS9b+J0VUa+JPzmzUwBfEWdW5y8gDsV68AgayYqe3U4jbyrA8xyVR3Eo1xl
+ rRg+lZ1tI2ErTX4WKDXQ8MdCWcagsiATKQpRNSswQzy+w8ANL0jqz85BdrjtN5Cr
+ 7cYUFnsmA0+7g1MrBj8mIZEpP6+mt3YSw8YYYC+Ghq201cZTc7mSqxNJVCcV48kl
+ i9hkutMm3bGT+AoaJrJMjsSGXbTsb7qMu1uav03MrDdNmy5l57qIi5yU+XCDcs2r
+ mDl+O+QaM0V/aVcQ==
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id bf91c020
  (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 25 Aug 2019 15:18:01 +0000 (UTC)
-Received: by mail-vs1-f51.google.com with SMTP id x20so9134765vsx.13
- for <wireguard@lists.zx2c4.com>; Sun, 25 Aug 2019 08:59:49 -0700 (PDT)
-X-Gm-Message-State: APjAAAVey3wseEN5mQ+n6gT+fmYcQ+oq3cKMFb06pFGqnFZTM7XTDIc1
- sj2mWXGXim5R097ED94+wg1cjOG34w19xcrNdJY=
-X-Google-Smtp-Source: APXvYqwVE3FyFiNoYgJYIN0D8oJic4ecEPpMDnqq2xg4aG8T+8CfqdbUN1HBJuZVQ5KDKi/tN6KgQCEUOglycn7dKKc=
-X-Received: by 2002:a05:6102:100f:: with SMTP id
- q15mr8536328vsp.100.1566748789627; 
- Sun, 25 Aug 2019 08:59:49 -0700 (PDT)
+ Sun, 25 Aug 2019 17:53:53 +0000 (UTC)
+Received: by mail-ot1-f48.google.com with SMTP id b1so13213499otp.6
+ for <wireguard@lists.zx2c4.com>; Sun, 25 Aug 2019 11:35:42 -0700 (PDT)
+X-Gm-Message-State: APjAAAUHOGS9cApMWDskTwqO3FWphDs3iyjAx41eDEhMqgI0XBu36Nfx
+ 5bdhzP07twhdRRwWiwtjY2d6t3CByjnwJqf8wX0=
+X-Google-Smtp-Source: APXvYqw62ljxEj+hV0hyj0H9eYjJOWb3F/MYHjPxNAAwwgMEyGPb5H4K8/3TTEsxsZu8UVGlWApv/JLqRKkPrP7plIs=
+X-Received: by 2002:a9d:675a:: with SMTP id w26mr12795018otm.179.1566758141628; 
+ Sun, 25 Aug 2019 11:35:41 -0700 (PDT)
 MIME-Version: 1.0
-References: <f41b1efb-cf2b-f6d5-f962-6f515e044482@mitteilung.com>
-In-Reply-To: <f41b1efb-cf2b-f6d5-f962-6f515e044482@mitteilung.com>
+References: <036a01d54abe$4c049cb0$e40dd610$@lindenberg.one>
+ <CAHmME9r6XdEMUxwq5p9S0pcC4d6dneM5pcv6bU0H0MHEMzP9SA@mail.gmail.com>
+ <014e01d55b69$d19256e0$74b704a0$@lindenberg.one>
+In-Reply-To: <014e01d55b69$d19256e0$74b704a0$@lindenberg.one>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sun, 25 Aug 2019 09:59:38 -0600
-X-Gmail-Original-Message-ID: <CAHmME9pB123mU5+V2U4Gk1LUWUffBcOkxChuEMEwSUxPGWB1LQ@mail.gmail.com>
-Message-ID: <CAHmME9pB123mU5+V2U4Gk1LUWUffBcOkxChuEMEwSUxPGWB1LQ@mail.gmail.com>
-Subject: Re: Debian 4.9.0.9-amd64 :: DMKS failed
-To: Markus Grundmann <markus@mitteilung.com>
+Date: Sun, 25 Aug 2019 12:35:30 -0600
+X-Gmail-Original-Message-ID: <CAHmME9o7PrETcRuLdO7DnpUiKNyO1AyL0qY4Xa1XFT4FPVsVvQ@mail.gmail.com>
+Message-ID: <CAHmME9o7PrETcRuLdO7DnpUiKNyO1AyL0qY4Xa1XFT4FPVsVvQ@mail.gmail.com>
+Subject: Re: Hyper-V 2019: unable to create wintun device: no interfaces found
+To: Joachim Lindenberg <wireguard@lindenberg.one>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
@@ -79,10 +80,22 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Addressed with:
+On Sun, Aug 25, 2019 at 11:23 AM Joachim Lindenberg
+<wireguard@lindenberg.one> wrote:
+> my experiments were actually roughly three weeks ago with versions .18 and .19, and that mail was somehow stuck..
+> Just retried with .22, and the good news is that I was able to set up a tunnel between a Hyper-V as a server and a windows client. The old error on wintun is gone.
 
-https://salsa.debian.org/debian/wireguard/commit/dca2647fa39e037448b450cb82d5d62b13685b25
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=934763
+Good to hear.
+
+> trick wireguard to work around the dynamic IP issue most Germans face. With the Ubuntu vms I can ping the server from the client, and if it is unreachable I am pulling down the interface and then up again.
+
+Not sure I understand exactly. Is the goal to simply
+change/re-randomize your listen-port due to some weird quirks of your
+router's NAT table, in which case `wg set wg0 listen-port 0` will
+probably work better than down/up? Or is this actually a case where
+adding PersistentKeepalive=25 could fix things? Both of these options,
+anyhow, are available in the Windows client. wg.exe is installed into
+system32 and works as expected.
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
