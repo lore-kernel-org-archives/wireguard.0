@@ -6,58 +6,63 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77729C3A5A1
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 25 Aug 2019 13:03:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6D53C3A5A1
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 25 Aug 2019 15:23:04 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id B07DA2082F
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 25 Aug 2019 13:03:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id E2413206DD
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 25 Aug 2019 15:23:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="EbWCPq/l"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org B07DA2082F
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="U4Xo2gcQ"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org E2413206DD
 Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b91b96fd;
-	Sun, 25 Aug 2019 13:03:28 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 63090bd1;
+	Sun, 25 Aug 2019 15:22:51 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 750774d7
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 87603f06
  for <wireguard@lists.zx2c4.com>;
- Sun, 25 Aug 2019 13:03:26 +0000 (UTC)
+ Sun, 25 Aug 2019 15:22:49 +0000 (UTC)
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id beff530b
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f11d4cc7
  for <wireguard@lists.zx2c4.com>;
- Sun, 25 Aug 2019 13:03:26 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id acb8793a
+ Sun, 25 Aug 2019 15:22:49 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d90197c8
  for <wireguard@lists.zx2c4.com>;
- Sun, 25 Aug 2019 12:21:39 +0000 (UTC)
+ Sun, 25 Aug 2019 14:41:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :from:date:message-id:subject:to:content-type; s=mail; bh=LtvaWo
- Za2atBLIgMqVYgDPLBpwQ=; b=EbWCPq/lnqtoVKaDmACGtYUTo7iXpW5Ay9JKq1
- +Fy16inLBCIFXmYMbqoxngCvFeWFwu5dCJ2FGaFL34O9qvN5476wDiFWgklwYFEL
- ecuOBMknv5Yl3F9opCwJwpFVVdo+eFHeawn6ZsIi8gMX5P81e+1NSwIMYM/qITQc
- WnC5+esLAKjA9mWIf/2tm7raxwCFM8Hf5hoSHKWMSlDNc2KFWW8r0J+ngvHAi4qV
- KT/Vu1yp2DGaqQSQ0NWtEYPWgrQeFqCJjG2qoI1NwYxp94/SHQ6hTOhMB9fnWNsx
- 0aDRrz3158sKyvBeFu6/iSzE995Ob1AyufsNkSRs9bNP7SjQ==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 7a7288fe
+ :references:in-reply-to:from:date:message-id:subject:to:cc
+ :content-type; s=mail; bh=lAHdNNRYHONbX3q+ZNzXsDrgzGg=; b=U4Xo2g
+ cQbh63QcDyZ66D7N/ReJ2pgO34mZvfye59JTiyD2m2E74jdJNXS06Wl11FZUEMgC
+ 0U9q8FVuUu7GJMmSa44Riftpre5rMK/sXlPZ2mFndVDFSG+QrYPAYNrnLNqEB3Ed
+ qRWk23qn+qAQ5aQB9yh1UcKvCW08ss6+F/aYqJDUfZ1oRrZsb+GxaBzwuHtmNtK8
+ JhnZ9TTggJNq+3ofdawNV6R/jRbeu9YYYADETEM3gckxf+4bfUHyB3n47xNpmjjs
+ VauCxFWHxzbN4jlCAcs8mMyLe3BuiEC0RPrW7x8GsI/zLmcfpQ3hwKLxaJcnMBKO
+ PlZs2qztoJzLp/dA==
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 70addf22
  (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 25 Aug 2019 12:21:39 +0000 (UTC)
-Received: by mail-ot1-f45.google.com with SMTP id f17so12833054otq.4
- for <wireguard@lists.zx2c4.com>; Sun, 25 Aug 2019 06:03:26 -0700 (PDT)
-X-Gm-Message-State: APjAAAWV8MxLLBl7TdsJ1zYkwy+axHPO7uuoj7ZW9FNs73+TW6wNaL+n
- qY8ga4LNd05oh0dyw5VjH2IGzzVW15ROto7AuFs=
-X-Google-Smtp-Source: APXvYqxQt+AEDdlaFdXbaKndBDTKuRljRBAkmDynW9NBPulB4+gBxaGoYYIzq7i1RWxTix4fuPGtLH8p9xxG9S7hIkM=
-X-Received: by 2002:a9d:66d8:: with SMTP id t24mr11817660otm.52.1566738205834; 
- Sun, 25 Aug 2019 06:03:25 -0700 (PDT)
+ Sun, 25 Aug 2019 14:41:00 +0000 (UTC)
+Received: by mail-ot1-f47.google.com with SMTP id m24so12944562otp.12
+ for <wireguard@lists.zx2c4.com>; Sun, 25 Aug 2019 08:22:48 -0700 (PDT)
+X-Gm-Message-State: APjAAAUKLoXmkOLQPiuekowRNC7ONJXJDuKeRs3PCZdACkiDgWEerchj
+ e5Uf4rgr05CnLmaLBPdSgcj0FO7XOThgjiKV9pI=
+X-Google-Smtp-Source: APXvYqydYFTHmVCdCvwP8WUqx92496/kcHoVmPGcm+1qUfBmLJrK1FssLaLaQr6rPA6aEwt/nbpol1uKLrJB4nhL9dg=
+X-Received: by 2002:a05:6830:10c7:: with SMTP id
+ z7mr11962887oto.243.1566746567555; 
+ Sun, 25 Aug 2019 08:22:47 -0700 (PDT)
 MIME-Version: 1.0
+References: <5d625420.1c69fb81.9f8e7.70a4@mx.google.com>
+In-Reply-To: <5d625420.1c69fb81.9f8e7.70a4@mx.google.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sun, 25 Aug 2019 07:03:15 -0600
-X-Gmail-Original-Message-ID: <CAHmME9oK37++in5rr7QR_8Q-NsbdGdU=aBmYXYBdYbg03pOVDg@mail.gmail.com>
-Message-ID: <CAHmME9oK37++in5rr7QR_8Q-NsbdGdU=aBmYXYBdYbg03pOVDg@mail.gmail.com>
-Subject: repositories and contributions
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Date: Sun, 25 Aug 2019 09:22:36 -0600
+X-Gmail-Original-Message-ID: <CAHmME9rDLvQQNd0VO5_rrNMakxaXuYt9hKij+tqOJ5aOur3gQQ@mail.gmail.com>
+Message-ID: <CAHmME9rDLvQQNd0VO5_rrNMakxaXuYt9hKij+tqOJ5aOur3gQQ@mail.gmail.com>
+Subject: Re: [PATCH] tun: darwin: fix panic: close of closed channel
+To: liuhaichao@bytedance.com
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -74,19 +79,10 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hey folks,
+I was under the impression this was fixed with
+https://git.zx2c4.com/wireguard-go/commit/?id=6d78f895579b114c93bd493ad8d61316fc5dd15a
 
-As WireGuard has grown, so has the number of repositories,
-maintainers, and contribution guidelines. I put together a unified
-list yesterday that should help newcomers make sense of what we're up
-to:
-
-https://www.wireguard.com/repositories/
-
-Let me know if there's something in there we've left out.
-
-Regards,
-Jason
+What precisely is the bug you're seeing?
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
