@@ -2,56 +2,74 @@ Return-Path: <SRS0=Q0ZK=WW=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.3 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.3 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DEC1C3A59E
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 26 Aug 2019 09:37:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 041B7C3A59F
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 26 Aug 2019 12:28:38 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id D992D206BA
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 26 Aug 2019 09:37:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org D992D206BA
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=spam-fetish.org
+	by mail.kernel.org (Postfix) with ESMTPS id 5E521206B7
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 26 Aug 2019 12:28:37 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="r1tV3YNP"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 5E521206B7
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3459e20d;
-	Mon, 26 Aug 2019 09:37:11 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 83f67a61;
+	Mon, 26 Aug 2019 12:28:35 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4c7f1fc7
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 60870d03
  for <wireguard@lists.zx2c4.com>;
- Mon, 26 Aug 2019 09:37:09 +0000 (UTC)
-Received: from mailout-02.maxonline.de (mailout-02.maxonline.de [81.24.66.23])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id db43e14c
+ Sun, 25 Aug 2019 20:04:03 +0000 (UTC)
+Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com
+ [IPv6:2607:f8b0:4864:20::d36])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7edd4189
  for <wireguard@lists.zx2c4.com>;
- Mon, 26 Aug 2019 09:37:09 +0000 (UTC)
-Received: from web03-01.max-it.de (web03-01.max-it.de [81.24.64.215])
- by mailout-02.maxonline.de (Postfix) with ESMTPS id B60934D3;
- Mon, 26 Aug 2019 11:37:06 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by web03-01.max-it.de (Postfix) with ESMTP id B240828B8B9;
- Mon, 26 Aug 2019 11:37:06 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at web03-01.max-it.de
-Received: from web03-01.max-it.de ([127.0.0.1])
- by localhost (web03-01.max-it.de [127.0.0.1]) (amavisd-new, port 10026)
- with ESMTP id 3ry2gWCtiya0; Mon, 26 Aug 2019 11:36:34 +0200 (CEST)
-Received: from [81.24.66.132] (unknown [81.24.66.132])
- (Authenticated sender: m.muenz@spam-fetish.org)
- by web03-01.max-it.de (Postfix) with ESMTPA id 5A06D28B847;
- Mon, 26 Aug 2019 11:36:34 +0200 (CEST)
-Subject: Re: [ANNOUNCE] OPNsense 19.7 supports WireGuard
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-References: <b660d135-4450-66d3-0254-a893f46ba9f7@spam-fetish.org>
- <CAHmME9qPAOLxz3CyHxq9tubzgzvksGS5iz55yL=eB2wFa23fXg@mail.gmail.com>
-From: "Muenz, Michael" <m.muenz@spam-fetish.org>
-Message-ID: <2c6c29af-a852-96da-351f-7dc34b4dab58@spam-fetish.org>
-Date: Mon, 26 Aug 2019 11:37:55 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+ Sun, 25 Aug 2019 20:04:03 +0000 (UTC)
+Received: by mail-io1-xd36.google.com with SMTP id l7so32346395ioj.6
+ for <wireguard@lists.zx2c4.com>; Sun, 25 Aug 2019 13:04:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=QJT03wHi/loFixT9UHkcrJySzyFPj+ubbvLC979BQWc=;
+ b=r1tV3YNP78IA/RenhN8RmysbW8P+TrZiMsKyEv6UQkilFL3BK4KBvRHWe41J27JaOe
+ 3vDI3oMFldif0+V9sO/pGdgzK55k2p9y4fWxiCaajVgaZ7mLlvj1SEQmzAOmYU13o9Mv
+ aLPgQCDc38BNHimsLvc+RJXe8h9EQjeog4AD2ZiyqU8iLntt/c1CA1rstLqhfyXuH48z
+ uYTOCpDH8mcGoA8sgp6MpYlxXaZTXm33vCrCdK1w8KXr8mzPwoKqCQKSuwp24LWLg722
+ 5ZzhEoKjeolYNaY3veLAlmwHkGRENKJki9P6UzDqNvPkwuRKaSKz2s11CTNrmP1L6Zuu
+ zMJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=QJT03wHi/loFixT9UHkcrJySzyFPj+ubbvLC979BQWc=;
+ b=ZwHPOl1lN1mw0gPjOOVrSZm4+SOtS8CzlXmuHhb0f3OmnHwTXLXrVgOsh9KGwp7ijl
+ D99UoFAqUngkh/uUjR9idMZ6jBqfa7bcjig11OzioXeNRiG4DtbwF+ZTvsl+HI1SHsSD
+ X/rYK5AZBFsJ6vZOvSLL7sbXRXxVdfclGAUyTD7whmXATouoE5oWkQesuxpIGyE79r5T
+ z6tWfS3MkL5tbXIBeawySxMTBZ+cjw7YQ3X3tJz99wsmecgNNsPTYTb9ssY8YzcAHeMf
+ Ep1oMGSF8f3lQ/b4CktQ785PCNkULHalwhQKopBLp2EJtxZc+nWX0FQ1vtt8hYumrMoF
+ N+fQ==
+X-Gm-Message-State: APjAAAW7Hbl8KTsXnhXaZ1frcfiFwIw7hiL03iVkHVzkNSBsmQTx0Xpd
+ JCd+t2s+5SovYjypMM3jCqapHVJDtQE4OLwt2XoxkMxuoss=
+X-Google-Smtp-Source: APXvYqwzapctnkOy+f0zhikJOAmQ8ZSUo4tWMRW1uyxGZImS9OPSTu5iiHihlH5tyHeRsOCO7QSd9yvd1olRfXhpUps=
+X-Received: by 2002:a5e:a502:: with SMTP id 2mr13428292iog.269.1566763442605; 
+ Sun, 25 Aug 2019 13:04:02 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9qPAOLxz3CyHxq9tubzgzvksGS5iz55yL=eB2wFa23fXg@mail.gmail.com>
+References: <CANH_QeanVTjMG1gsps0Boj2vOUBCQqReH+u84su1--_t-QyiJA@mail.gmail.com>
+ <CAHmME9romoNCJKaNfQXETG2GE+3mcVjEOkuu6+P4on-xXobEjw@mail.gmail.com>
+ <CANH_QeYk=1HyuOFgg2_1YxHNyR9keWH883BD90bKvQn3im497g@mail.gmail.com>
+ <CAHmME9pxw2u=Su1jccf58iFPqvfY-opCSEJ3_TLtzjAA3tgYQw@mail.gmail.com>
+In-Reply-To: <CAHmME9pxw2u=Su1jccf58iFPqvfY-opCSEJ3_TLtzjAA3tgYQw@mail.gmail.com>
+From: Vasili Pupkin <diggest@gmail.com>
+Date: Sun, 25 Aug 2019 23:04:06 +0300
+Message-ID: <CANH_QeaEDZ-UMZ_G_Zem7HhVBBZf7gaK1VnTZjTgVd+w1Th1pA@mail.gmail.com>
+Subject: Re: Linux kernel 5 different behavior
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+X-Mailman-Approved-At: Mon, 26 Aug 2019 14:28:33 +0200
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
@@ -64,27 +82,24 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Am 25.08.2019 um 17:45 schrieb Jason A. Donenfeld:
-> Congratulations on the release. That's great news.
+Usage of fwmark is my current workaround. If the same user id of an
+outer packets is not a bug then ignore it.
+
+On Sun, Aug 25, 2019 at 10:07 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
 >
-> Would you like me to add some blurb to https://www.wireguard.com/install/ on it?
+> On Sun, Aug 25, 2019 at 1:03 PM Vasili Pupkin <diggest@gmail.com> wrote:
+> > Yes. On kernel version 4, outer packets (i.e. encrypted packets) are
+> > sent from privileged user
+> > account credentials so they pass the iptables sandbox. On kernel 5
+> > they inherit owner id of the user who sent unencrypted packets.
 >
-Hi,
-
-If you like you can add some lines like "Install via 
-"System->Firmware->Plugins->WireGuard" and follow the documenatation 
-here https://docs.opnsense.org/manual/how-tos/wireguard-s2s.html
-
-Best,
-
-Michael
-
-
+> Can you use the `fwmark` option and adjust your rules to match on
+> !1234 or the like?
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
