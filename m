@@ -6,71 +6,74 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 35D48C3A5A1
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8B5DC3A5A4
 	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 25 Aug 2019 19:24:51 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id C70B9206BA
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 25 Aug 2019 19:24:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 509F5206BA
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 25 Aug 2019 19:24:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=lindenberg.one header.i=@lindenberg.one header.b="Td7ikWc7"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org C70B9206BA
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=lindenberg.one header.i=@lindenberg.one header.b="lM9BG5Ns"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 509F5206BA
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=lindenberg.one
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0b0bb007;
-	Sun, 25 Aug 2019 19:23:13 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 88c3b2d8;
+	Sun, 25 Aug 2019 19:23:14 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 90b9f2f9
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fd119264
  for <wireguard@lists.zx2c4.com>;
- Sun, 25 Aug 2019 18:52:06 +0000 (UTC)
+ Sun, 25 Aug 2019 19:04:14 +0000 (UTC)
 Received: from mailarchive.lindenberg.one (mailarchive.lindenberg.one
  [62.113.211.160])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 77cf51a2
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ef55adfd
  for <wireguard@lists.zx2c4.com>;
- Sun, 25 Aug 2019 18:52:05 +0000 (UTC)
+ Sun, 25 Aug 2019 19:04:14 +0000 (UTC)
 Received: from Alex (unknown [192.168.177.5])
  (using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
  (Authenticated sender: news@lindenberg.one)
- by mailarchive.lindenberg.one (Postfix) with ESMTPSA id 0AEAE2805B9;
- Sun, 25 Aug 2019 20:52:05 +0200 (CEST)
+ by mailarchive.lindenberg.one (Postfix) with ESMTPSA id A5EF82805B9;
+ Sun, 25 Aug 2019 21:04:12 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lindenberg.one;
- s=dkim180429; t=1566759125;
+ s=dkim180429; t=1566759852;
  h=from:sender:reply-to:subject:date:message-id:to:cc:mime-version:content-type:content-transfer-encoding:resent-to:resent-cc:resent-from:resent-sender:resent-message-id:in-reply-to:references:list-id:list-owner:list-unsubscribe:list-subscribe:list-post;
- bh=MMYnganXkLKkW5JEmr+SSLAkgQG0JVG5qL7cr7hw688=;
- b=Td7ikWc7BmI+nbDmWNF3tuybgK8obfnMRlE9nc7GDkSG9xKyrIwcp7ARI9Hu7VAzAPM+bV
- tofjmegYbBx3ZQUQSXc0+XEtnuCnM2UGcrWKD2aaBJxxAZv4anjl8i8IKlccXj6b42xejr
- NopL2Hl7r8rshnAtodxWHVYJ5hrKWlBiKnya8VJQXJCOzd1FDupfKOi+h+XEBsHbiEObh4
- nOYoT88c3gvbGjb0LWlsnNqN6jEC1psvK31uNRA7v9emgit2bAIRh74dfHpYl1n9/wua+X
- HqcA+MND65iI2+37c4moHc5iuIJ07DRoornNf0utb5OGoNqFrJN6QsIOottPJA==
+ bh=mODVshdqFZ+k/ciB93Ngc8GwmeYXRd23k1yrBbzFxtU=;
+ b=lM9BG5Nskjn2cznQt4g6CJDhrBg0hjRa4NZA5lh6QRmmoHQSAypFT9phZKcoQJUrNNxwRX
+ xi9fFmaryNIYndMFE5ah8V3BlGZUnda0HVNFlV6oZQdJUeRvMxhptMeifuTXz9gm/qKBI+
+ zlZg2Mmi3pywl/CtJt3/WWPLf4drcLJeIo+/rtfuVtL9XIfHlkyx9EvkUlKN8QEfn+jvuR
+ O5QK9QoZRL6ns+0Gu1ijh9HyfnK+pU9uZLpXYhPt4iPbBaN5XRzGRHGe/L6jtsPBxHUkBZ
+ 5a7zjUDSDOyR8LARkJzGcUms4cBmmuM5URhnmiY7345chbjj/JGBrNGOh2dDTw==
 From: <news@lindenberg.one>
-To: "'Jason A. Donenfeld'" <Jason@zx2c4.com>
+To: "'Jason A. Donenfeld'" <Jason@zx2c4.com>,
+ "'Simon Rozman'" <simon@rozman.si>
 References: <036a01d54abe$4c049cb0$e40dd610$@lindenberg.one>
  <CAHmME9r6XdEMUxwq5p9S0pcC4d6dneM5pcv6bU0H0MHEMzP9SA@mail.gmail.com>
  <014e01d55b69$d19256e0$74b704a0$@lindenberg.one>
  <CAHmME9o7PrETcRuLdO7DnpUiKNyO1AyL0qY4Xa1XFT4FPVsVvQ@mail.gmail.com>
-In-Reply-To: <CAHmME9o7PrETcRuLdO7DnpUiKNyO1AyL0qY4Xa1XFT4FPVsVvQ@mail.gmail.com>
+ <015d01d55b76$30373290$90a597b0$@lindenberg.one>
+ <CAHmME9qf_kpT=u3JfLDh2fENq=z6P5cebYC5YRwTBF2P7NcGWg@mail.gmail.com>
+In-Reply-To: <CAHmME9qf_kpT=u3JfLDh2fENq=z6P5cebYC5YRwTBF2P7NcGWg@mail.gmail.com>
 Subject: AW: Hyper-V 2019: unable to create wintun device: no interfaces found
-Date: Sun, 25 Aug 2019 20:52:04 +0200
-Message-ID: <015d01d55b76$30373290$90a597b0$@lindenberg.one>
+Date: Sun, 25 Aug 2019 21:04:12 +0200
+Message-ID: <015e01d55b77$e1ec8e30$a5c5aa90$@lindenberg.one>
 MIME-Version: 1.0
 X-Mailer: Microsoft Outlook 16.0
 Content-Language: en-de
-Thread-Index: AQGl1jjZadwHrDiDTTS7Xq7i75kXDAJFFK7HAfYLZGwBulWLb6c7kfDw
+Thread-Index: AQGl1jjZadwHrDiDTTS7Xq7i75kXDAJFFK7HAfYLZGwBulWLbwJg0UAxARhLNnOnH8144A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=lindenberg.one; 
- s=dkim180429; t=1566759125;
+ s=dkim180429; t=1566759852;
  h=from:sender:reply-to:subject:date:message-id:to:cc:mime-version:content-type:content-transfer-encoding:resent-to:resent-cc:resent-from:resent-sender:resent-message-id:in-reply-to:references:list-id:list-owner:list-unsubscribe:list-subscribe:list-post;
- bh=MMYnganXkLKkW5JEmr+SSLAkgQG0JVG5qL7cr7hw688=;
- b=o5dWVZ5tci/TXeXnxfZZkSIWJErmcsEK2akWaGh9N0272E2ZdRMEe0WLupXZWF/0ksLfez
- /kxn7GW1PsgsZ933pzdiCKDwfKjt2cmzaZOPnPHfk933PzR+GofAoujm2p7WEYshhH/APc
- kPXVIkRCd56RC2kKGVI8g2MkLX3jfTf+qWfcG01pm1GAN3HAcETifcWmp1VGrA0nYExBL0
- bi74iFJi2JJDkFsw18IQEuN2E+yQqO1+msCeSNpoAGAJqtmFE3aT5mM8ca2WL+24Sms2ld
- CIyYmjGbfMLSs+ecvr4Z7/ICLIznOvinpQ3bemaFierRHBq2h0r++ZAw6g623Q==
-ARC-Seal: i=1; s=dkim180429; d=lindenberg.one; t=1566759125; a=rsa-sha256;
+ bh=mODVshdqFZ+k/ciB93Ngc8GwmeYXRd23k1yrBbzFxtU=;
+ b=jWFarabXtEjFjtSUeI8pVLIDtAYVcV7n/s0/h6glKyQtq/w0V3xpITrxpEw9qcG16IABmS
+ w5T+h/BQwZIyJfMyGjMEqRDJCdBhezIXFYX92/RVmGfmPw1GUj5dlyoin1wO1u9GdazPc1
+ 6vHyeHfYFeBY5AIKDHT9iUYRGvJLcPWrSZ2pMPFtkUdEv7/SWeJ2cXLlC3lK+GPv2XVqmG
+ yVb1i72IgVJg0gh0R3RiCcMmZEggp7kFO5PHh2Qc4FB/UIDd+N0PI4NlEhcpZ1o9ZRJuG0
+ ZAsbx5L/87031yuxZWq/Il3zNAypanjUffzXjAUoQv8rqALRaTPqA0wk0E5ThA==
+ARC-Seal: i=1; s=dkim180429; d=lindenberg.one; t=1566759852; a=rsa-sha256;
  cv=none;
- b=s55eI+NOw9/ku+K/mITKWTCNgEJvf2XpuKsmmjn5dvSKNIg5HdJppxWZYQpZP/1IbB9ey87q/lxRAS50HIk43/cqGqdaSqMUusJMwuYeIh5kwAWZwDiE3hLvyjbG6bd2AY7nvHQeheBdOHLY3FlIhSFtx5k9hPRYJlDa7DvJW3pTjMfLQ+FzzDgBDWYxGJKvLLK2B6xqCg29NuGou+rVEBU9daId0i1ohvNc/hlSzUFuH4/Px/kM9PgnPBNHqdWaNztqR3C1cpDXyuFKtoOhzRRWUvuUKSk7eOj9wiatRVlrd/J2kSGAbrzX/Eqc5mV+BLYXqGw69WukfdnPPnKZGw==
+ b=olBmp55O5bSSIhmMDPuD1lE9Lm17Yc6Aa+bGl4uOr44PiKJIPr1YTBE6DsoMP2Laddu0/6vVceoLEj4pMlud2xGTLNO28buW3NkjCQu3hj9SG5h9wY/+haMMmFYVamBSEfkebRHMvzZCutXMZ84NzRXa7J92xYsZbXrACNtY1h98GM89yyAcwKHaHACfVDmhg8p25xCzNfmofypQeIIiaOrHz4GkosWTr/MPyBhwp7yPztmcxle8tPHYfC2iWq6wxeyFMX7Vu2l+8/rYYX4sqHBvSNYJaLN1RAWdo6Y92/3pWcAAoTcKYUmxth3uJ+fs52+YBj2iB5Tpsbons/HnMQ==
 ARC-Authentication-Results: i=1; auth=pass smtp.auth=news@lindenberg.one
  smtp.mailfrom=news@lindenberg.one
 X-Mailman-Approved-At: Sun, 25 Aug 2019 21:23:11 +0200
@@ -91,46 +94,44 @@ Content-Transfer-Encoding: base64
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-SGkgSmFzb24sCm5vdCB0aGUgcG9ydC4gTXkgZXh0ZXJuYWwgSVAgaXMgZHluYW1pYy4gVGhpcyBp
-cyByZWFsbHkgc3RhbmRhcmQgZm9yIGludGVybmV0IHNlcnZpY2VzIGluIEdlcm1hbnkgb2ZmZXJl
-ZCB0byBub24tYnVzaW5lc3MgdXNlcnMsIG9yIGFsc28gYnVzaW5lc3MgdGhhdCBwcmVmZXIgbm90
-IHRoZSBwYXkgZXh0cmEgY2hhcmdlcyBmb3IgdGhlIGFzc2lnbm1lbnQgb2YgYSBzdGF0aWMgaXAg
-YWRkcmVzcy4gTXkgSVAgYWRkcmVzcyBjaGFuZ2VzIGF0IGxlYXN0IG9uY2UgYSBkYXkgKHVzdWFs
-bHkgYmV0d2VlbiAxIGFtIGFuZCAyIGFtKS4gVXN1YWxseSBvbmUgdXNlcyBhIGR5bmRucyBwcm92
-aWRlciwgYW5kIG1hbnkgcm91dGVycyBzdXBwb3J0IHVwZGF0aW5nIHRoZSBpcCBhZGRyZXNzIGF1
-dG9tYXRpY2FsbHkuIEFzIEkgYW0gcnVubmluZyBteSBleHRlcm5hbCBETlMgd2l0aCBjbG91ZGZs
-YXIsIEkgYW0gY2FsbGluZyB0aGVpciBBUEkgdG8gdXBkYXRlIG15IGV4dGVybmFsIGFkZHJlc3Mu
-Ck5vdyBhZmFpayBXaXJlZ3VhcmQgcmVzb2x2ZXMgdGhlIGRvbWFpbiBuYW1lIG9mIHRoZSBzZXJ2
-ZXIganVzdCBvbmNlIHRvIGFuIElQIGFkZHJlc3MgYW5kIG5vdCByZWd1bGFybHkgb3Igd2hlbmV2
-ZXIgdGhlIGNvbm5lY3Rpb24gYnJlYWtzIGRvd24gb3IgaGFzIGJlZW4gaWRsZSBmb3Igc29tZSB0
-aW1lLgpQZXJzaXN0ZW50S2VlcEFsaXZlIGNhbm5vdCBhZGRyZXNzIHRoZSBpc3N1ZSwgYXMgdGhl
-IGNsaWVudCBpcyBhbHNvIG5vdCBhd2FrZSBhbGwgdGhlIHRpbWUgaW4gb3JkZXIgdG8gc2F2ZSBl
-bmVyZ3kuIExvb2tpbmcgYXQgd2cgLz8gb24gd2luZG93cyBJIGFsc28gZG9uwrR0IHNlZSBhbnkg
-b3B0aW9uIHRoYXQgc2VlbXMgYXBwbGljYWJsZS4uClRoYW5rcywgSm9hY2hpbQoKLS0tLS1VcnNw
-csO8bmdsaWNoZSBOYWNocmljaHQtLS0tLQpWb246IEphc29uIEEuIERvbmVuZmVsZCA8SmFzb25A
-engyYzQuY29tPiAKR2VzZW5kZXQ6IFN1bmRheSwgMjUgQXVndXN0IDIwMTkgMjA6MzYKQW46IEpv
-YWNoaW0gTGluZGVuYmVyZyA8d2lyZWd1YXJkQGxpbmRlbmJlcmcub25lPgpDYzogU2ltb24gUm96
-bWFuIDxzaW1vbkByb3ptYW4uc2k+OyBXaXJlR3VhcmQgbWFpbGluZyBsaXN0IDx3aXJlZ3VhcmRA
-bGlzdHMuengyYzQuY29tPgpCZXRyZWZmOiBSZTogSHlwZXItViAyMDE5OiB1bmFibGUgdG8gY3Jl
-YXRlIHdpbnR1biBkZXZpY2U6IG5vIGludGVyZmFjZXMgZm91bmQKCk9uIFN1biwgQXVnIDI1LCAy
-MDE5IGF0IDExOjIzIEFNIEpvYWNoaW0gTGluZGVuYmVyZyA8d2lyZWd1YXJkQGxpbmRlbmJlcmcu
-b25lPiB3cm90ZToKPiBteSBleHBlcmltZW50cyB3ZXJlIGFjdHVhbGx5IHJvdWdobHkgdGhyZWUg
-d2Vla3MgYWdvIHdpdGggdmVyc2lvbnMgLjE4IGFuZCAuMTksIGFuZCB0aGF0IG1haWwgd2FzIHNv
-bWVob3cgc3R1Y2suLgo+IEp1c3QgcmV0cmllZCB3aXRoIC4yMiwgYW5kIHRoZSBnb29kIG5ld3Mg
-aXMgdGhhdCBJIHdhcyBhYmxlIHRvIHNldCB1cCBhIHR1bm5lbCBiZXR3ZWVuIGEgSHlwZXItViBh
-cyBhIHNlcnZlciBhbmQgYSB3aW5kb3dzIGNsaWVudC4gVGhlIG9sZCBlcnJvciBvbiB3aW50dW4g
-aXMgZ29uZS4KCkdvb2QgdG8gaGVhci4KCj4gdHJpY2sgd2lyZWd1YXJkIHRvIHdvcmsgYXJvdW5k
-IHRoZSBkeW5hbWljIElQIGlzc3VlIG1vc3QgR2VybWFucyBmYWNlLiBXaXRoIHRoZSBVYnVudHUg
-dm1zIEkgY2FuIHBpbmcgdGhlIHNlcnZlciBmcm9tIHRoZSBjbGllbnQsIGFuZCBpZiBpdCBpcyB1
-bnJlYWNoYWJsZSBJIGFtIHB1bGxpbmcgZG93biB0aGUgaW50ZXJmYWNlIGFuZCB0aGVuIHVwIGFn
-YWluLgoKTm90IHN1cmUgSSB1bmRlcnN0YW5kIGV4YWN0bHkuIElzIHRoZSBnb2FsIHRvIHNpbXBs
-eSBjaGFuZ2UvcmUtcmFuZG9taXplIHlvdXIgbGlzdGVuLXBvcnQgZHVlIHRvIHNvbWUgd2VpcmQg
-cXVpcmtzIG9mIHlvdXIgcm91dGVyJ3MgTkFUIHRhYmxlLCBpbiB3aGljaCBjYXNlIGB3ZyBzZXQg
-d2cwIGxpc3Rlbi1wb3J0IDBgIHdpbGwgcHJvYmFibHkgd29yayBiZXR0ZXIgdGhhbiBkb3duL3Vw
-PyBPciBpcyB0aGlzIGFjdHVhbGx5IGEgY2FzZSB3aGVyZSBhZGRpbmcgUGVyc2lzdGVudEtlZXBh
-bGl2ZT0yNSBjb3VsZCBmaXggdGhpbmdzPyBCb3RoIG9mIHRoZXNlIG9wdGlvbnMsIGFueWhvdywg
-YXJlIGF2YWlsYWJsZSBpbiB0aGUgV2luZG93cyBjbGllbnQuIHdnLmV4ZSBpcyBpbnN0YWxsZWQg
-aW50bwpzeXN0ZW0zMiBhbmQgd29ya3MgYXMgZXhwZWN0ZWQuCgpfX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fXwpXaXJlR3VhcmQgbWFpbGluZyBsaXN0CldpcmVH
-dWFyZEBsaXN0cy56eDJjNC5jb20KaHR0cHM6Ly9saXN0cy56eDJjNC5jb20vbWFpbG1hbi9saXN0
-aW5mby93aXJlZ3VhcmQK
+VGhlIHNjcmlwdCBpcyBwcm9iYWJseSBtb3JlIGVmZmljaWVudCBidXQgc2lnbmlmaWNhbnRseSBs
+ZXNzIGNvbnN1bWFibGUgdG8gbWUgKEkgd291bGQgbm90IGJlIHdpbGxpbmcgdG8gdHJ5IHRvIHRy
+YW5zbGF0ZSB0aGlzIHRvIHdpbmRvd3MpIHRoZW4gcGluZyAtYzEgfHwgcHVsbCBkb3duIGFuZCB1
+cCBJIHJlYWQgc29tZXdoZXJlIGVsc2UuIEFjdHVhbGx5IEkgaGF2ZSBzb21lIG1vcmUgY2FzZXMg
+aW4gbXkgc2NyaXB0LCBidXQgY2Fubm90IGluY2x1ZGUgdGhlbSBiZWNhdXNlIHRoZSBjbGllbnQg
+aXMgc2xlZXBpbmcgKGFuZCB0aGUgcm91dGVyIGhhcyBhbiBpc3N1ZSB3aXRoIHdvbCByaWdodCBu
+b3cpLiBJIGd1ZXNzIG15IHNjcmlwdCBpcyBsZXNzIGFkYXB0YWJsZSBhbmQgc3VwcG9ydHMganVz
+dCBvbmUgY2xpZW50LCBidXQgZG9lcyB0aGUgdHJpY2suClBsZWFzZSwgcGxlYXNlLCBwbGVhc2Ug
+LSB0aGVyZSBtdXN0IGJlIGEgYmV0dGVyIHBsYWNlIHRvIGRvIHRoaXMgYXV0b21hdGljYWxseSB3
+aXRob3V0IGV4dHJhIHNjcmlwdGluZy4uClRoYW5rcywgSm9hY2hpbQoKLS0tLS1VcnNwcsO8bmds
+aWNoZSBOYWNocmljaHQtLS0tLQpWb246IEphc29uIEEuIERvbmVuZmVsZCA8SmFzb25AengyYzQu
+Y29tPiAKR2VzZW5kZXQ6IFN1bmRheSwgMjUgQXVndXN0IDIwMTkgMjA6NTUKQW46IG5ld3NAbGlu
+ZGVuYmVyZy5vbmU7IFNpbW9uIFJvem1hbiA8c2ltb25Acm96bWFuLnNpPgpDYzogV2lyZUd1YXJk
+IG1haWxpbmcgbGlzdCA8d2lyZWd1YXJkQGxpc3RzLnp4MmM0LmNvbT4KQmV0cmVmZjogUmU6IEh5
+cGVyLVYgMjAxOTogdW5hYmxlIHRvIGNyZWF0ZSB3aW50dW4gZGV2aWNlOiBubyBpbnRlcmZhY2Vz
+IGZvdW5kCgpPbiBTdW4sIEF1ZyAyNSwgMjAxOSBhdCAxMjo1MiBQTSA8bmV3c0BsaW5kZW5iZXJn
+Lm9uZT4gd3JvdGU6Cj4gbm90IHRoZSBwb3J0LiBNeSBleHRlcm5hbCBJUCBpcyBkeW5hbWljLiBU
+aGlzIGlzIHJlYWxseSBzdGFuZGFyZCBmb3IgaW50ZXJuZXQgc2VydmljZXMgaW4gR2VybWFueSBv
+ZmZlcmVkIHRvIG5vbi1idXNpbmVzcyB1c2Vycywgb3IgYWxzbyBidXNpbmVzcyB0aGF0IHByZWZl
+ciBub3QgdGhlIHBheSBleHRyYSBjaGFyZ2VzIGZvciB0aGUgYXNzaWdubWVudCBvZiBhIHN0YXRp
+YyBpcCBhZGRyZXNzLiBNeSBJUCBhZGRyZXNzIGNoYW5nZXMgYXQgbGVhc3Qgb25jZSBhIGRheSAo
+dXN1YWxseSBiZXR3ZWVuIDEgYW0gYW5kIDIgYW0pLiBVc3VhbGx5IG9uZSB1c2VzIGEgZHluZG5z
+IHByb3ZpZGVyLCBhbmQgbWFueSByb3V0ZXJzIHN1cHBvcnQgdXBkYXRpbmcgdGhlIGlwIGFkZHJl
+c3MgYXV0b21hdGljYWxseS4gQXMgSSBhbSBydW5uaW5nIG15IGV4dGVybmFsIEROUyB3aXRoIGNs
+b3VkZmxhciwgSSBhbSBjYWxsaW5nIHRoZWlyIEFQSSB0byB1cGRhdGUgbXkgZXh0ZXJuYWwgYWRk
+cmVzcy4KPiBOb3cgYWZhaWsgV2lyZWd1YXJkIHJlc29sdmVzIHRoZSBkb21haW4gbmFtZSBvZiB0
+aGUgc2VydmVyIGp1c3Qgb25jZSB0byBhbiBJUCBhZGRyZXNzIGFuZCBub3QgcmVndWxhcmx5IG9y
+IHdoZW5ldmVyIHRoZSBjb25uZWN0aW9uIGJyZWFrcyBkb3duIG9yIGhhcyBiZWVuIGlkbGUgZm9y
+IHNvbWUgdGltZS4KPiBQZXJzaXN0ZW50S2VlcEFsaXZlIGNhbm5vdCBhZGRyZXNzIHRoZSBpc3N1
+ZSwgYXMgdGhlIGNsaWVudCBpcyBhbHNvIG5vdCBhd2FrZSBhbGwgdGhlIHRpbWUgaW4gb3JkZXIg
+dG8gc2F2ZSBlbmVyZ3kuIExvb2tpbmcgYXQgd2cgLz8gb24gd2luZG93cyBJIGFsc28gZG9uwrR0
+IHNlZSBhbnkgb3B0aW9uIHRoYXQgc2VlbXMgYXBwbGljYWJsZS4uCgpBaGhoLCB0aGUgRE5TIHJl
+LXJlc29sdXRpb24gaXNzdWUuIE9uIGxpbnV4IHdlIGhhdmUgdGhpcyBuaWNlIHNjcmlwdDoKCmh0
+dHBzOi8vZ2l0Lnp4MmM0LmNvbS9XaXJlR3VhcmQvdHJlZS9jb250cmliL2V4YW1wbGVzL3JlcmVz
+b2x2ZS1kbnMKCk9uIHdpbmRvd3MsIGl0IHNob3VsZCBiZSBwcmV0dHkgZWFzeSB0byBkbyBhcyB3
+ZWxsLiBZb3UgY2FuIGFjdHVhbGx5IGp1c3QgdXNlIHRhc2sgc2NoZWR1bGVyIHRvIHJ1biBgd2cg
+c2V0IHdnMCBwZWVyIEFCQ0QuLi5FRj0gZW5kcG9pbnQgc29tZXdoZXJlLm9uLmR5bmRuczoxMjM0
+YCBldmVyeSBtaW51dGUgb3Igd2hhdGV2ZXIgeW91IGZlZWwgaXMgYmVzdC4KCl9fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fCldpcmVHdWFyZCBtYWlsaW5nIGxp
+c3QKV2lyZUd1YXJkQGxpc3RzLnp4MmM0LmNvbQpodHRwczovL2xpc3RzLnp4MmM0LmNvbS9tYWls
+bWFuL2xpc3RpbmZvL3dpcmVndWFyZAo=
