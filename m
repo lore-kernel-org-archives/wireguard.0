@@ -2,73 +2,79 @@ Return-Path: <SRS0=QHSY=WV=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.3 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
-	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B531C3A5A1
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 25 Aug 2019 19:22:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 35D48C3A5A1
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 25 Aug 2019 19:24:51 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 169BB206BA
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 25 Aug 2019 19:22:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id C70B9206BA
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 25 Aug 2019 19:24:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ITsLOWNu"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 169BB206BA
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=lindenberg.one header.i=@lindenberg.one header.b="Td7ikWc7"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org C70B9206BA
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=lindenberg.one
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cdd4f115;
-	Sun, 25 Aug 2019 19:22:56 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0b0bb007;
+	Sun, 25 Aug 2019 19:23:13 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d2ed0074
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 90b9f2f9
  for <wireguard@lists.zx2c4.com>;
- Sun, 25 Aug 2019 19:03:26 +0000 (UTC)
-Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com
- [IPv6:2607:f8b0:4864:20::d2c])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2c85acf6
+ Sun, 25 Aug 2019 18:52:06 +0000 (UTC)
+Received: from mailarchive.lindenberg.one (mailarchive.lindenberg.one
+ [62.113.211.160])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 77cf51a2
  for <wireguard@lists.zx2c4.com>;
- Sun, 25 Aug 2019 19:03:26 +0000 (UTC)
-Received: by mail-io1-xd2c.google.com with SMTP id j5so32083997ioj.8
- for <wireguard@lists.zx2c4.com>; Sun, 25 Aug 2019 12:03:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=84wtIiu3GD9uXD1ilqqxIRpDBpnFIYXz8uz3850Xinc=;
- b=ITsLOWNuCxQ417fMBLTizVbzK4d+SthIDjRxq27FmK2LjZQVtmepA529/1MTQfujLe
- JK+5bTeX/j2ZkS6Zlxon9KCDKPIQLIzkxW6aXfF38CwXZhmWerd75NatTLihan6PcIQm
- VhrJsp4fOuVB+dfCDcwrbZWhDpF/Y52492olFAxa11CvpF4e+PHcueJQwO3N+pdRNtF+
- NYcAKHni3lxwaXAg1lUrjCurOvaC6j4bh4UVs0Hzt4F5hUWPzFxy30fHsAuxufvT6GRx
- SM+7i5zNqxa0EJnF9a3Njd268H6YPb5CmnOeyuCQIbdlFZwiHMRyGGDSQpDkyhp26jL8
- raDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=84wtIiu3GD9uXD1ilqqxIRpDBpnFIYXz8uz3850Xinc=;
- b=TW83ZLQSyeP7bG7QANwMwnDhww/DU8QsNUd9dcyoPCjgaVNT4h1tvwBPVlNeZNcJr5
- PhXi3uJ99Z5Sc/fC2WLX4Ks/JB7GsBRu2j1feU1iwRlbe1450ZfONgTQvIc7E/sr9IvE
- t414usC+JGx1FoFgfenER+chA4nTmbYs5LVGpnW7fJIcFrAfqp1tcCcyE6/KW6iIVMVm
- UPLCdsvfQ1RlrcrUBSZmkU1F6zgFAU+1X3v+eegaV9VlUugPRM6rIWFGTHBNnC2/REMz
- HhaV5H73PNGoahCcEDh/7bVH1uARvG+TU+Izkwe+s6Pgo+ZUwQpbuUPCfdLdcFJtWcKy
- gPwA==
-X-Gm-Message-State: APjAAAX/ILjn/igToIoK/rzKm6oQlkLx3UZ0Ts1vZPIY8VzcbArxYhfw
- 9ez3dcrFAi1Zkl9BQNWw6dRuwmVZPf2ZcoT7njKr0Eh+HgilwQ==
-X-Google-Smtp-Source: APXvYqwL/U+aUuJkFATV0m/lh7muf/Bz3eKFJFDRM3yX65X+mYkqq7jZDo3Nk0QzryEvCuQPAz4StdfsnMsoZOU+LPI=
-X-Received: by 2002:a6b:3b57:: with SMTP id i84mr20625497ioa.145.1566759806466; 
- Sun, 25 Aug 2019 12:03:26 -0700 (PDT)
+ Sun, 25 Aug 2019 18:52:05 +0000 (UTC)
+Received: from Alex (unknown [192.168.177.5])
+ (using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ (Authenticated sender: news@lindenberg.one)
+ by mailarchive.lindenberg.one (Postfix) with ESMTPSA id 0AEAE2805B9;
+ Sun, 25 Aug 2019 20:52:05 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lindenberg.one;
+ s=dkim180429; t=1566759125;
+ h=from:sender:reply-to:subject:date:message-id:to:cc:mime-version:content-type:content-transfer-encoding:resent-to:resent-cc:resent-from:resent-sender:resent-message-id:in-reply-to:references:list-id:list-owner:list-unsubscribe:list-subscribe:list-post;
+ bh=MMYnganXkLKkW5JEmr+SSLAkgQG0JVG5qL7cr7hw688=;
+ b=Td7ikWc7BmI+nbDmWNF3tuybgK8obfnMRlE9nc7GDkSG9xKyrIwcp7ARI9Hu7VAzAPM+bV
+ tofjmegYbBx3ZQUQSXc0+XEtnuCnM2UGcrWKD2aaBJxxAZv4anjl8i8IKlccXj6b42xejr
+ NopL2Hl7r8rshnAtodxWHVYJ5hrKWlBiKnya8VJQXJCOzd1FDupfKOi+h+XEBsHbiEObh4
+ nOYoT88c3gvbGjb0LWlsnNqN6jEC1psvK31uNRA7v9emgit2bAIRh74dfHpYl1n9/wua+X
+ HqcA+MND65iI2+37c4moHc5iuIJ07DRoornNf0utb5OGoNqFrJN6QsIOottPJA==
+From: <news@lindenberg.one>
+To: "'Jason A. Donenfeld'" <Jason@zx2c4.com>
+References: <036a01d54abe$4c049cb0$e40dd610$@lindenberg.one>
+ <CAHmME9r6XdEMUxwq5p9S0pcC4d6dneM5pcv6bU0H0MHEMzP9SA@mail.gmail.com>
+ <014e01d55b69$d19256e0$74b704a0$@lindenberg.one>
+ <CAHmME9o7PrETcRuLdO7DnpUiKNyO1AyL0qY4Xa1XFT4FPVsVvQ@mail.gmail.com>
+In-Reply-To: <CAHmME9o7PrETcRuLdO7DnpUiKNyO1AyL0qY4Xa1XFT4FPVsVvQ@mail.gmail.com>
+Subject: AW: Hyper-V 2019: unable to create wintun device: no interfaces found
+Date: Sun, 25 Aug 2019 20:52:04 +0200
+Message-ID: <015d01d55b76$30373290$90a597b0$@lindenberg.one>
 MIME-Version: 1.0
-References: <CANH_QeanVTjMG1gsps0Boj2vOUBCQqReH+u84su1--_t-QyiJA@mail.gmail.com>
- <CAHmME9romoNCJKaNfQXETG2GE+3mcVjEOkuu6+P4on-xXobEjw@mail.gmail.com>
-In-Reply-To: <CAHmME9romoNCJKaNfQXETG2GE+3mcVjEOkuu6+P4on-xXobEjw@mail.gmail.com>
-From: Vasili Pupkin <diggest@gmail.com>
-Date: Sun, 25 Aug 2019 22:03:30 +0300
-Message-ID: <CANH_QeYk=1HyuOFgg2_1YxHNyR9keWH883BD90bKvQn3im497g@mail.gmail.com>
-Subject: Re: Linux kernel 5 different behavior
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-X-Mailman-Approved-At: Sun, 25 Aug 2019 21:22:54 +0200
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-de
+Thread-Index: AQGl1jjZadwHrDiDTTS7Xq7i75kXDAJFFK7HAfYLZGwBulWLb6c7kfDw
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=lindenberg.one; 
+ s=dkim180429; t=1566759125;
+ h=from:sender:reply-to:subject:date:message-id:to:cc:mime-version:content-type:content-transfer-encoding:resent-to:resent-cc:resent-from:resent-sender:resent-message-id:in-reply-to:references:list-id:list-owner:list-unsubscribe:list-subscribe:list-post;
+ bh=MMYnganXkLKkW5JEmr+SSLAkgQG0JVG5qL7cr7hw688=;
+ b=o5dWVZ5tci/TXeXnxfZZkSIWJErmcsEK2akWaGh9N0272E2ZdRMEe0WLupXZWF/0ksLfez
+ /kxn7GW1PsgsZ933pzdiCKDwfKjt2cmzaZOPnPHfk933PzR+GofAoujm2p7WEYshhH/APc
+ kPXVIkRCd56RC2kKGVI8g2MkLX3jfTf+qWfcG01pm1GAN3HAcETifcWmp1VGrA0nYExBL0
+ bi74iFJi2JJDkFsw18IQEuN2E+yQqO1+msCeSNpoAGAJqtmFE3aT5mM8ca2WL+24Sms2ld
+ CIyYmjGbfMLSs+ecvr4Z7/ICLIznOvinpQ3bemaFierRHBq2h0r++ZAw6g623Q==
+ARC-Seal: i=1; s=dkim180429; d=lindenberg.one; t=1566759125; a=rsa-sha256;
+ cv=none;
+ b=s55eI+NOw9/ku+K/mITKWTCNgEJvf2XpuKsmmjn5dvSKNIg5HdJppxWZYQpZP/1IbB9ey87q/lxRAS50HIk43/cqGqdaSqMUusJMwuYeIh5kwAWZwDiE3hLvyjbG6bd2AY7nvHQeheBdOHLY3FlIhSFtx5k9hPRYJlDa7DvJW3pTjMfLQ+FzzDgBDWYxGJKvLLK2B6xqCg29NuGou+rVEBU9daId0i1ohvNc/hlSzUFuH4/Px/kM9PgnPBNHqdWaNztqR3C1cpDXyuFKtoOhzRRWUvuUKSk7eOj9wiatRVlrd/J2kSGAbrzX/Eqc5mV+BLYXqGw69WukfdnPPnKZGw==
+ARC-Authentication-Results: i=1; auth=pass smtp.auth=news@lindenberg.one
+ smtp.mailfrom=news@lindenberg.one
+X-Mailman-Approved-At: Sun, 25 Aug 2019 21:23:11 +0200
+Cc: 'WireGuard mailing list' <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -80,24 +86,51 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Yes. On kernel version 4, outer packets (i.e. encrypted packets) are
-sent from privileged user
-account credentials so they pass the iptables sandbox. On kernel 5
-they inherit owner id of the user who sent unencrypted packets.
-
-.
-
-On Sun, Aug 25, 2019 at 9:52 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
->
-> Could you clarify? Do you mean that inner and outer packets were
-> marked differently in Linux < 5 but are now marked as belonging to the
-> same UID in Linux==5?
-_______________________________________________
-WireGuard mailing list
-WireGuard@lists.zx2c4.com
-https://lists.zx2c4.com/mailman/listinfo/wireguard
+SGkgSmFzb24sCm5vdCB0aGUgcG9ydC4gTXkgZXh0ZXJuYWwgSVAgaXMgZHluYW1pYy4gVGhpcyBp
+cyByZWFsbHkgc3RhbmRhcmQgZm9yIGludGVybmV0IHNlcnZpY2VzIGluIEdlcm1hbnkgb2ZmZXJl
+ZCB0byBub24tYnVzaW5lc3MgdXNlcnMsIG9yIGFsc28gYnVzaW5lc3MgdGhhdCBwcmVmZXIgbm90
+IHRoZSBwYXkgZXh0cmEgY2hhcmdlcyBmb3IgdGhlIGFzc2lnbm1lbnQgb2YgYSBzdGF0aWMgaXAg
+YWRkcmVzcy4gTXkgSVAgYWRkcmVzcyBjaGFuZ2VzIGF0IGxlYXN0IG9uY2UgYSBkYXkgKHVzdWFs
+bHkgYmV0d2VlbiAxIGFtIGFuZCAyIGFtKS4gVXN1YWxseSBvbmUgdXNlcyBhIGR5bmRucyBwcm92
+aWRlciwgYW5kIG1hbnkgcm91dGVycyBzdXBwb3J0IHVwZGF0aW5nIHRoZSBpcCBhZGRyZXNzIGF1
+dG9tYXRpY2FsbHkuIEFzIEkgYW0gcnVubmluZyBteSBleHRlcm5hbCBETlMgd2l0aCBjbG91ZGZs
+YXIsIEkgYW0gY2FsbGluZyB0aGVpciBBUEkgdG8gdXBkYXRlIG15IGV4dGVybmFsIGFkZHJlc3Mu
+Ck5vdyBhZmFpayBXaXJlZ3VhcmQgcmVzb2x2ZXMgdGhlIGRvbWFpbiBuYW1lIG9mIHRoZSBzZXJ2
+ZXIganVzdCBvbmNlIHRvIGFuIElQIGFkZHJlc3MgYW5kIG5vdCByZWd1bGFybHkgb3Igd2hlbmV2
+ZXIgdGhlIGNvbm5lY3Rpb24gYnJlYWtzIGRvd24gb3IgaGFzIGJlZW4gaWRsZSBmb3Igc29tZSB0
+aW1lLgpQZXJzaXN0ZW50S2VlcEFsaXZlIGNhbm5vdCBhZGRyZXNzIHRoZSBpc3N1ZSwgYXMgdGhl
+IGNsaWVudCBpcyBhbHNvIG5vdCBhd2FrZSBhbGwgdGhlIHRpbWUgaW4gb3JkZXIgdG8gc2F2ZSBl
+bmVyZ3kuIExvb2tpbmcgYXQgd2cgLz8gb24gd2luZG93cyBJIGFsc28gZG9uwrR0IHNlZSBhbnkg
+b3B0aW9uIHRoYXQgc2VlbXMgYXBwbGljYWJsZS4uClRoYW5rcywgSm9hY2hpbQoKLS0tLS1VcnNw
+csO8bmdsaWNoZSBOYWNocmljaHQtLS0tLQpWb246IEphc29uIEEuIERvbmVuZmVsZCA8SmFzb25A
+engyYzQuY29tPiAKR2VzZW5kZXQ6IFN1bmRheSwgMjUgQXVndXN0IDIwMTkgMjA6MzYKQW46IEpv
+YWNoaW0gTGluZGVuYmVyZyA8d2lyZWd1YXJkQGxpbmRlbmJlcmcub25lPgpDYzogU2ltb24gUm96
+bWFuIDxzaW1vbkByb3ptYW4uc2k+OyBXaXJlR3VhcmQgbWFpbGluZyBsaXN0IDx3aXJlZ3VhcmRA
+bGlzdHMuengyYzQuY29tPgpCZXRyZWZmOiBSZTogSHlwZXItViAyMDE5OiB1bmFibGUgdG8gY3Jl
+YXRlIHdpbnR1biBkZXZpY2U6IG5vIGludGVyZmFjZXMgZm91bmQKCk9uIFN1biwgQXVnIDI1LCAy
+MDE5IGF0IDExOjIzIEFNIEpvYWNoaW0gTGluZGVuYmVyZyA8d2lyZWd1YXJkQGxpbmRlbmJlcmcu
+b25lPiB3cm90ZToKPiBteSBleHBlcmltZW50cyB3ZXJlIGFjdHVhbGx5IHJvdWdobHkgdGhyZWUg
+d2Vla3MgYWdvIHdpdGggdmVyc2lvbnMgLjE4IGFuZCAuMTksIGFuZCB0aGF0IG1haWwgd2FzIHNv
+bWVob3cgc3R1Y2suLgo+IEp1c3QgcmV0cmllZCB3aXRoIC4yMiwgYW5kIHRoZSBnb29kIG5ld3Mg
+aXMgdGhhdCBJIHdhcyBhYmxlIHRvIHNldCB1cCBhIHR1bm5lbCBiZXR3ZWVuIGEgSHlwZXItViBh
+cyBhIHNlcnZlciBhbmQgYSB3aW5kb3dzIGNsaWVudC4gVGhlIG9sZCBlcnJvciBvbiB3aW50dW4g
+aXMgZ29uZS4KCkdvb2QgdG8gaGVhci4KCj4gdHJpY2sgd2lyZWd1YXJkIHRvIHdvcmsgYXJvdW5k
+IHRoZSBkeW5hbWljIElQIGlzc3VlIG1vc3QgR2VybWFucyBmYWNlLiBXaXRoIHRoZSBVYnVudHUg
+dm1zIEkgY2FuIHBpbmcgdGhlIHNlcnZlciBmcm9tIHRoZSBjbGllbnQsIGFuZCBpZiBpdCBpcyB1
+bnJlYWNoYWJsZSBJIGFtIHB1bGxpbmcgZG93biB0aGUgaW50ZXJmYWNlIGFuZCB0aGVuIHVwIGFn
+YWluLgoKTm90IHN1cmUgSSB1bmRlcnN0YW5kIGV4YWN0bHkuIElzIHRoZSBnb2FsIHRvIHNpbXBs
+eSBjaGFuZ2UvcmUtcmFuZG9taXplIHlvdXIgbGlzdGVuLXBvcnQgZHVlIHRvIHNvbWUgd2VpcmQg
+cXVpcmtzIG9mIHlvdXIgcm91dGVyJ3MgTkFUIHRhYmxlLCBpbiB3aGljaCBjYXNlIGB3ZyBzZXQg
+d2cwIGxpc3Rlbi1wb3J0IDBgIHdpbGwgcHJvYmFibHkgd29yayBiZXR0ZXIgdGhhbiBkb3duL3Vw
+PyBPciBpcyB0aGlzIGFjdHVhbGx5IGEgY2FzZSB3aGVyZSBhZGRpbmcgUGVyc2lzdGVudEtlZXBh
+bGl2ZT0yNSBjb3VsZCBmaXggdGhpbmdzPyBCb3RoIG9mIHRoZXNlIG9wdGlvbnMsIGFueWhvdywg
+YXJlIGF2YWlsYWJsZSBpbiB0aGUgV2luZG93cyBjbGllbnQuIHdnLmV4ZSBpcyBpbnN0YWxsZWQg
+aW50bwpzeXN0ZW0zMiBhbmQgd29ya3MgYXMgZXhwZWN0ZWQuCgpfX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fXwpXaXJlR3VhcmQgbWFpbGluZyBsaXN0CldpcmVH
+dWFyZEBsaXN0cy56eDJjNC5jb20KaHR0cHM6Ly9saXN0cy56eDJjNC5jb20vbWFpbG1hbi9saXN0
+aW5mby93aXJlZ3VhcmQK
