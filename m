@@ -2,82 +2,86 @@ Return-Path: <SRS0=QHSY=WV=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,T_KAM_HTML_FONT_INVALID
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8B5DC3A5A4
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 25 Aug 2019 19:24:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E49CC3A5A3
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 25 Aug 2019 19:24:52 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 509F5206BA
+	by mail.kernel.org (Postfix) with ESMTPS id C9691206BA
 	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 25 Aug 2019 19:24:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=lindenberg.one header.i=@lindenberg.one header.b="lM9BG5Ns"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 509F5206BA
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=lindenberg.one
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=althea.net header.i=@althea.net header.b="Y4f+C4/x";
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xW5OQ+zv"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org C9691206BA
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=althea.net
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 88c3b2d8;
-	Sun, 25 Aug 2019 19:23:14 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a95b0015;
+	Sun, 25 Aug 2019 19:23:15 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fd119264
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3c87cb82
  for <wireguard@lists.zx2c4.com>;
- Sun, 25 Aug 2019 19:04:14 +0000 (UTC)
-Received: from mailarchive.lindenberg.one (mailarchive.lindenberg.one
- [62.113.211.160])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ef55adfd
+ Sun, 25 Aug 2019 19:12:05 +0000 (UTC)
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
+ [66.111.4.26])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 87c5d5b8
  for <wireguard@lists.zx2c4.com>;
- Sun, 25 Aug 2019 19:04:14 +0000 (UTC)
-Received: from Alex (unknown [192.168.177.5])
- (using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- (Authenticated sender: news@lindenberg.one)
- by mailarchive.lindenberg.one (Postfix) with ESMTPSA id A5EF82805B9;
- Sun, 25 Aug 2019 21:04:12 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lindenberg.one;
- s=dkim180429; t=1566759852;
- h=from:sender:reply-to:subject:date:message-id:to:cc:mime-version:content-type:content-transfer-encoding:resent-to:resent-cc:resent-from:resent-sender:resent-message-id:in-reply-to:references:list-id:list-owner:list-unsubscribe:list-subscribe:list-post;
- bh=mODVshdqFZ+k/ciB93Ngc8GwmeYXRd23k1yrBbzFxtU=;
- b=lM9BG5Nskjn2cznQt4g6CJDhrBg0hjRa4NZA5lh6QRmmoHQSAypFT9phZKcoQJUrNNxwRX
- xi9fFmaryNIYndMFE5ah8V3BlGZUnda0HVNFlV6oZQdJUeRvMxhptMeifuTXz9gm/qKBI+
- zlZg2Mmi3pywl/CtJt3/WWPLf4drcLJeIo+/rtfuVtL9XIfHlkyx9EvkUlKN8QEfn+jvuR
- O5QK9QoZRL6ns+0Gu1ijh9HyfnK+pU9uZLpXYhPt4iPbBaN5XRzGRHGe/L6jtsPBxHUkBZ
- 5a7zjUDSDOyR8LARkJzGcUms4cBmmuM5URhnmiY7345chbjj/JGBrNGOh2dDTw==
-From: <news@lindenberg.one>
-To: "'Jason A. Donenfeld'" <Jason@zx2c4.com>,
- "'Simon Rozman'" <simon@rozman.si>
-References: <036a01d54abe$4c049cb0$e40dd610$@lindenberg.one>
- <CAHmME9r6XdEMUxwq5p9S0pcC4d6dneM5pcv6bU0H0MHEMzP9SA@mail.gmail.com>
- <014e01d55b69$d19256e0$74b704a0$@lindenberg.one>
- <CAHmME9o7PrETcRuLdO7DnpUiKNyO1AyL0qY4Xa1XFT4FPVsVvQ@mail.gmail.com>
- <015d01d55b76$30373290$90a597b0$@lindenberg.one>
- <CAHmME9qf_kpT=u3JfLDh2fENq=z6P5cebYC5YRwTBF2P7NcGWg@mail.gmail.com>
-In-Reply-To: <CAHmME9qf_kpT=u3JfLDh2fENq=z6P5cebYC5YRwTBF2P7NcGWg@mail.gmail.com>
-Subject: AW: Hyper-V 2019: unable to create wintun device: no interfaces found
-Date: Sun, 25 Aug 2019 21:04:12 +0200
-Message-ID: <015e01d55b77$e1ec8e30$a5c5aa90$@lindenberg.one>
-MIME-Version: 1.0
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-de
-Thread-Index: AQGl1jjZadwHrDiDTTS7Xq7i75kXDAJFFK7HAfYLZGwBulWLbwJg0UAxARhLNnOnH8144A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=lindenberg.one; 
- s=dkim180429; t=1566759852;
- h=from:sender:reply-to:subject:date:message-id:to:cc:mime-version:content-type:content-transfer-encoding:resent-to:resent-cc:resent-from:resent-sender:resent-message-id:in-reply-to:references:list-id:list-owner:list-unsubscribe:list-subscribe:list-post;
- bh=mODVshdqFZ+k/ciB93Ngc8GwmeYXRd23k1yrBbzFxtU=;
- b=jWFarabXtEjFjtSUeI8pVLIDtAYVcV7n/s0/h6glKyQtq/w0V3xpITrxpEw9qcG16IABmS
- w5T+h/BQwZIyJfMyGjMEqRDJCdBhezIXFYX92/RVmGfmPw1GUj5dlyoin1wO1u9GdazPc1
- 6vHyeHfYFeBY5AIKDHT9iUYRGvJLcPWrSZ2pMPFtkUdEv7/SWeJ2cXLlC3lK+GPv2XVqmG
- yVb1i72IgVJg0gh0R3RiCcMmZEggp7kFO5PHh2Qc4FB/UIDd+N0PI4NlEhcpZ1o9ZRJuG0
- ZAsbx5L/87031yuxZWq/Il3zNAypanjUffzXjAUoQv8rqALRaTPqA0wk0E5ThA==
-ARC-Seal: i=1; s=dkim180429; d=lindenberg.one; t=1566759852; a=rsa-sha256;
- cv=none;
- b=olBmp55O5bSSIhmMDPuD1lE9Lm17Yc6Aa+bGl4uOr44PiKJIPr1YTBE6DsoMP2Laddu0/6vVceoLEj4pMlud2xGTLNO28buW3NkjCQu3hj9SG5h9wY/+haMMmFYVamBSEfkebRHMvzZCutXMZ84NzRXa7J92xYsZbXrACNtY1h98GM89yyAcwKHaHACfVDmhg8p25xCzNfmofypQeIIiaOrHz4GkosWTr/MPyBhwp7yPztmcxle8tPHYfC2iWq6wxeyFMX7Vu2l+8/rYYX4sqHBvSNYJaLN1RAWdo6Y92/3pWcAAoTcKYUmxth3uJ+fs52+YBj2iB5Tpsbons/HnMQ==
-ARC-Authentication-Results: i=1; auth=pass smtp.auth=news@lindenberg.one
- smtp.mailfrom=news@lindenberg.one
+ Sun, 25 Aug 2019 19:12:05 +0000 (UTC)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id ED3F921C7A
+ for <wireguard@lists.zx2c4.com>; Sun, 25 Aug 2019 15:12:04 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute4.internal (MEProxy); Sun, 25 Aug 2019 15:12:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=althea.net; h=
+ mime-version:message-id:in-reply-to:references:date:from:to
+ :subject:content-type; s=fm1; bh=W+0/8vvdMWGhZlrPuFILnxWCjFkYFlV
+ q0i5hKC3AXo8=; b=Y4f+C4/xmlzv3ER02G39Pd3XBFZw0LciMNDEfykSXqz6TMg
+ bASqfqGyx2He6RgILi9Rdg+fgI/w5pi/eHKqYEeQWsbWu4HJBKrWvA6nE0rXSmOb
+ 8GJF3IY5NJe8+f+1V7klBNw6C08h3ZVfvPDmnVU0CgpJYDtZwnj1s97svxNzc6Ue
+ cSypc78z/660faKm5XgHRJ6Niot1XKOHKototkuLNulyBxetLvhfh9RSAXBrtfSf
+ fH/cPhD+FIB0qgiaiOfKWXML/CrYRu5p/2t5Hakd3LfKtsSy8nT36PD7jZKVrRXT
+ JgJfg5Z/vxEcIDO3hm4ZY+ffHGPt44VXtewNvCg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=W+0/8v
+ vdMWGhZlrPuFILnxWCjFkYFlVq0i5hKC3AXo8=; b=xW5OQ+zv5SlHKeK1PQXNgn
+ EZ0wURD7pFv1kGjSADOK+VKhySX5W1cCAMpgjp/RY6457OvGPvBnaQHKA0Z5kDjF
+ mAKy/2S8UTY01ew7oD3WWqcbVNhp9FCT6vryCZi7Bqe6XP5JkvVhSkZDQhKnhGET
+ DejfrgqLTsNQPEBSeJIMar02ynyUNc+GXk8mVqXZZo5zKmS5YmiBQJUt6Z2kyhMB
+ 7U+QafJkX/w+54tdXXdHPBq8eCXzx+KGlh+TdtaPX0MnhQNznPkzURS1YCgzsOgt
+ zaX1/p1OfwbqN0r7GP4ZFE+ONg6kTXTwbBPeUPvuLACUUAKCKEMFQ8dboJ7+9IOQ
+ ==
+X-ME-Sender: <xms:hN1iXYqx9etU-a2uNHkNnteLh7677vHt0ZyUf5X_dJcE7ZzhN2r63Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduvddrudehvddgudefiecutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+ necuuegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkjghffffhvffutgesrg
+ dtreerreerjeenucfhrhhomhepfdfluhhsthhinhcumfhilhhprghtrhhitghkfdcuoehj
+ uhhsthhinhesrghlthhhvggrrdhnvghtqeenucffohhmrghinhepghhithhhuhgsrdgtoh
+ hmpdiigidvtgegrdgtohhmnecurfgrrhgrmhepmhgrihhlfhhrohhmpehjuhhsthhinhes
+ rghlthhhvggrrdhnvghtnecuvehluhhsthgvrhfuihiivgeptd
+X-ME-Proxy: <xmx:hN1iXS4wUVr7xErw96LUpSCp7wW5rV1OwFRmXz62-cMLMmclw7hj5w>
+ <xmx:hN1iXQzLk7YTVMw15wpUJ3hvN5erCyDJEI50yxP86tOZbAQ4sVHHFA>
+ <xmx:hN1iXfBMlnRD4Uika_Adzq_F92Jzm7NGTNScfuoMhe9qiEXIcoTUgw>
+ <xmx:hN1iXTUgzhMSkL6XRxqQXG1rQZyHP2swjyg0OeaiIp7zbjozQM327g>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 6A458E00A3; Sun, 25 Aug 2019 15:12:04 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.6-916-g49fca03-fmstable-20190821v7
+Mime-Version: 1.0
+Message-Id: <4bb0af33-4378-4cf0-85b2-2e65297a5760@www.fastmail.com>
+In-Reply-To: <CACu-5+1gKi4h0Jft5tMphM5PVOiDhBuqCiE7zbCGMTHvwWW05Q@mail.gmail.com>
+References: <CACu-5+1gKi4h0Jft5tMphM5PVOiDhBuqCiE7zbCGMTHvwWW05Q@mail.gmail.com>
+Date: Sun, 25 Aug 2019 15:11:44 -0400
+From: "Justin Kilpatrick" <justin@althea.net>
+To: wireguard@lists.zx2c4.com
+Subject: Re: wireguard on openwrt with mwan3 (multi ip address)
 X-Mailman-Approved-At: Sun, 25 Aug 2019 21:23:11 +0200
-Cc: 'WireGuard mailing list' <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -89,49 +93,87 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: multipart/mixed; boundary="===============7200214515588201723=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-VGhlIHNjcmlwdCBpcyBwcm9iYWJseSBtb3JlIGVmZmljaWVudCBidXQgc2lnbmlmaWNhbnRseSBs
-ZXNzIGNvbnN1bWFibGUgdG8gbWUgKEkgd291bGQgbm90IGJlIHdpbGxpbmcgdG8gdHJ5IHRvIHRy
-YW5zbGF0ZSB0aGlzIHRvIHdpbmRvd3MpIHRoZW4gcGluZyAtYzEgfHwgcHVsbCBkb3duIGFuZCB1
-cCBJIHJlYWQgc29tZXdoZXJlIGVsc2UuIEFjdHVhbGx5IEkgaGF2ZSBzb21lIG1vcmUgY2FzZXMg
-aW4gbXkgc2NyaXB0LCBidXQgY2Fubm90IGluY2x1ZGUgdGhlbSBiZWNhdXNlIHRoZSBjbGllbnQg
-aXMgc2xlZXBpbmcgKGFuZCB0aGUgcm91dGVyIGhhcyBhbiBpc3N1ZSB3aXRoIHdvbCByaWdodCBu
-b3cpLiBJIGd1ZXNzIG15IHNjcmlwdCBpcyBsZXNzIGFkYXB0YWJsZSBhbmQgc3VwcG9ydHMganVz
-dCBvbmUgY2xpZW50LCBidXQgZG9lcyB0aGUgdHJpY2suClBsZWFzZSwgcGxlYXNlLCBwbGVhc2Ug
-LSB0aGVyZSBtdXN0IGJlIGEgYmV0dGVyIHBsYWNlIHRvIGRvIHRoaXMgYXV0b21hdGljYWxseSB3
-aXRob3V0IGV4dHJhIHNjcmlwdGluZy4uClRoYW5rcywgSm9hY2hpbQoKLS0tLS1VcnNwcsO8bmds
-aWNoZSBOYWNocmljaHQtLS0tLQpWb246IEphc29uIEEuIERvbmVuZmVsZCA8SmFzb25AengyYzQu
-Y29tPiAKR2VzZW5kZXQ6IFN1bmRheSwgMjUgQXVndXN0IDIwMTkgMjA6NTUKQW46IG5ld3NAbGlu
-ZGVuYmVyZy5vbmU7IFNpbW9uIFJvem1hbiA8c2ltb25Acm96bWFuLnNpPgpDYzogV2lyZUd1YXJk
-IG1haWxpbmcgbGlzdCA8d2lyZWd1YXJkQGxpc3RzLnp4MmM0LmNvbT4KQmV0cmVmZjogUmU6IEh5
-cGVyLVYgMjAxOTogdW5hYmxlIHRvIGNyZWF0ZSB3aW50dW4gZGV2aWNlOiBubyBpbnRlcmZhY2Vz
-IGZvdW5kCgpPbiBTdW4sIEF1ZyAyNSwgMjAxOSBhdCAxMjo1MiBQTSA8bmV3c0BsaW5kZW5iZXJn
-Lm9uZT4gd3JvdGU6Cj4gbm90IHRoZSBwb3J0LiBNeSBleHRlcm5hbCBJUCBpcyBkeW5hbWljLiBU
-aGlzIGlzIHJlYWxseSBzdGFuZGFyZCBmb3IgaW50ZXJuZXQgc2VydmljZXMgaW4gR2VybWFueSBv
-ZmZlcmVkIHRvIG5vbi1idXNpbmVzcyB1c2Vycywgb3IgYWxzbyBidXNpbmVzcyB0aGF0IHByZWZl
-ciBub3QgdGhlIHBheSBleHRyYSBjaGFyZ2VzIGZvciB0aGUgYXNzaWdubWVudCBvZiBhIHN0YXRp
-YyBpcCBhZGRyZXNzLiBNeSBJUCBhZGRyZXNzIGNoYW5nZXMgYXQgbGVhc3Qgb25jZSBhIGRheSAo
-dXN1YWxseSBiZXR3ZWVuIDEgYW0gYW5kIDIgYW0pLiBVc3VhbGx5IG9uZSB1c2VzIGEgZHluZG5z
-IHByb3ZpZGVyLCBhbmQgbWFueSByb3V0ZXJzIHN1cHBvcnQgdXBkYXRpbmcgdGhlIGlwIGFkZHJl
-c3MgYXV0b21hdGljYWxseS4gQXMgSSBhbSBydW5uaW5nIG15IGV4dGVybmFsIEROUyB3aXRoIGNs
-b3VkZmxhciwgSSBhbSBjYWxsaW5nIHRoZWlyIEFQSSB0byB1cGRhdGUgbXkgZXh0ZXJuYWwgYWRk
-cmVzcy4KPiBOb3cgYWZhaWsgV2lyZWd1YXJkIHJlc29sdmVzIHRoZSBkb21haW4gbmFtZSBvZiB0
-aGUgc2VydmVyIGp1c3Qgb25jZSB0byBhbiBJUCBhZGRyZXNzIGFuZCBub3QgcmVndWxhcmx5IG9y
-IHdoZW5ldmVyIHRoZSBjb25uZWN0aW9uIGJyZWFrcyBkb3duIG9yIGhhcyBiZWVuIGlkbGUgZm9y
-IHNvbWUgdGltZS4KPiBQZXJzaXN0ZW50S2VlcEFsaXZlIGNhbm5vdCBhZGRyZXNzIHRoZSBpc3N1
-ZSwgYXMgdGhlIGNsaWVudCBpcyBhbHNvIG5vdCBhd2FrZSBhbGwgdGhlIHRpbWUgaW4gb3JkZXIg
-dG8gc2F2ZSBlbmVyZ3kuIExvb2tpbmcgYXQgd2cgLz8gb24gd2luZG93cyBJIGFsc28gZG9uwrR0
-IHNlZSBhbnkgb3B0aW9uIHRoYXQgc2VlbXMgYXBwbGljYWJsZS4uCgpBaGhoLCB0aGUgRE5TIHJl
-LXJlc29sdXRpb24gaXNzdWUuIE9uIGxpbnV4IHdlIGhhdmUgdGhpcyBuaWNlIHNjcmlwdDoKCmh0
-dHBzOi8vZ2l0Lnp4MmM0LmNvbS9XaXJlR3VhcmQvdHJlZS9jb250cmliL2V4YW1wbGVzL3JlcmVz
-b2x2ZS1kbnMKCk9uIHdpbmRvd3MsIGl0IHNob3VsZCBiZSBwcmV0dHkgZWFzeSB0byBkbyBhcyB3
-ZWxsLiBZb3UgY2FuIGFjdHVhbGx5IGp1c3QgdXNlIHRhc2sgc2NoZWR1bGVyIHRvIHJ1biBgd2cg
-c2V0IHdnMCBwZWVyIEFCQ0QuLi5FRj0gZW5kcG9pbnQgc29tZXdoZXJlLm9uLmR5bmRuczoxMjM0
-YCBldmVyeSBtaW51dGUgb3Igd2hhdGV2ZXIgeW91IGZlZWwgaXMgYmVzdC4KCl9fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fCldpcmVHdWFyZCBtYWlsaW5nIGxp
-c3QKV2lyZUd1YXJkQGxpc3RzLnp4MmM0LmNvbQpodHRwczovL2xpc3RzLnp4MmM0LmNvbS9tYWls
-bWFuL2xpc3RpbmZvL3dpcmVndWFyZAo=
+--===============7200214515588201723==
+Content-Type: multipart/alternative;
+ boundary=172b2656565d4bae8473edd7062d838c
+
+--172b2656565d4bae8473edd7062d838c
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+I have a similar setup, a tunnel routed over several different interface=
+s.=20
+
+Configure both ends of the tunnel with all of the connection details and=
+ set an aggressive keepalive (5 seconds is what I use).=20
+
+
+--=20
+ Justin Kilpatrick
+ justin@althea.net
+
+
+
+On Sun, Aug 25, 2019, at 11:49 AM, =E6=9B=B9=E7=85=9C wrote:
+> Hi,
+> I'm using wireguard on openwrt, and I have multi wan links. When I use=
+ wireguard as a server with mwan3, the wireguard client won't handshake =
+because inbound interface and outbound interface is different.
+>=20
+> Details please see:
+> https://github.com/openwrt/packages/issues/9538
+>=20
+> How to fix this issue? Thanks.
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
+>=20
+
+--172b2656565d4bae8473edd7062d838c
+Content-Type: text/html;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html><html><head><title></title><style type=3D"text/css">p.Mso=
+Normal,p.MsoNoSpacing{margin:0}</style></head><body><div>I have a simila=
+r setup, &nbsp;a tunnel routed over several different interfaces. <br></=
+div><div><br></div><div>Configure both ends of the tunnel with all of th=
+e connection details and set an aggressive keepalive (5 seconds is what =
+I use). <br></div><div><br></div><div><br></div><div id=3D"sig65957160">=
+<div class=3D"signature">--&nbsp;<br></div><div class=3D"signature">&nbs=
+p; Justin Kilpatrick<br></div><div class=3D"signature">&nbsp; justin@alt=
+hea.net<br></div><div class=3D"signature"><br></div></div><div><br></div=
+><div><br></div><div>On Sun, Aug 25, 2019, at 11:49 AM, =E6=9B=B9=E7=85=9C=
+ wrote:<br></div><blockquote type=3D"cite" id=3D"qt"><div dir=3D"ltr"><d=
+iv>Hi,<br></div><div><span style=3D"font-family:arial, sans-serif" class=
+=3D"font">I'm using wireguard on openwrt, and I have multi wan links. Wh=
+en I use wireguard as a server with mwan3, the wireguard client won't ha=
+ndshake because&nbsp;<span style=3D"background-color:transparent" class=3D=
+"highlight"><span style=3D"color:rgb(36, 41, 46)" class=3D"colour">inbou=
+nd interface and outbound interface is different.</span></span></span><b=
+r></div><div><br></div><div>Details please see:<br></div><div><a href=3D=
+"https://github.com/openwrt/packages/issues/9538">https://github.com/ope=
+nwrt/packages/issues/9538</a><br></div><div><div><br></div><div>How to f=
+ix this issue? Thanks.<br></div></div></div><div>_______________________=
+________________________<br></div><div>WireGuard mailing list<br></div><=
+div>WireGuard@lists.zx2c4.com<br></div><div>https://lists.zx2c4.com/mail=
+man/listinfo/wireguard<br></div><div><br></div></blockquote><div><br></d=
+iv></body></html>
+--172b2656565d4bae8473edd7062d838c--
+
+--===============7200214515588201723==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
+_______________________________________________
+WireGuard mailing list
+WireGuard@lists.zx2c4.com
+https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--===============7200214515588201723==--
