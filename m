@@ -2,47 +2,61 @@ Return-Path: <SRS0=Q0ZK=WW=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F256C3A59F
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 26 Aug 2019 12:28:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CDA5C3A59F
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 26 Aug 2019 12:50:38 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id E8F1D206B7
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 26 Aug 2019 12:28:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org E8F1D206B7
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=intnet.mu
+	by mail.kernel.org (Postfix) with ESMTPS id A38B121848
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 26 Aug 2019 12:50:37 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=netravnen.de header.i=@netravnen.de header.b="s2ZCuMo1"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A38B121848
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=netravnen.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e5245aa4;
-	Mon, 26 Aug 2019 12:28:41 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 59e20cbf;
+	Mon, 26 Aug 2019 12:50:36 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5f3a950c
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 214a5ad1
  for <wireguard@lists.zx2c4.com>;
- Mon, 26 Aug 2019 11:45:02 +0000 (UTC)
-Received: from smtp5.intnet.mu (mta140.intnet.mu [202.123.30.140])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d1c76770
+ Mon, 26 Aug 2019 12:50:34 +0000 (UTC)
+Received: from mailrelay1-1.pub.mailoutpod1-cph3.one.com
+ (mailrelay1-1.pub.mailoutpod1-cph3.one.com [46.30.210.182])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e4a09010
  for <wireguard@lists.zx2c4.com>;
- Mon, 26 Aug 2019 11:45:01 +0000 (UTC)
-Received: from unknown (HELO ys-hkm-ysn-lbd.eh-zohr) ([197.226.216.158])
- by smtp5.intnet.mu with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 26 Aug 2019 15:42:04 +0400
-From: Vincent <mercier@intnet.mu>
-Mime-Version: 1.0 (Mac OS X Mail 11.5 \(3445.9.1\))
-Subject: Re: [ANNOUNCE] OPNsense 19.7 supports WireGuard
-Date: Mon, 26 Aug 2019 15:44:57 +0400
+ Mon, 26 Aug 2019 12:50:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=netravnen.de; s=20140924;
+ h=message-id:from:to:reply-to:subject:content-transfer-encoding:content-type:
+ mime-version:references:in-reply-to:date:from;
+ bh=9JhOmhL7oM/g/CelmAxJRXXMcBabfzg8QhFZe090zk0=;
+ b=s2ZCuMo1UoH25FyHXW81q7Uck0a3pz8SMvql9yNm5LU5RbH1as1ClWQo32BguwOO+uBkfO6KTf0PX
+ NhIjt3jogLAQlxZ4VPLvVTyTXtGZf08DoqsDqyJspmhDvUS9UtWodLH/dZJko78j0FhBUDKWtJM9Hm
+ HaQbixx3IlUmVYKs=
+X-HalOne-Cookie: eb659d024a17c437fcf0a70a05f6c7cba67d9f53
+X-HalOne-ID: 16aa47e2-c800-11e9-aee4-d0431ea8a283
+Received: from localhost (unknown [5.186.125.201])
+ by mailrelay1.pub.mailoutpod1-cph3.one.com (Halon) with ESMTPSA
+ id 16aa47e2-c800-11e9-aee4-d0431ea8a283;
+ Mon, 26 Aug 2019 12:50:31 +0000 (UTC)
+Date: Mon, 26 Aug 2019 12:50:30 +0000
+In-Reply-To: <C86A2825-D825-4E9E-A7D4-9F518A61CEA3@intnet.mu>
 References: <mailman.1.1566813601.6235.wireguard@lists.zx2c4.com>
-To: wireguard@lists.zx2c4.com
-In-Reply-To: <mailman.1.1566813601.6235.wireguard@lists.zx2c4.com>
-Message-Id: <C86A2825-D825-4E9E-A7D4-9F518A61CEA3@intnet.mu>
-X-Mailer: Apple Mail (2.3445.9.1)
-X-Mailman-Approved-At: Mon, 26 Aug 2019 14:28:33 +0200
+ <C86A2825-D825-4E9E-A7D4-9F518A61CEA3@intnet.mu>
+MIME-Version: 1.0
+Subject: Re: [ANNOUNCE] OPNsense 19.7 supports WireGuard
+To: wireguard@lists.zx2c4.com,Vincent <mercier@intnet.mu>
+From: Chriztoffer Hansen <chriztoffer@netravnen.de>
+Message-ID: <7E2D61EB-4C8A-4E6F-8C55-C784DD8FF4D8@netravnen.de>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
+Reply-To: chriztoffer@netravnen.de
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -56,7 +70,7 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Wireguard not listed in OPNsense 19.7 plugins
+It is at least included on the latest documentation. https://wiki.opnsense.org/manual/vpnet.html
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
