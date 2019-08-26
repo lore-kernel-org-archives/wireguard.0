@@ -7,72 +7,63 @@ X-Spam-Status: No, score=-0.3 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4991EC3A59F
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C281BC3A5A6
 	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 26 Aug 2019 12:28:41 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id E544A206B7
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 26 Aug 2019 12:28:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 694C6206B7
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 26 Aug 2019 12:28:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M9awa8t1"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org E544A206B7
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R75MP3H5"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 694C6206B7
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9e3dd7ac;
-	Mon, 26 Aug 2019 12:28:39 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 118f00e6;
+	Mon, 26 Aug 2019 12:28:40 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5bf7af19
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5fc6b72d
  for <wireguard@lists.zx2c4.com>;
- Mon, 26 Aug 2019 09:30:14 +0000 (UTC)
-Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com
- [IPv6:2607:f8b0:4864:20::d2d])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f26f2c2f
+ Mon, 26 Aug 2019 09:40:18 +0000 (UTC)
+Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com
+ [IPv6:2607:f8b0:4864:20::d30])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 15760b62
  for <wireguard@lists.zx2c4.com>;
- Mon, 26 Aug 2019 09:30:13 +0000 (UTC)
-Received: by mail-io1-xd2d.google.com with SMTP id l7so35722036ioj.6
- for <wireguard@lists.zx2c4.com>; Mon, 26 Aug 2019 02:30:13 -0700 (PDT)
+ Mon, 26 Aug 2019 09:40:17 +0000 (UTC)
+Received: by mail-io1-xd30.google.com with SMTP id z3so35805488iog.0
+ for <wireguard@lists.zx2c4.com>; Mon, 26 Aug 2019 02:40:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=dMEDYFBLpbEEckkBJHKS/0xLp8uDa1bWshHhXNClojs=;
- b=M9awa8t1sLOLpB8LMgsxjf0mioZ5DumHlAbsFSotT9p7XYM9M0/asQunmOlTi5Zxfr
- pEahj3qm0Ta9iDxqrz/rKjd68zqpVnTUUJ24+L6faPHmEdbM3x7Mn5RErUSQyaOeY87T
- /qyllB7kIPKLrfUdSZ0f78saP3dTnr3t+aaZytJWqLPoeFBedIcaYPOcVCUewKTVhHU9
- H08dt3b4PCdEXcRi/Ymbw2NifQWd7/A9VS+2CLrVKp58wPMJrIiNODTlIKYIxFQ0m4Mc
- SwHB2CXlHNs9S+wnwigyyiK0DoqOIRUQ5d2ORiSvKfm+M0cdohIYPtW2YJiRirw37WkF
- hyOQ==
+ h=mime-version:from:date:message-id:subject:to;
+ bh=g+QCRx+4hx1XzEE1m3pokMr5KR1pj9OzN3x+VpDSBeI=;
+ b=R75MP3H5vzX2qYcOfK/thpwWn3gVFQuz2TW+L7hwh8pSuAaZV9d+zUO4+ifKRw6g9X
+ 9Sa4E0pLrUdpoiBV2fXG1Vs8Bm9Xjcah43r01yWfbgyaSRUiTFFbOIHrZt6xdm9mcBm5
+ /sSwjk+t6OIWvT6RkCpO6LXCFTfRtFWUL0+U2CVzheeOYeSP8grKNFZRkwWTPeHd5kuv
+ bClg/MGwlrFLtJTciL0WQG3x9ZVPZOskdUIzx9sBgM51O8QEEjZO/kk9zvgFSONQVEkB
+ 8N7NnnREeJ0zIgLG00ifokKcDfOd5ok7Lnv+eJL/ieLALUPsI8/t6ML954dWcQY8Nm/Q
+ mzPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=dMEDYFBLpbEEckkBJHKS/0xLp8uDa1bWshHhXNClojs=;
- b=CpMCfsoCDJGugozNscHz/IcyKg5GGlKJ9VIHtLc432+tlQTHGkBDH8fos5Fqm7EHVi
- ZvLodv71vzItlZ28WIXAYIzcfvV8Fh6hTcU5ZtpKWwqYzyxQVURET9KI4RWw3GJkxRPR
- kfvQdMAvfpGxLdh8guArZtKWUIz/ov2PYloZSdJdUkl3ij1+g0XKQRS0/ltjL/yzRzGj
- 0JeWlVPZ5zFIj3VMSPAKyU+5UEtsIVQ3Nh37LDc30QY3vy5tfVSIYgD/RIYozIT/7jpq
- mVtjK+dk/liVw1xDrD2P+vYfdWZMazh6wv3OU3r00pUSia7W5loigijD/JF6ICUozO4U
- xUUw==
-X-Gm-Message-State: APjAAAUBtyN8eo9GZVtn9qHk8Sq/eOQCASgI1zrNvcLWgKcKYob3tTUZ
- 6MnSwzumWrwTsrXL0bugDSO0WjH3mIka2/7DbH0=
-X-Google-Smtp-Source: APXvYqzf4/1Gh029ffEYfDt2PDn1U5K/SQv+LgGbelqWiixHXdnnwob/f1GKbyIUfu2k6b4EfKExDu7haQ7wmOJfQeA=
-X-Received: by 2002:a02:a383:: with SMTP id y3mr17459121jak.6.1566811813141;
- Mon, 26 Aug 2019 02:30:13 -0700 (PDT)
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=g+QCRx+4hx1XzEE1m3pokMr5KR1pj9OzN3x+VpDSBeI=;
+ b=lMhX9eoq0Zwuwd+qEm/IJsZhNBrwrUKu71spjDr4U1YbBTMCHHVo9hkSaXKBAsEBfH
+ w0W3Yko7lWpRDHSFelq0tn9hwQCioz3iuFul/BW3EC5QU5fkRJOZ8OQlWXDk5FeXm+Df
+ +E9SnkSdCXK89feS12jaUV1K9l0hXdLzyAxM/TnlnPLFUOgCH361WGbKeoIWESI4ZzNL
+ U79TyWjNdkoVheLyieyx1+jBaxAnV+lhKDfylf8hId2JRlQ9X7cRDIxhUuDZdi1cuqup
+ QM0Bz8A3rZtBDNYBVi9OqYFCsuAS8vhiGFmkhPijrLJFc7xZn4c/gDtns8lP+vEg8DCP
+ Sgkg==
+X-Gm-Message-State: APjAAAUv/MMIzVWuUSVzIGcBnsV5g79xxoLX94S0vEgdCkb8H6YgXT0A
+ 1OBUpBQMb+JwQc15RtFuOtfWA2gsiOguSBAO1IeWplgFaXw=
+X-Google-Smtp-Source: APXvYqxAb7V+jzok2KzpjYy7eVR+Mndt5lBSjB+XKCqO7gglN/BhWi1rjPArtJxJQ/SqwZProdsTeezSFpNeXwr23Zg=
+X-Received: by 2002:a6b:5116:: with SMTP id f22mr14926292iob.108.1566812417100; 
+ Mon, 26 Aug 2019 02:40:17 -0700 (PDT)
 MIME-Version: 1.0
-References: <CANH_QeanVTjMG1gsps0Boj2vOUBCQqReH+u84su1--_t-QyiJA@mail.gmail.com>
- <CAHmME9romoNCJKaNfQXETG2GE+3mcVjEOkuu6+P4on-xXobEjw@mail.gmail.com>
- <CANH_QeYk=1HyuOFgg2_1YxHNyR9keWH883BD90bKvQn3im497g@mail.gmail.com>
- <CAHmME9pxw2u=Su1jccf58iFPqvfY-opCSEJ3_TLtzjAA3tgYQw@mail.gmail.com>
- <CANH_QeaEDZ-UMZ_G_Zem7HhVBBZf7gaK1VnTZjTgVd+w1Th1pA@mail.gmail.com>
- <CAHmME9pLLpPTJ+f2r0t0gh08nTrKZ8qGLgoL4o5NFoaUj_1KGQ@mail.gmail.com>
-In-Reply-To: <CAHmME9pLLpPTJ+f2r0t0gh08nTrKZ8qGLgoL4o5NFoaUj_1KGQ@mail.gmail.com>
 From: Vasili Pupkin <diggest@gmail.com>
-Date: Mon, 26 Aug 2019 12:29:53 +0300
-Message-ID: <CANH_QeZs5BhNumC6tDO=QiNARVbW02L8wRx=r-XLGNE-8u8c3A@mail.gmail.com>
-Subject: Re: Linux kernel 5 different behavior
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Mon, 26 Aug 2019 12:39:57 +0300
+Message-ID: <CANH_QeaA2XfXBHLoyWO7bd+32bs-iqjKiOpUqRh-vZrJ0Nzk1Q@mail.gmail.com>
+Subject: Tun interface do not route packets on Windows 7 (extended no-NAT)
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-Mailman-Approved-At: Mon, 26 Aug 2019 14:28:33 +0200
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -89,20 +80,22 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Mon, Aug 26, 2019 at 5:09 AM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
-> > Usage of fwmark is my current workaround. If the same user id of an
-> > outer packets is not a bug then ignore it.
->
-> I can see arguments both ways. Do you recall off hand the last kernel
-> version that had the prior behavior? I'd like to try to find the
-> commit and read the rationale upstream.
+In my setup I have a client running Win7, the tun interface allows to
+make connection from client to server but it only route packets back
+for some time and then broke.
 
-I see the difference now between 4.18.0 and 5.0.0 kernels, the closest
-I can get with readily compiled kernels on my distro. According to
-`iptables -t mangle -A OUTPUT -j LOG --log-uid` on kernel 4.18 outer
-packets have UID=0 if original packets were sent from system processes
-and do not have associated UID at all if original packets were sent by
-the user. On kernel 5.0 they always inherit UID.
+The client system is NOT behind the NAT and PersistentKeepalive=25 do
+not help, the issue is local and external network route encrypted
+packets as expected. Have tested it with wireshark.
+
+I have checked the tun adapter with RawCap tool (wireshark do not let
+you monitor tun interface on Win7) and decrypted packets sent by the
+server actually generated inside the tun
+interface on the client but aren't routed to the process nor processed
+any further, they stuck on OSI level 3. If I then ping server from
+client the tun interface revives but broke again after like 30 seconds
+of silence. The support for Win7 will be dropped later this year but
+it is still rather popular OS among users.
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
