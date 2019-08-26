@@ -2,61 +2,60 @@ Return-Path: <SRS0=Q0ZK=WW=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.3 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CDA5C3A59F
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 26 Aug 2019 12:50:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 01A5AC3A59F
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 26 Aug 2019 14:24:02 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id A38B121848
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 26 Aug 2019 12:50:37 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=netravnen.de header.i=@netravnen.de header.b="s2ZCuMo1"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A38B121848
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=netravnen.de
+	by mail.kernel.org (Postfix) with ESMTPS id 4C0A2217F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 26 Aug 2019 14:24:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 4C0A2217F5
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=spam-fetish.org
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 59e20cbf;
-	Mon, 26 Aug 2019 12:50:36 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1b34dc97;
+	Mon, 26 Aug 2019 14:23:59 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 214a5ad1
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 466f558c
  for <wireguard@lists.zx2c4.com>;
- Mon, 26 Aug 2019 12:50:34 +0000 (UTC)
-Received: from mailrelay1-1.pub.mailoutpod1-cph3.one.com
- (mailrelay1-1.pub.mailoutpod1-cph3.one.com [46.30.210.182])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e4a09010
+ Mon, 26 Aug 2019 14:23:55 +0000 (UTC)
+Received: from mailout-02.maxonline.de (mailout-02.maxonline.de [81.24.66.23])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ed8e169a
  for <wireguard@lists.zx2c4.com>;
- Mon, 26 Aug 2019 12:50:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=netravnen.de; s=20140924;
- h=message-id:from:to:reply-to:subject:content-transfer-encoding:content-type:
- mime-version:references:in-reply-to:date:from;
- bh=9JhOmhL7oM/g/CelmAxJRXXMcBabfzg8QhFZe090zk0=;
- b=s2ZCuMo1UoH25FyHXW81q7Uck0a3pz8SMvql9yNm5LU5RbH1as1ClWQo32BguwOO+uBkfO6KTf0PX
- NhIjt3jogLAQlxZ4VPLvVTyTXtGZf08DoqsDqyJspmhDvUS9UtWodLH/dZJko78j0FhBUDKWtJM9Hm
- HaQbixx3IlUmVYKs=
-X-HalOne-Cookie: eb659d024a17c437fcf0a70a05f6c7cba67d9f53
-X-HalOne-ID: 16aa47e2-c800-11e9-aee4-d0431ea8a283
-Received: from localhost (unknown [5.186.125.201])
- by mailrelay1.pub.mailoutpod1-cph3.one.com (Halon) with ESMTPSA
- id 16aa47e2-c800-11e9-aee4-d0431ea8a283;
- Mon, 26 Aug 2019 12:50:31 +0000 (UTC)
-Date: Mon, 26 Aug 2019 12:50:30 +0000
-In-Reply-To: <C86A2825-D825-4E9E-A7D4-9F518A61CEA3@intnet.mu>
+ Mon, 26 Aug 2019 14:23:54 +0000 (UTC)
+Received: from web03-01.max-it.de (web03-01.max-it.de [81.24.64.215])
+ by mailout-02.maxonline.de (Postfix) with ESMTPS id 505474D3
+ for <wireguard@lists.zx2c4.com>; Mon, 26 Aug 2019 16:23:52 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by web03-01.max-it.de (Postfix) with ESMTP id 48AB128B8B9
+ for <wireguard@lists.zx2c4.com>; Mon, 26 Aug 2019 16:23:52 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at web03-01.max-it.de
+Received: from web03-01.max-it.de ([127.0.0.1])
+ by localhost (web03-01.max-it.de [127.0.0.1]) (amavisd-new, port 10026)
+ with ESMTP id 2pxJR4AAAaxI for <wireguard@lists.zx2c4.com>;
+ Mon, 26 Aug 2019 16:23:51 +0200 (CEST)
+Received: from [81.24.66.132] (unknown [81.24.66.132])
+ (Authenticated sender: m.muenz@spam-fetish.org)
+ by web03-01.max-it.de (Postfix) with ESMTPA id D837828B847
+ for <wireguard@lists.zx2c4.com>; Mon, 26 Aug 2019 16:23:51 +0200 (CEST)
+Subject: Re: [ANNOUNCE] OPNsense 19.7 supports WireGuard
+To: wireguard@lists.zx2c4.com
 References: <mailman.1.1566813601.6235.wireguard@lists.zx2c4.com>
  <C86A2825-D825-4E9E-A7D4-9F518A61CEA3@intnet.mu>
+From: "Muenz, Michael" <m.muenz@spam-fetish.org>
+Message-ID: <fca2eded-b498-98b0-d5b8-a6dd43970ad6@spam-fetish.org>
+Date: Mon, 26 Aug 2019 16:25:13 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Subject: Re: [ANNOUNCE] OPNsense 19.7 supports WireGuard
-To: wireguard@lists.zx2c4.com,Vincent <mercier@intnet.mu>
-From: Chriztoffer Hansen <chriztoffer@netravnen.de>
-Message-ID: <7E2D61EB-4C8A-4E6F-8C55-C784DD8FF4D8@netravnen.de>
+In-Reply-To: <C86A2825-D825-4E9E-A7D4-9F518A61CEA3@intnet.mu>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
-Reply-To: chriztoffer@netravnen.de
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -65,12 +64,33 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-It is at least included on the latest documentation. https://wiki.opnsense.org/manual/vpnet.html
+Am 26.08.2019 um 13:44 schrieb Vincent:
+> Wireguard not listed in OPNsense 19.7 plugins
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
+>
+I have one user report where it wasn't listed in the plugins menu.
+
+Seems user switched multiple times from production to development mode.
+
+
+You can as always install via CLI:
+
+# pkg install os-wireguard
+
+
+Best,
+
+Michael
+
+
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
