@@ -2,70 +2,74 @@ Return-Path: <SRS0=H7Gu=WY=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.3 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A64A7C3A5A3
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 28 Aug 2019 02:21:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BDA2FC3A5A3
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 28 Aug 2019 02:25:11 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id E5C4920674
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 28 Aug 2019 02:21:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 47844214DA
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 28 Aug 2019 02:25:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="o2C7i96v"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org E5C4920674
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lg21GYFp"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 47844214DA
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d55489c4;
-	Wed, 28 Aug 2019 02:20:53 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 672e9d4c;
+	Wed, 28 Aug 2019 02:25:10 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0f105f21
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8942d8dc
  for <wireguard@lists.zx2c4.com>;
- Wed, 28 Aug 2019 02:20:51 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 778def32
+ Tue, 27 Aug 2019 23:02:09 +0000 (UTC)
+Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com
+ [IPv6:2607:f8b0:4864:20::643])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b879fc60
  for <wireguard@lists.zx2c4.com>;
- Wed, 28 Aug 2019 02:20:51 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 96fe3070
- for <wireguard@lists.zx2c4.com>;
- Wed, 28 Aug 2019 01:38:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=BWnYPgdo8OeqEtWiVmJPd2XXJ0k=; b=o2C7i9
- 6vNRsZpTzvmyq27agHIRx3vHBqM6lngqgBHlPDr9NLyYISUZBIL4dehzu7mvomrY
- 8h/rgIvby93xAXg0c+FmKKq4//wCjxJc8aVRf3t8Bt1ATowOxUI4JV99sdD0Ncz3
- 4DpsTEsFsg4/LJlm2x1fbw/ZsoOWRaDIzr/c6fGKXKkuDmqfUdUitvfbJdb7a2o+
- MLUMus+3lS7S84RDpr67DTsnlNpCtinetzG5lbHBzm5UdPUMFeofAS5rSx0faDUv
- EBrbx9WteTB7CeEPTPTRQLq37apudJBn3akI1NS70aSJ15+yn1C7CT5wrLzExZGB
- 125liHqJqLy0x2OA==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 0496a471
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Wed, 28 Aug 2019 01:38:43 +0000 (UTC)
-Received: by mail-ot1-f45.google.com with SMTP id p23so1256436oto.0
- for <wireguard@lists.zx2c4.com>; Tue, 27 Aug 2019 19:20:50 -0700 (PDT)
-X-Gm-Message-State: APjAAAWuARMEWHMGCR5grdwBgCFO/cVcqodYPFQFull8ULyzgQrpjzs9
- bsNLT6RuSiB80NDnHQ9dNPmU0gX9eZW7Lfdnkhk=
-X-Google-Smtp-Source: APXvYqxW17jDg1znbBqI2pA+NBR6Ei+BXsJMo2I/meq5ZBmZwg2QtJwbufS49Lzo2/n7Sj0O4/exAqPKMvGBFcvCris=
-X-Received: by 2002:a9d:73c4:: with SMTP id m4mr1435887otk.369.1566958849667; 
- Tue, 27 Aug 2019 19:20:49 -0700 (PDT)
+ Tue, 27 Aug 2019 23:02:09 +0000 (UTC)
+Received: by mail-pl1-x643.google.com with SMTP id gn20so263990plb.2
+ for <wireguard@lists.zx2c4.com>; Tue, 27 Aug 2019 16:02:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=C0Td/4Oqey7Pni9TnkPaH9H7AypgHHVWWkjvZTvMeg4=;
+ b=Lg21GYFp1H+2muK2kvoOPKKNTxpp+hkxepRiFXgRRx+iggojJgoybSOLgOgY2jR7N2
+ iUdhxOE7IX6QPXB1T4ZYjyU4ZTHy8reFkyl0JC3b4UXhU7FKprlocyYcMPzSAejsvVDP
+ oa6oHv8gYcGdvFFSY+Kzltpav2X3pKMOzkZXqz4yOLXY5qwoOx1hvma89BiwCKmAqsYY
+ qQAobO4Ig2syTg78H1Uj7LZtiFtNhOqufjYFXzBTIbCjJqUHS6wWxx6Pq3p1kMbslgyj
+ ERbuLk8WcuOTg3x04leuMIbbR7RURickSYwBaCtFWIqeY+MzxKB1u8bV85cag+ZLAeSl
+ pA7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=C0Td/4Oqey7Pni9TnkPaH9H7AypgHHVWWkjvZTvMeg4=;
+ b=KXkIzdBUb3kR6/8H4E9pB0E28Vr+SPVR104fYNv2Scz5EKxLx7lL3A/7VxKsMmOFw9
+ 0SCm5fA6J3Y2dx7alU9Iql8VOqKJgbRUTajRRVfo8p6xrw9vJTYHyJkvkzK5Lc1DJXuE
+ 15XEf/d5YbNs6SKWbPZ5/E90oDVi1U35EGHSWcwLflw7C6jW5e8LaujzPBZLVMesqDHq
+ 81zEGkRiWsWKW2X5pahV/8M9BvnGieqCdsewq7w039f+eDmNyre5FehSnoDobtYjTOft
+ 9GEbDQIob1oKH1E6+dNy3AiuCZPCp7VDG1NClMuZgRnsF8OIZEeQWkYFNppsqz+zZeP6
+ /jdQ==
+X-Gm-Message-State: APjAAAV486jR3ggIw6cR3YZY8itA2DHt7t1Wy5OauMcAxa6htsm/tpdl
+ Dg0v0PWRmbX0ywflrpltUYjTTf/RwAjOX4TY51L0hN/S
+X-Google-Smtp-Source: APXvYqxU2O5caf83w+lw/9GErFdq3y6hyL297b765rpdqWHCS3aKVAjY2RQV7hCw09bppwzYC4One9KqGrnoeEPfSgg=
+X-Received: by 2002:a17:902:b094:: with SMTP id
+ p20mr1354189plr.320.1566946928876; 
+ Tue, 27 Aug 2019 16:02:08 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAHmME9pNVSr4vqXEvpH-K2bK-9OyOurkHrzK7kg0Mmyb0ASrUA@mail.gmail.com>
- <BWKVAQQ0RFKJ.2FBG8FY1MXOR1@rxps>
-In-Reply-To: <BWKVAQQ0RFKJ.2FBG8FY1MXOR1@rxps>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 27 Aug 2019 20:20:38 -0600
-X-Gmail-Original-Message-ID: <CAHmME9q6hQfrQK_1pRB=tbtJ_Sn=-3Z=8v_ZJW7uB6UuxDx15Q@mail.gmail.com>
-Message-ID: <CAHmME9q6hQfrQK_1pRB=tbtJ_Sn=-3Z=8v_ZJW7uB6UuxDx15Q@mail.gmail.com>
-Subject: Re: [PATCH] wg-quick: linux: Don't fail systemd service when using
- systemd-resolved
-To: Ronan Pigott <rpigott314@gmail.com>
-Cc: Ronan Pigott <rpigott@berkeley.edu>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>
+References: <5d41995d.1c69fb81.35aae.ce0c@mx.google.com>
+ <CAHmME9pDABPALZ+P+3TO20FTcwu1Gni3ZumP-Y+nB6aHjBPO1w@mail.gmail.com>
+In-Reply-To: <CAHmME9pDABPALZ+P+3TO20FTcwu1Gni3ZumP-Y+nB6aHjBPO1w@mail.gmail.com>
+From: Neven Sajko <nsajko@gmail.com>
+Date: Tue, 27 Aug 2019 23:02:46 +0000
+Message-ID: <CAL+bK4O=BV4AjmGpUvpAjOJ6SjpZf4QGSYiubfmjcxZfxr=2=A@mail.gmail.com>
+Subject: Re: [PATCH] device: in setZero, keep arr alive after being written to
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+X-Mailman-Approved-At: Wed, 28 Aug 2019 04:25:08 +0200
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -82,60 +86,10 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Ronan,
+> But this doesn't prevent the runtime from copying things to places we
+> can't control, right?
 
-On Tue, Aug 27, 2019 at 7:21 PM Ronan Pigott <rpigott314@gmail.com> wrote:
-> Yeah that was my first thought, then I supposed that perhaps it was
-> ordered that way intentionally to prevent a situation where the dns is
-> unset and a client would make a dns lookup on the interface before it is
-> deleted. It would use the sd-resolved 'global' configured dns servers in
-> that case which is maybe undesired.
-
-Right, exactly.
-
-> I realize it's a hack. I gave the explanation somewhat in the hope
-> someone had a better solution to the problem I was experiencing.
-
-One approach to the hack would be to just take it all the way and
-append `|| true`. That is, make it non-fatal. A tear down routine,
-anyway, has very few choices on what to do when something goes wrong,
-and sometimes continuing isn't such a bad policy.
-
-> The real issue here is that there are there are three common
-> implementations of resolvconf: debian resolvconf, openresolv, and
-> sd-resolved compat interface. So wg-quick uses resolvconf, but is only
-> fully compatible with openresolv. wg-quick is (accidentally) compatible
-> with sd-resolved through the resolvconf compat interface, except for
-> this minor hiccup. This hack allows wg-quick to work for both methods
-> with no extra configuration from the user, no alternative code path
-> for sd-resolved, and no change in behavior for non sd-resolved users.
-
-"wg-quick is (accidentally) compatible with sd-resolved" That's
-actually not totally true. Systemd has that resolvconf compat
-interface because I annoyed Lennart about it a bunch. :-P
-
-> There is another way that is might be more palatable: openresolv and
-> sd-resolved resolvconf both support a '-f' flag for ignoring missing
-> interfaces, which neatly sidesteps this error. However, I don't think
-> debian's resolvconf supports this flag. Now that I look into it though,
-> it seems debian's resolvconf does not support '-l' either, which wg-quick
-> uses, so maybe we don't care to support this anyway. I think v2 will
-> just use the flag instead, if that's alright.
-
-Yes, that's terrific. If I recall correctly, Debian's resolvconf will
-ignore arguments it doesn't understand if they're in the right
-position. It seems, anyhow, that -f is exactly what we should be
-using. I'll gladly merge a signed-off-by v2 that adds it.
-
-> Users of openvpn use sd-resolved dbus interface in place of resolvconf,
-> such as seen here: https://github.com/jonathanio/update-systemd-resolved
-> but I believe this is overkill for wg-quick.
-
-Ahhh yes the amazing shell-script IPv6 parser. I recall reading this
-in wonder a few years ago. Indeed it's a bit "much" for wg-quick, and
-I think your solution of adding -f to resolvconf is a good approach.
-
-Jason
+Correct.
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
