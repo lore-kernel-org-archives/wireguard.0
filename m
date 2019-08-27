@@ -2,48 +2,69 @@ Return-Path: <SRS0=ZPcD=WX=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.3 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,
+	NUMERIC_HTTP_ADDR,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE954C3A5A3
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 27 Aug 2019 17:18:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D16FC3A5A3
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 27 Aug 2019 17:21:21 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 39CD3214DA
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 27 Aug 2019 17:18:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 39CD3214DA
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=pallas.us
+	by mail.kernel.org (Postfix) with ESMTPS id C1D2F214DA
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 27 Aug 2019 17:21:20 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I3raFSZL"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org C1D2F214DA
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 22f8e66e;
-	Tue, 27 Aug 2019 17:17:50 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 40dab678;
+	Tue, 27 Aug 2019 17:20:53 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c77fb02d
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2df81416
  for <wireguard@lists.zx2c4.com>;
- Tue, 27 Aug 2019 17:17:44 +0000 (UTC)
-Received: from telperion.info (2600:3c01::f03c:91ff:fe96:a052
- [IPv6:2600:3c01::f03c:91ff:fe96:a052])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 98779442
+ Tue, 27 Aug 2019 17:20:51 +0000 (UTC)
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com
+ [IPv6:2a00:1450:4864:20::12e])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a250058c
  for <wireguard@lists.zx2c4.com>;
- Tue, 27 Aug 2019 17:17:44 +0000 (UTC)
-Received: from [209.204.163.2] (209-204-163-2.vpn.sonic.net
- [::ffff:209.204.163.2]) (AUTH: LOGIN pallas, )
- by telperion.info with ESMTPSA
- id 000000000004837A.000000005D65665C.00004965; Tue, 27 Aug 2019 10:20:28 -0700
-Subject: Re: Support of multiple endpoints to support IPv6/IPv4 protocol change
-To: wireguard@lists.zx2c4.com
-References: <87h86fq4ss.fsf@line.ungleich.ch>
- <915FDB2D-7452-433C-A3FE-63EF75916417@pallas.us>
-From: Derrick Lyndon Pallas <derrick@pallas.us>
-Message-ID: <a5dd2f52-86ba-8bad-4594-af4f821907eb@pallas.us>
-Date: Tue, 27 Aug 2019 10:17:41 -0700
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
- Gecko/20100101 Thunderbird/60.8.0
+ Tue, 27 Aug 2019 17:20:51 +0000 (UTC)
+Received: by mail-lf1-x12e.google.com with SMTP id u13so5919368lfm.9
+ for <wireguard@lists.zx2c4.com>; Tue, 27 Aug 2019 10:20:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=PFwDZOeUbmicMKSKZQmHv5vfE5Sk+nkVqw24wfuEU/U=;
+ b=I3raFSZLF4pOJ3r9fqpH7jIusZrVqMwiUYLA5ytCi4J1171EF7sVsBKmr/ZcjB/u2a
+ thBt5avoIsL7DUxy9buTJLBfdYxKPyz2Pa2N1VD4O4+Cp4L9X4LER1zmHwMRKDJWhf7e
+ oegMdHCGV/+hSxgk9kHE+mq9ARkYFP3mjgX9WrFhotAqjokXlfPBN0LfEtHSm6g6mSuF
+ +cVHl/TE0nRCYVmZYIyTk+zrY0MHppwkOgb0lo5bzyN/urdoBaa+4ixDKEEfIP3H7nKB
+ ZCcCwEi5Q/YlUx13vQ9MNu8I6nHYo0TLS7YikhYjKn4EImiOfUCgG7FhaasQH6khzkOZ
+ IxPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=PFwDZOeUbmicMKSKZQmHv5vfE5Sk+nkVqw24wfuEU/U=;
+ b=NBgdwPrilRMs+RRwRZ2csLkrtEF0yzpEv2KfKPd8ELnwYtrB1+Js+SF4kXQFU1qKeT
+ qkEQtAm8yKyuiyJxvPaYgRK0jagjKCGytHibCW4IM0GdNP6H1UKh2P0OuHfRm0/t/lJJ
+ L1FNWjkNoQfRa30LKl3FbuT3uObAk7ZPkPD/A3Fjh/BgamkLEvqPjNiyWPucWx2b/j2k
+ KFMGobdt91p19dH9lcYKBR085Dc6kjdF4P+ImGyC5uO4/q6SGO+DkReepWvSnuELAPAC
+ LM7HX52vcCC0Jwf9twbb4QmIHbHxLuQYPxI3lFULsw+I9NhhYqcWyTbpIw/fxUd6NYKg
+ qe6A==
+X-Gm-Message-State: APjAAAUIuSr+F6VRS24z2INWUnnDcu7l2nUK8FhxRBiLeTY9UARdt+Xk
+ sXVFdt3OfKe95UZLwUuvyTPRWHyD0exaIunD/06YQAJH
+X-Google-Smtp-Source: APXvYqzBsjZHkLOhTvaQ6/cUxkuuGAmgW38JXjrLme46x6RCCE22nXePbIgf6QxywwVc0+5tTin2KLErcNgi2T4y0F8=
+X-Received: by 2002:a05:6512:50f:: with SMTP id
+ o15mr14424371lfb.63.1566926449022; 
+ Tue, 27 Aug 2019 10:20:49 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <915FDB2D-7452-433C-A3FE-63EF75916417@pallas.us>
-Content-Language: en-US
+From: Dimitar Vassilev <dimitar.vassilev@gmail.com>
+Date: Tue, 27 Aug 2019 20:20:37 +0300
+Message-ID: <CAF+AZZVktGm19scLjT4Ku-JyQGyxQGfsLFSf=wybyuuiuoULQw@mail.gmail.com>
+Subject: need a hand with WG setup
+To: wireguard@lists.zx2c4.com
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -55,77 +76,104 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset="utf-8"; Format="flowed"
+Content-Type: multipart/mixed; boundary="===============3466494325108196602=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-V291bGQgaXQgbWFrZSBzZW5zZSB0byBkbyBzb21ldGhpbmcgbGlrZSBIYXBweSBFeWViYWxscyAo
-UkZDIDgzMDUpIApleHRlbmRlZCBmb3IgVURQPyBJZiBXaXJlR3VhcmQgd2VyZSB0byBpbXBsZW1l
-bnQgdGhlIGVxdWl2YWxlbnQgb2YgCnNlY3Rpb24gNSAoYnV0IGtlZXAgdGhlIGxpc3Qgb2YgYWRk
-cmVzc2VzIGFyb3VuZCBhZnRlciBhIGhhbmRzaGFrZSBmb3IgCnByb2Jpbmcgb3IgZmFpbG92ZXIp
-IHRoZW4gdXNlcmxhbmQgY291bGQgZWFzaWx5IGhhbmRsZSBzZWN0aW9ucyAzIGFuZCA0LiAKfkRl
-cnJpY2sKCgpPbiA4LzI1LzE5IDEyOjIzIFBNLCBEZXJyaWNrIEx5bmRvbiBQYWxsYXMgd3JvdGU6
-Cj4gSSByZWNlbnRseSByYW4gaW50byB0aGlzIGlzc3VlLiBNeSBzb2x1dGlvbiB3YXMgdG8gc29y
-dCBhIGxpc3Qgb2YgZW5kcG9pbnQgYWRkcmVzc2VzIChub3QgZG9tYWlucykgYnkgcHJpb3JpdHkg
-YW5kIGZpcnN0IGNoZWNrIHdoZXRoZXIgdGhlIGNsaWVudCBoYWQgYSByb3V0ZSB0byBhbiBhZGRy
-ZXNzIGJlZm9yZSBwaWNraW5nIGl0LiBJdCB3b3VsZCBiZSBuaWNlIGlmIFdpcmVndWFyZCBrZXB0
-IGEgbGlzdCBvZiBmYWxsYmFjayBhZGRyZXNzZXMgaW4gY2FzZSB0aGUgY3VycmVudGx5IGFjdGl2
-ZSBhZGRyZXNzIHN0b3BwZWQgd29ya2luZywgYnV0IHRoaXMgY2FuIGJlIGFjaGlldmVkIGJ5IHRv
-b2xpbmcgdG9kYXkuCj4KPiB+RGVycmljayDigKIgaVBob25lCj4KPj4gT24gQXVnIDE3LCAyMDE5
-LCBhdCA2OjUwIEFNLCBOaWNvIFNjaG90dGVsaXVzIDxuaWNvLnNjaG90dGVsaXVzQHVuZ2xlaWNo
-LmNoPiB3cm90ZToKPj4KPj4KPj4gSGVsbG8sCj4+Cj4+IFRMO0RSCj4+IEhvdyBkaWZmaWN1bHQg
-aXMgaXQgdG8gYWRkIHN1cHBvcnQgZm9yIG11bHRpcGxlIGVuZHBvaW50cyBpbiB3aXJlZ3VhcmQ/
-Cj4+Cj4+IE15IHByb2JsZW0gaXMgdGhhdCBzb21ldGltZXMgd2UgbmVlZCB0byBjb25uZWN0IHRv
-IHRoZSBWUE4gc2VydmVyCj4+IHZpYSBJUHY0LCBzb21ldGltZXMgdmlhIElQdjYgYW5kIHRoZSBv
-dGhlciBwcm90b2NvbCB3b24ndCB3b3JrIGFueW1vcmUuCj4+Cj4+Cj4+IExvbmcgc3Rvcnk6Cj4+
-IFdlIGFyZSBhIGNsb3VkIHByb3ZpZGVyIG9mZmVyaW5nIGZyZWUgSVB2NiBWUE5zIHdpdGggVk1z
-LCB0byBlbmFibGUKPj4gY3VzdG9tZXJzIHRvIGhhdmUgSVB2NiBhbnl3aGVyZS4gSW4gc29tZSBz
-aXR1YXRpb25zIGN1c3RvbWVycyBhcmUKPj4gY29uZnVzZWQsIGJlY2F1c2UgdGhlaXIgbmV0d29y
-ayBkb2Vzbid0IHdvcmsgYW55bW9yZSB3aGlsZSB3aXJlZ3VhcmQgaXMKPj4gYWN0aXZlIG9yIHRo
-ZSB0dW5uZWwgZG9lc24ndCB3b3JrIGluIHNvbWUgbmV0d29ya3MuIEkgd2lsbCBkZXNjcmliZSBz
-b21lCj4+IHNpdHVhdGlvbnMgdGhhdCB3ZSBleHBlcmllbmNlZCBhbmQgaG93IHdlIHdvcmsgYXJv
-dW5kIGl0IGF0IHRoZSBtb21lbnQuCj4+Cj4+Cj4+IFN0b3J5IDE6IHVzaW5nIFZQTiBpbiBWUE4K
-Pj4gU29tZSBvZiBvdXIgY3VzdG9tZXJzIGhhdmUgYW4gSVB2NiB0dW5uZWwgdG8gcHJvdmlkZSBh
-IC80OCB0byB0aGVpcgo+PiBuZXR3b3JrLiBUaGV5IHVzdWFsbHkgdXNlIGEgY291cGxlIG9mIC82
-NHMgdG8gc2VwYXJhdGUgdGhlaXIgaW50ZXJuYWwKPj4gbmV0d29ya3MuIFNvbWUgb2YgdGhlc2Ug
-Y3VzdG9tZXJzIGFsc28gaGF2ZSBhIFZQTiB0byB0aGVpciBlbmQgZGV2aWNlCj4+IChsaWtlIGEg
-bm90ZWJvb2spIHdpdGggYW5vdGhlciAvNDggcm91dGVkIHRvIGl0LiBJbiB0aGlzIHNpdHVhdGlv
-biwgdGhleQo+PiBhcmUgdW5hYmxlIHRvIHJlYWNoIHRoZSBWUE4gc2VydmVyIG9yIGxvY2FsIGNs
-aWVudHMgaWYgdGhleSBkb24ndAo+PiBleHBsaWNpdGx5IGNoYW5nZSB0aGVpciBjb25maWd1cmF0
-aW9uIHRvIHJlYWNoIHRoZSBWUE4gc2VydmVyIHZpYSBJUHY0Cj4+IGluc3RlYWQgb2YgSVB2NjoK
-Pj4KPj4gV2l0aCBhIHN0YW5kYXJkIGNvbmZpZywgdGhlIEROUyBuYW1lIG9mIHRoZSB0dW5uZWwg
-ZW5kcG9pbnQgaW4KPj4gaW4gd2cwLmNvbmYsIG5vdCBmaXhlZCB0byBJUHY0L0lQdjYsIHdlIGhh
-ZCB0aGUgZm9sbG93aW5nIHJlcG9ydDoKPj4KPj4gSW4gdGhpcyBjYXNlIGlmIHRoZSBub3RlYm9v
-ayBjb25uZWN0cyB2aWEgSVB2NiB0byB0aGUgVlBOIHNlcnZlciwKPj4gaXQgZWZmZWN0aXZlbHkg
-Y29ubmVjdHMgdG8gdGhlIFZQTiBzZXJ2ZXIgdGhyb3VnaCB0aGUgVlBOLiBXZSBoYWQKPj4gcmVw
-b3J0cyB0aGF0IGluIHRoaXMgc2l0dWF0aW9uIHRoZSBub3RlYm9vayBjYW4gZWl0aGVyIG5vdCBl
-c3RhYmxpc2ggdGhlCj4+IFZQTiB0dW5uZWwgb3IgaXMgdW5hYmxlIHRvIHJlYWNoIGxvY2FsIGRl
-dmljZXMKPj4KPj4gV29ya2Fyb3VuZCBmcm9tIHNvbWUgY3VzdG9tZXJzOiBoYXJkIGNvZGUgdGhl
-IElQdjQgYWRkcmVzcyBhcyBhbiBlbmRwb2ludAo+Pgo+PiBTdG9yeSAyOiBDaGFuZ2UgZnJvbSBJ
-UHY0IG9ubHkgdG8gSVB2NiBvbmx5IG5ldHdvcmtzCj4+Cj4+IFdlIGhhdmUgcmVwb3J0cyBmcm9t
-IGNsaWVudHMgdGhhdCB0aGUgVlBOIGlzIG5vdCBlc3RhYmxpc2hlZCBhZ2FpbiwgaWYKPj4gdGhl
-eSBzd2l0Y2ggZnJvbSBhbiBJUHY0IG9ubHkgbmV0d29yayB0byBhbiBJUHY2IG9ubHkgbmV0d29y
-ayBhbmQgdmljZQo+PiB2ZXJzYS4gSSBhc3N1bWUgdGhpcyBpcyBkdWUgdG8gd2lyZWd1YXJkIHJl
-c29sdmluZyB0aGUgYWRkcmVzcyBhdAo+PiBzdGFydHVwIGFuZCBuZXZlciByZS1yZXNvbHZpbmcg
-YW5kL29yIG5vdCBzdG9yaW5nIGFsbCBETlMgcmVzdWx0cyAoQSBhbmQKPj4gQUFBQSBhbnN3ZXJz
-KS4KPj4KPj4gV29ya2Fyb3VuZCBmcm9tIHNvbWUgY3VzdG9tZXJzOiByZXN0YXJ0IHdpcmVndWFy
-ZCB3aGVuIGNoYW5naW5nCj4+IHVuZGVybHlpbmcgcHJvdG9jb2wgbmV0d29yawo+Pgo+Pgo+PiBT
-dG9yeSAzOiBDb21iaW5hdGlvbiBvZiBhYm92ZQo+PiBTb21lIG9mIG91ciBjbGllbnRzIGhhcmQg
-Y29kZWQgdGhlIElQdjQgYWRkcmVzcyBvZiB0aGUgdHVubmVsIGVuZHBvaW50Cj4+IGluIHRoZWly
-IHdnMC5jb25mIHRvIGF2b2lkIHRoZSBwcm9ibGVtIGZyb20gc3RvcnkgMS4gSG93ZXZlciB0aGlz
-IGJyZWFrcwo+PiB0aGVpciBJbnRlcm5ldCB3aGVuIHN3aXRjaGluZyB0byBJUHY2IG9ubHkgbmV0
-d29ya3MuIEluIHRoaXMgY2FzZSB0aGUKPj4gZW5kcG9pbnQgaXMgZml4ZWQgdG8gSVB2NCwgYnV0
-IHRoZXkgZG9uJ3QgaGF2ZSBhbnkgSVB2NCBjb25uZWN0aXZpdHkuCj4+Cj4+IFdvcmthcm91bmQg
-ZnJvbSBzb21lIGN1c3RvbWVyczogcmVjb25maWd1cmUgd2lyZWd1YXJkIHRvIHVzZSBoYXJkY29k
-ZWQKPj4gSVB2NiBvciBJUHY0IG9ubHkgZW5kcG9pbnQuCj4+Cj4+Cj4+IC0tCj4+IFlvdXIgU3dp
-c3MsIE9wZW4gU291cmNlIGFuZCBJUHY2IFZpcnR1YWwgTWFjaGluZS4gTm93IG9uIHd3dy5kYXRh
-Y2VudGVybGlnaHQuY2guCj4+IF9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fCj4+IFdpcmVHdWFyZCBtYWlsaW5nIGxpc3QKPj4gV2lyZUd1YXJkQGxpc3RzLnp4
-MmM0LmNvbQo+PiBodHRwczovL2xpc3RzLnp4MmM0LmNvbS9tYWlsbWFuL2xpc3RpbmZvL3dpcmVn
-dWFyZAo+IF9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fCj4g
-V2lyZUd1YXJkIG1haWxpbmcgbGlzdAo+IFdpcmVHdWFyZEBsaXN0cy56eDJjNC5jb20KPiBodHRw
-czovL2xpc3RzLnp4MmM0LmNvbS9tYWlsbWFuL2xpc3RpbmZvL3dpcmVndWFyZApfX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXwpXaXJlR3VhcmQgbWFpbGluZyBs
-aXN0CldpcmVHdWFyZEBsaXN0cy56eDJjNC5jb20KaHR0cHM6Ly9saXN0cy56eDJjNC5jb20vbWFp
-bG1hbi9saXN0aW5mby93aXJlZ3VhcmQK
+--===============3466494325108196602==
+Content-Type: multipart/alternative; boundary="00000000000062196e05911c7ec9"
+
+--00000000000062196e05911c7ec9
+Content-Type: text/plain; charset="UTF-8"
+
+Hello,
+
+I'm trying to establish site to site VPN with 2 OpenWRTs 18.6.4 - linux
+4.9.184
+
+my problem is that I cannot get any ping running and cannot reach the
+remote tunnel ips.
+Below is my setup
+# ip r
+default via 95.87.xxx.xxx dev eth0.2 proto static src 95.87.xxx.xx
+95.87.xxx.0/24 dev eth0.2 proto kernel scope link src 95.87.xxxxx.xxx
+130.204.xxx.xxx via 95.87.xxx.x dev eth0.2 proto static
+192.168.11.0/24 dev br-lan proto kernel scope link src 192.168.11.1
+192.168.100.1xx/25 dev wgknxvtun0 proto static scope link
+192.168.101.0/24 dev wgknxvrtun0 proto kernel scope link src 192.168.101.1
+216.66.xx.xx via 95.87.xxx.1 dev eth0.2 proto static
+
+root@OpenWrt:~# wg show
+interface: wgknxvtun0
+  public key: f6
+  private key: (hidden)
+  listening port: 51820
+
+peer: ThW
+  endpoint: 130.204.xxx.xxx:51820
+  allowed ips: 192.168.100.128/25
+  latest handshake: 2 minutes, 15 seconds ago
+  transfer: 134.86 KiB received, 121.67 KiB sent
+  persistent keepalive: every 25 seconds
+
+  root@OpenWrt:~# wg showconf wgknxvtun0
+  [Interface]
+  ListenPort = 51820
+  PrivateKey = xxxx
+
+  [Peer]
+  PublicKey = Tx
+  AllowedIPs = 192.168.100.128/25
+  Endpoint = 130.204.x.x:51820
+  PersistentKeepalive = 25
+
+I've setup a separate FW zone where input, forward and output are default.
+Ideas what I'm missing are welcome.
+
+Best,
+Dimitar
+
+--00000000000062196e05911c7ec9
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hello,<div><br></div><div>I&#39;m trying to establish site=
+ to site VPN with 2 OpenWRTs 18.6.4 - linux 4.9.184</div><div><br></div><di=
+v>my problem is that I cannot get any ping running and cannot reach the rem=
+ote tunnel ips.</div><div>Below is my setup</div><div># ip r<br>default via=
+ 95.87.xxx.xxx dev eth0.2 proto static src 95.87.xxx.xx <br>95.87.xxx.0/24 =
+dev eth0.2 proto kernel scope link src 95.87.xxxxx.xxx <br>130.204.xxx.xxx =
+via 95.87.xxx.x dev eth0.2 proto static <br><a href=3D"http://192.168.11.0/=
+24">192.168.11.0/24</a> dev br-lan proto kernel scope link src 192.168.11.1=
+ <br>192.168.100.1xx/25 dev wgknxvtun0 proto static scope link <br><a href=
+=3D"http://192.168.101.0/24">192.168.101.0/24</a> dev wgknxvrtun0 proto ker=
+nel scope link src 192.168.101.1 <br>216.66.xx.xx via 95.87.xxx.1 dev eth0.=
+2 proto static <br><br>root@OpenWrt:~# wg show<br>interface: wgknxvtun0<br>=
+=C2=A0 public key: f6<br>=C2=A0 private key: (hidden)<br>=C2=A0 listening p=
+ort: 51820<br><br>peer: ThW<br>=C2=A0 endpoint: 130.204.xxx.xxx:51820<br>=
+=C2=A0 allowed ips: <a href=3D"http://192.168.100.128/25">192.168.100.128/2=
+5</a><br>=C2=A0 latest handshake: 2 minutes, 15 seconds ago<br>=C2=A0 trans=
+fer: 134.86 KiB received, 121.67 KiB sent<br>=C2=A0 persistent keepalive: e=
+very 25 seconds<br><br>=C2=A0 root@OpenWrt:~# wg showconf wgknxvtun0<br>=C2=
+=A0 [Interface]<br>=C2=A0 ListenPort =3D 51820<br>=C2=A0 PrivateKey =3D xxx=
+x<br><br>=C2=A0 [Peer]<br>=C2=A0 PublicKey =3D Tx<br>=C2=A0 AllowedIPs =3D =
+<a href=3D"http://192.168.100.128/25">192.168.100.128/25</a><br>=C2=A0 Endp=
+oint =3D 130.204.x.x:51820<br>=C2=A0 PersistentKeepalive =3D 25<br></div><d=
+iv><br></div><div>I&#39;ve setup a separate FW zone where input, forward an=
+d output are default.</div><div>Ideas what I&#39;m missing are welcome.</di=
+v><div><br></div><div>Best,</div><div>Dimitar</div></div>
+
+--00000000000062196e05911c7ec9--
+
+--===============3466494325108196602==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
+_______________________________________________
+WireGuard mailing list
+WireGuard@lists.zx2c4.com
+https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--===============3466494325108196602==--
