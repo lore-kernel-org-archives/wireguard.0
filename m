@@ -2,50 +2,66 @@ Return-Path: <SRS0=H7Gu=WY=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50750C3A5A1
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 28 Aug 2019 13:01:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C49B5C3A5A1
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 28 Aug 2019 13:42:48 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id F00DE22CF8
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 28 Aug 2019 13:01:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 4BAE920828
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 28 Aug 2019 13:42:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=airmail.cc header.i=@airmail.cc header.b="gbjiGB1S"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org F00DE22CF8
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=airmail.cc
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="F30QYhJc"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 4BAE920828
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0ad0c41f;
-	Wed, 28 Aug 2019 13:01:32 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1204180c;
+	Wed, 28 Aug 2019 13:42:47 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f867ab2e
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 254c2927
  for <wireguard@lists.zx2c4.com>;
- Wed, 28 Aug 2019 13:01:29 +0000 (UTC)
-Received: from cock.li (mx1.cock.li [185.10.68.5])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a15cb597
+ Wed, 28 Aug 2019 13:42:44 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 801ecf61
  for <wireguard@lists.zx2c4.com>;
- Wed, 28 Aug 2019 13:01:29 +0000 (UTC)
-From: Mikk <mikkmar@airmail.cc>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=airmail.cc; s=mail;
- t=1566997288; bh=MmRgNh+GfC/3j/gnDxWaHe6OlRMCeKN09xLxi81gt/w=;
- h=From:To:Cc:Subject:Date:From;
- b=gbjiGB1S0IGGwNL2D4jGA2ZX9i67vnDeBxun1/JJSJHcw3G/43yORH53InyDa37qL
- 0aZLY6zPK9FBKicNL/Xw82OYy2KWubu+xIRwS34420CwkN3TC+9/3byxh5LsTMkLaB
- ehBjbAtn92j42yDVL5PYVj3QWrZukC4/kMu0K2COPNmJDcCc+fncYDqYQ3hqf3k2Qh
- 2UXwrRzFUxJe3XLpWrJ+EMZaY9P0IwzClCasNV9HdEc8BKtRL37kecqoOuEGYXxStb
- Mc+VZfkJVkndQ8ispQhKumJ0d9cfT9+aBhIYFdTMJ2rLAR0n7ouD8gc9Ix+On/fi8e
- 8/2Y83K7ZmJNg==
-To: wireguard@lists.zx2c4.com
-Subject: [PATCH] Makefile: rework kernel version logic
-Date: Wed, 28 Aug 2019 16:01:25 +0300
-Message-Id: <20190828130125.2261931-1-mikkmar@airmail.cc>
-X-Mailer: git-send-email 2.23.0
+ Wed, 28 Aug 2019 13:42:44 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e4523af6
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 28 Aug 2019 13:00:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :references:in-reply-to:from:date:message-id:subject:to:cc
+ :content-type; s=mail; bh=FRpSZjxHfLfTtHtC+ksC3sT3zvs=; b=F30QYh
+ JcTNDYuot5QX7c/mE1m/HFPjjTCa1vL/xsAgh+eE61Z0XiRoE3sSwyv0uuBUyGmz
+ L0DP1EfihVnPoFHs6Vs7UlcXW3CAqNkU9vu2n5uVIkfDH0AGujYvG1a5LTQD2Ntk
+ aGBT1popeSuVGnyLJJbpN/1+drtkiLLJ0f8PadM/3L7vthwQup/ix/QiW7b8aPEp
+ v4Khs82/NwTSioW2Um0QP3+65RPkpoJgaBx1jeNxZG3Kxl1zvVo1QQStCgPRWeHV
+ wQF/P+cnTZqw5zTgv/oKI3enqc3C61cWnBKXzpEH/2UfyviaT/XIx1ea3p+aO3x7
+ N+DSb42L0pMGrzZw==
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 8ee7ef3a
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 28 Aug 2019 13:00:33 +0000 (UTC)
+Received: by mail-oi1-f180.google.com with SMTP id g128so2142262oib.1
+ for <wireguard@lists.zx2c4.com>; Wed, 28 Aug 2019 06:42:44 -0700 (PDT)
+X-Gm-Message-State: APjAAAVPcIlu0q0Xm7rPeQ91XjensTfu+b1UrQ+vFIVet9lbF5eftPac
+ 2Paa2m4DDoZDTz98UlDDgTGvAOAPmKzRGYJBHRs=
+X-Google-Smtp-Source: APXvYqxPJaOSY8r6bfw8Sd+L22nPp0o+SdglferAabwUq82wSWaL0KY5aFoAN9MDUD/WD5d35meCaq2FqWsDjPEAKow=
+X-Received: by 2002:aca:4a53:: with SMTP id x80mr2737857oia.115.1566999763371; 
+ Wed, 28 Aug 2019 06:42:43 -0700 (PDT)
 MIME-Version: 1.0
+References: <20190828130125.2261931-1-mikkmar@airmail.cc>
+In-Reply-To: <20190828130125.2261931-1-mikkmar@airmail.cc>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 28 Aug 2019 07:42:32 -0600
+X-Gmail-Original-Message-ID: <CAHmME9pOoQ6xRWeJaq43BWMheoU8mN7=R23i1mjJMCc1XZwx5Q@mail.gmail.com>
+Message-ID: <CAHmME9pOoQ6xRWeJaq43BWMheoU8mN7=R23i1mjJMCc1XZwx5Q@mail.gmail.com>
+Subject: Re: [PATCH] Makefile: rework kernel version logic
+To: Mikk <mikkmar@airmail.cc>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -62,39 +78,13 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This makes depmod actually work when building/installing the module for a kernel other than the currently running one
+Merged as: https://git.zx2c4.com/WireGuard/commit/?id=dcca03f27879701d7377109517176a3aae86619f
 
-Signed-off-by: Mikk <mikkmar@airmail.cc>
----
- src/Makefile | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+Every place else uses KERNELRELEASE, so I've changed the variable to that.
 
-diff --git a/src/Makefile b/src/Makefile
-index 24b2ba0..d0d6c4d 100644
---- a/src/Makefile
-+++ b/src/Makefile
-@@ -2,7 +2,8 @@
- #
- # Copyright (C) 2015-2019 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
- 
--KERNELDIR ?= /lib/modules/$(shell uname -r)/build
-+KVER ?= $(shell uname -r)
-+KERNELDIR ?= /lib/modules/$(KVER)/build
- PREFIX ?= /usr
- DESTDIR ?=
- SRCDIR ?= $(PREFIX)/src
-@@ -45,7 +46,7 @@ clean:
- 
- module-install:
- 	@$(MAKE) -C $(KERNELDIR) M=$(PWD) modules_install
--	$(DEPMOD) -a
-+	$(DEPMOD) -a $(KVER)
- 
- install: module-install tools-install
- 
--- 
-2.23.0
+Thanks for the patch.
 
+Jason
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
