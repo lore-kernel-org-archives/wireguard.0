@@ -1,60 +1,71 @@
-Return-Path: <SRS0=uQE/=WZ=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=b7im=W2=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B477C3A59F
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 29 Aug 2019 04:47:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 040CFC3A5A4
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 30 Aug 2019 11:42:49 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 9B24C22CF5
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 29 Aug 2019 04:47:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 9B24C22CF5
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=spam-fetish.org
+	by mail.kernel.org (Postfix) with ESMTPS id 58B1F21721
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 30 Aug 2019 11:42:48 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=stalder.io header.i=@stalder.io header.b="aNXgtsw+"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 58B1F21721
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=stalder.io
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d30b9fd3;
-	Thu, 29 Aug 2019 04:46:44 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 995be776;
+	Fri, 30 Aug 2019 11:42:29 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7b9cd155
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a5a099af
  for <wireguard@lists.zx2c4.com>;
- Thu, 29 Aug 2019 04:46:40 +0000 (UTC)
-Received: from mailout-02.maxonline.de (mailout-02.maxonline.de [81.24.66.23])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6534bc7c
+ Fri, 30 Aug 2019 11:42:27 +0000 (UTC)
+Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com
+ [IPv6:2607:f8b0:4864:20::742])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4936f628
  for <wireguard@lists.zx2c4.com>;
- Thu, 29 Aug 2019 04:46:40 +0000 (UTC)
-Received: from web03-01.max-it.de (web03-01.max-it.de [81.24.64.215])
- by mailout-02.maxonline.de (Postfix) with ESMTPS id 1F7854FD
- for <wireguard@lists.zx2c4.com>; Thu, 29 Aug 2019 06:46:38 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by web03-01.max-it.de (Postfix) with ESMTP id 12F5728B847
- for <wireguard@lists.zx2c4.com>; Thu, 29 Aug 2019 06:46:38 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at web03-01.max-it.de
-Received: from web03-01.max-it.de ([127.0.0.1])
- by localhost (web03-01.max-it.de [127.0.0.1]) (amavisd-new, port 10026)
- with ESMTP id SE2ittezWDZK for <wireguard@lists.zx2c4.com>;
- Thu, 29 Aug 2019 06:46:37 +0200 (CEST)
-Received: from [81.24.66.132] (unknown [81.24.66.132])
- (Authenticated sender: m.muenz@spam-fetish.org)
- by web03-01.max-it.de (Postfix) with ESMTPA id B0D3728B82F
- for <wireguard@lists.zx2c4.com>; Thu, 29 Aug 2019 06:46:37 +0200 (CEST)
-Subject: Re: [ANNOUNCE] OPNsense 19.7 supports WireGuard
-To: wireguard@lists.zx2c4.com
-References: <b660d135-4450-66d3-0254-a893f46ba9f7@spam-fetish.org>
- <CAHmME9qPAOLxz3CyHxq9tubzgzvksGS5iz55yL=eB2wFa23fXg@mail.gmail.com>
- <CALwBDFtP-QkGVZ6EncjtQxZ1--sGWKwzXwpNPaiLYymR5=+G6Q@mail.gmail.com>
- <CAHwDNp2pLJBV8M0sPa+XA4MDMVqJOp2=PQ1B=_W++k7V=wYfGA@mail.gmail.com>
-From: "Muenz, Michael" <m.muenz@spam-fetish.org>
-Message-ID: <c87496a2-b47b-c15c-763c-3b01d0b039cb@spam-fetish.org>
-Date: Thu, 29 Aug 2019 06:47:58 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+ Fri, 30 Aug 2019 11:42:27 +0000 (UTC)
+Received: by mail-qk1-x742.google.com with SMTP id u190so5838644qkh.5
+ for <wireguard@lists.zx2c4.com>; Fri, 30 Aug 2019 04:42:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stalder.io; s=google;
+ h=mime-version:from:date:message-id:subject:to
+ :content-transfer-encoding;
+ bh=UbkTCM9n3q+oY3oUrBRXUvj2Z+2tsa9P3JpAYvKGp3g=;
+ b=aNXgtsw+vhg+pZhNrwKQwoMFeBalyjSir3q3ywrVWqWFxe2ylkF5G4zn8OxBmty3zo
+ 3vG0Q0tvIDlu9kyWv0TKVs1zivBcavL3HIOi8QEd+hdfR0PLWDl2EX2pszI6fFh6xf4R
+ jdaYWW8yUfsPBhQIuiwoGM15v9Fz9oy8jugI0OOx7aeXTGWCrKWC1nWTioKhPSPMqiKi
+ nVCjeduD7BnalA6b9a/JOGicyHBJweBCQG7HV3GQSoBPVNJGfx51SBnSz0/J8MJqjJIF
+ z1ch6b6sF73e24WnL1fFb13IQuqI40jjGs7jCsbr17OY8xd/RxnME5QZTvFkz3GiPpTp
+ QioA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+ :content-transfer-encoding;
+ bh=UbkTCM9n3q+oY3oUrBRXUvj2Z+2tsa9P3JpAYvKGp3g=;
+ b=Y3R6xg7uawoxPxWS7YXXmQ1TxZZQ7PVkTa1QaXxPg0xZLvke6oS7aHZEGSHhV84jP9
+ UxnJ8KdgUa50TIBV/0ICBG4Pu5/vLtWwJlUzSVIwGzKIc4FyJY713neYyXf29sUszNCw
+ Ezsc0KK+EYiMU3uzZQiMiyfbMPtTnMy+/kBDcGfTy8hJYqTJT0G8ZMTkFnuNi4U3nPHp
+ a8JG9zVcKMtLhGll9luE9odKM86kpq8DFswKPIBNxaLg0HKlHwSgO7u+JDjvVm0uE+Ak
+ Q34xMOaHQkQ9TowBh8y96O2wsMu6XkDZZhpnT/CChcmUfU6orC3ar/dfylDhBpt4RRe7
+ OYCw==
+X-Gm-Message-State: APjAAAUz7i+66xYGG4zDCM2DC0QysynH8zK2wme39IsSmLzxej5bIH1N
+ M/kpCerxYv/l1Hm6y9XyBqyy+8aYyTR6NbDvFGBSkw74587nkn/C
+X-Google-Smtp-Source: APXvYqyZHYU/QeIjJ8anjIMuzqvyvFDoNS27oSf7uiMQZnVydHT6tc746z4HML97ere38EnXS9iIwNWv55zgRYiTFlo=
+X-Received: by 2002:a05:620a:126f:: with SMTP id
+ b15mr3046157qkl.483.1567165346355; 
+ Fri, 30 Aug 2019 04:42:26 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAHwDNp2pLJBV8M0sPa+XA4MDMVqJOp2=PQ1B=_W++k7V=wYfGA@mail.gmail.com>
+From: Nicolas Stalder <n+wireguard@stalder.io>
+Date: Fri, 30 Aug 2019 13:42:15 +0200
+Message-ID: <CACzkAFoO3==OiS0jgu1rHuHBo5_F-6XkcDW=gBN8p81F70bmKg@mail.gmail.com>
+Subject: Re: Support FIDO2/CTAP2 security tokens as keystore
+To: wireguard@lists.zx2c4.com
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -66,50 +77,84 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Am 28.08.2019 um 21:08 schrieb Alex Davies:
-> This is great news. We have been using wireguard on OPNSense (mostly 
-> as servers, but also as a client in a few places) in production for 
-> some time now, without drama (we found one bug with a trivial 
-> workaround, see email chain "Table=off behavior (not adding any route 
-> *at all*)" to this list). We can now upgrade to something formally 
-> "supported" ;-)
->
-> If anybody else tries to use the hardware appliances provided by the 
-> founders of OPNSense (Deciso[1]) as a wireguard server or client, we 
-> found the performance on the non-x86 CPUs (A10, etc.) was not great 
-> (they have all sorts of ipsec type offloads, but not for WG). IIRC we 
-> struggled to get more than a few gigabits per second in aggregate. The 
-> Intel E3 models are able to run as close to line rate on 10G as makes 
-> no odds for us.
->
-> [1] 
-> https://www.deciso.com/wp-content/uploads/2015/11/Brochure-OPNsense-appliances_ordered-rev201603.pdf
->
-The gateway code in OPNsense 19.7 changed, so it was only possible to do 
-PBR with 19.1.X.
-
-With the last update of 19.7.3 I updated the plugin to add gateway 
-support so it works with PostUp and PostDown. As usual in Open Source it 
-lacks documentation yet. :)
-
-https://github.com/opnsense/plugins/pull/1443
-
-
-I did some quick iperf tests in a 10G lab last year (old Xeon E3):
-
-https://www.routerperformance.net/comparing-opnsense-vpn-performance/
-
-
-Best,
-
-Michael
-
-_______________________________________________
-WireGuard mailing list
-WireGuard@lists.zx2c4.com
-https://lists.zx2c4.com/mailman/listinfo/wireguard
+SGF2aW5nIHNvbWV0aGluZyBsaWtlIHRoaXMgaGFzIGJlZW4gbXkgZHJlYW0gZm9yIGEgd2hpbGUg
+bm93LCBhbmQgSQppbnRlbmQgdG8gbWFrZSBpdApwb3NzaWJsZSB3aXRoIG15IGNvbXBhbnkncyBv
+cGVuIHNvdXJjZSBGSURPMiBwcm9kdWN0IChTb2xvS2V5cykuIE5vIEVUQSBhcyB3ZSdyZQpqdWdn
+bGluZyBpbXBsZW1lbnRhdGlvbiBvZiBvdGhlciBmdW5jdGlvbmFsaXR5IHdpdGggbGltaXRlZCBy
+ZXNvdXJjZXMuCgpOb3RlIHRoYXQgRklETzIgZGlyZWN0bHkgd29uJ3Qgd29yaywgYXMgaXQgb25s
+eSBkZWZpbmVzIHNpZ25hdHVyZXMgb2YKY2VydGFpbiAobm90IGFsbCkgcGF5bG9hZHMKKGFuZCB3
+aXRoIHRoZSBobWFjLWV4dGVuc2lvbiBzb21lIEhNQUNzKS4KClRoZSBtYWluIHVzZSBjYXNlcyBJ
+IHNlZSBhcmUgaW4gYSAicm9hZCB3YXJyaW9yIiBraW5kIG9mIHNldHVwOgotIGNhbiB1c2Ugb24g
+b3RoZXIgcGVvcGxlJ3MgY29tcHV0ZXJzIChvciBldmVuIG9uZSdzIG93biB0aGF0IGFyZQpzZW1p
+LXVudHJ1c3RlZCBhbmQgaW5mcmVxdWVudGx5IGNvbm5lY3QpCi0gbm8gbmVlZCB0byBzeW5jaHJv
+bml6ZSBrZXkgb3V0IG9mIGJhbmQgLSB1c2Ug4oCcZG9uZ2xlbmV04oCdCi0gb25jZSByZW1vdmVk
+LCBjb25uZWN0aW9ucyBhcmUgY2xvc2VkCgpVc2UgYXMgYmFieSBIU00gb24gYSBzZXJ2ZXIgbWF5
+IGFyZSBtYXkgbm90IG1ha2Ugc2Vuc2UgdG9vLCBhcyBsb25nIGFzCnRoZSBtaWNyb2NvbnRyb2xs
+ZXIKY2FuIGtlZXAgdXAgd2l0aCB0aGUgbnVtYmVyIG9mIGNvbm5lY3Rpb25zIHRoYXQgbmVlZCAo
+cmUpa2V5aW5nLiBUbwptYWtlIHRoaXMgZWZmaWNpZW50LCBJJ20gc2VwYXJhdGVseQp3b3JraW5n
+IG9uIHBhY2thZ2luZyB1cCBCam9lcm4gSGFhc2UncyBDb3J0ZXgtTTQgaW1wbGVtZW50YXRpb24g
+W2FdIGluCmFuIGVhc2lseSB1c2FibGUKZm9ybSBbYl0uCgpJZiBteSB1bmRlcnN0YW5kaW5nIGlz
+IGNvcnJlY3QsIHRoZSBiYXJlIG1pbmltdW0gZnVuY3Rpb25hbGl0eSBpczoKLSBzdG9yZSBrZXkg
+bm9uLWV4dHJhY3RhYmx5IG9uIGRldmljZSAodW5sZXNzIHlvdSdyZSBDb2xpbiBPJ0ZseW5uLi4u
+KQogIChpZiB0aGVyZSBpcyBhbiBpc3N1ZSwganVzdCByb3RhdGUgdGhlIGtleSkKLSBwZXJpb2Rp
+Y2FsbHkgZG8gQ3VydmUyNTUxOSBEaWZmaWUtSGVsbG1hbiB0byBnZW5lcmF0ZSBzZXNzaW9ucyBr
+ZXlzCiAgKHRoYXQgYXJlIHJldmVhbGVkIHRvIHRoZSBjbGllbnQsIHBvc3NpYmx5IHdpdGggc29t
+ZSBzb3J0IG9mCnRyYW5zcG9ydCBsYXllciBzZWN1cml0eSkKCkJleW9uZCBtaW5pbWFsIGZ1bmN0
+aW9uYWxpdHkgdGhlcmUgYXJlIHF1ZXN0aW9ucyBvZiBob3cgdG8gZW5yb2xsCmtleXMsIGhvdyB0
+byBzZWxlY3QgaWYgdGhlcmUgYXJlIG11bHRpcGxlLi4uCgpUaGUgdGhyZWF0IG1vZGVsIHdvdWxk
+IGJlIGFsb25nIHRoZSBsaW5lcyBvZjogaWYgdGhlIGtleSBpcyBpbiB0aGUKcG9ydCwgY2FuIGNv
+bm5lY3Q7IGlmIG5vdCwgY2Fubm90LgpUaGlzIGRvZXMgcHJldmVudCBtYWxpY2lvdXMgcHJvY2Vz
+c2VzIGluIHVzZXIgc3BhY2UgKG9yIHJvb3QpIGZyb20Kc3RlYWxpbmcgdGhlIGtleS4KClR3byBs
+YXllcnMgb2Ygc2VjdXJpdHkgY291bGQgYmUgYWRkZWQ6Ci0gInVzZXIgcHJlc2VuY2UiIGNoZWNr
+IHJlcXVpcmluZyBhbiBpbml0aWFsIGtleSBwcmVzcyBvbiB0aGUgdG9rZW4uCi0gInVzZXIgdmVy
+aWZpY2F0aW9uIjogUElOIHRvIHVubG9jayBrZXkgKGFkZGluZyBzb21ldGhpbmcgeW91IGtub3cg
+dG8Kc29tZXRoaW5nIHlvdSBoYXZlKQpJIGFzc3VtZSBwcmVzc2luZyB0aGUga2V5IGV2ZXJ5IHR3
+byBtaW51dGVzIChSZWtleS1BZnRlci1UaW1lKSBpcwphbm5veWluZywgc28gcGVyaGFwcyBhbiBp
+bml0aWFsIHZlcmlmaWNhdGlvbgpzaG91bGQgYmUgZ29vZCBmb3Igc29tZSB0aW1lLCBwZXJoYXBz
+IHBlciBlbmRwb2ludCwgcGVyaGFwcyBnbG9iYWxseS4KClJlZ2FyZGluZyBpbXBsZW1lbnRhdGlv
+biBJIHNlZSB0aHJlZSBiYXNpYyBwYXRoczoKLSBDVEFQSElEIGhhcyAidmVuZG9yIiBjb21tYW5k
+cyBbMV0sIHVzZSB0aGVzZS4gQWR2YW50YWdlIGlzIHRoYXQgcmF3CkNUQVBISUQgaXMgYSBzdXBl
+ciBzaW1wbGUgcHJvdG9jb2wsCmFuZCB3aXRoIEZJRE8yIG1heWJlIGJlY29taW5nIG1vcmUgd2lk
+ZXNwcmVhZCwgdWRldiBydWxlcyB3aWxsIGFscmVhZHkKYmUgaW4gcGxhY2UgWzJdLgotIGFsdGVy
+bmF0aXZlIENUQVBISUQgb3B0aW9uOiBpbnN0ZWFkIG9mIHJhdyB2ZW5kb3IgY29tbWFuZHMsIHVz
+ZQpDVEFQSElEX0NCT1IgYW5kIGV4dGVuZCB0aGUKQXV0aGVudGljYXRvciBBUEkgd2l0aCAiYXV0
+aGVudGljYXRvclZlbmRvciIgY29tbWFuZHMgWzNdLiBEaXNhZHZhbnRhZ2U6IENCT1IgOikKLSBD
+Q0lEIHJvdXRlOiBlbnRhaWxzIHN1cHBvcnRpbmcgdGhlIGZ1bGwgc21hcnRjYXJkIHN0YWNrIGNy
+dWZ0CnNvbWV3YXkgb3Igb3RoZXIuLiB1Z2gsIGJ1dCBwb3NzaWJsZS4KTWF5YmUgYmFzZWQgb24g
+UElWPyBUaGF0IHN0YW5kYXJkIGRvZXNuJ3QgaW5jbHVkZSB0aGUgcmVxdWlyZWQKY3J5cHRvZ3Jh
+cGh5LCBidXQgaXQncyBuaWNlbHkgc3BsaXQgaW4KdGhyZWUgcGFydHMsIHdoZXJlIHBhcnRzIDIg
+KyAzIGNvbnN0cmFpbiBnZW5lcmFsIElTTyA3ODE2IGludG8gYQpwcm90b2NvbCwgd2hlcmVhcyBz
+cGVjaWZpY3Mgb24ga2V5cwphbmQgdGhlaXIgY3J5cHRvZ3JhcGh5IGFyZSBjb25zdHJhaW5lZCB0
+byBwYXJ0IDEsIHdoaWNoIGNvdWxkIHRoZW4gYmUKbW9kaWZpZWQgW2MsIHBhZ2UgMzFdLgoKUGVy
+c29uYWxseSwgSSdkIHByZWZlciBvcHRpb25zIDEgb3IgMiwgd2l0aCB0aGUgZ29hbCBvZiBldmVu
+dHVhbGx5CmFkZGluZyB0aGUgbmVjZXNzYXJ5IGV4dGVuc2lvbnMgdG8KdGhlIEZJRE8gQ1RBUCBz
+cGVjLiBXb3JrIHRvd2FyZHMgb3B0aW9uIDMgaXMgdmVyeSB2ZXJ5IGV4cGVyaW1lbnRhbGx5CmJl
+aW5nIGV4cGxvcmVkIGluIFtkXS4KCldoYXQgaXMgY29tcGxldGVseSB1bmNsZWFyIHRvIG1lIChu
+b3QgYmVpbmcgYSBrZXJuZWwgb3IgV2lyZWd1YXJkIGRldgphdCBhbGwpIGlzIGhvdyBXaXJlZ3Vh
+cmQgYXMgcGFydCBvZiB0aGUKa2VybmVsIHdvdWxkIGNvbm5lY3QgYW5kIGludGVyZmFjZSB3aXRo
+IHRoZSB0b2tlbi4KCkhlbmNlIGl0IHdvdWxkIGJlIHVzZWZ1bCBpZiBzb21lb25lIHdpdGggV2ly
+ZWd1YXJkIGFuZCBrZXJuZWwKZXhwZXJ0aXNlIGNvdWxkIGRlZmluZSBhIG1pbmltYWwgaW50ZXJm
+YWNlCihtb3N0bHk6ICJkbyBESCB3aXRoIHlvdXIgc2VjcmV0IGtleSBhZ2FpbnN0IHRoaXMgcHVi
+bGljIGtleSwgZ2l2ZSBtZQp0aGUgc2VjcmV0IikgZm9yIGEgc21hbGwgc2hpbSBwcm9jZXNzIHRv
+IGltcGxlbWVudCBhZ2FpbnN0LAp3aGljaCBpbiB0dXJuIHdvdWxkIHNwZWFrIENUQVAyIChvciBJ
+U08gNzgxNikgdG8gdGhlIHRva2VuLgpNYXliZSB0aGlzIG1pbmltYWwgaW50ZXJmYWNlIGFscmVh
+ZHkgZXhpc3RzPyBJcyB0aGlzIHdoZXJlIG5ldGxpbmsgY29tZXMgaW4/ClNob3VsZCBOb2lzZSBi
+ZSB1c2VkIHRvIGNvbmZpZGVudGlhbGx5IG11dHVhbGx5IGF1dGhlbnRpY2F0ZSBXaXJlZ3VhcmQK
+YW5kIHRoZSB0b2tlbj8KCgpDaGVlcnMsCk5pY29sYXMgU3RhbGRlcgoKClthXSBodHRwczovL2dp
+dGh1Yi5jb20vQmpvZXJuTUhhYXNlL2ZlMjU1MTkvdHJlZS9tYXN0ZXIvU1RNMzJGNDA3L2NyeXB0
+bwpbYl0gaHR0cHM6Ly9naXRodWIuY29tL25pY2tyYXkvc2FsdHkKWzFdIGh0dHBzOi8vZmlkb2Fs
+bGlhbmNlLm9yZy9zcGVjcy9maWRvLXYyLjAtcmQtMjAxODA3MDIvZmlkby1jbGllbnQtdG8tYXV0
+aGVudGljYXRvci1wcm90b2NvbC12Mi4wLXJkLTIwMTgwNzAyLmh0bWwjdXNiLXZlbmRvci1zcGVj
+aWZpYy1jb21tYW5kcwpbMl0gaHR0cHM6Ly9naXRodWIuY29tL3N5c3RlbWQvc3lzdGVtZC9wdWxs
+LzEzMzU3ClszXSBodHRwczovL2ZpZG9hbGxpYW5jZS5vcmcvc3BlY3MvZmlkby12Mi4wLXJkLTIw
+MTgwNzAyL2ZpZG8tY2xpZW50LXRvLWF1dGhlbnRpY2F0b3ItcHJvdG9jb2wtdjIuMC1yZC0yMDE4
+MDcwMi5odG1sI2NvbW1hbmRzCltjXSBodHRwczovL252bHB1YnMubmlzdC5nb3YvbmlzdHB1YnMv
+U3BlY2lhbFB1YmxpY2F0aW9ucy9OSVNULlNQLjgwMC03My00LnBkZgpbZF0gaHR0cHM6Ly96aXNz
+b3UuZGV2Cl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fCldp
+cmVHdWFyZCBtYWlsaW5nIGxpc3QKV2lyZUd1YXJkQGxpc3RzLnp4MmM0LmNvbQpodHRwczovL2xp
+c3RzLnp4MmM0LmNvbS9tYWlsbWFuL2xpc3RpbmZvL3dpcmVndWFyZAo=
