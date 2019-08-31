@@ -2,40 +2,71 @@ Return-Path: <SRS0=7TlJ=W3=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,TVD_SPACE_RATIO,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8ACFC3A59F
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 31 Aug 2019 07:14:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5323C3A59F
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 31 Aug 2019 08:20:24 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 50B9D23774
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 31 Aug 2019 07:14:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 50B9D23774
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=wolff.to
+	by mail.kernel.org (Postfix) with ESMTPS id C66A023697
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 31 Aug 2019 08:20:23 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uUjvHqSm"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org C66A023697
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=honson.id.au
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fa2d3c74;
-	Sat, 31 Aug 2019 07:14:02 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 88a5f2c4;
+	Sat, 31 Aug 2019 08:20:06 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 554fc2bc
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0fa06247
  for <wireguard@lists.zx2c4.com>;
- Sat, 31 Aug 2019 07:14:00 +0000 (UTC)
-Received: from wolff.to (wolff.to [98.103.208.27])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with SMTP id 2c90895c
+ Sat, 31 Aug 2019 08:20:02 +0000 (UTC)
+Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com
+ [64.147.123.19])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id aa408c9b
  for <wireguard@lists.zx2c4.com>;
- Sat, 31 Aug 2019 07:14:00 +0000 (UTC)
-Received: (qmail 21129 invoked by uid 500); 31 Aug 2019 07:08:55 -0000
-Date: Sat, 31 Aug 2019 02:08:55 -0500
-From: Bruno Wolff III <bruno@wolff.to>
+ Sat, 31 Aug 2019 08:20:02 +0000 (UTC)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailout.west.internal (Postfix) with ESMTP id CBB403F1
+ for <wireguard@lists.zx2c4.com>; Sat, 31 Aug 2019 04:20:00 -0400 (EDT)
+Received: from imap1 ([10.202.2.51])
+ by compute3.internal (MEProxy); Sat, 31 Aug 2019 04:20:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=content-type:date:from:message-id
+ :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
+ :x-me-sender:x-sasl-enc; s=fm3; bh=xU6BqxA/Bu4oZ7hrqkWb+VE1DLWu1
+ evvAzBYUtt+4kc=; b=uUjvHqSm7AmR2gtgwwcKMCfIH+lfbjy2rFPOFZHApRGct
+ qkjqX0Z0xJEMFYHRXC9AZDVeSRb5yjHeFwzrNtPQ0pOLz99mseM3epcx2aUqRLQe
+ TGYDGKaGnpXQ4pk+aYXLFXLnNjwpJjFlQw2ic4Gr+5NBOry3KQwnDdnsLKMnCe3B
+ If5aZmYUJ1ujE6Ra6mQst3d8P+4DG0/CsQhmihFMzG/yv7jkG9vlWllqzpxQQ0qk
+ jx9H84/QcFHeghF2Zr/JNEyNfAyszaagfYLyEyOktvuh1iA23TuBI9Tu8Gw6J5+9
+ LkJ4Uh5R39ReOgsZgT1jVw/7EkhZ01PeMy5TxrIng==
+X-ME-Sender: <xms:ry1qXb9yzFxjTp1BDFsSBYnKM6JKeSS2XhemBwrdIUZLGHEfAwPwEw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduvddrudeihedgudefgecutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+ necuuegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkfffhvffutgesrgdtre
+ erreertdenucfhrhhomhepfdfuthgvvhgvnhcujfhonhhsohhnfdcuoehsthgvvhgvnhes
+ hhhonhhsohhnrdhiugdrrghuqeenucfrrghrrghmpehmrghilhhfrhhomhepshhtvghvvg
+ hnsehhohhnshhonhdrihgurdgruhenucevlhhushhtvghrufhiiigvpedt
+X-ME-Proxy: <xmx:ry1qXTau3g8B9Qb_HoAgr3zNwNe5HstC9O2av56cNaufyewLAke10g>
+ <xmx:ry1qXVeykXB1g4ljHvNhsaj3NcGgq8I8yJ-ublZQgTfdPVeci47vnQ>
+ <xmx:ry1qXQnxlAo_lFMOSgilAN7xubPHIFHn8gZ8ZCJ8jL3ZLMfMBtbaTQ>
+ <xmx:sC1qXXh7MP8JIMv5CvnN1Ts2-Mep_Rq6CCgnZxE5WIZpMHD3qWsYeQ>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id EC629C200A4; Sat, 31 Aug 2019 04:19:58 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.7-154-gfa7592a-fmstable-20190829v1
+Mime-Version: 1.0
+Message-Id: <7f2230df-ffe2-4072-9970-4fac371deee0@www.fastmail.com>
+Date: Sat, 31 Aug 2019 18:18:18 +1000
+From: "Steven Honson" <steven@honson.id.au>
 To: wireguard@lists.zx2c4.com
-Subject: Commit 4659d637e271d7f2814c6763035553331cca3a3f seems broken
-Message-ID: <20190831070855.GA20933@wolff.to>
-MIME-Version: 1.0
-Content-Disposition: inline
-User-Agent: Mutt/1.12.1 (2019-06-15)
+Subject: [PATCH] tools: use new name for userspace_has_wireguard_iface
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -47,77 +78,98 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset="utf-8"; Format="flowed"
+Content-Type: multipart/mixed; boundary="===============5026200237658831546=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-SSBnb3QgYnVpbGRzIGVycm9yIHdpdGggNDY1OWQ2MzdlMjcxZDdmMjgxNGM2NzYzMDM1NTUzMzMx
-Y2NhM2EzZiwgYnV0IG5vdCAKd2l0aCBkY2NhMDNmMjc4Nzk3MDFkNzM3NzEwOTUxNzE3NmEzYWFl
-ODY2MTlmLgoKW2JydW5vQGxhcHRvcDIgc3JjXSQgbWFrZSBLRVJORUxESVI9L2xpYi9tb2R1bGVz
-LzUuMy4wLTAucmM2LmdpdDIuMi5mYzMyLng4Nl82NC9idWlsZCBjbGVhbiBhbGwKICBDTEVBTiAg
-IC9ob21lL2JydW5vL1dpcmVHdWFyZC9zcmMKICBDTEVBTiAgIC9ob21lL2JydW5vL1dpcmVHdWFy
-ZC9zcmMvTW9kdWxlLnN5bXZlcnMKICBDTEVBTiAgIC9ob21lL2JydW5vL1dpcmVHdWFyZC9zcmMv
-dG9vbHMve3dnLCoubywqLmR9CiAgQ0MgW01dICAvaG9tZS9icnVuby9XaXJlR3VhcmQvc3JjL21h
-aW4ubwogIENDIFtNXSAgL2hvbWUvYnJ1bm8vV2lyZUd1YXJkL3NyYy9ub2lzZS5vCiAgQ0MgW01d
-ICAvaG9tZS9icnVuby9XaXJlR3VhcmQvc3JjL2RldmljZS5vCiAgQ0MgW01dICAvaG9tZS9icnVu
-by9XaXJlR3VhcmQvc3JjL3BlZXIubwogIENDIFtNXSAgL2hvbWUvYnJ1bm8vV2lyZUd1YXJkL3Ny
-Yy90aW1lcnMubwogIENDIFtNXSAgL2hvbWUvYnJ1bm8vV2lyZUd1YXJkL3NyYy9xdWV1ZWluZy5v
-CiAgQ0MgW01dICAvaG9tZS9icnVuby9XaXJlR3VhcmQvc3JjL3NlbmQubwogIENDIFtNXSAgL2hv
-bWUvYnJ1bm8vV2lyZUd1YXJkL3NyYy9yZWNlaXZlLm8KICBDQyBbTV0gIC9ob21lL2JydW5vL1dp
-cmVHdWFyZC9zcmMvc29ja2V0Lm8KICBDQyBbTV0gIC9ob21lL2JydW5vL1dpcmVHdWFyZC9zcmMv
-cGVlcmxvb2t1cC5vCiAgQ0MgW01dICAvaG9tZS9icnVuby9XaXJlR3VhcmQvc3JjL2FsbG93ZWRp
-cHMubwogIENDIFtNXSAgL2hvbWUvYnJ1bm8vV2lyZUd1YXJkL3NyYy9yYXRlbGltaXRlci5vCiAg
-Q0MgW01dICAvaG9tZS9icnVuby9XaXJlR3VhcmQvc3JjL2Nvb2tpZS5vCiAgQ0MgW01dICAvaG9t
-ZS9icnVuby9XaXJlR3VhcmQvc3JjL25ldGxpbmsubwogIENDIFtNXSAgL2hvbWUvYnJ1bm8vV2ly
-ZUd1YXJkL3NyYy9jcnlwdG8vemluYy9jaGFjaGEyMC9jaGFjaGEyMC5vCiAgUEVSTEFTTSAvaG9t
-ZS9icnVuby9XaXJlR3VhcmQvc3JjL2NyeXB0by96aW5jL2NoYWNoYTIwL2NoYWNoYTIwLXg4Nl82
-NC5TCiAgQVMgW01dICAvaG9tZS9icnVuby9XaXJlR3VhcmQvc3JjL2NyeXB0by96aW5jL2NoYWNo
-YTIwL2NoYWNoYTIwLXg4Nl82NC5vCiAgQ0MgW01dICAvaG9tZS9icnVuby9XaXJlR3VhcmQvc3Jj
-L2NyeXB0by96aW5jL3BvbHkxMzA1L3BvbHkxMzA1Lm8KICBQRVJMQVNNIC9ob21lL2JydW5vL1dp
-cmVHdWFyZC9zcmMvY3J5cHRvL3ppbmMvcG9seTEzMDUvcG9seTEzMDUteDg2XzY0LlMKICBBUyBb
-TV0gIC9ob21lL2JydW5vL1dpcmVHdWFyZC9zcmMvY3J5cHRvL3ppbmMvcG9seTEzMDUvcG9seTEz
-MDUteDg2XzY0Lm8KICBDQyBbTV0gIC9ob21lL2JydW5vL1dpcmVHdWFyZC9zcmMvY3J5cHRvL3pp
-bmMvY2hhY2hhMjBwb2x5MTMwNS5vCiAgQ0MgW01dICAvaG9tZS9icnVuby9XaXJlR3VhcmQvc3Jj
-L2NyeXB0by96aW5jL2JsYWtlMnMvYmxha2Uycy5vCiAgQVMgW01dICAvaG9tZS9icnVuby9XaXJl
-R3VhcmQvc3JjL2NyeXB0by96aW5jL2JsYWtlMnMvYmxha2Uycy14ODZfNjQubwogIENDIFtNXSAg
-L2hvbWUvYnJ1bm8vV2lyZUd1YXJkL3NyYy9jcnlwdG8vemluYy9jdXJ2ZTI1NTE5L2N1cnZlMjU1
-MTkubwogIExEIFtNXSAgL2hvbWUvYnJ1bm8vV2lyZUd1YXJkL3NyYy93aXJlZ3VhcmQubwogIEJ1
-aWxkaW5nIG1vZHVsZXMsIHN0YWdlIDIuCiAgTU9EUE9TVCAxIG1vZHVsZXMKICBDQyAgICAgIC9o
-b21lL2JydW5vL1dpcmVHdWFyZC9zcmMvd2lyZWd1YXJkLm1vZC5vCiAgTEQgW01dICAvaG9tZS9i
-cnVuby9XaXJlR3VhcmQvc3JjL3dpcmVndWFyZC5rbwogIENDICAgICAgL2hvbWUvYnJ1bm8vV2ly
-ZUd1YXJkL3NyYy90b29scy93Zy5vCiAgQ0MgICAgICAvaG9tZS9icnVuby9XaXJlR3VhcmQvc3Jj
-L3Rvb2xzL2NvbmZpZy5vCiAgQ0MgICAgICAvaG9tZS9icnVuby9XaXJlR3VhcmQvc3JjL3Rvb2xz
-L3Nob3cubwogIENDICAgICAgL2hvbWUvYnJ1bm8vV2lyZUd1YXJkL3NyYy90b29scy9tbmxnLm8K
-ICBDQyAgICAgIC9ob21lL2JydW5vL1dpcmVHdWFyZC9zcmMvdG9vbHMvdGVybWluYWwubwogIEND
-ICAgICAgL2hvbWUvYnJ1bm8vV2lyZUd1YXJkL3NyYy90b29scy9pcGMubwppcGMuYzogSW4gZnVu
-Y3Rpb24g4oCYdXNlcnNwYWNlX2dldF93aXJlZ3VhcmRfaW50ZXJmYWNlc+KAmToKaXBjLmM6MTg5
-Ojg6IHdhcm5pbmc6IGltcGxpY2l0IGRlY2xhcmF0aW9uIG9mIGZ1bmN0aW9uIOKAmHVzZXJzcGFj
-ZV9oYXNfd2lyZWd1YXJkX2ludGVyZmFjZeKAmTsgZGlkIHlvdSBtZWFuIOKAmHVzZXJzcGFjZV9n
-ZXRfd2lyZWd1YXJkX2ludGVyZmFjZXPigJk/IFstV2ltcGxpY2l0LWZ1bmN0aW9uLWRlY2xhcmF0
-aW9uXQogIDE4OSB8ICAgaWYgKCF1c2Vyc3BhY2VfaGFzX3dpcmVndWFyZF9pbnRlcmZhY2UoZW50
-LT5kX25hbWUpKQogICAgICB8ICAgICAgICBefn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+
-fn4KICAgICAgfCAgICAgICAgdXNlcnNwYWNlX2dldF93aXJlZ3VhcmRfaW50ZXJmYWNlcwpBdCB0
-b3AgbGV2ZWw6CmlwYy5jOjE0MzoxMzogd2FybmluZzog4oCYdXNlcnNwYWNlX2hhc193aXJlZ3Vh
-cmRfaWZhY2XigJkgZGVmaW5lZCBidXQgbm90IHVzZWQgWy1XdW51c2VkLWZ1bmN0aW9uXQogIDE0
-MyB8IHN0YXRpYyBib29sIHVzZXJzcGFjZV9oYXNfd2lyZWd1YXJkX2lmYWNlKGNvbnN0IGNoYXIg
-KmlmYWNlKQogICAgICB8ICAgICAgICAgICAgIF5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+
-CiAgQ0MgICAgICAvaG9tZS9icnVuby9XaXJlR3VhcmQvc3JjL3Rvb2xzL2VuY29kaW5nLm8KICBD
-QyAgICAgIC9ob21lL2JydW5vL1dpcmVHdWFyZC9zcmMvdG9vbHMvY3VydmUyNTUxOS5vCiAgQ0Mg
-ICAgICAvaG9tZS9icnVuby9XaXJlR3VhcmQvc3JjL3Rvb2xzL3NldGNvbmYubwogIENDICAgICAg
-L2hvbWUvYnJ1bm8vV2lyZUd1YXJkL3NyYy90b29scy9nZW5rZXkubwogIENDICAgICAgL2hvbWUv
-YnJ1bm8vV2lyZUd1YXJkL3NyYy90b29scy9zaG93Y29uZi5vCiAgQ0MgICAgICAvaG9tZS9icnVu
-by9XaXJlR3VhcmQvc3JjL3Rvb2xzL3B1YmtleS5vCiAgQ0MgICAgICAvaG9tZS9icnVuby9XaXJl
-R3VhcmQvc3JjL3Rvb2xzL3NldC5vCiAgTEQgICAgICAvaG9tZS9icnVuby9XaXJlR3VhcmQvc3Jj
-L3Rvb2xzL3dnCi91c3IvYmluL2xkOiBpcGMubzogaW4gZnVuY3Rpb24gYGlwY19saXN0X2Rldmlj
-ZXMnOgppcGMuYzooLnRleHQrMHhmMzkpOiB1bmRlZmluZWQgcmVmZXJlbmNlIHRvIGB1c2Vyc3Bh
-Y2VfaGFzX3dpcmVndWFyZF9pbnRlcmZhY2UnCi91c3IvYmluL2xkOiBpcGMubzogaW4gZnVuY3Rp
-b24gYGlwY19nZXRfZGV2aWNlJzoKaXBjLmM6KC50ZXh0KzB4MTA5YSk6IHVuZGVmaW5lZCByZWZl
-cmVuY2UgdG8gYHVzZXJzcGFjZV9oYXNfd2lyZWd1YXJkX2ludGVyZmFjZScKL3Vzci9iaW4vbGQ6
-IGlwYy5vOiBpbiBmdW5jdGlvbiBgaXBjX3NldF9kZXZpY2UnOgppcGMuYzooLnRleHQrMHgxZTY0
-KTogdW5kZWZpbmVkIHJlZmVyZW5jZSB0byBgdXNlcnNwYWNlX2hhc193aXJlZ3VhcmRfaW50ZXJm
-YWNlJwpjb2xsZWN0MjogZXJyb3I6IGxkIHJldHVybmVkIDEgZXhpdCBzdGF0dXMKbWFrZVsxXTog
-KioqIFs8YnVpbHRpbj46IHdnXSBFcnJvciAxCm1ha2U6ICoqKiBbTWFrZWZpbGU6NTk6IHRvb2xz
-XSBFcnJvciAyCgpfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-XwpXaXJlR3VhcmQgbWFpbGluZyBsaXN0CldpcmVHdWFyZEBsaXN0cy56eDJjNC5jb20KaHR0cHM6
-Ly9saXN0cy56eDJjNC5jb20vbWFpbG1hbi9saXN0aW5mby93aXJlZ3VhcmQK
+--===============5026200237658831546==
+Content-Type: multipart/alternative;
+ boundary=5be0f5b5ea2a4a00a4ef7867427c393a
+
+--5be0f5b5ea2a4a00a4ef7867427c393a
+Content-Type: text/plain
+
+Signed-off-by: Steven Honson <steven@honson.id.au>
+---
+src/tools/ipc.c | 6 +++---
+1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/src/tools/ipc.c b/src/tools/ipc.c
+index d3452be..1739c63 100644
+--- a/src/tools/ipc.c
++++ b/src/tools/ipc.c
+@@ -186,7 +186,7 @@ static int userspace_get_wireguard_interfaces(struct inflatable_buffer *buffer)
+if (strncmp(end, SOCK_SUFFIX, strlen(SOCK_SUFFIX)))
+continue;
+*end = '\0';
+- if (!userspace_has_wireguard_interface(ent->d_name))
++ if (!userspace_has_wireguard_iface(ent->d_name))
+continue;
+buffer->next = strdup(ent->d_name);
+buffer->good = true;
+@@ -966,7 +966,7 @@ cleanup:
+int ipc_get_device(struct wgdevice **dev, const char *iface)
+{
+#ifdef __linux__
+- if (userspace_has_wireguard_interface(iface))
++ if (userspace_has_wireguard_iface(iface))
+return userspace_get_device(dev, iface);
+return kernel_get_device(dev, iface);
+#else
+@@ -977,7 +977,7 @@ int ipc_get_device(struct wgdevice **dev, const char *iface)
+int ipc_set_device(struct wgdevice *dev)
+{
+#ifdef __linux__
+- if (userspace_has_wireguard_interface(dev->name))
++ if (userspace_has_wireguard_iface(dev->name))
+return userspace_set_device(dev);
+return kernel_set_device(dev);
+#else
+--
+2.21.0
+--5be0f5b5ea2a4a00a4ef7867427c393a
+Content-Type: text/html
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html><html><head><title></title><style type=3D"text/css">p.Mso=
+Normal,p.MsoNoSpacing{margin:0}</style></head><body><div>Signed-off-by: =
+Steven Honson &lt;<a href=3D"mailto:steven@honson.id.au">steven@honson.i=
+d.au</a>&gt;<br></div><div>---<br></div><div>src/tools/ipc.c | 6 +++---<=
+br></div><div>1 file changed, 3 insertions(+), 3 deletions(-)<br></div><=
+div><br></div><div>diff --git a/src/tools/ipc.c b/src/tools/ipc.c<br></d=
+iv><div>index d3452be..1739c63 100644<br></div><div>--- a/src/tools/ipc.=
+c<br></div><div>+++ b/src/tools/ipc.c<br></div><div>@@ -186,7 +186,7 @@ =
+static int userspace_get_wireguard_interfaces(struct inflatable_buffer *=
+buffer)<br></div><div>if (strncmp(end, SOCK_SUFFIX, strlen(SOCK_SUFFIX))=
+)<br></div><div>continue;<br></div><div>*end =3D '\0';<br></div><div>-		=
+if (!userspace_has_wireguard_interface(ent-&gt;d_name))<br></div><div>+	=
+	if (!userspace_has_wireguard_iface(ent-&gt;d_name))<br></div><div>conti=
+nue;<br></div><div>buffer-&gt;next =3D strdup(ent-&gt;d_name);<br></div>=
+<div>buffer-&gt;good =3D true;<br></div><div>@@ -966,7 +966,7 @@ cleanup=
+:<br></div><div>int ipc_get_device(struct wgdevice **dev, const char *if=
+ace)<br></div><div>{<br></div><div>#ifdef __linux__<br></div><div>-	if (=
+userspace_has_wireguard_interface(iface))<br></div><div>+	if (userspace_=
+has_wireguard_iface(iface))<br></div><div>return userspace_get_device(de=
+v, iface);<br></div><div>return kernel_get_device(dev, iface);<br></div>=
+<div>#else<br></div><div>@@ -977,7 +977,7 @@ int ipc_get_device(struct w=
+gdevice **dev, const char *iface)<br></div><div>int ipc_set_device(struc=
+t wgdevice *dev)<br></div><div>{<br></div><div>#ifdef __linux__<br></div=
+><div>-	if (userspace_has_wireguard_interface(dev-&gt;name))<br></div><d=
+iv>+	if (userspace_has_wireguard_iface(dev-&gt;name))<br></div><div>retu=
+rn userspace_set_device(dev);<br></div><div>return kernel_set_device(dev=
+);<br></div><div>#else<br></div><div>--<br></div><div>2.21.0<br></div></=
+body></html>
+--5be0f5b5ea2a4a00a4ef7867427c393a--
+
+--===============5026200237658831546==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
+_______________________________________________
+WireGuard mailing list
+WireGuard@lists.zx2c4.com
+https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--===============5026200237658831546==--
