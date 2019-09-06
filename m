@@ -6,57 +6,59 @@ X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CEAB9C00307
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  6 Sep 2019 19:17:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 15722C00307
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  6 Sep 2019 19:53:24 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 73320206BB
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  6 Sep 2019 19:17:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 108C520838
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  6 Sep 2019 19:53:22 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="Ed1Q7S/N"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 73320206BB
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	dkim=permerror (0-bit key) header.d=eggiecode.org header.i=@eggiecode.org header.b="hxWamMAm"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 108C520838
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=eggiecode.org
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 638b8bb1;
-	Fri, 6 Sep 2019 19:17:39 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6de14e6a;
+	Fri, 6 Sep 2019 19:52:55 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 777830c1
- for <wireguard@lists.zx2c4.com>; Fri, 6 Sep 2019 19:17:37 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c987969f
- for <wireguard@lists.zx2c4.com>; Fri, 6 Sep 2019 19:17:35 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c602385a
- for <wireguard@lists.zx2c4.com>; Fri, 6 Sep 2019 18:34:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type:content-transfer-encoding; s=mail; bh=AYTXi9H6HxaV
- cZtqYGU2/aLyLXI=; b=Ed1Q7S/NrbOuj8Sq/xjHxGplL34jJ/v7nA/7rS0WgvIJ
- qGmcYjT173XEqBKznuHoBuW934em54RCqdFdnK7XkR99QYS2ni1Y8ZX3hOwABuAV
- uTyFaL5Z26upNG8+yQgAQ1shrd7BkmclZ7OsrNTR6thJ2yMomNPxK8umavHW0cLM
- SoUfycCr48kDSMZalerzZDMGT3s/MXu7IXexJDq2R5zVYvsdwK9reO/PKr97gHg4
- wZTjqgKqbrjcsWU7MiTqqsr4jcgZCfyR5QXvR3ERQkxEkvOqMLODPqLN0wAGPwbi
- cprrnxOOqbHX9+Quo3oYkLcdfVdAEolZ+joOEu+mqA==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 79b1bd8b
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Fri, 6 Sep 2019 18:34:14 +0000 (UTC)
-Received: by mail-oi1-f179.google.com with SMTP id z6so350360oix.9
- for <wireguard@lists.zx2c4.com>; Fri, 06 Sep 2019 12:17:35 -0700 (PDT)
-X-Gm-Message-State: APjAAAVbbvbjw1mHv9YBIKwesHICiSkz/R6zu15sJZEgk1eP7eSHEuUO
- 3SzasbMITfQ/kcKNnH52f7lv0X3n7GMpxDq4qd4=
-X-Google-Smtp-Source: APXvYqzfOb4NtqkzX+Fpye7ylPs0oNFb1QFe8pXeVCI0XKza8yExrTehf6JYViFKi9HTMQX1jfkyYuuRXW5Rtq2VWiI=
-X-Received: by 2002:aca:edd4:: with SMTP id l203mr8725474oih.52.1567797454737; 
- Fri, 06 Sep 2019 12:17:34 -0700 (PDT)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0718153a
+ for <wireguard@lists.zx2c4.com>; Fri, 6 Sep 2019 19:52:54 +0000 (UTC)
+Received: from mail01.eggieservers.nl (mail01.eggieservers.nl
+ [IPv6:2a01:7c8:aab4:31b:1::1])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 56381587
+ for <wireguard@lists.zx2c4.com>; Fri, 6 Sep 2019 19:52:54 +0000 (UTC)
+Received: from localhost (localhost [127.0.0.1])
+ by mail01.eggieservers.nl (Postfix) with ESMTP id 4BA551C37D2;
+ Fri,  6 Sep 2019 22:22:45 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at mail.vps01.eggieservers.nl
+Received: from mail01.eggieservers.nl ([127.0.0.1])
+ by localhost (vps01.eggieservers.nl [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 5SLZEoK4JPLu; Fri,  6 Sep 2019 22:21:42 +0200 (CEST)
+Received: from olifant.lan.eggie.zone (unknown
+ [IPv6:2a02:a454:d534:0:9553:9e39:79d2:4613])
+ (Authenticated sender: egbert@eggiecode.org)
+ by mail01.eggieservers.nl (Postfix) with ESMTPSA id 901E41C37B9;
+ Fri,  6 Sep 2019 22:21:42 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=eggiecode.org;
+ s=default; t=1567801302;
+ bh=9q4Rc8umu6kuhEp6qhNM3+MnMnoSjRSkhcVqnIYvwoU=;
+ h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
+ b=hxWamMAmZQSWAm1Znl8+u4o0i9QvX3evcwCecO4OOmdNX45usZ/lHfM667gWH6HGY
+ erep/jqVbbvKSOFuHQsYdYuahPxGOYFy5vyhA5P191PzCuRZeoDDN6AX12f75Aykps
+ cJ4R3uSK+fDE2s2n1Gmv7Bq3wuvJNhllG2yvuIDk=
+Message-ID: <3437989727b14b2ebe1a2c5fd5a7a9bc430ed2f4.camel@eggiecode.org>
+Subject: Re: DMKS failed after Kernel Upgrade to 4.4.0-161-generic on Ubuntu
+ 16.04 LTS
+From: Egbert Verhage <egbert@eggiecode.org>
+To: Markus Grundmann <markus@activezone.de>
+Date: Fri, 06 Sep 2019 21:51:46 +0200
+In-Reply-To: <3a0ae2da89436159fbce7856a6a88d3e@activezone.de>
+References: <a8a4d088-d5fd-5e3b-23ab-72e2c7932ff3@activezone.de>
+ <CAHmME9pTAY5X3h2xwwz6LPjqWpgtd2R+Lw4C3-ZPqxve=4HCSw@mail.gmail.com>
+ <3a0ae2da89436159fbce7856a6a88d3e@activezone.de>
+User-Agent: Evolution 3.32.4 
 MIME-Version: 1.0
-References: <CAMKRnFh4XvqYzPDVjy_NOpeHY+KgsRfEuHfEjWy9N1wfY9MwTg@mail.gmail.com>
-In-Reply-To: <CAMKRnFh4XvqYzPDVjy_NOpeHY+KgsRfEuHfEjWy9N1wfY9MwTg@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 6 Sep 2019 13:17:23 -0600
-X-Gmail-Original-Message-ID: <CAHmME9oC+rYCVqv21-nGw_vyxzY5VhTHoa0mrnbOEShcczBN-g@mail.gmail.com>
-Message-ID: <CAHmME9oC+rYCVqv21-nGw_vyxzY5VhTHoa0mrnbOEShcczBN-g@mail.gmail.com>
-Subject: Re: WireGuard fails to build on CentOS 7.1908
-To: Dario Pilori <dario.pilori@astrogeo.va.it>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
@@ -69,115 +71,80 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: multipart/mixed; boundary="===============4647737430169905431=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-SGkgRGFyaW8sCgpBcmUgeW91IHJ1bm5pbmcgdGhlIGxhdGVzdCBlbDcga2VybmVsPyBPciBhcmUg
-dGhlcmUgUkhFTCB1cGRhdGVzIHlvdQpoYXZlbid0IHlldCBhcHBsaWVkPyBDYW4geW91IHByb3Zp
-ZGUgbW9yZSBpbmZvIGFib3V0IHZlcnNpb25zPwoKSmFzb24KCk9uIEZyaSwgU2VwIDYsIDIwMTkg
-YXQgMTowOCBQTSBEYXJpbyBQaWxvcmkgPGRhcmlvLnBpbG9yaUBhc3Ryb2dlby52YS5pdD4gd3Jv
-dGU6Cj4KPiBEZWFyIGFsbCwKPgo+IEkganVzdCB1cGdyYWRlZCBhIHRlc3QgbWFjaGluZSB0byBD
-ZW50T1MgNy4xOTA4IChiYXNlZCBvbiBSSEVMIDcuNyksCj4gY3VycmVudGx5IG9uIENSIHJlcG9z
-aXRvcnksIHdoaWNoIGNhcnJpZXMgTGludXgga2VybmVsIDMuMTAuMC0xMDYyLgo+Cj4gTGF0ZXN0
-IFdpcmVHdWFyZCByZWxlYXNlIGZyb20gQ2VudE9TIFJQTSByZXBvICgwLjAuMjAxOTA3MDIpIGZh
-aWxzIHRvCj4gYnVpbGQgd2l0aCB0aGUgZm9sbG93aW5nIGVycm9yOgo+Cj4gREtNUyBtYWtlLmxv
-ZyBmb3Igd2lyZWd1YXJkLTAuMC4yMDE5MDcwMiBmb3Iga2VybmVsCj4gMy4xMC4wLTEwNjIuZWw3
-Lng4Nl82NCAoeDg2XzY0KQo+IFNhdCBBdWcgMzEgMTc6NTE6NDMgQ0VTVCAyMDE5Cj4gbWFrZTog
-RW50ZXJpbmcgZGlyZWN0b3J5IGAvdXNyL3NyYy9rZXJuZWxzLzMuMTAuMC0xMDYyLmVsNy54ODZf
-NjQnCj4gICBMRCAgICAgIC92YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE5MDcwMi9idWls
-ZC9idWlsdC1pbi5vCj4gICBDQyBbTV0gIC92YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE5
-MDcwMi9idWlsZC9tYWluLm8KPiAgIENDIFtNXSAgL3Zhci9saWIvZGttcy93aXJlZ3VhcmQvMC4w
-LjIwMTkwNzAyL2J1aWxkL25vaXNlLm8KPiAgIENDIFtNXSAgL3Zhci9saWIvZGttcy93aXJlZ3Vh
-cmQvMC4wLjIwMTkwNzAyL2J1aWxkL2RldmljZS5vCj4gICBDQyBbTV0gIC92YXIvbGliL2RrbXMv
-d2lyZWd1YXJkLzAuMC4yMDE5MDcwMi9idWlsZC9wZWVyLm8KPiAgIENDIFtNXSAgL3Zhci9saWIv
-ZGttcy93aXJlZ3VhcmQvMC4wLjIwMTkwNzAyL2J1aWxkL3RpbWVycy5vCj4gICBDQyBbTV0gIC92
-YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE5MDcwMi9idWlsZC9xdWV1ZWluZy5vCj4gICBD
-QyBbTV0gIC92YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE5MDcwMi9idWlsZC9zZW5kLm8K
-PiAgIENDIFtNXSAgL3Zhci9saWIvZGttcy93aXJlZ3VhcmQvMC4wLjIwMTkwNzAyL2J1aWxkL3Jl
-Y2VpdmUubwo+IC92YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE5MDcwMi9idWlsZC9yZWNl
-aXZlLmM6IEluIGZ1bmN0aW9uCj4g4oCYd2dfcGFja2V0X2NvbnN1bWVfZGF0YV9kb25l4oCZOgo+
-IC92YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE5MDcwMi9idWlsZC9yZWNlaXZlLmM6NDAz
-OjQ6IHdhcm5pbmc6Cj4gcGFzc2luZyBhcmd1bWVudCAxIG9mIOKAmElQNl9FQ05fc2V0X2Nl4oCZ
-IGZyb20gaW5jb21wYXRpYmxlIHBvaW50ZXIgdHlwZQo+IFtlbmFibGVkIGJ5IGRlZmF1bHRdCj4g
-ICAgIElQNl9FQ05fc2V0X2NlKHNrYiwgaXB2Nl9oZHIoc2tiKSk7Cj4gICAgIF4KPiBJbiBmaWxl
-IGluY2x1ZGVkIGZyb20gaW5jbHVkZS9uZXQvaXBfdHVubmVscy5oOjE0OjAsCj4gICAgICAgICAg
-ICAgICAgICBmcm9tCj4gL3Zhci9saWIvZGttcy93aXJlZ3VhcmQvMC4wLjIwMTkwNzAyL2J1aWxk
-L2NvbXBhdC9jb21wYXQuaDo5MiwKPiAgICAgICAgICAgICAgICAgIGZyb20gPGNvbW1hbmQtbGlu
-ZT46MDoKPiBpbmNsdWRlL25ldC9pbmV0X2Vjbi5oOjEyMDoxOTogbm90ZTogZXhwZWN0ZWQg4oCY
-c3RydWN0IHNrX2J1ZmYgKuKAmSBidXQKPiBhcmd1bWVudCBpcyBvZiB0eXBlIOKAmHN0cnVjdCBp
-cHY2aGRyICrigJkKPiAgc3RhdGljIGlubGluZSBpbnQgSVA2X0VDTl9zZXRfY2Uoc3RydWN0IHNr
-X2J1ZmYgKnNrYiwgc3RydWN0IGlwdjZoZHIgKmlwaCkKPiAgICAgICAgICAgICAgICAgICAgXgo+
-IC92YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE5MDcwMi9idWlsZC9yZWNlaXZlLmM6NDAz
-OjQ6IGVycm9yOiB0b28KPiBmZXcgYXJndW1lbnRzIHRvIGZ1bmN0aW9uIOKAmElQNl9FQ05fc2V0
-X2Nl4oCZCj4gICAgIElQNl9FQ05fc2V0X2NlKHNrYiwgaXB2Nl9oZHIoc2tiKSk7Cj4gICAgIF4K
-PiBJbiBmaWxlIGluY2x1ZGVkIGZyb20gaW5jbHVkZS9uZXQvaXBfdHVubmVscy5oOjE0OjAsCj4g
-ICAgICAgICAgICAgICAgICBmcm9tCj4gL3Zhci9saWIvZGttcy93aXJlZ3VhcmQvMC4wLjIwMTkw
-NzAyL2J1aWxkL2NvbXBhdC9jb21wYXQuaDo5MiwKPiAgICAgICAgICAgICAgICAgIGZyb20gPGNv
-bW1hbmQtbGluZT46MDoKPiBpbmNsdWRlL25ldC9pbmV0X2Vjbi5oOjEyMDoxOTogbm90ZTogZGVj
-bGFyZWQgaGVyZQo+ICBzdGF0aWMgaW5saW5lIGludCBJUDZfRUNOX3NldF9jZShzdHJ1Y3Qgc2tf
-YnVmZiAqc2tiLCBzdHJ1Y3QgaXB2NmhkciAqaXBoKQo+ICAgICAgICAgICAgICAgICAgICBeCj4g
-bWFrZVsxXTogKioqIFsvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8wLjAuMjAxOTA3MDIvYnVpbGQv
-cmVjZWl2ZS5vXSBFcnJvciAxCj4gbWFrZVsxXTogKioqIFdhaXRpbmcgZm9yIHVuZmluaXNoZWQg
-am9icy4uLi4KPiBtYWtlOiAqKiogW19tb2R1bGVfL3Zhci9saWIvZGttcy93aXJlZ3VhcmQvMC4w
-LjIwMTkwNzAyL2J1aWxkXSBFcnJvciAyCj4gbWFrZTogTGVhdmluZyBkaXJlY3RvcnkgYC91c3Iv
-c3JjL2tlcm5lbHMvMy4xMC4wLTEwNjIuZWw3Lng4Nl82NCcKPgo+IEkgYW0gbm90IHN1cmUgaWYg
-dGhpcyBpcyBhIGtub3duIGJ1ZyBvciBub3QuCj4KPiBUaGFua3MsCj4gRGFyaW8KPiBfX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXwo+IFdpcmVHdWFyZCBtYWls
-aW5nIGxpc3QKPiBXaXJlR3VhcmRAbGlzdHMuengyYzQuY29tCj4gaHR0cHM6Ly9saXN0cy56eDJj
-NC5jb20vbWFpbG1hbi9saXN0aW5mby93aXJlZ3VhcmQKCk9uIEZyaSwgU2VwIDYsIDIwMTkgYXQg
-MTowOCBQTSBEYXJpbyBQaWxvcmkgPGRhcmlvLnBpbG9yaUBhc3Ryb2dlby52YS5pdD4gd3JvdGU6
-Cj4KPiBEZWFyIGFsbCwKPgo+IEkganVzdCB1cGdyYWRlZCBhIHRlc3QgbWFjaGluZSB0byBDZW50
-T1MgNy4xOTA4IChiYXNlZCBvbiBSSEVMIDcuNyksCj4gY3VycmVudGx5IG9uIENSIHJlcG9zaXRv
-cnksIHdoaWNoIGNhcnJpZXMgTGludXgga2VybmVsIDMuMTAuMC0xMDYyLgo+Cj4gTGF0ZXN0IFdp
-cmVHdWFyZCByZWxlYXNlIGZyb20gQ2VudE9TIFJQTSByZXBvICgwLjAuMjAxOTA3MDIpIGZhaWxz
-IHRvCj4gYnVpbGQgd2l0aCB0aGUgZm9sbG93aW5nIGVycm9yOgo+Cj4gREtNUyBtYWtlLmxvZyBm
-b3Igd2lyZWd1YXJkLTAuMC4yMDE5MDcwMiBmb3Iga2VybmVsCj4gMy4xMC4wLTEwNjIuZWw3Lng4
-Nl82NCAoeDg2XzY0KQo+IFNhdCBBdWcgMzEgMTc6NTE6NDMgQ0VTVCAyMDE5Cj4gbWFrZTogRW50
-ZXJpbmcgZGlyZWN0b3J5IGAvdXNyL3NyYy9rZXJuZWxzLzMuMTAuMC0xMDYyLmVsNy54ODZfNjQn
-Cj4gICBMRCAgICAgIC92YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE5MDcwMi9idWlsZC9i
-dWlsdC1pbi5vCj4gICBDQyBbTV0gIC92YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE5MDcw
-Mi9idWlsZC9tYWluLm8KPiAgIENDIFtNXSAgL3Zhci9saWIvZGttcy93aXJlZ3VhcmQvMC4wLjIw
-MTkwNzAyL2J1aWxkL25vaXNlLm8KPiAgIENDIFtNXSAgL3Zhci9saWIvZGttcy93aXJlZ3VhcmQv
-MC4wLjIwMTkwNzAyL2J1aWxkL2RldmljZS5vCj4gICBDQyBbTV0gIC92YXIvbGliL2RrbXMvd2ly
-ZWd1YXJkLzAuMC4yMDE5MDcwMi9idWlsZC9wZWVyLm8KPiAgIENDIFtNXSAgL3Zhci9saWIvZGtt
-cy93aXJlZ3VhcmQvMC4wLjIwMTkwNzAyL2J1aWxkL3RpbWVycy5vCj4gICBDQyBbTV0gIC92YXIv
-bGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE5MDcwMi9idWlsZC9xdWV1ZWluZy5vCj4gICBDQyBb
-TV0gIC92YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE5MDcwMi9idWlsZC9zZW5kLm8KPiAg
-IENDIFtNXSAgL3Zhci9saWIvZGttcy93aXJlZ3VhcmQvMC4wLjIwMTkwNzAyL2J1aWxkL3JlY2Vp
-dmUubwo+IC92YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE5MDcwMi9idWlsZC9yZWNlaXZl
-LmM6IEluIGZ1bmN0aW9uCj4g4oCYd2dfcGFja2V0X2NvbnN1bWVfZGF0YV9kb25l4oCZOgo+IC92
-YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE5MDcwMi9idWlsZC9yZWNlaXZlLmM6NDAzOjQ6
-IHdhcm5pbmc6Cj4gcGFzc2luZyBhcmd1bWVudCAxIG9mIOKAmElQNl9FQ05fc2V0X2Nl4oCZIGZy
-b20gaW5jb21wYXRpYmxlIHBvaW50ZXIgdHlwZQo+IFtlbmFibGVkIGJ5IGRlZmF1bHRdCj4gICAg
-IElQNl9FQ05fc2V0X2NlKHNrYiwgaXB2Nl9oZHIoc2tiKSk7Cj4gICAgIF4KPiBJbiBmaWxlIGlu
-Y2x1ZGVkIGZyb20gaW5jbHVkZS9uZXQvaXBfdHVubmVscy5oOjE0OjAsCj4gICAgICAgICAgICAg
-ICAgICBmcm9tCj4gL3Zhci9saWIvZGttcy93aXJlZ3VhcmQvMC4wLjIwMTkwNzAyL2J1aWxkL2Nv
-bXBhdC9jb21wYXQuaDo5MiwKPiAgICAgICAgICAgICAgICAgIGZyb20gPGNvbW1hbmQtbGluZT46
-MDoKPiBpbmNsdWRlL25ldC9pbmV0X2Vjbi5oOjEyMDoxOTogbm90ZTogZXhwZWN0ZWQg4oCYc3Ry
-dWN0IHNrX2J1ZmYgKuKAmSBidXQKPiBhcmd1bWVudCBpcyBvZiB0eXBlIOKAmHN0cnVjdCBpcHY2
-aGRyICrigJkKPiAgc3RhdGljIGlubGluZSBpbnQgSVA2X0VDTl9zZXRfY2Uoc3RydWN0IHNrX2J1
-ZmYgKnNrYiwgc3RydWN0IGlwdjZoZHIgKmlwaCkKPiAgICAgICAgICAgICAgICAgICAgXgo+IC92
-YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE5MDcwMi9idWlsZC9yZWNlaXZlLmM6NDAzOjQ6
-IGVycm9yOiB0b28KPiBmZXcgYXJndW1lbnRzIHRvIGZ1bmN0aW9uIOKAmElQNl9FQ05fc2V0X2Nl
-4oCZCj4gICAgIElQNl9FQ05fc2V0X2NlKHNrYiwgaXB2Nl9oZHIoc2tiKSk7Cj4gICAgIF4KPiBJ
-biBmaWxlIGluY2x1ZGVkIGZyb20gaW5jbHVkZS9uZXQvaXBfdHVubmVscy5oOjE0OjAsCj4gICAg
-ICAgICAgICAgICAgICBmcm9tCj4gL3Zhci9saWIvZGttcy93aXJlZ3VhcmQvMC4wLjIwMTkwNzAy
-L2J1aWxkL2NvbXBhdC9jb21wYXQuaDo5MiwKPiAgICAgICAgICAgICAgICAgIGZyb20gPGNvbW1h
-bmQtbGluZT46MDoKPiBpbmNsdWRlL25ldC9pbmV0X2Vjbi5oOjEyMDoxOTogbm90ZTogZGVjbGFy
-ZWQgaGVyZQo+ICBzdGF0aWMgaW5saW5lIGludCBJUDZfRUNOX3NldF9jZShzdHJ1Y3Qgc2tfYnVm
-ZiAqc2tiLCBzdHJ1Y3QgaXB2NmhkciAqaXBoKQo+ICAgICAgICAgICAgICAgICAgICBeCj4gbWFr
-ZVsxXTogKioqIFsvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8wLjAuMjAxOTA3MDIvYnVpbGQvcmVj
-ZWl2ZS5vXSBFcnJvciAxCj4gbWFrZVsxXTogKioqIFdhaXRpbmcgZm9yIHVuZmluaXNoZWQgam9i
-cy4uLi4KPiBtYWtlOiAqKiogW19tb2R1bGVfL3Zhci9saWIvZGttcy93aXJlZ3VhcmQvMC4wLjIw
-MTkwNzAyL2J1aWxkXSBFcnJvciAyCj4gbWFrZTogTGVhdmluZyBkaXJlY3RvcnkgYC91c3Ivc3Jj
-L2tlcm5lbHMvMy4xMC4wLTEwNjIuZWw3Lng4Nl82NCcKPgo+IEkgYW0gbm90IHN1cmUgaWYgdGhp
-cyBpcyBhIGtub3duIGJ1ZyBvciBub3QuCj4KPiBUaGFua3MsCj4gRGFyaW8KPiBfX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXwo+IFdpcmVHdWFyZCBtYWlsaW5n
-IGxpc3QKPiBXaXJlR3VhcmRAbGlzdHMuengyYzQuY29tCj4gaHR0cHM6Ly9saXN0cy56eDJjNC5j
-b20vbWFpbG1hbi9saXN0aW5mby93aXJlZ3VhcmQKCgoKLS0gCkphc29uIEEuIERvbmVuZmVsZApE
-ZWVwIFNwYWNlIEV4cGxvcmVyCmZyOiArMzMgNiA1MSA5MCA4MiA2Ngp1czogKzEgNTEzIDQ3NiAx
-MjAwCl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fCldpcmVH
-dWFyZCBtYWlsaW5nIGxpc3QKV2lyZUd1YXJkQGxpc3RzLnp4MmM0LmNvbQpodHRwczovL2xpc3Rz
-Lnp4MmM0LmNvbS9tYWlsbWFuL2xpc3RpbmZvL3dpcmVndWFyZAo=
+
+--===============4647737430169905431==
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-JgBosj58f9iGynnsYefA"
+
+
+--=-JgBosj58f9iGynnsYefA
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hey Markus,=20
+
+It shoud be fixed now! Just updated the ppa package en it shoud work.
+
+Greetz,
+Egbert
+
+On Fri, 2019-09-06 at 17:00 +0200, Markus Grundmann wrote:
+> No! No! Jason! You do not have to apologize. I think we have to
+> thank=20
+> you for WireGuard!
+>=20
+> -Markus
+>=20
+> Am 2019-09-06 16:06, schrieb Jason A. Donenfeld:
+>=20
+> > Sorry for the hassle. I'm not happy about the situation either, but
+> > it
+> > is what it is. Ubuntu isn't the best distro to deal with
+> > unfortunately.
+> >=20
+> > I'll poke Egbert again to see if he can hurry up.
+
+--=-JgBosj58f9iGynnsYefA
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+
+iQKTBAABCgB9FiEE+OhqNTbreSu+mIfAlYuguCx20HwFAl1yuNJfFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldEY4
+RTg2QTM1MzZFQjc5MkJCRTk4ODdDMDk1OEJBMEI4MkM3NkQwN0MACgkQlYuguCx2
+0HxH2A/+K1E0tGh3+22vScfD33GQKNyvRCpu25ZfWcZPrDYMU81g+pEP0etaw1oL
+k9BV1jpDaVtSiQyRjfQEKrYuQiz2Zi7idM9M8Rdd3EeTxOVbj+vahOQiYzoPW849
+NFSnygtE64ii/EsUXpc18DXJry2PJCsEIVg2tytYHHldAB8yToibdkWA69jdv1Vc
+s2z//vrmOAvbkx6cDMf3BBJWqeFVuq3C+Vd4WSTGIITNU3uIhaXUZKWc37Bbd/z7
+1vXATOsza1jiPkzTDCF6mw6uSOkb7TAPYa8VwMTquZxgNGYIVt+0jMXl3AAU8KBH
+oRJQv66ffXScsQwbHSSD0OqBiR6taXL9uBLt+g4DdoZ/1GU0JgioiJ/FU80c1QnN
+LqAfuxqF6zq8Gq913U5wRJko98Xa1FhlonCZY+r2impEup8ZilU9BLAptB7JVQoO
+YLlp6akWI08E6e/06ZBj97/ng6Ezj267j2sNpmu+vZVjEAVtSwhQjtmJUdmt5A3L
+K7nuWAXXHAOcCw13g7UOeEIJkxwl+ISLI9wcp8R1WJSd+gqkdnoSfutKwTdVxS+E
+Vdb+v2ir104pTcPAJhh3JlF+Tbf0po/R6jWUNydOEJ6Jts+ZPXFacPZYcrUIl+FV
+9I0aOfvgGdlf6oqV8evDd9Kk1LCkb57337OumPsSEgbZ+vuecqg=
+=i+U7
+-----END PGP SIGNATURE-----
+
+--=-JgBosj58f9iGynnsYefA--
+
+
+--===============4647737430169905431==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
+_______________________________________________
+WireGuard mailing list
+WireGuard@lists.zx2c4.com
+https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--===============4647737430169905431==--
+
