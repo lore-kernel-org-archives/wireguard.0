@@ -1,51 +1,93 @@
-Return-Path: <SRS0=P4Ju=XA=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=Lcmb=XB=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 45EC3C43331
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  5 Sep 2019 22:25:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4130CC43331
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  6 Sep 2019 07:33:11 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id E0A1D2070C
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  5 Sep 2019 22:25:54 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="DMqqHMgG"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org E0A1D2070C
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id 9F7552082C
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  6 Sep 2019 07:33:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 9F7552082C
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=activezone.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a978ac9c;
-	Thu, 5 Sep 2019 22:25:53 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9c1a0e20;
+	Fri, 6 Sep 2019 07:32:53 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a72db150
- for <wireguard@lists.zx2c4.com>; Thu, 5 Sep 2019 22:25:49 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b2fc34f4
- for <wireguard@lists.zx2c4.com>; Thu, 5 Sep 2019 22:25:49 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 008735cb
- for <wireguard@lists.zx2c4.com>; Thu, 5 Sep 2019 21:42:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=date:to:from
- :subject:mime-version:content-type; s=mail; bh=+XeqUNuTKT9sPuK0Q
- WvIUqQNlY0=; b=DMqqHMgGM4WRrG0uHZ4d365Z8KC0tHe0w453yZDmkrNLTHg+j
- UbT2xtqHHm++flsDSkjS3zYaRzzwzj64UwAHphOTwmDS6cz68sGjl5fznb/8YAJM
- j3OF0HL9Jzl0f3MRxPBYPw/iLV+HUaHaLLTTVgxv9UTH1YCj1CyJpzr8nPpeLMuj
- V5CnJuUzpJlM+PwFGHfpc2ZiNUseDdzaFn+GMkBz0w4zRvRzXc7tuJVdEW7QrzLF
- rrce23Qo3+LUQbBwVAylkn86QVoVuz6b2xY7BGfVprEij6wktAwaJDVA8yIv8sOj
- x3t+E5q7kaNGL9/4tiYWPS9z7Yzpal7/GYppA==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 754a3ee1
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Thu, 5 Sep 2019 21:42:34 +0000 (UTC)
-Date: Thu, 05 Sep 2019 16:25:47 -0600
-To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: [ANNOUNCE] WireGuard Snapshot `0.0.20190905` Available
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 47a14c34
+ for <wireguard@lists.zx2c4.com>; Fri, 6 Sep 2019 07:32:52 +0000 (UTC)
+Received: from vintage.nbg1-dc1.freebsdcloud.com
+ (vintage.nbg1-dc1.freebsdcloud.com [159.69.229.98])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fe8e9a46
+ for <wireguard@lists.zx2c4.com>; Fri, 6 Sep 2019 07:32:52 +0000 (UTC)
+Received: from [82.206.32.229] (ip229.vl4-han.activezone.de [82.206.32.229])
+ (authenticated bits=0)
+ by vintage.nbg1-dc1.freebsdcloud.com (8.15.2/8.15.2) with ESMTPSA id
+ x867Wo4D081983
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO)
+ for <wireguard@lists.zx2c4.com>; Fri, 6 Sep 2019 09:32:51 +0200 (CEST)
+ (envelope-from markus@activezone.de)
+X-Authentication-Warning: vintage.nbg1-dc1.freebsdcloud.com: Host
+ ip229.vl4-han.activezone.de [82.206.32.229] claimed to be [82.206.32.229]
+To: wireguard@lists.zx2c4.com
+From: Markus Grundmann <markus@activezone.de>
+Subject: DMKS failed after Kernel Upgrade to 4.4.0-161-generic on Ubuntu 16.04
+ LTS
+Openpgp: preference=signencrypt
+Autocrypt: addr=markus@activezone.de; prefer-encrypt=mutual; keydata=
+ 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
+Message-ID: <a8a4d088-d5fd-5e3b-23ab-72e2c7932ff3@activezone.de>
+Date: Fri, 6 Sep 2019 09:32:45 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Message-Id: <74c308376a2bd7e7@frisell.zx2c4.com>
+Content-Language: de-DE
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -57,125 +99,96 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-Hello,
-
-A new snapshot, `0.0.20190905`, has been tagged in the git repository.
-
-Please note that this snapshot is, like the rest of the project at this point
-in time, experimental, and does not constitute a real release that would be
-considered secure and bug-free. WireGuard is generally thought to be fairly
-stable, and most likely will not crash your computer (though it may).
-However, as this is a pre-release snapshot, it comes with no guarantees, and
-its security is not yet to be depended on; it is not applicable for CVEs.
-
-With all that said, if you'd like to test this snapshot out, there are a
-few relevant changes.
-
-== Changes ==
-
-  * compat: define conversion constants for ancient kernels
-  * compat: support running in OpenVZ environments
-  * compat: do not run bc on clean target
-  * compat: account for android-4.9 backport of addr_gen_mode
-  * compat: work around ubuntu breakage
-  
-  Lots of compat work. Of particular note is that Ubuntu 16.04 screwed up a
-  backport, which broke WireGuard. Their kernel team is aware of the issue, but
-  due to bureaucratic constraints, they can't release a new kernel for ~7 weeks,
-  so we're releasing a new version instead.
-  
-  * wg-quick: android: refactor and add incoming allow rules
-  
-  Android battery savers also limit incoming traffic, so we open this up to
-  WireGuard.
-  
-  * netlink: enforce that unused bits of flags are zero
-  
-  This enforcement means we can use these bits later.
-  
-  * noise: immediately rekey all peers after changing device private key
-  
-  It should now be possible to change private keys and then immediately
-  re-handshake, without loosing incoming packets.
-  
-  * netlink: skip peers with invalid keys
-  
-  We already had this for some cases but not for the invalid case.
-  
-  * Kbuild: account for upstream configuration maze changes
-  
-  This should allow inserting into the build system of mainline kernels for
-  folks using the jury-rig scripts.
-  
-  * wg-quick: openbsd: fix alternate routing table syntax
-  
-  Syntax bug, which should now allow for multiple routing table-based routing on
-  OpenBSD.
-  
-  * wg-quick: linux: don't fail down when using systemd-resolved
-  
-  This prevents systemd-resolved->resolvconf systems to use wg-quick.
-  
-  * Makefile: allow specifying kernel release
-  
-  It is now possible to build for a kernel different from the running one.
-  
-  * tools: windows: enforce named pipe ownership and use protected prefix
-  
-  Security hardening enhancements for the Windows tools port.
-
-This snapshot contains commits from: Jason A. Donenfeld, Ronan Pigott, Nathan 
-Chancellor, Mikk Mar, and Ankur Kothari.
-
-As always, the source is available at https://git.zx2c4.com/WireGuard/ and
-information about the project is available at https://www.wireguard.com/ .
-
-This snapshot is available in compressed tarball form here:
-  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-0.0.20190905.tar.xz
-  SHA2-256: 78767ceeb5286beaa851145f072d920a340a9f1b771a2943b8efd638cee1a8f6
-  BLAKE2b-256: 2cb58ed55b4261257b0dcfca58a3e73bc5ea8eb660855e0bbb0639b893d4aa2e
-
-A PGP signature of that file decompressed is available here:
-  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-0.0.20190905.tar.asc
-  Signing key: AB9942E6D4A4CFC3412620A749FC7012A5DE03AE
-
-If you're a snapshot package maintainer, please bump your package version. If
-you're a user, the WireGuard team welcomes any and all feedback on this latest
-snapshot.
-
-Finally, WireGuard development thrives on donations. By popular demand, we
-have a webpage for this: https://www.wireguard.com/donations/
-
-Thank you,
-Jason Donenfeld
-
-
------BEGIN PGP SIGNATURE-----
-
-iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAl1xi1wQHGphc29uQHp4
-MmM0LmNvbQAKCRBJ/HASpd4DrnN9D/sHHEJmmQaJZ4RszJjDydUzq8wJ6SliFT0E
-JiuDTWyZQld7IRiCAAPmcgH9Xv783icLUQNKcO6JRAV0rTcmUmV4N6iuT1LKeNIj
-KrG44SxuAOSKSQacsJHE+jU4Tbn2MqGztw1f9NwUCOzTg/TfivERTG8+Xi5MP0c6
-clkHF6I8aTlV30JeqjmbpbSWYnnYJo5k3mMAY7lPZ4ddiWQTfYm3gBRbDu1cdwjX
-IHJ0ZtGvnwrb16/OTwxcPkE0lZiV7WLghHmXJjPbN6V0diHUIyvNddPceN1gxOeK
-HbI646KtceDBOGlWA+z6qF27W4PVw29fRtfAtUVDsPXNDRhYvGdnjG1p7ReUamW4
-KKuHJHfvgJURy++AXV9PUj6V0MtHANX6bWLjVDKRg+DIHPIU5iATF4Cz6vp9jcOh
-r3mJ3iA6XJE/0PSmqM1jbbB0Tb6dIGGXZgymMt4H3Uf0HYROQRAD8PZdl5Ii/d26
-1lydevz1TiUpO6ADcYq9PYngSVP4McR8EM/eCkBL+dY3RTlx0/lMemKR992FkTyq
-7TutFLfSa0FUJvkk1LsEQvLUKKpfkDiGd+/7v/k6DaIBSkA91kBiTdXNkyJpPnJS
-KWlH6dz7QZdVZVxdbZacHeFYvtqaa2+YaDyPJiibByBuwK0+g8lPQnTg3wuFjMIo
-FW5aLIHbeg==
-=vikk
------END PGP SIGNATURE-----
-_______________________________________________
-WireGuard mailing list
-WireGuard@lists.zx2c4.com
-https://lists.zx2c4.com/mailman/listinfo/wireguard
+UXVlc3Rpb246IElmIHRoZSBwYXRjaCBuZWVkZWQ/CgpEb24ndCB0b3VjaCBhIHJ1bm5pbmcgc3lz
+dGVtIDotfAotTWFya3VzCgoKWy4uXQpTZWxlY3RpbmcgcHJldmlvdXNseSB1bnNlbGVjdGVkIHBh
+Y2thZ2Ugd2lyZWd1YXJkLWRrbXMuCihSZWFkaW5nIGRhdGFiYXNlIC4uLiAzNDYyMzkgZmlsZXMg
+YW5kIGRpcmVjdG9yaWVzIGN1cnJlbnRseSBpbnN0YWxsZWQuKQpQcmVwYXJpbmcgdG8gdW5wYWNr
+IC4uLi93aXJlZ3VhcmQtZGttc18wLjAuMjAxOTA3MDItd2cxfnhlbmlhbF9hbGwuZGViIC4uLgpV
+bnBhY2tpbmcgd2lyZWd1YXJkLWRrbXMgKDAuMC4yMDE5MDcwMi13ZzF+eGVuaWFsKSAuLi4KU2Vs
+ZWN0aW5nIHByZXZpb3VzbHkgdW5zZWxlY3RlZCBwYWNrYWdlIHdpcmVndWFyZC10b29scy4KUHJl
+cGFyaW5nIHRvIHVucGFjawouLi4vd2lyZWd1YXJkLXRvb2xzXzAuMC4yMDE5MDcwMi13ZzF+eGVu
+aWFsX2FtZDY0LmRlYiAuLi4KVW5wYWNraW5nIHdpcmVndWFyZC10b29scyAoMC4wLjIwMTkwNzAy
+LXdnMX54ZW5pYWwpIC4uLgpTZWxlY3RpbmcgcHJldmlvdXNseSB1bnNlbGVjdGVkIHBhY2thZ2Ug
+d2lyZWd1YXJkLgpQcmVwYXJpbmcgdG8gdW5wYWNrIC4uLi93aXJlZ3VhcmRfMC4wLjIwMTkwNzAy
+LXdnMX54ZW5pYWxfYWxsLmRlYiAuLi4KVW5wYWNraW5nIHdpcmVndWFyZCAoMC4wLjIwMTkwNzAy
+LXdnMX54ZW5pYWwpIC4uLgpQcm9jZXNzaW5nIHRyaWdnZXJzIGZvciBtYW4tZGIgKDIuNy41LTEp
+IC4uLgpTZXR0aW5nIHVwIHdpcmVndWFyZC1ka21zICgwLjAuMjAxOTA3MDItd2cxfnhlbmlhbCkg
+Li4uCkxvYWRpbmcgbmV3IHdpcmVndWFyZC0wLjAuMjAxOTA3MDIgREtNUyBmaWxlcy4uLgpGaXJz
+dCBJbnN0YWxsYXRpb246IGNoZWNraW5nIGFsbCBrZXJuZWxzLi4uCkJ1aWxkaW5nIG9ubHkgZm9y
+IDQuNC4wLTE2MS1nZW5lcmljCkJ1aWxkaW5nIGluaXRpYWwgbW9kdWxlIGZvciA0LjQuMC0xNjEt
+Z2VuZXJpYwpFUlJPUjogQ2Fubm90IGNyZWF0ZSByZXBvcnQ6IFtFcnJubyAxN10gRmlsZSBleGlz
+dHM6CicvdmFyL2NyYXNoL3dpcmVndWFyZC1ka21zLjAuY3Jhc2gnCkVycm9yISBCYWQgcmV0dXJu
+IHN0YXR1cyBmb3IgbW9kdWxlIGJ1aWxkIG9uIGtlcm5lbDogNC40LjAtMTYxLWdlbmVyaWMKKHg4
+Nl82NCkKQ29uc3VsdCAvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8wLjAuMjAxOTA3MDIvYnVpbGQv
+bWFrZS5sb2cgZm9yIG1vcmUKaW5mb3JtYXRpb24uClNldHRpbmcgdXAgd2lyZWd1YXJkLXRvb2xz
+ICgwLjAuMjAxOTA3MDItd2cxfnhlbmlhbCkgLi4uClNldHRpbmcgdXAgd2lyZWd1YXJkICgwLjAu
+MjAxOTA3MDItd2cxfnhlbmlhbCkgLi4uCgo9PT0gQ3Jhc2ggUmVwb3J0ID09PQpQcm9ibGVtVHlw
+ZTogUGFja2FnZQpES01TQnVpbGRMb2c6CiBES01TIG1ha2UubG9nIGZvciB3aXJlZ3VhcmQtMC4w
+LjIwMTkwNzAyIGZvciBrZXJuZWwgNC40LjAtMTYxLWdlbmVyaWMKKHg4Nl82NCkKIEZyIDYuIFNl
+cCAwOTowMjoxOCBDRVNUIDIwMTkKIG1ha2U6IEVudGVyaW5nIGRpcmVjdG9yeSAnL3Vzci9zcmMv
+bGludXgtaGVhZGVycy00LjQuMC0xNjEtZ2VuZXJpYycKICAgTEQgICAgICAvdmFyL2xpYi9ka21z
+L3dpcmVndWFyZC8wLjAuMjAxOTA3MDIvYnVpbGQvYnVpbHQtaW4ubwogICBDQyBbTV0gIC92YXIv
+bGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE5MDcwMi9idWlsZC9tYWluLm8KICAgQ0MgW01dICAv
+dmFyL2xpYi9ka21zL3dpcmVndWFyZC8wLjAuMjAxOTA3MDIvYnVpbGQvbm9pc2UubwogICBDQyBb
+TV0gIC92YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE5MDcwMi9idWlsZC9kZXZpY2Uubwog
+ICBDQyBbTV0gIC92YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE5MDcwMi9idWlsZC9wZWVy
+Lm8KICAgQ0MgW01dICAvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8wLjAuMjAxOTA3MDIvYnVpbGQv
+dGltZXJzLm8KICAgQ0MgW01dICAvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8wLjAuMjAxOTA3MDIv
+YnVpbGQvcXVldWVpbmcubwogICBDQyBbTV0gIC92YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4y
+MDE5MDcwMi9idWlsZC9zZW5kLm8KICAgQ0MgW01dICAvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8w
+LjAuMjAxOTA3MDIvYnVpbGQvcmVjZWl2ZS5vCiAgIENDIFtNXSAgL3Zhci9saWIvZGttcy93aXJl
+Z3VhcmQvMC4wLjIwMTkwNzAyL2J1aWxkL3NvY2tldC5vCiAgIENDIFtNXSAgL3Zhci9saWIvZGtt
+cy93aXJlZ3VhcmQvMC4wLjIwMTkwNzAyL2J1aWxkL3BlZXJsb29rdXAubwogICBDQyBbTV0gIC92
+YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE5MDcwMi9idWlsZC9hbGxvd2VkaXBzLm8KIC92
+YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE5MDcwMi9idWlsZC9hbGxvd2VkaXBzLmM6IElu
+IGZ1bmN0aW9uCuKAmHJvb3RfcmVtb3ZlX3BlZXJfbGlzdHPigJk6CiAvdmFyL2xpYi9ka21zL3dp
+cmVndWFyZC8wLjAuMjAxOTA3MDIvYnVpbGQvYWxsb3dlZGlwcy5jOjcyOjE6IHdhcm5pbmc6CnRo
+ZSBmcmFtZSBzaXplIG9mIDEwNDggYnl0ZXMgaXMgbGFyZ2VyIHRoYW4gMTAyNCBieXRlcwpbLVdm
+cmFtZS1sYXJnZXItdGhhbj1dCiAgfQogIF4KIC92YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4y
+MDE5MDcwMi9idWlsZC9hbGxvd2VkaXBzLmM6IEluIGZ1bmN0aW9uCuKAmHJvb3RfZnJlZV9yY3Xi
+gJk6CiAvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8wLjAuMjAxOTA3MDIvYnVpbGQvYWxsb3dlZGlw
+cy5jOjU5OjE6IHdhcm5pbmc6CnRoZSBmcmFtZSBzaXplIG9mIDEwNDggYnl0ZXMgaXMgbGFyZ2Vy
+IHRoYW4gMTAyNCBieXRlcwpbLVdmcmFtZS1sYXJnZXItdGhhbj1dCiAgfQogIF4KIC92YXIvbGli
+L2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE5MDcwMi9idWlsZC9hbGxvd2VkaXBzLmM6IEluIGZ1bmN0
+aW9uCuKAmHdhbGtfcmVtb3ZlX2J5X3BlZXIuaXNyYS4z4oCZOgogL3Zhci9saWIvZGttcy93aXJl
+Z3VhcmQvMC4wLjIwMTkwNzAyL2J1aWxkL2FsbG93ZWRpcHMuYzoxMjY6MTogd2FybmluZzoKdGhl
+IGZyYW1lIHNpemUgb2YgMTAzMiBieXRlcyBpcyBsYXJnZXIgdGhhbiAxMDI0IGJ5dGVzClstV2Zy
+YW1lLWxhcmdlci10aGFuPV0KICB9CiAgXgogICBDQyBbTV0gIC92YXIvbGliL2RrbXMvd2lyZWd1
+YXJkLzAuMC4yMDE5MDcwMi9idWlsZC9yYXRlbGltaXRlci5vCiAvdmFyL2xpYi9ka21zL3dpcmVn
+dWFyZC8wLjAuMjAxOTA3MDIvYnVpbGQvcmF0ZWxpbWl0ZXIuYzoyNTo4OiBlcnJvcjoKdW5rbm93
+biB0eXBlIG5hbWUg4oCYaHNpcGhhc2hfa2V5X3TigJkKICBzdGF0aWMgaHNpcGhhc2hfa2V5X3Qg
+a2V5OwogICAgICAgICBeCiAvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8wLjAuMjAxOTA3MDIvYnVp
+bGQvcmF0ZWxpbWl0ZXIuYzogSW4gZnVuY3Rpb24K4oCYd2dfcmF0ZWxpbWl0ZXJfYWxsb3figJk6
+CiAvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8wLjAuMjAxOTA3MDIvYnVpbGQvcmF0ZWxpbWl0ZXIu
+YzoxMDk6MjI6IGVycm9yOgppbXBsaWNpdCBkZWNsYXJhdGlvbiBvZiBmdW5jdGlvbiDigJhoc2lw
+aGFzaF8ydTMy4oCZClstV2Vycm9yPWltcGxpY2l0LWZ1bmN0aW9uLWRlY2xhcmF0aW9uXQogICAg
+YnVja2V0ID0gJnRhYmxlX3Y0W2hzaXBoYXNoXzJ1MzIobmV0X3dvcmQsIGlwLCAma2V5KSAmCiAg
+ICAgICAgICAgICAgICAgICAgICAgXgogL3Zhci9saWIvZGttcy93aXJlZ3VhcmQvMC4wLjIwMTkw
+NzAyL2J1aWxkL3JhdGVsaW1pdGVyLmM6MTE2OjIyOiBlcnJvcjoKaW1wbGljaXQgZGVjbGFyYXRp
+b24gb2YgZnVuY3Rpb24g4oCYaHNpcGhhc2hfM3UzMuKAmQpbLVdlcnJvcj1pbXBsaWNpdC1mdW5j
+dGlvbi1kZWNsYXJhdGlvbl0KICAgIGJ1Y2tldCA9ICZ0YWJsZV92Nltoc2lwaGFzaF8zdTMyKG5l
+dF93b3JkLCBpcCA+PiAzMiwgaXAsICZrZXkpICYKICAgICAgICAgICAgICAgICAgICAgICBeCiBj
+YzE6IHNvbWUgd2FybmluZ3MgYmVpbmcgdHJlYXRlZCBhcyBlcnJvcnMKIHNjcmlwdHMvTWFrZWZp
+bGUuYnVpbGQ6Mjg1OiByZWNpcGUgZm9yIHRhcmdldAonL3Zhci9saWIvZGttcy93aXJlZ3VhcmQv
+MC4wLjIwMTkwNzAyL2J1aWxkL3JhdGVsaW1pdGVyLm8nIGZhaWxlZAogbWFrZVsxXTogKioqIFsv
+dmFyL2xpYi9ka21zL3dpcmVndWFyZC8wLjAuMjAxOTA3MDIvYnVpbGQvcmF0ZWxpbWl0ZXIub10K
+RXJyb3IgMQogTWFrZWZpbGU6MTQ1NDogcmVjaXBlIGZvciB0YXJnZXQKJ19tb2R1bGVfL3Zhci9s
+aWIvZGttcy93aXJlZ3VhcmQvMC4wLjIwMTkwNzAyL2J1aWxkJyBmYWlsZWQKIG1ha2U6ICoqKiBb
+X21vZHVsZV8vdmFyL2xpYi9ka21zL3dpcmVndWFyZC8wLjAuMjAxOTA3MDIvYnVpbGRdIEVycm9y
+IDIKIG1ha2U6IExlYXZpbmcgZGlyZWN0b3J5ICcvdXNyL3NyYy9saW51eC1oZWFkZXJzLTQuNC4w
+LTE2MS1nZW5lcmljJwpES01TS2VybmVsVmVyc2lvbjogNC40LjAtMTYxLWdlbmVyaWMKRGF0ZTog
+RnJpIFNlcCAgNiAwOTowMjoyOCAyMDE5CkR1cGxpY2F0ZVNpZ25hdHVyZToKZGttczp3aXJlZ3Vh
+cmQtZGttczowLjAuMjAxOTA3MDItd2cxfnhlbmlhbDovdmFyL2xpYi9ka21zL3dpcmVndWFyZC8w
+LjAuMjAxOTA3MDIvYnVpbGQvcmF0ZWxpbWl0ZXIuYzoyNTo4OgplcnJvcjogdW5rbm93biB0eXBl
+IG5hbWUg4oCYaHNpcGhhc2hfa2V5X3TigJkKUGFja2FnZTogd2lyZWd1YXJkLWRrbXMgMC4wLjIw
+MTkwNzAyLXdnMX54ZW5pYWwKUGFja2FnZVZlcnNpb246IDAuMC4yMDE5MDcwMi13ZzF+eGVuaWFs
+ClNvdXJjZVBhY2thZ2U6IHdpcmVndWFyZApUaXRsZTogd2lyZWd1YXJkLWRrbXMgMC4wLjIwMTkw
+NzAyLXdnMX54ZW5pYWw6IHdpcmVndWFyZCBrZXJuZWwgbW9kdWxlCmZhaWxlZCB0byBidWlsZApf
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXwpXaXJlR3VhcmQg
+bWFpbGluZyBsaXN0CldpcmVHdWFyZEBsaXN0cy56eDJjNC5jb20KaHR0cHM6Ly9saXN0cy56eDJj
+NC5jb20vbWFpbG1hbi9saXN0aW5mby93aXJlZ3VhcmQK
