@@ -2,92 +2,63 @@ Return-Path: <SRS0=Lcmb=XB=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4130CC43331
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  6 Sep 2019 07:33:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 10A48C43331
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  6 Sep 2019 14:07:30 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 9F7552082C
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  6 Sep 2019 07:33:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 9F7552082C
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=activezone.de
+	by mail.kernel.org (Postfix) with ESMTPS id 4997020854
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  6 Sep 2019 14:07:29 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="NRhFpchu"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 4997020854
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9c1a0e20;
-	Fri, 6 Sep 2019 07:32:53 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c2c55509;
+	Fri, 6 Sep 2019 14:07:11 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 47a14c34
- for <wireguard@lists.zx2c4.com>; Fri, 6 Sep 2019 07:32:52 +0000 (UTC)
-Received: from vintage.nbg1-dc1.freebsdcloud.com
- (vintage.nbg1-dc1.freebsdcloud.com [159.69.229.98])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fe8e9a46
- for <wireguard@lists.zx2c4.com>; Fri, 6 Sep 2019 07:32:52 +0000 (UTC)
-Received: from [82.206.32.229] (ip229.vl4-han.activezone.de [82.206.32.229])
- (authenticated bits=0)
- by vintage.nbg1-dc1.freebsdcloud.com (8.15.2/8.15.2) with ESMTPSA id
- x867Wo4D081983
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO)
- for <wireguard@lists.zx2c4.com>; Fri, 6 Sep 2019 09:32:51 +0200 (CEST)
- (envelope-from markus@activezone.de)
-X-Authentication-Warning: vintage.nbg1-dc1.freebsdcloud.com: Host
- ip229.vl4-han.activezone.de [82.206.32.229] claimed to be [82.206.32.229]
-To: wireguard@lists.zx2c4.com
-From: Markus Grundmann <markus@activezone.de>
-Subject: DMKS failed after Kernel Upgrade to 4.4.0-161-generic on Ubuntu 16.04
- LTS
-Openpgp: preference=signencrypt
-Autocrypt: addr=markus@activezone.de; prefer-encrypt=mutual; keydata=
- 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
-Message-ID: <a8a4d088-d5fd-5e3b-23ab-72e2c7932ff3@activezone.de>
-Date: Fri, 6 Sep 2019 09:32:45 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c85afd46
+ for <wireguard@lists.zx2c4.com>; Fri, 6 Sep 2019 14:07:08 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ed7a15a0
+ for <wireguard@lists.zx2c4.com>; Fri, 6 Sep 2019 14:07:08 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5c303b8d
+ for <wireguard@lists.zx2c4.com>; Fri, 6 Sep 2019 13:23:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :references:in-reply-to:from:date:message-id:subject:to:cc
+ :content-type; s=mail; bh=45b08PR5rqPUpm0TYguGQfq8hp8=; b=NRhFpc
+ huY1jsuZjmhpYYrKhk3aozWsa2B89cwfrZ4xp7EQJu9d/oRbRXmJDo/hS2e6Ywtl
+ 13BqBQQZpQtczgbUAR8Z59EovjvmBRO/IrJV38pHqWjXgZTY6YrQZ5h2XQetBwoR
+ wUGqVSV0Tpw5u/FKKEgMWZnAaLw1CqiiQ4RCn1AYeKp1F4PpAAiWxlCiLj1DkN9X
+ mChbTKsJRQgSlUT21MkfBfSzWr0ul/oXZJxaHT/Xp9wdtHHmxhskz3mbvyw29SRb
+ Zg4fGvIvN8dkiAwofWrsrLFiATKGDA88JF1Qu5KsaWa+z2wq6jCi7qCAwgahr7+3
+ 1csUjVH0aYWn0+1w==
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 649dd37a
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Fri, 6 Sep 2019 13:23:48 +0000 (UTC)
+Received: by mail-ot1-f46.google.com with SMTP id y39so5817999ota.7
+ for <wireguard@lists.zx2c4.com>; Fri, 06 Sep 2019 07:07:07 -0700 (PDT)
+X-Gm-Message-State: APjAAAVDaWPsjMn82kxTrMxoeaZszWqh2UhXnXohYWq6Bw56K2QPbtkH
+ 1WY1wcqAJCf5taUPPoJ6aYjp6vziRsBNqSAP13U=
+X-Google-Smtp-Source: APXvYqzc8BFQsNn3t6KPazHhEfBLS3rBNmbgOOw4/qZ++nDyPH6bnrI7QlcTmhLOv/3XQd/BCmE4uvrQkT/Idyh6+eY=
+X-Received: by 2002:a9d:73c4:: with SMTP id m4mr7214159otk.369.1567778826902; 
+ Fri, 06 Sep 2019 07:07:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Language: de-DE
+References: <a8a4d088-d5fd-5e3b-23ab-72e2c7932ff3@activezone.de>
+In-Reply-To: <a8a4d088-d5fd-5e3b-23ab-72e2c7932ff3@activezone.de>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Fri, 6 Sep 2019 08:06:54 -0600
+X-Gmail-Original-Message-ID: <CAHmME9pTAY5X3h2xwwz6LPjqWpgtd2R+Lw4C3-ZPqxve=4HCSw@mail.gmail.com>
+Message-ID: <CAHmME9pTAY5X3h2xwwz6LPjqWpgtd2R+Lw4C3-ZPqxve=4HCSw@mail.gmail.com>
+Subject: Re: DMKS failed after Kernel Upgrade to 4.4.0-161-generic on Ubuntu
+ 16.04 LTS
+To: Markus Grundmann <markus@activezone.de>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -99,96 +70,332 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: multipart/mixed; boundary="===============7674202370217769959=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-UXVlc3Rpb246IElmIHRoZSBwYXRjaCBuZWVkZWQ/CgpEb24ndCB0b3VjaCBhIHJ1bm5pbmcgc3lz
-dGVtIDotfAotTWFya3VzCgoKWy4uXQpTZWxlY3RpbmcgcHJldmlvdXNseSB1bnNlbGVjdGVkIHBh
-Y2thZ2Ugd2lyZWd1YXJkLWRrbXMuCihSZWFkaW5nIGRhdGFiYXNlIC4uLiAzNDYyMzkgZmlsZXMg
-YW5kIGRpcmVjdG9yaWVzIGN1cnJlbnRseSBpbnN0YWxsZWQuKQpQcmVwYXJpbmcgdG8gdW5wYWNr
-IC4uLi93aXJlZ3VhcmQtZGttc18wLjAuMjAxOTA3MDItd2cxfnhlbmlhbF9hbGwuZGViIC4uLgpV
-bnBhY2tpbmcgd2lyZWd1YXJkLWRrbXMgKDAuMC4yMDE5MDcwMi13ZzF+eGVuaWFsKSAuLi4KU2Vs
-ZWN0aW5nIHByZXZpb3VzbHkgdW5zZWxlY3RlZCBwYWNrYWdlIHdpcmVndWFyZC10b29scy4KUHJl
-cGFyaW5nIHRvIHVucGFjawouLi4vd2lyZWd1YXJkLXRvb2xzXzAuMC4yMDE5MDcwMi13ZzF+eGVu
-aWFsX2FtZDY0LmRlYiAuLi4KVW5wYWNraW5nIHdpcmVndWFyZC10b29scyAoMC4wLjIwMTkwNzAy
-LXdnMX54ZW5pYWwpIC4uLgpTZWxlY3RpbmcgcHJldmlvdXNseSB1bnNlbGVjdGVkIHBhY2thZ2Ug
-d2lyZWd1YXJkLgpQcmVwYXJpbmcgdG8gdW5wYWNrIC4uLi93aXJlZ3VhcmRfMC4wLjIwMTkwNzAy
-LXdnMX54ZW5pYWxfYWxsLmRlYiAuLi4KVW5wYWNraW5nIHdpcmVndWFyZCAoMC4wLjIwMTkwNzAy
-LXdnMX54ZW5pYWwpIC4uLgpQcm9jZXNzaW5nIHRyaWdnZXJzIGZvciBtYW4tZGIgKDIuNy41LTEp
-IC4uLgpTZXR0aW5nIHVwIHdpcmVndWFyZC1ka21zICgwLjAuMjAxOTA3MDItd2cxfnhlbmlhbCkg
-Li4uCkxvYWRpbmcgbmV3IHdpcmVndWFyZC0wLjAuMjAxOTA3MDIgREtNUyBmaWxlcy4uLgpGaXJz
-dCBJbnN0YWxsYXRpb246IGNoZWNraW5nIGFsbCBrZXJuZWxzLi4uCkJ1aWxkaW5nIG9ubHkgZm9y
-IDQuNC4wLTE2MS1nZW5lcmljCkJ1aWxkaW5nIGluaXRpYWwgbW9kdWxlIGZvciA0LjQuMC0xNjEt
-Z2VuZXJpYwpFUlJPUjogQ2Fubm90IGNyZWF0ZSByZXBvcnQ6IFtFcnJubyAxN10gRmlsZSBleGlz
-dHM6CicvdmFyL2NyYXNoL3dpcmVndWFyZC1ka21zLjAuY3Jhc2gnCkVycm9yISBCYWQgcmV0dXJu
-IHN0YXR1cyBmb3IgbW9kdWxlIGJ1aWxkIG9uIGtlcm5lbDogNC40LjAtMTYxLWdlbmVyaWMKKHg4
-Nl82NCkKQ29uc3VsdCAvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8wLjAuMjAxOTA3MDIvYnVpbGQv
-bWFrZS5sb2cgZm9yIG1vcmUKaW5mb3JtYXRpb24uClNldHRpbmcgdXAgd2lyZWd1YXJkLXRvb2xz
-ICgwLjAuMjAxOTA3MDItd2cxfnhlbmlhbCkgLi4uClNldHRpbmcgdXAgd2lyZWd1YXJkICgwLjAu
-MjAxOTA3MDItd2cxfnhlbmlhbCkgLi4uCgo9PT0gQ3Jhc2ggUmVwb3J0ID09PQpQcm9ibGVtVHlw
-ZTogUGFja2FnZQpES01TQnVpbGRMb2c6CiBES01TIG1ha2UubG9nIGZvciB3aXJlZ3VhcmQtMC4w
-LjIwMTkwNzAyIGZvciBrZXJuZWwgNC40LjAtMTYxLWdlbmVyaWMKKHg4Nl82NCkKIEZyIDYuIFNl
-cCAwOTowMjoxOCBDRVNUIDIwMTkKIG1ha2U6IEVudGVyaW5nIGRpcmVjdG9yeSAnL3Vzci9zcmMv
-bGludXgtaGVhZGVycy00LjQuMC0xNjEtZ2VuZXJpYycKICAgTEQgICAgICAvdmFyL2xpYi9ka21z
-L3dpcmVndWFyZC8wLjAuMjAxOTA3MDIvYnVpbGQvYnVpbHQtaW4ubwogICBDQyBbTV0gIC92YXIv
-bGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE5MDcwMi9idWlsZC9tYWluLm8KICAgQ0MgW01dICAv
-dmFyL2xpYi9ka21zL3dpcmVndWFyZC8wLjAuMjAxOTA3MDIvYnVpbGQvbm9pc2UubwogICBDQyBb
-TV0gIC92YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE5MDcwMi9idWlsZC9kZXZpY2Uubwog
-ICBDQyBbTV0gIC92YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE5MDcwMi9idWlsZC9wZWVy
-Lm8KICAgQ0MgW01dICAvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8wLjAuMjAxOTA3MDIvYnVpbGQv
-dGltZXJzLm8KICAgQ0MgW01dICAvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8wLjAuMjAxOTA3MDIv
-YnVpbGQvcXVldWVpbmcubwogICBDQyBbTV0gIC92YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4y
-MDE5MDcwMi9idWlsZC9zZW5kLm8KICAgQ0MgW01dICAvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8w
-LjAuMjAxOTA3MDIvYnVpbGQvcmVjZWl2ZS5vCiAgIENDIFtNXSAgL3Zhci9saWIvZGttcy93aXJl
-Z3VhcmQvMC4wLjIwMTkwNzAyL2J1aWxkL3NvY2tldC5vCiAgIENDIFtNXSAgL3Zhci9saWIvZGtt
-cy93aXJlZ3VhcmQvMC4wLjIwMTkwNzAyL2J1aWxkL3BlZXJsb29rdXAubwogICBDQyBbTV0gIC92
-YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE5MDcwMi9idWlsZC9hbGxvd2VkaXBzLm8KIC92
-YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE5MDcwMi9idWlsZC9hbGxvd2VkaXBzLmM6IElu
-IGZ1bmN0aW9uCuKAmHJvb3RfcmVtb3ZlX3BlZXJfbGlzdHPigJk6CiAvdmFyL2xpYi9ka21zL3dp
-cmVndWFyZC8wLjAuMjAxOTA3MDIvYnVpbGQvYWxsb3dlZGlwcy5jOjcyOjE6IHdhcm5pbmc6CnRo
-ZSBmcmFtZSBzaXplIG9mIDEwNDggYnl0ZXMgaXMgbGFyZ2VyIHRoYW4gMTAyNCBieXRlcwpbLVdm
-cmFtZS1sYXJnZXItdGhhbj1dCiAgfQogIF4KIC92YXIvbGliL2RrbXMvd2lyZWd1YXJkLzAuMC4y
-MDE5MDcwMi9idWlsZC9hbGxvd2VkaXBzLmM6IEluIGZ1bmN0aW9uCuKAmHJvb3RfZnJlZV9yY3Xi
-gJk6CiAvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8wLjAuMjAxOTA3MDIvYnVpbGQvYWxsb3dlZGlw
-cy5jOjU5OjE6IHdhcm5pbmc6CnRoZSBmcmFtZSBzaXplIG9mIDEwNDggYnl0ZXMgaXMgbGFyZ2Vy
-IHRoYW4gMTAyNCBieXRlcwpbLVdmcmFtZS1sYXJnZXItdGhhbj1dCiAgfQogIF4KIC92YXIvbGli
-L2RrbXMvd2lyZWd1YXJkLzAuMC4yMDE5MDcwMi9idWlsZC9hbGxvd2VkaXBzLmM6IEluIGZ1bmN0
-aW9uCuKAmHdhbGtfcmVtb3ZlX2J5X3BlZXIuaXNyYS4z4oCZOgogL3Zhci9saWIvZGttcy93aXJl
-Z3VhcmQvMC4wLjIwMTkwNzAyL2J1aWxkL2FsbG93ZWRpcHMuYzoxMjY6MTogd2FybmluZzoKdGhl
-IGZyYW1lIHNpemUgb2YgMTAzMiBieXRlcyBpcyBsYXJnZXIgdGhhbiAxMDI0IGJ5dGVzClstV2Zy
-YW1lLWxhcmdlci10aGFuPV0KICB9CiAgXgogICBDQyBbTV0gIC92YXIvbGliL2RrbXMvd2lyZWd1
-YXJkLzAuMC4yMDE5MDcwMi9idWlsZC9yYXRlbGltaXRlci5vCiAvdmFyL2xpYi9ka21zL3dpcmVn
-dWFyZC8wLjAuMjAxOTA3MDIvYnVpbGQvcmF0ZWxpbWl0ZXIuYzoyNTo4OiBlcnJvcjoKdW5rbm93
-biB0eXBlIG5hbWUg4oCYaHNpcGhhc2hfa2V5X3TigJkKICBzdGF0aWMgaHNpcGhhc2hfa2V5X3Qg
-a2V5OwogICAgICAgICBeCiAvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8wLjAuMjAxOTA3MDIvYnVp
-bGQvcmF0ZWxpbWl0ZXIuYzogSW4gZnVuY3Rpb24K4oCYd2dfcmF0ZWxpbWl0ZXJfYWxsb3figJk6
-CiAvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8wLjAuMjAxOTA3MDIvYnVpbGQvcmF0ZWxpbWl0ZXIu
-YzoxMDk6MjI6IGVycm9yOgppbXBsaWNpdCBkZWNsYXJhdGlvbiBvZiBmdW5jdGlvbiDigJhoc2lw
-aGFzaF8ydTMy4oCZClstV2Vycm9yPWltcGxpY2l0LWZ1bmN0aW9uLWRlY2xhcmF0aW9uXQogICAg
-YnVja2V0ID0gJnRhYmxlX3Y0W2hzaXBoYXNoXzJ1MzIobmV0X3dvcmQsIGlwLCAma2V5KSAmCiAg
-ICAgICAgICAgICAgICAgICAgICAgXgogL3Zhci9saWIvZGttcy93aXJlZ3VhcmQvMC4wLjIwMTkw
-NzAyL2J1aWxkL3JhdGVsaW1pdGVyLmM6MTE2OjIyOiBlcnJvcjoKaW1wbGljaXQgZGVjbGFyYXRp
-b24gb2YgZnVuY3Rpb24g4oCYaHNpcGhhc2hfM3UzMuKAmQpbLVdlcnJvcj1pbXBsaWNpdC1mdW5j
-dGlvbi1kZWNsYXJhdGlvbl0KICAgIGJ1Y2tldCA9ICZ0YWJsZV92Nltoc2lwaGFzaF8zdTMyKG5l
-dF93b3JkLCBpcCA+PiAzMiwgaXAsICZrZXkpICYKICAgICAgICAgICAgICAgICAgICAgICBeCiBj
-YzE6IHNvbWUgd2FybmluZ3MgYmVpbmcgdHJlYXRlZCBhcyBlcnJvcnMKIHNjcmlwdHMvTWFrZWZp
-bGUuYnVpbGQ6Mjg1OiByZWNpcGUgZm9yIHRhcmdldAonL3Zhci9saWIvZGttcy93aXJlZ3VhcmQv
-MC4wLjIwMTkwNzAyL2J1aWxkL3JhdGVsaW1pdGVyLm8nIGZhaWxlZAogbWFrZVsxXTogKioqIFsv
-dmFyL2xpYi9ka21zL3dpcmVndWFyZC8wLjAuMjAxOTA3MDIvYnVpbGQvcmF0ZWxpbWl0ZXIub10K
-RXJyb3IgMQogTWFrZWZpbGU6MTQ1NDogcmVjaXBlIGZvciB0YXJnZXQKJ19tb2R1bGVfL3Zhci9s
-aWIvZGttcy93aXJlZ3VhcmQvMC4wLjIwMTkwNzAyL2J1aWxkJyBmYWlsZWQKIG1ha2U6ICoqKiBb
-X21vZHVsZV8vdmFyL2xpYi9ka21zL3dpcmVndWFyZC8wLjAuMjAxOTA3MDIvYnVpbGRdIEVycm9y
-IDIKIG1ha2U6IExlYXZpbmcgZGlyZWN0b3J5ICcvdXNyL3NyYy9saW51eC1oZWFkZXJzLTQuNC4w
-LTE2MS1nZW5lcmljJwpES01TS2VybmVsVmVyc2lvbjogNC40LjAtMTYxLWdlbmVyaWMKRGF0ZTog
-RnJpIFNlcCAgNiAwOTowMjoyOCAyMDE5CkR1cGxpY2F0ZVNpZ25hdHVyZToKZGttczp3aXJlZ3Vh
-cmQtZGttczowLjAuMjAxOTA3MDItd2cxfnhlbmlhbDovdmFyL2xpYi9ka21zL3dpcmVndWFyZC8w
-LjAuMjAxOTA3MDIvYnVpbGQvcmF0ZWxpbWl0ZXIuYzoyNTo4OgplcnJvcjogdW5rbm93biB0eXBl
-IG5hbWUg4oCYaHNpcGhhc2hfa2V5X3TigJkKUGFja2FnZTogd2lyZWd1YXJkLWRrbXMgMC4wLjIw
-MTkwNzAyLXdnMX54ZW5pYWwKUGFja2FnZVZlcnNpb246IDAuMC4yMDE5MDcwMi13ZzF+eGVuaWFs
-ClNvdXJjZVBhY2thZ2U6IHdpcmVndWFyZApUaXRsZTogd2lyZWd1YXJkLWRrbXMgMC4wLjIwMTkw
-NzAyLXdnMX54ZW5pYWw6IHdpcmVndWFyZCBrZXJuZWwgbW9kdWxlCmZhaWxlZCB0byBidWlsZApf
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXwpXaXJlR3VhcmQg
-bWFpbGluZyBsaXN0CldpcmVHdWFyZEBsaXN0cy56eDJjNC5jb20KaHR0cHM6Ly9saXN0cy56eDJj
-NC5jb20vbWFpbG1hbi9saXN0aW5mby93aXJlZ3VhcmQK
+--===============7674202370217769959==
+Content-Type: multipart/alternative; boundary="0000000000001084a20591e2f4b9"
+
+--0000000000001084a20591e2f4b9
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+The Ubuntu kernel team backported something wrong. They know that they
+screwed it up, but they're unable to fix it for another 7 weeks. That sort
+of delay is unacceptable for users who rely on WireGuard, so I released a
+new version, 20190905, yesterday that contains a workaround. At this point
+we're waiting on Egbert to bump the Ubuntu package to the newer version I
+released.
+
+Sorry for the hassle. I'm not happy about the situation either, but it is
+what it is. Ubuntu isn't the best distro to deal with unfortunately.
+
+I'll poke Egbert again to see if he can hurry up.
+
+On Fri, Sep 6, 2019, 01:39 Markus Grundmann <markus@activezone.de> wrote:
+
+> Question: If the patch needed?
+>
+> Don't touch a running system :-|
+> -Markus
+>
+>
+> [..]
+> Selecting previously unselected package wireguard-dkms.
+> (Reading database ... 346239 files and directories currently installed.)
+> Preparing to unpack .../wireguard-dkms_0.0.20190702-wg1~xenial_all.deb ..=
+.
+> Unpacking wireguard-dkms (0.0.20190702-wg1~xenial) ...
+> Selecting previously unselected package wireguard-tools.
+> Preparing to unpack
+> .../wireguard-tools_0.0.20190702-wg1~xenial_amd64.deb ...
+> Unpacking wireguard-tools (0.0.20190702-wg1~xenial) ...
+> Selecting previously unselected package wireguard.
+> Preparing to unpack .../wireguard_0.0.20190702-wg1~xenial_all.deb ...
+> Unpacking wireguard (0.0.20190702-wg1~xenial) ...
+> Processing triggers for man-db (2.7.5-1) ...
+> Setting up wireguard-dkms (0.0.20190702-wg1~xenial) ...
+> Loading new wireguard-0.0.20190702 DKMS files...
+> First Installation: checking all kernels...
+> Building only for 4.4.0-161-generic
+> Building initial module for 4.4.0-161-generic
+> ERROR: Cannot create report: [Errno 17] File exists:
+> '/var/crash/wireguard-dkms.0.crash'
+> Error! Bad return status for module build on kernel: 4.4.0-161-generic
+> (x86_64)
+> Consult /var/lib/dkms/wireguard/0.0.20190702/build/make.log for more
+> information.
+> Setting up wireguard-tools (0.0.20190702-wg1~xenial) ...
+> Setting up wireguard (0.0.20190702-wg1~xenial) ...
+>
+> =3D=3D=3D Crash Report =3D=3D=3D
+> ProblemType: Package
+> DKMSBuildLog:
+>  DKMS make.log for wireguard-0.0.20190702 for kernel 4.4.0-161-generic
+> (x86_64)
+>  Fr 6. Sep 09:02:18 CEST 2019
+>  make: Entering directory '/usr/src/linux-headers-4.4.0-161-generic'
+>    LD      /var/lib/dkms/wireguard/0.0.20190702/build/built-in.o
+>    CC [M]  /var/lib/dkms/wireguard/0.0.20190702/build/main.o
+>    CC [M]  /var/lib/dkms/wireguard/0.0.20190702/build/noise.o
+>    CC [M]  /var/lib/dkms/wireguard/0.0.20190702/build/device.o
+>    CC [M]  /var/lib/dkms/wireguard/0.0.20190702/build/peer.o
+>    CC [M]  /var/lib/dkms/wireguard/0.0.20190702/build/timers.o
+>    CC [M]  /var/lib/dkms/wireguard/0.0.20190702/build/queueing.o
+>    CC [M]  /var/lib/dkms/wireguard/0.0.20190702/build/send.o
+>    CC [M]  /var/lib/dkms/wireguard/0.0.20190702/build/receive.o
+>    CC [M]  /var/lib/dkms/wireguard/0.0.20190702/build/socket.o
+>    CC [M]  /var/lib/dkms/wireguard/0.0.20190702/build/peerlookup.o
+>    CC [M]  /var/lib/dkms/wireguard/0.0.20190702/build/allowedips.o
+>  /var/lib/dkms/wireguard/0.0.20190702/build/allowedips.c: In function
+> =E2=80=98root_remove_peer_lists=E2=80=99:
+>  /var/lib/dkms/wireguard/0.0.20190702/build/allowedips.c:72:1: warning:
+> the frame size of 1048 bytes is larger than 1024 bytes
+> [-Wframe-larger-than=3D]
+>   }
+>   ^
+>  /var/lib/dkms/wireguard/0.0.20190702/build/allowedips.c: In function
+> =E2=80=98root_free_rcu=E2=80=99:
+>  /var/lib/dkms/wireguard/0.0.20190702/build/allowedips.c:59:1: warning:
+> the frame size of 1048 bytes is larger than 1024 bytes
+> [-Wframe-larger-than=3D]
+>   }
+>   ^
+>  /var/lib/dkms/wireguard/0.0.20190702/build/allowedips.c: In function
+> =E2=80=98walk_remove_by_peer.isra.3=E2=80=99:
+>  /var/lib/dkms/wireguard/0.0.20190702/build/allowedips.c:126:1: warning:
+> the frame size of 1032 bytes is larger than 1024 bytes
+> [-Wframe-larger-than=3D]
+>   }
+>   ^
+>    CC [M]  /var/lib/dkms/wireguard/0.0.20190702/build/ratelimiter.o
+>  /var/lib/dkms/wireguard/0.0.20190702/build/ratelimiter.c:25:8: error:
+> unknown type name =E2=80=98hsiphash_key_t=E2=80=99
+>   static hsiphash_key_t key;
+>          ^
+>  /var/lib/dkms/wireguard/0.0.20190702/build/ratelimiter.c: In function
+> =E2=80=98wg_ratelimiter_allow=E2=80=99:
+>  /var/lib/dkms/wireguard/0.0.20190702/build/ratelimiter.c:109:22: error:
+> implicit declaration of function =E2=80=98hsiphash_2u32=E2=80=99
+> [-Werror=3Dimplicit-function-declaration]
+>     bucket =3D &table_v4[hsiphash_2u32(net_word, ip, &key) &
+>                        ^
+>  /var/lib/dkms/wireguard/0.0.20190702/build/ratelimiter.c:116:22: error:
+> implicit declaration of function =E2=80=98hsiphash_3u32=E2=80=99
+> [-Werror=3Dimplicit-function-declaration]
+>     bucket =3D &table_v6[hsiphash_3u32(net_word, ip >> 32, ip, &key) &
+>                        ^
+>  cc1: some warnings being treated as errors
+>  scripts/Makefile.build:285: recipe for target
+> '/var/lib/dkms/wireguard/0.0.20190702/build/ratelimiter.o' failed
+>  make[1]: *** [/var/lib/dkms/wireguard/0.0.20190702/build/ratelimiter.o]
+> Error 1
+>  Makefile:1454: recipe for target
+> '_module_/var/lib/dkms/wireguard/0.0.20190702/build' failed
+>  make: *** [_module_/var/lib/dkms/wireguard/0.0.20190702/build] Error 2
+>  make: Leaving directory '/usr/src/linux-headers-4.4.0-161-generic'
+> DKMSKernelVersion: 4.4.0-161-generic
+> Date: Fri Sep  6 09:02:28 2019
+> DuplicateSignature:
+>
+> dkms:wireguard-dkms:0.0.20190702-wg1~xenial:/var/lib/dkms/wireguard/0.0.2=
+0190702/build/ratelimiter.c:25:8:
+> error: unknown type name =E2=80=98hsiphash_key_t=E2=80=99
+> Package: wireguard-dkms 0.0.20190702-wg1~xenial
+> PackageVersion: 0.0.20190702-wg1~xenial
+> SourcePackage: wireguard
+> Title: wireguard-dkms 0.0.20190702-wg1~xenial: wireguard kernel module
+> failed to build
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
+>
+
+--0000000000001084a20591e2f4b9
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto">The Ubuntu kernel team backported something wrong. They k=
+now that they screwed it up, but they&#39;re unable to fix it for another 7=
+ weeks. That sort of delay is unacceptable for users who rely on WireGuard,=
+ so I released a new version, 20190905, yesterday that contains a workaroun=
+d. At this point we&#39;re waiting on Egbert to bump the Ubuntu package to =
+the newer version I released.<div dir=3D"auto"><br></div><div dir=3D"auto">=
+Sorry for the hassle. I&#39;m not happy about the situation either, but it =
+is what it is. Ubuntu isn&#39;t the best distro to deal with unfortunately.=
+</div><div dir=3D"auto"><br></div><div dir=3D"auto">I&#39;ll poke Egbert ag=
+ain to see if he can hurry up.</div></div><br><div class=3D"gmail_quote"><d=
+iv dir=3D"ltr" class=3D"gmail_attr">On Fri, Sep 6, 2019, 01:39 Markus Grund=
+mann &lt;<a href=3D"mailto:markus@activezone.de">markus@activezone.de</a>&g=
+t; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 =
+.8ex;border-left:1px #ccc solid;padding-left:1ex">Question: If the patch ne=
+eded?<br>
+<br>
+Don&#39;t touch a running system :-|<br>
+-Markus<br>
+<br>
+<br>
+[..]<br>
+Selecting previously unselected package wireguard-dkms.<br>
+(Reading database ... 346239 files and directories currently installed.)<br=
+>
+Preparing to unpack .../wireguard-dkms_0.0.20190702-wg1~xenial_all.deb ...<=
+br>
+Unpacking wireguard-dkms (0.0.20190702-wg1~xenial) ...<br>
+Selecting previously unselected package wireguard-tools.<br>
+Preparing to unpack<br>
+.../wireguard-tools_0.0.20190702-wg1~xenial_amd64.deb ...<br>
+Unpacking wireguard-tools (0.0.20190702-wg1~xenial) ...<br>
+Selecting previously unselected package wireguard.<br>
+Preparing to unpack .../wireguard_0.0.20190702-wg1~xenial_all.deb ...<br>
+Unpacking wireguard (0.0.20190702-wg1~xenial) ...<br>
+Processing triggers for man-db (2.7.5-1) ...<br>
+Setting up wireguard-dkms (0.0.20190702-wg1~xenial) ...<br>
+Loading new wireguard-0.0.20190702 DKMS files...<br>
+First Installation: checking all kernels...<br>
+Building only for 4.4.0-161-generic<br>
+Building initial module for 4.4.0-161-generic<br>
+ERROR: Cannot create report: [Errno 17] File exists:<br>
+&#39;/var/crash/wireguard-dkms.0.crash&#39;<br>
+Error! Bad return status for module build on kernel: 4.4.0-161-generic<br>
+(x86_64)<br>
+Consult /var/lib/dkms/wireguard/0.0.20190702/build/make.log for more<br>
+information.<br>
+Setting up wireguard-tools (0.0.20190702-wg1~xenial) ...<br>
+Setting up wireguard (0.0.20190702-wg1~xenial) ...<br>
+<br>
+=3D=3D=3D Crash Report =3D=3D=3D<br>
+ProblemType: Package<br>
+DKMSBuildLog:<br>
+=C2=A0DKMS make.log for wireguard-0.0.20190702 for kernel 4.4.0-161-generic=
+<br>
+(x86_64)<br>
+=C2=A0Fr 6. Sep 09:02:18 CEST 2019<br>
+=C2=A0make: Entering directory &#39;/usr/src/linux-headers-4.4.0-161-generi=
+c&#39;<br>
+=C2=A0 =C2=A0LD=C2=A0 =C2=A0 =C2=A0 /var/lib/dkms/wireguard/0.0.20190702/bu=
+ild/built-in.o<br>
+=C2=A0 =C2=A0CC [M]=C2=A0 /var/lib/dkms/wireguard/0.0.20190702/build/main.o=
+<br>
+=C2=A0 =C2=A0CC [M]=C2=A0 /var/lib/dkms/wireguard/0.0.20190702/build/noise.=
+o<br>
+=C2=A0 =C2=A0CC [M]=C2=A0 /var/lib/dkms/wireguard/0.0.20190702/build/device=
+.o<br>
+=C2=A0 =C2=A0CC [M]=C2=A0 /var/lib/dkms/wireguard/0.0.20190702/build/peer.o=
+<br>
+=C2=A0 =C2=A0CC [M]=C2=A0 /var/lib/dkms/wireguard/0.0.20190702/build/timers=
+.o<br>
+=C2=A0 =C2=A0CC [M]=C2=A0 /var/lib/dkms/wireguard/0.0.20190702/build/queuei=
+ng.o<br>
+=C2=A0 =C2=A0CC [M]=C2=A0 /var/lib/dkms/wireguard/0.0.20190702/build/send.o=
+<br>
+=C2=A0 =C2=A0CC [M]=C2=A0 /var/lib/dkms/wireguard/0.0.20190702/build/receiv=
+e.o<br>
+=C2=A0 =C2=A0CC [M]=C2=A0 /var/lib/dkms/wireguard/0.0.20190702/build/socket=
+.o<br>
+=C2=A0 =C2=A0CC [M]=C2=A0 /var/lib/dkms/wireguard/0.0.20190702/build/peerlo=
+okup.o<br>
+=C2=A0 =C2=A0CC [M]=C2=A0 /var/lib/dkms/wireguard/0.0.20190702/build/allowe=
+dips.o<br>
+=C2=A0/var/lib/dkms/wireguard/0.0.20190702/build/allowedips.c: In function<=
+br>
+=E2=80=98root_remove_peer_lists=E2=80=99:<br>
+=C2=A0/var/lib/dkms/wireguard/0.0.20190702/build/allowedips.c:72:1: warning=
+:<br>
+the frame size of 1048 bytes is larger than 1024 bytes<br>
+[-Wframe-larger-than=3D]<br>
+=C2=A0 }<br>
+=C2=A0 ^<br>
+=C2=A0/var/lib/dkms/wireguard/0.0.20190702/build/allowedips.c: In function<=
+br>
+=E2=80=98root_free_rcu=E2=80=99:<br>
+=C2=A0/var/lib/dkms/wireguard/0.0.20190702/build/allowedips.c:59:1: warning=
+:<br>
+the frame size of 1048 bytes is larger than 1024 bytes<br>
+[-Wframe-larger-than=3D]<br>
+=C2=A0 }<br>
+=C2=A0 ^<br>
+=C2=A0/var/lib/dkms/wireguard/0.0.20190702/build/allowedips.c: In function<=
+br>
+=E2=80=98walk_remove_by_peer.isra.3=E2=80=99:<br>
+=C2=A0/var/lib/dkms/wireguard/0.0.20190702/build/allowedips.c:126:1: warnin=
+g:<br>
+the frame size of 1032 bytes is larger than 1024 bytes<br>
+[-Wframe-larger-than=3D]<br>
+=C2=A0 }<br>
+=C2=A0 ^<br>
+=C2=A0 =C2=A0CC [M]=C2=A0 /var/lib/dkms/wireguard/0.0.20190702/build/rateli=
+miter.o<br>
+=C2=A0/var/lib/dkms/wireguard/0.0.20190702/build/ratelimiter.c:25:8: error:=
+<br>
+unknown type name =E2=80=98hsiphash_key_t=E2=80=99<br>
+=C2=A0 static hsiphash_key_t key;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0^<br>
+=C2=A0/var/lib/dkms/wireguard/0.0.20190702/build/ratelimiter.c: In function=
+<br>
+=E2=80=98wg_ratelimiter_allow=E2=80=99:<br>
+=C2=A0/var/lib/dkms/wireguard/0.0.20190702/build/ratelimiter.c:109:22: erro=
+r:<br>
+implicit declaration of function =E2=80=98hsiphash_2u32=E2=80=99<br>
+[-Werror=3Dimplicit-function-declaration]<br>
+=C2=A0 =C2=A0 bucket =3D &amp;table_v4[hsiphash_2u32(net_word, ip, &amp;key=
+) &amp;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0^<br>
+=C2=A0/var/lib/dkms/wireguard/0.0.20190702/build/ratelimiter.c:116:22: erro=
+r:<br>
+implicit declaration of function =E2=80=98hsiphash_3u32=E2=80=99<br>
+[-Werror=3Dimplicit-function-declaration]<br>
+=C2=A0 =C2=A0 bucket =3D &amp;table_v6[hsiphash_3u32(net_word, ip &gt;&gt; =
+32, ip, &amp;key) &amp;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0^<br>
+=C2=A0cc1: some warnings being treated as errors<br>
+=C2=A0scripts/Makefile.build:285: recipe for target<br>
+&#39;/var/lib/dkms/wireguard/0.0.20190702/build/ratelimiter.o&#39; failed<b=
+r>
+=C2=A0make[1]: *** [/var/lib/dkms/wireguard/0.0.20190702/build/ratelimiter.=
+o]<br>
+Error 1<br>
+=C2=A0Makefile:1454: recipe for target<br>
+&#39;_module_/var/lib/dkms/wireguard/0.0.20190702/build&#39; failed<br>
+=C2=A0make: *** [_module_/var/lib/dkms/wireguard/0.0.20190702/build] Error =
+2<br>
+=C2=A0make: Leaving directory &#39;/usr/src/linux-headers-4.4.0-161-generic=
+&#39;<br>
+DKMSKernelVersion: 4.4.0-161-generic<br>
+Date: Fri Sep=C2=A0 6 09:02:28 2019<br>
+DuplicateSignature:<br>
+dkms:wireguard-dkms:0.0.20190702-wg1~xenial:/var/lib/dkms/wireguard/0.0.201=
+90702/build/ratelimiter.c:25:8:<br>
+error: unknown type name =E2=80=98hsiphash_key_t=E2=80=99<br>
+Package: wireguard-dkms 0.0.20190702-wg1~xenial<br>
+PackageVersion: 0.0.20190702-wg1~xenial<br>
+SourcePackage: wireguard<br>
+Title: wireguard-dkms 0.0.20190702-wg1~xenial: wireguard kernel module<br>
+failed to build<br>
+_______________________________________________<br>
+WireGuard mailing list<br>
+<a href=3D"mailto:WireGuard@lists.zx2c4.com" target=3D"_blank" rel=3D"noref=
+errer">WireGuard@lists.zx2c4.com</a><br>
+<a href=3D"https://lists.zx2c4.com/mailman/listinfo/wireguard" rel=3D"noref=
+errer noreferrer" target=3D"_blank">https://lists.zx2c4.com/mailman/listinf=
+o/wireguard</a><br>
+</blockquote></div>
+
+--0000000000001084a20591e2f4b9--
+
+--===============7674202370217769959==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
+_______________________________________________
+WireGuard mailing list
+WireGuard@lists.zx2c4.com
+https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--===============7674202370217769959==--
