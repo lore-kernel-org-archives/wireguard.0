@@ -2,85 +2,56 @@ Return-Path: <SRS0=2lTk=XC=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	HTML_MESSAGE,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3973EC43331
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  7 Sep 2019 07:41:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0645CC43331
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  7 Sep 2019 10:05:49 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 97D4D21835
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  7 Sep 2019 07:41:37 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=astrogeo.va.it header.i=@astrogeo.va.it header.b="KVRv0wz2"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 97D4D21835
-Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=astrogeo.va.it
+	by mail.kernel.org (Postfix) with ESMTPS id 3A28C20854
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  7 Sep 2019 10:05:23 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 3A28C20854
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=friedels.name
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 396bf6d1;
-	Sat, 7 Sep 2019 07:41:20 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 81d534b3;
+	Sat, 7 Sep 2019 10:04:50 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 75c389f8
- for <wireguard@lists.zx2c4.com>; Sat, 7 Sep 2019 07:41:18 +0000 (UTC)
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com
- [IPv6:2a00:1450:4864:20::329])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 50b70795
- for <wireguard@lists.zx2c4.com>; Sat, 7 Sep 2019 07:41:17 +0000 (UTC)
-Received: by mail-wm1-x329.google.com with SMTP id p13so9385345wmh.1
- for <wireguard@lists.zx2c4.com>; Sat, 07 Sep 2019 00:41:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=astrogeo.va.it; s=google;
- h=subject:to:cc:references:from:message-id:date:user-agent
- :mime-version:in-reply-to:content-language:content-transfer-encoding;
- bh=VwLHWONS/QuzGJ65oQcuLjjj9ATVoZnQv4msK6l1L/k=;
- b=KVRv0wz2wEiLL8yU60PvSV8bDq1mGBdEzyLhcl9LZVYvrCohbhpR7+UdRs9ioSx/JB
- jleRV2Mska4EpwoAgw8Kxeowdux7AYwz/4L3skjYHeS0WB4aiXfaqCsSYmEs6X32RAD8
- kqDSWyisemdzYTVXBVBxmktgXHvrfxHD2MduE+ZF2lFuSDdutWC4XhJltyNlWRlmQuAL
- fVEAtiHqm8Z/tDwoUJD1+9h50WKh0MyH2p2TWh/DDny3xKe2wDrOrOFU1F5SanCQovRf
- DRNTF0njPaUDRWNHoJcflDz/ET2HomKuLAHQ8u74KfO5rSTSnlYO1Q5CCvzglBrD6oE6
- gkVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:cc:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=VwLHWONS/QuzGJ65oQcuLjjj9ATVoZnQv4msK6l1L/k=;
- b=Mx/Blh0A+NmUm2qsnKSn/sX9tsBKpxPvZpsGvLENDl5EwmZl9h3oRkDyGtqgg/ueIH
- 434f58Q+JlOBR28nFRmGMYcgVT0WGPzDqnF8Ko8uG330cIfZ4UABUhXtXyC6uElMvgUT
- p42501Gce9xPgsXchGkBkJ3XOrhy+rD79rwjHd/daHnrd+T8KQ1dGnYJS+lz9tBvWYJo
- zcHGVfT1RTNcMpe7NCOa8yPzta1ASPFAwjU/c9Nyv1yI+l3cuZraUlQMJ0fTzRQq3WkO
- LL4gD7WGHzN2XnaP4jotKEcfxkPyBLB8MWo3PTj9TiM92TdLHQOozYfnNarH9S9w9Aoo
- 2N+Q==
-X-Gm-Message-State: APjAAAVhrC3S0wBvc6NdbN3+wYufbSkUABc5J3dw+6IwM8BMqub8pV50
- PBYj9in57REXsX5oHoKJNWW49A==
-X-Google-Smtp-Source: APXvYqwMhsIrBYk/8uQFNb8U8ZM0ZMlZSG/Tne2lUTe28Eum1fig90e5xrM+wuv9uBTCcia9Ivw8Aw==
-X-Received: by 2002:a1c:a8d8:: with SMTP id
- r207mr10205603wme.135.1567842075909; 
- Sat, 07 Sep 2019 00:41:15 -0700 (PDT)
-Received: from [192.168.2.58] (78-134-57-223.v4.ngi.it. [78.134.57.223])
- by smtp.gmail.com with ESMTPSA id b16sm2747353wrh.5.2019.09.07.00.41.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 07 Sep 2019 00:41:15 -0700 (PDT)
-Subject: Re: WireGuard fails to build on CentOS 7.1908
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-References: <CAMKRnFh4XvqYzPDVjy_NOpeHY+KgsRfEuHfEjWy9N1wfY9MwTg@mail.gmail.com>
- <CAHmME9oC+rYCVqv21-nGw_vyxzY5VhTHoa0mrnbOEShcczBN-g@mail.gmail.com>
- <816bb8ff-101f-2719-4b75-1d194c519aef@astrogeo.va.it>
- <CAHmME9odNo2d+=u1z7kNuXKy2HYzOqaHt_0N9Dz49kZFp4qW_g@mail.gmail.com>
-From: Dario Pilori <dario.pilori@astrogeo.va.it>
-Message-ID: <9891ad84-a635-3922-2fb9-ceadd6cdb8fd@astrogeo.va.it>
-Date: Sat, 7 Sep 2019 09:41:50 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.0
-MIME-Version: 1.0
-In-Reply-To: <CAHmME9odNo2d+=u1z7kNuXKy2HYzOqaHt_0N9Dz49kZFp4qW_g@mail.gmail.com>
-Content-Language: en-US
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a828ed15
+ for <wireguard@lists.zx2c4.com>; Sat, 7 Sep 2019 10:04:48 +0000 (UTC)
+Received: from smtprelay08.ispgateway.de (smtprelay08.ispgateway.de
+ [134.119.228.110])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cf178de5
+ for <wireguard@lists.zx2c4.com>; Sat, 7 Sep 2019 10:04:48 +0000 (UTC)
+Received: from [84.61.93.104] (helo=[192.168.177.20])
+ by smtprelay08.ispgateway.de with esmtpsa
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256) (Exim 4.92.2)
+ (envelope-from <hendrik@friedels.name>)
+ id 1i6XaI-0006yf-Sb; Sat, 07 Sep 2019 12:04:46 +0200
+From: "Hendrik Friedel" <hendrik@friedels.name>
+To: =?utf-8?q?Ivan=20Lab=c3=a1th?= <labawi-wg@matrix-dream.net>
+Subject: Re[2]: Keep-alive does not keep the connection alive
+Date: Sat, 07 Sep 2019 10:04:44 +0000
+Message-Id: <emc2cb759b-1a2b-4bd0-a4f8-77ed32053cff@ryzen>
+In-Reply-To: <20190828065411.GA6914@matrix-dream.net>
+References: <em08a1734c-6242-4687-b8d8-cf84e0b95ec3@ryzen>
+ <CANH_QeYQ7hyBG1qK9PJB9E77gggW0NYe70vv8m6Dn=fU5zHQbg@mail.gmail.com>
+ <em7afc7e4a-39a3-472d-ba45-79c6ad20b842@ryzen>
+ <20190826180244.GB5022@matrix-dream.net>
+ <CANcuY=oE9L_sm1b_JJV4_fv+ABLx9ZbTeXXzijkiLw-b=CxkMQ@mail.gmail.com>
+ <em05f3a9de-8e41-4353-affa-3fb52e65cda8@ryzen>
+ <20190828065411.GA6914@matrix-dream.net>
+User-Agent: eM_Client/7.2.34062.0
+Mime-Version: 1.0
+X-Df-Sender: aGVuZHJpa0BmcmllZGVscy5uYW1l
+Cc: wireguard@lists.zx2c4.com
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
+Reply-To: Hendrik Friedel <hendrik@friedels.name>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -89,78 +60,195 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
+Content-Type: multipart/mixed; boundary="===============4292451733509165423=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Jason,
+--===============4292451733509165423==
+Content-Type: multipart/alternative;
+ boundary="------=_MB39AD2061-877A-4181-AEDB-EEA144F0F9FF"
 
-In a nutshell, RHEL 7 is a rolling release. Point releases are basically 
-moments where several packages are updated at the same time, and these 
-updates usually bring bigger changes than standard RHEL updates.
+--------=_MB39AD2061-877A-4181-AEDB-EEA144F0F9FF
+Content-Type: text/plain; format=flowed; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-RHEL 7.7 was released on August 6th, and support for RHEL 7.6 was 
-immediately dropped. This is almost transparent to RHEL users, since a 
-simple 'yum update' would automatically upgrade all packages to latest 
-RHEL 7.x release. Only (paying) RHEL customers, with an additional 
-support contract, can keep an old RHEL point release for some time.
+Hello,
 
-CentOS does not offer such support contract, therefore as soon as a 
-point release is released, the previous one is immediately dropped.
+>>  that seems not to be the intended behaviour:
+>>  If I understand correctly, the current behaviour is:
+>>
+>>  At tunnel start the IP is resolved
+>>  This IP is used for ever, namingly for re-connects.
+>This is only partly correct. The remote endpoint can unconditionally
+>roam and is updated by any valid packet from a given IP (if I remember
+>correctly).
+What does that mean?
+Does that mean, that traffic will update the IP so that the problem will=20
+not appear?
+>
 
-Since CentOS is a recompilation of RHEL, there is a lag (~ several 
-months) between RHEL and CentOS releases. The "Continuous-Release" (CR) 
-repository is basically a beta version of the next CentOS point release, 
-which is based on an already-released RHEL point release. While the CR 
-release is not widely used (since it's a development version), it is a 
-very faithful representation on what the next official version would be, 
-since CentOS is only a mere recompilation of RHEL.
+>
+>>  The probably intended behaviour would be:
+>>  At tunnel start and at any re-connect the IP is resolved.
+>>
+>>  Do you agree that this behaviour should be changed?
+>>  Apart from that: Can you suggest an automatable workaround?
+>
+>In some circumstances a similar behavior would be a desired.
 
-CentOS 7.7.1908 (based on RHEL 7.7) was released on the CR repo on 
-August 30th. Usually it stays there for several weeks, then it is 
-released with very minor changes. When it happens, the support of CentOS 
-7.6.1804 (based on RHEL 7.6) will be immediately dropped, and the update 
-to this version will be sent to all CentOS 7 machines.
+That's ambigous.
+In what circumstances, what behaviour would be desired?
 
-For the "WireGuard support" perspective, right now it works on latest 
-"official" CentOS 7 kernel. I suspect that it doesn't compile on the 
-already-released RHEL 7.7, but I don't have a RHEL7 installation where I 
-can test it.  However, when CentOS 7.7.1908 (based on RHEL 7.7) will be 
-released, which should happen in some weeks, it is highly probable that 
-WireGuard will not be compatible with the latest (and only supported) 
-RHEL/CentOS 7 kernel.
+>
+>Wireguard design and implementation is layered (which seems good).
+>The secure* tunnel, including the kernel module and wg tool seem
+>to be in a reasonable state, but automation, DNS, key exchange are
+>out of scope for them. It is meant to be provided by tooling, which is
+>currently very raw.
 
-To answer to your question, I agree with you that it is worth only 
-supporting the most recent official RHEL/CentOS kernel, since the CR 
-release is meant only for testing. However, "be prepared" that, when 
-CentOS 7.7.1908 will be released, it is highly probable that WG will not 
-compile on it.
+I don't understand...
+When I am on my way in a roadwarrier scenario with my mobile, with a=20
+changing IP and a changing connection that works very well.
+If the IP of my Server is changing, it's not working well at all. I=20
+don't think that this should be declared as 'works as intended'.
+>
 
-Dario
+>
+>As a workaround you could
+>   - unconditionally periodically update the endpoint
+This would break existing transfers without reason.
+>   - monitor last handshake time, when large update endpoint or restart
+>     tunnel
+That could be an option.
+>   - add keepalive to server - it might reduce your downtime
+How would that help?
 
-On 07/09/2019 00:47, Jason A. Donenfeld wrote:
-> Hey Dario,
-> 
-> I'm not super familiar with the RHEL release varieties. Maybe you or
-> somebody can clarify and help define how we'll approach it?
-> 
-> What we've done in the past is support whatever the "latest" RHEL
-> kernel is. IIRC, 7.6 was released not so long ago, and we did the
-> compat.h work on 7.6, and then dropped support for RHEL 7.5. It sounds
-> to me like what you're saying now is that 7.6 has already been
-> replaced by 7.7? Or there's a stable 7.6 and then an "in-development"
-> 7.7 that is rolling? If it's the latter case, do you know if that's
-> widely used and worthwhile for us to support?
-> 
-> In other words, I'm not so sure of the RHEL landscape, but if you make
-> a description and argument for what we should support in WireGuard's
-> compat layer, as long as it's somewhat reasonable, I'm happy to
-> oblige.
-> 
-> Jason
-> 
+Greetings,
+Hendrik
+
+
+>
+
+
+
+
+>
+--------=_MB39AD2061-877A-4181-AEDB-EEA144F0F9FF
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<html><head><style>#x93406428d40e43d5be476ffb5412c83f #x70fb53580d9c415c9d6=
+c4afe5251441b{
+	font-family:'Segoe UI';
+	font-size:12pt;
+}
+#x93406428d40e43d5be476ffb5412c83f{
+	font-family:'Segoe UI';
+	font-size:12pt;
+}#x70fb53580d9c415c9d6c4afe5251441b
+{font-family: 'Segoe UI'; font-size: 12pt;}
+</style>
+
+<style id=3D"css_styles" type=3D"text/css">blockquote.cite { margin-left: 5=
+px; margin-right: 0px; padding-left: 10px; padding-right:0px; border-left:=
+ 1px solid #cccccc }
+blockquote.cite2 {margin-left: 5px; margin-right: 0px; padding-left: 10px;=
+ padding-right:0px; border-left: 1px solid #cccccc; margin-top: 3px; padding=
+-top: 0px; }
+a img { border: 0px; }
+li[style=3D'text-align: center;'], li[style=3D'text-align: right;'] {  list=
+-style-position: inside;}
+body { font-family: Segoe UI; font-size: 12pt;   }</style></head><body clas=
+s=3D"plain"><div>Hello,</div><div><br /></div><div id=3D"x1378faaa1981473">=
+<blockquote type=3D"cite" class=3D"cite2"><blockquote type=3D"cite" class=
+=3D"cite"><div class=3D"plain_line"> that seems not to be the intended beha=
+viour:</div>
+<div class=3D"plain_line"> If I understand correctly, the current behaviour =
+is:</div>
+<div class=3D"plain_line">=C2=A0</div>
+<div class=3D"plain_line"> At tunnel start the IP is resolved</div>
+<div class=3D"plain_line"> This IP is used for ever, namingly for re-connec=
+ts.</div>
+</blockquote>
+<div class=3D"plain_line">This is only partly correct. The remote endpoint=
+ can unconditionally</div>
+<div class=3D"plain_line">roam and is updated by any valid packet from a gi=
+ven IP (if I remember</div>
+<div class=3D"plain_line">correctly).</div></blockquote><div id=3D"x1378faa=
+a1981473">What does that mean?</div><div id=3D"x1378faaa1981473">Does that=
+ mean, that traffic will update the IP so that the problem will not appear?<=
+/div><blockquote type=3D"cite" class=3D"cite2"><div class=3D"plain_line"><b=
+r /></div></blockquote><br /><blockquote type=3D"cite" class=3D"cite2"><div =
+class=3D"plain_line"><br /></div>
+<blockquote type=3D"cite" class=3D"cite2">
+<div class=3D"plain_line"> The probably intended behaviour would be:</div>
+<div class=3D"plain_line"> At tunnel start and at any re-connect the IP is=
+ resolved.</div>
+<div class=3D"plain_line">=C2=A0</div>
+<div class=3D"plain_line"> Do you agree that this behaviour should be chang=
+ed?</div>
+<div class=3D"plain_line"> Apart from that: Can you suggest an automatable=
+ workaround?</div>
+</blockquote>
+<div class=3D"plain_line">=C2=A0</div>
+<div class=3D"plain_line">In some circumstances a similar behavior would be =
+a desired.</div></blockquote><div id=3D"x1378faaa1981473"><br /></div><div =
+id=3D"x1378faaa1981473">That's ambigous.</div><div id=3D"x1378faaa1981473"=
+>In what circumstances, what behaviour would be desired?</div><div id=3D"x1=
+378faaa1981473"><br /></div><blockquote type=3D"cite" class=3D"cite2"><div=
+ class=3D"plain_line"><br /></div>
+<div class=3D"plain_line">Wireguard design and implementation is layered (w=
+hich seems good).</div>
+<div class=3D"plain_line">The secure* tunnel, including the kernel module a=
+nd wg tool seem</div>
+<div class=3D"plain_line">to be in a reasonable state, but automation, DNS, =
+key exchange are</div>
+<div class=3D"plain_line">out of scope for them. It is meant to be provided =
+by tooling, which is</div>
+<div class=3D"plain_line">currently very raw.</div></blockquote><div id=3D"=
+x1378faaa1981473"><br /></div><div id=3D"x1378faaa1981473">I don't understa=
+nd... </div><div id=3D"x1378faaa1981473">When I am on my way in a roadwarri=
+er scenario with my mobile, with a changing IP and a changing connection th=
+at works very well.</div><div id=3D"x1378faaa1981473">If the IP of my Serve=
+r is changing, it's not working well at all. I don't think that this should =
+be declared as 'works as intended'.</div><blockquote type=3D"cite" class=
+=3D"cite2"><div class=3D"plain_line"><br /></div></blockquote><br /><blockq=
+uote type=3D"cite" class=3D"cite2"><div class=3D"plain_line"><br /></div>
+<div class=3D"plain_line">As a workaround you could</div>
+<div class=3D"plain_line">  - unconditionally periodically update the endpo=
+int</div></blockquote></div><div id=3D"x1378faaa1981473"><div id=3D"x934064=
+28d40e43d5be476ffb5412c83f"><div class=3D"plain"><div id=3D"x1378faaa198147=
+3"><div id=3D"x70fb53580d9c415c9d6c4afe5251441b"><div class=3D"plain"><div=
+ id=3D"x1378faaa1981473">This would break existing transfers without reason.=
+</div></div></div></div></div></div><blockquote type=3D"cite" class=3D"cite=
+2"><div class=3D"plain_line">  - monitor last handshake time, when large up=
+date endpoint or restart</div>
+<div class=3D"plain_line">    tunnel</div></blockquote>That could be an opt=
+ion.<br /><blockquote type=3D"cite" class=3D"cite2"><div class=3D"plain_lin=
+e">  - add keepalive to server - it might reduce your downtime</div></block=
+quote>How would that help?</div><div id=3D"x1378faaa1981473"><br /></div><d=
+iv id=3D"x1378faaa1981473">Greetings,</div><div id=3D"x1378faaa1981473">Hen=
+drik</div><div id=3D"x1378faaa1981473"><br /></div><div id=3D"x1378faaa1981=
+473"><br /><blockquote type=3D"cite" class=3D"cite2"><div class=3D"plain_li=
+ne"><br /></div></blockquote><div id=3D"x1378faaa1981473"><br /></div><div=
+ id=3D"x1378faaa1981473"></div><div id=3D"x1378faaa1981473"><br /></div><div =
+id=3D"x1378faaa1981473"><br /></div><br /><blockquote type=3D"cite" class=
+=3D"cite2"><div class=3D"plain_line"><br /></div>
+</blockquote></div>
+</body></html>
+--------=_MB39AD2061-877A-4181-AEDB-EEA144F0F9FF--
+
+
+--===============4292451733509165423==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--===============4292451733509165423==--
+
