@@ -2,102 +2,63 @@ Return-Path: <SRS0=/FJx=XG=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=0.3 required=3.0 tests=DKIM_ADSP_ALL,DKIM_INVALID,
+	DKIM_SIGNED,FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D6C2C49ED6
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 11 Sep 2019 16:41:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3ABB1ECDE20
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 11 Sep 2019 16:41:19 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 02A0C206CD
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 11 Sep 2019 16:41:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 801DC206CD
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 11 Sep 2019 16:41:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=lamendola.me header.i=@lamendola.me header.b="nNIce5PN"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 02A0C206CD
-Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=lamendola.me
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=mail.ua header.i=@mail.ua header.b="I6xQPWZO"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 801DC206CD
+Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=mail.ua
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9475e0df;
-	Wed, 11 Sep 2019 16:40:41 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 91beb739;
+	Wed, 11 Sep 2019 16:40:42 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8be0a492
- for <wireguard@lists.zx2c4.com>; Sat, 7 Sep 2019 12:54:25 +0000 (UTC)
-Received: from NAM04-CO1-obe.outbound.protection.outlook.com
- (mail-eopbgr690051.outbound.protection.outlook.com [40.107.69.51])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e92e7298
- for <wireguard@lists.zx2c4.com>; Sat, 7 Sep 2019 12:54:25 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=iZHh1FchwuKpD7TQt/bmVonxl6NdBcpijhxTA1rZsQa0888KvIt3KKrmqef8glWJJQkN5f/yXFpiShgit1+mqq+TzeRqVW3k4ntkvBXjUYyMh/eTwX1aQdES/U+sbYy/UX+YWEn86jqKgsdFtxHCD902sT+b+9OkSHDgvG3Xnmsd2U6dFh4haFIf4WD/gyszkZrw0/w9WKW0MNT7MgL6sq9iLCrw4Qn1/UUWHodJ4CJtAGVs+yGAf9lia/eiuaFl1099g0vwNk2NWmvIFhpza66ElMTp+iQr7cT6kffIF0NNjdjLEKoii3mSZGvJ6R2G6ZxnUt7Zrh8WNo28NxQiwg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=MYkc7RwnmuKGuy5n+Qo0ma/7WvlmSUPpd9PbKvlL9+8=;
- b=a7RMjO/224tFyHcsOgF0tT2RWpuDyJvWpwCMwv6CgosYkwHY2Pk+7nwLBqfb3c/ZmzQa6IydQ5AU2iMCsQtwMGDW1qOzIn+Q5o4xj8L1GZeA5OGtQaUxslfaBVSufTtpMKJz09PHlIk3v/KpmNh5XLHa0hhaDBD3ezNR4w7mfXQtCOUh2MJx3/yxuG3hEZt/6zuHpfjDodTgSTWXsNXmoRRtZ8aJof/NsTdT52QX6sFtk1pzVFZGmZ+svN6stRzvuslpAFxXIDiC+rp2lSxR8Hf2Db42kYaOCJhAVqrEPOlvXFroguYDGjl0VveHyDOTHTid12qYfWVrOSsNYDRK+Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=lamendola.me; dmarc=pass action=none header.from=lamendola.me;
- dkim=pass header.d=lamendola.me; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lamendola.me;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=MYkc7RwnmuKGuy5n+Qo0ma/7WvlmSUPpd9PbKvlL9+8=;
- b=nNIce5PN3O5iZyBjKa+HDNHQY2BhXYz4pCbNEGH59sJJu+gh5u1j8Lw+EewIsCM+04D+W+IWash84SrYOQMkwjEmSdwdQS5l3R8qnPf6+X2grbmWsFKEUVEKQHNlOu1qfMe1YPGMkCBZ6C1CGuO8fkuaaNK79j0gaKu6aNKZiKQ=
-Received: from BN7PR04MB5300.namprd04.prod.outlook.com (20.176.29.93) by
- BN7PR04MB4435.namprd04.prod.outlook.com (52.133.222.32) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2241.18; Sat, 7 Sep 2019 12:54:23 +0000
-Received: from BN7PR04MB5300.namprd04.prod.outlook.com
- ([fe80::4842:116d:de1b:6d54]) by BN7PR04MB5300.namprd04.prod.outlook.com
- ([fe80::4842:116d:de1b:6d54%7]) with mapi id 15.20.2241.018; Sat, 7 Sep 2019
- 12:54:23 +0000
-From: Salvatore LaMendola <salvatore@lamendola.me>
-To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
-Subject: Suggested Debian install instructions patch for the website
-Thread-Topic: Suggested Debian install instructions patch for the website
-Thread-Index: AQHVZXlRxcIO9IPv3UyYO2n07hdKGA==
-Date: Sat, 7 Sep 2019 12:54:23 +0000
-Message-ID: <BN7PR04MB5300E9570A3AA9F1A9B82141D4B50@BN7PR04MB5300.namprd04.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=salvatore@lamendola.me; 
-x-originating-ip: [173.70.107.181]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: d9564de4-5874-4f10-9074-08d73392822c
-x-microsoft-antispam: BCL:0; PCL:0;
- RULEID:(2390118)(7020095)(4652040)(7021145)(8989299)(4534185)(7022145)(4603075)(4627221)(201702281549075)(8990200)(7048125)(7024125)(7027125)(7023125)(5600166)(711020)(4605104)(1401327)(2017052603328)(7193020);
- SRVR:BN7PR04MB4435; 
-x-ms-traffictypediagnostic: BN7PR04MB4435:
-x-ms-exchange-purlcount: 2
-x-microsoft-antispam-prvs: <BN7PR04MB4435BAC3D607F51D22D46F4CD4B50@BN7PR04MB4435.namprd04.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:10000;
-x-forefront-prvs: 0153A8321A
-x-forefront-antispam-report: SFV:NSPM;
- SFS:(10009020)(376002)(346002)(136003)(366004)(396003)(39830400003)(199004)(189003)(504964003)(33656002)(91956017)(76116006)(2501003)(2351001)(86362001)(102836004)(66946007)(66556008)(14454004)(53936002)(606006)(66446008)(64756008)(66476007)(6506007)(5640700003)(7736002)(1730700003)(81156014)(81166006)(8936002)(8676002)(52536014)(508600001)(5660300002)(55016002)(14444005)(256004)(6306002)(54896002)(9686003)(236005)(186003)(486006)(99286004)(476003)(66066001)(6436002)(71190400001)(316002)(6916009)(25786009)(26005)(71200400001)(966005)(3846002)(2906002)(74316002)(6116002)(7696005);
- DIR:OUT; SFP:1101; SCL:1; SRVR:BN7PR04MB4435;
- H:BN7PR04MB5300.namprd04.prod.outlook.com; FPR:; SPF:None; LANG:en;
- PTR:InfoNoRecords; A:1; MX:1; 
-received-spf: None (protection.outlook.com: lamendola.me does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: hcDAsjEjyOTfXkdtVyCenA1SH+jHl1zDSRG3DENlxtnksdwGqAW/+fxL7VQsZ+dIewQhvqlRmoenxkL6dyYFC1oYAHs4vgHRXlzWFJhFY4gEYnC2/cVd+y//3m5cm1NRZOIBF0Q7GFxe85O7XKBU7ooENjGUrPyv3T+rkOFjJU8XM05rS2qmTLnGSAzin4OcrNQ8PoD73xWoixzySNu950jodwJm/HDBY9T4kVAt2Ixw03YfhCI3QyhloicHvNmB4atDquoGAMUQ8/FfCtUa9hLS2HVrRCgOLDhHrqUi9pjEYrDRpu7YSICjS1rCuyVtMOOlZtU7/UZESiODUF6E4ZRib0CUf7SHc+jdUmVl3sANBUdKcpS5TiX+YYOtYFIDhc72aRYb7YDPnwmbDaEeOJZNp6qDUD8NclZThyc2YMo=
-x-ms-exchange-transport-forked: True
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a22ceadb
+ for <wireguard@lists.zx2c4.com>; Mon, 9 Sep 2019 23:11:40 +0000 (UTC)
+Received: from f522.i.mail.ru (f522.i.mail.ru [94.100.184.13])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id eee44327
+ for <wireguard@lists.zx2c4.com>; Mon, 9 Sep 2019 23:11:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ua;
+ s=mail; 
+ h=Content-Type:Message-ID:Reply-To:Date:MIME-Version:Subject:To:From;
+ bh=+AoMRbS/cidtnqKJQqHiR4+nQOSQR7ZjWT8TTcErEhk=; 
+ b=I6xQPWZODuBI6ggAbhneuggv+uva1041P3l70h8V4VUZwVGbhrB2pTXExS6ZL6eKWusRMrHSStd2RejweUhy7V+Hr+dtX0WVfZuscD8tCjfsd456vw2Px2AbIsVX+g7u9Vs86g+KvvzShHFcuL7sxXMMw9XAP0PYQI2N4Wer6eY=;
+Received: by f522.i.mail.ru with local (envelope-from <iron@mail.ua>)
+ id 1i7Sor-00024P-QJ
+ for wireguard@lists.zx2c4.com; Tue, 10 Sep 2019 02:11:38 +0300
+Received: by e.mail.ru with HTTP;
+	Tue, 10 Sep 2019 02:11:37 +0300
+From: =?UTF-8?B?0JXQstCz0LXQvdC40LkgSVJPTg==?= <iron@mail.ua>
+To: wireguard@lists.zx2c4.com
+Subject: =?UTF-8?B?V2lyZWd1YXJkIHdpdGggZGlzYWJsZWQgSVB2NiB1bmRlciBGcmVlQlNE?=
 MIME-Version: 1.0
-X-OriginatorOrg: lamendola.me
-X-MS-Exchange-CrossTenant-Network-Message-Id: d9564de4-5874-4f10-9074-08d73392822c
-X-MS-Exchange-CrossTenant-originalarrivaltime: 07 Sep 2019 12:54:23.4297 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 95fb7574-ac23-41db-ae8e-1bf46bad575b
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: UMrsGbJSXSkc6dlMO4peGSYiTRRVl35DQUQB0UKXVvIhFGutxZ+6W5KA54wRCXIgsPRKOzdWEUSWP6qcwX+LGw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN7PR04MB4435
+X-Mailer: Mail.Ru Mailer 1.0
+Date: Tue, 10 Sep 2019 02:11:37 +0300
+X-Priority: 3 (Normal)
+Message-ID: <1568070697.332144477@f522.i.mail.ru>
+Authentication-Results: f522.i.mail.ru; auth=pass smtp.auth=iron@mail.ua
+ smtp.mailfrom=iron@mail.ua
+X-77F55803: C25EFC2EB3804F3A9110AD76CAB125BE45CFA22AAFF36450A9B3F007CD7F4FE240B5F7B097B5751E3A5BB986DF78545B
+X-7FA49CB5: 70AAF3C13DB7016878DA827A17800CE775391C3A22ADB47CD82A6BABE6F325ACA01ED31736435A1FBFD28B28ED4578739E625A9149C048EE0295F3697264BFA8B237B30BB4E08982B287FD4696A6DC2FA8DF7F3B2552694A4E2F5AFA99E116B42401471946AA11AF269823B5EC1E9D4DED6B9921EE2920938F08D7030A58E5AD6BA297DBC24807EAA9D420A4CFB5DD3EC8FDB296C59A0BD93088ABB567818FBB3FC07C0C7AD49DD08941B15DA834481FA18204E546F3947C1D471462564A2E19F6B57BC7E64490618DEB871D839B7333395957E7521B51C2545D4CF71C94A83E9FA2833FD35BB23D27C277FBC8AE2E8B2EE5AD8F952D28FBA471835C12D1D977C4224003CC836476C0CAF46E325F83A522CA9DD8327EE493D58E677C372A3F47AD19C9A918A40246E6498CEBD523939F731C566533BA786A40A5AABA2AD371193C9F3DD0FB1AF5EBE26B79914A659FB62623479134186CDE6BA297DBC24807EABDAD6C7F3747799A
+X-Mailru-MI: 800
+X-Mailru-Sender: 108D79A39691CE80892F2FA9BE89D15E8FBD315BAC9093B8056CCC2992A6EA9DF2E6B909CECB75D67CC34E373F918147CF966ECF4123ED9E0DA589AF0A473323C1066F626AABBBD9DEC57AFBCB8B665245EC9C6EA746485E67EA787935ED9F1B
+X-Mras: OK
+X-Spam: undefined
 X-Mailman-Approved-At: Wed, 11 Sep 2019 18:40:39 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
+Reply-To: =?UTF-8?B?0JXQstCz0LXQvdC40LkgSVJPTg==?= <iron@mail.ua>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -106,195 +67,61 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============0402391108421749932=="
+Content-Type: multipart/mixed; boundary="===============0301299502665017224=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============0402391108421749932==
-Content-Language: en-US
+
+--===============0301299502665017224==
 Content-Type: multipart/alternative;
-	boundary="_000_BN7PR04MB5300E9570A3AA9F1A9B82141D4B50BN7PR04MB5300namp_"
-
---_000_BN7PR04MB5300E9570A3AA9F1A9B82141D4B50BN7PR04MB5300namp_
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-Hello,
-
-On the [install page of the website](https://www.wireguard.com/install/), t=
-he default pin config smartly deprioritizes Sid after adding the repository=
-. However, it seems this causes the wireguard packages to be non-upgradable=
-. After speaking with someone on IRC about this, I can't think of a reason =
-why we wouldn't want to be able to upgrade the wireguard packages. So, I'd =
-like to propose the following addition to the pinning configuration written=
- in the instructions (unified diff follows):
-
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D
-
---- orig        2019-09-07 08:43:08.489455140 -0400
-+++ new 2019-09-07 08:45:49.056137802 -0400
-@@ -1,4 +1,4 @@
-# echo "deb http://deb.debian.org/debian/ unstable main" > /etc/apt/sources=
-.list.d/unstable.list
--# printf 'Package: *\nPin: release a=3Dunstable\nPin-Priority: 90\n' > /et=
-c/apt/preferences.d/limit-unstable
-+# printf 'Package: *\nPin: release a=3Dunstable\nPin-Priority: 90\n\nPacka=
-ge: /^wireguard/\nPin: release a=3Dunstable\nPin-Priority: 500\n' > /etc/ap=
-t/preferences.d/limit-unstable
-# apt update
-# apt install wireguard
-
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D
-
-This preserves the general priority of 90 for *, but it also sets any packa=
-ge starting with wireguard to 500, which matches the default priority used =
-in the PPAs.
-
-The only reason I chose a regex match here is in case any additional wiregu=
-ard packages get added later, other than wireguard, wireguard-dkms, and wir=
-eguard-tools. Otherwise, the Package line could read:
-
-Package: wireguard wireguard-dkms wireguard-tools
-
-Anyone have any objections to this approach? Also, is there a repo for the =
-website I can fork and PR this to?
-
-Thank you in advance.
-
---
-Salvatore LaMendola
+	boundary="--ALT--9OdNzaWgnHuwfchkUqxwchUWjiVdJRRm1568070697"
 
 
---_000_BN7PR04MB5300E9570A3AA9F1A9B82141D4B50BN7PR04MB5300namp_
-Content-Type: text/html; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+----ALT--9OdNzaWgnHuwfchkUqxwchUWjiVdJRRm1568070697
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: base64
 
-<html>
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
->
-</head>
-<body>
-<div dir=3D"auto" style=3D"direction: ltr; margin: 0; padding: 0; font-fami=
-ly: sans-serif; font-size: 11pt; color: black; ">
-Hello,<br>
-<br>
-</div>
-<div dir=3D"auto" style=3D"direction: ltr; margin: 0; padding: 0; font-fami=
-ly: sans-serif; font-size: 11pt; color: black; ">
-On the [install page of the website](<a href=3D"https://www.wireguard.com/i=
-nstall/">https://www.wireguard.com/install/</a>), the default pin config sm=
-artly deprioritizes Sid after adding the repository. However, it seems this=
- causes the wireguard packages to
- be non-upgradable. After speaking with someone on IRC about this, I can't =
-think of a reason why we wouldn't want to be able to upgrade the wireguard =
-packages. So, I'd like to propose the following addition to the pinning con=
-figuration written in the instructions
- (unified diff follows):<br>
-<br>
-</div>
-<div dir=3D"auto" style=3D"direction: ltr; margin: 0; padding: 0; font-fami=
-ly: sans-serif; font-size: 11pt; color: black; ">
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D<br>
-<br>
-</div>
-<div dir=3D"auto" style=3D"direction: ltr; margin: 0; padding: 0; font-fami=
-ly: sans-serif; font-size: 11pt; color: black; ">
---- orig&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2019-09-07 08:43:08.4894=
-55140 -0400<br>
-</div>
-<div dir=3D"auto" style=3D"direction: ltr; margin: 0; padding: 0; font-fami=
-ly: sans-serif; font-size: 11pt; color: black; ">
-&#43;&#43;&#43; new 2019-09-07 08:45:49.056137802 -0400<br>
-</div>
-<div dir=3D"auto" style=3D"direction: ltr; margin: 0; padding: 0; font-fami=
-ly: sans-serif; font-size: 11pt; color: black; ">
-@@ -1,4 &#43;1,4 @@<br>
-</div>
-<div dir=3D"auto" style=3D"direction: ltr; margin: 0; padding: 0; font-fami=
-ly: sans-serif; font-size: 11pt; color: black; ">
-# echo &quot;deb <a href=3D"http://deb.debian.org/debian">http://deb.debian=
-.org/debian</a>/ unstable main&quot; &gt; /etc/apt/sources.list.d/unstable.=
-list<br>
-</div>
-<div dir=3D"auto" style=3D"direction: ltr; margin: 0; padding: 0; font-fami=
-ly: sans-serif; font-size: 11pt; color: black; ">
--# printf 'Package: *\nPin: release a=3Dunstable\nPin-Priority: 90\n' &gt; =
-/etc/apt/preferences.d/limit-unstable<br>
-</div>
-<div dir=3D"auto" style=3D"direction: ltr; margin: 0; padding: 0; font-fami=
-ly: sans-serif; font-size: 11pt; color: black; ">
-&#43;# printf 'Package: *\nPin: release a=3Dunstable\nPin-Priority: 90\n\nP=
-ackage: /^wireguard/\nPin: release a=3Dunstable\nPin-Priority: 500\n' &gt; =
-/etc/apt/preferences.d/limit-unstable<br>
-</div>
-<div dir=3D"auto" style=3D"direction: ltr; margin: 0; padding: 0; font-fami=
-ly: sans-serif; font-size: 11pt; color: black; ">
-# apt update<br>
-</div>
-<div dir=3D"auto" style=3D"direction: ltr; margin: 0; padding: 0; font-fami=
-ly: sans-serif; font-size: 11pt; color: black; ">
-# apt install wireguard<br>
-<br>
-</div>
-<div dir=3D"auto" style=3D"direction: ltr; margin: 0; padding: 0; font-fami=
-ly: sans-serif; font-size: 11pt; color: black; ">
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D<br>
-<br>
-</div>
-<div dir=3D"auto" style=3D"direction: ltr; margin: 0; padding: 0; font-fami=
-ly: sans-serif; font-size: 11pt; color: black; ">
-This preserves the general priority of 90 for *, but it also sets any packa=
-ge starting with wireguard to 500, which matches the default priority used =
-in the PPAs.
-<br>
-<br>
-</div>
-<div dir=3D"auto" style=3D"direction: ltr; margin: 0; padding: 0; font-fami=
-ly: sans-serif; font-size: 11pt; color: black; ">
-The only reason I chose a regex match here is in case any additional wiregu=
-ard packages get added later, other than wireguard, wireguard-dkms, and wir=
-eguard-tools. Otherwise, the Package line could read:<br>
-<br>
-</div>
-<div dir=3D"auto" style=3D"direction: ltr; margin: 0; padding: 0; font-fami=
-ly: sans-serif; font-size: 11pt; color: black; ">
-Package: wireguard wireguard-dkms wireguard-tools<br>
-<br>
-</div>
-<div dir=3D"auto" style=3D"direction: ltr; margin: 0; padding: 0; font-fami=
-ly: sans-serif; font-size: 11pt; color: black; ">
-Anyone have any objections to this approach? Also, is there a repo for the =
-website I can fork and PR this to?<br>
-<br>
-</div>
-<div dir=3D"auto" style=3D"direction: ltr; margin: 0; padding: 0; font-fami=
-ly: sans-serif; font-size: 11pt; color: black; ">
-Thank you in advance.<br>
-<br>
-</div>
-<div dir=3D"auto" style=3D"direction: ltr; margin: 0; padding: 0; font-fami=
-ly: sans-serif; font-size: 11pt; color: black; ">
-<span id=3D"OutlookSignature">
-<div dir=3D"auto" style=3D"direction: ltr; margin: 0; padding: 0; font-fami=
-ly: sans-serif; font-size: 11pt; color: black; ">
--- <br>
-</div>
-<div dir=3D"auto" style=3D"direction: ltr; margin: 0; padding: 0; font-fami=
-ly: sans-serif; font-size: 11pt; color: black; ">
-Salvatore LaMendola</div>
-</span><br>
-</div>
-</body>
-</html>
+SGVsbG8sCgpJJ20gdHJ5aW5nIHRvIHNldHVwIHdpcmVndWFyZCBzZXJ2ZXIgb24gRnJlZUJTRCB3
+aGljaCB3YXMgYnVpbHQgZnJvbSBwb3J0cy4gSSBoYXZlIGN1c3RvbSBrZXJuZWwgYnVpbGQgd2hl
+cmUgSSBkaXNhYmxlZCBJUHY2IHdoaWNoIEkgY3VycmVudGx5IGRvbid0IHVzZSBhdCB0aGlzIFZN
+LiBXaGVuIEkgdHJ5aW5nIHRvIHN0YXJ0IFdJcmVndWFyZCBJIHJlY2VpdmUgYW4gZXJyb3I6Cgoj
+IHNlcnZpY2Ugd2lyZWd1YXJkIHN0YXJ0ClsjXSB3aXJlZ3VhcmQtZ28gd2cwCklORk86ICh3ZzAp
+IDIwMTkvMDkvMTAgMDI6MDI6MjkgU3RhcnRpbmcgd2lyZWd1YXJkLWdvIHZlcnNpb24gMC4wLjIw
+MTkwODA1CkVSUk9SOiAod2cwKSAyMDE5LzA5LzEwIDAyOjAyOjI5IEZhaWxlZCB0byBjcmVhdGUg
+VFVOIGRldmljZTogYWRkcmVzcyBmYW1pbHkgbm90IHN1cHBvcnRlZCBieSBwcm90b2NvbCBmYW1p
+bHkKWyNdIHJtIC1mIC92YXIvcnVuL3dpcmVndWFyZC93ZzAuc29jawpuZXRzdGF0OiBpbmV0Njog
+dW5rbm93biBhZGRyZXNzIGZhbWlseQoKSGVyZSBpcyBteSBjb25maWcgZmlsZSB3ZzAuY29uZjoK
+CltJbnRlcmZhY2VdCkFkZHJlc3MgPSAxOTIuMTY4LjIyMi4xLzMyClByaXZhdGVLZXkgPSA8cHJp
+diBLZXk+Ckxpc3RlblBvcnQgPSA1MTgyMAoKW1BlZXJdClB1YmxpY0tleSA9IDxwdWIga2V5PgpB
+bGxvd2VkSVBzID0gMTkyLjE2OC4yMjIuMi8zMgoKV2h5IGRvZXMgaXQgdHJ5IHRvIHVzZSBJUHY2
+IG9uIHR1bjAgaW50ZXJmYWNlIHdoZW4gSSBkaWRuJ3Qgc3BlY2lmeSBJUHY2IGFkZHJlc3MgaW4g
+dGhlIGNvbmZpZyBmaWxlLgoKVGhhbmsgeW91IQo=
 
---_000_BN7PR04MB5300E9570A3AA9F1A9B82141D4B50BN7PR04MB5300namp_--
+----ALT--9OdNzaWgnHuwfchkUqxwchUWjiVdJRRm1568070697
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: base64
 
---===============0402391108421749932==
+CjxIVE1MPjxCT0RZPkhlbGxvLDxicj48YnI+SSdtIHRyeWluZyB0byBzZXR1cCB3aXJlZ3VhcmQg
+c2VydmVyIG9uIEZyZWVCU0Qgd2hpY2ggd2FzIGJ1aWx0IGZyb20gcG9ydHMuIEkgaGF2ZSBjdXN0
+b20ga2VybmVsIGJ1aWxkIHdoZXJlIEkgZGlzYWJsZWQgSVB2NiB3aGljaCBJIGN1cnJlbnRseSBk
+b24ndCB1c2UgYXQgdGhpcyBWTS4gV2hlbiBJIHRyeWluZyB0byBzdGFydCBXSXJlZ3VhcmQgSSBy
+ZWNlaXZlIGFuIGVycm9yOjxicj48YnI+IyBzZXJ2aWNlIHdpcmVndWFyZCBzdGFydDxicj5bI10g
+d2lyZWd1YXJkLWdvIHdnMDxicj5JTkZPOiAod2cwKSAyMDE5LzA5LzEwIDAyOjAyOjI5IFN0YXJ0
+aW5nIHdpcmVndWFyZC1nbyB2ZXJzaW9uIDAuMC4yMDE5MDgwNTxicj5FUlJPUjogKHdnMCkgMjAx
+OS8wOS8xMCAwMjowMjoyOSBGYWlsZWQgdG8gY3JlYXRlIFRVTiBkZXZpY2U6IGFkZHJlc3MgZmFt
+aWx5IG5vdCBzdXBwb3J0ZWQgYnkgcHJvdG9jb2wgZmFtaWx5PGJyPlsjXSBybSAtZiAvdmFyL3J1
+bi93aXJlZ3VhcmQvd2cwLnNvY2s8YnI+bmV0c3RhdDogaW5ldDY6IHVua25vd24gYWRkcmVzcyBm
+YW1pbHk8YnI+PGJyPkhlcmUgaXMgbXkgY29uZmlnIGZpbGUgd2cwLmNvbmY6PGJyPjxicj5bSW50
+ZXJmYWNlXTxicj5BZGRyZXNzID0gMTkyLjE2OC4yMjIuMS8zMjxicj5Qcml2YXRlS2V5ID0gJmx0
+O3ByaXYgS2V5Jmd0Ozxicj5MaXN0ZW5Qb3J0ID0gNTE4MjA8YnI+PGJyPltQZWVyXTxicj5QdWJs
+aWNLZXkgPSAmbHQ7cHViIGtleSZndDs8YnI+QWxsb3dlZElQcyA9IDE5Mi4xNjguMjIyLjIvMzI8
+YnI+PGJyPldoeSBkb2VzIGl0IHRyeSB0byB1c2UgSVB2NiBvbiB0dW4wIGludGVyZmFjZSB3aGVu
+IEkgZGlkbid0IHNwZWNpZnkgSVB2NiBhZGRyZXNzIGluIHRoZSBjb25maWcgZmlsZS48YnI+PGJy
+PlRoYW5rIHlvdSE8YnI+PC9CT0RZPjwvSFRNTD4K
+
+----ALT--9OdNzaWgnHuwfchkUqxwchUWjiVdJRRm1568070697--
+
+--===============0301299502665017224==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -305,4 +132,4 @@ WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---===============0402391108421749932==--
+--===============0301299502665017224==--
