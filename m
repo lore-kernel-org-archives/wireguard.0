@@ -3,98 +3,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.5 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F749C49ED6
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 11 Sep 2019 13:28:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FD5EC49ED6
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 11 Sep 2019 16:39:31 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 2EEAB2084D
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 11 Sep 2019 13:28:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 2EEAB2084D
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=ironai.com
+	by mail.kernel.org (Postfix) with ESMTPS id C20EA20838
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 11 Sep 2019 16:39:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org C20EA20838
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a54edf51;
-	Wed, 11 Sep 2019 13:28:25 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 791ac1e1;
+	Wed, 11 Sep 2019 16:39:29 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6e3dcad6
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 725b4ad1
  for <wireguard@lists.zx2c4.com>;
- Wed, 11 Sep 2019 13:28:23 +0000 (UTC)
-Received: from achernar.uberspace.de (achernar.uberspace.de [95.143.172.237])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1627f2a5
+ Tue, 10 Sep 2019 21:22:27 +0000 (UTC)
+Received: from dd44832.kasserver.com (dd44832.kasserver.com [85.13.162.224])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bb2f8f1f
  for <wireguard@lists.zx2c4.com>;
- Wed, 11 Sep 2019 13:28:22 +0000 (UTC)
-Received: (qmail 24150 invoked from network); 11 Sep 2019 13:28:21 -0000
-Received: from localhost (HELO ?192.168.1.133?) (127.0.0.1)
- by achernar.uberspace.de with SMTP; 11 Sep 2019 13:28:21 -0000
-Subject: Re: Keep-alive does not keep the connection alive
-To: =?UTF-8?Q?Ivan_Lab=c3=a1th?= <labawi-wg@matrix-dream.net>,
- Hendrik Friedel <hendrik@friedels.name>
-References: <em08a1734c-6242-4687-b8d8-cf84e0b95ec3@ryzen>
- <CANH_QeYQ7hyBG1qK9PJB9E77gggW0NYe70vv8m6Dn=fU5zHQbg@mail.gmail.com>
- <em7afc7e4a-39a3-472d-ba45-79c6ad20b842@ryzen>
- <20190826180244.GB5022@matrix-dream.net>
- <CANcuY=oE9L_sm1b_JJV4_fv+ABLx9ZbTeXXzijkiLw-b=CxkMQ@mail.gmail.com>
- <em05f3a9de-8e41-4353-affa-3fb52e65cda8@ryzen>
- <20190828065411.GA6914@matrix-dream.net>
- <emc2cb759b-1a2b-4bd0-a4f8-77ed32053cff@ryzen>
- <20190910091922.GA5679@matrix-dream.net>
-From: Vincent Wiemann <vincent.wiemann@ironai.com>
+ Tue, 10 Sep 2019 21:22:27 +0000 (UTC)
+Received: from [192.168.0.206]
+ (HSI-KBW-046-005-229-199.hsi8.kabel-badenwuerttemberg.de [46.5.229.199])
+ by dd44832.kasserver.com (Postfix) with ESMTPSA id 8351F6EC0135;
+ Tue, 10 Sep 2019 23:22:25 +0200 (CEST)
+Subject: Re: wg-quick invoking resolvectl instead of resolvconf on systems
+ where that is appropriate?
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+References: <87zhjc3rzr.fsf@fifthhorseman.net>
+ <CAHmME9rkuwVHo1Egq9r0vtOdR5yJ0xes3_WEWb3ncVnPhXwbmQ@mail.gmail.com>
+From: Michael Biebl <biebl@debian.org>
 Openpgp: preference=signencrypt
-Autocrypt: addr=vincent.wiemann@ironai.com; prefer-encrypt=mutual; keydata=
- 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
- sFWRrW2QGIhjT+Y4XMq8yZQ=
-Message-ID: <33c80a5c-44f4-a20f-e3e3-7514a8f3d696@ironai.com>
-Date: Wed, 11 Sep 2019 15:28:18 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+Autocrypt: addr=biebl@debian.org; prefer-encrypt=mutual; keydata=
+ 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
+Message-ID: <fca41efd-5478-7845-bc40-75598d9add90@debian.org>
+Date: Tue, 10 Sep 2019 23:22:21 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <20190910091922.GA5679@matrix-dream.net>
-Content-Language: en-US
-Cc: wireguard@lists.zx2c4.com
+In-Reply-To: <CAHmME9rkuwVHo1Egq9r0vtOdR5yJ0xes3_WEWb3ncVnPhXwbmQ@mail.gmail.com>
+X-Mailman-Approved-At: Wed, 11 Sep 2019 18:39:28 +0200
+Cc: Willem van den Akker <wvdakker@wilsoft.nl>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -106,93 +101,103 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: multipart/mixed; boundary="===============7630320382275712900=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-SGVsbG8gSXZhbiwKCk9uIDEwLjA5LjE5IDExOjE5LCBJdmFuIExhYsOhdGggd3JvdGU6Cj4gT24g
-U2F0LCBTZXAgMDcsIDIwMTkgYXQgMTA6MDQ6NDRBTSArMDAwMCwgSGVuZHJpayBGcmllZGVsIHdy
-b3RlOgo+PiBIZWxsbywKPj4KPj4+PiAgdGhhdCBzZWVtcyBub3QgdG8gYmUgdGhlIGludGVuZGVk
-IGJlaGF2aW91cjoKPj4+PiAgSWYgSSB1bmRlcnN0YW5kIGNvcnJlY3RseSwgdGhlIGN1cnJlbnQg
-YmVoYXZpb3VyIGlzOgo+Pj4+Cj4+Pj4gIEF0IHR1bm5lbCBzdGFydCB0aGUgSVAgaXMgcmVzb2x2
-ZWQKPj4+PiAgVGhpcyBJUCBpcyB1c2VkIGZvciBldmVyLCBuYW1pbmdseSBmb3IgcmUtY29ubmVj
-dHMuCj4+PiBUaGlzIGlzIG9ubHkgcGFydGx5IGNvcnJlY3QuIFRoZSByZW1vdGUgZW5kcG9pbnQg
-Y2FuIHVuY29uZGl0aW9uYWxseQo+Pj4gcm9hbSBhbmQgaXMgdXBkYXRlZCBieSBhbnkgdmFsaWQg
-cGFja2V0IGZyb20gYSBnaXZlbiBJUCAoaWYgSSByZW1lbWJlcgo+Pj4gY29ycmVjdGx5KS4KPj4g
-V2hhdCBkb2VzIHRoYXQgbWVhbj8KPj4gRG9lcyB0aGF0IG1lYW4sIHRoYXQgdHJhZmZpYyB3aWxs
-IHVwZGF0ZSB0aGUgSVAgc28gdGhhdCB0aGUgcHJvYmxlbSB3aWxsIAo+PiBub3QgYXBwZWFyPwo+
-IAo+IElmIHlvdSBoYXZlIHBlZXJzIEEgYW5kIEIgd2l0aCBwdWJsaWNseSByZWNoYWJsZSBJUCtw
-b3J0IEExIGFuZCBCMS4KPiBXaGVuIEEncyBpcCtwb3J0IGNoYW5nZXMgZnJvbSBBMSB0byBBMiwg
-dGhlbiAoYXNzdW1pbmcgSSByZW1lbWJlciBjb3JyZWN0bHkpCj4gYW55IHByb3Blcmx5IGF1dGhl
-bnRpY2F0ZWQgdHJhZmZpYyBmcm9tIEEgKG5vdyBBMikgdG8gQiAoQjEpIHdpbGwgdXBkYXRlCj4g
-QidzIHJlY29yZCBvZiBBJ3MgcmVtb3RlIGVuZHBvaW50IHRvIEEyLiBBbnkgc3Vic2VxdWVudCB0
-cmFmZmljIGZyb20gQiB3aWxsIGJlCj4gc2VudCB0byBBMi4KPiAKPiBOb3RlLCB0aGUgcm9hbWlu
-ZyBzaWRlIChvbmUgd2l0aCBjaGFuZ2VkIGlwL3BvcnQpIG11c3Qgc2VuZCB0aGUgZmlyc3QKPiBw
-YWNrZXQsIHNvIGl0IHNob3VsZCBiZSB0aGUgb25lIHNlbmRpbmcga2VlcGFsaXZlIG1lc3NhZ2Vz
-IGFuZCBpdCBpcwo+IHRoZSBzaWRlIHdoZXJlIHlvdSBzaG91bGQgc2V0IHRoZSBrZWVwYWxpdmUg
-aW50ZXJ2YWwgKGZvciBzZW5kaW5nCj4gcGFja2V0cykuCj4gCj4+Cj4+Pgo+Pj4+ICBUaGUgcHJv
-YmFibHkgaW50ZW5kZWQgYmVoYXZpb3VyIHdvdWxkIGJlOgo+Pj4+ICBBdCB0dW5uZWwgc3RhcnQg
-YW5kIGF0IGFueSByZS1jb25uZWN0IHRoZSBJUCBpcyByZXNvbHZlZC4KPj4+Pgo+Pj4+ICBEbyB5
-b3UgYWdyZWUgdGhhdCB0aGlzIGJlaGF2aW91ciBzaG91bGQgYmUgY2hhbmdlZD8KPj4+PiAgQXBh
-cnQgZnJvbSB0aGF0OiBDYW4geW91IHN1Z2dlc3QgYW4gYXV0b21hdGFibGUgd29ya2Fyb3VuZD8K
-Pj4+Cj4+PiBJbiBzb21lIGNpcmN1bXN0YW5jZXMgYSBzaW1pbGFyIGJlaGF2aW9yIHdvdWxkIGJl
-IGEgZGVzaXJlZC4KPj4KPj4gVGhhdCdzIGFtYmlnb3VzLgo+PiBJbiB3aGF0IGNpcmN1bXN0YW5j
-ZXMsIHdoYXQgYmVoYXZpb3VyIHdvdWxkIGJlIGRlc2lyZWQ/Cj4gCj4gRm9yIGV4YW1wbGUsIEkg
-ZG9uJ3Qgd2FudCBteSBzZXJ2ZXIgb2YgbXkgY2xpZW50IGNvbnRpbnVvdXNseSByZS1yZXNvbHZp
-bmcgRE5TLAo+IGZvciBwcml2YWN5IHJlYXNvbnMgYW1vbmcgb3RoZXJzLiBBbHNvIEkgcHJlZmVy
-IGtlcm5lbCBub3QgbXVja2luZyB3aXRoCj4gRE5TIGZvciBzZWN1cml0eSByZWFzb25zPgo+Pj4g
-V2lyZWd1YXJkIGRlc2lnbiBhbmQgaW1wbGVtZW50YXRpb24gaXMgbGF5ZXJlZCAod2hpY2ggc2Vl
-bXMgZ29vZCkuCj4+PiBUaGUgc2VjdXJlKiB0dW5uZWwsIGluY2x1ZGluZyB0aGUga2VybmVsIG1v
-ZHVsZSBhbmQgd2cgdG9vbCBzZWVtCj4+PiB0byBiZSBpbiBhIHJlYXNvbmFibGUgc3RhdGUsIGJ1
-dCBhdXRvbWF0aW9uLCBETlMsIGtleSBleGNoYW5nZSBhcmUKPj4+IG91dCBvZiBzY29wZSBmb3Ig
-dGhlbS4gSXQgaXMgbWVhbnQgdG8gYmUgcHJvdmlkZWQgYnkgdG9vbGluZywgd2hpY2ggaXMKPj4+
-IGN1cnJlbnRseSB2ZXJ5IHJhdy4KPj4KPj4gSSBkb24ndCB1bmRlcnN0YW5kLi4uCj4+IFdoZW4g
-SSBhbSBvbiBteSB3YXkgaW4gYSByb2Fkd2FycmllciBzY2VuYXJpbyB3aXRoIG15IG1vYmlsZSwg
-d2l0aCBhIAo+PiBjaGFuZ2luZyBJUCBhbmQgYSBjaGFuZ2luZyBjb25uZWN0aW9uIHRoYXQgd29y
-a3MgdmVyeSB3ZWxsLgo+PiBJZiB0aGUgSVAgb2YgbXkgU2VydmVyIGlzIGNoYW5naW5nLCBpdCdz
-IG5vdCB3b3JraW5nIHdlbGwgYXQgYWxsLiBJIAo+PiBkb24ndCB0aGluayB0aGF0IHRoaXMgc2hv
-dWxkIGJlIGRlY2xhcmVkIGFzICd3b3JrcyBhcyBpbnRlbmRlZCcuCj4gCj4gSSBhbSBub3Qgc2F5
-aW5nIHdpcmVndWFyZCBzb2x1dGlvbiBpcyB3b3JraW5nIGFzIGludGVuZGVkLiBJIGFtIHNheWlu
-Zwo+IHRoZSBETlMgcmVzb2x1dGlvbiBpcyBtZWFudCB0byBiZSBpbXBsZW1lbnRlZCBpbiBvdXQt
-b2Yta2VybmVsIHRvb2xpbmcsCj4gd2hpY2ggaXMgY3VycmVudGx5IG1pbmltYWwgYW5kIHN1Y2gg
-ZmVhdHVyZXMgYXJlIG5vdCAoeWV0KSBpbXBsZW1lbnRlZC4KPiBFaXRoZXIgd2F5LCB0aGUga2Vy
-bmVsIHNob3VsZCBub3QgaGFuZGxlIEROUywgdGhlIHRvb2xpbmcgd2hlcmUgRE5TCj4gaGFuZGxp
-bmcgYmVsb25ncyBoYXMgbm8gY29uY2VwdCBvZiByZWNvbm5lY3Rpb25zLCBzbyB0aGUgcmVxdWVz
-dCBpcwo+IHZlcnkgZmFyIGZyb20gYSBzaW1wbGUgY2hhbmdlIGFuZCBwcm9iYWJseSBzaG91bGQg
-bm90IGFuZCBldmVuIGNvdWxkCj4gbm90IGJlIGRvbmUgaW4gdGhlIHdheSB5b3UgaGF2ZSBkZXNj
-cmliZWQKSXQncyBhIGJpdCBPVCwgYnV0IEkgYWN0dWFsbHkgdGhpbmsgbGV0dGluZyB0aGUga2Vy
-bmVsIHBhcnQgb2YgV2lyZUd1YXJkCmRvIHRoZSBETlMgcXVlcmllcyBpcyB0b3RhbGx5IGxlZ2l0
-IGFuZCBhIHdpc2hmdWwgKG1heWJlIG9wdGlvbmFsKSBmZWF0dXJlOgpodHRwczovL3d3dy5rZXJu
-ZWwub3JnL2RvYy9Eb2N1bWVudGF0aW9uL25ldHdvcmtpbmcvZG5zX3Jlc29sdmVyLnR4dAoKVGhp
-cyB3b3VsZCBhbGxvdyBEeW5ETlMgc2NlbmFyaW9zIHdpdGhvdXQgYW55IG1vbml0b3JpbmcgZGFl
-bW9ucyBydW5uaW5nCmFuZCBwcm9wZXIgY29uZmlndXJhdGlvbiB1c2luZyBzeXN0ZW1kLgoKPiAK
-PiBFdmVuIGluIHRoZSBrZXJuZWwgaXRzZWxmIHRoZXJlIGlzIG5vdCBhIHdlbGwgZGVmaW5lZCBj
-b25jZXB0IGNvbm5lY3Rpb24sCj4gbW9yZSBsaWtlIGEgcGVlciBzdGF0ZSBvciBzZXNzaW9uIChp
-cCwga2V5cyBldGMuKSB0aGF0IGlzIHBvc3NpYmx5IHZhbGlkCj4gb3IgZGVmaW5pdGVseSBpbnZh
-bGlkLgo+IAo+Pj4gQXMgYSB3b3JrYXJvdW5kIHlvdSBjb3VsZAo+Pj4gICAtIHVuY29uZGl0aW9u
-YWxseSBwZXJpb2RpY2FsbHkgdXBkYXRlIHRoZSBlbmRwb2ludAo+PiBUaGlzIHdvdWxkIGJyZWFr
-IGV4aXN0aW5nIHRyYW5zZmVycyB3aXRob3V0IHJlYXNvbi4KPiAKPiBBcyBJIHNhaWQsIHlvdSBj
-b3VsZCB0cnkgcGVyaW9kaWNhbGx5IHVwZGF0aW5nIHRoZSBlbmRwb2ludCwgYW5kIG9ubHkKPiBl
-bmRwb2ludCwgbm90IHJlc3RhcnRpbmcgb3IgY2hhbmdpbmcgYW55dGhpbmcgZXhjZXB0IHBlZXIg
-aXArcG9ydC4KPiBJZiB1cGRhdGluZyBlbmRwb2ludCBpbmZvcm1hdGlvbiAodG8gdGhlIHNhbWUg
-b3IgdmFsaWQgaXArcG9ydCkgZG9lcyBicmVhawo+IGNvbm5lY3Rpb25zLCB0aGVuIEkgYmVsaWV2
-ZSBpdCBpcyBhIGJ1ZyB0aGF0IHNob3VsZCBiZSByZXBvcnRlZC4KPiAKPj4+ICAgLSBtb25pdG9y
-IGxhc3QgaGFuZHNoYWtlIHRpbWUsIHdoZW4gbGFyZ2UgdXBkYXRlIGVuZHBvaW50IG9yIHJlc3Rh
-cnQKPj4+ICAgICB0dW5uZWwKPj4gVGhhdCBjb3VsZCBiZSBhbiBvcHRpb24uCj4+PiAgIC0gYWRk
-IGtlZXBhbGl2ZSB0byBzZXJ2ZXIgLSBpdCBtaWdodCByZWR1Y2UgeW91ciBkb3dudGltZQo+PiBI
-b3cgd291bGQgdGhhdCBoZWxwPwo+IAo+IEtlZXBhbGl2ZSBpcyBvbmUtc2lkZWQuIEFzIHlvdXIg
-Y2xpZW50IGRvZXNuJ3Qga25vdyB3aGVyZSB0byBzZW5kCj4gdGhlIGtlZXBhbGl2ZSByZXF1ZXN0
-LCBpdCBkb2Vzbid0IGhlbHAuIEtlZXBhbGl2ZSBvbiB0aGUgc2VydmVyIGNhbi4KPiBJZiB0aGUg
-c2VydmVyIGNoYW5nZXMgSVBzIGFuZCB0aGUgY2xpZW50IHJlbWFpbnMgcmVhY2hhYmxlIG9uIHBy
-ZXZpb3VzIGlwK3BvcnQsCj4ga2VlcGFsaXZlIG9uIHNlcnZlciBzaG91bGQga2VlcCB5b3VyIHR1
-bm5lbCBhbGl2ZS4KPiAKPiAKPiBSb2FtaW5nIHdpbGwgd29yayBpZiB0aGUgc2lkZSB0aGF0IGNo
-YW5nZXMgaXBzOgo+ICAgYSkgaGFzIGtlZXBhbGl2ZSBlbmFibGVkLCBzbyBpdCB3aWxsIHNlbmQg
-YSBwYWNrZXQgcGVyaW9kaWNhbGx5Cj4gICBiKSBzZW5kcyBhbiB1bnNvbGljaXRlZCBwYWNrZXQg
-KGUuZy4gcmVxdWVzdHMgc29tZXRoaW5nIGZyb20gdGhlCj4gICAgICBvdGhlciBzaWRlIGFzIGNs
-aWVudHMgdXN1YWxseSBkbyBidXQgc2VydmVyIGxlc3Mgc28pCj4gICBjKSBpcCBpcyBjaGFuZ2Vk
-IGFmdGVyIGEgcmVxdWVzdCBpcyByZWNlaXZlZCBhbmQgYmVmb3JlIGEgcmVwbHkgaXMKPiAgICAg
-IHNlbnQgKGNvdWxkIGhhcHBlbiBidXQgdW5yZWxpYWJsZSkKPiAKPiBSZWdhcmRzLAo+IEl2YW4K
-CkJlc3QsClZpbmNlbnQKX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX18KV2lyZUd1YXJkIG1haWxpbmcgbGlzdApXaXJlR3VhcmRAbGlzdHMuengyYzQuY29tCmh0
-dHBzOi8vbGlzdHMuengyYzQuY29tL21haWxtYW4vbGlzdGluZm8vd2lyZWd1YXJkCg==
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--===============7630320382275712900==
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="DBQq2SM4GeeAhRCrcKlqboOe9nicxz7Ws"
+
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--DBQq2SM4GeeAhRCrcKlqboOe9nicxz7Ws
+Content-Type: multipart/mixed; boundary="ghU6ZC7RSTD68CN9iW8QUq5ZuTIvKeVIM";
+ protected-headers="v1"
+From: Michael Biebl <biebl@debian.org>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ Willem van den Akker <wvdakker@wilsoft.nl>
+Message-ID: <fca41efd-5478-7845-bc40-75598d9add90@debian.org>
+Subject: Re: wg-quick invoking resolvectl instead of resolvconf on systems
+ where that is appropriate?
+References: <87zhjc3rzr.fsf@fifthhorseman.net>
+ <CAHmME9rkuwVHo1Egq9r0vtOdR5yJ0xes3_WEWb3ncVnPhXwbmQ@mail.gmail.com>
+In-Reply-To: <CAHmME9rkuwVHo1Egq9r0vtOdR5yJ0xes3_WEWb3ncVnPhXwbmQ@mail.gmail.com>
+
+--ghU6ZC7RSTD68CN9iW8QUq5ZuTIvKeVIM
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+
+Hi
+
+Am 10.09.19 um 20:52 schrieb Jason A. Donenfeld:
+> The standard interface for modifying DNS on Linux is resolvconf. It is
+> for this reason that systemd added the compatibility layer.=20
+
+I don't think this statemement is true.
+resolvconf is by no means a Linux standard interface, e.g. Debian never
+has shipped with resolvconf installed by default.
+
+It's an optional interface (where different implementations exist).
+
+I think the only distro that ever installed resolvconf by default is
+Ubuntu (and I'm not sure they still do on all flavors nowadays).
+
+Which distros nowadays do install resolvconf by default?
+
+> Debian
+>> should install the proper symlink. WireGuard upstream will support the=
+
+>> standard mechanism of resolvconf.
+
+We can't do that (at least not in the systemd package) as that would
+make other implementations like openresolv uninstallable.
+
+
+--=20
+Why is it that all of the instruments seeking intelligent life in the
+universe are pointed away from Earth?
+
+
+--ghU6ZC7RSTD68CN9iW8QUq5ZuTIvKeVIM--
+
+--DBQq2SM4GeeAhRCrcKlqboOe9nicxz7Ws
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEECbOsLssWnJBDRcxUauHfDWCPItwFAl14FA0ACgkQauHfDWCP
+ItyeuRAAmeJl7W+h1HR+FokgC0BT2synQXmA5WuddAP60EvoQHlSce+ygfZ+AcHw
+A5XlVlw7itkacNgdEzheqKNeSCPccEH+vJOp+mL6+igy50eVM3tV4loQnUvX4XwR
++NnkFyN3/pJVBF7V2q6GKbiY/8V+07nYY5diwV/f53FR86P+KNMWKN3pbV53XQXC
+r2hUoyIACFRrnodkCK+SGno+ywyv/nT3BE7BgTDTkronUsLPxCd/mXvrAEJY6n8n
+FyUf36TsLLGLhi0EE1/JkzV444fKBNm44ldgZap1BiBf4Rn+4ALwpDgn0hNWwqbA
+dgIrzreTGy8qzJ/mrjRFYH6nRDp9WIpXfRmSPLzdGTyzY6PxKWU6nzeOsAU21cGp
+nCDTP4zqCP9bTnn8pLUe9UVQBXSPBOFV4s0XhS7IsJe/hPORq/+P1cNfIpMxyv1y
+8H+Hs6a+1Y8hQ0ei6QMDHIKx34R31NxaJpBTfiQ74DwdukyKAO79jNSc8JHYdqEz
+m+i0DQhAsAIes79gv9Al5Dv/+B+77qzUnog6V1oP5NKgh/ECfgrsPmTdx/aoHJea
+w3U8JQg/kgyp81IOkUoOvgthamYpfyee7rfmxKLadvSLv8ZXItFyddmYS5R1Wr9t
+Z8QHPS6Ez5CAy3cLIPeLhoQvKeWok7woSiAGsTs1eep9H+JvDn0=
+=odMV
+-----END PGP SIGNATURE-----
+
+--DBQq2SM4GeeAhRCrcKlqboOe9nicxz7Ws--
+
+--===============7630320382275712900==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
+_______________________________________________
+WireGuard mailing list
+WireGuard@lists.zx2c4.com
+https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--===============7630320382275712900==--
