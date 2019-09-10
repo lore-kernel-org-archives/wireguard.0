@@ -2,73 +2,83 @@ Return-Path: <SRS0=xahJ=XF=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
-	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 19A4EC49ED6
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 10 Sep 2019 09:36:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C7D35C49ED7
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 10 Sep 2019 18:51:13 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id B0F6820872
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 10 Sep 2019 09:36:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 09D7B2084D
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 10 Sep 2019 18:51:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qlt0G8dl"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org B0F6820872
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	dkim=permerror (0-bit key) header.d=fifthhorseman.net header.i=@fifthhorseman.net header.b="kzEmD38w";
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=fifthhorseman.net header.i=@fifthhorseman.net header.b="koaljniE"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 09D7B2084D
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=fifthhorseman.net
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5306f40d;
-	Tue, 10 Sep 2019 09:36:24 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 16ae7480;
+	Tue, 10 Sep 2019 18:50:55 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 09553dd7
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3ea69560
  for <wireguard@lists.zx2c4.com>;
- Tue, 10 Sep 2019 09:36:22 +0000 (UTC)
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com
- [IPv6:2a00:1450:4864:20::52f])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3cfdf39a
+ Tue, 10 Sep 2019 18:50:53 +0000 (UTC)
+Received: from che.mayfirst.org (che.mayfirst.org [IPv6:2001:470:1:116::7])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 01705ab4
  for <wireguard@lists.zx2c4.com>;
- Tue, 10 Sep 2019 09:36:22 +0000 (UTC)
-Received: by mail-ed1-x52f.google.com with SMTP id p2so15222490edx.11
- for <wireguard@lists.zx2c4.com>; Tue, 10 Sep 2019 02:36:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=qnX3wc/VLBPHrpfw80KUe7RDrWotKN0evhgm90iWlhs=;
- b=qlt0G8dl6g3bwHK5OhvsJPJn5DXQy9EHkr1/bnOUNf1l13oNR4DbwzC3wz/Af2cOZg
- 8RmkWspz88uRIZ5VaiOu7WiTl9SmqYpzZBKPb4Mers7ciTj4MOXUmQvXEPKv3TnNksC/
- kc0x/+mi9SPA+G1fixQoHkZr5HS41cZIQ9Z+xeYaJP4wcrNpEYGLqLW3CLSxlmwJNu4r
- 9JFadbfy4tRaqiXxpwh5S3YnfUO30ladl7IL0J4BnxUtOhMlFTOQQtOrODKXaMww4IP1
- 6i+Blv00zAp6RGKgEAYdjKHTGqO0JxeTnqxd18QFEfJCic8jSnMhWNI2WAdNLozLXGJU
- 2HyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=qnX3wc/VLBPHrpfw80KUe7RDrWotKN0evhgm90iWlhs=;
- b=hPdASkTdRycT6qa51FFcv9pWyggDd5vtdu6YckIuCrVHl30f96MgmNLx0Ed12ny1XV
- uDqzxeyhfF2qGKg0M9rYtYsiegJiPM5EdFkygD2JI+cNYUu/EI24JDpyMiCbkbu9rSQU
- WnVyetr+My9SPx9j387cyJqFxVrYEyq45pV32wgq13UpCw4l6h7ilLqIh07Oif1qxuSB
- rrOnOy4tuA0rgbIyJwLwrn76GG8yU3a/3lnbQjSEq4lpqpHJmv66yCHZqtUi/RGLzd0f
- eXMjv/mAHUoP7UXv+xmThYdVfpRyfv2UoF5uUw7T1LL4uy63S+IfbWyeOlSewPdC1qXL
- pisQ==
-X-Gm-Message-State: APjAAAVxe99eF13cpZywLirzjCan4sfGchqVNziHXk3V2AHdzl8AKXGl
- XNsSZW3SXcRwnClpsdK7eQxslf7xpHXfM5wWTqLYNHdn
-X-Google-Smtp-Source: APXvYqwb7WCF/VyYEszS+GdhmyvyylWy68KGxDtl4PiIk7a3f/B250cr8nocW5CYZh34EmV8qdVsLOl4ZxlUgt0omq8=
-X-Received: by 2002:a50:c052:: with SMTP id u18mr29272578edd.88.1568108180532; 
- Tue, 10 Sep 2019 02:36:20 -0700 (PDT)
+ Tue, 10 Sep 2019 18:50:53 +0000 (UTC)
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/simple; 
+ d=fifthhorseman.net; i=@fifthhorseman.net; q=dns/txt; 
+ s=2019; t=1568141452; h=from : to : cc : subject : date : 
+ message-id : mime-version : content-type : from; 
+ bh=I17pNm0PQYMnvxc7jv2tNS1P3+XyTD9/976KrYAvpyo=; 
+ b=kzEmD38wKt/zYm0+HmXfyk+vaiOoRMs8Ap4SJo87Zn3IxDz5QMWi2rnr
+ PPEvDqp2CnhCRLbX4r+ndcvlPVWtAA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fifthhorseman.net; 
+ i=@fifthhorseman.net; q=dns/txt; s=2019rsa; t=1568141452; 
+ h=from : to : cc : subject : date : message-id : 
+ mime-version : content-type : from; 
+ bh=I17pNm0PQYMnvxc7jv2tNS1P3+XyTD9/976KrYAvpyo=; 
+ b=koaljniEmP38sMhNMUSDZ/b9qHZPFh43WuefXbtfd25Ok9we0k+CnK69
+ oCuxBlKGZaZglFQGz4ov0Iutz3kUr1re24s7oILP4XMdbsnjTM6vBWkYkw
+ GQztjVMJNxwn/D7dD7kHqcuCO5cE9qdmtSroDfcsVhFPTWfcGSeT55Y7YO
+ KopuxXof45icInOctX0yQm5bY3Okl8Z9PUsDXe9fANeC0vzZvrWRnDo2jJ
+ hBr/O+UwXU7EFQF+dnOSx4flrK2I93VSA1GbtI3BuG38Ndj9rSsg0QtIrV
+ aXY/4OQnXQFSmHjoqrJEwj3WMWCIOCeCiIc9m1YEzXIZQXbzHcXhKQ==
+Received: from fifthhorseman.net (unknown [38.109.115.130])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (No client certificate requested)
+ by che.mayfirst.org (Postfix) with ESMTPSA id 9CF1BF9A5;
+ Tue, 10 Sep 2019 14:50:52 -0400 (EDT)
+Received: by fifthhorseman.net (Postfix, from userid 1000)
+ id 4BEC1203AF; Tue, 10 Sep 2019 14:50:49 -0400 (EDT)
+From: Daniel Kahn Gillmor <dkg@fifthhorseman.net>
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Subject: wg-quick invoking resolvectl instead of resolvconf on systems where
+ that is appropriate?
+Autocrypt: addr=dkg@fifthhorseman.net; prefer-encrypt=mutual; keydata=
+ mDMEXEK/AhYJKwYBBAHaRw8BAQdAr/gSROcn+6m8ijTN0DV9AahoHGafy52RRkhCZVwxhEe0K0Rh
+ bmllbCBLYWhuIEdpbGxtb3IgPGRrZ0BmaWZ0aGhvcnNlbWFuLm5ldD6ImQQTFggAQQIbAQUJA8Jn
+ AAULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBMS8Lds4zOlkhevpwvIGkReQOOXGBQJcQsbzAhkB
+ AAoJEPIGkReQOOXG4fkBAO1joRxqAZY57PjdzGieXLpluk9RkWa3ufkt3YUVEpH/AP9c+pgIxtyW
+ +FwMQRjlqljuj8amdN4zuEqaCy4hhz/1DbgzBFxCv4sWCSsGAQQB2kcPAQEHQERSZxSPmgtdw6nN
+ u7uxY7bzb9TnPrGAOp9kClBLRwGfiPUEGBYIACYWIQTEvC3bOMzpZIXr6cLyBpEXkDjlxgUCXEK/
+ iwIbAgUJAeEzgACBCRDyBpEXkDjlxnYgBBkWCAAdFiEEyQ5tNiAKG5IqFQnndhgZZSmuX/gFAlxC
+ v4sACgkQdhgZZSmuX/iVWgD/fCU4ONzgy8w8UCHGmrmIZfDvdhg512NIBfx+Mz9ls5kA/Rq97vz4
+ z48MFuBdCuu0W/fVqVjnY7LN5n+CQJwGC0MIA7QA/RyY7Sz2gFIOcrns0RpoHr+3WI+won3xCD8+
+ sVXSHZvCAP98HCjDnw/b0lGuCR7coTXKLIM44/LFWgXAdZjm1wjODbg4BFxCv50SCisGAQQBl1UB
+ BQEBB0BG4iXnHX/fs35NWKMWQTQoRI7oiAUt0wJHFFJbomxXbAMBCAeIfgQYFggAJhYhBMS8Lds4
+ zOlkhevpwvIGkReQOOXGBQJcQr+dAhsMBQkB4TOAAAoJEPIGkReQOOXGe/cBAPlek5d9xzcXUn/D
+ kY6jKmxe26CTws3ZkbK6Aa5Ey/qKAP0VuPQSCRxA7RKfcB/XrEphfUFkraL06Xn/xGwJ+D0hCw==
+Date: Tue, 10 Sep 2019 14:50:48 -0400
+Message-ID: <87zhjc3rzr.fsf@fifthhorseman.net>
 MIME-Version: 1.0
-References: <CADdae-jaGWC=HxVpU7Gc6QD=mCgq6O2jTXdmzeKXyKvLq6QVmw@mail.gmail.com>
- <CAHmME9qbO37Cs9gMOLxaTqdu2KLTeOm6vtpvWKPe4tJZ6mFB+g@mail.gmail.com>
-In-Reply-To: <CAHmME9qbO37Cs9gMOLxaTqdu2KLTeOm6vtpvWKPe4tJZ6mFB+g@mail.gmail.com>
-From: nicolas prochazka <prochazka.nicolas@gmail.com>
-Date: Tue, 10 Sep 2019 11:36:13 +0200
-Message-ID: <CADdae-hWHX2xD4AZakB4Ytoz5Yj=yORoEE-Cs5o2seh=KhBnAQ@mail.gmail.com>
-Subject: Re: Using openssl to generate private Key
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Cc: Willem van den Akker <wvdakker@wilsoft.nl>,
+ Michael Biebl <biebl@debian.org>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -80,19 +90,67 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: multipart/mixed; boundary="===============0573139304316168653=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-VGhhbmtzIGZvciB0aGUgZXhwbGFuYXRpb24sCk5pY29sYXMKCkxlIGRpbS4gOCBzZXB0LiAyMDE5
-IMOgIDIzOjI0LCBKYXNvbiBBLiBEb25lbmZlbGQgPEphc29uQHp4MmM0LmNvbT4gYSDDqWNyaXQg
-Ogo+Cj4gVGhpcyBzZWVtcyB0byB3b3JrLCBtYXliZToKPgo+IG9wZW5zc2wgZ2VucGtleSAtYWxn
-b3JpdGhtIFgyNTUxOSAtb3V0Zm9ybSBkZXIgfCB0YWlsIC1jIDMyIHwgYmFzZTY0Cj4KPiBvcGVu
-c3NsIGdlbnBrZXkgLWFsZ29yaXRobSBYMjU1MTkgLW91dGZvcm0gZGVyIHwgdGFpbCAtYyAzMiB8
-IGJhc2U2NCB8IHdnIHB1YmtleQo+Cj4gSSBoYXZlbid0IHZlcmlmaWVkIHdoYXQncyBoYXBwZW5p
-bmcgaW4gdGhlIGNvZGUgdGhvdWdoLCBzbyB1c2UgYXQgeW91cgo+IG93biByaXNrLiB3Zyg4KSBp
-cyB0aGUgYmVzdCB3YXkgdG8gZ2VuZXJhdGUgd2lyZWd1YXJkIHByaXZhdGUga2V5cyBmb3IKPiB1
-c2Ugd2l0aCB3aXJlZ3VhcmQuCl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fCldpcmVHdWFyZCBtYWlsaW5nIGxpc3QKV2lyZUd1YXJkQGxpc3RzLnp4MmM0LmNv
-bQpodHRwczovL2xpc3RzLnp4MmM0LmNvbS9tYWlsbWFuL2xpc3RpbmZvL3dpcmVndWFyZAo=
+--===============0573139304316168653==
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha512; protocol="application/pgp-signature"
+
+--=-=-=
+Content-Type: text/plain
+
+Hi Wireguard folks--
+
+over in https://bugs.debian.org/939904, Michael Biebl (in cc) pointed
+out that on GNU/Linux systems supervised by systemd, if systemd-resolved
+is running, it might make more sense for wg-quick to invoke resolvectl
+directly with the DNS parameter instead of depending on resolvectl's
+resolvconf-like symlink shim.
+
+Jason, is that something that you'd be ok with, or is wg-quick wedded to
+resolvconf, even if resolvectl is available and there is no resolvconf?
+(and if you're ok with it, but if both exist, do you have a preference
+for which one should be used?)
+
+Is anyone interested in hacking on src/tools/wg-quick/linux.bash to
+enable this?  I think the command should be pretty simple -- the main
+things to get right are detection of subsystem availability and conflict
+resolution.
+
+I guess my preference would be something like:
+
+ * if resolvectl exists, try to use it.  if it succeeds, done.  (it
+   might fail if systemd-resolved is not running, for example)
+
+ * otherwise, try using resolvconf.
+
+but of course this is Jason's call to make.
+
+       --dkg
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEARYKAB0WIQTJDm02IAobkioVCed2GBllKa5f+AUCXXfwiAAKCRB2GBllKa5f
++H/qAQCr7fH3CJeqtVk9iY0cV7vAPt0I452+pHrMxExcfqSXGwD/bGrbv6pI0uh5
+ATzquqCcigMQMMfCCgRUZ1TUpup9vgI=
+=8O6A
+-----END PGP SIGNATURE-----
+--=-=-=--
+
+--===============0573139304316168653==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
+_______________________________________________
+WireGuard mailing list
+WireGuard@lists.zx2c4.com
+https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--===============0573139304316168653==--
