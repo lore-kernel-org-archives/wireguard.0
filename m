@@ -6,52 +6,50 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1E5CC4CEC7
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 13 Sep 2019 13:23:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF85FC49ED7
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 13 Sep 2019 22:09:11 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id E1E78206BB
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 13 Sep 2019 13:23:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 21BB22084F
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 13 Sep 2019 22:09:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="key not found in DNS" (0-bit key) header.d=ungleich.ch header.i=@ungleich.ch header.b="tEMg66PH"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org E1E78206BB
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=ungleich.ch
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="ugD11xe8"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 21BB22084F
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cd3bc555;
-	Fri, 13 Sep 2019 13:22:59 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 92cba0fa;
+	Fri, 13 Sep 2019 22:08:53 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 02ed8391
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d15c68ec
  for <wireguard@lists.zx2c4.com>;
- Fri, 13 Sep 2019 13:22:58 +0000 (UTC)
-Received: from smtp.ungleich.ch (mx.ungleich.ch [185.203.112.16])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fbd638fe
+ Fri, 13 Sep 2019 22:08:51 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6c9d23cf
  for <wireguard@lists.zx2c4.com>;
- Fri, 13 Sep 2019 13:22:58 +0000 (UTC)
-Received: from nico.schottelius.org (localhost [IPv6:::1])
- by smtp.ungleich.ch (Postfix) with ESMTP id EBC711FD72;
- Fri, 13 Sep 2019 15:22:56 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ungleich.ch; s=mail;
- t=1568380977; bh=foRZKO9f17T4eVlIa+f5N3uBSoSprMfdQU7VcldNgVI=;
- h=References:From:To:Cc:Subject:In-reply-to:Date:From;
- b=tEMg66PHcYd5aQGb5VySlFzkOxbUI/YJTTooNZlBr92Ij+FsbVDHhtdziNfTiIVL8
- IP6AWXnoGvmZ0n2N7vQrVYnLdCKMUFfArqUjKdxX4HYoNowS3QLWt50ANQAX28GeCY
- +KOC1LV1QSax3V701x4law1RM9uBw1jImk4XAuic=
-Received: by nico.schottelius.org (Postfix, from userid 1000)
- id B96131A01027; Fri, 13 Sep 2019 22:22:55 +0900 (KST)
-References: <CAFsReqSUQYthBTr4o7HQQGdNUgzA33i9hAoJ_UieNUzJbB=hLA@mail.gmail.com>
- <878sqs8ip3.fsf@line.ungleich.ch>
- <CAFsReqTThNXkkPH+_YHOhC_DEbKwY5rPdmRDVJxLiTQbhfAbDA@mail.gmail.com>
-User-agent: mu4e 1.0; emacs 26.1
-From: Nico Schottelius <nico.schottelius@ungleich.ch>
-To: =?utf-8?Q?R=C3=A9mi?= Lapeyre <remi.lapeyre@lenstra.fr>
-Subject: Re: Adding 2FA to WireGuard
-In-reply-to: <CAFsReqTThNXkkPH+_YHOhC_DEbKwY5rPdmRDVJxLiTQbhfAbDA@mail.gmail.com>
-Date: Fri, 13 Sep 2019 22:22:55 +0900
-Message-ID: <875zlw8h5c.fsf@line.ungleich.ch>
+ Fri, 13 Sep 2019 22:08:51 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a17698b6
+ for <wireguard@lists.zx2c4.com>;
+ Fri, 13 Sep 2019 21:24:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=date:to:from
+ :subject:mime-version:content-type; s=mail; bh=Y6RL9j4dy1D2uqSPq
+ QvqAAZxvIM=; b=ugD11xe8VpdNiWIUXKZh3y1mHuZohwnxn/JerpOoQK/mpLRMy
+ yr8kUxDPweLWM4en4tr2jVb5+qzWZfaqxIQcxocRePXmaGfEdfsxnye/ge5N54TP
+ TDwTRFCEj4WMu5YvPw4u9eI6mZ+mHhYcAJOAaUdBi0dYL2XfoSJuzUdIJ2w5pnmb
+ +ayEUPelrQIb5iFdAurGYbsCLRlBiruL0v+k04otDyPrJmE8JBVDxG9ftK1exr33
+ wfxYnTo4wo3FjUgMobwHzZh0opnx9yuzzNxwaGiDkwG9Hm9LR5Liek9tINJl9l+T
+ MLLY4jvM5DuFh3SI5lc45djHq5d+POKfBbZGA==
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id eb9657ce
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Fri, 13 Sep 2019 21:24:35 +0000 (UTC)
+Date: Fri, 13 Sep 2019 18:08:49 -0400
+To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: [ANNOUNCE] WireGuard Snapshot `0.0.20190913` Available
 MIME-Version: 1.0
-Cc: wireguard@lists.zx2c4.com
+Message-Id: <fa40c5684582cf42@frisell.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -63,28 +61,80 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-CkhleSBSw6ltaSwKClLDqW1pIExhcGV5cmUgPHJlbWkubGFwZXlyZUBsZW5zdHJhLmZyPiB3cml0
-ZXM6Cj4gSGkgTmljbywgeWVzIHB5b3RwIGlzIHRoZSBpbXBsZW1lbnRhdGlvbiBJIHVzZSBvbiB0
-aGUgc2VydmVyLCBidXQgYW55dGhpbmcKPiBDb21wYXRpYmxlIHdpdGhyZmM2MjM4IHNob3VsZCB3
-b3JrLgoKVGhhdCBzb3VuZHMgYWJvdXQgcmlnaHQhCgo+PiBXZSBoYXZlIHdyaXR0ZW4gdW5nbGVp
-Y2gtb3RwIFswXSB0aGF0IGV4dGVuZHMgdGhlIG90cCBhcHByb2FjaCB3aXRoCj4+IHJlYWxtcyBz
-aW1pbGFyIHRvIGtlcmJlcm9zLgo+Cj4gVGhpcyBsb29rcyBpbnRlcmVzdGluZywgSSB3aWxsIG1v
-dmUgdGhlIGNvZGUgdGhhdCB2YWxpZGF0ZSB0aGUgT1RQIGluIGEKPiBzZXBhcmF0ZSBjbGFzcyBz
-byB0aGF0IGFub3RoZXIgdmFsaWRhdGlvbiBiYWNrZW5kIGxpa2Ugb25lIGJhc2VkIG9uIHRoaXMK
-PiBwcm9qZWN0IGNhbiBiZSB1c2VkIGluc3RlYWQgb2YgcmVhZGluZyB0aGUgc2VlZHMgZnJvbSBh
-IFNRTGl0ZSBmaWxlIGxpa2UKPiBJ4oCZbSBkb2luZyBub3cuCj4KPiBJIGRpZCBub3Qgc2VlIGFu
-eSBraW5kIG9mIGNvb2wgZG93biBpbgo+IGh0dHBzOi8vY29kZS51bmdsZWljaC5jaC91bmdsZWlj
-aC1wdWJsaWMvdW5nbGVpY2gtb3RwL2Jsb2IvbWFzdGVyL290cGF1dGgvc2VyaWFsaXplci5weS4K
-PiBBcmUgeW91IG5vdCB3b3JyaWVkIHRoYXQgc29tZW9uZQo+IGNvdWxkIHRyeSB0byBicnV0ZS1m
-b3JjZSB0aGUgT1RQIHZhbGlkYXRpb24/CgpUaGF0IGlzIGEgZ29vZCBwb2ludCEgV2Ugd2lsbCBj
-ZXJ0YWlubHkgd2FudCB0byBmaXggdGhhdCwgYXMgdGhlIHNlZWQKZW50cm9weSBpcyBub3QgKnRo
-YXQqIGJpZy4KCkJlc3QgcmVnYXJkcywKCk5pY28KCgotLQpZb3VyIFN3aXNzLCBPcGVuIFNvdXJj
-ZSBhbmQgSVB2NiBWaXJ0dWFsIE1hY2hpbmUuIE5vdyBvbiB3d3cuZGF0YWNlbnRlcmxpZ2h0LmNo
-LgpfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXwpXaXJlR3Vh
-cmQgbWFpbGluZyBsaXN0CldpcmVHdWFyZEBsaXN0cy56eDJjNC5jb20KaHR0cHM6Ly9saXN0cy56
-eDJjNC5jb20vbWFpbG1hbi9saXN0aW5mby93aXJlZ3VhcmQK
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+Hello,
+
+A new snapshot, `0.0.20190913`, has been tagged in the git repository.
+
+Please note that this snapshot is a snapshot rather than a final
+release that is considered secure and bug-free. WireGuard is generally
+thought to be fairly stable, and most likely will not crash your
+computer (though it may).  However, as this is a snapshot, it comes
+with no guarantees; it is not applicable for CVEs.
+
+With all that said, if you'd like to test this snapshot out, there are a
+few relevant changes.
+
+== Changes ==
+
+  * compat: support newer PaX
+  * compat: don't rewrite siphash when it's from compat
+  * Kbuild: squelch warnings for stack limit on broken kernel configs
+  * compat: support rhel/centos 7.7
+  
+  These are all compatibility-related fixes, addressing some fallout from the
+  last snapshot. This also brings support for RHEL 7.7.
+
+This snapshot contains commits from: Jason A. Donenfeld.
+
+As always, the source is available at https://git.zx2c4.com/WireGuard/ and
+information about the project is available at https://www.wireguard.com/ .
+
+This snapshot is available in compressed tarball form here:
+  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-0.0.20190913.tar.xz
+  SHA2-256: 997327185d2d1b597dc118f737c0c165e2a2c21453387ea02659f1159d148518
+  BLAKE2b-256: 73aa107bcc2b57f9470d2593c4e3a5e1bc9d3f73d333dd8e1c95a25f6f4d12e9
+
+A PGP signature of that file decompressed is available here:
+  https://git.zx2c4.com/WireGuard/snapshot/WireGuard-0.0.20190913.tar.asc
+  Signing key: AB9942E6D4A4CFC3412620A749FC7012A5DE03AE
+
+If you're a snapshot package maintainer, please bump your package version. If
+you're a user, the WireGuard team welcomes any and all feedback on this latest
+snapshot.
+
+Finally, WireGuard development thrives on donations. By popular demand, we
+have a webpage for this: https://www.wireguard.com/donations/
+
+Thank you,
+Jason Donenfeld
+
+
+-----BEGIN PGP SIGNATURE-----
+
+iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAl18E20QHGphc29uQHp4
+MmM0LmNvbQAKCRBJ/HASpd4Drtm5D/wIbd6aG+JCdooXqtd7NXl/4Eh8feZqKImJ
++QP2YbjPUGAECVXzUyxfWxX0G9I8zd2IIyGGnoQj6GmT0sI6of98O/fl51DifpG3
+2vtOga7vAEzLGBSsZ4WZIwQQeY4t9hme9iRPLTS1M4nwgGHysGyi8YK4h2T3qLB4
+8etzQmCqUS8pAdRwGEfh0jHX8qnkIWo2SXduTPI/Q97A2SPOXTXClluYIiowZ1O7
+1sdiW3Ak/kMnhAYV4b4Oit4KgYsFV0TNEOc+Am0x4VqlHODWjFJhq9Um61giwX/I
+OnSXvVCJV3W8UJoe3llTfXkQR7H1wZB/V1Qx71GIMMJxAOcRbLLTUggdak6+hN5M
+DCiE/+AJ4LYPQy0iukXwV0mwWPzN3w3U+6CpcQN61VwCMXzWrDMLV5uMaeMFl/BE
+HvGxu30OP7Zl2KZlXrIl5oZ4i0C8jpgEFa8TNwS4PePIsWXdqV7IG+3JJ1DRYOZy
+1ySWHy63mzbjqakcffr0kGJFykzd3htGFibWKLs2mSPZdlHXGS85WHvC+tQLWBfp
+xC0zAgZoHZF2stPvaefsdlAE1LeEahV/sOIUv0dgoJAFQp9qEf3sLWLWcpmL3H0x
+X4cI/6mR68W1VdiZHZ9Uf7dtjipylM+7MBBJayoDIAHCqHtuPfCSyhO/2Qd0rtVo
+fl1LQHcyvw==
+=OGmg
+-----END PGP SIGNATURE-----
+_______________________________________________
+WireGuard mailing list
+WireGuard@lists.zx2c4.com
+https://lists.zx2c4.com/mailman/listinfo/wireguard
