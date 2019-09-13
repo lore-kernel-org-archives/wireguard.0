@@ -1,68 +1,77 @@
-Return-Path: <SRS0=NPIR=XJ=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=Wz3S=XK=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	UNPARSEABLE_RELAY,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C17EC4CEC7
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 14 Sep 2019 17:11:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A7DA8C4CEC9
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 15 Sep 2019 01:40:17 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id AECFB2067B
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 14 Sep 2019 17:11:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 0557720830
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 15 Sep 2019 01:40:16 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="fmj8pQTk"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org AECFB2067B
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=lenstra-fr.20150623.gappssmtp.com header.i=@lenstra-fr.20150623.gappssmtp.com header.b="GIayqoXv"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 0557720830
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=lenstra.fr
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e04e4803;
-	Sat, 14 Sep 2019 17:11:14 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 74e1bd0e;
+	Sun, 15 Sep 2019 01:39:58 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 84ca73fd
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7a56861b
  for <wireguard@lists.zx2c4.com>;
- Sat, 14 Sep 2019 17:11:12 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f9c27ff4
+ Fri, 13 Sep 2019 13:17:59 +0000 (UTC)
+Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com
+ [IPv6:2607:f8b0:4864:20::b35])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4402ed26
  for <wireguard@lists.zx2c4.com>;
- Sat, 14 Sep 2019 17:11:12 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 87f43fbb
- for <wireguard@lists.zx2c4.com>;
- Sat, 14 Sep 2019 16:26:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=FI+TybkKqcTKReQ7ISopuMfzYOE=; b=fmj8pQ
- Tk2ii5admZBZFcqDJV59EMyNKWeAFKKOI4f86ZdnUdRXMugViMuilvRWx3vGBnz6
- 5ua8qfju6QZdXv6VsSAYFf8j2GGGGztZ6lNxCXk08SsCnjijhkB3oQ30UHMZHyGx
- A40kZwKsCiHDALnWNtC37mkIGlhFR3toqp3iRtSyyD25CFlzvQcOUbhYxu8k6U+s
- 0feSlZI8zkGsmnlDtyJFRlaElxbkmn2Hstrx67t2IDH6mFzPl3IIoOeOeaXAHBED
- XIo7XwVBziks7uuUCyi6WTXz1mKABlaOMrhSyjaIuJiU10CAj30xYLsCyX1Sp21H
- dzEKsKgzRV6asNiw==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 359b01f2
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Sat, 14 Sep 2019 16:26:50 +0000 (UTC)
-Received: by mail-ot1-f53.google.com with SMTP id 67so32172938oto.3
- for <wireguard@lists.zx2c4.com>; Sat, 14 Sep 2019 10:11:12 -0700 (PDT)
-X-Gm-Message-State: APjAAAUL65GwWSKuR0kdiSWlOgXTDBoVO0FrcMFSLKupEIOlqBeQUPnY
- z/z/jRVHcoCOwCkK0dRu8A8zSGkhFOOzFRfJAEc=
-X-Google-Smtp-Source: APXvYqwkLqlZ0ErqTCLUtWZ2fAxda0PQ0eW86NqdBCt9LdaWrZeevc2IgPw5ATQ/RY9ffQ2tW/Mdsd6RRY2H07xEKTA=
-X-Received: by 2002:a9d:73c4:: with SMTP id m4mr38242484otk.369.1568481071780; 
- Sat, 14 Sep 2019 10:11:11 -0700 (PDT)
+ Fri, 13 Sep 2019 13:17:59 +0000 (UTC)
+Received: by mail-yb1-xb35.google.com with SMTP id t15so9895837ybg.7
+ for <wireguard@lists.zx2c4.com>; Fri, 13 Sep 2019 06:17:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=lenstra-fr.20150623.gappssmtp.com; s=20150623;
+ h=from:in-reply-to:references:mime-version:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=4iQHnNqjf+xmFh3YEggMXeewxUhKetxwpk+AqMTW8BU=;
+ b=GIayqoXvUhxK3q2zz4VPeNWqF2ddEDbW7bUEmh9iyCg2hhR4LPuqB0nu1u5IWvlCCz
+ FGSd/UzkDy8s7XcjZ6FxDrRAa6ZtLFcHEo7YxIgLQHafb2BNFu63TKVhg44OZuXUc/ph
+ HdPFB4NDbH3yJPh2rth1sUIreZsneDy7woaApJPV9GhX5oAbzWcXpcqabqtPnIydCUo3
+ hSqAoP+R0o+t0a9yi+qAWVfPs3h7rIGCna0+s5O99HGkSwLiYesSI5fbKuV3Tu9nw1OZ
+ TZj3CVkPiw6dPH6AVf+T6NIfIfLbFFesKWg6TYsBNEW3V084k8QdBRAW7Dogc2cjWsra
+ f77g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:in-reply-to:references:mime-version:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=4iQHnNqjf+xmFh3YEggMXeewxUhKetxwpk+AqMTW8BU=;
+ b=flkOWAB2GUPaQ2rXoCmnN5RZ9dGTySraSWj5HtcZ19tKTTRBe9DsBRwOMvPk2LKOFz
+ HOfS1VxlNcMZIMxdlDdz7cAZsUW6NPbuh0MCohfr9/OUnPLPWfcTyjXEWwrRIekjNroY
+ 4KKZL5HynD+kjaUz8FM5PBqMjpl/Mvseo1PM81c2E/NASScdgTQdNiKfbn43ENzlkFSq
+ /jIGvE2TKv/pKm/zDBgqQTwVVUtbyK9FyV5c19H9xOYCXiUdQsjCWIWkbhdMjvgWsP24
+ Jhcdnwq/iDgpxYdoCQ8Q3g7e0l6qsy3kzbGKf4CAtNZemGk3X3f7ZHon5P2Zj1S8vRIS
+ gFyg==
+X-Gm-Message-State: APjAAAXcf4GolTxsHCgqZShVnNy+LPysC7yqj045R7TwgYNpE8Tioy1L
+ COrf81nYhE9iSQfYQdkaGR/ac8lowHqmJ57ZoxGc4TwCExo=
+X-Google-Smtp-Source: APXvYqx5ijyA9+ZugPgDaOh8A87wMJVjLzs9iAtmKdi/ywzMn/nCvuahXzN+ksyK4kL6wrLHdcoorwIBpPT2xrHLUVM=
+X-Received: by 2002:a25:9a08:: with SMTP id x8mr205510ybn.91.1568380678158;
+ Fri, 13 Sep 2019 06:17:58 -0700 (PDT)
+Received: from 1058052472880 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 13 Sep 2019 15:17:56 +0200
+From: =?UTF-8?Q?R=C3=A9mi_Lapeyre?= <remi.lapeyre@lenstra.fr>
+In-Reply-To: <878sqs8ip3.fsf@line.ungleich.ch>
+References: <CAFsReqSUQYthBTr4o7HQQGdNUgzA33i9hAoJ_UieNUzJbB=hLA@mail.gmail.com>
+ <878sqs8ip3.fsf@line.ungleich.ch>
 MIME-Version: 1.0
-References: <CAHo=znZWFs427fDRYPUx3jxjXR01McUFwsOQR9rQy4ocWwyRNA@mail.gmail.com>
- <CAHmME9rXV2_YG3fGMErDeTjfHeNKhDC2cCYA6Kw93n9A328QpQ@mail.gmail.com>
-In-Reply-To: <CAHmME9rXV2_YG3fGMErDeTjfHeNKhDC2cCYA6Kw93n9A328QpQ@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sat, 14 Sep 2019 11:11:00 -0600
-X-Gmail-Original-Message-ID: <CAHmME9p0ue59kxwD3BWGLmU3U-SmO2fxxhP7ubCsGts2GU-aZg@mail.gmail.com>
-Message-ID: <CAHmME9p0ue59kxwD3BWGLmU3U-SmO2fxxhP7ubCsGts2GU-aZg@mail.gmail.com>
-Subject: Re: On Windows: Wrong source IP address
-To: Sebastiano Barrera <sebastiano.barrera@gmail.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Date: Fri, 13 Sep 2019 15:17:56 +0200
+Message-ID: <CAFsReqTThNXkkPH+_YHOhC_DEbKwY5rPdmRDVJxLiTQbhfAbDA@mail.gmail.com>
+Subject: Re: Adding 2FA to WireGuard
+To: Nico Schottelius <nico.schottelius@ungleich.ch>
+X-Mailman-Approved-At: Sun, 15 Sep 2019 03:39:57 +0200
+Cc: wireguard@lists.zx2c4.com
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -74,23 +83,98 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-To give more detail, a more ideal solution would be to specify the
-source address / source if index using WSASendMsg, and retrieve the
-incoming destination address / destination if index using WSARecvMsg,
-and implement sticky socket semantics. A linux implementation in C is
-here: https://git.zx2c4.com/WireGuard/tree/contrib/examples/sticky-sockets/sticky-sockets.c
-and in go is here:
-https://git.zx2c4.com/wireguard-go/tree/device/conn_linux.go . If you
-want to provide conn_windows.go that implements sticky sockets, that
-would probably solve 80% of the problem. The remaining part would be
-policy routing for the case when we don't have a sender if or when
-it's gone stale.
-_______________________________________________
-WireGuard mailing list
-WireGuard@lists.zx2c4.com
-https://lists.zx2c4.com/mailman/listinfo/wireguard
+TGUgMTMgc2VwdGVtYnJlIDIwMTkgw6AgMTQ6NDk6MzEsIE5pY28gU2Nob3R0ZWxpdXMKKG5pY28u
+c2Nob3R0ZWxpdXNAdW5nbGVpY2guY2gobWFpbHRvOm5pY28uc2Nob3R0ZWxpdXNAdW5nbGVpY2gu
+Y2gpKSBhCsOpY3JpdDoKCj4KPiBIZXkgUsOpbWksCj4KPiB0aGF0IGlzIHZlcnkgd2VsY29tZSBu
+ZXdzLiBXZSBtaWdodCBhY3R1YWxseSBhbHNvIGJlIGludGVyZXN0ZWQgaW4KPiB0aGlzLiBBcmUg
+eW91IGJ5IGFueSBjaGFuZ2UgdXNpbmcgcHlvdHAgZm9yIHlvdXIgc2VydmVyPwoKSGkgTmljbywg
+eWVzIHB5b3RwIGlzIHRoZSBpbXBsZW1lbnRhdGlvbiBJIHVzZSBvbiB0aGUgc2VydmVyLCBidXQg
+YW55dGhpbmcKQ29tcGF0aWJsZSB3aXRowqByZmM2MjM4IHNob3VsZCB3b3JrLgoKPiBXZSBoYXZl
+IHdyaXR0ZW4gdW5nbGVpY2gtb3RwIFswXSB0aGF0IGV4dGVuZHMgdGhlIG90cCBhcHByb2FjaCB3
+aXRoCj4gcmVhbG1zIHNpbWlsYXIgdG8ga2VyYmVyb3MuCgpUaGlzIGxvb2tzIGludGVyZXN0aW5n
+LCBJIHdpbGwgbW92ZSB0aGUgY29kZSB0aGF0IHZhbGlkYXRlIHRoZSBPVFAgaW4gYQpzZXBhcmF0
+ZSBjbGFzcyBzbyB0aGF0IGFub3RoZXIgdmFsaWRhdGlvbiBiYWNrZW5kIGxpa2Ugb25lIGJhc2Vk
+IG9uIHRoaXMKcHJvamVjdCBjYW4gYmUgdXNlZCBpbnN0ZWFkIG9mIHJlYWRpbmcgdGhlIHNlZWRz
+IGZyb20gYSBTUUxpdGUgZmlsZSBsaWtlCknigJltIGRvaW5nIG5vdy4KCkkgZGlkIG5vdCBzZWUg
+YW55IGtpbmQgb2YgY29vbCBkb3duIGluCmh0dHBzOi8vY29kZS51bmdsZWljaC5jaC91bmdsZWlj
+aC1wdWJsaWMvdW5nbGVpY2gtb3RwL2Jsb2IvbWFzdGVyL290cGF1dGgvc2VyaWFsaXplci5weS4K
+QXJlIHlvdSBub3Qgd29ycmllZCB0aGF0IHNvbWVvbmUKY291bGQgdHJ5IHRvIGJydXRlLWZvcmNl
+IHRoZSBPVFAgdmFsaWRhdGlvbj8KCj4gSW4gcmVnYXJkIHRvIGZha2luZyB0aGUgYWRkcmVzczog
+Z2l2ZW4gdGhhdCB0aGVyZSBhcmUgbm8gb3RoZXIgcm91dGVzIC8KPiBzZXJ2ZXJzIGluIHlvdXIg
+bmV0d29yayB0aGF0IGNhbiBzZW5kIHRyYWZmaWMgKmZyb20qIHRoYXQgcGFydGljdWxhciBJUAo+
+IHJhbmdlLCB5b3VyIGFzc3VtcHRpb24gc2hvdWxkIGhvbGQuCgpUaGFua3MgOikKCj4gQmVzdCwK
+Pgo+IE5pY28KPgo+IFswXSBodHRwczovL2NvZGUudW5nbGVpY2guY2gvdW5nbGVpY2gtcHVibGlj
+L3VuZ2xlaWNoLW90cAo+Cj4gUsOpbWkgTGFwZXlyZSB3cml0ZXM6Cj4KPiA+IEhpIGV2ZXJ5Ym9k
+eSEgV2UgYXJlIHVzaW5nIFdpcmVlR3VhcmQgb24gTWFjIGFuZCBMaW51eCB3aGljaCB3b3JrcyBn
+cmVhdAo+ID4gYnV0IGZvcgo+ID4gY29tcGxpYW5jZSBwdXJwb3NlLCB3ZSB3b3VsZCBsaWtlIHRv
+IGJlIGFibGUgdG8gYWRkIGFuIE9UUCBjaGFsbGVuZ2Ugb24KPiA+IGNvbm5lY3Rpb24uCj4gPgo+
+ID4gSSd2ZSBiZWVuIGxvb2tpbmcgYXQgdGhlIGFyY2hpdmUgb2YgdGhlIG1haWxpbmcgbGlzdCBh
+bmQgYXQgdGhlIHZhcmlvdXMKPiA+IHByb2plY3RzCj4gPiBidWlsdCBhcm91bmQgV2lyZUd1YXJk
+IGFuZCBzdGFydGVkIHdyaXRpbmcgYW4gaW1wbGVtZW50YXRpb24gYmFzZWQgb24gdGhlCj4gPiBp
+ZGVhCj4gPiBmcm9tIGh0dHBzOi8vbGlzdHMuengyYzQuY29tL3BpcGVybWFpbC93aXJlZ3VhcmQv
+MjAxNy1TZXB0ZW1iZXIvMDAxNzQxLmh0bWw6Cj4gPgo+ID4+IEFsdGVybmF0aXZlbHksIHlvdSBj
+b3VsZCBkbyBPVFAgaW4tYmFuZCwgaW4gb3JkZXIgdG8gYXV0aG9yaXplIHRoYXQKPiA+PiBwdWJs
+aWMga2V5IGZvciBhIGNlcnRhaW4gd2luZG93IG9mIHRpbWUgYmVmb3JlIGluYWN0aXZpdHkuIElu
+IHRoaXMKPiA+PiBzY2hlbWUsIHlvdSdkIGRpc2FsbG93IGFjY2VzcyB0byB0aGUgbmV0d29yayBz
+ZWdtZW50IGJhc2VkIG9uIGZpcmV3YWxsCj4gPj4gcnVsZXMgdW50aWwgYSBjZXJ0YWluIGluLWJh
+bmQgY2hhbGxlbmdlIGlzIG1hZGUgLS0gcGVyaGFwcyBieQo+ID4+IGNvbnRhY3RpbmcgYSBjZXJ0
+YWluIHNhbmRib3hlZCBzZXJ2ZXIgYW5kIGFuc3dlcmluZyBhbiBPVFAgY2hhbGxlbmdlCj4gPj4g
+dGhlcmUKPiA+Cj4gPiBNeSBjdXJyZW50IGltcGxlbWVudGF0aW9uIChJIHBsYW4gdG8gcHVibGlz
+aCBpdCB1bmRlciBNSVQgbGljZW5zZSBvbmNlIGl0J3MKPiA+IHJlYWR5KSBoYXMgYSBQeXRob24g
+c2VydmVyIG9uIHRoZSBXaXJlR3VhcmQgc2VydmVyIGJvdW5kIHRvIHRoZSB3ZyBpbnRlcmZhY2UK
+PiA+IHRoYXQgYWRkIGFuIElQVGFibGUgcnVsZSB0byBhbGxvdyB0aGUgdHJhZmZpYyBmb3IgYSBn
+aXZlbiBhbW91bnQgb2YgdGltZQo+ID4gd2hlbgo+ID4gYSBUT1RQIGlzIHJlY2VpdmVkIG92ZXIg
+VENQLiBIZXJlIGFyZSBzb21lIGRldGFpbHMKPiA+Cj4gPiAtIFRoZSBUT1RQIGlzIGJvdW5kIHRv
+IHRoZSBpbnRlcm5hbCB0dW5uZWwgSVAgYWRkcmVzcyBzbyB0aGUgSVAgYWRkcmVzcwo+ID4gdGhh
+dAo+ID4gb3BlbnMgdGhlIFRDUCBjb25uZWN0aW9uIGlzIHVzZWQgdG8gaWRlbnRpZnkgdGhlIHVz
+ZXIsIGFzIHRoZWUgcGFja2V0Cj4gPiBtdXN0Cj4gPiBoYXZlIGJlZW4gZGVjcnlwdGVkLCBpdCBz
+ZWVtcyB0byBtZSB0aGF0IHRoZXJlIGlzIG5vIHdheSB0byBzcG9vZiB0aGlzLgo+ID4KPiA+IC0g
+QSBzbWFsbCB0ZXh0IHByb3RvY29sIGxldCB0aGUgdXNlciBsb2ctaW4sIGxvZy1vdXQgYW5kIHJl
+YWQgdGhlIHN0YXR1cwo+ID4gb2YgdGhlCj4gPiBjb25uZWN0aW9uLgo+ID4KPiA+IFRoZSBjbGll
+bnQgbmVlZHMgdG8gc2VuZCB0aGUgVE9UUCBqdXN0IGFmdGVyIGNvbm5lY3RpbmcgdG8gdGhlIHNl
+cnZlciwgZm9yCj4gPiB3aGljaAo+ID4gSSBoYWQgaG9wZWQgdG8gdXNlIHRoZSAiUG9zdFVwIiBm
+aWVsZCBvZiB3Zy1xdWljay4KPiA+Cj4gPiB7UG9zdCxQcmV9LXtVcCxEb3dufSBzZWVtcyB0byBi
+ZSBvbmx5IGF2YWlsYWJsZSBvbiB3Zy1xdWljayBmb3Igbm93IGJ1dCB3ZQo+ID4gYXJlCj4gPiB1
+c2luZyB0aGUgd2lyZWd1YXJkLWFwcGxlIGNsaWVudCBzbyBJIGhhdmUgYSBmZXcgcXVlc3Rpb25z
+Ogo+ID4KPiA+IDEuIElzIHRoZSBhYnNlbmNlIG9mIHN1cHBvcnQge1Bvc3QsUHJlfS17VXAsRG93
+bn0gaW4gd2lyZWd1YXJkLWFwcGxlIG9uCj4gPiBwdXJwb3NlIG9yIHdvdWxkIGEgcGF0Y2ggdG8g
+YWRkIHRoaXMgd2VsY29tZWQ/Cj4gPgo+ID4gMi4gSXMgdGhpcyB3YXkgdG8gZG8gdGhlIE9UUCBh
+dXRoZW50aWNhdGlvbiBzb3VuZD8KPiA+Cj4gPiAzLiBJJ3ZlIHNlZW4gdGhhdCBUdW5TYWZlIGhh
+cyBhZGRlZCBhbiBleHRlbnNpb24gdG8gdGhlIFdpcmVHdWFyZAo+ID4gcHJvdG9jb2wgc28KPiA+
+IHRoZSBUT1RQIGF1dGggd291bGQgbm90IGJlIHNoYXJlZCBieSBhbiBhdHRhY2tlciB0aGF0IHN1
+Y2NlZGVkIHRvIGNvbm5lY3QKPiA+IHdoZW4KPiA+IHRoZSB1c2VyIGlzIGFscmVhZHkgY29ubmVj
+dGVkLiBUaGlzIHNlZW1zIGxpa2UgYSBnb29kIGlkZWEgdG8gZG8sIHdoYXQKPiA+IGFyZSB5b3Vy
+Cj4gPiB0aG91Z3RzIGFib3V0IHRoaXM/IFdvdWxkIHlvdSByZWNvbW1lbmQgYWdhaW5zdCBteSAi
+ZWFzaWVyIgo+ID4gaW1wbGVtZW50YXRpb24/Cj4gPgo+ID4gNC4gSSBrbm93IHRoYXQgVHVuU2Fm
+ZSB3YXMgc3Ryb25nbHkgYWR2aXNlZCBhZ2FpbnN0IHdoZW4gaXQgd2FzCj4gPiBjbG9zZWQtc291
+cmNlLgo+ID4gTm93IHRoYXQgaXQgaXMgQUdQTCBjb2RlLCBpcyBpdCBzdGlsbCB0aGUgY2FzZT8K
+PiA+Cj4gPiBPbmUgbW9yZSB0aGluZywgdG8gc2ltcGxpZnkgdGhlIGRlcGxveW1lbnQgb2YgV2ly
+ZUd1YXJkLCBJIHdvdWxkIGxpa2UgdG8KPiA+IHByb3Bvc2UKPiA+IGEgY2hhbmdlIGluIHRoZSB3
+YXkgdGhlIE1hY09TIGNsaWVudCBpbXBvcnQgV2lyZUd1YXJkIGNvbmZpZ3VyYXRpb25zIGZyb20g
+YQo+ID4gZmlsZS4KPiA+Cj4gPiBPdXIgY3VycmVudCBmbG93IGlzICJQbGVhc2Ugb3BlbiB0aGUg
+V2lyZUd1YXJkIGFwcCwgY2xpY2sgb24gY3JlYXRlIFR1bm5lbCwKPiA+IGdpdmUKPiA+IGl0IGEg
+bmFtZSwgcGFzdGUgdGhpcyBjb25maWd1cmF0aW9uIHVuZGVybmVhdGggd2hhdCdzIGFscmVhZHkg
+d3JpdHRlbiwgaGl0Cj4gPiBzYXZlCj4gPiBhbmQgc2VuZCB1cyB5b3VyIHB1YmxpYyBrZXkiLiBJ
+dCBnaXZlcyBhIGxvdCBvZiBvcG9ydHVuaXR5IHRvIHRoZSB1c2VyIHRvCj4gPiBtaXN0eXBlIHNv
+bWV0aGluZyBhbmQgbWFrZSBjaGFuZ2luZyB0aGUgY29uZmlndXJhdGlvbiBjdW1iZXJzb21lICgi
+RWRpdCB0aGUKPiA+IHR1bm5lbCwgZG9uJ3QgdG91Y2ggdGhlIGBbSW50ZXJmYWNlXWAgcGFydCBi
+dXQgcmVwbGFjZSB3aGF0J3MgdW5kZXJuZWF0aCBieQo+ID4gdGhpcyIpIHNvIEkgd291bGQgbGlr
+ZSB0byBiZSBhYmxlIHRvIHNlbmQgdG8gdGhlIHVzZXIgYSBjb25maWd1cmF0aW9uIGZpbGUKPiA+
+IHdpdGgKPiA+IHRoZSBQcml2YXRlS2V5IG1pc3NpbmcgYW5kIGhhdmUgdGhlIFdpcmVHdWFyZCBj
+bGllbnQgZ2VuZXJhdGUgb25lIG9uIHRoZQo+ID4gZmx5IGJ1dAo+ID4gdGhpcyBjdXJyZW50bHkg
+Z2l2ZXMgYW4gZXJyb3IgIkludGVyZmFjZeKAmXMgcHJpdmF0ZSBrZXkgaXMgcmVxdWlyZWQiLiBX
+b3VsZAo+ID4gc2VuZGluZyBhIHBhdGNoIGZvciB0aGlzIGJlIHdlbGNvbWVkIHRvbz8KPiA+Cj4g
+Pgo+ID4gVGhhbmtzIGZvciB0YWtpbmcgdGhlIHRpbWUgdG8gaGVscCBtZSwgSSBsb29rIGZvcndh
+cmQgdG8gY29udHJpYnV0ZSB0bwo+ID4gV2lyZUd1YXJkIDopCj4gPgo+ID4gUsOpbWkKPiA+IF9f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fCj4gPiBXaXJlR3Vh
+cmQgbWFpbGluZyBsaXN0Cj4gPiBXaXJlR3VhcmRAbGlzdHMuengyYzQuY29tCj4gPiBodHRwczov
+L2xpc3RzLnp4MmM0LmNvbS9tYWlsbWFuL2xpc3RpbmZvL3dpcmVndWFyZAo+Cj4KPiAtLQo+IFlv
+dXIgU3dpc3MsIE9wZW4gU291cmNlIGFuZCBJUHY2IFZpcnR1YWwgTWFjaGluZS4gTm93IG9uIHd3
+dy5kYXRhY2VudGVybGlnaHQuY2guCl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fCldpcmVHdWFyZCBtYWlsaW5nIGxpc3QKV2lyZUd1YXJkQGxpc3RzLnp4MmM0
+LmNvbQpodHRwczovL2xpc3RzLnp4MmM0LmNvbS9tYWlsbWFuL2xpc3RpbmZvL3dpcmVndWFyZAo=
