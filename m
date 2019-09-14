@@ -3,68 +3,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B0670C49ED6
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 14 Sep 2019 04:44:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C7C4C4CEC7
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 14 Sep 2019 16:52:08 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id E347F20693
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 14 Sep 2019 04:44:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id CC68C20640
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 14 Sep 2019 16:52:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="mK4perDI"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org E347F20693
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="vsU8d05o"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org CC68C20640
 Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6338294f;
-	Sat, 14 Sep 2019 04:44:35 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 873c839b;
+	Sat, 14 Sep 2019 16:52:06 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id db8cc8d4
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 511489ec
  for <wireguard@lists.zx2c4.com>;
- Sat, 14 Sep 2019 04:44:33 +0000 (UTC)
+ Sat, 14 Sep 2019 16:52:03 +0000 (UTC)
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ef03d36f
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f64638e5
  for <wireguard@lists.zx2c4.com>;
- Sat, 14 Sep 2019 04:44:33 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 27fc1ba0
+ Sat, 14 Sep 2019 16:52:03 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f5e69b73
  for <wireguard@lists.zx2c4.com>;
- Sat, 14 Sep 2019 04:00:15 +0000 (UTC)
+ Sat, 14 Sep 2019 16:07:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
  :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=ypLrp3lJKSD+ZDOOWAEgvwdh8L4=; b=mK4per
- DI3IsWy+3t8isHffTVHQTJoTtSJPKWlwupH8DG9MPLyB4CB4UVCGsWe/m4r6Befg
- j6ozaDOBC6iQos7/lTtqoaaHM7zy2URdVSzBKql9ad10LtK+LrjCF7JybJqTgQBf
- cUWRVPttpIqAVarEQlayHvWgxNWdFAWZUL++KbBlUjAImtmPNjYhbQ7gAIksH3/E
- c3oN3AincpYgrnUkocEGGJeY97JeTg6KO9njuoqeU6iEPRZCUxKACTrZXt91qTdo
- J4ApxBga4I/RFu4MJWIeAbNV49Zh0RdBOF+O3tlr5TbF6ac8eYABdBLFd0oSGXfz
- MigdLHo4mrqZJeUQ==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 8031606f
+ :content-type; s=mail; bh=Yp1iAEoEgRRtAhzqYbU6CRVT8tg=; b=vsU8d0
+ 5oHQW53OYGJGEZ3jviJKVqYwI6j4Y6zwRwEQ2BGzA2Yf3Zwh+8Cu0ugglOpdV3BJ
+ Ujq5kl17eEv/arYuoMRdkRAzO3KBJzkpYwVkiZN5vjN/36GPce4d1TMzXd74xUdD
+ S2fg346C4xJNZkTdjdMU2xbFl0lciTfydzZgDlTfGk/wgcaGu2FL/7fzQMcAlkCy
+ q179jBDfku73QuXhGVY4jAg9Njt6cEpHekts/UBUDZDD340djao3guMkAhM+ZU4B
+ ynRvymNrVMCH2uYIO7xl45pOhL0SNgmvCR1j2RfYHNxPHKENP+81GIALfXqLfkN1
+ YOUphBJS9dELfJkA==
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 690fafee
  (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sat, 14 Sep 2019 04:00:14 +0000 (UTC)
-Received: by mail-ot1-f51.google.com with SMTP id z26so22067498oto.1
- for <wireguard@lists.zx2c4.com>; Fri, 13 Sep 2019 21:44:32 -0700 (PDT)
-X-Gm-Message-State: APjAAAVU/MHqfKeoj0Yyf+PRurDubFbJpV5rhG/INt/ShHAKFbmPa5l/
- +HxQBPkpHkELkAWyLsrM/hXyx4cARHzTGfuvDBc=
-X-Google-Smtp-Source: APXvYqwnPrmLuuGVMmA4BidO4vowRdSHL4kvYRU5W14y8HL0vGBZ0ZlZCCIUBUuq1w/Ik7yivP12/lYkrcNgUzmzbME=
-X-Received: by 2002:a9d:7d91:: with SMTP id j17mr17543438otn.120.1568436271326; 
- Fri, 13 Sep 2019 21:44:31 -0700 (PDT)
+ Sat, 14 Sep 2019 16:07:40 +0000 (UTC)
+Received: by mail-ot1-f54.google.com with SMTP id g13so2250016otp.8
+ for <wireguard@lists.zx2c4.com>; Sat, 14 Sep 2019 09:52:02 -0700 (PDT)
+X-Gm-Message-State: APjAAAXLDluanYJuDD3GjS30PwTVhZah/vxmKH9jaJKd32797K7cWaVR
+ w4VUN2zCGpkJw/+oWUdpDO/rExHxLEB204EDq5o=
+X-Google-Smtp-Source: APXvYqz/7OBu+ZPDrpd1yqtrkQK+7FGXl+4MFBwakHRp/INDPwNt8udc2VsEzLc4/1Qg/mSx9WOvaYufksQmlhdYGsE=
+X-Received: by 2002:a9d:6748:: with SMTP id w8mr26926496otm.243.1568479921780; 
+ Sat, 14 Sep 2019 09:52:01 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAMKRnFh4XvqYzPDVjy_NOpeHY+KgsRfEuHfEjWy9N1wfY9MwTg@mail.gmail.com>
- <CAHmME9oC+rYCVqv21-nGw_vyxzY5VhTHoa0mrnbOEShcczBN-g@mail.gmail.com>
- <816bb8ff-101f-2719-4b75-1d194c519aef@astrogeo.va.it>
- <CAHmME9odNo2d+=u1z7kNuXKy2HYzOqaHt_0N9Dz49kZFp4qW_g@mail.gmail.com>
- <9891ad84-a635-3922-2fb9-ceadd6cdb8fd@astrogeo.va.it>
-In-Reply-To: <9891ad84-a635-3922-2fb9-ceadd6cdb8fd@astrogeo.va.it>
+References: <CAHo=znZWFs427fDRYPUx3jxjXR01McUFwsOQR9rQy4ocWwyRNA@mail.gmail.com>
+In-Reply-To: <CAHo=znZWFs427fDRYPUx3jxjXR01McUFwsOQR9rQy4ocWwyRNA@mail.gmail.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 13 Sep 2019 22:44:20 -0600
-X-Gmail-Original-Message-ID: <CAHmME9qugc1AHqiHq39+GT2QjdyFx8QKEMhLev_6r+MNerwQ1Q@mail.gmail.com>
-Message-ID: <CAHmME9qugc1AHqiHq39+GT2QjdyFx8QKEMhLev_6r+MNerwQ1Q@mail.gmail.com>
-Subject: Re: WireGuard fails to build on CentOS 7.1908
-To: Dario Pilori <dario.pilori@astrogeo.va.it>
+Date: Sat, 14 Sep 2019 10:51:50 -0600
+X-Gmail-Original-Message-ID: <CAHmME9rXV2_YG3fGMErDeTjfHeNKhDC2cCYA6Kw93n9A328QpQ@mail.gmail.com>
+Message-ID: <CAHmME9rXV2_YG3fGMErDeTjfHeNKhDC2cCYA6Kw93n9A328QpQ@mail.gmail.com>
+Subject: Re: On Windows: Wrong source IP address
+To: Sebastiano Barrera <sebastiano.barrera@gmail.com>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
@@ -82,18 +78,19 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hey Dario,
-
-Thanks for the explanation. I released a new snapshot today that
-should include support for both RHEL 7.6 and 7.7. As soon as CentOS
-7.7 comes out, I intend to drop 7.6 support entirely to continue with
-the policy of supporting the latest RHEL only. It seems like there's
-an awkward transition period while CentOS catches up to RHEL, so I'll
-try to stay on top of that for 7.7->7.8 too.
-
-Joe - can you bump the copr package?
-
-Jason
+We do this in order to prevent routing loops. Since the endpoints
+can't roam, we can't add an explicit route for it (efficiently and
+easily, at least) with the 0/1,128/1 hack. So instead on each platform
+we attempt to use some form of policy routing to exclude the wireguard
+socket from the wireguard route. On windows, policy routing
+capabilities seem somewhat limited, and IP_UNICAST_IF to the default
+route seemed like it'd work good enough for most people's use cases.
+It obviously totally breaks when you're not using the default route. I
+wonder if WFP can be made to attach some kind of context that we can
+route on late in the stack, but I haven't looked into that yet. If
+you'd like to tackle this issue and find something better than
+IP_UNICAST_IF with the default for policy routing, I'd be happy to
+take patches.
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
