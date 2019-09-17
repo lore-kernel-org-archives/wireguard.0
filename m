@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
 	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 96DBBC432C1
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 24 Sep 2019 08:57:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B4FACC432C2
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 24 Sep 2019 08:57:42 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 344CF2146E
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 24 Sep 2019 08:57:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 563762146E
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 24 Sep 2019 08:57:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RsAfM7qc"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 344CF2146E
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hp4S9xO5"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 563762146E
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4f30544f;
-	Tue, 24 Sep 2019 08:57:00 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a83738fc;
+	Tue, 24 Sep 2019 08:57:42 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 209df17a
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4a5b8140
  for <wireguard@lists.zx2c4.com>;
- Mon, 23 Sep 2019 14:35:42 +0000 (UTC)
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com
- [IPv6:2a00:1450:4864:20::330])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0dfd7b1b
+ Tue, 17 Sep 2019 10:36:14 +0000 (UTC)
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com
+ [IPv6:2a00:1450:4864:20::12f])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2865803e
  for <wireguard@lists.zx2c4.com>;
- Mon, 23 Sep 2019 14:35:42 +0000 (UTC)
-Received: by mail-wm1-x330.google.com with SMTP id 3so9570195wmi.3
- for <wireguard@lists.zx2c4.com>; Mon, 23 Sep 2019 07:35:41 -0700 (PDT)
+ Tue, 17 Sep 2019 10:36:14 +0000 (UTC)
+Received: by mail-lf1-x12f.google.com with SMTP id c195so2444412lfg.9
+ for <wireguard@lists.zx2c4.com>; Tue, 17 Sep 2019 03:36:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=mime-version:from:date:message-id:subject:to;
- bh=JNod1H/AwsqlPAwgSeDea3o53i2lZlae+Jy9dm4cHBM=;
- b=RsAfM7qcaARNEvmPx9f9pNnm3HywbjQQ4vj2vY2CTCBVFz2GTQh6KaDW2cHSaw9fqQ
- 7ymFXuhqZn27Qt9TyxqLWb/1TxMwBY4GRk2J9HqVD6VbgP3HRP5RJjnNuIV4/lNe9sLa
- Ilmn2yXLdR4oNinFwF5AkzKvGh+OjLtkxh3+6iYWrIDz7LI9vl7nNTFTZ8YsMbydQ4i+
- ZZcIZA4cJDj1cbS2iqqAgtaqd0Ck3NTrlzW4qksf7V5vjsy5I26C7JujYKNkUrAnZ+bm
- J1aqhbZGSF0wGbtWoLoK9PHTKybcJ9slYwWUtmNZcj5PxeLn3+JgGDU2YavOZZaTWe95
- zN9A==
+ bh=JIB+pfNfT6Z5CdsqUgX1GWYlMkHGREgjdew8YL2MB5k=;
+ b=hp4S9xO5YengponZAM1I/w5LrHWj+Loex5+j8yzRoJJYZ7S9zk2TT2VVQdylqZNAmQ
+ 0QDMkP3Qc02p8kIMjPWm2zFcks/RF3TBm/UjGPzno2EEZPhX4no/PN4ZdtEj+u5dy3S+
+ Iz8uSef2jMl3BgiYm1qOD/5W/rDANEFwZcxzZ1cHY8Tmk+wYAHsXPvGxWagQzaOkpDj3
+ 1QzahNrPmW4z+kguKr+P+nnXnTLGTrQHOdvyjCbiYNHRsmJzXWh/8S3Uc9bRRi+IpB6V
+ OaXB+mu2xG9oeGnapdildHE2W0MjjRid4dt37WoZYR9QUSKRpk28goTeLc3oy5LbGMKf
+ qUew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=JNod1H/AwsqlPAwgSeDea3o53i2lZlae+Jy9dm4cHBM=;
- b=pFluTVB730PRNBQM584GomZP3iCfeIyA8Iqk/r7JNm/+dMYg3di2W41+iQ9/PoPDIy
- NeZKWRuQmVcdz6U5BfPsAItc8GkgP2ayqUo3Ceb+vwtuWQNJfz/q0z8cANCZgw4QVq+G
- aGobt0M5G+xSw/FFb5icut+Ww2Tw+Ff87+HzF+jXwn+Gq2rEH3NSfGZJ0vgtM2Je7lvw
- SrFiiwz+ao+38jO/LKgbhM37TyHCnkVY/YcMCZFDrlM/l128Rjv4sEbpzn2zbDGPZ/EO
- FOBOWAo3RerFWa+1O1hgwQ3tBXLdLIe38D1GyygrAA3K2MoWgBv8eo4tfMuCJbLlq363
- yaGg==
-X-Gm-Message-State: APjAAAXa0+6rQBrRG9aX9TLOcuSjoMRWclsI6wDdQxGnmVwb9neVwM24
- C1gI3w3O/rd517D4Lwo2U+iQbP3j0eAsWxYn2dJmLvYFnRo=
-X-Google-Smtp-Source: APXvYqziaBmiC7Gt8DKcdqZ4Y7qYoc6pQPGlupdanW/XTz1t7SAQL9GuXfZ3U9Wb3jeX7Duy7jVUK7MLcnvx6dMCF8g=
-X-Received: by 2002:a7b:c92d:: with SMTP id h13mr14516816wml.169.1569249340327; 
- Mon, 23 Sep 2019 07:35:40 -0700 (PDT)
+ bh=JIB+pfNfT6Z5CdsqUgX1GWYlMkHGREgjdew8YL2MB5k=;
+ b=uHNN3sxI2514dzE5y9ZiYlkEoha7DUxWUuHlGTBzDwHggJMa2VxMeGU7GcisC0m4wu
+ yveL13ogQLNvh5+y5K4Akewrf2+WdYEKLTzuGV/DMzvo7eQgNcNB3t0rYDmFKwP7c84F
+ 0/Z3/0nqSD6+RB4XgsntPeyVEVGOQfqu9qpAKnPIoeHaONQu2BbIqL83xv4+fK2vM7Bv
+ Zg89kqHUS98WoiADgNoW/wcOlFPJywqxTEqGJSqyuY/RUxLaN2y4g4Qww73EWWAc6Adx
+ zJdCErkDNek9jybKC+seyqLY94Y/WfMUv2tGe/fI+TlngZiNqD086JygBbn/5cHiZyfk
+ dDxA==
+X-Gm-Message-State: APjAAAUpu+UU7J1hX1sej0igy1kvlUl9LRpYxoFtX7VLQ7O7OA3zv6Rj
+ CXdoXlhkt4DSre7cOYZL9k9TMfHN3eo2WltIbIABqQ==
+X-Google-Smtp-Source: APXvYqyp2Gr+R15nYu20hkhldY5Gholt4Lq5/nEb6AzYwBJkbrSbXpAq+/q5RhazZKm7P7xwOTJTkXTY3B7K4h9+3Cc=
+X-Received: by 2002:ac2:4c8f:: with SMTP id d15mr1864923lfl.74.1568716572891; 
+ Tue, 17 Sep 2019 03:36:12 -0700 (PDT)
 MIME-Version: 1.0
-From: lord arthas <lordarthas1995@gmail.com>
-Date: Mon, 23 Sep 2019 22:35:28 +0800
-Message-ID: <CA+Jjfb-JA-knznBY7hJP75JbTewztRA90Mmn-g7j0Lh8uvSidg@mail.gmail.com>
-Subject: I can't make a hotspot with Wireguard!
+From: Mathieu Dolmen <mathieu.dolmen@gmail.com>
+Date: Tue, 17 Sep 2019 12:36:02 +0200
+Message-ID: <CAPYL5WkE5_pNP4MxLuyLXyD+HWW6wY1QVzZqqpEdD7Fr_QRQJQ@mail.gmail.com>
+Subject: New contributor introduction
 To: wireguard@lists.zx2c4.com
-X-Mailman-Approved-At: Tue, 24 Sep 2019 10:56:58 +0200
+X-Mailman-Approved-At: Tue, 24 Sep 2019 10:57:40 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -75,43 +75,25 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============7176574624559716323=="
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============7176574624559716323==
-Content-Type: multipart/alternative; boundary="0000000000007e894205933955a1"
+Hi everyone,
 
---0000000000007e894205933955a1
-Content-Type: text/plain; charset="UTF-8"
+I'm new here and want to contribute to the project. If you have good
+first issues I'll be happy to help.
 
-Dear developer:
-    I find that I couldn't normally run a hotspot which based on Windows 10
-mobile hotspot function when I try sharing internet from Wireguard with
-Windows 10's hotspot. My device can't connect with the hotspot which being
-shared by Wireguard. I hope you can fix it
+I plan on working on the fq_codel integration to better manage packet
+queues. I have little experience with kernel programming so it could
+take me some time (2-3 months I guess). Let me know if that's ok with
+you or if there is someone else already working on this.
 
---0000000000007e894205933955a1
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Thanks for your time,
 
-<div dir=3D"ltr">Dear developer:<div>=C2=A0 =C2=A0 I find that I couldn&#39=
-;t normally run a hotspot which based on Windows 10 mobile hotspot function=
- when I try sharing internet from Wireguard with Windows 10&#39;s hotspot. =
-My device can&#39;t connect with the hotspot which being shared by Wireguar=
-d. I hope you can fix it</div></div>
-
---0000000000007e894205933955a1--
-
---===============7176574624559716323==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
+Mathieu Dolmen
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
-
---===============7176574624559716323==--
