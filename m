@@ -2,53 +2,61 @@ Return-Path: <SRS0=As8F=XU=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=0.6 required=3.0 tests=DKIM_ADSP_ALL,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51E63C432C2
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 25 Sep 2019 08:46:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F2DE0C432C1
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 25 Sep 2019 08:50:04 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 76F5D214DA
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 25 Sep 2019 08:46:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 8BF392082F
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 25 Sep 2019 08:50:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=toke.dk header.i=@toke.dk header.b="lnGCwqPn"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 76F5D214DA
-Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=toke.dk
+	dkim=fail reason="key not found in DNS" (0-bit key) header.d=p-np.de header.i=@p-np.de header.b="aoAxej7D"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 8BF392082F
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=p-np.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dc7aff10;
-	Wed, 25 Sep 2019 08:46:11 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id be2bc9bc;
+	Wed, 25 Sep 2019 08:50:03 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 75e1113d
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 28910339
  for <wireguard@lists.zx2c4.com>;
- Wed, 25 Sep 2019 08:46:10 +0000 (UTC)
-Received: from mail.toke.dk (mail.toke.dk [52.28.52.200])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6f948fdd
+ Tue, 24 Sep 2019 09:37:09 +0000 (UTC)
+Received: from mx2.mailbox.org (mx2.mailbox.org [80.241.60.215])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9f3cf340
  for <wireguard@lists.zx2c4.com>;
- Wed, 25 Sep 2019 08:46:10 +0000 (UTC)
-From: Toke =?utf-8?Q?H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=toke.dk; s=20161023;
- t=1569401168; bh=hdI2/8m1XWzYalolj8xZHSopkUVGhtQLUm6AD7C/6rE=;
- h=From:To:Subject:In-Reply-To:References:Date:From;
- b=lnGCwqPn8Xik4+dABeuye2OpcKR61gBj+tf2azZZoiepMCvLys5acy3IEAA+CySH2
- XpGvTv765iKAnzYQNUpf7Y00XFwVyGsUT3ShOReN/2rArjEsMh8kVdmUJaheeNA1Mw
- A8fSIQHBrNUzDQv6bAp2GpCkb/BFUB+646giQysI2lnfync3zPBY7ptF2QJpBStDF9
- c3Q4bwZw+CxdwrDkgOEvUpbi226xIFGNwDtCu+HCOGojbt8uZVyJx9lIwnUMXa59CM
- ikhH6E/y8/5YSbpJvWH3rya/lMZkr25jE3h7vDFC6/NaiaBhJubkJEM0MOqhlMJ26T
- KZU470eZglgHQ==
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>,
- Netdev <netdev@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
-Subject: Re: WireGuard to port to existing Crypto API
-In-Reply-To: <CAHmME9pmfZAp5zd9BDLFc2fWUhtzZcjYZc2atTPTyNFFmEdHLg@mail.gmail.com>
-References: <CAHmME9pmfZAp5zd9BDLFc2fWUhtzZcjYZc2atTPTyNFFmEdHLg@mail.gmail.com>
-Date: Wed, 25 Sep 2019 10:46:08 +0200
-X-Clacks-Overhead: GNU Terry Pratchett
-Message-ID: <87v9tg3grz.fsf@toke.dk>
+ Tue, 24 Sep 2019 09:37:09 +0000 (UTC)
+Received: from smtp2.mailbox.org (smtp1.mailbox.org
+ [IPv6:2001:67c:2050:105:465:1:1:0])
+ (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+ (No client certificate requested)
+ by mx2.mailbox.org (Postfix) with ESMTPS id 0D66BA31A8
+ for <wireguard@lists.zx2c4.com>; Tue, 24 Sep 2019 11:37:09 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=p-np.de; h=
+ content-type:content-type:mime-version:subject:subject
+ :message-id:from:from:date:date:received; s=062016; t=
+ 1569317809; bh=ctl33jQVHH/FEH5gzVY6Y8LZ4usM+jU4XbRBHDRaO5o=; b=a
+ oAxej7DM8a7Vc4iec7XAvNOWIBchOcS/E1Hv/i2KiVOhqPPo50jnVpmmxC/ZO2jw
+ II0PHF4//4siihb1kzeZMTKRqzmC5XDBEe3ReOZtrNXb6pVB92btgY16CzRGh/h1
+ AGmnkAmschoXPM417sV/yoz9WfTMmoyXtE0RJ5piG4=
+X-Virus-Scanned: amavisd-new at heinlein-support.de
+Received: from smtp2.mailbox.org ([80.241.60.240])
+ by hefe.heinlein-support.de (hefe.heinlein-support.de [91.198.250.172])
+ (amavisd-new, port 10030)
+ with ESMTP id JX00-x59Ph85 for <wireguard@lists.zx2c4.com>;
+ Tue, 24 Sep 2019 11:36:49 +0200 (CEST)
+Date: Tue, 24 Sep 2019 11:36:48 +0200 (CEST)
+From: wireguard@p-np.de
+To: wireguard@lists.zx2c4.com
+Message-ID: <1394974820.30160.1569317808871@office.mailbox.org>
+Subject: Port dependent issues on iOS 13
 MIME-Version: 1.0
+X-Priority: 3
+Importance: Medium
+X-Mailman-Approved-At: Wed, 25 Sep 2019 10:50:01 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -60,51 +68,97 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="===============1467883505932959392=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-"Jason A. Donenfeld" <Jason@zx2c4.com> writes:
+--===============1467883505932959392==
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_30159_140701092.1569317808868"
 
-> Hi folks,
->
-> I'm at the Kernel Recipes conference now and got a chance to talk with
-> DaveM a bit about WireGuard upstreaming. His viewpoint has recently
-> solidified: in order to go upstream, WireGuard must port to the
-> existing crypto API, and handle the Zinc project separately. As DaveM
-> is the upstream network tree maintainer, his opinion is quite
-> instructive.
->
-> I've long resisted the idea of porting to the existing crypto API,
-> because I think there are serious problems with it, in terms of
-> primitives, API, performance, and overall safety. I didn't want to
-> ship WireGuard in a form that I thought was sub-optimal from a
-> security perspective, since WireGuard is a security-focused project.
->
-> But it seems like with or without us, WireGuard will get ported to the
-> existing crypto API. So it's probably better that we just fully
-> embrace it, and afterwards work evolutionarily to get Zinc into Linux
-> piecemeal. I've ported WireGuard already several times as a PoC to the
-> API and have a decent idea of the ways it can go wrong and generally
-> how to do it in the least-bad way.
->
-> I realize this kind of compromise might come as a disappointment for
-> some folks. But it's probably better that as a project we remain
-> intimately involved with our Linux kernel users and the security of
-> the implementation, rather than slinking away in protest because we
-> couldn't get it all in at once. So we'll work with upstream, port to
-> the crypto API, and get the process moving again. We'll pick up the
-> Zinc work after that's done.
+------=_Part_30159_140701092.1569317808868
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On the contrary, kudos on taking the pragmatic route! Much as I have
-enjoyed watching your efforts on Zinc, I always thought it was a shame
-it had to hold back the upstreaming of WireGuard. So as far as I'm
-concerned, doing that separately sounds like the right approach at this
-point, and I'll look forward to seeing the patches land :)
+Hello,
 
--Toke
+in place upgrades from iOS 12 -> iOS 13 (release) seem to work well in general. But there is a bizarre issue depending on remote endpoint ports. If you have, in my case, 4500/UDP configured as remote endpoint the tunnel does not send or receive traffic. Changing it to any other port works. Changing back to 4500/UDP breaks it again reproducibly. For others, documented here https://www.reddit.com/r/WireGuard/comments/d6in39/wg_broken_on_ios_13/  , it is 1500/UDP, in #WireGuard there has been a documented issue for 500/UDP not working.
+
+I have AnyConnect installed in parallel and checked, whether that's related. But removing and resetting Network settings did not fix port 4500 for me.
+
+As there is no port number dependent branching in the WireGuard-iOS code base, this is likely an iOS regression. Does any one of you have a working channel to Apple to report this?
+
+Thank you for an else excellent product. Let me know if I can be of any help.
+
+Best regards,
+
+Christian
+------=_Part_30159_140701092.1569317808868
+MIME-Version: 1.0
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<!doctype html>
+<html>
+ <head> 
+  <meta charset="UTF-8"> 
+ </head>
+ <body>
+  <div>
+   Hello,
+  </div>
+  <div>
+   <br>
+  </div>
+  <div>
+   in place upgrades from iOS 12 -&gt; iOS 13 (release) seem to work well in general. But there is a bizarre issue depending on 
+   <strong>remote</strong> endpoint ports. If you have, in my case, 4500/UDP configured as remote endpoint the tunnel does not send or receive traffic. Changing it to any other port works. Changing back to 4500/UDP breaks it again reproducibly. For others, documented 
+   <a href="https://www.reddit.com/r/WireGuard/comments/d6in39/wg_broken_on_ios_13/">here</a>&nbsp;, it is 1500/UDP, in #WireGuard there has been a documented issue for 500/UDP not working.
+  </div>
+  <div>
+   <br>
+  </div>
+  <div>
+   I have AnyConnect installed in parallel and checked, whether that's related. But removing and resetting Network settings did not fix port 4500 for me.
+  </div>
+  <div>
+   <br>
+  </div>
+  <div>
+   As there is no port number dependent branching in the WireGuard-iOS code base, this is likely an iOS regression. Does any one of you have a working channel to Apple to report this?
+  </div>
+  <div>
+   <br>
+  </div>
+  <div>
+   Thank you for an else excellent product. Let me know if I can be of any help.
+  </div>
+  <div>
+   <br>
+  </div>
+  <div>
+   Best regards,
+  </div>
+  <div>
+   <br>
+  </div>
+  <div>
+   Christian
+  </div> 
+ </body>
+</html>
+------=_Part_30159_140701092.1569317808868--
+
+--===============1467883505932959392==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--===============1467883505932959392==--
