@@ -1,74 +1,63 @@
-Return-Path: <SRS0=JHi/=XL=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=ifwh=XT=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.3 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
-	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D602CC49ED7
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 16 Sep 2019 09:53:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 47ABAC432C1
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 24 Sep 2019 08:48:08 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 39CC7206A4
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 16 Sep 2019 09:53:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 8576A2146E
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 24 Sep 2019 08:48:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bIMAzf2l"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 39CC7206A4
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="Jx/RfNmp"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 8576A2146E
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1e31ec34;
-	Mon, 16 Sep 2019 09:53:40 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c58c38e0;
+	Tue, 24 Sep 2019 08:48:06 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 91d8abe3
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 26eff24d
  for <wireguard@lists.zx2c4.com>;
- Mon, 16 Sep 2019 09:53:37 +0000 (UTC)
-Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com
- [IPv6:2607:f8b0:4864:20::32c])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4466f536
+ Tue, 24 Sep 2019 08:48:03 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9032d5db
  for <wireguard@lists.zx2c4.com>;
- Mon, 16 Sep 2019 09:53:37 +0000 (UTC)
-Received: by mail-ot1-x32c.google.com with SMTP id s22so1244217otr.6
- for <wireguard@lists.zx2c4.com>; Mon, 16 Sep 2019 02:53:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=fg0IaaK2yZNdSijmG7akfwVS/nkZcsj2Hsmn9Hk8M+Q=;
- b=bIMAzf2lVUrbK7b5bU+K3Ynh5BGSUczXcU+PPuDwIFzfXuJDpDBkrljSHoiNTgQWRr
- KdhA/2oOJ2pgS1qqvSd2gzOVTOYF8EYapxiNLmHC4gTXQCPeYrxHe3vBP59gLYoLVYXb
- 1Gc9jfvpGiKFzZvGFdEGtMaS7GBTUC1+ppqrD5LGfBi0f4BRNqNA/ND2kWF8N+r/YY2C
- EwmsZlhyTg9eM2Wl1pbfBbGHrUtG8lLikkdH5Hzdc645A4yqdd1pBmQm9lt+bhsY/Hlv
- XALtWZ8Wht3cRlPpYNyPWeIF3+STVueLgGGoHiH5zIvjy2k5TceFtlJnJW6k+tVMrqvM
- rVPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=fg0IaaK2yZNdSijmG7akfwVS/nkZcsj2Hsmn9Hk8M+Q=;
- b=UG6C2N5Bi/5PRjPuSAyItUTQH7Bu3I6vy7WgNtFETCS+pVOQ2c0GB0r96XAXmb9p3t
- f0MOCX41+X2n4qz47khgO2cEA6OtFD5SmVjOgxS2ZC2APNVsHbgsx/pC9sM9/G/y5Ffy
- wxLZxZyooSSsGj5cTRokrJnyDs/2Sl6ekqP0eb1/A/XNfcdw7+ZQmaX50gOymo7MAMxx
- Ntj9DsLvb1LKkfOmDlnQ21fYXT1c//VB93Sdc3BE38UcujHAsRduyLzNzuy1RDRZxtMJ
- 8eSVfr86cR5zrLHrTVSbOVNzdk+H7mBkY+4lzh2425+PHBYRlhLLNutCL4+o4JJH6oMN
- Kyjg==
-X-Gm-Message-State: APjAAAXUAV5t2w8T29nkXNM9wwjq8rMnfm9uoc0nhK1LWrSGU8maRB7n
- NvUH8/snXStnHPnXk/TqqCdiXXH3U6D+eBvlRsaNzjGZyBQ=
-X-Google-Smtp-Source: APXvYqxU49rQrkEIaWC0p7rELnhrSAlrt6gCPQczSfhCX1Ntb7BvUqxldH6x/Fu0gtRd6ismVsX5YxTHHM32sCaQ/fY=
-X-Received: by 2002:a9d:1e83:: with SMTP id n3mr40285506otn.287.1568627617190; 
- Mon, 16 Sep 2019 02:53:37 -0700 (PDT)
+ Tue, 24 Sep 2019 08:48:03 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 45fe2913
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 24 Sep 2019 08:02:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :from:date:message-id:subject:to:content-type; s=mail; bh=ozXlLP
+ W/f03UFdgH+awu/RJH8Fg=; b=Jx/RfNmp/psFwpz8wYXodvE5i8PudY0dRy469O
+ Oeo0aBwp+PUlZ9cwhNlHcFXnv1MBgHBZFcpraY58wU2NjGpHO+xmg3oT0txNZwMv
+ CTpcSFN2FbnAedgsKhAEBYRVC3IHZLI19pE3WtFuzH4B+drdGu4uCwqnfyXBT4o9
+ 9MnqXCOgtfnbZTGOl6Wcb9W1mMlI6P8c3WLv9e3EB8Aic1FgOnS+fTLid3Fw+7tO
+ XV4BFgc9rxyVNE8hqPgGOr92SWucSkCDTEhhER/wSEnSyAXhDxDVWZW2fPbv3FWp
+ 9iW18eEtEqn4CWASVE2/6KkQYYW0j3euRSONXLQroRVwpBJA==
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 66b3cbe6
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 24 Sep 2019 08:02:28 +0000 (UTC)
+Received: by mail-ot1-f48.google.com with SMTP id o44so767015ota.10
+ for <wireguard@lists.zx2c4.com>; Tue, 24 Sep 2019 01:48:03 -0700 (PDT)
+X-Gm-Message-State: APjAAAWXCPVc++eGKUqf4cQh1zVQyLD3kQyK4OoPdO/eRsEVF4cRF2OF
+ ziFhqYFeXnBO0iPGnaLyW2+a2hT+yu6UGztkoqU=
+X-Google-Smtp-Source: APXvYqwWFsCWwJM1DWwo1IGKCtjjPiU7JVi3e7s8CU4mJVeHvP8dNYAmzbtm+O/7EMCIG+URjlfpdfUlbYu9eLNVkP8=
+X-Received: by 2002:a9d:ec2:: with SMTP id 60mr967991otj.369.1569314883101;
+ Tue, 24 Sep 2019 01:48:03 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAHo=znZWFs427fDRYPUx3jxjXR01McUFwsOQR9rQy4ocWwyRNA@mail.gmail.com>
- <CAHmME9rXV2_YG3fGMErDeTjfHeNKhDC2cCYA6Kw93n9A328QpQ@mail.gmail.com>
- <CAHmME9p0ue59kxwD3BWGLmU3U-SmO2fxxhP7ubCsGts2GU-aZg@mail.gmail.com>
-In-Reply-To: <CAHmME9p0ue59kxwD3BWGLmU3U-SmO2fxxhP7ubCsGts2GU-aZg@mail.gmail.com>
-From: Sebastiano Barrera <sebastiano.barrera@gmail.com>
-Date: Mon, 16 Sep 2019 11:53:20 +0200
-Message-ID: <CAHo=znac+BQ594WTCGtrEm=G-Rc2O9AdvhBMYy3RGmr9eeUhjg@mail.gmail.com>
-Subject: Re: On Windows: Wrong source IP address
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Tue, 24 Sep 2019 10:47:51 +0200
+X-Gmail-Original-Message-ID: <CAHmME9qeF2ScwZwqNwZ3oVYC8zDOt5Sa4UkYsn-q+SkG7JhFcw@mail.gmail.com>
+Message-ID: <CAHmME9qeF2ScwZwqNwZ3oVYC8zDOt5Sa4UkYsn-q+SkG7JhFcw@mail.gmail.com>
+Subject: breakage in policy routing on 5.3 and 5.3.1
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -85,30 +74,25 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Jason,
+Hi folks,
 
-Thank you very much for your explanation! I'll look into it and study
-the source code you linked, but I don't think I'll be able to
-contribute any concrete work before the next week or so.  I'll be back
-when I do!
+FYI, upstream Linux broke aspects policy routing in 5.3. This isn't
+specific to WireGuard, but rather the policy routing engine in
+general, but users of the wg-quick(8) bash script for configuring
+networks might run into this if they're routing a default route and
+have IPv6, because the bash script makes use of policy routing.
 
-Thanks again!
--Sebastiano
+I sent two patches upstream to fix bugs introduced with 5.3:
+https://lore.kernel.org/netdev/20190923144612.29668-1-Jason@zx2c4.com/
+https://lore.kernel.org/netdev/20190924073615.31704-1-Jason@zx2c4.com/
 
-Il giorno sab 14 set 2019 alle ore 19:11 Jason A. Donenfeld
-<Jason@zx2c4.com> ha scritto:
->
-> To give more detail, a more ideal solution would be to specify the
-> source address / source if index using WSASendMsg, and retrieve the
-> incoming destination address / destination if index using WSARecvMsg,
-> and implement sticky socket semantics. A linux implementation in C is
-> here: https://git.zx2c4.com/WireGuard/tree/contrib/examples/sticky-sockets/sticky-sockets.c
-> and in go is here:
-> https://git.zx2c4.com/wireguard-go/tree/device/conn_linux.go . If you
-> want to provide conn_windows.go that implements sticky sockets, that
-> would probably solve 80% of the problem. The remaining part would be
-> policy routing for the case when we don't have a sender if or when
-> it's gone stale.
+The latter one appears to mitigate the problem, as confirmed by Arch
+Linux users: https://bugs.archlinux.org/task/63870
+
+I'll update this thread when we know more from the netdev mailing list.
+
+Thanks,
+Jason
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
