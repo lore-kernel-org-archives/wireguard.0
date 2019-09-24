@@ -3,88 +3,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=3.4.0
+	HTML_MESSAGE,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22E67C432C1
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 24 Sep 2019 09:00:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 72BA4C432C2
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 24 Sep 2019 15:29:27 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id C09942146E
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 24 Sep 2019 09:00:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org C09942146E
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=noc23.de
+	by mail.kernel.org (Postfix) with ESMTPS id D488F20665
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 24 Sep 2019 15:29:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org D488F20665
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=attglobal.net
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3a8d29e2;
-	Tue, 24 Sep 2019 08:58:59 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 30d22c4f;
+	Tue, 24 Sep 2019 15:29:10 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3326e4f5
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6007c9ce
  for <wireguard@lists.zx2c4.com>;
- Mon, 23 Sep 2019 12:18:51 +0000 (UTC)
-Received: from dubhe.uberspace.de (dubhe.uberspace.de [185.26.156.47])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0c19a409
+ Tue, 24 Sep 2019 15:29:07 +0000 (UTC)
+Received: from dnvrco-cmomta02.email.rr.com (dnvrco-outbound-snat.email.rr.com
+ [107.14.73.232])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 48ec790b
  for <wireguard@lists.zx2c4.com>;
- Mon, 23 Sep 2019 12:18:50 +0000 (UTC)
-Received: (qmail 23564 invoked from network); 23 Sep 2019 12:18:49 -0000
-Received: from localhost (HELO ?10.0.23.107?) (127.0.0.1)
- by dubhe.uberspace.de with SMTP; 23 Sep 2019 12:18:49 -0000
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-From: Ulrich Kalloch <ulli@noc23.de>
-Autocrypt: addr=ulli@noc23.de; prefer-encrypt=mutual; keydata=
- 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
-Subject: Build fail on OpenBSD 6.5 amd64
-Message-ID: <bd446815-ae6b-a2fd-a4a7-38a9f05a4b24@noc23.de>
-Date: Mon, 23 Sep 2019 14:18:40 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.1.0
+ Tue, 24 Sep 2019 15:29:07 +0000 (UTC)
+Received: from [192.168.0.2] ([23.243.28.100]) by cmsmtp with ESMTP
+ id CmkRiep9hiYm2CmkUiy1ZS; Tue, 24 Sep 2019 15:29:06 +0000
+Subject: Re: Centos 7.6 wg-quick not working properly
+To: George Lucan <boss_geo2005@yahoo.com>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
+References: <1429556426.5086611.1568572361543.ref@mail.yahoo.com>
+ <1429556426.5086611.1568572361543@mail.yahoo.com>
+ <432951712.5476709.1568659634512@mail.yahoo.com>
+From: Eddie <stunnel@attglobal.net>
+X-Clacks-Overhead: GNU Terry Pratchett
+Message-ID: <26c139a5-d8a4-528f-d777-937966557699@attglobal.net>
+Date: Tue, 24 Sep 2019 08:29:03 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-X-Mailman-Approved-At: Tue, 24 Sep 2019 10:58:58 +0200
+In-Reply-To: <432951712.5476709.1568659634512@mail.yahoo.com>
+Content-Language: en-US
+X-CMAE-Envelope: MS4wfPx9ti5n/BUlpDNY3mtNdx4XtC8sJfzvY01QMwPy2Su2mXs9qi/VzdHnflOY307Ek/jXLM0Uw/7LKfjqLIQUKYcz58vbHgjmKXYnIQuA7SqH8oHWwSV3
+ Ro4ntgRRnVoWPeyTp20gdS3WFYZlWV5ZQObEbG6yxicFQRCvUva+Ucd3KznSNVemIRr5ljaBSx3wS8PwzHPvFKSzLimyNbdVmAA=
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
+Reply-To: stunnel@attglobal.net
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -93,257 +59,303 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============3704963748150259158=="
+Content-Type: multipart/mixed; boundary="===============7374351373533035368=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---===============3704963748150259158==
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="erUWzsFHDbjTXu9sMDe3Pn3t8JOCtqBFY"
-
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---erUWzsFHDbjTXu9sMDe3Pn3t8JOCtqBFY
-Content-Type: multipart/mixed; boundary="g8r4f8cV6jrrDfuIpVclitpeGzbGtwrV5";
- protected-headers="v1"
-From: Ulrich Kalloch <ulli@noc23.de>
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Message-ID: <bd446815-ae6b-a2fd-a4a7-38a9f05a4b24@noc23.de>
-Subject: Build fail on OpenBSD 6.5 amd64
-
---g8r4f8cV6jrrDfuIpVclitpeGzbGtwrV5
-Content-Type: multipart/mixed;
- boundary="------------C0C21DBAB4135F823FF72D54"
+This is a multi-part message in MIME format.
+--===============7374351373533035368==
+Content-Type: multipart/alternative;
+ boundary="------------74D8DAE246B95F130B1DFC37"
 Content-Language: en-US
 
 This is a multi-part message in MIME format.
---------------C0C21DBAB4135F823FF72D54
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: base64
+--------------74D8DAE246B95F130B1DFC37
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-SGVsbG8gQCBhbGwKCnRoZSBidWlsZCBzY3JpcHQgLT4gaHR0cHM6Ly94bi0tNGRiLmNjL0lL
-dUJjNjJaIGZhaWxzIG9uIE9wZW5CU0QgNi41CgpUaGUgT3V0cHV0IDoKCgpmb28jIC4vaW5z
-dGFsbC5zaMKgwqDCoMKgClsrXSBQcmVwYXJpbmcgYnVpbGQgZGlyZWN0b3J5IGluIC91c3Iv
-c3JjL3dpcmVndWFyZApbK10gSW5zdGFsbGluZyBkZXBlbmRlbmNpZXMKcXVpcmtzLTMuMTI0
-IHNpZ25lZCBvbiAyMDE5LTA5LTIyVDIxOjAwOjEwWgpbK10gRmV0Y2hpbmcgbGF0ZXN0IHZl
-cnNpb25zClRyeWluZyAxNDcuNzUuMTA1LjE2OS4uLgpSZXF1ZXN0aW5nIGh0dHBzOi8vYnVp
-bGQud2lyZWd1YXJkLmNvbS9kaXN0cm9zLnR4dAoxOTc4IGJ5dGVzIHJlY2VpdmVkIGluIDAu
-MDAgc2Vjb25kcyAoMTIuNjkgTUIvcykKWytdIEZldGNoaW5nIGFuZCB1bnBhY2tpbmcgYXJj
-aGl2ZXMKVHJ5aW5nIDE0Ny43NS43Ny4yNTEuLi4KUmVxdWVzdGluZwpodHRwczovL2dpdC56
-eDJjNC5jb20vV2lyZUd1YXJkL3NuYXBzaG90L1dpcmVHdWFyZC0wLjAuMjAxOTA5MTMudGFy
-Lnh6CjMzMDc4OCBieXRlcyByZWNlaXZlZCBpbiAxLjU1IHNlY29uZHMgKDIwOC45MiBLQi9z
-KQpUcnlpbmcgMTQ3Ljc1Ljc3LjI1MS4uLgpSZXF1ZXN0aW5nCmh0dHBzOi8vZ2l0Lnp4MmM0
-LmNvbS93aXJlZ3VhcmQtZ28vc25hcHNob3Qvd2lyZWd1YXJkLWdvLTAuMC4yMDE5MDkwOC50
-YXIueHoKNzkyMTIgYnl0ZXMgcmVjZWl2ZWQgaW4gMC41MSBzZWNvbmRzICgxNTAuNDYgS0Iv
-cykKWytdIEJ1aWxkaW5nIHdnKDgpIGFuZCB3Zy1xdWljayg4KSB0b29scwpnbWFrZTogRW50
-ZXJpbmcgZGlyZWN0b3J5CicvdXNyL3NyYy93aXJlZ3VhcmQvV2lyZUd1YXJkLTAuMC4yMDE5
-MDkxMy9zcmMvdG9vbHMnCsKgIENDwqDCoMKgwqDCoCAvdXNyL3NyYy93aXJlZ3VhcmQvV2ly
-ZUd1YXJkLTAuMC4yMDE5MDkxMy9zcmMvdG9vbHMvd2cubwrCoCBDQ8KgwqDCoMKgwqAgL3Vz
-ci9zcmMvd2lyZWd1YXJkL1dpcmVHdWFyZC0wLjAuMjAxOTA5MTMvc3JjL3Rvb2xzL3NldC5v
-CsKgIENDwqDCoMKgwqDCoCAvdXNyL3NyYy93aXJlZ3VhcmQvV2lyZUd1YXJkLTAuMC4yMDE5
-MDkxMy9zcmMvdG9vbHMvbW5sZy5vCsKgIENDwqDCoMKgwqDCoCAvdXNyL3NyYy93aXJlZ3Vh
-cmQvV2lyZUd1YXJkLTAuMC4yMDE5MDkxMy9zcmMvdG9vbHMvcHVia2V5Lm8KwqAgQ0PCoMKg
-wqDCoMKgIC91c3Ivc3JjL3dpcmVndWFyZC9XaXJlR3VhcmQtMC4wLjIwMTkwOTEzL3NyYy90
-b29scy9zaG93Y29uZi5vCsKgIENDwqDCoMKgwqDCoCAvdXNyL3NyYy93aXJlZ3VhcmQvV2ly
-ZUd1YXJkLTAuMC4yMDE5MDkxMy9zcmMvdG9vbHMvZ2Vua2V5Lm8KwqAgQ0PCoMKgwqDCoMKg
-IC91c3Ivc3JjL3dpcmVndWFyZC9XaXJlR3VhcmQtMC4wLjIwMTkwOTEzL3NyYy90b29scy9z
-ZXRjb25mLm8KwqAgQ0PCoMKgwqDCoMKgIC91c3Ivc3JjL3dpcmVndWFyZC9XaXJlR3VhcmQt
-MC4wLjIwMTkwOTEzL3NyYy90b29scy9jdXJ2ZTI1NTE5Lm8Kd2cuYzo2OjEwOiBmYXRhbCBl
-cnJvcjogJ3N0ZGRlZi5oJyBmaWxlIG5vdCBmb3VuZAojaW5jbHVkZSA8c3RkZGVmLmg+CsKg
-wqDCoMKgwqDCoMKgwqAgXn5+fn5+fn5+fgpzZXQuYzo2OjEwOiBmYXRhbCBlcnJvcjogJ3N0
-ZGlvLmgnIGZpbGUgbm90IGZvdW5kCiNpbmNsdWRlIDxzdGRpby5oPgrCoMKgwqDCoMKgwqDC
-oMKgIF5+fn5+fn5+fgoxIGVycm9yIGdlbmVyYXRlZC4KMSBlcnJvciBnZW5lcmF0ZWQuCnNo
-b3djb25mLmM6NjoxMDogZmF0YWwgZXJyb3I6ICdhcnBhL2luZXQuaCcgZmlsZSBub3QgZm91
-bmQKI2luY2x1ZGUgPGFycGEvaW5ldC5oPgrCoMKgwqDCoMKgwqDCoMKgIF5+fn5+fn5+fn5+
-fn4KZ2Vua2V5LmM6NjoxMDogZmF0YWwgZXJyb3I6ICdlcnJuby5oJyBmaWxlIG5vdCBmb3Vu
-ZAojaW5jbHVkZSA8ZXJybm8uaD4KwqDCoMKgwqDCoMKgwqDCoCBefn5+fn5+fn4KcHVia2V5
-LmM6NjoxMDogZmF0YWwgZXJyb3I6ICdlcnJuby5oJyBmaWxlIG5vdCBmb3VuZAojaW5jbHVk
-ZSA8ZXJybm8uaD4KwqDCoMKgwqDCoMKgwqDCoCBefn5+fn5+fn4KMSBlcnJvciBnZW5lcmF0
-ZWQuCjEgZXJyb3IgZ2VuZXJhdGVkLgpzZXRjb25mLmM6NjoxMDogZmF0YWwgZXJyb3I6ICdz
-dGRkZWYuaCcgZmlsZSBub3QgZm91bmQKI2luY2x1ZGUgPHN0ZGRlZi5oPgrCoMKgwqDCoMKg
-wqDCoMKgIF5+fn5+fn5+fn4KMSBlcnJvciBnZW5lcmF0ZWQuCkluIGZpbGUgaW5jbHVkZWQg
-ZnJvbSBjdXJ2ZTI1NTE5LmM6NjoKLi9jdXJ2ZTI1NTE5Lmg6OToxMDogZmF0YWwgZXJyb3I6
-ICdzdGRpbnQuaCcgZmlsZSBub3QgZm91bmQKMSBlcnJvciNpbmNsdWRlIDxzdGRpbnQuaD4g
-Z2VuZXJhdGVkCi4KwqDCoMKgwqDCoMKgwqDCoCBefn5+fn5+fn5+CjEgZXJyb3IgZ2VuZXJh
-dGVkLgpnbWFrZTogKioqIFs8YnVpbHRpbj46IHNldC5vXSBFcnJvciAxCmdtYWtlOiAqKiog
-V2FpdGluZyBmb3IgdW5maW5pc2hlZCBqb2JzLi4uLgpnbWFrZTogKioqIFs8YnVpbHRpbj46
-IHdnLm9dIEVycm9yIDEKZ21ha2U6ICoqKiBbPGJ1aWx0aW4+OiBwdWJrZXkub10gRXJyb3Ig
-MQpnbWFrZTogKioqIFs8YnVpbHRpbj46IGN1cnZlMjU1MTkub10gRXJyb3IgMQpnbWFrZTog
-KioqIFs8YnVpbHRpbj46IHNldGNvbmYub10gRXJyb3IgMQpnbWFrZTogKioqIFs8YnVpbHRp
-bj46IGdlbmtleS5vXSBFcnJvciAxCmdtYWtlOiAqKiogWzxidWlsdGluPjogc2hvd2NvbmYu
-b10gRXJyb3IgMQpnbWFrZTogTGVhdmluZyBkaXJlY3RvcnkKJy91c3Ivc3JjL3dpcmVndWFy
-ZC9XaXJlR3VhcmQtMC4wLjIwMTkwOTEzL3NyYy90b29scycKWytdIENsZWFuaW5nIHVwIGJ1
-aWxkIGRpcmVjdG9yeQpmb28jCgoKVGhlIFN5c3RlbSBpcyBhIFBsYWluIE9wZW5CU0Qgd2l0
-aCB0aGlzIFBhY2thZ2VzLnRvdGFsIDIxMgpkcnd4ci14ci14wqAgNTMgcm9vdMKgIHdoZWVs
-wqAgMTUzNiBTZXAgMjMgMTQ6MDUgLgpkcnd4ci14ci14wqDCoCA3IHJvb3TCoCB3aGVlbMKg
-wqAgNTEyIFNlcCAyMyAxMTo0OSAuLgpkcnd4ci14ci14wqDCoCAyIHJvb3TCoCB3aGVlbMKg
-wqAgNTEyIFNlcCAyMyAxMjowNSBhY3gtZmlybXdhcmUtMS40cDUKZHJ3eHIteHIteMKgwqAg
-MiByb290wqAgd2hlZWzCoMKgIDUxMiBTZXAgMjMgMTI6MDUgYW1kZ3B1LWZpcm13YXJlLTIw
-MTgxMjE4CmRyd3hyLXhyLXjCoMKgIDIgcm9vdMKgIHdoZWVswqDCoCA1MTIgU2VwIDIzIDEy
-OjA1IGF0aG4tZmlybXdhcmUtMS4xcDQKZHJ3eHIteHIteMKgwqAgMiByb290wqAgd2hlZWzC
-oMKgIDUxMiBTZXAgMjMgMTQ6MDUgYmFzaC01LjAuMwpkcnd4ci14ci14wqDCoCAyIHJvb3TC
-oCB3aGVlbMKgwqAgNTEyIFNlcCAyMyAxMjowNSBid2ZtLWZpcm13YXJlLTIwMTcxMTI1CmRy
-d3hyLXhyLXjCoMKgIDIgcm9vdMKgIHdoZWVswqDCoCA1MTIgU2VwIDIzIDEyOjA1IGJ3aS1m
-aXJtd2FyZS0xLjRwNApkcnd4ci14ci14wqDCoCAyIHJvb3TCoCB3aGVlbMKgwqAgNTEyIFNl
-cCAyMyAxNDowMyBiemlwMi0xLjAuNnAxMApkcnd4ci14ci14wqDCoCAyIHJvb3TCoCB3aGVl
-bMKgwqAgNTEyIFNlcCAyMyAxNDowNSBjdXJsLTcuNjQuMXAxCmRyd3hyLXhyLXjCoMKgIDIg
-cm9vdMKgIHdoZWVswqDCoCA1MTIgU2VwIDIzIDE0OjA1IGN2c3BzLTIuMXAyCmRyd3hyLXhy
-LXjCoMKgIDIgcm9vdMKgIHdoZWVswqDCoCA1MTIgU2VwIDIzIDExOjUxIGRlc2t0b3AtZmls
-ZS11dGlscy0wLjIzcDEwCmRyd3hyLXhyLXjCoMKgIDIgcm9vdMKgIHdoZWVswqDCoCA1MTIg
-U2VwIDIzIDE0OjA1IGdldHRleHQtMC4xOS44LjFwMwpkcnd4ci14ci14wqDCoCAyIHJvb3TC
-oCB3aGVlbMKgwqAgNTEyIFNlcCAyMyAxNDowNSBnaXQtMi4yMS4wCmRyd3hyLXhyLXjCoMKg
-IDIgcm9vdMKgIHdoZWVswqDCoCA1MTIgU2VwIDIzIDExOjUxIGdsaWIyLTIuNTguM3A5CmRy
-d3hyLXhyLXjCoMKgIDIgcm9vdMKgIHdoZWVswqDCoCA1MTIgU2VwIDIzIDE0OjA1IGdtYWtl
-LTQuMi4xcDAKZHJ3eHIteHIteMKgwqAgMiByb290wqAgd2hlZWzCoMKgIDUxMiBTZXAgMjMg
-MTQ6MDUgZ28tMS4xMi4xCmRyd3hyLXhyLXjCoMKgIDIgcm9vdMKgIHdoZWVswqDCoCA1MTIg
-U2VwIDIzIDExOjUxIGh0b3AtMi4yLjBwOApkcnd4ci14ci14wqDCoCAyIHJvb3TCoCB3aGVl
-bMKgwqAgNTEyIFNlcCAyMyAxMTo0MSBpbnRlbC1maXJtd2FyZS0yMDE5MDUxNHAwdjAKZHJ3
-eHIteHIteMKgwqAgMiByb290wqAgd2hlZWzCoMKgIDUxMiBTZXAgMjMgMTI6MDUgaW50ZWxk
-cm0tZmlybXdhcmUtMjAxODEyMTgKZHJ3eHIteHIteMKgwqAgMiByb290wqAgd2hlZWzCoMKg
-IDUxMiBTZXAgMjMgMTI6MDUgaXB3LWZpcm13YXJlLTEuM3AyCmRyd3hyLXhyLXjCoMKgIDIg
-cm9vdMKgIHdoZWVswqDCoCA1MTIgU2VwIDIzIDEyOjA1IGl3aS1maXJtd2FyZS0zLjFwMgpk
-cnd4ci14ci14wqDCoCAyIHJvb3TCoCB3aGVlbMKgwqAgNTEyIFNlcCAyMyAxMjowNSBpd20t
-ZmlybXdhcmUtMC4yMDE3MDEwNQpkcnd4ci14ci14wqDCoCAyIHJvb3TCoCB3aGVlbMKgwqAg
-NTEyIFNlcCAyMyAxMjowNSBpd24tZmlybXdhcmUtNS4xMXAxCmRyd3hyLXhyLXjCoMKgIDIg
-cm9vdMKgIHdoZWVswqDCoCA1MTIgU2VwIDIzIDExOjUxIGxpYmZmaS0zLjIuMXA1CmRyd3hy
-LXhyLXjCoMKgIDIgcm9vdMKgIHdoZWVswqDCoCA1MTIgU2VwIDIzIDE0OjA1IGxpYmljb252
-LTEuMTRwMwpkcnd4ci14ci14wqDCoCAyIHJvb3TCoCB3aGVlbMKgwqAgNTEyIFNlcCAyMyAx
-NDowMyBsaWJpZG4yLTIuMC4wcDAKZHJ3eHIteHIteMKgwqAgMiByb290wqAgd2hlZWzCoMKg
-IDUxMiBTZXAgMjMgMTQ6MDMgbGlicHNsLTAuMjAuMgpkcnd4ci14ci14wqDCoCAyIHJvb3TC
-oCB3aGVlbMKgwqAgNTEyIFNlcCAyMyAxNDowMyBsaWJ1bmlzdHJpbmctMC45LjcKZHJ3eHIt
-eHIteMKgwqAgMiByb290wqAgd2hlZWzCoMKgIDUxMiBTZXAgMjMgMTI6MDUgbWFsby1maXJt
-d2FyZS0xLjRwNApkcnd4ci14ci14wqDCoCAyIHJvb3TCoCB3aGVlbMKgwqAgNTEyIFNlcCAy
-MyAxMTo1MSBuYW5vLTQuMApkcnd4ci14ci14wqDCoCAyIHJvb3TCoCB3aGVlbMKgwqAgNTEy
-IFNlcCAyMyAxNDowNSBuZ2h0dHAyLTEuMzcuMApkcnd4ci14ci14wqDCoCAyIHJvb3TCoCB3
-aGVlbMKgwqAgNTEyIFNlcCAyMyAxMTo1MSBubG9hZC0wLjcuNHA0CmRyd3hyLXhyLXjCoMKg
-IDIgcm9vdMKgIHdoZWVswqDCoCA1MTIgU2VwIDIzIDEyOjA1IG90dXMtZmlybXdhcmUtMS4w
-cDEKZHJ3eHIteHIteMKgwqAgMiByb290wqAgd2hlZWzCoMKgIDUxMiBTZXAgMjMgMTQ6MDUg
-cDUtRXJyb3ItMC4xNzAyNQpkcnd4ci14ci14wqDCoCAyIHJvb3TCoCB3aGVlbMKgwqAgNTEy
-IFNlcCAyMyAxMTo1MSBwY3JlLTguNDFwMgpkcnd4ci14ci14wqDCoCAyIHJvb3TCoCB3aGVl
-bMKgwqAgNTEyIFNlcCAyMyAxNDowMyBwY3JlMi0xMC4zMgpkcnd4ci14ci14wqDCoCAyIHJv
-b3TCoCB3aGVlbMKgwqAgNTEyIFNlcCAyMyAxMjowNSBwZ3QtZmlybXdhcmUtMS4ycDQKZHJ3
-eHIteHIteMKgwqAgMiByb290wqAgd2hlZWzCoMKgIDUxMiBTZXAgMjMgMTE6NTEgcHl0aG9u
-LTMuNi44cDAKZHJ3eHIteHIteMKgwqAgMiByb290wqAgd2hlZWzCoMKgIDUxMiBTZXAgMjMg
-MTE6NTEgcXVpcmtzLTMuMTI0CmRyd3hyLXhyLXjCoMKgIDIgcm9vdMKgIHdoZWVswqDCoCA1
-MTIgU2VwIDIzIDExOjQxIHJhZGVvbmRybS1maXJtd2FyZS0yMDE4MTIxOApkcnd4ci14ci14
-wqDCoCAyIHJvb3TCoCB3aGVlbMKgwqAgNTEyIFNlcCAyMyAxMjowNSByc3UtZmlybXdhcmUt
-MS4ycDEKZHJ3eHIteHIteMKgwqAgMiByb290wqAgd2hlZWzCoMKgIDUxMiBTZXAgMjMgMTQ6
-MDUgcnN5bmMtMy4xLjMKZHJ3eHIteHIteMKgwqAgMiByb290wqAgd2hlZWzCoMKgIDUxMiBT
-ZXAgMjMgMTI6MDUgcnR3bi1maXJtd2FyZS0yMDE4MDEwMwpkcnd4ci14ci14wqDCoCAyIHJv
-b3TCoCB3aGVlbMKgwqAgNTEyIFNlcCAyMyAxMTo1MSBzcWxpdGUzLTMuMjcuMnAwCmRyd3hy
-LXhyLXjCoMKgIDIgcm9vdMKgIHdoZWVswqDCoCA1MTIgU2VwIDIzIDEyOjA1IHVhdGgtZmly
-bXdhcmUtMi4wcDEKZHJ3eHIteHIteMKgwqAgMiByb290wqAgd2hlZWzCoMKgIDUxMiBTZXAg
-MjMgMTI6MDUgdXBndC1maXJtd2FyZS0xLjFwNApkcnd4ci14ci14wqDCoCAyIHJvb3TCoCB3
-aGVlbMKgwqAgNTEyIFNlcCAyMyAxMjowNSB1cnR3bi1maXJtd2FyZS0yMDE4MDEwMwpkcnd4
-ci14ci14wqDCoCAyIHJvb3TCoCB3aGVlbMKgwqAgNTEyIFNlcCAyMyAxMjowNSB1dmlkZW8t
-ZmlybXdhcmUtMS4ycDIKZHJ3eHIteHIteMKgwqAgMiByb290wqAgd2hlZWzCoMKgIDUxMiBT
-ZXAgMjMgMTE6NDEgdm1tLWZpcm13YXJlLTEuMTEuMHAxCmRyd3hyLXhyLXjCoMKgIDIgcm9v
-dMKgIHdoZWVswqDCoCA1MTIgU2VwIDIzIDE0OjAzIHdnZXQtMS4yMC4zCmRyd3hyLXhyLXjC
-oMKgIDIgcm9vdMKgIHdoZWVswqDCoCA1MTIgU2VwIDIzIDEyOjA1IHdwaS1maXJtd2FyZS0z
-LjJwMQpkcnd4ci14ci14wqDCoCAyIHJvb3TCoCB3aGVlbMKgwqAgNTEyIFNlcCAyMyAxMTo1
-MSB4ei01LjIuNAoKUmVnYXJkcwoKVWxsaQoK
---------------C0C21DBAB4135F823FF72D54
-Content-Type: application/pgp-keys;
- name="0x44BE4EB74E7625C8.asc"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: attachment;
- filename="0x44BE4EB74E7625C8.asc"
+I'll just repeat verbatim the response I got from Silvan (thank you) 
+when I reported the same issue previously:
 
------BEGIN PGP PUBLIC KEY BLOCK-----
+The main problem is that the current standard kernel of CentOS simple 
+does not support the handling of "suppress_prefixlength".
+Iproute2 supports it since it does not return any error while adding so 
+it had to be the kernel causing problems.
+In essence Red Hats official answer was "It isn't a bug, RHEL7 simple 
+does not support it".
+If you sill want to fix your problem just upgrade your kernel to 
+long-term or mainline.
 
-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
-1MpLlAUU
-=3D/upJ
------END PGP PUBLIC KEY BLOCK-----
+Cheers.
 
---------------C0C21DBAB4135F823FF72D54--
+On 9/16/2019 11:47 AM, George Lucan wrote:
+> Hello,
+>
+> Some further investigations have revealed that actually the "second 
+> main" table gets created by the last command executed by wg-quick "ip 
+> -4 rule add table main suppress_prefixlength 0". Will try to figure 
+> out what is happening further.
+>
+> George
+>
+> On Sunday, 15 September 2019, 9:32:41 pm GMT+3, George Lucan 
+> <boss_geo2005@yahoo.com> wrote:
+>
+>
+> Hello,
+>
+> I have been trying for several days to setup a wireguard vpn and send 
+> all the traffic from a VM to another site (redirect gateway scenario).
+>
+> Site A
+> OS is Centos 7.6 installed with docker and wireguard installed
+>
+> Site B
+> OS is a Opensense 19.7.4 with wireguard installed from the plugin and 
+> a bunch of other things on it
+>
+> I believe the issue is within Ip route on Centos 7.6 but I am reaching 
+> out for maybe different opinions.
+> On the Centos VM I am using wireguard installed from the repos on the 
+> website and using systemd to bring up the tunnel. Everything seem to 
+> be brought up correctly except that the traffic does not go through 
+> the tunnel.
+>
+> Further investigating I noticed something unusual (in my opinion).
+>
+> Before the tunnel is up:
+> #ip rule show
+> 0:      from all lookup local
+> 32766:  from all lookup main
+> 32767:  from all lookup default
+> After the tunnel is up:
+> #ip rule show
+> 0:      from all lookup local
+> 32764:  from all lookup main
+> 32765:  not from all fwmark 0xca6c lookup 51820
+> 32766:  from all lookup main
+> 32767:  from all lookup default
+> To me is seems like somehow there are 2 tables named "main" one after 
+> the new table created by wg-quick (looking at the priority it seems it 
+> is the same one that was present previously) and another one that gets 
+> create out of thin air before the wireguard created one named 51820.
+> Ping works through the tunnel for IP to the other end of the tunnel
+> #wg
+> interface: wg0
+>    public key: 8JXLXfl1W2xZd1T+zaCKSNB+FhUbb1IquIHvHhY7/iY=
+>    private key: (hidden)
+>    listening port: 34559
+>    fwmark: 0xca6c
+>
+> peer: 04kTPSrh08X5uOCmL5aM1iCm8UqFHGtJDsrsPReafS8=
+>    endpoint: 188.27.172.68:1300
+>    allowed ips: 0.0.0.0/0
+>    latest handshake: 1 minute, 41 seconds ago
+>    transfer: 87.85 KiB received, 415.61 KiB sent
+>    persistent keepalive: every 15 seconds
+> # ping 192.168.249.1
+> PING 192.168.249.1 (192.168.249.1) 56(84) bytes of data.
+> 64 bytes from 192.168.249.1: icmp_seq=1 ttl=64 time=89.2 ms
+> 64 bytes from 192.168.249.1: icmp_seq=2 ttl=64 time=89.5 ms
+> Is there any step that I might have missed or any kernel feature that would explain the behaviour?
+> Worth mentioning it is a home env so I can test whatever is needed to get to the bottom of it.
+> Thanks
+> George
+>
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---g8r4f8cV6jrrDfuIpVclitpeGzbGtwrV5--
 
---erUWzsFHDbjTXu9sMDe3Pn3t8JOCtqBFY
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+--------------74D8DAE246B95F130B1DFC37
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 7bit
 
------BEGIN PGP SIGNATURE-----
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body text="#000000" bgcolor="#FFFFFF">
+    I'll just repeat verbatim the response I got from Silvan (thank you)
+    when I reported the same issue previously:<br>
+    <br>
+    The main problem is that the current standard kernel of CentOS
+    simple does not support the handling of "suppress_prefixlength".
+    <br>
+    Iproute2 supports it since it does not return any error while adding
+    so it had to be the kernel causing problems.
+    <br>
+    In essence Red Hats official answer was "It isn't a bug, RHEL7
+    simple does not support it".
+    <br>
+    If you sill want to fix your problem just upgrade your kernel to
+    long-term or mainline.
+    <br>
+    <br>
+    Cheers.<br>
+    <br>
+    <div class="moz-cite-prefix">On 9/16/2019 11:47 AM, George Lucan
+      wrote:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:432951712.5476709.1568659634512@mail.yahoo.com">
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <div class="ydpb7fc655cyahoo-style-wrap" style="font-family:
+        Helvetica Neue, Helvetica, Arial, sans-serif; font-size: 13px;">
+        <div dir="ltr" data-setdir="false">Hello,</div>
+        <div dir="ltr" data-setdir="false"><br>
+        </div>
+        <div dir="ltr" data-setdir="false">Some further investigations
+          have revealed that actually the "second main" table gets
+          created by the last command executed by wg-quick "<span style="orphans: 2; white-space: pre-wrap; widows: 2;">ip -4 rule add table main suppress_prefixlength 0</span>".
+          Will try to figure out what is happening further.</div>
+        <div dir="ltr" data-setdir="false"><br>
+        </div>
+        <div dir="ltr" data-setdir="false">George</div>
+        <div><br>
+        </div>
+      </div>
+      <div id="ydp88fb36beyahoo_quoted_8919518802"
+        class="ydp88fb36beyahoo_quoted">
+        <div style="font-family:'Helvetica Neue', Helvetica, Arial,
+          sans-serif;font-size:13px;color:#26282a;">
+          <div> On Sunday, 15 September 2019, 9:32:41 pm GMT+3, George
+            Lucan <a class="moz-txt-link-rfc2396E" href="mailto:boss_geo2005@yahoo.com">&lt;boss_geo2005@yahoo.com&gt;</a> wrote: </div>
+          <div><br>
+          </div>
+          <div><br>
+          </div>
+          <div>
+            <div id="ydp88fb36beyiv3767299611">
+              <div>
+                <div
+                  class="ydp88fb36beyiv3767299611ydpceb13acfyahoo-style-wrap"
+                  style="font-size:13px;">
+                  <div dir="ltr" style="font-family:Helvetica Neue,
+                    Helvetica, Arial, sans-serif;">Hello,</div>
+                  <div dir="ltr" style="font-family:Helvetica Neue,
+                    Helvetica, Arial, sans-serif;"><br>
+                  </div>
+                  <div dir="ltr" style="font-family:Helvetica Neue,
+                    Helvetica, Arial, sans-serif;">I have been trying
+                    for several days to setup a wireguard vpn and send
+                    all the traffic from a VM to another site (redirect
+                    gateway scenario).</div>
+                  <div dir="ltr" style="font-family:Helvetica Neue,
+                    Helvetica, Arial, sans-serif;"><br>
+                  </div>
+                  <div dir="ltr" style="font-family:Helvetica Neue,
+                    Helvetica, Arial, sans-serif;">Site A</div>
+                  <div dir="ltr" style="font-family:Helvetica Neue,
+                    Helvetica, Arial, sans-serif;">OS is Centos 7.6
+                    installed with docker and wireguard installed</div>
+                  <div dir="ltr" style="font-family:Helvetica Neue,
+                    Helvetica, Arial, sans-serif;"><br>
+                  </div>
+                  <div dir="ltr" style="font-family:Helvetica Neue,
+                    Helvetica, Arial, sans-serif;">Site B</div>
+                  <div dir="ltr" style="font-family:Helvetica Neue,
+                    Helvetica, Arial, sans-serif;">OS is a Opensense
+                    19.7.4 with wireguard installed from the plugin and
+                    a bunch of other things on it</div>
+                  <div dir="ltr" style="font-family:Helvetica Neue,
+                    Helvetica, Arial, sans-serif;"><br>
+                  </div>
+                  <div dir="ltr" style="font-family:Helvetica Neue,
+                    Helvetica, Arial, sans-serif;">I believe the issue
+                    is within Ip route on Centos 7.6 but I am reaching
+                    out for maybe different opinions.</div>
+                  <div dir="ltr" style="font-family:Helvetica Neue,
+                    Helvetica, Arial, sans-serif;">On the Centos VM I am
+                    using wireguard installed from the repos on the
+                    website and using systemd to bring up the tunnel.
+                    Everything seem to be brought up correctly except
+                    that the traffic does not go through the tunnel.</div>
+                  <div dir="ltr" style="font-family:Helvetica Neue,
+                    Helvetica, Arial, sans-serif;"><br>
+                  </div>
+                  <div dir="ltr" style="font-family:Helvetica Neue,
+                    Helvetica, Arial, sans-serif;">Further investigating
+                    I noticed something unusual (in my opinion).</div>
+                  <div dir="ltr" style="font-family:Helvetica Neue,
+                    Helvetica, Arial, sans-serif;"><br>
+                  </div>
+                  <div dir="ltr" style="font-family:Helvetica Neue,
+                    Helvetica, Arial, sans-serif;">Before the tunnel is
+                    up:</div>
+                  <div dir="ltr" style="font-family:Helvetica Neue,
+                    Helvetica, Arial, sans-serif;">
+                    <div dir="ltr">
+                      <pre style="orphans:2;widows:2;">#ip rule show
+0:      from all lookup local 
+32766:  from all lookup main 
+32767:  from all lookup default </pre>
+                    </div>
+                  </div>
+                  <div dir="ltr" style="font-family:Helvetica Neue,
+                    Helvetica, Arial, sans-serif;">After the tunnel is
+                    up:</div>
+                  <div dir="ltr">
+                    <div dir="ltr">
+                      <pre style="font-family:Helvetica Neue, Helvetica, Arial, sans-serif;orphans:2;widows:2;">#ip rule show
+0:      from all lookup local 
+32764:  from all lookup main 
+32765:  not from all fwmark 0xca6c lookup 51820 
+32766:  from all lookup main 
+32767:  from all lookup default </pre>
+                      <pre style="font-family:Helvetica Neue, Helvetica, Arial, sans-serif;orphans:2;widows:2;"><span><span style="font-family:Helvetica Neue, Helvetica, Arial, sans-serif;">To me is seems like somehow there are 2 tables named "main" one after the new table created by wg-quick (looking at the priority it seems it is the same one that was present previously) and another one that gets create out of thin air before the wireguard created one named 51820.</span></span></pre>
+                      <pre style="orphans:2;widows:2;"><span style="font-family:Helvetica Neue, Helvetica, Arial, sans-serif;">Ping works through the tunnel for IP to the other end of the tunnel</span></pre>
+                      <pre style="orphans:2;widows:2;"><div dir="ltr"><pre>#wg
+interface: wg0
+  public key: 8JXLXfl1W2xZd1T+zaCKSNB+FhUbb1IquIHvHhY7/iY=
+  private key: (hidden)
+  listening port: 34559
+  fwmark: 0xca6c
 
-iQIzBAEBCAAdFiEENG5AQe49g8SDl9CNRL5Ot052JcgFAl2IuCYACgkQRL5Ot052
-JcgStg/+POSFUNBvj6bXpf4GAuG5KPMhtZM8sW12Yuk5bVCgcGFODI8iw9b2LjCc
-hwh9UXAETwKI4iuvdWGTzuSU0ivb9sqOIqru6OaKkIiVK8kvSBQgHKMIRMcX2UYH
-rrxacXb61mPSZuUrY2RHypUT2BXuUvYu0blwPqzs0bZ2tLDvuj7p8JTbRHbAc9h6
-QqL0oTFclc/GQZ7/k/VEkHXgdo7v918nMOQG4Gq2JIQkY85Eym8xvedoJQ1FLp6r
-I7H2lmgHP6fmsqlfbW1+SFFv90Wa01MLxzTbM0Rd0W/YbJ5C1bXpOhAP/GXxb00Z
-XAuXtpuubPAnTLWxFvdKvZpAwLjDRz78cDu/bL+XErGJ5GZLkEgEXoGZu/OTb9j9
-OgG2TNgX7WuatUMdrgPFA2Bj1U/ogz/qFqJvJh24QFVtqyvWvEQ6heb89d2UZzkx
-mQs9SnIc+E5pHg3tE/MtY4GjUvSLYzngWk43HLB+bkiABhAOvw+4BdECVzKVA2Yk
-2BGguU50ruPlPu+MCZram0l19NHfFmhG1L81P0YNSFbEub0jvtnQqeonrZBQqqiN
-MIezu9OPloG8c6QmiAp3RRkIfRgDjKc/GQKQHhQtRC7S3mUME3RLSunnpjPqAk+F
-7rDG9K0+E3DeXy6ICHnJIuhPiJ/LuP/WjzYhurfTn9iIsvb41hs=
-=ZZRH
------END PGP SIGNATURE-----
+peer: 04kTPSrh08X5uOCmL5aM1iCm8UqFHGtJDsrsPReafS8=
+  endpoint: 188.27.172.68:1300
+  allowed ips: 0.0.0.0/0
+  latest handshake: 1 minute, 41 seconds ago
+  transfer: 87.85 KiB received, 415.61 KiB sent
+  persistent keepalive: every 15 seconds</pre><pre><div dir="ltr"><pre># ping 192.168.249.1
+PING 192.168.249.1 (192.168.249.1) 56(84) bytes of data.
+64 bytes from 192.168.249.1: icmp_seq=1 ttl=64 time=89.2 ms
+64 bytes from 192.168.249.1: icmp_seq=2 ttl=64 time=89.5 ms</pre></div></pre></div></pre>
+                    </div>
+                  </div>
+                  <div dir="ltr" style="font-family:Helvetica Neue,
+                    Helvetica, Arial, sans-serif;"><span>
+                      <pre style="font-family:Helvetica Neue, Helvetica, Arial, sans-serif;orphans:2;widows:2;">Is there any step that I might have missed or any kernel feature that would explain the behaviour?</pre>
+                      <pre style="font-family:Helvetica Neue, Helvetica, Arial, sans-serif;orphans:2;widows:2;">Worth mentioning it is a home env so I can test whatever is needed to get to the bottom of it.</pre>
+                      <pre style="font-family:Helvetica Neue, Helvetica, Arial, sans-serif;orphans:2;widows:2;">
+</pre>
+                      <pre style="font-family:Helvetica Neue, Helvetica, Arial, sans-serif;orphans:2;widows:2;">Thanks</pre>
+                      <pre style="font-family:Helvetica Neue, Helvetica, Arial, sans-serif;orphans:2;widows:2;">
+</pre>
+                      <pre style="font-family:Helvetica Neue, Helvetica, Arial, sans-serif;orphans:2;widows:2;">George</pre>
+                    </span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <fieldset class="mimeAttachmentHeader"></fieldset>
+      <pre class="moz-quote-pre" wrap="">_______________________________________________
+WireGuard mailing list
+<a class="moz-txt-link-abbreviated" href="mailto:WireGuard@lists.zx2c4.com">WireGuard@lists.zx2c4.com</a>
+<a class="moz-txt-link-freetext" href="https://lists.zx2c4.com/mailman/listinfo/wireguard">https://lists.zx2c4.com/mailman/listinfo/wireguard</a>
+</pre>
+    </blockquote>
+    <br>
+  </body>
+</html>
 
---erUWzsFHDbjTXu9sMDe3Pn3t8JOCtqBFY--
+--------------74D8DAE246B95F130B1DFC37--
 
---===============3704963748150259158==
+--===============7374351373533035368==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -354,4 +366,4 @@ WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---===============3704963748150259158==--
+--===============7374351373533035368==--
