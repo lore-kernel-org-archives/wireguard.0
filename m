@@ -2,53 +2,68 @@ Return-Path: <SRS0=As8F=XU=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1F6FC432C1
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 25 Sep 2019 09:41:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A695C432C1
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 25 Sep 2019 10:14:57 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 707BB2082F
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 25 Sep 2019 09:41:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 707BB2082F
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=davemloft.net
+	by mail.kernel.org (Postfix) with ESMTPS id 082DF20872
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 25 Sep 2019 10:14:56 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="ckS4tFji"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 082DF20872
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 56f00ee7;
-	Wed, 25 Sep 2019 09:40:37 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 96774311;
+	Wed, 25 Sep 2019 10:14:56 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 920698c3
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 336f6a8e
  for <wireguard@lists.zx2c4.com>;
- Wed, 25 Sep 2019 09:40:34 +0000 (UTC)
-Received: from shards.monkeyblade.net (shards.monkeyblade.net
- [IPv6:2620:137:e000::1:9])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e774b979
+ Wed, 25 Sep 2019 10:14:52 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 16a78790
  for <wireguard@lists.zx2c4.com>;
- Wed, 25 Sep 2019 09:40:34 +0000 (UTC)
-Received: from localhost (unknown [65.39.69.237])
- (using TLSv1 with cipher AES256-SHA (256/256 bits))
- (Client did not present a certificate)
- (Authenticated sender: davem-davemloft)
- by shards.monkeyblade.net (Postfix) with ESMTPSA id 0E0731549287F;
- Wed, 25 Sep 2019 02:40:32 -0700 (PDT)
-Date: Wed, 25 Sep 2019 11:40:31 +0200 (CEST)
-Message-Id: <20190925.114031.379108392028630817.davem@davemloft.net>
-To: bruno@wolff.to
-Subject: Re: WireGuard to port to existing Crypto API
-From: David Miller <davem@davemloft.net>
-In-Reply-To: <20190925091700.GA9970@wolff.to>
+ Wed, 25 Sep 2019 10:14:52 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e64577bb
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 25 Sep 2019 09:29:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :references:in-reply-to:from:date:message-id:subject:to:cc
+ :content-type; s=mail; bh=KNimhQJi7rFc4+5jJt/B0zxPOp0=; b=ckS4tF
+ jiEQrFzzfeM3TBVYfHogw01x1l+JqeLjPB9nw+I4mioVZf4xRqSwJtBcc54o9lXY
+ kdiiMLTcTAXIej3G7wRMLDtO6GL9UJL34ZZX4pqOiDXyTfupkm+TkFfYyNu/ID/x
+ +TrMtvby594BgAbhLP+CHhfz/D4BTPOQPqjh9zNsj5ncAN/vw0p3Q9CwMF98+8Hf
+ JGpBiTON5f78EmA6lpAg3XhfLYCwAcwIkq2zzPPgjhepOgOLYZMTnjgBCPa1hmxi
+ 0avS3o3ETY5/COeRsqUjBpRn6USczws/T5jw/7SUYYucRQHVOrGBYz9hTweYNhEM
+ sPxMfJxTOXcHUy0Q==
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 4ad85da5
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 25 Sep 2019 09:29:08 +0000 (UTC)
+Received: by mail-ot1-f45.google.com with SMTP id 21so4268848otj.11
+ for <wireguard@lists.zx2c4.com>; Wed, 25 Sep 2019 03:14:52 -0700 (PDT)
+X-Gm-Message-State: APjAAAUVdnMhTBMVRS0P/NtjsdnDG+r2E6PMtEJd2WK8+tzxG5XAzzid
+ D/ITrBgQ7saUdDC4jm8Jge0lrQYrHHg0wijDA9s=
+X-Google-Smtp-Source: APXvYqxXoFZZqOOGNm3SkWkHUEygxEwZrVu1GAlDCqmZfXb80ErX+pGyKR30T3QiTIHzoNYfeSdnYkAOzrvYBFFVkfI=
+X-Received: by 2002:a9d:3476:: with SMTP id v109mr5721549otb.179.1569406491412; 
+ Wed, 25 Sep 2019 03:14:51 -0700 (PDT)
+MIME-Version: 1.0
 References: <CAHmME9pmfZAp5zd9BDLFc2fWUhtzZcjYZc2atTPTyNFFmEdHLg@mail.gmail.com>
- <20190925091700.GA9970@wolff.to>
-X-Mailer: Mew version 6.8 on Emacs 26.2
-Mime-Version: 1.0
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.5.12
- (shards.monkeyblade.net [149.20.54.216]);
- Wed, 25 Sep 2019 02:40:34 -0700 (PDT)
-Cc: netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
- wireguard@lists.zx2c4.com
+ <20190925.113928.2046484827308019751.davem@davemloft.net>
+In-Reply-To: <20190925.113928.2046484827308019751.davem@davemloft.net>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 25 Sep 2019 12:14:40 +0200
+X-Gmail-Original-Message-ID: <CAHmME9qK2RWPLWWZGcmtVEHz+vUaVRBNtjv3GutkzWccdogF0w@mail.gmail.com>
+Message-ID: <CAHmME9qK2RWPLWWZGcmtVEHz+vUaVRBNtjv3GutkzWccdogF0w@mail.gmail.com>
+Subject: Re: WireGuard to port to existing Crypto API
+To: David Miller <davem@davemloft.net>
+Cc: Netdev <netdev@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -65,18 +80,28 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-From: Bruno Wolff III <bruno@wolff.to>
-Date: Wed, 25 Sep 2019 04:17:00 -0500
+Hi Dave,
 
-> Are there going to be two branches, one for using the current API and
-> one using Zinc?
+On Wed, Sep 25, 2019 at 12:03 PM David Miller <davem@davemloft.net> wrote:
+> I didn't say "must" anything, I suggested this as a more smoothe
+> and efficient way forward.
 
-This is inapproprate to even discuss at this point.
+s/must/should/g? However it's characterized, I think your jugements
+and opinions are generally sound, and I intend to put them into
+action.
 
-Let's see what the crypto based stuff looks like, evaluate it,
-and then decide how to proceed forward.
+> I'm also a bit disappointed that you felt the need to so quickly
+> make such an explosive posting to the mailing list when we've
 
-Thank you.
+Explosive? That's certainly not the intent here. The project is
+changing direction in a big way. Collaborating with others on the
+crypto API will be an important part of that. Announcing the change in
+direction, those intentions, a rationale on why it will be okay, and
+inviting collaboration is a responsible thing to do at the earliest
+opportunity. Better to announce intent early rather than surprise
+people or deter potential collaborators by keeping plans secret.
+
+Jason
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
