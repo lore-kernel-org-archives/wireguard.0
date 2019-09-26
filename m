@@ -2,67 +2,51 @@ Return-Path: <SRS0=F87Q=YJ=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 91696FA3728
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 16 Oct 2019 20:12:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B85EFA3728
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 16 Oct 2019 20:15:45 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id D6D0B218DE
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 16 Oct 2019 20:12:31 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="L4ZP+eKL"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org D6D0B218DE
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id 0A1E120659
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 16 Oct 2019 20:15:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 0A1E120659
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=jzdm.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ce4b66ed;
-	Wed, 16 Oct 2019 20:12:30 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id aee1c6b1;
+	Wed, 16 Oct 2019 20:15:28 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c1bdda5c
- for <wireguard@lists.zx2c4.com>;
- Wed, 16 Oct 2019 20:12:28 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 34a63f7b
- for <wireguard@lists.zx2c4.com>;
- Wed, 16 Oct 2019 20:12:28 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d5f6a002
- for <wireguard@lists.zx2c4.com>;
- Wed, 16 Oct 2019 19:24:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to
- :content-type; s=mail; bh=Jk5E3I9m8u7HwetiERnSQ1gMuxo=; b=L4ZP+e
- KLLscKAzFAiUJyuFf7NchsiJHsb8Kz6cmQ8PrN520U7ARCFN5LO4RThU3N0q4/8m
- IiCMg8qLMB84aas7W4TFNDwhptdVC+RaA0Youl+Te31AFmAP2IJ9wgoAX85LO2Qn
- CVFhb6QPEkAd6e1aB4jenGS0GiNAgluG128X6Y/bwWNt/zG0hMYqW63JflGn5pEb
- BaZuKEmEXLnyKlu1fQv+vS01cJmUq9MBgluQAvxW81TjO2WuD8tHpopouCrpDELg
- PpD+3xHaQF5rqLVC8bePnyyLe7Gvdq9LsdVjSSTJFGtd88dz0A+2bZ3HaVCADUhh
- yPUKeQTvvRw2jOGQ==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 485f3eb6
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Wed, 16 Oct 2019 19:23:59 +0000 (UTC)
-Received: by mail-ot1-f48.google.com with SMTP id 60so21309373otu.0
- for <wireguard@lists.zx2c4.com>; Wed, 16 Oct 2019 13:12:28 -0700 (PDT)
-X-Gm-Message-State: APjAAAU+nXrl3PzF23tV3JnG81Vg6lvBkRgncYUW7yytbQsD3B63k+kY
- 6HWZkKi2w/E031XD8C0W4wRcH8WhAKXl68wy3po=
-X-Google-Smtp-Source: APXvYqwtQ5oYF607RkevU00oCAKNaWcY5R7OWPzYTgzFv1yBbIsj8pfFnBgNmdExXrl/6/D30vXMrWMSKnmLaPci5q0=
-X-Received: by 2002:a05:6830:1bd9:: with SMTP id
- v25mr79412ota.52.1571256747552; 
- Wed, 16 Oct 2019 13:12:27 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAHmME9rcxwHNwT33cQzP6pGf64YG1Sz5iJtjQcOyFGanQf-CMg@mail.gmail.com>
-In-Reply-To: <CAHmME9rcxwHNwT33cQzP6pGf64YG1Sz5iJtjQcOyFGanQf-CMg@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 16 Oct 2019 22:12:16 +0200
-X-Gmail-Original-Message-ID: <CAHmME9r1oxTF=LJejR-gRhkBTw-Zd9eK5pWuMbRLLN8sAjfP8Q@mail.gmail.com>
-Message-ID: <CAHmME9r1oxTF=LJejR-gRhkBTw-Zd9eK5pWuMbRLLN8sAjfP8Q@mail.gmail.com>
-Subject: Re: WireGuard removed from Google Play Store,
- rectification in progress
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a26544b6
+ for <WireGuard@lists.zx2c4.com>;
+ Thu, 26 Sep 2019 06:34:39 +0000 (UTC)
+Received: from mx2.mailbox.org (mx2a.mailbox.org
+ [IPv6:2001:67c:2050:104:0:2:25:2])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a829a6a5
+ for <WireGuard@lists.zx2c4.com>;
+ Thu, 26 Sep 2019 06:34:39 +0000 (UTC)
+Received: from smtp2.mailbox.org (smtp2.mailbox.org
+ [IPv6:2001:67c:2050:105:465:1:2:0])
+ (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+ (No client certificate requested)
+ by mx2.mailbox.org (Postfix) with ESMTPS id AA962A1C55
+ for <WireGuard@lists.zx2c4.com>; Thu, 26 Sep 2019 08:34:36 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at heinlein-support.de
+Received: from smtp2.mailbox.org ([80.241.60.241])
+ by gerste.heinlein-support.de (gerste.heinlein-support.de [91.198.250.173])
+ (amavisd-new, port 10030)
+ with ESMTP id QrgYDoCYISUw for <WireGuard@lists.zx2c4.com>;
+ Thu, 26 Sep 2019 08:34:33 +0200 (CEST)
+From: "Johannes Z. D. Mieth" <mail@jzdm.de>
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
+Subject: iOS 13.1, AppleMusic and WireGuard not working together
+Message-Id: <292B4AFF-49DB-4DF3-831E-20A1FEEA936D@jzdm.de>
+Date: Thu, 26 Sep 2019 08:34:31 +0200
+To: WireGuard@lists.zx2c4.com
+X-Mailman-Approved-At: Wed, 16 Oct 2019 22:15:27 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -74,26 +58,77 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="===============1109552103775504101=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi again,
 
-I expected to send this email sometime next week due to usual Play
-Store review process delays, but it seems like the attention the prior
-email received has sped up the process considerably. This is a notice
-that the app has been relisted on the Play Store in its usual
-location: https://play.google.com/store/apps/details?id=com.wireguard.android
-. Sorry again for any inconvenience this has caused users, or caused
-developers who depend on the availability of our app for use by their
-own users. We won't be making any similar changes unless we're certain
-that we won't be delisted.
+--===============1109552103775504101==
+Content-Type: multipart/signed;
+	boundary="Apple-Mail=_C746474D-D091-4207-A73C-20BE5BF2F78E";
+	protocol="application/pgp-signature";
+	micalg=pgp-sha256
 
-Regards,
-Jason
+
+--Apple-Mail=_C746474D-D091-4207-A73C-20BE5BF2F78E
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
+
+Dear all,
+
+i am using WireGuard (1.0.6) on an iPhone 7 with iOS 13.1, the WireGuard =
+endpoint is located at an Hetzner Cloud-Server (german hosting =
+provider).
+Since the update from iOS 12.4.1 to iOS 13.1 AppleMusic is no longer =
+able to search for music while WireGuard is active.
+
+Can anyone confirm this behaviour?
+Is this specific to WireGuard or AppleMusic/iOS?
+Unfortunately i am not able to check via a different endpoint as i only =
+have this one on the Hetzner Cloud at the moment. Maybe Apple is =
+blocking that network, but this would be unexpected and new to the =
+current iOS version.
+
+Sincerely,
+	Johannes
+
+--Apple-Mail=_C746474D-D091-4207-A73C-20BE5BF2F78E
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEE9Rfk5zbLvt+K4ctGbHFLOjn6joIFAl2MW/cACgkQbHFLOjn6
+joIODxAAwLet9ETwsbPZMIz845VCi2zmGjGJ81O/W9N1nenWaw5Cp2W6ruQjkiFu
+O66hrCAZ1gujerKL1pawG+Z6GRJ+k6gfOyWvmrllU/0xebOP8jHynHWk59BpQt4s
+dXyjyIfKHDeaQET/1RAjQ87VXaxdqBBhUFqaKz+l1ehc5/WujO2Sd02pYTTlWGdw
+/OzIFGmApk/BjB9u57lCQ7727CmlFPw3VeKkEz0W6b7Fefp2w31vXCzW7/TBANc3
+PCQxEM6xf0hM/iukJlemVBZWWJeTGnC1lfjFaDdwP1Rekc/xvgXGnBUPsl7c6wCF
+EvUCzBF/VA/dnSULsdbgPJMuThtualknj12rM5eNlzwsFM/MrVCl1wEbZI9NI8ix
+KEP4nY3FTCkgZeL+wyXL1AMM855gCz+Gsgi2IUp/c28FJ2CAAKwS6jEpXQ78h9uZ
+xHgsZ3L3Z0vyMpQjuJNNp85ZZXRGmnIP2B3qrrpevnmMzsHUYpbXNg57EhKCP61O
+X5jybVbzwT4OLGXBApUtWmnD8qEJsul6rilW7r6w7WcM/O+2jbwBbnCAuZpOR2HB
+lzQEd7SYc6Mm2OrEUchFRxniHituBIG8jkzD1gIzS9S+JYe5bDM0dpMrkFmJI2Gz
+b96A5xE9m7tGlQ1Pnt6psVdzYjewlMLS9ZG4HR0WC9IJuZQm1NI=
+=D4U/
+-----END PGP SIGNATURE-----
+
+--Apple-Mail=_C746474D-D091-4207-A73C-20BE5BF2F78E--
+
+--===============1109552103775504101==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--===============1109552103775504101==--
