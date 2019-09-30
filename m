@@ -2,75 +2,57 @@ Return-Path: <SRS0=OnWR=ZT=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=1.0 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
-	DKIM_INVALID,DKIM_SIGNED,FORGED_YAHOO_RCVD,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,FREEMAIL_REPLYTO_END_DIGIT,HEADER_FROM_DIFFERENT_DOMAINS,
-	HTML_MESSAGE,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 55860C432C0
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 27 Nov 2019 09:45:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D09AC432C0
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 27 Nov 2019 09:49:58 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id EF82C20678
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 27 Nov 2019 09:45:57 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="tpaZ9Nde"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org EF82C20678
-Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=yahoo.com
+	by mail.kernel.org (Postfix) with ESMTPS id 7C91220678
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 27 Nov 2019 09:49:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 7C91220678
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=lists.m7n.se
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 217df751;
-	Wed, 27 Nov 2019 09:45:56 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6f073183;
+	Wed, 27 Nov 2019 09:49:19 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dc203d56
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f0ffdf53
  for <wireguard@lists.zx2c4.com>;
- Wed, 20 Nov 2019 19:04:19 +0000 (UTC)
-Received: from sonic317-20.consmr.mail.gq1.yahoo.com
- (sonic317-20.consmr.mail.gq1.yahoo.com [98.137.66.146])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8b38f138
+ Mon, 30 Sep 2019 11:16:33 +0000 (UTC)
+Received: from bond.m7n.se (bond.m7n.se [IPv6:2a00:1a28:1251:46:246:28:121:1])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ee46839a
  for <wireguard@lists.zx2c4.com>;
- Wed, 20 Nov 2019 19:04:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
- t=1574276658; bh=Q0KoZGuEHvRDwMYmbzg12mfGXmM7bj8Hu6JzZQhqXOM=;
- h=Date:From:Reply-To:To:Subject:References:From:Subject;
- b=tpaZ9NdeWArG2qLzepp6UE87PE3BWv8JZQL0Bzewwm0UmxA6WkVi5C1CwLYzJa+oa0ft/EHOT6dqa4AbleHr89T/QnNPEGMklovPV4GK8K8QUXiDJ0ssayYyaFmquZaaDDInkkkZziuX159zYAOhPrYo8Yq/3p1uDc/gnSVXnlWDmKToVg9O9yXvY88WFtWllMshHpsKZQSsC4ewuZ+rFr0GcS8yXtvTcld1MIP2ejMy254XMOQxFOjrJMfs4floKzYA7o5Jlihl2cgatdMOyYyqOAxOzpAlBoFvtVquHDkttRHD38qr1eADIpIVObm0WSTk5nxk/4YFMp8YQpD7Pg==
-X-YMail-OSG: gMOUjboVM1kuAmvD8SDiR1sCQ1.uFu93Eh6ARzkwtrPV4EXIJIxgMLQ4mP4CNbv
- i6meoSDMHzc_f8iTvJBFpdoNoXv8lZkVF7Vn3ldkZQToEAqYf2Y2Jl.3PSKHUKl_EINSliECmitC
- bIV.yY5G8Ub5ixRXy_YPycAfyZlsQOJXgvT_BfXI4nW1KxI6qhEXSYwKoBqe4j3G.lCbc1XeinXh
- nrn5Q7lMC3PE6HDMwihhD5UUDN1yF4gFcH3V1kAZXqziUmjQeCFmoRhCPi3zm3pYeCA0LtGqSOpY
- e.SdpTBGrnTdAcP7F98Tm2EbLNAaCBy3DSIrx8hF3rlaUIWAwDr_vi7Kp8spTzCUqPlrp96r.yLT
- y9ZVixRjT_CqnA9tgU3u191Uq7ZpZXFvS9SjJT8sd_wB4b50Ok.7UOKu5X5n5KHFumG_J3q4o99g
- yWoou2.TUOywfPWZJtM9lqZ3kXf.SztHzfRmlHXv4rYeNTx9f6aFNtBL6VewTUR3muVfls5KHCXK
- V3bLGVkZmweCztnA65SeETD5778Jb6IDjxba3c27aPmj6t1EZOZoXWUKjRacatRuZN4LJiEmTXoa
- D7wSQlTJo37nAUDYiac..4uCZVGn40Lk6I4q81w3SQgX6xYJXzjEKv0m13V4qYvDmugbKSz_vlME
- lsa3b1p1uWQyiN9m_ob_Obw1jC1Q7.idLPOsObyKkNqeZVX8RdW7NG7V_trIRQX6.bwEjzXEoIIq
- yZvrzOfuZ61KDnFWnCjmBgFqOpiGWtzs07aYo1KpIeHGeCNDR7ENWByh4FKpPv5QjFDsyoYuufu5
- .7n_ch07N_A4KVacwl6sJymOqC.2eoE10Tdh1V8U410kxzNSTU07ek4TQgZnnQvBqNIdaJOeaohj
- mtn64SJbgC9FrZTlnKarCr.LqAjRUoVxJYBan_B1g5rQX6tH2Y4w7bfZMaGjiGAqbTW.mGHaawpS
- w7HrhD_GEvgxFSgfckC36.TnSVMl3DQ4qGQyR5_xCiXe9MehcKxXnNLx1pM2uPOhuvyY_gzFIX6e
- b5RmUGvsxndISona7QC3awoTgL5MIagjN_51jEzGVHg_QCT0SIuQ4jHOSWFMqvVW1K9xSGuAmQ4Y
- 4Wd3OjPKqCp3EtlzFbmFYJtVcDLbHdn7bERdEaf_6aWo18gaCtfCnvamOyCkoDCkokNDkvI_Tghm
- j7UpWmhtzo910m1L2ZxMRYzQ.6TGyUdnIOmbAmHDzxgflmhNJ7L7aQ6bHX85yZgjH8_QjFUP3eOF
- XeJsU2PBE2jmnqOj80EJsMb4iTt6ARqv3IMuoP3uMs7A0kUj2kq63tgoblSiZksxcdNefM5mbNa_
- Wf8W.E6Cl1YQ5HkGyZ36U2h4SmJZXmegbJC03
-Received: from sonic.gate.mail.ne1.yahoo.com by
- sonic317.consmr.mail.gq1.yahoo.com with HTTP; Wed, 20 Nov 2019 19:04:18 +0000
-Date: Wed, 20 Nov 2019 19:04:16 +0000 (UTC)
-From: Mark Nichols <mnichols62@yahoo.com>
-To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
-Message-ID: <860712054.4029860.1574276656913@mail.yahoo.com>
-Subject: Unable to create Wintun Interface
+ Mon, 30 Sep 2019 11:16:33 +0000 (UTC)
+Received: from [IPv6:2001:470:de6f:1301:e586:4e35:311d:a4e] (unknown
+ [IPv6:2001:470:de6f:1301:e586:4e35:311d:a4e])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by bond.m7n.se (Postfix) with ESMTPSA id 37BC1600A357;
+ Mon, 30 Sep 2019 11:16:31 +0000 (UTC)
+Subject: Re: IPv6 endpoint AND IPv4 fallback endpoint in roadwarrior scenario?
+To: Nico Schottelius <nico.schottelius@ungleich.ch>,
+ Henning Reich <henning.reich@gmail.com>
+References: <71fa7444-07f7-d7da-9a0b-895a27be18bd@bartschnet.de>
+ <72539641-4832-70d5-09b5-430a8ab2deae@noc23.de>
+ <CAOAVeL0e4JP+T6Z1353UPRmEXL84ZX5MSe+pjTO6xzzn9TB83A@mail.gmail.com>
+ <87eezyp6f1.fsf@line.ungleich.ch>
+From: mikma.wg@lists.m7n.se
+Message-ID: <079444e4-2d89-92d9-f3b3-245a073bb190@m7n.se>
+Date: Mon, 30 Sep 2019 13:16:30 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-References: <860712054.4029860.1574276656913.ref@mail.yahoo.com>
-X-Mailer: WebService/1.1.14728 YMailNorrin Mozilla/5.0 (Windows NT 10.0; Win64;
- x64; rv:70.0) Gecko/20100101 Firefox/70.0
-X-Mailman-Approved-At: Wed, 27 Nov 2019 10:45:52 +0100
+In-Reply-To: <87eezyp6f1.fsf@line.ungleich.ch>
+Content-Language: en-US
+X-Mailman-Approved-At: Wed, 27 Nov 2019 10:49:18 +0100
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
-Reply-To: Mark Nichols <mnichols62@yahoo.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -79,76 +61,36 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============3169929956944028692=="
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============3169929956944028692==
-Content-Type: multipart/alternative; 
-	boundary="----=_Part_4029859_1482565554.1574276656912"
-Content-Length: 3092
+On 2019-09-30 09:52, Nico Schottelius wrote:
+> 
+> At lookup time this works already. The problem is, if the underlying
+> network topology changes and you need to reconnect via IPv4, when you
+> had IPv6 underlying before.
 
-------=_Part_4029859_1482565554.1574276656912
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+It doesn't work for me at least not with the Android app. I have a DNS 
+name with both AAAA and A records that I use but the app seems to prefer 
+IPv4 instead of IPv6. And I also can't detect any fallback to IPv6 if 
+ICMP unreachable are sent for the IPv4 handshake attempts.
 
-I've just installed Wireguard on Windows 10 64-bit using the msi installer. When I create a tunnel and try to connect, I get:
-Unable to create Wintun interface: Error creating interface: Unable to set name of Wintun interface: NciSetConnectionName failed: The requested operation was made in the context of a transaction that is no longer active.
-I have uninstalled and reinstalled from the command prompt as the administrator.
+/Mikma
 
-I have validated the tunnel works with the configured parameters on a Mac. 
-
-Any suggestions?
-
-Mark Nichols
-Discrimination, oppression, and injustice are challenges to be overcome, tools to sharpen our determination, and reflections on the poor character of the oppressor. Lack of opportunity is a calling to create something new and better. If we choose to see circumstances as something to overcome on our way to success instead of allowing them to define us as a victim, we retain the power to pursue our highest destiny. 
-
-------=_Part_4029859_1482565554.1574276656912
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-<html><head></head><body><div class=3D"ydp8578fc45yahoo-style-wrap" style=
-=3D"font-family:Helvetica Neue, Helvetica, Arial, sans-serif;font-size:16px=
-;"><div><div dir=3D"ltr" data-setdir=3D"false">I've just installed Wireguar=
-d on Windows 10 64-bit using the msi installer. When I create a tunnel and =
-try to connect, I get:</div><div dir=3D"ltr" data-setdir=3D"false"><br></di=
-v><div dir=3D"ltr" data-setdir=3D"false"><span>Unable to create Wintun inte=
-rface: Error creating interface: Unable to set name of Wintun interface: Nc=
-iSetConnectionName failed: The requested operation was made in the context =
-of a transaction that is no longer active.</span></div><div dir=3D"ltr" dat=
-a-setdir=3D"false"><span><br></span></div><div dir=3D"ltr" data-setdir=3D"f=
-alse"><span>I have uninstalled and reinstalled from the command prompt as t=
-he administrator.<br></span></div><div dir=3D"ltr" data-setdir=3D"false"><b=
-r></div><div dir=3D"ltr" data-setdir=3D"false">I have validated the tunnel =
-works with the configured parameters on a Mac. <br></div><div dir=3D"ltr" d=
-ata-setdir=3D"false"><br></div><div dir=3D"ltr" data-setdir=3D"false">Any s=
-uggestions?<br></div><div><br></div><div class=3D"ydp8578fc45signature"><di=
-v style=3D"font-size:16px;">Mark Nichols<br>
-
-
-
-
-
-
-<i><span style=3D"font-size:9.0pt;line-height:107%;font-family:Calibri;">Di=
-scrimination, oppression, and injustice are challenges to be overcome, tool=
-s to sharpen our determination, and reflections on the poor character of th=
-e oppressor. Lack of opportunity is a calling to create something new and b=
-etter. If we choose to see circumstances as something to overcome on our wa=
-y to success instead of allowing them to define us as a victim, we retain t=
-he power to pursue our highest destiny.</span></i> <br></div></div></div></=
-div></body></html>
-------=_Part_4029859_1482565554.1574276656912--
-
---===============3169929956944028692==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
+> 
+> This is the feature that is - afaik- not currently implemented in
+> wireguard.
+> 
+> 
+> Henning Reich <henning.reich@gmail.com> writes:
+> 
+>> Should a DNS entry Wirth one
+>> AAAA record and one A record solve thus problem? So the OS decide the best
+>> way to connect?
+>>
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
-
---===============3169929956944028692==--
