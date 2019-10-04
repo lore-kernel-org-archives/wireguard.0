@@ -1,75 +1,71 @@
-Return-Path: <SRS0=knlp=XZ=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=ZOV3=X5=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
 	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C07FEC4360C
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 30 Sep 2019 08:45:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DB1C4C4360C
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  4 Oct 2019 12:52:56 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 596DC2081B
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 30 Sep 2019 08:45:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 419EF2070B
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  4 Oct 2019 12:52:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BWmTJacI"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 596DC2081B
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MCmPpw/A"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 419EF2070B
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 27f6a6f2;
-	Mon, 30 Sep 2019 08:45:04 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 064233ab;
+	Fri, 4 Oct 2019 12:52:38 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 24f75b00
- for <wireguard@lists.zx2c4.com>;
- Mon, 30 Sep 2019 08:45:01 +0000 (UTC)
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com
- [IPv6:2a00:1450:4864:20::135])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 51c278d9
- for <wireguard@lists.zx2c4.com>;
- Mon, 30 Sep 2019 08:45:01 +0000 (UTC)
-Received: by mail-lf1-x135.google.com with SMTP id r134so6347729lff.12
- for <wireguard@lists.zx2c4.com>; Mon, 30 Sep 2019 01:45:00 -0700 (PDT)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 288bfb29
+ for <wireguard@lists.zx2c4.com>; Fri, 4 Oct 2019 12:52:37 +0000 (UTC)
+Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com
+ [IPv6:2607:f8b0:4864:20::82e])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f9a8880f
+ for <wireguard@lists.zx2c4.com>; Fri, 4 Oct 2019 12:52:37 +0000 (UTC)
+Received: by mail-qt1-x82e.google.com with SMTP id l3so8382855qtr.4
+ for <wireguard@lists.zx2c4.com>; Fri, 04 Oct 2019 05:52:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=BCjgVe12mcKE3Q6TGhZS2ffIdmVw7p6daKKKBMuQtR0=;
- b=BWmTJacIN5qEl8/geSuKrCjdtGZ5bsurLhk8Jo+dvZewYDdyfWM06TvK7r/w0rRuMU
- PPPmiMTDp4dfP3037HPi7FC+DLq3FR3JsnY1khZA0GTBte/HMU4Cjhoc6slo0NjtsJff
- uE3WkOT/uWB+6SGz9R1osDOYkFql7Jal2PfA9MiP01vwICFVaNkyIiR0eob8Ah/WPE2r
- 94he0tjZaIHuVhZlcmLvkesmcS7sdrVUfZlkWmyFJpEi4Gncgv6p30yG4x0hzTfqEa3T
- qqoZHncI7DZfNrWV7hz1spU4z0h5tHltDKahdRzY7S59gUgS0csPGVhOd2wWClKYyov2
- pX8A==
+ :cc; bh=MtCUK+ZHxgV8HE/TIL5vbnHjgx+FJSt2PF0+oqd1npE=;
+ b=MCmPpw/Am4GQAmRksFZW6urCykNd2+cIBhYuQzpLDSh+GK4aYTofYDpz6NUdJ9DbNz
+ wUCm51zD33Spix2KuCtqORc183zQJhFkg+yGg6PiavD08S8JmVMg4/KUvobSoN7Vm8CJ
+ tlitW/EeGrwyRpTeQb7njX3kd3qhW87WPVT3pRpp4jY/t6qoSSqLNqN+rmxaKl87e5bG
+ f++x0KFuRfJe++X58DFpFlJz8rQtAxQFl6A3CUhOxzrN1wuqqtVPCEzrvl/4aHJE6QV5
+ 1GhrRKcOVSA7v9E9D3AnDves6p/B690FiAK2OvUgfuSR/SSgYhnUFRQOPpaoSbIBck50
+ ayeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=BCjgVe12mcKE3Q6TGhZS2ffIdmVw7p6daKKKBMuQtR0=;
- b=PTWUkPDE3vIyhczeyp1YmIIkca/ohV9h7u4+Xsyp6FAPyg/1PrOj53pejkrsCuH6Be
- V8sDeyGOMCatj9wG6jTWE9qxvyClwI2mtTfF90v5Ic1geu3/2zX+Jrg3HQJf+WTJ2U/b
- 2kG7zMVBSMHsmIeBWJJXhjqkJYMiXL1ungUHsPHGE8JrLiQRDo/SjqxZttS6/cN0oUR3
- evAgtut0AK7DznsZkEAzeYl6s6YPzjtzKuhbGWwYTWJ5hN3RtBu/inAY2tK2xJMM5/ae
- oBIBXaxwATYjnmGfvbhsl16fDKrPwZfe1XLhKfP+iOUZCcZCcW4X0io98dXuDAfPHAAn
- mryA==
-X-Gm-Message-State: APjAAAUXLVKoLnxrBlg50zRhjdK43H7Ziq7qRnJUYeClJtZ+lRD/KNsA
- xx+So4fN0eveiXCgF1IddkeAODZ+daTPsaPi30I=
-X-Google-Smtp-Source: APXvYqyT46rRl672GOUZOJl+QaZ+dd6QMN5sD1y5mt0GuwZhuaKRS1QZm+sAEFGZp0BRlNFAtMu7BUEVpWXtDdvoQVU=
-X-Received: by 2002:a19:d6:: with SMTP id 205mr10996642lfa.144.1569833098844; 
- Mon, 30 Sep 2019 01:44:58 -0700 (PDT)
+ bh=MtCUK+ZHxgV8HE/TIL5vbnHjgx+FJSt2PF0+oqd1npE=;
+ b=Q9FRH4S4vMJxHDFHw2yH9MObKta+OlI5f8Q6O8dN3wUcY/AGs8vOn9dnHeDsrD7IGY
+ fWiZLiUR7Lq0nWeGn1DjDoMYMgCzjpePKGSp6dtIs+6ZgTvy+0J0QZ+EnZaLM3Rnh936
+ 3UcN7EWolL77X4btnoWIZKuiTEVDZXaQldmV0eHdy7fZVIrZTy+/sSEl+kVs9inbI+i4
+ q3BNyCc2/mJbvpubx8TQ46XUWUDMLZFKeEui3WqF8kUQG72BDgGndK8mVbcFHIT2n8M9
+ AV3gZ3Hrc3lo3rr4dzgPtsaBReLIuqLJ1IEaOWYIOeX7s7hM8kO8pOJp68qlIxZluSlD
+ uJcA==
+X-Gm-Message-State: APjAAAWt01vNNAYC3upb3ygH6iBa0RVtdo/Cc00luUy2BdlCR1Ze723i
+ 1luUM/8/LThn/FFJwcrAYbqGQn9qP9Jars4m35E=
+X-Google-Smtp-Source: APXvYqzjudR98nQgTPZefTxzGR0qVBvA6ZqeuhyJsCyp1h14Lvb9SKAvna/p/TefkYWF7KNTB+9D7lAIPPFGXhmLxQw=
+X-Received: by 2002:ac8:1935:: with SMTP id t50mr14946416qtj.214.1570193556266; 
+ Fri, 04 Oct 2019 05:52:36 -0700 (PDT)
 MIME-Version: 1.0
-References: <71fa7444-07f7-d7da-9a0b-895a27be18bd@bartschnet.de>
- <72539641-4832-70d5-09b5-430a8ab2deae@noc23.de>
- <CAOAVeL0e4JP+T6Z1353UPRmEXL84ZX5MSe+pjTO6xzzn9TB83A@mail.gmail.com>
- <87eezyp6f1.fsf@line.ungleich.ch>
-In-Reply-To: <87eezyp6f1.fsf@line.ungleich.ch>
-From: Kalin KOZHUHAROV <me.kalin@gmail.com>
-Date: Mon, 30 Sep 2019 10:44:47 +0200
-Message-ID: <CAKXLc7dYaAMxhnWnTMkbW4bGo=HOOhwxeCBcdP6y3D_+d5Uffg@mail.gmail.com>
-Subject: Re: IPv6 endpoint AND IPv4 fallback endpoint in roadwarrior scenario?
-To: Nico Schottelius <nico.schottelius@ungleich.ch>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+References: <CA+kUo267JEndBxav--GABQ3o02ZXMOVmktB1ZW2R6Tzx-X0v-Q@mail.gmail.com>
+In-Reply-To: <CA+kUo267JEndBxav--GABQ3o02ZXMOVmktB1ZW2R6Tzx-X0v-Q@mail.gmail.com>
+From: Simone Rossetto <simros85@gmail.com>
+Date: Fri, 4 Oct 2019 14:52:25 +0200
+Message-ID: <CAEBQdhi6DrBPxT6RC6evvw8982GKcX9oKQO=2mN0OEoFp3GaeA@mail.gmail.com>
+Subject: Re: Strange firewall dnat rule to make WireGuard work on
+ dual-interface
+To: James <james.b.price@gmail.com>
+Cc: wireguard@lists.zx2c4.com
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -86,57 +82,22 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Mon, Sep 30, 2019 at 9:53 AM Nico Schottelius
-<nico.schottelius@ungleich.ch> wrote:
-> At lookup time this works already.
->
-yup!
+Hi James
 
-> The problem is, if the underlying network topology changes and you need to reconnect via IPv4,
-> when you had IPv6 underlying before.
->
-Well, "if the underlying network topology changes" it is better to
-detect and update things from OS level.
-A restart of the wg interface (and using A/AAAA DNS records) works, so
-it just needs to be initiated from whoever is taking care of the OS
-network reconfiguration.
+Il giorno mer 25 set 2019 alle ore 10:51 James
+<james.b.price@gmail.com> ha scritto:
+> By design or lack of features, it ignores what the interface and IP the incoming packet was received on.
 
-I would say that is "outside" feature, shouldn't be implemented at wg level.
+Yes, it seams that.
 
-Or ... actually, if there are other use cases, a more generic
-"self-restart-timer" might be helpful. Something along the lines of
-persistent-keepalive, but the reverse.
-Persistent-keepalive is a packet send to the remote endpoint as a
-one-way throw-and-forget packet, there are many valid configurations
-that use it only on one of the ways (e.g. A --> B).
-Currently, keepalive packets are discarded on the receive end after
-updating the stats (e.g.
-https://github.com/WireGuard/WireGuard/blob/0d9758d1afe5f812d5ccfcbb4b7c74f42f50318b/src/receive.c#L362
-)
+> I'm trying to do something similar to you but even with your IPtables I can't get mine to work. I have a more complicated setup and I can't seem to get the outbound packets to follow a routing table using a mark.
 
-/* A packet with length 0 is a keepalive packet */
-if (unlikely(!skb->len)) {
-  update_rx_stats(peer, message_data_len(0));
-  net_dbg_ratelimited("%s: Receiving keepalive packet from peer %llu
-(%pISpfsc)\n",
-    dev->name, peer->internal_id,
-    &peer->endpoint.addr);
-  goto packet_processed;
-}
+Maybe I can help you... tell me which is your configuration and what
+you need to accomplish.
 
-I would say a reverse-keepalive (not the best wording) is to try to
-reconnect to the peer if it was off-line (no data or KA-packets) for
-some predefined time. This can be measured in number of seconds since
-last packet received (KA or data). If such a condition is met,
-resetting the interface (and thus redoing DNS lookup) may result in
-fixing the link disruption caused by topology change.
 
-Again, this may be better implemented outside wireguard since the
-timeout is available e.g. via `wg show <INTERFACE> latest-handshakes`
-command.
-
-Cheers,
-Kalin.
+Bye
+Simone
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
