@@ -6,58 +6,49 @@ X-Spam-Status: No, score=-5.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A797FC4740A
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  5 Oct 2019 20:58:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5ACB4C47404
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  5 Oct 2019 21:20:33 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 22EDE20867
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  5 Oct 2019 20:58:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 990C2222C5
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  5 Oct 2019 21:20:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="Ood9Z7QV"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 22EDE20867
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	dkim=fail reason="key not found in DNS" (0-bit key) header.d=ungleich.ch header.i=@ungleich.ch header.b="kMjvbdbY"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 990C2222C5
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=ungleich.ch
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bca4892e;
-	Sat, 5 Oct 2019 20:57:40 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 224265a5;
+	Sat, 5 Oct 2019 21:20:30 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0acd5263
- for <wireguard@lists.zx2c4.com>; Sat, 5 Oct 2019 20:57:37 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d5199c61
- for <wireguard@lists.zx2c4.com>; Sat, 5 Oct 2019 20:57:37 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ba6840fb
- for <wireguard@lists.zx2c4.com>; Sat, 5 Oct 2019 20:10:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=7nyFEq9l9xxj6LI8+mcdGt50cJo=; b=Ood9Z7
- QVlv3vf8Po/wWcDv9hz1228qpnLyNOx5Od3o9QkMKbfjNgo/d/vSwXJBCmvzSRGf
- NNQozoK4rCT6zLsngzjAypQDATrcKHztK9U5gDnBA2L2h4dDjQUqotllgwdlemwN
- vPRasgbcEKXddu3Hw4N4n34Vigq8j1wKQ9aRPDrpYFi8xWaZGeRhacvUBLWgw3SS
- xFB2AgZqSdzUCi5hsWZx6whIST7ChRTK+P4/RtgblilPguaCE6ZcJ8s6L0jJ3BWJ
- GtpnhE8BoDanEMsVm9Z1HVc/25L+quv/O+AM0/DsgpVwgYM1VbYW+Ac9yymPtFaY
- 1nz5f4OEkAIFkIVA==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 530b06be
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sat, 5 Oct 2019 20:10:33 +0000 (UTC)
-Received: by mail-ot1-f42.google.com with SMTP id g13so8057424otp.8
- for <wireguard@lists.zx2c4.com>; Sat, 05 Oct 2019 13:57:37 -0700 (PDT)
-X-Gm-Message-State: APjAAAVAKf7dJoiACAJ7R4HsCJeHSrRPIGkZguc7SHrPyxB9sUiXAWi4
- EQzpO5A7A30exwvsP+P/b9xPt6ktMB97lC6ZWWE=
-X-Google-Smtp-Source: APXvYqz7cBUMw0zsmMOiTGquSyImcpbStGWl4BxvlkX4qsiEar9GXdRRqUQzZgP7FwN4UD07ubhxhojdQE+koSwoaMM=
-X-Received: by 2002:a9d:65d2:: with SMTP id z18mr3586290oth.52.1570309056657; 
- Sat, 05 Oct 2019 13:57:36 -0700 (PDT)
-MIME-Version: 1.0
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a84f6052
+ for <wireguard@lists.zx2c4.com>; Sat, 5 Oct 2019 21:20:28 +0000 (UTC)
+Received: from smtp.ungleich.ch (smtp.ungleich.ch
+ [IPv6:2a0a:e5c0:0:2:400:b3ff:fe39:7956])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5c640276
+ for <wireguard@lists.zx2c4.com>; Sat, 5 Oct 2019 21:20:28 +0000 (UTC)
+Received: from diamond.localdomain (localhost [IPv6:::1])
+ by smtp.ungleich.ch (Postfix) with ESMTP id 8735C2036B
+ for <wireguard@lists.zx2c4.com>; Sat,  5 Oct 2019 23:20:25 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ungleich.ch; s=mail;
+ t=1570310426; bh=qWfN8hhmdtNwuddBkBxshKtZ1YOCYU781c0bhpWf6es=;
+ h=References:From:To:Subject:In-reply-to:Date:From;
+ b=kMjvbdbYf3XKn7Fcq0I+QRUGojY930cxCUuy60NIIS0mCTK01iHgwv6cY2bQ1dTEI
+ wz5MxdKj2CLb5XWIKpufkGR1NINRKGPQL/bz8O5lvSoRPUzowCTNqVqUGKatMnFCdx
+ rR4cHixPOtDTjG9DbabMAZ4E94+HF8jjOfi9iYVg=
+Received: by diamond.localdomain (Postfix, from userid 1000)
+ id 7505C13E2AB5; Sat,  5 Oct 2019 23:20:19 +0200 (CEST)
 References: <87v9t2c45b.fsf@ungleich.ch>
-In-Reply-To: <87v9t2c45b.fsf@ungleich.ch>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sat, 5 Oct 2019 22:57:24 +0200
-X-Gmail-Original-Message-ID: <CAHmME9rHYf71vrPxVec5AVaUOgB=+1YHE+j8rg=ebDbZO0qA2g@mail.gmail.com>
-Message-ID: <CAHmME9rHYf71vrPxVec5AVaUOgB=+1YHE+j8rg=ebDbZO0qA2g@mail.gmail.com>
+ <CAHmME9rHYf71vrPxVec5AVaUOgB=+1YHE+j8rg=ebDbZO0qA2g@mail.gmail.com>
+User-agent: mu4e 1.3.5; emacs 26.3
+From: Nico Schottelius <nico.schottelius@ungleich.ch>
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Subject: Re: Kernel panic on 5.3.1-arch1-1-ARCH
-To: Nico Schottelius <nico.schottelius@ungleich.ch>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+In-reply-to: <CAHmME9rHYf71vrPxVec5AVaUOgB=+1YHE+j8rg=ebDbZO0qA2g@mail.gmail.com>
+Date: Sat, 05 Oct 2019 23:20:19 +0200
+Message-ID: <87r23qc2jw.fsf@ungleich.ch>
+MIME-Version: 1.0
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -74,30 +65,47 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This isn't WireGuard, actually. It's a line in wg-quick's bash that
-says `ip rule add ... suppress_prefix ...`.
 
-You can reproduce the kernel crash without WireGuard anywhere in the
-equation with this sequence:
+Hey Jason,
 
-ip netns add crash
-ip -n crash link add dummy1 type dummy
-ip -n crash link set dummy1 up
-ip -n crash -6 route add default dev dummy1
-ip -n crash -6 rule add table main suppress_prefixlength 0
-ip netns exec crash ping -f -c 1000 -W 1 1234::1 || true
-ip -n crash -6 rule del table main suppress_prefixlength 0
-ip -n crash link del dummy1
-ip netns del crash
+thanks for the quick reply - I' ll upgrade as soon as a new package is
+released and give a status update afterwards. Thanks for tracking it
+down!
 
-I submitted a patch for this upstream here:
+Best,
 
-https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=ca7a03c4175366a92cee0ccc4fec0038c3266e26
+Nico
 
-It's been backported to stable already. Update your kernel to 5.3.4
-and things should work again for you.
+Jason A. Donenfeld <Jason@zx2c4.com> writes:
 
-Jason
+> This isn't WireGuard, actually. It's a line in wg-quick's bash that
+> says `ip rule add ... suppress_prefix ...`.
+>
+> You can reproduce the kernel crash without WireGuard anywhere in the
+> equation with this sequence:
+>
+> ip netns add crash
+> ip -n crash link add dummy1 type dummy
+> ip -n crash link set dummy1 up
+> ip -n crash -6 route add default dev dummy1
+> ip -n crash -6 rule add table main suppress_prefixlength 0
+> ip netns exec crash ping -f -c 1000 -W 1 1234::1 || true
+> ip -n crash -6 rule del table main suppress_prefixlength 0
+> ip -n crash link del dummy1
+> ip netns del crash
+>
+> I submitted a patch for this upstream here:
+>
+> https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=ca7a03c4175366a92cee0ccc4fec0038c3266e26
+>
+> It's been backported to stable already. Update your kernel to 5.3.4
+> and things should work again for you.
+>
+> Jason
+
+
+--
+Modern, affordable, Swiss Virtual Machines. Visit www.datacenterlight.ch
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
