@@ -1,55 +1,67 @@
-Return-Path: <SRS0=SFG/=X6=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=fVBb=X7=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=0.5 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,HTML_MESSAGE,MAILING_LIST_MULTI,
+	NUMERIC_HTTP_ADDR,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 25A3CC47404
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  5 Oct 2019 22:02:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C13FC4360C
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  6 Oct 2019 16:55:23 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 0E73B222C5
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  5 Oct 2019 22:02:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id BC75620835
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  6 Oct 2019 16:55:22 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="key not found in DNS" (0-bit key) header.d=ungleich.ch header.i=@ungleich.ch header.b="E6P3hdtR"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 0E73B222C5
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=ungleich.ch
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gWawh+F7"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org BC75620835
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 15b98ccb;
-	Sat, 5 Oct 2019 22:02:21 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f351e390;
+	Sun, 6 Oct 2019 16:55:05 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id aa004756
- for <wireguard@lists.zx2c4.com>; Sat, 5 Oct 2019 22:02:19 +0000 (UTC)
-Received: from smtp.ungleich.ch (smtp.ungleich.ch
- [IPv6:2a0a:e5c0:0:2:400:b3ff:fe39:7956])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 36ab3b0b
- for <wireguard@lists.zx2c4.com>; Sat, 5 Oct 2019 22:02:19 +0000 (UTC)
-Received: from diamond.localdomain (localhost [IPv6:::1])
- by smtp.ungleich.ch (Postfix) with ESMTP id 21EB0201F1
- for <wireguard@lists.zx2c4.com>; Sun,  6 Oct 2019 00:02:18 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ungleich.ch; s=mail;
- t=1570312938; bh=T8vWpRmCFprQ2EO2VzdXvdeuoeQ5tzkEOSrXfgRg/Zk=;
- h=References:From:To:Subject:In-reply-to:Date:From;
- b=E6P3hdtRv+Bchmyvda+f+yL1y+UnpFUSYebsbLx6jVxL1WxHYkNHtfZNtWaOs5MgD
- wb7jTm5/8PFcAaiTU7zwZdgNVcE7f9VSnZ+6k6uRL5Bi64cbg4gd6ycK/QFdJ1sqE4
- VjRE2VlKePpT5jIAeJx+m80prdaFGE5f95zfrnKk=
-Received: by diamond.localdomain (Postfix, from userid 1000)
- id B8A4C13E0027; Sun,  6 Oct 2019 00:02:18 +0200 (CEST)
-References: <87v9t2c45b.fsf@ungleich.ch>
- <CAHmME9rHYf71vrPxVec5AVaUOgB=+1YHE+j8rg=ebDbZO0qA2g@mail.gmail.com>
- <87r23qc2jw.fsf@ungleich.ch>
-User-agent: mu4e 1.3.5; emacs 26.3
-From: Nico Schottelius <nico.schottelius@ungleich.ch>
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: Kernel panic on 5.3.1-arch1-1-ARCH
-In-reply-to: <87r23qc2jw.fsf@ungleich.ch>
-Date: Sun, 06 Oct 2019 00:02:18 +0200
-Message-ID: <874l0mzw9h.fsf@ungleich.ch>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 90f752cc
+ for <wireguard@lists.zx2c4.com>; Sun, 6 Oct 2019 16:55:00 +0000 (UTC)
+Received: from mail-ua1-x92a.google.com (mail-ua1-x92a.google.com
+ [IPv6:2607:f8b0:4864:20::92a])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9a74189a
+ for <wireguard@lists.zx2c4.com>; Sun, 6 Oct 2019 16:55:00 +0000 (UTC)
+Received: by mail-ua1-x92a.google.com with SMTP id b14so3371224uap.6
+ for <wireguard@lists.zx2c4.com>; Sun, 06 Oct 2019 09:55:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=M79lbKgB2VoUvYeCCh42AzaQDo7/5XZAlxzKcPPSKLI=;
+ b=gWawh+F76v8IqaLtRmMkQZK0OIX8AU2N34Av4j7kBhe+AEERuOfVnUls+SR4frH/Wv
+ MSkOUofj6EqyY1vcCBhSNSLOIvtqTqHcsrLX4BPf87xMaC5azhstTmN4lrBWS96rnaFg
+ IFj9sZfxKMukc7tGb03WHxjjrWIxMyWJlW6DB/AVHG0xSLT+Rlwo4ZA382hp6XcviREO
+ jSmhC55I7FU2Gb25U/pw0XyGgIooC4WzM7+rnx4kzuwr4scxBBSGfQb6MBvOX2P6xwLe
+ e6+B6U44ZIR5ryIUqwztSa7zueKk9Cny5cb9OiBzEf020GvyvNuY9dRSKH4sc0i7m/wN
+ GY8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=M79lbKgB2VoUvYeCCh42AzaQDo7/5XZAlxzKcPPSKLI=;
+ b=fVgV420u+TdRb64ODBFphi7c+jj+jB26fQEJj7rLMswKwDtdltTVfZ1ZS8PBEHilKG
+ fc/4Hec+KO5wh2S7gSjZnjFoFzpUbEye1rRxuc5tcNugQP6mo4BcV6tRedjl85r/MlBB
+ 63cVAWXw8hgOw9OF1hzvIoQMz32GscGGWXlHOs3n98PPINPK6MSBJmXeu7Qjh/040yMa
+ aZe4RBdwYDxCblKz9jCsmlw28taxcsOCXQeGwWNH+CxkUU+iic4uYpHaxRNsytFZTmrS
+ xDuTFCPl4NW+TmLXabLW1ekNL9GHDBWF96+RB3Fc3goQGEBj70qy+gUxUWzZMW5hSxs8
+ 6Geg==
+X-Gm-Message-State: APjAAAVnpwYT7UxdhWIPygrLhDoELuwi9H5T+fVN/3SuUpKa6B3Mphqg
+ hbSGzEkk6oLzK98fv+dnx6g5pZGDX0d/ISMxYm0joA6NH24=
+X-Google-Smtp-Source: APXvYqywJ46bmKgS9tY0Y2NROeugD6VqAACB4RltJiZzMyVrIT0gpQoipW3DAa77HxskaSh2vGPfcq+UymDO0mBANCc=
+X-Received: by 2002:ab0:3310:: with SMTP id r16mr11588424uao.22.1570380898503; 
+ Sun, 06 Oct 2019 09:54:58 -0700 (PDT)
 MIME-Version: 1.0
+From: =?UTF-8?B?QWRyacOhbiBNaWjDoWxrbw==?= <adriankoooo@gmail.com>
+Date: Sun, 6 Oct 2019 18:54:47 +0200
+Message-ID: <CA+Hw3ebFCOoc6N_sn9HsaGmLiFp68XY+jLV83NS5JqmtLZ=8-g@mail.gmail.com>
+Subject: wg-quick systemd service doesn't work after boot
+To: wireguard@lists.zx2c4.com
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -61,87 +73,96 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="===============0072230040142211678=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
+--===============0072230040142211678==
+Content-Type: multipart/alternative; boundary="0000000000009e12d4059440cb1d"
 
-... and just updated via the testing repo, everything green on 5.3.4.
+--0000000000009e12d4059440cb1d
+Content-Type: text/plain; charset="UTF-8"
 
-On this system I see one error regarding the IPv4 fib table,
-which might be due to IPv6 only usage:
+I have 3 wg interface on my server, but I am unable to enable wg0 with
+wg-quick at boot:
 
-[root@diamond ~]# wg-quick up wg0
-[#] ip link add wg0 type wireguard
-[#] wg setconf wg0 /dev/fd/63
-[#] ip -6 address add 2a0a:e5c1:137::137/48 dev wg0
-[#] ip link set mtu 1420 up dev wg0
-Error: ipv4: FIB table does not exist.
-Dump terminated
-[#] wg set wg0 fwmark 51820
-[#] ip -6 route add ::/0 dev wg0 table 51820
-[#] ip -6 rule add not fwmark 51820 table 51820
-[#] ip -6 rule add table main suppress_prefixlength 0
-[root@diamond ~]# ip a sh dev wg0
-5: wg0: <POINTOPOINT,NOARP,UP,LOWER_UP> mtu 1420 qdisc noqueue state UNKNOWN group default qlen 1000
-    link/none
-    inet6 2a0a:e5c1:137::137/48 scope global
-       valid_lft forever preferred_lft forever
-[root@diamond ~]# pacman -Q | grep wireguard
-wireguard-dkms 0.0.20190913-1
-wireguard-tools 0.0.20190913-1
+@ubuntu:~$ sudo systemctl enable wg-quick@wg0
+@ubuntu:~$
 
-As everything work[tm], would it be an option to rename it to a warning
-instead?
+Oct 06 13:22:51 ubuntu systemd[1]: Starting WireGuard via wg-quick(8) for
+wg0...
+Oct 06 13:22:51 ubuntu wg-quick[1737]: Warning: `/etc/wireguard/wg0.conf'
+is world accessible
+Oct 06 13:22:52 ubuntu wg-quick[1737]: [#] ip link add wg0 type wireguard
+Oct 06 13:22:52 ubuntu wg-quick[1737]: [#] wg setconf wg0 /dev/fd/63
+Oct 06 13:22:52 ubuntu wg-quick[1737]: [#] ip -4 address add 192.168.5.2/24
+dev wg0
+Oct 06 13:22:52 ubuntu wg-quick[1737]: [#] ip link set mtu 1420 up dev wg0
+Oct 06 13:22:53 ubuntu wg-quick[1737]: [#] ip -4 route add 192.168.2.0/24
+dev wg0
+Oct 06 13:22:53 ubuntu wg-quick[1737]: [#] iptables -A FORWARD -i wg0 -j
+ACCEPT; iptables -A FORWARD -o wg0 -j ACCEPT; iptables -t nat -A
+POSTROUTING -o e
+*Oct 06 13:22:53 ubuntu wg-quick[1737]: Another app is currently holding
+the xtables lock. Perhaps you want to use the -w option?*
+Oct 06 13:22:53 ubuntu wg-quick[1737]: [#] ip link delete dev wg0
+Oct 06 13:22:53 ubuntu systemd[1]: wg-quick@wg0.service: Main process
+exited, code=exited, status=1/FAILURE
+Oct 06 13:22:53 ubuntu systemd[1]: Failed to start WireGuard via
+wg-quick(8) for wg0.
+Oct 06 13:22:53 ubuntu systemd[1]: wg-quick@wg0.service: Unit entered
+failed state.
+Oct 06 13:22:53 ubuntu systemd[1]: wg-quick@wg0.service: Failed with result
+'exit-code'.
 
-Best,
+As you can see it fails at iptables command.
 
-Nico
+wg0, wg2 fails with this problem, but wg1 starts without problem (same
+config, with iptables command).
 
-Nico Schottelius <nico.schottelius@ungleich.ch> writes:
+--0000000000009e12d4059440cb1d
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> Hey Jason,
->
-> thanks for the quick reply - I' ll upgrade as soon as a new package is
-> released and give a status update afterwards. Thanks for tracking it
-> down!
->
-> Best,
->
-> Nico
->
-> Jason A. Donenfeld <Jason@zx2c4.com> writes:
->
->> This isn't WireGuard, actually. It's a line in wg-quick's bash that
->> says `ip rule add ... suppress_prefix ...`.
->>
->> You can reproduce the kernel crash without WireGuard anywhere in the
->> equation with this sequence:
->>
->> ip netns add crash
->> ip -n crash link add dummy1 type dummy
->> ip -n crash link set dummy1 up
->> ip -n crash -6 route add default dev dummy1
->> ip -n crash -6 rule add table main suppress_prefixlength 0
->> ip netns exec crash ping -f -c 1000 -W 1 1234::1 || true
->> ip -n crash -6 rule del table main suppress_prefixlength 0
->> ip -n crash link del dummy1
->> ip netns del crash
->>
->> I submitted a patch for this upstream here:
->>
->> https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=ca7a03c4175366a92cee0ccc4fec0038c3266e26
->>
->> It's been backported to stable already. Update your kernel to 5.3.4
->> and things should work again for you.
->>
->> Jason
+<div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr">I have 3 wg interface on=
+ my server, but I am unable to enable wg0 with wg-quick at boot:<br><br>@ub=
+untu:~$ sudo systemctl enable wg-quick@wg0<br>@ubuntu:~$=C2=A0<div><br></di=
+v><div><div>Oct 06 13:22:51 ubuntu systemd[1]: Starting WireGuard via wg-qu=
+ick(8) for wg0...</div><div>Oct 06 13:22:51 ubuntu wg-quick[1737]: Warning:=
+ `/etc/wireguard/wg0.conf&#39; is world accessible</div><div>Oct 06 13:22:5=
+2 ubuntu wg-quick[1737]: [#] ip link add wg0 type wireguard</div><div>Oct 0=
+6 13:22:52 ubuntu wg-quick[1737]: [#] wg setconf wg0 /dev/fd/63</div><div>O=
+ct 06 13:22:52 ubuntu wg-quick[1737]: [#] ip -4 address add <a href=3D"http=
+://192.168.5.2/24">192.168.5.2/24</a> dev wg0</div><div>Oct 06 13:22:52 ubu=
+ntu wg-quick[1737]: [#] ip link set mtu 1420 up dev wg0</div><div>Oct 06 13=
+:22:53 ubuntu wg-quick[1737]: [#] ip -4 route add <a href=3D"http://192.168=
+.2.0/24">192.168.2.0/24</a> dev wg0</div><div>Oct 06 13:22:53 ubuntu wg-qui=
+ck[1737]: [#] iptables -A FORWARD -i wg0 -j ACCEPT; iptables -A FORWARD -o =
+wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o e</div><div><b>Oct 06 13:2=
+2:53 ubuntu wg-quick[1737]: Another app is currently holding the xtables lo=
+ck. Perhaps you want to use the -w option?</b></div><div>Oct 06 13:22:53 ub=
+untu wg-quick[1737]: [#] ip link delete dev wg0</div><div>Oct 06 13:22:53 u=
+buntu systemd[1]: wg-quick@wg0.service: Main process exited, code=3Dexited,=
+ status=3D1/FAILURE</div><div>Oct 06 13:22:53 ubuntu systemd[1]: Failed to =
+start WireGuard via wg-quick(8) for wg0.</div><div>Oct 06 13:22:53 ubuntu s=
+ystemd[1]: wg-quick@wg0.service: Unit entered failed state.</div><div>Oct 0=
+6 13:22:53 ubuntu systemd[1]: wg-quick@wg0.service: Failed with result &#39=
+;exit-code&#39;.</div></div><div><br></div><div>As you can see it fails at =
+iptables command.</div><div><br></div><div>wg0, wg2 fails with this problem=
+, but wg1 starts without problem (same config, with iptables command).</div=
+><div><br></div><div><br></div></div></div></div>
 
+--0000000000009e12d4059440cb1d--
 
---
-Modern, affordable, Swiss Virtual Machines. Visit www.datacenterlight.ch
+--===============0072230040142211678==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--===============0072230040142211678==--
