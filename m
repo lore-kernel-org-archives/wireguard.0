@@ -6,57 +6,62 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93B67C4360C
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 16 Oct 2019 08:48:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 91696FA3728
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 16 Oct 2019 20:12:32 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id CF7DC20872
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 16 Oct 2019 08:48:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id D6D0B218DE
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 16 Oct 2019 20:12:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="RPLDzG/c"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org CF7DC20872
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="L4ZP+eKL"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org D6D0B218DE
 Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 51ebe679;
-	Wed, 16 Oct 2019 08:48:36 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ce4b66ed;
+	Wed, 16 Oct 2019 20:12:30 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c0349b86
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c1bdda5c
  for <wireguard@lists.zx2c4.com>;
- Wed, 16 Oct 2019 08:48:35 +0000 (UTC)
+ Wed, 16 Oct 2019 20:12:28 +0000 (UTC)
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id faaffec8
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 34a63f7b
  for <wireguard@lists.zx2c4.com>;
- Wed, 16 Oct 2019 08:48:35 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 053a532f
+ Wed, 16 Oct 2019 20:12:28 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d5f6a002
  for <wireguard@lists.zx2c4.com>;
- Wed, 16 Oct 2019 08:00:10 +0000 (UTC)
+ Wed, 16 Oct 2019 19:24:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :from:date:message-id:subject:to:content-type; s=mail; bh=byaImK
- xNNBawYAGymNrrpd0W2AA=; b=RPLDzG/cZ37bqkobaONUayJptTEUfPZFiBBvpt
- a1AZfD3s9Bt/HIzsN9iFa47hQQHGa/5HKyU5Y2TaPVz7Z4nayNYwXudQa1aGSgry
- Kz9L+9W7sYuvf/okOYSUaT9DicpFlSF3nJ8NblXi4apiNPGEp/7tgh2gQzvS7JAQ
- EboNdQJyR8bDItd47oyDYMSoP6hD1H3j+DJjICzCOKpmCBkc/kzTvG3YxT/V+bhJ
- paOZOIs1Xgf5Uupu8ldtKM8f54+ayCETu8HaU9Jng2zX6HXXpVhLts5JZby/CdTR
- yW8qgNq1OYsg6tLehdDnQ82X140h5iIryfz36eU1HZEL1eRw==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 3ef88ed5
+ :references:in-reply-to:from:date:message-id:subject:to
+ :content-type; s=mail; bh=Jk5E3I9m8u7HwetiERnSQ1gMuxo=; b=L4ZP+e
+ KLLscKAzFAiUJyuFf7NchsiJHsb8Kz6cmQ8PrN520U7ARCFN5LO4RThU3N0q4/8m
+ IiCMg8qLMB84aas7W4TFNDwhptdVC+RaA0Youl+Te31AFmAP2IJ9wgoAX85LO2Qn
+ CVFhb6QPEkAd6e1aB4jenGS0GiNAgluG128X6Y/bwWNt/zG0hMYqW63JflGn5pEb
+ BaZuKEmEXLnyKlu1fQv+vS01cJmUq9MBgluQAvxW81TjO2WuD8tHpopouCrpDELg
+ PpD+3xHaQF5rqLVC8bePnyyLe7Gvdq9LsdVjSSTJFGtd88dz0A+2bZ3HaVCADUhh
+ yPUKeQTvvRw2jOGQ==
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 485f3eb6
  (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 16 Oct 2019 08:00:10 +0000 (UTC)
-Received: by mail-oi1-f172.google.com with SMTP id g81so1163913oib.8
- for <wireguard@lists.zx2c4.com>; Wed, 16 Oct 2019 01:48:34 -0700 (PDT)
-X-Gm-Message-State: APjAAAV0qUzN3wCp8X9yGevBoRqS8EqZTiRiLo0WO4XrSh2tCD9QZTJS
- TJPdQcJ4Y3Cq831zmQ+8yAMyupWEPUG1z6iVKxA=
-X-Google-Smtp-Source: APXvYqxKUXIpUPL5STLCiq/4prjjKpBXJo0xaZ4wSMqSRNp/Ub0qIGcQ4lDCNNeBZ4DV9KTRx/k1As5P0OTsTJHd2Yw=
-X-Received: by 2002:a54:4f04:: with SMTP id e4mr826879oiy.115.1571215713332;
- Wed, 16 Oct 2019 01:48:33 -0700 (PDT)
+ Wed, 16 Oct 2019 19:23:59 +0000 (UTC)
+Received: by mail-ot1-f48.google.com with SMTP id 60so21309373otu.0
+ for <wireguard@lists.zx2c4.com>; Wed, 16 Oct 2019 13:12:28 -0700 (PDT)
+X-Gm-Message-State: APjAAAU+nXrl3PzF23tV3JnG81Vg6lvBkRgncYUW7yytbQsD3B63k+kY
+ 6HWZkKi2w/E031XD8C0W4wRcH8WhAKXl68wy3po=
+X-Google-Smtp-Source: APXvYqwtQ5oYF607RkevU00oCAKNaWcY5R7OWPzYTgzFv1yBbIsj8pfFnBgNmdExXrl/6/D30vXMrWMSKnmLaPci5q0=
+X-Received: by 2002:a05:6830:1bd9:: with SMTP id
+ v25mr79412ota.52.1571256747552; 
+ Wed, 16 Oct 2019 13:12:27 -0700 (PDT)
 MIME-Version: 1.0
+References: <CAHmME9rcxwHNwT33cQzP6pGf64YG1Sz5iJtjQcOyFGanQf-CMg@mail.gmail.com>
+In-Reply-To: <CAHmME9rcxwHNwT33cQzP6pGf64YG1Sz5iJtjQcOyFGanQf-CMg@mail.gmail.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 16 Oct 2019 10:48:21 +0200
-X-Gmail-Original-Message-ID: <CAHmME9rcxwHNwT33cQzP6pGf64YG1Sz5iJtjQcOyFGanQf-CMg@mail.gmail.com>
-Message-ID: <CAHmME9rcxwHNwT33cQzP6pGf64YG1Sz5iJtjQcOyFGanQf-CMg@mail.gmail.com>
-Subject: WireGuard removed from Google Play Store, rectification in progress
+Date: Wed, 16 Oct 2019 22:12:16 +0200
+X-Gmail-Original-Message-ID: <CAHmME9r1oxTF=LJejR-gRhkBTw-Zd9eK5pWuMbRLLN8sAjfP8Q@mail.gmail.com>
+Message-ID: <CAHmME9r1oxTF=LJejR-gRhkBTw-Zd9eK5pWuMbRLLN8sAjfP8Q@mail.gmail.com>
+Subject: Re: WireGuard removed from Google Play Store,
+ rectification in progress
 To: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
@@ -74,33 +79,17 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
+Hi again,
 
-After waiting several days for Google to review our app -- apparently
-the process is manual now and they're quite backed up -- I was
-delighted to learn this morning that the app was approved. Then, 20
-minutes later, I received a letter saying that the entire app listing,
-not just the latest version, has been removed and delisted from the
-Play Store.
-
-They said it was because we're in violation of their "Payments
-Policy", presumably because we have a link inside the app that opens
-the user's web browser to wireguard.com/donations/ . I appealed using
-their website appeal form. Thirty minutes later (was this automated,
-unlike the manual app review process?), I received a rejection of the
-appeal.
-
-I immediately made this commit --
-https://git.zx2c4.com/wireguard-android/commit/?id=f0bab44b4a17b65e9f7e718a9ba9b2bc37041268
--- and uploaded a new version. We're now waiting for a new, presumably
-manual, review of the app. Until then, it is entirely unavailable on
-the Play Store.
-
-Sorry for the inconvenience. I'm sure many users are just as annoyed
-as I am. In the interim, luckily F-Droid has our app:
-https://f-droid.org/en/packages/com.wireguard.android/
-
-I'll send an update once we're reinstated on the Play Store.
+I expected to send this email sometime next week due to usual Play
+Store review process delays, but it seems like the attention the prior
+email received has sped up the process considerably. This is a notice
+that the app has been relisted on the Play Store in its usual
+location: https://play.google.com/store/apps/details?id=com.wireguard.android
+. Sorry again for any inconvenience this has caused users, or caused
+developers who depend on the availability of our app for use by their
+own users. We won't be making any similar changes unless we're certain
+that we won't be delisted.
 
 Regards,
 Jason
