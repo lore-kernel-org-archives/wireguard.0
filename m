@@ -1,52 +1,66 @@
-Return-Path: <SRS0=X8KC=YH=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=F87Q=YJ=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.3 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 00EB0C4CECE
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 14 Oct 2019 21:54:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 93B67C4360C
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 16 Oct 2019 08:48:38 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 4C3E02089C
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 14 Oct 2019 21:54:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 4C3E02089C
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=attglobal.net
+	by mail.kernel.org (Postfix) with ESMTPS id CF7DC20872
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 16 Oct 2019 08:48:37 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="RPLDzG/c"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org CF7DC20872
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8993cc50;
-	Mon, 14 Oct 2019 21:53:59 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 51ebe679;
+	Wed, 16 Oct 2019 08:48:36 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 905fe25b
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c0349b86
  for <wireguard@lists.zx2c4.com>;
- Mon, 14 Oct 2019 21:53:57 +0000 (UTC)
-Received: from dnvrco-cmomta03.email.rr.com (dnvrco-outbound-snat.email.rr.com
- [107.14.73.230])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5304aeed
+ Wed, 16 Oct 2019 08:48:35 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id faaffec8
  for <wireguard@lists.zx2c4.com>;
- Mon, 14 Oct 2019 21:53:57 +0000 (UTC)
-Received: from [192.168.0.2] ([23.243.28.100]) by cmsmtp with ESMTP
- id K8HqiQ9tZWnTiK8HsiICAe; Mon, 14 Oct 2019 21:53:57 +0000
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-From: Eddie <stunnel@attglobal.net>
-Subject: Still No Connection from iPhone
-X-Clacks-Overhead: GNU Terry Pratchett
-Message-ID: <63b32dcd-ec67-6a71-8780-c7893d1b7cab@attglobal.net>
-Date: Mon, 14 Oct 2019 14:53:53 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+ Wed, 16 Oct 2019 08:48:35 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 053a532f
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 16 Oct 2019 08:00:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :from:date:message-id:subject:to:content-type; s=mail; bh=byaImK
+ xNNBawYAGymNrrpd0W2AA=; b=RPLDzG/cZ37bqkobaONUayJptTEUfPZFiBBvpt
+ a1AZfD3s9Bt/HIzsN9iFa47hQQHGa/5HKyU5Y2TaPVz7Z4nayNYwXudQa1aGSgry
+ Kz9L+9W7sYuvf/okOYSUaT9DicpFlSF3nJ8NblXi4apiNPGEp/7tgh2gQzvS7JAQ
+ EboNdQJyR8bDItd47oyDYMSoP6hD1H3j+DJjICzCOKpmCBkc/kzTvG3YxT/V+bhJ
+ paOZOIs1Xgf5Uupu8ldtKM8f54+ayCETu8HaU9Jng2zX6HXXpVhLts5JZby/CdTR
+ yW8qgNq1OYsg6tLehdDnQ82X140h5iIryfz36eU1HZEL1eRw==
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 3ef88ed5
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 16 Oct 2019 08:00:10 +0000 (UTC)
+Received: by mail-oi1-f172.google.com with SMTP id g81so1163913oib.8
+ for <wireguard@lists.zx2c4.com>; Wed, 16 Oct 2019 01:48:34 -0700 (PDT)
+X-Gm-Message-State: APjAAAV0qUzN3wCp8X9yGevBoRqS8EqZTiRiLo0WO4XrSh2tCD9QZTJS
+ TJPdQcJ4Y3Cq831zmQ+8yAMyupWEPUG1z6iVKxA=
+X-Google-Smtp-Source: APXvYqxKUXIpUPL5STLCiq/4prjjKpBXJo0xaZ4wSMqSRNp/Ub0qIGcQ4lDCNNeBZ4DV9KTRx/k1As5P0OTsTJHd2Yw=
+X-Received: by 2002:a54:4f04:: with SMTP id e4mr826879oiy.115.1571215713332;
+ Wed, 16 Oct 2019 01:48:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="------------927C1DF249CDAE0EF75920C9"
-Content-Language: en-US
-X-CMAE-Envelope: MS4wfO1eWvRdrIjaq0OqRRsuGGtELc8XDcjUr5w4/f0zbNBRU/jKBhWHRdxz+UP5obeJP19qxQcRCrTnPe6woL5HcS05bEdBHrueIx6vQ/eAH1Hgb7ubjLSw
- 0tOwvZQOlewMVuY4srltvXhjbvEbsqE59XqoKTECiHI1vdlPfGUP/ln/p2YgaVpACfGbNtJTOXLb/w==
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 16 Oct 2019 10:48:21 +0200
+X-Gmail-Original-Message-ID: <CAHmME9rcxwHNwT33cQzP6pGf64YG1Sz5iJtjQcOyFGanQf-CMg@mail.gmail.com>
+Message-ID: <CAHmME9rcxwHNwT33cQzP6pGf64YG1Sz5iJtjQcOyFGanQf-CMg@mail.gmail.com>
+Subject: WireGuard removed from Google Play Store, rectification in progress
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
-Reply-To: stunnel@attglobal.net
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -55,163 +69,42 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This is a multi-part message in MIME format.
---------------927C1DF249CDAE0EF75920C9
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Hi,
 
-Title says it all.  I'm still unable to connect to my home CentOS server 
-from my iPhone.  A check of the IP shows I'm still routed via AT&T.
+After waiting several days for Google to review our app -- apparently
+the process is manual now and they're quite backed up -- I was
+delighted to learn this morning that the app was approved. Then, 20
+minutes later, I received a letter saying that the entire app listing,
+not just the latest version, has been removed and delisted from the
+Play Store.
 
-On the server, wg shows no connectivity from the client at all and if I 
-temporarily block the port in my firewall it doesn't show any attempt to 
-connect.
+They said it was because we're in violation of their "Payments
+Policy", presumably because we have a link inside the app that opens
+the user's web browser to wireguard.com/donations/ . I appealed using
+their website appeal form. Thirty minutes later (was this automated,
+unlike the manual app review process?), I received a rejection of the
+appeal.
 
-I'm running the latest version of wg for iOS (0.0.20191012 (14)) on the 
-latest iPhone iOS (13.1.2).  Logs from iPhone attached.
+I immediately made this commit --
+https://git.zx2c4.com/wireguard-android/commit/?id=f0bab44b4a17b65e9f7e718a9ba9b2bc37041268
+-- and uploaded a new version. We're now waiting for a new, presumably
+manual, review of the app. Until then, it is entirely unavailable on
+the Play Store.
 
-Cheers.
+Sorry for the inconvenience. I'm sure many users are just as annoyed
+as I am. In the interim, luckily F-Droid has our app:
+https://f-droid.org/en/packages/com.wireguard.android/
 
---------------927C1DF249CDAE0EF75920C9
-Content-Type: text/plain; charset=UTF-8;
- name="wireguard-log-2019-10-14T212844Z.txt"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment;
- filename="wireguard-log-2019-10-14T212844Z.txt"
+I'll send an update once we're reinstated on the Play Store.
 
-MjAxOS0xMC0xNCAxNDoyODoxNC45MTQyNzk6IFtBUFBdIHN0YXJ0QWN0aXZhdGlvbjogRW50
-ZXJpbmcgKHR1bm5lbDogQm9nb0xpbnV4KQ0KMjAxOS0xMC0xNCAxNDoyODoxNC45MTQ4Nzg6
-IFtBUFBdIHN0YXJ0QWN0aXZhdGlvbjogU3RhcnRpbmcgdHVubmVsDQoyMDE5LTEwLTE0IDE0
-OjI4OjE0LjkxNTc0MTogW0FQUF0gc3RhcnRBY3RpdmF0aW9uOiBTdWNjZXNzDQoyMDE5LTEw
-LTE0IDE0OjI4OjE0LjkyNTUxMjogW0FQUF0gVHVubmVsICdCb2dvTGludXgnIGNvbm5lY3Rp
-b24gc3RhdHVzIGNoYW5nZWQgdG8gJ2Nvbm5lY3RpbmcnDQoyMDE5LTEwLTE0IDE0OjI4OjE1
-LjAxNzM2NDogW05FVF0gQXBwIHZlcnNpb246IDAuMC4yMDE5MTAxMiAoMTQpOyBHbyBiYWNr
-ZW5kIHZlcnNpb246IDAuMC4yMDE5MDkwOQ0KMjAxOS0xMC0xNCAxNDoyODoxNS4wMTc1NzQ6
-IFtORVRdIFN0YXJ0aW5nIHR1bm5lbCBmcm9tIHRoZSBhcHANCjIwMTktMTAtMTQgMTQ6Mjg6
-MTkuOTE2MzEwOiBbQVBQXSBTdGF0dXMgdXBkYXRlIG5vdGlmaWNhdGlvbiB0aW1lb3V0IGZv
-ciB0dW5uZWwgJ0JvZ29MaW51eCcuIFR1bm5lbCBzdGF0dXMgaXMgbm93ICdjb25uZWN0aW5n
-Jy4NCjIwMTktMTAtMTQgMTQ6Mjg6MjAuMDcxNTU5OiBbTkVUXSBUdW5uZWwgaW50ZXJmYWNl
-IGlzIHV0dW4xDQoyMDE5LTEwLTE0IDE0OjI4OjIwLjA3MzIxODogW05FVF0gRE5TNjQ6IG1h
-cHBlZCAyMy4yNDMuMjguMTAwIHRvIGl0c2VsZi4NCjIwMTktMTAtMTQgMTQ6Mjg6MjAuMDc0
-MjQ5OiBbTkVUXSBBdHRhY2hpbmcgdG8gaW50ZXJmYWNlDQoyMDE5LTEwLTE0IDE0OjI4OjIw
-LjA3NjE1NzogW05FVF0gUm91dGluZTogZW5jcnlwdGlvbiB3b3JrZXIgLSBzdGFydGVkDQoy
-MDE5LTEwLTE0IDE0OjI4OjIwLjA3NjM3MjogW05FVF0gUm91dGluZTogZW5jcnlwdGlvbiB3
-b3JrZXIgLSBzdGFydGVkDQoyMDE5LTEwLTE0IDE0OjI4OjIwLjA3NjQ0NTogW05FVF0gUm91
-dGluZTogZGVjcnlwdGlvbiB3b3JrZXIgLSBzdGFydGVkDQoyMDE5LTEwLTE0IDE0OjI4OjIw
-LjA3NjUyNTogW05FVF0gUm91dGluZTogaGFuZHNoYWtlIHdvcmtlciAtIHN0YXJ0ZWQNCjIw
-MTktMTAtMTQgMTQ6Mjg6MjAuMDc2NTkxOiBbTkVUXSBSb3V0aW5lOiBlbmNyeXB0aW9uIHdv
-cmtlciAtIHN0YXJ0ZWQNCjIwMTktMTAtMTQgMTQ6Mjg6MjAuMDc2NjY2OiBbTkVUXSBSb3V0
-aW5lOiBkZWNyeXB0aW9uIHdvcmtlciAtIHN0YXJ0ZWQNCjIwMTktMTAtMTQgMTQ6Mjg6MjAu
-MDc2NzMzOiBbTkVUXSBSb3V0aW5lOiBoYW5kc2hha2Ugd29ya2VyIC0gc3RhcnRlZA0KMjAx
-OS0xMC0xNCAxNDoyODoyMC4wNzY3OTk6IFtORVRdIFJvdXRpbmU6IGVuY3J5cHRpb24gd29y
-a2VyIC0gc3RhcnRlZA0KMjAxOS0xMC0xNCAxNDoyODoyMC4wNzY4NzE6IFtORVRdIFJvdXRp
-bmU6IGRlY3J5cHRpb24gd29ya2VyIC0gc3RhcnRlZA0KMjAxOS0xMC0xNCAxNDoyODoyMC4w
-NzY5NzI6IFtORVRdIFJvdXRpbmU6IGhhbmRzaGFrZSB3b3JrZXIgLSBzdGFydGVkDQoyMDE5
-LTEwLTE0IDE0OjI4OjIwLjA3NzAyODogW05FVF0gUm91dGluZTogaGFuZHNoYWtlIHdvcmtl
-ciAtIHN0YXJ0ZWQNCjIwMTktMTAtMTQgMTQ6Mjg6MjAuMDc3MTAzOiBbTkVUXSBSb3V0aW5l
-OiBkZWNyeXB0aW9uIHdvcmtlciAtIHN0YXJ0ZWQNCjIwMTktMTAtMTQgMTQ6Mjg6MjAuMDc3
-MTk2OiBbTkVUXSBSb3V0aW5lOiBoYW5kc2hha2Ugd29ya2VyIC0gc3RhcnRlZA0KMjAxOS0x
-MC0xNCAxNDoyODoyMC4wNzcyNjg6IFtORVRdIFJvdXRpbmU6IGVuY3J5cHRpb24gd29ya2Vy
-IC0gc3RhcnRlZA0KMjAxOS0xMC0xNCAxNDoyODoyMC4wNzczNDU6IFtORVRdIFJvdXRpbmU6
-IGRlY3J5cHRpb24gd29ya2VyIC0gc3RhcnRlZA0KMjAxOS0xMC0xNCAxNDoyODoyMC4wNzc0
-NTk6IFtORVRdIFJvdXRpbmU6IGRlY3J5cHRpb24gd29ya2VyIC0gc3RhcnRlZA0KMjAxOS0x
-MC0xNCAxNDoyODoyMC4wNzc1NjY6IFtORVRdIFJvdXRpbmU6IGVuY3J5cHRpb24gd29ya2Vy
-IC0gc3RhcnRlZA0KMjAxOS0xMC0xNCAxNDoyODoyMC4wNzc2NzA6IFtORVRdIFJvdXRpbmU6
-IGhhbmRzaGFrZSB3b3JrZXIgLSBzdGFydGVkDQoyMDE5LTEwLTE0IDE0OjI4OjIwLjA3Nzc0
-ODogW05FVF0gUm91dGluZTogVFVOIHJlYWRlciAtIHN0YXJ0ZWQNCjIwMTktMTAtMTQgMTQ6
-Mjg6MjAuMDc3ODcxOiBbTkVUXSBSb3V0aW5lOiBldmVudCB3b3JrZXIgLSBzdGFydGVkDQoy
-MDE5LTEwLTE0IDE0OjI4OjIwLjA3ODAzNzogW05FVF0gVUFQSTogVXBkYXRpbmcgcHJpdmF0
-ZSBrZXkNCjIwMTktMTAtMTQgMTQ6Mjg6MjAuMDc4NjYxOiBbTkVUXSBVQVBJOiBSZW1vdmlu
-ZyBhbGwgcGVlcnMNCjIwMTktMTAtMTQgMTQ6Mjg6MjAuMDc4NzgzOiBbTkVUXSBVQVBJOiBU
-cmFuc2l0aW9uIHRvIHBlZXIgY29uZmlndXJhdGlvbg0KMjAxOS0xMC0xNCAxNDoyODoyMC4w
-Nzk0ODg6IFtORVRdIHBlZXIocnJBeeKApkxIeFUpIC0gVUFQSTogQ3JlYXRlZA0KMjAxOS0x
-MC0xNCAxNDoyODoyMC4wNzk2NTA6IFtORVRdIHBlZXIocnJBeeKApkxIeFUpIC0gVUFQSTog
-VXBkYXRpbmcgZW5kcG9pbnQNCjIwMTktMTAtMTQgMTQ6Mjg6MjAuMDc5ODY0OiBbTkVUXSBw
-ZWVyKHJyQXnigKZMSHhVKSAtIFVBUEk6IFVwZGF0aW5nIHBlcnNpc3RlbnQga2VlcGFsaXZl
-IGludGVydmFsDQoyMDE5LTEwLTE0IDE0OjI4OjIwLjA4MDQ1ODogW05FVF0gUm91dGluZTog
-cmVjZWl2ZSBpbmNvbWluZyBJUHY2IC0gc3RhcnRlZA0KMjAxOS0xMC0xNCAxNDoyODoyMC4w
-ODA2NzU6IFtORVRdIFJvdXRpbmU6IHJlY2VpdmUgaW5jb21pbmcgSVB2NCAtIHN0YXJ0ZWQN
-CjIwMTktMTAtMTQgMTQ6Mjg6MjAuMDgwODg0OiBbTkVUXSBVRFAgYmluZCBoYXMgYmVlbiB1
-cGRhdGVkDQoyMDE5LTEwLTE0IDE0OjI4OjIwLjA4MTAwNDogW05FVF0gcGVlcihyckF54oCm
-TEh4VSkgLSBTdGFydGluZy4uLg0KMjAxOS0xMC0xNCAxNDoyODoyMC4wODEyMzg6IFtORVRd
-IHBlZXIocnJBeeKApkxIeFUpIC0gUm91dGluZTogc2VxdWVudGlhbCBzZW5kZXIgLSBzdGFy
-dGVkDQoyMDE5LTEwLTE0IDE0OjI4OjIwLjA4MTMzNTogW05FVF0gcGVlcihyckF54oCmTEh4
-VSkgLSBSb3V0aW5lOiBub25jZSB3b3JrZXIgLSBzdGFydGVkDQoyMDE5LTEwLTE0IDE0OjI4
-OjIwLjA4MTQxMjogW05FVF0gcGVlcihyckF54oCmTEh4VSkgLSBSb3V0aW5lOiBzZXF1ZW50
-aWFsIHJlY2VpdmVyIC0gc3RhcnRlZA0KMjAxOS0xMC0xNCAxNDoyODoyMC4wODE1MjU6IFtO
-RVRdIERldmljZSBzdGFydGVkDQoyMDE5LTEwLTE0IDE0OjI4OjIwLjA4MzQyMjogW0FQUF0g
-VHVubmVsICdCb2dvTGludXgnIGNvbm5lY3Rpb24gc3RhdHVzIGNoYW5nZWQgdG8gJ2Nvbm5l
-Y3RlZCcNCjIwMTktMTAtMTQgMTQ6Mjg6MjguMzgwNzM5OiBbQVBQXSBTdGF0dXMgdXBkYXRl
-IG5vdGlmaWNhdGlvbiB0aW1lb3V0IGZvciB0dW5uZWwgJ0JvZ29MaW51eCcuIFR1bm5lbCBz
-dGF0dXMgaXMgbm93ICdjb25uZWN0ZWQnLg0KMjAxOS0xMC0xNCAxNDoyODoyOS42NDk5NTk6
-IFtBUFBdIHN0YXJ0RGVhY3RpdmF0aW9uOiBUdW5uZWw6IEJvZ29MaW51eA0KMjAxOS0xMC0x
-NCAxNDoyODoyOS42NTY0OTA6IFtBUFBdIFR1bm5lbCAnQm9nb0xpbnV4JyBjb25uZWN0aW9u
-IHN0YXR1cyBjaGFuZ2VkIHRvICdkaXNjb25uZWN0aW5nJw0KMjAxOS0xMC0xNCAxNDoyODoz
-MC4xODQ2MDg6IFtORVRdIE5ldHdvcmsgY2hhbmdlIGRldGVjdGVkIHdpdGggc2F0aXNmaWVk
-IHJvdXRlIGFuZCBpbnRlcmZhY2Ugb3JkZXIgW3BkcF9pcDBdDQoyMDE5LTEwLTE0IDE0OjI4
-OjMwLjE4NzczMDogW05FVF0gRE5TNjQ6IG1hcHBlZCAyMy4yNDMuMjguMTAwIHRvIGl0c2Vs
-Zi4NCjIwMTktMTAtMTQgMTQ6Mjg6MzAuMTg4NjE4OiBbTkVUXSBVQVBJOiBUcmFuc2l0aW9u
-IHRvIHBlZXIgY29uZmlndXJhdGlvbg0KMjAxOS0xMC0xNCAxNDoyODozMC4xODg5NTA6IFtO
-RVRdIHBlZXIocnJBeeKApkxIeFUpIC0gVUFQSTogVXBkYXRpbmcgZW5kcG9pbnQNCjIwMTkt
-MTAtMTQgMTQ6Mjg6MzAuMTg5NDk0OiBbTkVUXSBSb3V0aW5lOiByZWNlaXZlIGluY29taW5n
-IElQdjQgLSBzdG9wcGVkDQoyMDE5LTEwLTE0IDE0OjI4OjMwLjE4OTc4OTogW05FVF0gUm91
-dGluZTogcmVjZWl2ZSBpbmNvbWluZyBJUHY2IC0gc3RvcHBlZA0KMjAxOS0xMC0xNCAxNDoy
-ODozMC4xOTA3MDU6IFtORVRdIFJvdXRpbmU6IHJlY2VpdmUgaW5jb21pbmcgSVB2NiAtIHN0
-YXJ0ZWQNCjIwMTktMTAtMTQgMTQ6Mjg6MzAuMTkxMDUzOiBbTkVUXSBSb3V0aW5lOiByZWNl
-aXZlIGluY29taW5nIElQdjQgLSBzdGFydGVkDQoyMDE5LTEwLTE0IDE0OjI4OjMwLjE5MTMz
-NDogW05FVF0gVURQIGJpbmQgaGFzIGJlZW4gdXBkYXRlZA0KDQoNCjIwMTktMTAtMTQgMTQ6
-Mjg6MzQuNjY3MDQzOiBbTkVUXSBTdG9wcGluZyB0dW5uZWwNCjIwMTktMTAtMTQgMTQ6Mjg6
-MzQuNjY3NjE0OiBbTkVUXSBEZXZpY2UgY2xvc2luZw0KMjAxOS0xMC0xNCAxNDoyODozNC42
-Njg2MjE6IFtORVRdIFJvdXRpbmU6IGV2ZW50IHdvcmtlciAtIHN0b3BwZWQNCjIwMTktMTAt
-MTQgMTQ6Mjg6MzQuNjY5NjU2OiBbTkVUXSBSb3V0aW5lOiBUVU4gcmVhZGVyIC0gc3RvcHBl
-ZA0KMjAxOS0xMC0xNCAxNDoyODozNC42NzA2MDE6IFtORVRdIFJvdXRpbmU6IHJlY2VpdmUg
-aW5jb21pbmcgSVB2NCAtIHN0b3BwZWQNCjIwMTktMTAtMTQgMTQ6Mjg6MzQuNjcwOTYyOiBb
-TkVUXSBSb3V0aW5lOiByZWNlaXZlIGluY29taW5nIElQdjYgLSBzdG9wcGVkDQoyMDE5LTEw
-LTE0IDE0OjI4OjM0LjY3MTQyMzogW05FVF0gUm91dGluZTogaGFuZHNoYWtlIHdvcmtlciAt
-IHN0b3BwZWQNCjIwMTktMTAtMTQgMTQ6Mjg6MzQuNjcxNjM3OiBbTkVUXSBSb3V0aW5lOiBk
-ZWNyeXB0aW9uIHdvcmtlciAtIHN0b3BwZWQNCjIwMTktMTAtMTQgMTQ6Mjg6MzQuNjcxODc3
-OiBbTkVUXSBwZWVyKHJyQXnigKZMSHhVKSAtIFN0b3BwaW5nLi4uDQoyMDE5LTEwLTE0IDE0
-OjI4OjM0LjY3MjE2NjogW05FVF0gcGVlcihyckF54oCmTEh4VSkgLSBSb3V0aW5lOiBzZXF1
-ZW50aWFsIHNlbmRlciAtIHN0b3BwZWQNCjIwMTktMTAtMTQgMTQ6Mjg6MzQuNjcyMzQ1OiBb
-TkVUXSBSb3V0aW5lOiBlbmNyeXB0aW9uIHdvcmtlciAtIHN0b3BwZWQNCjIwMTktMTAtMTQg
-MTQ6Mjg6MzQuNjcyNTI3OiBbTkVUXSBwZWVyKHJyQXnigKZMSHhVKSAtIFJvdXRpbmU6IG5v
-bmNlIHdvcmtlciAtIHN0b3BwZWQNCjIwMTktMTAtMTQgMTQ6Mjg6MzQuNjcyNjY5OiBbTkVU
-XSBSb3V0aW5lOiBkZWNyeXB0aW9uIHdvcmtlciAtIHN0b3BwZWQNCjIwMTktMTAtMTQgMTQ6
-Mjg6MzQuNjcyODE1OiBbTkVUXSBSb3V0aW5lOiBoYW5kc2hha2Ugd29ya2VyIC0gc3RvcHBl
-ZA0KMjAxOS0xMC0xNCAxNDoyODozNC42NzI5NTQ6IFtORVRdIFJvdXRpbmU6IGVuY3J5cHRp
-b24gd29ya2VyIC0gc3RvcHBlZA0KMjAxOS0xMC0xNCAxNDoyODozNC42NzMwODg6IFtORVRd
-IFJvdXRpbmU6IGRlY3J5cHRpb24gd29ya2VyIC0gc3RvcHBlZA0KMjAxOS0xMC0xNCAxNDoy
-ODozNC42NzMyMzM6IFtORVRdIFJvdXRpbmU6IGRlY3J5cHRpb24gd29ya2VyIC0gc3RvcHBl
-ZA0KMjAxOS0xMC0xNCAxNDoyODozNC42NzMzNzQ6IFtORVRdIFJvdXRpbmU6IGRlY3J5cHRp
-b24gd29ya2VyIC0gc3RvcHBlZA0KMjAxOS0xMC0xNCAxNDoyODozNC42NzM1MTU6IFtORVRd
-IFJvdXRpbmU6IGVuY3J5cHRpb24gd29ya2VyIC0gc3RvcHBlZA0KMjAxOS0xMC0xNCAxNDoy
-ODozNC42NzM2NTE6IFtORVRdIFJvdXRpbmU6IGhhbmRzaGFrZSB3b3JrZXIgLSBzdG9wcGVk
-DQoyMDE5LTEwLTE0IDE0OjI4OjM0LjY3MzgxNjogW05FVF0gUm91dGluZTogaGFuZHNoYWtl
-IHdvcmtlciAtIHN0b3BwZWQNCjIwMTktMTAtMTQgMTQ6Mjg6MzQuNjc0MDM4OiBbTkVUXSBS
-b3V0aW5lOiBlbmNyeXB0aW9uIHdvcmtlciAtIHN0b3BwZWQNCjIwMTktMTAtMTQgMTQ6Mjg6
-MzQuNjc0MjM1OiBbTkVUXSBSb3V0aW5lOiBoYW5kc2hha2Ugd29ya2VyIC0gc3RvcHBlZA0K
-MjAxOS0xMC0xNCAxNDoyODozNC42NzQzODg6IFtORVRdIFJvdXRpbmU6IGVuY3J5cHRpb24g
-d29ya2VyIC0gc3RvcHBlZA0KMjAxOS0xMC0xNCAxNDoyODozNC42NzQ1MzA6IFtORVRdIFJv
-dXRpbmU6IGRlY3J5cHRpb24gd29ya2VyIC0gc3RvcHBlZA0KMjAxOS0xMC0xNCAxNDoyODoz
-NC42NzQ2Nzk6IFtORVRdIFJvdXRpbmU6IGhhbmRzaGFrZSB3b3JrZXIgLSBzdG9wcGVkDQoy
-MDE5LTEwLTE0IDE0OjI4OjM0LjY3NDgyMjogW05FVF0gUm91dGluZTogZW5jcnlwdGlvbiB3
-b3JrZXIgLSBzdG9wcGVkDQoyMDE5LTEwLTE0IDE0OjI4OjM0LjY3NTA3MjogW05FVF0gcGVl
-cihyckF54oCmTEh4VSkgLSBSb3V0aW5lOiBzZXF1ZW50aWFsIHJlY2VpdmVyIC0gc3RvcHBl
-ZA0KMjAxOS0xMC0xNCAxNDoyODozNC42NzU0NDY6IFtORVRdIEludGVyZmFjZSBjbG9zZWQN
-CjIwMTktMTAtMTQgMTQ6Mjg6MzQuNjg1Mjc1OiBbQVBQXSBUdW5uZWwgJ0JvZ29MaW51eCcg
-Y29ubmVjdGlvbiBzdGF0dXMgY2hhbmdlZCB0byAnZGlzY29ubmVjdGVkJw0K
---------------927C1DF249CDAE0EF75920C9
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
+Regards,
+Jason
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
-
---------------927C1DF249CDAE0EF75920C9--
