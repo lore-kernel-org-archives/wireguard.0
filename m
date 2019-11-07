@@ -2,53 +2,44 @@ Return-Path: <SRS0=ozWx=Y7=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB52AC5DF60
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  7 Nov 2019 16:38:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6EBDDC43331
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  7 Nov 2019 21:51:26 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 9B10D206DF
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  7 Nov 2019 16:38:57 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=ungleich.ch header.i=@ungleich.ch header.b="VOKrQuYM"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 9B10D206DF
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=ungleich.ch
+	by mail.kernel.org (Postfix) with ESMTPS id AF0162084C
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  7 Nov 2019 21:51:25 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org AF0162084C
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=matrix-dream.net
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 222b4fc4;
-	Thu, 7 Nov 2019 16:38:30 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ae3d243d;
+	Thu, 7 Nov 2019 21:51:24 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5200e177
- for <wireguard@lists.zx2c4.com>; Thu, 7 Nov 2019 16:38:28 +0000 (UTC)
-Received: from smtp.ungleich.ch (smtp.ungleich.ch
- [IPv6:2a0a:e5c0:0:2:400:b3ff:fe39:7956])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5faf219a
- for <wireguard@lists.zx2c4.com>; Thu, 7 Nov 2019 16:38:27 +0000 (UTC)
-Received: from diamond.localdomain (localhost [IPv6:::1])
- by smtp.ungleich.ch (Postfix) with ESMTP id B1E3A21EB7
- for <wireguard@lists.zx2c4.com>; Thu,  7 Nov 2019 17:38:25 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ungleich.ch; s=mail;
- t=1573144705; bh=znc/B6/eSWbQccPp5NQuAt0+vLOHuvN9+DY/CU8dlxE=;
- h=From:To:Subject:Date:From;
- b=VOKrQuYMLLhZd19EsMY3wGwFcteE3qy742GKRffV0Zn+FV1AUEyYRFtkDgosqV5/C
- 1bEWis2mP6KI5vOnfiwUBa0uTRjaSTIRO4lrvI4J7nEBNXO1zxKntx/BPT3/SyhYJS
- FTl+MihKGWRYblutFVSdXXo+abuu8yHS8+b4xkCVFdxfaYjBp0Wj+RZ6O5T686cxi7
- 16zerC3w1nz0lulzmH1QEZOfiiVl0GpbvWuMEPZapexNavs2wUw8C0TD/GayLbjgAS
- VO3s4xdnEN5H5jgNDmP9S8HJ7+2XL3z+Eij+QL1JTT8yNrrRmVUmkdvqUTUPaFsPoP
- T6QUbE1MJOj3g==
-Received: by diamond.localdomain (Postfix, from userid 1000)
- id D511013E2D1A; Thu,  7 Nov 2019 17:38:42 +0100 (CET)
-User-agent: mu4e 1.3.5; emacs 26.3
-From: Nico Schottelius <nico.schottelius@ungleich.ch>
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Netfilter redirect does not work with wireguard
-Date: Thu, 07 Nov 2019 17:38:42 +0100
-Message-ID: <87pni3ljzh.fsf@ungleich.ch>
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5700fa16
+ for <wireguard@lists.zx2c4.com>; Thu, 7 Nov 2019 21:51:22 +0000 (UTC)
+Received: from mail1.matrix-dream.net (mail1.matrix-dream.net
+ [IPv6:2a0a:51c0::71])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 61d92b21
+ for <wireguard@lists.zx2c4.com>; Thu, 7 Nov 2019 21:51:22 +0000 (UTC)
+Received: from ivan by mail1.matrix-dream.net with local (Exim 4.92.2)
+ (envelope-from <labawi-wg@matrix-dream.net>)
+ id 1iSpg6-0006Hq-Lr; Thu, 07 Nov 2019 21:50:54 +0000
+Date: Thu, 7 Nov 2019 21:50:54 +0000
+From: Ivan =?iso-8859-1?Q?Lab=E1th?= <labawi-wg@matrix-dream.net>
+To: Nico Schottelius <nico.schottelius@ungleich.ch>
+Subject: Re: Netfilter redirect does not work with wireguard
+Message-ID: <20191107215054.GA23531@matrix-dream.net>
+References: <87pni3ljzh.fsf@ungleich.ch>
 MIME-Version: 1.0
+Content-Disposition: inline
+In-Reply-To: <87pni3ljzh.fsf@ungleich.ch>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -65,48 +56,71 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-
 Hello,
 
-I am experimenting with nft / netfilter redirects to support wireguard
-packets on *any* udp port. I tried using the following configuration for
-nftables:
+have you checked the source port of replies, or whether
+there are any replies?
 
-[17:34:14] vpn-2a0ae5c1:~# cat /etc/nftables.conf
-#!/usr/sbin/nft -f
+# tcpdump -nn
 
-flush ruleset
+Tcpdump should show pre-NAT addresses on incoming packets
+and AFAIK post-NAT on outgoing packets, i.e. what goes on
+the wire.
 
-table ip nat {
-	chain prerouting {
-		type nat hook prerouting priority 0;
+You might need to apply SNAT on outgoing packets, which
+might happen automatically with TCP connection tracking,
+but I wouldn't really expect it on connection-less UDP.
 
-		# SSH works
-		tcp dport != 22 redirect to 22
+Regards,
+Ivan
 
-		# wireguard doesn't
-		udp dport != 51820 redirect to 51820
-	}
-
-	chain postrouting {
-		type nat hook postrouting priority 0;
-	}
-}
-
-However as you can see in the comments, this does not work with
-wireguard, however it does work with SSH.
-
-I can see that wireguard is kernel space, and ssh user space, but does
-that cause the netfilter part to be skipped or am I doing some silly
-mistake here?
-
-Best regards,
-
-Nico
-
-
---
-Modern, affordable, Swiss Virtual Machines. Visit www.datacenterlight.ch
+On Thu, Nov 07, 2019 at 05:38:42PM +0100, Nico Schottelius wrote:
+> 
+> Hello,
+> 
+> I am experimenting with nft / netfilter redirects to support wireguard
+> packets on *any* udp port. I tried using the following configuration for
+> nftables:
+> 
+> [17:34:14] vpn-2a0ae5c1:~# cat /etc/nftables.conf
+> #!/usr/sbin/nft -f
+> 
+> flush ruleset
+> 
+> table ip nat {
+> 	chain prerouting {
+> 		type nat hook prerouting priority 0;
+> 
+> 		# SSH works
+> 		tcp dport != 22 redirect to 22
+> 
+> 		# wireguard doesn't
+> 		udp dport != 51820 redirect to 51820
+> 	}
+> 
+> 	chain postrouting {
+> 		type nat hook postrouting priority 0;
+> 	}
+> }
+> 
+> However as you can see in the comments, this does not work with
+> wireguard, however it does work with SSH.
+> 
+> I can see that wireguard is kernel space, and ssh user space, but does
+> that cause the netfilter part to be skipped or am I doing some silly
+> mistake here?
+> 
+> Best regards,
+> 
+> Nico
+> 
+> 
+> --
+> Modern, affordable, Swiss Virtual Machines. Visit www.datacenterlight.ch
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
