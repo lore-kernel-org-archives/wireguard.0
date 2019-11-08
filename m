@@ -1,73 +1,81 @@
-Return-Path: <SRS0=ozWx=Y7=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=ChNg=ZA=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=0.6 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
-	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,MAILING_LIST_MULTI,SPF_HELO_NONE,
+X-Spam-Status: No, score=0.5 required=3.0 tests=DKIM_ADSP_ALL,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F925C43331
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  7 Nov 2019 21:52:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 27305C5DF60
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  8 Nov 2019 10:11:13 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id A60692166E
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  7 Nov 2019 21:52:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 416AE214DB
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  8 Nov 2019 10:11:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NEjFxdvP"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A60692166E
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=coppint.com header.i=@coppint.com header.b="bE2qnUtY"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 416AE214DB
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=coppint.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1e1a9e7c;
-	Thu, 7 Nov 2019 21:51:54 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 578eb2ad;
+	Fri, 8 Nov 2019 10:10:55 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4ac55967
- for <wireguard@lists.zx2c4.com>; Thu, 7 Nov 2019 21:51:51 +0000 (UTC)
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com
- [IPv6:2a00:1450:4864:20::333])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8fc35c55
- for <wireguard@lists.zx2c4.com>; Thu, 7 Nov 2019 21:51:50 +0000 (UTC)
-Received: by mail-wm1-x333.google.com with SMTP id c22so4195068wmd.1
- for <wireguard@lists.zx2c4.com>; Thu, 07 Nov 2019 13:51:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:content-transfer-encoding:mime-version:subject:message-id:date
- :to; bh=KfMRTN9le52K1euKW9Ky9UTM9KyPzpVb60r/DOAQf2M=;
- b=NEjFxdvPZFN54RC1og2d7vxB2q6UAPjmmjHPoQrI+P+YauxrSHq10jzRtwaM/aHR/y
- b407OEvjtDtg/S6OjZYExXG4Brc7vO/+iGlJKmj9fmYl3AK4x4CYBMHKa5adJF7L6SD1
- mO+tjz1hKcefoUGbMHoWGKbh9R6leMC6iLRv3xc/q9tgeLetbint5za3yxqJS0BVXs6U
- /bwnQLTACsHzk/FLr/sqD7c5Xkag/qnY1qevYZ2BJPsN932VvCUriq7BlDTP1/6XUn6B
- S7U+kwXNZBvB2i4TEpEiJ5KR7KPbqheEIfHEYrkWAlZ7E0nXoV7dL+kCMLoe0WNNt/7+
- DVBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:from:content-transfer-encoding:mime-version
- :subject:message-id:date:to;
- bh=KfMRTN9le52K1euKW9Ky9UTM9KyPzpVb60r/DOAQf2M=;
- b=ptcQ1gi422EhlE9wJfhYXQ2tF9ZyUupA9sSkQAa+Mmbcc3XYBxBGU+XnUDjoI1lnMO
- KKAD4XcFf742SJW/q7P84PYr+GaqJ0XZmQmBP+gw+HxcdTxI33589GUVCDF1NC5AMU7o
- TnTB/3KUCwEanNaNflUNBjl70YxYSg5Vp/A9L8/jxocAa7NGJMaECc3zClom9Xk4XR+o
- TDCIRoCy6yCZAUe32fgH/6apdCL0KJyKf+9oszPW1oR8W6TU3AtY81j+4vVREdnyqEkb
- Nmc5WHqdPpm1HoeaxLy21J+ebOrBsRBbe7lF52bjymZLjbTAXBqHFd8AfbdLKSYkLzmJ
- 7aDw==
-X-Gm-Message-State: APjAAAXsgr2SmVoc+ZJEUG34pxjkFHycwA7xekig6fhjJboX5D29L8o/
- PcJenNWHkMOapROkeNKx4G/2HO6ybrkexA==
-X-Google-Smtp-Source: APXvYqywRTzs6Uk0+hnw1ts4uZCorlXoeZ0R3CIAV0gmnUJcucm4KxtSVp2Zt0gx97fKvihhp7nlfA==
-X-Received: by 2002:a1c:9917:: with SMTP id b23mr4999942wme.42.1573163509247; 
- Thu, 07 Nov 2019 13:51:49 -0800 (PST)
-Received: from [192.168.1.100] (90-64-21-199.dynamic.orange.sk. [90.64.21.199])
- by smtp.gmail.com with ESMTPSA id 11sm4439791wmb.34.2019.11.07.13.51.47
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 07 Nov 2019 13:51:48 -0800 (PST)
-From: =?utf-8?Q?Adri=C3=A1n_Mih=C3=A1lko?= <adriankoooo@gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
-Subject: Unable to retrieve tunnel information from the saved configuration.
-Message-Id: <6BEB9EA2-322B-4782-A9F4-F5094B2AF9AB@gmail.com>
-Date: Thu, 7 Nov 2019 22:51:47 +0100
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0d35df78
+ for <wireguard@lists.zx2c4.com>; Fri, 8 Nov 2019 10:10:54 +0000 (UTC)
+Received: from mail01.coppint.com (mail01.coppint.com [212.129.15.236])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 102c7727
+ for <wireguard@lists.zx2c4.com>; Fri, 8 Nov 2019 10:10:54 +0000 (UTC)
+Received: from localhost (localhost [127.0.0.1])
+ by mail01.coppint.com (Mail server) with ESMTP id 583FE1C5928
+ for <wireguard@lists.zx2c4.com>; Fri,  8 Nov 2019 11:10:53 +0100 (CET)
+X-Virus-Scanned: mail01.coppint.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=coppint.com; s=dkim;
+ t=1573207851; bh=QUDuHusYDpvFh7UmabtCN6jTQLHErlvKcjmaVOkQwAg=;
+ h=To:From:Subject:Message-ID:Date:MIME-Version:
+ Content-Transfer-Encoding;
+ b=bE2qnUtYK04LYKQlZT6yb6hIEYuX8VI5dK59sXzSjULirpPfflYWuNuphrCcMqnqu
+ JOjBRi1EaH1KBjIoJVGINEv4WDpjxg0QT1EHzNlz5lK/4PU2k9zgqxS59MP9RxmCAn
+ RZMWnH+A+X+CnpyXzlyyXO/QfgSJtvyN8nEBMGTMFf05ppJrpqjPFjAo4hNPx/S2wN
+ Xb/pYhSwQ4qfFPxMQDrPBd72qAaLq3EPgUl0E1gaossWC/C3RvcXpCsPUwhmT/p+OX
+ 19DipEGVwX9NrQp2JU52BkjpszFxItkFDUgxfvp61ZwoIo4T0W5gpTUwIewaY80Ukj
+ 1xzgZWtNJeIpw==
 To: wireguard@lists.zx2c4.com
-X-Mailer: Apple Mail (2.3445.104.11)
+From: Florent B <florent@coppint.com>
+Subject: OnePlus 7T Android kernel module
+Autocrypt: addr=florent@coppint.com; prefer-encrypt=mutual; keydata=
+ mQENBE+eRuMBCADQrH5Fv3yOQMlrszKSd3PoukYaEn7pxHhLiGb5UPG8MqKvofu9nodX8m5W
+ g/lx7A9De1rQP7F6B0tQdVMLebI+DwM4YhTVypB4B/B9VCoyTbPOcSE4DEf7Altmhu4y76UQ
+ PJRTqzi5dLbQ13DeiogOvAH9r5P/ocYphJiWunMBMcToE5EL2ZlIPmc2wwrTZrFQL7Khjxh+
+ 7gwXwPbjhN0XiqNCALmMOe7ukg6/sJsdr8B8hqVRwXyd0NZnnbVLAkCx6uQ0FyfRG9+b/ZxH
+ LBJuCV3Xppg7kn1BxmKVCDR7m5rijFLpN5JT7wAsRuwoEU4kwdW7DmHOByg0kjvm6xzBABEB
+ AAG0JkZsb3JlbnQgQmF1dGlzdGEgPGZsb3JlbnRAY29wcGludC5jb20+iQFVBBMBAgA/Ahsj
+ BgsJCAcDAgYVCAIJCgsEFgIDAQIeAQIXgBYhBAVEImv+Vl8guwOEGv+6X0vegX1nBQJcwtMS
+ BQkPBb+vAAoJEP+6X0vegX1nNdQH/3SNhpc7wqAPflrm0a2/O6YXk/JU+DNehD3hNaYWindT
+ Sbgw464+EMAJQHZS3+dVYGu3YN/W1F26tf8YCzF9wnEl7OZkK55mQFo/DsgTFwKcFI4Y7wKX
+ uvlo174GrKCFdSjRAMGXIzAKZbGNHgRKSBtM9mK2vM+V+UjJVdHq4HM4xIR4CeTI0L+0QkMw
+ aOk8HXsCw5som5IeFL2y0akjH3L8TeiuwvvD5iNxUnHQbI8LtpqfPrCWGnd/QjooEOWhMaSm
+ Jf8NqhOKTxIYzj8BDnTmzLbWWkpRHJmlVSPSv5HbKEJk+nfEq3Nf/SGRqetigtQCmIwxC4QD
+ JQ7qjzz55qy5AQ0ET55G4wEIAKaUfSaCPpUQo01IzzqLIl5rmpvWNBMYXcu0UyvX5Sl7VIVI
+ pYWK/K9yI4BELfMC3MkqQNiyp+BjnOupkRqRGChEPyDhJtbBVilWEjbUVnMLwfYDhjwos8Bh
+ aIF69n1DQhi68XzPkN4WLglj9y9GFIPlUTvqfzRXwY86RIvWnGKwa5Lji/m2LF0ZWLMQNJoc
+ Sm4JD+yMu32RXRzepcyKGHNYAwpz61BLTFfFvrR5fhRJkCJ0kb5PoZ6ZOR1A/7B4PXJOamdK
+ qzG3oySleTb/Bb4kfBwyrX59uZ3PzuXotN1CqQpRwMcd9qwOPKNiDxQP6BSoRcvspbnjORfO
+ aeE6rgUAEQEAAYkBPAQYAQIAJgIbDBYhBAVEImv+Vl8guwOEGv+6X0vegX1nBQJcwtMXBQkP
+ Bb+0AAoJEP+6X0vegX1nfzUH/0W55wkTFJYVm1qvOFLS1ELfKxV5lAzwKZkVU5gTamcHElx7
+ WFn3qGkWt0a+8dLT6sunMqm2/AnbrDfVdNb8YsjxehoZV4TXpkvOJCrjn9pKOuuoYER2NE3H
+ 0IXwT3wpcT7kkeqWtrd4sqCmGasRMmQZ8iTMUPQXkjFfVaEYoBYfO+BASQxpkLX1iyYbobNI
+ Kbms3V5RTiHcRZeck1D2iRUBNng6T67jKqO8J5BqNn1+UQ3S2TNNhUlPTXY/iZMsxovhqGFI
+ RWKBK20ERyDPD+CYGkSIseaWnfAQy5qRQ7cehr+F+kijnpyiSSMAmTQ5s1lZLR1QPUDNGqf3
+ sUxiZpU=
+X-Archive: expiry=0
+Archive: no
+X-No-Archive: yes
+Message-ID: <4149a40f-af4d-4f94-c7fe-16fc53588544@coppint.com>
+Date: Fri, 8 Nov 2019 11:10:40 +0100
+MIME-Version: 1.0
+Content-Language: en-US
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -84,18 +92,22 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-After update from yesterday I am unable to connect to my WG server, I get: Unable to retrieve tunnel information from the saved configuration.
+Hi list,
 
-Client information: 
+I would like to know what is necessary to get a Wireguard kernel module
+for a new phone.
 
-App version: 0.0.20191105 (16) - 1.0.8
-Go backend version: 0.0.20191013
+I'm rooted with Magisk, and the Wireguard app tells me there's no module
+for my phone (OnePlus 7T HD1903).
 
-Mac OS X Mojace 10.14.6.
+How can I help to get this phone supported ?
 
+And by the way, does the kernel module installation make SafetyNet to fail ?
 
-Best regards,
-Adrian
+Thank you.
+
+Florent
+
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
