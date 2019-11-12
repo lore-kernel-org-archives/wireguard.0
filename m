@@ -2,68 +2,72 @@ Return-Path: <SRS0=OnWR=ZT=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.3 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
-	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,
-	NORMAL_HTTP_TO_IP,NUMERIC_HTTP_ADDR,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=0.7 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FORGED_YAHOO_RCVD,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BB72FC432C0
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 27 Nov 2019 09:38:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A9A76C43215
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 27 Nov 2019 09:39:10 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 557ED20678
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 27 Nov 2019 09:38:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 4E10720678
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 27 Nov 2019 09:39:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YfALCCzq"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 557ED20678
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="cRvXqV+K"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 4E10720678
+Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=yahoo.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 98bf7333;
-	Wed, 27 Nov 2019 09:38:02 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8c823c0a;
+	Wed, 27 Nov 2019 09:38:55 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b86f07dc
- for <wireguard@lists.zx2c4.com>; Mon, 7 Oct 2019 10:27:14 +0000 (UTC)
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com
- [IPv6:2607:f8b0:4864:20::329])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c3f7dbbb
- for <wireguard@lists.zx2c4.com>; Mon, 7 Oct 2019 10:27:14 +0000 (UTC)
-Received: by mail-ot1-x329.google.com with SMTP id z6so10510330otb.2
- for <wireguard@lists.zx2c4.com>; Mon, 07 Oct 2019 03:27:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=DKQLkHFy54OAICf15F7B37usRGaBMtwx2RiemQp7bKw=;
- b=YfALCCzqfd/E1Zn4CYK5JU6128jyrMcCYUJX8P6iTA+uw3lWCNHalk9EHnc/Uu1iyS
- iyLU55NNampboHs8IE6YIhyOO1c22OewSnkpceRb4SnqGe5KoiwHwQWM8R25ibwsToHJ
- +uwVkAsqH42AyDLO6F111tSxM+ClEifrFpCVA7LRk1wj83Xi+4XLgCtZO/2TALJl0gvP
- ucozLYaEkctMnz5lb5Xk0SDrp67tP0EE91UDZbOZ4NQqFmqS5ixBDUsKVCcz3TcW7W44
- ktVx92/LPZ998psXISI+TW37O6ZDviOKHTIlTLqq6N0q3r14nWGvLCmEkwZ7ZC3iVnXc
- wWwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=DKQLkHFy54OAICf15F7B37usRGaBMtwx2RiemQp7bKw=;
- b=FO1iG6zbsYukKX+SAjSsPu0jpr+wkRtWoRP8Iq7nH+i8XZk7k0mo6PmECja2w9M2NR
- iY0hI31z7UFqp9Z9+EfF9Fj4G5Sw290ObYVSAogPxRqba4GyFc1DEmE3pm3uOZOwWxau
- Ulxsk5A3x9SkRzjLVIcFruxRkStAqgKyfZOHdNXm9KAK1GYzBtcJHiKBcdSaOQVzRF++
- 4ede+6JfimqM0iYX+bOc/PHL7wLFUCe+818i7PVh8GYw/ntLwqJbkBsatm/diGN9C1OM
- vub/E6UZ+HTvaSxzxyIDsQm9JEcUAuKyXJ41SO8kCaCP4vPtqhFOWqSARi6S4r3S3c5l
- /RYg==
-X-Gm-Message-State: APjAAAXhLn2GPmzK9dRolgn7SxlHRuARl088J79cqWxtF0mMbz78RWdr
- kqWIRmpV9rNILbOmN57UwBlSF75TgPH9k2CF9DYAWSzg
-X-Google-Smtp-Source: APXvYqzJTI+pV0lpkXpHWmvTWLRV/joN7GaS8cDTUnRKM6dbUvszagnJ7AGD+/iGyUVb+Mwbt/tdEjXurDtlVGC+2Xs=
-X-Received: by 2002:a9d:7dd0:: with SMTP id k16mr7324117otn.53.1570444034217; 
- Mon, 07 Oct 2019 03:27:14 -0700 (PDT)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c6271b4b
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 12 Nov 2019 04:38:24 +0000 (UTC)
+Received: from sonic305-1.consmr.mail.bf2.yahoo.com
+ (sonic305-1.consmr.mail.bf2.yahoo.com [74.6.133.40])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 530d055f
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 12 Nov 2019 04:38:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
+ t=1573533503; bh=u9LRMejViL4OZkzhEW5J24J3KzijcgaMR7WHNWeBeLk=;
+ h=Date:From:To:Subject:References:From:Subject;
+ b=cRvXqV+KQtk1QIxUqpcwlFWn7BzPIHgsPLOJ6BLI9XzK8St2YLMXLpEsVtAyePVypn/BUPKjJyYkrj4iNTKumH0JqRJtLggefsohVxihkQ09MFpc219IUbidqBL+wmerLUc4aJ3YWOGpew8g+fz/JZq0Rwi2ARLv8LUnGaV5VLq/JcyRcpNaOnT2wU/FhGJK6yFHySdPyJtQN1M9LrXU2O/NnqUw6Ic3vqqwUoNAt2sOIKF3PxcCi7GfYJheNi0Zj4Nqo/OMl1WCkoGV3XhJGjGqmiHKdOwe/HFaji3RVYTInUmmmdKuTU8BGs1cQMh5ppFudesFgreDh9FSgorojw==
+X-YMail-OSG: 5EyJmjcVM1lN2PVD7LI5wV46w8NUtMtOen3MWUdtG9kqMni3gTnYg3nvMMdfHd2
+ _E7CBD3.76pI0sEEkhKdJfIGRsj_C1ff4Tdpa4dQbdWEBhA_Md3w8dwEQtr3vaN8Oi.hgM2tING2
+ MP4QSIKFioCrVf6IsfNQ.rxfL46wqXZunDKYu2MTVeJGqq0GaAyKwfE4T_oH5BU6oO_hUNDolC0C
+ UbFaRNTiQjyiQ2BPA2SvhMdbT_QToxjP9bnsoE37oa474spwvJ2u4YIxulFDvEM9YWKNCUXbM8Q2
+ sSI_SmE9KD6HBFGDmkI3qH..K6YN7Jfe8pxXCY1QqcwlVHcuzljDzh2tEoEl8kDfFL2PrVfezhq1
+ 3FbHNdmuc3TTk.8moHgouXIrPydPAmyDfJJeB8IahEgOo7xg6yhJqsdQZ6guITQNC4djXd8UgZPz
+ 9TWruaZbG.tznV8jeBxdzKPURVH3vPAhtlFVNe4SyGwiHrs4JGDgc1.AMM9gx9r3l1tiAQigOiLj
+ h.V95fOCe8eZNko8Oa17Ms3lxnK1t5fyCU04cedFO8_kpkMXolkGO2fs58EY.7anR0VI4YK8WiZ.
+ N0gDA5gRe3eLqvAQL.oSZ72qpxU06bbAHetoEGM6bjCZg_7og_NLWUqZPNOoJsKsjYpOYDQ9Jgp9
+ sO6sOO.MgRvfoqUl72uQ_ByoWuHjBaGSaOj2XORhxU0P1ouIRU8c4ZGerIs.zW8qsCe.zSiP3Ch4
+ o_cDKEWdew3HWi5VybmLh2MKPhPUZ8aPf.RDjxLL.77iLI.8nTzHyeF9jpKhdLd_UGWFo9huJVlI
+ _YYwBhJpFGZ9a6b4vEyNgJ9hUzmNfs.TMdB9PuTTCZSc2jUs0WF7S1Sp.RPr75eAnXxY0rp3ksYt
+ Tj6JJ_wJCzhCk5KjJCx1jI076LiY7xjf9OB.DhQDmynLdQCxWJ_A_zuPqnbOyvNJmsQhaHZdp837
+ zIB.8ZulUdn0g3QUK.KVB1wxuXn5tKgL9okPtVwgkCmGw.jIraCk0erhpx62kyginpqoPi.HuHLD
+ F.Exr32ahRUDJZsno2X0P.fehsylj2_IyTKDV8zOFdOp9y0MydO44nFIdFt9EVtMBsFmoazTgSg7
+ FzWRL2M86hw8VMX8TFMpcbVT.rVCtOah_zAG32R4j.f5IAo9eDzX3rkVqIJLfi4xHRe7bx3ts9A.
+ Ugkk0Sb3sX.PtHWugwcs8vkV6YAgR6.Tc9KdcUYYvJwFLMVB.CLyr1sMDfrhP68n9fe4s6s0YSIx
+ rj178V9Nr0sk9XEzeN_dfg2oYox388ArGm.P807qVKt5VqmzWP5yF2sUB1UVN51Z66js_WVqnmWo
+ pUZPCliB6iiy6VCj7VlEfU9VSDFnV7Q--
+Received: from sonic.gate.mail.ne1.yahoo.com by
+ sonic305.consmr.mail.bf2.yahoo.com with HTTP; Tue, 12 Nov 2019 04:38:23 +0000
+Date: Tue, 12 Nov 2019 04:38:22 +0000 (UTC)
+From: Richard Reiner <rreiner3@yahoo.com>
+To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+Message-ID: <2078146812.1909563.1573533502212@mail.yahoo.com>
+Subject: Windows client "Unable to create Wintun device"
 MIME-Version: 1.0
-From: Unnamed Road <semenenvy@gmail.com>
-Date: Mon, 7 Oct 2019 13:27:04 +0300
-Message-ID: <CAKHog22jaZrMKjf6Gd9pKNxvDATtv4EHoDehbLSUVgVBJY7oeg@mail.gmail.com>
-Subject: Wireguard changes the IP address of the destination after a while and
- the session breaks.
-To: wireguard@lists.zx2c4.com
-X-Mailman-Approved-At: Wed, 27 Nov 2019 10:38:01 +0100
+References: <2078146812.1909563.1573533502212.ref@mail.yahoo.com>
+X-Mailer: WebService/1.1.14680 YMailNorrin Mozilla/5.0 (Windows NT 10.0; Win64;
+ x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97
+ Safari/537.36
+X-Mailman-Approved-At: Wed, 27 Nov 2019 10:38:54 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -75,107 +79,80 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============6989588555112750854=="
+Content-Type: multipart/mixed; boundary="===============6651516960042618669=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============6989588555112750854==
-Content-Type: multipart/alternative; boundary="000000000000cc9b2c05944f7ed2"
+--===============6651516960042618669==
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_1909562_1610028748.1573533502211"
+Content-Length: 3976
 
---000000000000cc9b2c05944f7ed2
-Content-Type: text/plain; charset="UTF-8"
-
-Hello to all!
-
-I encountered a problem while using Wireguard. Here is my traffic dump
-
-tcpdump -vnr wg_02-10-2019_03-17-03.pcap | grep 10.10.10.12 | head -n 10
-reading from file wg_02-10-2019_03-17-03.pcap, link-type EN10MB (Ethernet)
-    10.10.10.225.49267 > 10.10.10.12.https: UDP, length 96
-    10.10.10.12.https > 10.10.10.225.49267: UDP, length 96
-    10.10.10.225.49267 > 10.10.10.12.https: UDP, length 96
-    10.10.10.12.https > 10.10.10.225.49267: UDP, length 96
-    10.10.10.12.https > 10.10.10.225.49267: UDP, length 96
-
-tcpdump -vnr wg_02-10-2019_03-47-03.pcap | grep 10.10.10.10 | head -n 10
-reading from file wg_02-10-2019_03-47-03.pcap, link-type EN10MB (Ethernet)
-    10.10.10.10.https > 10.10.10.225.49267: UDP, length 148
-    10.10.10.10.https > 10.10.10.225.49267: UDP, length 96
-    10.10.10.10.https > 10.10.10.225.49267: UDP, length 96
-    10.10.10.10.https > 10.10.10.225.49267: UDP, length 148
-    10.10.10.10.https > 10.10.10.225.49267: UDP, length 96
-    10.10.10.10.https > 10.10.10.225.49267: UDP, length 96
-
-In this place (02-10-2019_03-47-03) where the address in the dump changes
-on 10.10.10.10 and my session breaks.
-
-Where is the IP address 10.10.10.12/32 in lo interface (CentOS7) and
-10.10.10.10/30 is enp0s25 and i am using OSPF and p2p session with another
-IP / 30 (ASBR)
-
- netstat -puntal | grep 443
-
-udp        0      0 0.0.0.0:443             0.0.0.0:*
-    -
-udp6       0      0 :::443                  :::*
-     -
-
-10.10.10.225  - client with Windows 7 and settings
-[Peer]
-PublicKey = key
-AllowedIPs = 0.0.0.0/1, 128.0.0.0/1
-EndPoint = 10.10.10.12:443
-PersistentKeepAlive = 30
-
-What am I doing wrong? Why does the destination address change?
-
---000000000000cc9b2c05944f7ed2
-Content-Type: text/html; charset="UTF-8"
+------=_Part_1909562_1610028748.1573533502211
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">Hello to all!<br><br>I encountered a problem while using W=
-ireguard. Here is my traffic dump<div><br><div>tcpdump -vnr wg_02-10-2019_0=
-3-17-03.pcap | grep 10.10.10.12 | head -n 10<br>reading from file wg_02-10-=
-2019_03-17-03.pcap, link-type EN10MB (Ethernet)<br>=C2=A0 =C2=A0 10.10.10.2=
-25.49267 &gt; 10.10.10.12.https: UDP, length 96<br>=C2=A0 =C2=A0 10.10.10.1=
-2.https &gt; 10.10.10.225.49267: UDP, length 96<br>=C2=A0 =C2=A0 10.10.10.2=
-25.49267 &gt; 10.10.10.12.https: UDP, length 96<br>=C2=A0 =C2=A0 10.10.10.1=
-2.https &gt; 10.10.10.225.49267: UDP, length 96<br>=C2=A0 =C2=A0 10.10.10.1=
-2.https &gt; 10.10.10.225.49267: UDP, length 96<br><br>tcpdump -vnr wg_02-1=
-0-2019_03-47-03.pcap | grep 10.10.10.10 | head -n 10<br>reading from file w=
-g_02-10-2019_03-47-03.pcap, link-type EN10MB (Ethernet)<br>=C2=A0 =C2=A0 10=
-.10.10.10.https &gt; 10.10.10.225.49267: UDP, length 148<br>=C2=A0 =C2=A0 1=
-0.10.10.10.https &gt; 10.10.10.225.49267: UDP, length 96<br>=C2=A0 =C2=A0 1=
-0.10.10.10.https &gt; 10.10.10.225.49267: UDP, length 96<br>=C2=A0 =C2=A0 1=
-0.10.10.10.https &gt; 10.10.10.225.49267: UDP, length 148<br>=C2=A0 =C2=A0 =
-10.10.10.10.https &gt; 10.10.10.225.49267: UDP, length 96<br>=C2=A0 =C2=A0 =
-10.10.10.10.https &gt; 10.10.10.225.49267: UDP, length 96<br></div><div><br=
-></div><div>In this place (02-10-2019_03-47-03) where the address in the du=
-mp changes on 10.10.10.10 and my session breaks.</div><div><br></div><div>W=
-here is the IP address=C2=A0<a href=3D"http://10.10.10.12/32" target=3D"_bl=
-ank">10.10.10.12/32</a>=C2=A0in=C2=A0lo interface (CentOS7) and=C2=A0<a hre=
-f=3D"http://10.10.10.10/30" target=3D"_blank">10.10.10.10/30</a>=C2=A0is=C2=
-=A0enp0s25 and i am using OSPF and p2p session with another IP / 30 (ASBR)<=
-br></div><div><br></div><div>=C2=A0netstat -puntal | grep 443<br></div><div=
-><br></div><div>udp =C2=A0 =C2=A0 =C2=A0 =C2=A00 =C2=A0 =C2=A0 =C2=A00=C2=
-=A0<a href=3D"http://0.0.0.0:443/" target=3D"_blank">0.0.0.0:443</a>=C2=A0=
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 0.0.0.0:* =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -<br>=
-udp6 =C2=A0 =C2=A0 =C2=A0 0 =C2=A0 =C2=A0 =C2=A00 :::443 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0:::* =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0-<br></div><div><br></div><div>10.10.10.225=C2=A0 -=C2=A0clien=
-t with Windows 7 and settings</div><div>[Peer]<br></div><div>PublicKey =3D =
-key</div><div>AllowedIPs =3D=C2=A0<a href=3D"http://0.0.0.0/1" target=3D"_b=
-lank">0.0.0.0/1</a>,=C2=A0<a href=3D"http://128.0.0.0/1" target=3D"_blank">=
-128.0.0.0/1</a></div><div>EndPoint =3D=C2=A0<a href=3D"http://10.10.10.12:4=
-43/" target=3D"_blank">10.10.10.12:443</a></div><div>PersistentKeepAlive =
-=3D 30</div><div><br></div><div>What am I doing wrong? Why does the destina=
-tion address change?</div></div></div>
+On one of my machines, the Wireguard Windows client 0.0.35 was previously=
+=C2=A0working well, but as of today whenever attempting to activate any tun=
+nel it generates errors with log messages like:
+=C2=A0 2019-11-11 17:32:48.033: [TUN] [tun22] Unable to create Wintun devic=
+e: Unable to create Wintun interface: GetStringValueWait(NetCfgInstanceId) =
+failed: Timeout waiting for registry value
+An uninstall - reboot - reinstall has not corrected this/
 
---000000000000cc9b2c05944f7ed2--
+The affected machine has received some Windows 10 updates recently as well =
+as a VMware Player update.But another machine with the same software instal=
+led works fine.
+Any thoughts=C2=A0or suggestions?
 
---===============6989588555112750854==
+
+------=_Part_1909562_1610028748.1573533502211
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<html><head></head><body><div class=3D"ydp6836c165yahoo-style-wrap" style=
+=3D"font-family:Helvetica Neue, Helvetica, Arial, sans-serif;font-size:16px=
+;"><div dir=3D"ltr" data-setdir=3D"false"><div><div class=3D"ydpd9bbaf35adn=
+ ydpd9bbaf35ads" data-message-id=3D"#msg-a:r-1579899094284406921" data-lega=
+cy-message-id=3D"16e5dc0f2704ef04" style=3D"border-left: none; padding: 0px=
+; color: rgb(34, 34, 34); font-family: Roboto, RobotoDraft, Helvetica, Aria=
+l, sans-serif; font-size: medium;"><div class=3D"ydpd9bbaf35gs" style=3D"ma=
+rgin: 0px; padding: 0px 0px 20px; width: 1084.57px;"><div><div class=3D"ydp=
+d9bbaf35ii ydpd9bbaf35gt" style=3D"direction: ltr; margin: 8px 0px 0px; pad=
+ding: 0px; position: relative;"><div class=3D"ydpd9bbaf35a3s ydpd9bbaf35aXj=
+CH" style=3D"font-stretch: normal; font-size: small; line-height: 1.5; font=
+-family: Arial, Helvetica, sans-serif;"><div dir=3D"ltr"><div>On one of my =
+machines, the Wireguard Windows client 0.0.35 was previously&nbsp;working w=
+ell, but as of today whenever attempting to activate any tunnel it generate=
+s errors with log messages like:</div><div dir=3D"ltr"><br></div><div dir=
+=3D"ltr"><div>&nbsp; 2019-11-11 17:32:48.033: [TUN] [tun22] Unable to creat=
+e Wintun device: Unable to create Wintun interface: GetStringValueWait(NetC=
+fgInstanceId) failed: Timeout waiting for registry value</div><div><br styl=
+e=3D"color: rgb(0, 0, 0); font-family: Helvetica Neue, Helvetica, Arial, sa=
+ns-serif; font-size: 16px;"></div><div></div><div>An uninstall - reboot - r=
+einstall has not corrected this/<br></div><div><br></div><div>The affected =
+machine has received some Windows 10 updates recently as well as a VMware P=
+layer update.</div><div>But another machine with the same software installe=
+d works fine.</div><div><br></div><div>Any thoughts&nbsp;or suggestions?</d=
+iv><div class=3D"ydpd9bbaf35yj6qo"></div><div class=3D"ydpd9bbaf35adL"><br>=
+</div></div></div><div class=3D"ydpd9bbaf35adL"></div></div></div><div clas=
+s=3D"ydpd9bbaf35hi" style=3D"border-bottom-left-radius: 1px; border-bottom-=
+right-radius: 1px; padding: 0px; width: auto; background: rgb(242, 242, 242=
+); margin: 0px;"></div></div></div><div class=3D"ydpd9bbaf35ajx" style=3D"c=
+lear: both;"></div></div><div class=3D"ydpd9bbaf35gA ydpd9bbaf35gt ydpd9bba=
+f35acV" style=3D"padding: 0px; width: auto; border-bottom-left-radius: 0px;=
+ border-bottom-right-radius: 0px; border-top: none; margin: 0px; background=
+-image: initial; background-position: initial; background-size: initial; ba=
+ckground-repeat: initial; background-attachment: initial; background-origin=
+: initial; background-clip: initial; color: rgb(34, 34, 34); font-family: R=
+oboto, RobotoDraft, Helvetica, Arial, sans-serif;"><div class=3D"ydpd9bbaf3=
+5gB ydpd9bbaf35xu" style=3D"border-top: 0px; padding: 0px;"><div class=3D"y=
+dpd9bbaf35ip ydpd9bbaf35iq" style=3D"clear: both; margin: 0px; padding: 16p=
+x 0px; border-top: none;"></div></div></div></div><br></div></div></body></=
+html>
+------=_Part_1909562_1610028748.1573533502211--
+
+--===============6651516960042618669==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -186,4 +163,4 @@ WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---===============6989588555112750854==--
+--===============6651516960042618669==--
