@@ -2,54 +2,56 @@ Return-Path: <SRS0=OnWR=ZT=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.3 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	HTML_MESSAGE,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B963C432C0
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 27 Nov 2019 09:43:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 00B76C43215
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 27 Nov 2019 09:43:21 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 5054920678
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 27 Nov 2019 09:43:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 4893920678
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 27 Nov 2019 09:43:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="qv40GA/K"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 5054920678
-Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=protonmail.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=localdomain.pl header.i=@localdomain.pl header.b="OGdikMFj"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 4893920678
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=localdomain.pl
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ab569458;
-	Wed, 27 Nov 2019 09:43:02 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 54693b96;
+	Wed, 27 Nov 2019 09:43:03 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 56a01f26
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a0058a95
  for <wireguard@lists.zx2c4.com>;
- Sat, 26 Oct 2019 17:59:58 +0000 (UTC)
-Received: from mail-40133.protonmail.ch (mail-40133.protonmail.ch
- [185.70.40.133])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id efa258d5
+ Sun, 17 Nov 2019 13:59:38 +0000 (UTC)
+Received: from smtp.megiteam.pl (smtp.megiteam.pl [31.186.83.105])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 460b2256
  for <wireguard@lists.zx2c4.com>;
- Sat, 26 Oct 2019 17:59:58 +0000 (UTC)
-Date: Sat, 26 Oct 2019 17:59:50 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
- s=default; t=1572112796;
- bh=SbdctSxuSlRXzc/wBSL8ud7+mZ6I4x36ghYD9D2KhYw=;
- h=Date:To:From:Reply-To:Subject:Feedback-ID:From;
- b=qv40GA/KD3Qkk0760RMmimdmCA/n6N01c3rIvynyPJJ1KhoxP6yyFODBiBimFMgU7
- +K+ST+pNKmlS9F6VEqTe5kNuokH22GkGxZgXoKPPFxo4T+KUp+XU3WxTDJ7lddixgI
- w+jHMebGZWmd7uV6nsqOO3od7LMS4Q4xAQvyobSs=
-To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
-From: Renym <Renym@protonmail.com>
-Subject: Wireguard iOS: no route to host [Error]
-Message-ID: <FMFm6l4aMU7yRmIgib2QDFHXVFxEarmC-QqQVIgq7-HaT8fVHsS3G2XSmJewCXQ65AQmyQae6fUT8dWluaGHVdzEzVyYn969_RXBxIRldQ4=@protonmail.com>
-Feedback-ID: sNIRFEmAn7iHZpCBttVAxRjJj7bW1IXA2T5qmVzqC5h4i5WGTaAqRZKHsDTrxYBfaMSbX0L1A9trGqQ6AABJsw==:Ext:ProtonMail
-MIME-Version: 1.0
+ Sun, 17 Nov 2019 13:59:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=localdomain.pl; s=megiteam; h=Message-Id:Date:Subject:To:From;
+ bh=GWiE1I9rbtM1L2cfM47q8lzzGcxYoe60akhn6ohNP7U=; b=OGdikMFj0FYVBo0WjgnrlpHhDB
+ Mqy4vsw+I57Qvgg/dN/ia9KpYO2RcaUMY2WPu73tMHBe4NNDHu4sgY6MbluqILeIzhWdtpP7/PyLq
+ 9Bgv0WFn6pOI0LvGqItxLsJxW0AtwqwFmzFmabQSPsjBW3TWuMcVxAo7obVbK/LPFCdTrONenyvpv
+ J54MQDNS3+nyZuGMJ6YLQXUpNmLyUqTb9bY8yTHiNRVa8i1B9W5E8LtgTCwpklyPsxB2Ig69BxK8p
+ QLCgOT3mYwr5FhjNXm+ZhS5dlxPW12WZbMxRGnpxsUhxlK1fWk4oqTslWhHF7kZp7lX4IbP6mjLwV
+ 7i9wSKpg==;
+Received: from [93.159.154.34] (helo=ubuntu1804.localdomain)
+ by smtp.megiteam.pl with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.86.2_XX) (envelope-from <root@localdomain.pl>)
+ id 1iWL5O-0005Ew-PG
+ for wireguard@lists.zx2c4.com; Sun, 17 Nov 2019 14:59:31 +0100
+From: Grzegorz Nosek <root@localdomain.pl>
+To: wireguard@lists.zx2c4.com
+Subject: [PATCH] Don't delete peers if not needed on `setconf`
+Date: Sun, 17 Nov 2019 05:59:27 -0800
+Message-Id: <20191117135928.3349-1-root@localdomain.pl>
+X-Mailer: git-send-email 2.17.1
 X-Mailman-Approved-At: Wed, 27 Nov 2019 10:43:00 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
-Reply-To: Renym <Renym@protonmail.com>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -58,129 +60,52 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============0632035007463851106=="
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This is a multi-part message in MIME format.
+Disclaimer: this patch has received only very light testing. Consider it
+an invitation to discussion rather than battle-tested production code.
 
---===============0632035007463851106==
-Content-Type: multipart/alternative;
-	boundary="b1_4fd57295e90ac4160673bdf9e7e94134"
+Disclaimer 2: I'm not subscribed, so please CC all replies.
 
-This is a multi-part message in MIME format.
+Disclaimer 3: this is the first email ever I'm sending via git-send-email,
+so please excuse any etiquette breaches :)
 
---b1_4fd57295e90ac4160673bdf9e7e94134
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+Without this patch, `wg setconf` causes a brief outage on the wg interface
+since all peers are removed and have to be readded and redo the handshake.
+I'm running WireGuard in a highly dynamic environment where peers come
+and go and the reloads are frequent enough that the downtime is noticeable
+(several seconds of downtime per minute isn't really acceptable for me).
 
-VG8gV2lyZUd1YXJkIERldmVsb3BlciwKCiAgICBIZWxsbywgV2hlbiBJIHVzZSBXaXJlR3VhcmQg
-Rm9yIGlPUyAoaHR0cHM6Ly9hcHBzLmFwcGxlLmNvbS91cy9hcHAvd2lyZWd1YXJkL2lkMTQ0MTE5
-NTIwOSkgSSBmb3VuZCB0aGF0IGl0IGNvdWxkIG5vdCBjb25uZWN0IHRvIHRoZSBzZXJ2ZXIgc2lk
-ZSBwcm9wZXJseS4gV2hlbiBJIGNoZWNrZWQgdGhlIGxvZ3MgSSBmb3VuZCB0aGlzIGVycm9yLCB3
-aGljaCBpcyBjb25zaXN0ZW50IHdpdGggdGhlIGZlZWRiYWNrIGluIHRoZSBmb2xsb3dpbmcgbGlu
-azoKaHR0cHM6Ly93d3cucmVkZGl0LmNvbS9yL1dpcmVHdWFyZC9jb21tZW50cy9heDNoMGMvZmFp
-bGVkX3RvX3NlbmRfaGFuZHNoYWtlX2luaXRpYXRpb25fb25faW9zLwoKICAgIFdoZW4gSSBmdXJ0
-aGVyIGNoZWNrZWQgdGhlIHByb2JsZW0sIEkgZm91bmQgdGhhdCB0aGVyZSBpcyBubyBXaXJlbGVz
-cyBTZXR0aW5nIG9wdGlvbiBpbiB0aGUgV2lyZUd1YXJkIHNldHRpbmdzIHBhZ2UgaW4gdGhlIGlP
-UyBzZXR0aW5ncy4gSSB1bmRlcnN0YW5kIHRoYXQgdGhpcyBzZXR0aW5nIHdpbGwgb25seSBhcHBl
-YXIgaW4gaU9TIGRldmljZXMgd2l0aCBDZWxsdWxhciBzb2xkIGluIENoaW5hLiBVbmRlciBub3Jt
-YWwgY2lyY3Vtc3RhbmNlcywgQ2hpbmEgcmVnaW9uIGRldmljZXMgd2lsbCBwb3AgdXAgdGhlIHVz
-ZXIgcGVybWlzc2lvbiB0byB1c2UgZGF0YSB3aGVuIGFuIGFwcCBmaXJzdCBydW5zIChZb3UgY2Fu
-IHNlbGVjdDogb2ZmIC8gV0xBTiBPbmx5IC8gV0xBTiAmIENlbGx1bGFyIERhdGEpLCBidXQgV2ly
-ZUd1YXJkIGRvZXMgbm90IHBvcCB1cCB0aGUgYWxlcnQgd2hlbiBpdCBmaXJzdCBydW5zLCBzbyB0
-aGUgV2lyZWxlc3Mgc2V0dGluZyBvcHRpb24gZG9lcyBub3QgYXBwZWFyIGluIHRoZSBpT1Mgc2V0
-dGluZ3MsIGl0IHJlc3VsdHMgaW4gSXQgaXMgV2lyZUd1YXJkIHRoYXQgY2FuIG5ldmVyIHVzZSBh
-bnkgbmV0d29yayAoV0xBTiBhbmQgQ2VsbHVsYXIgRGF0YSkuCgogICAgRnVydGhlciBpbnF1aXJ5
-IGFuZCBsZWFybmluZyByZWxhdGVkIG1hdGVyaWFscywgSSBsZWFybmVkIHRoYXQgaXQgaXMgcG9z
-c2libGUgdGhhdCBXaXJlR3VhcmQgb25seSB1c2VzIHRoZSB1bmRlcmx5aW5nIHNvY2tzIHRvIGNv
-bm5lY3QsIHRoZXJlIGlzIG5vIG9wZXJhdGlvbiB0byBhY3RpdmVseSBjb25uZWN0IHRvIHRoZSBu
-ZXR3b3JrLCBjYXVzaW5nIGlPUyB0byBub3QgcG9wIHVwIGFuIGFsZXJ0LiBUaGlzIHNob3VsZCBi
-ZSBhIHN5c3RlbSBidWcgdGhhdCBoYXMgbm90IGJlZW4gd2VsbCByZXNvbHZlZCBzaW5jZSBpT1Mx
-MC4gSG93ZXZlciwgZHVlIHRvIHRoZSBleHBlcmllbmNlIG9mIHNvbWUgZGV2ZWxvcGVycywgdGhl
-cmUgaXMgYW4gZWFzeSB3YXkgdG8gc29sdmUgdGhpcyBwcm9ibGVtLiBXaGVuIHRoZSBhcHAgZmly
-c3QgcnVucyBvciB0aGVyZSBpcyBhIHJlbGF0ZWQgZXJyb3IsIG9wZW4gYSBVUkwgc2Vzc2lvbiB0
-byBmb3JjZSBpbnRlcm5ldCBhY2Nlc3MgYXR0ZW1wdCwgdGhlbiB0aGUgc3lzdGVtIHdpbGwgcG9w
-IHVwIHRoZSBuZXR3b3JrIHBlcm1pc3Npb24sIGFuZCBhbGwgcHJvYmxlbXMgd2lsbCBiZSBzb2x2
-ZWQuIEhlcmUgaXMgYSBjb2RlIHRvIHNvbHZlIHRoZSBzYW1lIHByb2JsZW0gZm9yIHJlZmVyZW5j
-ZToKaHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9hLzQzNjcwNzgzCgogICAgSSBob3BlIHRoZSBh
-Ym92ZSBpbmZvcm1hdGlvbiBjYW4gaGVscCB5b3Ugc29sdmUgdGhpcyBwcm9ibGVtLiBJIHJlYWxs
-eSBsaWtlIHRoZSBkZXNpZ24gb2YgV2lyZUd1YXJkIGFuZCBpT1MgQXBwLCBJdCBpcyB2ZXJ5IGNv
-bnZlbmllbnQgdG8gdXNlLiBJIGFtIGxvb2tpbmcgZm9yd2FyZCB0byB1cGRhdGluZyBpdCB0byBh
-IHZlcnNpb24gdGhhdCBjYW4gYmUgdXNlZCBub3JtYWxseS4KCiAgICBTaW5jZXJlbHksIEkgd2lz
-aCB5b3UgYWxsIHRoZSBiZXN0IQ==
+Right now I'm working around by using `addconf` instead of `setconf`
+and a bash one-liner in cron to clean the dead peers once in a while[*].
 
+Still, I took a look at the driver code and it looks like it would be pretty
+easy to not remove the peers unless they're really going away:
+1. Mark all peers for potential deletion instead of removing them outright
+2. Unmark any peer touched by set_peer (i.e. present in the netlink message)
+3. Remove all marked peers
 
---b1_4fd57295e90ac4160673bdf9e7e94134
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: base64
+My patch basically does just that.
 
-PGRpdj5UbyBXaXJlR3VhcmQgRGV2ZWxvcGVyLDxicj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2
-PiZuYnNwOyAmbmJzcDsgSGVsbG8sIFdoZW4gSSB1c2UgV2lyZUd1YXJkIEZvciBpT1MgKDxhIGhy
-ZWY9Imh0dHBzOi8vYXBwcy5hcHBsZS5jb20vdXMvYXBwL3dpcmVndWFyZC9pZDE0NDExOTUyMDki
-Pmh0dHBzOi8vYXBwcy5hcHBsZS5jb20vdXMvYXBwL3dpcmVndWFyZC9pZDE0NDExOTUyMDk8L2E+
-KSBJIGZvdW5kIHRoYXQgaXQgY291bGQgbm90IGNvbm5lY3QgdG8gdGhlIHNlcnZlciBzaWRlIHBy
-b3Blcmx5LiBXaGVuIEkgY2hlY2tlZCB0aGUgbG9ncyBJIGZvdW5kIHRoaXMgZXJyb3IsIHdoaWNo
-IGlzIGNvbnNpc3RlbnQgd2l0aCB0aGUgZmVlZGJhY2sgaW4gdGhlIGZvbGxvd2luZyBsaW5rOjxi
-cj48L2Rpdj48ZGl2PjxhIGhyZWY9Imh0dHBzOi8vd3d3LnJlZGRpdC5jb20vci9XaXJlR3VhcmQv
-Y29tbWVudHMvYXgzaDBjL2ZhaWxlZF90b19zZW5kX2hhbmRzaGFrZV9pbml0aWF0aW9uX29uX2lv
-cy8iPmh0dHBzOi8vd3d3LnJlZGRpdC5jb20vci9XaXJlR3VhcmQvY29tbWVudHMvYXgzaDBjL2Zh
-aWxlZF90b19zZW5kX2hhbmRzaGFrZV9pbml0aWF0aW9uX29uX2lvcy88L2E+PGJyPjwvZGl2Pjxk
-aXY+PGJyPjwvZGl2PjxkaXY+Jm5ic3A7ICZuYnNwOyBXaGVuIEkgZnVydGhlciBjaGVja2VkIHRo
-ZSBwcm9ibGVtLCBJIGZvdW5kIHRoYXQgdGhlcmUgaXMgbm8gV2lyZWxlc3MgU2V0dGluZyBvcHRp
-b24gaW4gdGhlIFdpcmVHdWFyZCBzZXR0aW5ncyBwYWdlIGluIHRoZSBpT1Mgc2V0dGluZ3MuIEkg
-dW5kZXJzdGFuZCB0aGF0IHRoaXMgc2V0dGluZyB3aWxsIG9ubHkgYXBwZWFyIGluIGlPUyBkZXZp
-Y2VzIHdpdGgmbmJzcDtDZWxsdWxhciBzb2xkIGluIENoaW5hLiBVbmRlciBub3JtYWwgY2lyY3Vt
-c3RhbmNlcywgQ2hpbmEgcmVnaW9uIGRldmljZXMgd2lsbCBwb3AgdXAgdGhlIHVzZXIgcGVybWlz
-c2lvbiB0byB1c2UgZGF0YSB3aGVuIGFuIGFwcCBmaXJzdCBydW5zIChZb3UgY2FuIHNlbGVjdDog
-b2ZmIC8gV0xBTiBPbmx5IC8gV0xBTiAmYW1wOyBDZWxsdWxhciBEYXRhKSwgYnV0IFdpcmVHdWFy
-ZCBkb2VzIG5vdCBwb3AgdXAgdGhlIDxzcGFuIHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOnJnYigy
-NTUsIDI1NSwgMjU1KSI+PHNwYW4gc3R5bGU9ImNvbG9yOnJnYigzNiwgMzksIDQxKSI+PHNwYW4g
-c3R5bGU9ImZvbnQtZmFtaWx5OkFyaWFsLCAmcXVvdDtIZWx2ZXRpY2EgTmV1ZSZxdW90OywgSGVs
-dmV0aWNhLCBzYW5zLXNlcmlmIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjE1cHgiPmFsZXJ0PC9z
-cGFuPjwvc3Bhbj48L3NwYW4+PC9zcGFuPiB3aGVuIGl0IGZpcnN0IHJ1bnMsIHNvIHRoZSBXaXJl
-bGVzcyBzZXR0aW5nIG9wdGlvbiA8c3BhbiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjpyZ2IoMjU1
-LCAyNTUsIDI1NSkiPjxzcGFuIHN0eWxlPSJjb2xvcjpyZ2IoNTEsIDUxLCA1MSkiPjxzcGFuIHN0
-eWxlPSJmb250LWZhbWlseTphcmlhbCI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxM3B4Ij5kb2Vz
-IG5vdDwvc3Bhbj48L3NwYW4+PC9zcGFuPjwvc3Bhbj4mbmJzcDthcHBlYXIgaW4gdGhlIGlPUyBz
-ZXR0aW5ncywgaXQgcmVzdWx0cyBpbiBJdCBpcyBXaXJlR3VhcmQgdGhhdCBjYW4gbmV2ZXIgdXNl
-IGFueSBuZXR3b3JrIChXTEFOIGFuZCBDZWxsdWxhciBEYXRhKS48YnI+PC9kaXY+PGRpdj48YnI+
-PC9kaXY+PGRpdj4mbmJzcDsgJm5ic3A7IEZ1cnRoZXIgaW5xdWlyeSBhbmQgbGVhcm5pbmcgcmVs
-YXRlZCBtYXRlcmlhbHMsIEkgbGVhcm5lZCB0aGF0IGl0IGlzIHBvc3NpYmxlIHRoYXQgV2lyZUd1
-YXJkIG9ubHkgdXNlcyB0aGUgdW5kZXJseWluZyBzb2NrcyB0byBjb25uZWN0LCB0aGVyZSBpcyBu
-byBvcGVyYXRpb24gdG8gYWN0aXZlbHkgY29ubmVjdCB0byB0aGUgbmV0d29yaywgY2F1c2luZyBp
-T1MgdG8gbm90IHBvcCB1cCBhbiBhbGVydC4gVGhpcyBzaG91bGQgYmUgYSBzeXN0ZW0gYnVnIHRo
-YXQgaGFzIG5vdCBiZWVuIHdlbGwgcmVzb2x2ZWQgc2luY2UgaU9TMTAuIEhvd2V2ZXIsIGR1ZSB0
-byB0aGUgZXhwZXJpZW5jZSBvZiBzb21lIGRldmVsb3BlcnMsIHRoZXJlIGlzIGFuIGVhc3kgd2F5
-IHRvIHNvbHZlIHRoaXMgcHJvYmxlbS4gV2hlbiB0aGUgYXBwIGZpcnN0IHJ1bnMgb3IgdGhlcmUg
-aXMgYSByZWxhdGVkIGVycm9yLCBvcGVuIGEgVVJMIHNlc3Npb24gdG8gZm9yY2UgaW50ZXJuZXQg
-YWNjZXNzIGF0dGVtcHQsIHRoZW4gdGhlIHN5c3RlbSB3aWxsIHBvcCB1cCB0aGUgbmV0d29yayBw
-ZXJtaXNzaW9uLCBhbmQgYWxsIHByb2JsZW1zIHdpbGwgYmUgc29sdmVkLiZuYnNwO0hlcmUgaXMg
-YSBjb2RlIHRvIHNvbHZlIHRoZSBzYW1lIHByb2JsZW0gZm9yIHJlZmVyZW5jZTombmJzcDs8YnI+
-PC9kaXY+PGRpdj48YSBocmVmPSJodHRwczovL3N0YWNrb3ZlcmZsb3cuY29tL2EvNDM2NzA3ODMi
-Pmh0dHBzOi8vc3RhY2tvdmVyZmxvdy5jb20vYS80MzY3MDc4MzwvYT48YnI+PC9kaXY+PGRpdj48
-YnI+PC9kaXY+PGRpdj4mbmJzcDsgJm5ic3A7Jm5ic3A7SSBob3BlIHRoZSBhYm92ZSBpbmZvcm1h
-dGlvbiBjYW4gaGVscCB5b3Ugc29sdmUgdGhpcyBwcm9ibGVtLiBJIHJlYWxseSBsaWtlIHRoZSBk
-ZXNpZ24gb2YgV2lyZUd1YXJkIGFuZCBpT1MgQXBwLCBJdCBpcyB2ZXJ5IGNvbnZlbmllbnQgdG8g
-dXNlLiBJIGFtIGxvb2tpbmcgZm9yd2FyZCB0byB1cGRhdGluZyBpdCB0byBhIHZlcnNpb24gdGhh
-dCBjYW4gYmUgdXNlZCBub3JtYWxseS48YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj4mbmJz
-cDsgJm5ic3A7IFNpbmNlcmVseSwgSSB3aXNoIHlvdSBhbGwgdGhlIGJlc3QhPGJyPjwvZGl2Pg==
+Please take a look and let me know what you think.
 
+Thanks,
+ Grzegorz Nosek
 
+* Here's the one-liner if anyone cares :)
 
---b1_4fd57295e90ac4160673bdf9e7e94134--
+#!/bin/bash
 
+INTERFACE=${1:-wg0}
 
---===============0632035007463851106==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+diff -u <(wg showconf $INTERFACE | grep PublicKey | sort) <(grep PublicKey /etc/wireguard/$INTERFACE.conf | sort) | grep ^-PublicKey | awk '{ print $3 }' | xargs -iPEER wg set $INTERFACE peer PEER remove
+
 
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
-
---===============0632035007463851106==--
-
