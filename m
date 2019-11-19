@@ -2,65 +2,53 @@ Return-Path: <SRS0=p9ce=ZL=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=0.6 required=3.0 tests=DKIM_ADSP_ALL,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72D79C432C0
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 19 Nov 2019 15:26:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EC4CCC432C3
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 19 Nov 2019 16:07:23 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id C5110222D1
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 19 Nov 2019 15:26:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 101F322362
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 19 Nov 2019 16:07:22 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="XmWGQjZK"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org C5110222D1
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=toke.dk header.i=@toke.dk header.b="dsKpxv7Z"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 101F322362
+Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=toke.dk
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 94f4195b;
-	Tue, 19 Nov 2019 15:26:11 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b28cb6e9;
+	Tue, 19 Nov 2019 16:07:22 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a992d044
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a8f8384e
  for <wireguard@lists.zx2c4.com>;
- Tue, 19 Nov 2019 15:26:09 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 51ead74d
+ Tue, 19 Nov 2019 16:07:20 +0000 (UTC)
+Received: from mail.toke.dk (mail.toke.dk [IPv6:2a00:7660:6da:2001::664])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2f252b81
  for <wireguard@lists.zx2c4.com>;
- Tue, 19 Nov 2019 15:26:09 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4cee1b7b
- for <wireguard@lists.zx2c4.com>;
- Tue, 19 Nov 2019 14:33:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to
- :content-type; s=mail; bh=58tOpoWuGOPtrL5dDo0A73bkNVw=; b=XmWGQj
- ZKuwg49MyntardA3u40MgoCd2HbXZkbaXmfOd9Tox8S/6kArm+XIXmwMWO/2zDL9
- h0ia/u3Lx4Lc/xwK3JdaWAMPMwKnPrxaT2G/i5fbn2P4T+OLEqmjtzZLaLIRYt+E
- F5fKcp4vJW0L9LQ8gb1TuYmiZhD0ARvxA8Yy2+20eMVDYB8u8d6A+I9Q24vBlodU
- ddGSLhdQ/rntiwkR5i5cn4xoo8ksDTI1hMS4/qk0ZMB/gwLs4DyXWlAZJszbjQQ4
- /AURjA8Js+pGML41yhTuRkMJJVqgYmDfv/M+a/+/gF4TlFORl5+faa6kYJ0j0NbY
- +4w8bphJxpI/JtDg==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 3a6b784b
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Tue, 19 Nov 2019 14:33:20 +0000 (UTC)
-Received: by mail-ot1-f46.google.com with SMTP id l14so18166634oti.10
- for <wireguard@lists.zx2c4.com>; Tue, 19 Nov 2019 07:26:09 -0800 (PST)
-X-Gm-Message-State: APjAAAX08UrbtV7n1jdH4Z+fYqNurtfUaxsXCQIr/YsAcquN/X1kKgLm
- Ir5ifzbBCb5N/zzUSNMCirvIuXhVjWjSosrnru8=
-X-Google-Smtp-Source: APXvYqwl7CLysDPXwOEChVbDSAmHkYa0OdbIfyBXp7E2XNPysMNhzSBfqgSeFbWk9r56RZvRXzZTC68guhjP/Xpgw2Y=
-X-Received: by 2002:a9d:6a81:: with SMTP id l1mr4337152otq.369.1574177168923; 
- Tue, 19 Nov 2019 07:26:08 -0800 (PST)
-MIME-Version: 1.0
-References: <CAHmME9pmfZAp5zd9BDLFc2fWUhtzZcjYZc2atTPTyNFFmEdHLg@mail.gmail.com>
-In-Reply-To: <CAHmME9pmfZAp5zd9BDLFc2fWUhtzZcjYZc2atTPTyNFFmEdHLg@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 19 Nov 2019 16:25:57 +0100
-X-Gmail-Original-Message-ID: <CAHmME9pPDQxVO5m1gRzWkDn5GfRn7yDdNa3_hy7QC-1RmE0H=A@mail.gmail.com>
-Message-ID: <CAHmME9pPDQxVO5m1gRzWkDn5GfRn7yDdNa3_hy7QC-1RmE0H=A@mail.gmail.com>
+ Tue, 19 Nov 2019 16:07:19 +0000 (UTC)
+From: Toke =?utf-8?Q?H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=toke.dk; s=20161023;
+ t=1574179638; bh=8ruBbKtu+CPus2bgIZqZ5JYDyMtq4FGDZ/fRY1obxOI=;
+ h=From:To:Subject:In-Reply-To:References:Date:From;
+ b=dsKpxv7ZcrEooUc2GNfJ7Y/s8hC464Oa5PVCAGDvVHoDBSfJ52lYQtcTO93aI/Ff8
+ ZkUd7/uf1GlCroG/mqI2JuGPpYItcg+qmXzxjmKCj3BJP1aOvQ0o2Jx2vsnvRlWC6p
+ lZcSaxn8wFVb4Yyr5WMjyPylHrZJGGfveAduAnrm8i3bvFpB+DP4Rjv2dDsm7Q2ATu
+ WZ21CRewR9Z71xxph0JRF2BN1dnNW9hcJfb2klhMB/MwZdz2w45FwJHG74tcZxajJv
+ Bl6lrKWwvL7Gb4grMG8TiR2SsqR1Zc0GQIRgzTkBFfZVfY8vjm5+rm5KXmTgqaAVzP
+ oxtmV+b4x5QYQ==
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
 Subject: Re: WireGuard to port to existing Crypto API
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+In-Reply-To: <CAHmME9pPDQxVO5m1gRzWkDn5GfRn7yDdNa3_hy7QC-1RmE0H=A@mail.gmail.com>
+References: <CAHmME9pmfZAp5zd9BDLFc2fWUhtzZcjYZc2atTPTyNFFmEdHLg@mail.gmail.com>
+ <CAHmME9pPDQxVO5m1gRzWkDn5GfRn7yDdNa3_hy7QC-1RmE0H=A@mail.gmail.com>
+Date: Tue, 19 Nov 2019 17:07:17 +0100
+X-Clacks-Overhead: GNU Terry Pratchett
+Message-ID: <87eey3alze.fsf@toke.dk>
+MIME-Version: 1.0
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -77,30 +65,36 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hey folks,
+"Jason A. Donenfeld" <Jason@zx2c4.com> writes:
 
-Small update on this thread: it turns out that at the same time as I
-was stepping toward compromising and using the old crypto API here
-with this thread, other kernel developers were interested in
-compromising to upstream some aspects of Zinc. The result is that
-everybody took constructive steps toward each other, and the first
-part of Zinc has been merged:
+> Hey folks,
+>
+> Small update on this thread: it turns out that at the same time as I
+> was stepping toward compromising and using the old crypto API here
+> with this thread, other kernel developers were interested in
+> compromising to upstream some aspects of Zinc. The result is that
+> everybody took constructive steps toward each other, and the first
+> part of Zinc has been merged:
+>
+> https://lore.kernel.org/linux-crypto/CAHmME9rxGp439vNYECm85bgibkVyrN7Qc+5v3r8QBmBXPZM=Dg@mail.gmail.com/
+>
+> It's not called "Zinc" any more, and some of the design decisions I
+> liked aren't there, but I think the lion's share of what we were after
+> is there, and a few other pieces should be possible to upstream one at
+> a time.
+>
+> These steps forward should unlock WireGuard upstreaming, which I
+> expect to get rolling again soon. WireGuard is probably mostly okay,
+> but I still do anticipate review with lots of feedback to incorporate,
+> since now there's more impetus for people to take the patch submission
+> seriously. I'll keep this list updated as we move forward.
 
-https://lore.kernel.org/linux-crypto/CAHmME9rxGp439vNYECm85bgibkVyrN7Qc+5v3r8QBmBXPZM=Dg@mail.gmail.com/
+This is great news! I'll keep by eyes peeled for the wireguard
+submission. Do note that net-next closes during the merge window,
+though, so you'll probably have to wait until after 5.5-rc1 is out the
+door to submit that (and so we'll get Wireguard with Linux 5.6).
 
-It's not called "Zinc" any more, and some of the design decisions I
-liked aren't there, but I think the lion's share of what we were after
-is there, and a few other pieces should be possible to upstream one at
-a time.
-
-These steps forward should unlock WireGuard upstreaming, which I
-expect to get rolling again soon. WireGuard is probably mostly okay,
-but I still do anticipate review with lots of feedback to incorporate,
-since now there's more impetus for people to take the patch submission
-seriously. I'll keep this list updated as we move forward.
-
-Regards,
-Jason
+-Toke
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
