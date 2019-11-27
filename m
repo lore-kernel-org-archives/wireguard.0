@@ -6,55 +6,55 @@ X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BFBCFC2D0C9
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 466C5C2D0CA
 	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Dec 2019 09:54:37 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 6500E214AF
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Dec 2019 09:54:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 83642214AF
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Dec 2019 09:54:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=rozman.si header.i=@rozman.si header.b="MDdW9y7x"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 6500E214AF
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=rozman.si header.i=@rozman.si header.b="KhOYTcwu"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 83642214AF
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=rozman.si
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6210b734;
-	Thu, 12 Dec 2019 09:54:35 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 26a0a731;
+	Thu, 12 Dec 2019 09:54:34 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 06438ba4
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c09bf55e
  for <wireguard@lists.zx2c4.com>;
- Wed, 27 Nov 2019 11:27:16 +0000 (UTC)
+ Wed, 27 Nov 2019 10:55:40 +0000 (UTC)
 Received: from pub5.amebis.si (pub5.amebis.si [IPv6:2a00:ee2:209:164::f])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 46d694ea
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ca77f24f
  for <wireguard@lists.zx2c4.com>;
- Wed, 27 Nov 2019 11:27:15 +0000 (UTC)
+ Wed, 27 Nov 2019 10:55:40 +0000 (UTC)
 Received: by pub5.amebis.si (Postfix, from userid 1000)
- id DC5D01002B6F; Wed, 27 Nov 2019 12:27:14 +0100 (CET)
+ id 1C26E1002B6F; Wed, 27 Nov 2019 11:55:38 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rozman.si;
- s=default; t=1574854034;
- bh=yJ6o1MFyYg4HQM9QEDs9jnyEmXchV7hD7IE3TNlGpbo=;
+ s=default; t=1574852138;
+ bh=yJW0KoLKgk8LcdpxOxA6VRmg5XIfQ7qJCMWCGRsTZVc=;
  h=From:To:Subject:Date:References:In-Reply-To:From;
- b=MDdW9y7x3kG5hJieIjrO+0sfs2G8pu2xATaT7gitzFCUYOYTP17ZPZeps/OBLX6yl
- qb4CIBWpm9H4vy8MexZb5pfR9m4EKQGPD6F8x3WIVRN2ONKxeuLODLB21kFemnLAFl
- pS0hVd9HpuTjPRbIeuuLTE3lQI0ynzHwwSUeinA0=
+ b=KhOYTcwuas0Y/N6wdUhJ3Y4pB0XwPlVkRDbq/bUQSBnlklcbLKemuUqERSMB2oNKW
+ 2E3PwC9ZCwXAZBmQokhWp0cTpAWQVHRXnN1czopXzgaaHVdxVQm9xuvLSRS7x31X2M
+ +nPpwOKyCvF+921lE9KWgktUScbQoF6vZPfCdL60=
 Received: from PLANJAVA.amebis.doma (planjava.amebis.doma
  [IPv6:2a00:ee2:209:164::2])
- by pub5.amebis.si (Postfix) with ESMTPS id 2B09E1002F28;
- Wed, 27 Nov 2019 12:27:12 +0100 (CET)
+ by pub5.amebis.si (Postfix) with ESMTPS id 0038D1002F28;
+ Wed, 27 Nov 2019 11:55:34 +0100 (CET)
 Received: from PLANJAVA.amebis.doma ([fe80::a486:6f91:d7b9:9035]) by
  PLANJAVA.amebis.doma ([fe80::a486:6f91:d7b9:9035%17]) with mapi id
- 14.03.0468.000; Wed, 27 Nov 2019 12:27:12 +0100
+ 14.03.0468.000; Wed, 27 Nov 2019 11:55:34 +0100
 From: Simon Rozman <simon@rozman.si>
-To: Chris Bennett <chris@ceegeebee.com>, "wireguard@lists.zx2c4.com"
+To: Alexey Ivanov <alexey.ivanes@gmail.com>, "wireguard@lists.zx2c4.com"
  <wireguard@lists.zx2c4.com>
-Subject: RE: Wireguard for Windows - local administrator necessary?
-Thread-Topic: Wireguard for Windows - local administrator necessary?
-Thread-Index: AQHVpQJHTtkN+79nwk68BneIRNTY5aee2JVA
-Date: Wed, 27 Nov 2019 11:27:10 +0000
-Message-ID: <99D61A626FDA8A4B90A270669121BE10C9B3E6A8@PLANJAVA.amebis.doma>
-References: <CABPTpJBGQcze6b3_tJij8Ysp8zwb_4fyQAEv_fy4Bx9YpVcpRw@mail.gmail.com>
-In-Reply-To: <CABPTpJBGQcze6b3_tJij8Ysp8zwb_4fyQAEv_fy4Bx9YpVcpRw@mail.gmail.com>
+Subject: RE: Wireguard for Windows breaks Task Scheduler
+Thread-Topic: Wireguard for Windows breaks Task Scheduler
+Thread-Index: AQHVpQJFAdUTJA5HqU+9qtScyq1YjKee1teg
+Date: Wed, 27 Nov 2019 10:55:33 +0000
+Message-ID: <99D61A626FDA8A4B90A270669121BE10C9B3E657@PLANJAVA.amebis.doma>
+References: <CAJcUPC7nXZXO6aJYMsEF3TYkLneftvH3VRNUtfVaGjWJTtkvWw@mail.gmail.com>
+In-Reply-To: <CAJcUPC7nXZXO6aJYMsEF3TYkLneftvH3VRNUtfVaGjWJTtkvWw@mail.gmail.com>
 Accept-Language: en-GB, sl-SI, en-US
 Content-Language: en-US
 X-MS-Has-Attach: yes
@@ -73,46 +73,43 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============4450630275595104220=="
+Content-Type: multipart/mixed; boundary="===============8588470251564625347=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============4450630275595104220==
+--===============8588470251564625347==
 Content-Language: en-US
 Content-Type: multipart/signed; protocol="application/x-pkcs7-signature";
 	micalg=2.16.840.1.101.3.4.2.1;
-	boundary="----=_NextPart_000_0018_01D5A51D.FCFF6BD0"
+	boundary="----=_NextPart_000_0011_01D5A519.9228F1E0"
 
-------=_NextPart_000_0018_01D5A51D.FCFF6BD0
+------=_NextPart_000_0011_01D5A519.9228F1E0
 Content-Type: multipart/alternative;
-	boundary="----=_NextPart_001_0019_01D5A51D.FCFF6BD0"
+	boundary="----=_NextPart_001_0012_01D5A519.9228F1E0"
 
 
-------=_NextPart_001_0019_01D5A51D.FCFF6BD0
+------=_NextPart_001_0012_01D5A519.9228F1E0
 Content-Type: text/plain;
 	charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Chris!
+Hi Alexey!
 
 =20
 
-This is WireGuard design. Reconfiguring network - which (dis)connecting =
-VPN is =E2=80=93 is administrative task.
+Unfortunately, this piling of NLA profiles was solved in WireGuard for =
+Windows 10 only. Windows 7 and 8 will create a new NLA entry each time =
+WireGuard connects.
 
 =20
 
-If your organization issues laptops to their employees, the corporate =
-VPN should be up at all times. You don't want them to disconnect from =
-VPN and use those laptops on compromised networks, do you?
+It's the same situation as if you would connect your laptop to 100 or =
+more WiFis in the past.
 
 =20
 
-I did have an issue when roaming laptops to and from corporate WiFi, as =
-the endpoint IP changes =E2=80=93 restarting the tunnel helped, but =
-adding a scheduled task to reset endpoint IP every 2 minutes using =
-wg.exe command line works like a charm here. If that's the reason you =
-would want your users to manipulate WireGuard tunnels?
+You should address your question why so many NLA profiles crash Task =
+Scheduler to Microsoft.
 
 =20
 
@@ -122,37 +119,94 @@ Simon
 
 =20
 
-From: WireGuard <wireguard-bounces@lists.zx2c4.com> On Behalf Of Chris =
-Bennett
-Sent: Thursday, September 26, 2019 4:35 AM
+From: WireGuard <wireguard-bounces@lists.zx2c4.com> On Behalf Of Alexey =
+Ivanov
+Sent: Saturday, November 16, 2019 11:24 PM
 To: wireguard@lists.zx2c4.com
-Subject: Wireguard for Windows - local administrator necessary?
+Subject: Wireguard for Windows breaks Task Scheduler
 
 =20
 
-Hi there,
+Im not exactly sure what wireguard doing to create virtual network =
+adapters in windows, but it's more looks like it can't handle deletion =
+of them properly.=20
+
+This issue easy to reproduce:=20
+
+1.	Create wireguard's tunnels.
+2.	Connect tunnel, disconnect and remove it.
+3.	Repeat it multiple times.
+
+Windows registry will be full of wrong records of these non-existed =
+network connections.
+
+And now try to open Task Scheduler and click on "Create task..." it will =
+crash with log:
 
 =20
 
-I've been experimenting with the use of the Windows Wireguard agent for =
-corporate VPN access.  It's been working really well!
+=D0=B2 =
+Microsoft.Windows.ManagementUI.CombinedControls.INetwork.GetName()
+  =D0=B2 =
+Microsoft.Windows.ManagementUI.CombinedControls.UINetwork.GetUINetwork(IN=
+etwork network)
+  =D0=B2 =
+Microsoft.Windows.ManagementUI.CombinedControls.NetworkListManager.GetNet=
+workList()
+  =D0=B2 =
+Microsoft.Windows.ManagementUI.CombinedControls.ControlTaskConditions.Pop=
+ulateNetworkComboBox()
+  =D0=B2 =
+Microsoft.Windows.ManagementUI.CombinedControls.ControlTaskConditions.Ini=
+tializeConditions()
+  =D0=B2 =
+Microsoft.Windows.ManagementUI.CombinedControls.EditTaskDialog.Initialize=
+View()
+  =D0=B2 =
+Microsoft.Windows.ManagementUI.CombinedControls.EditTaskDialog.Initialize=
+(UITaskFolder folder, String taskName, String title, UserChoice =
+userAction, BaseResultsControl inOwnerView, String inXmlText)
+  =D0=B2 =
+Microsoft.Windows.ManagementUI.CombinedControls.BaseResultsControl.Create=
+Task(UITaskFolder folder, String initialTaskName, String taskXml)
+  =D0=B2 System.Windows.Forms.MenuItem.OnClick(EventArgs e)
+  =D0=B2 System.Windows.Forms.MenuItem.MenuItemData.Execute()
+  =D0=B2 System.Windows.Forms.Command.Invoke()
+  =D0=B2 System.Windows.Forms.Control.WmCommand(Message& m)
+  =D0=B2 System.Windows.Forms.Control.WndProc(Message& m)
+  =D0=B2 System.Windows.Forms.ListView.WndProc(Message& m)
+  =D0=B2 System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 =
+msg, IntPtr wparam, IntPtr lparam)=20
 
 =20
 
-However I've found the logged in user needs local Administrator access =
-to activate and de-activate a tunnel.  Is there any way around this?  Is =
-it in the roadmap to remove this requirement? =20
+So ive googled solution =
+https://answers.microsoft.com/en-us/windows/forum/all/task-scheduler-cras=
+hed/5acab7c5-eb79-48c8-876d-ade321565953?auth=3D1 (Programatix message)
 
 =20
 
-Thanks!
+To resolve the problem,
+    Run regedit
+    Go to HKLM\Software\Microsoft\Windows NT\CurrentVersion\NetworkList
+    Delete everything under the following path,
+        Nla->Cache
+        Nla->IntranetEnabled
+        Nla->Wireless
+        Profiles
+        Signatures->Managed
+        Signatures->Unmanaged
+    Reboot
 
 =20
 
-Chris
+And it actually helps.
+
+Can wireguard just properly handle this "issue" on his own and do not =
+break Task Scheduler application?
 
 
-------=_NextPart_001_0019_01D5A51D.FCFF6BD0
+------=_NextPart_001_0012_01D5A519.9228F1E0
 Content-Type: text/html;
 	charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
@@ -183,11 +237,11 @@ p.MsoNormal, li.MsoNormal, div.MsoNormal
 	font-family:"Calibri",sans-serif;}
 a:link, span.MsoHyperlink
 	{mso-style-priority:99;
-	color:#0563C1;
+	color:blue;
 	text-decoration:underline;}
 a:visited, span.MsoHyperlinkFollowed
 	{mso-style-priority:99;
-	color:#954F72;
+	color:purple;
 	text-decoration:underline;}
 code
 	{mso-style-priority:99;
@@ -213,69 +267,137 @@ span.EmailStyle19
 	margin:70.85pt 70.85pt 70.85pt 70.85pt;}
 div.WordSection1
 	{page:WordSection1;}
+/* List Definitions */
+@list l0
+	{mso-list-id:2100905263;
+	mso-list-template-ids:-1146718990;}
+ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
 --></style><!--[if gte mso 9]><xml>
 <o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
 </xml><![endif]--><!--[if gte mso 9]><xml>
 <o:shapelayout v:ext=3D"edit">
 <o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]--></head><body lang=3DSL =
-link=3D"#0563C1" vlink=3D"#954F72"><div class=3DWordSection1><p =
-class=3DMsoNormal><span lang=3DEN-GB =
-style=3D'mso-fareast-language:EN-US'>Hi Chris!<o:p></o:p></span></p><p =
-class=3DMsoNormal><span lang=3DEN-GB =
+</o:shapelayout></xml><![endif]--></head><body lang=3DSL link=3Dblue =
+vlink=3Dpurple><div class=3DWordSection1><p class=3DMsoNormal><span =
+lang=3DEN-GB style=3D'mso-fareast-language:EN-US'>Hi =
+Alexey!<o:p></o:p></span></p><p class=3DMsoNormal><span lang=3DEN-GB =
 style=3D'mso-fareast-language:EN-US'><o:p>&nbsp;</o:p></span></p><p =
 class=3DMsoNormal><span lang=3DEN-GB =
-style=3D'mso-fareast-language:EN-US'>This is WireGuard design. =
-Reconfiguring network - which (dis)connecting VPN is =E2=80=93 is =
-administrative task.<o:p></o:p></span></p><p class=3DMsoNormal><span =
+style=3D'mso-fareast-language:EN-US'>Unfortunately, this piling of NLA =
+profiles was solved in WireGuard for Windows 10 only. Windows 7 and 8 =
+will create a new NLA entry each time WireGuard =
+connects.<o:p></o:p></span></p><p class=3DMsoNormal><span lang=3DEN-GB =
+style=3D'mso-fareast-language:EN-US'><o:p>&nbsp;</o:p></span></p><p =
+class=3DMsoNormal><span lang=3DEN-GB =
+style=3D'mso-fareast-language:EN-US'>It's the same situation as if you =
+would connect your laptop to 100 or more WiFis in the =
+past.<o:p></o:p></span></p><p class=3DMsoNormal><span lang=3DEN-GB =
+style=3D'mso-fareast-language:EN-US'><o:p>&nbsp;</o:p></span></p><p =
+class=3DMsoNormal><span lang=3DEN-GB =
+style=3D'mso-fareast-language:EN-US'>You should address your question =
+why so many NLA profiles crash Task Scheduler to =
+Microsoft.<o:p></o:p></span></p><p class=3DMsoNormal><span lang=3DEN-GB =
+style=3D'mso-fareast-language:EN-US'><o:p>&nbsp;</o:p></span></p><p =
+class=3DMsoNormal><span lang=3DEN-GB>Best =
+regards,<o:p></o:p></span></p><p class=3DMsoNormal><span =
+lang=3DEN-GB>Simon<o:p></o:p></span></p><p class=3DMsoNormal><span =
 lang=3DEN-GB =
-style=3D'mso-fareast-language:EN-US'><o:p>&nbsp;</o:p></span></p><p =
-class=3DMsoNormal><span lang=3DEN-GB =
-style=3D'mso-fareast-language:EN-US'>If your organization issues laptops =
-to their employees, the corporate VPN should be up at all times. You =
-don't want them to disconnect from VPN and use those laptops on =
-compromised networks, do you?<o:p></o:p></span></p><p =
-class=3DMsoNormal><span lang=3DEN-GB =
-style=3D'mso-fareast-language:EN-US'><o:p>&nbsp;</o:p></span></p><p =
-class=3DMsoNormal><span lang=3DEN-GB =
-style=3D'mso-fareast-language:EN-US'>I did have an issue when roaming =
-laptops to and from corporate WiFi, as the endpoint IP changes =E2=80=93 =
-restarting the tunnel helped, but adding a scheduled task to reset =
-endpoint IP every 2 minutes using wg.exe command line works like a charm =
-here. If that's the reason you would want your users to manipulate =
-WireGuard tunnels?<o:p></o:p></span></p><p class=3DMsoNormal><span =
-style=3D'mso-fareast-language:EN-US'><o:p>&nbsp;</o:p></span></p><p =
-class=3DMsoNormal>Best regards,<o:p></o:p></p><p =
-class=3DMsoNormal>Simon<o:p></o:p></p><p class=3DMsoNormal><span =
 style=3D'mso-fareast-language:EN-US'><o:p>&nbsp;</o:p></span></p><div =
 style=3D'border:none;border-left:solid blue 1.5pt;padding:0cm 0cm 0cm =
 4.0pt'><div><div style=3D'border:none;border-top:solid #E1E1E1 =
 1.0pt;padding:3.0pt 0cm 0cm 0cm'><p class=3DMsoNormal><b><span =
-lang=3DEN-US>From:</span></b><span lang=3DEN-US> WireGuard =
-&lt;wireguard-bounces@lists.zx2c4.com&gt; <b>On Behalf Of </b>Chris =
-Bennett<br><b>Sent:</b> Thursday, September 26, 2019 4:35 =
-AM<br><b>To:</b> wireguard@lists.zx2c4.com<br><b>Subject:</b> Wireguard =
-for Windows - local administrator =
-necessary?<o:p></o:p></span></p></div></div><p =
-class=3DMsoNormal><o:p>&nbsp;</o:p></p><div><p class=3DMsoNormal>Hi =
-there,<o:p></o:p></p><div><p =
-class=3DMsoNormal><o:p>&nbsp;</o:p></p></div><div><p =
-class=3DMsoNormal>I've been experimenting with the use of the Windows =
-Wireguard agent for corporate VPN access.&nbsp; It's been working really =
-well!<o:p></o:p></p></div><div><p =
-class=3DMsoNormal><o:p>&nbsp;</o:p></p></div><div><p =
-class=3DMsoNormal>However I've found the logged in user needs local =
-Administrator access to activate and de-activate a tunnel.&nbsp; Is =
-there any way around this?&nbsp; Is it in the roadmap to remove this =
-requirement?&nbsp;&nbsp;<o:p></o:p></p></div><div><p =
-class=3DMsoNormal><o:p>&nbsp;</o:p></p></div><div><p =
-class=3DMsoNormal>Thanks!<o:p></o:p></p></div><div><p =
-class=3DMsoNormal><o:p>&nbsp;</o:p></p></div><div><p =
-class=3DMsoNormal>Chris<o:p></o:p></p></div></div></div></div></body></ht=
-ml>
-------=_NextPart_001_0019_01D5A51D.FCFF6BD0--
+lang=3DEN-GB>From:</span></b><span lang=3DEN-GB> WireGuard =
+&lt;wireguard-bounces@lists.zx2c4.com&gt; <b>On Behalf Of </b>Alexey =
+Ivanov<br><b>Sent:</b> Saturday, November 16, 2019 11:24 =
+PM<br><b>To:</b> wireguard@lists.zx2c4.com<br><b>Subject:</b> Wireguard =
+for Windows breaks Task Scheduler<o:p></o:p></span></p></div></div><p =
+class=3DMsoNormal><span =
+lang=3DEN-GB><o:p>&nbsp;</o:p></span></p><div><div><p =
+class=3DMsoNormal><span lang=3DEN-GB>Im not exactly sure what wireguard =
+doing to create virtual network adapters in windows, but it's more looks =
+like it can't handle deletion of them properly. =
+<o:p></o:p></span></p></div><div><p class=3DMsoNormal><span =
+lang=3DEN-GB>This issue easy to reproduce: =
+<o:p></o:p></span></p></div><ol start=3D1 type=3D1><li class=3DMsoNormal =
+style=3D'mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;mso-list:l0 =
+level1 lfo1'><span lang=3DEN-GB>Create wireguard's =
+tunnels.<o:p></o:p></span></li><li class=3DMsoNormal =
+style=3D'mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;mso-list:l0 =
+level1 lfo1'><span lang=3DEN-GB>Connect tunnel, disconnect and remove =
+it.<o:p></o:p></span></li><li class=3DMsoNormal =
+style=3D'mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;mso-list:l0 =
+level1 lfo1'><span lang=3DEN-GB>Repeat it multiple =
+times.<o:p></o:p></span></li></ol><div><p class=3DMsoNormal><span =
+lang=3DEN-GB>Windows registry will be full of wrong records of these =
+non-existed network connections.<o:p></o:p></span></p></div><div><p =
+class=3DMsoNormal><span lang=3DEN-GB>And now try to open Task Scheduler =
+and click on &quot;Create task...&quot; it will crash with =
+log:<o:p></o:p></span></p></div><div><p class=3DMsoNormal><span =
+lang=3DEN-GB><o:p>&nbsp;</o:p></span></p></div><blockquote =
+style=3D'border:none;border-left:solid #CCCCCC 1.0pt;padding:0cm 0cm 0cm =
+6.0pt;margin-left:4.8pt;margin-right:0cm'><div><p =
+class=3DMsoNormal><span lang=3DEN-GB>=D0=B2 =
+Microsoft.Windows.ManagementUI.CombinedControls.INetwork.GetName()<br>&nb=
+sp; =D0=B2 =
+Microsoft.Windows.ManagementUI.CombinedControls.UINetwork.GetUINetwork(IN=
+etwork network)<br>&nbsp; =D0=B2 =
+Microsoft.Windows.ManagementUI.CombinedControls.NetworkListManager.GetNet=
+workList()<br>&nbsp; =D0=B2 =
+Microsoft.Windows.ManagementUI.CombinedControls.ControlTaskConditions.Pop=
+ulateNetworkComboBox()<br>&nbsp; =D0=B2 =
+Microsoft.Windows.ManagementUI.CombinedControls.ControlTaskConditions.Ini=
+tializeConditions()<br>&nbsp; =D0=B2 =
+Microsoft.Windows.ManagementUI.CombinedControls.EditTaskDialog.Initialize=
+View()<br>&nbsp; =D0=B2 =
+Microsoft.Windows.ManagementUI.CombinedControls.EditTaskDialog.Initialize=
+(UITaskFolder folder, String taskName, String title, UserChoice =
+userAction, BaseResultsControl inOwnerView, String inXmlText)<br>&nbsp; =
+=D0=B2 =
+Microsoft.Windows.ManagementUI.CombinedControls.BaseResultsControl.Create=
+Task(UITaskFolder folder, String initialTaskName, String =
+taskXml)<br>&nbsp; =D0=B2 =
+System.Windows.Forms.MenuItem.OnClick(EventArgs e)<br>&nbsp; =D0=B2 =
+System.Windows.Forms.MenuItem.MenuItemData.Execute()<br>&nbsp; =D0=B2 =
+System.Windows.Forms.Command.Invoke()<br>&nbsp; =D0=B2 =
+System.Windows.Forms.Control.WmCommand(Message&amp; m)<br>&nbsp; =D0=B2 =
+System.Windows.Forms.Control.WndProc(Message&amp; m)<br>&nbsp; =D0=B2 =
+System.Windows.Forms.ListView.WndProc(Message&amp; m)<br>&nbsp; =D0=B2 =
+System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, =
+IntPtr wparam, IntPtr lparam) =
+<o:p></o:p></span></p></div></blockquote><div><p class=3DMsoNormal><span =
+lang=3DEN-GB><o:p>&nbsp;</o:p></span></p></div><div><p =
+class=3DMsoNormal><span lang=3DEN-GB>So ive googled solution <a =
+href=3D"https://answers.microsoft.com/en-us/windows/forum/all/task-schedu=
+ler-crashed/5acab7c5-eb79-48c8-876d-ade321565953?auth=3D1">https://answer=
+s.microsoft.com/en-us/windows/forum/all/task-scheduler-crashed/5acab7c5-e=
+b79-48c8-876d-ade321565953?auth=3D1</a> (Programatix =
+message)<o:p></o:p></span></p></div><div><p class=3DMsoNormal><span =
+lang=3DEN-GB><o:p>&nbsp;</o:p></span></p></div><blockquote =
+style=3D'border:none;border-left:solid #CCCCCC 1.0pt;padding:0cm 0cm 0cm =
+6.0pt;margin-left:4.8pt;margin-right:0cm'><div><p =
+class=3DMsoNormal><span lang=3DEN-GB>To resolve the problem,<br>&nbsp; =
+&nbsp; Run regedit<br>&nbsp; &nbsp; Go to =
+HKLM\Software\Microsoft\Windows NT\CurrentVersion\NetworkList<br>&nbsp; =
+&nbsp; Delete everything under the following path,<br>&nbsp; &nbsp; =
+&nbsp; &nbsp; Nla-&gt;Cache<br>&nbsp; &nbsp; &nbsp; &nbsp; =
+Nla-&gt;IntranetEnabled<br>&nbsp; &nbsp; &nbsp; &nbsp; =
+Nla-&gt;Wireless<br>&nbsp; &nbsp; &nbsp; &nbsp; Profiles<br>&nbsp; =
+&nbsp; &nbsp; &nbsp; Signatures-&gt;Managed<br>&nbsp; &nbsp; &nbsp; =
+&nbsp; Signatures-&gt;Unmanaged<br>&nbsp; &nbsp; =
+Reboot<o:p></o:p></span></p></div></blockquote><div><p =
+class=3DMsoNormal><span =
+lang=3DEN-GB><o:p>&nbsp;</o:p></span></p></div><div><p =
+class=3DMsoNormal><span lang=3DEN-GB>And it actually =
+helps.<o:p></o:p></span></p></div><div><p class=3DMsoNormal><span =
+lang=3DEN-GB>Can wireguard just properly handle this &quot;issue&quot; =
+on his own and do not break Task Scheduler =
+application?<o:p></o:p></span></p></div></div></div></div></body></html>
+------=_NextPart_001_0012_01D5A519.9228F1E0--
 
-------=_NextPart_000_0018_01D5A51D.FCFF6BD0
+------=_NextPart_000_0011_01D5A519.9228F1E0
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -354,23 +476,23 @@ RqsKPBhWoaFEVZ+Vn3wxap5h/oAhocifNzkWJTNWjxnoPM2eNz2uWFJsgsNhlwteUvnq7+bKTNte
 SKWKr6pI+GUsZhmCh5URpUnqUanp0Uie0MD9f3tiOLOp711sNb0xwi+VdDuDB37IddOIsfhPBood
 wpoFrTGCAyEwggMdAgEBMEUwPTELMAkGA1UEBhMCc2kxGzAZBgNVBAoTEnN0YXRlLWluc3RpdHV0
 aW9uczERMA8GA1UECxMIc2lnZW4tY2ECBDtKDS4wDQYJYIZIAWUDBAIBBQCgggGtMBgGCSqGSIb3
-DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTE5MTEyNzExMjcwOVowLwYJKoZIhvcN
-AQkEMSIEIJTlpUY2qEBUK3m4tnP8TOlIZUAJ6wK/ggpsuaKV/Yj9MFQGCSsGAQQBgjcQBDFHMEUw
+DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTE5MTEyNzEwNTUzMlowLwYJKoZIhvcN
+AQkEMSIEIAXITaDcbo8hrGZzyy5WbQxHVL2+K289LQAF3igN57g+MFQGCSsGAQQBgjcQBDFHMEUw
 PTELMAkGA1UEBhMCc2kxGzAZBgNVBAoTEnN0YXRlLWluc3RpdHV0aW9uczERMA8GA1UECxMIc2ln
 ZW4tY2ECBDtKDS4wVgYLKoZIhvcNAQkQAgsxR6BFMD0xCzAJBgNVBAYTAnNpMRswGQYDVQQKExJz
 dGF0ZS1pbnN0aXR1dGlvbnMxETAPBgNVBAsTCHNpZ2VuLWNhAgQ7Sg0uMIGTBgkqhkiG9w0BCQ8x
 gYUwgYIwCwYJYIZIAWUDBAEqMAsGCWCGSAFlAwQBFjAKBggqhkiG9w0DBzALBglghkgBZQMEAQIw
 DgYIKoZIhvcNAwICAgCAMA0GCCqGSIb3DQMCAgFAMAsGCWCGSAFlAwQCATALBglghkgBZQMEAgMw
-CwYJYIZIAWUDBAICMAcGBSsOAwIaMA0GCSqGSIb3DQEBAQUABIIBALUanl6IbxiAILNNUohgvz81
-c7QWUEXwFuXrKpnmDE2t3tVW9Y1OM0+a/si1IVewHMy707e+DcoFog3MBu4KRvyIABCSK4hz0LJ4
-oQwf4+lykO2U6MAsguBwJVabxgkC1NtdSTqe42/kqR29YTi1wLomX0jYRP3tfixOO1j1aoKkKBIf
-tIt6qN0Oa66+nx1Kz3Gx4qw6q1BtJiousvKrzOJP+zE+e57833Sw9dN3Qtc+tp1FDvEqxzJW9RpW
-6PEzjwa7VW3ig1vnFhS+xMTlv8WBOQ7i2rhN/1xcGyxHeExpZHQ9gkxauwYjNqqeSxvpAGdX9fst
-FaCnfmP+i+iyMlQAAAAAAAA=
+CwYJYIZIAWUDBAICMAcGBSsOAwIaMA0GCSqGSIb3DQEBAQUABIIBAEmof+mN0y7t1pW0glDJp/mC
+X+dkEgnYHZ9RCtoKMz7YGYhqdzVGVLoWc5R+XBJxOG+d9bOifa/zbnbZJ027LiEWWyb0F1nISW6J
+CZ1juxibMfB13q/wiRLMZu1HsTDthCPgPmpG9dJEVgyZkXNAteBXRAxs1JI9IH4vmtuDe0kuM+Zc
+a9J5RGF7Uw2jeZX+evArflI4bQcrX4Ea7qlrrcHO5+l7ihbY0uavvJgx05y5LHZh4PiOJmXCY5ph
+U+pmSjzp3WsaaFHJc1sxpEBBUwO9txzAPhp7FQhqAEKwqIFOTseKxRjlVcpZWdCr5S8qwc/tK/cN
+MhF7EbSG+75l26UAAAAAAAA=
 
-------=_NextPart_000_0018_01D5A51D.FCFF6BD0--
+------=_NextPart_000_0011_01D5A519.9228F1E0--
 
---===============4450630275595104220==
+--===============8588470251564625347==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -381,4 +503,4 @@ WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---===============4450630275595104220==--
+--===============8588470251564625347==--
