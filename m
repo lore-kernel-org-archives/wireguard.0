@@ -2,67 +2,52 @@ Return-Path: <SRS0=OnWR=ZT=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FF30C432C0
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 27 Nov 2019 12:31:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 41D76C432C0
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 27 Nov 2019 12:35:03 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 0B5A22071E
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 27 Nov 2019 12:31:24 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="u0qzaz/L"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 0B5A22071E
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id D39152075C
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 27 Nov 2019 12:35:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org D39152075C
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=lonnie.abelbeck.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 35c3f7fb;
-	Wed, 27 Nov 2019 12:31:23 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0b9f1f6c;
+	Wed, 27 Nov 2019 12:34:35 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d734d495
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c8d6f68c
  for <wireguard@lists.zx2c4.com>;
- Wed, 27 Nov 2019 12:31:22 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9253eb3f
+ Wed, 27 Nov 2019 12:34:32 +0000 (UTC)
+Received: from ibughas.pair.com (ibughas.pair.com [209.68.5.177])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cad3fadd
  for <wireguard@lists.zx2c4.com>;
- Wed, 27 Nov 2019 12:31:22 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 56c8b8bb
- for <wireguard@lists.zx2c4.com>;
- Wed, 27 Nov 2019 11:37:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=CPLR0+t2KTD0jK0Z4M8dijwms14=; b=u0qzaz
- /LL6FReRdMEHdXKCeLD1/v8Wfl/s+S1hZNHYwhk/BkoNGUaI6r+thL9hAtMmi6j3
- nkKEIs3UEp9KH8CX3TPKzySZ+qMFyQ8e46nipFWR/aQqm1U+hq+azp43mWusWDr1
- A7LxQDMrShu9T8qVXEdit6GZ11+JvN4aSrJEywHeodOsm0RCkFi292CAKkUO18v3
- sBp5iRy9AdmurrRt6XTK+3jwpEsB6kvBdWG6RbagMHxvSFgPkPD6kyEsPJruo31C
- BIv5Cez6alfSX0+tekfA5wlei8JzOLqRo5K8kPl2f6Lo5eMuR8WvA15SYnuy2TSZ
- NFinzMOfeTJydRCQ==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 8b745a2c
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Wed, 27 Nov 2019 11:37:30 +0000 (UTC)
-Received: by mail-oi1-f177.google.com with SMTP id d22so19915337oic.7
- for <wireguard@lists.zx2c4.com>; Wed, 27 Nov 2019 04:31:21 -0800 (PST)
-X-Gm-Message-State: APjAAAUXZOPczg6ny4wncv1NH4WBQJbk24WApy6l0jqrKchc1t+015Cb
- mnYyl/fum65apwLBLUQH4lU89HzOSrmbxWZzh50=
-X-Google-Smtp-Source: APXvYqz7yJNBXhpbvp0F7Aupfhrp+jROaFkeoxQRtSqYYoW14HjGQnWrn7P2DX4V4wsE7jDDVyR9Z6MEag2hZcyYdwU=
-X-Received: by 2002:a05:6808:2c1:: with SMTP id
- a1mr3761812oid.66.1574857880535; 
- Wed, 27 Nov 2019 04:31:20 -0800 (PST)
-MIME-Version: 1.0
-References: <CAG6CVpU7L67oBqM5vi7-oXfYN=jMF9urvfxz_qZqFjdm-a+F=A@mail.gmail.com>
-In-Reply-To: <CAG6CVpU7L67oBqM5vi7-oXfYN=jMF9urvfxz_qZqFjdm-a+F=A@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 27 Nov 2019 13:31:09 +0100
-X-Gmail-Original-Message-ID: <CAHmME9pzEg9sn1PJMXrmttWjYvSzsRRfXugphES5kPPhqN2WZw@mail.gmail.com>
-Message-ID: <CAHmME9pzEg9sn1PJMXrmttWjYvSzsRRfXugphES5kPPhqN2WZw@mail.gmail.com>
-Subject: Re: Bug in helper contrib/examples/reresolve-dns/reresolve-dns.sh
-To: cem@freebsd.org
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+ Wed, 27 Nov 2019 12:34:32 +0000 (UTC)
+Received: from ibughas.pair.com (localhost [127.0.0.1])
+ by ibughas.pair.com (Postfix) with ESMTP id 833331E3037;
+ Wed, 27 Nov 2019 07:34:32 -0500 (EST)
+Received: from [10.4.1.148] (wsip-70-184-211-81.om.om.cox.net [70.184.211.81])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256
+ bits)) (No client certificate requested)
+ by ibughas.pair.com (Postfix) with ESMTPSA id 50D131E302F;
+ Wed, 27 Nov 2019 07:34:32 -0500 (EST)
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
+Subject: Re: [PATCH] Don't delete peers if not needed on `setconf`
+From: Lonnie Abelbeck <lists@lonnie.abelbeck.com>
+In-Reply-To: <CAHmME9od2vBXmb0B2r9BztWeZAw=foK10xfTKfoYT3jnt_LNtA@mail.gmail.com>
+Date: Wed, 27 Nov 2019 06:34:31 -0600
+Message-Id: <ECEC6F1D-A8A9-4121-BB1E-382636454789@lonnie.abelbeck.com>
+References: <20191117135928.3349-1-root@localdomain.pl>
+ <20191117135928.3349-2-root@localdomain.pl>
+ <CAHmME9od2vBXmb0B2r9BztWeZAw=foK10xfTKfoYT3jnt_LNtA@mail.gmail.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+X-Mailer: Apple Mail (2.3445.104.11)
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ Grzegorz Nosek <root@localdomain.pl>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -79,9 +64,18 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Thanks for the suggestion!
 
-https://git.zx2c4.com/WireGuard/commit/?id=d05b6606886018853da20ca3ee8bda16524b53b9
+> On Nov 27, 2019, at 4:22 AM, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+> 
+> Interesting implementation strategy. There's a pure-userspace version
+> of that too, here:
+> 
+> https://git.zx2c4.com/WireGuard/commit/?h=jd/syncconf
+
+Our project has been using "syncconf" ever since Jason crafted it, works perfectly, solves the same issue as Grzegorz reported.
+
+Lonnie
+
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
