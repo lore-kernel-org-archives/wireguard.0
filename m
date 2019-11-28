@@ -4,65 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	TVD_SPACE_RATIO,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 02CA5C432C0
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 28 Nov 2019 12:51:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9392C432C0
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 28 Nov 2019 13:05:30 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 97A922176D
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 28 Nov 2019 12:51:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 1A1FD2176D
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 28 Nov 2019 13:05:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="NmvNYz4U"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 97A922176D
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=ungleich.ch header.i=@ungleich.ch header.b="KLw5Wh7L"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 1A1FD2176D
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=ungleich.ch
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 33ade7a2;
-	Thu, 28 Nov 2019 12:51:56 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 837d6d68;
+	Thu, 28 Nov 2019 13:05:28 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8a9b1206
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 82709b12
  for <wireguard@lists.zx2c4.com>;
- Thu, 28 Nov 2019 12:51:54 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b703a8e7
+ Thu, 28 Nov 2019 13:05:25 +0000 (UTC)
+Received: from smtp.ungleich.ch (smtp.ungleich.ch
+ [IPv6:2a0a:e5c0:0:2:400:b3ff:fe39:7956])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 33b3ef5c
  for <wireguard@lists.zx2c4.com>;
- Thu, 28 Nov 2019 12:51:54 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d6750ede
- for <wireguard@lists.zx2c4.com>;
- Thu, 28 Nov 2019 11:57:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=RGw+gIr6JdSvZ8zDo4TjIc0Xf5g=; b=NmvNYz
- 4US+8k89zIy4E5ppOu5ZccMQzyXAy3BToZVIE3z417KvJzu6z4ivkPRD0gC/k9jl
- CRmEUBbPXYASe5PF3UAxVA3YqqW65Au3VLOEANpqgvMU3+qTXjZg7N/wTlWNlGEX
- Np3U/wquXt8hfiQAFaWwMaUekmx+VfA0LzZkhLQu9KNGJSv0Pc7hPu4B0ClNWJfl
- Xke5YOEBH65ZFxezt912qkcLuIEGDM7Cdg488BlHqNIf4z1yJkuv0StTtaI/Efgu
- Yb1cNdF9g1o3BFF6LR4tubtCjCMghFBfEmliMJsyDjYj9IJRU8xTembka9JWV8h4
- noDFMyFf7ToWA9Jw==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 680dfcff
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Thu, 28 Nov 2019 11:57:55 +0000 (UTC)
-Received: by mail-oi1-f173.google.com with SMTP id 14so23167734oir.12
- for <wireguard@lists.zx2c4.com>; Thu, 28 Nov 2019 04:51:54 -0800 (PST)
-X-Gm-Message-State: APjAAAVyFQHTtBvMy9MTrX4z9twFEZVziXYN+2k58dqTtOBne4qevGV0
- TY0md22uZlkUQHcAP53NGT5X1gIcMb4kQiJA9Ok=
-X-Google-Smtp-Source: APXvYqwsEmx18MGSY8sCYNiVBSNp1ynYLonNSXP6ALk6YOowkl8usYTEJRnm9ZzcJipE+qCf0IXLvP/C2iapRidapLE=
-X-Received: by 2002:a05:6808:906:: with SMTP id
- w6mr7817036oih.122.1574945513899; 
- Thu, 28 Nov 2019 04:51:53 -0800 (PST)
-MIME-Version: 1.0
+ Thu, 28 Nov 2019 13:05:25 +0000 (UTC)
+Received: from diamond.localdomain (localhost [IPv6:::1])
+ by smtp.ungleich.ch (Postfix) with ESMTP id C84422010D;
+ Thu, 28 Nov 2019 14:05:23 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ungleich.ch; s=mail;
+ t=1574946323; bh=aWik7wFDlvC9KBbc2xxaQzN7mtjMh0PS20Z7D9gynB8=;
+ h=References:From:To:Cc:Subject:In-reply-to:Date:From;
+ b=KLw5Wh7LNkhkkmoMY7wo0g5ikhAXBuwaHnvrKfsK1lWClf6o0RzrR45uOGCz0gt9X
+ O0TetBmg1aStIXyg+1aZt0+oEkHHK5fNEGh+y1n6SzfS5YD6bG+BQ+aWMadBE2Mvwl
+ Zt5+Ea+t9+HWBB2O5o/suwWfzev5OzVDuiEAf0X7wnvOcURS4vdprT2ExHNNLuQAgs
+ Gkz33aJ4BHE7Behys+jiS9Y6DXzuISmS/tjVM0GKZI8SMOWj2h3wCjioI+RGqlTmh8
+ 34cQWgilVXTgRRdMYHyifuPXuUSbmu/m7/XnbY8WNHtw8f+HA7+LCxUS6oSDg2HwAY
+ JY1Ht/j4eq6tA==
+Received: by diamond.localdomain (Postfix, from userid 1000)
+ id 8B8C013E35FF; Thu, 28 Nov 2019 14:07:00 +0100 (CET)
 References: <9cefaab6-d3f8-25f0-34da-754e59c7c4d4@med.uni-frankfurt.de>
-In-Reply-To: <9cefaab6-d3f8-25f0-34da-754e59c7c4d4@med.uni-frankfurt.de>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 28 Nov 2019 13:51:42 +0100
-X-Gmail-Original-Message-ID: <CAHmME9rV17Y_NE-=OV96FWt6=3fx94D8G4ADcvj9nG7zzHdL4w@mail.gmail.com>
-Message-ID: <CAHmME9rV17Y_NE-=OV96FWt6=3fx94D8G4ADcvj9nG7zzHdL4w@mail.gmail.com>
+ <CAHmME9rV17Y_NE-=OV96FWt6=3fx94D8G4ADcvj9nG7zzHdL4w@mail.gmail.com>
+User-agent: mu4e 1.3.5; emacs 26.3
+From: Nico Schottelius <nico.schottelius@ungleich.ch>
+To: wireguard@lists.zx2c4.com
 Subject: Re: PostDown 0.0.20191127
-To: Thomas Sattler <sattler@med.uni-frankfurt.de>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+In-reply-to: <CAHmME9rV17Y_NE-=OV96FWt6=3fx94D8G4ADcvj9nG7zzHdL4w@mail.gmail.com>
+Date: Thu, 28 Nov 2019 14:07:00 +0100
+Message-ID: <87tv6o5evf.fsf@ungleich.ch>
+MIME-Version: 1.0
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -79,10 +70,42 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Thanks. Fixed this way:
-https://git.zx2c4.com/WireGuard/commit/?id=57854fb710160f567cf776b65080a9ce5afdf02c
 
-But: why is your remove_iptables failing in the first place?
+Follow up question from my side Jason: what do you think about replacing
+"$2" in the script with a shifted "$@" and allowing multiple devices to
+be specified?
+
+i.e. wg-quick up wgungleich wgplace4 wgplace11
+
+is something I would like to do in one call and it would potentially be
+easy to just loop around it as follows:
+
+...
+elif [[ $# -ge 2 && $1 == up ]]; then
+	auto_su
+    shift # kick out "up" from the list
+    while [ $# -ge 1 ]; do
+        name=$1; shift
+	    parse_options "$name"
+        cmd_up
+    done
+...
+
+
+Jason A. Donenfeld <Jason@zx2c4.com> writes:
+
+> Thanks. Fixed this way:
+> https://git.zx2c4.com/WireGuard/commit/?id=57854fb710160f567cf776b65080a9ce5afdf02c
+>
+> But: why is your remove_iptables failing in the first place?
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+
+--
+Modern, affordable, Swiss Virtual Machines. Visit www.datacenterlight.ch
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
