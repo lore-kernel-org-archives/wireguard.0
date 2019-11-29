@@ -2,56 +2,50 @@ Return-Path: <SRS0=ytco=ZV=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D796C432C0
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 29 Nov 2019 21:19:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BBF5C432C0
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 29 Nov 2019 22:33:21 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id A688F21771
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 29 Nov 2019 21:19:17 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=trustiosity.com header.i=@trustiosity.com header.b="4vF/y7RA"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A688F21771
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=trustiosity.com
+	by mail.kernel.org (Postfix) with ESMTPS id 8325D20656
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 29 Nov 2019 22:33:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 8325D20656
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=lonnie.abelbeck.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 97a66191;
-	Fri, 29 Nov 2019 21:19:00 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 18469850;
+	Fri, 29 Nov 2019 22:32:53 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 750fb6fc
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 40b10811
  for <wireguard@lists.zx2c4.com>;
- Fri, 29 Nov 2019 21:18:57 +0000 (UTC)
-Received: from mx.trustiosity.com (mx.trustiosity.com [54.186.28.113])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 318fd1fe
+ Fri, 29 Nov 2019 22:32:49 +0000 (UTC)
+Received: from ibughas.pair.com (ibughas.pair.com [209.68.5.177])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f2ad5217
  for <wireguard@lists.zx2c4.com>;
- Fri, 29 Nov 2019 21:18:57 +0000 (UTC)
-Received: from [192.168.212.66] (csm.ldm [192.168.212.66])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
- (Client did not present a certificate)
- (Authenticated sender: zrm@trustiosity.com)
- by mx.trustiosity.com (Postfix) with ESMTPSA id 6651F423F61
- for <wireguard@lists.zx2c4.com>; Fri, 29 Nov 2019 16:18:55 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=trustiosity.com;
- s=mx; t=1575062335; bh=dpIYZS3Cbpr94CA2fYcSRi6FDKOYB0/bT3WDvpOSRQk=;
- h=Subject:To:References:From:Date:In-Reply-To:From;
- b=4vF/y7RA5vhbeTxzM6pDJ8+TvUhC/kiJuIqdOJwO3qGHM3XQJRzzszb+wGAW5XSFI
- igRu8Jj9aShgXwj1UJWfhEEZx7WbB4joST9K1abPTs7lpAh70rkTUcwIwCw4yxeHyd
- IuAy4B8ZUOmWlmACvq8JH/X6c4NCPXOGPlMzT4Vg=
+ Fri, 29 Nov 2019 22:32:49 +0000 (UTC)
+Received: from ibughas.pair.com (localhost [127.0.0.1])
+ by ibughas.pair.com (Postfix) with ESMTP id EB3A31E302B;
+ Fri, 29 Nov 2019 17:32:48 -0500 (EST)
+Received: from [10.4.1.148] (wsip-70-184-211-81.om.om.cox.net [70.184.211.81])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256
+ bits)) (No client certificate requested)
+ by ibughas.pair.com (Postfix) with ESMTPSA id C25AF1E3005;
+ Fri, 29 Nov 2019 17:32:48 -0500 (EST)
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
 Subject: Re: idle traffic considerations
-To: wireguard@lists.zx2c4.com
+From: Lonnie Abelbeck <lists@lonnie.abelbeck.com>
+In-Reply-To: <86ffb110-50f2-de38-ec25-698b0232b09b@trustiosity.com>
+Date: Fri, 29 Nov 2019 16:32:48 -0600
+Message-Id: <81C63072-2522-4B64-87A6-ACEAEFF6519D@lonnie.abelbeck.com>
 References: <48f2826293c5cf93d123d8789b6afc15@ethergeist.de>
-From: zrm <zrm@trustiosity.com>
-Message-ID: <86ffb110-50f2-de38-ec25-698b0232b09b@trustiosity.com>
-Date: Fri, 29 Nov 2019 16:18:52 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
-MIME-Version: 1.0
-In-Reply-To: <48f2826293c5cf93d123d8789b6afc15@ethergeist.de>
-Content-Language: en-US
+ <86ffb110-50f2-de38-ec25-698b0232b09b@trustiosity.com>
+To: zrm <zrm@trustiosity.com>
+X-Mailer: Apple Mail (2.3445.104.11)
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -63,53 +57,41 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On 10/17/19 06:29, Knuth wrote:
-> Hey,
-> 
-> we are planning to deploy certain devices with an embedded sim cards in 
-> different countries across the globe, for maintenance we need to be able 
-> to connect to the devices with ssh.
-> 
-> Since the sim cards only provide us with a private IPv4 behind NAT 
-> (because apparently IPv6 is still hard...) we need to reverse the 
-> connection process to our control system,
-> at the moment we consider doing this with wireguard (we are aware of the 
-> "pre" release status), since we had good experiences with it on other 
-> similar setups.
-> 
-> To calculate some rough estimated costs for the mobile connection 
-> traffic volume, i'd love to know if there is a way to calculate the 
-> amount of traffic caused by an idle wireguard connection kept alive 
-> since we would be charged per MByte transferred.
-> Or do we simply have to setup a few test subjects and monitor it over a 
-> longer time, which in itself could be error prone.
-> 
-> 
-> Thanks for your time
-> Knuth
 
-Ballpark estimate, round a keepalive packet to about a hundred bytes. 
-You're also going to get a re-keys, call those two hundred bytes. If you 
-have a keepalive every 30 seconds and a re-key every 120 seconds, that's 
-around 18KB per hour per peer in each direction.
 
-This scales inversely with the keepalive interval, and if it's longer 
-than 120 seconds then the idle rekeys happen less often too. How short 
-you can get away with depends on how long your network provider(s) 
-continue to track idle UDP flows. RFC4787 Section 4.3 recommends five 
-minutes and requires at least two minutes here, but you may still want 
-to test and make sure you don't have a crappy network provider that 
-violates the RFC.
+> On Nov 29, 2019, at 3:18 PM, zrm <zrm@trustiosity.com> wrote:
+> 
+> On 10/17/19 06:29, Knuth wrote:
+>> Hey,
+>> we are planning to deploy certain devices with an embedded sim cards in different countries across the globe, for maintenance we need to be able to connect to the devices with ssh.
+>> Since the sim cards only provide us with a private IPv4 behind NAT (because apparently IPv6 is still hard...) we need to reverse the connection process to our control system,
+>> at the moment we consider doing this with wireguard (we are aware of the "pre" release status), since we had good experiences with it on other similar setups.
+>> To calculate some rough estimated costs for the mobile connection traffic volume, i'd love to know if there is a way to calculate the amount of traffic caused by an idle wireguard connection kept alive since we would be charged per MByte transferred.
+>> Or do we simply have to setup a few test subjects and monitor it over a longer time, which in itself could be error prone.
+>> Thanks for your time
+>> Knuth
+> 
+> Ballpark estimate, round a keepalive packet to about a hundred bytes. You're also going to get a re-keys, call those two hundred bytes. If you have a keepalive every 30 seconds and a re-key every 120 seconds, that's around 18KB per hour per peer in each direction.
 
-It's also best to test the results empirically in any event. We can 
-estimate about how big a keepalive packet is but if you've got a bug 
-sending them every 60ms instead of every 60s you'll be happy to catch it 
-before the bill comes in across your entire fleet.
+I had a similar use case as Knuth described, zrm's estimate is right on target.
+
+Using a Netgear LB1121 as a 4G/LTE Endpoint, native IPv4-only behind NAT to a static IPv4 public server.
+
+## 4G/LTE Endpoint
+PersistentKeepalive = 25
+
+## Static Endpoint
+PersistentKeepalive = 0
+
+When idle the WireGuard VPN consumes less than 0.5 MB/day of data.
+
+Lonnie
+
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
