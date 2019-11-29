@@ -1,69 +1,57 @@
-Return-Path: <SRS0=wroZ=ZU=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=ytco=ZV=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8159BC432C0
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 28 Nov 2019 17:14:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D796C432C0
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 29 Nov 2019 21:19:18 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 979B321739
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 28 Nov 2019 17:14:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id A688F21771
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 29 Nov 2019 21:19:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="hq7cYbs+"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 979B321739
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=trustiosity.com header.i=@trustiosity.com header.b="4vF/y7RA"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A688F21771
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=trustiosity.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c7ae7751;
-	Thu, 28 Nov 2019 17:14:33 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 97a66191;
+	Fri, 29 Nov 2019 21:19:00 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ee0c5b55
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 750fb6fc
  for <wireguard@lists.zx2c4.com>;
- Thu, 28 Nov 2019 17:14:32 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 06d58f76
+ Fri, 29 Nov 2019 21:18:57 +0000 (UTC)
+Received: from mx.trustiosity.com (mx.trustiosity.com [54.186.28.113])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 318fd1fe
  for <wireguard@lists.zx2c4.com>;
- Thu, 28 Nov 2019 17:14:32 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 805be7bf
- for <wireguard@lists.zx2c4.com>;
- Thu, 28 Nov 2019 16:20:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=OZ9EJTNn/MdhiPUgz2ApdCDfEJw=; b=hq7cYb
- s+iUeOuHcZtgqP0YwHrm1UIHotwygUARQojYNMhh4NTnYym3pBLQguTbvuQmi8dK
- emHBJv7/Rd8niwsGAyxtHB76E7eXqN6i/rEYkuaO/Tu0tAp/S2KMsL5sGLpYb0Ao
- zt9g0MuD3z+O7kkxeXRpee2W5HDXKFhnlz63hip8TnYPens6EZYcT7wIgIaa3lzV
- zmu4NBMc/3ELWnZJS1ZQbBoNvJafxODGxV8HVEIkgvp6xGxA0/nYR+ETmb2Z+UW/
- NJpFDQQkfhbYTbhZmwDO4Lv3sawIjEU+ZimUysYmSsO5TCpKdjFROQ2V8+K8dIF0
- mW1VXYi8NTuRHaNg==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id e3815082
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Thu, 28 Nov 2019 16:20:32 +0000 (UTC)
-Received: by mail-oi1-f170.google.com with SMTP id s71so23814061oih.11
- for <wireguard@lists.zx2c4.com>; Thu, 28 Nov 2019 09:14:32 -0800 (PST)
-X-Gm-Message-State: APjAAAXL4tNMFbV4znaIrUcQvWUYHgI4G8Ke5ah9O+/9A1Df6OSzDauC
- yKoZLqvlyk095f/ZwpQZ5tyYSCWsW262/bEtcp4=
-X-Google-Smtp-Source: APXvYqxjTL98pgrVV8JAY+/W47ai+xA7YPcIOlIH/svT74fgMt0LiH23ieVPlm4Ujjrl0GNDXJ53Y9d6/WgSu+Snxo8=
-X-Received: by 2002:aca:815:: with SMTP id 21mr2262185oii.52.1574961271536;
- Thu, 28 Nov 2019 09:14:31 -0800 (PST)
+ Fri, 29 Nov 2019 21:18:57 +0000 (UTC)
+Received: from [192.168.212.66] (csm.ldm [192.168.212.66])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
+ (Client did not present a certificate)
+ (Authenticated sender: zrm@trustiosity.com)
+ by mx.trustiosity.com (Postfix) with ESMTPSA id 6651F423F61
+ for <wireguard@lists.zx2c4.com>; Fri, 29 Nov 2019 16:18:55 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=trustiosity.com;
+ s=mx; t=1575062335; bh=dpIYZS3Cbpr94CA2fYcSRi6FDKOYB0/bT3WDvpOSRQk=;
+ h=Subject:To:References:From:Date:In-Reply-To:From;
+ b=4vF/y7RA5vhbeTxzM6pDJ8+TvUhC/kiJuIqdOJwO3qGHM3XQJRzzszb+wGAW5XSFI
+ igRu8Jj9aShgXwj1UJWfhEEZx7WbB4joST9K1abPTs7lpAh70rkTUcwIwCw4yxeHyd
+ IuAy4B8ZUOmWlmACvq8JH/X6c4NCPXOGPlMzT4Vg=
+Subject: Re: idle traffic considerations
+To: wireguard@lists.zx2c4.com
+References: <48f2826293c5cf93d123d8789b6afc15@ethergeist.de>
+From: zrm <zrm@trustiosity.com>
+Message-ID: <86ffb110-50f2-de38-ec25-698b0232b09b@trustiosity.com>
+Date: Fri, 29 Nov 2019 16:18:52 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
 MIME-Version: 1.0
-References: <9cefaab6-d3f8-25f0-34da-754e59c7c4d4@med.uni-frankfurt.de>
- <CAHmME9rV17Y_NE-=OV96FWt6=3fx94D8G4ADcvj9nG7zzHdL4w@mail.gmail.com>
- <cc88dffc-8940-64c9-f339-0a158fb87967@med.uni-frankfurt.de>
-In-Reply-To: <cc88dffc-8940-64c9-f339-0a158fb87967@med.uni-frankfurt.de>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 28 Nov 2019 18:14:20 +0100
-X-Gmail-Original-Message-ID: <CAHmME9pjM9AzZ2JEsKFtdv3CxJmOVf55vWDweWWudjpjvHseGw@mail.gmail.com>
-Message-ID: <CAHmME9pjM9AzZ2JEsKFtdv3CxJmOVf55vWDweWWudjpjvHseGw@mail.gmail.com>
-Subject: Re: PostDown 0.0.20191127
-To: Thomas Sattler <sattler@med.uni-frankfurt.de>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+In-Reply-To: <48f2826293c5cf93d123d8789b6afc15@ethergeist.de>
+Content-Language: en-US
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -75,14 +63,53 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Ahhh, that's what's up. Thanks! Will address.
+On 10/17/19 06:29, Knuth wrote:
+> Hey,
+> 
+> we are planning to deploy certain devices with an embedded sim cards in 
+> different countries across the globe, for maintenance we need to be able 
+> to connect to the devices with ssh.
+> 
+> Since the sim cards only provide us with a private IPv4 behind NAT 
+> (because apparently IPv6 is still hard...) we need to reverse the 
+> connection process to our control system,
+> at the moment we consider doing this with wireguard (we are aware of the 
+> "pre" release status), since we had good experiences with it on other 
+> similar setups.
+> 
+> To calculate some rough estimated costs for the mobile connection 
+> traffic volume, i'd love to know if there is a way to calculate the 
+> amount of traffic caused by an idle wireguard connection kept alive 
+> since we would be charged per MByte transferred.
+> Or do we simply have to setup a few test subjects and monitor it over a 
+> longer time, which in itself could be error prone.
+> 
+> 
+> Thanks for your time
+> Knuth
 
-Jason
+Ballpark estimate, round a keepalive packet to about a hundred bytes. 
+You're also going to get a re-keys, call those two hundred bytes. If you 
+have a keepalive every 30 seconds and a re-key every 120 seconds, that's 
+around 18KB per hour per peer in each direction.
+
+This scales inversely with the keepalive interval, and if it's longer 
+than 120 seconds then the idle rekeys happen less often too. How short 
+you can get away with depends on how long your network provider(s) 
+continue to track idle UDP flows. RFC4787 Section 4.3 recommends five 
+minutes and requires at least two minutes here, but you may still want 
+to test and make sure you don't have a crappy network provider that 
+violates the RFC.
+
+It's also best to test the results empirically in any event. We can 
+estimate about how big a keepalive packet is but if you've got a bug 
+sending them every 60ms instead of every 60s you'll be happy to catch it 
+before the bill comes in across your entire fleet.
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
