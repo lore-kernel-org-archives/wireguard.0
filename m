@@ -2,111 +2,65 @@ Return-Path: <SRS0=1Eb4=Z6=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.0 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 00A1EC2BBE2
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  8 Dec 2019 10:41:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BD43C43603
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  8 Dec 2019 10:45:05 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 9849E206D6
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  8 Dec 2019 10:41:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 04DB1206D6
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  8 Dec 2019 10:45:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=cs.umd.edu header.i=@cs.umd.edu header.b="AP1/AN93"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 9849E206D6
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=cs.umd.edu
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="bR0cegrO"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 04DB1206D6
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3e3f54aa;
-	Sun, 8 Dec 2019 10:41:09 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fb47d41b;
+	Sun, 8 Dec 2019 10:44:52 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 829bdf7e
- for <wireguard@lists.zx2c4.com>; Thu, 5 Dec 2019 12:56:05 +0000 (UTC)
-Received: from mrouter00.cs.umd.edu (mrouter00.cs.umd.edu [128.8.128.203])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 75574b54
- for <wireguard@lists.zx2c4.com>; Thu, 5 Dec 2019 12:56:05 +0000 (UTC)
-Received: from barracuda.cs.umd.edu (barracuda01.cs.umd.edu [128.8.128.202])
- (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
- (No client certificate requested)
- by mrouter00.cs.umd.edu (Postfix) with ESMTPS id C086482480CF
- for <wireguard@lists.zx2c4.com>; Thu,  5 Dec 2019 07:56:02 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=cs.umd.edu;
- s=mrouter00; t=1575550564;
- bh=4ABo2l5/UPhmfeQQEm7S2VEdds1UctkmPZQ9YlUduQI=;
- h=Subject:From:To:References:Date:In-Reply-To;
- b=AP1/AN93H9ZyZwZIfraRPfh75zltnZ4WUCDKNhziRok+OSSWlBoaDfb7Gekfh0XKz
- 0Dfbgy6LInnbpZzxaFKVlj9MBGWHQwSKM9Bh9VG2EcS08HT5IJ/qshhYH6N9rw03dQ
- aB/XyYw885uWpAE4dSZTlrTzE+RxmTipRZNvyygg=
-Authentication-Results: mrouter00.cs.umd.edu;
- arc=none smtp.remote-ip=128.8.128.202
-ARC-Seal: i=1; a=rsa-sha256; d=cs.umd.edu; s=csmx; t=1575550564; cv=none;
- b=jSMydt6KCLJx2GNSJgwjRcoeSS/MNEIHWfH7swdsNlclMoYlTSOXbE+Tb0kj3+52U279yhovAo9P8Rt+1VhRFhsxzUkopuSvwmHT2UAQ0GEgZfDwgFJ/CBEoV716TJbbNwCx+cQe9VVc3sMcqkTIf0wdlLUZzK3tKvVDHoTnhIQ=
-ARC-Message-Signature: i=1; a=rsa-sha256; d=cs.umd.edu; s=csmx; t=1575550564; 
- c=relaxed/simple;
- bh=4ABo2l5/UPhmfeQQEm7S2VEdds1UctkmPZQ9YlUduQI=; 
- h=X-ASG-Debug-ID:Received:X-Barracuda-Envelope-From:
- X-Barracuda-Effective-Source-IP:X-Barracuda-Apparent-Source-IP:
- Received:Subject:From:X-ASG-Orig-Subj:To:References:Message-ID:
- Date:User-Agent:MIME-Version:In-Reply-To:Content-Type:
- Content-Transfer-Encoding:Content-Language:X-Barracuda-Connect:
- X-Barracuda-Start-Time:X-Barracuda-URL:X-Virus-Scanned:
- X-Barracuda-Scan-Msg-Size:X-Barracuda-BRTS-Status:
- X-Barracuda-Bayes:X-Barracuda-Spam-Score:X-Barracuda-Spam-Status:
- X-Barracuda-Spam-Report;
- b=MJEZPWZtXkOo7kSxclT+xjYbul4+syO7tl8VKIyz/ASgNNtRF2dyYGCf0z0YJQW2AgMfj8cmLdBx4upUB7qlOLv1ycvnniurIskw/AJczdDkKT4ghs8fkxXLWf7mfMaC0XJuT9JSK8VduORnSW9UFA1vGxglykFIJHNRldSPHjQ=
-ARC-Authentication-Results: i=1; mrouter00.cs.umd.edu;
- dkim=none (no signatures found);
- x-return-mx=pass (MX Record found) header.domain=cs.umd.edu
- policy.org_domain=umd.edu policy.is_org=no;
- x-return-mx=pass (MX Record found) smtp.domain=cs.umd.edu
- policy.org_domain=umd.edu policy.is_org=no; x-trusted-ip=pass
-Authentication-Results: mrouter00.cs.umd.edu; dkim=none (no signatures found);
- x-return-mx=pass header.domain=cs.umd.edu policy.org_domain=umd.edu
- policy.is_org=no (MX Record found); 
- x-return-mx=pass smtp.domain=cs.umd.edu policy.org_domain=umd.edu
- policy.is_org=no (MX Record found); x-trusted-ip=pass
-X-ASG-Debug-ID: 1575550562-08f01f355e30d240001-KOqj8r
-Received: from bacon.cs.umd.edu (bacon.cs.umd.edu [128.8.127.22]) by
- barracuda.cs.umd.edu with ESMTP id N4NEOpvMeyq083gA for
- <wireguard@lists.zx2c4.com>; Thu, 05 Dec 2019 07:56:02 -0500 (EST)
-X-Barracuda-Envelope-From: seriv@cs.umd.edu
-X-Barracuda-Effective-Source-IP: bacon.cs.umd.edu[128.8.127.22]
-X-Barracuda-Apparent-Source-IP: 128.8.127.22
-Received: from [10.137.0.16] (unknown [10.73.252.133])
- (Authenticated sender: seriv)
- by bacon.cs.umd.edu (Postfix) with ESMTPSA id 60932833291C
- for <wireguard@lists.zx2c4.com>; Thu,  5 Dec 2019 07:55:59 -0500 (EST)
-Subject: RHEL-8.1 backported a couple features breaking wireguard compilation.
-From: Sergey Ivanov <seriv@cs.umd.edu>
-X-ASG-Orig-Subj: RHEL-8.1 backported a couple features breaking wireguard
- compilation.
-To: wireguard@lists.zx2c4.com
-References: <6c0d375eec6dddfcff8040df3a34e69a@cs.umd.edu>
-Message-ID: <dcf2a064-9800-8fcc-bd0c-3a604f8bd9bd@cs.umd.edu>
-Date: Thu, 5 Dec 2019 07:55:57 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3e54948d
+ for <wireguard@lists.zx2c4.com>; Sun, 8 Dec 2019 10:44:49 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fa04e813
+ for <wireguard@lists.zx2c4.com>; Sun, 8 Dec 2019 10:44:49 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b4e1dfa9
+ for <wireguard@lists.zx2c4.com>; Sun, 8 Dec 2019 09:49:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :references:in-reply-to:from:date:message-id:subject:to:cc
+ :content-type; s=mail; bh=Zrk0yxOvzKSSxzObJLHBdVK/nRg=; b=bR0ceg
+ rO+fdw+8IvBdyCuMLuC6vIhLWwElZp8oW3kDTeH08vnsR7BH1Wvd2utsl+tenYQC
+ Thea9C4hKFQ5m53a1yUat0NqyK61o0aws/O6odrbe8vtC1xoTRundVrA4TD6oGYS
+ XlunCwVZldWCmVneQIuVdqvVGsSNOQprxKXffpZn2GH7rJR1B9L4hfyxWVpyXuCo
+ EP0KhijnnF7wgiq0zgkDMDBBM19G8YBSNFYzMIgt3fr7JMT6AwPFSQyOPJlkZt1G
+ sCl7jqL2mM9/gD9/a0mdbi0hHh4YtQ0QPY8rUzSMrP59WGB7jGVoVZ0iHoYHN5CH
+ J9vXoSYQZtE+6BlA==
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 753985a5
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Sun, 8 Dec 2019 09:49:32 +0000 (UTC)
+Received: by mail-oi1-f177.google.com with SMTP id c16so3852134oic.3
+ for <wireguard@lists.zx2c4.com>; Sun, 08 Dec 2019 02:44:48 -0800 (PST)
+X-Gm-Message-State: APjAAAVnDlpAeUPjb4C5cNL/CSCc0GnEGCfClaCoYRWTMflMhkBKuFhB
+ hkE1W2XrXMPxuP4i+lLTaYnLdhq5OO/7s+jMIjM=
+X-Google-Smtp-Source: APXvYqw2xRrA44yrOmdN44yEmXsYnoKY2PKX8eXLBQGnWfxgHSsVeVL4PWjQUSCGHzEXQebRmHKOGq35tRwP6rw6YWw=
+X-Received: by 2002:a05:6808:4cc:: with SMTP id
+ a12mr4460806oie.115.1575801887812; 
+ Sun, 08 Dec 2019 02:44:47 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <6c0d375eec6dddfcff8040df3a34e69a@cs.umd.edu>
-Content-Language: en-US
-X-Barracuda-Connect: bacon.cs.umd.edu[128.8.127.22]
-X-Barracuda-Start-Time: 1575550562
-X-Barracuda-URL: https://barracuda01.cs.umd.edu:443/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at cs.umd.edu
-X-Barracuda-Scan-Msg-Size: 1224
-X-Barracuda-BRTS-Status: 1
-X-Barracuda-Bayes: INNOCENT GLOBAL 0.0000 1.0000 -2.0210
-X-Barracuda-Spam-Score: -2.02
-X-Barracuda-Spam-Status: No,
- SCORE=-2.02 using per-user scores of TAG_LEVEL=1000.0
- QUARANTINE_LEVEL=1000.0 KILL_LEVEL=1000.0 tests=
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.78470
- Rule breakdown below
- pts rule name              description
- ---- ---------------------- --------------------------------------------------
-X-Mailman-Approved-At: Sun, 08 Dec 2019 11:41:06 +0100
+References: <6c0d375eec6dddfcff8040df3a34e69a@cs.umd.edu>
+ <dcf2a064-9800-8fcc-bd0c-3a604f8bd9bd@cs.umd.edu>
+In-Reply-To: <dcf2a064-9800-8fcc-bd0c-3a604f8bd9bd@cs.umd.edu>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Sun, 8 Dec 2019 11:44:35 +0100
+X-Gmail-Original-Message-ID: <CAHmME9r4mgUzrqxJ7vEJZLqG7UVnQjAKrJSpDDF8h0hr7hnYBw@mail.gmail.com>
+Message-ID: <CAHmME9r4mgUzrqxJ7vEJZLqG7UVnQjAKrJSpDDF8h0hr7hnYBw@mail.gmail.com>
+Subject: Re: RHEL-8.1 backported a couple features breaking wireguard
+ compilation.
+To: Sergey Ivanov <seriv@cs.umd.edu>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -118,32 +72,158 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset="utf-8"; Format="flowed"
+Content-Type: multipart/mixed; boundary="===============1123201774281144406=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-SGksCgpvbiBrZXJuZWwgNC4xOC4wLTE0Ny5lbDgueDg2XzY0IEkgYW0gbm90IGFibGUgdG8gY29t
-cGlsZSAKaHR0cHM6Ly9naXQuengyYzQuY29tL1dpcmVHdWFyZCBzb3VyY2VzLCB0cmllZCB0YWdz
-IDAuMC4yMDE5MTEyNyBhbmTCoCAKMC4wLjIwMTkxMjA1IGFuZCBtYXN0ZXIgYXQgNWViODdmYjY0
-OS4KClRvIGNvbXBpbGUgaXQgSSBkaWQgdGhlIGZvbGxvd2luZyB3b3JrYXJvdW5kOgoKPT09CgoK
-JCBnaXQgZGlmZgpkaWZmIC0tZ2l0IGEvc3JjL2NvbXBhdC9jb21wYXQuaCBiL3NyYy9jb21wYXQv
-Y29tcGF0LmgKaW5kZXggYWIyMmZhNC4uNmUwMzRiNSAxMDA2NDQKLS0tIGEvc3JjL2NvbXBhdC9j
-b21wYXQuaAorKysgYi9zcmMvY29tcGF0L2NvbXBhdC5oCkBAIC0zMjYsNyArMzI2LDcgQEAgc3Rh
-dGljIGlubGluZSBpbnQgd2FpdF9mb3JfcmFuZG9tX2J5dGVzKHZvaWQpCiDCoH0KIMKgI2VuZGlm
-CgotI2lmIExJTlVYX1ZFUlNJT05fQ09ERSA8IEtFUk5FTF9WRVJTSU9OKDQsIDE5LCAwKSAmJiBM
-SU5VWF9WRVJTSU9OX0NPREUgCiA+PSBLRVJORUxfVkVSU0lPTig0LCAyLCAwKQorI2lmIExJTlVY
-X1ZFUlNJT05fQ09ERSA8IEtFUk5FTF9WRVJTSU9OKDQsIDE5LCAwKSAmJiBkZWZpbmVkKElTUkhF
-TDgpIAomJiBSSEVMX01JTk9SIDwgMSAmJiBMSU5VWF9WRVJTSU9OX0NPREUgPj0gS0VSTkVMX1ZF
-UlNJT04oNCwgMiwgMCkKIMKgI2luY2x1ZGUgPGxpbnV4L3JhbmRvbS5oPgogwqAjaW5jbHVkZSA8
-bGludXgvc2xhYi5oPgogwqBzdHJ1Y3Qgcm5nX2lzX2luaXRpYWxpemVkX2NhbGxiYWNrIHsKQEAg
-LTgzMSw3ICs4MzEsNyBAQCBzdGF0aWMgaW5saW5lIHZvaWQgc2tiX21hcmtfbm90X29uX2xpc3Qo
-c3RydWN0IApza19idWZmICpza2IpCiDCoH0KIMKgI2VuZGlmCgotI2lmIExJTlVYX1ZFUlNJT05f
-Q09ERSA8IEtFUk5FTF9WRVJTSU9OKDQsIDIwLCAwKQorI2lmIExJTlVYX1ZFUlNJT05fQ09ERSA8
-IEtFUk5FTF9WRVJTSU9OKDQsIDIwLCAwKSAmJiAoIWRlZmluZWQoSVNSSEVMOCkgCnx8IFJIRUxf
-TUlOT1IgPCAxKQogwqAjZGVmaW5lIE5MQV9FWEFDVF9MRU4gTkxBX1VOU1BFQwogwqAjZW5kaWYK
-IMKgI2lmIExJTlVYX1ZFUlNJT05fQ09ERSA8IEtFUk5FTF9WRVJTSU9OKDUsIDIsIDApCj09PQoK
-LS0gCgogwqAgUmVnYXJkcywKCiDCoCBTZXJnZXkgSXZhbm92CgpfX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fXwpXaXJlR3VhcmQgbWFpbGluZyBsaXN0CldpcmVH
-dWFyZEBsaXN0cy56eDJjNC5jb20KaHR0cHM6Ly9saXN0cy56eDJjNC5jb20vbWFpbG1hbi9saXN0
-aW5mby93aXJlZ3VhcmQK
+--===============1123201774281144406==
+Content-Type: multipart/alternative; boundary="000000000000c270c805992ef704"
+
+--000000000000c270c805992ef704
+Content-Type: text/plain; charset="UTF-8"
+
+Thanks. The rhel backporting policy has generally been to not support older
+point releases once new ones exist. So we'll move to supporting rhel 8.1
+and drop 8.0. If you submit a properly formatted git patch with a sign off
+line, I can apply it.
+
+On Sun, Dec 8, 2019, 11:41 Sergey Ivanov <seriv@cs.umd.edu> wrote:
+
+> Hi,
+>
+> on kernel 4.18.0-147.el8.x86_64 I am not able to compile
+> https://git.zx2c4.com/WireGuard sources, tried tags 0.0.20191127 and
+> 0.0.20191205 and master at 5eb87fb649.
+>
+> To compile it I did the following workaround:
+>
+> ===
+>
+>
+> $ git diff
+> diff --git a/src/compat/compat.h b/src/compat/compat.h
+> index ab22fa4..6e034b5 100644
+> --- a/src/compat/compat.h
+> +++ b/src/compat/compat.h
+> @@ -326,7 +326,7 @@ static inline int wait_for_random_bytes(void)
+>   }
+>   #endif
+>
+> -#if LINUX_VERSION_CODE < KERNEL_VERSION(4, 19, 0) && LINUX_VERSION_CODE
+>  >= KERNEL_VERSION(4, 2, 0)
+> +#if LINUX_VERSION_CODE < KERNEL_VERSION(4, 19, 0) && defined(ISRHEL8)
+> && RHEL_MINOR < 1 && LINUX_VERSION_CODE >= KERNEL_VERSION(4, 2, 0)
+>   #include <linux/random.h>
+>   #include <linux/slab.h>
+>   struct rng_is_initialized_callback {
+> @@ -831,7 +831,7 @@ static inline void skb_mark_not_on_list(struct
+> sk_buff *skb)
+>   }
+>   #endif
+>
+> -#if LINUX_VERSION_CODE < KERNEL_VERSION(4, 20, 0)
+> +#if LINUX_VERSION_CODE < KERNEL_VERSION(4, 20, 0) && (!defined(ISRHEL8)
+> || RHEL_MINOR < 1)
+>   #define NLA_EXACT_LEN NLA_UNSPEC
+>   #endif
+>   #if LINUX_VERSION_CODE < KERNEL_VERSION(5, 2, 0)
+> ===
+>
+> --
+>
+>    Regards,
+>
+>    Sergey Ivanov
+>
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
+>
+
+--000000000000c270c805992ef704
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div>Thanks. The rhel backporting policy has generally be=
+en to not support older point releases once new ones exist. So we&#39;ll mo=
+ve to supporting rhel 8.1 and drop 8.0. If you submit a properly formatted =
+git patch with a sign off line, I can apply it.<br><br><div class=3D"gmail_=
+quote"><div dir=3D"ltr" class=3D"gmail_attr">On Sun, Dec 8, 2019, 11:41 Ser=
+gey Ivanov &lt;<a href=3D"mailto:seriv@cs.umd.edu">seriv@cs.umd.edu</a>&gt;=
+ wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8=
+ex;border-left:1px #ccc solid;padding-left:1ex">Hi,<br>
+<br>
+on kernel 4.18.0-147.el8.x86_64 I am not able to compile <br>
+<a href=3D"https://git.zx2c4.com/WireGuard" rel=3D"noreferrer noreferrer" t=
+arget=3D"_blank">https://git.zx2c4.com/WireGuard</a> sources, tried tags 0.=
+0.20191127 and=C2=A0 <br>
+0.0.20191205 and master at 5eb87fb649.<br>
+<br>
+To compile it I did the following workaround:<br>
+<br>
+=3D=3D=3D<br>
+<br>
+<br>
+$ git diff<br>
+diff --git a/src/compat/compat.h b/src/compat/compat.h<br>
+index ab22fa4..6e034b5 100644<br>
+--- a/src/compat/compat.h<br>
++++ b/src/compat/compat.h<br>
+@@ -326,7 +326,7 @@ static inline int wait_for_random_bytes(void)<br>
+=C2=A0=C2=A0}<br>
+=C2=A0=C2=A0#endif<br>
+<br>
+-#if LINUX_VERSION_CODE &lt; KERNEL_VERSION(4, 19, 0) &amp;&amp; LINUX_VERS=
+ION_CODE <br>
+=C2=A0&gt;=3D KERNEL_VERSION(4, 2, 0)<br>
++#if LINUX_VERSION_CODE &lt; KERNEL_VERSION(4, 19, 0) &amp;&amp; defined(IS=
+RHEL8) <br>
+&amp;&amp; RHEL_MINOR &lt; 1 &amp;&amp; LINUX_VERSION_CODE &gt;=3D KERNEL_V=
+ERSION(4, 2, 0)<br>
+=C2=A0=C2=A0#include &lt;linux/random.h&gt;<br>
+=C2=A0=C2=A0#include &lt;linux/slab.h&gt;<br>
+=C2=A0=C2=A0struct rng_is_initialized_callback {<br>
+@@ -831,7 +831,7 @@ static inline void skb_mark_not_on_list(struct <br>
+sk_buff *skb)<br>
+=C2=A0=C2=A0}<br>
+=C2=A0=C2=A0#endif<br>
+<br>
+-#if LINUX_VERSION_CODE &lt; KERNEL_VERSION(4, 20, 0)<br>
++#if LINUX_VERSION_CODE &lt; KERNEL_VERSION(4, 20, 0) &amp;&amp; (!defined(=
+ISRHEL8) <br>
+|| RHEL_MINOR &lt; 1)<br>
+=C2=A0=C2=A0#define NLA_EXACT_LEN NLA_UNSPEC<br>
+=C2=A0=C2=A0#endif<br>
+=C2=A0=C2=A0#if LINUX_VERSION_CODE &lt; KERNEL_VERSION(5, 2, 0)<br>
+=3D=3D=3D<br>
+<br>
+-- <br>
+<br>
+=C2=A0=C2=A0 Regards,<br>
+<br>
+=C2=A0=C2=A0 Sergey Ivanov<br>
+<br>
+_______________________________________________<br>
+WireGuard mailing list<br>
+<a href=3D"mailto:WireGuard@lists.zx2c4.com" target=3D"_blank" rel=3D"noref=
+errer">WireGuard@lists.zx2c4.com</a><br>
+<a href=3D"https://lists.zx2c4.com/mailman/listinfo/wireguard" rel=3D"noref=
+errer noreferrer" target=3D"_blank">https://lists.zx2c4.com/mailman/listinf=
+o/wireguard</a><br>
+</blockquote></div></div></div>
+
+--000000000000c270c805992ef704--
+
+--===============1123201774281144406==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
+_______________________________________________
+WireGuard mailing list
+WireGuard@lists.zx2c4.com
+https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--===============1123201774281144406==--
