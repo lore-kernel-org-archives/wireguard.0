@@ -2,59 +2,52 @@ Return-Path: <SRS0=uCSF=Z7=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.5 required=3.0 tests=DKIM_ADSP_ALL,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 52BA7C43603
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  9 Dec 2019 11:57:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0CB1EC43603
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  9 Dec 2019 12:44:03 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id A35CB2077B
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  9 Dec 2019 11:57:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 4CB3920726
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  9 Dec 2019 12:44:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="mZ+HyPHP"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A35CB2077B
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=toke.dk header.i=@toke.dk header.b="tTOFyL+4"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 4CB3920726
+Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=toke.dk
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8db7a5e1;
-	Mon, 9 Dec 2019 11:57:03 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 30e44899;
+	Mon, 9 Dec 2019 12:43:44 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e71df635
- for <wireguard@lists.zx2c4.com>; Mon, 9 Dec 2019 11:57:01 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4086933f
- for <wireguard@lists.zx2c4.com>; Mon, 9 Dec 2019 11:57:01 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ded67a93
- for <wireguard@lists.zx2c4.com>; Mon, 9 Dec 2019 11:01:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :from:date:message-id:subject:to:content-type; s=mail; bh=ioH3ax
- SkPr8J8bblz4mr4XrAz7g=; b=mZ+HyPHP1k9HxrxNjXqXapDI9mams55+NWL17T
- woLGmwWlev8J++wV5I283cgHQ7RxcRIlrC1NRPo+q1ymQra/NJTsYfKGqza7ZTm1
- 3FDsrJ3NoFUnv/Z89brq1czzMp1MqjmuSbucUKgEPHjDYBbOsEvsOGM//XDbkhAb
- cNgSMtOU1+R5E/4ponjTcautQQtsz6gbNrp2CWsqZSxE85GrPQnxKCz3c07QLuyV
- 1n5eT+/eXLklmyz1xGJSnWGBkjzIL9o3JoAXJGak+uOodwFYsQ5cePqqDa4qozrz
- jmqvXuF4Hw3OKS/bw6hZJwqzkT52lctG+PFufYrDAg/G/YAg==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 0a4a584b
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 9 Dec 2019 11:01:37 +0000 (UTC)
-Received: by mail-oi1-f175.google.com with SMTP id i1so6023657oie.8
- for <wireguard@lists.zx2c4.com>; Mon, 09 Dec 2019 03:57:01 -0800 (PST)
-X-Gm-Message-State: APjAAAUZ2/Omh8RNv3Y4RXv7DqCmou6WBZqWziIFbvf/dk98wMugKQS+
- veAxpEt3vKVxdVaeQkTIAk4D4D+yJsamU+TW5zA=
-X-Google-Smtp-Source: APXvYqwOqTjKU/LHLNPlGAMqyvGsHaPi566amNvjtNpLmFyUDZvFu7Zx2VPnx3VgSRR72ecxG4I4NyQ0cl4PNTzHAyc=
-X-Received: by 2002:aca:5143:: with SMTP id f64mr22626453oib.66.1575892620789; 
- Mon, 09 Dec 2019 03:57:00 -0800 (PST)
-MIME-Version: 1.0
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 9 Dec 2019 12:56:49 +0100
-X-Gmail-Original-Message-ID: <CAHmME9p1-5hQXv5QNqqHT+OBjn-vf16uAU2HtYcmwKMtLhnsTA@mail.gmail.com>
-Message-ID: <CAHmME9p1-5hQXv5QNqqHT+OBjn-vf16uAU2HtYcmwKMtLhnsTA@mail.gmail.com>
-Subject: organization of wireguard linux kernel repos moving forward
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c79ba7b9
+ for <wireguard@lists.zx2c4.com>; Mon, 9 Dec 2019 12:43:43 +0000 (UTC)
+Received: from mail.toke.dk (mail.toke.dk [45.145.95.4])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5f423efb
+ for <wireguard@lists.zx2c4.com>; Mon, 9 Dec 2019 12:43:43 +0000 (UTC)
+From: Toke =?utf-8?Q?H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=toke.dk; s=20161023;
+ t=1575895421; bh=G2z7odAkzR9JBaN8/WVO3+Ty2ThT2Yl0JDnr6Qd9/3I=;
+ h=From:To:Subject:In-Reply-To:References:Date:From;
+ b=tTOFyL+4Uq96ckD58Ao7++kcXavR49vsruUVidd1AWa3B3mMrusmA/Kf2sj7T0VLR
+ MIB45bx893aJpl0rlU5nLL5wBCBIwd0wdM5P5ErLaWpIsvYZIbQrkrASKx96weO14U
+ BPscEF/vpdc9oe59QoywhtTGzio9Oc9Z3pbleWloCfHO65opuYFzUtaYJRdzKv2UIu
+ WLajaFfafKyzptp9t8JseIDFMp7ioWTKKYCyykaNXcNJ/zLb9/b/FbahlEyHMtkGJs
+ mPyo/YftS7nKcsxfyFdCsuKO2VJ0rj39JWPgWiza2p0sRVOsrmcm2wFn67okvLw6eJ
+ pMpIq6zN8wN2w==
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>,
  Netdev <netdev@vger.kernel.org>
+Subject: Re: organization of wireguard linux kernel repos moving forward
+In-Reply-To: <CAHmME9p1-5hQXv5QNqqHT+OBjn-vf16uAU2HtYcmwKMtLhnsTA@mail.gmail.com>
+References: <CAHmME9p1-5hQXv5QNqqHT+OBjn-vf16uAU2HtYcmwKMtLhnsTA@mail.gmail.com>
+Date: Mon, 09 Dec 2019 13:43:41 +0100
+X-Clacks-Overhead: GNU Terry Pratchett
+Message-ID: <87d0cxlldu.fsf@toke.dk>
+MIME-Version: 1.0
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -71,62 +64,21 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-[Cross-posted to wireguard mailing list and netdev.]
+"Jason A. Donenfeld" <Jason@zx2c4.com> writes:
 
-Hey folks,
+> 2) wireguard-tools.git will have the userspace utilities and scripts,
+> such as wg(8) and wg-quick(8), and be easily packageable by distros.
+> This repo won't be live until we get a bit closer to the 5.6 release,
+> but when it is live, it will live at:
+> https://git.zx2c4.com/wireguard-tools/ [currently 404s]
+> https://git.kernel.org/pub/scm/linux/kernel/git/zx2c4/wireguard-tools.git/
+> [currently 404s]
 
-With WireGuard in net-next, it's time to break up the monolithic repo
-we've been using for development into something a bit more manageable
-and in line with ordinary kernel development.
+Any plans for integrating this further with iproute2? One could imagine
+either teaching 'ip' about the wireguard-specific config (keys etc), or
+even just moving the 'wg' binary wholesale into iproute2?
 
-Right now the "WireGuard.git" repo has been structured as an out of
-tree module, alongside a subdirectory for tools, one for scripts, one
-for tests, and another for a super gnarly compat layer that makes the
-thing work on all kernels going back to 3.10. We're going to break
-this up into three repositories:
-
-1) wireguard-linux.git will be a full Linux tree, with wireguard
-changes, and regularly merge in net/net-next, and have things from
-there posted on netdev like usual for review. This repo won't be an
-out of tree module any more, obviously. This lives at:
-https://git.zx2c4.com/wireguard-linux/
-https://git.kernel.org/pub/scm/linux/kernel/git/zx2c4/wireguard-linux.git/
-
-2) wireguard-tools.git will have the userspace utilities and scripts,
-such as wg(8) and wg-quick(8), and be easily packageable by distros.
-This repo won't be live until we get a bit closer to the 5.6 release,
-but when it is live, it will live at:
-https://git.zx2c4.com/wireguard-tools/ [currently 404s]
-https://git.kernel.org/pub/scm/linux/kernel/git/zx2c4/wireguard-tools.git/
-[currently 404s]
-
-3) wireguard-linux-compat.git will be an out-of-tree module containing
-the aforementioned horrific compat.h layer. New development will go
-into upstream wireguard-linux.git, but we'll do our best to keep
-things mostly working for as long as it makes sense and is feasible.
-This repo won't be live until we get a bit closer to the 5.6 release,
-but when it is live, it will live at:
-https://git.zx2c4.com/wireguard-linux-compat/ [currently 404s]
-https://git.kernel.org/pub/scm/linux/kernel/git/zx2c4/wireguard-linux-compat.git/
-[currently 404s]
-
-Since 5.6 is a long ways off, we'll probably have a few more snapshots
-posted out of the monolithic WireGuard.git repo, but in the next few
-months we'll be transitioning things over and working with distro
-packagers to make sure the new tarball URLs for the tools are all set.
-
-The CI that runs on build.wireguard.com will also see some updates to
-reflect these adjustments, and also more closely align with the
-net-next tree. Additionally, I'm interested to see if I can make our
-CI useful for a variety of things in net/ and drivers/net/ instead of
-just for wireguard.
-
-More generally, wireguard linux development will be moving to the
-release cadence, development, and review practices of netdev, rather
-than living sequestered as an out-of-tree snapshot-only thing.
-
-Regards,
-Jason
+-Toke
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
