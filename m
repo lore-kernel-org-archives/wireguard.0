@@ -6,68 +6,63 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87CA4C43603
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 10 Dec 2019 19:15:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A141C43603
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 10 Dec 2019 19:23:05 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 0B8BD20637
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 10 Dec 2019 19:15:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id E3F96207FF
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 10 Dec 2019 19:23:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="ywnJJn23"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 0B8BD20637
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="jrJaJmtm"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org E3F96207FF
 Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 48f0e4eb;
-	Tue, 10 Dec 2019 19:15:37 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ab5cc452;
+	Tue, 10 Dec 2019 19:22:37 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1857471e
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 404583be
  for <wireguard@lists.zx2c4.com>;
- Tue, 10 Dec 2019 19:15:36 +0000 (UTC)
+ Tue, 10 Dec 2019 19:22:35 +0000 (UTC)
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c3a13e9e
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e8f4c542
  for <wireguard@lists.zx2c4.com>;
- Tue, 10 Dec 2019 19:15:36 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 20ebb7a2
+ Tue, 10 Dec 2019 19:22:35 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5fd98430
  for <wireguard@lists.zx2c4.com>;
- Tue, 10 Dec 2019 18:20:02 +0000 (UTC)
+ Tue, 10 Dec 2019 18:27:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
  :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=03Q/u5OdFeKm43FkQM+bZHSLJKI=; b=ywnJJn
- 234NaKsxjxR9Ooj4ZUdCy3aSS/ZiEWFNWyo+F2zNbdoAMV1zfsaHQypyemV63q/h
- D6tNOgNyKTAwf957vX+z/wdEHtDINKDbd03Olus3V4IxOlhdfhdqrq7oU7n6GcKu
- l5phU+U9uGRQRErU0s5MZ7iRvdCAz+sNpKXnrpKAwAMllDx3yv+M5UVdDPtcT2ee
- A+X5kDUWNhagfLBDFC1cA1nRzV3v2GbgzJ8JPhFuLivnQ9tE3fyLAZAsvJqcZib1
- dyMPRpiLle80WbBdIaZ67Cr63Vh9PliAjCqdqVvfsVqSeVShOLt/rUhc+ai0k4VF
- ojekBToWaWQEDWGw==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 5db9013f
+ :content-type; s=mail; bh=VbHyzhyRQQiVctWq95sZVWr/Lz4=; b=jrJaJm
+ tmIK/UHwciE7dI7uKgegpjGc5igC4Ji6Tzb9d9poNzVdA/dwS1y7DfbyxOfLhxo1
+ oxxLyYoHv1+iqcNiy2mra7d4onRlXDNDL0UcOhzf1jWtDZHhPilQvhu8HiyeF9sD
+ LuDwwf1REgKXSFLc1wCbDI09XNtj5pACizHR2enfd5TbHpjnC2aFBeK0ppwPBUCV
+ yHi2FTQ1kUQPGLSvXw7j91UNBoYrukDyT//XJ4rGNNodBGvj3t4wVLfR3eADhnvC
+ bha0qHI3aO1ocegLv8DkzdtjAFwT4nAt/SbzFfcEKcOF15uw8bckSIBfZqG6VRjd
+ 5WS4qtcST4ZZurBQ==
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 002f21fe
  (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 10 Dec 2019 18:20:01 +0000 (UTC)
-Received: by mail-oi1-f174.google.com with SMTP id x195so10896458oix.4
- for <wireguard@lists.zx2c4.com>; Tue, 10 Dec 2019 11:15:35 -0800 (PST)
-X-Gm-Message-State: APjAAAWoXcPf8TfJ7kDN/8igslUsFlfVRzYx4qI1GogwlZEyL95xBMnY
- iHJx48jdVBUlfYGWi2pDXhakf/FczOZ2lrmCdFg=
-X-Google-Smtp-Source: APXvYqxsgbt3DNXRzCMBLBRwK5XVSnMXpsKJpjnUkfXI1dBDz0hhDmDB8sl0zK4HI9KYyLvOCRujhTsGbZMvAr/4yjA=
-X-Received: by 2002:aca:815:: with SMTP id 21mr420715oii.52.1576005335134;
- Tue, 10 Dec 2019 11:15:35 -0800 (PST)
+ Tue, 10 Dec 2019 18:27:00 +0000 (UTC)
+Received: by mail-ot1-f42.google.com with SMTP id 66so16548882otd.9
+ for <wireguard@lists.zx2c4.com>; Tue, 10 Dec 2019 11:22:34 -0800 (PST)
+X-Gm-Message-State: APjAAAUMHxqIO1R3tnWDvXst1n4gRWxJa0cPZ+c0wgUHAUO60ixRpm9d
+ Jv09iCqAXcyzn59jpPdP0wdW8I0bKNtby/k3Sx4=
+X-Google-Smtp-Source: APXvYqzd1TYKhpHwc/Hpk3WQnzUBVQo4E++QrDGDezJayjNdopmVLXIO0VQQeWz+xov0+EzFb9Alqe1mrmV5H55gCUU=
+X-Received: by 2002:a05:6830:1141:: with SMTP id
+ x1mr27504948otq.120.1576005754381; 
+ Tue, 10 Dec 2019 11:22:34 -0800 (PST)
 MIME-Version: 1.0
-References: <20191210154850.577745-1-Jason@zx2c4.com>
- <FX30kbIJvHNSsmPxMSA_XdlAOLSee8p5eHMDcDAkDH8KKhihrybE2EtZJIjtU9ojh-JJT9g4Cj5xlT85E5uETb9JsBJmficyjfDvblrRaJg=@protonmail.ch>
- <CAHmME9pdqq23OXNPHLT-YyXCKTVTKJNyfz9D+Q0jADAN=BDhnA@mail.gmail.com>
- <20191210221215.56c2f30d@natsu>
- <CAHmME9oYJFfQByaaVefEfbbXT=DABV+=DShuupJjBrk5i87GQA@mail.gmail.com>
- <OP549CYtruXJJQ-jftan-7-ySlaBW7egOMSgpfkcSjBM3DMK6rnDyiN-V8VUEdIq-MxP5iNwV57VMvcPp9MwTjdUIndoZ3JtQXlW900KhW8=@protonmail.ch>
-In-Reply-To: <OP549CYtruXJJQ-jftan-7-ySlaBW7egOMSgpfkcSjBM3DMK6rnDyiN-V8VUEdIq-MxP5iNwV57VMvcPp9MwTjdUIndoZ3JtQXlW900KhW8=@protonmail.ch>
+References: <04a38f45-1043-0db5-6c76-2ee573fd71cf@malte-wetz.de>
+In-Reply-To: <04a38f45-1043-0db5-6c76-2ee573fd71cf@malte-wetz.de>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 10 Dec 2019 20:15:24 +0100
-X-Gmail-Original-Message-ID: <CAHmME9qbpPQ2-M66bjjV32t2rvbsd=-EgEJau5SfxHoe6UEixg@mail.gmail.com>
-Message-ID: <CAHmME9qbpPQ2-M66bjjV32t2rvbsd=-EgEJau5SfxHoe6UEixg@mail.gmail.com>
-Subject: Re: [PATCH] wg-quick: linux: add support for nft and prefer it
-To: Jordan Glover <Golden_Miller83@protonmail.ch>
-Cc: "jwollrath@web.de" <jwollrath@web.de>,
- "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+Date: Tue, 10 Dec 2019 20:22:23 +0100
+X-Gmail-Original-Message-ID: <CAHmME9qwJ-+qv6CBLDL05qMQdi6KPkM5MS2aT7-5q7hM6QN+4g@mail.gmail.com>
+Message-ID: <CAHmME9qwJ-+qv6CBLDL05qMQdi6KPkM5MS2aT7-5q7hM6QN+4g@mail.gmail.com>
+Subject: Re: Windows client: PostUp/PreDown possible?
+To: Mark Schmidt <knupps@gmx.de>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -84,40 +79,15 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Tue, Dec 10, 2019 at 7:58 PM Jordan Glover
-<Golden_Miller83@protonmail.ch> wrote:
->
-> On Tuesday, December 10, 2019 5:36 PM, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
->
-> >
-> > On the other hand, if what you say is actually true in our case, and
-> > nftables is utter crap, then perhaps we should scrap this nft(8) patch
-> > all together and just keep pure iptables(8). DKG - you seemed to want
-> > nft(8) support, though. How would you feel about that sort of
-> > conclusion?
-> >
-> > Jason
->
-> The only scenario where you really want to use nft is where iptables command
-> doesn't exist. I don't know how realistic scenario it is but I assume it can
-> happen in the wild. Otherwise calling iptables will take care of both iptables
-> and nftables automatically if those are supported on system. That's why I
-> proposed to invert current patch logic.
+We'd considered it, but the fear is that it will be used to spread
+malware and RCE. Linux command line users can generally be trusted to
+check the config files they're writing into /etc/wireguard, but I
+don't have that same feeling about plug-and-chug Windows users
+pointing and clicking their way to BonziBuddy. That's possibly a bit
+of a patronizing perspective, I realize, but the potential for havoc
+is pretty high.
 
-I reason about things a bit differently. For me, the decision is
-between these two categories:
-
-A) iptables-nft points to iptables and is available for people who
-want a nft-only system. So, code against the iptables API, and mandate
-that users either have iptables or iptables-nft installed, which isn't
-unreasonable, considering the easy availability of each.
-
-B) nft is the future and should be used whenever available. Support
-iptables as a fallback though for old systems, and remove it as soon
-as we can.
-
-Attitudes that fall somewhere between (A) and (B) are much less
-interesting to me.
+Thoughts?
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
