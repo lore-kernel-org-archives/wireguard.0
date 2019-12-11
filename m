@@ -2,79 +2,63 @@ Return-Path: <SRS0=vHM2=2B=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.0 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,FREEMAIL_REPLYTO_END_DIGIT,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A88FEC43603
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 11 Dec 2019 07:14:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BEB4C43603
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 11 Dec 2019 19:14:12 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id AE35B2053B
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 11 Dec 2019 07:14:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id B10DB206A5
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 11 Dec 2019 19:14:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=istream-today.20150623.gappssmtp.com header.i=@istream-today.20150623.gappssmtp.com header.b="bwkkIyBr"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org AE35B2053B
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=istream.today
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=protonmail.ch header.i=@protonmail.ch header.b="VgPBHEWa"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org B10DB206A5
+Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=protonmail.ch
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 57a9d433;
-	Wed, 11 Dec 2019 07:14:40 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0f5ebb87;
+	Wed, 11 Dec 2019 19:13:44 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c314c717
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 01011a99
  for <wireguard@lists.zx2c4.com>;
- Wed, 11 Dec 2019 07:14:33 +0000 (UTC)
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com
- [IPv6:2a00:1450:4864:20::42b])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c7fae842
+ Wed, 11 Dec 2019 19:13:42 +0000 (UTC)
+Received: from mail-40137.protonmail.ch (mail-40137.protonmail.ch
+ [185.70.40.137])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 910f4236
  for <wireguard@lists.zx2c4.com>;
- Wed, 11 Dec 2019 07:14:33 +0000 (UTC)
-Received: by mail-wr1-x42b.google.com with SMTP id b6so22822011wrq.0
- for <wireguard@lists.zx2c4.com>; Tue, 10 Dec 2019 23:14:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=istream-today.20150623.gappssmtp.com; s=20150623;
- h=from:to:subject:date:message-id:mime-version:content-language
- :thread-index; bh=mW+9UQTqosNadsPpjEOhhZyuYWr3plMNt3FltNmeh4U=;
- b=bwkkIyBrsOKOogutWIGNoQ0FjYcEevZIwzjeSyrwDrtnwdm/Wmk6Mks7tOe/uLoJi2
- kCTzy1FrYCE3Cr6kc7w8kuM6OsZmR/7bBuN7E2NkdRW1PkY1Q9X4VXMW7xBTsboyR9pY
- a40Ke08ueKBZAbqKA5eTPgWUJ2zjE2Ry9a0raYMD2dqOfarKDvTOHTdM/wfN2KUhKHqS
- aB+yuA9ZoNfhak7bforUsJpTQG307viUrz0Of8TQ36XHDY8oyJkfiNpBk9frKDrnRaYn
- 6wzcBwXtjLYvtHGjThZ+eF5f/FgK+5bMgrqkdnrbMdJZLAmwSTrFpBC7F+r0uRbUuLpf
- nHMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:subject:date:message-id:mime-version
- :content-language:thread-index;
- bh=mW+9UQTqosNadsPpjEOhhZyuYWr3plMNt3FltNmeh4U=;
- b=cdk2Orvzo0EmUrk/jTwX1jSowVsAKsDi4c/AkopRLRma1xWh0WI44eDzlmo0PqhNxa
- 3YhdF9TrJEB8GxnN6zY7OlKRo/DMRRAnVpwO2qnYmNgv0/vCKJkSAdKcgPJpO0cp75PR
- Scz0cFF1E5F7sUT8SgRRwRvszvQtepZT1VvgfTqHTy4XyiasPnX1CjPFUzUG6bsdvBLD
- sFRuHBjxC/iHVGP2X2DmSjm6tVaNOJIclcMnFWn9UAy7Fixhxmajve5S6sQaXJX87WEJ
- 3f1k0loyBXfBxsPrr0hFd1CXks3M07eCLF8Y7GlnfxWd23rUTAsRt1IMlZDzKeemyI+9
- g/8Q==
-X-Gm-Message-State: APjAAAXo0l5yRbhEPfytzVUyuYLYdzI/waOKa5O728UPrjsTRAnLA6KZ
- N+8QMMmtFhXNp/m1FmerCwS/kHtZ1qA=
-X-Google-Smtp-Source: APXvYqzPJKJRYAa/vBeBr3grzMLj60gi5XNZm8VZSGacyt7T0maY+/XtHLzsBb+/jJYf2UeDoHTpHg==
-X-Received: by 2002:adf:eb89:: with SMTP id t9mr1968840wrn.5.1576048471711;
- Tue, 10 Dec 2019 23:14:31 -0800 (PST)
-Received: from DESKTOPHPDKODH ([188.241.118.162])
- by smtp.gmail.com with ESMTPSA id k4sm1231309wmk.26.2019.12.10.23.14.30
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 10 Dec 2019 23:14:31 -0800 (PST)
-From: <cristian.c@istream.today>
-To: <wireguard@lists.zx2c4.com>
-Subject: Limited speed 100Mbps Down 200Mbps UP
-Date: Wed, 11 Dec 2019 09:14:29 +0200
-Message-ID: <000a01d5aff2$a17d7d80$e4787880$@istream.today>
+ Wed, 11 Dec 2019 19:13:41 +0000 (UTC)
+Date: Wed, 11 Dec 2019 19:13:37 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.ch;
+ s=default; t=1576091620;
+ bh=3KpWwiMUMI4IWy99FSNy/TypdObyAtata8DpF+s2yZQ=;
+ h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:
+ Feedback-ID:From;
+ b=VgPBHEWaEjis8NQSmxdp78vbUNjLv+u2E8I+AeSm7Ly5dEBPr7wS4PVaJxKMuUPq+
+ seHLPu3rxhlEdZR4S0b7E4rbUuSxB4Lkoa9ZMht0fJdqFa6Eq11q7L8r3NHt16SkoF
+ w4JpcTR8vqRwgiga0tXAudwdN/C7/9iSw2jhvBas=
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+From: Jordan Glover <Golden_Miller83@protonmail.ch>
+Subject: Re: [ANNOUNCE] WireGuard Snapshot `0.0.20191205` Available
+Message-ID: <d6oxUBUTOkqCrCBzL2cNsRFieVsCyW8xyJyZP4qv24E4PwTWauo1bKsMThdjCPJ54N7QYRuPMwY-Tzj_js-3w31RQzYyWp6s7dZZVXiLBTg=@protonmail.ch>
+In-Reply-To: <CAHmME9pUfWvtnOwaFtD-+ZZjG0maS+pBUOqp_fmMD2OkyWNRXQ@mail.gmail.com>
+References: <fa4b08be3b6fee08@frisell.zx2c4.com>
+ <NHVyo9ngt5xOvRvbPjQgDNH8pGe-_qN2sVDvP7jv2a6ZZRWd_0Ia9q6w2ZUTEdIQ_n-U-TRDxz-92_hnUpJTx_e-XlC180z5q1wWwF9q5rs=@protonmail.ch>
+ <CAHmME9qFER60XD1aVqP3cgpEHOnikMWfhC-mrxYXojWEjWcu8w@mail.gmail.com>
+ <qgogeFsyHmrD5A5oDJC_2s3UznPWIP0ncQl5Co1jS5Khgl_48mDer0UJFV3r6DUKs9bJyCS2j7f8dYz9WT_3WLQEYx8v8iP9cVFXXqvojwY=@protonmail.ch>
+ <CAHmME9pmhntbNxw9ABjA-krzFARDaV+ZWZhgmWuL9hwfMJUCEA@mail.gmail.com>
+ <sUhAy9FQoNuL5pe4TIlO25pMeAUxCEvrvj9LPjQ9WauOtxLWfE3Ug9juP6RORXxjLpl6AfV7x5k9i-mkfs-OK1IYx2FcusfU7Ko3uLlcfHM=@protonmail.ch>
+ <CAHmME9pUfWvtnOwaFtD-+ZZjG0maS+pBUOqp_fmMD2OkyWNRXQ@mail.gmail.com>
+Feedback-ID: QEdvdaLhFJaqnofhWA-dldGwsuoeDdDw7vz0UPs8r8sanA3bIt8zJdf4aDqYKSy4gJuZ0WvFYJtvq21y6ge_uQ==:Ext:ProtonMail
 MIME-Version: 1.0
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-us
-Thread-Index: AdWv8qDnK2T2w2P9T7iUxbGdZPV3LQ==
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
+Reply-To: Jordan Glover <Golden_Miller83@protonmail.ch>
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -83,124 +67,41 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============0359688400079604598=="
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This is a multipart message in MIME format.
+On Friday, December 6, 2019 5:35 PM, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
 
---===============0359688400079604598==
-Content-Type: multipart/alternative;
-	boundary="----=_NextPart_000_000B_01D5B003.6506E9C0"
-Content-Language: en-us
+> Looks like an arch problem or a libnftnl problem. I've made a minimal
+> reproducer:
+>
+> printf 'filter\nCOMMIT\nraw\nCOMMIT\n*mangle\nCOMMIT\n' | sudo
+> iptables-nft-restore -n
+>
+> I filed a bug report on Arch: https://bugs.archlinux.org/task/64755
+> You can follow up with them.
 
-This is a multipart message in MIME format.
+I tried to compile myself iptables 1.8.4 which is latest upstream version
+and have good and bad news:
 
-------=_NextPart_000_000B_01D5B003.6506E9C0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+The good one is your minimal reproducer no longer causes segfault.
 
-Hello,
+The bad one is wg-quick still does:
 
- 
+wg-quick[2325]: [#] iptables-restore -n
+audit[2326]: ANOM_ABEND auid=4294967295 uid=0 gid=0 ses=4294967295 subj==unconfined pid=2326 comm="iptables-restor" exe="/usr/bin/xtables-nft-multi" sig=11 res=1
+wg-quick[2325]: /usr/bin/wg-quick: line 29:  2326 Segmentation fault      (core dumped) "$@"
+kernel: show_signal_msg: 40 callbacks suppressed
+kernel: iptables-restor[2326]: segfault at 0 ip 000069bb4df13cc9 sp 0000716fcc5b9b30 error 4 in libnftnl.so.11.2.0[69bb4df11000+18000]
+kernel: Code: 15 5c 20 02 00 48 85 c0 74 07 48 89 00 48 89 40 08 48 83 c4 08 c3 66 66 2e 0f 1f 84 00 00 00 00 00 55 48 89 fd 53 48 83 ec 08 <48> 8b 3f 48 8b 1f 48 39 fd 74 2f 0f 1f 40 00 48 8b 47 08 48 89 43
 
-   I have installed Wireguard on multiple location, servers, on each of this
-server I have 1Gbps link, my problem is that I'm not able to get more that
-~100-120Mbps for download and ~200Mbps Upload, any idea why?
+Maybe upstream found and fixed some regression but still missed
+the other one.
 
- 
-
-  As a server I use CentOS 7 as for "client" I use Windows 10 with latest
-Wireguard client..
-
- 
-
-Thank you in advance,
-
-Cristian
-
-  
-
-
-------=_NextPart_000_000B_01D5B003.6506E9C0
-Content-Type: text/html;
-	charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" =
-xmlns:o=3D"urn:schemas-microsoft-com:office:office" =
-xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" =
-xmlns=3D"http://www.w3.org/TR/REC-html40"><head><META =
-HTTP-EQUIV=3D"Content-Type" CONTENT=3D"text/html; =
-charset=3Dus-ascii"><meta name=3DGenerator content=3D"Microsoft Word 15 =
-(filtered medium)"><style><!--
-/* Font Definitions */
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0in;
-	margin-bottom:.0001pt;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:#0563C1;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:#954F72;
-	text-decoration:underline;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-family:"Calibri",sans-serif;}
-@page WordSection1
-	{size:8.5in 11.0in;
-	margin:1.0in 1.0in 1.0in 1.0in;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]--></head><body lang=3DEN-US =
-link=3D"#0563C1" vlink=3D"#954F72"><div class=3DWordSection1><p =
-class=3DMsoNormal>Hello,<o:p></o:p></p><p =
-class=3DMsoNormal><o:p>&nbsp;</o:p></p><p class=3DMsoNormal>&nbsp;&nbsp; =
-I have installed Wireguard on multiple location, servers, on each of =
-this server I have 1Gbps link, my problem is that I&#8217;m not able to =
-get more that ~100-120Mbps for download and ~200Mbps Upload, any idea =
-why?<o:p></o:p></p><p class=3DMsoNormal><o:p>&nbsp;</o:p></p><p =
-class=3DMsoNormal>&nbsp; As a server I use CentOS 7 as for =
-&#8220;client&#8221; I use Windows 10 with latest Wireguard =
-client..<o:p></o:p></p><p class=3DMsoNormal><o:p>&nbsp;</o:p></p><p =
-class=3DMsoNormal>Thank you in advance,<o:p></o:p></p><p =
-class=3DMsoNormal>Cristian<o:p></o:p></p><p class=3DMsoNormal>&nbsp; =
-<o:p></o:p></p></div></body></html>
-------=_NextPart_000_000B_01D5B003.6506E9C0--
-
-
---===============0359688400079604598==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
+Jordan
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
-
---===============0359688400079604598==--
-
