@@ -2,71 +2,51 @@ Return-Path: <SRS0=NvnE=2C=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 61D6CC43603
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Dec 2019 09:53:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BC20C2D0C8
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Dec 2019 09:54:36 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id AEE0D214AF
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Dec 2019 09:53:35 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="W0zjhyFu"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org AEE0D214AF
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id 74F142173E
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Dec 2019 09:54:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 74F142173E
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=huawei.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2eaa20ed;
-	Thu, 12 Dec 2019 09:53:08 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9aa0b87a;
+	Thu, 12 Dec 2019 09:54:08 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5e1eacc5
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e45c8c33
  for <wireguard@lists.zx2c4.com>;
- Thu, 12 Dec 2019 09:53:06 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1ff7282a
+ Thu, 12 Dec 2019 09:18:17 +0000 (UTC)
+Received: from huawei.com (szxga04-in.huawei.com [45.249.212.190])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2e37428a
  for <wireguard@lists.zx2c4.com>;
- Thu, 12 Dec 2019 09:53:06 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 58ae5a73
- for <wireguard@lists.zx2c4.com>;
- Thu, 12 Dec 2019 08:57:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=uLMjB8m4/DGzwbgB4YAjzY8FX+s=; b=W0zjhy
- FuZk2iDgknFlmyo7GxA2cpuOWLEZgWuRp3L6VPFZIkKIMGeClAq3vJMrh1Njxztl
- KYpyG6juhnFoNZDCN/yctB02IqatVHaPrJZmaZom4SSV3KU6NIdu2mXIZ6cG6Aiz
- yLlE/YLgFSv8Qavk+h4NwoFs0zHjP3h2fEqJY9WSApOixeN9Y9nbHOUBlrkZYwYP
- v8caggK+asJGXMQYqXyo/CNGzQxyEfRmRwRQgS5Q4KbZ9gEMmiAje00JBWZIjBfk
- lDKIOVdCfHphrXiMMYR415/QgNqFKjQMDy6x6t5qIGQxljs7CQTb2bdAubeQAdzd
- UoqSgYghBxJCT9hQ==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id a85a4d8f
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Thu, 12 Dec 2019 08:57:19 +0000 (UTC)
-Received: by mail-ot1-f47.google.com with SMTP id r27so1235142otc.8
- for <wireguard@lists.zx2c4.com>; Thu, 12 Dec 2019 01:53:06 -0800 (PST)
-X-Gm-Message-State: APjAAAWNJygRbezzJNBtwIcsgLgT3v8keygUC6f7SNvCo1wBrjrVJorV
- DX3o9x2FnvWVSTfsoAc6tdOt7TxLOBT71b1Jqes=
-X-Google-Smtp-Source: APXvYqzzCr8AIVVzRHm5jB+v++pLKtoFo36nbLfIhws6k4JnwsU8tvA44DpopjLtyjY6u6I87eEYZ1DhGjq6VqKLNOw=
-X-Received: by 2002:a05:6830:1b6a:: with SMTP id
- d10mr7471945ote.52.1576144385762; 
- Thu, 12 Dec 2019 01:53:05 -0800 (PST)
+ Thu, 12 Dec 2019 09:18:16 +0000 (UTC)
+Received: from DGGEMS402-HUB.china.huawei.com (unknown [172.30.72.59])
+ by Forcepoint Email with ESMTP id 3EADA54B19AC2CC7B697;
+ Thu, 12 Dec 2019 17:18:14 +0800 (CST)
+Received: from localhost.localdomain.localdomain (10.175.113.25) by
+ DGGEMS402-HUB.china.huawei.com (10.3.19.202) with Microsoft SMTP Server id
+ 14.3.439.0; Thu, 12 Dec 2019 17:18:07 +0800
+From: YueHaibing <yuehaibing@huawei.com>
+To: "Jason A . Donenfeld" <Jason@zx2c4.com>, "David S . Miller"
+ <davem@davemloft.net>
+Subject: [PATCH net-next] net: Remove unused including <linux/version.h>
+Date: Thu, 12 Dec 2019 09:15:27 +0000
+Message-ID: <20191212091527.35293-1-yuehaibing@huawei.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-References: <20191212091527.35293-1-yuehaibing@huawei.com>
-In-Reply-To: <20191212091527.35293-1-yuehaibing@huawei.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 12 Dec 2019 10:52:54 +0100
-X-Gmail-Original-Message-ID: <CAHmME9pVuOR-EMxXVHVqippJ6UL4cMEoXZ4hoooK-qtQ=az5uQ@mail.gmail.com>
-Message-ID: <CAHmME9pVuOR-EMxXVHVqippJ6UL4cMEoXZ4hoooK-qtQ=az5uQ@mail.gmail.com>
-Subject: Re: [PATCH net-next] net: Remove unused including <linux/version.h>
-To: YueHaibing <yuehaibing@huawei.com>
-Cc: Netdev <netdev@vger.kernel.org>, kernel-janitors@vger.kernel.org,
- "David S . Miller" <davem@davemloft.net>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>,
- LKML <linux-kernel@vger.kernel.org>
+X-Originating-IP: [10.175.113.25]
+X-CFilter-Loop: Reflected
+X-Mailman-Approved-At: Thu, 12 Dec 2019 10:54:08 +0100
+Cc: netdev@vger.kernel.org, kernel-janitors@vger.kernel.org,
+ YueHaibing <yuehaibing@huawei.com>, linux-kernel@vger.kernel.org,
+ wireguard@lists.zx2c4.com
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -83,22 +63,28 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Thu, Dec 12, 2019 at 10:18 AM YueHaibing <yuehaibing@huawei.com> wrote:
->
-> Remove including <linux/version.h> that don't need it.
->
-> Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+Remove including <linux/version.h> that don't need it.
 
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+---
+ drivers/net/wireguard/main.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-Thanks. Committed with some wording changes to wireguard-linux.git for staging:
+diff --git a/drivers/net/wireguard/main.c b/drivers/net/wireguard/main.c
+index 10c0a40f6a9e..7a7d5f1a80fc 100644
+--- a/drivers/net/wireguard/main.c
++++ b/drivers/net/wireguard/main.c
+@@ -12,7 +12,6 @@
+ 
+ #include <uapi/linux/wireguard.h>
+ 
+-#include <linux/version.h>
+ #include <linux/init.h>
+ #include <linux/module.h>
+ #include <linux/genetlink.h>
 
-https://git.kernel.org/pub/scm/linux/kernel/git/zx2c4/wireguard-linux.git/commit/?id=062fd1993cdbf64a57395320c719e58b9a75b767
 
-I'll re-send this to net-next as part of a cleanup series I'm
-preparing in a few days.
 
-Jason
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
