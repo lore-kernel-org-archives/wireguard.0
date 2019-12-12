@@ -6,55 +6,56 @@ X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 466C5C2D0CA
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Dec 2019 09:54:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4538CC2D0CB
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Dec 2019 09:54:38 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 83642214AF
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Dec 2019 09:54:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id DC2E8214AF
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Dec 2019 09:54:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=rozman.si header.i=@rozman.si header.b="KhOYTcwu"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 83642214AF
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=rozman.si header.i=@rozman.si header.b="ZrE7io9i"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org DC2E8214AF
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=rozman.si
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 26a0a731;
-	Thu, 12 Dec 2019 09:54:34 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8a54ebae;
+	Thu, 12 Dec 2019 09:54:37 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c09bf55e
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ac99d09c
  for <wireguard@lists.zx2c4.com>;
- Wed, 27 Nov 2019 10:55:40 +0000 (UTC)
-Received: from pub5.amebis.si (pub5.amebis.si [IPv6:2a00:ee2:209:164::f])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ca77f24f
+ Thu, 12 Dec 2019 09:28:05 +0000 (UTC)
+Received: from pub5.amebis.si (pub5.amebis.si [213.250.55.21])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5a6e1c58
  for <wireguard@lists.zx2c4.com>;
- Wed, 27 Nov 2019 10:55:40 +0000 (UTC)
+ Thu, 12 Dec 2019 09:28:05 +0000 (UTC)
 Received: by pub5.amebis.si (Postfix, from userid 1000)
- id 1C26E1002B6F; Wed, 27 Nov 2019 11:55:38 +0100 (CET)
+ id B0D1E1002FC0; Thu, 12 Dec 2019 10:28:03 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rozman.si;
- s=default; t=1574852138;
- bh=yJW0KoLKgk8LcdpxOxA6VRmg5XIfQ7qJCMWCGRsTZVc=;
+ s=default; t=1576142883;
+ bh=xu8QKfSrcqKB9mTT9hnOydDYATAx3QTyHGk5+KqDfK8=;
  h=From:To:Subject:Date:References:In-Reply-To:From;
- b=KhOYTcwuas0Y/N6wdUhJ3Y4pB0XwPlVkRDbq/bUQSBnlklcbLKemuUqERSMB2oNKW
- 2E3PwC9ZCwXAZBmQokhWp0cTpAWQVHRXnN1czopXzgaaHVdxVQm9xuvLSRS7x31X2M
- +nPpwOKyCvF+921lE9KWgktUScbQoF6vZPfCdL60=
+ b=ZrE7io9iJEED7Xk4KCRrQnEQGdRkZTQ/SxTOVWGT3KEETu6IQvuvltt+fMLXYQkHM
+ Kc9VX1NXGzZB5XZzcjnonQamx35YwA4Ej10350oiIhUzoBsRgOG7kxe2Sd9pbNPReA
+ h7ov9REa7mjmMzclDNlEVGE4EW4a2EirqEaWBSpY=
 Received: from PLANJAVA.amebis.doma (planjava.amebis.doma
  [IPv6:2a00:ee2:209:164::2])
- by pub5.amebis.si (Postfix) with ESMTPS id 0038D1002F28;
- Wed, 27 Nov 2019 11:55:34 +0100 (CET)
+ by pub5.amebis.si (Postfix) with ESMTPS id 1418E1002FB6;
+ Thu, 12 Dec 2019 10:28:01 +0100 (CET)
 Received: from PLANJAVA.amebis.doma ([fe80::a486:6f91:d7b9:9035]) by
  PLANJAVA.amebis.doma ([fe80::a486:6f91:d7b9:9035%17]) with mapi id
- 14.03.0468.000; Wed, 27 Nov 2019 11:55:34 +0100
+ 14.03.0468.000; Thu, 12 Dec 2019 10:28:01 +0100
 From: Simon Rozman <simon@rozman.si>
-To: Alexey Ivanov <alexey.ivanes@gmail.com>, "wireguard@lists.zx2c4.com"
+To: Richard Reiner <rreiner3@yahoo.com>, "wireguard@lists.zx2c4.com"
  <wireguard@lists.zx2c4.com>
-Subject: RE: Wireguard for Windows breaks Task Scheduler
-Thread-Topic: Wireguard for Windows breaks Task Scheduler
-Thread-Index: AQHVpQJFAdUTJA5HqU+9qtScyq1YjKee1teg
-Date: Wed, 27 Nov 2019 10:55:33 +0000
-Message-ID: <99D61A626FDA8A4B90A270669121BE10C9B3E657@PLANJAVA.amebis.doma>
-References: <CAJcUPC7nXZXO6aJYMsEF3TYkLneftvH3VRNUtfVaGjWJTtkvWw@mail.gmail.com>
-In-Reply-To: <CAJcUPC7nXZXO6aJYMsEF3TYkLneftvH3VRNUtfVaGjWJTtkvWw@mail.gmail.com>
+Subject: RE: Windows client "Unable to create Wintun device"
+Thread-Topic: Windows client "Unable to create Wintun device"
+Thread-Index: AQHVpQaeuMfCEytYcUucwligrjF2Eae2T7Qg
+Date: Thu, 12 Dec 2019 09:28:00 +0000
+Message-ID: <99D61A626FDA8A4B90A270669121BE10D0597A0F@PLANJAVA.amebis.doma>
+References: <2078146812.1909563.1573533502212.ref@mail.yahoo.com>
+ <2078146812.1909563.1573533502212@mail.yahoo.com>
+In-Reply-To: <2078146812.1909563.1573533502212@mail.yahoo.com>
 Accept-Language: en-GB, sl-SI, en-US
 Content-Language: en-US
 X-MS-Has-Attach: yes
@@ -73,43 +74,52 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============8588470251564625347=="
+Content-Type: multipart/mixed; boundary="===============6778128274354246712=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============8588470251564625347==
+--===============6778128274354246712==
 Content-Language: en-US
 Content-Type: multipart/signed; protocol="application/x-pkcs7-signature";
 	micalg=2.16.840.1.101.3.4.2.1;
-	boundary="----=_NextPart_000_0011_01D5A519.9228F1E0"
+	boundary="----=_NextPart_000_0029_01D5B0D6.D3724930"
 
-------=_NextPart_000_0011_01D5A519.9228F1E0
+------=_NextPart_000_0029_01D5B0D6.D3724930
 Content-Type: multipart/alternative;
-	boundary="----=_NextPart_001_0012_01D5A519.9228F1E0"
+	boundary="----=_NextPart_001_002A_01D5B0D6.D3724930"
 
 
-------=_NextPart_001_0012_01D5A519.9228F1E0
+------=_NextPart_001_002A_01D5B0D6.D3724930
 Content-Type: text/plain;
 	charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Alexey!
+Hi Richard,
 
 =20
 
-Unfortunately, this piling of NLA profiles was solved in WireGuard for =
-Windows 10 only. Windows 7 and 8 will create a new NLA entry each time =
-WireGuard connects.
+I apologise for the delay. (Becoming my standard letter introduction =
+these days. =E2=98=B9)
 
 =20
 
-It's the same situation as if you would connect your laptop to 100 or =
-more WiFis in the past.
+Your error is saying that NetCfgInstanceId value did not appear in the =
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\{4d36e972-e325-=
+11ce-bfc1-08002be10318}\<id> registry key in 10 seconds. Can you check =
+the registry key what's going on there, please?
 
 =20
 
-You should address your question why so many NLA profiles crash Task =
-Scheduler to Microsoft.
+Also, check the event log (System and Application and Service =
+Logs\Microsoft\Windows\DeviceSetupManager) for any errors at the time =
+you are attempting to activate the tunnel. Maybe there's some disabled =
+service causing interface device creation to fail?
+
+=20
+
+Maybe your Windows is attempting to access Windows Update for a newer =
+version of Wintun driver first, triggering 10 second timeout in =
+WireGuard?
 
 =20
 
@@ -119,94 +129,45 @@ Simon
 
 =20
 
-From: WireGuard <wireguard-bounces@lists.zx2c4.com> On Behalf Of Alexey =
-Ivanov
-Sent: Saturday, November 16, 2019 11:24 PM
+From: WireGuard <wireguard-bounces@lists.zx2c4.com> On Behalf Of Richard =
+Reiner
+Sent: Tuesday, November 12, 2019 5:38 AM
 To: wireguard@lists.zx2c4.com
-Subject: Wireguard for Windows breaks Task Scheduler
+Subject: Windows client "Unable to create Wintun device"
 
 =20
 
-Im not exactly sure what wireguard doing to create virtual network =
-adapters in windows, but it's more looks like it can't handle deletion =
-of them properly.=20
-
-This issue easy to reproduce:=20
-
-1.	Create wireguard's tunnels.
-2.	Connect tunnel, disconnect and remove it.
-3.	Repeat it multiple times.
-
-Windows registry will be full of wrong records of these non-existed =
-network connections.
-
-And now try to open Task Scheduler and click on "Create task..." it will =
-crash with log:
+On one of my machines, the Wireguard Windows client 0.0.35 was =
+previously working well, but as of today whenever attempting to activate =
+any tunnel it generates errors with log messages like:
 
 =20
 
-=D0=B2 =
-Microsoft.Windows.ManagementUI.CombinedControls.INetwork.GetName()
-  =D0=B2 =
-Microsoft.Windows.ManagementUI.CombinedControls.UINetwork.GetUINetwork(IN=
-etwork network)
-  =D0=B2 =
-Microsoft.Windows.ManagementUI.CombinedControls.NetworkListManager.GetNet=
-workList()
-  =D0=B2 =
-Microsoft.Windows.ManagementUI.CombinedControls.ControlTaskConditions.Pop=
-ulateNetworkComboBox()
-  =D0=B2 =
-Microsoft.Windows.ManagementUI.CombinedControls.ControlTaskConditions.Ini=
-tializeConditions()
-  =D0=B2 =
-Microsoft.Windows.ManagementUI.CombinedControls.EditTaskDialog.Initialize=
-View()
-  =D0=B2 =
-Microsoft.Windows.ManagementUI.CombinedControls.EditTaskDialog.Initialize=
-(UITaskFolder folder, String taskName, String title, UserChoice =
-userAction, BaseResultsControl inOwnerView, String inXmlText)
-  =D0=B2 =
-Microsoft.Windows.ManagementUI.CombinedControls.BaseResultsControl.Create=
-Task(UITaskFolder folder, String initialTaskName, String taskXml)
-  =D0=B2 System.Windows.Forms.MenuItem.OnClick(EventArgs e)
-  =D0=B2 System.Windows.Forms.MenuItem.MenuItemData.Execute()
-  =D0=B2 System.Windows.Forms.Command.Invoke()
-  =D0=B2 System.Windows.Forms.Control.WmCommand(Message& m)
-  =D0=B2 System.Windows.Forms.Control.WndProc(Message& m)
-  =D0=B2 System.Windows.Forms.ListView.WndProc(Message& m)
-  =D0=B2 System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 =
-msg, IntPtr wparam, IntPtr lparam)=20
+  2019-11-11 17:32:48.033: [TUN] [tun22] Unable to create Wintun device: =
+Unable to create Wintun interface: GetStringValueWait(NetCfgInstanceId) =
+failed: Timeout waiting for registry value
 
 =20
 
-So ive googled solution =
-https://answers.microsoft.com/en-us/windows/forum/all/task-scheduler-cras=
-hed/5acab7c5-eb79-48c8-876d-ade321565953?auth=3D1 (Programatix message)
+An uninstall - reboot - reinstall has not corrected this/
 
 =20
 
-To resolve the problem,
-    Run regedit
-    Go to HKLM\Software\Microsoft\Windows NT\CurrentVersion\NetworkList
-    Delete everything under the following path,
-        Nla->Cache
-        Nla->IntranetEnabled
-        Nla->Wireless
-        Profiles
-        Signatures->Managed
-        Signatures->Unmanaged
-    Reboot
+The affected machine has received some Windows 10 updates recently as =
+well as a VMware Player update.
+
+But another machine with the same software installed works fine.
 
 =20
 
-And it actually helps.
+Any thoughts or suggestions?
 
-Can wireguard just properly handle this "issue" on his own and do not =
-break Task Scheduler application?
+=20
+
+=20
 
 
-------=_NextPart_001_0012_01D5A519.9228F1E0
+------=_NextPart_001_002A_01D5B0D6.D3724930
 Content-Type: text/html;
 	charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
@@ -220,6 +181,9 @@ http-equiv=3DContent-Type content=3D"text/html; charset=3Dutf-8"><meta =
 name=3DGenerator content=3D"Microsoft Word 15 (filtered =
 medium)"><style><!--
 /* Font Definitions */
+@font-face
+	{font-family:Helvetica;
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
 @font-face
 	{font-family:"Cambria Math";
 	panose-1:2 4 5 3 5 4 6 3 2 4;}
@@ -237,11 +201,11 @@ p.MsoNormal, li.MsoNormal, div.MsoNormal
 	font-family:"Calibri",sans-serif;}
 a:link, span.MsoHyperlink
 	{mso-style-priority:99;
-	color:blue;
+	color:#0563C1;
 	text-decoration:underline;}
 a:visited, span.MsoHyperlinkFollowed
 	{mso-style-priority:99;
-	color:purple;
+	color:#954F72;
 	text-decoration:underline;}
 code
 	{mso-style-priority:99;
@@ -260,144 +224,121 @@ span.EmailStyle19
 	color:windowtext;}
 .MsoChpDefault
 	{mso-style-type:export-only;
-	font-family:"Calibri",sans-serif;
-	mso-fareast-language:EN-US;}
+	font-size:10.0pt;}
 @page WordSection1
 	{size:612.0pt 792.0pt;
 	margin:70.85pt 70.85pt 70.85pt 70.85pt;}
 div.WordSection1
 	{page:WordSection1;}
-/* List Definitions */
-@list l0
-	{mso-list-id:2100905263;
-	mso-list-template-ids:-1146718990;}
-ol
-	{margin-bottom:0cm;}
-ul
-	{margin-bottom:0cm;}
 --></style><!--[if gte mso 9]><xml>
 <o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
 </xml><![endif]--><!--[if gte mso 9]><xml>
 <o:shapelayout v:ext=3D"edit">
 <o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]--></head><body lang=3DSL link=3Dblue =
-vlink=3Dpurple><div class=3DWordSection1><p class=3DMsoNormal><span =
-lang=3DEN-GB style=3D'mso-fareast-language:EN-US'>Hi =
-Alexey!<o:p></o:p></span></p><p class=3DMsoNormal><span lang=3DEN-GB =
+</o:shapelayout></xml><![endif]--></head><body lang=3DSL =
+link=3D"#0563C1" vlink=3D"#954F72"><div class=3DWordSection1><p =
+class=3DMsoNormal><span lang=3DEN-GB =
+style=3D'mso-fareast-language:EN-US'>Hi Richard,<o:p></o:p></span></p><p =
+class=3DMsoNormal><span lang=3DEN-GB =
 style=3D'mso-fareast-language:EN-US'><o:p>&nbsp;</o:p></span></p><p =
 class=3DMsoNormal><span lang=3DEN-GB =
-style=3D'mso-fareast-language:EN-US'>Unfortunately, this piling of NLA =
-profiles was solved in WireGuard for Windows 10 only. Windows 7 and 8 =
-will create a new NLA entry each time WireGuard =
-connects.<o:p></o:p></span></p><p class=3DMsoNormal><span lang=3DEN-GB =
+style=3D'mso-fareast-language:EN-US'>I apologise for the delay. =
+(Becoming my standard letter introduction these days. </span><span =
+lang=3DEN-GB style=3D'font-family:"Segoe UI =
+Emoji",sans-serif;mso-fareast-language:EN-US'>=E2=98=B9</span><span =
+lang=3DEN-GB =
+style=3D'mso-fareast-language:EN-US'>)<o:p></o:p></span></p><p =
+class=3DMsoNormal><span lang=3DEN-GB =
 style=3D'mso-fareast-language:EN-US'><o:p>&nbsp;</o:p></span></p><p =
 class=3DMsoNormal><span lang=3DEN-GB =
-style=3D'mso-fareast-language:EN-US'>It's the same situation as if you =
-would connect your laptop to 100 or more WiFis in the =
-past.<o:p></o:p></span></p><p class=3DMsoNormal><span lang=3DEN-GB =
+style=3D'mso-fareast-language:EN-US'>Your error is saying that =
+</span><code><span lang=3DEN-GB =
+style=3D'font-size:10.0pt;mso-fareast-language:EN-US'>NetCfgInstanceId</s=
+pan></code><span lang=3DEN-GB style=3D'mso-fareast-language:EN-US'> =
+value did not appear in the HKEY</span><code><span lang=3DEN-GB =
+style=3D'font-size:10.0pt;mso-fareast-language:EN-US'>_LOCAL_MACHINE\SYST=
+EM\CurrentControlSet\Control\Class\{4d36e972-e325-11ce-bfc1-08002be10318}=
+\<i>&lt;id&gt;</i></span></code><span lang=3DEN-GB =
+style=3D'mso-fareast-language:EN-US'> registry key in 10 seconds. Can =
+you check the registry key what's going on there, =
+please?<o:p></o:p></span></p><p class=3DMsoNormal><span lang=3DEN-GB =
 style=3D'mso-fareast-language:EN-US'><o:p>&nbsp;</o:p></span></p><p =
 class=3DMsoNormal><span lang=3DEN-GB =
-style=3D'mso-fareast-language:EN-US'>You should address your question =
-why so many NLA profiles crash Task Scheduler to =
-Microsoft.<o:p></o:p></span></p><p class=3DMsoNormal><span lang=3DEN-GB =
+style=3D'mso-fareast-language:EN-US'>Also, check the event log (System =
+and Application and Service Logs\Microsoft\Windows\DeviceSetupManager) =
+for any errors at the time you are attempting to activate the tunnel. =
+Maybe there's some disabled service causing interface device creation to =
+fail?<o:p></o:p></span></p><p class=3DMsoNormal><span lang=3DEN-GB =
 style=3D'mso-fareast-language:EN-US'><o:p>&nbsp;</o:p></span></p><p =
-class=3DMsoNormal><span lang=3DEN-GB>Best =
-regards,<o:p></o:p></span></p><p class=3DMsoNormal><span =
-lang=3DEN-GB>Simon<o:p></o:p></span></p><p class=3DMsoNormal><span =
+class=3DMsoNormal><span lang=3DEN-GB =
+style=3D'mso-fareast-language:EN-US'>Maybe your Windows is attempting to =
+access Windows Update for a newer version of Wintun driver first, =
+triggering 10 second timeout in WireGuard?<o:p></o:p></span></p><p =
+class=3DMsoNormal><span lang=3DEN-GB =
+style=3D'mso-fareast-language:EN-US'><o:p>&nbsp;</o:p></span></p><div><p =
+class=3DMsoNormal>Best regards,<o:p></o:p></p><p =
+class=3DMsoNormal>Simon<o:p></o:p></p></div><p class=3DMsoNormal><span =
 lang=3DEN-GB =
 style=3D'mso-fareast-language:EN-US'><o:p>&nbsp;</o:p></span></p><div =
 style=3D'border:none;border-left:solid blue 1.5pt;padding:0cm 0cm 0cm =
 4.0pt'><div><div style=3D'border:none;border-top:solid #E1E1E1 =
 1.0pt;padding:3.0pt 0cm 0cm 0cm'><p class=3DMsoNormal><b><span =
 lang=3DEN-GB>From:</span></b><span lang=3DEN-GB> WireGuard =
-&lt;wireguard-bounces@lists.zx2c4.com&gt; <b>On Behalf Of </b>Alexey =
-Ivanov<br><b>Sent:</b> Saturday, November 16, 2019 11:24 =
-PM<br><b>To:</b> wireguard@lists.zx2c4.com<br><b>Subject:</b> Wireguard =
-for Windows breaks Task Scheduler<o:p></o:p></span></p></div></div><p =
+&lt;wireguard-bounces@lists.zx2c4.com&gt; <b>On Behalf Of </b>Richard =
+Reiner<br><b>Sent:</b> Tuesday, November 12, 2019 5:38 AM<br><b>To:</b> =
+wireguard@lists.zx2c4.com<br><b>Subject:</b> Windows client &quot;Unable =
+to create Wintun device&quot;<o:p></o:p></span></p></div></div><p =
 class=3DMsoNormal><span =
-lang=3DEN-GB><o:p>&nbsp;</o:p></span></p><div><div><p =
-class=3DMsoNormal><span lang=3DEN-GB>Im not exactly sure what wireguard =
-doing to create virtual network adapters in windows, but it's more looks =
-like it can't handle deletion of them properly. =
-<o:p></o:p></span></p></div><div><p class=3DMsoNormal><span =
-lang=3DEN-GB>This issue easy to reproduce: =
-<o:p></o:p></span></p></div><ol start=3D1 type=3D1><li class=3DMsoNormal =
-style=3D'mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;mso-list:l0 =
-level1 lfo1'><span lang=3DEN-GB>Create wireguard's =
-tunnels.<o:p></o:p></span></li><li class=3DMsoNormal =
-style=3D'mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;mso-list:l0 =
-level1 lfo1'><span lang=3DEN-GB>Connect tunnel, disconnect and remove =
-it.<o:p></o:p></span></li><li class=3DMsoNormal =
-style=3D'mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;mso-list:l0 =
-level1 lfo1'><span lang=3DEN-GB>Repeat it multiple =
-times.<o:p></o:p></span></li></ol><div><p class=3DMsoNormal><span =
-lang=3DEN-GB>Windows registry will be full of wrong records of these =
-non-existed network connections.<o:p></o:p></span></p></div><div><p =
-class=3DMsoNormal><span lang=3DEN-GB>And now try to open Task Scheduler =
-and click on &quot;Create task...&quot; it will crash with =
-log:<o:p></o:p></span></p></div><div><p class=3DMsoNormal><span =
-lang=3DEN-GB><o:p>&nbsp;</o:p></span></p></div><blockquote =
-style=3D'border:none;border-left:solid #CCCCCC 1.0pt;padding:0cm 0cm 0cm =
-6.0pt;margin-left:4.8pt;margin-right:0cm'><div><p =
-class=3DMsoNormal><span lang=3DEN-GB>=D0=B2 =
-Microsoft.Windows.ManagementUI.CombinedControls.INetwork.GetName()<br>&nb=
-sp; =D0=B2 =
-Microsoft.Windows.ManagementUI.CombinedControls.UINetwork.GetUINetwork(IN=
-etwork network)<br>&nbsp; =D0=B2 =
-Microsoft.Windows.ManagementUI.CombinedControls.NetworkListManager.GetNet=
-workList()<br>&nbsp; =D0=B2 =
-Microsoft.Windows.ManagementUI.CombinedControls.ControlTaskConditions.Pop=
-ulateNetworkComboBox()<br>&nbsp; =D0=B2 =
-Microsoft.Windows.ManagementUI.CombinedControls.ControlTaskConditions.Ini=
-tializeConditions()<br>&nbsp; =D0=B2 =
-Microsoft.Windows.ManagementUI.CombinedControls.EditTaskDialog.Initialize=
-View()<br>&nbsp; =D0=B2 =
-Microsoft.Windows.ManagementUI.CombinedControls.EditTaskDialog.Initialize=
-(UITaskFolder folder, String taskName, String title, UserChoice =
-userAction, BaseResultsControl inOwnerView, String inXmlText)<br>&nbsp; =
-=D0=B2 =
-Microsoft.Windows.ManagementUI.CombinedControls.BaseResultsControl.Create=
-Task(UITaskFolder folder, String initialTaskName, String =
-taskXml)<br>&nbsp; =D0=B2 =
-System.Windows.Forms.MenuItem.OnClick(EventArgs e)<br>&nbsp; =D0=B2 =
-System.Windows.Forms.MenuItem.MenuItemData.Execute()<br>&nbsp; =D0=B2 =
-System.Windows.Forms.Command.Invoke()<br>&nbsp; =D0=B2 =
-System.Windows.Forms.Control.WmCommand(Message&amp; m)<br>&nbsp; =D0=B2 =
-System.Windows.Forms.Control.WndProc(Message&amp; m)<br>&nbsp; =D0=B2 =
-System.Windows.Forms.ListView.WndProc(Message&amp; m)<br>&nbsp; =D0=B2 =
-System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, =
-IntPtr wparam, IntPtr lparam) =
-<o:p></o:p></span></p></div></blockquote><div><p class=3DMsoNormal><span =
-lang=3DEN-GB><o:p>&nbsp;</o:p></span></p></div><div><p =
-class=3DMsoNormal><span lang=3DEN-GB>So ive googled solution <a =
-href=3D"https://answers.microsoft.com/en-us/windows/forum/all/task-schedu=
-ler-crashed/5acab7c5-eb79-48c8-876d-ade321565953?auth=3D1">https://answer=
-s.microsoft.com/en-us/windows/forum/all/task-scheduler-crashed/5acab7c5-e=
-b79-48c8-876d-ade321565953?auth=3D1</a> (Programatix =
-message)<o:p></o:p></span></p></div><div><p class=3DMsoNormal><span =
-lang=3DEN-GB><o:p>&nbsp;</o:p></span></p></div><blockquote =
-style=3D'border:none;border-left:solid #CCCCCC 1.0pt;padding:0cm 0cm 0cm =
-6.0pt;margin-left:4.8pt;margin-right:0cm'><div><p =
-class=3DMsoNormal><span lang=3DEN-GB>To resolve the problem,<br>&nbsp; =
-&nbsp; Run regedit<br>&nbsp; &nbsp; Go to =
-HKLM\Software\Microsoft\Windows NT\CurrentVersion\NetworkList<br>&nbsp; =
-&nbsp; Delete everything under the following path,<br>&nbsp; &nbsp; =
-&nbsp; &nbsp; Nla-&gt;Cache<br>&nbsp; &nbsp; &nbsp; &nbsp; =
-Nla-&gt;IntranetEnabled<br>&nbsp; &nbsp; &nbsp; &nbsp; =
-Nla-&gt;Wireless<br>&nbsp; &nbsp; &nbsp; &nbsp; Profiles<br>&nbsp; =
-&nbsp; &nbsp; &nbsp; Signatures-&gt;Managed<br>&nbsp; &nbsp; &nbsp; =
-&nbsp; Signatures-&gt;Unmanaged<br>&nbsp; &nbsp; =
-Reboot<o:p></o:p></span></p></div></blockquote><div><p =
-class=3DMsoNormal><span =
-lang=3DEN-GB><o:p>&nbsp;</o:p></span></p></div><div><p =
-class=3DMsoNormal><span lang=3DEN-GB>And it actually =
-helps.<o:p></o:p></span></p></div><div><p class=3DMsoNormal><span =
-lang=3DEN-GB>Can wireguard just properly handle this &quot;issue&quot; =
-on his own and do not break Task Scheduler =
-application?<o:p></o:p></span></p></div></div></div></div></body></html>
-------=_NextPart_001_0012_01D5A519.9228F1E0--
+lang=3DEN-GB><o:p>&nbsp;</o:p></span></p><div><div><div><div><div><div><d=
+iv style=3D'margin-top:6.0pt'><div><div><div><p class=3DMsoNormal><span =
+lang=3DEN-GB =
+style=3D'font-size:12.0pt;font-family:"Arial",sans-serif;color:#222222'>O=
+n one of my machines, the Wireguard Windows client 0.0.35 was =
+previously&nbsp;working well, but as of today whenever attempting to =
+activate any tunnel it generates errors with log messages =
+like:<o:p></o:p></span></p></div><div><p class=3DMsoNormal><span =
+lang=3DEN-GB =
+style=3D'font-size:12.0pt;font-family:"Arial",sans-serif;color:#222222'><=
+o:p>&nbsp;</o:p></span></p></div><div><div><p class=3DMsoNormal><span =
+lang=3DEN-GB =
+style=3D'font-size:12.0pt;font-family:"Arial",sans-serif;color:#222222'>&=
+nbsp; 2019-11-11 17:32:48.033: [TUN] [tun22] Unable to create Wintun =
+device: Unable to create Wintun interface: =
+GetStringValueWait(NetCfgInstanceId) failed: Timeout waiting for =
+registry value<o:p></o:p></span></p></div><div><p =
+class=3DMsoNormal><span lang=3DEN-GB =
+style=3D'font-size:12.0pt;font-family:"Arial",sans-serif;color:#222222'><=
+o:p>&nbsp;</o:p></span></p></div><div><p class=3DMsoNormal><span =
+lang=3DEN-GB =
+style=3D'font-size:12.0pt;font-family:"Arial",sans-serif;color:#222222'>A=
+n uninstall - reboot - reinstall has not corrected =
+this/<o:p></o:p></span></p></div><div><p class=3DMsoNormal><span =
+lang=3DEN-GB =
+style=3D'font-size:12.0pt;font-family:"Arial",sans-serif;color:#222222'><=
+o:p>&nbsp;</o:p></span></p></div><div><p class=3DMsoNormal><span =
+lang=3DEN-GB =
+style=3D'font-size:12.0pt;font-family:"Arial",sans-serif;color:#222222'>T=
+he affected machine has received some Windows 10 updates recently as =
+well as a VMware Player update.<o:p></o:p></span></p></div><div><p =
+class=3DMsoNormal><span lang=3DEN-GB =
+style=3D'font-size:12.0pt;font-family:"Arial",sans-serif;color:#222222'>B=
+ut another machine with the same software installed works =
+fine.<o:p></o:p></span></p></div><div><p class=3DMsoNormal><span =
+lang=3DEN-GB =
+style=3D'font-size:12.0pt;font-family:"Arial",sans-serif;color:#222222'><=
+o:p>&nbsp;</o:p></span></p></div><div><p class=3DMsoNormal><span =
+lang=3DEN-GB =
+style=3D'font-size:12.0pt;font-family:"Arial",sans-serif;color:#222222'>A=
+ny thoughts&nbsp;or suggestions?<o:p></o:p></span></p></div><div><p =
+class=3DMsoNormal><span lang=3DEN-GB =
+style=3D'font-size:12.0pt;font-family:"Arial",sans-serif;color:#222222'><=
+o:p>&nbsp;</o:p></span></p></div></div></div></div></div></div></div></di=
+v></div><p class=3DMsoNormal><span lang=3DEN-GB =
+style=3D'font-size:12.0pt;font-family:"Helvetica",sans-serif'><o:p>&nbsp;=
+</o:p></span></p></div></div></div></div></body></html>
+------=_NextPart_001_002A_01D5B0D6.D3724930--
 
-------=_NextPart_000_0011_01D5A519.9228F1E0
+------=_NextPart_000_0029_01D5B0D6.D3724930
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -476,23 +417,23 @@ RqsKPBhWoaFEVZ+Vn3wxap5h/oAhocifNzkWJTNWjxnoPM2eNz2uWFJsgsNhlwteUvnq7+bKTNte
 SKWKr6pI+GUsZhmCh5URpUnqUanp0Uie0MD9f3tiOLOp711sNb0xwi+VdDuDB37IddOIsfhPBood
 wpoFrTGCAyEwggMdAgEBMEUwPTELMAkGA1UEBhMCc2kxGzAZBgNVBAoTEnN0YXRlLWluc3RpdHV0
 aW9uczERMA8GA1UECxMIc2lnZW4tY2ECBDtKDS4wDQYJYIZIAWUDBAIBBQCgggGtMBgGCSqGSIb3
-DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTE5MTEyNzEwNTUzMlowLwYJKoZIhvcN
-AQkEMSIEIAXITaDcbo8hrGZzyy5WbQxHVL2+K289LQAF3igN57g+MFQGCSsGAQQBgjcQBDFHMEUw
+DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTE5MTIxMjA5Mjc1OVowLwYJKoZIhvcN
+AQkEMSIEIBI59PqipgRhzhSirH0K/FTqRN0+Rbw68joOjzWN9MU+MFQGCSsGAQQBgjcQBDFHMEUw
 PTELMAkGA1UEBhMCc2kxGzAZBgNVBAoTEnN0YXRlLWluc3RpdHV0aW9uczERMA8GA1UECxMIc2ln
 ZW4tY2ECBDtKDS4wVgYLKoZIhvcNAQkQAgsxR6BFMD0xCzAJBgNVBAYTAnNpMRswGQYDVQQKExJz
 dGF0ZS1pbnN0aXR1dGlvbnMxETAPBgNVBAsTCHNpZ2VuLWNhAgQ7Sg0uMIGTBgkqhkiG9w0BCQ8x
 gYUwgYIwCwYJYIZIAWUDBAEqMAsGCWCGSAFlAwQBFjAKBggqhkiG9w0DBzALBglghkgBZQMEAQIw
 DgYIKoZIhvcNAwICAgCAMA0GCCqGSIb3DQMCAgFAMAsGCWCGSAFlAwQCATALBglghkgBZQMEAgMw
-CwYJYIZIAWUDBAICMAcGBSsOAwIaMA0GCSqGSIb3DQEBAQUABIIBAEmof+mN0y7t1pW0glDJp/mC
-X+dkEgnYHZ9RCtoKMz7YGYhqdzVGVLoWc5R+XBJxOG+d9bOifa/zbnbZJ027LiEWWyb0F1nISW6J
-CZ1juxibMfB13q/wiRLMZu1HsTDthCPgPmpG9dJEVgyZkXNAteBXRAxs1JI9IH4vmtuDe0kuM+Zc
-a9J5RGF7Uw2jeZX+evArflI4bQcrX4Ea7qlrrcHO5+l7ihbY0uavvJgx05y5LHZh4PiOJmXCY5ph
-U+pmSjzp3WsaaFHJc1sxpEBBUwO9txzAPhp7FQhqAEKwqIFOTseKxRjlVcpZWdCr5S8qwc/tK/cN
-MhF7EbSG+75l26UAAAAAAAA=
+CwYJYIZIAWUDBAICMAcGBSsOAwIaMA0GCSqGSIb3DQEBAQUABIIBANFI3qPyqsSjEZqOFAEwDoKd
+iYQ4o/5HniS8qDc2PK79qrFS7qtcxzHV8HWtzMyKPPrdNZrL8vDNmw2SAvyMvJaBerKRrgJoQVO0
+Rj5/sodeCESM9prWf+GgmQKRrLK+3soUzhTbacG6zrvd82TJXZOW1cCqquskAt7h/oiRog+Ltquv
+ZGpgou+SMlwZdPBNIy8+M2bM1XyP83TXAv0TmuhBCfT0KxenqyUzcYeH7DwBYiAXX+E/U0QSo6OH
+AIfGG07dwfTT5+QeWCUkOIiE79nOw7M/DueaqZ+RPuIFR74w4ryeamSssBFPePyLNQrDGL9ceEoV
+n8PU+vw5E+WfvZkAAAAAAAA=
 
-------=_NextPart_000_0011_01D5A519.9228F1E0--
+------=_NextPart_000_0029_01D5B0D6.D3724930--
 
---===============8588470251564625347==
+--===============6778128274354246712==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -503,4 +444,4 @@ WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---===============8588470251564625347==--
+--===============6778128274354246712==--
