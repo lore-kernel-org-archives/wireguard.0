@@ -6,56 +6,56 @@ X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4538CC2D0CB
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Dec 2019 09:54:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39175C43603
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Dec 2019 09:56:28 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id DC2E8214AF
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Dec 2019 09:54:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id CDEB2214AF
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Dec 2019 09:56:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=rozman.si header.i=@rozman.si header.b="ZrE7io9i"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org DC2E8214AF
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=rozman.si header.i=@rozman.si header.b="QrvgKVDN"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org CDEB2214AF
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=rozman.si
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8a54ebae;
-	Thu, 12 Dec 2019 09:54:37 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e51fb279;
+	Thu, 12 Dec 2019 09:54:38 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ac99d09c
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id de5cc0fa
  for <wireguard@lists.zx2c4.com>;
- Thu, 12 Dec 2019 09:28:05 +0000 (UTC)
+ Thu, 12 Dec 2019 09:53:17 +0000 (UTC)
 Received: from pub5.amebis.si (pub5.amebis.si [213.250.55.21])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5a6e1c58
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0974be9c
  for <wireguard@lists.zx2c4.com>;
- Thu, 12 Dec 2019 09:28:05 +0000 (UTC)
+ Thu, 12 Dec 2019 09:53:16 +0000 (UTC)
 Received: by pub5.amebis.si (Postfix, from userid 1000)
- id B0D1E1002FC0; Thu, 12 Dec 2019 10:28:03 +0100 (CET)
+ id 9726E1002FB6; Thu, 12 Dec 2019 10:53:15 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rozman.si;
- s=default; t=1576142883;
- bh=xu8QKfSrcqKB9mTT9hnOydDYATAx3QTyHGk5+KqDfK8=;
+ s=default; t=1576144395;
+ bh=Dq+xTtIcSYXH8+0r/2d4hUoMO63+rSjGd5+z/03SIP4=;
  h=From:To:Subject:Date:References:In-Reply-To:From;
- b=ZrE7io9iJEED7Xk4KCRrQnEQGdRkZTQ/SxTOVWGT3KEETu6IQvuvltt+fMLXYQkHM
- Kc9VX1NXGzZB5XZzcjnonQamx35YwA4Ej10350oiIhUzoBsRgOG7kxe2Sd9pbNPReA
- h7ov9REa7mjmMzclDNlEVGE4EW4a2EirqEaWBSpY=
+ b=QrvgKVDNWsqy6VTfcwnupqrQoFTBxfWvY2mvZKZoeX89wzIV5YQRhAgycc5kWyFow
+ U7SO6jYGBWjDDJ9tz7JbOpBwDeErEYLJ+IaqbzUdGt+omgSm8+oQLI7F9x25mg8iid
+ eqY4fImX+QysLq4eDhJVM5qIa57taT81f4oWxWO4=
 Received: from PLANJAVA.amebis.doma (planjava.amebis.doma
  [IPv6:2a00:ee2:209:164::2])
- by pub5.amebis.si (Postfix) with ESMTPS id 1418E1002FB6;
- Thu, 12 Dec 2019 10:28:01 +0100 (CET)
+ by pub5.amebis.si (Postfix) with ESMTPS id F25861002FB6;
+ Thu, 12 Dec 2019 10:53:12 +0100 (CET)
 Received: from PLANJAVA.amebis.doma ([fe80::a486:6f91:d7b9:9035]) by
  PLANJAVA.amebis.doma ([fe80::a486:6f91:d7b9:9035%17]) with mapi id
- 14.03.0468.000; Thu, 12 Dec 2019 10:28:01 +0100
+ 14.03.0468.000; Thu, 12 Dec 2019 10:53:12 +0100
 From: Simon Rozman <simon@rozman.si>
-To: Richard Reiner <rreiner3@yahoo.com>, "wireguard@lists.zx2c4.com"
+To: Mark Nichols <mnichols62@yahoo.com>, "wireguard@lists.zx2c4.com"
  <wireguard@lists.zx2c4.com>
-Subject: RE: Windows client "Unable to create Wintun device"
-Thread-Topic: Windows client "Unable to create Wintun device"
-Thread-Index: AQHVpQaeuMfCEytYcUucwligrjF2Eae2T7Qg
-Date: Thu, 12 Dec 2019 09:28:00 +0000
-Message-ID: <99D61A626FDA8A4B90A270669121BE10D0597A0F@PLANJAVA.amebis.doma>
-References: <2078146812.1909563.1573533502212.ref@mail.yahoo.com>
- <2078146812.1909563.1573533502212@mail.yahoo.com>
-In-Reply-To: <2078146812.1909563.1573533502212@mail.yahoo.com>
+Subject: RE: Unable to create Wintun Interface
+Thread-Topic: Unable to create Wintun Interface
+Thread-Index: AQHVpQexXmUHcLh+rU+9qTfeeRx9GKe2WE0Q
+Date: Thu, 12 Dec 2019 09:53:12 +0000
+Message-ID: <99D61A626FDA8A4B90A270669121BE10D0597B0D@PLANJAVA.amebis.doma>
+References: <860712054.4029860.1574276656913.ref@mail.yahoo.com>
+ <860712054.4029860.1574276656913@mail.yahoo.com>
+In-Reply-To: <860712054.4029860.1574276656913@mail.yahoo.com>
 Accept-Language: en-GB, sl-SI, en-US
 Content-Language: en-US
 X-MS-Has-Attach: yes
@@ -74,100 +74,89 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============6778128274354246712=="
+Content-Type: multipart/mixed; boundary="===============8404334360647440864=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============6778128274354246712==
+--===============8404334360647440864==
 Content-Language: en-US
 Content-Type: multipart/signed; protocol="application/x-pkcs7-signature";
 	micalg=2.16.840.1.101.3.4.2.1;
-	boundary="----=_NextPart_000_0029_01D5B0D6.D3724930"
+	boundary="----=_NextPart_000_0037_01D5B0DA.58292BF0"
 
-------=_NextPart_000_0029_01D5B0D6.D3724930
+------=_NextPart_000_0037_01D5B0DA.58292BF0
 Content-Type: multipart/alternative;
-	boundary="----=_NextPart_001_002A_01D5B0D6.D3724930"
+	boundary="----=_NextPart_001_0038_01D5B0DA.58292BF0"
 
 
-------=_NextPart_001_002A_01D5B0D6.D3724930
+------=_NextPart_001_0038_01D5B0DA.58292BF0
 Content-Type: text/plain;
 	charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7bit
 
-Hi Richard,
+Please check if you have any network adapter that has a name similar to the 
+tunnel name you are trying to use (Control Panel\Network and Internet\Network 
+Connections). WireGuard needs to have a network adapter with the name that 
+corresponds to the tunnel name. In your case, it fails naming it.
 
-=20
 
-I apologise for the delay. (Becoming my standard letter introduction =
-these days. =E2=98=B9)
 
-=20
+Maybe you named your Ethernet/Wifi adapter as "MyCompany", and then created a 
+WireGuard tunnel with the same name "MyCompany". Maybe you have a WiFi SSID 
+named "MyCompany". Try picking different name for your WireGuard tunnel. Other 
+than WireGuard tunnel and adapter names must be aligned internal limitation, 
+the name of the tunnel doesn't play any significant role. You can select a 
+different name (e.g. "MyCompanyWG", "wg0", etc.) and try again.
 
-Your error is saying that NetCfgInstanceId value did not appear in the =
-HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\{4d36e972-e325-=
-11ce-bfc1-08002be10318}\<id> registry key in 10 seconds. Can you check =
-the registry key what's going on there, please?
 
-=20
-
-Also, check the event log (System and Application and Service =
-Logs\Microsoft\Windows\DeviceSetupManager) for any errors at the time =
-you are attempting to activate the tunnel. Maybe there's some disabled =
-service causing interface device creation to fail?
-
-=20
-
-Maybe your Windows is attempting to access Windows Update for a newer =
-version of Wintun driver first, triggering 10 second timeout in =
-WireGuard?
-
-=20
 
 Best regards,
 
 Simon
 
-=20
 
-From: WireGuard <wireguard-bounces@lists.zx2c4.com> On Behalf Of Richard =
-Reiner
-Sent: Tuesday, November 12, 2019 5:38 AM
+
+From: WireGuard <wireguard-bounces@lists.zx2c4.com> On Behalf Of Mark Nichols
+Sent: Wednesday, November 20, 2019 8:04 PM
 To: wireguard@lists.zx2c4.com
-Subject: Windows client "Unable to create Wintun device"
-
-=20
-
-On one of my machines, the Wireguard Windows client 0.0.35 was =
-previously working well, but as of today whenever attempting to activate =
-any tunnel it generates errors with log messages like:
-
-=20
-
-  2019-11-11 17:32:48.033: [TUN] [tun22] Unable to create Wintun device: =
-Unable to create Wintun interface: GetStringValueWait(NetCfgInstanceId) =
-failed: Timeout waiting for registry value
-
-=20
-
-An uninstall - reboot - reinstall has not corrected this/
-
-=20
-
-The affected machine has received some Windows 10 updates recently as =
-well as a VMware Player update.
-
-But another machine with the same software installed works fine.
-
-=20
-
-Any thoughts or suggestions?
-
-=20
-
-=20
+Subject: Unable to create Wintun Interface
 
 
-------=_NextPart_001_002A_01D5B0D6.D3724930
+
+I've just installed Wireguard on Windows 10 64-bit using the msi installer. 
+When I create a tunnel and try to connect, I get:
+
+
+
+Unable to create Wintun interface: Error creating interface: Unable to set 
+name of Wintun interface: NciSetConnectionName failed: The requested operation 
+was made in the context of a transaction that is no longer active.
+
+
+
+I have uninstalled and reinstalled from the command prompt as the 
+administrator.
+
+
+
+I have validated the tunnel works with the configured parameters on a Mac.
+
+
+
+Any suggestions?
+
+
+
+Mark Nichols
+Discrimination, oppression, and injustice are challenges to be overcome, tools 
+to sharpen our determination, and reflections on the poor character of the 
+oppressor. Lack of opportunity is a calling to create something new and 
+better. If we choose to see circumstances as something to overcome on our way 
+to success instead of allowing them to define us as a victim, we retain the 
+power to pursue our highest destiny.
+
+
+------=_NextPart_001_0038_01D5B0DA.58292BF0
 Content-Type: text/html;
 	charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
@@ -238,107 +227,85 @@ div.WordSection1
 </o:shapelayout></xml><![endif]--></head><body lang=3DSL =
 link=3D"#0563C1" vlink=3D"#954F72"><div class=3DWordSection1><p =
 class=3DMsoNormal><span lang=3DEN-GB =
-style=3D'mso-fareast-language:EN-US'>Hi Richard,<o:p></o:p></span></p><p =
-class=3DMsoNormal><span lang=3DEN-GB =
+style=3D'mso-fareast-language:EN-US'>Please check if you have any =
+network adapter that has a name similar to the tunnel name you are =
+trying to use (Control Panel\Network and Internet\Network Connections). =
+WireGuard needs to have a network adapter with the name that corresponds =
+to the tunnel name. In your case, it fails naming =
+it.<o:p></o:p></span></p><p class=3DMsoNormal><span lang=3DEN-GB =
 style=3D'mso-fareast-language:EN-US'><o:p>&nbsp;</o:p></span></p><p =
 class=3DMsoNormal><span lang=3DEN-GB =
-style=3D'mso-fareast-language:EN-US'>I apologise for the delay. =
-(Becoming my standard letter introduction these days. </span><span =
-lang=3DEN-GB style=3D'font-family:"Segoe UI =
-Emoji",sans-serif;mso-fareast-language:EN-US'>=E2=98=B9</span><span =
-lang=3DEN-GB =
-style=3D'mso-fareast-language:EN-US'>)<o:p></o:p></span></p><p =
-class=3DMsoNormal><span lang=3DEN-GB =
-style=3D'mso-fareast-language:EN-US'><o:p>&nbsp;</o:p></span></p><p =
-class=3DMsoNormal><span lang=3DEN-GB =
-style=3D'mso-fareast-language:EN-US'>Your error is saying that =
-</span><code><span lang=3DEN-GB =
-style=3D'font-size:10.0pt;mso-fareast-language:EN-US'>NetCfgInstanceId</s=
-pan></code><span lang=3DEN-GB style=3D'mso-fareast-language:EN-US'> =
-value did not appear in the HKEY</span><code><span lang=3DEN-GB =
-style=3D'font-size:10.0pt;mso-fareast-language:EN-US'>_LOCAL_MACHINE\SYST=
-EM\CurrentControlSet\Control\Class\{4d36e972-e325-11ce-bfc1-08002be10318}=
-\<i>&lt;id&gt;</i></span></code><span lang=3DEN-GB =
-style=3D'mso-fareast-language:EN-US'> registry key in 10 seconds. Can =
-you check the registry key what's going on there, =
-please?<o:p></o:p></span></p><p class=3DMsoNormal><span lang=3DEN-GB =
-style=3D'mso-fareast-language:EN-US'><o:p>&nbsp;</o:p></span></p><p =
-class=3DMsoNormal><span lang=3DEN-GB =
-style=3D'mso-fareast-language:EN-US'>Also, check the event log (System =
-and Application and Service Logs\Microsoft\Windows\DeviceSetupManager) =
-for any errors at the time you are attempting to activate the tunnel. =
-Maybe there's some disabled service causing interface device creation to =
-fail?<o:p></o:p></span></p><p class=3DMsoNormal><span lang=3DEN-GB =
-style=3D'mso-fareast-language:EN-US'><o:p>&nbsp;</o:p></span></p><p =
-class=3DMsoNormal><span lang=3DEN-GB =
-style=3D'mso-fareast-language:EN-US'>Maybe your Windows is attempting to =
-access Windows Update for a newer version of Wintun driver first, =
-triggering 10 second timeout in WireGuard?<o:p></o:p></span></p><p =
-class=3DMsoNormal><span lang=3DEN-GB =
+style=3D'mso-fareast-language:EN-US'>Maybe you named your Ethernet/Wifi =
+adapter as &quot;MyCompany&quot;, and then created a WireGuard tunnel =
+with the same name &quot;MyCompany&quot;. Maybe you have a WiFi SSID =
+named &quot;MyCompany&quot;. Try picking different name for your =
+WireGuard tunnel. Other than WireGuard tunnel and adapter names must be =
+aligned internal limitation, the name of the tunnel doesn't play any =
+significant role. You can select a different name (e.g. =
+&quot;MyCompanyWG&quot;, &quot;wg0&quot;, etc.) and try =
+again.<o:p></o:p></span></p><p class=3DMsoNormal><span lang=3DEN-GB =
 style=3D'mso-fareast-language:EN-US'><o:p>&nbsp;</o:p></span></p><div><p =
-class=3DMsoNormal>Best regards,<o:p></o:p></p><p =
-class=3DMsoNormal>Simon<o:p></o:p></p></div><p class=3DMsoNormal><span =
+class=3DMsoNormal><span lang=3DEN-GB>Best =
+regards,<o:p></o:p></span></p><p class=3DMsoNormal><span =
+lang=3DEN-GB>Simon<o:p></o:p></span></p></div><p class=3DMsoNormal><span =
 lang=3DEN-GB =
 style=3D'mso-fareast-language:EN-US'><o:p>&nbsp;</o:p></span></p><div =
 style=3D'border:none;border-left:solid blue 1.5pt;padding:0cm 0cm 0cm =
 4.0pt'><div><div style=3D'border:none;border-top:solid #E1E1E1 =
 1.0pt;padding:3.0pt 0cm 0cm 0cm'><p class=3DMsoNormal><b><span =
 lang=3DEN-GB>From:</span></b><span lang=3DEN-GB> WireGuard =
-&lt;wireguard-bounces@lists.zx2c4.com&gt; <b>On Behalf Of </b>Richard =
-Reiner<br><b>Sent:</b> Tuesday, November 12, 2019 5:38 AM<br><b>To:</b> =
-wireguard@lists.zx2c4.com<br><b>Subject:</b> Windows client &quot;Unable =
-to create Wintun device&quot;<o:p></o:p></span></p></div></div><p =
+&lt;wireguard-bounces@lists.zx2c4.com&gt; <b>On Behalf Of </b>Mark =
+Nichols<br><b>Sent:</b> Wednesday, November 20, 2019 8:04 =
+PM<br><b>To:</b> wireguard@lists.zx2c4.com<br><b>Subject:</b> Unable to =
+create Wintun Interface<o:p></o:p></span></p></div></div><p =
 class=3DMsoNormal><span =
-lang=3DEN-GB><o:p>&nbsp;</o:p></span></p><div><div><div><div><div><div><d=
-iv style=3D'margin-top:6.0pt'><div><div><div><p class=3DMsoNormal><span =
-lang=3DEN-GB =
-style=3D'font-size:12.0pt;font-family:"Arial",sans-serif;color:#222222'>O=
-n one of my machines, the Wireguard Windows client 0.0.35 was =
-previously&nbsp;working well, but as of today whenever attempting to =
-activate any tunnel it generates errors with log messages =
-like:<o:p></o:p></span></p></div><div><p class=3DMsoNormal><span =
-lang=3DEN-GB =
-style=3D'font-size:12.0pt;font-family:"Arial",sans-serif;color:#222222'><=
-o:p>&nbsp;</o:p></span></p></div><div><div><p class=3DMsoNormal><span =
-lang=3DEN-GB =
-style=3D'font-size:12.0pt;font-family:"Arial",sans-serif;color:#222222'>&=
-nbsp; 2019-11-11 17:32:48.033: [TUN] [tun22] Unable to create Wintun =
-device: Unable to create Wintun interface: =
-GetStringValueWait(NetCfgInstanceId) failed: Timeout waiting for =
-registry value<o:p></o:p></span></p></div><div><p =
+lang=3DEN-GB><o:p>&nbsp;</o:p></span></p><div><div><div><p =
 class=3DMsoNormal><span lang=3DEN-GB =
-style=3D'font-size:12.0pt;font-family:"Arial",sans-serif;color:#222222'><=
-o:p>&nbsp;</o:p></span></p></div><div><p class=3DMsoNormal><span =
+style=3D'font-size:12.0pt;font-family:"Helvetica",sans-serif'>I've just =
+installed Wireguard on Windows 10 64-bit using the msi installer. When I =
+create a tunnel and try to connect, I =
+get:<o:p></o:p></span></p></div><div><p class=3DMsoNormal><span =
 lang=3DEN-GB =
-style=3D'font-size:12.0pt;font-family:"Arial",sans-serif;color:#222222'>A=
-n uninstall - reboot - reinstall has not corrected =
-this/<o:p></o:p></span></p></div><div><p class=3DMsoNormal><span =
-lang=3DEN-GB =
-style=3D'font-size:12.0pt;font-family:"Arial",sans-serif;color:#222222'><=
-o:p>&nbsp;</o:p></span></p></div><div><p class=3DMsoNormal><span =
-lang=3DEN-GB =
-style=3D'font-size:12.0pt;font-family:"Arial",sans-serif;color:#222222'>T=
-he affected machine has received some Windows 10 updates recently as =
-well as a VMware Player update.<o:p></o:p></span></p></div><div><p =
-class=3DMsoNormal><span lang=3DEN-GB =
-style=3D'font-size:12.0pt;font-family:"Arial",sans-serif;color:#222222'>B=
-ut another machine with the same software installed works =
-fine.<o:p></o:p></span></p></div><div><p class=3DMsoNormal><span =
-lang=3DEN-GB =
-style=3D'font-size:12.0pt;font-family:"Arial",sans-serif;color:#222222'><=
-o:p>&nbsp;</o:p></span></p></div><div><p class=3DMsoNormal><span =
-lang=3DEN-GB =
-style=3D'font-size:12.0pt;font-family:"Arial",sans-serif;color:#222222'>A=
-ny thoughts&nbsp;or suggestions?<o:p></o:p></span></p></div><div><p =
-class=3DMsoNormal><span lang=3DEN-GB =
-style=3D'font-size:12.0pt;font-family:"Arial",sans-serif;color:#222222'><=
-o:p>&nbsp;</o:p></span></p></div></div></div></div></div></div></div></di=
-v></div><p class=3DMsoNormal><span lang=3DEN-GB =
 style=3D'font-size:12.0pt;font-family:"Helvetica",sans-serif'><o:p>&nbsp;=
-</o:p></span></p></div></div></div></div></body></html>
-------=_NextPart_001_002A_01D5B0D6.D3724930--
+</o:p></span></p></div><div><p class=3DMsoNormal><span lang=3DEN-GB =
+style=3D'font-size:12.0pt;font-family:"Helvetica",sans-serif'>Unable to =
+create Wintun interface: Error creating interface: Unable to set name of =
+Wintun interface: NciSetConnectionName failed: The requested operation =
+was made in the context of a transaction that is no longer =
+active.<o:p></o:p></span></p></div><div><p class=3DMsoNormal><span =
+lang=3DEN-GB =
+style=3D'font-size:12.0pt;font-family:"Helvetica",sans-serif'><o:p>&nbsp;=
+</o:p></span></p></div><div><p class=3DMsoNormal><span lang=3DEN-GB =
+style=3D'font-size:12.0pt;font-family:"Helvetica",sans-serif'>I have =
+uninstalled and reinstalled from the command prompt as the =
+administrator.<o:p></o:p></span></p></div><div><p =
+class=3DMsoNormal><span lang=3DEN-GB =
+style=3D'font-size:12.0pt;font-family:"Helvetica",sans-serif'><o:p>&nbsp;=
+</o:p></span></p></div><div><p class=3DMsoNormal><span lang=3DEN-GB =
+style=3D'font-size:12.0pt;font-family:"Helvetica",sans-serif'>I have =
+validated the tunnel works with the configured parameters on a Mac. =
+<o:p></o:p></span></p></div><div><p class=3DMsoNormal><span lang=3DEN-GB =
+style=3D'font-size:12.0pt;font-family:"Helvetica",sans-serif'><o:p>&nbsp;=
+</o:p></span></p></div><div><p class=3DMsoNormal><span lang=3DEN-GB =
+style=3D'font-size:12.0pt;font-family:"Helvetica",sans-serif'>Any =
+suggestions?<o:p></o:p></span></p></div><div><p class=3DMsoNormal><span =
+lang=3DEN-GB =
+style=3D'font-size:12.0pt;font-family:"Helvetica",sans-serif'><o:p>&nbsp;=
+</o:p></span></p></div><div><div><p class=3DMsoNormal><span lang=3DEN-GB =
+style=3D'font-size:12.0pt;font-family:"Helvetica",sans-serif'>Mark =
+Nichols<br></span><i><span lang=3DEN-GB =
+style=3D'font-size:9.0pt'>Discrimination, oppression, and injustice are =
+challenges to be overcome, tools to sharpen our determination, and =
+reflections on the poor character of the oppressor. Lack of opportunity =
+is a calling to create something new and better. If we choose to see =
+circumstances as something to overcome on our way to success instead of =
+allowing them to define us as a victim, we retain the power to pursue =
+our highest destiny.</span></i><span lang=3DEN-GB =
+style=3D'font-size:12.0pt;font-family:"Helvetica",sans-serif'> =
+<o:p></o:p></span></p></div></div></div></div></div></div></body></html>
+------=_NextPart_001_0038_01D5B0DA.58292BF0--
 
-------=_NextPart_000_0029_01D5B0D6.D3724930
+------=_NextPart_000_0037_01D5B0DA.58292BF0
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -417,23 +384,23 @@ RqsKPBhWoaFEVZ+Vn3wxap5h/oAhocifNzkWJTNWjxnoPM2eNz2uWFJsgsNhlwteUvnq7+bKTNte
 SKWKr6pI+GUsZhmCh5URpUnqUanp0Uie0MD9f3tiOLOp711sNb0xwi+VdDuDB37IddOIsfhPBood
 wpoFrTGCAyEwggMdAgEBMEUwPTELMAkGA1UEBhMCc2kxGzAZBgNVBAoTEnN0YXRlLWluc3RpdHV0
 aW9uczERMA8GA1UECxMIc2lnZW4tY2ECBDtKDS4wDQYJYIZIAWUDBAIBBQCgggGtMBgGCSqGSIb3
-DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTE5MTIxMjA5Mjc1OVowLwYJKoZIhvcN
-AQkEMSIEIBI59PqipgRhzhSirH0K/FTqRN0+Rbw68joOjzWN9MU+MFQGCSsGAQQBgjcQBDFHMEUw
+DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTE5MTIxMjA5NTMxMFowLwYJKoZIhvcN
+AQkEMSIEIBEKmjknHhtWvk/BVGG/Tmy9v05yhJblLNAqTao4A4UHMFQGCSsGAQQBgjcQBDFHMEUw
 PTELMAkGA1UEBhMCc2kxGzAZBgNVBAoTEnN0YXRlLWluc3RpdHV0aW9uczERMA8GA1UECxMIc2ln
 ZW4tY2ECBDtKDS4wVgYLKoZIhvcNAQkQAgsxR6BFMD0xCzAJBgNVBAYTAnNpMRswGQYDVQQKExJz
 dGF0ZS1pbnN0aXR1dGlvbnMxETAPBgNVBAsTCHNpZ2VuLWNhAgQ7Sg0uMIGTBgkqhkiG9w0BCQ8x
 gYUwgYIwCwYJYIZIAWUDBAEqMAsGCWCGSAFlAwQBFjAKBggqhkiG9w0DBzALBglghkgBZQMEAQIw
 DgYIKoZIhvcNAwICAgCAMA0GCCqGSIb3DQMCAgFAMAsGCWCGSAFlAwQCATALBglghkgBZQMEAgMw
-CwYJYIZIAWUDBAICMAcGBSsOAwIaMA0GCSqGSIb3DQEBAQUABIIBANFI3qPyqsSjEZqOFAEwDoKd
-iYQ4o/5HniS8qDc2PK79qrFS7qtcxzHV8HWtzMyKPPrdNZrL8vDNmw2SAvyMvJaBerKRrgJoQVO0
-Rj5/sodeCESM9prWf+GgmQKRrLK+3soUzhTbacG6zrvd82TJXZOW1cCqquskAt7h/oiRog+Ltquv
-ZGpgou+SMlwZdPBNIy8+M2bM1XyP83TXAv0TmuhBCfT0KxenqyUzcYeH7DwBYiAXX+E/U0QSo6OH
-AIfGG07dwfTT5+QeWCUkOIiE79nOw7M/DueaqZ+RPuIFR74w4ryeamSssBFPePyLNQrDGL9ceEoV
-n8PU+vw5E+WfvZkAAAAAAAA=
+CwYJYIZIAWUDBAICMAcGBSsOAwIaMA0GCSqGSIb3DQEBAQUABIIBAMw15IB/RApqN31MHs96V5Vg
+hlpS3QOJaIdm6WYV6yWLcz1RZJVIqUoFm2hgDTrG1tcDCFR7WGUfrWgtEzXiKZ9JO0vn4qpcK4X1
+r/BHEP/rohoLKbEkds+ie48F9VD5Ki8SpxPBc6IYVb1rk9MWLCBPyUAUGagpkTzb75Ptyu/Bvehu
+QcjFe2mlgyCOoSNNgvBcF4I/NWyeOJZckskQljZtSuaqoME7YdzLnYCx+ycHqXbnRIUBln6aEsH6
+MR0phVjTM1sVy0DPv7Olgo5hxHZz5x5z0QBD6Y4EuEQs4tyYZHOUPYI/ds1wD5Ouh8zNCWdL+TE4
+vmdg/8Dr231t8dkAAAAAAAA=
 
-------=_NextPart_000_0029_01D5B0D6.D3724930--
+------=_NextPart_000_0037_01D5B0DA.58292BF0--
 
---===============6778128274354246712==
+--===============8404334360647440864==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -444,4 +411,4 @@ WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---===============6778128274354246712==--
+--===============8404334360647440864==--
