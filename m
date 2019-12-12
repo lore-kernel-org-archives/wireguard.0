@@ -2,52 +2,71 @@ Return-Path: <SRS0=NvnE=2C=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BCF2C43603
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Dec 2019 18:53:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BFB13C43603
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Dec 2019 19:07:05 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 129A32073B
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Dec 2019 18:53:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 129A32073B
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=davemloft.net
+	by mail.kernel.org (Postfix) with ESMTPS id 4805121556
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Dec 2019 19:07:04 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="GfeDyCoT"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 4805121556
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cf25587c;
-	Thu, 12 Dec 2019 18:53:04 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a7bb7516;
+	Thu, 12 Dec 2019 19:07:04 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 95322cb9
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d5f93065
  for <wireguard@lists.zx2c4.com>;
- Thu, 12 Dec 2019 18:53:02 +0000 (UTC)
-Received: from shards.monkeyblade.net (shards.monkeyblade.net
- [IPv6:2620:137:e000::1:9])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4adc9360
+ Thu, 12 Dec 2019 19:07:02 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7b58131e
  for <wireguard@lists.zx2c4.com>;
- Thu, 12 Dec 2019 18:53:02 +0000 (UTC)
-Received: from localhost (unknown [IPv6:2601:601:9f00:1c3::3d5])
- (using TLSv1 with cipher AES256-SHA (256/256 bits))
- (Client did not present a certificate)
- (Authenticated sender: davem-davemloft)
- by shards.monkeyblade.net (Postfix) with ESMTPSA id D516D153DCDBB;
- Thu, 12 Dec 2019 10:52:58 -0800 (PST)
-Date: Thu, 12 Dec 2019 10:52:58 -0800 (PST)
-Message-Id: <20191212.105258.579549471896891617.davem@davemloft.net>
-To: yuehaibing@huawei.com
-Subject: Re: [PATCH net-next] net: Remove unused including <linux/version.h>
-From: David Miller <davem@davemloft.net>
-In-Reply-To: <20191212091527.35293-1-yuehaibing@huawei.com>
+ Thu, 12 Dec 2019 19:07:02 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9dd05ceb
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 12 Dec 2019 18:11:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :references:in-reply-to:from:date:message-id:subject:to:cc
+ :content-type; s=mail; bh=Gap4hyb3YJho4i7tIDDW6ea2M7E=; b=GfeDyC
+ oTdom0f29bx7WQEfihXhBCQdSLOdasAvB0dalfeNHjtmMQm89xwF6KrDQJ3gwZ7l
+ chCkqbktrtUApPCE84fiRUalcI0PiIzvLmdGXpFf7Ao2wC9WKvbmdP8tRA75jhPI
+ jENw/TCtpC1ZR/yxQiEhJhRUGS+2rJV0+KVyRr03hmhfUNQQPrTsYAKlN15U9XPN
+ /CUYpZImVbfa7nFvkLjUTpwcUgXo6u3GQ01mcwPQeAicwi85FWduCEkPhz5MrEqc
+ kwFw5NPSSUh6VoY6raDbQuEwkyoRRX0XCAzZt2PTCqda7bHQpbDwFeJJtHZNBhvU
+ HCkuKEDj7IddxaFw==
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id b123208a
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 12 Dec 2019 18:11:12 +0000 (UTC)
+Received: by mail-ot1-f42.google.com with SMTP id g18so3044225otj.13
+ for <wireguard@lists.zx2c4.com>; Thu, 12 Dec 2019 11:07:02 -0800 (PST)
+X-Gm-Message-State: APjAAAWRgheZxvH2mNY+cJFpgk0v1B9/PBV4oFIVyTp1TQweiuPCDRQe
+ piImB9tgi1s4Ub3YZfLf5aJE1btYaN9nlSESxYE=
+X-Google-Smtp-Source: APXvYqxCKAGJ2V7i7Z038u/aSejmowoq1mmb2+5F30wgv9JmKhhntQi57wRLGO7+Adc9XeyCGdQX/971aGYA9LxcTVo=
+X-Received: by 2002:a05:6830:1b6a:: with SMTP id
+ d10mr10174984ote.52.1576177621494; 
+ Thu, 12 Dec 2019 11:07:01 -0800 (PST)
+MIME-Version: 1.0
 References: <20191212091527.35293-1-yuehaibing@huawei.com>
-X-Mailer: Mew version 6.8 on Emacs 26.1
-Mime-Version: 1.0
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.5.12
- (shards.monkeyblade.net [149.20.54.216]);
- Thu, 12 Dec 2019 10:52:59 -0800 (PST)
-Cc: netdev@vger.kernel.org, kernel-janitors@vger.kernel.org,
- linux-kernel@vger.kernel.org, wireguard@lists.zx2c4.com
+ <20191212.105258.579549471896891617.davem@davemloft.net>
+In-Reply-To: <20191212.105258.579549471896891617.davem@davemloft.net>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 12 Dec 2019 20:06:50 +0100
+X-Gmail-Original-Message-ID: <CAHmME9osYEbi1BDmJL=4N+A1rbb7_MPqVijogHSFhU39rRCbdw@mail.gmail.com>
+Message-ID: <CAHmME9osYEbi1BDmJL=4N+A1rbb7_MPqVijogHSFhU39rRCbdw@mail.gmail.com>
+Subject: Re: [PATCH net-next] net: Remove unused including <linux/version.h>
+To: David Miller <davem@davemloft.net>
+Cc: Netdev <netdev@vger.kernel.org>, kernel-janitors@vger.kernel.org,
+ YueHaibing <yuehaibing@huawei.com>, LKML <linux-kernel@vger.kernel.org>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -64,20 +83,31 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-From: YueHaibing <yuehaibing@huawei.com>
-Date: Thu, 12 Dec 2019 09:15:27 +0000
+Hi Dave,
 
-> Remove including <linux/version.h> that don't need it.
-> 
-> Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+On Thu, Dec 12, 2019 at 7:53 PM David Miller <davem@davemloft.net> wrote:
+>
+> From: YueHaibing <yuehaibing@huawei.com>
+> Date: Thu, 12 Dec 2019 09:15:27 +0000
+>
+> > Remove including <linux/version.h> that don't need it.
+> >
+> > Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+>
+> Appropriate subject line for this should have been:
+>
+>         Subject: [PATCH net-next] wireguard: Remove unused include <linux/version.h>
+>
+> 'net' is too broad a subsystem prefix as it basically encompases half of the
+> entire kernel tree.  When people look at the git shortlog output you need to
+> be specific enough that people can tell what touches what.
 
-Appropriate subject line for this should have been:
+I have these fixed up how you like in the wireguard-linux.git repo,
+and I'll submit these in a series to net-next next week all together.
 
-	Subject: [PATCH net-next] wireguard: Remove unused include <linux/version.h>
+https://git.kernel.org/pub/scm/linux/kernel/git/zx2c4/wireguard-linux.git/log
 
-'net' is too broad a subsystem prefix as it basically encompases half of the
-entire kernel tree.  When people look at the git shortlog output you need to
-be specific enough that people can tell what touches what.
+Jason
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
