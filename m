@@ -2,71 +2,57 @@ Return-Path: <SRS0=NvnE=2C=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BFB13C43603
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Dec 2019 19:07:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B79D0C43603
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Dec 2019 19:12:17 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 4805121556
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Dec 2019 19:07:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 5818D21556
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Dec 2019 19:12:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="GfeDyCoT"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 4805121556
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=trustiosity.com header.i=@trustiosity.com header.b="XUDFhmTd"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 5818D21556
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=trustiosity.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a7bb7516;
-	Thu, 12 Dec 2019 19:07:04 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 695f7716;
+	Thu, 12 Dec 2019 19:12:00 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d5f93065
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2b9202e2
  for <wireguard@lists.zx2c4.com>;
- Thu, 12 Dec 2019 19:07:02 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7b58131e
+ Thu, 12 Dec 2019 19:11:58 +0000 (UTC)
+Received: from mx.trustiosity.com (mx.trustiosity.com [54.186.28.113])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cc13eb2b
  for <wireguard@lists.zx2c4.com>;
- Thu, 12 Dec 2019 19:07:02 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9dd05ceb
- for <wireguard@lists.zx2c4.com>;
- Thu, 12 Dec 2019 18:11:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=Gap4hyb3YJho4i7tIDDW6ea2M7E=; b=GfeDyC
- oTdom0f29bx7WQEfihXhBCQdSLOdasAvB0dalfeNHjtmMQm89xwF6KrDQJ3gwZ7l
- chCkqbktrtUApPCE84fiRUalcI0PiIzvLmdGXpFf7Ao2wC9WKvbmdP8tRA75jhPI
- jENw/TCtpC1ZR/yxQiEhJhRUGS+2rJV0+KVyRr03hmhfUNQQPrTsYAKlN15U9XPN
- /CUYpZImVbfa7nFvkLjUTpwcUgXo6u3GQ01mcwPQeAicwi85FWduCEkPhz5MrEqc
- kwFw5NPSSUh6VoY6raDbQuEwkyoRRX0XCAzZt2PTCqda7bHQpbDwFeJJtHZNBhvU
- HCkuKEDj7IddxaFw==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id b123208a
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Thu, 12 Dec 2019 18:11:12 +0000 (UTC)
-Received: by mail-ot1-f42.google.com with SMTP id g18so3044225otj.13
- for <wireguard@lists.zx2c4.com>; Thu, 12 Dec 2019 11:07:02 -0800 (PST)
-X-Gm-Message-State: APjAAAWRgheZxvH2mNY+cJFpgk0v1B9/PBV4oFIVyTp1TQweiuPCDRQe
- piImB9tgi1s4Ub3YZfLf5aJE1btYaN9nlSESxYE=
-X-Google-Smtp-Source: APXvYqxCKAGJ2V7i7Z038u/aSejmowoq1mmb2+5F30wgv9JmKhhntQi57wRLGO7+Adc9XeyCGdQX/971aGYA9LxcTVo=
-X-Received: by 2002:a05:6830:1b6a:: with SMTP id
- d10mr10174984ote.52.1576177621494; 
- Thu, 12 Dec 2019 11:07:01 -0800 (PST)
+ Thu, 12 Dec 2019 19:11:58 +0000 (UTC)
+Received: from [192.168.212.66] (csm.ldm [192.168.212.66])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
+ (Client did not present a certificate)
+ (Authenticated sender: zrm@trustiosity.com)
+ by mx.trustiosity.com (Postfix) with ESMTPSA id B762C4205CD
+ for <wireguard@lists.zx2c4.com>; Thu, 12 Dec 2019 14:11:56 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=trustiosity.com;
+ s=mx; t=1576177916; bh=9t/obJ+DpC5e67e4SnAAXeHMUlbVjPXmR2E6aRLiFuQ=;
+ h=Subject:To:References:From:Date:In-Reply-To:From;
+ b=XUDFhmTd44XODLKH92ZoMMdLxGqp+XEp+TuV8DDa2v8sfuwAxnEzg+v7dp9US1FHc
+ zeMomk4X+eQoxSihdEMqDHd0V+04ml3rCmlldAJMzGekGpmMC5fJ+fJQrDy7IJfp72
+ dF38NFFYmis1yN/wjgnhaJdVKKiQaqLEfzTSBH/I=
+Subject: Re: Wireguard for Windows - local administrator necessary?
+To: wireguard@lists.zx2c4.com
+References: <CABPTpJBGQcze6b3_tJij8Ysp8zwb_4fyQAEv_fy4Bx9YpVcpRw@mail.gmail.com>
+ <99D61A626FDA8A4B90A270669121BE10C9B3E6A8@PLANJAVA.amebis.doma>
+From: zrm <zrm@trustiosity.com>
+Message-ID: <b341c46c-5be8-4f6c-401f-beea6d13c8ba@trustiosity.com>
+Date: Thu, 12 Dec 2019 14:11:56 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
 MIME-Version: 1.0
-References: <20191212091527.35293-1-yuehaibing@huawei.com>
- <20191212.105258.579549471896891617.davem@davemloft.net>
-In-Reply-To: <20191212.105258.579549471896891617.davem@davemloft.net>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 12 Dec 2019 20:06:50 +0100
-X-Gmail-Original-Message-ID: <CAHmME9osYEbi1BDmJL=4N+A1rbb7_MPqVijogHSFhU39rRCbdw@mail.gmail.com>
-Message-ID: <CAHmME9osYEbi1BDmJL=4N+A1rbb7_MPqVijogHSFhU39rRCbdw@mail.gmail.com>
-Subject: Re: [PATCH net-next] net: Remove unused including <linux/version.h>
-To: David Miller <davem@davemloft.net>
-Cc: Netdev <netdev@vger.kernel.org>, kernel-janitors@vger.kernel.org,
- YueHaibing <yuehaibing@huawei.com>, LKML <linux-kernel@vger.kernel.org>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>
+In-Reply-To: <99D61A626FDA8A4B90A270669121BE10C9B3E6A8@PLANJAVA.amebis.doma>
+Content-Language: en-US
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -78,37 +64,37 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="utf-8"; Format="flowed"
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Dave,
-
-On Thu, Dec 12, 2019 at 7:53 PM David Miller <davem@davemloft.net> wrote:
->
-> From: YueHaibing <yuehaibing@huawei.com>
-> Date: Thu, 12 Dec 2019 09:15:27 +0000
->
-> > Remove including <linux/version.h> that don't need it.
-> >
-> > Signed-off-by: YueHaibing <yuehaibing@huawei.com>
->
-> Appropriate subject line for this should have been:
->
->         Subject: [PATCH net-next] wireguard: Remove unused include <linux/version.h>
->
-> 'net' is too broad a subsystem prefix as it basically encompases half of the
-> entire kernel tree.  When people look at the git shortlog output you need to
-> be specific enough that people can tell what touches what.
-
-I have these fixed up how you like in the wireguard-linux.git repo,
-and I'll submit these in a series to net-next next week all together.
-
-https://git.kernel.org/pub/scm/linux/kernel/git/zx2c4/wireguard-linux.git/log
-
-Jason
-_______________________________________________
-WireGuard mailing list
-WireGuard@lists.zx2c4.com
-https://lists.zx2c4.com/mailman/listinfo/wireguard
+T24gMTEvMjcvMTkgMDY6MjcsIFNpbW9uIFJvem1hbiB3cm90ZToKPiBIaSBDaHJpcyEKPiAKPiBU
+aGlzIGlzIFdpcmVHdWFyZCBkZXNpZ24uIFJlY29uZmlndXJpbmcgbmV0d29yayAtIHdoaWNoIChk
+aXMpY29ubmVjdGluZyAKPiBWUE4gaXMg4oCTIGlzIGFkbWluaXN0cmF0aXZlIHRhc2suCj4gCj4g
+SWYgeW91ciBvcmdhbml6YXRpb24gaXNzdWVzIGxhcHRvcHMgdG8gdGhlaXIgZW1wbG95ZWVzLCB0
+aGUgY29ycG9yYXRlIAo+IFZQTiBzaG91bGQgYmUgdXAgYXQgYWxsIHRpbWVzLiBZb3UgZG9uJ3Qg
+d2FudCB0aGVtIHRvIGRpc2Nvbm5lY3QgZnJvbSAKPiBWUE4gYW5kIHVzZSB0aG9zZSBsYXB0b3Bz
+IG9uIGNvbXByb21pc2VkIG5ldHdvcmtzLCBkbyB5b3U/Cj4gCj4gSSBkaWQgaGF2ZSBhbiBpc3N1
+ZSB3aGVuIHJvYW1pbmcgbGFwdG9wcyB0byBhbmQgZnJvbSBjb3Jwb3JhdGUgV2lGaSwgYXMgCj4g
+dGhlIGVuZHBvaW50IElQIGNoYW5nZXMg4oCTIHJlc3RhcnRpbmcgdGhlIHR1bm5lbCBoZWxwZWQs
+IGJ1dCBhZGRpbmcgYSAKPiBzY2hlZHVsZWQgdGFzayB0byByZXNldCBlbmRwb2ludCBJUCBldmVy
+eSAyIG1pbnV0ZXMgdXNpbmcgd2cuZXhlIGNvbW1hbmQgCj4gbGluZSB3b3JrcyBsaWtlIGEgY2hh
+cm0gaGVyZS4gSWYgdGhhdCdzIHRoZSByZWFzb24geW91IHdvdWxkIHdhbnQgeW91ciAKPiB1c2Vy
+cyB0byBtYW5pcHVsYXRlIFdpcmVHdWFyZCB0dW5uZWxzPwo+IAo+IEJlc3QgcmVnYXJkcywKPiAK
+PiBTaW1vbgoKSXQgbWFrZXMgc2Vuc2UgdGhhdCB1c2VycyBzaG91bGRuJ3QgYmUgYWJsZSB0byBt
+YW5pcHVsYXRlIFdpcmVHdWFyZCAKdHVubmVscyBieSBkZWZhdWx0LCBidXQgc2hvdWxkbid0IGl0
+IGJlIHBvc3NpYmxlIHRvIGNoYW5nZSB0aGUgZGVmYXVsdCAKdGhyb3VnaCBzb21ldGhpbmcgbGVz
+cyBkcmFzdGljIHRoYW4gZ2l2aW5nIHRoZSB1c2VyIGZ1bGwgYWRtaW5pc3RyYXRvciAKYWNjZXNz
+PwoKRm9yIGV4YW1wbGUsIHRoZSByZWdpc3RyeSBpbiBtb2Rlcm4gV2luZG93cyBpcyBwZXJtaXNz
+aW9uZWQgd2l0aCBBQ0xzLiAKSXQgY291bGQgYmUgbWFkZSB0aGUgY2FzZSB0aGF0IG1vZGlmeWlu
+ZyBhIFdpcmVHdWFyZCB0dW5uZWwgb24gV2luZG93cyAKaXMgZG9uZSBieSB3cml0aW5nIHRvIGEg
+cGFydGljdWxhciByZWdpc3RyeSBsb2NhdGlvbiBhbmQgdGhlbiBwb2tpbmcgdGhlIApzZXJ2aWNl
+IHRvIHByb21wdCBpdCB0byBsb29rIHRoZXJlIGZvciBuZXcgY29uZmlndXJhdGlvbi4gVGhlbiB0
+aGUgCmFkbWluaXN0cmF0b3IgY291bGQgZXhwbGljaXRseSBnaXZlIGEgdXNlciBvciBncm91cCBw
+ZXJtaXNzaW9uIHRvIG1vZGlmeSAKdGhhdCByZWdpc3RyeSBsb2NhdGlvbiBpZiB0aGV5IHNob3Vs
+ZCBiZSBhYmxlIHRvIG1vZGlmeSBXaXJlR3VhcmQgCmNvbmZpZ3VyYXRpb24uIE9yIHRoZSBzYW1l
+IHRoaW5nIGNvdWxkIGFsc28gYmUgZG9uZSB3aXRoIGEgZmlsZXN5c3RlbSAKbG9jYXRpb24uCl9f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fCldpcmVHdWFyZCBt
+YWlsaW5nIGxpc3QKV2lyZUd1YXJkQGxpc3RzLnp4MmM0LmNvbQpodHRwczovL2xpc3RzLnp4MmM0
+LmNvbS9tYWlsbWFuL2xpc3RpbmZvL3dpcmVndWFyZAo=
