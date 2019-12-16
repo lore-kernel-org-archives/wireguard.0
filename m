@@ -2,47 +2,66 @@ Return-Path: <SRS0=hbZ4=2G=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F0F3C43603
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 16 Dec 2019 20:32:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E2F2CC43603
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 16 Dec 2019 22:55:22 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id DE82C2082E
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 16 Dec 2019 20:32:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org DE82C2082E
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=53c70r.de
+	by mail.kernel.org (Postfix) with ESMTPS id 2D5742176D
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 16 Dec 2019 22:55:21 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="1+josn3L"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 2D5742176D
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fe83d457;
-	Mon, 16 Dec 2019 20:32:42 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5628158f;
+	Mon, 16 Dec 2019 22:55:20 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7f2ecee0
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c70ae3c8
  for <wireguard@lists.zx2c4.com>;
- Mon, 16 Dec 2019 20:32:40 +0000 (UTC)
-Received: from 53c70r.de (53c70r.de [IPv6:2a01:4f8:c2c:5e22::1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b1c64c31
+ Mon, 16 Dec 2019 22:55:18 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id de9e15e5
  for <wireguard@lists.zx2c4.com>;
- Mon, 16 Dec 2019 20:32:40 +0000 (UTC)
-Received: from localhost.localdomain (p57A44167.dip0.t-ipconnect.de
- [87.164.65.103])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
- (No client certificate requested)
- by 53c70r.de (Postfix) with ESMTPSA id C85431033B30
- for <wireguard@lists.zx2c4.com>; Mon, 16 Dec 2019 21:32:38 +0100 (CET)
-To: wireguard@lists.zx2c4.com
-From: Silvan Nagl <mail@53c70r.de>
-Subject: WG interface does not come up after Fedora Upgrade
-Message-ID: <c984c11f-fd80-7468-698d-bc5ed8b8fdb8@53c70r.de>
-Date: Mon, 16 Dec 2019 21:32:38 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
+ Mon, 16 Dec 2019 22:55:18 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d5906d51
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 16 Dec 2019 21:58:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :references:in-reply-to:from:date:message-id:subject:to:cc
+ :content-type; s=mail; bh=mXpfwdk/XjmxUdiVi854lK9J20g=; b=1+josn
+ 3L3PHus4IP6Tm+pPYaOASMGrrsAIUYt2qAlO9jcjJIw0A2pkwy1MsLTJC0zhljTR
+ jCjFRkxgt1xbqFX95knUm7yi6KAV4h1dvhQDQQb2w4se0oJ7UbOAQ7kspbtdKdME
+ s8i2Y2QupXxLxZGlfvSCt915XYIboX160tZx6sDJmITLVVHawvH2RP+VmZTp9+gw
+ dmUKtbWirAsjws+Jm3r/L15cL/fYHfrdqzLsJjE2cR3GVZzNao15nAbO8RZpp29n
+ 306DzFOkkS8bK2XkAX8hNbbH8ffnHbk1eHDxEKUA6+9/NNjD84FxxiMEUI7WkvKT
+ UNs/0rSDLi0u4iIg==
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 7f0584a9
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 16 Dec 2019 21:58:56 +0000 (UTC)
+Received: by mail-oi1-f175.google.com with SMTP id b8so4650777oiy.5
+ for <wireguard@lists.zx2c4.com>; Mon, 16 Dec 2019 14:55:18 -0800 (PST)
+X-Gm-Message-State: APjAAAUzSeiq4EyPZDIvb36myhhsAVy4Z4rjfI361sTL30jCYTYECHPW
+ OCSdxiTM1g3cA/rnpU9xv7/AtSNaUb75HUQGP4E=
+X-Google-Smtp-Source: APXvYqzXQ0weEUme+SUzseRhkirC2+DTO1iBN3/MprRRGNwqBMeRTlvUr86nh2xP23Xg+GARtLcS6L1RhP75jGgK5WI=
+X-Received: by 2002:aca:5cc1:: with SMTP id q184mr760331oib.122.1576536917683; 
+ Mon, 16 Dec 2019 14:55:17 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="------------C726085F60FE0D8E8A62218B"
-Content-Language: en-US
+References: <c984c11f-fd80-7468-698d-bc5ed8b8fdb8@53c70r.de>
+In-Reply-To: <c984c11f-fd80-7468-698d-bc5ed8b8fdb8@53c70r.de>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Mon, 16 Dec 2019 23:55:05 +0100
+X-Gmail-Original-Message-ID: <CAHmME9rkeeMUdozgaz5uSobTkUifOfs3UG5GE=Vr8e5pYK97jA@mail.gmail.com>
+Message-ID: <CAHmME9rkeeMUdozgaz5uSobTkUifOfs3UG5GE=Vr8e5pYK97jA@mail.gmail.com>
+Subject: Re: WG interface does not come up after Fedora Upgrade
+To: Silvan Nagl <mail@53c70r.de>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -54,122 +73,68 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
+Content-Type: multipart/mixed; boundary="===============5883419274975624242=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This is a multi-part message in MIME format.
---------------C726085F60FE0D8E8A62218B
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+--===============5883419274975624242==
+Content-Type: multipart/alternative; boundary="000000000000f4367b0599da1a2c"
 
-Hi,
+--000000000000f4367b0599da1a2c
+Content-Type: text/plain; charset="UTF-8"
 
-recently i upgraded my Fedora including WG to the newest version 
-0.0.20191212. After the upgrade i was not able to bring up the interface 
-anymore. Does someone else have the same issue as me?
+Which Fedora? Which kernel? What version of nftables?
 
-Actual error:
+On Mon, Dec 16, 2019, 21:32 Silvan Nagl <mail@53c70r.de> wrote:
 
-/dev/fd/63:5:94-96: Error: syntax error, unexpected fib
+> Hi,
+>
+> recently i upgraded my Fedora including WG to the newest version
+> 0.0.20191212. After the upgrade i was not able to bring up the interface
+> anymore. Does someone else have the same issue as me?
+>
+> Actual error:
+>
+> /dev/fd/63:5:94-96: Error: syntax error, unexpected fib
+>
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
+>
 
+--000000000000f4367b0599da1a2c
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
---------------C726085F60FE0D8E8A62218B
-Content-Type: text/plain; charset=UTF-8;
- name="wg_log"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment;
- filename="wg_log"
+<div dir=3D"auto"><div>Which Fedora? Which kernel? What version of nftables=
+?<br><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">O=
+n Mon, Dec 16, 2019, 21:32 Silvan Nagl &lt;<a href=3D"mailto:mail@53c70r.de=
+">mail@53c70r.de</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" =
+style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">Hi,=
+<br>
+<br>
+recently i upgraded my Fedora including WG to the newest version <br>
+0.0.20191212. After the upgrade i was not able to bring up the interface <b=
+r>
+anymore. Does someone else have the same issue as me?<br>
+<br>
+Actual error:<br>
+<br>
+/dev/fd/63:5:94-96: Error: syntax error, unexpected fib<br>
+<br>
+_______________________________________________<br>
+WireGuard mailing list<br>
+<a href=3D"mailto:WireGuard@lists.zx2c4.com" target=3D"_blank" rel=3D"noref=
+errer">WireGuard@lists.zx2c4.com</a><br>
+<a href=3D"https://lists.zx2c4.com/mailman/listinfo/wireguard" rel=3D"noref=
+errer noreferrer" target=3D"_blank">https://lists.zx2c4.com/mailman/listinf=
+o/wireguard</a><br>
+</blockquote></div></div></div>
 
-RGVjIDE2IDE4OjA3OjQ2IGxvY2FsaG9zdC5sb2NhbGRvbWFpbiB3Zy1xdWlja1sxNzY3XTog
-WyNdIGlwIGxpbmsgYWRkIGFhYSB0eXBlIHdpcmVndWFyZApEZWMgMTYgMTg6MDc6NDYgbG9j
-YWxob3N0LmxvY2FsZG9tYWluIHN5c3RlbWRbMTY1N106IENyZWF0ZWQgc2xpY2UgZGJ1c1x4
-MmQ6MS4yXHgyZG9yZy5mcmVlZGVza3RvcC5wb3J0YWwuSUJ1cy5zbGljZS4KRGVjIDE2IDE4
-OjA3OjQ2IGxvY2FsaG9zdC5sb2NhbGRvbWFpbiBzeXN0ZW1kWzE2NTddOiBTdGFydGVkIGRi
-dXMtOjEuMi1vcmcuZnJlZWRlc2t0b3AucG9ydGFsLklCdXNAMC5zZXJ2aWNlLgpEZWMgMTYg
-MTg6MDc6NDYgbG9jYWxob3N0LmxvY2FsZG9tYWluIGtlcm5lbDogd2lyZWd1YXJkOiBsb2Fk
-aW5nIG91dC1vZi10cmVlIG1vZHVsZSB0YWludHMga2VybmVsLgpEZWMgMTYgMTg6MDc6NDYg
-bG9jYWxob3N0LmxvY2FsZG9tYWluIGtlcm5lbDogd2lyZWd1YXJkOiBXaXJlR3VhcmQgMC4w
-LjIwMTkxMjEyIGxvYWRlZC4gU2VlIHd3dy53aXJlZ3VhcmQuY29tIGZvciBpbmZvcm1hdGlv
-bi4KRGVjIDE2IDE4OjA3OjQ2IGxvY2FsaG9zdC5sb2NhbGRvbWFpbiBrZXJuZWw6IHdpcmVn
-dWFyZDogQ29weXJpZ2h0IChDKSAyMDE1LTIwMTkgSmFzb24gQS4gRG9uZW5mZWxkIDxKYXNv
-bkB6eDJjNC5jb20+LiBBbGwgUmlnaHRzIFJlc2VydmVkLgpEZWMgMTYgMTg6MDc6NDYgbG9j
-YWxob3N0LmxvY2FsZG9tYWluIHdnLXF1aWNrWzE3NjddOiBbI10gd2cgc2V0Y29uZiBhYWEg
-L2Rldi9mZC82MwpEZWMgMTYgMTg6MDc6NDYgbG9jYWxob3N0LmxvY2FsZG9tYWluIE5ldHdv
-cmtNYW5hZ2VyWzE0MTddOiA8aW5mbz4gIFsxNTc2NTE2MDY2LjIyOTBdIG1hbmFnZXI6IChh
-YWEpOiBuZXcgV2lyZUd1YXJkIGRldmljZSAoL29yZy9mcmVlZGVza3RvcC9OZXR3b3JrTWFu
-YWdlci9EZXZpY2VzLzcpCkRlYyAxNiAxODowNzo0NiBsb2NhbGhvc3QubG9jYWxkb21haW4g
-c3lzdGVtZC11ZGV2ZFs5NTZdOiBldGh0b29sOiBhdXRvbmVnb3RpYXRpb24gaXMgdW5zZXQg
-b3IgZW5hYmxlZCwgdGhlIHNwZWVkIGFuZCBkdXBsZXggYXJlIG5vdCB3cml0YWJsZS4KRGVj
-IDE2IDE4OjA3OjQ2IGxvY2FsaG9zdC5sb2NhbGRvbWFpbiBzeXN0ZW1kLXVkZXZkWzk1Nl06
-IFVzaW5nIGRlZmF1bHQgaW50ZXJmYWNlIG5hbWluZyBzY2hlbWUgJ3YyNDMnLgpEZWMgMTYg
-MTg6MDc6NDYgbG9jYWxob3N0LmxvY2FsZG9tYWluIHdnLXF1aWNrWzE3NjddOiBbI10gaXAg
-LTQgYWRkcmVzcyBhZGQgMTAuMjIuMC4yLzMyIGRldiBhYWEKRGVjIDE2IDE4OjA3OjQ2IGxv
-Y2FsaG9zdC5sb2NhbGRvbWFpbiB3Zy1xdWlja1sxNzY3XTogWyNdIGlwIC02IGFkZHJlc3Mg
-YWRkIGZjMDA6OjEwLjIyLjAuMi8xMjggZGV2IGFhYQpEZWMgMTYgMTg6MDc6NDYgbG9jYWxo
-b3N0LmxvY2FsZG9tYWluIHdnLXF1aWNrWzE3NjddOiBbI10gaXAgbGluayBzZXQgbXR1IDE0
-MjAgdXAgZGV2IGFhYQpEZWMgMTYgMTg6MDc6NDYgbG9jYWxob3N0LmxvY2FsZG9tYWluIE5l
-dHdvcmtNYW5hZ2VyWzE0MTddOiA8aW5mbz4gIFsxNTc2NTE2MDY2LjI2NjBdIGRldmljZSAo
-YWFhKTogc3RhdGUgY2hhbmdlOiB1bm1hbmFnZWQgLT4gdW5hdmFpbGFibGUgKHJlYXNvbiAn
-Y29ubmVjdGlvbi1hc3N1bWVkJywgc3lzLWlmYWNlLXN0YXRlOiAnZXh0ZXJuYWwnKQpEZWMg
-MTYgMTg6MDc6NDYgbG9jYWxob3N0LmxvY2FsZG9tYWluIE5ldHdvcmtNYW5hZ2VyWzE0MTdd
-OiA8aW5mbz4gIFsxNTc2NTE2MDY2LjI3MTNdIGRldmljZSAoYWFhKTogc3RhdGUgY2hhbmdl
-OiB1bmF2YWlsYWJsZSAtPiBkaXNjb25uZWN0ZWQgKHJlYXNvbiAnY29ubmVjdGlvbi1hc3N1
-bWVkJywgc3lzLWlmYWNlLXN0YXRlOiAnZXh0ZXJuYWwnKQpEZWMgMTYgMTg6MDc6NDYgbG9j
-YWxob3N0LmxvY2FsZG9tYWluIE5ldHdvcmtNYW5hZ2VyWzE0MTddOiA8aW5mbz4gIFsxNTc2
-NTE2MDY2LjI3MzBdIGRldmljZSAoYWFhKTogQWN0aXZhdGlvbjogc3RhcnRpbmcgY29ubmVj
-dGlvbiAnYWFhJyAoNDZmYjkxNDktNjM5ZC00NWI0LThiNjItNThmMjZkODZlYWU1KQpEZWMg
-MTYgMTg6MDc6NDYgbG9jYWxob3N0LmxvY2FsZG9tYWluIE5ldHdvcmtNYW5hZ2VyWzE0MTdd
-OiA8aW5mbz4gIFsxNTc2NTE2MDY2LjI3MzhdIGRldmljZSAoYWFhKTogc3RhdGUgY2hhbmdl
-OiBkaXNjb25uZWN0ZWQgLT4gcHJlcGFyZSAocmVhc29uICdub25lJywgc3lzLWlmYWNlLXN0
-YXRlOiAnZXh0ZXJuYWwnKQpEZWMgMTYgMTg6MDc6NDYgbG9jYWxob3N0LmxvY2FsZG9tYWlu
-IE5ldHdvcmtNYW5hZ2VyWzE0MTddOiA8aW5mbz4gIFsxNTc2NTE2MDY2LjI3NTFdIGRldmlj
-ZSAoYWFhKTogc3RhdGUgY2hhbmdlOiBwcmVwYXJlIC0+IGNvbmZpZyAocmVhc29uICdub25l
-Jywgc3lzLWlmYWNlLXN0YXRlOiAnZXh0ZXJuYWwnKQpEZWMgMTYgMTg6MDc6NDYgbG9jYWxo
-b3N0LmxvY2FsZG9tYWluIE5ldHdvcmtNYW5hZ2VyWzE0MTddOiA8aW5mbz4gIFsxNTc2NTE2
-MDY2LjI3NjJdIGRldmljZSAoYWFhKTogc3RhdGUgY2hhbmdlOiBjb25maWcgLT4gaXAtY29u
-ZmlnIChyZWFzb24gJ25vbmUnLCBzeXMtaWZhY2Utc3RhdGU6ICdleHRlcm5hbCcpCkRlYyAx
-NiAxODowNzo0NiBsb2NhbGhvc3QubG9jYWxkb21haW4gTmV0d29ya01hbmFnZXJbMTQxN106
-IDxpbmZvPiAgWzE1NzY1MTYwNjYuMjc3MV0gZGV2aWNlIChhYWEpOiBzdGF0ZSBjaGFuZ2U6
-IGlwLWNvbmZpZyAtPiBpcC1jaGVjayAocmVhc29uICdub25lJywgc3lzLWlmYWNlLXN0YXRl
-OiAnZXh0ZXJuYWwnKQpEZWMgMTYgMTg6MDc6NDYgbG9jYWxob3N0LmxvY2FsZG9tYWluIHdn
-LXF1aWNrWzE3NjddOiBbI10gbW91bnQgYDEwLjIyLjAuMSBmYzAwOjoxMC4yMi4wLjEnIC9l
-dGMvcmVzb2x2LmNvbmYKRGVjIDE2IDE4OjA3OjQ2IGxvY2FsaG9zdC5sb2NhbGRvbWFpbiBO
-ZXR3b3JrTWFuYWdlclsxNDE3XTogPGluZm8+ICBbMTU3NjUxNjA2Ni4yODQ0XSBkZXZpY2Ug
-KGFhYSk6IHN0YXRlIGNoYW5nZTogaXAtY2hlY2sgLT4gc2Vjb25kYXJpZXMgKHJlYXNvbiAn
-bm9uZScsIHN5cy1pZmFjZS1zdGF0ZTogJ2V4dGVybmFsJykKRGVjIDE2IDE4OjA3OjQ2IGxv
-Y2FsaG9zdC5sb2NhbGRvbWFpbiBOZXR3b3JrTWFuYWdlclsxNDE3XTogPGluZm8+ICBbMTU3
-NjUxNjA2Ni4yODQ5XSBkZXZpY2UgKGFhYSk6IHN0YXRlIGNoYW5nZTogc2Vjb25kYXJpZXMg
-LT4gYWN0aXZhdGVkIChyZWFzb24gJ25vbmUnLCBzeXMtaWZhY2Utc3RhdGU6ICdleHRlcm5h
-bCcpCkRlYyAxNiAxODowNzo0NiBsb2NhbGhvc3QubG9jYWxkb21haW4gTmV0d29ya01hbmFn
-ZXJbMTQxN106IDxpbmZvPiAgWzE1NzY1MTYwNjYuMjg3NF0gZGV2aWNlIChhYWEpOiBBY3Rp
-dmF0aW9uOiBzdWNjZXNzZnVsLCBkZXZpY2UgYWN0aXZhdGVkLgpEZWMgMTYgMTg6MDc6NDYg
-bG9jYWxob3N0LmxvY2FsZG9tYWluIHN5c3RlbWRbMV06IGlzY3NpLnNlcnZpY2U6IFVuaXQg
-Y2Fubm90IGJlIHJlbG9hZGVkIGJlY2F1c2UgaXQgaXMgaW5hY3RpdmUuCkRlYyAxNiAxODow
-Nzo0NiBsb2NhbGhvc3QubG9jYWxkb21haW4gd2ctcXVpY2tbMTc2N106IFsjXSB3ZyBzZXQg
-YWFhIGZ3bWFyayA1MTgyMApEZWMgMTYgMTg6MDc6NDYgbG9jYWxob3N0LmxvY2FsZG9tYWlu
-IHdnLXF1aWNrWzE3NjddOiBbI10gaXAgLTYgcm91dGUgYWRkIDo6LzAgZGV2IGFhYSB0YWJs
-ZSA1MTgyMApEZWMgMTYgMTg6MDc6NDYgbG9jYWxob3N0LmxvY2FsZG9tYWluIHdnLXF1aWNr
-WzE3NjddOiBbI10gaXAgLTYgcnVsZSBhZGQgbm90IGZ3bWFyayA1MTgyMCB0YWJsZSA1MTgy
-MApEZWMgMTYgMTg6MDc6NDYgbG9jYWxob3N0LmxvY2FsZG9tYWluIHdnLXF1aWNrWzE3Njdd
-OiBbI10gaXAgLTYgcnVsZSBhZGQgdGFibGUgbWFpbiBzdXBwcmVzc19wcmVmaXhsZW5ndGgg
-MApEZWMgMTYgMTg6MDc6NDYgbG9jYWxob3N0LmxvY2FsZG9tYWluIHdnLXF1aWNrWzE3Njdd
-OiBbI10gbmZ0IC1mIC9kZXYvZmQvNjMKRGVjIDE2IDE4OjA3OjQ2IGxvY2FsaG9zdC5sb2Nh
-bGRvbWFpbiB3Zy1xdWlja1sxNzY3XTogL2Rldi9mZC82Mzo1Ojk0LTk2OiBFcnJvcjogc3lu
-dGF4IGVycm9yLCB1bmV4cGVjdGVkIGZpYgpEZWMgMTYgMTg6MDc6NDYgbG9jYWxob3N0Lmxv
-Y2FsZG9tYWluIHdnLXF1aWNrWzE3NjddOiBbI10gdW1vdW50IC9ldGMvcmVzb2x2LmNvbmYK
-RGVjIDE2IDE4OjA3OjQ2IGxvY2FsaG9zdC5sb2NhbGRvbWFpbiBzeXN0ZW1kWzE2NTddOiBl
-dGMtcmVzb2x2LmNvbmYubW91bnQ6IFN1Y2NlZWRlZC4KRGVjIDE2IDE4OjA3OjQ2IGxvY2Fs
-aG9zdC5sb2NhbGRvbWFpbiBzeXN0ZW1kWzFdOiBldGMtcmVzb2x2LmNvbmYubW91bnQ6IFN1
-Y2NlZWRlZC4KRGVjIDE2IDE4OjA3OjQ2IGxvY2FsaG9zdC5sb2NhbGRvbWFpbiB3Zy1xdWlj
-a1sxNzY3XTogWyNdIGlwIC02IHJ1bGUgZGVsZXRlIHRhYmxlIDUxODIwCkRlYyAxNiAxODow
-Nzo0NiBsb2NhbGhvc3QubG9jYWxkb21haW4gd2ctcXVpY2tbMTc2N106IFsjXSBpcCAtNiBy
-dWxlIGRlbGV0ZSB0YWJsZSBtYWluIHN1cHByZXNzX3ByZWZpeGxlbmd0aCAwCkRlYyAxNiAx
-ODowNzo0NiBsb2NhbGhvc3QubG9jYWxkb21haW4gd2ctcXVpY2tbMTc2N106IFsjXSBpcCBs
-aW5rIGRlbGV0ZSBkZXYgYWFhCkRlYyAxNiAxODowNzo0NiBsb2NhbGhvc3QubG9jYWxkb21h
-aW4gTmV0d29ya01hbmFnZXJbMTQxN106IDxpbmZvPiAgWzE1NzY1MTYwNjYuNDcyNF0gZGV2
-aWNlIChhYWEpOiBzdGF0ZSBjaGFuZ2U6IGFjdGl2YXRlZCAtPiB1bm1hbmFnZWQgKHJlYXNv
-biAndW5tYW5hZ2VkJywgc3lzLWlmYWNlLXN0YXRlOiAncmVtb3ZlZCcpCg==
---------------C726085F60FE0D8E8A62218B
+--000000000000f4367b0599da1a2c--
+
+--===============5883419274975624242==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -180,4 +145,4 @@ WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---------------C726085F60FE0D8E8A62218B--
+--===============5883419274975624242==--
