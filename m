@@ -4,63 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	TRACKER_ID autolearn=no autolearn_force=no version=3.4.0
+	UNPARSEABLE_RELAY autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB5E8C2D0DA
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 26 Dec 2019 13:11:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F789C2D0DA
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 26 Dec 2019 15:36:46 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 8698A2075E
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 26 Dec 2019 13:11:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 5D7A0206A4
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 26 Dec 2019 15:36:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="sMwP2KdX"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 8698A2075E
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=lenstra-fr.20150623.gappssmtp.com header.i=@lenstra-fr.20150623.gappssmtp.com header.b="0duAQIwX"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 5D7A0206A4
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=lenstra.fr
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 25e04e8a;
-	Thu, 26 Dec 2019 13:11:20 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2bcb4721;
+	Thu, 26 Dec 2019 15:36:43 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 91671ffa
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 128a9581
  for <wireguard@lists.zx2c4.com>;
- Thu, 26 Dec 2019 13:11:18 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 015a3ecb
+ Thu, 19 Dec 2019 10:37:57 +0000 (UTC)
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com
+ [IPv6:2a00:1450:4864:20::42f])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e4a387bc
  for <wireguard@lists.zx2c4.com>;
- Thu, 26 Dec 2019 13:11:18 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6941b24a
- for <wireguard@lists.zx2c4.com>;
- Thu, 26 Dec 2019 12:13:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to
- :content-type; s=mail; bh=z3sW1UYAivxkdhkDIzUrArMC1t8=; b=sMwP2K
- dXp/qf5ssyRrrW+FV3XRloG2zYCl9cdylIoBktrscs8pqUdYRAPJ15RqcT0FQS17
- Xzu9Pxjyk4j64s4N0o1RjjOEQN1F0JwIGdep0h/ov47+cCibu3UrIwLER3qwYLtA
- WKI03aQeNZwptjclkb5m5Scv5HPENB3BhcS6uZqOKQ6LaPHjt5rQRmqAZu/p79i4
- 48v5jA9FrwFskh9T8FkiFKXPQssLr3Rm7LdNRiyhd21xTPNfJPbhRzh2tXicOJIL
- C9Rm+aiBvLsgsIq9yBO4dDtADZoUI1ODHzgSsy9u8rSJ1Vh7Z3z67DfY6fysf+4j
- Qc9+lh69F+BVLVvA==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id c898798c
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Thu, 26 Dec 2019 12:13:42 +0000 (UTC)
-Received: by mail-oi1-f171.google.com with SMTP id k4so8449655oik.2
- for <wireguard@lists.zx2c4.com>; Thu, 26 Dec 2019 05:11:18 -0800 (PST)
-X-Gm-Message-State: APjAAAVA+1p/VXl0qRws8yWedrOA6llTcHWrkg+GqsGA+yHZi0w+4kF2
- 2Z2CXxbXwRh8tTyteT5udHrn91jW+p9TrqLPpww=
-X-Google-Smtp-Source: APXvYqzy4H9J0QEDYl+53NElFXpvYAM7MGVRgyho+pFfPZMsZPJwD5loJn5/XNyWj/WOtxmnyz/g/OWon02KIPw5S3g=
-X-Received: by 2002:aca:2109:: with SMTP id 9mr1711623oiz.119.1577365877362;
- Thu, 26 Dec 2019 05:11:17 -0800 (PST)
+ Thu, 19 Dec 2019 10:37:57 +0000 (UTC)
+Received: by mail-wr1-x42f.google.com with SMTP id z3so5463229wru.3
+ for <wireguard@lists.zx2c4.com>; Thu, 19 Dec 2019 02:37:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=lenstra-fr.20150623.gappssmtp.com; s=20150623;
+ h=from:in-reply-to:references:mime-version:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=IluKs4F0HK2WzY2plwHQBiiYLxirmBIwjrHa1+K13z0=;
+ b=0duAQIwXJHHjMSCmJl6vgdpMDide4FE+KroMdr0h80vMVixCtFaqEAPs8geKnlsbti
+ lXOrLYmGIvL61IDL389wimo4YTXZ95iUZHFobqlBSOwTjzg8f8xi0zmFGLNB4Y/6mTdZ
+ xReHkRU7kYtXWRZBKWMNK3TPMHtqSS1TTNaLJoVKskXu4Hd0tqoT262Bcimqe+tbuwcW
+ H4FLfcwIKyBXtFzWnRSx5FaOKUw0BYcSltX1XGL0SABDCBy5TtDNuEDVtJPf5Lqm6o38
+ Lql97xEjmc7lPONedjBpdQlaIa1GUjafTQBNKKQ0Gk+hGYi2Tbb2GHfWXzLWUQ5S/Lg6
+ Y+LA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:in-reply-to:references:mime-version:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=IluKs4F0HK2WzY2plwHQBiiYLxirmBIwjrHa1+K13z0=;
+ b=G3DRRcZobA4I1L7OvHinSo4d5Ix2ee9GiKYxOpTMggyZVI/jdNfiOUueeMtZZhumoM
+ HNhmVzMDlhs6g1p6HK1P89fGypy6CdHqQguAm7Z+87nZ9ZcObPYNPRxgy2eJKFaYGIpR
+ uczRQJ8LvbUNO9Ct941y4Xxn9XxhKEoIIoTlUCInuMjkvVxTiZrTcCjV9Z+TtyBoS8Yj
+ j8SLVWXX3IZgGapE25DWfXFkAzA3MjUagKGy/Ztoak+QX4TeIx4Ze16axfgTxZjYmwCH
+ XQpOmVwprwaUGM+7tqdDQaGF40Jb9c1jrZHSUcbJt20tYj9zyoZ2+vgd+WtJImVrY1OP
+ Lx6g==
+X-Gm-Message-State: APjAAAVcDa4sVeA9cOIhtuW3HNoCbsUOyg2eefVM/Hfwtc0OkshrE2Z5
+ 3fY+C/P9zN/BXDA971lvPwvtDszWBV6+zeCeAmmAyg==
+X-Google-Smtp-Source: APXvYqyHyxOucx9sbSDrEeMsXmkIwdflY6PjfNp0yGM2C6g+xfg8nlwSRZQm1+EtgGZlaAsuGYzIjCVcOQi5NxID43k=
+X-Received: by 2002:adf:fe8c:: with SMTP id l12mr8071650wrr.215.1576751875769; 
+ Thu, 19 Dec 2019 02:37:55 -0800 (PST)
+Received: from 1058052472880 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 19 Dec 2019 02:37:55 -0800
+From: =?UTF-8?Q?R=C3=A9mi_Lapeyre?= <remi.lapeyre@lenstra.fr>
+In-Reply-To: <CAHmME9rKOd1rLygTtbho-vo85wQBGo5tQXdBrDvE-Fdk+r=_aw@mail.gmail.com>
+References: <CA+jiYFD1SD-FgjgkwSTmkog1CYJYrEY87MKwD3StzAmmCJkn3w@mail.gmail.com>
+ <CAHmME9rKOd1rLygTtbho-vo85wQBGo5tQXdBrDvE-Fdk+r=_aw@mail.gmail.com>
 MIME-Version: 1.0
-References: <fa05a96d8708b837@frisell.zx2c4.com>
-In-Reply-To: <fa05a96d8708b837@frisell.zx2c4.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 26 Dec 2019 14:11:05 +0100
-X-Gmail-Original-Message-ID: <CAHmME9oUhv4D-567aFP2v-eoeRGfrApbTkTKNe8m8owoTyVS9Q@mail.gmail.com>
-Message-ID: <CAHmME9oUhv4D-567aFP2v-eoeRGfrApbTkTKNe8m8owoTyVS9Q@mail.gmail.com>
-Subject: Re: [ANNOUNCE] wireguard-tools v1.0.20191226 released
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Date: Thu, 19 Dec 2019 02:37:55 -0800
+Message-ID: <CAFsReqQ6uPQVWvupBBZZd3Q766i=4HnNZGyK83gNvyLG12nw5w@mail.gmail.com>
+Subject: Re: MTU on wireguard-apple for IPv6
+To: =?UTF-8?Q?R=C3=A9mi_Lapeyre?= <remi.lapeyre@henki.fr>, 
+ "Jason A. Donenfeld" <jason@zx2c4.com>
+X-Mailman-Approved-At: Thu, 26 Dec 2019 16:36:40 +0100
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -72,38 +84,19 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-That sha2 hash was wrong. The correct one is:
-
-aa8af0fdc9872d369d8c890a84dbc2a2466b55795dccd5b47721b2d97644b04f
-
-
-
------BEGIN PGP SIGNATURE-----
-
-iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAl4EsWEQHGphc29uQHp4
-MmM0LmNvbQAKCRBJ/HASpd4Dri50D/9/etliazw92H7HNlAYyWAcnM8W+6itkiuU
-5PjRPfxcNOFeHMP+xV0dwuOPED5fxCygOv8PJqR1ABleKM+SzInteLOHGEmCj59Z
-r100IKlxzvBeTB8RVsCTSaN0mtP5ySTynt8DEv7sMXypQQZsFiLDshu24vilSW8G
-B2X16orWX+986x2XPE6j75IH6Hu71YBN3m2lo+7b+Ki8IArYYctY6TywyPQ4IDh5
-qC1K7uhnuOBozS3m8AbRmArf08xHe5Xvon8F144KEZCVji/wCfPdUPiqAtkKHKz/
-QvwEA3UALtswV/CmhH8lD3vmTFqTrK6W0EdOBdq0URNBQZJRwfKSn6Hbw4caNusB
-SS4ja7I3DBmRiR6JcXN8OdSDsowF5yF4C1VKjUkQuaRVdtGuE3uIpg8/b53U2yro
-JD80+NdDdDh0r0F0UP/7IP+hjRg0BTyLosPFL5oKA5xULpbsMWCFaHzzTnAaiqgF
-GAWPZBtUuoQbjCXCArLWOz/tBlsW9P001hsocOEcxwpXTH2JhL3DftWqOK1x0oO6
-2AAXGKibqutdBOm3TGOBxMqDa9rVdXvYDZFe8GuWX4OQXZhLPXB/g1wSrJBoFhT0
-lFpvlSS3YE6QrKAtv9UHO0+9QfipaG7feTdlTRWpCSF6D8Cd1eMNikEbtJDEPJd+
-gbY9KJHzfg==
-=O+lX
------END PGP SIGNATURE-----
-_______________________________________________
-WireGuard mailing list
-WireGuard@lists.zx2c4.com
-https://lists.zx2c4.com/mailman/listinfo/wireguard
+PiBQcm9iYWJseSB0aGUgcGhvbmUncyBkaGNwIHNlcnZlciBkb2Vzbid0IHBhc3MgdGhlIHJpZ2h0
+IE1UVSBiYWNrIHRvCj4gdGhlIGNsaWVudCwgYnV0IHRoZW4gdGhlIHBob25lIGRvZXMgdGhlIG1z
+cy1tdHUgaGFjayB0byBmaXggdXAgVENQCj4gY29ubmVjdGlvbnMuIFRoYXQgaGFjayBkb2Vzbid0
+IHdvcmsgd2hlbiB0aGUgdHJhZmZpYyBpcyBlbmQtdG8tZW5kCj4gZW5jcnlwdGVkLCBhcyBpcyB0
+aGUgY2FzZSB3aXRoIFdpcmVHdWFyZCwgc28gbm8gc21hbGxlciBNU1MgaXMgZXZlcgo+IG5lZ290
+aWF0ZWQuCgpXb27igJl0IHRoaXMgc2l0dWF0aW9uIGhhcHBlbiBhIGxvdD8gU2hvdWxkIHdlIGZp
+eCB0aGUgZGVmYXVsdCBNVFUgdG8gMTI4MAp0byBhdm9pZCB1c2VycyBoYXZpbmcgdGhlaXIgdHVu
+bmVsIHJhbmRvbWx5IGZhaWwgb24gc29tZSBuZXR3b3JrPwpfX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fX19fXwpXaXJlR3VhcmQgbWFpbGluZyBsaXN0CldpcmVHdWFy
+ZEBsaXN0cy56eDJjNC5jb20KaHR0cHM6Ly9saXN0cy56eDJjNC5jb20vbWFpbG1hbi9saXN0aW5m
+by93aXJlZ3VhcmQK
