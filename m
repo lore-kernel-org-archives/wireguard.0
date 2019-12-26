@@ -2,54 +2,65 @@ Return-Path: <SRS0=7eHk=2Q=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	TRACKER_ID autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B257C2D0DA
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 26 Dec 2019 12:35:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EB5E8C2D0DA
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 26 Dec 2019 13:11:21 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 5FFF6206CB
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 26 Dec 2019 12:35:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 8698A2075E
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 26 Dec 2019 13:11:21 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="JiCzl9px"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 5FFF6206CB
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="sMwP2KdX"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 8698A2075E
 Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 316e927e;
-	Thu, 26 Dec 2019 12:35:09 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 25e04e8a;
+	Thu, 26 Dec 2019 13:11:20 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 871bfbac
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 91671ffa
  for <wireguard@lists.zx2c4.com>;
- Thu, 26 Dec 2019 12:35:08 +0000 (UTC)
+ Thu, 26 Dec 2019 13:11:18 +0000 (UTC)
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 73d37cfd
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 015a3ecb
  for <wireguard@lists.zx2c4.com>;
- Thu, 26 Dec 2019 12:35:08 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 06426e99
+ Thu, 26 Dec 2019 13:11:18 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6941b24a
  for <wireguard@lists.zx2c4.com>;
- Thu, 26 Dec 2019 11:37:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=date:to:from
- :subject:mime-version:content-type; s=mail; bh=GNebpEdci2uH5anNw
- /lcKy5V7Zk=; b=JiCzl9pxIyuXVfoE3oKzA2ufw0sTmZGyGTYRbw5lJlCUTHDwX
- winsmza5p9oOHF1aaeisRCtrDobzahkqFpoEtlqNlk/eKOPjkQZkoPRPAhQLD98p
- LDFNmkL1AW35J5ptsVVmEbWdlyOTipuJBWfAtMcW30zs8n9hjuEMZDAD+GBm1apH
- lh24BV4jjcml2XrlZna5rpSnSyqMSHCKL01VykBrZoGe3O67sDxv//oy/8xOU4+n
- 2zOBdHvt/OnCZeMQjsRuO/3m5dYwP2R8+UWHwsjbEwjUe+eLRjVQ46e9TeJm5Vjk
- HUCPab2DthAh5EWkzBGlvaw5ggGLiqhfHzJUQ==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id b72bb46e
+ Thu, 26 Dec 2019 12:13:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :references:in-reply-to:from:date:message-id:subject:to
+ :content-type; s=mail; bh=z3sW1UYAivxkdhkDIzUrArMC1t8=; b=sMwP2K
+ dXp/qf5ssyRrrW+FV3XRloG2zYCl9cdylIoBktrscs8pqUdYRAPJ15RqcT0FQS17
+ Xzu9Pxjyk4j64s4N0o1RjjOEQN1F0JwIGdep0h/ov47+cCibu3UrIwLER3qwYLtA
+ WKI03aQeNZwptjclkb5m5Scv5HPENB3BhcS6uZqOKQ6LaPHjt5rQRmqAZu/p79i4
+ 48v5jA9FrwFskh9T8FkiFKXPQssLr3Rm7LdNRiyhd21xTPNfJPbhRzh2tXicOJIL
+ C9Rm+aiBvLsgsIq9yBO4dDtADZoUI1ODHzgSsy9u8rSJ1Vh7Z3z67DfY6fysf+4j
+ Qc9+lh69F+BVLVvA==
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id c898798c
  (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 26 Dec 2019 11:37:32 +0000 (UTC)
-Date: Thu, 26 Dec 2019 13:35:06 +0100
-To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: [ANNOUNCE] wireguard-tools v1.0.20191226 released 
+ Thu, 26 Dec 2019 12:13:42 +0000 (UTC)
+Received: by mail-oi1-f171.google.com with SMTP id k4so8449655oik.2
+ for <wireguard@lists.zx2c4.com>; Thu, 26 Dec 2019 05:11:18 -0800 (PST)
+X-Gm-Message-State: APjAAAVA+1p/VXl0qRws8yWedrOA6llTcHWrkg+GqsGA+yHZi0w+4kF2
+ 2Z2CXxbXwRh8tTyteT5udHrn91jW+p9TrqLPpww=
+X-Google-Smtp-Source: APXvYqzy4H9J0QEDYl+53NElFXpvYAM7MGVRgyho+pFfPZMsZPJwD5loJn5/XNyWj/WOtxmnyz/g/OWon02KIPw5S3g=
+X-Received: by 2002:aca:2109:: with SMTP id 9mr1711623oiz.119.1577365877362;
+ Thu, 26 Dec 2019 05:11:17 -0800 (PST)
 MIME-Version: 1.0
-Message-Id: <fa05a96d8708b837@frisell.zx2c4.com>
+References: <fa05a96d8708b837@frisell.zx2c4.com>
+In-Reply-To: <fa05a96d8708b837@frisell.zx2c4.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 26 Dec 2019 14:11:05 +0100
+X-Gmail-Original-Message-ID: <CAHmME9oUhv4D-567aFP2v-eoeRGfrApbTkTKNe8m8owoTyVS9Q@mail.gmail.com>
+Message-ID: <CAHmME9oUhv4D-567aFP2v-eoeRGfrApbTkTKNe8m8owoTyVS9Q@mail.gmail.com>
+Subject: Re: [ANNOUNCE] wireguard-tools v1.0.20191226 released
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -69,70 +80,28 @@ Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-Hello,
+That sha2 hash was wrong. The correct one is:
 
-A new version, v1.0.20191226, of wireguard-tools has been tagged in the git
-repository, containing various required userspace utilities, such as the
-wg(8) and wg-quick(8) commands and documentation.
+aa8af0fdc9872d369d8c890a84dbc2a2466b55795dccd5b47721b2d97644b04f
 
-== Changes ==
-
-  This new wireguard-tools.git repository replaces the older WireGuard.git's
-  src/tools subdirectory. Package managers should begin to migrate to this newer
-  repository for distribution packages. There should be no functional changes
-  from the previous 0.0.20191219 snapshot from WireGuard.git, but there may be
-  build nits. Please send feedback as issues may be encountered. In the coming
-  days, WireGuard.git's compat kernel module will also be split out to a new
-  repository, and an announcement email will similarly be sent. We've tried to
-  retain as much of the git history for the tools as possible. It's still
-  slightly possible that the repository may be rebased a bit during this week
-  and next, if we receive reports of missing history, but hopefully what's there
-  now will form the basis.
-  
-  The versioning scheme for these will be major.minor.date -- so basically
-  semver, but we encode the date as the last nibble, so that it's easier for
-  humans to keep track of how old things are.
-
-
-
-As always, the source is available at https://git.zx2c4.com/wireguard-tools/ and
-information about the project is available at https://www.wireguard.com/ .
-
-This release is available in compressed tarball form here:
-  https://git.zx2c4.com/wireguard-tools/snapshot/wireguard-tools-1.0.20191226.tar.xz
-  SHA2-256: 74be7bb41d5b8a9ef253394f47d17784ea28cce7fabda0f66ab1e209c6acd108
-
-A PGP signature of that file decompressed is available here:
-  https://git.zx2c4.com/wireguard-tools/snapshot/wireguard-tools-1.0.20191226.tar.asc
-  Signing key: AB9942E6D4A4CFC3412620A749FC7012A5DE03AE
-  Remember to unxz the tarball before verifying the signature.
-
-If you're a package maintainer, please bump your package version. If you're a
-user, the WireGuard team welcomes any and all feedback on this latest snapshot.
-
-Finally, WireGuard development thrives on donations. By popular demand, we
-have a webpage for this: https://www.wireguard.com/donations/
-
-Thank you,
-Jason Donenfeld
 
 
 -----BEGIN PGP SIGNATURE-----
 
-iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAl4EqJ8QHGphc29uQHp4
-MmM0LmNvbQAKCRBJ/HASpd4DrnS6EACAEjhi3RDGPavc2gGrrPQJtdJjXEQUjnNi
-8G1J6WF8F+yzpRv398vHoXgaL5BMPehqgLNflShF5+oThKc4ThPA7iCKXorc+/ZR
-XLE3ajurBbD2ekKKWzzqZZmppggxP0g7suCZTF62/ThgjFSAAwLHzKBfwaGGTIRr
-gkvfZ56WWdadJHBBuMpEVCXMdns25jtbNW7TC74HAeJuv7TyDMDog9iYgfPCz70P
-ePmK50vX+kg8gK17ypfAFFnjPPTyHb02+s17lH2FJQNFhLRObe7cirNcE3Ny7TZH
-doEIv3OdTkNkReFOjDalbzzzqLn0rgZx2WDKOMEcM7ca2A0chh4onKDNHgEE9k8G
-E3SmW86h4XAqu7J5eQ2Jpys2aIr2kzNbD1RJF0p1csWKb97zmAn6ZRuN78L6fuJG
-YjSvQSZY73qbAVvIYbATtGGTu1tvM9MnGROsy/QzLD7m3HSh1N7XRGfP1KV+3oy6
-dSPk2WYUExIYsWSVYLl9qCr2Z1/Ubqo0AW0SlvlaT7vLlSWw0+vjfRkKQVPfUhJ1
-0y7p28qAphMNuXBS3twdJOpYYNOz2t33JThIl6J3KOBA7cwUQmBWnZNhe9pKRrvt
-0Dwz6RxSEGH+wbG0kZSgrS4Rl9RgJgSFAjtwaG4rqgbmsDyu+gg7sqReg6BjgxtG
-v4NZkl3Hfg==
-=JrF5
+iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAl4EsWEQHGphc29uQHp4
+MmM0LmNvbQAKCRBJ/HASpd4Dri50D/9/etliazw92H7HNlAYyWAcnM8W+6itkiuU
+5PjRPfxcNOFeHMP+xV0dwuOPED5fxCygOv8PJqR1ABleKM+SzInteLOHGEmCj59Z
+r100IKlxzvBeTB8RVsCTSaN0mtP5ySTynt8DEv7sMXypQQZsFiLDshu24vilSW8G
+B2X16orWX+986x2XPE6j75IH6Hu71YBN3m2lo+7b+Ki8IArYYctY6TywyPQ4IDh5
+qC1K7uhnuOBozS3m8AbRmArf08xHe5Xvon8F144KEZCVji/wCfPdUPiqAtkKHKz/
+QvwEA3UALtswV/CmhH8lD3vmTFqTrK6W0EdOBdq0URNBQZJRwfKSn6Hbw4caNusB
+SS4ja7I3DBmRiR6JcXN8OdSDsowF5yF4C1VKjUkQuaRVdtGuE3uIpg8/b53U2yro
+JD80+NdDdDh0r0F0UP/7IP+hjRg0BTyLosPFL5oKA5xULpbsMWCFaHzzTnAaiqgF
+GAWPZBtUuoQbjCXCArLWOz/tBlsW9P001hsocOEcxwpXTH2JhL3DftWqOK1x0oO6
+2AAXGKibqutdBOm3TGOBxMqDa9rVdXvYDZFe8GuWX4OQXZhLPXB/g1wSrJBoFhT0
+lFpvlSS3YE6QrKAtv9UHO0+9QfipaG7feTdlTRWpCSF6D8Cd1eMNikEbtJDEPJd+
+gbY9KJHzfg==
+=O+lX
 -----END PGP SIGNATURE-----
 _______________________________________________
 WireGuard mailing list
