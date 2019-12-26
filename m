@@ -6,50 +6,62 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 988E6C2D0DA
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 26 Dec 2019 17:03:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BF5F7C2D0DA
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 26 Dec 2019 17:45:21 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id D9572206CB
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 26 Dec 2019 17:03:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 59FBF206CB
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 26 Dec 2019 17:45:21 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="ecmFnFSf"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org D9572206CB
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="ULRnFkPz"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 59FBF206CB
 Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2da58cbd;
-	Thu, 26 Dec 2019 17:03:24 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 040be216;
+	Thu, 26 Dec 2019 17:45:20 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4c1fadf9
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ec9fbb7c
  for <wireguard@lists.zx2c4.com>;
- Thu, 26 Dec 2019 17:03:23 +0000 (UTC)
+ Thu, 26 Dec 2019 17:45:17 +0000 (UTC)
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d21d5a95
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b335484c
  for <wireguard@lists.zx2c4.com>;
- Thu, 26 Dec 2019 17:03:23 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6ea9b753
+ Thu, 26 Dec 2019 17:45:17 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4eec0cd8
  for <wireguard@lists.zx2c4.com>;
- Thu, 26 Dec 2019 16:05:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=date:to:from
- :subject:mime-version:content-type; s=mail; bh=mJM64TvV5gb1gIYKt
- fdULv1Pzhs=; b=ecmFnFSfsQJ5Vr6BAxUF793qrcAiBq7drOYjpKx/52IGrmkX7
- rJ2Jg9HZ3DEDIE7bsYZwz7O2iYMyxMDVvK7AS8lDtNeiiQd74X0ZJaod+Xla9OzD
- 3UnG5Y5hYkQhM8UEljufkOChbiQTFQSfj45X0RAqppOnnAZoEJbBAfi4wP2kFNGG
- uGPpoIcf00lxVODDWGfr/Q3yZVo/7tPvN+xDJeWHodwyDQXLtTGOP8v8c2BPlOAR
- 4rbhkc7Q3JycqbvW23nnZVJELU+fo6ObhEbFEG5j4haYhlmDrIdTW6BuQNWX3sPf
- f+QdF/QYP+F5ZYPXAGx3ZYcxjnR3qxLfYLFzg==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 3d1dc453
+ Thu, 26 Dec 2019 16:47:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :references:in-reply-to:from:date:message-id:subject:to
+ :content-type; s=mail; bh=fopYylMzhmJTsn6ihU2uI65gTDc=; b=ULRnFk
+ PzXeVoYOTKL253K+JHU8BNVM5Br01shzUJTRpIOkAy1ArpnqzdcrwNZA8Ao0zEY4
+ 8TLXl+rT8xaeo2x28P86OnFAIedxMBwRaGvDSfG0Wud5pn31dyfPl8Tyky1J7JWx
+ 37jRpRUpxkP4JkxmeK6v0gynkqKccGStiMGW0ikzWW422ipinD+C5x0onidDb0us
+ zrnMcOlUlxVr43lq5ps+xGwhC2wWramqI6QelXnKdIJPY5myyYfGMgy5fDSfZbFg
+ fZIpsTr5RAAeUCWUJ8QruiiTpPTOPzZdrdjWbGnlJ8G1uZx2obO5MpbH9pK+pXNw
+ sS5kYm/Yu0LSdIHQ==
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 983e457d
  (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 26 Dec 2019 16:05:45 +0000 (UTC)
-Date: Thu, 26 Dec 2019 18:03:15 +0100
-To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: [ANNOUNCE] wireguard-linux-compat v0.0.20191226 released
+ Thu, 26 Dec 2019 16:47:40 +0000 (UTC)
+Received: by mail-oi1-f169.google.com with SMTP id p125so6631395oif.10
+ for <wireguard@lists.zx2c4.com>; Thu, 26 Dec 2019 09:45:17 -0800 (PST)
+X-Gm-Message-State: APjAAAXvlzeh9uEzL5FU5neLs6OTC68eSrkmja07v7foyeOrS8FMyK1E
+ Vlk92c9KKwpI8pZoGRbC7156o2RBfrkZEvTIlSk=
+X-Google-Smtp-Source: APXvYqyYX5++06zK1pj3w/Qz/ydqMMZKpHipwKzy00ldDibAi3pL21o4MICBQjttiFc+StQeJU4n34M2Q0I7/H4BkwA=
+X-Received: by 2002:a05:6808:a8a:: with SMTP id
+ q10mr2463084oij.66.1577382316807; 
+ Thu, 26 Dec 2019 09:45:16 -0800 (PST)
 MIME-Version: 1.0
-Message-Id: <fa05b35c817d1eeb@frisell.zx2c4.com>
+References: <CAHmME9p1-5hQXv5QNqqHT+OBjn-vf16uAU2HtYcmwKMtLhnsTA@mail.gmail.com>
+In-Reply-To: <CAHmME9p1-5hQXv5QNqqHT+OBjn-vf16uAU2HtYcmwKMtLhnsTA@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 26 Dec 2019 18:45:05 +0100
+X-Gmail-Original-Message-ID: <CAHmME9rArDcBAhdj2roaoVeC+S_v=+KdEvrvY3gPMnApnLdmJA@mail.gmail.com>
+Message-ID: <CAHmME9rArDcBAhdj2roaoVeC+S_v=+KdEvrvY3gPMnApnLdmJA@mail.gmail.com>
+Subject: Re: organization of wireguard linux kernel repos moving forward
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -66,80 +78,40 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Mon, Dec 9, 2019 at 12:56 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+> With WireGuard in net-next, it's time to break up the monolithic repo
+> we've been using for development into something a bit more manageable
+> and in line with ordinary kernel development.
+>
+> Right now the "WireGuard.git" repo has been structured as an out of
+> tree module, alongside a subdirectory for tools, one for scripts, one
+> for tests, and another for a super gnarly compat layer that makes the
+> thing work on all kernels going back to 3.10. We're going to break
+> this up into three repositories:
+>
+> 1) wireguard-linux.git will be a full Linux tree, with wireguard
+> changes, and regularly merge in net/net-next, and have things from
+> there posted on netdev like usual for review. This repo won't be an
+> out of tree module any more, obviously.
+> https://git.zx2c4.com/wireguard-linux/
+>
+> 2) wireguard-tools.git will have the userspace utilities and scripts,
+> such as wg(8) and wg-quick(8), and be easily packageable by distros.
+> https://git.zx2c4.com/wireguard-tools/
+>
+> 3) wireguard-linux-compat.git will be an out-of-tree module containing
+> the aforementioned horrific compat.h layer. New development will go
+> into upstream wireguard-linux.git, but we'll do our best to keep
+> things mostly working for as long as it makes sense and is feasible.
+> https://git.zx2c4.com/wireguard-linux-compat/
+>
+> The CI that runs on build.wireguard.com will also see some updates to
+> reflect these adjustments, and also more closely align with the
+> net-next tree. Additionally, I'm interested to see if I can make our
+> CI useful for a variety of things in net/ and drivers/net/ instead of
+> just for wireguard.
 
-Hello,
-
-A new version, v0.0.20191226, of the backported WireGuard kernel module for
-3.10 <= Linux <= 5.5.y has been tagged in the git repository.
-
-Please note that until Linux 5.6 is released, this snapshot is a
-snapshot rather than a secure final release.
-
-== Changes ==
-
-  This new wireguard-linux-compat.git repository replaces the older WireGuard.git's
-  kernel module subdirectory, offering compatibility for kernels 3.10 to 5.5.
-  There should be no functional changes from the previous 0.0.20191219 snapshot
-  from WireGuard.git, but there may be build nits. Please send feedback as
-  issues may be encountered. This corresponds with the recent tools split into
-  the wireguard-tools repo.  We've tried to retain as much of the git history
-  for the tools as possible. It's still slightly possible that the repository
-  may be rebased a bit during this week and next, if we receive reports of
-  missing history, but hopefully what's there now will form the basis.
-  
-  The versioning scheme for these will be major.minor.date -- so basically
-  semver, but we encode the date as the last nibble, so that it's easier for
-  humans to keep track of how old things are.
-  
-  For now, we'll retain the 0.0.date version for this repo. When Linux 5.6
-  lands, we'll cut a new 1.0.date release.
-  
-  In case this is confusing, see https://www.wireguard.com/repositories/ for a
-  list of all WireGuard-related repositories and detailed descriptions.
-
-
-
-As always, the source is available at https://git.zx2c4.com/wireguard-linux-compat/
-and information about the project is available at https://www.wireguard.com/ .
-
-This snapshot is available in compressed tarball form here:
-  https://git.zx2c4.com/wireguard-linux-compat/snapshot/wireguard-linux-compat-0.0.20191226.tar.xz
-  SHA2-256: 7c0e576459c6337bcdea692bdbec561719a15da207dc739e0e3e60ff821a5491
-
-A PGP signature of that file decompressed is available here:
-  https://git.zx2c4.com/wireguard-linux-compat/snapshot/wireguard-linux-compat-0.0.20191226.tar.asc
-  Signing key: AB9942E6D4A4CFC3412620A749FC7012A5DE03AE
-  Remember to unxz the tarball before verifying the signature.
-
-If you're a package maintainer, please bump your package version. If you're a
-user, the WireGuard team welcomes any and all feedback on this latest version.
-
-Finally, WireGuard development thrives on donations. By popular demand, we
-have a webpage for this: https://www.wireguard.com/donations/
-
-Thank you,
-Jason Donenfeld
-
-
------BEGIN PGP SIGNATURE-----
-
-iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAl4E57EQHGphc29uQHp4
-MmM0LmNvbQAKCRBJ/HASpd4DrhStD/9V+AuEDk0x7tuyzbALVssH7c9wMvJrgl+U
-4lJwd02mMPP2j+N2+f12hV0ggxss7odEqxCat3Xqa7pJv+1ZWnrX7aSYkHAnNYyn
-JchQhD2Ki5eBVcpkcXygTEIykjus1wbN6wp8zNVxDG9Syt9S6xktmbAQKCMBzANJ
-aDRWVkNClpKkysa91REcaqF/OL9CP8knm22ouTl0VF8ljS36WRzX5ZoklcpuwaqQ
-rJdIKWO5pOiwrUmJC1JBLKEpfQNd8+PRKcgzE4Cgd1A+on+HlKsGGwLFRrbcayoV
-Y/WhciZ2lVHNZq7sSLZry//FmJrGjj9o1S+cLEf+csjFAlc/o4WiyhnVziJDiKpb
-VJGL5Pjp1tkvIpZ9TB/7STteaBWVPnRf4GQ3Fzx/EomaYJuF+NFkMbX0R+dloPOW
-HV53pU5tg2I6Un2OS2D+JZ2KRA6uxyZnYzNMs9COrMg9kB6Obs6JgBlgChvU2U5A
-6nLpSWZHYrRaMZt8EvZww+ix8HorRT56fF3UUFNMvcfFSx60ObA/+cUWCcfXRS+R
-qEwIjt660OQn9tQiOtQ8V5jQpKA1MzYkhKk3aSqcaEQ+8g58xxpKTZ+yDXHawB4+
-q2CgJc7BdVqlvShHKGrgh3qdqvmDAFwYTrSfp9x/xo8pko8FCbV2PKJ0RL8BEAtw
-Rbt13HPNgg==
-=/od7
------END PGP SIGNATURE-----
+The above changes are now complete.
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
