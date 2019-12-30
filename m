@@ -2,69 +2,135 @@ Return-Path: <SRS0=wyc1=2U=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.4 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
-	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,
-	NUMERIC_HTTP_ADDR,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-1.9 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 98F8BC2D0CE
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 30 Dec 2019 09:51:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD247C2D0C2
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 30 Dec 2019 10:13:09 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 305092071E
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 30 Dec 2019 09:51:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 41D67206E4
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 30 Dec 2019 10:13:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="t4bQMvJG"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 305092071E
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=web.de header.i=@web.de header.b="pgXGy860"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 41D67206E4
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=web.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 39f30201;
-	Mon, 30 Dec 2019 09:51:24 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 68cc1fee;
+	Mon, 30 Dec 2019 10:13:08 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 83ee03a8
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 571a2078
  for <wireguard@lists.zx2c4.com>;
- Sat, 28 Dec 2019 21:03:32 +0000 (UTC)
-Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com
- [IPv6:2607:f8b0:4864:20::831])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 90cf3e19
+ Mon, 30 Dec 2019 10:13:03 +0000 (UTC)
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 188236bc
  for <wireguard@lists.zx2c4.com>;
- Sat, 28 Dec 2019 21:03:32 +0000 (UTC)
-Received: by mail-qt1-x831.google.com with SMTP id e6so27121835qtq.7
- for <wireguard@lists.zx2c4.com>; Sat, 28 Dec 2019 13:03:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=vkyGtLr39/m+audvP062j5ptoONEF4k3WuyHryzga04=;
- b=t4bQMvJGmU2qvZX7jVgpOH2Q0oimx/Fh2AdDCfCp69H+5ip7pGfyC1ZkBj5Pq1PE8s
- Gb5PXbz9ikFdbYafSrudN53hkmZjjvnQQ9LapDpwSX6wcrLiomG+pTBZdA2L2iJEVRv2
- soQNcC1oEAx4b66ggskA26X6umzmQe5/6Q/8JYhKEKUocDjdgl4OThAz1AiqlPNpcx0K
- ytuJDfjHlS23sl0pF14jMcQtIJR/2fpH63cpS9Cb+uhacdnVnLhp7ehrWhMO94kBcnYv
- nzPZETG169o8+6Fc56Antat5TodAeGnH/X9w8pHvYSa+rKf+JSFoCBpHXcSLo9ufk4KP
- zqKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=vkyGtLr39/m+audvP062j5ptoONEF4k3WuyHryzga04=;
- b=TfYlNU+90KKCc+OZ1r9ZqpOKRYrwVxCByfuCTU8uwaDG9SgTQDD0tD02PYH5NYWsn6
- X2m7XjK/OIRSeISygp3AYRGezu8JsfM6Otup86A1eo/9DnICK4OFw7ywfO+8WWbR1Go2
- Lb7tSQuveLdmwVjUDch92IpELf+iVWWKCqcYH/gdEAmstMOzTOQgnmYyaPn2XrrNnHB4
- 6kOkR0ap3nqn6ge5xntzZ7XxcDKupxqISX8UXhrNoSUI3QK1DZcFvTnngdkX10m6vkVb
- 2rkx0L+thK6Mi8NEp+jc6Ty/Uszm/OjIoFv98/iQ5n+nvrrA0CNDvdZy2b5ZJAOysIdA
- cJfA==
-X-Gm-Message-State: APjAAAWsYd0oIbhGDVsHmRVaGK+zlj5nF0gH5tYiAYKNfB/qGf81W9k8
- FCxnuCrpbUuukG0V9nIYrxcIDBfkLtW2gCyml/ExRtTI
-X-Google-Smtp-Source: APXvYqyrI/GQt0njfj7qK8M+1jAmCHK4qaEgP7c2xlrVs65aGH53OsG/x7Dvu90PPZ6cskBp0XlHKmJXtq/FcVD1Vo8=
-X-Received: by 2002:aed:3c16:: with SMTP id t22mr41903538qte.92.1577567011217; 
- Sat, 28 Dec 2019 13:03:31 -0800 (PST)
-MIME-Version: 1.0
-From: eric brandl <ericb0813@gmail.com>
-Date: Sat, 28 Dec 2019 15:03:20 -0600
-Message-ID: <CALXT2kFp9SPFELS97vHJFndGH7cFh0=gjC1h9Tuv2LgSMHeJ-Q@mail.gmail.com>
-Subject: Data Connection Lost Win10 (Server) Win10 (Clients) 37
+ Mon, 30 Dec 2019 10:13:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+ s=dbaedf251592; t=1577700782;
+ bh=tlD6KxRVG3nVOPyhXwvReSdYUjCtp69+NOM4Uo0H0AM=;
+ h=X-UI-Sender-Class:Subject:To:References:From:Date:In-Reply-To;
+ b=pgXGy860CY1YYq3rFC4MnDBYQeu8fQiS7xdgU/ahhrQDDIMu6RZlWGwfuB8n0RWxF
+ R834jS6mxHoX7IpjIuHle3jn+crSXCeU0Zk+bnC3DXbSHXa5dssRvEMwZrH7a5g/+m
+ X5TbJgtGD6cfIX1uEMOWU9KImed73rqmrYhZRrsU=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.34] ([93.207.123.91]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0McnqH-1j37oV26gD-00HtLl for
+ <wireguard@lists.zx2c4.com>; Mon, 30 Dec 2019 11:13:02 +0100
+Subject: Re: remove peer endpoint
 To: wireguard@lists.zx2c4.com
-X-Mailman-Approved-At: Mon, 30 Dec 2019 10:51:22 +0100
+References: <CtiLrRxfJF8VjxK15ZVRrI9eJBflmVjOBKiOTYAHVAmF7lVPMuQvg3luFb89M3FKdy2fvemWnkfXd-LRJ1MCGy0GC2TddQuX0-Wga9hBS_4=@protonmail.com>
+ <A02FDAAF-B405-4735-9DD1-95A7F6CE9B3F@lonnie.abelbeck.com>
+ <bWad1d4zSz8UESfEBgTLTfDZQbC9-fLXfJF2R3GoONB9PuL3WjNnYrnFQOYmt-gQa9sLLMDJJ8p6zY8XEUlXxxudvzNC5OUjuG75yjbBMIY=@protonmail.com>
+ <CAHmME9q1s8Ze40Uzi9+9PM8h=iWAs7_U=Zh2+5O8GjAjQKFeag@mail.gmail.com>
+ <CAHmME9q=L1kyxSu8KBVMkZx6-A77RaAeCtXeOaYQbXGDho-Ujg@mail.gmail.com>
+From: em12345 <em12345@web.de>
+Autocrypt: addr=em12345@web.de; prefer-encrypt=mutual; keydata=
+ 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
+Message-ID: <b01381cb-dd21-10fe-8223-19bbcf9fcca8@web.de>
+Date: Mon, 30 Dec 2019 11:13:02 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.3.0
+MIME-Version: 1.0
+In-Reply-To: <CAHmME9q=L1kyxSu8KBVMkZx6-A77RaAeCtXeOaYQbXGDho-Ujg@mail.gmail.com>
+Content-Language: en-US
+X-Provags-ID: V03:K1:pPC+ZGKInsj32XFgtLehuSa8rdXurcvF8+sQavluQeV2HUxDFRa
+ gIp944RFTO7Pnvhqbsp83hkSkRQuHOy/i+vdVNFuk7m4TQTai9WA+Tf6WFH+Qlvj88M3Cdt
+ tZwN6MZnHp2mdCD4cXTk8a5PduMPY6i4kV9Q/fDWlutlqla9HFloXfzrj0SvM6GWV2Pv03X
+ qrr/01juYKFRo8cpgRzUQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:SVsPPhD3Sv4=:6bFqpPxD4uWKfkOmGtKbv1
+ QAcNZgQqr3ck6OtWZPHjKRMUXEZGXuixWIbJnH/XSSVQy+wzpZqLg1PNlFmkR2Ref7x9dj3It
+ Ro5GUa4DMTreMzm+f1gCPbhYugwrJlWOF6lSF7CuD/fN4x55OKvvNoQyJcd2ZOKAsrbg7Ea9c
+ jURM+zz0fdWRozRARgxUGAqq6Hqw7/58+bPXQjrhjN2AOZK3Dg41fNz8tanB07M2Qex3EILnR
+ n5bgquvguR+WBwkpjz2Y06TvuJDjXs5NsJ1Z18vlTiUZ/tt2yxtE0GcAH+aM1YKWeLqaZ2Lsw
+ gkbKOJICB1wuYyeCi3JnM2Ni6TvmTN/Jq6AZ0PHPJG5GFm92CHgJbURuzc4kUvCKgIzlDxg6w
+ zkZ/ouDdZ+dHsC5IT2LguzjyxMLJhfyArkG+CXeWJLBAjV3MLsNjtj9aOTYBURYw/jd4P20sy
+ PVV8mCvNuMMAwU7V5dHb7/Brd+M9rEubzbXboSfsWlR3Z6L17GemVRIKcAPlFFEcmscNJgNP+
+ /mG2Wv4my9vBENn2xRLjUDzrYTJyV02nttvlL853bi45+vEonNN6suHsBT9vTGkhmDKYY9a4r
+ Xq6oFpOL1hdS3oVIzrmFdrNDAt1I8m711pur06FmPo+fPU1wKjHopuudN5cEK0x8cDfWXptnA
+ a+pkx9neWcE9X9x5+ppuX3C/cMdOwImIbBooQBWLrCLaH6vLuG/FWD4zWMWC5gTnDTVn7Xabp
+ 6B8bPyDsB4uX342ikHe743w5P+SRpLETAbIDWMkuWvUnukVU+gglQG+4N8s/vrWZ3RCVUNGlF
+ 5Nz9fX8sFRGrylMdzlaP9FVwIL+VbrOXJ3BUSClQNIrfuKLsTGN2LcLaYXpCmKwhnu5tqVbJy
+ TKf67NBqJFxOEknMaJP6G/uqqUDhKySXUj3Bbh+xoQov62j/cqpEJW+Rcl3C7vwjp+cT5+xPL
+ rMvO+4aoV6Pf9dibg+QSZCPtjVuxIb90s+c8TH0irBvXwFQXTT7ZjgE0r6sDTzCi7ZwAC/WPr
+ KlHtSNLfpr8OBJhv11xFsHg1ygPn4WHSQ6P3Wf0SzV2dNRVsdtygoo6ir8mTxrRYA9xnvMeEn
+ z7qT//sp1qMNuwWuuTReFHVF7xr1c8inhGgMsc/76+nk1a0Z3JFAVcntFe9KeifTdH1w78l/8
+ GaYxtQlMYUovVHchUO9eZc71Ps7FE4GFGsl4k/BiQYVGjrC1crLb/X26+yOUaeQitPUI4wKTR
+ prGsEnpuF0m22q0SGSPRfKt43erls/oJronz1Uw==
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -76,303 +142,65 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============9162917763792167144=="
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============9162917763792167144==
-Content-Type: multipart/alternative; boundary="00000000000050244f059ac9f11f"
-
---00000000000050244f059ac9f11f
-Content-Type: text/plain; charset="UTF-8"
-
-Issue I am having is sporadically around every 5 to 30 min all peer
-connections no longer send traffic over them, and the only way to get them
-working again is to restart the WireGuard server (Win 10) .
-
-
-The log shows this:
-
-2019-12-28 01:39:46.625: [TUN] [GameNet] Failed to write packet to TUN
-device: file already closed
-
-2019-12-28 01:39:46.629: [TUN] [GameNet] Binding v4 socket to interface 16
-(blackhole=false)
-
-2019-12-28 01:39:46.631: [TUN] [GameNet] Failed to write packet to TUN
-device: file already closed
-
-2019-12-28 01:39:46.649: [TUN] [GameNet] Failed to write packet to TUN
-device: file already closed
-
-2019-12-28 01:39:46.668: [TUN] [GameNet] Failed to write packet to TUN
-device: file already closed
-
-2019-12-28 01:39:46.692: [TUN] [GameNet] Failed to write packet to TUN
-device: file already closed
-
-2019-12-28 01:39:46.714: [TUN] [GameNet] Failed to write packet to TUN
-device: file already closed
-
-2019-12-28 01:39:46.730: [TUN] [GameNet] Failed to write packet to TUN
-device: file already closed
-
-
-Server Config:
-
-[Interface]
-PrivateKey = SNIP
-ListenPort = 5687
-Address = 10.152.152.1/24
-MTU = 1360
-
-[Peer]
-PublicKey = BMIr6jiTNpu1wiSAqTLBUBFnM3DBW+RMdvapkmnFAiY=
-AllowedIPs = 10.152.152.2/32
-
-[Peer]
-PublicKey = gY0SvOX8lKfLkMXHIwA6pNnB8ooc36vCOPlQ0WmR5Es=
-AllowedIPs = 10.152.152.3/32
-
-[Peer]
-PublicKey = NcbtXceq1dh3khRv+YXXXw9RmJJH+r0acVIGbJ3qWSY=
-AllowedIPs = 10.152.152.4/32
-
-[Peer]
-PublicKey = LkMrfhjHOz6VgL9gTsBkcahkw++RMYokMbJnViQ9xVM=
-AllowedIPs = 10.152.152.5/32
-
-[Peer]
-PublicKey = YAKEhGM4Wr1SYSb197ugyV7IKqUOh+Jzpg7NVNLa3AM=
-AllowedIPs = 10.152.152.6/32
-
-[Peer]
-PublicKey = MZ1ycd1MdUvFUDpRxgY0hc7/jwTP9TuuYB6uwmyYdmQ=
-AllowedIPs = 10.152.152.7/32
-
-[Peer]
-PublicKey = Re5hkZG10PuN993GVRkkYCjjnyKyk96SCN4vFP5l/mM=
-AllowedIPs = 10.152.152.8/32
-
-[Peer]
-PublicKey = Yrx9W1PC60Uw9tpsRIByV0U+aW3eE210X1LCxTnk21w=
-AllowedIPs = 10.152.152.10/32
-
-Example Client Config:
-
-[Interface]
-PrivateKey = generated_private_key
-ListenPort = 5687
-Address = 10.152.152.3/24
-MTU = 1360
-
-[Peer]
-PublicKey = wQE513lYAgeLMcA72rGUnAcqknTYRlC2+oyWKI4Q1j4=
-AllowedIPs = 10.152.152.0/24
-Endpoint = SNIP:5687
-PersistentKeepalive = 40
-
-Things I have tried:
-
-Rolling back to 35
-
-Changing MTU
-
-Switching NIC in Proxmox from Intel to Realtek and back
-
-
-Other Notes:
-
-With only two peers connected it seems to be less of an issue, with 8 or so
-connected we get this issue quicker.
-
---00000000000050244f059ac9f11f
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><p class=3D"gmail-_1qeIAgB0cPwnLhDF9XSiJM" style=3D"margin=
-:0px;padding:0.8em 0px 0.25em;border:0px;font-variant-numeric:inherit;font-=
-variant-east-asian:inherit;font-stretch:inherit;font-size:14px;line-height:=
-inherit;font-family:&quot;Noto Sans&quot;,Arial,sans-serif;vertical-align:b=
-aseline;color:rgb(26,26,27)">Issue I am having is sporadically around every=
- 5 to 30 min all peer connections no longer send traffic over them, and the=
- only way to get them working again is to restart the WireGuard server (Win=
- 10) .</p><p class=3D"gmail-_1qeIAgB0cPwnLhDF9XSiJM" style=3D"margin:0px;pa=
-dding:0.8em 0px 0.25em;border:0px;font-variant-numeric:inherit;font-variant=
--east-asian:inherit;font-stretch:inherit;font-size:14px;line-height:inherit=
-;font-family:&quot;Noto Sans&quot;,Arial,sans-serif;vertical-align:baseline=
-;color:rgb(26,26,27)"><br></p><p class=3D"gmail-_1qeIAgB0cPwnLhDF9XSiJM" st=
-yle=3D"margin:0px;padding:0.8em 0px 0.25em;border:0px;font-variant-numeric:=
-inherit;font-variant-east-asian:inherit;font-stretch:inherit;font-size:14px=
-;line-height:inherit;font-family:&quot;Noto Sans&quot;,Arial,sans-serif;ver=
-tical-align:baseline;color:rgb(26,26,27)">The log shows this:</p><p class=
-=3D"gmail-_1qeIAgB0cPwnLhDF9XSiJM" style=3D"margin:0px;padding:0.8em 0px 0.=
-25em;border:0px;font-variant-numeric:inherit;font-variant-east-asian:inheri=
-t;font-stretch:inherit;font-size:14px;line-height:inherit;font-family:&quot=
-;Noto Sans&quot;,Arial,sans-serif;vertical-align:baseline;color:rgb(26,26,2=
-7)">2019-12-28 01:39:46.625: [TUN] [GameNet] Failed to write packet to TUN =
-device: file already closed</p><p class=3D"gmail-_1qeIAgB0cPwnLhDF9XSiJM" s=
-tyle=3D"margin:0px;padding:0.8em 0px 0.25em;border:0px;font-variant-numeric=
-:inherit;font-variant-east-asian:inherit;font-stretch:inherit;font-size:14p=
-x;line-height:inherit;font-family:&quot;Noto Sans&quot;,Arial,sans-serif;ve=
-rtical-align:baseline;color:rgb(26,26,27)">2019-12-28 01:39:46.629: [TUN] [=
-GameNet] Binding v4 socket to interface 16 (blackhole=3Dfalse)</p><p class=
-=3D"gmail-_1qeIAgB0cPwnLhDF9XSiJM" style=3D"margin:0px;padding:0.8em 0px 0.=
-25em;border:0px;font-variant-numeric:inherit;font-variant-east-asian:inheri=
-t;font-stretch:inherit;font-size:14px;line-height:inherit;font-family:&quot=
-;Noto Sans&quot;,Arial,sans-serif;vertical-align:baseline;color:rgb(26,26,2=
-7)">2019-12-28 01:39:46.631: [TUN] [GameNet] Failed to write packet to TUN =
-device: file already closed</p><p class=3D"gmail-_1qeIAgB0cPwnLhDF9XSiJM" s=
-tyle=3D"margin:0px;padding:0.8em 0px 0.25em;border:0px;font-variant-numeric=
-:inherit;font-variant-east-asian:inherit;font-stretch:inherit;font-size:14p=
-x;line-height:inherit;font-family:&quot;Noto Sans&quot;,Arial,sans-serif;ve=
-rtical-align:baseline;color:rgb(26,26,27)">2019-12-28 01:39:46.649: [TUN] [=
-GameNet] Failed to write packet to TUN device: file already closed</p><p cl=
-ass=3D"gmail-_1qeIAgB0cPwnLhDF9XSiJM" style=3D"margin:0px;padding:0.8em 0px=
- 0.25em;border:0px;font-variant-numeric:inherit;font-variant-east-asian:inh=
-erit;font-stretch:inherit;font-size:14px;line-height:inherit;font-family:&q=
-uot;Noto Sans&quot;,Arial,sans-serif;vertical-align:baseline;color:rgb(26,2=
-6,27)">2019-12-28 01:39:46.668: [TUN] [GameNet] Failed to write packet to T=
-UN device: file already closed</p><p class=3D"gmail-_1qeIAgB0cPwnLhDF9XSiJM=
-" style=3D"margin:0px;padding:0.8em 0px 0.25em;border:0px;font-variant-nume=
-ric:inherit;font-variant-east-asian:inherit;font-stretch:inherit;font-size:=
-14px;line-height:inherit;font-family:&quot;Noto Sans&quot;,Arial,sans-serif=
-;vertical-align:baseline;color:rgb(26,26,27)">2019-12-28 01:39:46.692: [TUN=
-] [GameNet] Failed to write packet to TUN device: file already closed</p><p=
- class=3D"gmail-_1qeIAgB0cPwnLhDF9XSiJM" style=3D"margin:0px;padding:0.8em =
-0px 0.25em;border:0px;font-variant-numeric:inherit;font-variant-east-asian:=
-inherit;font-stretch:inherit;font-size:14px;line-height:inherit;font-family=
-:&quot;Noto Sans&quot;,Arial,sans-serif;vertical-align:baseline;color:rgb(2=
-6,26,27)">2019-12-28 01:39:46.714: [TUN] [GameNet] Failed to write packet t=
-o TUN device: file already closed</p><p class=3D"gmail-_1qeIAgB0cPwnLhDF9XS=
-iJM" style=3D"margin:0px;padding:0.8em 0px 0.25em;border:0px;font-variant-n=
-umeric:inherit;font-variant-east-asian:inherit;font-stretch:inherit;font-si=
-ze:14px;line-height:inherit;font-family:&quot;Noto Sans&quot;,Arial,sans-se=
-rif;vertical-align:baseline;color:rgb(26,26,27)">2019-12-28 01:39:46.730: [=
-TUN] [GameNet] Failed to write packet to TUN device: file already closed</p=
-><p class=3D"gmail-_1qeIAgB0cPwnLhDF9XSiJM" style=3D"margin:0px;padding:0.8=
-em 0px 0.25em;border:0px;font-variant-numeric:inherit;font-variant-east-asi=
-an:inherit;font-stretch:inherit;font-size:14px;line-height:inherit;font-fam=
-ily:&quot;Noto Sans&quot;,Arial,sans-serif;vertical-align:baseline;color:rg=
-b(26,26,27)"><br></p><p class=3D"gmail-_1qeIAgB0cPwnLhDF9XSiJM" style=3D"ma=
-rgin:0px;padding:0.8em 0px 0.25em;border:0px;font-variant-numeric:inherit;f=
-ont-variant-east-asian:inherit;font-stretch:inherit;font-size:14px;line-hei=
-ght:inherit;font-family:&quot;Noto Sans&quot;,Arial,sans-serif;vertical-ali=
-gn:baseline;color:rgb(26,26,27)">Server Config:</p><pre class=3D"gmail-_3Gn=
-arIQX9tD_qsgXkfSDz1" style=3D"margin-top:4px;margin-bottom:4px;padding:8px;=
-border:0px;font-variant-numeric:inherit;font-variant-east-asian:inherit;fon=
-t-stretch:inherit;font-size:14px;line-height:1.4;font-family:inherit;vertic=
-al-align:baseline;max-width:100%;overflow:auto;display:grid;color:rgb(26,26=
-,27)"><code class=3D"gmail-_34q3PgLsx9zIU5BiSOjFoM" style=3D"margin:0px;pad=
-ding:0px;border:0px;font-style:inherit;font-variant:inherit;font-stretch:in=
-herit;font-size:13px;line-height:20px;font-family:&quot;Noto Mono&quot;,Men=
-lo,Monaco,Consolas,monospace;vertical-align:baseline;background-color:trans=
-parent;max-width:100%;overflow:auto">[Interface]
-PrivateKey =3D SNIP
-ListenPort =3D 5687
-Address =3D <a href=3D"http://10.152.152.1/24">10.152.152.1/24</a>
-MTU =3D 1360
-
-[Peer]
-PublicKey =3D BMIr6jiTNpu1wiSAqTLBUBFnM3DBW+RMdvapkmnFAiY=3D
-AllowedIPs =3D <a href=3D"http://10.152.152.2/32">10.152.152.2/32</a>
-
-[Peer]
-PublicKey =3D gY0SvOX8lKfLkMXHIwA6pNnB8ooc36vCOPlQ0WmR5Es=3D
-AllowedIPs =3D <a href=3D"http://10.152.152.3/32">10.152.152.3/32</a>
-
-[Peer]
-PublicKey =3D NcbtXceq1dh3khRv+YXXXw9RmJJH+r0acVIGbJ3qWSY=3D
-AllowedIPs =3D <a href=3D"http://10.152.152.4/32">10.152.152.4/32</a>
-
-[Peer]
-PublicKey =3D LkMrfhjHOz6VgL9gTsBkcahkw++RMYokMbJnViQ9xVM=3D
-AllowedIPs =3D <a href=3D"http://10.152.152.5/32">10.152.152.5/32</a>
-
-[Peer]
-PublicKey =3D YAKEhGM4Wr1SYSb197ugyV7IKqUOh+Jzpg7NVNLa3AM=3D
-AllowedIPs =3D <a href=3D"http://10.152.152.6/32">10.152.152.6/32</a>
-
-[Peer]
-PublicKey =3D MZ1ycd1MdUvFUDpRxgY0hc7/jwTP9TuuYB6uwmyYdmQ=3D
-AllowedIPs =3D <a href=3D"http://10.152.152.7/32">10.152.152.7/32</a>
-
-[Peer]
-PublicKey =3D Re5hkZG10PuN993GVRkkYCjjnyKyk96SCN4vFP5l/mM=3D
-AllowedIPs =3D <a href=3D"http://10.152.152.8/32">10.152.152.8/32</a>
-
-[Peer]
-PublicKey =3D Yrx9W1PC60Uw9tpsRIByV0U+aW3eE210X1LCxTnk21w=3D
-AllowedIPs =3D <a href=3D"http://10.152.152.10/32">10.152.152.10/32</a>
-</code></pre><p class=3D"gmail-_1qeIAgB0cPwnLhDF9XSiJM" style=3D"margin:0px=
-;padding:0.8em 0px 0.25em;border:0px;font-variant-numeric:inherit;font-vari=
-ant-east-asian:inherit;font-stretch:inherit;font-size:14px;line-height:inhe=
-rit;font-family:&quot;Noto Sans&quot;,Arial,sans-serif;vertical-align:basel=
-ine;color:rgb(26,26,27)">Example Client Config:</p><pre class=3D"gmail-_3Gn=
-arIQX9tD_qsgXkfSDz1" style=3D"margin-top:4px;margin-bottom:4px;padding:8px;=
-border:0px;font-variant-numeric:inherit;font-variant-east-asian:inherit;fon=
-t-stretch:inherit;font-size:14px;line-height:1.4;font-family:inherit;vertic=
-al-align:baseline;max-width:100%;overflow:auto;display:grid;color:rgb(26,26=
-,27)"><code class=3D"gmail-_34q3PgLsx9zIU5BiSOjFoM" style=3D"margin:0px;pad=
-ding:0px;border:0px;font-style:inherit;font-variant:inherit;font-stretch:in=
-herit;font-size:13px;line-height:20px;font-family:&quot;Noto Mono&quot;,Men=
-lo,Monaco,Consolas,monospace;vertical-align:baseline;background-color:trans=
-parent;max-width:100%;overflow:auto">[Interface]
-PrivateKey =3D generated_private_key
-ListenPort =3D 5687
-Address =3D <a href=3D"http://10.152.152.3/24">10.152.152.3/24</a>
-MTU =3D 1360
-
-[Peer]
-PublicKey =3D wQE513lYAgeLMcA72rGUnAcqknTYRlC2+oyWKI4Q1j4=3D
-AllowedIPs =3D <a href=3D"http://10.152.152.0/24">10.152.152.0/24</a>
-Endpoint =3D SNIP:5687
-PersistentKeepalive =3D 40
-</code></pre><p class=3D"gmail-_1qeIAgB0cPwnLhDF9XSiJM" style=3D"margin:0px=
-;padding:0.8em 0px 0.25em;border:0px;font-variant-numeric:inherit;font-vari=
-ant-east-asian:inherit;font-stretch:inherit;font-size:14px;line-height:inhe=
-rit;font-family:&quot;Noto Sans&quot;,Arial,sans-serif;vertical-align:basel=
-ine;color:rgb(26,26,27)">Things I have tried:</p><p class=3D"gmail-_1qeIAgB=
-0cPwnLhDF9XSiJM" style=3D"margin:0px;padding:0.8em 0px 0.25em;border:0px;fo=
-nt-variant-numeric:inherit;font-variant-east-asian:inherit;font-stretch:inh=
-erit;font-size:14px;line-height:inherit;font-family:&quot;Noto Sans&quot;,A=
-rial,sans-serif;vertical-align:baseline;color:rgb(26,26,27)">Rolling back t=
-o 35</p><p class=3D"gmail-_1qeIAgB0cPwnLhDF9XSiJM" style=3D"margin:0px;padd=
-ing:0.8em 0px 0.25em;border:0px;font-variant-numeric:inherit;font-variant-e=
-ast-asian:inherit;font-stretch:inherit;font-size:14px;line-height:inherit;f=
-ont-family:&quot;Noto Sans&quot;,Arial,sans-serif;vertical-align:baseline;c=
-olor:rgb(26,26,27)">Changing MTU</p><p class=3D"gmail-_1qeIAgB0cPwnLhDF9XSi=
-JM" style=3D"margin:0px;padding:0.8em 0px 0.25em;border:0px;font-variant-nu=
-meric:inherit;font-variant-east-asian:inherit;font-stretch:inherit;font-siz=
-e:14px;line-height:inherit;font-family:&quot;Noto Sans&quot;,Arial,sans-ser=
-if;vertical-align:baseline;color:rgb(26,26,27)">Switching NIC in Proxmox fr=
-om Intel to Realtek and back</p><p class=3D"gmail-_1qeIAgB0cPwnLhDF9XSiJM" =
-style=3D"margin:0px;padding:0.8em 0px 0.25em;border:0px;font-variant-numeri=
-c:inherit;font-variant-east-asian:inherit;font-stretch:inherit;font-size:14=
-px;line-height:inherit;font-family:&quot;Noto Sans&quot;,Arial,sans-serif;v=
-ertical-align:baseline;color:rgb(26,26,27)"><br></p><p class=3D"gmail-_1qeI=
-AgB0cPwnLhDF9XSiJM" style=3D"margin:0px;padding:0.8em 0px 0.25em;border:0px=
-;font-variant-numeric:inherit;font-variant-east-asian:inherit;font-stretch:=
-inherit;font-size:14px;line-height:inherit;font-family:&quot;Noto Sans&quot=
-;,Arial,sans-serif;vertical-align:baseline;color:rgb(26,26,27)">Other Notes=
-:</p><p class=3D"gmail-_1qeIAgB0cPwnLhDF9XSiJM" style=3D"margin:0px;padding=
-:0.8em 0px 0px;border:0px;font-variant-numeric:inherit;font-variant-east-as=
-ian:inherit;font-stretch:inherit;font-size:14px;line-height:inherit;font-fa=
-mily:&quot;Noto Sans&quot;,Arial,sans-serif;vertical-align:baseline;color:r=
-gb(26,26,27)">With only two peers connected it seems to be less of an issue=
-, with 8 or so connected we get this issue quicker.</p></div>
-
---00000000000050244f059ac9f11f--
-
---===============9162917763792167144==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
-_______________________________________________
-WireGuard mailing list
-WireGuard@lists.zx2c4.com
-https://lists.zx2c4.com/mailman/listinfo/wireguard
-
---===============9162917763792167144==--
+SGksCgppbiBteSBjYXNlIHRoZSByZWFzb24gaXMgbm90IGV4YWN0bHkgYmVpbmcgYWJsZSB0byBy
+ZW1vdmUgdGhlIGVuZHBvaW50LApidXQgcmF0aGVyIGJlaW5nIGFibGUgdG8gc2V0dXAgYSBwZWVy
+IHdpdGhvdXQgZW5kcG9pbnQsIHNvIHRoYXQgb25seSB0aGUKZW5kcG9pbnQgbmVlZHMgdG8gYmUg
+c2V0dXAgbGF0ZXIuCgpTY2VuYXJpbzoKQWxsIGtleXMgZm9yIGludGVyZmFjZSBhbmQgcGVlciBh
+cmUgY29uZmlndXJlZCB2aWEgIndnIiBzdGFuZGFyZCBjb25maWcKZmlsZSwgc28gdGhhdCB0aGUg
+aW50ZXJmYWNlIGNhbiBiZSBicm91Z2h0IHVwIGF0IGJvb3QgdGltZS4KCkJ1dCB3aGVuIGhhdmlu
+ZyB0byB1c2UgYSB0byBiZSByZXNvbHZlZCBob3N0IG5hbWUgYXMgZW5kcG9pbnQsIHRoZW4gdGhl
+CmJvb3QgcHJvY2VzcyBibG9ja3MgZm9yIGFyb3VuZCBhIG1pbnV0ZSBpbiBjYXNlIG5vIG5ldHdv
+cmsgKGluY2wuIEROUykKaXMgYXZhaWxhYmxlLiBBdCBsZWFzdCB3aGVuIHJ1bm5pbmcgc3lzdGVt
+ZCByZWFkaW5nCi9ldGMvbmV0d29yay9pbnRlcmZhY2VzLiBJJ20gbm90IHVzaW5nIHN5c3RlbWQg
+YnVpbHRpbiB3ZyBzdXBwb3J0LgoKVGhlcmUgaXMgb2YgY291cnNlIHRoZSBwb3NzaWJpbGl0eSB0
+byBicmluZyB1cCB0aGUgd2ctKiBpbnRlcmZhY2VzIGxhdGVyCmFsdG9nZXRoZXIuIEJ1dCB0aGUg
+ZWFzaWVzdCB3YXkgZm9yIG1lIHdhcyB0byB1c2UgYSBsb2NhbCBlbmRwb2ludCBJUAooMTI3LjAu
+MS4xKSBhZGRyZXNzLCBhbmQgdGhlbiB1c2UgdXAvZG93biBzY3JpcHRzIHRyaWdnZXJlZCBvbiBM
+QU4vV0xBTgp1cC9kb3duLCB3aGljaCB0aGVuIG9ubHkgcmVzb2x2ZSB0aGUgZW5kcG9pbnQgaG9z
+dCBuYW1lIGFuZCBzZXQgdmlhIHdnCnRoZSByZXNvbHZlZCBJUCBvZiB0aGF0LgoKVGhpcyB3YXkg
+SSdtIGFsc28gYWJsZSB0byB1c2Ugc2V2ZXJhbCBob3N0bmFtZXMgZnJvbSBkaWZmZXJlbnQgRHlu
+RE5TCnByb3ZpZGVycywgaW4gY2FzZSBvbmUgc2VydmljZSBwcm92aWRlciBpcyBkb3duLCB3aGlj
+aCB3ZyBhcyBmYXIgYXMgSQprbm93IGRvZXNuJ3QgY3VycmVudGx5IHN1cHBvcnQuCkkuZToKCTEu
+KSByZXNvbHZlIGZpcnN0IGhvc3QgbmFtZQoJMi4pIHNldCBlbmRwb2ludCBJUCBvbiBwZWVyCgkz
+LikgcGluZyBpbnRvIHR1bm5lbCB0byBzZWUgaWYgaXQgaXMgd29ya2luZwoJNC4pIGlmIG5vdCB3
+b3JraW5nLCB0aGVuIHRyeSBuZXh0IGhvc3QgbmFtZQoKClRoYW5rcywKCkVtbWFudWVsCgoKT24g
+MjAxOS0xMi0zMCAxMDozNywgSmFzb24gQS4gRG9uZW5mZWxkIHdyb3RlOgo+IEhpIERldmluLAo+
+Cj4gQ291bGQgeW91IGxldCBtZSBrbm93IHlvdXIgcmVhc29uIGZvciB3YW50aW5nIHRoaXM/IElm
+IHRoZXJlJ3MgYSBnb29kCj4ganVzdGlmaWNhdGlvbiwgd2UgY291bGQgY29uc2lkZXIgYWRkaW5n
+IGl0LiBCdXQgSSdkIGxpa2Ugc29tZQo+IHJlYXNvbmluZyBhcyBpdCByZWxhdGVzIHRvIHRoZSBl
+bnRpcmUgc3lzdGVtIHlvdSdyZSB0cnlpbmcgdG8gYnVpbGQsCj4gZmlyc3QuCj4KPiBUaGFua3Ms
+Cj4gSmFzb24KPgo+IE9uIFNhdCwgRGVjIDI4LCAyMDE5IGF0IDEwOjM2IFBNIEphc29uIEEuIERv
+bmVuZmVsZCA8SmFzb25AengyYzQuY29tPiB3cm90ZToKPj4KPj4gSSdtIGludGVyZXN0ZWQgdG8g
+bGVhcm4sIHdoeSB3b3VsZCB5b3Ugd2FudCBzdWNoIGEgdGhpbmc/IFRoZSBlbmRwb2ludCBmaWVs
+ZCBpcyBvbmx5IGV2ZXIgYSAiaGludCIgYW55d2F5LCBkdWUgdG8gdGhlIHJvYW1pbmcuCj4+Cj4+
+IE9uIFNhdCwgRGVjIDI4LCAyMDE5LCAxMzoxMiBEZXZpbiBTbWl0aCA8ZGV2aW5yc21pdGhAcHJv
+dG9ubWFpbC5jb20+IHdyb3RlOgo+Pj4KPj4+IElmIEknbSBub3QgbWlzdGFrZW4sIGB3ZyBzZXQg
+PGludGVyZmFjZT4gcGVlciA8YmFzZTY0PiByZW1vdmVgIHJlbW92ZXMgdGhlIHdob2xlIHBlZXIg
+LSBJJ20gbG9va2luZyB0byByZW1vdmUganVzdCB0aGUgcGVlcidzIGVuZHBvaW50IGF0dHJpYnV0
+ZSBbZW5kcG9pbnQgPGlwPjo8cG9ydD5dLgo+Pj4KPj4+IOKAkOKAkOKAkOKAkOKAkOKAkOKAkCBP
+cmlnaW5hbCBNZXNzYWdlIOKAkOKAkOKAkOKAkOKAkOKAkOKAkAo+Pj4gT24gRnJpZGF5LCBEZWNl
+bWJlciAyNywgMjAxOSAxMDo1MSBBTSwgTG9ubmllIEFiZWxiZWNrIDxsaXN0c0Bsb25uaWUuYWJl
+bGJlY2suY29tPiB3cm90ZToKPj4+Cj4+Pj4+IE9uIERlYyAyNywgMjAxOSwgYXQgOTo1MSBBTSwg
+RGV2aW4gU21pdGggZGV2aW5yc21pdGhAcHJvdG9ubWFpbC5jb20gd3JvdGU6Cj4+Pj4+IElzIGl0
+IHBvc3NpYmxlIHRvIHJlbW92ZSB0aGUgZW5kcG9pbnQgb2YgYSBwZWVyIHZpYSB0aGUgYHdnIHNl
+dGAgY29tbWFuZD8gQWxsIG9mIHRoZSBvdGhlciBwZWVyIGF0dHJpYnV0ZXMgKHByZXNoYXJlZC1r
+ZXksIHBlcnNpc3RlbnQta2VlcGFsaXZlLCBhbGxvd2VkLWlwcykgYXJlIHJlbW92YWJsZSBpbiB0
+aGlzIGZhc2hpb24gKGFuZCBkb2N1bWVudGVkIGluIHRoZSBtYW4gcGFnZSkuIEkndmUgdHJpZWQg
+YHdnIHNldCA8aW50ZXJmYWNlPiBwZWVyIDxiYXNlNjQtcHVibGljLWtleT4gZW5kcG9pbnQgMGAg
+Li4uCj4+Pj4KPj4+PiBZZXMsIHRoaXMgd29ya3M6Cj4+Pj4KPj4+PiAtLS0tLS0tLS0tLS0tLS0t
+LS0tCj4+Pj4KPj4+PiB3ZyBzZXQgPGludGVyZmFjZT4gcGVlciA8YmFzZTY0LXB1YmxpYy1rZXk+
+IHJlbW92ZQo+Pj4+IC0tCj4+Pj4KPj4+PiBJZiB5b3UgZm9yZ2V0LCAid2cgc2V0IC0taGVscCIg
+d2lsbCByZW1pbmQgeW91Lgo+Pj4+Cj4+Pj4gTG9ubmllCj4+Pgo+Pj4KPj4+IF9fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fCj4+PiBXaXJlR3VhcmQgbWFpbGlu
+ZyBsaXN0Cj4+PiBXaXJlR3VhcmRAbGlzdHMuengyYzQuY29tCj4+PiBodHRwczovL2xpc3RzLnp4
+MmM0LmNvbS9tYWlsbWFuL2xpc3RpbmZvL3dpcmVndWFyZAo+IF9fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fCj4gV2lyZUd1YXJkIG1haWxpbmcgbGlzdAo+IFdp
+cmVHdWFyZEBsaXN0cy56eDJjNC5jb20KPiBodHRwczovL2xpc3RzLnp4MmM0LmNvbS9tYWlsbWFu
+L2xpc3RpbmZvL3dpcmVndWFyZAo+Cl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fCldpcmVHdWFyZCBtYWlsaW5nIGxpc3QKV2lyZUd1YXJkQGxpc3RzLnp4MmM0
+LmNvbQpodHRwczovL2xpc3RzLnp4MmM0LmNvbS9tYWlsbWFuL2xpc3RpbmZvL3dpcmVndWFyZAo=
