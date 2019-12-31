@@ -1,74 +1,48 @@
-Return-Path: <SRS0=wyc1=2U=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=mHS8=2V=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,NUMERIC_HTTP_ADDR,SPF_HELO_NONE,SPF_PASS autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B0DD6C2D0C2
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 30 Dec 2019 11:53:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8701AC2D0C2
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 31 Dec 2019 14:33:00 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 3F28D206DB
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 30 Dec 2019 11:53:43 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="yH+lLtu7"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 3F28D206DB
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id 948C7206DB
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 31 Dec 2019 14:32:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 948C7206DB
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=barrys-emacs.org
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 39e51218;
-	Mon, 30 Dec 2019 11:53:16 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d0e7825d;
+	Tue, 31 Dec 2019 14:32:46 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 901542b8
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b3e832c6
  for <wireguard@lists.zx2c4.com>;
- Mon, 30 Dec 2019 11:53:14 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e89e4773
+ Tue, 31 Dec 2019 12:03:17 +0000 (UTC)
+Received: from claranet-outbound-smtp06.uk.clara.net
+ (claranet-outbound-smtp06.uk.clara.net [195.8.89.39])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b8c0fdef
  for <wireguard@lists.zx2c4.com>;
- Mon, 30 Dec 2019 11:53:14 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1c5baaad
- for <wireguard@lists.zx2c4.com>;
- Mon, 30 Dec 2019 10:55:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=K9kU8f7vpcBdKquNLw6L5VqjT84=; b=yH+lLt
- u7/EEWh5oMQ2WigU9thu/qivOlpkDpfIjWq1Ao6czdcWk2mbNWuBNoV0prnaxqFO
- lKGQ86dHKL4YJrEnVQn64iIvN5XpPWmbiqCRxYHBZuR9vkTSe7Q6vpzI8KdE3x55
- m8b3Ykm0gX3/Vho9I/9OM17J9Ub5llFw1K4sSRUmsrD01UbW0H7tIqWvQbgbaB2M
- dWbzBi3+4t0CtRQ2Z0Q4vk9fdBvlu4xOCuFUrnN+GxNUdmeN5+E38t3fP6sqQLyO
- Jd2BVbXTbrvUGqH7Ckh3mfYhisgqPSQSkdMdQdjDIVOhVQv6SNz4x4vNnNagys5s
- 0KBqPX7G4r6Gm8jA==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 3509e3a1
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Mon, 30 Dec 2019 10:55:07 +0000 (UTC)
-Received: by mail-ot1-f43.google.com with SMTP id w21so38256027otj.7
- for <wireguard@lists.zx2c4.com>; Mon, 30 Dec 2019 03:53:13 -0800 (PST)
-X-Gm-Message-State: APjAAAWuvkMhnzdLOx5w61tAcnc8EoBkbWY9lw3BgX01YOJ77gL9wtlq
- 1vXmORD9fkKQckiDf29NtlFagONLxJA5boFeMzY=
-X-Google-Smtp-Source: APXvYqwN++r0CyODfORHTWAE7i5PvIznujm9bxu80+/KpIMz+IQrYwfH/mm4Tx455mjzHhnF4QK4UVbxWse2btM3RHQ=
-X-Received: by 2002:a9d:6745:: with SMTP id w5mr59057071otm.52.1577706793402; 
- Mon, 30 Dec 2019 03:53:13 -0800 (PST)
-MIME-Version: 1.0
-References: <CtiLrRxfJF8VjxK15ZVRrI9eJBflmVjOBKiOTYAHVAmF7lVPMuQvg3luFb89M3FKdy2fvemWnkfXd-LRJ1MCGy0GC2TddQuX0-Wga9hBS_4=@protonmail.com>
- <A02FDAAF-B405-4735-9DD1-95A7F6CE9B3F@lonnie.abelbeck.com>
- <bWad1d4zSz8UESfEBgTLTfDZQbC9-fLXfJF2R3GoONB9PuL3WjNnYrnFQOYmt-gQa9sLLMDJJ8p6zY8XEUlXxxudvzNC5OUjuG75yjbBMIY=@protonmail.com>
- <CAHmME9q1s8Ze40Uzi9+9PM8h=iWAs7_U=Zh2+5O8GjAjQKFeag@mail.gmail.com>
- <CAHmME9q=L1kyxSu8KBVMkZx6-A77RaAeCtXeOaYQbXGDho-Ujg@mail.gmail.com>
- <b01381cb-dd21-10fe-8223-19bbcf9fcca8@web.de>
- <CAHmME9pj1V5s3UzYx3BGmgD9ffuOepHM76k5OGU1f08Xr9j-oQ@mail.gmail.com>
- <54c26a82-4b7b-1bbd-4879-4c504392fc1a@web.de>
-In-Reply-To: <54c26a82-4b7b-1bbd-4879-4c504392fc1a@web.de>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 30 Dec 2019 12:53:02 +0100
-X-Gmail-Original-Message-ID: <CAHmME9od-Nxx3YMqw7Q33_fJDCmE0O_OUM2jhLTfPKyRgL5upg@mail.gmail.com>
-Message-ID: <CAHmME9od-Nxx3YMqw7Q33_fJDCmE0O_OUM2jhLTfPKyRgL5upg@mail.gmail.com>
-Subject: Re: remove peer endpoint
-To: em12345 <em12345@web.de>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+ Tue, 31 Dec 2019 12:03:17 +0000 (UTC)
+Received: from cpc96796-rdng27-2-0-cust183.15-3.cable.virginm.net
+ ([86.19.118.184]:43070 helo=expanse.chelsea.private)
+ by relay06.mail.eu.clara.net (relay.clara.net [81.171.239.36]:10587)
+ with esmtpsa (authdaemon_plain:barry@barrys-emacs.org)
+ (TLS1.2:DHE_RSA_AES_256_CBC_SHA256:256)
+ id 1imGF0-0001G5-Kf  for wireguard@lists.zx2c4.com
+ (return-path <barry@barrys-emacs.org>); Tue, 31 Dec 2019 12:03:15 +0000
+From: Barry Scott <barry@barrys-emacs.org>
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
+Subject: wireguard broke with recent update on fedora 31
+Message-Id: <F9761E5F-F69B-458F-A534-3249FCFBF5FD@barrys-emacs.org>
+Date: Tue, 31 Dec 2019 12:03:13 +0000
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+X-Mailer: Apple Mail (2.3445.104.11)
+X-Mailman-Approved-At: Tue, 31 Dec 2019 15:32:44 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -85,14 +59,94 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Mon, Dec 30, 2019 at 12:50 PM em12345 <em12345@web.de> wrote:
->
-> Sorry, may be I was not clear enough. I didn't intend to ask for the
-> removal of the ability to set an endpoint, but for the ability to
-> configure a peer without knowing the endpoint at configuration time.
-> Because the endpoint is only known at a later point.
+I had wireguard working but the recent update of somethng has broken it.
 
-This is already possible and not relevant to the discussion at hand.
+I'm happy to help debug, run test code.
+
+My server end is fedora 31, which is up to date.
+
+kernel-5.3.16-300.fc31.x86_64
+wireguard-dkms-0.0.20191226-1.fc31.noarch
+wireguard-tools-1.0.20191226-1.fc31.x86_64
+
+The server has 2 phys interfaces, external that is connected to the internet (no NAT)
+and internal that is home network. I uses systemd-networkd for the phys interfaces.
+wireguard uses a service that runnings these commands to start it up.
+
+    ip link add wg0 type wireguard
+    wg setconf wg0 /etc/wireguard/wg0.conf
+    ip -4 address add 172.16.4.1/24 dev wg0
+    ip link set mtu 1420 up dev wg0
+
+(I also tried a smaller MTU, 1280, with no change).
+
+I use firewalld configured to allow access through wg0.
+I have also turned off firewalld to eliminate iptables rules
+as a source of problem.
+
+$ wg
+interface: wg0
+  public key: KNwXI8p8zJVed81RI3WhHQuYEUxIe0/PDP77Z2YSKTI=
+  private key: (hidden)
+  listening port: 51820
+
+peer: bXUXQRJ9e2RXuxpSofQPVsvGMb5idhZiiF3lTOs1PRQ=
+  endpoint: 213.205.240.12:43029
+  allowed ips: (none)
+  latest handshake: 33 seconds ago
+  transfer: 1.02 KiB received, 3.11 KiB sent
+  persistent keepalive: every 30 seconds
+
+peer: JGxzN0iT+WIL2rltsWfaKD1IFC/f7b/AxF9peecTDEU=
+  allowed ips: (none)
+  persistent keepalive: every 30 seconds
+
+peer: hom+2y5nNr9UnsSeyNJvWS6RkvnbTQOWwd8Zopsuzwo=
+  allowed ips: 0.0.0.0/0
+  persistent keepalive: every 30 seconds
+
+peer bX... is an Android phone running wireguard v0.0.20191220.
+
+A tcpdump show 2 ways comms with the phone
+
+$ tcpdump -n -i external port 51820
+11:35:09.545035 IP 213.205.240.12.43029 > 86.19.118.184.51820: UDP, length 112
+11:35:09.792170 IP 86.19.118.184.51820 > 213.205.240.12.43029: UDP, length 32
+11:35:14.533234 IP 213.205.240.12.43029 > 86.19.118.184.51820: UDP, length 112
+11:35:14.800147 IP 213.205.240.12.43029 > 86.19.118.184.51820: UDP, length 148
+11:35:14.802647 IP 86.19.118.184.51820 > 213.205.240.12.43029: UDP, length 92
+... etc...
+
+But I see nothing for "tcpdump -i wg0". And these stats:
+
+$ ip -s addr show wg0
+4: wg0: <POINTOPOINT,NOARP,UP,LOWER_UP> mtu 1280 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/none
+    inet 172.16.4.1/24 scope global wg0
+       valid_lft forever preferred_lft forever
+    RX: bytes  packets  errors  dropped overrun mcast
+    180        2        1       0       0       0
+    TX: bytes  packets  errors  dropped carrier collsns
+    92         1        0       3       0       0
+
+
+Run test from phone here. Turn on wireguard, attempt to browse to http://172.16.4.1.
+
+$ ip -s addr show wg0
+4: wg0: <POINTOPOINT,NOARP,UP,LOWER_UP> mtu 1280 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/none
+    inet 172.16.4.1/24 scope global wg0
+       valid_lft forever preferred_lft forever
+    RX: bytes  packets  errors  dropped overrun mcast
+    180        2        28      0       0       0
+    TX: bytes  packets  errors  dropped carrier collsns
+    188        4        0       3       0       0
+
+The RX errors have increased. dmesg is dull.
+
+Barry
+
+
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
