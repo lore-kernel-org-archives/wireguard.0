@@ -2,71 +2,91 @@ Return-Path: <SRS0=qbNG=2Y=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.4 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
-	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,
-	NORMAL_HTTP_TO_IP,NUMERIC_HTTP_ADDR,SPF_HELO_NONE,SPF_PASS autolearn=no
+X-Spam-Status: No, score=-1.9 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 804B2C2D0CE
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  3 Jan 2020 15:40:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3067FC2D0C2
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  3 Jan 2020 15:41:11 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 25CF221734
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  3 Jan 2020 15:40:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id C724321734
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  3 Jan 2020 15:41:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h9554U5w"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 25CF221734
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b="z27gaMyT"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org C724321734
+Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=icloud.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 00547df9;
-	Fri, 3 Jan 2020 15:39:13 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id df04f02e;
+	Fri, 3 Jan 2020 15:39:53 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bb0c0231
- for <wireguard@lists.zx2c4.com>; Thu, 2 Jan 2020 06:23:22 +0000 (UTC)
-Received: from mail-vs1-xe2e.google.com (mail-vs1-xe2e.google.com
- [IPv6:2607:f8b0:4864:20::e2e])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ce9afd4b
- for <wireguard@lists.zx2c4.com>; Thu, 2 Jan 2020 06:23:22 +0000 (UTC)
-Received: by mail-vs1-xe2e.google.com with SMTP id x123so24832086vsc.2
- for <wireguard@lists.zx2c4.com>; Wed, 01 Jan 2020 22:23:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=YsIFeZ+rq5pOxteQXckHTHux0qeStH/OgRuko4GPiXc=;
- b=h9554U5wD3mvi+ERQQnWoSFJ5n8j7BZkJZZTD8lU8UR5vM2yBEer7S55r4xuULwMny
- 5mqglQqVtsKnrKH5ZKzksWtc4BnPbUIDL1h5U0AhB5ZJvxKY+6BspGBcCf9qe8XVM8ug
- WONgbR0yeK72Y7oFKra6I5kPvV2rHoPzD23mmz7jD3b7C8YcUjGiGN6ySDc5VInraTKO
- 4qvo1eoTdJrd0rC3IurlztCiUSs2BDuajzDJZEJIthTKu3aRX0Za+FbpP0OMM9aGjVx9
- Jui7W4e4YzdeaMuhKTdnMfatKlStm7v67he1fxb6ncFtPQyBa/K97cydqJER+dDlQMwF
- 7QGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=YsIFeZ+rq5pOxteQXckHTHux0qeStH/OgRuko4GPiXc=;
- b=jw6J6ilOQHKHvS1SpcBqZsKy07Ze759TDwhIJsW+lf90Bdvp7KFVvgZPTSeJm/MUlB
- ZMs15FzjogvfLJazDCYaPA4Z8lfUtAX7J6cn3yIu7JT/XrV1kaLqVj7/nt66BESkzObn
- Ca3OQQ/+cMRNHUV3fOL27LT+XyL8t8wEbeyxoZ8KUDnAKla2fLbkCAKczlWAub83I+ZL
- VX0qtBLHBuD8/rdBbJpcQaqg6O2JpwmnZCaYxnYIrzj0jjYTxcWT4ie0kNzjceoCrodA
- EXyn7NFqu7Lmt+ui49/GPuueKedRT2d3uJeb5WDlRli1liVTlvGotd14mVtegiDNWb4l
- o8ZA==
-X-Gm-Message-State: APjAAAU2l1KbGkVdMrWoJ8CgQ3aRIk1VXmZcCRnpPwVwBCZIcsE7kN4f
- b26yHGLWXO3MGt0Wh8C0w+NqqDh4LIF55y2zyXw=
-X-Google-Smtp-Source: APXvYqxkrXY7Z+cYf4gDLqoTdL8adv3vcc3PLTP0S6O1iRmAihbGh79wTpaVWWRvWpWngNcc1OHU8nINpyvNWtDDBJ8=
-X-Received: by 2002:a67:c185:: with SMTP id h5mr45166664vsj.211.1577946200996; 
- Wed, 01 Jan 2020 22:23:20 -0800 (PST)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a61b6a96
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 31 Dec 2019 19:24:04 +0000 (UTC)
+Received: from st43p00im-ztbu10063601.me.com (st43p00im-ztbu10063601.me.com
+ [17.58.63.174])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 27adbe2c
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 31 Dec 2019 19:24:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
+ s=1a1hai; t=1577820243;
+ bh=yD9/bDqtzu8AFWtBf/h5v1/svYV4EHc1vsView7a+tQ=;
+ h=Subject:From:To:Message-ID:Date:Content-Type;
+ b=z27gaMyT8YT8GMzMRkoPMtLzYD0ZvCYHlyq0C8wWtcr5O22vjT1XL1QUf3ZI3K2q1
+ emk1ABK3u+QKcI7DrYXEfVBdWZT9glUzUGVvj7um4/gUNeqDm8g5p1oGE9XIrt2/mg
+ S3A74jzYm4rTBN5EEtRGz4xIRYkNn1IhZkeKLE6lv3jaDiFOma0MED7yPXaerz+qxN
+ 6q4otPEN1xgDlnqAAxkBL4JCskWhyLug6Cp6i2IaqW7CTSRjcubU4Sqy0cm6+SOw0D
+ W8f4LApuKhf9LLyKdkyIB11iITqKoXHHlpeYAeBbUhtyCc9zfMfDQ+OBGhr6OEurjR
+ KmL6noiMVrosA==
+Received: from [10.65.11.24] (unknown [185.206.227.140])
+ by st43p00im-ztbu10063601.me.com (Postfix) with ESMTPSA id 332E970061C
+ for <wireguard@lists.zx2c4.com>; Tue, 31 Dec 2019 19:24:03 +0000 (UTC)
+Subject: Re: DNS fails after undetermined time in-tunnel
+From: Lee Yates <rainmakerraw@icloud.com>
+To: "WireGuard@lists.zx2c4.com" <WireGuard@lists.zx2c4.com>
+References: <ef68748c-4b72-3287-781f-52cb93483de1@icloud.com>
+Autocrypt: addr=rainmakerraw@icloud.com; keydata=
+ mQENBFtSPGIBCACA1E2BjKjTOrhm43bkGwdwJHlgP04pimOFX3RrcA6YIg36mXvkCu8+q8we
+ cTreZxGxVehb1VyQPkypI3k8UcfXWYm2t1uxGkiM/kCnUKsqBwJZXLxPM9erPIENwIf1hICc
+ sPjEuMq2nIhYV8kfCOgwZKnbezy7kZ24edbVldz3dMniqiEeipkXWUr8y2UomYreGosFsLEN
+ yj8RPFqYzCpvlFU9rT9wU5/+nwHtX1ySCmniR3MXurAWm6mAAJU9g/0dv5Ua8BCvvR/dadz4
+ RGA7CmvOYL8qcn5A5djFMOqNqIp9IQOn9XNHR6+W8JzVwTpaz8xkbO/yr2kjhxn9uU5BABEB
+ AAG0I0xlZSBZYXRlcyA8cmFpbm1ha2VycmF3QGljbG91ZC5jb20+iQE/BBABCAApAhsDAhkB
+ FiEExF+G9PyiAB1cKHnz7yXLzDsoqZIFAl3R5D8FCQZCDt0ACgkQ7yXLzDsoqZK/dQf+NJnK
+ 46Pa3P0zzZhRHh+/J27nMtSfTTsdkboHbmSPVxiw9nlQ3xmFKEs9sqd4S4pWRVjpz+O/1O4L
+ lMNJLc5Vt9ehhZ6UU5leoDU97NP6NCIEPwXOI8kZ58BzL7WPeqCaQFTXw2qcRwrBXUIYOJL2
+ /pn23d5VMQRuJPbX1vQbVMQxyHmCNcTUl5bMmw1UsMcKT+fcvusIKLSS9gWQIn4Z0/HwNrwn
+ 2P8deKL0oREHgHni9z1l3ZBKlldf8jQv5p9+9RYYaTjHZEwed8QSqLSGLSeFonZvYRKyzY33
+ GHOsg6QahjAgn30qKxy3s9E9i06OnSlFK1YaqijlpWImZeyZD7kBDQRbUjxkAQgAgEetirjP
+ rK6Jd/XvXugGNAYE7TBSKkdzCEHkDpI+4RuooXSyk4vgCuYh42ophEMPuVBkja9kFnn0vCed
+ 2lt8TLC6lupCgifVfQe7VQeJ0N8qke25jk+k5ozkWuVap+PPVt4u6yItE2aO7Bqwl1p15v1J
+ YJcr2LtPwEkCmIISpkcWgdWgj2QTwRjrKiJ3n6OxUDDdQiwNO2k9l4epuh0NfCghcfosN2K4
+ YFZkGCoPMA07ByJfV8hFBxPGHBUeI990Q7bwb4q0+ktt91vOTkN0EzxDbYYwfAmDsida8HoV
+ SLZFQuPZ4Sk6U64lSdQE1czzJ8dLPyT8yONHDeyEtLKIPQARAQABiQE8BBgBCAAmAhsMFiEE
+ xF+G9PyiAB1cKHnz7yXLzDsoqZIFAl3R5D8FCQZCDtsACgkQ7yXLzDsoqZJzqAf/QWZh9Abw
+ wrv/Bg9stqFNQ3E1H56h8p6upQENs3ZC3eOwOs4AHuhJcyQNpIjz/rEetxy1p+OH9Fohyaef
+ rXF933/z1h1DC81wWi6DvuG9TdPEk/CnApnGF56ZJXp4JcxE7SMQQ1aUsodY7l9k3opl6hoT
+ x0K1FtIT52lKAWf8cmoYFkiBfNyILtF3jv6ve/5ppmZo6/reNvFr9XML4odg1aoi19Jd/1HK
+ /gzUP0i2z5B8r3PvJO6pdiNlmzPhBbCWdilFWkad++IEnDPymLYBGwRsawdBC0Tf62xpzGZ/
+ +aqMGUhvXpzfqiYc+G0oXzgt1J46RjN+mb8fTQPl/jTFqA==
+Message-ID: <eae1d28d-bcf2-8e42-93e9-2b6c5879e28c@icloud.com>
+Date: Tue, 31 Dec 2019 19:24:03 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.3.0
 MIME-Version: 1.0
-References: <b3fb12ff-969a-9037-ee6f-f8e4b6d91895@attglobal.net>
-In-Reply-To: <b3fb12ff-969a-9037-ee6f-f8e4b6d91895@attglobal.net>
-From: Edward Vielmetti <edward.vielmetti@gmail.com>
-Date: Thu, 2 Jan 2020 01:22:43 -0500
-Message-ID: <CAPRZce10tz0KgBUMFcHj09WDvUF_ygpMBQckB-Nebnjk52479g@mail.gmail.com>
-Subject: Re: wg-quick: syntax error, unexpected saddr
-To: stunnel@attglobal.net
-X-Mailman-Approved-At: Fri, 03 Jan 2020 16:39:10 +0100
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+In-Reply-To: <ef68748c-4b72-3287-781f-52cb93483de1@icloud.com>
+Content-Language: en-GB
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-12-31_06:, , signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
+ malwarescore=0
+ phishscore=0 bulkscore=0 spamscore=0 clxscore=1015 mlxscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1908290000 definitions=main-1912310166
+X-Mailman-Approved-At: Fri, 03 Jan 2020 16:39:50 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -78,157 +98,105 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============3275918265557927658=="
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============3275918265557927658==
-Content-Type: multipart/alternative; boundary="000000000000c8ffe1059b223ace"
+Further to the below, I have discovered after sending the original
+message (typical!) that resolvconf doesn't appear to be being called
+correctly, at least on Void.
 
---000000000000c8ffe1059b223ace
-Content-Type: text/plain; charset="UTF-8"
+> resolvconf -a mullvad -m -0 -x
+> No file given via stdin
 
-Eddie - what version of nftables does Slackware come with? The output of
-`nft -v` should be helpful.
+The DNS entry in /etc/resolv.conf stays at the original system DNS and
+isn't changed to reflect the WireGuard .conf file.
 
-There is a report from stackexchange that nftables at 0.7 gives this error,
-but at 0.8.1 or better it's OK. I was not easily able to verify that from
-the source code, but it would be where I'd start to look. There was
+However after noticing this and issuing 'resolvconf -u' manually once
+the tunnel is up, openresolv/resolvconf correctly updates
+/etc/resolv.conf with the tunnel's supposed DNS (from the .conf).
 
-The nftables 0.8.1 release notes (from 2018) are here:
-https://lwn.net/Articles/744480/ and it points to new syntax in this
-release.
+> $ sudo resolvconf -u
+> $ sudo cat /etc/resolv.conf
+> # Generated by resolvconf
+> nameserver 193.138.218.74
 
-good luck!
+As I said in my first message, this isn't Void Linux specific and people
+(including me) are experiencing the same issue on systemd based systems,
+but hopefully it's a useful pointer. Again, I hope this is helpful.
 
-Ed
+Best wishes,
 
-On Thu, Jan 2, 2020 at 12:27 AM Eddie <stunnel@attglobal.net> wrote:
-
-> First time running wireguard as a native client on my Slackware 14.2
-> system throws this:
->
-> root@The-Tardis:~# wg-quick up wg0
-> [#] ip link add wg0 type wireguard
-> [#] wg setconf wg0 /dev/fd/63
-> [#] ip -4 address add 192.168.150.14/32 dev wg0
-> [#] ip link set mtu 1420 up dev wg0
-> [#] wg set wg0 fwmark 51820
-> [#] ip -4 route add 0.0.0.0/0 dev wg0 table 51820
-> [#] ip -4 rule add not fwmark 51820 table 51820
-> [#] ip -4 rule add table main suppress_prefixlength 0
-> [#] sysctl -q net.ipv4.conf.all.src_valid_mark=1
-> [#] nft -f /dev/fd/63
-> /dev/fd/63:5:76-80: Error: syntax error, unexpected saddr
->
-> Fairly simple config to connect to my VPS:
->
-> [Interface]
-> Address = 192.168.150.14/32
-> PrivateKey = <Not the key you're looking for>
->
-> [Peer]
-> PublicKey = <Just being overly paranoid>
-> Endpoint = www.xxx.yyy.zzz:51820
-> AllowedIPs = 0.0.0.0/0
->
-> Not sure what additional information you need collected at this point.
->
-> I'm able to connect outbound successfully using NordVPN's version of
-> wireguard, but that doesn't use wg-quick, which is where the issue is.
->
-> Cheers.
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
->
+Lee Yates
 
 
--- 
-Edward Vielmetti +1 734 330 2465
-edward.vielmetti@gmail.com
-
---000000000000c8ffe1059b223ace
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Eddie - what version of nftables does Slackware come with?=
- The output of `nft -v` should be helpful.<div><br></div><div>There is a re=
-port from stackexchange that nftables at 0.7 gives this error, but at 0.8.1=
- or better it&#39;s OK. I was not easily able to verify that from the sourc=
-e code, but it would be where I&#39;d start to look. There was=C2=A0</div><=
-div><br></div><div>The nftables 0.8.1 release notes (from 2018) are here:=
-=C2=A0<a href=3D"https://lwn.net/Articles/744480/">https://lwn.net/Articles=
-/744480/</a>=C2=A0and it points to new syntax in this release.</div><div><b=
-r></div><div>good luck!</div><div><br></div><div>Ed</div></div><br><div cla=
-ss=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Jan 2, 202=
-0 at 12:27 AM Eddie &lt;<a href=3D"mailto:stunnel@attglobal.net">stunnel@at=
-tglobal.net</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex">First time running wireguard as a native client on my Slackware =
-14.2 <br>
-system throws this:<br>
-<br>
-root@The-Tardis:~# wg-quick up wg0<br>
-[#] ip link add wg0 type wireguard<br>
-[#] wg setconf wg0 /dev/fd/63<br>
-[#] ip -4 address add <a href=3D"http://192.168.150.14/32" rel=3D"noreferre=
-r" target=3D"_blank">192.168.150.14/32</a> dev wg0<br>
-[#] ip link set mtu 1420 up dev wg0<br>
-[#] wg set wg0 fwmark 51820<br>
-[#] ip -4 route add <a href=3D"http://0.0.0.0/0" rel=3D"noreferrer" target=
-=3D"_blank">0.0.0.0/0</a> dev wg0 table 51820<br>
-[#] ip -4 rule add not fwmark 51820 table 51820<br>
-[#] ip -4 rule add table main suppress_prefixlength 0<br>
-[#] sysctl -q net.ipv4.conf.all.src_valid_mark=3D1<br>
-[#] nft -f /dev/fd/63<br>
-/dev/fd/63:5:76-80: Error: syntax error, unexpected saddr<br>
-<br>
-Fairly simple config to connect to my VPS:<br>
-<br>
-[Interface]<br>
-Address =3D <a href=3D"http://192.168.150.14/32" rel=3D"noreferrer" target=
-=3D"_blank">192.168.150.14/32</a><br>
-PrivateKey =3D &lt;Not the key you&#39;re looking for&gt;<br>
-<br>
-[Peer]<br>
-PublicKey =3D &lt;Just being overly paranoid&gt;<br>
-Endpoint =3D www.xxx.yyy.zzz:51820<br>
-AllowedIPs =3D <a href=3D"http://0.0.0.0/0" rel=3D"noreferrer" target=3D"_b=
-lank">0.0.0.0/0</a><br>
-<br>
-Not sure what additional information you need collected at this point.<br>
-<br>
-I&#39;m able to connect outbound successfully using NordVPN&#39;s version o=
-f <br>
-wireguard, but that doesn&#39;t use wg-quick, which is where the issue is.<=
-br>
-<br>
-Cheers.<br>
-_______________________________________________<br>
-WireGuard mailing list<br>
-<a href=3D"mailto:WireGuard@lists.zx2c4.com" target=3D"_blank">WireGuard@li=
-sts.zx2c4.com</a><br>
-<a href=3D"https://lists.zx2c4.com/mailman/listinfo/wireguard" rel=3D"noref=
-errer" target=3D"_blank">https://lists.zx2c4.com/mailman/listinfo/wireguard=
-</a><br>
-</blockquote></div><br clear=3D"all"><div><br></div>-- <br><div dir=3D"ltr"=
- class=3D"gmail_signature">Edward Vielmetti=C2=A0+1 734 330 2465<div><a hre=
-f=3D"mailto:edward.vielmetti@gmail.com" target=3D"_blank">edward.vielmetti@=
-gmail.com</a></div><div><br></div></div>
-
---000000000000c8ffe1059b223ace--
-
---===============3275918265557927658==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
+On 31/12/2019 18:49, Lee Yates wrote:
+> Hi,
+> 
+> I hope everyone had an enjoyable festive period.
+> 
+> I have posted this issue on the /r/WireGuard subreddit, and several
+> Linux people responded that they are also experiencing it. As such I'm
+> posting here 'properly'.
+> 
+> For a while now, I have noticed that a WG tunnel on my Linux machines
+> will at some point lose DNS. It doesn't matter what the DNS was set to
+> in the .conf (i.e. VPN provider's own, my own local resolver on a Pi,
+> Cloudflare, whatever) - after a seemingly arbitrary time DNS will just
+> stop working whether in a browser, CLI or elsewhere. For example:
+> 
+>> $ update
+>> Password: 
+>> [*] Updating `https://alpha.de.repo.voidlinux.org/current/x86_64-repodata' ...
+>> ERROR: [reposync] failed to fetch file `https://alpha.de.repo.voidlinux.org/current/x86_64-repodata': Transient resolver failure
+> 
+> Only taking down the tunnel and bringing it back up will resolve the
+> issue, at least until it recurs again a short while later. Curiously
+> though, wg-quick reports that there's no such process during the
+> take-down, but it does nonetheless disconnect it. Reconnecting does, as
+> I said, work fine for a while again.
+> 
+>> $ sudo cat /etc/resolv.conf
+>> nameserver 192.168.2.12
+> 
+>> $ wg-quick down mullvad
+>> [#] ip -4 rule delete table 51820
+>> [#] ip -4 rule delete table main suppress_prefixlength 0
+>> [#] ip -6 rule delete table 51820
+>> [#] ip -6 rule delete table main suppress_prefixlength 0
+>> [#] ip link delete dev mullvad
+>> [#] resolvconf -d mullvad -f
+>> [#] iptables-restore -n
+>> [#] ip6tables-restore -n
+>> [#] ip route del 192.168.2.0/24 via 192.168.1.1
+>> RTNETLINK answers: No such process
+> 
+> I am currently in Void Linux with WireGuard version 20191219 (the latest
+> in the repo). Void has openresolv (3.9.2_1) installed also, by default.
+> Because Void uses runit rather then systemd, there's no access to the
+> wg-quick@ system service. As such I am bringing up and taking down the
+> connection manually with wg-quick up/down. However I get the same
+> behaviour on Ubuntu 19.10, Arch Linux and Fedora 31 which all use
+> systemd and the related wg-quick@ service (and resolvconf instead of
+> openresolv).
+> 
+> I have also tried adding a PersistentKeepalive = 25 to my .conf with no
+> effect either way. My home router is actually a repurposed Dell Optiplex
+> Core i7 x64 machine with Arch Linux installed, and WireGuard has never
+> needed NAT keepalive on my network before (nor did enabling it change
+> this DNS drop behaviour). Finally, I have tried several WireGuard
+> providers including Mullvad, TunSafe, AzireVPN and a manual VPS install
+> - all have the same DNS failure after a short while.
+> 
+> I don't know how to start debugging this, but hopefully I've provided
+> enough to help someone get an idea (or provide me further steps to help).
+> 
+> Best wishes,
+> 
+> Lee Yates
+> 
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
-
---===============3275918265557927658==--
