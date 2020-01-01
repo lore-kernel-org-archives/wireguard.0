@@ -2,64 +2,66 @@ Return-Path: <SRS0=qbNG=2Y=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.4 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CEAB9C2D0C2
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  3 Jan 2020 15:38:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0649BC32767
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  3 Jan 2020 15:40:06 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 1C27421734
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  3 Jan 2020 15:38:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 99BC221734
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  3 Jan 2020 15:40:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="MC+a1P0J"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 1C27421734
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HaWl5q13"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 99BC221734
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8a87efc1;
-	Fri, 3 Jan 2020 15:38:33 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 02535271;
+	Fri, 3 Jan 2020 15:39:12 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 26b988a9
- for <wireguard@lists.zx2c4.com>; Fri, 3 Jan 2020 15:38:31 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0405b7b9
- for <wireguard@lists.zx2c4.com>; Fri, 3 Jan 2020 15:38:31 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b90ebe3b
- for <wireguard@lists.zx2c4.com>; Fri, 3 Jan 2020 14:39:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=A0PEVc2rd2XgwNVZ9VThyUBRo2U=; b=MC+a1P
- 0JnoQ4/f2wrY4p/vftOzmYmeoo7HRJMWvIXWV9hmWzWfUaajIKxecPD9YdQ6BfHB
- 51piQ0UoKdoFIo2LYylVT3jSL5hcZhF5+5AFDnSVsufLl9TL+5Rj6vp5+Z70eJc2
- Hkiv3so4ADMNnWr8VE0lqzx8SmHukoRL0q41O4XYRXAPXSW+2xP3xIgLRa6ivmfM
- fvcnl1/2ZNuk/GWbOHuI5l5KsgN8K7P3lMvmFlivFKSG+MhstLzRLisfkWx+P0iR
- 8fVXZnsWbN7vY6U2ui9gJzOVJZl8AsbXIax0hPVlC1pBR5bjsYBXwc+H3ahV/K+l
- oJ/WCyp+33hBfoeQ==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 2e6ba7f8
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Fri, 3 Jan 2020 14:39:53 +0000 (UTC)
-Received: by mail-ot1-f50.google.com with SMTP id 19so49117119otz.3
- for <wireguard@lists.zx2c4.com>; Fri, 03 Jan 2020 07:38:31 -0800 (PST)
-X-Gm-Message-State: APjAAAWnt95i30navnZL2d6oHN0Oi2jlEMNJVAbx+5Hvn8sbq7cY8H9k
- ggcImBe1dTWRwox1MhRcZojtGWID38cBI5Xzxs0=
-X-Google-Smtp-Source: APXvYqwkZ42NhtiBzXm2oQqjWJyDDsfYXFeoqk2n4KWqrQmAbXSk5eu9+Xnn42yHNW7oQT/BBE+iItxvTXMhOZ6Z/HU=
-X-Received: by 2002:a9d:6745:: with SMTP id w5mr85089567otm.52.1578065910872; 
- Fri, 03 Jan 2020 07:38:30 -0800 (PST)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5fe1b3f9
+ for <wireguard@lists.zx2c4.com>; Wed, 1 Jan 2020 03:38:39 +0000 (UTC)
+Received: from mail-vk1-xa2c.google.com (mail-vk1-xa2c.google.com
+ [IPv6:2607:f8b0:4864:20::a2c])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5ab7cada
+ for <wireguard@lists.zx2c4.com>; Wed, 1 Jan 2020 03:38:39 +0000 (UTC)
+Received: by mail-vk1-xa2c.google.com with SMTP id p191so9277817vkf.8
+ for <wireguard@lists.zx2c4.com>; Tue, 31 Dec 2019 19:38:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=eQYfYpl+7VFIz5r1KschXgsfywL2clSIdg+emOGxKgY=;
+ b=HaWl5q13P1oupx6fxi37nFqocCL/pAwZiqSMsCzobpkdnMQUYuSFcwBB3GLsLJUnmT
+ VLkh7OYJHDuXPfC+Pb2S6pNdozqfT2BHB0SsnhHen8+z2AeCYaKZuX5ljgoLkMegALY4
+ 0ikN8//yJtkdf23FyaLy9pi/hhnC88v1bifTjtScmmzc38zn3UgU/YWGqSnv+xJSi0Xi
+ r6uSGFo2eB51Ko7IFb7fW2HGPhkWUizjVSCDUa4LjT+hWeR3kkXpRGHDtaiKcLruy8y1
+ DCDzf76AoVFXh/b2ZIjo0C8klnM4jUME9kT6RGK+jEEx425BAI8JkK0aN5MiYHNm295M
+ inLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=eQYfYpl+7VFIz5r1KschXgsfywL2clSIdg+emOGxKgY=;
+ b=bRsYiStmZepeJCQQaqvVyNk9RTPc1OZHppIvY/pJZUsK9s85m0LtMpxQotxlH5n6TR
+ p9QjGa95I/LAE8kffZ9kexLrH2VLEuIanxf502WHwWfQYtmiK3ABMJs8A+Ktcgh8cjZO
+ c+Z5UXusjzYtIIsCHtZqiS9YldOgNy71uL4TgrE21rsBz/+Dy+bXh4wOQKxH0qgBkT4/
+ NnditT17yybgfFYKRGY+xHxzMEDlU9L5uMMlrCxXBe7whINYVWCP7L3VViV4aRAGY2qj
+ lBcTp1lucCtVEkMHwVdVKxdvt/eTL/33Wphg7cw4kPnSTLpobJl0lxl+eXYzd4PBapLr
+ kG5g==
+X-Gm-Message-State: APjAAAXb0YtdJbsLHHwkNFwOHnmCHy8bsndg2osBE5/eXXhf4GkFGwBl
+ b5Il326w/G5pjBie65M9SJWMWesqgo2AWDhiFE6jNwlrSzo=
+X-Google-Smtp-Source: APXvYqwwAyPKYAUE/PbZ2mRubS1FsweeoqRl2uHchdmXFLYxV8pJuwtcE80wcL0xImL+cawyO0cPSTrg0SKuGzfbIeg=
+X-Received: by 2002:a1f:9ec8:: with SMTP id h191mr43096868vke.48.1577849917295; 
+ Tue, 31 Dec 2019 19:38:37 -0800 (PST)
 MIME-Version: 1.0
-References: <b3fb12ff-969a-9037-ee6f-f8e4b6d91895@attglobal.net>
- <762ea0a4-cc2a-4b7d-91fc-efa9e9531043@zx2c4.com>
- <7eb40791-9689-2b3d-bfb0-2299cdf7b07a@attglobal.net>
-In-Reply-To: <7eb40791-9689-2b3d-bfb0-2299cdf7b07a@attglobal.net>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 3 Jan 2020 16:38:19 +0100
-X-Gmail-Original-Message-ID: <CAHmME9r+HM27xhjwDP3q=DJV7KJsvZS__75szHzBE4qHBoXYUg@mail.gmail.com>
-Message-ID: <CAHmME9r+HM27xhjwDP3q=DJV7KJsvZS__75szHzBE4qHBoXYUg@mail.gmail.com>
-Subject: Re: wg-quick: syntax error, unexpected saddr
-To: Eddie <stunnel@attglobal.net>
-Cc: alvind11@hotmail.com, WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: Edward Vielmetti <edward.vielmetti@gmail.com>
+Date: Tue, 31 Dec 2019 22:38:00 -0500
+Message-ID: <CAPRZce0Ruqyrei0OykZ-d-gK97TGTq4wMPy2OrrVeUEbvm=sjA@mail.gmail.com>
+Subject: Installing Wireguard on Windows 10 on Arm; "wintun" device
+To: wireguard@lists.zx2c4.com
+X-Mailman-Approved-At: Fri, 03 Jan 2020 16:39:10 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -71,55 +73,84 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="===============3290625512754863587=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Eddie,
+--===============3290625512754863587==
+Content-Type: multipart/alternative; boundary="000000000000d4533b059b0bcf7f"
 
-A new Slackware maintainer (CC'd) has been found.
+--000000000000d4533b059b0bcf7f
+Content-Type: text/plain; charset="UTF-8"
 
-Something to consider with the nft(8) issue, by the way, is not only
-the version of nft(8), but also the options in your kernel. We check
-for these ones in Gentoo:
-https://gitweb.gentoo.org/repo/gentoo.git/tree/net-vpn/wireguard-tools/wireguard-tools-1.0.20200102.ebuild#n39
+I have a Windows 10 on Arm laptop (Lenovo Yoga C630) that I'm
+looking to install Wireguard on.
 
-Jason
+Generally speaking, Windows 10 on Arm runs either arm64 or win32
+binaries, but not win64, so I installed the 32-bit x86 version of Wireguard
+and the software came up fine.
+
+I created a config to point at my existing Wireguard server, but was stymied
+by the need to install a "Wintun" device. Apparently this doesn't work,
+with the error message as follows
+
+2019-12-31 22:30:55.300: [TUN] [wg0] Unable to create Wintun interface:
+Error creating interface: No driver for device "Wintun" installed
+
+I do see this commit
+
+https://git.zx2c4.com/wintun/commit/?id=f48b0b2883e849a2c91ccbfa72fa0691461c7cda
 
 
-On Thu, Jan 2, 2020 at 9:43 PM Eddie <stunnel@attglobal.net> wrote:
->
-> I don't use those packages for wireguard.  I build my own from source.
->
-> But yes, the rest of Slack seems to be stuck in a time-warp.
->
-> Cheers.
->
->
->
-> On 1/2/2020 12:10 PM, Jason A. Donenfeld wrote:
-> > On 1/2/20 6:25 AM, Eddie wrote:
-> > > First time running wireguard as a native client on my Slackware 14.2
-> > > system throws this:
-> >
-> > So far as I can tell, Slackware hasn't updated its WireGuard since
-> > 2018: https://slackbuilds.org/repository/14.2/network/WireGuard/
-> >
-> > I've tried several times to contact the maintainers and have not
-> > received a reply.
-> >
-> > It sounds like their kernel and/or nft are similarly bitrotted?
-> >
-> > Maybe consider a new distro.
-> >
-> > Alternatively, just get rid of nft from your system, and it will
-> > fallback to using iptables.
-> >
-> > Jason
-> >
-> >
+which makes me think there's some arm64 work going on somewhere, and it's
+possible
+that I botched the install at some point, so I'd welcome any guidance or
+expectations.
+
+thanks
+
+Ed
+-- 
+Edward Vielmetti +1 734 330 2465
+edward.vielmetti@gmail.com
+
+--000000000000d4533b059b0bcf7f
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">I have a Windows 10 on Arm laptop (Lenovo Yoga C630) that =
+I&#39;m=C2=A0<div>looking to install Wireguard on.</div><div><br></div><div=
+>Generally speaking, Windows 10 on Arm runs either arm64 or win32</div><div=
+>binaries, but not win64, so I installed the 32-bit x86 version of Wireguar=
+d</div><div>and the software came up fine.</div><div><br></div><div>I creat=
+ed a config to point at my existing Wireguard server, but was stymied</div>=
+<div>by the need to install a &quot;Wintun&quot; device. Apparently this do=
+esn&#39;t work,</div><div>with the error message as follows</div><div><br><=
+/div><div>2019-12-31 22:30:55.300: [TUN] [wg0] Unable to create Wintun inte=
+rface: Error creating interface: No driver for device &quot;Wintun&quot; in=
+stalled<br><div><br></div><div>I do see this commit</div><div><br></div><di=
+v><a href=3D"https://git.zx2c4.com/wintun/commit/?id=3Df48b0b2883e849a2c91c=
+cbfa72fa0691461c7cda">https://git.zx2c4.com/wintun/commit/?id=3Df48b0b2883e=
+849a2c91ccbfa72fa0691461c7cda</a>=C2=A0</div><div><br></div><div>which make=
+s me think there&#39;s some arm64 work going on somewhere, and it&#39;s pos=
+sible</div><div>that I botched the install at some point, so I&#39;d welcom=
+e any guidance or expectations.</div><div><br></div><div>thanks</div><div><=
+br></div><div>Ed=C2=A0</div>-- <br><div dir=3D"ltr" class=3D"gmail_signatur=
+e" data-smartmail=3D"gmail_signature">Edward Vielmetti=C2=A0+1 734 330 2465=
+<div><a href=3D"mailto:edward.vielmetti@gmail.com" target=3D"_blank">edward=
+.vielmetti@gmail.com</a></div><div><br></div></div></div></div>
+
+--000000000000d4533b059b0bcf7f--
+
+--===============3290625512754863587==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--===============3290625512754863587==--
