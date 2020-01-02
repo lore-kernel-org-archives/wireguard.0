@@ -2,53 +2,66 @@ Return-Path: <SRS0=WErI=2X=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	HTML_MESSAGE,MAILING_LIST_MULTI,NORMAL_HTTP_TO_IP,NUMERIC_HTTP_ADDR,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1,WEIRD_PORT autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AE17C2D0C2
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  2 Jan 2020 18:57:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6898FC2D0C2
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  2 Jan 2020 20:10:33 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id AC04F21655
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  2 Jan 2020 18:57:49 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="p45r/Sv4"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org AC04F21655
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id BA1D121582
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  2 Jan 2020 20:10:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org BA1D121582
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=attglobal.net
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3df33e05;
-	Thu, 2 Jan 2020 18:57:48 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e3c6b80e;
+	Thu, 2 Jan 2020 20:10:05 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6534ac70
- for <wireguard@lists.zx2c4.com>; Thu, 2 Jan 2020 18:57:45 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7c601f96
- for <wireguard@lists.zx2c4.com>; Thu, 2 Jan 2020 18:57:45 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d374ee5d
- for <wireguard@lists.zx2c4.com>; Thu, 2 Jan 2020 17:59:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=date:to:from
- :subject:mime-version:content-type; s=mail; bh=UIqkIqqhmn/4NCVGA
- tpaAvOmnuI=; b=p45r/Sv42W5CIE0GzDEEbaXBPA74VZkOqtxs6H/Yj/J0Gxk3I
- Kilg6hMXS3fg7J1kp3juPf0B/lY6raaSbA3Rku7+7HyIfL5LqB5q6kxlcWW4FXTV
- oxk5ZD9Aophj68zfdn4WRCs78SAO9zSADUG+LBqZjT0Vdfx+HFgnK061uMhi7K62
- 9ZbeNHoLMMa/4HkicN3BsPX+NNvGE872zX1zdqf8br7LE0Di3BuM72ohqrr48EO4
- 4MbpYZJEPEjiquoU6ly1ymOcYJGxslmADoqdpS+Bi1XvOCCYpFOM50fX09g6g/vt
- SeHcmoryZ7LHYz2Xsov8q5q7e030/Wxyo4rsw==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id afbcf7be
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Thu, 2 Jan 2020 17:59:13 +0000 (UTC)
-Date: Thu, 02 Jan 2020 19:57:43 +0100
-To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: [ANNOUNCE] wireguard-tools v1.0.20200102 released 
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9fef0f0c
+ for <wireguard@lists.zx2c4.com>; Thu, 2 Jan 2020 20:10:02 +0000 (UTC)
+Received: from p-impout001.msg.pkvw.co.charter.net
+ (p-impout002aa.msg.pkvw.co.charter.net [47.43.26.133])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a8c17ec0
+ for <wireguard@lists.zx2c4.com>; Thu, 2 Jan 2020 20:10:02 +0000 (UTC)
+Received: from [192.168.0.2] ([76.91.204.161]) by cmsmtp with ESMTP
+ id n6kGiESpxWkjHn6kHiRfeK; Thu, 02 Jan 2020 20:07:01 +0000
+X-Authority-Analysis: v=2.3 cv=IpRgj43g c=1 sm=1 tr=0
+ a=rO8gbEbqGp3jIVlhlq3uIg==:117 a=rO8gbEbqGp3jIVlhlq3uIg==:17
+ a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=r77TgQKjGQsHNAKrUKIA:9 a=07d9gI8wAAAA:8
+ a=mHFh7uMkAAAA:8 a=aceowhZSAAAA:8 a=xP1ufChRAAAA:8 a=UGG5zPGqAAAA:8
+ a=pGLkceISAAAA:8 a=LkJbPPXozsjAb6FABBAA:9 a=EJiJzViVGyDGSnxX:21
+ a=2gW9RQ0MBYY1SBxS:21 a=QEXdDO2ut3YA:10 a=bTZ3FDUYaMkA:10 a=1SC-I_OoR3IA:10
+ a=UNj90DokZAQA:10 a=qiWi7Edwir4A:10 a=69WVnREnm1wA:10 a=NWVoK91CQyQA:10
+ a=S5G5rcVzBIwTvdc5o6_T:22 a=0-dW2UBFgGQgl3lKmnmz:22 a=hqjn9byvZf4Lm12z06sA:9
+ a=Wsj9e-ekxdMg5FN_:21 a=WH3rSPPR-1IrHbW4:21 a=7qXVA5r3zGBVQQNE:21
+ a=_W_S_7VecoQA:10 a=1FFeGIo4sIMA:10 a=RPAUK0fq2fAA:10
+ a=e2CUPOnPG4QKp8I52DXD:22 a=HQEt9TzzOQq8o8QOxM_l:22 a=NMZokWJXTV_zCymGmvQm:22
+ a=SuU39FtTVyGER4vBZ3Sa:22 a=17ibUXfGiVyGqR_YBevW:22
+Subject: Re: wg-quick: syntax error, unexpected saddr
+From: Eddie <stunnel@attglobal.net>
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+References: <b3fb12ff-969a-9037-ee6f-f8e4b6d91895@attglobal.net>
+ <CAPRZce10tz0KgBUMFcHj09WDvUF_ygpMBQckB-Nebnjk52479g@mail.gmail.com>
+ <3d6ae658-2184-5da2-ddaa-c4060419bee5@attglobal.net>
+ <b1fa4bed-d9cd-d20e-2037-9794f1a53185@attglobal.net>
+X-Clacks-Overhead: GNU Terry Pratchett
+Message-ID: <57894c8a-cbe8-f397-9cbb-82f13cb0792c@attglobal.net>
+Date: Thu, 2 Jan 2020 12:07:00 -0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.1
 MIME-Version: 1.0
-Message-Id: <fa069be92ea93878@frisell.zx2c4.com>
+In-Reply-To: <b1fa4bed-d9cd-d20e-2037-9794f1a53185@attglobal.net>
+Content-Language: en-US
+X-CMAE-Envelope: MS4wfIl4SwHBFGP54w1Iur7n4L9nfzsABRShKcn7zvwbbkeSdiNr2b0WiK/4mTEWTUlwUgfSIqdzoa6Yzjl6pXPY8I0cp74higqwCVUoVUEk++ch46ZloJSe
+ KdLnRSE5gGNI6+FqVMHZgOtuEkRuqUCzOXit27ygQzOKn+yjeo9KOCInqNS6X9VdnBh636jWiMoeCQ==
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
+Reply-To: stunnel@attglobal.net
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -57,91 +70,378 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="===============8287505836162649189=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+This is a multi-part message in MIME format.
+--===============8287505836162649189==
+Content-Type: multipart/alternative;
+ boundary="------------78375DD05D40D69796B10FE4"
+Content-Language: en-US
 
-Hello,
+This is a multi-part message in MIME format.
+--------------78375DD05D40D69796B10FE4
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-A new version, v1.0.20200102, of wireguard-tools has been tagged in the git
-repository, containing various required userspace utilities, such as the
-wg(8) and wg-quick(8) commands and documentation.
+As a follow up, wireguard-tools v1.0.20200102 also has the issue.
 
-== Changes ==
+I did think of updating nftables to the latest, but that then started 
+dragging in too many other updated dependencies I wasn't comfortable 
+with.  So, as nftables currently isn't used on Slack, I renamed the 
+binary so that wg-quick wouldn't find it, which allowed the connection 
+to be made.
 
-  * systemd: update documentation URL
-  * global: bump copyright
-  
-  Usual house keeping.
-  
-  * Makefile: DEBUG_TOOLS -> DEBUG and document
-  * Makefile: port static analysis check
-  * dns-hatchet: adjust path for new repo layout
-  * Makefile: rework automatic version.h mangling
-  
-  These are some important-ish cleanups for downstream package maintainers that
-  should make packaging this a lot smoother.
-  
-  * man: add documentation about removing explicit listen-port
-  
-  Documentation improvement.
-  
-  * wg-quick: linux: quote ifname for nft
-  
-  This should fix issues with weirdly named ifnames and odd versions of nft(8).
-  
-  * fuzz: find bugs in the config syntax parser
-  * fuzz: find bugs when parsing uapi input
-  
-  These are two fuzzers that have been laying around without a repo for a while.
-  Perhaps somebody with enough compute power will find bugs with them.
+Now all I need do is work out why the handshakes between client and 
+server are working, but traffic doesn't flow.
 
-This release contains commits from: Jason A. Donenfeld and Devin Smith.
-
-As always, the source is available at https://git.zx2c4.com/wireguard-tools/ and
-information about the project is available at https://www.wireguard.com/ .
-
-This release is available in compressed tarball form here:
-  https://git.zx2c4.com/wireguard-tools/snapshot/wireguard-tools-1.0.20200102.tar.xz
-  SHA2-256: 547cd1c2f8dca904faac9e8d3964f1ef956c24bb12e3498da88dde95243c7f08
-
-A PGP signature of that file decompressed is available here:
-  https://git.zx2c4.com/wireguard-tools/snapshot/wireguard-tools-1.0.20200102.tar.asc
-  Signing key: AB9942E6D4A4CFC3412620A749FC7012A5DE03AE
-  Remember to unxz the tarball before verifying the signature.
-
-If you're a package maintainer, please bump your package version. If you're a
-user, the WireGuard team welcomes any and all feedback on this latest version.
-
-Finally, WireGuard development thrives on donations. By popular demand, we
-have a webpage for this: https://www.wireguard.com/donations/
-
-Thank you,
-Jason Donenfeld
+Cheers.
 
 
------BEGIN PGP SIGNATURE-----
+On 1/2/2020 12:04 AM, Eddie wrote:
+> Not sure if this helps, or not.  But this is the relevant part from a 
+> bash trace:
+>
+> + cmd nft -f /dev/fd/63
+> + echo '[#] nft -f /dev/fd/63'
+> [#] nft -f /dev/fd/63
+> + nft -f /dev/fd/63
+> ++ echo -n 'add table ip wg-quick-wg0
+> add chain ip wg-quick-wg0 preraw { type filter hook prerouting 
+> priority -300; }
+> add chain ip wg-quick-wg0 premangle { type filter hook prerouting 
+> priority -150; }
+> add chain ip wg-quick-wg0 postmangle { type filter hook postrouting 
+> priority -150; }
+> add rule ip wg-quick-wg0 preraw iifname != wg0 ip daddr 192.168.150.14 
+> fib saddr type != local drop
+> add rule ip wg-quick-wg0 postmangle meta l4proto udp mark 51820 ct 
+> mark set mark
+> add rule ip wg-quick-wg0 premangle meta l4proto udp meta mark set ct mark
+> '
+> /dev/fd/63:5:76-80: Error: syntax error, unexpected saddr
+>
+> ^^^^^
+> Cheers.
+>
+>
+> On 1/1/2020 11:34 PM, Eddie wrote:
+>> Ha.  Even older:
+>>
+>> root@The-Tardis:~# nft -v
+>> nftables v0.6 (Support Edward Snowden)
+>>
+>>
+>> And in reply to a couple of off-list messages:
+>>
+>> wireguard-tools-1.0.20191226
+>>
+>> There are different reasons for using different VPNs.  Can you really 
+>> "totally" trust the one that you're using.
+>>
+>> Cheers.
+>>
+>>
+>>
+>> On 1/1/2020 10:22 PM, Edward Vielmetti wrote:
+>>> Eddie - what version of nftables does Slackware come with? The 
+>>> output of `nft -v` should be helpful.
+>>>
+>>> There is a report from stackexchange that nftables at 0.7 gives this 
+>>> error, but at 0.8.1 or better it's OK. I was not easily able to 
+>>> verify that from the source code, but it would be where I'd start to 
+>>> look. There was
+>>>
+>>> The nftables 0.8.1 release notes (from 2018) are here: 
+>>> https://lwn.net/Articles/744480/ and it points to new syntax in this 
+>>> release.
+>>>
+>>> good luck!
+>>>
+>>> Ed
+>>>
+>>> On Thu, Jan 2, 2020 at 12:27 AM Eddie <stunnel@attglobal.net 
+>>> <mailto:stunnel@attglobal.net>> wrote:
+>>>
+>>>     First time running wireguard as a native client on my Slackware
+>>>     14.2
+>>>     system throws this:
+>>>
+>>>     root@The-Tardis:~# wg-quick up wg0
+>>>     [#] ip link add wg0 type wireguard
+>>>     [#] wg setconf wg0 /dev/fd/63
+>>>     [#] ip -4 address add 192.168.150.14/32
+>>>     <http://192.168.150.14/32> dev wg0
+>>>     [#] ip link set mtu 1420 up dev wg0
+>>>     [#] wg set wg0 fwmark 51820
+>>>     [#] ip -4 route add 0.0.0.0/0 <http://0.0.0.0/0> dev wg0 table 51820
+>>>     [#] ip -4 rule add not fwmark 51820 table 51820
+>>>     [#] ip -4 rule add table main suppress_prefixlength 0
+>>>     [#] sysctl -q net.ipv4.conf.all.src_valid_mark=1
+>>>     [#] nft -f /dev/fd/63
+>>>     /dev/fd/63:5:76-80: Error: syntax error, unexpected saddr
+>>>
+>>>     Fairly simple config to connect to my VPS:
+>>>
+>>>     [Interface]
+>>>     Address = 192.168.150.14/32 <http://192.168.150.14/32>
+>>>     PrivateKey = <Not the key you're looking for>
+>>>
+>>>     [Peer]
+>>>     PublicKey = <Just being overly paranoid>
+>>>     Endpoint = www.xxx.yyy.zzz:51820
+>>>     AllowedIPs = 0.0.0.0/0 <http://0.0.0.0/0>
+>>>
+>>>     Not sure what additional information you need collected at this
+>>>     point.
+>>>
+>>>     I'm able to connect outbound successfully using NordVPN's
+>>>     version of
+>>>     wireguard, but that doesn't use wg-quick, which is where the
+>>>     issue is.
+>>>
+>>>     Cheers.
+>>>     _______________________________________________
+>>>     WireGuard mailing list
+>>>     WireGuard@lists.zx2c4.com <mailto:WireGuard@lists.zx2c4.com>
+>>>     https://lists.zx2c4.com/mailman/listinfo/wireguard
+>>>
+>>>
+>>>
+>>> -- 
+>>> Edward Vielmetti +1 734 330 2465
+>>> edward.vielmetti@gmail.com <mailto:edward.vielmetti@gmail.com>
+>>>
+>>
+>>
+>> _______________________________________________
+>> WireGuard mailing list
+>> WireGuard@lists.zx2c4.com
+>> https://lists.zx2c4.com/mailman/listinfo/wireguard
+>
+>
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
 
-iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAl4OPQsQHGphc29uQHp4
-MmM0LmNvbQAKCRBJ/HASpd4DriThD/wN35VDlD2OBYZkPSnyEBLiB8kPoxC0qheY
-5ghP3EGyvG1bpKnYVbZG7oRNl1YG8+xU8hDYPBBiGzIoOTmDyOng6zt65jhEaTIP
-nEc4rOyWLybVRiLaJzix9eARwVLX6HhcjupDbvkQtqpudmsveYWIB4U1ebZFXPo7
-4YvkmFyl86DlwZhYzN6yHDkAVqQBytjUncTlas7q/t9c06b8xBEUJKPzDFxCZVh6
-0S/+WpJiFgKLoUiKsuqNSGwZFKiQUOcs0z3UkXJ03HWj5Vwu87I+im/wkZwt3ZLn
-w4tB32K0QWVxbbi4z7lNpzcXgOoGIcPmSdfHvpWWWPnLnu2F0zu05vzW6+JCiO64
-Zs5IWVpZ2z6tgcdofIv/5Xap4LfcXjgUDdzlO97e/ql8jXHnE9furkLNAepa5rGL
-2V9CummqDrF5G24KK/qEqWJZYR4dB4r8Pprd4GrrZNLtlcN7V2Q2Po1wgmEjpgEn
-VarQ5uf5S4YP/B8iaNc8RzOtyngWZ2l7xTuEUuwXDDoRlzbadgmQz1L5Mr73Yx3r
-J3M9HRvNRE7LZwrB6xknl1q3/j698UFvcjRHFIHsd/GSlKScIf47p2fwIEs2cPUs
-DVRCJ00qCija25L7iIM+UqXyUQ2mcR4rVpIyyH8T/8CJo9psi66btDCOLx1oOnTQ
-Y3UOSl2BpA==
-=s6nE
------END PGP SIGNATURE-----
+
+--------------78375DD05D40D69796B10FE4
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 8bit
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body text="#000000" bgcolor="#FFFFFF">
+    As a follow up, wireguard-tools v1.0.20200102 also has the issue.<br>
+    <br>
+    I did think of updating nftables to the latest, but that then
+    started dragging in too many other updated dependencies I wasn't
+    comfortable with.  So, as nftables currently isn't used on Slack, I
+    renamed the binary so that wg-quick wouldn't find it, which allowed
+    the connection to be made.<br>
+    <br>
+    Now all I need do is work out why the handshakes between client and
+    server are working, but traffic doesn't flow.<br>
+    <br>
+    Cheers.<br>
+    <br>
+    <br>
+    <div class="moz-cite-prefix">On 1/2/2020 12:04 AM, Eddie wrote:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:b1fa4bed-d9cd-d20e-2037-9794f1a53185@attglobal.net">
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      Not sure if this helps, or not.  But this is the relevant part
+      from a bash trace:<br>
+      <br>
+      <tt>+ cmd nft -f /dev/fd/63</tt><tt><br>
+      </tt><tt>+ echo '[#] nft -f /dev/fd/63'</tt><tt><br>
+      </tt><tt>[#] nft -f /dev/fd/63</tt><tt><br>
+      </tt><tt>+ nft -f /dev/fd/63</tt><tt><br>
+      </tt><tt>++ echo -n 'add table ip wg-quick-wg0</tt><tt><br>
+      </tt><tt>add chain ip wg-quick-wg0 preraw { type filter hook
+        prerouting priority -300; }</tt><tt><br>
+      </tt><tt>add chain ip wg-quick-wg0 premangle { type filter hook
+        prerouting priority -150; }</tt><tt><br>
+      </tt><tt>add chain ip wg-quick-wg0 postmangle { type filter hook
+        postrouting priority -150; }</tt><tt><br>
+      </tt><tt>add rule ip wg-quick-wg0 preraw iifname != wg0 ip daddr
+        192.168.150.14 fib saddr type != local drop</tt><tt><br>
+      </tt><tt>add rule ip wg-quick-wg0 postmangle meta l4proto udp mark
+        51820 ct mark set mark</tt><tt><br>
+      </tt><tt>add rule ip wg-quick-wg0 premangle meta l4proto udp meta
+        mark set ct mark</tt><tt><br>
+      </tt><tt>'</tt><tt><br>
+      </tt><tt>/dev/fd/63:5:76-80: Error: syntax error, unexpected saddr</tt><tt><br>
+      </tt><tt><br>
+      </tt><tt>                                                                          
+        ^^^^^</tt><br>
+      Cheers.<br>
+      <br>
+      <br>
+      <div class="moz-cite-prefix">On 1/1/2020 11:34 PM, Eddie wrote:<br>
+      </div>
+      <blockquote type="cite"
+        cite="mid:3d6ae658-2184-5da2-ddaa-c4060419bee5@attglobal.net">
+        <meta http-equiv="Content-Type" content="text/html;
+          charset=UTF-8">
+        Ha.  Even older:<br>
+        <br>
+        root@The-Tardis:~# nft -v<br>
+        nftables v0.6 (Support Edward Snowden)<br>
+        <br>
+        <br>
+        And in reply to a couple of off-list messages:<br>
+        <br>
+        wireguard-tools-1.0.20191226<br>
+        <br>
+        There are different reasons for using different VPNs.  Can you
+        really "totally" trust the one that you're using.<br>
+        <br>
+        Cheers.<br>
+        <br>
+        <br>
+        <br>
+        <div class="moz-cite-prefix">On 1/1/2020 10:22 PM, Edward
+          Vielmetti wrote:<br>
+        </div>
+        <blockquote type="cite"
+cite="mid:CAPRZce10tz0KgBUMFcHj09WDvUF_ygpMBQckB-Nebnjk52479g@mail.gmail.com">
+          <meta http-equiv="content-type" content="text/html;
+            charset=UTF-8">
+          <div dir="ltr">Eddie - what version of nftables does Slackware
+            come with? The output of `nft -v` should be helpful.
+            <div><br>
+            </div>
+            <div>There is a report from stackexchange that nftables at
+              0.7 gives this error, but at 0.8.1 or better it's OK. I
+              was not easily able to verify that from the source code,
+              but it would be where I'd start to look. There was </div>
+            <div><br>
+            </div>
+            <div>The nftables 0.8.1 release notes (from 2018) are here: <a
+                href="https://lwn.net/Articles/744480/"
+                moz-do-not-send="true">https://lwn.net/Articles/744480/</a> and
+              it points to new syntax in this release.</div>
+            <div><br>
+            </div>
+            <div>good luck!</div>
+            <div><br>
+            </div>
+            <div>Ed</div>
+          </div>
+          <br>
+          <div class="gmail_quote">
+            <div dir="ltr" class="gmail_attr">On Thu, Jan 2, 2020 at
+              12:27 AM Eddie &lt;<a href="mailto:stunnel@attglobal.net"
+                moz-do-not-send="true">stunnel@attglobal.net</a>&gt;
+              wrote:<br>
+            </div>
+            <blockquote class="gmail_quote" style="margin:0px 0px 0px
+              0.8ex;border-left:1px solid
+              rgb(204,204,204);padding-left:1ex">First time running
+              wireguard as a native client on my Slackware 14.2 <br>
+              system throws this:<br>
+              <br>
+              root@The-Tardis:~# wg-quick up wg0<br>
+              [#] ip link add wg0 type wireguard<br>
+              [#] wg setconf wg0 /dev/fd/63<br>
+              [#] ip -4 address add <a href="http://192.168.150.14/32"
+                rel="noreferrer" target="_blank" moz-do-not-send="true">192.168.150.14/32</a>
+              dev wg0<br>
+              [#] ip link set mtu 1420 up dev wg0<br>
+              [#] wg set wg0 fwmark 51820<br>
+              [#] ip -4 route add <a href="http://0.0.0.0/0"
+                rel="noreferrer" target="_blank" moz-do-not-send="true">0.0.0.0/0</a>
+              dev wg0 table 51820<br>
+              [#] ip -4 rule add not fwmark 51820 table 51820<br>
+              [#] ip -4 rule add table main suppress_prefixlength 0<br>
+              [#] sysctl -q net.ipv4.conf.all.src_valid_mark=1<br>
+              [#] nft -f /dev/fd/63<br>
+              /dev/fd/63:5:76-80: Error: syntax error, unexpected saddr<br>
+              <br>
+              Fairly simple config to connect to my VPS:<br>
+              <br>
+              [Interface]<br>
+              Address = <a href="http://192.168.150.14/32"
+                rel="noreferrer" target="_blank" moz-do-not-send="true">192.168.150.14/32</a><br>
+              PrivateKey = &lt;Not the key you're looking for&gt;<br>
+              <br>
+              [Peer]<br>
+              PublicKey = &lt;Just being overly paranoid&gt;<br>
+              Endpoint = <a class="moz-txt-link-abbreviated"
+                href="http://www.xxx.yyy.zzz:51820"
+                moz-do-not-send="true">www.xxx.yyy.zzz:51820</a><br>
+              AllowedIPs = <a href="http://0.0.0.0/0" rel="noreferrer"
+                target="_blank" moz-do-not-send="true">0.0.0.0/0</a><br>
+              <br>
+              Not sure what additional information you need collected at
+              this point.<br>
+              <br>
+              I'm able to connect outbound successfully using NordVPN's
+              version of <br>
+              wireguard, but that doesn't use wg-quick, which is where
+              the issue is.<br>
+              <br>
+              Cheers.<br>
+              _______________________________________________<br>
+              WireGuard mailing list<br>
+              <a href="mailto:WireGuard@lists.zx2c4.com" target="_blank"
+                moz-do-not-send="true">WireGuard@lists.zx2c4.com</a><br>
+              <a
+                href="https://lists.zx2c4.com/mailman/listinfo/wireguard"
+                rel="noreferrer" target="_blank" moz-do-not-send="true">https://lists.zx2c4.com/mailman/listinfo/wireguard</a><br>
+            </blockquote>
+          </div>
+          <br clear="all">
+          <div><br>
+          </div>
+          -- <br>
+          <div dir="ltr" class="gmail_signature">Edward Vielmetti +1 734
+            330 2465
+            <div><a href="mailto:edward.vielmetti@gmail.com"
+                target="_blank" moz-do-not-send="true">edward.vielmetti@gmail.com</a></div>
+            <div><br>
+            </div>
+          </div>
+        </blockquote>
+        <br>
+        <br>
+        <fieldset class="mimeAttachmentHeader"></fieldset>
+        <pre class="moz-quote-pre" wrap="">_______________________________________________
+WireGuard mailing list
+<a class="moz-txt-link-abbreviated" href="mailto:WireGuard@lists.zx2c4.com" moz-do-not-send="true">WireGuard@lists.zx2c4.com</a>
+<a class="moz-txt-link-freetext" href="https://lists.zx2c4.com/mailman/listinfo/wireguard" moz-do-not-send="true">https://lists.zx2c4.com/mailman/listinfo/wireguard</a>
+</pre>
+      </blockquote>
+      <br>
+      <br>
+      <fieldset class="mimeAttachmentHeader"></fieldset>
+      <pre class="moz-quote-pre" wrap="">_______________________________________________
+WireGuard mailing list
+<a class="moz-txt-link-abbreviated" href="mailto:WireGuard@lists.zx2c4.com">WireGuard@lists.zx2c4.com</a>
+<a class="moz-txt-link-freetext" href="https://lists.zx2c4.com/mailman/listinfo/wireguard">https://lists.zx2c4.com/mailman/listinfo/wireguard</a>
+</pre>
+    </blockquote>
+    <br>
+  </body>
+</html>
+
+--------------78375DD05D40D69796B10FE4--
+
+--===============8287505836162649189==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--===============8287505836162649189==--
