@@ -1,51 +1,54 @@
-Return-Path: <SRS0=mHS8=2V=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=WErI=2X=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,NUMERIC_HTTP_ADDR,SPF_HELO_NONE,SPF_PASS autolearn=no
+X-Spam-Status: No, score=-2.3 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8701AC2D0C2
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 31 Dec 2019 14:33:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9664AC2D0DD
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  2 Jan 2020 05:26:18 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 948C7206DB
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 31 Dec 2019 14:32:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 948C7206DB
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=barrys-emacs.org
+	by mail.kernel.org (Postfix) with ESMTPS id F256321655
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  2 Jan 2020 05:26:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org F256321655
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=attglobal.net
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d0e7825d;
-	Tue, 31 Dec 2019 14:32:46 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a63f9bd5;
+	Thu, 2 Jan 2020 05:26:01 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b3e832c6
- for <wireguard@lists.zx2c4.com>;
- Tue, 31 Dec 2019 12:03:17 +0000 (UTC)
-Received: from claranet-outbound-smtp06.uk.clara.net
- (claranet-outbound-smtp06.uk.clara.net [195.8.89.39])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b8c0fdef
- for <wireguard@lists.zx2c4.com>;
- Tue, 31 Dec 2019 12:03:17 +0000 (UTC)
-Received: from cpc96796-rdng27-2-0-cust183.15-3.cable.virginm.net
- ([86.19.118.184]:43070 helo=expanse.chelsea.private)
- by relay06.mail.eu.clara.net (relay.clara.net [81.171.239.36]:10587)
- with esmtpsa (authdaemon_plain:barry@barrys-emacs.org)
- (TLS1.2:DHE_RSA_AES_256_CBC_SHA256:256)
- id 1imGF0-0001G5-Kf  for wireguard@lists.zx2c4.com
- (return-path <barry@barrys-emacs.org>); Tue, 31 Dec 2019 12:03:15 +0000
-From: Barry Scott <barry@barrys-emacs.org>
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
-Subject: wireguard broke with recent update on fedora 31
-Message-Id: <F9761E5F-F69B-458F-A534-3249FCFBF5FD@barrys-emacs.org>
-Date: Tue, 31 Dec 2019 12:03:13 +0000
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5bbd0b0b
+ for <wireguard@lists.zx2c4.com>; Thu, 2 Jan 2020 05:25:57 +0000 (UTC)
+Received: from p-impout001.msg.pkvw.co.charter.net
+ (p-impout002aa.msg.pkvw.co.charter.net [47.43.26.133])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4563898e
+ for <wireguard@lists.zx2c4.com>; Thu, 2 Jan 2020 05:25:57 +0000 (UTC)
+Received: from [192.168.0.2] ([76.91.204.161]) by cmsmtp with ESMTP
+ id mszci9jz7WkjHmszdiQzc7; Thu, 02 Jan 2020 05:25:57 +0000
+X-Authority-Analysis: v=2.3 cv=IpRgj43g c=1 sm=1 tr=0
+ a=rO8gbEbqGp3jIVlhlq3uIg==:117 a=rO8gbEbqGp3jIVlhlq3uIg==:17
+ a=IkcTkHD0fZMA:10 a=xP1ufChRAAAA:8 a=Hi1OobsBpwcAyijCwHgA:9
+ a=QxG4OI8PWL17y5ok:21 a=mdfGrniXiRg3uQyw:21 a=QEXdDO2ut3YA:10
+ a=SuU39FtTVyGER4vBZ3Sa:22 a=pHzHmUro8NiASowvMSCR:22 a=xoEH_sTeL_Rfw54TyV31:22
 To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-X-Mailer: Apple Mail (2.3445.104.11)
-X-Mailman-Approved-At: Tue, 31 Dec 2019 15:32:44 +0100
+From: Eddie <stunnel@attglobal.net>
+Subject: wg-quick: syntax error, unexpected saddr
+X-Clacks-Overhead: GNU Terry Pratchett
+Message-ID: <b3fb12ff-969a-9037-ee6f-f8e4b6d91895@attglobal.net>
+Date: Wed, 1 Jan 2020 21:25:56 -0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.1
+MIME-Version: 1.0
+Content-Language: en-US
+X-CMAE-Envelope: MS4wfPK5qeIRdTcNefT5w+l8SXVO/TeiuKdL0eTYwzhp4K7Dk23cCsHlyX/ZJryJvIByghPQLHrzAl752NpVi9Uy4kkmMBcSEWxWcusOYj+LRg35z4fpoOq1
+ dEACpADcfFAwWxIpM6VG9x1wfjLS3Y3EA6UMelVxmyg+ELuGmgPKDHNCQBx5ey1baMsb+5qg19+ugA==
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
+Reply-To: stunnel@attglobal.net
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -54,99 +57,44 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-I had wireguard working but the recent update of somethng has broken it.
+First time running wireguard as a native client on my Slackware 14.2 
+system throws this:
 
-I'm happy to help debug, run test code.
+root@The-Tardis:~# wg-quick up wg0
+[#] ip link add wg0 type wireguard
+[#] wg setconf wg0 /dev/fd/63
+[#] ip -4 address add 192.168.150.14/32 dev wg0
+[#] ip link set mtu 1420 up dev wg0
+[#] wg set wg0 fwmark 51820
+[#] ip -4 route add 0.0.0.0/0 dev wg0 table 51820
+[#] ip -4 rule add not fwmark 51820 table 51820
+[#] ip -4 rule add table main suppress_prefixlength 0
+[#] sysctl -q net.ipv4.conf.all.src_valid_mark=1
+[#] nft -f /dev/fd/63
+/dev/fd/63:5:76-80: Error: syntax error, unexpected saddr
 
-My server end is fedora 31, which is up to date.
+Fairly simple config to connect to my VPS:
 
-kernel-5.3.16-300.fc31.x86_64
-wireguard-dkms-0.0.20191226-1.fc31.noarch
-wireguard-tools-1.0.20191226-1.fc31.x86_64
+[Interface]
+Address = 192.168.150.14/32
+PrivateKey = <Not the key you're looking for>
 
-The server has 2 phys interfaces, external that is connected to the internet (no NAT)
-and internal that is home network. I uses systemd-networkd for the phys interfaces.
-wireguard uses a service that runnings these commands to start it up.
+[Peer]
+PublicKey = <Just being overly paranoid>
+Endpoint = www.xxx.yyy.zzz:51820
+AllowedIPs = 0.0.0.0/0
 
-    ip link add wg0 type wireguard
-    wg setconf wg0 /etc/wireguard/wg0.conf
-    ip -4 address add 172.16.4.1/24 dev wg0
-    ip link set mtu 1420 up dev wg0
+Not sure what additional information you need collected at this point.
 
-(I also tried a smaller MTU, 1280, with no change).
+I'm able to connect outbound successfully using NordVPN's version of 
+wireguard, but that doesn't use wg-quick, which is where the issue is.
 
-I use firewalld configured to allow access through wg0.
-I have also turned off firewalld to eliminate iptables rules
-as a source of problem.
-
-$ wg
-interface: wg0
-  public key: KNwXI8p8zJVed81RI3WhHQuYEUxIe0/PDP77Z2YSKTI=
-  private key: (hidden)
-  listening port: 51820
-
-peer: bXUXQRJ9e2RXuxpSofQPVsvGMb5idhZiiF3lTOs1PRQ=
-  endpoint: 213.205.240.12:43029
-  allowed ips: (none)
-  latest handshake: 33 seconds ago
-  transfer: 1.02 KiB received, 3.11 KiB sent
-  persistent keepalive: every 30 seconds
-
-peer: JGxzN0iT+WIL2rltsWfaKD1IFC/f7b/AxF9peecTDEU=
-  allowed ips: (none)
-  persistent keepalive: every 30 seconds
-
-peer: hom+2y5nNr9UnsSeyNJvWS6RkvnbTQOWwd8Zopsuzwo=
-  allowed ips: 0.0.0.0/0
-  persistent keepalive: every 30 seconds
-
-peer bX... is an Android phone running wireguard v0.0.20191220.
-
-A tcpdump show 2 ways comms with the phone
-
-$ tcpdump -n -i external port 51820
-11:35:09.545035 IP 213.205.240.12.43029 > 86.19.118.184.51820: UDP, length 112
-11:35:09.792170 IP 86.19.118.184.51820 > 213.205.240.12.43029: UDP, length 32
-11:35:14.533234 IP 213.205.240.12.43029 > 86.19.118.184.51820: UDP, length 112
-11:35:14.800147 IP 213.205.240.12.43029 > 86.19.118.184.51820: UDP, length 148
-11:35:14.802647 IP 86.19.118.184.51820 > 213.205.240.12.43029: UDP, length 92
-... etc...
-
-But I see nothing for "tcpdump -i wg0". And these stats:
-
-$ ip -s addr show wg0
-4: wg0: <POINTOPOINT,NOARP,UP,LOWER_UP> mtu 1280 qdisc noqueue state UNKNOWN group default qlen 1000
-    link/none
-    inet 172.16.4.1/24 scope global wg0
-       valid_lft forever preferred_lft forever
-    RX: bytes  packets  errors  dropped overrun mcast
-    180        2        1       0       0       0
-    TX: bytes  packets  errors  dropped carrier collsns
-    92         1        0       3       0       0
-
-
-Run test from phone here. Turn on wireguard, attempt to browse to http://172.16.4.1.
-
-$ ip -s addr show wg0
-4: wg0: <POINTOPOINT,NOARP,UP,LOWER_UP> mtu 1280 qdisc noqueue state UNKNOWN group default qlen 1000
-    link/none
-    inet 172.16.4.1/24 scope global wg0
-       valid_lft forever preferred_lft forever
-    RX: bytes  packets  errors  dropped overrun mcast
-    180        2        28      0       0       0
-    TX: bytes  packets  errors  dropped carrier collsns
-    188        4        0       3       0       0
-
-The RX errors have increased. dmesg is dull.
-
-Barry
-
-
+Cheers.
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
