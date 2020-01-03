@@ -6,58 +6,59 @@ X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 710F7C2D0CE
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  3 Jan 2020 17:24:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DDFA6C2D0C2
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  3 Jan 2020 17:54:04 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 10A27206E6
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  3 Jan 2020 17:24:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 8040420866
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  3 Jan 2020 17:54:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=solidadmin.com header.i=@solidadmin.com header.b="AMbKeR6j"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 10A27206E6
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=solidadmin.com header.i=@solidadmin.com header.b="aoGa6G3K"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 8040420866
 Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=solidadmin.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b402a9a2;
-	Fri, 3 Jan 2020 17:24:47 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e5238f4e;
+	Fri, 3 Jan 2020 17:53:47 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cff224bc
- for <wireguard@lists.zx2c4.com>; Fri, 3 Jan 2020 17:24:46 +0000 (UTC)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fd437945
+ for <wireguard@lists.zx2c4.com>; Fri, 3 Jan 2020 17:53:44 +0000 (UTC)
 Received: from conquer.yellowcord.com (conquer.yellowcord.com [45.55.224.114])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e3f018a2
- for <wireguard@lists.zx2c4.com>; Fri, 3 Jan 2020 17:24:46 +0000 (UTC)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a200db7a
+ for <wireguard@lists.zx2c4.com>; Fri, 3 Jan 2020 17:53:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=solidadmin.com; s=default; h=Content-Type:In-Reply-To:MIME-Version:Date:
  Message-ID:From:References:To:Subject:Sender:Reply-To:Cc:
  Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
  Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
  List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=lPndeav9lacI/9d/5R4vO8EEchlIU2G3/N3nU4i4LAs=; b=AMbKeR6jc2v9lFkuMQ4quQMHV
- opk3vg9cf5VfhKxsZyL7VmAlVZrawfaqHvz34fChP7AIVYAZbbUwmrg8jlYdHXHyVswuJKFQhIx6A
- 7Ce6R9J1CSYmeHck3uPYAzOZmSZyF0BxJY3nnV8wyIvmFBk/YIRvlFAvPgLBx5QOYGlKrWkfO/Zux
- AeRd82Nwf/v7qNWLHnQoj0uriHo9NiMyiCgFxj5Gdptw7RtUaApOLEwZHm1UA4+Pg+HSBSOTFaJ+I
- 3ry3QTsGKA78HgvNsi/k3zOekyGRmSOEGQBc542XruyUUxjOnMP4pxmDds8FNdsHYeZfhPJnZmpR1
- CeooTLNvA==;
-Received: from c-67-173-122-188.hsd1.il.comcast.net ([67.173.122.188]:21814
+ bh=sbDzDcqT3Pk4mQpz4Vf2XKjtvCTKR23VuxgVdPgJ7uc=; b=aoGa6G3Kezml1IPLrEMYwa4iL
+ SjprupkMjeu+mt7ZmA2NhjPzS4ZKtF4GrE2Q2SKJ+4XaZV7DEgZUnosuCVUgipGdJximV5ITBosN9
+ VjXuznyly4/FAA5FtLsZ9iILB9IOuNNbqee2VJAVF8AY7jQSFyyYC1phtkndDZ/6GjBXCsm/bJnCt
+ psjcP5ZDJghzKKWfp+AzD0ZBji9C2K0a119My1rbGdqCE0OUjeyL5nLynV56587OWwuAUUaSi/1hk
+ J7kEQeaCFB9aEEHt7SsZDjoSEyHd9hjitzO7povYG7ZdcJRu/h3k90pQoL+FXhHKj8/x6M1TegUQ6
+ P116t2lcQ==;
+Received: from c-67-173-122-188.hsd1.il.comcast.net ([67.173.122.188]:40512
  helo=[192.168.1.179]) by conquer.yellowcord.com with esmtpsa
  (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128) (Exim 4.92)
- (envelope-from <joe@solidadmin.com>) id 1inQgn-0001KJ-TU
- for wireguard@lists.zx2c4.com; Fri, 03 Jan 2020 11:24:45 -0600
+ (envelope-from <joe@solidadmin.com>) id 1inR8q-0001Ud-OW
+ for wireguard@lists.zx2c4.com; Fri, 03 Jan 2020 11:53:44 -0600
 Subject: Re: wireguard broke with recent update on fedora 31
 To: wireguard@lists.zx2c4.com
 References: <6c155e17-eb7a-c267-ee10-6cbb8a56857f@zx2c4.com>
  <6A278F71-FC48-497B-9948-D65A85004F57@barrys-emacs.org>
+ <59d645ac-4c88-4d68-b96d-7e4acaeeb618@solidadmin.com>
 From: Joe Doss <joe@solidadmin.com>
 X-Pep-Version: 2.0
 Organization: SolidAdmin
-Message-ID: <59d645ac-4c88-4d68-b96d-7e4acaeeb618@solidadmin.com>
-Date: Fri, 3 Jan 2020 11:24:45 -0600
+Message-ID: <a4e5e78d-afa0-c7d5-30dc-56fa139c3a85@solidadmin.com>
+Date: Fri, 3 Jan 2020 11:53:44 -0600
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.3.1
 MIME-Version: 1.0
-In-Reply-To: <6A278F71-FC48-497B-9948-D65A85004F57@barrys-emacs.org>
-Content-Type: multipart/mixed; boundary="------------F4372225B5100981DF863B65"
+In-Reply-To: <59d645ac-4c88-4d68-b96d-7e4acaeeb618@solidadmin.com>
+Content-Type: multipart/mixed; boundary="------------2E038DA87021CD873B318EFC"
 Content-Language: en-US
 X-AntiAbuse: This header was added to track abuse,
  please include it with any abuse report
@@ -86,28 +87,28 @@ Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
 This is a multi-part message in MIME format.
---------------F4372225B5100981DF863B65
+--------------2E038DA87021CD873B318EFC
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-On 1/2/20 4:58 PM, Barry wrote:
-> I already tried that. Dnf says the files needed to downgrade are no lon=
-ger available.
-> I did not double check the files in the copr repo folder to see if they=
- can be curl=E2=80=99ed.
-> I do that check tomorrow.
+Hey Barry,
 
-The old builds got mucked up when we moved to the new repos. I will push
-a few of the older versions to copr so you can try downgrading.
+Some older versions are building now:
+
+https://copr.fedorainfracloud.org/coprs/jdoss/wireguard/builds/
+
+I have not tested them as I had to make some changes so the old repo
+sources to build the src RPMs. Let me know if you run into any issues.
 
 Joe
+
 
 
 --=20
 Joe Doss
 joe@solidadmin.com
 
---------------F4372225B5100981DF863B65
+--------------2E038DA87021CD873B318EFC
 Content-Type: application/pgp-keys;
  name="pEpkey.asc"
 Content-Transfer-Encoding: quoted-printable
@@ -145,7 +146,7 @@ KNWAxKFBPqOvOG4etxOAZeFMZmNUjZjpilKnWn4qnCpxYVw=3D
 =3D4Z8k
 -----END PGP PUBLIC KEY BLOCK-----
 
---------------F4372225B5100981DF863B65
+--------------2E038DA87021CD873B318EFC
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -156,4 +157,4 @@ WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---------------F4372225B5100981DF863B65--
+--------------2E038DA87021CD873B318EFC--
