@@ -6,33 +6,32 @@ X-Spam-Status: No, score=-1.0 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,MISSING_HEADERS,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 99A50C2D0C2
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  3 Jan 2020 20:29:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B4B0C2D0C2
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  3 Jan 2020 20:31:51 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 22F36222C3
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  3 Jan 2020 20:29:44 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 22F36222C3
+	by mail.kernel.org (Postfix) with ESMTPS id 292CD222C3
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  3 Jan 2020 20:31:51 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 292CD222C3
 Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=attglobal.net
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 14deac26;
-	Fri, 3 Jan 2020 20:29:17 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fa2c1808;
+	Fri, 3 Jan 2020 20:31:50 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cb06004e
- for <wireguard@lists.zx2c4.com>; Fri, 3 Jan 2020 20:29:14 +0000 (UTC)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e9e962c5
+ for <wireguard@lists.zx2c4.com>; Fri, 3 Jan 2020 20:31:47 +0000 (UTC)
 Received: from p-impout001.msg.pkvw.co.charter.net
- (p-impout004aa.msg.pkvw.co.charter.net [47.43.26.135])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 80a1a560
- for <wireguard@lists.zx2c4.com>; Fri, 3 Jan 2020 20:29:14 +0000 (UTC)
+ (p-impout005aa.msg.pkvw.co.charter.net [47.43.26.136])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bbcf6aa1
+ for <wireguard@lists.zx2c4.com>; Fri, 3 Jan 2020 20:31:47 +0000 (UTC)
 Received: from [192.168.0.2] ([76.91.204.161]) by cmsmtp with ESMTP
- id nTZJi82m940aWnTZJiNDu1; Fri, 03 Jan 2020 20:29:14 +0000
-X-Authority-Analysis: v=2.3 cv=TY3oSiYh c=1 sm=1 tr=0
+ id nTbmi5c0ilLVdnTbmiQRWp; Fri, 03 Jan 2020 20:31:47 +0000
+X-Authority-Analysis: v=2.3 cv=bI1o382Z c=1 sm=1 tr=0
  a=rO8gbEbqGp3jIVlhlq3uIg==:117 a=rO8gbEbqGp3jIVlhlq3uIg==:17
  a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=9cW_t1CCXrUA:10 a=IkcTkHD0fZMA:10
- a=UGG5zPGqAAAA:8 a=sI_bnSRXN423SxA9bHwA:9 a=QEXdDO2ut3YA:10
- a=17ibUXfGiVyGqR_YBevW:22
+ a=jK4f0YRpEqe5PQrhusMA:9 a=QEXdDO2ut3YA:10
 Subject: Re: wg-quick: syntax error, unexpected saddr
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 References: <b3fb12ff-969a-9037-ee6f-f8e4b6d91895@attglobal.net>
@@ -40,18 +39,17 @@ References: <b3fb12ff-969a-9037-ee6f-f8e4b6d91895@attglobal.net>
  <7eb40791-9689-2b3d-bfb0-2299cdf7b07a@attglobal.net>
  <CAHmME9r+HM27xhjwDP3q=DJV7KJsvZS__75szHzBE4qHBoXYUg@mail.gmail.com>
  <CAHmME9ruOqW=PRXE=mKj_a2WZ9q1CbUh7YOCf7ZhhNx6Us33kw@mail.gmail.com>
- <CAHmME9qMXKanb2dyQdGYWY=T=TjAGYmhtdAeKDmRzV=6Hdd7ww@mail.gmail.com>
 From: Eddie <stunnel@attglobal.net>
 X-Clacks-Overhead: GNU Terry Pratchett
-Message-ID: <d2d02640-9546-393c-3e23-8443f50f1e30@attglobal.net>
-Date: Fri, 3 Jan 2020 12:29:12 -0800
+Message-ID: <14330289-5d26-22b4-434f-08a6a2cd3ecc@attglobal.net>
+Date: Fri, 3 Jan 2020 12:31:45 -0800
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
  Thunderbird/60.9.1
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9qMXKanb2dyQdGYWY=T=TjAGYmhtdAeKDmRzV=6Hdd7ww@mail.gmail.com>
+In-Reply-To: <CAHmME9ruOqW=PRXE=mKj_a2WZ9q1CbUh7YOCf7ZhhNx6Us33kw@mail.gmail.com>
 Content-Language: en-US
-X-CMAE-Envelope: MS4wfCjCeuYhRPeqXdgNtsftfGGxaLjkrvP+zTMsY8A8X0zItrKmkGfDNCWVWop4yo33XQRgurw2YQRin/h9YGxbcpLzGg1T/XpucIFuUVo5p50WIF+IwlHY
- ovN++OMp+QB1un7O12mHYFzFjztC++1DQGpC8zcXqfzcmdVLWrCEJaE29iK4CiHN/mG+FJp9yI5fag==
+X-CMAE-Envelope: MS4wfP3umy5L+NT8QQ50RKM+sj6allyE2Je/M8ydeHzzgOro5IYZTipT86W+M2DQD3X1HgfL16Ko5+1uF+1Ak+H75+1Zi7k4KsOy8ooagorWzt9cuKULH40A
+ /XvBb18h3er22s75fIxkJVMAiDRv4vLxPHtyRIHZCE85dzNLwKy7B+Nsicf5EuwL9FLmPLlntH4zcg==
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -69,11 +67,12 @@ Content-Type: text/plain; charset="utf-8"; Format="flowed"
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-QWdyZWVkLCB3YXkgdG9vIHVnbHkuwqAgOi0pwqAgRG9uJ3QgZG8gaXQgZm9yIG1lLgoKQ2hlZXJz
-LgoKCk9uIDEvMy8yMDIwIDg6MjIgQU0sIEphc29uIEEuIERvbmVuZmVsZCB3cm90ZToKPiBXZSBj
-b3VsZCBkbyBzb21ldGhpbmcgbGlrZSB0aGlzOgo+IGh0dHBzOi8vZ2l0Lnp4MmM0LmNvbS93aXJl
-Z3VhcmQtdG9vbHMvY29tbWl0Lz9oPWpkL25mdC12ZXJzaW9uLWRldGVjdGlvbgo+Cj4gQnV0IHRo
-YXQgc2VlbXMgcHJldHR5IHVnbHkgYW5kIEkgdGhpbmsgSSdkIHJhdGhlciBub3QuCj4KPgoKX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18KV2lyZUd1YXJkIG1h
-aWxpbmcgbGlzdApXaXJlR3VhcmRAbGlzdHMuengyYzQuY29tCmh0dHBzOi8vbGlzdHMuengyYzQu
-Y29tL21haWxtYW4vbGlzdGluZm8vd2lyZWd1YXJkCg==
+TGV0IG1lIHNlZSBpZiBJIGNhbiBpbnN0YWxsIDAuNyB3aXRob3V0IHRvbyBtYW55IGRlcGVuZGVu
+Y2llcyBjcmVlcGluZyAKaW4uwqAgSSB0cmllZCB0aGUgbGF0ZXN0IFNsYWNrd2FyZSBjdXJyZW50
+IGJ1aWxkIG9mIDAuOSwgYnV0IHRoZSAKZGVwZW5kZW5jaWVzIHdlcmUgZ2V0dGluZyBvdXQgb2Yg
+aGFuZC4KCkNoZWVycy4KCgpPbiAxLzMvMjAyMCA4OjA3IEFNLCBKYXNvbiBBLiBEb25lbmZlbGQg
+d3JvdGU6Cj4gSSB0b29rIGEgY2xvc2VyIGxvb2suIEluZGVlZCB0aGUgaXNzdWUgaXMgdGhhdCBu
+ZnQgMC42IGlzIHRvbyBvbGQuIFVzZSAwLjcrLgo+Cj4KCl9fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fX19fCldpcmVHdWFyZCBtYWlsaW5nIGxpc3QKV2lyZUd1YXJk
+QGxpc3RzLnp4MmM0LmNvbQpodHRwczovL2xpc3RzLnp4MmM0LmNvbS9tYWlsbWFuL2xpc3RpbmZv
+L3dpcmVndWFyZAo=
