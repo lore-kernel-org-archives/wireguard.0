@@ -1,69 +1,74 @@
-Return-Path: <SRS0=sfXu=3A=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=e2pA=3E=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.3 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C1B77C33C9E
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 11 Jan 2020 05:07:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13A92C32771
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 15 Jan 2020 18:13:18 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 07EE62077C
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 11 Jan 2020 05:07:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 799742187F
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 15 Jan 2020 18:13:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=laro.se header.i=@laro.se header.b="o9b29jTb"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 07EE62077C
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=laro.se
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H0PcIuK4"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 799742187F
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6a5c3ee9;
-	Sat, 11 Jan 2020 05:07:49 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d2b41bd3;
+	Wed, 15 Jan 2020 18:13:00 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e3159ca6
- for <wireguard@lists.zx2c4.com>;
- Sat, 11 Jan 2020 05:07:47 +0000 (UTC)
-Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com
- [IPv6:2607:f8b0:4864:20::732])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 72d3e984
- for <wireguard@lists.zx2c4.com>;
- Sat, 11 Jan 2020 05:07:47 +0000 (UTC)
-Received: by mail-qk1-x732.google.com with SMTP id k6so4022933qki.5
- for <wireguard@lists.zx2c4.com>; Fri, 10 Jan 2020 21:07:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=laro.se; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
- bh=O5GZyTXfag8rMXtIT8owg/bzVOsZfLBk7yBIMwQGMrQ=;
- b=o9b29jTbV6SvSgH/lMVqQClE6RllleZho5D2KQjJ/tpOFtfotRuW2rgTP2q8Sq/O3v
- UFeboz0Ynu/gXHZsmFyoYa1QavkQlU9728KyhFrZcAJZYuO1gwjmg1TH4cDEECIBbJ+7
- /BlBXsX2dlvVFij3H8kUvl4ft9Qujb4cgMKHY=
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0873a16d
+ for <wireguard@lists.zx2c4.com>; Wed, 8 Jan 2020 08:16:19 +0000 (UTC)
+Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com
+ [IPv6:2607:f8b0:4864:20::533])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c7a5d560
+ for <wireguard@lists.zx2c4.com>; Wed, 8 Jan 2020 08:16:19 +0000 (UTC)
+Received: by mail-pg1-x533.google.com with SMTP id x8so1185165pgk.8
+ for <wireguard@lists.zx2c4.com>; Wed, 08 Jan 2020 00:16:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=content-transfer-encoding:from:mime-version:date:subject:message-id
+ :to; bh=Z3Ed0MznphfjkW/7NsDwNd7zPU7DyCLIEbdvYkSu8rw=;
+ b=H0PcIuK4TwHe8k/PacG8JImg114Ntvl8meoaRH66oMEH55AaDDEwVCKuaW/QJQ1iJz
+ mffRZwLgNKNhlDvXMaoIywbp44FKawUzsgea8fRCQBKAF6kzptCV2MXrFXX37u3aCkGq
+ 9pBBh4rqfo00cWPkMK5I1SqiOypvgI8fkOibuVpQMoAS+BVjk0ps8/RUG9TmjUPdahGi
+ r9Z4cuulIpltjtC9KQaEh00Ibr8QjMHMpATcWjUxBWFX0MBNXXD5wpeRe8lU5CReFDKA
+ feML3aubD7dwzieseMRqrabzL0dJe3jMoTnHkKdNAuFproXA7BUA7dpYe4cOoOsy6txG
+ CnNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to;
- bh=O5GZyTXfag8rMXtIT8owg/bzVOsZfLBk7yBIMwQGMrQ=;
- b=uXbuW6Z97bHSF27IpaWjlL5/TED5Jt8kzCKH+gWHFYsHnkH062M8hW5oYSUj209ecB
- Bl4YAoBOZLxpNuoRE+TYmqhymHvK4RV4nvBdipv5micctQh8igPAhkg6leGysDdCBnkd
- eQE5nd63FbHHr8zMzV81/Hej01X8welmJJsl65Jaa/0UlU3xcFoJSeDi6PEhK0UiUaVs
- l+P104LUfQHumASq76GNcUIgO/IiiZQte8nuKidrwXlo1VDr3oa2yRBcEHKoK8iJf7zS
- tOxbWMH72MiASRfnPVR6EsmtDNR4nixBlBzBks48y//+bH5maRpSoWdElJ1TBmTuE8Aa
- EKlg==
-X-Gm-Message-State: APjAAAViFSKDHWk8aJyucy2z7rKWjcsuM6NJ3Qc6Duibi1e75uedqJse
- iXAdfZAOiJkuORpl1lyrOj5NSsBjH85D6MoBwhp/WY7W6M4=
-X-Google-Smtp-Source: APXvYqwXLyMFKPSWIPL3ju0I84FhdkgHQtUDDR95mqunpKpRaAGmFAVfKplQGXQGHT7O/pmthl5BLclLCIcB3MNoNzA=
-X-Received: by 2002:a05:620a:15e8:: with SMTP id
- p8mr1881338qkm.469.1578719266137; 
- Fri, 10 Jan 2020 21:07:46 -0800 (PST)
-MIME-Version: 1.0
-References: <CAGCGytL4bbuvHnPt1scJ1QAWSFw_zx3RGQQAdbC0d8D+rjiJ4A@mail.gmail.com>
- <CA+CGqoLds_96+utWZV1jr9-On=oqNC4r9BLs5s0YT+_s2QVikQ@mail.gmail.com>
-In-Reply-To: <CA+CGqoLds_96+utWZV1jr9-On=oqNC4r9BLs5s0YT+_s2QVikQ@mail.gmail.com>
-From: "simon@laro.se" <simon@laro.se>
-Date: Sat, 11 Jan 2020 18:07:10 +1300
-Message-ID: <CAOtBoV8chDpMReY3SWai+pU+9GfD8MSd1SzeXuSmiwivNW4U-w@mail.gmail.com>
-Subject: Re: Android: Cannot toggle the quick setting tile on a locked screen
+ h=x-gm-message-state:content-transfer-encoding:from:mime-version:date
+ :subject:message-id:to;
+ bh=Z3Ed0MznphfjkW/7NsDwNd7zPU7DyCLIEbdvYkSu8rw=;
+ b=KmZ3EkLRWPjDSjWoG2g9JkBVUda4AukCkXpQQHkOL/+vhrAu04DMP1KUKBlOCQxgRn
+ QwdM3fWf4KnuhR9MFVp8IomTw3JjUhCkGNntvg/PxPfcwOlkBNRI6jDhJOGRO+7ifycW
+ T9MnV5enImvUh02x/r/mdagMEN+sz2lQX8nnkuPiAf9rTkCuLGZ5C0cbS63yjL5div7y
+ e4EAZCOHwLBeIrYUVNnzuM+zPzXb6iAD53K8r3rl4ANX1xO6hRaht2PlhuVjg9zQe4SC
+ y56xXHyzpw0FPlye/oyEAw0pdiK8UOxh5mI9RACN/IUcCysSvamGtyN+BUwiWXWsh/5l
+ tsEA==
+X-Gm-Message-State: APjAAAWI+/VtAnEHJrMxTxMuiOooXUNqUGIKgXvghxCde/yn5iTrJiBP
+ t01TPTQF0CZ+T0madl9iAoCup15S
+X-Google-Smtp-Source: APXvYqxqEqP+xxsxhBpWrS7O6Wdbn32FzjZGc6sOUZpdxT1XLyNLA55AEPSHbqgTA4aXK/ePIV9/zQ==
+X-Received: by 2002:a63:358a:: with SMTP id c132mr4094722pga.286.1578471377589; 
+ Wed, 08 Jan 2020 00:16:17 -0800 (PST)
+Received: from [192.168.8.100] ([1.200.35.123])
+ by smtp.gmail.com with ESMTPSA id x197sm2415012pfc.1.2020.01.08.00.16.16
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 08 Jan 2020 00:16:16 -0800 (PST)
+From: Birdman Hsu <birdman.hsu@gmail.com>
+Mime-Version: 1.0 (1.0)
+Date: Wed, 8 Jan 2020 16:16:14 +0800
+Subject: Supporting Trad. Chinese for WG clients of Windows and Android devices
+Message-Id: <054A2AA7-65E6-4CBF-8051-B64855290234@gmail.com>
 To: wireguard@lists.zx2c4.com
+X-Mailer: iPad Mail (17C54)
+X-Mailman-Approved-At: Wed, 15 Jan 2020 19:12:59 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -75,131 +80,21 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============5666095165040946937=="
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============5666095165040946937==
-Content-Type: multipart/alternative; boundary="0000000000000efbd6059bd6392b"
+Hi!
 
---0000000000000efbd6059bd6392b
-Content-Type: text/plain; charset="UTF-8"
+Kindly add the support for Trad. Chinese in the future releases of WG Windows and Android clients.
 
-This was purposefully added in the December update for the Android
-application, a user should not be able to bring tunnels up and down without
-being an "authenticated". This could be added as a toggle within the app,
-but it has not been done or requested as far as I am awre.
+Thanks/Br, 
 
-You should still be able to use the `wg-quick down` from within a Tasker
-shell command.
+Birdman Hsu 
 
-https://git.zx2c4.com/wireguard-android/commit/?id=c370d754bc5074b6e357afdcb4baf09301d0bb8d
-
-On Thu, 9 Jan 2020 at 21:56, Kai Haberzettl <khaberz@gmail.com> wrote:
-
-> What Device and ROM are you using? Samsung OneUI has a specific setting as
-> to whether network settings should be available on the lock screen or not.
-> I don't see this in AOSP. Look for something like this in your settings, it
-> might help.
->
-> On Thu, Jan 9, 2020 at 7:10 AM Arpit Gupta <g.arpit@gmail.com> wrote:
->
->> Hi
->>
->> I can't say for sure when this behavior changed where I cannot toggle
->> quick setting option for WireGuard when the phone is locked.
->>
->> I know this was working in December so not sure if the December update
->> for Android changed something or if this was an explicit change in the
->> Android app.
->>
->> Wanted to see if any one else is seeing similar behavior and if there is
->> anything that can be done about it?
->>
->> I was using Tasker to automate toggling the quick setting when ever I was
->> not connected to a specific WiFi network. That automation no longer works
->> because I need to unlock the phone before that setting can be toggled.
->>
->>
->> --
->> Arpit
->> _______________________________________________
->> WireGuard mailing list
->> WireGuard@lists.zx2c4.com
->> https://lists.zx2c4.com/mailman/listinfo/wireguard
->>
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
->
-
---0000000000000efbd6059bd6392b
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">This was purposefully added in the December update for the=
- Android application, a user should not be able to bring tunnels up and dow=
-n without being an &quot;authenticated&quot;. This could be added as a togg=
-le within the app, but it has not been done or requested as far as I am awr=
-e.<div><br><div>You should still be able to use the `wg-quick down` from wi=
-thin a Tasker shell command.<div><br></div><div><a href=3D"https://git.zx2c=
-4.com/wireguard-android/commit/?id=3Dc370d754bc5074b6e357afdcb4baf09301d0bb=
-8d">https://git.zx2c4.com/wireguard-android/commit/?id=3Dc370d754bc5074b6e3=
-57afdcb4baf09301d0bb8d</a><br></div></div></div></div><br><div class=3D"gma=
-il_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, 9 Jan 2020 at 21:56=
-, Kai Haberzettl &lt;<a href=3D"mailto:khaberz@gmail.com">khaberz@gmail.com=
-</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:=
-0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">=
-<div dir=3D"ltr">What Device and ROM are you using? Samsung OneUI has a spe=
-cific setting as to whether=C2=A0network settings should be available on th=
-e lock screen or not. I don&#39;t see this in AOSP. Look for something like=
- this in your settings, it might help.=C2=A0</div><br><div class=3D"gmail_q=
-uote"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Jan 9, 2020 at 7:10 AM =
-Arpit Gupta &lt;<a href=3D"mailto:g.arpit@gmail.com" target=3D"_blank">g.ar=
-pit@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" sty=
-le=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddi=
-ng-left:1ex"><div dir=3D"auto">Hi<div dir=3D"auto"><br></div><div dir=3D"au=
-to">I can&#39;t say for sure when this behavior changed where I cannot togg=
-le quick setting option for WireGuard when the phone is locked.=C2=A0</div>=
-<div dir=3D"auto"><br></div><div dir=3D"auto">I know this was working in De=
-cember so not sure if the December update for Android changed something or =
-if this was an explicit change in the Android app.=C2=A0</div><div dir=3D"a=
-uto"><br></div><div dir=3D"auto">Wanted to see if any one else is seeing si=
-milar behavior and if there is anything that can be done=C2=A0about it?</di=
-v><div dir=3D"auto"><br></div><div dir=3D"auto">I was using Tasker to autom=
-ate toggling the quick setting when ever I was not connected to a specific =
-WiFi network. That automation no longer works because I need to unlock the =
-phone before that setting can be toggled.</div><div dir=3D"auto"><br><div d=
-ir=3D"auto"><br>--<br>Arpit</div></div></div>
-_______________________________________________<br>
-WireGuard mailing list<br>
-<a href=3D"mailto:WireGuard@lists.zx2c4.com" target=3D"_blank">WireGuard@li=
-sts.zx2c4.com</a><br>
-<a href=3D"https://lists.zx2c4.com/mailman/listinfo/wireguard" rel=3D"noref=
-errer" target=3D"_blank">https://lists.zx2c4.com/mailman/listinfo/wireguard=
-</a><br>
-</blockquote></div>
-_______________________________________________<br>
-WireGuard mailing list<br>
-<a href=3D"mailto:WireGuard@lists.zx2c4.com" target=3D"_blank">WireGuard@li=
-sts.zx2c4.com</a><br>
-<a href=3D"https://lists.zx2c4.com/mailman/listinfo/wireguard" rel=3D"noref=
-errer" target=3D"_blank">https://lists.zx2c4.com/mailman/listinfo/wireguard=
-</a><br>
-</blockquote></div>
-
---0000000000000efbd6059bd6392b--
-
---===============5666095165040946937==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
+Sent from my iPad Pro 10.5!
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
-
---===============5666095165040946937==--
