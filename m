@@ -7,68 +7,63 @@ X-Spam-Status: No, score=-0.3 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 64DB8C33CB3
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD1FAC33CB2
 	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 15 Jan 2020 18:17:49 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 117012187F
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 15 Jan 2020 18:17:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 88EC22187F
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 15 Jan 2020 18:17:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WXVVSpCZ"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 117012187F
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b78ROVi+"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 88EC22187F
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2cd04ee2;
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e4c96523;
 	Wed, 15 Jan 2020 18:17:06 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 94f2078f
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5f4d8d77
  for <wireguard@lists.zx2c4.com>;
- Fri, 10 Jan 2020 11:22:24 +0000 (UTC)
-Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com
- [IPv6:2607:f8b0:4864:20::231])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 682316a8
+ Wed, 15 Jan 2020 09:11:12 +0000 (UTC)
+Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com
+ [IPv6:2607:f8b0:4864:20::243])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3e831e93
  for <wireguard@lists.zx2c4.com>;
- Fri, 10 Jan 2020 11:22:24 +0000 (UTC)
-Received: by mail-oi1-x231.google.com with SMTP id p125so1523667oif.10
- for <wireguard@lists.zx2c4.com>; Fri, 10 Jan 2020 03:22:23 -0800 (PST)
+ Wed, 15 Jan 2020 09:11:12 +0000 (UTC)
+Received: by mail-oi1-x243.google.com with SMTP id l9so14697135oii.5
+ for <wireguard@lists.zx2c4.com>; Wed, 15 Jan 2020 01:11:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :content-transfer-encoding;
- bh=yHTxvWFXitZBZuADNS7DQdefkTt5vKQnSIxKZwHbaKI=;
- b=WXVVSpCZzMOSo8kCI20iWy2i0/lqrTZSIKAYC1EvgUbdXOXRfjv+lRqSgpfGyXoibR
- HVJdQnDQnna7d2qR5aiNNoXDkmSNrcayj3T4sJBeOtIM57klsU6UdCX1M0iExuCWXLt9
- AqmRJJrVnM7+HlaB2708h8eR7AkqtEB5PtBZSaHDwZ+3Sne4rELv4IyGX6MlJJ20hiI3
- ZeJRsWC/kCimIOA9HzGNCTnrt748ccQIgJR/XnG0ec9KUDVVww25yc0yLDrODdtTbF9a
- EipRy5LP7anN5t4Iu1SxOs0+uSNr2yWy2JXrcQw61zgzG+H2epDN19TlIpnuCyjs74Mk
- qTWg==
+ h=mime-version:from:date:message-id:subject:to;
+ bh=5j7wppJQrewdiq1vETFu7rog2gkvSzPFKQxBbm/UoJM=;
+ b=b78ROVi+YYizY77N5nRZm+HCsCbo0vph/dlPTpD9k1Z2hT8+VXaBhCNcQ95w/Z0e4V
+ H8+GhyfQzu0zJnseFZnKJndupx19PYyGecMhxg+V+Cpq9QoUHYC0Bn1S+PrrPlGhhJut
+ Uj1dEuBImFBg/27MrcexIsbBcIABUZ7msLUvMZUVSkm+3HL1TpihawZWPcK+aIujMsJ6
+ TqQq7D5E4NXW7X6HaHeTExSkV+Ptok5DyVnNo/Tb0s9u1EQyMEN0ZyVSLOdQDC55ug5g
+ wwCItJcoVoNbKKJ64JrJH3cbwj7ATBsn98+QIGPBodJpyaKXRgFJFBbeGcFQaKuXFMXH
+ WVlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:content-transfer-encoding;
- bh=yHTxvWFXitZBZuADNS7DQdefkTt5vKQnSIxKZwHbaKI=;
- b=Vre1cWhuF0wj+kUw+UGmLcm98X3Qhl2dAGqs/LyMd7BMEgULk/ViANCfvQQ7SOtPri
- Rkgn+/DFiWQiutCs+qoGnZhRyl4bbmNLgzNTConcAisuN3eD74ErLJbna4rNo2KSWd+L
- Z0bGrO9G+e4RNlqILKFnVp0GE2oMg3ZK2Mtc4WH0MMc4M22iFD9ZsY24dSQOWkH+oBaM
- fTKPomVS2mARZ9x5P2cIpt/mKG/lzp8WvSZ4Gn8/hjWfgqOuSRF+M1gd4l4SVMoCjVXg
- fliY1SOueDRRoCg3xrJGlddcKba26mBE526SkMojDQc4A+OyLiuLNBYGu1aja1BN2mBN
- QRgA==
-X-Gm-Message-State: APjAAAW6Z7vIP8LSFfMK94OGgACRZJZ84Dj+aBX0LnsAhSNh8XUxgJjH
- 1pwjubYztXVrXWiV2RaKFpK+Z/Gent7fitwy3/Q=
-X-Google-Smtp-Source: APXvYqyeYqn4L0yORXPRESWL0z3j0mK8LAvVySa6FjQDVo9PrfNCFY/2/O0N/OuYttalh5F0siLoAC02sJbbWxC1SxY=
-X-Received: by 2002:aca:c509:: with SMTP id v9mr1689075oif.151.1578655343261; 
- Fri, 10 Jan 2020 03:22:23 -0800 (PST)
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=5j7wppJQrewdiq1vETFu7rog2gkvSzPFKQxBbm/UoJM=;
+ b=PCh6hMmwL0XHyKKKP3q34wK8Hd20FENtXrjrLLzrWO/wr7GwBdrEyzw0/Mi5NG30Pm
+ MMYqgXlocT1I8R1VxL/BTgj2FpYIrnz7APygnqpliSUaSDc+DzwkFZ2gCQRPw829gBK9
+ FBqUYDthj5N708SsC67J4CCh9+yLhxZxiY6dW/tprMKj60rAdlUtD48SV2YUb6BZ9Pme
+ qtnCdjKt+iR5GnHo9EExBSU6iYw+1i4a1I7YG0JN6TmGpsumTYkF8Pcm+gZGWypOWkqB
+ 5RhFqxnNLNp48KtqII9evcIuLBuKAo8NoJ+dGhWUmhujJnQrcD9RxVdGESH/6GX4MmVP
+ 4Fzg==
+X-Gm-Message-State: APjAAAUJZDgIKTHJsYwAW4lmpKyv+vGnNDxOOkROmFMz/Hkxpf17b3mK
+ vIiZp/Q6u919Zjbz1qnSWgCmT0FNagXfK6Iz0bRrx7zlwZU=
+X-Google-Smtp-Source: APXvYqw89o1/mtm/O0nzJSMMlV0NLAa5s+Q2Ek6fyNpqTKYxDn4FHvPG4xMunQeaAyj0lRT9E10X3VMlr4zB0dxcxME=
+X-Received: by 2002:aca:d5d3:: with SMTP id
+ m202mr19396002oig.161.1579079471403; 
+ Wed, 15 Jan 2020 01:11:11 -0800 (PST)
 MIME-Version: 1.0
-References: <CABfcST9Ovn7=2gmXhKYEmp4tA6w33KnV4f5KEXZtqz33nfVt3g@mail.gmail.com>
- <CAPWNY8VCYCUy7B_6D-WbPFcAYVopO9D97Ykp_35MdKQUk_Z26Q@mail.gmail.com>
-In-Reply-To: <CAPWNY8VCYCUy7B_6D-WbPFcAYVopO9D97Ykp_35MdKQUk_Z26Q@mail.gmail.com>
-From: Michael Brookes <mgsb81@gmail.com>
-Date: Fri, 10 Jan 2020 11:22:12 +0000
-Message-ID: <CABfcST9__kJ8Z+ED6BaWB0psJB8qaTwtnh=GHPf8iRrn-B7bJg@mail.gmail.com>
-Subject: Re: Explanation of multiple addresses in config
-To: =?UTF-8?Q?Mantas_Mikul=C4=97nas?= <grawity@gmail.com>, 
- wireguard@lists.zx2c4.com
+From: =?UTF-8?Q?Motiejus_Jak=C5=A1tys?= <motiejus.jakstys@gmail.com>
+Date: Wed, 15 Jan 2020 11:10:58 +0200
+Message-ID: <CAFVMu-q_B2EJk_GkY-3vxGT94Bcmozuom1jwQ15kZgbT81-=sg@mail.gmail.com>
+Subject: multiple endpoints for a single peer -- implementation details
+To: wireguard@lists.zx2c4.com
 X-Mailman-Approved-At: Wed, 15 Jan 2020 19:17:04 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
@@ -81,87 +76,87 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-VGhhbmtzIHZlcnkgbXVjaCwgeW91ciByZXNwb25zZSBoZWxwZWQgbWUgdW5kZXJzdGFuZCB3aGF0
-IHdhcwpoYXBwZW5pbmcgYW5kIGZpeGVkIGl0LgpJIHVuZGVyc3RhbmQgdGhlIGNvbmNlcHQgb2Yg
-QWxsb3dlZElQcywgYnV0IGV4cGVjdGVkIHRoYXQgd2hlbiBkb2luZwp3Zy1xdWljayB1cCBpdCB3
-b3VsZCBpbnN0YWxsIGFsbCB0aGUgcm91dGVzIGFzIG5lZWRlZCwgaWYgSSBleHBsYWluCndpdGgg
-YSBjb25maWcgY2FsbGVkIGFsbHBlZXIuY29uZjoKCltJbnRlcmZhY2VdClByaXZhdGVLZXkgPSBw
-cml2YXRlCkFkZHJlc3MgPSAxMC4xOS41MC4xMDAvMjQKQWRkcmVzcyA9IDEwLjg4LjExOC4xNjYv
-MTYKQWRkcmVzcyA9IDE3Mi4zMC4xMTguMTY2LzE2CgpbUGVlcl0KUHVibGljS2V5ID0gb2xtUmda
-OHpIdXErbXM4TVlCZmxPWFFzY2o5aWNzS285OVVtU3V3cVdBQT0KQWxsb3dlZElQcyA9IDEwLjIw
-MC45Ni4wLzIwCkVuZHBvaW50ID0gZXAxOjUxODIwClBlcnNpc3RlbnRLZWVwYWxpdmUgPSAyNQoK
-W1BlZXJdClB1YmxpY0tleSA9IFBlbU93ekNSbXBDT0wrY3JVbTVySzYzdlloaDVpYlBmbEpiRWh0
-YkpMQ0M9CkFsbG93ZWRJUHMgPSAxNzIuMjcuMC4wLzE2LDEwLjg4LjAuMC8xNiwxMC4xMDAuMC4w
-LzE2CkVuZHBvaW50ID0gZXAyOjUxODIwClBlcnNpc3RlbnRLZWVwYWxpdmUgPSAyNQoKW1BlZXJd
-ClB1YmxpY0tleSA9IERBQUVaaG40eE1rVVJrSGxsRm1ZU2tmZVFwYU1YUHhVSERKSDZGeWJzRUU9
-CkFsbG93ZWRJUHMgPSAxMC4yMDEuMTYuMC8yMApFbmRwb2ludCA9IGVwMzo1MTgyMApQZXJzaXN0
-ZW50S2VlcGFsaXZlID0gMjUKCltQZWVyXQpQdWJsaWNLZXkgPSBtK3FVNHROU05Yek1JTm9oQTFy
-cjY2YXFVWDZxVkZqWmhLQXN0Wk9xbEREPQpBbGxvd2VkSVBzID0gMTAuMTkuNTAuMC8yNCwgMTAu
-MC4wLjAvMjQKRW5kcG9pbnQgPSBlcDQ6NTE4MjAKUGVyc2lzdGVudEtlZXBhbGl2ZSA9IDEwCgpE
-b2luZyB3Zy1xdWljayB1cCBhbGxwZWVyLmNvbmYgSSBnZXQgdGhlc2Ugcm91dGVzIGluc3RhbGxl
-ZDoKCjEwLjAuMC4wLzI0IGRldiBhbGxwZWVyIHNjb3BlIGxpbmsKMTAuMTkuNTAuMC8yNCBkZXYg
-YWxscGVlciBwcm90byBrZXJuZWwgc2NvcGUgbGluayBzcmMgMTAuMTkuNTAuMTAwCjEwLjg4LjAu
-MC8xNiBkZXYgYWxscGVlciBwcm90byBrZXJuZWwgc2NvcGUgbGluayBzcmMgMTAuODguMTE4LjE2
-NgoxMC4xMDAuMC4wLzE2IGRldiBhbGxwZWVyIHNjb3BlIGxpbmsKMTAuMjAwLjk2LjAvMjAgZGV2
-IGFsbHBlZXIgc2NvcGUgbGluawoxMC4yMDEuMTYuMC8yMCBkZXYgYWxscGVlciBzY29wZSBsaW5r
-CjE3Mi4yNy4wLjAvMTYgZGV2IGFsbHBlZXIgc2NvcGUgbGluawoxNzIuMzAuMC4wLzE2IGRldiBh
-bGxwZWVyIHByb3RvIGtlcm5lbCBzY29wZSBsaW5rIHNyYyAxNzIuMzAuMTE4LjE2NgoKV2hpY2gg
-bWFrZXMgdGhlIHBlZXIgd2l0aCBlbmRwb2ludCBlcDQgd29yaywgdGhlIG90aGVycyBkbyBub3Qg
-ZHVlIHRvCnBhY2tldHMgdXNpbmcgdGhlIHdyb25nIHNvdXJjZSBhZGRyZXNzIGFzIGV4cGxhaW5l
-ZCBpbiB0aGUgT1AuCgpJZiBJIHJlbW92ZSB0aGVzZSByb3V0ZXM6CjEwLjEwMC4wLjAvMTYgZGV2
-IGFsbHBlZXIgc2NvcGUgbGluawoxMC4yMDAuOTYuMC8yMCBkZXYgYWxscGVlciBzY29wZSBsaW5r
-CjEwLjIwMS4xNi4wLzIwIGRldiBhbGxwZWVyIHNjb3BlIGxpbmsKMTcyLjI3LjAuMC8xNiBkZXYg
-YWxscGVlciBzY29wZSBsaW5rCgphbmQgbWFudWFsbHkgYWRkIHJvdXRlcyBsaWtlIHlvdSBzdWdn
-ZXN0ZWQsIGZvciBleGFtcGxlOgoKaXAgcm91dGUgYWRkIDEwLjIwMS4xNi4wLzIwIGRldiBhbGxw
-ZWVyIHNyYyAxNzIuMzAuMTE4LjE2NgppcCByb3V0ZSBhZGQgMTcyLjI3LjAuMC8xNiBkZXYgYWxs
-cGVlciBzcmMgMTAuODguMTE4LjE2NgoKYWxsIHBlZXJzIHdvcmssIHdoaWNoIGlzIGdyZWF0LgoK
-TWFueSB0aGFua3MgYWdhaW4KCgpPbiBUaHUsIDkgSmFuIDIwMjAgYXQgMDY6NTgsIE1hbnRhcyBN
-aWt1bMSXbmFzIDxncmF3aXR5QGdtYWlsLmNvbT4gd3JvdGU6Cj4KPiBPbiBUaHUsIEphbiA5LCAy
-MDIwIGF0IDg6MDQgQU0gTWljaGFlbCBCcm9va2VzIDxtZ3NiODFAZ21haWwuY29tPiB3cm90ZToK
-Pj4KPj4gSGVsbG8KPj4KPj4gVGhlIG1hbnBhZ2UgZm9yIHdnLXF1aWNrIHN0YXRlcyBvbmUgY2Fu
-IHVzZSBBZGRyZXNzIG11bHRpcGxlIHRpbWVzIGluCj4+IHRoZSBJbnRlcmZhY2Ugc2VjdGlvbiBv
-ZiBhIGNvbmZpZy4gIEkndmUgdHJpZWQgdGhpcyBidXQgaXQgeWllbGRzCj4+IHVuZXhwZWN0ZWQg
-cmVzdWx0cy4gIEhlcmUgaXMgbXkgY29uZmlnIHdoaWNoIEknbSB1c2luZyBvbiBteSBVYnVudHUK
-Pj4gbGFwdG9wOgo+Pgo+PiBbSW50ZXJmYWNlXQo+PiBQcml2YXRlS2V5ID0gPGtleT4KPj4gQWRk
-cmVzcyA9IDEwLjE5LjQ5LjEwMy8yNAo+PiBBZGRyZXNzID0gMTAuODguMTE4LjE2Ni8xNgo+Pgo+
-PiBbUGVlcl0KPj4gUHVibGljS2V5ID0gRmdWTFNjalgyOWp3blhYYkhTdEZwTktjRnFiYWlOSzZM
-dVNXRmdscldDbz0KPj4gQWxsb3dlZElQcyA9IDE3Mi4xOC4xLjAvMjQsIDEwLjE5LjQ5LjAvMjQK
-Pj4gRW5kcG9pbnQgPSBlbmRwb2ludDE6NTE4MjAKPj4gUGVyc2lzdGVudEtlZXBhbGl2ZSA9IDEw
-Cj4+Cj4+IFtQZWVyXQo+PiBQdWJsaWNLZXkgPSBpdFhyUmVWait3dWVjclNzK1ZObkVFa3BjN3dI
-YjhRaFhRdE1RVUJyT2o4PQo+PiBBbGxvd2VkSVBzID0gMTcyLjI3LjAuMC8xNiwxMC44OC4wLjAv
-MTYKPj4gRW5kcG9pbnQgPSBlbmRwb2ludDI6NTE4MjAKPj4gUGVyc2lzdGVudEtlZXBhbGl2ZSA9
-IDI1Cj4+Cj4+IHdnLXF1aWNrIHVwIDxjb25maWc+IGdpdmVzIG1lIGFuIGludGVyZmFjZSB3aXRo
-IGJvdGggYWRkcmVzc2VzCj4+IGFzc2lnbmVkLCAxMC4xOS40OS4xMDMgaXMgbGlzdGVkIGZpcnN0
-LCAxMC44OC4xMTguMTY2IGxpc3RlZCBzZWNvbmQgaW4KPj4gdGhlIGlwIGFkZHIgb3V0cHV0Lgo+
-PiBSdW5uaW5nIHRjcGR1bXAgaW4gcGFyYWxsZWwgb24gYm90aCBwZWVyIGVuZHBvaW50cyBhbmQg
-bXkgbGF0b3AsIEkKPj4gcGluZyBhbiBhZGRyZXNzIGluIHRoZSByYW5nZXMgdGhlIHNlY29uZCBw
-ZWVyIGxpc3RzIGluIGl0cyBBbGxvd2VkSVBzLAo+PiBmb3IgZXhhbXBsZSAxNzIuMjcuMy4xNDEu
-Cj4+IHRjcGR1bXAgb24gdGhlIHdpcmVndWFyZCBpbnRlcmZhY2VzIHNob3dzIHRoZSBmb2xsb3dp
-bmc6Cj4+Cj4+IDEwLjE5LjQ5LjEwMyAtPiAxNzIuMjcuMy4xNDE6IDogSUNNUCBlY2hvIHJlcXVl
-c3QKPj4KPj4gSSBjYW4gc2VlIHRoZSBwZWVyIGl0WHJSZVYuLi4gcmVjZWl2aW5nIHRoZSBlY2hv
-IHJlcXVlc3QgYnV0IGl0J3MKPj4gY29taW5nIGZyb20gdGhlIGZpcnN0IEFkZHJlc3MgbGlzdGVk
-IGluIHRoZSBjb25maWcgYW5kIGVuZHBvaW50MiBvbmx5Cj4+IGhhcyAxMC44OC8xNiBhZGRyZXNz
-ZXMgaW4gaXQncyBBbGxvd2VkSVBzLgo+Pgo+PiBBbnkgaW5zaWdodCBpbnRvIHdoYXQncyBoYXBw
-ZW5pbmcgd291bGQgYmUgZ3JhdGVmdWxseSByZWNlaXZlZCwgSSd2ZQo+PiB0cmllZCBhc2tpbmcg
-YSBjb3VwbGUgb2YgdGltZXMgYnV0IG5vdCBoYWQgYW55IGZlZWRiYWNrLCBJIHN1c3BlY3QgSQo+
-PiBhbSBmdW5kYW1lbnRhbGx5IG1pc3VuZGVyc3RhbmRpbmcgc29tZXRoaW5nIGhlcmUuCj4KPgo+
-IEhvbmVzdGx5IHRoaXMgc291bmRzIHF1aXRlIG5vcm1hbC4gVGhlIGtlcm5lbCdzIG5ldHdvcmsg
-c3RhY2sgY2hvb3NlcyB0aGUgc291cmNlIGFkZHJlc3Mgd2l0aG91dCBhbnkgaW50ZXJuYWwga25v
-d2xlZGdlIGFib3V0IFdpcmVHdWFyZCdzIGNvbmZpZ3VyYXRpb24uCj4KPiBJIHRoaW5rIHlvdSdy
-ZSBjb25mdXNlZCBhYm91dCB0aGUgcHVycG9zZSBvZiBXaXJlR3VhcmQncyBBbGxvd2VkSVBzPS4g
-SXQgb25seSBkZWZpbmVzIGFjY2VwdGFibGUgKnJlbW90ZSogYWRkcmVzc2VzIGZvciB0aGF0IHBl
-ZXIgKGRlc3RpbmF0aW9ucyBmb3Igb3V0Ym91bmQsIHNvdXJjZXMgZm9yIGluYm91bmQpOyBpdCBk
-b2VzIG5vdCByZXN0cmljdCB3aGF0ICpsb2NhbCogYWRkcmVzcyB5b3Ugd2lsbCB1c2UuCj4KPiBZ
-b3UgY2FuIHRlbGwgTGludXggdG8gcHJlZmVyIG9uZSBzb3VyY2UgYWRkcmVzcyBvciB0aGUgb3Ro
-ZXIsIGJ5IGFkZGluZyByb3V0ZXMgd2l0aCB0aGUgJ3NyYycga2V5d29yZCBpbiBgaXAgcm91dGVg
-IChSVEFfUFJFRlNSQyBhdHRyaWJ1dGUpLiBGb3IgZXhhbXBsZToKPgo+IGlwIHJvdXRlIGFkZCAx
-NzIuMTguMS4wLzI0IGRldiB3ZzAgc3JjIDEwLjE5LjQ5LjEwMwo+IGlwIHJvdXRlIGFkZCAxNzIu
-MjcuMC4wLzE2IGRldiB3ZzAgc3JjIDEwLjg4LjExOC4xNjYKPgo+IC0tCj4gTWFudGFzIE1pa3Vs
-xJduYXMKX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18KV2ly
-ZUd1YXJkIG1haWxpbmcgbGlzdApXaXJlR3VhcmRAbGlzdHMuengyYzQuY29tCmh0dHBzOi8vbGlz
-dHMuengyYzQuY29tL21haWxtYW4vbGlzdGluZm8vd2lyZWd1YXJkCg==
+Hi all,
+
+I thought I'd implement a prototype to use multiple endpoints for a
+single peer, but after some analysis on "## Select new endpoint during
+each handshake"[1], I'd like to share the concerns with future readers
+who might try the same endeavor. TLDR: I think the kernel is not in
+the best position to do this, "decision making in user space" may be
+more appropriate.
+
+To make it happen, handshake process would change. New suggested flow:
+- Initiator sends a handshake packet to all endpoints quasi-simultaneously.
+  - Each handshake is a new message with a different ephemeral key et al.
+- Responder receives the first one and responds.
+- Responder receives more handshakes within 1/INITIATIONS_PER_SECOND
+and discards them.
+- Responder may receive more after 1/INITIATIONS_PER_SECOND and responds.
+
+Responder needs to maintain more than one handshake state for
+MAX_TIMER_HANDSHAKES, specifically, the whole `noise_handshake`
+struct. Following a later suggestion in the thread, this can have an
+upper bound of MAX_ENDPOINTS_PER_PEER (TBD constant).
+
+Responder's responses are technically different handshakes: different
+ephemeral keys, different hashes, possibly different indices (I
+haven't figured the role of indices yet). From this stems the question
+1.
+
+Questions:
+1. how can initiator associate the one-of-the-many handshakes it sent
+with the one-of-the-many responses it received? I.e. is there
+common/derivable data shared between the handshake request and
+response? I wasn't able to find one.
+2. more a concern: neither kernel, nor wireguard-go implementations
+are willing to accept more than one endpoint, and it would be messy to
+extend:
+
+include/uapi/linux/wireguard.h
+  WGPEER_A_ENDPOINT: struct sockaddr_in or struct sockaddr_in6
+
+device/uapi.go:
+  case "endpoint":
+  ...
+    endpoint, err := CreateEndpoint(value)
+
+Endpoint is fixed to be a single UDP address, and both kernel and
+wireguard-go refuse unknown keys. To have tooling
+backwards-compatibility (i.e. use newer wireguard-tools with older
+kernel implementations), wireguard-tools would need to know the
+supported "features" of the underlying implementation. And there is no
+version negotiation between the user/kernel space. Which makes it
+tricky to add features like this.
+
+Related gotcha: currently DNS is looked up in userspace during
+interface configuration**. The biggest selling point of "multiple
+endpoints" is increasing probability to reach it... Given that:
+1. wireguard-linux netlink API was not designed to be extendable (so
+isn't wireguard-go).
+2. DNS lookup is done on configuration time.
+
+I am suggesting that "## Decision-making in userspace" would work
+better here. Userspace would regularly* issue handshake initiations
+and measure how long it takes for each endpoint, and hand over the
+*single* endpoint to the kernel to connect. Interestingly enough, this
+"userspace thing" is a combination of wireguard-tools for config
+parsing and MNL, and wireguard-go to initiate the handshake. What do
+you think, where could this belong? A userspace wireguard
+implementation in C, and/or wireguard-tools implementation in Go would
+make this easy, but we have neither. :)
+
+Motiejus
+
+[1]: https://lists.zx2c4.com/pipermail/wireguard/2017-January/000917.html
+[*]: timing and conditions when to do the "probing handshakes" would
+need to be very carefully considered. TBD.
+[**]: my wireguard server is behind a dynamic IP with a DNS TTL of 600 seconds.
+_______________________________________________
+WireGuard mailing list
+WireGuard@lists.zx2c4.com
+https://lists.zx2c4.com/mailman/listinfo/wireguard
