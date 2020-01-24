@@ -2,78 +2,66 @@ Return-Path: <SRS0=wYFz=3R=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.8 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
-	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2EFCBC33C9E
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 28 Jan 2020 10:34:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EC4C1C33C9E
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 28 Jan 2020 10:34:51 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 8391121739
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 28 Jan 2020 10:34:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 4162221739
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 28 Jan 2020 10:34:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ypk6+gp7"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 8391121739
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=rfraile.eu header.i=@rfraile.eu header.b="XaHuPZt8"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 4162221739
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=rfraile.eu
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fa7ae197;
-	Tue, 28 Jan 2020 10:34:48 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 88232ccd;
+	Tue, 28 Jan 2020 10:34:49 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 564b4e72
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4b163008
  for <wireguard@lists.zx2c4.com>;
- Fri, 24 Jan 2020 12:55:21 +0000 (UTC)
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com
- [IPv6:2a00:1450:4864:20::430])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7574d62e
+ Fri, 24 Jan 2020 18:37:26 +0000 (UTC)
+Received: from smtp-relay-03-5.dondominio.net (smtp-relay-03-5.dondominio.net
+ [31.214.176.48])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 46b85e3e
  for <wireguard@lists.zx2c4.com>;
- Fri, 24 Jan 2020 12:55:21 +0000 (UTC)
-Received: by mail-wr1-x430.google.com with SMTP id q6so1835972wro.9
- for <wireguard@lists.zx2c4.com>; Fri, 24 Jan 2020 04:55:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=to:from:subject:message-id:date:user-agent:mime-version
- :content-transfer-encoding:content-language;
- bh=fr/a2W1sTv9bpI7QD6Ygogt5299BH+DJx/I22jQiaBs=;
- b=Ypk6+gp77g9Cg0hfKzXnqMytn27HlR3tghrub0o9C3KA8lef0m65F+gaNSBq0RmnRE
- mN3lnv4lBtoH9+o9n7GxnSmN6Rm6XcGSQwa+7xcTbCvbZPz2+gGr+gwCGuBIjFsRpQid
- +TKzCymTKnIt2Mj5hZ7M+vC6ptgeD0Y0yf88mplFhTg0KYE/tS8jv1k1HdBT5P0Y4WIb
- WyXc5S/EdkXGdIPiarObcuA0GX1IJhmXRi9VvR3ZlxshgVqPwJrHaBDVm0INt+vJnLD7
- YeS9yzYcqAzlmvhRJswIcw9dxWcfQ7YWOvJphaInRRqiV9q+Idb5GG7eWwIbEw+H6EBM
- Dk6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:to:from:subject:message-id:date:user-agent
- :mime-version:content-transfer-encoding:content-language;
- bh=fr/a2W1sTv9bpI7QD6Ygogt5299BH+DJx/I22jQiaBs=;
- b=GPoiORIjygKXxxoluG2KnSj/dpM8MDgUZ0XSnWm1UT1pLUoWZRrRUkYLnS5fFotZhy
- gc6AxpZWneFu99CiMKa4ESVCkdPQrlTFMyv3Hw2P8kADgfkUbXNopO8WCLwFrwCdMhQb
- w4N54n945jFwoZU3xVcjeuE08TRF700lTFkKUkqJHh+YFlY98Ce1XRDNwdZwgFdut3kZ
- sHsZJz+ASrRqTsuMmAz7gn8Xl0KTaAGQIHeL2Mv5YQFZ73TbM+IgDc/8o4rdTGY04n1/
- aiIzNpq1wEx1AwuEYnJz0Hm0Wq32Gy0cpP2eCd9vi4TrbBS1EuuoquXAwCM6SiWuBBNK
- r08Q==
-X-Gm-Message-State: APjAAAV9eKnjgK5l26poRjeeMUY6rng38z1Jpt7ffuWUyRy6/DOo8HKQ
- t57bwVMdA8SCblyFgOSAwF/XZ1Go
-X-Google-Smtp-Source: APXvYqzViwAOlrHjF/aF4N4Ba1qKHnWJRsGO4ae8mobUHCk9r95BT2mgwVQ1cEQ1OVg8OOF8S7veGw==
-X-Received: by 2002:a5d:4b8f:: with SMTP id b15mr4235868wrt.100.1579870519384; 
- Fri, 24 Jan 2020 04:55:19 -0800 (PST)
-Received: from [10.201.95.96] ([94.102.109.20])
- by smtp.gmail.com with ESMTPSA id g79sm5675004wme.17.2020.01.24.04.55.17
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 24 Jan 2020 04:55:18 -0800 (PST)
-To: wireguard@lists.zx2c4.com
-From: cyberurchin@gmail.com
-Subject: Windows Wireguard with Multiple Endpoints in Different Subnets
-Message-ID: <413c4ea5-9e70-acf9-caff-f6049374f7ce@gmail.com>
-Date: Fri, 24 Jan 2020 13:55:17 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
+ Fri, 24 Jan 2020 18:37:26 +0000 (UTC)
+Received: from localhost (smtp-relay-local.scip.local [127.0.0.1])
+ by smtp-relay.dondominio.com (Postfix) with SMTP id C60FD40925
+ for <wireguard@lists.zx2c4.com>; Fri, 24 Jan 2020 19:37:24 +0100 (CET)
+Received: from mail-node.dondominio.com 
+ by smtp-relay.dondominio.com (Postfix) with ESMTP id 31D5440858;
+ Fri, 24 Jan 2020 19:37:23 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=rfraile.eu; s=dddk;
+ t=1579891043; bh=d3q1MpFaAxTqrFxoJTbS6FVeuxaNYEct1PqfoWLjkMU=;
+ h=Content-Type:Date:From:To:Subject:Message-ID;
+ b=XaHuPZt8ueEXo8w0qfThzJ4lK4jPfzZ3+YD32u/91oKSaE5KLBKH0ZSgzP2NPV4S9
+ gp4Fq7yZladuAY/QchCI/BPekeEwtsEPEzyw86IJcBRyKGEMIkK5fq+QdSxPzstzlY
+ JC07U2EZCc68TRHGqD3JYblCdmyS5duIjwuM9brg=
+Received: from webmail.rfraile.eu (webmail-03.scip.local [172.21.33.135])
+ (Authenticated sender: rfraile@rfraile.eu)
+ by mail-node.dondominio.com (Postfix) with ESMTPA id 0CF5040154;
+ Fri, 24 Jan 2020 19:37:23 +0100 (CET)
+Received: from 2.154.21.178.dyn.user.ono.com ([2.154.21.178])
+ via webmail-ha-01.scip.local ([172.21.33.131]) by webmail.rfraile.eu
+ with HTTP (HTTP/1.1 POST); Fri, 24 Jan 2020 19:37:23 +0100
 MIME-Version: 1.0
-Content-Language: en-US
+Date: Fri, 24 Jan 2020 19:37:23 +0100
+From: Ricardo Fraile <rfraile@rfraile.eu>
+To: wireguard@lists.zx2c4.com
+Subject: [PATCH] wg-quick: Linux and FreeBSD: Add support to search domain in
+ wg-quick
+Message-ID: <39913106ac854a2f2515aa2ad10d71ad@rfraile.eu>
+X-Sender: rfraile@rfraile.eu
+User-Agent: DD Webmail
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.5.11
+ (mail-node.dondominio.com [0.0.0.0]); Fri, 24 Jan 2020 19:37:23 +0100 (CET)
 X-Mailman-Approved-At: Tue, 28 Jan 2020 11:34:47 +0100
+Cc: kevin@darbyshire-bryant.me.uk, mdlayher@gmail.com
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -85,94 +73,219 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-CkhpIEZvbGtzLAoKSGVyZSBhcmUgdHdvIHF1ZXN0aW9uIHRoYXQgSSBoYXZlIGNvbmNlcm5pbmcg
-dGhlIFdpbmRvd3MgdmVyc2lvbiBvZiBXaXJlZ3VhcmQuCgpNeSBzZXR1cCBpcyBhcyBmb2xsb3dz
-OiBBIFdpbmRvd3MgbWFjaGluZSB3aXRoIHR3byBFdGhlcm5ldCBwb3J0cyBjb25uZWN0cyB0byB0
-d28gTGludXggY2xpZW50cywgb25lIG9uIGVhY2ggZW5kLiBUaGVyZSBhcmUgdHdvIHN1Ym5ldHMg
-ZGVmaW5lZCBmb3IgdGhlIHR3byBwb3J0cywgMTkyLjE2OC4wLjAvMjQgYW5kIDE5Mi4xNjguNi4w
-LzI0LiBJIG5lZWQgYSBzZWN1cmUgdHVubmVsIGZyb20gdGhlIFdpbmRvd3MgbWFjaGluZSB0byBl
-YWNoIG9mIHRoZSB0d28gTGludXggY2xpZW50cyBidXQgdGhlIHR3byBMaW51eCBjbGllbnRzIGRv
-IG5vdCBuZWVkIHRvIHRhbGsgdG8gZWFjaCBvdGhlci4KCmEpIFVuZGVyIExpbnV4LCBJIGNhbiBk
-ZWZpbmUgc2V2ZXJhbCBXaXJlZ3VhZCB0dW5uZWxzIHRoYXQgd29yayBpbmRlcGVuZGV0bHkgYnV0
-IHRoaXMgZG9lc24ndCBzZWVtIHRvIGJlIHRoZSBjYXNlIGluIFdpbmRvd3MuIEluIGZhY3QsIHdo
-ZW4gSSBhY3RpdmF0ZSBvbmUgdHVubmVsLCB0aGUgb3RoZXIgb25lIGlzIGF1dG9tYXRpY2FsbHkg
-ZGVhY3RpdmF0ZWQuIFdoeSBpcyB0aGF0PwoKTXkgd29yay1hcm91bmQgbG9va3MgYSBsaXR0bGUg
-Yml0IGxpa2UgaGFjayBidXQgd29ya3MsIGluIHByaW5jaXBsZS4gSSd2ZSBkZWZpbmVkIG9ubHkg
-b25lIHR1bm5lbCB0aGF0IGluY2x1ZGVzIHRoZSB0d28gTGludXggY2xpZW50cyBhcyBwZWVycyBl
-dmVuIHRob3VnaCB0aGV5IGFyZSBpbiB0d28gZGlmZmVyZW50IHN1Ym5ldHM6CgpbSW50ZXJmYWNl
-XQpQcml2YXRlS2V5ID0gK09kam50cUNzL09jSkdzZEdYWFhYWE1TaE5zZFVXOUVRVzMzSGh2T1Zs
-UT0KTGlzdGVuUG9ydCA9IDUxODIwCkFkZHJlc3MgPSAxOTIuMTY4LjguNi8yNAoKW1BlZXJdClB1
-YmxpY0tleSA9IHVqUmg0Nkt5UXJBME9sSlo3N2RYWFhYWGhVZDRUYXFLa29CaEZqNlpsQms9CkFs
-bG93ZWRJUHMgPSAxOTIuMTY4LjguMy8zMgpFbmRwb2ludCA9IDE5Mi4xNjguNi4yOjUxODIwCgpb
-UGVlcl0KUHVibGljS2V5ID0gMzJWR2UrUG5WQ3REaW8xMkdjcmhLWFhYWFhsT1dxeTRuY0Q2RzBV
-MU1oYz0KQWxsb3dlZElQcyA9IDE5Mi4xNjguOC40LzMyCkVuZHBvaW50ID0gMTkyLjE2OC4wLjIw
-MTo1MTgyMAoKU28gZmFyLCBzbyBnb29kLgoKYikgVGhlIGNvbmZpZ3VyYXRpb24gZGVzY3JpYmVk
-IGFib3ZlIGJyZWFrcyB3aGVuIEkgZGVmaW5lIGEgZGVmYXVsdCBnYXRld2F5LCBlLmcuIDE5Mi4x
-NjguMC4xLiBJbiB0aGlzIGNhc2UsIFdpcmVndWFyZCBtZXNzZXMgdXAgdGhlIHBhY2thZ2VzIHRo
-YXQgc2hvdWxkIGdvIHRvIDE5Mi4xNjguNi4yICh0aGUgTGludXggY2xpZW50IG9uIHRoZSBuZXR3
-b3JrIHdoZXJlIHRoZSBnYXRld2F5IG5vdCBpcykgYW5kIHNlbmRzIHRoZW0gdG8gMTkyLjE2OC4w
-LjEgKHRoZSBkZWZhdWx0IGdhdGV3YXkpLiBQaW5nIGNvbW1hbmRzIHRvIDE5Mi4xNjguNi4yLCBo
-b3dldmVyLCB3b3JrLCBpbiB0aGUgc2Vuc2UgdGhhdCB0aGUgcm91dGluZyB0YWJsZSBpdHNlbGYg
-aXMgc3RpbGwgb2suIEl0IGxvb2tzIGxpa2UgdGhpczoKCklQdjQgUm91dGUgVGFibGUKPT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09CkFjdGl2ZSBSb3V0ZXM6Ck5ldHdvcmsgRGVzdGluYXRpb27CoMKgwqDCoMKg
-wqDCoCBOZXRtYXNrwqDCoMKgwqDCoMKgwqDCoMKgIEdhdGV3YXnCoMKgwqDCoMKgwqAgSW50ZXJm
-YWNlwqAgTWV0cmljCsKgwqDCoMKgwqDCoMKgwqDCoCAwLjAuMC4wwqDCoMKgwqDCoMKgwqDCoMKg
-IDAuMC4wLjDCoMKgwqDCoMKgwqAgMTkyLjE2OC4wLjHCoMKgwqDCoCAxOTIuMTY4LjAuMjAywqDC
-oMKgIDI4MQrCoMKgwqDCoMKgwqDCoCAxMjcuMC4wLjDCoMKgwqDCoMKgwqDCoCAyNTUuMC4wLjDC
-oMKgwqDCoMKgwqDCoMKgIE9uLWxpbmvCoMKgwqDCoMKgwqDCoMKgIDEyNy4wLjAuMcKgwqDCoCAz
-MzEKwqDCoMKgwqDCoMKgwqAgMTI3LjAuMC4xwqAgMjU1LjI1NS4yNTUuMjU1wqDCoMKgwqDCoMKg
-wqDCoCBPbi1saW5rwqDCoMKgwqDCoMKgwqDCoCAxMjcuMC4wLjHCoMKgwqAgMzMxCsKgIDEyNy4y
-NTUuMjU1LjI1NcKgIDI1NS4yNTUuMjU1LjI1NcKgwqDCoMKgwqDCoMKgwqAgT24tbGlua8KgwqDC
-oMKgwqDCoMKgwqAgMTI3LjAuMC4xwqDCoMKgIDMzMQrCoMKgwqDCoMKgwqAgMTkyLjE2OC4wLjDC
-oMKgwqAgMjU1LjI1NS4yNTUuMMKgwqDCoMKgwqDCoMKgwqAgT24tbGlua8KgwqDCoMKgwqAgMTky
-LjE2OC4wLjIwMsKgwqDCoCAyODEKwqDCoMKgwqAgMTkyLjE2OC4wLjIwMsKgIDI1NS4yNTUuMjU1
-LjI1NcKgwqDCoMKgwqDCoMKgwqAgT24tbGlua8KgwqDCoMKgwqAgMTkyLjE2OC4wLjIwMsKgwqDC
-oCAyODEKwqDCoMKgwqAgMTkyLjE2OC4wLjI1NcKgIDI1NS4yNTUuMjU1LjI1NcKgwqDCoMKgwqDC
-oMKgwqAgT24tbGlua8KgwqDCoMKgwqAgMTkyLjE2OC4wLjIwMsKgwqDCoCAyODEKwqDCoMKgwqDC
-oMKgIDE5Mi4xNjguNi4wwqDCoMKgIDI1NS4yNTUuMjU1LjDCoMKgwqDCoMKgwqDCoMKgIE9uLWxp
-bmvCoMKgwqDCoMKgwqDCoCAxOTIuMTY4LjYuM8KgwqDCoCAzMTEKwqDCoMKgwqDCoMKgIDE5Mi4x
-NjguNi4zwqAgMjU1LjI1NS4yNTUuMjU1wqDCoMKgwqDCoMKgwqDCoCBPbi1saW5rwqDCoMKgwqDC
-oMKgwqAgMTkyLjE2OC42LjPCoMKgwqAgMzExCsKgwqDCoMKgIDE5Mi4xNjguNi4yNTXCoCAyNTUu
-MjU1LjI1NS4yNTXCoMKgwqDCoMKgwqDCoMKgIE9uLWxpbmvCoMKgwqDCoMKgwqDCoCAxOTIuMTY4
-LjYuM8KgwqDCoCAzMTEKwqDCoMKgwqDCoMKgIDE5Mi4xNjguOC4wwqDCoMKgIDI1NS4yNTUuMjU1
-LjDCoMKgwqDCoMKgwqDCoMKgIE9uLWxpbmvCoMKgwqDCoMKgwqDCoCAxOTIuMTY4LjguNsKgwqDC
-oCAyNjEKwqDCoMKgwqDCoMKgIDE5Mi4xNjguOC4zwqAgMjU1LjI1NS4yNTUuMjU1wqDCoMKgwqDC
-oMKgwqDCoCBPbi1saW5rwqDCoMKgwqDCoMKgwqAgMTkyLjE2OC44LjbCoMKgwqDCoMKgIDUKwqDC
-oMKgwqDCoMKgIDE5Mi4xNjguOC40wqAgMjU1LjI1NS4yNTUuMjU1wqDCoMKgwqDCoMKgwqDCoCBP
-bi1saW5rwqDCoMKgwqDCoMKgwqAgMTkyLjE2OC44LjbCoMKgwqDCoMKgIDUKwqDCoMKgwqDCoMKg
-IDE5Mi4xNjguOC42wqAgMjU1LjI1NS4yNTUuMjU1wqDCoMKgwqDCoMKgwqDCoCBPbi1saW5rwqDC
-oMKgwqDCoMKgwqAgMTkyLjE2OC44LjbCoMKgwqAgMjYxCsKgwqDCoMKgIDE5Mi4xNjguOC4yNTXC
-oCAyNTUuMjU1LjI1NS4yNTXCoMKgwqDCoMKgwqDCoMKgIE9uLWxpbmvCoMKgwqDCoMKgwqDCoCAx
-OTIuMTY4LjguNsKgwqDCoCAyNjEKwqDCoMKgwqDCoMKgwqAgMjI0LjAuMC4wwqDCoMKgwqDCoMKg
-wqAgMjQwLjAuMC4wwqDCoMKgwqDCoMKgwqDCoCBPbi1saW5rwqDCoMKgwqDCoMKgwqDCoCAxMjcu
-MC4wLjHCoMKgwqAgMzMxCsKgwqDCoMKgwqDCoMKgIDIyNC4wLjAuMMKgwqDCoMKgwqDCoMKgIDI0
-MC4wLjAuMMKgwqDCoMKgwqDCoMKgwqAgT24tbGlua8KgwqDCoMKgwqAgMTkyLjE2OC4wLjIwMsKg
-wqDCoCAyODEKwqDCoMKgwqDCoMKgwqAgMjI0LjAuMC4wwqDCoMKgwqDCoMKgwqAgMjQwLjAuMC4w
-wqDCoMKgwqDCoMKgwqDCoCBPbi1saW5rwqDCoMKgwqDCoMKgwqAgMTkyLjE2OC42LjPCoMKgwqAg
-MzExCsKgIDI1NS4yNTUuMjU1LjI1NcKgIDI1NS4yNTUuMjU1LjI1NcKgwqDCoMKgwqDCoMKgwqAg
-T24tbGlua8KgwqDCoMKgwqDCoMKgwqAgMTI3LjAuMC4xwqDCoMKgIDMzMQrCoCAyNTUuMjU1LjI1
-NS4yNTXCoCAyNTUuMjU1LjI1NS4yNTXCoMKgwqDCoMKgwqDCoMKgIE9uLWxpbmvCoMKgwqDCoMKg
-IDE5Mi4xNjguMC4yMDLCoMKgwqAgMjgxCsKgIDI1NS4yNTUuMjU1LjI1NcKgIDI1NS4yNTUuMjU1
-LjI1NcKgwqDCoMKgwqDCoMKgwqAgT24tbGlua8KgwqDCoMKgwqDCoMKgIDE5Mi4xNjguNi4zwqDC
-oMKgIDMxMQo9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT0KUGVyc2lzdGVudCBSb3V0ZXM6CsKgIE5ldHdvcmsg
-QWRkcmVzc8KgwqDCoMKgwqDCoMKgwqDCoCBOZXRtYXNrwqAgR2F0ZXdheSBBZGRyZXNzwqAgTWV0
-cmljCsKgwqDCoMKgwqDCoMKgwqDCoCAwLjAuMC4wwqDCoMKgwqDCoMKgwqDCoMKgIDAuMC4wLjDC
-oMKgwqDCoMKgwqAgMTkyLjE2OC4wLjHCoCBEZWZhdWx0Cj09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQoKQW55
-IGlkZWFzPwoKVGhlcmUgaXMgbm8gSVB2Ni4gSWYgSSByZW1vdmUgdGhlIGRlZmF1bHQgZ2F0ZXdh
-eSwgdGhlIHR3byB0dW5uZWxzIHdvcmsgYWdhaW4uCgpBaCwgeWVzLCBhbmQgYSBmaW5hbCBub3Rl
-IC0gdGhlcmUgaXMgYSByZWxhdGVkIGlzc3VlIGhlcmU6Cmh0dHBzOi8vbGlzdHMuengyYzQuY29t
-L3BpcGVybWFpbC93aXJlZ3VhcmQvMjAxOS1TZXB0ZW1iZXIvMDA0NDkzLmh0bWwKClRoZSBhbnN3
-ZXIgdG8gdGhhdCBwb3N0IGFsc28gc2VlbXMgdG8gYW5zd2VyIG15IHF1ZXN0aW9uLCB0b28sIGJ1
-dCBJJ2QgbGlrZSB0byBnZXQgY29uZmlybWF0aW9uIGFuZCBtYXliZSB0aGUgd29ybGQgaGFzIG1v
-dmVkIG9uIGluIHRoZSBtZWFudGltZS4KCkNoZWVycywKSW5nbwoKX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX18KV2lyZUd1YXJkIG1haWxpbmcgbGlzdApXaXJl
-R3VhcmRAbGlzdHMuengyYzQuY29tCmh0dHBzOi8vbGlzdHMuengyYzQuY29tL21haWxtYW4vbGlz
-dGluZm8vd2lyZWd1YXJkCg==
+Hello,
+
+
+This patch allows wg-quick to pass the search domain to resolvconf with 
+the option 'DNSSearch=' as it already does with the 'DNS=' option. As an 
+example:
+
+[Interface]
+...
+DNSSearch = lan1.example.com, lan2.example.com
+...
+
+This was discussed previously a few times:
+
+https://lists.zx2c4.com/pipermail/wireguard/2019-January/003811.html
+https://lists.zx2c4.com/pipermail/wireguard/2018-May/002882.html
+https://lists.zx2c4.com/pipermail/wireguard/2019-September/004578.html
+
+
+Thanks,
+Ricardo F.
+
+
+
+
+diff --git a/src/man/wg-quick.8 b/src/man/wg-quick.8
+index 6250adc..2094c30 100644
+--- a/src/man/wg-quick.8
++++ b/src/man/wg-quick.8
+@@ -1,4 +1,4 @@
+-.TH WG-QUICK 8 "2016 January 1" ZX2C4 "WireGuard"
++.TH WG-QUICK 8 "2020 January 1" ZX2C4 "WireGuard"
+
+  .SH NAME
+  wg-quick - set up a WireGuard interface simply
+@@ -82,6 +82,10 @@ DNS servers. May be specified multiple times. Upon 
+bringing the interface up, th
+  .BR resolvconf (8)
+  are undesirable, the PostUp and PostDown keys below may be used 
+instead.
+  .IP \(bu
++DNSSearch \(em a comma-separated list of domain names to be set as the 
+interface's
++search for hostname lookups. This options runs in conjunction with DNS 
+and only if that is
++already set. Only available on Linux and FreeBSD.
++.IP \(bu
+  MTU \(em if not specified, the MTU is automatically determined from the 
+endpoint addresses
+  or the system default route, which is usually a sane choice. However, 
+to manually specify
+  an MTU to override this automatic discovery, this value may be 
+specified explicitly.
+@@ -124,6 +128,8 @@ traffic:
+  .br
+      \fBDNS = 10.200.100.1\fP
+  .br
++    \fBDNSSearch = loc1.example.com, loc2.example.com\fP
++.br
+      PrivateKey = oK56DE9Ue9zK76rAc8pBl6opph+1v36lm7cXXsQKrQM=
+  .br
+
+@@ -141,7 +147,7 @@ traffic:
+
+  The `Address` field is added here in order to set up the address for 
+the interface. The `DNS` field
+  indicates that a DNS server for the interface should be configured via
+-.BR resolvconf (8).
++.BR resolvconf (8), the `DNSSerach` field set the search domains with 
+it too.
+  The peer's allowed IPs entry implies that this interface should be 
+configured as the default gateway,
+  which this script does.
+
+diff --git a/src/wg-quick/freebsd.bash b/src/wg-quick/freebsd.bash
+index c390dcc..a108323 100755
+--- a/src/wg-quick/freebsd.bash
++++ b/src/wg-quick/freebsd.bash
+@@ -16,6 +16,7 @@ INTERFACE=""
+  ADDRESSES=( )
+  MTU=""
+  DNS=( )
++DNS_SEARCH=( )
+  TABLE=""
+  PRE_UP=( )
+  POST_UP=( )
+@@ -85,6 +86,7 @@ parse_options() {
+  			Address) ADDRESSES+=( ${value//,/ } ); continue ;;
+  			MTU) MTU="$value"; continue ;;
+  			DNS) DNS+=( ${value//,/ } ); continue ;;
++			DNSSearch) DNS_SEARCH+=( ${value//,/ } ); continue ;;
+  			Table) TABLE="$value"; continue ;;
+  			PreUp) PRE_UP+=( "$value" ); continue ;;
+  			PreDown) PRE_DOWN+=( "$value" ); continue ;;
+@@ -297,7 +299,11 @@ monitor_daemon() {
+  HAVE_SET_DNS=0
+  set_dns() {
+  	[[ ${#DNS[@]} -gt 0 ]] || return 0
+-	printf 'nameserver %s\n' "${DNS[@]}" | cmd resolvconf -a "$INTERFACE" 
+-x
++	if [[ -n $DNS_SEARCH ]]; then
++		(printf 'nameserver %s\n' "${DNS[@]}" && printf 'search %s\n' 
+"$DNS_SEARCH") | cmd resolvconf -a "$INTERFACE" -x
++	else
++		printf 'nameserver %s\n' "${DNS[@]}" | cmd resolvconf -a "$INTERFACE" 
+-x
++	fi
+  	HAVE_SET_DNS=1
+  }
+
+@@ -342,8 +348,9 @@ save_config() {
+  	{ read -r _; while read -r _ _ _ address _; do
+  		new_config+="Address = $address"$'\n'
+  	done } < <(netstat -I "$INTERFACE" -n -W -f inet6)
+-	while read -r address; do
+-		[[ $address =~ ^nameserver\ ([a-zA-Z0-9_=+:%.-]+)$ ]] && 
+new_config+="DNS = ${BASH_REMATCH[1]}"$'\n'
++	while read -r line; do
++		[[ $line =~ ^nameserver\ ([a-zA-Z0-9_=+:%.-]+)$ ]] && 
+new_config+="DNS = ${BASH_REMATCH[1]}"$'\n'
++		[[ $line =~ ^search\ (.+)$ ]] && new_config+="DNSSearch = 
+${BASH_REMATCH[1]/ /, }"$'\n'
+  	done < <(resolvconf -l "$INTERFACE" 2>/dev/null)
+  	[[ -n $MTU ]] && new_config+="MTU = $MTU"$'\n'
+  	[[ -n $TABLE ]] && new_config+="Table = $TABLE"$'\n'
+@@ -395,6 +402,7 @@ cmd_usage() {
+  	  - Address: may be specified one or more times and contains one or 
+more
+  	    IP addresses (with an optional CIDR mask) to be set for the 
+interface.
+  	  - DNS: an optional DNS server to use while the device is up.
++	  - DNSSearch: Search list for host-name lookup to use while the 
+device is up.
+  	  - MTU: an optional MTU for the interface; if unspecified, 
+auto-calculated.
+  	  - Table: an optional routing table to which routes will be added; if
+  	    unspecified or \`auto', the default table is used. If \`off', no 
+routes
+diff --git a/src/wg-quick/linux.bash b/src/wg-quick/linux.bash
+index 7c2c002..1715354 100755
+--- a/src/wg-quick/linux.bash
++++ b/src/wg-quick/linux.bash
+@@ -16,6 +16,7 @@ INTERFACE=""
+  ADDRESSES=( )
+  MTU=""
+  DNS=( )
++DNS_SEARCH=( )
+  TABLE=""
+  PRE_UP=( )
+  POST_UP=( )
+@@ -57,6 +58,7 @@ parse_options() {
+  			Address) ADDRESSES+=( ${value//,/ } ); continue ;;
+  			MTU) MTU="$value"; continue ;;
+  			DNS) DNS+=( ${value//,/ } ); continue ;;
++			DNSSearch) DNS_SEARCH=${value//,/}; continue ;;
+  			Table) TABLE="$value"; continue ;;
+  			PreUp) PRE_UP+=( "$value" ); continue ;;
+  			PreDown) PRE_DOWN+=( "$value" ); continue ;;
+@@ -150,7 +152,11 @@ resolvconf_iface_prefix() {
+  HAVE_SET_DNS=0
+  set_dns() {
+  	[[ ${#DNS[@]} -gt 0 ]] || return 0
+-	printf 'nameserver %s\n' "${DNS[@]}" | cmd resolvconf -a 
+"$(resolvconf_iface_prefix)$INTERFACE" -m 0 -x
++	if [[ -n $DNS_SEARCH ]]; then
++		(printf 'nameserver %s\n' "${DNS[@]}" && printf 'search %s\n' 
+"$DNS_SEARCH") | cmd resolvconf -a 
+"$(resolvconf_iface_prefix)$INTERFACE" -m 0 -x
++	else
++		printf 'nameserver %s\n' "${DNS[@]}" | cmd resolvconf -a 
+"$(resolvconf_iface_prefix)$INTERFACE" -m 0 -x
++	fi
+  	HAVE_SET_DNS=1
+  }
+
+@@ -253,8 +259,9 @@ save_config() {
+  	for address in ${BASH_REMATCH[1]}; do
+  		new_config+="Address = $address"$'\n'
+  	done
+-	while read -r address; do
+-		[[ $address =~ ^nameserver\ ([a-zA-Z0-9_=+:%.-]+)$ ]] && 
+new_config+="DNS = ${BASH_REMATCH[1]}"$'\n'
++	while read -r line; do
++		[[ $line =~ ^nameserver\ ([a-zA-Z0-9_=+:%.-]+)$ ]] && 
+new_config+="DNS = ${BASH_REMATCH[1]}"$'\n'
++		[[ $line =~ ^search\ (.+)$ ]] && new_config+="DNSSearch = 
+${BASH_REMATCH[1]/ /, }"$'\n'
+  	done < <(resolvconf -l "$(resolvconf_iface_prefix)$INTERFACE" 
+2>/dev/null || cat 
+"/etc/resolvconf/run/interface/$(resolvconf_iface_prefix)$INTERFACE" 
+2>/dev/null)
+  	[[ -n $MTU && $(ip link show dev "$INTERFACE") =~ mtu\ ([0-9]+) ]] && 
+new_config+="MTU = ${BASH_REMATCH[1]}"$'\n'
+  	[[ -n $TABLE ]] && new_config+="Table = $TABLE"$'\n'
+@@ -304,6 +311,7 @@ cmd_usage() {
+  	  - Address: may be specified one or more times and contains one or 
+more
+  	    IP addresses (with an optional CIDR mask) to be set for the 
+interface.
+  	  - DNS: an optional DNS server to use while the device is up.
++	  - DNSSearch: Search list for host-name lookup to use while the 
+device is up.
+  	  - MTU: an optional MTU for the interface; if unspecified, 
+auto-calculated.
+  	  - Table: an optional routing table to which routes will be added; if
+  	    unspecified or \`auto', the default table is used. If \`off', no 
+routes
+_______________________________________________
+WireGuard mailing list
+WireGuard@lists.zx2c4.com
+https://lists.zx2c4.com/mailman/listinfo/wireguard
