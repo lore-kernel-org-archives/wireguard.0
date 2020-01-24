@@ -1,67 +1,79 @@
-Return-Path: <SRS0=2alZ=3P=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=wYFz=3R=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.8 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0ED62C2D0DB
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 26 Jan 2020 10:57:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2EFCBC33C9E
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 28 Jan 2020 10:34:50 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 4FBCC2075D
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 26 Jan 2020 10:57:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 8391121739
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 28 Jan 2020 10:34:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="h/IsaKHm"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 4FBCC2075D
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ypk6+gp7"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 8391121739
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b890ef12;
-	Sun, 26 Jan 2020 10:57:26 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fa7ae197;
+	Tue, 28 Jan 2020 10:34:48 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 155aeb81
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 564b4e72
  for <wireguard@lists.zx2c4.com>;
- Sun, 26 Jan 2020 10:57:24 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 202e95f6
+ Fri, 24 Jan 2020 12:55:21 +0000 (UTC)
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com
+ [IPv6:2a00:1450:4864:20::430])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7574d62e
  for <wireguard@lists.zx2c4.com>;
- Sun, 26 Jan 2020 10:57:24 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8c9108fb
- for <wireguard@lists.zx2c4.com>;
- Sun, 26 Jan 2020 09:55:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=ZLjguUL7Cuz1hdAEsMUVdNuWlbU=; b=h/IsaK
- Hm6qmluIuPOSIUWcVpuOvGPPPX1Ui4+oe/GlytUUrBWmEPfDcoOLn+qZdFL9OPeo
- HleyBGJus+9WdbqGqvu9r3DFwfZb4kzUo73mMKQhMrtmOM8M5nZ1LqjKJR1giXAt
- p3OKaQj1sS8KXmwK8zGWPX4xwIcPsJmtJ8XypGKzEqeyY3X6cFUISvOlxAZ9GWYQ
- W9wEybQWm4Yvp6WpD41j1bS00/Y1u7KNJyY7dgo2l+UDYAfPH4OYiqo2ypnzAtbH
- VaCWxDUMfkbnB1Mbuln2Y1yC9j12VqoXsqwFft1Jwrv4Z28XJe81HIdnZrTWGiso
- F+kZv58lWmwESj4Q==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id b05e0fd0
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Sun, 26 Jan 2020 09:55:49 +0000 (UTC)
-Received: by mail-oi1-f179.google.com with SMTP id q81so4065209oig.0
- for <wireguard@lists.zx2c4.com>; Sun, 26 Jan 2020 02:57:24 -0800 (PST)
-X-Gm-Message-State: APjAAAVCYp552CAihz8dDLqMeyGuIer3zuHx/rMX4nxh79HQL/e1WKBz
- aooQswtyWmUpLmu0xuSdyQRm/YnAyo8S7izqwKY=
-X-Google-Smtp-Source: APXvYqwa8XC/wtSym6IS+1L+gKdKjyUtiOcCWo1BU09n3/V6uBwi8RCGG9h27vn9wnkVhfrRGB7kzhmZ0VwXP6C1eIM=
-X-Received: by 2002:aca:815:: with SMTP id 21mr4715118oii.52.1580036243801;
- Sun, 26 Jan 2020 02:57:23 -0800 (PST)
+ Fri, 24 Jan 2020 12:55:21 +0000 (UTC)
+Received: by mail-wr1-x430.google.com with SMTP id q6so1835972wro.9
+ for <wireguard@lists.zx2c4.com>; Fri, 24 Jan 2020 04:55:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=to:from:subject:message-id:date:user-agent:mime-version
+ :content-transfer-encoding:content-language;
+ bh=fr/a2W1sTv9bpI7QD6Ygogt5299BH+DJx/I22jQiaBs=;
+ b=Ypk6+gp77g9Cg0hfKzXnqMytn27HlR3tghrub0o9C3KA8lef0m65F+gaNSBq0RmnRE
+ mN3lnv4lBtoH9+o9n7GxnSmN6Rm6XcGSQwa+7xcTbCvbZPz2+gGr+gwCGuBIjFsRpQid
+ +TKzCymTKnIt2Mj5hZ7M+vC6ptgeD0Y0yf88mplFhTg0KYE/tS8jv1k1HdBT5P0Y4WIb
+ WyXc5S/EdkXGdIPiarObcuA0GX1IJhmXRi9VvR3ZlxshgVqPwJrHaBDVm0INt+vJnLD7
+ YeS9yzYcqAzlmvhRJswIcw9dxWcfQ7YWOvJphaInRRqiV9q+Idb5GG7eWwIbEw+H6EBM
+ Dk6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+ :mime-version:content-transfer-encoding:content-language;
+ bh=fr/a2W1sTv9bpI7QD6Ygogt5299BH+DJx/I22jQiaBs=;
+ b=GPoiORIjygKXxxoluG2KnSj/dpM8MDgUZ0XSnWm1UT1pLUoWZRrRUkYLnS5fFotZhy
+ gc6AxpZWneFu99CiMKa4ESVCkdPQrlTFMyv3Hw2P8kADgfkUbXNopO8WCLwFrwCdMhQb
+ w4N54n945jFwoZU3xVcjeuE08TRF700lTFkKUkqJHh+YFlY98Ce1XRDNwdZwgFdut3kZ
+ sHsZJz+ASrRqTsuMmAz7gn8Xl0KTaAGQIHeL2Mv5YQFZ73TbM+IgDc/8o4rdTGY04n1/
+ aiIzNpq1wEx1AwuEYnJz0Hm0Wq32Gy0cpP2eCd9vi4TrbBS1EuuoquXAwCM6SiWuBBNK
+ r08Q==
+X-Gm-Message-State: APjAAAV9eKnjgK5l26poRjeeMUY6rng38z1Jpt7ffuWUyRy6/DOo8HKQ
+ t57bwVMdA8SCblyFgOSAwF/XZ1Go
+X-Google-Smtp-Source: APXvYqzViwAOlrHjF/aF4N4Ba1qKHnWJRsGO4ae8mobUHCk9r95BT2mgwVQ1cEQ1OVg8OOF8S7veGw==
+X-Received: by 2002:a5d:4b8f:: with SMTP id b15mr4235868wrt.100.1579870519384; 
+ Fri, 24 Jan 2020 04:55:19 -0800 (PST)
+Received: from [10.201.95.96] ([94.102.109.20])
+ by smtp.gmail.com with ESMTPSA id g79sm5675004wme.17.2020.01.24.04.55.17
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 24 Jan 2020 04:55:18 -0800 (PST)
+To: wireguard@lists.zx2c4.com
+From: cyberurchin@gmail.com
+Subject: Windows Wireguard with Multiple Endpoints in Different Subnets
+Message-ID: <413c4ea5-9e70-acf9-caff-f6049374f7ce@gmail.com>
+Date: Fri, 24 Jan 2020 13:55:17 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
 MIME-Version: 1.0
-References: <CAPDdT2w3_t=sC=_FrcDX5OaTkT0vuPXKCtbFTB9O_Hq3frb4qA@mail.gmail.com>
-In-Reply-To: <CAPDdT2w3_t=sC=_FrcDX5OaTkT0vuPXKCtbFTB9O_Hq3frb4qA@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sun, 26 Jan 2020 11:57:12 +0100
-X-Gmail-Original-Message-ID: <CAHmME9oZNrRoniYA_ReUGsFLmxo0gV3jM-E+DFB6duKSZtOuHw@mail.gmail.com>
-Message-ID: <CAHmME9oZNrRoniYA_ReUGsFLmxo0gV3jM-E+DFB6duKSZtOuHw@mail.gmail.com>
-Subject: Re: After win2019 server reboot, Wireguard tunnel doesn't start
-To: Peter Selc <peter.selc@gmail.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Language: en-US
+X-Mailman-Approved-At: Tue, 28 Jan 2020 11:34:47 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -73,287 +85,94 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============8238641807784021770=="
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============8238641807784021770==
-Content-Type: multipart/alternative; boundary="0000000000000b4c12059d08db2c"
-
---0000000000000b4c12059d08db2c
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Thanks for the report. Is this reproducible every time you reboot your
-system, or only that one time after Windows Update?
-
-If the latter, do you have a list of what was being updated?
-
-Thanks,
-Jason
-
-On Wed, Jan 22, 2020, 20:51 Peter Selc <peter.selc@gmail.com> wrote:
-
-> Hello all,
->
-> I'm running version 0.0.38 on Windows 2019 server. Admin user logs in,
-> starts the tunnel via GUI, disconnects from RDP session. Clients can
-> connect.
->
-> After the server is rebooted (windows updates), the tunnel doesn't come u=
-p
-> automatically as it should, error is:
->
-> 2020-01-15 15:00:56.197: [TUN] [Server] peer(SuXT=E2=80=A69iko) - Sending
-> keepalive packet
-> 2020-01-15 15:01:06.198: [TUN] [Server] peer(SuXT=E2=80=A69iko) - Sending
-> keepalive packet
-> 2020-01-15 15:01:31.236: [TUN] [Server] peer(SuXT=E2=80=A69iko) - Receivi=
-ng
-> keepalive packet
-> 2020-01-15 15:01:49.729: [TUN] [Server] peer(SuXT=E2=80=A69iko) - Sending
-> keepalive packet
-> 2020-01-15 15:09:43.727: [TUN] [Server] peer(SuXT=E2=80=A69iko) - Removin=
-g all
-> keys, since we haven't received a new one in 540 seconds
->
-> -- reboot happens here--
->
-> 2020-01-15 17:19:00.356: [MGR] Exited UI process for user
-> 'admin_user@winserver' for session 2 with status 40010004
-> 2020-01-15 17:19:01.417: [MGR] Starting UI process for user
-> =E2=80=98admin_user@winserver=E2=80=99 for session 2
-> 2020-01-15 17:19:02.350: [MGR] Exited UI process for user
-> 'admin_user@winserver' for session 2 with status 1
-> 2020-01-15 17:19:46.142: [TUN] [Server] Device closing
-> 2020-01-15 17:19:46.146: [TUN] [Server] Routine: TUN reader - stopped
-> 2020-01-15 17:19:46.217: [TUN] [Server] Routine: event worker - stopped
-> 2020-01-15 17:19:46.222: [TUN] [Server] Routine: receive incoming IPv4 -
-> stopped
-> 2020-01-15 17:19:46.223: [TUN] [Server] Routine: receive incoming IPv6 -
-> stopped
-> 2020-01-15 17:19:46.223: [TUN] [Server] Routine: decryption worker -
-> stopped
-> 2020-01-15 17:19:46.224: [TUN] [Server] peer(1WB6=E2=80=A6G/xk) - Stoppin=
-g...
-> 2020-01-15 17:19:46.224: [TUN] [Server] peer(1WB6=E2=80=A6G/xk) - Routine=
-:
-> sequential receiver - stopped
-> 2020-01-15 17:19:46.225: [TUN] [Server] peer(1WB6=E2=80=A6G/xk) - Routine=
-: nonce
-> worker - stopped
-> 2020-01-15 17:19:46.225: [TUN] [Server] Routine: encryption worker -
-> stopped
-> 2020-01-15 17:19:46.225: [TUN] [Server] Routine: handshake worker - stopp=
-ed
-> 2020-01-15 17:19:46.226: [TUN] [Server] Routine: encryption worker -
-> stopped
-> 2020-01-15 17:19:46.228: [TUN] [Server] Routine: decryption worker -
-> stopped
-> 2020-01-15 17:19:46.228: [TUN] [Server] Routine: handshake worker - stopp=
-ed
-> 2020-01-15 17:19:46.229: [TUN] [Server] peer(1WB6=E2=80=A6G/xk) - Routine=
-:
-> sequential sender - stopped
-> 2020-01-15 17:19:46.229: [TUN] [Server] peer(akUl=E2=80=A6uaHM) - Stoppin=
-g...
-> 2020-01-15 17:19:46.230: [TUN] [Server] peer(akUl=E2=80=A6uaHM) - Routine=
-:
-> sequential receiver - stopped
-> 2020-01-15 17:19:46.268: [TUN] [Server] peer(akUl=E2=80=A6uaHM) - Routine=
-:
-> sequential sender - stopped
-> 2020-01-15 17:19:46.280: [TUN] [Server] peer(akUl=E2=80=A6uaHM) - Routine=
-: nonce
-> worker - stopped
-> 2020-01-15 17:19:46.319: [TUN] [Server] peer(UUvS=E2=80=A6DwEo) - Stoppin=
-g...
-> 2020-01-15 17:19:46.321: [TUN] [Server] peer(UUvS=E2=80=A6DwEo) - Routine=
-:
-> sequential receiver - stopped
-> 2020-01-15 17:19:46.321: [TUN] [Server] peer(UUvS=E2=80=A6DwEo) - Routine=
-:
-> sequential sender - stopped
-> 2020-01-15 17:19:46.322: [TUN] [Server] peer(UUvS=E2=80=A6DwEo) - Routine=
-: nonce
-> worker - stopped
-> 2020-01-15 17:19:46.322: [TUN] [Server] peer(SuXT=E2=80=A69iko) - Stoppin=
-g...
-> 2020-01-15 17:19:46.322: [TUN] [Server] peer(SuXT=E2=80=A69iko) - Routine=
-:
-> sequential receiver - stopped
-> 2020-01-15 17:19:46.323: [TUN] [Server] peer(SuXT=E2=80=A69iko) - Routine=
-: nonce
-> worker - stopped
-> 2020-01-15 17:19:46.323: [TUN] [Server] peer(SuXT=E2=80=A69iko) - Routine=
-:
-> sequential sender - stopped
-> 2020-01-15 17:19:46.324: [TUN] [Server] peer(JRsL=E2=80=A6401s) - Stoppin=
-g...
-> 2020-01-15 17:19:46.325: [TUN] [Server] peer(JRsL=E2=80=A6401s) - Routine=
-:
-> sequential receiver - stopped
-> 2020-01-15 17:19:46.325: [TUN] [Server] peer(JRsL=E2=80=A6401s) - Routine=
-: nonce
-> worker - stopped
-> 2020-01-15 17:19:46.326: [TUN] [Server] peer(JRsL=E2=80=A6401s) - Routine=
-:
-> sequential sender - stopped
-> 2020-01-15 17:19:46.326: [TUN] [Server] peer(mWrq=E2=80=A6/Xnc) - Stoppin=
-g...
-> 2020-01-15 17:19:46.327: [TUN] [Server] peer(mWrq=E2=80=A6/Xnc) - Routine=
-:
-> sequential receiver - stopped
-> 2020-01-15 17:19:46.327: [TUN] [Server] peer(mWrq=E2=80=A6/Xnc) - Routine=
-:
-> sequential sender - stopped
-> 2020-01-15 17:19:46.328: [TUN] [Server] peer(mWrq=E2=80=A6/Xnc) - Routine=
-: nonce
-> worker - stopped
-> 2020-01-15 17:19:46.328: [TUN] [Server] Interface closed
-> 2020-01-15 17:19:46.328: [TUN] [Server] Shutting down
-> 2020-01-15 17:21:00.637: [MGR] Starting WireGuard/0.0.38 (Windows Server
-> 10.0.17763; amd64)
-> 2020-01-15 17:21:00.637: [TUN] [Server] Starting WireGuard/0.0.38 (Window=
-s
-> Server 10.0.17763; amd64)
-> 2020-01-15 17:21:00.760: [TUN] [Server] SCM locked for 27s by .\NT Servic=
-e
-> Control Manager, marking service as started
-> 2020-01-15 17:21:00.784: [TUN] [Server] Watching network interfaces
-> 2020-01-15 17:21:00.837: [TUN] [Server] Resolving DNS names
-> 2020-01-15 17:21:01.033: [TUN] [Server] Creating Wintun interface
-> 2020-01-15 17:21:08.159: [TUN] [Server] Unable to create Wintun interface=
-:
-> Error creating interface: SetupDiCallClassInstaller(DIF_REGISTERDEVICE)
-> failed: winapi error #3758096907
-> 2020-01-15 17:21:08.207: [TUN] [Server] Shutting down
-> 2020-01-15 17:21:11.161: [MGR] Removing Wintun interface =E2=80=98Local A=
-rea
-> Connection=E2=80=99 because determining tunnel service name failed: Tunne=
-l name is
-> not valid
->
-> Is this some known behaviour with a known fix, or not supported yet?
-> Many thanks,
->
-> Peter
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
->
-
---0000000000000b4c12059d08db2c
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto">Thanks for the report. Is this reproducible every time yo=
-u reboot your system, or only that one time after Windows Update?<div dir=
-=3D"auto"><br></div><div dir=3D"auto">If the latter, do you have a list of =
-what was being updated?</div><div dir=3D"auto"><br></div><div dir=3D"auto">=
-Thanks,</div><div dir=3D"auto">Jason</div></div><br><div class=3D"gmail_quo=
-te"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Jan 22, 2020, 20:51 Peter=
- Selc &lt;<a href=3D"mailto:peter.selc@gmail.com">peter.selc@gmail.com</a>&=
-gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0=
- .8ex;border-left:1px #ccc solid;padding-left:1ex"><div dir=3D"ltr"><div>He=
-llo all,</div><div><br></div><div>I&#39;m running version 0.0.38 on Windows=
- 2019 server. Admin user logs in, starts the tunnel via GUI, disconnects fr=
-om RDP session. Clients can connect.</div><div><br></div><div>After the ser=
-ver is rebooted (windows updates), the tunnel doesn&#39;t come up automatic=
-ally as it should, error is:</div><div><br></div><div>2020-01-15 15:00:56.1=
-97: [TUN] [Server] peer(SuXT=E2=80=A69iko) - Sending keepalive packet<br>20=
-20-01-15 15:01:06.198: [TUN] [Server] peer(SuXT=E2=80=A69iko) - Sending kee=
-palive packet<br>2020-01-15 15:01:31.236: [TUN] [Server] peer(SuXT=E2=80=A6=
-9iko) - Receiving keepalive packet<br>2020-01-15 15:01:49.729: [TUN] [Serve=
-r] peer(SuXT=E2=80=A69iko) - Sending keepalive packet<br>2020-01-15 15:09:4=
-3.727: [TUN] [Server] peer(SuXT=E2=80=A69iko) - Removing all keys, since we=
- haven&#39;t received a new one in 540 seconds<br><br>-- reboot happens her=
-e--<br><br>2020-01-15 17:19:00.356: [MGR] Exited UI process for user &#39;a=
-dmin_user@winserver&#39; for session 2 with status 40010004<br>2020-01-15 1=
-7:19:01.417: [MGR] Starting UI process for user =E2=80=98admin_user@winserv=
-er=E2=80=99 for session 2<br>2020-01-15 17:19:02.350: [MGR] Exited UI proce=
-ss for user &#39;admin_user@winserver&#39; for session 2 with status 1<br>2=
-020-01-15 17:19:46.142: [TUN] [Server] Device closing<br>2020-01-15 17:19:4=
-6.146: [TUN] [Server] Routine: TUN reader - stopped<br>2020-01-15 17:19:46.=
-217: [TUN] [Server] Routine: event worker - stopped<br>2020-01-15 17:19:46.=
-222: [TUN] [Server] Routine: receive incoming IPv4 - stopped<br>2020-01-15 =
-17:19:46.223: [TUN] [Server] Routine: receive incoming IPv6 - stopped<br>20=
-20-01-15 17:19:46.223: [TUN] [Server] Routine: decryption worker - stopped<=
-br>2020-01-15 17:19:46.224: [TUN] [Server] peer(1WB6=E2=80=A6G/xk) - Stoppi=
-ng...<br>2020-01-15 17:19:46.224: [TUN] [Server] peer(1WB6=E2=80=A6G/xk) - =
-Routine: sequential receiver - stopped<br>2020-01-15 17:19:46.225: [TUN] [S=
-erver] peer(1WB6=E2=80=A6G/xk) - Routine: nonce worker - stopped<br>2020-01=
--15 17:19:46.225: [TUN] [Server] Routine: encryption worker - stopped<br>20=
-20-01-15 17:19:46.225: [TUN] [Server] Routine: handshake worker - stopped<b=
-r>2020-01-15 17:19:46.226: [TUN] [Server] Routine: encryption worker - stop=
-ped<br>2020-01-15 17:19:46.228: [TUN] [Server] Routine: decryption worker -=
- stopped<br>2020-01-15 17:19:46.228: [TUN] [Server] Routine: handshake work=
-er - stopped<br>2020-01-15 17:19:46.229: [TUN] [Server] peer(1WB6=E2=80=A6G=
-/xk) - Routine: sequential sender - stopped<br>2020-01-15 17:19:46.229: [TU=
-N] [Server] peer(akUl=E2=80=A6uaHM) - Stopping...<br>2020-01-15 17:19:46.23=
-0: [TUN] [Server] peer(akUl=E2=80=A6uaHM) - Routine: sequential receiver - =
-stopped<br>2020-01-15 17:19:46.268: [TUN] [Server] peer(akUl=E2=80=A6uaHM) =
-- Routine: sequential sender - stopped<br>2020-01-15 17:19:46.280: [TUN] [S=
-erver] peer(akUl=E2=80=A6uaHM) - Routine: nonce worker - stopped<br>2020-01=
--15 17:19:46.319: [TUN] [Server] peer(UUvS=E2=80=A6DwEo) - Stopping...<br>2=
-020-01-15 17:19:46.321: [TUN] [Server] peer(UUvS=E2=80=A6DwEo) - Routine: s=
-equential receiver - stopped<br>2020-01-15 17:19:46.321: [TUN] [Server] pee=
-r(UUvS=E2=80=A6DwEo) - Routine: sequential sender - stopped<br>2020-01-15 1=
-7:19:46.322: [TUN] [Server] peer(UUvS=E2=80=A6DwEo) - Routine: nonce worker=
- - stopped<br>2020-01-15 17:19:46.322: [TUN] [Server] peer(SuXT=E2=80=A69ik=
-o) - Stopping...<br>2020-01-15 17:19:46.322: [TUN] [Server] peer(SuXT=E2=80=
-=A69iko) - Routine: sequential receiver - stopped<br>2020-01-15 17:19:46.32=
-3: [TUN] [Server] peer(SuXT=E2=80=A69iko) - Routine: nonce worker - stopped=
-<br>2020-01-15 17:19:46.323: [TUN] [Server] peer(SuXT=E2=80=A69iko) - Routi=
-ne: sequential sender - stopped<br>2020-01-15 17:19:46.324: [TUN] [Server] =
-peer(JRsL=E2=80=A6401s) - Stopping...<br>2020-01-15 17:19:46.325: [TUN] [Se=
-rver] peer(JRsL=E2=80=A6401s) - Routine: sequential receiver - stopped<br>2=
-020-01-15 17:19:46.325: [TUN] [Server] peer(JRsL=E2=80=A6401s) - Routine: n=
-once worker - stopped<br>2020-01-15 17:19:46.326: [TUN] [Server] peer(JRsL=
-=E2=80=A6401s) - Routine: sequential sender - stopped<br>2020-01-15 17:19:4=
-6.326: [TUN] [Server] peer(mWrq=E2=80=A6/Xnc) - Stopping...<br>2020-01-15 1=
-7:19:46.327: [TUN] [Server] peer(mWrq=E2=80=A6/Xnc) - Routine: sequential r=
-eceiver - stopped<br>2020-01-15 17:19:46.327: [TUN] [Server] peer(mWrq=E2=
-=80=A6/Xnc) - Routine: sequential sender - stopped<br>2020-01-15 17:19:46.3=
-28: [TUN] [Server] peer(mWrq=E2=80=A6/Xnc) - Routine: nonce worker - stoppe=
-d<br>2020-01-15 17:19:46.328: [TUN] [Server] Interface closed<br>2020-01-15=
- 17:19:46.328: [TUN] [Server] Shutting down<br>2020-01-15 17:21:00.637: [MG=
-R] Starting WireGuard/0.0.38 (Windows Server 10.0.17763; amd64)<br>2020-01-=
-15 17:21:00.637: [TUN] [Server] Starting WireGuard/0.0.38 (Windows Server 1=
-0.0.17763; amd64)<br>2020-01-15 17:21:00.760: [TUN] [Server] SCM locked for=
- 27s by .\NT Service Control Manager, marking service as started<br>2020-01=
--15 17:21:00.784: [TUN] [Server] Watching network interfaces<br>2020-01-15 =
-17:21:00.837: [TUN] [Server] Resolving DNS names<br>2020-01-15 17:21:01.033=
-: [TUN] [Server] Creating Wintun interface<br>2020-01-15 17:21:08.159: [TUN=
-] [Server] Unable to create Wintun interface: Error creating interface: Set=
-upDiCallClassInstaller(DIF_REGISTERDEVICE) failed: winapi error #3758096907=
-<br>2020-01-15 17:21:08.207: [TUN] [Server] Shutting down<br>2020-01-15 17:=
-21:11.161: [MGR] Removing Wintun interface =E2=80=98Local Area Connection=
-=E2=80=99 because determining tunnel service name failed: Tunnel name is no=
-t valid</div><div><br></div><div>Is this some known behaviour with a known =
-fix, or not supported yet?<br></div><div>Many thanks,</div><div><br></div><=
-div>Peter<br></div></div>
-_______________________________________________<br>
-WireGuard mailing list<br>
-<a href=3D"mailto:WireGuard@lists.zx2c4.com" target=3D"_blank" rel=3D"noref=
-errer">WireGuard@lists.zx2c4.com</a><br>
-<a href=3D"https://lists.zx2c4.com/mailman/listinfo/wireguard" rel=3D"noref=
-errer noreferrer" target=3D"_blank">https://lists.zx2c4.com/mailman/listinf=
-o/wireguard</a><br>
-</blockquote></div>
-
---0000000000000b4c12059d08db2c--
-
---===============8238641807784021770==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
-_______________________________________________
-WireGuard mailing list
-WireGuard@lists.zx2c4.com
-https://lists.zx2c4.com/mailman/listinfo/wireguard
-
---===============8238641807784021770==--
+CkhpIEZvbGtzLAoKSGVyZSBhcmUgdHdvIHF1ZXN0aW9uIHRoYXQgSSBoYXZlIGNvbmNlcm5pbmcg
+dGhlIFdpbmRvd3MgdmVyc2lvbiBvZiBXaXJlZ3VhcmQuCgpNeSBzZXR1cCBpcyBhcyBmb2xsb3dz
+OiBBIFdpbmRvd3MgbWFjaGluZSB3aXRoIHR3byBFdGhlcm5ldCBwb3J0cyBjb25uZWN0cyB0byB0
+d28gTGludXggY2xpZW50cywgb25lIG9uIGVhY2ggZW5kLiBUaGVyZSBhcmUgdHdvIHN1Ym5ldHMg
+ZGVmaW5lZCBmb3IgdGhlIHR3byBwb3J0cywgMTkyLjE2OC4wLjAvMjQgYW5kIDE5Mi4xNjguNi4w
+LzI0LiBJIG5lZWQgYSBzZWN1cmUgdHVubmVsIGZyb20gdGhlIFdpbmRvd3MgbWFjaGluZSB0byBl
+YWNoIG9mIHRoZSB0d28gTGludXggY2xpZW50cyBidXQgdGhlIHR3byBMaW51eCBjbGllbnRzIGRv
+IG5vdCBuZWVkIHRvIHRhbGsgdG8gZWFjaCBvdGhlci4KCmEpIFVuZGVyIExpbnV4LCBJIGNhbiBk
+ZWZpbmUgc2V2ZXJhbCBXaXJlZ3VhZCB0dW5uZWxzIHRoYXQgd29yayBpbmRlcGVuZGV0bHkgYnV0
+IHRoaXMgZG9lc24ndCBzZWVtIHRvIGJlIHRoZSBjYXNlIGluIFdpbmRvd3MuIEluIGZhY3QsIHdo
+ZW4gSSBhY3RpdmF0ZSBvbmUgdHVubmVsLCB0aGUgb3RoZXIgb25lIGlzIGF1dG9tYXRpY2FsbHkg
+ZGVhY3RpdmF0ZWQuIFdoeSBpcyB0aGF0PwoKTXkgd29yay1hcm91bmQgbG9va3MgYSBsaXR0bGUg
+Yml0IGxpa2UgaGFjayBidXQgd29ya3MsIGluIHByaW5jaXBsZS4gSSd2ZSBkZWZpbmVkIG9ubHkg
+b25lIHR1bm5lbCB0aGF0IGluY2x1ZGVzIHRoZSB0d28gTGludXggY2xpZW50cyBhcyBwZWVycyBl
+dmVuIHRob3VnaCB0aGV5IGFyZSBpbiB0d28gZGlmZmVyZW50IHN1Ym5ldHM6CgpbSW50ZXJmYWNl
+XQpQcml2YXRlS2V5ID0gK09kam50cUNzL09jSkdzZEdYWFhYWE1TaE5zZFVXOUVRVzMzSGh2T1Zs
+UT0KTGlzdGVuUG9ydCA9IDUxODIwCkFkZHJlc3MgPSAxOTIuMTY4LjguNi8yNAoKW1BlZXJdClB1
+YmxpY0tleSA9IHVqUmg0Nkt5UXJBME9sSlo3N2RYWFhYWGhVZDRUYXFLa29CaEZqNlpsQms9CkFs
+bG93ZWRJUHMgPSAxOTIuMTY4LjguMy8zMgpFbmRwb2ludCA9IDE5Mi4xNjguNi4yOjUxODIwCgpb
+UGVlcl0KUHVibGljS2V5ID0gMzJWR2UrUG5WQ3REaW8xMkdjcmhLWFhYWFhsT1dxeTRuY0Q2RzBV
+MU1oYz0KQWxsb3dlZElQcyA9IDE5Mi4xNjguOC40LzMyCkVuZHBvaW50ID0gMTkyLjE2OC4wLjIw
+MTo1MTgyMAoKU28gZmFyLCBzbyBnb29kLgoKYikgVGhlIGNvbmZpZ3VyYXRpb24gZGVzY3JpYmVk
+IGFib3ZlIGJyZWFrcyB3aGVuIEkgZGVmaW5lIGEgZGVmYXVsdCBnYXRld2F5LCBlLmcuIDE5Mi4x
+NjguMC4xLiBJbiB0aGlzIGNhc2UsIFdpcmVndWFyZCBtZXNzZXMgdXAgdGhlIHBhY2thZ2VzIHRo
+YXQgc2hvdWxkIGdvIHRvIDE5Mi4xNjguNi4yICh0aGUgTGludXggY2xpZW50IG9uIHRoZSBuZXR3
+b3JrIHdoZXJlIHRoZSBnYXRld2F5IG5vdCBpcykgYW5kIHNlbmRzIHRoZW0gdG8gMTkyLjE2OC4w
+LjEgKHRoZSBkZWZhdWx0IGdhdGV3YXkpLiBQaW5nIGNvbW1hbmRzIHRvIDE5Mi4xNjguNi4yLCBo
+b3dldmVyLCB3b3JrLCBpbiB0aGUgc2Vuc2UgdGhhdCB0aGUgcm91dGluZyB0YWJsZSBpdHNlbGYg
+aXMgc3RpbGwgb2suIEl0IGxvb2tzIGxpa2UgdGhpczoKCklQdjQgUm91dGUgVGFibGUKPT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09CkFjdGl2ZSBSb3V0ZXM6Ck5ldHdvcmsgRGVzdGluYXRpb27CoMKgwqDCoMKg
+wqDCoCBOZXRtYXNrwqDCoMKgwqDCoMKgwqDCoMKgIEdhdGV3YXnCoMKgwqDCoMKgwqAgSW50ZXJm
+YWNlwqAgTWV0cmljCsKgwqDCoMKgwqDCoMKgwqDCoCAwLjAuMC4wwqDCoMKgwqDCoMKgwqDCoMKg
+IDAuMC4wLjDCoMKgwqDCoMKgwqAgMTkyLjE2OC4wLjHCoMKgwqDCoCAxOTIuMTY4LjAuMjAywqDC
+oMKgIDI4MQrCoMKgwqDCoMKgwqDCoCAxMjcuMC4wLjDCoMKgwqDCoMKgwqDCoCAyNTUuMC4wLjDC
+oMKgwqDCoMKgwqDCoMKgIE9uLWxpbmvCoMKgwqDCoMKgwqDCoMKgIDEyNy4wLjAuMcKgwqDCoCAz
+MzEKwqDCoMKgwqDCoMKgwqAgMTI3LjAuMC4xwqAgMjU1LjI1NS4yNTUuMjU1wqDCoMKgwqDCoMKg
+wqDCoCBPbi1saW5rwqDCoMKgwqDCoMKgwqDCoCAxMjcuMC4wLjHCoMKgwqAgMzMxCsKgIDEyNy4y
+NTUuMjU1LjI1NcKgIDI1NS4yNTUuMjU1LjI1NcKgwqDCoMKgwqDCoMKgwqAgT24tbGlua8KgwqDC
+oMKgwqDCoMKgwqAgMTI3LjAuMC4xwqDCoMKgIDMzMQrCoMKgwqDCoMKgwqAgMTkyLjE2OC4wLjDC
+oMKgwqAgMjU1LjI1NS4yNTUuMMKgwqDCoMKgwqDCoMKgwqAgT24tbGlua8KgwqDCoMKgwqAgMTky
+LjE2OC4wLjIwMsKgwqDCoCAyODEKwqDCoMKgwqAgMTkyLjE2OC4wLjIwMsKgIDI1NS4yNTUuMjU1
+LjI1NcKgwqDCoMKgwqDCoMKgwqAgT24tbGlua8KgwqDCoMKgwqAgMTkyLjE2OC4wLjIwMsKgwqDC
+oCAyODEKwqDCoMKgwqAgMTkyLjE2OC4wLjI1NcKgIDI1NS4yNTUuMjU1LjI1NcKgwqDCoMKgwqDC
+oMKgwqAgT24tbGlua8KgwqDCoMKgwqAgMTkyLjE2OC4wLjIwMsKgwqDCoCAyODEKwqDCoMKgwqDC
+oMKgIDE5Mi4xNjguNi4wwqDCoMKgIDI1NS4yNTUuMjU1LjDCoMKgwqDCoMKgwqDCoMKgIE9uLWxp
+bmvCoMKgwqDCoMKgwqDCoCAxOTIuMTY4LjYuM8KgwqDCoCAzMTEKwqDCoMKgwqDCoMKgIDE5Mi4x
+NjguNi4zwqAgMjU1LjI1NS4yNTUuMjU1wqDCoMKgwqDCoMKgwqDCoCBPbi1saW5rwqDCoMKgwqDC
+oMKgwqAgMTkyLjE2OC42LjPCoMKgwqAgMzExCsKgwqDCoMKgIDE5Mi4xNjguNi4yNTXCoCAyNTUu
+MjU1LjI1NS4yNTXCoMKgwqDCoMKgwqDCoMKgIE9uLWxpbmvCoMKgwqDCoMKgwqDCoCAxOTIuMTY4
+LjYuM8KgwqDCoCAzMTEKwqDCoMKgwqDCoMKgIDE5Mi4xNjguOC4wwqDCoMKgIDI1NS4yNTUuMjU1
+LjDCoMKgwqDCoMKgwqDCoMKgIE9uLWxpbmvCoMKgwqDCoMKgwqDCoCAxOTIuMTY4LjguNsKgwqDC
+oCAyNjEKwqDCoMKgwqDCoMKgIDE5Mi4xNjguOC4zwqAgMjU1LjI1NS4yNTUuMjU1wqDCoMKgwqDC
+oMKgwqDCoCBPbi1saW5rwqDCoMKgwqDCoMKgwqAgMTkyLjE2OC44LjbCoMKgwqDCoMKgIDUKwqDC
+oMKgwqDCoMKgIDE5Mi4xNjguOC40wqAgMjU1LjI1NS4yNTUuMjU1wqDCoMKgwqDCoMKgwqDCoCBP
+bi1saW5rwqDCoMKgwqDCoMKgwqAgMTkyLjE2OC44LjbCoMKgwqDCoMKgIDUKwqDCoMKgwqDCoMKg
+IDE5Mi4xNjguOC42wqAgMjU1LjI1NS4yNTUuMjU1wqDCoMKgwqDCoMKgwqDCoCBPbi1saW5rwqDC
+oMKgwqDCoMKgwqAgMTkyLjE2OC44LjbCoMKgwqAgMjYxCsKgwqDCoMKgIDE5Mi4xNjguOC4yNTXC
+oCAyNTUuMjU1LjI1NS4yNTXCoMKgwqDCoMKgwqDCoMKgIE9uLWxpbmvCoMKgwqDCoMKgwqDCoCAx
+OTIuMTY4LjguNsKgwqDCoCAyNjEKwqDCoMKgwqDCoMKgwqAgMjI0LjAuMC4wwqDCoMKgwqDCoMKg
+wqAgMjQwLjAuMC4wwqDCoMKgwqDCoMKgwqDCoCBPbi1saW5rwqDCoMKgwqDCoMKgwqDCoCAxMjcu
+MC4wLjHCoMKgwqAgMzMxCsKgwqDCoMKgwqDCoMKgIDIyNC4wLjAuMMKgwqDCoMKgwqDCoMKgIDI0
+MC4wLjAuMMKgwqDCoMKgwqDCoMKgwqAgT24tbGlua8KgwqDCoMKgwqAgMTkyLjE2OC4wLjIwMsKg
+wqDCoCAyODEKwqDCoMKgwqDCoMKgwqAgMjI0LjAuMC4wwqDCoMKgwqDCoMKgwqAgMjQwLjAuMC4w
+wqDCoMKgwqDCoMKgwqDCoCBPbi1saW5rwqDCoMKgwqDCoMKgwqAgMTkyLjE2OC42LjPCoMKgwqAg
+MzExCsKgIDI1NS4yNTUuMjU1LjI1NcKgIDI1NS4yNTUuMjU1LjI1NcKgwqDCoMKgwqDCoMKgwqAg
+T24tbGlua8KgwqDCoMKgwqDCoMKgwqAgMTI3LjAuMC4xwqDCoMKgIDMzMQrCoCAyNTUuMjU1LjI1
+NS4yNTXCoCAyNTUuMjU1LjI1NS4yNTXCoMKgwqDCoMKgwqDCoMKgIE9uLWxpbmvCoMKgwqDCoMKg
+IDE5Mi4xNjguMC4yMDLCoMKgwqAgMjgxCsKgIDI1NS4yNTUuMjU1LjI1NcKgIDI1NS4yNTUuMjU1
+LjI1NcKgwqDCoMKgwqDCoMKgwqAgT24tbGlua8KgwqDCoMKgwqDCoMKgIDE5Mi4xNjguNi4zwqDC
+oMKgIDMxMQo9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT0KUGVyc2lzdGVudCBSb3V0ZXM6CsKgIE5ldHdvcmsg
+QWRkcmVzc8KgwqDCoMKgwqDCoMKgwqDCoCBOZXRtYXNrwqAgR2F0ZXdheSBBZGRyZXNzwqAgTWV0
+cmljCsKgwqDCoMKgwqDCoMKgwqDCoCAwLjAuMC4wwqDCoMKgwqDCoMKgwqDCoMKgIDAuMC4wLjDC
+oMKgwqDCoMKgwqAgMTkyLjE2OC4wLjHCoCBEZWZhdWx0Cj09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQoKQW55
+IGlkZWFzPwoKVGhlcmUgaXMgbm8gSVB2Ni4gSWYgSSByZW1vdmUgdGhlIGRlZmF1bHQgZ2F0ZXdh
+eSwgdGhlIHR3byB0dW5uZWxzIHdvcmsgYWdhaW4uCgpBaCwgeWVzLCBhbmQgYSBmaW5hbCBub3Rl
+IC0gdGhlcmUgaXMgYSByZWxhdGVkIGlzc3VlIGhlcmU6Cmh0dHBzOi8vbGlzdHMuengyYzQuY29t
+L3BpcGVybWFpbC93aXJlZ3VhcmQvMjAxOS1TZXB0ZW1iZXIvMDA0NDkzLmh0bWwKClRoZSBhbnN3
+ZXIgdG8gdGhhdCBwb3N0IGFsc28gc2VlbXMgdG8gYW5zd2VyIG15IHF1ZXN0aW9uLCB0b28sIGJ1
+dCBJJ2QgbGlrZSB0byBnZXQgY29uZmlybWF0aW9uIGFuZCBtYXliZSB0aGUgd29ybGQgaGFzIG1v
+dmVkIG9uIGluIHRoZSBtZWFudGltZS4KCkNoZWVycywKSW5nbwoKX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX18KV2lyZUd1YXJkIG1haWxpbmcgbGlzdApXaXJl
+R3VhcmRAbGlzdHMuengyYzQuY29tCmh0dHBzOi8vbGlzdHMuengyYzQuY29tL21haWxtYW4vbGlz
+dGluZm8vd2lyZWd1YXJkCg==
