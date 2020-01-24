@@ -2,79 +2,92 @@ Return-Path: <SRS0=FSGf=3N=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,T_KAM_HTML_FONT_INVALID
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.3 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DB2F2C2D0DB
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Jan 2020 11:45:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E030C2D0DB
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Jan 2020 16:02:07 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 0FAE420678
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Jan 2020 11:45:44 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=mullvad-net.20150623.gappssmtp.com header.i=@mullvad-net.20150623.gappssmtp.com header.b="pjJuFFEC"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 0FAE420678
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=mullvad.net
+	by mail.kernel.org (Postfix) with ESMTPS id 91973206F0
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Jan 2020 16:02:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 91973206F0
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=viisauksena.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2309ff75;
-	Fri, 24 Jan 2020 11:45:27 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0a351240;
+	Fri, 24 Jan 2020 16:01:53 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 571a11d5
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dfd05048
  for <wireguard@lists.zx2c4.com>;
- Thu, 23 Jan 2020 10:14:30 +0000 (UTC)
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com
- [IPv6:2a00:1450:4864:20::22d])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 07efffc5
+ Fri, 24 Jan 2020 16:01:51 +0000 (UTC)
+Received: from viisauksena.de (rauberhaus.de [178.254.39.111])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5f636d7b
  for <wireguard@lists.zx2c4.com>;
- Thu, 23 Jan 2020 10:14:30 +0000 (UTC)
-Received: by mail-lj1-x22d.google.com with SMTP id m26so2590789ljc.13
- for <wireguard@lists.zx2c4.com>; Thu, 23 Jan 2020 02:14:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mullvad-net.20150623.gappssmtp.com; s=20150623;
- h=from:message-id:mime-version:subject:date:in-reply-to:cc:to
- :references; bh=gbF+IKQqYu/a5DNSSNJRIdwCFAf0n5FhQEy5LHBn554=;
- b=pjJuFFECvn9pGyqnNOLakAHwezcmwszFxpAiC2TZ6i25ykibH03l05x2dZDGwT7VXV
- YS55qeX3LTxFHI7JUr7xutn1uTzBiz0OAEKqAHg+rahMLiIElMDHHLT6ClSb69PXkT9k
- rcWSZwmMD9bQf8cUTqXjrx915iBLuqKA4R3Xu6+seKmb+xj6ICTEKTWYj06uhnmGpN62
- WCsu5tROfmPkrdFn5iDeXLp6LTGkr7jTtuckQsmBudjhnY1zgE5dZb84ELkvEVv83mSW
- w41+QNKkDiehE8wo11PPoFJJN8mY2UqD9b7QDgoeeT/A+/5Cf/UzP77jr1BexoINChwV
- jfCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:from:message-id:mime-version:subject:date
- :in-reply-to:cc:to:references;
- bh=gbF+IKQqYu/a5DNSSNJRIdwCFAf0n5FhQEy5LHBn554=;
- b=m0unh+Jd5SJVOlGAdmHKBRM13G2pEXWwo+Mh0P4Ao5uJ+yyXZ9FK0f2akmBZz9Of+7
- /ny3ojZHffCqGwtNRqOm6Q4njIa+5tkIz5nwpT3PgfPLKNJ31kFfMiCtrWN4+YBpdM8s
- zSATQ46NMlnZ4tfQHVgC+Yv/wTXRmEnBx1OaCPuiL+YQSUq1Q6Kk3WMbL8use/ebHReg
- lqweoDXjHIZ9gp2xtC4koXisMorJuQ22VnFbjDFyeHfVPrqyxkR6a524G1miEt0+FX+Q
- ZfbtOgZf3MDdIbWCk4rOzJPDiLEcZp0X10MmNp8xvOqATIOrwvDmgprPtrvAtw0HqFR1
- z/9Q==
-X-Gm-Message-State: APjAAAUh+EPt0RnsgvTsD5FFrwbJdy98qlEEZsQHCnf47MfmBgEc2TAv
- U/OsyBYZTPmGkG86Q+00ZPu40w==
-X-Google-Smtp-Source: APXvYqxXtWLgELgNIFYeWjTSgxVoXl6urb7daqteejz/cqbEquAGX5Cdv+VDpSE3X8v8koma4VJGmA==
-X-Received: by 2002:a2e:97c1:: with SMTP id m1mr22409787ljj.270.1579774467272; 
- Thu, 23 Jan 2020 02:14:27 -0800 (PST)
-Received: from [10.65.212.57] ([185.213.154.226])
- by smtp.gmail.com with ESMTPSA id f11sm805697lfm.12.2020.01.23.02.14.25
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 23 Jan 2020 02:14:26 -0800 (PST)
-From: Andrej Mihajlov <and@mullvad.net>
-Message-Id: <806BAAAF-D9C8-423A-82B1-B6FEF853CAFB@mullvad.net>
-Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.40.2.2.4\))
-Subject: Re: Wireguard on MacOS (Catalina) not able to quit/deactivate
-Date: Thu, 23 Jan 2020 11:14:21 +0100
-In-Reply-To: <CAO=kRDLXM+D+dfq6D4mkgPrE8saXknksrPxvQsw3E9EOK3gzhA@mail.gmail.com>
-To: Revath S Kumar <gmail@revathskumar.com>
-References: <CAO=kRDJJ6m1RMad-nwLro6kp7FhST9j1gP+C45xQx1R7sC932g@mail.gmail.com>
- <CAO=kRDLXM+D+dfq6D4mkgPrE8saXknksrPxvQsw3E9EOK3gzhA@mail.gmail.com>
-X-Mailer: Apple Mail (2.3608.40.2.2.4)
-X-Mailman-Approved-At: Fri, 24 Jan 2020 12:45:26 +0100
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+ Fri, 24 Jan 2020 16:01:50 +0000 (UTC)
+Received: from [192.168.178.54] (pD95F617C.dip0.t-ipconnect.de [217.95.97.124])
+ by rauberhaus.de (Postfix) with ESMTPSA id C76C7206C6
+ for <wireguard@lists.zx2c4.com>; Fri, 24 Jan 2020 17:01:49 +0100 (CET)
+Authentication-Results: v32412.1blu.de;
+ spf=pass (sender IP is 217.95.97.124) smtp.mailfrom=jens@viisauksena.de
+ smtp.helo=[192.168.178.54]
+Received-SPF: pass (v32412.1blu.de: connection is authenticated)
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: jens <jens@viisauksena.de>
+Subject: wireguard-hosts file
+Openpgp: id=AB0F97125ABF0FAEDEFBDB8B507EB93F6F6DEE01
+Autocrypt: addr=jens@viisauksena.de; prefer-encrypt=mutual; keydata=
+ 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
+Message-ID: <674aac2b-1b4c-022c-0e4d-596529dce78f@viisauksena.de>
+Date: Fri, 24 Jan 2020 17:01:49 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="------------5840F8F28C14A75AD5D4EA20"
+Content-Language: en-US
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -86,211 +99,105 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============1601044182602302878=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
+This is a multi-part message in MIME format.
+--------------5840F8F28C14A75AD5D4EA20
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 
---===============1601044182602302878==
-Content-Type: multipart/alternative;
-	boundary="Apple-Mail=_6358F2E9-5A3A-4A16-B1D6-AB14AAA8CBC8"
+i really would love to have a feature like wireguard-hosts file.
+whereas wg command would print given "name" instead of key - so the
+output would be more meaningfull
+We have some wireguard running in server like infrastructure, where one
+server serves dozens of "clients"
 
+so instead of
+peer: l9FxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaU=
+we would have something alike
+peer: superhero downtown
 
---Apple-Mail=_6358F2E9-5A3A-4A16-B1D6-AB14AAA8CBC8
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
+some of you may be familar with batman-adv layer2 routing protocol,
+there they also have a batctl which is working pretty similar to wg tool.
+there you can add a bat-hosts file which is doing the job, which totaly
+works likes any hosts file
+a normal hosts file maps ip to name,
+a bat-hosts file maps mac addresses to name,
+a wg-hosts file would map keys to name.
 
-Hi,
+i found the sources for bat-hosts ( .c .h .sample ) here
+https://downloads.open-mesh.org/batman/releases/batman-adv-2019.5/batctl-2019.5.tar.gz
 
-I see the same issue. Possible side effect of having `exit(0)` in =
-`stopTunnel`?
+is this something maybe usefull to other also?
+is there a chance to have this implemented by default?
 
-=
-https://github.com/WireGuard/wireguard-apple/blob/master/WireGuard/WireGua=
-rdNetworkExtension/PacketTunnelProvider.swift#L102 =
-<https://github.com/WireGuard/wireguard-apple/blob/master/WireGuard/WireGu=
-ardNetworkExtension/PacketTunnelProvider.swift#L102>
+thx for answers.
+fuzzle
 
-Cheers,
-Andrej
+-- 
+make the world nicer, please use PGP encryption
 
-> On 16 Jan 2020, at 15:18, Revath S Kumar <gmail@revathskumar.com> =
-wrote:
->=20
-> Found the issue.=20
-> This is due to On demand option is ON.=20
->=20
-> Once On demand is OFF you can deactivate and quit.
->=20
->=20
-> On Wed, Nov 27, 2019 at 7:45 AM Revath S Kumar <gmail@revathskumar.com =
-<mailto:gmail@revathskumar.com>> wrote:
-> Hello all,
->=20
-> I installed wireguard on MacOS (Catalina) recently.
-> After I configured and activated once, I am not able to =
-quit/deactivate the wireguard session.
-> I am attaching Gifs for your reference. [1]
->=20
->  Even I tried to kill the process via Activity Monitor but a process =
-names WireguardNetworkExtension, shows up again. [2]
->=20
-> [1]: https://imgur.com/CEm4cXM <https://imgur.com/CEm4cXM>
-> [2]: https://imgur.com/xC8uCUy <https://imgur.com/xC8uCUy>
->=20
-> with regards,
-> Revath S Kumar,
-> JavaScripter / Rubyist=20
-> https://blog.revathskumar.com/ =
-<https://blog.revathskumar.com/>__________________________________________=
-_____
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
+--------------5840F8F28C14A75AD5D4EA20
+Content-Type: application/pgp-keys;
+ name="0x507EB93F6F6DEE01.asc"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename="0x507EB93F6F6DEE01.asc"
 
+-----BEGIN PGP PUBLIC KEY BLOCK-----
 
---Apple-Mail=_6358F2E9-5A3A-4A16-B1D6-AB14AAA8CBC8
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html;
-	charset=us-ascii
+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
+=tOCZ
+-----END PGP PUBLIC KEY BLOCK-----
 
-<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; =
-charset=3Dus-ascii"></head><body style=3D"word-wrap: break-word; =
--webkit-nbsp-mode: space; line-break: after-white-space;" class=3D""><div =
-class=3D"">Hi,</div><div class=3D""><br class=3D""></div><div class=3D"">I=
- see the same issue. Possible side effect of having `exit(0)` in =
-`stopTunnel`?</div><div class=3D""><br class=3D""></div><div class=3D""><a=
- =
-href=3D"https://github.com/WireGuard/wireguard-apple/blob/master/WireGuard=
-/WireGuardNetworkExtension/PacketTunnelProvider.swift#L102" =
-class=3D"">https://github.com/WireGuard/wireguard-apple/blob/master/WireGu=
-ard/WireGuardNetworkExtension/PacketTunnelProvider.swift#L102</a></div><di=
-v class=3D""><br class=3D""></div><div class=3D"">Cheers,</div><div =
-class=3D"">Andrej</div><div><br class=3D""><blockquote type=3D"cite" =
-class=3D""><div class=3D"">On 16 Jan 2020, at 15:18, Revath S Kumar =
-&lt;<a href=3D"mailto:gmail@revathskumar.com" =
-class=3D"">gmail@revathskumar.com</a>&gt; wrote:</div><br =
-class=3D"Apple-interchange-newline"><div class=3D""><div dir=3D"ltr" =
-class=3D""><div class=3D"">Found the issue. <br class=3D""></div><div =
-class=3D"">This is due to<b class=3D""> On demand</b> option is <b =
-class=3D"">ON</b>. <br class=3D""></div><div class=3D""><br =
-class=3D""></div><div class=3D"">Once <b class=3D"">On demand </b>is OFF =
-you can deactivate and quit.<br class=3D""></div></div><br class=3D""><br =
-class=3D""><div class=3D"gmail_quote"><div dir=3D"ltr" =
-class=3D"gmail_attr">On Wed, Nov 27, 2019 at 7:45 AM Revath S Kumar =
-&lt;<a href=3D"mailto:gmail@revathskumar.com" =
-class=3D"">gmail@revathskumar.com</a>&gt; wrote:<br =
-class=3D""></div><blockquote class=3D"gmail_quote" style=3D"margin:0px =
-0px 0px 0.8ex;border-left:1px solid =
-rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr" class=3D""><div =
-class=3D"">Hello all,</div><div class=3D""><br class=3D""></div><div =
-class=3D"">I installed wireguard on MacOS (Catalina) recently.</div><div =
-class=3D"">After I configured and activated once, I am not able to =
-quit/deactivate the wireguard session.</div><div class=3D"">I am =
-attaching Gifs for your reference. [1]<br class=3D""></div><div =
-class=3D""><br class=3D""></div><div class=3D"">&nbsp;Even I tried to =
-kill the process via Activity Monitor but a process names <b =
-class=3D"">WireguardNetworkExtension, </b>shows up again. [2]<br =
-class=3D""></div><div class=3D""><br class=3D""></div><div class=3D"">[1]:=
- <span style=3D"background-image: unset; background-size: unset; =
-background-attachment: unset; background-origin: unset; background-clip: =
-unset; background-color: unset; background-blend-mode: unset; border: =
-unset unset unset; border-top-left-radius: unset; =
-border-top-right-radius: unset; border-bottom-right-radius: unset; =
-border-bottom-left-radius: unset; display: unset; float: unset; clear: =
-unset; vertical-align: unset; overflow: unset; isolation: unset; =
-break-after: unset; break-before: unset; break-inside: unset; =
-column-width: unset; column-count: unset; column-fill: unset; =
-column-rule-width: unset; column-rule-style: unset; column-rule-color: =
-unset; opacity: unset; mix-blend-mode: unset; font-family: unset; =
-font-size: unset; font-style: unset; font-variant-caps: unset; =
-font-weight: unset; font-stretch: unset; line-height: unset; =
-font-synthesis: unset; writing-mode: unset; border-collapse: unset; =
-empty-cells: unset; caption-side: unset; border-spacing: unset; =
-text-transform: unset; text-indent: unset; word-break: unset; =
-text-align: unset; letter-spacing: unset; word-spacing: unset; =
-white-space: pre-wrap; -webkit-text-emphasis-style: unset; =
--webkit-text-emphasis-color: unset; line-break: unset; list-style: unset =
-unset unset; quotes: unset; margin: unset; outline: unset unset unset; =
-padding: unset; width: unset; min-width: unset; max-width: unset; =
-height: unset; min-height: unset; max-height: unset; box-sizing: unset; =
-object-fit: unset; object-position: unset; table-layout: unset; =
-text-overflow: unset; text-decoration: unset; background-position: unset =
-unset; background-repeat: unset unset;" class=3D""><a =
-href=3D"https://imgur.com/CEm4cXM" target=3D"_blank" =
-class=3D"">https://imgur.com/CEm4cXM</a></span></div><div class=3D""><span=
- style=3D"background-image: unset; background-size: unset; =
-background-attachment: unset; background-origin: unset; background-clip: =
-unset; background-color: unset; background-blend-mode: unset; border: =
-unset unset unset; border-top-left-radius: unset; =
-border-top-right-radius: unset; border-bottom-right-radius: unset; =
-border-bottom-left-radius: unset; display: unset; float: unset; clear: =
-unset; vertical-align: unset; overflow: unset; isolation: unset; =
-break-after: unset; break-before: unset; break-inside: unset; =
-column-width: unset; column-count: unset; column-fill: unset; =
-column-rule-width: unset; column-rule-style: unset; column-rule-color: =
-unset; opacity: unset; mix-blend-mode: unset; font-family: unset; =
-font-size: unset; font-style: unset; font-variant-caps: unset; =
-font-weight: unset; font-stretch: unset; line-height: unset; =
-font-synthesis: unset; writing-mode: unset; border-collapse: unset; =
-empty-cells: unset; caption-side: unset; border-spacing: unset; =
-text-transform: unset; text-indent: unset; word-break: unset; =
-text-align: unset; letter-spacing: unset; word-spacing: unset; =
-white-space: pre-wrap; -webkit-text-emphasis-style: unset; =
--webkit-text-emphasis-color: unset; line-break: unset; list-style: unset =
-unset unset; quotes: unset; margin: unset; outline: unset unset unset; =
-padding: unset; width: unset; min-width: unset; max-width: unset; =
-height: unset; min-height: unset; max-height: unset; box-sizing: unset; =
-object-fit: unset; object-position: unset; table-layout: unset; =
-text-overflow: unset; text-decoration: unset; background-position: unset =
-unset; background-repeat: unset unset;" class=3D"">[2]: <span =
-style=3D"background-image: unset; background-size: unset; =
-background-attachment: unset; background-origin: unset; background-clip: =
-unset; background-color: unset; background-blend-mode: unset; border: =
-unset unset unset; border-top-left-radius: unset; =
-border-top-right-radius: unset; border-bottom-right-radius: unset; =
-border-bottom-left-radius: unset; display: unset; float: unset; clear: =
-unset; vertical-align: unset; overflow: unset; isolation: unset; =
-break-after: unset; break-before: unset; break-inside: unset; =
-column-width: unset; column-count: unset; column-fill: unset; =
-column-rule-width: unset; column-rule-style: unset; column-rule-color: =
-unset; opacity: unset; mix-blend-mode: unset; font-family: unset; =
-font-size: unset; font-style: unset; font-variant-caps: unset; =
-font-weight: unset; font-stretch: unset; line-height: unset; =
-font-synthesis: unset; writing-mode: unset; border-collapse: unset; =
-empty-cells: unset; caption-side: unset; border-spacing: unset; =
-text-transform: unset; text-indent: unset; word-break: unset; =
-text-align: unset; letter-spacing: unset; word-spacing: unset; =
-white-space: pre-wrap; -webkit-text-emphasis-style: unset; =
--webkit-text-emphasis-color: unset; line-break: unset; list-style: unset =
-unset unset; quotes: unset; margin: unset; outline: unset unset unset; =
-padding: unset; width: unset; min-width: unset; max-width: unset; =
-height: unset; min-height: unset; max-height: unset; box-sizing: unset; =
-object-fit: unset; object-position: unset; table-layout: unset; =
-text-overflow: unset; text-decoration: unset; background-position: unset =
-unset; background-repeat: unset unset;" class=3D""><a =
-href=3D"https://imgur.com/xC8uCUy" target=3D"_blank" =
-class=3D"">https://imgur.com/xC8uCUy</a></span></span></div><div =
-class=3D""><br class=3D""></div><div class=3D""><div dir=3D"ltr" =
-class=3D""><div dir=3D"ltr" class=3D""><div class=3D""><div dir=3D"ltr" =
-class=3D""><div class=3D""><div dir=3D"ltr" class=3D""><div =
-class=3D""><div dir=3D"ltr" class=3D"">with regards,<br class=3D"">Revath =
-S Kumar,<br class=3D""><div class=3D""><span class=3D"">JavaScripter / =
-</span>Rubyist <br class=3D""></div><div class=3D""><a =
-href=3D"https://blog.revathskumar.com/" target=3D"_blank" =
-class=3D"">https://blog.revathskumar.com/</a></div></div></div></div></div=
-></div></div></div></div></div></div>
-</blockquote></div>
-_______________________________________________<br class=3D"">WireGuard =
-mailing list<br class=3D""><a href=3D"mailto:WireGuard@lists.zx2c4.com" =
-class=3D"">WireGuard@lists.zx2c4.com</a><br =
-class=3D"">https://lists.zx2c4.com/mailman/listinfo/wireguard<br =
-class=3D""></div></blockquote></div><br class=3D""></body></html>=
-
---Apple-Mail=_6358F2E9-5A3A-4A16-B1D6-AB14AAA8CBC8--
-
---===============1601044182602302878==
+--------------5840F8F28C14A75AD5D4EA20
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -301,4 +208,4 @@ WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---===============1601044182602302878==--
+--------------5840F8F28C14A75AD5D4EA20--
