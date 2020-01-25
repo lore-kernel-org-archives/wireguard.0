@@ -1,93 +1,77 @@
-Return-Path: <SRS0=FSGf=3N=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=XtlP=3O=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.3 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+X-Spam-Status: No, score=-5.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E030C2D0DB
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Jan 2020 16:02:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 63E3EC35241
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 25 Jan 2020 06:52:15 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 91973206F0
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Jan 2020 16:02:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 91973206F0
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=viisauksena.de
+	by mail.kernel.org (Postfix) with ESMTPS id 19C662071A
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 25 Jan 2020 06:52:13 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="deJkzrvd"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 19C662071A
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=honson.id.au
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0a351240;
-	Fri, 24 Jan 2020 16:01:53 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e6393e5d;
+	Sat, 25 Jan 2020 06:52:01 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dfd05048
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d9d31a83
  for <wireguard@lists.zx2c4.com>;
- Fri, 24 Jan 2020 16:01:51 +0000 (UTC)
-Received: from viisauksena.de (rauberhaus.de [178.254.39.111])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5f636d7b
+ Sat, 25 Jan 2020 06:51:57 +0000 (UTC)
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
+ [66.111.4.25])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6736bab9
  for <wireguard@lists.zx2c4.com>;
- Fri, 24 Jan 2020 16:01:50 +0000 (UTC)
-Received: from [192.168.178.54] (pD95F617C.dip0.t-ipconnect.de [217.95.97.124])
- by rauberhaus.de (Postfix) with ESMTPSA id C76C7206C6
- for <wireguard@lists.zx2c4.com>; Fri, 24 Jan 2020 17:01:49 +0100 (CET)
-Authentication-Results: v32412.1blu.de;
- spf=pass (sender IP is 217.95.97.124) smtp.mailfrom=jens@viisauksena.de
- smtp.helo=[192.168.178.54]
-Received-SPF: pass (v32412.1blu.de: connection is authenticated)
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-From: jens <jens@viisauksena.de>
-Subject: wireguard-hosts file
-Openpgp: id=AB0F97125ABF0FAEDEFBDB8B507EB93F6F6DEE01
-Autocrypt: addr=jens@viisauksena.de; prefer-encrypt=mutual; keydata=
- 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
-Message-ID: <674aac2b-1b4c-022c-0e4d-596529dce78f@viisauksena.de>
-Date: Fri, 24 Jan 2020 17:01:49 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
-MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="------------5840F8F28C14A75AD5D4EA20"
-Content-Language: en-US
+ Sat, 25 Jan 2020 06:51:57 +0000 (UTC)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailout.nyi.internal (Postfix) with ESMTP id C36C221947
+ for <wireguard@lists.zx2c4.com>; Sat, 25 Jan 2020 01:51:56 -0500 (EST)
+Received: from imap21 ([10.202.2.71])
+ by compute3.internal (MEProxy); Sat, 25 Jan 2020 01:51:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=he3/Pz
+ ndQnw58mEmHBXb7J+RqNCEOqsUp9pdLAnHKts=; b=deJkzrvd8M/6iYGV+YBCCf
+ owj5CSkmoI5GYWcEkvxJtmws4HZFx7tOOEM9gmkKjxzZrzfHgUjj7Im0Yg8e3pxR
+ RrVfdN276Q34pGcV7UiAyi6hLQHtGTCuRNAcxe6DAz5HlHSyoyrOkMB0w9fd/fis
+ B/xpWBKXxtPVkgp0McTQAAEwkSqUYdFUz6UEkGuHsRULRtEBpOZcQOmbWKxYus9q
+ UOLFjo+TbpXQhuMatsa9LupASvkQKNnd/Sso747YpuONeJI8hrdwrz6WLLRys2C7
+ FyQCLFBn/LA/lB+dP2hTaV3zZXFI0lfzyvajGdhGgS2R+W/+H/7DXbi7yB5IbzQw
+ ==
+X-ME-Sender: <xms:jOUrXstNIS4D0ivzYWgfX4siqxMMZlU0frIviHOwQPcC90g9VHg94g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedugedrvdeigdelkecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkjghffffhvffutgesrgdtre
+ erreertdenucfhrhhomhepfdfuthgvvhgvnhcujfhonhhsohhnfdcuoehsthgvvhgvnhes
+ hhhonhhsohhnrdhiugdrrghuqeenucffohhmrghinhepiiigvdgtgedrtghomhdpghhith
+ hhuhgsrdgtohhmpdhophgvnhdqmhgvshhhrdhorhhgnecuvehluhhsthgvrhfuihiivgep
+ tdenucfrrghrrghmpehmrghilhhfrhhomhepshhtvghvvghnsehhohhnshhonhdrihgurd
+ gruh
+X-ME-Proxy: <xmx:jOUrXiMdX-6Nsmb1aJgcXvdte6mOb_bjTYvhaW7zl70fz91l6z87OA>
+ <xmx:jOUrXmf5j3OcMwWWAdTEhpjSpG6uvAOuuO-yq8nONZFdq_7sqBZMiA>
+ <xmx:jOUrXhlSbi1_3HaoVSvjXHms689sBCAEs18gmyEsc-D_3wy7eLc4cw>
+ <xmx:jOUrXq6AugXsvio6-DAq_kx1Ml-zuVEu1geV_xxi5KflmCG-JmQmPw>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 50625660065; Sat, 25 Jan 2020 01:51:56 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.7-777-gdb93371-fmstable-20200123v1
+Mime-Version: 1.0
+Message-Id: <06a605c4-8d84-487a-899e-fe7ed899189c@www.fastmail.com>
+In-Reply-To: <674aac2b-1b4c-022c-0e4d-596529dce78f@viisauksena.de>
+References: <674aac2b-1b4c-022c-0e4d-596529dce78f@viisauksena.de>
+Date: Sat, 25 Jan 2020 17:51:45 +1100
+From: "Steven Honson" <steven@honson.id.au>
+To: wireguard@lists.zx2c4.com
+Subject: Re: wireguard-hosts file
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -99,105 +83,117 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
+Content-Type: multipart/mixed; boundary="===============6969047234315428791=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This is a multi-part message in MIME format.
---------------5840F8F28C14A75AD5D4EA20
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+--===============6969047234315428791==
+Content-Type: multipart/alternative;
+ boundary=4943c4de09e64185a206d81e986791c7
 
-i really would love to have a feature like wireguard-hosts file.
-whereas wg command would print given "name" instead of key - so the
-output would be more meaningfull
-We have some wireguard running in server like infrastructure, where one
-server serves dozens of "clients"
+--4943c4de09e64185a206d81e986791c7
+Content-Type: text/plain
 
-so instead of
-peer: l9FxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaU=
-we would have something alike
-peer: superhero downtown
+Hi!
 
-some of you may be familar with batman-adv layer2 routing protocol,
-there they also have a batctl which is working pretty similar to wg tool.
-there you can add a bat-hosts file which is doing the job, which totaly
-works likes any hosts file
-a normal hosts file maps ip to name,
-a bat-hosts file maps mac addresses to name,
-a wg-hosts file would map keys to name.
+There was some work underway a while back for something along these lines in https://git.zx2c4.com/wireguard-monolithic-historical/commit/?h=lr/peer-names&id=f50ef1676fe5861c9071910d2caf64593a28d837, <https://git.zx2c4.com/wireguard-monolithic-historical/log/?h=lr/peer-names> but unfortunately that work stalled out.
 
-i found the sources for bat-hosts ( .c .h .sample ) here
-https://downloads.open-mesh.org/batman/releases/batman-adv-2019.5/batctl-2019.5.tar.gz
+There are a few workarounds/alternatives out there such as https://github.com/warner/wireguard-vanity-address, which will help you generate keypairs with a short defined string in the public key, but this isn't likely to be workable for a large number of peers.
 
-is this something maybe usefull to other also?
-is there a chance to have this implemented by default?
+Cheers,
+Steven
 
-thx for answers.
-fuzzle
+On Sat, 25 Jan 2020, at 3:01 AM, jens wrote:
+> i really would love to have a feature like wireguard-hosts file.
+> whereas wg command would print given "name" instead of key - so the
+> output would be more meaningfull
+> We have some wireguard running in server like infrastructure, where one
+> server serves dozens of "clients"
+> 
+> so instead of
+> peer: l9FxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaU=
+> we would have something alike
+> peer: superhero downtown
+> 
+> some of you may be familar with batman-adv layer2 routing protocol,
+> there they also have a batctl which is working pretty similar to wg tool.
+> there you can add a bat-hosts file which is doing the job, which totaly
+> works likes any hosts file
+> a normal hosts file maps ip to name,
+> a bat-hosts file maps mac addresses to name,
+> a wg-hosts file would map keys to name.
+> 
+> i found the sources for bat-hosts ( .c .h .sample ) here
+> https://downloads.open-mesh.org/batman/releases/batman-adv-2019.5/batctl-2019.5.tar.gz
+> 
+> is this something maybe usefull to other also?
+> is there a chance to have this implemented by default?
+> 
+> thx for answers.
+> fuzzle
+> 
+> -- 
+> make the world nicer, please use PGP encryption
+> 
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
+> 
+> 
+> *Attachments:*
+>  * 0x507EB93F6F6DEE01.asc
 
--- 
-make the world nicer, please use PGP encryption
+--4943c4de09e64185a206d81e986791c7
+Content-Type: text/html
+Content-Transfer-Encoding: quoted-printable
 
---------------5840F8F28C14A75AD5D4EA20
-Content-Type: application/pgp-keys;
- name="0x507EB93F6F6DEE01.asc"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
- filename="0x507EB93F6F6DEE01.asc"
+<!DOCTYPE html><html><head><title></title><style type=3D"text/css">p.Mso=
+Normal,p.MsoNoSpacing{margin:0}</style></head><body><div>Hi!<br></div><d=
+iv><br></div><div>There was some work underway a while back for somethin=
+g along these lines in <a href=3D"https://git.zx2c4.com/wireguard-monoli=
+thic-historical/commit/?h=3Dlr/peer-names&amp;id=3Df50ef1676fe5861c90719=
+10d2caf64593a28d837">https://git.zx2c4.com/wireguard-monolithic-historic=
+al/commit/?h=3Dlr/peer-names&amp;id=3Df50ef1676fe5861c9071910d2caf64593a=
+28d837</a><a href=3D"https://git.zx2c4.com/wireguard-monolithic-historic=
+al/log/?h=3Dlr/peer-names">,</a> but unfortunately that work stalled out=
+.</div><div><br></div><div>There are a few workarounds/alternatives out =
+there such as <a href=3D"https://github.com/warner/wireguard-vanity-addr=
+ess">https://github.com/warner/wireguard-vanity-address,</a> which will =
+help you generate keypairs with a short defined string in the public key=
+, but this isn't likely to be workable for a large number of peers.<br><=
+/div><div><br></div><div>Cheers,<br></div><div>Steven<br></div><div><br>=
+</div><div>On Sat, 25 Jan 2020, at 3:01 AM, jens wrote:<br></div><blockq=
+uote type=3D"cite" id=3D"qt"><div>i really would love to have a feature =
+like wireguard-hosts file.<br></div><div>whereas wg command would print =
+given "name" instead of key - so the<br></div><div>output would be more =
+meaningfull<br></div><div>We have some wireguard running in server like =
+infrastructure, where one<br></div><div>server serves dozens of "clients=
+"<br></div><div><br></div><div>so instead of<br></div><div>peer: l9Fxaaa=
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaU=3D<br></div><div>we would have someth=
+ing alike<br></div><div>peer: superhero downtown<br></div><div><br></div=
+><div>some of you may be familar with batman-adv layer2 routing protocol=
+,<br></div><div>there they also have a batctl which is working pretty si=
+milar to wg tool.<br></div><div>there you can add a bat-hosts file which=
+ is doing the job, which totaly<br></div><div>works likes any hosts file=
+<br></div><div>a normal hosts file maps ip to name,<br></div><div>a bat-=
+hosts file maps mac addresses to name,<br></div><div>a wg-hosts file wou=
+ld map keys to name.<br></div><div><br></div><div>i found the sources fo=
+r bat-hosts ( .c .h .sample ) here<br></div><div>https://downloads.open-=
+mesh.org/batman/releases/batman-adv-2019.5/batctl-2019.5.tar.gz<br></div=
+><div><br></div><div>is this something maybe usefull to other also?<br><=
+/div><div>is there a chance to have this implemented by default?<br></di=
+v><div><br></div><div>thx for answers.<br></div><div>fuzzle<br></div><di=
+v><br></div><div>--&nbsp;<br></div><div>make the world nicer, please use=
+ PGP encryption<br></div><div><br></div><div>___________________________=
+____________________<br></div><div>WireGuard mailing list<br></div><div>=
+WireGuard@lists.zx2c4.com<br></div><div>https://lists.zx2c4.com/mailman/=
+listinfo/wireguard<br></div><div><br></div><div><br></div><div><b>Attach=
+ments:</b><br></div><ul><li>0x507EB93F6F6DEE01.asc<br></li></ul></blockq=
+uote><div><br></div></body></html>
+--4943c4de09e64185a206d81e986791c7--
 
------BEGIN PGP PUBLIC KEY BLOCK-----
-
-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
-=tOCZ
------END PGP PUBLIC KEY BLOCK-----
-
---------------5840F8F28C14A75AD5D4EA20
+--===============6969047234315428791==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -208,4 +204,4 @@ WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---------------5840F8F28C14A75AD5D4EA20--
+--===============6969047234315428791==--
