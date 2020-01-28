@@ -2,49 +2,68 @@ Return-Path: <SRS0=wYFz=3R=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CD6C4C33CB3
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 28 Jan 2020 10:34:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 94346C33C9E
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 28 Jan 2020 10:37:45 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 1695721739
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 28 Jan 2020 10:34:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 1695721739
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=barrys-emacs.org
+	by mail.kernel.org (Postfix) with ESMTPS id 1A0732467E
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 28 Jan 2020 10:37:44 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="WNWBn73R"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 1A0732467E
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 72d759b0;
-	Tue, 28 Jan 2020 10:34:50 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 32eaf12b;
+	Tue, 28 Jan 2020 10:36:51 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 53e793d7
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ce3d2186
  for <wireguard@lists.zx2c4.com>;
- Mon, 27 Jan 2020 21:45:23 +0000 (UTC)
-Received: from claranet-outbound-smtp08.uk.clara.net
- (claranet-outbound-smtp08.uk.clara.net [195.8.89.41])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 43d2e3b8
+ Tue, 28 Jan 2020 10:36:49 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 43b8897b
  for <wireguard@lists.zx2c4.com>;
- Mon, 27 Jan 2020 21:45:23 +0000 (UTC)
-Received: from cpc96796-rdng27-2-0-cust183.15-3.cable.virginm.net
- ([86.19.118.184]:25813 helo=[172.16.2.123])
- by relay08.mail.eu.clara.net (relay.clara.net [81.171.239.38]:10587)
- with esmtpsa (authdaemon_plain:barry@barrys-emacs.org)
- (TLS1.2:DHE_RSA_AES_256_CBC_SHA256:256) id 1iwCC8-0005N2-So 
- (return-path <barry@barrys-emacs.org>); Mon, 27 Jan 2020 21:45:21 +0000
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
-Subject: Re: wireguard-hosts file
-From: Barry Scott <barry@barrys-emacs.org>
-In-Reply-To: <674aac2b-1b4c-022c-0e4d-596529dce78f@viisauksena.de>
-Date: Mon, 27 Jan 2020 21:45:20 +0000
-Message-Id: <8BABCA2C-771B-41F7-BEC0-ADF779C6A8FB@barrys-emacs.org>
-References: <674aac2b-1b4c-022c-0e4d-596529dce78f@viisauksena.de>
-To: jens <jens@viisauksena.de>
-X-Mailer: Apple Mail (2.3445.104.11)
-X-Mailman-Approved-At: Tue, 28 Jan 2020 11:34:47 +0100
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+ Tue, 28 Jan 2020 10:36:48 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a7e7bb10
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 28 Jan 2020 09:34:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :references:in-reply-to:from:date:message-id:subject:to:cc
+ :content-type; s=mail; bh=mTRsRHnL2O/IXzJoShkF3DXNHic=; b=WNWBn7
+ 3RHvaTQ94BVQDPeofOMfa+UogiwUTG7KyUJ9XENFt8NcIt2MHfMPB5+3OKZEGyHM
+ annQKlIYRWQOZcwbNEms7BfkCkQAPwF7NFcF3qnDEvd9StV8WgkC5tfB4Ufyrlfm
+ A3yuOlqzXe6X5mGxDDrnHQG1BKF0gmVivX5eOK3YTwg7USAFINW/1DzL6zCCMNZd
+ Ul2L157zjJjGrlpxpAz7J/DkZMdPSl6MfHmy6PCxEZvAvl0eW3SPmP9LHN5vrxvQ
+ 8cZMVZ1DGmhpSB+FbAzFBiDbK3J3J8YyHhJuEAx6la7jrlHVJDHkRihqpQYEMXi4
+ I8rhstuTKgWn3UYA==
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id dbb08909
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 28 Jan 2020 09:34:57 +0000 (UTC)
+Received: by mail-ot1-f41.google.com with SMTP id r16so11526645otd.2
+ for <wireguard@lists.zx2c4.com>; Tue, 28 Jan 2020 02:36:48 -0800 (PST)
+X-Gm-Message-State: APjAAAUz/A5ofXdR/tvuCVPsL8AGXjuNwYA8Ta6yYpNI+My8hA9RIRtG
+ EwXudBxD/DP9G+Aq+fgICYMpukI/MmL/tyIDZOk=
+X-Google-Smtp-Source: APXvYqxOL+BtTdJhmoFEFqSMi+82/+L5NZrDAob/bu8yqX5cdFswAv4yx6mpYI3ZKME4VKvpgCZ4HhOhF0HBT1r3wtU=
+X-Received: by 2002:a9d:6745:: with SMTP id w5mr16324546otm.52.1580207807756; 
+ Tue, 28 Jan 2020 02:36:47 -0800 (PST)
+MIME-Version: 1.0
+References: <39913106ac854a2f2515aa2ad10d71ad@rfraile.eu>
+In-Reply-To: <39913106ac854a2f2515aa2ad10d71ad@rfraile.eu>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Tue, 28 Jan 2020 11:36:36 +0100
+X-Gmail-Original-Message-ID: <CAHmME9ra9_gXEq4x75MZy2d0Otbs-k9g_GKHcM8d3f4+=GVy7A@mail.gmail.com>
+Message-ID: <CAHmME9ra9_gXEq4x75MZy2d0Otbs-k9g_GKHcM8d3f4+=GVy7A@mail.gmail.com>
+Subject: Re: [PATCH] wg-quick: Linux and FreeBSD: Add support to search domain
+ in wg-quick
+To: Ricardo Fraile <rfraile@rfraile.eu>
+Cc: kevin@darbyshire-bryant.me.uk, Matt Layher <mdlayher@gmail.com>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -61,69 +80,9 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-
-
-> On 24 Jan 2020, at 16:01, jens <jens@viisauksena.de> wrote:
-> 
-> i really would love to have a feature like wireguard-hosts file.
-> whereas wg command would print given "name" instead of key - so the
-> output would be more meaningfull
-> We have some wireguard running in server like infrastructure, where one
-> server serves dozens of "clients"
-> 
-> so instead of
-> peer: l9FxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaU=
-> we would have something alike
-> peer: superhero downtown
-> 
-> some of you may be familar with batman-adv layer2 routing protocol,
-> there they also have a batctl which is working pretty similar to wg tool.
-> there you can add a bat-hosts file which is doing the job, which totaly
-> works likes any hosts file
-> a normal hosts file maps ip to name,
-> a bat-hosts file maps mac addresses to name,
-> a wg-hosts file would map keys to name.
-> 
-> i found the sources for bat-hosts ( .c .h .sample ) here
-> https://downloads.open-mesh.org/batman/releases/batman-adv-2019.5/batctl-2019.5.tar.gz
-> 
-> is this something maybe usefull to other also?
-> is there a chance to have this implemented by default?
-
-I thought about this problem as well. I was thinking along the lines
-of having a user-defined string field that could be used as the
-friendly client name instead of the client public key.
-
-But since I concluded that I needed my own tooling on top of
-what wireguard provides at the server end. At that point
-I can replace the wg command with my own that does what
-I want.
-
-I use the client public key as the key into my client database.
-
-I have a python script that added clients to the database,
-generates a new server wg0.conf and a wg0.conf for each client.
-It takes care of allocating the next free IP address in the VPN pool
-for example.
-
-Another python script takes the output of "wg show wg0 dump" and
-the database to create a status output that uses the client names.
-
-Barry
-
-
-
-> 
-> thx for answers.
-> fuzzle
-> 
-> -- 
-> make the world nicer, please use PGP encryption
-> <0x507EB93F6F6DEE01.asc>_______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
-
+I'm not so sure that we want to fill wg-quick(8) up with every dns
+nob... If you have specialized networking requirements, wg-quick(8) is
+probably not for you anyway.
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
