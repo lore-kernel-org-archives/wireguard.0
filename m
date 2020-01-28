@@ -6,55 +6,63 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D6E3C2D0DB
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 28 Jan 2020 12:53:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40395C2D0DB
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 28 Jan 2020 14:14:57 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 8DB0924681
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 28 Jan 2020 12:53:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 7B6D024693
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 28 Jan 2020 14:14:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=ungleich.ch header.i=@ungleich.ch header.b="rOBMqbZQ"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 8DB0924681
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=ungleich.ch
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="bA26mkml"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 7B6D024693
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a0a0321f;
-	Tue, 28 Jan 2020 12:52:44 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 57a14cfb;
+	Tue, 28 Jan 2020 14:14:14 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d13b9362
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 952506a8
  for <wireguard@lists.zx2c4.com>;
- Tue, 28 Jan 2020 12:52:42 +0000 (UTC)
-Received: from smtp.ungleich.ch (mx.ungleich.ch [185.203.112.16])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dda1d80e
+ Tue, 28 Jan 2020 14:14:12 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b80c2bb6
  for <wireguard@lists.zx2c4.com>;
- Tue, 28 Jan 2020 12:52:42 +0000 (UTC)
-Received: from diamond.localdomain (localhost [IPv6:::1])
- by smtp.ungleich.ch (Postfix) with ESMTP id 416DF22EED;
- Tue, 28 Jan 2020 13:52:41 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ungleich.ch; s=mail;
- t=1580215961; bh=/xUZ9UQ4x2YhourP4L8vrvWcjchyqu/0ni9ueJB1MNo=;
- h=References:From:To:Cc:Subject:In-reply-to:Date:From;
- b=rOBMqbZQW5Pwcqa3X/EgKQB11spt47xwXv+YdviDprZogYl6bz+pGG4j30sBLZ10I
- az43Vav1i0IuzpXWxczDxC8WukG75NkFk9IqPYz2bkP6/famurkGHESvLm2CSINCLL
- YxcFCeFKH0GLmsRTOVxRXUHLRb3U19MB8YSnxeDOTSKOOhlwP8WFLx1SIc2UFUzuy2
- +hdtzRIREfw3kSroX+v92E8aN4gLATIIPfnDtndkNjQyTMGhg6xYd19xMruRIMgGv6
- HI0Z/74WGRZ3PrRYA6QRA/UB6ONTKciSEt9akQiW/FKc3J97avvvct1dF1KRJKKKD/
- zJPhqqEDyp4rw==
-Received: by diamond.localdomain (Postfix, from userid 1000)
- id 0F5B713E2CDA; Tue, 28 Jan 2020 13:52:41 +0100 (CET)
-References: <39913106ac854a2f2515aa2ad10d71ad@rfraile.eu>
- <CAHmME9ra9_gXEq4x75MZy2d0Otbs-k9g_GKHcM8d3f4+=GVy7A@mail.gmail.com>
- <CAPWNY8W4oXesE53MMDNZC092xN8nK9iyKV-pcNpvMxcH1y4LuQ@mail.gmail.com>
-User-agent: mu4e 1.3.5; emacs 26.3
-From: Nico Schottelius <nico.schottelius@ungleich.ch>
-To: wireguard@lists.zx2c4.com
-Subject: Re: [PATCH] wg-quick: Linux and FreeBSD: Add support to search domain
- in wg-quick
-In-reply-to: <CAPWNY8W4oXesE53MMDNZC092xN8nK9iyKV-pcNpvMxcH1y4LuQ@mail.gmail.com>
-Date: Tue, 28 Jan 2020 13:52:41 +0100
-Message-ID: <878slreo9y.fsf@ungleich.ch>
+ Tue, 28 Jan 2020 14:14:12 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 27519b07
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 28 Jan 2020 13:12:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :references:in-reply-to:from:date:message-id:subject:to:cc
+ :content-type; s=mail; bh=cDwRIzlvPkl1U8TxK/dAda/Ba2I=; b=bA26mk
+ mlJk90GgYPmtaxCMuKiwq5IwpdXFgyDa36F27tkBR3SB+xbCyMHJgSe6KjkWGN8m
+ nb833+d/P7TmxfCzYF1HF1wUArxM4BM+03Y8rBQUV5hbH3cyCUAY22saMv2HSX5K
+ 3N2BhPI/y6XCU93eCovGtSd8KrFlzSWCxkTl46QMM0/ygkn0vESnJQY2WRxDLCho
+ NVAfcPAdh7VWcWgVIcPSMtLvVzltcVejGdzoQwsCs9BzWlPm+ZFFWg6SG3/bReoQ
+ jwKoX2+v+fUUstbjlXixBziU3XWeGoLy3n3yEKk3ueOxij6EzmgZZcsaIM56T/zG
+ xshL7G0zYk3PKuvA==
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 4250932d
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 28 Jan 2020 13:12:20 +0000 (UTC)
+Received: by mail-oi1-f180.google.com with SMTP id d62so10367492oia.11
+ for <wireguard@lists.zx2c4.com>; Tue, 28 Jan 2020 06:14:11 -0800 (PST)
+X-Gm-Message-State: APjAAAUlgB6vM2xX6zvPOni3C/4QcsVcH/OXZGdZ27iZMUmtSv9yB4P3
+ u0tpWBMuQRIIBC5H1YmArM1D6C894m1VpQZMCMk=
+X-Google-Smtp-Source: APXvYqw1CxPIxqoDFwM/zhqOCITnixlz79+retO3fykn2lCP4vttPikuo5o5jsPwPWfw73QQFSmVvZ0rhlzhjka4v8E=
+X-Received: by 2002:a05:6808:a8a:: with SMTP id
+ q10mr2910478oij.66.1580220851154; 
+ Tue, 28 Jan 2020 06:14:11 -0800 (PST)
 MIME-Version: 1.0
+References: <20200123111825.17435-1-ilie.halip@gmail.com>
+In-Reply-To: <20200123111825.17435-1-ilie.halip@gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Tue, 28 Jan 2020 15:14:00 +0100
+X-Gmail-Original-Message-ID: <CAHmME9rTD=zCpw5fkw-baUHBuutWzg18aJ-8KvnPHzNpJDTNHw@mail.gmail.com>
+Message-ID: <CAHmME9rTD=zCpw5fkw-baUHBuutWzg18aJ-8KvnPHzNpJDTNHw@mail.gmail.com>
+Subject: Re: [PATCH] compat: support building for RHEL-8.2
+To: Ilie Halip <ilie.halip@gmail.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -66,31 +74,22 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Ckkgc2Vjb25kIE1hbnRhcyBpbiB0aGlzIHJlZ2FyZCAtIGRvbid0IGJsb2F0IHdnLXF1aWNrLCBi
-dXQgYSBETlMKc2VhcmNoIHBhdGggaXMgcHJldHR5IHN0YW5kYXJkIHRvIGJlIHN1Ym1pdHRlZCBi
-eSAiYSBuZXR3b3JrIi4KCldlIGFyZSBub3QgdGFsa2luZyBkaGNwIGJvb3Qgb3B0aW9ucywgZXZl
-biB0aG91Z2ggTlRQIHNlcnZlcnMgd291bGQKcHJvYmFibHkgYWxzbyBtYWtlIHNlbnNlLCBpZiB5
-b3Ugc2VlIHdpcmVndWFyZCBhcyBwcm92aWRpbmcgYSBuZXR3b3JrLgoKQmVzdCwKCk5pY28KCgoK
-TWFudGFzIE1pa3VsxJduYXMgPGdyYXdpdHlAZ21haWwuY29tPiB3cml0ZXM6Cgo+IFRoYXQgbWln
-aHQgYmUgdHJ1ZSwgYnV0IElNSE8gdGhlIGxpc3Qgb2Ygc2VhcmNoIGRvbWFpbnMgZG9lc24ndCBm
-YWxsCj4gdW5kZXIgInNwZWNpYWxpemVkIG9wdGlvbnMiIOKAkyBpdCBpcyBldmVuIGRlcGxveWVk
-IHZpYSBESENQIGFuZCBzaW1pbGFyCj4gbWVjaGFuaXNtcyBhbG1vc3QgYXMgY29tbW9ubHkgYXMg
-dGhlIGxpc3Qgb2YgRE5TIHJlc29sdmVycyB0aGVtc2VsdmVzLAo+IHNvIGlmIGEgVlBOIGNsaWVu
-dCBzdXBwb3J0cyB0aGUgbGF0dGVyIHRoZW4gaXQgbWFrZXMgc2Vuc2UgdG8gc3VwcG9ydAo+IGJv
-dGguCj4KPgo+IE9uIFR1ZSwgSmFuIDI4LCAyMDIwIGF0IDEyOjM3IFBNIEphc29uIEEuIERvbmVu
-ZmVsZCA8SmFzb25AengyYzQuY29tPiB3cm90ZToKPj4KPj4gSSdtIG5vdCBzbyBzdXJlIHRoYXQg
-d2Ugd2FudCB0byBmaWxsIHdnLXF1aWNrKDgpIHVwIHdpdGggZXZlcnkgZG5zCj4+IG5vYi4uLiBJ
-ZiB5b3UgaGF2ZSBzcGVjaWFsaXplZCBuZXR3b3JraW5nIHJlcXVpcmVtZW50cywgd2ctcXVpY2so
-OCkgaXMKPj4gcHJvYmFibHkgbm90IGZvciB5b3UgYW55d2F5Lgo+PiBfX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXwo+PiBXaXJlR3VhcmQgbWFpbGluZyBsaXN0
-Cj4+IFdpcmVHdWFyZEBsaXN0cy56eDJjNC5jb20KPj4gaHR0cHM6Ly9saXN0cy56eDJjNC5jb20v
-bWFpbG1hbi9saXN0aW5mby93aXJlZ3VhcmQKCgotLQpNb2Rlcm4sIGFmZm9yZGFibGUsIFN3aXNz
-IFZpcnR1YWwgTWFjaGluZXMuIFZpc2l0IHd3dy5kYXRhY2VudGVybGlnaHQuY2gKX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18KV2lyZUd1YXJkIG1haWxpbmcg
-bGlzdApXaXJlR3VhcmRAbGlzdHMuengyYzQuY29tCmh0dHBzOi8vbGlzdHMuengyYzQuY29tL21h
-aWxtYW4vbGlzdGluZm8vd2lyZWd1YXJkCg==
+Hi Ilie,
+
+Thanks for this. Usually we don't special case RHEL point releases and
+just maintain that wireguard-linux-compat only works with the latest
+RHEL. Could you resubmit this using the normal ISRHEL check instead?
+
+Do you have any idea on RHEL8.2 release date?
+
+Thanks,
+Jason
+_______________________________________________
+WireGuard mailing list
+WireGuard@lists.zx2c4.com
+https://lists.zx2c4.com/mailman/listinfo/wireguard
