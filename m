@@ -2,70 +2,148 @@ Return-Path: <SRS0=qOIe=3S=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D708FC2D0DB
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 29 Jan 2020 13:47:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E6CFC2D0DB
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 29 Jan 2020 15:32:39 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id D3DEA20716
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 29 Jan 2020 13:47:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id AC30F206F0
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 29 Jan 2020 15:32:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=rfraile.eu header.i=@rfraile.eu header.b="eo1f8JC4"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org D3DEA20716
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=rfraile.eu
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=solidadmin.com header.i=@solidadmin.com header.b="VOTD4zd6"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org AC30F206F0
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=solidadmin.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5b5ae575;
-	Wed, 29 Jan 2020 13:46:41 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 84fbe8a2;
+	Wed, 29 Jan 2020 15:32:08 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2027601b
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 604482a7
  for <wireguard@lists.zx2c4.com>;
- Wed, 29 Jan 2020 13:46:38 +0000 (UTC)
-Received: from smtp-relay-00-2.dondominio.net (smtp-relay-00-2.dondominio.net
- [31.214.176.15])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8f1d8f6b
+ Wed, 29 Jan 2020 15:32:06 +0000 (UTC)
+Received: from conquer.yellowcord.com (conquer.yellowcord.com [45.55.224.114])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id edef1976
  for <wireguard@lists.zx2c4.com>;
- Wed, 29 Jan 2020 13:46:38 +0000 (UTC)
-Received: from localhost (smtp-relay-local.scip.local [127.0.0.1])
- by smtp-relay.dondominio.com (Postfix) with SMTP id 5C44E41EF4
- for <wireguard@lists.zx2c4.com>; Wed, 29 Jan 2020 14:46:37 +0100 (CET)
-Received: from mail-node.dondominio.com 
- by smtp-relay.dondominio.com (Postfix) with ESMTP id 6A51E4093F
- for <wireguard@lists.zx2c4.com>; Wed, 29 Jan 2020 14:46:34 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=rfraile.eu; s=dddk;
- t=1580305594; bh=3iA/drnFRvnSFSqeyPl1BiV1v99C3S3yCa4HmZBO1mg=;
- h=Content-Type:Date:From:To:Subject:Message-ID;
- b=eo1f8JC4pvHvBR5sSGqYrKmHJy4Ft6kP/9XH6yT3n76ppQja6aEq6/xgEmhIZBThh
- TRK6WKUqerwPMoaDhvTWwHENFvP9zdkSbHA8/sqGwKYWcR8/ou5Eu8BYTD7jLFZEjW
- RTwbWsXqj0dLJV5i63mcI5Svo7z3yVwKmVBU2uog=
-Received: from webmail.rfraile.eu (webmail-05.scip.local [172.21.33.137])
- (Authenticated sender: rfraile@rfraile.eu)
- by mail-node.dondominio.com (Postfix) with ESMTPA id 0993E4089D
- for <wireguard@lists.zx2c4.com>; Wed, 29 Jan 2020 14:46:33 +0100 (CET)
-Received: from [195.110.94.140] via webmail-ha-01.scip.local ([172.21.33.131])
- by webmail.rfraile.eu
- with HTTP (HTTP/1.1 POST); Wed, 29 Jan 2020 14:46:33 +0100
+ Wed, 29 Jan 2020 15:32:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=solidadmin.com; s=default; h=Content-Type:In-Reply-To:MIME-Version:Date:
+ Message-ID:From:References:To:Subject:Sender:Reply-To:Cc:
+ Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+ Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+ List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=5hO6sQ0/Dx4IR4FDtWsCs/6Vvwa4ToHqskjBxoqYdcw=; b=VOTD4zd61IhYsovxkURSlPQDC
+ zow6L8THfaWyZgAYIGWG6vAc1+SIMqSfTIsitvY/nDDJB/fhhIN379faR7Bq8ooLv5DkwLhBD2J0p
+ L0ZltRxRI4fI5fCj2ze7hWclB4WUZnMb95HXZOn8G8ti0U0t736ys6o/jzA9A4aGbVehk7KKoy6IC
+ 382+SCMWjtYsFOWsyt2SD9Cj2EIMx0MauZRfrFDqR3hmlL2CgV0AfQSepYXBMucKd8ZDOWHydJGHl
+ kUXDPBn0x4SZ/ynJvbcietOAQk95riU+lB74WwxrKfHOrOu1QOy0k8hnli6nz+L1pEKwnpeKU10XH
+ 8zSlaEriA==;
+Received: from 141.195.160.108.in-addr.arpa ([108.160.195.141]:55864
+ helo=[192.168.1.179]) by conquer.yellowcord.com with esmtpsa
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128) (Exim 4.92)
+ (envelope-from <joe@solidadmin.com>) id 1iwpK4-0002Iy-1W
+ for wireguard@lists.zx2c4.com; Wed, 29 Jan 2020 09:32:08 -0600
+Subject: Re: wireguard ci hooked up to quite a few kernel trees
+To: wireguard@lists.zx2c4.com
+References: <CAHmME9rProfVf4VGHGX9no3KTa08nL_oYkK8Nv+eknk4ewVMAw@mail.gmail.com>
+ <20200129124001.ak2fo6nr2bqp2ywk@iyo>
+From: Joe Doss <joe@solidadmin.com>
+Autocrypt: addr=joe@solidadmin.com; keydata=
+ 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
+Organization: SolidAdmin
+Message-ID: <23385beb-d8f4-efbb-dadf-1a731c2d4a7b@solidadmin.com>
+Date: Wed, 29 Jan 2020 09:32:00 -0600
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-Date: Wed, 29 Jan 2020 14:46:33 +0100
-From: Ricardo Fraile <rfraile@rfraile.eu>
-To: Wireguard <wireguard@lists.zx2c4.com>
-Subject: Re: [PATCH] wg-quick: Linux and FreeBSD: Add support to search domain
- in wg-quick
-In-Reply-To: <878slreo9y.fsf@ungleich.ch>
-References: <39913106ac854a2f2515aa2ad10d71ad@rfraile.eu>
- <CAHmME9ra9_gXEq4x75MZy2d0Otbs-k9g_GKHcM8d3f4+=GVy7A@mail.gmail.com>
- <CAPWNY8W4oXesE53MMDNZC092xN8nK9iyKV-pcNpvMxcH1y4LuQ@mail.gmail.com>
- <878slreo9y.fsf@ungleich.ch>
-Message-ID: <87e42167b02ded0d465916fea8e004b4@rfraile.eu>
-X-Sender: rfraile@rfraile.eu
-User-Agent: DD Webmail
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.5.11
- (mail-node.dondominio.com [0.0.0.0]); Wed, 29 Jan 2020 14:46:33 +0100 (CET)
+In-Reply-To: <20200129124001.ak2fo6nr2bqp2ywk@iyo>
+X-AntiAbuse: This header was added to track abuse,
+ please include it with any abuse report
+X-AntiAbuse: Primary Hostname - conquer.yellowcord.com
+X-AntiAbuse: Original Domain - lists.zx2c4.com
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - solidadmin.com
+X-Get-Message-Sender-Via: conquer.yellowcord.com: authenticated_id:
+ jdoss@solidadmin.com
+X-Authenticated-Sender: conquer.yellowcord.com: jdoss@solidadmin.com
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -77,39 +155,81 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset="utf-8"; Format="flowed"
+Content-Type: multipart/mixed; boundary="===============8698285606560649452=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-VGhhbmtzIGZvciB0aGUgZmVlZGJhY2suCgpBcyBJJ2xsIHVzZSBpdCB3aXRoIHRoaXMgcGF0Y2gg
-YW5kIG1heWJlIGl0IGNhbiBzb2x2ZSB0aGUgaXNzdWUgdG8gCmFueW9uZSBpbiB0aGUgZnV0dXJl
-LCBJIHNoYXJlIGl0IG9uIEdpdGh1YjoKCmh0dHBzOi8vZ2l0aHViLmNvbS9yZnJhaWwzL21pc2Mv
-dHJlZS9tYXN0ZXIvd2ctcXVpY2sKCgpSZWdhcmRzLAoKClAuRDogQ29uZ3JhdHMgYWJvdXQgdGhl
-IHVwc3RyZWFtIHN5bmMhCgoKCkVsIDIwMjAtMDEtMjggMTM6NTIsIE5pY28gU2Nob3R0ZWxpdXMg
-ZXNjcmliacOzOgoKPiBJIHNlY29uZCBNYW50YXMgaW4gdGhpcyByZWdhcmQgLSBkb24ndCBibG9h
-dCB3Zy1xdWljaywgYnV0IGEgRE5TCj4gc2VhcmNoIHBhdGggaXMgcHJldHR5IHN0YW5kYXJkIHRv
-IGJlIHN1Ym1pdHRlZCBieSAiYSBuZXR3b3JrIi4KPiAKPiBXZSBhcmUgbm90IHRhbGtpbmcgZGhj
-cCBib290IG9wdGlvbnMsIGV2ZW4gdGhvdWdoIE5UUCBzZXJ2ZXJzIHdvdWxkCj4gcHJvYmFibHkg
-YWxzbyBtYWtlIHNlbnNlLCBpZiB5b3Ugc2VlIHdpcmVndWFyZCBhcyBwcm92aWRpbmcgYSBuZXR3
-b3JrLgo+IAo+IEJlc3QsCj4gCj4gTmljbwo+IAo+IE1hbnRhcyBNaWt1bMSXbmFzIDxncmF3aXR5
-QGdtYWlsLmNvbT4gd3JpdGVzOgo+IAo+IFRoYXQgbWlnaHQgYmUgdHJ1ZSwgYnV0IElNSE8gdGhl
-IGxpc3Qgb2Ygc2VhcmNoIGRvbWFpbnMgZG9lc24ndCBmYWxsCj4gdW5kZXIgInNwZWNpYWxpemVk
-IG9wdGlvbnMiIC0gaXQgaXMgZXZlbiBkZXBsb3llZCB2aWEgREhDUCBhbmQgc2ltaWxhcgo+IG1l
-Y2hhbmlzbXMgYWxtb3N0IGFzIGNvbW1vbmx5IGFzIHRoZSBsaXN0IG9mIEROUyByZXNvbHZlcnMg
-dGhlbXNlbHZlcywKPiBzbyBpZiBhIFZQTiBjbGllbnQgc3VwcG9ydHMgdGhlIGxhdHRlciB0aGVu
-IGl0IG1ha2VzIHNlbnNlIHRvIHN1cHBvcnQKPiBib3RoLgo+IAo+IE9uIFR1ZSwgSmFuIDI4LCAy
-MDIwIGF0IDEyOjM3IFBNIEphc29uIEEuIERvbmVuZmVsZCA8SmFzb25AengyYzQuY29tPiAKPiB3
-cm90ZToKPiBJJ20gbm90IHNvIHN1cmUgdGhhdCB3ZSB3YW50IHRvIGZpbGwgd2ctcXVpY2soOCkg
-dXAgd2l0aCBldmVyeSBkbnMKPiBub2IuLi4gSWYgeW91IGhhdmUgc3BlY2lhbGl6ZWQgbmV0d29y
-a2luZyByZXF1aXJlbWVudHMsIHdnLXF1aWNrKDgpIGlzCj4gcHJvYmFibHkgbm90IGZvciB5b3Ug
-YW55d2F5Lgo+IF9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-Cj4gV2lyZUd1YXJkIG1haWxpbmcgbGlzdAo+IFdpcmVHdWFyZEBsaXN0cy56eDJjNC5jb20KPiBo
-dHRwczovL2xpc3RzLnp4MmM0LmNvbS9tYWlsbWFuL2xpc3RpbmZvL3dpcmVndWFyZAoKLS0KTW9k
-ZXJuLCBhZmZvcmRhYmxlLCBTd2lzcyBWaXJ0dWFsIE1hY2hpbmVzLiBWaXNpdCB3d3cuZGF0YWNl
-bnRlcmxpZ2h0LmNoCl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fCldpcmVHdWFyZCBtYWlsaW5nIGxpc3QKV2lyZUd1YXJkQGxpc3RzLnp4MmM0LmNvbQpodHRw
-czovL2xpc3RzLnp4MmM0LmNvbS9tYWlsbWFuL2xpc3RpbmZvL3dpcmVndWFyZApfX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXwpXaXJlR3VhcmQgbWFpbGluZyBs
-aXN0CldpcmVHdWFyZEBsaXN0cy56eDJjNC5jb20KaHR0cHM6Ly9saXN0cy56eDJjNC5jb20vbWFp
-bG1hbi9saXN0aW5mby93aXJlZ3VhcmQK
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--===============8698285606560649452==
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature";
+ boundary="lqSsB87YrHnstbLJZehhwOFY5AVY0rjjT"
+
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--lqSsB87YrHnstbLJZehhwOFY5AVY0rjjT
+Content-Type: multipart/mixed; boundary="A2lmrLSDgOItW4mBfiSftCsUdcpgu8ZYq";
+ protected-headers="v1"
+From: Joe Doss <joe@solidadmin.com>
+To: wireguard@lists.zx2c4.com
+Message-ID: <23385beb-d8f4-efbb-dadf-1a731c2d4a7b@solidadmin.com>
+Subject: Re: wireguard ci hooked up to quite a few kernel trees
+References: <CAHmME9rProfVf4VGHGX9no3KTa08nL_oYkK8Nv+eknk4ewVMAw@mail.gmail.com>
+ <20200129124001.ak2fo6nr2bqp2ywk@iyo>
+In-Reply-To: <20200129124001.ak2fo6nr2bqp2ywk@iyo>
+
+--A2lmrLSDgOItW4mBfiSftCsUdcpgu8ZYq
+Content-Type: text/plain; charset=windows-1252
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+
+On 1/29/20 6:40 AM, dvn wrote:
+> Impressed by how comprehensive this is already. Would you be up for
+> sharing some of the details of how this system works. Looks like it's
+> largely custom. Obviously based on QEMU/KVM, as you say - are you
+> emulating most of the architectures outside of x86_64?
+
+Pay no attention to the Bash Wizard behind the CI curtain... :)
+
+--=20
+Joe Doss
+joe@solidadmin.com
+
+
+--A2lmrLSDgOItW4mBfiSftCsUdcpgu8ZYq--
+
+--lqSsB87YrHnstbLJZehhwOFY5AVY0rjjT
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEESp42FnGgzRdsBX4Fj8DDXH0IRlYFAl4xpXYACgkQj8DDXH0I
+RlZI4g/9Fua+SW9/Z3MyAZKfGJrHp4bLxiCLwwuK2OxFQtv5MZqALU0hPXxbdvS7
+e7U7fZqdJ6AoXR065NcxRFrwyauEt57g2qx6fgzEq5xv1Lo85Ej9Xvt4AiYrRXi6
+Uvs0p+zKKOL+XXt3vuKd4rTrizQlGW0Ol62ETzGFBcBOOiyZb921MQe2IRwOXpdT
+zYFjZTaYnnqyok1vJG02LOqOeLYtGc5MAunSV1Q+PCsHAkE7K2aMCTEHDnoJbmgF
+DMTcVZlIAR1iKBldZz6s3E7I6oVcndjcEyIL5OHMX7T2kvGgtzCXPYT58xSZkgel
+o/qxlADb9FTNaJuQAi7fWFUMccwv9VMAosbR+r/rQHb9YpHRJxhqgBung+OmY99Q
+aKJA3LAfKDFeoBArsBXtTHMlP5hW/eOFX3uC9raF1JtKB+MDEB+FMDoH5Jtdf8KR
+dXvF2vESY4RpcI771Aj/ZGy0TxkV02zDcQgWi3pPeknlRGRslvZ/w573RigzNk37
+4jBl2Rn0Ojm1d6Hz7d4Ca8J83xbT3bl+KxbbzlBl3hHd4smW/hZ86PzQGWyTb3pk
+iVgUeOnjW6EpvoeDni4h2Wwu5DLTjKzoOjXa2PJ1URs2DLzvsy8ZXR+608x+9JtJ
+MHfQpk/NTEDSWrxkU+X0/J6v2RZQ+z6420duWBxYzfgz5GqnyLc=
+=MwAw
+-----END PGP SIGNATURE-----
+
+--lqSsB87YrHnstbLJZehhwOFY5AVY0rjjT--
+
+--===============8698285606560649452==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
+_______________________________________________
+WireGuard mailing list
+WireGuard@lists.zx2c4.com
+https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--===============8698285606560649452==--
