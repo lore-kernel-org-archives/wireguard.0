@@ -2,148 +2,154 @@ Return-Path: <SRS0=F0uL=3T=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+X-Spam-Status: No, score=-1.8 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72FFBC2D0DB
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 30 Jan 2020 16:53:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B779C2D0DB
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 30 Jan 2020 17:32:18 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id C390C20661
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 30 Jan 2020 16:53:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id B18AC20674
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 30 Jan 2020 17:32:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=solidadmin.com header.i=@solidadmin.com header.b="GUkss6R+"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org C390C20661
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=solidadmin.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TTO9ga0v"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org B18AC20674
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id afd82c98;
-	Thu, 30 Jan 2020 16:53:36 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 04997e2f;
+	Thu, 30 Jan 2020 17:31:50 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 01c70e0d
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6caa69a1
  for <wireguard@lists.zx2c4.com>;
- Thu, 30 Jan 2020 16:53:34 +0000 (UTC)
-Received: from conquer.yellowcord.com (conquer.yellowcord.com [45.55.224.114])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 660e0ed1
+ Thu, 30 Jan 2020 17:31:47 +0000 (UTC)
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com
+ [IPv6:2a00:1450:4864:20::42b])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fe2ba462
  for <wireguard@lists.zx2c4.com>;
- Thu, 30 Jan 2020 16:53:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=solidadmin.com; s=default; h=Content-Transfer-Encoding:Content-Type:
- MIME-Version:Date:Message-ID:Cc:To:Subject:From:Sender:Reply-To:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
- List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=h9xajAIibWNqyxH5vWn9mju5ZBLzvDapGFHcZ+dIGio=; b=GUkss6R+AwlatCVXi3mvOxA1/E
- 8I7XIK23RRGzhPMRGNsNqZLVqzsuTIAHogHAemuGv1Cqa3QCTmatb0kwZB+AbZikZyGMm0x+q1rBA
- 8WRs/VOjkyBxtudLFWmqpVZBF0LgkPPLOlPqHXfc/8Ief+HJk1DuJPIMe8Fwuez21INQDWySgMr+u
- NsbacZ+ps71DCfn2gm23tT8AQv9IX0pZKAVORhRBPRPGLWRxFSBKgiUMlbr4Vg+Kb2WQTqdvrx7OL
- eyYPhiAfPmp8N0MShqeqnfCrr/1YnrSQgYkuEW3yv1pdoUL0AQ7MhNBZTV66n/ljExrwFpJT5SQ8r
- XqNDW07A==;
-Received: from c-67-173-122-188.hsd1.il.comcast.net ([67.173.122.188]:15041
- helo=[192.168.1.179]) by conquer.yellowcord.com with esmtpsa
- (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128) (Exim 4.92)
- (envelope-from <joe@solidadmin.com>)
- id 1ixD4a-00048k-62; Thu, 30 Jan 2020 10:53:44 -0600
-From: Joe Doss <joe@solidadmin.com>
-Subject: wireguard-tools EPEL Packages
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Autocrypt: addr=joe@solidadmin.com; keydata=
- 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
-Organization: SolidAdmin
-Message-ID: <14d713c9-c87c-df88-872a-48ebdfa9a740@solidadmin.com>
-Date: Thu, 30 Jan 2020 10:53:42 -0600
+ Thu, 30 Jan 2020 17:31:47 +0000 (UTC)
+Received: by mail-wr1-x42b.google.com with SMTP id j104so5110842wrj.7
+ for <wireguard@lists.zx2c4.com>; Thu, 30 Jan 2020 09:31:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=subject:to:references:from:autocrypt:message-id:date:user-agent
+ :mime-version:in-reply-to:content-transfer-encoding:content-language;
+ bh=oVDaJmWlEt70yoo+FstZGQRfVf3lpzoFJE9+WItLgJI=;
+ b=TTO9ga0vdA/+b3GMxPqSIqLEwIfr8CX5x8yOG9fTbh/0zbCuRgcW8o9ik5XiG+RJck
+ Qc1e36nxdVL8LsQZ2hNIIfBHV7uomHpWPrqWmkzusdMqUG2UyM8S+8UGhHxR87bOx1SS
+ lrmiP33pRmpcWlX81+YimGAeECKDHeVpJueRLMgEBfaOX0WQ7qh6QAv20hik1DnL09kC
+ LWh0q3MKK0U0pQQEpMihkWY3F4QI1tUxfuQNwsaJm3kRakGpdpDGy9Bh1XvjHWXNpFE2
+ FQ2j6qMAzBDHkmy+6SK+skSyKPalBUGtelvVlmDNq7I7ZDZ03kcWCC1vrXnR2UU9E40V
+ UE4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:subject:to:references:from:autocrypt:message-id
+ :date:user-agent:mime-version:in-reply-to:content-transfer-encoding
+ :content-language;
+ bh=oVDaJmWlEt70yoo+FstZGQRfVf3lpzoFJE9+WItLgJI=;
+ b=GQqqbNh38Pot4k4v3x4ORxhBVKFoK3fPQt9e/M5W/186KsoJulUuaZo8nNu9j+oNPk
+ YkzF0SiuuUry+Q4LImSEXmubIqazQbdGkS3LwIo+pEBxFAHY/NLwdl+B7meuJRx6I3/g
+ 4SmpT7Nz7LjyoXPmqvqdvtWzBsNTLziKWoTRu4CDfEtqLmhUe2mARF1gkEF48qsKubp4
+ cCfSsw0A2a8s4QtJuEjIMc2OdfnZwO1ouvYU5Ad2nKZf9O2uXIx8KQATaEvnD1fGwqzZ
+ 1/hLwL+CQUd5c18d46Nc1+mIG6fou13QcznHZxpMYRjLYKZaZx/l6A3OnipTr1yWVGLo
+ orkQ==
+X-Gm-Message-State: APjAAAV1L6E/+9dq+9MewOouWwpCIE5YYF35grim0q0ha62Z0/+yyvE1
+ Aqn2MZv2EbUIXa0CNGgVgmQD4GVM
+X-Google-Smtp-Source: APXvYqwUcfzrgTWpabFDGpGHEeFhTAy1q6mrq0RA7ZhL/COrX4Yylx1REOKU+AfB3y5RIFR4G+OFQw==
+X-Received: by 2002:a5d:62d1:: with SMTP id o17mr6942957wrv.9.1580405514973;
+ Thu, 30 Jan 2020 09:31:54 -0800 (PST)
+Received: from [192.168.1.100]
+ (host154-183-dynamic.252-95-r.retail.telecomitalia.it. [95.252.183.154])
+ by smtp.googlemail.com with ESMTPSA id s16sm8419973wrn.78.2020.01.30.09.31.54
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 30 Jan 2020 09:31:54 -0800 (PST)
+Subject: Re: Wireguard is now in Linus' tree
+To: wireguard@lists.zx2c4.com
+References: <20200129002159.GA9104@wolff.to>
+From: Germano Massullo <germano.massullo@gmail.com>
+Autocrypt: addr=germano.massullo@gmail.com; prefer-encrypt=mutual; keydata=
+ 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
+ YljxTJc=
+Message-ID: <b8cf1c3b-e9e6-2141-4b63-3cf11f0adaec@gmail.com>
+Date: Thu, 30 Jan 2020 18:31:53 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.4.1
 MIME-Version: 1.0
+In-Reply-To: <20200129002159.GA9104@wolff.to>
 Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse,
- please include it with any abuse report
-X-AntiAbuse: Primary Hostname - conquer.yellowcord.com
-X-AntiAbuse: Original Domain - lists.zx2c4.com
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - solidadmin.com
-X-Get-Message-Sender-Via: conquer.yellowcord.com: authenticated_id:
- jdoss@solidadmin.com
-X-Authenticated-Sender: conquer.yellowcord.com: jdoss@solidadmin.com
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-Cc: john Florian <jflorian@doubledog.org>,
- Michael Watters <wattersm@watters.ws>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -160,25 +166,7 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hey all,
-
-I have EPEL 7 and EPEL 8 packages built for wireguard-tools that need
-some testing and karma if you have a FAS account. Jason and I are hoping
-to get these into stable somewhat soon.
-
-https://bodhi.fedoraproject.org/updates/FEDORA-EPEL-2020-ae3c489b3a
-https://bodhi.fedoraproject.org/updates/FEDORA-EPEL-2020-07d59431de
-
-Thanks!
-Joe
-
-
-
--- 
-Joe Doss
-joe@solidadmin.com
-
-
+Thank you guys for your work, this is an amazing news!
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
