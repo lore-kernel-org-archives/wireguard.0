@@ -7,67 +7,66 @@ X-Spam-Status: No, score=-0.3 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
 	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81ED4C3F68F
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 30 Jan 2020 02:08:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 52C88C33C9E
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 30 Jan 2020 07:03:45 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 27D3F206F0
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 30 Jan 2020 02:08:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id AD99C206F0
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 30 Jan 2020 07:03:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QBVe9WtP"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 27D3F206F0
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kepLOwDh"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org AD99C206F0
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 35cc535f;
-	Thu, 30 Jan 2020 01:54:08 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 941ab761;
+	Thu, 30 Jan 2020 07:03:36 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 751683be
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c9fffc30
  for <wireguard@lists.zx2c4.com>;
- Wed, 29 Jan 2020 09:17:01 +0000 (UTC)
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com
- [IPv6:2a00:1450:4864:20::329])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 949e433b
+ Thu, 30 Jan 2020 07:03:33 +0000 (UTC)
+Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com
+ [IPv6:2607:f8b0:4864:20::231])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 93b6ea01
  for <wireguard@lists.zx2c4.com>;
- Wed, 29 Jan 2020 09:17:01 +0000 (UTC)
-Received: by mail-wm1-x329.google.com with SMTP id t23so5379764wmi.1
- for <wireguard@lists.zx2c4.com>; Wed, 29 Jan 2020 01:17:01 -0800 (PST)
+ Thu, 30 Jan 2020 07:03:33 +0000 (UTC)
+Received: by mail-oi1-x231.google.com with SMTP id q81so2565650oig.0
+ for <wireguard@lists.zx2c4.com>; Wed, 29 Jan 2020 23:03:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
- bh=wOT/OTBL2uzpC6AeOeNF9w/o0iSJ3EgiGKVN0jYy/qA=;
- b=QBVe9WtPumTeGDCAVcgrf01V5fHViSJS5rlibMZdEc37tSSl7Kc+V1Zsjnb8W1T4RX
- zC16/+fESTjxPXsa48ZIB+FCTlMj2G1qlchD0TiNvZ2REzgzMvcJJjtNr6fl340YlNJa
- tXPwtrCq46xntwhqmeF2gpMtvXGJGpe4FVdwx3Uk9h3Awk6fxF6kv7M6WgA/WpfmuDHY
- XPYibF2har18LgcKtidVjrED4bMVPeD1SjYxTbyC1jC592JKQgeIgPP4ErqmZgGuDZrF
- 0+01eA18ehIFWszbg05gnSgyyiqlMJsb/YCjUUrJYeNl+BOfk9RuJhyrqec7PdGRuYRL
- x8rQ==
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=8sTiGpkn09wnr2MMOiRLTl/U3z/dlBVIs0p/JX2sf70=;
+ b=kepLOwDhcLVfs8tKl9wBFsyBAE+3MkrWBft5+boXLeVBRLORfhG8lg3y4+u7fZj4dK
+ ylBtdBOOCNuEKMQbJwYnf6IZgtlWS0i1j/+LH68MwUaT9XZ/5p+jtY69RF+ISS7Kl5ZH
+ 1NRIZEctKqIV1EbDPFAXvjRQE5Is/NT+lUt7lc3jqoVCWHC+sgvvmVj0L2uYw5YWpyO0
+ TrAugHNErquoP6iumeA65YKgSqX7X4PZ0NH+qmxR1U2g3+NJBG5ABrgEaGiUC7lq9ufi
+ B0OI7tDXg6GCWItmWIYkT5QEzFrFlrNssls91HKQEzso23TWs5fikzfFu3pi6FzIceYE
+ uJug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to;
- bh=wOT/OTBL2uzpC6AeOeNF9w/o0iSJ3EgiGKVN0jYy/qA=;
- b=NFw91zYd9t53khpOV5Hr1/7w7QELnc1soOG6JWwp41SC5zTezQdCUjUkvCriDU0x59
- l/EcMHqgT8c9r1uYGAb3yQb7I+17P9wiQkVukcEUVB/wN60+FuGJhP4p8qezdk4VxVTZ
- KUQxyWXn4VWVRykuKhPrWH2xp7jkFOJeOvavQsd6Y+GbnMYsTgR/OAIwQdLlWlt8CRl9
- 7fbkNK/kvkUhEqvCZjONBjmQGVatoG0MAAHjNg3r3JfR21B6iNXSGXO//eZ0nt3BwvI6
- wdxtcGzxumwNJWlEbhPYlvL6Fam2hd6YVHgWgQrsSBpmFi39+r0FZe0CfT7rG02mYM8x
- Y5mQ==
-X-Gm-Message-State: APjAAAWsko/i/O/j0OmPtLt7i3ctgWuv7uXK3z+EwbAA/Pn8VntZj8f8
- OOShAeTyNoX05uzO+lYe4cedwMYRpmbHgHnH5nF96Q==
-X-Google-Smtp-Source: APXvYqzLLeRkJoUw/dXn2s0DHV633KQHaXlQWMfKRIsuNbAiFWKMtAqceYo2RpjIJXkRM6ub71yqlf7eERMueFfQjj0=
-X-Received: by 2002:a1c:66d6:: with SMTP id a205mr2901425wmc.10.1580289420695; 
- Wed, 29 Jan 2020 01:17:00 -0800 (PST)
+ :message-id:subject:to:cc;
+ bh=8sTiGpkn09wnr2MMOiRLTl/U3z/dlBVIs0p/JX2sf70=;
+ b=aXG8oU/pO0KlkzFOMjYhO2TeXQCe8w91ksSRwvKQVufehgxT2Ls0L5ybgHM+6andb5
+ +aHyoyNaxhCaUTuFNrmVjThCLnoD3MvYud2YAlDX2+jc/Q4STCwbwaOvE2NDgk99fLZj
+ NDn+3TiZRNv3dRzqGr93nPh08EwUDcRzPw9eEL5U1QwWn6jBEwxYdEEqqjsSrYmS509/
+ r+nJonouW36o3rAPLYp9naoL6bp9aGZDMZ4RykNu3ti83rLjjxEHaTQ9GQGv3FnxjOGa
+ LUlC/Vrq90VwncWqvvMZCt8Sl7jIBNELNf3WRVdVLoe2G8Res/b4Ve5O46rsfVTUGC45
+ 1KPA==
+X-Gm-Message-State: APjAAAXcEe3dOMR9bfIe0csUv7vw1U6oNgJ3Racm/tEhHol85Tm/Q+os
+ tTbqqA9dxmpzmxcNRf32Ojs9rlnqpmWSNk6lXZ8FAHUoCRB8CA==
+X-Google-Smtp-Source: APXvYqwfBmuG8VX1BaNQTzAzkN3H+hyvFPWHfRhBuvg5SnVShVV/wHq7pUEP0N1EVSv/5dUHALs8KH5mn+yQEUsrtMA=
+X-Received: by 2002:a54:408f:: with SMTP id i15mr1903784oii.64.1580367819745; 
+ Wed, 29 Jan 2020 23:03:39 -0800 (PST)
 MIME-Version: 1.0
-References: <20200129002159.GA9104@wolff.to>
- <CAHmME9po4e8VccZwWmHotBqR=RBbKtwu8uGV7wm2WXz9Rq3f=Q@mail.gmail.com>
-In-Reply-To: <CAHmME9po4e8VccZwWmHotBqR=RBbKtwu8uGV7wm2WXz9Rq3f=Q@mail.gmail.com>
-From: C Habs <bumpthelala@gmail.com>
-Date: Wed, 29 Jan 2020 09:16:49 +0000
-Message-ID: <CANe8y8amu3m01vHG_2fj2th_DNB8HeE8GNOiRemupELtNzcyVA@mail.gmail.com>
-Subject: Re: Wireguard is now in Linus' tree
-To: wireguard@lists.zx2c4.com
-X-Mailman-Approved-At: Thu, 30 Jan 2020 02:54:05 +0100
+References: <6cd7ccf2c193ee3bd1db3d5870f6982084d0d0d6.camel@dreamofjapan.de>
+In-Reply-To: <6cd7ccf2c193ee3bd1db3d5870f6982084d0d0d6.camel@dreamofjapan.de>
+From: Martin <martinmoen@gmail.com>
+Date: Thu, 30 Jan 2020 07:03:03 +0000
+Message-ID: <CAKiCHuOpy7m9yUwUiE1QBPEDtoM6O_R5grgD9JgLVd-qP3fRHQ@mail.gmail.com>
+Subject: Re: ArchLinux wireguard install
+To: planung@dreamofjapan.de
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -79,83 +78,106 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============0663068620863273355=="
+Content-Type: multipart/mixed; boundary="===============6993357074424820425=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============0663068620863273355==
-Content-Type: multipart/alternative; boundary="000000000000901c59059d43cdbb"
+--===============6993357074424820425==
+Content-Type: multipart/alternative; boundary="00000000000082b035059d560eb8"
 
---000000000000901c59059d43cdbb
+--00000000000082b035059d560eb8
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, 29 Jan 2020 at 08:45, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+Take a look at the mullvad program for arch in the AUR.
+But I'd also ask in the Networking section on the archlinux forums
+regarding the upgrade path for the module and kernel.
+https://bbs.archlinux.org/viewforum.php?id=3D8
 
-> Hi Bruno,
+On Thu, Jan 30, 2020 at 2:09 AM Frank Tornack <planung@dreamofjapan.de>
+wrote:
+
+> hello all,
 >
-> Thanks for posting this! Indeed last night I stayed awake as long as I
-> could, refreshing Linus' git repo on my phone until I was dreaming. I
-> _think_ I've woken up now, but this might still be a dream...
+> I apologize in advance for the stupid question, but I am very unsure.
+> I received a voucher for a VPN service at a trade fair and would like
+> to test it. The service Mullvad VPN uses the technology WireGuard. And
+> I use ArchLinux.
 >
-> A big thanks to everybody who's helped the project over the years,
-> written code, assisted in the IRC channel, asked good questions on the
-> list and IRC channel, and so forth.
+> My question was created by the ArchLinux Wiki. There it already refers
+> to the kernel 5.6, which should support this function without a module.
+> Now my question is, is it better to wait for this kernel or just
+> install the module? Would it be a problem if I forgot to delete the
+> module again? I am using the Network Manager, what do I need to be
+> aware of?
 >
-> I look forward to start refining some of rougher areas of WireGuard now.
+> Many thanks in advance and thank you for developing this tool.
 >
-> Regards,
-> Jason
+>
+> --
+> Mit freundlichen Gr=C3=BC=C3=9Fen
+> Frank Tornack
+>
+>
+> -----------------------------
+>   Why don't you pair `em up in threes? -Yogi Berra
+>
 > _______________________________________________
 > WireGuard mailing list
 > WireGuard@lists.zx2c4.com
 > https://lists.zx2c4.com/mailman/listinfo/wireguard
+>
 
-
-Thank you to all, from me in userland. It never ceases to amaze me the
-effort and skill from generous people that goes in to these projects made
-available for all to use.
-
-Habs
-
---000000000000901c59059d43cdbb
+--00000000000082b035059d560eb8
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">On Wed, 29 Jan 2020 at 08:45, Jason A=
-. Donenfeld &lt;<a href=3D"mailto:Jason@zx2c4.com">Jason@zx2c4.com</a>&gt; =
-wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0=
-px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Hi Bruno,=
+<div dir=3D"ltr"><div>Take a look at the mullvad program for arch in the AU=
+R.</div><div>But I&#39;d also ask in the Networking section on the archlinu=
+x forums regarding the upgrade path for the module and kernel.<br></div><di=
+v><a href=3D"https://bbs.archlinux.org/viewforum.php?id=3D8">https://bbs.ar=
+chlinux.org/viewforum.php?id=3D8</a></div></div><br><div class=3D"gmail_quo=
+te"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Jan 30, 2020 at 2:09 AM F=
+rank Tornack &lt;<a href=3D"mailto:planung@dreamofjapan.de">planung@dreamof=
+japan.de</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D=
+"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-le=
+ft:1ex">hello all,<br>
+<br>
+I apologize in advance for the stupid question, but I am very unsure.<br>
+I received a voucher for a VPN service at a trade fair and would like<br>
+to test it. The service Mullvad VPN uses the technology WireGuard. And<br>
+I use ArchLinux.<br>
+<br>
+My question was created by the ArchLinux Wiki. There it already refers<br>
+to the kernel 5.6, which should support this function without a module.<br>
+Now my question is, is it better to wait for this kernel or just<br>
+install the module? Would it be a problem if I forgot to delete the<br>
+module again? I am using the Network Manager, what do I need to be<br>
+aware of?<br>
+<br>
+Many thanks in advance and thank you for developing this tool.<br>
 <br>
 <br>
-Thanks for posting this! Indeed last night I stayed awake as long as I<br>
-could, refreshing Linus&#39; git repo on my phone until I was dreaming. I<b=
-r>
-_think_ I&#39;ve woken up now, but this might still be a dream...<br>
+-- <br>
+Mit freundlichen Gr=C3=BC=C3=9Fen<br>
+Frank Tornack<br>
 <br>
-A big thanks to everybody who&#39;s helped the project over the years,<br>
-written code, assisted in the IRC channel, asked good questions on the<br>
-list and IRC channel, and so forth.<br>
 <br>
-I look forward to start refining some of rougher areas of WireGuard now.<br=
->
+-----------------------------<br>
+=C2=A0 Why don&#39;t you pair `em up in threes? -Yogi Berra<br>
 <br>
-Regards,<br>
-Jason<br>
 _______________________________________________<br>
 WireGuard mailing list<br>
 <a href=3D"mailto:WireGuard@lists.zx2c4.com" target=3D"_blank">WireGuard@li=
 sts.zx2c4.com</a><br>
 <a href=3D"https://lists.zx2c4.com/mailman/listinfo/wireguard" rel=3D"noref=
 errer" target=3D"_blank">https://lists.zx2c4.com/mailman/listinfo/wireguard=
-</a></blockquote><div><br></div><div>Thank you to all, from me in userland.=
- It never ceases to amaze me the effort and skill from generous people that=
- goes in to these projects made available for all to use.</div><div><br></d=
-iv><div>Habs<br></div><div><br></div><div>=C2=A0</div></div></div>
+</a><br>
+</blockquote></div>
 
---000000000000901c59059d43cdbb--
+--00000000000082b035059d560eb8--
 
---===============0663068620863273355==
+--===============6993357074424820425==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -166,4 +188,4 @@ WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---===============0663068620863273355==--
+--===============6993357074424820425==--
