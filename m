@@ -6,59 +6,72 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92C0DC33C9E
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 30 Jan 2020 09:02:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A58C9C35240
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 30 Jan 2020 09:02:32 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id A98862082E
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 30 Jan 2020 09:02:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id A93942082E
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 30 Jan 2020 09:02:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=deutsche-cyberberatung.de header.i=@deutsche-cyberberatung.de header.b="kxIZTxz9"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A98862082E
-Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=deutsche-cyberberatung.de
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=dreamofjapan.de header.i=@dreamofjapan.de header.b="XKSCGnm0";
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=dreamofjapan.de header.i=@dreamofjapan.de header.b="GFsFNEaq"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A93942082E
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=dreamofjapan.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 340611f9;
-	Thu, 30 Jan 2020 09:02:05 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2a0a036f;
+	Thu, 30 Jan 2020 09:02:06 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b97c6ea2
- for <WireGuard@lists.zx2c4.com>;
- Thu, 30 Jan 2020 02:23:23 +0000 (UTC)
-Received: from mail.deutsche-cyberberatung.de (mail.deutsche-cyberberatung.de
- [138.201.186.254])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c9743044
- for <WireGuard@lists.zx2c4.com>;
- Thu, 30 Jan 2020 02:23:22 +0000 (UTC)
-Received: from authenticated-user (mail.deutsche-cyberberatung.de
- [138.201.186.254])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
- (No client certificate requested)
- by mail.deutsche-cyberberatung.de (Postfix) with ESMTPSA id BE8F43EB21;
- Thu, 30 Jan 2020 03:23:27 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
- d=deutsche-cyberberatung.de; s=mail; t=1580351007;
- bh=yZKlFnaDclN7QTPxSjkurpab67wnRo7CMJHGNi3HRE4=;
- h=From:Subject:Date:References:Cc:In-Reply-To:To:From;
- b=kxIZTxz91AhfZ/ELuv3kT/WSonRWx7duQzesuIJctATmub9v3ox4UeJkzmZ7HVMqt
- owjEL93MBs7UIKAuRziv1pUdt4iw/tBd0M5AFJyrjOXYKt+j8Z30lidRbR4q3mVqV/
- jR//wNUtK0a9/Q8yQhUHh2Eh1lgA2svyMdDqV73Ux4Ayz1zkns4BCB38kMpa/U1pYE
- A1j5LrD9ZxeOxvBs3pC2ADxTOQryutkz6b2zoRbeL8g1xetIekqgze6OX0TPEn1ewo
- i3vzhzTn169Qgt7BKXTxcbny0eUl2E2Kgbm/LkMsdZmArdEjG95M6dPLt/3ljgI5iA
- TxP79Htt3nNmQ==
-From: "Dr. Benjamin Flesch" <bf@deutsche-cyberberatung.de>
-Mime-Version: 1.0
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f36b2997
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 30 Jan 2020 07:40:10 +0000 (UTC)
+Received: from dreamofjapan.de (dreamofjapan.de [45.85.216.235])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id aaead446
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 30 Jan 2020 07:40:10 +0000 (UTC)
+Received: from localhost (localhost [127.0.0.1])
+ by dreamofjapan.de (Postfix) with ESMTP id 0F5311F089;
+ Thu, 30 Jan 2020 08:40:17 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=dreamofjapan.de;
+ s=mail; t=1580370017;
+ bh=0RI1Ae8lg3sWOmh0ADXQ7GXITwws27JPFTYcHbwREaE=;
+ h=Subject:From:Reply-To:To:Cc:In-Reply-To:References:Date:From;
+ b=XKSCGnm0dHdPiA9QrPscOrEUTxR0nyPmiG4Yg23oW47cQQ2lIElYus0FbKr0+MiIh
+ 0PY5PeMAFMTmr77yYS7KA5KkqmQa6Y+hLjtwmkENvquF0zeBuz+YiVqWJazXT479Ea
+ /TcWHh0ZVMm6TCtoyTJ8V5fgAtAY8u4+YHzttzS8=
+X-Virus-Scanned: Debian amavisd-new at dreamofjapan.de
+Received: from dreamofjapan.de ([127.0.0.1])
+ by localhost (mail.dreamofjapan.de [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 49k8-bDjDhZ9; Thu, 30 Jan 2020 08:40:13 +0100 (CET)
+Received: from hackbook-ng (unknown [80.64.187.41])
+ (Authenticated sender: planung@dreamofjapan.de)
+ by dreamofjapan.de (Postfix) with ESMTPSA id 966961EF24;
+ Thu, 30 Jan 2020 08:40:13 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=dreamofjapan.de;
+ s=mail; t=1580370013;
+ bh=0RI1Ae8lg3sWOmh0ADXQ7GXITwws27JPFTYcHbwREaE=;
+ h=Subject:From:Reply-To:To:Cc:In-Reply-To:References:Date:From;
+ b=GFsFNEaqNjm9TPKrcOmxeL6CVPD3NjvmygMYBFW3MUGhub0WtlOYiIiwxPHSmQUbP
+ ythR/j0F/1iQvYkfh84h+xlK44/fED9atMgEUKTi24qazrJQxHoxo/cRzibapQcvB0
+ +Lwg28jsbyjF7mrt/jiHttsWExBy/JZqGHkZu5G0=
+Message-ID: <c78df5b34a8e002c031e8dc6262bf9e3e35ea1a4.camel@dreamofjapan.de>
 Subject: Re: ArchLinux wireguard install
-Date: Thu, 30 Jan 2020 03:23:26 +0100
-Message-Id: <FC906C5B-26A4-4FED-BB79-49E03704298E@deutsche-cyberberatung.de>
+From: Frank Tornack <planung@dreamofjapan.de>
+To: Martin <martinmoen@gmail.com>
+In-Reply-To: <CAKiCHuOpy7m9yUwUiE1QBPEDtoM6O_R5grgD9JgLVd-qP3fRHQ@mail.gmail.com>
 References: <6cd7ccf2c193ee3bd1db3d5870f6982084d0d0d6.camel@dreamofjapan.de>
-In-Reply-To: <6cd7ccf2c193ee3bd1db3d5870f6982084d0d0d6.camel@dreamofjapan.de>
-To: planung@dreamofjapan.de
+ <CAKiCHuOpy7m9yUwUiE1QBPEDtoM6O_R5grgD9JgLVd-qP3fRHQ@mail.gmail.com>
+Organization: Familie Tornack
+Date: Thu, 30 Jan 2020 08:40:13 +0100
+MIME-Version: 1.0
+User-Agent: Evolution 3.34.3 
 X-Mailman-Approved-At: Thu, 30 Jan 2020 10:02:03 +0100
-Cc: WireGuard@lists.zx2c4.com
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
+Reply-To: planung@dreamofjapan.de
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -72,33 +85,31 @@ Content-Transfer-Encoding: base64
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-SGkgRnJhbmssCgpJIGFtIGFsc28gcnVubmluZyBXaXJlR3VhcmQgb24gYXJjaC4gSSB0aGluayB0
-aGVyZSBhcmUgdHdvIHJlbGV2YW50IHBhY2thZ2VzIGluIEFVUiByaWdodCBub3csIG9uZSBvZiB0
-aGVtIGlzIHdpcmVndWFyZC1kYW1zLgoKSnVzdCBpbnN0YWxsIHRoZXNlIHBhY2thZ2VzIGFuZCBk
-b27igJl0IGJvdGhlciB3aXRoIE5ldHdvcmtNYW5hZ2VyIC0gdXNlIHRoZSB3Zy1xdWljayBjb21t
-YW5kIGxpbmUgdG9vbCB0byBzcGluIHVwIHRoZSB2cG4uIEkgaGF2ZSBjb25maWd1cmVkIGl0IHBl
-cnNpc3RlbnRseSBpbiAvZXRjL3dpcmVndWFyZC8gZm9sZGVyLgoKSSB0aGluayBhZnRlciB0aGUg
-ZnJlc2gga2VybmVsIHdlIGNhbiBqdXN0IGRlaW5zdGFsbCB0aGUgQVVSIHBhY2thZ2VzIGFuZCB0
-aGVyZSB3b27igJl0IGJlIGFueSBwcm9ibGVtLgoKQmVzdApCZW5qYW1pbiAKClNlbnQgZnJvbSBh
-IG1vYmlsZSBkZXZpY2UuCgo+IE9uIDMwLiBKYW4gMjAyMCwgYXQgMDM6MDMsIEZyYW5rIFRvcm5h
-Y2sgPHBsYW51bmdAZHJlYW1vZmphcGFuLmRlPiB3cm90ZToKPiAKPiDvu79oZWxsbyBhbGwsCj4g
-Cj4gSSBhcG9sb2dpemUgaW4gYWR2YW5jZSBmb3IgdGhlIHN0dXBpZCBxdWVzdGlvbiwgYnV0IEkg
-YW0gdmVyeSB1bnN1cmUuCj4gSSByZWNlaXZlZCBhIHZvdWNoZXIgZm9yIGEgVlBOIHNlcnZpY2Ug
-YXQgYSB0cmFkZSBmYWlyIGFuZCB3b3VsZCBsaWtlCj4gdG8gdGVzdCBpdC4gVGhlIHNlcnZpY2Ug
-TXVsbHZhZCBWUE4gdXNlcyB0aGUgdGVjaG5vbG9neSBXaXJlR3VhcmQuIEFuZAo+IEkgdXNlIEFy
-Y2hMaW51eC4KPiAKPiBNeSBxdWVzdGlvbiB3YXMgY3JlYXRlZCBieSB0aGUgQXJjaExpbnV4IFdp
-a2kuIFRoZXJlIGl0IGFscmVhZHkgcmVmZXJzCj4gdG8gdGhlIGtlcm5lbCA1LjYsIHdoaWNoIHNo
-b3VsZCBzdXBwb3J0IHRoaXMgZnVuY3Rpb24gd2l0aG91dCBhIG1vZHVsZS4KPiBOb3cgbXkgcXVl
-c3Rpb24gaXMsIGlzIGl0IGJldHRlciB0byB3YWl0IGZvciB0aGlzIGtlcm5lbCBvciBqdXN0Cj4g
-aW5zdGFsbCB0aGUgbW9kdWxlPyBXb3VsZCBpdCBiZSBhIHByb2JsZW0gaWYgSSBmb3Jnb3QgdG8g
-ZGVsZXRlIHRoZQo+IG1vZHVsZSBhZ2Fpbj8gSSBhbSB1c2luZyB0aGUgTmV0d29yayBNYW5hZ2Vy
-LCB3aGF0IGRvIEkgbmVlZCB0byBiZQo+IGF3YXJlIG9mPwo+IAo+IE1hbnkgdGhhbmtzIGluIGFk
-dmFuY2UgYW5kIHRoYW5rIHlvdSBmb3IgZGV2ZWxvcGluZyB0aGlzIHRvb2wuCj4gCj4gCj4gLS0g
-Cj4gTWl0IGZyZXVuZGxpY2hlbiBHcsO8w59lbgo+IEZyYW5rIFRvcm5hY2sKPiAKPiAKPiAtLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQo+ICBXaHkgZG9uJ3QgeW91IHBhaXIgYGVtIHVwIGlu
-IHRocmVlcz8gLVlvZ2kgQmVycmEKPiAKPiBfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fXwo+IFdpcmVHdWFyZCBtYWlsaW5nIGxpc3QKPiBXaXJlR3VhcmRAbGlz
-dHMuengyYzQuY29tCj4gaHR0cHM6Ly9saXN0cy56eDJjNC5jb20vbWFpbG1hbi9saXN0aW5mby93
-aXJlZ3VhcmQKCl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-CldpcmVHdWFyZCBtYWlsaW5nIGxpc3QKV2lyZUd1YXJkQGxpc3RzLnp4MmM0LmNvbQpodHRwczov
-L2xpc3RzLnp4MmM0LmNvbS9tYWlsbWFuL2xpc3RpbmZvL3dpcmVndWFyZAo=
+SSB3b3VsZCBub3QgbGlrZSB0byB1c2UgZXh0cmEgdmVuZG9yIHNvZnR3YXJlIGlmIHRoZXJlIGFy
+ZSBvdGhlciB3YXlzLgpVbmZvcnR1bmF0ZWx5IEkgY2Fubm90IGZpbmQgeW91ciBwb3N0IGluIHRo
+ZSBmb3J1bS4KLS0gCk1pdCBmcmV1bmRsaWNoZW4gR3LDvMOfZW4KRnJhbmsgVG9ybmFjawoKCi0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCiJTaGVsdGVyLCIgd2hhdCBhIG5pY2UgbmFtZSBm
+b3IgZm9yIGEgcGxhY2Ugd2hlcmUgeW91IHBvbGlzaCB5b3VyIGNhdC4KCkFtIERvbm5lcnN0YWcs
+IGRlbiAzMC4wMS4yMDIwLCAwNzowMyArMDAwMCBzY2hyaWViIE1hcnRpbjoKPiBUYWtlIGEgbG9v
+ayBhdCB0aGUgbXVsbHZhZCBwcm9ncmFtIGZvciBhcmNoIGluIHRoZSBBVVIuCj4gQnV0IEknZCBh
+bHNvIGFzayBpbiB0aGUgTmV0d29ya2luZyBzZWN0aW9uIG9uIHRoZSBhcmNobGludXggZm9ydW1z
+Cj4gcmVnYXJkaW5nIHRoZSB1cGdyYWRlIHBhdGggZm9yIHRoZSBtb2R1bGUgYW5kIGtlcm5lbC4K
+PiBodHRwczovL2Jicy5hcmNobGludXgub3JnL3ZpZXdmb3J1bS5waHA/aWQ9OAo+IAo+IE9uIFRo
+dSwgSmFuIDMwLCAyMDIwIGF0IDI6MDkgQU0gRnJhbmsgVG9ybmFjayA8Cj4gcGxhbnVuZ0BkcmVh
+bW9mamFwYW4uZGU+IHdyb3RlOgo+ID4gaGVsbG8gYWxsLAo+ID4gCj4gPiBJIGFwb2xvZ2l6ZSBp
+biBhZHZhbmNlIGZvciB0aGUgc3R1cGlkIHF1ZXN0aW9uLCBidXQgSSBhbSB2ZXJ5Cj4gPiB1bnN1
+cmUuCj4gPiBJIHJlY2VpdmVkIGEgdm91Y2hlciBmb3IgYSBWUE4gc2VydmljZSBhdCBhIHRyYWRl
+IGZhaXIgYW5kIHdvdWxkCj4gPiBsaWtlCj4gPiB0byB0ZXN0IGl0LiBUaGUgc2VydmljZSBNdWxs
+dmFkIFZQTiB1c2VzIHRoZSB0ZWNobm9sb2d5IFdpcmVHdWFyZC4KPiA+IEFuZAo+ID4gSSB1c2Ug
+QXJjaExpbnV4Lgo+ID4gCj4gPiBNeSBxdWVzdGlvbiB3YXMgY3JlYXRlZCBieSB0aGUgQXJjaExp
+bnV4IFdpa2kuIFRoZXJlIGl0IGFscmVhZHkKPiA+IHJlZmVycwo+ID4gdG8gdGhlIGtlcm5lbCA1
+LjYsIHdoaWNoIHNob3VsZCBzdXBwb3J0IHRoaXMgZnVuY3Rpb24gd2l0aG91dCBhCj4gPiBtb2R1
+bGUuCj4gPiBOb3cgbXkgcXVlc3Rpb24gaXMsIGlzIGl0IGJldHRlciB0byB3YWl0IGZvciB0aGlz
+IGtlcm5lbCBvciBqdXN0Cj4gPiBpbnN0YWxsIHRoZSBtb2R1bGU/IFdvdWxkIGl0IGJlIGEgcHJv
+YmxlbSBpZiBJIGZvcmdvdCB0byBkZWxldGUgdGhlCj4gPiBtb2R1bGUgYWdhaW4/IEkgYW0gdXNp
+bmcgdGhlIE5ldHdvcmsgTWFuYWdlciwgd2hhdCBkbyBJIG5lZWQgdG8gYmUKPiA+IGF3YXJlIG9m
+Pwo+ID4gCj4gPiBNYW55IHRoYW5rcyBpbiBhZHZhbmNlIGFuZCB0aGFuayB5b3UgZm9yIGRldmVs
+b3BpbmcgdGhpcyB0b29sLgo+ID4gCj4gPiAKCl9fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fCldpcmVHdWFyZCBtYWlsaW5nIGxpc3QKV2lyZUd1YXJkQGxpc3Rz
+Lnp4MmM0LmNvbQpodHRwczovL2xpc3RzLnp4MmM0LmNvbS9tYWlsbWFuL2xpc3RpbmZvL3dpcmVn
+dWFyZAo=
