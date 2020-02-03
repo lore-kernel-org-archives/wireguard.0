@@ -2,59 +2,66 @@ Return-Path: <SRS0=RmRV=3X=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.4 required=3.0 tests=FROM_LOCAL_HEX,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46604C35247
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  3 Feb 2020 18:29:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FF5CC3F68F
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  3 Feb 2020 20:25:15 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id E9F002082E
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  3 Feb 2020 18:29:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org E9F002082E
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com
+	by mail.kernel.org (Postfix) with ESMTPS id B69AD2087E
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  3 Feb 2020 20:25:14 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="DuoZOvfR"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org B69AD2087E
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4d20c17c;
-	Mon, 3 Feb 2020 18:28:48 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5c69ad65;
+	Mon, 3 Feb 2020 20:24:30 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d52775c6
- for <wireguard@lists.zx2c4.com>; Mon, 3 Feb 2020 18:27:30 +0000 (UTC)
-Received: from mail-il1-f200.google.com (mail-il1-f200.google.com
- [209.85.166.200])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5c1010e1
- for <wireguard@lists.zx2c4.com>; Mon, 3 Feb 2020 18:27:30 +0000 (UTC)
-Received: by mail-il1-f200.google.com with SMTP id s9so12738781ilk.0
- for <wireguard@lists.zx2c4.com>; Mon, 03 Feb 2020 10:28:12 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
- bh=fNirEIjUZWmHl3fUAVYFWGTvsAYsyyMxP84IDuD55uU=;
- b=T+mcGxa8yudwRkPjkXZ3qSNISgnBzUEMLarq1miTQ5PHhFX6zHhcXL5tRuJOafMMBi
- /nEZz5Hi8u/8wy5bPNuJ/isjxVwLlLkdE2yXSzRy8zARd+9NLDJJvBWxo4fxh3k3VfUr
- 87H9LiKvZy4/8Pvp0/E/dS4SK4xH0bID5vg/9rHMXUfy+lLEe3lD5f8WAbDKPueQ+L3B
- TaR1VeJaYFEcIbc7Y8xlO0kaFHEmbl+hTnvyUMHN6yJX2TFRVqt7MmT32aS8RDYjcBCx
- 6tr661OuH6vTKyXvZ5GdcxVeAyzwaIZWNOGs2GilRDHHB44bhU8dmug2WYCLoV8z+qkA
- vPKg==
-X-Gm-Message-State: APjAAAUtfu0f0jixSopbB26k/MPzosphUvQIdfl07/TIqrcy3l7Och2Y
- 7BmrDeekaiMwRiIoaGvXaP5JaHL0RhMaOv/7RVb39vwfuAQF
-X-Google-Smtp-Source: APXvYqxAnqBewG1iFwpsyVzj92urVpUN607Q5R7WgBJZrs7tq87ZBAeAdxyr34hRFZHw5wcrwspswcSloprUWaKraiBImuLSxIpZ
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2d25b3a0
+ for <wireguard@lists.zx2c4.com>; Mon, 3 Feb 2020 20:24:28 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8be662fb
+ for <wireguard@lists.zx2c4.com>; Mon, 3 Feb 2020 20:24:28 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bd182852
+ for <wireguard@lists.zx2c4.com>; Mon, 3 Feb 2020 20:24:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :references:in-reply-to:from:date:message-id:subject:to:cc
+ :content-type; s=mail; bh=n10J7S+AOGTmDvM08pKinjPzH+0=; b=DuoZOv
+ fR92bsTay3DgDOpyf0jXMaY67OD/cq3PkTJsMgqmYYrRJAgj2mN3wP49Ih0fiES/
+ NhfVzZ0IfvN2mDPgjZfk7u6SJAQFXT1ZhUCimNcFizc67vzVAXWJ28g0M8XtdN5J
+ P1uX0ECF1KNbBNOXE6qxomHpDiyb7dpyMVqFTLZTzgc33I812Kn8kDU4sT+tRFbf
+ Kz6ZAHqLDRQmDzERNaGBQhPUbvSaB41Yg9vM7W8QW2UCHojPLogWzQeXXBAYXb9R
+ fyuxZcqmAwEoiBiSD66TymAXZCbpkUy7Q26TK1VMXY6B/+moAA7PzhIPZ2IO5omI
+ oM5cWSGf26RTTO+A==
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 8674b58e
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Mon, 3 Feb 2020 20:24:27 +0000 (UTC)
+Received: by mail-oi1-f179.google.com with SMTP id a22so16023891oid.13
+ for <wireguard@lists.zx2c4.com>; Mon, 03 Feb 2020 12:25:10 -0800 (PST)
+X-Gm-Message-State: APjAAAXw5VLUgsWiEt80r9rf54ITXyUcjojqe1NcTzAiMhrIcM6Nr4gj
+ 59WVdXNemMWVYeQRNZA6lL7WttYUbpf/ITv+mak=
+X-Google-Smtp-Source: APXvYqwstmCx6NDTmNXty+nOFS0LtivgqcnUmYH0S+j4J1xxMHQIG+1MPE5dF5AETVuOds6I/s5hkfLHzX8gXHxYqUA=
+X-Received: by 2002:a05:6808:4cc:: with SMTP id
+ a12mr588645oie.115.1580761509902; 
+ Mon, 03 Feb 2020 12:25:09 -0800 (PST)
 MIME-Version: 1.0
-X-Received: by 2002:a02:c906:: with SMTP id t6mr20831421jao.75.1580754491979; 
- Mon, 03 Feb 2020 10:28:11 -0800 (PST)
-Date: Mon, 03 Feb 2020 10:28:11 -0800
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <000000000000f8bfe8059db01519@google.com>
-Subject: possible deadlock in wg_noise_handshake_create_initiation
-From: syzbot <syzbot+d5bc560aaa1cedefffd5@syzkaller.appspotmail.com>
-To: Jason@zx2c4.com, davem@davemloft.net, jason@zx2c4.com, 
- linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
- syzkaller-bugs@googlegroups.com, wireguard@lists.zx2c4.com
-X-Mailman-Approved-At: Mon, 03 Feb 2020 19:28:48 +0100
+References: <000000000000f8bfe8059db01519@google.com>
+In-Reply-To: <000000000000f8bfe8059db01519@google.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Mon, 3 Feb 2020 21:24:57 +0100
+X-Gmail-Original-Message-ID: <CAHmME9oVLWp_JcWzOm_OWqFOs+C=wj1kp7g=UnHANmrKHRbUsw@mail.gmail.com>
+Message-ID: <CAHmME9oVLWp_JcWzOm_OWqFOs+C=wj1kp7g=UnHANmrKHRbUsw@mail.gmail.com>
+Subject: Re: possible deadlock in wg_noise_handshake_create_initiation
+To: syzbot <syzbot+d5bc560aaa1cedefffd5@syzkaller.appspotmail.com>
+Cc: Netdev <netdev@vger.kernel.org>, syzkaller-bugs@googlegroups.com,
+ David Miller <davem@davemloft.net>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ LKML <linux-kernel@vger.kernel.org>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -71,152 +78,13 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello,
+On Mon, Feb 3, 2020 at 7:28 PM syzbot
+<syzbot+d5bc560aaa1cedefffd5@syzkaller.appspotmail.com> wrote:
+> syzbot found the following crash on:
 
-syzbot found the following crash on:
+Thanks, fixing.
 
-HEAD commit:    ccaaaf6f Merge tag 'mpx-for-linus' of git://git.kernel.org..
-git tree:       upstream
-console output: https://syzkaller.appspot.com/x/log.txt?x=16034a79e00000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=3373595e41752b95
-dashboard link: https://syzkaller.appspot.com/bug?extid=d5bc560aaa1cedefffd5
-compiler:       clang version 10.0.0 (https://github.com/llvm/llvm-project/ c2443155a0fb245c8f17f2c1c72b6ea391e86e81)
-syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=103868b5e00000
-C reproducer:   https://syzkaller.appspot.com/x/repro.c?x=16dd064ee00000
-
-The bug was bisected to:
-
-commit e7096c131e5161fa3b8e52a650d7719d2857adfd
-Author: Jason A. Donenfeld <Jason@zx2c4.com>
-Date:   Sun Dec 8 23:27:34 2019 +0000
-
-    net: WireGuard secure network tunnel
-
-bisection log:  https://syzkaller.appspot.com/x/bisect.txt?x=14440195e00000
-final crash:    https://syzkaller.appspot.com/x/report.txt?x=16440195e00000
-console output: https://syzkaller.appspot.com/x/log.txt?x=12440195e00000
-
-IMPORTANT: if you fix the bug, please add the following tag to the commit:
-Reported-by: syzbot+d5bc560aaa1cedefffd5@syzkaller.appspotmail.com
-Fixes: e7096c131e51 ("net: WireGuard secure network tunnel")
-
-======================================================
-WARNING: possible circular locking dependency detected
-5.5.0-syzkaller #0 Not tainted
-------------------------------------------------------
-kworker/u4:4/509 is trying to acquire lock:
-ffff888097a30e80 (&wg->static_identity.lock){++++}, at: wg_noise_handshake_create_initiation+0x6a/0x15c0 drivers/net/wireguard/noise.c:499
-
-but task is already holding lock:
-ffffc90002157d78 ((work_completion)(&peer->transmit_handshake_work)){+.+.}, at: process_one_work+0x7a5/0x10f0 kernel/workqueue.c:2239
-
-which lock already depends on the new lock.
-
-
-the existing dependency chain (in reverse order) is:
-
--> #2 ((work_completion)(&peer->transmit_handshake_work)){+.+.}:
-       lock_acquire+0x154/0x250 kernel/locking/lockdep.c:4484
-       process_one_work+0x7c8/0x10f0 kernel/workqueue.c:2240
-       worker_thread+0xbbc/0x1630 kernel/workqueue.c:2410
-       kthread+0x332/0x350 kernel/kthread.c:255
-       ret_from_fork+0x24/0x30 arch/x86/entry/entry_64.S:352
-
--> #1 ((wq_completion)wg-kex-wireguard0){+.+.}:
-       lock_acquire+0x154/0x250 kernel/locking/lockdep.c:4484
-       flush_workqueue+0x10a/0x1820 kernel/workqueue.c:2775
-       peer_remove_after_dead+0x125/0x280 drivers/net/wireguard/peer.c:141
-       wg_peer_remove+0x211/0x270 drivers/net/wireguard/peer.c:176
-       wg_set_device+0xb6a/0x2010 drivers/net/wireguard/netlink.c:575
-       genl_family_rcv_msg_doit net/netlink/genetlink.c:672 [inline]
-       genl_family_rcv_msg net/netlink/genetlink.c:717 [inline]
-       genl_rcv_msg+0xf15/0x13e0 net/netlink/genetlink.c:734
-       netlink_rcv_skb+0x19e/0x3e0 net/netlink/af_netlink.c:2477
-       genl_rcv+0x28/0x40 net/netlink/genetlink.c:745
-       netlink_unicast_kernel net/netlink/af_netlink.c:1302 [inline]
-       netlink_unicast+0x766/0x920 net/netlink/af_netlink.c:1328
-       netlink_sendmsg+0xa2b/0xd40 net/netlink/af_netlink.c:1917
-       sock_sendmsg_nosec net/socket.c:652 [inline]
-       sock_sendmsg net/socket.c:672 [inline]
-       ____sys_sendmsg+0x4f7/0x7f0 net/socket.c:2343
-       ___sys_sendmsg net/socket.c:2397 [inline]
-       __sys_sendmsg+0x1ed/0x290 net/socket.c:2430
-       __do_sys_sendmsg net/socket.c:2439 [inline]
-       __se_sys_sendmsg net/socket.c:2437 [inline]
-       __x64_sys_sendmsg+0x7f/0x90 net/socket.c:2437
-       do_syscall_64+0xf7/0x1c0 arch/x86/entry/common.c:294
-       entry_SYSCALL_64_after_hwframe+0x49/0xbe
-
--> #0 (&wg->static_identity.lock){++++}:
-       check_prev_add kernel/locking/lockdep.c:2475 [inline]
-       check_prevs_add kernel/locking/lockdep.c:2580 [inline]
-       validate_chain+0x1507/0x7be0 kernel/locking/lockdep.c:2970
-       __lock_acquire+0xc5a/0x1bc0 kernel/locking/lockdep.c:3954
-       lock_acquire+0x154/0x250 kernel/locking/lockdep.c:4484
-       down_read+0x39/0x50 kernel/locking/rwsem.c:1495
-       wg_noise_handshake_create_initiation+0x6a/0x15c0 drivers/net/wireguard/noise.c:499
-       wg_packet_send_handshake_initiation drivers/net/wireguard/send.c:34 [inline]
-       wg_packet_handshake_send_worker+0xe5/0x1a0 drivers/net/wireguard/send.c:51
-       process_one_work+0x7f5/0x10f0 kernel/workqueue.c:2264
-       worker_thread+0xbbc/0x1630 kernel/workqueue.c:2410
-       kthread+0x332/0x350 kernel/kthread.c:255
-       ret_from_fork+0x24/0x30 arch/x86/entry/entry_64.S:352
-
-other info that might help us debug this:
-
-Chain exists of:
-  &wg->static_identity.lock --> (wq_completion)wg-kex-wireguard0 --> (work_completion)(&peer->transmit_handshake_work)
-
- Possible unsafe locking scenario:
-
-       CPU0                    CPU1
-       ----                    ----
-  lock((work_completion)(&peer->transmit_handshake_work));
-                               lock((wq_completion)wg-kex-wireguard0);
-                               lock((work_completion)(&peer->transmit_handshake_work));
-  lock(&wg->static_identity.lock);
-
- *** DEADLOCK ***
-
-2 locks held by kworker/u4:4/509:
- #0: ffff88809ec44128 ((wq_completion)wg-kex-wireguard0){+.+.}, at: spin_unlock_irq include/linux/spinlock.h:388 [inline]
- #0: ffff88809ec44128 ((wq_completion)wg-kex-wireguard0){+.+.}, at: process_one_work+0x763/0x10f0 kernel/workqueue.c:2237
- #1: ffffc90002157d78 ((work_completion)(&peer->transmit_handshake_work)){+.+.}, at: process_one_work+0x7a5/0x10f0 kernel/workqueue.c:2239
-
-stack backtrace:
-CPU: 1 PID: 509 Comm: kworker/u4:4 Not tainted 5.5.0-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
-Workqueue: wg-kex-wireguard0 wg_packet_handshake_send_worker
-Call Trace:
- __dump_stack lib/dump_stack.c:77 [inline]
- dump_stack+0x1fb/0x318 lib/dump_stack.c:118
- print_circular_bug+0xc3f/0xe70 kernel/locking/lockdep.c:1684
- check_noncircular+0x206/0x3a0 kernel/locking/lockdep.c:1808
- check_prev_add kernel/locking/lockdep.c:2475 [inline]
- check_prevs_add kernel/locking/lockdep.c:2580 [inline]
- validate_chain+0x1507/0x7be0 kernel/locking/lockdep.c:2970
- __lock_acquire+0xc5a/0x1bc0 kernel/locking/lockdep.c:3954
- lock_acquire+0x154/0x250 kernel/locking/lockdep.c:4484
- down_read+0x39/0x50 kernel/locking/rwsem.c:1495
- wg_noise_handshake_create_initiation+0x6a/0x15c0 drivers/net/wireguard/noise.c:499
- wg_packet_send_handshake_initiation drivers/net/wireguard/send.c:34 [inline]
- wg_packet_handshake_send_worker+0xe5/0x1a0 drivers/net/wireguard/send.c:51
- process_one_work+0x7f5/0x10f0 kernel/workqueue.c:2264
- worker_thread+0xbbc/0x1630 kernel/workqueue.c:2410
- kthread+0x332/0x350 kernel/kthread.c:255
- ret_from_fork+0x24/0x30 arch/x86/entry/entry_64.S:352
-
-
----
-This bug is generated by a bot. It may contain errors.
-See https://goo.gl/tpsmEJ for more information about syzbot.
-syzbot engineers can be reached at syzkaller@googlegroups.com.
-
-syzbot will keep track of this bug report. See:
-https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
-For information about bisection process see: https://goo.gl/tpsmEJ#bisection
-syzbot can test patches for this bug, for details see:
-https://goo.gl/tpsmEJ#testing-patches
+Jason
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
