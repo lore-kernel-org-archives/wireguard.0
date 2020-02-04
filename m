@@ -2,86 +2,58 @@ Return-Path: <SRS0=oAv7=3Y=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.8 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
-	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-6.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D09B4C3F68F
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  4 Feb 2020 21:06:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A0CC5C3524B
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  4 Feb 2020 21:17:53 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 722322082E
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  4 Feb 2020 21:06:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 1AF5721744
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  4 Feb 2020 21:17:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cFa4jZ0M"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 722322082E
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="juBzB4sF"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 1AF5721744
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 597f581a;
-	Tue, 4 Feb 2020 21:05:57 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 030b96dc;
+	Tue, 4 Feb 2020 21:17:00 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4c3ec171
- for <wireguard@lists.zx2c4.com>; Mon, 3 Feb 2020 18:19:53 +0000 (UTC)
-Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com
- [IPv6:2607:f8b0:4864:20::543])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d848d0ca
- for <wireguard@lists.zx2c4.com>; Mon, 3 Feb 2020 18:19:53 +0000 (UTC)
-Received: by mail-pg1-x543.google.com with SMTP id j15so1195110pgm.6
- for <wireguard@lists.zx2c4.com>; Mon, 03 Feb 2020 10:20:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=subject:from:to:cc:references:message-id:date:user-agent
- :mime-version:in-reply-to:content-language:content-transfer-encoding;
- bh=xYaMX13Lpg26+cMEriN2lo885jko91UPKe0BLsD49fc=;
- b=cFa4jZ0Maqd3bkSaGhDMN0ARQpvXDWyeBHGP8mV9eOsyafOgZ3yCKppCq+YZdXH1EJ
- aeVM+B/Ry4PFNs/6QeuqYRVr6YibG/9JQRTZERD2Cben/kXiU/MmZ9/Mv4NMpz/khqfZ
- lcJZ4a1RKt3g3VKOg+7qdclMF+t0m+de22srySsuHg1ROeUXouPuHPiwvyhhPtsPMWsj
- yl3nORqDnRCDdSG2XVLz361+EI9p2Z2b4tHwCz3CUfiJ4veKENR/A0dbdpUM16K0FJXD
- EpWJnGDoecj1DzJJAybpOzZ8PdDT10hFZa+hle0EcnpLszc1sWWTQUX+ldEJhfpg6adw
- /y6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:from:to:cc:references:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=xYaMX13Lpg26+cMEriN2lo885jko91UPKe0BLsD49fc=;
- b=r+mC59WADC6emO/CVd4vE1KDw+WPQcWVomFWwtqTE+hFMzj0fX2GzpcF7u/U6WoUjB
- GBgbIyGWRSp1mCcP6oBdlkYWO741AFRGdcN5q26dPxHjBSRg9ukXS6XeEPmzYYm8A+BN
- yD+tDUAat6OHEECxeGlS78sO5WVa0VUO3oYPwYmy3siaSgYLDITaQaeIxWxLznNIdOX1
- Sv16tp2/rApW5rsSPTcCE0qSN4LMVmTZfMgDn5LaWoyem88zYKeZnAgOcD/wdVg+7vi2
- G+GxlDnZ7ijvPC0zca+Rv/TQm5/vM1xdkP3J9U1bGjWyxr+bq7ZKAr2zud47wWIAejZi
- wCBQ==
-X-Gm-Message-State: APjAAAUXBpH//I/ttZXrL5+euSwPCGZlIshFa2Ws7l2zEUzFevWYG1gA
- v6djAl4NpzxnFIqBHgBuVHgToyAU
-X-Google-Smtp-Source: APXvYqyfqUDg4YPI6HQ3+mec00YINQIcfgA2Rfid5AdGIXg0iGNQRX99a6lqodz9O+B6BPJpZGPf+g==
-X-Received: by 2002:a63:1d1a:: with SMTP id d26mr25096960pgd.98.1580754034382; 
- Mon, 03 Feb 2020 10:20:34 -0800 (PST)
-Received: from ?IPv6:2620:15c:2c1:200:55c7:81e6:c7d8:94b?
- ([2620:15c:2c1:200:55c7:81e6:c7d8:94b])
- by smtp.gmail.com with ESMTPSA id j8sm153172pjb.4.2020.02.03.10.20.33
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Feb 2020 10:20:33 -0800 (PST)
-Subject: Re: [PATCH net] wireguard: fix use-after-free in
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9159bf3f
+ for <wireguard@lists.zx2c4.com>; Tue, 4 Feb 2020 21:16:58 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1bd92a84
+ for <wireguard@lists.zx2c4.com>; Tue, 4 Feb 2020 21:16:58 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id da57187e;
+ Tue, 4 Feb 2020 21:16:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=from:to:cc
+ :subject:date:message-id:in-reply-to:references:mime-version
+ :content-transfer-encoding; s=mail; bh=1zpfBgdueLmPHjsgAl6QLvWtV
+ +0=; b=juBzB4sFaZ45usiV+DGqtIugAlcEuVwSsqML2mkemp1Npk+hOx7PIrj8X
+ DZ1RJ89lO+OtYIFyjMhlwVFukgnNWM8dsqxxZhck8h+F66hxV9m2/khPqyg7mKwf
+ ++Qk8bGQrY+8AD9rXpO6vIgy87ekKPjQWL4KkKQhr1yol7Pr2LeEC900M1RTiLRO
+ YWpptQmZgXIKYlWHrOxVZnWDsGIXS4iLtD1p8DWcNI49SNgbNnBohnzGJpiz9FAP
+ RVtYPlpuJTS9n33d+prx6pLtz5KsBopE3/2Mw4AGHa1j4dTfgCTKQf2d4WeqMPX/
+ BmCiUX/9Tm7qW0xvcEZRGnzm66Ylw==
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 3582a01a
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO); 
+ Tue, 4 Feb 2020 21:16:57 +0000 (UTC)
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: netdev@vger.kernel.org,
+	davem@davemloft.net
+Subject: [PATCH net 1/5] wireguard: allowedips: fix use-after-free in
  root_remove_peer_lists
-From: Eric Dumazet <eric.dumazet@gmail.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>, Eric Dumazet <edumazet@google.com>
-References: <20200203171951.222257-1-edumazet@google.com>
- <CAHmME9r3bROD=jAH-598_DU_RUxQECiqC6sw=spdQvHQiiwf=g@mail.gmail.com>
- <efaa70a3-5c71-3cc0-ffe4-e8401d598992@gmail.com>
-Message-ID: <ba618605-ec50-085d-c854-f65290473c1c@gmail.com>
-Date: Mon, 3 Feb 2020 10:20:32 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
+Date: Tue,  4 Feb 2020 22:17:25 +0100
+Message-Id: <20200204211729.365431-2-Jason@zx2c4.com>
+In-Reply-To: <20200204211729.365431-1-Jason@zx2c4.com>
+References: <20200204211729.365431-1-Jason@zx2c4.com>
 MIME-Version: 1.0
-In-Reply-To: <efaa70a3-5c71-3cc0-ffe4-e8401d598992@gmail.com>
-Content-Language: en-US
-X-Mailman-Approved-At: Tue, 04 Feb 2020 22:05:55 +0100
-Cc: netdev <netdev@vger.kernel.org>, syzbot <syzkaller@googlegroups.com>,
- "David S . Miller" <davem@davemloft.net>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>
+Cc: Eric Dumazet <edumazet@google.com>, syzbot <syzkaller@googlegroups.com>,
+ wireguard@lists.zx2c4.com
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -98,55 +70,166 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
+From: Eric Dumazet <edumazet@google.com>
 
+In the unlikely case a new node could not be allocated, we need to
+remove @newnode from @peer->allowedips_list before freeing it.
 
-On 2/3/20 10:17 AM, Eric Dumazet wrote:
-> 
-> 
-> On 2/3/20 9:29 AM, Jason A. Donenfeld wrote:
->> Hi Eric,
->>
->> On Mon, Feb 3, 2020 at 6:19 PM Eric Dumazet <edumazet@google.com> wrote:
->>> diff --git a/drivers/net/wireguard/allowedips.c b/drivers/net/wireguard/allowedips.c
->>> index 121d9ea0f13584f801ab895753e936c0a12f0028..3725e9cd85f4f2797afd59f42af454acc107aa9a 100644
->>> --- a/drivers/net/wireguard/allowedips.c
->>> +++ b/drivers/net/wireguard/allowedips.c
->>> @@ -263,6 +263,7 @@ static int add(struct allowedips_node __rcu **trie, u8 bits, const u8 *key,
->>>         } else {
->>>                 node = kzalloc(sizeof(*node), GFP_KERNEL);
->>>                 if (unlikely(!node)) {
->>> +                       list_del(&newnode->peer_list);
->>>                         kfree(newnode);
->>>                         return -ENOMEM;
->>>                 }
->>> --
->>> 2.25.0.341.g760bfbb309-goog
->>
->> Thanks, nice catch. I remember switching that code over to using the
->> peer_list somewhat recently and embarrassed I missed this. Glad to see
->> WireGuard is hooked up to syzkaller.
->>
-> 
-> I will let you work on a lockdep issue that syzbot found :)
-> 
+syzbot reported:
 
-BTW wireguard@lists.zx2c4.com  seems to be a moderated list...
+BUG: KASAN: use-after-free in __list_del_entry_valid+0xdc/0xf5 lib/list_debug.c:54
+Read of size 8 at addr ffff88809881a538 by task syz-executor.4/30133
 
-You might document this.
+CPU: 0 PID: 30133 Comm: syz-executor.4 Not tainted 5.5.0-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x197/0x210 lib/dump_stack.c:118
+ print_address_description.constprop.0.cold+0xd4/0x30b mm/kasan/report.c:374
+ __kasan_report.cold+0x1b/0x32 mm/kasan/report.c:506
+ kasan_report+0x12/0x20 mm/kasan/common.c:639
+ __asan_report_load8_noabort+0x14/0x20 mm/kasan/generic_report.c:135
+ __list_del_entry_valid+0xdc/0xf5 lib/list_debug.c:54
+ __list_del_entry include/linux/list.h:132 [inline]
+ list_del include/linux/list.h:146 [inline]
+ root_remove_peer_lists+0x24f/0x4b0 drivers/net/wireguard/allowedips.c:65
+ wg_allowedips_free+0x232/0x390 drivers/net/wireguard/allowedips.c:300
+ wg_peer_remove_all+0xd5/0x620 drivers/net/wireguard/peer.c:187
+ wg_set_device+0xd01/0x1350 drivers/net/wireguard/netlink.c:542
+ genl_family_rcv_msg_doit net/netlink/genetlink.c:672 [inline]
+ genl_family_rcv_msg net/netlink/genetlink.c:717 [inline]
+ genl_rcv_msg+0x67d/0xea0 net/netlink/genetlink.c:734
+ netlink_rcv_skb+0x177/0x450 net/netlink/af_netlink.c:2477
+ genl_rcv+0x29/0x40 net/netlink/genetlink.c:745
+ netlink_unicast_kernel net/netlink/af_netlink.c:1302 [inline]
+ netlink_unicast+0x59e/0x7e0 net/netlink/af_netlink.c:1328
+ netlink_sendmsg+0x91c/0xea0 net/netlink/af_netlink.c:1917
+ sock_sendmsg_nosec net/socket.c:652 [inline]
+ sock_sendmsg+0xd7/0x130 net/socket.c:672
+ ____sys_sendmsg+0x753/0x880 net/socket.c:2343
+ ___sys_sendmsg+0x100/0x170 net/socket.c:2397
+ __sys_sendmsg+0x105/0x1d0 net/socket.c:2430
+ __do_sys_sendmsg net/socket.c:2439 [inline]
+ __se_sys_sendmsg net/socket.c:2437 [inline]
+ __x64_sys_sendmsg+0x78/0xb0 net/socket.c:2437
+ do_syscall_64+0xfa/0x790 arch/x86/entry/common.c:294
+ entry_SYSCALL_64_after_hwframe+0x49/0xbe
+RIP: 0033:0x45b399
+Code: ad b6 fb ff c3 66 2e 0f 1f 84 00 00 00 00 00 66 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 0f 83 7b b6 fb ff c3 66 2e 0f 1f 84 00 00 00 00
+RSP: 002b:00007f99a9bcdc78 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
+RAX: ffffffffffffffda RBX: 00007f99a9bce6d4 RCX: 000000000045b399
+RDX: 0000000000000000 RSI: 0000000020001340 RDI: 0000000000000003
+RBP: 000000000075bf20 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000004
+R13: 00000000000009ba R14: 00000000004cb2b8 R15: 0000000000000009
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 0ae68fb8d38f167ae4a4b8ab49e27946393641e5..890d1f3e698e4c2475eadcd4a462768391328dd7 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -18040,7 +18040,7 @@ M:      Jason A. Donenfeld <Jason@zx2c4.com>
- S:     Maintained
- F:     drivers/net/wireguard/
- F:     tools/testing/selftests/wireguard/
--L:     wireguard@lists.zx2c4.com
-+L:     wireguard@lists.zx2c4.com (moderated for non-subscribers)
- L:     netdev@vger.kernel.org
- 
- WISTRON LAPTOP BUTTON DRIVER
+Allocated by task 30103:
+ save_stack+0x23/0x90 mm/kasan/common.c:72
+ set_track mm/kasan/common.c:80 [inline]
+ __kasan_kmalloc mm/kasan/common.c:513 [inline]
+ __kasan_kmalloc.constprop.0+0xcf/0xe0 mm/kasan/common.c:486
+ kasan_kmalloc+0x9/0x10 mm/kasan/common.c:527
+ kmem_cache_alloc_trace+0x158/0x790 mm/slab.c:3551
+ kmalloc include/linux/slab.h:556 [inline]
+ kzalloc include/linux/slab.h:670 [inline]
+ add+0x70a/0x1970 drivers/net/wireguard/allowedips.c:236
+ wg_allowedips_insert_v4+0xf6/0x160 drivers/net/wireguard/allowedips.c:320
+ set_allowedip drivers/net/wireguard/netlink.c:343 [inline]
+ set_peer+0xfb9/0x1150 drivers/net/wireguard/netlink.c:468
+ wg_set_device+0xbd4/0x1350 drivers/net/wireguard/netlink.c:591
+ genl_family_rcv_msg_doit net/netlink/genetlink.c:672 [inline]
+ genl_family_rcv_msg net/netlink/genetlink.c:717 [inline]
+ genl_rcv_msg+0x67d/0xea0 net/netlink/genetlink.c:734
+ netlink_rcv_skb+0x177/0x450 net/netlink/af_netlink.c:2477
+ genl_rcv+0x29/0x40 net/netlink/genetlink.c:745
+ netlink_unicast_kernel net/netlink/af_netlink.c:1302 [inline]
+ netlink_unicast+0x59e/0x7e0 net/netlink/af_netlink.c:1328
+ netlink_sendmsg+0x91c/0xea0 net/netlink/af_netlink.c:1917
+ sock_sendmsg_nosec net/socket.c:652 [inline]
+ sock_sendmsg+0xd7/0x130 net/socket.c:672
+ ____sys_sendmsg+0x753/0x880 net/socket.c:2343
+ ___sys_sendmsg+0x100/0x170 net/socket.c:2397
+ __sys_sendmsg+0x105/0x1d0 net/socket.c:2430
+ __do_sys_sendmsg net/socket.c:2439 [inline]
+ __se_sys_sendmsg net/socket.c:2437 [inline]
+ __x64_sys_sendmsg+0x78/0xb0 net/socket.c:2437
+ do_syscall_64+0xfa/0x790 arch/x86/entry/common.c:294
+ entry_SYSCALL_64_after_hwframe+0x49/0xbe
+
+Freed by task 30103:
+ save_stack+0x23/0x90 mm/kasan/common.c:72
+ set_track mm/kasan/common.c:80 [inline]
+ kasan_set_free_info mm/kasan/common.c:335 [inline]
+ __kasan_slab_free+0x102/0x150 mm/kasan/common.c:474
+ kasan_slab_free+0xe/0x10 mm/kasan/common.c:483
+ __cache_free mm/slab.c:3426 [inline]
+ kfree+0x10a/0x2c0 mm/slab.c:3757
+ add+0x12d2/0x1970 drivers/net/wireguard/allowedips.c:266
+ wg_allowedips_insert_v4+0xf6/0x160 drivers/net/wireguard/allowedips.c:320
+ set_allowedip drivers/net/wireguard/netlink.c:343 [inline]
+ set_peer+0xfb9/0x1150 drivers/net/wireguard/netlink.c:468
+ wg_set_device+0xbd4/0x1350 drivers/net/wireguard/netlink.c:591
+ genl_family_rcv_msg_doit net/netlink/genetlink.c:672 [inline]
+ genl_family_rcv_msg net/netlink/genetlink.c:717 [inline]
+ genl_rcv_msg+0x67d/0xea0 net/netlink/genetlink.c:734
+ netlink_rcv_skb+0x177/0x450 net/netlink/af_netlink.c:2477
+ genl_rcv+0x29/0x40 net/netlink/genetlink.c:745
+ netlink_unicast_kernel net/netlink/af_netlink.c:1302 [inline]
+ netlink_unicast+0x59e/0x7e0 net/netlink/af_netlink.c:1328
+ netlink_sendmsg+0x91c/0xea0 net/netlink/af_netlink.c:1917
+ sock_sendmsg_nosec net/socket.c:652 [inline]
+ sock_sendmsg+0xd7/0x130 net/socket.c:672
+ ____sys_sendmsg+0x753/0x880 net/socket.c:2343
+ ___sys_sendmsg+0x100/0x170 net/socket.c:2397
+ __sys_sendmsg+0x105/0x1d0 net/socket.c:2430
+ __do_sys_sendmsg net/socket.c:2439 [inline]
+ __se_sys_sendmsg net/socket.c:2437 [inline]
+ __x64_sys_sendmsg+0x78/0xb0 net/socket.c:2437
+ do_syscall_64+0xfa/0x790 arch/x86/entry/common.c:294
+ entry_SYSCALL_64_after_hwframe+0x49/0xbe
+
+The buggy address belongs to the object at ffff88809881a500
+ which belongs to the cache kmalloc-64 of size 64
+The buggy address is located 56 bytes inside of
+ 64-byte region [ffff88809881a500, ffff88809881a540)
+The buggy address belongs to the page:
+page:ffffea0002620680 refcount:1 mapcount:0 mapping:ffff8880aa400380 index:0x0
+raw: 00fffe0000000200 ffffea000250b748 ffffea000254bac8 ffff8880aa400380
+raw: 0000000000000000 ffff88809881a000 0000000100000020 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffff88809881a400: fb fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+ ffff88809881a480: 00 00 00 00 00 fc fc fc fc fc fc fc fc fc fc fc
+>ffff88809881a500: fb fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+                                        ^
+ ffff88809881a580: fb fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+ ffff88809881a600: 00 00 00 00 00 00 fc fc fc fc fc fc fc fc fc fc
+
+Fixes: e7096c131e51 ("net: WireGuard secure network tunnel")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Cc: Jason A. Donenfeld <Jason@zx2c4.com>
+Cc: wireguard@lists.zx2c4.com
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+---
+ drivers/net/wireguard/allowedips.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/net/wireguard/allowedips.c b/drivers/net/wireguard/allowedips.c
+index 121d9ea0f135..3725e9cd85f4 100644
+--- a/drivers/net/wireguard/allowedips.c
++++ b/drivers/net/wireguard/allowedips.c
+@@ -263,6 +263,7 @@ static int add(struct allowedips_node __rcu **trie, u8 bits, const u8 *key,
+ 	} else {
+ 		node = kzalloc(sizeof(*node), GFP_KERNEL);
+ 		if (unlikely(!node)) {
++			list_del(&newnode->peer_list);
+ 			kfree(newnode);
+ 			return -ENOMEM;
+ 		}
+-- 
+2.25.0
 
 _______________________________________________
 WireGuard mailing list
