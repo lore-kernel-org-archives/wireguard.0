@@ -1,4 +1,4 @@
-Return-Path: <SRS0=oAv7=3Y=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=aHSR=3Z=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
@@ -6,72 +6,46 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1004FC35247
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  4 Feb 2020 21:40:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 56706C35254
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  5 Feb 2020 13:42:56 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id A3ADA2084E
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  4 Feb 2020 21:40:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 942B020702
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  5 Feb 2020 13:42:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="3F+wGaXX"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A3ADA2084E
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="FISUMLF7"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 942B020702
 Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 245c0a50;
-	Tue, 4 Feb 2020 21:38:56 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0747c203;
+	Wed, 5 Feb 2020 13:41:57 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3ebf3a41
- for <wireguard@lists.zx2c4.com>; Tue, 4 Feb 2020 21:38:54 +0000 (UTC)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 34494169
+ for <wireguard@lists.zx2c4.com>; Wed, 5 Feb 2020 13:41:56 +0000 (UTC)
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4300c7b2
- for <wireguard@lists.zx2c4.com>; Tue, 4 Feb 2020 21:38:54 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 29b4cb48
- for <wireguard@lists.zx2c4.com>; Tue, 4 Feb 2020 21:38:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=IA9BgkXO4y1tj4ir/uT+L2i2M1Y=; b=3F+wGa
- XXKEaSC3rxCiikRLwYrLGz2HVfKcRFAtSpmC/EE2tIUCvw6Jt/3VgHlacgfoEgiq
- cdoIEXBCTMOjDumWyO4IG5fkM4tYFhenl8e8hrzl1OVzCeL7vmaM+FvfudV6iCdm
- ZhoJ3Mb6RI1cMLKVQh0AKk0xudQ7CNxwExkn8CHpqQZeYJB0g23WPlqdTTsCaZr9
- 25qt/F+VLG1nl1BHWLr7SCtxJhyGMIjONRzBy8UgWeN27ytKsxBtskbqvKO0/5sB
- yponmDA5bfukZiHbKA2Y4z6hmxOsGx4giiy/UXHIp0qK+mRI6vDaK9wYEQGZA10o
- ipjFHW+52k8te/8A==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id c6f1057c
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4451e1cd
+ for <wireguard@lists.zx2c4.com>; Wed, 5 Feb 2020 13:41:56 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9ce52036
+ for <wireguard@lists.zx2c4.com>; Wed, 5 Feb 2020 13:41:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=date:to:from
+ :subject:mime-version:content-type; s=mail; bh=3nqFIo9b1EcYJyCkS
+ YYDirSYqw0=; b=FISUMLF7Da1SlpXdHjVIyKJlpGedpvFlooWhFST/TpB7ClYE9
+ SNCDjbUvWKu8/eVnlQ+m7Va8gyRMy5qXwqf942VJrDPlxRa71BEhD7vINIXZJb90
+ ndqiQgIwyxzy2LbfZILmA6j1Ha534Y1eoYgfwyGr/9I15KH5ZyV3bHo4EZ6FDSgU
+ AybXmPRJVEadOy44uIFQGtTojA7RLVaVQk2LvOqNx3czI9J8IHMXP6qCkCp8MOy9
+ swtcGS44DXV7pgJw0zl6kfaiAUqFDb2mcYTKRAwEY+8+98ZXMhQ3cM4i9QybMrGX
+ g/t7ODIVgWGTr5l72NObSlGuK49M/G8YQcTvg==
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 831fb01e
  (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Tue, 4 Feb 2020 21:38:53 +0000 (UTC)
-Received: by mail-ot1-f50.google.com with SMTP id 59so18644079otp.12
- for <wireguard@lists.zx2c4.com>; Tue, 04 Feb 2020 13:39:44 -0800 (PST)
-X-Gm-Message-State: APjAAAVyBnNS8nJ/Z0fTFzQmo6QDuUclmBsx5B2NLUEP/pILAbCaTwyE
- z3MU0njCKjX10BwghNNkzRFG+4nEIddRoftNZ7c=
-X-Google-Smtp-Source: APXvYqyGam5KOWJSNtBSP5oVex1+DDBSldrjXTPvSbLwRn/WfIFo0yyZdSaxizLyfaNE/aV0+bPOpFVUxYmcYWpcpB4=
-X-Received: by 2002:a9d:6745:: with SMTP id w5mr24023954otm.52.1580852384144; 
- Tue, 04 Feb 2020 13:39:44 -0800 (PST)
-MIME-Version: 1.0
-References: <20191208232734.225161-1-Jason@zx2c4.com>
- <CACT4Y+bsJVmgbD-WogwU=LfWiPN1JgjBrwx4s8Y14hDd7vqqhQ@mail.gmail.com>
- <CAHmME9o0AparjaaOSoZD14RAW8_AJTfKfcx3Y2ndDAPFNC-MeQ@mail.gmail.com>
- <CACT4Y+Zssd6OZ2-U4kjw18mNthQyzPWZV_gkH3uATnSv1SVDfA@mail.gmail.com>
- <CAHmME9oM=YHMZyg23WEzmZAof=7iv-A01VazB3ihhR99f6X1cg@mail.gmail.com>
- <CACT4Y+aCEZm_BA5mmVTnK2cR8CQUky5w1qvmb2KpSR4-Pzp4Ow@mail.gmail.com>
- <CAHmME9rYstVLCBOgdMLqMeVDrX1V-f92vRKDqWsREROWdPbb6g@mail.gmail.com>
- <CAHmME9qUWr69o0r+Mtm8tRSeQq3P780DhWAhpJkNWBfZ+J5OYA@mail.gmail.com>
- <CACT4Y+YfBDvQHdK24ybyyy5p07MXNMnLA7+gq9axq-EizN6jhA@mail.gmail.com>
- <CAHmME9qcv5izLz-_Z2fQefhgxDKwgVU=MkkJmAkAn3O_dXs5fA@mail.gmail.com>
- <CACT4Y+arVNCYpJZsY7vMhBEKQsaig_o6j7E=ib4tF5d25c-cjw@mail.gmail.com>
- <CAHmME9ofmwig2=G+8vc1fbOCawuRzv+CcAE=85spadtbneqGag@mail.gmail.com>
- <CACT4Y+awD47=Q3taT_-yQPfQ4uyW-DRpeWBbSHcG6_=b20PPwg@mail.gmail.com>
-In-Reply-To: <CACT4Y+awD47=Q3taT_-yQPfQ4uyW-DRpeWBbSHcG6_=b20PPwg@mail.gmail.com>
+ for <wireguard@lists.zx2c4.com>; Wed, 5 Feb 2020 13:41:55 +0000 (UTC)
+Date: Wed, 05 Feb 2020 14:42:49 +0100
+To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 4 Feb 2020 22:39:33 +0100
-X-Gmail-Original-Message-ID: <CAHmME9q3_p_BX0BC6=urj4KeWLN2PvPgvGy3vQLFmd=qkNEkpQ@mail.gmail.com>
-Message-ID: <CAHmME9q3_p_BX0BC6=urj4KeWLN2PvPgvGy3vQLFmd=qkNEkpQ@mail.gmail.com>
-Subject: syzkaller wireguard key situation [was: Re: [PATCH net-next v2] net:
- WireGuard secure network tunnel]
-To: Dmitry Vyukov <dvyukov@google.com>
-Cc: netdev <netdev@vger.kernel.org>, syzbot <syzkaller@googlegroups.com>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>
+Subject: [ANNOUNCE] wireguard-linux-compat v0.0.20200205 released
+MIME-Version: 1.0
+Message-Id: <ff1abd785bd78c9e@frisell.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -88,83 +62,80 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hey Dmitry,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I see you got wireguard's netlink stuff hooked up to syzkaller.
-Excellent work, and thanks! It's already finding bugs.
+Hello,
 
-Right now it seems to know about 5 different keys you've come up with,
-and not much in the way of endpoints. I think we can improve this.
+A new version, v0.0.20200205, of the backported WireGuard kernel module for
+3.10 <= Linux <= 5.5.y has been tagged in the git repository.
 
-For keys, there are a few cases we care about:
+Please note that until Linux 5.6 is released, this snapshot is a
+snapshot rather than a secure final release.
 
-1) Low order keys
-2) Negative keys
-3) Normal keys
-4) Keys that correspond to other keys (private ==> public)
+== Changes ==
 
-For this last point, if we just have a few with that correspondance
-quality in there, syzkaller will eventually wind up configuring two
-interfaces that can talk to each other, which is good. Here's a
-collection of keys you can use, in base64, that will cover those
-cases, if you want to add these instead of the current ones in there:
+  * compat: support building for RHEL-8.2
+  * compat: remove RHEL-7.6 workaround
+  
+  Bleeding edge RHEL users should be content now (which includes the actual
+  RedHat employees I've been talking to about getting this into the RHEL kernel
+  itself). Also, we remove old hacks for versions we no longer support anyway.
+  
+  * allowedips: remove previously added list item when OOM fail
+  * noise: reject peers with low order public keys
+  
+  With this now being upstream, we benefit from increased fuzzing coverage of
+  the code, uncovering these two bugs.
+  
+  * netns: ensure non-addition of peers with failed precomputation
+  * netns: tie socket waiting to target pid
+  
+  An added test to our test suite for the above and a small fix for high-load CI
+  scenarios.
 
-1)
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
-4Ot6fDtBuK4WVuP68Z/EatoJjeucMrH9hmIFFl9JuAA=
+This release contains commits from: Jason A. Donenfeld, Ilie Halip, and Eric 
+Dumazet.
 
-2)
-2/////////////////////////////////////////8=
-TJyVvKNQjCSx0LFVnIPvWwREXMRYHI6G2CJO3dCfEdc=
+As always, the source is available at https://git.zx2c4.com/wireguard-linux-compat/
+and information about the project is available at https://www.wireguard.com/ .
 
-3,4)
-oFyoT2ycjjhT4v16cK4Psg+hUmAMsAhFF08IB2+NeEM=
-l1ydgcmDyCCe54ElS4mfjtklrp8JI8I8YvU8V82/aRw=
-sIBz6NROkePakiwiQ4JEu4hcaeJpyOnYNbEUKTpN3G4=
-0XMomfYRzYmUA01/QT3JV2MOVJPChaykAGXLYxG+aWs=
-oMuHmkf1vGRMDmk/ptAxx0oVU7bpAbn/L1GMeAQvtUI=
-9E2jZ6iO5lZPAgIRRWcnCC9c6+6LG/Xrczc0G0WbOSI=
+This snapshot is available in compressed tarball form here:
+  https://git.zx2c4.com/wireguard-linux-compat/snapshot/wireguard-linux-compat-0.0.20200205.tar.xz
+  SHA2-256: 9669e165fc7252cab7f908ba57f160f6d57539b7cc81180f260cb675d2fd362b
 
-That's 10 keys total, which should be a decent collection to replace
-your current set of hard coded keys in there. You can unbase64 these
-into C format with commands like:
+A PGP signature of that file decompressed is available here:
+  https://git.zx2c4.com/wireguard-linux-compat/snapshot/wireguard-linux-compat-0.0.20200205.tar.asc
+  Signing key: AB9942E6D4A4CFC3412620A749FC7012A5DE03AE
+  Remember to unxz the tarball before verifying the signature.
 
-$ echo '2/////////////////////////////////////////8=' | base64 -d | xxd -i
-  0xdb, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
+If you're a package maintainer, please bump your package version. If you're a
+user, the WireGuard team welcomes any and all feedback on this latest version.
 
-The second thing is getting two wireguard interfaces to talk to each
-other. This probably should happen over localhost. That means the
-listen port of one should be the endpoint of the other. So maybe you
-can get away fuzzing these with:
+Finally, WireGuard development thrives on donations. By popular demand, we
+have a webpage for this: https://www.wireguard.com/donations/
 
-Listen ports:
-51820
-51821
-51822
-[randomly selected]
+Thank you,
+Jason Donenfeld
 
-and
 
-Endpoints:
-127.0.0.1:51820
-127.0.0.1:51821
-127.0.0.1:51822
-[::1]:51820
-[::1]:51821
-[::1]:51822
-[randomly selected]
+-----BEGIN PGP SIGNATURE-----
 
-Finally the "allowed ips" for a peer, the routing table entry that
-points to wireguard, and the packet that's being sent, should all
-somehow correspond. But probably an allowed ips of 0.0.0.0/0 will
-eventually be fuzzed to, which covers everything for the first part,
-so let's see if the rest falls into place on its own.
-
-What do you think of all that?
-
-Jason
+iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAl46xksQHGphc29uQHp4
+MmM0LmNvbQAKCRBJ/HASpd4DrgDRD/9ZMO1hpbyHjoguYN/NrdExxnWX3RoAHxry
+yX5Dz3Pyl5WuFQ4dbvIW1PsZ4208sgx8/2wQ/F1tspmST32QwXiCyrLV1kJS30xK
+CbtIcyX34rA+qu8hbtbGyRoEea/6Z8oMug+yoFydoZOKcnpcfR6dGkHvUy005c3R
+mWq9ROva5kKJETU6D3ry+pGJv9ItfUnkIv/FJoPXx4cPF8K0bm2wzL0APOr/gGjt
+IrvvHtUJ6r6QasiP6K2fMO9ihVczS7m9hVL4M7Bxx1X3lEmMRpwiMf2zInkoL9HV
+b+FZzlFyNA+d7iRA/ZU40u9AxOwOwifbolm94aw8KI8dr9aKLmnusxIIAKsIYYa5
+X7NeKdTJ3GsILMQGbNCESP44Tr4LgVM743m92P8MvHJZtDZAigPBrGS4mr/uASDi
+XpU+dHqfL/Wehdk7UCaj2MJsgM42XzsSzGr6fAROP/Ck7JLaY83u17G6UbC26c30
+Ktt1xPTL3FLJBnd23MMb3vlWNITytEVa7NoVN/i4Hv1+tFeUvSdzzE/+EvdlLotd
+3c1gncM/TtbBUPa4o17IqF3vvzHQKsjQFl9BnvnusVEpNOBZRCadnqEr9sKQZ3Wa
+X4H2LJaCtGMTrugQ/eF5wsaV+92aWNQ1s6fplNg/lwl9qX6mxAk118L2y8Aq0Oxd
+O25DLiz/5A==
+=fdbn
+-----END PGP SIGNATURE-----
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
