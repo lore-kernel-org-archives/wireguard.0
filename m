@@ -2,65 +2,47 @@ Return-Path: <SRS0=FiAf=34=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.3 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
-	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88B21C35242
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  8 Feb 2020 21:26:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A1FEC352A1
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  8 Feb 2020 21:26:35 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 2AA3122522
+	by mail.kernel.org (Postfix) with ESMTPS id A574D22522
 	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  8 Feb 2020 21:26:34 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ql0Ot8oE"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 2AA3122522
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A574D22522
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=powercraft.nl
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4a6124f9;
-	Sat, 8 Feb 2020 21:24:09 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 90da899c;
+	Sat, 8 Feb 2020 21:24:11 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5baf9515
- for <wireguard@lists.zx2c4.com>; Fri, 7 Feb 2020 15:49:31 +0000 (UTC)
-Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com
- [IPv6:2607:f8b0:4864:20::82c])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cc87d4da
- for <wireguard@lists.zx2c4.com>; Fri, 7 Feb 2020 15:49:31 +0000 (UTC)
-Received: by mail-qt1-x82c.google.com with SMTP id w47so2178466qtk.4
- for <wireguard@lists.zx2c4.com>; Fri, 07 Feb 2020 07:50:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=6IDn2wklkCJZV/E2ZEkUXJ3G+h08fOZQwMsD/ZgH308=;
- b=ql0Ot8oEsz/sDYTo3h4I1gR8Tr2G8N+TFD0yosnjCnTvwkvT8lFt9A3si4vs4BD60l
- 2Lnc9tw9nP87mfHQIlWk+2/CkJOSyTVLh/1Iyzc4lvI3v/MA7PaUPYNzhsCKri+S2bw0
- E9bC5y7byjx7hVOyhN7IgFkSMQ4PNJN3asigNiU1tfhbUUVTXSezN1FPrAZKxDUONCll
- kqJ1p9L8EDKw2hFOJDRAG6tK+K8YyCFXm1j70LTziMlUpU1yRhuvww3fWTfv90rR6aSM
- wWLRzSX58XpIrgVWOPkcL7ZSw+bEQg8/Q2bm1x59LGCbtPsLtSMui8e6CiTfv80PtI36
- ULdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=6IDn2wklkCJZV/E2ZEkUXJ3G+h08fOZQwMsD/ZgH308=;
- b=RFGIzPcu6kAniZMqG8Gnb5rkC/xn5r0XQ7TP+ZXfaymci+uggshLl0VqWKY7TZ5szr
- wriq8n6cfXXjzC6Gt/MYmSzvH3o3K0788FOOX7ane5ofmyTBQkBOHQr2/b3YMFUxNhih
- k4p3qRAU7MXSHsG9L2kt6qifxnpqEjMFzzw6RtRLO9d+7J/e1lp/xQnVaBuMcYfHr7TR
- kSWh0h4YGv/XAzCwWZd2grn2Uo/qrk+jsit/ip02Och+E+/gRS898FjbfI9fty42POQx
- 4OQI17fJ0Qr1Qe8uctkRTAsjPL2qEyfiiMhXfkWKBGy76S6xAjSO7Nx+//nZ+XVS2oaC
- C88A==
-X-Gm-Message-State: APjAAAU6M3SKbB33tORM/uVKtgA1jpVY39cnleOtZuymIoP83xbz0spn
- LhqvFjJgWkrkDfUmetUlBaZqlB6tfqBN/TgVryx9kdeQ
-X-Google-Smtp-Source: APXvYqyxYUMhrF7fh1EQc0KhScMlBT6aDydcO6SbqWTmmpLvC/Ys257H1WtDn0rDNU0vccq8s9J7UxJWZqCf1PgNNiw=
-X-Received: by 2002:ac8:6bc9:: with SMTP id b9mr7972893qtt.108.1581090643663; 
- Fri, 07 Feb 2020 07:50:43 -0800 (PST)
-MIME-Version: 1.0
-From: Yoni Leitersdorf <litelite@gmail.com>
-Date: Fri, 7 Feb 2020 07:50:32 -0800
-Message-ID: <CAJFy1VX+ue2JskKZEjnOkMdC6sGVLU=fUSZ_BNOqD__SpZ5EYg@mail.gmail.com>
-Subject: Usability issue in MacOS
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a80bac62
+ for <wireguard@lists.zx2c4.com>; Fri, 7 Feb 2020 16:48:41 +0000 (UTC)
+Received: from lb2-smtp-cloud9.xs4all.net (lb2-smtp-cloud9.xs4all.net
+ [194.109.24.26])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 16054133
+ for <wireguard@lists.zx2c4.com>; Fri, 7 Feb 2020 16:48:41 +0000 (UTC)
+Received: from yessica.powercraft.nl ([80.127.158.83])
+ by smtp-cloud9.xs4all.net with ESMTP
+ id 06pFj89au2Mf206pGjhTRO; Fri, 07 Feb 2020 17:49:54 +0100
+Received: from [192.168.24.203] (ebony.powercraft.nl [80.127.158.83])
+ by yessica.powercraft.nl (Postfix) with ESMTPSA id 0B3142046F
+ for <wireguard@lists.zx2c4.com>; Fri,  7 Feb 2020 17:49:53 +0100 (CET)
+From: Jelle de Jong <jelledejong@powercraft.nl>
+Subject: how to forward/route/rule all traffic broadcast from an br0 to wg0
 To: wireguard@lists.zx2c4.com
+Message-ID: <bfa1d3ff-7885-0c68-9d74-212dec0aaed8@powercraft.nl>
+Date: Fri, 7 Feb 2020 17:49:56 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
+MIME-Version: 1.0
+Content-Language: en-US
+X-CMAE-Envelope: MS4wfKS6yOio5b1rMq48MbOA4uGfHES5rhCYk3TuFpPrC4iuYILqPPln/eJu7/NTdCznuqmgs9FREg+mNiXQNEmMFIfSJNm613PsI8jnl5rOoOHvJTuSUYWb
+ /IUd1SkbGRItACX1Sxk6fs714RoqE8X2Rwqtr4z0A9rvoU0wPLvPinMXzdI4SSXFeJwTx6MvU6WA3b6yHWbvAn/4ASOs5eSge8M=
 X-Mailman-Approved-At: Sat, 08 Feb 2020 22:24:08 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
@@ -73,45 +55,38 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============3168676140289464629=="
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============3168676140289464629==
-Content-Type: multipart/alternative; boundary="0000000000002c5f74059dfe5ab6"
+Hello everybody,
 
---0000000000002c5f74059dfe5ab6
-Content-Type: text/plain; charset="UTF-8"
+br0 (with eth0 eth1 eth3)
+wg0 (192.168.43.10/24)
 
-When configuring a tunnel in the MacOS client, there's an option called
-"On-Demand". If Ethernet and/or Wi-Fi are checked, the client will
-auto-connect the tunnel.
+dhcp-helper to forward broadcast to ip?
 
-It's a great feature, but the term "On-Demand" is misleading. I would
-suggest "Auto-Connect" or "Auto-Establish" instead.
+I am looking for way to use a wireguard tunnel to route all traffic 
+including dhcp broadcast from one network to an other network and create 
+a form of a network bridge.
 
---0000000000002c5f74059dfe5ab6
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+I got an working wireguard client wg0 (192.168.43.10/24) that has a 
+linux bridge br0 on the same system, so br0 and wg0.
 
-<div dir=3D"ltr">When configuring a tunnel in the MacOS client, there&#39;s=
- an option called &quot;On-Demand&quot;. If Ethernet and/or Wi-Fi are check=
-ed, the client will auto-connect the tunnel.<div><br></div><div>It&#39;s a =
-great feature, but the term &quot;On-Demand&quot; is misleading. I would su=
-ggest &quot;Auto-Connect&quot; or &quot;Auto-Establish&quot; instead.</div>=
-</div>
+I can not add wg0 to the bridge because bridging is layer2.
 
---0000000000002c5f74059dfe5ab6--
+How can I use either ip route, nftables, iptables, etc to route all 
+traffic on br0 to wg0.
 
---===============3168676140289464629==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+I want to runnel an dhcp and pxe boot over the br0 to wg0.
 
+Can someone share an example?
+
+Kind regards,
+
+Jelle de Jong
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
-
---===============3168676140289464629==--
