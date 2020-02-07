@@ -2,62 +2,72 @@ Return-Path: <SRS0=RHSj=33=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+X-Spam-Status: No, score=-0.3 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7664CC352A2
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  7 Feb 2020 11:26:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E5CAAC352A2
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  7 Feb 2020 13:19:18 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id F029120726
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  7 Feb 2020 11:26:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 50656217BA
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  7 Feb 2020 13:19:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="r9QuDH6d"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org F029120726
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K2XQmQGQ"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 50656217BA
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4c010c5b;
-	Fri, 7 Feb 2020 11:24:47 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0244894f;
+	Fri, 7 Feb 2020 13:18:05 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id befad108
- for <wireguard@lists.zx2c4.com>; Fri, 7 Feb 2020 11:24:45 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d2ade926
- for <wireguard@lists.zx2c4.com>; Fri, 7 Feb 2020 11:24:45 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 102754da
- for <wireguard@lists.zx2c4.com>; Fri, 7 Feb 2020 11:24:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=cq9rn/rodNISIcgjNypUuW0LVx0=; b=r9QuDH
- 6dRU6AgbMWCywvldLFBhi+OUF12uNdXnmBrx1mFqaU/MiXB3q8bckDG46W9eq2Uj
- ITWiM537dmw/rg4k3vWa7A8Y7ueZLjRTq3XBcL7pptt/EbrueuVOIrkPM59+rHTJ
- yA0MJBfEeR4oeUTfO0uE4KcJ0rMMf1hmcC0EjyKx+o118ZKTBr48lxK0BZMJ4T1g
- Eq9uFJWVwCDnsTdEYrDdZ+tIh9SQf4aMdtO28s43Gje7Ud3J/wCW021A09eUTvk9
- 9cmK8Is3aI1AQGx017IAfmwuDvQXdw6VIOuoPmItA50IgQJfftMUhMq15OMdFdfB
- O9GlEGwa3yPifG5w==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 8404f6de
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Fri, 7 Feb 2020 11:24:45 +0000 (UTC)
-Received: by mail-ot1-f51.google.com with SMTP id g64so1789347otb.13
- for <wireguard@lists.zx2c4.com>; Fri, 07 Feb 2020 03:25:56 -0800 (PST)
-X-Gm-Message-State: APjAAAVEqvcCV3vx1B2u6KNLa+VkcoWyB+4VTgbafGSJVCyH/W6Gqa0A
- 72qr0dm8yGS0BBzIiM1DYRoPlPgOjTOWTlNd/3k=
-X-Google-Smtp-Source: APXvYqxp4MmjNYTOyGt4INNLLcno5XuuLl78SPFwI364CHsgiS5VYjdTeai4Gff3d2xtyte/ozKTq6UG6T8SI5T0Y2s=
-X-Received: by 2002:a9d:24c8:: with SMTP id z66mr2373928ota.52.1581074755939; 
- Fri, 07 Feb 2020 03:25:55 -0800 (PST)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 710e6d9c
+ for <wireguard@lists.zx2c4.com>; Fri, 7 Feb 2020 13:18:03 +0000 (UTC)
+Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com
+ [IPv6:2a00:1450:4864:20::243])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c7d01540
+ for <wireguard@lists.zx2c4.com>; Fri, 7 Feb 2020 13:18:03 +0000 (UTC)
+Received: by mail-lj1-x243.google.com with SMTP id h23so2103219ljc.8
+ for <wireguard@lists.zx2c4.com>; Fri, 07 Feb 2020 05:19:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=QyLnQGPjDgS0q6HNVw40elnm4wkAjixjpyTovJ7UGdk=;
+ b=K2XQmQGQHrFKXEjU0VNjyV90P/2QTpr6jhqS7yTnd+0B75q9NAU63DDJXxPFbQWPax
+ UtIU5Zqziu8BP1Fhpil0IM8OMqG+PYYw7Ep6MSYv9oF5/3SrC1Z11S+RaE6Qixz+IG2I
+ 31y+D9HHazBcMIEuRFHe0EHcSkQMO7WjWdIENTd433PijYVZ2y65m4aMPRc2k67//cS1
+ craAANx1TSlp9IUOzGob/3Fe64IfhoWOI28GpSaWuhNLo5XvDczN96+9uzCqY7BIs9um
+ /w0IteBVVUaOWL30xbhL1WPLIsFmp8HcOyh8j97MBhpYi4F/7HsUE4o+dMs4vLH6YH8D
+ sDxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=QyLnQGPjDgS0q6HNVw40elnm4wkAjixjpyTovJ7UGdk=;
+ b=JwjraHknaTYUOKYgssPTMIdfUbq/0GpSiheRl6uD1VD5rOT3dkXi+M1HTCE4LxbsC1
+ e+AaclH2iWQTHz8rhmlRtomxFi06wRQsrhSWN8v92ML523h/nBekhpQreWGGy+eDXcmY
+ pRG+CCpFCnh3SD11d2n0kRPmC5FCsibLQ2lIUv5DacZr4E07jzCtFMOUQ4EYn8JGNpUn
+ XGFYCjX1iPKHeJw04xe0oHIOXZRUvdEWYpt9cw7xRwkRyjn2UPUv70XSN2AaxRjK+4Ox
+ XW7/DjfMGqZqt7WteRYmi99itKKZzjvOt/XfiviRDePXi08WZLNVQa6z+PpTZ2yR9Ohs
+ Z1wQ==
+X-Gm-Message-State: APjAAAXNAa/HWs5qAC3KS3x1Tivv64gcMrQQ2cy4oTsnk+jG2tpbbkRT
+ 2janTT0RmVrlrxPCJNPu0V3UP33ENF6jS8LkQi4=
+X-Google-Smtp-Source: APXvYqynH0txbGSqkBRE7+I8ky0+308DzGfd128wVP9e+fA7TloaWiZZB+kkdBu/eXw14rB7a8p+KgpT/A0qgej9cAA=
+X-Received: by 2002:a05:651c:d4:: with SMTP id
+ 20mr5208467ljr.269.1581081552502; 
+ Fri, 07 Feb 2020 05:19:12 -0800 (PST)
 MIME-Version: 1.0
 References: <7bd93b7f-adef-e1b7-252b-1616914a6e4f@posteo.net>
-In-Reply-To: <7bd93b7f-adef-e1b7-252b-1616914a6e4f@posteo.net>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 7 Feb 2020 12:25:45 +0100
-X-Gmail-Original-Message-ID: <CAHmME9pC5Ki=Rnj-W+=t7CZtmVP9aUQJRL0bCzV1MHm3eO60NQ@mail.gmail.com>
-Message-ID: <CAHmME9pC5Ki=Rnj-W+=t7CZtmVP9aUQJRL0bCzV1MHm3eO60NQ@mail.gmail.com>
+ <CAHmME9pC5Ki=Rnj-W+=t7CZtmVP9aUQJRL0bCzV1MHm3eO60NQ@mail.gmail.com>
+In-Reply-To: <CAHmME9pC5Ki=Rnj-W+=t7CZtmVP9aUQJRL0bCzV1MHm3eO60NQ@mail.gmail.com>
+From: Ilie Halip <ilie.halip@gmail.com>
+Date: Fri, 7 Feb 2020 15:19:01 +0200
+Message-ID: <CAHFW8PSKTg5KAaZgTGhRkYVF+dBzY1ztHpK248B3HGC5R8mtOA@mail.gmail.com>
 Subject: Re: Building module on Mint on 5.4 kernels: fatal 'make' errors
-To: Nicholas Joll <najoll@posteo.net>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ Nicholas Joll <najoll@posteo.net>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -74,8 +84,26 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Seems to be a Mint DKMS problem maybe? Are they shipping clang but
-building kernels with gcc, or vice versa?
+My guess is you're installing the kernel from the Ubuntu PPA,
+https://kernel.ubuntu.com/~kernel-ppa/mainline, is that right?
+
+I can reproduce this build error with a fresh 5.4.6 kernel. Turns out, these
+kernels are built with a newer GCC (9.2.1). As such, the kernel's generated
+headers have CONFIG_CC_HAS_ASM_INLINE=1. But your GCC (probably 7.4.0? that's
+what I have on Mint 19.3 machine) doesn't support this feature.
+
+I installed GCC 9 from a PPA and was able to build the module manually:
+    $ KERNELRELEASE=5.4.6-050406-generic
+KERNELDIR=/home/ihalip/Projects/wireguard/kernels/ubuntu/usr/src/linux-headers-5.4.6-050406-generic
+make CC=gcc-9
+    [ ...snip... ]
+      MODPOST 1 modules
+      CC [M]  /home/ihalip/Projects/wireguard/wireguard-linux-compat/src/wireguard.mod.o
+      LD [M]  /home/ihalip/Projects/wireguard/wireguard-linux-compat/src/wireguard.ko
+
+I imagine you'd see the same issue building any out-of-tree kernel module.
+
+I.H.
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
