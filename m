@@ -2,79 +2,73 @@ Return-Path: <SRS0=FiAf=34=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	HTML_MESSAGE,MAILING_LIST_MULTI,NORMAL_HTTP_TO_IP,NUMERIC_HTTP_ADDR,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.3 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,
+	NORMAL_HTTP_TO_IP,NUMERIC_HTTP_ADDR,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 103DFC35242
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  8 Feb 2020 21:29:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 49C3CC35242
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  8 Feb 2020 21:30:13 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id A3B8E22522
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  8 Feb 2020 21:29:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A3B8E22522
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=pineview.net
+	by mail.kernel.org (Postfix) with ESMTPS id E170722522
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  8 Feb 2020 21:30:12 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LVpTZLFl"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org E170722522
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id baa4792c;
-	Sat, 8 Feb 2020 21:24:14 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cc232eff;
+	Sat, 8 Feb 2020 21:25:34 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8d89206c
- for <wireguard@lists.zx2c4.com>; Sat, 8 Feb 2020 10:28:56 +0000 (UTC)
-Received: from mail.pineview.net (mail.pineview.net [203.33.246.11])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0d9799f8
- for <wireguard@lists.zx2c4.com>; Sat, 8 Feb 2020 10:28:55 +0000 (UTC)
-Received: from HigherTime.local (HigherTime.pineview.net [203.33.246.60])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
- (No client certificate requested)
- by mail.pineview.net (Postfix) with ESMTPSA id 9F298801A7;
- Sat,  8 Feb 2020 21:00:12 +1030 (ACDT)
-Subject: Re: BGP over multiple wireguard vpn link
-To: Roberto 007 <mikit77777@gmail.com>, wireguard@lists.zx2c4.com
-References: <CABW-WNP=WfUcLaex2bMPAv4FX6hUmt4==CXx=nT3=K0NbHqE_g@mail.gmail.com>
-From: Mike O'Connor <mike@pineview.net>
-Autocrypt: addr=mike@pineview.net; prefer-encrypt=mutual; keydata=
- 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
-Message-ID: <fdaeb8d6-4986-8997-db86-b8a2cd818188@pineview.net>
-Date: Sat, 8 Feb 2020 21:00:12 +1030
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
- Gecko/20100101 Thunderbird/68.4.2
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 955f1786
+ for <WireGuard@lists.zx2c4.com>; Fri, 7 Feb 2020 14:51:59 +0000 (UTC)
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com
+ [IPv6:2a00:1450:4864:20::533])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f774538a
+ for <WireGuard@lists.zx2c4.com>; Fri, 7 Feb 2020 14:51:59 +0000 (UTC)
+Received: by mail-ed1-x533.google.com with SMTP id g19so2634923eds.11
+ for <WireGuard@lists.zx2c4.com>; Fri, 07 Feb 2020 06:53:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:reply-to:from:date:message-id:subject:to;
+ bh=PnRD0jQrEqnmd9Pv4mGhz6SlmO5KZKSUEanUbRi2dYY=;
+ b=LVpTZLFlEMym+DnW6xlY0vx8Ju2kj9yOAfBnTnHs/4co8+F2apXEOp9w3etwx4XWo1
+ sE+1RX++aWwskfzIKxGn7HyiiXZbSuPqK925LtrluCcgG9TjCn0RvoBID/hkG6moXaJn
+ S+bY9UOwPVobxyjcOlSF2uakpBPjsMwYWovPq/qJpr2PoBqPbaRJ76vdWv7npVt0wIMo
+ qYq/boK27wJfMmOTuGCr0uhbZulvhf68M2sx2Q/sQGp7yHPsKPDYNAm2UijBlctvpR84
+ kfRU0RMBAicRQhEBEUWoBNkcCRm7cz7rx8cWAwZ8WtvxCWw06Oz/IMdyJLM3BvV7tg+9
+ o1RQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+ :subject:to;
+ bh=PnRD0jQrEqnmd9Pv4mGhz6SlmO5KZKSUEanUbRi2dYY=;
+ b=S3OR3yY6JNzguKi1jm4spjsvCzNZhshLbF2vnkpE6epn55Gny9p/e4ffnqQQWVD8Vu
+ iZvLsQHPuIdviLRvxpqlUbBLQQPDtYSaVDyQ6xv4YxgRhOmDWUTAvZlFtnL/Z8MXlHxI
+ 1s2SAeSwRoOQnuQFK50L5nvHZS1UbHEErx9+KdRWfGuyqsqJm7YRrFHCU79f1xOraxpe
+ xjSsh9MJsyDBSYD5ix8rN82p/GH/zz/MpdiAhHl7Bv7/w01czN10suIJEpdYYCuyHx2J
+ ZcSgghFjWrXgWhvHequWoRTn8p/qXdmQ13KO7ZT8uGFfqHSARje4F3gKa/n+JHZa0F3P
+ pp+A==
+X-Gm-Message-State: APjAAAWq9VNxOJ6boi2NUYbXp0kk01wHcZsMpFOBqADi1qZH1Dqx5wbK
+ ZB3VBXPCH8TWfdopaoe2YFMoZRlIfDC5miIYuUgadAuH4g==
+X-Google-Smtp-Source: APXvYqwC2R8g9vNloTrzP5pS4pomCdRdZK1aVZzPVyJOUwEXehz1OV7IJBKs8sTymB//5MxPUTAtxAHQEVQk10bzPZo=
+X-Received: by 2002:a05:6402:74a:: with SMTP id
+ p10mr7800247edy.377.1581087190076; 
+ Fri, 07 Feb 2020 06:53:10 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CABW-WNP=WfUcLaex2bMPAv4FX6hUmt4==CXx=nT3=K0NbHqE_g@mail.gmail.com>
-Content-Language: en-US
-X-Mailman-Approved-At: Sat, 08 Feb 2020 22:24:08 +0100
+From: Kunal Shah <kunalv.shah@gmail.com>
+Date: Fri, 7 Feb 2020 20:22:33 +0530
+Message-ID: <CAMK_KHiuWijzbna+tBpZfZm9MixXXy5iEXoVh0r3oNmrqC-Ccg@mail.gmail.com>
+Subject: wireguard looses internet connection intermittently.
+To: WireGuard@lists.zx2c4.com
+X-Mailman-Approved-At: Sat, 08 Feb 2020 22:25:32 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
+Reply-To: kunalv.shah@gmail.com
 List-Id: Development discussion of WireGuard <wireguard.lists.zx2c4.com>
 List-Unsubscribe: <https://lists.zx2c4.com/mailman/options/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=unsubscribe>
@@ -83,179 +77,138 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============4124487699343886565=="
+Content-Type: multipart/mixed; boundary="===============3815507595333934457=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This is a multi-part message in MIME format.
---===============4124487699343886565==
-Content-Type: multipart/alternative;
- boundary="------------BAC928E214BC12BB1449D27E"
-Content-Language: en-US
+--===============3815507595333934457==
+Content-Type: multipart/alternative; boundary="00000000000052d0f1059dfd8cc4"
 
-This is a multi-part message in MIME format.
---------------BAC928E214BC12BB1449D27E
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+--00000000000052d0f1059dfd8cc4
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Miki
+Hello All,
 
-I'm doing basically what your talking about but with OSPF.
+Just started with wireguard and installation went smoothly. I am planning
+to setup wireguard on gcp linux server and connect my ubuntu laptop to use
+GCP server as vpn server. Primary requirement is to use GCP server as vpn
+server while traveling.
 
-I do not use wg-quick, instead I configure the Wireguard in the network
-interface file like /etc/network/interface on all the machines.
+I have got partial success with my setup. I am able to browse few sites and
+not able to browse few more. They are very popular sites. For example, I am
+able to go to www.yahoo.com but gmail.google.com I get error message that
+site took too long to respond.
 
-iface wg-p2p inet static
-            address xxx.xxx.xxx/xxx
-            pre-up ip link add $IFACE mtu 1500 type wireguard
-            pre-up wg setconf $IFACE /etc/wireguard/$IFACE.conf
-            post-down ip link del $IFACE
+I have opened udp port 51840 inbound to my GCP server.
 
-Central machines I'll list the allowed ip addresses from the individual
-peers.
+My client side (ubuntu laptop)
 
-On the peers I'll have an allow all like
+[Interface]
+PrivateKey = <ubuntu laptop privkey>
+Address = 192.168.1.2
+DNS = 8.8.8.8
+[Peer]
+PublicKey = <gcp server pubkey>ystemctl start wg-quick@wg0
+Endpoint = <gcp server's public ip>:51840
 AllowedIPs = 0.0.0.0/0, ::/0
 
-The allow all ip's on each peer does not add a route but does allow any
-traffic to be sent to the central system.
+PersistentKeepalive = 25
 
-From that point you can configure any dynamic routing system you want.
+My server (GCP)
 
-Mike
+[Interface]
+Address = 192.168.1.1
+SaveConfig = true
+PostUp = iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j
+ACCEPT; iptables -t nat -A POSTROUTING -o ens4 -j MASQUERADE
+PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i
+-j ACCEPT; iptables -t nat -D POSTROUTING -o ens4 -j MASQUERADE
+ListenPort = 51840
+PrivateKey = <gcp server priv key>
 
+[Peer]
+PublicKey = <ubuntu laptop public key>
+AllowedIPs = 192.168.1.2/32
 
-On 17/1/20 9:23 pm, Roberto 007 wrote:
-> Hello Wireguard team,
->
-> I would like to test multiple VPN links with BGP which is for
-> controlling traffic.
-> I have no problem to make BGP over multiple links but once I tried to
-> ping then I found a problem because I cannot set Allowed-IPs 0.0.0.0/0
-> <http://0.0.0.0/0> to all the wireguard links.
->
-> My question is that this kind of configuration is not supported
-> wireguard? 
->
-> I could make it with IPSec without any issues.
->
-> If you could give us some advice, it would be greatly appreciated.
->
-> Thanks and best regards,
-> Miki
->
->
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
+with this configuration if I start wireguard on both system using systemctl
+start wg-quick@wg0 , I am able to ping 192.168.1.1 from 192.168.1.2 without
+any packet drop. However, if I browse through chrome or firefox, for few
+sites it gives me error like site took too long to respond. On the same
+browser if I try few more sites, they work. Same time when it does not work
+from browser, if I ping the site, I get the dns resolved and response for
+the ping.
 
+I am not able to troubleshoot further., Are there any other logs I can
+refer to? Any idea what could have gone wrong? Has anyone faced this issue
+before?
 
+Thanks in advanced for the help.
 
---------------BAC928E214BC12BB1449D27E
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Kunal Shah
 
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <div class="moz-cite-prefix">Hi Miki</div>
-    <div class="moz-cite-prefix"><br>
-    </div>
-    <div class="moz-cite-prefix">I'm doing basically what your talking
-      about but with OSPF.</div>
-    <div class="moz-cite-prefix"><br>
-    </div>
-    <div class="moz-cite-prefix">I do not use wg-quick, instead I
-      configure the Wireguard in the network interface file like
-      /etc/network/interface on all the machines.<br>
-    </div>
-    <div class="moz-cite-prefix"><br>
-    </div>
-    <div class="moz-cite-prefix">iface wg-p2p inet static<br>
-                  address xxx.xxx.xxx/xxx<br>
-                  pre-up ip link add $IFACE mtu 1500 type wireguard<br>
-                  pre-up wg setconf $IFACE /etc/wireguard/$IFACE.conf<br>
-                  post-down ip link del $IFACE</div>
-    <div class="moz-cite-prefix"><br>
-    </div>
-    <div class="moz-cite-prefix">Central machines I'll list the allowed
-      ip addresses from the individual peers.<br>
-    </div>
-    <div class="moz-cite-prefix"><br>
-    </div>
-    <div class="moz-cite-prefix">On the peers I'll have an allow all
-      like</div>
-    <div class="moz-cite-prefix">AllowedIPs = 0.0.0.0/0, ::/0<br>
-    </div>
-    <div class="moz-cite-prefix"><br>
-    </div>
-    <div class="moz-cite-prefix">The allow all ip's on each peer does
-      not add a route but does allow any traffic to be sent to the
-      central system.</div>
-    <div class="moz-cite-prefix"><br>
-    </div>
-    <div class="moz-cite-prefix">From that point you can configure any
-      dynamic routing system you want.<br>
-    </div>
-    <div class="moz-cite-prefix"><br>
-    </div>
-    <div class="moz-cite-prefix">Mike<br>
-    </div>
-    <div class="moz-cite-prefix"><br>
-    </div>
-    <div class="moz-cite-prefix"><br>
-    </div>
-    <div class="moz-cite-prefix">On 17/1/20 9:23 pm, Roberto 007 wrote:<br>
-    </div>
-    <blockquote type="cite"
-cite="mid:CABW-WNP=WfUcLaex2bMPAv4FX6hUmt4==CXx=nT3=K0NbHqE_g@mail.gmail.com">
-      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-      <div dir="ltr">Hello Wireguard team,
-        <div><br>
-        </div>
-        <div>I would like to test multiple VPN links with BGP which is
-          for controlling traffic.</div>
-        <div>I have no problem to make BGP over multiple links but once
-          I tried to ping then I found a problem because I cannot set
-          Allowed-IPs <a href="http://0.0.0.0/0" moz-do-not-send="true">0.0.0.0/0</a>
-          to all the wireguard links.</div>
-        <div><br>
-        </div>
-        <div>My question is that this kind of configuration is not
-          supported wireguard? </div>
-        <div><br>
-        </div>
-        <div>I could make it with IPSec without any issues.</div>
-        <div><br>
-        </div>
-        <div>If you could give us some advice, it would be greatly
-          appreciated.</div>
-        <div><br>
-        </div>
-        <div>Thanks and best regards,</div>
-        <div>Miki</div>
-        <div><br>
-        </div>
-      </div>
-      <br>
-      <fieldset class="mimeAttachmentHeader"></fieldset>
-      <pre class="moz-quote-pre" wrap="">_______________________________________________
-WireGuard mailing list
-<a class="moz-txt-link-abbreviated" href="mailto:WireGuard@lists.zx2c4.com">WireGuard@lists.zx2c4.com</a>
-<a class="moz-txt-link-freetext" href="https://lists.zx2c4.com/mailman/listinfo/wireguard">https://lists.zx2c4.com/mailman/listinfo/wireguard</a>
-</pre>
-    </blockquote>
-    <p><br>
-    </p>
-  </body>
-</html>
+--00000000000052d0f1059dfd8cc4
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
---------------BAC928E214BC12BB1449D27E--
+<div dir=3D"ltr"><div class=3D"gmail_default" style=3D"font-family:verdana,=
+sans-serif">Hello All,</div><div class=3D"gmail_default" style=3D"font-fami=
+ly:verdana,sans-serif"><br></div><div class=3D"gmail_default" style=3D"font=
+-family:verdana,sans-serif">Just started with wireguard and installation we=
+nt smoothly. I am planning to setup wireguard on gcp linux server and conne=
+ct my ubuntu laptop to use GCP server as vpn server. Primary requirement is=
+ to use GCP server as vpn server while traveling.</div><div class=3D"gmail_=
+default" style=3D"font-family:verdana,sans-serif"><br></div><div class=3D"g=
+mail_default" style=3D"font-family:verdana,sans-serif">I have got partial s=
+uccess with my setup. I am able to browse few sites and not able to browse =
+few more. They are very popular sites. For example, I am able to go to <a h=
+ref=3D"http://www.yahoo.com">www.yahoo.com</a> but <a href=3D"http://gmail.=
+google.com">gmail.google.com</a> I get error message that site took too lon=
+g to respond.</div><div class=3D"gmail_default" style=3D"font-family:verdan=
+a,sans-serif"><br></div><div class=3D"gmail_default" style=3D"font-family:v=
+erdana,sans-serif">I have opened udp port 51840 inbound to my GCP server.<b=
+r></div><div class=3D"gmail_default" style=3D"font-family:verdana,sans-seri=
+f"><br></div><div class=3D"gmail_default" style=3D"font-family:verdana,sans=
+-serif">My client side (ubuntu laptop)</div><div class=3D"gmail_default" st=
+yle=3D"font-family:verdana,sans-serif"><br></div><div class=3D"gmail_defaul=
+t" style=3D"font-family:verdana,sans-serif">[Interface]<br>PrivateKey =3D &=
+lt;ubuntu laptop privkey&gt;<br>Address =3D 192.168.1.2<br>DNS =3D 8.8.8.8<=
+br>[Peer]<br>PublicKey =3D &lt;gcp server pubkey&gt;ystemctl start wg-quick=
+@wg0<br>Endpoint =3D &lt;gcp server&#39;s public ip&gt;:51840<br>AllowedIPs=
+ =3D <a href=3D"http://0.0.0.0/0">0.0.0.0/0</a>, ::/0<br><br>PersistentKeep=
+alive =3D 25</div><div class=3D"gmail_default" style=3D"font-family:verdana=
+,sans-serif"><br></div><div class=3D"gmail_default" style=3D"font-family:ve=
+rdana,sans-serif">My server (GCP)</div><div class=3D"gmail_default" style=
+=3D"font-family:verdana,sans-serif"><br></div><div class=3D"gmail_default" =
+style=3D"font-family:verdana,sans-serif">[Interface]<br>Address =3D 192.168=
+.1.1<br>SaveConfig =3D true<br>PostUp =3D iptables -A FORWARD -i %i -j ACCE=
+PT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o =
+ens4 -j MASQUERADE<br>PostDown =3D iptables -D FORWARD -i %i -j ACCEPT; ipt=
+ables -D FORWARD -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o ens4 -j=
+ MASQUERADE<br>ListenPort =3D 51840<br>PrivateKey =3D &lt;gcp server priv k=
+ey&gt;<br><br>[Peer]<br>PublicKey =3D &lt;ubuntu laptop public key&gt;<br>A=
+llowedIPs =3D <a href=3D"http://192.168.1.2/32">192.168.1.2/32</a></div><di=
+v class=3D"gmail_default" style=3D"font-family:verdana,sans-serif"><br></di=
+v><div class=3D"gmail_default" style=3D"font-family:verdana,sans-serif">wit=
+h this configuration if I start wireguard on both system using systemctl st=
+art wg-quick@wg0 , I am able to ping 192.168.1.1 from 192.168.1.2 without a=
+ny packet drop. However, if I browse through chrome or firefox, for few sit=
+es it gives me error like site took too long to respond. On the same browse=
+r if I try few more sites, they work. Same time when it does not work from =
+browser, if I ping the site, I get the dns resolved and response for the pi=
+ng.<br></div><div class=3D"gmail_default" style=3D"font-family:verdana,sans=
+-serif"><br></div><div class=3D"gmail_default" style=3D"font-family:verdana=
+,sans-serif">I am not able to troubleshoot further., Are there any other lo=
+gs I can refer to? Any idea what could have gone wrong? Has anyone faced th=
+is issue before?</div><div class=3D"gmail_default" style=3D"font-family:ver=
+dana,sans-serif"><br></div><div class=3D"gmail_default" style=3D"font-famil=
+y:verdana,sans-serif">Thanks in advanced for the help.</div><div class=3D"g=
+mail_default" style=3D"font-family:verdana,sans-serif"><br></div><div class=
+=3D"gmail_default" style=3D"font-family:verdana,sans-serif">Kunal Shah<br><=
+/div></div>
 
---===============4124487699343886565==
+--00000000000052d0f1059dfd8cc4--
+
+--===============3815507595333934457==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -266,4 +219,4 @@ WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---===============4124487699343886565==--
+--===============3815507595333934457==--
