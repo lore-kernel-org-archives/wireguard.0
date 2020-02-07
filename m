@@ -2,47 +2,48 @@ Return-Path: <SRS0=FiAf=34=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A1FEC352A1
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6D85C35254
 	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  8 Feb 2020 21:26:35 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id A574D22522
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  8 Feb 2020 21:26:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A574D22522
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=powercraft.nl
+	by mail.kernel.org (Postfix) with ESMTPS id 2767922522
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  8 Feb 2020 21:26:35 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=jikken.de header.i=@jikken.de header.b="FOk4n2ie"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 2767922522
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=jikken.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 90da899c;
-	Sat, 8 Feb 2020 21:24:11 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e59a4f39;
+	Sat, 8 Feb 2020 21:24:12 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a80bac62
- for <wireguard@lists.zx2c4.com>; Fri, 7 Feb 2020 16:48:41 +0000 (UTC)
-Received: from lb2-smtp-cloud9.xs4all.net (lb2-smtp-cloud9.xs4all.net
- [194.109.24.26])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 16054133
- for <wireguard@lists.zx2c4.com>; Fri, 7 Feb 2020 16:48:41 +0000 (UTC)
-Received: from yessica.powercraft.nl ([80.127.158.83])
- by smtp-cloud9.xs4all.net with ESMTP
- id 06pFj89au2Mf206pGjhTRO; Fri, 07 Feb 2020 17:49:54 +0100
-Received: from [192.168.24.203] (ebony.powercraft.nl [80.127.158.83])
- by yessica.powercraft.nl (Postfix) with ESMTPSA id 0B3142046F
- for <wireguard@lists.zx2c4.com>; Fri,  7 Feb 2020 17:49:53 +0100 (CET)
-From: Jelle de Jong <jelledejong@powercraft.nl>
-Subject: how to forward/route/rule all traffic broadcast from an br0 to wg0
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 00201998
+ for <wireguard@lists.zx2c4.com>; Fri, 7 Feb 2020 22:19:36 +0000 (UTC)
+Received: from shinsetsu.jikken.de (shinsetsu.jikken.de [92.60.39.148])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fdafcba6
+ for <wireguard@lists.zx2c4.com>; Fri, 7 Feb 2020 22:19:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=jikken.de;
+ s=Mv0BmWWr5KBeokdR; t=1581114048;
+ bh=LPPlWNVOgdtjHgAeptu94XhwPJj309i3Lvmk/GOMasU=;
+ h=Date:From:To:Subject:References:In-Reply-To;
+ b=FOk4n2iereXegGVixVP4Ujad3nKWpPo0iPxjlCHPE7mMCY6Bt9vlKjgzOg/OZx/KN
+ YVT2951Gi2+dxDljcqUKjTZysLNOxATzG9uEzayIEXqkaVnoI9Wkoc5SAM//qfY2Ij
+ a/o8j03fnt/dnz0v5IALjDqJaGEFicPgjIkLotK4=
+Date: Fri, 7 Feb 2020 23:20:47 +0100
+From: Inrin <inrin@jikken.de>
 To: wireguard@lists.zx2c4.com
-Message-ID: <bfa1d3ff-7885-0c68-9d74-212dec0aaed8@powercraft.nl>
-Date: Fri, 7 Feb 2020 17:49:56 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.1
+Subject: Re: BGP over multiple wireguard vpn link
+Message-ID: <20200207222047.r5n2lfeegyznlchf@nisshoku>
+Mail-Followup-To: wireguard@lists.zx2c4.com
+References: <CABW-WNP=WfUcLaex2bMPAv4FX6hUmt4==CXx=nT3=K0NbHqE_g@mail.gmail.com>
 MIME-Version: 1.0
-Content-Language: en-US
-X-CMAE-Envelope: MS4wfKS6yOio5b1rMq48MbOA4uGfHES5rhCYk3TuFpPrC4iuYILqPPln/eJu7/NTdCznuqmgs9FREg+mNiXQNEmMFIfSJNm613PsI8jnl5rOoOHvJTuSUYWb
- /IUd1SkbGRItACX1Sxk6fs714RoqE8X2Rwqtr4z0A9rvoU0wPLvPinMXzdI4SSXFeJwTx6MvU6WA3b6yHWbvAn/4ASOs5eSge8M=
+Content-Disposition: inline
+In-Reply-To: <CABW-WNP=WfUcLaex2bMPAv4FX6hUmt4==CXx=nT3=K0NbHqE_g@mail.gmail.com>
 X-Mailman-Approved-At: Sat, 08 Feb 2020 22:24:08 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
@@ -55,38 +56,19 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"; Format="flowed"
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="utf-8"; Format="flowed"
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello everybody,
-
-br0 (with eth0 eth1 eth3)
-wg0 (192.168.43.10/24)
-
-dhcp-helper to forward broadcast to ip?
-
-I am looking for way to use a wireguard tunnel to route all traffic 
-including dhcp broadcast from one network to an other network and create 
-a form of a network bridge.
-
-I got an working wireguard client wg0 (192.168.43.10/24) that has a 
-linux bridge br0 on the same system, so br0 and wg0.
-
-I can not add wg0 to the bridge because bridging is layer2.
-
-How can I use either ip route, nftables, iptables, etc to route all 
-traffic on br0 to wg0.
-
-I want to runnel an dhcp and pxe boot over the br0 to wg0.
-
-Can someone share an example?
-
-Kind regards,
-
-Jelle de Jong
-_______________________________________________
-WireGuard mailing list
-WireGuard@lists.zx2c4.com
-https://lists.zx2c4.com/mailman/listinfo/wireguard
+SGVsbG8gTWlraSwKCk9uIEZyaSwgSmFuIDE3LCAyMDIwIGF0IDA1OjUzOjU3UE0gKzA3MDAsIFJv
+YmVydG8gMDA3IHdyb3RlOgo+SSB3b3VsZCBsaWtlIHRvIHRlc3QgbXVsdGlwbGUgVlBOIGxpbmtz
+IHdpdGggQkdQIHdoaWNoIGlzIGZvciBjb250cm9sbGluZwo+dHJhZmZpYy4KPkkgaGF2ZSBubyBw
+cm9ibGVtIHRvIG1ha2UgQkdQIG92ZXIgbXVsdGlwbGUgbGlua3MgYnV0IG9uY2UgSSB0cmllZCB0
+byBwaW5nCj50aGVuIEkgZm91bmQgYSBwcm9ibGVtIGJlY2F1c2UgSSBjYW5ub3Qgc2V0IEFsbG93
+ZWQtSVBzIDAuMC4wLjAvMCB0byBhbGwKPnRoZSB3aXJlZ3VhcmQgbGlua3MuCkNvdWxkIHlvdSBl
+bGFib3JhdGUgb24gaG93IHlvdSdyZSBjb25maWd1cmluZyB5b3VyIFdHIGxpbmtzPwpFLmcuIHdn
+K2lwcm91dGUyLCB3Zy1xdWljaywgc3lzdGVtZC1uZXR3b3JrZCwg4oCmCgpCZXN0IHJlZ2FyZHMs
+CklucmluCl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fCldp
+cmVHdWFyZCBtYWlsaW5nIGxpc3QKV2lyZUd1YXJkQGxpc3RzLnp4MmM0LmNvbQpodHRwczovL2xp
+c3RzLnp4MmM0LmNvbS9tYWlsbWFuL2xpc3RpbmZvL3dpcmVndWFyZAo=
