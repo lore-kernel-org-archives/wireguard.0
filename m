@@ -2,65 +2,75 @@ Return-Path: <SRS0=FiAf=34=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.3 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
-	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	HTML_MESSAGE,MAILING_LIST_MULTI,NORMAL_HTTP_TO_IP,NUMERIC_HTTP_ADDR,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8817C35242
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  8 Feb 2020 21:27:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 103DFC35242
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  8 Feb 2020 21:29:44 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 8A47622522
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  8 Feb 2020 21:27:09 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UVSRX5WI"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 8A47622522
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	by mail.kernel.org (Postfix) with ESMTPS id A3B8E22522
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  8 Feb 2020 21:29:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A3B8E22522
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=pineview.net
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d63ded93;
-	Sat, 8 Feb 2020 21:24:13 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id baa4792c;
+	Sat, 8 Feb 2020 21:24:14 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4de35f7d
- for <wireguard@lists.zx2c4.com>; Sat, 8 Feb 2020 05:00:30 +0000 (UTC)
-Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com
- [IPv6:2607:f8b0:4864:20::d34])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bbd8322e
- for <wireguard@lists.zx2c4.com>; Sat, 8 Feb 2020 05:00:30 +0000 (UTC)
-Received: by mail-io1-xd34.google.com with SMTP id h8so1923370iob.2
- for <wireguard@lists.zx2c4.com>; Fri, 07 Feb 2020 21:01:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=g9eAkf6qbAYenCFsEMJDDLilUZOzg0MdqVfTQGW9F4s=;
- b=UVSRX5WIrRbFH1E2yUCVe8IJ2yQvBwWHA3AehzGUKUscHz1ZI3cTFVk9xdcqAiskCo
- pDzauArWddHKoPxwDkGUcr8fwWj+o+cKByRDlXwr16zoL3qu8x3FQVrtOpVbbLj/jhdD
- Vz6mp5D7hrnEqM3D+gij8m6RK6l1Q677bumrVafeJbY5eamQByO/gZGOPA9AnBOCqWbh
- GIFseC46aK+L62QoMXQN2R42mhjcOdqyyX4LqEt9OeU0iJU/r8zzdfe+qRf/O7c7M+kR
- O8hEJyi8zWOgAGQQqPyyLQj8oO4QLFDl1OZ13zbz/rXrFO+/N8u1lNi1X0Eb2VkNuyT7
- kcvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=g9eAkf6qbAYenCFsEMJDDLilUZOzg0MdqVfTQGW9F4s=;
- b=nvBMvif08O6ReULeoVNCxmxe6FCbyABECBRfI3FshULwrLanz4ng4dsgQTKJqoNrNG
- 8sx6Q0UfiW5+ENm6XkR6O/v3EbAOpYwuqJT5zKpklirnsZctSpGLPHj+FRIyN71WRiXL
- oXbMdK7DlN35ECtOD+Fqmsgmbi6XB8A0hN8phZxVvWAWBi8OjMYNlN3bg4nfmtm1+X8O
- sK3HYsgLwhTfiZ/TJ4dlnA91vzl+BCKE/ubfj9pLiiDpYjoMkT2sa6EGbx0crXaes4KT
- CYVjOvub0Y0DvV2QbjvvYxyk8zGmdd6+Ks+5eNZhqlM/ycwm6efFarUrrKH3L+1o6xgF
- PWFQ==
-X-Gm-Message-State: APjAAAUN35AcJRkXmCVhsKAp6vS6d4VSI+M7a9SYxpk7hoRQWFmJpOjo
- PwNJBDgOELmb8LreVCnvUooqTXSHsiuvdvR8SXYgoYJrzvWa6A==
-X-Google-Smtp-Source: APXvYqzvGo789nD8RbV5K4yAnvB3xxV8dlzrh2Qn1Im4b2RUQPq3eE5BjaRkrt6KS4ukN4l1zpcfYZfsEXB0BFlE4qU=
-X-Received: by 2002:a6b:1744:: with SMTP id 65mr1535296iox.145.1581138106720; 
- Fri, 07 Feb 2020 21:01:46 -0800 (PST)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8d89206c
+ for <wireguard@lists.zx2c4.com>; Sat, 8 Feb 2020 10:28:56 +0000 (UTC)
+Received: from mail.pineview.net (mail.pineview.net [203.33.246.11])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0d9799f8
+ for <wireguard@lists.zx2c4.com>; Sat, 8 Feb 2020 10:28:55 +0000 (UTC)
+Received: from HigherTime.local (HigherTime.pineview.net [203.33.246.60])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
+ (No client certificate requested)
+ by mail.pineview.net (Postfix) with ESMTPSA id 9F298801A7;
+ Sat,  8 Feb 2020 21:00:12 +1030 (ACDT)
+Subject: Re: BGP over multiple wireguard vpn link
+To: Roberto 007 <mikit77777@gmail.com>, wireguard@lists.zx2c4.com
+References: <CABW-WNP=WfUcLaex2bMPAv4FX6hUmt4==CXx=nT3=K0NbHqE_g@mail.gmail.com>
+From: Mike O'Connor <mike@pineview.net>
+Autocrypt: addr=mike@pineview.net; prefer-encrypt=mutual; keydata=
+ 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
+Message-ID: <fdaeb8d6-4986-8997-db86-b8a2cd818188@pineview.net>
+Date: Sat, 8 Feb 2020 21:00:12 +1030
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
+ Gecko/20100101 Thunderbird/68.4.2
 MIME-Version: 1.0
-From: Isaac Nickaein <nickaein.i@gmail.com>
-Date: Sat, 8 Feb 2020 08:31:21 +0330
-Message-ID: <CA+NJmkessNRmWxxST5tZSijVJU4QZevibKZ2XbXEWRCUty54PQ@mail.gmail.com>
-Subject: Minor bugs in the sample script for ns-routing
-To: wireguard@lists.zx2c4.com
+In-Reply-To: <CABW-WNP=WfUcLaex2bMPAv4FX6hUmt4==CXx=nT3=K0NbHqE_g@mail.gmail.com>
+Content-Language: en-US
 X-Mailman-Approved-At: Sat, 08 Feb 2020 22:24:08 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
@@ -73,36 +83,187 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="===============4124487699343886565=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-The sample script provided at "Routing and Network Namespace
-Intergration" page seems to have a few bugs, at least on Ubuntu 19.10:
+This is a multi-part message in MIME format.
+--===============4124487699343886565==
+Content-Type: multipart/alternative;
+ boundary="------------BAC928E214BC12BB1449D27E"
+Content-Language: en-US
 
-1. The execi command seems to have an extra "exec" at the beginning. Instead of:
+This is a multi-part message in MIME format.
+--------------BAC928E214BC12BB1449D27E
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-exec ip netns exec physical sudo -E -u \#${SUDO_UID:-$(id -u)} -g
-\#${SUDO_GID:-$(id -g)} -- "$@"
+Hi Miki
 
-It should say:
+I'm doing basically what your talking about but with OSPF.
 
-ip netns exec physical sudo -E -u \#${SUDO_UID:-$(id -u)} -g
-\#${SUDO_GID:-$(id -g)} -- "$@"
+I do not use wg-quick, instead I configure the Wireguard in the network
+interface file like /etc/network/interface on all the machines.
+
+iface wg-p2p inet static
+            address xxx.xxx.xxx/xxx
+            pre-up ip link add $IFACE mtu 1500 type wireguard
+            pre-up wg setconf $IFACE /etc/wireguard/$IFACE.conf
+            post-down ip link del $IFACE
+
+Central machines I'll list the allowed ip addresses from the individual
+peers.
+
+On the peers I'll have an allow all like
+AllowedIPs = 0.0.0.0/0, ::/0
+
+The allow all ip's on each peer does not add a route but does allow any
+traffic to be sent to the central system.
+
+From that point you can configure any dynamic routing system you want.
+
+Mike
 
 
-2. The "shift" command should be moved into "execi" function.
+On 17/1/20 9:23 pm, Roberto 007 wrote:
+> Hello Wireguard team,
+>
+> I would like to test multiple VPN links with BGP which is for
+> controlling traffic.
+> I have no problem to make BGP over multiple links but once I tried to
+> ping then I found a problem because I cannot set Allowed-IPs 0.0.0.0/0
+> <http://0.0.0.0/0> to all the wireguard links.
+>
+> My question is that this kind of configuration is not supported
+> wireguard? 
+>
+> I could make it with IPSec without any issues.
+>
+> If you could give us some advice, it would be greatly appreciated.
+>
+> Thanks and best regards,
+> Miki
+>
+>
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
 
-3. dhcpd seems to be replaced by dhclient. It would be nice if the
-script set it (and other configurations) as a variable, e.g. to make
-it easier for user to adopt the script:
 
-DHCP_DAEMON=dhcpd
-WG_IFACE=wgvpn0
-WLAN_IFACE=wlan0
-WLAN_PHY=phy0
+
+--------------BAC928E214BC12BB1449D27E
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 8bit
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <div class="moz-cite-prefix">Hi Miki</div>
+    <div class="moz-cite-prefix"><br>
+    </div>
+    <div class="moz-cite-prefix">I'm doing basically what your talking
+      about but with OSPF.</div>
+    <div class="moz-cite-prefix"><br>
+    </div>
+    <div class="moz-cite-prefix">I do not use wg-quick, instead I
+      configure the Wireguard in the network interface file like
+      /etc/network/interface on all the machines.<br>
+    </div>
+    <div class="moz-cite-prefix"><br>
+    </div>
+    <div class="moz-cite-prefix">iface wg-p2p inet static<br>
+                  address xxx.xxx.xxx/xxx<br>
+                  pre-up ip link add $IFACE mtu 1500 type wireguard<br>
+                  pre-up wg setconf $IFACE /etc/wireguard/$IFACE.conf<br>
+                  post-down ip link del $IFACE</div>
+    <div class="moz-cite-prefix"><br>
+    </div>
+    <div class="moz-cite-prefix">Central machines I'll list the allowed
+      ip addresses from the individual peers.<br>
+    </div>
+    <div class="moz-cite-prefix"><br>
+    </div>
+    <div class="moz-cite-prefix">On the peers I'll have an allow all
+      like</div>
+    <div class="moz-cite-prefix">AllowedIPs = 0.0.0.0/0, ::/0<br>
+    </div>
+    <div class="moz-cite-prefix"><br>
+    </div>
+    <div class="moz-cite-prefix">The allow all ip's on each peer does
+      not add a route but does allow any traffic to be sent to the
+      central system.</div>
+    <div class="moz-cite-prefix"><br>
+    </div>
+    <div class="moz-cite-prefix">From that point you can configure any
+      dynamic routing system you want.<br>
+    </div>
+    <div class="moz-cite-prefix"><br>
+    </div>
+    <div class="moz-cite-prefix">Mike<br>
+    </div>
+    <div class="moz-cite-prefix"><br>
+    </div>
+    <div class="moz-cite-prefix"><br>
+    </div>
+    <div class="moz-cite-prefix">On 17/1/20 9:23 pm, Roberto 007 wrote:<br>
+    </div>
+    <blockquote type="cite"
+cite="mid:CABW-WNP=WfUcLaex2bMPAv4FX6hUmt4==CXx=nT3=K0NbHqE_g@mail.gmail.com">
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <div dir="ltr">Hello Wireguard team,
+        <div><br>
+        </div>
+        <div>I would like to test multiple VPN links with BGP which is
+          for controlling traffic.</div>
+        <div>I have no problem to make BGP over multiple links but once
+          I tried to ping then I found a problem because I cannot set
+          Allowed-IPs <a href="http://0.0.0.0/0" moz-do-not-send="true">0.0.0.0/0</a>
+          to all the wireguard links.</div>
+        <div><br>
+        </div>
+        <div>My question is that this kind of configuration is not
+          supported wireguard? </div>
+        <div><br>
+        </div>
+        <div>I could make it with IPSec without any issues.</div>
+        <div><br>
+        </div>
+        <div>If you could give us some advice, it would be greatly
+          appreciated.</div>
+        <div><br>
+        </div>
+        <div>Thanks and best regards,</div>
+        <div>Miki</div>
+        <div><br>
+        </div>
+      </div>
+      <br>
+      <fieldset class="mimeAttachmentHeader"></fieldset>
+      <pre class="moz-quote-pre" wrap="">_______________________________________________
+WireGuard mailing list
+<a class="moz-txt-link-abbreviated" href="mailto:WireGuard@lists.zx2c4.com">WireGuard@lists.zx2c4.com</a>
+<a class="moz-txt-link-freetext" href="https://lists.zx2c4.com/mailman/listinfo/wireguard">https://lists.zx2c4.com/mailman/listinfo/wireguard</a>
+</pre>
+    </blockquote>
+    <p><br>
+    </p>
+  </body>
+</html>
+
+--------------BAC928E214BC12BB1449D27E--
+
+--===============4124487699343886565==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--===============4124487699343886565==--
