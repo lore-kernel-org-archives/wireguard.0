@@ -1,63 +1,74 @@
-Return-Path: <SRS0=FiAf=34=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=u9qp=37=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24133C35242
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  8 Feb 2020 22:21:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DA27C352A3
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 11 Feb 2020 13:59:45 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id BC7942082E
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  8 Feb 2020 22:21:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 8D3712086A
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 11 Feb 2020 13:59:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="k3SN2Lfj"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org BC7942082E
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=inuits.eu header.i=@inuits.eu header.b="IDkzW6+C"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 8D3712086A
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=inuits.eu
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 20b7132b;
-	Sat, 8 Feb 2020 22:19:38 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7c7ec44c;
+	Tue, 11 Feb 2020 13:57:33 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bbaafeb2
- for <wireguard@lists.zx2c4.com>; Sat, 8 Feb 2020 22:19:36 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 505f4ddc
- for <wireguard@lists.zx2c4.com>; Sat, 8 Feb 2020 22:19:36 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 08346966
- for <wireguard@lists.zx2c4.com>; Sat, 8 Feb 2020 22:19:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=B4ZgXSdNqF5jASEIOjghbUwPSqI=; b=k3SN2L
- fjaF4JEU0BZXQNmRLqFQh+lHZTSsGPzYdo5vlOzNclxx6XKZIIo1w67G9WYcjQud
- 3sBxzDBdhfj7OCLQDLMoQlK0YedIUj1Sq/gSKgsTEC0rdsM5K/xCG4LDlCApB9eB
- KV/gwH3teeCXP78UrNA7EJn/RePiUC5/KJmFJoyqdcZhYIQAI9P98jsUB3u7UE8h
- fsiQB3xPea8TrPVDyb+N9ZhiLqfq52iuhXz+us2e2WXvW9FNAaG5VDHJkVD11dYh
- Ousi14RielIxigbXqtMRB3GhmSQjVDaWivQ6p5mEPYC2A7vaeu3pXsvhzOgFtGFx
- hyDTXpaKbdg+RRyw==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 73b67d04
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sat, 8 Feb 2020 22:19:36 +0000 (UTC)
-Received: by mail-ot1-f48.google.com with SMTP id i6so2787918otr.7
- for <wireguard@lists.zx2c4.com>; Sat, 08 Feb 2020 14:20:59 -0800 (PST)
-X-Gm-Message-State: APjAAAWDMIemgQOTC6pShE612UcoviE+896epsx751chVMaDgUjoqmd6
- GzS37sQvwQhlSEscv6t/AreLe0vTZMSl4VYjIe0=
-X-Google-Smtp-Source: APXvYqxDz7tAaMlMOJQ20GAB0XEdLe24lspelTtN7QlqmGDNVQj2LOQk1pzQKJl17Hb7xWmbGpX6uzG85IYvMIqBqi0=
-X-Received: by 2002:a9d:7a47:: with SMTP id z7mr5010645otm.179.1581200458549; 
- Sat, 08 Feb 2020 14:20:58 -0800 (PST)
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d546ca89
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 11 Feb 2020 13:57:31 +0000 (UTC)
+Received: from zimbra88.inuits.eu (zimbra88.inuits.eu [176.31.37.175])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3bed63f1
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 11 Feb 2020 13:57:30 +0000 (UTC)
+Received: from localhost (localhost [127.0.0.1])
+ by zimbra88.inuits.eu (Postfix) with ESMTP id 529407C07AD;
+ Tue, 11 Feb 2020 14:59:13 +0100 (CET)
+Received: from zimbra88.inuits.eu ([127.0.0.1])
+ by localhost (zimbra88.inuits.eu [127.0.0.1]) (amavisd-new, port 10032)
+ with ESMTP id EayPZYr4DlSg; Tue, 11 Feb 2020 14:59:11 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zimbra88.inuits.eu (Postfix) with ESMTP id B138D7C07DD;
+ Tue, 11 Feb 2020 14:59:11 +0100 (CET)
+DKIM-Filter: OpenDKIM Filter v2.10.3 zimbra88.inuits.eu B138D7C07DD
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=inuits.eu;
+ s=E845565C-8838-11E9-A43F-52B5C8A0861E; t=1581429551;
+ bh=ywEh4alKK2N6EmCcmalFA4Wwv/A8eNBaxfD4KgdmTqs=;
+ h=Date:From:To:Message-ID:MIME-Version;
+ b=IDkzW6+CsbJMWCiu9hTLut63f8ORrdZjMpj15h19k2A2+fhqDyICAy3U24shWkfoT
+ GX4FkNgCx4+vVsZkW118TORQ9KNEtsNrn5cPV7hfLywz2rTaqA18Aa1VgjtbYXcxLC
+ 16ChKco/9wWFbS/4Dz4o2YrBkD6y7w6HxhYCdeRSWZ/zxJw0ATK/0LgBnm42jCDOVo
+ aK0ndp9lF1LWNGOdL/rLJvM+Noq1Bo0PM7A+1lCAz1rRJixJ+JuGpZ3hmXKNS9oG2l
+ rXLGpiEfyJvyLEXUdjiEajSV4diVpyTkG3vUZBkWpOUGK5loeVT6eETbalfWnebqmx
+ 4IawSABo1cp+g==
+X-Virus-Scanned: amavisd-new at zimbra88.inuits.eu
+Received: from zimbra88.inuits.eu ([127.0.0.1])
+ by localhost (zimbra88.inuits.eu [127.0.0.1]) (amavisd-new, port 10026)
+ with ESMTP id A6zgSddH0ssM; Tue, 11 Feb 2020 14:59:11 +0100 (CET)
+Received: from zimbra88.inuits.eu (zimbra88.inuits.eu [10.0.228.250])
+ by zimbra88.inuits.eu (Postfix) with ESMTP id 954E27C07AD;
+ Tue, 11 Feb 2020 14:59:11 +0100 (CET)
+Date: Tue, 11 Feb 2020 14:59:11 +0100 (CET)
+From: Christophe Vanlancker <carroarmato0@inuits.eu>
+To: smith151@ngs.ru
+Message-ID: <1037620993.52462.1581429551465.JavaMail.zimbra@inuits.eu>
+In-Reply-To: <web-43707088@mx61.intranet.ru>
+References: <web-43707088@mx61.intranet.ru>
+Subject: Re: Enable default route after establishing connection only
 MIME-Version: 1.0
-References: <20200207200035.69579-1-hristo@venev.name>
-In-Reply-To: <20200207200035.69579-1-hristo@venev.name>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sat, 8 Feb 2020 23:20:47 +0100
-X-Gmail-Original-Message-ID: <CAHmME9owUFjKsW=oGWeziQk8rjPm4cMrArJQ=nDP8+793w5PsA@mail.gmail.com>
-Message-ID: <CAHmME9owUFjKsW=oGWeziQk8rjPm4cMrArJQ=nDP8+793w5PsA@mail.gmail.com>
-Subject: Re: [PATCH] Implement reading keys from stdin.
-To: Hristo Venev <hristo@venev.name>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+X-Originating-IP: [10.0.228.250]
+X-Mailer: Zimbra 8.8.12_GA_3794 (ZimbraWebClient - FF72 (Linux)/8.8.12_GA_3794)
+Thread-Topic: Enable default route after establishing connection only
+Thread-Index: PNtQ9mhtOhMYsi9QzCcVjllybCsaSw==
+Cc: wireguard@lists.zx2c4.com
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -74,14 +85,45 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Thank for the patch, and nice hanging with you at FOSDEM.
+I think it's better to solve this at another level.
 
-Trying to get a handle on the use case for this. Is this so that you
-can put the private key and the preshared key in a single file
-together? Is there a situation where the shell redirection trick
-doesn't cut it? For example:
+I use WireGuard on my phone, and I would rather have connections fail and me being aware of that rather than my connections working and falsely believing they are going through the tunnel.
 
-wg set wg0 private-key <(head -n 1 bothkeys) preshared-key <(tail -n 1 bothkeys)
+----- Original Message -----
+From: smith151@ngs.ru
+To: wireguard@lists.zx2c4.com
+Sent: Tuesday, 28 January, 2020 09:50:23
+Subject: Enable default route after establishing connection only
+
+I am using default route on wireguard. And sometimes 
+remote server is not acceptable. The reasons may differ - 
+planned maintenance of server, internet troubles, blocked 
+IPs of server by country black list an so on.
+
+In case when wireguard server is not reachable wireguard 
+client always setting default route via wg0 peer. And all 
+internet traffic is not available in this case. How can I 
+set up wireguard to enable default route after 
+establishing connection only?
+
+I am using wireguard v.20200121 on Debian 10 buster. The 
+config file of client is very simple:
+
+```
+[Interface]
+Address = 1.2.3.2
+PrivateKey = ClientPrivateKey=
+
+[Peer]
+PublicKey = ServerPublicKey=
+Endpoint = 1.2.3.1:51820
+PersistentKeepalive = 25
+AllowedIPs = 0.0.0.0/0,::/0
+```
+_______________________________________________
+WireGuard mailing list
+WireGuard@lists.zx2c4.com
+https://lists.zx2c4.com/mailman/listinfo/wireguard
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
