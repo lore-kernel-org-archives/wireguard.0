@@ -2,70 +2,70 @@ Return-Path: <SRS0=KrVi=4C=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+X-Spam-Status: No, score=-0.3 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 171FAC2BA83
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 98725C3B196
 	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 14 Feb 2020 11:03:44 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id A9EF72168B
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 14 Feb 2020 11:03:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 317D62168B
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 14 Feb 2020 11:03:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=bossanova.com header.i=@bossanova.com header.b="oSY5pWTV"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A9EF72168B
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=bossanova.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Cu2tCdbl"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 317D62168B
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fb112b09;
-	Fri, 14 Feb 2020 10:55:09 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 277626ed;
+	Fri, 14 Feb 2020 10:55:10 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2b0b85bb
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8227fa0e
  for <wireguard@lists.zx2c4.com>;
- Mon, 10 Feb 2020 14:05:47 +0000 (UTC)
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com
- [IPv6:2a00:1450:4864:20::42b])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4d665470
+ Tue, 11 Feb 2020 15:17:56 +0000 (UTC)
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com
+ [IPv6:2a00:1450:4864:20::22d])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cc9f063d
  for <wireguard@lists.zx2c4.com>;
- Mon, 10 Feb 2020 14:05:47 +0000 (UTC)
-Received: by mail-wr1-x42b.google.com with SMTP id z3so7908929wru.3
- for <wireguard@lists.zx2c4.com>; Mon, 10 Feb 2020 06:07:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bossanova.com; s=bossanova;
+ Tue, 11 Feb 2020 15:17:56 +0000 (UTC)
+Received: by mail-lj1-x22d.google.com with SMTP id n18so12012359ljo.7
+ for <wireguard@lists.zx2c4.com>; Tue, 11 Feb 2020 07:19:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=NGygjBwpxPYO8XFoSQzN4ptPoP1Nf5aTr6s95G6ZFe0=;
- b=oSY5pWTVXinpnDzu9lGHK4L2T9U8dR91hxku8vlddws5WZlaGvwTkA1WUdEJJ4ORTX
- 839U56nst7s7AF8qlipK3yVQJvkFEQacz+2fp5zQ8cS2RMu/hVr5j4BsxauE5hPIkBwJ
- z2FhXvnrXBgZu7f72TlOjct6ZOQhPci2Rwf6Uw3fhGy1LNBfSBUS4/gTITQE531I2O2R
- k/BlYqLKbqNIVyaDYu/qHgin3BIB9PmkQFeFbeiqHJN1hoBdttECkopKmPZTif+a/uWf
- Pfiec0WaAkf3y5ati78r/fT554BPgc9OnZ1ceMUtvJg+EeviXfxyreT0MrJTDPpkr/DB
- RZEQ==
+ :cc; bh=AZpg+qVIr+9hfGLNqA0DG9U+puVyd46CBIwi5EjNY3M=;
+ b=Cu2tCdblkuNmAqXhsECLNYe4V5vRBV+bXE9z1ppKVXf6XkAarGY01xUwfR9IuhWjZG
+ 79iN2x8mJnJX/+VkH7CdStBw0IEO8eXQwZ0ZvWU1WDpvPlYZQ9xpJcg+Kq+gHbMK7iLV
+ cuj5p5r+eqFloNe/C/u9EQVfRu4iNP0KU8q44kuXX/VqBZ77jclADTt/J6ZtzuBTEBp5
+ TsdrdwT7jKRrEta7ClkRq9NG1NVLZ4IMmhNdN80j0hJklOkvc9ygoppPcUa9uGL3nRu2
+ +UJp3JBAQbn4ryENDFriAYxF/8KWXr9MzeJPt46H7egbe5weB3BFBgAtAuIo8tXxn578
+ wZ1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=NGygjBwpxPYO8XFoSQzN4ptPoP1Nf5aTr6s95G6ZFe0=;
- b=arIAOJkErFrljz+miwI/h6x5YrwUC8ORvf1vDhopXtCeq5Vhb0AGg2MFyOShDu8+Qd
- dRxKDR3Q2PEH3nqxQdkJ8OoogsCjsYJV2sQ5YOpyUVzT8tUnSBJ0cbJDwjsdLxk01KGv
- SmSZ6uLzJFpsoqAqlmT+8CS/V0I6PvR6v9fbX7TFB5XEk39jWu0t2j2Dv4jFsNSIbzJ2
- Xj2Ea41mKUGfk/rtq1fn3iRmlxtHSPwatJhCsIDNKrU3q4hP0zlPsBcum1jzOby899ub
- Vf4ixsYYmaQ1BOQWpUe6pVRHBO9zQRx7yrXpSUgJ37jG95FDAFVMId16/L7LBwk+3TVn
- xP4Q==
-X-Gm-Message-State: APjAAAUyDXiTEGiEvpz9xdcWueucHAoTODT6fxXTeboByAnFjJiAf90U
- 7Jiutk1Wig/xNY8Qal8K7ztt7D3UuhiMLpBcELVc3w==
-X-Google-Smtp-Source: APXvYqxWSms/XbjntfIBQ9cyQ2tFJiUdQKRzndh6XAG31rLLfN3wmcpGBxHGcSmxMJ7YfeNNVkhiOKxHCkicGcBoFng=
-X-Received: by 2002:adf:f401:: with SMTP id g1mr2144437wro.129.1581343641208; 
- Mon, 10 Feb 2020 06:07:21 -0800 (PST)
+ bh=AZpg+qVIr+9hfGLNqA0DG9U+puVyd46CBIwi5EjNY3M=;
+ b=Ml+I3EYcnCpFcw/YyJ/XxX6oErIskWSteGkj54kancpiRcVPbbvQZDoEhZfCjizxGV
+ elWuQA3j0gU0kprstx6XN8MPRS9aq7lPVLBBcapt3fu994CNqZRmrPCssErjf9fSBPOh
+ GhlGijx8BPeyxqpVkwyOmP9A5l/ijeSt9FN2v68OYu8vritkfqLbgwR6+Y/3Qk/W/Qi5
+ XXrDsyjJVZqkcXHztbxLodkKZIwHyhOCewIJEPrIHOWIBYLFq/D6rE7KrznxTQhAYz6F
+ clkNyedikb7lFywhbkyo4uVLJ5c96d8b0VL/+UUamo4BY7q/IyXihsgBgM+cBWcpIWUb
+ ReYg==
+X-Gm-Message-State: APjAAAU94DQYEJuasCEIGX7ht9WaNngB9CPm5/4r4C0UoU+SAU/xxMKl
+ My3MWDmA0twHpqDLEfTWv0bwXEs44lAvpxg0lTw=
+X-Google-Smtp-Source: APXvYqwMj7wxyZcv2gh5NOQxMvfK5+WJRUfP/jMHBuztp9oStUc2TK79NAIuKi9eWcx+geMJdOiOurBmZEVQKa2Tr1M=
+X-Received: by 2002:a2e:8797:: with SMTP id n23mr4340685lji.176.1581434379220; 
+ Tue, 11 Feb 2020 07:19:39 -0800 (PST)
 MIME-Version: 1.0
-References: <CA+w0pKbV0bUrYfvnZ82Nam2oCODGG5_hv4d+AzqYXvuto3Y_vg@mail.gmail.com>
- <CAHmME9pFY10ujuOWUD45YkEu8zgFgyQP+zxbSbYE+oh=2fhmnQ@mail.gmail.com>
-In-Reply-To: <CAHmME9pFY10ujuOWUD45YkEu8zgFgyQP+zxbSbYE+oh=2fhmnQ@mail.gmail.com>
-From: Barrett Strausser <barrett@bossanova.com>
-Date: Mon, 10 Feb 2020 09:07:10 -0500
-Message-ID: <CA+w0pKY0KGCBAPYqoTReXdDmB22ctWkczEoK-FFxoR3B8b0wzw@mail.gmail.com>
-Subject: Re: CryptoKey Routing Management for Peers
+References: <413c4ea5-9e70-acf9-caff-f6049374f7ce@gmail.com>
+ <CAHmME9rbO2mPjgX7FHgC4f3uK9ewtsiaNvVpZ7SpXuNPLCB07g@mail.gmail.com>
+In-Reply-To: <CAHmME9rbO2mPjgX7FHgC4f3uK9ewtsiaNvVpZ7SpXuNPLCB07g@mail.gmail.com>
+From: Ingo Naumann <cyberurchin@gmail.com>
+Date: Tue, 11 Feb 2020 16:19:28 +0100
+Message-ID: <CAEouytwqENepmAF59Yx4_fjHo4Y4_E2Bz5hCeSfbcDX4K7+zyA@mail.gmail.com>
+Subject: Re: Windows Wireguard with Multiple Endpoints in Different Subnets
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>
 X-Mailman-Approved-At: Fri, 14 Feb 2020 11:55:07 +0100
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
@@ -80,74 +80,70 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============3139832166679819441=="
+Content-Type: multipart/mixed; boundary="===============2176409974625324596=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============3139832166679819441==
-Content-Type: multipart/alternative; boundary="00000000000000a681059e39423e"
+--===============2176409974625324596==
+Content-Type: multipart/alternative; boundary="00000000000068bcd9059e4e6235"
 
---00000000000000a681059e39423e
+--00000000000068bcd9059e4e6235
 Content-Type: text/plain; charset="UTF-8"
 
-I don't doubt that it can handle 1M peers.
-
-My question was more concerned with can an *Organization *perform the
-configuration management to handle 1M peers if all configuration is through
-a static IP.
-
-If I have 1M peers and .9999 have no change per day, that still leaves 100
-changes or ~4 per hour. I'd argue it is a good practice to have to restart
-services to pick up those changes.
-
-I'll have a look at those links. Thank you very much
-
--b
+The config file stays the same. The configuration breaks when I define a
+default gateway in my network settings (in order to have the Windows
+machine connected to the Internet). From that moment on, the packages
+destined to the other ethernet port (the one where the default gateway not
+is) are showing up on the wrong port (I can see them with Wireshark). But
+only the packages from Wireguard, if I do a simple ping, everything works
+because the subnets are all still properly defined.
 
 
+On Tue, Jan 28, 2020 at 11:38 AM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
 
-On Sat, Feb 8, 2020 at 4:29 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
-
-> WireGuard has an API, via Netlink. This might help you:
+> On Tue, Jan 28, 2020 at 11:34 AM <cyberurchin@gmail.com> wrote:
+> > b) The configuration described above breaks when I define a default
+> gateway, e.g. 192.168.0.1.
 >
-> https://git.zx2c4.com/wireguard-tools/tree/contrib/embeddable-wg-library
-> https://git.zx2c4.com/wireguard-tools/tree/src/uapi/linux/wireguard.h
->
-> It can handle 1M peers, yes.
+> I didn't quite understand what type of change this sentence implies.
+> What's the config file after you make the transformation described in
+> (b)?
 >
 
---00000000000000a681059e39423e
+--00000000000068bcd9059e4e6235
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">I don&#39;t doubt that it can handle 1M peers.=C2=A0<div><=
-br></div><div>My question was more concerned with can an <i>Organization </=
-i>perform the configuration management to handle 1M peers if all configurat=
-ion is through a static IP.</div><div><br></div><div>If I have 1M peers and=
- .9999 have no change per day, that still leaves 100 changes or ~4 per hour=
-. I&#39;d argue it is a good practice to have to restart services to pick u=
-p those changes.</div><div><br></div><div>I&#39;ll have a look at those lin=
-ks. Thank you very much</div><div><br></div><div>-b</div><div><br></div><di=
-v><br></div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"=
-gmail_attr">On Sat, Feb 8, 2020 at 4:29 PM Jason A. Donenfeld &lt;<a href=
-=3D"mailto:Jason@zx2c4.com">Jason@zx2c4.com</a>&gt; wrote:<br></div><blockq=
-uote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1p=
-x solid rgb(204,204,204);padding-left:1ex">WireGuard has an API, via Netlin=
-k. This might help you:<br>
+<div dir=3D"ltr">The config file stays the same. The configuration breaks w=
+hen I define a
+ default gateway in my network settings (in order to have the Windows=20
+machine connected to the Internet). From that moment on, the packages=20
+destined to the other ethernet port (the one where the default gateway=20
+not is) are showing up on the wrong port (I can see them with=20
+Wireshark). But only the packages from <span class=3D"gmail-il">Wireguard</=
+span>, if I do a simple ping, everything works because the subnets are all =
+still properly defined.<div class=3D"gmail-yj6qo gmail-ajU"><div id=3D"gmai=
+l-:15v" class=3D"gmail-ajR" tabindex=3D"0"><br></div></div></div><br><div c=
+lass=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Jan 28, =
+2020 at 11:38 AM Jason A. Donenfeld &lt;<a href=3D"mailto:Jason@zx2c4.com">=
+Jason@zx2c4.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" s=
+tyle=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pad=
+ding-left:1ex">On Tue, Jan 28, 2020 at 11:34 AM &lt;<a href=3D"mailto:cyber=
+urchin@gmail.com" target=3D"_blank">cyberurchin@gmail.com</a>&gt; wrote:<br=
+>
+&gt; b) The configuration described above breaks when I define a default ga=
+teway, e.g. 192.168.0.1.<br>
 <br>
-<a href=3D"https://git.zx2c4.com/wireguard-tools/tree/contrib/embeddable-wg=
--library" rel=3D"noreferrer" target=3D"_blank">https://git.zx2c4.com/wiregu=
-ard-tools/tree/contrib/embeddable-wg-library</a><br>
-<a href=3D"https://git.zx2c4.com/wireguard-tools/tree/src/uapi/linux/wiregu=
-ard.h" rel=3D"noreferrer" target=3D"_blank">https://git.zx2c4.com/wireguard=
--tools/tree/src/uapi/linux/wireguard.h</a><br>
-<br>
-It can handle 1M peers, yes.<br>
+I didn&#39;t quite understand what type of change this sentence implies.<br=
+>
+What&#39;s the config file after you make the transformation described in<b=
+r>
+(b)?<br>
 </blockquote></div>
 
---00000000000000a681059e39423e--
+--00000000000068bcd9059e4e6235--
 
---===============3139832166679819441==
+--===============2176409974625324596==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -158,4 +154,4 @@ WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---===============3139832166679819441==--
+--===============2176409974625324596==--
