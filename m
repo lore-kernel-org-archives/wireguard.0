@@ -2,88 +2,90 @@ Return-Path: <SRS0=3Rrq=4D=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.0 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D476C352A3
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 15 Feb 2020 03:40:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 05F2AC352A3
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 15 Feb 2020 06:14:45 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 9939D2083B
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 15 Feb 2020 03:40:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 5C13E2067D
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 15 Feb 2020 06:14:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=sholland.org header.i=@sholland.org header.b="JNDPpzNb";
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="R+pB4w4O"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 9939D2083B
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=sholland.org header.i=@sholland.org header.b="AcJNKHH/";
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nGdFpT8W"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 5C13E2067D
 Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=sholland.org
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d278cbc0;
-	Sat, 15 Feb 2020 03:38:24 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id beb0a523;
+	Sat, 15 Feb 2020 06:12:31 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 62bbe003
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e7af44d8
  for <wireguard@lists.zx2c4.com>;
- Sat, 15 Feb 2020 03:38:22 +0000 (UTC)
-Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com
- [64.147.123.24])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 525bdde6
+ Sat, 15 Feb 2020 06:12:28 +0000 (UTC)
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com
+ [66.111.4.29])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e8dd7688
  for <wireguard@lists.zx2c4.com>;
- Sat, 15 Feb 2020 03:38:22 +0000 (UTC)
+ Sat, 15 Feb 2020 06:12:28 +0000 (UTC)
 Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
- by mailout.west.internal (Postfix) with ESMTP id 231724C6;
- Fri, 14 Feb 2020 22:40:17 -0500 (EST)
+ by mailout.nyi.internal (Postfix) with ESMTP id 2DF6C21E1C;
+ Sat, 15 Feb 2020 01:14:40 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
- by compute5.internal (MEProxy); Fri, 14 Feb 2020 22:40:17 -0500
+ by compute5.internal (MEProxy); Sat, 15 Feb 2020 01:14:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sholland.org; h=
  subject:to:references:from:message-id:date:mime-version
- :in-reply-to:content-type:content-transfer-encoding; s=fm1; bh=T
- le0fpgh6nx5jmbQZTOJX1WealLpBL/Y8MIn52Ye1uU=; b=JNDPpzNb+h7ORUQy/
- fkcsyH2uAZCUT+tQ9VP909gEyqMMWG8I73XOmd/ua6B2rCLLh+MpuyFEJa0sWzy/
- ikb38Q5AiLSMIXhkHl8BeEoatHwec4L7FJYTqwQNidjU45+NJcQBR2I8e1A5S4Oc
- k6sXifslgxtYZPcU8Z0aDcLZu2eWMNs+nsGYA6UBncGuSW5RJdWkzVqcFZIalMvL
- 0hFDIcdoQHjyPFUuVe8iX1hD6oGuUrtEViH4XchJuVvkWiafkCnuGvHZFWI6RYwZ
- TqVFQg+lIrbYojvYAoYOnnw71RhVncVzvUf54pDe7VawCcmR92cORyfl4Ip5Qmw9
- 0D5MQ==
+ :in-reply-to:content-type:content-transfer-encoding; s=fm1; bh=s
+ KunUzmwm2yiR/NOqf5sFKfnV84p5V1N8QWrjzrTlkw=; b=AcJNKHH/MR/XYa4x2
+ kVzmSNoBPt4anyNMDqYNDjfhu7TajXMk5WubWstwONCEHpmMxa8Rqc+/xzTt2mrZ
+ aciDU8O9berINY2w7hSnNfs/Qi9da+KXa9t/2o57f222tLPTskv8xTHl9oSHGw6x
+ DRMy1WEeG62HGqwJY+BEImbumOHBTJdsBkaClqGhzzqQWVp32u6fcqV4D9nxSp+M
+ rXbkQF9JsItn9/cP86W/Pil5sF1BWtFT2mGVGf1NTMebOUsCn/42L2wjhjcfyeXR
+ dEySZeJ2+pMfOLnrBNEHDpzfjV15PGzqV2zmk00/MlhXLwMzchf3JaeWTEFhji1l
+ FARgA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=content-transfer-encoding:content-type
  :date:from:in-reply-to:message-id:mime-version:references
  :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm2; bh=Tle0fpgh6nx5jmbQZTOJX1WealLpBL/Y8MIn52Ye1
- uU=; b=R+pB4w4O5Si3O3qd62skwPjkjDKeQ9aCbUuEQleOpTVVsLf4r6u1lguIZ
- rDfxJTPK7ZO34pQRcsZv/cgWFF6BnTOZ6hW6hK/gHr0Ct9Ym94LyHmjdvLSEQ749
- 3uVVBgqM8BCHmpJ77dS7aOsC75ILpFNvswE7sd0WdxErsniwcZseMhCwCnKJZyib
- a2Odfas4WBzTMLf1MzPmC/eCQ0LJDTKckvJAiNYuRyS2MqjYrpH9IMy151kchmnP
- jweTyGXpJcqmKpHN/OifAGCiU8yDHCukf+izTlWJL+9XRkQccPhve5qjlRmreihw
- GqXoKGUB9PDa1mQWIy5HNDS6+PfJw==
-X-ME-Sender: <xms:IGhHXuFBZDRjb3fFHQL7nhfkvVL5i7qol9yqtQBkkHTutQ-mv_X5eQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedugedrjedugdeiudcutefuodetggdotefrodftvf
+ :x-sasl-enc; s=fm2; bh=sKunUzmwm2yiR/NOqf5sFKfnV84p5V1N8QWrjzrTl
+ kw=; b=nGdFpT8Wyp/3Oiqjm0BhAsqIVPwxxuXwqZU7M7g5rlb6yv2wcXsz3Q7LO
+ 29d3aYZqAyWH1J2TLP7D6WoydKom3J76fTpA06u8n2ypqOPOEeKHvrTodXop4dsG
+ XLDMgMmPL7RJ5SqpE3/AVyh1CvC3eeQsKJcXOhQdfudxIznFAEqIZgoDudUc1wwi
+ 1rTL1Simi32CJmKYf8rjY7KwX83vlx05unwbv6P5Ql//DITBYl1AvN3cujYwxNvP
+ NihrWjUeZWMSu2jHfAwiZOu3aZCse1XeEux7aQIHdET9DL/C2Uhasn9Po1llnnz6
+ MJ4U8MPADwhU8TcTxu/vzWlMUpCvw==
+X-ME-Sender: <xms:T4xHXh0uW0gGjs1lZRF_R_eYFpxDKEEa9LnZDhYoT9fh54wmXFQ7Rg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedugedrjedugdelfecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
  fjughrpefuvfhfhffkffgfgggjtgfgsehtjeertddtfeejnecuhfhrohhmpefurghmuhgv
- lhcujfholhhlrghnugcuoehsrghmuhgvlhesshhhohhllhgrnhgurdhorhhgqeenucfkph
- epjedtrddufeehrddugeekrdduhedunecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
- rghmpehmrghilhhfrhhomhepshgrmhhuvghlsehshhholhhlrghnugdrohhrgh
-X-ME-Proxy: <xmx:IGhHXmMZeVYExkkzwmgznXtnBZ-J2AHOfa9zF7Ma3qwTEToFz1kXog>
- <xmx:IGhHXgdUtYLbx7zDZBcU0Ur9oU06BBtC2qDZEiyj_9jrL55AX6eeww>
- <xmx:IGhHXjs7yJ5gHVFhdYm4yKnBMB3ZVrS4jKrm2j8sct4xqbFiv6ICtA>
- <xmx:IGhHXsEuP6yamuX7t8rY04bDegEIKCj1OOUEGiiv64izlvK4a9uIqw>
+ lhcujfholhhlrghnugcuoehsrghmuhgvlhesshhhohhllhgrnhgurdhorhhgqeenucffoh
+ hmrghinhepiiigvdgtgedrtghomhenucfkphepjedtrddufeehrddugeekrdduhedunecu
+ vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepshgrmhhuvg
+ hlsehshhholhhlrghnugdrohhrgh
+X-ME-Proxy: <xmx:T4xHXtOkW333r28kEd3Ihv8pVtYzbDkUgbXKi8JwbQC1n0BBTGTuGw>
+ <xmx:T4xHXk2XcB-nBA-3BZcWLafRAk85T9WLrXHNDdqxFP02BtEpranjTA>
+ <xmx:T4xHXk3iJ___OPaWxntZIg4zRlmIbYUY3EveqOqs7bjV5ZKKP0wfvQ>
+ <xmx:UIxHXlx_8malROO8Vp11fC1g7UOdvAar2835oKK-47M1AxSqJm5Aog>
 Received: from [192.168.50.169]
  (70-135-148-151.lightspeed.stlsmo.sbcglobal.net [70.135.148.151])
- by mail.messagingengine.com (Postfix) with ESMTPA id 3C6DA3060BD1;
- Fri, 14 Feb 2020 22:40:16 -0500 (EST)
+ by mail.messagingengine.com (Postfix) with ESMTPA id A11D23060C28;
+ Sat, 15 Feb 2020 01:14:39 -0500 (EST)
 Subject: Re: [PATCH] Add japanese translation.
 To: Eiji Tanioka <tanioka404@gmail.com>, wireguard@lists.zx2c4.com
 References: <20200213103117.68943-1-tanioka404@gmail.com>
+ <120ad97e-0dcb-6502-f097-e1368d9987cf@sholland.org>
+ <CAA2ss9EDZ4qip3Rh-z_zseLr2u0+A8ePEUUBd7dnJq2RTdPmwA@mail.gmail.com>
 From: Samuel Holland <samuel@sholland.org>
-Message-ID: <120ad97e-0dcb-6502-f097-e1368d9987cf@sholland.org>
-Date: Fri, 14 Feb 2020 21:40:15 -0600
+Message-ID: <851381cd-3fc0-94f9-63a1-7b69deb9a640@sholland.org>
+Date: Sat, 15 Feb 2020 00:14:38 -0600
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.2.2
 MIME-Version: 1.0
-In-Reply-To: <20200213103117.68943-1-tanioka404@gmail.com>
+In-Reply-To: <CAA2ss9EDZ4qip3Rh-z_zseLr2u0+A8ePEUUBd7dnJq2RTdPmwA@mail.gmail.com>
 Content-Language: en-US
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
@@ -101,25 +103,14 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On 2/13/20 4:31 AM, Eiji Tanioka wrote:
-> This patch is Japanese translation for wireguard-android.
+On 2/14/20 11:27 PM, Eiji Tanioka wrote:
+> Hi, Samuel.
+> 
+> Thank you for your reply!
+> I re-created patch.
 
-Thank you for the patch!
-
-Yes, `git format-patch` and sending to this list is how we're currently
-accepting contributions to the Android app.
-
-Next time, please also include your Signed-off-by: line in the commit message.
-
-> ---
->  app/src/main/res/values-ja/strings.xml | 300 ++++++++++++-------------
->  1 file changed, 150 insertions(+), 150 deletions(-)
-
-It looks like you created this file in a previous commit. Please squash your
-changes to a single commit that creates the file with its final contents.
-
-Thanks,
-Samuel
+Thanks, applied:
+https://git.zx2c4.com/wireguard-android/commit/?id=822f72df956ecd3aaa6a2b254e059e38ba5122e4
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
