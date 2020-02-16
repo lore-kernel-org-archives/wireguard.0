@@ -2,85 +2,67 @@ Return-Path: <SRS0=0UwN=4E=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.3 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86252C2BA83
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 16 Feb 2020 09:59:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36844C2BA83
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 16 Feb 2020 12:59:41 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id C160B2086A
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 16 Feb 2020 09:59:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 871F22084E
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 16 Feb 2020 12:59:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=sgregoratto.me header.i=@sgregoratto.me header.b="ZvCGLNld";
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Nv1r4rg/"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org C160B2086A
-Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=sgregoratto.me
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rvImUtlU"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 871F22084E
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dc323b2b;
-	Sun, 16 Feb 2020 09:56:48 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ad654411;
+	Sun, 16 Feb 2020 12:57:05 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b4d51ff9
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 80234c30
  for <wireguard@lists.zx2c4.com>;
- Sun, 16 Feb 2020 04:07:50 +0000 (UTC)
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
- [66.111.4.28])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5497fce7
+ Sun, 16 Feb 2020 12:57:03 +0000 (UTC)
+Received: from mail-vs1-xe36.google.com (mail-vs1-xe36.google.com
+ [IPv6:2607:f8b0:4864:20::e36])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5212a481
  for <wireguard@lists.zx2c4.com>;
- Sun, 16 Feb 2020 04:07:50 +0000 (UTC)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
- by mailout.nyi.internal (Postfix) with ESMTP id 436F821402;
- Sat, 15 Feb 2020 23:09:54 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute6.internal (MEProxy); Sat, 15 Feb 2020 23:09:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sgregoratto.me;
- h=content-transfer-encoding:content-type:in-reply-to:date:cc
- :subject:from:to:message-id; s=fm2; bh=2QgKwI+PEQ3fLfUI+Jh1MMCRL
- 8XltBD+t4tEo0prTWw=; b=ZvCGLNldNxzlI/HiALuwooHlGAF+sUc9/iVQcgL1K
- nTcEMIsF59RNhiIjTuKaArs7olaYSWIfNzLT0aO+GiyDU9vI+3yEt1mUHum2gn3X
- XDfLl7n3EiIv3bayil81zh3xvKBP+JJapOpyoHIkiMeHh0n8fJBPHtOFSXc/uwyO
- T0VLacnzBwA1NptDTQqcJKnSaOdzS9MsjKVJRtakwXPZ3elg7M9jZnCogsdq9iOS
- xdZ5/ChEqYkcWBjL3g0HftiPEKLqzXZfHyZhhSGN5J6sS2BHhDVwoAY9hvcVig7v
- +vUjav0TRSCgevXg9kKZXHk1bsnvHHyJyxH2IBbcqqjpg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-transfer-encoding:content-type
- :date:from:in-reply-to:message-id:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=2QgKwI
- +PEQ3fLfUI+Jh1MMCRL8XltBD+t4tEo0prTWw=; b=Nv1r4rg/9f4LpBOFtpVYG9
- qD3Bl2Z+zt8dRwQs1OqDc0D/pZ3KvuOCP88jHyRQ4ddjPUHPsBA0AzOCgAsiLEsI
- trG5xmnJemqiuJnfGyUaklb57SFN5EbfQnsSt3zhOOtnmavp4he7EABRs+AKe5hy
- iNwAVhDldVzC+DgdH4m+Me6ddrkqY7cxxlkbD6Dg1XX0tlEFMuWPdRRKkfG+8VaL
- VKvZkw6UIl73afTtC0RVIp/WOTMA6SoZ35pM6qasrfDQVnKrNqaH7+UaOXYfURL+
- xb8dknmeruxJtF8y0/Rxcyv3vWQwpGmNDFt+5IOhmIgANiGohVGyBefzxgeBnAlw
- ==
-X-ME-Sender: <xms:kcBIXsQ38HDc7VcKafzWf57ojc_kaCWlUyK2RnjAcmkDm1GGPfHS1A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedugedrjeefgdeilecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefgtggjfffuhffvkfesthhqredttddtjeenucfhrhhomhepfdfuthgvphhhvghn
- ucfirhgvghhorhgrthhtohdfuceophgvrhhsohhnrghlsehsghhrvghgohhrrghtthhord
- hmvgeqnecukfhppeehkedrudejledrgeegrddujedvnecuvehluhhsthgvrhfuihiivgep
- tdenucfrrghrrghmpehmrghilhhfrhhomhepphgvrhhsohhnrghlsehsghhrvghgohhrrg
- htthhordhmvg
-X-ME-Proxy: <xmx:kcBIXuVpjStlsGvfatMr8Nullt3rU2mYnSr3nlUP36LNnDZJeEkbfQ>
- <xmx:kcBIXm9UVg5rioFLOyaNM6Q4DwRpPX7iQ0FRx7iaRnMN6axGQCPQLQ>
- <xmx:kcBIXm0-rQX3Nv4iia6j_TgYe-8TNtO6cPxBgz4iuqGpYYtjq2fFxQ>
- <xmx:ksBIXpSAP7TeqP46WxKdprk5zc0Z2HZmZ5fc53OoJMEw4_RHpzLpyw>
-Received: from localhost (172.44.179.58.sta.dodo.net.au [58.179.44.172])
- by mail.messagingengine.com (Postfix) with ESMTPA id 5CD683060BD1;
- Sat, 15 Feb 2020 23:09:52 -0500 (EST)
-In-Reply-To: <CAHmME9pF8QvnOLzRkF0YeATj_AmXALc-eNtyjnrz3yQUvrxV0w@mail.gmail.com>
-Date: Sun, 16 Feb 2020 14:35:42 +1100
-Subject: Re: [PATCH v2] Rewrite wg-quick.8 in mdoc
-From: "Stephen Gregoratto" <personal@sgregoratto.me>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>, "Stephen Gregoratto"
- <dev@sgregoratto.me>
-Message-Id: <C0N9UZABRUMK.2ZUAKCTU1HH2M@dextop.sgregoratto.me>
-X-Mailman-Approved-At: Sun, 16 Feb 2020 10:56:47 +0100
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>, discuss@mandoc.bsd.lv
+ Sun, 16 Feb 2020 12:57:03 +0000 (UTC)
+Received: by mail-vs1-xe36.google.com with SMTP id b79so8659670vsd.9
+ for <wireguard@lists.zx2c4.com>; Sun, 16 Feb 2020 04:59:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=oaJGQS+h7DVzGgehCnfQvBZ7c+DyvOPrP85cv5H7gpw=;
+ b=rvImUtlUZA5s2r7Pd5oAa9lo2mCyQV+ua3bswlSN9X561wRrVMO6AT1vS1a78xFsHq
+ Qpd+5rV8g44I4bOyhNJkHjOEUJQVWUgFwHU/UTjnjtPOny0hLP65Dc15ncXCOPuQ6cC4
+ 3PEwTa5xUDNi6eOx/awy4qiSpbGwTgoHpIbrg/EynXqnLAA3RNXAK7zbrIfjNazMMgyd
+ 8NUxJDiz2e8eW4Y/Ply8tfchke3SExmYwzbvQmfR40oxDAvd6yyymvA49B1l8n8BTmdq
+ 4y39pLnAHB+/KggyKCwba1UCLfTqtTnWNPKcTks8LmzBY8WpOheI/v8o9FcqaLC4/7pj
+ USbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=oaJGQS+h7DVzGgehCnfQvBZ7c+DyvOPrP85cv5H7gpw=;
+ b=DSl1rHzHCMlRi5I4aJCQcj32rZ8ZzS9aBTvLgqDzhCOkY0jQXgMbuoIpC/ccKbK75p
+ xvIRkzAGqKv6IMPvD955hlnIvESgg1GKar9PEnwQgYRtsO6pGMQebq5SZADnNtXlWmVK
+ kYY5TJY+Rh2EZKnD3ASLTtwreEcX3PszAiClvKGAjexURbOtky8eh5im7c94B+WwusCL
+ a9Q2nYG9K7uKGgoheJX+ucq4XS8L3cq2YPgNyfXnrj1BcqTy4rJe7o29oQ8zzw+1fRA6
+ 4MBVO8ifDJJP5VSb6vhR0qsCadc2GvkBUDj3D2b64Weu1bIPjUE/FTXP6/JE92ghxYr7
+ fmow==
+X-Gm-Message-State: APjAAAV8tUZ/fXiISlsoHlw4YFS78vNyx0+hP8jLaAYKmfgPs7pcwhXy
+ St9X0XiU9v0a+vAWxcFGpOATtIqx5Ykgxf77l69qjThbETQ=
+X-Google-Smtp-Source: APXvYqxVTH6yQCg1/OQRmnkFl/uR5L+1Oh9tGbuS61sAJFWp4zylqTKdCESIKXdTunL3aZG4ChABsw21uWD1PaPappM=
+X-Received: by 2002:a67:ee46:: with SMTP id g6mr5709505vsp.153.1581857964139; 
+ Sun, 16 Feb 2020 04:59:24 -0800 (PST)
+MIME-Version: 1.0
+From: Neal Becker <ndbecker2@gmail.com>
+Date: Sun, 16 Feb 2020 07:58:48 -0500
+Message-ID: <CAG3t+pEeJ_+AUUoA3NvpKPhtp_-G78DJTS3PGZyRHigMCSHyww@mail.gmail.com>
+Subject: wireguard slow pings
+To: wireguard@lists.zx2c4.com
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -92,62 +74,78 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="===============7216900343594366518=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Jason,
+--===============7216900343594366518==
+Content-Type: multipart/alternative; boundary="00000000000009b259059eb1027e"
 
-On Sat Feb 15, 2020 at 8:53 PM, Jason A. Donenfeld wrote:
-> Thanks for doing this. I appreciate it. I can manually diff the text
-> to the old one if you insist, but I'd really prefer to see either a
-> list of what text you changed or having the type setting and the text
-> change done in separate commits.
+--00000000000009b259059eb1027e
+Content-Type: text/plain; charset="UTF-8"
 
-The changes made are very minor:
+I'm testing wireguard
+wireguard-0.0.20191219-2.fc31.x86_64
+between a Fedora 31 client and server, comparing to openvpn.
 
-The config_file and interface arguments were made lowercase, and all
-mention of them in the rest of the manual has been changed as well.
+Openvpn is running between a linux client outside my lan and a server on my
+router, which is running dd-wrt.
+I'm pinging between that linux client and another linux client within my
+lan.
 
-The interface additions were changed from a bulleted list to a
-definition list, where the additions were the definitions.
+wireguard is running between the same linux client outside my lan and the
+same other linux client within my lan.  This
+time router is simply forwarding packets via NAT.
 
-I removed the boldening in the examples along with the sentance:
-  
-  "Bold lines below are for options that extend wg(8)."
+Openvpn ping times are much lower (about 10ms) and much lower variance than
+wireguard.  Wireguard pings
+are all over the place.
 
-The justification was that since the [interface] additions were
-properly marked up in the example explainations, having the lines be
-enboldened was redundant. You can see the difference better when viewing
-them as PDF's through groff side-by-side. If you'd like I can revert
-this.
+Packets coming in from the WAN are traversing some firewall that I don't
+control, which may be affecting results.  Openvpn
+is config to use udp.
 
-As mentioned by Ingo, more manual references were added to the SEE ALSO
-section, with them being sorted in section-name order. I also moved the
-link to the project page into this section, and dropped the "World Wide
-Web" bit.
+Any ideas?
 
-Finally, the AUTHORS section was reworded slightly:
+Thanks,
+Neal
 
- original:  "wg-quick was written by..."
- new:       "The wg-quick program was written by..."
-
-This is a convention for system programs.
-
-
-As for Anthony's work, this seems to be a case of "convergent
-evolution," since our work is very similar ;). I think if I combine the
-best parts of both, along with Ingo's comments, I could prepare a final
-patch for wg-quick. I'm not sure if everyone that helped needs to sign
-off on the patch, but I'll make sure they're mentioned.
-
-For the next patch, would you like to see the list above in the commit
-message?
 -- 
-Stephen Gregoratto
+*Those who don't understand recursion are doomed to repeat it*
+
+--00000000000009b259059eb1027e
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">I&#39;m testing wireguard<div>wireguard-0.0.20191219-2.fc3=
+1.x86_64=C2=A0</div><div>between a Fedora 31 client and server, comparing t=
+o openvpn.</div><div><br></div><div>Openvpn is running between a linux clie=
+nt outside my lan and a server on my router, which is running dd-wrt.</div>=
+<div>I&#39;m pinging between that linux client and another linux client wit=
+hin my lan.</div><div><br></div><div>wireguard is running between the same =
+linux client outside my lan and the same other linux client within my lan.=
+=C2=A0 This</div><div>time router is simply forwarding packets via NAT.</di=
+v><div><br></div><div>Openvpn ping times are much lower (about 10ms) and mu=
+ch lower variance than wireguard.=C2=A0 Wireguard pings</div><div>are all o=
+ver the place.</div><div><br></div><div>Packets coming in from the WAN are =
+traversing some firewall that I don&#39;t control, which may be affecting r=
+esults.=C2=A0 Openvpn</div><div>is config to use udp.</div><div><br></div><=
+div>Any ideas?</div><div><br></div><div>Thanks,</div><div>Neal<br clear=3D"=
+all"><div><br></div>-- <br><div dir=3D"ltr" class=3D"gmail_signature" data-=
+smartmail=3D"gmail_signature"><div dir=3D"ltr"><i>Those who don&#39;t under=
+stand recursion are doomed to repeat it</i></div></div></div></div>
+
+--00000000000009b259059eb1027e--
+
+--===============7216900343594366518==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--===============7216900343594366518==--
