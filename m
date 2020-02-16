@@ -6,64 +6,65 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 326DAC76199
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 16 Feb 2020 09:34:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4748C2BA83
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 16 Feb 2020 09:40:40 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 2AD3420857
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 16 Feb 2020 09:34:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 59F6220857
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 16 Feb 2020 09:40:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=rozman.si header.i=@rozman.si header.b="odLtx0Nb"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 2AD3420857
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=rozman.si header.i=@rozman.si header.b="VP8JlcQC"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 59F6220857
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=rozman.si
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0c3452d2;
-	Sun, 16 Feb 2020 09:31:51 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e49ddbab;
+	Sun, 16 Feb 2020 09:38:18 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ca5268c8
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 991f55a2
  for <wireguard@lists.zx2c4.com>;
- Sun, 16 Feb 2020 09:31:49 +0000 (UTC)
+ Sun, 16 Feb 2020 09:38:16 +0000 (UTC)
 Received: from pub5.amebis.si (pub5.amebis.si [IPv6:2a00:ee2:209:164::f])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 160acbac
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8877ea4a
  for <wireguard@lists.zx2c4.com>;
- Sun, 16 Feb 2020 09:31:48 +0000 (UTC)
+ Sun, 16 Feb 2020 09:38:16 +0000 (UTC)
 Received: by pub5.amebis.si (Postfix, from userid 1000)
- id DD9D21002FB5; Sun, 16 Feb 2020 10:34:06 +0100 (CET)
+ id 516991002FB5; Sun, 16 Feb 2020 10:40:36 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rozman.si;
- s=default; t=1581845646;
- bh=VCaNLW6KiJb+s9MT2cQw5NPp5sGt3bYX9R30OeLs7+U=;
+ s=default; t=1581846036;
+ bh=0h9n+kA51nSJBOPnx4PJeN+qkR0053MdBHUvPDSZvzo=;
  h=From:To:CC:Subject:Date:References:In-Reply-To:From;
- b=odLtx0NbTAalVIW3untqCMKYFsvgbu9RRbGEIoEVQVQjmJJA8HejAFr807nDTLuPa
- 5YySK37FzHJRR2VRP4FOQ+uxmc1jV1x9/v+10sJzUvxV5cjwdPSeczIWZn8EOL9aqE
- ydnZI6i33DvmPRz2mbbvYQtlv6UGylrmphFhy4K4=
+ b=VP8JlcQCS2Wvv/XLQyJ1ajHbEIbThbdtV+HXVmfQiW6NzjSXr0RaobUND69XBj60s
+ /GRq7dqNJULbBfyAA5F67GbxLm0QY/M9mH6RK8WahxUeibPhgCiZn7lMO3AJPz9OsM
+ PoNJx/7tYfWT3hZEkkOs0AdZh0+l+IPAEyK5YST0=
 Received: from PLANJAVA.amebis.doma (planjava.amebis.doma
  [IPv6:2a00:ee2:209:164::2])
- by pub5.amebis.si (Postfix) with ESMTPS id 198141002F87;
- Sun, 16 Feb 2020 10:34:04 +0100 (CET)
+ by pub5.amebis.si (Postfix) with ESMTPS id 70B0B1002F87;
+ Sun, 16 Feb 2020 10:40:33 +0100 (CET)
 Received: from PLANJAVA.amebis.doma ([fe80::a486:6f91:d7b9:9035]) by
  PLANJAVA.amebis.doma ([fe80::a486:6f91:d7b9:9035%17]) with mapi id
- 14.03.0468.000; Sun, 16 Feb 2020 10:34:04 +0100
+ 14.03.0468.000; Sun, 16 Feb 2020 10:40:33 +0100
 From: Simon Rozman <simon@rozman.si>
-To: Peter Selc <peter.selc@gmail.com>, "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: RE: After win2019 server reboot, Wireguard tunnel doesn't start
-Thread-Topic: After win2019 server reboot, Wireguard tunnel doesn't start
-Thread-Index: AQHV0V5Yi40WuvbWdUO2NRS+h8Olnqf8uzkAgACLWYCAHRCngIADXckA
-Date: Sun, 16 Feb 2020 09:34:02 +0000
-Message-ID: <99D61A626FDA8A4B90A270669121BE10D06C64A8@PLANJAVA.amebis.doma>
-References: <CAPDdT2w3_t=sC=_FrcDX5OaTkT0vuPXKCtbFTB9O_Hq3frb4qA@mail.gmail.com>
- <CAHmME9oZNrRoniYA_ReUGsFLmxo0gV3jM-E+DFB6duKSZtOuHw@mail.gmail.com>
- <CAPDdT2x2B-O+ga7_tvTjYLz-wyG-PyAaRRPXedo7moBfnBG4xA@mail.gmail.com>
- <CAPDdT2ztKwCpUq+FdpzrKVSmBMnCZdO0qg2hudytK_Nt_Swtvg@mail.gmail.com>
-In-Reply-To: <CAPDdT2ztKwCpUq+FdpzrKVSmBMnCZdO0qg2hudytK_Nt_Swtvg@mail.gmail.com>
+To: Eiji Tanioka <tanioka404@gmail.com>
+Subject: RE: [PATCH] Add japanese translation.
+Thread-Topic: [PATCH] Add japanese translation.
+Thread-Index: AQHV4yYHU90nY+tQGEeolquzntujRqgbjDWAgAA8cxqAADQ0gIABldSA
+Date: Sun, 16 Feb 2020 09:40:32 +0000
+Message-ID: <99D61A626FDA8A4B90A270669121BE10D06C64FF@PLANJAVA.amebis.doma>
+References: <20200213103117.68943-1-tanioka404@gmail.com>
+ <120ad97e-0dcb-6502-f097-e1368d9987cf@sholland.org>
+ <CAA2ss9EDZ4qip3Rh-z_zseLr2u0+A8ePEUUBd7dnJq2RTdPmwA@mail.gmail.com>
+ <851381cd-3fc0-94f9-63a1-7b69deb9a640@sholland.org>
+ <CAA2ss9E2jnvA_TLhBPJTSuqBz+YoU-wUTPnYghYw+bMPpeSoWQ@mail.gmail.com>
+In-Reply-To: <CAA2ss9E2jnvA_TLhBPJTSuqBz+YoU-wUTPnYghYw+bMPpeSoWQ@mail.gmail.com>
 Accept-Language: en-GB, sl-SI, en-US
 Content-Language: en-US
 X-MS-Has-Attach: yes
 X-MS-TNEF-Correlator: 
 x-originating-ip: [2a00:ee2:209:164::1]
 MIME-Version: 1.0
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Cc: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -75,40 +76,85 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============6578114113957246329=="
+Content-Type: multipart/mixed; boundary="===============2632552368001688999=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============6578114113957246329==
+--===============2632552368001688999==
 Content-Language: en-US
 Content-Type: multipart/signed; protocol="application/x-pkcs7-signature";
 	micalg=2.16.840.1.101.3.4.2.1;
-	boundary="----=_NextPart_000_0000_01D5E4B4.99E42690"
+	boundary="----=_NextPart_000_0008_01D5E4B5.82B10370"
 
-------=_NextPart_000_0000_01D5E4B4.99E42690
+------=_NextPart_000_0008_01D5E4B5.82B10370
 Content-Type: multipart/alternative;
-	boundary="----=_NextPart_001_0001_01D5E4B4.99E42690"
+	boundary="----=_NextPart_001_0009_01D5E4B5.82B10370"
 
 
-------=_NextPart_001_0001_01D5E4B4.99E42690
+------=_NextPart_001_0009_01D5E4B5.82B10370
 Content-Type: text/plain;
 	charset="utf-8"
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+Hi Eiji!
 
- 
+=20
 
-Can you send the %SystemRoot%\inf\SetupAPI.dev.log file, please?
+I wonder if you might be willing to contribute Japanese translation for =
+the wireguard-windows as well?
 
- 
+=20
 
-Regards,
+The wireguard-windows has pending localization support here =
+https://git.zx2c4.com/wireguard-windows/log/?h=3Dsr/l18n. I have =
+translated it to Slovenian already. Furthermore, I should get the French =
+translation to integrate soon too.
 
-Simon
+=20
+
+Regards, Simon
+
+=20
+
+From: WireGuard <wireguard-bounces@lists.zx2c4.com> On Behalf Of Eiji =
+Tanioka
+Sent: Saturday, February 15, 2020 11:23 AM
+To: Samuel Holland <samuel@sholland.org>
+Cc: wireguard@lists.zx2c4.com
+Subject: Re: [PATCH] Add japanese translation.
+
+=20
+
+Thank you for applying my patch!
+
+=20
+
+I'm now translating wireguard-apple into Japanese. When finished, I will =
+send patch.
+
+Next time, I will not forget your advice.
+
+=20
+
+Thanks,
+
+=20
+
+2020=E5=B9=B42=E6=9C=8815=E6=97=A5(=E5=9C=9F) 15:14 Samuel Holland =
+<samuel@sholland.org <mailto:samuel@sholland.org> >:
+
+On 2/14/20 11:27 PM, Eiji Tanioka wrote:
+> Hi, Samuel.
+>=20
+> Thank you for your reply!
+> I re-created patch.
+
+Thanks, applied:
+https://git.zx2c4.com/wireguard-android/commit/?id=3D822f72df956ecd3aaa6a=
+2b254e059e38ba5122e4
 
 
-------=_NextPart_001_0001_01D5E4B4.99E42690
+------=_NextPart_001_0009_01D5E4B5.82B10370
 Content-Type: text/html;
 	charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
@@ -123,23 +169,34 @@ name=3DGenerator content=3D"Microsoft Word 15 (filtered =
 medium)"><style><!--
 /* Font Definitions */
 @font-face
+	{font-family:"MS Gothic";
+	panose-1:2 11 6 9 7 2 5 8 2 4;}
+@font-face
 	{font-family:"Cambria Math";
 	panose-1:2 4 5 3 5 4 6 3 2 4;}
 @font-face
 	{font-family:Calibri;
 	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"\@MS Gothic";
+	panose-1:2 11 6 9 7 2 5 8 2 4;}
 /* Style Definitions */
 p.MsoNormal, li.MsoNormal, div.MsoNormal
 	{margin:0cm;
 	margin-bottom:.0001pt;
 	font-size:11.0pt;
 	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:blue;
+	text-decoration:underline;}
 span.EmailStyle19
 	{mso-style-type:personal-reply;
 	font-family:"Calibri",sans-serif;
 	color:windowtext;}
 .MsoChpDefault
 	{mso-style-type:export-only;
+	font-family:"Calibri",sans-serif;
 	mso-fareast-language:EN-US;}
 @page WordSection1
 	{size:612.0pt 792.0pt;
@@ -153,23 +210,65 @@ div.WordSection1
 <o:idmap v:ext=3D"edit" data=3D"1" />
 </o:shapelayout></xml><![endif]--></head><body lang=3DSL link=3Dblue =
 vlink=3Dpurple><div class=3DWordSection1><p class=3DMsoNormal><span =
-lang=3DEN-GB =
-style=3D'mso-fareast-language:EN-US'>Hi,<o:p></o:p></span></p><p =
+lang=3DEN-GB style=3D'mso-fareast-language:EN-US'>Hi =
+Eiji!<o:p></o:p></span></p><p class=3DMsoNormal><span lang=3DEN-GB =
+style=3D'mso-fareast-language:EN-US'><o:p>&nbsp;</o:p></span></p><p =
+class=3DMsoNormal><span lang=3DEN-GB =
+style=3D'mso-fareast-language:EN-US'>I wonder if you might be willing to =
+contribute Japanese translation for the wireguard-windows as =
+well?<o:p></o:p></span></p><p class=3DMsoNormal><span lang=3DEN-GB =
+style=3D'mso-fareast-language:EN-US'><o:p>&nbsp;</o:p></span></p><p =
+class=3DMsoNormal><span lang=3DEN-GB =
+style=3D'mso-fareast-language:EN-US'>The wireguard-windows has pending =
+localization support here =
+https://git.zx2c4.com/wireguard-windows/log/?h=3Dsr/l18n. I have =
+translated it to Slovenian already. Furthermore, I should get the French =
+translation to integrate soon too.<o:p></o:p></span></p><p =
 class=3DMsoNormal><span lang=3DEN-GB =
 style=3D'mso-fareast-language:EN-US'><o:p>&nbsp;</o:p></span></p><p =
 class=3DMsoNormal><span lang=3DEN-GB =
-style=3D'mso-fareast-language:EN-US'>Can you send the =
-%SystemRoot%\inf\SetupAPI.dev.log file, please?<o:p></o:p></span></p><p =
-class=3DMsoNormal><span lang=3DEN-GB =
-style=3D'mso-fareast-language:EN-US'><o:p>&nbsp;</o:p></span></p><p =
-class=3DMsoNormal><span lang=3DEN-GB =
-style=3D'mso-fareast-language:EN-US'>Regards,<o:p></o:p></span></p><p =
-class=3DMsoNormal><span lang=3DEN-GB =
-style=3D'mso-fareast-language:EN-US'>Simon<o:p></o:p></span></p></div></b=
-ody></html>
-------=_NextPart_001_0001_01D5E4B4.99E42690--
+style=3D'mso-fareast-language:EN-US'>Regards, =
+Simon<o:p></o:p></span></p><p class=3DMsoNormal><span lang=3DEN-GB =
+style=3D'mso-fareast-language:EN-US'><o:p>&nbsp;</o:p></span></p><div =
+style=3D'border:none;border-left:solid blue 1.5pt;padding:0cm 0cm 0cm =
+4.0pt'><div><div style=3D'border:none;border-top:solid #E1E1E1 =
+1.0pt;padding:3.0pt 0cm 0cm 0cm'><p class=3DMsoNormal><b><span =
+lang=3DEN-US>From:</span></b><span lang=3DEN-US> WireGuard =
+&lt;wireguard-bounces@lists.zx2c4.com&gt; <b>On Behalf Of </b>Eiji =
+Tanioka<br><b>Sent:</b> Saturday, February 15, 2020 11:23 =
+AM<br><b>To:</b> Samuel Holland =
+&lt;samuel@sholland.org&gt;<br><b>Cc:</b> =
+wireguard@lists.zx2c4.com<br><b>Subject:</b> Re: [PATCH] Add japanese =
+translation.<o:p></o:p></span></p></div></div><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p><div><p class=3DMsoNormal>Thank =
+you for applying my patch!<o:p></o:p></p><div><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p></div><div><p =
+class=3DMsoNormal>I'm now translating wireguard-apple into Japanese. =
+When finished, I will send patch.<o:p></o:p></p></div><div><p =
+class=3DMsoNormal>Next time, I will not forget your =
+advice.<o:p></o:p></p></div><div><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p></div><div><p =
+class=3DMsoNormal>Thanks,<o:p></o:p></p></div></div><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p><div><div><p =
+class=3DMsoNormal>2020<span style=3D'font-family:"MS =
+Gothic"'>=E5=B9=B4</span>2<span style=3D'font-family:"MS =
+Gothic"'>=E6=9C=88</span>15<span style=3D'font-family:"MS =
+Gothic"'>=E6=97=A5</span>(<span style=3D'font-family:"MS =
+Gothic"'>=E5=9C=9F</span>) 15:14 Samuel Holland &lt;<a =
+href=3D"mailto:samuel@sholland.org">samuel@sholland.org</a>&gt;:<o:p></o:=
+p></p></div><blockquote style=3D'border:none;border-left:solid #CCCCCC =
+1.0pt;padding:0cm 0cm 0cm 6.0pt;margin-left:4.8pt;margin-right:0cm'><p =
+class=3DMsoNormal>On 2/14/20 11:27 PM, Eiji Tanioka wrote:<br>&gt; Hi, =
+Samuel.<br>&gt; <br>&gt; Thank you for your reply!<br>&gt; I re-created =
+patch.<br><br>Thanks, applied:<br><a =
+href=3D"https://git.zx2c4.com/wireguard-android/commit/?id=3D822f72df956e=
+cd3aaa6a2b254e059e38ba5122e4" =
+target=3D"_blank">https://git.zx2c4.com/wireguard-android/commit/?id=3D82=
+2f72df956ecd3aaa6a2b254e059e38ba5122e4</a><o:p></o:p></p></blockquote></d=
+iv></div></div></body></html>
+------=_NextPart_001_0009_01D5E4B5.82B10370--
 
-------=_NextPart_000_0000_01D5E4B4.99E42690
+------=_NextPart_000_0008_01D5E4B5.82B10370
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -248,23 +347,23 @@ RqsKPBhWoaFEVZ+Vn3wxap5h/oAhocifNzkWJTNWjxnoPM2eNz2uWFJsgsNhlwteUvnq7+bKTNte
 SKWKr6pI+GUsZhmCh5URpUnqUanp0Uie0MD9f3tiOLOp711sNb0xwi+VdDuDB37IddOIsfhPBood
 wpoFrTGCAzswggM3AgEBMEUwPTELMAkGA1UEBhMCc2kxGzAZBgNVBAoTEnN0YXRlLWluc3RpdHV0
 aW9uczERMA8GA1UECxMIc2lnZW4tY2ECBDtKDS4wDQYJYIZIAWUDBAIBBQCgggHHMBgGCSqGSIb3
-DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTIwMDIxNjA5MzQwMFowLwYJKoZIhvcN
-AQkEMSIEIF7AizDRABTxsyxmP7WF/4joZszTXQa5WtOjcmAH40pyMFQGCSsGAQQBgjcQBDFHMEUw
+DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTIwMDIxNjA5NDAzMVowLwYJKoZIhvcN
+AQkEMSIEIEqzESGREFaakzXYxdtZKgA7zahV60gofa+FyHoCnRf2MFQGCSsGAQQBgjcQBDFHMEUw
 PTELMAkGA1UEBhMCc2kxGzAZBgNVBAoTEnN0YXRlLWluc3RpdHV0aW9uczERMA8GA1UECxMIc2ln
 ZW4tY2ECBDtKDS4wVgYLKoZIhvcNAQkQAgsxR6BFMD0xCzAJBgNVBAYTAnNpMRswGQYDVQQKExJz
 dGF0ZS1pbnN0aXR1dGlvbnMxETAPBgNVBAsTCHNpZ2VuLWNhAgQ7Sg0uMIGtBgkqhkiG9w0BCQ8x
 gZ8wgZwwCwYJKoZIhvcNAQEHMAsGCWCGSAFlAwQBKjALBglghkgBZQMEARYwCgYIKoZIhvcNAwcw
 CwYJYIZIAWUDBAECMA4GCCqGSIb3DQMCAgIAgDANBggqhkiG9w0DAgIBQDALBglghkgBZQMEAgEw
 CwYJKoZIhvcNAQEKMAsGCWCGSAFlAwQCAzALBglghkgBZQMEAgIwBwYFKw4DAhowDQYJKoZIhvcN
-AQEBBQAEggEAeQrb8YJ+teOBOFnZXJnPA5KCApkRIdm9ffq5Hz/d/l6qFfqbBIZ+HTlsP27Rb5sf
-xLiTfCATcfyGdFKgxcLwpXJUZg4pG5/1lsnRIGtsOQ6Dx+t0lRFztutAMbcp0Pli2BF820zwWOlI
-I0WLD2Lau3Xvd6sh6dfGwVeRKuMHMuHa6jNUq8TFgc6psd78gzkKs7cwxnPrBEcBQhUNPApjjpuw
-1qax8Kr6I7iu30OVVCjtGzV4VzB8HlhzB6bew94oElDfqMsU7fnsJhit7Qhp/IwSnfzTdcX4cfLu
-/vqCrbS928sBRaWWTfhZp8flcVgLaIyq+rTIrCmvRIyY8NRErAAAAAAAAA==
+AQEBBQAEggEA+UecdCVZRiCfAWUFNIz8Dhj8Nu5i9ISF498G1s5UT7WclCMEzY+k/Ib9h1bzQxys
+lUgA2RXfDVr23QRquN21KUCgqGXy8Bud/bsu5AXTAqTky802EHfB24aqCQwxQzAQ09AKbdOpLRtI
+q+ESB1x7hOx4F+v+GI8ueUlueSGeHGSvMlDqjtZcNwOGkol7UoF18RyG8cb4/WTLgcBIjtM9RMC4
+bvTp75bbkVQuyCRLerF/gRboqb1rKz7M9+vr30KvkrlY0akbrM1vgf59Cc1vLBkai8HItjnWGq4a
+bkbFEcgeUIyOLRmCs9sKqHcXZ4hJJaXogpcxMY/aDFGqb7RnygAAAAAAAA==
 
-------=_NextPart_000_0000_01D5E4B4.99E42690--
+------=_NextPart_000_0008_01D5E4B5.82B10370--
 
---===============6578114113957246329==
+--===============2632552368001688999==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -275,4 +374,4 @@ WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---===============6578114113957246329==--
+--===============2632552368001688999==--
