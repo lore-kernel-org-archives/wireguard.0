@@ -6,53 +6,52 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F6ACC35254
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 17 Feb 2020 11:32:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C21BBC7619F
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 17 Feb 2020 11:44:21 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id BB92D20836
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 17 Feb 2020 11:32:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 683A2206F4
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 17 Feb 2020 11:44:21 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="AWhL/54l"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org BB92D20836
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="uNiIDryE"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 683A2206F4
 Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3065d73a;
-	Mon, 17 Feb 2020 11:29:44 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0fa3fa39;
+	Mon, 17 Feb 2020 11:41:51 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 950b2f06
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2a322624
  for <wireguard@lists.zx2c4.com>;
- Mon, 17 Feb 2020 11:29:43 +0000 (UTC)
+ Mon, 17 Feb 2020 11:41:49 +0000 (UTC)
 Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 700fce66
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fceab9c0
  for <wireguard@lists.zx2c4.com>;
- Mon, 17 Feb 2020 11:29:43 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9cc6d956
+ Mon, 17 Feb 2020 11:41:49 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 20e21c3d
  for <wireguard@lists.zx2c4.com>;
- Mon, 17 Feb 2020 11:29:43 +0000 (UTC)
+ Mon, 17 Feb 2020 11:41:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
  :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=J1+43o37F9mhaHojBDC95OYQLFE=; b=AWhL/5
- 4ld6KebozTZWRdoRVEu0a3zfnCg1VyRQDaVowvnLKIzYIdUVpWi++8/SoJTfrD3x
- 4Ka/OnGR2X7IluAD5oPwnBbuFzsnWTU8/Lv1bp2/ntiamN7oEL3L59DTQxUO2Hzx
- ojwwwZRP6KPVWPMTLh6DFSM188I8mUoP1R1UBNGhXRLUyS3cEuzZ5dsIz7HptiVy
- B/Sg15R11nGW6o770kmbAHpl9MGyxxmBM4bif0BOFvRviD4LMWhf+ZvM9LpwPkMd
- uXrzkFrk8LoERBkEYLYFkDqHHJHKfqvtoq+qNSxa3yR4cTdnZyfPRUuSriqDfpWE
- 53ywzfhWzLn3/K5A==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 5c3b660d
+ :content-type; s=mail; bh=wQXCNI9A2YUaaGUQfj7y9iUP5zk=; b=uNiIDr
+ yEcK5YYCGrCJEAp+i8Pe4xhHWu90hFP00Pj1sjkRMpRpU6krYX+dvwCIBs8tjU1M
+ KYz55GNxoLDsmsVzaqrOY4Dvl6v3wQkIBR/MRCvaS+IyUSaNfWpeSNUGxLXWKBcs
+ 07cAcSdH4DBcTzDB7T5VLvmvgkN1xtynItjPIo1qMKImgrDxeyLwEtXeZ4VROjES
+ c6nl2AMO6n7TbitwwrGc0+9d3Ff1NGWngXu/IixkYyWxsxZfeQUkDMXSWQ2loJGT
+ e6oaMpJpnBESzRMd8EIQ+gyZ4pPpL5gYLUeDuGECAhuCIdAHIcE7RjbYn7zqqJxd
+ X7LXYjsYKgRy8X/Q==
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 73fdb72f
  (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 17 Feb 2020 11:29:42 +0000 (UTC)
-Received: by mail-oi1-f170.google.com with SMTP id b18so16383960oie.2
- for <wireguard@lists.zx2c4.com>; Mon, 17 Feb 2020 03:32:11 -0800 (PST)
-X-Gm-Message-State: APjAAAXaYuutOWGqKYek57hZKAniVZMKdInkEpGZZrscDxtLukINKXF+
- Wg5NNGhrxwYAFwzL7Oy66dWpQ8nnYEO3fJTm90M=
-X-Google-Smtp-Source: APXvYqzulskY2RmmruRAShaKIMl9ybJnU+9vP+Bvo4qvdtgOkMLDMcPcvWGmqCHiDnI9gknzPXsxXLGaNWkvAksvDSc=
-X-Received: by 2002:a05:6808:29a:: with SMTP id
- z26mr4057224oic.122.1581939130169; 
- Mon, 17 Feb 2020 03:32:10 -0800 (PST)
+ Mon, 17 Feb 2020 11:41:49 +0000 (UTC)
+Received: by mail-ot1-f51.google.com with SMTP id z9so15777899oth.5
+ for <wireguard@lists.zx2c4.com>; Mon, 17 Feb 2020 03:44:18 -0800 (PST)
+X-Gm-Message-State: APjAAAVIMyMT8jlHBInfcU7TRBh8XB8D34kvpm3XjlTePuk5Z4GmByN8
+ Jh7Ud8IcUNWS5PEYZWLU8ZI/U03o3+Y5uRgVUbM=
+X-Google-Smtp-Source: APXvYqx/nE/SIdj6n88DX7WkMOWTXoc9LjwiMOkSC90rKZGFpSfr9MnZAvgN9CvPdc+XVc0yw0XHz+mACRWNCdb8yNA=
+X-Received: by 2002:a9d:674f:: with SMTP id w15mr11839173otm.243.1581939857444; 
+ Mon, 17 Feb 2020 03:44:17 -0800 (PST)
 MIME-Version: 1.0
 References: <20191208232734.225161-1-Jason@zx2c4.com>
  <CACT4Y+bsJVmgbD-WogwU=LfWiPN1JgjBrwx4s8Y14hDd7vqqhQ@mail.gmail.com>
@@ -69,11 +68,12 @@ References: <20191208232734.225161-1-Jason@zx2c4.com>
  <CACT4Y+awD47=Q3taT_-yQPfQ4uyW-DRpeWBbSHcG6_=b20PPwg@mail.gmail.com>
  <CAHmME9q3_p_BX0BC6=urj4KeWLN2PvPgvGy3vQLFmd=qkNEkpQ@mail.gmail.com>
  <CACT4Y+bSBD_=rmGCF3mngiRKOfa7cv0odFaadF1wyEV9NVhQcg@mail.gmail.com>
-In-Reply-To: <CACT4Y+bSBD_=rmGCF3mngiRKOfa7cv0odFaadF1wyEV9NVhQcg@mail.gmail.com>
+ <CAHmME9pQQhQtg8JymxMbSMgnhZ9BpjEoTb=sSNndjp1rXnzi_Q@mail.gmail.com>
+In-Reply-To: <CAHmME9pQQhQtg8JymxMbSMgnhZ9BpjEoTb=sSNndjp1rXnzi_Q@mail.gmail.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 17 Feb 2020 12:31:58 +0100
-X-Gmail-Original-Message-ID: <CAHmME9pQQhQtg8JymxMbSMgnhZ9BpjEoTb=sSNndjp1rXnzi_Q@mail.gmail.com>
-Message-ID: <CAHmME9pQQhQtg8JymxMbSMgnhZ9BpjEoTb=sSNndjp1rXnzi_Q@mail.gmail.com>
+Date: Mon, 17 Feb 2020 12:44:06 +0100
+X-Gmail-Original-Message-ID: <CAHmME9or-Wwx63ZtwYzOWV9KQJY1aarx2Eh8iF2P--BXfz6u+g@mail.gmail.com>
+Message-ID: <CAHmME9or-Wwx63ZtwYzOWV9KQJY1aarx2Eh8iF2P--BXfz6u+g@mail.gmail.com>
 Subject: Re: syzkaller wireguard key situation [was: Re: [PATCH net-next v2]
  net: WireGuard secure network tunnel]
 To: Dmitry Vyukov <dvyukov@google.com>
@@ -95,25 +95,22 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hey Dmitry,
+Observation:
 
-Yes! Our side discussions wound up getting everything pretty squared
-away, and coverage on syzkaller looks pretty good to me. By inference,
-I think we're hitting most code paths in WireGuard. Syzkaller, though,
-is missing non-userspace-process coverage from:
+It seems to be starting to synthesize packets sent to the wireguard
+socket. These aren't the proper handshake packets generated internally
+by that triangle commit, but rather ones that syzkaller creates
+itself. That's why we have coverage on wg_receive, which otherwise
+wouldn't be called from a userspace process, since syzbot is sending
+its own packets to that function.
 
-- workqueues
-- napi callback
-- timer callback
-- udp tunnel callback
-
-Seems like there might be some future research to be done on how we
-can track these. But tracking it or not, the fact that packets are
-flowing on some path implies that other code paths are being hit. So I
-feel pretty good about syzkaller's ability to dig up nice wireguard
-bugs.
-
-Jason
+However, the packets it generates aren't getting very far, failing all
+of the tests in validate_header_len. None of those checks are at all
+cryptographic, which means it should be able to hit those eventually.
+Anything we should be doing to help it out? After it gets past that
+check, it'll wind up in the handshake queue or the data queue, and
+then (in theory) it should be rejected on a cryptographic basis. But
+maybe syzbot will figure out how to crash it instead :-P.
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
