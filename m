@@ -2,62 +2,62 @@ Return-Path: <SRS0=qhAm=4F=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
 	DKIM_INVALID,DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B8D9EC34021
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 17 Feb 2020 15:42:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CBD17C34027
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 17 Feb 2020 19:25:02 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 579F922B48
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 17 Feb 2020 15:42:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 3B59820725
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 17 Feb 2020 19:25:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=google.com header.i=@google.com header.b="m8lSm5L9"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 579F922B48
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=google.com header.i=@google.com header.b="XhfvhwYn"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 3B59820725
 Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=google.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 05cae33c;
-	Mon, 17 Feb 2020 15:40:22 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f4dcf231;
+	Mon, 17 Feb 2020 19:22:13 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 20f145cd
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5afc81c1
  for <wireguard@lists.zx2c4.com>;
- Mon, 17 Feb 2020 15:40:21 +0000 (UTC)
-Received: from mail-qv1-xf43.google.com (mail-qv1-xf43.google.com
- [IPv6:2607:f8b0:4864:20::f43])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 809c3366
+ Mon, 17 Feb 2020 19:22:10 +0000 (UTC)
+Received: from mail-qt1-x842.google.com (mail-qt1-x842.google.com
+ [IPv6:2607:f8b0:4864:20::842])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e12367b9
  for <wireguard@lists.zx2c4.com>;
- Mon, 17 Feb 2020 15:40:21 +0000 (UTC)
-Received: by mail-qv1-xf43.google.com with SMTP id dc14so7745901qvb.9
- for <wireguard@lists.zx2c4.com>; Mon, 17 Feb 2020 07:42:51 -0800 (PST)
+ Mon, 17 Feb 2020 19:22:10 +0000 (UTC)
+Received: by mail-qt1-x842.google.com with SMTP id d5so12847596qto.0
+ for <wireguard@lists.zx2c4.com>; Mon, 17 Feb 2020 11:24:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=2vBeSuiRPaNapi1PlVcmXh3bJYRV5oYBhPklfX/Y49A=;
- b=m8lSm5L9Zv/xkUo9tRJLzzXO6GImg8Eup7cWVaJtjF6LV7gpXBhMIJa8psoEyDfjWM
- lfHGVxDdVJTDYJ2yaKh6ezfRAYEhxtecySWNmsEMr6AA9+FB5qjduvX5Ate4sMqJsRfd
- gOHjCEmZboIWXvpiWhjUad8k0aHGijk6SqlXKiGuVONc2/X6AtovV3rXZyhJwyg4XRyJ
- YVDhog/2F/U1gXsmnK6qVrTHdPCet+GZhPvSwfB4yk8wYV0Dt/JFaaLCA/xdF8hLcPRZ
- 5BFwnz/zbjpGeKeI3p7yZFFoZzI42v5/qRm/BEEDdT0VouwAX6QG6GwDWK7c/dVkLNmb
- C6WA==
+ :cc; bh=JIJCYoeJZi1BF4DfYx9tVVCS/hUoszz7+fHwROsJ/sg=;
+ b=XhfvhwYnBIK/WesduUEBtjCLLyg3HK5iR0ADqhQf7XKcPzSMZ9DoPvWMTwo8CVK9hd
+ K92GqoXzrg79sURfb1CFsaHPXP3fWZWih+xbekMovSOT5URkz+zM4Mmi93FQiwPvwPSQ
+ 3QB8/m0jb9Le4OUoZ+RR6H6vOV7b/RK4a6EQHlA+jgjM8oHHUYW2g0ovMSAThXIex9M5
+ sSAsbCOpNXhwERWCtSo2z5ji5yWD65fD70bqqS7jElMIHKSmaa0a0qABHDm0nIL8XrGX
+ b5mHKLKhOjywqoFjKP4cWDPIRRNSNiFFrqqqQ/NcHDEQyu6UZcA7P0hSQ9MjzKcThyg1
+ akRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=2vBeSuiRPaNapi1PlVcmXh3bJYRV5oYBhPklfX/Y49A=;
- b=Sg13bkyedPy+Tm5yx8KrJ0I+1qJSoWBNFP1Ga6AHUjfZLkTsNsgEvXHKdhvpGRIXCM
- 8CPYW+K4uzs7zZB6iEGZ43POYFHnYJ9Z8nrw/bL38wESlGC1pJRyfJHZPd+KEoscq0zX
- GQ2ej9ev8TnGGmC3qnw7RfLxO0f+MT2T8pO7q2ZF+fhMmKyS23U2zu0iJECDFOZfhTV0
- qU/bRug+sUcP+ihBE/6fBs3tTgWiJQLouoameR8wvMXPWpFjIvsnENqs+kwV8tBysbpw
- 6hhDeQFwsb9ogM16I/upnukVt4QLBllUj+DqvQzuYQt5pbz5ioUdVoTbuMKWHqvxIA8q
- 8kEQ==
-X-Gm-Message-State: APjAAAVjkkMjceHDrRs1/ZqLgecbXQBMm8T2lURb8eC32KL2S2sVzbM+
- KCZzNc4wl5e1M3VTMiU5ePzWOjBif7HS18Ns7cHsjSNTLc+KhA==
-X-Google-Smtp-Source: APXvYqzkrsEoEEvjVaDIthEE+eWPGyJt5Uba0JCNhWu/6EltGeMeoJMkuNmwyUMM+7spOH9ulxTdt21IsutXiFrxaMU=
-X-Received: by 2002:a05:6214:1874:: with SMTP id
- eh20mr13353966qvb.122.1581954170809; 
- Mon, 17 Feb 2020 07:42:50 -0800 (PST)
+ bh=JIJCYoeJZi1BF4DfYx9tVVCS/hUoszz7+fHwROsJ/sg=;
+ b=WmDy2G0EkGuE8G3G96PU84nR+mFdxchgpXQ2U+axUNOM0Bl0yYLq/aAHXWrFcvNW0E
+ lu9LAAejUi/E+49i6fCl1NAwpzsXMtHyeZsDB+GIYg0jGzG3GsWZ0G3buQ51nkFf4GCh
+ WWGwkTGcEoxw126k41/qfiBxv2DZM7c0Xb5z1HbszuCRMZAXGlGmbY6ac+UQzbdu5HR/
+ +186iU4P7zVdDnl0R3ZS9kEKga53IFF5fM8gwTnejtL7tYuaV1O8UBdu5r2+n7kBdKsg
+ rCEW8atnxSneCAfh2ylmeZ9HA12L5XKmjOfIkZPjy+Fzi8ZL0BRcP+rBqb3yTxBJl+Lw
+ s+Zg==
+X-Gm-Message-State: APjAAAUnrsTdvdImt8V9ICG0lECNj9EmPLgalmqhvnJw1i3V/E1xuH9R
+ UX/afeEgs0BtyE03RKtbrdIR15+1FJoVub/r1fRi7A==
+X-Google-Smtp-Source: APXvYqxzV0kH2vSIgFPc02FvrnF/SPy8sz7uAskPUxbXNJCk+2tUtc7DjPEHrVOaM6ByqoCgeGeTp2teVfzLlb5yhLI=
+X-Received: by 2002:ac8:7159:: with SMTP id h25mr14505780qtp.380.1581967481700; 
+ Mon, 17 Feb 2020 11:24:41 -0800 (PST)
 MIME-Version: 1.0
 References: <20191208232734.225161-1-Jason@zx2c4.com>
  <CACT4Y+bsJVmgbD-WogwU=LfWiPN1JgjBrwx4s8Y14hDd7vqqhQ@mail.gmail.com>
@@ -77,10 +77,11 @@ References: <20191208232734.225161-1-Jason@zx2c4.com>
  <CAHmME9pQQhQtg8JymxMbSMgnhZ9BpjEoTb=sSNndjp1rXnzi_Q@mail.gmail.com>
  <CAHmME9or-Wwx63ZtwYzOWV9KQJY1aarx2Eh8iF2P--BXfz6u+g@mail.gmail.com>
  <CACT4Y+a8N7_n4t_vxezKJVkd1+gDHaMzpeG18MuDE04+r3341A@mail.gmail.com>
-In-Reply-To: <CACT4Y+a8N7_n4t_vxezKJVkd1+gDHaMzpeG18MuDE04+r3341A@mail.gmail.com>
+ <CACT4Y+atqrSfZuquPZcRUKNtVbLdu+B5YN3=YmDb38Ruzj3Pzw@mail.gmail.com>
+In-Reply-To: <CACT4Y+atqrSfZuquPZcRUKNtVbLdu+B5YN3=YmDb38Ruzj3Pzw@mail.gmail.com>
 From: Dmitry Vyukov <dvyukov@google.com>
-Date: Mon, 17 Feb 2020 16:42:39 +0100
-Message-ID: <CACT4Y+atqrSfZuquPZcRUKNtVbLdu+B5YN3=YmDb38Ruzj3Pzw@mail.gmail.com>
+Date: Mon, 17 Feb 2020 20:24:30 +0100
+Message-ID: <CACT4Y+bMzYZeMvv2DdTuTKtJFzTcHhinp7N7VmSiXqSBDyj8Ug@mail.gmail.com>
 Subject: Re: syzkaller wireguard key situation [was: Re: [PATCH net-next v2]
  net: WireGuard secure network tunnel]
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>
@@ -102,65 +103,82 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Mon, Feb 17, 2020 at 4:19 PM Dmitry Vyukov <dvyukov@google.com> wrote:
->
-> On Mon, Feb 17, 2020 at 12:44 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+On Mon, Feb 17, 2020 at 4:42 PM Dmitry Vyukov <dvyukov@google.com> wrote:
+> > >
+> > > Observation:
+> > >
+> > > It seems to be starting to synthesize packets sent to the wireguard
+> > > socket. These aren't the proper handshake packets generated internally
+> > > by that triangle commit, but rather ones that syzkaller creates
+> > > itself. That's why we have coverage on wg_receive, which otherwise
+> > > wouldn't be called from a userspace process, since syzbot is sending
+> > > its own packets to that function.
+> > >
+> > > However, the packets it generates aren't getting very far, failing all
+> > > of the tests in validate_header_len. None of those checks are at all
+> > > cryptographic, which means it should be able to hit those eventually.
+> > > Anything we should be doing to help it out? After it gets past that
+> > > check, it'll wind up in the handshake queue or the data queue, and
+> > > then (in theory) it should be rejected on a cryptographic basis. But
+> > > maybe syzbot will figure out how to crash it instead :-P.
 > >
-> > Observation:
+> > Looking into this.
 > >
-> > It seems to be starting to synthesize packets sent to the wireguard
-> > socket. These aren't the proper handshake packets generated internally
-> > by that triangle commit, but rather ones that syzkaller creates
-> > itself. That's why we have coverage on wg_receive, which otherwise
-> > wouldn't be called from a userspace process, since syzbot is sending
-> > its own packets to that function.
+> > Found the program that gives wg_receive coverage:
 > >
-> > However, the packets it generates aren't getting very far, failing all
-> > of the tests in validate_header_len. None of those checks are at all
-> > cryptographic, which means it should be able to hit those eventually.
-> > Anything we should be doing to help it out? After it gets past that
-> > check, it'll wind up in the handshake queue or the data queue, and
-> > then (in theory) it should be rejected on a cryptographic basis. But
-> > maybe syzbot will figure out how to crash it instead :-P.
+> > r0 = openat$tun(0xffffffffffffff9c,
+> > &(0x7f0000000080)='/dev/net/tun\x00', 0x88002, 0x0)
+> > ioctl$TUNSETIFF(r0, 0x400454ca, &(0x7f00000000c0)={'syzkaller1\x00',
+> > 0x420000015001})
+> > r1 = socket$netlink(0x10, 0x3, 0x0)
+> > ioctl$sock_inet_SIOCSIFADDR(r1, 0x8914,
+> > &(0x7f0000000140)={'syzkaller1\x00', {0x7, 0x0, @empty}})
+> > write$tun(r0, &(0x7f00000002c0)={@void, @val, @ipv4=@udp={{0x5, 0x4,
+> > 0x0, 0x0, 0x1c, 0x0, 0x0, 0x0, 0x11, 0x0, @remote, @broadcast}, {0x0,
+> > 0x4e21, 0x8}}}, 0x26)
+> >
+> > Checked that doing SIOCSIFADDR is also required, otherwise the packet
+> > does not reach wg_receive.
 >
-> Looking into this.
 >
-> Found the program that gives wg_receive coverage:
+> All packets we inject with standard means (syz_emit_ethernet) get
+> rejected on the following check:
 >
-> r0 = openat$tun(0xffffffffffffff9c,
-> &(0x7f0000000080)='/dev/net/tun\x00', 0x88002, 0x0)
-> ioctl$TUNSETIFF(r0, 0x400454ca, &(0x7f00000000c0)={'syzkaller1\x00',
-> 0x420000015001})
-> r1 = socket$netlink(0x10, 0x3, 0x0)
-> ioctl$sock_inet_SIOCSIFADDR(r1, 0x8914,
-> &(0x7f0000000140)={'syzkaller1\x00', {0x7, 0x0, @empty}})
-> write$tun(r0, &(0x7f00000002c0)={@void, @val, @ipv4=@udp={{0x5, 0x4,
-> 0x0, 0x0, 0x1c, 0x0, 0x0, 0x0, 0x11, 0x0, @remote, @broadcast}, {0x0,
-> 0x4e21, 0x8}}}, 0x26)
+> static struct sk_buff *ip_rcv_core(struct sk_buff *skb, struct net *net)
+> {
+> const struct iphdr *iph;
+> u32 len;
 >
-> Checked that doing SIOCSIFADDR is also required, otherwise the packet
-> does not reach wg_receive.
+> /* When the interface is in promisc. mode, drop all the crap
+> * that it receives, do not try to analyse it.
+> */
+> if (skb->pkt_type == PACKET_OTHERHOST)
+> goto drop;
+>
+> Even if we drop IFF_NAPI_FRAGS which diverges packets who-knows-where.
+>
+> Somehow we need to get something other than PACKET_OTHERHOST...
+> Why is it dropping all remote packets?...
+> How do remote packets get into stack then?...
 
+I've managed to create a packet that reaches wg_receive, that is:
 
-All packets we inject with standard means (syz_emit_ethernet) get
-rejected on the following check:
+syz_emit_ethernet(AUTO, &AUTO={@local, @empty, @void, {@ipv4={AUTO,
+@udp={{AUTO, AUTO, 0x0, 0x0, AUTO, 0x0, 0x0, 0x0, AUTO, 0x0, @empty,
+@empty, {[]}}, {0x0, 0x4e22, AUTO, 0x0, [], ""/10}}}}}, 0x0)
 
-static struct sk_buff *ip_rcv_core(struct sk_buff *skb, struct net *net)
-{
-const struct iphdr *iph;
-u32 len;
+Had to enumerate all possible combinations of local/remote mac,
+local/report ip, local/remote port.
 
-/* When the interface is in promisc. mode, drop all the crap
-* that it receives, do not try to analyse it.
-*/
-if (skb->pkt_type == PACKET_OTHERHOST)
-goto drop;
+However, this is only without IFF_NAPI_FRAGS. With IFF_NAPI_FRAGS it
+reaches udp_gro_receive, but does not get past:
 
-Even if we drop IFF_NAPI_FRAGS which diverges packets who-knows-where.
-
-Somehow we need to get something other than PACKET_OTHERHOST...
-Why is it dropping all remote packets?...
-How do remote packets get into stack then?...
+if (!sk || NAPI_GRO_CB(skb)->encap_mark ||
+    (skb->ip_summed != CHECKSUM_PARTIAL &&
+     NAPI_GRO_CB(skb)->csum_cnt == 0 &&
+     !NAPI_GRO_CB(skb)->csum_valid) ||
+    !udp_sk(sk)->gro_receive)
+    goto out;
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
