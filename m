@@ -1,63 +1,95 @@
-Return-Path: <SRS0=OdKV=4H=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=ftKT=4I=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7958C34056
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Feb 2020 20:32:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 64190C11D05
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 20 Feb 2020 16:15:13 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 00393208C4
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Feb 2020 20:32:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id BB5B920658
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 20 Feb 2020 16:15:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="AxPDrn78"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 00393208C4
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=google.com header.i=@google.com header.b="fJGjxpzw"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org BB5B920658
+Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=google.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dde16b52;
-	Wed, 19 Feb 2020 20:29:41 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9ba04dab;
+	Thu, 20 Feb 2020 16:11:51 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 93f5fa0c
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bdab0302
  for <wireguard@lists.zx2c4.com>;
- Wed, 19 Feb 2020 20:29:40 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 94844501
+ Thu, 20 Feb 2020 16:11:49 +0000 (UTC)
+Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com
+ [IPv6:2607:f8b0:4864:20::841])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ee28d3a8
  for <wireguard@lists.zx2c4.com>;
- Wed, 19 Feb 2020 20:29:40 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0763d023
- for <wireguard@lists.zx2c4.com>;
- Wed, 19 Feb 2020 20:29:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :from:date:message-id:subject:to:content-type; s=mail; bh=R2DV4r
- h7A1HSX2daOMVkD6hLC/s=; b=AxPDrn78XALR5uClGIDh2Yfdf5dymOnCifzPw0
- Wb9xb+nnn/dOr1B3lDu5TN9NoTToDZJGseb0oZLga8fvci0iQ0HKliZNIVp0wwqR
- n6jkIhL0S8RUPFGuZHjY1Iy2KioH+66AoB6FTVtmEpDqM5FYykX0eAZ5kCuVGsy2
- cbMPwqId9/SQ0LjHaqa98vidygv3dA24dyF/LpA7doJP2npGi/BPUGyVZFGOF0Xw
- XEE8IhowfLcrUITLkGx6bIFWkA199f2dlRXLCTd20C1Bsh7Tb+i2AOGhKrvJVVAI
- YJH+ubecmZN4Awl9unTxDAQTdUYAiY4IXmKdwJ4f/UP0fuiA==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 32a73a16
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Wed, 19 Feb 2020 20:29:39 +0000 (UTC)
-Received: by mail-ot1-f41.google.com with SMTP id r16so1493442otd.2
- for <wireguard@lists.zx2c4.com>; Wed, 19 Feb 2020 12:32:26 -0800 (PST)
-X-Gm-Message-State: APjAAAWT6veWhXK7zOCisAefadN+04TN6x04mLDF2c7dwHNN6MvgvTZI
- oxyHT6gvRmN9PZEUrEHkL23LaWZao9WHFiEivNw=
-X-Google-Smtp-Source: APXvYqxHCgufGRRDHfAEg+5kQfKlFZ2/3T7EdmSHhwXVyWXxaWjQx36jkdKyfRG/DvdpXj1G0HFReNGfA+Tyn+24I/o=
-X-Received: by 2002:a9d:6a53:: with SMTP id h19mr21750823otn.120.1582144346319; 
- Wed, 19 Feb 2020 12:32:26 -0800 (PST)
+ Thu, 20 Feb 2020 16:11:49 +0000 (UTC)
+Received: by mail-qt1-x841.google.com with SMTP id p34so1426950qtb.6
+ for <wireguard@lists.zx2c4.com>; Thu, 20 Feb 2020 08:14:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=vlgOWD70sGSD6Q6S9d4i72Mqm2+mfzaFs9aekElBY4s=;
+ b=fJGjxpzwZas2SHHKSac3FieS+YV+ZCc43Btj+4opOVqOcyC/1BsWh9vYTYpcJflbxj
+ bi8SP09WCEX0BuoxK2iofVOrukIOhubAb2SiyZz0MX8wyxa9GEOVmaDXmiZpSbInf1rs
+ 8zx4XtVZrQcwl93tG+E4pR8A83Aku1/0j9YpQDwj1CBFeaf/o8F2c+ydA65cP9eS5fKR
+ KuB/BO57DQhDr1yI5OYd4lA706QlaNzNP+HJe2udc+42gZrYcSeTSzdwU60bleQlGw/n
+ 8T9oy6tYc8+KPiZmldHgedqBts/6xmytW6biWJGmxFe5euSENk8/pGJzUu4T29gGFbsN
+ QYXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=vlgOWD70sGSD6Q6S9d4i72Mqm2+mfzaFs9aekElBY4s=;
+ b=ZsDdShBUgaVeMU5JnrXjJRFDWnxxrZJ8/G51GmUujPkoMQkla+QOKoTm9jhLyfhyDP
+ trvhPiAAX5ZnAXZW6c6oUyrrsqi/JU9yuSELilFaH/o0wZcUwc1/+sBt+fen59N1zodk
+ flaJkl+LMtoI+z/R184HxgT8BPf9NYv0S1DxxoqsCXOSGpr/mur1fh12gy7sOjuGttUz
+ g6btweMNu9wTilJFDJKhMqDpyWnYH6jQrGGUJ6Wl6Ho4Jnpg6NEY4hxBce+Mno35fcAY
+ X5/3RLAGLkfafCbCeXqk4InH4yIDjo7m+PqrecoLrNSe3BU9D3lbmerQbkQhUu7JrxO4
+ QJnA==
+X-Gm-Message-State: APjAAAVmqgpmldjkRw0P7pJ7Ze8mUpZxwWnOZ2K/UhaZozmboAT8inK/
+ Nf2h5dvSLy9z1Uv4vajngq11JOxgFbw9VBFFa9R97g==
+X-Google-Smtp-Source: APXvYqzro9bjUdDoqdxbO0hSHg5hQHKSxY20PYs5XLGavt8RUKl/gt8SVHfere+lkXEy7e/cn+yK2SGy/Ek+Bmhbm/o=
+X-Received: by 2002:ac8:340c:: with SMTP id u12mr26975327qtb.257.1582215281878; 
+ Thu, 20 Feb 2020 08:14:41 -0800 (PST)
 MIME-Version: 1.0
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 19 Feb 2020 21:32:15 +0100
-X-Gmail-Original-Message-ID: <CAHmME9rAVrEUsRibMJ30UBJbsYfD4FaAcpcqmSGR4JMvJ2=_bw@mail.gmail.com>
-Message-ID: <CAHmME9rAVrEUsRibMJ30UBJbsYfD4FaAcpcqmSGR4JMvJ2=_bw@mail.gmail.com>
-Subject: build breakage on Ubuntu 19.10
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+References: <20191208232734.225161-1-Jason@zx2c4.com>
+ <CACT4Y+bsJVmgbD-WogwU=LfWiPN1JgjBrwx4s8Y14hDd7vqqhQ@mail.gmail.com>
+ <CAHmME9o0AparjaaOSoZD14RAW8_AJTfKfcx3Y2ndDAPFNC-MeQ@mail.gmail.com>
+ <CACT4Y+Zssd6OZ2-U4kjw18mNthQyzPWZV_gkH3uATnSv1SVDfA@mail.gmail.com>
+ <CAHmME9oM=YHMZyg23WEzmZAof=7iv-A01VazB3ihhR99f6X1cg@mail.gmail.com>
+ <CACT4Y+aCEZm_BA5mmVTnK2cR8CQUky5w1qvmb2KpSR4-Pzp4Ow@mail.gmail.com>
+ <CAHmME9rYstVLCBOgdMLqMeVDrX1V-f92vRKDqWsREROWdPbb6g@mail.gmail.com>
+ <CAHmME9qUWr69o0r+Mtm8tRSeQq3P780DhWAhpJkNWBfZ+J5OYA@mail.gmail.com>
+ <CACT4Y+YfBDvQHdK24ybyyy5p07MXNMnLA7+gq9axq-EizN6jhA@mail.gmail.com>
+ <CAHmME9qcv5izLz-_Z2fQefhgxDKwgVU=MkkJmAkAn3O_dXs5fA@mail.gmail.com>
+ <CACT4Y+arVNCYpJZsY7vMhBEKQsaig_o6j7E=ib4tF5d25c-cjw@mail.gmail.com>
+ <CAHmME9ofmwig2=G+8vc1fbOCawuRzv+CcAE=85spadtbneqGag@mail.gmail.com>
+ <CACT4Y+awD47=Q3taT_-yQPfQ4uyW-DRpeWBbSHcG6_=b20PPwg@mail.gmail.com>
+ <CAHmME9q3_p_BX0BC6=urj4KeWLN2PvPgvGy3vQLFmd=qkNEkpQ@mail.gmail.com>
+ <CACT4Y+bSBD_=rmGCF3mngiRKOfa7cv0odFaadF1wyEV9NVhQcg@mail.gmail.com>
+ <CAHmME9pQQhQtg8JymxMbSMgnhZ9BpjEoTb=sSNndjp1rXnzi_Q@mail.gmail.com>
+ <CAHmME9or-Wwx63ZtwYzOWV9KQJY1aarx2Eh8iF2P--BXfz6u+g@mail.gmail.com>
+ <CACT4Y+a8N7_n4t_vxezKJVkd1+gDHaMzpeG18MuDE04+r3341A@mail.gmail.com>
+ <CACT4Y+atqrSfZuquPZcRUKNtVbLdu+B5YN3=YmDb38Ruzj3Pzw@mail.gmail.com>
+ <CACT4Y+bMzYZeMvv2DdTuTKtJFzTcHhinp7N7VmSiXqSBDyj8Ug@mail.gmail.com>
+ <CACT4Y+bUXAstk41RPSF-EQDh7A8-XkTbc53nQTHt4DS5AUhr-A@mail.gmail.com>
+ <CAHmME9pr4=cn5ijSNs05=fjdfQon49kyEzymkUREJ=xzTZ7Q7w@mail.gmail.com>
+In-Reply-To: <CAHmME9pr4=cn5ijSNs05=fjdfQon49kyEzymkUREJ=xzTZ7Q7w@mail.gmail.com>
+From: Dmitry Vyukov <dvyukov@google.com>
+Date: Thu, 20 Feb 2020 17:14:30 +0100
+Message-ID: <CACT4Y+aTBNZAekX_D+QdofqBdUuG9BkzLq+TFDxr8-sSqL9hdQ@mail.gmail.com>
+Subject: Re: syzkaller wireguard key situation [was: Re: [PATCH net-next v2]
+ net: WireGuard secure network tunnel]
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: netdev <netdev@vger.kernel.org>, syzbot <syzkaller@googlegroups.com>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -74,36 +106,183 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi all,
+On Wed, Feb 19, 2020 at 11:23 AM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+>
+> On Tue, Feb 18, 2020 at 11:00 AM Dmitry Vyukov <dvyukov@google.com> wrote:
+> > I've added descriptions for wireguard packets:
+> > https://github.com/google/syzkaller/commit/012fbc3229ebef871a201ea431b16610e6e0d345
+> > It gives all reachable coverage (without breaking crypto).
+>
+> Oh, great, that looks really good. It now fails at the index match,
+> which is basically trying to brute force a 32-bit integer that's
+> changing every 3 minutes, which syzkaller is probably too slow to do
+> on it's own. But that's fine.
+>
+> Your commit has some questions in it, like "# Not clear if these
+> indexes are also generated randomly and we need to guess them or
+> not.". Here's what's up with those indices:
+>
+> Message message_handshake_initiation: the sender picks a random 32-bit
+> number, and places it in the "sender_index" field.
+> Message message_handshake_response: the sender picks a random 32-bit
+> number, and places it in the "sender_index" field. It places the
+> 32-bit number that it received from message_handshake_initiation into
+> the "receiver_index" field.
+> Message message_handshake_cookie: the sender places the 32-bit number
+> that it received from message_handshake_initiation or
+> message_handshake_response into the "receive_index" field.
+> Message message_data: the sender places the 32-bit number that it
+> picked for the  message_handshake_initiation or
+> message_handshake_response into the "key_idx" field.
+>
+> I'm not sure it'll be too feasible to correlate these relations via
+> fuzzing. And either way, I think we've got decent enough non-crypto
+> coverage now on the receive path.
+>
+> I noticed a small seemingly insignificant function with low coverage
+> that's on the rtnl path that might benefit from some attention and
+> also help find bugs in other devices: wg_netdevice_notification. This
+> triggers on various things, but the only case it really cares about is
+> NETDEV_REGISTER, which happens when the interface changes network
+> namespaces. WireGuard holds a reference to its underlying creating
+> namespace, and in order to avoid circular reference counting or UaF it
+> needs to either relinquish or get a reference. There are other drivers
+> with similar type of reference counting management, I would assume.
+> This sort of thing seems up the ally of the types of bugs and races
+> syzkaller likes to find. The way to trigger it is with `ip link set
+> dev wg0 netns blah`, and then back to its original netns. That's this
+> code in net/core/rtnetlink.c:
+>
+>        if (tb[IFLA_NET_NS_PID] || tb[IFLA_NET_NS_FD] ||
+> tb[IFLA_TARGET_NETNSID]) {
+>                struct net *net = rtnl_link_get_net_capable(skb, dev_net(dev),
+>                                                            tb, CAP_NET_ADMIN);
+>                if (IS_ERR(net)) {
+>                        err = PTR_ERR(net);
+>                        goto errout;
+>                }
+>
+>                err = dev_change_net_namespace(dev, net, ifname);
+>                put_net(net);
+>                if (err)
+>                        goto errout;
+>                status |= DO_SETLINK_MODIFIED;
+>        }
+>
+> That seems to have decent coverage, but not over wireguard. Is that
+> just a result of the syzkaller @devname not yet being expanded to
+> wg{0,1,2}, and it'll take a few more weeks for it to learn that?
+> @netns_id seems probably good, being restricted to 0:4; is it possible
+> these weren't created though a priori?
 
-The Canonical kernel team is a bit behind in deploying fixes (i.e.
-bumping the wireguard package version) for recent breakage they
-introduced. As a result, WireGuard will entirely stop working when
-people update their systems. It's been like this for at least a week,
-as far as I can see, and the emails keep piling up, so it seems
-prudent I send a warning about the issue.
+Running an instance aimed at these functions:
 
-As an interim fix, Unit193 very nicely got our usual PPA making
-packages for Ubuntu 19.10, which you can use in place of the packages
-from Canonical. To activate this, do the following:
+"enable_syscalls": [
+"socket$nl_generic",
+"syz_genetlink_get_family_id$wireguard",
+"sendmsg$WG_CMD*",
+"ioctl$ifreq_SIOCGIFINDEX_wireguard*",
+"socket$nl_route",
+"sendmsg$nl_route",
+"setsockopt",
+"syz_emit_ethernet",
+"syz_extract_tcp_res",
+"socket$inet*",
+"accept4$inet*",
+"bind$inet*",
+"connect$inet*",
+"sendto$inet*",
+"recvfrom$inet*",
+"syz_genetlink_get_family_id$fou",
+"sendmsg$FOU*",
+"unshare",
+"setns",
+"socket",
+"socketpair",
+"getuid",
+"getgid",
+"bpf",
+"setsockopt",
+"getsockopt",
+"ioctl",
+"accept4",
+"connect",
+"bind",
+"listen",
+"sendmsg",
+"recvmsg",
+"syz_emit_ethernet",
+"syz_extract_tcp_res",
+"write$tun",
+"syz_init_net_socket",
+"syz_genetlink_get_family_id",
+"syz_open_procfs$namespace",
+"ioctl$NS_GET*",
+"ioctl$TUN*",
+"openat$tun",
+"getpid",
+"mmap"
+]
 
-$ sudo add-apt-repository ppa:wireguard/wireguard
-$ sudo apt-get update
-$ sudo apt-get upgrade
+I got some coverage in wg_netdevice_notification:
+https://imgur.com/a/1sJZKtp
 
-That should result in updating your wireguard package from Canonical's
-to the working and up to date one inside of the PPA.
+Or you mean the parts that are still red?
 
-Sorry about this. For 20.04 LTS, Canonical will be shipping wireguard
-along with their kernel, and we've also discussed them doing the same
-for 18.04 LTS. This means that it'll be built as part of their CI and
-distributed normally, so problems like this shouldn't come up again.
-And of course, with WireGuard being upstream now, as Linux 5.6
-trickles down into the distros, this class of problems should
-disappear entirely.
+I think theoretically these parts should be reachable too because
+syzkaller can do unshare and obtain net ns fd's.
 
-Regards,
-Jason
+It's quite hard to test because it just crashes all the time on known bugs.
+So maybe the most profitable way to get more coverage throughout the
+networking subsystem now is to fix the top layer of crashers ;)
+
+2020/02/20 16:29:08 vm-9: crash: BUG: MAX_LOCKDEP_ENTRIES too low!
+2020/02/20 16:32:25 vm-6: crash: kernel BUG at net/core/skbuff.c:LINE!
+2020/02/20 16:33:13 vm-16: crash: INFO: task hung in register_netdevice_notifier
+2020/02/20 16:33:46 vm-5: crash: INFO: task hung in register_netdevice_notifier
+2020/02/20 16:34:22 vm-2: crash: WARNING in restore_regulatory_settings
+2020/02/20 16:34:27 vm-4: crash: unregister_netdevice: waiting for DEV
+to become free
+2020/02/20 16:35:04 vm-26: crash: BUG: MAX_LOCKDEP_ENTRIES too low!
+2020/02/20 16:35:17 vm-34: crash: no output from test machine
+2020/02/20 16:35:20 vm-0: crash: INFO: task hung in register_netdevice_notifier
+2020/02/20 16:36:42 vm-3: crash: WARNING in restore_regulatory_settings
+2020/02/20 16:37:47 vm-29: crash: INFO: task hung in register_netdevice_notifier
+2020/02/20 16:38:54 vm-31: crash: INFO: task hung in register_netdevice_notifier
+2020/02/20 16:39:00 vm-9: crash: INFO: task hung in register_netdevice_notifier
+2020/02/20 16:41:41 vm-4: crash: BUG: MAX_LOCKDEP_ENTRIES too low!
+2020/02/20 16:43:00 vm-23: crash: BUG: MAX_LOCKDEP_ENTRIES too low!
+2020/02/20 16:44:01 vm-2: crash: possible deadlock in htab_lru_map_delete_node
+2020/02/20 16:44:06 vm-38: crash: INFO: task hung in register_netdevice_notifier
+2020/02/20 16:47:13 vm-8: crash: unregister_netdevice: waiting for DEV
+to become free
+2020/02/20 16:47:20 vm-25: crash: unregister_netdevice: waiting for
+DEV to become free
+2020/02/20 16:47:33 vm-18: crash: BUG: using smp_processor_id() in
+preemptible [ADDR] code: syz-executor
+2020/02/20 16:49:37 vm-37: crash: unregister_netdevice: waiting for
+DEV to become free
+2020/02/20 16:51:51 vm-12: crash: WARNING in print_bfs_bug
+2020/02/20 16:53:28 vm-4: crash: BUG: MAX_LOCKDEP_ENTRIES too low!
+2020/02/20 16:55:24 vm-17: crash: INFO: task hung in register_netdevice_notifier
+2020/02/20 16:56:26 vm-34: crash: BUG: MAX_LOCKDEP_KEYS too low!
+2020/02/20 16:57:11 vm-3: crash: BUG: MAX_LOCKDEP_ENTRIES too low!
+2020/02/20 16:57:44 vm-31: crash: BUG: MAX_LOCKDEP_ENTRIES too low!
+2020/02/20 16:58:13 vm-33: crash: BUG: MAX_LOCKDEP_KEYS too low!
+2020/02/20 16:58:35 vm-32: crash: BUG: using smp_processor_id() in
+preemptible [ADDR] code: syz-executor
+2020/02/20 17:03:12 vm-9: crash: INFO: task hung in raw_release
+2020/02/20 17:03:20 vm-3: crash: unregister_netdevice: waiting for DEV
+to become free
+2020/02/20 17:03:26 vm-6: crash: BUG: using smp_processor_id() in
+preemptible [ADDR] code: syz-executor
+2020/02/20 17:05:08 vm-31: crash: INFO: task hung in lock_sock_nested
+2020/02/20 17:06:01 vm-16: crash: BUG: MAX_LOCKDEP_ENTRIES too low!
+2020/02/20 17:06:24 vm-26: crash: INFO: task hung in bcm_release
+2020/02/20 17:07:20 vm-27: crash: BUG: MAX_LOCKDEP_ENTRIES too low!
+2020/02/20 17:08:03 vm-11: crash: BUG: MAX_LOCKDEP_ENTRIES too low!
+2020/02/20 17:08:05 vm-17: crash: WARNING in hsr_addr_subst_dest
+2020/02/20 17:09:12 vm-22: crash: BUG: MAX_LOCKDEP_ENTRIES too low!
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
