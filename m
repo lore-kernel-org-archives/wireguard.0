@@ -1,93 +1,52 @@
-Return-Path: <SRS0=ftKT=4I=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=cn6I=4J=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	TVD_SPACE_RATIO,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CCCE0C11D12
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 20 Feb 2020 16:59:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FF1DC35643
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 21 Feb 2020 07:23:13 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 718DF20722
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 20 Feb 2020 16:59:46 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="QDRSuCoo"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 718DF20722
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id 08B6C20722
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 21 Feb 2020 07:23:12 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 08B6C20722
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=huawei.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4dad84dd;
-	Thu, 20 Feb 2020 16:56:51 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0022a7b6;
+	Fri, 21 Feb 2020 07:20:13 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c8c01f3e
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 20b9e24c
  for <wireguard@lists.zx2c4.com>;
- Thu, 20 Feb 2020 16:56:48 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dc82a025
+ Fri, 21 Feb 2020 07:20:11 +0000 (UTC)
+Received: from huawei.com (szxga07-in.huawei.com [45.249.212.35])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 659b75f7
  for <wireguard@lists.zx2c4.com>;
- Thu, 20 Feb 2020 16:56:48 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c2d5e2ae
- for <wireguard@lists.zx2c4.com>;
- Thu, 20 Feb 2020 16:56:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=R+YQb3a1nwlrCF02ELPS2VBuM2I=; b=QDRSuC
- oorhR0jXS2IS0UMxJ1OLtqf464rwkp4JB5BBLYU6xqZocrwQUmiB/Ry/iUvZQOw0
- O55rbKXDjrxjK16O8Y3x24R8jRxV9zyow7XvRFGDPAnsysO+6taYeV241QdbcdRI
- Pn39kxjPunzfv3nuP7O0PD7BpMX1neyniYu4lIIPY4N3TfuRACG5QUbWfoWsDeLE
- 6mGtX/+jAKs6PSg4EyhELP0Ubasnuqrwq+3KvH06SZwQjYqg4dJQ7BojAajea1X9
- a9MUxTrk/ST7G7eDPMcyILG/aFaFGrjBMGBEyeYtmXIPewjKd0e5vqxO/YP9KUJi
- UgdmvcKcapgEZbtQ==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 96cfa559
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Thu, 20 Feb 2020 16:56:47 +0000 (UTC)
-Received: by mail-ot1-f50.google.com with SMTP id 77so4307495oty.6
- for <wireguard@lists.zx2c4.com>; Thu, 20 Feb 2020 08:59:41 -0800 (PST)
-X-Gm-Message-State: APjAAAV29ctbT0gaxiFU99j7uBANrXD0ShBECPO1seEtWg+MYlkugaBr
- hVF61ANpDmEzgP2gsiQqrfShNqdBwupoPU4uixU=
-X-Google-Smtp-Source: APXvYqzbLPhtbX8MPYW8XUtW0agC6diNeNIh5SiOgfGxMndFp5thxDhxsF0q4o2n6pu7FdCLjwqfAP0tLNytgubjFQc=
-X-Received: by 2002:a9d:674f:: with SMTP id w15mr24408261otm.243.1582217980756; 
- Thu, 20 Feb 2020 08:59:40 -0800 (PST)
+ Fri, 21 Feb 2020 07:20:10 +0000 (UTC)
+Received: from DGGEMS406-HUB.china.huawei.com (unknown [172.30.72.59])
+ by Forcepoint Email with ESMTP id C1C63ACB9E65A576160E;
+ Fri, 21 Feb 2020 15:23:02 +0800 (CST)
+Received: from localhost (10.133.213.239) by DGGEMS406-HUB.china.huawei.com
+ (10.3.19.206) with Microsoft SMTP Server id 14.3.439.0; Fri, 21 Feb 2020
+ 15:22:53 +0800
+From: YueHaibing <yuehaibing@huawei.com>
+To: <Jason@zx2c4.com>, <shuah@kernel.org>, <davem@davemloft.net>,
+ <yuehaibing@huawei.com>
+Subject: [PATCH net-next] wireguard: selftests: remove duplicated include
+ <sys/types.h>
+Date: Fri, 21 Feb 2020 15:22:09 +0800
+Message-ID: <20200221072209.10612-1-yuehaibing@huawei.com>
+X-Mailer: git-send-email 2.10.2.windows.1
 MIME-Version: 1.0
-References: <20191208232734.225161-1-Jason@zx2c4.com>
- <CACT4Y+bsJVmgbD-WogwU=LfWiPN1JgjBrwx4s8Y14hDd7vqqhQ@mail.gmail.com>
- <CAHmME9o0AparjaaOSoZD14RAW8_AJTfKfcx3Y2ndDAPFNC-MeQ@mail.gmail.com>
- <CACT4Y+Zssd6OZ2-U4kjw18mNthQyzPWZV_gkH3uATnSv1SVDfA@mail.gmail.com>
- <CAHmME9oM=YHMZyg23WEzmZAof=7iv-A01VazB3ihhR99f6X1cg@mail.gmail.com>
- <CACT4Y+aCEZm_BA5mmVTnK2cR8CQUky5w1qvmb2KpSR4-Pzp4Ow@mail.gmail.com>
- <CAHmME9rYstVLCBOgdMLqMeVDrX1V-f92vRKDqWsREROWdPbb6g@mail.gmail.com>
- <CAHmME9qUWr69o0r+Mtm8tRSeQq3P780DhWAhpJkNWBfZ+J5OYA@mail.gmail.com>
- <CACT4Y+YfBDvQHdK24ybyyy5p07MXNMnLA7+gq9axq-EizN6jhA@mail.gmail.com>
- <CAHmME9qcv5izLz-_Z2fQefhgxDKwgVU=MkkJmAkAn3O_dXs5fA@mail.gmail.com>
- <CACT4Y+arVNCYpJZsY7vMhBEKQsaig_o6j7E=ib4tF5d25c-cjw@mail.gmail.com>
- <CAHmME9ofmwig2=G+8vc1fbOCawuRzv+CcAE=85spadtbneqGag@mail.gmail.com>
- <CACT4Y+awD47=Q3taT_-yQPfQ4uyW-DRpeWBbSHcG6_=b20PPwg@mail.gmail.com>
- <CAHmME9q3_p_BX0BC6=urj4KeWLN2PvPgvGy3vQLFmd=qkNEkpQ@mail.gmail.com>
- <CACT4Y+bSBD_=rmGCF3mngiRKOfa7cv0odFaadF1wyEV9NVhQcg@mail.gmail.com>
- <CAHmME9pQQhQtg8JymxMbSMgnhZ9BpjEoTb=sSNndjp1rXnzi_Q@mail.gmail.com>
- <CAHmME9or-Wwx63ZtwYzOWV9KQJY1aarx2Eh8iF2P--BXfz6u+g@mail.gmail.com>
- <CACT4Y+a8N7_n4t_vxezKJVkd1+gDHaMzpeG18MuDE04+r3341A@mail.gmail.com>
- <CACT4Y+atqrSfZuquPZcRUKNtVbLdu+B5YN3=YmDb38Ruzj3Pzw@mail.gmail.com>
- <CACT4Y+bMzYZeMvv2DdTuTKtJFzTcHhinp7N7VmSiXqSBDyj8Ug@mail.gmail.com>
- <CACT4Y+bUXAstk41RPSF-EQDh7A8-XkTbc53nQTHt4DS5AUhr-A@mail.gmail.com>
- <CAHmME9pr4=cn5ijSNs05=fjdfQon49kyEzymkUREJ=xzTZ7Q7w@mail.gmail.com>
- <CACT4Y+aTBNZAekX_D+QdofqBdUuG9BkzLq+TFDxr8-sSqL9hdQ@mail.gmail.com>
- <CAHmME9pSWRe8k3+4G45tWE9V+N3A9APN5KFq65S5D0JNvR2xxQ@mail.gmail.com>
- <CACT4Y+ZZM-nW--q6kzKpw4tJ+tmsS=SK13SChtD__r5-k5hH_Q@mail.gmail.com>
-In-Reply-To: <CACT4Y+ZZM-nW--q6kzKpw4tJ+tmsS=SK13SChtD__r5-k5hH_Q@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 20 Feb 2020 17:59:29 +0100
-X-Gmail-Original-Message-ID: <CAHmME9pYGETQUrfTX7CQrHA_Z+oVJU0kAYQpaynaAvD8Pq2-hA@mail.gmail.com>
-Message-ID: <CAHmME9pYGETQUrfTX7CQrHA_Z+oVJU0kAYQpaynaAvD8Pq2-hA@mail.gmail.com>
-Subject: Re: syzkaller wireguard key situation [was: Re: [PATCH net-next v2]
- net: WireGuard secure network tunnel]
-To: Dmitry Vyukov <dvyukov@google.com>
-Cc: netdev <netdev@vger.kernel.org>, syzbot <syzkaller@googlegroups.com>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>
+X-Originating-IP: [10.133.213.239]
+X-CFilter-Loop: Reflected
+Cc: netdev@vger.kernel.org, linux-kselftest@vger.kernel.org,
+ wireguard@lists.zx2c4.com, linux-kernel@vger.kernel.org
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -104,23 +63,29 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Thu, Feb 20, 2020 at 5:45 PM Dmitry Vyukov <dvyukov@google.com> wrote:
-> If it's aimed only at, say, wireguard netlink interface, then it's not
-> distracted by bugs in other parts. But as you add some ipv4/6 tcp/udp
-> sockets, more netlink to change these net namespaces, namespaces
-> related syscalls, packet injection, etc, in the end it covers quite a
-> significant part of kernel. You know how fuzzing works, right. You
-> really need to fix the current layer of bugs to get to the next one.
-> And we accumulated 600+ open bugs. It still finds some new ones, but I
-> guess these are really primitive ones (as compared to its full bug
-> finding potential).
+Remove duplicated include.
 
-Yea, seems reasonable. I need to get a local syzkaller instance set up
-for customization and then start patching the things that seem to be
-standing in the way. Either way, so long as there isn't some
-implementation issue or logical problem getting in the way of calling
-that codepath, I'm satisfied in knowing that syzkaller will get there
-eventually.
+Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+---
+ tools/testing/selftests/wireguard/qemu/init.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/tools/testing/selftests/wireguard/qemu/init.c b/tools/testing/selftests/wireguard/qemu/init.c
+index 90bc981..c969812 100644
+--- a/tools/testing/selftests/wireguard/qemu/init.c
++++ b/tools/testing/selftests/wireguard/qemu/init.c
+@@ -13,7 +13,6 @@
+ #include <fcntl.h>
+ #include <sys/wait.h>
+ #include <sys/mount.h>
+-#include <sys/types.h>
+ #include <sys/stat.h>
+ #include <sys/types.h>
+ #include <sys/io.h>
+-- 
+2.7.4
+
+
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
