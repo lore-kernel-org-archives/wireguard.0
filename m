@@ -2,61 +2,100 @@ Return-Path: <SRS0=8BwB=4N=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 59A58C35DEA
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 25 Feb 2020 00:47:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 81551C35DF0
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 25 Feb 2020 00:47:18 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id E94C62072D
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 25 Feb 2020 00:47:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 759EF2072D
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 25 Feb 2020 00:47:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=qq.com header.i=@qq.com header.b="akWeDGH4"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org E94C62072D
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=vip.qq.com
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=walker.earth header.i=@walker.earth header.b="p52cElI+"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 759EF2072D
+Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=walker.earth
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7b70d6d7;
-	Tue, 25 Feb 2020 00:43:46 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0fcecfb3;
+	Tue, 25 Feb 2020 00:43:47 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fdf1f20e
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3378b044
  for <wireguard@lists.zx2c4.com>;
- Sun, 23 Feb 2020 11:09:56 +0000 (UTC)
-Received: from qq.com (out203-205-221-231.mail.qq.com [203.205.221.231])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2e9baf73
+ Sun, 23 Feb 2020 16:22:12 +0000 (UTC)
+Received: from EUR05-AM6-obe.outbound.protection.outlook.com
+ (mail-am6eur05on2135.outbound.protection.outlook.com [40.107.22.135])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e02719dc
  for <wireguard@lists.zx2c4.com>;
- Sun, 23 Feb 2020 11:09:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1582456387; bh=gcEsvo1pK//HSD0D5AnJ+eDwC+fRG6paBf2Q1Fde62c=;
- h=From:To:Cc:Subject:Date;
- b=akWeDGH4SeRKDQZk7thkKbAez3xebBLa5JVArmyCbdGE32FoGvEDIaRi17dznB3QN
- UAqyFUll2lipGywISmYsEkBmEIkJ/cnPRPvIqX5A9n3R7bhKRQVOAmNC68YLwnXqBp
- +RjMgq/aoF0dsCQ5kaVJ3PfEmibtz/zvH7wrTeiM=
-Received: from localhost.localdomain ([240e:30c:203:c62a:40a7:e093:b857:6359])
- by newxmesmtplogicsvrsza2.qq.com (NewEsmtp) with SMTP
- id 3420A87C; Sun, 23 Feb 2020 19:13:02 +0800
-X-QQ-mid: xmsmtpt1582456382tg11i2he1
-X-QQ-XMAILINFO: OEADv/rmrvQh+IKeUto2RzPevo0ewYuL5i71drJIUorPHCuovriYIVGH2WNuwy
- x7oVjJJ/XWF6bkOr8iJXUUZEZXYLwIZFg4jL/50sQEpBMBiNL2cBlucesFiHGquepmr6OlsG/w7+
- zxzSetSwIFEBLE95HKmaWlLbTlfExzYvBKUS/LkpTETLpOmnQX8GcWvqDjoJmXVpNIMhoQf3aQ3U
- w+VcRy2WtDRJDgD++KrD0p5Mq4CVy83jggqhaKQ95X+iem5IUS2eb9MiingoblCS8/FRIJ6JvNPc
- bI0XDGv8cmj1u3KYYfCwCyYA9KY9H1B/xlQlZiuFDQz6G+xEbE8PuI5SXa1cyayn0yWlt2SuvnvO
- Xreg7knGOXCg8vZPnr1vjD/eDp4hBQBgPX6oJ2df/zMwyqxxTAyFXt8TZirqVwWTQtmgY0NyKp7/
- lj6VvN8gIHng7ZqCa4hUXu53rEp4YJXZj/JrvkBulNHtGCKjOdox0ZZeR5ZzLrQiF9l7qeZJ+bhX
- IzsRkb/9XL0vjcXh+yKkCsxdsqqMvoxq2yymO6/vPS+JG/jlE55HMvfo/VLqWAR0YsCwcd6sHn+e
- 1JiHhQQVty6WWiwwMCJWVF2T1r+z+Fpf5Ld4b4q6WKtaF6wj2Qmg/r/Jjo
-From: srb12345@vip.qq.com
-To: wireguard@lists.zx2c4.com
-Subject: [PATCH] Update Simplified Chinese translation
-Date: Sun, 23 Feb 2020 19:12:48 +0800
-Message-Id: <20200223111248.1083-1-srb12345@vip.qq.com>
-X-Mailer: git-send-email 2.24.1.windows.2
+ Sun, 23 Feb 2020 16:22:12 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=cPM1I2Nw1gkUDOB9oP5daVsEJSbqK+ncZ2dN+EgMaFOdMZmwTf73f/gsFQgOoT0pv7Tfa81vcnQgDsPA2dClopQlwsaNw+hJh2I0Gzpw54DREKF6kbdZ1EBul9E/WiLbhGE+u+PAe51eypNjI3lrgtG80IvzEqg0Th0zvQoxAYnKl2CiueZS01x8gxVCaX7k8a3rMMWmSfEFalkE9CBTY91Q3J8lQQG6RNBQKhDjkT8sSG7fQkZDTxSLimkDuj14/h2brjP3Sa3Zehre9Oz35OHzQmBwGawKfGvxvzX/NFNcdovSTm294BamTXVY1mwNqhrIzdPKUyXtnPxc3C/+tQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=1fBodo9Tnw05EihXwWrlvv3/XOlvg7rvt6Zy1JsdeuE=;
+ b=Kp9uHHvZXjjVBBsf+KIloKEIbvRys/rKOw/UpSmxnR2WRrcV80iOU6Nd79Fyb/lXcKKnUyn2/5kq3d7twdYxnZ0iABXvMWr9srP674TGY09NXn8iGgaLPKDacDFvmeycCpyrkgqxQr6pWP2FBANMOtKqsauhEWV6hs/fziwPvxbt5q4ssodnhvs3rtPZjaXTvAqpz8BzzcrwhblpqdoFm382eoOOSMA9OPPEo6HZerYHVq86F2LMtFP/ZrTViD51+qlPE21Sspo2clf/Nxo4prZylYJ1s2mdNvsr/9Y0mkWZMckk7w51zA+y5YEaR279mp0bWrgUP9AM1HPtxUvAIg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=walker.earth; dmarc=pass action=none header.from=walker.earth;
+ dkim=pass header.d=walker.earth; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=walker.earth;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=1fBodo9Tnw05EihXwWrlvv3/XOlvg7rvt6Zy1JsdeuE=;
+ b=p52cElI+fxld+w3aJrMkd7GCyd26NjBu1TyBLpnxOw5cutQDIz5gMv7ZFHWRiSHY64634xghaNKlpNTGChg7KKISEoy8Yo7A1j4jVduZhWxGhhk4QaoSlYyRjSNPodPWKLHXARt50ZR1/3/hHUQJgS2GP5I5hIySC4wke1Otk+c=
+Received: from AM0PR03MB4354.eurprd03.prod.outlook.com (20.177.41.143) by
+ AM0PR03MB6084.eurprd03.prod.outlook.com (20.179.39.214) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2750.18; Sun, 23 Feb 2020 16:25:26 +0000
+Received: from AM0PR03MB4354.eurprd03.prod.outlook.com
+ ([fe80::4538:1377:1440:9ae6]) by AM0PR03MB4354.eurprd03.prod.outlook.com
+ ([fe80::4538:1377:1440:9ae6%6]) with mapi id 15.20.2750.021; Sun, 23 Feb 2020
+ 16:25:26 +0000
+From: Maurice Walker <maurice@walker.earth>
+To: Matthias Urlichs <matthias@urlichs.de>
+Subject: Re: Bug report: WireGuard iOS prioritizes IPv4 over IPv6
+Thread-Topic: Bug report: WireGuard iOS prioritizes IPv4 over IPv6
+Thread-Index: AdXqZPlKmTqbmje8QT2M1WMdtTHVuQ==
+Date: Sun, 23 Feb 2020 16:25:26 +0000
+Message-ID: <AM0PR03MB435421232B923FCE2962C7B0DCEF0@AM0PR03MB4354.eurprd03.prod.outlook.com>
+Accept-Language: en-DE, en-US
+Content-Language: de-DE
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=maurice@walker.earth; 
+x-originating-ip: [2a02:8071:31be:6201:e0b7:607:4801:73bc]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: acf15a36-03fe-4021-cb89-08d7b87cfda8
+x-ms-traffictypediagnostic: AM0PR03MB6084:
+x-microsoft-antispam-prvs: <AM0PR03MB60848BAB298DA8EAC879E36DDCEF0@AM0PR03MB6084.eurprd03.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:10000;
+x-forefront-prvs: 0322B4EDE1
+x-forefront-antispam-report: SFV:NSPM;
+ SFS:(10019020)(376002)(396003)(39830400003)(366004)(346002)(136003)(189003)(199004)(2906002)(66946007)(71200400001)(52536014)(66556008)(316002)(66476007)(6506007)(508600001)(66446008)(64756008)(5660300002)(9686003)(55016002)(81156014)(8676002)(76116006)(7696005)(186003)(8936002)(81166006)(33656002)(4326008)(6916009)(86362001)(46492005);
+ DIR:OUT; SFP:1102; SCL:1; SRVR:AM0PR03MB6084;
+ H:AM0PR03MB4354.eurprd03.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; MX:1; A:0; 
+received-spf: None (protection.outlook.com: walker.earth does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: QcRemKAw5QrWhDlhFvlFWVvHFUtblWOJFWGCMqK+gwTnuWiadztKkWHI6Gpb38flIE7kClC6JHo4oZ/yGpsrkX4t+ZP8YoXtAzukwE3Z5PUfGSwWr+6R7Z48nPqXCdeVDeZ09b8jI1fGz9eWyC2xZN/GARfhhr7sKWNUdOjIkYJePaV3q/sn98atadRs0sHsrEq8jqmgN5aZA5cl6jyl3Thzs2VETV3ICKzRyVpHOZyCsEVj8oI+UvMS8iDY4FNEOWs6SUYscMgIOxeII6HrvO1RkqjEKuxW1ey5Jqm1zMjIushcX3cmRFEZdBR8xR7mEPZdj6y+sihQ8FFMA3DNV9XC0wv75FbeOav/h+5Htr+lRA5DzoUOCznZsWqmCoAVcrga/XWVZphFMMInVb9ZUC7/cDi3mcsHs5B01b8i+z5MOZm7EVq5jy2yP39tp4JUWEpbc1f++pxiHClRKDSAj/hNUW9EYDAbpDzWfN9NYY4=
+x-ms-exchange-antispam-messagedata: edlWqF/tglhWb93oBIVAz8nrEaxVHTT9Q9gTvTReIz/TjRzo6e0cwpMlZ/o/NvcBes6fqIWCEUIZ4pJnXp4x74lDRnXEaOmWsVWiwdflJA33ZCW3HIPsgkmoL5XzrQeLox1EaXHuT89wzVdsOPOw01QS31eBH9z/Hr5Qi5lM613JS5cvvHmnBLiLo470ErYNlQDn9K50sz/D/YqJ8mTWUg==
+x-ms-exchange-transport-forked: True
 MIME-Version: 1.0
+X-OriginatorOrg: walker.earth
+X-MS-Exchange-CrossTenant-Network-Message-Id: acf15a36-03fe-4021-cb89-08d7b87cfda8
+X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Feb 2020 16:25:26.6438 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 0547d8f4-2a6b-4582-bed6-f413072064c5
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: UIddv3cvLv5P0xa1a6rLCpBRBY9kFPW3mn1YKma0PdhZ8IAUexq76vhpf6XmB1cKiDWCttH3kLYM3/cD20+VZA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM0PR03MB6084
 X-Mailman-Approved-At: Tue, 25 Feb 2020 01:43:43 +0100
+Cc: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -68,59 +107,39 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-RnJvbTogTGlsbGlnYW50TWF0c3VyaSA8c3JiMTIzNDVAdmlwLnFxLmNvbT4KClNpZ25lZC1vZmYt
-Ynk6IExpbGxpZ2FudE1hdHN1cmkgPHNyYjEyMzQ1QHZpcC5xcS5jb20+Ci0tLQogYXBwL3NyYy9t
-YWluL3Jlcy92YWx1ZXMtemgtckNOL3N0cmluZ3MueG1sIHwgMTAgKysrKysrKystLQogMSBmaWxl
-IGNoYW5nZWQsIDggaW5zZXJ0aW9ucygrKSwgMiBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS9h
-cHAvc3JjL21haW4vcmVzL3ZhbHVlcy16aC1yQ04vc3RyaW5ncy54bWwgYi9hcHAvc3JjL21haW4v
-cmVzL3ZhbHVlcy16aC1yQ04vc3RyaW5ncy54bWwKaW5kZXggMzM2MGRhZS4uOTdlODcxYSAxMDA2
-NDQKLS0tIGEvYXBwL3NyYy9tYWluL3Jlcy92YWx1ZXMtemgtckNOL3N0cmluZ3MueG1sCisrKyBi
-L2FwcC9zcmMvbWFpbi9yZXMvdmFsdWVzLXpoLXJDTi9zdHJpbmdzLnhtbApAQCAtMSwyMSArMSwy
-NyBAQAogPD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KIDxyZXNvdXJjZXM+
-CiAgICAgPHBsdXJhbHMgbmFtZT0iZGVsZXRlX2Vycm9yIj4KKyAgICAgICAgPGl0ZW0gcXVhbnRp
-dHk9Im9uZSI+5peg5rOV5Yig6ZmkICVkIOmhue+8miVzPC9pdGVtPgogICAgICAgICA8aXRlbSBx
-dWFudGl0eT0ib3RoZXIiPuaXoOazleWIoOmZpCAlZCDpobnvvJolczwvaXRlbT4KICAgICA8L3Bs
-dXJhbHM+CiAgICAgPHBsdXJhbHMgbmFtZT0iZGVsZXRlX3N1Y2Nlc3MiPgorICAgICAgICA8aXRl
-bSBxdWFudGl0eT0ib25lIj7liKDpmaTkuoYgJWQg6aG5PC9pdGVtPgogICAgICAgICA8aXRlbSBx
-dWFudGl0eT0ib3RoZXIiPuWIoOmZpOS6hiAlZCDpobk8L2l0ZW0+CiAgICAgPC9wbHVyYWxzPgog
-ICAgIDxwbHVyYWxzIG5hbWU9ImRlbGV0ZV90aXRsZSI+CisgICAgICAgIDxpdGVtIHF1YW50aXR5
-PSJvbmUiPuW3sumAieaLqSAlZCDpobk8L2l0ZW0+CiAgICAgICAgIDxpdGVtIHF1YW50aXR5PSJv
-dGhlciI+5bey6YCJ5oupICVkIOmhuTwvaXRlbT4KICAgICA8L3BsdXJhbHM+CiAgICAgPHBsdXJh
-bHMgbmFtZT0iaW1wb3J0X3BhcnRpYWxfc3VjY2VzcyI+CisgICAgICAgIDxpdGVtIHF1YW50aXR5
-PSJvbmUiPuWvvOWFpeS6hiAlZCDpobnvvIzor7vlj5bliLAgJWQg6aG5PC9pdGVtPgogICAgICAg
-ICA8aXRlbSBxdWFudGl0eT0ib3RoZXIiPuWvvOWFpeS6hiAlZCDpobnvvIzor7vlj5bliLAgJWQg
-6aG5PC9pdGVtPgogICAgIDwvcGx1cmFscz4KICAgICA8cGx1cmFscyBuYW1lPSJpbXBvcnRfdG90
-YWxfc3VjY2VzcyI+CisgICAgICAgIDxpdGVtIHF1YW50aXR5PSJvbmUiPuWvvOWFpeS6hiAlZCDp
-obk8L2l0ZW0+CiAgICAgICAgIDxpdGVtIHF1YW50aXR5PSJvdGhlciI+5a+85YWl5LqGICVkIOmh
-uTwvaXRlbT4KICAgICA8L3BsdXJhbHM+CiAgICAgPHBsdXJhbHMgbmFtZT0ic2V0X2V4Y2x1ZGVk
-X2FwcGxpY2F0aW9ucyI+CisgICAgICAgIDxpdGVtIHF1YW50aXR5PSJvbmUiPiVkIOS4quaOkumZ
-pOW6lOeUqDwvaXRlbT4KICAgICAgICAgPGl0ZW0gcXVhbnRpdHk9Im90aGVyIj4lZCDkuKrmjpLp
-maTlupTnlKg8L2l0ZW0+CiAgICAgPC9wbHVyYWxzPgogICAgIDxzdHJpbmcgbmFtZT0iYWRkX3Bl
-ZXIiPua3u+WKoOiKgueCuTwvc3RyaW5nPgpAQCAtMzgsNyArNDQsNyBAQAogICAgIDxzdHJpbmcg
-bmFtZT0iYmFkX2NvbmZpZ19yZWFzb25fdW5rbm93bl9hdHRyaWJ1dGUiPuWxnuaAp+acquefpTwv
-c3RyaW5nPgogICAgIDxzdHJpbmcgbmFtZT0iYmFkX2NvbmZpZ19yZWFzb25fdW5rbm93bl9zZWN0
-aW9uIj7oioLmnKrnn6U8L3N0cmluZz4KICAgICA8c3RyaW5nIG5hbWU9ImJhZF9jb25maWdfcmVh
-c29uX3ZhbHVlX291dF9vZl9yYW5nZSI+5pWw5YC86LaF5Ye66IyD5Zu0PC9zdHJpbmc+Ci0gICAg
-PHN0cmluZyBuYW1lPSJiYWRfZXh0ZW5zaW9uX2Vycm9yIj7mlofku7bmianlsZXlkI3lv4Xpobvk
-uLogLmNvbmYg5oiWIC56aXA8L3N0cmluZz4KKyAgICA8c3RyaW5nIG5hbWU9ImJhZF9leHRlbnNp
-b25fZXJyb3IiPuaJqeWxleWQjeW/hemhu+S4uiAuY29uZiDmiJYgLnppcDwvc3RyaW5nPgogICAg
-IDxzdHJpbmcgbmFtZT0iY2FuY2VsIj7lj5bmtog8L3N0cmluZz4KICAgICA8c3RyaW5nIG5hbWU9
-ImNvbmZpZ19kZWxldGVfZXJyb3IiPuaXoOazleWIoOmZpOmFjee9riDigJwlc+KAnTwvc3RyaW5n
-PgogICAgIDxzdHJpbmcgbmFtZT0iY29uZmlnX2V4aXN0c19lcnJvciI+4oCcJXPigJ0g55qE6YWN
-572u5bey5a2Y5ZyoPC9zdHJpbmc+CkBAIC02MCw3ICs2Niw3IEBACiAgICAgPHN0cmluZyBuYW1l
-PSJkYXJrX3RoZW1lX3N1bW1hcnlfb24iPuato+WcqOS9v+eUqOaal+iJsu+8iOm7keWknO+8ieS4
-u+mimDwvc3RyaW5nPgogICAgIDxzdHJpbmcgbmFtZT0iZGFya190aGVtZV90aXRsZSI+5L2/55So
-5pqX6Imy5Li76aKYPC9zdHJpbmc+CiAgICAgPHN0cmluZyBuYW1lPSJkZWxldGUiPuWIoOmZpDwv
-c3RyaW5nPgotICAgIDxzdHJpbmcgbmFtZT0iZGVzZWxlY3RfYWxsIj7lhajpg6jlj5bmtog8L3N0
-cmluZz4KKyAgICA8c3RyaW5nIG5hbWU9InRvZ2dsZV9hbGwiPuWPjemAiTwvc3RyaW5nPgogICAg
-IDxzdHJpbmcgbmFtZT0iZG5zX3NlcnZlcnMiPkROUyDmnI3liqHlmag8L3N0cmluZz4KICAgICA8
-c3RyaW5nIG5hbWU9ImVkaXQiPue8lui+kTwvc3RyaW5nPgogICAgIDxzdHJpbmcgbmFtZT0iZW5k
-cG9pbnQiPuWvueerr+WcsOWdgDwvc3RyaW5nPgotLSAKMi4yNC4xLndpbmRvd3MuMgoKX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18KV2lyZUd1YXJkIG1haWxp
-bmcgbGlzdApXaXJlR3VhcmRAbGlzdHMuengyYzQuY29tCmh0dHBzOi8vbGlzdHMuengyYzQuY29t
-L21haWxtYW4vbGlzdGluZm8vd2lyZWd1YXJkCg==
+Hi Matthias,
+
+Thanks for the explanation.
+
+I did some more testing on Windows. If the peer FQDN resolves to both AAAA and
+A, WireGuard seems to check for an interface with an IPv4 address (other than
+link-local or loopback). If there is one, it uses IPv4, otherwise IPv6. The
+issue is that it doesn't seem to check whether there actually is an IPv4 route
+to the peer. So as long as there is any IPv4 address on any interface, WG
+doesn't use IPv6 - even if there is no IPv4 default gateway (or other IPv4
+route to the peer).
+Since it already seems to perform some rudimentary IPv4 connectivity check,
+a simple check of the routing table could be a stopgap fix.
+
+> Thus the frontend needs to remember all addresses, send one to the
+> driver, wait a bit, check whether a link could be established, then try
+> with another peer address. Repeat until success.
+
+Right, that would ultimately be what one would wish for. But until this is
+implemented, WG should at least prefer IPv6 over IPv4.
+
+Cheers,
+
+Maurice
+
+(Sorry for double posting. I mailed again after the first mail had been on
+hold for moderator approval for three days. I will be more patient this time.)
+_______________________________________________
+WireGuard mailing list
+WireGuard@lists.zx2c4.com
+https://lists.zx2c4.com/mailman/listinfo/wireguard
