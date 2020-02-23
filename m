@@ -1,144 +1,68 @@
 Return-Path: <SRS0=ZSUP=4L=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Level: **
+X-Spam-Status: No, score=2.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,
+	NUMERIC_HTTP_ADDR,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DEAEC35671
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 23 Feb 2020 10:47:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D22EC35671
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 23 Feb 2020 10:59:01 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id E906E20656
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 23 Feb 2020 10:47:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 0DDBF20637
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 23 Feb 2020 10:59:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (4096-bit key) header.d=urlichs.de header.i=@urlichs.de header.b="eFaRqe+t"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org E906E20656
-Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=urlichs.de
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="AsoAgRr4"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 0DDBF20637
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4eaf8b29;
-	Sun, 23 Feb 2020 10:43:59 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id befb1c11;
+	Sun, 23 Feb 2020 10:55:18 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 37199b8a
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e2be63bd
  for <wireguard@lists.zx2c4.com>;
- Sun, 23 Feb 2020 10:43:57 +0000 (UTC)
-Received: from netz.smurf.noris.de (dispatch.smurf.noris.de
- [IPv6:2001:780:107:b::b])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c09ea012
+ Sun, 23 Feb 2020 10:55:16 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ee229dcb
  for <wireguard@lists.zx2c4.com>;
- Sun, 23 Feb 2020 10:43:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=urlichs.de; 
- s=20160512;
- h=Content-Transfer-Encoding:Content-Type:In-Reply-To:
- MIME-Version:Date:Message-ID:From:References:To:Subject:Sender:Reply-To:Cc:
- Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
- List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=+5MJm4/RNQRefqexJhZ7AN2t+QAML8jZpSd8xpwELtg=; b=eFaRqe+t4XbDDy4oNL7krkDLMb
- 4D/Wn0DUU7UNaCuatfigyLsA4VVTJr3hLOXS/RAJINOo0fSHvne5+JDt+rLGIZvUciwu+YJ1OBYC9
- jDZFWB3Y6fE2yCg0BYgBvyQcwnTLId0UvXVvWv4bJ1c2Ob3B3+nv16exhfi9O1DG2tjTqqOIxOzdf
- r7kcEaXVv/Xelej4SiwmuzY/7X4tnk+td3Ke7G6DbOaQlNbVWR+8WpHyLl5Fq4E6baMVo8bfVl/w4
- cLEGTMuEM5+Px9y8eN8wJCF4/rm5e63vlZiEXRny+NNP8PMJKSz9ifSpHx/ETxj5pjo8MMCsl8pYv
- SXFPtiBx3kuP2LhzeMRIyr47Imo5fJUahj3/4JijEJnebLbeyXNr3niEnwXVuROrgBUgczYgMAdVV
- J2PJzCqiMoxSWYeMFOPb21BtyQmkMhCnFk9vZP6yZXH1laaGURS8yu9v0CV1aWaL0lKc32lCUhV8w
- m8sOcv0uT5JrW3PcgTdht/jkl+AY802MKx8LQHpfdpNyC4/Fnk2edMUQL/hZ8xtY1Egzxi5seBSk/
- dlWsHvmPqGj0C5wv/DHAHpxD0lgXSEcOEzzWLIyl2+/qE+Nj57cOWVw0rm9sQapWVG4VW8oBptNfj
- C9zB24sPkQHeP/GnExVSq0ZrHy44f93bqYpVhvmLU=;
-Received: from [2001:780:107:200::a] by mail.vm.smurf.noris.de with esmtpsa
- (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim 4.92)
- (envelope-from <matthias@urlichs.de>) id 1j5om6-000OfB-UI
- for wireguard@lists.zx2c4.com; Sun, 23 Feb 2020 11:46:15 +0100
-Subject: Re: how to forward/route/rule all traffic broadcast from an br0 to wg0
-To: wireguard@lists.zx2c4.com
-References: <bfa1d3ff-7885-0c68-9d74-212dec0aaed8@powercraft.nl>
- <33e4e4e3-bcc4-4ebd-23b9-abf2ffb9ed6a@powercraft.nl>
-From: Matthias Urlichs <matthias@urlichs.de>
-Autocrypt: addr=matthias@urlichs.de; prefer-encrypt=mutual; keydata=
- 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
- fsVEzkSD5BLOh2EZ7CyO5+Y=
-Message-ID: <6e9fdedc-6b6a-c843-50a9-a28f8c1b2ce2@urlichs.de>
-Date: Sun, 23 Feb 2020 11:46:13 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+ Sun, 23 Feb 2020 10:55:16 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 85dbd3b2
+ for <wireguard@lists.zx2c4.com>;
+ Sun, 23 Feb 2020 10:55:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :references:in-reply-to:from:date:message-id:subject:to:cc
+ :content-type; s=mail; bh=sQOhhhuo24k1UwYAkL2qs4A6yhY=; b=AsoAgR
+ r4hNlvyr59h+I1g93yRz/MMqz5uX4WGIc7oohmAbK+meJHNYKxqxqi1P4/2Oazro
+ wb8X4oC/02HHEXJlJLmI0li0/3BE6wGvxD0wlkX22jTBnTBtouIjzcEBOVbAAUj6
+ SC12LSoa7/ZsxYoRb8U+6ctuvLW0gSfuNnjf0OHhFDW3tyUaUXkNRemno6P05V3s
+ BM+meVC59O/cN7naQQxcJNbCPcN8ygWNzmjjw+Cva1kpRTtXXMrVAIv0k1C/f6Ap
+ fzLhuHubKCdo74dGW6Nfp/92C0/OhRLWllaWYYLd0k6/1l9m8UrTnq+Zc0x33dxZ
+ H9Bys/DBhhETyCvA==
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id dc3a7718
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Sun, 23 Feb 2020 10:55:16 +0000 (UTC)
+Received: by mail-ot1-f45.google.com with SMTP id z9so6167325oth.5
+ for <wireguard@lists.zx2c4.com>; Sun, 23 Feb 2020 02:58:31 -0800 (PST)
+X-Gm-Message-State: APjAAAVn2Fs2ERoZrdJX9rwFYOTU5IU9YrIL3IndYP/KjlOxIiv7xKwq
+ 4skN/aD2VWgHXSBgR3Fr1EQm/ukmFAFJ8gJeHVM=
+X-Google-Smtp-Source: APXvYqz3h5GcJVtvJDpEI7KkW88L8d9M7ubttlmMTvLuAzjHwDG4KYLBSKBhNn9HwLuwOVlXcDvDgMQZmybhKVBjYio=
+X-Received: by 2002:a9d:7a47:: with SMTP id z7mr37001664otm.179.1582455510836; 
+ Sun, 23 Feb 2020 02:58:30 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <33e4e4e3-bcc4-4ebd-23b9-abf2ffb9ed6a@powercraft.nl>
-Content-Language: en-US
-X-Smurf-Spam-Score: 0.0 (/)
+References: <CAPMuNSoJaLGxTErezypvgh4j6iD9Kj2eh2UtEaGLANqjgwJ6YQ@mail.gmail.com>
+In-Reply-To: <CAPMuNSoJaLGxTErezypvgh4j6iD9Kj2eh2UtEaGLANqjgwJ6YQ@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Sun, 23 Feb 2020 11:58:18 +0100
+X-Gmail-Original-Message-ID: <CAHmME9oOq0iVAZZ63N-3yF52pn+D9XEa=dz8hOepq6N8d-e_oQ@mail.gmail.com>
+Message-ID: <CAHmME9oOq0iVAZZ63N-3yF52pn+D9XEa=dz8hOepq6N8d-e_oQ@mail.gmail.com>
+Subject: Re: xtables lock at startup?
+To: "Dimitri J. Panagiotou" <dimitri@panagiotou.net>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -150,18 +74,156 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Type: multipart/mixed; boundary="===============0300739917471543528=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-T24gMjAuMDIuMjAgMTU6NDAsIEplbGxlIGRlIEpvbmcgd3JvdGU6Cj4gQW55b25lIHRoYXQgY2Fu
-IGFuc3dlciB0aGUgcXVlc3Rpb24gb24gaG93IHRvIGJyb2FkY2FzdCB0cmFmZmljIGxpa2UKPiBE
-SENQIHRocm91Z2ggYW4gZXhjaXNpdGluZyB3aXJlZ3VhcmQgY29ubmVjdGlvbj8gCgpZb3UgbmVl
-ZCBhIHR1bm5lbC4gIm1hbiBpcC1saW5rIiBvbiBMaW51eC4KCkknbSBzdXJlIHlvdSdsbCBmaW5k
-IGEgdHV0b3JpYWwgdGhhdCBleHBsYWlucyB0aGUgdmFyaW91cyBvcHRpb25zIOKAkwp0aG9zZSBk
-ZXRhaWxzIGFyZSBvZmYtdG9waWMgZm9yIHRoZSBXRyBsaXN0IGFuZCBteSBleHBlcmllbmNlIHdp
-dGggdGhlbQppcyBzbGlnaHRseSBvdXQgb2YgZGF0ZS4gOi0vCgotLSAKLS0gTWF0dGhpYXMgVXJs
-aWNocwoKX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18KV2ly
-ZUd1YXJkIG1haWxpbmcgbGlzdApXaXJlR3VhcmRAbGlzdHMuengyYzQuY29tCmh0dHBzOi8vbGlz
-dHMuengyYzQuY29tL21haWxtYW4vbGlzdGluZm8vd2lyZWd1YXJkCg==
+--===============0300739917471543528==
+Content-Type: multipart/alternative; boundary="00000000000098ae92059f3c2296"
+
+--00000000000098ae92059f3c2296
+Content-Type: text/plain; charset="UTF-8"
+
+Do what it says; pass the -w option to iptables.
+
+On Sun, Feb 23, 2020, 11:36 Dimitri J. Panagiotou <dimitri@panagiotou.net>
+wrote:
+
+> Hi,
+>
+> Since upgrading to Fedora 31 (5.5), wireguard (latest) does not start
+> after rebooting.
+> It does start with no problem at all after rebooting, by manually running
+> wg-quick.
+>
+> This is what I get:
+> -- Reboot --
+> Feb 22 01:19:48 myservername systemd[1]: Starting WireGuard via
+> wg-quick(8) for wg0...
+> Feb 22 01:19:49 myservername wg-quick[1173]: [#] ip link add wg0 type
+> wireguard
+> Feb 22 01:19:49 myservername wg-quick[1173]: [#] wg setconf wg0 /dev/fd/63
+> Feb 22 01:19:50 myservername wg-quick[1173]: [#] ip -4 address add
+> 10.12.182.1/24 dev wg0
+> Feb 22 01:19:50 myservername wg-quick[1173]: [#] ip link set mtu 1420 up
+> dev wg0
+> Feb 22 01:19:50 myservername wg-quick[1173]: [#] mount `10.12.197.1'
+> /etc/resolv.conf
+> Feb 22 01:19:51 myservername wg-quick[1173]: [#] iptables -A FORWARD -i
+> wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o enp2s0 -j MASQUERADE
+> Feb 22 01:19:51 myservername wg-quick[1173]: Another app is currently
+> holding the xtables lock. Perhaps you want to use the -w option?
+> Feb 22 01:19:51 myservername wg-quick[1173]: [#] umount /etc/resolv.conf
+> Feb 22 01:19:51 myservername wg-quick[1173]: [#] ip link delete dev wg0
+> Feb 22 01:19:51 myservername systemd[1]: wg-quick@wg0.service: Main
+> process exited, code=exited, status=4/NOPERMISSION
+> Feb 22 01:19:51 myservername systemd[1]: wg-quick@wg0.service: Failed
+> with result 'exit-code'.
+> Feb 22 01:19:51 myservername systemd[1]: Failed to start WireGuard via
+> wg-quick(8) for wg0.
+>
+> Running
+> wireguard-dkms.noarch                         1:0.0.20200215-2.fc31
+>            @jdoss-wireguard
+> wireguard-tools.x86_64                        1:1.0.20200102-1.fc31
+>            @jdoss-wireguard
+>
+> Any idea what's causing this?
+>
+> Thanks,
+> -dimitri
+>
+>
+> _______________________________________________
+> WireGuard mailing list
+> WireGuard@lists.zx2c4.com
+> https://lists.zx2c4.com/mailman/listinfo/wireguard
+>
+
+--00000000000098ae92059f3c2296
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto">Do what it says; pass the -w option to iptables.</div><br=
+><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Sun, F=
+eb 23, 2020, 11:36 Dimitri J. Panagiotou &lt;<a href=3D"mailto:dimitri@pana=
+giotou.net">dimitri@panagiotou.net</a>&gt; wrote:<br></div><blockquote clas=
+s=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;pad=
+ding-left:1ex"><div dir=3D"ltr"><div class=3D"gmail_default" style=3D"font-=
+family:tahoma,sans-serif;color:#330033">Hi,</div><div class=3D"gmail_defaul=
+t" style=3D"font-family:tahoma,sans-serif;color:#330033"><br></div><div cla=
+ss=3D"gmail_default" style=3D"font-family:tahoma,sans-serif;color:#330033">=
+Since upgrading to Fedora 31 (5.5), wireguard (latest) does not start after=
+ rebooting.</div><div class=3D"gmail_default" style=3D"font-family:tahoma,s=
+ans-serif;color:#330033">It does start with no problem at all after rebooti=
+ng, by manually running wg-quick.</div><div class=3D"gmail_default" style=
+=3D"font-family:tahoma,sans-serif;color:#330033"><br></div><div class=3D"gm=
+ail_default" style=3D"font-family:tahoma,sans-serif;color:#330033">This is =
+what I get:</div><div class=3D"gmail_default" style=3D"font-family:tahoma,s=
+ans-serif"><font color=3D"#330033">-- Reboot --</font><br><font color=3D"#3=
+30033">Feb 22 01:19:48 myservername systemd[1]: Starting WireGuard via wg-q=
+uick(8) for wg0...</font><br><font color=3D"#330033">Feb 22 01:19:49 myserv=
+ername wg-quick[1173]: [#] ip link add wg0 type wireguard</font><br><font c=
+olor=3D"#330033">Feb 22 01:19:49 myservername wg-quick[1173]: [#] wg setcon=
+f wg0 /dev/fd/63</font><br><font color=3D"#330033">Feb 22 01:19:50 myserver=
+name wg-quick[1173]: [#] ip -4 address add <a href=3D"http://10.12.182.1/24=
+" target=3D"_blank" rel=3D"noreferrer">10.12.182.1/24</a> dev wg0</font><br=
+><font color=3D"#330033">Feb 22 01:19:50 myservername wg-quick[1173]: [#] i=
+p link set mtu 1420 up dev wg0</font><br><font color=3D"#330033">Feb 22 01:=
+19:50 myservername wg-quick[1173]: [#] mount `10.12.197.1&#39; /etc/resolv.=
+conf</font><br><font color=3D"#330033">Feb 22 01:19:51 myservername wg-quic=
+k[1173]: [#] iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTR=
+OUTING -o enp2s0 -j MASQUERADE</font><br><font color=3D"#ff0000">Feb 22 01:=
+19:51 myservername wg-quick[1173]: Another app is currently holding the xta=
+bles lock. Perhaps you want to use the -w option?</font><br><font color=3D"=
+#330033">Feb 22 01:19:51 myservername wg-quick[1173]: [#] umount /etc/resol=
+v.conf</font><br><font color=3D"#330033">Feb 22 01:19:51 myservername wg-qu=
+ick[1173]: [#] ip link delete dev wg0</font><br><font color=3D"#330033">Feb=
+ 22 01:19:51 myservername systemd[1]: wg-quick@wg0.service: Main process ex=
+ited, code=3Dexited, status=3D4/NOPERMISSION</font><br><font color=3D"#3300=
+33">Feb 22 01:19:51 myservername systemd[1]: wg-quick@wg0.service: Failed w=
+ith result &#39;exit-code&#39;.</font><br><font color=3D"#330033">Feb 22 01=
+:19:51 myservername systemd[1]: Failed to start WireGuard via wg-quick(8) f=
+or wg0.</font><br></div><div class=3D"gmail_default" style=3D"font-family:t=
+ahoma,sans-serif;color:#330033"><br></div><div class=3D"gmail_default" styl=
+e=3D"font-family:tahoma,sans-serif;color:#330033">Running=C2=A0</div><div c=
+lass=3D"gmail_default" style=3D"font-family:tahoma,sans-serif;color:#330033=
+">wireguard-dkms.noarch =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 1:0.0.20200215-2.fc31 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0@jdoss-wireguard<br>wireguard-=
+tools.x86_64 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A01:1.0.20200102-1.fc31 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0@jdoss-wireguard<br></div><div class=3D"gmai=
+l_default" style=3D"font-family:tahoma,sans-serif;color:#330033"><br></div>=
+<div class=3D"gmail_default" style=3D"font-family:tahoma,sans-serif;color:#=
+330033">Any idea what&#39;s causing this?=C2=A0=C2=A0</div><div class=3D"gm=
+ail_default" style=3D"font-family:tahoma,sans-serif;color:#330033"><br></di=
+v><div class=3D"gmail_default" style=3D"font-family:tahoma,sans-serif;color=
+:#330033">Thanks,</div><div class=3D"gmail_default" style=3D"font-family:ta=
+homa,sans-serif;color:#330033">-dimitri</div><div class=3D"gmail_default" s=
+tyle=3D"font-family:tahoma,sans-serif;color:#330033"><br></div><div class=
+=3D"gmail_default" style=3D"font-family:tahoma,sans-serif;color:#330033"><b=
+r></div></div>
+_______________________________________________<br>
+WireGuard mailing list<br>
+<a href=3D"mailto:WireGuard@lists.zx2c4.com" target=3D"_blank" rel=3D"noref=
+errer">WireGuard@lists.zx2c4.com</a><br>
+<a href=3D"https://lists.zx2c4.com/mailman/listinfo/wireguard" rel=3D"noref=
+errer noreferrer" target=3D"_blank">https://lists.zx2c4.com/mailman/listinf=
+o/wireguard</a><br>
+</blockquote></div>
+
+--00000000000098ae92059f3c2296--
+
+--===============0300739917471543528==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
+_______________________________________________
+WireGuard mailing list
+WireGuard@lists.zx2c4.com
+https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--===============0300739917471543528==--
