@@ -2,68 +2,78 @@ Return-Path: <SRS0=ZSUP=4L=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.3 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BB01BC35671
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 23 Feb 2020 11:38:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6867DC35671
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 23 Feb 2020 12:45:43 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 1AB0C20637
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 23 Feb 2020 11:38:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id C101A20675
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 23 Feb 2020 12:45:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="WMlpmxYB"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 1AB0C20637
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jQMXRGIH"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org C101A20675
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3041b758;
-	Sun, 23 Feb 2020 11:34:49 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dfd315ad;
+	Sun, 23 Feb 2020 12:41:59 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cf2342d4
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8711057e
  for <wireguard@lists.zx2c4.com>;
- Sun, 23 Feb 2020 11:34:47 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b2544f3b
+ Sun, 23 Feb 2020 12:41:58 +0000 (UTC)
+Received: from mail-lj1-x241.google.com (mail-lj1-x241.google.com
+ [IPv6:2a00:1450:4864:20::241])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 08df8464
  for <wireguard@lists.zx2c4.com>;
- Sun, 23 Feb 2020 11:34:47 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 16d93ec4
- for <wireguard@lists.zx2c4.com>;
- Sun, 23 Feb 2020 11:34:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=7iDlHEN5SSK8y0h+xt68BqDrmvE=; b=WMlpmx
- YBEFEyrs/o1bntMHe6g/avTh80ZAaU7q5vRqxgYG5njNBXaWBIoXCe5KUl3/1YAz
- W1hwy1PC8kG//sha2632TbjkSxEYE0twJ7r6MaFQeNU106FhDcEaOn4w4t7Ibh7m
- muzAVEGr4U92wmZURlECA5DgwmPvtvTzVr3GlWa/mNILWVvJ+O3BPWIxNYhu6yby
- 2E0xxFoyk30o7LKqcXiduQPJXmKW1x0QoHOiP7C4ICGMQOvlgEM9onOi0yPuuQom
- 2lMCZbzgWNa79q2GZOnpd8nPVj1XbNUa4dybF873WtKy4CS5cuZ9MB6ycdfxXKpj
- v3kjbZ/VXKsMPfRA==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id eede1e06
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Sun, 23 Feb 2020 11:34:47 +0000 (UTC)
-Received: by mail-ot1-f44.google.com with SMTP id j20so6243872otq.3
- for <wireguard@lists.zx2c4.com>; Sun, 23 Feb 2020 03:38:02 -0800 (PST)
-X-Gm-Message-State: APjAAAXAi0f1a6eFChZ+iehq51ihbYOfq9DdTSYwAviLoTEk6CmoagRv
- +el3kaUBCZWBcvcg19Q43HSkzX8Pi0Xq0W5hyRA=
-X-Google-Smtp-Source: APXvYqzEpm/gS52LZ9Vde4PjVpmkJBjOtbPQgJ1Oy7Hvj0Zo9IabJKVKBmI+E+CNcZYJcFynqOfBzeh0r2Km1eYfR5s=
-X-Received: by 2002:a9d:674f:: with SMTP id w15mr36129273otm.243.1582457881764; 
- Sun, 23 Feb 2020 03:38:01 -0800 (PST)
+ Sun, 23 Feb 2020 12:41:58 +0000 (UTC)
+Received: by mail-lj1-x241.google.com with SMTP id w1so6988722ljh.5
+ for <wireguard@lists.zx2c4.com>; Sun, 23 Feb 2020 04:45:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=message-id:subject:from:to:date:in-reply-to:references:user-agent
+ :mime-version:content-transfer-encoding;
+ bh=ZSAe0neNSSaFzzn3pK7jJI+mg5Du5Lji9aEy+ShS+mg=;
+ b=jQMXRGIHUJryoZ68DIfPqWt51QtXMfMUS04ODEHHI7Q/CJ+cxsIE2XqqVNxdvDW+EX
+ NpmhsU1CpNKgT0ytEDGjr4HmO0A3jgyPKXJp5OTt+HJuYLPXRgpLhjZiwvW8KYeF9epU
+ OsdLcGSaNDrcMpKUFhHQuFAC5W0ftjbwbgEoD4NFNyGu3UbivmUrgJgscsrmrpPzug5Z
+ fe2jM/+jhyQxmE/gn+5LGGXtJ932mtLoRVFmkUlhCu9/6s6kaN12H4eTqlJ/L2KGVktB
+ Aemx0xfkIWB7F8/runcq6P+j9handshdDR5XCZv/hh+qrPRW2EnoNq+4BXQhTQv5Bk53
+ xDbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
+ :references:user-agent:mime-version:content-transfer-encoding;
+ bh=ZSAe0neNSSaFzzn3pK7jJI+mg5Du5Lji9aEy+ShS+mg=;
+ b=KpiJtbCCeLI1sa5zQAXaIZOwxMtmX+f1k80Yozugrvan9faQfntDBZVZdI0zML9vJz
+ eMhPT9lJyxydCxCOPEldxzE9uvA4QXJXffMXDOAmF1ruYxCl3Sn41vDypRNshDgqF3U+
+ NtqP95d//ddJi2v+jrfHv+ORZ0MvGlCiH6k0WUxbE8gk0SFQXkEnQte3N7DvZEklI0KH
+ iJQW4WG1XevDirUg+PDjHmiXEZn8xMPntlIiTg9wMrdV/esM02joGyCgexjSeuIxOTsE
+ j1lAfKys7yTVXoR7WSvAtOhQbXHnrVUfSalkIrQSjahETh7AosTyzPqcDP8KbCWTGwED
+ j2Lw==
+X-Gm-Message-State: APjAAAXVw5tockycnCWb2vhxedyxjeYil6C83qonQoh183E5+GVqFA1T
+ dx43TubUhe4Yq7RXBEBuD9TbEpaY
+X-Google-Smtp-Source: APXvYqxUYFHpfiuPSnh6sSbmuGg5ApJqnnuTIC6amMKQSKvXNcNaPcogcoZhfZNvW9JEyeq07rPK+A==
+X-Received: by 2002:a2e:99c5:: with SMTP id l5mr26523442ljj.88.1582461912047; 
+ Sun, 23 Feb 2020 04:45:12 -0800 (PST)
+Received: from mammut (2481-7a97-c98e-345f-a980-830b-07d0-2001.dyn.estpak.ee.
+ [2001:7d0:830b:a980:345f:c98e:7a97:2481])
+ by smtp.gmail.com with ESMTPSA id h19sm4553282ljl.57.2020.02.23.04.45.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 23 Feb 2020 04:45:11 -0800 (PST)
+Message-ID: <6631a080206c608c7b92cffab3f739c66a1ff1e8.camel@gmail.com>
+Subject: Re: [PATCH] wg show: Add json output
+From: Arti Zirk <arti.zirk@gmail.com>
+To: Matthew Oliver <matt@oliver.net.au>, wireguard@lists.zx2c4.com
+Date: Sun, 23 Feb 2020 14:45:09 +0200
+In-Reply-To: <CAEQe3e=JMOwASvDGuC00uiYdTY_VaU0PnB285pU715i7g4uRaA@mail.gmail.com>
+References: <20200217035701.28261-1-matt@oliver.net.au>
+ <CAEQe3e=JMOwASvDGuC00uiYdTY_VaU0PnB285pU715i7g4uRaA@mail.gmail.com>
+User-Agent: Evolution 3.34.4 
 MIME-Version: 1.0
-References: <01F8520D-6F1E-4DFB-BC07-80D9838EF35D@libassi.se>
-In-Reply-To: <01F8520D-6F1E-4DFB-BC07-80D9838EF35D@libassi.se>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sun, 23 Feb 2020 12:37:48 +0100
-X-Gmail-Original-Message-ID: <CAHmME9ozSn+f1s9+q4-L_PA+Q76YY81X8_P2i4jMhYM8Or-17Q@mail.gmail.com>
-Message-ID: <CAHmME9ozSn+f1s9+q4-L_PA+Q76YY81X8_P2i4jMhYM8Or-17Q@mail.gmail.com>
-Subject: Re: FreeBSD wireguard wg-quick remote IP address assignment is
- incorrect
-To: Peter Libassi <peter@libassi.se>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -80,37 +90,15 @@ Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-We tried this already and it didn't work. See the below commit.
-Perhaps you can update that bug report you filed?
+On E, 2020-02-17 at 15:47 +1100, Matthew Oliver wrote:
+> Someone asked about this in the IRC channel, so quickly wrote up a
+> patch to add it. No pressure if you do/don't want to merge it :)
 
-commit 2c6cabd73dfb23990c245250ef2e502bdb33d189
-Author: Jason A. Donenfeld <Jason@zx2c4.com>
-Date:   Thu Feb 28 19:03:11 2019 +0100
+If you have wireguard-tools package installed then it should be
+possible to use the incldued wg-json script to do the same
 
-   wg-quick: freebsd: rebreak interface loopback, while fixing localhost
+  sudo /usr/share/wireguard-tools/examples/json/wg-json
 
-   The commit 7c833642 ("wg-quick: freebsd: allow loopback to work") was
-   supposed to make things better, but actually it just started sending
-   legitimate localhost traffic over the WireGuard interface, which is
-   really quite bad.
-
-   This reverts commit 7c833642dfa342218602ab18e7091e86408d2982.
-
-   Reported-by: Matt Smith <matt.xtaz@gmail.com>
-   Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-
-diff --git a/src/wg-quick/freebsd.bash b/src/wg-quick/freebsd.bash
-index 93f1a3b7..e83dbef0 100755
---- a/src/wg-quick/freebsd.bash
-+++ b/src/wg-quick/freebsd.bash
-@@ -158,7 +158,7 @@ add_addr() {
-       if [[ $1 == *:* ]]; then
-               cmd ifconfig "$INTERFACE" inet6 "$1" alias
-       else
--               cmd ifconfig "$INTERFACE" inet "$1" 127.0.0.1 alias
-+               cmd ifconfig "$INTERFACE" inet "$1" "${1%%/*}" alias
-       fi
-}
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
