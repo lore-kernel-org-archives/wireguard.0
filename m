@@ -6,30 +6,30 @@ X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DB11C35671
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 23 Feb 2020 10:42:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DEAEC35671
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 23 Feb 2020 10:47:52 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 54B5E20656
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 23 Feb 2020 10:42:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id E906E20656
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 23 Feb 2020 10:47:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (4096-bit key) header.d=urlichs.de header.i=@urlichs.de header.b="rKSpxXxZ"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 54B5E20656
+	dkim=fail reason="signature verification failed" (4096-bit key) header.d=urlichs.de header.i=@urlichs.de header.b="eFaRqe+t"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org E906E20656
 Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=urlichs.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7d94a25e;
-	Sun, 23 Feb 2020 10:39:01 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4eaf8b29;
+	Sun, 23 Feb 2020 10:43:59 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5367ac54
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 37199b8a
  for <wireguard@lists.zx2c4.com>;
- Sun, 23 Feb 2020 10:38:58 +0000 (UTC)
+ Sun, 23 Feb 2020 10:43:57 +0000 (UTC)
 Received: from netz.smurf.noris.de (dispatch.smurf.noris.de
  [IPv6:2001:780:107:b::b])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id af9c286f
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c09ea012
  for <wireguard@lists.zx2c4.com>;
- Sun, 23 Feb 2020 10:38:58 +0000 (UTC)
+ Sun, 23 Feb 2020 10:43:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=urlichs.de; 
  s=20160512;
  h=Content-Transfer-Encoding:Content-Type:In-Reply-To:
@@ -37,23 +37,24 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=urlichs.de;
  Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
  Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
  List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=maZvXyzS6GTW80umGV9Zn9j95kYfsDfAVnN/I+61mG4=; b=rKSpxXxZ29qNidF3jdMRAAGfI3
- NiI2Y7bHZi02I5/wJJlcO9Z9P1EYeW8NqO7vunlbon/T088xoJ0RZA/Kh4z35QDyJMtumWxX+rzsC
- N8+85lkGEtuftGcSpxatdklnfLvrDrG00hjEHYQMGB257KrxSG8XU3x1J+rZ76cfxIQ3u79yBOtce
- hh6ZA+6CN/7Mep5UADgesZMOoKG10lE7cLD+GDqGcFdkoP5/GnS7X8h+ahTYpI7fO1q4BFEGRiq49
- kmjEI6OlKfs4HrgrzraFdoBMlJI2px2GMtNsjRFQynTeWTuF81SHKCp1mf31VIotVPVmbqMM1jFi0
- eCcLcC1rP83ujs57hgXS+hdwlHDF80xX5wWLI0Jt01X0oe7cac3876Kt+PN3H8besPLtU2g675/6o
- 4x4ufYZlkwSnxCPCkmd1DcdgnvX/bAFwn6SwilZbapcKwX9ChB2wwDXZYf7HX5DDqz1d0y4W15fvA
- vR8P1ldkE34qTZ3pYaL3/iBHC/7npZKqebolGDAjgjQGNpvKno+zQQ/djGxFMiWQcPbIoPdruxtCP
- 8A2rbQAwyK6Ge9wzeK+/PwS5mIiWB91G3+0Xi5lMj61SUxygslp/2XzXkAYYa1gbbEF5rKh2L9VQ2
- LiUYWhUppqDrcalWjMS5MJ50P3eXRHZUmV6r0DG9g=;
+ bh=+5MJm4/RNQRefqexJhZ7AN2t+QAML8jZpSd8xpwELtg=; b=eFaRqe+t4XbDDy4oNL7krkDLMb
+ 4D/Wn0DUU7UNaCuatfigyLsA4VVTJr3hLOXS/RAJINOo0fSHvne5+JDt+rLGIZvUciwu+YJ1OBYC9
+ jDZFWB3Y6fE2yCg0BYgBvyQcwnTLId0UvXVvWv4bJ1c2Ob3B3+nv16exhfi9O1DG2tjTqqOIxOzdf
+ r7kcEaXVv/Xelej4SiwmuzY/7X4tnk+td3Ke7G6DbOaQlNbVWR+8WpHyLl5Fq4E6baMVo8bfVl/w4
+ cLEGTMuEM5+Px9y8eN8wJCF4/rm5e63vlZiEXRny+NNP8PMJKSz9ifSpHx/ETxj5pjo8MMCsl8pYv
+ SXFPtiBx3kuP2LhzeMRIyr47Imo5fJUahj3/4JijEJnebLbeyXNr3niEnwXVuROrgBUgczYgMAdVV
+ J2PJzCqiMoxSWYeMFOPb21BtyQmkMhCnFk9vZP6yZXH1laaGURS8yu9v0CV1aWaL0lKc32lCUhV8w
+ m8sOcv0uT5JrW3PcgTdht/jkl+AY802MKx8LQHpfdpNyC4/Fnk2edMUQL/hZ8xtY1Egzxi5seBSk/
+ dlWsHvmPqGj0C5wv/DHAHpxD0lgXSEcOEzzWLIyl2+/qE+Nj57cOWVw0rm9sQapWVG4VW8oBptNfj
+ C9zB24sPkQHeP/GnExVSq0ZrHy44f93bqYpVhvmLU=;
 Received: from [2001:780:107:200::a] by mail.vm.smurf.noris.de with esmtpsa
  (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim 4.92)
- (envelope-from <matthias@urlichs.de>) id 1j5oi0-000Oca-5r
- for wireguard@lists.zx2c4.com; Sun, 23 Feb 2020 11:42:00 +0100
-Subject: Re: Bug report: WireGuard iOS prioritizes IPv4 over IPv6
+ (envelope-from <matthias@urlichs.de>) id 1j5om6-000OfB-UI
+ for wireguard@lists.zx2c4.com; Sun, 23 Feb 2020 11:46:15 +0100
+Subject: Re: how to forward/route/rule all traffic broadcast from an br0 to wg0
 To: wireguard@lists.zx2c4.com
-References: <AM0PR03MB4354F7720F30995B3615664DDC160@AM0PR03MB4354.eurprd03.prod.outlook.com>
+References: <bfa1d3ff-7885-0c68-9d74-212dec0aaed8@powercraft.nl>
+ <33e4e4e3-bcc4-4ebd-23b9-abf2ffb9ed6a@powercraft.nl>
 From: Matthias Urlichs <matthias@urlichs.de>
 Autocrypt: addr=matthias@urlichs.de; prefer-encrypt=mutual; keydata=
  mQINBE7uOWcBEADgsF3N8L9mUekI0XLfLNQpMLq9VMwi8nyZtmJECHOajfOX8tMWua1Bh4qh
@@ -130,12 +131,12 @@ Autocrypt: addr=matthias@urlichs.de; prefer-encrypt=mutual; keydata=
  L2fxPK+cqOQvhqtYwI33EKhzgUa7mEqnJcxEU23crbL92LQ+UtT3fEkf/I3O1WyYjAUvoYKS
  kYP4aXv7R9rMFnCm79FeUSYJse3ew4C1Ug0GZZJXDTJqf6sQbGdpQuKN/SLIWPjDWyMWsNkX
  fsVEzkSD5BLOh2EZ7CyO5+Y=
-Message-ID: <fdeba97e-f753-803b-0ee3-57570a81840e@urlichs.de>
-Date: Sun, 23 Feb 2020 11:41:59 +0100
+Message-ID: <6e9fdedc-6b6a-c843-50a9-a28f8c1b2ce2@urlichs.de>
+Date: Sun, 23 Feb 2020 11:46:13 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.5.0
 MIME-Version: 1.0
-In-Reply-To: <AM0PR03MB4354F7720F30995B3615664DDC160@AM0PR03MB4354.eurprd03.prod.outlook.com>
+In-Reply-To: <33e4e4e3-bcc4-4ebd-23b9-abf2ffb9ed6a@powercraft.nl>
 Content-Language: en-US
 X-Smurf-Spam-Score: 0.0 (/)
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -154,16 +155,13 @@ Content-Transfer-Encoding: base64
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-T24gMTcuMDIuMjAgMTY6NDQsIE1hdXJpY2UgV2Fsa2VyIHdyb3RlOgo+IFRoZSBBbmRyb2lkICh2
-MC4wLjIwMjAwMjA2KSBhbmQgV2luZG93cyAodjAuMC4zOCkgY2xpZW50cyBoYXZlIHRoZSBzYW1l
-IGJ1Zy4KCkl0J3Mgbm90IGEgKCJzaW1wbGUiKSBidWcsIGJ1dCBhIGdlbmVyYWwgcHJvYmxlbSB3
-aXRoIHBlZXJzIHdpdGgKbXVsdGlwbGUgYWRkcmVzc2VzIOKAkyB3aXJlZ3VhcmQgb25seSBzdG9y
-ZXMgb25lIGluIHRoZSBrZXJuZWwsIGl0IGRvZXNuJ3QKZG8gbXVsdGlwYXRoLCBieSBkZXNpZ24u
-CgpUaHVzIHRoZSBmcm9udGVuZCBuZWVkcyB0byByZW1lbWJlciBhbGwgYWRkcmVzc2VzLCBzZW5k
-IG9uZSB0byB0aGUKZHJpdmVyLCB3YWl0IGEgYml0LCBjaGVjayB3aGV0aGVyIGEgbGluayBjb3Vs
-ZCBiZSBlc3RhYmxpc2hlZCwgdGhlbiB0cnkKd2l0aCBhbm90aGVyIHBlZXIgYWRkcmVzcy4gUmVw
-ZWF0IHVudGlsIHN1Y2Nlc3MuIEJvbnVzIHBvaW50cyBmb3IKcmVwZWF0aW5nIHRoZSBob3N0IG5h
-bWUgbG9va3VwLgoKLS0gCi0tIE1hdHRoaWFzIFVybGljaHMKCl9fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fCldpcmVHdWFyZCBtYWlsaW5nIGxpc3QKV2lyZUd1
-YXJkQGxpc3RzLnp4MmM0LmNvbQpodHRwczovL2xpc3RzLnp4MmM0LmNvbS9tYWlsbWFuL2xpc3Rp
-bmZvL3dpcmVndWFyZAo=
+T24gMjAuMDIuMjAgMTU6NDAsIEplbGxlIGRlIEpvbmcgd3JvdGU6Cj4gQW55b25lIHRoYXQgY2Fu
+IGFuc3dlciB0aGUgcXVlc3Rpb24gb24gaG93IHRvIGJyb2FkY2FzdCB0cmFmZmljIGxpa2UKPiBE
+SENQIHRocm91Z2ggYW4gZXhjaXNpdGluZyB3aXJlZ3VhcmQgY29ubmVjdGlvbj8gCgpZb3UgbmVl
+ZCBhIHR1bm5lbC4gIm1hbiBpcC1saW5rIiBvbiBMaW51eC4KCkknbSBzdXJlIHlvdSdsbCBmaW5k
+IGEgdHV0b3JpYWwgdGhhdCBleHBsYWlucyB0aGUgdmFyaW91cyBvcHRpb25zIOKAkwp0aG9zZSBk
+ZXRhaWxzIGFyZSBvZmYtdG9waWMgZm9yIHRoZSBXRyBsaXN0IGFuZCBteSBleHBlcmllbmNlIHdp
+dGggdGhlbQppcyBzbGlnaHRseSBvdXQgb2YgZGF0ZS4gOi0vCgotLSAKLS0gTWF0dGhpYXMgVXJs
+aWNocwoKX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18KV2ly
+ZUd1YXJkIG1haWxpbmcgbGlzdApXaXJlR3VhcmRAbGlzdHMuengyYzQuY29tCmh0dHBzOi8vbGlz
+dHMuengyYzQuY29tL21haWxtYW4vbGlzdGluZm8vd2lyZWd1YXJkCg==
