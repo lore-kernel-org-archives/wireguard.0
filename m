@@ -2,77 +2,40 @@ Return-Path: <SRS0=8BwB=4N=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.5 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
-	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 74486C35DEE
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 25 Feb 2020 00:48:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4742EC35DEA
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 25 Feb 2020 00:49:09 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 1624F21D7E
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 25 Feb 2020 00:48:08 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="p7tU6CjE"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 1624F21D7E
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	by mail.kernel.org (Postfix) with ESMTPS id A713B2072D
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 25 Feb 2020 00:49:08 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A713B2072D
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=distanz.ch
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2213b8dd;
-	Tue, 25 Feb 2020 00:43:52 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e461c962;
+	Tue, 25 Feb 2020 00:43:53 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9ece5a7e
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 994eb3fe
  for <wireguard@lists.zx2c4.com>;
- Mon, 24 Feb 2020 13:31:41 +0000 (UTC)
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com
- [IPv6:2a00:1450:4864:20::444])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b3adee35
+ Mon, 24 Feb 2020 17:20:58 +0000 (UTC)
+Received: from sym2.noone.org (sym2.noone.org [178.63.92.236])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8d3ff468
  for <wireguard@lists.zx2c4.com>;
- Mon, 24 Feb 2020 13:31:41 +0000 (UTC)
-Received: by mail-wr1-x444.google.com with SMTP id z15so2075870wrl.1
- for <wireguard@lists.zx2c4.com>; Mon, 24 Feb 2020 05:35:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=XgkWDk5QfcspmkZaIZr50vVKbt4Kr6qoHxpxOJCDhdc=;
- b=p7tU6CjEX9K9FWgwCbF7V5BRRWt99YgpeaMeLBf96vsptl+LBfKZyl+00WQ7g8e7vc
- cBlg3mnMmOtG+RF4LIwJ8pjf/zAcuAm7ON3y+vDbzVSN+d0KHA9OzoUHG3UEMPC4hih2
- fLUtVM6FezVkcITSk15VMAt64A/648CBNeEy41OFk5ZEukax2wcTQhrifdlA0uAY27D7
- UnrgL2hDsFv3wDsKMPk8zxycjgy06kK84Ao7wHTTPwcyiIk5K+wTj3x4zzjzg6bysolc
- zYJFmEWehe22r+83NtARAM/DU7WOwoy+C3qItQ9SXhfkJ9x7ECuHrWulFWrAdWo9tRdD
- py5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=XgkWDk5QfcspmkZaIZr50vVKbt4Kr6qoHxpxOJCDhdc=;
- b=tDWrnNUV6ef2OwOYc89VVL9svybl3W38AlHbjHENmWYMh2uUyAyh7WM6J8fqIbCXSn
- BCe9Nv6gMMzo/8NnQsvfqD0xa+v0BJ09gPbItFGBpTKHwfXNsigr7ttnE2IM9jnblTox
- UuhPbfxIy8vRUN2BWk4UjQmTXWZB7neWwBwLjVM7aq+AEJq1n4rnRt3C2ug6n2T+NG7A
- lPueCwnRGPWgob3Ah4uwDbluJcE3NoR7nV4W6bw4dJS3YL1n4IBCYW8inq5no1SFKwq4
- /KymJmqy5/4gmN1ehf9/H8l396TFSHeqIS5zB/NKWGLJF98U/p3BKJ3Fizq20Dy2KAR6
- NGgA==
-X-Gm-Message-State: APjAAAXiG9c3SpFxrleIQ4AHjZhhPkaytHzKswrjlXEdURL6EqLE1r6X
- iSZvW1L+H2pigxg8IuDQcZ1TKvmUFfo=
-X-Google-Smtp-Source: APXvYqymhHs61GHgxEfgQ5xZ1kwAt5DxiZ7rTYaBrQxTBOjAUPQULs0HIzUL19juAOsfcN0IMJ1Ogg==
-X-Received: by 2002:adf:f084:: with SMTP id n4mr66515274wro.200.1582551303418; 
- Mon, 24 Feb 2020 05:35:03 -0800 (PST)
-Received: from localhost.localdomain ([185.217.171.65])
- by smtp.gmail.com with ESMTPSA id u8sm18596013wmm.15.2020.02.24.05.35.02
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 24 Feb 2020 05:35:02 -0800 (PST)
-From: Arjen Brouwer <arjenjb@gmail.com>
+ Mon, 24 Feb 2020 17:20:58 +0000 (UTC)
+Received: by sym2.noone.org (Postfix, from userid 1002)
+ id 48R87T62YCzvjc1; Mon, 24 Feb 2020 18:24:21 +0100 (CET)
+From: Tobias Klauser <tklauser@distanz.ch>
 To: wireguard@lists.zx2c4.com
-Subject: [PATCH] DO_NOT_LAUNCH parameter was ignored by MSI, should work now
-Date: Mon, 24 Feb 2020 14:32:39 +0100
-Message-Id: <20200224133237.953-1-arjenjb@gmail.com>
-X-Mailer: git-send-email 2.24.1.windows.2
-MIME-Version: 1.0
+Subject: [PATCH] global: use RTMGRP_* consts from x/sys/unix
+Date: Mon, 24 Feb 2020 18:24:21 +0100
+Message-Id: <20200224172421.957-1-tklauser@distanz.ch>
+X-Mailer: git-send-email 2.11.0
 X-Mailman-Approved-At: Tue, 25 Feb 2020 01:43:43 +0100
-Cc: Arjen Brouwer <arjen@ag5.nl>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -84,60 +47,79 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
+MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-From: Arjen Brouwer <arjen@ag5.nl>
+Update the golang.org/x/sys/unix dependency and use the newly introduced
+RTMGRP_* consts instead of using the corresponding RTNLGRP_* const to
+create a mask.
 
-
-The `DO_NO_LAUNCH` parameter did not actually work. After running the installer with the DO_NO_LAUNCH parameter, the UI still showed up afterwards and the MSI log had the following entry:
-
-```
-MSI (c) (28:08) [14:43:17:966]: Ignoring disallowed property DO_NOT_LAUNCH
-```
-
-By explicitly defining the DO_NOT_LAUNCH property and making it secure, solved the problem.
-
+Signed-off-by: Tobias Klauser <tklauser@distanz.ch>
 ---
- installer/wireguard.wxs | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ device/conn_linux.go | 2 +-
+ go.mod               | 2 +-
+ go.sum               | 4 ++--
+ tun/tun_linux.go     | 2 +-
+ 4 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/installer/wireguard.wxs b/installer/wireguard.wxs
-index 5bbb1eb..781d20c 100644
---- a/installer/wireguard.wxs
-+++ b/installer/wireguard.wxs
-@@ -45,7 +45,8 @@
- 		<Property Id="DISABLEROLLBACK" Value="yes" />
- 		<Property Id="MSIDISABLERMRESTART" Value="1" />
- 		<Property Id="MSIRMSHUTDOWN" Value="1" />
--
-+		<Property Id="DO_NOT_LAUNCH" Value="0" Secure="yes" />
-+		
- 		<!--
- 			Upgrading
- 		-->
-@@ -135,7 +136,7 @@
- 		-->
- 		<CustomAction Id="LaunchApplication" HideTarget="yes" Impersonate="no" Execute="deferred" FileKey="wireguard.exe" ExeCommand="" Return="asyncNoWait" />
- 		<InstallExecuteSequence>
--			<Custom Action="LaunchApplication" Before="InstallFinalize">(&amp;WireGuardFeature = 3) AND NOT DO_NOT_LAUNCH</Custom>
-+			<Custom Action="LaunchApplication" Before="InstallFinalize"><![CDATA[(&WireGuardFeature = 3) AND (DO_NOT_LAUNCH = "0")]]></Custom>
- 		</InstallExecuteSequence>
- 
- 		<!--
-@@ -143,7 +144,7 @@
- 		-->
- 		<CustomAction Id="LaunchApplicationAsOrdinaryUser" HideTarget="yes" FileKey="wireguard.exe" ExeCommand="" Return="asyncNoWait" />
- 		<InstallExecuteSequence>
--			<Custom Action="LaunchApplicationAsOrdinaryUser" After="InstallFinalize">(&amp;WireGuardFeature = -1) AND (!WireGuardFeature = 3) AND NOT DO_NOT_LAUNCH</Custom>
-+			<Custom Action="LaunchApplicationAsOrdinaryUser" After="InstallFinalize"><![CDATA[(&WireGuardFeature = -1) AND (!WireGuardFeature = 3) AND (DO_NOT_LAUNCH = "0")]]></Custom>
- 		</InstallExecuteSequence>
- 	</Product>
- </Wix>
+diff --git a/device/conn_linux.go b/device/conn_linux.go
+index 94b6d5c072c7..e90b0e35b456 100644
+--- a/device/conn_linux.go
++++ b/device/conn_linux.go
+@@ -118,7 +118,7 @@ func createNetlinkRouteSocket() (int, error) {
+ 	}
+ 	saddr := &unix.SockaddrNetlink{
+ 		Family: unix.AF_NETLINK,
+-		Groups: uint32(1 << (unix.RTNLGRP_IPV4_ROUTE - 1)),
++		Groups: unix.RTMGRP_IPV4_ROUTE,
+ 	}
+ 	err = unix.Bind(sock, saddr)
+ 	if err != nil {
+diff --git a/go.mod b/go.mod
+index 34b1e720a8ea..c5f11d5966ec 100644
+--- a/go.mod
++++ b/go.mod
+@@ -5,6 +5,6 @@ go 1.12
+ require (
+ 	golang.org/x/crypto v0.0.0-20191002192127-34f69633bfdc
+ 	golang.org/x/net v0.0.0-20191003171128-d98b1b443823
+-	golang.org/x/sys v0.0.0-20191003212358-c178f38b412c
++	golang.org/x/sys v0.0.0-20200223170610-d5e6a3e2c0ae
+ 	golang.org/x/text v0.3.2
+ )
+diff --git a/go.sum b/go.sum
+index 970f4cbade71..555fb0eec4fd 100644
+--- a/go.sum
++++ b/go.sum
+@@ -6,8 +6,8 @@ golang.org/x/net v0.0.0-20191003171128-d98b1b443823 h1:Ypyv6BNJh07T1pUSrehkLemqP
+ golang.org/x/net v0.0.0-20191003171128-d98b1b443823/go.mod h1:z5CRVTTTmAJ677TzLLGU+0bjPO0LkuOLi4/5GtJWs/s=
+ golang.org/x/sys v0.0.0-20190215142949-d0b11bdaac8a/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
+ golang.org/x/sys v0.0.0-20190412213103-97732733099d/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+-golang.org/x/sys v0.0.0-20191003212358-c178f38b412c h1:6Zx7DRlKXf79yfxuQ/7GqV3w2y7aDsk6bGg0MzF5RVU=
+-golang.org/x/sys v0.0.0-20191003212358-c178f38b412c/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
++golang.org/x/sys v0.0.0-20200223170610-d5e6a3e2c0ae h1:/WDfKMnPU+m5M4xB+6x4kaepxRw6jWvR5iDRdvjHgy8=
++golang.org/x/sys v0.0.0-20200223170610-d5e6a3e2c0ae/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+ golang.org/x/text v0.3.0/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
+ golang.org/x/text v0.3.2 h1:tW2bmiBqwgJj/UpqtC8EpXEZVYOwU0yG4iWbprSVAcs=
+ golang.org/x/text v0.3.2/go.mod h1:bEr9sfX3Q8Zfm5fL9x+3itogRgK3+ptLWKqgva+5dAk=
+diff --git a/tun/tun_linux.go b/tun/tun_linux.go
+index 36b43ea4d094..7ab062314662 100644
+--- a/tun/tun_linux.go
++++ b/tun/tun_linux.go
+@@ -85,7 +85,7 @@ func createNetlinkSocket() (int, error) {
+ 	}
+ 	saddr := &unix.SockaddrNetlink{
+ 		Family: unix.AF_NETLINK,
+-		Groups: uint32((1 << (unix.RTNLGRP_LINK - 1)) | (1 << (unix.RTNLGRP_IPV4_IFADDR - 1)) | (1 << (unix.RTNLGRP_IPV6_IFADDR - 1))),
++		Groups: unix.RTMGRP_LINK | unix.RTMGRP_IPV4_IFADDR | unix.RTMGRP_IPV6_IFADDR,
+ 	}
+ 	err = unix.Bind(sock, saddr)
+ 	if err != nil {
 -- 
-2.24.1.windows.2
+2.25.0
 
 _______________________________________________
 WireGuard mailing list
