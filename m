@@ -1,73 +1,67 @@
 Return-Path: <SRS0=8BwB=4N=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
-X-Spam-Level: **
-X-Spam-Status: No, score=2.5 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
-	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B759C35DF2
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 25 Feb 2020 05:14:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 598C9C35DF2
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 25 Feb 2020 06:07:46 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 022C22467C
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 25 Feb 2020 05:14:54 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H1k05A3T"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 022C22467C
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	by mail.kernel.org (Postfix) with ESMTPS id 6EF0C20656
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 25 Feb 2020 06:07:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 6EF0C20656
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=libassi.se
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id eea0bb90;
-	Tue, 25 Feb 2020 05:11:08 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6ce55686;
+	Tue, 25 Feb 2020 06:04:15 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 922f0b77
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c1948375
  for <wireguard@lists.zx2c4.com>;
- Tue, 25 Feb 2020 05:11:06 +0000 (UTC)
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com
- [IPv6:2a00:1450:4864:20::12f])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7f04f035
+ Tue, 25 Feb 2020 06:04:13 +0000 (UTC)
+Received: from smtp2.outgoing.loopia.se (smtp2.outgoing.loopia.se
+ [93.188.3.37])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f862b8aa
  for <wireguard@lists.zx2c4.com>;
- Tue, 25 Feb 2020 05:11:06 +0000 (UTC)
-Received: by mail-lf1-x12f.google.com with SMTP id 7so8649187lfz.11
- for <wireguard@lists.zx2c4.com>; Mon, 24 Feb 2020 21:14:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=vyNWIsHI/qkOAy/OyhxSqqZhUwc4freppl4V+T2inNM=;
- b=H1k05A3T5VGPlNkApvUbGqQsr0UHViVp7F3MAgqlF23Y+2ktbDB+i7WPomHaCf1j+V
- 4pheeTi+Yxqs6kabhASCdCxnOWGTqD805L/z6eRxoHAcvebqcb2Zyiu/8zmaq6mI4AD4
- o+8Qzw0aKAW8+qAKlrqt/bE+rgIdzVwFf9jAoZYgwZrrwzD8MG/fwhio0uIJfCpyZtU5
- emzYuS02ik5cnXVQrmWkROgeKZfjGug6roRP2ULtLr0jXoesk052TUM6N/OGXunS+Jsd
- X0lTegf3O1Hjk59nCCwxkfqmWtHcrq/MX5Xpply+Stm0VarOBW5L6QTn1KkP/k2I7Jea
- TdVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=vyNWIsHI/qkOAy/OyhxSqqZhUwc4freppl4V+T2inNM=;
- b=lH3p4GN7Fejrw/BgVfRmGp3XIdbmCbK6EriiTo7j27oLAIyBMgW0aOtvFgYxUYUR1c
- EJG1iiAzTqSiXzoNT/tCt8NHbVS3CGoMxzA1LlOlAotxSVfBTKx46sfuIhhgjIWFRWcD
- Ex5D/E+xSO0GQIIZpyIwwlX6p0xO3E0XUv3bQQNvv43CMfd0izoA3C7YRuWJ4abx/cKC
- rUfgO33IL6anqLdr03p2LthedHCcAwum/5D7u5AGJCmcScXl0VSSNDlvuJXc5+u2OU+b
- I2WZY086oE5iJWNBn2LdHJolcUZR6bXTM2Vz0mQKm7dUCL6Av/9zliMiE8k9gDX+LjmL
- DYfA==
-X-Gm-Message-State: APjAAAXagEfcG3PJ3hEfGg/wdLVnWg7ylEuxKHu4gQ4VFZZVSDuy53Qu
- uWm8M5pDs9ex23g35I3jymwNzm+NfdMIF51og3g=
-X-Google-Smtp-Source: APXvYqwSwfbq/MFjkjd/OtY/JQYsWrYIdm6bm5Bv6unz9cwWHWnv7shFMm9fgsQBzo5duSazZExF0YwoWbIg81g40Zw=
-X-Received: by 2002:a05:6512:31ca:: with SMTP id
- j10mr17747474lfe.110.1582607673411; 
- Mon, 24 Feb 2020 21:14:33 -0800 (PST)
-MIME-Version: 1.0
-References: <CA+5JoNrd7dNRQv+y7-wBw1denTt9GKnvF3S1R-FwgYixauMC=w@mail.gmail.com>
-In-Reply-To: <CA+5JoNrd7dNRQv+y7-wBw1denTt9GKnvF3S1R-FwgYixauMC=w@mail.gmail.com>
-From: Reid Rankin <reidrankin@gmail.com>
-Date: Tue, 25 Feb 2020 00:14:22 -0500
-Message-ID: <CAMaqUZ1r7Y_57bUYs=D_EoACbzA9uvkywTMEhUsMa1QgT_X9UA@mail.gmail.com>
-Subject: Re: [feature request] Randomize PersistentKeepalive
-To: John Smith <dingrite@gmail.com>
-Cc: wireguard@lists.zx2c4.com
+ Tue, 25 Feb 2020 06:04:13 +0000 (UTC)
+Received: from s807.loopia.se (localhost [127.0.0.1])
+ by s807.loopia.se (Postfix) with ESMTP id D3F4B2E5DFCC
+ for <wireguard@lists.zx2c4.com>; Tue, 25 Feb 2020 07:07:40 +0100 (CET)
+Received: from s499.loopia.se (unknown [172.22.191.5])
+ by s807.loopia.se (Postfix) with ESMTP id B54CD2E27659;
+ Tue, 25 Feb 2020 07:07:40 +0100 (CET)
+Received: from s470.loopia.se (unknown [172.22.191.5])
+ by s499.loopia.se (Postfix) with ESMTP id B15C51CDAF12;
+ Tue, 25 Feb 2020 07:07:40 +0100 (CET)
+X-Virus-Scanned: amavisd-new at amavis.loopia.se
+Received: from s498.loopia.se ([172.22.191.5])
+ by s470.loopia.se (s470.loopia.se [172.22.190.10]) (amavisd-new, port 10024)
+ with LMTP id rQPdSnNtOpyi; Tue, 25 Feb 2020 07:07:38 +0100 (CET)
+X-Loopia-Auth: user
+X-Loopia-User: peter@libassi.se
+X-Loopia-Originating-IP: 78.82.164.216
+Received: from [10.79.0.17] (c-d8a4524e.03-77-73746f30.bbcust.telenor.se
+ [78.82.164.216]) (Authenticated sender: peter@libassi.se)
+ by s498.loopia.se (Postfix) with ESMTPSA id 843A947085A;
+ Tue, 25 Feb 2020 07:07:38 +0100 (CET)
+Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
+Subject: Re: FreeBSD wireguard wg-quick remote IP address assignment is
+ incorrect
+From: Peter Libassi <peter@libassi.se>
+In-Reply-To: <CAHmME9oh74nx_eZz19vn=n+U6gF0M6Dtu--EnGw8dVwSnvX9cg@mail.gmail.com>
+Date: Tue, 25 Feb 2020 07:07:38 +0100
+Message-Id: <94EEC84F-00C1-446A-9AE7-61CACB38CD64@libassi.se>
+References: <01F8520D-6F1E-4DFB-BC07-80D9838EF35D@libassi.se>
+ <CAHmME9ozSn+f1s9+q4-L_PA+Q76YY81X8_P2i4jMhYM8Or-17Q@mail.gmail.com>
+ <645AC0E3-6440-4ABF-9589-179F5AEDE00E@libassi.se>
+ <CAHmME9oh74nx_eZz19vn=n+U6gF0M6Dtu--EnGw8dVwSnvX9cg@mail.gmail.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+X-Mailer: Apple Mail (2.3608.60.0.2.5)
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -79,91 +73,42 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============7198086602522695380=="
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============7198086602522695380==
-Content-Type: multipart/alternative; boundary="000000000000314eed059f5f90fe"
-
---000000000000314eed059f5f90fe
-Content-Type: text/plain; charset="UTF-8"
-
-Won't help -- a keepalive is by definition the minimum possible size frame.
-That means not just that it's a predictable size, but that everything that
-size must be a keepalive, randomized interval or not.
-
-To get the kind of effect you're looking for, you'd need to send actual
-dummy data -- which, incidentally, you can totally do no problem just by
-making sure you're sending packets from an IP that isn't on the AllowedIPs
-list on the other side. That will always cause the payload to be silently
-dropped on the floor before it even hits the rest of the networking stack,
-and with resource usage comparable to that of keepalives.
-
---Reid
-
-On Mon, Feb 24, 2020 at 7:49 PM John Smith <dingrite@gmail.com> wrote:
-
-> There are some applications where you do not want a listener to know that
-> a channel is being kept alive and no information is being transmitted.
->
-> Perhaps the ideal solution would be to add an option to the wg tool to
-> send a keepalive packet, preferably of arbitrary size within some range. A
-> script could then be used to keep the channel alive in a manner. Would be
-> cleaner than sending something else through that may require further action
-> by the peer.
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
->
-
---000000000000314eed059f5f90fe
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div><div dir=3D"auto">Won&#39;t help -- a keepalive is by definition the m=
-inimum possible size frame. That means not just that it&#39;s a predictable=
- size, but that everything that size must be a keepalive, randomized interv=
-al or not.=C2=A0</div></div><div dir=3D"auto"><br></div><div dir=3D"auto">T=
-o get the kind of effect you&#39;re looking for, you&#39;d need to send act=
-ual dummy data -- which, incidentally, you can totally do no problem just b=
-y making sure you&#39;re sending packets from an IP that isn&#39;t on the A=
-llowedIPs list on the other side. That will always cause the payload to be =
-silently dropped on the floor before it even hits the rest of the networkin=
-g stack, and with resource usage comparable to that of keepalives.</div><di=
-v dir=3D"auto"><br></div><div dir=3D"auto">--Reid</div><div dir=3D"auto"><b=
-r></div><div><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_att=
-r">On Mon, Feb 24, 2020 at 7:49 PM John Smith &lt;<a href=3D"mailto:dingrit=
-e@gmail.com">dingrite@gmail.com</a>&gt; wrote:<br></div><blockquote class=
-=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padd=
-ing-left:1ex"><div dir=3D"ltr">There are some applications where you do not=
- want a listener to know that a channel is being kept alive and no informat=
-ion is being transmitted.<div><br></div><div>Perhaps the ideal solution wou=
-ld be to add an option to the wg tool to send a keepalive packet, preferabl=
-y of arbitrary size within some range. A script could then be used to keep =
-the channel alive in a manner. Would be cleaner than sending something else=
- through that may require further action by the peer.</div></div>
-_______________________________________________<br>
-WireGuard mailing list<br>
-<a href=3D"mailto:WireGuard@lists.zx2c4.com" target=3D"_blank">WireGuard@li=
-sts.zx2c4.com</a><br>
-<a href=3D"https://lists.zx2c4.com/mailman/listinfo/wireguard" rel=3D"noref=
-errer" target=3D"_blank">https://lists.zx2c4.com/mailman/listinfo/wireguard=
-</a><br>
-</blockquote></div></div>
-
---000000000000314eed059f5f90fe--
-
---===============7198086602522695380==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-
-_______________________________________________
-WireGuard mailing list
-WireGuard@lists.zx2c4.com
-https://lists.zx2c4.com/mailman/listinfo/wireguard
-
---===============7198086602522695380==--
+Cgo+IDIzIGZlYi4gMjAyMCBrbC4gMTY6MzIgc2tyZXYgSmFzb24gQS4gRG9uZW5mZWxkIDxKYXNv
+bkB6eDJjNC5jb20+Ogo+IAo+IE9uIFN1biwgRmViIDIzLCAyMDIwIGF0IDI6MjUgUE0gUGV0ZXIg
+TGliYXNzaSA8cGV0ZXJAbGliYXNzaS5zZT4gd3JvdGU6Cj4+IAo+PiBPaywgV2VsbCBldmVuIGlm
+IHVzaW5nIGFub3RoZXIgbG9jYWwgSVAgaW4gcmFuZ2UgMTI3LjAuMC4wLzggd2UgY2Fu4oCZdCBi
+ZSBjZXJ0YWluIHdlIHdpbGwgY2xhc2ggd2l0aCBzb21ldGhpbmcgZWxzZS4KPj4gCj4+IEhvdyBh
+Ym91dCBhZGRpbmcgYSBkaXJlY3RpdmUgZm9yIHRoZSByZW1vdGUgaW50ZXJmYWNlIGFkZHJlc3Mg
+aW4gd2cuY29uZj8gTGlrZSB0aGlzOgo+PiAKPj4gIyBjYXQgL3Vzci9sb2NhbC9ldGMvd2lyZWd1
+YXJkL3dnMC5jb25mCj4+IFtJbnRlcmZhY2VdCj4+IFByaXZhdGVLZXkgPSA8LT4KPj4gTGlzdGVu
+UG9ydCA9IDc3NzcKPj4gQWRkcmVzcyA9IDE5Mi4xNjguMi4xLzMyCj4+IFJlbW90ZUFkZHJlc3Mg
+PSAxOTIuMTY4LjIuMgo+PiAKPj4gW1BlZXJdCj4+IFB1YmxpY0tleSA9IDwtPgo+PiBBbGxvd2Vk
+SVBzID0gMTkyLjE2OC4yLjAvMjQKPj4gRW5kcG9pbnQgPSAxNzIuMTYuMC4yMzo3Nzc3Cj4+IAo+
+PiAjIGRpZmYgL3Vzci9sb2NhbC9iaW4vd2ctcXVpY2sub3JnIC4vd2ctcXVpY2sKPj4gMTdhMTgK
+Pj4+IFJFTU9URV9BRERSRVNTPSIiCj4+IDg2YTg4Cj4+PiBSZW1vdGVBZGRyZXNzKSBSRU1PVEVB
+RERSRVNTPSIkdmFsdWUiOyBjb250aW51ZSA7Owo+PiAxNzVjMTc3LDE4MQo+PiA8IGNtZCBpZmNv
+bmZpZyAiJElOVEVSRkFDRSIgaW5ldCAiJDEiICIkezElJS8qfSIgYWxpYXMKPj4gLS0tCj4+PiAg
+ICBpZiBbWyAtbiAkUkVNT1RFQUREUkVTUyBdXTsgdGhlbgo+Pj4gY21kIGlmY29uZmlnICIkSU5U
+RVJGQUNFIiBpbmV0ICIkMSIgIiRSRU1PVEVBRERSRVNTIiBhbGlhcwo+Pj4gICAgZWxzZQo+Pj4g
+ICAgICAgICAgICAgICAgY21kIGlmY29uZmlnICIkSU5URVJGQUNFIiBpbmV0ICIkMSIgIiR7MSUl
+Lyp9IiBhbGlhcwo+Pj4gICAgZmkKPiAKPiBUaGlzIGlzIG5vdCBhIGNvcnJlY3QgZml4OyB3ZSdy
+ZSBub3QgZ29pbmcgdG8gYWRkIGEgY29uZmlndXJhdGlvbiBub2IKPiB0byB3b3JrIGFyb3VuZCBG
+cmVlQlNEIG5ldHdvcmsgc3RhY2sgZ290Y2hhcy4KPiAKPiBSYXRoZXIsIEknZCBwcmVmZXIgdG8g
+c2VlIGFsbCB0aGUgRnJlZUJTRCB3Zy1xdWljayBzZW1hbnRpY3MgcmVkb25lCj4gYXJvdW5kIG11
+bHRpcGxlIHJvdXRpbmcgdGFibGVzIGFuZCBtYXJrcywgbXVjaCBsaWtlIG9uIExpbnV4LCB0aG91
+Z2ggSQo+IGRvbid0IGtub3cgaWYgdGhhdCdzIHBvc3NpYmxlLiBCYXJyaW5nIHRoYXQsIGEgcHJv
+cGVyIHNvbHV0aW9uCj4gcHJvYmFibHkgaW52b2x2ZXMgcmUtcmVhZGluZyB0aGUgaWZjb25maWcg
+bWFuIHBhZ2UgYSBmZXcgZG96ZW4gdGltZXMKPiB0byBmaW5kIG91dCBob3cgdG8gaGF2ZSBpbnRl
+cmZhY2UgYWRkcmVzc2VzIGFzIHdlIG5lZWQgdGhlbS4KCkl0IHdvcmtzIHBlcmZlY3RseSBmb3Ig
+bXkgc2luZ2xlIHNpdGUtMi1zaXRlIHVzZSBjYXNlLiBZb3UgaGF2ZSB0d28gb3B0aW9ucyBhcyBJ
+IHNlZSBpdC4gRWl0aGVyIGNvbnZpbmNlIHRoZSBGcmVlQlNEIHRlYW0gdG8gZHJvcCB0aGUgZGVz
+dF9hZGRyZXNzIHJlcXVpcmVtZW50IG9yIGltcGxlbWVudCBsb2NhbC9yZW1vdGUgYWRkcmVzcyBh
+d2FyZW5lc3MgcGVyIFtQZWVyXSBpbiB0aGUgd2ctcXVpY2sgc2NyaXB0LgoKL1BldGVyCgpfX19f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXwpXaXJlR3VhcmQgbWFp
+bGluZyBsaXN0CldpcmVHdWFyZEBsaXN0cy56eDJjNC5jb20KaHR0cHM6Ly9saXN0cy56eDJjNC5j
+b20vbWFpbG1hbi9saXN0aW5mby93aXJlZ3VhcmQK
