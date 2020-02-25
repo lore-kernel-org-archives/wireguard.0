@@ -2,67 +2,74 @@ Return-Path: <SRS0=8BwB=4N=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CC57EC35E01
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 25 Feb 2020 17:17:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B898EC35E17
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 25 Feb 2020 21:28:50 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id DD9FE20732
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 25 Feb 2020 17:17:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 1F5DC20838
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 25 Feb 2020 21:28:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=rozman.si header.i=@rozman.si header.b="puFzqTmY"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org DD9FE20732
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=rozman.si
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fWi3Z/BN"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 1F5DC20838
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2a35df62;
-	Tue, 25 Feb 2020 17:13:32 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ea4f13e5;
+	Tue, 25 Feb 2020 21:24:48 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dc550e52
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f8425003
  for <wireguard@lists.zx2c4.com>;
- Tue, 25 Feb 2020 17:13:28 +0000 (UTC)
-Received: from pub5.amebis.si (pub5.amebis.si [213.250.55.21])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3c3c238d
+ Tue, 25 Feb 2020 21:24:45 +0000 (UTC)
+Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com
+ [IPv6:2607:f8b0:4864:20::e44])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1c2b7a23
  for <wireguard@lists.zx2c4.com>;
- Tue, 25 Feb 2020 17:13:27 +0000 (UTC)
-Received: by pub5.amebis.si (Postfix, from userid 1000)
- id 1DDB81002F87; Tue, 25 Feb 2020 18:16:59 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rozman.si;
- s=default; t=1582651019;
- bh=aH40JoL9ePmFtmXhvrBA3cW8hoqB6LOQ/LGtxK4Gxi4=;
- h=From:To:Subject:Date:References:In-Reply-To:From;
- b=puFzqTmYx2hE/wwjrak25m3+kDl0d1ErI6Fgo5PAkbwh4+UnGQ59PXyhQrXcz/r+W
- bSvlIrUVR7OM1Fbp6sQrF3ZOGfSJ8yvfpMfPA/3OhUwQ8Hujj1qJqYqs1UgMhjAPDc
- R7BNYt5+MWOTJ1rRI4RsiG+5o4eQDiEVtDUaspvo=
-Received: from PLANJAVA.amebis.doma (planjava.amebis.doma
- [IPv6:2a00:ee2:209:164::2])
- by pub5.amebis.si (Postfix) with ESMTPS id 708981002F87;
- Tue, 25 Feb 2020 18:16:56 +0100 (CET)
-Received: from PLANJAVA.amebis.doma ([fe80::a486:6f91:d7b9:9035]) by
- PLANJAVA.amebis.doma ([fe80::a486:6f91:d7b9:9035%17]) with mapi id
- 14.03.0468.000; Tue, 25 Feb 2020 18:16:56 +0100
-From: Simon Rozman <simon@rozman.si>
-To: Eiji Tanioka <tanioka404@gmail.com>, "wireguard@lists.zx2c4.com"
- <wireguard@lists.zx2c4.com>
-Subject: RE: [PATCH 1/2 wireguard-windows] Add Japanese translation to
- resources.rc
-Thread-Topic: [PATCH 1/2 wireguard-windows] Add Japanese translation to
- resources.rc
-Thread-Index: AQHV6/LMxD8SqMherEqM+933fV/QXagsJasg
-Date: Tue, 25 Feb 2020 17:16:55 +0000
-Message-ID: <99D61A626FDA8A4B90A270669121BE10D0767622@PLANJAVA.amebis.doma>
-References: <20200225154427.99376-1-tanioka404@gmail.com>
-In-Reply-To: <20200225154427.99376-1-tanioka404@gmail.com>
-Accept-Language: en-GB, sl-SI, en-US
-Content-Language: en-US
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-x-originating-ip: [2a00:ee2:209:164::1]
+ Tue, 25 Feb 2020 21:24:44 +0000 (UTC)
+Received: by mail-vs1-xe44.google.com with SMTP id r18so441672vso.5
+ for <wireguard@lists.zx2c4.com>; Tue, 25 Feb 2020 13:28:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=C1N2YkA2ynGxDHvBmFS3GZi1rynWN8Kq4jdYeuK4t08=;
+ b=fWi3Z/BNh9oF2OwUlfWRadgePUwTaHGolyOV2us8hnF4nChJbnJPANJMolTP9dwy56
+ bHFfeKF0e6Jz0f9/TTIH9Xl5OMRGeeUO0IaZdepjqmx2U00JmLs7FauHZwtp1KRkdeiF
+ UpM4qoOYntLA4sWs/lc8PFEKf/FmA3NB7RN7Kk1g6h+6gRimCtdYxz4PFGBF+RFb5fmM
+ hxG8UrmZRspWlMQjotjfT48+Jule/ruB4mbYBL7fj2arIFCPhBV6ng1aHTfMewvbEW4F
+ sRgUHHSls70G+BC/Ah/kt55TYI4u+NB+GkzMkM8wjISoZ0rPoJGjwSVFWE7s+4mKEMBH
+ 7I0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=C1N2YkA2ynGxDHvBmFS3GZi1rynWN8Kq4jdYeuK4t08=;
+ b=omGSXhP1937S8eu/8IVDYSEwV+ZgcgC964k06U57lPqsniAt06H8kFa6Wn5NbkL7M3
+ 5GhKrJxlrQoUNiWhjxEMt7h9b/Qw7C694ZBAoW/QTKODDUsPmY4oERPfUNZj5wpTLygU
+ gHnSqtrH6wOW+n666lwnH/r3leIVX931agOVf5P588bjSZAl5dAFtm+055p/EKeH0NdT
+ Jw4cQ7u26i9+M34rxpVF8jXKyGCrkXP86Ih1Dhz582MZFiaX2XTURFu0bC+k0cchaxyW
+ VyQU0rkmi+WO1s7Hd+MVaq9q8lSdL2vbAI0YK9eI1NZVZrO0KiEAnnD8vbcadIhOWv+b
+ eIQw==
+X-Gm-Message-State: APjAAAXX+kOkJbFSAItrWuEP2TZfmL40gBHRMUmt2sp0R81dcWlk11DL
+ Xy1N1LSdPRh/rBiK20/ZMsAWbL2O86u0/FDcyO75PYJ3HVk=
+X-Google-Smtp-Source: APXvYqxou9tJnJ0wAOfrdvHWKs58Sb3ZOh0BjuhgRjEc/99452nj6jxeA5Bqnvm/XXqiGhTHSTgN3m8iT6Uogkc3z/U=
+X-Received: by 2002:a67:7987:: with SMTP id u129mr1215772vsc.83.1582666098376; 
+ Tue, 25 Feb 2020 13:28:18 -0800 (PST)
 MIME-Version: 1.0
+References: <20200225154427.99376-1-tanioka404@gmail.com>
+ <99D61A626FDA8A4B90A270669121BE10D0767622@PLANJAVA.amebis.doma>
+In-Reply-To: <99D61A626FDA8A4B90A270669121BE10D0767622@PLANJAVA.amebis.doma>
+From: Eiji Tanioka <tanioka404@gmail.com>
+Date: Wed, 26 Feb 2020 06:28:07 +0900
+Message-ID: <CAA2ss9EMhZM8KVmUFku_4x2RoHwiZp3+VNMd4qudv+gnS1xF9A@mail.gmail.com>
+Subject: Re: [PATCH 1/2 wireguard-windows] Add Japanese translation to
+ resources.rc
+To: Simon Rozman <simon@rozman.si>
+Cc: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -74,163 +81,139 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============3063138139583703378=="
+Content-Type: multipart/mixed; boundary="===============8117684514148989982=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============3063138139583703378==
-Content-Language: en-US
-Content-Type: multipart/signed; protocol="application/x-pkcs7-signature";
-	micalg=2.16.840.1.101.3.4.2.1;
-	boundary="----=_NextPart_000_0000_01D5EC07.C14AD210"
+--===============8117684514148989982==
+Content-Type: multipart/alternative; boundary="00000000000097848e059f6d2a2c"
 
-------=_NextPart_000_0000_01D5EC07.C14AD210
-Content-Type: text/plain;
-	charset="utf-8"
+--00000000000097848e059f6d2a2c
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Thank you very much. I have applied your patch to the sr/l18n branch.
+Sorry, failed to send message.gotext.json.
+I will send it.
 
-Looking forward to locales/ja/messages.gotext.json =F0=9F=98=8A
+2020=E5=B9=B42=E6=9C=8826=E6=97=A5(=E6=B0=B4) 2:17 Simon Rozman <simon@rozm=
+an.si>:
 
-Best regards,
-Simon
+> Thank you very much. I have applied your patch to the sr/l18n branch.
+>
+> Looking forward to locales/ja/messages.gotext.json =F0=9F=98=8A
+>
+> Best regards,
+> Simon
+>
+> > -----Original Message-----
+> > From: WireGuard <wireguard-bounces@lists.zx2c4.com> On Behalf Of Eiji
+> > Tanioka
+> > Sent: Tuesday, February 25, 2020 4:44 PM
+> > To: wireguard@lists.zx2c4.com
+> > Subject: [PATCH 1/2 wireguard-windows] Add Japanese translation to
+> > resources.rc
+> >
+> > Signed-off-by: Eiji Tanioka <tanioka404@gmail.com>
+> > ---
+> >  resources.rc | 7 +++++++
+> >  1 file changed, 7 insertions(+)
+> >
+> > diff --git a/resources.rc b/resources.rc index 14c0ce0..b5b779a 100644
+> > --- a/resources.rc
+> > +++ b/resources.rc
+> > @@ -56,6 +56,13 @@ VERSIONINFO_TEMPLATE(
+> >    "https://www.wireguard.com/"
+> >  )
+> >
+> > +LANGUAGE LANG_JAPANESE, SUBLANG_DEFAULT VERSIONINFO_TEMPLATE(
+> > +  "041104b0", 0x411, 0x4b0,
+> > +  "WireGuard: =E9=AB=98=E9=80=9F=E3=81=A7=E3=80=81=E7=8F=BE=E4=BB=A3=
+=E7=9A=84=E3=81=A7=E3=80=81=E3=82=BB=E3=82=AD=E3=83=A5=E3=82=A2=E3=81=AA VP=
+N =E3=83=88=E3=83=B3=E3=83=8D=E3=83=AB",
+> > +  "https://www.wireguard.com/"
+> > +)
+> > +
+> >  LANGUAGE LANG_SLOVENIAN, SUBLANG_DEFAULT  VERSIONINFO_TEMPLATE(
+> >    "042404b0", 0x424, 0x4b0,
+> > --
+> > 2.25.0
+> >
+> > _______________________________________________
+> > WireGuard mailing list
+> > WireGuard@lists.zx2c4.com
+> > https://lists.zx2c4.com/mailman/listinfo/wireguard
+>
 
-> -----Original Message-----
-> From: WireGuard <wireguard-bounces@lists.zx2c4.com> On Behalf Of Eiji
-> Tanioka
-> Sent: Tuesday, February 25, 2020 4:44 PM
-> To: wireguard@lists.zx2c4.com
-> Subject: [PATCH 1/2 wireguard-windows] Add Japanese translation to
-> resources.rc
->=20
-> Signed-off-by: Eiji Tanioka <tanioka404@gmail.com>
-> ---
->  resources.rc | 7 +++++++
->  1 file changed, 7 insertions(+)
->=20
-> diff --git a/resources.rc b/resources.rc index 14c0ce0..b5b779a 100644
-> --- a/resources.rc
-> +++ b/resources.rc
-> @@ -56,6 +56,13 @@ VERSIONINFO_TEMPLATE(
->    "https://www.wireguard.com/"
->  )
->=20
-> +LANGUAGE LANG_JAPANESE, SUBLANG_DEFAULT VERSIONINFO_TEMPLATE(
-> +  "041104b0", 0x411, 0x4b0,
-> +  "WireGuard: =
-=E9=AB=98=E9=80=9F=E3=81=A7=E3=80=81=E7=8F=BE=E4=BB=A3=E7=9A=84=E3=81=A7=E3=
-=80=81=E3=82=BB=E3=82=AD=E3=83=A5=E3=82=A2=E3=81=AA VPN =
-=E3=83=88=E3=83=B3=E3=83=8D=E3=83=AB",
-> +  "https://www.wireguard.com/"
-> +)
-> +
->  LANGUAGE LANG_SLOVENIAN, SUBLANG_DEFAULT  VERSIONINFO_TEMPLATE(
->    "042404b0", 0x424, 0x4b0,
-> --
-> 2.25.0
->=20
-> _______________________________________________
-> WireGuard mailing list
-> WireGuard@lists.zx2c4.com
-> https://lists.zx2c4.com/mailman/listinfo/wireguard
+--00000000000097848e059f6d2a2c
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-------=_NextPart_000_0000_01D5EC07.C14AD210
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
+<div dir=3D"ltr">Sorry, failed to send message.gotext.json.<div>I will send=
+ it.</div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gm=
+ail_attr">2020=E5=B9=B42=E6=9C=8826=E6=97=A5(=E6=B0=B4) 2:17 Simon Rozman &=
+lt;<a href=3D"mailto:simon@rozman.si">simon@rozman.si</a>&gt;:<br></div><bl=
+ockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-lef=
+t:1px solid rgb(204,204,204);padding-left:1ex">Thank you very much. I have =
+applied your patch to the sr/l18n branch.<br>
+<br>
+Looking forward to locales/ja/messages.gotext.json =F0=9F=98=8A<br>
+<br>
+Best regards,<br>
+Simon<br>
+<br>
+&gt; -----Original Message-----<br>
+&gt; From: WireGuard &lt;<a href=3D"mailto:wireguard-bounces@lists.zx2c4.co=
+m" target=3D"_blank">wireguard-bounces@lists.zx2c4.com</a>&gt; On Behalf Of=
+ Eiji<br>
+&gt; Tanioka<br>
+&gt; Sent: Tuesday, February 25, 2020 4:44 PM<br>
+&gt; To: <a href=3D"mailto:wireguard@lists.zx2c4.com" target=3D"_blank">wir=
+eguard@lists.zx2c4.com</a><br>
+&gt; Subject: [PATCH 1/2 wireguard-windows] Add Japanese translation to<br>
+&gt; resources.rc<br>
+&gt; <br>
+&gt; Signed-off-by: Eiji Tanioka &lt;<a href=3D"mailto:tanioka404@gmail.com=
+" target=3D"_blank">tanioka404@gmail.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 resources.rc | 7 +++++++<br>
+&gt;=C2=A0 1 file changed, 7 insertions(+)<br>
+&gt; <br>
+&gt; diff --git a/resources.rc b/resources.rc index 14c0ce0..b5b779a 100644=
+<br>
+&gt; --- a/resources.rc<br>
+&gt; +++ b/resources.rc<br>
+&gt; @@ -56,6 +56,13 @@ VERSIONINFO_TEMPLATE(<br>
+&gt;=C2=A0 =C2=A0 &quot;<a href=3D"https://www.wireguard.com/" rel=3D"noref=
+errer" target=3D"_blank">https://www.wireguard.com/</a>&quot;<br>
+&gt;=C2=A0 )<br>
+&gt; <br>
+&gt; +LANGUAGE LANG_JAPANESE, SUBLANG_DEFAULT VERSIONINFO_TEMPLATE(<br>
+&gt; +=C2=A0 &quot;041104b0&quot;, 0x411, 0x4b0,<br>
+&gt; +=C2=A0 &quot;WireGuard: =E9=AB=98=E9=80=9F=E3=81=A7=E3=80=81=E7=8F=BE=
+=E4=BB=A3=E7=9A=84=E3=81=A7=E3=80=81=E3=82=BB=E3=82=AD=E3=83=A5=E3=82=A2=E3=
+=81=AA VPN =E3=83=88=E3=83=B3=E3=83=8D=E3=83=AB&quot;,<br>
+&gt; +=C2=A0 &quot;<a href=3D"https://www.wireguard.com/" rel=3D"noreferrer=
+" target=3D"_blank">https://www.wireguard.com/</a>&quot;<br>
+&gt; +)<br>
+&gt; +<br>
+&gt;=C2=A0 LANGUAGE LANG_SLOVENIAN, SUBLANG_DEFAULT=C2=A0 VERSIONINFO_TEMPL=
+ATE(<br>
+&gt;=C2=A0 =C2=A0 &quot;042404b0&quot;, 0x424, 0x4b0,<br>
+&gt; --<br>
+&gt; 2.25.0<br>
+&gt; <br>
+&gt; _______________________________________________<br>
+&gt; WireGuard mailing list<br>
+&gt; <a href=3D"mailto:WireGuard@lists.zx2c4.com" target=3D"_blank">WireGua=
+rd@lists.zx2c4.com</a><br>
+&gt; <a href=3D"https://lists.zx2c4.com/mailman/listinfo/wireguard" rel=3D"=
+noreferrer" target=3D"_blank">https://lists.zx2c4.com/mailman/listinfo/wire=
+guard</a><br>
+</blockquote></div>
 
-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
-AwMwJzAlBggrBgEFBQcCARYZaHR0cDovL3d3dy5jYS5nb3Yuc2kvY3BzLzAIBgYEAIswAQIwGAYI
-KwYBBQUHAQMEDDAKMAgGBgQAjkYBATAaBgNVHREEEzARgQ9zaW1vbkByb3ptYW4uc2kwge4GA1Ud
-HwSB5jCB4zBWoFSgUqRQME4xCzAJBgNVBAYTAnNpMRswGQYDVQQKExJzdGF0ZS1pbnN0aXR1dGlv
-bnMxETAPBgNVBAsTCHNpZ2VuLWNhMQ8wDQYDVQQDEwZDUkw0NTUwgYiggYWggYKGV2xkYXA6Ly94
-NTAwLmdvdi5zaS9vdT1zaWdlbi1jYSxvPXN0YXRlLWluc3RpdHV0aW9ucyxjPXNpP2NlcnRpZmlj
-YXRlUmV2b2NhdGlvbkxpc3Q/YmFzZYYnaHR0cDovL3d3dy5zaWdlbi1jYS5zaS9jcmwvc2lnZW4t
-Y2EuY3JsMCsGA1UdEAQkMCKADzIwMTYwMjE5MTc1NDQxWoEPMjAyMTAyMTkyMTM4MTVaMB8GA1Ud
-IwQYMBaAFHF7igYfMQVVq2ASd0cgHgOIGOyJMB0GA1UdDgQWBBS7/7AHyQYI0e8GOPmwTc1ZTNw5
-lzAJBgNVHRMEAjAAMBkGCSqGSIb2fQdBAAQMMAobBFY4LjEDAgOoMA0GCSqGSIb3DQEBBQUAA4IB
-AQBBUL4KG1Z1oBIIdKIZs9yJxnJg/LfEPVvzNH8+CCqegq0D6k48Doo72oVEiskjqggdbUGj30uA
-H8PjCD5kLGVoDwh5a2atQ3qQzaYA/lj2Js2f4fdXNn60vRp7XzbGsQdwYYecIrKzO5x6XVAIRb+T
-HZNjXL3VX6vOozwBQv/+dx1P9H/rMUn7d8ci7v4PeqShbWbWwi6ez19cZvSKSkz/lWf4tj8QbA0n
-WeUBlk3Bx6/TRda7kwXzcFExt+ROGt0YJjbZCN3kd7swcRvRT6gEi9L6n1XLghwPSYhzZjaL5fXv
-I11JuSoQCy13XWBkq35Moo4iY19wanS1W6UM8Yq0MIIF5TCCBE2gAwIBAgINAKZovVEAAAAAVx3Q
-6DANBgkqhkiG9w0BAQsFADBcMQswCQYDVQQGEwJTSTEcMBoGA1UEChMTUmVwdWJsaWthIFNsb3Zl
-bmlqYTEXMBUGA1UEYRMOVkFUU0ktMTc2NTk5NTcxFjAUBgNVBAMTDVNJLVRSVVNUIFJvb3QwHhcN
-MTYwNTI0MTE1ODI3WhcNMjEwNjI3MjIwMDAwWjA9MQswCQYDVQQGEwJzaTEbMBkGA1UEChMSc3Rh
-dGUtaW5zdGl0dXRpb25zMREwDwYDVQQLEwhzaWdlbi1jYTCCASIwDQYJKoZIhvcNAQEBBQADggEP
-ADCCAQoCggEBALDlZbLArGSW8ogbs+2e5ALGTyuIzi6KUYB1rxBb8ss4ZpuiDm00R5alkhGv9jVH
-onciDM4WiGKq00luGLwuRNi+xp7CGhmsQY78MAcC8sZq1FsjAO9BNNikc2PfIpIzhAGljfODXPq4
-1Ho13+z4bQ/gTO2tnDp9htalCJS+fXoRH/6FP1RaiGOHnKWxp07Nt0Rzr8+KSWsf483XSU1aKxfm
-XHazu3K5byfSm4kViN8QX3YhAWrHFTEK0ZxY+CgWBW3ZTtmh1wcgy0smiU2Ssqe6lujjWI8inAGW
-WsT3MU0LSbXheGHiVBgGu55UNH4MPuvutYAf3RaEHWg4Zmdz+JECAwEAAaOCAkMwggI/MBIGA1Ud
-EwEB/wQIMAYBAf8CAQAwDgYDVR0PAQH/BAQDAgEGMDoGA1UdIAQzMDEwLwYEVR0gADAnMCUGCCsG
-AQUFBwIBFhlodHRwOi8vd3d3LmNhLmdvdi5zaS9jcHMvMGkGCCsGAQUFBwEBBF0wWzA2BggrBgEF
-BQcwAoYqaHR0cDovL3d3dy5jYS5nb3Yuc2kvY3J0L3NpLXRydXN0LXJvb3QuY3J0MCEGCCsGAQUF
-BzABhhVodHRwOi8vb2NzcC5jYS5nb3Yuc2kwHQYDVR0OBBYEFHF7igYfMQVVq2ASd0cgHgOIGOyJ
-MIIBPAYDVR0fBIIBMzCCAS8wgbeggbSggbGGKmh0dHA6Ly93d3cuY2EuZ292LnNpL2NybC9zaS10
-cnVzdC1yb290LmNybIaBgmxkYXA6Ly94NTAwLmdvdi5zaS9jbj1TSS1UUlVTVCUyMFJvb3Qsb3Jn
-YW5pemF0aW9uSWRlbnRpZmllcj1WQVRTSS0xNzY1OTk1NyxvPVJlcHVibGlrYSUyMFNsb3Zlbmlq
-YSxjPVNJP2NlcnRpZmljYXRlUmV2b2NhdGlvbkxpc3Qwc6BxoG+kbTBrMQswCQYDVQQGEwJTSTEc
-MBoGA1UEChMTUmVwdWJsaWthIFNsb3ZlbmlqYTEXMBUGA1UEYRMOVkFUU0ktMTc2NTk5NTcxFjAU
-BgNVBAMTDVNJLVRSVVNUIFJvb3QxDTALBgNVBAMTBENSTDEwEwYDVR0jBAwwCoAITKPDaF4IAmMw
-DQYJKoZIhvcNAQELBQADggGBAHuvNSPhY4qcirWJkTwkqaOPqOSV06J/ZepFQfUEJ87TlrGjp4XR
-5FLktTAEY/7R4Sgeb2K8OWEl/Koc1BbH6+uyZYvfa+WnnJEWeWOmyPy/vooO7eZyOVvaORxurWOL
-CCVDW2wBkbtUoKZaUyzgP+ZPPGRV8GFlbZLCzGmArMGXJXe8t/XNiJDLehGqSWT49NYjyYQdIgI+
-qi9W+A6BSUQ9jsMdYJqKhXQcosfH51sc6gZVxTKMr3PsItsa8XFiNazECAAFr0ms7HB6zb8QvHRF
-eBGk/CLrW4VkZEBN/JtuyhvgktQ2BvuGtauEvHZQAYpMSh35D7pwtavRMpmhaAsQb4yPqhIMcztw
-RqsKPBhWoaFEVZ+Vn3wxap5h/oAhocifNzkWJTNWjxnoPM2eNz2uWFJsgsNhlwteUvnq7+bKTNte
-SKWKr6pI+GUsZhmCh5URpUnqUanp0Uie0MD9f3tiOLOp711sNb0xwi+VdDuDB37IddOIsfhPBood
-wpoFrTGCAyEwggMdAgEBMEUwPTELMAkGA1UEBhMCc2kxGzAZBgNVBAoTEnN0YXRlLWluc3RpdHV0
-aW9uczERMA8GA1UECxMIc2lnZW4tY2ECBDtKDS4wDQYJYIZIAWUDBAIBBQCgggGtMBgGCSqGSIb3
-DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTIwMDIyNTE3MTY1MlowLwYJKoZIhvcN
-AQkEMSIEIDTgAhPxO9NHRyeAqzV66nFbchk2j7ewWYB91PXgwRoyMFQGCSsGAQQBgjcQBDFHMEUw
-PTELMAkGA1UEBhMCc2kxGzAZBgNVBAoTEnN0YXRlLWluc3RpdHV0aW9uczERMA8GA1UECxMIc2ln
-ZW4tY2ECBDtKDS4wVgYLKoZIhvcNAQkQAgsxR6BFMD0xCzAJBgNVBAYTAnNpMRswGQYDVQQKExJz
-dGF0ZS1pbnN0aXR1dGlvbnMxETAPBgNVBAsTCHNpZ2VuLWNhAgQ7Sg0uMIGTBgkqhkiG9w0BCQ8x
-gYUwgYIwCwYJYIZIAWUDBAEqMAsGCWCGSAFlAwQBFjAKBggqhkiG9w0DBzALBglghkgBZQMEAQIw
-DgYIKoZIhvcNAwICAgCAMA0GCCqGSIb3DQMCAgFAMAsGCWCGSAFlAwQCATALBglghkgBZQMEAgMw
-CwYJYIZIAWUDBAICMAcGBSsOAwIaMA0GCSqGSIb3DQEBAQUABIIBAM/b40PHCNzjurNGMmQx+7Ej
-DnpvWuxPwzYZGroardpygqkh4HLxn/LVaOfboXr2anmmca7vM1nfIAqf9zBe7hH3Xx98eLMWAUxQ
-fvwuzmWlzkEFpgzn28s1KWUT3Q+8x9DCjtcIsrkgpirrzqcIG1PnZZcNNXszubBEYucwQBewZXxv
-hgzRjaJcatHiryALzeNTWJReAXmRPSrzhTN6fIMX/TAJ5Nvo6755SZ2rJ25jMR0tfEkNz+a1SmSn
-R9RicGepcWA90IoxEcLyl3gKsJl+ffABO9VA13Qsuh9PtOcdtZk97RBrfziaahmWpiSdDFBL71v9
-qMYo9r5jnu8k8kgAAAAAAAA=
+--00000000000097848e059f6d2a2c--
 
-------=_NextPart_000_0000_01D5EC07.C14AD210--
-
---===============3063138139583703378==
+--===============8117684514148989982==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -241,4 +224,4 @@ WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---===============3063138139583703378==--
+--===============8117684514148989982==--
