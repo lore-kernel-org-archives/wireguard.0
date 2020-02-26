@@ -2,77 +2,82 @@ Return-Path: <SRS0=PTk7=4O=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.5 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
+X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
 	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 488C3C4BA06
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 26 Feb 2020 03:25:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7EDECC4BA0B
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 26 Feb 2020 03:44:48 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id DD5CF2082F
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 26 Feb 2020 03:25:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 122F52067C
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 26 Feb 2020 03:44:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QLlktFDe"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org DD5CF2082F
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z6HLUa52"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 122F52067C
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: from krantz.zx2c4.com (localhost [IPv6:::1])
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c8baa3bb;
-	Wed, 26 Feb 2020 03:21:24 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ef5f7fe7;
+	Wed, 26 Feb 2020 03:41:10 +0000 (UTC)
 Received: from krantz.zx2c4.com (localhost [127.0.0.1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 91c07bbf
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f48fb7e2
  for <wireguard@lists.zx2c4.com>;
- Wed, 26 Feb 2020 03:21:22 +0000 (UTC)
-Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com
- [IPv6:2607:f8b0:4864:20::536])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 44feb8bd
+ Wed, 26 Feb 2020 03:41:08 +0000 (UTC)
+Received: from mail-lj1-x241.google.com (mail-lj1-x241.google.com
+ [IPv6:2a00:1450:4864:20::241])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f65227d9
  for <wireguard@lists.zx2c4.com>;
- Wed, 26 Feb 2020 03:21:21 +0000 (UTC)
-Received: by mail-pg1-x536.google.com with SMTP id 6so592962pgk.0
- for <wireguard@lists.zx2c4.com>; Tue, 25 Feb 2020 19:24:57 -0800 (PST)
+ Wed, 26 Feb 2020 03:41:08 +0000 (UTC)
+Received: by mail-lj1-x241.google.com with SMTP id d10so1311289ljl.9
+ for <wireguard@lists.zx2c4.com>; Tue, 25 Feb 2020 19:44:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=f4UpuWpdSoqLouEm727r3BfPK6oMMg1FJHFDrFAsn/I=;
- b=QLlktFDeg0mJElua0h3yP+7CuYDSxLqKiNS1q2C1EtNd+9mnkKwWN6SWRR/4HjzM4l
- Yvl2BSGYPNCFQiXUq1mMj516OlDKjHbac48IPezmVHIFrv0itl7+V16uDMabSm5tirjC
- W/EF2/oSHAAWT2WHWqkNL7lpDd/1+ZlP2H3WX7YZbNEUt2mIk/2YwZOkh+dLh7TzC9cA
- jw7FIzstZ6/jXo1HmWH4HTo0VsD+rL6mUOI/1XKJOjfyNNeVOqKPNhKOK8lbM/wvTBxI
- MlfL2ksQHDtRNvwZoEp/JpBNwy3PWlWdC9ON/powenaUemoaAlv1foHpP/jmW2hHr6yn
- GrKg==
+ h=subject:to:references:from:message-id:date:user-agent:mime-version
+ :in-reply-to:content-transfer-encoding:content-language;
+ bh=pWdzIz3mxSnyURqRwDkyN+07nNLLDIwXVxKGDkGpbzU=;
+ b=Z6HLUa52SJaSQciXvAmLlt/+48pgubOP0+r4sq10WV8935/0JlbyI9KzID1Se9TB5s
+ BWUjMVthK1MIcXVEaUFd6xuWDuPzxQCwJe52h1IDYSxxPFPR3kHx+WpFrCrjIxDtwxah
+ HWYjQFoaFfQnjvbEUPP6aOkwF29RgxLsm+Hj7Fj42C1EXCVMA78npNnWzD0IWyK2KvW1
+ PG5owN1u801bGN01Wn1j2PZxO9w83zI48p3PiOA8toIbrhNjSepA9oo7UCBCzwzrJ5PC
+ XaS5d1QdxgjKK76Uwqd+Ir6wsXMcvxoRqruzbwE1luiOuAtGev5BhFkcpTseQk5Cdr+K
+ qMZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=f4UpuWpdSoqLouEm727r3BfPK6oMMg1FJHFDrFAsn/I=;
- b=g7ZPv4BqjANCmYEaNa38RzE4ymwiCBi8wcgxv5sE6YAZCp87YDLa/OzUe9gR/CwKuC
- KCRnBptr5yOHh3noa9CwJ1Q0NLmiNC/RnCI7UsWUq9FJTTTrazr057t/XPChwo+FFXJo
- SUjx4lM/+GHYJSheXy94O6kqMIDcGt/MxrxjJlF401PgiVqtu6YXVR00LWQpwD/0AVa+
- 8GOoVojCiHV2UvfoSOTWcDP47u+yPWl6HSF9Zp2pFkPbsp5hfMBtjKohrvWzVqbIxXWh
- AZUhGnthwxt40/5HyaMQeuUV9+HTsDX+8GOmKM2hneZzEChI5CPWElAmJWNAPNF0Tmhl
- 4pNw==
-X-Gm-Message-State: APjAAAWFvicwmRmGF/ggrsEisqJe0HnA4MYsctqUK1l9+y0cVAEeRhx4
- 9pQxLmDzUIZdhJ/m+DQK92+A94oW3Y8wPA==
-X-Google-Smtp-Source: APXvYqxpt6p14ADarsFygNoBw8FdoXTu6C3iV4o9w9PbcyU2i6srZBMXKXPF3QECKHmhnWrBlZBg8A==
-X-Received: by 2002:aa7:9aa7:: with SMTP id x7mr1970621pfi.78.1582687496615;
- Tue, 25 Feb 2020 19:24:56 -0800 (PST)
-Received: from home-imac.catsrv1.hicat.ne.jp (ca163152.hicat.ne.jp.
- [202.95.163.152])
- by smtp.gmail.com with ESMTPSA id z27sm546718pfj.107.2020.02.25.19.24.55
+ h=x-gm-message-state:subject:to:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-transfer-encoding
+ :content-language;
+ bh=pWdzIz3mxSnyURqRwDkyN+07nNLLDIwXVxKGDkGpbzU=;
+ b=cpUv6ArDztY5BNaHZk02AZQLovoscXKuK5VYAd7GstlxkVBPUJb9dg9cXl9WXXu2ro
+ O47Z6VZTBRTx0CP8/7t+doIESmA3Yltb3KY1/vFt5+4kjOtufNuvkcAY8LAaBprgecqp
+ Wi3WljaNh6jcyPB+l5NQKwviBIZp8XQ9u7DUEpV4cF83uA7RWzQvWGhEtgTJc7UeTpC1
+ IzBX5QhTO/JnEYc7PGDD9+rxKrz6hQe6Y0Tk/7wNa+iBcBdpWT86NDoRFIV+YXamlAUe
+ lE3YK/HwwAFemGLzpOjEhG1GBf0eu3MLkStYCAhlbEIArWm1oiZG0HDKzstV86queKo+
+ wwpA==
+X-Gm-Message-State: ANhLgQ3GK/3RUCscX6B/0+PiIYW2h3geGf8J9LWxqe/6n314DuEGYiIF
+ Xpa38rCMC7peifZIXx/zKgs1DtuOTfU=
+X-Google-Smtp-Source: APXvYqwp1E5Mtm/2yJVynzqjO9sUK7AhEHKKKukSamMQpD6lvlvt5kZNDHx08dlvypX8jVl+wn+Jiw==
+X-Received: by 2002:a2e:e12:: with SMTP id 18mr1441373ljo.123.1582688683211;
+ Tue, 25 Feb 2020 19:44:43 -0800 (PST)
+Received: from [0.0.0.0] ([178.165.72.177])
+ by smtp.gmail.com with ESMTPSA id j26sm261702lfm.3.2020.02.25.19.44.41
  (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 25 Feb 2020 19:24:56 -0800 (PST)
-From: Eiji Tanioka <tanioka404@gmail.com>
-To: wireguard@lists.zx2c4.com
-Subject: [PATCH wireguard-android] remove <item quantity=one> tag due to no
- plural form in Japanese.
-Date: Wed, 26 Feb 2020 12:24:43 +0900
-Message-Id: <20200226032442.2668-1-tanioka404@gmail.com>
-X-Mailer: git-send-email 2.25.0
+ Tue, 25 Feb 2020 19:44:42 -0800 (PST)
+Subject: Re: [PATCH] Update Simplified Chinese translation
+To: Samuel Holland <samuel@sholland.org>, wireguard@lists.zx2c4.com
+References: <20200223111248.1083-1-srb12345@vip.qq.com>
+ <8b65014d-b6b9-c933-1ccd-d92d9f28ed23@sholland.org>
+ <CAA2ss9F2XipJeiD0gJUn7Zz=f+JyLij4UQ4rnQ+dCND=UA6BUA@mail.gmail.com>
+ <e0c0aa85-ebb9-7adc-a9dd-fbd91c2d61c2@sholland.org>
+From: Vasili Pupkin <diggest@gmail.com>
+Message-ID: <1eb99bf8-f07e-9b13-f543-017b14a3df5f@gmail.com>
+Date: Wed, 26 Feb 2020 06:44:41 +0300
+User-Agent: Mozilla/5.0 (Windows NT 5.2; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
+In-Reply-To: <e0c0aa85-ebb9-7adc-a9dd-fbd91c2d61c2@sholland.org>
+Content-Language: en-US
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -84,42 +89,30 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-U2lnbmVkLW9mZi1ieTogRWlqaSBUYW5pb2thIDx0YW5pb2thNDA0QGdtYWlsLmNvbT4KLS0tCiBh
-cHAvc3JjL21haW4vcmVzL3ZhbHVlcy1qYS9zdHJpbmdzLnhtbCB8IDYgLS0tLS0tCiAxIGZpbGUg
-Y2hhbmdlZCwgNiBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS9hcHAvc3JjL21haW4vcmVzL3Zh
-bHVlcy1qYS9zdHJpbmdzLnhtbCBiL2FwcC9zcmMvbWFpbi9yZXMvdmFsdWVzLWphL3N0cmluZ3Mu
-eG1sCmluZGV4IDRmMjUyNmUuLjE2Y2QxNjUgMTAwNjQ0Ci0tLSBhL2FwcC9zcmMvbWFpbi9yZXMv
-dmFsdWVzLWphL3N0cmluZ3MueG1sCisrKyBiL2FwcC9zcmMvbWFpbi9yZXMvdmFsdWVzLWphL3N0
-cmluZ3MueG1sCkBAIC0xLDI3ICsxLDIxIEBACiA8P3htbCB2ZXJzaW9uPSIxLjAiIGVuY29kaW5n
-PSJ1dGYtOCI/PgogPHJlc291cmNlcz4KICAgICA8cGx1cmFscyBuYW1lPSJkZWxldGVfZXJyb3Ii
-PgotICAgICAgICA8aXRlbSBxdWFudGl0eT0ib25lIj4lZCDjg4jjg7Pjg43jg6vjgpLliYrpmaTj
-gafjgY3jgb7jgZvjgpM6ICVzPC9pdGVtPgogICAgICAgICA8aXRlbSBxdWFudGl0eT0ib3RoZXIi
-PiVkIOODiOODs+ODjeODq+OCkuWJiumZpOOBp+OBjeOBvuOBm+OCkzogJXM8L2l0ZW0+CiAgICAg
-PC9wbHVyYWxzPgogICAgIDxwbHVyYWxzIG5hbWU9ImRlbGV0ZV9zdWNjZXNzIj4KLSAgICAgICAg
-PGl0ZW0gcXVhbnRpdHk9Im9uZSI+JWQg44OI44Oz44ON44Or44KS5YmK6Zmk44GX44G+44GX44Gf
-PC9pdGVtPgogICAgICAgICA8aXRlbSBxdWFudGl0eT0ib3RoZXIiPiVkIOODiOODs+ODjeODq+OC
-kuWJiumZpOOBl+OBvuOBl+OBnzwvaXRlbT4KICAgICA8L3BsdXJhbHM+CiAgICAgPHBsdXJhbHMg
-bmFtZT0iZGVsZXRlX3RpdGxlIj4KLSAgICAgICAgPGl0ZW0gcXVhbnRpdHk9Im9uZSI+JWQg44OI
-44Oz44ON44Or44KS6YG45oqePC9pdGVtPgogICAgICAgICA8aXRlbSBxdWFudGl0eT0ib3RoZXIi
-PiVkIOODiOODs+ODjeODq+OCkumBuOaKnjwvaXRlbT4KICAgICA8L3BsdXJhbHM+CiAgICAgPHBs
-dXJhbHMgbmFtZT0iaW1wb3J0X3BhcnRpYWxfc3VjY2VzcyI+Ci0gICAgICAgIDxpdGVtIHF1YW50
-aXR5PSJvbmUiPiVkIOWAi++8iOWFqCAlZCDlgIvvvInjga7jg4jjg7Pjg43jg6voqK3lrprjgpLj
-gqTjg7Pjg53jg7zjg4g8L2l0ZW0+CiAgICAgICAgIDxpdGVtIHF1YW50aXR5PSJvdGhlciI+JWQg
-5YCL77yI5YWoICVkIOWAi++8ieOBruODiOODs+ODjeODq+ioreWumuOCkuOCpOODs+ODneODvOOD
-iDwvaXRlbT4KICAgICA8L3BsdXJhbHM+CiAgICAgPHBsdXJhbHMgbmFtZT0iaW1wb3J0X3RvdGFs
-X3N1Y2Nlc3MiPgotICAgICAgICA8aXRlbSBxdWFudGl0eT0ib25lIj4lZCDlgIvjga7jg4jjg7Pj
-g43jg6voqK3lrprjgpLjgqTjg7Pjg53jg7zjg4jmuIg8L2l0ZW0+CiAgICAgICAgIDxpdGVtIHF1
-YW50aXR5PSJvdGhlciI+JWQg5YCL44Gu44OI44Oz44ON44Or6Kit5a6a44KS44Kk44Oz44Od44O8
-44OI5riIPC9pdGVtPgogICAgIDwvcGx1cmFscz4KICAgICA8cGx1cmFscyBuYW1lPSJzZXRfZXhj
-bHVkZWRfYXBwbGljYXRpb25zIj4KLSAgICAgICAgPGl0ZW0gcXVhbnRpdHk9Im9uZSI+6Zmk5aSW
-44Ki44OX44OqICVkIOWAizwvaXRlbT4KICAgICAgICAgPGl0ZW0gcXVhbnRpdHk9Im90aGVyIj7p
-maTlpJbjgqLjg5fjg6ogJWQg5YCLPC9pdGVtPgogICAgIDwvcGx1cmFscz4KICAgICA8c3RyaW5n
-IG5hbWU9ImFkZF9wZWVyIj7jg5TjgqLjgpLov73liqDjgZnjgos8L3N0cmluZz4KLS0gCjIuMjUu
-MAoKX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18KV2lyZUd1
-YXJkIG1haWxpbmcgbGlzdApXaXJlR3VhcmRAbGlzdHMuengyYzQuY29tCmh0dHBzOi8vbGlzdHMu
-engyYzQuY29tL21haWxtYW4vbGlzdGluZm8vd2lyZWd1YXJkCg==
+On 26.02.2020 5:56, Samuel Holland wrote:
+> On 2/25/20 2:13 AM, Eiji Tanioka wrote:
+>> Hi Samuel.
+>>
+>> I already translated in Japanese, but I didn't concern about plurals.
+>>
+>> Japanese doesn't have plurals, so does "values-ja/strings.xml" needs these fix?
+>> - remove plurals
+>> - add string resource that have same "name" attribute as plurals
+> Resources that have <plural> tags in the untranslated XML should use <plural> in
+> translations as well. However, the only <item> tag inside them should be
+> "other". (It should look like the Chinese translation did before this patch.)
+>
+> So the only thing to fix is removing the <item quantity="one"> tags.
+
+It seams that russian translation is very basic and not utilize 
+quantity="two" and quantity="few" forms, without them some plurals reads 
+odd. Do you need help fixing it or it is done on purpose?
+_______________________________________________
+WireGuard mailing list
+WireGuard@lists.zx2c4.com
+https://lists.zx2c4.com/mailman/listinfo/wireguard
