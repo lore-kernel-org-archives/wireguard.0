@@ -2,58 +2,58 @@ Return-Path: <SRS0=l04w=4P=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MIME_QP_LONG_LINE,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+	MIME_QP_LONG_LINE,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EA24AC4BA3B
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 27 Feb 2020 11:40:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA2D7C4BA24
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 27 Feb 2020 11:47:28 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 3A67A24690
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 27 Feb 2020 11:40:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 8AA9024693
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 27 Feb 2020 11:47:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=rozman.si header.i=@rozman.si header.b="aJ979jZt"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 3A67A24690
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=rozman.si header.i=@rozman.si header.b="Bghs31iR"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 8AA9024693
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=rozman.si
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8901807c;
-	Thu, 27 Feb 2020 11:36:41 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b8df1d4d;
+	Thu, 27 Feb 2020 11:43:40 +0000 (UTC)
 Received: from pub5.amebis.si (pub5.amebis.si [213.250.55.21])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1ce73130
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e1e5c659
  for <wireguard@lists.zx2c4.com>;
- Thu, 27 Feb 2020 11:36:39 +0000 (UTC)
+ Thu, 27 Feb 2020 11:43:38 +0000 (UTC)
 Received: by pub5.amebis.si (Postfix, from userid 1000)
- id 1FC7E1002F87; Thu, 27 Feb 2020 12:40:24 +0100 (CET)
+ id BD8C31002FB5; Thu, 27 Feb 2020 12:47:23 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rozman.si;
- s=default; t=1582803624;
- bh=QrGZLGShT8j2GJ5+o3g/qXsc5LANvPhCvxFRlZwrbmw=;
+ s=default; t=1582804043;
+ bh=NhsNCish2qxxbGJsPvhB00b+eTubPJldY4BHwGHuicM=;
  h=From:To:Subject:Date:References:In-Reply-To:From;
- b=aJ979jZtiX5D51ELqcYyCUerbGgVT/x6vfqJh6Uq/VuI0swDxEbpMOw7isi+rcaw0
- Wh+Z7gq8LR9f6HXD0iCamjyMVFTTW/yZlklvcWm8End6Oz29yhnTKNo9lw1vFqzy7F
- IFvpCMrnQV5EoFMOep4U4xZ7qtU30N9eZ7e8fc8A=
+ b=Bghs31iRxx4XGi9LmqptqhKH2OPTfj54vB6AgSpQctTwkwEhou52qVtYJkK076guE
+ aj0RhqsI3kTC2DAUFraWzdC2MKTnJbl7/8s6ZY30ud/X/ANnTx24kXIcpZ85p30FA1
+ iIg2W+Gxf/WHe63MA55lB2fRsDxSXPR0LdbHR4V4=
 Received: from PLANJAVA.amebis.doma (planjava.amebis.doma
  [IPv6:2a00:ee2:209:164::2])
- by pub5.amebis.si (Postfix) with ESMTPS id 58D011002F87;
- Thu, 27 Feb 2020 12:40:21 +0100 (CET)
+ by pub5.amebis.si (Postfix) with ESMTPS id 2946E1002F87;
+ Thu, 27 Feb 2020 12:47:21 +0100 (CET)
 Received: from PLANJAVA.amebis.doma ([fe80::a486:6f91:d7b9:9035]) by
  PLANJAVA.amebis.doma ([fe80::a486:6f91:d7b9:9035%17]) with mapi id
- 14.03.0487.000; Thu, 27 Feb 2020 12:40:21 +0100
+ 14.03.0487.000; Thu, 27 Feb 2020 12:47:21 +0100
 From: Simon Rozman <simon@rozman.si>
-To: Arjen Brouwer <arjenjb@gmail.com>, "wireguard@lists.zx2c4.com"
+To: Eiji Tanioka <tanioka404@gmail.com>, "wireguard@lists.zx2c4.com"
  <wireguard@lists.zx2c4.com>
-Subject: Re: [PATCH] DO_NOT_LAUNCH parameter was ignored by MSI, should work
- now
-Thread-Topic: [PATCH] DO_NOT_LAUNCH parameter was ignored by MSI, should
- work now
-Thread-Index: AQHV6xbhddRYcZ6UTUa9oM8/janovKgu7zMA
-Date: Thu, 27 Feb 2020 11:40:20 +0000
-Message-ID: <AE60ED0F-6F29-43E2-9565-D61998256B85@rozman.si>
-References: <20200224133237.953-1-arjenjb@gmail.com>
-In-Reply-To: <20200224133237.953-1-arjenjb@gmail.com>
+Subject: Re: [PATCH wireguard-windows] l18n: change EnumerationSeparator for
+ Japanese.
+Thread-Topic: [PATCH wireguard-windows] l18n: change EnumerationSeparator
+ for Japanese.
+Thread-Index: AQHV7VJtD2Fs8wXzu0G4VLlr4qtkPqgu7LAA
+Date: Thu, 27 Feb 2020 11:47:20 +0000
+Message-ID: <3494258D-7F14-4890-B3A4-8CED4EA24D05@rozman.si>
+References: <20200227094326.9597-1-tanioka404@gmail.com>
+In-Reply-To: <20200227094326.9597-1-tanioka404@gmail.com>
 Accept-Language: en-GB, sl-SI, en-US
 Content-Language: en-GB
 X-MS-Has-Attach: yes
@@ -72,112 +72,70 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Content-Type: multipart/mixed; boundary="===============7145866042671502114=="
+Content-Type: multipart/mixed; boundary="===============5903017340232201208=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---===============7145866042671502114==
+--===============5903017340232201208==
 Content-Language: en-GB
 Content-Type: multipart/signed; protocol="application/pkcs7-signature";
-	micalg=sha256; boundary="B_3665652020_936472756"
+	micalg=sha256; boundary="B_3665652440_613929565"
 
---B_3665652020_936472756
+--B_3665652440_613929565
 Content-type: text/plain;
 	charset="UTF-8"
 Content-transfer-encoding: quoted-printable
 
-Hi Arjen,
+Arigato!
 
-I was not able to reproduce the problem your patch was supposed to solve.
+Rebuilt the zgotext.go file, amended to your commit, and applied to sr/l18n=
+ patch.
 
-Running:
-msiexec /i https://download.wireguard.com/windows-client/wireguard-amd64-0.=
-0.38.msi /l* setup.log DO_NOT_LAUNCH=3D1
-did not launch the WireGuard after setup was complete. Screencast here: htt=
-ps://1drv.ms/v/s!AsRKV9itoeUTi0Y-LT895Ynvh0da
-
-Running the same command in elevated prompt neither. Screen cast here: http=
-s://1drv.ms/v/s!AsRKV9itoeUTi0cEkCG_n2FEX1WA
-
-When adding /qn to completely silence the MSI progress neither. Screen cast=
- here: https://1drv.ms/v/s!AsRKV9itoeUTi0izY000CEIE4axC
-
-So, how were you setting the `DO_NOT_LAUNCH` property in the first place?
-
-Regards,
-Simon
+Regards, Simon
 
 =EF=BB=BF-----Original Message-----
-From: WireGuard <wireguard-bounces@lists.zx2c4.com> on behalf of Arjen Brou=
-wer <arjenjb@gmail.com>
-Date: Tuesday, 25 February 2020 at 01:51
+From: WireGuard <wireguard-bounces@lists.zx2c4.com> on behalf of Eiji Tanio=
+ka <tanioka404@gmail.com>
+Date: Thursday, 27 February 2020 at 10:43
 To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
-Cc: Arjen Brouwer <arjen@ag5.nl>
-Subject: [PATCH] DO_NOT_LAUNCH parameter was ignored by MSI, should work no=
-w
+Subject: [PATCH wireguard-windows] l18n: change EnumerationSeparator for Ja=
+panese.
 
-    From: Arjen Brouwer <arjen@ag5.nl>
+    I grepped source tree and found that 'EnumerationSeparator' is used
+    for multiple IP addresses separation. In these situation, comma is
+    better than "=E3=80=81" in Japanese.
+    ("=E3=80=81" is used for Japanese sentence separator, but separation by comma
+    is more preferable to enumerate ASCII values.)
    =20
-   =20
-    The `DO_NO_LAUNCH` parameter did not actually work. After running the i=
-nstaller with the DO_NO_LAUNCH parameter, the UI still showed up afterwards =
-and the MSI log had the following entry:
-   =20
-    ```
-    MSI (c) (28:08) [14:43:17:966]: Ignoring disallowed property DO_NOT_LAU=
-NCH
-    ```
-   =20
-    By explicitly defining the DO_NOT_LAUNCH property and making it secure,=
- solved the problem.
-   =20
+    Signed-off-by: Eiji Tanioka <tanioka404@gmail.com>
     ---
-     installer/wireguard.wxs | 7 ++++---
-     1 file changed, 4 insertions(+), 3 deletions(-)
+     locales/ja/messages.gotext.json | 4 ++--
+     1 file changed, 2 insertions(+), 2 deletions(-)
    =20
-    diff --git a/installer/wireguard.wxs b/installer/wireguard.wxs
-    index 5bbb1eb..781d20c 100644
-    --- a/installer/wireguard.wxs
-    +++ b/installer/wireguard.wxs
-    @@ -45,7 +45,8 @@
-     		<Property Id=3D"DISABLEROLLBACK" Value=3D"yes" />
-     		<Property Id=3D"MSIDISABLERMRESTART" Value=3D"1" />
-     		<Property Id=3D"MSIRMSHUTDOWN" Value=3D"1" />
-    -
-    +		<Property Id=3D"DO_NOT_LAUNCH" Value=3D"0" Secure=3D"yes" />
-    +		
-     		<!--
-     			Upgrading
-     		-->
-    @@ -135,7 +136,7 @@
-     		-->
-     		<CustomAction Id=3D"LaunchApplication" HideTarget=3D"yes" Impersonate=3D"n=
-o" Execute=3D"deferred" FileKey=3D"wireguard.exe" ExeCommand=3D"" Return=3D"asyncNoW=
-ait" />
-     		<InstallExecuteSequence>
-    -			<Custom Action=3D"LaunchApplication" Before=3D"InstallFinalize">(&amp;W=
-ireGuardFeature =3D 3) AND NOT DO_NOT_LAUNCH</Custom>
-    +			<Custom Action=3D"LaunchApplication" Before=3D"InstallFinalize"><![CDAT=
-A[(&WireGuardFeature =3D 3) AND (DO_NOT_LAUNCH =3D "0")]]></Custom>
-     		</InstallExecuteSequence>
-    =20
-     		<!--
-    @@ -143,7 +144,7 @@
-     		-->
-     		<CustomAction Id=3D"LaunchApplicationAsOrdinaryUser" HideTarget=3D"yes" =
-FileKey=3D"wireguard.exe" ExeCommand=3D"" Return=3D"asyncNoWait" />
-     		<InstallExecuteSequence>
-    -			<Custom Action=3D"LaunchApplicationAsOrdinaryUser" After=3D"InstallFina=
-lize">(&amp;WireGuardFeature =3D -1) AND (!WireGuardFeature =3D 3) AND NOT DO_NO=
-T_LAUNCH</Custom>
-    +			<Custom Action=3D"LaunchApplicationAsOrdinaryUser" After=3D"InstallFina=
-lize"><![CDATA[(&WireGuardFeature =3D -1) AND (!WireGuardFeature =3D 3) AND (DO_=
-NOT_LAUNCH =3D "0")]]></Custom>
-     		</InstallExecuteSequence>
-     	</Product>
-     </Wix>
+    diff --git a/locales/ja/messages.gotext.json b/locales/ja/messages.gote=
+xt.json
+    index 3501458..723cb6c 100644
+    --- a/locales/ja/messages.gotext.json
+    +++ b/locales/ja/messages.gotext.json
+    @@ -455,7 +455,7 @@
+             {
+                 "id": "[EnumerationSeparator]",
+                 "message": "[EnumerationSeparator]",
+    -            "translation": "=E3=80=81",
+    +            "translation": ", ",
+                 "comment": "Inserted between items when listing (e.g. =E2=80=98,=
+ =E2=80=99 or =E2=80=98=E3=80=81=E2=80=99)"
+             },
+             {
+    @@ -1494,4 +1494,4 @@
+                 ]
+             }
+         ]
+    -}
+    \ No newline at end of file
+    +}
     --=20
-    2.24.1.windows.2
+    2.25.0
    =20
     _______________________________________________
     WireGuard mailing list
@@ -185,7 +143,7 @@ NOT_LAUNCH =3D "0")]]></Custom>
     https://lists.zx2c4.com/mailman/listinfo/wireguard
    =20
 
---B_3665652020_936472756
+--B_3665652440_613929565
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -238,17 +196,17 @@ TiFLtJPBaDqdXzb+oa4wLEveeCQ6WNYWQ++dmTiLKpj+MNHC6tavJdWldgu570A5Lvbr3zJe
 HX2HtUTMAjnSJpVy2G+FQ6iPDqNGztfO6LlWqfiJFxIfQ0kGejLnP75veb7WM9dMPCj8EvF2
 dhgxggHbMIIB1wIBATBFMD0xCzAJBgNVBAYTAnNpMRswGQYDVQQKExJzdGF0ZS1pbnN0aXR1
 dGlvbnMxETAPBgNVBAsTCHNpZ2VuLWNhAgQ7Sg0uMA0GCWCGSAFlAwQCAQUAoGkwLwYJKoZI
-hvcNAQkEMSIEIFjBLQ1ZYMJbCAybH1qPG+J9XYW3A0diGpHcyvVV0Bx4MBgGCSqGSIb3DQEJ
-AzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTIwMDIyNzExNDAyMFowDQYJKoZIhvcN
-AQEBBQAEggEAC24vN+Nq5jES4NwBUnQCTS8oG05WlOeHFsSuFJJP1YasertQEMN3NbLDC6zw
-mJu/bNvYjt/SQ6H+/KPtL0bMptKLkHnWHPBSz56RhlG07v+ENzi/uEhO2AZVNIkZp1dCAueN
-Y/EfxUzW3Gpa67TtbAY7ifYyxsPEDBqhkNcvu/Nkf1nbFXRy3u18XFghF/QK3foLXneH9CSn
-iLAhTYtOfk+y3+Bka4TaLKyn67pqnvb5jnPw0o5i15NI9x0/s3odyNx6G48FsX+2ByIoKrlg
-lXmwAVmfjE7YIefwU424jsNAHgaXlqWac2StaQHjaRat3QW3yrt11tlha8r+KgBGdQ==
+hvcNAQkEMSIEIKH95YrfsWp7Rxhagkf/hIJBQKgbaeCqL7vd9q52yJSFMBgGCSqGSIb3DQEJ
+AzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTIwMDIyNzExNDcyMFowDQYJKoZIhvcN
+AQEBBQAEggEAtrfKUtXMcxIfRAdzHCjEJOCRi146eqGD7GR5vJUdZ5yLRrxfUIn3XF4YJSbW
+uSzZRV4mzNSJf4oWznqNlxnLOvBoxVo3JgGpx+NRUbJrz6KI/yIFACzeiGkEhtKY2HojrtFo
+3PthY4fTEU/rdmPZtbj7v38VWhmVTFduk9TH7dk6cEvw81Fttw2JIgISuaYCAEvxndgGUzjQ
+jKV7E9s1et5oWHGJXy1qw11H6RohwgS9liNfZnIShF7UfZhPCgSazEgsOHOxr4bkeCF+dQ/1
+2Kh93zObcWzkwIuNulnAp6eebMI+Npd75zcyEgKsj/1Wk3qkYwYx2q3UIsh5RmnlXQ==
 
---B_3665652020_936472756--
+--B_3665652440_613929565--
 
---===============7145866042671502114==
+--===============5903017340232201208==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -259,4 +217,4 @@ WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
 
---===============7145866042671502114==--
+--===============5903017340232201208==--
