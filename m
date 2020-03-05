@@ -1,36 +1,61 @@
 Return-Path: <SRS0=VbKr=4W=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-9.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Level: **
+X-Spam-Status: No, score=2.4 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 59B0AC3F2D7
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  5 Mar 2020 02:53:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ADE50C3F2CD
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  5 Mar 2020 06:00:46 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 7740220838
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  5 Mar 2020 02:53:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 7740220838
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=distanz.ch
+	by mail.kernel.org (Postfix) with ESMTPS id ED323208CD
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  5 Mar 2020 06:00:45 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="eT5YAKka"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org ED323208CD
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1cad39df;
-	Thu, 5 Mar 2020 02:47:43 +0000 (UTC)
-Received: from sym2.noone.org (sym2.noone.org [178.63.92.236])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4117b3f7
- for <wireguard@lists.zx2c4.com>; Wed, 4 Mar 2020 16:17:22 +0000 (UTC)
-Received: by sym2.noone.org (Postfix, from userid 1002)
- id 48XfKH0xSMzvjc1; Wed,  4 Mar 2020 17:21:54 +0100 (CET)
-From: Tobias Klauser <tklauser@distanz.ch>
-To: wireguard@lists.zx2c4.com
-Subject: [PATCH wireguard-go] global: use RTMGRP_* consts from x/sys/unix
-Date: Wed,  4 Mar 2020 17:21:54 +0100
-Message-Id: <20200304162154.8600-1-tklauser@distanz.ch>
-X-Mailer: git-send-email 2.11.0
-X-Mailman-Approved-At: Thu, 05 Mar 2020 03:47:41 +0100
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 04b2bee5;
+	Thu, 5 Mar 2020 05:55:40 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1ce395d4
+ for <wireguard@lists.zx2c4.com>; Thu, 5 Mar 2020 05:55:38 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e5145e01
+ for <wireguard@lists.zx2c4.com>; Thu, 5 Mar 2020 05:55:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :references:in-reply-to:from:date:message-id:subject:to:cc
+ :content-type; s=mail; bh=DeNiYhNsLSWU5HcLXmZL0Oo9Q8M=; b=eT5YAK
+ kaG/knxkJtpDImo9kAASthuDfXb+xyt8/oOr3/khF/D5E9gf+Q0saVgkO564sqq5
+ ykv5QoU5xTKc+Vd91l23dZRI5YznbNwwrdAo5t7JNaCcN9OWgAlSVczr1A1F3R0g
+ 2+hssrWNOpcg5wbo0RewbAQrjFOAT/8mY4jE3DhqD4+FtO5CMDGF0e1nAb3BcQ0k
+ O9q/3WQmVTDUtBVUb5LZpYSFmoQK+x6yXTIdQR+mQV/dIgI0Ii6VicbgKF+A/1d+
+ pCFeQNNQHv/+KqOXQ72k/4Av4KDk18UZw+C9Dikwz0kcG86p6nU85qQObEsadcNc
+ 2aqdaIk1l56ZRO0g==
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 88cc55ee
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Thu, 5 Mar 2020 05:55:37 +0000 (UTC)
+Received: by mail-io1-f41.google.com with SMTP id d15so5193065iog.3
+ for <wireguard@lists.zx2c4.com>; Wed, 04 Mar 2020 22:00:16 -0800 (PST)
+X-Gm-Message-State: ANhLgQ1lXm4FYloTK+YvhdTB7IMQCJQvjnTCLeean/RfE7WLMnYjo3jM
+ qNiqWYqlDVD/J6m5e0C8EvR1KbHXGja4/moe0UA=
+X-Google-Smtp-Source: ADFU+vv6r70OUUDShNKoDwzypXopFBBewjVcjdrjqzyTNFl/riEWfoGbKY38/w5ZTlDYSHY2i89O0EcokKTgsBzrF5A=
+X-Received: by 2002:a05:6602:2501:: with SMTP id
+ i1mr5200335ioe.231.1583388015467; 
+ Wed, 04 Mar 2020 22:00:15 -0800 (PST)
+MIME-Version: 1.0
+References: <20200304162154.8600-1-tklauser@distanz.ch>
+In-Reply-To: <20200304162154.8600-1-tklauser@distanz.ch>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 5 Mar 2020 14:00:04 +0800
+X-Gmail-Original-Message-ID: <CAHmME9o+qacQhiZO_7hW0+uv1EASqLhTmcKWGXeVs02MryK0rg@mail.gmail.com>
+Message-ID: <CAHmME9o+qacQhiZO_7hW0+uv1EASqLhTmcKWGXeVs02MryK0rg@mail.gmail.com>
+Subject: Re: [PATCH wireguard-go] global: use RTMGRP_* consts from x/sys/unix
+To: Tobias Klauser <tklauser@distanz.ch>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.15
 Precedence: list
@@ -42,81 +67,34 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="===============0970459076056173030=="
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Update the golang.org/x/sys/unix dependency and use the newly introduced
-RTMGRP_* consts instead of using the corresponding RTNLGRP_* const to
-create a mask.
+--===============0970459076056173030==
+Content-Type: multipart/alternative; boundary="00000000000034229e05a015404d"
 
-Signed-off-by: Tobias Klauser <tklauser@distanz.ch>
----
- device/conn_linux.go | 2 +-
- go.mod               | 2 +-
- go.sum               | 4 ++--
- tun/tun_linux.go     | 2 +-
- 4 files changed, 5 insertions(+), 5 deletions(-)
+--00000000000034229e05a015404d
+Content-Type: text/plain; charset="UTF-8"
 
-diff --git a/device/conn_linux.go b/device/conn_linux.go
-index 94b6d5c072c7..e90b0e35b456 100644
---- a/device/conn_linux.go
-+++ b/device/conn_linux.go
-@@ -118,7 +118,7 @@ func createNetlinkRouteSocket() (int, error) {
- 	}
- 	saddr := &unix.SockaddrNetlink{
- 		Family: unix.AF_NETLINK,
--		Groups: uint32(1 << (unix.RTNLGRP_IPV4_ROUTE - 1)),
-+		Groups: unix.RTMGRP_IPV4_ROUTE,
- 	}
- 	err = unix.Bind(sock, saddr)
- 	if err != nil {
-diff --git a/go.mod b/go.mod
-index 34b1e720a8ea..f4e7b97c993e 100644
---- a/go.mod
-+++ b/go.mod
-@@ -5,6 +5,6 @@ go 1.12
- require (
- 	golang.org/x/crypto v0.0.0-20191002192127-34f69633bfdc
- 	golang.org/x/net v0.0.0-20191003171128-d98b1b443823
--	golang.org/x/sys v0.0.0-20191003212358-c178f38b412c
-+	golang.org/x/sys v0.0.0-20200302150141-5c8b2ff67527
- 	golang.org/x/text v0.3.2
- )
-diff --git a/go.sum b/go.sum
-index 970f4cbade71..be3d0cfdf4f3 100644
---- a/go.sum
-+++ b/go.sum
-@@ -6,8 +6,8 @@ golang.org/x/net v0.0.0-20191003171128-d98b1b443823 h1:Ypyv6BNJh07T1pUSrehkLemqP
- golang.org/x/net v0.0.0-20191003171128-d98b1b443823/go.mod h1:z5CRVTTTmAJ677TzLLGU+0bjPO0LkuOLi4/5GtJWs/s=
- golang.org/x/sys v0.0.0-20190215142949-d0b11bdaac8a/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
- golang.org/x/sys v0.0.0-20190412213103-97732733099d/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
--golang.org/x/sys v0.0.0-20191003212358-c178f38b412c h1:6Zx7DRlKXf79yfxuQ/7GqV3w2y7aDsk6bGg0MzF5RVU=
--golang.org/x/sys v0.0.0-20191003212358-c178f38b412c/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
-+golang.org/x/sys v0.0.0-20200302150141-5c8b2ff67527 h1:uYVVQ9WP/Ds2ROhcaGPeIdVq0RIXVLwsHlnvJ+cT1So=
-+golang.org/x/sys v0.0.0-20200302150141-5c8b2ff67527/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
- golang.org/x/text v0.3.0/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
- golang.org/x/text v0.3.2 h1:tW2bmiBqwgJj/UpqtC8EpXEZVYOwU0yG4iWbprSVAcs=
- golang.org/x/text v0.3.2/go.mod h1:bEr9sfX3Q8Zfm5fL9x+3itogRgK3+ptLWKqgva+5dAk=
-diff --git a/tun/tun_linux.go b/tun/tun_linux.go
-index 36b43ea4d094..7ab062314662 100644
---- a/tun/tun_linux.go
-+++ b/tun/tun_linux.go
-@@ -85,7 +85,7 @@ func createNetlinkSocket() (int, error) {
- 	}
- 	saddr := &unix.SockaddrNetlink{
- 		Family: unix.AF_NETLINK,
--		Groups: uint32((1 << (unix.RTNLGRP_LINK - 1)) | (1 << (unix.RTNLGRP_IPV4_IFADDR - 1)) | (1 << (unix.RTNLGRP_IPV6_IFADDR - 1))),
-+		Groups: unix.RTMGRP_LINK | unix.RTMGRP_IPV4_IFADDR | unix.RTMGRP_IPV6_IFADDR,
- 	}
- 	err = unix.Bind(sock, saddr)
- 	if err != nil {
--- 
-2.25.0
+Applied, thanks.
+
+--00000000000034229e05a015404d
+Content-Type: text/html; charset="UTF-8"
+
+<div dir="ltr"><div>Applied, thanks.</div></div>
+
+--00000000000034229e05a015404d--
+
+--===============0970459076056173030==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
 _______________________________________________
 WireGuard mailing list
 WireGuard@lists.zx2c4.com
 https://lists.zx2c4.com/mailman/listinfo/wireguard
+
+--===============0970459076056173030==--
