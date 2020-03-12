@@ -2,60 +2,70 @@ Return-Path: <SRS0=0+k7=45=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75330C10DCE
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Mar 2020 11:41:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3ED8BC10DCE
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Mar 2020 11:50:39 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 4EBDC206E9
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Mar 2020 11:41:56 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="KCy2kOsn"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 4EBDC206E9
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=vip.qq.com
+	by mail.kernel.org (Postfix) with ESMTPS id D786E206E7
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Mar 2020 11:50:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org D786E206E7
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=msfjarvis.dev
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a72af4b2;
-	Thu, 12 Mar 2020 11:36:21 +0000 (UTC)
-Received: from qq.com (out203-205-221-164.mail.qq.com [203.205.221.164])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id be7a3928
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e69648fe;
+	Thu, 12 Mar 2020 11:44:36 +0000 (UTC)
+Received: from mail-qt1-f193.google.com (mail-qt1-f193.google.com
+ [209.85.160.193])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 537284bf
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 12 Mar 2020 11:36:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1584013303; bh=uny5t8rwWuAe5TtQE8cMRVf9UQBDfIbfgkMepdzuHRE=;
- h=From:To:Cc:Subject:Date;
- b=KCy2kOsnjzYZkOq+eSilyLIULR2FItBoMxKsDPF0BR69MzcfOs7g5BXdbqwpH9r7h
- AWoTx5TcJq8cKzngiDQocOkqXbVG6LxfFK9wz6L0iNXUB4IyD0OxnxhMQNMHcSBz4+
- RqsWFp5sYDyxOik1DdqVvDPlQHTEmUnVf0p5e11U=
-Received: from localhost.localdomain ([240e:30c:203:ff08:41ca:9f21:415a:33e9])
- by newxmesmtplogicsvrszb1.qq.com (NewEsmtp) with SMTP
- id A650A872; Thu, 12 Mar 2020 19:41:37 +0800
-X-QQ-mid: xmsmtpt1584013297tv2p6i3ks
-X-QQ-XMAILINFO: NkGKqrz1RktM/XERKSBZPWJz1NNiwHCIBuPC0v6DOOQRxeD2XwtzDpXgH2Uip1
- fSYvusXV+hX3QMvyxh78XKOsS5z1w1SZrtymnw0ewoliwDwe3eh/18OW0lJ2suAgZhXoMJwZRLTK
- 38XuTaBI2TcBMvxzDM/sl8tAh5dtkOBP2kY0UKK3iGfK5W6nVUn3xU1H2s9zZYF1dBrv41TEev43
- NgZj/MsfMefglfhmQ6QDNdJs70fq8GqzJdPzuJdCZed+5KYg3EXrXEGaB5LsVw0wZ1d0EWJSN3A6
- Bu9/38erLxtMme+LYoE2cE06PblbgSx2bORw5uTap82ENaPH3wz567AIijAo+KqtJXAMXIzM9F9I
- cuV1cJevzIUDis66yPZ6iHnWbYv4ME3vfEqvCxWyI99KanojYcNxlonzH8AONrkc+NX7MOS9353V
- GRrWPDNxShEfy0nxrfngqIHPget9a3OQmIIs4SrVCHJ++iA+uOtVLISzo+DtehyBMsP8iyS2mvMs
- F8h24w4rRAg64YN3LaOWsknbUuFNJ0lSvkoHWKUuNtP0Qo/qZPyZf4YwMObjE+Ezz1qrf17uLNET
- 4HEld50vfOn/IV4WImzPI/s0/FwhZiIqVRaM5Fwpw6HGFhjHqXdOvB7ySH82ZUvixuHME=
-From: srb12345@vip.qq.com
-To: wireguard@lists.zx2c4.com
-Cc: LilligantMatsuri <srb12345@vip.qq.com>
-Subject: [PATCH] Update Simplified Chinese translation
-Date: Thu, 12 Mar 2020 19:40:41 +0800
-Message-Id: <20200312114041.470-1-srb12345@vip.qq.com>
-X-Mailer: git-send-email 2.24.1.windows.2
+ Thu, 12 Mar 2020 11:41:42 +0000 (UTC)
+Received: by mail-qt1-f193.google.com with SMTP id f17so2730926qtq.6
+ for <wireguard@lists.zx2c4.com>; Thu, 12 Mar 2020 04:47:16 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=ASIqPZ7Z0JFpCitkoGf3qnrVWVakjCB8GPdy0dbTJFI=;
+ b=WM27hhJ8bVm1wlYS1xnw07dfvbFH8iboiSPeohtsJv5PyDh/roWdlthr1vakA6UOU7
+ Y1ahbxzg9Y1otQBxtLNoTM8ad2m4LD6tEDrOwrZTkS43AQi/j5UOJ+wveOhsvpOxuSUz
+ 7lkWz85TqueZ73cMPWLni0/lQmAY/JbDAlU+3+o3JOjkz+yJ8zfuDNcslOJzkQOScXoa
+ ZZ8vIeydqEXr4wgJkTrOHuCJwACqQR98GbYl6SKm3aj6FswfDM1qAa4/WPBkc9TFRT+m
+ Xy+R25mT5+k9kUkEa8oqJJf4YBVE1DfjhdxJxG1AFyyAojZRBIcgyuMT5zKZxxybumrd
+ wk9g==
+X-Gm-Message-State: ANhLgQ3haFA7Zk5ZvLx4k5NCIiwc7ChghMvxvd0DW+W2zhOgCNsXTMHH
+ AbbNrXngWt+9FCudBILn9K/0KIk23MMNxA==
+X-Google-Smtp-Source: ADFU+vsxsRna2vOpJS8OajC/oQnfB4+ZikpF1N0y13bQ66cSvukT/pdf0OgRZCPgGkS0jtfhLdW4+A==
+X-Received: by 2002:aed:2535:: with SMTP id v50mr354450qtc.354.1584013635427; 
+ Thu, 12 Mar 2020 04:47:15 -0700 (PDT)
+Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com.
+ [209.85.222.171])
+ by smtp.gmail.com with ESMTPSA id x89sm12756063qtd.43.2020.03.12.04.47.14
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 12 Mar 2020 04:47:15 -0700 (PDT)
+Received: by mail-qk1-f171.google.com with SMTP id h14so5563148qke.5
+ for <wireguard@lists.zx2c4.com>; Thu, 12 Mar 2020 04:47:14 -0700 (PDT)
+X-Received: by 2002:a25:7347:: with SMTP id o68mr8340482ybc.193.1584013634719; 
+ Thu, 12 Mar 2020 04:47:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20200312114041.470-1-srb12345@vip.qq.com>
+In-Reply-To: <20200312114041.470-1-srb12345@vip.qq.com>
+From: Harsh Shandilya <me@msfjarvis.dev>
+Date: Thu, 12 Mar 2020 17:17:03 +0530
+X-Gmail-Original-Message-ID: <CALpmF+F87Jtc6SqjP7sSsiB9JUwPMt7rAF7WFQTSmazR9e0EuQ@mail.gmail.com>
+Message-ID: <CALpmF+F87Jtc6SqjP7sSsiB9JUwPMt7rAF7WFQTSmazR9e0EuQ@mail.gmail.com>
+Subject: Re: [PATCH] Update Simplified Chinese translation
+To: srb12345@vip.qq.com
+Cc: wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
+X-Mailman-Approved-At: Thu, 12 Mar 2020 12:44:35 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -70,114 +80,141 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-From: LilligantMatsuri <srb12345@vip.qq.com>
-
-Signed-off-by: LilligantMatsuri <srb12345@vip.qq.com>
----
- ui/src/main/res/values-zh-rCN/strings.xml | 40 ++++++++++++++---------
- 1 file changed, 25 insertions(+), 15 deletions(-)
-
-diff --git a/ui/src/main/res/values-zh-rCN/strings.xml b/ui/src/main/res/values-zh-rCN/strings.xml
-index c8175f1..d3243f9 100644
---- a/ui/src/main/res/values-zh-rCN/strings.xml
-+++ b/ui/src/main/res/values-zh-rCN/strings.xml
-@@ -20,7 +20,7 @@
-     </plurals>
-     <string name="add_peer">添加节点</string>
-     <string name="addresses">局域网 IP 地址</string>
--    <string name="allowed_ips">允许的 IP 地址（段）</string>
-+    <string name="allowed_ips">路由的 IP 地址（段）</string>
-     <string name="app_name">WireGuard</string>
-     <string name="bad_config_context">%1$s 的 %2$s 字段</string>
-     <string name="bad_config_context_top_level">%s</string>
-@@ -49,7 +49,7 @@
-     <string name="config_save_success">已保存 “%s” 的配置</string>
-     <string name="create_activity_title">创建 WireGuard 隧道</string>
-     <string name="create_bin_dir_error">无法创建本地二进制文件目录</string>
--    <string name="create_empty">手动配置</string>
-+    <string name="create_empty">手动创建</string>
-     <string name="create_from_file">导入配置或压缩包</string>
-     <string name="create_from_qr_code">扫描二维码</string>
-     <string name="create_output_dir_error">无法创建输出目录</string>
-@@ -63,12 +63,12 @@
-     <string name="toggle_all">反选</string>
-     <string name="dns_servers">DNS 服务器</string>
-     <string name="edit">编辑</string>
--    <string name="endpoint">对端地址</string>
-+    <string name="endpoint">对端</string>
-     <string name="error_down">断开连接时出错：%s</string>
-     <string name="error_fetching_apps">获取应用列表时出错：%s</string>
-     <string name="error_root">请获取 root 权限并重试</string>
-     <string name="error_up">建立连接时出错：%s</string>
--    <string name="exclude_private_ips">排除局域网 IP</string>
-+    <string name="exclude_private_ips">排除局域网</string>
-     <string name="excluded_applications">排除的应用</string>
-     <string name="generate">生成密钥</string>
-     <string name="generic_error">未知的 “%s” 错误</string>
-@@ -92,24 +92,32 @@
-     <string name="logcat_error">无法运行 logcat：</string>
-     <string name="module_version_error">无法确定内核模块版本</string>
-     <string name="module_installer_not_found">没有可用于此设备的模块</string>
--    <string name="module_installer_initial">此实验性的内核模块可以提升性能</string>
--    <string name="module_installer_success">安装成功，应用将在 5 秒后重启</string>
-+    <string name="module_installer_initial">使用内核模块可以提升性能（实验性）</string>
-+    <string name="module_installer_success">安装成功，应用将于 5 秒后重启</string>
-     <string name="module_installer_title">下载并安装内核模块</string>
-     <string name="module_installer_working">正在下载安装...</string>
-     <string name="module_installer_error">发生错误，请重试</string>
-+    <string name="module_disabler_disabled_title">启用内核模块</string>
-+    <string name="module_disabler_disabled_summary">内核空间的模块性能较强，但可能不稳定</string>
-+    <string name="module_disabler_enabled_title">停用内核模块</string>
-+    <string name="module_disabler_enabled_summary">用户空间的模块性能较弱，但稳定性更好</string>
-+    <string name="module_disabler_working">应用将于 5 秒后重启</string>
-     <string name="mtu">MTU</string>
-+    <string name="multiple_tunnels_title">同时开启多条隧道</string>
-+    <string name="multiple_tunnels_summary_on">当前允许同时开启多条隧道</string>
-+    <string name="multiple_tunnels_summary_off">当前一次只能开启一条隧道</string>
-     <string name="name">名称</string>
-     <string name="no_config_error">尝试在无配置情况下建立连接</string>
-     <string name="no_configs_error">未找到配置</string>
-     <string name="no_tunnels_error">无隧道</string>
-     <string name="parse_error_generic">字符串</string>
--    <string name="parse_error_inet_address"> IP 地址</string>
--    <string name="parse_error_inet_endpoint">对端地址</string>
--    <string name="parse_error_inet_network"> IP 网络</string>
-+    <string name="parse_error_inet_address">&#32;IP 地址</string>
-+    <string name="parse_error_inet_endpoint">对端</string>
-+    <string name="parse_error_inet_network">&#32;IP 网络</string>
-     <string name="parse_error_integer">数字</string>
--    <string name="parse_error_reason">无法解析%1$s “%2$s” </string>
-+    <string name="parse_error_reason">无法解析%1$s “%2$s”&#32;</string>
-     <string name="peer">节点 / Peer</string>
--    <string name="permission_description">允许一个应用对 WireGuard 隧道进行控制（开启 / 关闭隧道），但可能会误传一些流量</string>
-+    <string name="permission_description">允许其他应用控制 WireGuard 隧道（开启 / 关闭），但可能会误传一些流量</string>
-     <string name="permission_label">控制 WireGuard 隧道</string>
-     <string name="persistent_keepalive">连接保活间隔</string>
-     <string name="pre_shared_key">预共享密钥</string>
-@@ -117,7 +125,9 @@
-     <string name="public_key">公钥</string>
-     <string name="public_key_description">公钥</string>
-     <string name="qr_code_hint">提示：使用命令 `qrencode -t ansiutf8 &lt; tunnel.conf` 生成二维码</string>
--    <string name="restore_on_boot_title">开机自启</string>
-+    <string name="restore_on_boot_summary_on">设备启动时自动开启上次使用的隧道</string>
-+    <string name="restore_on_boot_summary_off">未启用</string>
-+    <string name="restore_on_boot_title">启动时恢复</string>
-     <string name="save">保存</string>
-     <string name="select_all">全选</string>
-     <string name="set_exclusions">确定</string>
-@@ -128,9 +138,9 @@
-     <string name="toggle_error">切换隧道状态时出错：%s</string>
-     <string name="tools_installer_already">wg 与 wg-quick 已安装</string>
-     <string name="tools_installer_failure">无法安装命令行工具（尚未获取 root 权限？）</string>
--    <string name="tools_installer_initial">安装脚本工具（可选）</string>
--    <string name="tools_installer_initial_magisk">安装脚本工具为 Magisk 模块（可选）</string>
--    <string name="tools_installer_initial_system">安装脚本工具至系统分区（可选）</string>
-+    <string name="tools_installer_initial">安装命令行工具（可选）</string>
-+    <string name="tools_installer_initial_magisk">安装命令行工具为 Magisk 模块（可选）</string>
-+    <string name="tools_installer_initial_system">安装命令行工具至系统分区（可选）</string>
-     <string name="tools_installer_success_magisk">wg 与 wg-quick 已安装为 Magisk 模块（重启后生效）</string>
-     <string name="tools_installer_success_system">wg 与 wg-quick 已安装至系统分区</string>
-     <string name="tools_installer_title">安装命令行工具</string>
--- 
-2.24.1.windows.2
-
+T24gVGh1LCAxMiBNYXIgMjAyMCBhdCAxNzoxMywgPHNyYjEyMzQ1QHZpcC5xcS5jb20+IHdyb3Rl
+Og0KPg0KPiBGcm9tOiBMaWxsaWdhbnRNYXRzdXJpIDxzcmIxMjM0NUB2aXAucXEuY29tPg0KPg0K
+PiBTaWduZWQtb2ZmLWJ5OiBMaWxsaWdhbnRNYXRzdXJpIDxzcmIxMjM0NUB2aXAucXEuY29tPg0K
+PiAtLS0NCj4gIHVpL3NyYy9tYWluL3Jlcy92YWx1ZXMtemgtckNOL3N0cmluZ3MueG1sIHwgNDAg
+KysrKysrKysrKysrKystLS0tLS0tLS0NCj4gIDEgZmlsZSBjaGFuZ2VkLCAyNSBpbnNlcnRpb25z
+KCspLCAxNSBkZWxldGlvbnMoLSkNCj4NCj4gZGlmZiAtLWdpdCBhL3VpL3NyYy9tYWluL3Jlcy92
+YWx1ZXMtemgtckNOL3N0cmluZ3MueG1sIGIvdWkvc3JjL21haW4vcmVzL3ZhbHVlcy16aC1yQ04v
+c3RyaW5ncy54bWwNCj4gaW5kZXggYzgxNzVmMS4uZDMyNDNmOSAxMDA2NDQNCj4gLS0tIGEvdWkv
+c3JjL21haW4vcmVzL3ZhbHVlcy16aC1yQ04vc3RyaW5ncy54bWwNCj4gKysrIGIvdWkvc3JjL21h
+aW4vcmVzL3ZhbHVlcy16aC1yQ04vc3RyaW5ncy54bWwNCj4gQEAgLTIwLDcgKzIwLDcgQEANCj4g
+ICAgICA8L3BsdXJhbHM+DQo+ICAgICAgPHN0cmluZyBuYW1lPSJhZGRfcGVlciI+5re75Yqg6IqC
+54K5PC9zdHJpbmc+DQo+ICAgICAgPHN0cmluZyBuYW1lPSJhZGRyZXNzZXMiPuWxgOWfn+e9kSBJ
+UCDlnLDlnYA8L3N0cmluZz4NCj4gLSAgICA8c3RyaW5nIG5hbWU9ImFsbG93ZWRfaXBzIj7lhYHo
+rrjnmoQgSVAg5Zyw5Z2A77yI5q6177yJPC9zdHJpbmc+DQo+ICsgICAgPHN0cmluZyBuYW1lPSJh
+bGxvd2VkX2lwcyI+6Lev55Sx55qEIElQIOWcsOWdgO+8iOaute+8iTwvc3RyaW5nPg0KPiAgICAg
+IDxzdHJpbmcgbmFtZT0iYXBwX25hbWUiPldpcmVHdWFyZDwvc3RyaW5nPg0KPiAgICAgIDxzdHJp
+bmcgbmFtZT0iYmFkX2NvbmZpZ19jb250ZXh0Ij4lMSRzIOeahCAlMiRzIOWtl+autTwvc3RyaW5n
+Pg0KPiAgICAgIDxzdHJpbmcgbmFtZT0iYmFkX2NvbmZpZ19jb250ZXh0X3RvcF9sZXZlbCI+JXM8
+L3N0cmluZz4NCj4gQEAgLTQ5LDcgKzQ5LDcgQEANCj4gICAgICA8c3RyaW5nIG5hbWU9ImNvbmZp
+Z19zYXZlX3N1Y2Nlc3MiPuW3suS/neWtmCDigJwlc+KAnSDnmoTphY3nva48L3N0cmluZz4NCj4g
+ICAgICA8c3RyaW5nIG5hbWU9ImNyZWF0ZV9hY3Rpdml0eV90aXRsZSI+5Yib5bu6IFdpcmVHdWFy
+ZCDpmqfpgZM8L3N0cmluZz4NCj4gICAgICA8c3RyaW5nIG5hbWU9ImNyZWF0ZV9iaW5fZGlyX2Vy
+cm9yIj7ml6Dms5XliJvlu7rmnKzlnLDkuozov5vliLbmlofku7bnm67lvZU8L3N0cmluZz4NCj4g
+LSAgICA8c3RyaW5nIG5hbWU9ImNyZWF0ZV9lbXB0eSI+5omL5Yqo6YWN572uPC9zdHJpbmc+DQo+
+ICsgICAgPHN0cmluZyBuYW1lPSJjcmVhdGVfZW1wdHkiPuaJi+WKqOWIm+W7ujwvc3RyaW5nPg0K
+PiAgICAgIDxzdHJpbmcgbmFtZT0iY3JlYXRlX2Zyb21fZmlsZSI+5a+85YWl6YWN572u5oiW5Y6L
+57yp5YyFPC9zdHJpbmc+DQo+ICAgICAgPHN0cmluZyBuYW1lPSJjcmVhdGVfZnJvbV9xcl9jb2Rl
+Ij7miavmj4/kuoznu7TnoIE8L3N0cmluZz4NCj4gICAgICA8c3RyaW5nIG5hbWU9ImNyZWF0ZV9v
+dXRwdXRfZGlyX2Vycm9yIj7ml6Dms5XliJvlu7rovpPlh7rnm67lvZU8L3N0cmluZz4NCj4gQEAg
+LTYzLDEyICs2MywxMiBAQA0KPiAgICAgIDxzdHJpbmcgbmFtZT0idG9nZ2xlX2FsbCI+5Y+N6YCJ
+PC9zdHJpbmc+DQo+ICAgICAgPHN0cmluZyBuYW1lPSJkbnNfc2VydmVycyI+RE5TIOacjeWKoeWZ
+qDwvc3RyaW5nPg0KPiAgICAgIDxzdHJpbmcgbmFtZT0iZWRpdCI+57yW6L6RPC9zdHJpbmc+DQo+
+IC0gICAgPHN0cmluZyBuYW1lPSJlbmRwb2ludCI+5a+556uv5Zyw5Z2APC9zdHJpbmc+DQo+ICsg
+ICAgPHN0cmluZyBuYW1lPSJlbmRwb2ludCI+5a+556uvPC9zdHJpbmc+DQo+ICAgICAgPHN0cmlu
+ZyBuYW1lPSJlcnJvcl9kb3duIj7mlq3lvIDov57mjqXml7blh7rplJnvvJolczwvc3RyaW5nPg0K
+PiAgICAgIDxzdHJpbmcgbmFtZT0iZXJyb3JfZmV0Y2hpbmdfYXBwcyI+6I635Y+W5bqU55So5YiX
+6KGo5pe25Ye66ZSZ77yaJXM8L3N0cmluZz4NCj4gICAgICA8c3RyaW5nIG5hbWU9ImVycm9yX3Jv
+b3QiPuivt+iOt+WPliByb290IOadg+mZkOW5tumHjeivlTwvc3RyaW5nPg0KPiAgICAgIDxzdHJp
+bmcgbmFtZT0iZXJyb3JfdXAiPuW7uueri+i/nuaOpeaXtuWHuumUme+8miVzPC9zdHJpbmc+DQo+
+IC0gICAgPHN0cmluZyBuYW1lPSJleGNsdWRlX3ByaXZhdGVfaXBzIj7mjpLpmaTlsYDln5/nvZEg
+SVA8L3N0cmluZz4NCj4gKyAgICA8c3RyaW5nIG5hbWU9ImV4Y2x1ZGVfcHJpdmF0ZV9pcHMiPuaO
+kumZpOWxgOWfn+e9kTwvc3RyaW5nPg0KPiAgICAgIDxzdHJpbmcgbmFtZT0iZXhjbHVkZWRfYXBw
+bGljYXRpb25zIj7mjpLpmaTnmoTlupTnlKg8L3N0cmluZz4NCj4gICAgICA8c3RyaW5nIG5hbWU9
+ImdlbmVyYXRlIj7nlJ/miJDlr4bpkqU8L3N0cmluZz4NCj4gICAgICA8c3RyaW5nIG5hbWU9Imdl
+bmVyaWNfZXJyb3IiPuacquefpeeahCDigJwlc+KAnSDplJnor688L3N0cmluZz4NCj4gQEAgLTky
+LDI0ICs5MiwzMiBAQA0KPiAgICAgIDxzdHJpbmcgbmFtZT0ibG9nY2F0X2Vycm9yIj7ml6Dms5Xo
+v5DooYwgbG9nY2F077yaPC9zdHJpbmc+DQo+ICAgICAgPHN0cmluZyBuYW1lPSJtb2R1bGVfdmVy
+c2lvbl9lcnJvciI+5peg5rOV56Gu5a6a5YaF5qC45qih5Z2X54mI5pysPC9zdHJpbmc+DQo+ICAg
+ICAgPHN0cmluZyBuYW1lPSJtb2R1bGVfaW5zdGFsbGVyX25vdF9mb3VuZCI+5rKh5pyJ5Y+v55So
+5LqO5q2k6K6+5aSH55qE5qih5Z2XPC9zdHJpbmc+DQo+IC0gICAgPHN0cmluZyBuYW1lPSJtb2R1
+bGVfaW5zdGFsbGVyX2luaXRpYWwiPuatpOWunumqjOaAp+eahOWGheaguOaooeWdl+WPr+S7peaP
+kOWNh+aAp+iDvTwvc3RyaW5nPg0KPiAtICAgIDxzdHJpbmcgbmFtZT0ibW9kdWxlX2luc3RhbGxl
+cl9zdWNjZXNzIj7lronoo4XmiJDlip/vvIzlupTnlKjlsIblnKggNSDnp5LlkI7ph43lkK88L3N0
+cmluZz4NCj4gKyAgICA8c3RyaW5nIG5hbWU9Im1vZHVsZV9pbnN0YWxsZXJfaW5pdGlhbCI+5L2/
+55So5YaF5qC45qih5Z2X5Y+v5Lul5o+Q5Y2H5oCn6IO977yI5a6e6aqM5oCn77yJPC9zdHJpbmc+
+DQo+ICsgICAgPHN0cmluZyBuYW1lPSJtb2R1bGVfaW5zdGFsbGVyX3N1Y2Nlc3MiPuWuieijheaI
+kOWKn++8jOW6lOeUqOWwhuS6jiA1IOenkuWQjumHjeWQrzwvc3RyaW5nPg0KPiAgICAgIDxzdHJp
+bmcgbmFtZT0ibW9kdWxlX2luc3RhbGxlcl90aXRsZSI+5LiL6L295bm25a6J6KOF5YaF5qC45qih
+5Z2XPC9zdHJpbmc+DQo+ICAgICAgPHN0cmluZyBuYW1lPSJtb2R1bGVfaW5zdGFsbGVyX3dvcmtp
+bmciPuato+WcqOS4i+i9veWuieijhS4uLjwvc3RyaW5nPg0KPiAgICAgIDxzdHJpbmcgbmFtZT0i
+bW9kdWxlX2luc3RhbGxlcl9lcnJvciI+5Y+R55Sf6ZSZ6K+v77yM6K+36YeN6K+VPC9zdHJpbmc+
+DQo+ICsgICAgPHN0cmluZyBuYW1lPSJtb2R1bGVfZGlzYWJsZXJfZGlzYWJsZWRfdGl0bGUiPuWQ
+r+eUqOWGheaguOaooeWdlzwvc3RyaW5nPg0KPiArICAgIDxzdHJpbmcgbmFtZT0ibW9kdWxlX2Rp
+c2FibGVyX2Rpc2FibGVkX3N1bW1hcnkiPuWGheaguOepuumXtOeahOaooeWdl+aAp+iDvei+g+W8
+uu+8jOS9huWPr+iDveS4jeeos+Wumjwvc3RyaW5nPg0KPiArICAgIDxzdHJpbmcgbmFtZT0ibW9k
+dWxlX2Rpc2FibGVyX2VuYWJsZWRfdGl0bGUiPuWBnOeUqOWGheaguOaooeWdlzwvc3RyaW5nPg0K
+PiArICAgIDxzdHJpbmcgbmFtZT0ibW9kdWxlX2Rpc2FibGVyX2VuYWJsZWRfc3VtbWFyeSI+55So
+5oi356m66Ze055qE5qih5Z2X5oCn6IO96L6D5byx77yM5L2G56iz5a6a5oCn5pu05aW9PC9zdHJp
+bmc+DQo+ICsgICAgPHN0cmluZyBuYW1lPSJtb2R1bGVfZGlzYWJsZXJfd29ya2luZyI+5bqU55So
+5bCG5LqOIDUg56eS5ZCO6YeN5ZCvPC9zdHJpbmc+DQo+ICAgICAgPHN0cmluZyBuYW1lPSJtdHUi
+Pk1UVTwvc3RyaW5nPg0KPiArICAgIDxzdHJpbmcgbmFtZT0ibXVsdGlwbGVfdHVubmVsc190aXRs
+ZSI+5ZCM5pe25byA5ZCv5aSa5p2h6Zqn6YGTPC9zdHJpbmc+DQo+ICsgICAgPHN0cmluZyBuYW1l
+PSJtdWx0aXBsZV90dW5uZWxzX3N1bW1hcnlfb24iPuW9k+WJjeWFgeiuuOWQjOaXtuW8gOWQr+Wk
+muadoemap+mBkzwvc3RyaW5nPg0KPiArICAgIDxzdHJpbmcgbmFtZT0ibXVsdGlwbGVfdHVubmVs
+c19zdW1tYXJ5X29mZiI+5b2T5YmN5LiA5qyh5Y+q6IO95byA5ZCv5LiA5p2h6Zqn6YGTPC9zdHJp
+bmc+DQo+ICAgICAgPHN0cmluZyBuYW1lPSJuYW1lIj7lkI3np7A8L3N0cmluZz4NCj4gICAgICA8
+c3RyaW5nIG5hbWU9Im5vX2NvbmZpZ19lcnJvciI+5bCd6K+V5Zyo5peg6YWN572u5oOF5Ya15LiL
+5bu656uL6L+e5o6lPC9zdHJpbmc+DQo+ICAgICAgPHN0cmluZyBuYW1lPSJub19jb25maWdzX2Vy
+cm9yIj7mnKrmib7liLDphY3nva48L3N0cmluZz4NCj4gICAgICA8c3RyaW5nIG5hbWU9Im5vX3R1
+bm5lbHNfZXJyb3IiPuaXoOmap+mBkzwvc3RyaW5nPg0KPiAgICAgIDxzdHJpbmcgbmFtZT0icGFy
+c2VfZXJyb3JfZ2VuZXJpYyI+5a2X56ym5LiyPC9zdHJpbmc+DQo+IC0gICAgPHN0cmluZyBuYW1l
+PSJwYXJzZV9lcnJvcl9pbmV0X2FkZHJlc3MiPiBJUCDlnLDlnYA8L3N0cmluZz4NCj4gLSAgICA8
+c3RyaW5nIG5hbWU9InBhcnNlX2Vycm9yX2luZXRfZW5kcG9pbnQiPuWvueerr+WcsOWdgDwvc3Ry
+aW5nPg0KPiAtICAgIDxzdHJpbmcgbmFtZT0icGFyc2VfZXJyb3JfaW5ldF9uZXR3b3JrIj4gSVAg
+572R57ucPC9zdHJpbmc+DQo+ICsgICAgPHN0cmluZyBuYW1lPSJwYXJzZV9lcnJvcl9pbmV0X2Fk
+ZHJlc3MiPiYjMzI7SVAg5Zyw5Z2APC9zdHJpbmc+DQo+ICsgICAgPHN0cmluZyBuYW1lPSJwYXJz
+ZV9lcnJvcl9pbmV0X2VuZHBvaW50Ij7lr7nnq688L3N0cmluZz4NCj4gKyAgICA8c3RyaW5nIG5h
+bWU9InBhcnNlX2Vycm9yX2luZXRfbmV0d29yayI+JiMzMjtJUCDnvZHnu5w8L3N0cmluZz4NCj4g
+ICAgICA8c3RyaW5nIG5hbWU9InBhcnNlX2Vycm9yX2ludGVnZXIiPuaVsOWtlzwvc3RyaW5nPg0K
+PiAtICAgIDxzdHJpbmcgbmFtZT0icGFyc2VfZXJyb3JfcmVhc29uIj7ml6Dms5Xop6PmnpAlMSRz
+IOKAnCUyJHPigJ0gPC9zdHJpbmc+DQo+ICsgICAgPHN0cmluZyBuYW1lPSJwYXJzZV9lcnJvcl9y
+ZWFzb24iPuaXoOazleino+aekCUxJHMg4oCcJTIkc+KAnSYjMzI7PC9zdHJpbmc+DQo+ICAgICAg
+PHN0cmluZyBuYW1lPSJwZWVyIj7oioLngrkgLyBQZWVyPC9zdHJpbmc+DQo+IC0gICAgPHN0cmlu
+ZyBuYW1lPSJwZXJtaXNzaW9uX2Rlc2NyaXB0aW9uIj7lhYHorrjkuIDkuKrlupTnlKjlr7kgV2ly
+ZUd1YXJkIOmap+mBk+i/m+ihjOaOp+WItu+8iOW8gOWQryAvIOWFs+mXremap+mBk++8ie+8jOS9
+huWPr+iDveS8muivr+S8oOS4gOS6m+a1gemHjzwvc3RyaW5nPg0KPiArICAgIDxzdHJpbmcgbmFt
+ZT0icGVybWlzc2lvbl9kZXNjcmlwdGlvbiI+5YWB6K645YW25LuW5bqU55So5o6n5Yi2IFdpcmVH
+dWFyZCDpmqfpgZPvvIjlvIDlkK8gLyDlhbPpl63vvInvvIzkvYblj6/og73kvJror6/kvKDkuIDk
+upvmtYHph488L3N0cmluZz4NCj4gICAgICA8c3RyaW5nIG5hbWU9InBlcm1pc3Npb25fbGFiZWwi
+PuaOp+WItiBXaXJlR3VhcmQg6Zqn6YGTPC9zdHJpbmc+DQo+ICAgICAgPHN0cmluZyBuYW1lPSJw
+ZXJzaXN0ZW50X2tlZXBhbGl2ZSI+6L+e5o6l5L+d5rS76Ze06ZqUPC9zdHJpbmc+DQo+ICAgICAg
+PHN0cmluZyBuYW1lPSJwcmVfc2hhcmVkX2tleSI+6aKE5YWx5Lqr5a+G6ZKlPC9zdHJpbmc+DQo+
+IEBAIC0xMTcsNyArMTI1LDkgQEANCj4gICAgICA8c3RyaW5nIG5hbWU9InB1YmxpY19rZXkiPuWF
+rOmSpTwvc3RyaW5nPg0KPiAgICAgIDxzdHJpbmcgbmFtZT0icHVibGljX2tleV9kZXNjcmlwdGlv
+biI+5YWs6ZKlPC9zdHJpbmc+DQo+ICAgICAgPHN0cmluZyBuYW1lPSJxcl9jb2RlX2hpbnQiPuaP
+kOekuu+8muS9v+eUqOWRveS7pCBgcXJlbmNvZGUgLXQgYW5zaXV0ZjggJmx0OyB0dW5uZWwuY29u
+ZmAg55Sf5oiQ5LqM57u056CBPC9zdHJpbmc+DQo+IC0gICAgPHN0cmluZyBuYW1lPSJyZXN0b3Jl
+X29uX2Jvb3RfdGl0bGUiPuW8gOacuuiHquWQrzwvc3RyaW5nPg0KPiArICAgIDxzdHJpbmcgbmFt
+ZT0icmVzdG9yZV9vbl9ib290X3N1bW1hcnlfb24iPuiuvuWkh+WQr+WKqOaXtuiHquWKqOW8gOWQ
+r+S4iuasoeS9v+eUqOeahOmap+mBkzwvc3RyaW5nPg0KPiArICAgIDxzdHJpbmcgbmFtZT0icmVz
+dG9yZV9vbl9ib290X3N1bW1hcnlfb2ZmIj7mnKrlkK/nlKg8L3N0cmluZz4NCj4gKyAgICA8c3Ry
+aW5nIG5hbWU9InJlc3RvcmVfb25fYm9vdF90aXRsZSI+5ZCv5Yqo5pe25oGi5aSNPC9zdHJpbmc+
+DQo+ICAgICAgPHN0cmluZyBuYW1lPSJzYXZlIj7kv53lrZg8L3N0cmluZz4NCj4gICAgICA8c3Ry
+aW5nIG5hbWU9InNlbGVjdF9hbGwiPuWFqOmAiTwvc3RyaW5nPg0KPiAgICAgIDxzdHJpbmcgbmFt
+ZT0ic2V0X2V4Y2x1c2lvbnMiPuehruWumjwvc3RyaW5nPg0KPiBAQCAtMTI4LDkgKzEzOCw5IEBA
+DQo+ICAgICAgPHN0cmluZyBuYW1lPSJ0b2dnbGVfZXJyb3IiPuWIh+aNoumap+mBk+eKtuaAgeaX
+tuWHuumUme+8miVzPC9zdHJpbmc+DQo+ICAgICAgPHN0cmluZyBuYW1lPSJ0b29sc19pbnN0YWxs
+ZXJfYWxyZWFkeSI+d2cg5LiOIHdnLXF1aWNrIOW3suWuieijhTwvc3RyaW5nPg0KPiAgICAgIDxz
+dHJpbmcgbmFtZT0idG9vbHNfaW5zdGFsbGVyX2ZhaWx1cmUiPuaXoOazleWuieijheWRveS7pOih
+jOW3peWFt++8iOWwmuacquiOt+WPliByb290IOadg+mZkO+8n++8iTwvc3RyaW5nPg0KPiAtICAg
+IDxzdHJpbmcgbmFtZT0idG9vbHNfaW5zdGFsbGVyX2luaXRpYWwiPuWuieijheiEmuacrOW3peWF
+t++8iOWPr+mAie+8iTwvc3RyaW5nPg0KPiAtICAgIDxzdHJpbmcgbmFtZT0idG9vbHNfaW5zdGFs
+bGVyX2luaXRpYWxfbWFnaXNrIj7lronoo4XohJrmnKzlt6XlhbfkuLogTWFnaXNrIOaooeWdl++8
+iOWPr+mAie+8iTwvc3RyaW5nPg0KPiAtICAgIDxzdHJpbmcgbmFtZT0idG9vbHNfaW5zdGFsbGVy
+X2luaXRpYWxfc3lzdGVtIj7lronoo4XohJrmnKzlt6Xlhbfoh7Pns7vnu5/liIbljLrvvIjlj6/p
+gInvvIk8L3N0cmluZz4NCj4gKyAgICA8c3RyaW5nIG5hbWU9InRvb2xzX2luc3RhbGxlcl9pbml0
+aWFsIj7lronoo4Xlkb3ku6TooYzlt6XlhbfvvIjlj6/pgInvvIk8L3N0cmluZz4NCj4gKyAgICA8
+c3RyaW5nIG5hbWU9InRvb2xzX2luc3RhbGxlcl9pbml0aWFsX21hZ2lzayI+5a6J6KOF5ZG95Luk
+6KGM5bel5YW35Li6IE1hZ2lzayDmqKHlnZfvvIjlj6/pgInvvIk8L3N0cmluZz4NCj4gKyAgICA8
+c3RyaW5nIG5hbWU9InRvb2xzX2luc3RhbGxlcl9pbml0aWFsX3N5c3RlbSI+5a6J6KOF5ZG95Luk
+6KGM5bel5YW36Iez57O757uf5YiG5Yy677yI5Y+v6YCJ77yJPC9zdHJpbmc+DQo+ICAgICAgPHN0
+cmluZyBuYW1lPSJ0b29sc19pbnN0YWxsZXJfc3VjY2Vzc19tYWdpc2siPndnIOS4jiB3Zy1xdWlj
+ayDlt7Llronoo4XkuLogTWFnaXNrIOaooeWdl++8iOmHjeWQr+WQjueUn+aViO+8iTwvc3RyaW5n
+Pg0KPiAgICAgIDxzdHJpbmcgbmFtZT0idG9vbHNfaW5zdGFsbGVyX3N1Y2Nlc3Nfc3lzdGVtIj53
+ZyDkuI4gd2ctcXVpY2sg5bey5a6J6KOF6Iez57O757uf5YiG5Yy6PC9zdHJpbmc+DQo+ICAgICAg
+PHN0cmluZyBuYW1lPSJ0b29sc19pbnN0YWxsZXJfdGl0bGUiPuWuieijheWRveS7pOihjOW3peWF
+tzwvc3RyaW5nPg0KPiAtLQ0KPiAyLjI0LjEud2luZG93cy4yDQo+DQoNCkFwcGxpZWQsIHRoYW5r
+cyENCg==
