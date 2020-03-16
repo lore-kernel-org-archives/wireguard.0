@@ -2,76 +2,64 @@ Return-Path: <SRS0=hP/g=5B=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CA574C0044D
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 16 Mar 2020 11:25:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B368C0044D
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 16 Mar 2020 19:31:00 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 251F920719
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 16 Mar 2020 11:25:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 7018620674
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 16 Mar 2020 19:30:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fx8UGhs3"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 251F920719
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="lBDAeO2Y"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 7018620674
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8889135b;
-	Mon, 16 Mar 2020 11:19:26 +0000 (UTC)
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com
- [2a00:1450:4864:20::131])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id baa4699c
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 304528a0;
+	Mon, 16 Mar 2020 19:24:24 +0000 (UTC)
+Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 9ad10a1c
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 16 Mar 2020 11:19:23 +0000 (UTC)
-Received: by mail-lf1-x131.google.com with SMTP id 5so6579309lfr.2
- for <wireguard@lists.zx2c4.com>; Mon, 16 Mar 2020 04:25:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=message-id:subject:from:to:date:in-reply-to:references:user-agent
- :mime-version:content-transfer-encoding;
- bh=kkxGqfNARPVJSGj33jKuQTHk8K+ePG29LHdhiSRq3OU=;
- b=Fx8UGhs3JCRrcDpFHtZzpgIPbvE2vlAlAdUsiKrKy/a1iDB4NaXLKJQb4qxYm/WShh
- oRXk0kqAv0sk81VSrJVzfgfzxuGUWfoFqqZPIcJfIvfYMRrJ5wll8JPREQyBrNKW3ijV
- ZNp4Z80pdn+91I12wwQrIOdvvkpqnyLvwrdw2nB9pQJV+Eoxn868/IYLnFH7uzTJQtZZ
- zFSsQMgNYEnkddiHF9SWg7/YREXGOVaQ61x5a0ZmvFBfiCOVniBFR45/TUZoUKDEqXlr
- Tj4ZmJzFrKsJVxVZGqmBm5uRrnuTLaaTLYbltfpzgsrPc22sIZTjbVLsEquMKIdOnuKv
- i4cQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
- :references:user-agent:mime-version:content-transfer-encoding;
- bh=kkxGqfNARPVJSGj33jKuQTHk8K+ePG29LHdhiSRq3OU=;
- b=TwRneNNN/vi4nK4U5RFkqT3YGGPE0XtGBR6KNEjDXzcS7KdaG4lwnaGddpVWz4sRUL
- Gg+JEgc2okDuaOfCrFMgdHui5e/Utz3IhR+0Cd0RkujA3Z7AD4x25AsJ+KoAC/x2fyH5
- Q9domG+fDlFbG76z/QXjkBdJvmh0h+iRpgN65THa6nyxVrhdV1v6Fl/MlYB8wchQBOjJ
- cUyWkVOR2na7rqT0jSj6lHIXPln5lwUGUr+Q+EnQNMe4AHYvWeyOdOM1eDYHwl2p+WBR
- gBFLXLZ5Smrnk3m4dKGPd4VBy2SpSfXIDdiiKJ6nAf1B2FTcx+Wms86NKOUqfFpFoJS3
- gKNQ==
-X-Gm-Message-State: ANhLgQ2nWIUDAZjzTScZoCH46l80hpyXhFncH6YyGqVTyOU2Y4a+/31d
- JBGAs0Mz4O6spp8DaS0Qeug=
-X-Google-Smtp-Source: ADFU+vvXr/B6G7zDQO6Z7dRDz5SLgO2ISwxatvzIJ2Qr99xUUyotL5WrEiP29EJFEj3lWh+rJyJ0Kw==
-X-Received: by 2002:a05:6512:31d3:: with SMTP id
- j19mr16449793lfe.178.1584357926646; 
- Mon, 16 Mar 2020 04:25:26 -0700 (PDT)
-Received: from PC-681 (134-103-235-80.sta.estpak.ee. [80.235.103.134])
- by smtp.gmail.com with ESMTPSA id u19sm617163ljk.12.2020.03.16.04.25.25
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 16 Mar 2020 04:25:25 -0700 (PDT)
-Message-ID: <66978c85ee43b1b89a6001479dbf0ed61438f26d.camel@gmail.com>
-Subject: Re: Logging
-From: Arti Zirk <arti.zirk@gmail.com>
-To: "J.R. Oldroyd" <wgrd@opal.com>, wireguard@lists.zx2c4.com
-Date: Mon, 16 Mar 2020 13:25:24 +0200
-In-Reply-To: <20200315141659.771e0088@opal.com>
-References: <20200315141659.771e0088@opal.com>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.36.0 
+ Mon, 16 Mar 2020 19:24:21 +0000 (UTC)
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a890c0eb
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 16 Mar 2020 19:24:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :references:in-reply-to:from:date:message-id:subject:to:cc
+ :content-type; s=mail; bh=U2GTgDtESgMUaZUrD8ykJjCcFYQ=; b=lBDAeO
+ 2Y9ra0Cl20FFGQpa4PVHWHdc+BJC4vypef/YfofXx4roMq3/kYM2zJViq6UgAR0A
+ ajAdj8PWEx4OYLUTL6KGof6lYUWHQFYluTk4vcrqOId939FhnWYi1Ea9SNcvfvuw
+ WljWqggFUNqTy+vXNVBE4SQbL5QfrQA6Gl4GJdMLvYWcv7308jrMCS0Z/bzd3x3d
+ DLrwXdbbGtDCsv4ZvdARWgEh1PA9ya2dqv20L1LKtiBFpVgx2SICAULr7KAqNMzH
+ pu49nJZBbj9U4d+/o+kmbK8Us72DEpHiqm1tH2TzRVXyWEQ3oACGdjlz8UZEdFSJ
+ S2cmfmwiOdV2SYxw==
+Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id da1fba21
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 16 Mar 2020 19:24:21 +0000 (UTC)
+Received: by mail-il1-f175.google.com with SMTP id d14so17186539ilq.10
+ for <wireguard@lists.zx2c4.com>; Mon, 16 Mar 2020 12:30:29 -0700 (PDT)
+X-Gm-Message-State: ANhLgQ2yWRKJo/u15MIV3HaGEVcaq5rV0I/9dMNfZY2RMjUqrkzq8Fnu
+ xMX5pIxjRftavbjuOSDlcB/f79EgHF+qVlbO0MQ=
+X-Google-Smtp-Source: ADFU+vtvP+4VYvQbyUYIVa+zrlycRZOBGvcj1xjtpYez4SRfyaJj8VXLP4MZ8YwYvJTD0pkmKokIVQlLb++pRDnSLrI=
+X-Received: by 2002:a92:7f04:: with SMTP id a4mr1337824ild.64.1584387028534;
+ Mon, 16 Mar 2020 12:30:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+References: <20200315141659.771e0088@opal.com>
+In-Reply-To: <20200315141659.771e0088@opal.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Mon, 16 Mar 2020 13:30:17 -0600
+X-Gmail-Original-Message-ID: <CAHmME9onNwD9+hw2LgzZg_OqN21mOPEyQ9wAsFGjTA6=mK7xgA@mail.gmail.com>
+Message-ID: <CAHmME9onNwD9+hw2LgzZg_OqN21mOPEyQ9wAsFGjTA6=mK7xgA@mail.gmail.com>
+Subject: Re: Logging
+To: "J.R. Oldroyd" <wgrd@opal.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -86,13 +74,15 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On P, 2020-03-15 at 14:16 +0100, J.R. Oldroyd wrote:
-> New here.  Apologies if I am re-hashing something discussed before.
-> I did read back a few months of this list and didn't see any relevant
-> discussion.
+Hi JR,
 
-Quite a lot of information can also be obtained via Linux Wireguard
-module. wg(8) man page has a section on that. 
+Adding direct syslog support might make sense. I'll look into
+integrating those files you sent, though, perhaps it'd be better if
+you submitted those as a patch to the mailing list with a proper
+Signed-off-by line? (Or even to Github?)
 
-https://git.zx2c4.com/wireguard-tools/about/src/man/wg.8#DEBUGGING%20INFORMATION
+I'm curious to know: is there a reason why you prefer this to something like:
 
+`LOG_LEVEL=debug wireguard-go -f wg0 2>&1 | logger &`
+
+Jason
