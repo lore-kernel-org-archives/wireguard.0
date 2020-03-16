@@ -2,62 +2,43 @@ Return-Path: <SRS0=5+V/=5V=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.2 required=3.0 tests=DKIM_ADSP_ALL,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F1E4DC2BA19
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  5 Apr 2020 07:39:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C1DC5C2BA19
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  5 Apr 2020 21:47:15 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 2E71A206C3
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  5 Apr 2020 07:39:01 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="2eXKknN4"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 2E71A206C3
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id 0C26820659
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  5 Apr 2020 21:47:14 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 0C26820659
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=frhoelzlwimmer.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e322b4cb;
-	Sun, 5 Apr 2020 07:29:51 +0000 (UTC)
-Received: from frisell.zx2c4.com (frisell.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 61465df2
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sun, 5 Apr 2020 07:29:50 +0000 (UTC)
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 68abe6a3
- for <wireguard@lists.zx2c4.com>; Sun, 5 Apr 2020 07:29:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=u8McmerZ0VtxbMkVcDBnYT7tGco=; b=2eXKkn
- N4qI/IP6nRBQPvdtqKFQF6DjtqubFU4KUZl0KIuYUIpEqNFL3AuRfYzGCfpcogYv
- KSDAwfxxLzFJepAJm7N5npR0Zv/fmU7OQqI6C7+UzFc3roB5D6vkwwYW05nlz8Xc
- 2Q91TluXoa3wXq5CfqV3TGqMbD5fKtuCH3tfb88Ata8EoyJTSrRG5P9RRtPkDQYp
- mvzS7QypIFuTjb6tSYi8FF2KxXehMiLBdtly7nj5qu/55U/GwTRgx5SyruM5FOrt
- S+47JrkZ0XiJfKHRM5cylN7AiyLYlpJzssBvFMxQ6d2Dy7E9eGgJDVsPpHgMXOQc
- ih2AqIT44Cr7okYw==
-Received: by frisell.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 8103f283
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sun, 5 Apr 2020 07:29:50 +0000 (UTC)
-Received: by mail-il1-f169.google.com with SMTP id j69so11651262ila.11
- for <wireguard@lists.zx2c4.com>; Sun, 05 Apr 2020 00:38:28 -0700 (PDT)
-X-Gm-Message-State: AGi0PubqEobWOiGS8tjnc4XAWbjch5micHqLXl0e/FAcVbyw5e4uAFJk
- +lPKZNm3TqAil+k/UJtXJL1VzHTNy066KRGDyq8=
-X-Google-Smtp-Source: APiQypK+PVswX9ZFu89k7lz7/W3gCLH/ZSwo63+OwqEEglPeYc8VdJA/MwwT1lPAze6Tn4X2GsKzxFydn40BSLTE1PE=
-X-Received: by 2002:a92:798f:: with SMTP id
- u137mr17000716ilc.231.1586072307784; 
- Sun, 05 Apr 2020 00:38:27 -0700 (PDT)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0bf57e77;
+	Sun, 5 Apr 2020 21:38:15 +0000 (UTC)
+Received: from mail.frhoelzlwimmer.de (mail.frhoelzlwimmer.de [79.143.178.148])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fc6aa6f3
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 16 Mar 2020 17:52:12 +0000 (UTC)
+Received: from [192.168.2.23] (p4FFEBC10.dip0.t-ipconnect.de [79.254.188.16])
+ (Authenticated sender: ich@frhoelzlwimmer.de)
+ by mail.frhoelzlwimmer.de (Postfix) with ESMTPSA id DD4194195587
+ for <wireguard@lists.zx2c4.com>; Mon, 16 Mar 2020 18:58:17 +0100 (CET)
+To: wireguard@lists.zx2c4.com
+From: =?UTF-8?B?Ri4gSMO2bHpsd2ltbWVy?= <git.ich@frhoelzlwimmer.de>
+Subject: More advanced user configuration like SSH?
+Message-ID: <adeb013d-5881-e113-b865-599a3c572fa5@frhoelzlwimmer.de>
+Date: Mon, 16 Mar 2020 18:58:17 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.5.0
 MIME-Version: 1.0
-References: <445BCA5B-03B7-4127-82E8-029188083D45@gmail.com>
-In-Reply-To: <445BCA5B-03B7-4127-82E8-029188083D45@gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sun, 5 Apr 2020 01:38:17 -0600
-X-Gmail-Original-Message-ID: <CAHmME9rVRofNPx=Od3JZym-y=Jd1nN=_hZ9y9BOtNenofU0C1w@mail.gmail.com>
-Message-ID: <CAHmME9rVRofNPx=Od3JZym-y=Jd1nN=_hZ9y9BOtNenofU0C1w@mail.gmail.com>
-Subject: Re: Multihoming?
-To: Alex Besogonov <alex.besogonov@gmail.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-Mailman-Approved-At: Sun, 05 Apr 2020 23:38:13 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -72,13 +53,21 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Sat, Apr 4, 2020 at 4:45 PM Alex Besogonov <alex.besogonov@gmail.com> wrote:
-> By true multihoming I mean possibility of using multiple connections at the same time, preferably with configurable rates for them on both sides.
+Dear all,
 
-Both connections at the same time, configurable rates... seems a bit
-out of scope for an encrypted tunnel, doesn't it?
 
-Rather, set up two tunnels, and then bond them or run some other
-aggregation protocol over it. Several years ago I was aggregating
-several different internet connections using MPTCP over various pipes.
-Things worked extraordinarily well.
+I would like to allow all of my colleagues to set up a wireguard VPN to
+our servers.
+We are managing our users (+ their SSH keys) via FreeIPA.
+Is there a possibility to integrate Wireguard and FreeIPA authentication?
+
+--------
+In my dreams, wireguard could be used just like SSH:
+"wg-quick user@wgserver.com"
+with SSH-keys read from e.g. "~/authorized_peers" or some authentication
+service.
+
+
+Best regards,
+Florian Hölzlwimmer
+
