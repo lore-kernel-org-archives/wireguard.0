@@ -6,43 +6,44 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EA7B0C43331
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 30 Mar 2020 02:19:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F698C2D0ED
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 30 Mar 2020 02:19:39 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 4EC0E20733
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 30 Mar 2020 02:19:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 4EC0E20733
+	by mail.kernel.org (Postfix) with ESMTPS id 123B120733
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 30 Mar 2020 02:19:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 123B120733
 Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=barrys-emacs.org
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 42fa6d07;
-	Mon, 30 Mar 2020 02:10:44 +0000 (UTC)
-Received: from claranet-outbound-smtp05.uk.clara.net
- (claranet-outbound-smtp05.uk.clara.net [195.8.89.38])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f6f98495
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 31486a30;
+	Mon, 30 Mar 2020 02:10:45 +0000 (UTC)
+Received: from claranet-outbound-smtp06.uk.clara.net
+ (claranet-outbound-smtp06.uk.clara.net [195.8.89.39])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2c24127d
  (TLSv1.2:AES256-SHA256:256:NO) for <wireguard@lists.zx2c4.com>;
- Tue, 17 Mar 2020 18:12:00 +0000 (UTC)
+ Tue, 17 Mar 2020 18:48:15 +0000 (UTC)
 Received: from cpc96796-rdng27-2-0-cust183.15-3.cable.virginm.net
- ([86.19.118.184]:2583 helo=[172.16.2.196])
- by relay05.mail.eu.clara.net (relay.clara.net [81.171.239.35]:10587)
+ ([86.19.118.184]:32934 helo=[172.16.2.123])
+ by relay06.mail.eu.clara.net (relay.clara.net [81.171.239.36]:10587)
  with esmtpsa (authdaemon_plain:barry@barrys-emacs.org)
- (TLS1.2:RSA_AES_256_CBC_SHA256:256) id 1jEGn7-0003yg-HL 
- (return-path <barry@barrys-emacs.org>); Tue, 17 Mar 2020 18:18:14 +0000
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (1.0)
-Subject: Re: Adding comments for a peer through wg set
-From: Barry <barry@barrys-emacs.org>
-In-Reply-To: <20200317015201.GA384449@riseup.net>
-Date: Tue, 17 Mar 2020 18:18:12 +0000
+ (TLS1.2:DHE_RSA_AES_256_CBC_SHA256:256) id 1jEHMB-0001Yh-LQ 
+ (return-path <barry@barrys-emacs.org>); Tue, 17 Mar 2020 18:54:28 +0000
+Content-Type: text/plain;
+	charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
+Subject: Re: Question for wireguard events
+From: Barry Scott <barry@barrys-emacs.org>
+In-Reply-To: <5b5318f7-415b-e07b-5afd-a1e9b3292432@wut.de>
+Date: Tue, 17 Mar 2020 18:54:26 +0000
 Cc: wireguard@lists.zx2c4.com
-Message-Id: <CB283B6E-6429-4212-B23A-60CF8AFC10CD@barrys-emacs.org>
-References: <20200317015201.GA384449@riseup.net>
-To: Sukhbir Singh <yamailinglist@riseup.net>
-X-Mailer: iPad Mail (17D50)
-X-Mailman-Approved-At: Mon, 30 Mar 2020 04:10:42 +0200
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <5F86D785-5A81-4836-8B71-8C3F2F06C630@barrys-emacs.org>
+References: <5b5318f7-415b-e07b-5afd-a1e9b3292432@wut.de>
+To: Simon Lindhorst <s.lindhorst@wut.de>
+X-Mailer: Apple Mail (2.3608.60.0.2.5)
+X-Mailman-Approved-At: Mon, 30 Mar 2020 04:10:43 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -59,42 +60,61 @@ Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
 
 
-> On 17 Mar 2020, at 17:28, Sukhbir Singh <yamailinglist@riseup.net> wrote:
+> On 16 Mar 2020, at 12:43, Simon Lindhorst <s.lindhorst@wut.de> wrote:
 >=20
-> =EF=BB=BFHi,
+> Hi,
 >=20
-> When adding a new peer through `wg set', it seems like there is no way
-> to include comments in the parameters. To solve this, the hack I use
-> involves making sure SaveConfig is set in wg0.conf, adding the peer,
-> `wg-quick save' and then appending the desired comment to the end of the
-> wg0.conf file. This helps me add the peer without taking down the tunnel
-> and also saves it to the config.
+> is there a way to get events for wireguard?
 >=20
-> Is there a better way? Note that I tried adding the comments to the
-> different parameters (using "#") but it didn't work as expected.
->=20
-> What's the reason for adding comments? So as to keep some notes about
-> the peer I added, like "[Peer] ... # laptop config". So if there is a
-> better solution for key management, please do share.
+> I want to show in an gui which clients are connected or not. For that =
+I could poll the wireguard netlink socket. The better way in my opinion =
+is to wait for events, so no polling is required.
 
-My solution to this problem is to maintain my own files and generate
-the server wg0.conf from them. I also generate the clients wg0.conf
-from the same data. I manage the allocation of IP addresses automatically.
+I don't know if there are events that you can hook, others understand =
+this better then I do.
 
-Then the things that you are using comments for can be key/value
-pairs in thoses files. For example I have a friendly name for each peer.
+What I did is:
+
+	wg show all dump
+
+I extract the latest_handshake field out of the dump for each client.
+I know the client_keepalive from my client database.
+
+Then I do this calculation based on information from people on =
+#wireguard IRC:
+
+        ago =3D now - latest_handshake
+        # handshake is every 2 minutes + keep alive + 2 (error margin)
+        down_after =3D (60*2) + client_keepalive + 2
+
+        if latest_handshake =3D=3D 0 or ago > down_after:
+            state =3D 'Down'
+        else:
+            state =3D 'Up (%d%%)' % (100-(ago*100//down_after),)
+
+I only have a handful of clients so this is fast for me. I show the =
+results
+in a web page that shows the status of my firewall.
+
+If I was going to scale this to large size I'm use the netlink interface
+so that I only fetched the perr info I needed.
 
 Barry
 
 
-
-
-
-
 >=20
-> Thanks.
 >=20
-> --=20
-> Sukhbir
+> Best regards,
+>=20
+> Simon
+>=20
+> -- Unsere Aussagen koennen Irrtuemer und Missverstaendnisse enthalten.
+> Bitte pruefen Sie die Aussagen fuer Ihren Fall, bevor Sie =
+Entscheidungen auf Grundlage dieser Aussagen treffen.
+> Wiesemann & Theis GmbH, Porschestr. 12, D-42279 Wuppertal
+> Geschaeftsfuehrer: Dipl.-Ing. Ruediger Theis
+> Registergericht: Amtsgericht Wuppertal, HRB 6377 Infos zum =
+Datenschutz: http://www.wut.de/datenschutz
+> Tel. +49-202/2680-0, Fax +49-202/2680-265, http://www.wut.de
 >=20
 
