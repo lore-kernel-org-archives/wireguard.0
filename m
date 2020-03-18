@@ -2,70 +2,40 @@ Return-Path: <SRS0=qVad=5D=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B9BDC10DCE
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 18 Mar 2020 10:43:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD0E5C4332D
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 18 Mar 2020 22:08:58 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 8CBCE2076C
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 18 Mar 2020 10:43:51 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=aixah.de header.i=@aixah.de header.b="Oyl49oKG"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 8CBCE2076C
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=aixah.de
+	by mail.kernel.org (Postfix) with ESMTPS id 1760C20752
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 18 Mar 2020 22:08:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 1760C20752
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=wolff.to
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9525478b;
-	Wed, 18 Mar 2020 10:37:03 +0000 (UTC)
-Received: from mout-p-101.mailbox.org (mout-p-101.mailbox.org [80.241.56.151])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c11c2b03
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bc461c3a;
+	Wed, 18 Mar 2020 22:02:32 +0000 (UTC)
+Received: from wolff.to (wolff.to [98.103.208.27])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with SMTP id f5201cf4
  for <wireguard@lists.zx2c4.com>;
- Wed, 18 Mar 2020 10:37:01 +0000 (UTC)
-Received: from smtp2.mailbox.org (smtp2.mailbox.org [80.241.60.241])
- (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
- (No client certificate requested)
- by mout-p-101.mailbox.org (Postfix) with ESMTPS id 48j6880xQGzKmfb;
- Wed, 18 Mar 2020 11:43:20 +0100 (CET)
-X-Virus-Scanned: amavisd-new at heinlein-support.de
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aixah.de; s=MBO0001;
- t=1584528198;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=0vOD26KXAvlFblaDE+9vSepgZZwSe5gKTe+Dm2zG8T4=;
- b=Oyl49oKG/Fxb2i52dryj5FmNx5YW8wb1H7WMkEFC1eZV5Mve2/JqY3VuBMNxWW5cGR83gg
- avnD092QCV7lWSIQLO0mAGaoNNXi0nJTCB4YDC4g/J9p3vinKaBu5IfYSEJQbX9tDXkLUX
- 5m4t+AczqLtMYG/mDdXvwVI51STEWaokG2W11+9pcxaJ/ugqT/q6lwCnzWqRVEH1q3WWDZ
- uFRodShO4vsxamMdYHJ0Ey4uJgtcZrNPUH8J6Xe9V53fZ2a+HCItzSaTj0YhuILp6wGQN8
- 5zuFU9Cn57laSzS3R1FCQu1KrQxtp83oqJccCVeEILTyyCoHpBMi3w5QkPoEyA==
-Received: from smtp2.mailbox.org ([80.241.60.241])
- by spamfilter03.heinlein-hosting.de (spamfilter03.heinlein-hosting.de
- [80.241.56.117]) (amavisd-new, port 10030)
- with ESMTP id H4qVAcvd-HKH; Wed, 18 Mar 2020 11:43:17 +0100 (CET)
-Date: Wed, 18 Mar 2020 10:43:15 +0000
-From: Luis Ressel <aranea@aixah.de>
-To: "J.R. Oldroyd" <wgrd@opal.com>
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: Logging
-Message-ID: <20200318104315.q6wslbsh7gy2x3bk@vega>
-Mail-Followup-To: "J.R. Oldroyd" <wgrd@opal.com>,
- "Jason A. Donenfeld" <Jason@zx2c4.com>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>
-References: <20200315141659.771e0088@opal.com>
- <CAHmME9onNwD9+hw2LgzZg_OqN21mOPEyQ9wAsFGjTA6=mK7xgA@mail.gmail.com>
- <20200317083717.14719676@opal.com>
- <20200317181205.ar7762xdewbszu4q@vega>
- <20200318091442.0d45889a@opal.com>
+ Wed, 18 Mar 2020 22:02:29 +0000 (UTC)
+Received: (qmail 6474 invoked by uid 500); 18 Mar 2020 21:50:26 -0000
+Date: Wed, 18 Mar 2020 16:50:26 -0500
+From: Bruno Wolff III <bruno@wolff.to>
+To: Germano Massullo <germano.massullo@gmail.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Subject: Re: WireGuard connecting hosts WAN->LAN
+Message-ID: <20200318215026.GA5996@wolff.to>
+References: <c3b5c2e5-d77b-1984-107d-6f6a56b67f84@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <20200318091442.0d45889a@opal.com>
+In-Reply-To: <c3b5c2e5-d77b-1984-107d-6f6a56b67f84@gmail.com>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -80,20 +50,34 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Wed, Mar 18, 2020 at 09:14:42AM +0100, J.R. Oldroyd wrote:
-> First, I should point out that the whole purpose of syslog(3) is
-> to do the flexible directing of different daemons' logs to different
-> places, including in chroots.
+On Sat, Mar 14, 2020 at 16:33:44 +0100,
+  Germano Massullo <germano.massullo@gmail.com> wrote:
+>A simple question to Wireguard developers, since while asking for help
+>in OpenWRT forum[1] I have been told that I am asking a thing that
+>Wireguard cannot do, so I want to ask upstream if it is possible or not
+>
+>Scenario:
+>A = internet (WAN) host (WireGuard IP 10.1.1.3)
+>B = OpenWRT router (WireGuard IP 10.1.1.1)
+>C = LAN host (WireGuard IP 10.1.1.2)
+>
+>I want to:
+>1) connect A to C passing through B. I don't want to expose C to
+>internet at all, (so no things like port forwarding)
+>2) A must have C public key (and viceversa), so in case of B being
+>compromised, the A<->C VPN will not be compromised.
+>
+>In a few words, I want B to just route forwards packages from A to C.
 
-By design, syslog funnels all logs through a single socket. Separating
-them again requires matching the contents of log messages, which is
-inefficient and error-prone. Getting syslog to work in chroots can be
-annoying, since it requires opening the logging socket before chrooting
-(which requires support by the daemon), or providing a /dev/log socket
-inside the chroot.
+This set of requirements seems odd.
+Do you not trust C to be able to properly ignore unwanted packets?
 
-That said, I'm aware that syslog is more convenient in some setups, so
-offering both stderr and syslog logging sounds reasonable to me.
-
-Cheers,
-Luis
+It is possible to have C ignore layer 3 traffic (DHCP traffic is special) 
+that is not using the tunnel. Inbound you block all traffic not 
+destined for the tunnel's port. Outbound you block all traffic not 
+tagged as tunnel traffic. (Wireguard provides a way to tag tunnel traffic.) 
+The default route should be through the tunnel. Tunnel traffic should be 
+routed through B. The configuration gets trickier if you want to send 
+traffic to A's external address as then you have a routing dependency not 
+based on the destination address. You can do this by having two routing 
+tables using the tag to pick which table gets used.
