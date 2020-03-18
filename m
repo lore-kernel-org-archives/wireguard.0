@@ -2,73 +2,70 @@ Return-Path: <SRS0=ccJ7=5E=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C96B4C4332D
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 19 Mar 2020 08:15:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D997C4332D
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 19 Mar 2020 08:25:57 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 3357620663
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 19 Mar 2020 08:15:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 5D51F20714
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 19 Mar 2020 08:25:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CEjwOdpU"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 3357620663
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=isnic.is header.i=@isnic.is header.b="VHUSs8Ho"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 5D51F20714
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=isnic.is
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7cd4633e;
-	Thu, 19 Mar 2020 08:08:03 +0000 (UTC)
-Received: from mail-vs1-xe42.google.com (mail-vs1-xe42.google.com
- [2607:f8b0:4864:20::e42])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id eb479b7c
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 24a64f36;
+	Thu, 19 Mar 2020 08:19:27 +0000 (UTC)
+Received: from aker.isnic.is (aker-syslog.isnic.is [193.4.58.91])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7b946977
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 19 Mar 2020 08:08:02 +0000 (UTC)
-Received: by mail-vs1-xe42.google.com with SMTP id z125so972513vsb.13
- for <wireguard@lists.zx2c4.com>; Thu, 19 Mar 2020 01:14:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=hZdMMtUsDMoqRollS/5B/WJwIj7CMx2WHlRZajfm3kI=;
- b=CEjwOdpUt2gm9mVyhbiuVf4siz61oxCOBzMfEurRs8fJmY5oPXJi4FOAck1x3O7cKd
- 4/Auhb9DpXEvG1ij/kc0cOQ/K0P+hJUudKO5NGe8dyULdXy/Ywxo9dpD/r0yAJ0fxjWc
- Ob7wgMGinX1HFaX4ZGGq7bTJPLRHltVZQLsRoYy0RtMAE3GeJmm6WzhcIbzFIJXpKFsg
- ZK3BBk4TstTSNDg5Ro5Ud1hcL7AAX0fZFjYIxq4sQQpEIEGdu8Au4x7zdmmOazu95HoP
- zknRx25Vh8k5TufjS1y3i7d9xYo2oEshsA5qWIuaGULc8tuSsppzC8MwsOIjgnEKzgFt
- z35w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=hZdMMtUsDMoqRollS/5B/WJwIj7CMx2WHlRZajfm3kI=;
- b=H/UyAUx2B4inD7JLY6/K7XmkusuSAZ30UPhVwe/vtiCn97HxPjEzeRhjIe8+7HmXqg
- rMYNHEPEIsNHFtCZrUwJ/Wil3/FH/O/VN1mQrDhlpuvsY03fLoQcvAmSPxSquMvKeXES
- FNTabWRQmckuEd9y6HF9ievvA+J9SoaWw0vTqPE8u3Vs5vggUSs+sgdtyXQk1x4WxiJA
- qA8X/xK0GVq3C/KJhY73hstwZouScYTvwQ7ZfKM1BRGLVxypS2ctPUNE2BF68B8K0RIk
- g0iyuTNyQSLuR9/yjEOih4jzhLyU3GsyPd63jCIPnpOL5MKaBzpptEaNB6CY4XJl3HvO
- inYg==
-X-Gm-Message-State: ANhLgQ1cUGIHvxg6s0q2sGgkjUx0FYUkxYpwJ0PACSsrMvFtUtvVtCN+
- YRRHtP2N34Fz1frQi7UteVDdXLfwe31JD7P0V28OkpYT
-X-Google-Smtp-Source: ADFU+vt4cJCdvqSITG1Z6MyBormX2Xi2x54BSSAkdydmz/E4qKhY4JHQ+2Yu7BegRA3KWy1WgA6o56snpiy/vi2DmdU=
-X-Received: by 2002:a67:7f58:: with SMTP id a85mr1171862vsd.28.1584605668254; 
- Thu, 19 Mar 2020 01:14:28 -0700 (PDT)
+ Wed, 18 Mar 2020 08:15:09 +0000 (UTC)
+Received: from sirona.isnic.is (sirona.isnic.is [193.4.58.72])
+ (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+ (No client certificate requested)
+ by aker.isnic.is (Postfix) with ESMTPS id 53597759B9;
+ Wed, 18 Mar 2020 08:21:27 +0000 (GMT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=isnic.is; s=20180821;
+ t=1584519687; bh=MCRpKGN4Gaci1vTbJQAGVdtnlLmQXnQLuUWQKyPX5sg=;
+ h=Date:From:To:Cc:In-Reply-To:References:Subject;
+ b=VHUSs8Ho+2iqJiFiNmHFDCjccUK78ErJ2OlYxJpBrI+DftAZrFhboHsKGrz2aiCDy
+ ZOnMYi4MEwgmku/GmuV1pUjl03nYqRUaE1H0m8ho/Cntfr44vXCP33L6yU71+UPNPs
+ FCKiOlfEncuPJ3Oy4giDWcRsqiCRzXR2+1Y2B33bP5V0aY/RdOR7RlBZIP89R5S8w3
+ hvYA33OlMnBOdhqNFzkJilBgIUVP+MowZOsUoYGBcRfV8p4TlIa1pDssrDb8tc9KeN
+ 3AvdcrqY1kN/GlN2UaAWZRB8QIbPl4EWXnnASRRb0kzGc2IfcZWJ/pvCTv26JIr7q9
+ 7Qeh97htS9WCA==
+Received: from localhost (localhost.localdomain [127.0.0.1])
+ by sirona.isnic.is (Postfix) with ESMTP id 4975711771E9;
+ Wed, 18 Mar 2020 08:21:27 +0000 (GMT)
+Received: from sirona.isnic.is ([127.0.0.1])
+ by localhost (sirona.isnic.is [127.0.0.1]) (amavisd-new, port 10026)
+ with ESMTP id p_LU8CGdPjkp; Wed, 18 Mar 2020 08:21:27 +0000 (GMT)
+Received: from sirona.isnic.is (sirona.isnic.is [193.4.58.72])
+ by sirona.isnic.is (Postfix) with ESMTP id 2D4701176C45;
+ Wed, 18 Mar 2020 08:21:27 +0000 (GMT)
+Date: Wed, 18 Mar 2020 08:21:27 +0000 (GMT)
+From: David Steinn Geirsson <david@isnic.is>
+To: Luis Ressel <aranea@aixah.de>
+Cc: wireguard <wireguard@lists.zx2c4.com>
+Message-ID: <2142983292.1223420.1584519687100.JavaMail.zimbra@sirona.isnic.is>
+In-Reply-To: <20200317183459.4m4zlie3w3ga2lrv@vega>
+References: <582744509.1200952.1584461614719.JavaMail.zimbra@sirona.isnic.is>
+ <20200317183459.4m4zlie3w3ga2lrv@vega>
+Subject: Re: 'wg syncconf' and interface addresses
 MIME-Version: 1.0
-References: <20200318234214.5048-1-tanioka404@gmail.com>
- <CALpmF+HqACr03Zz+-160iNXFQcP1YzFUHRGWTQSatzmbv6uRzg@mail.gmail.com>
-In-Reply-To: <CALpmF+HqACr03Zz+-160iNXFQcP1YzFUHRGWTQSatzmbv6uRzg@mail.gmail.com>
-From: Eiji Tanioka <tanioka404@gmail.com>
-Date: Thu, 19 Mar 2020 17:14:17 +0900
-Message-ID: <CAA2ss9GtRF2dwZO-6L3S0A98PH_MKedEuocKS3zxDOcD1BvPmQ@mail.gmail.com>
-Subject: Re: [PATCH wireguard-android] strings: Update Japanese Translation,
- corresponds to commit 724884e.
-To: Harsh Shandilya <me@msfjarvis.dev>
-Cc: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [193.4.58.72]
+X-Mailer: Zimbra 8.8.11_GA_3799 (ZimbraWebClient - FF72 (Linux)/8.8.11_GA_3787)
+Thread-Topic: 'wg syncconf' and interface addresses
+Thread-Index: uT/+qbaEOWxdcPS/QIUOoz9KSL7MUg==
+X-Mailman-Approved-At: Thu, 19 Mar 2020 09:19:26 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -83,25 +80,29 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-> In the coming days we'll be making the translations available on Crowdin
-> so if you find that more preferable, the option will be available. The pr=
-oject link is
-> https://crowdin.com/project/wireguard.
 
-Looks Good!
-When available, I will use it for translation.
+----- Original Message -----
+> From: "Luis Ressel" <aranea@aixah.de>
+> To: "David Steinn Geirsson" <david@isnic.is>
+> Cc: "wireguard" <wireguard@lists.zx2c4.com>
+> Sent: Tuesday, March 17, 2020 6:34:59 PM
+> Subject: Re: 'wg syncconf' and interface addresses
 
-2020=E5=B9=B43=E6=9C=8819=E6=97=A5(=E6=9C=A8) 12:48 Harsh Shandilya <me@msf=
-jarvis.dev>:
->
-> On Thu, 19 Mar 2020 at 05:14, Eiji Tanioka <tanioka404@gmail.com> wrote:
-> >
-> > Signed-off-by: Eiji Tanioka <tanioka404@gmail.com>
-> > ---
-> >  ui/src/main/res/values-ja/strings.xml | 1 +
-> >  1 file changed, 1 insertion(+)
->
-> Applied, thanks. In the coming days we'll be making the translations
-> available on Crowdin so if you find that more preferable, the option
-> will be available. The project link is
-> https://crowdin.com/project/wireguard.
+> On Tue, Mar 17, 2020 at 04:13:34PM +0000, David Steinn Geirsson wrote:
+>> Is Address a valid key for WireGuard configuration, and if so should the wg tool
+>> not parse and apply those changes as well?
+> 
+> The wg-quick script uses an extension of the wg config file format, with
+> config keys such as Address which aren't recognized by wg.
+> 
+> If you wish to use a config file with both wg-quick and wg, you can use
+> the "wg-quick strip" verb to remove wg-quick options from the config
+> file. In some shells such as bash, this can be done quite comfortably:
+> $ wg syncconf wg0 <(wg-quick strip wg0)
+
+Thanks, I did not know about 'wg-quick strip'. I was thinking of some sed tricks
+to remove these keys but that's much better.
+
+> 
+> Cheers,
+> Luis
