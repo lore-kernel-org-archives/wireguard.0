@@ -2,68 +2,44 @@ Return-Path: <SRS0=1oQw=5P=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A30CCC43331
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 30 Mar 2020 02:28:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F4F2C43331
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 30 Mar 2020 02:31:31 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 43CE720578
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 30 Mar 2020 02:28:39 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=nicze.de header.i=@nicze.de header.b="kKpba0Gk"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 43CE720578
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=nicze.de
+	by mail.kernel.org (Postfix) with ESMTPS id 0336A20735
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 30 Mar 2020 02:31:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 0336A20735
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=fud.no
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e31f7804;
-	Mon, 30 Mar 2020 02:10:51 +0000 (UTC)
-Received: from vie01a-dmta-de02-1.mx.upcmail.net
- (vie01a-dmta-de02-1.mx.upcmail.net [84.116.36.118])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d377cc41
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 57df9e97;
+	Mon, 30 Mar 2020 02:10:52 +0000 (UTC)
+Received: from mail.fud.no (mail.fud.no [2a02:c0:2f0:de01:f816:3eff:fede:dc6a])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 61caacbf
  (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 27 Mar 2020 17:21:06 +0000 (UTC)
-Received: from [172.31.216.235] (helo=vie01a-pemc-psmtp-pe12.mail.upcmail.net)
- by vie01a-dmta-de02.mx.upcmail.net with esmtp (Exim 4.92)
- (envelope-from <suyjuris.gi@nicze.de>) id 1jHsmb-0004qR-6l
- for wireguard@lists.zx2c4.com; Fri, 27 Mar 2020 18:28:37 +0100
-Received: from mail.nicze.de ([5.147.172.5])
- by vie01a-pemc-psmtp-pe12.mail.upcmail.net with ESMTPA
- id HsmZjUD6w6Jy6HsmajQnHt; Fri, 27 Mar 2020 18:28:36 +0100
-X-Env-Mailfrom: suyjuris.gi@nicze.de
-X-Env-Rcptto: wireguard@lists.zx2c4.com
-X-SourceIP: 5.147.172.5
-X-CNFS-Analysis: v=2.3 cv=GKl27dFK c=1 sm=1 tr=0
- a=/5kknKd2Jpx1Os9ibyM9kw==:117 a=/5kknKd2Jpx1Os9ibyM9kw==:17
- a=SS2py6AdgQ4A:10 a=ZRvcX2vtjEA36wY3-fMA:9 a=pHzHmUro8NiASowvMSCR:22
- a=n87TN5wuljxrRezIQYnT:22
-X-Authenticated-Sender: peter.czerner@unitybox.de
-Received: from localhost.localdomain (p5790B815.dip0.t-ipconnect.de
- [87.144.184.21])
- by mail.nicze.de (Postfix) with ESMTPSA id B6E1CF20A82;
- Fri, 27 Mar 2020 18:28:34 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=nicze.de; s=mail;
- t=1585330115; bh=mfUZc4n5+fIni5fozSZxHWMwU4ec3JtXtevADKT4c68=;
- h=From:To:Cc:Subject:Date:From;
- b=kKpba0GkX4yg12qCVynwQ0mXd9hCfC9fuKJmyc78QD9HCsVjyvlwmdalPP2n470/7
- zWMNm3dRlDR/QCRzn4Fd7E49GZU6LUAKU1M4BlG5lbJuoaSlldD26/sFJq5xvaVgMM
- iWJ4YM82sW3BDYXQYLEpsDt3sdTidmQhikAVf640=
-From: Philipp Czerner <suyjuris.gi@nicze.de>
+ Fri, 27 Mar 2020 21:30:18 +0000 (UTC)
+Received: from [98.128.186.71] (port=53398 helo=sloth.fud.no)
+ by mail.fud.no with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <tore@fud.no>)
+ id 1jHwfm-0002fR-Js; Fri, 27 Mar 2020 22:37:50 +0100
 To: wireguard@lists.zx2c4.com
-Cc: Philipp Czerner <suyjuris.gi@nicze.de>
-Subject: [PATCH wireguard-windows] Calculate the actual route metric by
- summing interface and route metric.
-Date: Fri, 27 Mar 2020 18:07:50 +0100
-Message-Id: <20200327170750.5285-1-suyjuris.gi@nicze.de>
-X-Mailer: git-send-email 2.17.1
-X-CMAE-Envelope: MS4wfBAwE9kt2+XDt3pvDk7KFH0uEPPbEwYJqtleMXklFfI1SRF+uNuoSvHdUSoRLPxYhx+NHjJC/PnhMv025ONuuny6iCoKXdk/5wf0aFluoZh/MPF6eUQs
- QT0fLRc+/wsJ6I7qyOm08ONIqwA7CyfGQ3gCat7VllNPMJdr3QRpKaiv
-X-Mailman-Approved-At: Mon, 30 Mar 2020 04:10:43 +0200
+From: Tore Anderson <tore@fud.no>
+Subject: wg syncconf changes endpoint to IPv4 and removes fwmark
+Message-ID: <e8292a70-3ba7-61ee-469c-bacb4135553f@fud.no>
+Date: Fri, 27 Mar 2020 22:37:48 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.6.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-Mailman-Approved-At: Mon, 30 Mar 2020 04:10:42 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -78,39 +54,71 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Signed-off-by: Philipp Czerner <suyjuris.gi@nicze.de>
----
-Hi,
+While testing the patch I just sent, I stumbled across two bugs in wg syncconf:
 
-I had some issues setting up Wireguard behind another VPN. Curiously, it bound the physical interface instead of the other VPN, which was the default route. According to MSDN "the actual route metric used to compute the route preference is the summation of interface metric specified in the Metric member of the MIB_IPINTERFACE_ROW structure and the route metric offset specified in this member" (documentation for MIB_IPFORWARD_ROW2), but the code did not seem to consider this. After I changed the calculation, I got the expected behaviour.
+1) The endpoint address is changed from IPv6 to IPv4 (harmless but unexpected).
+2) The fwmark vanishes (harmful - the tunnel breaks completely).
 
-Cheers,
-Philipp
+The terminal log below should demonstrate these issues:
 
- tunnel/defaultroutemonitor.go | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+[:~] $ sudo cat /etc/wireguard/integrity.conf | sed 's/PrivateKey.*/<snip>/'
+[Interface]
+<snip>
 
-diff --git a/tunnel/defaultroutemonitor.go b/tunnel/defaultroutemonitor.go
-index c102b64..4b24e8e 100644
---- a/tunnel/defaultroutemonitor.go
-+++ b/tunnel/defaultroutemonitor.go
-@@ -33,8 +33,14 @@ func bindSocketRoute(family winipcfg.AddressFamily, device *device.Device, ourLU
- 		if err != nil || ifrow.OperStatus != winipcfg.IfOperStatusUp {
- 			continue
- 		}
--		if r[i].Metric < lowestMetric {
--			lowestMetric = r[i].Metric
-+
-+		iface, err := r[i].InterfaceLUID.IPInterface(family)
-+		if err != nil {
-+			continue
-+		}
-+
-+		if r[i].Metric + iface.Metric < lowestMetric {
-+			lowestMetric = r[i].Metric + iface.Metric;
- 			index = r[i].InterfaceIndex
- 			luid = r[i].InterfaceLUID
- 		}
--- 
-2.17.1
+Address = 10.0.237.73/24,fdab:1337:1337:237::73/64
+DNS = 2001:9b1:8826::53, 2001:9b0:4:2601::53, 98.128.186.86, 155.4.89.136
 
+[Peer]
+PublicKey = ipW9/ysMc9vQbg/x7WK/udnl06+NJioWZZ4XIqz4PQY=
+Endpoint = wireguard.5july.net:48574
+AllowedIPs = 0.0.0.0/0, ::/0
+[:~] $ sudo wg-quick up integrity
+[#] ip link add integrity type wireguard
+[#] wg setconf integrity /dev/fd/63
+[#] ip -4 address add 10.0.237.73/24 dev integrity
+[#] ip -6 address add fdab:1337:1337:237::73/64 dev integrity
+[#] ip link set mtu 1420 up dev integrity
+[#] mount `2001:9b1:8826::53 2001:9b0:4:2601::53 98.128.186.86 155.4.89.136' /etc/resolv.conf
+[#] wg set integrity fwmark 51820
+[#] ip -6 route add ::/0 dev integrity table 51820
+[#] ip -6 rule add not fwmark 51820 table 51820
+[#] ip -6 rule add table main suppress_prefixlength 0
+[#] nft -f /dev/fd/63
+[#] ip -4 route add 0.0.0.0/0 dev integrity table 51820
+[#] ip -4 rule add not fwmark 51820 table 51820
+[#] ip -4 rule add table main suppress_prefixlength 0
+[#] sysctl -q net.ipv4.conf.all.src_valid_mark=1
+[#] nft -f /dev/fd/63
+[:~] $ sudo wg
+interface: integrity
+  public key: s9okCVHLskAUeQPcV7f9ThS8qOcN5WmDb8zEdl+oOnY=
+  private key: (hidden)
+  listening port: 40813
+  fwmark: 0xca6c
+
+peer: ipW9/ysMc9vQbg/x7WK/udnl06+NJioWZZ4XIqz4PQY=
+  endpoint: [2001:9b1:8826:0:98:128:186:112]:48574
+  allowed ips: 0.0.0.0/0, ::/0
+  latest handshake: 8 seconds ago
+  transfer: 43.33 KiB received, 46.32 KiB sent
+[:~] $ sudo wg-quick strip integrity | sudo wg syncconf integrity /dev/stdin
+[:~] $ sudo wg
+[:~] $ sudo wg
+interface: integrity
+  public key: s9okCVHLskAUeQPcV7f9ThS8qOcN5WmDb8zEdl+oOnY=
+  private key: (hidden)
+  listening port: 50375
+
+peer: ipW9/ysMc9vQbg/x7WK/udnl06+NJioWZZ4XIqz4PQY=
+  endpoint: 98.128.186.71:48574
+  allowed ips: 0.0.0.0/0, ::/0
+  latest handshake: 2 minutes, 9 seconds ago
+  transfer: 558.95 KiB received, 205.80 KiB sent
+
+The endpoint changed to IPv4 and the fwmark disappeared even though the config file did not change.
+
+The tunnel as at this point broken, passing no traffic. 'wg set integrity fwmark 51820' revives it.
+
+I am running Fedora 31 with the latest packages (v1.0.20200102) from the jdoss/wireguard COPR.
+
+Tore
