@@ -2,42 +2,68 @@ Return-Path: <SRS0=1oQw=5P=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0E81C43331
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 30 Mar 2020 08:58:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 671DCC43331
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 30 Mar 2020 12:25:33 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id B652F20733
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 30 Mar 2020 08:58:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org B652F20733
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=fud.no
+	by mail.kernel.org (Postfix) with ESMTPS id 93AB520714
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 30 Mar 2020 12:25:32 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=mullvad-net.20150623.gappssmtp.com header.i=@mullvad-net.20150623.gappssmtp.com header.b="qyahbzMX"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 93AB520714
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=mullvad.net
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a1f24741;
-	Mon, 30 Mar 2020 08:50:10 +0000 (UTC)
-Received: from mail.fud.no (mail.fud.no [2a02:c0:2f0:de01:f816:3eff:fede:dc6a])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 01908d56
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 130f2bda;
+	Mon, 30 Mar 2020 12:17:11 +0000 (UTC)
+Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com
+ [2607:f8b0:4864:20::330])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 0d7cb567
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 30 Mar 2020 08:50:09 +0000 (UTC)
-Received: from wireguard.i.bitbit.net ([2a02:c0:2:6:18:59ff:fe38:da0c]:50088
- helo=sloth.fud.no)
- by mail.fud.no with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tore@fud.no>)
- id 1jIpzg-0001Ee-LS; Mon, 30 Mar 2020 10:42:04 +0200
-From: Tore Anderson <tore@fud.no>
-To: wireguard@lists.zx2c4.com
-Cc: Tore Anderson <tore@fud.no>
-Subject: [PATCH] wg-quick: add 'reload' command (wrapper for 'wg syncconf')
-Date: Mon, 30 Mar 2020 10:41:57 +0200
-Message-Id: <20200330084157.51834-1-tore@fud.no>
-X-Mailer: git-send-email 2.25.1
+ Mon, 30 Mar 2020 12:17:09 +0000 (UTC)
+Received: by mail-ot1-x330.google.com with SMTP id r19so11917643otn.7
+ for <wireguard@lists.zx2c4.com>; Mon, 30 Mar 2020 05:25:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mullvad-net.20150623.gappssmtp.com; s=20150623;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+ bh=o+qq4XrTFyf+eQNzwO/39xfNCr34imoFWTWDeFTWv9w=;
+ b=qyahbzMXJLr7TCBa15a0JDTpn7sgAQllaE0DCFoxJD679fsgG4BCqaettk2s7EXXq0
+ dTkQX7swb2gtBcgfp4Kf36n3kmp2wXjgH88m4upfjPcSKCT2RkuRBABvBTMsiNladLrk
+ ED8s2fnwW5fXDczo83QGCzxdoyYzN76EKYuiY89hjGl20GnbraXaCVDtyAALV23J5zcx
+ L4LjjhNrbU7Mtc4Y5tK1BOUdboJhECx1Bcs2HADE/uBQ4bqoyC9H+YCvRtezwRj83QK3
+ YRREB9LBxcSed85oxWbIyWtAMrv1fJosjcBFjUp1ZEJ+29rMqjg134fOAVIMR9/W+kWw
+ u5Qw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to;
+ bh=o+qq4XrTFyf+eQNzwO/39xfNCr34imoFWTWDeFTWv9w=;
+ b=KHxbRoBIw05eQzuuXyqcZPe1Ez3qX2aKZ8POPGI4vQNOM6BLpOR2lWswhb/jOip2wR
+ Rrdw4ule69DsXwU/4ca0Shljia4+0XBzSoa846lYvJs2w/ywspMJz7ps+xY5S4yW79+Y
+ VRatYxveqHdjLChlvWoworDrGJk9aspaTYASFcF2aMLMtq2G52or+M0SERCiO1Bz1HQJ
+ HxFWXVzJTIXt50uFfn/R+mE1iHSgsKuGQ2PZYvOEEVbfLfCAM7vsGAl5r8tgmbAQ3Xal
+ U3D8j9mM9tETIL79K0rVGuKNxlDijhPaMwZrQbnoqGgKCQzlxmE3nqX9TGBK1sivhzOw
+ mMzw==
+X-Gm-Message-State: ANhLgQ3YZS//UVs47MjecwGvKCkdWX3Tex4nyRumKHQ0fMS2C/NP4NPp
+ B85bPmvZnlwv6H6Lzk24GByugUhrMoV+qYLtZoFDGm2j2HU=
+X-Google-Smtp-Source: ADFU+vvbW6rcXmvyrCn0cQAQmKu0HnbiKTnMm7NMKjRzAGpqedatcTSpMGTYBOmNzQUlVG4TuqaLak1HuNQD3rl1/Eg=
+X-Received: by 2002:a9d:6142:: with SMTP id c2mr9209666otk.92.1585571102027;
+ Mon, 30 Mar 2020 05:25:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAHmME9qOpDeraWo5rM31EWQW574KEduRBTL-+0A2ZyqBNDeYkg@mail.gmail.com>
+In-Reply-To: <CAHmME9qOpDeraWo5rM31EWQW574KEduRBTL-+0A2ZyqBNDeYkg@mail.gmail.com>
+From: =?UTF-8?Q?Fredrik_Str=C3=B6mberg?= <stromberg@mullvad.net>
+Date: Mon, 30 Mar 2020 14:24:51 +0200
+Message-ID: <CANTUoechj1jeWTm0YqwPxXctA2eYDah8OiVWi=zL61p8yHhViA@mail.gmail.com>
+Subject: Re: [ANNOUNCE] WireGuard 1.0.0 for Linux 5.6 Released
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -52,247 +78,15 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Also add an ExecReload statement that uses this in the systemd template unit.
+On Mon, Mar 30, 2020 at 4:33 AM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+> Earlier this evening, Linus released [1] Linus 5.6, which contains our
+> first release of WireGuard. This is quite exciting. It means that
+> kernels from here on out will have WireGuard built-in by default.
 
-Signed-off-by: Tore Anderson <tore@fud.no>
----
- src/man/wg-quick.8            |  9 ++++++---
- src/systemd/wg-quick@.service |  1 +
- src/wg-quick/darwin.bash      | 17 ++++++++++++++++-
- src/wg-quick/freebsd.bash     | 15 ++++++++++++++-
- src/wg-quick/linux.bash       | 15 ++++++++++++++-
- src/wg-quick/openbsd.bash     | 15 ++++++++++++++-
- 6 files changed, 65 insertions(+), 7 deletions(-)
+Yippee!
 
-diff --git a/src/man/wg-quick.8 b/src/man/wg-quick.8
-index eca3b48..023805e 100644
---- a/src/man/wg-quick.8
-+++ b/src/man/wg-quick.8
-@@ -10,6 +10,8 @@ wg-quick - set up a WireGuard interface simply
- |
- .I down
- |
-+.I reload
-+|
- .I save
- |
- .I strip
-@@ -28,9 +30,10 @@ Use \fIup\fP to add and set up an interface, and use \fIdown\fP to tear down and
- an interface. Running \fIup\fP adds a WireGuard interface, brings up the interface with the
- supplied IP addresses, sets up mtu and routes, and optionally runs pre/post up scripts. Running \fIdown\fP
- optionally saves the current configuration, removes the WireGuard interface, and optionally
--runs pre/post down scripts. Running \fIsave\fP saves the configuration of an existing
--interface without bringing the interface down. Use \fIstrip\fP to output a configuration file
--with all
-+runs pre/post down scripts. Running \fIreload\fP synchronises any changes to peers/keys in
-+the config file with an already active interfaces. Running \fIsave\fP saves the configuration
-+of an existing interface without bringing the interface down. Use \fIstrip\fP to output a
-+configuration file with all
- .BR wg-quick (8)-specific
- options removed, suitable for use with
- .BR wg (8).
-diff --git a/src/systemd/wg-quick@.service b/src/systemd/wg-quick@.service
-index 7c5f9d1..a3b89d9 100644
---- a/src/systemd/wg-quick@.service
-+++ b/src/systemd/wg-quick@.service
-@@ -14,6 +14,7 @@ Type=oneshot
- RemainAfterExit=yes
- ExecStart=/usr/bin/wg-quick up %i
- ExecStop=/usr/bin/wg-quick down %i
-+ExecReload=/usr/bin/wg-quick reload %i
- Environment=WG_ENDPOINT_RESOLUTION_RETRIES=infinity
- 
- [Install]
-diff --git a/src/wg-quick/darwin.bash b/src/wg-quick/darwin.bash
-index d9d07cf..a732d6a 100755
---- a/src/wg-quick/darwin.bash
-+++ b/src/wg-quick/darwin.bash
-@@ -350,6 +350,10 @@ set_config() {
- 	cmd wg setconf "$REAL_INTERFACE" <(echo "$WG_CONFIG")
- }
- 
-+sync_config() {
-+	cmd wg syncconf "$REAL_INTERFACE" <(echo "$WG_CONFIG")
-+}
-+
- save_config() {
- 	local old_umask new_config current_config address cmd
- 	new_config=$'[Interface]\n'
-@@ -398,7 +402,7 @@ execute_hooks() {
- 
- cmd_usage() {
- 	cat >&2 <<-_EOF
--	Usage: $PROGRAM [ up | down | save | strip ] [ CONFIG_FILE | INTERFACE ]
-+	Usage: $PROGRAM [ up | down | reload | save | strip ] [ CONFIG_FILE | INTERFACE ]
- 
- 	  CONFIG_FILE is a configuration file, whose filename is the interface name
- 	  followed by \`.conf'. Otherwise, INTERFACE is an interface name, with
-@@ -458,6 +462,13 @@ cmd_down() {
- 	execute_hooks "${POST_DOWN[@]}"
- }
- 
-+cmd_reload() {
-+	if ! get_real_interface || [[ " $(wg show interfaces) " != *" $REAL_INTERFACE "* ]]; then
-+		die "\`$INTERFACE' is not a WireGuard interface"
-+	fi
-+	sync_config
-+}
-+
- cmd_save() {
- 	if ! get_real_interface || [[ " $(wg show interfaces) " != *" $REAL_INTERFACE "* ]]; then
- 		die "\`$INTERFACE' is not a WireGuard interface"
-@@ -482,6 +493,10 @@ elif [[ $# -eq 2 && $1 == down ]]; then
- 	auto_su
- 	parse_options "$2"
- 	cmd_down
-+elif [[ $# -eq 2 && $1 == reload ]]; then
-+	auto_su
-+	parse_options "$2"
-+	cmd_reload
- elif [[ $# -eq 2 && $1 == save ]]; then
- 	auto_su
- 	parse_options "$2"
-diff --git a/src/wg-quick/freebsd.bash b/src/wg-quick/freebsd.bash
-index c390dcc..6eef1f6 100755
---- a/src/wg-quick/freebsd.bash
-+++ b/src/wg-quick/freebsd.bash
-@@ -333,6 +333,10 @@ set_config() {
- 	cmd wg setconf "$INTERFACE" <(echo "$WG_CONFIG")
- }
- 
-+sync_config() {
-+	cmd wg syncconf "$INTERFACE" <(echo "$WG_CONFIG")
-+}
-+
- save_config() {
- 	local old_umask new_config current_config address cmd
- 	new_config=$'[Interface]\n'
-@@ -382,7 +386,7 @@ execute_hooks() {
- 
- cmd_usage() {
- 	cat >&2 <<-_EOF
--	Usage: $PROGRAM [ up | down | save | strip ] [ CONFIG_FILE | INTERFACE ]
-+	Usage: $PROGRAM [ up | down | reload | save | strip ] [ CONFIG_FILE | INTERFACE ]
- 
- 	  CONFIG_FILE is a configuration file, whose filename is the interface name
- 	  followed by \`.conf'. Otherwise, INTERFACE is an interface name, with
-@@ -440,6 +444,11 @@ cmd_down() {
- 	execute_hooks "${POST_DOWN[@]}"
- }
- 
-+cmd_reload() {
-+	[[ " $(wg show interfaces) " == *" $INTERFACE "* ]] || die "\`$INTERFACE' is not a WireGuard interface"
-+	sync_config
-+}
-+
- cmd_save() {
- 	[[ " $(wg show interfaces) " == *" $INTERFACE "* ]] || die "\`$INTERFACE' is not a WireGuard interface"
- 	save_config
-@@ -464,6 +473,10 @@ elif [[ $# -eq 2 && $1 == down ]]; then
- 	auto_su
- 	parse_options "$2"
- 	cmd_down
-+elif [[ $# -eq 2 && $1 == reload ]]; then
-+	auto_su
-+	parse_options "$2"
-+	cmd_reload
- elif [[ $# -eq 2 && $1 == save ]]; then
- 	auto_su
- 	parse_options "$2"
-diff --git a/src/wg-quick/linux.bash b/src/wg-quick/linux.bash
-index 7c2c002..37d6ba8 100755
---- a/src/wg-quick/linux.bash
-+++ b/src/wg-quick/linux.bash
-@@ -246,6 +246,10 @@ set_config() {
- 	cmd wg setconf "$INTERFACE" <(echo "$WG_CONFIG")
- }
- 
-+sync_config() {
-+	cmd wg syncconf "$INTERFACE" <(echo "$WG_CONFIG")
-+}
-+
- save_config() {
- 	local old_umask new_config current_config address cmd
- 	[[ $(ip -all -brief address show dev "$INTERFACE") =~ ^$INTERFACE\ +\ [A-Z]+\ +(.+)$ ]] || true
-@@ -293,7 +297,7 @@ execute_hooks() {
- 
- cmd_usage() {
- 	cat >&2 <<-_EOF
--	Usage: $PROGRAM [ up | down | save | strip ] [ CONFIG_FILE | INTERFACE ]
-+	Usage: $PROGRAM [ up | down | reload | save | strip ] [ CONFIG_FILE | INTERFACE ]
- 
- 	  CONFIG_FILE is a configuration file, whose filename is the interface name
- 	  followed by \`.conf'. Otherwise, INTERFACE is an interface name, with
-@@ -347,6 +351,11 @@ cmd_down() {
- 	execute_hooks "${POST_DOWN[@]}"
- }
- 
-+cmd_reload() {
-+	[[ " $(wg show interfaces) " == *" $INTERFACE "* ]] || die "\`$INTERFACE' is not a WireGuard interface"
-+	sync_config
-+}
-+
- cmd_save() {
- 	[[ " $(wg show interfaces) " == *" $INTERFACE "* ]] || die "\`$INTERFACE' is not a WireGuard interface"
- 	save_config
-@@ -368,6 +377,10 @@ elif [[ $# -eq 2 && $1 == down ]]; then
- 	auto_su
- 	parse_options "$2"
- 	cmd_down
-+elif [[ $# -eq 2 && $1 == reload ]]; then
-+	auto_su
-+	parse_options "$2"
-+	cmd_reload
- elif [[ $# -eq 2 && $1 == save ]]; then
- 	auto_su
- 	parse_options "$2"
-diff --git a/src/wg-quick/openbsd.bash b/src/wg-quick/openbsd.bash
-index 8d458d1..c509e70 100755
---- a/src/wg-quick/openbsd.bash
-+++ b/src/wg-quick/openbsd.bash
-@@ -313,6 +313,10 @@ set_config() {
- 	cmd wg setconf "$REAL_INTERFACE" <(echo "$WG_CONFIG")
- }
- 
-+sync_config() {
-+	cmd wg syncconf "$INTERFACE" <(echo "$WG_CONFIG")
-+}
-+
- save_config() {
- 	local old_umask new_config current_config address network cmd
- 	new_config=$'[Interface]\n'
-@@ -361,7 +365,7 @@ execute_hooks() {
- 
- cmd_usage() {
- 	cat >&2 <<-_EOF
--	Usage: $PROGRAM [ up | down | save | strip ] [ CONFIG_FILE | INTERFACE ]
-+	Usage: $PROGRAM [ up | down | reload | save | strip ] [ CONFIG_FILE | INTERFACE ]
- 
- 	  CONFIG_FILE is a configuration file, whose filename is the interface name
- 	  followed by \`.conf'. Otherwise, INTERFACE is an interface name, with
-@@ -419,6 +423,11 @@ cmd_down() {
- 	execute_hooks "${POST_DOWN[@]}"
- }
- 
-+cmd_reload() {
-+	[[ " $(wg show interfaces) " == *" $INTERFACE "* ]] || die "\`$INTERFACE' is not a WireGuard interface"
-+	sync_config
-+}
-+
- cmd_save() {
- 	if ! get_real_interface || [[ " $(wg show interfaces) " != *" $REAL_INTERFACE "* ]]; then
- 		die "\`$INTERFACE' is not a WireGuard interface"
-@@ -442,6 +451,10 @@ elif [[ $# -eq 2 && $1 == down ]]; then
- 	auto_su
- 	parse_options "$2"
- 	cmd_down
-+elif [[ $# -eq 2 && $1 == reload ]]; then
-+	auto_su
-+	parse_options "$2"
-+	cmd_reload
- elif [[ $# -eq 2 && $1 == save ]]; then
- 	auto_su
- 	parse_options "$2"
--- 
-2.25.1
+Congratulations Jason, and to everyone else who has contributed to the
+development of WireGuard.
 
+Cheers,
+Fredrik Stromberg
