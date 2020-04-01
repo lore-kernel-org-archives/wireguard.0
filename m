@@ -2,68 +2,42 @@ Return-Path: <SRS0=FpfO=5R=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F23BC43331
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  1 Apr 2020 06:46:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6102C43331
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  1 Apr 2020 12:48:18 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 262F1206EB
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  1 Apr 2020 06:46:24 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=rozman.si header.i=@rozman.si header.b="q3AbuPm/"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 262F1206EB
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=rozman.si
+	by mail.kernel.org (Postfix) with ESMTPS id DDA6620675
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  1 Apr 2020 12:48:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org DDA6620675
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=romanrm.net
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5b4dfc1c;
-	Wed, 1 Apr 2020 06:38:16 +0000 (UTC)
-Received: from pub5.amebis.si (pub5.amebis.si [2a00:ee2:209:164::f])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 307c65f7
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0802278e;
+	Wed, 1 Apr 2020 12:40:07 +0000 (UTC)
+Received: from len.romanrm.net (len.romanrm.net [2001:41d0:1:8b3b::1])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 29b9955c
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 1 Apr 2020 06:38:13 +0000 (UTC)
-Received: by pub5.amebis.si (Postfix, from userid 1000)
- id D5A721002F93; Wed,  1 Apr 2020 08:46:17 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rozman.si;
- s=default; t=1585723577;
- bh=hUI/WuSGZglCF3FGTXexRQ05ujkblr9ZpYJrzE/WnPs=;
- h=From:To:Subject:Date:References:In-Reply-To:From;
- b=q3AbuPm/EpD9Ejf2zVdLz/h1szNm5EqQ03Q482vq+0EVLU+rCtxmP3vLTD9K5Z96G
- aJI/j37UewmSXzP8bROIXsChT3/0Gvc4wKyxHzBI6BNr3P3JLLZopTfPs3Rt/Lrf57
- NMnImbHO5GX2exqA1iIPdptt95+B+rNTDVAwVkTw=
-Received: from PLANJAVA.amebis.doma (planjava.amebis.doma
- [IPv6:2a00:ee2:209:164::2])
- by pub5.amebis.si (Postfix) with ESMTPS id A51ED1002F8A;
- Wed,  1 Apr 2020 08:46:12 +0200 (CEST)
-Received: from PLANJAVA.amebis.doma ([fe80::a486:6f91:d7b9:9035]) by
- PLANJAVA.amebis.doma ([fe80::a486:6f91:d7b9:9035%17]) with mapi id
- 14.03.0487.000; Wed, 1 Apr 2020 08:46:12 +0200
-From: Simon Rozman <simon@rozman.si>
-To: Ludwig Herzog <ludwig.herzog@web.de>, "wireguard@lists.zx2c4.com"
- <wireguard@lists.zx2c4.com>
-Subject: Re: [PATCH wireguard-windows] Calculate the actual route metric by
- summing interface and route metric.
-Thread-Topic: [PATCH wireguard-windows] Calculate the actual route metric by
- summing interface and route metric.
-Thread-Index: AQHWBjscateo5Q/HNkSIjh4Tpj9zjqhgeweAgAA01oCAAyYhAA==
-Date: Wed, 1 Apr 2020 06:46:11 +0000
-Message-ID: <EE280F52-484A-4C40-BBF3-F23D0E19CFC9@rozman.si>
-References: <20200327170750.5285-1-suyjuris.gi@nicze.de>
- <CAHmME9r4vDKeWCjp2XF3pKaKUDokDphnVoYBqV5YfLd=gTNbPA@mail.gmail.com>
- <e7f67006-09a0-e775-5f7d-4d0c8e7e271a@web.de>
-In-Reply-To: <e7f67006-09a0-e775-5f7d-4d0c8e7e271a@web.de>
-Accept-Language: en-GB, sl-SI, en-US
-Content-Language: en-GB
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-user-agent: Microsoft-MacOutlook/16.35.20030802
-x-originating-ip: [2a00:ee2:209:164::1]
-Content-Type: multipart/signed; protocol="application/pkcs7-signature";
- micalg=sha256; boundary="B_3668575570_434790901"
+ for <wireguard@lists.zx2c4.com>; Wed, 1 Apr 2020 12:40:05 +0000 (UTC)
+Received: from natsu (natsu.40.romanrm.net
+ [IPv6:fd39:aa:c499:6515:e99e:8f1b:cfc9:ccb8])
+ by len.romanrm.net (Postfix) with SMTP id 0BBC840338;
+ Wed,  1 Apr 2020 12:48:11 +0000 (UTC)
+Date: Wed, 1 Apr 2020 17:48:11 +0500
+From: Roman Mamedov <rm@romanrm.net>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
+Subject: Re: [ANNOUNCE] wireguard-linux-compat v1.0.20200330 released
+Message-ID: <20200401174811.5cf6895c@natsu>
+In-Reply-To: <38842e471ccb3582@frisell.zx2c4.com>
+References: <38842e471ccb3582@frisell.zx2c4.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -78,107 +52,111 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---B_3668575570_434790901
-Content-type: text/plain;
-	charset="UTF-8"
-Content-transfer-encoding: quoted-printable
+On Mon, 30 Mar 2020 18:19:17 -0600
+"Jason A. Donenfeld" <Jason@zx2c4.com> wrote:
 
-Hi Ludwig,
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+>=20
+> Hello,
+>=20
+> A new version, v1.0.20200330, of the backported WireGuard kernel module f=
+or
+> 3.10 <=3D Linux <=3D 5.5.y has been tagged in the git repository.
 
-Would a support for ExecPostUp/ExecPreDown satisfy your need?
+My kernel build for 5.4.29 has failed just now:
 
-Regards, Simon
+In file included from <command-line>:
+././net/wireguard/compat/compat.h:1029:20: error: redefinition of =E2=80=98=
+skb_reset_redirect=E2=80=99
+ static inline void skb_reset_redirect(struct sk_buff *skb)
+                    ^~~~~~~~~~~~~~~~~~
+In file included from ././net/wireguard/compat/compat.h:878,
+                 from <command-line>:
+./include/linux/skbuff.h:4538:20: note: previous definition of =E2=80=98skb=
+_reset_redirect=E2=80=99 was here
+ static inline void skb_reset_redirect(struct sk_buff *skb)
+                    ^~~~~~~~~~~~~~~~~~
+In file included from <command-line>:
+././net/wireguard/compat/compat.h: In function =E2=80=98skb_reset_redirect=
+=E2=80=99:
+././net/wireguard/compat/compat.h:1032:2: error: implicit declaration of fu=
+nction =E2=80=98skb_reset_tc=E2=80=99; did you mean =E2=80=98skb_reserve=E2=
+=80=99? [-Werror=3Dimplicit-function-declaration]
+  skb_reset_tc(skb);
+  ^~~~~~~~~~~~
+  skb_reserve
+cc1: some warnings being treated as errors
+scripts/Makefile.build:265: recipe for target 'net/wireguard/main.o' failed
+make[3]: *** [net/wireguard/main.o] Error 1
+scripts/Makefile.build:500: recipe for target 'net/wireguard' failed
+make[2]: *** [net/wireguard] Error 2
 
-=EF=BB=BF-----Original Message-----
-From: WireGuard <wireguard-bounces@lists.zx2c4.com> on behalf of Ludwig Her=
-zog <ludwig.herzog@web.de>
-Date: Tuesday, 31 March 2020 at 05:33
-To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
-Subject: Re: [PATCH wireguard-windows] Calculate the actual route metric by=
- summing interface and route metric.
+>=20
+> =3D=3D Changes =3D=3D
+>=20
+>   * queueing: backport skb_reset_redirect change from 5.6
+>   * version: bump
+>  =20
+>   This release has only one slight change, to put it closer to he 5.6 cod=
+ebase,
+>   but its main purpose is to bump us to a 1.0.y version number. Now that
+>   WireGuard 1.0.0 has been released for Linux 5.6 [1], we can put the sam=
+e number on
+>   the backport compat codebase.
+>  =20
+>   [1] https://lists.zx2c4.com/pipermail/wireguard/2020-March/005206.html
+>=20
+> This release contains commits from: Jason A. Donenfeld.
+>=20
+> As always, the source is available at https://git.zx2c4.com/wireguard-lin=
+ux-compat/
+> and information about the project is available at https://www.wireguard.c=
+om/ .
+>=20
+> This version is available in compressed tarball form here:
+>   https://git.zx2c4.com/wireguard-linux-compat/snapshot/wireguard-linux-c=
+ompat-1.0.20200330.tar.xz
+>   SHA2-256: 2d57b239605be2ee0e4c2da935ff1a23e9ed8bb3ee692e10ae032ae50f280=
+bef
+>=20
+> A PGP signature of that file decompressed is available here:
+>   https://git.zx2c4.com/wireguard-linux-compat/snapshot/wireguard-linux-c=
+ompat-1.0.20200330.tar.asc
+>   Signing key: AB9942E6D4A4CFC3412620A749FC7012A5DE03AE
+>   Remember to unxz the tarball before verifying the signature.
+>=20
+> If you're a package maintainer, please bump your package version. If you'=
+re a
+> user, the WireGuard team welcomes any and all feedback on this latest ver=
+sion.
+>=20
+> Finally, WireGuard development thrives on donations. By popular demand, we
+> have a webpage for this: https://www.wireguard.com/donations/
+>=20
+> Thank you,
+> Jason Donenfeld
+>=20
+>=20
+> -----BEGIN PGP SIGNATURE-----
+>=20
+> iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAl6CjGwQHGphc29uQHp4
+> MmM0LmNvbQAKCRBJ/HASpd4DrqfwD/wJlEbOhYd1ixM3OI8Q2endXmJBRh9UimjL
+> F2moHwTzDM49o3xQpfgQuBFbZWK0L/JNTSlKxrmBLcX9fBJ2VERT1Nrnlh414Ovw
+> FLpmJt9gOWMF6hjlptXKaE/T0vRjzfLli2YzfzyvqMQg9hR/eRKlYhYWOu/fsm3L
+> UtmBm8wGdDeo7e119M0dnfcfboW2b3NKQX87/bWrAn21BL9F+JsNx8Ytx2a5cU8z
+> ZLj56sDWWclmoIXiLI1e+bKO9pXRXvfkSd11p5KK6knD8i8BtAn7uVVfda5VWxmO
+> xooFhNq75photRM0t/VAKhp7ji96pYwSQD6Kw91HPgBcptB29XoacUcpLs40TUx5
+> D7LpvYISKItZpPdfgSwIx3kyajBDmn8bpFZH8T+/cDsIvuJbdpGjP88Qr86JiKQ+
+> BiVmTW5nXWn0d4tQIbw2w34BVre5cLheyWZN3Nk6f7bfxjba52Qa85rrjPoCNWv+
+> PPsVTffIfAxk5ZavSuPUx+QMtmIqnC/bOb2WUn/+lukv+HVYYXO5GyHrfTqS9EW/
+> kw/2dC9pGSye6bz7KYTQwRHSJnaA+SDk2ZNFdlrsYaoFfuZJeaFMkiU3xpIYGllv
+> +v6rmQw/l0d4yZtHR6jmMV4qWeZetH0/5De21/syOQt8XuySjlkNVLRUPgIdZtKN
+> ak69693rPw=3D=3D
+> =3DK43H
+> -----END PGP SIGNATURE-----
 
-    Hi,
-   =20
-    I'm reading this maillist since a longer time and was never brave enoug=
-h
-    to mention my problem since I'm not a developer or programmer and don't
-    know if I can describe it properly. Now this windows/metric stuff came
-    up, so I take a heart ;-)
-   =20
-    In short: I have windows 10 client softwares which only work properly
-    with manually set adapter and gateway metrics in the VPN network
-    adapter, what works for openVPN (even better for a logmein test setup)
-    but not for wireguard, since manual metric settings are not recognized =
-/
-    overwritten by the windows wireguard app. Is it possible to set the
-    metrics somehow in the config file? Or prevent the windows wireguard ap=
-p
-    from overwriting?
-   =20
-    Regards
-   =20
-    Ludwig
-   =20
 
---B_3668575570_434790901
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
-
-MIILkQYJKoZIhvcNAQcCoIILgjCCC34CAQExDzANBglghkgBZQMEAgEFADALBgkqhkiG9w0B
-BwGgggl6MIIFWTCCBEGgAwIBAgIEO0oNLjANBgkqhkiG9w0BAQUFADA9MQswCQYDVQQGEwJz
-aTEbMBkGA1UEChMSc3RhdGUtaW5zdGl0dXRpb25zMREwDwYDVQQLEwhzaWdlbi1jYTAeFw0x
-NjAyMTkxNzU0NDFaFw0yMTAyMTkyMTM4MTVaMIGAMQswCQYDVQQGEwJTSTEbMBkGA1UEChMS
-c3RhdGUtaW5zdGl0dXRpb25zMREwDwYDVQQLEwhzaWdlbi1jYTEUMBIGA1UECxMLaW5kaXZp
-ZHVhbHMxKzATBgNVBAMTDFNpbW9uIFJvem1hbjAUBgNVBAUTDTIzNDU2Nzk1MTIwNDIwggEi
-MA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQD+LEVulmN6fPkadqe82V8M1xrQ52BYGDka
-xqVw/tEwalpKEiMR6DO8VfCpkjj1Ka5JEoU21Srm1MFg6Tkot9b8ykHAGEWGakBRBSgJGBBQ
-AqiO8knjtQuohXSAFeUWjLMfA3mOZG8rJbGrCyg39Fmm1jeezWYuB/7s2xrqK7Stc/GzIheq
-sYE0Pw1FhqtECA52JuzoItOX368d31tN/O1ynkH7F0TXy48GFncmq5Yid3d3QVOk1qQC68lo
-ILwSSkLA5xOV6mHz/XlAAb/jfNLfsIyxT1RO4+rPlOulTYVex/bfxlbKGXN4qfK/o84TFqXW
-1dbDUK7jS9PzMxthWpTfAgMBAAGjggIbMIICFzAOBgNVHQ8BAf8EBAMCBaAwSwYDVR0gBEQw
-QjA2BgsrBgEEAa9ZAgIDAzAnMCUGCCsGAQUFBwIBFhlodHRwOi8vd3d3LmNhLmdvdi5zaS9j
-cHMvMAgGBgQAizABAjAYBggrBgEFBQcBAwQMMAowCAYGBACORgEBMBoGA1UdEQQTMBGBD3Np
-bW9uQHJvem1hbi5zaTCB7gYDVR0fBIHmMIHjMFagVKBSpFAwTjELMAkGA1UEBhMCc2kxGzAZ
-BgNVBAoTEnN0YXRlLWluc3RpdHV0aW9uczERMA8GA1UECxMIc2lnZW4tY2ExDzANBgNVBAMT
-BkNSTDQ1NTCBiKCBhaCBgoZXbGRhcDovL3g1MDAuZ292LnNpL291PXNpZ2VuLWNhLG89c3Rh
-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
-
---B_3668575570_434790901--
+--=20
+With respect,
+Roman
