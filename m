@@ -2,76 +2,99 @@ Return-Path: <SRS0=6BFc=56=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FDE0C2BB85
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 14 Apr 2020 08:18:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 587F0C352B6
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 14 Apr 2020 08:20:51 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 467CF206E9
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 14 Apr 2020 08:18:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 467CF206E9
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=perches.com
+	by mail.kernel.org (Postfix) with ESMTPS id A73DF206E9
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 14 Apr 2020 08:20:50 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="VpO2ZURy"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A73DF206E9
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=outlook.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cfdc92eb;
-	Tue, 14 Apr 2020 08:03:49 +0000 (UTC)
-Received: from smtprelay.hostedemail.com (smtprelay0054.hostedemail.com
- [216.40.44.54])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ed5c3e24
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Mon, 13 Apr 2020 21:24:03 +0000 (UTC)
-Received: from filter.hostedemail.com (clb03-v110.bra.tucows.net
- [216.40.38.60])
- by smtprelay06.hostedemail.com (Postfix) with ESMTP id D45AF18027F9D;
- Mon, 13 Apr 2020 21:33:46 +0000 (UTC)
-X-Session-Marker: 6A6F6540706572636865732E636F6D
-X-HE-Tag: badge84_5a5696689f027
-X-Filterd-Recvd-Size: 3380
-Received: from XPS-9350.home (unknown [47.151.136.130])
- (Authenticated sender: joe@perches.com)
- by omf07.hostedemail.com (Postfix) with ESMTPA;
- Mon, 13 Apr 2020 21:33:40 +0000 (UTC)
-Message-ID: <efd6ceb1f182aa7364e9706422768a1c1335aee4.camel@perches.com>
-Subject: Re: [PATCH 2/2] crypto: Remove unnecessary memzero_explicit()
-From: Joe Perches <joe@perches.com>
-To: Waiman Long <longman@redhat.com>, Andrew Morton
- <akpm@linux-foundation.org>,  David Howells <dhowells@redhat.com>, Jarkko
- Sakkinen <jarkko.sakkinen@linux.intel.com>, James Morris
- <jmorris@namei.org>, "Serge E. Hallyn" <serge@hallyn.com>, Linus Torvalds
- <torvalds@linux-foundation.org>, Matthew Wilcox <willy@infradead.org>,
- David Rientjes <rientjes@google.com>
-Cc: linux-mm@kvack.org, keyrings@vger.kernel.org,
- linux-kernel@vger.kernel.org,  x86@kernel.org,
- linux-crypto@vger.kernel.org, linux-s390@vger.kernel.org, 
- linux-pm@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
- linux-arm-kernel@lists.infradead.org, linux-amlogic@lists.infradead.org, 
- linux-mediatek@lists.infradead.org, linuxppc-dev@lists.ozlabs.org, 
- virtualization@lists.linux-foundation.org, netdev@vger.kernel.org, 
- intel-wired-lan@lists.osuosl.org, linux-ppp@vger.kernel.org, 
- wireguard@lists.zx2c4.com, linux-wireless@vger.kernel.org, 
- devel@driverdev.osuosl.org, linux-scsi@vger.kernel.org, 
- target-devel@vger.kernel.org, linux-btrfs@vger.kernel.org, 
- linux-cifs@vger.kernel.org, samba-technical@lists.samba.org, 
- linux-fscrypt@vger.kernel.org, ecryptfs@vger.kernel.org, 
- kasan-dev@googlegroups.com, linux-bluetooth@vger.kernel.org, 
- linux-wpan@vger.kernel.org, linux-sctp@vger.kernel.org, 
- linux-nfs@vger.kernel.org, tipc-discussion@lists.sourceforge.net, 
- cocci@systeme.lip6.fr, linux-security-module@vger.kernel.org, 
- linux-integrity@vger.kernel.org
-Date: Mon, 13 Apr 2020 14:31:32 -0700
-In-Reply-To: <20200413211550.8307-3-longman@redhat.com>
-References: <20200413211550.8307-1-longman@redhat.com>
- <20200413211550.8307-3-longman@redhat.com>
-Content-Type: text/plain; charset="ISO-8859-1"
-User-Agent: Evolution 3.34.1-2 
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 25030fc5;
+	Tue, 14 Apr 2020 08:08:42 +0000 (UTC)
+Received: from EUR04-VI1-obe.outbound.protection.outlook.com
+ (mail-oln040092075108.outbound.protection.outlook.com [40.92.75.108])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id abcc4634
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Thu, 9 Apr 2020 14:21:17 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=LlxexFfFWiOiNnLo3YQaNCFpDg03/jMVqAYNglItqiutlNWffmvIKxXawZeLDYnEkps/3Grw5hMuAV63zRLxgV/eQt49C4QiidULh5BcE46aMdbh01RkOVsdEsKGrsVLgDyhsSRDYa6NHNsJ/akwyL5voEsThGQHKJZBj7/VWjt+ZC7zpTarz7m8gubDcNTkNOIDx9hq/h0lJVBAPoF8XsO+H4JoiklGG3a6cxo17ahkhbsd+2Gug3bfcbf/oB+2XLeCUgyydvwILO5P/J8Hy+5NjhXq+wwO7Cw/MoUGhc9ln5HfBg6BIJl3WRfPfimBiw+dklkSGb+W+C3gvvtwZg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=XWu30xM7ZIsBTPgXSCdDOzciZy+aCKq4KxQORw/DhM4=;
+ b=Ff54Rr6jdKH6HOy+T9qc5z8Zim7KCtlPRC91xbhPW14r6Qpk7Hi25+u83x+yRuvZRgZ0KJcdps+dYcI3isOn0HrEv5ZeoclR0R449aEYU8g9v/3pEIBpBvGSj/1yXCjFZfSkvFSqZR1FNoWnssf6B4vk2ZY7O/bkPlHslzK6wxqVFOvTpYbOkd1/ebNTqZ0Y1U/60JxwzPh0VKSoKpyrAE6nOlxJqf+IePaFfMY20kj1ewIAEC5WvYmltv0FaPARYuo+wcVCzMGAawNPlWolxqrVjJhAqVhp3lN08u4G4CcLFncgYLFw6+VB1CW1oJwe7pnshT0EaukVhNV5oj0q4g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=XWu30xM7ZIsBTPgXSCdDOzciZy+aCKq4KxQORw/DhM4=;
+ b=VpO2ZURyawnZv+SWOJ108IT407JzHiSt0miMCB3FnJn50hNedOh4z3utzEX1qFq8QbA57psHdmglg6LYyQgrdtIX2Lpzcj+RZ8Za/uyyoHY0dVL+95osU+QotQRvc768GECYHZOrFNJ75FY77W95/6TBrsHU1iL1WeDxrO8iTR+LE1XvIjjESkC6JZgQkWSRU4HRXi/aTxRoOTfcFabfdKN/rqw5vD69r2nLf+6HGI6s7qxxBhqAlnijmZ8oWKhyk61r6WfhWlqCpvStMmLE4ANH8rjqeqr8EJLyK40ZJO1oZerSNKtRm2EDS6m95HXx3sDR+s+UbeGBSTH4ji5JqA==
+Received: from VI1EUR04FT030.eop-eur04.prod.protection.outlook.com
+ (2a01:111:e400:7e0e::4f) by
+ VI1EUR04HT134.eop-eur04.prod.protection.outlook.com (2a01:111:e400:7e0e::102)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2900.15; Thu, 9 Apr
+ 2020 14:30:27 +0000
+Received: from DB6PR05MB3461.eurprd05.prod.outlook.com
+ (2a01:111:e400:7e0e::53) by VI1EUR04FT030.mail.protection.outlook.com
+ (2a01:111:e400:7e0e::366) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2900.15 via Frontend
+ Transport; Thu, 9 Apr 2020 14:30:27 +0000
+Received: from DB6PR05MB3461.eurprd05.prod.outlook.com
+ ([fe80::7108:18c2:ed10:4176]) by DB6PR05MB3461.eurprd05.prod.outlook.com
+ ([fe80::7108:18c2:ed10:4176%4]) with mapi id 15.20.2878.021; Thu, 9 Apr 2020
+ 14:30:27 +0000
+From: payload bob <payloadbob@outlook.com>
+To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+Subject: Log debug packets
+Thread-Topic: Log debug packets
+Thread-Index: AQHWDntdfRWHGuZNAUykv31Ue58s6w==
+Date: Thu, 9 Apr 2020 14:30:27 +0000
+Message-ID: <DB6PR05MB3461934909D9B35E222450B7DDC10@DB6PR05MB3461.eurprd05.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-incomingtopheadermarker: OriginalChecksum:7B7AC25E24C24AF14EB136AEFD0F6825165B2C0FC301A1ECB2CA1ACF85AA250C;
+ UpperCasedChecksum:BE8BE8695E66FD82FEE3B2E98EAC0548012D45714B7BA568F045A4BAAF83CA50;
+ SizeAsReceived:6647; Count:42
+x-tmn: [CkCKxVqjNVmf6W06q9hy2buNs6pBwPUA]
+x-ms-publictraffictype: Email
+x-incomingheadercount: 42
+x-eopattributedmessage: 0
+x-ms-office365-filtering-correlation-id: 9d14d284-c3f7-4557-73d3-08d7dc928c64
+x-ms-traffictypediagnostic: VI1EUR04HT134:
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: EnKqaccTS9nmEzG3kfm8yAecAVBI1jPp0s2JAE/qOTKLoSUqC0XHZgsQWQxE654fvgwwP/D9nggg6VYopXoVZpt5RSJcx8u9NsDrZunAfhBKy9MIQ6RsBeUetTqX6RJHoBauztM7Q6W7A2V0Un5DYHboZ69DEPtFTgd2ocWLE6JFyoNOHo28bhdFL/1ShZEq
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:0; SRV:;
+ IPV:NLI; SFV:NSPM; H:DB6PR05MB3461.eurprd05.prod.outlook.com; PTR:; CAT:NONE;
+ SFTY:; SFS:; DIR:OUT; SFP:1901; 
+x-ms-exchange-antispam-messagedata: XF/pYLv2+VTzQuaQ11N/rUn3twK76Xlqvl/oXlraVnZt28agILm7oQvkmkOrogiVmRW12ZnWUcbmh1sdND5civbT5ASvHbj1V0N6dpuaR0ijEwGx1nz+MOFC0QT99saTaSZI9zlTCtItULcgYjLESg==
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-Mailman-Approved-At: Tue, 14 Apr 2020 10:03:41 +0200
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9d14d284-c3f7-4557-73d3-08d7dc928c64
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-originalarrivaltime: 09 Apr 2020 14:30:27.4394 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Internet
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1EUR04HT134
+X-Mailman-Approved-At: Tue, 14 Apr 2020 10:08:40 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -86,40 +109,16 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Mon, 2020-04-13 at 17:15 -0400, Waiman Long wrote:
-> Since kfree_sensitive() will do an implicit memzero_explicit(), there
-> is no need to call memzero_explicit() before it. Eliminate those
-> memzero_explicit() and simplify the call sites.
-
-2 bits of trivia:
-
-> diff --git a/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c b/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c
-[]
-> @@ -391,10 +388,7 @@ int sun8i_ce_aes_setkey(struct crypto_skcipher *tfm, const u8 *key,
->  		dev_dbg(ce->dev, "ERROR: Invalid keylen %u\n", keylen);
->  		return -EINVAL;
->  	}
-> -	if (op->key) {
-> -		memzero_explicit(op->key, op->keylen);
-> -		kfree(op->key);
-> -	}
-> +	kfree_sensitive(op->key);
->  	op->keylen = keylen;
->  	op->key = kmemdup(key, keylen, GFP_KERNEL | GFP_DMA);
->  	if (!op->key)
-
-It might be a defect to set op->keylen before the kmemdup succeeds.
-
-> @@ -416,10 +410,7 @@ int sun8i_ce_des3_setkey(struct crypto_skcipher *tfm, const u8 *key,
->  	if (err)
->  		return err;
->  
-> -	if (op->key) {
-> -		memzero_explicit(op->key, op->keylen);
-> -		kfree(op->key);
-> -	}
-> +	free_sensitive(op->key, op->keylen);
-
-Why not kfree_sensitive(op->key) ?
-
-
+ Hi.=0A=
+=0A=
+With debugging enabled you can log all kinds of stuff like malformed or rep=
+layed packets. However, debugging only tells you that something went wrong =
+but it does not really show the cause.=0A=
+It would be really nice if you could log those packets so you know exactly =
+which packet caused an issue. Wireguard already knows about those. With ext=
+ernal tools you would need to do lots of extra parsing and basically do eve=
+rything twice. Also, I don't know to which extend tools like tcpdump/wiresh=
+ark/iptables for logging traffic could handle all possible wireguard errors=
+.=0A=
+=0A=
+Regards.=
