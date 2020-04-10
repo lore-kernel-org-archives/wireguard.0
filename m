@@ -1,70 +1,69 @@
-Return-Path: <SRS0=i4ZG=5W=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=O5R5=52=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DD08C2BA19
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  6 Apr 2020 09:47:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A9D97C2BA2B
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 10 Apr 2020 07:40:13 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id AD669206F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  6 Apr 2020 09:47:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id CF56020787
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 10 Apr 2020 07:40:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gZ7r1hRL"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org AD669206F5
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	dkim=pass (2048-bit key) header.d=aixah.de header.i=@aixah.de header.b="1MsEmn6w"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org CF56020787
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=aixah.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d762cc10;
-	Mon, 6 Apr 2020 09:38:45 +0000 (UTC)
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com
- [2a00:1450:4864:20::129])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6e39615c
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 6 Apr 2020 09:38:42 +0000 (UTC)
-Received: by mail-lf1-x129.google.com with SMTP id w145so11260802lff.3
- for <wireguard@lists.zx2c4.com>; Mon, 06 Apr 2020 02:47:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=9BZKtWZ3Vdct78tEjdmeg+MV7D3u9GNCGLUBwR4P6vk=;
- b=gZ7r1hRLw0fdaSjxFNZyjZy9dyuUHWLKIHdBeh4eNpymIJ8glifhCFNjYULqrGQBpd
- oY5mNRTPYHeWSfg8iy+oNf46pGWpjru226KHbpjZHB6PWE4ey5UFDYJ3SBBJlVSIs5c0
- xyJ43n6SKGYYpXWGjE1QpoBeJSrVP8JWUrOSJNmoSUqh69A5XcXXKNQ0S5n1pOud34jD
- WhQfwadHgYoXtu+nHThIyaIMA+pvqynU1Y7TtJqolvVM/ul7Px2qkTdRY55ONrk1DHeP
- WrJ7H1VaDcgcONJbnmhHZIsycQW0tEJetp2pJeH7aPbJN9DWdHWzBT0Hc5JbetngsfE+
- WQIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=9BZKtWZ3Vdct78tEjdmeg+MV7D3u9GNCGLUBwR4P6vk=;
- b=gVOBiMFVpMcbFjgsPcCxuDqKChfDG1xsS27OTPsn1WPhw7hlxi7AqJ76j5ytyaCdeW
- 8By+boG7RYckYbV2JLRW3WGQPqPPHyrx2I5clOVFgK6QzXCyWZAJKBRNF8U2D1QM9xVP
- tv4B2bqY0nXnSY4TNHRKkYNqB5Jt9DGbtlqhMAWGnDo4ucaTjBrMxjylFShrF9YK+YyY
- 4AFHQvdPTwBplBsNWgFHaN4i8fwLOrl+gGETQP9dR2GkbcigCZSBoBO0W7MRF/ttd2Yv
- WOKgx+M7/aRZbzmLnVi+VsBTkPYw526zTk9ZSddlT2QVGN5+uwfc0OfeSD875RuA5oDZ
- C3WQ==
-X-Gm-Message-State: AGi0PuaOjWXspRnucbYZM0goFkwDhS/lVKAyfTud1Jan4CSnPbnOF6NC
- 3sDUx+9dd+dl9oNxY/T5n9VxxvtFQjfznNDsaRSH+AGcK/k=
-X-Google-Smtp-Source: APiQypIla20uXUbpI8KAteCY0WpU9SQOms7xL16exLYMB275CW89hVStS5NB4AZ0tkmCyb37/c7aa6x51yhPOQAloiY=
-X-Received: by 2002:a19:7615:: with SMTP id c21mr12527119lff.24.1586166447977; 
- Mon, 06 Apr 2020 02:47:27 -0700 (PDT)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f4dd7da2;
+	Fri, 10 Apr 2020 07:30:53 +0000 (UTC)
+Received: from mout-p-201.mailbox.org (mout-p-201.mailbox.org [80.241.56.171])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 9fd98a85
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Fri, 10 Apr 2020 07:30:51 +0000 (UTC)
+Received: from smtp2.mailbox.org (smtp2.mailbox.org
+ [IPv6:2001:67c:2050:105:465:1:2:0])
+ (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+ (No client certificate requested)
+ by mout-p-201.mailbox.org (Postfix) with ESMTPS id 48z9056dMBzQlCW;
+ Fri, 10 Apr 2020 09:40:05 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at heinlein-support.de
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aixah.de; s=MBO0001;
+ t=1586504404;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=uXNG+fmUhglyxTVJEXF3pb8d9H6s1vZra6TdKBFOxIM=;
+ b=1MsEmn6wUfdQoZJY1Vioq68aBc5x4nyS+y3RcVyVIiqSN0WYNQKc9jKtPqR16AR4v/xe+7
+ LWoK8jrmtDYiBkvg8b9KrzkOK10y9aAY3BL4juBhSlmfz2xOVY/xpPmFxsPH5qa9Eh6R6I
+ /rkd/8j607J0qMAxkN70/75Ptc5NBUH/EoNTBWJf48k7F4KZDilk2tNfljehqp/5R1SqQ6
+ 4AYe+KxKCZ8JUtqBbgT2zK2Z0K/w7u7gQ9s8d24WqF51kIviaYiOaRsjaqGWAv35v/o5e/
+ D9ynwOLs8GQoz7L01M5g5QIvuMjEjRI/P7jmeR+w3P7oOBq15nxcd4NZzNh1iw==
+Received: from smtp2.mailbox.org ([80.241.60.241])
+ by spamfilter02.heinlein-hosting.de (spamfilter02.heinlein-hosting.de
+ [80.241.56.116]) (amavisd-new, port 10030)
+ with ESMTP id CtyHrHCeH2ub; Fri, 10 Apr 2020 09:39:57 +0200 (CEST)
+Date: Fri, 10 Apr 2020 07:39:55 +0000
+From: Luis Ressel <aranea@aixah.de>
+To: vrein@tuta.io
+Cc: Wireguard <wireguard@lists.zx2c4.com>
+Subject: Re: [PROPOSAL] wg-quick ip rule priority
+Message-ID: <20200410073955.i3epess3yd4uximo@vega>
+Mail-Followup-To: vrein@tuta.io, Wireguard <wireguard@lists.zx2c4.com>
+References: <M4APSeK--3-2@tuta.io>
 MIME-Version: 1.0
-References: <CAMaqUZ2i+LFg8wreOr=H1gB5ocw9+N5uacsZukcjEx6xNrbdkQ@mail.gmail.com>
- <CAFX-c4sfzqEwCk+1Ec7dRtVD60jougU1w9=V-cAQ-8Qk0S+HZg@mail.gmail.com>
-In-Reply-To: <CAFX-c4sfzqEwCk+1Ec7dRtVD60jougU1w9=V-cAQ-8Qk0S+HZg@mail.gmail.com>
-From: Reid Rankin <reidrankin@gmail.com>
-Date: Mon, 6 Apr 2020 05:46:51 -0400
-Message-ID: <CAMaqUZ0G8Gt=33Fxh=UxgPUXz3z5c0AjbFq6F9QxgcTU-xWKzg@mail.gmail.com>
-Subject: Re: Thoughts on wg-dynamic
-To: brian mullan <bmullan.mail@gmail.com>
-Cc: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <M4APSeK--3-2@tuta.io>
+X-Rspamd-Queue-Id: B37AA1742
+X-Rspamd-Score: -4.70 / 15.00 / 15.00
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -79,25 +78,43 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-I looked at something similar, but I really don't want to pay the
-extra overhead -- and it just feels wrong to use
-IP-in-Ethernet-in-GRE-in-UDP-in-IP(-in-WG-in-UDP-in-IP) if you don't
-have to for routing purposes. (Version 2.0 of the product I'm working
-on might use something similar for dynamic routing, but for now I'm
-content with the assumption that all peers can reach each other.)
+On Sun, Apr 05, 2020 at 07:37:18PM +0200, vrein@tuta.io wrote:
+> Hi everyone!
+> I have some tiny proposal for wg-quick utility: adding priority for iproute2 routing rules
+> 
+> For linux.bash this should be as easy as this:
+> https://gitea.tort.icu/vrein/wireguard-tools/commit/0947dc76770a5d81ba39340ebe9189b80a92584c
 
---Reid
+While I don't think it'd be a bad idea to support configurable rule
+priorities if they're useful to someone, they shouldn't be neccessary
+for the use case you described -- you can avoid the separate routing
+rules for wg1 altogether.
 
-On Sun, Apr 5, 2020 at 8:02 PM brian mullan <bmullan.mail@gmail.com> wrote:
->
-> Reid
->
-> I've been using
->
-> m13253/VxWireguard-Generator: Utility to generate VXLAN over Wireguard mesh SD-WAN configuration
->
-> https://github.com/m13253/VxWireguard-Generator
->
-> I added BGP with BGP VRF.  It all works great in my multi cloud, multi node use-case.
->
-> Brian
+All you should need to do is to add "FwMark = 51820" (or some other
+arbitrary value, as long as it's identical for both wg tunnels) to the
+config files of both wg interfaces. Then you end up with these ip rules
+(taken from your post rather than an actual test):
+
+0:      from all lookup local
+32764:  from all lookup main suppress_prefixlength 0
+32765:  not from all fwmark 0xca6c lookup 51820
+32766:  from all lookup main
+32767:  from all lookup default
+
+Furthermore, wg-quick would add an "0.0.0.0/0 dev wg0" route to table
+51820, and "10.5.0.0/24 dev wg1" to the main table.
+
+This would result in encrypted traffic using the routes in the main
+table, traffic to 10.5.0.0/24 the wg1 tunnel, and everything else the
+wg0 tunnel, exactly as intended by you.
+
+> PS:
+> Somehow, connectivity with both A and B peers were worked in single wg0 interface some time ago,
+>   but after few updates this feature stopped working.
+
+It should indeed be possible to have both of these peers on the same wg
+interface. If you're running into issues with that, please elaborate on
+them here or pay us a visit on IRC (#wireguard on Freenode).
+
+
+Luis
