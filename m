@@ -2,76 +2,79 @@ Return-Path: <SRS0=6BFc=56=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9DA5FC352BE
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 14 Apr 2020 08:13:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11D03C3815B
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 14 Apr 2020 08:13:36 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 2F6B62074D
+	by mail.kernel.org (Postfix) with ESMTPS id B2FF32072D
 	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 14 Apr 2020 08:13:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Iu5kd/ds"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 2F6B62074D
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=gmx.net
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="QwJ2OBrK"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org B2FF32072D
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=redhat.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b8d71d76;
-	Tue, 14 Apr 2020 08:03:45 +0000 (UTC)
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6dbe8575
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d5752cf4;
+	Tue, 14 Apr 2020 08:03:46 +0000 (UTC)
+Received: from us-smtp-1.mimecast.com (us-smtp-delivery-1.mimecast.com
+ [205.139.110.120])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b2bb42ad
  for <wireguard@lists.zx2c4.com>;
- Sat, 11 Apr 2020 18:12:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1586629287;
- bh=TGG9nifKSUT4Ka/HtzmLvmPJhD34wgE+kuCxl4Jg8MU=;
- h=X-UI-Sender-Class:To:From:Subject:Date;
- b=Iu5kd/dstYW9/DE5BNzQSavbksve47O667cMJDSzrm3Nw5paAV+6FMS3gxRGsLISP
- AytFm3wQqb97mlCMKOiXHI7VSo5rxQYWTiKF1dF2WS6BIVSy3BcyoO6QjhN6HkLBgi
- xQYhY5zj7UdZ/rMOgIVwXP6K/ZTpz0q4s+KG0BGQ=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.2] ([176.199.252.22]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N2DxE-1jHWAr0Oy6-013aMF for
- <wireguard@lists.zx2c4.com>; Sat, 11 Apr 2020 20:21:27 +0200
-To: wireguard@lists.zx2c4.com
-From: Christian Weiss <cwei@gmx.net>
-Subject: RHEL 7.8, Kernel 3.10: ratelimiter.c:25:1: error: unknown type name
- 'hsiphash_key_t'
-Message-ID: <0312354a-8bdb-00b1-f342-092c71e4817c@gmx.net>
-Date: Sat, 11 Apr 2020 20:21:01 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:ntzw34ZRnVT3ZAihwXJnbJBQJWKAOWzs4UKG51QMMiu2GjlUZju
- YbFuWww7M/wQfXTpAe2e0SEk+ix7Kmi593lWMX9QYGGYlyoJRHYIP7y2iOBsTJKCe1bNG+p
- C/wRz/4ZK/m8kf9jw1HlCe6ElzaSRH5vu5VddPsdl6u1Vo8NlM4y1DZPfXfK5XC6C82dnS9
- eNaLLsOPWTZH1qfUTTElw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:NFw8aoUZN2U=:/kTX1dqfAaAaICOFwKvB8Y
- a6SSHgVe4gU2zrWRyml9y1mC7wAqtbAFp6KFBIPZBSmyEQrM7ERdEuB1wNI+SuYBQLgrFb5wr
- Zw7+nKejaoY6GsXSV7UfWVqlyeMaGcw88rN3Tyr8ZV5OZNbCxdkCfEWFdC2FqI5V1gV/CIh9H
- rew4JNentEo4XfIfygjh8P2j0TG8INfoi2Umz9hvRVoaHTAQeMo6XLKucAk+2dfov2iMuLP2h
- aCLqzPQNBTN+1rYYUu8RtJZqPhMshwxLvLJA6e0oBWZyukQclz97Q9II28BgrKsj+Oz9IxoMs
- hlRIiUrn/jcxBXMTZckvIOauyeWa8Vn9/DIgQDvO6NCK7A8gcopLrao8JEAPEeNnEyeP6hWVw
- toe3sneMTOOkK+qE1PTB1jUvjpsKU9jcuy+RUk/hys1reAXJkerxWq4M+EJPjxSXe52O7UZ+b
- T8STJ72cBecF5mGB0H4iZ3vvvN1/KwEqx6Pnb4FAffFc36T2lwUZSn0dpe8ZJVAyiLJBMJcab
- hvgs9Ts7y4MwxqxDDWao1M750yKooiB9bzch5M6LYX+7x2cg3hcIiulMwrITTeX4V69H55GYi
- gizau/3Yv5nh9UgYQes7XcQVgo4JytWeNdFTWXOmk7WKfF/f6n0e2WpHR8G4vDVQMoySJsV8d
- XQ2K6VgA/tk8VdFGAfyEp+UetdKK4JY5mbDc+2t/StPqFLT3JP0OzM2lnKXSkES+KW/5rwUwV
- Vag/9Cj0VfQJwrMJYA1yzaApQ0Meo3b4NN9qOgweGtEFbrnDpb3hLJ1iFYGNtZzu+dpECIJls
- XxmX18Oo8G44Vd5d6DSOgfleyorkTHezMpAt/9Ovu7aIZVHmDT/X34ezFN+eyS4/4u1CgE/tf
- Hco3SBT+Nq9WUCEg1/CYcIp6/AibsR+yPW6/wu5UYcEkFo0hqtpo1g4m5wxQj7439aJhK7wEg
- b+kkF6RTcoIU/JK6PmpF8JImJT9zgqn4QDSueygPjJEv1c4diEKO96jxh5GTLQ004wwqrPUVO
- RXUBfMsxQxg+dglWAfbXutR0bftBuuYm447jWgcvHIN+KxfoF462LSxBHZi+8y9RJJWNzT1Sa
- bUnjHJdaZjzt13LmYL5qpLgtxBd1AKYavhEyk6k5zf6rH8/3bUterM2Bw0feTurvsnywyvtQ6
- 7Z64+GjlOed34SEXf/1Gi84kF6wr5C9eIgXm7j/acE858iZ//MZaOKbnbaWQSHJNLnS5/2W+F
- l5om8gPnGnfpL5Q4U
+ Mon, 13 Apr 2020 21:07:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1586812604;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc; bh=aZ6g7e8BD4k4NsjW61IF0M2p6EBHyF5yVO1v4ZHY2zM=;
+ b=QwJ2OBrKWwunEWeJ4hLMYVHhHCc9SoC2lcLY6AiU7klUcxbdH33lR8ddlGiwAzL+Wi3nk/
+ g53mqMTgOgEvYoLX66VMvuF+/DopUoBPA2P0GnWG2Ekuq7r8Fjv0ZX+m3kDxxlvEp4OxD5
+ SK7eAGDOINax2g3CF7fsvoxpB97ZaPE=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-458-MoXmhvmhO8yN4Fv14szuWw-1; Mon, 13 Apr 2020 17:16:40 -0400
+X-MC-Unique: MoXmhvmhO8yN4Fv14szuWw-1
+Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com
+ [10.5.11.11])
+ (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+ (No client certificate requested)
+ by mimecast-mx01.redhat.com (Postfix) with ESMTPS id DA0F08018A1;
+ Mon, 13 Apr 2020 21:16:33 +0000 (UTC)
+Received: from llong.com (ovpn-115-28.rdu2.redhat.com [10.10.115.28])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id D8C9C11D2DD;
+ Mon, 13 Apr 2020 21:16:23 +0000 (UTC)
+From: Waiman Long <longman@redhat.com>
+To: Andrew Morton <akpm@linux-foundation.org>,
+ David Howells <dhowells@redhat.com>,
+ Jarkko Sakkinen <jarkko.sakkinen@linux.intel.com>,
+ James Morris <jmorris@namei.org>, "Serge E. Hallyn" <serge@hallyn.com>,
+ Linus Torvalds <torvalds@linux-foundation.org>,
+ Joe Perches <joe@perches.com>, Matthew Wilcox <willy@infradead.org>,
+ David Rientjes <rientjes@google.com>
+Cc: linux-mm@kvack.org, keyrings@vger.kernel.org, linux-kernel@vger.kernel.org,
+ x86@kernel.org, linux-crypto@vger.kernel.org, linux-s390@vger.kernel.org,
+ linux-pm@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
+ linux-arm-kernel@lists.infradead.org, linux-amlogic@lists.infradead.org,
+ linux-mediatek@lists.infradead.org, linuxppc-dev@lists.ozlabs.org,
+ virtualization@lists.linux-foundation.org, netdev@vger.kernel.org,
+ intel-wired-lan@lists.osuosl.org, linux-ppp@vger.kernel.org,
+ wireguard@lists.zx2c4.com, linux-wireless@vger.kernel.org,
+ devel@driverdev.osuosl.org, linux-scsi@vger.kernel.org,
+ target-devel@vger.kernel.org, linux-btrfs@vger.kernel.org,
+ linux-cifs@vger.kernel.org, samba-technical@lists.samba.org,
+ linux-fscrypt@vger.kernel.org, ecryptfs@vger.kernel.org,
+ kasan-dev@googlegroups.com, linux-bluetooth@vger.kernel.org,
+ linux-wpan@vger.kernel.org, linux-sctp@vger.kernel.org,
+ linux-nfs@vger.kernel.org, tipc-discussion@lists.sourceforge.net,
+ cocci@systeme.lip6.fr, linux-security-module@vger.kernel.org,
+ linux-integrity@vger.kernel.org, Waiman Long <longman@redhat.com>
+Subject: [PATCH 0/2] mm, treewide: Rename kzfree() to kfree_sensitive()
+Date: Mon, 13 Apr 2020 17:15:48 -0400
+Message-Id: <20200413211550.8307-1-longman@redhat.com>
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
 X-Mailman-Approved-At: Tue, 14 Apr 2020 10:03:41 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -87,70 +90,136 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello Dear Mailinglist,
+This patchset makes a global rename of the kzfree() to kfree_sensitive()
+to highlight the fact buffer clearing is only needed if the data objects
+contain sensitive information like encrpytion key. The fact that kzfree()
+uses memset() to do the clearing isn't totally safe either as compiler
+may compile out the clearing in their optimizer. Instead, the new
+kfree_sensitive() uses memzero_explicit() which won't get compiled out.
 
-with RHEL 7.8, kernel 3.10 and current Wireguard 1.0.20191226 make
-throws the obove error:
+Waiman Long (2):
+  mm, treewide: Rename kzfree() to kfree_sensitive()
+  crypto: Remove unnecessary memzero_explicit()
 
-# rpm -qa "wireguard*"
-wireguard-tools-1.0.20191226-1.el7.x86_64
-wireguard-dkms-1.0.20200401-1.el7.noarch
+ arch/s390/crypto/prng.c                       |  4 +--
+ arch/x86/power/hibernate.c                    |  2 +-
+ crypto/adiantum.c                             |  2 +-
+ crypto/ahash.c                                |  4 +--
+ crypto/api.c                                  |  2 +-
+ crypto/asymmetric_keys/verify_pefile.c        |  4 +--
+ crypto/deflate.c                              |  2 +-
+ crypto/drbg.c                                 | 10 +++---
+ crypto/ecc.c                                  |  8 ++---
+ crypto/ecdh.c                                 |  2 +-
+ crypto/gcm.c                                  |  2 +-
+ crypto/gf128mul.c                             |  4 +--
+ crypto/jitterentropy-kcapi.c                  |  2 +-
+ crypto/rng.c                                  |  2 +-
+ crypto/rsa-pkcs1pad.c                         |  6 ++--
+ crypto/seqiv.c                                |  2 +-
+ crypto/shash.c                                |  2 +-
+ crypto/skcipher.c                             |  2 +-
+ crypto/testmgr.c                              |  6 ++--
+ crypto/zstd.c                                 |  2 +-
+ .../allwinner/sun8i-ce/sun8i-ce-cipher.c      | 17 +++-------
+ .../allwinner/sun8i-ss/sun8i-ss-cipher.c      | 18 +++-------
+ drivers/crypto/amlogic/amlogic-gxl-cipher.c   | 14 +++-----
+ drivers/crypto/atmel-ecc.c                    |  2 +-
+ drivers/crypto/caam/caampkc.c                 | 28 +++++++--------
+ drivers/crypto/cavium/cpt/cptvf_main.c        |  6 ++--
+ drivers/crypto/cavium/cpt/cptvf_reqmanager.c  | 12 +++----
+ drivers/crypto/cavium/nitrox/nitrox_lib.c     |  4 +--
+ drivers/crypto/cavium/zip/zip_crypto.c        |  6 ++--
+ drivers/crypto/ccp/ccp-crypto-rsa.c           |  6 ++--
+ drivers/crypto/ccree/cc_aead.c                |  4 +--
+ drivers/crypto/ccree/cc_buffer_mgr.c          |  4 +--
+ drivers/crypto/ccree/cc_cipher.c              |  6 ++--
+ drivers/crypto/ccree/cc_hash.c                |  8 ++---
+ drivers/crypto/ccree/cc_request_mgr.c         |  2 +-
+ drivers/crypto/inside-secure/safexcel_hash.c  |  3 +-
+ drivers/crypto/marvell/cesa/hash.c            |  2 +-
+ .../crypto/marvell/octeontx/otx_cptvf_main.c  |  6 ++--
+ .../marvell/octeontx/otx_cptvf_reqmgr.h       |  2 +-
+ drivers/crypto/mediatek/mtk-aes.c             |  2 +-
+ drivers/crypto/nx/nx.c                        |  4 +--
+ drivers/crypto/virtio/virtio_crypto_algs.c    | 12 +++----
+ drivers/crypto/virtio/virtio_crypto_core.c    |  2 +-
+ drivers/md/dm-crypt.c                         | 34 +++++++++----------
+ drivers/md/dm-integrity.c                     |  6 ++--
+ drivers/misc/ibmvmc.c                         |  6 ++--
+ .../hisilicon/hns3/hns3pf/hclge_mbx.c         |  2 +-
+ .../net/ethernet/intel/ixgbe/ixgbe_ipsec.c    |  6 ++--
+ drivers/net/ppp/ppp_mppe.c                    |  6 ++--
+ drivers/net/wireguard/noise.c                 |  4 +--
+ drivers/net/wireguard/peer.c                  |  2 +-
+ drivers/net/wireless/intel/iwlwifi/pcie/rx.c  |  2 +-
+ .../net/wireless/intel/iwlwifi/pcie/tx-gen2.c |  6 ++--
+ drivers/net/wireless/intel/iwlwifi/pcie/tx.c  |  6 ++--
+ drivers/net/wireless/intersil/orinoco/wext.c  |  4 +--
+ drivers/s390/crypto/ap_bus.h                  |  4 +--
+ drivers/staging/ks7010/ks_hostif.c            |  2 +-
+ drivers/staging/rtl8723bs/core/rtw_security.c |  2 +-
+ drivers/staging/wlan-ng/p80211netdev.c        |  2 +-
+ drivers/target/iscsi/iscsi_target_auth.c      |  2 +-
+ fs/btrfs/ioctl.c                              |  2 +-
+ fs/cifs/cifsencrypt.c                         |  2 +-
+ fs/cifs/connect.c                             | 10 +++---
+ fs/cifs/dfs_cache.c                           |  2 +-
+ fs/cifs/misc.c                                |  8 ++---
+ fs/crypto/keyring.c                           |  6 ++--
+ fs/crypto/keysetup_v1.c                       |  4 +--
+ fs/ecryptfs/keystore.c                        |  4 +--
+ fs/ecryptfs/messaging.c                       |  2 +-
+ include/crypto/aead.h                         |  2 +-
+ include/crypto/akcipher.h                     |  2 +-
+ include/crypto/gf128mul.h                     |  2 +-
+ include/crypto/hash.h                         |  2 +-
+ include/crypto/internal/acompress.h           |  2 +-
+ include/crypto/kpp.h                          |  2 +-
+ include/crypto/skcipher.h                     |  2 +-
+ include/linux/slab.h                          |  2 +-
+ lib/mpi/mpiutil.c                             |  6 ++--
+ lib/test_kasan.c                              |  6 ++--
+ mm/slab_common.c                              | 10 +++---
+ net/atm/mpoa_caches.c                         |  4 +--
+ net/bluetooth/ecdh_helper.c                   |  6 ++--
+ net/bluetooth/smp.c                           | 24 ++++++-------
+ net/core/sock.c                               |  2 +-
+ net/ipv4/tcp_fastopen.c                       |  2 +-
+ net/mac80211/aead_api.c                       |  4 +--
+ net/mac80211/aes_gmac.c                       |  2 +-
+ net/mac80211/key.c                            |  2 +-
+ net/mac802154/llsec.c                         | 20 +++++------
+ net/sctp/auth.c                               |  2 +-
+ net/sctp/socket.c                             |  2 +-
+ net/sunrpc/auth_gss/gss_krb5_crypto.c         |  4 +--
+ net/sunrpc/auth_gss/gss_krb5_keys.c           |  6 ++--
+ net/sunrpc/auth_gss/gss_krb5_mech.c           |  2 +-
+ net/tipc/crypto.c                             | 10 +++---
+ net/wireless/core.c                           |  2 +-
+ net/wireless/ibss.c                           |  4 +--
+ net/wireless/lib80211_crypt_tkip.c            |  2 +-
+ net/wireless/lib80211_crypt_wep.c             |  2 +-
+ net/wireless/nl80211.c                        | 24 ++++++-------
+ net/wireless/sme.c                            |  6 ++--
+ net/wireless/util.c                           |  2 +-
+ net/wireless/wext-sme.c                       |  2 +-
+ scripts/coccinelle/free/devm_free.cocci       |  4 +--
+ scripts/coccinelle/free/ifnullfree.cocci      |  4 +--
+ scripts/coccinelle/free/kfree.cocci           |  6 ++--
+ scripts/coccinelle/free/kfreeaddr.cocci       |  2 +-
+ security/apparmor/domain.c                    |  4 +--
+ security/apparmor/include/file.h              |  2 +-
+ security/apparmor/policy.c                    | 24 ++++++-------
+ security/apparmor/policy_ns.c                 |  6 ++--
+ security/apparmor/policy_unpack.c             | 14 ++++----
+ security/keys/big_key.c                       |  6 ++--
+ security/keys/dh.c                            | 14 ++++----
+ security/keys/encrypted-keys/encrypted.c      | 14 ++++----
+ security/keys/trusted-keys/trusted_tpm1.c     | 34 +++++++++----------
+ security/keys/user_defined.c                  |  6 ++--
+ 117 files changed, 332 insertions(+), 358 deletions(-)
 
-# cat /etc/oracle-release
-Oracle Linux Server release 7.8
+-- 
+2.18.1
 
-# uname -a
-Linux xxxxxxxx 3.10.0-1127.el7.x86_64 #1 SMP Wed Apr 1 10:20:09 PDT 2020
-x86_64 x86_64 x86_64 GNU/Linux
-
-# make
-  CC [M]  /var/lib/dkms/wireguard/1.0.20200401/build/main.o
-  CC [M]  /var/lib/dkms/wireguard/1.0.20200401/build/noise.o
-  CC [M]  /var/lib/dkms/wireguard/1.0.20200401/build/device.o
-  CC [M]  /var/lib/dkms/wireguard/1.0.20200401/build/peer.o
-  CC [M]  /var/lib/dkms/wireguard/1.0.20200401/build/timers.o
-  CC [M]  /var/lib/dkms/wireguard/1.0.20200401/build/queueing.o
-  CC [M]  /var/lib/dkms/wireguard/1.0.20200401/build/send.o
-  CC [M]  /var/lib/dkms/wireguard/1.0.20200401/build/receive.o
-  CC [M]  /var/lib/dkms/wireguard/1.0.20200401/build/socket.o
-  CC [M]  /var/lib/dkms/wireguard/1.0.20200401/build/peerlookup.o
-  CC [M]  /var/lib/dkms/wireguard/1.0.20200401/build/allowedips.o
-  CC [M]  /var/lib/dkms/wireguard/1.0.20200401/build/ratelimiter.o
-/var/lib/dkms/wireguard/1.0.20200401/build/ratelimiter.c:25:1: error:
-unknown type name =E2=80=98hsiphash_key_t=E2=80=99
- static hsiphash_key_t key;
- ^
-/var/lib/dkms/wireguard/1.0.20200401/build/ratelimiter.c: In function
-=E2=80=98wg_ratelimiter_allow=E2=80=99:
-/var/lib/dkms/wireguard/1.0.20200401/build/ratelimiter.c:109:3: error:
-implicit declaration of function =E2=80=98hsiphash_2u32=E2=80=99
-[-Werror=3Dimplicit-function-declaration]
-   bucket =3D &table_v4[hsiphash_2u32(net_word, ip, &key) &
-   ^
-/var/lib/dkms/wireguard/1.0.20200401/build/ratelimiter.c:116:3: error:
-implicit declaration of function =E2=80=98hsiphash_3u32=E2=80=99
-[-Werror=3Dimplicit-function-declaration]
-   bucket =3D &table_v6[hsiphash_3u32(net_word, ip >> 32, ip, &key) &
-   ^
-cc1: some warnings being treated as errors
-make[2]: *** [/var/lib/dkms/wireguard/1.0.20200401/build/ratelimiter.o]
-Error 1
-make[1]: *** [_module_/var/lib/dkms/wireguard/1.0.20200401/build] Error 2
-make: *** [module] Error 2
-
-
-The following change works for me; make succeeds:
-=2D-- compat/compat.h.bak 2020-04-11 20:04:15.077425108 +0200
-+++ compat/compat.h     2020-04-11 20:06:39.279397118 +0200
-@@ -1034,7 +1034,7 @@
- }
- #endif
-
--#if defined(ISUBUNTU1604)
-+#if defined(ISUBUNTU1604) || defined(ISRHEL7)
- #include <linux/siphash.h>
- #ifndef _WG_LINUX_SIPHASH_H
- #define hsiphash_2u32 siphash_2u32
-
-Kind regards,
-Christian
