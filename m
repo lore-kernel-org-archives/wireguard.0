@@ -2,64 +2,100 @@ Return-Path: <SRS0=1xjk=6I=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F720C55199
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C5DEAC54FCB
 	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Apr 2020 20:56:28 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id E74CF21556
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Apr 2020 20:56:27 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=davidslab.com header.i=@davidslab.com header.b="IrTOKL2Q"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org E74CF21556
-Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=davidslab.com
+	by mail.kernel.org (Postfix) with ESMTPS id 64F6B21556
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Apr 2020 20:56:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 64F6B21556
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 849182eb;
-	Fri, 24 Apr 2020 20:38:11 +0000 (UTC)
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com
- [2a00:1450:4864:20::632])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a0d99a7a
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6e9d15aa;
+	Fri, 24 Apr 2020 20:38:20 +0000 (UTC)
+Received: from mx2.suse.de (mx2.suse.de [195.135.220.15])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4ebc7bbb
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 16 Apr 2020 15:16:13 +0000 (UTC)
-Received: by mail-ej1-x632.google.com with SMTP id gr25so1563134ejb.10
- for <wireguard@lists.zx2c4.com>; Thu, 16 Apr 2020 08:26:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=davidslab.com; s=google;
- h=mime-version:from:date:message-id:subject:to;
- bh=wwGv5gfjLDxyVCXEW08nhZgUhXOgCAba99CA2w6HCJE=;
- b=IrTOKL2Q/ebb3p0ZraC7boPy/7WzG5DZGnrAOxXKqgU5KVYCuggMoAKXyjl3sTZJod
- DtkeUOAE5zxFlxKpHEw4M8qmBoSk/uVcNwO8qSYTE1BYNf7osWq8yH6jnKU1JUaPAJUq
- +JML6IpPxSaJ1ZmUa0ODhEnDuFAfoOSUUYA7E=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=wwGv5gfjLDxyVCXEW08nhZgUhXOgCAba99CA2w6HCJE=;
- b=SF5w9sbtGIe5ifrouV+Me6vSjuOFLbB6YRaC+7z5e/r9e7kR46W+wwop7kg6Tq3BJO
- NFW+GzxXHGJmgbky5hLiu1Wc4nVZ/Ojqttgr27+Kr5x+yXmGyfv47Gp020KA1pGym/gm
- 2SaeGyNaUDYHUXeM0Cdsyyn0JoTRWvNUYcD9hE/b96RR/PXsMLFDW01WJBZdECl/093g
- ntWelI+JdZ3huzU2EDygTgHaeNime7Ws6p2NG9+oJMZXVlwUAvKppE8JMevNPqA78cpO
- UPleTLtXUlxiedjqqiL1k+5kYgH93lR08quA6gS/D1qXqLs+VLAHdvlAEd4Hgdt7QEx/
- f/JA==
-X-Gm-Message-State: AGi0PuaDA1nSKmsbKytYAdL6jjlQPgX+gUrpe+iStA5VnvD8NJNLFeIM
- z010KCeb6Eu3WmHrBmev4o0Y2yLCV6cI7EpXVF5B0Zjd8/h//w==
-X-Google-Smtp-Source: APiQypJr5DSgBtAqB5czjnaKnGiOjKkaRPwcTVFwmmyQQvOeh3YOQluD4vNFq9kQJSkqz0bw/FfCKz+ZdflAN7CLIKE=
-X-Received: by 2002:a17:906:2296:: with SMTP id
- p22mr10067974eja.269.1587050778063; 
- Thu, 16 Apr 2020 08:26:18 -0700 (PDT)
+ Tue, 14 Apr 2020 12:39:50 +0000 (UTC)
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay2.suse.de (unknown [195.135.220.254])
+ by mx2.suse.de (Postfix) with ESMTP id 6EF73AA7C;
+ Tue, 14 Apr 2020 12:49:36 +0000 (UTC)
+Received: by ds.suse.cz (Postfix, from userid 10065)
+ id E5E76DA72D; Tue, 14 Apr 2020 14:48:54 +0200 (CEST)
+Date: Tue, 14 Apr 2020 14:48:54 +0200
+From: David Sterba <dsterba@suse.cz>
+To: Waiman Long <longman@redhat.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+ David Howells <dhowells@redhat.com>,
+ Jarkko Sakkinen <jarkko.sakkinen@linux.intel.com>,
+ James Morris <jmorris@namei.org>, "Serge E. Hallyn" <serge@hallyn.com>,
+ Linus Torvalds <torvalds@linux-foundation.org>,
+ Joe Perches <joe@perches.com>, Matthew Wilcox <willy@infradead.org>,
+ David Rientjes <rientjes@google.com>, linux-mm@kvack.org,
+ keyrings@vger.kernel.org, linux-kernel@vger.kernel.org,
+ x86@kernel.org, linux-crypto@vger.kernel.org,
+ linux-s390@vger.kernel.org, linux-pm@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com,
+ linux-arm-kernel@lists.infradead.org, linux-amlogic@lists.infradead.org,
+ linux-mediatek@lists.infradead.org, linuxppc-dev@lists.ozlabs.org,
+ virtualization@lists.linux-foundation.org, netdev@vger.kernel.org,
+ intel-wired-lan@lists.osuosl.org, linux-ppp@vger.kernel.org,
+ wireguard@lists.zx2c4.com, linux-wireless@vger.kernel.org,
+ devel@driverdev.osuosl.org, linux-scsi@vger.kernel.org,
+ target-devel@vger.kernel.org, linux-btrfs@vger.kernel.org,
+ linux-cifs@vger.kernel.org, samba-technical@lists.samba.org,
+ linux-fscrypt@vger.kernel.org, ecryptfs@vger.kernel.org,
+ kasan-dev@googlegroups.com, linux-bluetooth@vger.kernel.org,
+ linux-wpan@vger.kernel.org, linux-sctp@vger.kernel.org,
+ linux-nfs@vger.kernel.org, tipc-discussion@lists.sourceforge.net,
+ cocci@systeme.lip6.fr, linux-security-module@vger.kernel.org,
+ linux-integrity@vger.kernel.org
+Subject: Re: [PATCH 1/2] mm, treewide: Rename kzfree() to kfree_sensitive()
+Message-ID: <20200414124854.GQ5920@twin.jikos.cz>
+Mail-Followup-To: dsterba@suse.cz, Waiman Long <longman@redhat.com>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ David Howells <dhowells@redhat.com>,
+ Jarkko Sakkinen <jarkko.sakkinen@linux.intel.com>,
+ James Morris <jmorris@namei.org>,
+ "Serge E. Hallyn" <serge@hallyn.com>,
+ Linus Torvalds <torvalds@linux-foundation.org>,
+ Joe Perches <joe@perches.com>, Matthew Wilcox <willy@infradead.org>,
+ David Rientjes <rientjes@google.com>, linux-mm@kvack.org,
+ keyrings@vger.kernel.org, linux-kernel@vger.kernel.org,
+ x86@kernel.org, linux-crypto@vger.kernel.org,
+ linux-s390@vger.kernel.org, linux-pm@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com,
+ linux-arm-kernel@lists.infradead.org,
+ linux-amlogic@lists.infradead.org,
+ linux-mediatek@lists.infradead.org, linuxppc-dev@lists.ozlabs.org,
+ virtualization@lists.linux-foundation.org, netdev@vger.kernel.org,
+ intel-wired-lan@lists.osuosl.org, linux-ppp@vger.kernel.org,
+ wireguard@lists.zx2c4.com, linux-wireless@vger.kernel.org,
+ devel@driverdev.osuosl.org, linux-scsi@vger.kernel.org,
+ target-devel@vger.kernel.org, linux-btrfs@vger.kernel.org,
+ linux-cifs@vger.kernel.org, samba-technical@lists.samba.org,
+ linux-fscrypt@vger.kernel.org, ecryptfs@vger.kernel.org,
+ kasan-dev@googlegroups.com, linux-bluetooth@vger.kernel.org,
+ linux-wpan@vger.kernel.org, linux-sctp@vger.kernel.org,
+ linux-nfs@vger.kernel.org, tipc-discussion@lists.sourceforge.net,
+ cocci@systeme.lip6.fr, linux-security-module@vger.kernel.org,
+ linux-integrity@vger.kernel.org
+References: <20200413211550.8307-1-longman@redhat.com>
+ <20200413211550.8307-2-longman@redhat.com>
 MIME-Version: 1.0
-From: David Leung <david@davidslab.com>
-Date: Thu, 16 Apr 2020 23:26:07 +0800
-Message-ID: <CACfAimOGRV7atBGjwGzDc=tgaNZYpzPjscGygLFBR=TYojJ3DQ@mail.gmail.com>
-Subject: Netlink API returns wrong attribute ID for peers on Ubuntu 19.10
-To: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
-X-Mailman-Approved-At: Fri, 24 Apr 2020 22:38:10 +0200
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200413211550.8307-2-longman@redhat.com>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+X-Mailman-Approved-At: Fri, 24 Apr 2020 22:38:19 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -71,22 +107,24 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
+Reply-To: dsterba@suse.cz
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello,
-
-I've been using the Netlink Generic API to get a WireGuard device's
-peer endpoints successfully on NixOS.
-
-When I run the same program on Ubuntu 19.10 (running wireguard version
-v1.0.20200206), the peers attribute returned is 32776 instead of 8.
-This doesn't match what's defined in
-https://git.zx2c4.com/wireguard-tools/tree/contrib/embeddable-wg-library/wireguard.c.
-
-I wonder if it's caused by a decoding mistake on my end, or if there's
-something strange happening with the Ubuntu package.
+On Mon, Apr 13, 2020 at 05:15:49PM -0400, Waiman Long wrote:
+>  fs/btrfs/ioctl.c                              |  2 +-
 
 
-Best,
-David
+> diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
+> index 40b729dce91c..eab3f8510426 100644
+> --- a/fs/btrfs/ioctl.c
+> +++ b/fs/btrfs/ioctl.c
+> @@ -2691,7 +2691,7 @@ static int btrfs_ioctl_get_subvol_info(struct file *file, void __user *argp)
+>  	btrfs_put_root(root);
+>  out_free:
+>  	btrfs_free_path(path);
+> -	kzfree(subvol_info);
+> +	kfree_sensitive(subvol_info);
+
+This is not in a sensitive context so please switch it to plain kfree.
+With that you have my acked-by. Thanks.
