@@ -2,56 +2,95 @@ Return-Path: <SRS0=6BFc=56=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 10779C2BA19
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 14 Apr 2020 09:29:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6631AC2BA19
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 14 Apr 2020 13:09:10 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 964C3206E9
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 14 Apr 2020 09:28:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id CAE3D2087E
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 14 Apr 2020 13:09:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="ocYzkw5Y"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 964C3206E9
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="BTAN21Wo"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org CAE3D2087E
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=redhat.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 71bd82e6;
-	Tue, 14 Apr 2020 09:19:09 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ea20928f
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ce19cfeb;
+	Tue, 14 Apr 2020 12:59:18 +0000 (UTC)
+Received: from us-smtp-delivery-1.mimecast.com
+ (us-smtp-delivery-1.mimecast.com [207.211.31.120])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4324a076
  for <wireguard@lists.zx2c4.com>;
- Tue, 14 Apr 2020 09:19:08 +0000 (UTC)
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 64b409f1
- for <wireguard@lists.zx2c4.com>;
- Tue, 14 Apr 2020 09:19:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=date:from:to
- :subject:message-id:references:mime-version:content-type
- :in-reply-to; s=mail; bh=nCnUrjlsKNnlAzPeOQbmySMahbI=; b=ocYzkw5
- YjTBVYkQNngBcsbir9J+YSitQdXdgGIIe1mD7ZcK5K0TVBa2j2T+H1wowxcB1mnw
- ZtVygws6ZZMw10eVshp9BkVBKAQgfs4HIW6PfAwgAXTFxsltFnZFjjOm2pey2Lzr
- LAKI9qbnoProNQg8gIOpuJx/8BEQqGna6jxysHPQOyo/50ZH0srSOI/81yXvVsnb
- TqpYgQv/houE0TB9FkGcUB6owM7Niewmc74Hh1H4jCjmYnuH+GqydgRIvM0mPid9
- 7L5i1/BIDvr3VlbmEruP+peHG65rUdUvo45wU8l+EySjmOXEewVIgRd8/PCsuVG7
- 4zJgEhdQgB22//g==
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id bb4c6d70
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Tue, 14 Apr 2020 09:19:07 +0000 (UTC)
-Date: Tue, 14 Apr 2020 03:28:55 -0600
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: [ANNOUNCE] wireguard-linux-compat v1.0.20200413 released
-Message-ID: <20200414092855.GA1962743@zx2c4.com>
-References: <b9c8be5ee78f3f2f@mail.zx2c4.com>
+ Tue, 14 Apr 2020 12:59:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1586869745;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=hBYiVbPBfUS+AcwD+sXBpDKSbw0tQLOGN9sYzZKYAmI=;
+ b=BTAN21WocSEZDEQm2BhK4woJchErWB0xzslg0PRL+jaW73JuBBrb4U+r4OkMNKBbmzZ4UU
+ SCbUG2wUypFUui+uF2bDpjjfzTzcGjJONpKqua7ehfBP327KAv9KBAk5zaFQIpt7gAzXFP
+ mOe73lGOE/I3IOT6gqpXRWTm7whysyw=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-106-PA7uLtZsM327ACx1G3T_7g-1; Tue, 14 Apr 2020 09:07:49 -0400
+X-MC-Unique: PA7uLtZsM327ACx1G3T_7g-1
+Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com
+ [10.5.11.11])
+ (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+ (No client certificate requested)
+ by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 96CEA8048E4;
+ Tue, 14 Apr 2020 13:07:05 +0000 (UTC)
+Received: from warthog.procyon.org.uk (ovpn-113-129.rdu2.redhat.com
+ [10.10.113.129])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 5AB5418A8E;
+ Tue, 14 Apr 2020 13:06:57 +0000 (UTC)
+Organization: Red Hat UK Ltd. Registered Address: Red Hat UK Ltd, Amberley
+ Place, 107-111 Peascod Street, Windsor, Berkshire, SI4 1TE, United
+ Kingdom.
+ Registered in England and Wales under Company Registration No. 3798903
+From: David Howells <dhowells@redhat.com>
+In-Reply-To: <20200413211550.8307-2-longman@redhat.com>
+References: <20200413211550.8307-2-longman@redhat.com>
+ <20200413211550.8307-1-longman@redhat.com>
+To: Waiman Long <longman@redhat.com>, herbert@gondor.apana.org.au
+cc: Andrew Morton <akpm@linux-foundation.org>,
+ David Howells <dhowells@redhat.com>,
+ Jarkko Sakkinen <jarkko.sakkinen@linux.intel.com>,
+ James Morris <jmorris@namei.org>, "Serge E. Hallyn" <serge@hallyn.com>,
+ Linus Torvalds <torvalds@linux-foundation.org>,
+ Joe Perches <joe@perches.com>, Matthew Wilcox <willy@infradead.org>,
+ David Rientjes <rientjes@google.com>, linux-mm@kvack.org,
+ keyrings@vger.kernel.org, linux-kernel@vger.kernel.org,
+ x86@kernel.org, linux-crypto@vger.kernel.org,
+ linux-s390@vger.kernel.org, linux-pm@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com,
+ linux-arm-kernel@lists.infradead.org, linux-amlogic@lists.infradead.org,
+ linux-mediatek@lists.infradead.org, linuxppc-dev@lists.ozlabs.org,
+ virtualization@lists.linux-foundation.org, netdev@vger.kernel.org,
+ intel-wired-lan@lists.osuosl.org, linux-ppp@vger.kernel.org,
+ wireguard@lists.zx2c4.com, linux-wireless@vger.kernel.org,
+ devel@driverdev.osuosl.org, linux-scsi@vger.kernel.org,
+ target-devel@vger.kernel.org, linux-btrfs@vger.kernel.org,
+ linux-cifs@vger.kernel.org, samba-technical@lists.samba.org,
+ linux-fscrypt@vger.kernel.org, ecryptfs@vger.kernel.org,
+ kasan-dev@googlegroups.com, linux-bluetooth@vger.kernel.org,
+ linux-wpan@vger.kernel.org, linux-sctp@vger.kernel.org,
+ linux-nfs@vger.kernel.org, tipc-discussion@lists.sourceforge.net,
+ cocci@systeme.lip6.fr, linux-security-module@vger.kernel.org,
+ linux-integrity@vger.kernel.org
+Subject: Re: [PATCH 1/2] mm, treewide: Rename kzfree() to kfree_sensitive()
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <b9c8be5ee78f3f2f@mail.zx2c4.com>
+Content-Type: text/plain; charset="us-ascii"
+Content-ID: <3807473.1586869616.1@warthog.procyon.org.uk>
+Date: Tue, 14 Apr 2020 14:06:56 +0100
+Message-ID: <3807474.1586869616@warthog.procyon.org.uk>
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -66,27 +105,42 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Waiman Long <longman@redhat.com> wrote:
 
+> As said by Linus:
+> 
+>   A symmetric naming is only helpful if it implies symmetries in use.
+>   Otherwise it's actively misleading.
+> 
+>   In "kzalloc()", the z is meaningful and an important part of what the
+>   caller wants.
+> 
+>   In "kzfree()", the z is actively detrimental, because maybe in the
+>   future we really _might_ want to use that "memfill(0xdeadbeef)" or
+>   something. The "zero" part of the interface isn't even _relevant_.
+> 
+> The main reason that kzfree() exists is to clear sensitive information
+> that should not be leaked to other future users of the same memory
+> objects.
+> 
+> Rename kzfree() to kfree_sensitive() to follow the example of the
+> recently added kvfree_sensitive() and make the intention of the API
+> more explicit. In addition, memzero_explicit() is used to clear the
+> memory to make sure that it won't get optimized away by the compiler.
+> 
+> The renaming is done by using the command sequence:
+> 
+>   git grep -w --name-only kzfree |\
+>   xargs sed -i 's/\bkzfree\b/kfree_sensitive/'
+> 
+> followed by some editing of the kfree_sensitive() kerneldoc and the
+> use of memzero_explicit() instead of memset().
+> 
+> Suggested-by: Joe Perches <joe@perches.com>
+> Signed-off-by: Waiman Long <longman@redhat.com>
 
-This missing hash from the previous email is:
-  https://git.zx2c4.com/wireguard-linux-compat/snapshot/wireguard-linux-compat-1.0.20200413.tar.xz
-  SHA2-256: cf166348fbb67419528e73049ce001d29131aea367fa6aef9d3e223f7251e116
+Since this changes a lot of crypto stuff, does it make sense for it to go via
+the crypto tree?
 
------BEGIN PGP SIGNATURE-----
+Acked-by: David Howells <dhowells@redhat.com>
 
-iQIzBAEBCAAdFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAl6Vgi8ACgkQSfxwEqXe
-A65edQ//fcfg1TWDShOoZsIpabeoot0kbpLpWr5W98McesV19QRnsJTrzLYVU6Ro
-yrt6JkAtJHOZlYkMMeoXwY8TvRh9njTTPCOlp6kPdKh8Fqh7RQ3eiKq0MgDK1s89
-BZMo7QzHv/5jgbvqMkf5hsmyX7CWw0XG6mbQy3Git9NBbKu0XxzDtYpz/ztry1SV
-EWCgDyzWV7hoQbjFmZvT90ODqJ84ybujkpHS1dRNC8j93trG9QdlsPIUlCIkDQr5
-XyQbIi58TnZE+3fYdaLbBVwh9N27jdL8GZRGfM9UYdjI5mNZr2ui/aSEeHct0raN
-PEGKIH3rD9zMfFqr69AtVlNx8FSrHxt7BboC3M+L4LG1sYHtFpLOPUvUErbLR1Xt
-ysg4veVMhOFB2w8hZdSBNtyAOQQ5MT6NCN55BdiZVP8ofJF+85V+TOecXNG9CEvP
-B9tK6SUhTIy6UQA1R+O1B5yvvMk22K4B6ewnCAWbO4drBvbgOewofNHdXLuyvNSO
-NFlX9g2g2H/p7yn6R2Lz6vBZN7bb4tPyfcCKpFCj6I65RF95q/kQcLsVjYBrybUd
-DLaWwbI6fdqKQbtwOR8MMGAmC2JZFIDUEzfewQ/Il2/096qwgUSZW0k7Lt5QF84w
-7Eubeqd6BbnInXK2IXYdlw0rN4t7hz2q2NTGVymFo4r2qyiRet0=
-=OucQ
------END PGP SIGNATURE-----
