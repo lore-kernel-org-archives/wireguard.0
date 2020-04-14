@@ -2,100 +2,100 @@ Return-Path: <SRS0=6BFc=56=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.9 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1,
-	USER_IN_DEF_DKIM_WL autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.4 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 37D43C2BA19
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5510C352B6
 	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 14 Apr 2020 08:27:05 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id D1C4720578
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 14 Apr 2020 08:27:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 4EB9A20578
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 14 Apr 2020 08:27:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="PMRE9MFB"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org D1C4720578
-Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=google.com
+	dkim=pass (1024-bit key) header.d=c-s.fr header.i=@c-s.fr header.b="swLCNyX7"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 4EB9A20578
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=c-s.fr
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 69cc3009;
-	Tue, 14 Apr 2020 08:03:52 +0000 (UTC)
-Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com
- [2607:f8b0:4864:20::542])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2c624bdb
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7516d881;
+	Tue, 14 Apr 2020 08:03:53 +0000 (UTC)
+Received: from pegase1.c-s.fr (pegase1.c-s.fr [93.17.236.30])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6be92b84
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 14 Apr 2020 00:20:15 +0000 (UTC)
-Received: by mail-pg1-x542.google.com with SMTP id h69so2689619pgc.8
- for <wireguard@lists.zx2c4.com>; Mon, 13 Apr 2020 17:30:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=date:from:to:cc:subject:in-reply-to:message-id:references
- :user-agent:mime-version;
- bh=GtP40NBc6K+wY7TevCqJVJVyGGxw6eyhk3x6njvRZbI=;
- b=PMRE9MFBjRNguCLZJxvQ0tC6cbj5HN/L0mNJHOjg1H5naWvyPaji8Uw6CjXqOQ2azW
- MhWs/LuNrHlvICFisvb7Cy6SJ3VKQrmiHJlokad5hGoOXcGXzDY3vorrrgpyAZrAVUDE
- dUN76VdbMCLvs9G10TRyVoj/R2uKEUPKhrkRhwWPh9Qq6Oj8zqhrDAXwnWHye+K8R3ym
- lDZQumSHVx6+RupP9U0o1EyjztcXPr7zTXefIIyzd+nYkxQBJg3bKkumuWN4k6N/hrZC
- eN210smaNX58gX6QVglgalvDGfi5xzWfnOSt7/cWPG1d3xQeaexIo7gZ03EO3NRYAH/8
- 2wUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:in-reply-to:message-id
- :references:user-agent:mime-version;
- bh=GtP40NBc6K+wY7TevCqJVJVyGGxw6eyhk3x6njvRZbI=;
- b=dCiyTRhIsuV1xolsfUxcAc7UQ9HSPUcQ0pZLWX1vs1jE3bBAOv4RVObO9LPqbFnmYo
- VX4Wa7KLFaPdu4APfstUSNPIevX75tiYZ8Doot5HMW5y/maYrPP/L3K8MuaIz5Heq5E0
- dDVeVwLRfMRLyrnBwyp+0aTebnDLQgMYjOxM/kD/yEBaPu+xjILDAMkpD9u5hqBzDYnZ
- U91Uskh/eBM+1NRcJU+RrXDtkdhYlT1wMV5Sgx0Za8P13VBmVuSMnn4XgLAwH/EWDB2R
- vPOwLbAoWgp4kFIL5WjjZUewQzJqgdzPEpbi/l+AogDBxOKUK9y2pkB6MSLIUplDKbhx
- 0o+w==
-X-Gm-Message-State: AGi0PuYu5//+qNtND5iCjRzEDdeybGfIN/2aE/hVgklzmONcwKNog+k5
- cke/v7VO8vVwv3VHuBhOSpUhqA==
-X-Google-Smtp-Source: APiQypL5W5g7xmsU3GZXO1UecYYPwVLK1dPD412glciRM3pdZ8NSkRu/LjnNHn8Pg6Fxg4L/cgCpIw==
-X-Received: by 2002:a62:dd48:: with SMTP id w69mr10144721pff.86.1586824199909; 
- Mon, 13 Apr 2020 17:29:59 -0700 (PDT)
-Received: from [2620:15c:17:3:3a5:23a7:5e32:4598]
- ([2620:15c:17:3:3a5:23a7:5e32:4598])
- by smtp.gmail.com with ESMTPSA id g11sm10055136pjs.17.2020.04.13.17.29.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 13 Apr 2020 17:29:59 -0700 (PDT)
-Date: Mon, 13 Apr 2020 17:29:58 -0700 (PDT)
-From: David Rientjes <rientjes@google.com>
-X-X-Sender: rientjes@chino.kir.corp.google.com
-To: Waiman Long <longman@redhat.com>
-cc: Andrew Morton <akpm@linux-foundation.org>, 
- David Howells <dhowells@redhat.com>, 
- Jarkko Sakkinen <jarkko.sakkinen@linux.intel.com>, 
- James Morris <jmorris@namei.org>, "Serge E. Hallyn" <serge@hallyn.com>, 
- Linus Torvalds <torvalds@linux-foundation.org>, 
- Joe Perches <joe@perches.com>, Matthew Wilcox <willy@infradead.org>, 
- linux-mm@kvack.org, keyrings@vger.kernel.org, linux-kernel@vger.kernel.org, 
- x86@kernel.org, linux-crypto@vger.kernel.org, linux-s390@vger.kernel.org, 
- linux-pm@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
- linux-arm-kernel@lists.infradead.org, linux-amlogic@lists.infradead.org, 
- linux-mediatek@lists.infradead.org, linuxppc-dev@lists.ozlabs.org, 
- virtualization@lists.linux-foundation.org, netdev@vger.kernel.org, 
- intel-wired-lan@lists.osuosl.org, linux-ppp@vger.kernel.org, 
- wireguard@lists.zx2c4.com, linux-wireless@vger.kernel.org, 
- devel@driverdev.osuosl.org, linux-scsi@vger.kernel.org, 
- target-devel@vger.kernel.org, linux-btrfs@vger.kernel.org, 
- linux-cifs@vger.kernel.org, samba-technical@lists.samba.org, 
- linux-fscrypt@vger.kernel.org, ecryptfs@vger.kernel.org, 
- kasan-dev@googlegroups.com, linux-bluetooth@vger.kernel.org, 
- linux-wpan@vger.kernel.org, linux-sctp@vger.kernel.org, 
- linux-nfs@vger.kernel.org, tipc-discussion@lists.sourceforge.net, 
- cocci@systeme.lip6.fr, linux-security-module@vger.kernel.org, 
+ Tue, 14 Apr 2020 05:58:48 +0000 (UTC)
+Received: from localhost (mailhub1-int [192.168.12.234])
+ by localhost (Postfix) with ESMTP id 491Zmc64yLz9txkH;
+ Tue, 14 Apr 2020 08:08:32 +0200 (CEST)
+Authentication-Results: localhost; dkim=pass
+ reason="1024-bit key; insecure key"
+ header.d=c-s.fr header.i=@c-s.fr header.b=swLCNyX7; dkim-adsp=pass;
+ dkim-atps=neutral
+X-Virus-Scanned: Debian amavisd-new at c-s.fr
+Received: from pegase1.c-s.fr ([192.168.12.234])
+ by localhost (pegase1.c-s.fr [192.168.12.234]) (amavisd-new, port 10024)
+ with ESMTP id 4yni2YpdXT3P; Tue, 14 Apr 2020 08:08:32 +0200 (CEST)
+Received: from messagerie.si.c-s.fr (messagerie.si.c-s.fr [192.168.25.192])
+ by pegase1.c-s.fr (Postfix) with ESMTP id 491Zmc4L0Rz9txkG;
+ Tue, 14 Apr 2020 08:08:32 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=c-s.fr; s=mail;
+ t=1586844512; bh=AyML/oaUiIiNPJKHTIdsIrbz6fYQpNyy/73cMAJtVGI=;
+ h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+ b=swLCNyX719PsbdWXJyAjua3tpVkuZHN/PgaRAzIUI6j3FuSDm374UPnlGZYSrGzxT
+ ndt6dm09KOl8ksmzmfqqYKRuIRIOuM5gK03jv/9oM2sodvHG7ZsAdW0K43bNG1m7AR
+ C9uF0GCYNnsgDDdT0CCsxA/cfFfbv77mzxAhptqM=
+Received: from localhost (localhost [127.0.0.1])
+ by messagerie.si.c-s.fr (Postfix) with ESMTP id 5B4A48B77D;
+ Tue, 14 Apr 2020 08:08:33 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at c-s.fr
+Received: from messagerie.si.c-s.fr ([127.0.0.1])
+ by localhost (messagerie.si.c-s.fr [127.0.0.1]) (amavisd-new, port 10023)
+ with ESMTP id IsbJC8uJ2iOV; Tue, 14 Apr 2020 08:08:33 +0200 (CEST)
+Received: from [192.168.4.90] (unknown [192.168.4.90])
+ by messagerie.si.c-s.fr (Postfix) with ESMTP id 997728B752;
+ Tue, 14 Apr 2020 08:08:30 +0200 (CEST)
+Subject: Re: [PATCH v2 2/2] crypto: Remove unnecessary memzero_explicit()
+To: Waiman Long <longman@redhat.com>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ David Howells <dhowells@redhat.com>,
+ Jarkko Sakkinen <jarkko.sakkinen@linux.intel.com>,
+ James Morris <jmorris@namei.org>, "Serge E. Hallyn" <serge@hallyn.com>,
+ Linus Torvalds <torvalds@linux-foundation.org>, Joe Perches
+ <joe@perches.com>, Matthew Wilcox <willy@infradead.org>,
+ David Rientjes <rientjes@google.com>
+Cc: linux-mm@kvack.org, keyrings@vger.kernel.org,
+ linux-kernel@vger.kernel.org, x86@kernel.org, linux-crypto@vger.kernel.org,
+ linux-s390@vger.kernel.org, linux-pm@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com,
+ linux-arm-kernel@lists.infradead.org, linux-amlogic@lists.infradead.org,
+ linux-mediatek@lists.infradead.org, linuxppc-dev@lists.ozlabs.org,
+ virtualization@lists.linux-foundation.org, netdev@vger.kernel.org,
+ intel-wired-lan@lists.osuosl.org, linux-ppp@vger.kernel.org,
+ wireguard@lists.zx2c4.com, linux-wireless@vger.kernel.org,
+ devel@driverdev.osuosl.org, linux-scsi@vger.kernel.org,
+ target-devel@vger.kernel.org, linux-btrfs@vger.kernel.org,
+ linux-cifs@vger.kernel.org, samba-technical@lists.samba.org,
+ linux-fscrypt@vger.kernel.org, ecryptfs@vger.kernel.org,
+ kasan-dev@googlegroups.com, linux-bluetooth@vger.kernel.org,
+ linux-wpan@vger.kernel.org, linux-sctp@vger.kernel.org,
+ linux-nfs@vger.kernel.org, tipc-discussion@lists.sourceforge.net,
+ cocci@systeme.lip6.fr, linux-security-module@vger.kernel.org,
  linux-integrity@vger.kernel.org
-Subject: Re: [PATCH 1/2] mm, treewide: Rename kzfree() to kfree_sensitive()
-In-Reply-To: <20200413211550.8307-2-longman@redhat.com>
-Message-ID: <alpine.DEB.2.21.2004131729410.260270@chino.kir.corp.google.com>
 References: <20200413211550.8307-1-longman@redhat.com>
- <20200413211550.8307-2-longman@redhat.com>
-User-Agent: Alpine 2.21 (DEB 202 2017-01-01)
+ <20200413222846.24240-1-longman@redhat.com>
+From: Christophe Leroy <christophe.leroy@c-s.fr>
+Message-ID: <eca85e0b-0af3-c43a-31e4-bd5c3f519798@c-s.fr>
+Date: Tue, 14 Apr 2020 08:08:22 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+In-Reply-To: <20200413222846.24240-1-longman@redhat.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: fr
+Content-Transfer-Encoding: 8bit
 X-Mailman-Approved-At: Tue, 14 Apr 2020 10:03:41 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -111,38 +111,196 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Mon, 13 Apr 2020, Waiman Long wrote:
 
-> As said by Linus:
+
+Le 14/04/2020 à 00:28, Waiman Long a écrit :
+> Since kfree_sensitive() will do an implicit memzero_explicit(), there
+> is no need to call memzero_explicit() before it. Eliminate those
+> memzero_explicit() and simplify the call sites. For better correctness,
+> the setting of keylen is also moved down after the key pointer check.
 > 
->   A symmetric naming is only helpful if it implies symmetries in use.
->   Otherwise it's actively misleading.
-> 
->   In "kzalloc()", the z is meaningful and an important part of what the
->   caller wants.
-> 
->   In "kzfree()", the z is actively detrimental, because maybe in the
->   future we really _might_ want to use that "memfill(0xdeadbeef)" or
->   something. The "zero" part of the interface isn't even _relevant_.
-> 
-> The main reason that kzfree() exists is to clear sensitive information
-> that should not be leaked to other future users of the same memory
-> objects.
-> 
-> Rename kzfree() to kfree_sensitive() to follow the example of the
-> recently added kvfree_sensitive() and make the intention of the API
-> more explicit. In addition, memzero_explicit() is used to clear the
-> memory to make sure that it won't get optimized away by the compiler.
-> 
-> The renaming is done by using the command sequence:
-> 
->   git grep -w --name-only kzfree |\
->   xargs sed -i 's/\bkzfree\b/kfree_sensitive/'
-> 
-> followed by some editing of the kfree_sensitive() kerneldoc and the
-> use of memzero_explicit() instead of memset().
-> 
-> Suggested-by: Joe Perches <joe@perches.com>
 > Signed-off-by: Waiman Long <longman@redhat.com>
+> ---
+>   .../allwinner/sun8i-ce/sun8i-ce-cipher.c      | 19 +++++-------------
+>   .../allwinner/sun8i-ss/sun8i-ss-cipher.c      | 20 +++++--------------
+>   drivers/crypto/amlogic/amlogic-gxl-cipher.c   | 12 +++--------
+>   drivers/crypto/inside-secure/safexcel_hash.c  |  3 +--
+>   4 files changed, 14 insertions(+), 40 deletions(-)
+> 
+> diff --git a/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c b/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c
+> index aa4e8fdc2b32..8358fac98719 100644
+> --- a/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c
+> +++ b/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c
+> @@ -366,10 +366,7 @@ void sun8i_ce_cipher_exit(struct crypto_tfm *tfm)
+>   {
+>   	struct sun8i_cipher_tfm_ctx *op = crypto_tfm_ctx(tfm);
+>   
+> -	if (op->key) {
+> -		memzero_explicit(op->key, op->keylen);
+> -		kfree(op->key);
+> -	}
+> +	kfree_sensitive(op->key);
+>   	crypto_free_sync_skcipher(op->fallback_tfm);
+>   	pm_runtime_put_sync_suspend(op->ce->dev);
+>   }
+> @@ -391,14 +388,11 @@ int sun8i_ce_aes_setkey(struct crypto_skcipher *tfm, const u8 *key,
+>   		dev_dbg(ce->dev, "ERROR: Invalid keylen %u\n", keylen);
+>   		return -EINVAL;
+>   	}
+> -	if (op->key) {
+> -		memzero_explicit(op->key, op->keylen);
+> -		kfree(op->key);
+> -	}
+> -	op->keylen = keylen;
+> +	kfree_sensitive(op->key);
+>   	op->key = kmemdup(key, keylen, GFP_KERNEL | GFP_DMA);
+>   	if (!op->key)
+>   		return -ENOMEM;
+> +	op->keylen = keylen;
 
-Acked-by: David Rientjes <rientjes@google.com>
+Does it matter at all to ensure op->keylen is not set when of->key is 
+NULL ? I'm not sure.
+
+But if it does, then op->keylen should be set to 0 when freeing op->key.
+
+>   
+>   	crypto_sync_skcipher_clear_flags(op->fallback_tfm, CRYPTO_TFM_REQ_MASK);
+>   	crypto_sync_skcipher_set_flags(op->fallback_tfm, tfm->base.crt_flags & CRYPTO_TFM_REQ_MASK);
+> @@ -416,14 +410,11 @@ int sun8i_ce_des3_setkey(struct crypto_skcipher *tfm, const u8 *key,
+>   	if (err)
+>   		return err;
+>   
+> -	if (op->key) {
+> -		memzero_explicit(op->key, op->keylen);
+> -		kfree(op->key);
+> -	}
+> -	op->keylen = keylen;
+> +	kfree_sensitive(op->key);
+>   	op->key = kmemdup(key, keylen, GFP_KERNEL | GFP_DMA);
+>   	if (!op->key)
+>   		return -ENOMEM;
+> +	op->keylen = keylen;
+
+Same comment as above.
+
+>   
+>   	crypto_sync_skcipher_clear_flags(op->fallback_tfm, CRYPTO_TFM_REQ_MASK);
+>   	crypto_sync_skcipher_set_flags(op->fallback_tfm, tfm->base.crt_flags & CRYPTO_TFM_REQ_MASK);
+> diff --git a/drivers/crypto/allwinner/sun8i-ss/sun8i-ss-cipher.c b/drivers/crypto/allwinner/sun8i-ss/sun8i-ss-cipher.c
+> index 5246ef4f5430..0495fbc27fcc 100644
+> --- a/drivers/crypto/allwinner/sun8i-ss/sun8i-ss-cipher.c
+> +++ b/drivers/crypto/allwinner/sun8i-ss/sun8i-ss-cipher.c
+> @@ -249,7 +249,6 @@ static int sun8i_ss_cipher(struct skcipher_request *areq)
+>   			offset = areq->cryptlen - ivsize;
+>   			if (rctx->op_dir & SS_DECRYPTION) {
+>   				memcpy(areq->iv, backup_iv, ivsize);
+> -				memzero_explicit(backup_iv, ivsize);
+>   				kfree_sensitive(backup_iv);
+>   			} else {
+>   				scatterwalk_map_and_copy(areq->iv, areq->dst, offset,
+> @@ -367,10 +366,7 @@ void sun8i_ss_cipher_exit(struct crypto_tfm *tfm)
+>   {
+>   	struct sun8i_cipher_tfm_ctx *op = crypto_tfm_ctx(tfm);
+>   
+> -	if (op->key) {
+> -		memzero_explicit(op->key, op->keylen);
+> -		kfree(op->key);
+> -	}
+> +	kfree_sensitive(op->key);
+>   	crypto_free_sync_skcipher(op->fallback_tfm);
+>   	pm_runtime_put_sync(op->ss->dev);
+>   }
+> @@ -392,14 +388,11 @@ int sun8i_ss_aes_setkey(struct crypto_skcipher *tfm, const u8 *key,
+>   		dev_dbg(ss->dev, "ERROR: Invalid keylen %u\n", keylen);
+>   		return -EINVAL;
+>   	}
+> -	if (op->key) {
+> -		memzero_explicit(op->key, op->keylen);
+> -		kfree(op->key);
+> -	}
+> -	op->keylen = keylen;
+> +	kfree_sensitive(op->key);
+>   	op->key = kmemdup(key, keylen, GFP_KERNEL | GFP_DMA);
+>   	if (!op->key)
+>   		return -ENOMEM;
+> +	op->keylen = keylen;
+
+Same comment as above.
+
+>   
+>   	crypto_sync_skcipher_clear_flags(op->fallback_tfm, CRYPTO_TFM_REQ_MASK);
+>   	crypto_sync_skcipher_set_flags(op->fallback_tfm, tfm->base.crt_flags & CRYPTO_TFM_REQ_MASK);
+> @@ -418,14 +411,11 @@ int sun8i_ss_des3_setkey(struct crypto_skcipher *tfm, const u8 *key,
+>   		return -EINVAL;
+>   	}
+>   
+> -	if (op->key) {
+> -		memzero_explicit(op->key, op->keylen);
+> -		kfree(op->key);
+> -	}
+> -	op->keylen = keylen;
+> +	kfree_sensitive(op->key);
+>   	op->key = kmemdup(key, keylen, GFP_KERNEL | GFP_DMA);
+>   	if (!op->key)
+>   		return -ENOMEM;
+> +	op->keylen = keylen;
+
+Same comment as above.
+
+>   
+>   	crypto_sync_skcipher_clear_flags(op->fallback_tfm, CRYPTO_TFM_REQ_MASK);
+>   	crypto_sync_skcipher_set_flags(op->fallback_tfm, tfm->base.crt_flags & CRYPTO_TFM_REQ_MASK);
+> diff --git a/drivers/crypto/amlogic/amlogic-gxl-cipher.c b/drivers/crypto/amlogic/amlogic-gxl-cipher.c
+> index fd1269900d67..6aa9ce7bbbd4 100644
+> --- a/drivers/crypto/amlogic/amlogic-gxl-cipher.c
+> +++ b/drivers/crypto/amlogic/amlogic-gxl-cipher.c
+> @@ -341,10 +341,7 @@ void meson_cipher_exit(struct crypto_tfm *tfm)
+>   {
+>   	struct meson_cipher_tfm_ctx *op = crypto_tfm_ctx(tfm);
+>   
+> -	if (op->key) {
+> -		memzero_explicit(op->key, op->keylen);
+> -		kfree(op->key);
+> -	}
+> +	kfree_sensitive(op->key);
+>   	crypto_free_sync_skcipher(op->fallback_tfm);
+>   }
+>   
+> @@ -368,14 +365,11 @@ int meson_aes_setkey(struct crypto_skcipher *tfm, const u8 *key,
+>   		dev_dbg(mc->dev, "ERROR: Invalid keylen %u\n", keylen);
+>   		return -EINVAL;
+>   	}
+> -	if (op->key) {
+> -		memzero_explicit(op->key, op->keylen);
+> -		kfree(op->key);
+> -	}
+> -	op->keylen = keylen;
+> +	kfree_sensitive(op->key);
+>   	op->key = kmemdup(key, keylen, GFP_KERNEL | GFP_DMA);
+>   	if (!op->key)
+>   		return -ENOMEM;
+> +	op->keylen = keylen;
+
+Same comment as above.
+
+>   
+>   	return crypto_sync_skcipher_setkey(op->fallback_tfm, key, keylen);
+>   }
+> diff --git a/drivers/crypto/inside-secure/safexcel_hash.c b/drivers/crypto/inside-secure/safexcel_hash.c
+> index 43962bc709c6..4a2d162914de 100644
+> --- a/drivers/crypto/inside-secure/safexcel_hash.c
+> +++ b/drivers/crypto/inside-secure/safexcel_hash.c
+> @@ -1081,8 +1081,7 @@ static int safexcel_hmac_init_pad(struct ahash_request *areq,
+>   		}
+>   
+>   		/* Avoid leaking */
+> -		memzero_explicit(keydup, keylen);
+> -		kfree(keydup);
+> +		kfree_sensitive(keydup);
+>   
+>   		if (ret)
+>   			return ret;
+> 
+
+
+Christophe
