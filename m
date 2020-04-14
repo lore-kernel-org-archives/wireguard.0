@@ -2,99 +2,101 @@ Return-Path: <SRS0=6BFc=56=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.9 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1,
+	USER_IN_DEF_DKIM_WL autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 587F0C352B6
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 14 Apr 2020 08:20:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 37D43C2BA19
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 14 Apr 2020 08:27:05 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id A73DF206E9
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 14 Apr 2020 08:20:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id D1C4720578
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 14 Apr 2020 08:27:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="VpO2ZURy"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A73DF206E9
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=outlook.com
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="PMRE9MFB"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org D1C4720578
+Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=google.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 25030fc5;
-	Tue, 14 Apr 2020 08:08:42 +0000 (UTC)
-Received: from EUR04-VI1-obe.outbound.protection.outlook.com
- (mail-oln040092075108.outbound.protection.outlook.com [40.92.75.108])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id abcc4634
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Thu, 9 Apr 2020 14:21:17 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=LlxexFfFWiOiNnLo3YQaNCFpDg03/jMVqAYNglItqiutlNWffmvIKxXawZeLDYnEkps/3Grw5hMuAV63zRLxgV/eQt49C4QiidULh5BcE46aMdbh01RkOVsdEsKGrsVLgDyhsSRDYa6NHNsJ/akwyL5voEsThGQHKJZBj7/VWjt+ZC7zpTarz7m8gubDcNTkNOIDx9hq/h0lJVBAPoF8XsO+H4JoiklGG3a6cxo17ahkhbsd+2Gug3bfcbf/oB+2XLeCUgyydvwILO5P/J8Hy+5NjhXq+wwO7Cw/MoUGhc9ln5HfBg6BIJl3WRfPfimBiw+dklkSGb+W+C3gvvtwZg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=XWu30xM7ZIsBTPgXSCdDOzciZy+aCKq4KxQORw/DhM4=;
- b=Ff54Rr6jdKH6HOy+T9qc5z8Zim7KCtlPRC91xbhPW14r6Qpk7Hi25+u83x+yRuvZRgZ0KJcdps+dYcI3isOn0HrEv5ZeoclR0R449aEYU8g9v/3pEIBpBvGSj/1yXCjFZfSkvFSqZR1FNoWnssf6B4vk2ZY7O/bkPlHslzK6wxqVFOvTpYbOkd1/ebNTqZ0Y1U/60JxwzPh0VKSoKpyrAE6nOlxJqf+IePaFfMY20kj1ewIAEC5WvYmltv0FaPARYuo+wcVCzMGAawNPlWolxqrVjJhAqVhp3lN08u4G4CcLFncgYLFw6+VB1CW1oJwe7pnshT0EaukVhNV5oj0q4g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=XWu30xM7ZIsBTPgXSCdDOzciZy+aCKq4KxQORw/DhM4=;
- b=VpO2ZURyawnZv+SWOJ108IT407JzHiSt0miMCB3FnJn50hNedOh4z3utzEX1qFq8QbA57psHdmglg6LYyQgrdtIX2Lpzcj+RZ8Za/uyyoHY0dVL+95osU+QotQRvc768GECYHZOrFNJ75FY77W95/6TBrsHU1iL1WeDxrO8iTR+LE1XvIjjESkC6JZgQkWSRU4HRXi/aTxRoOTfcFabfdKN/rqw5vD69r2nLf+6HGI6s7qxxBhqAlnijmZ8oWKhyk61r6WfhWlqCpvStMmLE4ANH8rjqeqr8EJLyK40ZJO1oZerSNKtRm2EDS6m95HXx3sDR+s+UbeGBSTH4ji5JqA==
-Received: from VI1EUR04FT030.eop-eur04.prod.protection.outlook.com
- (2a01:111:e400:7e0e::4f) by
- VI1EUR04HT134.eop-eur04.prod.protection.outlook.com (2a01:111:e400:7e0e::102)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2900.15; Thu, 9 Apr
- 2020 14:30:27 +0000
-Received: from DB6PR05MB3461.eurprd05.prod.outlook.com
- (2a01:111:e400:7e0e::53) by VI1EUR04FT030.mail.protection.outlook.com
- (2a01:111:e400:7e0e::366) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2900.15 via Frontend
- Transport; Thu, 9 Apr 2020 14:30:27 +0000
-Received: from DB6PR05MB3461.eurprd05.prod.outlook.com
- ([fe80::7108:18c2:ed10:4176]) by DB6PR05MB3461.eurprd05.prod.outlook.com
- ([fe80::7108:18c2:ed10:4176%4]) with mapi id 15.20.2878.021; Thu, 9 Apr 2020
- 14:30:27 +0000
-From: payload bob <payloadbob@outlook.com>
-To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
-Subject: Log debug packets
-Thread-Topic: Log debug packets
-Thread-Index: AQHWDntdfRWHGuZNAUykv31Ue58s6w==
-Date: Thu, 9 Apr 2020 14:30:27 +0000
-Message-ID: <DB6PR05MB3461934909D9B35E222450B7DDC10@DB6PR05MB3461.eurprd05.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-incomingtopheadermarker: OriginalChecksum:7B7AC25E24C24AF14EB136AEFD0F6825165B2C0FC301A1ECB2CA1ACF85AA250C;
- UpperCasedChecksum:BE8BE8695E66FD82FEE3B2E98EAC0548012D45714B7BA568F045A4BAAF83CA50;
- SizeAsReceived:6647; Count:42
-x-tmn: [CkCKxVqjNVmf6W06q9hy2buNs6pBwPUA]
-x-ms-publictraffictype: Email
-x-incomingheadercount: 42
-x-eopattributedmessage: 0
-x-ms-office365-filtering-correlation-id: 9d14d284-c3f7-4557-73d3-08d7dc928c64
-x-ms-traffictypediagnostic: VI1EUR04HT134:
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: EnKqaccTS9nmEzG3kfm8yAecAVBI1jPp0s2JAE/qOTKLoSUqC0XHZgsQWQxE654fvgwwP/D9nggg6VYopXoVZpt5RSJcx8u9NsDrZunAfhBKy9MIQ6RsBeUetTqX6RJHoBauztM7Q6W7A2V0Un5DYHboZ69DEPtFTgd2ocWLE6JFyoNOHo28bhdFL/1ShZEq
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:0; SRV:;
- IPV:NLI; SFV:NSPM; H:DB6PR05MB3461.eurprd05.prod.outlook.com; PTR:; CAT:NONE;
- SFTY:; SFS:; DIR:OUT; SFP:1901; 
-x-ms-exchange-antispam-messagedata: XF/pYLv2+VTzQuaQ11N/rUn3twK76Xlqvl/oXlraVnZt28agILm7oQvkmkOrogiVmRW12ZnWUcbmh1sdND5civbT5ASvHbj1V0N6dpuaR0ijEwGx1nz+MOFC0QT99saTaSZI9zlTCtItULcgYjLESg==
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 69cc3009;
+	Tue, 14 Apr 2020 08:03:52 +0000 (UTC)
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com
+ [2607:f8b0:4864:20::542])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2c624bdb
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 14 Apr 2020 00:20:15 +0000 (UTC)
+Received: by mail-pg1-x542.google.com with SMTP id h69so2689619pgc.8
+ for <wireguard@lists.zx2c4.com>; Mon, 13 Apr 2020 17:30:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=date:from:to:cc:subject:in-reply-to:message-id:references
+ :user-agent:mime-version;
+ bh=GtP40NBc6K+wY7TevCqJVJVyGGxw6eyhk3x6njvRZbI=;
+ b=PMRE9MFBjRNguCLZJxvQ0tC6cbj5HN/L0mNJHOjg1H5naWvyPaji8Uw6CjXqOQ2azW
+ MhWs/LuNrHlvICFisvb7Cy6SJ3VKQrmiHJlokad5hGoOXcGXzDY3vorrrgpyAZrAVUDE
+ dUN76VdbMCLvs9G10TRyVoj/R2uKEUPKhrkRhwWPh9Qq6Oj8zqhrDAXwnWHye+K8R3ym
+ lDZQumSHVx6+RupP9U0o1EyjztcXPr7zTXefIIyzd+nYkxQBJg3bKkumuWN4k6N/hrZC
+ eN210smaNX58gX6QVglgalvDGfi5xzWfnOSt7/cWPG1d3xQeaexIo7gZ03EO3NRYAH/8
+ 2wUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:date:from:to:cc:subject:in-reply-to:message-id
+ :references:user-agent:mime-version;
+ bh=GtP40NBc6K+wY7TevCqJVJVyGGxw6eyhk3x6njvRZbI=;
+ b=dCiyTRhIsuV1xolsfUxcAc7UQ9HSPUcQ0pZLWX1vs1jE3bBAOv4RVObO9LPqbFnmYo
+ VX4Wa7KLFaPdu4APfstUSNPIevX75tiYZ8Doot5HMW5y/maYrPP/L3K8MuaIz5Heq5E0
+ dDVeVwLRfMRLyrnBwyp+0aTebnDLQgMYjOxM/kD/yEBaPu+xjILDAMkpD9u5hqBzDYnZ
+ U91Uskh/eBM+1NRcJU+RrXDtkdhYlT1wMV5Sgx0Za8P13VBmVuSMnn4XgLAwH/EWDB2R
+ vPOwLbAoWgp4kFIL5WjjZUewQzJqgdzPEpbi/l+AogDBxOKUK9y2pkB6MSLIUplDKbhx
+ 0o+w==
+X-Gm-Message-State: AGi0PuYu5//+qNtND5iCjRzEDdeybGfIN/2aE/hVgklzmONcwKNog+k5
+ cke/v7VO8vVwv3VHuBhOSpUhqA==
+X-Google-Smtp-Source: APiQypL5W5g7xmsU3GZXO1UecYYPwVLK1dPD412glciRM3pdZ8NSkRu/LjnNHn8Pg6Fxg4L/cgCpIw==
+X-Received: by 2002:a62:dd48:: with SMTP id w69mr10144721pff.86.1586824199909; 
+ Mon, 13 Apr 2020 17:29:59 -0700 (PDT)
+Received: from [2620:15c:17:3:3a5:23a7:5e32:4598]
+ ([2620:15c:17:3:3a5:23a7:5e32:4598])
+ by smtp.gmail.com with ESMTPSA id g11sm10055136pjs.17.2020.04.13.17.29.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 13 Apr 2020 17:29:59 -0700 (PDT)
+Date: Mon, 13 Apr 2020 17:29:58 -0700 (PDT)
+From: David Rientjes <rientjes@google.com>
+X-X-Sender: rientjes@chino.kir.corp.google.com
+To: Waiman Long <longman@redhat.com>
+cc: Andrew Morton <akpm@linux-foundation.org>, 
+ David Howells <dhowells@redhat.com>, 
+ Jarkko Sakkinen <jarkko.sakkinen@linux.intel.com>, 
+ James Morris <jmorris@namei.org>, "Serge E. Hallyn" <serge@hallyn.com>, 
+ Linus Torvalds <torvalds@linux-foundation.org>, 
+ Joe Perches <joe@perches.com>, Matthew Wilcox <willy@infradead.org>, 
+ linux-mm@kvack.org, keyrings@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ x86@kernel.org, linux-crypto@vger.kernel.org, linux-s390@vger.kernel.org, 
+ linux-pm@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
+ linux-arm-kernel@lists.infradead.org, linux-amlogic@lists.infradead.org, 
+ linux-mediatek@lists.infradead.org, linuxppc-dev@lists.ozlabs.org, 
+ virtualization@lists.linux-foundation.org, netdev@vger.kernel.org, 
+ intel-wired-lan@lists.osuosl.org, linux-ppp@vger.kernel.org, 
+ wireguard@lists.zx2c4.com, linux-wireless@vger.kernel.org, 
+ devel@driverdev.osuosl.org, linux-scsi@vger.kernel.org, 
+ target-devel@vger.kernel.org, linux-btrfs@vger.kernel.org, 
+ linux-cifs@vger.kernel.org, samba-technical@lists.samba.org, 
+ linux-fscrypt@vger.kernel.org, ecryptfs@vger.kernel.org, 
+ kasan-dev@googlegroups.com, linux-bluetooth@vger.kernel.org, 
+ linux-wpan@vger.kernel.org, linux-sctp@vger.kernel.org, 
+ linux-nfs@vger.kernel.org, tipc-discussion@lists.sourceforge.net, 
+ cocci@systeme.lip6.fr, linux-security-module@vger.kernel.org, 
+ linux-integrity@vger.kernel.org
+Subject: Re: [PATCH 1/2] mm, treewide: Rename kzfree() to kfree_sensitive()
+In-Reply-To: <20200413211550.8307-2-longman@redhat.com>
+Message-ID: <alpine.DEB.2.21.2004131729410.260270@chino.kir.corp.google.com>
+References: <20200413211550.8307-1-longman@redhat.com>
+ <20200413211550.8307-2-longman@redhat.com>
+User-Agent: Alpine 2.21 (DEB 202 2017-01-01)
 MIME-Version: 1.0
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9d14d284-c3f7-4557-73d3-08d7dc928c64
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-originalarrivaltime: 09 Apr 2020 14:30:27.4394 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Internet
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1EUR04HT134
-X-Mailman-Approved-At: Tue, 14 Apr 2020 10:08:40 +0200
+Content-Type: text/plain; charset=US-ASCII
+X-Mailman-Approved-At: Tue, 14 Apr 2020 10:03:41 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -109,16 +111,38 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
- Hi.=0A=
-=0A=
-With debugging enabled you can log all kinds of stuff like malformed or rep=
-layed packets. However, debugging only tells you that something went wrong =
-but it does not really show the cause.=0A=
-It would be really nice if you could log those packets so you know exactly =
-which packet caused an issue. Wireguard already knows about those. With ext=
-ernal tools you would need to do lots of extra parsing and basically do eve=
-rything twice. Also, I don't know to which extend tools like tcpdump/wiresh=
-ark/iptables for logging traffic could handle all possible wireguard errors=
-.=0A=
-=0A=
-Regards.=
+On Mon, 13 Apr 2020, Waiman Long wrote:
+
+> As said by Linus:
+> 
+>   A symmetric naming is only helpful if it implies symmetries in use.
+>   Otherwise it's actively misleading.
+> 
+>   In "kzalloc()", the z is meaningful and an important part of what the
+>   caller wants.
+> 
+>   In "kzfree()", the z is actively detrimental, because maybe in the
+>   future we really _might_ want to use that "memfill(0xdeadbeef)" or
+>   something. The "zero" part of the interface isn't even _relevant_.
+> 
+> The main reason that kzfree() exists is to clear sensitive information
+> that should not be leaked to other future users of the same memory
+> objects.
+> 
+> Rename kzfree() to kfree_sensitive() to follow the example of the
+> recently added kvfree_sensitive() and make the intention of the API
+> more explicit. In addition, memzero_explicit() is used to clear the
+> memory to make sure that it won't get optimized away by the compiler.
+> 
+> The renaming is done by using the command sequence:
+> 
+>   git grep -w --name-only kzfree |\
+>   xargs sed -i 's/\bkzfree\b/kfree_sensitive/'
+> 
+> followed by some editing of the kfree_sensitive() kerneldoc and the
+> use of memzero_explicit() instead of memset().
+> 
+> Suggested-by: Joe Perches <joe@perches.com>
+> Signed-off-by: Waiman Long <longman@redhat.com>
+
+Acked-by: David Rientjes <rientjes@google.com>
