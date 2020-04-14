@@ -1,67 +1,75 @@
-Return-Path: <SRS0=JEDp=6G=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=1xjk=6I=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CDD6C38A30
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 22 Apr 2020 06:27:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E7CC3C54FCB
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Apr 2020 20:47:42 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id A4888206CD
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 22 Apr 2020 06:27:17 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="mrGOhfYj"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A4888206CD
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id 661A020857
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Apr 2020 20:47:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 661A020857
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=suse.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3adeeba5;
-	Wed, 22 Apr 2020 06:16:26 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id eb7991cd
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5b514b77;
+	Fri, 24 Apr 2020 20:36:31 +0000 (UTC)
+Received: from mx2.suse.de (mx2.suse.de [195.135.220.15])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 043d48fd
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 22 Apr 2020 06:16:24 +0000 (UTC)
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0841ffa1
- for <wireguard@lists.zx2c4.com>;
- Wed, 22 Apr 2020 06:16:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=Uehlb2Q1NbpPTv2SoCRdL4Q6SF4=; b=mrGOhf
- YjGvF4KgY6slPdROQGwAgFDo3eomALbBpuAoWUoVj9lskhVm/HsInYwgO5O1/45C
- 05r8q7SxHgDJflN9tjj9P7HIPHtzWuJwwcA0irErtI+XPoch8dPs0sm7B1CJ2C0p
- UTyboijkfareTS3q/Vtb2anmIDrMPtHFDtS+7NwKD2i9Eepa3Iqasrk6PGsrG6nt
- aoOnTSRGQoD01BohJy4pnFisH34owwoePOhXGv2twivpQDS/5jGQeo01zmAlb91i
- 3/S9cWB1bhJyoiCTKl7iXUX8N2aNcnNCpa5+HpgJk3ZiQxY3KQFJw/Ex7/sdQ52s
- FbAWjlD0wAlFHIUQ==
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id a9d27154
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Wed, 22 Apr 2020 06:16:24 +0000 (UTC)
-Received: by mail-il1-f177.google.com with SMTP id q10so802666ile.0
- for <wireguard@lists.zx2c4.com>; Tue, 21 Apr 2020 23:27:13 -0700 (PDT)
-X-Gm-Message-State: AGi0PuaPVZBBgXG4bYXHzvUxKRPM8FhM9Gnhdo4ylknq/qqk1LXW9Rhm
- H4YjvNnaV5bfdQvwDu0M7xc1lgY/zYW7dwnt7TI=
-X-Google-Smtp-Source: APiQypLPVfLg8zJ7gz5Bq24SqvMynIuEsKpkMKME1EcQewetJu9/4M70wWw/ymirtysCzgj6r69TZO2UTSShOj0i2zE=
-X-Received: by 2002:a92:d98c:: with SMTP id r12mr25229133iln.224.1587536833413; 
- Tue, 21 Apr 2020 23:27:13 -0700 (PDT)
+ Tue, 14 Apr 2020 19:06:17 +0000 (UTC)
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay2.suse.de (unknown [195.135.220.254])
+ by mx2.suse.de (Postfix) with ESMTP id 63506AC2C;
+ Tue, 14 Apr 2020 19:16:04 +0000 (UTC)
+Date: Tue, 14 Apr 2020 21:16:01 +0200
+From: Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
+To: Waiman Long <longman@redhat.com>
+Cc: Christophe Leroy <christophe.leroy@c-s.fr>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ David Howells <dhowells@redhat.com>,
+ Jarkko Sakkinen <jarkko.sakkinen@linux.intel.com>,
+ James Morris <jmorris@namei.org>, "Serge E. Hallyn" <serge@hallyn.com>,
+ Linus Torvalds <torvalds@linux-foundation.org>,
+ Joe Perches <joe@perches.com>, Matthew Wilcox <willy@infradead.org>,
+ David Rientjes <rientjes@google.com>, linux-mm@kvack.org,
+ keyrings@vger.kernel.org, linux-kernel@vger.kernel.org,
+ x86@kernel.org, linux-crypto@vger.kernel.org,
+ linux-s390@vger.kernel.org, linux-pm@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com,
+ linux-arm-kernel@lists.infradead.org, linux-amlogic@lists.infradead.org,
+ linux-mediatek@lists.infradead.org, linuxppc-dev@lists.ozlabs.org,
+ virtualization@lists.linux-foundation.org, netdev@vger.kernel.org,
+ intel-wired-lan@lists.osuosl.org, linux-ppp@vger.kernel.org,
+ wireguard@lists.zx2c4.com, linux-wireless@vger.kernel.org,
+ devel@driverdev.osuosl.org, linux-scsi@vger.kernel.org,
+ target-devel@vger.kernel.org, linux-btrfs@vger.kernel.org,
+ linux-cifs@vger.kernel.org, samba-technical@lists.samba.org,
+ linux-fscrypt@vger.kernel.org, ecryptfs@vger.kernel.org,
+ kasan-dev@googlegroups.com, linux-bluetooth@vger.kernel.org,
+ linux-wpan@vger.kernel.org, linux-sctp@vger.kernel.org,
+ linux-nfs@vger.kernel.org, tipc-discussion@lists.sourceforge.net,
+ cocci@systeme.lip6.fr, linux-security-module@vger.kernel.org,
+ linux-integrity@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] crypto: Remove unnecessary memzero_explicit()
+Message-ID: <20200414191601.GZ25468@kitsune.suse.cz>
+References: <20200413211550.8307-1-longman@redhat.com>
+ <20200413222846.24240-1-longman@redhat.com>
+ <eca85e0b-0af3-c43a-31e4-bd5c3f519798@c-s.fr>
+ <e194a51f-a5e5-a557-c008-b08cac558572@redhat.com>
 MIME-Version: 1.0
-References: <20200422062513.13953-1-sultan@kerneltoast.com>
-In-Reply-To: <20200422062513.13953-1-sultan@kerneltoast.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 22 Apr 2020 00:27:02 -0600
-X-Gmail-Original-Message-ID: <CAHmME9p=_oBBGGCSqshbFsOeS=Hg7RBnoEZ--MPO5jiJS+P4Ew@mail.gmail.com>
-Message-ID: <CAHmME9p=_oBBGGCSqshbFsOeS=Hg7RBnoEZ--MPO5jiJS+P4Ew@mail.gmail.com>
-Subject: Re: [PATCH] wireguard: remove errant newline from
- wg_packet_encrypt_worker()
-To: Sultan Alsawaf <sultan@kerneltoast.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
- Netdev <netdev@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <e194a51f-a5e5-a557-c008-b08cac558572@redhat.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Mailman-Approved-At: Fri, 24 Apr 2020 22:36:30 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -76,8 +84,70 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Applied to the wireguard tree and will go out with the next wireguard
-update patchset I post on netdev.
+On Tue, Apr 14, 2020 at 12:24:36PM -0400, Waiman Long wrote:
+> On 4/14/20 2:08 AM, Christophe Leroy wrote:
+> >
+> >
+> > Le 14/04/2020 à 00:28, Waiman Long a écrit :
+> >> Since kfree_sensitive() will do an implicit memzero_explicit(), there
+> >> is no need to call memzero_explicit() before it. Eliminate those
+> >> memzero_explicit() and simplify the call sites. For better correctness,
+> >> the setting of keylen is also moved down after the key pointer check.
+> >>
+> >> Signed-off-by: Waiman Long <longman@redhat.com>
+> >> ---
+> >>   .../allwinner/sun8i-ce/sun8i-ce-cipher.c      | 19 +++++-------------
+> >>   .../allwinner/sun8i-ss/sun8i-ss-cipher.c      | 20 +++++--------------
+> >>   drivers/crypto/amlogic/amlogic-gxl-cipher.c   | 12 +++--------
+> >>   drivers/crypto/inside-secure/safexcel_hash.c  |  3 +--
+> >>   4 files changed, 14 insertions(+), 40 deletions(-)
+> >>
+> >> diff --git a/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c
+> >> b/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c
+> >> index aa4e8fdc2b32..8358fac98719 100644
+> >> --- a/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c
+> >> +++ b/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c
+> >> @@ -366,10 +366,7 @@ void sun8i_ce_cipher_exit(struct crypto_tfm *tfm)
+> >>   {
+> >>       struct sun8i_cipher_tfm_ctx *op = crypto_tfm_ctx(tfm);
+> >>   -    if (op->key) {
+> >> -        memzero_explicit(op->key, op->keylen);
+> >> -        kfree(op->key);
+> >> -    }
+> >> +    kfree_sensitive(op->key);
+> >>       crypto_free_sync_skcipher(op->fallback_tfm);
+> >>       pm_runtime_put_sync_suspend(op->ce->dev);
+> >>   }
+> >> @@ -391,14 +388,11 @@ int sun8i_ce_aes_setkey(struct crypto_skcipher
+> >> *tfm, const u8 *key,
+> >>           dev_dbg(ce->dev, "ERROR: Invalid keylen %u\n", keylen);
+> >>           return -EINVAL;
+> >>       }
+> >> -    if (op->key) {
+> >> -        memzero_explicit(op->key, op->keylen);
+> >> -        kfree(op->key);
+> >> -    }
+> >> -    op->keylen = keylen;
+> >> +    kfree_sensitive(op->key);
+> >>       op->key = kmemdup(key, keylen, GFP_KERNEL | GFP_DMA);
+> >>       if (!op->key)
+> >>           return -ENOMEM;
+> >> +    op->keylen = keylen;
+> >
+> > Does it matter at all to ensure op->keylen is not set when of->key is
+> > NULL ? I'm not sure.
+> >
+> > But if it does, then op->keylen should be set to 0 when freeing op->key. 
+> 
+> My thinking is that if memory allocation fails, we just don't touch
+> anything and return an error code. I will not explicitly set keylen to 0
+> in this case unless it is specified in the API documentation.
+You already freed the key by now so not touching anything is not
+possible. The key is set to NULL on allocation failure so setting keylen
+to 0 should be redundant. However, setting keylen to 0 is consisent with
+not having a key, and it avoids the possibility of leaking the length
+later should that ever cause any problem.
 
-Thanks,
-Jason
+Thanks
+
+Michal
