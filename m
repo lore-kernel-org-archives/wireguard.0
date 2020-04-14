@@ -2,43 +2,95 @@ Return-Path: <SRS0=6BFc=56=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.4 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BFCE2C2BA19
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 14 Apr 2020 15:17:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8722AC2BA19
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 14 Apr 2020 16:25:32 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 5113220768
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 14 Apr 2020 15:17:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 5113220768
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=romanrm.net
+	by mail.kernel.org (Postfix) with ESMTPS id F04762075E
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 14 Apr 2020 16:25:31 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="NsgcQPq0"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org F04762075E
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=redhat.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0e736425;
-	Tue, 14 Apr 2020 15:07:03 +0000 (UTC)
-Received: from len.romanrm.net (len.romanrm.net [2001:41d0:1:8b3b::1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 1b6f2638
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 58f71260;
+	Tue, 14 Apr 2020 16:15:13 +0000 (UTC)
+Received: from us-smtp-1.mimecast.com (us-smtp-delivery-1.mimecast.com
+ [207.211.31.120])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 35d04645
  for <wireguard@lists.zx2c4.com>;
- Tue, 14 Apr 2020 15:07:01 +0000 (UTC)
-Received: from natsu (natsu.40.romanrm.net
- [IPv6:fd39:aa:c499:6515:e99e:8f1b:cfc9:ccb8])
- by len.romanrm.net (Postfix) with SMTP id 43945400BD;
- Tue, 14 Apr 2020 15:16:49 +0000 (UTC)
-Date: Tue, 14 Apr 2020 20:16:48 +0500
-From: Roman Mamedov <rm@romanrm.net>
-To: ajs124 <wireguard@ajs124.de>
-Cc: <mike@pmfarmwald.com>, <wireguard@lists.zx2c4.com>
-Subject: Re: Is there a way to use wireguard as a non-encrypted VPN?
-Message-ID: <20200414201648.0c6eb3ae@natsu>
-In-Reply-To: <20200414170241.2d9d5d6d@desk>
-References: <9a3401d61035$4d6b5840$e84208c0$@pmfarmwald.com>
- <20200414170241.2d9d5d6d@desk>
+ Tue, 14 Apr 2020 16:15:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1586881501;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=yW8t58m2bp1NhazlqC7/k8J+nPWsrZBYDWUsjTyk2qQ=;
+ b=NsgcQPq0gDRRzr+WCv6O+IejAhACeGf91UcZUch7xVIEkk4F0++6WsAKwkQ+6nkMoq/jD7
+ lzSV3f1EuKP3Hxnp2JivHQcF6Vr/Z22M++foNVb8RdxR7eWsyL6QJbeO4NazIgQ9svAhXl
+ 7AFa78Hn9YCF68TMh9hKXOVlm2kXUcc=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-87-m_CJjLwlPvyXxruKyZ4cKA-1; Tue, 14 Apr 2020 12:24:56 -0400
+X-MC-Unique: m_CJjLwlPvyXxruKyZ4cKA-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.phx2.redhat.com
+ [10.5.11.15])
+ (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+ (No client certificate requested)
+ by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 12123107ACC4;
+ Tue, 14 Apr 2020 16:24:50 +0000 (UTC)
+Received: from llong.remote.csb (ovpn-118-173.rdu2.redhat.com [10.10.118.173])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 0E02D118DEE;
+ Tue, 14 Apr 2020 16:24:36 +0000 (UTC)
+Subject: Re: [PATCH v2 2/2] crypto: Remove unnecessary memzero_explicit()
+To: Christophe Leroy <christophe.leroy@c-s.fr>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ David Howells <dhowells@redhat.com>,
+ Jarkko Sakkinen <jarkko.sakkinen@linux.intel.com>,
+ James Morris <jmorris@namei.org>, "Serge E. Hallyn" <serge@hallyn.com>,
+ Linus Torvalds <torvalds@linux-foundation.org>, Joe Perches
+ <joe@perches.com>, Matthew Wilcox <willy@infradead.org>,
+ David Rientjes <rientjes@google.com>
+Cc: linux-mm@kvack.org, keyrings@vger.kernel.org,
+ linux-kernel@vger.kernel.org, x86@kernel.org, linux-crypto@vger.kernel.org,
+ linux-s390@vger.kernel.org, linux-pm@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com,
+ linux-arm-kernel@lists.infradead.org, linux-amlogic@lists.infradead.org,
+ linux-mediatek@lists.infradead.org, linuxppc-dev@lists.ozlabs.org,
+ virtualization@lists.linux-foundation.org, netdev@vger.kernel.org,
+ intel-wired-lan@lists.osuosl.org, linux-ppp@vger.kernel.org,
+ wireguard@lists.zx2c4.com, linux-wireless@vger.kernel.org,
+ devel@driverdev.osuosl.org, linux-scsi@vger.kernel.org,
+ target-devel@vger.kernel.org, linux-btrfs@vger.kernel.org,
+ linux-cifs@vger.kernel.org, samba-technical@lists.samba.org,
+ linux-fscrypt@vger.kernel.org, ecryptfs@vger.kernel.org,
+ kasan-dev@googlegroups.com, linux-bluetooth@vger.kernel.org,
+ linux-wpan@vger.kernel.org, linux-sctp@vger.kernel.org,
+ linux-nfs@vger.kernel.org, tipc-discussion@lists.sourceforge.net,
+ cocci@systeme.lip6.fr, linux-security-module@vger.kernel.org,
+ linux-integrity@vger.kernel.org
+References: <20200413211550.8307-1-longman@redhat.com>
+ <20200413222846.24240-1-longman@redhat.com>
+ <eca85e0b-0af3-c43a-31e4-bd5c3f519798@c-s.fr>
+From: Waiman Long <longman@redhat.com>
+Organization: Red Hat
+Message-ID: <e194a51f-a5e5-a557-c008-b08cac558572@redhat.com>
+Date: Tue, 14 Apr 2020 12:24:36 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <eca85e0b-0af3-c43a-31e4-bd5c3f519798@c-s.fr>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.15
 Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -54,47 +106,77 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Tue, 14 Apr 2020 17:02:41 +0200
-ajs124 <wireguard@ajs124.de> wrote:
+On 4/14/20 2:08 AM, Christophe Leroy wrote:
+>
+>
+> Le 14/04/2020 =C3=A0 00:28, Waiman Long a =C3=A9crit=C2=A0:
+>> Since kfree_sensitive() will do an implicit memzero_explicit(), there
+>> is no need to call memzero_explicit() before it. Eliminate those
+>> memzero_explicit() and simplify the call sites. For better correctness=
+,
+>> the setting of keylen is also moved down after the key pointer check.
+>>
+>> Signed-off-by: Waiman Long <longman@redhat.com>
+>> ---
+>> =C2=A0 .../allwinner/sun8i-ce/sun8i-ce-cipher.c=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 | 19 +++++-------------
+>> =C2=A0 .../allwinner/sun8i-ss/sun8i-ss-cipher.c=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 | 20 +++++--------------
+>> =C2=A0 drivers/crypto/amlogic/amlogic-gxl-cipher.c=C2=A0=C2=A0 | 12 ++=
++--------
+>> =C2=A0 drivers/crypto/inside-secure/safexcel_hash.c=C2=A0 |=C2=A0 3 +-=
+-
+>> =C2=A0 4 files changed, 14 insertions(+), 40 deletions(-)
+>>
+>> diff --git a/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c
+>> b/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c
+>> index aa4e8fdc2b32..8358fac98719 100644
+>> --- a/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c
+>> +++ b/drivers/crypto/allwinner/sun8i-ce/sun8i-ce-cipher.c
+>> @@ -366,10 +366,7 @@ void sun8i_ce_cipher_exit(struct crypto_tfm *tfm)
+>> =C2=A0 {
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 struct sun8i_cipher_tfm_ctx *op =3D cry=
+pto_tfm_ctx(tfm);
+>> =C2=A0 -=C2=A0=C2=A0=C2=A0 if (op->key) {
+>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 memzero_explicit(op->key, =
+op->keylen);
+>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 kfree(op->key);
+>> -=C2=A0=C2=A0=C2=A0 }
+>> +=C2=A0=C2=A0=C2=A0 kfree_sensitive(op->key);
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 crypto_free_sync_skcipher(op->fallback_=
+tfm);
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 pm_runtime_put_sync_suspend(op->ce->dev=
+);
+>> =C2=A0 }
+>> @@ -391,14 +388,11 @@ int sun8i_ce_aes_setkey(struct crypto_skcipher
+>> *tfm, const u8 *key,
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 dev_dbg(ce->dev=
+, "ERROR: Invalid keylen %u\n", keylen);
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return -EINVAL;
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+>> -=C2=A0=C2=A0=C2=A0 if (op->key) {
+>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 memzero_explicit(op->key, =
+op->keylen);
+>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 kfree(op->key);
+>> -=C2=A0=C2=A0=C2=A0 }
+>> -=C2=A0=C2=A0=C2=A0 op->keylen =3D keylen;
+>> +=C2=A0=C2=A0=C2=A0 kfree_sensitive(op->key);
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 op->key =3D kmemdup(key, keylen, GFP_KE=
+RNEL | GFP_DMA);
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (!op->key)
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return -ENOMEM;
+>> +=C2=A0=C2=A0=C2=A0 op->keylen =3D keylen;
+>
+> Does it matter at all to ensure op->keylen is not set when of->key is
+> NULL ? I'm not sure.
+>
+> But if it does, then op->keylen should be set to 0 when freeing op->key=
+.=20
 
-> On Sat, 11 Apr 2020 12:13:36 -0700
-> <mike@pmfarmwald.com> wrote:
->=20
-> > I have some older routers that run OpenWRT just fine, but are a bit slo=
-w at
-> > Wireguard (3-5 MBytes/s for SMB transfers) and which are too slow for
-> > playing HD movies.
-> > For these routers/uses I don't care about security, I just want a VPN to
-> > tunnel (thru Comcast, and other ISPs that block lots of ports.)
-> > If there was a way to use Wiireguard=C2=A0with encryption disabled, I'm=
- pretty
-> > sure my performance would be closer to 20-50 MB/s which would be more t=
-han
-> > adequate.
-> > Thanks.
-> > Mike Farmwald
-> >=20
->=20
-> If you're actually just looking for an unencrypted tunnel, there is some =
-standardized stuff like GRE[1] or IP in IP[2] out there.
->=20
-> The Linux Kernel supports both of those natively and it looks to me like =
-OpenWRT should be able to configure at least one of them through its interf=
-ace.
->=20
-> 1: https://en.wikipedia.org/wiki/Generic_Routing_Encapsulation
-> 2: https://en.wikipedia.org/wiki/IP_in_IP
+My thinking is that if memory allocation fails, we just don't touch
+anything and return an error code. I will not explicitly set keylen to 0
+in this case unless it is specified in the API documentation.
 
-Those both require dedicated IP on both ends of the connection, which is not
-always the case on residential ISPs' IPv4 now.
+Cheers,
+Longman
 
-I'd suggest to check out L2TP instead, which doesn't, and can be used witho=
-ut
-encryption too, that one can work.
-
-Or PPTP as mentioned, but it's more complex (separate signaling and data
-protocols) for no good reason and has more issues traversing NATs/firewalls.
-
---=20
-With respect,
-Roman
