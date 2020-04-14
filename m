@@ -2,56 +2,76 @@ Return-Path: <SRS0=IpBN=6S=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C3E2BC3A5A9
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 May 2020 22:55:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A7727C3A5A9
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 May 2020 23:02:19 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 6940F206EB
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 May 2020 22:55:06 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="IDXjs5+g"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 6940F206EB
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id 5994E2087E
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 May 2020 23:02:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 5994E2087E
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=pineview.net
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cd576392;
-	Mon, 4 May 2020 22:42:37 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 534d74f8
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 81b6d968;
+	Mon, 4 May 2020 22:49:34 +0000 (UTC)
+Received: from mail.pineview.net (mail.pineview.net [203.33.246.11])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b9655b30
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 4 May 2020 22:42:35 +0000 (UTC)
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 499e2faf;
- Mon, 4 May 2020 22:42:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=subject:to
- :references:from:message-id:date:mime-version:in-reply-to
- :content-type:content-transfer-encoding; s=mail; bh=i0ylfdx1DjV8
- qrPhs9eQPqxjcMY=; b=IDXjs5+gX6tNaWx4xN+3Jh+Fh+T+yLj385KVyaaz1Wd9
- 3Q5I0iGzKGt887IGUs3hqY4rpD7Bi2sObLK7+EKJd+NBxp9dnRLLLxr43HmSdDkx
- 2UHOKFbEWN+5yh1upEqCZXmXijrEoCoD4jtytgoF+hinfFXVY3554NP7iwwEXk3Q
- B3kOE4IZnMJyT3lkFXHn2veKJ+x5kkJ9eL52FlNFZDIbZteb1a0AhJx7DTc58tsj
- DZ/Jo4xXdUVgQVwomDcbOYou8yKAAlfj3hK1bNb5YLh5jcCH6Ty0GBo35NseqVML
- 1zwqh45P8w8JYY0c21Na6LOVcOUDpW57MDxpXzVdFQ==
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 92821b7d
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Mon, 4 May 2020 22:42:35 +0000 (UTC)
-Subject: Re: soft lockup - may be related to wireguard (backported)
-To: Serge Belyshev <belyshev@depni.sinp.msu.ru>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>
-References: <CAF75rJBKTbaK6CEQcmto=YcgA5NGrG85jSvSrYZpQV-L1xFMww@mail.gmail.com>
- <878si8564q.fsf@depni.sinp.msu.ru>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Message-ID: <cacb70ea-1ecb-51ec-1201-240047ee8dc0@zx2c4.com>
-Date: Mon, 4 May 2020 16:55:02 -0600
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 14 Apr 2020 09:06:31 +0000 (UTC)
+Received: from HigherTime.local (HigherTime.pineview.net [203.33.246.62])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
+ (No client certificate requested)
+ by mail.pineview.net (Postfix) with ESMTPSA id 205438005B;
+ Tue, 14 Apr 2020 18:46:16 +0930 (ACST)
+Subject: Re: Is there a way to use wireguard as a non-encrypted VPN?
+To: mike@pmfarmwald.com, wireguard@lists.zx2c4.com
+References: <9a3401d61035$4d6b5840$e84208c0$@pmfarmwald.com>
+From: Mike O'Connor <mike@pineview.net>
+Autocrypt: addr=mike@pineview.net; prefer-encrypt=mutual; keydata=
+ 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
+Message-ID: <42e91c0b-ca22-d279-4be5-5ece42687400@pineview.net>
+Date: Tue, 14 Apr 2020 18:46:15 +0930
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
+ Gecko/20100101 Thunderbird/68.7.0
 MIME-Version: 1.0
-In-Reply-To: <878si8564q.fsf@depni.sinp.msu.ru>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <9a3401d61035$4d6b5840$e84208c0$@pmfarmwald.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+X-Mailman-Approved-At: Tue, 05 May 2020 00:49:33 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -66,54 +86,21 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On 5/4/20 4:47 AM, Serge Belyshev wrote:
-> Hi! I can reproduce similar RCU stall with a different kernel under
-> specific conditions on a specific box:
-> 
-> [   54.437636] rcu: INFO: rcu_sched self-detected stall on CPU
-> [   54.438838] rcu:  0-...!: (2101 ticks this GP) idle=ea6/1/0x4000000000000002 softirq=604/604 fqs=0
-> [   54.440052]  (t=2101 jiffies g=69 q=89)
-> [   54.441273] rcu: rcu_sched kthread starved for 2101 jiffies! g69 f0x0 RCU_GP_WAIT_FQS(5) ->state=0x402 ->cpu=0
-> [   54.442547] rcu: RCU grace-period kthread stack dump:
-> [   54.443812] rcu_sched       I    0    10      2 0x80004000
-> [   54.443814] Call Trace:
-> [   54.445087]  ? __schedule+0x540/0xa80
-> [   54.446356]  schedule+0x45/0xb0
-> [   54.447612]  schedule_timeout+0x144/0x280
-> [   54.448859]  ? __next_timer_interrupt+0xc0/0xc0
-> [   54.450099]  rcu_gp_kthread+0x3f0/0x840
-> [   54.451329]  kthread+0xe6/0x120
-> [   54.452557]  ? rcu_gp_slow.part.0+0x30/0x30
-> [   54.453761]  ? __kthread_create_on_node+0x150/0x150
-> [   54.454943]  ret_from_fork+0x1f/0x30
-> [   54.456095] NMI backtrace for cpu 0
-> [   54.457221] CPU: 0 PID: 2910 Comm: md5sum Not tainted 5.6.0-00001-g6e142c237f00 #1309
-> [   54.458355] Hardware name: Gigabyte Technology Co., Ltd. GA-MA790FX-DQ6/GA-MA790FX-DQ6, BIOS F7g 07/19/2010
-> [   54.459484] Call Trace:
-> [   54.460576]  <IRQ>
-> [   54.461672]  dump_stack+0x50/0x70
-> [   54.462772]  nmi_cpu_backtrace.cold+0x14/0x53
-> [   54.463871]  ? lapic_can_unplug_cpu.cold+0x3e/0x3e
-> [   54.464955]  nmi_trigger_cpumask_backtrace+0x7c/0x89
-> [   54.466026]  rcu_dump_cpu_stacks+0x7b/0xa9
-> [   54.467088]  rcu_sched_clock_irq.cold+0x153/0x38a
-> [   54.468146]  update_process_times+0x1f/0x50
-> [   54.469204]  tick_sched_timer+0x33/0x70
-> [   54.470262]  ? tick_sched_do_timer+0x50/0x50
-> [   54.471321]  __hrtimer_run_queues+0xe2/0x180
-> [   54.472378]  hrtimer_interrupt+0x109/0x240
-> [   54.473423]  smp_apic_timer_interrupt+0x48/0x80
-> [   54.474461]  apic_timer_interrupt+0xf/0x20
-> [   54.475486]  </IRQ>
-> [   54.476495] RIP: 0033:0x556cbd33bf19
-> [   54.477506] Code: ce 44 8b 4b 10 c1 c9 0f 01 d1 44 89 4c 24 c8 21 ce 31 c6 01 fe 41 8d bc 01 af 0f 7c f5 89 d0 44 8b 4b 3c c1 ce 0a 31 c8 01 ce <21> f0 31 d0 01 f8 41 8d bc 12 2a c6 87 47 89 ca 41 89 ea c1 c0 07
-> [   54.479694] RSP: 002b:00007ffc30913ce8 EFLAGS: 00000283 ORIG_RAX: ffffffffffffff13
-> [   54.480813] RAX: 00000000980270bd RBX: 0000556cbe81e4e0 RCX: 00000000c35c3b1a
-> [   54.481943] RDX: 000000005b5e4ba7 RSI: 00000000ae8ee5ae RDI: 0000000009b5de85
-> [   54.483075] RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
-> [   54.484201] R10: 0000000000000000 R11: 00000000b16eb4f8 R12: 0000000000000000
-> [   54.485317] R13: 0000000000000000 R14: 0000000000000000 R15: 0000000023604445
-> 
+On 12/4/20 4:43 am, mike@pmfarmwald.com wrote:
+> I have some older routers that run OpenWRT just fine, but are a bit slow at
+> Wireguard (3-5 MBytes/s for SMB transfers) and which are too slow for
+> playing HD movies.
+> For these routers/uses I don't care about security, I just want a VPN to
+> tunnel (thru Comcast, and other ISPs that block lots of ports.)
+> If there was a way to use Wiireguard�with encryption disabled, I'm pretty
+> sure my performance would be closer to 20-50 MB/s which would be more than
+> adequate.
+> Thanks.
+> Mike Farmwald
+>
+>
+>
+I suggest that your use a GRE tunnel connection.
 
-I don't see anything wireguard-related in this stacktrace. Can you try 
-sending one that has something wireguard-related in it? Or is more complete?
+Mike
+
