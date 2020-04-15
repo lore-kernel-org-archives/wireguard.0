@@ -2,100 +2,46 @@ Return-Path: <SRS0=1xjk=6I=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.4 required=3.0 tests=FORGED_MUA_MOZILLA,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5DEAC54FCB
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Apr 2020 20:56:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 33546C55196
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Apr 2020 20:56:29 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 64F6B21556
+	by mail.kernel.org (Postfix) with ESMTPS id DEFF721556
 	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Apr 2020 20:56:28 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 64F6B21556
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org DEFF721556
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=gmx.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6e9d15aa;
-	Fri, 24 Apr 2020 20:38:20 +0000 (UTC)
-Received: from mx2.suse.de (mx2.suse.de [195.135.220.15])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4ebc7bbb
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 48ed3a75;
+	Fri, 24 Apr 2020 20:38:40 +0000 (UTC)
+Received: from ciao.gmane.io (ciao.gmane.io [159.69.161.202])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f56c9348
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 14 Apr 2020 12:39:50 +0000 (UTC)
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (unknown [195.135.220.254])
- by mx2.suse.de (Postfix) with ESMTP id 6EF73AA7C;
- Tue, 14 Apr 2020 12:49:36 +0000 (UTC)
-Received: by ds.suse.cz (Postfix, from userid 10065)
- id E5E76DA72D; Tue, 14 Apr 2020 14:48:54 +0200 (CEST)
-Date: Tue, 14 Apr 2020 14:48:54 +0200
-From: David Sterba <dsterba@suse.cz>
-To: Waiman Long <longman@redhat.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
- David Howells <dhowells@redhat.com>,
- Jarkko Sakkinen <jarkko.sakkinen@linux.intel.com>,
- James Morris <jmorris@namei.org>, "Serge E. Hallyn" <serge@hallyn.com>,
- Linus Torvalds <torvalds@linux-foundation.org>,
- Joe Perches <joe@perches.com>, Matthew Wilcox <willy@infradead.org>,
- David Rientjes <rientjes@google.com>, linux-mm@kvack.org,
- keyrings@vger.kernel.org, linux-kernel@vger.kernel.org,
- x86@kernel.org, linux-crypto@vger.kernel.org,
- linux-s390@vger.kernel.org, linux-pm@vger.kernel.org,
- linux-stm32@st-md-mailman.stormreply.com,
- linux-arm-kernel@lists.infradead.org, linux-amlogic@lists.infradead.org,
- linux-mediatek@lists.infradead.org, linuxppc-dev@lists.ozlabs.org,
- virtualization@lists.linux-foundation.org, netdev@vger.kernel.org,
- intel-wired-lan@lists.osuosl.org, linux-ppp@vger.kernel.org,
- wireguard@lists.zx2c4.com, linux-wireless@vger.kernel.org,
- devel@driverdev.osuosl.org, linux-scsi@vger.kernel.org,
- target-devel@vger.kernel.org, linux-btrfs@vger.kernel.org,
- linux-cifs@vger.kernel.org, samba-technical@lists.samba.org,
- linux-fscrypt@vger.kernel.org, ecryptfs@vger.kernel.org,
- kasan-dev@googlegroups.com, linux-bluetooth@vger.kernel.org,
- linux-wpan@vger.kernel.org, linux-sctp@vger.kernel.org,
- linux-nfs@vger.kernel.org, tipc-discussion@lists.sourceforge.net,
- cocci@systeme.lip6.fr, linux-security-module@vger.kernel.org,
- linux-integrity@vger.kernel.org
-Subject: Re: [PATCH 1/2] mm, treewide: Rename kzfree() to kfree_sensitive()
-Message-ID: <20200414124854.GQ5920@twin.jikos.cz>
-Mail-Followup-To: dsterba@suse.cz, Waiman Long <longman@redhat.com>,
- Andrew Morton <akpm@linux-foundation.org>,
- David Howells <dhowells@redhat.com>,
- Jarkko Sakkinen <jarkko.sakkinen@linux.intel.com>,
- James Morris <jmorris@namei.org>,
- "Serge E. Hallyn" <serge@hallyn.com>,
- Linus Torvalds <torvalds@linux-foundation.org>,
- Joe Perches <joe@perches.com>, Matthew Wilcox <willy@infradead.org>,
- David Rientjes <rientjes@google.com>, linux-mm@kvack.org,
- keyrings@vger.kernel.org, linux-kernel@vger.kernel.org,
- x86@kernel.org, linux-crypto@vger.kernel.org,
- linux-s390@vger.kernel.org, linux-pm@vger.kernel.org,
- linux-stm32@st-md-mailman.stormreply.com,
- linux-arm-kernel@lists.infradead.org,
- linux-amlogic@lists.infradead.org,
- linux-mediatek@lists.infradead.org, linuxppc-dev@lists.ozlabs.org,
- virtualization@lists.linux-foundation.org, netdev@vger.kernel.org,
- intel-wired-lan@lists.osuosl.org, linux-ppp@vger.kernel.org,
- wireguard@lists.zx2c4.com, linux-wireless@vger.kernel.org,
- devel@driverdev.osuosl.org, linux-scsi@vger.kernel.org,
- target-devel@vger.kernel.org, linux-btrfs@vger.kernel.org,
- linux-cifs@vger.kernel.org, samba-technical@lists.samba.org,
- linux-fscrypt@vger.kernel.org, ecryptfs@vger.kernel.org,
- kasan-dev@googlegroups.com, linux-bluetooth@vger.kernel.org,
- linux-wpan@vger.kernel.org, linux-sctp@vger.kernel.org,
- linux-nfs@vger.kernel.org, tipc-discussion@lists.sourceforge.net,
- cocci@systeme.lip6.fr, linux-security-module@vger.kernel.org,
- linux-integrity@vger.kernel.org
-References: <20200413211550.8307-1-longman@redhat.com>
- <20200413211550.8307-2-longman@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200413211550.8307-2-longman@redhat.com>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
-X-Mailman-Approved-At: Fri, 24 Apr 2020 22:38:19 +0200
+ Wed, 15 Apr 2020 12:15:09 +0000 (UTC)
+Received: from list by ciao.gmane.io with local (Exim 4.92)
+ (envelope-from <gnw-wireguard@m.gmane-mx.org>) id 1jOh6E-0008QA-8I
+ for wireguard@lists.zx2c4.com; Wed, 15 Apr 2020 14:25:02 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: wireguard@lists.zx2c4.com
+From: Kalle <kalle-python@gmx.de>
+Subject: Update kmod-wireguard on CentOS 7.7 failed
+Date: Wed, 15 Apr 2020 14:14:50 +0200
+Message-ID: <r76trq$3frd$1@ciao.gmane.io>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.6.0
+X-Mozilla-News-Host: news://news.gmane.org:119
+Content-Language: en-US
+X-Mailman-Approved-At: Fri, 24 Apr 2020 22:38:38 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -107,24 +53,44 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Reply-To: dsterba@suse.cz
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Mon, Apr 13, 2020 at 05:15:49PM -0400, Waiman Long wrote:
->  fs/btrfs/ioctl.c                              |  2 +-
+Hello,
+
+this happens on
+# cat /etc/redhat-release
+CentOS Linux release 7.7.1908 (Core)
+
+# yum update
+Resolving Dependencies
+--> Running transaction check
+---> Package kmod-wireguard.x86_64 0:1.0.20200401-1.el7_7.elrepo will be 
+updated
+---> Package kmod-wireguard.x86_64 0:1.0.20200413-1.el7_8.elrepo will be 
+an update
+--> Processing Dependency: kernel(siphash_4u64) = 0xdb8b9061 for 
+package: kmod-wireguard-1.0.20200413-1.el7_8.elrepo.x86_64
+--> Processing Dependency: kernel(siphash_3u32) = 0x04e11789 for 
+package: kmod-wireguard-1.0.20200413-1.el7_8.elrepo.x86_64
+--> Processing Dependency: kernel(siphash_1u64) = 0x0680ac30 for 
+package: kmod-wireguard-1.0.20200413-1.el7_8.elrepo.x86_64
+--> Finished Dependency Resolution
+Error: Package: kmod-wireguard-1.0.20200413-1.el7_8.elrepo.x86_64 (elrepo)
+            Requires: kernel(siphash_3u32) = 0x04e11789
+Error: Package: kmod-wireguard-1.0.20200413-1.el7_8.elrepo.x86_64 (elrepo)
+            Requires: kernel(siphash_4u64) = 0xdb8b9061
+Error: Package: kmod-wireguard-1.0.20200413-1.el7_8.elrepo.x86_64 (elrepo)
+            Requires: kernel(siphash_1u64) = 0x0680ac30
+  You could try using --skip-broken to work around the problem
+  You could try running: rpm -Va --nofiles --nodigest
 
 
-> diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
-> index 40b729dce91c..eab3f8510426 100644
-> --- a/fs/btrfs/ioctl.c
-> +++ b/fs/btrfs/ioctl.c
-> @@ -2691,7 +2691,7 @@ static int btrfs_ioctl_get_subvol_info(struct file *file, void __user *argp)
->  	btrfs_put_root(root);
->  out_free:
->  	btrfs_free_path(path);
-> -	kzfree(subvol_info);
-> +	kfree_sensitive(subvol_info);
+Witch kmod-wireguard.x86_64 0:1.0.20200401-1.el7_7.elrepo everything was 
+OK. Did i miss something?
 
-This is not in a sensitive context so please switch it to plain kfree.
-With that you have my acked-by. Thanks.
+Best regards,
+
+Kalle.
+
+
