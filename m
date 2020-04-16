@@ -2,52 +2,64 @@ Return-Path: <SRS0=1xjk=6I=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CB7AC55186
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Apr 2020 20:56:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F720C55199
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Apr 2020 20:56:28 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 1D82E21556
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Apr 2020 20:56:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id E74CF21556
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Apr 2020 20:56:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=tuta.io header.i=@tuta.io header.b="1viC/OQB"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 1D82E21556
-Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=tuta.io
+	dkim=pass (1024-bit key) header.d=davidslab.com header.i=@davidslab.com header.b="IrTOKL2Q"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org E74CF21556
+Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=davidslab.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2666af91;
-	Fri, 24 Apr 2020 20:37:49 +0000 (UTC)
-Received: from w1.tutanota.de (w1.tutanota.de [81.3.6.162])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 1eea804c
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 849182eb;
+	Fri, 24 Apr 2020 20:38:11 +0000 (UTC)
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com
+ [2a00:1450:4864:20::632])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a0d99a7a
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 22 Apr 2020 12:54:21 +0000 (UTC)
-Received: from w3.tutanota.de (unknown [192.168.1.164])
- by w1.tutanota.de (Postfix) with ESMTP id ECD69FA0319
- for <wireguard@lists.zx2c4.com>; Wed, 22 Apr 2020 13:05:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1587560711; 
- s=s1; d=tuta.io;
- h=From:From:To:To:Subject:Subject:Content-Description:Content-ID:Content-Type:Content-Type:Content-Transfer-Encoding:Content-Transfer-Encoding:Cc:Date:Date:In-Reply-To:MIME-Version:MIME-Version:Message-ID:Message-ID:Reply-To:References:Sender;
- bh=ozHX+rlcnBSbA0KT06jxFStPXF+e6xEcUpQPIA1uJ0U=;
- b=1viC/OQB7M9uta44YpZ8ybe9a35Fx8s+htJnZcMnMm7LCYyjH667VC7yotv8C0qJ
- NcLVi2evDfsiA1a4XLJCiD4g8IlcTVhyOO0tMNDDktkTLJAMZOm3ZOMP0aEJmSth6im
- JlCBJ54KYkKDoLWgfX4u07/Z4om2xPA2e3xzEawU9337aYmzBsw0vk9JJd1LsfYmK2V
- SuoeAnSFUYln2X8f2XZkYKDgol7IjGRLo7cG6vA5PdRP6B1Z3NX5gTYzoy0bFNdAqAI
- IBqASid6ddZ+vdLWnokLojTfaCw9/vT/mjEBXYr0H2ZKr/YL3DmS2xWULowZl9tqeN9
- 8kX7FJANmA==
-Date: Wed, 22 Apr 2020 15:05:11 +0200 (CEST)
-From: Adhipati Blambangan <adhipati@tuta.io>
-To: wireguard@lists.zx2c4.com
-Message-ID: <M5WzVK5--3-2@tuta.io>
-Subject: Attaching XDP program into wireguard interface
+ Thu, 16 Apr 2020 15:16:13 +0000 (UTC)
+Received: by mail-ej1-x632.google.com with SMTP id gr25so1563134ejb.10
+ for <wireguard@lists.zx2c4.com>; Thu, 16 Apr 2020 08:26:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=davidslab.com; s=google;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=wwGv5gfjLDxyVCXEW08nhZgUhXOgCAba99CA2w6HCJE=;
+ b=IrTOKL2Q/ebb3p0ZraC7boPy/7WzG5DZGnrAOxXKqgU5KVYCuggMoAKXyjl3sTZJod
+ DtkeUOAE5zxFlxKpHEw4M8qmBoSk/uVcNwO8qSYTE1BYNf7osWq8yH6jnKU1JUaPAJUq
+ +JML6IpPxSaJ1ZmUa0ODhEnDuFAfoOSUUYA7E=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=wwGv5gfjLDxyVCXEW08nhZgUhXOgCAba99CA2w6HCJE=;
+ b=SF5w9sbtGIe5ifrouV+Me6vSjuOFLbB6YRaC+7z5e/r9e7kR46W+wwop7kg6Tq3BJO
+ NFW+GzxXHGJmgbky5hLiu1Wc4nVZ/Ojqttgr27+Kr5x+yXmGyfv47Gp020KA1pGym/gm
+ 2SaeGyNaUDYHUXeM0Cdsyyn0JoTRWvNUYcD9hE/b96RR/PXsMLFDW01WJBZdECl/093g
+ ntWelI+JdZ3huzU2EDygTgHaeNime7Ws6p2NG9+oJMZXVlwUAvKppE8JMevNPqA78cpO
+ UPleTLtXUlxiedjqqiL1k+5kYgH93lR08quA6gS/D1qXqLs+VLAHdvlAEd4Hgdt7QEx/
+ f/JA==
+X-Gm-Message-State: AGi0PuaDA1nSKmsbKytYAdL6jjlQPgX+gUrpe+iStA5VnvD8NJNLFeIM
+ z010KCeb6Eu3WmHrBmev4o0Y2yLCV6cI7EpXVF5B0Zjd8/h//w==
+X-Google-Smtp-Source: APiQypJr5DSgBtAqB5czjnaKnGiOjKkaRPwcTVFwmmyQQvOeh3YOQluD4vNFq9kQJSkqz0bw/FfCKz+ZdflAN7CLIKE=
+X-Received: by 2002:a17:906:2296:: with SMTP id
+ p22mr10067974eja.269.1587050778063; 
+ Thu, 16 Apr 2020 08:26:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Mailman-Approved-At: Fri, 24 Apr 2020 22:37:47 +0200
+From: David Leung <david@davidslab.com>
+Date: Thu, 16 Apr 2020 23:26:07 +0800
+Message-ID: <CACfAimOGRV7atBGjwGzDc=tgaNZYpzPjscGygLFBR=TYojJ3DQ@mail.gmail.com>
+Subject: Netlink API returns wrong attribute ID for peers on Ubuntu 19.10
+To: wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
+X-Mailman-Approved-At: Fri, 24 Apr 2020 22:38:10 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -62,14 +74,19 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello everyone,
+Hello,
 
-I have tried to search for the same question in this mailing-list archive, but got no result.
+I've been using the Netlink Generic API to get a WireGuard device's
+peer endpoints successfully on NixOS.
 
-I have wireguard connection in all of my machines running in production, and it works pretty well. Currently, we are thinking of doing some packet-classification using XDP as an early hook in the RX path.
+When I run the same program on Ubuntu 19.10 (running wireguard version
+v1.0.20200206), the peers attribute returned is 32776 instead of 8.
+This doesn't match what's defined in
+https://git.zx2c4.com/wireguard-tools/tree/contrib/embeddable-wg-library/wireguard.c.
 
-A simple XDP program has been successfully attached to our "standard" interface. But, when I tried to attach the same XDP program to my wg0 interface, the logic in the XDP program did not kicked in. Is this something expected? if yes, is there any plan to support this use-case? I would like to help. But if not, could you guys shed me some light on what went wrong?
+I wonder if it's caused by a decoding mistake on my end, or if there's
+something strange happening with the Ubuntu package.
 
-Thanks!
 
-Adhipati B.
+Best,
+David
