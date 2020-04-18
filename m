@@ -2,66 +2,51 @@ Return-Path: <SRS0=xPCC=6C=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 40B10C38A29
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 18 Apr 2020 15:56:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 88639C38A29
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 18 Apr 2020 16:59:27 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id A839221D93
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 18 Apr 2020 15:56:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id BFE0521D93
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 18 Apr 2020 16:59:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fe8+0uRQ"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A839221D93
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=msfjarvis.dev header.i=@msfjarvis.dev header.b="LaTJS/FM"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org BFE0521D93
+Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=msfjarvis.dev
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 166e100e;
-	Sat, 18 Apr 2020 15:45:40 +0000 (UTC)
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com
- [2a00:1450:4864:20::632])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c2413b5c
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 26901c3f;
+	Sat, 18 Apr 2020 16:48:37 +0000 (UTC)
+Received: from sendmail.purelymail.com (sendmail.purelymail.com
+ [34.202.193.197])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c514e555
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sat, 18 Apr 2020 15:45:36 +0000 (UTC)
-Received: by mail-ej1-x632.google.com with SMTP id q8so4006759eja.2
- for <wireguard@lists.zx2c4.com>; Sat, 18 Apr 2020 08:55:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=0w9OQjt9JudhSuh06JVepQUx0/jYiv5I31i5CbBmfyg=;
- b=fe8+0uRQO4RnGPsIfJXOGdjTXzWGzssuDk5xvyykZJ0gZ8uOIlEF9AGd9Uw8PDfD3o
- qXa5kjxQn8tx0QbV2iG1C52z7NVQZ1Zxmgi0gtIa8tz7vFdc9r95dn7mZ4eqT1kfkPcM
- 5k4FHjeCYzIHZWflDB6TgEBcIJuWJXXmrkW9ih+NqDMM8FGo4RxNVRqIRWeqwLc+CFlZ
- kDD5F7sUGx1nzkxT3cmb4eaJFFXj9rF6QgpLtpS0bdSXGznhDTVZ7lRXNd6y37uxAnIA
- p4B52ujtZtG5wd8gSeRpPK9HgpPQVy4EhyVWS43+zdWL1bsUR5zvEkIBLkVweeREpb1y
- Z/MQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=0w9OQjt9JudhSuh06JVepQUx0/jYiv5I31i5CbBmfyg=;
- b=Agj3+9DNUFuQEbwITTlaTvbj6jH5+ckJVDZ26SoEEbIzpweFhkDE2Chxj47uNl+NZ4
- TukIpOYR0+v6qpL0ppXxRN8soIJ9SUess8iWd6w5BEBv6GfmRE+dvdapBmU4q3Y6+4BB
- /LC9wugQ6yuvCPAWFYCCOxjsjD4xz7ZS6ujaObZ3arfcxCAHl07A2GO3dRSWXsDvpts6
- ea5aWlhe8kqvAF2MAdw6Y3jCWJeRtCYWnDF7P5khL0/EwNZpcojzBwaJYkmO4Mk939pr
- AhZo/NpQuoWe2UDyheTAf+JhjjK+ePbIQmiqGaL0tRRpjadIuxbsyfsGcwLRZ0lzEyzM
- ZOBQ==
-X-Gm-Message-State: AGi0Pub1MFZJH8zuYx6VOncx3BlWOW6Yaq7gmmTB7uRkbtb2k7DxhNWW
- QNlcd+imgrOAjrDwYBJyED0hDsCT9CtdXreiCpz3dt4hq84=
-X-Google-Smtp-Source: APiQypJyAmY0u6bdqP2gRmDibKOAHMRYcx6v3Ljx+pMSN/NpiKKEllWa3hvQfvflMaPholcEHe32hC0VJbn8O9V8iMA=
-X-Received: by 2002:a17:906:d20e:: with SMTP id
- w14mr8086040ejz.19.1587225356584; 
- Sat, 18 Apr 2020 08:55:56 -0700 (PDT)
+ Sat, 18 Apr 2020 16:48:34 +0000 (UTC)
 MIME-Version: 1.0
-From: Eiji Tanioka <tanioka404@gmail.com>
-Date: Sun, 19 Apr 2020 00:55:45 +0900
-Message-ID: <CAA2ss9E8hAQqwKwA6aytcXCZPr905NX53LRdfY6-WG24m66AAA@mail.gmail.com>
-Subject: Question about Crowdin operation
-To: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+DKIM-Signature: a=rsa-sha256;
+ b=LaTJS/FMhAgFm2cEFEey31hMT7KBb4vzMAmFzFGy1RQC1Wn6AziLr4V8LYm9L9fE2Ayf+pF8RV3IHFcj34effj0Ohg/WP1T2ouOV+h5B7FFcRkfwn7BNZFQUb4N1ytNqgKcTdFGg8a1wmMLlcwM85bvQWGWIlQEaxHc7DuBek1JPTNitOzA2bbdbDOUbkomP+YvufnWlxnAdtP3k4ZlEW+bLBglVh0CA33NZhKBNH155+6fLZU+zmnc5j2kGgeI/iko/kawszqRYoVoxuHpjj4TSivkLrdY0JNwNFwW7O5zJjHXxOEfShxZptssYAhbIjfCMjrwhg/QMyNEDX1ioKg==;
+ s=purelymail1; d=msfjarvis.dev; v=1;
+ bh=F1cLlaPrsNYp4uVHsv/ih6PqqPxWrlrzxiY8eRbuEek=; h=from:to:received; 
+Authentication-Results: purelymail.com; auth=pass
+X-UserIsAuth: true
+Received: from 147.75.32.83 (EHLO mail.msfjarvis.dev) ([147.75.32.83])
+ by ip-172-30-0-208.ec2.internal (JAMES SMTP Server ) with ESMTPA ID 313392909; 
+ Sat, 18 Apr 2020 16:58:39 +0000 (UTC)
+Date: Sat, 18 Apr 2020 16:58:38 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: RainLoop/1.14.0
+From: "Harsh Shandilya" <me@msfjarvis.dev>
+Message-ID: <8bca79f715ae5c649b5b717feef8e704@msfjarvis.dev>
+Subject: Re: Question about Crowdin operation
+To: "Eiji Tanioka" <tanioka404@gmail.com>, wireguard@lists.zx2c4.com
+In-Reply-To: <CAA2ss9E8hAQqwKwA6aytcXCZPr905NX53LRdfY6-WG24m66AAA@mail.gmail.com>
+References: <CAA2ss9E8hAQqwKwA6aytcXCZPr905NX53LRdfY6-WG24m66AAA@mail.gmail.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -73,24 +58,18 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
+Reply-To: me@msfjarvis.dev
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
-
-I'm translating WireGuard apps into Japanese.
-I have a question about operation in Crowdin.
-
-When translate, we translators need to clarify about original string's
-context or meaning. In that situation, which option is preferred?
-
-- send ML about question.
-- in Crowdin, use comment.
-- in Crowdin, use comment and flag "Issue".
-- in Crowdin, use Discussion.
-
-# I had used second option, but never mention to anyone.
-# Should I had to mention to ?
-
-Kind regards,
-Eiji Tanioka
+April 18, 2020 9:25 PM, "Eiji Tanioka" <tanioka404@gmail.com> wrote:=0A=
+=0A> Hi,=0A> =0A> I'm translating WireGuard apps into Japanese.=0A> I hav=
+e a question about operation in Crowdin.=0A> =0A> When translate, we tran=
+slators need to clarify about original string's=0A> context or meaning. I=
+n that situation, which option is preferred?=0A> =0A> - send ML about que=
+stion.=0A> - in Crowdin, use comment.=0A> - in Crowdin, use comment and f=
+lag "Issue".=0A> - in Crowdin, use Discussion.=0A> =0A> # I had used seco=
+nd option, but never mention to anyone.=0A> # Should I had to mention to =
+?=0A=0AThe second option is perfectly fine, though you'll have better luc=
+k if you=0Amention me or Jason since that will ensure Crowdin does not sw=
+allow up the=0Anotifications.=0A=0A> Kind regards,=0A> Eiji Tanioka
