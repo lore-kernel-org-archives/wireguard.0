@@ -2,69 +2,101 @@ Return-Path: <SRS0=1xjk=6I=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0788AC55196
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Apr 2020 20:56:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CEEC0C54FD0
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Apr 2020 20:56:27 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 90BE621556
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Apr 2020 20:56:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 3652821556
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Apr 2020 20:56:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=alerinaldi-it.20150623.gappssmtp.com header.i=@alerinaldi-it.20150623.gappssmtp.com header.b="s5aqQrp8"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 90BE621556
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=alerinaldi.it
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="caoEwlzn"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 3652821556
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=outlook.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3dfcd438;
-	Fri, 24 Apr 2020 20:37:25 +0000 (UTC)
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com
- [2a00:1450:4864:20::443])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b3383a14
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fb8bd339;
+	Fri, 24 Apr 2020 20:37:50 +0000 (UTC)
+Received: from EUR01-DB5-obe.outbound.protection.outlook.com
+ (mail-oln040092064105.outbound.protection.outlook.com [40.92.64.105])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 988caed7
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 17 Apr 2020 22:45:47 +0000 (UTC)
-Received: by mail-wr1-x443.google.com with SMTP id d27so4875698wra.1
- for <wireguard@lists.zx2c4.com>; Fri, 17 Apr 2020 15:56:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=alerinaldi-it.20150623.gappssmtp.com; s=20150623;
- h=mime-version:from:date:message-id:subject:to
- :content-transfer-encoding;
- bh=EPn47IZXaPqVh9ui8ffVEWj+n5vOAQ+1oWtYnyRYwrs=;
- b=s5aqQrp8GpXZ7uC0ja9ojX+9k6zqnmmBHPxuDswpAhBY4pTVT1GlXdzoNbHLstRArD
- TN6tWIjrKJeIznnRwDUazdAz/qbysuw3fJkYWyIUYle5TULMO5qqN25R01WwfctqRLMf
- 5JG3cilMMIP70oQERFTwQP9M6vw5YpxsG0Eu1ogaaUrg7wvVZutNNvcZjVCwicdwesRi
- lYPa+eXciUG1Os9n04QDc5gJJI6ilnLtz+m4j34h9h9H34VpGXHJJ9/7y/sM4+PL58rR
- CnmLOwk7NP65LHP1elDyeNHUTYt0F/mj4BQyfVNcXXbjsppTLBwcyAtvshwvutKK95lo
- Zeug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to
- :content-transfer-encoding;
- bh=EPn47IZXaPqVh9ui8ffVEWj+n5vOAQ+1oWtYnyRYwrs=;
- b=gSVebR7HnuquAh58+p+uiM7WKzM65cBWIhBf8kbDfDsmJvcRHbqdaJc6VK5fQ6iFIY
- hjJgwaLznrxnbC+V5RGyRVJeluZZd0lZAL0w8TP+iSkOSgS54hWTCN/Z4qIGzzZxS9cQ
- fzwOzuqlxU6YopOq6GyUW7+LMzPQejG57U4AZPJuXwUvjgBDp/cEadvjPaiU600Bz2uX
- epnEZLF0ivwoO2Zor7D9Dx0QBnj15jKJT7Lc9za5Y4iLnnzytVVE8zFmZpC9TzwM5mOo
- XxoZl8UAwoaq/+/UzcviVjG5V2MJuXyrvSBBmokPz7r4bCBYfLjRTAa7+qKxkpOjyV4p
- eKXg==
-X-Gm-Message-State: AGi0Pua506PDGuG4kZrDJRPDCdxM9LFuTTF3D/4B3z3Ti7ru1ArsZGiG
- haObYenjAgW6WWekEXEP4XBWj+J9QG9z7LQQldrctx6HuP9Gew==
-X-Google-Smtp-Source: APiQypJ450vXu7c4FLm4fisu74cTgU8ryo3CkiOXM7DnHiMfslry+T62xlH6V3DXHiKL2VM4P00mQyFThhIyCCJ9wR0=
-X-Received: by 2002:adf:e552:: with SMTP id z18mr6072901wrm.244.1587164160680; 
- Fri, 17 Apr 2020 15:56:00 -0700 (PDT)
-MIME-Version: 1.0
-From: Alessandro Rinaldi <ale@alerinaldi.it>
-Date: Sat, 18 Apr 2020 00:55:49 +0200
-Message-ID: <CAJntV_GNfHPPUQKf=PnFuK3g4J30F+DVy+=9op-=K+u2ihzSHA@mail.gmail.com>
-Subject: engarde - small issue with wireguard-windows
-To: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+ Thu, 23 Apr 2020 12:10:24 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=IMnkq2a4boxVGepAFthJyGLERGuYNgEdUd4ZexANcPyqDuSihJwv9wGecYqCQuzB7AZNUrfe+kBgii81f0qMee7hg0e57zC5wRgevy18FebG/TB6vBWGCKP7Aj0Qym/9z5tcn74Z/SleqR0+yuUR5c9//NWw0yxOt7h8RHsgzfgIM+XoAM8/4Z/e0qJPTPTIR9GT3YRD3foJJUtQn8M7RcuLFNyRgTiMy28ir2Gk/U9xh70npOQsiv0/LRcu3q2LurhaBGGqODBtp68cCgpHKW+/KDfuDEsYwrt2t3IYtGrflg2DbuEaNjraOM8r+VNNtUNA+4uTx4QgrD2c7qVOiw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=u0vME2PFfyViMhndw/EV0sd3mocEo8f2A5XTeT9d/zk=;
+ b=gC5wdUSxbFow4N259hZ5WEedI8TzJDjsk0BazG5yXJMtkW2HP4aM4FZPgI0H+4BIkQc6hTnpuzBMYNt3ZnvZFLhzfNVtOYy1g+5SY4hkNTNMFdKN5VvMmGuvtvdnpQlZL0Rx60It1A4Pf2lGUxBl0vLZptrePep6GC7lOtJcV9/DpP6QQtIh1g7Z5gtqdDDDwJL8G3K6tnqgn2esAr1llrCxKnWqsZV7eoS0JPekFclDlIURLKe8OepaLneKWwo8aPc9ENjQydnbubQTixhFCBMvYopbA3wqW98Ij8yzvzWW0GD+W3bZ1dNHGXvoAhZ7R9LETHeYx+/rRA3dJso4Ug==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=u0vME2PFfyViMhndw/EV0sd3mocEo8f2A5XTeT9d/zk=;
+ b=caoEwlznuNLopjg17lGBr6jCiuQG9Xrmwn4ZmpoSQKvzNS3+Gk4UxbFd6auRNA9YMT/Ujb+jDoEvw6AmCJm2EUO+0eVE4k4+muLipQv5jMo+JDwG3H2XSNjVTCI/V0lgASwyYIoNDayuLrLn+rsGeYEC967BUvRa+LCqsGDyXOH1Ji6Cg7rYAfJxByyPaCmf061X4tSyiZeSGhUv5a74j9eHuCUtn0FvUtkfcpkMo1OuK/CwKXmgBhNxShDyE7nFAD+nlkjZyid6/A924Z5bAhAno5zQ1CP7uuO4SV/vrxjCFi2Eg1Bo0bBp/iY5pClhYri1IWiYvdOwq0jFey48Eg==
+Received: from HE1EUR01FT011.eop-EUR01.prod.protection.outlook.com
+ (2a01:111:e400:7e18::49) by
+ HE1EUR01HT079.eop-EUR01.prod.protection.outlook.com (2a01:111:e400:7e18::248)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2937.15; Thu, 23 Apr
+ 2020 12:21:21 +0000
+Received: from HE1P191MB0234.EURP191.PROD.OUTLOOK.COM (2a01:111:e400:7e18::52)
+ by HE1EUR01FT011.mail.protection.outlook.com
+ (2a01:111:e400:7e18::173) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2937.15 via Frontend
+ Transport; Thu, 23 Apr 2020 12:21:21 +0000
+Received: from HE1P191MB0234.EURP191.PROD.OUTLOOK.COM
+ ([fe80::1d8d:cc19:568b:ba73]) by HE1P191MB0234.EURP191.PROD.OUTLOOK.COM
+ ([fe80::1d8d:cc19:568b:ba73%8]) with mapi id 15.20.2921.033; Thu, 23 Apr 2020
+ 12:21:21 +0000
+From: Alessandro Magri <alessandromagri@outlook.com>
+To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+Subject: Debian package dependencies
+Thread-Topic: Debian package dependencies
+Thread-Index: AQHWGWmbT3vJyskyuk6r8m1s9bejmQ==
+Date: Thu, 23 Apr 2020 12:21:21 +0000
+Message-ID: <HE1P191MB0234A66C8CBFBB289F58E747B2D30@HE1P191MB0234.EURP191.PROD.OUTLOOK.COM>
+Accept-Language: it-IT, en-US
+Content-Language: it-IT
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-incomingtopheadermarker: OriginalChecksum:FD12696D1A880CEE316E2F35BA4C285A591E0D418626E9A30502C894B92BDD9A;
+ UpperCasedChecksum:2C72BEF5C413AACDC3F2AA7760BC2255281EB87F02496B4B6D1CA9DB1C5C857A;
+ SizeAsReceived:6722; Count:43
+x-ms-exchange-messagesentrepresentingtype: 1
+x-tmn: [B3dFqEyxogzEzkXttIDGccJONMlWAkTf]
+x-ms-publictraffictype: Email
+x-incomingheadercount: 43
+x-eopattributedmessage: 0
+x-ms-office365-filtering-correlation-id: 69462317-a740-4199-1b04-08d7e780d543
+x-ms-traffictypediagnostic: HE1EUR01HT079:
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: y8s2THBlO54Mz1F/yLP0PfSihb4dYdf7y75uM7QuAOo7umluY0QRoDnjHlNMmcc6oS60dxUQxFUjeHc5uWhjMeI2jbyaDk/iPatmi1q08dzZmynOWjaXYTEqz4Z+NrEslnZbchFLcwMZDr5rT1II4xFB1HowrtPvmdQzwK5VCIVLLMaEadfW7WVxwUTQMqU9muxtxuQY6tGlyfgjrXOVMg==
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:0; SRV:;
+ IPV:NLI; SFV:NSPM; H:HE1P191MB0234.EURP191.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
+ SFTY:; SFS:; DIR:OUT; SFP:1901; 
+x-ms-exchange-antispam-messagedata: szQs/NjJd8MoSxkBEKVQj8qWvNVxLbFmcw0nPArn/yG1HS7jvABY0zxTr1r/3CCkPoFpaU/JvGKBuCDLHnST5fvLEbdh47EK2AcRcGh0L+NMtbK4ciDOWizgA7hg4uraSlEiGAw1qzlHSC0vSvU57w==
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
-X-Mailman-Approved-At: Fri, 24 Apr 2020 22:37:24 +0200
+MIME-Version: 1.0
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: 69462317-a740-4199-1b04-08d7e780d543
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Apr 2020 12:21:21.5299 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Internet
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HE1EUR01HT079
+X-Mailman-Approved-At: Fri, 24 Apr 2020 22:37:47 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -79,70 +111,14 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello,
-
-I just subscribed to the mailing list so I'll introduce myself: I'm
-Alessandro, I'm from Italy and I LOVE WireGuard :)
-
-Last year I was looking for a way to create a reliable network tunnel
-over multiple unstable connections. I'm a volunteer in a radio station
-and it happens sometimes to broadcast from remote locations where
-Internet connections are not good.
-What I was looking for was not a failover mechanism, since when
-transmitting nearly real-time audio we couldn't afford even the time
-for it to detect a problem in the connection and switch to another
-one. Audio transmission requires low bandwidth, so we didn't care
-about wasting it to have a stable connection.
-
-So I came up with a solution that I called engarde [0]: it basically
-takes packets emitted from WireGuard and sends them to the other peer
-over all the available network interfaces (like for example, an ADSL
-modem over Ethernet, one or two 4G USB dongles, and maybe a WiFi
-network). On the other peer, engarde takes all the packets it receives
-and sends them to the local UDP port WireGuard is listening on. When
-it receives a packet back from WireGuard, it sends them back to all
-the destinations it received packets from recently (by default, 30
-seconds). Since WireGuard disards duplicated packets by looking at
-their timestamps [1], this totally works as a redundant bonding
-solution, for both upload and download: as long as at least one
-connection is up at any given moment, the tunnel is stable, without
-even a minimal interruption.
-The behaviour is better described in the project README, along with
-some example use cases and configurations.
-
-With the spreading of Covid-19 here in North of Italy, many radio
-speakers started transmitting from home, and I know of various radio
-stations that used engarde to have a stable audio signal by using, for
-example, the speaker's home connection and its smartphone one via USB
-tethering.
-
-First of all, I'd love to know what you think about it, or if you have
-a better approach than this one: I searched a lot for possible
-solutions before coming up with my own one and, even if I'm really
-satisfied with it, I'd like to know if there are more "mainstream"
-approaches for that.
-
-Also, by testing this, I found a strange issue with the WireGuard
-Windows client. For the solution to work, the WireGuard client must
-send its packets not directly to the other peer, but to engarde
-itself, that will dispatch them through all the interfaces. So, I need
-to set "127.0.0.1:54321" as the peer address, where 54321 is the port
-engarde is listening on. This works on Linux and Mac, but not on
-Windows. When I bring the tunnel up with 127.0.0.1:12345 as peer
-address, this is the error I get in logs:
-```
-2020-04-18 00:45:33.537: [TUN] [Radio] peer(gucn=E2=80=A6uwWE) - Failed to
-send handshake initiation write udp4 0.0.0.0:59301->127.0.0.1:12345:
-wsasendto: Indirizzo richiesto non valido nel proprio contesto.
-```
-This seems to be returned directly by the OS, since it's translated:
-I'm using Italian Windows, in the English version it's "The requested
-address is not valid in its context".
-The exact same configuration works like a charm in TunSafe.
-Is this an issue that could be solved on the WireGuard side?
-
-Thank you so much for any feedback you'll provide me, both for engarde
-itself and for the issue I'm having on Windows.
-
-[0] https://github.com/porech/engarde
-[1] https://www.wireguard.com/protocol/ , "DoS Mitigation" section
+Hi,=0A=
+I'm new to this mail-list, so i hope to use it in the right way.=0A=
+I'm using wireguard on some Debian machines, and yesterday after some updat=
+e wireguard promt some strange errors about the wireguard-dkms module confi=
+g.=0A=
+In the end I've to install bc to make all work again.=0A=
+=0A=
+I suggest to add this package to the dependencies list.=0A=
+Thank's=0A=
+=0A=
+Alessandro=
