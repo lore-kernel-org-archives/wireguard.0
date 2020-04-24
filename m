@@ -2,56 +2,75 @@ Return-Path: <SRS0=1xjk=6I=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88A75C54FD0
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Apr 2020 22:25:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E16D0C2BA1A
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Apr 2020 23:44:36 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 2EF0420736
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Apr 2020 22:25:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 50F3520728
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Apr 2020 23:44:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=toke.dk header.i=@toke.dk header.b="T69PPE2Y"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 2EF0420736
-Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=toke.dk
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ta4TEbUz"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 50F3520728
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d0db5214;
-	Fri, 24 Apr 2020 22:14:10 +0000 (UTC)
-Received: from mail.toke.dk (mail.toke.dk [45.145.95.4])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b8e6a154
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c2032735;
+	Fri, 24 Apr 2020 23:33:07 +0000 (UTC)
+Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com
+ [2607:f8b0:4864:20::541])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id fd82c795
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 24 Apr 2020 22:14:05 +0000 (UTC)
-From: Toke =?utf-8?Q?H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=toke.dk; s=20161023;
- t=1587767113; bh=H3LQe0OtSEjJ7mST7p3Z25dzzrLA9BqgG0HgSChWa/4=;
- h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
- b=T69PPE2YdtXg8SrdXK2u/NY+pBSBqGXpytCj20gSq7GyKyQtHSlvzDPXwJPsJxXyA
- jsQ5O0X2jFe2oHcNFqtDh3RS8xo+d1tC20TppaX7mJzgQTHJnxpdA8rP9jz+KJ4V4C
- RjKmGHWu7hO4VFLfJFwglWGHGWAWjbxvwjMTlKbVcEFVD2BOvZOSjMn5sZaarrphz6
- 1G1ISsz8o6pZ8eza6jp6Ll1OzKUlWwwZ/WY1sDxGQfNw25HnbPXRJ+NERkA+YGsPdU
- i+/O1eXqe7msy4jw56Zq7oVTAttDLoShxg50PyHoIKqDJKPvM+znXFTU/uEDb/v2gs
- k7biaTTwF+SHQ==
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: Adhipati Blambangan <adhipati@tuta.io>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: Attaching XDP program into wireguard interface
-In-Reply-To: <CAHmME9rssE6_0hT3nS5703YTS0EG_Pug6vGonx9_tU6yLC2UUg@mail.gmail.com>
-References: <M5WzVK5--3-2@tuta.io>
- <CAHmME9oGY8MVpMe1HbWm6AQCPxb4RcRpiAYrdDTBHAMotMyiGQ@mail.gmail.com>
- <CAHmME9oDRO6FwJdjOCm0EZNRwtweSZAfxWyyMfptMDSf_h__Bg@mail.gmail.com>
- <87a73035qd.fsf@toke.dk>
- <CAHmME9rssE6_0hT3nS5703YTS0EG_Pug6vGonx9_tU6yLC2UUg@mail.gmail.com>
-Date: Sat, 25 Apr 2020 00:25:12 +0200
-X-Clacks-Overhead: GNU Terry Pratchett
-Message-ID: <877dy434jb.fsf@toke.dk>
+ Fri, 24 Apr 2020 23:33:06 +0000 (UTC)
+Received: by mail-pg1-x541.google.com with SMTP id t11so5398917pgg.2
+ for <wireguard@lists.zx2c4.com>; Fri, 24 Apr 2020 16:44:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=YQEkVXtfNM6n1StjbHRiHUcAJLur7gwq1XYwaSW2eoc=;
+ b=Ta4TEbUzkxZMXn3TnvYG7aLmxBvPbeGPXmjfrxq4vOwaktX06iXTMjmYypg/jjVncr
+ Nl0SmcJ+LsnwdKTnhxgLe4oSoqRAtsrFsz7ol8r1RNlPvm3CSYqA3+IQDhyiSfsvn6To
+ 1uaE+UKqMDbAuPWa+JtJwCNahwC42rKELcUG7nWjJrSkwYV3cZ3/M5MgSRO7vq+Iwp00
+ S3NoUvLem58JI3aNmsh7hQetJx7rZaD8sxW8kef3//Wsdsr2toH+4ZOCngWdPRXy9cCu
+ 8peKx4PZsZG1p+1S1BaT6huaEhuXwp85mxwju+nOT80/MiZAwbwm/UA58FxVC73aH3VQ
+ t7xQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=YQEkVXtfNM6n1StjbHRiHUcAJLur7gwq1XYwaSW2eoc=;
+ b=i9IGhk2qN2tSis7KNipl3KsmjlAlUmCipINOhZGQOyUW5T/vGO4P3zHblKcmEoY8rk
+ VD6WgLH+xtEbIj4+p8vxDnsPcYcXrHi/XnTm+WTcBfvDAZS4lwy0tjcYRpknDgiPK1O2
+ uUx55kbGbEyKo1r099iHpW+a16Upr5YtWUKMehoNjTC61JCkQRRlBmqn0tIlpvdIUun9
+ TKSoGW0vc1QF21sMQeZI4xP5nK47MeAa+s9L53btaFKfobJT1BSYITUZtb3qSaRFabOx
+ qC/YtZflAJjv6e3md8joRwRCfFIHxzvkW0aB+tWaR7H5fDd2qDB8DlP5YsvnZzeC5ELu
+ K0Cw==
+X-Gm-Message-State: AGi0PubyysGUGCxvpKJWrZn7Oym0C1EtyHmTnoB/7i8OjZMeUQD9jsUt
+ ZwbQ3KURZCyhi1LeK/c+AycaZsa0
+X-Google-Smtp-Source: APiQypKorIRKUXzDkRdC/i5UcbhjjknECEpAcDagU/iZgvVj5nDOVIPA7c2gVOhmFHhNzGwg5SCmqw==
+X-Received: by 2002:a62:6585:: with SMTP id
+ z127mr12475756pfb.217.1587771854858; 
+ Fri, 24 Apr 2020 16:44:14 -0700 (PDT)
+Received: from localhost.localdomain ([98.203.142.101])
+ by smtp.gmail.com with ESMTPSA id u13sm5583535pjb.45.2020.04.24.16.44.13
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Fri, 24 Apr 2020 16:44:14 -0700 (PDT)
+From: Shawn Hoffman <godisgovernment@gmail.com>
+To: wireguard@lists.zx2c4.com
+Cc: Shawn Hoffman <godisgovernment@gmail.com>
+Subject: [PATCH 1/3] fix possible TunDispatchSecurityDescriptor leak.
+Date: Fri, 24 Apr 2020 16:43:25 -0700
+Message-Id: <20200424234327.1814-1-godisgovernment@gmail.com>
+X-Mailer: git-send-email 2.26.2.windows.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -66,40 +85,61 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-"Jason A. Donenfeld" <Jason@zx2c4.com> writes:
+TunDispatchSecurityDescriptor will leak if second
+RtlAbsoluteToSelfRelativeSD fails. Practically this can't happen, but
+from wintun code it's unclear.
 
-> On Fri, Apr 24, 2020 at 3:59 PM Toke H=C3=B8iland-J=C3=B8rgensen <toke@to=
-ke.dk> wrote:
->>
->> "Jason A. Donenfeld" <Jason@zx2c4.com> writes:
->>
->> > Oh. Set XDP_FLAGS_SKB_MODE.
->>
->> Yeah, you'd definitely need to run this in skb/generic XDP mode.
->>
->> -Toke
->
-> It looks like the code in question is likely:
->
->         bpf_op =3D bpf_chk =3D ops->ndo_bpf;
->        if (!bpf_op && (flags & (XDP_FLAGS_DRV_MODE | XDP_FLAGS_HW_MODE)))=
- {
->                NL_SET_ERR_MSG(extack, "underlying driver does not
-> support XDP in native mode");
->                return -EOPNOTSUPP;
->        }
->        if (!bpf_op || (flags & XDP_FLAGS_SKB_MODE))
->                bpf_op =3D generic_xdp_install;
->        if (bpf_op =3D=3D bpf_chk)
->                bpf_chk =3D generic_xdp_install;
->
-> It looks like bpf_op =3D=3D generic_xdp_install is the case when neither
-> XDP_FLAGS_DRV_MODE or XDP_FLAGS_HW_MODE is set. Setting
-> XDP_FLAGS_SKB_MODE explicitly will force it on all drivers, but not
-> specifying it will fallback to it if the driver doesn't have hardware
-> support, which is WireGuard's case, unless either XDP_FLAGS_DRV_MODE
-> or XDP_FLAGS_HW_MODE are set.
+Signed-off-by: Shawn Hoffman <godisgovernment@gmail.com>
+---
+ wintun.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-Yup, that sounds right :)
+diff --git a/wintun.c b/wintun.c
+index 624de2f..90e7930 100644
+--- a/wintun.c
++++ b/wintun.c
+@@ -820,6 +820,14 @@ static NTSTATUS TunInitializeDispatchSecurityDescriptor(VOID)
+     return STATUS_SUCCESS;
+ }
+ 
++static VOID TunFreeDispatchSecurityDescriptor(VOID)
++{
++    if (!TunDispatchSecurityDescriptor)
++        return;
++    ExFreePoolWithTag(TunDispatchSecurityDescriptor, TUN_MEMORY_TAG);
++    TunDispatchSecurityDescriptor = NULL;
++}
++
+ _IRQL_requires_max_(PASSIVE_LEVEL)
+ static VOID
+ TunProcessNotification(HANDLE ParentId, HANDLE ProcessId, BOOLEAN Create)
+@@ -1387,7 +1395,7 @@ TunUnload(PDRIVER_OBJECT DriverObject)
+     NdisMDeregisterMiniportDriver(NdisMiniportDriverHandle);
+     ExDeleteResourceLite(&TunDispatchCtxGuard);
+     ExDeleteResourceLite(&TunDispatchDeviceListLock);
+-    ExFreePoolWithTag(TunDispatchSecurityDescriptor, TUN_MEMORY_TAG);
++    TunFreeDispatchSecurityDescriptor();
+ }
+ 
+ DRIVER_INITIALIZE DriverEntry;
+@@ -1398,7 +1406,7 @@ DriverEntry(DRIVER_OBJECT *DriverObject, UNICODE_STRING *RegistryPath)
+     NTSTATUS Status;
+ 
+     if (!NT_SUCCESS(Status = TunInitializeDispatchSecurityDescriptor()))
+-        return Status;
++        goto cleanupSD;
+ 
+     NdisVersion = NdisGetVersion();
+     if (NdisVersion < NDIS_MINIPORT_VERSION_MIN)
+@@ -1461,6 +1469,7 @@ cleanupNotifier:
+ cleanupResources:
+     ExDeleteResourceLite(&TunDispatchCtxGuard);
+     ExDeleteResourceLite(&TunDispatchDeviceListLock);
+-    ExFreePoolWithTag(TunDispatchSecurityDescriptor, TUN_MEMORY_TAG);
++cleanupSD:
++    TunFreeDispatchSecurityDescriptor();
+     return Status;
+ }
+-- 
+2.26.2.windows.1
 
--Toke
