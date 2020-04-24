@@ -2,46 +2,64 @@ Return-Path: <SRS0=1xjk=6I=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.4 required=3.0 tests=FORGED_MUA_MOZILLA,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33546C55196
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BAFE5C55197
 	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Apr 2020 20:56:29 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id DEFF721556
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Apr 2020 20:56:28 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org DEFF721556
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=gmx.de
+	by mail.kernel.org (Postfix) with ESMTPS id 4847D21556
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Apr 2020 20:56:29 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="frGfi7WC"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 4847D21556
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 48ed3a75;
-	Fri, 24 Apr 2020 20:38:40 +0000 (UTC)
-Received: from ciao.gmane.io (ciao.gmane.io [159.69.161.202])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f56c9348
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0c02546f;
+	Fri, 24 Apr 2020 20:44:21 +0000 (UTC)
+Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id fd131c2c
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 15 Apr 2020 12:15:09 +0000 (UTC)
-Received: from list by ciao.gmane.io with local (Exim 4.92)
- (envelope-from <gnw-wireguard@m.gmane-mx.org>) id 1jOh6E-0008QA-8I
- for wireguard@lists.zx2c4.com; Wed, 15 Apr 2020 14:25:02 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: wireguard@lists.zx2c4.com
-From: Kalle <kalle-python@gmx.de>
-Subject: Update kmod-wireguard on CentOS 7.7 failed
-Date: Wed, 15 Apr 2020 14:14:50 +0200
-Message-ID: <r76trq$3frd$1@ciao.gmane.io>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
-X-Mozilla-News-Host: news://news.gmane.org:119
-Content-Language: en-US
-X-Mailman-Approved-At: Fri, 24 Apr 2020 22:38:38 +0200
+ Fri, 24 Apr 2020 20:44:19 +0000 (UTC)
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f497c6cd
+ for <wireguard@lists.zx2c4.com>;
+ Fri, 24 Apr 2020 20:44:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :references:in-reply-to:from:date:message-id:subject:to:cc
+ :content-type; s=mail; bh=UggGxqOxAgiuX0HKuhKHrb83Ago=; b=frGfi7
+ WCRmnawyIGEtVS7UIyOnoDzv0kW+7e0ddaDz4Nsv9v8NNj0NvdHNgoTv9OyqljUV
+ 0AfwVgzt29H0x/wzZtqjwSRP6pwcs0NlPq4QBv9rFsnWV2YrqP7TIhtZbKialmMp
+ G34MbUkuGnbLji/DCkli58CdWOiPto+1Rpt7JUz23sh6KVs794pBMwHaBzNI34Ww
+ CV6KpHMSPjU/4MYCFjsT+Gr5gZO3DUA3Z4n8uSgfKc3gehUVEJfveGeTbP2hz7n5
+ imJ46T1jHfpyMmg/XWTOt6a/lT8XIjpOEOdLAZ5F1OPrKjDFeBlhfeKRYcqw8voH
+ 6xGDG2SxFxQdYZmw==
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 07705476
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Fri, 24 Apr 2020 20:44:18 +0000 (UTC)
+Received: by mail-il1-f181.google.com with SMTP id m5so2362711ilj.10
+ for <wireguard@lists.zx2c4.com>; Fri, 24 Apr 2020 13:55:28 -0700 (PDT)
+X-Gm-Message-State: AGi0PuYgS2FxeKSSD7OypVPE0sJ1vHknQ3JWB2djZy0cGSt2wJFhFi7A
+ VCn46aTHnaLd5skkJIKCGkWbhuCNn9Vd4vbk8to=
+X-Google-Smtp-Source: APiQypLvbvpq4qQ9Xkx3D+spjfK7jaB22LBp7md+hitY+oSr7ENwJXcu09yy+ctUxXfter/+JExoZ8DsW3MP6PRATJA=
+X-Received: by 2002:a92:d4c4:: with SMTP id o4mr10877477ilm.38.1587761728071; 
+ Fri, 24 Apr 2020 13:55:28 -0700 (PDT)
+MIME-Version: 1.0
+References: <M5WzVK5--3-2@tuta.io>
+In-Reply-To: <M5WzVK5--3-2@tuta.io>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Fri, 24 Apr 2020 14:55:17 -0600
+X-Gmail-Original-Message-ID: <CAHmME9oGY8MVpMe1HbWm6AQCPxb4RcRpiAYrdDTBHAMotMyiGQ@mail.gmail.com>
+Message-ID: <CAHmME9oGY8MVpMe1HbWm6AQCPxb4RcRpiAYrdDTBHAMotMyiGQ@mail.gmail.com>
+Subject: Re: Attaching XDP program into wireguard interface
+To: Adhipati Blambangan <adhipati@tuta.io>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -56,41 +74,4 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello,
-
-this happens on
-# cat /etc/redhat-release
-CentOS Linux release 7.7.1908 (Core)
-
-# yum update
-Resolving Dependencies
---> Running transaction check
----> Package kmod-wireguard.x86_64 0:1.0.20200401-1.el7_7.elrepo will be 
-updated
----> Package kmod-wireguard.x86_64 0:1.0.20200413-1.el7_8.elrepo will be 
-an update
---> Processing Dependency: kernel(siphash_4u64) = 0xdb8b9061 for 
-package: kmod-wireguard-1.0.20200413-1.el7_8.elrepo.x86_64
---> Processing Dependency: kernel(siphash_3u32) = 0x04e11789 for 
-package: kmod-wireguard-1.0.20200413-1.el7_8.elrepo.x86_64
---> Processing Dependency: kernel(siphash_1u64) = 0x0680ac30 for 
-package: kmod-wireguard-1.0.20200413-1.el7_8.elrepo.x86_64
---> Finished Dependency Resolution
-Error: Package: kmod-wireguard-1.0.20200413-1.el7_8.elrepo.x86_64 (elrepo)
-            Requires: kernel(siphash_3u32) = 0x04e11789
-Error: Package: kmod-wireguard-1.0.20200413-1.el7_8.elrepo.x86_64 (elrepo)
-            Requires: kernel(siphash_4u64) = 0xdb8b9061
-Error: Package: kmod-wireguard-1.0.20200413-1.el7_8.elrepo.x86_64 (elrepo)
-            Requires: kernel(siphash_1u64) = 0x0680ac30
-  You could try using --skip-broken to work around the problem
-  You could try running: rpm -Va --nofiles --nodigest
-
-
-Witch kmod-wireguard.x86_64 0:1.0.20200401-1.el7_7.elrepo everything was 
-OK. Did i miss something?
-
-Best regards,
-
-Kalle.
-
-
+Could you send some sample code for us to debug this with?
