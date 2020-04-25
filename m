@@ -1,75 +1,67 @@
-Return-Path: <SRS0=1xjk=6I=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=Rf1T=6J=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MIME_QP_LONG_LINE,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B4215C2BA1A
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Apr 2020 23:48:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3282EC55186
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 25 Apr 2020 06:23:59 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 5DDB22064A
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Apr 2020 23:48:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 4402F20767
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 25 Apr 2020 06:23:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JyHtUwye"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 5DDB22064A
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	dkim=pass (1024-bit key) header.d=rozman.si header.i=@rozman.si header.b="Yi/AN32H"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 4402F20767
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=rozman.si
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0886b322;
-	Fri, 24 Apr 2020 23:37:43 +0000 (UTC)
-Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com
- [2607:f8b0:4864:20::443])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 8042c758
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7885027a;
+	Sat, 25 Apr 2020 06:12:18 +0000 (UTC)
+Received: from pub5.amebis.si (pub5.amebis.si [2a00:ee2:209:164::f])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id bc94a7e3
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 24 Apr 2020 23:37:41 +0000 (UTC)
-Received: by mail-pf1-x443.google.com with SMTP id x2so1869277pfx.7
- for <wireguard@lists.zx2c4.com>; Fri, 24 Apr 2020 16:48:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=y8ccWvNR5ztdJqej4gXn+p4FOlkgebgqyYsbRoqOf8w=;
- b=JyHtUwyeBtdv3BX2fKy+cESyQ0kEC1v21Z7qs+fiPWDf0RsqQtShfxJRGzpqBCtx4W
- JPnwbGavIq13QWul/lojBYUOgJPoQ/WmvF3HNLAI9OzLIpoWW55kS5jS7XllBO0ipBNL
- JlgiIjCBT7R79jVNZiME9V/vVEVeKKPIjOOfyexLD+lz8HOb1ZZvgMrkYUwvDsmEFDrk
- 3cuur7BQdglUYr9Noa2NtKhCMazbuQZ3T52G52hBSBZicSGq1CR75FIMCrLJCvqdqRqX
- Lv6q0yqe+8/Xj6FbgKLSl3ZkjiNdjgO7tTznKeT+D3qoEvDU1NR7JDq2Lv6v6X4IQH6u
- wEsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=y8ccWvNR5ztdJqej4gXn+p4FOlkgebgqyYsbRoqOf8w=;
- b=fZI717/uBdGyLwzCH0PbuJtydFiTqfHNNCKsc8fkwT6JReUHP38vm4fu9K8Rv+VpRO
- rfKw29SoB3+xlLuO3ZjUZ7q+1RUGaLIt+QWjYA1ln+lZcOjb2fkAS7Ap6KPAszXgkQPG
- kJGKvFoHjHjDF4FWVWs560kTh1DV8yaBdiC8ZYXGEK8Qs060GnfJKmbWKNER8wzU+lYF
- P/dD+ITGyfx4TDKH9Vvhj5ZACkjipVx2tDw9fvg/DaG1t+pg2ZWUYxpiYwHwJj+tWiv6
- +YQKfBc5PHFUjnn6T/4AnLeasTaXUZKRJss4c0MeFTIlCXoqEiq89ell19ePqLUqzXhN
- 6Znw==
-X-Gm-Message-State: AGi0PuZHWMxLxdVs/Vy+0hn3ItSMAUAQMH78GScPciUdyyo6ZMlyg6gk
- klb3WyX6E8FmoJM53bqgogoqVDJu
-X-Google-Smtp-Source: APiQypLEOVCFjUxOekXFffXca/RfyzQmzzDyAAJ3Wsrt3UScwWUKZyo4SkzyunuMMkEPFSFKWh7R/A==
-X-Received: by 2002:a62:25c6:: with SMTP id l189mr12669434pfl.28.1587772130243; 
- Fri, 24 Apr 2020 16:48:50 -0700 (PDT)
-Received: from localhost.localdomain ([98.203.142.101])
- by smtp.gmail.com with ESMTPSA id e7sm6640882pfj.97.2020.04.24.16.48.49
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Fri, 24 Apr 2020 16:48:49 -0700 (PDT)
-From: Shawn Hoffman <godisgovernment@gmail.com>
-To: wireguard@lists.zx2c4.com
-Cc: Shawn Hoffman <godisgovernment@gmail.com>
-Subject: [PATCH] use standard volatile semantics
-Date: Fri, 24 Apr 2020 16:47:45 -0700
-Message-Id: <20200424234745.1031-1-godisgovernment@gmail.com>
-X-Mailer: git-send-email 2.26.2.windows.1
+ Sat, 25 Apr 2020 06:12:16 +0000 (UTC)
+Received: by pub5.amebis.si (Postfix, from userid 1000)
+ id 50F5E1002FA9; Sat, 25 Apr 2020 08:23:26 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rozman.si;
+ s=default; t=1587795806;
+ bh=7KRD+qgVOv2X5w5BVzgG+LrC1r79WcPYfv1fIbBrvPQ=;
+ h=From:To:Subject:Date:References:In-Reply-To:From;
+ b=Yi/AN32HTcFIakzepYoW2+L0YISKAX/9IthEfxoBMn2DdhWtVljygvF0C24rz2WzA
+ 0dxfRWSRmHtZxuHHRTGl/+Tx6y4A9upDPX+LcSSIGzOtu3UGoOEr2/qLzitlLFMqfB
+ pixyB+SWY87QPjxzJ1ShV/45O5/qgOcEpOw1J0NU=
+Received: from PLANJAVA.amebis.doma (planjava.amebis.doma
+ [IPv6:2a00:ee2:209:164::2])
+ by pub5.amebis.si (Postfix) with ESMTPS id 973B11002FA1;
+ Sat, 25 Apr 2020 08:23:23 +0200 (CEST)
+Received: from PLANJAVA.amebis.doma ([fe80::a486:6f91:d7b9:9035]) by
+ PLANJAVA.amebis.doma ([fe80::a486:6f91:d7b9:9035%17]) with mapi id
+ 14.03.0487.000; Sat, 25 Apr 2020 08:23:23 +0200
+From: Simon Rozman <simon@rozman.si>
+To: Shawn Hoffman <godisgovernment@gmail.com>, "wireguard@lists.zx2c4.com"
+ <wireguard@lists.zx2c4.com>
+Subject: Re: [PATCH 0/1] wintun: use standard volatile semantics
+Thread-Topic: [PATCH 0/1] wintun: use standard volatile semantics
+Thread-Index: AQHWGno0X1xiA9GKeU+V6EcPByd9H6iJXxUA
+Date: Sat, 25 Apr 2020 06:23:23 +0000
+Message-ID: <B6B013EB-18CF-4017-A096-3512B19C9963@rozman.si>
+References: <20200424194010.32225-1-godisgovernment@gmail.com>
+In-Reply-To: <20200424194010.32225-1-godisgovernment@gmail.com>
+Accept-Language: en-GB, sl-SI, en-US
+Content-Language: en-GB
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator: 
+user-agent: Microsoft-MacOutlook/16.36.20041300
+x-originating-ip: [2a00:ee2:209:164::1]
+Content-Type: multipart/signed; protocol="application/pkcs7-signature";
+ micalg=sha256; boundary="B_3670647802_893478996"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -84,347 +76,125 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Make all archs are use the standardized concept of volatile.
-This patch will cause the most changes to arm64 codegen, and has
-yet to be tested on arm64 so is currently being submitted for
-comments. If someone would like to test on arm64 it would be
-appreciated. I do have an arm64 device, but it seems there's no
-existing arm64/windows wireguard binary package, so I can't
-just install such a thing and swap out the driver.
+--B_3670647802_893478996
+Content-type: text/plain;
+	charset="UTF-8"
+Content-transfer-encoding: quoted-printable
 
-Signed-off-by: Shawn Hoffman <godisgovernment@gmail.com>
----
- atomic.h               | 54 ------------------------------
- wintun.c               | 76 +++++++++++++++++++++---------------------
- wintun.vcxproj         |  5 ++-
- wintun.vcxproj.filters |  3 --
- 4 files changed, 40 insertions(+), 98 deletions(-)
- delete mode 100644 atomic.h
+Hi Shawn!
 
-diff --git a/atomic.h b/atomic.h
-deleted file mode 100644
-index 01dd35e..0000000
---- a/atomic.h
-+++ /dev/null
-@@ -1,54 +0,0 @@
--/* SPDX-License-Identifier: GPL-2.0
-- *
-- * Copyright (C) 2018-2019 WireGuard LLC. All Rights Reserved.
-- */
--
--#pragma once
--
--#include <wdm.h>
--
--static __forceinline VOID
--InterlockedSet(_Inout_ _Interlocked_operand_ LONG volatile *Target, _In_ LONG Value)
--{
--    *Target = Value;
--}
--
--static __forceinline VOID
--InterlockedSetU(_Inout_ _Interlocked_operand_ ULONG volatile *Target, _In_ ULONG Value)
--{
--    *Target = Value;
--}
--
--static __forceinline VOID
--InterlockedSetPointer(_Inout_ _Interlocked_operand_ VOID *volatile *Target, _In_opt_ VOID *Value)
--{
--    *Target = Value;
--}
--
--static __forceinline LONG
--InterlockedGet(_In_ _Interlocked_operand_ LONG volatile *Value)
--{
--    return *Value;
--}
--
--static __forceinline ULONG
--InterlockedGetU(_In_ _Interlocked_operand_ ULONG volatile *Value)
--{
--    return *Value;
--}
--
--static __forceinline PVOID
--InterlockedGetPointer(_In_ _Interlocked_operand_ PVOID volatile *Value)
--{
--    return *Value;
--}
--
--static __forceinline LONG64
--InterlockedGet64(_In_ _Interlocked_operand_ LONG64 volatile *Value)
--{
--#ifdef _WIN64
--    return *Value;
--#else
--    return InterlockedCompareExchange64(Value, 0, 0);
--#endif
--}
-\ No newline at end of file
-diff --git a/wintun.c b/wintun.c
-index a6a0e16..b042d35 100644
---- a/wintun.c
-+++ b/wintun.c
-@@ -9,7 +9,6 @@
- #include <ndis.h>
- #include <ntstrsafe.h>
- #include "undocumented.h"
--#include "atomic.h"
- 
- #pragma warning(disable : 4100) /* unreferenced formal parameter */
- #pragma warning(disable : 4200) /* nonstandard: zero-sized array in struct/union */
-@@ -250,7 +249,7 @@ TunSendNetBufferLists(
- 
-     KIRQL Irql = ExAcquireSpinLockShared(&Ctx->TransitionLock);
-     NDIS_STATUS Status;
--    if ((Status = NDIS_STATUS_PAUSED, !InterlockedGet(&Ctx->Running)) ||
-+    if ((Status = NDIS_STATUS_PAUSED, !ReadAcquire(&Ctx->Running)) ||
-         (Status = NDIS_STATUS_MEDIA_DISCONNECTED, KeReadStateEvent(&Ctx->Device.Disconnected)))
-         goto skipNbl;
- 
-@@ -258,7 +257,7 @@ TunSendNetBufferLists(
-     ULONG RingCapacity = Ctx->Device.Send.Capacity;
- 
-     /* Allocate space for packets in the ring. */
--    ULONG RingHead = InterlockedGetU(&Ring->Head);
-+    ULONG RingHead = ReadULongAcquire(&Ring->Head);
-     if (Status = NDIS_STATUS_ADAPTER_NOT_READY, RingHead >= RingCapacity)
-         goto skipNbl;
- 
-@@ -325,7 +324,7 @@ TunSendNetBufferLists(
-     {
-         NET_BUFFER_LIST *CompletedNbl = Ctx->Device.Send.ActiveNbls.Head;
-         Ctx->Device.Send.ActiveNbls.Head = NET_BUFFER_LIST_NEXT_NBL_EX(CompletedNbl);
--        InterlockedSetU(&Ring->Tail, TunNblGetOffset(CompletedNbl));
-+        WriteULongRelease(&Ring->Tail, TunNblGetOffset(CompletedNbl));
-         KeSetEvent(Ctx->Device.Send.TailMoved, IO_NETWORK_INCREMENT, FALSE);
-         NdisMSendNetBufferListsComplete(
-             Ctx->MiniportAdapterHandle, CompletedNbl, NDIS_SEND_COMPLETE_FLAGS_DISPATCH_LEVEL);
-@@ -343,11 +342,11 @@ skipNbl:
-     ExReleaseSpinLockShared(&Ctx->TransitionLock, Irql);
-     NdisMSendNetBufferListsComplete(Ctx->MiniportAdapterHandle, NetBufferLists, 0);
- updateStatistics:
--    InterlockedAdd64((LONG64 *)&Ctx->Statistics.ifHCOutOctets, SentPacketsSize);
--    InterlockedAdd64((LONG64 *)&Ctx->Statistics.ifHCOutUcastOctets, SentPacketsSize);
--    InterlockedAdd64((LONG64 *)&Ctx->Statistics.ifHCOutUcastPkts, SentPacketsCount);
--    InterlockedAdd64((LONG64 *)&Ctx->Statistics.ifOutErrors, ErrorPacketsCount);
--    InterlockedAdd64((LONG64 *)&Ctx->Statistics.ifOutDiscards, DiscardedPacketsCount);
-+    InterlockedAddNoFence64((LONG64 *)&Ctx->Statistics.ifHCOutOctets, SentPacketsSize);
-+    InterlockedAddNoFence64((LONG64 *)&Ctx->Statistics.ifHCOutUcastOctets, SentPacketsSize);
-+    InterlockedAddNoFence64((LONG64 *)&Ctx->Statistics.ifHCOutUcastPkts, SentPacketsCount);
-+    InterlockedAddNoFence64((LONG64 *)&Ctx->Statistics.ifOutErrors, ErrorPacketsCount);
-+    InterlockedAddNoFence64((LONG64 *)&Ctx->Statistics.ifOutDiscards, DiscardedPacketsCount);
- }
- 
- static MINIPORT_CANCEL_SEND TunCancelSend;
-@@ -393,15 +392,15 @@ TunReturnNetBufferLists(NDIS_HANDLE MiniportAdapterContext, PNET_BUFFER_LIST Net
-             if (!Ctx->Device.Receive.ActiveNbls.Head)
-                 KeSetEvent(&Ctx->Device.Receive.ActiveNbls.Empty, IO_NO_INCREMENT, FALSE);
-             KeReleaseInStackQueuedSpinLock(&LockHandle);
--            InterlockedSetU(&Ring->Head, TunNblGetOffset(CompletedNbl));
-+            WriteULongRelease(&Ring->Head, TunNblGetOffset(CompletedNbl));
-             NdisFreeNetBufferList(CompletedNbl);
-         }
-     }
- 
--    InterlockedAdd64((LONG64 *)&Ctx->Statistics.ifHCInOctets, ReceivedPacketsSize);
--    InterlockedAdd64((LONG64 *)&Ctx->Statistics.ifHCInUcastOctets, ReceivedPacketsSize);
--    InterlockedAdd64((LONG64 *)&Ctx->Statistics.ifHCInUcastPkts, ReceivedPacketsCount);
--    InterlockedAdd64((LONG64 *)&Ctx->Statistics.ifInErrors, ErrorPacketsCount);
-+    InterlockedAddNoFence64((LONG64 *)&Ctx->Statistics.ifHCInOctets, ReceivedPacketsSize);
-+    InterlockedAddNoFence64((LONG64 *)&Ctx->Statistics.ifHCInUcastOctets, ReceivedPacketsSize);
-+    InterlockedAddNoFence64((LONG64 *)&Ctx->Statistics.ifHCInUcastPkts, ReceivedPacketsCount);
-+    InterlockedAddNoFence64((LONG64 *)&Ctx->Statistics.ifInErrors, ErrorPacketsCount);
- }
- 
- _IRQL_requires_max_(PASSIVE_LEVEL)
-@@ -419,20 +418,20 @@ TunProcessReceiveData(_Inout_ TUN_CTX *Ctx)
-     VOID *Events[] = { &Ctx->Device.Disconnected, Ctx->Device.Receive.TailMoved };
-     ASSERT(RTL_NUMBER_OF(Events) <= THREAD_WAIT_OBJECTS);
- 
--    ULONG RingHead = InterlockedGetU(&Ring->Head);
-+    ULONG RingHead = ReadULongAcquire(&Ring->Head);
-     if (RingHead >= RingCapacity)
-         goto cleanup;
- 
-     while (!KeReadStateEvent(&Ctx->Device.Disconnected))
-     {
-         /* Get next packet from the ring. */
--        ULONG RingTail = InterlockedGetU(&Ring->Tail);
-+        ULONG RingTail = ReadULongAcquire(&Ring->Tail);
-         if (RingHead == RingTail)
-         {
-             LARGE_INTEGER SpinStart = KeQueryPerformanceCounter(NULL);
-             for (;;)
-             {
--                RingTail = InterlockedGetU(&Ring->Tail);
-+                RingTail = ReadULongAcquire(&Ring->Tail);
-                 if (RingTail != RingHead)
-                     break;
-                 if (KeReadStateEvent(&Ctx->Device.Disconnected))
-@@ -444,16 +443,16 @@ TunProcessReceiveData(_Inout_ TUN_CTX *Ctx)
-             }
-             if (RingHead == RingTail)
-             {
--                InterlockedSet(&Ring->Alertable, TRUE);
--                RingTail = InterlockedGetU(&Ring->Tail);
-+                WriteRelease(&Ring->Alertable, TRUE);
-+                RingTail = ReadULongAcquire(&Ring->Tail);
-                 if (RingHead == RingTail)
-                 {
-                     KeWaitForMultipleObjects(
-                         RTL_NUMBER_OF(Events), Events, WaitAny, Executive, KernelMode, FALSE, NULL, NULL);
--                    InterlockedSet(&Ring->Alertable, FALSE);
-+                    WriteRelease(&Ring->Alertable, FALSE);
-                     continue;
-                 }
--                InterlockedSet(&Ring->Alertable, FALSE);
-+                WriteRelease(&Ring->Alertable, FALSE);
-                 KeClearEvent(Ctx->Device.Receive.TailMoved);
-             }
-         }
-@@ -501,7 +500,7 @@ TunProcessReceiveData(_Inout_ TUN_CTX *Ctx)
-         TunNblSetOffsetAndMarkActive(Nbl, RingHead);
- 
-         KIRQL Irql = ExAcquireSpinLockShared(&Ctx->TransitionLock);
--        if (!InterlockedGet(&Ctx->Running))
-+        if (!ReadAcquire(&Ctx->Running))
-             goto cleanupNbl;
- 
-         KLOCK_QUEUE_HANDLE LockHandle;
-@@ -530,16 +529,16 @@ TunProcessReceiveData(_Inout_ TUN_CTX *Ctx)
-         ExReleaseSpinLockShared(&Ctx->TransitionLock, Irql);
-         NdisFreeNetBufferList(Nbl);
-     skipNbl:
--        InterlockedIncrement64((LONG64 *)&Ctx->Statistics.ifInDiscards);
-+        InterlockedIncrementNoFence64((LONG64 *)&Ctx->Statistics.ifInDiscards);
-         KeWaitForSingleObject(&Ctx->Device.Receive.ActiveNbls.Empty, Executive, KernelMode, FALSE, NULL);
--        InterlockedSetU(&Ring->Head, RingHead);
-+        WriteULongRelease(&Ring->Head, RingHead);
-     }
- 
-     /* Wait for all NBLs to return: 1. To prevent race between proceeding and invalidating ring head. 2. To have
-      * TunDispatchUnregisterBuffers() implicitly wait before releasing ring MDL used by NBL(s). */
-     KeWaitForSingleObject(&Ctx->Device.Receive.ActiveNbls.Empty, Executive, KernelMode, FALSE, NULL);
- cleanup:
--    InterlockedSetU(&Ring->Head, MAXULONG);
-+    WriteULongRelease(&Ring->Head, MAXULONG);
- }
- 
- #define IS_POW2(x) ((x) && !((x) & ((x)-1)))
-@@ -595,7 +594,7 @@ TunRegisterBuffers(_Inout_ TUN_CTX *Ctx, _Inout_ IRP *Irp)
-     if (Status = STATUS_INSUFFICIENT_RESOURCES, !Ctx->Device.Send.Ring)
-         goto cleanupSendUnlockPages;
- 
--    Ctx->Device.Send.RingTail = InterlockedGetU(&Ctx->Device.Send.Ring->Tail);
-+    Ctx->Device.Send.RingTail = ReadULongAcquire(&Ctx->Device.Send.Ring->Tail);
-     if (Status = STATUS_INVALID_PARAMETER, Ctx->Device.Send.RingTail >= Ctx->Device.Send.Capacity)
-         goto cleanupSendUnlockPages;
- 
-@@ -709,7 +708,7 @@ TunUnregisterBuffers(_Inout_ TUN_CTX *Ctx, _In_ FILE_OBJECT *Owner)
-     }
-     ZwClose(Ctx->Device.Receive.Thread);
- 
--    InterlockedSetU(&Ctx->Device.Send.Ring->Tail, MAXULONG);
-+    WriteULongRelease(&Ctx->Device.Send.Ring->Tail, MAXULONG);
-     KeSetEvent(Ctx->Device.Send.TailMoved, IO_NO_INCREMENT, FALSE);
- 
-     MmUnlockPages(Ctx->Device.Receive.Mdl);
-@@ -926,7 +925,7 @@ static NDIS_STATUS
- TunRestart(NDIS_HANDLE MiniportAdapterContext, PNDIS_MINIPORT_RESTART_PARAMETERS MiniportRestartParameters)
- {
-     TUN_CTX *Ctx = (TUN_CTX *)MiniportAdapterContext;
--    InterlockedSet(&Ctx->Running, TRUE);
-+    WriteRelease(&Ctx->Running, TRUE);
-     return NDIS_STATUS_SUCCESS;
- }
- 
-@@ -937,7 +936,7 @@ TunPause(NDIS_HANDLE MiniportAdapterContext, PNDIS_MINIPORT_PAUSE_PARAMETERS Min
- {
-     TUN_CTX *Ctx = (TUN_CTX *)MiniportAdapterContext;
- 
--    InterlockedSet(&Ctx->Running, FALSE);
-+    WriteRelease(&Ctx->Running, FALSE);
-     ExReleaseSpinLockExclusive(
-         &Ctx->TransitionLock,
-         ExAcquireSpinLockExclusive(&Ctx->TransitionLock)); /* Ensure above change is visible to all readers. */
-@@ -1131,9 +1130,10 @@ TunHaltEx(NDIS_HANDLE MiniportAdapterContext, NDIS_HALT_ACTION HaltAction)
-         ExAcquireSpinLockExclusive(&Ctx->TransitionLock)); /* Ensure above change is visible to all readers. */
-     NdisFreeNetBufferListPool(Ctx->NblPool);
- 
--    InterlockedSetPointer(&Ctx->MiniportAdapterHandle, NULL);
--#pragma warning(suppress : 28175)
--    InterlockedSetPointer(&Ctx->FunctionalDeviceObject->Reserved, NULL);
-+#pragma warning(suppress : 6387)
-+    WritePointerNoFence(&Ctx->MiniportAdapterHandle, NULL);
-+#pragma warning(suppress : 6387 28175)
-+    WritePointerNoFence(&Ctx->FunctionalDeviceObject->Reserved, NULL);
-     KeEnterCriticalRegion();
-     ExAcquireResourceExclusiveLite(&TunDispatchCtxGuard, TRUE); /* Ensure above change is visible to all readers. */
-     ExReleaseResourceLite(&TunDispatchCtxGuard);
-@@ -1242,16 +1242,16 @@ TunOidQuery(_Inout_ TUN_CTX *Ctx, _Inout_ NDIS_OID_REQUEST *OidRequest)
-     case OID_GEN_XMIT_OK:
-         return TunOidQueryWrite32or64(
-             OidRequest,
--            InterlockedGet64((LONG64 *)&Ctx->Statistics.ifHCOutUcastPkts) +
--                InterlockedGet64((LONG64 *)&Ctx->Statistics.ifHCOutMulticastPkts) +
--                InterlockedGet64((LONG64 *)&Ctx->Statistics.ifHCOutBroadcastPkts));
-+            ReadNoFence64((LONG64 *)&Ctx->Statistics.ifHCOutUcastPkts) +
-+                ReadNoFence64((LONG64 *)&Ctx->Statistics.ifHCOutMulticastPkts) +
-+                ReadNoFence64((LONG64 *)&Ctx->Statistics.ifHCOutBroadcastPkts));
- 
-     case OID_GEN_RCV_OK:
-         return TunOidQueryWrite32or64(
-             OidRequest,
--            InterlockedGet64((LONG64 *)&Ctx->Statistics.ifHCInUcastPkts) +
--                InterlockedGet64((LONG64 *)&Ctx->Statistics.ifHCInMulticastPkts) +
--                InterlockedGet64((LONG64 *)&Ctx->Statistics.ifHCInBroadcastPkts));
-+            ReadNoFence64((LONG64 *)&Ctx->Statistics.ifHCInUcastPkts) +
-+                ReadNoFence64((LONG64 *)&Ctx->Statistics.ifHCInMulticastPkts) +
-+                ReadNoFence64((LONG64 *)&Ctx->Statistics.ifHCInBroadcastPkts));
- 
-     case OID_GEN_STATISTICS:
-         return TunOidQueryWriteBuf(OidRequest, &Ctx->Statistics, (ULONG)sizeof(Ctx->Statistics));
-diff --git a/wintun.vcxproj b/wintun.vcxproj
-index 3bb61d1..abe4a17 100644
---- a/wintun.vcxproj
-+++ b/wintun.vcxproj
-@@ -125,7 +125,7 @@
-   <ItemDefinitionGroup>
-     <ClCompile>
-       <PreprocessorDefinitions>NDIS_MINIPORT_DRIVER=1;NDIS620_MINIPORT=1;NDIS683_MINIPORT=1;NDIS_WDM=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
--      <AdditionalOptions>/volatile:ms %(AdditionalOptions)</AdditionalOptions>
-+      <AdditionalOptions>/volatile:iso %(AdditionalOptions)</AdditionalOptions>
-       <EnablePREfast>true</EnablePREfast>
-     </ClCompile>
-     <ResourceCompile>
-@@ -171,9 +171,8 @@
-     <FilesToPackage Include="$(TargetPath)" Condition="'$(ConfigurationType)'=='Driver' or '$(ConfigurationType)'=='DynamicLibrary'" />
-   </ItemGroup>
-   <ItemGroup>
--    <ClInclude Include="atomic.h" />
-     <ClInclude Include="undocumented.h" />
-   </ItemGroup>
-   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-   <ImportGroup Label="ExtensionTargets" />
--</Project>
-+</Project>
-\ No newline at end of file
-diff --git a/wintun.vcxproj.filters b/wintun.vcxproj.filters
-index 467cc48..3e19120 100644
---- a/wintun.vcxproj.filters
-+++ b/wintun.vcxproj.filters
-@@ -33,8 +33,5 @@
-     <ClInclude Include="undocumented.h">
-       <Filter>Header Files</Filter>
-     </ClInclude>
--    <ClInclude Include="atomic.h">
--      <Filter>Header Files</Filter>
--    </ClInclude>
-   </ItemGroup>
- </Project>
-\ No newline at end of file
--- 
-2.26.2.windows.1
+Thank you. This generally looks good. I can't find any official documentati=
+on on the set of functions and macros from wdm.h, but that's nothing new wit=
+h Microsoft.=20
 
+I have some nitpicks thou.
+
+1. As the atomic.h is no longer used; it could be deleted from the repo.
+2. By removing #include "atomic.h", you should add #include <wdm.h>. wintun=
+.c is now directly using functions and macros declared in wdm.h.
+3. Please add "Signed-of-by: Shawn Hoffman <godisgovernment@gmail.com>" lin=
+e to your commit message.
+4. You are right, there is no WireGuard for Windows 10 ARM64 yet, because t=
+here is no MinGW and Go support for Windows 10 ARM64 yet. If we can get arm-=
+w64-mingw32-native, we could use set GOARCH=3Darm to compile 32-bit ARM wiregu=
+ard.exe. 32-bit ARM runs at native speed on Windows 10 ARM64. The challenge =
+I see is making SetupAPI work. I do know the SetupAPI does not work in x86 p=
+rocesses on AMD64 Windows. The System32 folder deflection makes it fail when=
+ attempting to create a device. I am expecting the same in ARM process on AR=
+M64 Windows.
+
+I have the ARM/ARM64 support high on my TODO list. I do hope to find some t=
+ime next week to play with your patch and WireGuard ARM.
+
+Regards, Simon
+
+=EF=BB=BF-----Original Message-----
+From: WireGuard <wireguard-bounces@lists.zx2c4.com> on behalf of Shawn Hoff=
+man <godisgovernment@gmail.com>
+Date: Friday, 24. April 2020 at 22:52
+To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+Cc: Shawn Hoffman <godisgovernment@gmail.com>
+Subject: [PATCH 0/1] wintun: use standard volatile semantics
+
+    Make all archs are use the standardized concept of volatile.
+    This patch will cause the most changes to arm64 codegen, and has
+    yet to be tested on arm64 so is currently being submitted for
+    comments. If someone would like to test on arm64 it would be
+    appreciated. I do have an arm64 device, but it seems there's no
+    existing arm64/windows wireguard binary package, so I can't
+    just install such a thing and swap out the driver.
+
+    Shawn Hoffman (1):
+      replace atomic.h with provided APIs switch to /volatile:iso
+
+     wintun.c               | 76 +++++++++++++++++++++---------------------
+     wintun.vcxproj         |  5 ++-
+     wintun.vcxproj.filters |  3 --
+     3 files changed, 40 insertions(+), 44 deletions(-)
+
+    --=20
+    2.20.1
+
+
+--B_3670647802_893478996
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+
+MIILkQYJKoZIhvcNAQcCoIILgjCCC34CAQExDzANBglghkgBZQMEAgEFADALBgkqhkiG9w0B
+BwGgggl6MIIFWTCCBEGgAwIBAgIEO0oNLjANBgkqhkiG9w0BAQUFADA9MQswCQYDVQQGEwJz
+aTEbMBkGA1UEChMSc3RhdGUtaW5zdGl0dXRpb25zMREwDwYDVQQLEwhzaWdlbi1jYTAeFw0x
+NjAyMTkxNzU0NDFaFw0yMTAyMTkyMTM4MTVaMIGAMQswCQYDVQQGEwJTSTEbMBkGA1UEChMS
+c3RhdGUtaW5zdGl0dXRpb25zMREwDwYDVQQLEwhzaWdlbi1jYTEUMBIGA1UECxMLaW5kaXZp
+ZHVhbHMxKzATBgNVBAMTDFNpbW9uIFJvem1hbjAUBgNVBAUTDTIzNDU2Nzk1MTIwNDIwggEi
+MA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQD+LEVulmN6fPkadqe82V8M1xrQ52BYGDka
+xqVw/tEwalpKEiMR6DO8VfCpkjj1Ka5JEoU21Srm1MFg6Tkot9b8ykHAGEWGakBRBSgJGBBQ
+AqiO8knjtQuohXSAFeUWjLMfA3mOZG8rJbGrCyg39Fmm1jeezWYuB/7s2xrqK7Stc/GzIheq
+sYE0Pw1FhqtECA52JuzoItOX368d31tN/O1ynkH7F0TXy48GFncmq5Yid3d3QVOk1qQC68lo
+ILwSSkLA5xOV6mHz/XlAAb/jfNLfsIyxT1RO4+rPlOulTYVex/bfxlbKGXN4qfK/o84TFqXW
+1dbDUK7jS9PzMxthWpTfAgMBAAGjggIbMIICFzAOBgNVHQ8BAf8EBAMCBaAwSwYDVR0gBEQw
+QjA2BgsrBgEEAa9ZAgIDAzAnMCUGCCsGAQUFBwIBFhlodHRwOi8vd3d3LmNhLmdvdi5zaS9j
+cHMvMAgGBgQAizABAjAYBggrBgEFBQcBAwQMMAowCAYGBACORgEBMBoGA1UdEQQTMBGBD3Np
+bW9uQHJvem1hbi5zaTCB7gYDVR0fBIHmMIHjMFagVKBSpFAwTjELMAkGA1UEBhMCc2kxGzAZ
+BgNVBAoTEnN0YXRlLWluc3RpdHV0aW9uczERMA8GA1UECxMIc2lnZW4tY2ExDzANBgNVBAMT
+BkNSTDQ1NTCBiKCBhaCBgoZXbGRhcDovL3g1MDAuZ292LnNpL291PXNpZ2VuLWNhLG89c3Rh
+dGUtaW5zdGl0dXRpb25zLGM9c2k/Y2VydGlmaWNhdGVSZXZvY2F0aW9uTGlzdD9iYXNlhido
+dHRwOi8vd3d3LnNpZ2VuLWNhLnNpL2NybC9zaWdlbi1jYS5jcmwwKwYDVR0QBCQwIoAPMjAx
+NjAyMTkxNzU0NDFagQ8yMDIxMDIxOTIxMzgxNVowHwYDVR0jBBgwFoAUcXuKBh8xBVWrYBJ3
+RyAeA4gY7IkwHQYDVR0OBBYEFLv/sAfJBgjR7wY4+bBNzVlM3DmXMAkGA1UdEwQCMAAwGQYJ
+KoZIhvZ9B0EABAwwChsEVjguMQMCA6gwDQYJKoZIhvcNAQEFBQADggEBAEFQvgobVnWgEgh0
+ohmz3InGcmD8t8Q9W/M0fz4IKp6CrQPqTjwOijvahUSKySOqCB1tQaPfS4Afw+MIPmQsZWgP
+CHlrZq1DepDNpgD+WPYmzZ/h91c2frS9GntfNsaxB3Bhh5wisrM7nHpdUAhFv5Mdk2NcvdVf
+q86jPAFC//53HU/0f+sxSft3xyLu/g96pKFtZtbCLp7PX1xm9IpKTP+VZ/i2PxBsDSdZ5QGW
+TcHHr9NF1ruTBfNwUTG35E4a3RgmNtkI3eR3uzBxG9FPqASL0vqfVcuCHA9JiHNmNovl9e8j
+XUm5KhALLXddYGSrfkyijiJjX3BqdLVbpQzxirQwggQZMIIDAaADAgECAgQ7PPnJMA0GCSqG
+SIb3DQEBBQUAMD0xCzAJBgNVBAYTAnNpMRswGQYDVQQKExJzdGF0ZS1pbnN0aXR1dGlvbnMx
+ETAPBgNVBAsTCHNpZ2VuLWNhMB4XDTAxMDYyOTIxMjc0NloXDTIxMDYyOTIxNTc0NlowPTEL
+MAkGA1UEBhMCc2kxGzAZBgNVBAoTEnN0YXRlLWluc3RpdHV0aW9uczERMA8GA1UECxMIc2ln
+ZW4tY2EwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCw5WWywKxklvKIG7PtnuQC
+xk8riM4uilGAda8QW/LLOGabog5tNEeWpZIRr/Y1R6J3IgzOFohiqtNJbhi8LkTYvsaewhoZ
+rEGO/DAHAvLGatRbIwDvQTTYpHNj3yKSM4QBpY3zg1z6uNR6Nd/s+G0P4EztrZw6fYbWpQiU
+vn16ER/+hT9UWohjh5ylsadOzbdEc6/PiklrH+PN10lNWisX5lx2s7tyuW8n0puJFYjfEF92
+IQFqxxUxCtGcWPgoFgVt2U7ZodcHIMtLJolNkrKnupbo41iPIpwBllrE9zFNC0m14Xhh4lQY
+BrueVDR+DD7r7rWAH90WhB1oOGZnc/iRAgMBAAGjggEfMIIBGzARBglghkgBhvhCAQEEBAMC
+AAcwXwYDVR0fBFgwVjBUoFKgUKROMEwxCzAJBgNVBAYTAnNpMRswGQYDVQQKExJzdGF0ZS1p
+bnN0aXR1dGlvbnMxETAPBgNVBAsTCHNpZ2VuLWNhMQ0wCwYDVQQDEwRDUkwxMCsGA1UdEAQk
+MCKADzIwMDEwNjI5MjEyNzQ2WoEPMjAyMTA2MjkyMTU3NDZaMAsGA1UdDwQEAwIBBjAfBgNV
+HSMEGDAWgBRxe4oGHzEFVatgEndHIB4DiBjsiTAdBgNVHQ4EFgQUcXuKBh8xBVWrYBJ3RyAe
+A4gY7IkwDAYDVR0TBAUwAwEB/zAdBgkqhkiG9n0HQQAEEDAOGwhWNS4wOjQuMAMCBJAwDQYJ
+KoZIhvcNAQEFBQADggEBAAC6YzTzGBjurn6Nksc19cIT1NYAqiEyFtbQW/opsI36F3eS+aW2
+9vmHPwYPIO5iPTT3qS/HqTvQJ4hMrN3JqeVaWIXXEjU93LCCW3L0u3O3+/44IZgEgLKIYg8e
+rDoWqeazCvYVEEUDo5fizawQ3PkAHr9zbEPsdyIWBi+Wg4l7sLhTREEI3IAfBdsZCXaHvjWd
+TiFLtJPBaDqdXzb+oa4wLEveeCQ6WNYWQ++dmTiLKpj+MNHC6tavJdWldgu570A5Lvbr3zJe
+HX2HtUTMAjnSJpVy2G+FQ6iPDqNGztfO6LlWqfiJFxIfQ0kGejLnP75veb7WM9dMPCj8EvF2
+dhgxggHbMIIB1wIBATBFMD0xCzAJBgNVBAYTAnNpMRswGQYDVQQKExJzdGF0ZS1pbnN0aXR1
+dGlvbnMxETAPBgNVBAsTCHNpZ2VuLWNhAgQ7Sg0uMA0GCWCGSAFlAwQCAQUAoGkwLwYJKoZI
+hvcNAQkEMSIEIFaCcgcGBT85fbaxSlpAsA6t9TUNyEqMG9K55YolKcN7MBgGCSqGSIb3DQEJ
+AzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTIwMDQyNTA2MjMyMlowDQYJKoZIhvcN
+AQEBBQAEggEAlwVJ1ddnpPEdS83isMsnXHHgjBsD9KYXdSDek+OjbH15qUEhwszECcwC7BQY
+UsukOmHFs9QvwHnhr9d0BZ14GHwxfRVUEoMT0YiEB/cwJoqcpxEZ2WyH/a3Ry3Tldq7NRIRW
+l9wichKaC3uura9F6Wih5MStqiQIOpZE7Xy6KwaiMrjDME2F3mkRrElg79c5uaqXDKkxTJQe
+t/zINd3KK31A9Eg9+B1pQKfTkgw2qnbysoDckJkphzdthJ9BvcMwQNJCGLdN9YAzIuF+pqnT
+qLgESlsbaaZViaDHhEkc8FhoA8GeOsoB1afSwHnRvZJqXTtwFZ0iEW52QhMHL1Mi0w==
+
+--B_3670647802_893478996--
