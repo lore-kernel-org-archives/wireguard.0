@@ -1,66 +1,71 @@
-Return-Path: <SRS0=Rf1T=6J=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=KyK9=6K=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 96193C55185
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 25 Apr 2020 08:52:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DC6D8C2BA1A
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 26 Apr 2020 03:53:37 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id E7E9320700
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 25 Apr 2020 08:52:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 49CA12070A
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 26 Apr 2020 03:53:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="q+GcINP1"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org E7E9320700
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h+sDYiog"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 49CA12070A
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 74506d42;
-	Sat, 25 Apr 2020 08:40:44 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2ef586f5
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7c40d9f1;
+	Sun, 26 Apr 2020 03:41:49 +0000 (UTC)
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com
+ [2a00:1450:4864:20::342])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 56d8ce8b
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sat, 25 Apr 2020 08:40:42 +0000 (UTC)
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 797062bf
- for <wireguard@lists.zx2c4.com>;
- Sat, 25 Apr 2020 08:40:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=Cy3Kw4pzwi4GWXgyieI8w8Qv7Go=; b=q+GcIN
- P1vp9EEPm1WjzFJxcloxm9QRF3eKW439H/vNKaryAcfk/6esoZCHVSmZLcHd21nF
- RrynZckrbyin/W64fSsBTtVjK5kmSS0gA+KboTGZkeErIGhU0Qa3gmQNSvizLno4
- jrKdkBwCWFfTDaL/HtwJFFN+dWwE0gWvxdrXASmSWckT4tJxJdZnVb2MuO7oFMrB
- a0SvzvgVD6zsbUvcXaPOAjrR5AcLSD/fq7wiWYNg3TVyPkaNtIDZfKvwCZNmTSrk
- pWHks7fFjcPgMGqf1K3WofGa0tI19ZmgefjO5B6OfPhE1yajaukVGR8LPmb8hmHv
- 8bqUnXX6vhRSeR+g==
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id b1c50716
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Sat, 25 Apr 2020 08:40:41 +0000 (UTC)
-Received: by mail-il1-f177.google.com with SMTP id c16so11660711ilr.3
- for <wireguard@lists.zx2c4.com>; Sat, 25 Apr 2020 01:51:55 -0700 (PDT)
-X-Gm-Message-State: AGi0PuZYiEZUxP8fJPm/HpWmoZBK60W94Plhg0Mw+cDXS0jCSqFudy7V
- eWZ27KosMdqb9dbLfNBgyY5KwVYg9dpbhX1xNwg=
-X-Google-Smtp-Source: APiQypJwlHAyMvwwuTqW+flnKGDH3HMlfWg8eju1Ru4J0Gr78G77Wpl2fjOSDYyJxryUPGiPtG0G6icCFdTGJ3zqnOw=
-X-Received: by 2002:a92:d98c:: with SMTP id r12mr12869648iln.224.1587804714431; 
- Sat, 25 Apr 2020 01:51:54 -0700 (PDT)
+ Sun, 26 Apr 2020 03:41:47 +0000 (UTC)
+Received: by mail-wm1-x342.google.com with SMTP id x25so15748900wmc.0
+ for <wireguard@lists.zx2c4.com>; Sat, 25 Apr 2020 20:53:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+ bh=9dfRV6cwCg1b3g7JD9rGEr4306ZPMu55LqDuUEGlT34=;
+ b=h+sDYiogl2iXbCH++eH5weALum9j9gAc2BpoIbxaHbMoe9i+xH+aRdohZu/LhQ9dCh
+ F+cft4hQ4vuk6CxJIL1nkmCvPiKhDsmML3PjvtdFTVnTDUvKajyjXG3qr3E6nLyPftYe
+ cmhI7G5tJI7C4Ecu611XHxM1zRn5ibgsTZgHHgyMbCS1gb+BVHKa0coYwLRCaowPZXgb
+ sechGwY4UFQGmQGr1wuD7pLRtLYHYbc28kpbgptf2AZAIl3XnfBhA9+y4Os6bk9rli5p
+ J1YbjsBOsK0wP/o7kmPQRgNOwvjv7zZkjTdhaG5ceLpLIGTODP+GmIBtpguNxIDlW3Qq
+ SWEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to;
+ bh=9dfRV6cwCg1b3g7JD9rGEr4306ZPMu55LqDuUEGlT34=;
+ b=b7DbA+W6Pr7peIzJCVjj2p776+9SRaiDTBfAWPlKBNZGTJMmVyXO5WOVG8d4v0UCUB
+ 5X1nQlBzBN7Ubl02eoA8QVkSpdPBfve4Epups9Ht2hPX9Pi6pNeJVJznXrT3BpIe/T9e
+ fQu0feYr5TlYEcJe3XJc3tduewjum5bBcwTbZnBrJbzA4AacckOIhJHVEce4sv+qHgcv
+ KM/P5JVQtdHukLFg7DD0nmY0Uwg687TzjSHyDQIyDvKjL1yy84MBjAxLFIakDYchxpjt
+ 8R0eLKJpckHjl+e9LzmopVwMpWmBJ7gQYl5jYjqmc89ZFbEetCsr87GMvHbe5BAmnewM
+ ThqA==
+X-Gm-Message-State: AGi0PuavUCFSD6SGtBo49/miuCuHq825dVKK9Itz1Jx3e8byrsksvvVk
+ mVrEHxzdN6Ci8Enlaa98AvUeb8tq2mhTrNNIvsGLsKcU
+X-Google-Smtp-Source: APiQypKu0nnHqVWQqcUaKpWiWsNkG0nYqtkrwrYCwTfoOMu22Rvr6olG2xCeUPL71GXJu7i7ZjhOmUpm3+JlajLDrRo=
+X-Received: by 2002:a1c:80c3:: with SMTP id
+ b186mr20460324wmd.117.1587873185921; 
+ Sat, 25 Apr 2020 20:53:05 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200424194010.32225-1-godisgovernment@gmail.com>
- <B6B013EB-18CF-4017-A096-3512B19C9963@rozman.si>
-In-Reply-To: <B6B013EB-18CF-4017-A096-3512B19C9963@rozman.si>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sat, 25 Apr 2020 02:51:43 -0600
-X-Gmail-Original-Message-ID: <CAHmME9rSMmdCgLdO1ST2ECWFbFvmUxmWWO+QXe+7+pitAhe8uw@mail.gmail.com>
-Message-ID: <CAHmME9rSMmdCgLdO1ST2ECWFbFvmUxmWWO+QXe+7+pitAhe8uw@mail.gmail.com>
-Subject: Re: [PATCH 0/1] wintun: use standard volatile semantics
-To: Simon Rozman <simon@rozman.si>
-Cc: Shawn Hoffman <godisgovernment@gmail.com>, 
- "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+References: <20200424234327.1814-1-godisgovernment@gmail.com>
+ <20200424234327.1814-2-godisgovernment@gmail.com>
+In-Reply-To: <20200424234327.1814-2-godisgovernment@gmail.com>
+From: Shawn Hoffman <godisgovernment@gmail.com>
+Date: Sat, 25 Apr 2020 20:52:53 -0700
+Message-ID: <CAPqQDTDPUH17QUQG4xehfiM9zFGw7PVQu=u00v5x15ts=L7SVQ@mail.gmail.com>
+Subject: Re: [PATCH 2/3] use ExEnterCriticalRegionAndAcquireResourceExclusive
+ and ExReleaseResourceAndLeaveCriticalRegion
+To: wireguard@lists.zx2c4.com
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -76,16 +81,57 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Sat, Apr 25, 2020 at 12:23 AM Simon Rozman <simon@rozman.si> wrote:
->
-> Hi Shawn!
->
-> Thank you. This generally looks good. I can't find any official documentation on the set of functions and macros from wdm.h, but that's nothing new with Microsoft.
->
-> I have some nitpicks thou.
->
-> 1. As the atomic.h is no longer used; it could be deleted from the repo.
-> 2. By removing #include "atomic.h", you should add #include <wdm.h>. wintun.c is now directly using functions and macros declared in wdm.h.
-> 3. Please add "Signed-of-by: Shawn Hoffman <godisgovernment@gmail.com>" line to your commit message.
+Looking back over this, the enter+acquire of the existing code is
+shared here, so replacing with exclusive will change behavior.
+For now, please ignore this patch.
 
-He resubmitted with his S-o-b line. See that patch series for the latest.
+
+On Fri, Apr 24, 2020 at 4:44 PM Shawn Hoffman <godisgovernment@gmail.com> wrote:
+>
+> Signed-off-by: Shawn Hoffman <godisgovernment@gmail.com>
+> ---
+>  wintun.c | 12 ++++--------
+>  1 file changed, 4 insertions(+), 8 deletions(-)
+>
+> diff --git a/wintun.c b/wintun.c
+> index 90e7930..00ac378 100644
+> --- a/wintun.c
+> +++ b/wintun.c
+> @@ -884,15 +884,13 @@ TunDispatchDeviceControl(DEVICE_OBJECT *DeviceObject, IRP *Irp)
+>      switch (Stack->Parameters.DeviceIoControl.IoControlCode)
+>      {
+>      case TUN_IOCTL_REGISTER_RINGS: {
+> -        KeEnterCriticalRegion();
+> -        ExAcquireResourceSharedLite(&TunDispatchCtxGuard, TRUE);
+> +        ExEnterCriticalRegionAndAcquireResourceExclusive(&TunDispatchCtxGuard);
+>  #pragma warning(suppress : 28175)
+>          TUN_CTX *Ctx = DeviceObject->Reserved;
+>          Status = NDIS_STATUS_ADAPTER_NOT_READY;
+>          if (Ctx)
+>              Status = TunRegisterBuffers(Ctx, Irp);
+> -        ExReleaseResourceLite(&TunDispatchCtxGuard);
+> -        KeLeaveCriticalRegion();
+> +        ExReleaseResourceAndLeaveCriticalRegion(&TunDispatchCtxGuard);
+>          break;
+>      }
+>      case TUN_IOCTL_FORCE_CLOSE_HANDLES:
+> @@ -913,14 +911,12 @@ _Use_decl_annotations_
+>  static NTSTATUS
+>  TunDispatchClose(DEVICE_OBJECT *DeviceObject, IRP *Irp)
+>  {
+> -    KeEnterCriticalRegion();
+> -    ExAcquireResourceSharedLite(&TunDispatchCtxGuard, TRUE);
+> +    ExEnterCriticalRegionAndAcquireResourceExclusive(&TunDispatchCtxGuard);
+>  #pragma warning(suppress : 28175)
+>      TUN_CTX *Ctx = DeviceObject->Reserved;
+>      if (Ctx)
+>          TunUnregisterBuffers(Ctx, IoGetCurrentIrpStackLocation(Irp)->FileObject);
+> -    ExReleaseResourceLite(&TunDispatchCtxGuard);
+> -    KeLeaveCriticalRegion();
+> +    ExReleaseResourceAndLeaveCriticalRegion(&TunDispatchCtxGuard);
+>      return NdisDispatchClose(DeviceObject, Irp);
+>  }
+>
+> --
+> 2.26.2.windows.1
+>
