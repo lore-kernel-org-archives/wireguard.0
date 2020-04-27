@@ -1,72 +1,53 @@
-Return-Path: <SRS0=KyK9=6K=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=Mtl/=6L=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Level: *
+X-Spam-Status: No, score=1.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MSGID_RANDY,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DC6D8C2BA1A
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 26 Apr 2020 03:53:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FBD5C54FD0
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 27 Apr 2020 01:24:59 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 49CA12070A
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 26 Apr 2020 03:53:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id DD64C206A5
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 27 Apr 2020 01:24:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h+sDYiog"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 49CA12070A
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="JnEDEzlN"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org DD64C206A5
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7c40d9f1;
-	Sun, 26 Apr 2020 03:41:49 +0000 (UTC)
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com
- [2a00:1450:4864:20::342])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 56d8ce8b
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4b5528e9;
+	Mon, 27 Apr 2020 01:13:05 +0000 (UTC)
+Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 62574b43
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 26 Apr 2020 03:41:47 +0000 (UTC)
-Received: by mail-wm1-x342.google.com with SMTP id x25so15748900wmc.0
- for <wireguard@lists.zx2c4.com>; Sat, 25 Apr 2020 20:53:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
- bh=9dfRV6cwCg1b3g7JD9rGEr4306ZPMu55LqDuUEGlT34=;
- b=h+sDYiogl2iXbCH++eH5weALum9j9gAc2BpoIbxaHbMoe9i+xH+aRdohZu/LhQ9dCh
- F+cft4hQ4vuk6CxJIL1nkmCvPiKhDsmML3PjvtdFTVnTDUvKajyjXG3qr3E6nLyPftYe
- cmhI7G5tJI7C4Ecu611XHxM1zRn5ibgsTZgHHgyMbCS1gb+BVHKa0coYwLRCaowPZXgb
- sechGwY4UFQGmQGr1wuD7pLRtLYHYbc28kpbgptf2AZAIl3XnfBhA9+y4Os6bk9rli5p
- J1YbjsBOsK0wP/o7kmPQRgNOwvjv7zZkjTdhaG5ceLpLIGTODP+GmIBtpguNxIDlW3Qq
- SWEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to;
- bh=9dfRV6cwCg1b3g7JD9rGEr4306ZPMu55LqDuUEGlT34=;
- b=b7DbA+W6Pr7peIzJCVjj2p776+9SRaiDTBfAWPlKBNZGTJMmVyXO5WOVG8d4v0UCUB
- 5X1nQlBzBN7Ubl02eoA8QVkSpdPBfve4Epups9Ht2hPX9Pi6pNeJVJznXrT3BpIe/T9e
- fQu0feYr5TlYEcJe3XJc3tduewjum5bBcwTbZnBrJbzA4AacckOIhJHVEce4sv+qHgcv
- KM/P5JVQtdHukLFg7DD0nmY0Uwg687TzjSHyDQIyDvKjL1yy84MBjAxLFIakDYchxpjt
- 8R0eLKJpckHjl+e9LzmopVwMpWmBJ7gQYl5jYjqmc89ZFbEetCsr87GMvHbe5BAmnewM
- ThqA==
-X-Gm-Message-State: AGi0PuavUCFSD6SGtBo49/miuCuHq825dVKK9Itz1Jx3e8byrsksvvVk
- mVrEHxzdN6Ci8Enlaa98AvUeb8tq2mhTrNNIvsGLsKcU
-X-Google-Smtp-Source: APiQypKu0nnHqVWQqcUaKpWiWsNkG0nYqtkrwrYCwTfoOMu22Rvr6olG2xCeUPL71GXJu7i7ZjhOmUpm3+JlajLDrRo=
-X-Received: by 2002:a1c:80c3:: with SMTP id
- b186mr20460324wmd.117.1587873185921; 
- Sat, 25 Apr 2020 20:53:05 -0700 (PDT)
+ Mon, 27 Apr 2020 01:13:03 +0000 (UTC)
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 83b2f43a
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 27 Apr 2020 01:13:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=date:to:from
+ :subject:mime-version:content-type; s=mail; bh=Y+n/1kpend3fVxTa2
+ 658ongVnzY=; b=JnEDEzlNDtodk2JnqMIqOZb5HpS09TjPGLhCh2mbOaEKS170K
+ sS43NH1x6WXmLe4wfvYSqIIE2bWBVOCFEaEgFhNDsVzah4tUEtOYL4+sBwmJ869B
+ LoS6XEVN9Ou1NbA2BnEMGh8fhEpd6HBC3pfKLN9T+SHCBqzQbEU8UBhJOgo2jg9m
+ zdiiKif3cRH56g8Ql2TrsRTsQxShe3vs65aE/j5kmhkJPSOJCOQKPSTHGs22ZHy9
+ tWnZJMEMMrpbQW9Irkn7vz+w7sutOs+Vjqc5fTR/NtMi6KNZsRUgAl+TPchlEF0w
+ pkbMPcZivnxR/NSsN1rc53+B0NDgejb8SOKHw==
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 45686762
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 27 Apr 2020 01:13:03 +0000 (UTC)
+Date: Sun, 26 Apr 2020 19:24:29 -0600
+To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: [ANNOUNCE] wireguard-linux-compat v1.0.20200426 released
 MIME-Version: 1.0
-References: <20200424234327.1814-1-godisgovernment@gmail.com>
- <20200424234327.1814-2-godisgovernment@gmail.com>
-In-Reply-To: <20200424234327.1814-2-godisgovernment@gmail.com>
-From: Shawn Hoffman <godisgovernment@gmail.com>
-Date: Sat, 25 Apr 2020 20:52:53 -0700
-Message-ID: <CAPqQDTDPUH17QUQG4xehfiM9zFGw7PVQu=u00v5x15ts=L7SVQ@mail.gmail.com>
-Subject: Re: [PATCH 2/3] use ExEnterCriticalRegionAndAcquireResourceExclusive
- and ExReleaseResourceAndLeaveCriticalRegion
-To: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Message-ID: <b9ca30b38895d715@mail.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -81,57 +62,83 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Looking back over this, the enter+acquire of the existing code is
-shared here, so replacing with exclusive will change behavior.
-For now, please ignore this patch.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+Hello,
+
+A new version, v1.0.20200426, of the backported WireGuard kernel module for
+3.10 <= Linux <= 5.5.y has been tagged in the git repository.
+
+== Changes ==
+
+  * crypto: do not export symbols
+  
+  These don't do anything and only increased file size.
+  
+  * compat: include sch_generic.h header for skb_reset_tc
+  
+  A fix for a compiler error on kernels with weird configs.
+  
+  * compat: import latest fixes for ptr_ring
+  * compat: don't assume READ_ONCE barriers on old kernels
+  * compat: kvmalloc_array is not required anyway
+  
+  ptr_ring.h from upstream was imported, with compat modifications, to our
+  compat layer, to receive the latest fixes.
+  
+  * queueing: cleanup ptr_ring in error path of packet_queue_init
+  
+  Sultan Alsawaf reported a memory leak on an error path.
+  
+  * main: mark as in-tree
+  
+  Now that we're upstream, there's no need to set the taint flag.
+  
+  * compat: prefix icmp[v6]_ndo_send with __compat
+  
+  Some distros that backported icmp[v6]_ndo_send still try to build the compat
+  module in some corner case circumstances, resulting in errors.  Work around
+  this with the usual __compat games.
+
+This release contains commits from: Jason A. Donenfeld.
+
+As always, the source is available at https://git.zx2c4.com/wireguard-linux-compat/
+and information about the project is available at https://www.wireguard.com/ .
+
+This version is available in compressed tarball form here:
+  https://git.zx2c4.com/wireguard-linux-compat/snapshot/wireguard-linux-compat-1.0.20200426.tar.xz
+  SHA2-256: 
+
+A PGP signature of that file decompressed is available here:
+  https://git.zx2c4.com/wireguard-linux-compat/snapshot/wireguard-linux-compat-1.0.20200426.tar.asc
+  Signing key: AB9942E6D4A4CFC3412620A749FC7012A5DE03AE
+  Remember to unxz the tarball before verifying the signature.
+
+If you're a package maintainer, please bump your package version. If you're a
+user, the WireGuard team welcomes any and all feedback on this latest version.
+
+Finally, WireGuard development thrives on donations. By popular demand, we
+have a webpage for this: https://www.wireguard.com/donations/
+
+Thank you,
+Jason Donenfeld
 
 
-On Fri, Apr 24, 2020 at 4:44 PM Shawn Hoffman <godisgovernment@gmail.com> wrote:
->
-> Signed-off-by: Shawn Hoffman <godisgovernment@gmail.com>
-> ---
->  wintun.c | 12 ++++--------
->  1 file changed, 4 insertions(+), 8 deletions(-)
->
-> diff --git a/wintun.c b/wintun.c
-> index 90e7930..00ac378 100644
-> --- a/wintun.c
-> +++ b/wintun.c
-> @@ -884,15 +884,13 @@ TunDispatchDeviceControl(DEVICE_OBJECT *DeviceObject, IRP *Irp)
->      switch (Stack->Parameters.DeviceIoControl.IoControlCode)
->      {
->      case TUN_IOCTL_REGISTER_RINGS: {
-> -        KeEnterCriticalRegion();
-> -        ExAcquireResourceSharedLite(&TunDispatchCtxGuard, TRUE);
-> +        ExEnterCriticalRegionAndAcquireResourceExclusive(&TunDispatchCtxGuard);
->  #pragma warning(suppress : 28175)
->          TUN_CTX *Ctx = DeviceObject->Reserved;
->          Status = NDIS_STATUS_ADAPTER_NOT_READY;
->          if (Ctx)
->              Status = TunRegisterBuffers(Ctx, Irp);
-> -        ExReleaseResourceLite(&TunDispatchCtxGuard);
-> -        KeLeaveCriticalRegion();
-> +        ExReleaseResourceAndLeaveCriticalRegion(&TunDispatchCtxGuard);
->          break;
->      }
->      case TUN_IOCTL_FORCE_CLOSE_HANDLES:
-> @@ -913,14 +911,12 @@ _Use_decl_annotations_
->  static NTSTATUS
->  TunDispatchClose(DEVICE_OBJECT *DeviceObject, IRP *Irp)
->  {
-> -    KeEnterCriticalRegion();
-> -    ExAcquireResourceSharedLite(&TunDispatchCtxGuard, TRUE);
-> +    ExEnterCriticalRegionAndAcquireResourceExclusive(&TunDispatchCtxGuard);
->  #pragma warning(suppress : 28175)
->      TUN_CTX *Ctx = DeviceObject->Reserved;
->      if (Ctx)
->          TunUnregisterBuffers(Ctx, IoGetCurrentIrpStackLocation(Irp)->FileObject);
-> -    ExReleaseResourceLite(&TunDispatchCtxGuard);
-> -    KeLeaveCriticalRegion();
-> +    ExReleaseResourceAndLeaveCriticalRegion(&TunDispatchCtxGuard);
->      return NdisDispatchClose(DeviceObject, Irp);
->  }
->
-> --
-> 2.26.2.windows.1
->
+-----BEGIN PGP SIGNATURE-----
+
+iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAl6mNEcQHGphc29uQHp4
+MmM0LmNvbQAKCRBJ/HASpd4DrpqAD/4xD9CHxEIRdCKy/j/0qSBegU9wokp8uOpt
+anYHDU8lnma+Om9F6r43zo2wByBb3re68r7S7XH8VNEG3qlTPaRGQ3DKaquUzrI5
+rPVFDHz/6v8s5PghqHke2rdEANTlaxzE2oNxWSMz8LnC2dvbl7SKWTp+onfz9YIk
+cU0MSUqebwYu4hYGSiYGYCs0qcWEQIO8Ux/6YT1SXwVzCF2yVhQ/OpYAiKIiai6s
+R1iz3GMVroOL5ssu2jB23Ge21RQHI6sSs2RKUJ06wgTMl6zLZd0zkmohMSkbQihh
+el5MalXFKkZ98bUDaujCM+UAQrt7asaIt9Ezm2pxwXr9GxDnjnIrecQLGAM8Jcub
+im/A/3xoplOF5fCyQzsBuNSt4lfemZ4e1auVKl+0xvgtf5uYUhA3I+kTts1EE0fm
+74yxFuV3dXTQtZukf4jV7gT1RXebrWSrcCHcLXLi228ltUbhk7swECFzEOG++hCP
+J+llzIT3iLblN/dgayX+FkZPKiw5++jl1X77TDc6KC1z7LdbDZPjgekfGPVZGYqy
+W37xweT5TAWCm816EnzuES8Oz+9WvUfghTGnpxEiGiYuPaEKGMUeUU37Qc1YTwcM
+K1iFkrxoi11ygM8iOy384bDAD7z7nLZBYYJzYlSnRCWis08Lr853afl+s4xVYbOh
+42ZO//eS4Q==
+=7G1T
+-----END PGP SIGNATURE-----
