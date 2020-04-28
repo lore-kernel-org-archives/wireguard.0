@@ -7,86 +7,85 @@ X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65F27C83000
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 28 Apr 2020 09:01:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 61DA1C83004
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 28 Apr 2020 09:11:20 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id CF8202064A
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 28 Apr 2020 09:01:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 0EC65206E2
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 28 Apr 2020 09:11:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="UxJdrc1G"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org CF8202064A
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="hnUHL4Ze"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 0EC65206E2
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=redhat.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9352b022;
-	Tue, 28 Apr 2020 08:49:02 +0000 (UTC)
-Received: from us-smtp-1.mimecast.com (us-smtp-2.mimecast.com [207.211.31.81])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f4688ebc
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 35942d22;
+	Tue, 28 Apr 2020 08:59:16 +0000 (UTC)
+Received: from us-smtp-delivery-1.mimecast.com (us-smtp-1.mimecast.com
+ [205.139.110.61])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 03f3524e
  for <wireguard@lists.zx2c4.com>;
- Tue, 28 Apr 2020 08:48:58 +0000 (UTC)
+ Tue, 28 Apr 2020 08:59:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1588064435;
+ s=mimecast20190719; t=1588065050;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mxW1qjTd1LnOPfoDLRudR3VIiE6OpaYI7Q4WCzEXVWs=;
- b=UxJdrc1GBAZTo2Nn2G5He3bTAXRM6UZl5UeGDNFHgAkcXkPoPb/h03BKjmEXa3gaEwIIrg
- n3wwVlZqNv7ivApUaCIKNrxxG5x+697spqrepG7gI/8SLS6s7oL6UO+5klSD5gQD/6ikb8
- +ZHNI3GqA6wifAzf/rRmOEr2rKjR2A8=
+ bh=u3xuxjNfVBNEZttbPvmOjVEPPldZq5/VBaGsumlIgP8=;
+ b=hnUHL4Ze43DOpGvU2B6KJMd0SAo3L82Zd+48irijoRqC8g+ZyBREOeyWuHQChZp547EXma
+ 5C/8zEgVzdq/tn8bxsuB1TrDwKNLS4O1s0GXjLoQgmo1dyAL4GW/9hIq6BaG3RaUhzNgWR
+ qF5wN18JTsW2r/1ix4Emk2hrbyFXW0s=
 Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
  [209.85.167.71]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-203-PT1mNFGhPumULtCwk3R1-w-1; Tue, 28 Apr 2020 05:00:31 -0400
-X-MC-Unique: PT1mNFGhPumULtCwk3R1-w-1
-Received: by mail-lf1-f71.google.com with SMTP id 85so948006lfa.7
- for <wireguard@lists.zx2c4.com>; Tue, 28 Apr 2020 02:00:30 -0700 (PDT)
+ us-mta-380-meEamhbnOhiPAWVIg_aS1Q-1; Tue, 28 Apr 2020 05:10:48 -0400
+X-MC-Unique: meEamhbnOhiPAWVIg_aS1Q-1
+Received: by mail-lf1-f71.google.com with SMTP id g5so8678078lfh.9
+ for <wireguard@lists.zx2c4.com>; Tue, 28 Apr 2020 02:10:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:from:to:cc:subject:in-reply-to:references:date
- :message-id:mime-version:content-transfer-encoding;
- bh=mxW1qjTd1LnOPfoDLRudR3VIiE6OpaYI7Q4WCzEXVWs=;
- b=fPXw0b5GlbUpLjJ1gCjk5+xUoQ6Dh5YpG5vOYumw/nv3bKE7cKTd7rThoQj4Mqa48Q
- fZp5Bt2mu73Hb47LQQTgtpLOdBuG0sgAk6GspHRmcUjSCu1J/WbOhUVLCsJWzHfPYLEN
- oDJlNXFbeppe+8lZz2qksrA+7IXQN1Iovr1UoWjhcoGLRpxF0VNj/N/ext4NbjwaBbJM
- ahhdfNoAKU1mGsi833WsPmLSD2Q9jqK17usNOpYfmEIGt690KI6V3sYQ3pp76nfdJWx7
- gANOFkt1+uTT+Y9r4DWIWUMmqii/CMhrwJnmSnBEgHcj1+kM45lQswoiqEnNNAPzckGf
- vLPw==
-X-Gm-Message-State: AGi0PuZMpS2LX6buYs3Xp+PCyAyDxIO6WL925VTwxKghK3FzEWP34MiK
- YvNnM1clArwjDSP+POTqrJ7PEuoJClwApOFueG+VEd007lXa5dCiPPG3tflG/OCxvAgsIZiJ1dh
- WVMYChtA2lcK1cK4kDCHg
-X-Received: by 2002:a19:c8cf:: with SMTP id
- y198mr17598087lff.197.1588064429243; 
- Tue, 28 Apr 2020 02:00:29 -0700 (PDT)
-X-Google-Smtp-Source: APiQypJXUUxwttVHq7AAC9XoXgii6tIs1XnC+5s+SRp3/FGEun1yAR8w5nWvnrB5FohYfFlPeUbukg==
-X-Received: by 2002:a19:c8cf:: with SMTP id
- y198mr17598071lff.197.1588064428955; 
- Tue, 28 Apr 2020 02:00:28 -0700 (PDT)
-Received: from alrua-x1.borgediget.toke.dk ([45.145.92.2])
- by smtp.gmail.com with ESMTPSA id o22sm12399636ljj.100.2020.04.28.02.00.28
+ :message-id:mime-version;
+ bh=mOdBWJKQxFlNabMwjODinAvYOR6ZDK7O0dodfKx0hcc=;
+ b=kMm62oZM++reBnwDg0OXQZhtTIWJjuUbOcGs8Eo2E5Z7uyqIlfmCJ3Ea4Ed8IZ43e2
+ FssKN5Zjk2NF39EHzOYm4MNx/KwnTAJYYc5OxSyPf24qdxT0FDyAO/8ogjINiiqzHdFr
+ BnSvNf3Dk0y3SCQhTbFipoHjx957FwuZhE0yFFpeATFZH4U5Ch7XiLmFRYhKLAcNGbDi
+ bWPHjxHtL71Oil0M1chx79jnGedZPxj0q4vnksOuDo9oVfNUP5Fwoj5xSVdSZFRMH3Iv
+ JsgthuTd26AtVJaCXkhRTqlnHfdztHo9kNYsuEZP97n83KYIBTeD736phmOD8og/NONO
+ y7ZA==
+X-Gm-Message-State: AGi0PuZRBPaqEYLU4VxKQ+xV+B+n7iz5CE8MPnYU+CSQQ8sO9+woPW8V
+ arK2H6wkjBK6jC9MCIdL3hTEOSz1V93cRR9hgeirNFZ200iDfTTGNJxl16t0hNttyL/dzk2pUPG
+ xKKWOHOxws92UMuZHxT8+
+X-Received: by 2002:ac2:57cb:: with SMTP id k11mr18503632lfo.19.1588065046851; 
+ Tue, 28 Apr 2020 02:10:46 -0700 (PDT)
+X-Google-Smtp-Source: APiQypIH/hZQ/rx7Ol7j9CLUYi6IHDh/x4Luka4wg/zRVzQni3QvyQRdLbuPtHuphYfxyjJMAsZnBg==
+X-Received: by 2002:ac2:57cb:: with SMTP id k11mr18503620lfo.19.1588065046546; 
+ Tue, 28 Apr 2020 02:10:46 -0700 (PDT)
+Received: from alrua-x1.borgediget.toke.dk ([2a0c:4d80:42:443::2])
+ by smtp.gmail.com with ESMTPSA id b28sm13669623lfo.46.2020.04.28.02.10.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Apr 2020 02:00:28 -0700 (PDT)
+ Tue, 28 Apr 2020 02:10:45 -0700 (PDT)
 Received: by alrua-x1.borgediget.toke.dk (Postfix, from userid 1000)
- id 5C3AC1814FF; Tue, 28 Apr 2020 11:00:25 +0200 (CEST)
+ id DE4981814FF; Tue, 28 Apr 2020 11:10:43 +0200 (CEST)
 From: Toke =?utf-8?Q?H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: David Miller <davem@davemloft.net>, Netdev <netdev@vger.kernel.org>,
+To: "Rodney W. Grimes" <ietf@gndrsh.dnsmgr.net>
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, David Miller <davem@davemloft.net>,
+ Netdev <netdev@vger.kernel.org>,
  WireGuard mailing list <wireguard@lists.zx2c4.com>,
  Olivier Tilmans <olivier.tilmans@nokia-bell-labs.com>,
  Dave Taht <dave.taht@gmail.com>, "Rodney W . Grimes" <ietf@gndrsh.dnsmgr.net>
-Subject: Re: [PATCH net v2] wireguard: use tunnel helpers for decapsulating
- ECN markings
-In-Reply-To: <CAHmME9rUCYuBCFbw=yhNPqDDJWD3ZUQ_R9xjQ-yp6DXA9_iScA@mail.gmail.com>
-References: <87d07sy81p.fsf@toke.dk> <20200427211619.603544-1-toke@redhat.com>
- <CAHmME9rUCYuBCFbw=yhNPqDDJWD3ZUQ_R9xjQ-yp6DXA9_iScA@mail.gmail.com>
+Subject: Re: [PATCH net] wireguard: Use tunnel helpers for decapsulating ECN
+ markings
+In-Reply-To: <202004280109.03S19SCY001751@gndrsh.dnsmgr.net>
+References: <202004280109.03S19SCY001751@gndrsh.dnsmgr.net>
 X-Clacks-Overhead: GNU Terry Pratchett
-Date: Tue, 28 Apr 2020 11:00:25 +0200
-Message-ID: <874kt4x9w6.fsf@toke.dk>
+Date: Tue, 28 Apr 2020 11:10:43 +0200
+Message-ID: <87zhawvuuk.fsf@toke.dk>
 MIME-Version: 1.0
 X-Mimecast-Spam-Score: 0
 X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain
 Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -102,43 +101,123 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-"Jason A. Donenfeld" <Jason@zx2c4.com> writes:
+"Rodney W. Grimes" <ietf@gndrsh.dnsmgr.net> writes:
 
-> On Mon, Apr 27, 2020 at 3:16 PM Toke H=C3=B8iland-J=C3=B8rgensen <toke@re=
-dhat.com> wrote:
->>
->> WireGuard currently only propagates ECN markings on tunnel decap accordi=
-ng
->> to the old RFC3168 specification. However, the spec has since been updat=
-ed
->> in RFC6040 to recommend slightly different decapsulation semantics. This
->> was implemented in the kernel as a set of common helpers for ECN
->> decapsulation, so let's just switch over WireGuard to using those, so it
->> can benefit from this enhancement and any future tweaks.
->>
->> RFC6040 also recommends dropping packets on certain combinations of
->> erroneous code points on the inner and outer packet headers which should=
-n't
->> appear in normal operation. The helper signals this by a return value > =
-1,
->> so also add a handler for this case.
+> Replying to a single issue I am reading, and really hope I
+> am miss understanding.  I am neither a wireguard or linux
+> user so I may be miss understanding what is said.
 >
-> Thanks for the details in your other email and for this v2. I've
-> applied this to the wireguard tree and will send things up to net
-> later this week with a few other things brewing there.
+> Inline at {RWG}
+>
+>> "Jason A. Donenfeld" <Jason@zx2c4.com> writes:
+>>=20
+>> > Hey Toke,
+>> >
+>> > Thanks for fixing this. I wasn't aware there was a newer ECN RFC. A
+>> > few comments below:
+>> >
+>> > On Mon, Apr 27, 2020 at 8:47 AM Toke H?iland-J?rgensen <toke@redhat.co=
+m> wrote:
+>> >> RFC6040 also recommends dropping packets on certain combinations of
+>> >> erroneous code points on the inner and outer packet headers which sho=
+uldn't
+>> >> appear in normal operation. The helper signals this by a return value=
+ > 1,
+>> >> so also add a handler for this case.
+>> >
+>> > This worries me. In the old implementation, we propagate some outer
+>> > header data to the inner header, which is technically an authenticity
+>> > violation, but minor enough that we let it slide. This patch here
+>> > seems to make that violation a bit worse: namely, we're now changing
+>> > the behavior based on a combination of outer header + inner header. An
+>> > attacker can manipulate the outer header (set it to CE) in order to
+>> > learn whether the inner header was CE or not, based on whether or not
+>> > the packet gets dropped, which is often observable. That's some form
+>
+> Why is anyone dropping on decap over the CE bit?  It should be passed
+> on, not lead to a packet drop.  If the outer header is CE on an inner
+> header of CE it should just continue to be a CE, dropping it is actually
+> breaking the purpose of the CE codepoint, to signal congestion before
+> having to cause a packet loss.
+>
+>> > of an oracle, which I'm not too keen on having in wireguard. On the
+>> > other hand, we pretty much already _explicitly leak this bit_ on tx
+>> > side -- in send.c:
+>> >
+>> > PACKET_CB(skb)->ds =3D ip_tunnel_ecn_encap(0, ip_hdr(skb), skb); // in=
+ner packet
+>> > ...
+>> > wg_socket_send_skb_to_peer(peer, skb, PACKET_CB(skb)->ds); // outer pa=
+cket
+>> >
+>> > We considered that leak a-okay. But a decryption oracle seems slightly
+>> > worse than an explicit and intentional leak. But maybe not that much
+>> > worse.
+>>=20
+>> Well, seeing as those two bits on the outer header are already copied
+>> from the inner header, there's no additional leak added by this change,
+>> is there? An in-path observer could set CE and observe that the packet
+>> gets dropped, but all they would learn is that the bits were zero
+>
+> Again why is CE leading to anyone dropping?
+>
+>> (non-ECT). Which they already knew because they could just read the bits
+>> directly from the header.
+>>=20
+>> Also note, BTW, that another difference between RFC 3168 and 6040 is the
+>> propagation of ECT(1) from outer to inner header. That's not actually
+>> done correctly in Linux ATM, but I sent a separate patch to fix this[0],
+>> which Wireguard will also benefit from with this patch.
+>
+> Thanks for this.
+>
+>>=20
+>> > I wanted to check with you: is the analysis above correct? And can you
+>> > somehow imagine the =3D=3D2 case leading to different behavior, in whi=
+ch
+>> > the packet isn't dropped? Or would that ruin the "[de]congestion" part
+>> > of ECN? I just want to make sure I understand the full picture before
+>> > moving in one direction or another.
+>>=20
+>> So I think the logic here is supposed to be that if there are CE marks
+>> on the outer header, then an AQM somewhere along the path has marked the
+>> packet, which is supposed to be a congestion signal, which we want to
+>> propagate all the way to the receiver (who will then echo it back to the
+>> receiver). However, if the inner packet is non-ECT then we can't
+>> actually propagate the ECN signal; and a drop is thus the only
+>> alternative congestion signal available to us.
+>
+> You cannot get a CE mark on the outer packet if the inner packet is
+> not ECT, as the outer packet would also be not ECT and thus not
+> eligible for CE mark.  If you get the above sited condition something
+> has gone *wrong*.
 
-Thanks!
+Yup, you're quite right. If everything is working correctly, this should
+never happen. This being the internet, though, there are bound to be
+cases where it will go wrong :)
 
-> By the way, the original code came out of a discussion I had with Dave
-> Taht while I was coding this on an airplane many years ago. I read
-> some old RFCs, made some changes, he tested them with cake, and told
-> me that the behavior looked correct. And that's about as far as I've
-> forayed into ECN land with WireGuard. It seems like it might be
-> helpful (at some point) to add something to the netns.sh test to make
-> sure that all this machinery is actually working and continues to work
-> properly as things change in the future.
+>> This case shouldn't
+>> actually happen that often, a middlebox has to be misconfigured to
+>> CE-mark a non-ECT packet in the first place. But, well, misconfigured
+>> middleboxes do exist as you're no doubt aware :)
+>
+> That is true, though I believe the be liberal in what you accept
+> concept would say ok, someone messed up, just propogate it and
+> let the end nodes deal with it, otherwise your creating a blackhole
+> that could be very hard to find.
 
-Yeah, good point. I guess I can look into that too at some point :)
+But that would lead you to ignore a congestion signal. And someone has
+to go through an awful lot of trouble to set this signal; if they're
+just randomly mangling bits the packet checksum will likely be wrong and
+the packet would be dropped anyway. So on balance I'd tend to agree with
+the RFC that the right thing to do is to propagate the congestion
+signal; which in the case of a non-ECT packet means dropping it,
+otherwise we'd just be contributing to the RFC-violating behaviour...
+
+I do believe the advice in the RFC to log these cases is exactly because
+of the risk of blackholes you're referring to. I discussed this a bit
+with Jason and we ended up agreeing that just marking it as a framing
+error should be enough for Wireguard, though...
 
 -Toke
 
