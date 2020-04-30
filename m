@@ -2,74 +2,64 @@ Return-Path: <SRS0=YtMA=6O=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8123CC47247
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 30 Apr 2020 13:57:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1ED92C47254
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 30 Apr 2020 23:22:01 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id C5C862063A
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 30 Apr 2020 13:57:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 6FB42208CA
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 30 Apr 2020 23:22:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="jLdMsu45"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org C5C862063A
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=gmx.de
+	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="iH1Om1lr"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 6FB42208CA
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 11b4765a;
-	Thu, 30 Apr 2020 13:44:40 +0000 (UTC)
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f5f02b96
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1270c376;
+	Thu, 30 Apr 2020 23:09:36 +0000 (UTC)
+Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 9da5c941
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 30 Apr 2020 13:44:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1588254990;
- bh=UAQ5y16e3lyD1crxJDuRJVbmFV/cvhVI0XEnVulzE14=;
- h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
- b=jLdMsu450O5s9/slCjYOXV6RCjNqnyu/fVlHjts+qc/s5a9uN50i2GxiaWWa5c5Xk
- lUpG1M6R8DhHmynqIbd5SBYCl8iZm8iSaY94lL5gfOO1I61MRqLOLjfRn1Y5WPuJ5G
- 71uN+LKcfHSnTaXRHvSl8amJctTvwWDdm6DGftmI=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from gmx.de ([87.166.109.173]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MRCOE-1jrAk60iF2-00NBX2; Thu, 30
- Apr 2020 15:56:30 +0200
-From: Martin Hauke <mardnh@gmx.de>
-To: wireguard@lists.zx2c4.com
-Cc: Martin Hauke <mardnh@gmx.de>
-Subject: [PATCH] systemd: add file wireguard.target
-Date: Thu, 30 Apr 2020 15:55:51 +0200
-Message-Id: <20200430135551.9911-1-mardnh@gmx.de>
-X-Mailer: git-send-email 2.26.2
+ Thu, 30 Apr 2020 23:09:33 +0000 (UTC)
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c5a601e2
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 30 Apr 2020 23:09:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :references:in-reply-to:from:date:message-id:subject:to:cc
+ :content-type; s=mail; bh=eu6zRC/sSQ61RszrgPpAyp4Th6Q=; b=iH1Om1
+ lrKPMyOFutBvvdsFAy3ZfHE+BslRv0wNcwG7/2Q56rWRcc1mVvdoL6NyJgmSt6WR
+ 1PUQQOgVGxxNyoDSPsSQccYRUf9VyQEB0P6IBJKKbfS0mMA4AnNvFIktRQALpxzk
+ b9Y6eIsIv5WVgO0KKnH++RU/Lzk4gNANT+SZsDd3/tfqtSMSrFeyC7UWWkO0tCB4
+ sFjzOfoV9pUAaW50YqCz+QEIaY01a+b1yyYzEKGGSbOOy4lKyTzphB9nULbbfrOt
+ DXSWhrsJTG9bJRec6Chw28zcM8BzPMHrwCrxePtF/uLEYvFmObdC/iXKTFkEReys
+ Vasd1P4Chwpdtruw==
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 04d49849
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 30 Apr 2020 23:09:33 +0000 (UTC)
+Received: by mail-io1-f54.google.com with SMTP id e9so3343269iok.9
+ for <wireguard@lists.zx2c4.com>; Thu, 30 Apr 2020 16:21:30 -0700 (PDT)
+X-Gm-Message-State: AGi0PuZwpIy6TlLhYjYPO0S2VCfRJPAZkskn3aZ/L/BT59X0Z/jWYeiP
+ oLWxnLxxQzzHCXY6s8CFchOHKm0AwoR2rz+IWeE=
+X-Google-Smtp-Source: APiQypLUv9uCpbMui893sbcsLjXCD5kb+IEN2PBbciqZUKzPA61w06F3w7fkuD1BA542ZIU7yb1h6EPRvZllahm3OCA=
+X-Received: by 2002:a5e:9401:: with SMTP id q1mr1273737ioj.80.1588288889837;
+ Thu, 30 Apr 2020 16:21:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:sKRpxXF/0ovUSty2t0sdS27Z0Zeum00jMEDL8uLV4z5LP4APulS
- +YUFXCzDJsrM89vMj70I19nQCeBtoGZIzpi9A/ZqxTmLuYoIPyOBqjPAEMg7yP+nreGRTIz
- yMmoPwIIxGTxRuEuig+cL7Itvv3er8XDNubrypPDzKwJ+CRjsaf6F370duefkjhczmn0/7H
- pdz3G4N78B+gysncO0IWQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:7eprBWHdvMA=:kvC22qidDq7TaAaWO0EnO3
- TS5SFQ41PyRuw8bzRoqRcTLDEYNq5FAZXcGOWIZ28pBss4+r1MWYkHJgEGe1COiERAq5VtzEI
- GctqYgEwJv1Yq2WJ9gsZytslk0V6BBXSxkn/71mrGTVXWImMmaGv7EGFjmvxpM8VKobGoXP/v
- Y1u00yz7Ye8PHgY9sHap9ngL3wISG2kZbwFxz1ZNqBTQOcgdHamIOOaJJHIgR4ipdOM73t0mW
- hr439074TTCMrqXjhVN/Qu/ouTc86+NHwnVkEnUJuINrz0032S+UT3hgXWzBYLe8NL/7sL/p+
- t708Jz2/F6gIMW4vD7gPqREgOMZp4JDavtYjx1z3i0iiwnCtmJTLrd/QDNNLbWs3lD6SChYQ0
- IO+YAF7KzvVGLv6htNWvVexs7cf63nAXinP9ov3aeODEQdj38SitROZ2zwxwlDeXmsJiiCjeC
- 8Pr15DlpHyq15Wd06j1IJtDkQ1rfNzhvOxbU086mkuTIDRMfXun6LFKmt2LAwh3fUXxvh6dVX
- nww7EpRsJLsUylYtWtKkHLUCZu8y364aIWTyBtk0nCBwTSGq4yO9v7juYV1yRt7nBAD+a8rg8
- QZx25fGzYgUQ1sacPihHLg/BcAPtvzyIIlUTr3jRgxU6ipzOIlJX1ES5cTVsQK8GXzCOuSwBb
- MS9MOLtlz49QQGdv2TqJA01WQ9kf3V0HqcHeyXNdHUoElhl6TCqF3o8z2hKzKVaGnPPPfmXsl
- HjyvfDOZ1R4+SNjaSQiD3AYkD66b+m+ydpz5Q84C9u8mx08ycdnF04BC1GQLKxc30oieuapuj
- XZjTpFtqyLirD93CDNIazhKe0jB7zReIcEiFpjTVgpaAL/6eI1akKMDK4R/LI/K9HfmElRL7P
- KQBktxUk4ce1p3TasJPrlF9Hq6VMzAj8JsF+vo4zySrMPUttqm1qZ7E6YbbgiUwq3plm3f1P2
- NVfwctId2BUlqhA2YrqrA7VbEtiHf9VfNP5yv7Ula9hESArHgqstFL2SmiPOpjUYsW/H9CuV9
- vnUljh7uRkPetx0HUcWfeR1JdDS/mZfFwLxSb4NFu4S3V0Z+V8QLxpcPq7DjBzmG9J4Kdu8CL
- m0HElX5bwuiOVBfYptExBfVquUwS6kM1+v8r2cPfMOXbtGBNdvfmRsJm4Xwj4v11hq+3tKcc0
- IzZ0XWcKO6ZL8cSQtreF0Zv/5joSZ+60dvP4ylFnN288OT0y6UarM/DM0XOhuFO0gMMS0zIHp
- 9HG3MJJJDqxywGPRb
+References: <20200430135551.9911-1-mardnh@gmx.de>
+In-Reply-To: <20200430135551.9911-1-mardnh@gmx.de>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 30 Apr 2020 17:21:19 -0600
+X-Gmail-Original-Message-ID: <CAHmME9p0u2=i1+ApzsHicFy4VrGKOcE0sD_e5Yk5b-y9UrZBow@mail.gmail.com>
+Message-ID: <CAHmME9p0u2=i1+ApzsHicFy4VrGKOcE0sD_e5Yk5b-y9UrZBow@mail.gmail.com>
+Subject: Re: [PATCH] systemd: add file wireguard.target
+To: Martin Hauke <mardnh@gmx.de>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -84,34 +74,23 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Add file wireguard.target, which allows you to stop or restart all
-instances.
-=2D--
- src/systemd/wg-quick@.service | 1 +
- src/systemd/wireguard.target  | 2 ++
- 2 files changed, 3 insertions(+)
- create mode 100644 src/systemd/wireguard.target
+Hey Martin,
 
-diff --git a/src/systemd/wg-quick@.service b/src/systemd/wg-quick@.service
-index 7c5f9d1..c22f7b3 100644
-=2D-- a/src/systemd/wg-quick@.service
-+++ b/src/systemd/wg-quick@.service
-@@ -2,6 +2,7 @@
- Description=3DWireGuard via wg-quick(8) for %I
- After=3Dnetwork-online.target nss-lookup.target
- Wants=3Dnetwork-online.target nss-lookup.target
-+PartOf=3Dwireguard.target
- Documentation=3Dman:wg-quick(8)
- Documentation=3Dman:wg(8)
- Documentation=3Dhttps://www.wireguard.com/
-diff --git a/src/systemd/wireguard.target b/src/systemd/wireguard.target
-new file mode 100644
-index 0000000..8e59224
-=2D-- /dev/null
-+++ b/src/systemd/wireguard.target
-@@ -0,0 +1,2 @@
-+[Unit]
-+Description=3DTarget to restart all parts of WireGuard
-=2D-
-2.26.2
+Thanks for the patch. Note that this needs to be submitted with your
+`Signed-off-by: ` line, which `git commit -s --amend` will add for
+you.
 
+On Thu, Apr 30, 2020 at 7:56 AM Martin Hauke <mardnh@gmx.de> wrote:
+> +PartOf=wireguard.target
+
+This won't reset wireguard interfaces configured by systemd-networkd,
+nor interfaces configured manually, right? So maybe it's better to
+call this wg-quick.target?
+
+> +Description=Target to restart all parts of WireGuard
+
+Is this verbage consistent with other systemd targets? Specifically,
+is the "to restart" part apt? Or should this say something more
+general?
+
+Jason
