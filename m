@@ -2,63 +2,73 @@ Return-Path: <SRS0=vxWX=6P=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ABE80C35280
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  1 May 2020 21:36:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B39F3C47256
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  1 May 2020 21:56:27 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 55FEC208DB
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  1 May 2020 21:36:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 36A6E2166E
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  1 May 2020 21:56:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="lz+A3dR2"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 55FEC208DB
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="hb0Likxc"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 36A6E2166E
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=gmx.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e8e762ef;
-	Fri, 1 May 2020 21:23:48 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 739bb9f7
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Fri, 1 May 2020 21:23:46 +0000 (UTC)
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 294aa520
- for <wireguard@lists.zx2c4.com>; Fri, 1 May 2020 21:23:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=m08UdedwexGGrbw8J6LkyHWjNEM=; b=lz+A3d
- R2fzWbP5u4GvTlebSLkOVX+uJm6ugkIc1XcTza4qH5xnTmYrJuJSaNw0pEoWLaOp
- mW2RN8M67oLnEeJO95igXgKa2eqtJPUBKY/BE/2jeWPQ1J+BUfnV2i7C5p0JdrCA
- Tep3YMC8R/QWj5koHpTwGRbVrXOxrkTxGKRpHgfOpZCYXRvYwpqZU3vAqMrM5l5Z
- IK6L5g5gV0rPBfLcl+O1P+ggpti3oI9VftwdeY+xvoTOrVpkHeKl8KZOedbAXdIb
- u46Ad6JRxDr+g8huVQl4ClTUhuqIamplEkfICcC8Bi63U/HbC/OUlgdmUM69Bvc0
- JMJ0M6EBZz/ONdqg==
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 80d2b79e
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Fri, 1 May 2020 21:23:46 +0000 (UTC)
-Received: by mail-io1-f42.google.com with SMTP id c2so6175338iow.7
- for <wireguard@lists.zx2c4.com>; Fri, 01 May 2020 14:35:50 -0700 (PDT)
-X-Gm-Message-State: AGi0PuZucG45fiUr9OONpC+qknV3ScqCHftHhRGb1rFUpNTTXOnMJdeI
- A+KcRdxmHqbKQ7yAhGkzY1GZA6+B0I4KRYDHPQA=
-X-Google-Smtp-Source: APiQypLPg7iwt+DkDCBjAHouNj1JjAs7TtSLoZ+QzwFrZpHJXZZzVSBz02GsIu/PxatS9TWp7+nHk88fvCj49Tpi7+E=
-X-Received: by 2002:a6b:7114:: with SMTP id q20mr5570921iog.79.1588368949891; 
- Fri, 01 May 2020 14:35:49 -0700 (PDT)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 55f9de6c;
+	Fri, 1 May 2020 21:44:21 +0000 (UTC)
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 0fdb9231
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Fri, 1 May 2020 21:44:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+ s=badeba3b8450; t=1588370181;
+ bh=XTgKHO3kiuTcSrIH+DGbig0OIsJj3MWF7rzkWvocSLY=;
+ h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+ b=hb0LikxcQyHgm7zE+S2X5epc3R+/TwI1ZmxIowmbUduVnSUNF72tl5WXZWBdSKA3Y
+ Upx97xKcsVmLiYa+T5KNrpQ8v4bWzh/p+x0PJmdzQiuSeIHJ0kXZAWxwGAIf+7DfzU
+ EWTW3zAV4gopEB5AsJfJtelB+2epK+cM989AaB0o=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from gmx.de ([87.166.110.18]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MSc1L-1jbbga3CHp-00SyXr; Fri, 01
+ May 2020 23:56:21 +0200
+From: Martin Hauke <mardnh@gmx.de>
+To: wireguard@lists.zx2c4.com
+Cc: Martin Hauke <mardnh@gmx.de>
+Subject: [PATCH] systemd: add file wg-quick.target
+Date: Fri,  1 May 2020 23:55:55 +0200
+Message-Id: <20200501215555.9775-1-mardnh@gmx.de>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-References: <20200430135551.9911-1-mardnh@gmx.de>
- <CAHmME9p0u2=i1+ApzsHicFy4VrGKOcE0sD_e5Yk5b-y9UrZBow@mail.gmail.com>
- <9d644025-9b85-51a1-58f8-07e445c61492@gmx.de>
-In-Reply-To: <9d644025-9b85-51a1-58f8-07e445c61492@gmx.de>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 1 May 2020 15:35:38 -0600
-X-Gmail-Original-Message-ID: <CAHmME9p--JcBcVdFKVnaexYy-NWobGudQyA7z9KX5w1KBW4cbw@mail.gmail.com>
-Message-ID: <CAHmME9p--JcBcVdFKVnaexYy-NWobGudQyA7z9KX5w1KBW4cbw@mail.gmail.com>
-Subject: Re: [PATCH] systemd: add file wireguard.target
-To: Martin Hauke <mardnh@gmx.de>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:MdptGRz1g3p+akwm09s398AFBlyQeAznD373cRmrmXdt5hRIgoD
+ HBl42CtVsr+mecFsStXmxKPz9vxnGbpIqDrtnZhy1X5lOJ97SbVxmVMn6lj8Y6R5OODmZrK
+ jC5mCgujyi06ZlpRyplMSP7kzTjijI2tb2jTebvLIe18HpkOqLbQ8DTvLgDTkfd+35O5eSj
+ Qi+MfjkE5msHITCbEOQoQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:j6v75F1pa1k=:39EEjaEx2cq5ckTxaL62cU
+ WedyMsjepCXwmnNxPG6lumDy+rKzmh3udJTNaMyqhn7TpXapW8+Xeh7NZpLkfRXgPT+1pAJAK
+ V4BcsKCOpnyLJq6fpscjRBfpVNfBmr4Ht7QfeeUpMRN8cZYWbGc7VXwppw0+AGt+r9kLXBeor
+ 0DC1oWloABIj6D+o55UKS4cWjOy4+D1UW8k8vKKkNyYJI03Tn0w31jlECY6JGpgwyviK0nW23
+ +n7DmHNIDp8WkxOOqN701M2xkKFFXgyAM1mG1AuKz3TuZiAXiFl/7mCEDPQhF4UncnYAil5Dp
+ qyNE7K3LLuenUJtF4rbyikaF82xw7Oubho6IRhuHlE1rAxKeGh1LIjQsEFHgI4IE/ekKFIsw+
+ yeUC3QQlAgfO5BtMsINmlWKOL70TBUVR8ZT5ovZz9Ne5O6h6ngsJEUUpfw5FyXyT3baKNG6F7
+ anrJlAScudv4jkmgpS2fBEEfOGelq4PGBgwIArtib1qSbY0eWJJrnh70+pA05Qi2XbO2VFak1
+ /I59h1Q2Bty6eD94QE7cPBfZLIXmhG9VkAZ1crAw6/wxOd0JlZF1euPF9y83hK69w0PmSjcxE
+ n7baH4ZdRhEYAR5TzYMs5kJZTFwyG5Womw/zp/LMnN4YZYxjwGauT9HdGdOPHewwzFIHm7CUF
+ N+2bBLS5XTWmC5FUszhmJvLkVRZC8XoDTAn9fJbiv1tMwwi9UaYCCK/Zt5l4j5WDpPZkNwA0n
+ xMApNt6ehCNO/xGGWULzH25eXnQg0/irSviFeQRQbYZJFcDEQpgo7q+ypFcbF4y6W/ithFp07
+ 0DZA2LIepMfQkquNVMZymg7pgY1YNPJOboiG/Or8rNUPD5XIXbjuhsqbnpGKF96dzjwvSeEtF
+ kXI9orZobNC3QXKhuAYhHX3xT3EpOqC+TCdwnwsYcXPb8J4Nc0yIaDqqZFe4mzJCBwaf1ulNR
+ B9gKn9n1mWfee7qYFVBuEmtN8ihnRV/wn19YjABosKi0Dq9OO8seyqcmjxcoTEafA3U+b3O94
+ w2RR8z+QQjkbGD9Y9xdst/wMlXwHAsiGXHhRwIRokWvzZGooEIpB4qEiwkJeaTJSWctodRRz9
+ J5TZ1aA4jWLt/qt/Qwvm5xO30cvhHOnetZPw7Itu9J+GF2BPh7J4xVNjZvTsqqlKS1NTH6juV
+ F9K60hFePcr0Tc5N5+31VU8Zp6lbqAZJhxXIt8yrPAGbChn3iPiBK2yO6uFVMXbuk1nS2CHT2
+ 926NIGiYwVuMYcCtB
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -73,92 +83,36 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Fri, May 1, 2020 at 3:29 PM Martin Hauke <mardnh@gmx.de> wrote:
->
-> Am 01.05.20 um 01:21 schrieb Jason A. Donenfeld:
-> > On Thu, Apr 30, 2020 at 7:56 AM Martin Hauke <mardnh@gmx.de> wrote:
-> >> +PartOf=wireguard.target
-> >
-> > This won't reset wireguard interfaces configured by systemd-networkd,
-> > nor interfaces configured manually, right? So maybe it's better to
-> > call this wg-quick.target?
->
-> Correct, then let's call this wg-quick.target .
->
-> >> +Description=Target to restart all parts of WireGuard
-> >
-> > Is this verbage consistent with other systemd targets? Specifically,
-> > is the "to restart" part apt? Or should this say something more
-> > general?
->
-> How about "Description=WireGuard target allowing to start/stop all
-> wg-quick@.service instances at once" ?
+Add file wg-quick.target, which allows you to start/stop all
+wg-quick@.service instances at once.
 
-Based on the language pattern established by below,
-"Description=WireGuard Tunnels via wg-quick(8)" seems more fitting.
+Signed-off-by: Martin Hauke <mardnh@gmx.de>
+=2D--
+ src/systemd/wg-quick.target   | 2 ++
+ src/systemd/wg-quick@.service | 1 +
+ 2 files changed, 3 insertions(+)
+ create mode 100644 src/systemd/wg-quick.target
 
-$ rg -g '*.target' ^Description= /lib/systemd
-/lib/systemd/system/initrd-fs.target:Description=Initrd File Systems
-/lib/systemd/system/printer.target:Description=Printer
-/lib/systemd/system/kexec.target:Description=Reboot via kexec
-/lib/systemd/system/emergency.target:Description=Emergency Mode
-/lib/systemd/system/getty-pre.target:Description=Login Prompts (Pre)
-/lib/systemd/system/local-fs.target:Description=Local File Systems
-/lib/systemd/system/initrd-root-device.target:Description=Initrd Root Device
-/lib/systemd/system/initrd-switch-root.target:Description=Switch Root
-/lib/systemd/system/basic.target:Description=Basic System
-/lib/systemd/system/umount.target:Description=Unmount All Filesystems
-/lib/systemd/system/rescue.target:Description=Rescue Mode
-/lib/systemd/system/reboot.target:Description=Reboot
-/lib/systemd/system/poweroff.target:Description=Power-Off
-/lib/systemd/system/remote-fs-pre.target:Description=Remote File Systems (Pre)
-/lib/systemd/system/timers.target:Description=Timers
-/lib/systemd/system/network-pre.target:Description=Network (Pre)
-/lib/systemd/system/final.target:Description=Final Step
-/lib/systemd/system/remote-cryptsetup.target:Description=Remote
-Encrypted Volumes
-/lib/systemd/system/hibernate.target:Description=Hibernate
-/lib/systemd/system/getty.target:Description=Login Prompts
-/lib/systemd/system/slices.target:Description=Slices
-/lib/systemd/system/boot-complete.target:Description=Boot Completion Check
-/lib/systemd/system/nss-user-lookup.target:Description=User and Group
-Name Lookups
-/lib/systemd/system/nss-lookup.target:Description=Host and Network Name Lookups
-/lib/systemd/system/hybrid-sleep.target:Description=Hybrid Suspend+Hibernate
-/lib/systemd/system/suspend-then-hibernate.target:Description=Suspend;
-Hibernate if not used for a period of time
-/lib/systemd/system/sockets.target:Description=Sockets
-/lib/systemd/system/paths.target:Description=Paths
-/lib/systemd/system/graphical.target:Description=Graphical Interface
-/lib/systemd/system/cryptsetup.target:Description=Local Encrypted Volumes
-/lib/systemd/system/local-fs-pre.target:Description=Local File Systems (Pre)
-/lib/systemd/system/halt.target:Description=Halt
-/lib/systemd/system/nfs-client.target:Description=NFS client services
-/lib/systemd/system/rpcbind.target:Description=RPC Port Mapper
-/lib/systemd/system/machines.target:Description=Containers
-/lib/systemd/system/multi-user.target:Description=Multi-User System
-/lib/systemd/system/network.target:Description=Network
-/lib/systemd/system/swap.target:Description=Swap
-/lib/systemd/system/network-online.target:Description=Network is Online
-/lib/systemd/system/initrd.target:Description=Initrd Default Target
-/lib/systemd/system/initrd-root-fs.target:Description=Initrd Root File System
-/lib/systemd/system/smartcard.target:Description=Smart Card
-/lib/systemd/system/shutdown.target:Description=Shutdown
-/lib/systemd/system/bluetooth.target:Description=Bluetooth
-/lib/systemd/system/system-update-pre.target:Description=Offline
-System Update (Pre)
-/lib/systemd/system/remote-fs.target:Description=Remote File Systems
-/lib/systemd/system/time-sync.target:Description=System Time Synchronized
-/lib/systemd/system/suspend.target:Description=Suspend
-/lib/systemd/system/blockdev@.target:Description=Block Device Preparation for %f
-/lib/systemd/system/sleep.target:Description=Sleep
-/lib/systemd/system/system-update.target:Description=Offline System Update
-/lib/systemd/system/nvmf-connect.target:Description=All instances of
-nvmf-autoconnect daemon
-/lib/systemd/system/sound.target:Description=Sound Card
-/lib/systemd/system/exit.target:Description=Exit the container
-/lib/systemd/system/time-set.target:Description=System Time Set
-/lib/systemd/system/sysinit.target:Description=System Initialization
-/lib/systemd/system/sigpwr.target:Description=Power Failure
-/lib/systemd/system/cryptsetup-pre.target:Description=Local Encrypted
-Volumes (Pre)
+diff --git a/src/systemd/wg-quick.target b/src/systemd/wg-quick.target
+new file mode 100644
+index 0000000..c209890
+=2D-- /dev/null
++++ b/src/systemd/wg-quick.target
+@@ -0,0 +1,2 @@
++[Unit]
++Description=3DWireGuard Tunnels via wg-quick(8)
+diff --git a/src/systemd/wg-quick@.service b/src/systemd/wg-quick@.service
+index 7c5f9d1..a9cbb58 100644
+=2D-- a/src/systemd/wg-quick@.service
++++ b/src/systemd/wg-quick@.service
+@@ -2,6 +2,7 @@
+ Description=3DWireGuard via wg-quick(8) for %I
+ After=3Dnetwork-online.target nss-lookup.target
+ Wants=3Dnetwork-online.target nss-lookup.target
++PartOf=3Dwg-quick.target
+ Documentation=3Dman:wg-quick(8)
+ Documentation=3Dman:wg(8)
+ Documentation=3Dhttps://www.wireguard.com/
+=2D-
+2.26.2
+
