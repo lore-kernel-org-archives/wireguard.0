@@ -2,91 +2,64 @@ Return-Path: <SRS0=IpBN=6S=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.4 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FROM_DOMAIN_NOVOWEL,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 804A5C47258
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 May 2020 11:03:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C58EFC47258
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 May 2020 11:03:43 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 2DB6020658
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 May 2020 11:03:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 2B93420658
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 May 2020 11:03:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=rcrdbrt.com header.i=@rcrdbrt.com header.b="nF0YjbPt"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 2DB6020658
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=rcrdbrt.com
+	dkim=pass (1024-bit key) header.d=rub.de header.i=@rub.de header.b="GoK8fe7O"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 2B93420658
+Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=rub.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 48da7fd9;
-	Mon, 4 May 2020 10:51:16 +0000 (UTC)
-Received: from mail.rcrdbrt.com (rcrdbrt.com [45.32.6.71])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 8143f1c9
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fb4c2696;
+	Mon, 4 May 2020 10:51:17 +0000 (UTC)
+Received: from out3.mail.ruhr-uni-bochum.de (out3.mail.ruhr-uni-bochum.de
+ [134.147.53.155])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b0e8f5f5
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Thu, 30 Apr 2020 13:49:38 +0000 (UTC)
-Subject: Re: [PATCH] systemd: add file wireguard.target
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=rcrdbrt.com; s=mail;
- t=1588255291; bh=3Lqc2x1o11QpgjAqc2sYaNzYUuhK+AA4Bole4X+vj8c=;
- h=Subject:To:References:From:In-Reply-To;
- b=nF0YjbPtTUJCxYbFCo3cZ5UylCGwmTy1PvTbY3HNV60vZs3zCoGVuY+y7q1nnfRKO
- 69gCH8jzYRXgWJmGpm2u92s58pl4J2Ls04AeEaZM3aXdNsskxC2JLsRTznT7hzHAGy
- mF5nSpZqD07YKlx2SHGHhI8+rYiAmWbJeP6cO+CU=
-To: Martin Hauke <mardnh@gmx.de>, wireguard@lists.zx2c4.com
-References: <20200430135551.9911-1-mardnh@gmx.de>
-From: Riccardo Berto <riccardo@rcrdbrt.com>
-Autocrypt: addr=riccardo@rcrdbrt.com; keydata=
- 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 Dw==
-Message-ID: <4c6e0e4e-9542-489e-7bb6-84b17ce44e15@rcrdbrt.com>
-Date: Thu, 30 Apr 2020 16:01:29 +0200
-Mime-Version: 1.0
-In-Reply-To: <20200430135551.9911-1-mardnh@gmx.de>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+ for <wireguard@lists.zx2c4.com>; Sun, 3 May 2020 20:21:17 +0000 (UTC)
+Received: from mx3.mail.ruhr-uni-bochum.de (localhost [127.0.0.1])
+ by out3.mail.ruhr-uni-bochum.de (Postfix mo-ext) with ESMTP id 49Fd3y0cjQz8SFW
+ for <wireguard@lists.zx2c4.com>; Sun,  3 May 2020 22:33:34 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=rub.de; s=mail-2017;
+ t=1588538014; bh=CUA7GQCBBtKIAn58Pv8hO82DgvxQtiz7T2frrFzLRqQ=;
+ h=From:Subject:To:Date:From;
+ b=GoK8fe7OOT7Na/jsNXglvLoi9NGyphD3dvuQAG2zUgIzZhVvYn+KQvIKO4OtIr365
+ M5PO5hxiXoDRN8sPm+4sxw0VQIDXJL358IKSMNCJevQFLGJZ4sfF7/LSwiJaxPRHGS
+ 46x/Cq/vBAE5xc1HNB49ECnSkzP708c6hH8cnyMM=
+Received: from out3.mail.ruhr-uni-bochum.de (localhost [127.0.0.1])
+ by mx3.mail.ruhr-uni-bochum.de (Postfix idis) with ESMTP id 49Fd3x6GbZz8SB4
+ for <wireguard@lists.zx2c4.com>; Sun,  3 May 2020 22:33:33 +0200 (CEST)
+X-Envelope-Sender: <pascal.ernster+wireguard@rub.de>
+X-RUB-Notes: Internal origin=134.147.42.227
+Received: from mail1.mail.ruhr-uni-bochum.de (mail1.mail.ruhr-uni-bochum.de
+ [134.147.42.227])
+ by out3.mail.ruhr-uni-bochum.de (Postfix mi-int) with ESMTP id 49Fd3x687nz8S9x
+ for <wireguard@lists.zx2c4.com>; Sun,  3 May 2020 22:33:33 +0200 (CEST)
+Received: from [IPv6:2a01:c23:6c01:5503:f417:bfc6:e4c5:b5ba]
+ (dynamic-2a01-0c23-6c01-5503-f417-bfc6-e4c5-b5ba.c23.pool.telefonica.de
+ [IPv6:2a01:c23:6c01:5503:f417:bfc6:e4c5:b5ba])
+ by mail1.mail.ruhr-uni-bochum.de (Postfix) with ESMTPSA id 49Fd3x24NWzypm
+ for <wireguard@lists.zx2c4.com>; Sun,  3 May 2020 22:33:33 +0200 (CEST)
+From: Pascal Ernster <pascal.ernster+wireguard@rub.de>
+Subject: Ubuntu kernel >= 5.3.0-52.46 breaks DKMS build for
+ wireguard-linux-compat >= 1.0.20200429, patch included
+To: wireguard@lists.zx2c4.com
+Message-ID: <6565463c-0a99-9137-5cc2-714e2fbd6dfc@rub.de>
+Date: Sun, 3 May 2020 22:33:43 +0200
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="------------3D3E1166ADE98F9D5739DFFB"
 Content-Language: en-US
+X-Virus-Scanned: clamav-milter 0.99.4 at mail1.mail.ruhr-uni-bochum.de
+X-Virus-Status: Clean
 X-Mailman-Approved-At: Mon, 04 May 2020 12:51:11 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -102,37 +75,63 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Vouching for this, sounds quite useful.
+This is a multi-part message in MIME format.
+--------------3D3E1166ADE98F9D5739DFFB
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On 4/30/20 3:55 PM, Martin Hauke wrote:
-> Add file wireguard.target, which allows you to stop or restart all
-> instances.
-> ---
->  src/systemd/wg-quick@.service | 1 +
->  src/systemd/wireguard.target  | 2 ++
->  2 files changed, 3 insertions(+)
->  create mode 100644 src/systemd/wireguard.target
->
-> diff --git a/src/systemd/wg-quick@.service b/src/systemd/wg-quick@.service
-> index 7c5f9d1..c22f7b3 100644
-> --- a/src/systemd/wg-quick@.service
-> +++ b/src/systemd/wg-quick@.service
-> @@ -2,6 +2,7 @@
->  Description=WireGuard via wg-quick(8) for %I
->  After=network-online.target nss-lookup.target
->  Wants=network-online.target nss-lookup.target
-> +PartOf=wireguard.target
->  Documentation=man:wg-quick(8)
->  Documentation=man:wg(8)
->  Documentation=https://www.wireguard.com/
-> diff --git a/src/systemd/wireguard.target b/src/systemd/wireguard.target
-> new file mode 100644
-> index 0000000..8e59224
-> --- /dev/null
-> +++ b/src/systemd/wireguard.target
-> @@ -0,0 +1,2 @@
-> +[Unit]
-> +Description=Target to restart all parts of WireGuard
-> --
-> 2.26.2
->
+Hi,
+
+
+Ubuntu kernel 5.3.0-52.46 breaks the DKMS build for
+wireguard-linux-compat 1.0.20200429. Function skb_reset_redirect() got
+added to the kernel's include/linux/skbuff.h, but collides with the
+function defintion from wireguard-linux-compat's compat/compat.h:
+
+https://kernel.ubuntu.com/git/ubuntu/ubuntu-eoan.git/commit/include/linux/skbuff.h?h=Ubuntu-5.3.0-52.46&id=b8845f9376917c49f5e219288613c6cbe172f884
+
+Kernel 5.3.0-52.46 is not only used for Ubuntu 19.10, but serves also as
+HWE kernel in Ubuntu 18.04.
+
+I've got the DKMS module to compile again on Ubuntu 18.04 using the
+attached patch, but I'm not sure it that's the correct solution to the
+problem since the colliding function definitions differ and I'm not
+really familiar with the kernel's network internals.
+
+
+Regards
+Pascal
+
+--------------3D3E1166ADE98F9D5739DFFB
+Content-Type: text/x-patch; charset=UTF-8;
+ name="fix-for-ubuntu-kernel-5.3.0-52.46.patch"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: attachment;
+ filename="fix-for-ubuntu-kernel-5.3.0-52.46.patch"
+
+--- /var/lib/dkms/wireguard/1.0.20200429/source/compat/compat.h	2020-04-3=
+0 23:03:40.000000000 +0000
++++ /var/lib/dkms/wireguard/1.0.20200429/source/compat/compat.h	2020-04-3=
+0 23:03:40.000000000 +0000
+@@ -1021,12 +1021,14 @@ out:
+ #if LINUX_VERSION_CODE < KERNEL_VERSION(5, 4, 29) || (LINUX_VERSION_CODE=
+ >=3D KERNEL_VERSION(5, 5, 0) && LINUX_VERSION_CODE < KERNEL_VERSION(5, 5=
+, 14))
+ #include <linux/skbuff.h>
+ #include <net/sch_generic.h>
++#if !(defined(UTS_UBUNTU_RELEASE_ABI) && (LINUX_VERSION_CODE >=3D KERNEL=
+_VERSION(5, 3, 18)) && (LINUX_VERSION_CODE < KERNEL_VERSION(5, 4, 0)) && =
+(UTS_UBUNTU_RELEASE_ABI >=3D 52)) // Ubuntu 18.04-HWE and 19.10 >=3D 5.3.=
+0-52.46
+ static inline void skb_reset_redirect(struct sk_buff *skb)
+ {
+ #ifdef CONFIG_NET_SCHED
+ 	skb_reset_tc(skb);
+ #endif
+ }
++#endif
+ #endif
+=20
+ #if defined(ISUBUNTU1604) || defined(ISRHEL7)
+
+--------------3D3E1166ADE98F9D5739DFFB--
