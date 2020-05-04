@@ -2,71 +2,72 @@ Return-Path: <SRS0=IpBN=6S=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6CCDBC3A5A9
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 May 2020 12:50:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DA9C6C47257
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 May 2020 13:33:52 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id C3DAF20721
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 May 2020 12:50:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 869872073B
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 May 2020 13:33:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dhSScPUb"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org C3DAF20721
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	dkim=pass (2048-bit key) header.d=yahoo.ca header.i=@yahoo.ca header.b="AF24Zl/C"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 869872073B
+Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=yahoo.ca
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5dbe9a35;
-	Mon, 4 May 2020 12:37:47 +0000 (UTC)
-Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com
- [2607:f8b0:4864:20::336])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 79d61702
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 4 May 2020 12:37:44 +0000 (UTC)
-Received: by mail-ot1-x336.google.com with SMTP id j26so8745790ots.0
- for <wireguard@lists.zx2c4.com>; Mon, 04 May 2020 05:50:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=JNrQB9bIfd9zlPROmS321vPnk/sStayet1erWJCjgho=;
- b=dhSScPUbo6HcwXW0zkHSbY7OzpLzE51ebxXeFPDtWd57xgRvCeEo9G0BT/mPS+G4uo
- dKYqQM5oAbg60kT0f/Rxw18wW8O6w1Skyn3FyMp7mG9r2dJNwwpMUjKY5GTHpnHzhfSH
- meekcB7+YMyNThPuHwcSbkUqvu6dKj/tAXBQLtLYzcvDj1lJC6Udc9D3dKEbRofUQo34
- 11C00kEjJEhWzaFwHx8U49Zrp2qbffrAMENUNam1uzC3721vdL1PFtoRW5BeZ+aKBwSq
- S0D+ZVc4lo43koeTEVfLQTNLRwuOmmmiqHdH7qVtlNQUudXEOlXefLJz9/lZkcPek0Se
- U3XQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=JNrQB9bIfd9zlPROmS321vPnk/sStayet1erWJCjgho=;
- b=X8zS03DXTMEqz9MH1KeI6QyZAaAvUkysCe+cf/Gt5n4jiz54wD8m2EU5WqW3ekiDI0
- rbY1iznx+kEvuDMjJ40dFvAkVKb0J2TgHx8WiTeiJrwLyar/MoD2nAeDLRoapv7iYLhr
- VuCr4IASf3TYX1F3Tcf68eiLKNRrEDO4doD/WRvUVuev1Y9Bmv+ruhWC1mxh5p2IknIg
- b+k/TRNBB+h/b9c9xMbisdoBzyuAk8w5jNZm5jdpdbBqtk39RPIj22x/pUBiKg6kgtj6
- D8mMlqYBi6LyfCqIhzegLz8CvvdgPtb/OMIJSTVNN6rGZ6yBQ3dO6h6zLwaPXVb0Rw/E
- HG1g==
-X-Gm-Message-State: AGi0PuYuklvH+Zjp0jLjJxtPkaCIrZ30Vun0v00Wwa6Lma+4oznRzwk8
- TvyP48tsi4BtlApTTzKrbLYxGuRpAf8GpTX3ShblNLVTOHY=
-X-Google-Smtp-Source: APiQypJ0G2fwjVO+w4vX604Ktyhbqo3Y+FrLfuu07woch0bUwCwTJl7+NAVJsOWTc8rF+c8em26PMPb0O1eSaIQUTTo=
-X-Received: by 2002:a9d:2185:: with SMTP id s5mr14653793otb.170.1588596608579; 
- Mon, 04 May 2020 05:50:08 -0700 (PDT)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b4053f16;
+	Mon, 4 May 2020 13:21:25 +0000 (UTC)
+Received: from sonic309-20.consmr.mail.gq1.yahoo.com
+ (sonic309-20.consmr.mail.gq1.yahoo.com [98.137.65.146])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 84314df8
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Mon, 4 May 2020 13:21:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.ca; s=s2048;
+ t=1588599226; bh=dM3o8yaHSuNUP04KmQnsMX3Fx/fbxtunWCPaGN/enT4=;
+ h=Date:From:Subject:To:References:In-Reply-To:From:Subject;
+ b=AF24Zl/Cii56uxKumhf09xzmi6RgJsmV3FDXc+XOBS9DWOrwUvyKvfC11XGC6gQlQ0nRDyN996wSQ3olmmWLdyCb1bGb+KNaHJ5skNDeJsKUHZ8HSh8gfCjMWsCKCP5+xfbs2geCHXO+x/qvnYmW5CD5k0V0NzP1WgyP96hcbDbpt6w4xwP5iwcThDL5iDiL9tXOwmuVgZ+u1EXvkyVlzEuTA9YoCmSweWdSOY1sTNhIWW4KPAweSaRJ/Vfrnq2hb9YzXyXaVdfJuOGN6jLlpNtvPQ+Qo0qxwr2ngY7y7a1P7mkGDdw06Cxy67bSceHi3VagtDE0O4GNRVi+idWl8A==
+X-YMail-OSG: WdYJFFQVM1l0snbz2K.3w2jQSAGsaZEA3M3rRVsFVPEqut26UAgmCrbLQr.81aP
+ E91ttQx4bd5_hFEirJSrIzdCz9.mrYsf8wHk24yPU0V2XmlZfwYcd6C0aaXVje1SzSzIJVDFcosT
+ MnA2lM1tTUZU8h7IaN7rWCdssB1isU1OHqrWVwskqFrZYibz2MZqNDBIKWVfOW6aaeNoDTepPK2I
+ hTPU3C2nDu6aLFf1IkLkGRP30D.ZWhXMhYUHT8DUak1SzZnTSr.cT.qoKuFfq_A6Mosxg0T949D4
+ W7Jv51KZefwqtCRMIAlwrq6aTicuSmwd8U1Cstn80FNQJTkoiEg_2BxJBezZcN4oZGTvbNZuzYEs
+ AdDYyLVWRczr0NCmpZT3NMlOu3E3R8Mkm0h4yD8q4MeUnD4_pqQh83.Qwt2Ob7XbqeUBOuwrofUb
+ MuwEAAPYxOB8Cn6gyycbKtbPne2eVQ4muK12YcgYP78EqbhA3TAyxAQWOTLPD30jmFlljoDjSt5Z
+ fygmJgEb9S0Q6__JpmMmI1BxicSwn54Hl2QvlnbMckhto5o1badsRlP6sp759FmQdi5lVmGJx5BJ
+ OomenGXhAeruaD8OycoyvTfu7iJqEN4qgpTF_3hMEYaafhxOtyh6oQZdQU1UM.3Gtpy_Ltv5qMfz
+ .XDO2rJ6EIoxodzw06F2RWvsjD62IIYLzfuO7dWk5NywPme5PpIK5KmWNWovHeWnSIekOynHLANJ
+ irFztEz55ZDQ7mFIX3_YiBplzZAQG3NqAv.w08r1UXeZsrGgnClrBPQGXX17fBwpSq1IFHoB1JtY
+ GvX7WPipb1VXdyqDvj679msJjlhwKdOpK6YrN51QMfbB.LjgNEyR0bvT.lyIRGx2jD8NktssInVS
+ 2KH.uyGde0ShZr1QH.8CngWI34.gxw6yDRdx2rtV.pfkLNhNE0p_TYUXFRL_xKsS9kpzALG8SGZi
+ xNw_iNdGVseZnk6bGGKyev7nRTSRcGSgkYXyvS7nBA7EqX7_QSeNxCbYJw7_5JIPEObjmwmpZtZ_
+ yGHrRAnQRC.3yErPKYAvdwvzv0iokPVET5GkaN.SuNg9qYZUDkcpSrmACOiRy.1J_U9GQ81KHPIH
+ Ik2gCfa4a9tdht.zYYCib5bpdpBI4xvG1BVhpun3AcIEsf6fbNldrNQ.OQ7EWITYxOBY9BqSGWoy
+ qGSAaP0KKR_8Y8ariMEFhUFHTichyGugLvckCnqSn2hvUZIFuSTh2wuLf8w1LZCnBTX1iOMvFHfd
+ RK8OWg.ZoCmHw9IjEYnyFXBYo_QancnYkZQ_zdMQ5wbGHfApi66gk.UA1HVqHoKE_Nv42bIvvmcT
+ NFYJlVLuy4lQx4Bgf1KmtnWyfYR8lhmP.ELhwXyTag4vFMQTNHpuZJOuR5tqrGu94OadCT9Q.3GZ
+ bNUaUImDdoHXuO6UxN20Fv2lgn6OQvYuo..bFnyU-
+Received: from sonic.gate.mail.ne1.yahoo.com by
+ sonic309.consmr.mail.gq1.yahoo.com with HTTP; Mon, 4 May 2020 13:33:46 +0000
+Received: by smtp428.mail.ne1.yahoo.com (VZM Hermes SMTP Server) with ESMTPA
+ ID cedfb84edc2388cd1f9c471704e375a0; 
+ Mon, 04 May 2020 13:33:41 +0000 (UTC)
+Date: Mon, 04 May 2020 09:33:38 -0400
+From: "Alex Xu (Hello71)" <alex_y_xu@yahoo.ca>
+Subject: Re: Newbie - WireGuard per systemd on Debian Buster
+To: Hans Kraus <hans@hanswkraus.com>, wireguard@lists.zx2c4.com
+References: <cf665c35-adf9-6f74-b360-1c3cfd723963@hanswkraus.com>
+In-Reply-To: <cf665c35-adf9-6f74-b360-1c3cfd723963@hanswkraus.com>
 MIME-Version: 1.0
-References: <CAF75rJBKTbaK6CEQcmto=YcgA5NGrG85jSvSrYZpQV-L1xFMww@mail.gmail.com>
- <CAHmME9oNus499EVFHVfLNjbOhU+vOV4P7R7USCm1ycNH2e0apA@mail.gmail.com>
-In-Reply-To: <CAHmME9oNus499EVFHVfLNjbOhU+vOV4P7R7USCm1ycNH2e0apA@mail.gmail.com>
-From: Wang Jian <larkwang@gmail.com>
-Date: Mon, 4 May 2020 20:49:57 +0800
-Message-ID: <CAF75rJAh8xA3-=nk+gTpvULMD-xC41ukEatW=JyowaZHfiOzQg@mail.gmail.com>
-Subject: Re: soft lockup - may be related to wireguard (backported)
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+Message-Id: <1588599175.18qb4zf4yk.none@localhost>
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
+X-Mailer: WebService/1.1.15756 hermes Apache-HttpAsyncClient/4.1.4
+ (Java/11.0.6)
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -81,152 +82,59 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Jason A. Donenfeld <Jason@zx2c4.com> =E4=BA=8E2020=E5=B9=B45=E6=9C=884=E6=
-=97=A5=E5=91=A8=E4=B8=80 =E4=B8=8B=E5=8D=881:26=E5=86=99=E9=81=93=EF=BC=9A
->
-> Are you routing wireguard over wireguard, or something interesting like t=
-hat?
->
-> Is ipsec being used?
+Excerpts from Hans Kraus's message of April 16, 2020 12:23 pm:
+> I'm a newbie to wireguard and trying to install a working environment,
+> starting with one server and one client. First I used the example in
+> <https://github.com/pirate/wireguard-docs/tree/master/example-simple-clie=
+nt-to-server>
+> and got it working.
+>=20
+> To get a more persistent installation I followed the example in
+> <https://wiki.debian.org/Wireguard>, with one server and one client,
+> "Step 2 - Alternative C - systemd". My server has a fixed ip4 address,
+> my client(s) get their addresses via DHCP (home network and road
+> warrior). My two "/etc/systemd/network" files on my server are:
+>=20
+> /etc/systemd/network/wg0.netdev
+> ---------------------------------------------
+> [NetDev]
+> Name=3Dwg0
+> Kind=3Dwireguard
+> Description=3DWireguard kraush
+>=20
+> [WireGuard]
+> PrivateKey=3D<private key server>
+> ListenPort=3D#####
+>=20
+> [WireGuardPeer]
+> PublicKey=3D<public key client>
+> AllowedIPs=3D<free range>.0/24
+> ---------------------------------------------
+>=20
+> /etc/systemd/network/wg0.network
+> ---------------------------------------------
+> [Match]
+> Name=3Dwg0
+>=20
+> [Network]
+> Address=3D<free range>.1/24
+> ---------------------------------------------
+> I omitted the "Endpoint=3D<remote IP or hostname>:<remote port>" part
+> because I don't know (at least at server startup) the IP address of my
+> client(s).
+>=20
+> That doesn't work. wg0 is up, ip addr show shows an address bound to the
+> interface. But it seems that the server doesn't recognize the peer
+> because "wg show wg0 peers" gives an empty list back.
+>=20
+> Any help appreciated,
+> Hans
+>=20
+> --=20
+> Diese E-Mail wurde von Avast Antivirus-Software auf Viren gepr=C3=BCft.
+> https://www.avast.com/antivirus
+>=20
+>=20
 
-I don't think I have any fancy use cases. But wireguard over pppoe?
-
-Other details are
-- nftable's iptables compatible mode is used, along with ipset
-- pppoe link is default route, and wg-quick is configured to install
-additional default route into new created routing table (2000)
-- ipset matches are used to MARK traffic to specific destinations in
-mangle table, PREROUTING & OUTPUT, for both v4 and v6
-- ip rules are added to match the fwmark and lookup new routing table
-(2000, so go out via wireguard interface) for forwarded traffic and
-output traffic
-
-Here is the list of loaded kmod.
-
-# lsmod
-Module                  Size  Used by
-pppoe                  20480  2
-pppox                  16384  1 pppoe
-ppp_generic            49152  6 pppox,pppoe
-slhc                   20480  1 ppp_generic
-wireguard              94208  0
-curve25519_x86_64      49152  1 wireguard
-libcurve25519          49152  2 curve25519_x86_64,wireguard
-libchacha20poly1305    16384  1 wireguard
-chacha_x86_64          28672  1 libchacha20poly1305
-poly1305_x86_64        28672  1 libchacha20poly1305
-ip6_udp_tunnel         16384  1 wireguard
-udp_tunnel             16384  1 wireguard
-libblake2s             16384  1 wireguard
-blake2s_x86_64         20480  1 libblake2s
-libblake2s_generic     20480  1 blake2s_x86_64
-libchacha              16384  1 chacha_x86_64
-cfg80211              839680  0
-rfkill                 28672  1 cfg80211
-8021q                  40960  0
-garp                   16384  1 8021q
-stp                    16384  1 garp
-mrp                    20480  1 8021q
-llc                    16384  2 stp,garp
-xt_mark                16384  4
-xt_set                 16384  4
-nft_chain_nat          16384  8
-xt_MASQUERADE          20480  3
-xt_TCPMSS              16384  5
-xt_nat                 16384  2
-nf_nat                 53248  3 xt_nat,nft_chain_nat,xt_MASQUERADE
-nft_counter            16384  25
-xt_tcpudp              20480  7
-ipt_REJECT             16384  3
-nf_reject_ipv4         16384  1 ipt_REJECT
-xt_state               16384  0
-xt_conntrack           16384  4
-xt_multiport           20480  2
-nft_compat             20480  34
-nf_tables             176128  93 nft_compat,nft_counter,nft_chain_nat
-ip_set_hash_ip         45056  2
-ip_set_hash_net        53248  3
-ip_set                 57344  3 ip_set_hash_ip,xt_set,ip_set_hash_net
-nfnetlink              16384  4 nft_compat,nf_tables,ip_set
-binfmt_misc            24576  1
-intel_powerclamp       20480  0
-nls_ascii              16384  1
-coretemp               20480  0
-snd_hda_codec_realtek   126976  1
-nls_cp437              20480  1
-vfat                   20480  1
-snd_hda_codec_generic    94208  1 snd_hda_codec_realtek
-fat                    86016  1 vfat
-ledtrig_audio          16384  2 snd_hda_codec_generic,snd_hda_codec_realtek
-snd_hda_codec_hdmi     73728  1
-snd_hda_intel          53248  0
-snd_intel_dspcfg       24576  1 snd_hda_intel
-snd_hda_codec         163840  4
-snd_hda_codec_generic,snd_hda_codec_hdmi,snd_hda_intel,snd_hda_codec_realte=
-k
-evdev                  28672  3
-gma500_gfx            221184  1
-efi_pstore             16384  0
-snd_hda_core          102400  5
-snd_hda_codec_generic,snd_hda_codec_hdmi,snd_hda_intel,snd_hda_codec,snd_hd=
-a_codec_realtek
-snd_hwdep              16384  1 snd_hda_codec
-snd_pcm               131072  4
-snd_hda_codec_hdmi,snd_hda_intel,snd_hda_codec,snd_hda_core
-drm_kms_helper        233472  1 gma500_gfx
-pcspkr                 16384  0
-efivars                20480  1 efi_pstore
-snd_timer              40960  1 snd_pcm
-iTCO_wdt               16384  0
-snd                   106496  8
-snd_hda_codec_generic,snd_hda_codec_hdmi,snd_hwdep,snd_hda_intel,snd_hda_co=
-dec,snd_hda_codec_realtek,snd_timer,snd_pcm
-sg                     36864  0
-iTCO_vendor_support    16384  1 iTCO_wdt
-soundcore              16384  1 snd
-i2c_algo_bit           16384  1 gma500_gfx
-watchdog               28672  1 iTCO_wdt
-acpi_cpufreq           28672  1
-button                 24576  0
-tcp_bbr                20480  36
-sch_cake               32768  3
-nf_conntrack          172032  5
-xt_conntrack,nf_nat,xt_state,xt_nat,xt_MASQUERADE
-nf_defrag_ipv6         24576  1 nf_conntrack
-nf_defrag_ipv4         16384  1 nf_conntrack
-loop                   40960  0
-drm                   585728  3 drm_kms_helper,gma500_gfx
-efivarfs               16384  1
-ip_tables              32768  0
-x_tables               53248  12
-xt_conntrack,nft_compat,xt_multiport,xt_state,xt_tcpudp,xt_nat,xt_set,ipt_R=
-EJECT,ip_tables,xt_MASQUERADE,xt_TCPMSS,xt_mark
-autofs4                53248  2
-ext4                  765952  1
-crc16                  16384  1 ext4
-mbcache                16384  1 ext4
-jbd2                  135168  1 ext4
-btrfs                1478656  0
-xor                    24576  1 btrfs
-zstd_decompress        90112  1 btrfs
-zstd_compress         188416  1 btrfs
-raid6_pq              122880  1 btrfs
-crc32c_generic         16384  2
-libcrc32c              16384  3 nf_conntrack,nf_nat,btrfs
-sd_mod                 57344  3
-ahci                   40960  2
-libahci                45056  1 ahci
-libata                290816  2 libahci,ahci
-e1000e                290816  0
-ehci_pci               20480  0
-uhci_hcd               53248  0
-scsi_mod              253952  3 sd_mod,libata,sg
-ehci_hcd               98304  1 ehci_pci
-i2c_i801               32768  0
-usbcore               315392  3 ehci_pci,ehci_hcd,uhci_hcd
-ptp                    20480  1 e1000e
-lpc_ich                28672  0
-mfd_core               20480  1 lpc_ich
-pps_core               24576  1 ptp
-usb_common             16384  3 usbcore,ehci_hcd,uhci_hcd
-video                  53248  1 gma500_gfx
+It could be that your public key is in the wrong format. Check journal=20
+to see if systemd-networkd outputs any information.
