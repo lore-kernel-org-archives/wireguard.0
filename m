@@ -2,68 +2,70 @@ Return-Path: <SRS0=IpBN=6S=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA9C6C47257
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 May 2020 13:33:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 960FFC3A5A9
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 May 2020 13:49:58 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 869872073B
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 May 2020 13:33:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 40F672078E
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 May 2020 13:49:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=yahoo.ca header.i=@yahoo.ca header.b="AF24Zl/C"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 869872073B
+	dkim=pass (2048-bit key) header.d=yahoo.ca header.i=@yahoo.ca header.b="kyrO/H75"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 40F672078E
 Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=yahoo.ca
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b4053f16;
-	Mon, 4 May 2020 13:21:25 +0000 (UTC)
-Received: from sonic309-20.consmr.mail.gq1.yahoo.com
- (sonic309-20.consmr.mail.gq1.yahoo.com [98.137.65.146])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 84314df8
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bc8f1336;
+	Mon, 4 May 2020 13:37:32 +0000 (UTC)
+Received: from sonic303-24.consmr.mail.gq1.yahoo.com
+ (sonic303-24.consmr.mail.gq1.yahoo.com [98.137.64.205])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7e7635b5
  (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 4 May 2020 13:21:22 +0000 (UTC)
+ for <wireguard@lists.zx2c4.com>; Mon, 4 May 2020 13:37:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.ca; s=s2048;
- t=1588599226; bh=dM3o8yaHSuNUP04KmQnsMX3Fx/fbxtunWCPaGN/enT4=;
+ t=1588600192; bh=Yoty8oMAvJw7Ebu9+CsXu8XgBxP71M5fvzn1X2JACgo=;
  h=Date:From:Subject:To:References:In-Reply-To:From:Subject;
- b=AF24Zl/Cii56uxKumhf09xzmi6RgJsmV3FDXc+XOBS9DWOrwUvyKvfC11XGC6gQlQ0nRDyN996wSQ3olmmWLdyCb1bGb+KNaHJ5skNDeJsKUHZ8HSh8gfCjMWsCKCP5+xfbs2geCHXO+x/qvnYmW5CD5k0V0NzP1WgyP96hcbDbpt6w4xwP5iwcThDL5iDiL9tXOwmuVgZ+u1EXvkyVlzEuTA9YoCmSweWdSOY1sTNhIWW4KPAweSaRJ/Vfrnq2hb9YzXyXaVdfJuOGN6jLlpNtvPQ+Qo0qxwr2ngY7y7a1P7mkGDdw06Cxy67bSceHi3VagtDE0O4GNRVi+idWl8A==
-X-YMail-OSG: WdYJFFQVM1l0snbz2K.3w2jQSAGsaZEA3M3rRVsFVPEqut26UAgmCrbLQr.81aP
- E91ttQx4bd5_hFEirJSrIzdCz9.mrYsf8wHk24yPU0V2XmlZfwYcd6C0aaXVje1SzSzIJVDFcosT
- MnA2lM1tTUZU8h7IaN7rWCdssB1isU1OHqrWVwskqFrZYibz2MZqNDBIKWVfOW6aaeNoDTepPK2I
- hTPU3C2nDu6aLFf1IkLkGRP30D.ZWhXMhYUHT8DUak1SzZnTSr.cT.qoKuFfq_A6Mosxg0T949D4
- W7Jv51KZefwqtCRMIAlwrq6aTicuSmwd8U1Cstn80FNQJTkoiEg_2BxJBezZcN4oZGTvbNZuzYEs
- AdDYyLVWRczr0NCmpZT3NMlOu3E3R8Mkm0h4yD8q4MeUnD4_pqQh83.Qwt2Ob7XbqeUBOuwrofUb
- MuwEAAPYxOB8Cn6gyycbKtbPne2eVQ4muK12YcgYP78EqbhA3TAyxAQWOTLPD30jmFlljoDjSt5Z
- fygmJgEb9S0Q6__JpmMmI1BxicSwn54Hl2QvlnbMckhto5o1badsRlP6sp759FmQdi5lVmGJx5BJ
- OomenGXhAeruaD8OycoyvTfu7iJqEN4qgpTF_3hMEYaafhxOtyh6oQZdQU1UM.3Gtpy_Ltv5qMfz
- .XDO2rJ6EIoxodzw06F2RWvsjD62IIYLzfuO7dWk5NywPme5PpIK5KmWNWovHeWnSIekOynHLANJ
- irFztEz55ZDQ7mFIX3_YiBplzZAQG3NqAv.w08r1UXeZsrGgnClrBPQGXX17fBwpSq1IFHoB1JtY
- GvX7WPipb1VXdyqDvj679msJjlhwKdOpK6YrN51QMfbB.LjgNEyR0bvT.lyIRGx2jD8NktssInVS
- 2KH.uyGde0ShZr1QH.8CngWI34.gxw6yDRdx2rtV.pfkLNhNE0p_TYUXFRL_xKsS9kpzALG8SGZi
- xNw_iNdGVseZnk6bGGKyev7nRTSRcGSgkYXyvS7nBA7EqX7_QSeNxCbYJw7_5JIPEObjmwmpZtZ_
- yGHrRAnQRC.3yErPKYAvdwvzv0iokPVET5GkaN.SuNg9qYZUDkcpSrmACOiRy.1J_U9GQ81KHPIH
- Ik2gCfa4a9tdht.zYYCib5bpdpBI4xvG1BVhpun3AcIEsf6fbNldrNQ.OQ7EWITYxOBY9BqSGWoy
- qGSAaP0KKR_8Y8ariMEFhUFHTichyGugLvckCnqSn2hvUZIFuSTh2wuLf8w1LZCnBTX1iOMvFHfd
- RK8OWg.ZoCmHw9IjEYnyFXBYo_QancnYkZQ_zdMQ5wbGHfApi66gk.UA1HVqHoKE_Nv42bIvvmcT
- NFYJlVLuy4lQx4Bgf1KmtnWyfYR8lhmP.ELhwXyTag4vFMQTNHpuZJOuR5tqrGu94OadCT9Q.3GZ
- bNUaUImDdoHXuO6UxN20Fv2lgn6OQvYuo..bFnyU-
+ b=kyrO/H75SpA11TZHXFBV6jUQo0lsx4Ae4GliQmty+nvWa2b0UlQP6OKW4l5Qwo6fDmIAZ66gcLTokOIl0d2eIFeuZKzz6QINOZKxZBWcRGXRDFx4lVAij+1K7OJYc+uAxT8vXJBV/xunyoQ2xyfguxpe7B3XwT3lW6UANqxvwjBXumg4ZAIpISNvdALqHHOZhqxzV34wERN4lZFUBPYehJ/jiV9fERaufeC8nlNYF3+PZOVmUCG+hLGproR8PYnOtsi8vBPS9WEwT2C0w6ljJK3ZFeZ8q95FXaa0Z0Orf1teOS9r98PU/jjOYFiLij/pdw77ffIKr4ySYJrVDylLXg==
+X-YMail-OSG: x.P3DzwVM1k3g3AUki6evUXw_I_cPN87x6Or4PFuhQ2HS18XMz6CUpFhyTPr67Q
+ E4vGP9xivOaQf6pXz1ERGkKmJA24Slx01OV6D2EI1RswL6wv3VkG60GaJr4NSVG6j1G_jIqMGGx7
+ WzaJnuL.PX.0qyugD0Q6amNKqgF2lFelJBy2GKUGZmUdkjR0dHtVFO1s8NUqEHF298F8U5sgzTeU
+ L1Tbqq.xxGUfghko59uoEJbGr35vOQP8Rf8.4OZ8YVgQxEmIWvzxcAmLvA9X6lQmToKcgZGJ04rR
+ mc90hGsxi8h3INcG1GZLAKSBVXl2YQObRaXkqO_3BoBOe.0KWPyXB.8QkeaOAJg.dympai46Ni2Y
+ dp79t9UkfvUz_CAR.rDxiZPG2bOszHemd4W949hY0vkrD7kNi.XhXkLPgwvP_41v6y8g5ELnUeGk
+ EczYLHJ2E9gjGcXAD8myaEJ7E7VCaoNBTw5I6B99WRFdf5m660dbD.Lsl2naqJupD_mQmexoaAJI
+ _z.VczIaPapuPRcugcxAlrBadrnO2cVvV.dUeTkdgjNn9qs11Kj.cpnjJ20a8BePVh7F0Zb6Q4fT
+ OIDk08tv.Xe4oLvAHKTBMXzHyrTXsJcmQJKq5yDIXd5zUZ1GPbtcRa5BwR9vmFbhKydEN5Zp_ON1
+ P3pIB3ldg5BOWADxbsWY0qJQ.LHK.yIjapPbw3qH3NGomtIkXeT1a8kqTf7GQm45AbXkNpsfSUDN
+ pPmbLjZGoseuEf3RK5mHzdxd5fEzJYgBcQyzsjoHAFguHra7m2j6p2OqWOuHKIF1NwkHPzxXD9jc
+ witD_WRTuqYGgaQy_dEzP8J3ECBUtJ0SMJmY65g82qX8yeLtbVFHbG_O0TU3K7E2bkHciHjMdozd
+ r_ha.SgX_VtI4OFl82029d0NHaywZ7gIRnOm7cb35gjKDy0TjJhJKLLJQPJpcb5CFKRik_bNSrBr
+ jyKqgnl_Ks06N_rIjnBw1j040bkLh7P_qF8P.lkSwhsVSl12LqFMl_w0GVkr7E0APLIFCU_OUZvX
+ FD.zYYNIeJ6yc4Eb7YViEmTxT_ay6HbaVKtyPdV2LOjAHy4c68WkJEl.oVrsNAK_5gVeTcy36oJC
+ 5hgqj__OZy7p3hxi3A7x2ylqiCOdiCKdXnBTFLdXxCafyy_HuJ7FPH5tChwIUqCh3AmyXOrVli44
+ YKnlJnAentImfRgwD9.S8jmG1fMH137C.0NRQunt8bZKjjy1ncqiBalPBoABlcAM0GOFx_2o6x63
+ fOmA_zyYgoMnSSPPqKKEUZu9rptb.II3etqaP8EXby7G8fASYbdqELyxCxOJc.3q7C076Y6fSNXI
+ _w._spEUxYpGTJ9G6jD_YPTK3KamZdnj37MmEee6gXqV2o.4whQYlj2NJF71kvVV0kqmauRmVCLA
+ 4lo30.uc-
 Received: from sonic.gate.mail.ne1.yahoo.com by
- sonic309.consmr.mail.gq1.yahoo.com with HTTP; Mon, 4 May 2020 13:33:46 +0000
-Received: by smtp428.mail.ne1.yahoo.com (VZM Hermes SMTP Server) with ESMTPA
- ID cedfb84edc2388cd1f9c471704e375a0; 
- Mon, 04 May 2020 13:33:41 +0000 (UTC)
-Date: Mon, 04 May 2020 09:33:38 -0400
+ sonic303.consmr.mail.gq1.yahoo.com with HTTP; Mon, 4 May 2020 13:49:52 +0000
+Received: by smtp417.mail.bf1.yahoo.com (VZM Hermes SMTP Server) with ESMTPA
+ ID 3bbac88628e1907088323d94b8756fbf; 
+ Mon, 04 May 2020 13:49:47 +0000 (UTC)
+Date: Mon, 04 May 2020 09:49:43 -0400
 From: "Alex Xu (Hello71)" <alex_y_xu@yahoo.ca>
-Subject: Re: Newbie - WireGuard per systemd on Debian Buster
-To: Hans Kraus <hans@hanswkraus.com>, wireguard@lists.zx2c4.com
-References: <cf665c35-adf9-6f74-b360-1c3cfd723963@hanswkraus.com>
-In-Reply-To: <cf665c35-adf9-6f74-b360-1c3cfd723963@hanswkraus.com>
+Subject: Re: soft lockup - may be related to wireguard (backported)
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>, Wang Jian <larkwang@gmail.com>,
+ wireguard@lists.zx2c4.com
+References: <CAF75rJBKTbaK6CEQcmto=YcgA5NGrG85jSvSrYZpQV-L1xFMww@mail.gmail.com>
+ <CAHmME9oNus499EVFHVfLNjbOhU+vOV4P7R7USCm1ycNH2e0apA@mail.gmail.com>
+In-Reply-To: <CAHmME9oNus499EVFHVfLNjbOhU+vOV4P7R7USCm1ycNH2e0apA@mail.gmail.com>
 MIME-Version: 1.0
-Message-Id: <1588599175.18qb4zf4yk.none@localhost>
+Message-Id: <1588599653.habtnvnvne.none@localhost>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 X-Mailer: WebService/1.1.15756 hermes Apache-HttpAsyncClient/4.1.4
@@ -82,59 +84,17 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Excerpts from Hans Kraus's message of April 16, 2020 12:23 pm:
-> I'm a newbie to wireguard and trying to install a working environment,
-> starting with one server and one client. First I used the example in
-> <https://github.com/pirate/wireguard-docs/tree/master/example-simple-clie=
-nt-to-server>
-> and got it working.
+Excerpts from Jason A. Donenfeld's message of May 4, 2020 1:26 am:
+> Are you routing wireguard over wireguard, or something interesting like t=
+hat?
 >=20
-> To get a more persistent installation I followed the example in
-> <https://wiki.debian.org/Wireguard>, with one server and one client,
-> "Step 2 - Alternative C - systemd". My server has a fixed ip4 address,
-> my client(s) get their addresses via DHCP (home network and road
-> warrior). My two "/etc/systemd/network" files on my server are:
->=20
-> /etc/systemd/network/wg0.netdev
-> ---------------------------------------------
-> [NetDev]
-> Name=3Dwg0
-> Kind=3Dwireguard
-> Description=3DWireguard kraush
->=20
-> [WireGuard]
-> PrivateKey=3D<private key server>
-> ListenPort=3D#####
->=20
-> [WireGuardPeer]
-> PublicKey=3D<public key client>
-> AllowedIPs=3D<free range>.0/24
-> ---------------------------------------------
->=20
-> /etc/systemd/network/wg0.network
-> ---------------------------------------------
-> [Match]
-> Name=3Dwg0
->=20
-> [Network]
-> Address=3D<free range>.1/24
-> ---------------------------------------------
-> I omitted the "Endpoint=3D<remote IP or hostname>:<remote port>" part
-> because I don't know (at least at server startup) the IP address of my
-> client(s).
->=20
-> That doesn't work. wg0 is up, ip addr show shows an address bound to the
-> interface. But it seems that the server doesn't recognize the peer
-> because "wg show wg0 peers" gives an empty list back.
->=20
-> Any help appreciated,
-> Hans
->=20
-> --=20
-> Diese E-Mail wurde von Avast Antivirus-Software auf Viren gepr=C3=BCft.
-> https://www.avast.com/antivirus
->=20
+> Is ipsec being used?
 >=20
 
-It could be that your public key is in the wrong format. Check journal=20
-to see if systemd-networkd outputs any information.
+This "DN2800MT" looks like an Atom board from 2012; are you trying to=20
+run a very large bandwidth through it? I think it's plausible that=20
+buffering could cause a large enough chunk of work for a slow CPU that=20
+the kernel could erroneously think that the code is stuck. I don't know=20
+why that would happen on the tx thread though, or why it would result in=20
+an RCU stall, seeing as only a single access is made under an RCU lock=20
+in this function...
