@@ -7,69 +7,68 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 960FFC3A5A9
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 May 2020 13:49:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D059C47257
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 May 2020 16:51:46 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 40F672078E
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 May 2020 13:49:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 8D8D32073B
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 May 2020 16:51:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=yahoo.ca header.i=@yahoo.ca header.b="kyrO/H75"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 40F672078E
-Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=yahoo.ca
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qZeJWEWN"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 8D8D32073B
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bc8f1336;
-	Mon, 4 May 2020 13:37:32 +0000 (UTC)
-Received: from sonic303-24.consmr.mail.gq1.yahoo.com
- (sonic303-24.consmr.mail.gq1.yahoo.com [98.137.64.205])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7e7635b5
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 4 May 2020 13:37:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.ca; s=s2048;
- t=1588600192; bh=Yoty8oMAvJw7Ebu9+CsXu8XgBxP71M5fvzn1X2JACgo=;
- h=Date:From:Subject:To:References:In-Reply-To:From:Subject;
- b=kyrO/H75SpA11TZHXFBV6jUQo0lsx4Ae4GliQmty+nvWa2b0UlQP6OKW4l5Qwo6fDmIAZ66gcLTokOIl0d2eIFeuZKzz6QINOZKxZBWcRGXRDFx4lVAij+1K7OJYc+uAxT8vXJBV/xunyoQ2xyfguxpe7B3XwT3lW6UANqxvwjBXumg4ZAIpISNvdALqHHOZhqxzV34wERN4lZFUBPYehJ/jiV9fERaufeC8nlNYF3+PZOVmUCG+hLGproR8PYnOtsi8vBPS9WEwT2C0w6ljJK3ZFeZ8q95FXaa0Z0Orf1teOS9r98PU/jjOYFiLij/pdw77ffIKr4ySYJrVDylLXg==
-X-YMail-OSG: x.P3DzwVM1k3g3AUki6evUXw_I_cPN87x6Or4PFuhQ2HS18XMz6CUpFhyTPr67Q
- E4vGP9xivOaQf6pXz1ERGkKmJA24Slx01OV6D2EI1RswL6wv3VkG60GaJr4NSVG6j1G_jIqMGGx7
- WzaJnuL.PX.0qyugD0Q6amNKqgF2lFelJBy2GKUGZmUdkjR0dHtVFO1s8NUqEHF298F8U5sgzTeU
- L1Tbqq.xxGUfghko59uoEJbGr35vOQP8Rf8.4OZ8YVgQxEmIWvzxcAmLvA9X6lQmToKcgZGJ04rR
- mc90hGsxi8h3INcG1GZLAKSBVXl2YQObRaXkqO_3BoBOe.0KWPyXB.8QkeaOAJg.dympai46Ni2Y
- dp79t9UkfvUz_CAR.rDxiZPG2bOszHemd4W949hY0vkrD7kNi.XhXkLPgwvP_41v6y8g5ELnUeGk
- EczYLHJ2E9gjGcXAD8myaEJ7E7VCaoNBTw5I6B99WRFdf5m660dbD.Lsl2naqJupD_mQmexoaAJI
- _z.VczIaPapuPRcugcxAlrBadrnO2cVvV.dUeTkdgjNn9qs11Kj.cpnjJ20a8BePVh7F0Zb6Q4fT
- OIDk08tv.Xe4oLvAHKTBMXzHyrTXsJcmQJKq5yDIXd5zUZ1GPbtcRa5BwR9vmFbhKydEN5Zp_ON1
- P3pIB3ldg5BOWADxbsWY0qJQ.LHK.yIjapPbw3qH3NGomtIkXeT1a8kqTf7GQm45AbXkNpsfSUDN
- pPmbLjZGoseuEf3RK5mHzdxd5fEzJYgBcQyzsjoHAFguHra7m2j6p2OqWOuHKIF1NwkHPzxXD9jc
- witD_WRTuqYGgaQy_dEzP8J3ECBUtJ0SMJmY65g82qX8yeLtbVFHbG_O0TU3K7E2bkHciHjMdozd
- r_ha.SgX_VtI4OFl82029d0NHaywZ7gIRnOm7cb35gjKDy0TjJhJKLLJQPJpcb5CFKRik_bNSrBr
- jyKqgnl_Ks06N_rIjnBw1j040bkLh7P_qF8P.lkSwhsVSl12LqFMl_w0GVkr7E0APLIFCU_OUZvX
- FD.zYYNIeJ6yc4Eb7YViEmTxT_ay6HbaVKtyPdV2LOjAHy4c68WkJEl.oVrsNAK_5gVeTcy36oJC
- 5hgqj__OZy7p3hxi3A7x2ylqiCOdiCKdXnBTFLdXxCafyy_HuJ7FPH5tChwIUqCh3AmyXOrVli44
- YKnlJnAentImfRgwD9.S8jmG1fMH137C.0NRQunt8bZKjjy1ncqiBalPBoABlcAM0GOFx_2o6x63
- fOmA_zyYgoMnSSPPqKKEUZu9rptb.II3etqaP8EXby7G8fASYbdqELyxCxOJc.3q7C076Y6fSNXI
- _w._spEUxYpGTJ9G6jD_YPTK3KamZdnj37MmEee6gXqV2o.4whQYlj2NJF71kvVV0kqmauRmVCLA
- 4lo30.uc-
-Received: from sonic.gate.mail.ne1.yahoo.com by
- sonic303.consmr.mail.gq1.yahoo.com with HTTP; Mon, 4 May 2020 13:49:52 +0000
-Received: by smtp417.mail.bf1.yahoo.com (VZM Hermes SMTP Server) with ESMTPA
- ID 3bbac88628e1907088323d94b8756fbf; 
- Mon, 04 May 2020 13:49:47 +0000 (UTC)
-Date: Mon, 04 May 2020 09:49:43 -0400
-From: "Alex Xu (Hello71)" <alex_y_xu@yahoo.ca>
-Subject: Re: soft lockup - may be related to wireguard (backported)
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>, Wang Jian <larkwang@gmail.com>,
- wireguard@lists.zx2c4.com
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 13ea4fb4;
+	Mon, 4 May 2020 16:38:52 +0000 (UTC)
+Received: from mail-oo1-xc2c.google.com (mail-oo1-xc2c.google.com
+ [2607:f8b0:4864:20::c2c])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b600bbb4
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Mon, 4 May 2020 16:38:50 +0000 (UTC)
+Received: by mail-oo1-xc2c.google.com with SMTP id t3so2537699oou.8
+ for <wireguard@lists.zx2c4.com>; Mon, 04 May 2020 09:51:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=Qi0RRieGU+R12oDPsfAYSGBdwoT0E95SbHAAmzGiSxA=;
+ b=qZeJWEWNRRJW6PqXmr5LQlWGCnAhjyCcgBWsepuMPUH5PB8rwQcFZzMJEeZuASGOJb
+ 19DfmV1CoGRK+oTmwfVBmXvGWg+Hl2O8QK1T1Oto7YOaF2RZvoNrFm3SuUUeFQkUTqiA
+ SHWld6B8wIYaUoIop8gDcqQJ0qpswjDYA5Yg4BcYOzVFx4M0PIotXjsitmbbjloE7UQI
+ MxTPMllp+64nq/F6XfGTpA77lj1Ow6CPIBPrUnvaezV9kY9VdM+GCgH99UGxF9L5YP2P
+ otImdlfiBaG/OlPTTaT7jzPYvqMXHrIxNwHmUitrYYLVFybBLvw/Emfl9ccwhVJCYy2q
+ YMRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=Qi0RRieGU+R12oDPsfAYSGBdwoT0E95SbHAAmzGiSxA=;
+ b=Rv6wR7AoAuQXF+khBnH91rFu1LA/vAsHjQV9lx7B0yEYwZjcLzkJ4kLs1eoCYfP7nw
+ URypnhTXgbO4tNptB1Vv6fMcBQ/NcnUGEew1IMus+iPZD9OsIul39O7msXxdhw7C+8gc
+ ueimVpRDiP0D0n+XTcxFDlQhJMn88VTAsS+6GRw/E5UNG88IAH10h976tjQwb0vLVuo3
+ yDTbxzyrGI0bojK+mLyM1A614tA9ipBx2HT3yoQkkSyS5Wa26OVGAtYzZdnxFv/UkmGn
+ lQzHvv9owabdeDiUiy2j8rWpSAewV6QIaV0ld02si0KGohOQg9E6UhsUzT3mTXo3ysa3
+ pXpA==
+X-Gm-Message-State: AGi0Puaohc+NbOj3/Gb5/3SLK3BM4Jes/lM8xtxR8PNCIs4VHtdYPRBu
+ K1Bn5vu1j0fpPR8ZT4Y0ESuHBnGHD5I2vLAVsuQ=
+X-Google-Smtp-Source: APiQypKheBqYi9H7y7QtLYylPZjznp6Dqj/YiS727wjavojIfQCSolKv1PHi2nOcOfwKjwDN8luiVyiEjT06sNERUwQ=
+X-Received: by 2002:a4a:d44a:: with SMTP id p10mr15998856oos.11.1588611075626; 
+ Mon, 04 May 2020 09:51:15 -0700 (PDT)
+MIME-Version: 1.0
 References: <CAF75rJBKTbaK6CEQcmto=YcgA5NGrG85jSvSrYZpQV-L1xFMww@mail.gmail.com>
  <CAHmME9oNus499EVFHVfLNjbOhU+vOV4P7R7USCm1ycNH2e0apA@mail.gmail.com>
-In-Reply-To: <CAHmME9oNus499EVFHVfLNjbOhU+vOV4P7R7USCm1ycNH2e0apA@mail.gmail.com>
-MIME-Version: 1.0
-Message-Id: <1588599653.habtnvnvne.none@localhost>
-Content-Type: text/plain; charset=utf-8
+ <1588599653.habtnvnvne.none@localhost>
+In-Reply-To: <1588599653.habtnvnvne.none@localhost>
+From: Wang Jian <larkwang@gmail.com>
+Date: Tue, 5 May 2020 00:51:02 +0800
+Message-ID: <CAF75rJA+Cs8Zspete8r4sZoZYP=N8+OVZnRK2JL5468VyiRZUQ@mail.gmail.com>
+Subject: Re: soft lockup - may be related to wireguard (backported)
+To: "Alex Xu (Hello71)" <alex_y_xu@yahoo.ca>
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Mailer: WebService/1.1.15756 hermes Apache-HttpAsyncClient/4.1.4
- (Java/11.0.6)
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -84,17 +83,35 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Excerpts from Jason A. Donenfeld's message of May 4, 2020 1:26 am:
-> Are you routing wireguard over wireguard, or something interesting like t=
-hat?
->=20
-> Is ipsec being used?
->=20
+Alex Xu (Hello71) <alex_y_xu@yahoo.ca> =E4=BA=8E2020=E5=B9=B45=E6=9C=884=E6=
+=97=A5=E5=91=A8=E4=B8=80 =E4=B8=8B=E5=8D=889:49=E5=86=99=E9=81=93=EF=BC=9A
+>
+> Excerpts from Jason A. Donenfeld's message of May 4, 2020 1:26 am:
+> > Are you routing wireguard over wireguard, or something interesting like=
+ that?
+> >
+> > Is ipsec being used?
+> >
+>
+> This "DN2800MT" looks like an Atom board from 2012; are you trying to
+> run a very large bandwidth through it? I think it's plausible that
+> buffering could cause a large enough chunk of work for a slow CPU that
+> the kernel could erroneously think that the code is stuck. I don't know
+> why that would happen on the tx thread though, or why it would result in
+> an RCU stall, seeing as only a single access is made under an RCU lock
+> in this function...
 
-This "DN2800MT" looks like an Atom board from 2012; are you trying to=20
-run a very large bandwidth through it? I think it's plausible that=20
-buffering could cause a large enough chunk of work for a slow CPU that=20
-the kernel could erroneously think that the code is stuck. I don't know=20
-why that would happen on the tx thread though, or why it would result in=20
-an RCU stall, seeing as only a single access is made under an RCU lock=20
-in this function...
+It's an old Atom CPU but still capable of handling at least 100Mbps
+(even with encryption).
+
+I have a prometheus running on this box, so I have monitoring data at
+an interval of 15s.
+
+Looking at the monitoring data
+1. the event started from 1:02:00am, ended at 1:04:45am
+2. peak time was 1:03:15am, for load, cpu usage and memory usage
+3. available memory dropped from 3.359GB to 2.714GB at 1:03:15am, and
+bounced up gradually
+from this point
+
+Seems it's related to wireguard's memory use, a cause or a result.
