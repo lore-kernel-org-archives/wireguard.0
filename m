@@ -2,73 +2,71 @@ Return-Path: <SRS0=7A+2=6T=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 36E4DC47256
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  5 May 2020 04:27:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 244B2C47247
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  5 May 2020 06:54:29 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id C4630206E6
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  5 May 2020 04:27:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 81C7E206A5
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  5 May 2020 06:54:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=rub.de header.i=@rub.de header.b="iHswiDP/"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org C4630206E6
-Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=rub.de
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bajz8N7C"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 81C7E206A5
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 31c68fe0;
-	Tue, 5 May 2020 04:14:38 +0000 (UTC)
-Received: from out2.mail.ruhr-uni-bochum.de (out2.mail.ruhr-uni-bochum.de
- [2a05:3e00:c:1001::8693:2ae5])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 16a063e0
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9b216ecd;
+	Tue, 5 May 2020 06:41:56 +0000 (UTC)
+Received: from mail-oo1-xc35.google.com (mail-oo1-xc35.google.com
+ [2607:f8b0:4864:20::c35])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b23b3d50
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Tue, 5 May 2020 04:14:35 +0000 (UTC)
-Received: from mx2.mail.ruhr-uni-bochum.de (localhost [127.0.0.1])
- by out2.mail.ruhr-uni-bochum.de (Postfix mo-ext) with ESMTP id 49GRWp5cX0z8S4g;
- Tue,  5 May 2020 06:27:02 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=rub.de; s=mail-2017;
- t=1588652822; bh=Uc3gN+iXbqH4vc+09Uj4jn6jKxvtHVuL1u3QHetzrLw=;
- h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
- b=iHswiDP/eWywLGxCKny1K+Uss+DtPlXfIUeAJPrc65Bkf88AiqFy8A7wmBv/PTSDk
- fXXwe8ftgd/cV+Gkyim9hkHhbtGSQza9lrrxGmH3lk7DKtvfPg9a5tBgHz8iklNw3O
- ox3zWQqjnBvdlt7JMlYxnLvUx7UEKE3+ElD5jhsQ=
-Received: from out2.mail.ruhr-uni-bochum.de (localhost [127.0.0.1])
- by mx2.mail.ruhr-uni-bochum.de (Postfix idis) with ESMTP id 49GRWp49Bfz8S3t;
- Tue,  5 May 2020 06:27:02 +0200 (CEST)
-X-RUB-Notes: Internal origin=IPv6:2a05:3e00:c:1001:5054:ff:fe37:b9e4
-X-Envelope-Sender: <pascal.ernster+wireguard@rub.de>
-Received: from mail1.mail.ruhr-uni-bochum.de (mail1.mail.ruhr-uni-bochum.de
- [IPv6:2a05:3e00:c:1001:5054:ff:fe37:b9e4])
- by out2.mail.ruhr-uni-bochum.de (Postfix mi-int) with ESMTP id 49GRWp0tJ4z8S37;
- Tue,  5 May 2020 06:27:01 +0200 (CEST)
-X-Virus-Status: Clean
-X-Virus-Scanned: clamav-milter 0.102.1 at mx2.mail.ruhr-uni-bochum.de
-Received: from [IPv6:2a01:c22:c018:d103:f417:bfc6:e4c5:b5ba]
- (dynamic-2a01-0c22-c018-d103-f417-bfc6-e4c5-b5ba.c22.pool.telefonica.de
- [IPv6:2a01:c22:c018:d103:f417:bfc6:e4c5:b5ba])
- by mail1.mail.ruhr-uni-bochum.de (Postfix) with ESMTPSA id 49GRWm73ZHzyWg;
- Tue,  5 May 2020 06:27:00 +0200 (CEST)
-Subject: Re: Ubuntu kernel >= 5.3.0-52.46 breaks DKMS build for
- wireguard-linux-compat >= 1.0.20200429, patch included
+ for <wireguard@lists.zx2c4.com>; Tue, 5 May 2020 06:41:53 +0000 (UTC)
+Received: by mail-oo1-xc35.google.com with SMTP id p67so308550ooa.11
+ for <wireguard@lists.zx2c4.com>; Mon, 04 May 2020 23:54:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=xNfg0RdcE5og5cdwLgyEszCiC1a3cEGKmbJaRhG+K70=;
+ b=bajz8N7C3wKIbFQGZq+vQoJWUbxrPc7crH+yl4OgCy+vtucGGgBBjKd4DtXA+kL4sb
+ rKPcwtyuJKhadjseGZI6G0wOr/qAv1P9Ej7Mp05U413e/cJdJG4OizeJugCQjyJ86IOn
+ xwbHTDPIGgrsni1a8m1D9wGSWxq/fW2PG85Zws7vb+MnRPlYMo26yHteKrOai1cEYO4w
+ 7O8ZwOitRwx4lieMpSNkG3FHFPGG2WfksghJDtQ+cy08x6Y4iRQlC1XdDKQC8xSzWNeu
+ 6HWOxcciVEsL93Iij6TZnJ/w5CaBB3nF2f8KBBBzoSwPALs2G1J/vy1zdhqHUG+ASD+l
+ p9tA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=xNfg0RdcE5og5cdwLgyEszCiC1a3cEGKmbJaRhG+K70=;
+ b=dS3PNPo44tsmYZ4GesfcpcsGF39T7IbQGBwHVa0oqETqHcSy5TbmmbYX2dxfwzRe4C
+ bY5R+Zw4iuh3p9NNzF0aaixyvDKY+XdjEDsPSF0wa1f5UGBALLt4KifuIs6jVYLyIcvE
+ +4w9Ae+qT73FG+UQLJopfmvEBvGFb8ybpeQVRW+qBOTi045Tx2QKeEqFUO3sGA4AZodt
+ DPgsEOA32yP74mrdH4D/rbt/RXy/o9aYGuVPB20uw/mOnKqd1/1K4n5/VH2fiovgF/wB
+ rjccCh3CvsJVGJl5ZMlKcqSQD7H3gyft7ZBQdkPpQMPSpbhc+ITXs+kHLjE2iwKPxuGM
+ v4hQ==
+X-Gm-Message-State: AGi0PuZcyCCS1mU5A82tkJY87TP3NMczxkwaLnJldxVS5I/QJXeXwcJC
+ IvFbJIeuM0sU2FxJ7vXi0BNXb0tfxU1ord1bkFxs1v5Q
+X-Google-Smtp-Source: APiQypL2nSS3/XzR07mZRyAFqKUbt20TAiQe8vaxsl7OHomOtbgdLhzTLDstNUZpKYsIVcs4I9hiVeG6gzFEBun+jPw=
+X-Received: by 2002:a4a:d44a:: with SMTP id p10mr1724999oos.11.1588661662992; 
+ Mon, 04 May 2020 23:54:22 -0700 (PDT)
+MIME-Version: 1.0
+References: <CAF75rJBKTbaK6CEQcmto=YcgA5NGrG85jSvSrYZpQV-L1xFMww@mail.gmail.com>
+ <a0985c12-6360-b192-1884-1d58db763a78@zx2c4.com>
+In-Reply-To: <a0985c12-6360-b192-1884-1d58db763a78@zx2c4.com>
+From: Wang Jian <larkwang@gmail.com>
+Date: Tue, 5 May 2020 14:54:10 +0800
+Message-ID: <CAF75rJDxM-m-wL89-JhQwbOk_1X4F2ebUzWuEz_2EULZ7bwm5Q@mail.gmail.com>
+Subject: Re: soft lockup - may be related to wireguard (backported)
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-References: <6565463c-0a99-9137-5cc2-714e2fbd6dfc@rub.de>
- <CAHmME9qDMiNh90_zA9KsFX-OaHNUHnw5=e65jH3PdXg1n7nyFw@mail.gmail.com>
- <20328df0-e2dd-1653-9fc1-1fb06cbc054f@rub.de>
- <CAHmME9rnxp2QYjhu1vU+2K1GaoM2hupz5uJGpo_8z4t=E2-boQ@mail.gmail.com>
-From: Pascal Ernster <pascal.ernster+wireguard@rub.de>
-Message-ID: <134de22f-64b8-96fd-67c4-680b1a8e244c@rub.de>
-Date: Tue, 5 May 2020 06:27:12 +0200
-MIME-Version: 1.0
-In-Reply-To: <CAHmME9rnxp2QYjhu1vU+2K1GaoM2hupz5uJGpo_8z4t=E2-boQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: clamav-milter 0.99.4 at mail1.mail.ruhr-uni-bochum.de
-X-Virus-Status: Clean
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -83,19 +81,35 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Jason,
+Jason A. Donenfeld <Jason@zx2c4.com> =E4=BA=8E2020=E5=B9=B45=E6=9C=885=E6=
+=97=A5=E5=91=A8=E4=BA=8C =E4=B8=8A=E5=8D=886:28=E5=86=99=E9=81=93=EF=BC=9A
+> Can you send full networking configuration in enough detail that I'll be
+> able to reliably reproduce this problem? If I can't reproduce it, it's
+> unlikely I'll be able to fix it.
 
+I will send full networking configuration to you privately. The
+configuration works
+and the problem occured only once.
 
-[2020-05-05 06:03] Jason A. Donenfeld:
-> Ahh, you're running -proposed, gotcha. So I guess I should wait until
-> this hits the main repo. Any idea when they usually do that?
+>
+> Meanwhile, it really really looks from your stacktrace that you have one
+> wireguard interface going over another wireguard interface:
+>
+> [27929.506367]  wg_packet_send_staged_packets+0x320/0x5d0 [wireguard]
+> [27929.506426]  wg_xmit+0x324/0x490 [wireguard]
+> [27929.506469]  dev_hard_start_xmit+0x8d/0x1e0
+> [27929.506508]  __dev_queue_xmit+0x721/0x8e0
+> [27929.506549]  ip_finish_output2+0x19b/0x590
+> [27929.506604]  ? nf_confirm+0xcb/0xf0 [nf_conntrack]
+> [27929.506648]  ip_output+0x76/0xf0
+> [27929.506681]  ? __ip_finish_output+0x1c0/0x1c0
+> [27929.506720]  iptunnel_xmit+0x174/0x210
+> [27929.506761]  send4+0x120/0x390 [wireguard]
+> [27929.506806]  wg_socket_send_skb_to_peer+0x98/0xb0 [wireguard]
+> [27929.506860]  wg_packet_tx_worker+0xa9/0x210 [wireguard]
+>
+> Here, a wireguard encrypted udp packet is being sent to an endpoint that
+> then is being routed to a wireguard interface. What in your network
+> config would make that possible?
 
-I'm not a Ubuntu developer, but my educated guess would be "when their
-next HWE kernel security advisory hits the RSS feed". At least that's
-what happened when 5.3.0-51.44 got released:
-
-https://usn.ubuntu.com/4342-1/
-
-
-Regards
-Pascal
+Maybe some erroneous ip route/rule magic that I don't notice.
