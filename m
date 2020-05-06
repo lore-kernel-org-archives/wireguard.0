@@ -6,60 +6,64 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 869FFC28CBC
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  6 May 2020 22:26:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8DB9C54E49
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  6 May 2020 23:55:21 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 2CC8920753
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  6 May 2020 22:26:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 2C0692078C
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  6 May 2020 23:55:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="NYxRliEZ"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 2CC8920753
+	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="p6/2aws+"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 2C0692078C
 Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a7c15ff1;
-	Wed, 6 May 2020 22:12:50 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 544bf31b;
+	Wed, 6 May 2020 23:42:09 +0000 (UTC)
 Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 1c5c354e
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 344ab933
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 6 May 2020 22:12:47 +0000 (UTC)
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b5e1f379
- for <wireguard@lists.zx2c4.com>; Wed, 6 May 2020 22:12:47 +0000 (UTC)
+ for <wireguard@lists.zx2c4.com>; Wed, 6 May 2020 23:42:07 +0000 (UTC)
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ef23028f
+ for <wireguard@lists.zx2c4.com>; Wed, 6 May 2020 23:42:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
  :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=jS2hoyUdprT/Za0PX4hHBxHxAWw=; b=NYxRli
- EZ0iE7UTWt8fWoHDPvX3UjDSUjvbIrLEICd0Pqz/zy7EZZUvbQEUz3lwrMY2PZP3
- 2gTmggNK9fVWdtGOSG3elYKhuHUUHnT1Sqn5KhdbY7ndT3eTjf6nauSSnQPDcu1Y
- pDA9wooMqZHLHUVXluEWAxMxjVDe8Mf1O67f+5juVI2CJCWsG0TPj8U63NZUv3Rx
- dpuApn97U2B06QpPUa9dVu3SzhaEOjgQaAPx2VqJrFt47mywt2O4oNp/1psSUSIV
- WGs1H9YursmY6y/8hlx8EP/rZiA7a03eS7VCDXqgRdnySymiGDzKw6d5GAKtn4QC
- hkR5i77G0NwHQdmg==
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 7bd1185b
+ :content-type; s=mail; bh=D/usW8grq1MrPqcLErnIvyCjXQc=; b=p6/2aw
+ s+oXJ9MKC7oXGC1PYd/Dx0zpSmjM6H62u7NjbTQvhT/RfDtsyd02doCnvQZC4ZRt
+ wQzilwg4ixYyJCqf999GBJn6YNZhEA47nzKf6ryNjbryK94tkIlsny16jsw8ygJB
+ /reJ4rXBKbPqlrysi12tsdlBY6k7BeJdDKk9XhxOWVTMJb4UAmexns0kAKIXUHdQ
+ 1YqABUbx0ip5bD2beLIjdGJ8ldg8wG6Sz7LcKUQLQv6oVHnkFaDWvC2TMXUu1Avj
+ Ysb4mX6wOa22ElWAbeXGIPev9Dn+Ilo4EVfyRkrycdBf2Exah/Ab0DchucPfZo7m
+ t9nHRw5Q03zTGwTg==
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id b876d978
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 6 May 2020 22:12:47 +0000 (UTC)
-Received: by mail-io1-f50.google.com with SMTP id k6so2227870iob.3
- for <wireguard@lists.zx2c4.com>; Wed, 06 May 2020 15:25:30 -0700 (PDT)
-X-Gm-Message-State: AGi0PublQpQIWaEKKZx6iyXrl8WjEx7dzsn0do4+3qUoq4lY0zeoo5kY
- 26kRllc/dQqByQcPhZmqCR5pKy83q4ud0IM1uok=
-X-Google-Smtp-Source: APiQypK1ULO7ubyQlCPQMM8lRNU5WVuahIkOMm1uwypUibMHQpzP6LuOwt+8hxFW70EZ5iRcWLsQ69WwOA4fqXjExTg=
-X-Received: by 2002:a02:b88e:: with SMTP id p14mr10374808jam.36.1588803930091; 
- Wed, 06 May 2020 15:25:30 -0700 (PDT)
+ for <wireguard@lists.zx2c4.com>; Wed, 6 May 2020 23:42:07 +0000 (UTC)
+Received: by mail-io1-f54.google.com with SMTP id u11so4260822iow.4
+ for <wireguard@lists.zx2c4.com>; Wed, 06 May 2020 16:54:51 -0700 (PDT)
+X-Gm-Message-State: AGi0PuZVgo2WysJHOIOodCGAt8qcwRtlB7BbSWFD6EYtYZn8e2Pzk09t
+ PpDlKWOhZhy/wWi4HAGy7wfNGQOdzEgeD2eCgWs=
+X-Google-Smtp-Source: APiQypIrHau4vDYPkMtxGIARRQRZt7+gK2Al5MPAwTteLhIrg0M4FVTrQEE5q6OaAcV7AOuKjXy/GiObtOkH9MyUMA4=
+X-Received: by 2002:a05:6602:21d3:: with SMTP id
+ c19mr10904745ioc.29.1588809290827; 
+ Wed, 06 May 2020 16:54:50 -0700 (PDT)
 MIME-Version: 1.0
 References: <CAKmhVkoE_fL59VJqqXoGHX_S3E9+h=KwyNchWSBrEfPHrpNyoQ@mail.gmail.com>
  <71c12e22-c7b6-9753-cc44-aac0f51592ff@pallas.us>
  <CAKmhVkrRbb_KncDjhM6gMcJRpCrK6WcB1Ed=WfVhScDHw96Gjw@mail.gmail.com>
  <CAHmME9qv2R1CBFAQ1xqM3eOtegLaZi=f7cfA26JS=8bGTLpPFg@mail.gmail.com>
  <9c64d009-4c24-425f-9126-ba93279c208e@www.fastmail.com>
-In-Reply-To: <9c64d009-4c24-425f-9126-ba93279c208e@www.fastmail.com>
+ <CAHmME9rbKP4zB5nWG-9vf+2ZepXm+Gqii=qjQ8cnG0O+Dhu2tQ@mail.gmail.com>
+ <CADGd2Dq3-EMBqA6bSKbR=C-pTZToPxv1xkM4BvYGh910T_e1Tg@mail.gmail.com>
+In-Reply-To: <CADGd2Dq3-EMBqA6bSKbR=C-pTZToPxv1xkM4BvYGh910T_e1Tg@mail.gmail.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 6 May 2020 16:25:19 -0600
-X-Gmail-Original-Message-ID: <CAHmME9rbKP4zB5nWG-9vf+2ZepXm+Gqii=qjQ8cnG0O+Dhu2tQ@mail.gmail.com>
-Message-ID: <CAHmME9rbKP4zB5nWG-9vf+2ZepXm+Gqii=qjQ8cnG0O+Dhu2tQ@mail.gmail.com>
+Date: Wed, 6 May 2020 17:54:39 -0600
+X-Gmail-Original-Message-ID: <CAHmME9q0mr_nF7rsWfFmNtAr6+6uv1yA=j6oJAoKZVXamH--zw@mail.gmail.com>
+Message-ID: <CAHmME9q0mr_nF7rsWfFmNtAr6+6uv1yA=j6oJAoKZVXamH--zw@mail.gmail.com>
 Subject: Re: WireGuard over WireGuard
-To: Justin Kilpatrick <justin@althea.net>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+To: John Lauro <johnalauro@gmail.com>
+Cc: Justin Kilpatrick <justin@althea.net>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -75,11 +79,13 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Wed, May 6, 2020 at 4:24 PM Justin Kilpatrick <justin@althea.net> wrote:
+On Wed, May 6, 2020 at 5:28 PM John Lauro <johnalauro@gmail.com> wrote:
 >
-> > 1340 or 1360
+> Wireguard is defaulting to 1420 MTU, the ethernet adapter is 1500 MTU,
+> and I have IPv6 completely disabled.
 >
-> Why two options? I've been using 1340 for a long time.
+> Can/should the MTU of wireguard be bumped to 1440?
 
-WireGuard over IPv4 has a 60 byte overhead. WireGuard over IPv6 has an
-80 byte overhead.
+You could if you wanted. But if you don't do it perfectly on all sides
+with total uniformity and clearheadedness about your network design,
+you'll run into subtle problems.
