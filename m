@@ -2,75 +2,54 @@ Return-Path: <SRS0=yJRU=6U=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3319FC28CBC
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  6 May 2020 10:52:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C8F18C28CBC
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  6 May 2020 11:02:26 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id B17ED206B8
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  6 May 2020 10:52:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 61CD92068E
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  6 May 2020 11:02:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="cexbZBDw"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org B17ED206B8
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=gmx.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=msfjarvis.dev header.i=@msfjarvis.dev header.b="Tv299tBp"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 61CD92068E
+Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=msfjarvis.dev
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1fe20226;
-	Wed, 6 May 2020 10:38:10 +0000 (UTC)
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a2587925
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Sun, 26 Apr 2020 20:50:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1587934910;
- bh=bbL26dJuZtFCckwQq9vpdAyUzzGLjixIdLWl2evCyww=;
- h=X-UI-Sender-Class:Date:From:To:Subject;
- b=cexbZBDwfJrFino+nzuqAdHgz2HBQ6hZ9znSUUTxQtyjErid1J8i0DwetSLdL2Z3x
- 69B5+Mom06hAVM9dZM7ovgRng2Mt9m2xWDrehnJZR2x68O05d33bMF5LySVwEVbJVy
- ava+OWxsQ4nizzl/LHO6OYSUivAlJm79s9aVtZww=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from gandalf.arda.local ([93.164.92.140]) by mail.gmx.com (mrgmx005
- [212.227.17.184]) with ESMTPSA (Nemesis) id 1MTzf6-1jc3YK2eO2-00QxPA
- for <wireguard@lists.zx2c4.com>; Sun, 26 Apr 2020 23:01:50 +0200
-Date: Sun, 26 Apr 2020 23:01:49 +0200
-From: Kent Friis <leeloored@gmx.com>
-To: wireguard@lists.zx2c4.com
-Subject: Multiple unreachable
-Message-Id: <20200426230149.bf9e998b37a983892c635e78@gmx.com>
-X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.31; x86_64-unknown-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a453cda9;
+	Wed, 6 May 2020 10:49:09 +0000 (UTC)
+Received: from sendmail.purelymail.com (sendmail.purelymail.com
+ [34.202.193.197])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id e51359d4
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Wed, 6 May 2020 10:49:05 +0000 (UTC)
+MIME-Version: 1.0
+DKIM-Signature: a=rsa-sha256;
+ b=Tv299tBp69XypKFFNnhj5kXd7cRbjcZpMnRfiUB7XHQKRF+AbAJmZRs1bamKQlc/kTOk28scHSjXKqF1JgQoUvo+WM+HKEBWpE+dbbokENT1pQlp4TUouZiPg0hzThbcmujILlG8qvAORuLzgvgFHjdjXDAqIK/8y5eZhhlMESTXz6PIPogyAnXmsh7MZ0ROuvBAeV96YeIixuKK2jYMUr8nEF3g4JbawKSYF4JQCptQ9QoTXv4KO+BZDXaB+9iO4ym7HTR2Nal7IuX27oUsYq/1T1+Z3ZXYpopsx46K2lO5CyxqInzwVcTqvS2+nWt/qJ83Rr5SeJMYy8g+y/vEKA==;
+ s=purelymail1; d=msfjarvis.dev; v=1;
+ bh=H4E1Mw3JIwjwKuGAk3vnT6HjIcUv4f4Fm8GhtHrinww=; h=from:to:received; 
+Authentication-Results: purelymail.com; auth=pass
+X-UserIsAuth: true
+Received: from 185.232.22.61 (EHLO ryzenbox) ([185.232.22.61])
+ by ip-172-30-0-42.ec2.internal (JAMES SMTP Server ) with ESMTPA ID -68324214; 
+ Wed, 06 May 2020 11:01:35 +0000 (UTC)
+Date: Wed, 6 May 2020 16:31:31 +0530
+From: Harsh Shandilya <me@msfjarvis.dev>
+To: Dark Shadow <shadowofdarkness@gmail.com>
+Cc: "=?utf-8?Q?wireguard=40lists.zx2c4.com?=" <wireguard@lists.zx2c4.com>, 
+ "Jason A. Donenfeld" <Jason@zx2c4.com>
+Message-ID: <FC124C86-7CBB-4856-BB9D-3EE3E4E550C1@getmailspring.com>
+In-Reply-To: <CAMXzSMozuS_dSpODmp3LzAmoetr9jKXUZpbQthx5P9YXk-xGAw@mail.gmail.com>
+References: <CAMXzSMozuS_dSpODmp3LzAmoetr9jKXUZpbQthx5P9YXk-xGAw@mail.gmail.com>
+Subject: Re: Android client fails to auto start connection if using a
+ DDNS address as endpoint
+X-Mailer: Mailspring
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:cs5sQLQG4fD8Lz+JO354MC7XESVkRjdDbA6Yp0lvkUF25sgdnYz
- i2Ty3onW5urS1xZDeeLQG+AUeg/vf8n9FI5sI9ROd487JJKdlYY2JxhvfI4Q1cDK8VCW3Cs
- nadS+lQNqVhwVVBr0eKz542R/r2J+THlLD86B0/DJwtWXMmIXswJ0tqtWlGYK2SrKsLAIs0
- zEd+KGSfiM3p0gM9nsKnA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:3FG/yKRPXYA=:na0j/ph5QSSVg//k9g2Ug6
- FxOANR+NP4DYwjQHV6tzRkQWKKwaw+xknfSKS93cMC+E9dmdUeYzAqYNGYgP0saPu1YgY2c0u
- TT0H4EqZ1LTggB0AwK/KByRc33QDiSUd7xq9Kn5pEr6zJ2/PZe6jnp4DOpUz9ZCZtNBTsnmkB
- aG7qVlc5VXZ5MLgmCRqsKJfQ1HobZqyI7eodukhDOeMsNbKm5NHjwXHIV4qY0T2YsPv6fovbT
- D0dw5XTnJwu5wwtbTY8StcfKD6vixN+7xJ+uf8mP/fLF4hvmFJ7tBNFmBTASONUjkRuNNKeKZ
- 0OeMSKsDzIVRsG2V2o9pCZxaMLN9T1xvVRTOPsy+K3/jbfLgi3Ja4E5li8DIVbrit/UJZTIdx
- LbGH1PDyXg8VFIVDi7+XLJEWf+SX6uRy3aYKNRR3+9MDUqHalfWQXXv0jMy0g6kOXFcaVI/Js
- 3NFf+JFK3c0cnM7LCT7H6R9Ozo2lVKusRtS7EXtIX/CyRoQWPOw2yg8PltwrH2AMgIt/IdKmJ
- Hxq5rc3LMMKldxf8m91NPD/2I7HtoO2IrME64d8VxeoYqrtxLwnOHhRDtvy6hQPaVHV2g/Olq
- DvytIeR3f7F+TFgLDpTE6myLLYyrOySvf1qR6EP5xXUp9Qbk5MUDy6bOFag+oFKLZD5AgSrSA
- 3NrvXh1vIDmMDrhRyQ2Q/dtU/cTwkuR+TNHKyzxPMwiLNPqeSdAThI7mWdkEJBRi0P2iwLvFs
- GPJsKvrx2dOEQjjKn4ITTLJFdbffUPFOnC3iJrAgl79eVqepc1ClHFZD6Uf3wPGsahci2Nuig
- yG7ALqaiJaj90fyYBbpENWC7QCW6z2oJ99oaZm8ahjSmciBKPkNrl45/emML0yz1c+ta7YfMl
- Kl8XO0d+NVRaRfM4q1v/JFr0gbSHo5ndjCW/ZSDHrTOXGJIQ26Pa3bqxIR2sDRDPUBZctopkF
- cafM23dsxY7iyocr+aCU//j23ovFUapYkqx4m0OVFTQF/3cnSJioeIF4bN2kqTE+TBko/JgDF
- 40kmA+Y0DYTL9GIjnkvTNbgI6XdBq5QwUP0OXBP25otNuoZgo4xinzUmfBbKQakXH/etDkid5
- CIbO4DIalIIzC39EP4/15hXNaK76yGv3ItVhDfhMe/ze2qYouWgDeKt9yyv0mmAypm6RaOUw+
- rgbxIr+DkilSMqMYyPbVP0IF2xnyOK/0OglbKNmU2X8qYZmLOnZYWMHeSCa0MIdHqAjxuy9DM
- +woUSfob9OrhPyuyX
-X-Mailman-Approved-At: Wed, 06 May 2020 12:38:09 +0200
+Content-Disposition: inline
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -85,66 +64,25 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-I have a pretty simple Wireguard setup between two machines. The power
-supply in my brothers server died, so the tunnel is of course down. My
-machine is running Linux 5.6.7 (from kernel.org, no patches or out of
-tree drivers) with in-kernel Wireguard.
 
-To see if he has gotten his server back up, I tried to ping it (via the
-tunnel). That gave more unreachable responses than expected (note the
-sequence number):
 
-PING 172.16.1.1 (172.16.1.1) 56(84) bytes of data.
-From 172.24.0.1 icmp_seq=1 Destination Host Unreachable
-From 172.24.0.1 icmp_seq=1 Destination Host Unreachable
-From 172.24.0.1 icmp_seq=1 Destination Host Unreachable
-From 172.24.0.1 icmp_seq=1 Destination Host Unreachable
-From 172.24.0.1 icmp_seq=1 Destination Host Unreachable
-From 172.24.0.1 icmp_seq=1 Destination Host Unreachable
-...
-From 172.24.0.1 icmp_seq=1 Destination Host Unreachable
-From 172.24.0.1 icmp_seq=1 Destination Host Unreachable
-From 172.24.0.1 icmp_seq=1 Destination Host Unreachable
-From 172.24.0.1 icmp_seq=1 Destination Host Unreachable
-From 172.24.0.1 icmp_seq=1 Destination Host Unreachable
-From 172.24.0.1 icmp_seq=1 Destination Host Unreachable
-From 172.24.0.1 icmp_seq=1 Destination Host Unreachable
-From 172.24.0.1 icmp_seq=1 Destination Host Unreachable
-From 172.24.0.1 icmp_seq=1 Destination Host Unreachable
-From 172.24.0.1 icmp_seq=1 Destination Host Unreachable
-From 172.24.0.1 icmp_seq=1 Destination Host Unreachable
-From 172.24.0.1 icmp_seq=1 Destination Host Unreachable
-From 172.24.0.1 icmp_seq=1 Destination Host Unreachable
-From 172.24.0.1 icmp_seq=1 Destination Host Unreachable
-ping: sendmsg: Destination address required
-^C
---- 172.16.1.1 ping statistics ---
-1 packets transmitted, 0 received, +50 errors, 100% packet loss, time 0ms
+On Apr 19 2020, at 9:01 pm, Dark Shadow <shadowofdarkness@gmail.com> wrote:
 
-172.24.0.1 is my end.
-172.16.1.1 is my brother (not online)
+> I set up Wireguard and had it working fine when manually starting the
+> connection.
+> After that I wanted to have it be always on so that it would auto
+> connect when turning the phone on but I found that it would say it was
+> connected but no data would transfer.
+> Manually turning it off and on again would fix the connection
+> 
+> If I change the server address to a IP address everything works
+> correctly and the connection just works after turning on the phone.
+> 
+> I assume this is a bug that can hopefully be fixed as I would prefer
+> to use the dyndns address in the settings.
+>
 
-rc.wireguard:
-ip link add dev wg0 type wireguard
-wg setconf wg0 /etc/wireguard/wg0.conf
-ip address add dev wg0 172.24.0.1
-ip link set up dev wg0
-ip route add 172.16.1.0/24 dev wg0
-
-wg0.conf:
-[Interface]
-PrivateKey = removed
-ListenPort = 51820
-
-[Peer]
-PublicKey = also removed
-AllowedIPs = 172.16.1.0/24
-
-My PC has been rebooted since the tunnel was last up, so Wireguard has no
-ip address for the other end.
-
-This is not causing any problems that I've noticed, but I assume there is
-a bug somewhere to give this many errors. Pinging an unreachable host on the
-LAN only gives one "Host Unreachable" message per sequence number.
-
--Kent
+Hm, that's pretty unexpected. Are you using the Go userspace backend or
+the kernel module? The settings page will show that at the top if you're
+unsure. I've Cc'ed Jason in case this is a problem lower down in the
+stack.
