@@ -4,62 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CE79C47255
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 11 May 2020 06:23:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 08F34C47255
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 11 May 2020 06:24:33 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 22512206A5
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 11 May 2020 06:23:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 9CFD120708
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 11 May 2020 06:24:32 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=rfraile.eu header.i=@rfraile.eu header.b="ZtYtBPnn"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 22512206A5
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=rfraile.eu
+	dkim=pass (1024-bit key) header.d=cowboyprogrammer.org header.i=@cowboyprogrammer.org header.b="H1m1asIr"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 9CFD120708
+Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=cowboyprogrammer.org
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 63b22ac3;
-	Mon, 11 May 2020 06:10:30 +0000 (UTC)
-Received: from smtp-relay-01-3.dondominio.net (smtp-relay-01-3.dondominio.net
- [31.214.176.26])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2b9dda9e
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3f8b6b28;
+	Mon, 11 May 2020 06:11:03 +0000 (UTC)
+Received: from mail.cowboyprogrammer.org (cowboyprogrammer.org
+ [2a01:7e01::f03c:91ff:fe55:618b])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ee8b32bb
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Tue, 21 Apr 2020 08:59:08 +0000 (UTC)
-Received: from localhost (smtp-relay-local.scip.local [127.0.0.1])
- by smtp-relay.dondominio.com (Postfix) with SMTP id 798BA40996
- for <wireguard@lists.zx2c4.com>; Tue, 21 Apr 2020 11:09:49 +0200 (CEST)
-Received: from mail-node.dondominio.com 
- by smtp-relay.dondominio.com (Postfix) with ESMTP id 25A9440C0B;
- Tue, 21 Apr 2020 11:09:48 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=rfraile.eu; s=dddk;
- t=1587460188; bh=L/GxIKGZh1mWoeQD3gRZKAoydBaaXpBjkJgi0svScds=;
- h=Date:From:To:Subject:Message-ID:Content-Type;
- b=ZtYtBPnntV6qy7AKI8la9oqkQxAqgaSDc84UhvjKnuv6D2dJNR8gjDntwT6SaIdrt
- HrMD9a3cnAAK5iIS+NgP0ZmfR7u0icDD6x4KfWnNEvGuJb5eHGQZCex5UlqBt93FOL
- G+eXt89DCyrCnR0QfHIc668ZoP5c8taAfYHGtqYQ=
-Received: from webmail.rfraile.eu (webmail-backend-03.scip.local
- [172.21.33.13]) (Authenticated sender: rfraile@rfraile.eu)
- by mail-node.dondominio.com (Postfix) with ESMTPA id 05A2D40B0E;
- Tue, 21 Apr 2020 11:09:48 +0200 (CEST)
-Received: from 2.154.13.170.dyn.user.ono.com ([2.154.13.170])
- via webmail-ha-01.scip.local ([172.21.33.131]) by webmail.rfraile.eu
- with HTTP (HTTP/1.1 POST); Tue, 21 Apr 2020 11:09:48 +0200
+ for <wireguard@lists.zx2c4.com>; Thu, 7 May 2020 10:30:33 +0000 (UTC)
+Received: from rodimus.cowboyprogrammer.org (83-233-107-18.cust.bredband2.com
+ [83.233.107.18])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
+ SHA256) (No client certificate requested)
+ by mail.cowboyprogrammer.org (Postfix) with ESMTPSA id C523220BA
+ for <wireguard@lists.zx2c4.com>; Thu,  7 May 2020 10:43:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=cowboyprogrammer.org;
+ s=mail; t=1588848199;
+ bh=mpL8+mKkfEEFA9oxL7vmSJyow+WNCgFCkfKhjqyYXVw=;
+ h=References:From:To:Subject:In-reply-to:Date:From;
+ b=H1m1asIr+YOKocJ2vkUkj9sfXztEFdjLRS8SCO4LAMni3q9BoZsc2efP5BKZEUkDN
+ JTfFXBcEASFwrnMnjpSTDnQI1J2n4ioeo1fanPWGJV3H7o2ODJk+BUT0xrHRSZVIGh
+ twTMK7UXo9Ua9hDHmXqprvRpaFnnXxi4GKSDvIhk=
+References: <cf665c35-adf9-6f74-b360-1c3cfd723963@hanswkraus.com>
+User-agent: mu4e 1.1.0; emacs 26.1
+From: Jonas Kalderstam <jonas@cowboyprogrammer.org>
+To: wireguard@lists.zx2c4.com
+Subject: Re: Newbie - WireGuard per systemd on Debian Buster
+In-reply-to: <cf665c35-adf9-6f74-b360-1c3cfd723963@hanswkraus.com>
+Date: Thu, 07 May 2020 12:43:18 +0200
+Message-ID: <87o8r0xby1.fsf@rodimus.kalderstam.se>
 MIME-Version: 1.0
-Date: Tue, 21 Apr 2020 11:09:48 +0200
-From: Ricardo Fraile <rfraile@rfraile.eu>
-To: simon@rozman.si, virtualdxs@gmail.com, wireguard@lists.zx2c4.com
-Subject: RE: Search Domain/DNS Suffix
-User-Agent: DD Webmail
-Message-ID: <f27176e3fc6ede8d04682a9b504df177@rfraile.eu>
-X-Sender: rfraile@rfraile.eu
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.5.11
- (mail-node.dondominio.com [0.0.0.0]); Tue, 21 Apr 2020 11:09:48 +0200 (CEST)
-X-Mailman-Approved-At: Mon, 11 May 2020 08:10:29 +0200
+Content-Type: multipart/signed; boundary="=-=-=";
+ micalg=pgp-sha512; protocol="application/pgp-signature"
+X-Mailman-Approved-At: Mon, 11 May 2020 08:11:02 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -74,14 +66,112 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
+--=-=-=
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
 
-I tried to solve a similar issue on Linux a few months ago but sadly it 
-wasn't merged to wg-quick:
 
-https://www.mail-archive.com/wireguard@lists.zx2c4.com/msg04530.html
+I've been running wireguard with systemd in Debian for some time=20
+now.
 
-In my particular opinion, I think that this option is mandatory at the 
-same level as DNS servers.
+On 2020-04-16 =E6=9C=A8 18:23, Hans Kraus <hans@hanswkraus.com> wrote:
+> /etc/systemd/network/wg0.netdev
+> ---------------------------------------------
+> [NetDev]
+> Name=3Dwg0
+> Kind=3Dwireguard
+> Description=3DWireguard kraush
+>
+> [WireGuard]
+> PrivateKey=3D<private key server>
+> ListenPort=3D#####
+>
+> [WireGuardPeer]
+> PublicKey=3D<public key client>
+> AllowedIPs=3D<free range>.0/24
+> ---------------------------------------------
 
-Regards,
+The only thing I can think of here is that your AllowedIPs ends=20
+with a
+zero - on the server you have to specify the exact IP=20
+address. It's on
+the client side where you let the AllowedIPs be a wildcard.
+
+Examples:
+
+server-side:
+=2D--
+[WireGuardPeer]
+# Client1 address
+AllowedIPs=3D192.168.2.5
+
+[WireGuardPeer]
+# Client2 address
+AllowedIPs=3D192.168.2.6
+=2D--
+
+
+client-side:
+=2D--
+[WireGuardPeer]
+# Entire wireguard range
+AllowedIPs=3D192.168.2.0/24
+=2D--
+
+> /etc/systemd/network/wg0.network
+> ---------------------------------------------
+> [Match]
+> Name=3Dwg0
+>
+> [Network]
+> Address=3D<free range>.1/24
+> ---------------------------------------------
+
+You might want to consider adding
+
+ IPForward=3Dyes
+
+for the server's .network file, and
+
+ FwMark=3D1234
+
+to client's .netdev file, to be sure you can do proper road=20
+warrioring
+down the line.
+
+I'm also a bit paranoid and have added the following to my client
+.network files:
+
+client.network:
+=2D--
+[Route]
+Address=3D192.168.2.0/24
+=2D--
+
+
+Hopefully the peer address fix solves your issues.
+
+=2D-
+Jonas Kalderstam
+PGP key: 987C54AB0D4451ED
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"; name="signature.asc"; description="Digital signature"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEMnDcQ1p9YE9bBjUhmHxUqw1EUe0FAl6z5kYACgkQmHxUqw1E
+Ue3LfA/+P0aDsBOCDFLLg8ezun22BRA7Sca+gajoSHjdyuA+ekfwMsU1PGCDO+pK
+8flIYchZgSTZYsSi123KxWxSsiaA2AmRJpPVNm58irlfjOaPXCbyXUUMJc05b0rO
+jCvBEFHZ3IdNRtGRw+2K1/+hnFWprs3VQRHkEAO32B28FP3HTKe7vLd0TN2nE1bX
+HQGhRQiN2rV9kpSppfzsX2Cvvf4o/kw86P+iIBkE0sfuaese3blKWGxzMfaMzCKc
+uDzSwFMHfYqXyu2s5ynbZ1B/ofKPT1cX9UT0uQrPRLz1W23RdZwHwFxMtVQwCYkb
+AW7JsykNRj/0sOnUL96ohO51tvwJGVW4djOp7Lb2oj8RO+Ut47we6EuZr5bnL0JA
+J/q+R0zX0jkq+rVYdZSmtZcgMO2QELGpLBOM41xDeNBxJ+PJx5g7P6IthNCEIJ/0
+5OjUZ78hxwq1cp+QIwPPxVsDethcjcOUDES82DR68YvfOglSFkTrXg+SGOItbm5k
+y10TkU6jFiPkR9YOeU4fcdJEGyXoKZnAK2bKvVZux97s51bgDxH3y/xuQHvGGBsr
+tWJ9l3EQS70ycFldCP+BwNsbLeGqckTyqZbIs0P/9XBT8eJvpAFNhP9w91a/BuVG
+5BK7zl9mLfBcJphLivDhcsTeHehkdpPJPuXP2/UKe1xqmZRF6IY=
+=5Ys6
+-----END PGP SIGNATURE-----
+--=-=-=--
