@@ -6,65 +6,63 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BB558C54E4A
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 11 May 2020 21:22:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9758BC47255
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 11 May 2020 21:25:43 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id DDA6520736
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 11 May 2020 21:22:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 29AB0206F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 11 May 2020 21:25:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=rfraile.eu header.i=@rfraile.eu header.b="nlEYNgVf"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org DDA6520736
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=rfraile.eu
+	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="2oONm79H"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 29AB0206F5
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f31cdc38;
-	Mon, 11 May 2020 21:09:07 +0000 (UTC)
-Received: from smtp-relay-02-2.dondominio.net (smtp-relay-02-2.dondominio.net
- [31.214.176.35])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id fecfc6d9
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c73e012b;
+	Mon, 11 May 2020 21:09:59 +0000 (UTC)
+Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id fa61ba7c
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 11 May 2020 08:43:17 +0000 (UTC)
-Received: from localhost (smtp-relay-local.scip.local [127.0.0.1])
- by smtp-relay.dondominio.com (Postfix) with SMTP id 4FBCE4082E
- for <wireguard@lists.zx2c4.com>; Mon, 11 May 2020 10:56:33 +0200 (CEST)
-Received: from mail-node.dondominio.com 
- by smtp-relay.dondominio.com (Postfix) with ESMTP id AF48E407CA;
- Mon, 11 May 2020 10:56:31 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=rfraile.eu; s=dddk;
- t=1589187391; bh=4VCaM3hIhu0TEgxDBP+LBRQnw80HSYZwfLHgZ/1Pc5w=;
- h=Date:From:To:Subject:Message-ID:Content-Type;
- b=nlEYNgVf0GT/FfQx3bpURlSvqBVBqq7AdKW+Veeqhie41MVI4LU38Yej41cFwsOSX
- J5jDlWW0mo9OhUTTACMaeTI2QHWLo3NsIkug51jBynFNtOpMtNf1pPv3g7mp2F0NBR
- v7CvjPzh/keRTZe7iCiLui9IC+GqwWODPy9As7VE=
-Received: from webmail.rfraile.eu (webmail-backend-02.scip.local
- [172.21.33.12]) (Authenticated sender: rfraile@rfraile.eu)
- by mail-node.dondominio.com (Postfix) with ESMTPA id 8926E40529;
- Mon, 11 May 2020 10:56:31 +0200 (CEST)
-Received: from 2.154.17.21.dyn.user.ono.com ([2.154.17.21])
- via webmail-ha-01.scip.local ([172.21.33.131]) by webmail.rfraile.eu
- with HTTP (HTTP/1.1 POST); Mon, 11 May 2020 10:56:31 +0200
+ Mon, 11 May 2020 21:09:56 +0000 (UTC)
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 28516082
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 11 May 2020 21:09:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :references:in-reply-to:from:date:message-id:subject:to:cc
+ :content-type; s=mail; bh=WIYYq0SsS5bZPA8ZucaUeldogHA=; b=2oONm7
+ 9H2d8wUMcc3RzZl74G5sk3qsx7hCQkmUDonaRJSr4FdNqRr3xVg53+sJ2R174Plp
+ FwKOLMrkEvnBhJRsYMoxUZ19t8shyM0U7F3BzBa6X9tvdy6h/v9I81NbarqYWsfh
+ TxMGBJ4vK9lo+zFo2VQqO3szioDXtI6tzM4/VfvqNHQo0NrcTmiVUeZKHr3ydtOc
+ yqDREtXq5FthUAkWd0C07mDXAOcQVsml0pBP8PS+TOclpTlw51Vsk9acMsK5+5Aa
+ 0nHUVg+l4KpcgbBBSsW3Jw8h0Gt8B73jNa12o/v/R+dInJE/JgTSbP1EqZKQgac8
+ 1o5GYH4wPd0Bzrmw==
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id dfbe64f0
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 11 May 2020 21:09:56 +0000 (UTC)
+Received: by mail-io1-f44.google.com with SMTP id f3so11555428ioj.1
+ for <wireguard@lists.zx2c4.com>; Mon, 11 May 2020 14:23:18 -0700 (PDT)
+X-Gm-Message-State: AGi0PuaxrhigF4fAY/rKc3z8TGN7cuvm9zpLr9b5an6XXNYtayZFmiZi
+ EsazEFqQsJ9JjXdMfm35uMSqXu3uZcAvsp+fATI=
+X-Google-Smtp-Source: APiQypInCSnhpTyS6NmYTi26Tvevx7dcDXVfhF09hs+MBG9fMaE2DXccz1zCHv6CsjR3inLpYdTYUWHCURhohIp42oE=
+X-Received: by 2002:a02:b88e:: with SMTP id p14mr16742221jam.36.1589232197327; 
+ Mon, 11 May 2020 14:23:17 -0700 (PDT)
 MIME-Version: 1.0
-Date: Mon, 11 May 2020 10:56:31 +0200
-From: Ricardo Fraile <rfraile@rfraile.eu>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: Simon Rozman <simon@rozman.si>, virtualdxs@gmail.com, WireGuard mailing
- list <wireguard@lists.zx2c4.com>
-Subject: Re: Search Domain/DNS Suffix
-In-Reply-To: <CAHmME9ovg+BBhVkKoNDd2LD-C9ChuBW5VXgj4n4V-Cp_-g0uiw@mail.gmail.com>
 References: <f27176e3fc6ede8d04682a9b504df177@rfraile.eu>
  <CAHmME9ovg+BBhVkKoNDd2LD-C9ChuBW5VXgj4n4V-Cp_-g0uiw@mail.gmail.com>
-User-Agent: DD Webmail
-Message-ID: <2db3cc14e0352128d499efc67fe57e29@rfraile.eu>
-X-Sender: rfraile@rfraile.eu
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.5.11
- (mail-node.dondominio.com [0.0.0.0]); Mon, 11 May 2020 10:56:31 +0200 (CEST)
-X-Mailman-Approved-At: Mon, 11 May 2020 23:09:05 +0200
+ <CABtXGiAP6SvNrsTArCe2fNLqTUEeBEOy9Osx+uCinfm6q9Yz1Q@mail.gmail.com>
+In-Reply-To: <CABtXGiAP6SvNrsTArCe2fNLqTUEeBEOy9Osx+uCinfm6q9Yz1Q@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Mon, 11 May 2020 15:23:06 -0600
+X-Gmail-Original-Message-ID: <CAHmME9oaWsnghkXhWfSqSS0f52nWfpjNRoBQ7EF-58joPG2z6w@mail.gmail.com>
+Message-ID: <CAHmME9oaWsnghkXhWfSqSS0f52nWfpjNRoBQ7EF-58joPG2z6w@mail.gmail.com>
+Subject: Re: Search Domain/DNS Suffix
+To: Phillip McMahon <phillip.mcmahon@gmail.com>
+Cc: Ricardo Fraile <rfraile@rfraile.eu>, Simon Rozman <simon@rozman.si>,
+ virtualdxs@gmail.com, WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -79,12 +77,13 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Perfect, that solves the domain setting workaround. Thanks Jason!
+On Mon, May 11, 2020 at 3:17 PM Phillip McMahon
+<phillip.mcmahon@gmail.com> wrote:
+>
+> Wireguard site is showing fedora wireguard-tools as up to date. It has
+> not been released yet, still marked as pending testing
+>
+> https://bodhi.fedoraproject.org/updates/?packages=wireguard-tools
 
-
-El 2020-05-11 08:25, Jason A. Donenfeld escribió:
-> Your wish is my command:
-> 
-> https://lists.zx2c4.com/pipermail/wireguard/2020-May/005415.html
-> 
-> DNS=8.8.8.8,8.8.4.4,mycorp.net
+Fine by me. This means there is no further action for Joe, the Fedora
+maintainer, to take on this matter.
