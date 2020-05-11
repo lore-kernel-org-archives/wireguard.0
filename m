@@ -6,60 +6,60 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9758BC47255
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 11 May 2020 21:25:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0EA4DC54E8D
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 11 May 2020 21:25:44 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 29AB0206F5
+	by mail.kernel.org (Postfix) with ESMTPS id AFDA7206F5
 	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 11 May 2020 21:25:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="2oONm79H"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 29AB0206F5
+	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="OnTd99bB"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org AFDA7206F5
 Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c73e012b;
-	Mon, 11 May 2020 21:09:59 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a606eedc;
+	Mon, 11 May 2020 21:10:34 +0000 (UTC)
 Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id fa61ba7c
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 180eb200
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 11 May 2020 21:09:56 +0000 (UTC)
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 28516082
+ Mon, 11 May 2020 21:10:33 +0000 (UTC)
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c527d731
  for <wireguard@lists.zx2c4.com>;
- Mon, 11 May 2020 21:09:56 +0000 (UTC)
+ Mon, 11 May 2020 21:10:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
  :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=WIYYq0SsS5bZPA8ZucaUeldogHA=; b=2oONm7
- 9H2d8wUMcc3RzZl74G5sk3qsx7hCQkmUDonaRJSr4FdNqRr3xVg53+sJ2R174Plp
- FwKOLMrkEvnBhJRsYMoxUZ19t8shyM0U7F3BzBa6X9tvdy6h/v9I81NbarqYWsfh
- TxMGBJ4vK9lo+zFo2VQqO3szioDXtI6tzM4/VfvqNHQo0NrcTmiVUeZKHr3ydtOc
- yqDREtXq5FthUAkWd0C07mDXAOcQVsml0pBP8PS+TOclpTlw51Vsk9acMsK5+5Aa
- 0nHUVg+l4KpcgbBBSsW3Jw8h0Gt8B73jNa12o/v/R+dInJE/JgTSbP1EqZKQgac8
- 1o5GYH4wPd0Bzrmw==
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id dfbe64f0
+ :content-type; s=mail; bh=blLERHrQ7ZJ4LNoEu8WYKP2qbQE=; b=OnTd99
+ bBGyfqhsPBZMiDLQVUIDcjz4ywb8PubRd1n0sk3CR37WDgIsHu0q8Z/5UIoLphxK
+ 0zyRFu1iS7pjCczT8G+WuT1wlXABtwccqb5FU0XLKt3CvJ8Nvq6XUMQeLRaW3IY2
+ MR9V6DfMTPIEd+dw/EAflAiNs8Wx6d1j2O6lGazFofwFDpA2L8Pu/VIXwAn3Bs81
+ n6HRp9xK92ogx/juLY7iL2WRHQlNWRZT7dtVGnKPV8qtlPs/zlOJorYHPDV6udrf
+ uT+8IsiTp+jjczz1z5mEBhS4jOdY6hxQK1lXwtfje4k9oTx4JJnjtBnQNZ6IhTVq
+ YxFMWWe8C91EPMgw==
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id b9a86511
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 11 May 2020 21:09:56 +0000 (UTC)
-Received: by mail-io1-f44.google.com with SMTP id f3so11555428ioj.1
- for <wireguard@lists.zx2c4.com>; Mon, 11 May 2020 14:23:18 -0700 (PDT)
-X-Gm-Message-State: AGi0PuaxrhigF4fAY/rKc3z8TGN7cuvm9zpLr9b5an6XXNYtayZFmiZi
- EsazEFqQsJ9JjXdMfm35uMSqXu3uZcAvsp+fATI=
-X-Google-Smtp-Source: APiQypInCSnhpTyS6NmYTi26Tvevx7dcDXVfhF09hs+MBG9fMaE2DXccz1zCHv6CsjR3inLpYdTYUWHCURhohIp42oE=
-X-Received: by 2002:a02:b88e:: with SMTP id p14mr16742221jam.36.1589232197327; 
- Mon, 11 May 2020 14:23:17 -0700 (PDT)
+ Mon, 11 May 2020 21:10:31 +0000 (UTC)
+Received: by mail-il1-f175.google.com with SMTP id 17so3060387ilj.3
+ for <wireguard@lists.zx2c4.com>; Mon, 11 May 2020 14:23:53 -0700 (PDT)
+X-Gm-Message-State: AGi0PuZHrfKcAe1OsuStk/pidYUOUVEjvR0yRqmVHPgyDKd7+KevvgZe
+ 4ut3JSHEjH3tLhcBWPLwLtmXowoG5+RS65Y7ybA=
+X-Google-Smtp-Source: APiQypJxUjEbruzGN5B4raXDN6jVKY1n1Ub/HkBoSXH7isWmXt/nvv1ER2cDSpJq6B1RIYNCI2VN3ng22lI+olXXC7I=
+X-Received: by 2002:a92:5c82:: with SMTP id d2mr18678276ilg.231.1589232232612; 
+ Mon, 11 May 2020 14:23:52 -0700 (PDT)
 MIME-Version: 1.0
 References: <f27176e3fc6ede8d04682a9b504df177@rfraile.eu>
  <CAHmME9ovg+BBhVkKoNDd2LD-C9ChuBW5VXgj4n4V-Cp_-g0uiw@mail.gmail.com>
- <CABtXGiAP6SvNrsTArCe2fNLqTUEeBEOy9Osx+uCinfm6q9Yz1Q@mail.gmail.com>
-In-Reply-To: <CABtXGiAP6SvNrsTArCe2fNLqTUEeBEOy9Osx+uCinfm6q9Yz1Q@mail.gmail.com>
+ <CAPqQDTAgsbLq3rdnXJHooxbMtWY5JADfTPUO_jo6MdxvTuGqrQ@mail.gmail.com>
+In-Reply-To: <CAPqQDTAgsbLq3rdnXJHooxbMtWY5JADfTPUO_jo6MdxvTuGqrQ@mail.gmail.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 11 May 2020 15:23:06 -0600
-X-Gmail-Original-Message-ID: <CAHmME9oaWsnghkXhWfSqSS0f52nWfpjNRoBQ7EF-58joPG2z6w@mail.gmail.com>
-Message-ID: <CAHmME9oaWsnghkXhWfSqSS0f52nWfpjNRoBQ7EF-58joPG2z6w@mail.gmail.com>
+Date: Mon, 11 May 2020 15:23:41 -0600
+X-Gmail-Original-Message-ID: <CAHmME9qDF+-4Ct08oua4yGF8y1-__Was8ik7F56vmYmiE7YhVQ@mail.gmail.com>
+Message-ID: <CAHmME9qDF+-4Ct08oua4yGF8y1-__Was8ik7F56vmYmiE7YhVQ@mail.gmail.com>
 Subject: Re: Search Domain/DNS Suffix
-To: Phillip McMahon <phillip.mcmahon@gmail.com>
+To: Shawn Hoffman <godisgovernment@gmail.com>
 Cc: Ricardo Fraile <rfraile@rfraile.eu>, Simon Rozman <simon@rozman.si>,
  virtualdxs@gmail.com, WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
@@ -77,13 +77,15 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Mon, May 11, 2020 at 3:17 PM Phillip McMahon
-<phillip.mcmahon@gmail.com> wrote:
+On Mon, May 11, 2020 at 3:55 AM Shawn Hoffman <godisgovernment@gmail.com> wrote:
 >
-> Wireguard site is showing fedora wireguard-tools as up to date. It has
-> not been released yet, still marked as pending testing
+> On windows, currently the following has to be done manually / outside
+> of wg flow:
 >
-> https://bodhi.fedoraproject.org/updates/?packages=wireguard-tools
+> PS> Set-DnsClient -InterfaceAlias name -ConnectionSpecificSuffix "name.com"
+>
+> It works fine (although the lack of PostUp, etc is annoying) , but
+> would be nicer if it could be easily configured the same way.
 
-Fine by me. This means there is no further action for Joe, the Fedora
-maintainer, to take on this matter.
+This is why I wrote in the release notes, "This new feature will be
+rolling out across our various GUI clients in the next week or so."
