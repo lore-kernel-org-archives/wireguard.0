@@ -2,72 +2,93 @@ Return-Path: <SRS0=yjuW=62=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7307EC54E8B
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 12 May 2020 07:36:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AFFE4C54E4A
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 12 May 2020 11:14:42 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id D29DB206B7
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 12 May 2020 07:36:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 1602A2222D
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 12 May 2020 11:14:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Cw33ZiQ4"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org D29DB206B7
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	dkim=pass (2048-bit key) header.d=althea.net header.i=@althea.net header.b="keJBF4Pk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CQ4hfnnk"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 1602A2222D
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=althea.net
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 11c83001;
-	Tue, 12 May 2020 07:22:55 +0000 (UTC)
-Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com
- [2a00:1450:4864:20::642])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 83dba67f
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d6b2851c;
+	Tue, 12 May 2020 11:01:14 +0000 (UTC)
+Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com
+ [64.147.123.24])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 50be5979
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 12 May 2020 07:22:54 +0000 (UTC)
-Received: by mail-ej1-x642.google.com with SMTP id n17so10163163ejh.7
- for <wireguard@lists.zx2c4.com>; Tue, 12 May 2020 00:36:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=LYArC21xI7rLFDi0Wm0xi2KryWvlhU1fCLrznhtUbrg=;
- b=Cw33ZiQ4n61fw1z+pdBHxAk+AORrn8iAVA/VuDhTzv/0cRuFeZI/zw7tHhrNlPULAn
- xa/oQHqQ3n+l/45/FVCcXwhZWwpJziXG9lyBl1PO8vc3UwL0TrIsgLCY3l21xNdGsebf
- Q4n9k3pUjC+vnh3q6kWAj22Q7sXSTQfH9VMMjFgpOZMtaca9Glo6RdAlrhBU1YCkHWZq
- t0s2aPIyr3rquhIh3phGfTI7XIAUMJB8H0YLKYPJwdXpOKeutU4HvnC/JxYYOCbvM6qs
- pAcTaZvCdi7k7A6N31Tg5amAqG1Z0JUZbblLxTbT/eIziC5efI1dlkaG4jxHtyxH76Co
- IEgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=LYArC21xI7rLFDi0Wm0xi2KryWvlhU1fCLrznhtUbrg=;
- b=Hlipg20QMnGtnVg2vGj8oZHDra5VfPCaM8nNQJqvyPHrwLQZjKFz10wNQBFO3Ddj57
- S4gK2bt+k1fn6uckO84HQXkiDTn1XxrPDpF4g+XUbsWLl3wLB6OrRHrXSqHUBMYWI+1M
- BLsExhYJXknXQie0do4NRCsc/huE9XlJbCMC7dTn+vG0WyS32lt+m5NcwlTV5S/Tmw9t
- 6nZ242hlEhaPrXHnDUSvPSqx1KInvnz7sOGh6I9J6NuaC7BHVnyPb62HD88Hqhq5vgm2
- 6lCUeq5mY6jI9rMtYdFMbezxcacq3MWKS6IrPr2OJPxZnfQ2+/Mc0pQcPBsQnInyT4Jb
- 8K/A==
-X-Gm-Message-State: AGi0Pua9KSTidaNGZHPiWqTDlkuqgGi08WRPqLIpPCXD1At+kEMbqVPE
- I1nVCB/6sUdbtlwZ+Cp2+hUnAeoOJb91ms1nKnE=
-X-Google-Smtp-Source: APiQypJW1FOG0iq5BrGs+xUIr/py04u0DJky07J5w+rJ1fLGPfzeQEil5U07fM0MLegGdRBci4IK0Jp50UMv1T5iKuc=
-X-Received: by 2002:a17:906:4c8e:: with SMTP id
- q14mr17246885eju.208.1589268978027; 
- Tue, 12 May 2020 00:36:18 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAHmME9oZxfaLpt7d=6omZEH0+cAKJPYw451ARTz0HJrMtrVnkw@mail.gmail.com>
-In-Reply-To: <CAHmME9oZxfaLpt7d=6omZEH0+cAKJPYw451ARTz0HJrMtrVnkw@mail.gmail.com>
-From: Eiji Tanioka <tanioka404@gmail.com>
-Date: Tue, 12 May 2020 16:36:06 +0900
-Message-ID: <CAA2ss9HN7VdQetZ0cmE393BjGiqhqTNa_a80PNz4NJH4sde4CA@mail.gmail.com>
-Subject: Re: WireGuard for OpenBSD Kernel Patches Posted
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
- Matt Dunwoodie <ncon@noconroy.net>
-Content-Type: text/plain; charset="UTF-8"
+ Tue, 12 May 2020 11:01:07 +0000 (UTC)
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
+ by mailout.west.internal (Postfix) with ESMTP id 468A476D
+ for <wireguard@lists.zx2c4.com>; Tue, 12 May 2020 07:14:32 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute7.internal (MEProxy); Tue, 12 May 2020 07:14:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=althea.net; h=
+ mime-version:message-id:in-reply-to:references:date:from:to
+ :subject:content-type:content-transfer-encoding; s=fm3; bh=Sra4y
+ gl6oY4B1x9y9SXXC9hAadHtwLvVNi2FAr2WtRU=; b=keJBF4PkcGm79G9ROu4Hp
+ dLOARvqZzIOnxl5IG85RuNNIiCU2Y4cCxTHWYJxgPlWgxllmilMVWMCBSTD7KVr+
+ gg4677iI6FzwIp8TgqNtmKzR63PQgycng3XYvGb5V+kx51u39PBJlu/p/CqXYziv
+ bFflItulB8owTAxfbzi8lgVq3xBRG87wEAvFreeJO+rRa8cA3f1mbUuJ9JdmE26i
+ YxEHwJIE0fOmFLLb959ghgYcHdHRPoPnTBQ4tnQY9Xr96mm35FjDpJ8ewR6BHZaI
+ yJWAtzENo1DE1OEFdQVgq+9BXumxUL4T9DeXDaE7TISX97G28rBz5dI6yGtDI+86
+ A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=content-transfer-encoding:content-type
+ :date:from:in-reply-to:message-id:mime-version:references
+ :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm2; bh=Sra4ygl6oY4B1x9y9SXXC9hAadHtwLvVNi2FAr2Wt
+ RU=; b=CQ4hfnnknVldTKOHq73RnRHxfyiNoYT9ItL/JkUOss5zZeLCteS8FDzXD
+ Vwhf4ejzGCNJdPojNRwkuXPUaXvX8pee9XtsQgZSXOniu43XY7d8hd/vc+a53Ubx
+ x9ZTPFKzIWEvYZnXHI6OVPVcWZDqzCV2PAgBHMfzBaDdYWRaDzDduFetF9XTlFxD
+ LOOCdw+/YZmdDdPx07A3VfGRGJR3J9QOL7H99HRZWmp4KQ4YG+uvdX/h1D4KULut
+ SFagueKFBc6mEBQgJmNPmrHlETI2h+tM/J527/tVA0r9CQ89tkEFLHBykTPyeApc
+ /KrZ8w6fD145H+mPTcXnlFr9kWz3A==
+X-ME-Sender: <xms:F4W6Xt317IUs48Q9GAihHAY2ka2ec8zMfZ0O9yOunFPKyUvaqWassA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrledvgdefhecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkjghffffhvffutgfgsehtqh
+ ertderreejnecuhfhrohhmpedflfhushhtihhnucfmihhlphgrthhrihgtkhdfuceojhhu
+ shhtihhnsegrlhhthhgvrgdrnhgvtheqnecuggftrfgrthhtvghrnhepveeikedvjeekhf
+ evieeutedtueetfeefhefguedttdejhfehhfdvgeehgefgfeegnecuvehluhhsthgvrhfu
+ ihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepjhhushhtihhnsegrlhhthhgvrg
+ drnhgvth
+X-ME-Proxy: <xmx:F4W6XkFZe4Dd8oqElb4JUkXe52rLYQt0h8ixYHogobunTm7qGXkSxw>
+ <xmx:F4W6Xt6-ASTfQPPqtb8CNSfqPKU_gtwa3Ok5ut2vgB6cf8gvSZrzIg>
+ <xmx:F4W6Xq0kxaP4B3-IL5jUYuchaBJaHIGd5hC62tKHXTGzm6PDVuQRbQ>
+ <xmx:F4W6XkFNnMxeDOhzAJkXAUnTk_I674sqPnwOnvjaSdWf8xrgj7KKRA>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 77BEBE00A9; Tue, 12 May 2020 07:14:31 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.3.0-dev0-413-g750b809-fmstable-20200507v1
+Mime-Version: 1.0
+Message-Id: <cc7d0e96-eaae-458f-8dc4-0cd1228e5d83@www.fastmail.com>
+In-Reply-To: <CAF+AZZULw_O3wjeEkSnWsXOKs_uddr9=a0-04OroKNhsSnKqSw@mail.gmail.com>
+References: <CAKmhVkoE_fL59VJqqXoGHX_S3E9+h=KwyNchWSBrEfPHrpNyoQ@mail.gmail.com>
+ <71c12e22-c7b6-9753-cc44-aac0f51592ff@pallas.us>
+ <CAKmhVkrRbb_KncDjhM6gMcJRpCrK6WcB1Ed=WfVhScDHw96Gjw@mail.gmail.com>
+ <CAHmME9qv2R1CBFAQ1xqM3eOtegLaZi=f7cfA26JS=8bGTLpPFg@mail.gmail.com>
+ <9c64d009-4c24-425f-9126-ba93279c208e@www.fastmail.com>
+ <CAHmME9rbKP4zB5nWG-9vf+2ZepXm+Gqii=qjQ8cnG0O+Dhu2tQ@mail.gmail.com>
+ <CADGd2Dq3-EMBqA6bSKbR=C-pTZToPxv1xkM4BvYGh910T_e1Tg@mail.gmail.com>
+ <CAHmME9q0mr_nF7rsWfFmNtAr6+6uv1yA=j6oJAoKZVXamH--zw@mail.gmail.com>
+ <f88c4fdf-ff31-a489-cb58-c02309016b13@pallas.us>
+ <CAF+AZZULw_O3wjeEkSnWsXOKs_uddr9=a0-04OroKNhsSnKqSw@mail.gmail.com>
+Date: Tue, 12 May 2020 07:14:11 -0400
+From: "Justin Kilpatrick" <justin@althea.net>
+To: wireguard@lists.zx2c4.com
+Subject: Re: WireGuard over WireGuard
+Content-Type: text/plain;charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -83,30 +104,47 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-That's good news!
+Althea uses WireGuard over WireGuard for mesh routing. Each device maint=
+ains a link to peers using WireGuard and then also maintains it's connec=
+tion to the exit over a multihop WireGuard connection.
 
-I hope it turns out to be a good one.
+Building working WireGuard tunnels over fe80 ipv6 link local addresses w=
+as a real pain. Packets sometimes arrive only to the interfaced scoped a=
+ddress and other times arrive without an interface scope. Requiring two =
+tunnels to successfully listen on one port.=20
 
-2020=E5=B9=B45=E6=9C=8812=E6=97=A5(=E7=81=AB) 15:35 Jason A. Donenfeld <Jas=
-on@zx2c4.com>:
+--=20
+  Justin Kilpatrick
+  justin@althea.net
+
+On Tue, May 12, 2020, at 2:56 AM, Dimitar Vassilev wrote:
+> Hi all,
+>=20
+> for my enlightenment can you please advise in which situation such
+> setups are useful?
+>=20
+> Thanks!
+>=20
+>=20
+> =D0=9D=D0=B0 =D1=87=D1=82, 7.05.2020 =D0=B3. =D0=B2 4:01 Derrick Lyndo=
+n Pallas <derrick@pallas.us> =D0=BD=D0=B0=D0=BF=D0=B8=D1=81=D0=B0:
+> >
+> > Note for the list: IPv6 has a minimum of 1280, which means 1360 in t=
+he
+> > outer layer. ~Derrick
+> >
+> >
+> > On 5/6/20 4:54 PM, Jason A. Donenfeld wrote:
+> > > On Wed, May 6, 2020 at 5:28 PM John Lauro <johnalauro@gmail.com> w=
+rote:
+> > >> Wireguard is defaulting to 1420 MTU, the ethernet adapter is 1500=
+ MTU,
+> > >> and I have IPv6 completely disabled.
+> > >>
+> > >> Can/should the MTU of wireguard be bumped to 1440?
+> > > You could if you wanted. But if you don't do it perfectly on all s=
+ides
+> > > with total uniformity and clearheadedness about your network desig=
+n,
+> > > you'll run into subtle problems.
 >
-> Hey folks,
->
-> I'm delighted to announce that Matt has posted his OpenBSD kernel port
-> to the OpenBSD mailing list:
->
-> https://marc.info/?l=3Dopenbsd-tech&m=3D158926407905492&w=3D2
-> https://marc.info/?l=3Dopenbsd-tech&m=3D158926356005344&w=3D2
->
-> We've worked together closely on this for a long time, and I think
-> this is a high quality implementation with a lot of the same security
-> design principles as our Linux implementation. In a way, WireGuard's
-> minimalism fits into and was inspired by OpenBSD's overall design
-> philosophy. Looking forward to seeing how things pan out on the
-> mailing list there; I'm optimistic.
->
-> Users can try this out early by following the directions at:
-> https://git.zx2c4.com/wireguard-openbsd/about/
->
-> Regards,
-> Jason
