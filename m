@@ -6,29 +6,29 @@ X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FEC4C433DF
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 14 May 2020 09:34:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C70AAC433DF
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 14 May 2020 09:53:58 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 568E72065D
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 14 May 2020 09:34:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 568E72065D
+	by mail.kernel.org (Postfix) with ESMTPS id 64508206DA
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 14 May 2020 09:53:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 64508206DA
 Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=pineview.net
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 976140c6;
-	Thu, 14 May 2020 09:21:15 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9205e7d2;
+	Thu, 14 May 2020 09:39:49 +0000 (UTC)
 Received: from mail.pineview.net (mail.pineview.net [203.33.246.11])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6b701cbf
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a2a283d4
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 14 May 2020 09:21:13 +0000 (UTC)
+ Thu, 14 May 2020 09:39:46 +0000 (UTC)
 Received: from airtime.pineview.net (airtime.pineview.net [203.33.246.51])
  (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
  (No client certificate requested)
- by mail.pineview.net (Postfix) with ESMTPSA id 2757D80049;
- Thu, 14 May 2020 19:04:51 +0930 (ACST)
+ by mail.pineview.net (Postfix) with ESMTPSA id 6AAF280049;
+ Thu, 14 May 2020 19:23:24 +0930 (ACST)
 Subject: Re: Significant Dropped Packets on WG interface
 To: Roman Mamedov <rm@romanrm.net>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
@@ -64,14 +64,14 @@ Autocrypt: addr=mike@pineview.net; prefer-encrypt=mutual; keydata=
  3zV1ZwpMVqEnu/bPLNBbz6rpk//nq6Tp6rz8JksR6SF4L+oZbNODLC7PVcMmJsFInNEYbXt2
  3S9AAsaiwCHYBbxmwS89+xbRTpQ9iEkEGBECAAkFAkQ3FhMCGwwACgkQfgQf7OYYFPWXWwCf
  eoco/Qk2hCPcWaAUIasIykRHyFgAn3dGUAaORgqhBBVrEcuAAyyoFKIm
-Message-ID: <3a12db88-85f5-8379-dc6a-f64866e006f3@pineview.net>
-Date: Thu, 14 May 2020 19:04:49 +0930
+Message-ID: <f7784521-fc03-9b68-0228-1ed6800ef681@pineview.net>
+Date: Thu, 14 May 2020 19:23:22 +0930
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
  Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
 In-Reply-To: <20200514141508.294bf88c@natsu>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Content-Language: en-US
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -87,20 +87,22 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
+Hi
 
 > Reduce MTU of the WG interfaces to accomodate for overhead. See 
 > https://www.mail-archive.com/wireguard@lists.zx2c4.com/msg01856.html for
 > calculations of by how much.
-Ok but why all of a sudden, I'll go thought the process again and see.
->>           inet6 addr: 2506:c500:ff4:1::aa/64 Scope:Global
-> I wonder what's this IP range, is this some VPN service? Squatting on
-> unassigned IPs within 2000::/3 seems like a very bad practice. If they wanted
-> an imaginary GUA for their NAT66, I'd suggest something like 66::/16 instead.
->
-I have a ipv6 range allocated, I changed the ip before posting.
 
-I'm routing my part of my class C and a small part of my ipv6 range from
-my DC to my home.
+So yes it was, but I can not understand why. I worked out the MTU be
+pinging back from the VPN server to the clients external ip address.
+
+Its way less than it should be at 1472, I think my ISP has made a change
+which broke things.
+
+I did do some MTU testing emailing before but I think I messed it up.
+
+
+Thanks
 
 Mike
 
