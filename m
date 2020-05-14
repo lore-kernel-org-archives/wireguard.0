@@ -2,77 +2,62 @@ Return-Path: <SRS0=uW9L=64=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C70AAC433DF
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 14 May 2020 09:53:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 456A3C433E5
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 14 May 2020 19:00:32 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 64508206DA
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 14 May 2020 09:53:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 64508206DA
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=pineview.net
+	by mail.kernel.org (Postfix) with ESMTPS id BC0F720675
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 14 May 2020 19:00:31 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=kernel.org header.i=@kernel.org header.b="M3EqFsbs"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org BC0F720675
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9205e7d2;
-	Thu, 14 May 2020 09:39:49 +0000 (UTC)
-Received: from mail.pineview.net (mail.pineview.net [203.33.246.11])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a2a283d4
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1d16812a;
+	Thu, 14 May 2020 18:46:30 +0000 (UTC)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 052fde1f
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 14 May 2020 09:39:46 +0000 (UTC)
-Received: from airtime.pineview.net (airtime.pineview.net [203.33.246.51])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
+ Thu, 14 May 2020 18:46:28 +0000 (UTC)
+Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net
+ [73.47.72.35])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
  (No client certificate requested)
- by mail.pineview.net (Postfix) with ESMTPSA id 6AAF280049;
- Thu, 14 May 2020 19:23:24 +0930 (ACST)
-Subject: Re: Significant Dropped Packets on WG interface
-To: Roman Mamedov <rm@romanrm.net>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-References: <21e7d9c5-1d0d-efc0-e698-f59325960df1@pineview.net>
- <20200514141508.294bf88c@natsu>
-From: Mike O'Connor <mike@pineview.net>
-Autocrypt: addr=mike@pineview.net; prefer-encrypt=mutual; keydata=
- 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
-Message-ID: <f7784521-fc03-9b68-0228-1ed6800ef681@pineview.net>
-Date: Thu, 14 May 2020 19:23:22 +0930
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+ by mail.kernel.org (Postfix) with ESMTPSA id C261B20722;
+ Thu, 14 May 2020 18:52:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1589482373;
+ bh=fIKF1pDVkSW6DCJNR99hImpfok5ZmIDQ7demSS+zRYk=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=M3EqFsbsvrAoZgI8kixBOZIfof+X5e65heH0oOMNn+M/il9Cl8bu6CEIg2OatGDRP
+ MDwz01/o7D4pnvBNKfvve3C2WuiJlTpAFKS4R7ViQShkNxiwT9/alw9pstAHuDGmJj
+ LMbxO1AghcApJzvkZKRXJwYjf7S+eIEQ8YT8uAEQ=
+From: Sasha Levin <sashal@kernel.org>
+To: linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, Arnd Bergmann <arnd@arndb.de>,
+ "David S . Miller" <davem@davemloft.net>, Sasha Levin <sashal@kernel.org>,
+ wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
+ clang-built-linux@googlegroups.com
+Subject: [PATCH AUTOSEL 5.6 51/62] wireguard: selftests: initalize ipv6
+ members to NULL to squelch clang warning
+Date: Thu, 14 May 2020 14:51:36 -0400
+Message-Id: <20200514185147.19716-51-sashal@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20200514185147.19716-1-sashal@kernel.org>
+References: <20200514185147.19716-1-sashal@kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <20200514141508.294bf88c@natsu>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -87,22 +72,55 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
 
-> Reduce MTU of the WG interfaces to accomodate for overhead. See 
-> https://www.mail-archive.com/wireguard@lists.zx2c4.com/msg01856.html for
-> calculations of by how much.
+[ Upstream commit 4fed818ef54b08d4b29200e416cce65546ad5312 ]
 
-So yes it was, but I can not understand why. I worked out the MTU be
-pinging back from the VPN server to the clients external ip address.
+Without setting these to NULL, clang complains in certain
+configurations that have CONFIG_IPV6=n:
 
-Its way less than it should be at 1472, I think my ISP has made a change
-which broke things.
+In file included from drivers/net/wireguard/ratelimiter.c:223:
+drivers/net/wireguard/selftest/ratelimiter.c:173:34: error: variable 'skb6' is uninitialized when used here [-Werror,-Wuninitialized]
+                ret = timings_test(skb4, hdr4, skb6, hdr6, &test_count);
+                                               ^~~~
+drivers/net/wireguard/selftest/ratelimiter.c:123:29: note: initialize the variable 'skb6' to silence this warning
+        struct sk_buff *skb4, *skb6;
+                                   ^
+                                    = NULL
+drivers/net/wireguard/selftest/ratelimiter.c:173:40: error: variable 'hdr6' is uninitialized when used here [-Werror,-Wuninitialized]
+                ret = timings_test(skb4, hdr4, skb6, hdr6, &test_count);
+                                                     ^~~~
+drivers/net/wireguard/selftest/ratelimiter.c:125:22: note: initialize the variable 'hdr6' to silence this warning
+        struct ipv6hdr *hdr6;
+                            ^
 
-I did do some MTU testing emailing before but I think I messed it up.
+We silence this warning by setting the variables to NULL as the warning
+suggests.
 
+Reported-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/net/wireguard/selftest/ratelimiter.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Thanks
-
-Mike
+diff --git a/drivers/net/wireguard/selftest/ratelimiter.c b/drivers/net/wireguard/selftest/ratelimiter.c
+index bcd6462e45401..007cd4457c5f6 100644
+--- a/drivers/net/wireguard/selftest/ratelimiter.c
++++ b/drivers/net/wireguard/selftest/ratelimiter.c
+@@ -120,9 +120,9 @@ bool __init wg_ratelimiter_selftest(void)
+ 	enum { TRIALS_BEFORE_GIVING_UP = 5000 };
+ 	bool success = false;
+ 	int test = 0, trials;
+-	struct sk_buff *skb4, *skb6;
++	struct sk_buff *skb4, *skb6 = NULL;
+ 	struct iphdr *hdr4;
+-	struct ipv6hdr *hdr6;
++	struct ipv6hdr *hdr6 = NULL;
+ 
+ 	if (IS_ENABLED(CONFIG_KASAN) || IS_ENABLED(CONFIG_UBSAN))
+ 		return true;
+-- 
+2.20.1
 
