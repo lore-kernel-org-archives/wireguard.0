@@ -5,70 +5,78 @@ X-Spam-Level:
 X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 27359C433DF
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 20 May 2020 13:16:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D2DFC433E1
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 20 May 2020 15:04:32 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 8A94F20756
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 20 May 2020 13:16:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 0BBF02072C
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 20 May 2020 15:04:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HP5PPFv3"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 8A94F20756
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VGszpM8L"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 0BBF02072C
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ef8d1a07;
-	Wed, 20 May 2020 13:00:23 +0000 (UTC)
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com
- [2a00:1450:4864:20::430])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 3e372464
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b41db481;
+	Wed, 20 May 2020 14:50:01 +0000 (UTC)
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com
+ [2a00:1450:4864:20::342])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d77bcbbc
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 20 May 2020 13:00:21 +0000 (UTC)
-Received: by mail-wr1-x430.google.com with SMTP id e16so3086187wra.7
- for <wireguard@lists.zx2c4.com>; Wed, 20 May 2020 06:14:50 -0700 (PDT)
+ Wed, 20 May 2020 14:49:58 +0000 (UTC)
+Received: by mail-wm1-x342.google.com with SMTP id h4so2828128wmb.4
+ for <wireguard@lists.zx2c4.com>; Wed, 20 May 2020 08:04:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:subject:to:message-id:date:user-agent:mime-version
- :content-transfer-encoding:content-language;
- bh=xkrliEVbqaSkSlLbAnlhieFhyn6gD3PLZetYD8e+kmo=;
- b=HP5PPFv34KnocdJqb4xW7hzpMP73/x7/cmQQ5m83ycFKHYNnXScTzm4G+LrfhYI5UH
- Lf7pYPRRfTrgm5F6FEBGUZseqAiRZ4V5Qa7CHreqlI4Q09oShyyMa4shnWGrAx6vTL/N
- cZ5xhmhAl/x+GxZJKcxISnN5DYb/eh1irt02ebwLrQqD/ejq/vk2kzfVU6DGeIYScf2G
- sHdgYMaGJiRTC3tKK4lQmDEyRAA+5SRqX/0YUmDz0aNgne5HaWllIEbI8G+BPLcF99yc
- 4SnxBWvmRu+41UEuxjdLRNsD4VgUW/TeNzA9l1LHkkiDZ+UDuS5vU1zjAij16bAcPF9N
- HjPQ==
+ h=subject:to:references:from:message-id:date:user-agent:mime-version
+ :in-reply-to:content-transfer-encoding:content-language;
+ bh=Yl2RhoPiwQAOp1rsmWAWT27D5585qkabzCFEGbrnqSk=;
+ b=VGszpM8Lbdusr7UNT3eWYEsnJ6ugwPAbX1BryLz0Sz+A/SLCtdP/4A1x8w4KRwUN0W
+ YX4VlzYESpx4kkniKG0pKV2xDLs6yHgQZ3xOlpWMeTKW1+7MJLi9z957lvg9xr5DwTOd
+ qVbEDN7zRRZn9m+db1RFJz94opXShqesR3WmG6TgIqgs8h5hCpXb3lFymDel2rR9Mt2l
+ AnYRHnycegXXmhjcnqvlDnq4mv6zXPy8BagUdUXFzy3iQ0QidKnDQHBNSo3y2PdF9rWw
+ MKh1fwo0LfbcHqrsLmsBh84HuxZZGg3KrK2Fyxkd+ZDUG86v06zES/1wVpjBV3e3r+XV
+ pUzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:from:subject:to:message-id:date:user-agent
- :mime-version:content-transfer-encoding:content-language;
- bh=xkrliEVbqaSkSlLbAnlhieFhyn6gD3PLZetYD8e+kmo=;
- b=OrR+4BXc83TdaC6cb3RBL2KmDg22g9E9MvzP1QsVHG5VpSWjCYJOwOiCd9SUu8eyNx
- ij/FxzwE2tCh+6zZ5Ny7j/rj1DCFI3fjfSJ/TtMEYXXWNJNIBAhfUan7Y21wKJh970Hv
- RWJo/cmqDqVfPa4VvjxTSTBYfLTiJsQA6W1N6nxG4v85xPUQMzTM5G/rQJV2h09Y5pra
- VD6nuCEtKzfz8DCCbV4BOZUyHM1Fx+Hr2QGI/UGfN6H+AZ4USOcV5cm4kYom0+2dYAJN
- t86mqBDPYr+y6lXZ7DLBYMbGOhUWcWgGJKEikyFC1bFTutXscU5zorjSwwu1n2yhYsJR
- oQYg==
-X-Gm-Message-State: AOAM531O8VxgQQ63WRufSkH7A7VCeNvcC6ncWpNzs5IgbBB/VT11g/9i
- rh9vuBh1QhYjvMj1BrL4gzse3BjO3EQ=
-X-Google-Smtp-Source: ABdhPJxNaNODXx5uU1/UWHRQCK3MHYO8POmBNQvj09gLhLk/zwFsJgxDxhBh3XBL18jwhPNEIq+wOQ==
-X-Received: by 2002:adf:e752:: with SMTP id c18mr4060713wrn.353.1589980488235; 
- Wed, 20 May 2020 06:14:48 -0700 (PDT)
-Received: from [0.0.0.0] ([185.220.102.8])
- by smtp.gmail.com with ESMTPSA id 88sm2793864wrq.77.2020.05.20.06.14.46
- for <wireguard@lists.zx2c4.com>
+ h=x-gm-message-state:subject:to:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-transfer-encoding
+ :content-language;
+ bh=Yl2RhoPiwQAOp1rsmWAWT27D5585qkabzCFEGbrnqSk=;
+ b=UeYIIe+ftX4UTNiYhmDyZ95oUn3DfkVd7KbyO602mIKPyHZJXn4gTSMm/4RwSHDwg+
+ s10K7868DY+n25lkGXDLUvBqnhrvtRxvPm6xAvTWNaQ75PJ5gBiVTFhfF6XpI3IaqHSh
+ LK285S2sv00hWCLmB3XMzVIW98vZ8/LVY+ajJQ8uM8+fIFYxkM4shPYZZNSH2APiVz1P
+ 22PnbEETLXNeFHN8QhPofjW1iEVP+0gYfTPfVKkTHWe2OJHwRvTFJa8eD6MZKeIfZBJK
+ 6he9obfUwpjfP2remSiJIdg3ODFXmUgJlMAra3Z2eA9qivtlRQRV2A78qm/BzddWBluo
+ JE7w==
+X-Gm-Message-State: AOAM5333s0keIyfA8HgNNzFt6CvLkDR5KExxy/xH7c4AC0rWqgbMsXhD
+ P664AGuCEZwr6tZv4wCyydhGdL4Qb9I=
+X-Google-Smtp-Source: ABdhPJzWzgD0AWolUeDIPeXY80se4LgSBAK1yqLQFzy+S3iwgPGkULovsOuxPV/CfC2BRRFlwE/H6Q==
+X-Received: by 2002:a05:600c:2043:: with SMTP id
+ p3mr4795944wmg.187.1589987066533; 
+ Wed, 20 May 2020 08:04:26 -0700 (PDT)
+Received: from [0.0.0.0] ([185.220.101.12])
+ by smtp.gmail.com with ESMTPSA id q17sm3553305wmk.36.2020.05.20.08.04.24
  (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Wed, 20 May 2020 06:14:47 -0700 (PDT)
+ Wed, 20 May 2020 08:04:25 -0700 (PDT)
+Subject: Re: Ubuntu kernel >= 5.3.0-52.46 breaks DKMS build for
+ wireguard-linux-compat >= 1.0.20200429, patch included
+To: Simon Deziel <simon@sdeziel.info>, wireguard@lists.zx2c4.com
+References: <6565463c-0a99-9137-5cc2-714e2fbd6dfc@rub.de>
+ <CAHmME9qDMiNh90_zA9KsFX-OaHNUHnw5=e65jH3PdXg1n7nyFw@mail.gmail.com>
+ <20328df0-e2dd-1653-9fc1-1fb06cbc054f@rub.de>
+ <CAHmME9rnxp2QYjhu1vU+2K1GaoM2hupz5uJGpo_8z4t=E2-boQ@mail.gmail.com>
+ <d62b74e0-0ae7-4948-df6d-325bcef94112@sdeziel.info>
 From: Vasili Pupkin <diggest@gmail.com>
-Subject: Wireguard is broken by recent ubuntu 18.04 kernel update
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Message-ID: <e0484514-9c09-cc78-022c-54d0e59145cd@gmail.com>
-Date: Wed, 20 May 2020 16:14:43 +0300
+Message-ID: <0c2ca6a0-9b74-72d9-8476-c1c249a785f3@gmail.com>
+Date: Wed, 20 May 2020 18:04:22 +0300
 User-Agent: Mozilla/5.0 (Windows NT 5.2; rv:52.0) Gecko/20100101
  Thunderbird/52.9.1
 MIME-Version: 1.0
+In-Reply-To: <d62b74e0-0ae7-4948-df6d-325bcef94112@sdeziel.info>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Content-Language: en-US
@@ -86,18 +94,12 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-The system is Ubuntu 18.04.4, and wireguard is broken in recent kernel 
-update "5.3.0-53.47~18.04.1"... not sure why 18.04.1 is landed on 
-18.04.4 system
+On 06.05.2020 19:22, Simon Deziel wrote:
+> On 2020-05-05 12:03 a.m., Jason at zx2c4.com (Jason A. Donenfeld) wrote:
+>> Ahh, you're running -proposed, gotcha. So I guess I should wait until
+>> this hits the main repo. Any idea when they usually do that?
+> The next kernel batch should land in -updates on May 18th. The detailed
+> schedule is at https://kernel.ubuntu.com/
 
-# ip link add dev wg0 type wireguard
-Error: Unknown device type.
-
-And nothing is shown by "lsmod | grep wireguard' and "dmesg | grep 
-wireguard"
-
-I've tried "apt install --reinstall wireguard" and "update-initramfs -u 
--k all" with no luck.
-
-Everything works fine with kernel 5.3.0-51
-
+The broken kernel 5.3.0-53.47~18.04.1 was still pushed to 18.04 very 
+recently, today or may be yesterday
