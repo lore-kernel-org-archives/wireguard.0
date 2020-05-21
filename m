@@ -1,77 +1,66 @@
-Return-Path: <SRS0=qtc0=7C=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=2ld3=7D=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FORGED_YAHOO_RCVD,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A439C433DF
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 20 May 2020 20:53:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CEEA9C433E0
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 21 May 2020 01:52:12 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id A709F20756
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 20 May 2020 20:53:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 22EAC20709
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 21 May 2020 01:52:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="b5dAXhC6"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A709F20756
-Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=yahoo.com
+	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="azsG9a7o"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 22EAC20709
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 577a21a6;
-	Wed, 20 May 2020 20:39:20 +0000 (UTC)
-Received: from sonic308-55.consmr.mail.gq1.yahoo.com
- (sonic308-55.consmr.mail.gq1.yahoo.com [98.137.68.31])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 593259f0
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4781669d;
+	Thu, 21 May 2020 01:37:37 +0000 (UTC)
+Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 8bb3f767
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 20 May 2020 20:39:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
- t=1590008027; bh=JJsUK6c3+cxfAOen8njC4y131xS0QqSo0rhB08P5Dnw=;
- h=Date:From:To:In-Reply-To:References:Subject:From:Subject;
- b=b5dAXhC6Upqu5X/9dsijMIU80xSAxBmJj/5IjHwXBncAs6B5AzUNHT3BbvGFkHHwpzQr3wCpCTo/RRCgy+7yTimKPNbpbG0L3j9Glw+xuDOjmN+KSNxGYQYpmoXjrBG7ij2iTrx+ojb0sURGUbkXdawTyi0i2v2aNEo8ZoGGBAXdCPqxS+OqLrULUPyZOETw27yMoKghmT5x7Cd0tlyJMdCAqwOhYWmDO77uXepA/Ioc+miiJIcUJ8D6SjRf1W9teXr2CRhqy8GERpKsSPfKf1kAIhz8bWK9CMTNUGA8cYltB0csGNMLu/fcjDYXajOg7g4PQe/ZDGPuuNfr6VaY4w==
-X-YMail-OSG: ARStaOwVM1mpe3GSlup36sESSlv6qAJCeDdviOQrODzK2YXpXbhoSua6Z4lwwm_
- zMjnQj_imMgO8xpCF8x6wzrQZUejmo33owaF6hObKyilaUlgeWgdCRj82qeko1P8t_UKfqSC02m_
- On_qa4UFkOzndjl_l.2wcLuMbFy6pIJ.3MFeK8AUtlYhCRkxkcHfMWW5VLkfveg2W_Ru8CoM0UTe
- oisVz6cE7QdA45lKN6eQLJr79lPZxiVxXAl7h7zQMuVH8xG0fsl0OGC26qCvJcx9uKuK1Km4SZkH
- mwA8ZF4H_XeX3G2ROIJmqy_5KyAKUpIbU5ItoIeucBKOBQRBAhWRoue82qKaGISl1ty8EcTFSEU8
- POIvNmqI6qYdgOxJOPBQv92z2_guddYkyBuRNO5_KPSPEC7TV13bE6I9zcaIBfoCCF.RwVsQ0mlj
- a.11QAmJnHYSOgAn_afdZUKyHj4rZMfBwyxrmRufCn8ejQ3xKfcgYbG8F8b3kFQq_gXrydEgNDm8
- bxRZgAJuY.6aHLNYS7NJyy2DHtIcIoLnFqUYje_jNXNXqeDi9nZsLhrrvpFjfWo58K0EdMDBZzVR
- qTAJ0w_.X0X7xx5U2q.Cmw.dEK5H0nQlWu5vcY6NnRx11Q8asfblxY7ia6J0wghD1pxFcctz80uL
- x4ArISn5RngRO1rEX4xj6j1uY8WUcGBwss5rdoVPnoJiXoaI8VV56diSpSCDVuJI_aUeZBNZXhxN
- hbMJGTJTaetO1K3rh5nx.KNKmw9ahBNq5bm.uOVx3z8ectvAkyDYF3PujxA775u2Nyxe1znuHeLv
- CCAw22wPO579Y5TG2oatwhUwoLIIx52QPPRhqsG33KpMYi0hqViZhNLHVskM57yPwDWwnXrFc4Ky
- mbIyf8cGrP.rirVGcBs2s0sq3N9Uo80nL_lM5CRDFOciHrpqX3Scvk_FglmxY_C8YLaRTQeWHL3W
- uhsvZCHQopWK2w1Tq0.GdA0UBb7NrtSnaJP.J4M8YvBqBsLxxM3WMMXcx_MmtRuf2QSo8jJOMpWy
- EUQk5iKm7LMw5Pa9KSeQduyYtpx2ZLnSD3Bj1V1CYbBxn3IiFWusXUTK2axNg6CyVJirQnT_aetC
- 4rr4RUTCoWICVrH638pg7X97HOE2j_66yUnFb0tBYrUshg9nLDq.m7FJKHCaK8GaDkn_yt0uMjF2
- uOu7vEpG9uQBhJouro0PszxPpPVyqMEpD1PhcQNyGi9h04bRC80nNjnGnVsMZoQUNFF311hgH8eV
- 1SfSgkJPAoJv4pVEkrdxWl2JeaCqhE2IwspVZAuKg3Y_dwdf5_CtY7ajFyrJ3ygC4TnRfiIKA4JU
- kLu8SfJzbk.HaQWqEL5Q8EN3kNs4-
-Received: from sonic.gate.mail.ne1.yahoo.com by
- sonic308.consmr.mail.gq1.yahoo.com with HTTP; Wed, 20 May 2020 20:53:47 +0000
-Date: Wed, 20 May 2020 20:53:42 +0000 (UTC)
-From: Jose Marinez <jedi_papi@yahoo.com>
-To: wireguard@lists.zx2c4.com, Harsh Shandilya <me@msfjarvis.dev>, 
- Mehdi Sadeghi <mx@43.yt>
-Message-ID: <1693606427.2437935.1590008022682@mail.yahoo.com>
-In-Reply-To: <81BFEC8F-2985-447E-9B08-5671682DBD3E@43.yt>
-References: <1587211445.2302354.1589995651547@mail.yahoo.com>
- <7CE4203F-F77E-479D-8F0B-E67A366F1EB3@getmailspring.com>
- <1737830936.2355235.1590000031565@mail.yahoo.com>
- <81BFEC8F-2985-447E-9B08-5671682DBD3E@43.yt>
-Subject: Re: Shouldn't devices tethered to a device using Wireguard share
- the same IP?
+ Thu, 21 May 2020 01:37:36 +0000 (UTC)
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 733331e0
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 21 May 2020 01:37:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :references:in-reply-to:from:date:message-id:subject:to:cc
+ :content-type; s=mail; bh=pnNyIiELkqX8VOm2YPR0+f19qh4=; b=azsG9a
+ 7oX0IkVo0EafyEYkU2j2+QdQYKzxLQiFBf4zXOtZLsRQuG5sOjHywamcj7CQNRLj
+ uK5DvWRNtYqC355nk9Gc9s4NvxUdb1TaZ6KDmtTdYrsD6e9dWKfMtQSqG60KYvR7
+ bb/AXIXIV2vttcT2BEnIPnGd9OG8s+3fQRbXns4K81xHWnbumm3mATYEyYcXTVM4
+ 3DEONPd49D/Bwb1HE9Up9D6vTbFgNFwPtT6CSebz3jdsbYrY/mYJ9isVoSnmyxZ4
+ KVuS5qphPfnaBfdHm94pxht9qOxsh/g2YUH2szJH2bqAJPYUi8cx4JLL5NeWBC+s
+ qiytc5PGHY/5Khnw==
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 2ef4feb7
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 21 May 2020 01:37:35 +0000 (UTC)
+Received: by mail-io1-f54.google.com with SMTP id c16so5646544iol.3
+ for <wireguard@lists.zx2c4.com>; Wed, 20 May 2020 18:52:08 -0700 (PDT)
+X-Gm-Message-State: AOAM530V8XlSMaTu0e7cgawLhrPypYR8Gh0CKfvCFqlQxKlW6jhZg7mq
+ Nk4nzt1/uCqu/C1UQlfdDAC/Fz21Dzisx0LgjwU=
+X-Google-Smtp-Source: ABdhPJwE3J8yapTuUbvmO8PhiZBn3FPMIrpjdvwhZmZv1k1ThUqiNEc6WY16CB5qSSIkoVArWKrOMf8plQ1TOunMZn0=
+X-Received: by 2002:a6b:ba02:: with SMTP id k2mr5960198iof.25.1590025928280;
+ Wed, 20 May 2020 18:52:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: WebService/1.1.15960 YMailNorrin Mozilla/5.0 (Macintosh;
- Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko)
- Version/13.1 Safari/605.1.15
+References: <e0484514-9c09-cc78-022c-54d0e59145cd@gmail.com>
+In-Reply-To: <e0484514-9c09-cc78-022c-54d0e59145cd@gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 20 May 2020 19:51:56 -0600
+X-Gmail-Original-Message-ID: <CAHmME9ry8QjC2rCynYD-BzhYxfmkmgdVLWrRJvfYghKQgOz9yQ@mail.gmail.com>
+Message-ID: <CAHmME9ry8QjC2rCynYD-BzhYxfmkmgdVLWrRJvfYghKQgOz9yQ@mail.gmail.com>
+Subject: Re: Wireguard is broken by recent ubuntu 18.04 kernel update
+To: unit193@ubuntu.com
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ Vasili Pupkin <diggest@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -86,97 +75,27 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Thanks Mehdi. I'll take a look.
+Hey Unit193,
 
-@Harsh,
+Now would be a good time to bump the ppa for all the versions, as
+downstream finally released the new kernel.
 
-Thank you for the clarification. I will reach out to both. I know that on m=
-acOS Catalina, Apple implemented new APIs for loading kernel modules now th=
-at the core of the OS is read-only. Not sure if they've done the same for i=
-OS. Perhaps they'll announce that next month.
+Thanks,
+Jason
 
-> @Harsh - I do have a rooted Android device with Wireguard on I can use
-> for tethering. Say I build my kernel module from the list you sent.
-> How do I go about integrating it into the Wireguard Android app?
-
->>>The app will automatically detect the kernel module and work with it,
->>>there's no user-facing work to be done.
-
-Let me see if I understand you correctly. Are you saying that if I take my =
-rooted phone make the /kernels folder add the manifest.xml and correspondin=
-g version kernel, the regular Wireguard app in the Play Store will utilize =
-it? I'm trying to make sure I follow.
-
-Will it show this extended UI in Settings?
-
-Thanks again,
-Jose
-
-
-
-
-
-
-
-On Wednesday, May 20, 2020, 03:00:18 PM EDT, Mehdi Sadeghi <mx@43.yt> wrote=
-:=20
-
-
-
-
-
-Hi Marinez and the list,
-
-There is a very nice open source app that can share the VPN connection of a=
- rooted device with clients on Android. Here is the link:
-
-https://github.com/Mygod/VPNHotspot/blob/master/README.md
-
-Cheers,
-Mehdi
-
-Am 20. Mai 2020 20:40:31 MESZ schrieb Jose Marinez <jedi_papi@yahoo.com>:
->=C2=A0=C2=A0Thank you all or the responses.Wow. This seems like a big issu=
-e for Android and iOS. How many people like me that are tethering, go about=
- convinced their devices are inheriting the VPN connection? Are there chann=
-els to communicate with both Google and Apple about this?=C2=A0@Harsh - I d=
-o have a rooted Android device with Wireguard on I can use for tethering. S=
-ay I build my kernel module from the list you sent. How do I go about integ=
-rating it into the Wireguard Android app?Thanks,JoseOn Wednesday, May 20, 2=
-020, 1:53 PM, Harsh Shandilya <me@msfjarvis.dev> wrote:>=20
->>=20
->> On May 20 2020, at 10:57 pm, Jose Marinez <jedi_papi@yahoo.com> wrote:
->>=20
->>>=C2=A0=C2=A0Hi Guys,
->>> =C2=A0=20
->>> Can you tell me if this is working as it should?...
->>> =C2=A0=20
->>> I have a phone with Wireguard on. I share the connection via
->>> tethering/hotspot. When I check the IP on the tethered device I don't
->>> see the same IP as my Wireguard endpoint. What I do see is an IP from
->>> the phone's mobile=C2=A0network, the one running Wireguard.=C2=A0
->>> =C2=A0=20
->>> Is this right? Does this=C2=A0mean that traffic from that tethered devi=
-ce
->>> not using the Wireguard connection? I'm confused.
->>> =C2=A0=20
->>> =C2=A0=20
->>> Thanks,
->>> Jose
->>=20
->>> =C2=A0=20
->>=20
->> At least on Android, tethering data is *not* routed through your VPN. If
->> you want that to happen, you will have to use the WireGuard kernel
->> module which requires a rooted device and a custom kernel. On some
->> supported devices
->> (https://github.com/WireGuard/android-wireguard-module-builder/tree/mast=
-er/kernels)
->> you can use root access to install the required module automatically
->> through the app, on your stock kernel.
->>=20
->> Harsh
->>>=20
-
---=20
-Diese Nachricht wurde von meinem Android-Ger=C3=A4t mit K-9 Mail gesendet.
+On Wed, May 20, 2020 at 7:14 AM Vasili Pupkin <diggest@gmail.com> wrote:
+>
+> The system is Ubuntu 18.04.4, and wireguard is broken in recent kernel
+> update "5.3.0-53.47~18.04.1"... not sure why 18.04.1 is landed on
+> 18.04.4 system
+>
+> # ip link add dev wg0 type wireguard
+> Error: Unknown device type.
+>
+> And nothing is shown by "lsmod | grep wireguard' and "dmesg | grep
+> wireguard"
+>
+> I've tried "apt install --reinstall wireguard" and "update-initramfs -u
+> -k all" with no luck.
+>
+> Everything works fine with kernel 5.3.0-51
