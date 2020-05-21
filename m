@@ -2,56 +2,74 @@ Return-Path: <SRS0=2ld3=7D=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=0.4 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FORGED_YAHOO_RCVD,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EB98C433DF
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 21 May 2020 07:05:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 63F51C433E0
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 21 May 2020 14:23:40 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id F2F7220748
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 21 May 2020 07:05:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id BDC592072C
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 21 May 2020 14:23:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=msfjarvis.dev header.i=@msfjarvis.dev header.b="ZkejJ/MU"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org F2F7220748
-Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=msfjarvis.dev
+	dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="Kj9/n72J"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org BDC592072C
+Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=yahoo.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c251f81f;
-	Thu, 21 May 2020 06:51:07 +0000 (UTC)
-Received: from sendmail.purelymail.com (sendmail.purelymail.com
- [34.202.193.197])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id e96c8eda
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2c8eb5c2;
+	Thu, 21 May 2020 14:08:15 +0000 (UTC)
+Received: from sonic314-19.consmr.mail.gq1.yahoo.com
+ (sonic314-19.consmr.mail.gq1.yahoo.com [98.137.69.82])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 57612245
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 21 May 2020 06:51:05 +0000 (UTC)
-MIME-Version: 1.0
-DKIM-Signature: a=rsa-sha256;
- b=ZkejJ/MUZG2gHniWLUcLG6sgPQpEmGnQB3Z1+pT31i4npg0AbDkzqHl9/4vzN8YwtvFj5iWXL0rUAY4eQKVMPzbI91yo4G75JHJ/RPh2PGwB/3E93kFVTy6UyHfAg8UbiU2PmN9OYe85AHL7ClWSbtvmOBhJO0TO/Tp+HTMYnOp9tOk50UgDM0f6BQ8D0WbDm9+FmPo1Jjwzsy8ckRtXSofNnud3N+iZsIL1+C1OGaZJ7lpZjbaXEHkYPnb2e+uwvxYWAg+QDiPIQf7wrGeNlFQml60kpOdMuCyzzoSViVSGeK/XU0TLtQdxkYK3VW8YGM/TOk69U2JpqDlFbvp//g==;
- s=purelymail3; d=msfjarvis.dev; v=1;
- bh=x700L8vQ9OP4DCZ7z5pSYf+R1dNeAt60wvlsvmxUGaM=; h=from:to:received; 
-Authentication-Results: purelymail.com; auth=pass
-X-UserIsAuth: true
-Received: from 185.200.118.103 (EHLO ryzenbox) ([185.200.118.103])
- by ip-172-30-0-208.ec2.internal (JAMES SMTP Server ) with ESMTPA ID 811190835; 
- Thu, 21 May 2020 07:05:31 +0000 (UTC)
-Date: Thu, 21 May 2020 12:35:27 +0530
-From: Harsh Shandilya <me@msfjarvis.dev>
-To: Jose Marinez <jedi_papi@yahoo.com>
-Cc: "=?utf-8?Q?wireguard=40lists.zx2c4.com?=" <wireguard@lists.zx2c4.com>, 
+ Thu, 21 May 2020 14:08:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
+ t=1590070969; bh=7mvKCfujLHnsDi9W3ZzR4Ni338OeO6uyAysQcj+tF/s=;
+ h=Date:From:To:Cc:In-Reply-To:References:Subject:From:Subject;
+ b=Kj9/n72JreeKSfV6QkFTFYVP1Rv/2QlSG+FLZUqET45wd/Itowz0mdpOsYbFao2VMs/Riy8dDfWI3TWMVXnR1o3ntm4sMQ4URpOinDNYJkUz+zQG6vC286NvJZqsyFs8gqJgJLchIZ30sLjD3KsQc/jjuqfReJY2oV0cCE1FC/9FeOa4w8F5yWTtmhf1oQc1bS2gDsgYLmfO1F4sBENv5X/EF2MXVY63kqEg1betV3rRPKROBDiOx42U5y1JexwfRwCVRz6a4IZ6Yp/HjAEsVX+In/MN5sJ5S2PW8/v0O0pNACSgEzrFC/6I3mwVUyC8fa4lDhVEbcbFatAGKGrlMQ==
+X-YMail-OSG: yTeISt8VM1m6a8MVBKTQZU0EsnJlWhdI1jb5BcXyxdyFT90Q5__6er3vTyD22yA
+ T7wYSqcrdXqfSCHnd8K44pLXKZHdNwE2RtELARjtWUh1BZnG0m6QTOkvsxUxDvszPUvcR_LsOaqJ
+ uYyS3T9CWfDaXVBEw70hpTKnMV961Ft0kmFPkYwfaXl7gV4hOXJo_C416d9WWOhXfbL_dHLWahEx
+ lU_ISIvnwBVjepbhdt8NriiPl_6bg0Kq15jOmuIJlIbsmiBvwTAecLX6LvgbVJbijXWWKkHgmGvk
+ LJBge523cz7za4Qhx4IbisQiXowgVyseVSNVsGdyaFNaFwupulFZVXoWwUe6ATAMtfsYif3Pvfh4
+ YI1VlGjn9vq9iDN2kBlfFNDBTmf7340M_a1bGanMOLcJhpMhnKmrFD5Sye1gM29hjYnRnHx5Jgbn
+ cs7rsTVXV.rM6cQV_gsNZFSHj_..O4bjOj05WqSUDPX2EpGQBqlb4A_oq2AGkarMPPnBRcP.sYvk
+ yfPJFvFkTrJbvKPugmGdCLSH.RaZIw0oTljJGcWMSNqzwJLSXjpZO8DZBHblsJ4rTh1mobYz5YIg
+ jNfA17lH87cGWoJQ2HQsENybs2wKyw_D8NhSE8kLJV00zMb9kdtBkSlDY9b3SF8uyFcCXSQ._hnQ
+ rwtlsLKWcVodiSSAPQyzZ7ixwCOGg1gBc2WtFnx8OOIPRzmFPsdkBLK3hzTcYUo0jt_qYbpx5ZHB
+ OlfVFBlz7QjzT0uQ5DuPMo.fRmYQFfoY9_hFVhRjH8x6xP_N6mDDdKOG48_LcgQgHPBmcTjU0H26
+ bqI55Zw1ZgCTn7dEk9miTxw9ILODcOEGwIrxDeOW5fjIdy4F_0_YnL2e37dr5y5OCt3X9cUwP.AC
+ PoKbYg.261fGyqFxPZSO0fKuXI.Dt_K723YJmgJsYRGGZ4ckZz86ShN1xgAVZTQUZoYAXPi.3_ag
+ qghdWdWRqV4Xeq7rnHOBlNVL1SMmAhR3jqf9eH8EyLxA57r7g4.Fbtr.fnOPEabwPfe4tGpSZTe0
+ fuZiuRwkROn3c_40Ufbej5JUJMaqiJNV6U15mJk_.SBHE9PLcivoZ3rVgH2qjF_ZVgKEiNiDMPdR
+ lDQlfc3s5g62gJnRwHg9pW5xG8zxX182pRl5D2fNdL5ObVpOpfeME7QyY7RgMnFloIVnePXPFwxu
+ yPzrBDtjQrIib.Z3.DZxvXgbhKlivYoTalMq6n5lzsnFGb5LfFACGd0wUKf9z64FMimxOOD05eQd
+ GnGip0KQ8XWpjyO2xFmcgaXlyBD8NTGauXCKR9Lo2nyYgZwlhqimHL3y98MaJq2fzd04WFhEuaSe
+ ftiiaFguPz.5UWRUlnImeGbG_7Q--
+Received: from sonic.gate.mail.ne1.yahoo.com by
+ sonic314.consmr.mail.gq1.yahoo.com with HTTP; Thu, 21 May 2020 14:22:49 +0000
+Date: Thu, 21 May 2020 14:22:47 +0000 (UTC)
+From: Jose Marinez <jedi_papi@yahoo.com>
+To: Harsh Shandilya <me@msfjarvis.dev>
+Cc: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>, 
  Mehdi Sadeghi <mx@43.yt>
-Message-ID: <220C4723-011D-4322-8213-820B36A15186@getmailspring.com>
-In-Reply-To: <1693606427.2437935.1590008022682@mail.yahoo.com>
+Message-ID: <1797380096.2767339.1590070967097@mail.yahoo.com>
+In-Reply-To: <220C4723-011D-4322-8213-820B36A15186@getmailspring.com>
 References: <1693606427.2437935.1590008022682@mail.yahoo.com>
-Subject: Re: Shouldn't devices tethered to a device using Wireguard
- share the same IP?
-X-Mailer: Mailspring
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+ <220C4723-011D-4322-8213-820B36A15186@getmailspring.com>
+Subject: Re: Shouldn't devices tethered to a device using Wireguard share
+ the same IP?
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Mailer: WebService/1.1.15960 YMailNorrin Mozilla/5.0 (Macintosh;
+ Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko)
+ Version/13.1 Safari/605.1.15
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -66,123 +84,10 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
+Thank you so much Harsh. What's the best way to make my kernel available to you? Even if you could allow me to push to the repo I wouldn't know where to save it.
+
+Thank you for this and your work on the apps.
 
 
-On May 21 2020, at 2:23 am, Jose Marinez <jedi=5Fpapi=40yahoo.com> wrote:=
 
 
-> Thanks Mehdi. I'll take a look.
-> =20
-> =40Harsh,
-> =20
-> Thank you for the clarification. I will reach out to both. I know that
-> on macOS Catalina, Apple implemented new APIs for loading kernel
-> modules now that the core of the OS is read-only. Not sure if they've
-> done the same for iOS. Perhaps they'll announce that next month.
-> =20
->> =40Harsh - I do have a rooted Android device with Wireguard on I can u=
-se
->> for tethering. Say I build my kernel module from the list you sent.
->> How do I go about integrating it into the Wireguard Android app=3F
-> =20
->>>> The app will automatically detect the kernel module and work with it=
-,
->>>> there's no user-facing work to be done.
-> =20
-> Let me see if I understand you correctly. Are you saying that if I
-> take my rooted phone make the /kernels folder add the manifest.xml and
-> corresponding version kernel, the regular Wireguard app in the Play
-> Store will utilize it=3F I'm trying to make sure I follow.
-
-If you contribute your device's kernel to the repository I linked for
-you, then we will build and host a signed kernel module for it. When you
-go into the WireGuard app's settings page, you will find an option
-titled, at least in English, =22Download and install kernel module=22.
-Pressing that will attempt to locate the module previously created by
-the WireGuard infrastructure and load it onto your device.
-
-> Will it show this extended UI in Settings=3F
-> =20
-> Thanks again,
-> Jose
-> =20
-> =20
-> =20
-> =20
-> =20
-> =20
-> =20
-> On Wednesday, May 20, 2020, 03:00:18 PM EDT, Mehdi Sadeghi <mx=4043.yt>=
-
-> wrote: =20
-> =20
-> =20
-> =20
-> =20
-> =20
-> Hi Marinez and the list,
-> =20
-> There is a very nice open source app that can share the VPN connection
-> of a rooted device with clients on Android. Here is the link:
-> =20
-> https://github.com/Mygod/VPNHotspot/blob/master/README.md
-> =20
-> Cheers,
-> Mehdi
-> =20
-> Am 20. Mai 2020 20:40:31 MESZ schrieb Jose Marinez <jedi=5Fpapi=40yahoo=
-.com>:
->> =C2=A0=C2=A0Thank you all or the responses.Wow. This seems like a big =
-issue for
->> Android and iOS. How many people like me that are tethering, go about
->> convinced their devices are inheriting the VPN connection=3F Are there=
-
->> channels to communicate with both Google and Apple about this=3F=C2=A0=
-=40Harsh
->> - I do have a rooted Android device with Wireguard on I can use for
->> tethering. Say I build my kernel module from the list you sent. How
->> do I go about integrating it into the Wireguard Android
->> app=3FThanks,JoseOn Wednesday, May 20, 2020, 1:53 PM, Harsh Shandilya
->> <me=40msfjarvis.dev> wrote:> =20
->>> =20
->>> On May 20 2020, at 10:57 pm, Jose Marinez <jedi=5Fpapi=40yahoo.com> w=
-rote:
->>> =20
->>>> =C2=A0=C2=A0Hi Guys,
->>>> =C2=A0 =20
->>>> Can you tell me if this is working as it should=3F...
->>>> =C2=A0 =20
->>>> I have a phone with Wireguard on. I share the connection via
->>>> tethering/hotspot. When I check the IP on the tethered device I don'=
-t
->>>> see the same IP as my Wireguard endpoint. What I do see is an IP fro=
-m
->>>> the phone's mobile=C2=A0network, the one running Wireguard.=C2=A0
->>>> =C2=A0 =20
->>>> Is this right=3F Does this=C2=A0mean that traffic from that tethered=
- device
->>>> not using the Wireguard connection=3F I'm confused.
->>>> =C2=A0 =20
->>>> =C2=A0 =20
->>>> Thanks,
->>>> Jose
->>> =20
->>>> =C2=A0 =20
->>> =20
->>> At least on Android, tethering data is *not* routed through your
->>> VPN. If
->>> you want that to happen, you will have to use the WireGuard kernel
->>> module which requires a rooted device and a custom kernel. On some
->>> supported devices
->>> (https://github.com/WireGuard/android-wireguard-module-builder/tree/m=
-aster/kernels)
->>> you can use root access to install the required module automatically
->>> through the app, on your stock kernel.
->>> =20
->>> Harsh
->>>> =20
-> =20
-> -- =20
-> Diese Nachricht wurde von meinem Android-Ger=C3=A4t mit K-9 Mail gesend=
-et.
-> 
