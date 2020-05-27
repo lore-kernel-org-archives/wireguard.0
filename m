@@ -1,56 +1,66 @@
-Return-Path: <SRS0=bqBh=7I=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=KoV/=7J=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 428C8C433DF
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 26 May 2020 16:14:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 18254C433DF
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 27 May 2020 09:01:56 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 9702D206D5
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 26 May 2020 16:14:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 7DFD4207E8
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 27 May 2020 09:01:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=msfjarvis.dev header.i=@msfjarvis.dev header.b="bIUB2/Sd"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 9702D206D5
-Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=msfjarvis.dev
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LcRfHsF4"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 7DFD4207E8
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4fdf3b04;
-	Tue, 26 May 2020 15:58:51 +0000 (UTC)
-Received: from sendmail.purelymail.com (sendmail.purelymail.com
- [34.202.193.197])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 99dab4a9
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 67d0ed70;
+	Wed, 27 May 2020 08:46:16 +0000 (UTC)
+Received: from mail-il1-x12a.google.com (mail-il1-x12a.google.com
+ [2607:f8b0:4864:20::12a])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 99b8bb62
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 26 May 2020 15:58:50 +0000 (UTC)
+ Wed, 27 May 2020 08:46:13 +0000 (UTC)
+Received: by mail-il1-x12a.google.com with SMTP id a18so5981365ilp.7
+ for <wireguard@lists.zx2c4.com>; Wed, 27 May 2020 02:01:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=NP3QSti9V22/14XO99+S9oZa6kfhOzekR9oam6dejKE=;
+ b=LcRfHsF4qscfuJ5fyMKfkvLbvV6VQauAR6QiwHXl6oefFCKBzOvLUC5jNBeW4aU7o1
+ pnzZg8J6lLdqdh/h4UOMwevkzDTH/FbdgnSVYRT81BfdRutKYIxTKPv+lXc9AyNoVwuE
+ pGhp8jZAA4xNwHaSXwAXkhRosZfrCLljz5sEYjMfW6uwaKtmUxxeAOGvDYnPV/P5Uzfd
+ tGluuuiKkRc1c1ZqkO8Gb8Wy2qfTRIYjEmECpkp9Ysiy2sDKdemPHNvuL5p3iwVdh5Aq
+ uwSNCa6yV666XL3iRJ/J4Lr1kYGCt/dSwCpCKYMaEty7QpbrSoLXBNYAymFu3GCJYwYn
+ bfIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=NP3QSti9V22/14XO99+S9oZa6kfhOzekR9oam6dejKE=;
+ b=ai472EPS7ZwCIOHRQOmAfRRRqKGAv8Rk4XX6Bu45Tzh+n66hPLuqM54+Yhvsusi5En
+ BLlvZVrfQdHicOYehI/6pC/oiJEjdNb71s/jU+LN+kXYO4reZH2hzemdDOv5XIFgknjd
+ lEqcxdsW3Zg8pRQz/vyhlYe5gYSahmTHJ/2nqJ/JL9F8kDphlPkVL3JkCV35Qq2m0Ll2
+ Lw+sXOeIiZXD4ctiY6b4+Lhu0nJz1JRvaAsEIKL6cpVXB0WBqjB9YxFoFqgf0C97qPkb
+ mj5N4pE9gwRO4m1c+/mI0CVPyc/fb1BbgIhtJuRGdz566wBCAJJSUeUMGq3iw5G1gvft
+ s38Q==
+X-Gm-Message-State: AOAM532UJ0uOOo/E5rjcVaflY9rAyRc0Eubq4egqeUPLrfdmny5FUXdV
+ +VrCySr1Ckbl8rQzI3GDZFLOFTyt6qCHOfY/rVLAqigX
+X-Google-Smtp-Source: ABdhPJzvF6WeFYWenThsb1bllTQJPnAo8K+G4uQc0N9sUzYQU9eBYLsz9O88DO3UrWohgYfMQ/s131Nzebt2AQF0344=
+X-Received: by 2002:a92:d183:: with SMTP id z3mr5080584ilz.102.1590570094448; 
+ Wed, 27 May 2020 02:01:34 -0700 (PDT)
 MIME-Version: 1.0
-DKIM-Signature: a=rsa-sha256;
- b=bIUB2/Sd9AYguQVZ6q8sOjyikYBBARV8k4YpMqNeX8UVelQBX194DfJYfg/c1uyPshJU+SlBZ2CawywotOjfNUSSLPhclNKTknUtmqZTtKA/vOQazobbatAkbNaepbIy8cCNk4qTZRhpVSRz8aiOvi/sTRsMev/6Q8yFK4A3HvPNfJycpgfcKqJRUg9SipRxW0WrUwaE+e1Eo+cSbU512F8Mrb9sR4NmRGJTuAIwmRa60rVh93njnT7CHdtvGveBdmIGfMlLevwzCaPsdkc5/BZtoZdI23zWR7D99Ny6vjR64BfVvYhvrLu5OMGNPVHfpEmlfhejbvKuEFxaM+V5GQ==;
- s=purelymail3; d=msfjarvis.dev; v=1;
- bh=jmVzubaRkUii0CBNBx03fbi6APxzuj1qPDjKeMlpqHQ=; h=from:to:received; 
-Authentication-Results: purelymail.com; auth=pass
-X-UserIsAuth: true
-Received: from 103.46.202.50 (EHLO ryzenbox) ([103.46.202.50])
- by ip-172-30-0-42.ec2.internal (JAMES SMTP Server ) with ESMTPA ID 470569226; 
- Tue, 26 May 2020 16:03:39 +0000 (UTC)
-Date: Tue, 26 May 2020 21:33:36 +0530
-From: Harsh Shandilya <me@msfjarvis.dev>
-To: Jose Marinez <jedi_papi@yahoo.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Message-ID: <D4BEBCDB-9B63-419C-80BD-DA4342B5D55D@getmailspring.com>
-In-Reply-To: <1911672182.4980335.1590508735704@mail.yahoo.com>
-References: <1911672182.4980335.1590508735704@mail.yahoo.com>
-Subject: Re: Shouldn't devices tethered to a device using Wireguard
- share the same IP?
-X-Mailer: Mailspring
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+From: nicolas prochazka <prochazka.nicolas@gmail.com>
+Date: Wed, 27 May 2020 11:01:18 +0200
+Message-ID: <CADdae-huQZkB2yZ1mD8vTt=0K8X81K3A3LYuCnKbF=GQ3x50xg@mail.gmail.com>
+Subject: Question about origin of packet relative to peer
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -65,84 +75,32 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
+Hello,
+Using one wireguard Interface, with multiple peer
+How can i know that a packet come from peer X ?
+Is is possible to mark packet not a level interface (wg0) but at peer level ?
+I can dump packet at wg0 but i lost the peer origin.
 
+Thanks,
+Nicolas
 
-On May 26 2020, at 9:28 pm, Jose Marinez <jedi=5Fpapi=40yahoo.com> wrote:=
+interface: wg0
+  public key: A
+  private key: (hidden)
+  listening port: 6081
 
+peer: B
+  preshared key: (hidden)
+  endpoint: ipb
+  allowed ips:
+  latest handshake: 1 minute, 27 seconds ago
+  transfer: 1.61 MiB received, 6.20 MiB sent
+  persistent keepalive: every 25 seconds
 
-> Hi Harsh,
-> =20
-> Here's the situation, there's a bunch of us that are using these Mi=46i=
-s
-> for use in China and HK. I'm sure you've heard in the news of what's
-> happening in HK at the moment. I have a copy of the kernel but haven't
-> managed to do the manifest.xml nor the other file. But what I did do
-> was contact the manufacturer that is here in HK and they've agreed to
-> collaborate. If I was the only one benefiting from this it wouldn't be
-> fair. The manufacturer understands the severity but can't for obvious
-> reasons push an OTA rooted kernel to all their devices. They've asked
-> me if there's a way to patch their kernel tree with a Wireguard
-> module. I told them I would ask and here I am.
-> =20
-> I have the kernel here, please disregard the ads:
-> https://www.sendspace.com/file/79o6c8=C2=A0
-> =20
-> =20
-> What can they do to get their kernel patched=3F
-
-This repository will get Android kernels started in the most
-straightforward fashion: https://git.zx2c4.com/android=5Fkernel=5Fwiregua=
-rd/about/.
-
-> There's a bunch of DOD people and families that will highly appreciate
-> this. I will make certain a nice donation comes your way.
-> =20
-> Thanks,
-> Jose
-> =20
-> On Thursday, May 21, 2020, 7:21 PM, Jose Marinez <jedi=5Fpapi=40yahoo.c=
-om> wrote:
->> Thank you. I will try it out. =46ingers crossed=21=21=21
->> =20
->> =20
->> =20
->> =20
->> =20
->> =20
->> =20
->> On Thursday, May 21, 2020, 10:29:12 AM EDT, Harsh Shandilya
->> <me=40msfjarvis.dev> wrote: =20
->> =20
->> =20
->> =20
->> =20
->> =20
->> =20
->> On May 21 2020, at 7:52 pm, Jose Marinez <jedi=5Fpapi=40yahoo.com> wro=
-te:
->> =20
->>> Thank you so much Harsh. What's the best way to make my kernel
->>> available to you=3F Even if you could allow me to push to the repo I
->>> wouldn't know where to save it.
->> =20
->> =20
->> The repo is maintained on GitHub so you will have to fork the reposito=
-ry
->> and create a pull request with your changes, help.github.com has very
->> beginner friendly documentation if this is your first time around this=
-.
->> =20
->> The process for adding a kernel is a bit involved and the documentatio=
-n
->> isn't quite fleshed out. You can check the steps out here=5B1=5D and a=
-n
->> example of adding a new device to the repository here=5B2=5D.
->> =20
->> 1: https://github.com/WireGuard/android-wireguard-module-builder=23add=
-ing-your-phones-kernel
->> 2: https://github.com/WireGuard/android-wireguard-module-builder/pull/=
-3/files
->> =20
->> =20
->>> =20
-> 
+peer:C
+  preshared key: (hidden)
+  endpoint: ipc
+  allowed ips:
+  latest handshake: 1 minute, 38 seconds ago
+  transfer: 24.75 KiB received, 309.71 KiB sent
+  persistent keepalive: every 25 seconds
