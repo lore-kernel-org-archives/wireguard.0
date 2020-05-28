@@ -6,51 +6,51 @@ X-Spam-Status: No, score=-6.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B9D2C433E1
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jun 2020 07:45:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 762E4C433E0
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jun 2020 07:46:22 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id BB20A208B3
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jun 2020 07:45:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 21A64208D5
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jun 2020 07:46:21 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=garrit.xyz header.i=@garrit.xyz header.b="cKtkJ95Y"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org BB20A208B3
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=garrit.xyz header.i=@garrit.xyz header.b="gnKRecZJ"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 21A64208D5
 Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=garrit.xyz
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 48a209c1;
-	Wed, 17 Jun 2020 07:26:41 +0000 (UTC)
-Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de
- [81.169.146.218])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ba12176e
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9e1f31f3;
+	Wed, 17 Jun 2020 07:26:42 +0000 (UTC)
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de
+ [81.169.146.166])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 8e5836c6
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 28 May 2020 18:35:43 +0000 (UTC)
+ Thu, 28 May 2020 18:35:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1590691876;
  s=strato-dkim-0002; d=garrit.xyz;
  h=References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
  X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
- bh=SrEa99xp0BIOkET9nK8X4tiQHdUdVEaL9NLCgOaAazw=;
- b=cKtkJ95YjkUZwS9dmcIrQKXS/kQjioCT8rdIP2MgOfnG3sxccD6P0QZoBjz7dThgCV
- AcqXgtBTZlbGFYkJE8Rc7efIIfZdF5PrprXU5SKruQ2v1hR/BKuWM8u1uEBvA3fu1dSY
- TBReFYy8H6bu29jRHOG9Es0LSrmvFF+Bu9G1+61ecIVVNy6YKNGLELVmdelAmFh6X71i
- mRtj3LXYdC+yPu8eQbv0/4eYcXAUrhB7srpbvdVVxMoFvVuk921oTpu9VqWxg3asxEqX
- +Uu9YqSPSNAV/i7OFuDEcQHKaJ9gmT0QZTb7p7W/x8JAOUuZYZqS6ngRxiGNALPG7XSM
- aQ3A==
+ bh=EZnUjMswSAZxbFXhbHQaQZIN/nVv1M4wexlgrA6C1Mk=;
+ b=gnKRecZJyYiQf4OivYwHnrOjHyryU0zoq4BtbaBqtgBqsCh0McK/Wa1xh0++uir9hZ
+ 2Z2+tn65us/tw/iBFnlOZ4wKX/WmFxl02cToPEqjERHh4t6gPkebTpX4siy5z5FC4pbY
+ lpQCZ8Ym7C4sD0HhsGNB++TqiQDzG+sUfjqgtQAankkdlIXAj1uJBDkIoukbpg8W2HuF
+ 5ty6mxMzBWj5E9OzAk6sQ5yM7ioiZ5IUdXy3+EhLWE/zeX7ypX6483IfOUqOsBO4WABV
+ RtWt/IDFOS0AtZ4yEhGjAx+yjCXtL8mVS2iteKmad+yjSe+Hvs2zdEEqVT/hW0k4RJ+r
+ LBbg==
 X-RZG-AUTH: ":L2MKYUGrb9+g6Yo/9DacaXP5UKUF1pzQZq8rlTFv9/FqKkfMj7DG0ltwUYiU2bdoyq/9lSg="
 X-RZG-CLASS-ID: mo00
 Received: from CKC-BS-N0240.fritz.box by smtp.strato.de (RZmta 46.9.0 AUTH)
- with ESMTPSA id k0b835w4SIja4YK
+ with ESMTPSA id k0b835w4SIja4YL
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256 bits))
  (Client did not present a certificate);
  Thu, 28 May 2020 20:45:36 +0200 (CEST)
 From: Garrit Franke <contact@garrit.xyz>
 To: wireguard@lists.zx2c4.com
 Cc: Garrit Franke <contact@garrit.xyz>
-Subject: [PATCH 5/6] wg-quick: openbsd: add restart command
-Date: Thu, 28 May 2020 20:45:09 +0200
-Message-Id: <20200528184510.51675-6-contact@garrit.xyz>
+Subject: [PATCH 6/6] wg-quick: darwin: add restart command
+Date: Thu, 28 May 2020 20:45:10 +0200
+Message-Id: <20200528184510.51675-7-contact@garrit.xyz>
 X-Mailer: git-send-email 2.24.3 (Apple Git-128)
 In-Reply-To: <20200528184510.51675-1-contact@garrit.xyz>
 References: <20200528184510.51675-1-contact@garrit.xyz>
@@ -72,14 +72,14 @@ Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
 ---
- src/wg-quick/openbsd.bash | 14 +++++++++++++-
+ src/wg-quick/darwin.bash | 14 +++++++++++++-
  1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/src/wg-quick/openbsd.bash b/src/wg-quick/openbsd.bash
-index ffd1834..5ccba03 100755
---- a/src/wg-quick/openbsd.bash
-+++ b/src/wg-quick/openbsd.bash
-@@ -390,7 +390,7 @@ execute_hooks() {
+diff --git a/src/wg-quick/darwin.bash b/src/wg-quick/darwin.bash
+index cde1b54..1d32fbe 100755
+--- a/src/wg-quick/darwin.bash
++++ b/src/wg-quick/darwin.bash
+@@ -418,7 +418,7 @@ execute_hooks() {
  
  cmd_usage() {
  	cat >&2 <<-_EOF
@@ -88,7 +88,7 @@ index ffd1834..5ccba03 100755
  
  	  CONFIG_FILE is a configuration file, whose filename is the interface name
  	  followed by \`.conf'. Otherwise, INTERFACE is an interface name, with
-@@ -448,6 +448,14 @@ cmd_down() {
+@@ -478,6 +478,14 @@ cmd_down() {
  	execute_hooks "${POST_DOWN[@]}"
  }
  
@@ -103,7 +103,7 @@ index ffd1834..5ccba03 100755
  cmd_save() {
  	if ! get_real_interface || [[ " $(wg show interfaces) " != *" $REAL_INTERFACE "* ]]; then
  		die "\`$INTERFACE' is not a WireGuard interface"
-@@ -471,6 +479,10 @@ elif [[ $# -eq 2 && $1 == down ]]; then
+@@ -502,6 +510,10 @@ elif [[ $# -eq 2 && $1 == down ]]; then
  	auto_su
  	parse_options "$2"
  	cmd_down
