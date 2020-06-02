@@ -2,64 +2,92 @@ Return-Path: <SRS0=n59I=76=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 113A4C433E0
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jun 2020 07:47:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 653CDC433E0
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jun 2020 07:48:26 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id AE3B7208D5
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jun 2020 07:47:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id D56CD208D5
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jun 2020 07:48:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gSRv2OMh"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org AE3B7208D5
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	dkim=pass (2048-bit key) header.d=startmail.com header.i=@startmail.com header.b="ss2ClRSP"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org D56CD208D5
+Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=startmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4319ba47;
-	Wed, 17 Jun 2020 07:26:45 +0000 (UTC)
-Received: from mail-ua1-x931.google.com (mail-ua1-x931.google.com
- [2607:f8b0:4864:20::931])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id e8b34655
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Tue, 2 Jun 2020 18:02:03 +0000 (UTC)
-Received: by mail-ua1-x931.google.com with SMTP id a10so1567300uan.8
- for <wireguard@lists.zx2c4.com>; Tue, 02 Jun 2020 11:18:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=FXiGqVb5c7ded05KpOf0gtf53reoH7H7BxcbJxLbDQM=;
- b=gSRv2OMhuMEvM2XhSdP8mOrsqYQ8q67uSok4vhjJGf2FctgSOTw4r+VaeVnuBzz/d3
- ojPs2vQOeDEndtSJ2T7fqkHNwaNR1LET6fWkEarkHwjQ1Gn2nyEotHlq0NOaBsVDrC2m
- F4iNR/nr0y+N1SdrC7zSiDrYKRV9j+T9ejMLtzUEe/lAhJ1eCMHc5QwQw72JKvQp56tf
- Zxq/req4npjXgeSzZIlSIP0gPJIZ4sEDhVOaQ3O4rq4qJwgHAV69d0PJTjaq93cXPbaB
- DwP2grMg8M1H5vCNshTv9QJfRjp+nRLbdsfdot6II1vWeY3kiOInPf4JQCdPhV108wW5
- RYSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=FXiGqVb5c7ded05KpOf0gtf53reoH7H7BxcbJxLbDQM=;
- b=hzcQ46BRMGg/0FhzVJ2U5lWWRAlGsKJzzxspUV5QKUJFWnPdpNWL5xBTyUKr28kIHB
- POtHMlzmrmjc/Ws7SmSXuKPDh+uwJ+sBPbbgf2C/8BAfw+48e8Gv7uPPHP5rAt4nC6PV
- aTDur9EOGya5lo6E4VLwS7jY1xD/jFbtHvOChzYtXNz8ihSbreIBFLd7TDd0mRw8vLuz
- OjU/cg+RqGCO1JN4RKzg4GS0X/BqseCUW6KmUHF/ufqvVuKSUwVSI23afCzV+uPq/iDT
- +FIXcHw7mPKtRX8yo97+hWeYCFumyTqyY2vUaa0SxTO8TG6Fe2rYRVHspNHzYdrsJmj8
- fg9g==
-X-Gm-Message-State: AOAM532S/VcarK7ZAKaAiydGq//b97TeKD/IJul1IjMAg7654TVfTT1S
- p6NdK2fCrxvIat88KjsjheiTayvFjF8Bjgu39ZPMXlw0HqE=
-X-Google-Smtp-Source: ABdhPJzrExBR9ITx4ArPlkI8hUY/5VN5JK/D3q2ut7w798FtDP0AQARzDaL8dAYsS5BvuDAfwXi/r0yOPQjEm6/Mex4=
-X-Received: by 2002:ab0:4066:: with SMTP id h93mr18671945uad.143.1591121894197; 
- Tue, 02 Jun 2020 11:18:14 -0700 (PDT)
-MIME-Version: 1.0
-From: Archit Pandey <architpandeynitk@gmail.com>
-Date: Tue, 2 Jun 2020 23:48:03 +0530
-Message-ID: <CANtWViMbVFtdz7VbH3+NWxRdkMUui5uHrbCOCw51bZYa__Qx9A@mail.gmail.com>
-Subject: Wireguard with Network Namespaces
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0568d432;
+	Wed, 17 Jun 2020 07:26:46 +0000 (UTC)
+Received: from mx-out2.startmail.com (mx-out2.startmail.com [145.131.90.155])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 1b7dc130
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Tue, 2 Jun 2020 18:28:35 +0000 (UTC)
+From: Daniel Rudd <danielrudd@startmail.com>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=startmail.com;
+ s=2017-11; t=1591123485;
+ bh=sjKDOd2IZ5Jx9MGTvRXTMtu9S+NfZTNnBmI7TsobpAo=;
+ h=From:Subject:To:Date:From;
+ b=ss2ClRSPbE5Mr3Ij4x0Y3PnDZzTLbjIP2ZYvu1vBUOvxtIYJNvTZrW1pRdWM1V107
+ RfM/XFtLL4kphSrV6SAHeKNo0nocilb7F6SrlmieVGOubVSSxpZwWAFqyDgH+e6t8K
+ Vr4IO6l7TAOAlLgPfadffRzUClUDbes/zwZIm3CDPdj9UCgEiNNu42ppDdQnEGOgEi
+ Il80O1NZHr5tLXiEk9I59ypMiqEj/LAAYz6icusvGmIFO0+FCz7HCAduVJuwEA+bGf
+ IwxbgqtgIIVffuHCRd7FWXJpHvQvEio/bpDOcR7FbvIna30t2CCujbkk+Tw7C6eeQG
+ 08m9cgvF1A8ew==
+Subject: wireguard-dkms build fails with ubuntu 18.04
+Autocrypt: addr=danielrudd@startmail.com; prefer-encrypt=mutual; keydata=
+ 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
+ 2kgnIus1hJioVtJaopOSpw==
 To: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+Message-ID: <3b276e57-18a1-cfad-ebb4-7bd167bbb97d@startmail.com>
+Date: Tue, 2 Jun 2020 19:44:43 +0100
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="------------BB6830AD705324BAB37C7EBE"
+Content-Language: en-US
 X-Mailman-Approved-At: Wed, 17 Jun 2020 09:26:35 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -75,51 +103,96 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello all,
+This is a multi-part message in MIME format.
+--------------BB6830AD705324BAB37C7EBE
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 
-I'm trying to set-up a wireguard peer-to-peer test using namespaces as
-the diagram below.
+Hi
 
-|--------------|            |----------|            |--------------|
-| wg0, ns1 |----------| lo, ns0 |----------| wg1, ns2 |
-|--------------|            |----------|            |--------------|
+Non-technical user here so please forgive any errors on my part.
 
-I'm unable to make ping work between the the two peers and get the
-following error:
+Wireguard-dkms build fails on Ubuntu 18.04 kernel 4.15.0-102-generic
+(and previous) with error:
 
-PING 192.168.241.1 (192.168.241.1) 56(84) bytes of data.
-From 192.168.241.2 icmp_seq=1 Destination Host Unreachable
-ping: sendmsg: Destination address required
-From 192.168.241.2 icmp_seq=2 Destination Host Unreachable
-ping: sendmsg: Destination address required
+ERROR: Cannot create report: [Errno 17] File exists:
+'/var/crash/wireguard-dkms.0.crash'
+Error! Bad return status for module build on kernel: 4.15.0-102-generic
+(x86_64)
+Consult /var/lib/dkms/wireguard/1.0.20200520/build/make.log for more
+information.
 
-Any ideas on what could be causing this?
+Crash file attached.
 
-The script I'm using to setup the test can be found here -
-https://gist.github.com/archit-p/ad01f715c81f128b271400653d05e09f.
+Would be grateful if anyone could advise.
 
-My configs are as follows:
+All the best
 
---> client.conf
-[Interface]
-ListenPort = 1
-PrivateKey = kJ0P5RK1/ihw9CKwwVBUzG1SzzBiu3jEuT50c14don4=
+Daniel
 
-[Peer]
-PublicKey = MsILnsNuioXMS9qSMn66eDgPEagABYKIQBHpUO+NED8=
-AllowedIPs = 0.0.0.0/0,::/0
-PreSharedKey = Du3JReQWNFjZJhhUHJzPXfARVNox2UNoVbf2ls4neco=
 
---> server.conf
-[Interface]
-ListenPort = 2
-PrivateKey = mB6r7QG1zefLRJeYAVUrAa+uDJX/N2tkPqZYg1PRYFM=
 
-[Peer]
-PublicKey = 2iyuOB1Q0Yd9hPY4eK57LcejHeslx8LrR8vjmyem+nc=
-AllowedIPs = 0.0.0.0/0,::/0
-PreSharedKey = Du3JReQWNFjZJhhUHJzPXfARVNox2UNoVbf2ls4neco=
+--------------BB6830AD705324BAB37C7EBE
+Content-Type: text/plain; charset=UTF-8;
+ name="dkms_make_log"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+ filename="dkms_make_log"
 
-Thank you for help debugging the issue!
-
-Archit.
+UHJvYmxlbVR5cGU6IFBhY2thZ2UKREtNU0J1aWxkTG9nOgogREtNUyBtYWtlLmxvZyBmb3Ig
+d2lyZWd1YXJkLTEuMC4yMDIwMDUyMCBmb3Iga2VybmVsIDQuMTUuMC0xMDItZ2VuZXJpYyAo
+eDg2XzY0KQogRnJpIDI5IE1heSAxODozNzoxMiBCU1QgMjAyMAogbWFrZTogRW50ZXJpbmcg
+ZGlyZWN0b3J5ICcvdXNyL3NyYy9saW51eC1oZWFkZXJzLTQuMTUuMC0xMDItZ2VuZXJpYycK
+ICAgQ0MgW01dICAvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8xLjAuMjAyMDA1MjAvYnVpbGQv
+bWFpbi5vCiAgIENDIFtNXSAgL3Zhci9saWIvZGttcy93aXJlZ3VhcmQvMS4wLjIwMjAwNTIw
+L2J1aWxkL25vaXNlLm8KICAgQ0MgW01dICAvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8xLjAu
+MjAyMDA1MjAvYnVpbGQvZGV2aWNlLm8KICAgQ0MgW01dICAvdmFyL2xpYi9ka21zL3dpcmVn
+dWFyZC8xLjAuMjAyMDA1MjAvYnVpbGQvcGVlci5vCiAgIENDIFtNXSAgL3Zhci9saWIvZGtt
+cy93aXJlZ3VhcmQvMS4wLjIwMjAwNTIwL2J1aWxkL3RpbWVycy5vCiAgIENDIFtNXSAgL3Zh
+ci9saWIvZGttcy93aXJlZ3VhcmQvMS4wLjIwMjAwNTIwL2J1aWxkL3F1ZXVlaW5nLm8KICAg
+Q0MgW01dICAvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8xLjAuMjAyMDA1MjAvYnVpbGQvc2Vu
+ZC5vCiAgIENDIFtNXSAgL3Zhci9saWIvZGttcy93aXJlZ3VhcmQvMS4wLjIwMjAwNTIwL2J1
+aWxkL3JlY2VpdmUubwogICBDQyBbTV0gIC92YXIvbGliL2RrbXMvd2lyZWd1YXJkLzEuMC4y
+MDIwMDUyMC9idWlsZC9zb2NrZXQubwogICBDQyBbTV0gIC92YXIvbGliL2RrbXMvd2lyZWd1
+YXJkLzEuMC4yMDIwMDUyMC9idWlsZC9wZWVybG9va3VwLm8KICAgQ0MgW01dICAvdmFyL2xp
+Yi9ka21zL3dpcmVndWFyZC8xLjAuMjAyMDA1MjAvYnVpbGQvYWxsb3dlZGlwcy5vCiAgIEND
+IFtNXSAgL3Zhci9saWIvZGttcy93aXJlZ3VhcmQvMS4wLjIwMjAwNTIwL2J1aWxkL3JhdGVs
+aW1pdGVyLm8KICAgQ0MgW01dICAvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8xLjAuMjAyMDA1
+MjAvYnVpbGQvY29va2llLm8KICAgQ0MgW01dICAvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8x
+LjAuMjAyMDA1MjAvYnVpbGQvbmV0bGluay5vCiAgIENDIFtNXSAgL3Zhci9saWIvZGttcy93
+aXJlZ3VhcmQvMS4wLjIwMjAwNTIwL2J1aWxkL2NyeXB0by96aW5jL2NoYWNoYTIwL2NoYWNo
+YTIwLm8KIEluIGZpbGUgaW5jbHVkZWQgZnJvbSA8Y29tbWFuZC1saW5lPjowOjA6CiAvdmFy
+L2xpYi9ka21zL3dpcmVndWFyZC8xLjAuMjAyMDA1MjAvYnVpbGQvc29ja2V0LmM6IEluIGZ1
+bmN0aW9uIOKAmHNlbmQ24oCZOgogL3Zhci9saWIvZGttcy93aXJlZ3VhcmQvMS4wLjIwMjAw
+NTIwL2J1aWxkL2NvbXBhdC9jb21wYXQuaDoxMDI6NDI6IGVycm9yOiDigJhjb25zdCBzdHJ1
+Y3QgaXB2Nl9zdHVi4oCZIGhhcyBubyBtZW1iZXIgbmFtZWQg4oCYaXB2Nl9kc3RfbG9va3Vw
+4oCZOyBkaWQgeW91IG1lYW4g4oCYaXB2Nl9kc3RfbG9va3VwX2Zsb3figJk/CiAgI2RlZmlu
+ZSBpcHY2X2RzdF9sb29rdXBfZmxvdyhhLCBiLCBjLCBkKSBpcHY2X2RzdF9sb29rdXAoYSwg
+YiwgJmRzdCwgYykgKyAodm9pZCAqKTAgPzogZHN0CiAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICBeCiAvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8xLjAuMjAy
+MDA1MjAvYnVpbGQvc29ja2V0LmM6MTM5OjIwOiBub3RlOiBpbiBleHBhbnNpb24gb2YgbWFj
+cm8g4oCYaXB2Nl9kc3RfbG9va3VwX2Zsb3figJkKICAgIGRzdCA9IGlwdjZfc3R1Yi0+aXB2
+Nl9kc3RfbG9va3VwX2Zsb3coc29ja19uZXQoc29jayksIHNvY2ssICZmbCwKICAgICAgICAg
+ICAgICAgICAgICAgXn5+fn5+fn5+fn5+fn5+fn5+fn4KICAgUEVSTEFTTSAvdmFyL2xpYi9k
+a21zL3dpcmVndWFyZC8xLjAuMjAyMDA1MjAvYnVpbGQvY3J5cHRvL3ppbmMvY2hhY2hhMjAv
+Y2hhY2hhMjAteDg2XzY0LlMKIHNjcmlwdHMvTWFrZWZpbGUuYnVpbGQ6MzMwOiByZWNpcGUg
+Zm9yIHRhcmdldCAnL3Zhci9saWIvZGttcy93aXJlZ3VhcmQvMS4wLjIwMjAwNTIwL2J1aWxk
+L3NvY2tldC5vJyBmYWlsZWQKIG1ha2VbMV06ICoqKiBbL3Zhci9saWIvZGttcy93aXJlZ3Vh
+cmQvMS4wLjIwMjAwNTIwL2J1aWxkL3NvY2tldC5vXSBFcnJvciAxCiBtYWtlWzFdOiAqKiog
+V2FpdGluZyBmb3IgdW5maW5pc2hlZCBqb2JzLi4uLgogbWFrZVsxXTogKioqIHdhaXQ6IE5v
+IGNoaWxkIHByb2Nlc3Nlcy4gU3RvcC4KIE1ha2VmaWxlOjE1Nzc6IHJlY2lwZSBmb3IgdGFy
+Z2V0ICdfbW9kdWxlXy92YXIvbGliL2RrbXMvd2lyZWd1YXJkLzEuMC4yMDIwMDUyMC9idWls
+ZCcgZmFpbGVkCiBtYWtlOiAqKiogW19tb2R1bGVfL3Zhci9saWIvZGttcy93aXJlZ3VhcmQv
+MS4wLjIwMjAwNTIwL2J1aWxkXSBFcnJvciAyCiBtYWtlOiBMZWF2aW5nIGRpcmVjdG9yeSAn
+L3Vzci9zcmMvbGludXgtaGVhZGVycy00LjE1LjAtMTAyLWdlbmVyaWMnCkRLTVNLZXJuZWxW
+ZXJzaW9uOiA0LjE1LjAtMTAyLWdlbmVyaWMKRGF0ZTogRnJpIE1heSAyOSAxODozNzoxNiAy
+MDIwCkR1cGxpY2F0ZVNpZ25hdHVyZTogZGttczp3aXJlZ3VhcmQtZGttczoxLjAuMjAyMDA1
+MjAtMHBwYTF+MTguMDQ6L3Zhci9saWIvZGttcy93aXJlZ3VhcmQvMS4wLjIwMjAwNTIwL2J1
+aWxkL2NvbXBhdC9jb21wYXQuaDoxMDI6NDI6IGVycm9yOiDigJhjb25zdCBzdHJ1Y3QgaXB2
+Nl9zdHVi4oCZIGhhcyBubyBtZW1iZXIgbmFtZWQg4oCYaXB2Nl9kc3RfbG9va3Vw4oCZOyBk
+aWQgeW91IG1lYW4g4oCYaXB2Nl9kc3RfbG9va3VwX2Zsb3figJk/ClBhY2thZ2U6IHdpcmVn
+dWFyZC1ka21zIDEuMC4yMDIwMDUyMC0wcHBhMX4xOC4wNApQYWNrYWdlVmVyc2lvbjogMS4w
+LjIwMjAwNTIwLTBwcGExfjE4LjA0ClNvdXJjZVBhY2thZ2U6IHdpcmVndWFyZC1saW51eC1j
+b21wYXQKVGl0bGU6IHdpcmVndWFyZC1ka21zIDEuMC4yMDIwMDUyMC0wcHBhMX4xOC4wNDog
+d2lyZWd1YXJkIGtlcm5lbCBtb2R1bGUgZmFpbGVkIHRvIGJ1aWxkCgo=
+--------------BB6830AD705324BAB37C7EBE--
