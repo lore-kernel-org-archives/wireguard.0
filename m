@@ -1,44 +1,62 @@
-Return-Path: <SRS0=LOpl=7P=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=+szR=7V=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1BE89C433DF
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  2 Jun 2020 13:09:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FFC6C433E2
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  8 Jun 2020 23:17:05 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 62E0D206A4
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  2 Jun 2020 13:09:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 62E0D206A4
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=fud.no
+	by mail.kernel.org (Postfix) with ESMTPS id E1A4020870
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  8 Jun 2020 23:17:04 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=kernel.org header.i=@kernel.org header.b="BR7co9c1"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org E1A4020870
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 71ec8853;
-	Tue, 2 Jun 2020 12:53:19 +0000 (UTC)
-Received: from mail.fud.no (mail.fud.no [2a02:c0:2f0:de01:f816:3eff:fede:dc6a])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 3f571208
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ac9c63fd;
+	Mon, 8 Jun 2020 23:00:03 +0000 (UTC)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 9e0af5cb
  (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Tue, 2 Jun 2020 12:53:16 +0000 (UTC)
-Received: from wireguard.i.bitbit.net ([2a02:c0:2:6:18:59ff:fe38:da0c]:50314
- helo=sloth.fud.no)
- by mail.fud.no with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tore@fud.no>)
- id 1jg6fT-00024O-94; Tue, 02 Jun 2020 15:09:23 +0200
-Message-ID: <ebcb261864a63500a357dafc93d39d98b001d132.camel@fud.no>
-Subject: Re: [PATCH] wg-quick: add 'reload' command (wrapper for 'wg syncconf')
-From: Tore Anderson <tore@fud.no>
-To: wireguard@lists.zx2c4.com
-Date: Tue, 02 Jun 2020 15:09:22 +0200
-In-Reply-To: <20200330084157.51834-1-tore@fud.no>
-References: <20200330084157.51834-1-tore@fud.no>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.36.2 (3.36.2-1.fc32) 
+ for <wireguard@lists.zx2c4.com>; Mon, 8 Jun 2020 23:00:00 +0000 (UTC)
+Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net
+ [73.47.72.35])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id 1073E20842;
+ Mon,  8 Jun 2020 23:16:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1591658218;
+ bh=KHmf4DzzWCF9mPRA9Ix69YMow6JAZbDZxzC58wlWWx0=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=BR7co9c1xH4K1OUMBqq1ea7iVVCeiSmn8zKU5t6bl4JD/fgVONwKH8xIC8kOMM5W5
+ gkKL4lg5EM55DjlrwmKj64jHZInUTrmnislQ6w7+Shu4FYBDgQaFxJvnH3xJ7gNBt3
+ MAh4nJzKxfVwtFtYYLPLkC+fP9C7NtbtOLJdTFtA=
+From: Sasha Levin <sashal@kernel.org>
+To: linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, Matt Dunwoodie <ncon@noconroy.net>,
+ "David S . Miller" <davem@davemloft.net>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, wireguard@lists.zx2c4.com,
+ netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.6 234/606] wireguard: noise: read preshared key
+ while taking lock
+Date: Mon,  8 Jun 2020 19:05:59 -0400
+Message-Id: <20200608231211.3363633-234-sashal@kernel.org>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20200608231211.3363633-1-sashal@kernel.org>
+References: <20200608231211.3363633-1-sashal@kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -53,19 +71,66 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-* Tore Anderson
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
 
-> Also add an ExecReload statement that uses this in the systemd template unit.
+[ Upstream commit bc67d371256f5c47d824e2eec51e46c8d62d022e ]
 
-Hello maintainers,
+Prior we read the preshared key after dropping the handshake lock, which
+isn't an actual crypto issue if it races, but it's still not quite
+correct. So copy that part of the state into a temporary like we do with
+the rest of the handshake state variables. Then we can release the lock,
+operate on the temporary, and zero it out at the end of the function. In
+performance tests, the impact of this was entirely unnoticable, probably
+because those bytes are coming from the same cacheline as other things
+that are being copied out in the same manner.
 
-I hate to nag, but considering this patch was posted over two months
-ago now and has yet to receive any feedback from any maintainer - good
-or bad - I am starting to suspect it has been forgotten about. Has it?
+Reported-by: Matt Dunwoodie <ncon@noconroy.net>
+Fixes: e7096c131e51 ("net: WireGuard secure network tunnel")
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ drivers/net/wireguard/noise.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-If there are outstanding issues with the patch that needs to be
-resolved before it can be merged, please let me know what those are and
-I will try to post a PATCH v2.
-
-Tore
+diff --git a/drivers/net/wireguard/noise.c b/drivers/net/wireguard/noise.c
+index 708dc61c974f..07eb438a6dee 100644
+--- a/drivers/net/wireguard/noise.c
++++ b/drivers/net/wireguard/noise.c
+@@ -715,6 +715,7 @@ wg_noise_handshake_consume_response(struct message_handshake_response *src,
+ 	u8 e[NOISE_PUBLIC_KEY_LEN];
+ 	u8 ephemeral_private[NOISE_PUBLIC_KEY_LEN];
+ 	u8 static_private[NOISE_PUBLIC_KEY_LEN];
++	u8 preshared_key[NOISE_SYMMETRIC_KEY_LEN];
+ 
+ 	down_read(&wg->static_identity.lock);
+ 
+@@ -733,6 +734,8 @@ wg_noise_handshake_consume_response(struct message_handshake_response *src,
+ 	memcpy(chaining_key, handshake->chaining_key, NOISE_HASH_LEN);
+ 	memcpy(ephemeral_private, handshake->ephemeral_private,
+ 	       NOISE_PUBLIC_KEY_LEN);
++	memcpy(preshared_key, handshake->preshared_key,
++	       NOISE_SYMMETRIC_KEY_LEN);
+ 	up_read(&handshake->lock);
+ 
+ 	if (state != HANDSHAKE_CREATED_INITIATION)
+@@ -750,7 +753,7 @@ wg_noise_handshake_consume_response(struct message_handshake_response *src,
+ 		goto fail;
+ 
+ 	/* psk */
+-	mix_psk(chaining_key, hash, key, handshake->preshared_key);
++	mix_psk(chaining_key, hash, key, preshared_key);
+ 
+ 	/* {} */
+ 	if (!message_decrypt(NULL, src->encrypted_nothing,
+@@ -783,6 +786,7 @@ wg_noise_handshake_consume_response(struct message_handshake_response *src,
+ 	memzero_explicit(chaining_key, NOISE_HASH_LEN);
+ 	memzero_explicit(ephemeral_private, NOISE_PUBLIC_KEY_LEN);
+ 	memzero_explicit(static_private, NOISE_PUBLIC_KEY_LEN);
++	memzero_explicit(preshared_key, NOISE_SYMMETRIC_KEY_LEN);
+ 	up_read(&wg->static_identity.lock);
+ 	return ret_peer;
+ }
+-- 
+2.25.1
 
