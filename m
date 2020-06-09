@@ -2,92 +2,56 @@ Return-Path: <SRS0=n59I=76=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 653CDC433E0
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jun 2020 07:48:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E56BC433DF
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jun 2020 07:49:07 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id D56CD208D5
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jun 2020 07:48:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 7FC69208D5
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jun 2020 07:49:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=startmail.com header.i=@startmail.com header.b="ss2ClRSP"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org D56CD208D5
-Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=startmail.com
+	dkim=pass (2048-bit key) header.d=hb9fxq.ch header.i=@hb9fxq.ch header.b="lJq+I/Ug"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 7FC69208D5
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=hb9fxq.ch
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0568d432;
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7e948a56;
 	Wed, 17 Jun 2020 07:26:46 +0000 (UTC)
-Received: from mx-out2.startmail.com (mx-out2.startmail.com [145.131.90.155])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 1b7dc130
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Tue, 2 Jun 2020 18:28:35 +0000 (UTC)
-From: Daniel Rudd <danielrudd@startmail.com>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=startmail.com;
- s=2017-11; t=1591123485;
- bh=sjKDOd2IZ5Jx9MGTvRXTMtu9S+NfZTNnBmI7TsobpAo=;
- h=From:Subject:To:Date:From;
- b=ss2ClRSPbE5Mr3Ij4x0Y3PnDZzTLbjIP2ZYvu1vBUOvxtIYJNvTZrW1pRdWM1V107
- RfM/XFtLL4kphSrV6SAHeKNo0nocilb7F6SrlmieVGOubVSSxpZwWAFqyDgH+e6t8K
- Vr4IO6l7TAOAlLgPfadffRzUClUDbes/zwZIm3CDPdj9UCgEiNNu42ppDdQnEGOgEi
- Il80O1NZHr5tLXiEk9I59ypMiqEj/LAAYz6icusvGmIFO0+FCz7HCAduVJuwEA+bGf
- IwxbgqtgIIVffuHCRd7FWXJpHvQvEio/bpDOcR7FbvIna30t2CCujbkk+Tw7C6eeQG
- 08m9cgvF1A8ew==
-Subject: wireguard-dkms build fails with ubuntu 18.04
-Autocrypt: addr=danielrudd@startmail.com; prefer-encrypt=mutual; keydata=
- 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
- 2kgnIus1hJioVtJaopOSpw==
-To: wireguard@lists.zx2c4.com
-Message-ID: <3b276e57-18a1-cfad-ebb4-7bd167bbb97d@startmail.com>
-Date: Tue, 2 Jun 2020 19:44:43 +0100
+Received: from sw.superlogical.ch (sw.superlogical.ch [2a03:4000:9:189::4a])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ddfd273e
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Tue, 9 Jun 2020 15:13:52 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon)
+ with ESMTPSA id F17F8C28BF; Tue,  9 Jun 2020 17:21:06 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hb9fxq.ch; s=default; 
+ t=1591716067;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=8+Nt7ROQbqai3uPLzcGnzXulo/FR7FIpsmMrw9Q5mCQ=;
+ b=lJq+I/Uggqk8XVZXt7sJ29wlB6RYBBwtBT3t5FbUTSQnwz7E+ydTJiqhYZxCNeNVfWLU69
+ +UeQN6UxZzoJNrqalKMB8tDyzK1gN1VipBrd2Yb+5ZTXiH2q1T3V2dT5r0gmyXfsKpcFDB
+ 2USr9tk1D4ftm1y+diZ7PIADPwLAJ8yq8KZLgo4mSpIv+8LWSiPkQnmBin1Xewb2wcIh6N
+ HLDjBHQSDr6BZBUAZVfQSqMYc38acKGJrZXQo9x85stX7QRtJ+IJaFzkchaLI0x7LsjOqz
+ 9T0tMYfp2KV5QxbOiBtvitbibGvvPTZKWZPYGavpvJT1chaTlRzJ5EpiJ48dyA==
+From: Frank Werner-Krippendorf <mail@hb9fxq.ch>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ "David S. Miller" <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>,
+ wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Cc: Frank Werner-Krippendorf <mail@hb9fxq.ch>
+Subject: [PATCH] Do not assign in if condition
+ wg_noise_handshake_consume_initiation()
+Date: Tue,  9 Jun 2020 17:21:00 +0200
+Message-Id: <20200609152100.29612-1-mail@hb9fxq.ch>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="------------BB6830AD705324BAB37C7EBE"
-Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Last-TLS-Session-Version: TLSv1.3
 X-Mailman-Approved-At: Wed, 17 Jun 2020 09:26:35 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -103,96 +67,30 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This is a multi-part message in MIME format.
---------------BB6830AD705324BAB37C7EBE
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Fixes an error condition reported by checkpatch.pl which caused by
+assigning a variable in an if condition in
+wg_noise_handshake_consume_initiation().
 
-Hi
+Signed-off-by: Frank Werner-Krippendorf <mail@hb9fxq.ch>
+---
+ drivers/net/wireguard/noise.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Non-technical user here so please forgive any errors on my part.
+diff --git a/drivers/net/wireguard/noise.c b/drivers/net/wireguard/noise.c
+index 626433690abb..9524a15a62a6 100644
+--- a/drivers/net/wireguard/noise.c
++++ b/drivers/net/wireguard/noise.c
+@@ -617,8 +617,9 @@ wg_noise_handshake_consume_initiation(struct message_handshake_initiation *src,
+ 	memcpy(handshake->hash, hash, NOISE_HASH_LEN);
+ 	memcpy(handshake->chaining_key, chaining_key, NOISE_HASH_LEN);
+ 	handshake->remote_index = src->sender_index;
++	initiation_consumption = ktime_get_coarse_boottime_ns();
+ 	if ((s64)(handshake->last_initiation_consumption -
+-	    (initiation_consumption = ktime_get_coarse_boottime_ns())) < 0)
++	    initiation_consumption) < 0)
+ 		handshake->last_initiation_consumption = initiation_consumption;
+ 	handshake->state = HANDSHAKE_CONSUMED_INITIATION;
+ 	up_write(&handshake->lock);
+-- 
+2.20.1
 
-Wireguard-dkms build fails on Ubuntu 18.04 kernel 4.15.0-102-generic
-(and previous) with error:
-
-ERROR: Cannot create report: [Errno 17] File exists:
-'/var/crash/wireguard-dkms.0.crash'
-Error! Bad return status for module build on kernel: 4.15.0-102-generic
-(x86_64)
-Consult /var/lib/dkms/wireguard/1.0.20200520/build/make.log for more
-information.
-
-Crash file attached.
-
-Would be grateful if anyone could advise.
-
-All the best
-
-Daniel
-
-
-
---------------BB6830AD705324BAB37C7EBE
-Content-Type: text/plain; charset=UTF-8;
- name="dkms_make_log"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment;
- filename="dkms_make_log"
-
-UHJvYmxlbVR5cGU6IFBhY2thZ2UKREtNU0J1aWxkTG9nOgogREtNUyBtYWtlLmxvZyBmb3Ig
-d2lyZWd1YXJkLTEuMC4yMDIwMDUyMCBmb3Iga2VybmVsIDQuMTUuMC0xMDItZ2VuZXJpYyAo
-eDg2XzY0KQogRnJpIDI5IE1heSAxODozNzoxMiBCU1QgMjAyMAogbWFrZTogRW50ZXJpbmcg
-ZGlyZWN0b3J5ICcvdXNyL3NyYy9saW51eC1oZWFkZXJzLTQuMTUuMC0xMDItZ2VuZXJpYycK
-ICAgQ0MgW01dICAvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8xLjAuMjAyMDA1MjAvYnVpbGQv
-bWFpbi5vCiAgIENDIFtNXSAgL3Zhci9saWIvZGttcy93aXJlZ3VhcmQvMS4wLjIwMjAwNTIw
-L2J1aWxkL25vaXNlLm8KICAgQ0MgW01dICAvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8xLjAu
-MjAyMDA1MjAvYnVpbGQvZGV2aWNlLm8KICAgQ0MgW01dICAvdmFyL2xpYi9ka21zL3dpcmVn
-dWFyZC8xLjAuMjAyMDA1MjAvYnVpbGQvcGVlci5vCiAgIENDIFtNXSAgL3Zhci9saWIvZGtt
-cy93aXJlZ3VhcmQvMS4wLjIwMjAwNTIwL2J1aWxkL3RpbWVycy5vCiAgIENDIFtNXSAgL3Zh
-ci9saWIvZGttcy93aXJlZ3VhcmQvMS4wLjIwMjAwNTIwL2J1aWxkL3F1ZXVlaW5nLm8KICAg
-Q0MgW01dICAvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8xLjAuMjAyMDA1MjAvYnVpbGQvc2Vu
-ZC5vCiAgIENDIFtNXSAgL3Zhci9saWIvZGttcy93aXJlZ3VhcmQvMS4wLjIwMjAwNTIwL2J1
-aWxkL3JlY2VpdmUubwogICBDQyBbTV0gIC92YXIvbGliL2RrbXMvd2lyZWd1YXJkLzEuMC4y
-MDIwMDUyMC9idWlsZC9zb2NrZXQubwogICBDQyBbTV0gIC92YXIvbGliL2RrbXMvd2lyZWd1
-YXJkLzEuMC4yMDIwMDUyMC9idWlsZC9wZWVybG9va3VwLm8KICAgQ0MgW01dICAvdmFyL2xp
-Yi9ka21zL3dpcmVndWFyZC8xLjAuMjAyMDA1MjAvYnVpbGQvYWxsb3dlZGlwcy5vCiAgIEND
-IFtNXSAgL3Zhci9saWIvZGttcy93aXJlZ3VhcmQvMS4wLjIwMjAwNTIwL2J1aWxkL3JhdGVs
-aW1pdGVyLm8KICAgQ0MgW01dICAvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8xLjAuMjAyMDA1
-MjAvYnVpbGQvY29va2llLm8KICAgQ0MgW01dICAvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8x
-LjAuMjAyMDA1MjAvYnVpbGQvbmV0bGluay5vCiAgIENDIFtNXSAgL3Zhci9saWIvZGttcy93
-aXJlZ3VhcmQvMS4wLjIwMjAwNTIwL2J1aWxkL2NyeXB0by96aW5jL2NoYWNoYTIwL2NoYWNo
-YTIwLm8KIEluIGZpbGUgaW5jbHVkZWQgZnJvbSA8Y29tbWFuZC1saW5lPjowOjA6CiAvdmFy
-L2xpYi9ka21zL3dpcmVndWFyZC8xLjAuMjAyMDA1MjAvYnVpbGQvc29ja2V0LmM6IEluIGZ1
-bmN0aW9uIOKAmHNlbmQ24oCZOgogL3Zhci9saWIvZGttcy93aXJlZ3VhcmQvMS4wLjIwMjAw
-NTIwL2J1aWxkL2NvbXBhdC9jb21wYXQuaDoxMDI6NDI6IGVycm9yOiDigJhjb25zdCBzdHJ1
-Y3QgaXB2Nl9zdHVi4oCZIGhhcyBubyBtZW1iZXIgbmFtZWQg4oCYaXB2Nl9kc3RfbG9va3Vw
-4oCZOyBkaWQgeW91IG1lYW4g4oCYaXB2Nl9kc3RfbG9va3VwX2Zsb3figJk/CiAgI2RlZmlu
-ZSBpcHY2X2RzdF9sb29rdXBfZmxvdyhhLCBiLCBjLCBkKSBpcHY2X2RzdF9sb29rdXAoYSwg
-YiwgJmRzdCwgYykgKyAodm9pZCAqKTAgPzogZHN0CiAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICBeCiAvdmFyL2xpYi9ka21zL3dpcmVndWFyZC8xLjAuMjAy
-MDA1MjAvYnVpbGQvc29ja2V0LmM6MTM5OjIwOiBub3RlOiBpbiBleHBhbnNpb24gb2YgbWFj
-cm8g4oCYaXB2Nl9kc3RfbG9va3VwX2Zsb3figJkKICAgIGRzdCA9IGlwdjZfc3R1Yi0+aXB2
-Nl9kc3RfbG9va3VwX2Zsb3coc29ja19uZXQoc29jayksIHNvY2ssICZmbCwKICAgICAgICAg
-ICAgICAgICAgICAgXn5+fn5+fn5+fn5+fn5+fn5+fn4KICAgUEVSTEFTTSAvdmFyL2xpYi9k
-a21zL3dpcmVndWFyZC8xLjAuMjAyMDA1MjAvYnVpbGQvY3J5cHRvL3ppbmMvY2hhY2hhMjAv
-Y2hhY2hhMjAteDg2XzY0LlMKIHNjcmlwdHMvTWFrZWZpbGUuYnVpbGQ6MzMwOiByZWNpcGUg
-Zm9yIHRhcmdldCAnL3Zhci9saWIvZGttcy93aXJlZ3VhcmQvMS4wLjIwMjAwNTIwL2J1aWxk
-L3NvY2tldC5vJyBmYWlsZWQKIG1ha2VbMV06ICoqKiBbL3Zhci9saWIvZGttcy93aXJlZ3Vh
-cmQvMS4wLjIwMjAwNTIwL2J1aWxkL3NvY2tldC5vXSBFcnJvciAxCiBtYWtlWzFdOiAqKiog
-V2FpdGluZyBmb3IgdW5maW5pc2hlZCBqb2JzLi4uLgogbWFrZVsxXTogKioqIHdhaXQ6IE5v
-IGNoaWxkIHByb2Nlc3Nlcy4gU3RvcC4KIE1ha2VmaWxlOjE1Nzc6IHJlY2lwZSBmb3IgdGFy
-Z2V0ICdfbW9kdWxlXy92YXIvbGliL2RrbXMvd2lyZWd1YXJkLzEuMC4yMDIwMDUyMC9idWls
-ZCcgZmFpbGVkCiBtYWtlOiAqKiogW19tb2R1bGVfL3Zhci9saWIvZGttcy93aXJlZ3VhcmQv
-MS4wLjIwMjAwNTIwL2J1aWxkXSBFcnJvciAyCiBtYWtlOiBMZWF2aW5nIGRpcmVjdG9yeSAn
-L3Vzci9zcmMvbGludXgtaGVhZGVycy00LjE1LjAtMTAyLWdlbmVyaWMnCkRLTVNLZXJuZWxW
-ZXJzaW9uOiA0LjE1LjAtMTAyLWdlbmVyaWMKRGF0ZTogRnJpIE1heSAyOSAxODozNzoxNiAy
-MDIwCkR1cGxpY2F0ZVNpZ25hdHVyZTogZGttczp3aXJlZ3VhcmQtZGttczoxLjAuMjAyMDA1
-MjAtMHBwYTF+MTguMDQ6L3Zhci9saWIvZGttcy93aXJlZ3VhcmQvMS4wLjIwMjAwNTIwL2J1
-aWxkL2NvbXBhdC9jb21wYXQuaDoxMDI6NDI6IGVycm9yOiDigJhjb25zdCBzdHJ1Y3QgaXB2
-Nl9zdHVi4oCZIGhhcyBubyBtZW1iZXIgbmFtZWQg4oCYaXB2Nl9kc3RfbG9va3Vw4oCZOyBk
-aWQgeW91IG1lYW4g4oCYaXB2Nl9kc3RfbG9va3VwX2Zsb3figJk/ClBhY2thZ2U6IHdpcmVn
-dWFyZC1ka21zIDEuMC4yMDIwMDUyMC0wcHBhMX4xOC4wNApQYWNrYWdlVmVyc2lvbjogMS4w
-LjIwMjAwNTIwLTBwcGExfjE4LjA0ClNvdXJjZVBhY2thZ2U6IHdpcmVndWFyZC1saW51eC1j
-b21wYXQKVGl0bGU6IHdpcmVndWFyZC1ka21zIDEuMC4yMDIwMDUyMC0wcHBhMX4xOC4wNDog
-d2lyZWd1YXJkIGtlcm5lbCBtb2R1bGUgZmFpbGVkIHRvIGJ1aWxkCgo=
---------------BB6830AD705324BAB37C7EBE--
