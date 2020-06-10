@@ -2,67 +2,64 @@ Return-Path: <SRS0=FlPj=7X=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22845C433E0
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 10 Jun 2020 03:42:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B65DC433E0
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 10 Jun 2020 10:42:02 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 88A6820737
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 10 Jun 2020 03:42:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 747F020656
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 10 Jun 2020 10:42:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="mglb60q1"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 88A6820737
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	dkim=pass (1024-bit key) header.d=ginkel.com header.i=@ginkel.com header.b="kEHELZXv"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 747F020656
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=ginkel.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cf6305dc;
-	Wed, 10 Jun 2020 03:25:24 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 33c8bab7
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6fd3a530;
+	Wed, 10 Jun 2020 10:24:33 +0000 (UTC)
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com
+ [2a00:1450:4864:20::12b])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id e586f2bf
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 10 Jun 2020 03:25:21 +0000 (UTC)
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b69d45e1
- for <wireguard@lists.zx2c4.com>;
- Wed, 10 Jun 2020 03:25:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=WxP0YQVGb/GYzrViQS1WSXQeXn0=; b=mglb60
- q1f9pE6Z0km3nCh1BLlFIbPBqHvVd9o8Bvxxdxy1GpSliPBCABWVONUCX1MquAhh
- KwihUVHvxUAXselUs9QqgKTIEPqg9/NvZ/T/Q/d2xY0gfV2nXlzCf++RIAhu7wmN
- +aZ+3cpc3dEjOPYnygGMPYV7DNTxM/+peGnU00CSt7OlmlvI7xhJ3KeobZFtT7Fh
- L32UKyNHyOuygFTpF+LPi9imak9Ww9THc8a1mhb+BnlDy+UbMQFqiTGD0MwrCn6N
- hAlwaagJrgO98/v2pK4du5WKcj7zQ46wD6kfmElHOsF5v4mb78Q4EzrNO7IIzf3l
- wkk2FqCdvSqNv5GA==
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 1fe82647
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Wed, 10 Jun 2020 03:25:20 +0000 (UTC)
-Received: by mail-il1-f174.google.com with SMTP id e11so576249ilr.4
- for <wireguard@lists.zx2c4.com>; Tue, 09 Jun 2020 20:42:29 -0700 (PDT)
-X-Gm-Message-State: AOAM531lewgt7DdkeXt/aOFv75Yfbd9Emt46TbBfPAOuw+HjCQbNRRjh
- cX4xiUqrSKBOrmweuFJhIHxHREEkuoV8OgqDhFU=
-X-Google-Smtp-Source: ABdhPJwVJTXyE+0max50h/3oBgdpiw7jusy9UrhqCRBjWU+q8aFts18KzyGm+1NfOmpt9VMpjqD84e79vUICw3dl1Q0=
-X-Received: by 2002:a92:2515:: with SMTP id l21mr1170698ill.64.1591760548653; 
- Tue, 09 Jun 2020 20:42:28 -0700 (PDT)
+ Wed, 10 Jun 2020 10:24:31 +0000 (UTC)
+Received: by mail-lf1-x12b.google.com with SMTP id c21so1170424lfb.3
+ for <wireguard@lists.zx2c4.com>; Wed, 10 Jun 2020 03:41:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ginkel.com; s=google;
+ h=mime-version:from:date:message-id:subject:to
+ :content-transfer-encoding;
+ bh=b70QCre1CuWuWwuABjAKVCI5lGqLSoyY641GAvg14to=;
+ b=kEHELZXvrn24GaZ43Zjrba7kSAqRICml+NrOe7rgaecDUTFhQXp65VOBgn/7NVIeJd
+ llcergHXs5Vsjljx4lIKlvgk7bs2mUDL5O2+KSiIzGS009r0P248iOlMJD+DYwJ9EFsL
+ 3kDGXVxaY9dThQv8wO1ldwStjHzSiw5hG76Os=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+ :content-transfer-encoding;
+ bh=b70QCre1CuWuWwuABjAKVCI5lGqLSoyY641GAvg14to=;
+ b=V6gnXIQm5oy3eCfcIIYTrb7yqZlUuMKlCBS2aapmC73WPvbydKpEtydF5zg/XtRTgv
+ Gam7nlfd0fyfRC1KwNBGGiUmNkL9b9uTWGfOUu9sW0Jl9xdbgsLDVHUbZFeBpoULxidN
+ eY5Bn25A9+SYNPEc5fgGh3w3fN/3PvXx7p4UA+67dvrb7MLtqyzLHRMmIcKDACUeSBor
+ h9yJLrS3VDLmNp0jcMfvcCJLILWQcyMpagIGZw1eZZ7720vJK2dgKCKoOzT7Fm1nF5cK
+ tKLPIFe3AV8T4q8iSJG1YrYgI9AFMjObq7VYIfcPp9EnQgHx3cMB8io2cCRvkuU/bl16
+ hX9w==
+X-Gm-Message-State: AOAM532F0DKx3LY0jtbd+JhB2YOlXyCW6NcvWtTzY6PRXluyXuV8cm/C
+ h1taMKzhagApQ4cLxAHLnn8OgxEDg25+db6jYqvoBqLEH3s=
+X-Google-Smtp-Source: ABdhPJwEhMotll9V+9fN911s22s2T6c1ZZje8cwVTX3EjVPY4YX0+BLp4yV1kiALGlCjcH2X52YY+ecTtYwu4Vag+58=
+X-Received: by 2002:ac2:4886:: with SMTP id x6mr1395825lfc.198.1591785700046; 
+ Wed, 10 Jun 2020 03:41:40 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200609152100.29612-1-mail@hb9fxq.ch>
-In-Reply-To: <20200609152100.29612-1-mail@hb9fxq.ch>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 9 Jun 2020 21:42:17 -0600
-X-Gmail-Original-Message-ID: <CAHmME9o=VwZQtQH7i2qE2Jf6OLP_vcOzyA4U+NhLkiATnyN2Bg@mail.gmail.com>
-Message-ID: <CAHmME9o=VwZQtQH7i2qE2Jf6OLP_vcOzyA4U+NhLkiATnyN2Bg@mail.gmail.com>
-Subject: Re: [PATCH] Do not assign in if condition
- wg_noise_handshake_consume_initiation()
-To: Frank Werner-Krippendorf <mail@hb9fxq.ch>
-Cc: "David S. Miller" <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>, 
- WireGuard mailing list <wireguard@lists.zx2c4.com>,
- Netdev <netdev@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
+From: Thilo-Alexander Ginkel <thilo@ginkel.com>
+Date: Wed, 10 Jun 2020 12:41:24 +0200
+Message-ID: <CANvSZQ97BG02tHyTUBf46XUfJKXArx-gaKe-R2ao0UEUoh55LA@mail.gmail.com>
+Subject: Ubuntu 18.04 kernel 4.15.0-106-generic breaks wireguard-1.0.20200520
+To: wireguard@lists.zx2c4.com
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -77,14 +74,58 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Tue, Jun 9, 2020 at 9:21 AM Frank Werner-Krippendorf <mail@hb9fxq.ch> wrote:
->
-> Fixes an error condition reported by checkpatch.pl which caused by
-> assigning a variable in an if condition in
-> wg_noise_handshake_consume_initiation().
->
-> Signed-off-by: Frank Werner-Krippendorf <mail@hb9fxq.ch>
+Hi there,
 
-Thanks. Queued up in the wireguard-linux.git tree.
+after updating to the current Ubuntu 18.04 kernel 4.15.0-106-generic
+kernel wireguard-dkms no longer compiles with the following build
+failure:
 
-Jason
+DKMS make.log for wireguard-1.0.20200520 for kernel 4.15.0-106-generic (x86=
+_64)
+Wed Jun 10 12:32:13 CEST 2020
+make: Entering directory '/usr/src/linux-headers-4.15.0-106-generic'
+  CC [M]  /var/lib/dkms/wireguard/1.0.20200520/build/main.o
+  CC [M]  /var/lib/dkms/wireguard/1.0.20200520/build/noise.o
+  CC [M]  /var/lib/dkms/wireguard/1.0.20200520/build/device.o
+  CC [M]  /var/lib/dkms/wireguard/1.0.20200520/build/peer.o
+  CC [M]  /var/lib/dkms/wireguard/1.0.20200520/build/timers.o
+  CC [M]  /var/lib/dkms/wireguard/1.0.20200520/build/queueing.o
+  CC [M]  /var/lib/dkms/wireguard/1.0.20200520/build/send.o
+  CC [M]  /var/lib/dkms/wireguard/1.0.20200520/build/receive.o
+  CC [M]  /var/lib/dkms/wireguard/1.0.20200520/build/socket.o
+  CC [M]  /var/lib/dkms/wireguard/1.0.20200520/build/peerlookup.o
+  CC [M]  /var/lib/dkms/wireguard/1.0.20200520/build/allowedips.o
+  CC [M]  /var/lib/dkms/wireguard/1.0.20200520/build/ratelimiter.o
+  CC [M]  /var/lib/dkms/wireguard/1.0.20200520/build/cookie.o
+  CC [M]  /var/lib/dkms/wireguard/1.0.20200520/build/netlink.o
+  CC [M]  /var/lib/dkms/wireguard/1.0.20200520/build/crypto/zinc/chacha20/c=
+hacha20.o
+  PERLASM /var/lib/dkms/wireguard/1.0.20200520/build/crypto/zinc/chacha20/c=
+hacha20-x86_64.S
+  CC [M]  /var/lib/dkms/wireguard/1.0.20200520/build/crypto/zinc/poly1305/p=
+oly1305.o
+In file included from <command-line>:0:0:
+/var/lib/dkms/wireguard/1.0.20200520/build/socket.c: In function =E2=80=98s=
+end6=E2=80=99:
+/var/lib/dkms/wireguard/1.0.20200520/build/compat/compat.h:102:42:
+error: =E2=80=98const struct ipv6_stub=E2=80=99 has no member named =E2=80=
+=98ipv6_dst_lookup=E2=80=99;
+did you mean =E2=80=98ipv6_dst_lookup_flow=E2=80=99?
+ #define ipv6_dst_lookup_flow(a, b, c, d) ipv6_dst_lookup(a, b, &dst,
+c) + (void *)0 ?: dst
+                                          ^
+/var/lib/dkms/wireguard/1.0.20200520/build/socket.c:139:20: note: in
+expansion of macro =E2=80=98ipv6_dst_lookup_flow=E2=80=99
+   dst =3D ipv6_stub->ipv6_dst_lookup_flow(sock_net(sock), sock, &fl,
+                    ^~~~~~~~~~~~~~~~~~~~
+scripts/Makefile.build:330: recipe for target
+'/var/lib/dkms/wireguard/1.0.20200520/build/socket.o' failed
+make[1]: *** [/var/lib/dkms/wireguard/1.0.20200520/build/socket.o] Error 1
+make[1]: *** Waiting for unfinished jobs....
+Makefile:1577: recipe for target
+'_module_/var/lib/dkms/wireguard/1.0.20200520/build' failed
+make: *** [_module_/var/lib/dkms/wireguard/1.0.20200520/build] Error 2
+make: Leaving directory '/usr/src/linux-headers-4.15.0-106-generic'
+
+Regards,
+Thilo
