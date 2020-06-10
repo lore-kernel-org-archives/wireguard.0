@@ -1,62 +1,68 @@
-Return-Path: <SRS0=+szR=7V=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=FlPj=7X=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 47813C433E0
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  8 Jun 2020 23:17:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 22845C433E0
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 10 Jun 2020 03:42:34 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id EA09320814
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  8 Jun 2020 23:17:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 88A6820737
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 10 Jun 2020 03:42:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=kernel.org header.i=@kernel.org header.b="FKbXWK16"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org EA09320814
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
+	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="mglb60q1"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 88A6820737
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bbbcd5cb;
-	Mon, 8 Jun 2020 23:00:05 +0000 (UTC)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 3f2c0123
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 8 Jun 2020 23:00:03 +0000 (UTC)
-Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net
- [73.47.72.35])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 1E92620814;
- Mon,  8 Jun 2020 23:17:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1591658221;
- bh=+TcgT78npKn9VMqKDNBMmUor9hgNRC2OV7K4FxsJqdc=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=FKbXWK16abSGzzHz2blATR0rSIChLsC1DmZom2Ga8CHI/M5rsqpHkJ2tOYHtKsUTP
- /7/7gt9X7XvfGGO8vRet3MoP1vc/TSA5N3bMe8e+2CczGxvnMlUeAtWig9wNLhMQtt
- twkda64mzbV7nH6zLtFiPfWmGTgx33xiIyjbQWSY=
-From: Sasha Levin <sashal@kernel.org>
-To: linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
- "David S . Miller" <davem@davemloft.net>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, wireguard@lists.zx2c4.com,
- netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.6 236/606] wireguard: noise: separate receive
- counter from send counter
-Date: Mon,  8 Jun 2020 19:06:01 -0400
-Message-Id: <20200608231211.3363633-236-sashal@kernel.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200608231211.3363633-1-sashal@kernel.org>
-References: <20200608231211.3363633-1-sashal@kernel.org>
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cf6305dc;
+	Wed, 10 Jun 2020 03:25:24 +0000 (UTC)
+Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 33c8bab7
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 10 Jun 2020 03:25:21 +0000 (UTC)
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b69d45e1
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 10 Jun 2020 03:25:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :references:in-reply-to:from:date:message-id:subject:to:cc
+ :content-type; s=mail; bh=WxP0YQVGb/GYzrViQS1WSXQeXn0=; b=mglb60
+ q1f9pE6Z0km3nCh1BLlFIbPBqHvVd9o8Bvxxdxy1GpSliPBCABWVONUCX1MquAhh
+ KwihUVHvxUAXselUs9QqgKTIEPqg9/NvZ/T/Q/d2xY0gfV2nXlzCf++RIAhu7wmN
+ +aZ+3cpc3dEjOPYnygGMPYV7DNTxM/+peGnU00CSt7OlmlvI7xhJ3KeobZFtT7Fh
+ L32UKyNHyOuygFTpF+LPi9imak9Ww9THc8a1mhb+BnlDy+UbMQFqiTGD0MwrCn6N
+ hAlwaagJrgO98/v2pK4du5WKcj7zQ46wD6kfmElHOsF5v4mb78Q4EzrNO7IIzf3l
+ wkk2FqCdvSqNv5GA==
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 1fe82647
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 10 Jun 2020 03:25:20 +0000 (UTC)
+Received: by mail-il1-f174.google.com with SMTP id e11so576249ilr.4
+ for <wireguard@lists.zx2c4.com>; Tue, 09 Jun 2020 20:42:29 -0700 (PDT)
+X-Gm-Message-State: AOAM531lewgt7DdkeXt/aOFv75Yfbd9Emt46TbBfPAOuw+HjCQbNRRjh
+ cX4xiUqrSKBOrmweuFJhIHxHREEkuoV8OgqDhFU=
+X-Google-Smtp-Source: ABdhPJwVJTXyE+0max50h/3oBgdpiw7jusy9UrhqCRBjWU+q8aFts18KzyGm+1NfOmpt9VMpjqD84e79vUICw3dl1Q0=
+X-Received: by 2002:a92:2515:: with SMTP id l21mr1170698ill.64.1591760548653; 
+ Tue, 09 Jun 2020 20:42:28 -0700 (PDT)
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
+References: <20200609152100.29612-1-mail@hb9fxq.ch>
+In-Reply-To: <20200609152100.29612-1-mail@hb9fxq.ch>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Tue, 9 Jun 2020 21:42:17 -0600
+X-Gmail-Original-Message-ID: <CAHmME9o=VwZQtQH7i2qE2Jf6OLP_vcOzyA4U+NhLkiATnyN2Bg@mail.gmail.com>
+Message-ID: <CAHmME9o=VwZQtQH7i2qE2Jf6OLP_vcOzyA4U+NhLkiATnyN2Bg@mail.gmail.com>
+Subject: Re: [PATCH] Do not assign in if condition
+ wg_noise_handshake_consume_initiation()
+To: Frank Werner-Krippendorf <mail@hb9fxq.ch>
+Cc: "David S. Miller" <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>, 
+ WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ Netdev <netdev@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -71,343 +77,14 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+On Tue, Jun 9, 2020 at 9:21 AM Frank Werner-Krippendorf <mail@hb9fxq.ch> wrote:
+>
+> Fixes an error condition reported by checkpatch.pl which caused by
+> assigning a variable in an if condition in
+> wg_noise_handshake_consume_initiation().
+>
+> Signed-off-by: Frank Werner-Krippendorf <mail@hb9fxq.ch>
 
-[ Upstream commit a9e90d9931f3a474f04bab782ccd9d77904941e9 ]
+Thanks. Queued up in the wireguard-linux.git tree.
 
-In "wireguard: queueing: preserve flow hash across packet scrubbing", we
-were required to slightly increase the size of the receive replay
-counter to something still fairly small, but an increase nonetheless.
-It turns out that we can recoup some of the additional memory overhead
-by splitting up the prior union type into two distinct types. Before, we
-used the same "noise_counter" union for both sending and receiving, with
-sending just using a simple atomic64_t, while receiving used the full
-replay counter checker. This meant that most of the memory being
-allocated for the sending counter was being wasted. Since the old
-"noise_counter" type increased in size in the prior commit, now is a
-good time to split up that union type into a distinct "noise_replay_
-counter" for receiving and a boring atomic64_t for sending, each using
-neither more nor less memory than required.
-
-Also, since sometimes the replay counter is accessed without
-necessitating additional accesses to the bitmap, we can reduce cache
-misses by hoisting the always-necessary lock above the bitmap in the
-struct layout. We also change a "noise_replay_counter" stack allocation
-to kmalloc in a -DDEBUG selftest so that KASAN doesn't trigger a stack
-frame warning.
-
-All and all, removing a bit of abstraction in this commit makes the code
-simpler and smaller, in addition to the motivating memory usage
-recuperation. For example, passing around raw "noise_symmetric_key"
-structs is something that really only makes sense within noise.c, in the
-one place where the sending and receiving keys can safely be thought of
-as the same type of object; subsequent to that, it's important that we
-uniformly access these through keypair->{sending,receiving}, where their
-distinct roles are always made explicit. So this patch allows us to draw
-that distinction clearly as well.
-
-Fixes: e7096c131e51 ("net: WireGuard secure network tunnel")
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/net/wireguard/noise.c            | 16 +++------
- drivers/net/wireguard/noise.h            | 14 ++++----
- drivers/net/wireguard/receive.c          | 42 ++++++++++++------------
- drivers/net/wireguard/selftest/counter.c | 17 +++++++---
- drivers/net/wireguard/send.c             | 12 +++----
- 5 files changed, 48 insertions(+), 53 deletions(-)
-
-diff --git a/drivers/net/wireguard/noise.c b/drivers/net/wireguard/noise.c
-index 07eb438a6dee..626433690abb 100644
---- a/drivers/net/wireguard/noise.c
-+++ b/drivers/net/wireguard/noise.c
-@@ -104,6 +104,7 @@ static struct noise_keypair *keypair_create(struct wg_peer *peer)
- 
- 	if (unlikely(!keypair))
- 		return NULL;
-+	spin_lock_init(&keypair->receiving_counter.lock);
- 	keypair->internal_id = atomic64_inc_return(&keypair_counter);
- 	keypair->entry.type = INDEX_HASHTABLE_KEYPAIR;
- 	keypair->entry.peer = peer;
-@@ -358,25 +359,16 @@ static void kdf(u8 *first_dst, u8 *second_dst, u8 *third_dst, const u8 *data,
- 	memzero_explicit(output, BLAKE2S_HASH_SIZE + 1);
- }
- 
--static void symmetric_key_init(struct noise_symmetric_key *key)
--{
--	spin_lock_init(&key->counter.receive.lock);
--	atomic64_set(&key->counter.counter, 0);
--	memset(key->counter.receive.backtrack, 0,
--	       sizeof(key->counter.receive.backtrack));
--	key->birthdate = ktime_get_coarse_boottime_ns();
--	key->is_valid = true;
--}
--
- static void derive_keys(struct noise_symmetric_key *first_dst,
- 			struct noise_symmetric_key *second_dst,
- 			const u8 chaining_key[NOISE_HASH_LEN])
- {
-+	u64 birthdate = ktime_get_coarse_boottime_ns();
- 	kdf(first_dst->key, second_dst->key, NULL, NULL,
- 	    NOISE_SYMMETRIC_KEY_LEN, NOISE_SYMMETRIC_KEY_LEN, 0, 0,
- 	    chaining_key);
--	symmetric_key_init(first_dst);
--	symmetric_key_init(second_dst);
-+	first_dst->birthdate = second_dst->birthdate = birthdate;
-+	first_dst->is_valid = second_dst->is_valid = true;
- }
- 
- static bool __must_check mix_dh(u8 chaining_key[NOISE_HASH_LEN],
-diff --git a/drivers/net/wireguard/noise.h b/drivers/net/wireguard/noise.h
-index f532d59d3f19..c527253dba80 100644
---- a/drivers/net/wireguard/noise.h
-+++ b/drivers/net/wireguard/noise.h
-@@ -15,18 +15,14 @@
- #include <linux/mutex.h>
- #include <linux/kref.h>
- 
--union noise_counter {
--	struct {
--		u64 counter;
--		unsigned long backtrack[COUNTER_BITS_TOTAL / BITS_PER_LONG];
--		spinlock_t lock;
--	} receive;
--	atomic64_t counter;
-+struct noise_replay_counter {
-+	u64 counter;
-+	spinlock_t lock;
-+	unsigned long backtrack[COUNTER_BITS_TOTAL / BITS_PER_LONG];
- };
- 
- struct noise_symmetric_key {
- 	u8 key[NOISE_SYMMETRIC_KEY_LEN];
--	union noise_counter counter;
- 	u64 birthdate;
- 	bool is_valid;
- };
-@@ -34,7 +30,9 @@ struct noise_symmetric_key {
- struct noise_keypair {
- 	struct index_hashtable_entry entry;
- 	struct noise_symmetric_key sending;
-+	atomic64_t sending_counter;
- 	struct noise_symmetric_key receiving;
-+	struct noise_replay_counter receiving_counter;
- 	__le32 remote_index;
- 	bool i_am_the_initiator;
- 	struct kref refcount;
-diff --git a/drivers/net/wireguard/receive.c b/drivers/net/wireguard/receive.c
-index 758d6a019184..474bb69f0e1b 100644
---- a/drivers/net/wireguard/receive.c
-+++ b/drivers/net/wireguard/receive.c
-@@ -246,20 +246,20 @@ static void keep_key_fresh(struct wg_peer *peer)
- 	}
- }
- 
--static bool decrypt_packet(struct sk_buff *skb, struct noise_symmetric_key *key)
-+static bool decrypt_packet(struct sk_buff *skb, struct noise_keypair *keypair)
- {
- 	struct scatterlist sg[MAX_SKB_FRAGS + 8];
- 	struct sk_buff *trailer;
- 	unsigned int offset;
- 	int num_frags;
- 
--	if (unlikely(!key))
-+	if (unlikely(!keypair))
- 		return false;
- 
--	if (unlikely(!READ_ONCE(key->is_valid) ||
--		  wg_birthdate_has_expired(key->birthdate, REJECT_AFTER_TIME) ||
--		  key->counter.receive.counter >= REJECT_AFTER_MESSAGES)) {
--		WRITE_ONCE(key->is_valid, false);
-+	if (unlikely(!READ_ONCE(keypair->receiving.is_valid) ||
-+		  wg_birthdate_has_expired(keypair->receiving.birthdate, REJECT_AFTER_TIME) ||
-+		  keypair->receiving_counter.counter >= REJECT_AFTER_MESSAGES)) {
-+		WRITE_ONCE(keypair->receiving.is_valid, false);
- 		return false;
- 	}
- 
-@@ -284,7 +284,7 @@ static bool decrypt_packet(struct sk_buff *skb, struct noise_symmetric_key *key)
- 
- 	if (!chacha20poly1305_decrypt_sg_inplace(sg, skb->len, NULL, 0,
- 					         PACKET_CB(skb)->nonce,
--						 key->key))
-+						 keypair->receiving.key))
- 		return false;
- 
- 	/* Another ugly situation of pushing and pulling the header so as to
-@@ -299,41 +299,41 @@ static bool decrypt_packet(struct sk_buff *skb, struct noise_symmetric_key *key)
- }
- 
- /* This is RFC6479, a replay detection bitmap algorithm that avoids bitshifts */
--static bool counter_validate(union noise_counter *counter, u64 their_counter)
-+static bool counter_validate(struct noise_replay_counter *counter, u64 their_counter)
- {
- 	unsigned long index, index_current, top, i;
- 	bool ret = false;
- 
--	spin_lock_bh(&counter->receive.lock);
-+	spin_lock_bh(&counter->lock);
- 
--	if (unlikely(counter->receive.counter >= REJECT_AFTER_MESSAGES + 1 ||
-+	if (unlikely(counter->counter >= REJECT_AFTER_MESSAGES + 1 ||
- 		     their_counter >= REJECT_AFTER_MESSAGES))
- 		goto out;
- 
- 	++their_counter;
- 
- 	if (unlikely((COUNTER_WINDOW_SIZE + their_counter) <
--		     counter->receive.counter))
-+		     counter->counter))
- 		goto out;
- 
- 	index = their_counter >> ilog2(BITS_PER_LONG);
- 
--	if (likely(their_counter > counter->receive.counter)) {
--		index_current = counter->receive.counter >> ilog2(BITS_PER_LONG);
-+	if (likely(their_counter > counter->counter)) {
-+		index_current = counter->counter >> ilog2(BITS_PER_LONG);
- 		top = min_t(unsigned long, index - index_current,
- 			    COUNTER_BITS_TOTAL / BITS_PER_LONG);
- 		for (i = 1; i <= top; ++i)
--			counter->receive.backtrack[(i + index_current) &
-+			counter->backtrack[(i + index_current) &
- 				((COUNTER_BITS_TOTAL / BITS_PER_LONG) - 1)] = 0;
--		counter->receive.counter = their_counter;
-+		counter->counter = their_counter;
- 	}
- 
- 	index &= (COUNTER_BITS_TOTAL / BITS_PER_LONG) - 1;
- 	ret = !test_and_set_bit(their_counter & (BITS_PER_LONG - 1),
--				&counter->receive.backtrack[index]);
-+				&counter->backtrack[index]);
- 
- out:
--	spin_unlock_bh(&counter->receive.lock);
-+	spin_unlock_bh(&counter->lock);
- 	return ret;
- }
- 
-@@ -473,12 +473,12 @@ int wg_packet_rx_poll(struct napi_struct *napi, int budget)
- 		if (unlikely(state != PACKET_STATE_CRYPTED))
- 			goto next;
- 
--		if (unlikely(!counter_validate(&keypair->receiving.counter,
-+		if (unlikely(!counter_validate(&keypair->receiving_counter,
- 					       PACKET_CB(skb)->nonce))) {
- 			net_dbg_ratelimited("%s: Packet has invalid nonce %llu (max %llu)\n",
- 					    peer->device->dev->name,
- 					    PACKET_CB(skb)->nonce,
--					    keypair->receiving.counter.receive.counter);
-+					    keypair->receiving_counter.counter);
- 			goto next;
- 		}
- 
-@@ -512,8 +512,8 @@ void wg_packet_decrypt_worker(struct work_struct *work)
- 	struct sk_buff *skb;
- 
- 	while ((skb = ptr_ring_consume_bh(&queue->ring)) != NULL) {
--		enum packet_state state = likely(decrypt_packet(skb,
--				&PACKET_CB(skb)->keypair->receiving)) ?
-+		enum packet_state state =
-+			likely(decrypt_packet(skb, PACKET_CB(skb)->keypair)) ?
- 				PACKET_STATE_CRYPTED : PACKET_STATE_DEAD;
- 		wg_queue_enqueue_per_peer_napi(skb, state);
- 		if (need_resched())
-diff --git a/drivers/net/wireguard/selftest/counter.c b/drivers/net/wireguard/selftest/counter.c
-index f4fbb9072ed7..ec3c156bf91b 100644
---- a/drivers/net/wireguard/selftest/counter.c
-+++ b/drivers/net/wireguard/selftest/counter.c
-@@ -6,18 +6,24 @@
- #ifdef DEBUG
- bool __init wg_packet_counter_selftest(void)
- {
-+	struct noise_replay_counter *counter;
- 	unsigned int test_num = 0, i;
--	union noise_counter counter;
- 	bool success = true;
- 
--#define T_INIT do {                                               \
--		memset(&counter, 0, sizeof(union noise_counter)); \
--		spin_lock_init(&counter.receive.lock);            \
-+	counter = kmalloc(sizeof(*counter), GFP_KERNEL);
-+	if (unlikely(!counter)) {
-+		pr_err("nonce counter self-test malloc: FAIL\n");
-+		return false;
-+	}
-+
-+#define T_INIT do {                                    \
-+		memset(counter, 0, sizeof(*counter));  \
-+		spin_lock_init(&counter->lock);        \
- 	} while (0)
- #define T_LIM (COUNTER_WINDOW_SIZE + 1)
- #define T(n, v) do {                                                  \
- 		++test_num;                                           \
--		if (counter_validate(&counter, n) != (v)) {           \
-+		if (counter_validate(counter, n) != (v)) {            \
- 			pr_err("nonce counter self-test %u: FAIL\n",  \
- 			       test_num);                             \
- 			success = false;                              \
-@@ -99,6 +105,7 @@ bool __init wg_packet_counter_selftest(void)
- 
- 	if (success)
- 		pr_info("nonce counter self-tests: pass\n");
-+	kfree(counter);
- 	return success;
- }
- #endif
-diff --git a/drivers/net/wireguard/send.c b/drivers/net/wireguard/send.c
-index 0d64a7531f64..485d5d7a217b 100644
---- a/drivers/net/wireguard/send.c
-+++ b/drivers/net/wireguard/send.c
-@@ -129,7 +129,7 @@ static void keep_key_fresh(struct wg_peer *peer)
- 	rcu_read_lock_bh();
- 	keypair = rcu_dereference_bh(peer->keypairs.current_keypair);
- 	if (likely(keypair && READ_ONCE(keypair->sending.is_valid)) &&
--	    (unlikely(atomic64_read(&keypair->sending.counter.counter) >
-+	    (unlikely(atomic64_read(&keypair->sending_counter) >
- 		      REKEY_AFTER_MESSAGES) ||
- 	     (keypair->i_am_the_initiator &&
- 	      unlikely(wg_birthdate_has_expired(keypair->sending.birthdate,
-@@ -353,7 +353,6 @@ void wg_packet_purge_staged_packets(struct wg_peer *peer)
- 
- void wg_packet_send_staged_packets(struct wg_peer *peer)
- {
--	struct noise_symmetric_key *key;
- 	struct noise_keypair *keypair;
- 	struct sk_buff_head packets;
- 	struct sk_buff *skb;
-@@ -373,10 +372,9 @@ void wg_packet_send_staged_packets(struct wg_peer *peer)
- 	rcu_read_unlock_bh();
- 	if (unlikely(!keypair))
- 		goto out_nokey;
--	key = &keypair->sending;
--	if (unlikely(!READ_ONCE(key->is_valid)))
-+	if (unlikely(!READ_ONCE(keypair->sending.is_valid)))
- 		goto out_nokey;
--	if (unlikely(wg_birthdate_has_expired(key->birthdate,
-+	if (unlikely(wg_birthdate_has_expired(keypair->sending.birthdate,
- 					      REJECT_AFTER_TIME)))
- 		goto out_invalid;
- 
-@@ -391,7 +389,7 @@ void wg_packet_send_staged_packets(struct wg_peer *peer)
- 		 */
- 		PACKET_CB(skb)->ds = ip_tunnel_ecn_encap(0, ip_hdr(skb), skb);
- 		PACKET_CB(skb)->nonce =
--				atomic64_inc_return(&key->counter.counter) - 1;
-+				atomic64_inc_return(&keypair->sending_counter) - 1;
- 		if (unlikely(PACKET_CB(skb)->nonce >= REJECT_AFTER_MESSAGES))
- 			goto out_invalid;
- 	}
-@@ -403,7 +401,7 @@ void wg_packet_send_staged_packets(struct wg_peer *peer)
- 	return;
- 
- out_invalid:
--	WRITE_ONCE(key->is_valid, false);
-+	WRITE_ONCE(keypair->sending.is_valid, false);
- out_nokey:
- 	wg_noise_keypair_put(keypair, false);
- 
--- 
-2.25.1
-
+Jason
