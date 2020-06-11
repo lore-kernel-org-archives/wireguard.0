@@ -6,65 +6,70 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97B57C433E0
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jun 2020 07:39:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 737FCC433DF
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jun 2020 07:41:58 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 2C34A20853
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jun 2020 07:39:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 1406E21501
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jun 2020 07:41:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="NV38qx+F"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 2C34A20853
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	dkim=pass (2048-bit key) header.d=with.parts header.i=@with.parts header.b="OIZylgk/"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 1406E21501
+Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=with.parts
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c574eb4f;
-	Wed, 17 Jun 2020 07:21:22 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 9d2846ff
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 755e9e42;
+	Wed, 17 Jun 2020 07:23:26 +0000 (UTC)
+Received: from mail.with.parts (mail.with.parts [104.37.195.247])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b51aa105
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 17 Jun 2020 07:21:19 +0000 (UTC)
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 771e354d
- for <wireguard@lists.zx2c4.com>;
- Wed, 17 Jun 2020 07:21:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=/WjaiR1OLeISWE+nIJng3CxQ8f0=; b=NV38qx
- +FFOFh4tUnGj8+4K9Fds7CGLjy0s8OI+6e0/sa56wC/NWtWbo/rxbAJIcOAOm42g
- 9MWA1IMVM+6BoU8hCJF0mwhXdLN20T7hXhJFB05YGUDwly+u5ec1jDQcYIU5irB5
- 6NAGtIRg7oVU+xqNo2vOPmpxvBMNpvjSbAFwTwDiL2PuhdH2+8aqG28RUlGzOozZ
- Sya8CQcDU33RkR047891/A0NmSbwvwkvD1knMfb+Tc0nouydpsRQpgfk5TvUgmzZ
- ffRNmNfoSUgLnHYXQdjE7+pdE4OCqaVMT6Ms4HHkltVKYHzlbCnAjmXarJssC3SK
- tvHLIlRJgFxW9cJg==
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 7539836e
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Wed, 17 Jun 2020 07:21:19 +0000 (UTC)
-Received: by mail-il1-f178.google.com with SMTP id g3so1185646ilq.10
- for <wireguard@lists.zx2c4.com>; Wed, 17 Jun 2020 00:39:23 -0700 (PDT)
-X-Gm-Message-State: AOAM53397hFsAevZShCtqWqJVZxBFXW2ye3VcQQLorl+Ldae9niuuakx
- 2smn7bShxJ68D8Ffoemj8gkOX/0ce33JH/VUDVc=
-X-Google-Smtp-Source: ABdhPJxt1Ymhqcspyd1UlakjMFfCUpcl0oHejxw2nZ/59skuDQefMBg+mpC6mMYAx4dzYFCz36498iAZPklmthhnI1A=
-X-Received: by 2002:a05:6e02:1189:: with SMTP id
- y9mr7378850ili.38.1592379562630; 
- Wed, 17 Jun 2020 00:39:22 -0700 (PDT)
+ Thu, 11 Jun 2020 17:32:13 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon)
+ with adasauce@with.parts
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=with.parts; s=dkim;
+ t=1591897773;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=7ZWOTHGVfR08R/WTlI2+qHdFK55M4Twjr+f8YiG2k0k=;
+ b=OIZylgk//d5Fyge0EhdR+nakHwUjcJeiir1F4H2xAqBFC8RgzhnQVnfqQZWhgq38q58Lqf
+ KoPf4SQOQVGAf5LGAi82Svu3/5rG1oUsjobHhOmBK1iBBGw7wToTzCkcL5wOMla+lScbVV
+ NIOckVq3/YKwwM3PiF0JjdtEsoSxRsXb1CtGgoPVICzx/yiSW2+gZRfIsmT0nUj85kQEwJ
+ M/n+p9PGN4NIx/fM7BaRv4mxqWO8p+xuBX0fH+WZnym6lDC6sIL6b0EdJxPujKl3fH5iDY
+ QsyiCRA9GaYglzjrttpY/0T0tDP2kn/kH0flS7Rw8SJ6LSXOqYJKsmxtbsmsjg==
+From: "Ada Sauce" <adasauce@with.parts>
+To: wireguard@lists.zx2c4.com
+User-Agent: SOGoMail 4.1.1
 MIME-Version: 1.0
-References: <CABtXGiBwT8xqHUP-L818UeNEG+2RcR165Kkxc9f6sMSZKJRd2g@mail.gmail.com>
- <CABtXGiB17ofxts38zaWOzyWEwsgYyT5MDkuaZ6XEFN+PPWZb2g@mail.gmail.com>
- <CAHmME9qAP8PjyenubAS51cnvGmfXiWo_Gg7NQNecjMd2AJ==jQ@mail.gmail.com>
- <CABtXGiAbo+MEsSQBOZzWgEpjF9HaRnmwk2K3UV-FGBbkySq-vA@mail.gmail.com>
-In-Reply-To: <CABtXGiAbo+MEsSQBOZzWgEpjF9HaRnmwk2K3UV-FGBbkySq-vA@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 17 Jun 2020 01:39:11 -0600
-X-Gmail-Original-Message-ID: <CAHmME9qYRwi5aYGQFGJgJg8n7tD0+xqOGOEykiDB=heHzWuDPA@mail.gmail.com>
-Message-ID: <CAHmME9qYRwi5aYGQFGJgJg8n7tD0+xqOGOEykiDB=heHzWuDPA@mail.gmail.com>
-Subject: Re: Windows Client - UI improvement
-To: Phillip McMahon <phillip.mcmahon@gmail.com>,
- Alexander Neumann <an2048@googlemail.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+Date: Thu, 11 Jun 2020 14:49:32 -0300
+Subject: =?utf-8?q?Re=3A?= Ubuntu =?utf-8?q?18=2E04?= kernel 
+ =?utf-8?q?4=2E15=2E0-106-generic?= breaks 
+ =?utf-8?q?wireguard-1=2E0=2E20200520?=
+Message-ID: <44-5ee26e80-1-1574d920@168130073>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=with.parts;
+ s=dkim; t=1591897773;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=7ZWOTHGVfR08R/WTlI2+qHdFK55M4Twjr+f8YiG2k0k=;
+ b=gzbtDYgl0JohTRWUIfc3t476/gys3hfvbA1uNTO6RgAfzR+Ke3Kpvp/cPc8GhBzOaGg92u
+ KvYGu4gCnfOcK9QFJnipLrfVuEc9T37W24OIfhV4q8CdcF7xg+ekSiLfqhMg/0GCiT7HGy
+ PBtwSJNWs+PPHCIWby7X5p+/K2iJD1v1keLz/A2PEQEZuYU0QqcvOBoliu5AuzyvMbK1AE
+ UWEu8EX/X/WTdiBX45Rb0R2Tr1kay7glI59TtvJ0lubTxHqK0JK6oc0Y4o0FUtVmi8w9nN
+ Eqs5NwB9qwhKHulkpwNTYfbSFxxyET95plYA3hxMpKbf7fdee/29UWUBPeupFA==
+ARC-Seal: i=1; s=dkim; d=with.parts; t=1591897773; a=rsa-sha256; cv=none;
+ b=lVrBCAck+S8mplsjOSqrCIQ7Czbb0v55Zl1OA9DwzMYCoyWm6K+uzjZsANuYrEQ4d5IRdu
+ R31iUDx2On0icAKfluKrtu/j34aQpYL6p574nj0EZDX7jElD89RrbMXLlg7UmY6R6OMQ30
+ tsgOSBsX1DwOPimhlAF6cE0Pr8KCELDPIW6esiQSZGcn59RJRTnSz0nqsI31bVnEgF2+SL
+ crR7WJGL88KYFGnNURQPta3m8b5IVglDFbuoCk+rY8o87F4OcA7YiGabXXdEIeANVK5LSO
+ oc8a2AavgNEcJd8tXQNQMKkRD2KmuFxZmV+yjMasauCYF7b0F2op+Rifk/ZH9w==
+ARC-Authentication-Results: i=1; mail.with.parts;
+ auth=pass smtp.mailfrom=adasauce@with.parts
+X-Mailman-Approved-At: Wed, 17 Jun 2020 09:23:25 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -79,16 +84,32 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Wed, Jun 17, 2020 at 12:49 AM Phillip McMahon
-<phillip.mcmahon@gmail.com> wrote:
-> I'm no Picasso, but take a look at the attached.
->
-> Essentially pin the standard set of options to be always visible, and
-> make the conf area scrollable.
+I'm now also observing the same failure mode as Martin.
 
-Oohh ho ho, that is a really nice idea. I have no idea how to do that
-with standard win32 API menu calls, but maybe there's some way. I'll
-look around. I'm also CCing Alexander who is pretty savvy with that
-sort of thing too.
+However, the kernel is 4.15.0-101-generic.
 
-Jason
+```
+/var/lib/dkms/wireguard/1.0.20200611/build/socket.c: In function =E2=80=
+=98send6=E2=80=99:
+/var/lib/dkms/wireguard/1.0.20200611/build/socket.c:139:20: error: =E2=80=
+=98const struct ipv6=5Fstub=E2=80=99 has no member named =E2=80=98ipv6=5F=
+dst=5Flookup=5Fflow=E2=80=99; did you mean =E2=80=98ipv6=5Fdst=5Flookup=
+=E2=80=99?
+   dst =3D ipv6=5Fstub->ipv6=5Fdst=5Flookup=5Fflow(sock=5Fnet(sock), so=
+ck, &fl,
+                    ^~~~~~~~~~~~~~~~~~~~
+                    ipv6=5Fdst=5Flookup
+scripts/Makefile.build:330: recipe for target '/var/lib/dkms/wireguard/=
+1.0.20200611/build/socket.o' failed
+make[1]: *** [/var/lib/dkms/wireguard/1.0.20200611/build/socket.o] Erro=
+r 1
+make[1]: *** Waiting for unfinished jobs....
+Makefile:1577: recipe for target '=5Fmodule=5F/var/lib/dkms/wireguard/1=
+.0.20200611/build' failed
+make: *** [=5Fmodule=5F/var/lib/dkms/wireguard/1.0.20200611/build] Erro=
+r 2
+make: Leaving directory '/usr/src/linux-headers-4.15.0-101-generic'
+```
+
+Cheers, Ada
+
