@@ -2,47 +2,93 @@ Return-Path: <SRS0=Z38T=74=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 811D1C433DF
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 15 Jun 2020 11:02:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 151FEC433DF
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 15 Jun 2020 18:41:32 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id AB6082068E
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 15 Jun 2020 11:02:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org AB6082068E
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=lists.m7n.se
+	by mail.kernel.org (Postfix) with ESMTPS id 7F81E2071A
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 15 Jun 2020 18:41:31 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="iOSi6SGL"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 7F81E2071A
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=redhat.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9a50b686;
-	Mon, 15 Jun 2020 10:44:11 +0000 (UTC)
-Received: from bond.m7n.se (bond.m7n.se [2a00:1a28:1251:46:246:28:121:1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4c1e21b7
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6b812905;
+	Mon, 15 Jun 2020 18:22:42 +0000 (UTC)
+Received: from us-smtp-1.mimecast.com (us-smtp-2.mimecast.com [207.211.31.81])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1dd83d36
  for <wireguard@lists.zx2c4.com>;
- Mon, 15 Jun 2020 10:44:10 +0000 (UTC)
-Received: from [IPv6:2001:470:de6f:1310:2449:6024:90c1:5276] (unknown
- [IPv6:2001:470:de6f:1310:2449:6024:90c1:5276])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ Mon, 15 Jun 2020 18:22:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1592246431;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=3LdVapGy9WTsAkwpfNEzCTfQe3Pij8/lM5ySXZsHExs=;
+ b=iOSi6SGLarrDdScRiW6WivQV/JT2U717fvdPWQPXU86jormg+4QrlYH+6CoQ1bKBcmsQ/B
+ yOW7kRTd4z9oxidxHf9YTdSea+WYeCe3RRWhWGXTJyTXsYPXL8xck6iQxf6+FPb5lAnKhS
+ S1VVssQnte2GEikXLA9qk0Y7J4KU8jk=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-513-n3G_ZfGUONug8wkjJytxqA-1; Mon, 15 Jun 2020 14:40:12 -0400
+X-MC-Unique: n3G_ZfGUONug8wkjJytxqA-1
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.phx2.redhat.com
+ [10.5.11.14])
+ (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by bond.m7n.se (Postfix) with ESMTPSA id 2885E600A13C;
- Mon, 15 Jun 2020 11:01:57 +0000 (UTC)
-Subject: Re: Openwrt wg0 behaves not alike that on Fedora: why?
-To: Sergey Ivanov <seriv@cs.umd.edu>, wireguard@lists.zx2c4.com
-References: <CAM+N7v=DWfk-b8V0C5kjrTRPv-nTb5OuuVoSYMMNNATdK6yR=g@mail.gmail.com>
-From: mikma.wg@lists.m7n.se
-Message-ID: <433a642e-4bde-cd7b-021c-2dd8663d3d47@lists.m7n.se>
-Date: Mon, 15 Jun 2020 13:01:55 +0200
+ by mimecast-mx01.redhat.com (Postfix) with ESMTPS id E5F43184D144;
+ Mon, 15 Jun 2020 18:40:06 +0000 (UTC)
+Received: from llong.remote.csb (ovpn-117-41.rdu2.redhat.com [10.10.117.41])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 3972B5D9CC;
+ Mon, 15 Jun 2020 18:40:00 +0000 (UTC)
+Subject: Re: [PATCH 1/2] mm, treewide: Rename kzfree() to kfree_sensitive()
+To: Dan Carpenter <dan.carpenter@oracle.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+ David Howells <dhowells@redhat.com>,
+ Jarkko Sakkinen <jarkko.sakkinen@linux.intel.com>,
+ James Morris <jmorris@namei.org>, "Serge E. Hallyn" <serge@hallyn.com>,
+ Linus Torvalds <torvalds@linux-foundation.org>, Joe Perches
+ <joe@perches.com>, Matthew Wilcox <willy@infradead.org>,
+ David Rientjes <rientjes@google.com>, samba-technical@lists.samba.org,
+ virtualization@lists.linux-foundation.org, linux-mm@kvack.org,
+ linux-sctp@vger.kernel.org, target-devel@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com, devel@driverdev.osuosl.org,
+ linux-s390@vger.kernel.org, linux-scsi@vger.kernel.org, x86@kernel.org,
+ kasan-dev@googlegroups.com, cocci@systeme.lip6.fr,
+ linux-wpan@vger.kernel.org, intel-wired-lan@lists.osuosl.org,
+ linux-crypto@vger.kernel.org, linux-pm@vger.kernel.org,
+ ecryptfs@vger.kernel.org, linux-nfs@vger.kernel.org,
+ linux-fscrypt@vger.kernel.org, linux-mediatek@lists.infradead.org,
+ linux-amlogic@lists.infradead.org, linux-arm-kernel@lists.infradead.org,
+ linux-cifs@vger.kernel.org, netdev@vger.kernel.org,
+ linux-wireless@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-bluetooth@vger.kernel.org, linux-security-module@vger.kernel.org,
+ keyrings@vger.kernel.org, tipc-discussion@lists.sourceforge.net,
+ wireguard@lists.zx2c4.com, linux-ppp@vger.kernel.org,
+ linux-integrity@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+ linux-btrfs@vger.kernel.org
+References: <20200413211550.8307-1-longman@redhat.com>
+ <20200413211550.8307-2-longman@redhat.com> <20200615180753.GJ4151@kadam>
+From: Waiman Long <longman@redhat.com>
+Organization: Red Hat
+Message-ID: <9d084be2-29a3-7757-9386-20dbaeb5fc24@redhat.com>
+Date: Mon, 15 Jun 2020 14:39:59 -0400
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-In-Reply-To: <CAM+N7v=DWfk-b8V0C5kjrTRPv-nTb5OuuVoSYMMNNATdK6yR=g@mail.gmail.com>
+In-Reply-To: <20200615180753.GJ4151@kadam>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -57,32 +103,55 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On 2020-06-14 20:19, Sergey Ivanov wrote:
-> Hi,
-> I have a question about wg0 on OpenWRT not forwarding packets from one
-> client to another. I have a laptop at home in my home LAN, and a
-> computer at work in a very restricted LAN. They can not see one
-> another. I spent a lot of time trying to get them connected by adding
-> their wg0's IP addresses to the AllowedIPs on my home router running
-> OpenWRT. I saw pings from each of them successfully decrypted (I've
-> used ping with patterns) on the OpenWRT wg0, but they never got routed
-> further.
-> 
-> When I decided to try to move the same AllowedIPs from OpenWRT's wg0
-> to my desktop Fedora, it immediately worked. It looks like some sort
-> of setting like isolation of the clients, or hairpin mode which is
-> different on OpenWRT than on Fedora.
-> 
-> Can someone help and suggest what I should look at? I'd like to have
-> it working on the router which is all time on.
+On 6/15/20 2:07 PM, Dan Carpenter wrote:
+> On Mon, Apr 13, 2020 at 05:15:49PM -0400, Waiman Long wrote:
+>> diff --git a/mm/slab_common.c b/mm/slab_common.c
+>> index 23c7500eea7d..c08bc7eb20bd 100644
+>> --- a/mm/slab_common.c
+>> +++ b/mm/slab_common.c
+>> @@ -1707,17 +1707,17 @@ void *krealloc(const void *p, size_t new_size, gfp_t flags)
+>>   EXPORT_SYMBOL(krealloc);
+>>   
+>>   /**
+>> - * kzfree - like kfree but zero memory
+>> + * kfree_sensitive - Clear sensitive information in memory before freeing
+>>    * @p: object to free memory of
+>>    *
+>>    * The memory of the object @p points to is zeroed before freed.
+>> - * If @p is %NULL, kzfree() does nothing.
+>> + * If @p is %NULL, kfree_sensitive() does nothing.
+>>    *
+>>    * Note: this function zeroes the whole allocated buffer which can be a good
+>>    * deal bigger than the requested buffer size passed to kmalloc(). So be
+>>    * careful when using this function in performance sensitive code.
+>>    */
+>> -void kzfree(const void *p)
+>> +void kfree_sensitive(const void *p)
+>>   {
+>>   	size_t ks;
+>>   	void *mem = (void *)p;
+>> @@ -1725,10 +1725,10 @@ void kzfree(const void *p)
+>>   	if (unlikely(ZERO_OR_NULL_PTR(mem)))
+>>   		return;
+>>   	ks = ksize(mem);
+>> -	memset(mem, 0, ks);
+>> +	memzero_explicit(mem, ks);
+>          ^^^^^^^^^^^^^^^^^^^^^^^^^
+> This is an unrelated bug fix.  It really needs to be pulled into a
+> separate patch by itself and back ported to stable kernels.
+>
+>>   	kfree(mem);
+>>   }
+>> -EXPORT_SYMBOL(kzfree);
+>> +EXPORT_SYMBOL(kfree_sensitive);
+>>   
+>>   /**
+>>    * ksize - get the actual amount of memory allocated for a given object
+> regards,
+> dan carpenter
+>
+Thanks for the suggestion. I will break it out and post a version soon.
 
-You should look at the firewall in OpenWrt. It's probably dropping or 
-rejecting the packets. In particular look at the forward option of the 
-firewall zone assigned to wg0. From the OpenWrt Firewall - Zone Settings 
-GUI:
+Cheers,
+Longman
 
-     the forward option describes the policy for forwarded traffic 
-between different networks within the zone.
-
-Since WireGuard is a routed (and not bridged) VPN the above setting can 
-also control forwarding between hosts on the same network.
