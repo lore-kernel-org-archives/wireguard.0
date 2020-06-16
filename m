@@ -2,68 +2,101 @@ Return-Path: <SRS0=kaTt=75=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E2D4C433DF
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 16 Jun 2020 20:11:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E951C433E2
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 16 Jun 2020 23:02:00 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 10CBA208C3
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 16 Jun 2020 20:11:54 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="PU7H1Vyo"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 10CBA208C3
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id ED3C820B80
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 16 Jun 2020 23:01:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org ED3C820B80
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1edd4de6;
-	Tue, 16 Jun 2020 19:53:41 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f03500ff
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3c3f4a3f;
+	Tue, 16 Jun 2020 22:43:46 +0000 (UTC)
+Received: from mx2.suse.de (mx2.suse.de [195.135.220.15])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 96808b9d
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 16 Jun 2020 19:53:37 +0000 (UTC)
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fe10621f
- for <wireguard@lists.zx2c4.com>;
- Tue, 16 Jun 2020 19:53:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=nWXssKiSkkC/qyPrpBqHWDn2MHA=; b=PU7H1V
- yowrWW4XzdMEytjW7AKJcPxJFuxRgPypEJwHfT7ARx2TFZnY2/LiKlJss7m7wWND
- sRl1a/TAdLGK0aMxkIgn0sLpm8ZPttpfNzT8Eij9ov+UxfZMwmbR+ltlmgfI7QhK
- OBuXBr+3j0vXR7jJjk3XskPnrfoKUWXQk+ji9rc/OuOHW1CZ0Legjq3ceMbypUEX
- Tf5tvPW0iuxNesmasIMFN+13F4h1trw1yxYkbwOJEH2CEX4My17ntElM0WHc+uol
- x85GHwsJG3WSRXsP5JPq1XRDdt2n6IpCzLUPN4DhtsG4XYx9kZrhw6Bu3Cel4ZHE
- y6lRzw58CamSE/vQ==
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id db10b0dc
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Tue, 16 Jun 2020 19:53:36 +0000 (UTC)
-Received: by mail-il1-f177.google.com with SMTP id e11so20307377ilr.4
- for <wireguard@lists.zx2c4.com>; Tue, 16 Jun 2020 13:11:36 -0700 (PDT)
-X-Gm-Message-State: AOAM533LKBJwoEOyrATj00SWTE5OtcDd+comZZUldB2vtzCFwwa6d4uo
- 6qFm2avZADriSBMDf1D+mntaosUTAuZxedbd9iY=
-X-Google-Smtp-Source: ABdhPJyXnwMNKpkCfPgwr6LUlSb0/Lyc0WsYobVgyFCz/DG1r9Cbn8TWaxW4IZxvJGNcL39fXLYYCeiwqa9JS2U3pa8=
-X-Received: by 2002:a92:c852:: with SMTP id b18mr5080693ilq.224.1592338295827; 
- Tue, 16 Jun 2020 13:11:35 -0700 (PDT)
+ Tue, 16 Jun 2020 22:43:44 +0000 (UTC)
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay2.suse.de (unknown [195.135.220.254])
+ by mx2.suse.de (Postfix) with ESMTP id 6CB7AADA8;
+ Tue, 16 Jun 2020 23:01:45 +0000 (UTC)
+Received: by ds.suse.cz (Postfix, from userid 10065)
+ id 1AC8EDA7C3; Wed, 17 Jun 2020 01:01:30 +0200 (CEST)
+Date: Wed, 17 Jun 2020 01:01:30 +0200
+From: David Sterba <dsterba@suse.cz>
+To: Joe Perches <joe@perches.com>
+Cc: Waiman Long <longman@redhat.com>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ David Howells <dhowells@redhat.com>,
+ Jarkko Sakkinen <jarkko.sakkinen@linux.intel.com>,
+ James Morris <jmorris@namei.org>, "Serge E. Hallyn" <serge@hallyn.com>,
+ Linus Torvalds <torvalds@linux-foundation.org>,
+ Matthew Wilcox <willy@infradead.org>, David Rientjes <rientjes@google.com>,
+ Michal Hocko <mhocko@suse.com>, Johannes Weiner <hannes@cmpxchg.org>,
+ Dan Carpenter <dan.carpenter@oracle.com>, David Sterba <dsterba@suse.cz>,
+ "Jason A . Donenfeld" <Jason@zx2c4.com>, linux-mm@kvack.org,
+ keyrings@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-crypto@vger.kernel.org, linux-pm@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com,
+ linux-amlogic@lists.infradead.org,
+ linux-mediatek@lists.infradead.org, linuxppc-dev@lists.ozlabs.org,
+ virtualization@lists.linux-foundation.org, netdev@vger.kernel.org,
+ linux-ppp@vger.kernel.org, wireguard@lists.zx2c4.com,
+ linux-wireless@vger.kernel.org, devel@driverdev.osuosl.org,
+ linux-scsi@vger.kernel.org, target-devel@vger.kernel.org,
+ linux-btrfs@vger.kernel.org, linux-cifs@vger.kernel.org,
+ linux-fscrypt@vger.kernel.org, ecryptfs@vger.kernel.org,
+ kasan-dev@googlegroups.com, linux-bluetooth@vger.kernel.org,
+ linux-wpan@vger.kernel.org, linux-sctp@vger.kernel.org,
+ linux-nfs@vger.kernel.org, tipc-discussion@lists.sourceforge.net,
+ linux-security-module@vger.kernel.org, linux-integrity@vger.kernel.org
+Subject: Re: [PATCH v4 0/3] mm, treewide: Rename kzfree() to kfree_sensitive()
+Message-ID: <20200616230130.GJ27795@twin.jikos.cz>
+Mail-Followup-To: dsterba@suse.cz, Joe Perches <joe@perches.com>,
+ Waiman Long <longman@redhat.com>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ David Howells <dhowells@redhat.com>,
+ Jarkko Sakkinen <jarkko.sakkinen@linux.intel.com>,
+ James Morris <jmorris@namei.org>,
+ "Serge E. Hallyn" <serge@hallyn.com>,
+ Linus Torvalds <torvalds@linux-foundation.org>,
+ Matthew Wilcox <willy@infradead.org>,
+ David Rientjes <rientjes@google.com>,
+ Michal Hocko <mhocko@suse.com>,
+ Johannes Weiner <hannes@cmpxchg.org>,
+ Dan Carpenter <dan.carpenter@oracle.com>,
+ "Jason A . Donenfeld" <Jason@zx2c4.com>, linux-mm@kvack.org,
+ keyrings@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-crypto@vger.kernel.org, linux-pm@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com,
+ linux-amlogic@lists.infradead.org,
+ linux-mediatek@lists.infradead.org, linuxppc-dev@lists.ozlabs.org,
+ virtualization@lists.linux-foundation.org, netdev@vger.kernel.org,
+ linux-ppp@vger.kernel.org, wireguard@lists.zx2c4.com,
+ linux-wireless@vger.kernel.org, devel@driverdev.osuosl.org,
+ linux-scsi@vger.kernel.org, target-devel@vger.kernel.org,
+ linux-btrfs@vger.kernel.org, linux-cifs@vger.kernel.org,
+ linux-fscrypt@vger.kernel.org, ecryptfs@vger.kernel.org,
+ kasan-dev@googlegroups.com, linux-bluetooth@vger.kernel.org,
+ linux-wpan@vger.kernel.org, linux-sctp@vger.kernel.org,
+ linux-nfs@vger.kernel.org, tipc-discussion@lists.sourceforge.net,
+ linux-security-module@vger.kernel.org,
+ linux-integrity@vger.kernel.org
+References: <20200616015718.7812-1-longman@redhat.com>
+ <fe3b9a437be4aeab3bac68f04193cb6daaa5bee4.camel@perches.com>
 MIME-Version: 1.0
-References: <f27176e3fc6ede8d04682a9b504df177@rfraile.eu>
- <CAHmME9ovg+BBhVkKoNDd2LD-C9ChuBW5VXgj4n4V-Cp_-g0uiw@mail.gmail.com>
- <CAPqQDTAgsbLq3rdnXJHooxbMtWY5JADfTPUO_jo6MdxvTuGqrQ@mail.gmail.com>
- <CAHmME9qDF+-4Ct08oua4yGF8y1-__Was8ik7F56vmYmiE7YhVQ@mail.gmail.com>
- <aaddabc6-33bc-9947-134b-16d9ba542673@anatoli.ws>
-In-Reply-To: <aaddabc6-33bc-9947-134b-16d9ba542673@anatoli.ws>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 16 Jun 2020 14:11:24 -0600
-X-Gmail-Original-Message-ID: <CAHmME9rBykioLWjmL5YtmMyU7TfhopL405ubyVZm2bNhPggcAg@mail.gmail.com>
-Message-ID: <CAHmME9rBykioLWjmL5YtmMyU7TfhopL405ubyVZm2bNhPggcAg@mail.gmail.com>
-Subject: Re: Search Domain/DNS Suffix
-To: Anatoli <me@anatoli.ws>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <fe3b9a437be4aeab3bac68f04193cb6daaa5bee4.camel@perches.com>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -75,19 +108,26 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
+Reply-To: dsterba@suse.cz
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Tue, Jun 16, 2020 at 1:48 PM Anatoli <me@anatoli.ws> wrote:
->
-> Hi All,
->
-> > This is why I wrote in the release notes, "This new feature will be
-> > rolling out across our various GUI clients in the next week or so."
->
-> Does that also include the iOS client? More than a month has passed and
-> I know AppStore sometimes introduces a significant delay, so just wanted
-> to confirm if this is the case or the iOS client won't get this feature
-> soon?
+On Tue, Jun 16, 2020 at 11:53:50AM -0700, Joe Perches wrote:
+> On Mon, 2020-06-15 at 21:57 -0400, Waiman Long wrote:
+> >  v4:
+> >   - Break out the memzero_explicit() change as suggested by Dan Carpenter
+> >     so that it can be backported to stable.
+> >   - Drop the "crypto: Remove unnecessary memzero_explicit()" patch for
+> >     now as there can be a bit more discussion on what is best. It will be
+> >     introduced as a separate patch later on after this one is merged.
+> 
+> To this larger audience and last week without reply:
+> https://lore.kernel.org/lkml/573b3fbd5927c643920e1364230c296b23e7584d.camel@perches.com/
+> 
+> Are there _any_ fastpath uses of kfree or vfree?
 
-iOS/macOS will get the feature.
+I'd consider kfree performance critical for cases where it is called
+under locks. If possible the kfree is moved outside of the critical
+section, but we have rbtrees or lists that get deleted under locks and
+restructuring the code to do eg. splice and free it outside of the lock
+is not always possible.
