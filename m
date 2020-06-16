@@ -2,112 +2,54 @@ Return-Path: <SRS0=n59I=76=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.4 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,UNPARSEABLE_RELAY,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2B4DC433DF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 44A82C433E1
 	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jun 2020 08:03:03 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 59DAB2073E
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jun 2020 08:03:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 792032073E
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jun 2020 08:03:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="WvEeJyFm"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 59DAB2073E
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=oracle.com
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=tutanota.com header.i=@tutanota.com header.b="JM25+Xr2"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 792032073E
+Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=tutanota.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 836f1c91;
-	Wed, 17 Jun 2020 07:26:55 +0000 (UTC)
-Received: from userp2120.oracle.com (userp2120.oracle.com [156.151.31.85])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 940c133e
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e737dbe4;
+	Wed, 17 Jun 2020 07:26:54 +0000 (UTC)
+Received: from w1.tutanota.de (w1.tutanota.de [81.3.6.162])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7372e85d
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 16 Jun 2020 14:09:46 +0000 (UTC)
-Received: from pps.filterd (userp2120.oracle.com [127.0.0.1])
- by userp2120.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 05GELOZQ057447;
- Tue, 16 Jun 2020 14:26:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
- h=date : from : to : cc
- : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=corp-2020-01-29;
- bh=UepsmQC/DlQFZ6+UxfaNjoC9RmBOSxOKZ2W1AkmRQd8=;
- b=WvEeJyFmKL8HM4eLekulNPcOb25Sw7YajmFzrepd+1TsQe+PNe2o6it9fFwXghV3FsHv
- QdrFGubdjTeCc6kAWKTDSEoqMv3it70YtNHwfwRr3qSfXcxJVIBcqm6X7SGsetYqkHWx
- H7ruRtQFUVaMSNzeIOu+jnB9ul0qpA74I5CLeOsjFOWmZFGD+qOJ1lRDn7UN2JHhoajF
- f/9ecfn6gkdb7upj+cJi6IY4VZZEPZcXh9vvLg7+i5e+33eQa6zJ2K1MWUsjTMUYhONT
- ZCDycK9k04JLa7cAHqpl868otcTeoTLOGNWMgNDyB7bEprwRuViNVIe1IhKb+72uVtQ1 Lw== 
-Received: from userp3030.oracle.com (userp3030.oracle.com [156.151.31.80])
- by userp2120.oracle.com with ESMTP id 31p6e5y3y1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
- Tue, 16 Jun 2020 14:26:56 +0000
-Received: from pps.filterd (userp3030.oracle.com [127.0.0.1])
- by userp3030.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 05GEODoW027404;
- Tue, 16 Jun 2020 14:26:56 GMT
-Received: from aserv0122.oracle.com (aserv0122.oracle.com [141.146.126.236])
- by userp3030.oracle.com with ESMTP id 31p6s7kbhq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 16 Jun 2020 14:26:56 +0000
-Received: from abhmp0017.oracle.com (abhmp0017.oracle.com [141.146.116.23])
- by aserv0122.oracle.com (8.14.4/8.14.4) with ESMTP id 05GEQfNL026862;
- Tue, 16 Jun 2020 14:26:42 GMT
-Received: from kadam (/41.57.98.10) by default (Oracle Beehive Gateway v4.0)
- with ESMTP ; Tue, 16 Jun 2020 07:26:41 -0700
-Date: Tue, 16 Jun 2020 17:26:24 +0300
-From: Dan Carpenter <dan.carpenter@oracle.com>
-To: Waiman Long <longman@redhat.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
- David Howells <dhowells@redhat.com>,
- Jarkko Sakkinen <jarkko.sakkinen@linux.intel.com>,
- James Morris <jmorris@namei.org>, "Serge E. Hallyn" <serge@hallyn.com>,
- Linus Torvalds <torvalds@linux-foundation.org>,
- Joe Perches <joe@perches.com>, Matthew Wilcox <willy@infradead.org>,
- David Rientjes <rientjes@google.com>, Michal Hocko <mhocko@suse.com>,
- Johannes Weiner <hannes@cmpxchg.org>, David Sterba <dsterba@suse.cz>,
- "Jason A . Donenfeld" <Jason@zx2c4.com>, linux-mm@kvack.org,
- keyrings@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-crypto@vger.kernel.org, linux-pm@vger.kernel.org,
- linux-stm32@st-md-mailman.stormreply.com,
- linux-amlogic@lists.infradead.org, linux-mediatek@lists.infradead.org,
- linuxppc-dev@lists.ozlabs.org,
- virtualization@lists.linux-foundation.org, netdev@vger.kernel.org,
- linux-ppp@vger.kernel.org, wireguard@lists.zx2c4.com,
- linux-wireless@vger.kernel.org, devel@driverdev.osuosl.org,
- linux-scsi@vger.kernel.org, target-devel@vger.kernel.org,
- linux-btrfs@vger.kernel.org, linux-cifs@vger.kernel.org,
- linux-fscrypt@vger.kernel.org, ecryptfs@vger.kernel.org,
- kasan-dev@googlegroups.com, linux-bluetooth@vger.kernel.org,
- linux-wpan@vger.kernel.org, linux-sctp@vger.kernel.org,
- linux-nfs@vger.kernel.org, tipc-discussion@lists.sourceforge.net,
- linux-security-module@vger.kernel.org, linux-integrity@vger.kernel.org
-Subject: Re: [PATCH v4 2/3] mm, treewide: Rename kzfree() to kfree_sensitive()
-Message-ID: <20200616142624.GO4282@kadam>
-References: <20200616015718.7812-1-longman@redhat.com>
- <20200616015718.7812-3-longman@redhat.com>
+ Tue, 16 Jun 2020 09:58:26 +0000 (UTC)
+Received: from w3.tutanota.de (unknown [192.168.1.164])
+ by w1.tutanota.de (Postfix) with ESMTP id 38586FA03F4
+ for <wireguard@lists.zx2c4.com>; Tue, 16 Jun 2020 10:16:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1592302582; 
+ s=s1; d=tutanota.com;
+ h=From:From:To:To:Subject:Subject:Content-Description:Content-ID:Content-Type:Content-Type:Content-Transfer-Encoding:Content-Transfer-Encoding:Cc:Date:Date:In-Reply-To:In-Reply-To:MIME-Version:MIME-Version:Message-ID:Message-ID:Reply-To:References:References:Sender;
+ bh=218btthL0O18CMiltrZlCzvKv0ipLLzgZF+5pHqZ3W8=;
+ b=JM25+Xr2Zc5OS6Ehlh22rknGr9GWTvCF2voOc8eksogeIPRAyA73fqvD4n23Rg66
+ aYTL7GaLB77/92a/MMrqXIwmOaiMYPdpYsB10BMVcWv0uHPRccALO+P6jLjh6pLOPty
+ qyW81dctAlcWlXlBuAkcEN7cTqNMSI+TWbP1BucTe5MpnHfrujy1au48fmHTfs46OCx
+ S3859VtXbaKvhi1PiWsWWEhxAxafGXULayXOlM1qsu8qeh3lmyys/wkonJ1m85EUlKV
+ xP1UVkcGV1LL8db07hLQA+5tlhUi/vO26h3jaaJOuwTseLCieVxPnc98/dUpYqtmTBv
+ pjvnr1TmJg==
+Date: Tue, 16 Jun 2020 12:16:22 +0200 (CEST)
+From: kolokd <kolokd@tutanota.com>
+To: Wireguard <wireguard@lists.zx2c4.com>
+Message-ID: <M9wcIP0--3-2@tutanota.com>
+In-Reply-To: <M9rS5MC--3-2@tutanota.com>
+References: <M9rS5MC--3-2@tutanota.com>
+Subject: Re: why multiple call to fmt.Fprintln for printing warning
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200616015718.7812-3-longman@redhat.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9653
- signatures=668680
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
- suspectscore=0
- mlxlogscore=886 adultscore=0 phishscore=0 bulkscore=0 spamscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2004280000 definitions=main-2006160106
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9653
- signatures=668680
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0
- priorityscore=1501 adultscore=0
- mlxscore=0 phishscore=0 mlxlogscore=893 lowpriorityscore=0 clxscore=1011
- suspectscore=0 spamscore=0 bulkscore=0 malwarescore=0 impostorscore=0
- cotscore=-2147483648 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2004280000 definitions=main-2006160106
-X-Mailman-Approved-At: Wed, 17 Jun 2020 09:26:35 +0200
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Mailman-Approved-At: Wed, 17 Jun 2020 09:26:34 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -122,15 +64,11 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Last time you sent this we couldn't decide which tree it should go
-through.  Either the crypto tree or through Andrew seems like the right
-thing to me.
+reply
 
-Also the other issue is that it risks breaking things if people add
-new kzfree() instances while we are doing the transition.  Could you
-just add a "#define kzfree kfree_sensitive" so that things continue to
-compile and we can remove it in the next kernel release?
+Jun 15, 2020, 4:09 PM by kolokd@tutanota.com:
 
-regards,
-dan carpenter
-
+> https://git.zx2c4.com/wireguard-go/tree/main.go#n39
+>
+> why multiple call?
+>
