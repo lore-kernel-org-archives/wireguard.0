@@ -2,54 +2,65 @@ Return-Path: <SRS0=n59I=76=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 44A82C433E1
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jun 2020 08:03:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19C0FC433E2
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jun 2020 08:03:05 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 792032073E
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jun 2020 08:03:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id B269E2073E
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jun 2020 08:03:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=tutanota.com header.i=@tutanota.com header.b="JM25+Xr2"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 792032073E
-Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=tutanota.com
+	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="doIot533"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org B269E2073E
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e737dbe4;
-	Wed, 17 Jun 2020 07:26:54 +0000 (UTC)
-Received: from w1.tutanota.de (w1.tutanota.de [81.3.6.162])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7372e85d
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 58f201dd;
+	Wed, 17 Jun 2020 07:29:38 +0000 (UTC)
+Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ec970815
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 16 Jun 2020 09:58:26 +0000 (UTC)
-Received: from w3.tutanota.de (unknown [192.168.1.164])
- by w1.tutanota.de (Postfix) with ESMTP id 38586FA03F4
- for <wireguard@lists.zx2c4.com>; Tue, 16 Jun 2020 10:16:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1592302582; 
- s=s1; d=tutanota.com;
- h=From:From:To:To:Subject:Subject:Content-Description:Content-ID:Content-Type:Content-Type:Content-Transfer-Encoding:Content-Transfer-Encoding:Cc:Date:Date:In-Reply-To:In-Reply-To:MIME-Version:MIME-Version:Message-ID:Message-ID:Reply-To:References:References:Sender;
- bh=218btthL0O18CMiltrZlCzvKv0ipLLzgZF+5pHqZ3W8=;
- b=JM25+Xr2Zc5OS6Ehlh22rknGr9GWTvCF2voOc8eksogeIPRAyA73fqvD4n23Rg66
- aYTL7GaLB77/92a/MMrqXIwmOaiMYPdpYsB10BMVcWv0uHPRccALO+P6jLjh6pLOPty
- qyW81dctAlcWlXlBuAkcEN7cTqNMSI+TWbP1BucTe5MpnHfrujy1au48fmHTfs46OCx
- S3859VtXbaKvhi1PiWsWWEhxAxafGXULayXOlM1qsu8qeh3lmyys/wkonJ1m85EUlKV
- xP1UVkcGV1LL8db07hLQA+5tlhUi/vO26h3jaaJOuwTseLCieVxPnc98/dUpYqtmTBv
- pjvnr1TmJg==
-Date: Tue, 16 Jun 2020 12:16:22 +0200 (CEST)
-From: kolokd <kolokd@tutanota.com>
-To: Wireguard <wireguard@lists.zx2c4.com>
-Message-ID: <M9wcIP0--3-2@tutanota.com>
-In-Reply-To: <M9rS5MC--3-2@tutanota.com>
-References: <M9rS5MC--3-2@tutanota.com>
-Subject: Re: why multiple call to fmt.Fprintln for printing warning
+ Wed, 17 Jun 2020 07:29:36 +0000 (UTC)
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a5637476
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 17 Jun 2020 07:29:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :references:in-reply-to:from:date:message-id:subject:to:cc
+ :content-type; s=mail; bh=gK+xxWCztGSG3fuaC/lwMMM/Fqg=; b=doIot5
+ 33B5aXVJd5Q8lmp9r1Yl7LuYWRQT6YbNVBPVKxyl7EOTYSyQo1/YtE/TLq78so4D
+ a6wSOlLXaAik68Iu8z29q6VQFgVUSgOxTdXVmm2N40FZf0MLQSoF59DeKg3v0mAL
+ X8IpskTZ+3AP3DKHyaPZGS7Q+UBkYX+9oBFpGDci1qxWz5iWiTfsQxlJBjH/3t6S
+ Egu3SJOcEiC4JY8QFEL4scHnQ5DiRD742pj6ehEsZVQTqyA1VIGkHauD+64IJw7U
+ hOBR6evLUq9ROJHYnaFymhGxcmmILZovpucIUa87J4t585BN1IdrER/2Sce2jRFb
+ R0NQ0HUZyClpc0aA==
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 7ec9e951
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 17 Jun 2020 07:29:35 +0000 (UTC)
+Received: by mail-il1-f175.google.com with SMTP id l6so1252621ilo.2
+ for <wireguard@lists.zx2c4.com>; Wed, 17 Jun 2020 00:47:39 -0700 (PDT)
+X-Gm-Message-State: AOAM532Dp6D2i/QvwNRtCMB0dwt+BtCKQ1NvuCFZd4hnt4D/J1cTgqF4
+ btB5jXQvZjKg9O4xoADjTrRUsDHcz5URQb2idOE=
+X-Google-Smtp-Source: ABdhPJy24lbjYWDt4XZqSIkcI1VdQAMfrsC2MZ0t8KxKAVEpt6aX5rDSv2vLcJPsXZxKt28YF0U++Iq2NVjgJbNM/qU=
+X-Received: by 2002:a92:2515:: with SMTP id l21mr6773240ill.64.1592380058725; 
+ Wed, 17 Jun 2020 00:47:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Mailman-Approved-At: Wed, 17 Jun 2020 09:26:34 +0200
+References: <20200528184510.51675-1-contact@garrit.xyz>
+In-Reply-To: <20200528184510.51675-1-contact@garrit.xyz>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 17 Jun 2020 01:47:27 -0600
+X-Gmail-Original-Message-ID: <CAHmME9pt7itFsXQnU=9LeRrcT5Yh7gd97bghOA-5a-nCvo85UQ@mail.gmail.com>
+Message-ID: <CAHmME9pt7itFsXQnU=9LeRrcT5Yh7gd97bghOA-5a-nCvo85UQ@mail.gmail.com>
+Subject: Re: [PATCH] wg-quick: add restart command
+To: Garrit Franke <contact@garrit.xyz>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ Luis Ressel <aranea@aixah.de>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -64,11 +75,9 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-reply
+Thanks for the patchset. I'm wondering what the intended use case of
+this is. When do you need to set the interface down and then
+immediately up again? Most changes to the config file can be reflected
+with a more simple:
 
-Jun 15, 2020, 4:09 PM by kolokd@tutanota.com:
-
-> https://git.zx2c4.com/wireguard-go/tree/main.go#n39
->
-> why multiple call?
->
+wg syncconf wg0 <(wg-quick strip wg0)
