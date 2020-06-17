@@ -4,86 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C58B7C433DF
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jun 2020 08:31:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 98C4CC433E3
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jun 2020 08:33:17 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 4C2EF212CC
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jun 2020 08:31:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 4267B21475
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jun 2020 08:33:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ericlight.com header.i=@ericlight.com header.b="BOLf4GPJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tHs3/I3H"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 4C2EF212CC
-Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=ericlight.com
+	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="fA/G5B6F"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 4267B21475
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d0b80339;
-	Wed, 17 Jun 2020 08:13:06 +0000 (UTC)
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com
- [64.147.123.21])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 19842fcb
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3b1e2e5a;
+	Wed, 17 Jun 2020 08:14:46 +0000 (UTC)
+Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 605637fd
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 17 Jun 2020 08:13:03 +0000 (UTC)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id 948685F4;
- Wed, 17 Jun 2020 04:31:06 -0400 (EDT)
-Received: from imap7 ([10.202.2.57])
- by compute4.internal (MEProxy); Wed, 17 Jun 2020 04:31:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ericlight.com;
- h=mime-version:message-id:in-reply-to:references:date:from:to
- :cc:subject:content-type; s=fm3; bh=t72rFkrDJhyZI49nYs3HzuSTDlfO
- RHzLCKzXoSnxMgo=; b=BOLf4GPJ51Am7YdxY5EZ7i5CeDbOfW6zmgJtLzQElOlO
- TRva+D7mXxh7S5pzwV2Dvw9Ue7nR7aHl1HzCD7+5dp1NrtaveNSgqRDmcWR97e4c
- 4WwW+x4VQ51eQ5r71hunG3aTV69BHdkU5sFaRObG7MuFGpqbzdBcz452ea+BE1Nc
- msTclYKp+SSsCRi8gCEcYaGFH7Lx7TdYnfjKe2vcIRqlS+rDykEl0mqdnR5LwG2a
- KbP3omwJDjuF8oA3rP7rNXJ46a9onvd8NPiEsgEPukkEP8GS6wf+fz9WhCZ+Xzpn
- OUCqTH7jihHy04oH/h2PFA81LZD2hjG8hGxaKF5+OQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=t72rFk
- rDJhyZI49nYs3HzuSTDlfORHzLCKzXoSnxMgo=; b=tHs3/I3HUXnU/zYoSFLDkY
- 6E3ruMxLPEWB3RN6D/qAltnEWMY7v4V6nFze7hA3Ye2xYnoaJmrg0B/bJS9YX+MD
- 0BiFh4uPJE/45zllcrb0X7lhm1EvJ9/Pmlzpcs9+w4WkdAY8Wm57m0Qj0SVFbIrG
- UF53C0Ffvbz5j360tRjShHlZTDa1KFy1opjHhYne1ePMD4hxu4sniX4O1cgnjPm1
- ooTfLvTpjCFFqE/jBR308UYvmRkUZH+lC+YWfKIfwc10TRd5qBgJbg67ZXpb/HNN
- jTIoFe0FkdVvtYPrl/TAtmcmcspRwphaqLoQPY/NOht6pgL7aGnnojNE8Qi88HvA
- ==
-X-ME-Sender: <xms:ydTpXjRTbrm4cEm23TEEQbzvm_4VsQqnpxtQPvOBP9UXM03FanwGfQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrudejvddgtdeiucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdfgrhhi
- tgcunfhighhhthdfuceovghrihgtsegvrhhitghlihhghhhtrdgtohhmqeenucggtffrrg
- htthgvrhhnpeevudeutdevleeiveehheejleeludegffdvkeeghfehkeehfeevhfdthfdu
- leehueenucffohhmrghinhepshgvnhhtvghntgdrvghsnecuvehluhhsthgvrhfuihiivg
- eptdenucfrrghrrghmpehmrghilhhfrhhomhepvghrihgtsegvrhhitghlihhghhhtrdgt
- ohhm
-X-ME-Proxy: <xmx:ytTpXkxBoCaiVZpzXNjIMxA5wOWtgdSCh7gwpR4t2zZSf5pd5S9-dA>
- <xmx:ytTpXo1tVn6UUKkWgndML7SpWwRg_mES1IBiszmjS4th1Zth2KMHlw>
- <xmx:ytTpXjC_GPrt4r8OZM9_qJgaH7wWRH3qYQ4I9ZMQ6pDMHgOB8YaTAw>
- <xmx:ytTpXvsJ4PTx80eVO4Fg2lFZsgpuV0KNdZrV2j9IlJmu-wLA281ZKQ>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id E6535180091; Wed, 17 Jun 2020 04:31:05 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.3.0-dev0-529-g3ee424a-fm-20200611.001-g3ee424a1
-Mime-Version: 1.0
-Message-Id: <bbb39589-9b55-49fc-9723-8086909e0bcf@www.fastmail.com>
-In-Reply-To: <CAHmME9oiN4uUjKPqAAkvrVtzh-0LgfLcPd92xQgFJAqgtWtXsw@mail.gmail.com>
-References: <20200528184510.51675-1-contact@garrit.xyz>
- <CAHmME9pt7itFsXQnU=9LeRrcT5Yh7gd97bghOA-5a-nCvo85UQ@mail.gmail.com>
- <29f7ec55-3a4b-42df-91f8-5204179639f5@www.fastmail.com>
- <CAHmME9oiN4uUjKPqAAkvrVtzh-0LgfLcPd92xQgFJAqgtWtXsw@mail.gmail.com>
-Date: Wed, 17 Jun 2020 20:30:41 +1200
-From: "Eric Light" <eric@ericlight.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
-Subject: Re: [PATCH] wg-quick: add restart command
-Content-Type: text/plain
+ Wed, 17 Jun 2020 08:14:43 +0000 (UTC)
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id addad529
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 17 Jun 2020 08:14:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :references:in-reply-to:from:date:message-id:subject:to:cc
+ :content-type; s=mail; bh=4HSxEBErYi8DXrtAMrHN1acJz+0=; b=fA/G5B
+ 6FCL41bMDymSagnBlUIC8FHV0umsQ4UAZBcq57FCQKTdAylh0R8oq9K5dGSwLJS0
+ U4IyFFeVXVbo5MrSaOja5DHju8i5SuukkPPmw9Q4DlNWI6g6JLDFlBQArflgLxFx
+ ERYbQL15hiq2h5NAlShi+xDEZIxD7GNwfVWXV0uQ2/IubVZhmxEMaGkfRRhardji
+ 9rjoiTHeweimthmK/T6dANfye+MWnBnArJfEQX8ARgveX8BmiwEhpr4w6Fxwnns6
+ F1UXYPZDabVt2uCnRwo5RjbwUCYwjzs6AUa4EN2nyCPb4LejlbDkD3tAI5Bta9Zd
+ WUqr68WRyi8i4alg==
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 62dc5104
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 17 Jun 2020 08:14:43 +0000 (UTC)
+Received: by mail-il1-f169.google.com with SMTP id h3so1288211ilh.13
+ for <wireguard@lists.zx2c4.com>; Wed, 17 Jun 2020 01:32:47 -0700 (PDT)
+X-Gm-Message-State: AOAM530pijR1SgdlBjkxCZTB8xxRwSPM5tXdUidFBuGDrjFKiJANkmRu
+ pMsALl3XqcI1ou7cmk4g9yVYkyqAxg/NpWOR0yI=
+X-Google-Smtp-Source: ABdhPJyLrmcLkOUtfrl8OQv+dETZlm8fnXDRlfXhT8pCctwIV09PbVsYO6uSdkiYkPy9Z3tTBoSQjoBjRQ+SNEKxCwQ=
+X-Received: by 2002:a92:2515:: with SMTP id l21mr6915134ill.64.1592382766935; 
+ Wed, 17 Jun 2020 01:32:46 -0700 (PDT)
+MIME-Version: 1.0
+References: <1592249458.376720421@webmail.emailsrvr.com>
+In-Reply-To: <1592249458.376720421@webmail.emailsrvr.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 17 Jun 2020 02:32:36 -0600
+X-Gmail-Original-Message-ID: <CAHmME9oz5tt9u5S3V6JikvB3oGihXR5rcZTLvcjxNu4qnvWCOw@mail.gmail.com>
+Message-ID: <CAHmME9oz5tt9u5S3V6JikvB3oGihXR5rcZTLvcjxNu4qnvWCOw@mail.gmail.com>
+Subject: Re: Kernel Panic after updating Kernel
+To: "dxiri@xirihosting.com" <dxiri@xirihosting.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ ElRepo <contact@elrepo.org>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -98,21 +75,37 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Oh hey that sounds like a great way to do it.  Seems like it'd be simpler than this patch set as well, which is always good.
+Hi Diego,
 
-E
-
---------------------------------------------
-Q: Why is this email five sentences or less?
-A: http://five.sentenc.es
-
-On Wed, 17 Jun 2020, at 20:19, Jason A. Donenfeld wrote:
-> On Wed, Jun 17, 2020 at 2:17 AM Eric Light <eric@ericlight.com> wrote:
-> >
-> > As a purely Debian user, the 'service x restart' pattern is far more memorable than the syncconf method.  I know personal preference isn't a great reason to add a knob, but Garrit's method is probably going to be much more familiar to many users.
-> 
-> For users who want service management patterns like that, it'd
-> certainly be possible to map the wg-quick strip stuff to `systemctl
-> reload wg-quick@wg0.service`, for that purpose. Maybe that's something
-> we should consider?
+On Wed, Jun 17, 2020 at 2:01 AM dxiri@xirihosting.com
+<dxiri@xirihosting.com> wrote:
 >
+> Posted this on IRC but got no response, probably this will be a better place:
+>
+> I updated my Centos7 server yesterday and wireguard is causing a kernel panic, wanted to know if this is a known issue?
+>
+> Using kernel 3.10.0-1127.10.1.el7.x86_64
+>
+> I Tried with 2 different repos (elrepo and Copr repo for wireguard owned by jdoss) and I have the same issue.
+>
+> I took a screenshot of The kernel panic and uploaded at https://imgur.com/a/Ojxeor0
+>
+> Another interesting bit of info is that as long as I don't move traffic trough wg0 vnic, no panic happens. I can easily trigger the panic by just doing a ping to the other VPN endpoint and I am able to reproduce this every single time.
+>
+> # lsmod | grep -i wire
+> wireguard             200896  0
+> ip6_udp_tunnel         12755  1 wireguard
+> udp_tunnel             14423  1 wireguard
+>
+> Thanks for the help!
+> Diego
+
+Huh, that's funny -- I'm unable to reproduce the bug at all.
+
+Does running this script crash for you?
+https://salsa.debian.org/debian/wireguard-linux-compat/-/raw/debian/master/debian/tests/netns-mini
+
+If not, could you describe your setup more and maybe some repro steps for me?
+
+Thanks,
+Jason
