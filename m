@@ -6,61 +6,60 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76A3BC433E0
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jun 2020 08:20:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 497E5C433DF
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jun 2020 08:23:02 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 2064F20739
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jun 2020 08:20:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id DAD6D20C09
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jun 2020 08:23:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="W+VTYhqw"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 2064F20739
+	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="ZyEC2Cbs"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org DAD6D20C09
 Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1f87c0be;
-	Wed, 17 Jun 2020 08:01:52 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d88985f2;
+	Wed, 17 Jun 2020 08:04:03 +0000 (UTC)
 Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 21074b1e
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d30de021
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 17 Jun 2020 08:01:50 +0000 (UTC)
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 995b14f7
+ Wed, 17 Jun 2020 08:04:01 +0000 (UTC)
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6beeeb22
  for <wireguard@lists.zx2c4.com>;
- Wed, 17 Jun 2020 08:01:50 +0000 (UTC)
+ Wed, 17 Jun 2020 08:04:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
  :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=BIYFuOkoAs5tne8Rfol5B9bn4fw=; b=W+VTYh
- qwzfVGbja9N1srveYIvn8Q1kpfNYZrKN3y8UZiNhlCcgInd9UM2SrFDy0xCq0wxR
- WsyX3crYTw4oWjhduGsT5SM7BFQfHsR2WwvhboKTBkgo6hutZ7gRA/ZnzpSlwxxa
- xRVH7PwsH/p0JBV2fZZiRIzmCn1FQFLnufroO+y9s7DQPLyiEDXHaAO6lPMv7nhv
- ChxA1C0gzzHbvKta3INS6Qd3jCPh263jTiSPwCZFTONold8DgbNukrosWplcQQLb
- 37h6ArrySvfpLdCyeeB6J0UJFhAdtKuqnoPnS8gvDT+UZPrLwczydjGAfNfG/gxO
- TXWWFfU14Qv1yJsw==
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 563fc40d
+ :content-type; s=mail; bh=2Qeipfd2Qj962XgdQzWLga2ln/A=; b=ZyEC2C
+ bskgKI4bBfQ5zOQAVxeP2rvRRrWhSN1jhuEYbAns2wRl7dV5KH4OtrqosL0LebJ0
+ +XXmQmP5+EQ1HoFJHvo55mfXCCCtbIkW+NtDXBTRNCP4GHYV4mvWtF/EQbfS2daj
+ 0Y60Iham/esg9lqm6M/tG7urAVU10Di2Nr07kvdpq2vHdXYP6huZOTuqtIrJ8QBj
+ Fzo29x/ktpb4zhFXGPUUz88TFheoxCDlhnXoSJBfBri/QKmVhyzdt6rmDxFCOVnR
+ zqNmiGlh+H3J8cpwEvzv++Eh+vh1lviQir8DimlSyVfJYYd2DXeQFprVry2ZjV5x
+ B8B97YqeLz9IYu/w==
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id c3a756ed
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 17 Jun 2020 08:01:50 +0000 (UTC)
-Received: by mail-il1-f170.google.com with SMTP id i1so1271056ils.11
- for <wireguard@lists.zx2c4.com>; Wed, 17 Jun 2020 01:19:54 -0700 (PDT)
-X-Gm-Message-State: AOAM530hk8LgRWnMXFf7xeBtwczUc2ObwVdB3TYp09FsnYVikXBe82qz
- ypr7/u+CSsIM53APAGdqZ9Xq75xjTrXEjdz6psk=
-X-Google-Smtp-Source: ABdhPJz5M6EF6AQh84O57UxqAQRwzpIO6p18ewD46SVYWPGH26LYH2k3aa7f5wwsiXU1NbaF7ievggTi/zShTT1APY4=
-X-Received: by 2002:a92:cf4d:: with SMTP id c13mr7116802ilr.207.1592381993651; 
- Wed, 17 Jun 2020 01:19:53 -0700 (PDT)
+ Wed, 17 Jun 2020 08:03:59 +0000 (UTC)
+Received: by mail-io1-f46.google.com with SMTP id m81so1801617ioa.1
+ for <wireguard@lists.zx2c4.com>; Wed, 17 Jun 2020 01:22:03 -0700 (PDT)
+X-Gm-Message-State: AOAM533YqFZ/RfI3uBlMu+1Gm5VUt267wFAgZfMDk0xcn9A8TvUsK79R
+ SHK+7Aec6iBo0Enggh3Ip7BQuBy82QsiGoKwbr0=
+X-Google-Smtp-Source: ABdhPJzdKsyDSjeImi9fJfIwUQ1i/ZchIxx+q8vXrytJ7eNEyvW4lbgtBciB5ww5WvLXL6OA+gJv2C2EDOqFEDvcXag=
+X-Received: by 2002:a6b:5a07:: with SMTP id o7mr6888435iob.67.1592382123095;
+ Wed, 17 Jun 2020 01:22:03 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200528184510.51675-1-contact@garrit.xyz>
- <CAHmME9pt7itFsXQnU=9LeRrcT5Yh7gd97bghOA-5a-nCvo85UQ@mail.gmail.com>
- <29f7ec55-3a4b-42df-91f8-5204179639f5@www.fastmail.com>
-In-Reply-To: <29f7ec55-3a4b-42df-91f8-5204179639f5@www.fastmail.com>
+References: <b4e30054-3864-c9eb-86dd-b8236af24a5a@d-a-s.com>
+In-Reply-To: <b4e30054-3864-c9eb-86dd-b8236af24a5a@d-a-s.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 17 Jun 2020 02:19:42 -0600
-X-Gmail-Original-Message-ID: <CAHmME9oiN4uUjKPqAAkvrVtzh-0LgfLcPd92xQgFJAqgtWtXsw@mail.gmail.com>
-Message-ID: <CAHmME9oiN4uUjKPqAAkvrVtzh-0LgfLcPd92xQgFJAqgtWtXsw@mail.gmail.com>
-Subject: Re: [PATCH] wg-quick: add restart command
-To: Eric Light <eric@ericlight.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Date: Wed, 17 Jun 2020 02:21:52 -0600
+X-Gmail-Original-Message-ID: <CAHmME9ox8eSuvkEnaBSD9epdKGkjZxYWXAzwUjLkhwcTv+oaAw@mail.gmail.com>
+Message-ID: <CAHmME9ox8eSuvkEnaBSD9epdKGkjZxYWXAzwUjLkhwcTv+oaAw@mail.gmail.com>
+Subject: Re: Ubuntu 18.04 broken
+To: Doug Walker <dwalker@d-a-s.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ Andy Whitcroft <apw@canonical.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -76,11 +75,16 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Wed, Jun 17, 2020 at 2:17 AM Eric Light <eric@ericlight.com> wrote:
+On Wed, Jun 17, 2020 at 2:01 AM Doug Walker <dwalker@d-a-s.com> wrote:
+> I see that build issues have been reported, but after updating the
+> server I'm having the same issue with the release from
+> http://ppa.launchpad.net/wireguard/wireguard/ubuntu bionic main.
 >
-> As a purely Debian user, the 'service x restart' pattern is far more memorable than the syncconf method.  I know personal preference isn't a great reason to add a knob, but Garrit's method is probably going to be much more familiar to many users.
+> Any eta for an update of the ppa?
+>
+> I've had to switch everyone back to OpenVPN, so it may really be a moot
+> point.  Getting people to move back might be a non-starter.
 
-For users who want service management patterns like that, it'd
-certainly be possible to map the wg-quick strip stuff to `systemctl
-reload wg-quick@wg0.service`, for that purpose. Maybe that's something
-we should consider?
+See <https://lists.zx2c4.com/pipermail/wireguard/2020-June/005545.html>
+for an explanation. A longterm solution is coming very soon I hope,
+but the onus is on Canonical.
