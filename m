@@ -2,80 +2,76 @@ Return-Path: <SRS0=n59I=76=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 599ADC433DF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BFCA1C433E1
 	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jun 2020 23:49:56 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id F0B46207E8
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jun 2020 23:49:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org F0B46207E8
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=perches.com
+	by mail.kernel.org (Postfix) with ESMTPS id 6C4CE207E8
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Jun 2020 23:49:56 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="M9wdNA4X"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 6C4CE207E8
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 81f00353;
-	Wed, 17 Jun 2020 23:30:59 +0000 (UTC)
-Received: from smtprelay.hostedemail.com (smtprelay0104.hostedemail.com
- [216.40.44.104])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 84115c19
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0aef2634;
+	Wed, 17 Jun 2020 23:31:05 +0000 (UTC)
+Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a715c7b8
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 17 Jun 2020 23:30:57 +0000 (UTC)
-Received: from smtprelay.hostedemail.com (10.5.19.251.rfc1918.com
- [10.5.19.251])
- by smtpgrave05.hostedemail.com (Postfix) with ESMTP id 1219418018A14
- for <wireguard@lists.zx2c4.com>; Wed, 17 Jun 2020 23:12:44 +0000 (UTC)
-Received: from filter.hostedemail.com (clb03-v110.bra.tucows.net
- [216.40.38.60])
- by smtprelay07.hostedemail.com (Postfix) with ESMTP id C6BF8181D330D;
- Wed, 17 Jun 2020 23:12:13 +0000 (UTC)
-X-Session-Marker: 6A6F6540706572636865732E636F6D
-X-HE-Tag: anger66_3706ec726e0b
-X-Filterd-Recvd-Size: 3931
-Received: from XPS-9350.home (unknown [47.151.133.149])
- (Authenticated sender: joe@perches.com)
- by omf11.hostedemail.com (Postfix) with ESMTPA;
- Wed, 17 Jun 2020 23:12:07 +0000 (UTC)
-Message-ID: <38c5745d14cff75fe264a3bc61d19fd837baf7ad.camel@perches.com>
-Subject: Re: [PATCH v4 0/3] mm, treewide: Rename kzfree() to kfree_sensitive()
-From: Joe Perches <joe@perches.com>
-To: Denis Efremov <efremov@ispras.ru>, Waiman Long <longman@redhat.com>, 
- Andrew Morton <akpm@linux-foundation.org>, David Howells
- <dhowells@redhat.com>, Jarkko Sakkinen <jarkko.sakkinen@linux.intel.com>,
- James Morris <jmorris@namei.org>, "Serge E. Hallyn" <serge@hallyn.com>,
- Linus Torvalds <torvalds@linux-foundation.org>, Matthew Wilcox
- <willy@infradead.org>, David Rientjes <rientjes@google.com>
-Cc: Michal Hocko <mhocko@suse.com>, Johannes Weiner <hannes@cmpxchg.org>, 
- Dan Carpenter <dan.carpenter@oracle.com>, David Sterba <dsterba@suse.cz>,
- "Jason A . Donenfeld" <Jason@zx2c4.com>, linux-mm@kvack.org,
- keyrings@vger.kernel.org,  linux-kernel@vger.kernel.org,
- linux-crypto@vger.kernel.org,  linux-pm@vger.kernel.org,
- linux-stm32@st-md-mailman.stormreply.com, 
- linux-amlogic@lists.infradead.org, linux-mediatek@lists.infradead.org, 
- linuxppc-dev@lists.ozlabs.org, virtualization@lists.linux-foundation.org, 
- netdev@vger.kernel.org, linux-ppp@vger.kernel.org,
- wireguard@lists.zx2c4.com,  linux-wireless@vger.kernel.org,
- devel@driverdev.osuosl.org,  linux-scsi@vger.kernel.org,
- target-devel@vger.kernel.org,  linux-btrfs@vger.kernel.org,
- linux-cifs@vger.kernel.org,  linux-fscrypt@vger.kernel.org,
- ecryptfs@vger.kernel.org,  kasan-dev@googlegroups.com,
- linux-bluetooth@vger.kernel.org,  linux-wpan@vger.kernel.org,
- linux-sctp@vger.kernel.org,  linux-nfs@vger.kernel.org,
- tipc-discussion@lists.sourceforge.net, 
- linux-security-module@vger.kernel.org, linux-integrity@vger.kernel.org
-Date: Wed, 17 Jun 2020 16:12:06 -0700
-In-Reply-To: <17e4fede-bab0-d93c-6964-69decc889d7d@ispras.ru>
-References: <20200616015718.7812-1-longman@redhat.com>
- <fe3b9a437be4aeab3bac68f04193cb6daaa5bee4.camel@perches.com>
- <17e4fede-bab0-d93c-6964-69decc889d7d@ispras.ru>
-Content-Type: text/plain; charset="ISO-8859-1"
-User-Agent: Evolution 3.36.2-0ubuntu1 
+ Wed, 17 Jun 2020 23:31:02 +0000 (UTC)
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5f5ad6cf
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 17 Jun 2020 20:44:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :references:in-reply-to:from:date:message-id:subject:to:cc
+ :content-type:content-transfer-encoding; s=mail; bh=aicm+hcEimZg
+ 0nzDmYXZdX6kJoI=; b=M9wdNA4Xfpd5zlRA3/7qkW9fZQiP4PbGPn2zoymHvent
+ 1bUdNjjmi6wmtJOETmZ5Zj/Ep1+uZwMRIbYynrDLHaXsWRM/fJyOlBYK+g1C5Xoy
+ H9I7FzTtuYb20lYBWPSQL3zJ36GJkuPhdw91VXhJncKAGnSxysu5Er2sU8NKvIFp
+ CJzlu0ZZ2lzYpg6usNwzTl6RQa+Ry/teGsVe34u8veQFpogTzAFXVSmSZ9Dy0vT8
+ EmbU6iiVxAfbzC29+Q+R3PmWzYPCTeXiEGgNPw/4kyDaJfLCpFHCmAykUiS6Q0hP
+ KOtdSNfrjrHhke0dR6Ec7bTSvoew85PrQ04mPq/1OQ==
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id cdb45605
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 17 Jun 2020 20:44:20 +0000 (UTC)
+Received: by mail-io1-f46.google.com with SMTP id r77so4623927ior.3
+ for <wireguard@lists.zx2c4.com>; Wed, 17 Jun 2020 14:02:28 -0700 (PDT)
+X-Gm-Message-State: AOAM530RtK2JSW5YVokmT34MEXMxnOrxSqQMQoOX0ri9T57zHORVJJ2V
+ gSA3t+9daMAoe0GeBm6XKKITa8xtp1bYoPDa1G0=
+X-Google-Smtp-Source: ABdhPJxmt2zdRkvCe4UaIzxW8+0y12CMuqGK0BMVn5yknBQ+VXDYRGf073Yy08u92ieahjc4/nWx/EefS5cz3VCJhyw=
+X-Received: by 2002:a05:6602:809:: with SMTP id
+ z9mr1398403iow.79.1592427747718; 
+ Wed, 17 Jun 2020 14:02:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+References: <CALjTZvbpu1Lw0j9dtXZPmVS+i-OnopUo+zuqtoQLnABQGw-SqQ@mail.gmail.com>
+ <CAHmME9r3nPwmUoYYrj0PnUStd1ACSmdFAO4Qv2cZtmiLspOW1g@mail.gmail.com>
+ <CALjTZvbtjVwpyV+AMX4htssTbwTHV45mQeokUr952D_GbtFPvw@mail.gmail.com>
+ <CALjTZvZRerzWqaqhY2U=m44n5taLEsY99uEt2=ZNCe27=LYbLA@mail.gmail.com>
+ <CAHmME9otC1mOqR2tLB55BVQQpNPvCMUGa1E4jfMYYXNp6_31BA@mail.gmail.com>
+ <CALjTZvZ4wqZZ7_Fk-YHaxT9uuWnS4n9dLm4ZXSy1UM3riv+NuQ@mail.gmail.com>
+ <CAHmME9qWrBTCsBr7s6oLD0zuBMzZUD2OV3s-tgDwV0W7bb9Utw@mail.gmail.com>
+ <CAHmME9p51XvLEZ7QbDreEXym34S4XZZaRotAv4aRiT5D4Pz3XA@mail.gmail.com>
+ <20200617204510.GA396261@zx2c4.com> <20200617205443.GA403252@zx2c4.com>
+In-Reply-To: <20200617205443.GA403252@zx2c4.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 17 Jun 2020 15:02:16 -0600
+X-Gmail-Original-Message-ID: <CAHmME9qX2dVBf-23g1ASW1EFaX_4VLUH5QZBCM71NVfe6rtaxA@mail.gmail.com>
+Message-ID: <CAHmME9qX2dVBf-23g1ASW1EFaX_4VLUH5QZBCM71NVfe6rtaxA@mail.gmail.com>
+Subject: Any progress on R_ARM_THM_JUMP11 issues?
+To: linux-arm-kernel <linux-arm-kernel@lists.infradead.org>
+Cc: OpenWrt Development List <openwrt-devel@lists.openwrt.org>, 
+ WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ Rui Salvaterra <rsalvaterra@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -90,41 +86,146 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Thu, 2020-06-18 at 00:31 +0300, Denis Efremov wrote:
-> 
-> On 6/16/20 9:53 PM, Joe Perches wrote:
-> > On Mon, 2020-06-15 at 21:57 -0400, Waiman Long wrote:
-> > >  v4:
-> > >   - Break out the memzero_explicit() change as suggested by Dan Carpenter
-> > >     so that it can be backported to stable.
-> > >   - Drop the "crypto: Remove unnecessary memzero_explicit()" patch for
-> > >     now as there can be a bit more discussion on what is best. It will be
-> > >     introduced as a separate patch later on after this one is merged.
-> > 
-> > To this larger audience and last week without reply:
-> > https://lore.kernel.org/lkml/573b3fbd5927c643920e1364230c296b23e7584d.camel@perches.com/
-> > 
-> > Are there _any_ fastpath uses of kfree or vfree?
-> > 
-> > Many patches have been posted recently to fix mispairings
-> > of specific types of alloc and free functions.
-> 
-> I've prepared a coccinelle script to highlight these mispairings in a function
-> a couple of days ago: https://lkml.org/lkml/2020/6/5/953
-> I've listed all the fixes in the commit message. 
-> 
-> Not so many mispairings actually, and most of them are harmless like:
-> kmalloc(E) -> kvfree(E)
-> 
-> However, coccinelle script can't detect cross-functions mispairings, i.e.
-> allocation in one function, free in another funtion.
+Hi ARM folks,
 
-Hey Denis, thanks for those patches.
+Rui emailed the OpenWRT list and me about an issue he found when
+compiling WireGuard. He was compiling kernels with
+CONFIG_THUMB2_AVOID_R_ARM_THM_JUMP11=3Dn -- which I'm well aware the
+Kconfig advices people not to do -- and got the dreaded "unknown
+relocation 102" error when trying to load the module. I figured out
+that I could "fix" it in the WireGuard code by either doing some extra
+stuff after the tail call, so that the B becomes a BL, or by moving
+the destination of the tail call a bit closer to the callsite, so that
+THUMB2's jump distance is shorter and fits within the B's limitations,
+thereby not needing the "JUMP11" relocation.
 
-If possible, it's probably better to not require these pairings
-and use a single standard kfree/free function.
+Obviously reordering code for this reason isn't going to fly with
+upstream patches, nor would adding dummy code to avoid a tail call.
+And there's already CONFIG_THUMB2_AVOID_R_ARM_THM_JUMP11=3Dy which seems
+like the right global solution for this.
 
-Given the existing ifs in kfree in slab/slob/slub, it seems
-likely that adding a few more wouldn't have much impact.
+But I am wondering: has anybody heard about toolchain progress toward
+fixing this? Couldn't the compiler reorder functions itself more
+intelligently? Or avoid emitting the B in the case that the jump will
+be too far? Or does nobody care much about 32-bit ARM these days so
+it's just fallen by the wayside and
+CONFIG_THUMB2_AVOID_R_ARM_THM_JUMP11=3Dy is the best we've got? Or
+something else?
 
+Jason
 
+On Wed, Jun 17, 2020 at 2:54 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+>
+> On Wed, Jun 17, 2020 at 02:45:12PM -0600, Jason A. Donenfeld wrote:
+> > Looks like my explanation there wasn't 100% accurate, but it does seem
+> > like the issue occurs when gcc sees a clear tail call that it can
+> > optimize into a B instruction instead of a BL instruction.
+> >
+> > The below patch avoids that, and thus fixes your issue, using a pretty
+> > bad trick that's not really suitable for being committed anywhere, but
+> > it is perhaps leading us in the right direction:
+> >
+> > diff --git a/src/send.c b/src/send.c
+> > index 828b086a..4bb6911f 100644
+> > --- a/src/send.c
+> > +++ b/src/send.c
+> > @@ -221,6 +221,8 @@ static bool encrypt_packet(struct sk_buff *skb, str=
+uct noise_keypair *keypair,
+> >      simd_context);
+> >  }
+> >
+> > +volatile char dummy;
+> > +
+> >  void wg_packet_send_keepalive(struct wg_peer *peer)
+> >  {
+> >   struct sk_buff *skb;
+> > @@ -240,6 +242,7 @@ void wg_packet_send_keepalive(struct wg_peer *peer)
+> >   }
+> >
+> >   wg_packet_send_staged_packets(peer);
+> > + dummy =3D -1;
+> >  }
+> >
+> >  static void wg_packet_create_data_done(struct sk_buff *first,
+>
+> A better fix with more explanation: it looks like the issue doesn't have
+> to do with the multifile thing I pointed out before, but just that gcc
+> sees it can optimize the tail call into a B instruction, which seems to
+> have a =C2=B12KB range, whereas BL has a =C2=B14MB range. The solution is=
+ to just
+> move the location of the function in that file to be closer to the
+> destination of the tail call. I'm not a big fan of that and I'm slightly
+> worried davem will nack it because it makes backporting harder for a
+> fairly speculative gain (at least, I haven't yet taken measurements,
+> though I suppose I could). There's also the question of - why are we
+> doing goofy reordering things to the code to work around a toolchain
+> bug? Shouldn't we fix the toolchain? So, I'll keep thinking...
+>
+> diff --git a/src/send.c b/src/send.c
+> index 828b086a..f44aff8d 100644
+> --- a/src/send.c
+> +++ b/src/send.c
+> @@ -221,27 +221,6 @@ static bool encrypt_packet(struct sk_buff *skb, stru=
+ct noise_keypair *keypair,
+>                                                    simd_context);
+>  }
+>
+> -void wg_packet_send_keepalive(struct wg_peer *peer)
+> -{
+> -       struct sk_buff *skb;
+> -
+> -       if (skb_queue_empty(&peer->staged_packet_queue)) {
+> -               skb =3D alloc_skb(DATA_PACKET_HEAD_ROOM + MESSAGE_MINIMUM=
+_LENGTH,
+> -                               GFP_ATOMIC);
+> -               if (unlikely(!skb))
+> -                       return;
+> -               skb_reserve(skb, DATA_PACKET_HEAD_ROOM);
+> -               skb->dev =3D peer->device->dev;
+> -               PACKET_CB(skb)->mtu =3D skb->dev->mtu;
+> -               skb_queue_tail(&peer->staged_packet_queue, skb);
+> -               net_dbg_ratelimited("%s: Sending keepalive packet to peer=
+ %llu (%pISpfsc)\n",
+> -                                   peer->device->dev->name, peer->intern=
+al_id,
+> -                                   &peer->endpoint.addr);
+> -       }
+> -
+> -       wg_packet_send_staged_packets(peer);
+> -}
+> -
+>  static void wg_packet_create_data_done(struct sk_buff *first,
+>                                        struct wg_peer *peer)
+>  {
+> @@ -346,6 +325,27 @@ err:
+>         kfree_skb_list(first);
+>  }
+>
+> +void wg_packet_send_keepalive(struct wg_peer *peer)
+> +{
+> +       struct sk_buff *skb;
+> +
+> +       if (skb_queue_empty(&peer->staged_packet_queue)) {
+> +               skb =3D alloc_skb(DATA_PACKET_HEAD_ROOM + MESSAGE_MINIMUM=
+_LENGTH,
+> +                               GFP_ATOMIC);
+> +               if (unlikely(!skb))
+> +                       return;
+> +               skb_reserve(skb, DATA_PACKET_HEAD_ROOM);
+> +               skb->dev =3D peer->device->dev;
+> +               PACKET_CB(skb)->mtu =3D skb->dev->mtu;
+> +               skb_queue_tail(&peer->staged_packet_queue, skb);
+> +               net_dbg_ratelimited("%s: Sending keepalive packet to peer=
+ %llu (%pISpfsc)\n",
+> +                                   peer->device->dev->name, peer->intern=
+al_id,
+> +                                   &peer->endpoint.addr);
+> +       }
+> +
+> +       wg_packet_send_staged_packets(peer);
+> +}
+> +
+>  void wg_packet_purge_staged_packets(struct wg_peer *peer)
+>  {
+>         spin_lock_bh(&peer->staged_packet_queue.lock);
+>
