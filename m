@@ -6,67 +6,67 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D795EC433E0
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 18 Jun 2020 20:12:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A168C433DF
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 18 Jun 2020 23:51:01 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 6EC35208C3
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 18 Jun 2020 20:12:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id E606C2075E
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 18 Jun 2020 23:51:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="RCxZwDDZ"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 6EC35208C3
+	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="y9EHX/XH"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org E606C2075E
 Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6e24d49e;
-	Thu, 18 Jun 2020 19:53:28 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e3399d4c;
+	Thu, 18 Jun 2020 23:32:01 +0000 (UTC)
 Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id df97d0af
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 75a665e6
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 18 Jun 2020 19:53:26 +0000 (UTC)
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7989fdb7
+ Thu, 18 Jun 2020 23:31:58 +0000 (UTC)
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 433873ee
  for <wireguard@lists.zx2c4.com>;
- Thu, 18 Jun 2020 19:53:26 +0000 (UTC)
+ Thu, 18 Jun 2020 23:31:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
  :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type:content-transfer-encoding; s=mail; bh=V2RNGuP85JFv
- qy9wg/YAJWu0oA4=; b=RCxZwDDZDfHUipdmkgbLFouqC3esscWRIy/qu+yUEAdk
- a23AJqBASmdp+7FDn07POur8TedapNoC1ER7ez8pmRyZgyoTGXwNWzofv6ocQuWH
- 7X0ThI2rdef6LxuyZ0EcEj/aMZMABRKgCuh+uf3HIlvwRXmypV+r/oUA6cie+4gu
- 2A5OvG2D7x/FirySp+IZFDJoXUa/eh6wgl7pKZsUubfg3HKIDhaftz3I0kmNi0Dr
- QgSlDL4PIKavV6OA8m2mefLt2VIerq4DOpolt0nr+Fgq4nNVT9jqZYkge4/MDnIK
- LFZ2IUddDDQLOVHKTqKEUniEj7CmEPqGNpD3Hy68fA==
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id c56be4b3
+ :content-type; s=mail; bh=NcZtDTjzBfI4iB98dh7sHbema0s=; b=y9EHX/
+ XHCXEaI2tQP9detQg1UXJvMdd5LMnfxUlKYQC3t+R/PB6htTVNzFYqn5fcRA3kKE
+ v2igPuVFYx0QoY0D9j3Pw7Vzn9gXhfrFknO2cwGWLgdreIwx99JtU0cz6+pFSwvP
+ wzV5qEnwfY+poDjCGqUh/LNprH1q2Ob/2aP1SPideIOZUTffT5XBWZ+10QQq/2+q
+ 73tvnrRUijJetpLAzRBcBRrDOpNccAGKK+P6fBtXxfk7I1CwyuueMCpuZygpUeBN
+ 8SDAR2Go7mkIyW2Qar+iccu+o6fXQI6wFWFa1mvarZqGB+zlbdveHL6G7kIfhNII
+ nYyf4od7ODv17SWg==
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 67a4691d
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 18 Jun 2020 19:53:26 +0000 (UTC)
-Received: by mail-il1-f173.google.com with SMTP id e11so7160319ilr.4
- for <wireguard@lists.zx2c4.com>; Thu, 18 Jun 2020 13:11:42 -0700 (PDT)
-X-Gm-Message-State: AOAM531SkiRD69N0L9dVUDkkcu8XwMtZgfZr+ZkwVnSDKNz+Vpq6gVCh
- 7M6gHZpgRU+dLOOQjrD1P1l198zvwvvzwWbqxb8=
-X-Google-Smtp-Source: ABdhPJzh3WOJ5DnyrfWX5TnvqQjemPbJlXBh+9zzFpRM2/UvLsNpAHg/kEsdR1ro0efsUJBzLsHIb0DUn+luqZePvHg=
-X-Received: by 2002:a92:cf4d:: with SMTP id c13mr175957ilr.207.1592511101627; 
- Thu, 18 Jun 2020 13:11:41 -0700 (PDT)
+ Thu, 18 Jun 2020 23:31:57 +0000 (UTC)
+Received: by mail-io1-f46.google.com with SMTP id i25so9370391iog.0
+ for <wireguard@lists.zx2c4.com>; Thu, 18 Jun 2020 16:50:14 -0700 (PDT)
+X-Gm-Message-State: AOAM532y1FTgbHwduE77l3Ys/FjhuzeWPix81Z47x13O0vTZBq5Fk6Hb
+ dN7+XUATecGVctXiV9YTs2AFzUs4PiFbUw5JAOc=
+X-Google-Smtp-Source: ABdhPJyKOuhtQ7hrfmaPzESzGSUlMk2k96LQMLAzN9djbqz4zOUMzlkXNP7YJ7eCRqB0YkINEeWqXRdFc05rSAVipmo=
+X-Received: by 2002:a6b:4e1a:: with SMTP id c26mr1364962iob.25.1592524213619; 
+ Thu, 18 Jun 2020 16:50:13 -0700 (PDT)
 MIME-Version: 1.0
-References: <1592249458.376720421@webmail.emailsrvr.com>
- <CAHmME9oz5tt9u5S3V6JikvB3oGihXR5rcZTLvcjxNu4qnvWCOw@mail.gmail.com>
- <1592454690.22771558@webmail.emailsrvr.com>
- <CAHmME9qyk41mAvSiEePmZDrmmsBwOVSejg8q+oXV7nb=Jo1SAQ@mail.gmail.com>
- <1e6ef75d-3657-888a-51dd-0bedf8783904@sysnux.pf>
- <CAHmME9q_eTwyLJ7z4RP4nJqEz9yu+9VH3oXm0j9Zx_Br3cFWEw@mail.gmail.com>
- <613e8bab-4062-3cec-15ab-eeca325a5859@sysnux.pf>
-In-Reply-To: <613e8bab-4062-3cec-15ab-eeca325a5859@sysnux.pf>
+References: <CALjTZvbpu1Lw0j9dtXZPmVS+i-OnopUo+zuqtoQLnABQGw-SqQ@mail.gmail.com>
+ <CAHmME9r3nPwmUoYYrj0PnUStd1ACSmdFAO4Qv2cZtmiLspOW1g@mail.gmail.com>
+ <CALjTZvbtjVwpyV+AMX4htssTbwTHV45mQeokUr952D_GbtFPvw@mail.gmail.com>
+ <CALjTZvZRerzWqaqhY2U=m44n5taLEsY99uEt2=ZNCe27=LYbLA@mail.gmail.com>
+ <CAHmME9otC1mOqR2tLB55BVQQpNPvCMUGa1E4jfMYYXNp6_31BA@mail.gmail.com>
+ <CALjTZvZ4wqZZ7_Fk-YHaxT9uuWnS4n9dLm4ZXSy1UM3riv+NuQ@mail.gmail.com>
+ <CAHmME9qWrBTCsBr7s6oLD0zuBMzZUD2OV3s-tgDwV0W7bb9Utw@mail.gmail.com>
+In-Reply-To: <CAHmME9qWrBTCsBr7s6oLD0zuBMzZUD2OV3s-tgDwV0W7bb9Utw@mail.gmail.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 18 Jun 2020 14:11:30 -0600
-X-Gmail-Original-Message-ID: <CAHmME9rvJmH=fvxvVYi5n3QHzt2tNskqoghjWG++bJSsv8iu7g@mail.gmail.com>
-Message-ID: <CAHmME9rvJmH=fvxvVYi5n3QHzt2tNskqoghjWG++bJSsv8iu7g@mail.gmail.com>
-Subject: Re: Kernel Panic after updating Kernel
-To: Jean-Denis Girard <jd.girard@sysnux.pf>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Date: Thu, 18 Jun 2020 17:50:02 -0600
+X-Gmail-Original-Message-ID: <CAHmME9ozm7KiT3rkDpAF=1p_g7QU6-6fxncZB1S4tfm5v2DGqQ@mail.gmail.com>
+Message-ID: <CAHmME9ozm7KiT3rkDpAF=1p_g7QU6-6fxncZB1S4tfm5v2DGqQ@mail.gmail.com>
+Subject: Re: wireguard: unknown relocation: 102 [ARMv7 Thumb-2]
+To: Rui Salvaterra <rsalvaterra@gmail.com>
+Cc: OpenWrt Development List <openwrt-devel@lists.openwrt.org>, 
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -81,22 +81,14 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Thu, Jun 18, 2020 at 2:10 PM Jean-Denis Girard <jd.girard@sysnux.pf> wro=
-te:
->
-> Le 18/06/2020 =C3=A0 09:48, Jason A. Donenfeld a =C3=A9crit :
-> > I am unable to reproduce this issue with vmxnet3. However, as I noted
-> > earlier, your wireguard version seems old. Try updating everything at
-> > once, and then see.
->
-> yum updated to wireguard-dkms.noarch 1:1.0.20200611-1.el7
->
-> By the way, yum complains :
-> Error! Could not locate dkms.conf file.
-> File: /var/lib/dkms/wireguard/0.0.20181218/source/dkms.conf does not exis=
-t.
->
-> I cannot reboot now, I will let you know how it goes later.
+Hey Rui,
 
-Oh, in your case, you appear to be using the dkms package instead of
-the elrepo package.
+I fixed it! It turned out to be caused by -fvisibility=hidden undoing
+the effect of the binutils fix from a while back. Here's the patch
+that makes the problem go away:
+
+https://git.zx2c4.com/wireguard-linux-compat/commit/?id=178cdfffb99f2fd6fb4a5bfd2f9319461d93f53b
+
+This will be in the next compat release.
+
+Jason
