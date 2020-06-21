@@ -6,54 +6,58 @@ X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2ED2C433DF
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 21 Jun 2020 12:57:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F0D47C433DF
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 21 Jun 2020 19:19:12 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id D836B248E7
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 21 Jun 2020 12:57:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 3CF3025232
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 21 Jun 2020 19:19:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=53c70r.de header.i=@53c70r.de header.b="FwdCmrzq"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org D836B248E7
-Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=53c70r.de
+	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="fe+46SAd"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 3CF3025232
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ee9a6b27;
-	Sun, 21 Jun 2020 12:38:47 +0000 (UTC)
-Received: from 53c70r.de (53c70r.de [5.181.49.190])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 75f49ed5
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1e1591c2;
+	Sun, 21 Jun 2020 19:00:16 +0000 (UTC)
+Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ee841a8e
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 21 Jun 2020 12:38:44 +0000 (UTC)
-Date: Sun, 21 Jun 2020 12:57:19 +0000 (UTC)
-DKIM-Filter: OpenDKIM Filter v2.11.0 53c70r.de 666DB407EA07
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=53c70r.de;
- s=default; t=1592744240;
- bh=+YXDQnj4OJVb3tI8U5sVmzMgca9BEbNhJFciqVz2SW0=;
- h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
- b=FwdCmrzqd8+MEtpxmCWfwQmz+GEin8rNPL6JX0sfwi4SYVV9QMHzbvBdfj5wdtP2u
- vCLKYqloM1d6+9e08jmKbc5YHGxu/TKgtwBWf2R2c4H5fBUzFlBR1ZA6DumhoeGJFC
- LtzLwgtb+6ypUpG6UW6AXE5j5+1zy15HFw9vMRs8=
-From: Silvan Nagl <mail@53c70r.de>
-To: Jean-Dens Girard <jd.girard@sysnux.pf>
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>
-Message-ID: <66f204e5-19de-4ad8-adab-019700fa2c4d@53c70r.de>
-In-Reply-To: <975a5f77-5c7e-dcfe-6bbe-d4b6e2c5e379@53c70r.de>
-References: <1592249458.376720421@webmail.emailsrvr.com>
- <CAHmME9oz5tt9u5S3V6JikvB3oGihXR5rcZTLvcjxNu4qnvWCOw@mail.gmail.com>
- <1592454690.22771558@webmail.emailsrvr.com>
- <CAHmME9qyk41mAvSiEePmZDrmmsBwOVSejg8q+oXV7nb=Jo1SAQ@mail.gmail.com>
- <1e6ef75d-3657-888a-51dd-0bedf8783904@sysnux.pf>
- <CAHmME9q_eTwyLJ7z4RP4nJqEz9yu+9VH3oXm0j9Zx_Br3cFWEw@mail.gmail.com>
- <613e8bab-4062-3cec-15ab-eeca325a5859@sysnux.pf>
- <CAHmME9rvJmH=fvxvVYi5n3QHzt2tNskqoghjWG++bJSsv8iu7g@mail.gmail.com>
- <975a5f77-5c7e-dcfe-6bbe-d4b6e2c5e379@53c70r.de>
-Subject: Re: Kernel Panic after updating Kernel
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Correlation-ID: <66f204e5-19de-4ad8-adab-019700fa2c4d@53c70r.de>
+ Sun, 21 Jun 2020 19:00:14 +0000 (UTC)
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 077e5e55
+ for <wireguard@lists.zx2c4.com>;
+ Sun, 21 Jun 2020 19:00:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :from:date:message-id:subject:to:cc:content-type; s=mail; bh=yWU
+ MKtt9DnMG9F8JfrwI+JNDMnQ=; b=fe+46SAdieFxyfBc7+E+n0RdBz8mQZtb7eZ
+ 6e5Dm/PmSo88V3VAUIOKfmFCRzpEdcZTzUzueWTJVQLQ5/hRbHtLbD4gslZ43TrH
+ 8ba6ie0lb1zsQheM8O2kO113VLCYCwsf7ZhO0coDZk5eVqZzH0L7K4tvTiVtNYta
+ iYHc5+vPZ7YUWpc7ylMgYAMRdmYjfGy65YgkckIo6usIEwJikIDuLo+Ged+CsEwy
+ pe0Ev7MdkqnDbjWECMzYjKb5E3PPEwW+Xqyz0h0wf0yNn0OyhixpVPRYesqJSbVF
+ 7kyma7TrbJQCmcAZY4XzlY7TPMNNAt3VucYGUU0zd10yvBV9QnA==
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 80877cb0
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Sun, 21 Jun 2020 19:00:14 +0000 (UTC)
+Received: by mail-il1-f170.google.com with SMTP id l6so14120574ilo.2
+ for <wireguard@lists.zx2c4.com>; Sun, 21 Jun 2020 12:18:53 -0700 (PDT)
+X-Gm-Message-State: AOAM5302WJC9kbF7Z4F5Q3eQo4UWg2zL0tNOUWcDqaPiZR95mYKPvk+k
+ 2tzEAsUsuT2M0VFfttPkzfXDDrnvqolZV4gLhtY=
+X-Google-Smtp-Source: ABdhPJyF16qHfR4/DWF9IoHINmaPbrg9LiqExhIeF4wHbeWP9bwUYrExywCm+9QnfChTj8zaAWJeRVl2cynSBdVnYq4=
+X-Received: by 2002:a05:6e02:1189:: with SMTP id
+ y9mr14213970ili.38.1592767132536; 
+ Sun, 21 Jun 2020 12:18:52 -0700 (PDT)
+MIME-Version: 1.0
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Sun, 21 Jun 2020 13:18:41 -0600
+X-Gmail-Original-Message-ID: <CAHmME9pAwNty0q_+WD8RebgfdMdaFbh-OsKXaAb7wdhKBR+6Sg@mail.gmail.com>
+Message-ID: <CAHmME9pAwNty0q_+WD8RebgfdMdaFbh-OsKXaAb7wdhKBR+6Sg@mail.gmail.com>
+Subject: [ANNOUNCE] WireGuard Merged Into OpenBSD
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Cc: Matt Dunwoodie <ncon@noconroy.net>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -68,34 +72,22 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-For me it was.
-Elrepo work's fine for me I had the same issue before when I used the old s=
-eparate dkms build from the WG repo.
+Hey everyone,
 
-21 Jun 2020 14:45:44 Jean-Dens Girard <jd.girard@sysnux.pf>:
+I'm happy to announce that WireGuard has been merged into the OpenBSD
+kernel, with integration into userland as well.
 
-> Le 18/06/2020 =C3=A0 10:11, Jason A. Donenfeld a =C3=A9crit=C2=A0:
->> On Thu, Jun 18, 2020 at 2:10 PM Jean-Denis Girard <jd.girard@sysnux.pf> =
-wrote:
->>> I cannot reboot now, I will let you know how it goes later.
->=20
-> Reboot with newer kernel and latest wireguard=C2=A0 still hangs.
->=20
->> Oh, in your case, you appear to be using the dkms package instead of
->> the elrepo package.
->=20
-> Is that a problem?
->=20
-> Thanks,
->=20
-> --=20
->=20
-> Jean-Denis Girard
->=20
-> SysNux=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Syst=C3=A8mes=C2=A0=C2=A0 Linux=
-=C2=A0=C2=A0 en=C2=A0=C2=A0 Polyn=C3=A9sie=C2=A0 fran=C3=A7aise
->=20
-> https://www.sysnux.pf/=C2=A0=C2=A0 T=C3=A9l: +689 40.50.10.40 / GSM: +689=
- 87.797.527
->=20
+https://marc.info/?l=openbsd-cvs&m=159274150512676&w=2
+
+Matt Dunwoodie and I have been working on this for quite some time
+now, with at some point Matt even showing up at my door in Paris to
+push the effort further. This marks the culmination of quite a bit of
+effort, and certainly a multi-year project for Matt. I should also
+note that the upstreaming process to OpenBSD was extremely pleasant.
+We did three patch revisions, with useful feedback on each one and a
+very supportive community.
+
+I imagine that this work will ship with OpenBSD 6.8.
+
+Enjoy!
+Jason
