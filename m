@@ -1,82 +1,54 @@
-Return-Path: <SRS0=kilO=AD=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=CtsK=AE=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.3 required=3.0 tests=DKIM_ADSP_CUSTOM_MED,
-	DKIM_INVALID,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Level: *
+X-Spam-Status: No, score=1.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MSGID_RANDY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C51FC433E0
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 22 Jun 2020 13:15:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BC2DC433DF
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 23 Jun 2020 22:16:15 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id AF9DF2068F
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 22 Jun 2020 13:15:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id A687520724
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 23 Jun 2020 22:16:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iggVLvI2"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org AF9DF2068F
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="r0HOpTxV"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A687520724
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 61e6f406;
-	Mon, 22 Jun 2020 12:56:51 +0000 (UTC)
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com
- [2a00:1450:4864:20::430])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 8f80ba5a
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 95972dc4;
+	Tue, 23 Jun 2020 21:57:01 +0000 (UTC)
+Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 0aa7aaa9
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 22 Jun 2020 12:56:47 +0000 (UTC)
-Received: by mail-wr1-x430.google.com with SMTP id q5so4242674wru.6
- for <wireguard@lists.zx2c4.com>; Mon, 22 Jun 2020 06:15:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=subject:to:references:from:message-id:date:user-agent:mime-version
- :in-reply-to:content-transfer-encoding:content-language;
- bh=5yVT4cpyKt5o2dtMv240iilWy/raCW97ukxK5g70JUQ=;
- b=iggVLvI2lB4mRRNE4IK7iod4IeNO8fbGaMImQ+DD4y1pRuhQ70jcOvcNgNsGGQdxGY
- 7C5vT+fWu3YfLvU+Qw+GNxSqzXq52ceqDFom1P5azIy1YZmqq7EW0OM0BQOyUdTqUZvV
- liYRX15j9F8CFPFLW6URviZXNtuqAYlRybGGyOW2SGCreP6gBtTtTh1kP/M9XGPdh+DR
- 7eWpixkQmObI6SZ1kBmU4TC5JEvhstdNoLNzHtMH0A60jgdB03EtrB37dSHVreQfITES
- meLpJmB8PGm9S5bqdG9byjy9NKz/Iih6njM9Q29s7uAd+p9dhISbamGcWYIOjwaIc91Z
- 4Tog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-transfer-encoding
- :content-language;
- bh=5yVT4cpyKt5o2dtMv240iilWy/raCW97ukxK5g70JUQ=;
- b=GgI0knZT69MjBjHqMN0GPAeEsYgcTZlYcfx2KN7BK3cmwN+gqx1pY490nLidO2QyGY
- pZqp5Mlsuw+yrY0/mXHgzZMdDiIUa9t93bBtto7v3B1mE7qNeaLYysLyKbb0/CriQ+nR
- D8qd+Sranm/d7avU78BcltiENHhn1PXoev5QieqXxzrpdkn+I2DCM43lSAboz6GDdbky
- yTqE2NmXxZ9HqRSVzfqLHHXsolZNRyqn32O+NC9i0NNgazaXM4n05U+ullkoDdMm13CC
- IFq2kA8dpDENN8BfZOtQhr9F02pz5jgXnWTBehwyBVlgoDoapm4KL3ndk9wD42JT8uzr
- KkqA==
-X-Gm-Message-State: AOAM530Mcz8TP2MoRVOZV2xGmG0eWhGt6W72+BqKaiJ6SDasRw6zk8uA
- ffl8Wb6qvL9V1C0757wO8a4B577h
-X-Google-Smtp-Source: ABdhPJyajpd9RgnjD8iONT8paKTWkpWZWxBLVqqr/6UnnfOvkNPwLXW0YO3gHURExVSsGv4otj25og==
-X-Received: by 2002:a5d:4591:: with SMTP id p17mr10587675wrq.343.1592831729761; 
- Mon, 22 Jun 2020 06:15:29 -0700 (PDT)
-Received: from [192.168.25.202] ([2.25.87.121])
- by smtp.gmail.com with ESMTPSA id v24sm20518522wrd.92.2020.06.22.06.15.28
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Jun 2020 06:15:29 -0700 (PDT)
-Subject: Re: Wireguard over VPN broken on windows
-To: wireguard@lists.zx2c4.com
-References: <CAN5wt5r_qoLFrZM6T2CJ6UhQpcqFTqf5AHUugpe0rN5LuL3YLQ@mail.gmail.com>
- <CAHmME9pfyKr62RrAmV81NKs938CmQbqRtcab=yJzKw9V8iMc1A@mail.gmail.com>
- <CAN5wt5q4iW07HcJE2GGWuEAwtiPKOUarNTiDGWyHJ6kOCNWA1g@mail.gmail.com>
-From: Peter Whisker <peter.whisker@gmail.com>
-Message-ID: <130dfa72-527b-0a51-0465-47956fb56c56@gmail.com>
-Date: Mon, 22 Jun 2020 14:15:28 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.9.0
+ Tue, 23 Jun 2020 21:56:58 +0000 (UTC)
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8ebe973f
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 23 Jun 2020 21:56:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=date:to:from
+ :subject:mime-version:content-type; s=mail; bh=NWUsQNMm9T1a2uQG0
+ gldi3FrfDI=; b=r0HOpTxVVxuG2ujQrkA2Z1dAipd/pLhMNeMTAn7RsF3zwd3sa
+ 72JdI/RuYCxNRcSKFjdakIZjuTDT3Qlw3HWoqfKEODqlCgJdh0y/JV/8NmjV1pSr
+ syKOY91uiT3bq0AxHubvBppe5YbGi9RDVADdx+4YBgqSBbrX7U/4+7WHehNHd20l
+ Na2Lc7B/GyFkvOJcwpGBR4iHw8s5bdzn2teoZL+/gIx/LUrI6ufrUHUYcG75q1Vy
+ byH1yvb+DYQBILTeOyhWc66laIrTxecYiTdNs80rmuTkWM/gqsrJqgmC3WA+9nWI
+ kESiXxPeOHkLLGtysPaqNBO4nMar+hCU4KCFg==
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 6c611d60
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 23 Jun 2020 21:56:57 +0000 (UTC)
+Date: Tue, 23 Jun 2020 16:15:52 -0600
+To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: [ANNOUNCE] wireguard-linux-compat v1.0.20200623 released
 MIME-Version: 1.0
-In-Reply-To: <CAN5wt5q4iW07HcJE2GGWuEAwtiPKOUarNTiDGWyHJ6kOCNWA1g@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
+Content-Type: text/plain; charset=UTF-8
+Message-ID: <6cd7bfefd767fdf2@mail.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -91,42 +63,77 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-This has been a problem for me which I have only managed to overcome by 
-using the Tunsafe client to connect over the VPN to my Linux Wireguard 
-server.
+Hello,
 
-I need to connect Wireguard over a PulseSecure SSLVPN. Wireguard 
-attempts to connect but then gives up claiming to have received no 
-handshakes. Tunsafe works fine with the identical configuration file. So 
-it's not an insuperable problem!
+A new version, v1.0.20200623, of the backported WireGuard kernel module for
+3.10 <= Linux <= 5.5.y has been tagged in the git repository.
 
-Thanks
+== Changes ==
 
-Peter
+  * compat: drop centos 8.1 support as 8.2 is now out
+  
+  Of note, as well, is that we now have both RHEL7 and RHEL8 in our CI at
+  <https://www.wireguard.com/build-status/>.
+  
+  * Kbuild: remove -fvisibility=hidden from cflags
+  
+  This fixes an issue when compiling wireguard as a module for ARM kernels in
+  THUMB2 mode without the JUMP11 workaround.
+  
+  * noise: do not assign initiation time in if condition
+  
+  Style fix.
+  
+  * device: avoid circular netns references
+  
+  Fixes a circular reference issue with network namespaces.
+  
+  * netns: workaround bad 5.2.y backport
+  
+  This works around a back backport in the 5.2.y series.
 
-On 22/06/2020 11:56, Christopher Ng wrote:
-> it worked for me on a local build, it never worked in any released version.
->
-> i've been playing around with a local build, if i comment out the
-> device.BindSocketToInterface calls in defaulltroutemonitor.go,
-> everything seems to work fine.  in a single config i have one peer on
-> an OpenVPN interface, and one on the default interface.  both are
-> connected, i can ping both peers over the wg interface.  why must the
-> socket be bound to a particular interface?  or perhaps i don't
-> understand what those calls do.
->
->
->
-> On Mon, 22 Jun 2020 at 09:23, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
->>> 59e556f on wireguard-go breaks
->> 59e556f fixes a regression, which never shipped in any release. There
->> is nothing here that "once worked and now doesn't." What you have in
->> mind has never worked.
->>
->> We're currently using IP_UNICAST_IF on the wireguard socket, attaching
->> it to the default route. I'd much rather have something like Linux's
->> policy routing and suppress_prefixlen, but I don't know how to do that
->> (yet?) on Windows. If you have any ideas or want to do some research,
->> I'd certainly be very interested.
+This release contains commits from: Jason A. Donenfeld and Frank 
+Werner-Krippendorf.
+
+As always, the source is available at https://git.zx2c4.com/wireguard-linux-compat/
+and information about the project is available at https://www.wireguard.com/ .
+
+This version is available in compressed tarball form here:
+  https://git.zx2c4.com/wireguard-linux-compat/snapshot/wireguard-linux-compat-1.0.20200623.tar.xz
+  SHA2-256: 130937724515799edf05ff8216bc837df8acda879428f3a7f96a3287758f9445
+
+A PGP signature of that file decompressed is available here:
+  https://git.zx2c4.com/wireguard-linux-compat/snapshot/wireguard-linux-compat-1.0.20200623.tar.asc
+  Signing key: AB9942E6D4A4CFC3412620A749FC7012A5DE03AE
+  Remember to unxz the tarball before verifying the signature.
+
+If you're a package maintainer, please bump your package version. If you're a
+user, the WireGuard team welcomes any and all feedback on this latest version.
+
+Finally, WireGuard development thrives on donations. By popular demand, we
+have a webpage for this: https://www.wireguard.com/donations/
+
+Thank you,
+Jason Donenfeld
+
+
+-----BEGIN PGP SIGNATURE-----
+
+iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAl7yfwcQHGphc29uQHp4
+MmM0LmNvbQAKCRBJ/HASpd4DrvxgEAC58ZDoAAyph0sVO5manhh+t4Gvai63+Wmf
+Aoja8LyoforyHWrOH7FYfKIn2G1cRQDdiZ24Bg6DrPVfJRHKd2epA5ZuRVH6TqZ4
+FfZCa7o1jx6Kmyh+3nNfL8GV+yiQdPcWcz7COw/NxHSp1bp2PmS5Sso6ArKrbaPE
+1+AtaTCm7x8Jje5CAJvVIWqK8KO+ap8riF2gxgA7pIi67xF1rhQVQ6A977UYSyyn
+UqVQf8xeQ+AWWM6x0fsUbwYsfza2ggR2lmpZad0CbP1Jx1/x+/YnFVMaRp709Ypg
+bHigMC12LuetR5U35ldV1sKiVxWlovzxnoznjNzKvwx7HjO0vLT6IyuerhVRsIYQ
+O+F0piRbMDKhz423SEij72ULvmyCrxnTxYU+ML9F/13HJFTJfYCtCr9bM6bSlEjt
+wCzA+leFO7WErlE9Ut05qYAawJPVNFVGQhVHgTUfTo5CPV/3iKtmfVzA46QBiJJv
++GetUADVQjl96sV+eCnuGtY2bQv/nnUMJcg+U9lUtNSfBJyi+F/dc/c5ZrW99DqW
+/rMvuJHxHIUITWI1IOCxCvi1hsKaV3kPLT1dNOUtsNHbhyj7ngQCSi7wjFiOH8BU
+74oLNAjU6ooD2PAWJUiam6YDii1cmBKseYRlaljpDnfXZDAn66wZdFFhtYcRmxms
+TjlXXorVHQ==
+=s2+A
+-----END PGP SIGNATURE-----
