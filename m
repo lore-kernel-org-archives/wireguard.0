@@ -1,54 +1,54 @@
-Return-Path: <SRS0=CtsK=AE=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=bSPH=AF=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
-X-Spam-Level: *
-X-Spam-Status: No, score=1.5 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MSGID_RANDY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BC2DC433DF
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 23 Jun 2020 22:16:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1A31C433DF
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 24 Jun 2020 06:07:27 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id A687520724
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 23 Jun 2020 22:16:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 1E0072073E
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 24 Jun 2020 06:07:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="r0HOpTxV"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A687520724
+	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="pEsdqFIx"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 1E0072073E
 Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 95972dc4;
-	Tue, 23 Jun 2020 21:57:01 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 38700a0e;
+	Wed, 24 Jun 2020 05:48:27 +0000 (UTC)
 Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 0aa7aaa9
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 38b61870
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 23 Jun 2020 21:56:58 +0000 (UTC)
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8ebe973f
+ Wed, 24 Jun 2020 05:48:25 +0000 (UTC)
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8f051ab7
  for <wireguard@lists.zx2c4.com>;
- Tue, 23 Jun 2020 21:56:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=date:to:from
- :subject:mime-version:content-type; s=mail; bh=NWUsQNMm9T1a2uQG0
- gldi3FrfDI=; b=r0HOpTxVVxuG2ujQrkA2Z1dAipd/pLhMNeMTAn7RsF3zwd3sa
- 72JdI/RuYCxNRcSKFjdakIZjuTDT3Qlw3HWoqfKEODqlCgJdh0y/JV/8NmjV1pSr
- syKOY91uiT3bq0AxHubvBppe5YbGi9RDVADdx+4YBgqSBbrX7U/4+7WHehNHd20l
- Na2Lc7B/GyFkvOJcwpGBR4iHw8s5bdzn2teoZL+/gIx/LUrI6ufrUHUYcG75q1Vy
- byH1yvb+DYQBILTeOyhWc66laIrTxecYiTdNs80rmuTkWM/gqsrJqgmC3WA+9nWI
- kESiXxPeOHkLLGtysPaqNBO4nMar+hCU4KCFg==
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 6c611d60
+ Wed, 24 Jun 2020 05:48:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=date:from:to
+ :subject:message-id:mime-version:content-type; s=mail; bh=Cho+qz
+ I3+STIYt7HFluxUBotY7w=; b=pEsdqFIxAwuAvXwwtzY6E4m+SmTMyYaGkc7Zm2
+ IR343CH5YNtLVQjXwE6kLZ/r0W8pRD/SdOQrmOoF/mdEKhvoI2oI+2b2QjdlnCSH
+ XZSIltAcpazRIXAPbou1Zc0MWQGivfja0S+GVuczHYJy3nE08i/mcGNs5AgmUdff
+ v9KNTwrSPr+H0ptRHSGy21F1pXcy7fMkWLxyODvEY/4ti0jyv+l/sOF5HbLLQWQj
+ aWhOpZ7PO+gDOGK6OyjCYtf2PaO5H58+ZrtdTEhho66BpCIVh6FpRv9/ypbcC+K1
+ eZBhiieOIAQdpR+ye/YCiHeRhekNnxYWPH76DsuWnpaLvlfw==
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id e8eac361
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 23 Jun 2020 21:56:57 +0000 (UTC)
-Date: Tue, 23 Jun 2020 16:15:52 -0600
-To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
+ Wed, 24 Jun 2020 05:48:25 +0000 (UTC)
+Date: Wed, 24 Jun 2020 00:07:22 -0600
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: [ANNOUNCE] wireguard-linux-compat v1.0.20200623 released
+To: wireguard@lists.zx2c4.com
+Subject: Trying out WireGuard's kernel support in OpenBSD's -current snapshots
+Message-ID: <20200624060722.GA686091@zx2c4.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Message-ID: <6cd7bfefd767fdf2@mail.zx2c4.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -63,77 +63,88 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi everyone,
 
-Hello,
+With WireGuard now being enabled on OpenBSD's -current snapshot builds,
+it's pretty easy to try it out on the platform. This email describes two
+options for doing in the context of basic VPS providers or personal
+machines.
 
-A new version, v1.0.20200623, of the backported WireGuard kernel module for
-3.10 <= Linux <= 5.5.y has been tagged in the git repository.
+Method A) From an existing OpenBSD install
 
-== Changes ==
+If you already have an OpenBSD install -- perhaps your VPS provider
+supports it as an auto install -- things are pretty easy:
 
-  * compat: drop centos 8.1 support as 8.2 is now out
-  
-  Of note, as well, is that we now have both RHEL7 and RHEL8 in our CI at
-  <https://www.wireguard.com/build-status/>.
-  
-  * Kbuild: remove -fvisibility=hidden from cflags
-  
-  This fixes an issue when compiling wireguard as a module for ARM kernels in
-  THUMB2 mode without the JUMP11 workaround.
-  
-  * noise: do not assign initiation time in if condition
-  
-  Style fix.
-  
-  * device: avoid circular netns references
-  
-  Fixes a circular reference issue with network namespaces.
-  
-  * netns: workaround bad 5.2.y backport
-  
-  This works around a back backport in the 5.2.y series.
+1. Use sysupgrade(8) to upgrade to the latest snapshot as root:
 
-This release contains commits from: Jason A. Donenfeld and Frank 
-Werner-Krippendorf.
+    # sysupgrade -s
 
-As always, the source is available at https://git.zx2c4.com/wireguard-linux-compat/
-and information about the project is available at https://www.wireguard.com/ .
+2. After it installs and it reboots, install wg(8) and wg-quick(8) as
+   root:
 
-This version is available in compressed tarball form here:
-  https://git.zx2c4.com/wireguard-linux-compat/snapshot/wireguard-linux-compat-1.0.20200623.tar.xz
-  SHA2-256: 130937724515799edf05ff8216bc837df8acda879428f3a7f96a3287758f9445
+    # pkg_add wireguard-tools
 
-A PGP signature of that file decompressed is available here:
-  https://git.zx2c4.com/wireguard-linux-compat/snapshot/wireguard-linux-compat-1.0.20200623.tar.asc
-  Signing key: AB9942E6D4A4CFC3412620A749FC7012A5DE03AE
-  Remember to unxz the tarball before verifying the signature.
-
-If you're a package maintainer, please bump your package version. If you're a
-user, the WireGuard team welcomes any and all feedback on this latest version.
-
-Finally, WireGuard development thrives on donations. By popular demand, we
-have a webpage for this: https://www.wireguard.com/donations/
-
-Thank you,
-Jason Donenfeld
+3. Now you can use wg(8) and wg-quick(8), in addition to ifconfig(8).
 
 
------BEGIN PGP SIGNATURE-----
+Method B) From an existing Linux install
 
-iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAl7yfwcQHGphc29uQHp4
-MmM0LmNvbQAKCRBJ/HASpd4DrvxgEAC58ZDoAAyph0sVO5manhh+t4Gvai63+Wmf
-Aoja8LyoforyHWrOH7FYfKIn2G1cRQDdiZ24Bg6DrPVfJRHKd2epA5ZuRVH6TqZ4
-FfZCa7o1jx6Kmyh+3nNfL8GV+yiQdPcWcz7COw/NxHSp1bp2PmS5Sso6ArKrbaPE
-1+AtaTCm7x8Jje5CAJvVIWqK8KO+ap8riF2gxgA7pIi67xF1rhQVQ6A977UYSyyn
-UqVQf8xeQ+AWWM6x0fsUbwYsfza2ggR2lmpZad0CbP1Jx1/x+/YnFVMaRp709Ypg
-bHigMC12LuetR5U35ldV1sKiVxWlovzxnoznjNzKvwx7HjO0vLT6IyuerhVRsIYQ
-O+F0piRbMDKhz423SEij72ULvmyCrxnTxYU+ML9F/13HJFTJfYCtCr9bM6bSlEjt
-wCzA+leFO7WErlE9Ut05qYAawJPVNFVGQhVHgTUfTo5CPV/3iKtmfVzA46QBiJJv
-+GetUADVQjl96sV+eCnuGtY2bQv/nnUMJcg+U9lUtNSfBJyi+F/dc/c5ZrW99DqW
-/rMvuJHxHIUITWI1IOCxCvi1hsKaV3kPLT1dNOUtsNHbhyj7ngQCSi7wjFiOH8BU
-74oLNAjU6ooD2PAWJUiam6YDii1cmBKseYRlaljpDnfXZDAn66wZdFFhtYcRmxms
-TjlXXorVHQ==
-=s2+A
------END PGP SIGNATURE-----
+You probably already have a Linux install -- or most likely your VPS
+provider will have any number of Linux distros out of the box -- in
+which case you can easily overwrite that Linux install with an OpenBSD
+install.
+
+1. Download the miniroot installer:
+
+    $ curl -OJL https://cdn.openbsd.org/pub/OpenBSD/snapshots/amd64/miniroot67.img
+
+2. Write the installer to your hard drive, which is usually either vda,
+   sda, hda, or nvme0n1. One of these commands will work, and the other
+   three will fail:
+
+    $ sudo dd if=miniroot67.img of=/dev/vda
+    $ sudo dd if=miniroot67.img of=/dev/sda
+    $ sudo dd if=miniroot67.img of=/dev/hda
+    $ sudo dd if=miniroot67.img of=/dev/nvme0n1
+
+   After one of those succeeds, this step is complete.
+
+3. Reboot the machine, and connect to its serial port. Most VPS
+   providers have an option called "launch console" or similar. You'll see
+   the OpenBSD installer. Most of the defaults should suit you fine, and
+   there are any number of online manuals on installing OpenBSD.
+
+4. When the installed system boots, install wg(8) and wg-quick(8) as
+   root:
+
+    # pkg_add wireguard-tools
+
+5. Now you can use wg(8) and wg-quick(8), in addition to ifconfig(8).
+
+
+Sidenote) Updating wireguard-go scripts to use the new wg(4) kernel
+          driver
+
+If you've already been using WireGuard with OpenBSD, it's via
+wireguard-go.  The big recent news is that a new native WireGuard
+implementation, wg(4), is now baked into the OpenBSD kernel, and
+userland utilities like ifconfig(8) and tcpdump(8) support it too. From
+a tooling perspective, however, very little should change: recent
+versions of wg(8) and wg-quick(8) support WireGuard using the exact same
+semantics as before, with these two exceptions:
+
+1. Instead of running `wireguard-go tun0` to create a tunnel manually,
+   you now run `ifconfig wg0 create`.
+
+2. Instead of referring to the WireGuard interface as "tunX", it's now
+   "wgX".
+
+Other than those two things, all scripts and commands should behave
+identically.
+
+
+Please let us know if you run into any bugs or other headaches. Thanks
+in advance for your testing and feedback.
+
+Enjoy!
+Jason
