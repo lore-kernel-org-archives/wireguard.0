@@ -2,66 +2,82 @@ Return-Path: <SRS0=xwVK=AI=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4517CC433E1
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 27 Jun 2020 00:22:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 934C9C433DF
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 27 Jun 2020 01:26:11 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id A8C042080C
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 27 Jun 2020 00:22:54 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="CwMDh4rx"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A8C042080C
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id E797B20720
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 27 Jun 2020 01:26:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org E797B20720
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=sysnux.pf
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cdee0dd9;
-	Sat, 27 Jun 2020 00:03:33 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 41c3a14f
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 92daa7a6;
+	Sat, 27 Jun 2020 01:06:49 +0000 (UTC)
+Received: from smtp-pro1.mana.pf (smtp-pro1.mana.pf [202.3.225.198])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 60e58de1
  for <wireguard@lists.zx2c4.com>;
- Sat, 27 Jun 2020 00:03:32 +0000 (UTC)
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 59d69f0d
- for <wireguard@lists.zx2c4.com>;
- Sat, 27 Jun 2020 00:03:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=b3z1Ika2k053NuwPALZ4Q3Qk8T8=; b=CwMDh4
- rxvTQgpb9t6lziCaFwrNb/7JezXYQHwj4QSrFcOBj1AEnRC16GKZwRUw2lQA/hNe
- Y/0kir+65lSe1daWTKLjh0lnzeXi9qrg5pgy3lUWu2EJUoHLZ0U8r2d/F7wq0VdT
- WW5MEcFeCkxDxx9A6bcnNDCzOPtZYAKKAl9IDYGPNlmWq5651dbOFojolpb4d3QZ
- 4yLpKq6bif/Kl09jeCLoVBBHcuC3q0Yzmy49XBGpOC9sLaX/IBxOF7Pn0/imbftw
- iLtChHkSGdlziUyZp9GgBo6CtS/RZV7TBl+f3uQSTKudGlQhI53Sds2mS64Bzas3
- G425+/gFd/peTnrA==
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 83faaf3c
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Sat, 27 Jun 2020 00:03:31 +0000 (UTC)
-Received: by mail-io1-f46.google.com with SMTP id q8so11649662iow.7
- for <wireguard@lists.zx2c4.com>; Fri, 26 Jun 2020 17:22:50 -0700 (PDT)
-X-Gm-Message-State: AOAM530xoz7t8auK6GkGLNrYMsjuN07hib2GwI0gPTyIlGf8n4RiKX9e
- u0sdTQTt4b6ytqtp0ROGy4CtVMSLJj2VzKx291c=
-X-Google-Smtp-Source: ABdhPJxv/V/0OszkpnGrACe/mfK5KNydokuhRm+uvVI9TJgTN7xJoU9T/KW/6g0gls3bi7Svdc/1qUTAY36VYL3FYPI=
-X-Received: by 2002:a6b:c80a:: with SMTP id y10mr6109433iof.67.1593217369913; 
- Fri, 26 Jun 2020 17:22:49 -0700 (PDT)
+ Sat, 27 Jun 2020 01:06:46 +0000 (UTC)
+Received: from tiare.sysnux.pf (103-4-75-17-dynamic.viti.pf [103.4.75.17])
+ (using TLSv1.2 with cipher ADH-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ (Authenticated sender: courrier@sysnux.pf)
+ by smtp-pro1.mana.pf (Postfix) with ESMTPSA id 78CFB5425D;
+ Fri, 26 Jun 2020 15:26:02 -1000 (-10)
+Received: from tiare.sysnux.pf (tiare.sysnux.pf [192.168.10.1])
+ by tiare.sysnux.pf (Postfix) with ESMTP id 5B23F1555378;
+ Fri, 26 Jun 2020 15:26:02 -1000 (-10)
+Subject: Re: Kernel Panic after updating Kernel
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+References: <1592249458.376720421@webmail.emailsrvr.com>
+ <CAHmME9oz5tt9u5S3V6JikvB3oGihXR5rcZTLvcjxNu4qnvWCOw@mail.gmail.com>
+ <1592454690.22771558@webmail.emailsrvr.com>
+ <CAHmME9qyk41mAvSiEePmZDrmmsBwOVSejg8q+oXV7nb=Jo1SAQ@mail.gmail.com>
+ <1e6ef75d-3657-888a-51dd-0bedf8783904@sysnux.pf>
+ <CAHmME9q_eTwyLJ7z4RP4nJqEz9yu+9VH3oXm0j9Zx_Br3cFWEw@mail.gmail.com>
+ <613e8bab-4062-3cec-15ab-eeca325a5859@sysnux.pf>
+ <CAHmME9rvJmH=fvxvVYi5n3QHzt2tNskqoghjWG++bJSsv8iu7g@mail.gmail.com>
+ <975a5f77-5c7e-dcfe-6bbe-d4b6e2c5e379@sysnux.pf>
+ <CAHmME9qy4j2XpsTu1syABo1g6BZyS4w3OYghmT4T2kj7WjTyyQ@mail.gmail.com>
+From: Jean-Denis Girard <jd.girard@sysnux.pf>
+Autocrypt: addr=jd.girard@sysnux.pf; keydata=
+ mQGiBEhHSi4RBAC2J54Syt9hbmoNgiiM4TNNliSgLiHu7q+8s34xiIpPRCO9APZrJjmeziG5
+ NFPSZ9ss3TDr92bcjRTejZ1Sn1+N5mSbvARFmohPU5oXy0ZysHNumOvsz6hxK+qu0o6rdm1c
+ 2mbZVGOkVht/Nete6BH9FS2SEYc1+XuxyX3gCkVuLwCgt4duvuhGKyBvrtmB2CcsuwGn80ED
+ /1l+aANGTJd5+cECriOvgYzQjrY/13ITX8pgZXqWFZYf8syD4f2MQYM2WCRn8znnZuslCGYt
+ 8Cf2uih7r1ZnVFoAq4Aw/YwTsKv6Z/Woyy7ttEL9RGxe95upzjLKracjBcBj6mYVg0+3RsTG
+ Z80dQYUgL/9oTk4rRHW9yNrFlbTiA/9ljx87XzKMHKFpMKMVCBP4Tf/QLOySmnCAurIKgOQX
+ r0USRNbXam3Xp3j/AIxHqaJaCqH9SxpMJspgmLKWQ4jXih9E7xIXF6ub7Wrip/HAUNobERhe
+ ggJqZSA40GDN+tIXRofc0kkZt3lJoqsHJWAH0jXtGttAJuXD/Gd2qtoyWrQwSmVhbi1EZW5p
+ cyBHaXJhcmQgKFN5c051eCkgPGpkLmdpcmFyZEBzeXNudXgucGY+iGAEExECACAFAkhHSi4C
+ GwMGCwkIBwMCBBUCCAMEFgIDAQIeAQIXgAAKCRC67tG/6g6j+CpWAKCASJwHb7ygwtqIkiOz
+ yVnwbyHKiQCdGzWQyHQQjwx26L4oLh1AfnCh7ji5Ag0ESEdKLhAIAO1p1yIrSrtTS96bqK9x
+ Q4f9j9R1zxAtjEjirZxU40LCYZrMvr59U726NqHGvxZZXhKD/FQIEMbah260KM8s0YIH0aEa
+ EZR0nx7Bb2IjNqAO6lu7kLcNHKN3NeNzH6Vlui1PsIqaidGpu9kn/tHDx1etGQoISY6HYheC
+ NQbvkOpoJ8sWiK6XqvcBHX8Pi+pEctzYwC6LUop9SCU+RMsG3JNdeI9Xyt2OOd/Wyc1h/isC
+ hmIxG6duZlSzEqN9Vq/nAo+MuIZnnVvh3mUT6kraWb1fU6NPAvCq1Uxeqqq7ellGh/43+Xbp
+ +r/da+F0chMhuGd7AqirVyvZvd2DvBS66q8ABAsIANp6SP0OTEk2Ii4ZzDSDdSFHUHdp3Hq9
+ raZ/P8HjYyhcNukDwoSzHaCxW+c7+mqEYQYuRRlNvZ+q6rFYK+Nxz5HemSvi8uimD9BG63iO
+ l3KsAMbg0l6XVLT+TXLj7IcEGJAe07/WEnFqbhhMxonTArL9baDq0xjYoEb4tLlAcJd6v7G4
+ b4i1J307pZDXDw5CY3woJdF0dv1t7qDo8vFj9GCcDj5Ll2zpQsut2oL1DszNjaDtRuMZy8rj
+ 2UI4NOmMJV2rX6rmJtvoKbzWen/q+CHdfOUoPsMCxqCPZGzTICck3U4TQrqwo0EFAcnrMwBQ
+ bWbcoN/PjauG+QGvnSPRAjqISQQYEQIACQUCSEdKLgIbDAAKCRC67tG/6g6j+EhAAJ49uucC
+ DF1SISmaDULRaiKwRE56sACeLPM7QaXYdy4epaBpOjixOg/rvO0=
+Message-ID: <8e3c1299-3b4c-1673-205d-e006998bcead@sysnux.pf>
+Date: Fri, 26 Jun 2020 15:26:02 -1000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.9.0
 MIME-Version: 1.0
-References: <20200626201330.325840-1-ndev@hwipl.net>
- <CAHmME9r7Q_+_3ePj4OzxZOkkrSdKA_THNjk6YjHxTQyNA2iaAw@mail.gmail.com>
-In-Reply-To: <CAHmME9r7Q_+_3ePj4OzxZOkkrSdKA_THNjk6YjHxTQyNA2iaAw@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 26 Jun 2020 18:22:38 -0600
-X-Gmail-Original-Message-ID: <CAHmME9pX30q1oWY3hpjK4u-1ApQP7RCA07BmhtRQx=dR85MS9A@mail.gmail.com>
-Message-ID: <CAHmME9pX30q1oWY3hpjK4u-1ApQP7RCA07BmhtRQx=dR85MS9A@mail.gmail.com>
-Subject: Re: wireguard: problem sending via libpcap's packet socket
-To: Hans Wippel <ndev@hwipl.net>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
- Netdev <netdev@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAHmME9qy4j2XpsTu1syABo1g6BZyS4w3OYghmT4T2kj7WjTyyQ@mail.gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="DVoHwbJnKa4E12yqW6v8xSJoDKRX7IZDz"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -76,63 +92,63 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Hans,
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--DVoHwbJnKa4E12yqW6v8xSJoDKRX7IZDz
+Content-Type: multipart/mixed; boundary="BtJmOTDrDIkOYPv5DMlyu2um02JFl07Je";
+ protected-headers="v1"
+From: Jean-Denis Girard <jd.girard@sysnux.pf>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Message-ID: <8e3c1299-3b4c-1673-205d-e006998bcead@sysnux.pf>
+Subject: Re: Kernel Panic after updating Kernel
+References: <1592249458.376720421@webmail.emailsrvr.com>
+ <CAHmME9oz5tt9u5S3V6JikvB3oGihXR5rcZTLvcjxNu4qnvWCOw@mail.gmail.com>
+ <1592454690.22771558@webmail.emailsrvr.com>
+ <CAHmME9qyk41mAvSiEePmZDrmmsBwOVSejg8q+oXV7nb=Jo1SAQ@mail.gmail.com>
+ <1e6ef75d-3657-888a-51dd-0bedf8783904@sysnux.pf>
+ <CAHmME9q_eTwyLJ7z4RP4nJqEz9yu+9VH3oXm0j9Zx_Br3cFWEw@mail.gmail.com>
+ <613e8bab-4062-3cec-15ab-eeca325a5859@sysnux.pf>
+ <CAHmME9rvJmH=fvxvVYi5n3QHzt2tNskqoghjWG++bJSsv8iu7g@mail.gmail.com>
+ <975a5f77-5c7e-dcfe-6bbe-d4b6e2c5e379@sysnux.pf>
+ <CAHmME9qy4j2XpsTu1syABo1g6BZyS4w3OYghmT4T2kj7WjTyyQ@mail.gmail.com>
+In-Reply-To: <CAHmME9qy4j2XpsTu1syABo1g6BZyS4w3OYghmT4T2kj7WjTyyQ@mail.gmail.com>
 
-Your test program appears to be doing:
+--BtJmOTDrDIkOYPv5DMlyu2um02JFl07Je
+Content-Type: text/plain; charset=utf-8
+Content-Language: fr
+Content-Transfer-Encoding: quoted-printable
 
-socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ALL)) = 3
-sendto(3, "E\0\0+\0\0@\0@\21\267o\300\250\1\1\300\250\1\1\4\322\4\322\0\0272\221\1\2\3\4"...,
-43, 0, NULL, 0) = 43
+Le 18/06/2020 =C3=A0 21:38, Jason A. Donenfeld a =C3=A9crit=C2=A0:
+> Remove all wireguard packages. Update to the latest kernel. Run `find
+> /lib/modules -name '*wireguard*' -print -delete`. Then install
+> kmod-wireguard.
 
-This means we're calling into af_packet's packet_sendmsg->packet_snd,
-which appears to call     packet_parse_headers(skb, sock):
+Sorry for late reply. I can confirm that removing wireguard module and
+reinstalling (from elrepo) worked.
 
-static void packet_parse_headers(struct sk_buff *skb, struct socket *sock)
-{
-    if ((!skb->protocol || skb->protocol == htons(ETH_P_ALL)) &&
-        sock->type == SOCK_RAW) {
-        skb_reset_mac_header(skb);
-        skb->protocol = dev_parse_header_protocol(skb);
-    }
 
-    skb_probe_transport_header(skb);
-}
+Thanks,
+--=20
+Jean-Denis Girard
 
-So the question is, why isn't skb->protocol set on the packet that
-makes it to wg_xmit?
+SysNux                   Syst=C3=A8mes   Linux   en   Polyn=C3=A9sie  fra=
+n=C3=A7aise
+https://www.sysnux.pf/   T=C3=A9l: +689 40.50.10.40 / GSM: +689 87.797.52=
+7
 
-Adding some printks, it looks like the result of:
 
-    pr_err("SARU %s:%d\n", __FILE__, __LINE__);
-    skb_reset_mac_header(skb);
-    skb->protocol = dev_parse_header_protocol(skb);
-    pr_err("%d\n", skb->protocol);
+--BtJmOTDrDIkOYPv5DMlyu2um02JFl07Je--
 
-is:
+--DVoHwbJnKa4E12yqW6v8xSJoDKRX7IZDz
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-    [    0.430754] SARU net/packet/af_packet.c:1864
-    [    0.431454] 0
+-----BEGIN PGP SIGNATURE-----
 
-So digging a bit further, dev_parse_header_protocol:
+iF0EARECAB0WIQQpXSKzt7TNR5dVgoi67tG/6g6j+AUCXvagKgAKCRC67tG/6g6j
++GllAJ4z93imL096gPEmJlsfN0iwsyQbXgCfR0OEJqQAqYLVAgMXt/2zcgBKNDs=
+=X5Ft
+-----END PGP SIGNATURE-----
 
-static inline __be16 dev_parse_header_protocol(const struct sk_buff *skb)
-{
-    const struct net_device *dev = skb->dev;
-
-    if (!dev->header_ops || !dev->header_ops->parse_protocol)
-        return 0;
-    return dev->header_ops->parse_protocol(skb);
-}
-
-Apparently the issue is that wireguard doesn't implement any
-header_ops. I fixed that in this commit here:
-https://git.zx2c4.com/wireguard-linux/commit/?id=73b20c384a8bc498c6b8950672003410ed6016da
-
-In my tests, that commit appears to fix the problem exposed by your
-test case. I'll probably wait a few days to think about this some more
-and make sure this is correct before submitting, but it seems likely
-that this will take care of the issue.
-
-Thanks for the report and easy test case!
-
-Jason
+--DVoHwbJnKa4E12yqW6v8xSJoDKRX7IZDz--
