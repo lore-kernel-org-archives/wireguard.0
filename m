@@ -4,77 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 91018C433E1
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 29 Jun 2020 18:49:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 875CDC433E1
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 29 Jun 2020 19:08:37 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 3B863204EC
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 29 Jun 2020 18:49:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 07148206E2
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 29 Jun 2020 19:08:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RE622I5w"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 3B863204EC
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EqfFC0dU"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 07148206E2
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 26b4971f;
-	Mon, 29 Jun 2020 18:30:04 +0000 (UTC)
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com
- [2607:f8b0:4864:20::1044])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ad14dee8
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 98aad832;
+	Mon, 29 Jun 2020 18:48:54 +0000 (UTC)
+Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com
+ [2607:f8b0:4864:20::82d])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 3a154faf
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 29 Jun 2020 18:30:01 +0000 (UTC)
-Received: by mail-pj1-x1044.google.com with SMTP id cv18so3341192pjb.1
- for <wireguard@lists.zx2c4.com>; Mon, 29 Jun 2020 11:49:42 -0700 (PDT)
+ Sun, 28 Jun 2020 19:45:15 +0000 (UTC)
+Received: by mail-qt1-x82d.google.com with SMTP id v19so11357851qtq.10
+ for <wireguard@lists.zx2c4.com>; Sun, 28 Jun 2020 13:04:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=0TqVDo7Scf3zMjLB/4NkkrNtpc5MiwaQ7FE8AIQUCg0=;
- b=RE622I5w0qbMww2edBz5TxnjBnLToOQoBaMdyIKlceSp1fFok2tfOv8YzNBp1YevLp
- vYdR5mhj+CvQHBb+0PXwRwahLkP9g/k6ZDzrH19e2RyZXjSkPTnteEsis8GrJiijfOzB
- zmf1fgpOmdqIhscKYO+2Z8wpIt4iEqkV7Fu8aA20H4y/iVTg3CH14tzzHNAMcUhrRP93
- qEtJsVDxcgXOI02HlSX3lOT4lhDgYSwCV06EDE8/I61q4VzqCZuue4i8KZ5Q4wmC7Kl+
- aZoSqNA4WQpW4cD0gM3tqAdv4fZ91x9HkHlBPrPsI1DQe7izmL2Rz/+9PTYetBJi1emS
- 1muw==
+ :cc; bh=Y1zn/fxfOmFeMHXh6Gk5ZdelSOYcZKVlBOAb2rVI9JA=;
+ b=EqfFC0dU0x9WmdbUtY9//oru81LC5z9OHEIZ/cE8DpHTbzHFsiXIulMEAgIgpIIaIP
+ GkRIO+PtS+PrpMmfhiVfor2iXBSbT3w4R+wEr27nFnuk076Fl8ZNGCaxEnAX4ab0dB8i
+ mc8IzAv35RgtJ4E7vi61uoy4bLdYiJy1l9O8CZWiIsVXOpR0+D7h+95vPps5OH9Scd/T
+ SblhjR97HBCCc5pbmHdlH5CpN3v8KFBvjJt3qBpBfwITW7f0G/XHzg1AISj3sTwjlFG6
+ apRaSMFFobh+TgUWCQ8ayJxtVbNhGeOQYQU+G2HAZok+redvJoqLxMkSifYHdXqYxR+1
+ EK6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=0TqVDo7Scf3zMjLB/4NkkrNtpc5MiwaQ7FE8AIQUCg0=;
- b=fXtZ/RIY2sHHp8+5NLndH/H6Hhh22+Xpb7HMc5z/thdShkCgp5qLcZIAHNzydqN3cu
- B8IlVqlZleMKtpK2R6C/FBa9nsL0WgWiFyPY0r3Ci67yFRLmi4XLrNSjl87ZVdviIhSu
- gsXpUmaa5JjFkNStdUH1nEyZ2eJLOnkkvdArYAH1pLJ5Wu7Pzfy3TyrYp5STFFL+CFLq
- qeNTOARsO7Hrh/bAgDPa20+1DVVNsQWsTM6BIanevBOXUnwzylmaS3nxoJGKcvHrIlin
- DKaBEsxRXB5w0e/+urA088cDTkaFsnj9bw/5SYYkGq4T8UvhT0q9IlL8jtKjm34oTl/f
- pueg==
-X-Gm-Message-State: AOAM533AZSObjX8myB6vMrqzFULCZCMlfxNDZ+9sAhIsAeMeS4di4jx6
- HBo32/ufECRySQgCWBMU0SgdtqcLJ/cxdtivnhKIskY/V7g=
-X-Google-Smtp-Source: ABdhPJzzdouo9wjO3XBojpE4vsJm5/kwGHEEoKShV8hKip/sBqXUZlAX6XoVL5yHKj7zYki5QePtyzzRR/j4R/IFZeg=
-X-Received: by 2002:a17:90a:930b:: with SMTP id
- p11mr18614175pjo.230.1593456581951; 
- Mon, 29 Jun 2020 11:49:41 -0700 (PDT)
+ bh=Y1zn/fxfOmFeMHXh6Gk5ZdelSOYcZKVlBOAb2rVI9JA=;
+ b=Biw3Y0bVde2MDL9bD3tbib4x/5lnjqIX+COCgrkgREZK2ytVJcvtsDTvnS/xwQWFo5
+ OnoiMRCeWkrqC//TuR21SpRySR45kFhzuHHMKQiKKg6uB5iMLSb+W62Uem8LBniH8C/2
+ eb5QkY82AiWyFciekDTbNe1qlqb9s+1hqWtws4reN239Uu9vjGIM9CD3jcC6lXpejbKu
+ MSUqTpz5iwzseWNxThkkUv8vaM2JSIhim3tZK+2eWACZln2GjpPXUXKUwgog+yyHHOk5
+ i/+9K1gVOHkwkNyiU+QxPBWPsGmbxrS/SvRcSy5y5M6cD+4psTg8j+7FezVV/QIHbVAy
+ IrMA==
+X-Gm-Message-State: AOAM530kvtm84+QfoYfP/FXTsDWq2OlUsXvdB0l+reAZDCc2BeKXJV1g
+ Y+3v0wCPp/pedhh7JQwSD3mMqV45
+X-Google-Smtp-Source: ABdhPJx7l4SY/hTIoZGRyrVlWHwQryFaJk1c4wj04yyd7rHAi2eQAxpnGnQxeWds2SdyCs+tablYUw==
+X-Received: by 2002:ac8:31a6:: with SMTP id h35mr12745456qte.323.1593374687708; 
+ Sun, 28 Jun 2020 13:04:47 -0700 (PDT)
+Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com.
+ [209.85.219.176])
+ by smtp.gmail.com with ESMTPSA id 19sm14009797qke.44.2020.06.28.13.04.46
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 28 Jun 2020 13:04:46 -0700 (PDT)
+Received: by mail-yb1-f176.google.com with SMTP id k18so7394052ybm.13
+ for <wireguard@lists.zx2c4.com>; Sun, 28 Jun 2020 13:04:46 -0700 (PDT)
+X-Received: by 2002:a25:cf82:: with SMTP id
+ f124mr21339639ybg.441.1593374686050; 
+ Sun, 28 Jun 2020 13:04:46 -0700 (PDT)
 MIME-Version: 1.0
-References: <372AE79B-69E5-4B18-926C-E402FDFB2E95@lonnie.abelbeck.com>
- <20171205035352.01ffe1f5@vega.skynet.aixah.de>
- <CAHmME9ouUNV4pc7qwr4bO-5bEecFc1U64PF13ExgmYnH9q45tw@mail.gmail.com>
- <20200624153706.3yngzzslepqh7q54@ws.flokli.de>
- <CA+cYV6uWUC1YDbpXz+ft-fKug7SY4_QNrR-x7q_z_qWmj7u-Ww@mail.gmail.com>
- <CAMaqUZ0nTL9mbYEifHP-sc8kQ6ehAOOWfmEb7ARNfZWWDkv4eA@mail.gmail.com>
- <875zbai32e.fsf@toke.dk> <20200629153118.4d72f447@natsu>
- <87r1tygmlv.fsf@toke.dk>
- <20200629163851.41d6d755@natsu> <87lfk6gjax.fsf@toke.dk>
-In-Reply-To: <87lfk6gjax.fsf@toke.dk>
-From: Luiz Angelo Daros de Luca <luizluca@gmail.com>
-Date: Mon, 29 Jun 2020 15:49:30 -0300
-Message-ID: <CAJq09z7NoX6f+MzYgvhQkZ7oe8aR8_AMqX+YWZn1MHSUArybPA@mail.gmail.com>
-Subject: Re: Standardized IPv6 ULA from PublicKey
-To: =?UTF-8?B?VG9rZSBIw7hpbGFuZC1Kw7hyZ2Vuc2Vu?= <toke@toke.dk>
-Cc: Roman Mamedov <rm@romanrm.net>, Reid Rankin <reidrankin@gmail.com>,
- ch@ntrv.dk, WireGuard mailing list <wireguard@lists.zx2c4.com>
+References: <20200626201330.325840-1-ndev@hwipl.net>
+ <CAHmME9r7Q_+_3ePj4OzxZOkkrSdKA_THNjk6YjHxTQyNA2iaAw@mail.gmail.com>
+ <CAHmME9pX30q1oWY3hpjK4u-1ApQP7RCA07BmhtRQx=dR85MS9A@mail.gmail.com>
+ <CAHmME9oCHNSNAVTNtxO2Oz10iqj_D8JPmN8526FbQ8UoO0-iHw@mail.gmail.com>
+In-Reply-To: <CAHmME9oCHNSNAVTNtxO2Oz10iqj_D8JPmN8526FbQ8UoO0-iHw@mail.gmail.com>
+From: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
+Date: Sun, 28 Jun 2020 16:04:08 -0400
+X-Gmail-Original-Message-ID: <CA+FuTSdpU_2w9iU+Rtv8pUepOcwqHYaV1jYVfB6_K157E6CSZw@mail.gmail.com>
+Message-ID: <CA+FuTSdpU_2w9iU+Rtv8pUepOcwqHYaV1jYVfB6_K157E6CSZw@mail.gmail.com>
+Subject: Re: wireguard: problem sending via libpcap's packet socket
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: Hans Wippel <ndev@hwipl.net>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>, 
+ Netdev <netdev@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+X-Mailman-Approved-At: Mon, 29 Jun 2020 20:48:52 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -89,70 +97,36 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-It simply does not make sense to set ULA automatically. ULA fc00::/7
-is subdivided in fc00::/8 and fd00::/8. The former would use some
-global registry while the second one
-uses a random 40-bit subnet prefix (to avoid conflicts). You would
-need to share this 40-bit random value with every node in order to
-have a common /48 prefix. Besides that,
-It would not make sense to have a full /48 for a single VPN network.
-It should be subdivided into common /64 appending another 16-bit
-subnet id. So, in the end, you would
-need a way to pass the ULA prefix (40-bit + 16-bit). ULA should be
-configured just like any other global address.
+On Sat, Jun 27, 2020 at 1:58 AM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+>
+> Hi again Hans,
+>
+> A few remarks: although gre implements header_ops, it looks like
+> various parts of the networking stack change behavior based on it. I'm
+> still analyzing that to understand the extent of the effects.
+> Something like <https://git.zx2c4.com/wireguard-linux/commit/?id=40c24fd379edc1668087111506ed3d0928052fe0>
+> would work, but I'm not thrilled by it. Further research is needed.
+>
+> However, one thing I noticed is that other layer 3 tunnels don't seem
+> to be a fan of libpcap. For example, try injecting a packet into an
+> ipip interface. You'll hit exactly the same snag for skb->protocol==0.
 
-If ULA is not the topic, we might need to change the thread name. The
-issue here is really about having Link Local Address automatically
-set.
+Not setting skb protocol when sending over packet sockets causes many
+headaches. Besides packet_parse_headers, virtio_net_hdr_to_skb also
+tries to infer it.
 
-I know that Wireguard wants to be as clean as possible not including
-any automatic setup logic. However, most protocols that would do that
-job, at least, expect LL to be present (DHCPv6).
-LL is set by the kernel for ethernet devices but not for TUN
-interfaces, probably because there is simply no "link" on a L3
-interface. There is, for example, a request to have it set for OpenVPN
-(https://community.openvpn.net/openvpn/ticket/415). I would expect
-IPv6 LL address to be present in any default scenario. I just don't
-know what would be the one to set it up. For ethernet
-devices, it is the kernel itself. For wireguard, there is a shared
-responsibility between userland (wg and wg-quick) and kernel. However,
-as a required feature, I would not depend on any software
-that is not required. If wg-quick is optional, it would not be the
-place to set the LL address. Maybe wg would be the one to set it as
-soon as a IPv6 stack is up for a wireguard interface, even when there
-is
-no intention to use IPv6. However, if wg is also "optional", it would
-be nice if the kernel API could require the userland code to inform
-the interface-id (or set a link local address) before IPv6 is up.
-For wireguard, LL address setup also means to set allowed IPs automatically.
+Packet sockets give various options to configure it explicitly: by
+choosing that protocol in socket(), bind() or, preferably, by passing
+it as argument to sendmsg. The socket/bind argument also configures
+the filter to receive packets, so for send-only sockets it is
+especially useful to choose ETH_P_NONE (0) there. This is not an
+"incorrect" option.
 
-Regarding what interface id should be used, even random value is
-acceptable but not ideal for management as it could be used as part of
-device ID.
-Wireguard could use a simple algorithm to map pubkey 256-bit into a
-64-bit value, just like ethernet 48-bit is mapped to a 64-bit value.
-It can be as
-simple as getting the last 64-bit from pubkey or any already in use
-form of hash. Keep it as simple as possible. It is not expected to be
-secret.
-The privacy extension, if used, is for automatically generated global
-addresses, not link-local one.
+Libpcap does have a pcap_set_protocol function, but it is fairly
+recent, so few processes will likely be using it. And again it is
+still not ideal if a socket is opened only for transmit.
 
-Keep in mind that LL is not expected to be a replacement for any
-global address (ULA or Internet one). They should still be set. At
-least for Linux, no
-"normal" process would really use LL addresses without specifying the
-outgoing interface ("fe80::...%interface"), which might limit what you
-can do with it.
-
-In summary, my suggestions:
-
-1) LL address should be set automatically by wg, better if required by
-kernel interface or even set up by kernel module.
-2) interface identification can be derived from pubkey with a simple
-algorithm. It does not need to be a secure hash.
-
-Regards,
----
-     Luiz Angelo Daros de Luca
-            luizluca@gmail.com
+header_ops looks like the best approach to me, too. The protocol field
+needs to reflect the protocol of the *outer* packet, of course, but if
+I read wg_allowedips_lookup_dst correctly, wireguard maintains the
+same outer protocol as the inner protocol, no sit (6-in-4) and such.
