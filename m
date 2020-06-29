@@ -6,73 +6,40 @@ X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87998C433DF
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 29 Jun 2020 10:53:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 87BA8C433DF
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 29 Jun 2020 11:04:12 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 1033623884
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 29 Jun 2020 10:53:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 2EACE23A05
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 29 Jun 2020 11:04:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=althea.net header.i=@althea.net header.b="QFxw7/8e";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OwFKc6xm"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 1033623884
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=althea.net
+	dkim=pass (2048-bit key) header.d=toke.dk header.i=@toke.dk header.b="Fp65RzAx"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 2EACE23A05
+Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=toke.dk
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8dfee5e2;
-	Mon, 29 Jun 2020 10:33:41 +0000 (UTC)
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
- [66.111.4.28])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 79eb1df3
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c0acee46;
+	Mon, 29 Jun 2020 10:44:06 +0000 (UTC)
+Received: from mail.toke.dk (mail.toke.dk [45.145.95.4])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id e0d4f99d
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 29 Jun 2020 10:33:38 +0000 (UTC)
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
- by mailout.nyi.internal (Postfix) with ESMTP id 35C255C0140
- for <wireguard@lists.zx2c4.com>; Mon, 29 Jun 2020 06:53:17 -0400 (EDT)
-Received: from imap9 ([10.202.2.59])
- by compute7.internal (MEProxy); Mon, 29 Jun 2020 06:53:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=althea.net; h=
- mime-version:message-id:in-reply-to:references:date:from:to
- :subject:content-type:content-transfer-encoding; s=fm1; bh=i1AN/
- 3bMaRPWZIn/H3UOoQ9ClQ0rEzWxbyjqD9Fy3g0=; b=QFxw7/8exsbAignXa1r9u
- 68prgJgns+SKhtAalkKUtODwyHT8SqHWYBHbBJrW3is/yOamLoV4BwPRNumbGe6M
- 30P6rw89WT0/swwE/nYFbfczbhek7MeOAbyJrc4WqhYXk2hb8CYVx1CTz/dGNe0T
- ij0E/UmKl9C45HPptsi+WMbnUIdgI9kq5SFMluFl2BiSxOlOlKXpVGW4iheOzOEb
- +Mlao+iMXKnaI+cJBuhrsT27+5uv+rmGQk1wO/9wyYrN9Q1C4hz6Pe8OK2UUKsZM
- j06Q+n2VJZGYV44eel/2FVeG/fGrk1KPx1W6sfVcwnSB49sEAjbTmgC4cjyDTrKj
- g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=content-transfer-encoding:content-type
- :date:from:in-reply-to:message-id:mime-version:references
- :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm3; bh=i1AN/3bMaRPWZIn/H3UOoQ9ClQ0rEzWxbyjqD9Fy3
- g0=; b=OwFKc6xmPCwTdbtI0jxsiT8Odc9Z29ijUc9LkfSeU2B+2mLITMhttiz5O
- PD2Op8MudImXE4ep58UeLFRIPJoh6p8tzKyyhOP3KTzxcrik1w7hgsPsLorCFvE1
- iiONaZeXg6wDH+yNOvP2qjfZfVzSMgRp4gRrCo5909EzO7gQI3pSdSdIum/6k4RY
- zfvijMEkz2IQ3h7JdKK4zJiIEV2lRp8oVpKi8dXxBsJlwtUfUEymIB8pkqmsRuRy
- jhJafTad76MOIf0lb4KiTSdLje+D0YUxO7QA5UmxGytppqSqPW20RBQIk7K1pk3W
- N9xEERfQthScvst219R5IJV2Ee13Q==
-X-ME-Sender: <xms:HMj5XvqwaTkcPzsWyXz72Ct6v6skRVyAMcUrxrZbcpKN7lbeHxN48Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrudelkedgfedvucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfgjfhffhffvufgtgfesth
- hqredtreerjeenucfhrhhomhepfdfluhhsthhinhcumfhilhhprghtrhhitghkfdcuoehj
- uhhsthhinhesrghlthhhvggrrdhnvghtqeenucggtffrrghtthgvrhhnpeevieekvdejke
- fhveeiueettdeuteeffeehgfeutddtjefhhefhvdegheeggfefgeenucevlhhushhtvghr
- ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehjuhhsthhinhesrghlthhhvg
- grrdhnvght
-X-ME-Proxy: <xmx:HMj5XpoSb6Hi6jlyP7pja8R386WSoIkU6aGjYJojx91KClN3peOVEA>
- <xmx:HMj5XsOfWTDb3SeEmK-jDwo002E76oKloLkqTY8bQobDORAJKAcpEQ>
- <xmx:HMj5Xi6kWcJWQ0ZeoMOU4RtiQrCjHYy3xu56QAB4QbqTWYTV2g_fog>
- <xmx:Hcj5XtKj9dBDtPp4UK6j3U4LFs_JPKrc9dcIUk6CkEzOK7RthIUdow>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 9CEAC1C005F; Mon, 29 Jun 2020 06:53:16 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.3.0-dev0-576-gfe2cd66-fm-20200629.001-gfe2cd668
-Mime-Version: 1.0
-Message-Id: <25d0c31b-bd93-4267-a757-686685c772a8@www.fastmail.com>
+ Mon, 29 Jun 2020 10:44:03 +0000 (UTC)
+From: Toke =?utf-8?Q?H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=toke.dk; s=20161023;
+ t=1593428620; bh=InDbuZ9lBhZ3V5CLN1tPdSwGHD6EA20/SXHj4dbC9r8=;
+ h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+ b=Fp65RzAx5Ca593YybbaIrGlReEVShtSqGKMuO1DiCVoxThctFBBQ0pTdXCVHBfa7G
+ +lj5I5YAekUMmUA+arNIgirSLQ0sNCtXV4kusXhkXWqZmJFM+dGNiTb30mLbawaWnT
+ uvHNvfvfQ1hJbnnna+TXsnZJHROyXDGgbZ3tEVxqVxMo4rU7ZgyT2fUI2V4RmODG0G
+ LXoPe9m3mbqp8iYT1N/LRfMZhr8q2unGcYKwLROQNUPbGopFhBJuieiZkzNAcfT8Z7
+ 5puAA/Y3bQ4mWJuwlXROXoM0+7eWQsnjNNPcrcZ/56ayPrBcOWXzI3UTQeQ9ncuCLw
+ Yq6HhXVJ3chcw==
+To: Roman Mamedov <rm@romanrm.net>
+Cc: Reid Rankin <reidrankin@gmail.com>, ch@ntrv.dk,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
+Subject: Re: Standardized IPv6 ULA from PublicKey
 In-Reply-To: <20200629153118.4d72f447@natsu>
 References: <372AE79B-69E5-4B18-926C-E402FDFB2E95@lonnie.abelbeck.com>
  <20171205035352.01ffe1f5@vega.skynet.aixah.de>
@@ -81,11 +48,11 @@ References: <372AE79B-69E5-4B18-926C-E402FDFB2E95@lonnie.abelbeck.com>
  <CA+cYV6uWUC1YDbpXz+ft-fKug7SY4_QNrR-x7q_z_qWmj7u-Ww@mail.gmail.com>
  <CAMaqUZ0nTL9mbYEifHP-sc8kQ6ehAOOWfmEb7ARNfZWWDkv4eA@mail.gmail.com>
  <875zbai32e.fsf@toke.dk> <20200629153118.4d72f447@natsu>
-Date: Mon, 29 Jun 2020 06:52:56 -0400
-From: "Justin Kilpatrick" <justin@althea.net>
-To: wireguard@lists.zx2c4.com
-Subject: Re: Standardized IPv6 ULA from PublicKey
-Content-Type: text/plain;charset=utf-8
+Date: Mon, 29 Jun 2020 13:03:40 +0200
+X-Clacks-Overhead: GNU Terry Pratchett
+Message-ID: <87r1tygmlv.fsf@toke.dk>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -101,43 +68,62 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-I'm assigning fe80 addresses derived from device MAC addresses for my ow=
-n Babel + WireGuard use case.
+Roman Mamedov <rm@romanrm.net> writes:
 
-To chip in on this I don't think WireGuard should add any 'auto-magical'=
- behavior into it's core code. There are significant advantages to keepi=
-ng core WireGuard ultra lean and pushing complexity into configuration s=
-cripts and separate programs.
-
-That being said adding an fe80 address as a standard for setup scripts (=
-wg-quick) seems like a good idea.
-
---=20
-  Justin Kilpatrick
-  justin@althea.net
-
-On Mon, Jun 29, 2020, at 6:31 AM, Roman Mamedov wrote:
 > On Mon, 29 Jun 2020 12:22:49 +0200
 > Toke H=C3=B8iland-J=C3=B8rgensen <toke@toke.dk> wrote:
->=20
-> > Reid Rankin <reidrankin@gmail.com> writes:
-> >=20
-> > > Each IPv6 network device is *required* to have a link-local
-> > > address by the RFC
-> >=20
-> > Given this
->=20
-> What you quoted is the shakiest statement of the entire proposal. Migh=
-t be a
-> cool idea and all, but I don't think RFCs say anything about "requirin=
-g" that
-> for point-to-point L3 interfaces, where there's no functioning multica=
-st or
-> broadcast to begin with. And it doesn't seem nice that submitter is tr=
-ying to
-> skew facts in their favor like that.
->=20
-> --=20
-> With respect,
-> Roman
 >
+>> Reid Rankin <reidrankin@gmail.com> writes:
+>>=20
+>> > Each IPv6 network device is *required* to have a link-local
+>> > address by the RFC
+>>=20
+>> Given this
+>
+> What you quoted is the shakiest statement of the entire proposal. Might b=
+e a
+> cool idea and all, but I don't think RFCs say anything about "requiring" =
+that
+> for point-to-point L3 interfaces, where there's no functioning multicast =
+or
+> broadcast to begin with. And it doesn't seem nice that submitter is tryin=
+g to
+> skew facts in their favor like that.
+
+Eh? This is specified pretty clearly in RFC4291, section 2.1:
+
+2.1.  Addressing Model
+
+   IPv6 addresses of all types are assigned to interfaces, not nodes.
+   An IPv6 unicast address refers to a single interface.  Since each
+   interface belongs to a single node, any of that node's interfaces'
+   unicast addresses may be used as an identifier for the node.
+
+   All interfaces are required to have at least one Link-Local unicast
+   address (see Section 2.8 for additional required addresses).  A
+   single interface may also have multiple IPv6 addresses of any type
+   (unicast, anycast, and multicast) or scope.  Unicast addresses with a
+   scope greater than link-scope are not needed for interfaces that are
+   not used as the origin or destination of any IPv6 packets to or from
+   non-neighbors.  This is sometimes convenient for point-to-point
+   interfaces.  There is one exception to this addressing model:
+
+      A unicast address or a set of unicast addresses may be assigned to
+      multiple physical interfaces if the implementation treats the
+      multiple physical interfaces as one interface when presenting it
+      to the internet layer.  This is useful for load-sharing over
+      multiple physical interfaces.
+
+   Currently, IPv6 continues the IPv4 model in that a subnet prefix is
+   associated with one link.  Multiple subnet prefixes may be assigned
+   to the same link.
+
+
+The fact that Wireguard doesn't assign one is often a source of
+annoyance, and since there already is a unique identifier for each peer
+on a link (the public key), I really don't see why wg shouldn't just
+assign a LL identifier and be done with it. Sure, have a config knob to
+turn it off if you're not using IPv6, but let's make this the default
+and have wg devices 'just work' over IPv6 by default.
+
+-Toke
