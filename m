@@ -2,59 +2,57 @@ Return-Path: <SRS0=JnmV=AK=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.7 required=3.0 tests=FROM_LOCAL_HEX,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BCC4C433DF
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 29 Jun 2020 12:15:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A0C7C433E0
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 29 Jun 2020 16:47:34 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id BAD4523B23
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 29 Jun 2020 12:15:25 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=toke.dk header.i=@toke.dk header.b="w5zyONwT"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org BAD4523B23
-Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=toke.dk
+	by mail.kernel.org (Postfix) with ESMTPS id AD0962559E
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 29 Jun 2020 16:47:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org AD0962559E
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5f1a15cc;
-	Mon, 29 Jun 2020 11:55:29 +0000 (UTC)
-Received: from mail.toke.dk (mail.toke.dk [45.145.95.4])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 83d27cae
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 48096f72;
+	Mon, 29 Jun 2020 16:27:35 +0000 (UTC)
+Received: from mail-io1-f71.google.com (mail-io1-f71.google.com
+ [209.85.166.71])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4808801c
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 29 Jun 2020 11:55:27 +0000 (UTC)
-From: Toke =?utf-8?Q?H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=toke.dk; s=20161023;
- t=1593432903; bh=ff6qxGS+EglJGkYv715tVU8SiN1WomUNLnsbSCmdlPs=;
- h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
- b=w5zyONwTeR+8cB2yLU1KG7rIE2cqjWd+ePiSEWytQ3NpGDUPf3DnfpWhORVrLaxCG
- Jek8U5Lc55llkynvAtsi3OpZ0bILC6usryjZ5gVYX8k+rYPua5QrcvMf8e5V2ucW9T
- 0TeYTNb27T5ZG3dudNQTcziYvLxkEsxpX9tG74oqfHBFEA/HBTBzh+R3pcJ4zUvQHN
- 0THcs9EeVnF5FsgkIB/TNwf1jjKPq5o0VcqDHYqJXLSsQhv2chIW3fNGO/3k9tLq3e
- HDJw6ecWaUrsUdzJ5Zl94qRpELVBhjtp/N9sOiaQgJOKFF7aCCrlE2L10ua7GgN7oR
- 6E0FCaqOAtoog==
-To: Roman Mamedov <rm@romanrm.net>
-Cc: Reid Rankin <reidrankin@gmail.com>, ch@ntrv.dk,
- WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: Standardized IPv6 ULA from PublicKey
-In-Reply-To: <20200629163851.41d6d755@natsu>
-References: <372AE79B-69E5-4B18-926C-E402FDFB2E95@lonnie.abelbeck.com>
- <20171205035352.01ffe1f5@vega.skynet.aixah.de>
- <CAHmME9ouUNV4pc7qwr4bO-5bEecFc1U64PF13ExgmYnH9q45tw@mail.gmail.com>
- <20200624153706.3yngzzslepqh7q54@ws.flokli.de>
- <CA+cYV6uWUC1YDbpXz+ft-fKug7SY4_QNrR-x7q_z_qWmj7u-Ww@mail.gmail.com>
- <CAMaqUZ0nTL9mbYEifHP-sc8kQ6ehAOOWfmEb7ARNfZWWDkv4eA@mail.gmail.com>
- <875zbai32e.fsf@toke.dk> <20200629153118.4d72f447@natsu>
- <87r1tygmlv.fsf@toke.dk> <20200629163851.41d6d755@natsu>
-Date: Mon, 29 Jun 2020 14:15:02 +0200
-X-Clacks-Overhead: GNU Terry Pratchett
-Message-ID: <87lfk6gjax.fsf@toke.dk>
+ Mon, 29 Jun 2020 16:27:33 +0000 (UTC)
+Received: by mail-io1-f71.google.com with SMTP id z65so9917538iof.13
+ for <wireguard@lists.zx2c4.com>; Mon, 29 Jun 2020 09:47:13 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
+ bh=J/R4XxZwQAT4xbXtFh8lwFtDA9cf+xMbyKu1eQl5jf8=;
+ b=Mnw6+Km4yM0d2BAHPTJQ3gT9+SXb3TSD8jdK+HNScHChLFECQkYexFEDDDFwfMvt1T
+ ElsNNYOMt7t3gf8bdfA3x/UIbq75YMRMAQdEGTE670wSKVRvQTFBkCUnOfDbSWY97nVL
+ VNWyOj7jxNxxAwpqr5uCHoTp5MuFZOGUjpIsQTuMSdcBh9gszWWYGaHexjCsc1h5s95i
+ d2M21sXQL0vP6tguKpvxaVIhRCFJOqtz2beaOc5eNiTyMevHeCbC3HR96GL+C4TDEtuv
+ 1E6REESyJMXisDNEW3Pn/m066b5GIqO44dyy/CmFI8b3vyKEQ2FN/UeAIgxVv3BYCTvn
+ guVw==
+X-Gm-Message-State: AOAM532++nIzKTtdWin0u5jbhREb7To41ZczA6ficxB6ka/57AsYYClU
+ VsqIUW2jGRm0aD/n/u7wk7DOMYsW1JqB6yjYd1JDRJGvEhjG
+X-Google-Smtp-Source: ABdhPJwcQ/lJpLQwMcD9q55uaUscxlk/L+5p87BCC5ifC21YduuXQuHTKGQwHLwBx816PHvGYKF/qAnd45+1oaXI7LcCJNVuh9yA
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+X-Received: by 2002:a02:270d:: with SMTP id g13mr17708126jaa.93.1593449233300; 
+ Mon, 29 Jun 2020 09:47:13 -0700 (PDT)
+Date: Mon, 29 Jun 2020 09:47:13 -0700
+X-Google-Appengine-App-Id: s~syzkaller
+X-Google-Appengine-App-Id-Alias: syzkaller
+Message-ID: <00000000000084cbe605a93bcf78@google.com>
+Subject: KASAN: vmalloc-out-of-bounds Read in netdev_name_node_lookup_rcu
+From: syzbot <syzbot+1860d20cb6a6f52be167@syzkaller.appspotmail.com>
+To: Jason@zx2c4.com, davem@davemloft.net, kuba@kernel.org, 
+ linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
+ syzkaller-bugs@googlegroups.com, wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -69,59 +67,96 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Roman Mamedov <rm@romanrm.net> writes:
+Hello,
 
-> On Mon, 29 Jun 2020 13:03:40 +0200
-> Toke H=C3=B8iland-J=C3=B8rgensen <toke@toke.dk> wrote:
->
->> Eh? This is specified pretty clearly in RFC4291, section 2.1:
->
-> It also says:
->
-> -----
->
-> 2.5.6.  Link-Local IPv6 Unicast Addresses
->
->    Link-Local addresses are for use on a single link.  Link-Local
->    addresses have the following format:
->
->    |   10     |
->    |  bits    |         54 bits         |          64 bits           |
->    +----------+-------------------------+----------------------------+
->    |1111111010|           0             |       interface ID         |
->    +----------+-------------------------+----------------------------+
->
->
-> -----
->
-> So should we also follow the designated format for link-locals, or
-> accept that WG's case differs from what they had in mind in those
-> sections.
+syzbot found the following crash on:
 
-In general I'd say that deviating from the RFC needs a good reason.
-Expanding the number of bits we can use for the identifier may be a good
-reason to expand the LL interface ID width (although I'm not actually
-too worried about collisions even if we only use 64 bits). I have yet to
-hear a good reason for not just having LL addresses enabled by default :)
+HEAD commit:    0574e200 enetc: Fix tx rings bitmap iteration range, irq h..
+git tree:       net
+console output: https://syzkaller.appspot.com/x/log.txt?x=15f95b4b100000
+kernel config:  https://syzkaller.appspot.com/x/.config?x=bf3aec367b9ab569
+dashboard link: https://syzkaller.appspot.com/bug?extid=1860d20cb6a6f52be167
+compiler:       gcc (GCC) 10.1.0-syz 20200507
 
-> That the "interface" is a special one, with a "link" that doesn't
-> function as other kinds of links do, that there's no "neighbour" per
-> se to contact by an all-neighbour multicast for instance, no mechanism
-> for the "all routers" multicast to work, etc (i.e. all of what the LLs
-> were intended to support).
+Unfortunately, I don't have any reproducer for this crash yet.
 
-But it's not special. If wireguard is setup as a single point-to-point
-link (allowed-ip ::/0), "all-neighbour multicast" and "broadcast"
-already works. If there are multiple peers on the interface it doesn't,
-but that is also a bug that should be fixed as far as I'm concerned.
+IMPORTANT: if you fix the bug, please add the following tag to the commit:
+Reported-by: syzbot+1860d20cb6a6f52be167@syzkaller.appspotmail.com
 
-> To be clear I'm not against adding LLs, just that "the RFC says so"
-> shouldn't be considered the main argument for that when it comes to
-> WG.
+==================================================================
+BUG: KASAN: vmalloc-out-of-bounds in strnlen+0x64/0x70 lib/string.c:561
+Read of size 1 at addr ffffc90016f09018 by task syz-executor.0/25244
 
-Oh sure, to me the main argument is also "because it's useful" rather
-than "because the RFC says so". But in my view "because it's useful" is
-also the reason that requirement is in the RFC in the first place, so
-really it amounts to the same thing.
+CPU: 0 PID: 25244 Comm: syz-executor.0 Not tainted 5.8.0-rc2-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
+Call Trace:
+ __dump_stack lib/dump_stack.c:77 [inline]
+ dump_stack+0x18f/0x20d lib/dump_stack.c:118
+ print_address_description.constprop.0.cold+0x5/0x436 mm/kasan/report.c:383
+ __kasan_report mm/kasan/report.c:513 [inline]
+ kasan_report.cold+0x1f/0x37 mm/kasan/report.c:530
+ strnlen+0x64/0x70 lib/string.c:561
+ strnlen include/linux/string.h:339 [inline]
+ dev_name_hash net/core/dev.c:208 [inline]
+ netdev_name_node_lookup_rcu+0x22/0x150 net/core/dev.c:290
+ dev_get_by_name_rcu net/core/dev.c:883 [inline]
+ dev_get_by_name+0x7b/0x1e0 net/core/dev.c:905
+ lookup_interface drivers/net/wireguard/netlink.c:63 [inline]
+ wg_get_device_start+0x2e4/0x3f0 drivers/net/wireguard/netlink.c:203
+ genl_start+0x342/0x6e0 net/netlink/genetlink.c:556
+ __netlink_dump_start+0x585/0x900 net/netlink/af_netlink.c:2343
+ genl_family_rcv_msg_dumpit+0x2ac/0x310 net/netlink/genetlink.c:638
+ genl_family_rcv_msg net/netlink/genetlink.c:733 [inline]
+ genl_rcv_msg+0x797/0x9e0 net/netlink/genetlink.c:753
+ netlink_rcv_skb+0x15a/0x430 net/netlink/af_netlink.c:2469
+ genl_rcv+0x24/0x40 net/netlink/genetlink.c:764
+ netlink_unicast_kernel net/netlink/af_netlink.c:1303 [inline]
+ netlink_unicast+0x533/0x7d0 net/netlink/af_netlink.c:1329
+ netlink_sendmsg+0x856/0xd90 net/netlink/af_netlink.c:1918
+ sock_sendmsg_nosec net/socket.c:652 [inline]
+ sock_sendmsg+0xcf/0x120 net/socket.c:672
+ sock_no_sendpage+0xee/0x130 net/core/sock.c:2853
+ kernel_sendpage net/socket.c:3642 [inline]
+ sock_sendpage+0xe5/0x140 net/socket.c:945
+ pipe_to_sendpage+0x2ad/0x380 fs/splice.c:448
+ splice_from_pipe_feed fs/splice.c:502 [inline]
+ __splice_from_pipe+0x3dc/0x830 fs/splice.c:626
+ splice_from_pipe fs/splice.c:661 [inline]
+ generic_splice_sendpage+0xd4/0x140 fs/splice.c:834
+ do_splice_from fs/splice.c:846 [inline]
+ direct_splice_actor+0x171/0x2f0 fs/splice.c:1016
+ splice_direct_to_actor+0x38c/0x980 fs/splice.c:971
+ do_splice_direct+0x1b3/0x280 fs/splice.c:1059
+ do_sendfile+0x559/0xc30 fs/read_write.c:1521
+ __do_sys_sendfile64 fs/read_write.c:1582 [inline]
+ __se_sys_sendfile64 fs/read_write.c:1568 [inline]
+ __x64_sys_sendfile64+0x1cc/0x210 fs/read_write.c:1568
+ do_syscall_64+0x60/0xe0 arch/x86/entry/common.c:359
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x45cb19
+Code: Bad RIP value.
+RSP: 002b:00007f4e16337c78 EFLAGS: 00000246 ORIG_RAX: 0000000000000028
+RAX: ffffffffffffffda RBX: 00000000004fd640 RCX: 000000000045cb19
+RDX: 0000000000000000 RSI: 0000000000000004 RDI: 0000000000000005
+RBP: 000000000078bf00 R08: 0000000000000000 R09: 0000000000000000
+R10: 000000010000680d R11: 0000000000000246 R12: 00000000ffffffff
+R13: 0000000000000901 R14: 00000000004cbddf R15: 00007f4e163386d4
 
--Toke
+
+Memory state around the buggy address:
+ ffffc90016f08f00: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
+ ffffc90016f08f80: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
+>ffffc90016f09000: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
+                            ^
+ ffffc90016f09080: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
+ ffffc90016f09100: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
+==================================================================
+
+
+---
+This bug is generated by a bot. It may contain errors.
+See https://goo.gl/tpsmEJ for more information about syzbot.
+syzbot engineers can be reached at syzkaller@googlegroups.com.
+
+syzbot will keep track of this bug report. See:
+https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
