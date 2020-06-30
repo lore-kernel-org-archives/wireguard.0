@@ -7,62 +7,62 @@ X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6CC1DC433E2
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DC39BC433E1
 	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 30 Jun 2020 04:00:35 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 1A774206BE
+	by mail.kernel.org (Postfix) with ESMTPS id 88DAD206BE
 	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 30 Jun 2020 04:00:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mk+11WlR"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 1A774206BE
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AST/x2uF"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 88DAD206BE
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id db7be67e;
-	Tue, 30 Jun 2020 03:40:35 +0000 (UTC)
-Received: from mail-il1-x12b.google.com (mail-il1-x12b.google.com
- [2607:f8b0:4864:20::12b])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2ba5f4ae
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6843936d;
+	Tue, 30 Jun 2020 03:40:36 +0000 (UTC)
+Received: from mail-il1-x12c.google.com (mail-il1-x12c.google.com
+ [2607:f8b0:4864:20::12c])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b7b71aa3
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 30 Jun 2020 03:22:02 +0000 (UTC)
-Received: by mail-il1-x12b.google.com with SMTP id t27so11480277ill.9
- for <wireguard@lists.zx2c4.com>; Mon, 29 Jun 2020 20:41:46 -0700 (PDT)
+ Tue, 30 Jun 2020 03:37:15 +0000 (UTC)
+Received: by mail-il1-x12c.google.com with SMTP id w9so16437562ilk.13
+ for <wireguard@lists.zx2c4.com>; Mon, 29 Jun 2020 20:56:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
  :cc; bh=yAZduYcEKm4wiOoLB6wnk1hlMRtoPsLgtKlyIvlMUUk=;
- b=mk+11WlRWtv/l/pJYJZ/RawfGOevO83rro8kVUb/Vrf4DiINK6k0SvEvAv4248qtD5
- SRxsQEFnTPHAwz0Fk09NojsWcpckLNuF16X//8BY1XJohQ7u4yRFrC77VCcBvv93kYLh
- ayp85mqvIvdJxLk3gPh3/Ocd5g/uXWTsZ07deh0prw5mhvkLUdWpuUnE6cgv4arSU0jN
- 1n7k1iAFvOjTfq62s5822T7/sgJrEQw5l2g8ZhWLyJC61sr8kuhEvoQyrvQCdIRPcsRn
- EBWM/hL04FBRZ5YafWesRBHrJysZhBGzbkidU4THG6T51lDf4BoXJn2FpMDCT/jsDUAG
- FVnA==
+ b=AST/x2uFdAOxU5odRsKWn9WpNVke4VbhSNvdISsxJZV/NpV7Lw4iiX0GXfsPiDW0W4
+ tUrRjKiSa62sEqDUPqKDwLjTEfwaJIzROaY0JTZ45PFyGziN68HkqYHlZgAWUgmUdiPP
+ HEwGMXZa8wYgmU3U9+2SswTLl2PyLa0FQlbDjmV8uhbQpGuo/BqKXIfX1spkVz3HteSf
+ aRC6y9fpGFIc8J0vnAIUviWUySCHN8LvMWS2m2k9nuQwY4VMIf3in26ljVIjLireNsJu
+ WIj0yyMXzaTLwD3OTnQ4fy40w42oSfRHblfTUWboKc/MMq6uDuGzjrQ141U67NzeFkvi
+ oK9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
  bh=yAZduYcEKm4wiOoLB6wnk1hlMRtoPsLgtKlyIvlMUUk=;
- b=csganMAYQfBVJAP8t7Av0FHx+czam9ZM6osWw3CS00O/fpxVThpjzw2ZlsbLb7SDUb
- UwreA4Mq1VpldswzSlX2ZgH+QFAN4RI5Pt9/ps9icO1wpQzR7toAcoT2lG6ZHCpsL+VC
- Yy+C/V1SLGWAxRZdMdMRNByMeSQQcP4jq5KskweJn5awciC+GeN70pQImj2Dexnw/nVt
- nsXma7FYzs+O2/IDYm6mCEoaWMPax2HUlFP1w/dN3q3aun42vsuLEX8tfvxegy6LDsS6
- 4aQzCV8EvqTE+XFlmE5xoHQFe7blnsCZ3J6+0UP8zgxXad8ngZpQHzIQ1CHxijR0My5g
- WVBQ==
-X-Gm-Message-State: AOAM531GkTyJ+OcNEJoo0rdK4CeJpisaKXp09nG43DCkYm0Yy1Ih5dSv
- n6K++5nPQZsBYuX6Uf9xhSzRb1lfP2KhabXaJsI=
-X-Google-Smtp-Source: ABdhPJwMySp39OyWrYSU+/VcHayy9Ma8ihqWkE+7RcZvh1E4BBzAw0Bsx6/HIj42fFNOZQmueF/9iSDAv//sWqEenSk=
-X-Received: by 2002:a05:6e02:147:: with SMTP id j7mr744349ilr.22.1593488505610; 
- Mon, 29 Jun 2020 20:41:45 -0700 (PDT)
+ b=D+kXQl8h5gjsbnJCFn7eu0llUrjdJdVl46Q+iz2gEJ1Lqm9tafnNDVJFKSPXpYj7Yw
+ Bj0vT3n1cfKFlK2nitX0sRbjYF6llXrMp7eMRWAE19aRgbekYndEHvgAQ1msjIuA9A3p
+ RTEPOVa/pJYb/ww7pYK8wXVl2+mo80XKA/huKpQ5EZj7k22k6hCNYUIqRpqaY4oze049
+ vFkZB2i+Ts2m33ndRnCSR8aQDlDVTNRt/iLPfHsQwzlNciiqr42ycCvyAeQK/tDBIHqM
+ 8d3k5kSbL5Swpa8trsjrLqDMf40g+w/lCTviFLnUEZ0ZuaURsbuW0NnN/4Hm/BiHBv0c
+ +E5A==
+X-Gm-Message-State: AOAM533pE96zAc8L+jQbU8g/+0pfswk2TJNxKvwqfIBDn8yikXs9h2zN
+ HVAaBPzPO/gdnQo3Gd63BWUwyGe0ll8C7ONKVXM=
+X-Google-Smtp-Source: ABdhPJxliD+RX+5z+ADoRBWAEQRMTYQaVyBjwuy4bcMqOCiNJvHeTGmICJj9i962YuR7HghZ2ecs16GvVbRu0qa8CbI=
+X-Received: by 2002:a92:bb0b:: with SMTP id w11mr777875ili.238.1593489419280; 
+ Mon, 29 Jun 2020 20:56:59 -0700 (PDT)
 MIME-Version: 1.0
-References: <000000000000c8af7205a9412c5b@google.com>
-In-Reply-To: <000000000000c8af7205a9412c5b@google.com>
+References: <00000000000084cbe605a93bcf78@google.com>
+In-Reply-To: <00000000000084cbe605a93bcf78@google.com>
 From: Cong Wang <xiyou.wangcong@gmail.com>
-Date: Mon, 29 Jun 2020 20:41:34 -0700
-Message-ID: <CAM_iQpVieGdepCKheYETDyo691k=tdj0n9GaEQG=orFTnz7tMA@mail.gmail.com>
-Subject: Re: KASAN: use-after-free Read in dev_get_by_name
-To: syzbot <syzbot+86e957379663a156cd31@syzkaller.appspotmail.com>
+Date: Mon, 29 Jun 2020 20:56:48 -0700
+Message-ID: <CAM_iQpVpaBQ5Hg9YAGRtcOWKDhyNOpZ6jfsDRbDhg-Da1xxUkw@mail.gmail.com>
+Subject: Re: KASAN: vmalloc-out-of-bounds Read in netdev_name_node_lookup_rcu
+To: syzbot <syzbot+1860d20cb6a6f52be167@syzkaller.appspotmail.com>
 Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, David Miller <davem@davemloft.net>,
  Jakub Kicinski <kuba@kernel.org>, LKML <linux-kernel@vger.kernel.org>, 
  Linux Kernel Network Developers <netdev@vger.kernel.org>,
