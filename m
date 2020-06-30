@@ -7,62 +7,62 @@ X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F3BC2C433E0
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 30 Jun 2020 04:00:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6CC1DC433E2
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 30 Jun 2020 04:00:35 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 959EC206BE
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 30 Jun 2020 04:00:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 1A774206BE
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 30 Jun 2020 04:00:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NDpBAaV5"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 959EC206BE
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mk+11WlR"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 1A774206BE
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cf9c094e;
-	Tue, 30 Jun 2020 03:40:34 +0000 (UTC)
-Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com
- [2607:f8b0:4864:20::d32])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id aff00fd4
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id db7be67e;
+	Tue, 30 Jun 2020 03:40:35 +0000 (UTC)
+Received: from mail-il1-x12b.google.com (mail-il1-x12b.google.com
+ [2607:f8b0:4864:20::12b])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2ba5f4ae
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 30 Jun 2020 03:19:26 +0000 (UTC)
-Received: by mail-io1-xd32.google.com with SMTP id m81so19533622ioa.1
- for <wireguard@lists.zx2c4.com>; Mon, 29 Jun 2020 20:39:10 -0700 (PDT)
+ Tue, 30 Jun 2020 03:22:02 +0000 (UTC)
+Received: by mail-il1-x12b.google.com with SMTP id t27so11480277ill.9
+ for <wireguard@lists.zx2c4.com>; Mon, 29 Jun 2020 20:41:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
  :cc; bh=yAZduYcEKm4wiOoLB6wnk1hlMRtoPsLgtKlyIvlMUUk=;
- b=NDpBAaV5Y8Ka1UoM0WgNI2K+NSaP1tG1RWeEhhHg0dFiLFP7uifzCMBubfXUDnq8JM
- Qdz7Rik33to316B5AikQ6oXzHq4T5UH+cUx44tVFqvaz9/rDiKRR78HnSgxrEIx0doRM
- MfpZ761C67mc3KPTANzjT/aC0qtYxVduY+jV78o+Y/0hYL5Oyo/ZSfweZKOPEz1uINMx
- 3KARiV0AexBxEgrNi/XAhz6MTDKARusWB48PhCg3unU3YJIU2shNFQXmaIE+2fBC8z/0
- ut2b2cArErLkqy1GxVobPujY+e/ylGVdmQ/MF4FqCskXyM7H//NEczILBs/hC99Wr2PS
- LR7w==
+ b=mk+11WlRWtv/l/pJYJZ/RawfGOevO83rro8kVUb/Vrf4DiINK6k0SvEvAv4248qtD5
+ SRxsQEFnTPHAwz0Fk09NojsWcpckLNuF16X//8BY1XJohQ7u4yRFrC77VCcBvv93kYLh
+ ayp85mqvIvdJxLk3gPh3/Ocd5g/uXWTsZ07deh0prw5mhvkLUdWpuUnE6cgv4arSU0jN
+ 1n7k1iAFvOjTfq62s5822T7/sgJrEQw5l2g8ZhWLyJC61sr8kuhEvoQyrvQCdIRPcsRn
+ EBWM/hL04FBRZ5YafWesRBHrJysZhBGzbkidU4THG6T51lDf4BoXJn2FpMDCT/jsDUAG
+ FVnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
  bh=yAZduYcEKm4wiOoLB6wnk1hlMRtoPsLgtKlyIvlMUUk=;
- b=tzU+EKpe5Jlf2cM2hFQpqwkP+97V8uDhjON/7EBASKkufwG+bAG1EDvUwuV9Lj8Ilm
- BHjXIfN+o1cTQUmsThLm/I9oMAIJT2W/f/2ukrW9OcBmmUQ0XDvAX5mzncrpOllqtEdW
- H0IUSvmWzQT8tVwwYzJyqDr9QNsWpBwwnwOVzATv1gvczh60KvDMCPUExvN4aWAk3Uee
- iURmN/JSE9izHisHnK1cR7VSqlbbMjFW1+ABlXekDP+9WvkWp1Ujti3PgQIkU6xA9d12
- KSpjQfmdTbqG9mh0ZRfRTpQPubLbRhE82LhxBO5B8o1aI5v1VlPuQqtwXgSLXmKKOZNI
- +LXA==
-X-Gm-Message-State: AOAM5339SfDOTgy536442WxyLdaO5VGIiobJCXnmgaK6iZXP4uRO49f/
- v1sgxS1fhDgu+zKugM+T6+d5w3W6IlaAfu15ZQA=
-X-Google-Smtp-Source: ABdhPJwoird2/Mhtjc7mCVLFXM2zg41JBownJhSzezbP4gCwOLLCuBVV57M7yNYu0M/LCJeRJ67NIwts/Q8apK7vfNo=
-X-Received: by 2002:a02:1a08:: with SMTP id 8mr20432403jai.124.1593488349849; 
- Mon, 29 Jun 2020 20:39:09 -0700 (PDT)
+ b=csganMAYQfBVJAP8t7Av0FHx+czam9ZM6osWw3CS00O/fpxVThpjzw2ZlsbLb7SDUb
+ UwreA4Mq1VpldswzSlX2ZgH+QFAN4RI5Pt9/ps9icO1wpQzR7toAcoT2lG6ZHCpsL+VC
+ Yy+C/V1SLGWAxRZdMdMRNByMeSQQcP4jq5KskweJn5awciC+GeN70pQImj2Dexnw/nVt
+ nsXma7FYzs+O2/IDYm6mCEoaWMPax2HUlFP1w/dN3q3aun42vsuLEX8tfvxegy6LDsS6
+ 4aQzCV8EvqTE+XFlmE5xoHQFe7blnsCZ3J6+0UP8zgxXad8ngZpQHzIQ1CHxijR0My5g
+ WVBQ==
+X-Gm-Message-State: AOAM531GkTyJ+OcNEJoo0rdK4CeJpisaKXp09nG43DCkYm0Yy1Ih5dSv
+ n6K++5nPQZsBYuX6Uf9xhSzRb1lfP2KhabXaJsI=
+X-Google-Smtp-Source: ABdhPJwMySp39OyWrYSU+/VcHayy9Ma8ihqWkE+7RcZvh1E4BBzAw0Bsx6/HIj42fFNOZQmueF/9iSDAv//sWqEenSk=
+X-Received: by 2002:a05:6e02:147:: with SMTP id j7mr744349ilr.22.1593488505610; 
+ Mon, 29 Jun 2020 20:41:45 -0700 (PDT)
 MIME-Version: 1.0
-References: <0000000000006eb8b705a9426b8b@google.com>
-In-Reply-To: <0000000000006eb8b705a9426b8b@google.com>
+References: <000000000000c8af7205a9412c5b@google.com>
+In-Reply-To: <000000000000c8af7205a9412c5b@google.com>
 From: Cong Wang <xiyou.wangcong@gmail.com>
-Date: Mon, 29 Jun 2020 20:38:58 -0700
-Message-ID: <CAM_iQpXix27CeSxORWz-5EHBGenSQ0PPxuGN3CjA51xonEA8+g@mail.gmail.com>
-Subject: Re: KASAN: use-after-free Read in netdev_name_node_lookup_rcu
-To: syzbot <syzbot+a82be85e09cd5df398fe@syzkaller.appspotmail.com>
+Date: Mon, 29 Jun 2020 20:41:34 -0700
+Message-ID: <CAM_iQpVieGdepCKheYETDyo691k=tdj0n9GaEQG=orFTnz7tMA@mail.gmail.com>
+Subject: Re: KASAN: use-after-free Read in dev_get_by_name
+To: syzbot <syzbot+86e957379663a156cd31@syzkaller.appspotmail.com>
 Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, David Miller <davem@davemloft.net>,
  Jakub Kicinski <kuba@kernel.org>, LKML <linux-kernel@vger.kernel.org>, 
  Linux Kernel Network Developers <netdev@vger.kernel.org>,
