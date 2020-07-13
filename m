@@ -1,58 +1,54 @@
-Return-Path: <SRS0=tBXN=AR=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=8LYU=AY=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.4 required=3.0 tests=FROM_LOCAL_HEX,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-1.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MSGID_RANDY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DF6DFC433E0
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  6 Jul 2020 06:22:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B4992C433E1
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 13 Jul 2020 03:34:33 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 5EF8F2075B
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  6 Jul 2020 06:22:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 5EF8F2075B
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com
+	by mail.kernel.org (Postfix) with ESMTPS id 12417206E2
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 13 Jul 2020 03:34:31 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="Wbm2FNg4"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 12417206E2
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c3deffd6;
-	Mon, 6 Jul 2020 06:01:45 +0000 (UTC)
-Received: from mail-io1-f72.google.com (mail-io1-f72.google.com
- [209.85.166.72])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 901a8b26
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7207e852;
+	Mon, 13 Jul 2020 03:12:49 +0000 (UTC)
+Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 658c15b9
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 6 Jul 2020 06:01:42 +0000 (UTC)
-Received: by mail-io1-f72.google.com with SMTP id a16so23067933iow.9
- for <wireguard@lists.zx2c4.com>; Sun, 05 Jul 2020 23:22:14 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
- bh=65VFK3CeGOY6XsF4+JQsV3Lwx5hkLbk2n9tjz+Qw9Jo=;
- b=rafWueZzUMyGtwEWE8328ebvf958HJFjHidrMOs86BuUs9IoT/i0fANnWjlmCAUTsj
- oOjxKEoTtJN04vmZB/6wuJ3H1BQJ1VFyDYucH4LIuw34UwE89hUgXdECGgH+C8yxTs6l
- B7PVW7DiDggfCBVJoDEisU12R55xLF7Y9Wr+td6o8ICu1qkPEEkXmXpPI/HXnHZwNlA0
- T46eLVLjVHrZs1MEcmjgeezgdP1upmjPc6pLPNnEI7uJ7JfYyxdLZhgOjoYG3p1F7v68
- fN4n5WEefmS2sGlwPNDpz0F3UEJm7yM/EGfvzboF74/3rBwdEn51T6hmO1oUAus98T02
- 3xKw==
-X-Gm-Message-State: AOAM532FVfQotq5y3Y+CveKp88Ey8GLSSIeEHo5rCHYlcXCWnJksoTI6
- TxTcnsF22EJTTrYjOp+d+luaint00w1AFpkqoJ8t6Ptx7uuU
-X-Google-Smtp-Source: ABdhPJzxJfprkEfzW1CDLFjw0CpuAk9bdct5cThB4k/Pgp3XcKi4EsWkOqKoaALvUQgTFtVbA7bcf/rlB1rqsD1zoXgBN1gbx34K
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 13 Jul 2020 03:12:47 +0000 (UTC)
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d98bd29e
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 13 Jul 2020 03:12:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=date:to:from
+ :subject:mime-version:content-type; s=mail; bh=NX+lTk8uIOhayhwyH
+ HfvgbzCZLI=; b=Wbm2FNg4lxqrPJ4xYE3bo9w5PBdCm10z2stpXprhzpXJP7Hc+
+ JkJe9SR1wxv+rP63B31E/uxMC+UoxDCvLeutK66tpey6MRUss0GehulIT4ff86hG
+ 4loR8hV6Z13lUQSxK0vbwLrxy6+UGktdjLKk4+vhSuErDAQQAXDF3vaDsUoiy7WP
+ 5nqq7RG/9tfrtyzSxgp7y7JSunmZEpLEKGthuAB7hBF5icnEFRS12djd8qoqZqSm
+ m2NaP3oa4HlGLVU736g/5P6mbxcVBpSYz8l3frD49HFQvcS5E1Ci5KQuflJw96Pf
+ pxGLM2PTD1JyugjKLaoBSljlA7wEfEZ4HoYoA==
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 41c04e91
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 13 Jul 2020 03:12:47 +0000 (UTC)
+Date: Sun, 12 Jul 2020 21:34:12 -0600
+To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: [ANNOUNCE] wireguard-linux-compat v1.0.20200712 released
 MIME-Version: 1.0
-X-Received: by 2002:a92:b749:: with SMTP id c9mr30062467ilm.289.1594016534226; 
- Sun, 05 Jul 2020 23:22:14 -0700 (PDT)
-Date: Sun, 05 Jul 2020 23:22:14 -0700
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <00000000000049f07f05a9bfe509@google.com>
-Subject: KASAN: use-after-free Read in wg_get_device_start
-From: syzbot <syzbot+e869cfbeeae05d706b9c@syzkaller.appspotmail.com>
-To: Jason@zx2c4.com, davem@davemloft.net, kuba@kernel.org, 
- linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
- syzkaller-bugs@googlegroups.com, wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Message-ID: <913e8149b5a5c3a6@mail.zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -67,127 +63,104 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
 Hello,
 
-syzbot found the following crash on:
+A new version, v1.0.20200712, of the backported WireGuard kernel module for
+3.10 <= Linux <= 5.5.y has been tagged in the git repository.
 
-HEAD commit:    7cc2a8ea Merge tag 'block-5.8-2020-07-01' of git://git.ker..
-git tree:       upstream
-console output: https://syzkaller.appspot.com/x/log.txt?x=123532a7100000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=183dd243398ba7ec
-dashboard link: https://syzkaller.appspot.com/bug?extid=e869cfbeeae05d706b9c
-compiler:       clang version 10.0.0 (https://github.com/llvm/llvm-project/ c2443155a0fb245c8f17f2c1c72b6ea391e86e81)
+== Changes ==
 
-Unfortunately, I don't have any reproducer for this crash yet.
+  This release brings parity with the commits Linus released a few hours
+  ago into 5.8-rc5.
+  
+  * receive: account for napi_gro_receive never returning GRO_DROP
+  
+  The napi_gro_receive function no longer returns GRO_DROP ever, making
+  handling GRO_DROP dead code. This commit removes that dead code.
+  Further, it's not even clear that device drivers have any business in
+  taking action after passing off received packets; that's arguably out of
+  their hands.
+  
+  * compat: rhel 8.3 backported skb_reset_redirect
+  
+  This works with the latest RHEL 8.3 beta, which isn't yet released,
+  and breaks CentOS 8 Stream as a result, but Red Hat is so slow to release
+  their kernels to testing that we've got a real issue: we can't support
+  Red Hat development efforts internally at the same time as supporting
+  CentOS 8 Stream, making the stream project something of bust,
+  unfortuantely.
+  
+  * compat: SUSE 15.1 is the final SUSE we need to support
+  
+  >=15.2 is in SUSE's kernel now. We'll be dropping 15.1 support in a
+  few weeks after people have had time to upgrade.
+  
+  * device: implement header_ops->parse_protocol for AF_PACKET
+  
+  WireGuard uses skb->protocol to determine packet type, and bails out if
+  it's not set or set to something it's not expecting. For AF_PACKET
+  injection, we need to support its call chain of:
+  
+      packet_sendmsg -> packet_snd -> packet_parse_headers ->
+        dev_parse_header_protocol -> parse_protocol
+  
+  Without a valid parse_protocol, this returns zero, and wireguard then
+  rejects the skb. So, this wires up the ip_tunnel handler for layer 3
+  packets for that case.
+  
+  * queueing: make use of ip_tunnel_parse_protocol
+  
+  Now that wg_examine_packet_protocol has been added for general
+  consumption as ip_tunnel_parse_protocol, it's possible to remove
+  wg_examine_packet_protocol and simply use the new
+  ip_tunnel_parse_protocol function directly.
+  
+  * compat: backport ip_tunnel_parse_protocol and ip_tunnel_header_ops
+  
+  These are required for moving wg_examine_packet_protocol out of
+  wireguard and into upstream.
 
-IMPORTANT: if you fix the bug, please add the following tag to the commit:
-Reported-by: syzbot+e869cfbeeae05d706b9c@syzkaller.appspotmail.com
+This release contains commits from: Jason A. Donenfeld.
 
-==================================================================
-BUG: KASAN: use-after-free in nla_get_u32 include/net/netlink.h:1541 [inline]
-BUG: KASAN: use-after-free in lookup_interface drivers/net/wireguard/netlink.c:61 [inline]
-BUG: KASAN: use-after-free in wg_get_device_start+0x2bc/0x2d0 drivers/net/wireguard/netlink.c:203
-Read of size 4 at addr ffff88803b9c3818 by task syz-executor.3/15521
+As always, the source is available at https://git.zx2c4.com/wireguard-linux-compat/
+and information about the project is available at https://www.wireguard.com/ .
 
-CPU: 1 PID: 15521 Comm: syz-executor.3 Not tainted 5.8.0-rc3-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
-Call Trace:
- __dump_stack lib/dump_stack.c:77 [inline]
- dump_stack+0x1f0/0x31e lib/dump_stack.c:118
- print_address_description+0x66/0x5a0 mm/kasan/report.c:383
- __kasan_report mm/kasan/report.c:513 [inline]
- kasan_report+0x132/0x1d0 mm/kasan/report.c:530
- nla_get_u32 include/net/netlink.h:1541 [inline]
- lookup_interface drivers/net/wireguard/netlink.c:61 [inline]
- wg_get_device_start+0x2bc/0x2d0 drivers/net/wireguard/netlink.c:203
- genl_start+0x390/0x570 net/netlink/genetlink.c:556
- __netlink_dump_start+0x3d2/0x700 net/netlink/af_netlink.c:2343
- genl_family_rcv_msg_dumpit net/netlink/genetlink.c:638 [inline]
- genl_family_rcv_msg net/netlink/genetlink.c:733 [inline]
- genl_rcv_msg+0xb03/0xe00 net/netlink/genetlink.c:753
- netlink_rcv_skb+0x190/0x3a0 net/netlink/af_netlink.c:2469
- genl_rcv+0x24/0x40 net/netlink/genetlink.c:764
- netlink_unicast_kernel net/netlink/af_netlink.c:1303 [inline]
- netlink_unicast+0x786/0x940 net/netlink/af_netlink.c:1329
- netlink_sendmsg+0xa57/0xd70 net/netlink/af_netlink.c:1918
- sock_sendmsg_nosec net/socket.c:652 [inline]
- sock_sendmsg net/socket.c:672 [inline]
- ____sys_sendmsg+0x519/0x800 net/socket.c:2352
- ___sys_sendmsg net/socket.c:2406 [inline]
- __sys_sendmsg+0x2b1/0x360 net/socket.c:2439
- do_syscall_64+0x73/0xe0 arch/x86/entry/common.c:359
- entry_SYSCALL_64_after_hwframe+0x44/0xa9
-RIP: 0033:0x45cb29
-Code: Bad RIP value.
-RSP: 002b:00007f1bd1266c78 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
-RAX: ffffffffffffffda RBX: 0000000000502320 RCX: 000000000045cb29
-RDX: 0000000000000000 RSI: 0000000020000200 RDI: 0000000000000003
-RBP: 000000000078bf00 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 00000000ffffffff
-R13: 0000000000000a32 R14: 00000000004cd184 R15: 00007f1bd12676d4
+This version is available in compressed tarball form here:
+  https://git.zx2c4.com/wireguard-linux-compat/snapshot/wireguard-linux-compat-1.0.20200712.tar.xz
+  SHA2-256: e15b3d4eb2cf186920a6ed13685187d6b846e59eb383c291913628682965ac95
 
-Allocated by task 15525:
- save_stack mm/kasan/common.c:48 [inline]
- set_track mm/kasan/common.c:56 [inline]
- __kasan_kmalloc+0x103/0x140 mm/kasan/common.c:494
- __kmalloc_reserve net/core/skbuff.c:142 [inline]
- __alloc_skb+0xde/0x4f0 net/core/skbuff.c:210
- alloc_skb include/linux/skbuff.h:1083 [inline]
- netlink_alloc_large_skb net/netlink/af_netlink.c:1175 [inline]
- netlink_sendmsg+0x7b2/0xd70 net/netlink/af_netlink.c:1893
- sock_sendmsg_nosec net/socket.c:652 [inline]
- sock_sendmsg net/socket.c:672 [inline]
- ____sys_sendmsg+0x519/0x800 net/socket.c:2352
- ___sys_sendmsg net/socket.c:2406 [inline]
- __sys_sendmsg+0x2b1/0x360 net/socket.c:2439
- do_syscall_64+0x73/0xe0 arch/x86/entry/common.c:359
- entry_SYSCALL_64_after_hwframe+0x44/0xa9
+A PGP signature of that file decompressed is available here:
+  https://git.zx2c4.com/wireguard-linux-compat/snapshot/wireguard-linux-compat-1.0.20200712.tar.asc
+  Signing key: AB9942E6D4A4CFC3412620A749FC7012A5DE03AE
+  Remember to unxz the tarball before verifying the signature.
 
-Freed by task 15525:
- save_stack mm/kasan/common.c:48 [inline]
- set_track mm/kasan/common.c:56 [inline]
- kasan_set_free_info mm/kasan/common.c:316 [inline]
- __kasan_slab_free+0x114/0x170 mm/kasan/common.c:455
- __cache_free mm/slab.c:3426 [inline]
- kfree+0x10a/0x220 mm/slab.c:3757
- skb_release_all net/core/skbuff.c:664 [inline]
- __kfree_skb+0x56/0x1c0 net/core/skbuff.c:678
- netlink_unicast_kernel net/netlink/af_netlink.c:1304 [inline]
- netlink_unicast+0x78e/0x940 net/netlink/af_netlink.c:1329
- netlink_sendmsg+0xa57/0xd70 net/netlink/af_netlink.c:1918
- sock_sendmsg_nosec net/socket.c:652 [inline]
- sock_sendmsg net/socket.c:672 [inline]
- ____sys_sendmsg+0x519/0x800 net/socket.c:2352
- ___sys_sendmsg net/socket.c:2406 [inline]
- __sys_sendmsg+0x2b1/0x360 net/socket.c:2439
- do_syscall_64+0x73/0xe0 arch/x86/entry/common.c:359
- entry_SYSCALL_64_after_hwframe+0x44/0xa9
+If you're a package maintainer, please bump your package version. If you're a
+user, the WireGuard team welcomes any and all feedback on this latest version.
 
-The buggy address belongs to the object at ffff88803b9c3800
- which belongs to the cache kmalloc-1k of size 1024
-The buggy address is located 24 bytes inside of
- 1024-byte region [ffff88803b9c3800, ffff88803b9c3c00)
-The buggy address belongs to the page:
-page:ffffea0000ee70c0 refcount:1 mapcount:0 mapping:0000000000000000 index:0x0
-flags: 0xfffe0000000200(slab)
-raw: 00fffe0000000200 ffffea0001859248 ffffea0000e02ec8 ffff8880aa400c40
-raw: 0000000000000000 ffff88803b9c3000 0000000100000002 0000000000000000
-page dumped because: kasan: bad access detected
+Finally, WireGuard development thrives on donations. By popular demand, we
+have a webpage for this: https://www.wireguard.com/donations/
 
-Memory state around the buggy address:
- ffff88803b9c3700: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
- ffff88803b9c3780: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
->ffff88803b9c3800: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                            ^
- ffff88803b9c3880: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
- ffff88803b9c3900: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-==================================================================
+Thank you,
+Jason Donenfeld
 
 
----
-This bug is generated by a bot. It may contain errors.
-See https://goo.gl/tpsmEJ for more information about syzbot.
-syzbot engineers can be reached at syzkaller@googlegroups.com.
+-----BEGIN PGP SIGNATURE-----
 
-syzbot will keep track of this bug report. See:
-https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
+iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAl8L1i8QHGphc29uQHp4
+MmM0LmNvbQAKCRBJ/HASpd4DrnFzD/43H09uMYK2PXPChfizkbiz84SvpWpPMqDn
+3frC+9Ijp9icZB3Ksd9qauaQhREle6McSjpFPXVL7n6YlLhYPjE5RodGG/sW60QW
+OOsCCWrKu1ict8WDDs0X7dIAtj/kKNwu7dUlJnWJRj3Mwe3Wk7s2/uBurf2X6rvC
+IzTGvcDDZ/TNDujhJZFgVRmgMQPXGlH0RIp4LVxJSsAIKO1RhjVGGbaTe2deh8sY
+YGcdBbtqOCb3K7X/fH2Lt4Ob2FbaqD+DRNDXdV7hPRo/QYtEMBsiiJsw+R9AqtEv
+MCg2EBF7l5T4pTiShZKVJnGYQp69vG94QZBrlMNoVJldtqs9DrwehzXaLG4XWILN
+Nn0ja2ZIjni+LpVJy7upYwZ9Fzdv6Q85HMVYJpcErhbbEC6uzln6WjXNGKNy7/oA
+l9vLu3uFzAvvXBInZDbpg/YpTvd4cXZ1pFFAAGjwCW9B7C4NIu6na8NT9Q51q9EH
+0q7l0Hj/CkL0frC0O1xDd5fYrI6SiZRdlHNVWdBCb7siUSw4yjA1L0x5VGkdKCHX
+seZLwUin+gaHUQIvTwzbDuHE77K406P4Xp1x1UBFv6g63uZBY3XKukdZSMBOPrDH
+eaEbos+pyyV1R49J+SbMMUHkGhIk70OAoFmq+aHdDqITrmhVH/VjSCM04/IdACqo
+V4AllFQlQQ==
+=rjkE
+-----END PGP SIGNATURE-----
