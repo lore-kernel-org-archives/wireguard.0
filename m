@@ -1,73 +1,66 @@
-Return-Path: <SRS0=i2uS=A7=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=mwgs=BA=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6EDFC433E0
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 20 Jul 2020 21:59:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F64CC433E2
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 21 Jul 2020 12:41:29 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 0B84C208E4
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 20 Jul 2020 21:59:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 6834A206E3
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 21 Jul 2020 12:41:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="CFf4FyTl"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 0B84C208E4
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	dkim=pass (2048-bit key) header.d=acpr.dev header.i=@acpr.dev header.b="fk++jYuA"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 6834A206E3
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=acpr.dev
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0af5dad7;
-	Mon, 20 Jul 2020 21:37:07 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7ab02975
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9c64ae3f;
+	Tue, 21 Jul 2020 12:18:39 +0000 (UTC)
+Received: from mail-ua1-x931.google.com (mail-ua1-x931.google.com
+ [2607:f8b0:4864:20::931])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2c940f1c
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 20 Jul 2020 21:37:05 +0000 (UTC)
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id eb26e253
- for <wireguard@lists.zx2c4.com>;
- Mon, 20 Jul 2020 21:37:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :in-reply-to:references:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=E8Pd1QP8AWWZvJ2cTus1hB6BCcg=; b=CFf4Fy
- Tlei/Xw0wuCeVpPbWnH0tBBNaFjUmWc4cAjnHHioVxqSvBVQmbEAegR3YpE4yk4T
- Dm7TocSF5teexAquK2wv79ZdDoFM/J7w7f22Kib6h6YaickbCGrpbcjP6JGp73Oh
- 3zX2sGNeO0byvzvcTdbFykT0VJ+uw3dDVIWSWIY3vc6ydRmZ6YQObHyJ1MUr0KHf
- RYDirYeorm18UvG66PmM75Dz4Hb/qOMTr1IeV0g60NgRszpkLNg5Qw4AcB3AW8VV
- cGs4ds1lN24kpoEQ0aFFlFPPWlglhayRzld5sjffo+jFJyBIbpENB1AOSg0QWjA0
- 48IPkqZNFCLWe8CQ==
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 066132b2
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Mon, 20 Jul 2020 21:37:04 +0000 (UTC)
-Received: by mail-il1-f171.google.com with SMTP id e18so14671247ilr.7
- for <wireguard@lists.zx2c4.com>; Mon, 20 Jul 2020 14:59:31 -0700 (PDT)
-X-Gm-Message-State: AOAM5330vH020uV9jjpNw73Ch2fuvo5ARtFspAT0sIsfG7BL1JJTiYf3
- dF49+7S86E7ig0xZshzglERPQnFI7pQVrnOpMy8=
-X-Google-Smtp-Source: ABdhPJze7ssrfVBfTELYWeFA4JOFo+cDoNET4FEwLccu2LXaW5Pcx75dJyAtodAYtkmPuR0T+CnLICCWcuBhUSzMeIA=
-X-Received: by 2002:a92:50f:: with SMTP id q15mr25989817ile.38.1595282370636; 
- Mon, 20 Jul 2020 14:59:30 -0700 (PDT)
+ Wed, 15 Jul 2020 11:53:07 +0000 (UTC)
+Received: by mail-ua1-x931.google.com with SMTP id c7so536645uap.0
+ for <wireguard@lists.zx2c4.com>; Wed, 15 Jul 2020 05:14:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=acpr.dev; s=google;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=T1RZ1nYfuyBtCm/oZ/a3yL26oBm7mNIh1d7n7crgMi4=;
+ b=fk++jYuATb+ffZ3qZzZsSUbwnEFANpdCj0p5LuD84nlZc06hvi7IklEH6pQHTLknYu
+ 7Zroyfi/md7g7ZUFSqSDRZW4DJHSbHB0A1jjrrHNcHKp01QJKY4qCorPvF7oMmEUjh3X
+ Bt/Pwx8gYdvTtr8+TmVbXPtFFF+Yc2mhY6c+c/JScngspRWTo6IrN52fMPzxDsv6t4UE
+ VULs4QybXzxYpBywQKjXHYZ2H99yFuLbC6Gt/HyBQeehG4Osp5PcA9UIk+Xwwd9Fhdgp
+ 1m/TA/aKwtoQu01ee8APSLMdQyhEmKfssnczxwBCG3zGVPa66SAlloX3sKoXOuxU9+8o
+ OLjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=T1RZ1nYfuyBtCm/oZ/a3yL26oBm7mNIh1d7n7crgMi4=;
+ b=DT2+7zOO8JoJge5oXi5qUuAwdwu8rsfTXsVMNTuD3D3bH5PYKhcN7+s3thAxvG6hO6
+ zfrHkYGLIQDVD+hgm/oif/QemFZjmEsfBg/UpOX9VafRGllrqWCQ9K/wFqkatnA8h9Wl
+ UwzdfAKKhrByDvmqAjKXUxZRKzZgZX/PtBBtg0pOBgozmy4b9iJBIOmqdDRIi4vs91Xb
+ d1gOfJlJYQfCxTk71oguB9JRptzCtUO4Ldw3neV2E3rFjpfS16+wfC2Udyjufa04CESs
+ fVOhnGlJmjiVFocl4ZyRA1hzJVp9EhRJmlbKCFTbM1GmGTa8v+6hc81hutUqMmMttT2N
+ lc8w==
+X-Gm-Message-State: AOAM532BiN7Nr4u3313Gh9pMufkjI3ctrwIUTl1jNKtbPz0XITKZd2BG
+ LpCcltSxcPw35Hkyy+zxoTJutJnIfGvBiwGUvKAXGEF6q88=
+X-Google-Smtp-Source: ABdhPJxnyGNiAG+t7oq7GgiTEBcsyifOsn5WF888hH85sEbo7xmUxpDPHsGYPzeat4f0D00/XvMRyFh34KnbDIXXRp8=
+X-Received: by 2002:ab0:486d:: with SMTP id c42mr7047113uad.64.1594815290429; 
+ Wed, 15 Jul 2020 05:14:50 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a92:1c7:0:0:0:0:0 with HTTP;
- Mon, 20 Jul 2020 14:59:29 -0700 (PDT)
-In-Reply-To: <076601d65ead$b4094d70$1c1be850$@lindenberg.one>
-References: <065501d65ea2$3e652fe0$bb2f8fa0$@lindenberg.one>
- <CAHmME9qr_ZPyhK1V5ENDdNtfk0cn0pb=Ne2T_FEYwaFHtuwWCw@mail.gmail.com>
- <067601d65ea7$1b71a3b0$5254eb10$@lindenberg.one>
- <CAHmME9pyp7z7043ZwvRv0huy9n1zL3x6O7o4w5EsQdg5WsOsdQ@mail.gmail.com>
- <076601d65ead$b4094d70$1c1be850$@lindenberg.one>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 20 Jul 2020 23:59:29 +0200
-X-Gmail-Original-Message-ID: <CAHmME9o2Tyx2Luy_qiEcfGQ7j7DZH_VM1vyk4rzh8=+mfpMaEg@mail.gmail.com>
-Message-ID: <CAHmME9o2Tyx2Luy_qiEcfGQ7j7DZH_VM1vyk4rzh8=+mfpMaEg@mail.gmail.com>
-Subject: Re: Wireguard on Ubuntu 18.04.4 (LTS)?
-To: Joachim Lindenberg <wireguard@lindenberg.one>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
- Andy Whitcroft <apw@canonical.com>
+From: Adam Cooper <adam@acpr.dev>
+Date: Wed, 15 Jul 2020 13:14:39 +0100
+Message-ID: <CAN00TTomuZoagZF2McBkDW1ZimSouN-jnDLm+Hq7OKeH-sF9zg@mail.gmail.com>
+Subject: MacOS IPv6 not functioning without custom static route
+To: wireguard@lists.zx2c4.com
 Content-Type: text/plain; charset="UTF-8"
+X-Mailman-Approved-At: Tue, 21 Jul 2020 14:18:38 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -82,17 +75,47 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On 7/20/20, Joachim Lindenberg <wireguard@lindenberg.one> wrote:
-> Would be great to have the truth at https://www.wireguard.com/install/.
+I'm using the latest MacOS client and have all the appropriate stuff
+setup on my server (Ubuntu 18.04) to use NAT IPv6. This works for all
+my other devices (android, ios, windows) in that I can access IPv6
+only sites just fine.
 
-Looks like Andy has already fixed the problem.
+But on my Mac I'm unable to reach IPv6 destinations that are not on
+the VPN IPv6 network.
 
-> With the addition of bionic-proposed wireguard installs, but wg-quick fails
-> because of "/usr/bin/wg-quick: line 32: resolvconf: command not found".
-> Looks like a dependency is not set.
-> Which of  openresolv or resolvconf is the recommended path?
+AllowedIPs = 0.0.0.0/5, 8.0.0.0/7, 11.0.0.0/8, 12.0.0.0/6, 16.0.0.0/4,
+32.0.0.0/3, 64.0.0.0/2, 128.0.0.0/3, 160.0.0.0/5, 168.0.0.0/6,
+172.0.0.0/12, 172.32.0.0/11, 172.64.0.0/10, 172.128.0.0/9,
+173.0.0.0/8, 174.0.0.0/7, 176.0.0.0/4, 192.0.0.0/9, 192.128.0.0/11,
+192.160.0.0/13, 192.169.0.0/16, 192.170.0.0/15, 192.172.0.0/14,
+192.176.0.0/12, 192.192.0.0/10, 193.0.0.0/8, 194.0.0.0/7, 196.0.0.0/6,
+200.0.0.0/5, 208.0.0.0/4, ::/0, fd82:88::1/128
 
-Both are part of Recommends: for this optional functionality, so the
-dependency in the package is fine.
+Should push all traffic correctly (the final local IPv6 route being
+redundant I know).
 
-Use openresolv.
+What I'm finding is that the Wireguard client is creating a new tunnel
+(utun1) and using that for all the defined routes in IPv4 but it is
+not setting a default route for IPv6.
+
+My system (and I don't really know why) has a preexisting tunnel
+(utun0) which is set as default
+
+default                          fe80::%utun0                 UGcI
+     utun0
+
+Wireguard is not creating a new default route pointing at utun1. If I
+do that manually
+
+sudo route add -inet6 ::/0 fe80::%utun1
+
+Then everything works as expected.
+
+The only thing I can think of is that Wireguard is seeing the existing
+tunnel and that it is default and assuming it does not need to create
+a route, even though that route is for a tunnel that Wireguard is not
+responsible for. Is this a bug? What can I do?
+
+Probably worth mentioning that I tried to replace ::/0 with ::/1,
+8000::/1 but that just results in completely broken connectivity in
+IPv6 and IPv4 - which may be another issue in and of itself.
