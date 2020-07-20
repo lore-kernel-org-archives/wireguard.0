@@ -2,63 +2,72 @@ Return-Path: <SRS0=i2uS=A7=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A92A5C433F1
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 20 Jul 2020 15:52:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6EDFC433E0
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 20 Jul 2020 21:59:36 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 20D032064B
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 20 Jul 2020 15:52:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 0B84C208E4
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 20 Jul 2020 21:59:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=lindenberg.one header.i=@lindenberg.one header.b="GNorQGeR"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 20D032064B
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=lindenberg.one
+	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="CFf4FyTl"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 0B84C208E4
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3e747ca7;
-	Mon, 20 Jul 2020 15:29:45 +0000 (UTC)
-Received: from mailarchive.lindenberg.one (mailarchive.lindenberg.one
- [62.113.211.160])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 0bfeab68
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0af5dad7;
+	Mon, 20 Jul 2020 21:37:07 +0000 (UTC)
+Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7ab02975
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 20 Jul 2020 15:29:44 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon)
- with ESMTPSA id A2DEC28F0CA; Mon, 20 Jul 2020 17:51:59 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lindenberg.one;
- s=dkim180429; t=1595260319;
- h=from:sender:subject:date:message-id:to:cc:mime-version:content-type:
- content-transfer-encoding:in-reply-to:references;
- bh=sSrwKtF6jcVvcUQVJpJD3LEKggPIzzYGtj9o5Gdhv1Y=;
- b=GNorQGeRYYVELTlG32C9Xw6CWPOUnroBmbTRJVyYYXG9duL/l8/Pie7sto0/lVvCkqqcsm
- sdCA9eWQbFuhEITBgX9SgeZ0WUdiFt8rHL6Jr+1q3iGqJ5vA63AIFzOBZGnSRSSJnpDtvP
- VxYHY3nWvCmyBtst5+Ui77fUK9DZbUV2bQT9v3hEmagNnRJD4cGFLXnELCEM/xwlMXTtro
- ESbIKeYeUFiOo/KZSVqLDtTvG+xdOqRlUQDVZtC2d5ekUFjCob+qngyzaq7B2pk0HXcTBO
- 15HcvoNz0ap2ZanurJ6VIlH77Wpksf4zer9V61XN7csspONIKABFCUc3EskeRg==
-From: "Joachim Lindenberg" <wireguard@lindenberg.one>
-To: "'Jason A. Donenfeld'" <Jason@zx2c4.com>,
- "'Joachim Lindenberg'" <wireguard@lindenberg.one>
-Cc: "'WireGuard mailing list'" <wireguard@lists.zx2c4.com>,
- "'Andy Whitcroft'" <apw@canonical.com>
+ Mon, 20 Jul 2020 21:37:05 +0000 (UTC)
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id eb26e253
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 20 Jul 2020 21:37:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :in-reply-to:references:from:date:message-id:subject:to:cc
+ :content-type; s=mail; bh=E8Pd1QP8AWWZvJ2cTus1hB6BCcg=; b=CFf4Fy
+ Tlei/Xw0wuCeVpPbWnH0tBBNaFjUmWc4cAjnHHioVxqSvBVQmbEAegR3YpE4yk4T
+ Dm7TocSF5teexAquK2wv79ZdDoFM/J7w7f22Kib6h6YaickbCGrpbcjP6JGp73Oh
+ 3zX2sGNeO0byvzvcTdbFykT0VJ+uw3dDVIWSWIY3vc6ydRmZ6YQObHyJ1MUr0KHf
+ RYDirYeorm18UvG66PmM75Dz4Hb/qOMTr1IeV0g60NgRszpkLNg5Qw4AcB3AW8VV
+ cGs4ds1lN24kpoEQ0aFFlFPPWlglhayRzld5sjffo+jFJyBIbpENB1AOSg0QWjA0
+ 48IPkqZNFCLWe8CQ==
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 066132b2
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 20 Jul 2020 21:37:04 +0000 (UTC)
+Received: by mail-il1-f171.google.com with SMTP id e18so14671247ilr.7
+ for <wireguard@lists.zx2c4.com>; Mon, 20 Jul 2020 14:59:31 -0700 (PDT)
+X-Gm-Message-State: AOAM5330vH020uV9jjpNw73Ch2fuvo5ARtFspAT0sIsfG7BL1JJTiYf3
+ dF49+7S86E7ig0xZshzglERPQnFI7pQVrnOpMy8=
+X-Google-Smtp-Source: ABdhPJze7ssrfVBfTELYWeFA4JOFo+cDoNET4FEwLccu2LXaW5Pcx75dJyAtodAYtkmPuR0T+CnLICCWcuBhUSzMeIA=
+X-Received: by 2002:a92:50f:: with SMTP id q15mr25989817ile.38.1595282370636; 
+ Mon, 20 Jul 2020 14:59:30 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 2002:a92:1c7:0:0:0:0:0 with HTTP;
+ Mon, 20 Jul 2020 14:59:29 -0700 (PDT)
+In-Reply-To: <076601d65ead$b4094d70$1c1be850$@lindenberg.one>
 References: <065501d65ea2$3e652fe0$bb2f8fa0$@lindenberg.one>
  <CAHmME9qr_ZPyhK1V5ENDdNtfk0cn0pb=Ne2T_FEYwaFHtuwWCw@mail.gmail.com>
  <067601d65ea7$1b71a3b0$5254eb10$@lindenberg.one>
  <CAHmME9pyp7z7043ZwvRv0huy9n1zL3x6O7o4w5EsQdg5WsOsdQ@mail.gmail.com>
-In-Reply-To: <CAHmME9pyp7z7043ZwvRv0huy9n1zL3x6O7o4w5EsQdg5WsOsdQ@mail.gmail.com>
-Subject: AW: Wireguard on Ubuntu 18.04.4 (LTS)?
-Date: Mon, 20 Jul 2020 17:51:59 +0200
-Message-ID: <076601d65ead$b4094d70$1c1be850$@lindenberg.one>
-MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Thread-Index: AQKY2nKwJ6yFlKQf3qBRm4OkrK0J7gHAlXLYAhHPtncDFEyNa6dUcBpg
-Content-Language: en-de
-X-Last-TLS-Session-Version: TLSv1.2
+ <076601d65ead$b4094d70$1c1be850$@lindenberg.one>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Mon, 20 Jul 2020 23:59:29 +0200
+X-Gmail-Original-Message-ID: <CAHmME9o2Tyx2Luy_qiEcfGQ7j7DZH_VM1vyk4rzh8=+mfpMaEg@mail.gmail.com>
+Message-ID: <CAHmME9o2Tyx2Luy_qiEcfGQ7j7DZH_VM1vyk4rzh8=+mfpMaEg@mail.gmail.com>
+Subject: Re: Wireguard on Ubuntu 18.04.4 (LTS)?
+To: Joachim Lindenberg <wireguard@lindenberg.one>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ Andy Whitcroft <apw@canonical.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -73,29 +82,17 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Would be great to have the truth at https://www.wireguard.com/install/.=20
-With the addition of bionic-proposed wireguard installs, but wg-quick =
-fails because of "/usr/bin/wg-quick: line 32: resolvconf: command not =
-found". Looks like a dependency is not set.
-Which of  openresolv or resolvconf is the recommended path?
-Thanks, Joachim
+On 7/20/20, Joachim Lindenberg <wireguard@lindenberg.one> wrote:
+> Would be great to have the truth at https://www.wireguard.com/install/.
 
------Urspr=C3=BCngliche Nachricht-----
-Von: Jason A. Donenfeld <Jason@zx2c4.com>=20
-Gesendet: Monday, 20 July 2020 17:22
-An: Joachim Lindenberg <wireguard@lindenberg.one>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>; Andy Whitcroft =
-<apw@canonical.com>
-Betreff: Re: Wireguard on Ubuntu 18.04.4 (LTS)?
+Looks like Andy has already fixed the problem.
 
-Looks like at the moment (July 20, 2020; ignore this email if you're =
-reading this >1 month from now) wireguard is still stuck in -proposed on =
-Bionic.
+> With the addition of bionic-proposed wireguard installs, but wg-quick fails
+> because of "/usr/bin/wg-quick: line 32: resolvconf: command not found".
+> Looks like a dependency is not set.
+> Which of  openresolv or resolvconf is the recommended path?
 
-echo 'deb http://us.archive.ubuntu.com/ubuntu bionic-proposed main =
-restricted universe multiverse' >> /etc/apt/sources.list apt update apt =
-install wireguard
+Both are part of Recommends: for this optional functionality, so the
+dependency in the package is fine.
 
-That's annoying and odd. I'm CCing Canonical's Andy Whitcroft who can =
-fix this inside of Ubuntu.
-
+Use openresolv.
