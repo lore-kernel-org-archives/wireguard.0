@@ -2,51 +2,77 @@ Return-Path: <SRS0=dVqJ=BD=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D9E7BC433DF
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Jul 2020 08:27:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B50AC433EC
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Jul 2020 08:28:14 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id CF8EF2074A
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Jul 2020 08:27:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id E5901206EB
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Jul 2020 08:28:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=bat.fr.eu.org header.i=@bat.fr.eu.org header.b="D/sXtyMj"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org CF8EF2074A
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=bat.fr.eu.org
+	dkim=pass (2048-bit key) header.d=tomcsanyi-net.20150623.gappssmtp.com header.i=@tomcsanyi-net.20150623.gappssmtp.com header.b="b4TrfdT1"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org E5901206EB
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=tomcsanyi.net
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 04e6044e;
-	Fri, 24 Jul 2020 08:04:07 +0000 (UTC)
-Received: from erza.lautre.net (erza.lautre.net [80.67.160.89])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 094b27c1
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b162516e;
+	Fri, 24 Jul 2020 08:04:12 +0000 (UTC)
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com
+ [2a00:1450:4864:20::344])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f6c0c480
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 21 Jul 2020 15:01:58 +0000 (UTC)
-Received: from localhost (unknown [193.32.127.237])
- by erza.lautre.net (Postfix) with ESMTPA id 13ADEF4655;
- Tue, 21 Jul 2020 17:24:28 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=bat.fr.eu.org;
- s=alternc; t=1595345069;
- bh=HyJhSr4OAkwpsfy0Bu8ZuV2XhJx+OuL0WF3PCLPJ8GU=;
- h=From:To:Cc:Subject:Date;
- b=D/sXtyMjwCY7lZRD6H2WkbedOdEsWL0KrE5fucGAsQthSpG75IN8y0FBMJooQ0CQF
- zQvTOcLQET2OtUesihvCsWQGbe7GMIXyfA070uxyF8r9VYP69lm3xpLRX/2ekdheYV
- BtgyHPf/WUJ/oXi3phMIfvi30+iwvbFPO5bczN4Q=
-From: bateast+wg@bat.fr.eu.org
+ Thu, 23 Jul 2020 13:47:27 +0000 (UTC)
+Received: by mail-wm1-x344.google.com with SMTP id j18so5088345wmi.3
+ for <wireguard@lists.zx2c4.com>; Thu, 23 Jul 2020 07:10:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=tomcsanyi-net.20150623.gappssmtp.com; s=20150623;
+ h=content-transfer-encoding:from:mime-version:date:subject:message-id
+ :references:to;
+ bh=UsnCWMprgpVwJBvBLCYPYUyElG2y/JbM630VdPNhsps=;
+ b=b4TrfdT1onxiyapAYByuTWp3ds0qwKudTNQetJQuzuIQTo3HmCtKNIFmWIyg7+Nerk
+ qDDuqVBc3FGZXNs4xW+5M71lCMWJfmN10ANvLs0PYsEwl14Pe8flSLyZnWmZ6Hkm8W0P
+ b1C0rSgqoYm6q6q0avSZsqMA1P4Ue6Wo3e+E8gFhVAZrdM580Pv/Io5i9ggyLru6Jcs6
+ POmea2juMjg+y0jupEJlgy8VgSYPc7TaLAVaZStxqnd8ZRg249s0SxkcwjqA3dSuLFJ+
+ 8B8nRKJybqS4YELpNptFNv708LDp2eSMNZL2J+4bPPvOI8JojMyzmsGRfKxk/dpvwAos
+ 4igA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:content-transfer-encoding:from:mime-version:date
+ :subject:message-id:references:to;
+ bh=UsnCWMprgpVwJBvBLCYPYUyElG2y/JbM630VdPNhsps=;
+ b=FM09hkYdsNAnNkuLrYLfXnsM8SIzlzmhyq+UO7g0Pe/C32ErrXiVfYXZWggVquJ3XO
+ fguLkuO8ExzCRr2ZfHO1youtZd2qtCT8+b+JRoLV8WCptlq4wDSJr2DE2mi2ftdPIbCa
+ yUA4ETP72TOvXxSeMOMxiAWB1bgUfUuHTZX9JpKWMx2Y3n+BipOktPafSfIKlUvZrCTD
+ EJGAJvWFsjmR9FLyj321/BWe0bRy9H+q7Sl+kHLaZGMUeFWrbxjPkqYy7iVeixoPuxZz
+ ZIOQZKXBYs6p8We9QaSeBZk9pqVKkFNXD45UKporqeg7RKjexxIq7Tr6QueY+QqSPBFQ
+ cL0g==
+X-Gm-Message-State: AOAM530ysJVkG9MSx2XXi+c7LCyZpdldhnZDSw0CmM0ZHmY5xpSmTKWM
+ sFYlVvJogKk1f35nqmWt9FPz4ZKS29g=
+X-Google-Smtp-Source: ABdhPJz4WX/AlDvdxfRm0CNEmCg+YOE7J+PrvhAiaw5L8RtEWbtiFNQ5hmNjtsQygBqKdP6LeOnflw==
+X-Received: by 2002:a7b:cb46:: with SMTP id v6mr4577986wmj.73.1595513413006;
+ Thu, 23 Jul 2020 07:10:13 -0700 (PDT)
+Received: from [192.168.0.102] (92-249-179-12.pool.digikabel.hu.
+ [92.249.179.12])
+ by smtp.gmail.com with ESMTPSA id j24sm4473419wrb.49.2020.07.23.07.10.12
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 23 Jul 2020 07:10:12 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: "Tomcsanyi, Domonkos" <domi@tomcsanyi.net>
+Mime-Version: 1.0 (1.0)
+Date: Thu, 23 Jul 2020 16:10:11 +0200
+Subject: [PATCH] Adding support for reloading configuration via systemd
+Message-Id: <865B9BD5-A256-43F8-9922-A6DE7680C216@tomcsanyi.net>
+References: <VI1PR02MB52169D6F055314DCD03746EDE6760@VI1PR02MB5216.eurprd02.prod.outlook.com>
 To: wireguard@lists.zx2c4.com
-Cc: Baptiste Fouques <baptiste+wg@bat.fr.eu.org>
-Subject: [PATCH 1/1] Network namespace support in wg-quick -- Linux only
-Date: Tue, 21 Jul 2020 17:24:26 +0200
-Message-Id: <20200721152426.451278-1-bateast+wg@bat.fr.eu.org>
-X-Mailer: git-send-email 2.27.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-Mailer: iPhone Mail (17F80)
 X-Mailman-Approved-At: Fri, 24 Jul 2020 10:04:05 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -62,330 +88,28 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-From: Baptiste Fouques <baptiste+wg@bat.fr.eu.org>
-
-Implement netns support as stated in https://www.wireguard.com/netns/ 
-§ Ordinary Containerization.
-
-Create Namespace if necessary. 
-Created a specific resolv.conf if necessary
-
+=EF=BB=BFSigned-off-by: Domonkos P. Tomcsanyi <domi@tomcsanyi.net>
 ---
- src/wg-quick/linux.bash | 125 +++++++++++++++++++++++++++-------------
- 1 file changed, 85 insertions(+), 40 deletions(-)
+src/systemd/wg-quick@.service | 1 +
+1 file changed, 1 insertion(+)
 
-diff --git a/src/wg-quick/linux.bash b/src/wg-quick/linux.bash
-index e4d4c4f..ed5b9c4 100755
---- a/src/wg-quick/linux.bash
-+++ b/src/wg-quick/linux.bash
-@@ -18,6 +18,7 @@ MTU=""
- DNS=( )
- DNS_SEARCH=( )
- TABLE=""
-+NAMESPACE=""
- PRE_UP=( )
- POST_UP=( )
- PRE_DOWN=( )
-@@ -61,6 +62,7 @@ parse_options() {
- 				[[ $v =~ (^[0-9.]+$)|(^.*:.*$) ]] && DNS+=( $v ) || DNS_SEARCH+=( $v )
- 			done; continue ;;
- 			Table) TABLE="$value"; continue ;;
-+      Namespace) NAMESPACE="$value"; continue ;;
- 			PreUp) PRE_UP+=( "$value" ); continue ;;
- 			PreDown) PRE_DOWN+=( "$value" ); continue ;;
- 			PostUp) POST_UP+=( "$value" ); continue ;;
-@@ -85,6 +87,33 @@ auto_su() {
- 	[[ $UID == 0 ]] || exec sudo -p "$PROGRAM must be run as root. Please enter the password for %u to continue: " -- "$BASH" -- "$SELF" "${ARGS[@]}"
- }
- 
-+HAVE_SET_NAMESPACE=0
-+add_ns () {
-+	  [[ -z "$NAMESPACE" ]] && return 0
-+    if ! ip netns |grep "$NAMESPACE"; then
-+        cmd ip netns add "$NAMESPACE";
-+				cmd ip -n "$NAMESPACE" link set dev lo up
-+        HAVE_SET_NAMESPACE=1
-+    fi
-+}
-+
-+del_ns () {
-+	  [[ -z "$NAMESPACE" ]] && return 0
-+    cmd ip netns del "$NAMESPACE"
-+}
-+
-+option_ns () {
-+    [[ -z "$NAMESPACE" ]] && echo "" && return 0
-+
-+    echo "-netns $NAMESPACE" && return 0
-+}
-+
-+exec_ns () {
-+    [[ -z "$NAMESPACE" ]] && echo "" && return 0
-+
-+    echo "ip netns exec $NAMESPACE" && return 0
-+}
-+
- add_if() {
- 	local ret
- 	if ! cmd ip link add "$INTERFACE" type wireguard; then
-@@ -93,6 +122,9 @@ add_if() {
- 		echo "[!] Missing WireGuard kernel module. Falling back to slow userspace implementation." >&2
- 		cmd "${WG_QUICK_USERSPACE_IMPLEMENTATION:-wireguard-go}" "$INTERFACE"
- 	fi
-+  if [[ -n "$NAMESPACE" ]]; then
-+    cmd ip link set netns "$NAMESPACE" dev "$INTERFACE"
-+  fi
- }
- 
- del_if() {
-@@ -100,45 +132,46 @@ del_if() {
- 	[[ $HAVE_SET_DNS -eq 0 ]] || unset_dns
- 	[[ $HAVE_SET_FIREWALL -eq 0 ]] || remove_firewall
- 	if [[ -z $TABLE || $TABLE == auto ]] && get_fwmark table && [[ $(wg show "$INTERFACE" allowed-ips) =~ /0(\ |$'\n'|$) ]]; then
--		while [[ $(ip -4 rule show 2>/dev/null) == *"lookup $table"* ]]; do
--			cmd ip -4 rule delete table $table
-+		while [[ $(ip -4 $(op) rule show 2>/dev/null) == *"lookup $table"* ]]; do
-+			  cmd ip -4  $(option_ns) rule delete table $table
- 		done
--		while [[ $(ip -4 rule show 2>/dev/null) == *"from all lookup main suppress_prefixlength 0"* ]]; do
--			cmd ip -4 rule delete table main suppress_prefixlength 0
-+		while [[ $(ip -4  $(option_ns) rule show 2>/dev/null) == *"from all lookup main suppress_prefixlength 0"* ]]; do
-+			  cmd ip -4  $(option_ns) rule delete table main suppress_prefixlength 0
- 		done
--		while [[ $(ip -6 rule show 2>/dev/null) == *"lookup $table"* ]]; do
--			cmd ip -6 rule delete table $table
-+		while [[ $(ip -6  $(option_ns) rule show 2>/dev/null) == *"lookup $table"* ]]; do
-+			  cmd ip -6  $(option_ns) rule delete table $table
- 		done
--		while [[ $(ip -6 rule show 2>/dev/null) == *"from all lookup main suppress_prefixlength 0"* ]]; do
--			cmd ip -6 rule delete table main suppress_prefixlength 0
-+		while [[ $(ip -6  $(option_ns) rule show 2>/dev/null) == *"from all lookup main suppress_prefixlength 0"* ]]; do
-+			  cmd ip -6  $(option_ns) rule delete table main suppress_prefixlength 0
- 		done
- 	fi
--	cmd ip link delete dev "$INTERFACE"
-+	cmd ip  $(option_ns) link delete dev "$INTERFACE"
-+	[[ $HAVE_SET_NAMESPACE -eq 0 ]] || del_ns
- }
- 
- add_addr() {
- 	local proto=-4
- 	[[ $1 == *:* ]] && proto=-6
--	cmd ip $proto address add "$1" dev "$INTERFACE"
-+	cmd ip  $(option_ns) $proto address add "$1" dev "$INTERFACE"
- }
- 
- set_mtu_up() {
- 	local mtu=0 endpoint output
- 	if [[ -n $MTU ]]; then
--		cmd ip link set mtu "$MTU" up dev "$INTERFACE"
-+		  cmd ip  $(option_ns) link set mtu "$MTU" up dev "$INTERFACE"
- 		return
- 	fi
- 	while read -r _ endpoint; do
- 		[[ $endpoint =~ ^\[?([a-z0-9:.]+)\]?:[0-9]+$ ]] || continue
--		output="$(ip route get "${BASH_REMATCH[1]}" || true)"
--		[[ ( $output =~ mtu\ ([0-9]+) || ( $output =~ dev\ ([^ ]+) && $(ip link show dev "${BASH_REMATCH[1]}") =~ mtu\ ([0-9]+) ) ) && ${BASH_REMATCH[1]} -gt $mtu ]] && mtu="${BASH_REMATCH[1]}"
--	done < <(wg show "$INTERFACE" endpoints)
-+		output="$(ip  $(option_ns) route get "${BASH_REMATCH[1]}" || true)"
-+		[[ ( $output =~ mtu\ ([0-9]+) || ( $output =~ dev\ ([^ ]+) && $(ip  $(option_ns) link show dev "${BASH_REMATCH[1]}") =~ mtu\ ([0-9]+) ) ) && ${BASH_REMATCH[1]} -gt $mtu ]] && mtu="${BASH_REMATCH[1]}"
-+	done < <($(exec_ns) wg show "$INTERFACE" endpoints)
- 	if [[ $mtu -eq 0 ]]; then
--		read -r output < <(ip route show default || true) || true
--		[[ ( $output =~ mtu\ ([0-9]+) || ( $output =~ dev\ ([^ ]+) && $(ip link show dev "${BASH_REMATCH[1]}") =~ mtu\ ([0-9]+) ) ) && ${BASH_REMATCH[1]} -gt $mtu ]] && mtu="${BASH_REMATCH[1]}"
-+		  read -r output < <(ip $(option_ns) route show default || true) || true
-+		  [[ ( $output =~ mtu\ ([0-9]+) || ( $output =~ dev\ ([^ ]+) && $(ip $(option_ns) link show dev "${BASH_REMATCH[1]}") =~ mtu\ ([0-9]+) ) ) && ${BASH_REMATCH[1]} -gt $mtu ]] && mtu="${BASH_REMATCH[1]}"
- 	fi
- 	[[ $mtu -gt 0 ]] || mtu=1500
--	cmd ip link set mtu $(( mtu - 80 )) up dev "$INTERFACE"
-+	cmd ip $(option_ns) link set mtu $(( mtu - 80 )) up dev "$INTERFACE"
- }
- 
- resolvconf_iface_prefix() {
-@@ -153,15 +186,19 @@ resolvconf_iface_prefix() {
- HAVE_SET_DNS=0
- set_dns() {
- 	[[ ${#DNS[@]} -gt 0 ]] || return 0
-+	[[ -n "$NAMESPACE" ]] && [[ -f "/etc/netns/$NAMESPACE/resolv.conf" ]] || cmd  mkdir -p "/etc/netns/$NAMESPACE" && cmd touch "/etc/netns/$NAMESPACE/resolv.conf"
- 	{ printf 'nameserver %s\n' "${DNS[@]}"
- 	  [[ ${#DNS_SEARCH[@]} -eq 0 ]] || printf 'search %s\n' "${DNS_SEARCH[*]}"
--	} | cmd resolvconf -a "$(resolvconf_iface_prefix)$INTERFACE" -m 0 -x
-+	} | cmd $(exec_ns) resolvconf -a "$(resolvconf_iface_prefix)$INTERFACE" -m 0 -x
-+	{ printf '    < nameserver %s\n' "${DNS[@]}"
-+	  [[ ${#DNS_SEARCH[@]} -eq 0 ]] || printf '    < search %s\n' "${DNS_SEARCH[*]}"
-+	} | cat
- 	HAVE_SET_DNS=1
- }
- 
- unset_dns() {
- 	[[ ${#DNS[@]} -gt 0 ]] || return 0
--	cmd resolvconf -d "$(resolvconf_iface_prefix)$INTERFACE" -f
-+	cmd $(exec_ns) resolvconf -d "$(resolvconf_iface_prefix)$INTERFACE" -f
- }
- 
- add_route() {
-@@ -170,17 +207,17 @@ add_route() {
- 	[[ $TABLE != off ]] || return 0
- 
- 	if [[ -n $TABLE && $TABLE != auto ]]; then
--		cmd ip $proto route add "$1" dev "$INTERFACE" table "$TABLE"
-+		  cmd ip $(option_ns) $proto route add "$1" dev "$INTERFACE" table "$TABLE"
- 	elif [[ $1 == */0 ]]; then
- 		add_default "$1"
- 	else
--		[[ -n $(ip $proto route show dev "$INTERFACE" match "$1" 2>/dev/null) ]] || cmd ip $proto route add "$1" dev "$INTERFACE"
-+		  [[ -n $(ip $(option_ns) $proto route show dev "$INTERFACE" match "$1" 2>/dev/null) ]] || cmd ip $(option_ns) $proto route add "$1" dev "$INTERFACE"
- 	fi
- }
- 
- get_fwmark() {
- 	local fwmark
--	fwmark="$(wg show "$INTERFACE" fwmark)" || return 1
-+	fwmark="$($(exec_ns) wg show "$INTERFACE" fwmark)" || return 1
- 	[[ -n $fwmark && $fwmark != off ]] || return 1
- 	printf -v "$1" "%d" "$fwmark"
- 	return 0
-@@ -191,8 +228,8 @@ remove_firewall() {
- 		local table nftcmd
- 		while read -r table; do
- 			[[ $table == *" wg-quick-$INTERFACE" ]] && printf -v nftcmd '%sdelete %s\n' "$nftcmd" "$table"
--		done < <(nft list tables 2>/dev/null)
--		[[ -z $nftcmd ]] || cmd nft -f <(echo -n "$nftcmd")
-+		done < <($(exec_ns) nft list tables 2>/dev/null)
-+		[[ -z $nftcmd ]] || cmd $(exec_ns) nft -f <(echo -n "$nftcmd")
- 	fi
- 	if type -p iptables >/dev/null; then
- 		local line iptables found restore
-@@ -202,8 +239,8 @@ remove_firewall() {
- 				[[ $line == "*"* || $line == COMMIT || $line == "-A "*"-m comment --comment \"wg-quick(8) rule for $INTERFACE\""* ]] || continue
- 				[[ $line == "-A"* ]] && found=1
- 				printf -v restore '%s%s\n' "$restore" "${line/#-A/-D}"
--			done < <($iptables-save 2>/dev/null)
--			[[ $found -ne 1 ]] || echo -n "$restore" | cmd $iptables-restore -n
-+			done < <($(exec_ns) $iptables-save 2>/dev/null)
-+			[[ $found -ne 1 ]] || echo -n "$restore" | cmd $(exec_ns) $iptables-restore -n
- 		done
- 	fi
- }
-@@ -213,16 +250,16 @@ add_default() {
- 	local table line
- 	if ! get_fwmark table; then
- 		table=51820
--		while [[ -n $(ip -4 route show table $table 2>/dev/null) || -n $(ip -6 route show table $table 2>/dev/null) ]]; do
-+		while [[ -n $(ip $(option_ns) -4 route show table $table 2>/dev/null) || -n $(ip $(option_ns) -6 route show table $table 2>/dev/null) ]]; do
- 			((table++))
- 		done
--		cmd wg set "$INTERFACE" fwmark $table
-+		cmd $(exec_ns) wg set "$INTERFACE" fwmark $table
- 	fi
- 	local proto=-4 iptables=iptables pf=ip
- 	[[ $1 == *:* ]] && proto=-6 iptables=ip6tables pf=ip6
--	cmd ip $proto route add "$1" dev "$INTERFACE" table $table
--	cmd ip $proto rule add not fwmark $table table $table
--	cmd ip $proto rule add table main suppress_prefixlength 0
-+	cmd ip $(option_ns) $proto route add "$1" dev "$INTERFACE" table $table
-+	cmd ip $(option_ns) $proto rule add not fwmark $table table $table
-+	cmd ip $(option_ns) $proto rule add table main suppress_prefixlength 0
- 
- 	local marker="-m comment --comment \"wg-quick(8) rule for $INTERFACE\"" restore=$'*raw\n' nftable="wg-quick-$INTERFACE" nftcmd 
- 	printf -v nftcmd '%sadd table %s %s\n' "$nftcmd" "$pf" "$nftable"
-@@ -239,21 +276,21 @@ add_default() {
- 	printf -v nftcmd '%sadd rule %s %s premangle meta l4proto udp meta mark set ct mark \n' "$nftcmd" "$pf" "$nftable"
- 	[[ $proto == -4 ]] && cmd sysctl -q net.ipv4.conf.all.src_valid_mark=1
- 	if type -p nft >/dev/null; then
--		cmd nft -f <(echo -n "$nftcmd")
-+		  cmd $(exec_ns) nft -f <(echo -n "$nftcmd")
- 	else
--		echo -n "$restore" | cmd $iptables-restore -n
-+		  echo -n "$restore" | cmd $(exec_ns) $iptables-restore -n
- 	fi
- 	HAVE_SET_FIREWALL=1
- 	return 0
- }
- 
- set_config() {
--	cmd wg setconf "$INTERFACE" <(echo "$WG_CONFIG")
-+	  cmd $(exec_ns) wg setconf "$INTERFACE" <(echo "$WG_CONFIG")
- }
- 
- save_config() {
- 	local old_umask new_config current_config address cmd
--	[[ $(ip -all -brief address show dev "$INTERFACE") =~ ^$INTERFACE\ +\ [A-Z]+\ +(.+)$ ]] || true
-+	[[ $(ip $(option_ns) -all -brief address show dev "$INTERFACE") =~ ^$INTERFACE\ +\ [A-Z]+\ +(.+)$ ]] || true
- 	new_config=$'[Interface]\n'
- 	for address in ${BASH_REMATCH[1]}; do
- 		new_config+="Address = $address"$'\n'
-@@ -261,8 +298,9 @@ save_config() {
- 	while read -r address; do
- 		[[ $address =~ ^nameserver\ ([a-zA-Z0-9_=+:%.-]+)$ ]] && new_config+="DNS = ${BASH_REMATCH[1]}"$'\n'
- 	done < <(resolvconf -l "$(resolvconf_iface_prefix)$INTERFACE" 2>/dev/null || cat "/etc/resolvconf/run/interface/$(resolvconf_iface_prefix)$INTERFACE" 2>/dev/null)
--	[[ -n $MTU && $(ip link show dev "$INTERFACE") =~ mtu\ ([0-9]+) ]] && new_config+="MTU = ${BASH_REMATCH[1]}"$'\n'
-+	[[ -n $MTU && $(ip $(option_ns) link show dev "$INTERFACE") =~ mtu\ ([0-9]+) ]] && new_config+="MTU = ${BASH_REMATCH[1]}"$'\n'
- 	[[ -n $TABLE ]] && new_config+="Table = $TABLE"$'\n'
-+  [[ -n "$NAMESPACE" ]] && new_config+="Namespace = $NAMESPACE"$'\n'
- 	[[ $SAVE_CONFIG -eq 0 ]] || new_config+=$'SaveConfig = true\n'
- 	for cmd in "${PRE_UP[@]}"; do
- 		new_config+="PreUp = $cmd"$'\n'
-@@ -278,7 +316,7 @@ save_config() {
- 	done
- 	old_umask="$(umask)"
- 	umask 077
--	current_config="$(cmd wg showconf "$INTERFACE")"
-+	current_config="$(cmd $(exec_ns) wg showconf "$INTERFACE")"
- 	trap 'rm -f "$CONFIG_FILE.tmp"; exit' INT TERM EXIT
- 	echo "${current_config/\[Interface\]$'\n'/$new_config}" > "$CONFIG_FILE.tmp" || die "Could not write configuration file"
- 	sync "$CONFIG_FILE.tmp"
-@@ -313,6 +351,10 @@ cmd_usage() {
- 	  - Table: an optional routing table to which routes will be added; if
- 	    unspecified or \`auto', the default table is used. If \`off', no routes
- 	    are added.
-+    - Namespace: an optional network namespace to which the interface is added;
-+      following https://www.wireguard.com/netns/ "Ordinary Containerization", the
-+      UDP socket lives in current namespace, then data is passed unecrypted from
-+      targeted namespace to current namespace.
- 	  - PreUp, PostUp, PreDown, PostDown: script snippets which will be executed
- 	    by bash(1) at the corresponding phases of the link, most commonly used
- 	    to configure DNS. The string \`%i' is expanded to INTERFACE.
-@@ -326,7 +368,9 @@ cmd_usage() {
- cmd_up() {
- 	local i
- 	[[ -z $(ip link show dev "$INTERFACE" 2>/dev/null) ]] || die "\`$INTERFACE' already exists"
-+	[[ -z $(ip $(option_ns) link show dev "$INTERFACE" 2>/dev/null) ]] || die "\`$INTERFACE' already exists in $NAMESPACE."
- 	trap 'del_if; exit' INT TERM EXIT
-+  add_ns
- 	execute_hooks "${PRE_UP[@]}"
- 	add_if
- 	set_config
-@@ -335,7 +379,7 @@ cmd_up() {
- 	done
- 	set_mtu_up
- 	set_dns
--	for i in $(while read -r _ i; do for i in $i; do [[ $i =~ ^[0-9a-z:.]+/[0-9]+$ ]] && echo "$i"; done; done < <(wg show "$INTERFACE" allowed-ips) | sort -nr -k 2 -t /); do
-+	for i in $(while read -r _ i; do for i in $i; do [[ $i =~ ^[0-9a-z:.]+/[0-9]+$ ]] && echo "$i"; done; done < <($(exec_ns) wg show "$INTERFACE" allowed-ips) | sort -nr -k 2 -t /); do
- 		add_route "$i"
- 	done
- 	execute_hooks "${POST_UP[@]}"
-@@ -343,17 +387,18 @@ cmd_up() {
- }
- 
- cmd_down() {
--	[[ " $(wg show interfaces) " == *" $INTERFACE "* ]] || die "\`$INTERFACE' is not a WireGuard interface"
-+	[[ " $($(exec_ns) wg show interfaces) " == *" $INTERFACE "* ]] || die "\`$INTERFACE' is not a WireGuard interface"
- 	execute_hooks "${PRE_DOWN[@]}"
- 	[[ $SAVE_CONFIG -eq 0 ]] || save_config
- 	del_if
- 	unset_dns || true
- 	remove_firewall || true
- 	execute_hooks "${POST_DOWN[@]}"
-+  del_ns
- }
- 
- cmd_save() {
--	[[ " $(wg show interfaces) " == *" $INTERFACE "* ]] || die "\`$INTERFACE' is not a WireGuard interface"
-+	[[ " $($(exec_ns) wg show interfaces) " == *" $INTERFACE "* ]] || die "\`$INTERFACE' is not a WireGuard interface"
- 	save_config
- }
- 
--- 
-2.27.0
+diff --git a/src/systemd/wg-quick@.service b/src/systemd/wg-quick@.service
+index a9cbb58..8eb040b 100644
+--- a/src/systemd/wg-quick@.service
++++ b/src/systemd/wg-quick@.service
+@@ -15,6 +15,7 @@ Type=3Doneshot
+RemainAfterExit=3Dyes
+ExecStart=3D/usr/bin/wg-quick up %i
+ExecStop=3D/usr/bin/wg-quick down %i
++ExecReload=3D/bin/bash -c '/usr/bin/wg syncconf %i <(/usr/bin/wg-quick stri=
+p
+%i)'
+Environment=3DWG_ENDPOINT_RESOLUTION_RETRIES=3Dinfinity
 
+[Install]
+--
+2.17.1
+
+Not the cleanest solution, but I think it might help a lot of people, so I'm=
+
+submitting it.
