@@ -2,78 +2,72 @@ Return-Path: <SRS0=dVqJ=BD=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+X-Spam-Status: No, score=-9.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B50AC433EC
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Jul 2020 08:28:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BEC6C433E0
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Jul 2020 08:33:13 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id E5901206EB
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Jul 2020 08:28:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 2883A2074A
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Jul 2020 08:33:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=tomcsanyi-net.20150623.gappssmtp.com header.i=@tomcsanyi-net.20150623.gappssmtp.com header.b="b4TrfdT1"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org E5901206EB
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=tomcsanyi.net
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SGhBFfMw"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 2883A2074A
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b162516e;
-	Fri, 24 Jul 2020 08:04:12 +0000 (UTC)
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com
- [2a00:1450:4864:20::344])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f6c0c480
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 338546ac;
+	Fri, 24 Jul 2020 08:09:52 +0000 (UTC)
+Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com
+ [2607:f8b0:4864:20::d36])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7780dd67
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 23 Jul 2020 13:47:27 +0000 (UTC)
-Received: by mail-wm1-x344.google.com with SMTP id j18so5088345wmi.3
- for <wireguard@lists.zx2c4.com>; Thu, 23 Jul 2020 07:10:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tomcsanyi-net.20150623.gappssmtp.com; s=20150623;
- h=content-transfer-encoding:from:mime-version:date:subject:message-id
- :references:to;
- bh=UsnCWMprgpVwJBvBLCYPYUyElG2y/JbM630VdPNhsps=;
- b=b4TrfdT1onxiyapAYByuTWp3ds0qwKudTNQetJQuzuIQTo3HmCtKNIFmWIyg7+Nerk
- qDDuqVBc3FGZXNs4xW+5M71lCMWJfmN10ANvLs0PYsEwl14Pe8flSLyZnWmZ6Hkm8W0P
- b1C0rSgqoYm6q6q0avSZsqMA1P4Ue6Wo3e+E8gFhVAZrdM580Pv/Io5i9ggyLru6Jcs6
- POmea2juMjg+y0jupEJlgy8VgSYPc7TaLAVaZStxqnd8ZRg249s0SxkcwjqA3dSuLFJ+
- 8B8nRKJybqS4YELpNptFNv708LDp2eSMNZL2J+4bPPvOI8JojMyzmsGRfKxk/dpvwAos
- 4igA==
+ Fri, 24 Jul 2020 08:09:50 +0000 (UTC)
+Received: by mail-io1-xd36.google.com with SMTP id t15so107557iob.3
+ for <wireguard@lists.zx2c4.com>; Fri, 24 Jul 2020 01:32:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:reply-to:from:date:message-id
+ :subject:to:cc;
+ bh=Ddv1fHhASWZagrjq1h/Dn3tdCGbUhBPGlg305Nx6iAQ=;
+ b=SGhBFfMwRSNIfGZlLe+kL86p8RknzaVxgJrsVDjnPaJ6kSBEyP+TG0iF4rs+qmH+w1
+ O6LZSQNjfkzGqmp90+g5i/+qPgtcOr0nMRaoDDTBuIh5S9n8yOsyzozy4/UPUGFGdi7O
+ unT4ykkf1ocSLlKz3D7B+GkZ5wbFKHWqcL8sUxOEOOH/jE+13UjRG0uFT9T0vUC6iR10
+ DoeH05IzfERdKBq9+ii2lX5z+LA5nBJHGFV3Pk475nd8iTXVDKTueqcb9vtBZuF8ElcT
+ COPpiP6ILcynKqJ0IVNSwWIhU9r2KHmRmJabJXdTLI7EokVUxqO68M+9RLnIXB5Iiad1
+ LW/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:content-transfer-encoding:from:mime-version:date
- :subject:message-id:references:to;
- bh=UsnCWMprgpVwJBvBLCYPYUyElG2y/JbM630VdPNhsps=;
- b=FM09hkYdsNAnNkuLrYLfXnsM8SIzlzmhyq+UO7g0Pe/C32ErrXiVfYXZWggVquJ3XO
- fguLkuO8ExzCRr2ZfHO1youtZd2qtCT8+b+JRoLV8WCptlq4wDSJr2DE2mi2ftdPIbCa
- yUA4ETP72TOvXxSeMOMxiAWB1bgUfUuHTZX9JpKWMx2Y3n+BipOktPafSfIKlUvZrCTD
- EJGAJvWFsjmR9FLyj321/BWe0bRy9H+q7Sl+kHLaZGMUeFWrbxjPkqYy7iVeixoPuxZz
- ZIOQZKXBYs6p8We9QaSeBZk9pqVKkFNXD45UKporqeg7RKjexxIq7Tr6QueY+QqSPBFQ
- cL0g==
-X-Gm-Message-State: AOAM530ysJVkG9MSx2XXi+c7LCyZpdldhnZDSw0CmM0ZHmY5xpSmTKWM
- sFYlVvJogKk1f35nqmWt9FPz4ZKS29g=
-X-Google-Smtp-Source: ABdhPJz4WX/AlDvdxfRm0CNEmCg+YOE7J+PrvhAiaw5L8RtEWbtiFNQ5hmNjtsQygBqKdP6LeOnflw==
-X-Received: by 2002:a7b:cb46:: with SMTP id v6mr4577986wmj.73.1595513413006;
- Thu, 23 Jul 2020 07:10:13 -0700 (PDT)
-Received: from [192.168.0.102] (92-249-179-12.pool.digikabel.hu.
- [92.249.179.12])
- by smtp.gmail.com with ESMTPSA id j24sm4473419wrb.49.2020.07.23.07.10.12
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 23 Jul 2020 07:10:12 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: "Tomcsanyi, Domonkos" <domi@tomcsanyi.net>
-Mime-Version: 1.0 (1.0)
-Date: Thu, 23 Jul 2020 16:10:11 +0200
-Subject: [PATCH] Adding support for reloading configuration via systemd
-Message-Id: <865B9BD5-A256-43F8-9922-A6DE7680C216@tomcsanyi.net>
-References: <VI1PR02MB52169D6F055314DCD03746EDE6760@VI1PR02MB5216.eurprd02.prod.outlook.com>
-To: wireguard@lists.zx2c4.com
-X-Mailer: iPhone Mail (17F80)
-X-Mailman-Approved-At: Fri, 24 Jul 2020 10:04:05 +0200
+ h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
+ :from:date:message-id:subject:to:cc;
+ bh=Ddv1fHhASWZagrjq1h/Dn3tdCGbUhBPGlg305Nx6iAQ=;
+ b=ncr93i+MEs+lU7OyeJcsmOu4Z3i8Z134PpmFMdwqmtUXTs0AXwh7D2qkPVonxbtN9T
+ VS7NFj2hy1B2+QXlbJ/GDxukQFVzuR+CWjjaHPiHTEgrTGq5f6LQxYGu+yYLKAIdRKoz
+ c1TMcJSgtuVTelk3Vf7fszaqoJUwxkhEzgENqqdtNaLr93IwtKziLukNSbYbN0IdybIe
+ A0yLSaBfNJcw+hWJirGuUbwv+VSOOHSL3wLaWhuIBtpkB8AJ3FTJVD9QvH21c2LOOQDj
+ NwJqV93EZKNtkB4w/SKIQtF2rFf+GUwFmRYck2ZgXZmjdr+aTZpupysfIp/o0zP62HvO
+ Qzag==
+X-Gm-Message-State: AOAM532lSH7XSqnqGVGOmTAs8oUDBNlRaAZrxRRPwZIkxAYNflGT2Y+d
+ oj1bWo2AgJgOO7n3L34l6WDSRaH9zXeKBUfJM2xRtnj2Uas=
+X-Google-Smtp-Source: ABdhPJxc6y7dgIzYrGIL2w+AllSRePifQQMocnjouKXrSkxNf/5wLlD4h/HJg3yYYlOWMfIaonvlPyxoOWe7Hr1PMpg=
+X-Received: by 2002:a05:6638:3aa:: with SMTP id
+ z10mr9618559jap.54.1595579563726; 
+ Fri, 24 Jul 2020 01:32:43 -0700 (PDT)
+MIME-Version: 1.0
+References: <20200721155826.29f29036.peter@petergarner.net>
+In-Reply-To: <20200721155826.29f29036.peter@petergarner.net>
+From: Jeffrey Walton <noloader@gmail.com>
+Date: Fri, 24 Jul 2020 04:32:32 -0400
+Message-ID: <CAH8yC8nCwwx8h8HmTGhsh10Dm4ThQTc=53ESfO=6iAXx4XvqmQ@mail.gmail.com>
+Subject: Re: Using OneRNG hardware RNG can I get wireguard to use /dev/random
+To: peter garner <peter@petergarner.net>
+Cc: wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -85,31 +79,26 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
+Reply-To: noloader@gmail.com
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-=EF=BB=BFSigned-off-by: Domonkos P. Tomcsanyi <domi@tomcsanyi.net>
----
-src/systemd/wg-quick@.service | 1 +
-1 file changed, 1 insertion(+)
+On Fri, Jul 24, 2020 at 4:28 AM peter garner <peter@petergarner.net> wrote:
+>
+> I've used my OneRNG v3.0 external device to recreate my SSH moduli and
+> am now looking to recreate my wireguard keys.
+>
+> According to the Wireguard docs it uses /dev/urandom:
+> https://gist.github.com/rmoriz/58f1768218a4fbc4b318615bfb85111d
+>
+> fd = open("/dev/urandom", O_RDONLY);
+>         if (fd < 0)
+>                 return fd;
+>         ret = read(fd, out, len);
+>         close(fd);
 
-diff --git a/src/systemd/wg-quick@.service b/src/systemd/wg-quick@.service
-index a9cbb58..8eb040b 100644
---- a/src/systemd/wg-quick@.service
-+++ b/src/systemd/wg-quick@.service
-@@ -15,6 +15,7 @@ Type=3Doneshot
-RemainAfterExit=3Dyes
-ExecStart=3D/usr/bin/wg-quick up %i
-ExecStop=3D/usr/bin/wg-quick down %i
-+ExecReload=3D/bin/bash -c '/usr/bin/wg syncconf %i <(/usr/bin/wg-quick stri=
-p
-%i)'
-Environment=3DWG_ENDPOINT_RESOLUTION_RETRIES=3Dinfinity
+Unrelated, the kernel-crypto folks recommend using /dev/urandom.
+Wiregaurd is following best practices. Also see
+https://lkml.org/lkml/2017/7/20/993.
 
-[Install]
---
-2.17.1
-
-Not the cleanest solution, but I think it might help a lot of people, so I'm=
-
-submitting it.
+Jeff
