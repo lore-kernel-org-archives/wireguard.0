@@ -1,49 +1,72 @@
-Return-Path: <SRS0=A7sd=BE=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=JaX8=BG=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E60DC433E0
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 25 Jul 2020 12:16:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D85ADC433E3
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 27 Jul 2020 15:47:43 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 3B7C920674
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 25 Jul 2020 12:16:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 3B7C920674
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=fud.no
+	by mail.kernel.org (Postfix) with ESMTPS id 4C35F206E7
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 27 Jul 2020 15:47:43 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=westernsemico.com header.i=@westernsemico.com header.b="OJjwzt89"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 4C35F206E7
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=westernsemico.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2cec11c4;
-	Sat, 25 Jul 2020 11:53:26 +0000 (UTC)
-Received: from mail.fud.no (mail.fud.no [2a02:c0:2f0:de01:f816:3eff:fede:dc6a])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2ea9fc71
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e834c555;
+	Mon, 27 Jul 2020 15:23:26 +0000 (UTC)
+Received: from server220-3.web-hosting.com (server220-3.web-hosting.com
+ [198.54.115.164])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 936036d5
  (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sat, 25 Jul 2020 11:53:24 +0000 (UTC)
-Received: from [2a02:c0:2:7::1] (port=51092 helo=sloth.fud.no)
- by mail.fud.no with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tore@fud.no>)
- id 1jzJ6F-0006EO-Ux; Sat, 25 Jul 2020 14:16:24 +0200
-Message-ID: <84986996953761e9d645b7ef583d3ffca689dfc5.camel@fud.no>
-Subject: Re: [PATCH] Adding support for reloading configuration via systemd
-From: Tore Anderson <tore@fud.no>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>, "Tomcsanyi, Domonkos"
- <domi@tomcsanyi.net>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Date: Sat, 25 Jul 2020 14:16:23 +0200
-In-Reply-To: <CAHmME9qsfmK6_d4bDF1Oj4585_56Vtm+wCT+i-2PO=tXN3Jsfw@mail.gmail.com>
-References: <VI1PR02MB52169D6F055314DCD03746EDE6760@VI1PR02MB5216.eurprd02.prod.outlook.com>
- <865B9BD5-A256-43F8-9922-A6DE7680C216@tomcsanyi.net>
- <CAHmME9qsfmK6_d4bDF1Oj4585_56Vtm+wCT+i-2PO=tXN3Jsfw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.36.4 (3.36.4-1.fc32) 
+ Sat, 25 Jul 2020 08:30:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=westernsemico.com; s=default; h=Content-Transfer-Encoding:Content-Type:
+ MIME-Version:Message-ID:Subject:To:From:Date:Sender:Reply-To:Cc:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+ List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=QleLkY2HdPRl2vP1YgW4fIApBe6MTZCJCapMO+Rq5Q4=; b=OJjwzt890EM7vZaIWi7Ox5/30R
+ 59vOnaY7+0GkhJV64wlbC6HZ9VaOPb1aN0kYYecNUw9tkcs4MTtBFLlsGZ8WUCWqED4ooc+/lqy7E
+ YEmbu6rTXFhWwunrPohEmKIn5+4fHN2VJhuk2yMdQT9jKEsJtqz89+EcKQQVJeC7tMfqXjZaZNPGE
+ erj8fzvyEHik0/ieT9ZBJsG/QxcPgplF/QAQKA0fAuqLxHDwHyeepqVaRZgmBmG6zw5sdrzYXKLTz
+ 6Fnw84Xr5cB9DxM4llZZoFCOIf+KR9iFSM1rCwGPfu1HJiXj7FLIQs1fhGhEddQaZvhj5PiHWq71g
+ f2xBMSIw==;
+Received: from [104.200.129.62] (port=42864 helo=conway)
+ by server220.web-hosting.com with esmtpsa (TLS1.2) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.93)
+ (envelope-from <adam@westernsemico.com>) id 1jzFvh-002q4C-MP
+ for wireguard@lists.zx2c4.com; Sat, 25 Jul 2020 04:53:28 -0400
+Date: Sat, 25 Jul 2020 01:52:10 -0700
+From: Adam Joseph <adam@westernsemico.com>
+To: wireguard@lists.zx2c4.com
+Subject: "wg ping" primitive for implementing prioritized endpoint lists?
+Message-ID: <20200725015210.0d656ea8@conway>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-OutGoing-Spam-Status: No, score=-1.0
+X-AntiAbuse: This header was added to track abuse,
+ please include it with any abuse report
+X-AntiAbuse: Primary Hostname - server220.web-hosting.com
+X-AntiAbuse: Original Domain - lists.zx2c4.com
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - westernsemico.com
+X-Get-Message-Sender-Via: server220.web-hosting.com: authenticated_id:
+ westwhdn/from_h
+X-Authenticated-Sender: server220.web-hosting.com: adam@westernsemico.com
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-From-Rewrite: unmodified, already matched
+X-Mailman-Approved-At: Mon, 27 Jul 2020 17:23:24 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -58,34 +81,37 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-* Jason A. Donenfeld
+Hi, thanks so much for wireguard, it is awesome.
 
-> This actually doesn't seem too bad to me. Are there cleaner solutions
-> that I'm not thinking of that I should consider before applying this
-> patch?
+Is there any way to test if a peer is reachable at a particular ip:port
+endpoint, without disturbing an existing, working exchange of packets
+with that peer at some other ip:port?  Sort of like a "wireguard ping"
+that avoids modifying the kernel's wg_peer.endpoint field the way "wg
+set peer endpoint; /bin/ping" would.
 
-I have no idea why my solution keeps being ignored (even after two
-gentle reminders), but perhaps third time's the charm?
+The use case here is a mobile client like a laptop that knows how to
+reach a server via either a preferred LAN IP (when the laptop is on the
+LAN) or via a less-desirable public internet address for the server.
+In a perfect world packets from the LAN to the server's public internet
+address wouldn't be trombone-routed.  Sadly, in real life they usually
+are -- for reasons beyond the control of the endpoints' administrators.
 
-In any case, to quote myself from 
-https://lists.zx2c4.com/pipermail/wireguard/2020-June/005585.html :
+With a primitive "wg ping" it would be possible to write a userspace
+tool to opportunistically upgrade a peer to a more-preferred endpoint
+or fall back to a less-preferred endpoint when connectivity is lost.
+More complex policies are possible too, along with improvements on
+the wireguard-tools/contrib/nat-hole-punching tool.
 
-«For what it is worth, I posted a patch that does exactly this back in
-March:
+In terms of implementation, one possibility is to allow an ICMP socket
+to mark its outbound packets "hey wireguard, if you find yourself
+encrypting this packet, after doing so send the resulting encrypted
+packet [and MESSAGE_HANDSHAKE_INITIATION it might provoke] to $IP:$PORT
+regardless of wg_peer.endpoint."  If the peer does not currently have a
+valid handshake (e.g. the timer just expired) then the ping will
+provoke a MESSAGE_HANDSHAKE_INITIATION, and the peer's
+MESSAGE_HANDSHAKE_RESPONSE will cause
+wg_socket_set_peer_endpoint_from_skb() to be called, which will update
+wg_peer.endpoint.  It would be nice if there were a way to prevent
+this, but I don't see any easy way to accomplish it.
 
-https://lists.zx2c4.com/pipermail/wireguard/2020-March/005222.html
-
-Reviews or user tests would be greatly appreciated.
-
-You can also pull from https://github.com/toreanderson/wireguard-tools
-if you prefer. The commit in question is here:
-
-https://github.com/toreanderson/wireguard-tools/commit/8305a267ec4259206c0de7f1d3f9cfb8522a3223
-
-There is one bugfix in GitHub compared to the patch I posted to the
-list in March - using $REAL_INTERFACE instead of $INTERFACE in wg-
-quick/openbsd.bash. I can post the updated patch to the list as well if
-you want, just let me know.»
-
-Tore
-
+  - a
