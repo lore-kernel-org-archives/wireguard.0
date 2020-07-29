@@ -2,76 +2,71 @@ Return-Path: <SRS0=HOwu=BI=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2684AC433DF
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 29 Jul 2020 10:40:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9002C433DF
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 29 Jul 2020 18:27:36 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 0EAAE20663
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 29 Jul 2020 10:40:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 6097A20809
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 29 Jul 2020 18:27:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=megamailservers.eu header.i=@megamailservers.eu header.b="OEAkPya2"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 0EAAE20663
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=sager.me.uk
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EhSfkYQT"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 6097A20809
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 591806bb;
-	Wed, 29 Jul 2020 10:16:32 +0000 (UTC)
-Received: from mail267c50.megamailservers.eu (mail1460c50.megamailservers.eu
- [91.136.14.60])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id e77418b4
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 24be7752;
+	Wed, 29 Jul 2020 18:03:43 +0000 (UTC)
+Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com
+ [2607:f8b0:4864:20::d31])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 5af2f02f
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 29 Jul 2020 10:16:30 +0000 (UTC)
-X-Authenticated-User: sagermail@sager.me.uk
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=megamailservers.eu;
- s=maildub; t=1596019202;
- bh=JmaVsUnoevxIZ+xOZpj0LPU08gEL9C7KxV5NuQJ9MOo=;
- h=Subject:To:References:From:Date:In-Reply-To:From;
- b=OEAkPya2uTT5RXsymVPRSGkDaHw9cDSV1zb2H+1zu7Lbywh1QiToH2VpV9FxbptUt
- r8K46PfAKhWYEcgpMSwp00H74lXuRLhI5MPCKucMBaE6RsVJc8Xx15QiegYR27LkwY
- wX5P3MjGFlYSD0+nK++wQW23RGHCwgkLSKGhW7VI=
-Feedback-ID: john@sager.me.u
-Received: from mainserver.wc (97.83.2.81.in-addr.arpa [81.2.83.97])
- (authenticated bits=0)
- by mail267c50.megamailservers.eu (8.14.9/8.13.1) with ESMTP id 06TAe0qp007422
- (version=TLSv1/SSLv3 cipher=AES128-GCM-SHA256 bits=128 verify=NO)
- for <wireguard@lists.zx2c4.com>; Wed, 29 Jul 2020 10:40:02 +0000
-Received: from [2001:8b0:cbe3:0:7987:f1cd:3396:9cb6]
- by mainserver.wc with esmtp (Exim 4.86_2)
- (envelope-from <john@sager.me.uk>) id 1k0jVA-0005Uh-9I
- for wireguard@lists.zx2c4.com; Wed, 29 Jul 2020 11:40:00 +0100
-Subject: Re: Confused about AllowedIPs meaning?
-To: wireguard@lists.zx2c4.com
-References: <02830f08-9e6f-a9f1-54c3-43758e95758f@gmail.com>
-From: John Sager <john@sager.me.uk>
-Message-ID: <981bec3d-2e1d-b0bf-d008-0b6717fa4300@sager.me.uk>
-Date: Wed, 29 Jul 2020 11:40:00 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+ Wed, 29 Jul 2020 18:03:41 +0000 (UTC)
+Received: by mail-io1-xd31.google.com with SMTP id k23so25527589iom.10
+ for <wireguard@lists.zx2c4.com>; Wed, 29 Jul 2020 11:27:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:reply-to:from:date:message-id
+ :subject:to:cc:content-transfer-encoding;
+ bh=wXqTPuHyT39MP1gfzyLeQBE2O/HyK0Ji5ZS4ZKHkSCA=;
+ b=EhSfkYQTdCu/L2/ZLOKV+PTa8nbAoX8mVwLwjJmqFwE0nenqMecZcsXd/f02oMmdc4
+ tetZJgX66ZM+nydN38wSYWVQoyr1LyOIS85fp2ebkAf+m6yPRIpkMxItgLk+tuqLbnW2
+ Hq2+URg1Vq3FONog23f/rNMJBraJgLzMGE5TvjLGT2HPpkf2McLyv+cpZswsMZzLyRDV
+ sJQJ18K1W17o64oa7IqTaYt/5QghJSd+sS/bi8HLB71plBetousyjL/pUxKLsnuIJOJs
+ a8GLWyQqUSqnItQZh/XkJ87futTEBr8pkZZ9jSa7I15o1ctwGYndw98IL6BjQWjDanY8
+ 9/oA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
+ :from:date:message-id:subject:to:cc:content-transfer-encoding;
+ bh=wXqTPuHyT39MP1gfzyLeQBE2O/HyK0Ji5ZS4ZKHkSCA=;
+ b=Za5hPayH09NKYaFKzD9dKqu8n6ipdtuNvVmEhpi5zvFlFxlLfK5kLFodgnAPX9t2UD
+ w9icSnJry6MiPUqu1ic7BjY52swTtMenIJvLtHRJCjNwxAtPiovRh5x56aL8fYKXHItA
+ 6u+yJLqRFiuQY7yW4FeZpy0Jh5iv27xrnVrRqk+suO4u6vHjHd2kO0n1cgjJt6BxkgXd
+ RZrCst+YRkAyMCkCfLXD71wm1mJ/hw8xuz10YNpPTpGHM2WYdH4LMP1+PLOiTRQpC+ow
+ bXfhPq1Dwj86p9uUZ3LikiFubRu0ayq4UUwa9TEHfdt6ALB/PLw//WIWqw/xlciPsHJf
+ rBZg==
+X-Gm-Message-State: AOAM530g4FYoq1WnOmQ31wty0A7ZSSXgZQpkwQfskZK4KghmWmpC2uMT
+ maMPhS4sKRN5zHkcY+mr44d++7qwPxWJF9Jz9Nw=
+X-Google-Smtp-Source: ABdhPJz+blI7zvD8QtllHi0vOMBbbUrDoxnNpmDIsEMdF+GTiA1J80K2Ho8feR+2elF+b5vnpCGmoqTWgpyivh9vM+8=
+X-Received: by 2002:a5d:8552:: with SMTP id b18mr35177562ios.28.1596047236727; 
+ Wed, 29 Jul 2020 11:27:16 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <02830f08-9e6f-a9f1-54c3-43758e95758f@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CTCH-RefID: str=0001.0A782F1B.5F215202.004A, ss=1, re=0.000, recu=0.000,
- reip=0.000, cl=1, cld=1, fgs=0
-X-CTCH-VOD: Unknown
-X-CTCH-Spam: Unknown
-X-CTCH-Score: 0.000
-X-CTCH-Rules: 
-X-CTCH-Flags: 0
-X-CTCH-ScoreCust: 0.000
-X-CSC: 0
-X-CHA: v=2.3 cv=Cf92G4jl c=1 sm=1 tr=0 a=dws6IJh5fU+Ftmrx3Eq8JA==:117
- a=dws6IJh5fU+Ftmrx3Eq8JA==:17 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=_RQrkK6FrEwA:10 a=yINdheanYzn9BT-ZHT0A:9 a=mmS0wzeBsJUxqt4B:21
- a=w7F0OaiFwd0QAJDl:21 a=QEXdDO2ut3YA:10
+References: <cd5b0b55-fe63-e4ec-7ee3-b68fc9e95e31@gwdg.de>
+In-Reply-To: <cd5b0b55-fe63-e4ec-7ee3-b68fc9e95e31@gwdg.de>
+From: Jeffrey Walton <noloader@gmail.com>
+Date: Wed, 29 Jul 2020 14:27:05 -0400
+Message-ID: <CAH8yC8=V_69QctjdZMpjgkA=ze7KzW8k+HP4xYN_zz3-xDW6OA@mail.gmail.com>
+Subject: Re: Hardware Security Token
+To: Marjan Olesch <marjan.olesch@gwdg.de>
+Cc: wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -83,100 +78,79 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
+Reply-To: noloader@gmail.com
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-So, are you running a RPi at each end as the Wireguard termination point? 
-I'm assuming you can't run Wireguard on your border routers. If you could 
-the config is easier, and you could if you used OpenWrt on the border 
-routers. I'm also assuming that your border routers are wifi access points, 
-so all your hosts connect there. So:
+On Wed, Jul 29, 2020 at 5:18 AM Marjan Olesch <marjan.olesch@gwdg.de> wrote=
+:
+>
+> I'm a student in computer science and currently writing my master
+> thesis. It's about an STM32F103 based security token, that is
+> specifically designed for the WireGuard authentication. For now, it has
+> more like a proof-of-concept character, and I'm aware of the possible
+> security flaws, which also have been discussed here before
+> (https://lists.zx2c4.com/pipermail/wireguard/2016-July/000243.html).
+>
+>
+> Nevertheless I want to briefly present my team's concept, as well as our
+> progress.
+>
+> The Noise IK pattern shows clearly, that it is not enough to just
+> outsource DH(SiPriv, SrPub) to the token, since this part would be
+> static, as long as the private static key or the peer=E2=80=99s public ke=
+y does
+> not change. Considering chapter 5.4 in the wireguard paper (initiation
+> scenario), at least the operation (Ci, k) :=3D Kdf2( Ci, DH(SiPriv, SrPub=
+)
+> ) needs to be ported to the token, since it is the Ci that is based on
+> ephemeral keys. Furthermore, the k, resulting from the KDF2 is a secret,
+> that is needed to create the AEAD. This means, that the k is kept on the
+> device, while the AEAD is also calculated on the token. Because the AEAD
+> calculation requires a timestamp, the device needs to run an RTC.
+> Considering all this, an attacker that intercepts the communication
+> between token and computer cannot replay the handshake with the
+> information transceived, since he is not able to alter neither the time
+> stamp, nor the k.
+>
+> Unfortunately, the STM32F103 can - from our findings - only run the
+> time, not the date, while powered off (with backup battery connected).
+> So for now the date has to be delivered once a day in our
+> implementation. The delivery can be protected by a password and/or a
+> hardware button for better security. The most important algorithms
+> Blakse2s, curve25519 and chacha20-poly1305 run on the STM32 and we were
+> able to reconstruct the operations needed, in order to source out the
+> particular parts from the handshake initiation. The communication to the
+> (virtual COM) device runs via USB and a really simple rpc protocol. We
+> used wireguard-rs for the development and everything stated above works
+> at the moment.
+>
+> I don=E2=80=99t want to bother you with too much information. Please let =
+me
+> know, if you have thoughts about this idea and/or the implementation. I
+> would be pleased to present you everything in more detail.
+>
+> Code can be found on https://gitlab.gwdg.de/uenigma
 
-1) Give the RPi a static address on its home network, and a default route to 
-its own border router. Put a static route in the border router to point to 
-the RPi for the network address range at the *other* end. So all hosts 
-connected to the border router go to the Internet for everything except the 
-other network, which go to the RPi.
+One comment on the date/time problem...
 
-2) Put NAT rules in the border routers to point the Wireguard port to the 
-RPi at its own end.
+Getting the current date/time has been a problem as long as I can
+remember. Early mobile phones without SIM cards would not fetch time
+from the carrier, so just about anything X.509-related could fail
+depending on the phone's default time (which was usually something
+like January 1, 2000).
 
-3) At RPi A set Wireguard to point to the Internet address & Wireguard port 
-for Network B. Set AllowedIPs to the network B range.
+I believe Google has a secure time server/protocol for this problem,
+but it is only a partial fix. I don't recall the name of the protocol
+or the server.
 
-4) Mirror (3) at the B end.
+The IETF has some recommendations at https://tools.ietf.org/html/rfc8633.
 
-HTH John
+I believe one of the fixes in the IoT age is a gossip protocol. If a
+dozen devices around you agree on a time, then the time is likely
+correct. You don't need to contact a network time server when the
+community agrees on the time. You can contact a secure time server for
+higher assurances, but the gossip'd time should be OK to get you to
+that point.
 
-On 26/07/2020 11:57, Gunnar Niels wrote:
-> Hello, I'm new to wireguard and have been experimenting with it in my home lab.
-> I'm interesting in using it to join two home networks (192.168.2.0/24 and
-> 192.168.4.0/24). They're typical home networks in two physically different
-> locations, each with their own gateways to the internet. I'd like for the
-> machines on each network to use their default gateway for internet access, but
-> configure things so they use a simple linux machine (raspberry pi) to route
-> to the other subnet over wireguard is the destination is the opposite subnet.
-> 
-> One wireguard node is exposed via an endpoint with a dns A record (I'm port
-> forwarding to the internal machine). On the other subnet, the rpi node is 
-> behind
-> NAT and pointed to that endpoint.
-> 
-> I have been able to get the wireguard nodes to connect and route machines on
-> their opposite networks, but I haven't been able to get non-wireguard nodes
-> to communicate with non-wireguard nodes across the tunnel. I have a few 
-> questions
-> I'm trying to clear up:
-> 
-> * Is it true that there isn't really a notion of a server/client from 
-> wireguard's
-> perspective, they're really just nodes, and I've applied the semantic 
-> designation
-> of the node behind the endpoint as a server, and the node behind the NAT as 
-> the client?
-> 
-> * Here's my "server" config on 192.168.2.0/24:
-> 
-> ===
-> 
-> [Interface]
-> Address = 10.2.0.1/24
-> ListenPort = 34777
-> PrivateKey = <server_priv_key>
-> 
-> [Peer]
-> PublicKey = <client_pub_key>
-> AllowedIPs = 10.2.0.2/32
-> 
-> ===
-> 
-> Here's my "client" config on 192.168.4.0/24
-> 
-> ===
-> 
-> [Interface]
-> Address = 10.2.0.2/24
-> PrivateKey = <client_priv_key>
-> 
-> [Peer]
-> PublicKey = <server_pub_key>
-> AllowedIPs = 0.0.0.0/0
-> Endpoint = <server_host>:34777
-> PersistentKeepalive = 15
-> 
-> ===
-> 
-> 
-> The simplicity of the wireguard config is one of the best features about it,
-> but the only thing I'm unclear about here is: exactly what is the "AllowedIPs"
-> field configuring? I'm not sure how to configure these fields for my use-case.
-> I'm guessing the server configuration is explicitly whitelisting the client,
-> but I'm not sure what 0.0.0.0/24 on the clientside is saying. It feels like
-> I should have my subnets as part of this field, but I'm not sure where because
-> I'm not sure exactly what the field represents.
-> 
-> If someone could elaborate on it and point me in the right direction given my
-> objective, that would be much appreciated!
-> 
-> -GN
-> 
+Jeff
