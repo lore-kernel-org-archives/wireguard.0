@@ -2,77 +2,75 @@ Return-Path: <SRS0=PVz2=BK=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5AE1BC433E1
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 31 Jul 2020 14:15:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C79A3C433E0
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 31 Jul 2020 14:19:14 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 05D18206D4
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 31 Jul 2020 14:15:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 6E565206DA
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 31 Jul 2020 14:19:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J45fjwoL"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 05D18206D4
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rqm6ZQ3M"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 6E565206DA
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b8e8a0ee;
-	Fri, 31 Jul 2020 13:51:31 +0000 (UTC)
-Received: from mail-il1-x143.google.com (mail-il1-x143.google.com
- [2607:f8b0:4864:20::143])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 567aaeb0
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f2374485;
+	Fri, 31 Jul 2020 13:51:32 +0000 (UTC)
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com
+ [2a00:1450:4864:20::529])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id cc878c9a
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 30 Jul 2020 13:38:38 +0000 (UTC)
-Received: by mail-il1-x143.google.com with SMTP id f68so653067ilh.12
- for <wireguard@lists.zx2c4.com>; Thu, 30 Jul 2020 07:02:20 -0700 (PDT)
+ Thu, 30 Jul 2020 16:03:44 +0000 (UTC)
+Received: by mail-ed1-x529.google.com with SMTP id v22so9614648edy.0
+ for <wireguard@lists.zx2c4.com>; Thu, 30 Jul 2020 09:27:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=DIpr0QaJo5ypRiVIpSJAPEWQch+S/l64ZhoGyRtAOOQ=;
- b=J45fjwoLvEAm3eIcaDQu8uJ797xkHEfRjCWUtZ9MXDkYFhBlQgvDFXCWz6vHGCKMe1
- JBrsSFofUfKr2DokALnVsaZhSOA4YUOLCNk3W1x2X2cO41g6efd5IlcY09AkOL2sHZmI
- MyTZJqxPnN910BgIzPskL3fpLfHxrYBFccjMqcetb2tjevXUyv1f/WbXcjguAeUKm8iq
- 7o+mfjYiKuELaWzBIfOW3M53ZTd+lMGpgJq0Iw+g3GLVZEpXk4uQgSmn2DW3ks52GcWz
- fmcO1i/eJeOyKmwIRvtoYyE6pbMdPp7agflqyI9QGJ3cZQ2oD0YnTWyXjcxZ4UiXSJ0Z
- tQcA==
+ h=from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=tSYu0EDRgdF/ZhnSctSy10Vn0b/Cy7y1HFpDqy8LgSc=;
+ b=rqm6ZQ3MjwytfLTwwnIOdvK7ap3nZvRE7wlXl5E5uBsNZyTrWa/i/mprlbwd0DzM5d
+ p2mdUwrUaNiC34MheVkukGUU3cTt8ylw7VgZYxfmTaHnBMzt6bFapu+jJK00U0T09jZj
+ jpcrcI7shTyCnSpOeSvapmwSPRaXp3X68TJDbeyHh3uVkopQ1px0nps66Deyyb9io2Ob
+ nAXfDWFSctpPo8JsyuDe9G0pLJwACCYl7Cm/qdOOt60rFAHmtb0XpubVl9RDL0E3ecVT
+ XdQZSV3zVs8cU0fNEXZzyxlD1y4KQQgLoj1r1PvD/nyjNu/o6+iup1daNtivyHiOwmL7
+ o2HQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=DIpr0QaJo5ypRiVIpSJAPEWQch+S/l64ZhoGyRtAOOQ=;
- b=ln1j8qqwNP+LCTIb1YMi+7YtFqLiMNvbGYJAIY0gic0wQkSDjt5tq5LdyQ2QSFTttN
- vf5aYMo35KqlwPSsWlW87V1Y+H3SCMzdhKkhc7NOC4SpOVS6BENV/RQ1V6Of0mZxSf4E
- KJ7yXG9jnjLy0iQoU1CfR+2QtXntfYyBlSQJOuVFnDAOi29SJUvIHeZastsQyxvDr9qQ
- fNGx2QNuSsxPzzFqtJN614T7vChq0SDesa2C0P4wO8ej//+4Cvx17R2h45r28rr0xs3v
- 2jKqGxSgqbJasHepfnJ6WWhyaMojucdCBwmzDNwtHwWHto4VOgXoVVbZgMEQoUF3nWO2
- xOTw==
-X-Gm-Message-State: AOAM532ZiaBBjHloegMCsV2Wrr0Y0gdXQy2nAhu8G4usUJGaNYM8Xh4Q
- Y0EmmoyR4cyMnwlWrA+G8i2u2P2ZvboPHcg23OI=
-X-Google-Smtp-Source: ABdhPJwJglpAZjfo9zTsPUWrfjX1pWyWLXm9wPSuW8m2Jj90xa9ownUfXx7iyOkTfwfFG+a6L3Q5tMAboRjCpu/7CRU=
-X-Received: by 2002:a92:6805:: with SMTP id d5mr2384159ilc.29.1596117740284;
- Thu, 30 Jul 2020 07:02:20 -0700 (PDT)
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=tSYu0EDRgdF/ZhnSctSy10Vn0b/Cy7y1HFpDqy8LgSc=;
+ b=KMlC06TgXBjsx/+dRX3zCCA/O7IMq89Jg3kxVTDXnwyKBktiR76/FM5bJt/cy6ZTtx
+ VaSjlY0UVhigFhhLyXoBflONWIbaczQivS6dIEsUZ+LrEIEGvzzbOpt8QOjSSsTwsu5r
+ YGOG1W2O2YJSJcM4cx3tbFYMktuXckU9L9xWd+6Ya4IGkEAfEWMrEb5oY15CJsEIb9CA
+ XS7KEW754PTX4NgBjPZpVmlsUfAVn/lbbO+a3zWyLG0r+AUePZjFXQPEuZJ85i5oOhGG
+ 5ObTHj15zrFhbA8JGAVhnAqAO2lf5wtJCLLSDAAtzihAUmx9PJc2Q7EMreVAvmPIaUnu
+ 1ApA==
+X-Gm-Message-State: AOAM53229MBcvaYBiTUjzYdyuFlUJJUiOXlz3LSwyagKfmh4yx81chtU
+ P1YfkbHqcb89w7AaNSeB34A45NsHziGAcg==
+X-Google-Smtp-Source: ABdhPJyc9slY3gp1fRfTBuNH63aN1KhjbQcVFcmaKh7jZ0LRBQWfgUAmf6JKTzeEAvdOnXUT+tEVQg==
+X-Received: by 2002:a50:e719:: with SMTP id a25mr3277127edn.15.1596126091246; 
+ Thu, 30 Jul 2020 09:21:31 -0700 (PDT)
+Received: from localhost.localdomain (ip113.ip-51-68-219.eu. [51.68.219.113])
+ by smtp.gmail.com with ESMTPSA id
+ y7sm6839337ejd.73.2020.07.30.09.21.29
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Thu, 30 Jul 2020 09:21:29 -0700 (PDT)
+From: Sina Siadat <siadat@gmail.com>
+To: wireguard@lists.zx2c4.com
+Cc: Sina Siadat <siadat@gmail.com>
+Subject: [PATCH] device ping test: get free port when testing
+Date: Thu, 30 Jul 2020 20:50:49 +0430
+Message-Id: <20200730162049.2869-1-siadat@gmail.com>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-References: <02830f08-9e6f-a9f1-54c3-43758e95758f@gmail.com>
- <26A86FD2-5A2D-49DC-A140-2E4B43213936@tomcsanyi.net>
- <ECF44AE9-A461-4252-8A33-B2A813280493@gmail.com>
- <20200729221814.GA32170@matrix-dream.net>
- <AF335FF5-251F-409A-9B9A-5D65D2EDA3DD@gmail.com>
-In-Reply-To: <AF335FF5-251F-409A-9B9A-5D65D2EDA3DD@gmail.com>
-From: M Rubon <rubonmtz@gmail.com>
-Date: Thu, 30 Jul 2020 10:02:10 -0400
-Message-ID: <CAJ24mqD0GWcguHwVifutRsmK7hn=qncwbVWCJqNAP7UgOUm-Qw@mail.gmail.com>
-Subject: Re: Confused about AllowedIPs meaning?
-To: Rich Brown <richb.hanover@gmail.com>
-Cc: =?UTF-8?B?SXZhbiBMYWLDoXRo?= <labawi-wg@matrix-dream.net>, 
- "Tomcsanyi, Domonkos" <domi@tomcsanyi.net>,
- Gunnar Niels <gunnar.s.niels@gmail.com>, wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-Mailman-Approved-At: Fri, 31 Jul 2020 15:51:20 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -88,145 +86,76 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
->  - Should the definition of AllowedIPs mention the "Address" of the peer?=
- That is, must the peer's Address be listed in AllowedIPs? [*]
-> - Some guides state that the Address specified for this peer and the othe=
-r peer should be chosen from a subnet different from any on the networks. I=
-s this a recommendation? A requirement? [**]
+Signed-off-by: Sina Siadat <siadat@gmail.com>
+---
+ device/device_test.go | 28 +++++++++++++++++++++++-----
+ 1 file changed, 23 insertions(+), 5 deletions(-)
 
-The address of the peer does *not* need to be included in AllowedIPs.
-If it is not there, the wg tunnel will still be created, but as
-discussed the wg tunnel will only accept packets with a destination
-address listed in AllowedIPs.
+diff --git a/device/device_test.go b/device/device_test.go
+index 5ea5410..016a0ca 100644
+--- a/device/device_test.go
++++ b/device/device_test.go
+@@ -8,6 +8,7 @@ package device
+ import (
+ 	"bufio"
+ 	"bytes"
++	"fmt"
+ 	"net"
+ 	"strings"
+ 	"testing"
+@@ -16,16 +17,30 @@ import (
+ 	"golang.zx2c4.com/wireguard/tun/tuntest"
+ )
+ 
++func getFreePort(t *testing.T) string {
++	l, err := net.ListenPacket("udp", "localhost:0")
++	if err != nil {
++		t.Fatal(err)
++	}
++	defer l.Close()
++	return fmt.Sprintf("%d", l.LocalAddr().(*net.UDPAddr).Port)
++}
++
+ func TestTwoDevicePing(t *testing.T) {
+-	// TODO(crawshaw): pick unused ports on localhost
++	port1 := getFreePort(t)
++	port2 := getFreePort(t)
++
+ 	cfg1 := `private_key=481eb0d8113a4a5da532d2c3e9c14b53c8454b34ab109676f6b58c2245e37b58
+-listen_port=53511
++listen_port={{PORT1}}
+ replace_peers=true
+ public_key=f70dbb6b1b92a1dde1c783b297016af3f572fef13b0abb16a2623d89a58e9725
+ protocol_version=1
+ replace_allowed_ips=true
+ allowed_ip=1.0.0.2/32
+-endpoint=127.0.0.1:53512`
++endpoint=127.0.0.1:{{PORT2}}`
++	cfg1 = strings.ReplaceAll(cfg1, "{{PORT1}}", port1)
++	cfg1 = strings.ReplaceAll(cfg1, "{{PORT2}}", port2)
++
+ 	tun1 := tuntest.NewChannelTUN()
+ 	dev1 := NewDevice(tun1.TUN(), NewLogger(LogLevelDebug, "dev1: "))
+ 	dev1.Up()
+@@ -35,13 +50,16 @@ endpoint=127.0.0.1:53512`
+ 	}
+ 
+ 	cfg2 := `private_key=98c7989b1661a0d64fd6af3502000f87716b7c4bbcf00d04fc6073aa7b539768
+-listen_port=53512
++listen_port={{PORT2}}
+ replace_peers=true
+ public_key=49e80929259cebdda4f322d6d2b1a6fad819d603acd26fd5d845e7a123036427
+ protocol_version=1
+ replace_allowed_ips=true
+ allowed_ip=1.0.0.1/32
+-endpoint=127.0.0.1:53511`
++endpoint=127.0.0.1:{{PORT1}}`
++	cfg2 = strings.ReplaceAll(cfg2, "{{PORT1}}", port1)
++	cfg2 = strings.ReplaceAll(cfg2, "{{PORT2}}", port2)
++
+ 	tun2 := tuntest.NewChannelTUN()
+ 	dev2 := NewDevice(tun2.TUN(), NewLogger(LogLevelDebug, "dev2: "))
+ 	dev2.Up()
+-- 
+2.24.3 (Apple Git-128)
 
-Following is the wg output when I have commented out the AllowedIPs
-entry in the config file.  You will see the handshake is still
-happening, though in this case the tunnel itself will accept no
-packets.  It is an existing but sad tunnel :-(
-
-peer: tndyLlE+lVFz/HIGs9BpjH....
-  endpoint: 192.168.82.234:57331
-  allowed ips: (none)
-  latest handshake: 35 seconds ago
-  transfer: 280 B received, 456 B sent
-  persistent keepalive: every 25 seconds
-
-
-On Wed, 29 Jul 2020 at 20:58, Rich Brown <richb.hanover@gmail.com> wrote:
->
-> These are helpful comments.
->
-> > On Jul 29, 2020, at 6:18 PM, Ivan Lab=C3=A1th <labawi-wg@matrix-dream.n=
-et> wrote:
-> >
-> > On Tue, Jul 28, 2020 at 05:33:43PM -0400, Rich Brown wrote:
-> >> AllowedIPs is the set of addresses that your WireGuard peer will send =
-across the tunnel to its peer.
-> >
-> > The definition is close, but not precise. Assuming things haven't
-> > changed much:
-> >
-> >  AllowedIPs specifies the set of addresses that your WireGuard
-> > host will send across the tunnel to its peer, and accept from
-> > the peer.
->
-> I think you and M. Rubon from earlier this afternoon are saying much the =
-same thing. I like those definitions because they make it explicit that the=
- AllowedIPs are used both for transmission (only packets with those destina=
-tions will be sent through the tunnel) and receipt (only those source addre=
-sses will be allowed back through the tunnel).
->
-> But I believe these definitions still leave uncertainty:
->
-> - Should the definition of AllowedIPs mention the "Address" of the peer? =
-That is, must the peer's Address be listed in AllowedIPs? [*]
-> - Some guides state that the Address specified for this peer and the othe=
-r peer should be chosen from a subnet different from any on the networks. I=
-s this a recommendation? A requirement? [**]
->
-> My goal is to produce a straightforward "can't fail" guide for people who=
- simply want to set up a VPN from their laptop to their office or home netw=
-ork. (Of course, the definitions must be correct, but I want to leave out a=
-ll the details and options that aren't essential for that simple case.) Is =
-the following a "good enough" definition to include in a "Just Do This" gui=
-de?
->
-> > AllowedIPs  =E2=80=94 a comma-separated list of IP (v4 or v6) addresses=
- with CIDR masks which are allowed:
-> > - as destination addresses when sending via this peer and
-> > - as source addresses when receiving via this peer.
->
-> Thanks.
->
-> Rich
->
-> [*] I think it is not necessary to specify the peer's Address in AllowedI=
-Ps. If it's not included, it won't be possible to interact with the peer us=
-ing that address (since it's not in AllowedIPs). However, the peer will lik=
-ely have an address that *is* in AllowedIPs, and that's how it will be acce=
-ssible. True?
->
-> [**] I suspect it would be possible to assign each peer's Address from an=
- existing subnet. But for simplicity, the I believe the guide should recomm=
-end a completely different subnet for the peers to avoid any confusion. Tru=
-e?
->
-> PS The remainder of the note is good/correct, but it muddies the water by=
- bringing up lots options and special cases that don't apply to the simples=
-t use cases.
->
-> > AllowedIPs is not a set of addresses, but of networks, wherein
-> > the peer with most specific match wins - as in a routing table.
-> > Also, beware negations might not do what you expect.
-> >
-> >
-> > Routing should work like so:
-> >
-> > When a linux system is sending a packet, it first consults
-> > the system routing table to choose the appropriate device.
-> > Then, if the outgoing device is a wireguard tunnel, it
-> > consults the routing table of the WG device to choose a peer.
-> > WG device's routing table is constructed from peers' AllowedIPs.
-> > When a peer is selected, the packet is encapsulated and sent
-> > to the peer's latest enpoint. Then the system routing table
-> > is again consulted, and hopefully a different outgoing device
-> > is selected.
-> >
-> > Note that the routing table is in fact a tree where the most
-> > specific match wins - both the system one and wireguard's.
-> > Also note that overlapping networks are allowed (e.g. 0.0.0.0/0,
-> > and 10.0.0.0/8), but identical networks in a single WG device
-> > are not allowed as neither would be more specific. The system
-> > routing table would throw an error on such attempts, but wireguard
-> > silently discards the old route keeping only the last one,
-> > so you need to be careful here.
-> >
-> >
-> > Such is basic routing. In more complicated scenarios:
-> > - routing rules select the routing table
-> > - iptables/nftables can change addresses, select devices, even clone pa=
-ckets
-> > - namespaces can nearly create an isolated network host/partition
-> > and you can also have xfrm encapsulation, maybe vdevs do something..
-> > All of this is either before the packet enters wireguard device
-> > (where wireguard routing is done), and/or after the packet is
-> > encapsulated/decapsulated (encrypted/decrypted) and processed again.
-> >
-> >
-> > When a packet is received, the system may also check the routing
-> > table for the source/peer address, and if the source device
-> > doesn't match the routing table entry, the packet would be discarded
-> > - so called reverse path filtering.
-> > Initial lookup of the encapsulated packet source in the system
-> > routing table is governed by the rp_filter setting.
-> > When a packet is processed by wireguard, the inner, decapsulated
-> > source is unconditionally checked for in the device routing table
-> > and packet discarded if peer doesn't match - i.e. the peer's allowed
-> > IPs must match, and also be the single most specific match.
-> > After wireguard decapsulation, the inner packet is again processes
-> > by the system, possibly checking the ips.
-> >
-> >
-> > Regards,
-> > Ivan
->
