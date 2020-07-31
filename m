@@ -2,52 +2,64 @@ Return-Path: <SRS0=PVz2=BK=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3711DC433DF
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 31 Jul 2020 14:19:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 01B43C433DF
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 31 Jul 2020 14:20:02 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id DD99C206DA
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 31 Jul 2020 14:19:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org DD99C206DA
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=matrix-dream.net
+	by mail.kernel.org (Postfix) with ESMTPS id 91CCF206DA
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 31 Jul 2020 14:20:02 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="f1wFk+7m"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 91CCF206DA
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 83be7058;
-	Fri, 31 Jul 2020 13:51:33 +0000 (UTC)
-Received: from mail1.matrix-dream.net (mail1.matrix-dream.net [2a0a:51c0::71])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 42570178
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4f8c4593;
+	Fri, 31 Jul 2020 13:55:45 +0000 (UTC)
+Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 46d27e4d
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 30 Jul 2020 17:56:21 +0000 (UTC)
-Received: from ivan by mail1.matrix-dream.net with local (Exim 4.92.2)
- (envelope-from <labawi-wg@matrix-dream.net>)
- id 1k1CyP-0003O8-H1; Thu, 30 Jul 2020 18:08:09 +0000
-Date: Thu, 30 Jul 2020 18:08:09 +0000
-From: Ivan =?iso-8859-1?Q?Lab=E1th?= <labawi-wg@matrix-dream.net>
-To: M Rubon <rubonmtz@gmail.com>
-Cc: Rich Brown <richb.hanover@gmail.com>,
- "Tomcsanyi, Domonkos" <domi@tomcsanyi.net>,
- Gunnar Niels <gunnar.s.niels@gmail.com>, wireguard@lists.zx2c4.com
-Subject: Re: Confused about AllowedIPs meaning?
-Message-ID: <20200730180809.GA12851@matrix-dream.net>
-References: <02830f08-9e6f-a9f1-54c3-43758e95758f@gmail.com>
- <26A86FD2-5A2D-49DC-A140-2E4B43213936@tomcsanyi.net>
- <ECF44AE9-A461-4252-8A33-B2A813280493@gmail.com>
- <20200729221814.GA32170@matrix-dream.net>
- <AF335FF5-251F-409A-9B9A-5D65D2EDA3DD@gmail.com>
- <CAJ24mqD0GWcguHwVifutRsmK7hn=qncwbVWCJqNAP7UgOUm-Qw@mail.gmail.com>
+ Fri, 31 Jul 2020 13:55:43 +0000 (UTC)
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d0db959b
+ for <wireguard@lists.zx2c4.com>;
+ Fri, 31 Jul 2020 13:55:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :references:in-reply-to:from:date:message-id:subject:to:cc
+ :content-type; s=mail; bh=2S5IqF6vSUMJErQ22QqWOr6YF8Q=; b=f1wFk+
+ 7mkataZk/A2RZxw49VkxTFXjPdzYfs5YffN+2WTlfymZvIi1p/AxiSGJxTgpn1Eh
+ J0gdbcgBEPePG7O7zyckOK1fdbWU5L60UpdQFYWuPq1lCeobgshpKbE+Posx/Lkr
+ JDEmUt2K4oVBB8sS+STKJavXH+LsCDLbiVlqFnniCguhiUaISw0VBrkOEqsBQ7Zc
+ BPUqzF3yA4cTJpw7AVhsZESZkK2zQ/q4BUyo5ky2bvT+gwyGHy9ygboQ3UxAxa2v
+ AUT6TyrL+qBUQJNZEOHgdRb53QOw63mi9IkkmBXlezvKmAR69EeT6gbT72VS4244
+ aQ+vl89Chx2PzzwA==
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 708d3ad5
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Fri, 31 Jul 2020 13:55:43 +0000 (UTC)
+Received: by mail-il1-f177.google.com with SMTP id y18so17017924ilp.10
+ for <wireguard@lists.zx2c4.com>; Fri, 31 Jul 2020 07:19:33 -0700 (PDT)
+X-Gm-Message-State: AOAM531zOoJkJhEv2TZ4W8G9piMw++V7383mKts+qYrlBcuMdn2rqmNw
+ mJxzsE2t/vnFjD5a6azlkMOvCGaLRMO2+LXuA0s=
+X-Google-Smtp-Source: ABdhPJzV7Ooa1AW6xqjhJaW2xvk6XmBVPhMnQYoXUZ5Vwc2R5RnN6R2MItHbxxTJjxgsA9KyvJo3j7XQbpxpGvqP+sc=
+X-Received: by 2002:a92:50f:: with SMTP id q15mr4076795ile.38.1596205173256;
+ Fri, 31 Jul 2020 07:19:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAJ24mqD0GWcguHwVifutRsmK7hn=qncwbVWCJqNAP7UgOUm-Qw@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Mailman-Approved-At: Fri, 31 Jul 2020 15:51:20 +0200
+References: <20200730162049.2869-1-siadat@gmail.com>
+In-Reply-To: <20200730162049.2869-1-siadat@gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Fri, 31 Jul 2020 16:19:21 +0200
+X-Gmail-Original-Message-ID: <CAHmME9o4uRpaYPiPo1UNm1bMAOBMFKLvG1tajoPnkTVUTdmhdA@mail.gmail.com>
+Message-ID: <CAHmME9o4uRpaYPiPo1UNm1bMAOBMFKLvG1tajoPnkTVUTdmhdA@mail.gmail.com>
+Subject: Re: [PATCH] device ping test: get free port when testing
+To: Sina Siadat <siadat@gmail.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -62,125 +74,4 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-To be clear, you should not put the endpoint address
-in the allowed ips list. The endpoint address is
-for routing over a "physical" network, while
-the "allowed" ips are the ips traveling via the tunnel,
-which have no relation to the endpoint address.
-
-
-On Thu, Jul 30, 2020 at 10:02:10AM -0400, M Rubon wrote:
-> >  - Should the definition of AllowedIPs mention the "Address" of the peer? That is, must the peer's Address be listed in AllowedIPs? [*]
-> > - Some guides state that the Address specified for this peer and the other peer should be chosen from a subnet different from any on the networks. Is this a recommendation? A requirement? [**]
-> 
-> The address of the peer does *not* need to be included in AllowedIPs.
-> If it is not there, the wg tunnel will still be created, but as
-> discussed the wg tunnel will only accept packets with a destination
-> address listed in AllowedIPs.
-> 
-> Following is the wg output when I have commented out the AllowedIPs
-> entry in the config file.  You will see the handshake is still
-> happening, though in this case the tunnel itself will accept no
-> packets.  It is an existing but sad tunnel :-(
-> 
-> peer: tndyLlE+lVFz/HIGs9BpjH....
->   endpoint: 192.168.82.234:57331
->   allowed ips: (none)
->   latest handshake: 35 seconds ago
->   transfer: 280 B received, 456 B sent
->   persistent keepalive: every 25 seconds
-> 
-> 
-> On Wed, 29 Jul 2020 at 20:58, Rich Brown <richb.hanover@gmail.com> wrote:
-> >
-> > These are helpful comments.
-> >
-> > > On Jul 29, 2020, at 6:18 PM, Ivan Labáth <labawi-wg@matrix-dream.net> wrote:
-> > >
-> > > On Tue, Jul 28, 2020 at 05:33:43PM -0400, Rich Brown wrote:
-> > >> AllowedIPs is the set of addresses that your WireGuard peer will send across the tunnel to its peer.
-> > >
-> > > The definition is close, but not precise. Assuming things haven't
-> > > changed much:
-> > >
-> > >  AllowedIPs specifies the set of addresses that your WireGuard
-> > > host will send across the tunnel to its peer, and accept from
-> > > the peer.
-> >
-> > I think you and M. Rubon from earlier this afternoon are saying much the same thing. I like those definitions because they make it explicit that the AllowedIPs are used both for transmission (only packets with those destinations will be sent through the tunnel) and receipt (only those source addresses will be allowed back through the tunnel).
-> >
-> > But I believe these definitions still leave uncertainty:
-> >
-> > - Should the definition of AllowedIPs mention the "Address" of the peer? That is, must the peer's Address be listed in AllowedIPs? [*]
-> > - Some guides state that the Address specified for this peer and the other peer should be chosen from a subnet different from any on the networks. Is this a recommendation? A requirement? [**]
-> >
-> > My goal is to produce a straightforward "can't fail" guide for people who simply want to set up a VPN from their laptop to their office or home network. (Of course, the definitions must be correct, but I want to leave out all the details and options that aren't essential for that simple case.) Is the following a "good enough" definition to include in a "Just Do This" guide?
-> >
-> > > AllowedIPs  — a comma-separated list of IP (v4 or v6) addresses with CIDR masks which are allowed:
-> > > - as destination addresses when sending via this peer and
-> > > - as source addresses when receiving via this peer.
-> >
-> > Thanks.
-> >
-> > Rich
-> >
-> > [*] I think it is not necessary to specify the peer's Address in AllowedIPs. If it's not included, it won't be possible to interact with the peer using that address (since it's not in AllowedIPs). However, the peer will likely have an address that *is* in AllowedIPs, and that's how it will be accessible. True?
-> >
-> > [**] I suspect it would be possible to assign each peer's Address from an existing subnet. But for simplicity, the I believe the guide should recommend a completely different subnet for the peers to avoid any confusion. True?
-> >
-> > PS The remainder of the note is good/correct, but it muddies the water by bringing up lots options and special cases that don't apply to the simplest use cases.
-> >
-> > > AllowedIPs is not a set of addresses, but of networks, wherein
-> > > the peer with most specific match wins - as in a routing table.
-> > > Also, beware negations might not do what you expect.
-> > >
-> > >
-> > > Routing should work like so:
-> > >
-> > > When a linux system is sending a packet, it first consults
-> > > the system routing table to choose the appropriate device.
-> > > Then, if the outgoing device is a wireguard tunnel, it
-> > > consults the routing table of the WG device to choose a peer.
-> > > WG device's routing table is constructed from peers' AllowedIPs.
-> > > When a peer is selected, the packet is encapsulated and sent
-> > > to the peer's latest enpoint. Then the system routing table
-> > > is again consulted, and hopefully a different outgoing device
-> > > is selected.
-> > >
-> > > Note that the routing table is in fact a tree where the most
-> > > specific match wins - both the system one and wireguard's.
-> > > Also note that overlapping networks are allowed (e.g. 0.0.0.0/0,
-> > > and 10.0.0.0/8), but identical networks in a single WG device
-> > > are not allowed as neither would be more specific. The system
-> > > routing table would throw an error on such attempts, but wireguard
-> > > silently discards the old route keeping only the last one,
-> > > so you need to be careful here.
-> > >
-> > >
-> > > Such is basic routing. In more complicated scenarios:
-> > > - routing rules select the routing table
-> > > - iptables/nftables can change addresses, select devices, even clone packets
-> > > - namespaces can nearly create an isolated network host/partition
-> > > and you can also have xfrm encapsulation, maybe vdevs do something..
-> > > All of this is either before the packet enters wireguard device
-> > > (where wireguard routing is done), and/or after the packet is
-> > > encapsulated/decapsulated (encrypted/decrypted) and processed again.
-> > >
-> > >
-> > > When a packet is received, the system may also check the routing
-> > > table for the source/peer address, and if the source device
-> > > doesn't match the routing table entry, the packet would be discarded
-> > > - so called reverse path filtering.
-> > > Initial lookup of the encapsulated packet source in the system
-> > > routing table is governed by the rp_filter setting.
-> > > When a packet is processed by wireguard, the inner, decapsulated
-> > > source is unconditionally checked for in the device routing table
-> > > and packet discarded if peer doesn't match - i.e. the peer's allowed
-> > > IPs must match, and also be the single most specific match.
-> > > After wireguard decapsulation, the inner packet is again processes
-> > > by the system, possibly checking the ips.
-> > >
-> > >
-> > > Regards,
-> > > Ivan
-> >
+Applied, thanks.
