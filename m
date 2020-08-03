@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 58802C433DF
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  3 Aug 2020 16:29:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 94C58C433E1
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  3 Aug 2020 16:31:31 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id EF9B520719
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  3 Aug 2020 16:29:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 35DA720775
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  3 Aug 2020 16:31:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="irUS/PYN"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org EF9B520719
+	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="WwCbrXZx"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 35DA720775
 Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 574c64c6;
-	Mon, 3 Aug 2020 16:04:23 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 37683e97;
+	Mon, 3 Aug 2020 16:06:50 +0000 (UTC)
 Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id cadf0a9c
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id eb88f8c2
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 3 Aug 2020 16:04:22 +0000 (UTC)
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id beab1ea4
- for <wireguard@lists.zx2c4.com>; Mon, 3 Aug 2020 16:04:21 +0000 (UTC)
+ for <wireguard@lists.zx2c4.com>; Mon, 3 Aug 2020 16:06:46 +0000 (UTC)
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0d78637b
+ for <wireguard@lists.zx2c4.com>; Mon, 3 Aug 2020 16:06:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
  :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=Aw14E+r28b6MSPD9Lo7J0ZoeNAA=; b=irUS/P
- YNq4xWmMcU2M5rMbkfRSxekfwarmFYguptQLyBNvBtmUO/KTiTOJ1Z77jHOnpo7a
- M80Xx9y3xskB5F4G0JuyUn87c1F36k19gNOxi4ZNuluKxONGpX/vJ9tCPsVrtDCc
- y3PGcStSSB3jfcm0/Bqv/vRcBQMDMziis2Xa1bs7dOnpBfm8+u441kLg0ib+qISk
- /wginMABi7EvECwyj3w9pw7PwSKexcXIJc0Hhh/LdLpgz5qdsEelB85bhM3/JMWF
- anTQ7BSK+UiAPOqCAqqeIi4Mvr35V4DLSZYGki1mfVNJ3GC4i4tCgBfJvf42N8aY
- wkCPeCCd8Bgi/X7A==
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 93b973d2
+ :content-type; s=mail; bh=Z4I1NffPTsL8xnEB/DTjEFw8sUc=; b=WwCbrX
+ Zx0ZnbygmDLDuouteFhOY2oAHGsDeF49NcrRr2hqq4xGVxQFzmoq7OE8RJd9ZDCN
+ tJoqMMrO1vOYCsFZqiywDOuZssgzTgc7lDucsVli3ckzSi/SxYkX4Y10Sp8Wcudw
+ GWr38CTSMvzHtAgqoefCCSey3bDsWJ8z5TCUt9KF9kt3HKqWwEtDXyy4DNKZ84id
+ ZMlEPyVdB6XjXp9DBkIRhJs3H03Cn00Zt3C1/fGjBjLO8onp7D9OtjB7p13baY02
+ EJ2Ctz/dQJihjG15uw7cwR+navN1VeWp1QCTf7EC2lv5ltiEgEQj+PN2KF07p9Ip
+ XLTVxB50JpONhhZw==
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id be478525
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 3 Aug 2020 16:04:21 +0000 (UTC)
-Received: by mail-il1-f169.google.com with SMTP id t4so31593449iln.1
- for <wireguard@lists.zx2c4.com>; Mon, 03 Aug 2020 09:28:36 -0700 (PDT)
-X-Gm-Message-State: AOAM532sVQRTARxmHBB7Qdp1X4HZWeXOxMY9qvJyt+yCAcGpwXTxG3vC
- u/cJDocvoHKxBTAjYv+dM3mdOJrPEpkoyoegEhU=
-X-Google-Smtp-Source: ABdhPJw8pMl3oq4xG9SOKoMHiY8skP6j/IUan5Smm+b03jpSUIoPWd9QVjb5w9NC/Qh1QhWDM+NcH18gVYJnktSGr18=
-X-Received: by 2002:a92:bb92:: with SMTP id x18mr193998ilk.64.1596472115760;
- Mon, 03 Aug 2020 09:28:35 -0700 (PDT)
+ for <wireguard@lists.zx2c4.com>; Mon, 3 Aug 2020 16:06:46 +0000 (UTC)
+Received: by mail-il1-f181.google.com with SMTP id l17so21408014ilq.13
+ for <wireguard@lists.zx2c4.com>; Mon, 03 Aug 2020 09:31:01 -0700 (PDT)
+X-Gm-Message-State: AOAM530CxWo3leYHeIhzX3HgO820F5RsuojhWXLEQ9I57JwoflA0dsS+
+ 89PMPGDFT/7KYe04kBtl76UEeDyZIaTQrogi5aY=
+X-Google-Smtp-Source: ABdhPJyKtMLsXl32mtG5qyzatroOoqmWMzlT9ZVm2VcJD0iU7wTKcJkU07s5AP+iRzyHFLLgCwJownD18LAN7cJUXrc=
+X-Received: by 2002:a92:ce12:: with SMTP id b18mr158804ilo.207.1596472260380; 
+ Mon, 03 Aug 2020 09:31:00 -0700 (PDT)
 MIME-Version: 1.0
 References: <20200803102808.GA1402387@zx2c4.com>
  <5fe66967628e355831945a610f6804fdfd9a6928.camel@noddingdog.org>
  <CAHmME9oLOSwC4_55cUZpHoXU+m8L=QQ20aDcn-ia5sWxQ+3nDA@mail.gmail.com>
  <d7506c2b3a5dce1c8c6c37c352f3ee50f6eed414.camel@noddingdog.org>
-In-Reply-To: <d7506c2b3a5dce1c8c6c37c352f3ee50f6eed414.camel@noddingdog.org>
+ <CAHmME9pA7qmK9Vg-W5Sa7O8y15H5cN0curQWG6=N5rU6TT3fVQ@mail.gmail.com>
+In-Reply-To: <CAHmME9pA7qmK9Vg-W5Sa7O8y15H5cN0curQWG6=N5rU6TT3fVQ@mail.gmail.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 3 Aug 2020 18:28:24 +0200
-X-Gmail-Original-Message-ID: <CAHmME9pA7qmK9Vg-W5Sa7O8y15H5cN0curQWG6=N5rU6TT3fVQ@mail.gmail.com>
-Message-ID: <CAHmME9pA7qmK9Vg-W5Sa7O8y15H5cN0curQWG6=N5rU6TT3fVQ@mail.gmail.com>
+Date: Mon, 3 Aug 2020 18:30:49 +0200
+X-Gmail-Original-Message-ID: <CAHmME9oTLHTfRw+_QAqqZNb4=GCb1WnJaEBsm_tBhzJ7FzoFkA@mail.gmail.com>
+Message-ID: <CAHmME9oTLHTfRw+_QAqqZNb4=GCb1WnJaEBsm_tBhzJ7FzoFkA@mail.gmail.com>
 Subject: Re: Migrating From Ubuntu PPA to Real Ubuntu Packages
 To: lists@noddingdog.org
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>, unit193@ubuntu.com, 
- Andy Whitcroft <apw@canonical.com>
+ Andy Whitcroft <apw@canonical.com>, W.Jackson@dell.com
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -76,26 +76,36 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Mon, Aug 3, 2020 at 6:25 PM NoddingDog <lists@noddingdog.org> wrote:
+On Mon, Aug 3, 2020 at 6:28 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
 >
-> I'm sure I did apt update after removing the PPA, but just checked
-> again:
+> On Mon, Aug 3, 2020 at 6:25 PM NoddingDog <lists@noddingdog.org> wrote:
+> >
+> > I'm sure I did apt update after removing the PPA, but just checked
+> > again:
+> >
+> > apt update
+> > apt install wireguard
+> >
+> > Same result - those gke kernels are included as dependencies and "will
+> > be installed".
+> >
+> > Maybe Dell need to fix their bionic-oem repositories?
 >
-> apt update
-> apt install wireguard
+> Ooof, that sounds disastrous. Hopefully Andy is reading these emails
+> and will fix this issue, but I'll poke him on IRC too.
 >
-> Same result - those gke kernels are included as dependencies and "will
-> be installed".
->
-> Maybe Dell need to fix their bionic-oem repositories?
+> Could you send me the URLs for the repos your laptop is using? I'd
+> like to double check the Release files on there. Perhaps just the
+> contents of /etc/apt or similar, and the name of the kernel package
+> your system uses?
 
-Ooof, that sounds disastrous. Hopefully Andy is reading these emails
-and will fix this issue, but I'll poke him on IRC too.
+Bingo:
 
-Could you send me the URLs for the repos your laptop is using? I'd
-like to double check the Release files on there. Perhaps just the
-contents of /etc/apt or similar, and the name of the kernel package
-your system uses?
+zx2c4@bionicman:~$ apt-cache show linux-image-oem | grep Provides
+zx2c4@bionicman:~$ apt-cache show linux-image-generic | grep Provides
+Provides: wireguard-modules (= 1.0.20200611-1ubuntu1~18.04.1),
+zfs-modules (= 0.7.5-1ubuntu16.9)
 
-
-Jason
+Indeed looks like maybe this was left out of linux-image-oem? That's
+surprising, especially given the trials and tribulations we went
+through initially to get this deployed to Dell customers.
