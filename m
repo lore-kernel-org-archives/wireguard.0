@@ -7,49 +7,60 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 02C13C433DF
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  6 Aug 2020 14:17:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 87179C433DF
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  6 Aug 2020 14:18:36 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 7F5F123121
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  6 Aug 2020 14:17:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 64C6523121
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  6 Aug 2020 14:18:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=seznam.cz header.i=@seznam.cz header.b="lxBw7BgT"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 7F5F123121
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=seznam.cz
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ccqyYyCv"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 64C6523121
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5c08fe0e;
-	Thu, 6 Aug 2020 13:53:04 +0000 (UTC)
-Received: from mxb2.seznam.cz (mxb2.seznam.cz [2a02:598:2::89])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 0cd13c3e
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Tue, 4 Aug 2020 13:04:03 +0000 (UTC)
-Received: from email.seznam.cz
- by email-smtpc15b.ng.seznam.cz (email-smtpc15b.ng.seznam.cz [10.23.14.195])
- id 29be78a04652c53b29e26096; Tue, 04 Aug 2020 15:28:22 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=seznam.cz; s=beta;
- t=1596547702; bh=qZluuVkPRcOs7VtR4myix+jWlA/UKuGopm7FF0EVDao=;
- h=Received:From:To:Subject:Date:Message-Id:Mime-Version:X-Mailer:
- Content-Type:Content-Transfer-Encoding;
- b=lxBw7BgTtwymrxcJm11Dtc+5dSXHrKgvwoRQoY60mQqQdLAKxX3J/pY/X2yUueylI
- WQOHzAqyg17Ia4quCU67IU68GP+46+Kr1lmzyf0xK9xkPKuQhfJBVIqtCEJWNbnP0y
- M63ybzPCennqN92EJimNgfYWW/B9YKy6YJ77HLPA=
-Received: from unknown ([::ffff:37.9.197.244])
- by email.seznam.cz (szn-ebox-5.0.40) with HTTP;
- Tue, 04 Aug 2020 15:28:20 +0200 (CEST)
-From: <scorba69@seznam.cz>
-To: <wireguard@lists.zx2c4.com>
-Subject: Wireguard sending keepalives even if keepalives disabled
-Date: Tue, 04 Aug 2020 15:28:20 +0200 (CEST)
-Message-Id: <7iV.N1fS.68VV8Wp67zX.1VAM9p@seznam.cz>
-Mime-Version: 1.0 (szn-mime-2.1.6)
-X-Mailer: szn-ebox-5.0.40
-Content-Type: text/plain;
-	charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Mailman-Approved-At: Thu, 06 Aug 2020 15:53:02 +0200
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4dcb2a21;
+	Thu, 6 Aug 2020 13:53:42 +0000 (UTC)
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com
+ [2a00:1450:4864:20::130])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 0925d836
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Thu, 6 Aug 2020 07:37:47 +0000 (UTC)
+Received: by mail-lf1-x130.google.com with SMTP id i80so25626919lfi.13
+ for <wireguard@lists.zx2c4.com>; Thu, 06 Aug 2020 01:02:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=LOn3ftASjuIpH1D0XT156vyPW7AkwrbUPZyzLL2YyLg=;
+ b=ccqyYyCvUI7I1bp8JANaZxfnFq2SRNdTikUP97GZjxiQhgo7hGUUNLzQS6EWsh4NLH
+ NIRdrHBGUxHV2u7wizSk9Ew/VEbEGmN9JXGZTnSoqTvVdnF4CWZ+kU6FwWzuQqRi0o2P
+ GumsJetXmF6xvhs2Sx0tpjePqUNEfHI37/0JSQrRuPP+BsiDvS1l0aZoHsTZr5PaFRlg
+ aWx54EujwIOkodq8xDzslLCEZr8XGcU8Mo9XQJVr+xJ2h5wrKYJpAoXP6Vwbs9/TiieU
+ WMQSaPhu83BnS6f59DP8Mngy17Dr5RAFLCZ2F5RHLH/BBiIaA0agskiqrKAv4M17o7dL
+ mdJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=LOn3ftASjuIpH1D0XT156vyPW7AkwrbUPZyzLL2YyLg=;
+ b=PhoQJ69CTnvtrdjxELzSagGhPXRiWGHhPTSVsG9Aq8lsJEZEM7UThJL0Egl5EgD6xe
+ 0DQaGMCW1/mwvUul4scnNrVtXine/ARP5SZalbSkwM5SkCh0juLYKdv2lea140hSlWEf
+ d7UshEOq+01XlJYrfPFmAOS5H1uXClt4Dl/UmLOLC8Xr1Ak8S5cce9sZQYt4cpfamgsr
+ TCZWlq7HDeZlauru87fFBGuweFaPoLEPDjH6MWV4oHkZT+HXZp01K6SzgAQ4Ge+N2UjY
+ YEpoRyW9mKgN4/UivDI176UZWTPU/UEQQNehZCXxKxre57SdRK939qj/lc8jxZqcAeL5
+ HMlQ==
+X-Gm-Message-State: AOAM531bWcJNjhFFMPWxOiQh727ahpHhhh8y1QBatVAH+yduLqWulzSf
+ EKlvMFOo91xFNEAi8qnE6fYLkPUNX9ZrJZnO4+Dkob9sJC0=
+X-Google-Smtp-Source: ABdhPJxA1gtEk3Igs8bj5/1Ylce+zyMQxm/k9U//YugUrbGpyJnirIWlwZGb8cal1xLNwoCDiHG4TSYRZqiLzUQQ3z4=
+X-Received: by 2002:a19:ae06:: with SMTP id f6mr3326018lfc.42.1596700940659;
+ Thu, 06 Aug 2020 01:02:20 -0700 (PDT)
+MIME-Version: 1.0
+From: Ryuichiro Nagasaka <r.ngsk.todo@gmail.com>
+Date: Thu, 6 Aug 2020 17:02:10 +0900
+Message-ID: <CAODy9c4WjuE2dJrXaJQeVn_WZXrk5ewpnqcsj1R024GT78ERGw@mail.gmail.com>
+Subject: Problem with connection from android phone to IPv6 endpoint
+To: wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
+X-Mailman-Approved-At: Thu, 06 Aug 2020 15:53:39 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -66,34 +77,49 @@ Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
 Hello,
 
-sorry if this is not a bug and also sorry if I am not using mailing lists =
-in the right way (I was not sure where to ask)...
+After upgrading Wireguard Android app to v1.0.20200724 by Google Play Store,
+The wireguard connections with multiple hosts via IPv6 network failed
+to establish.
+Using IPv4, the connections had no problem. Also, the ones from iPad including
+IPv6 were good.
 
-I have a little problem with wireguard. I have 2 devices:
-1) Debian Linux server with Wireguard service
-2) Android phone with Wireguard app
-They are both on the same local network (no subnets, no NAT etc.)
+Before the upgrade, the app version was V1.0.20200407, which could establish
+connections successfully.
+# reconfirmed by manually installing the old version of the app.
+# The IPv6 internet connection from my phone is always quite good.
 
-Everything works fine, but I have noticed that keepalive packets are being=
- sent between the two devices on regular basis, even if PersistentKeepaliv=
-e is not set.
-They are sent like every few minutes, sometimes twice in a row. The behavi=
-or does not change even if I set PersistentKeepalive on both devices to e.=
-g. 3600 seconds (1 hour).
-It seems, that the communication is little bit chatty. I have also noticed=
- that every few minutes a handshake also happens.
+On my router, I used tcpdump to check whether packets emitting from my phone
+were observed. But, no packet was found.
 
-The reason I am talking about this is that this is causing unnecessary tra=
-ffic and therefore increased battery consumption of the Android phone.
-For example on my phone, battery usually drops by 3% over night, but with =
-wireguard turned on it drops by 10%.
+Android Phone's configuration (Zenfone 6):
+=============
+[Interface]
+Address = 10.xxx.y.z/24, xxxx:xx:xxx:xxxx:yyyy:y::z/96
+PrivateKey = (hidden)
+DNS = 10.xxx.y.1
 
-I know that wireguard is still in development, I would just like to see so=
-me information regarding this topic.
+[Peer]
+PublicKey = (hidden)
+PresharedKey = (hidden)
+AllowedIPs = 0.0.0.0/0, ::/0
+Endpoint = [xxxx:xx:xxx:xxxx:yyyy:yyy:yy:y]:1194
+==============
 
-More information (including log from android app) can be found on reddit: =
-https://www.reddit.com/r/WireGuard/comments/hm4h88/wireguard_battery_drain=
-_on_android_phone/
+Router's configuration on /etc/wireguard/wg0.conf:
+==============
+[Interface]
+Address = 10.xxx.y.1/24, xxxx:xx:xxx:xxxx:yyyy:y::1/96
+ListenPort = 1194
+MTU = 1372
+PrivateKey = (hidden)
 
-Thanks a lot for any reply
-Tom
+[Peer]
+PublicKey = (hidden)
+PresharedKey = (hidden)
+AllowedIPs = 10.xxx.y.z/32, xxxx:xx:xxx:xxxx:yyyy:y::z/128
+==============
+
+Is anyone else having the same problem?
+
+Sincerely,
+Ryuichiro
