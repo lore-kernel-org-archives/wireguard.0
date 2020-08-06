@@ -2,45 +2,67 @@ Return-Path: <SRS0=Qc6R=BQ=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED3A6C433DF
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  6 Aug 2020 01:19:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB4DAC433DF
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  6 Aug 2020 03:02:11 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 6DE5A2245C
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  6 Aug 2020 01:19:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 6DE5A2245C
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=pallas.us
+	by mail.kernel.org (Postfix) with ESMTPS id 2E4542177B
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  6 Aug 2020 03:02:10 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qsDNxPza"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 2E4542177B
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f16dc33b;
-	Thu, 6 Aug 2020 00:54:24 +0000 (UTC)
-Received: from telperion.info (telperion.info [66.160.141.240])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 64703fc7
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5fc7b5f9;
+	Thu, 6 Aug 2020 02:37:36 +0000 (UTC)
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com
+ [2607:f8b0:4864:20::631])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id bcba5cd0
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Thu, 6 Aug 2020 00:54:15 +0000 (UTC)
-Received: from [192.168.127.224] (184-23-8-77.dsl.static.fusionbroadband.com
- [::ffff:184.23.8.77]) (AUTH: LOGIN pallas, )
- by telperion.info with ESMTPSA
- id 0000000000042AC8.000000005F2B5A4D.000022C9; Wed, 05 Aug 2020 18:18:03 -0700
-Subject: Re: wg-lla
-To: wireguard@lists.zx2c4.com
-References: <CAMaqUZ2UxEC+Fz4a=dp7R=6Ca=+TRH_u1cqhEEH0q1PA6hLvBg@mail.gmail.com>
-From: Derrick Lyndon Pallas <derrick@pallas.us>
-Message-ID: <2e14d61e-07ac-ac6c-d6a0-30aa250abae4@pallas.us>
-Date: Wed, 5 Aug 2020 18:17:13 -0700
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.11.0
+ for <wireguard@lists.zx2c4.com>; Thu, 6 Aug 2020 02:37:33 +0000 (UTC)
+Received: by mail-pl1-x631.google.com with SMTP id z20so6025793plo.6
+ for <wireguard@lists.zx2c4.com>; Wed, 05 Aug 2020 20:02:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:reply-to:from:date:message-id:subject:to;
+ bh=gwPdTuKdSpbESSv+oOUCMmSkVoCjvQvwOZE4vZn54JQ=;
+ b=qsDNxPzarUGopqE3YXveMAs84YCxHP3jxwhEcIldm4fsqPM9mmsgcQQUo6ZQY9CJZu
+ n62HYbBBXpAeyBBBOfpEIvYAblC+0/rGj8kUE9YFLmTc3cnT6Nwm0vBzTqv0fWTeeyi2
+ cdFRyGJVLoNIyUlTfXW/vb2PPzRyikl9VD6i9krek9muacLx805dUTqLi9Wb11+dGedC
+ 3PpaAqnNBK+bATBq5EUPXb/2gNsgJGjI5x3tFEAazRqFwzJNLBSoFitlEW0bFzjlzwEW
+ eEd3/iBJiUvSBFC0PEXCCp0DSEgjata8banmsUroL51Qfjdj6dvtnWNmgxcGMD/fU6M+
+ mpbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+ :subject:to;
+ bh=gwPdTuKdSpbESSv+oOUCMmSkVoCjvQvwOZE4vZn54JQ=;
+ b=cDN5WHdbOFpEpv5P5zpWeEXy82HKnqB5nW5wcvBomYeHky264w+mfrnt0nnNaztYAJ
+ ybL8bQ46YRaqJXbMdcZyKiMlBYtu4hMEYCBEtQol1849xBWWTwxcYfaPOXnhrtRPIU0T
+ IUvuctAKVWrqBDvzPKowz6hTrCapo2YFskY7LljZzLQk8H7ovovoMRAF2wPC4AntssKQ
+ F8FQLq2QIBkQ34AsmHd+QT0UObSylLEmlUqVleQnaFsfTx9Nm0tBdHeDOdLwSuinz9li
+ kIr6eNZZ1pBnI+DubbkS64xJzHtViOs74/hUCezXGWw0zaETe3ttpE6Dg/1LBZ28QmsU
+ 24fA==
+X-Gm-Message-State: AOAM532UPokO+fR+BHKEmUfTaVYcJPJ1aUlg0JtcozYGSgJJsrqYu6to
+ xuarrLANHsvBteTPtUKfa9Q3XvS58Js7peoSNoy4du1NInk=
+X-Google-Smtp-Source: ABdhPJxoEN55BRKHQV/zDPbIkLA/QvbVqKEwejtW2iwHqGfZPwq/Ueu+zzgDXJOMz/EZUit4VNb3Dax2i/oj6U7dgaM=
+X-Received: by 2002:a17:902:d881:: with SMTP id
+ b1mr5743207plz.74.1596682926161; 
+ Wed, 05 Aug 2020 20:02:06 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAMaqUZ2UxEC+Fz4a=dp7R=6Ca=+TRH_u1cqhEEH0q1PA6hLvBg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+From: Mo Balaa <buddybalaa@gmail.com>
+Date: Wed, 5 Aug 2020 22:01:55 -0500
+Message-ID: <CAKmhVkr2xZNocRzq76eOk3xCmoPh3bpiPongu0dUJesJs2DH-w@mail.gmail.com>
+Subject: Noteworthy: Self-hosted made easy,
+ secure and private. Powered by WireGuard
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -52,40 +74,28 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
+Reply-To: buddybalaa@gmail.com
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Thanks for updating!
+Hello fellow WireGuard enthusiasts!
 
-FYI, I just added this LLA algorithm to the PublicKey class in [1] with 
-three caveats:
+For those of you who are also interested in privacy / self-hosting
+please see my project:
 
-  * it allows for injection into an arbitrary IPv6 or IPv4 address space 
-(default is the LLA/10 that wg-lla uses)
-  * it fails if the generated address is the network address or 
-broadcast address of the provided address space
-  * it allows for an optional blake2b key, to mix the addresses if 
-desired (default is no secret, which produces the same addresses as wg-lla)
+https://noteworthy.tech/start/
 
-~Derrick
+We propose a general strategy for WireGaurd based hub and spoke
+topologies to enable blind TLS proxying for collaborative self-hosted
+online services.
 
-[1] https://github.com/ArgosyLabs/wgnlpy/
+The project is quite large in scope, but what I think you will find
+most interesting is that we use WireGuard to enable a Federation
+capable Matrix home server, without needing to expose any ports to the
+public internet on the server itself.
 
+Matrix is an open standard for end-to-end-encrypted messaging with
+mature open-source client/server implementations that works well as a
+private, self-hosted alternative to services like Slack or IRC.
 
-On 8/1/20 9:31 PM, Reid Rankin wrote:
-> A while ago, I included a link to a Gist containing `wg-lla.sh`, a
-> utility for calculating and assigning IPv6 Link-Local Addresses to
-> WireGuard peers based on a hash of their public key, which was based
-> on a shell-script implementation of Blake2s. At the time it was
-> intended as a proof-of-concept sort of thing, but I've had some
-> interested parties contact me about using it -- since I neglected to
-> stick on a license.
-> 
-> So I've rectified that error, and promoted it to a proper repo. Now
-> people can hopefully find it, as well as raise issues and make PRs.
-> Hope it's useful!
-> 
-> https://github.com/reidrankin/wg-lla
-> 
-> --Reid
-> 
+Comments, feedback, contributions welcome.
