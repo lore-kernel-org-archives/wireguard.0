@@ -2,64 +2,118 @@ Return-Path: <SRS0=Qc6R=BQ=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87179C433DF
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  6 Aug 2020 14:18:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 02C4DC433E1
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  6 Aug 2020 14:18:37 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 64C6523121
+	by mail.kernel.org (Postfix) with ESMTPS id D7E6523121
 	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  6 Aug 2020 14:18:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ccqyYyCv"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 64C6523121
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pa7+fB42"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org D7E6523121
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4dcb2a21;
-	Thu, 6 Aug 2020 13:53:42 +0000 (UTC)
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com
- [2a00:1450:4864:20::130])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 0925d836
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 56d7c9a6;
+	Thu, 6 Aug 2020 13:53:43 +0000 (UTC)
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com
+ [2a00:1450:4864:20::32a])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f503127b
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Thu, 6 Aug 2020 07:37:47 +0000 (UTC)
-Received: by mail-lf1-x130.google.com with SMTP id i80so25626919lfi.13
- for <wireguard@lists.zx2c4.com>; Thu, 06 Aug 2020 01:02:22 -0700 (PDT)
+ for <wireguard@lists.zx2c4.com>; Thu, 6 Aug 2020 10:57:56 +0000 (UTC)
+Received: by mail-wm1-x32a.google.com with SMTP id f18so6357772wmc.0
+ for <wireguard@lists.zx2c4.com>; Thu, 06 Aug 2020 04:22:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=LOn3ftASjuIpH1D0XT156vyPW7AkwrbUPZyzLL2YyLg=;
- b=ccqyYyCvUI7I1bp8JANaZxfnFq2SRNdTikUP97GZjxiQhgo7hGUUNLzQS6EWsh4NLH
- NIRdrHBGUxHV2u7wizSk9Ew/VEbEGmN9JXGZTnSoqTvVdnF4CWZ+kU6FwWzuQqRi0o2P
- GumsJetXmF6xvhs2Sx0tpjePqUNEfHI37/0JSQrRuPP+BsiDvS1l0aZoHsTZr5PaFRlg
- aWx54EujwIOkodq8xDzslLCEZr8XGcU8Mo9XQJVr+xJ2h5wrKYJpAoXP6Vwbs9/TiieU
- WMQSaPhu83BnS6f59DP8Mngy17Dr5RAFLCZ2F5RHLH/BBiIaA0agskiqrKAv4M17o7dL
- mdJw==
+ h=to:from:subject:autocrypt:message-id:date:user-agent:mime-version
+ :content-language:content-transfer-encoding;
+ bh=GJy2g6KZBojggoW14GGwXEGl+0b+Nqi0x5h2T0Cg1rI=;
+ b=pa7+fB42hHn8QejTHDTDV4yrqcDfAU5+CEnvhpqhufeM2XWRNTf3Bo/UuD6L6E+PFW
+ iQybzcg1+3YnSgal73uAFx0Ug3UyBUnvA9IgDaKZOoIdMNKhjFcjjG9nCLxdccJ+XZ4q
+ L2dMJGgy8CsUxPsG/t45V7DguD2/lfpMnm7oAy7kYfsbGGhPh6Up7BIVl3MTmu91j0AR
+ d2eUGEmjKuAHhizPkIdCZ4ErFXeDXH0RsY+FOCTIfIu4eI3WdVl8bmIPUk8ayME16pKj
+ nM9jepdFT/4gvWNywzsqt/faF0ncJTVkaKlKoge4PqqoJn2ckEsx6RfFEV7rQRQtvueS
+ zlZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=LOn3ftASjuIpH1D0XT156vyPW7AkwrbUPZyzLL2YyLg=;
- b=PhoQJ69CTnvtrdjxELzSagGhPXRiWGHhPTSVsG9Aq8lsJEZEM7UThJL0Egl5EgD6xe
- 0DQaGMCW1/mwvUul4scnNrVtXine/ARP5SZalbSkwM5SkCh0juLYKdv2lea140hSlWEf
- d7UshEOq+01XlJYrfPFmAOS5H1uXClt4Dl/UmLOLC8Xr1Ak8S5cce9sZQYt4cpfamgsr
- TCZWlq7HDeZlauru87fFBGuweFaPoLEPDjH6MWV4oHkZT+HXZp01K6SzgAQ4Ge+N2UjY
- YEpoRyW9mKgN4/UivDI176UZWTPU/UEQQNehZCXxKxre57SdRK939qj/lc8jxZqcAeL5
- HMlQ==
-X-Gm-Message-State: AOAM531bWcJNjhFFMPWxOiQh727ahpHhhh8y1QBatVAH+yduLqWulzSf
- EKlvMFOo91xFNEAi8qnE6fYLkPUNX9ZrJZnO4+Dkob9sJC0=
-X-Google-Smtp-Source: ABdhPJxA1gtEk3Igs8bj5/1Ylce+zyMQxm/k9U//YugUrbGpyJnirIWlwZGb8cal1xLNwoCDiHG4TSYRZqiLzUQQ3z4=
-X-Received: by 2002:a19:ae06:: with SMTP id f6mr3326018lfc.42.1596700940659;
- Thu, 06 Aug 2020 01:02:20 -0700 (PDT)
-MIME-Version: 1.0
-From: Ryuichiro Nagasaka <r.ngsk.todo@gmail.com>
-Date: Thu, 6 Aug 2020 17:02:10 +0900
-Message-ID: <CAODy9c4WjuE2dJrXaJQeVn_WZXrk5ewpnqcsj1R024GT78ERGw@mail.gmail.com>
-Subject: Problem with connection from android phone to IPv6 endpoint
+ h=x-gm-message-state:to:from:subject:autocrypt:message-id:date
+ :user-agent:mime-version:content-language:content-transfer-encoding;
+ bh=GJy2g6KZBojggoW14GGwXEGl+0b+Nqi0x5h2T0Cg1rI=;
+ b=ihQt9Yv+fTJUE/SEVS0z8erB1GOcpJZ9LK1LIKoPoCZnKe1dtQmV0GBq+4ayerkjOt
+ QkhU+TwFj0DQt78WhJxKxOMPK5nLliXxlXe1C6n+sl+Fzal06d6x0MkiIcnn033zqwxM
+ UOpLUSvHNMW6mWlqzsdcQWUrMFacpMUobWcpBkbs4YeJwofMP4q9bCC8yPsM9UD2oqW7
+ y1MmRNbiADkKXUqWqVgNdARtok806YQh1fx54mLPikKEw5K+xFqabzko3/yGohF4Va8v
+ Qs4NGsFHzJD2CxEmnV9B230CpDtl5GoCeU7jlrQFNe4+q14X+woMlWFfb078uTdXJC1i
+ 4DFw==
+X-Gm-Message-State: AOAM530HEQoPTfmbMnCgDLX95kdhX6PmWI9athnyMMC5+RdepEOnZbeh
+ bkrOx55ERmX1Ihwdx+WIHU0gBWgJ
+X-Google-Smtp-Source: ABdhPJwHfzoh/dUiV/wI7UT2Pti5B8+CMGByyZGSCZr5mWzOVClrAZIrxGQlEBMuhlv1MES3qduZsQ==
+X-Received: by 2002:a1c:b6d4:: with SMTP id g203mr7873627wmf.92.1596712951022; 
+ Thu, 06 Aug 2020 04:22:31 -0700 (PDT)
+Received: from [192.168.20.100] (20.157.63.94.rev.vodafone.pt. [94.63.157.20])
+ by smtp.gmail.com with ESMTPSA id
+ 128sm6045363wmz.43.2020.08.06.04.22.30
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 06 Aug 2020 04:22:30 -0700 (PDT)
 To: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+From: Mauro Santos <registo.mailling@gmail.com>
+Subject: Android App not setting DNS when allowed IPS not 0.0.0.0/0
+Autocrypt: addr=registo.mailling@gmail.com; prefer-encrypt=mutual; keydata=
+ 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 hJqc
+Message-ID: <aa041580-d6e8-6fa1-abc6-86de7f2ef53b@gmail.com>
+Date: Thu, 6 Aug 2020 12:22:29 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.11.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 X-Mailman-Approved-At: Thu, 06 Aug 2020 15:53:39 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -77,49 +131,66 @@ Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
 Hello,
 
-After upgrading Wireguard Android app to v1.0.20200724 by Google Play Store,
-The wireguard connections with multiple hosts via IPv6 network failed
-to establish.
-Using IPv4, the connections had no problem. Also, the ones from iPad including
-IPv6 were good.
+Like the subject says I have found that when I'm not routing all traffic
+through the vpn then my dns setting seems to be ignored (tested with
+nsleaktest.com).
 
-Before the upgrade, the app version was V1.0.20200407, which could establish
-connections successfully.
-# reconfirmed by manually installing the old version of the app.
-# The IPv6 internet connection from my phone is always quite good.
+If I route all traffic through the vpn then it works as expected.
 
-On my router, I used tcpdump to check whether packets emitting from my phone
-were observed. But, no packet was found.
+home network: 192.168.20.0/24
 
-Android Phone's configuration (Zenfone 6):
-=============
+vpn "server" is at 192.168.20.10 and internal vpn address is 10.4.4.1,
+where I have the dns server running and a few other services accessible
+only though the vpn.
+
+"server" config (with systemd-networkd)
+wireguard.netdev:
+[NetDev]
+Name = wireguard
+Kind = wireguard
+Description = WireGuard VPN
+
+[WireGuard]
+ListenPort = 4911
+PrivateKey = ...
+#Publickey = ...
+
+# Phone
+[WireGuardPeer]
+PublicKey = ...
+AllowedIPs = 10.4.4.3/32
+
+wireguard.network
+[Match]
+Name = wireguard
+
+[Network]
+Address = 10.4.4.1/24
+
+"client" config (android vpn app):
 [Interface]
-Address = 10.xxx.y.z/24, xxxx:xx:xxx:xxxx:yyyy:y::z/96
-PrivateKey = (hidden)
-DNS = 10.xxx.y.1
+name: msi
+public key: ...
+addresses: 10.4.4.3/32
+dns servers: 10.4.4.1
 
 [Peer]
-PublicKey = (hidden)
-PresharedKey = (hidden)
-AllowedIPs = 0.0.0.0/0, ::/0
-Endpoint = [xxxx:xx:xxx:xxxx:yyyy:yyy:yy:y]:1194
-==============
+public key: ...
+allowed ips: 10.4.4.0/24
+endpoint: 192.168.20.10:4911
 
-Router's configuration on /etc/wireguard/wg0.conf:
-==============
-[Interface]
-Address = 10.xxx.y.1/24, xxxx:xx:xxx:xxxx:yyyy:y::1/96
-ListenPort = 1194
-MTU = 1372
-PrivateKey = (hidden)
+The problem also persists if I access the vpn from outside my internal
+network and is "fixed" if I change the allowed ips from 10.4.4.0/24 to
+0.0.0.0/0.
 
-[Peer]
-PublicKey = (hidden)
-PresharedKey = (hidden)
-AllowedIPs = 10.xxx.y.z/32, xxxx:xx:xxx:xxxx:yyyy:y::z/128
-==============
+From what I have searched, other people with similar problems had a
+configuration problem, but I don't think it is the case here since my
+dns servers in on the same machine as other services and I can access
+the other services without problems.
 
-Is anyone else having the same problem?
+Any ideas on what the problem could be? I have checked the log on the
+android app but none of the messages in the log seems to indicate any
+problem, should I be looking for some warning/error messages in particular?
 
-Sincerely,
-Ryuichiro
+-- 
+Mauro Santos
