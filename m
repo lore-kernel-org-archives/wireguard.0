@@ -1,65 +1,71 @@
-Return-Path: <SRS0=Qc6R=BQ=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=S+OT=BR=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MISSING_HEADERS,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9235AC433E0
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  6 Aug 2020 14:18:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B98B6C433E0
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  7 Aug 2020 04:29:34 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 56D5B23121
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  6 Aug 2020 14:18:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 1FE302086A
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  7 Aug 2020 04:29:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=kilabit.info header.i=@kilabit.info header.b="G8J6n4hd";
-	dkim=pass (1024-bit key) header.d=amazonses.com header.i=@amazonses.com header.b="QSWg6IUy"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 56D5B23121
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=kilabit.info
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZbxKIjEm"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 1FE302086A
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f31cac25;
-	Thu, 6 Aug 2020 13:53:45 +0000 (UTC)
-Received: from b232-14.smtp-out.ap-southeast-2.amazonses.com
- (b232-14.smtp-out.ap-southeast-2.amazonses.com [69.169.232.14])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 22cf5f2a
- (TLSv1.2:ECDHE-RSA-AES256-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Thu, 6 Aug 2020 12:53:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
- s=qmu7se5xgw2loqmc5cw3bpwkrcsxkwvr; d=kilabit.info; t=1596719905;
- h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:Content-Transfer-Encoding:Message-Id:References:To;
- bh=iXZw7I6S0DPHEgUHpuHOT3lsr+OGqVQs64i7+2ajIDc=;
- b=G8J6n4hdrsTh72bfLzf2E/FW3sL0YnwZ7JIZBSk43kz9sr6TRp1jeV35MnDI7K7n
- sPPMPs4hMIHQAhhMUmCqP1/pncSi6SgoJ04tLew3/XzLX/alJ/1amOMMo680rwfjpyS
- 7Ys+UgtLPEHkwTeaAFlG1tAiZxtvNSvnjdFS+bgY=
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
- s=ulrbq2zjesb42hdt6rpnifgor3epinsy; d=amazonses.com; t=1596719905;
- h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:Content-Transfer-Encoding:Message-Id:References:To:Feedback-ID;
- bh=iXZw7I6S0DPHEgUHpuHOT3lsr+OGqVQs64i7+2ajIDc=;
- b=QSWg6IUyaekgIGT5sKCz6Hmr0GqkZ/jPZtFsvi/OtaGBOUaDg7oKci8RJaOtLClC
- 1wK9ptQbcTnTnQQSnH9GOb/y7iiikvab1E2rpJ4ETwh4TJN4wDnhUsSi8LsivTRDWIC
- PO5Lpe2qh7h+k5QqCbUPKSfL+CNvwmXgMlhF7Yvk=
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.1\))
-Subject: Re: WireGuard macOS App doesn't set system default DNS
-From: Shulhan <ms@kilabit.info>
-In-Reply-To: <CADn-QaMEbXB9T9xMz3QQ0rFOKSGnR0mTgEtydAUrYoPJgULaSQ@mail.gmail.com>
-Date: Thu, 6 Aug 2020 13:18:25 +0000
-Cc: Gijs Conijn <egc112@msn.com>,
- wireguard@lists.zx2c4.com
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a05b0591;
+	Fri, 7 Aug 2020 04:04:35 +0000 (UTC)
+Received: from mail-qv1-xf42.google.com (mail-qv1-xf42.google.com
+ [2607:f8b0:4864:20::f42])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 3f58ef43
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Fri, 7 Aug 2020 04:04:33 +0000 (UTC)
+Received: by mail-qv1-xf42.google.com with SMTP id l13so198553qvt.10
+ for <wireguard@lists.zx2c4.com>; Thu, 06 Aug 2020 21:29:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:cc
+ :content-transfer-encoding;
+ bh=kWgv5psTER60A2tYHgMHCibqnLVJXphx4wx7ocrUT5I=;
+ b=ZbxKIjEm0KT/GkHzY9G+t4gUcBDhcu1PKKy9Mo2RjXh3HZ1nyoHS0Hqi6dpidx/mWx
+ nPvcPP/AstF0ZHlPaAwrqZtAUNlD39rO8eWf1ZfCadWK0eigZo6hpUZv0SuQDBZVJ8db
+ taNudV8Yj5cFYzdbZn0CO8eRNNDskgFsX93z6EfzWgbbgynPH1cyiqvw0vbuITWFZ8kb
+ 2+2tqiExFMiuSN8/rr8eexeQVeD3r8E66hp902wv9+kNzSDkEJkc3KWeySkHebEzDbOs
+ 8IH31NKlt5Gfpq5OywVMJUjCNhgcRrtMN16SED/bB8W+BWiT5YqEmAyzCkxNiIr83+3/
+ jtzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:cc:content-transfer-encoding;
+ bh=kWgv5psTER60A2tYHgMHCibqnLVJXphx4wx7ocrUT5I=;
+ b=o3gZ4CtbrX6yGsrTVx39GlaAmQBJScQdlNmz0JzTGG9sPXcGe+ByiqbBpxFO9x7uhk
+ n9oQt+fG2Rj4QMRTTB4zX7fkcQWdgrAC89iQJ+HqIW9Egc6N/by0oXm97Rib8qETB7SP
+ bBixy1Fh7DdwhBlWJVvRCgctOMc2dDjPSdsiSVCtDzlDZIO8a/qMqMaYTUbXMmyzkHrh
+ eK85/s060/aevc/6QuHx8Gh7Al0fQgz9ag5Ez51C/BUg82nD77xMl10IBRLuQsNswRtb
+ x6rTcR0sA7Qv/2gKGvC6gSsL8hN08nWkk5Ixh5mFCO+25Z1krvcheHN/TcJMbPKmAGg6
+ ltkg==
+X-Gm-Message-State: AOAM531J92p9yBzzB6CHLMW110zwmUHYi5PznPvgn9Rt0LOI+ApCw32L
+ 5oKCbGN6N5E1RATuKhyN70j7uDvyJdwMID17/eAlrhiPMdA=
+X-Google-Smtp-Source: ABdhPJwheWVCOwAJiThZOD4q7eJ5DdpkS1XqdQW5xS5S95za3RQJj/Amj5HXvNj84zSCl1gAnoJnmjX/AgvXotz+ORs=
+X-Received: by 2002:ad4:4c89:: with SMTP id bs9mr12159569qvb.210.1596774554440; 
+ Thu, 06 Aug 2020 21:29:14 -0700 (PDT)
+MIME-Version: 1.0
+References: <aa041580-d6e8-6fa1-abc6-86de7f2ef53b@gmail.com>
+In-Reply-To: <aa041580-d6e8-6fa1-abc6-86de7f2ef53b@gmail.com>
+From: Alexander Skwar <alexanders.mailinglists+nospam@gmail.com>
+Date: Fri, 7 Aug 2020 06:29:01 +0200
+Message-ID: <CADn-QaO2gn8vX0qA9jeitSGiSK11qengh0U5_JjonTmSND84Tg@mail.gmail.com>
+Subject: Re: Android App not setting DNS when allowed IPS not 0.0.0.0/0
+Cc: wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Message-ID: <01080173c3ec3af0-1dd63a48-4c02-42b8-b52b-0b0b65366ff9-000000@ap-southeast-2.amazonses.com>
-References: <CAO8prk+D0zuzExJ9KcD5xJT1tGiVVHQO1Bs3ExBoUy7=Y0mhoQ@mail.gmail.com>
- <AM0PR07MB614721A4B6B17011C3DFF7C0964D0@AM0PR07MB6147.eurprd07.prod.outlook.com>
- <CADn-QaMEbXB9T9xMz3QQ0rFOKSGnR0mTgEtydAUrYoPJgULaSQ@mail.gmail.com>
-To: Alexander Skwar <alexanders.mailinglists+nospam@gmail.com>
-X-Mailer: Apple Mail (2.3608.120.23.2.1)
-X-SES-Outgoing: 2020.08.06-69.169.232.14
-Feedback-ID: 1.ap-southeast-2.wp6P5VKgOE241tt9Uq95AupcmA4MgXmCsfiLYAGFntA=:AmazonSES
-X-Mailman-Approved-At: Thu, 06 Aug 2020 15:53:39 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -74,34 +80,96 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
+hello
 
+Welcome to the club =E2=80=94 that is EXACTLY what I'm talking about in the
+thread "WireGuard macOS App doesn't set system default DNS".
 
-> On 3 Aug 2020, at 19.14, Alexander Skwar =
-<alexanders.mailinglists+nospam@gmail.com> wrote:
->=20
-> Hello Erik,
->=20
-> yes, I know that the DNS is private. This is why I have that on my =
-macOS
-> configuration:
->=20
-> # =E2=80=A6
-> AllowedIPs =3D 10.136.16.0/22, 169.254.169.253/32
-> # =E2=80=A6
->=20
-
-Did you set DNS servers manually in "Advanced" section? If yes, try to =
-clear it.
-
-I use macOS too and everything works fine.
-
-Did the DNS server 10.136.16.2 is the same VM as WireGuard server? If =
-it's in the same VM, maybe you can try the IP address of server peer =
-instead of IP internal of VM.
-
-I hope that give some hints.
-
+Are you on macOS as well? Using the WireGuard App or are you using wg-quick=
+?
 
 Regards,
 
-Shulhan=
+Alexander
+
+Am Do., 6. Aug. 2020 um 16:20 Uhr schrieb Mauro Santos
+<registo.mailling@gmail.com>:
+
+>
+> Hello,
+>
+> Like the subject says I have found that when I'm not routing all traffic
+> through the vpn then my dns setting seems to be ignored (tested with
+> nsleaktest.com).
+>
+> If I route all traffic through the vpn then it works as expected.
+>
+> home network: 192.168.20.0/24
+>
+> vpn "server" is at 192.168.20.10 and internal vpn address is 10.4.4.1,
+> where I have the dns server running and a few other services accessible
+> only though the vpn.
+>
+> "server" config (with systemd-networkd)
+> wireguard.netdev:
+> [NetDev]
+> Name =3D wireguard
+> Kind =3D wireguard
+> Description =3D WireGuard VPN
+>
+> [WireGuard]
+> ListenPort =3D 4911
+> PrivateKey =3D ...
+> #Publickey =3D ...
+>
+> # Phone
+> [WireGuardPeer]
+> PublicKey =3D ...
+> AllowedIPs =3D 10.4.4.3/32
+>
+> wireguard.network
+> [Match]
+> Name =3D wireguard
+>
+> [Network]
+> Address =3D 10.4.4.1/24
+>
+> "client" config (android vpn app):
+> [Interface]
+> name: msi
+> public key: ...
+> addresses: 10.4.4.3/32
+> dns servers: 10.4.4.1
+>
+> [Peer]
+> public key: ...
+> allowed ips: 10.4.4.0/24
+> endpoint: 192.168.20.10:4911
+>
+> The problem also persists if I access the vpn from outside my internal
+> network and is "fixed" if I change the allowed ips from 10.4.4.0/24 to
+> 0.0.0.0/0.
+>
+> From what I have searched, other people with similar problems had a
+> configuration problem, but I don't think it is the case here since my
+> dns servers in on the same machine as other services and I can access
+> the other services without problems.
+>
+> Any ideas on what the problem could be? I have checked the log on the
+> android app but none of the messages in the log seems to indicate any
+> problem, should I be looking for some warning/error messages in particula=
+r?
+>
+> --
+> Mauro Santos
+
+
+
+--
+
+
+
+Alexander
+--
+=3D>        Google+ =3D> http://plus.skwar.me         <=3D=3D
+=3D> Chat (Jabber/Google Talk) =3D> a.skwar@gmail.com <=3D=3D
