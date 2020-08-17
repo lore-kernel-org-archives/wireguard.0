@@ -2,75 +2,89 @@ Return-Path: <SRS0=FBn0=B4=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B417C433E4
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Aug 2020 11:37:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 37E2FC433DF
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Aug 2020 11:37:31 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id E908B205CB
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Aug 2020 11:37:23 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MFbqK+MW"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org E908B205CB
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	by mail.kernel.org (Postfix) with ESMTPS id C40AC205CB
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Aug 2020 11:37:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org C40AC205CB
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=jku.at
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4cfbf023;
-	Tue, 18 Aug 2020 11:10:58 +0000 (UTC)
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com
- [2a00:1450:4864:20::535])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id bb8070cc
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f98f0c6f;
+	Tue, 18 Aug 2020 11:11:20 +0000 (UTC)
+Received: from emailsecure.uni-linz.ac.at (emailsecure.uni-linz.ac.at
+ [140.78.3.66])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d17a3a42
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 18 Aug 2020 08:24:54 +0000 (UTC)
-Received: by mail-ed1-x535.google.com with SMTP id i26so14617012edv.4
- for <wireguard@lists.zx2c4.com>; Tue, 18 Aug 2020 01:51:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=msubi59q7gcednrRKsyO1+hlCuvCdOQy40syi25xej8=;
- b=MFbqK+MWM0E6zdAe6D/pt2+Itrkxnd6LizKM0fLmfgDoRCE4rxoGWDX4rFrk7UfYtL
- CDv+DmTzofqgyc3a3nzTHz9N0N+MeWMX7zvpkqAynla1emlUKSW6xJbK0cAP4r/z5t4c
- GtZoWVLBRisM/s7Z5HNt5guEBylSHJCRPg0RVWrUVc6QJcVCEb6X0PZFPWZFNeBZSMRS
- SWLO0y+4bC02p2V7jV4Rcd1qReEtFe9AWed+athGoKXr1u9Z9Uq0dHyL32whTKZ8O4Ri
- edcc/Ynhc5/FgpQ3auUTCwV7MOzUoNYPo4+ZfV8A8SfE44X5m2pj4UI3Hg11mtVSb3vP
- pE8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=msubi59q7gcednrRKsyO1+hlCuvCdOQy40syi25xej8=;
- b=eY6sxQXJQdRN290h4yZ8V7O5sWzsQKh3/AFh5k4vQ0i75zAgyOlJOL+DnlEJbjgVoU
- 2c4mRf0N77QtQysAPzpE4zSA8cXgRVFXQu9qwBdaY19AnN5Kf/DBNde4qN0Mm50rx55k
- 6hMqz1A7lsQFHN/Lgr3Qk1fJnveOXa1I6d0HWeuHWVGQiGXQEGUITPNCMl4RoDQfEQ2N
- TsVtbA083xsIdrYMZqTfOycLsWqITDdpGtGhIfdi1+SJb+8KVbrFAGwaOEga057yFt1N
- jAytcbByO42vrmPxGsKlu2UYv0xVx1Itk/R12KlKAtvGy6RFZB2ZDj3uVzdq+FopWpF7
- 91Hw==
-X-Gm-Message-State: AOAM533ONk/K8UqkJaMK+Vbot1uJOYI7NiN9BgGeIIWZthXFsGABx4EG
- fWucdBxgHAS1dcP6Lx7RveLvX+V5DSEs4a48+bM=
-X-Google-Smtp-Source: ABdhPJzPE/kz1NoVvBudL0l4QiXD5j6GWC+HR848YmIEHwsyBzXP5Xm+ykku0snrQuMrmOq1IfahkpH6xsZhkdsCujs=
-X-Received: by 2002:a50:fb94:: with SMTP id e20mr19101852edq.103.1597740661755; 
- Tue, 18 Aug 2020 01:51:01 -0700 (PDT)
+ Mon, 17 Aug 2020 14:38:21 +0000 (UTC)
+Received: from [140.78.57.134] (pnp134.pnp.jku.at [140.78.57.134])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by emailsecure.uni-linz.ac.at (Postfix) with ESMTPSA id 4BVclC6KJtz2PPx
+ for <wireguard@lists.zx2c4.com>; Mon, 17 Aug 2020 17:04:23 +0200 (CEST)
+To: wireguard@lists.zx2c4.com
+From: Daniel Hofer <daniel.hofer@jku.at>
+Subject: wg-quick: "Endpoint" inside "Allowed IPs"
+Autocrypt: addr=daniel.hofer@jku.at; keydata=
+ mQINBF65ZtMBEADVDDRL0i0DK+DWUov35Vf7SDhOPJDcGjyPK6kei/K28f3VG4/xiCPBDQEy
+ RmLAwaz/eU5LFQdMvYV0hOQeoUn1QKVaDB9uLpjUFgsyv9Kv6dr3q1N1u5VV0RxbGHIiKR8V
+ 1JF+axXttzWRr6YruiEQG+2+Cf+QZWzR9jU6DS66gbo9dLQB3A3ZCOzpeWDGULlSISjeabjY
+ ytitT0jxjW5yta3BZJt+uVVJ+W5QCZ1onogtoaYKwHK5nMK/5WcxrX9dxsQs68LftUQ4RXAH
+ 18BJ2RmRoWtCv/N/Y886eRMzQp9uoaMmp/NrsCNisaR7PNWEZUIFUdnDJet8y4CCsUCqsxhy
+ zoIWeI3IWsRrK66sKSaVnsIFzFF1932aD9NtEayZ1i+yRZuvNArgXOM4bktYRHbczslTmW9W
+ phQrHZMWhGFoKzLgeB8Rm13GQMbaEeAWaE9Z6CViQxTq6W2ceY1MEzfL5el20zclDaBKDNkH
+ Nkp6vzIEZwoPrqQafO+5oN93pFM6GggPt5YHYr30XERZVB0Ox3I26VsV/VQOm5K2hbVwjp6s
+ 4HbsxwAuHXlBPuhDOQXSqAgJFtG1f8Vz6SFIFCUU5ViN26abUCDhwSyAezgoSzeaILiCe0hr
+ lec7qHmS5O760obGDv0BUAQiyFzhPywrLhzWCfFYyznQfpnLlwARAQABtCJEYW5pZWwgSG9m
+ ZXIgPGRhbmllbC5ob2ZlckBqa3UuYXQ+iQJOBBMBCAA4FiEEI4EqQSG6X11BDknakKpVPYG2
+ K4kFAl65aXsCGwMFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQkKpVPYG2K4mFKA//e/fb
+ SULJDaK2sMmO5A+/TBgvsTcaUCvaSqZaLtYDLNWcUw7JB4E27hAgtjxKixtGLuO9Eb7sCHMQ
+ /j/CiR/AoUQJ2shLKjkZxzza+EjtnGOFoDLnc9FTrfYaBgrXIReANW5bJaR/QfJB3+a6NHzN
+ RqCRXcSr0KAnQVvHoQTSpnJAivi+nbj7nfHESe+dbXJAFPXEZkXc64gWj1V2IAbiPpzWsyh9
+ EBVyoG2C7e4Axs1U1Ws2ZUnYoS3ZIFdZXkdtusm9TaK1MKl5s/mpUnidRB4WyuFbbGoP7Hj3
+ Jv+kmyl0DEV6wurbf7L0Pr71VkdBHdEBd2sqeLFA2dzgvzbOl3mVGEIY/+BHEZztIHu5ug3Y
+ 5t80DdlBN5RMU6zGGcHCXA+ZRy9gG24XkVBxqIAwyYKOjGT9UBFyVyVxsgYSBu32G55yNoZp
+ VpRu0puZiqfUJYZC52/IZh90FLsN38aBnSxZZRbMR2Jjt3asbtNWdo7yJ8Wc+K/Ph9KHiR5z
+ eQD43UbwWrCZhMLSNTRK1E8iHXNcDAfFKZGuEg0dZZowNwRbN3HxD0mF7iAwlHV+yb01B4lE
+ LwIpgzxZ/i9+E7KgmZrCo6kBoNV/xRKwbd7ilWJSukxe2hAc7WTiEIKoG9EYzCsCCEMyu0DS
+ ARfoJJHmvaBQ829I+QgtkBfPlPWdWwe5Ag0EXrlm0wEQAL4Dp5X5d7BBlUpMvomI7V3Z5H/X
+ /qTbGfxgwoP+DI602NrvhHtKxD4qLpD2LEMcKTpC9arcor/PyyMMTWSR7dD0x6O1K3MlbnJR
+ f7ws64hgs93a1VGWKIXoNFH+MHDt0dKoDjIQ1yZVuK1kS14NRALbGo39rBg54MWU1/W+3ykb
+ R6MBIzbGOqWPFKiwPBxT/naLfA3Yzm2OUOL726cBl3bscIuv5kZxdnJrCTu3QyfVaEAXXvMU
+ 9YK/N4JL8QJ1idjzQaeXsSI+4vu0wCpkUqqQEuiUliGYhDYHWk3px+81Qx2eU5sWHOQbLOUT
+ IhLT85OeDTLhhfrzR2FdkzpiFiOy8kGKVKcO3qzzsD/Rdh64FXi1Cj9CE/BNo0EkhNIg+tLQ
+ BIA1xwYdCwX9GyK5kh/4E+JXdyIl/SJUop8bq9/mMDcPMpld9EjBDCRS1TQ9g0IW+fwhTodA
+ JKXXJPyhAIzl6U547qUu32THTWq3GYOC4sUAer49TpWRTBOgXAWtzzAAYSrMBlFYUhQyMp+M
+ P4+t8XLFOjShl4zM2m8citjScWUcZTjFm46yMeTmSrOd2oUKzsMnRiqefMGBIi8JxEldx7yd
+ MFKQi609ZoJ1QaKTA8Xwo/tWKrjwa/mprDI1Zajza4+GVuvx7AYB78npDjiEjlMQKygv9E5n
+ JqbhlAgDABEBAAGJAjYEGAEIACAWIQQjgSpBIbpfXUEOSdqQqlU9gbYriQUCXrlm0wIbDAAK
+ CRCQqlU9gbYriZ8AD/0UHlUQC5deN2T1QGRCnbPBtLS51JTx2cNPtw3B7KN1B7+i0vBGZ02J
+ wQ54SZzc0eq8SRS8n1E9X+xY+OfHnMfA75EGPq28tmpXjyzPUGVyiSff0kI8q4w4vf8Yexfm
+ 3bNyom2nfrJaA7zkBuVsFgP9eeY0onsR75JaaK6kwvwCfpsG2q7fppG6VQEiKDeuqlSznC92
+ L6K5wGwy+GHsZZ6A/PsLhQOY73feC9rc47t5gWzsDBwtC0sathJEYMnGhirroV/RYV294+J1
+ nK/MtFieEtsuvCz2JhTvc0hogPwmu9g0tM43/aPmhEDfbrf1scZlJ304gqcyAo4/n11AvJBe
+ f4ifasNA38QO3uH6v/5PSp6d4f1TMOCbarlg9UoYf4pqxVr35szVOlacsi7ck1eapsEElt0c
+ hQD+l0+X6ZKZ1FM24DvwZXgdLEsTthmxVwklt+xjLwJ6BmjtVhZKar9zBuKCJHdncLxEhsGv
+ WwevC0/UCVBGCM8xduM+bsJDkRItXbzyf5TaPmDt261GyJU5zRzmJWLfsMwYl9FFlGpNcxRL
+ GGNW4+1gKd0rV2HssQW38kioa+mlhfFCcUNNPVAGPpJkWMaWTdsz9bCUN4m9Vc/azsoIKbtN
+ L8tEViKAzw70q0TvPKyjGnxPK8OF1lWT5JMe/dLwydE/HkhwoJF2kg==
+Message-ID: <7706462a-3f7f-bbe9-46ea-8bd31332e70a@jku.at>
+Date: Mon, 17 Aug 2020 17:04:23 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.11.0
 MIME-Version: 1.0
-References: <CAARAvpL1PDSm5T_5pE5qUP9b+bMeUi9Td57op9t+OoSLvo9L2A@mail.gmail.com>
- <CAHmME9qobq9ZhyOGm5WaTTXA0i=k=_w0L+7LWCPcjUye5idJYA@mail.gmail.com>
-In-Reply-To: <CAHmME9qobq9ZhyOGm5WaTTXA0i=k=_w0L+7LWCPcjUye5idJYA@mail.gmail.com>
-From: Ferad Zyulkyarov <feradz@gmail.com>
-Date: Tue, 18 Aug 2020 10:50:49 +0200
-Message-ID: <CAARAvpLXrRummZrkG8g2xS97SeiBDC_ZC9+iygX0V8P_kokpUQ@mail.gmail.com>
-Subject: Re: WireGuard on Windows: Unable to create Wintun interface: Error
- registering rings: Error listing NDIS interfaces: no interfaces found
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
- Simon Rozman <simon@rozman.si>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Mailman-Approved-At: Tue, 18 Aug 2020 13:10:55 +0200
+Content-Language: en-US
+X-Mailman-Approved-At: Tue, 18 Aug 2020 13:11:19 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -85,48 +99,47 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Jason and Simon, thanks for the reply.
+Hello to all,
 
-I tried Jason's recommendation and added Tcpip as a dependence to the
-WireGuard service. This doesn't seem to solve the problem.
+Since this is my very first mail to a mailing list ever, I hope I do not
+make any mistake (especially because I could not find a bugtracker or
+something similar to write my issue to).
 
-I added the dependency by executing the following command:
-sc config WireGuardTunnel$wg0 depend=3D nsi/Tcpip
+I am working at a university and my institute switched to WireGuard a
+few weeks back, which lead to the the following configuration file:
 
-After executing this command I verified that noth NSI and TCPIP are
-listed as dependencies.
+####################
+[Interface]
+Address =3D <Private IP>/32
+PrivateKey =3D <redacted>
+DNS =3D <University DNS>
 
-I restarted the machine few times but still WireGuard does not start
-automatically when the machine starts.There is the same error in the
-WireGuard log file: [tun] [wg0] Unable to create Wintun interface:
-Error registering
-rings: Error listing NDIS interfaces: no interfaces found
+[Peer]
+PublicKey =3D <redacted>
+AllowedIPs =3D <University class B segment>.0.0/16
+Endpoint =3D <University class B segment>.123.456:<Port>
+####################
 
-I need to start WireGuard manually.
+I am using Arch Linux with wireguard-tools 1.0.20200513-1.
 
-I tried the recommendation from Simon to set startup type to
-"Automatic (delayed start)" for the WireGuard service. Unfortunately,
-this also does not solve the problem. WireGuard does not start. I
-check the logs and I see
+My university owns a public class B segment. The purpose of the VPN is
+to access this segment, but the endpoint for wireguard is also located
+inside said network.
+When I want to connect using "wg-quick up <config file>", a route is
+added for the "Allowed IPs" which unfortunately also covers the desired
+endpoint. As a result, wireguard runs into a chicken and egg problem.
 
-[MGR] Removing Wintun interface =E2=80=98wg0=E2=80=99 because its service i=
-s stopped
+As a workaround, I added the following line to the [Interface] section
+excluding the endpoint from the route created for the Allowed IPs:
+PostUp =3D ip route add <University class B segment>.123.456 via $(ip
+route show default | awk '/default/ {print $3}')
 
-It looks like the WireGuard manager removes the service and installs
-again. As a result the dependency to TCPIP disappears.
+Now to my question: Is wg-quick working as expected or did I miss
+something? If my config is correct, wouldn't it be a good idea to let
+wg-quick check if the endpoint is inside the allowed IPs and add the
+route I am creating in the PostUp line automatically?
 
-In my first email I explained, but worth mentioning again. There are
-other Windows machines same OS, where WireGuard starts automatically
-at startup. This is very strange that in some machines it starts and
-in others it does not. If you guide me I can try to help debug this
-issue and address.
-
-Regards,
-Ferad
+--
+Daniel
 
 
-On Tue, Aug 18, 2020 at 9:43 AM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
->
-> Hopefully this addresses your issue:
-> https://git.zx2c4.com/wireguard-windows/commit/?id=3D86cf5c84384bde2b4147=
-fc5eedee24937729a101
