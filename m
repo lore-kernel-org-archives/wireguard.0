@@ -2,89 +2,103 @@ Return-Path: <SRS0=FBn0=B4=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 37E2FC433DF
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Aug 2020 11:37:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F3069C433DF
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Aug 2020 19:13:44 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id C40AC205CB
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Aug 2020 11:37:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org C40AC205CB
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=jku.at
+	by mail.kernel.org (Postfix) with ESMTPS id 63AE42076E
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 18 Aug 2020 19:13:44 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=outbound.mailhop.org header.i=@outbound.mailhop.org header.b="uEeeghwz";
+	dkim=pass (2048-bit key) header.d=lakedaemon.net header.i=@lakedaemon.net header.b="1HgEd5nm"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 63AE42076E
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=lakedaemon.net
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f98f0c6f;
-	Tue, 18 Aug 2020 11:11:20 +0000 (UTC)
-Received: from emailsecure.uni-linz.ac.at (emailsecure.uni-linz.ac.at
- [140.78.3.66])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d17a3a42
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bedba81c;
+	Tue, 18 Aug 2020 18:47:04 +0000 (UTC)
+Received: from outbound2o.ore.mailhop.org (outbound2o.ore.mailhop.org
+ [54.187.213.119])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 80e8c27b
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 17 Aug 2020 14:38:21 +0000 (UTC)
-Received: from [140.78.57.134] (pnp134.pnp.jku.at [140.78.57.134])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by emailsecure.uni-linz.ac.at (Postfix) with ESMTPSA id 4BVclC6KJtz2PPx
- for <wireguard@lists.zx2c4.com>; Mon, 17 Aug 2020 17:04:23 +0200 (CEST)
-To: wireguard@lists.zx2c4.com
-From: Daniel Hofer <daniel.hofer@jku.at>
-Subject: wg-quick: "Endpoint" inside "Allowed IPs"
-Autocrypt: addr=daniel.hofer@jku.at; keydata=
- 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
-Message-ID: <7706462a-3f7f-bbe9-46ea-8bd31332e70a@jku.at>
-Date: Mon, 17 Aug 2020 17:04:23 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.11.0
+ Tue, 18 Aug 2020 11:30:18 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; t=1597751787; cv=none;
+ d=outbound.mailhop.org; s=arc-outbound20181012;
+ b=BVSYF+ba5bEE5ykXpAb13FhynUmhJC7iRWlQX7/oDnaVjOVLmwLAMR2qLfgOW8OvhnFlv5X1gZM/4
+ QP4tj3epD+eUfxDTZrVsge6skeWql2EUN94zzaGkOpiQVUTBpiHM4NiRcWfekYU+PMP+POvTea6Ntd
+ Hhf3yt/IG0vYLGTyB1DWczb/j+NNpMBfuvQlo7UYB7Zk9EDPnzK+gNPVcITa+Tf9H0/yKijsBbwKl2
+ p4HUknAfEzDSzGeDKCo3a6MCHsfTMlVExtu6hArk/8ABfbyTCHnRutsrTSk5WowQe2xWamXaljI79L
+ RoxbnfFEP7nRjxWyzUbtpYVfaPa1APQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=outbound.mailhop.org; s=arc-outbound20181012;
+ h=in-reply-to:content-transfer-encoding:content-type:mime-version:references:
+ message-id:subject:cc:to:from:date:dkim-signature:dkim-signature:from;
+ bh=xt6pfIwe/HWrx1ZHEjKWJeIQn7RdWVuMVqKhhmvnRKw=;
+ b=GSv9g9P3WqyuM4lDhvDBDVCw9I7cP9t6Iw74CI+oAqToY297HQNdQnS30eF7IQo7DHcOhERm3DLQq
+ Ul2iz8/htvZVd+CjnJhGN73Vc2UQfH6vDCKjVLsnn1FAuBEoJtA/vNHIAqrKVXwwS9CR6YfngJOf9p
+ vzs1ZWLHrU9X4stu5boTVcYhYpqgfRbaipL++ua0iXpbLkQM4KHaOi7gcp0EDNkhfNJtXvNWa9SH4j
+ Qe1A7UP6ouvrSOnx5Prj4OJbGuKi7nKes+gwaF9wfemx52OMebsybZ+bCcCtDcr0ykuYJ6qDefc7NR
+ XA9pkzB87P0CiPDgPzvGqFvtc6YZBMQ==
+ARC-Authentication-Results: i=1; outbound4.ore.mailhop.org;
+ spf=pass smtp.mailfrom=lakedaemon.net smtp.remote-ip=108.39.81.163;
+ dkim=pass header.d=lakedaemon.net header.s=mail header.a=rsa-sha256
+ header.b=1HgEd5nm; 
+ dmarc=none header.from=lakedaemon.net;
+ arc=none header.oldest-pass=0;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=outbound.mailhop.org; s=dkim-high;
+ h=in-reply-to:content-transfer-encoding:content-type:mime-version:references:
+ message-id:subject:cc:to:from:date:from;
+ bh=xt6pfIwe/HWrx1ZHEjKWJeIQn7RdWVuMVqKhhmvnRKw=;
+ b=uEeeghwz0X92KYiwz3gJ+aG430dlIgR/6JAVoCQzaLWTdlnGaSWU0D2iXmm/kHKnZZ+0ld66e9DP+
+ 0A6OsLz/oTBQdW3QQW+WCV3Tat7tFQN8Plc/MVxHNau+C7JBwIwk7Zl7jT3VQjDk+led6c2Go3VIuM
+ Yjo8LyZoi1OUgr9ReIQO8fey1oP9WPxDyBxqo1IpOd13+3RLWGPp8rePq7YLQglvMNi2F2673gIq7E
+ B3TfWd4VtawKW0COr3O/DvWCHsDJx+poNsHbkejWHt3Tt56g7T+XmgbAI20xDKTYDPaX3lg1QlBowO
+ qyCQETpx3UsfaS9eaSA7dLhF9ZPb4Sw==
+X-MHO-RoutePath: amFjMjk5NzkyNDU4
+X-MHO-User: d67a23f7-e149-11ea-b630-6b8aa7872eb8
+X-Report-Abuse-To: https://support.duocircle.com/support/solutions/articles/5000540958-duocircle-standard-smtp-abuse-information
+X-Originating-IP: 108.39.81.163
+X-Mail-Handler: DuoCircle Outbound SMTP
+Received: from io (static-108-39-81-163.nrflva.fios.verizon.net
+ [108.39.81.163]) by outbound4.ore.mailhop.org (Halon) with ESMTPSA
+ id d67a23f7-e149-11ea-b630-6b8aa7872eb8;
+ Tue, 18 Aug 2020 11:56:26 +0000 (UTC)
+Received: from io.lakedaemon.net (localhost [127.0.0.1])
+ by io (Postfix) with ESMTP id C3D5C80040;
+ Tue, 18 Aug 2020 11:56:22 +0000 (UTC)
+X-DKIM: OpenDKIM Filter v2.6.8 io C3D5C80040
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lakedaemon.net;
+ s=mail; t=1597751782;
+ bh=xt6pfIwe/HWrx1ZHEjKWJeIQn7RdWVuMVqKhhmvnRKw=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To;
+ b=1HgEd5nmuvze6XbyX7UG0mJBPISP1Xb4G1i+vHXhVUdRkdcZFiJagR/XcGemzlEvY
+ W6Bh/I9cA02DxmZ+1FOtO2xl90Wz7WaUnHMUfnOJCO5JG7LxP+pxXi0RdQYuKJoiew
+ em9KF2zKptETegfkTf5uG5nlIK8BqKA6wBq/pW528XkrtIxlyd9CBZEMN8FyBCQk0w
+ +ylPuErpL20549yw+q0eOi6KVFlOoQ9sYT9uLqlREbiSwCI6HWv1KqJ8XSxyBc4Qti
+ bBmIIcbGcsguwh9cBnMen45qJ2B3dFElZtWAYMsCrmvTxuaNBCXy2AUETH6PLEkDpq
+ GNbIIQseTJEuA==
+Date: Tue, 18 Aug 2020 11:56:22 +0000
+From: Jason Cooper <wireguard@lakedaemon.net>
+To: Stephan Eichmeier <stephan@eichmeier.eu>
+Cc: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+Subject: Re: Bug in WireGuard ios14?
+Message-ID: <20200818115622.GA14997@io.lakedaemon.net>
+References: <04663CD6-2F41-4316-82A8-123FFC58FFE1@eichmeier.eu>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Content-Language: en-US
-X-Mailman-Approved-At: Tue, 18 Aug 2020 13:11:19 +0200
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <04663CD6-2F41-4316-82A8-123FFC58FFE1@eichmeier.eu>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Mailman-Approved-At: Tue, 18 Aug 2020 20:47:03 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -99,47 +113,18 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello to all,
+Hi Stephan,
 
-Since this is my very first mail to a mailing list ever, I hope I do not
-make any mistake (especially because I could not find a bugtracker or
-something similar to write my issue to).
+On Sat, Aug 15, 2020 at 05:25:26AM +0000, Stephan Eichmeier wrote:
+> if I use wireguard on iOS 14 there is a problem with “allowed IPs”.
+> Routing all traffic with 0.0.0.0/0 works. 
+> 
+> But if I would like only to route 192.168.0.0/24 through WireGuard, it
+> works also, but every connection except 192.168.0.0/24 doesn’t work.
+> This happens only on iOS 14. 
 
-I am working at a university and my institute switched to WireGuard a
-few weeks back, which lead to the the following configuration file:
+Is that the hotspot subnet on iOS?  You might have a conflict there.
 
-####################
-[Interface]
-Address =3D <Private IP>/32
-PrivateKey =3D <redacted>
-DNS =3D <University DNS>
+thx,
 
-[Peer]
-PublicKey =3D <redacted>
-AllowedIPs =3D <University class B segment>.0.0/16
-Endpoint =3D <University class B segment>.123.456:<Port>
-####################
-
-I am using Arch Linux with wireguard-tools 1.0.20200513-1.
-
-My university owns a public class B segment. The purpose of the VPN is
-to access this segment, but the endpoint for wireguard is also located
-inside said network.
-When I want to connect using "wg-quick up <config file>", a route is
-added for the "Allowed IPs" which unfortunately also covers the desired
-endpoint. As a result, wireguard runs into a chicken and egg problem.
-
-As a workaround, I added the following line to the [Interface] section
-excluding the endpoint from the route created for the Allowed IPs:
-PostUp =3D ip route add <University class B segment>.123.456 via $(ip
-route show default | awk '/default/ {print $3}')
-
-Now to my question: Is wg-quick working as expected or did I miss
-something? If my config is correct, wouldn't it be a good idea to let
-wg-quick check if the endpoint is inside the allowed IPs and add the
-route I am creating in the PostUp line automatically?
-
---
-Daniel
-
-
+Jason
