@@ -2,50 +2,50 @@ Return-Path: <SRS0=gWl9=B5=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1416CC433DF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 85E02C433E4
 	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Aug 2020 16:20:10 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 79AF92078D
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Aug 2020 16:20:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 2E3EE2078D
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 Aug 2020 16:20:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="key not found in DNS" (0-bit key) header.d=bluematt.me header.i=@bluematt.me header.b="PyrRI+mE"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 79AF92078D
+	dkim=pass (2048-bit key) header.d=bluematt.me header.i=@bluematt.me header.b="iQ8gTKff"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 2E3EE2078D
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=bluematt.me
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b9f9688f;
-	Wed, 19 Aug 2020 15:53:49 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d9671a6d;
+	Wed, 19 Aug 2020 15:53:50 +0000 (UTC)
 Received: from mail.as397444.net (mail.as397444.net
  [2620:6e:a000:dead:beef:15:bad:f00d])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id eead2937
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 19b85e1c
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sat, 15 Aug 2020 19:34:22 +0000 (UTC)
-Received: by mail.as397444.net (Postfix) with ESMTPSA id 7F19F2E0DBB
- for <wireguard@lists.zx2c4.com>; Sat, 15 Aug 2020 20:00:10 +0000 (UTC)
+ Tue, 18 Aug 2020 15:00:13 +0000 (UTC)
+Received: by mail.as397444.net (Postfix) with ESMTPSA id 3312C2E73EE
+ for <wireguard@lists.zx2c4.com>; Tue, 18 Aug 2020 15:26:22 +0000 (UTC)
 X-DKIM-Note: Keys used to sign are likely public at https://as397444.net/dkim/
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bluematt.me;
- s=1597520462; t=1597521610;
- bh=u8Z7dgR81ygHDwbEgfVMfMaaOox9VlsWHy/u77+LA74=;
+ s=1597762862; t=1597764383;
+ bh=pTsXwdOBcejMSIsHoHDt/pUg6I7ZvTlXBvj+yGnvo58=;
  h=From:Subject:To:References:Date:In-Reply-To:From;
- b=PyrRI+mEyDZGtM80xnNybRSb5G2wTTJrIVXzIwfiuKFj83DcBpvqR/VW8NZReXpGH
- E4IrEupi1CHt96KJ7osj87oRY2y9SdPxD5u9YGUyLLZkaN95YcgFY9abw1/BoN0Xxn
- zVZGL1Qr8hkobi6CfNujKtoOQMYdeW2Bc2MvTPVd+TQz2X+wD6NSQoUAUM1mDuZkuc
- gmApftCih9S5zwHfbgkfooOIY88AYgO4UPo4avP7kXDIfiY7u/oJKnNcwiDTJPqfaI
- JqX+jbHlF7Sxl3tlA1RoNbsmjit2d6tflFgjGRHRjEjjs0Pmp0eRwXnOetTyvXE4RQ
- I0Ib2+fJeu1XQ==
+ b=iQ8gTKffuEiWN4/c1OZzxJPqeagcxPMGpLdXX9gbzNxVMTlutILr5mpydMPbAtqOv
+ o+1Pa6xBCErjhzX08Tj42m0C/LcHs9lXJNjwAH/R3xUCSCpKanR5A9Z3/CRoQ7AIST
+ 4r7lgzR4TZmRZ1/HVWjRkxzlf9TDdY01LouOtJVVRy9vJ6cqVi0Mz4pTyAF7FdJtFX
+ tF3kn5Thof1gEQNvbDfTi5Px15EQ23OY960QxATwmAX4rm1FqetTycptxV3zFfe0Ik
+ q6VlypMnQLvudvoPGPqTt+NnebQlo6VxTchWQCGLzbWf3uyJG5wzspxzSe5DXVMC6N
+ 9lwKBxZAJK8cg==
 From: Matt Corallo <wg-lists@bluematt.me>
-Subject: Re: Incorrect Source Addr Selection On Initiate and Asymmetric Routing
+Subject: Incorrect Source Addr Selection On Initiate and Asymmetric Routing
 To: WireGuard mailing list <wireguard@lists.zx2c4.com>
 References: <6fc9765d-f4ef-84d2-c65a-97bab58e3e4b@bluematt.me>
-Message-ID: <f979b2ac-9946-1520-978a-da6b82d8ca8c@bluematt.me>
-Date: Sat, 15 Aug 2020 16:00:09 -0400
+Message-ID: <eeee1fa3-8b42-1122-3123-d3b07b150036@bluematt.me>
+Date: Tue, 18 Aug 2020 11:26:21 -0400
 MIME-Version: 1.0
 In-Reply-To: <6fc9765d-f4ef-84d2-c65a-97bab58e3e4b@bluematt.me>
 Content-Type: text/plain; charset=utf-8; format=flowed
@@ -65,6 +65,9 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
+
+[Resending this few-month-old mail because apparently the list bounced it the first time.]
+
 
 Oops, should have mentioned, this may have always been the case, with only recent addition of asymmetric routing leading
 me to identify it, but its at least been the case on 5.6.X and currently is the case on 5.7.6.
