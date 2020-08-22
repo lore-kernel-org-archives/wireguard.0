@@ -2,56 +2,46 @@ Return-Path: <SRS0=L39c=CA=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F467C433DF
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 22 Aug 2020 19:38:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 81343C433DF
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 22 Aug 2020 21:15:17 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 488C82078A
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 22 Aug 2020 19:38:27 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="uhEUnK7w"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 488C82078A
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id AAF2E207CD
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 22 Aug 2020 21:15:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org AAF2E207CD
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=pallas.us
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 98e66f0c;
-	Sat, 22 Aug 2020 19:11:42 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id eb414c16
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 368a9959;
+	Sat, 22 Aug 2020 20:48:20 +0000 (UTC)
+Received: from telperion.info (<unknown> [2600:3c01::f03c:91ff:fe96:a052])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 80bcd12a
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sat, 22 Aug 2020 19:11:40 +0000 (UTC)
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a109f94f
- for <wireguard@lists.zx2c4.com>;
- Sat, 22 Aug 2020 19:11:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=date:from:to
- :subject:message-id:references:mime-version:content-type
- :in-reply-to; s=mail; bh=HWpRURwsxPnBmmTXG2hR0Du11xk=; b=uhEUnK7
- wNUOid/vVDZKBEc6mcS+yDhfYTPqbfTPY9gfINB0cpxaERt3Jd2c5d56DyOUn9si
- xnw53+fIaAZKlxfQqbLAg2t0jMRwFIL2RkeBzWUt+q15bkD02xGheW4Khig0IzY2
- 4U3Ybm6Uh5/Cf+cb3ZoVVNzvLsJuIQ58gDiFDL+R6oZWk1A8GeEoe9iNrVfc3iiM
- JAubATtQAZD/aAagzxYY3tiveMgI4GLRMo246tBQDrvdpnpWWlGctffDG3abYgBg
- CdNvNq1UmOqlcq5t2QsDtjEWD1310IdjoxnggKLOheH7EcV0+RVZBb3ExSa1anAP
- kPC8JxkOdTVqJqg==
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 85fe0010
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Sat, 22 Aug 2020 19:11:39 +0000 (UTC)
-Date: Sat, 22 Aug 2020 21:38:20 +0200
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: [ANNOUNCE] wireguard-tools v1.0.20200820 released
-Message-ID: <20200822193820.GA13202@zx2c4.com>
-References: <9df92b74b25ead68@mail.zx2c4.com>
+ Sat, 22 Aug 2020 20:48:17 +0000 (UTC)
+Received: from [192.168.127.224] (184-23-8-77.dsl.static.fusionbroadband.com
+ [::ffff:184.23.8.77]) (AUTH: LOGIN pallas, )
+ by telperion.info with ESMTPSA
+ id 000000000004438C.000000005F418AF1.00005003; Sat, 22 Aug 2020 14:15:28 -0700
+Subject: Re: Python Wrapper for wireguard-tools
+To: wireguard@lists.zx2c4.com
+References: <CAF-5xiCzvHFLtLFpw5FNOR5w7=bEBNjDtVgedRjGNzBigk4cZw@mail.gmail.com>
+ <CAHmME9qoWSURAqdQJuOdo9xCBgrtENNOGgf_o1uRep66xRWzJw@mail.gmail.com>
+From: Derrick Lyndon Pallas <derrick@pallas.us>
+Message-ID: <abdfb441-3df9-3ab5-dae2-7ed4f648e40c@pallas.us>
+Date: Sat, 22 Aug 2020 14:14:27 -0700
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <9df92b74b25ead68@mail.zx2c4.com>
+In-Reply-To: <CAHmME9qoWSURAqdQJuOdo9xCBgrtENNOGgf_o1uRep66xRWzJw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -66,27 +56,26 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Andrew, if you'd like help creating a truly cross-platform library in 
+python, I'm happy to help. The reasons wgnlpy is currently Netlink-only 
+is that I was developing it for a Linux system and pyroute2 didn't 
+support Wireguard yet. If embeddable-wg-library supported UAPI and BSD 
+too, then hooking it up to Pyhton via CFFI would make a lot of sense, 
+and I'm potentially able to help with that as well. ~Derrick
 
-Looks like the SHA256 was missing. Sorry about that.
 
-$ sha256sum wireguard-tools-1.0.20200820.tar.xz 
-7735a04c68fffb101a10a67e3bd97a171f2b8eb47e9ddce2be68eb6538b013d0  wireguard-tools-1.0.20200820.tar.xz
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAl9Bc8sACgkQSfxwEqXe
-A65FKg//XfGibh24rSSjzumtQv+piCRARHBuJYJntm+WwDWP14almwhLYmzvMrIX
-EUftU0SV7/BbKAYbx7qclw1EDpGCnj3OVdfbeSqy+Mi7RyfJ/uIvDr1bix/b1Sc3
-Ss+jXFoEJ1u3p9JT/LywiCVrsiAKDICL/DTkv2HlJ7gcGfKHgysTmYeA0v4Rolq4
-/ZqdQzgrj524PpRHZw/u2opQKzxD7hLjLiYJX07AISZh7XHhMhtyLdZOuUgSetlQ
-pSccWz1wdLqrbZ9jYeoB8DOYhHwZbFXkkeFXlBf3/g1JqK3Om6OHPOTQDKQrbapf
-moGS4SS/MrD9ZACTqJX5V0hClqeZlsHiD2yIqN14j7bQ1OC/Yz2g3EnxGB58zxBw
-ii4x/b4Ig38XNjoh3DCDCjWv00FkBAhkIBqm9Z8A1rzqJFGxPqRxQuFl8xY7sJq4
-cCjAtUF+em2+GZSWj9qWljVK0FhJr+yFaTBBlByTFdjgB5NGxbxaCoz1vChJIcrN
-43JJ5Th2vhUOEVXndhcmqeKuMcteDV/KtQ5gKxh+4WpUo1viiagUI6IZwUnU2mrW
-uyMTFu/jiQIVaHc5NnFjZwmRbMZi3eQfDtFIG3nN30sB15suMPXUxNkPOjqpEthF
-Ab3W/vdMD3BrUaApXi+coJiplH9uqkrfNvK2u0uAer4L+LzcaZY=
-=/Vw1
------END PGP SIGNATURE-----
+On 8/22/20 12:05 PM, Jason A. Donenfeld wrote:
+> Hey Andrew,
+>
+> The most complete "library" is actually the wgctrl-go one from Matt
+> (CC'd). It's complete because it supports all the same interfaces as
+> wg(8) -- Linux Netlink, OpenBSD IOCTL, and x-platform UAPI. The
+> embeddable-wg-library is just for Linux Netlink, but I should maybe
+> refactor that to be more modular. And as you pointed out, the wgnlpy
+> stuff is Netlink also.
+>
+> If you wanted to start a new cross-platform library, and essentially
+> "clone" Matt's Go library into a pure Python one, I'd certainly
+> welcome that effort and would be happy to help.
+>
+> Jason
