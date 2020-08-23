@@ -2,53 +2,48 @@ Return-Path: <SRS0=D3OD=CF=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MSGID_RANDY,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C2655C433DF
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 27 Aug 2020 08:27:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F2D1FC433E3
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 27 Aug 2020 08:28:18 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 1E2C822B47
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 27 Aug 2020 08:27:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 36EDE20738
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 27 Aug 2020 08:28:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="L45WfZmF"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 1E2C822B47
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	dkim=pass (1024-bit key) header.d=protonmail.ch header.i=@protonmail.ch header.b="FYm5E9wa"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 36EDE20738
+Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=protonmail.ch
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 94c190da;
-	Thu, 27 Aug 2020 07:59:27 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 736705b9
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c337d250;
+	Thu, 27 Aug 2020 08:00:22 +0000 (UTC)
+Received: from mail-40138.protonmail.ch (mail-40138.protonmail.ch
+ [185.70.40.138])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 8cbbee82
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 27 Aug 2020 07:59:24 +0000 (UTC)
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f2097e4b
- for <wireguard@lists.zx2c4.com>;
- Thu, 27 Aug 2020 07:59:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=date:to:from
- :subject:mime-version:content-type; s=mail; bh=ycWI/N+khNgq/zWQ/
- uS+P5hDg2A=; b=L45WfZmFE8lb7rep6PizL2yyUj1INT50FtryCi6xCkEeKywRB
- LJhhQxgJyjlsIzpoKDYkhGGx1+OT21sJFdurOnmqjyL9Su5MmBerrtmqya4dwmmJ
- 9SDz+aOpsubvTpOe0SIb+xOXeQypNSi2mt6BjB3l+JX8M8rtS7jGnWljpl8HcKUD
- Khj0PhN4AFyAPs1dQe6o4dF+P7NUFtFUySAT1WpHqG9FlzpcBkPvzsEnByOTR37u
- EgKtadi9zuc5VAVPuIMUSkowVixDqrpYzWvsC3JJnY6ULqDeYNN3r9SX+MCdD33e
- 4ihv4Yniya/FrU26aabQyy5p7BfbwN8rbir0Q==
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 58f74923
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Thu, 27 Aug 2020 07:59:23 +0000 (UTC)
-Date: Thu, 27 Aug 2020 10:26:37 +0200
-To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: [ANNOUNCE] wireguard-tools v1.0.20200827 released 
+ Sun, 23 Aug 2020 18:07:33 +0000 (UTC)
+Date: Sun, 23 Aug 2020 18:34:17 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.ch;
+ s=protonmail; t=1598207662;
+ bh=AcEcJcreWuT+l+PHCzzaLb7DkmRTNixsQwPMtzzaeqc=;
+ h=Date:To:From:Reply-To:Subject:From;
+ b=FYm5E9waq99h5Y0jghXmzPN36n9W2xhnJNTJ4Mgf1/Abmf24cI3tZjHpBKIOQowQH
+ fq2sKwI44zk/Z4lgCbUYtjs+a//OnrxlyCuoMrvt0KmJHxce1TyIRj1dXuV1sgzHyS
+ 3w67mu6AwEQFi6/RL5Z83Y1I5ItJa4FE05fgW9kE=
+To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+From: Laura Smith <n5d9xq3ti233xiyif2vp@protonmail.ch>
+Subject: Two small Wireguard frustrations on Mac & Apple iOS
+Message-ID: <RO0eYtp8TKtVxKltNMcmKXS8FhbJRiFU1fBuG8XmE3h8AtjY2_JlRSw_k29pm-3r70B_3pQHIF1nk252-3wHqVMlnbGbub2GiCU3DN7arLY=@protonmail.ch>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Message-ID: <9dfad326d538b8c1@mail.zx2c4.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Mailman-Approved-At: Thu, 27 Aug 2020 10:00:21 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -60,82 +55,42 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
+Reply-To: Laura Smith <n5d9xq3ti233xiyif2vp@protonmail.ch>
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-Hello,
+These aren't show-stoppers per-se, but it would be nice to see them fixed a=
+nd new clients pushed out via the App Store:
 
-A new version, v1.0.20200827, of wireguard-tools has been tagged in the git
-repository, containing various required userspace utilities, such as the
-wg(8) and wg-quick(8) commands and documentation.
+(1) MacOS (10.15.6 but also observed on 10.15.5, not tested on anything old=
+er)
 
-== Changes ==
+- Start with WG client in an operational state
+- Disconnect network (e.g. if on WiFI, turn off the WiFi in the menu bar)
+- Sleep the machine
+- Wait- Wake the machine
+- Turn on Wifi
+- Note that WG client fails to re-establish connectivity (shows connected, =
+but no traffic flows until you deactivate/reactivate WG)
 
-  * wg-quick: android: use iproute2 to bring up interface instead of ndc
-  
-  Android 11's ndc regresses even more, but it turns out that netd doesn't
-  need to track up/down state via direct invocation, so just set the
-  interface up by way of normal iproute2.
-  
-  * Revert "wg-quick: wait on process substitutions"
-  
-  The real reason for this small release. This reverts a commit from the last
-  release, which means the old problem comes back. That's an issue. But waiting
-  on process substitutions is not available with commonly used bash versions:
-  
-    # wg-quick up demo
-    [#] ip link add demo type wireguard
-    [#] wg setconf demo /dev/fd/63
-    /usr/bin/wg-quick: line 251: wait: pid 2955 is not a child of this shell
-    [#] ip link delete dev demo
-  
-  This means we have to wait a few years before fixing this issue. IOW, it's a
-  bash limitation that we can't fix right now. But maybe someone on this list
-  has some nice ideas of other potential fixes. I'd be interested in hearing
-  ideas.
-  
+(2) iOS (13.6.1, also observed on 13.6, not tested on anything older)
 
-This release contains commits from: Jason A. Donenfeld.
+After a period of time, seems to be a few days to a week, WG seems to deact=
+ivate of its own accord (as if some sort of counter was reached or somethin=
+g).=C2=A0 This does not appear to be correlated with network connectivity (=
+e.g. I can switch to airplane mode for an extended period of time, then re-=
+enable, and WG remains connected), so its something else in the WG code (ei=
+ther itself or the way it interacts with iOS).
 
-As always, the source is available at https://git.zx2c4.com/wireguard-tools/ and
-information about the project is available at https://www.wireguard.com/ .
+This is all a bit frustrating because you are unknowingly then using an une=
+ncrypted connection.
 
-This release is available in compressed tarball form here:
-  https://git.zx2c4.com/wireguard-tools/snapshot/wireguard-tools-1.0.20200827.tar.xz
-  SHA2-256: 51bc85e33a5b3cf353786ae64b0f1216d7a871447f058b6137f793eb0f53b7fd
+Perhaps WG should consider adding "retry" functionality (OpenVPN client for=
+ iOS has such a feature, where you can tell it to retry for a period of tim=
+e or indefinitely)=C2=A0
 
-A PGP signature of that file decompressed is available here:
-  https://git.zx2c4.com/wireguard-tools/snapshot/wireguard-tools-1.0.20200827.tar.asc
-  Signing key: AB9942E6D4A4CFC3412620A749FC7012A5DE03AE
-  Remember to unxz the tarball before verifying the signature.
+Apart from that, WG is great ;-)
 
-If you're a package maintainer, please bump your package version. If you're a
-user, the WireGuard team welcomes any and all feedback on this latest version.
-
-Finally, WireGuard development thrives on donations. By popular demand, we
-have a webpage for this: https://www.wireguard.com/donations/
-
-Thank you,
-Jason Donenfeld
-
-
------BEGIN PGP SIGNATURE-----
-
-iQJDBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAl9HbjIQHGphc29uQHp4
-MmM0LmNvbQAKCRBJ/HASpd4DrqjWD/jKutC3MPQubBWEyOA5nc+e621b+6ziTL0a
-jspFfYVUgaPFdQOhvxRzf4EI32lS+GjNwCpfgXexivkFRsPcDezGYz+WHdzm7SyC
-Ap5cY7ftb6C2W7b49wVBF2pvBiVTG8thX0VRuYU4j+Hat+uQVw2rqEOZPK6H1qlM
-uBx4HB0rCEM+i7cMJ4FGh/oPMSAJxMPhnSBfoDqSbW/ZBCSpAEWMUfQhdhKO+g03
-kTNAHNk6SLkQagimFa8thwCQf3mZjtC+FCn+HBucFcYGLhAuKVAIF5tdbnI317tK
-nXqSqxn74bar2yNTffMn6cmY3sjKNuH/WHz68M8mEgsxhgMaAmNTCBTAR+TmEL35
-Ckr9mZcGUr+5VqUgYtcfZLY5VFHlzjnyZZljzAxeR/5jLWHTFlH7IKSQeQLAefw8
-to0osdw9hg0iIx4ErpdxFEzbP9MWtposaSksiMfuIyHhdWM3PEv7yO2YbuHTwEbm
-at8oqpDEdCQSWugU8gH7Tu3l9WV9/fEWrwCHnIZcI9QnhwcRlo1HXi1kY9noxD/D
-lGIfZW32mOpuEW2NGeJ97zEV9AAnrsaYBOpKMxF4iR2WE7OI8XO6AZwrD25IrREx
-wvwFXNUmJSF7Wi6ut9zD9xEBmYuHXZgoLFV3xTC6XhyN2qQDaOdhLnWx0c5PyoFG
-Mf/CN6x+
-=3+Ka
------END PGP SIGNATURE-----
+Laura
