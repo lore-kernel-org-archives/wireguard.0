@@ -2,62 +2,73 @@ Return-Path: <SRS0=5dvq=C3=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A375C43464
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 18 Sep 2020 15:58:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7EFFBC43463
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 18 Sep 2020 15:59:18 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 2318823787
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 18 Sep 2020 15:58:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id A29402388B
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 18 Sep 2020 15:59:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=oneacl.com header.i=@oneacl.com header.b="dtf4BsC+";
-	dkim=pass (1024-bit key) header.d=amazonses.com header.i=@amazonses.com header.b="DqBf5pzC"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 2318823787
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=oneacl.com
+	dkim=pass (2048-bit key) header.d=alerinaldi-it.20150623.gappssmtp.com header.i=@alerinaldi-it.20150623.gappssmtp.com header.b="NCNZ6ASY"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A29402388B
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=alerinaldi.it
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 349b0753;
-	Fri, 18 Sep 2020 15:27:38 +0000 (UTC)
-Received: from a27-57.smtp-out.us-west-2.amazonses.com
- (a27-57.smtp-out.us-west-2.amazonses.com [54.240.27.57])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2e9e700a
- (TLSv1.2:ECDHE-RSA-AES256-SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id df0ee397;
+	Fri, 18 Sep 2020 15:27:49 +0000 (UTC)
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com
+ [2a00:1450:4864:20::329])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a3ebd241
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 15 Sep 2020 22:59:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
- s=b2wcjc4b47rrujlg73p6tcdszvksmhfj; d=oneacl.com; t=1600212548;
- h=Subject:To:References:From:Message-ID:Date:MIME-Version:In-Reply-To:Content-Type:Content-Transfer-Encoding;
- bh=4jiqj63dKgCpJbf8KjhcVOMMq1K4mtTwRq3K5UEvb3M=;
- b=dtf4BsC+mCEX6kZVR/DFOHOjCiYT3qXP98ts38GDKUPJLfsBVgQfTNvnf64M0DNP
- LDqRnBWEeScxE7DsxLGrWDGgYl7EMtNadw1I8P4S3Ovu02JEKEqIXT5GZoQmo7d/zCo
- YnqY7NGU2nhQnrpjsn2Vjn+NwIyOQabaluk0PhbM=
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
- s=hsbnp7p3ensaochzwyq5wwmceodymuwv; d=amazonses.com; t=1600212548;
- h=Subject:To:References:From:Message-ID:Date:MIME-Version:In-Reply-To:Content-Type:Content-Transfer-Encoding:Feedback-ID;
- bh=4jiqj63dKgCpJbf8KjhcVOMMq1K4mtTwRq3K5UEvb3M=;
- b=DqBf5pzCncgNud6JiG9pJGHdBmHVrm0hPQbTwjmmv44qxkfg9VdPEs55q4RgkiTa
- kZef6xqacExabv8me6BHHpuD1RHHLfsqfvM9DqMwa3ytv8y9ee+zH8yABq9eOP3Fn75
- Q8sTgZWyBfWSJCY2GEgvWxeLcgA0ZP9fav+fZmHE=
-Subject: Re: Two small Wireguard frustrations on Mac & Apple iOS
-To: wireguard@lists.zx2c4.com
-References: <6650E7F9-7985-4DFC-9620-60FFE690C4F8@alexburke.ca>
- <a473a088-91f8-10bb-7522-67c989c7a052@k8s.local>
-From: Eddie Jones <data.goldfish@oneacl.com>
-Message-ID: <010101749419bbd4-6acb47ec-2a3d-4183-b60c-6bbb01e4bdd1-000000@us-west-2.amazonses.com>
-Date: Tue, 15 Sep 2020 23:29:08 +0000
+ Sun, 30 Aug 2020 14:26:11 +0000 (UTC)
+Received: by mail-wm1-x329.google.com with SMTP id v4so2393432wmj.5
+ for <wireguard@lists.zx2c4.com>; Sun, 30 Aug 2020 07:53:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=alerinaldi-it.20150623.gappssmtp.com; s=20150623;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :content-transfer-encoding;
+ bh=mggjmLxzNRDwHqPI6eZB2YLTSWVZt+8P2/ppL1A1/Mo=;
+ b=NCNZ6ASYkw918Z9v2jxWy0NCz0G2u51RNsqJ2x1pc949hCP35XlUWjntx6l+MVHoAM
+ HE+7pP50U+j7xVOcW4ULt4DNsbLEKFJatGtA1R0Ov1mWbnmY4ZfXvK48MNi8E02LiEUr
+ OWbtKzKoU6hRZ7tayuhkJbyu7MDkiky6cqQd8cwIhSZABmmX/R1Z9vpRXCsnu7SZuX/R
+ /UxVkJ6edVZoKWdf/vcylRjQzyxovxWI7cnO5Qp7fTfyL7o0pNo4x2rfR/L/tEiaQ6H2
+ ACcE3CpDoh6Co1RCoZu17/QXPiLjn65BlbhUGHP8AtsUwEnvR6l1MFa9BNsAPij0ugrS
+ nLDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:content-transfer-encoding;
+ bh=mggjmLxzNRDwHqPI6eZB2YLTSWVZt+8P2/ppL1A1/Mo=;
+ b=W3rnOfhmrtytI7gTObX4Nfo+OAjRZh9FrWIejgxaarUV30K0UjxH2NNBLEZanHepvt
+ iuOn38DdJHSqak73w3OZ9LacvTLolcN6zfXChQo9Or9rIcfQv7Ls1Gk2f6fimJkKRjbp
+ o8i61gecprWG4vtNPyZ9wl5JoZaDILYl7DMzv//4X1J0kMwl4ZDpMjEoCwXVqGB5kiPi
+ LRHN9jw0HF262Wm6KjDfwjY6M/Ih1/CGFhr/tbj31Rh4g3OMpjV/l//6D6VL4eTkL8A+
+ tQZojjNzUt6N5gJ0dcbdSSnDIof8ORex7L8Do/btCWIfwfIjwF24ddnhRKLdQ1bt45JM
+ a/1A==
+X-Gm-Message-State: AOAM530K8/I9Y7zbv3ML47CgpNr3dYMTFnz0aXvtuuTeY7Rpyp7lqpp3
+ c+S064KMnD1po0zw6LhMD3KQIlsMpHeu33Ul1eGZBDQTTFyRzpUKTFY=
+X-Google-Smtp-Source: ABdhPJzA44OX1oB/low3MvEIxUbCVMtx1wpVKS5tNZuK+3HlPjJjGSwPBlqX5+QKY3M1cjEBL91EJN4Ngz2Hoik7ti4=
+X-Received: by 2002:a05:600c:22c8:: with SMTP id
+ 8mr6750221wmg.143.1598799232865; 
+ Sun, 30 Aug 2020 07:53:52 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <a473a088-91f8-10bb-7522-67c989c7a052@k8s.local>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-SES-Outgoing: 2020.09.15-54.240.27.57
-Feedback-ID: 1.us-west-2.uB/QlwiJBEoaCws3+Zv+F9cXI7w8e8pGXTk2xBIonJQ=:AmazonSES
-X-Mailman-Approved-At: Fri, 18 Sep 2020 17:27:32 +0200
+References: <CANtK_yx9zFK1Z4gm_SNC_rvveSoHEgTBrWscE5CeZaPuACUHbw@mail.gmail.com>
+In-Reply-To: <CANtK_yx9zFK1Z4gm_SNC_rvveSoHEgTBrWscE5CeZaPuACUHbw@mail.gmail.com>
+From: Alessandro Rinaldi <ale@alerinaldi.it>
+Date: Sun, 30 Aug 2020 16:53:41 +0200
+Message-ID: <CAJntV_ExhPJXMS4U9j8qvM68M4ckLFLyV1ei99b4_Mv0j2mdag@mail.gmail.com>
+Subject: Re: Cannot set endpoint to localhost on windows
+To: wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailman-Approved-At: Fri, 18 Sep 2020 17:27:47 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -72,191 +83,51 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
+Hello,
+I have the exact same problem and it's preventing me from using
+engarde[0] with the official Wireguard client on Windows. I reported
+that to the mailing list some time ago.
+Thanks for pointing that out again :)
 
-Sorry if this message comes out of thread, I wasn't subscribed when the 
-messages below were sent (I did click on the web link containing 
-"in-reply-to").
+[0] https://github.com/porech/engarde
 
-I'm also seeing the same on iOS (an iPhone and an iPad) after I put them 
-to flight mode (overnight or for more than a few hours).
-It seems to recover after a minute and a half but looking at the logs I 
-also saw that handshakes are being attempted while in flight mode every 
-~ 10 minutes.
-This doesn't seem to affect battery life (significantly)
-
-sample log:
--- 
-2020-09-11 00:35:06.972422: [NET] peer(YhQB…Lcm8) - Handshake did not 
-complete after 5 seconds, retrying (try 3)
-2020-09-11 00:35:06.972897: [NET] peer(YhQB…Lcm8) - Sending handshake 
-initiation
-2020-09-11 00:35:06.975534: [NET] peer(CHzf…1U30) - Handshake did not 
-complete after 5 seconds, retrying (try 6)
-2020-09-11 00:35:06.978000: [NET] peer(CHzf…1U30) - Sending handshake 
-initiation
-2020-09-11 00:35:06.980886: [NET] peer(YhQB…Lcm8) - Failed to send 
-handshake initiation write udp4 0.0.0.0:56035->redacted_peer_1:44455: 
-sendto: no route to host
-2020-09-11 00:35:06.981306: [NET] peer(YhQB…Lcm8) - Removing all keys, 
-since we haven't received a new one in 540 seconds
-2020-09-11 00:35:06.985392: [NET] peer(CHzf…1U30) - Failed to send 
-handshake initiation write udp4 0.0.0.0:56035->redacted_peer_2:44455: 
-sendto: no route to host
-2020-09-11 00:35:06.985751: [NET] peer(CHzf…1U30) - Removing all keys, 
-since we haven't received a new one in 540 seconds
-2020-09-11 00:35:06.987170: [NET] peer(YhQB…Lcm8) - Awaiting keypair
-2020-09-11 00:35:06.994062: [NET] peer(CHzf…1U30) - Awaiting keypair
-2020-09-11 00:35:12.160213: [NET] peer(CHzf…1U30) - Handshake did not 
-complete after 5 seconds, retrying (try 2)
-2020-09-11 00:35:12.160762: [NET] peer(CHzf…1U30) - Sending handshake 
-initiation
-2020-09-11 00:35:12.168432: [NET] peer(CHzf…1U30) - Failed to send 
-handshake initiation write udp4 0.0.0.0:56035->redacted_peer_2:44455: 
-sendto: no route to host
-2020-09-11 00:35:12.232323: [NET] peer(YhQB…Lcm8) - Handshake did not 
-complete after 5 seconds, retrying (try 2)
-2020-09-11 00:35:12.232701: [NET] peer(YhQB…Lcm8) - Sending handshake 
-initiation
-[a few more]
-2020-09-11 00:55:13.793554: [NET] peer(CHzf…1U30) - Failed to send 
-handshake initiation write udp4 0.0.0.0:56035->redacted_peer_2:44455: 
-sendto: no route to host
-2020-09-11 00:55:13.823302: [NET] peer(YhQB…Lcm8) - Handshake did not 
-complete after 5 seconds, retrying (try 19)
-2020-09-11 00:55:13.823679: [NET] peer(YhQB…Lcm8) - Sending handshake 
-initiation
-2020-09-11 00:55:13.830352: [NET] peer(YhQB…Lcm8) - Failed to send 
-handshake initiation write udp4 0.0.0.0:56035->redacted_peer_1:44455: 
-sendto: no route to host
-2020-09-11 00:55:18.961279: [NET] peer(CHzf…1U30) - Handshake did not 
-complete after 5 seconds, retrying (try 20)
-2020-09-11 00:55:18.961761: [NET] peer(CHzf…1U30) - Sending handshake 
-initiation
-2020-09-11 00:55:18.969481: [NET] peer(CHzf…1U30) - Failed to send 
-handshake initiation write udp4 0.0.0.0:56035->redacted_peer_2:44455: 
-sendto: no route to host
-2020-09-11 00:55:19.013912: [NET] peer(YhQB…Lcm8) - Handshake did not 
-complete after 5 seconds, retrying (try 20)
-2020-09-11 00:55:19.014284: [NET] peer(YhQB…Lcm8) - Sending handshake 
-initiation
-2020-09-11 00:55:19.021406: [NET] peer(YhQB…Lcm8) - Failed to send 
-handshake initiation write udp4 0.0.0.0:56035->redacted_peer_1:44455: 
-sendto: no route to host
-2020-09-11 00:55:24.071094: [NET] peer(YhQB…Lcm8) - Handshake did not 
-complete after 20 attempts, giving up
-2020-09-11 00:55:24.072152: [NET] peer(YhQB…Lcm8) - Sending handshake 
-initiation
-2020-09-11 00:55:24.079339: [NET] peer(YhQB…Lcm8) - Failed to send 
-handshake initiation write udp4 0.0.0.0:56035->redacted_peer_1:44455: 
-sendto: no route to host
-2020-09-11 00:55:24.079992: [NET] peer(YhQB…Lcm8) - Awaiting keypair
-2020-09-11 00:55:24.083542: [NET] peer(CHzf…1U30) - Sending handshake 
-initiation
-2020-09-11 00:55:24.088956: [NET] peer(CHzf…1U30) - Failed to send 
-handshake initiation write udp4 0.0.0.0:56035->redacted_peer_2:44455: 
-sendto: no route to host
-2020-09-11 00:55:29.187685: [NET] peer(CHzf…1U30) - Handshake did not 
-complete after 5 seconds, retrying (try 2)
-2020-09-11 00:55:29.188175: [NET] peer(CHzf…1U30) - Sending handshake 
-initiation
-2020-09-11 00:55:29.195769: [NET] peer(CHzf…1U30) - Failed to send 
-handshake initiation write udp4 0.0.0.0:56035->redacted_peer_2:44455: 
-sendto: no route to host
-
-Log for when I woke up in the morning:
-2020-09-11 07:30:33.963812: [NET] Network change detected with 
-unsatisfied route and interface order [utun2, en0]
-2020-09-11 07:30:33.964685: [NET] DNS64: mapped redacted_peer_1 to itself.
-2020-09-11 07:30:33.970653: [NET] DNS64: mapped redacted_peer_2 to itself.
-2020-09-11 07:30:33.971174: [NET] DNS64: mapped wg_endpoint to itself.
-2020-09-11 07:30:33.972489: [NET] DNS64: mapped wg_endpoint to itself.
-2020-09-11 07:30:33.974145: [NET] UAPI: Transition to peer configuration
-2020-09-11 07:30:33.976164: [NET] peer(YhQB…Lcm8) - UAPI: Updating endpoint
-2020-09-11 07:30:33.978041: [NET] peer(CHzf…1U30) - UAPI: Updating endpoint
-2020-09-11 07:30:33.978884: [NET] peer(gk0t…AyAc) - UAPI: Updating endpoint
-2020-09-11 07:30:33.981027: [NET] peer(xmkD…IMho) - UAPI: Updating endpoint
-2020-09-11 07:30:33.983182: [NET] Routine: receive incoming IPv4 - stopped
-2020-09-11 07:30:33.985043: [NET] Routine: receive incoming IPv6 - stopped
-2020-09-11 07:30:33.987112: [NET] peer(YhQB…Lcm8) - Sending handshake 
-initiation
-2020-09-11 07:30:33.989163: [NET] Routine: receive incoming IPv6 - started
-2020-09-11 07:30:33.991036: [NET] Routine: receive incoming IPv4 - started
-2020-09-11 07:30:33.993164: [NET] UDP bind has been updated
-2020-09-11 07:30:34.522914: [NET] Network change detected with satisfied 
-route and interface order [en0, utun2]
-2020-09-11 07:30:34.543799: [NET] DNS64: mapped redacted_peer_1 to itself.
-2020-09-11 07:30:34.546818: [NET] DNS64: mapped redacted_peer_2 to itself.
-2020-09-11 07:30:34.547362: [NET] DNS64: mapped wg_endpoint to itself.
-2020-09-11 07:30:34.548670: [NET] DNS64: mapped wg_endpoint to itself.
-2020-09-11 07:30:34.550471: [NET] UAPI: Transition to peer configuration
-2020-09-11 07:30:34.552311: [NET] peer(YhQB…Lcm8) - UAPI: Updating endpoint
-2020-09-11 07:30:34.555128: [NET] peer(CHzf…1U30) - UAPI: Updating endpoint
-2020-09-11 07:30:34.555231: [NET] peer(gk0t…AyAc) - UAPI: Updating endpoint
-2020-09-11 07:30:34.557314: [NET] peer(xmkD…IMho) - UAPI: Updating endpoint
-2020-09-11 07:30:34.559804: [NET] Routine: receive incoming IPv6 - stopped
-2020-09-11 07:30:34.561226: [NET] Routine: receive incoming IPv4 - stopped
-2020-09-11 07:30:34.563905: [NET] Routine: receive incoming IPv6 - started
-2020-09-11 07:30:34.565256: [NET] Routine: receive incoming IPv4 - started
-2020-09-11 07:30:34.567279: [NET] UDP bind has been updated
-2020-09-11 07:30:37.309301: [APP] App version: 0.0.20200127 (17); Go 
-backend version: 0.0.20200121
-2020-09-11 07:30:39.013248: [NET] peer(YhQB…Lcm8) - Handshake did not 
-complete after 5 seconds, retrying (try 2)
-2020-09-11 07:30:39.013410: [NET] peer(YhQB…Lcm8) - Sending handshake 
-initiation
-2020-09-11 07:32:00.302471: [NET] peer(YhQB…Lcm8) - Removing all keys, 
-since we haven't received a new one in 540 seconds
-2020-09-11 07:32:00.303803: [NET] peer(YhQB…Lcm8) - Handshake did not 
-complete after 5 seconds, retrying (try 3)
-2020-09-11 07:32:00.304892: [NET] Received invalid response message from 
-redacted_peer_1:44455
-2020-09-11 07:32:00.305435: [NET] peer(YhQB…Lcm8) - Sending handshake 
-initiation
-2020-09-11 07:32:00.308002: [NET] peer(YhQB…Lcm8) - Awaiting keypair
-2020-09-11 07:32:00.309891: [NET] peer(CHzf…1U30) - Handshake did not 
-complete after 5 seconds, retrying (try 14)
-2020-09-11 07:32:00.311963: [NET] peer(CHzf…1U30) - Sending handshake 
-initiation
-2020-09-11 07:32:00.372409: [NET] peer(YhQB…Lcm8) - Received handshake 
-response
-2020-09-11 07:32:00.372697: [NET] peer(YhQB…Lcm8) - Obtained awaited 
-keypair
-2020-09-11 07:32:00.529186: [NET] peer(CHzf…1U30) - Received handshake 
-response
-
-
-I normally try to toggle wireguard connection but it seems to hang so I 
-try to turn off/on wifi but
-it appears that after about 1:30 min it fixes itself - this time I just 
-let it alone (I was actually looking at the logs)
-
-Would there anything I can do on my end or is a code update in the App 
-required?
-
-Thank you.
-
-
-
-In reply to:
----
-
-Alexander Burke alex at alexburke.ca
-Thu Aug 27 10:29:10 CEST 2020
-
-I can’t speak for the Mac side, but I’ve been seeing the same on iOS for 
-months now.
-
-> /El 23 ag 2020, a les 20:34, Laura Smith <n5d9xq3ti233xiyif2vp at 
-protonmail.ch <https://lists.zx2c4.com/mailman/listinfo/wireguard>> va 
-escriure: />//>/Hi, />//>/These aren't show-stoppers per-se, but it 
-would be nice to see them fixed and new clients pushed out via the App 
-Store: />//>/(1) MacOS (10.15.6 but also observed on 10.15.5, not tested 
-on anything older) />//>/- Start with WG client in an operational state 
-/>/- Disconnect network (e.g. if on WiFI, turn off the WiFi in the menu 
-bar) />/- Sleep the machine />/- Wait- Wake the machine />/- Turn on 
-Wifi />/- Note that WG client fails to re-establish connectivity (shows 
-connected, but no traffic flows until you deactivate/reactivate WG) /
-
-
-
+On Sat, Aug 29, 2020 at 11:08 PM Hirbod Behnam
+<chrome.hiri.angry@gmail.com> wrote:
+>
+> Hello
+> I'm not sure if this is already reported or not but I found a small
+> problem with the windows client of wireguard that does not allow users
+> to use "plugins" on top of wireguard.
+> So here is my case. I used gost to create a really simple port
+> forwarder from my localhost to my server with this command: gost
+> -L=3Dudp://127.0.0.1:12345/1.1.1.1:12345 (that forwards packets on port
+> 12345 to 1.1.1.1:12345 and of course my server is not 1.1.1.1 :D)
+> Also here is my wireguard config:
+>
+> [Interface]
+> PrivateKey =3D xxxx
+> Address =3D 10.9.0.2/24
+> DNS =3D 8.8.8.8
+> [Peer]
+> PublicKey =3D xxxx
+> AllowedIPs =3D 0.0.0.0/8,1.0.0.0/16,1.1.0.0/24,1.1.1.0/32,1.1.1.2/31,1.1.=
+1.4/30,1.1.1.8/29,1.1.1.16/28,1.1.1.32/27,1.1.1.64/26,1.1.1.128/25,1.1.2.0/=
+23,1.1.4.0/22,1.1.8.0/21,1.1.16.0/20,1.1.32.0/19,1.1.64.0/18,1.1.128.0/17,1=
+.2.0.0/15,1.4.0.0/14,1.8.0.0/13,1.16.0.0/12,1.32.0.0/11,1.64.0.0/10,1.128.0=
+.0/9,2.0.0.0/7,4.0.0.0/6,8.0.0.0/5,16.0.0.0/4,32.0.0.0/3,64.0.0.0/2,128.0.0=
+.0/1
+> Endpoint =3D 127.0.0.1:12345
+> PersistentKeepalive =3D 25
+>
+> The allowed IPs are all ip addresses except 1.1.1.1.
+> When I run the client, the log fills with: [TUN] [xxx-wg0] peer(xxx) -
+> Failed to send data packet write udp4 0.0.0.0:58932->127.0.0.1:12345:
+> wsasendto: The requested address is not valid in its context.
+> And I cannot connect to anything. Sometimes in gost, it says that a
+> connection is established but I still cannot connect to anything
+> though wireguard.
+>
+> Also it's good to know that the exact config works fine with TunSafe,
+> the official Ubuntu client and openvpn. (I can connect through gost)
+> Thanks for the project!
+> Hirbod
