@@ -1,83 +1,84 @@
-Return-Path: <SRS0=dNI2=CI=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=I0b+=CJ=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 940AAC433E6
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 30 Aug 2020 19:53:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FAB6C433E6
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 31 Aug 2020 20:41:05 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 2DB1020757
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 30 Aug 2020 19:53:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 8F5942054F
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 31 Aug 2020 20:41:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=bukn-net.20150623.gappssmtp.com header.i=@bukn-net.20150623.gappssmtp.com header.b="uWtLJVkD"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 2DB1020757
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=bukn.net
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b3Y3kED8"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 8F5942054F
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a79a943f;
-	Sun, 30 Aug 2020 19:24:58 +0000 (UTC)
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com
- [2a00:1450:4864:20::332])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2d965ba7
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6bd057a1;
+	Mon, 31 Aug 2020 20:13:09 +0000 (UTC)
+Received: from mail-qv1-xf44.google.com (mail-qv1-xf44.google.com
+ [2607:f8b0:4864:20::f44])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ff266851
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 30 Aug 2020 19:24:55 +0000 (UTC)
-Received: by mail-wm1-x332.google.com with SMTP id c19so3116622wmd.1
- for <wireguard@lists.zx2c4.com>; Sun, 30 Aug 2020 12:52:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bukn-net.20150623.gappssmtp.com; s=20150623;
- h=from:to:cc:references:in-reply-to:subject:date:message-id
- :mime-version:content-transfer-encoding:content-language
- :thread-index; bh=yz8ecbFwRRFVk6EozWCGSI5hGl2UZbN2rEQ9fT32QYY=;
- b=uWtLJVkDkQvM9MYaBSXeuSQi4Vsi5/TaKR/QcdhYahSvrrutYet39xsTltmTG3+fLG
- pd+B1hguHAuHXSXNeWAj3EK0LSRBhGhzLhLykxigCEKLvGpFKGjSeqt7BmXIOwnU3TZt
- kybaKTh5IjAMbbPfqtV9hct9XQzLA9VlLdhFr9UtGo6jyASfyHUcQkd2RAALMOUDGS4d
- B5JaxTMURYkI32F+WvBwOSXXoKrAQqChYW/0p9FpMYKhRielRKnEmU2GaVwjW/jadMim
- zAuYUDxiB9qmDDW1uS3ouDL4rLH1wIn4okudI5C12F1iOtsGO0wsiv1k2lPrGWyzxE/t
- Jj1g==
+ Mon, 31 Aug 2020 20:13:07 +0000 (UTC)
+Received: by mail-qv1-xf44.google.com with SMTP id cy2so2557585qvb.0
+ for <wireguard@lists.zx2c4.com>; Mon, 31 Aug 2020 13:41:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=subject:to:cc:references:from:message-id:date:user-agent
+ :mime-version:in-reply-to:content-transfer-encoding:content-language;
+ bh=0BVFP/1g/HQOTMSBFiHU/Ck0syJVbeMQLR2eHvlhZV4=;
+ b=b3Y3kED89wJIxVsNcV15kSjU1jNgA6GeaiydqD7Mna/ZcfW1exeFJnwdqCQvMCx+5i
+ Lbl9mYQaaZdAzqxCyspXH5d/A/THotHzwIQar6fNpFlHwqdD1dHNQ5gEQwKhn1inhdzK
+ T7BN9M807sxkWVHT4NYDVQzO9zhze54Eo7LuJKQCgQQkqA/upsf1hfa2tua/Gn8h4kkR
+ 1CVUTuBOEfLfmfuN4ONCcSQbMETVYG5yJfnhv5NIcMAg/l5h5qowgEMUrdhQVedeBiZT
+ 8o5XCs3+KwNSXrUMzrikVcMRCjan5MZ8UFULAAseLEodRw2vxkBbKbsZsdJn+4Oo1u7d
+ Gmow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:cc:references:in-reply-to:subject:date
- :message-id:mime-version:content-transfer-encoding:content-language
- :thread-index;
- bh=yz8ecbFwRRFVk6EozWCGSI5hGl2UZbN2rEQ9fT32QYY=;
- b=oNB9WshTb4sDxZ9IGxPEMyaTUSn6jshCc3y3lnbPN4XaAjKv+kyNmCd7Hlq9AjjU4U
- JbTnYoJabuNChTIlXdFUFzVH7X9H8dy10AFp2x5DggTUXiSTa0Uaumv81X1Ax9pLV8q2
- a/zMr5vIkwjDYGFjIgpBKJy2cmf+aDzXRLJt82cv99Xll25b3dbBtXcCNJvADzFopAkK
- oiNHyOfSivW5LAGopib1gOLcdD0arb4HE5daYnbFhrf7wg78pYaYaldGwuS2M/Hk9iZm
- UOs/RUTTxvK+krMI1Cjy/MYQnP5/mWmFJQIi7aS0SfYw0J4asnx8wYCnJAieUv+ELyCe
- Wm5g==
-X-Gm-Message-State: AOAM532/cXItkIB21sWRCrKm9ruAyDOgrLrHhBWXrgbtPDNsxNvWDWZy
- 96WjOnqmusTnc0ljEwvFjzJiHmg5JCG9DU/r
-X-Google-Smtp-Source: ABdhPJwp+oJtTg5St8UGkikuKP4sWkHA/ZPOWGPZMTTYPALbofskPvI4K7TabCJc750KEO9nkbJ60A==
-X-Received: by 2002:a7b:c847:: with SMTP id c7mr299697wml.149.1598817159109;
- Sun, 30 Aug 2020 12:52:39 -0700 (PDT)
-Received: from XPS13 ([2a02:8011:8003:20:a181:63e5:bafc:6a04])
- by smtp.gmail.com with ESMTPSA id v29sm8668260wrv.51.2020.08.30.12.52.37
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Sun, 30 Aug 2020 12:52:38 -0700 (PDT)
-From: "Aaron Bolton" <aaron@bukn.net>
-To: <stunnel@attglobal.net>
-Cc: <wireguard@lists.zx2c4.com>
-References: <f4484f4c-d744-48ad-b78f-c6005936d60e@www.fastmail.com>
- <CA+oXxS0r9iMFC32SHweKEiersLVxNQrxopQs+EEsomwGyNGZgw@mail.gmail.com>
- <7522bb20-c067-0bed-2d55-5bfa08d5b205@attglobal.net>
-In-Reply-To: <7522bb20-c067-0bed-2d55-5bfa08d5b205@attglobal.net>
-Subject: RE: AllowedIPs
-Date: Sun, 30 Aug 2020 20:52:36 +0100
-Message-ID: <000001d67f07$1cdb96e0$5692c4a0$@bukn.net>
+ h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-transfer-encoding
+ :content-language;
+ bh=0BVFP/1g/HQOTMSBFiHU/Ck0syJVbeMQLR2eHvlhZV4=;
+ b=lvMzWRe2fxSkjVvjCWF8G0epnB8vBoRKvKp51mTZuXn4dMe5zplNU+0tWl8PZWIaSB
+ RHTgDV4afbQp5pIT9r0D8k/WUxWHVbmvJfRzAF5ULbTNPDMxFq2GvYyr6PgHf7rNBF7d
+ BRbNd1ZBS76ssYaBmmvG/wGv+PNPkM3vLgsIteo9BCNQ6YcyRK6Nj6YIt5BzPDfDL+Na
+ OhGaKhsvYoGoGkE2FM3WbGDeSPW++3LNWzNMsSq+aSBgu7swkI8LkTNo2T5a4uV64nE3
+ 7sV9Ocmpwl4qmN/FRJkdQk5vJhteu1WzzUnZc1qxSqL2yK9TVc9BLVPIvGGrv8QX3Cwc
+ FgOA==
+X-Gm-Message-State: AOAM530UKVno2LX2f/miFqpiY+taqZTv/JEbXBroWUZYJIHx7LgBpgpr
+ WlxymGO810BtegK1FudrkYQC9TKFJUipUg==
+X-Google-Smtp-Source: ABdhPJxwcIXoMs9NVRsLETecUijLg36xDNa3Tjt/G9jF/3j++M0Ojif1i9xHyy56hZVEesI1M4X3BA==
+X-Received: by 2002:a05:6214:1413:: with SMTP id
+ n19mr2894092qvx.165.1598906459910; 
+ Mon, 31 Aug 2020 13:40:59 -0700 (PDT)
+Received: from ?IPv6:2600:6c4a:7880:136e:9dc0:fb44:e06f:3513?
+ ([2600:6c4a:7880:136e:9dc0:fb44:e06f:3513])
+ by smtp.gmail.com with ESMTPSA id l1sm11340367qtp.96.2020.08.31.13.40.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 31 Aug 2020 13:40:59 -0700 (PDT)
+Subject: Re: Python Wrapper for wireguard-tools
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ Andrew Roth <andrew@andrewjroth.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+References: <CAF-5xiCzvHFLtLFpw5FNOR5w7=bEBNjDtVgedRjGNzBigk4cZw@mail.gmail.com>
+ <CAHmME9qoWSURAqdQJuOdo9xCBgrtENNOGgf_o1uRep66xRWzJw@mail.gmail.com>
+From: Matt Layher <mdlayher@gmail.com>
+Message-ID: <00e010bb-33c8-5885-e7ff-7e6aa8ba1dc1@gmail.com>
+Date: Mon, 31 Aug 2020 16:40:58 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-gb
-Thread-Index: AQJ7vW28p4j4q45lsb61vzRo9yZBugIX7ScfAldeZM+n4xh9kA==
+In-Reply-To: <CAHmME9qoWSURAqdQJuOdo9xCBgrtENNOGgf_o1uRep66xRWzJw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -92,57 +93,29 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Funny you suggest that :) I just found that option a couple of hours ago =
+Hi all,
 
+Apologies for the delay! I meant to reply much sooner but lost track.
 
------Original Message-----
-From: WireGuard <wireguard-bounces@lists.zx2c4.com> On Behalf Of Eddie
-Sent: 30 August 2020 20:09
-Cc: wireguard@lists.zx2c4.com
-Subject: Re: AllowedIPs
+I would also encourage you to use the native interfaces as much as 
+possible, rather than binding to C or shelling out to wg(8). If you have 
+any questions about decisions I made in wgctrl-go, I'd be happy to share 
+my thoughts.
 
-Wouldn't using Table =3D off do everything you need, without touching =
-the routing.
+- Matt
 
-Cheers.
-
-On 8/30/2020 1:56 AM, Aaron Bolton wrote:
-> Yes, this does thanks
+On 8/22/20 3:05 PM, Jason A. Donenfeld wrote:
+> Hey Andrew,
 >
-> I plan on using Quagga for BGP over WireGuard tunnels so I guess I=20
-> need to avoid wg-quick if that makes changes to the routing table and=20
-> firewall as I want to manage those my self
+> The most complete "library" is actually the wgctrl-go one from Matt
+> (CC'd). It's complete because it supports all the same interfaces as
+> wg(8) -- Linux Netlink, OpenBSD IOCTL, and x-platform UAPI. The
+> embeddable-wg-library is just for Linux Netlink, but I should maybe
+> refactor that to be more modular. And as you pointed out, the wgnlpy
+> stuff is Netlink also.
 >
->> On 30 Aug 2020, at 00:16, Eric Light <eric@ericlight.com> wrote:
->>
->> =EF=BB=BFI believe it's both, in a way.
->>
->> As far as wg is concerned, the AllowedIPs is effectively an ACL.  Any =
-
->> traffic hitting your wireguard interface from an IP not within the=20
->> AllowedIPs will either be dropped on decryption, or won't even be=20
->> decrypted.  (It's one of these, but I can't remember which)
->>
->> On top of that, wg-quick interprets the AllowedIPs string and does =
-other things, such as adding appropriate network routing (the second =
-part of your guess), as well as modifying any client firewall rules to =
-permit the traffic.
->>
->> Hope this helps  :)
->>
->> E
->>
->> --------------------------------------------
->> Q: Why is this email five sentences or less?
->> A: http://five.sentenc.es
->>
->>> On Sun, 30 Aug 2020, at 04:07, Aaron Bolton wrote:
->>> I=E2=80=99m trying to understand AllowedIPs better is it effectively =
-a ACL=20
->>> that day what is allowed down the tunnel or is it mechanism to=20
->>> configure what addresses get routed down the tunnel?
->>>
->>> Thanks in advance
->>>
-
-
+> If you wanted to start a new cross-platform library, and essentially
+> "clone" Matt's Go library into a pure Python one, I'd certainly
+> welcome that effort and would be happy to help.
+>
+> Jason
