@@ -1,54 +1,81 @@
-Return-Path: <SRS0=5dvq=C3=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=EIBb=C5=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SHORT_URL,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 734E9C43464
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 18 Sep 2020 16:01:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 067ADC43465
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 20 Sep 2020 22:24:13 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id B10612388B
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 18 Sep 2020 16:01:53 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="d1JcfEXj"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org B10612388B
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id 054F820874
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 20 Sep 2020 22:24:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 054F820874
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=jhoward.fastmail.fm
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4251ccd0;
-	Fri, 18 Sep 2020 15:29:13 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7549aefd
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fbb6598b;
+	Sun, 20 Sep 2020 21:53:15 +0000 (UTC)
+Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com
+ [64.147.123.24])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4e1caf07
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 18 Sep 2020 15:29:10 +0000 (UTC)
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id aa56625d;
- Fri, 18 Sep 2020 15:29:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=date:from:to
- :cc:subject:message-id:mime-version:content-type; s=mail; bh=rMN
- VeNVGCLqUjGpX8bAMTBucAzk=; b=d1JcfEXj2xHWw4PJdW3msXDG7vY1DU3Hkdv
- L17Le6dLoWLtOg5U/vQBkXt6zFgH8WZIi1EeNFsNle+eF5aqksjWgiyjCdyH1Szr
- lDwwUPKUp56sGbGjm0467vTbVMVDn2/THbfF6TssG37w0g2khsnWt4R/51UakeJ0
- bdvHGV9tR2u69egZQrjWrO2NUQisiptvRwIzcr7cwc172yLRL9KD2HtGoZiRAqsP
- 8cF5gBZKkpBYr7D53JZOHF2C3600fc0YAtHKjcGFcOP10qaycMSb4dUn58aw6r7g
- TyTiUlJBBwSlYwgQx1uvJc5ciTYybmKwPlKWA2Oz/G1Vj0zHm2w==
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 377e4eb3
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Fri, 18 Sep 2020 15:29:10 +0000 (UTC)
-Date: Fri, 18 Sep 2020 17:59:19 +0200
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+ Sat, 19 Sep 2020 19:51:35 +0000 (UTC)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+ by mailout.west.internal (Postfix) with ESMTP id 586C85C7
+ for <wireguard@lists.zx2c4.com>; Sat, 19 Sep 2020 16:21:55 -0400 (EDT)
+Received: from imap35 ([10.202.2.85])
+ by compute1.internal (MEProxy); Sat, 19 Sep 2020 16:21:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.fm; h=
+ mime-version:message-id:date:from:to:subject:content-type; s=
+ fm1; bh=y7rO1GVaydJ/KJc4n3Oyqj8bpky1/1ltzx3GwVP0EIA=; b=i0bgeOjL
+ r2dA4VU+x30eCBnMjjtqCUYv8wuTV3NKnncuKh572EhtYZXs26Nb5uk51svFzrYa
+ jTKIxYYEbtnkgXSQe1BlzKV98zJnqpKdo5YG5TxIdK8dns/l/1HC7dLlWVJ1Q+Pt
+ 8eqMZ6DLRQ043ICzTwugVQfIGeh16PKLYW+x3f5v+ZSfTh4eXbK33xJgGyINL7BW
+ 2HI12WkQHhWsMk/j5L+/aB6SGYOLUHgls237oanq1L5Nkwszn294cVfSndpVxEPC
+ X1ymc/U3ef9afjYmX5JQ70uRh2Rcu31T/S1YH46lttu/ZeeaNs2UFEor30icZw0c
+ PUUTBvaykbxZFg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=content-type:date:from:message-id
+ :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
+ :x-me-sender:x-sasl-enc; s=fm3; bh=y7rO1GVaydJ/KJc4n3Oyqj8bpky1/
+ 1ltzx3GwVP0EIA=; b=RgEIhvrdMyrKFqyZSXZV5oxTDGtyZbtzzmqn9ijeAjKpn
+ VipiyPDbdF6rRpnlfgLudP4UBJMAjhsR4PesdEE7xkq/JG/t3xEQ4skCM3JKbVIj
+ uQHufy1Yrh9t93OCZz4Vk3JedDmXFgFlCYKiaO1+ooHsiZcRSbWYkA0C+jOmvrw3
+ oNbmLzA2L/LnoEm/GvP1gOMNHchcN8kOw3j8PyhkIAbFsl3U1OikuOj9SbpxDEt6
+ Xy9xjgFI5ejpm6ndxJE8ihrXXIVOH2P+VGU91vV20sn7jSEKnJjNZP6S6PcgsIg2
+ C7wREq0CAzYsrCwQcNaDQ/fi5wVMhLhDewQI8GnJw==
+X-ME-Sender: <xms:YmhmXwBs420FrEHY4Martw40xHukzWBZfkPbL5U8onKM97Vxv_mwUg>
+ <xme:YmhmXygY0_QbBxZoeVSTRCV0jQF62-Z4VxNA7U28YdN4RzDj3fngIlYTpZ51vXol2
+ Tc08A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrtdekgddugeelucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfffhffvufgtsehttdertd
+ erredtnecuhfhrohhmpedflfgvrhgvmhihucfjohifrghrugdfuceofhhorhhumhesjhhh
+ ohifrghrugdrfhgrshhtmhgrihhlrdhfmheqnecuggftrfgrthhtvghrnhepudetfefhvd
+ eggeekgeduleeuuddvteduvdevffehtdeuleeiieektdekledufffgnecuffhomhgrihhn
+ pedtgidtrdhsthenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfh
+ hrohhmpehfohhruhhmsehjhhhofigrrhgurdhfrghsthhmrghilhdrfhhm
+X-ME-Proxy: <xmx:YmhmXzmR1dFoml1rTgAkA5VkeXE9JGXDhB0cfKMVNHM3f--VPY_JAg>
+ <xmx:YmhmX2x318sFhOI3hTSfPTA7iu_G__zXufddChbq9fbRLOQ6q3tiiw>
+ <xmx:YmhmX1Sl3FtJ_wwTgcbdpRhNN2WlLILLHOIiFVFG8SYoQRbg9ZlSDw>
+ <xmx:YmhmX8dWtZJY52MXOUR6ymLR6sJf5iDFEwEhy8HF0sWpTDvFr1EvOQ>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id A50B114C086D; Sat, 19 Sep 2020 16:21:54 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.3.0-325-g8593b62-fm-20200916.004-g0f995879-bis
+Mime-Version: 1.0
+Message-Id: <82dd10dc-ee1d-45a7-a82c-1739e1048e5e@www.fastmail.com>
+Date: Sat, 19 Sep 2020 13:21:34 -0700
+From: "Jeremy Howard" <forum@jhoward.fastmail.fm>
 To: wireguard@lists.zx2c4.com
-Cc: amyagi@gmail.com
-Subject: wireguard now built into CentOS 7 and CentOS 8's "kernel-plus" kernel
-Message-ID: <20200918155919.GA549539@zx2c4.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Subject: Apparent Windows routing bug when switching between VPNs
+Content-Type: text/plain
+X-Mailman-Approved-At: Sun, 20 Sep 2020 23:53:13 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -63,37 +90,12 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi folks,
+I just started using wireguard, after using openvpn for quite a while. I've seen a semi-regular bug when using wireguard from Windows 10. I find if I switch from one vpn to another, by deactivating one and activating another, and then I switch back to the first one, I often find that I can no longer connect to servers in that 1st vpn. I get the handshake, but can't actually connect to anything after that - perhaps some issue with the Windows routing table?
 
-Users of RHEL and CentOS have typically had two different installation
-strategies: a kmod from ELrepo or dkms from copr. These have worked
-well, but it's still been a bit more cumbersome than one would like,
-especially with Secure Boot.
+Oddly, to fix it, I find that I have to edit the config in wireguard windows - e.g by changing the order of the lines in the text
+Then I find I can connect again. Even rebooting doesn't fix it - only editing the config (e.g by changing the order of the lines) works.
 
-WireGuard has finally been added to CentOS's "kernel-plus" kernels,
-which are the normal RHEL kernels, with things added. This means that
-WireGuard gets distributed as a built-in to these. It seems to work
-well. Instructions are on wireguard.com/install/ and as of writing
-suggest the following:
+It seems to happen with different servers in different locations, but here's a server conf dump if it helps:
+https://0x0.st/ilqo.txt
 
-
-CentOS 8
-========
-$ sudo yum install yum-utils epel-release
-$ sudo yum-config-manager --setopt=centosplus.includepkgs="kernel-plus, kernel-plus-*" --setopt=centosplus.enabled=1 --save
-$ sudo sed -e 's/^DEFAULTKERNEL=kernel-core$/DEFAULTKERNEL=kernel-plus-core/' -i /etc/sysconfig/kernel
-$ sudo yum install kernel-plus wireguard-tools
-$ sudo reboot
-
-CentOS 7
-========
-$ sudo yum install yum-utils epel-release
-$ sudo yum-config-manager --setopt=centosplus.includepkgs=kernel-plus --enablerepo=centosplus --save
-$ sudo sed -e 's/^DEFAULTKERNEL=kernel$/DEFAULTKERNEL=kernel-plus/' -i /etc/sysconfig/kernel
-$ sudo yum install kernel-plus wireguard-tools
-$ sudo reboot
-
-Let me know if there are any issues.
-
-Thanks,
-Jason
+Let me know if there's any other info I could provide.
