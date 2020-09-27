@@ -2,78 +2,77 @@ Return-Path: <SRS0=Zpbp=DI=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6897C4727C
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  1 Oct 2020 11:14:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EBC70C47420
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  1 Oct 2020 11:14:39 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 0A1FC2137B
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  1 Oct 2020 11:14:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id ABE352137B
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  1 Oct 2020 11:14:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SoAm6Eax"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 0A1FC2137B
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="g20ldOkS";
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="a21tAS1J"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org ABE352137B
+Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=mailbox.org
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1344250f;
-	Thu, 1 Oct 2020 10:40:46 +0000 (UTC)
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com
- [2607:f8b0:4864:20::102d])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ade4371e
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b5f10b10;
+	Thu, 1 Oct 2020 10:40:45 +0000 (UTC)
+Received: from mout-p-102.mailbox.org (mout-p-102.mailbox.org [80.241.56.152])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 591ea694
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 30 Sep 2020 22:10:35 +0000 (UTC)
-Received: by mail-pj1-x102d.google.com with SMTP id b17so703255pji.1
- for <wireguard@lists.zx2c4.com>; Wed, 30 Sep 2020 15:42:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=reply-to:to:from:subject:message-id:date:user-agent:mime-version
- :content-language:content-transfer-encoding;
- bh=FPlBRoXuGhsiCgLm6OfLkCs+3eDwQbRcxyIASRb7hJw=;
- b=SoAm6EaxxNyyrpA5M5bdkbfH+7g0xu/5WHX91GTTUfFx/7Y5IyYufRylLahq8LE89v
- Vl5GFUM8aJJcmgp112Fh57MpvaFi7EwEnQyCW/ujzK8zASs0T6qNcNyLFQCPRZJglpY0
- toHVyMDmYNLy6BQ4/JtocdFy1FygBW48TXYku3G9aMO2oMoz02QM8+qbCad53sOEpmRi
- qR5jqHXUNmK/2IMzsz6O28cQ9sUf9N/aWj97ivF5/uPKJybpe37Pp/URXnNtvbZC6uE9
- VoCro5/Y89ijfESEQLOQHuQIJc/2rjMUq3yb4lP4rDIC+U9h928e57g5fwEw+Dx5Cy6N
- JKow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:reply-to:to:from:subject:message-id:date
- :user-agent:mime-version:content-language:content-transfer-encoding;
- bh=FPlBRoXuGhsiCgLm6OfLkCs+3eDwQbRcxyIASRb7hJw=;
- b=mUC1IEilhHZw9dwRtc8O1IcUby0hqH3YhlbbxkqS7+I/QTU3d0Z8CtO74o1sm78grv
- IAOLt0BEL8VnqxL+LCGNdeHm7gXLnu2UdqExzAVT3kWRQn43h4NWyaJwjg2F/kpKn78m
- NACB25Qqu0a7+VOCp/Txc2Fmtr3Gd0a9F0BUpBO+NoZrs7/eGLg31EYW/YeiEe2nLEZ6
- pcBQv4D2m54+h9tUt9hDYUbqfNjMWhkPSqywRGF9acnkpd6PTmgHj2rI7r3zCrdn0TU3
- LONmLTPnKBCGXGemJdgx7cdLS4aeggnvTinFj2MmPkqvbn45uc3KYBOiWI+4T7gaEZgz
- I/5Q==
-X-Gm-Message-State: AOAM533mwvFNjEoIUAJGUqtfvRt5lLXZ9rPCmuIxHFXw9oKJ3D1nOGQi
- aRqlVUXcWGfWPFkeahJV5U4ykhA0AVQ=
-X-Google-Smtp-Source: ABdhPJz9d7RaGuybrsbXbhk6jC9YU9DV0RxPYmhOjy9jh1yjtdNXQZDJINqH2vscybinRC4Cqy6iOQ==
-X-Received: by 2002:a17:90a:c255:: with SMTP id
- d21mr4563332pjx.212.1601505740654; 
- Wed, 30 Sep 2020 15:42:20 -0700 (PDT)
-Received: from mua.localhost (99-7-172-215.lightspeed.snmtca.sbcglobal.net.
- [99.7.172.215])
- by smtp.gmail.com with ESMTPSA id r4sm3274843pjf.4.2020.09.30.15.42.20
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 30 Sep 2020 15:42:20 -0700 (PDT)
+ Sun, 27 Sep 2020 15:51:10 +0000 (UTC)
+Received: from smtp1.mailbox.org (smtp1.mailbox.org [80.241.60.240])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange ECDHE (P-384) server-signature RSA-PSS (4096 bits) server-digest
+ SHA256) (No client certificate requested)
+ by mout-p-102.mailbox.org (Postfix) with ESMTPS id 4BzrXP6JcQzKmQY
+ for <wireguard@lists.zx2c4.com>; Sun, 27 Sep 2020 18:22:29 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mailbox.org; h=
+ content-transfer-encoding:mime-version:content-type:content-type
+ :date:date:from:from:subject:subject:message-id:received; s=
+ mail20150812; t=1601223746; bh=cAFntiOUjBx+OeCEhJyk1z54LujnDaUR5
+ p+OkZHvCkI=; b=g20ldOkSAcBsRKFTorBIDLVHQ5Nm0vuw5wlOP2nyozOeO5TOe
+ vsfrDTckfX/Q2FgYDcK7qEjv1ttBfCUpXtrYS/wi1veuSWYVgfa75hAcuGI3zNoA
+ jMKPbITYe4xvYFPi2SO74dNKn8yoVemrNliCm6eEbVTF8uH5XA2O+I/uJZWdio0G
+ 9eBKtEchbs8kk01MFvpwpW+RqrTbIdwrbvZ33NDYJJsfP0qD9qgG9JwndtB2Jz7Z
+ 3yDrQaAFkgmvKnBvjEY36HpIttw4SHXsBYBbbAa+R1cEThXUBjSQt6ONzVTWt5az
+ b9sRgs/DT2hzJEsaS2lWshpWpCVAwThvRmC+A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org;
+ s=mail20150812; t=1601223747;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=hXJdiyCg/JUT1TlaxpcpprUAUiKVRGW+LdCZ4ldAsBY=;
+ b=a21tAS1JVlCzp6slVWVeEej+dWfIe/4QYJE6KKTXZCoNhF85ZQi6oDgJD8FvbeO+F4hwNs
+ t4+BH8VwQLZWduIhNCXBLmoFK3d6RJTDimsYta/2xg+xVl5uLn7kFvuuEWPwke+h/czk3v
+ tYQuvAxMitxSRWhLcylzBUPMxHvKUmqp+MIAUGA4UqkAYoexHqdCTWPA0gi5r/ebhC5xe7
+ ZdhOuW9eBZQIrvF6M+80vfI8nVnurjjI1yJ67Y/Z/C+J8It2Xkg5AYGYsBQAtfXk3584hK
+ y2TTnqYuKeZ+8cNBGZQbA0uZpO6kLsqJBGJAy/mLnmCpNh2OogD3/HNzeJrNeA==
+X-Virus-Scanned: amavisd-new at heinlein-support.de
+Received: from smtp1.mailbox.org ([80.241.60.240])
+ by spamfilter04.heinlein-hosting.de (spamfilter04.heinlein-hosting.de
+ [80.241.56.122]) (amavisd-new, port 10030)
+ with ESMTP id NHZV0DhxpJJw for <wireguard@lists.zx2c4.com>;
+ Sun, 27 Sep 2020 18:22:26 +0200 (CEST)
+Message-ID: <9fb89fd06db799a7a1981205562f7cc933a5a0c5.camel@mailbox.org>
+Subject: Wireguard wg-quick defaults conflict with Kubernetes firewall
+From: Sebastian Rose <sebastian.rose@mailbox.org>
 To: wireguard@lists.zx2c4.com
-From: PGNet Dev <pgnet.dev@gmail.com>
-Subject: more specific routes for IPs added to "AllowedIPs =" ?
-Message-ID: <8e81c9fc-b43c-235f-5c6a-335c736d9f5e@gmail.com>
-Date: Wed, 30 Sep 2020 15:42:19 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+Date: Sun, 27 Sep 2020 18:22:25 +0200
+Content-Type: text/plain; charset="UTF-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-MBO-SPAM-Probability: 
+X-Rspamd-Score: -5.52 / 15.00 / 15.00
+X-Rspamd-Queue-Id: A3772150C
+X-Rspamd-UID: da5e1c
 X-Mailman-Approved-At: Thu, 01 Oct 2020 12:40:42 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -86,44 +85,70 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Reply-To: pgnet.dev@gmail.com
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-I've two linux machines connected with wg.
+Hello,
 
- Machine #1 is a remote VM, & connects to the public 'net.
+wg-quick in its default configuration causes routing conflicts when the same host is also running a kubernetes
+master node. The issue seems to be how wg-quick marks the traffic to route to the Wireguard peer: 
+https://www.wireguard.com/netns/#routing-all-your-traffic
+This leads to a loss of network connectivity when Kubernetes and Wireguard are running simultaneously on the
+same host.
 
- Machine #2 is local, on my LAN.
+wg-quick (when not instructed otherwise) generates an wg0 interface like this:
 
-To date, they've only routed internal traffic. Nice -n- easy.
+> interface: wg0
+>   public key: [REMOVED]
+>   private key: (hidden)
+>   listening port: 37827
+>   fwmark: 0xca6c
+> 
+> peer: [REMOVED]
+>   endpoint: [IPV4]:51820
+>   allowed ips: 0.0.0.0/0, ::/0
+>   latest handshake: 1 minute, 21 seconds ago
+>   transfer: 161.54 KiB received, 185.11 KiB sent
 
-I'm adding forwarding of specific EXTERNAL traffic from the 'net, received at Machine #1, to port-specific services, on the LAN.
+Additionally, the following routing rule gets created
+> rule 32765:	not from all fwmark 0xca6c lookup 51820
 
-E.g. a 'listener' on a local lan machine, @ ip 10.0.0.1 port 11111
+> # ip route show table 51820
+> default dev wg0 scope link
 
-On the local end of the VPN, for any external IP that needs to traverse the VPN link, adding the specific IP to
+This got created with the following configuration:
 
-	AllowedIPs = ... X.X.X.X
+> # wg showconf wg0
+> [Interface]
+> ListenPort = 36768
+> FwMark = 0xca6c
+> PrivateKey = [REMOVED]
+> 
+> [Peer]
+> PublicKey = [REMOVED]
+> AllowedIPs = 0.0.0.0/0, ::/0
+> Endpoint = [IPV4]:51820
 
-works.  Traffic flows.
+As part of a kubernetes installation, the following firewall rules get added:
 
-BUT, that adds a local route
+> # iptables -L KUBE-FIREWALL
+> Chain KUBE-FIREWALL (2 references)
+> target     prot opt source               destination         
+> DROP       all  -- !127.0.0.0/8          127.0.0.0/8          /* block incoming localnet connections */ ! ctstate RELATED,ESTABLISHED,DNAT
+> DROP       all  --  anywhere             anywhere             /* kubernetes firewall for dropping marked packets */ mark match 0x8000/0x8000
 
-	X.X.X.X dev wg0 scope link
+As far as I can tell, Wireguard marks its traffic with 0xca6c and Kubernetes wants to drop traffic that's
+marked 0x8000. Since 0xca6c ∧ 0x8000 = 0x8000 all Wireguard traffic gets dropped and there is no network
+connectivity.
 
-so ALL local traffic from local lan to that IP, e.g. an ssh session, gets routed BACK via that new route over the VPN.
+Proposed solution:
 
-I'd like to limit that -- so that ONLY traffic from the 'net to that local listener on ip 10.0.0.1 port 11111 is routed back via the VPN; all _other_ traffic to the originating IP (e.g., that ssh connection), gets routed over my normal default route.
+Change FwMark in the [Interface] section of the wg0.conf to something like
 
-What's the cleanest way -- in wireguard config -- to
+> FwMark = 0x4a6c
 
-	(a) allow any/all IPs over the VPN
-	(b) limit the route to the specific ip target/port
+This will cause the kubernetes firewall not to conflict anymore with the defaults of wg-quick.
 
-So far, I seem to _need_ that originating IP in the "allowedips ="; which creates the 'overreaching' route ...
-
-I'm guessing some judicious use of PostUp/Down routes set?
-
-
+Best,
+Sebastian
 
