@@ -7,59 +7,69 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D262BC4727C
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  1 Oct 2020 11:11:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B4C8FC47420
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  1 Oct 2020 11:11:33 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 063842087D
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  1 Oct 2020 11:11:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id CB91420B1F
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  1 Oct 2020 11:11:32 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=squyres.com header.i=@squyres.com header.b="iTqtVOm7"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 063842087D
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=squyres.com
+	dkim=pass (2048-bit key) header.d=lemonjuice.tk header.i=@lemonjuice.tk header.b="XgU/FST2"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org CB91420B1F
+Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=lemonjuice.tk
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 17a356f0;
-	Thu, 1 Oct 2020 10:39:18 +0000 (UTC)
-Received: from squyres.com (squyres.com [64.253.106.170])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d6dc3200
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 76e292d2;
+	Thu, 1 Oct 2020 10:39:38 +0000 (UTC)
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com
+ [2a00:1450:4864:20::131])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6b2acf88
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 30 Sep 2020 00:53:55 +0000 (UTC)
-X-Debug-Header: memoryhole.net squyres.com
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=squyres.com; h=
- mime-version:references:in-reply-to:from:date:message-id:subject
- :to:content-type:content-transfer-encoding; s=default; bh=jtk+1f
- +ATzbkb7JY5UxGmx+MW3g=; b=iTqtVOm7tBk+90LKA7x8y27Yf6wFnTMX6dNgv7
- 9r+U35Y5Ccuf/U7kBbVVxoWx7CLP2YuDIA07S8LC2hZlgFMWCcYpvHu4Qsk5PoUa
- cBJ5P6gNl7wZJdM4FIA2a4OhJ+sZ7xepZFWT9gqTX9SleMELxSEJwuCbQ2H9xywB
- ObfF0=
-Received: (qmail 24699 invoked by uid 64020); 30 Sep 2020 01:25:33 -0000
-Received: from unknown (HELO mail-wm1-f49.google.com) (jeff@209.85.128.49) by 
- squyres.com with ESMTPSA (AES128-SHA encrypted, authenticated); 30 
- Sep 2020 01:25:33 -0000
-Received: by mail-wm1-f49.google.com with SMTP id t17so184059wmi.4
- for <wireguard@lists.zx2c4.com>; Tue, 29 Sep 2020 18:25:33 -0700 (PDT)
-X-Gm-Message-State: AOAM533sfQfMH9r36fiCQs7YovwiZLu6i8QNkw0g116lh4U9Hcad8+aG
- Llr0220+d4V1Fi1xOd0iAFZH9Yh2HqeKg++P+V0=
-X-Google-Smtp-Source: ABdhPJyJI7/kGvmuC8GxN4e/iznRbslpaGMD7eKjL4ogN4Gsr8RfcTX0PJh1xfM5ioEUNMGE0BLOEwp8nsBcVXBdVGk=
-X-Received: by 2002:a1c:6287:: with SMTP id w129mr180373wmb.52.1601429132428; 
- Tue, 29 Sep 2020 18:25:32 -0700 (PDT)
+ Mon, 28 Sep 2020 12:49:09 +0000 (UTC)
+Received: by mail-lf1-x131.google.com with SMTP id y2so1202138lfy.10
+ for <wireguard@lists.zx2c4.com>; Mon, 28 Sep 2020 06:20:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=lemonjuice.tk; s=gsuite;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :content-transfer-encoding;
+ bh=kY81sGnX1Yt9t9tfomzhvq+3sK0nSSNRa+Y/MqZ2j04=;
+ b=XgU/FST2uBsxs6j93z4pWG2XoM6rO1eUkxCjmgjycfFJ6QQihMAgI877ix3Olkd2b4
+ ylWjQbLV9xoPKWqRaUdcxRemFn8u9G+IhyTC8gmgCC8UAzBqfejIho7p55xSXhJwLswg
+ 5EuKMvHlJFBqec6VJlP+axAFnJEPcIa5AwQezFRPMS8N/oxloWeGCDK0yhGrcvw/STwh
+ 4gCaMFycbjqUFNVx6jnGja6noVmw6rJ7nR3XpBNoLEtlzMniC8TUiH6I5Q/I6ZfXdEoK
+ 0F3RDAW1+OyGopvAKYkA4fnUMlFO95c0H5r9PacU5bIbBh6ynPC5FXAy8BUvohFkoUlY
+ xkrg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:content-transfer-encoding;
+ bh=kY81sGnX1Yt9t9tfomzhvq+3sK0nSSNRa+Y/MqZ2j04=;
+ b=oVQHUhhHtvF3DWwNyMAPiGbYRWhXhrWUzMW4vLhKgHi1fppGNXas0NcYUASmIc0+v6
+ bEMw7U7F3233geCmJUWqNZy8oSO0jGcQWSN8IF+5uNnQTFcDpzn1A67qaRNIdv92VkRR
+ QusvUKkb+EaaXvqQMLyYyHzoNPEgj94hpOwYJeEKyiHWZouvD7jJt+oMoMreqDIQctta
+ 7+fZb8ppW2l6VDqAgBGecuzNsTors5Zw40BmXOkM8gCKitXYS3iulpAYqyjvlESAKQoC
+ s1LzbQDQMYVAE8wT2eWKgMIefatT9QWnuNKvZ+BFYlS5TOn6YhqTltN0eulP/pldlQiJ
+ oqlg==
+X-Gm-Message-State: AOAM531bBrljQSDzkgphpO2ISpVrlC2TCfUpcJ3G4fFMEGfRlwy2QH1z
+ LRoqAIhgqHe8OieQra1UBHhFiK6GeScIH4fwwLW0WJ9A9H+qfA==
+X-Google-Smtp-Source: ABdhPJy6RskzzN7x4WYt3RVgsT8VUT5+zB8/c3YM0c7rmJwiFAOB3hfT/wGSiFc7v46qCbpgl2vudRLQZT5WYwR2EoE=
+X-Received: by 2002:a19:c801:: with SMTP id y1mr420444lff.217.1601299235739;
+ Mon, 28 Sep 2020 06:20:35 -0700 (PDT)
 MIME-Version: 1.0
 References: <6650E7F9-7985-4DFC-9620-60FFE690C4F8@alexburke.ca>
  <010101747ab4aca3-491864e4-b0b7-474e-903e-035cd3fd9884-000000@us-west-2.amazonses.com>
  <_6C1kLqz08ZzDSlyJFksWGJkEabvSXjImi0ZpRw7s5bjUcMYcUlzSTUg1aUVzhnmAyYvGtMpSYff1DvoDw_vbLxel15gdVmkxtAjZWDp-w8=@protonmail.ch>
 In-Reply-To: <_6C1kLqz08ZzDSlyJFksWGJkEabvSXjImi0ZpRw7s5bjUcMYcUlzSTUg1aUVzhnmAyYvGtMpSYff1DvoDw_vbLxel15gdVmkxtAjZWDp-w8=@protonmail.ch>
-From: Jeff Squyres <jeff@squyres.com>
-Date: Tue, 29 Sep 2020 21:25:20 -0400
-X-Gmail-Original-Message-ID: <CAOmeisUoGznGcF1_Qpj0dmjUS+c1uso2kDkhjbSzy6_RC9r+3w@mail.gmail.com>
-Message-ID: <CAOmeisUoGznGcF1_Qpj0dmjUS+c1uso2kDkhjbSzy6_RC9r+3w@mail.gmail.com>
+From: Jonny <jonny@lemonjuice.tk>
+Date: Mon, 28 Sep 2020 14:20:25 +0100
+Message-ID: <CAGHQbXusptPtaSDK-48Jq8t-ZPXxjm7oQfqv7pTihFFNNeTMuw@mail.gmail.com>
 Subject: Re: Two small Wireguard frustrations on Mac & Apple iOS
-To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+To: Laura Smith <n5d9xq3ti233xiyif2vp@protonmail.ch>, wireguard@lists.zx2c4.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Mailman-Approved-At: Thu, 01 Oct 2020 12:39:16 +0200
+X-Mailman-Approved-At: Thu, 01 Oct 2020 12:39:36 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -74,17 +84,21 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-FWIW, I first publicly reported this same problem with iOS in Jan
-2020: https://lists.zx2c4.com/pipermail/wireguard/2020-January/004860.html
-(with much more followup information in
-https://lists.zx2c4.com/pipermail/wireguard/2020-January/004874.html).
+Hey,
 
-It still happens periodically on my iOS 13 (and now iOS 14) iPhone 8+.
-It happens with much lower frequency than it used to, but it still
-definitely happens sometimes.
+I'm not a MAC or iOS user but I've seen issues where if the peer
+endpoint uses a DNS hostname, when the device tries to reconnect to
+the endpoint cause DNS resolution isn't working it can't connect.
+You tried hard coding the IP?
+
+--
+Jonny
+
+--
+Jonny
 
 
-On Mon, Sep 28, 2020 at 8:59 AM Laura Smith
+On Mon, 28 Sep 2020 at 14:12, Laura Smith
 <n5d9xq3ti233xiyif2vp@protonmail.ch> wrote:
 >
 > I am starting to seriously consider switching back to OpenVPN.
@@ -379,7 +393,3 @@ WG client fails to re-establish connectivity (shows
 > > connected, but no traffic flows until you deactivate/reactivate WG) /
 >
 >
-
-
---=20
-{+} Jeff Squyres
