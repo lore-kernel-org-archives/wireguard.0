@@ -1,42 +1,45 @@
-Return-Path: <SRS0=Zpbp=DI=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=+QJz=DM=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C776C47420
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  1 Oct 2020 16:52:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7072DC4727F
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Oct 2020 13:51:46 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 3A5A1221F0
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  1 Oct 2020 16:52:24 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 3A5A1221F0
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=romanrm.net
+	by mail.kernel.org (Postfix) with ESMTPS id 6E0DD20665
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Oct 2020 13:51:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 6E0DD20665
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=spam-free.eu
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7b632ba8;
-	Thu, 1 Oct 2020 16:20:05 +0000 (UTC)
-Received: from rin.romanrm.net (rin.romanrm.net [2001:bc8:2dd2:1000::1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 0fdd8156
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Thu, 1 Oct 2020 16:20:03 +0000 (UTC)
-Received: from natsu (unknown [IPv6:fd39::e99e:8f1b:cfc9:ccb8])
- by rin.romanrm.net (Postfix) with SMTP id CE73991D;
- Thu,  1 Oct 2020 16:51:52 +0000 (UTC)
-Date: Thu, 1 Oct 2020 21:51:52 +0500
-From: Roman Mamedov <rm@romanrm.net>
-To: PGNet Dev <pgnet.dev@gmail.com>
-Cc: wireguard@lists.zx2c4.com
-Subject: Re: more specific routes for IPs added to "AllowedIPs =" ?
-Message-ID: <20201001215152.62d4b5c0@natsu>
-In-Reply-To: <8e81c9fc-b43c-235f-5c6a-335c736d9f5e@gmail.com>
-References: <8e81c9fc-b43c-235f-5c6a-335c736d9f5e@gmail.com>
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0de321a6;
+	Mon, 5 Oct 2020 13:19:05 +0000 (UTC)
+Received: from s2.spam-free.eu (s2.spam-free.eu [195.5.121.125])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 3d014cf2
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Mon, 5 Oct 2020 13:19:04 +0000 (UTC)
+Received: from [192.168.129.206]
+ (dslb-002-204-084-239.002.204.pools.vodafone-ip.de [2.204.84.239])
+ by s2.spam-free.eu (Postfix) with ESMTPSA id BEE9D1C0D02
+ for <wireguard@lists.zx2c4.com>; Mon,  5 Oct 2020 15:51:24 +0200 (CEST)
+From: Chris <wireguard@spam-free.eu>
+Subject: wg-quick up (on linux) fails in case of several default routes
+To: wireguard@lists.zx2c4.com
+References: <mailman.0.1601114111.20018.wireguard@lists.zx2c4.com>
+Message-ID: <ebc8ff04-a073-13a8-2f80-a5cf01ab8416@spam-free.eu>
+Date: Mon, 5 Oct 2020 15:51:24 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+In-Reply-To: <mailman.0.1601114111.20018.wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
+Content-Language: de-DE
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -51,54 +54,19 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Wed, 30 Sep 2020 15:42:19 -0700
-PGNet Dev <pgnet.dev@gmail.com> wrote:
+In case there is more than one default route (with different metrics):
 
-> I've two linux machines connected with wg.
-> 
->  Machine #1 is a remote VM, & connects to the public 'net.
-> 
->  Machine #2 is local, on my LAN.
-> 
-> To date, they've only routed internal traffic. Nice -n- easy.
-> 
-> I'm adding forwarding of specific EXTERNAL traffic from the 'net, received at Machine #1, to port-specific services, on the LAN.
-> 
-> E.g. a 'listener' on a local lan machine, @ ip 10.0.0.1 port 11111
-> 
-> On the local end of the VPN, for any external IP that needs to traverse the VPN link, adding the specific IP to
-> 
-> 	AllowedIPs = ... X.X.X.X
-> 
-> works.  Traffic flows.
-> 
-> BUT, that adds a local route
->
-> 	X.X.X.X dev wg0 scope link
-> 
+wg-quick tries to set the route to the wg server through the default gateway.
+However, in case there is more than one default route it
+fails setting the route to server correctly.
 
-"That" is called wg-quick. For any sort of non-basic usage, I suggest going
-with "wg" directly. "wg" does not add any routes or IPs, it only sets up the
-encrypted tunnel. The rest is completely up to you. Make your own wrapper
-around it, that only does exactly what you need and nothing more.
+Instead it should run through the list of default gateways and set routes to the
+wg server through ALL default gateways with a metric of the corresponding 
+default route.
+Chris
+
+P.S.: Shall one report bugs here or rather at gitlab or both?
 
 
-> so ALL local traffic from local lan to that IP, e.g. an ssh session, gets routed BACK via that new route over the VPN.
-> 
-> I'd like to limit that -- so that ONLY traffic from the 'net to that local listener on ip 10.0.0.1 port 11111 is routed back via the VPN; all _other_ traffic to the originating IP (e.g., that ssh connection), gets routed over my normal default route.
-> 
-> What's the cleanest way -- in wireguard config -- to
-> 
-> 	(a) allow any/all IPs over the VPN
-> 	(b) limit the route to the specific ip target/port
-> 
-> So far, I seem to _need_ that originating IP in the "allowedips ="; which creates the 'overreaching' route ...
-> 
-> I'm guessing some judicious use of PostUp/Down routes set?
-> 
-> 
 
 
--- 
-With respect,
-Roman
