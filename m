@@ -2,69 +2,51 @@ Return-Path: <SRS0=oTJ6=DN=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=BAYES_40,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,
+	PDS_TONAME_EQ_TOLOCAL_SHORT,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E1C25C4363D
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  6 Oct 2020 13:58:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 66A54C41604
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  6 Oct 2020 17:51:20 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 1718320760
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  6 Oct 2020 13:58:56 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="v9lF5dnk"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 1718320760
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id C831E20782
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  6 Oct 2020 17:51:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org C831E20782
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=spam-free.eu
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0269d589;
-	Tue, 6 Oct 2020 13:26:09 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 87f7f6f5
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Tue, 6 Oct 2020 13:26:07 +0000 (UTC)
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 27ed00d8
- for <wireguard@lists.zx2c4.com>; Tue, 6 Oct 2020 13:26:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :in-reply-to:references:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=j+Pei6wRUP7Zkhas7h1wCEsdcc8=; b=v9lF5d
- nktY9P55OvPu6lphFrQDfM11LM2I5rGWKldFN2VLtNgZ4rOWLlP3czBnZFjowYF8
- PdwOu1PCwI9iLRhBkG0DzG/kpKi2wLo5mpwwT5i3qp05OnPUezsC6WJNaOtREgkp
- cLk6THWqy43HCq1MQ4t6lRSPvSpruyBmXwubQSQWbx+5dv23vxYvM8dVWnvyobOi
- 2ziKzzqY+l3jIULRxYjlEFJL5ktQXSgtsUu5ItXIvNecxnhpUUAsXFJE/0PkVvYX
- s9v603BRBuh3vcbH/WQmWiSagbAKOCLDPr0aj0HTdElkDknLqvhP1wjqsvJIyARF
- q3Nzz7RjqtymRiIQ==
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id bc4e4320
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Tue, 6 Oct 2020 13:26:06 +0000 (UTC)
-Received: by mail-il1-f173.google.com with SMTP id c5so10467257ilr.9
- for <wireguard@lists.zx2c4.com>; Tue, 06 Oct 2020 06:58:37 -0700 (PDT)
-X-Gm-Message-State: AOAM530vRQe78W4hkOxSMn+U83ma3qIUyasu9sZLIVSiqxrXbboTkdj0
- IcLGMj3sk5j3z8Gn8gMhgAQE7awl32Xtnm53dVg=
-X-Google-Smtp-Source: ABdhPJxrNql2uX76i4Swe1HKIA+IEiazElO43fiQxOSOCEiyyBsBdKOZHq6D5kIuftA3KJ46ojGFxz1MjUzvdyJk1B8=
-X-Received: by 2002:a05:6e02:1250:: with SMTP id
- j16mr3811308ilq.224.1601992716476; 
- Tue, 06 Oct 2020 06:58:36 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a92:159b:0:0:0:0:0 with HTTP;
- Tue, 6 Oct 2020 06:58:36 -0700 (PDT)
-In-Reply-To: <413570f5-1761-2864-65c8-706a9858d491@spam-free.eu>
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id edda2f12;
+	Tue, 6 Oct 2020 17:18:46 +0000 (UTC)
+Received: from s2.spam-free.eu (s2.spam-free.eu [195.5.121.125])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 5e8b2f47
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Tue, 6 Oct 2020 17:18:43 +0000 (UTC)
+Received: from [192.168.136.206] (ip-178-200-219-233.hsi07.unitymediagroup.de
+ [178.200.219.233])
+ by s2.spam-free.eu (Postfix) with ESMTPSA id 501EA1C39EA
+ for <wireguard@lists.zx2c4.com>; Tue,  6 Oct 2020 19:51:13 +0200 (CEST)
+From: Chris <wireguard@spam-free.eu>
+Subject: Re: wg-quick up (on linux) fails in case of several default routes
+To: wireguard <wireguard@lists.zx2c4.com>
 References: <mailman.0.1601114111.20018.wireguard@lists.zx2c4.com>
  <ebc8ff04-a073-13a8-2f80-a5cf01ab8416@spam-free.eu>
  <CAHmME9qUWGbuSasA+xxoJO+ycog9+S6TPW9aPF8fFDkgaQDP3g@mail.gmail.com>
  <79a4e995-763c-9724-02b7-81da87c0f88a@spam-free.eu>
  <CAHmME9pYFjNC+g85BNaaYUsVp9h5mxrGtGZwvZ-WRrSxXEHNgA@mail.gmail.com>
  <413570f5-1761-2864-65c8-706a9858d491@spam-free.eu>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 6 Oct 2020 15:58:36 +0200
-X-Gmail-Original-Message-ID: <CAHmME9oXm6sfOW-OWO35-McDzO463iun5Ga4fKq+C2akSF1-Hw@mail.gmail.com>
-Message-ID: <CAHmME9oXm6sfOW-OWO35-McDzO463iun5Ga4fKq+C2akSF1-Hw@mail.gmail.com>
-Subject: Re: wg-quick up (on linux) fails in case of several default routes
-To: Chris <wireguard@spam-free.eu>
-Cc: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+ <CAHmME9oXm6sfOW-OWO35-McDzO463iun5Ga4fKq+C2akSF1-Hw@mail.gmail.com>
+Message-ID: <9d5e813d-3f69-af38-b341-02ccab476b6b@spam-free.eu>
+Date: Tue, 6 Oct 2020 19:51:12 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
+MIME-Version: 1.0
+In-Reply-To: <CAHmME9oXm6sfOW-OWO35-McDzO463iun5Ga4fKq+C2akSF1-Hw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: de-DE
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -79,4 +61,11 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Sounds like you put something silly into PostUp, then? Check your config file.
+Your right, it was a stupid config file.
+Sorry for any inconveniences.
+
+
+On 06/10/2020 15:58, Jason A. Donenfeld wrote:
+> Sounds like you put something silly into PostUp, then? Check your config file.
+
+
