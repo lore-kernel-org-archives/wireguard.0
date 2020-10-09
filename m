@@ -2,43 +2,63 @@ Return-Path: <SRS0=EmC4=DQ=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26860C433DF
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  9 Oct 2020 12:18:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA2E3C433E7
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  9 Oct 2020 12:21:09 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 3F5172184D
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  9 Oct 2020 12:18:56 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 3F5172184D
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=ovpn.com
+	by mail.kernel.org (Postfix) with ESMTPS id CBC8E2184D
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  9 Oct 2020 12:21:08 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="pDFUeC9B"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org CBC8E2184D
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e9922faa;
-	Fri, 9 Oct 2020 11:46:03 +0000 (UTC)
-Received: from smtpout-38.fbg1.glesys.net (smtpout-38.fbg1.glesys.net
- [2a02:751:100:1::38])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id fb3539f1
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bc269adb;
+	Fri, 9 Oct 2020 11:47:58 +0000 (UTC)
+Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 567a5ebf
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Fri, 9 Oct 2020 11:46:01 +0000 (UTC)
-Received: from MacBook-Pro.lan.mail (c80-217-156-23.bredband.comhem.se
- [80.217.156.23])
- by mail-halon-01.fbg1.glesys.net (Halon) with ESMTPSA
- id 9766a2e6-0a29-11eb-add5-0bec97ae8c39;
- Fri, 09 Oct 2020 14:18:51 +0200 (CEST)
-Date: Fri, 9 Oct 2020 14:18:46 +0200
-From: David Wibergh <david@ovpn.com>
-To: wireguard@lists.zx2c4.com
-Message-ID: <etPan.5f80552b.45639067.8db@ovpn.com>
-Subject: Samsung Galaxy S10e =?utf-8?Q?can=E2=80=99t_?=reach local
- devices in network
+ for <wireguard@lists.zx2c4.com>; Fri, 9 Oct 2020 11:47:56 +0000 (UTC)
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4a161b88
+ for <wireguard@lists.zx2c4.com>; Fri, 9 Oct 2020 11:47:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :references:in-reply-to:from:date:message-id:subject:to:cc
+ :content-type; s=mail; bh=uPfQSYxwiRSfia15Qqxog0qYcho=; b=pDFUeC
+ 9BZj6M0YNo5d+RoQ90pM9SCwegHP6l9eQxcBf6NIwZeTBS6JcirVtnoL9oefRWR6
+ 81Dip6cMm3iZYbb48FfNO12wimDN4ZXBAoPgCw9Fk1pI1bqd2BnLWjRRDcibM4+/
+ KNJ61vlQ8f4dKHsFUb87LUQvCQ3gwb3WQxyV2V+I/5vSgbGxTJJPzaMmA1xa3wh2
+ 1UPMd/R/NI1ulUscOHHfTDyS4cDCNuacPMDQx4zdp0xE33UpuarYoQGZeaHFa9lY
+ 2m3peQBMuNp2M2EoFFdF/73J6VtYcf8M/JCII2syZoJxppiZKi5eIyjLFQuEnO1N
+ h6/YFtSKtt3FthWg==
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id f64c52b3
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Fri, 9 Oct 2020 11:47:55 +0000 (UTC)
+Received: by mail-io1-f44.google.com with SMTP id 67so9835983iob.8
+ for <wireguard@lists.zx2c4.com>; Fri, 09 Oct 2020 05:20:48 -0700 (PDT)
+X-Gm-Message-State: AOAM530VXIm0oypa9YAHufflgwl/dLCIG6/gCpLtLyK0RlQjloUoiW5g
+ OpNRX5ORODhdbnBEzu8CKGjWwffnoPj2I/ehd40=
+X-Google-Smtp-Source: ABdhPJwOT+6IqTkJXqZccaw1YrTAg4uLtDcqJIQFbJlWOr6CjkbkY50hlSTnlLYtA4Ow3XMidWuQn+DZaTz2QGpXQ10=
+X-Received: by 2002:a05:6638:c3:: with SMTP id
+ w3mr9890208jao.108.1602246047898; 
+ Fri, 09 Oct 2020 05:20:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+References: <be4e9109-399b-5520-e6fd-e7163350aaf0@riseup.net>
+In-Reply-To: <be4e9109-399b-5520-e6fd-e7163350aaf0@riseup.net>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Fri, 9 Oct 2020 14:20:37 +0200
+X-Gmail-Original-Message-ID: <CAHmME9oe5e84gpsGjGYkWHZoOLYKX1xUZBNzM7g0R6cEHg5JUg@mail.gmail.com>
+Message-ID: <CAHmME9oe5e84gpsGjGYkWHZoOLYKX1xUZBNzM7g0R6cEHg5JUg@mail.gmail.com>
+Subject: Re: [PATCH] wg-quick linux: Add strip-and-eval cmd to extract keys
+ from PostUp
+To: Robin Schneider <ypid@riseup.net>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -53,76 +73,10 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi everyone,
+This seems like a weird inconsistent hack. Strip should return
+something that is acted on by something else, and not also do things.
 
-Sorry for bothering you, but we do have an Android specific question. Whe=
-n using the official WireGuard app on Android (v1.0.20200927), as well as=
- our own, on certain device types we have issues reaching local devices i=
-n the network, even if we exclude private IPs. It works entirely fine on =
-other device models though. I have tried on several different wireless ne=
-tworks & different subnets (192.168.0.1/24, 192.168.0.1/16, 10.220.0.1/16=
-), as well as reaching various devices.
+But I have another suggestion on how to achieve what you want:
 
-So far, we have had issues on OnePlus HD1903 & Samsung Galaxy S10e (model=
- number SM-G970=46).
-
-
-Network
-I have three devices in the wireless network (10.220.1.1/16).
-
-1. Samsung Galaxy S10e (10.220.0.2)
-2. Macbook (10.220.0.1)
-3. Lenovo thinkpad (10.220.1.7)
-
-On the S10e, I can not ping 10.220.0.1 nor 10.220.1.7 when connected.
-
-On the Macbook, I can ping 10.220.1.7 when connected.
-
-
-Configurations
-
-Macbook uses following config:
-
-=5BInterface=5D
-PrivateKey =3D XXX
-Address =3D 172.20.196.X/32, fd00:0:1337:cafe:1111:1111:X:1a60/128
-DNS =3D 46.227.67.134, 192.165.9.158
-
-=5BPeer=5D
-PublicKey =3D 0CvxLBss+WQyJqidXRUnd5iO9gMJwM=46NPidg09d4Onk=3D
-AllowedIPs =3D ::/0, 0.0.0.0/5, 8.0.0.0/7, 11.0.0.0/8, 12.0.0.0/6, 16.0.0=
-.0/4, 32.0.0.0/3, 64.0.0.0/2, 128.0.0.0/3, 160.0.0.0/5, 168.0.0.0/6, 172.=
-0.0.0/12, 172.32.0.0/11, 172.64.0.0/10, 172.128.0.0/9, 173.0.0.0/8, 174.0=
-.0.0/7, 176.0.0.0/4, 192.0.0.0/9, 192.128.0.0/11, 192.160.0.0/13, 192.169=
-.0.0/16, 192.170.0.0/15, 192.172.0.0/14, 192.176.0.0/12, 192.192.0.0/10, =
-193.0.0.0/8, 194.0.0.0/7, 196.0.0.0/6, 200.0.0.0/5, 208.0.0.0/4, 46.227.6=
-7.134/32, 192.165.9.158/32
-Endpoint =3D vpn90.prd.erfurt.ovpn.com:9929
-
-
-Samsung Galaxy S10e uses the following config:
-
-=5BInterface=5D
-Address =3D X/32, fd00:0:1337:cafe:1111:1111:e827:X/128
-DNS =3D 46.227.67.134, 192.165.9.158
-PrivateKey =3D XXX
-
-=5BPeer=5D
-AllowedIPs =3D 0.0.0.0/5, 8.0.0.0/7, 11.0.0.0/8, 12.0.0.0/6, 16.0.0.0/4, =
-32.0.0.0/3, 64.0.0.0/2, 128.0.0.0/3, 160.0.0.0/5, 168.0.0.0/6, 172.0.0.0/=
-12, 172.32.0.0/11, 172.64.0.0/10, 172.128.0.0/9, 173.0.0.0/8, 174.0.0.0/7=
-, 176.0.0.0/4, 192.0.0.0/9, 192.128.0.0/11, 192.160.0.0/13, 192.169.0.0/1=
-6, 192.170.0.0/15, 192.172.0.0/14, 192.176.0.0/12, 192.192.0.0/10, 193.0.=
-0.0/8, 194.0.0.0/7, 196.0.0.0/6, 200.0.0.0/5, 208.0.0.0/4, ::/0, 46.227.6=
-7.134/32, 192.165.9.158/32
-Endpoint =3D vpn11.prd.kista.ovpn.com:9929
-PublicKey =3D p4s2Su=46gKgWnV56Uh3yCx6ZWnaVy=46XegV9=46Qqv670So=3D
-
-
-Is this an issue you=E2=80=99re aware of=3F Is there anything else needed=
- from me=3F
-
-Thanks,
-David Wibergh
-
-
+wg syncconf wg0 <(printf '[Interface]\nPrivateKey=%s\n' "$(wg show wg0
+private-key)"; wg-quick strip wg0)
