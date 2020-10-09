@@ -1,71 +1,48 @@
-Return-Path: <SRS0=215W=DT=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=77B4=DV=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 82DD0C433E7
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 12 Oct 2020 22:32:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23DBCC433E7
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 14 Oct 2020 10:47:34 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id B583E2078E
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 12 Oct 2020 22:32:18 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="thOFqX22"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org B583E2078E
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id E2A1E20878
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 14 Oct 2020 10:47:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org E2A1E20878
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=max.pm
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ba7d89ee;
-	Mon, 12 Oct 2020 21:58:27 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 8b4c9b25
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Mon, 12 Oct 2020 21:58:25 +0000 (UTC)
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c05d8392
- for <wireguard@lists.zx2c4.com>;
- Mon, 12 Oct 2020 21:58:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=0qNQr8y7G+FYVWiJuE45bv6YbFM=; b=thOFqX
- 22cFKzJuU/JFFKJoX8wJ+1y5FDmGI5dPcInsrnQY+Drmh0GPFI1ag9sdm3x3SWNM
- 19oxFTaNmvGM/oh88cBpp+Akw/ysd7Zb8/GxLv2RXMf9mN/e1Feuf2n+ck8OfeCg
- 8/cVuUVrr5SU3inclWbHAEJLx9JFwfxwF1m354yMI2VRI8JQSv+7xk04/zr0WbdA
- eNGJjObb7rNgUOGGz9qSwKvckhdWAHb8JU5NlK7XJW8kdFVFu/bUDYeAxGe6qgha
- U05tHm1OuTdj7PQZ3PUbjiU2J8qVJBLCdvbSPwPtfjFUcNZ2IHC7YBBH2hszKqbt
- Oh3z2VCQ5LHXOxDA==
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 52944bd3
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Mon, 12 Oct 2020 21:58:25 +0000 (UTC)
-Received: by mail-il1-f180.google.com with SMTP id o18so17670312ill.2
- for <wireguard@lists.zx2c4.com>; Mon, 12 Oct 2020 15:31:44 -0700 (PDT)
-X-Gm-Message-State: AOAM533lz0JFJLUb/mM0A3sG0aFf66AnyFJ0SUMccJVcjFlDcXrHYGKG
- jZ0HGECqUok/+w15HNlyTq2cEFLBGtjt6MLRowU=
-X-Google-Smtp-Source: ABdhPJyDepMpjqvwYAFZUcyjI2XdVLlfVjN5oQigAKIYOQzeU4Td+VYDv96IfyIiYqgab6LMST2wKm0l8ecyFhXhnCI=
-X-Received: by 2002:a05:6e02:4af:: with SMTP id
- e15mr740929ils.64.1602541903720; 
- Mon, 12 Oct 2020 15:31:43 -0700 (PDT)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 55f2f189;
+	Wed, 14 Oct 2020 10:46:54 +0000 (UTC)
+Received: from hergenrother.uberspace.de (hergenrother.uberspace.de
+ [185.26.156.204])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id e5b4d037
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Fri, 9 Oct 2020 13:53:22 +0000 (UTC)
+Received: (qmail 10249 invoked from network); 9 Oct 2020 14:26:14 -0000
+Received: from localhost (HELO localhost) (127.0.0.1)
+ by hergenrother.uberspace.de with SMTP; 9 Oct 2020 14:26:14 -0000
+Date: Fri, 9 Oct 2020 16:26:12 +0200
+From: "Max R. P. Grossmann" <m@max.pm>
+To: Rudi C <rudiwillalwaysloveyou@gmail.com>
+Cc: wireguard@lists.zx2c4.com
+Subject: Re: [FR] How can I expose the wireguard tunnel as a socks5 proxy on
+ the client?
+Message-ID: <20201009142612.nyremqtnp2yjp257@desktop42>
+X-PGP-PK: mDMEXiQ2gxYJKwYBBAHaRw8BAQdAe486pBdti/gJHMqGnKAgX+5K2CiYJGZ6ONHAG8Q31ni0Hk1heCBSLiBQLiBHcm9zc21hbm4gPG1AbWF4LnBtPoiQBBMWCAA4FiEEoJqS/FAV7oYacJhRGZmGHBY2upsFAl4kNoMCGwMFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQGZmGHBY2upuk5AD9FArDm6+U2sD5O0PrXUxFQdsPKo7u/yeUAfdVafBIP6EBAMRUTzGsv72kVW/ZCZzzePW+rYFIXT23HHYB5NY+D5UOuDgEXiQ2gxIKKwYBBAGXVQEFAQEHQMRFCdiwQ/SkphEslSmg2TNp8vDM9QkYYrLB0LJ2zEpZAwEIB4h4BBgWCAAgFiEEoJqS/FAV7oYacJhRGZmGHBY2upsFAl4kNoMCGwwACgkQGZmGHBY2upuBtwEA9Sx9td+orI+VHu9QfrV0qw8unIS1MWQi+94PeKYGYH0BAO9Kr/xs0GTjB/1zaeQwC5zo7NvMJjeMlAFlSuGdJgkB
+References: <CAE9z9A0H8t3op=ewTCUhZXeOoprWEquiiH77mUN_C8EMvwiF2w@mail.gmail.com>
 MIME-Version: 1.0
-References: <be4e9109-399b-5520-e6fd-e7163350aaf0@riseup.net>
- <CAHmME9oe5e84gpsGjGYkWHZoOLYKX1xUZBNzM7g0R6cEHg5JUg@mail.gmail.com>
- <b1955eb8-bc38-770c-848d-540c6c13bfbc@riseup.net>
- <CAHmME9q0WPQYavB7cnJCcTfYYTafnJ3WxsswP33tv27C7+BMZw@mail.gmail.com>
- <4870a998-bab9-14a7-0447-29f74322eca6@riseup.net>
-In-Reply-To: <4870a998-bab9-14a7-0447-29f74322eca6@riseup.net>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 13 Oct 2020 00:31:32 +0200
-X-Gmail-Original-Message-ID: <CAHmME9oQB8-NmqJGD3SEhmOR4MA-ybTkkMfV2mbtwc3etrYByQ@mail.gmail.com>
-Message-ID: <CAHmME9oQB8-NmqJGD3SEhmOR4MA-ybTkkMfV2mbtwc3etrYByQ@mail.gmail.com>
-Subject: Re: [PATCH] wg-quick linux: Add strip-and-eval cmd to extract keys
- from PostUp
-To: Robin Schneider <ypid@riseup.net>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="fkfut3tque6m2ndg"
+Content-Disposition: inline
+In-Reply-To: <CAE9z9A0H8t3op=ewTCUhZXeOoprWEquiiH77mUN_C8EMvwiF2w@mail.gmail.com>
+User-Agent: NeoMutt/20200925
+X-Mailman-Approved-At: Wed, 14 Oct 2020 12:46:50 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -80,20 +57,66 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Mon, Oct 12, 2020 at 9:54 PM Robin Schneider <ypid@riseup.net> wrote:
->
-> On 2020-10-12 17:01, Jason A. Donenfeld wrote:
-> > On Sat, Oct 10, 2020 at 5:58 PM Robin Schneider <ypid@riseup.net> wrote:
-> >> The proposed workaround has two issues:
-> >>
-> >> 1. It does not allow to replace the PrivateKey or PresharedKey using the `syncconf` now from the config file which is what I want to have.
-> >> 2. It only outputs the PrivateKey and not the PresharedKey for each peer. Sure, this could be done with a for loop.
-> >
-> > Sounds like something easily achievable with scripting.
-> >
->
-> So you suggest to write a 3party script instead of putting it into wg-quick? Because a inline script with support for all of this wound not exactly be a one-liner :) Could such a script be included in the wireguard-tools?
 
-Yes, write your own script for this kind of custom merging of
-PostUp/PreUp state modification, instead of trying to parse bash with
-a regex as this commit does.
+--fkfut3tque6m2ndg
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [FR] How can I expose the wireguard tunnel as a socks5 proxy on
+ the client?
+MIME-Version: 1.0
+
+Another idea would be to install WireGuard in a (tiny) virtual machine or a=
+ VPS and then ssh into that machine using
+
+	ssh -TD9151 user@example.com
+
+This creates a SOCKS5 proxy on port 9151.
+
+Then, for example, you could create two Firefox profiles; one without a pro=
+xy (for the uncensored websites) and another that utilizes the SOCKS5 proxy=
+ on port 9151. The SOCKS5 proxy exposed by ssh will route all traffic over =
+your virtual machine (example.com above), which will in turn route it throu=
+gh WireGuard.
+
+Since ssh can now be natively used under Windows, I'd be surprised if its -=
+D option were not available. AFAIR, Putty can also do something similar.
+
+Best,
+
+Max
+
+On 20/10/04 03:41pm, Rudi C wrote:
+> I use Wireguard to circumvent Iran's censorship. A major problem with
+> it is that it's very hard to selectively proxy specific domains/apps
+> through Wireguard, while leaving others alone. This is an essential
+> feature for Iran's internet, as:
+> 1. The connection is terrible, so avoiding using the proxy for
+> uncensored sites helps a lot.
+> 2. International traffic is 2x more expensive, so avoiding the proxy
+> for internal traffic is very beneficial.
+> 3. Some internal sites ban international IPs and need Iranian IPs.
+>=20
+> The easiest way to solve this program, as far as I understand, is to
+> add the ability to expose the tunnel as a socks5 proxy on the client
+> side. This is the approach that shadowsocks, v2ray, etc have adopted.
+> There are mature solutions to selectively routing traffic through a
+> socks proxy.
+>=20
+> I searched around, and there are docker containers that already do
+> this wireguard-to-socks thing; But running docker is expensive on a
+> non-Linux machine, so it'd be much appreciated if you could support
+> exposing socks and HTTP proxy servers natively.
+
+--fkfut3tque6m2ndg
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQSgmpL8UBXuhhpwmFEZmYYcFja6mwUCX4BzBAAKCRAZmYYcFja6
+m9O5AP908v4nOMGcBVGTGMy6A/xwJHrU1XC7auTsS08OOVFHTwD+L5yHT9fRLJsi
+A/Jd7SG2jaF3X7QLooXKsN+VWr/ZDwI=
+=otc4
+-----END PGP SIGNATURE-----
+
+--fkfut3tque6m2ndg--
