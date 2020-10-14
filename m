@@ -5,57 +5,50 @@ X-Spam-Level:
 X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A4472C4363A
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 16 Oct 2020 13:17:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2932BC433DF
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 16 Oct 2020 13:17:24 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 90DD62083B
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 16 Oct 2020 13:17:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id B4D3C206E5
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 16 Oct 2020 13:17:22 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=yandex.ru header.i=@yandex.ru header.b="jgRVhDvn"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 90DD62083B
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=yandex.ru
+	dkim=pass (1024-bit key) header.d=protonmail.ch header.i=@protonmail.ch header.b="CP+SrEqA"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org B4D3C206E5
+Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=protonmail.ch
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b806022a;
-	Fri, 16 Oct 2020 13:16:52 +0000 (UTC)
-Received: from forward101p.mail.yandex.net (forward101p.mail.yandex.net
- [77.88.28.101])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 356a120c
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a1239254;
+	Fri, 16 Oct 2020 13:16:53 +0000 (UTC)
+Received: from mail-40136.protonmail.ch (mail-40136.protonmail.ch
+ [185.70.40.136])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id fdafa2d6
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 12 Oct 2020 10:04:11 +0000 (UTC)
-Received: from mxback29o.mail.yandex.net (mxback29o.mail.yandex.net
- [IPv6:2a02:6b8:0:1a2d::80])
- by forward101p.mail.yandex.net (Yandex) with ESMTP id 28D7D26420F0
- for <wireguard@lists.zx2c4.com>; Mon, 12 Oct 2020 13:37:24 +0300 (MSK)
-Received: from sas1-27140bb19246.qloud-c.yandex.net
- (sas1-27140bb19246.qloud-c.yandex.net [2a02:6b8:c08:1803:0:640:2714:bb1])
- by mxback29o.mail.yandex.net (mxback/Yandex) with ESMTP id Tu07uBugX4-bN6KOpxg;
- Mon, 12 Oct 2020 13:37:24 +0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
- t=1602499044; bh=TT5rAp9st9MsLglx/mVOrhlBpx0YlfgHtp52K91AajA=;
- h=To:Subject:From:Date:Message-Id;
- b=jgRVhDvnK6RtcichCdwKMNGpxgoOb/b/Hwk0Vnln86qFnSqhhaRoiBAuezViC6Xr3
- RuRXbDdY0SYY+LVrviq9+VoJTLQH0WTe6QNsoBVoLX0RYcob5BcV1hA8creJCgL5F+
- gF/WQ17bl34VuDOVewkl8KeYC4MAVqsPQANDNn3Y=
-Authentication-Results: mxback29o.mail.yandex.net;
- dkim=pass header.i=@yandex.ru
-Received: by sas1-27140bb19246.qloud-c.yandex.net (smtp/Yandex) with ESMTPSA
- id oyoliJFvUp-bNmKAuB9; Mon, 12 Oct 2020 13:37:23 +0300
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
- (Client certificate not present)
-Date: Mon, 12 Oct 2020 13:37:17 +0300
-From: igo95862@yandex.ru
-Subject: Is default MTU correct?
-To: wireguard@lists.zx2c4.com
-Message-Id: <5643IQ.GL6UAT2S5L8L@yandex.ru>
-X-Mailer: geary/3.38.1
+ Wed, 14 Oct 2020 11:04:29 +0000 (UTC)
+Date: Wed, 14 Oct 2020 11:04:28 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.ch;
+ s=protonmail; t=1602673479;
+ bh=pU5x8oOl9uPDtGyQcg7PHkzlwOzM5LpNkmYD1RJTx+c=;
+ h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
+ b=CP+SrEqAsOMu2tSwgNaNklU5oFjR6JOghXLQKzXlmCk9Kk1JgAfo5VTxPGiIV5xbY
+ Uden+clezyEKtxhhevUQEaPaX/XRneHmB/+OFANa3HatoTx+VBKs0Vr3AWjpxFzv79
+ N80u7xvUdC4/UdOTIAKNcAIxxiEls6gFveyO++to=
+To: "Max R. P. Grossmann" <m@max.pm>
+From: Thireus <thireus@protonmail.ch>
+Cc: Rudi C <rudiwillalwaysloveyou@gmail.com>, wireguard@lists.zx2c4.com
+Subject: Re: [FR] How can I expose the wireguard tunnel as a socks5 proxy on
+ the client?
+Message-ID: <BAFA6A11-22BE-4A91-B1AD-ADA979A94BE6@protonmail.ch>
+In-Reply-To: <20201009142612.nyremqtnp2yjp257@desktop42>
+References: <CAE9z9A0H8t3op=ewTCUhZXeOoprWEquiiH77mUN_C8EMvwiF2w@mail.gmail.com>
+ <20201009142612.nyremqtnp2yjp257@desktop42>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-Mailman-Approved-At: Fri, 16 Oct 2020 15:16:50 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -68,63 +61,56 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
+Reply-To: Thireus <thireus@protonmail.ch>
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Was thinking why my wireguards connection had MTU of 1420.
+Maybe this could help: https://github.com/kizzx2/docker-wireguard-socks-pro=
+xy
 
-The default MTU is calculated here:
-https://github.com/torvalds/linux/blob/master/drivers/net/wireguard/device.c#L255
-
-Which results in MTU of 1420 for wg-quick and systemd-networkd.
-
-The first issue at glance is that it does not account for extension 
-headers. (as well as if client is behind MTU lower than 1500)
-
-However, I decided to test what happends if I increase or decrease MTU 
-and see what happends to packets with Wireshark. Wireshark can display 
-the payload length of Wireguard.
-
-These are the maximum packet (the outer IP packet) and payload (the IP 
-packet inside Wireguard) sizes I saw. My endpoint MTU is 1500. (end 
-point is not under my administration)
-
-Default MTU of 1420:
- Incoming packet: length 1494, datalen 1420
- Outgoing packet: length 1494, datalen 1420
-
- As you can see there are 6 bytes missing from maximum MTU.
-
-
-MTU of 3000:
- Incoming packet: length 1494, datalen 1420
- Outgoing packet: length 1498, datalen 1424
-
- I thought the connection would break or start fragmenting but it seems 
-like there was
- somekind of Path MTU Discovery which determined the MTU to be 1498, 
-much closer to the
- actual MTU of 1500. I guess the missing two bytes are because of some 
-allignment.
-
-MTU of 1350:
- Incoming packet: length 1434, datalen 1360 (two packets of 1494/1420)
- Outgoing packet: length 1424, datalen 1350
-
- The outgoing packet had the exact datalen of 1350, howver, the 
-incoming packets added
- extra 10 bytes somehow.
-
-
-As you can see there is a Path MTU Discovery that seems to be working.
-The question is should the default even be set 1420?
-If the kernel can determine the correct MTU of 1424 (not sure why 2 
-bytes are missing)
-why not set MTU to something really high and make kernel find the 
-actual MTU?
-
-Idealy kernel should find the MTU during initialization of Wireguard 
-device.
-
+> Le 9 oct. 2020 =C3=A0 15:26, Max R. P. Grossmann <m@max.pm> a =C3=A9crit =
+:
+>=20
+> Another idea would be to install WireGuard in a (tiny) virtual machine or=
+ a VPS and then ssh into that machine using
+>=20
+> =09ssh -TD9151 user@example.com
+>=20
+> This creates a SOCKS5 proxy on port 9151.
+>=20
+> Then, for example, you could create two Firefox profiles; one without a p=
+roxy (for the uncensored websites) and another that utilizes the SOCKS5 pro=
+xy on port 9151. The SOCKS5 proxy exposed by ssh will route all traffic ove=
+r your virtual machine (example.com above), which will in turn route it thr=
+ough WireGuard.
+>=20
+> Since ssh can now be natively used under Windows, I'd be surprised if its=
+ -D option were not available. AFAIR, Putty can also do something similar.
+>=20
+> Best,
+>=20
+> Max
+>=20
+> On 20/10/04 03:41pm, Rudi C wrote:
+>> I use Wireguard to circumvent Iran's censorship. A major problem with
+>> it is that it's very hard to selectively proxy specific domains/apps
+>> through Wireguard, while leaving others alone. This is an essential
+>> feature for Iran's internet, as:
+>> 1. The connection is terrible, so avoiding using the proxy for
+>> uncensored sites helps a lot.
+>> 2. International traffic is 2x more expensive, so avoiding the proxy
+>> for internal traffic is very beneficial.
+>> 3. Some internal sites ban international IPs and need Iranian IPs.
+>>=20
+>> The easiest way to solve this program, as far as I understand, is to
+>> add the ability to expose the tunnel as a socks5 proxy on the client
+>> side. This is the approach that shadowsocks, v2ray, etc have adopted.
+>> There are mature solutions to selectively routing traffic through a
+>> socks proxy.
+>>=20
+>> I searched around, and there are docker containers that already do
+>> this wireguard-to-socks thing; But running docker is expensive on a
+>> non-Linux machine, so it'd be much appreciated if you could support
+>> exposing socks and HTTP proxy servers natively.
 
 
