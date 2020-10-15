@@ -2,66 +2,66 @@ Return-Path: <SRS0=ZPJq=DX=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F28EC433E7
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD823C433DF
 	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 16 Oct 2020 13:20:45 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 3161820848
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 16 Oct 2020 13:20:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 1E47F2087D
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 16 Oct 2020 13:20:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gWb0m6Si"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 3161820848
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FlZZFN9q"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 1E47F2087D
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 54857e74;
-	Fri, 16 Oct 2020 13:16:55 +0000 (UTC)
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com
- [2a00:1450:4864:20::533])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 1b019779
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8644c053;
+	Fri, 16 Oct 2020 13:16:56 +0000 (UTC)
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com
+ [2a00:1450:4864:20::62e])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 264f9d0b
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 15 Oct 2020 12:05:17 +0000 (UTC)
-Received: by mail-ed1-x533.google.com with SMTP id cm24so1814906edb.0
- for <wireguard@lists.zx2c4.com>; Thu, 15 Oct 2020 05:05:37 -0700 (PDT)
+ Thu, 15 Oct 2020 14:00:49 +0000 (UTC)
+Received: by mail-ej1-x62e.google.com with SMTP id p5so3814641ejj.2
+ for <wireguard@lists.zx2c4.com>; Thu, 15 Oct 2020 07:01:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=mime-version:from:date:message-id:subject:to;
- bh=zOhZA6BBT6c2LVR3QmA/IZh+72qSPUreXetA62Gz3zQ=;
- b=gWb0m6Si3AUawH8DxW7Zh4RhoM75gFT5JEQ58YqlSDZR4AUg1Z5RiIxKGxVdma7Pd4
- PLwWZ5qTYV2RVKKemgE7U3OsU1pwsoZRfLm8SCSwDOv3BT/260JhFsVd9vLYafZJI3bS
- eRi7jjt6ywWcDw/MIKBpJgpbQnJL/50AOKoAoJmk6uw23Ru0NntKe6f8OLctrSK7lCe3
- mBuL9uT3kIEekCphXuBg21eWnZvdhRFSircEQoC4aa3kczhJzmbh9/HrZqsEsDCC6wMV
- 2J8TQxMnqHKDSnChoGKdxW80Rbf6vzLNSeZaTj3kefxa3D2mC8Phv4NkXE2a1EjK5P3k
- X5fQ==
+ bh=jOAPkmdYoSk/QnBC40B3DmT2zVBAW6b/ZnO5JUn0gEU=;
+ b=FlZZFN9qPAtndF1UYBjIch7bg+0jI49m96j7KgS6LBqCb80KGq6ZLapIGn7VtoHpA+
+ 0HtpNGfOLxc4n8gaypkWtWGRkMSglMqrS0uBw5PwQdMw8h0d9KqoNkpo7RPRwnCULOcO
+ 27K0WZHuiX7RQ/Y22YwJbauq8lPJvCs0YJ2yfVN9lLb75OQTIVJ9FngWZgvrF6Fea6W6
+ nRtAptyUqCArRCj/VafDYZ9/QdEkx2vcMJuY6AFlepxlGsF0lcAiQ9FDSmApXf8DkwsI
+ 1aKgbsqN+aLJnLU0ha9qnMkgoiijzuz5RrKllBEH2dVGaYSrGWvd2bOeC1mCiALdIBBp
+ hQbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=zOhZA6BBT6c2LVR3QmA/IZh+72qSPUreXetA62Gz3zQ=;
- b=GWm0MYSdkCja/LHUnnhoa0Z5FuIG0pCERpAJ1jefFIKgArucGcb+ykYJVktb3MvalH
- KlhTwK4DwPjv3Ze90xJdIkosMtnwlmDVcZVGcBkhI7IbGtb6oELplyPtIzJw1TZ6V3WD
- M9X9PbUAjWVRvHinVoTVMNtUY62GOJlEuAl/56ACUPTP+lMyw+EGkU7KRJsbGxVoRAqP
- 3++jgRjwAft5CxUbYPAvkSOPq0AqjXzoUA49/GnCYmGrejMihLKlhXCiPu6i5DlYU4XN
- /hJqnMMRFW7v9UGpG6zZDQSUF6BblQYjZ/vYuKBzDZqoO8Hb5lzLnwjMQnPDwGC7Q+LQ
- lhsA==
-X-Gm-Message-State: AOAM533FhnFQmago1T12+IgYJM70pmUIWop+9ZyjkT5T7ACH4DE9GOFa
- ELwggBl/YJODlCWknPx95jFoCW16IC7vk7zFfJqod81+JYfiTj0u
-X-Google-Smtp-Source: ABdhPJyEcmiP2hmkzfozTTd8WPiA30vIj7mAxOE9m3CqkSMj9IwZgMaKeFpsr5bByRPHwqReUWDrGF+xYUH45WjmAvo=
-X-Received: by 2002:a05:6402:3133:: with SMTP id
- dd19mr4139557edb.100.1602763534199; 
- Thu, 15 Oct 2020 05:05:34 -0700 (PDT)
+ bh=jOAPkmdYoSk/QnBC40B3DmT2zVBAW6b/ZnO5JUn0gEU=;
+ b=eWgeS/nlfUWUfl9b0HXM4WC0KlCaZMjq5bhohBXPTMPYIvsdj3AcaFI3av0SNUPkf2
+ UUnZ5+P7Vb9PcUQJiI0KLHh+N75hygs3QORm/3XaxnR+V4quEZ6FSwK6+gY5g+uWEwIs
+ LsHCVND+Wjj5kXCVNFi/owARslt00i8lDsEvo6vfdetjqv96o4kSf4pPpX6UzDP4rbeA
+ 1Twgj6lj9AMhimFPARGVV2TWCtTbKeP+ptI/9aoM/Nf1CpScEEN+Lo5p/BEIG2QwIAzE
+ k08iCjXVdFWpV44f8yi0df5h4c5arpha7eNdSBzkcaFYpRtKKrsdBgq384XxhVLpyapR
+ FNZA==
+X-Gm-Message-State: AOAM532D+DGt7+h885M0wA5b8Pvboz+T34sutQLd8SzGrjxHkzWhigt2
+ 8oj+HtUOJBYk8mVrExn8KJxHGFfpos3NpoLgS+f1AfKWGESYpc4K
+X-Google-Smtp-Source: ABdhPJzAR/aQ6ME4hcRqwr4Y4TgjijinHM9Pw0TUHvNla0c4+Xhxc1r9N8epO12LeUhD9Ob7fl+tsGrS+cUEQ3yvG3Q=
+X-Received: by 2002:a17:906:3cc:: with SMTP id
+ c12mr4561806eja.216.1602770468468; 
+ Thu, 15 Oct 2020 07:01:08 -0700 (PDT)
 MIME-Version: 1.0
-From: Enzo A <r33int@gmail.com>
-Date: Thu, 15 Oct 2020 14:04:58 +0200
-Message-ID: <CAC=m+TjA+J8RqsiLwJWXtNoFvPUJ0xVHS=UKVUUeh=2yRz8yqA@mail.gmail.com>
-Subject: Weird behavior with IPv6 on Windows
+From: Dashamir Hoxha <dashohoxha@gmail.com>
+Date: Thu, 15 Oct 2020 16:00:56 +0200
+Message-ID: <CAMucfLxvG08p=Z+gR=YjePf1C40y9UiwgzHWgEwxp7jH5Ghviw@mail.gmail.com>
+Subject: [PATCH] wg-quick: linux: fix sysctl inside a docker container
 To: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/mixed; boundary="0000000000006e199705b1b614a9"
 X-Mailman-Approved-At: Fri, 16 Oct 2020 15:16:50 +0200
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -77,18 +77,48 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello everyone,
+--0000000000006e199705b1b614a9
+Content-Type: text/plain; charset="UTF-8"
 
-First of all, thanks a lot for developing and maintaining Wireguard.
-It really is an amazing product!
-I am running with a strange issue with Wireguard on Windows. When my
-tunnel is enabled, DNS-resolving hosts that are in AllowedIPs results
-in the A (IPv4) record of the (sub)domain being resolved over the AAAA
-(IPv6) record, which gets ignored when wireguard is enabled.
-The intended behavior is that the AAAA record always gets resolved in priority.
+In Docker containers you cannot run `sysctl`. So, it is not possible to set
+`sysctl -q net.ipv4.conf.all.src_valid_mark=1` from inside the container.
+However you can set it when creating the container, with the Docker option:
+`--sysctl net.ipv4.conf.all.src_valid_mark=1`
 
-Here is my client config: https://del.dog/easocerran.txt, and here are
-also some screenshots of an example ping showing the issue:
-https://imgur.com/a/dnlg6nd
+This patch checks first if `net.ipv4.conf.all.src_valid_mark` is already set,
+before trying to set it. Otherwise `sysctl` will fail in a docker container,
+and `wg-quick` will fail to start the interface.
 
-Thanks!
+--0000000000006e199705b1b614a9
+Content-Type: text/x-patch; charset="US-ASCII"; 
+	name="0001-wg-quick-linux-fix-sysctl-inside-a-docker-container.patch"
+Content-Disposition: attachment; 
+	filename="0001-wg-quick-linux-fix-sysctl-inside-a-docker-container.patch"
+Content-Transfer-Encoding: base64
+Content-ID: <f_kgaw52l20>
+X-Attachment-Id: f_kgaw52l20
+
+RnJvbSBiYjFlNWRhNGRlYTI1NzBmMjA5ZWQ0NjFmZjljYWI0YzUzMjhkZjJhIE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBEYXNoYW1pciBIb3hoYSA8ZGFzaG9ob3hoYUBnbWFpbC5jb20+
+CkRhdGU6IFRodSwgMTUgT2N0IDIwMjAgMTU6MjQ6MTUgKzAyMDAKU3ViamVjdDogW1BBVENIXSB3
+Zy1xdWljazogbGludXg6IGZpeCBzeXNjdGwgaW5zaWRlIGEgZG9ja2VyIGNvbnRhaW5lcgoKU2ln
+bmVkLW9mZi1ieTogRGFzaGFtaXIgSG94aGEgPGRhc2hvaG94aGFAZ21haWwuY29tPgotLS0KIHNy
+Yy93Zy1xdWljay9saW51eC5iYXNoIHwgNCArKystCiAxIGZpbGUgY2hhbmdlZCwgMyBpbnNlcnRp
+b25zKCspLCAxIGRlbGV0aW9uKC0pCgpkaWZmIC0tZ2l0IGEvc3JjL3dnLXF1aWNrL2xpbnV4LmJh
+c2ggYi9zcmMvd2ctcXVpY2svbGludXguYmFzaAppbmRleCBlNGQ0YzRmLi40NGY3OWYxIDEwMDc1
+NQotLS0gYS9zcmMvd2ctcXVpY2svbGludXguYmFzaAorKysgYi9zcmMvd2ctcXVpY2svbGludXgu
+YmFzaApAQCAtMjM3LDcgKzIzNyw5IEBAIGFkZF9kZWZhdWx0KCkgewogCXByaW50ZiAtdiByZXN0
+b3JlICclc0NPTU1JVFxuKm1hbmdsZVxuLUkgUE9TVFJPVVRJTkcgLW0gbWFyayAtLW1hcmsgJWQg
+LXAgdWRwIC1qIENPTk5NQVJLIC0tc2F2ZS1tYXJrICVzXG4tSSBQUkVST1VUSU5HIC1wIHVkcCAt
+aiBDT05OTUFSSyAtLXJlc3RvcmUtbWFyayAlc1xuQ09NTUlUXG4nICIkcmVzdG9yZSIgJHRhYmxl
+ICIkbWFya2VyIiAiJG1hcmtlciIKIAlwcmludGYgLXYgbmZ0Y21kICclc2FkZCBydWxlICVzICVz
+IHBvc3RtYW5nbGUgbWV0YSBsNHByb3RvIHVkcCBtYXJrICVkIGN0IG1hcmsgc2V0IG1hcmsgXG4n
+ICIkbmZ0Y21kIiAiJHBmIiAiJG5mdGFibGUiICR0YWJsZQogCXByaW50ZiAtdiBuZnRjbWQgJyVz
+YWRkIHJ1bGUgJXMgJXMgcHJlbWFuZ2xlIG1ldGEgbDRwcm90byB1ZHAgbWV0YSBtYXJrIHNldCBj
+dCBtYXJrIFxuJyAiJG5mdGNtZCIgIiRwZiIgIiRuZnRhYmxlIgotCVtbICRwcm90byA9PSAtNCBd
+XSAmJiBjbWQgc3lzY3RsIC1xIG5ldC5pcHY0LmNvbmYuYWxsLnNyY192YWxpZF9tYXJrPTEKKwlp
+ZiBbWyAkcHJvdG8gPT0gLTQgJiYgJChzeXNjdGwgLW4gbmV0LmlwdjQuY29uZi5hbGwuc3JjX3Zh
+bGlkX21hcmspID09ICcwJyBdXTsgdGhlbgorCQljbWQgc3lzY3RsIC1xIG5ldC5pcHY0LmNvbmYu
+YWxsLnNyY192YWxpZF9tYXJrPTEKKwlmaQogCWlmIHR5cGUgLXAgbmZ0ID4vZGV2L251bGw7IHRo
+ZW4KIAkJY21kIG5mdCAtZiA8KGVjaG8gLW4gIiRuZnRjbWQiKQogCWVsc2UKLS0gCjIuMjUuMQoK
+--0000000000006e199705b1b614a9--
