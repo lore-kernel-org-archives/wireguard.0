@@ -4,61 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5B3DC43457
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39739C433DF
 	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 16 Oct 2020 13:25:54 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 38E3120897
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 16 Oct 2020 13:25:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 50F1D20848
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 16 Oct 2020 13:25:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SfGq0V4M"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 38E3120897
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YDLtXpJS"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 50F1D20848
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ee0c57fd;
-	Fri, 16 Oct 2020 13:17:00 +0000 (UTC)
-Received: from mail-vs1-xe29.google.com (mail-vs1-xe29.google.com
- [2607:f8b0:4864:20::e29])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 777481ad
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ec13dcb4;
+	Fri, 16 Oct 2020 13:16:59 +0000 (UTC)
+Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com
+ [2607:f8b0:4864:20::b2e])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 0cdf1e00
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 16 Oct 2020 01:23:06 +0000 (UTC)
-Received: by mail-vs1-xe29.google.com with SMTP id v23so525799vsp.6
- for <wireguard@lists.zx2c4.com>; Thu, 15 Oct 2020 18:23:30 -0700 (PDT)
+ Thu, 15 Oct 2020 20:51:25 +0000 (UTC)
+Received: by mail-yb1-xb2e.google.com with SMTP id n142so108279ybf.7
+ for <wireguard@lists.zx2c4.com>; Thu, 15 Oct 2020 13:51:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=wdlF4DUQWA3MoUgkYTx0ddyn2VKi/AzY4HuyAgCLVuM=;
- b=SfGq0V4M6zuoBsvlO01TekS9Mbi31WtMiL5j3hIhMkTKNYxcPxtOJfRwJnWCDBv78A
- xr/b1VU205bzbjbu20rPtmh5gvOa7xCwfhrMMn01jP895ZdhqsBZwxLuABum6X3dkFUX
- w0mLWJrLnW6NsQLo8gmOgcDHiRru07DxVZvZlD0cHMz0K2nNAZQNfqdkiHTyu65gQu/9
- HLr7+9lKQRlVGLsvntWKIrwcT15/nN43AlnFiQY53tUVmp6ZO4yD1IdfPtbcwiA8Ulq4
- hTkEr3y4KPqfPL6FaP/ibbUI90yQTyRUjCz1bY1pBpIbJemfq89Z8CfleZNuOnOwBHFJ
- Tqcw==
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+ bh=44mL05k785DouSBlejy0dBs4QUnqK66cIXdGTm3L/Kw=;
+ b=YDLtXpJS/8IhomPkwNXqi6hChyPregqRrLw5g4kWTwft55IrA8/TUrv8Kb+ogD5CRA
+ ar4ET/E/h+WvF/FKX4NwzL+Bdv7eiWsiBbHHyg3LP3f/81K4S12aTlQCY5t6bYh0tTRP
+ +SbK8vmJ1LIAM4Wwlmgo33FepgMD9l3DWWiSpPcuu+j16bfMUqU9gdncxDs6O8ibWBbN
+ 9MnIZKR5ofGIWz0k856zhikThHRQbg+lPW73aojf+kuvTHRckh/ZZLUHSZjBNs5BLsk5
+ VzbPPDU5/jPWx1amk16e0Ah0BwnsiQ78vp2k9G9B4I109c3SVYto0YS08jbdDnlFPx39
+ G0gA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=wdlF4DUQWA3MoUgkYTx0ddyn2VKi/AzY4HuyAgCLVuM=;
- b=M23bYqA61HPWJJYOAq5UdQ+e9oL97X1AftimOWizXLbWT2FQaMjnep7aaDXR5ODYLm
- +3AExvdyQZW5Toem4fmhVkMTNb1VnIC5TlB9/5yo7pGEJR/pgYndmjawtMgQA09sxQ27
- GHxcyVMyaqC7IZHZuulw2dXJ6loLUuzEoaN5Ww7cJaPLQ1NV/PM7nmnHbujNNQk60uLM
- jiDLEc9G06oiQUCcHuhrMkAb6rJZGvBPxtTLO1Vc7MzAxBJOceUKYFq6psBP7j200som
- /vFvh07l/A8qkd4q5ZcvwSKOKGxvr1z+/jqZal5lutMxqJjrDm7tjD91N3D1jDq0BK67
- gEDA==
-X-Gm-Message-State: AOAM530Kp2vRVHb0uEAGENoD6QW6FmueogMgoP1N7FqDu+YzVXklnUzH
- SKVNqTimzavPehzvyf5SR2EesKkwcJYhn7Zv7bpXBegA99yJv360
-X-Google-Smtp-Source: ABdhPJxpOwbpygohs0zJNsikPliqRV6+AIxO6MBAwOsoWrxpt0DNnamdEL95rBtzyYeN292Ywc4nzG12+lbAbSO3tu0=
-X-Received: by 2002:a67:68c9:: with SMTP id d192mr669236vsc.5.1602811410039;
- Thu, 15 Oct 2020 18:23:30 -0700 (PDT)
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to;
+ bh=44mL05k785DouSBlejy0dBs4QUnqK66cIXdGTm3L/Kw=;
+ b=btyTUuF+jtj+0koS1sWWfo+C0XgMp+KGC/OVyTli4LswmUV/MdSAVUYh/gEyLSNz28
+ 548Fj79jaFO09JgnFY+o/lkMDHPpDN0rkHhTtmDbloJDiK5ESrldCEwC6lCGrIxNnpXF
+ 9G97VZj8EuQNdjnYxEyBYZSTijP3oZlMApy2JB0K768+lWo3JpJ68XTa+YpgonWA/Z48
+ Fa0Csfy80+sKBr9cmSGjP0ZSfZPJ9sScxxYM6KMvc7dcf0rdSvob+bTz3iEWQeaR+1i9
+ PBvVtz5GLLkwP3yweKpXFAbh5C3lchjpOPvANHqe3XMddzXyGh77vU2EWjgBPajLRLeA
+ HBpA==
+X-Gm-Message-State: AOAM533Rl0hsYrwhqOML6nuQdHEqbGOqWEQUroUKt4bjBm/PLIooNJ4V
+ rxpfQxnhaT1HR/LMLrIiFYxqGyssS9g/EGuf3GKLiHiNK10z5GvZ
+X-Google-Smtp-Source: ABdhPJwyQxUxEnvY2z/QDrkzeWU6Sm/o5mSeiE6G1jTcPnx1RgOziy85xsKIlEs7UHaUF/fiHLpIryBRFd+Vq7hL7p0=
+X-Received: by 2002:a25:40c5:: with SMTP id n188mr346200yba.514.1602795107812; 
+ Thu, 15 Oct 2020 13:51:47 -0700 (PDT)
 MIME-Version: 1.0
-From: Felix-Etienne Gauthier <felixetienne.gauthier@gmail.com>
-Date: Thu, 15 Oct 2020 21:23:18 -0400
-Message-ID: <CACQQHaQBs99fKQ9qJ+F6EA_uJ09sbte+V=HVCqZ9cBA+XdPJtg@mail.gmail.com>
-Subject: WireGuard Android TV Always On VPN
+References: <CAA6eTQFuf1n3HLtkg0xLp-+kGF5Xf_v5zEYYP7U0ae3Mvn810Q@mail.gmail.com>
+ <CAA6eTQFfWxMBuPzJd-xHAaCj3GUt+nkb3BLpwomF1+-05CU9dA@mail.gmail.com>
+In-Reply-To: <CAA6eTQFfWxMBuPzJd-xHAaCj3GUt+nkb3BLpwomF1+-05CU9dA@mail.gmail.com>
+From: Boiler Plate <boilerplate4u@gmail.com>
+Date: Thu, 15 Oct 2020 22:51:36 +0200
+Message-ID: <CAPLehQ1sZSRdusvf4ZAZ7H+Svtm0JznEacTpccVBhW+xYyio4w@mail.gmail.com>
+Subject: Re: [wg-apple] Prevent changes to the resolver?
 To: wireguard@lists.zx2c4.com
 Content-Type: text/plain; charset="UTF-8"
 X-Mailman-Approved-At: Fri, 16 Oct 2020 15:16:50 +0200
@@ -76,9 +80,34 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi guys!
+Forgot to mention that the mac-gui (WireGuard app) always sets the
+default route no matter what conf is used:
 
-Is it possible to add Always-On Feature directly into the Android app?
-There is no way to get access to VPN settings when using Android TV.
+Destination      Gateway          RT_IFA           Flags        Refs
+   Use    Mtu     Netif
+default              link#14            10.0.0.4           UCSI
+     1        0       1420   utun2
+10.0.0.3/32       link#14            10.0.0.4           UCS
+  0        0       1420   utun2
+10.0.0.4           10.0.0.4           10.0.0.4           UH
+     0        0       1420   utun2
+--
 
-Thanks!
+On Thu, Oct 15, 2020 at 10:43 PM Boilerplate4U <Boilerplate4U@gmail.com> wrote:
+>
+> ---------- Forwarded message ---------
+> From: Boilerplate4U <Boilerplate4U@gmail.com>
+> Date: tors 15 okt. 2020 kl 20:55
+> Subject: [wg-apple] Prevent changes to the resolver?
+> To: <wireguard@lists.zx2c4.com>
+>
+>
+> Does anyone know how to prevent wg on macos (gui) from making changes
+> to the resolver (i.e. /etc/resolv.conf) ? Every time when I activate a
+> tunnel, wg resets the dns settings and sets the tunnel ip as the
+> resolver address.
+>
+> macos catalina 10.15.7, app version: 0.0.20191105, backend 0.0.20191013
+> --
+>
+> Thanks in advance!
