@@ -2,64 +2,61 @@ Return-Path: <SRS0=TPeR=EF=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.4 required=3.0 tests=BAYES_05,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26C00C00A89
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 30 Oct 2020 16:06:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B51AC4741F
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 30 Oct 2020 16:14:02 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 0C18B2083B
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 30 Oct 2020 16:06:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 630BC20724
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 30 Oct 2020 16:14:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="NzvYw+HR"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 0C18B2083B
+	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="Milk8/sE"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 630BC20724
 Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2db2161a;
-	Fri, 30 Oct 2020 16:03:29 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f4bb9645;
+	Fri, 30 Oct 2020 16:11:42 +0000 (UTC)
 Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 910b55d4
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id cf081326
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 30 Oct 2020 16:03:27 +0000 (UTC)
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c90176f1
+ Fri, 30 Oct 2020 16:11:40 +0000 (UTC)
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 939bbcac
  for <wireguard@lists.zx2c4.com>;
- Fri, 30 Oct 2020 16:04:13 +0000 (UTC)
+ Fri, 30 Oct 2020 16:12:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
  :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=+4LilY8GO62zQcg5LuyFgp5xg9k=; b=NzvYw+
- HRd1UoX4ttyS9ROqAY5jO0TEXcNWR5DazKQ0LTkvS0jeULFZLzva3s6qlp3jrrC7
- hh0w9kSQ2RQMcxm/TKLgsW9YyAafqgoJvBkmvughQqp7dx82GjeBvLgjqq3SZd9A
- AsLI+fRIFCLWv9TfrEzC3+Q+dMaUqpQOuAjvXmITppXYRp4/JIzqmsCVVUznnm+s
- dt58GPkwrTAQ3on0OIHgPEf6gJmq02OHlEnsi9qSJa9WkTbKeWL0OIsAyb/7wXid
- upQGgUaP4frgewxEqTkpOHn+fKiHT4ZP6VjyiOLacpXfCY8lRaUGD4VaCZZoyPEv
- 3CvqV49FLre8nRuA==
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id a6b41c90
+ :content-type; s=mail; bh=5GunqGTXiS7UD4Uocn7gMwJm3Gg=; b=Milk8/
+ sE5wG+yGsPJ+Rn/BINQQvXcNSiCGf22ltmZDfhie6fqfEW4eHaF59IiJrKe4ztpp
+ bPc/rzCM2BCaHnITDvMoX3wFM+ildtez+6BCttLToiFov07gHTk3QSqdhkrrQ45g
+ Oa0j/Ff/yqenkU75pgB1JAFYS2r6CZLW2fnj8AnbMTQGoWqFC2FQKY1XoV+eWTlv
+ 0bFtJY+gzQJztVIJIQga7yqsVyqVP5ZLpWDbvrXZJuE24dzxsy2gMEz+MJ/BUCC+
+ gSyt5g9GqdmsJPzwwisrlwSNEd0ZEShdasseuDbg+UFHapHwWWnNDLsLlbGfdr8O
+ 3lyEOW5YGeDvf/Og==
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id ebee82f9
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 30 Oct 2020 16:04:13 +0000 (UTC)
-Received: by mail-yb1-f177.google.com with SMTP id m188so5546610ybf.2
- for <wireguard@lists.zx2c4.com>; Fri, 30 Oct 2020 09:05:44 -0700 (PDT)
-X-Gm-Message-State: AOAM532jym/JIq4kD0pA6PnLiyCodSqKNXz+GJ+1VpupneDo/2ttIunf
- P+h/V6M6xTYL0/nc9Y3cZ8uQXCd+zVD1Jy4QemM=
-X-Google-Smtp-Source: ABdhPJybdrIC2bS3X/U0EbASC0DaIy9bhx5jyOiNK60GmPkFjPb/LnOSBj29E68cdCnEZVB4y8UlznX0V8c32YfvA/w=
-X-Received: by 2002:a5b:c4a:: with SMTP id d10mr4628204ybr.123.1604073944000; 
- Fri, 30 Oct 2020 09:05:44 -0700 (PDT)
+ Fri, 30 Oct 2020 16:12:26 +0000 (UTC)
+Received: by mail-yb1-f171.google.com with SMTP id f140so5565573ybg.3
+ for <wireguard@lists.zx2c4.com>; Fri, 30 Oct 2020 09:13:57 -0700 (PDT)
+X-Gm-Message-State: AOAM533p63OhP8DWypuQVUEB3mO49Sv3reClZr7lKlfQzJ5rvFH3tKyd
+ hhhpob8/W+Uy1+TUUo4U/msong9bZw9vxVOlnGE=
+X-Google-Smtp-Source: ABdhPJzjrjQ456AVQruvWqob5RhCi86qEIKXU84Ab02mOcbLrfySRAF8L3Hl3R64cD6eJ8DkOJaxnn8v2y9V1TaEePY=
+X-Received: by 2002:a25:cc85:: with SMTP id l127mr4143212ybf.49.1604074437029; 
+ Fri, 30 Oct 2020 09:13:57 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200424234327.1814-1-godisgovernment@gmail.com>
- <20200424234327.1814-2-godisgovernment@gmail.com>
- <CAPqQDTDPUH17QUQG4xehfiM9zFGw7PVQu=u00v5x15ts=L7SVQ@mail.gmail.com>
-In-Reply-To: <CAPqQDTDPUH17QUQG4xehfiM9zFGw7PVQu=u00v5x15ts=L7SVQ@mail.gmail.com>
+References: <20200424234745.1031-1-godisgovernment@gmail.com>
+In-Reply-To: <20200424234745.1031-1-godisgovernment@gmail.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 30 Oct 2020 17:05:33 +0100
-X-Gmail-Original-Message-ID: <CAHmME9oPv0+fxB=-pvKyqZ42uycEWEAXyWAfwdtWFGxiHYyV+Q@mail.gmail.com>
-Message-ID: <CAHmME9oPv0+fxB=-pvKyqZ42uycEWEAXyWAfwdtWFGxiHYyV+Q@mail.gmail.com>
-Subject: Re: [PATCH 2/3] use ExEnterCriticalRegionAndAcquireResourceExclusive
- and ExReleaseResourceAndLeaveCriticalRegion
+Date: Fri, 30 Oct 2020 17:13:46 +0100
+X-Gmail-Original-Message-ID: <CAHmME9q3G+NGgV_S9JeZk2+JpUVt=zcDGKQMTiracJi2pPXXVA@mail.gmail.com>
+Message-ID: <CAHmME9q3G+NGgV_S9JeZk2+JpUVt=zcDGKQMTiracJi2pPXXVA@mail.gmail.com>
+Subject: Re: [PATCH] use standard volatile semantics
 To: Shawn Hoffman <godisgovernment@gmail.com>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
@@ -77,4 +74,8 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Do you have a replacement for this or was it a botched idea?
+Applied. Thanks a lot for this cleanup.
+
+And sorry for the delay. We're getting rolling again now with Wintun
+improvements. Feel free to poke me on IRC (I'm zx2c4) if you're still
+interested in hacking on this.
