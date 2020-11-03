@@ -2,61 +2,81 @@ Return-Path: <SRS0=Vb0R=EP=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A13BDC2D0A3
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  9 Nov 2020 22:43:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C6502C5517A
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  9 Nov 2020 22:43:57 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id A8B3F206CB
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  9 Nov 2020 22:43:54 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kapsi.fi header.i=@kapsi.fi header.b="kbTbJDxz"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A8B3F206CB
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=kapsi.fi
+	by mail.kernel.org (Postfix) with ESMTPS id B7704206B6
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  9 Nov 2020 22:43:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org B7704206B6
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=zackelan.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a571fd46;
-	Mon, 9 Nov 2020 22:40:16 +0000 (UTC)
-Received: from mail.kapsi.fi (mail.kapsi.fi [2001:67c:1be8::25])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2747795a
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 99feec2b;
+	Mon, 9 Nov 2020 22:40:17 +0000 (UTC)
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com
+ [66.111.4.29])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 1b946f5c
  (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sun, 1 Nov 2020 18:37:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=kapsi.fi;
- s=20161220; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
- Message-ID:Subject:From:To:Sender:Reply-To:Cc:Content-ID:Content-Description:
- Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
- In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive;
- bh=ES6uDs8xKb+g+CRgBN8B6Ud8N8VD2QH88rAh57Z+dZ8=; b=kbTbJDxz4KH4N70xF8hTUpC8If
- RKmXVQNzV4jzCKjk6OIwocgJUvnbZKl1iaqcP6shL1dMqcTkcPZqThdS4I7E4+kanNYhHbZ7+uNY3
- heRBp+uDaKtDWUiYVgzTeYwY5k6fhD1xXeSpWvKXmFa9ANO/Wesq10ZS+TViPOfli32sB6rKrpque
- RJYKzEQE+msa6okVIajpXoreEyS938Ro4Kh4CB045ueAzwLQVU+nfu9wmwzeN7Gp8r1erNKBze41B
- Raemhn81SqqlA4rBor4A7Ywe9ffaw/1x2e1eNp7ql/ix6BjG2KtMltZnIxfPanVFcNV5KEip/A4qA
- ztSRe5Jg==;
-Received: from [2001:67c:1104:fa0:bcc2:a108:9d06:791d] (helo=[IPv6:::1])
- by mail.kapsi.fi with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.89) (envelope-from <samip537@kapsi.fi>) id 1kZIGa-0002us-DE
- for wireguard@lists.zx2c4.com; Sun, 01 Nov 2020 20:39:48 +0200
+ for <wireguard@lists.zx2c4.com>; Tue, 3 Nov 2020 08:55:13 +0000 (UTC)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id 2981D5C0109
+ for <wireguard@lists.zx2c4.com>; Tue,  3 Nov 2020 03:57:59 -0500 (EST)
+Received: from imap10 ([10.202.2.60])
+ by compute4.internal (MEProxy); Tue, 03 Nov 2020 03:57:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zackelan.com; h=
+ mime-version:message-id:date:from:to:subject:content-type; s=
+ fm2; bh=63/xEyCpiQYIn0y974ZSPPhqXA3/up3QzBlrohP7mP4=; b=ohtclUv5
+ aE0hsxzaf8BrVj3iX2gSPGAVZyd25sBMr7QjCHGe7yb4va7oZP6psku6eY3xkUx8
+ F3JWfFhOGkjsWLp20ul/bycZ8MEcw+nyvbnYQjjl37mkmfRvaSoVJ4KjCAZp/cHD
+ D6UABUZChWR3tWPFaAR3hlwNCv1f9tbXblieGOE8sqinVl8MV+7FfkAdrXMaOsuP
+ qETsSpHFUIPg4H/9H1CtP1Y+dkzpmM4Pz5BFldhQu9U4Ze578QcHqwIhbnj/4GWe
+ FIscDlATOAHQTK4rwDfO/mr7aA/mWsJQLjZGwcbFihHr++tHIg3lN6VCnqvo6bbw
+ cy5Mc9RjQfTssw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=content-type:date:from:message-id
+ :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
+ :x-me-sender:x-sasl-enc; s=fm1; bh=63/xEyCpiQYIn0y974ZSPPhqXA3/u
+ p3QzBlrohP7mP4=; b=rWnULVNsdvBHxq5zzkk4GWDB88STbRl0r374iTS9+GXt6
+ 8ado83b3XQu/c+ZVYU2SNZY3bsV9H5/sAXWf1nXxc9mLSkHvfSeg0JH2N2DjEG9L
+ HQWLfjAefR3BqLXw1G+t7XWh/2VMF+rV8Q/x5OrWM5LVG1mF0RJZV52Snsg03Xyh
+ 6Cxuqhj+NruVY8/8ZXUOJDivUee0DiyGaOgux7Xyatgqx3mtTyX9z0Hn31NHInYl
+ Kwek4H2hwIBvZXrzl58yiA8GfpxyLGxX9AU12a0PwgTh6GK9BKjyn1y6cHiir+BR
+ Cvx64qCsxt28TH/A4eYPgLm+pOD1xjqGLAGbLD1LQ==
+X-ME-Sender: <xms:lhuhX9J6lXfxYQyOZWSgrYkg017M3UnplY8RqsOL-GY4tXY4TReQug>
+ <xme:lhuhX5ITjNSijIwHH7cpc-ft6O0TGDrScLwwepzCIAaCBqgIGdEKTJx7WmSuPliKR
+ vn2wiEeNZf1Vhzfgg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedruddtvddguddvvdcutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+ necuuegrihhlohhuthemuceftddtnecuogfuuhhsphgvtghtffhomhgrihhnucdlgeelmd
+ enucfjughrpefofgggkfffhffvufgtsehttdertderredtnecuhfhrohhmpedfkggrtghk
+ ucfglhgrnhdfuceofihirhgvghhurghrugesiigrtghkvghlrghnrdgtohhmqeenucggtf
+ frrghtthgvrhhnpeejkeeguedvteetuedugedvgeekkeettdehhfejvdffkedttdffvdei
+ fedtffelteenucffohhmrghinhepfihirhgvghhurghrugdrtghomhdpfhhrvggvmhihih
+ hprdgtohhmpdiigidvtgegrdgtohhmpdhgihhthhhusgdrtghomhenucevlhhushhtvghr
+ ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpeifihhrvghguhgrrhguseiirg
+ gtkhgvlhgrnhdrtghomh
+X-ME-Proxy: <xmx:lhuhX1vZMfdOnv4WH2di1LCHxDRfvw_LfwYrf0ZFqw8DeTVdQEfu3w>
+ <xmx:lhuhX-a5SJhZ4rtcZDRJqUbGmXP4JCKE1V4needtBiXDVCAqyCh-7w>
+ <xmx:lhuhX0aPRz7uf5l064H5Up0t7wulbOIi4-i3dBFsQ9QA6GV8xxut7g>
+ <xmx:lxuhX9mtN_wi4kqSoA3a_nNFM8SOuIEGuG545-vhvLlXdbcncCwdeA>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id CFA2A2016A; Tue,  3 Nov 2020 03:57:58 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.3.0-530-g8da6958-fm-20201021.003-g69105b13-v35
+Mime-Version: 1.0
+Message-Id: <154faa3b-098c-45c2-ab3a-99e2cf9d6754@www.fastmail.com>
+Date: Tue, 03 Nov 2020 00:57:38 -0800
+From: "Zack Elan" <wireguard@zackelan.com>
 To: wireguard@lists.zx2c4.com
-From: =?UTF-8?Q?Skyler_M=c3=a4ntysaari?= <samip537@kapsi.fi>
-Subject: [EdgeRouter] PtP links using /32 subnet mask
-Message-ID: <dfeff1eb-47a9-32ad-ac6b-6d6cc231df5f@kapsi.fi>
-Date: Sun, 1 Nov 2020 20:39:42 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.4.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-Antivirus: Avast (VPS 201101-4, 01/11/2020), Outbound message
-X-Antivirus-Status: Clean
-X-SA-Exim-Connect-IP: 2001:67c:1104:fa0:bcc2:a108:9d06:791d
-X-SA-Exim-Mail-From: samip537@kapsi.fi
-X-SA-Exim-Scanned: No (on mail.kapsi.fi); SAEximRunCond expanded to false
+Subject: DNS resolution retries and EAI_NONAME
+Content-Type: text/plain
 X-Mailman-Approved-At: Mon, 09 Nov 2020 23:40:11 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -72,30 +92,28 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi there list,
+Short version: if I set WG_ENDPOINT_RESOLUTION_RETRIES=infinity, I would like wg(8) to actually retry infinitely, rather than exiting the first time it gets what it assumes to be a permanent failure.
 
-Does anyone know how can I achieve this configuration in EdgeRouter?
-Like how do I tell it what the peer address actually is?
+Long version:
 
-wg0.conf:
--------------------------------------------------------------------------------------------------------------------------------
-[Interface]
-PrivateKey = <snip>
-#Address = 172.22.114.96/32,fe80::22b:42ff:42bb:3db0/64
-PostUp = /usr/sbin/ip addr add 172.22.114.97/32 dev hel1_zotan_dn42 peer
-172.20.177.35
-PostUp = /usr/sbin/ip addr add fe80::22b:42ff:42bb:5db0/64 dev
-hel1_zotan_dn42 peer fe80::4
-ListenPort = 52341
-Table = off
+When WG_ENDPOINT_RESOLUTION_RETRIES is set, wg will retry endpoint resolution failures...but it special-cases 2 or 3 error response codes [0] - EAI_NONAME, EAI_FAIL and (if defined) EAI_NODATA because it considers them "permanent" failures that are not worth retrying.
 
-[Peer]
-PublicKey = B+3QYRU5UqaWYAsKMfyk7wqDzsFZ31RluCakeXEVm2E=
-Endpoint =  <snip>
-PersistentKeepalive = 25
-AllowedIPs = 0.0.0.0/0,fd00::/8,fe80::/64
----------------------------------------------------------------------------------------------------------------------------------
+I have several Wireguard tunnels that are set to start at boot on a NixOS box I host. NixOS sets this variable to infinite for me [1]. Despite this, when I reboot that host, I consistently have the tunnels fail on startup. They're failing with a error that wg(8) considers permanent:
 
-P.S I did tweak the interface script on EdgeOS so it allows duplicate
-addresses.
+Oct 29 19:08:48 mord kernel: wireguard: WireGuard 1.0.20200908 loaded. See www.wireguard.com for information.
+Oct 29 19:08:48 mord wireguard-wg0-peer-eG9xbERdnkQrnrpnRrteQQ4zKn-Bi2WA2V2Y2X0UCl0--x3d-start[1046]: Name or service not known: `4184f12df2343796c155.freemyip.com:12345'
+Oct 29 19:08:48 mord systemd[1]: wireguard-wg0-peer-eG9xbERdnkQrnrpnRrteQQ4zKn-Bi2WA2V2Y2X0UCl0\x3d.service: Main process exited, code=exited, status=1/FAILURE
+Oct 29 19:08:48 mord wireguard-wg0-peer-CBdpnmSVnwIvgtj4M1g3LlCLm-wooeo--x2bs5AARyoPjxU--x3d-start[1048]: Name or service not known: `d67930b08f5396e21ae1.freemyip.com:12345'
+Oct 29 19:08:48 mord systemd[1]: wireguard-wg0-peer-CBdpnmSVnwIvgtj4M1g3LlCLm-wooeo\x2bs5AARyoPjxU\x3d.service: Main process exited, code=exited, status=1/FAILURE
+Oct 29 19:08:48 mord wireguard-wg0-peer-J4rZgtReGrTwTglP05wLQt1GniIfUV4o4zAqcO-b3AI--x3d-start[1047]: Name or service not known: `9fa2756baed60cb5f18e.freemyip.com:12345'
+Oct 29 19:08:48 mord systemd[1]: wireguard-wg0-peer-J4rZgtReGrTwTglP05wLQt1GniIfUV4o4zAqcO-b3AI\x3d.service: Main process exited, code=exited, status=1/FAILURE
 
+This host gets an IP from DHCP a few seconds later, and after that I can SSH in and manually start the Wireguard tunnels without issue.
+
+The assumption that wg(8) makes - that EAI_NONAME / "name or service not known" is a permanent failure - may be true in some cases, but isn't true in mine. 
+
+I think it might also make sense, along with not special-casing those error codes, to lower the default number of retries to maybe 1 or 2 (instead of 15)? That would achieve the desired effect of not taking forever to fail if the error truly is permanent, but also allow use cases like mine where the tunnel is configured to start on boot and I want "the network will be up soon, trust me" retry behavior.
+
+0: https://git.zx2c4.com/wireguard-tools/tree/src/config.c#n245
+
+1: https://github.com/NixOS/nixpkgs/blob/nixos-20.09/nixos/modules/services/networking/wireguard.nix#L280
