@@ -1,4 +1,4 @@
-Return-Path: <SRS0=TPeR=EF=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=k+pv=EJ=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
@@ -6,60 +6,57 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B51AC4741F
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 30 Oct 2020 16:14:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D666DC2D0A3
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  3 Nov 2020 19:06:03 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 630BC20724
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 30 Oct 2020 16:14:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id BCF4C20786
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  3 Nov 2020 19:05:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="Milk8/sE"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 630BC20724
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	dkim=pass (1024-bit key) header.d=xirihosting.com header.i=@xirihosting.com header.b="eXPgsTtY"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org BCF4C20786
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=xirihosting.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f4bb9645;
-	Fri, 30 Oct 2020 16:11:42 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id cf081326
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Fri, 30 Oct 2020 16:11:40 +0000 (UTC)
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 939bbcac
- for <wireguard@lists.zx2c4.com>;
- Fri, 30 Oct 2020 16:12:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=5GunqGTXiS7UD4Uocn7gMwJm3Gg=; b=Milk8/
- sE5wG+yGsPJ+Rn/BINQQvXcNSiCGf22ltmZDfhie6fqfEW4eHaF59IiJrKe4ztpp
- bPc/rzCM2BCaHnITDvMoX3wFM+ildtez+6BCttLToiFov07gHTk3QSqdhkrrQ45g
- Oa0j/Ff/yqenkU75pgB1JAFYS2r6CZLW2fnj8AnbMTQGoWqFC2FQKY1XoV+eWTlv
- 0bFtJY+gzQJztVIJIQga7yqsVyqVP5ZLpWDbvrXZJuE24dzxsy2gMEz+MJ/BUCC+
- gSyt5g9GqdmsJPzwwisrlwSNEd0ZEShdasseuDbg+UFHapHwWWnNDLsLlbGfdr8O
- 3lyEOW5YGeDvf/Og==
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id ebee82f9
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Fri, 30 Oct 2020 16:12:26 +0000 (UTC)
-Received: by mail-yb1-f171.google.com with SMTP id f140so5565573ybg.3
- for <wireguard@lists.zx2c4.com>; Fri, 30 Oct 2020 09:13:57 -0700 (PDT)
-X-Gm-Message-State: AOAM533p63OhP8DWypuQVUEB3mO49Sv3reClZr7lKlfQzJ5rvFH3tKyd
- hhhpob8/W+Uy1+TUUo4U/msong9bZw9vxVOlnGE=
-X-Google-Smtp-Source: ABdhPJzjrjQ456AVQruvWqob5RhCi86qEIKXU84Ab02mOcbLrfySRAF8L3Hl3R64cD6eJ8DkOJaxnn8v2y9V1TaEePY=
-X-Received: by 2002:a25:cc85:: with SMTP id l127mr4143212ybf.49.1604074437029; 
- Fri, 30 Oct 2020 09:13:57 -0700 (PDT)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 487e6c54;
+	Tue, 3 Nov 2020 19:03:07 +0000 (UTC)
+Received: from smtp71.iad3a.emailsrvr.com (smtp71.iad3a.emailsrvr.com
+ [173.203.187.71])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7ec52ba3
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Tue, 3 Nov 2020 19:03:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=xirihosting.com;
+ s=20180223-h43bbanu; t=1604430353;
+ bh=PM+Ad4GJxcw3H9ZcvIIghWkWz8ze7Uttnzfh18LVnM4=;
+ h=Date:Subject:From:To:From;
+ b=eXPgsTtYICSoshlA22Oq0+0lwTiQuocblW4w7WSMl1TMDot19y7qnH0Y1Tkb9n0O9
+ Li3e9EJGa0/wjSIm6dfDqbrAW5io0gUVC89ivs2Mw3G8g9ybU2RvrYlYu2l5dLK9o8
+ BK8vv1he+hTK9kzA3GuSujBAbi1/6palzgVSnjII=
+Received: from app25.wa-webapps.iad3a (relay-webapps.rsapps.net
+ [172.27.255.140])
+ by smtp9.relay.iad3a.emailsrvr.com (SMTP Server) with ESMTP id 738AE43BA
+ for <wireguard@lists.zx2c4.com>; Tue,  3 Nov 2020 14:05:53 -0500 (EST)
+Received: from xirihosting.com (localhost.localdomain [127.0.0.1])
+ by app25.wa-webapps.iad3a (Postfix) with ESMTP id 4CBF020042
+ for <wireguard@lists.zx2c4.com>; Tue,  3 Nov 2020 14:05:53 -0500 (EST)
+Received: by webmail.emailsrvr.com
+ (Authenticated sender: dxiri@xirihosting.com, from: dxiri@xirihosting.com) 
+ with HTTP; Tue, 3 Nov 2020 14:05:53 -0500 (EST)
+X-Auth-ID: dxiri@xirihosting.com
+Date: Tue, 3 Nov 2020 14:05:53 -0500 (EST)
+Subject: Using Wireguard for Geo redundancy
+From: "dxiri@xirihosting.com" <dxiri@xirihosting.com>
+To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
 MIME-Version: 1.0
-References: <20200424234745.1031-1-godisgovernment@gmail.com>
-In-Reply-To: <20200424234745.1031-1-godisgovernment@gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 30 Oct 2020 17:13:46 +0100
-X-Gmail-Original-Message-ID: <CAHmME9q3G+NGgV_S9JeZk2+JpUVt=zcDGKQMTiracJi2pPXXVA@mail.gmail.com>
-Message-ID: <CAHmME9q3G+NGgV_S9JeZk2+JpUVt=zcDGKQMTiracJi2pPXXVA@mail.gmail.com>
-Subject: Re: [PATCH] use standard volatile semantics
-To: Shawn Hoffman <godisgovernment@gmail.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Importance: Normal
+X-Priority: 3 (Normal)
+X-Type: plain
+Message-ID: <1604430353.311423080@webmail.emailsrvr.com>
+X-Mailer: webmail/18.1.7-RC
+X-Classification-ID: 851ecda5-4da7-4d4d-9617-3d2a6ef23e22-1-1
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -74,8 +71,14 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Applied. Thanks a lot for this cleanup.
+Hi!=0A=0AI am looking for information on how to leverage Wireguard in a geo=
+-redundancy scenario.=0A=0AWe have a couple management boxes colocated next=
+ to each other that provide HA via a VIP that "jumps" between each of those=
+ management boxes depending on availability.=0A=0ANow lets say we want to p=
+lace management box on datacenter 1 (DC1) and management box 2 on datacente=
+r2 (DC2).=0A=0AAssuming the VIP cannot move between DCs, how could you leve=
+rage Wireguard to provide the same level of redundancy but with geographica=
+lly dispersed hosts?=0A=0AAny information on this topic or documentation th=
+at points me in the right direction would be really appreciated!=0A=0AThank=
+s!=0ADiego
 
-And sorry for the delay. We're getting rolling again now with Wintun
-improvements. Feel free to poke me on IRC (I'm zx2c4) if you're still
-interested in hacking on this.
