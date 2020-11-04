@@ -2,69 +2,73 @@ Return-Path: <SRS0=4t3h=EK=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3063DC388F9
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  4 Nov 2020 17:36:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C176C2D0A3
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  4 Nov 2020 19:46:54 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 27EE62067D
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  4 Nov 2020 17:36:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 563D9206F9
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  4 Nov 2020 19:46:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=xirihosting.com header.i=@xirihosting.com header.b="mkmqy/f7"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 27EE62067D
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=xirihosting.com
+	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="YZ0TuiB2"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 563D9206F9
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7e58b512;
-	Wed, 4 Nov 2020 17:33:49 +0000 (UTC)
-Received: from smtp119.iad3a.emailsrvr.com (smtp119.iad3a.emailsrvr.com
- [173.203.187.119])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 21ca6d0e
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 4 Nov 2020 17:33:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=xirihosting.com;
- s=20180223-h43bbanu; t=1604511402;
- bh=45ATsbEC8a9rvfSFsWtpUqpQ3JXB2xsYT5NcLrfW+rw=;
- h=Date:Subject:From:To:From;
- b=mkmqy/f7JOEIgL3WZtufq4/dTJ+6k36X/AWlehrsITISv40IMPrJYPiPqBv4lR3Il
- 5m7WvOySOd27S9V/jMwwQP/A7bmEC4JkWnMg5XaINdQS+EOuuFp+3eSKvPrRZYYJef
- 3ogn/oOeaotn7Of1T98FW4GqtoZdNNf45AmSEYaU=
-Received: from app47.wa-webapps.iad3a (relay-webapps.rsapps.net
- [172.27.255.140])
- by smtp15.relay.iad3a.emailsrvr.com (SMTP Server) with ESMTP id 00A1151F1;
- Wed,  4 Nov 2020 12:36:41 -0500 (EST)
-Received: from xirihosting.com (localhost.localdomain [127.0.0.1])
- by app47.wa-webapps.iad3a (Postfix) with ESMTP id E1ABAE117E;
- Wed,  4 Nov 2020 12:36:41 -0500 (EST)
-Received: by webmail.emailsrvr.com
- (Authenticated sender: dxiri@xirihosting.com, from: dxiri@xirihosting.com) 
- with HTTP; Wed, 4 Nov 2020 12:36:41 -0500 (EST)
-X-Auth-ID: dxiri@xirihosting.com
-Date: Wed, 4 Nov 2020 12:36:41 -0500 (EST)
-Subject: Re: Using Wireguard for Geo redundancy
-From: "dxiri@xirihosting.com" <dxiri@xirihosting.com>
-To: "Laura Smith" <n5d9xq3ti233xiyif2vp@protonmail.ch>
-Cc: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 691e5273;
+	Wed, 4 Nov 2020 19:43:38 +0000 (UTC)
+Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id acc0a271
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Wed, 4 Nov 2020 19:43:35 +0000 (UTC)
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0511dc87
+ for <wireguard@lists.zx2c4.com>; Wed, 4 Nov 2020 19:44:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :references:in-reply-to:from:date:message-id:subject:to:cc
+ :content-type; s=mail; bh=A3txSEFLmhKqctZhBsIbAmC27m4=; b=YZ0Tui
+ B294RZlMp3QLM3Ri3JNXVOGFuWXm59fll9PFQbjflCH4iIqHSuP9Z8petTgmMsoa
+ SYbiicDRJ07VU2USeeAHNCxPXmve1Apkqxc2QSqq56SCB5oDAhRL9G8qX5ELPRAl
+ 54WzpqWLpl51bZ18F02TkblOIVULgtTHAnmPCkQj7KUZEp1nFOpeB7z7821tZ+Cs
+ d4R9vFfZ9lrK8MTI1fhIo66OpbCgYcENeFySwtOV6gsfTWVeMOqVYmJVQde4Dmq/
+ 7KXYw7NydK/I3c7Kc51z6FfX96jcuI8qpyujURHaLwNUi72UpnTdRv8h0yarEddf
+ MIBiq3jLEgYQu1Rw==
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 98a8d222
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Wed, 4 Nov 2020 19:44:21 +0000 (UTC)
+Received: by mail-yb1-f174.google.com with SMTP id b138so19045680yba.5
+ for <wireguard@lists.zx2c4.com>; Wed, 04 Nov 2020 11:46:32 -0800 (PST)
+X-Gm-Message-State: AOAM531NMbTdZZsmF2LzeL6I5ICkrz6uvq3ymNg+57TPpWhBLEQ9lmE5
+ X9ExOQ//pZRW2W4L09wx07Ca3hqL8p2Ax7B88So=
+X-Google-Smtp-Source: ABdhPJwrKS1Qe6FXigKFOooqaDL+07TCiLCBrWPsMRVnWDv3P9m/KovJNUleFszPuWdGWRHEv9qhIoS2MVT6MLp9zZs=
+X-Received: by 2002:a25:4943:: with SMTP id w64mr27765905yba.178.1604519191132; 
+ Wed, 04 Nov 2020 11:46:31 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain;charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Importance: Normal
-X-Priority: 3 (Normal)
-X-Type: plain
-In-Reply-To: <gBLFnYn1ENCoAu8pZXEVAFF88CT1DSPAOnmcV47vBrvQlLpA1jg2Yp6iZb9RotAOGDJPrqgeDiqO
- xesYB09WPXEtWsqR5R5rvx-udouR9-w=@protonmail.ch>
-References: <1604430353.311423080@webmail.emailsrvr.com> 
- <gBLFnYn1ENCoAu8pZXEVAFF88CT1DSPAOnmcV47vBrvQlLpA1jg2Yp6iZb9RotAOGDJPrqgeD
- iqOxesYB09WPXEtWsqR5R5rvx-udouR9-w=@protonmail.ch>
-X-Client-IP: 186.176.65.158
-Message-ID: <1604511401.921917444@webmail.emailsrvr.com>
-X-Mailer: webmail/18.1.9-RC
-X-Classification-ID: 0f841780-d6c1-4ca6-b3ff-ba666b913a61-1-1
+References: <059fcb95-fba8-673e-0cd6-fb26e8ed4861@gmail.com>
+ <4f731535-2a51-a673-5daf-d9ec2536a8f8@gmail.com>
+In-Reply-To: <4f731535-2a51-a673-5daf-d9ec2536a8f8@gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 4 Nov 2020 20:46:20 +0100
+X-Gmail-Original-Message-ID: <CAHmME9qkPLwO4+H=+GAvWXDMQz-tHhyK1mmmtmb5Waph7fTiCw@mail.gmail.com>
+Message-ID: <CAHmME9qkPLwO4+H=+GAvWXDMQz-tHhyK1mmmtmb5Waph7fTiCw@mail.gmail.com>
+Subject: Re: [PATCH net-next v2 07/10] wireguard: switch to dev_get_tstats64
+To: Heiner Kallweit <hkallweit1@gmail.com>
+Cc: Jakub Kicinski <kuba@kernel.org>, David Miller <davem@davemloft.net>, 
+ Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>,
+ Hideaki YOSHIFUJI <yoshfuji@linux-ipv6.org>, 
+ Andrew Lunn <andrew@lunn.ch>, Vivien Didelot <vivien.didelot@gmail.com>, 
+ Florian Fainelli <f.fainelli@gmail.com>, Vladimir Oltean <olteanv@gmail.com>, 
+ Russell King <linux@armlinux.org.uk>, Pablo Neira Ayuso <pablo@netfilter.org>, 
+ Harald Welte <laforge@gnumonks.org>, Herbert Xu <herbert@gondor.apana.org.au>, 
+ "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
+ osmocom-net-gprs@lists.osmocom.org, 
+ WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ Steffen Klassert <steffen.klassert@secunet.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -79,40 +83,32 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-I didn't know you can use names instead of IPs on the WG config, that is pr=
-etty cool!=0A=0AThanks Laura! =0A=0A-----Original Message-----=0AFrom: "Lau=
-ra Smith" <n5d9xq3ti233xiyif2vp@protonmail.ch>=0ASent: Wednesday, November =
-4, 2020 6:11am=0ATo: "dxiri@xirihosting.com" <dxiri@xirihosting.com>=0ACc: =
-"WireGuard mailing list" <wireguard@lists.zx2c4.com>=0ASubject: Re: Using W=
-ireguard for Geo redundancy=0A=0AHello Diego,=0A=0AWireguard is deliberatel=
-y "dumb". It doesn't have any fancy things like failover built-in, that is =
-an "exercise left to the reader" as the saying goes.=0A=0ASo, in answer to =
-your question, the "best" solution would involve BGP. But from your email i=
-t would seem you don't run BGP and you don't have an independent allocation=
- of IPs.=0A=0ASo that leaves us with "tier 2" options.  My suggestions of o=
-ptions to look at would be (in rough order of preference):=0A=0A- If the tw=
-o datacentres are run by the same company, then talk to them. They might be=
- willing to provide an anycast IP range for you that is visible from both d=
-atacentres.=0A=0A- If the two datacentres are run by different companies, b=
-ut they are "provider independent" and you buy your transit capacity from t=
-he same ISP at both locations, then speak to your ISP. They might be willin=
-g to provide an anycast IP range for your that is visible from both datacen=
-tres.=0A=0A- Use name rather than IP in your Wireguard client config files =
-and then run your DNS with a short TTL so that you can achieve a manual fai=
-lover in, say 5-10 minutes.=0A=0A- Use an external cloud service such as AW=
-S ELB, Cloudflare etc. to provide the failover layer for you.=0A=0AGood luc=
-k !=0A=0ALaura=0A=0A=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=
-=E2=80=90 Original Message =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=
-=80=90=E2=80=90=0AOn Tuesday, 3 November 2020 19:05, dxiri@xirihosting.com =
-<dxiri@xirihosting.com> wrote:=0A=0A> Hi!=0A>=0A> I am looking for informat=
-ion on how to leverage Wireguard in a geo-redundancy scenario.=0A>=0A> We h=
-ave a couple management boxes colocated next to each other that provide HA =
-via a VIP that "jumps" between each of those management boxes depending on =
-availability.=0A>=0A> Now lets say we want to place management box on datac=
-enter 1 (DC1) and management box 2 on datacenter2 (DC2).=0A>=0A> Assuming t=
-he VIP cannot move between DCs, how could you leverage Wireguard to provide=
- the same level of redundancy but with geographically dispersed hosts?=0A>=
-=0A> Any information on this topic or documentation that points me in the r=
-ight direction would be really appreciated!=0A>=0A> Thanks!=0A> Diego=0A=0A=
-=0A
+On Wed, Nov 4, 2020 at 3:31 PM Heiner Kallweit <hkallweit1@gmail.com> wrote:
+>
+> Replace ip_tunnel_get_stats64() with the new identical core fucntion
+> dev_get_tstats64().
+>
+> Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+> ---
+>  drivers/net/wireguard/device.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/drivers/net/wireguard/device.c b/drivers/net/wireguard/device.c
+> index c9f65e96c..a3ed49cd9 100644
+> --- a/drivers/net/wireguard/device.c
+> +++ b/drivers/net/wireguard/device.c
+> @@ -215,7 +215,7 @@ static const struct net_device_ops netdev_ops = {
+>         .ndo_open               = wg_open,
+>         .ndo_stop               = wg_stop,
+>         .ndo_start_xmit         = wg_xmit,
+> -       .ndo_get_stats64        = ip_tunnel_get_stats64
+> +       .ndo_get_stats64        = dev_get_tstats64
+>  };
+>
+>  static void wg_destruct(struct net_device *dev)
+> --
+> 2.29.2
 
+Looks fine to me.
+
+Reviewed-by: Jason A. Donenfeld <Jason@zx2c4.com>
