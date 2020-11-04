@@ -2,49 +2,92 @@ Return-Path: <SRS0=Vb0R=EP=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C15FEC2D0A3
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  9 Nov 2020 22:47:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C9F1C2D0A3
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  9 Nov 2020 22:48:26 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 6F563206C0
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  9 Nov 2020 22:47:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 714FB206C0
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  9 Nov 2020 22:48:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=protonmail.ch header.i=@protonmail.ch header.b="e8+izJ1h"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 6F563206C0
-Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=protonmail.ch
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QrI9H99C"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 714FB206C0
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2b5612d2;
-	Mon, 9 Nov 2020 22:40:19 +0000 (UTC)
-Received: from mail-40140.protonmail.ch (mail-40140.protonmail.ch
- [185.70.40.140])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id e20337c2
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2b65df0c;
+	Mon, 9 Nov 2020 22:40:21 +0000 (UTC)
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com
+ [2a00:1450:4864:20::444])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 60d6cb3b
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 4 Nov 2020 11:08:26 +0000 (UTC)
-Date: Wed, 04 Nov 2020 11:11:09 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.ch;
- s=protonmail; t=1604488279;
- bh=TVCIgQ5ZbOReYN8pKv1Qrlii+mDUbAMxCsJYT6c5N9A=;
- h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
- b=e8+izJ1h6xTqbuGQjw2Up+P8/OfUKre/csmr7ewBj6Ail3NcQuOGEoyrmV+PV8kU3
- RAr36mFTQbxt3NHKIcGU1EfGXxYMgOvkmGmbXfpfhSaV6ANgGMoVLYIpTQru4no+vE
- 4zeSKK2j9KjUWCe8QktwOeS31KOUQGEJNp+JuDbE=
-To: "dxiri@xirihosting.com" <dxiri@xirihosting.com>
-From: Laura Smith <n5d9xq3ti233xiyif2vp@protonmail.ch>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: Using Wireguard for Geo redundancy
-Message-ID: <gBLFnYn1ENCoAu8pZXEVAFF88CT1DSPAOnmcV47vBrvQlLpA1jg2Yp6iZb9RotAOGDJPrqgeDiqOxesYB09WPXEtWsqR5R5rvx-udouR9-w=@protonmail.ch>
-In-Reply-To: <1604430353.311423080@webmail.emailsrvr.com>
-References: <1604430353.311423080@webmail.emailsrvr.com>
+ for <wireguard@lists.zx2c4.com>; Wed, 4 Nov 2020 14:28:38 +0000 (UTC)
+Received: by mail-wr1-x444.google.com with SMTP id w1so22315113wrm.4
+ for <wireguard@lists.zx2c4.com>; Wed, 04 Nov 2020 06:31:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=subject:from:to:cc:references:message-id:date:user-agent
+ :mime-version:in-reply-to:content-language:content-transfer-encoding;
+ bh=aw1qKrJDVTVGc9+faF8YMpoPIqDGI/C6NZGeaxcJruY=;
+ b=QrI9H99CnOXLE9YZ52vL/jd7vSPJ7YbbQ+/GEz94K8jHJym6M/yW6n7dju4xj5lqvL
+ 5hPJigkMUPqI6te9DzILj1mVuLFH+niifOTv0c2T6V0eTSsbPZcuiNSsCl3/ijjcClQu
+ bUR/gdg03fgrzruEuihWf7Wk8TATNkMygT5n3WM59gUq7r1Z2t7apZLRn+WRi61CSFi8
+ 5AjFr42vhN7BZhd53pz0xL5hkjD31ut3FEyPiTAD0EL9NukVbMfUQ0fxqExCPQwen50y
+ iFVw20oY6bErmKuFp2yv1UG6O77jPSu5fgQ4+O73BmrronAtNcS3LCyis5A2LI2s62Zw
+ C89Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=aw1qKrJDVTVGc9+faF8YMpoPIqDGI/C6NZGeaxcJruY=;
+ b=IrRtgXNdilHvvEj0qLzs/t6K+aAknnHngKKqpoEtOFXzY5k30X0EKBqPMy1nYyXXgZ
+ ANLs0EYfvlC+t7sLKbIpbvJIzPdnSB0iMN8EyfYTIFgMEh/1VVB79WeNceDnV5/vHtN3
+ Ml2nvje5Ae+aVUxTykw1pB0GGlVOXI8NY0v7fTiyYOFW58v6Ea5u1AYPazYFdWQtMboI
+ AUtVPUoLv4f7x5HL+RcIq/f01cPXqFtMQmYLn11QXQgtLKdZdWz7lb57/wJHy0UNNRbr
+ R6LJu05KOppKSPCtT8AGBJsCETMrP8MzQUACHyqi0jV4vM22hOKessQQ4cxh4AW6772L
+ AgXA==
+X-Gm-Message-State: AOAM530l18NNbGklQtHlx9zzWdwZFd5exSXRrXnVpYgm/2fyvoq4koVC
+ Wih1Jwoju5kd2qWobCmzHtE=
+X-Google-Smtp-Source: ABdhPJz307ULmxdDn5V8kkb2G/YjE3mN/nyh2Kax26+h4TOoNX1k539hzKbqFhhOjkZL0yu4Tvw5cQ==
+X-Received: by 2002:adf:fe48:: with SMTP id m8mr32046522wrs.127.1604500293328; 
+ Wed, 04 Nov 2020 06:31:33 -0800 (PST)
+Received: from ?IPv6:2003:ea:8f23:2800:d177:63da:d01d:cf70?
+ (p200300ea8f232800d17763dad01dcf70.dip0.t-ipconnect.de.
+ [2003:ea:8f23:2800:d177:63da:d01d:cf70])
+ by smtp.googlemail.com with ESMTPSA id g17sm2849624wrw.37.2020.11.04.06.31.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 04 Nov 2020 06:31:32 -0800 (PST)
+Subject: [PATCH net-next v2 01/10] net: core: add dev_get_tstats64 as a
+ ndo_get_stats64 implementation
+From: Heiner Kallweit <hkallweit1@gmail.com>
+To: Jakub Kicinski <kuba@kernel.org>, David Miller <davem@davemloft.net>,
+ Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>,
+ Hideaki YOSHIFUJI <yoshfuji@linux-ipv6.org>, Andrew Lunn <andrew@lunn.ch>,
+ Vivien Didelot <vivien.didelot@gmail.com>,
+ Florian Fainelli <f.fainelli@gmail.com>, Vladimir Oltean
+ <olteanv@gmail.com>, Russell King <linux@armlinux.org.uk>,
+ Pablo Neira Ayuso <pablo@netfilter.org>, Harald Welte
+ <laforge@gnumonks.org>, "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ Herbert Xu <herbert@gondor.apana.org.au>
+Cc: "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
+ osmocom-net-gprs@lists.osmocom.org, wireguard@lists.zx2c4.com,
+ Steffen Klassert <steffen.klassert@secunet.com>
+References: <059fcb95-fba8-673e-0cd6-fb26e8ed4861@gmail.com>
+Message-ID: <91133597-bd18-20ab-2a98-fd061ff90fed@gmail.com>
+Date: Wed, 4 Nov 2020 15:24:01 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.4.0
 MIME-Version: 1.0
+In-Reply-To: <059fcb95-fba8-673e-0cd6-fb26e8ed4861@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-Mailman-Approved-At: Mon, 09 Nov 2020 23:40:11 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -57,68 +100,60 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Reply-To: Laura Smith <n5d9xq3ti233xiyif2vp@protonmail.ch>
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello Diego,
+It's a frequent pattern to use netdev->stats for the less frequently
+accessed counters and per-cpu counters for the frequently accessed
+counters (rx/tx bytes/packets). Add a default ndo_get_stats64()
+implementation for this use case.
 
-Wireguard is deliberately "dumb". It doesn't have any fancy things like fai=
-lover built-in, that is an "exercise left to the reader" as the saying goes=
-.
+Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+---
+ include/linux/netdevice.h |  1 +
+ net/core/dev.c            | 15 +++++++++++++++
+ 2 files changed, 16 insertions(+)
 
-So, in answer to your question, the "best" solution would involve BGP. But =
-from your email it would seem you don't run BGP and you don't have an indep=
-endent allocation of IPs.
-
-So that leaves us with "tier 2" options.  My suggestions of options to look=
- at would be (in rough order of preference):
-
-- If the two datacentres are run by the same company, then talk to them. Th=
-ey might be willing to provide an anycast IP range for you that is visible =
-from both datacentres.
-
-- If the two datacentres are run by different companies, but they are "prov=
-ider independent" and you buy your transit capacity from the same ISP at bo=
-th locations, then speak to your ISP. They might be willing to provide an a=
-nycast IP range for your that is visible from both datacentres.
-
-- Use name rather than IP in your Wireguard client config files and then ru=
-n your DNS with a short TTL so that you can achieve a manual failover in, s=
-ay 5-10 minutes.
-
-- Use an external cloud service such as AWS ELB, Cloudflare etc. to provide=
- the failover layer for you.
-
-Good luck !
-
-Laura
-
-=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90 Original Me=
-ssage =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90
-On Tuesday, 3 November 2020 19:05, dxiri@xirihosting.com <dxiri@xirihosting=
-.com> wrote:
-
-> Hi!
->
-> I am looking for information on how to leverage Wireguard in a geo-redund=
-ancy scenario.
->
-> We have a couple management boxes colocated next to each other that provi=
-de HA via a VIP that "jumps" between each of those management boxes dependi=
-ng on availability.
->
-> Now lets say we want to place management box on datacenter 1 (DC1) and ma=
-nagement box 2 on datacenter2 (DC2).
->
-> Assuming the VIP cannot move between DCs, how could you leverage Wireguar=
-d to provide the same level of redundancy but with geographically dispersed=
- hosts?
->
-> Any information on this topic or documentation that points me in the righ=
-t direction would be really appreciated!
->
-> Thanks!
-> Diego
+diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
+index a53ed2d1e..7ce648a56 100644
+--- a/include/linux/netdevice.h
++++ b/include/linux/netdevice.h
+@@ -4527,6 +4527,7 @@ void netdev_stats_to_stats64(struct rtnl_link_stats64 *stats64,
+ 			     const struct net_device_stats *netdev_stats);
+ void dev_fetch_sw_netstats(struct rtnl_link_stats64 *s,
+ 			   const struct pcpu_sw_netstats __percpu *netstats);
++void dev_get_tstats64(struct net_device *dev, struct rtnl_link_stats64 *s);
+ 
+ extern int		netdev_max_backlog;
+ extern int		netdev_tstamp_prequeue;
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 9e7f071b8..88acc03fa 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -10366,6 +10366,21 @@ void dev_fetch_sw_netstats(struct rtnl_link_stats64 *s,
+ }
+ EXPORT_SYMBOL_GPL(dev_fetch_sw_netstats);
+ 
++/**
++ *	dev_get_tstats64 - ndo_get_stats64 implementation
++ *	@dev: device to get statistics from
++ *	@s: place to store stats
++ *
++ *	Populate @s from dev->stats and dev->tstats. Can be used as
++ *	ndo_get_stats64() callback.
++ */
++void dev_get_tstats64(struct net_device *dev, struct rtnl_link_stats64 *s)
++{
++	netdev_stats_to_stats64(s, &dev->stats);
++	dev_fetch_sw_netstats(s, dev->tstats);
++}
++EXPORT_SYMBOL_GPL(dev_get_tstats64);
++
+ struct netdev_queue *dev_ingress_queue_create(struct net_device *dev)
+ {
+ 	struct netdev_queue *queue = dev_ingress_queue(dev);
+-- 
+2.29.2
 
 
