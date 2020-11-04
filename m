@@ -8,63 +8,62 @@ X-Spam-Status: No, score=-11.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DCD9C2D0A3
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  9 Nov 2020 22:59:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 52F56C2D0A3
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  9 Nov 2020 23:01:35 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 607C32074F
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  9 Nov 2020 22:59:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 86BA42067C
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  9 Nov 2020 23:01:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UBktEN5F"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 607C32074F
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gfkh6YfC"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 86BA42067C
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c3882649;
-	Mon, 9 Nov 2020 22:40:31 +0000 (UTC)
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com
- [2a00:1450:4864:20::343])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7e9047ef
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 64b90790;
+	Mon, 9 Nov 2020 22:40:32 +0000 (UTC)
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com
+ [2a00:1450:4864:20::429])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 319f7192
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 4 Nov 2020 14:28:51 +0000 (UTC)
-Received: by mail-wm1-x343.google.com with SMTP id v5so2555834wmh.1
- for <wireguard@lists.zx2c4.com>; Wed, 04 Nov 2020 06:31:46 -0800 (PST)
+ for <wireguard@lists.zx2c4.com>; Wed, 4 Nov 2020 14:28:52 +0000 (UTC)
+Received: by mail-wr1-x429.google.com with SMTP id s9so22254109wro.8
+ for <wireguard@lists.zx2c4.com>; Wed, 04 Nov 2020 06:31:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=subject:from:to:cc:references:message-id:date:user-agent
  :mime-version:in-reply-to:content-language:content-transfer-encoding;
- bh=vff6yNcLVki99HBXZKVURhKPJZnmPneHA9KBTYAFVzs=;
- b=UBktEN5FFWzGcN/0dr4YKDfe1DmzUGMSWC0WJ2kbIDqpZCZWf/DZ5Ndq5EZ7Pl2F41
- B3UQT6eKdT1KQgUAoglAHvIqc2o9oZqfTN9B5GURjMhOw1d4GQ0j4j8wkw8RN7KIGOGD
- 3DX8t5fgwcEb6E3+KlwaEZ2BaaO1M3mncFslT6rqlfqIR1+WMNW3PGrFfI1/0gC0ZqTP
- sMXKywSZW4x+Cay10MDEEKQGahsJRWowTvL0187JqA98jHyT6Z7wzW1hJ70eWuXwQ9Vw
- 8OjaD5nFLQ6GYKbsfNRDYHT3y5zT+/TtXyFi6JSMmiBFnkjUsIxxjcYnWV4MP+U4u8i7
- lNTw==
+ bh=K0xwbWgfzNb+siGOnTIoHV8a22y8LDX4Jm2bW67sNRs=;
+ b=Gfkh6YfCE72+ydlSJ/wl7fWmXAUOkTbF24ca29DtpQjcRnzH2tuzCLv3xTT37WI3E1
+ ADY32e7KnYdz09JC2n7Ffr6URAzF0HDjz3MxA71JqOiTjEJKepuLYN7K9nZmvk90RRF5
+ bZvEQXcMAZxU5w4Fq/D2ZYzLxto9L/ffmiYoUHwmxRx3xQJCsnyQm0R1J82N+6Qv96lg
+ 4L6uz/yaCUq28ORAzFXzKYqwYUAI4KFP3Xe+fN5bYN+SO0YZxbxQqMmXL0vXA4KoP5PA
+ iu5k47/kJGsNgbsFX6Pl/x+Ll9JjfG9MKhHtPAPufCLMKlT9HNlOfqHZVL1eALx65NZ8
+ TmZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:subject:from:to:cc:references:message-id:date
  :user-agent:mime-version:in-reply-to:content-language
  :content-transfer-encoding;
- bh=vff6yNcLVki99HBXZKVURhKPJZnmPneHA9KBTYAFVzs=;
- b=RWIJy3H9bVX1PlBS9+76TD0NvnryWKvQgh3XMURM9rPO5/TX6ehU9vgw0K+UFqTeug
- vpzrLYpn+ep1DLv+BQU17vi+q+M6O4yQMKB5WmdBWdq2zky8mf2YYacMtmsHbz7eXSgj
- eDP7Iu4D0AzM+sTJKOHU3bHd3lSd/tjE81ppkY5U2u9fkXzSgd6tDHvI7XSZm4QvGdBT
- QHh05aR4xJqL+qbbD1ClOoSpFCGzQbdCdIhenMJY1LZZSvelwoDzrkqjKWBqLHLlUrSt
- QqaAPlk7AbGVN57swf/MKOxCkNeYQ4Fd2ksR4uP5Ql/P+QdQaRJiayyOtPPPKTYJJUqa
- z2bg==
-X-Gm-Message-State: AOAM533njAHdT5kr7vlP1LQ8cuYMhMhyR1oXJn0J3yHhxnIQNaRbSiRQ
- hM96HY5vT1teXxHxOsPeIAM=
-X-Google-Smtp-Source: ABdhPJyuPb/O1vtK4Zhv26voXtkXkk4NNvFF1xRJ61h9iW1ULwMrqeM1nC5CNCuUIvPWej8nSAUxBg==
-X-Received: by 2002:a05:600c:2110:: with SMTP id
- u16mr4940556wml.4.1604500305924; 
- Wed, 04 Nov 2020 06:31:45 -0800 (PST)
+ bh=K0xwbWgfzNb+siGOnTIoHV8a22y8LDX4Jm2bW67sNRs=;
+ b=LXZWWFhxUwJx/NBmDf8Vnhha0oM/OxxALK9wguxtwDBVqhHPAZ09CdIbAWvyQW4IBR
+ R8GEQa3TvE+ZpYqrRxayJUtddpU+8kNgOoAZSA3Xbw2H18VOZb6yVzpRtqIV9dLKUSOP
+ tPbtBgO0G/slwv4oaBZMqEKEuRoHvMGbGWlCXMW6J+czprCDYLC51myCkd51TtNmM6b1
+ DBd2PNbLoBaM78oDNomOqap8elLM1PVZcgVXINWMlhrNddiyh3GvKxHUnARhaxjvHGoC
+ s7ldTLan/YHfOwDX4T/Af6v6kzTlkQlF5k2JLXS0UHY2qnCiDK912U3HbhyGm+TmYD3Z
+ FWHA==
+X-Gm-Message-State: AOAM531LWEzVDilfcB5L6dVKAi/EFnSjDpVHsChH4JlmJBqBrkSh7jTe
+ yWdOsAfMLa2oGucB37fvUgI=
+X-Google-Smtp-Source: ABdhPJwl5X8jvdS+mUXZcO0Nb3rEd3NCzr93XMi5XApyMil2tE6bG73j3OHe5qt6fBIyVpvdh0u7gw==
+X-Received: by 2002:a5d:474f:: with SMTP id o15mr5595878wrs.100.1604500307652; 
+ Wed, 04 Nov 2020 06:31:47 -0800 (PST)
 Received: from ?IPv6:2003:ea:8f23:2800:d177:63da:d01d:cf70?
  (p200300ea8f232800d17763dad01dcf70.dip0.t-ipconnect.de.
  [2003:ea:8f23:2800:d177:63da:d01d:cf70])
- by smtp.googlemail.com with ESMTPSA id g17sm2850560wrw.37.2020.11.04.06.31.45
+ by smtp.googlemail.com with ESMTPSA id k84sm2508318wmf.42.2020.11.04.06.31.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Nov 2020 06:31:45 -0800 (PST)
-Subject: [PATCH net-next v2 09/10] ipv4/ipv6: switch to dev_get_tstats64
+ Wed, 04 Nov 2020 06:31:47 -0800 (PST)
+Subject: [PATCH net-next v2 10/10] net: remove ip_tunnel_get_stats64
 From: Heiner Kallweit <hkallweit1@gmail.com>
 To: Jakub Kicinski <kuba@kernel.org>, David Miller <davem@davemloft.net>,
  Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>,
@@ -79,8 +78,8 @@ Cc: "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
  osmocom-net-gprs@lists.osmocom.org, wireguard@lists.zx2c4.com,
  Steffen Klassert <steffen.klassert@secunet.com>
 References: <059fcb95-fba8-673e-0cd6-fb26e8ed4861@gmail.com>
-Message-ID: <ebe0951b-891f-2d52-02e2-62d18e944f0e@gmail.com>
-Date: Wed, 4 Nov 2020 15:29:35 +0100
+Message-ID: <1d40c040-7b4b-9531-2cb0-0e8e3f954e25@gmail.com>
+Date: Wed, 4 Nov 2020 15:31:02 +0100
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.4.0
 MIME-Version: 1.0
@@ -103,105 +102,47 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Replace ip_tunnel_get_stats64() with the new identical core fucntion
-dev_get_tstats64().
+After having migrated all users remove ip_tunnel_get_stats64().
 
 Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
 ---
- net/ipv4/ip_gre.c  | 6 +++---
- net/ipv4/ipip.c    | 2 +-
- net/ipv6/ip6_gre.c | 6 +++---
- net/ipv6/sit.c     | 2 +-
- 4 files changed, 8 insertions(+), 8 deletions(-)
+ include/net/ip_tunnels.h  | 2 --
+ net/ipv4/ip_tunnel_core.c | 9 ---------
+ 2 files changed, 11 deletions(-)
 
-diff --git a/net/ipv4/ip_gre.c b/net/ipv4/ip_gre.c
-index e70291748..a68bf4c6f 100644
---- a/net/ipv4/ip_gre.c
-+++ b/net/ipv4/ip_gre.c
-@@ -920,7 +920,7 @@ static const struct net_device_ops ipgre_netdev_ops = {
- 	.ndo_start_xmit		= ipgre_xmit,
- 	.ndo_do_ioctl		= ip_tunnel_ioctl,
- 	.ndo_change_mtu		= ip_tunnel_change_mtu,
--	.ndo_get_stats64	= ip_tunnel_get_stats64,
-+	.ndo_get_stats64	= dev_get_tstats64,
- 	.ndo_get_iflink		= ip_tunnel_get_iflink,
- 	.ndo_tunnel_ctl		= ipgre_tunnel_ctl,
- };
-@@ -1275,7 +1275,7 @@ static const struct net_device_ops gre_tap_netdev_ops = {
- 	.ndo_set_mac_address 	= eth_mac_addr,
- 	.ndo_validate_addr	= eth_validate_addr,
- 	.ndo_change_mtu		= ip_tunnel_change_mtu,
--	.ndo_get_stats64	= ip_tunnel_get_stats64,
-+	.ndo_get_stats64	= dev_get_tstats64,
- 	.ndo_get_iflink		= ip_tunnel_get_iflink,
- 	.ndo_fill_metadata_dst	= gre_fill_metadata_dst,
- };
-@@ -1308,7 +1308,7 @@ static const struct net_device_ops erspan_netdev_ops = {
- 	.ndo_set_mac_address	= eth_mac_addr,
- 	.ndo_validate_addr	= eth_validate_addr,
- 	.ndo_change_mtu		= ip_tunnel_change_mtu,
--	.ndo_get_stats64	= ip_tunnel_get_stats64,
-+	.ndo_get_stats64	= dev_get_tstats64,
- 	.ndo_get_iflink		= ip_tunnel_get_iflink,
- 	.ndo_fill_metadata_dst	= gre_fill_metadata_dst,
- };
-diff --git a/net/ipv4/ipip.c b/net/ipv4/ipip.c
-index 75d35e76b..d5bfa087c 100644
---- a/net/ipv4/ipip.c
-+++ b/net/ipv4/ipip.c
-@@ -347,7 +347,7 @@ static const struct net_device_ops ipip_netdev_ops = {
- 	.ndo_start_xmit	= ipip_tunnel_xmit,
- 	.ndo_do_ioctl	= ip_tunnel_ioctl,
- 	.ndo_change_mtu = ip_tunnel_change_mtu,
--	.ndo_get_stats64 = ip_tunnel_get_stats64,
-+	.ndo_get_stats64 = dev_get_tstats64,
- 	.ndo_get_iflink = ip_tunnel_get_iflink,
- 	.ndo_tunnel_ctl	= ipip_tunnel_ctl,
- };
-diff --git a/net/ipv6/ip6_gre.c b/net/ipv6/ip6_gre.c
-index 931b186d2..8cf659994 100644
---- a/net/ipv6/ip6_gre.c
-+++ b/net/ipv6/ip6_gre.c
-@@ -1391,7 +1391,7 @@ static const struct net_device_ops ip6gre_netdev_ops = {
- 	.ndo_start_xmit		= ip6gre_tunnel_xmit,
- 	.ndo_do_ioctl		= ip6gre_tunnel_ioctl,
- 	.ndo_change_mtu		= ip6_tnl_change_mtu,
--	.ndo_get_stats64	= ip_tunnel_get_stats64,
-+	.ndo_get_stats64	= dev_get_tstats64,
- 	.ndo_get_iflink		= ip6_tnl_get_iflink,
- };
+diff --git a/include/net/ip_tunnels.h b/include/net/ip_tunnels.h
+index 02ccd3254..1b7905eb7 100644
+--- a/include/net/ip_tunnels.h
++++ b/include/net/ip_tunnels.h
+@@ -274,8 +274,6 @@ int ip_tunnel_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd);
+ int __ip_tunnel_change_mtu(struct net_device *dev, int new_mtu, bool strict);
+ int ip_tunnel_change_mtu(struct net_device *dev, int new_mtu);
  
-@@ -1828,7 +1828,7 @@ static const struct net_device_ops ip6gre_tap_netdev_ops = {
- 	.ndo_set_mac_address = eth_mac_addr,
- 	.ndo_validate_addr = eth_validate_addr,
- 	.ndo_change_mtu = ip6_tnl_change_mtu,
--	.ndo_get_stats64 = ip_tunnel_get_stats64,
-+	.ndo_get_stats64 = dev_get_tstats64,
- 	.ndo_get_iflink = ip6_tnl_get_iflink,
- };
+-void ip_tunnel_get_stats64(struct net_device *dev,
+-			   struct rtnl_link_stats64 *tot);
+ struct ip_tunnel *ip_tunnel_lookup(struct ip_tunnel_net *itn,
+ 				   int link, __be16 flags,
+ 				   __be32 remote, __be32 local,
+diff --git a/net/ipv4/ip_tunnel_core.c b/net/ipv4/ip_tunnel_core.c
+index 25f1caf5a..923a9fa2e 100644
+--- a/net/ipv4/ip_tunnel_core.c
++++ b/net/ipv4/ip_tunnel_core.c
+@@ -429,15 +429,6 @@ int skb_tunnel_check_pmtu(struct sk_buff *skb, struct dst_entry *encap_dst,
+ }
+ EXPORT_SYMBOL(skb_tunnel_check_pmtu);
  
-@@ -1896,7 +1896,7 @@ static const struct net_device_ops ip6erspan_netdev_ops = {
- 	.ndo_set_mac_address =	eth_mac_addr,
- 	.ndo_validate_addr =	eth_validate_addr,
- 	.ndo_change_mtu =	ip6_tnl_change_mtu,
--	.ndo_get_stats64 =	ip_tunnel_get_stats64,
-+	.ndo_get_stats64 =	dev_get_tstats64,
- 	.ndo_get_iflink =	ip6_tnl_get_iflink,
- };
- 
-diff --git a/net/ipv6/sit.c b/net/ipv6/sit.c
-index 5e2c34c0a..4dc5f9366 100644
---- a/net/ipv6/sit.c
-+++ b/net/ipv6/sit.c
-@@ -1396,7 +1396,7 @@ static const struct net_device_ops ipip6_netdev_ops = {
- 	.ndo_uninit	= ipip6_tunnel_uninit,
- 	.ndo_start_xmit	= sit_tunnel_xmit,
- 	.ndo_do_ioctl	= ipip6_tunnel_ioctl,
--	.ndo_get_stats64 = ip_tunnel_get_stats64,
-+	.ndo_get_stats64 = dev_get_tstats64,
- 	.ndo_get_iflink = ip_tunnel_get_iflink,
- 	.ndo_tunnel_ctl = ipip6_tunnel_ctl,
- };
+-/* Often modified stats are per cpu, other are shared (netdev->stats) */
+-void ip_tunnel_get_stats64(struct net_device *dev,
+-			   struct rtnl_link_stats64 *tot)
+-{
+-	netdev_stats_to_stats64(tot, &dev->stats);
+-	dev_fetch_sw_netstats(tot, dev->tstats);
+-}
+-EXPORT_SYMBOL_GPL(ip_tunnel_get_stats64);
+-
+ static const struct nla_policy ip_tun_policy[LWTUNNEL_IP_MAX + 1] = {
+ 	[LWTUNNEL_IP_UNSPEC]	= { .strict_start_type = LWTUNNEL_IP_OPTS },
+ 	[LWTUNNEL_IP_ID]	= { .type = NLA_U64 },
 -- 
 2.29.2
 
