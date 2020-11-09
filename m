@@ -1,68 +1,52 @@
-Return-Path: <SRS0=F3dT=EM=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=Vb0R=EP=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87F4CC2D0A3
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  6 Nov 2020 16:19:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF8ECC388F7
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  9 Nov 2020 16:26:32 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 9A59822203
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  6 Nov 2020 16:19:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 15DAB206CB
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  9 Nov 2020 16:26:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=kernel.org header.i=@kernel.org header.b="qZnx3ALp"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 9A59822203
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
+	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="j9DVqOj2"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 15DAB206CB
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d8ae6618;
-	Fri, 6 Nov 2020 16:15:40 +0000 (UTC)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id aebbb494
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Fri, 6 Nov 2020 16:15:38 +0000 (UTC)
-Received: from kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com (unknown
- [163.114.132.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id D77E922202;
- Fri,  6 Nov 2020 16:18:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1604679529;
- bh=1OGiCj6diov6W4McEbxpKOj+fj5u/W5GEP7kzpgc6ZU=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=qZnx3ALpLlM5ehOv6O1rJ3D6pwuiJo58f9Lnmc3/7hnd7moHaW5RjAc3DlRqdGLHT
- co3GWnTc+tZ8w/Bq8Aj+dcqE+pif1ym6/9KOFJ19ABJmMY0UYJLnNRw5czyBu2nHsk
- r4XMeij6RQGLATWJDCGvnaHfpL7kJ9tzgPp+A+wY=
-Date: Fri, 6 Nov 2020 08:18:46 -0800
-From: Jakub Kicinski <kuba@kernel.org>
-To: Heiner Kallweit <hkallweit1@gmail.com>
-Cc: Willem de Bruijn <willemb@google.com>, David Miller
- <davem@davemloft.net>, Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>, Hideaki
- YOSHIFUJI <yoshfuji@linux-ipv6.org>, Andrew Lunn <andrew@lunn.ch>, Vivien
- Didelot <vivien.didelot@gmail.com>, Florian Fainelli
- <f.fainelli@gmail.com>, Vladimir Oltean <olteanv@gmail.com>, Russell King
- <linux@armlinux.org.uk>, Pablo Neira Ayuso <pablo@netfilter.org>, Harald
- Welte <laforge@gnumonks.org>, "Jason A. Donenfeld" <Jason@zx2c4.com>,
- Herbert Xu <herbert@gondor.apana.org.au>, "netdev@vger.kernel.org"
- <netdev@vger.kernel.org>, osmocom-net-gprs@lists.osmocom.org,
- wireguard@lists.zx2c4.com, Steffen Klassert <steffen.klassert@secunet.com>
-Subject: Re: [PATCH net-next v2 03/10] tun: switch to net core provided
- statistics counters
-Message-ID: <20201106081846.27212e9e@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-In-Reply-To: <aea7d78e-2d77-1f8a-70f0-73d46c96b44e@gmail.com>
-References: <059fcb95-fba8-673e-0cd6-fb26e8ed4861@gmail.com>
- <30fd49be-f467-95f5-9586-fec9fbde8e48@gmail.com>
- <20201105171446.5f78f1a6@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
- <dcb51de1-5e11-7c07-9784-bf3546a1246a@gmail.com>
- <aea7d78e-2d77-1f8a-70f0-73d46c96b44e@gmail.com>
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 43f048da;
+	Mon, 9 Nov 2020 16:22:29 +0000 (UTC)
+Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c53a6ad0
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Mon, 9 Nov 2020 16:22:26 +0000 (UTC)
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9f4d492b
+ for <wireguard@lists.zx2c4.com>; Mon, 9 Nov 2020 16:23:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=date:from:to
+ :subject:message-id:mime-version:content-type; s=mail; bh=GCXE7I
+ p2uMgg9ytpQ4mwyuuvB5k=; b=j9DVqOj2N65+Tx7c+JLh7iVsp0ZTa665faA9Zh
+ 5y/IUQ5NPQXo+lm3Djoo++sKzSX+8WKxK2+Sg3FgqWNddbEbo5HQqQrfK+zCAZbt
+ B2J3GHDR7taFcBNdCOSk9pcAbMUHPO3SBr9M45lWiXZU97azC9qxi0t0vt+0WAAn
+ LkipUUvTB1N7ySwbubk6zbeZcIjH5tHjdpuBwaHif7oB9C9cTDOvw0+2DGxsIc9G
+ FGRqKTZhKj9XFo2ScjyVBhA6i/a9W/yiaxl5W7eQsTb+0x2wGMACyXS/uOswpQBr
+ KGL0bn6AHBAqagsgGRluvA/wIA2b/voauq9HuAFgFe9hl3mw==
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 3b7c02f1
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Mon, 9 Nov 2020 16:23:12 +0000 (UTC)
+Date: Mon, 9 Nov 2020 17:25:58 +0100
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: wireguard@lists.zx2c4.com
+Subject: [ANNOUNCE] Wintun 0.9 Released with Major Usability Improvements
+Message-ID: <20201109162558.GA2277411@zx2c4.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -77,40 +61,89 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Fri, 6 Nov 2020 09:27:45 +0100 Heiner Kallweit wrote:
-> On 06.11.2020 08:48, Heiner Kallweit wrote:
-> > On 06.11.2020 02:14, Jakub Kicinski wrote:  
-> >> On Wed, 4 Nov 2020 15:25:24 +0100 Heiner Kallweit wrote:  
-> >>> @@ -1066,7 +1054,7 @@ static netdev_tx_t tun_net_xmit(struct sk_buff *skb, struct net_device *dev)
-> >>>  	return NETDEV_TX_OK;
-> >>>  
-> >>>  drop:
-> >>> -	this_cpu_inc(tun->pcpu_stats->tx_dropped);
-> >>> +	dev->stats.tx_dropped++;
-> >>>  	skb_tx_error(skb);
-> >>>  	kfree_skb(skb);
-> >>>  	rcu_read_unlock();  
-> >>
-> >> This is no longer atomic. Multiple CPUs may try to update it at the
-> >> same time.
-> >>
-> >> Do you know what the story on dev->rx_dropped is? The kdoc says drivers
-> >> are not supposed to use it but:
-> >>
-> >> drivers/net/ipvlan/ipvlan_core.c:               atomic_long_inc(&skb->dev->rx_dropped);
-> >> drivers/net/macvlan.c:  atomic_long_inc(&skb->dev->rx_dropped);
-> >> drivers/net/vxlan.c:            atomic_long_inc(&vxlan->dev->rx_dropped);
-> >>
-> >> Maybe tun can use it, too?
-> >>  
-> > Thanks, yes that should be possible. Here we speak about tx_dropped,
-> > but AFAICS the same applies as for rx_dropped. Will change it accordingly
-> > in a v3.
-> >   
-> For rx_dropped and tx_dropped it's easy, however tun also has a per-cpu
-> counter for rx_frame_errors that is incremented if virtio_net_hdr_to_skb()
-> fails. Not sure how to deal best with this one.
+Hi folks,
 
-Umpf, yeah, so I'd probably add an atomic long to struct tun_struct,
-but then you'll need to keep the ndo implementation instead of using
-dev_get_tstats64 directly. I can't think of a better way, tho.
+Simon and I are very excited to announce the release of Wintun 0.9, the
+release in which Wintun finally becomes easy and enjoyable to use by
+developers. I consider this the most significant release of Wintun yet.
+
+Webpage: https://www.wintun.net/
+
+For background: Wintun is a driver for the Windows kernel that enables
+userspace programs to create network tunnels. It's a "/dev/net/tun" of the
+Windows world. We use this for WireGuard. We had investigated OpenVPN's "tap6"
+driver but found it to be a crumbling mess with dubious security, and instead
+endeavored to write a lightweight minimal replacement that obtains extremely
+high speeds using a ring buffer, similar to Linux's io_uring.
+
+Big Change 1: API Library and Easy Distribution
+-----------------------------------------------
+
+We used to rely on an obscure Microsoft technology for distributing Wintun,
+called MSI Merge Modules (MSM), in which application writers would bundle the
+signed MSM we provided as part of their MSI installer. This was great in that
+it encapsulated a lot of logic and hid it from developers, but relying on MSM
+was a hassle and precluded the use of Wintun in many non-MSI apps.
+
+The MSM also would simply make sure the driver was installed, but wouldn't
+provide anything else. It was up to developers to then navigate arcane Windows
+driver instantiation APIs, which are some of the oldest and most obscure to
+use. Then, once installed, developers had to manage a ring and various IOCTLs
+themselves. It all worked -- WireGuard and OpenVPN (after receiving our
+assistance) successfully deployed it -- but it was cumbersome enough that
+nobody else was going to use this.
+
+With Wintun 0.9, we're changing what we distribute and also providing an easy
+to use API. Rather than shipping MSMs to developers, we now ship a single
+basic boring wintun.dll. This dll hides all of the driver installation and
+adapter instantiation logic, and provides a nice interface for managing
+adapters and shuffling data in and out of the ring buffer. So, application
+developers can now just grab that dll, plop it into their application like
+they would any other dll, and use Wintun without even noticing that it's
+inserting a kernel driver when necessary
+
+Big Change 2: Support for WOW64 and ARM
+---------------------------------------
+
+Windows does not support setupapi.dll and related driver functions on 32-bit
+processes running on 64-bit operating systems. This meant that it was
+impossible for WOW64 processes to use Wintun. Wintun also formerly required
+64bit addresses, which made the kernel ABI clumsy for WOW64 processes. With
+Wintun 0.9, we now bundle a 64-bit version of Wintun inside 32-bit versions of
+the wintun.dll, and we marshal calls back and forth to an on-demand proxy
+process running on the native architecture.
+
+Not only do we have this for basic WOW64, but we also have this working for
+Windows' ARM64 emulation of x86 binaries. So you can now run an x86 program on
+ARM64 and wintun.dll will figure out what to do.
+
+This has big effects for us. Since Go still has not been ported to ARM64, we
+use an ARM build and rely on this new feature of Wintun. This means we should
+have a WireGuard for ARM64 Windows release in the coming week or two.
+
+Big Change 3: Administrator User Permissions
+--------------------------------------------
+
+Wintun requires the Local System user. But if you're running as Administrator,
+the wintun.dll library will attempt to do its operations as Local System,
+automatically. This effectively means that normal apps can bundle Wintun now,
+rather than just services.
+
+
+Please let us know if you have any questions or feedback. We're certainly
+interested in developer reports on what integrating this is like.
+
+- The API reference is available online:
+  https://git.zx2c4.com/wintun/about/
+
+- And there's some simple example code too:
+  https://git.zx2c4.com/wintun/tree/example/example.c
+
+- A signed wintun.dll for amd64, arm64, x86, and arm is on the webpage:
+  https://www.wintun.net/
+
+- And of course, it's open source:
+  git clone https://git.zx2c4.com/wintun
+
+Regards,
+Jason
