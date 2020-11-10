@@ -2,78 +2,83 @@ Return-Path: <SRS0=x2E1=EQ=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 546A2C55ABD
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 10 Nov 2020 13:03:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 28DFBC388F7
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 10 Nov 2020 13:04:52 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 2135620674
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 10 Nov 2020 13:03:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 5608F2064B
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 10 Nov 2020 13:04:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pcfreak.de header.i=@pcfreak.de header.b="PKTFDzAx"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 2135620674
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=pcfreak.de
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YFYAhuj6"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 5608F2064B
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id eb86a08b;
-	Tue, 10 Nov 2020 12:59:03 +0000 (UTC)
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com
- [2a00:1450:4864:20::636])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 70d88cf7
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8cb9706e;
+	Tue, 10 Nov 2020 12:59:04 +0000 (UTC)
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com
+ [2a00:1450:4864:20::329])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 762d7167
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 10 Nov 2020 08:41:10 +0000 (UTC)
-Received: by mail-ej1-x636.google.com with SMTP id o23so16326010ejn.11
- for <wireguard@lists.zx2c4.com>; Tue, 10 Nov 2020 00:44:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pcfreak.de; s=google;
- h=subject:to:references:from:message-id:date:user-agent:mime-version
- :in-reply-to:content-transfer-encoding:content-language;
- bh=AmIFbybm3Zka1VEj4Zd3a8hSB+rU0skoTocLqyDvoh0=;
- b=PKTFDzAx9QvuBwisdjmcqyncqrvpQWpeg6oQnTDTVzeFhsfmKYo0Tgh+ay103qpskv
- hzUdk0MA3XZ30VBMyKEMASYBXZClXAHKsG5yDRYUOvDf0A+l8es/EuDAX4kyOcPiCb0G
- 0wiX951038ucpLPfopml6WJTCWImj1oVPYt2E=
+ Tue, 10 Nov 2020 12:52:25 +0000 (UTC)
+Received: by mail-wm1-x329.google.com with SMTP id 19so1355095wmf.1
+ for <wireguard@lists.zx2c4.com>; Tue, 10 Nov 2020 04:56:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:references:in-reply-to:subject:date:message-id:mime-version
+ :content-transfer-encoding:thread-index:content-language;
+ bh=sOkrzrBqofO8imR4FzlYg8eIPyrCSDq0JQa1aw0XnFQ=;
+ b=YFYAhuj63TKLN7W3+bx7wm3je5lVj4FQ/PEWB65iszZ5b9eZitmQENkcaQg7lFiAvV
+ IG5a+Tmkp0KvARTvZuqnZW6x96EwMOf2l96SZr+LddsbWHC85WkHjBmEBfAHfB1tTdsh
+ a2sYK4Ut3S+r6PlwHlF5AEzT2agECtdJ4J9Fu9QTaC+p3C4qv8aZRp/fCl0yrkZXXSB0
+ 4CU8eDPvl1AnOda0DIPd6Nr0HGPxE0moFJCG8THiXzbwoKY5BL9wGYNt9tb8JD1XPbsJ
+ kt0M+vl6D+4BqgDMkh3F3v+Lgh/EDs3yZWRQWHMtiWFvCsecydESl7yDHDP2BQEqsy30
+ wUVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-transfer-encoding
+ h=x-gm-message-state:from:to:references:in-reply-to:subject:date
+ :message-id:mime-version:content-transfer-encoding:thread-index
  :content-language;
- bh=AmIFbybm3Zka1VEj4Zd3a8hSB+rU0skoTocLqyDvoh0=;
- b=rRuFEeULvGWVbazkbER+7DL9oAYYq4+AA+ogYmL597DE8B2dXkQRdKLzNsR92HQS/p
- UCdKo5Y79ISIcbqhSvA6TCT/sPkMR/MeSoKrju6l0o5fgpA7ACB8nJStcmb6FE0xUT0P
- 0swsJNm3589vE3JWwG6jkgvGhJnA+Ez3lNZWloKzQwPU4gUWqPEM1wVHCbLpSm7KVaFv
- Zn1h5waSmmrby9PjL4gqbNajrF+1hoh2QnbW5HxWGzd25XY4WGbQ9fxzH3Sf5VihreW7
- qb704e5V5PTp/wUHDx0/v4vts+E5Wfl/YSgWLt3lnl+kWZCnQ1U1VEPtSdLWw0CHZoT0
- ukag==
-X-Gm-Message-State: AOAM5331wv69yI1YqnzASbAs6FbNkhBew48WdGLxujDZSuwnk3RWrGip
- AbVrNfJ4jPhSSjQlhdZ/9fnsBwF/RoONJg==
-X-Google-Smtp-Source: ABdhPJwt4mpeSBb54uQM7neVCkMcJ4tVhwiCnMjyrBCJiFlUrtNvzL5qgrwwlZNMhI/vL4rpK3lj0Q==
-X-Received: by 2002:a17:906:13d0:: with SMTP id
- g16mr18817074ejc.327.1604997889230; 
- Tue, 10 Nov 2020 00:44:49 -0800 (PST)
-Received: from [10.110.180.53] (inetpop1.witron.de. [195.243.201.20])
- by smtp.googlemail.com with ESMTPSA id j7sm10007292ejk.14.2020.11.10.00.44.48
+ bh=sOkrzrBqofO8imR4FzlYg8eIPyrCSDq0JQa1aw0XnFQ=;
+ b=HaojMlqNxIE1lD7OfAF7+0BliWxX7cDrlmJ/+LkMedKTdwg7ooFs66Hjz+CjHpm/rq
+ 8rWzY9ioaxlC/OuVamhwyDDKLm8RZL3+s1asouYQpjExVTO9CFDyeS510DUcVXYuMrny
+ mht5dluQPo2dq22+LCKv56drJXygeP/BMODNtHNftMk9fSUe75O7P17J8N1KP2bbRQ3/
+ akaQ+UFkn1NJpfE+q2voweOso92H2E2Y27QJyChJAyv1VUO6VX79NDloOIkdF8PnMwj7
+ POdo3omPxo3eJKmw+kSq6MqnKsZBDdv6/fiuQ6/hzr60Lq86wdq2BEB7ZX94CK8vgudw
+ YwFA==
+X-Gm-Message-State: AOAM530A5GIJMV1mYjZWsvETi3M15CBnIYslY+XOCgnjCmvsf2wV4a3l
+ TXbwrtID48LZ/OExQZX9PL1ICbHBFKfgOg==
+X-Google-Smtp-Source: ABdhPJybAmf/Xln9Rp5DS4TMqdTbNZ+6U0x+Lpw0JxHGnFQvggWheLbZ2B/Rvah37JGshntiNvbPRg==
+X-Received: by 2002:a1c:80cb:: with SMTP id b194mr4617986wmd.73.1605012966044; 
+ Tue, 10 Nov 2020 04:56:06 -0800 (PST)
+Received: from TICTACPC2 ([2a02:120b:2c7d:320:84a2:f5df:5eb4:2a22])
+ by smtp.gmail.com with ESMTPSA id g138sm2827798wme.39.2020.11.10.04.56.05
  for <wireguard@lists.zx2c4.com>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Nov 2020 00:44:48 -0800 (PST)
-Subject: Re: Add local DNS forwarder to Windows client
-To: wireguard@lists.zx2c4.com
-References: <CADJb3qRk2nuvQdyF1+=9yf84annmJ+nyapdokFx1o-WcVfvfKQ@mail.gmail.com>
- <A64A6CAC-E8CA-41AB-8CCD-E9E379591C91@tomcsanyi.net>
-From: Der PCFreak <mailinglists@pcfreak.de>
-Message-ID: <d62f54e7-cb5f-7baf-9320-19903b7c5d51@pcfreak.de>
-Date: Tue, 10 Nov 2020 09:44:47 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.4.1
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Tue, 10 Nov 2020 04:56:05 -0800 (PST)
+From: <samuel.progin@gmail.com>
+To: <wireguard@lists.zx2c4.com>
+References: <CAHmME9rW1e+rRc8q+-_eLR=U9OTn+Sn84ECJtGFY=Hjg8kzfEQ@mail.gmail.com>
+ <20201110134743.1615fcf4@frign.de>
+In-Reply-To: <20201110134743.1615fcf4@frign.de>
+Subject: RE: Should we sunset Windows 7 support?
+Date: Tue, 10 Nov 2020 13:56:06 +0100
+Message-ID: <00fa01d6b760$da95c480$8fc14d80$@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <A64A6CAC-E8CA-41AB-8CCD-E9E379591C91@tomcsanyi.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain;
+	charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQGiIb/2UHAuS8Fc7FjKD9QRhcCEUwJbQa6fqhej6jA=
+Content-Language: fr-ch
+X-Antivirus: Avast (VPS 201109-4, 09.11.2020), Outbound message
+X-Antivirus-Status: Clean
 X-Mailman-Approved-At: Tue, 10 Nov 2020 13:58:56 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -89,99 +94,92 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
+Dear all,
 
-concerning local DNS forwarder.
+FWIW, Microsoft sells extended support (Windows 7 ESU) to corporate
+customers using Pro or Enterprise editions. It can be extended until Jan
+10th 2023.
 
-I am in an environment where I need to resolve public DNS names to local 
-IPs for specific hosts and additionally public DNS for the rest.
-In Windows XP it was possible to just stop the DNS cache service and set 
-2 DNS servers and everything worked.
-Newer versions of Windows starting with Windows 7 do only connect to the 
-second DNS if connecting (not querying) the first fails.
-So if your first DNS is up but has no reply for your query, Windows will 
-just add that fqdn to the negative cache and no longer
-query the DNS for a specific time or until you delete the cache with 
-ipconfig /flushdns.
+https://docs.microsoft.com/en-us/troubleshoot/windows-client/windows-7-eos-=
+f
+aq/windows-7-extended-security-updates-faq
 
-All of the above can be fixed using a local DNS forwarder.
+Kind regards.
 
-I use DeadWood on my machine for years now. 
-https://maradns.samiam.org/deadwood/doc/FAQ.html
+Samuel
 
-I just point my DNS to 127.0.0.1 (which is the deadwood service) and 
-configure Deadwood a little bit. It basically let's me
-exactly specify which hosts to resolve how and can have something 
-similiar to a HOSTS entry, too.
+-----Original Message-----
+From: WireGuard <wireguard-bounces@lists.zx2c4.com> On Behalf Of Laslo
+Hunhold
+Sent: mardi, 10 novembre 2020 13:48
+To: wireguard@lists.zx2c4.com
+Subject: Re: Should we sunset Windows 7 support?
 
-As Domi wrote I would encourage you to tryout a local DNS resolver, too.
+On Tue, 10 Nov 2020 13:27:20 +0100
+"Jason A. Donenfeld" <Jason@zx2c4.com> wrote:
 
-Regards
+Dear Jason,
 
-Peter
+> Windows 7 has been EOL'd by Microsoft since January of this year. It 
+> is no longer receiving security updates or fixes. This email is to get 
+> the conversation started about doing the same with WireGuard for 
+> Windows.
+> [...] Do we really want to keep maintaining gross stuff like this? It 
+> makes me uncomfortable to have kludges like that sitting around in the 
+> code. Shouldn't I write an auto-downloader that then checks hashes? 
+> Shouldn't I build this into the installer? Shouldn't I....
+> waste tons of time supporting Windows 7 better?
+> 
+> Probably not.
+> 
+> But I know so many users are still using Windows 7. I'd like to hear 
+> from you to understand why, in order to assess when is the right 
+> moment to sunset our Windows 7 support.
+> 
+> So, if you care for Windows 7, please pipe up! We're not going to 
+> remove support for it overnight, and we're not prepared yet to 
+> announce any sort of formal deprecation plan, but the world is moving 
+> on at some point.
 
-On 10.11.2020 09:14, Tomcsanyi, Domonkos wrote:
-> Hello Yves,
->
-> I am by no means a person with authority to make such a decision, but your usecase seems to be so specific I would not imagine it would make sense to blow up the size and complexity of the Windows wg with a local DNS forwarder.
-> I think it is way better if people just install a local DNS resolver/forwarder on their own. There a ton of choices available, from simply python scripts to large scale servers. You could easily configure any of these to distinguish which DNS server to ask based on the TLD portion of your local domain or whatever other distinguisher you have.
-> Then the only thing you need to do is tell your system (either via wg or by other means) to use the local resolver and the case is solved :).
-> Also I am pretty sure one of the main philosophies behind wg is to be the same as much as possible on all platforms. Adding a DNS resolver would again mean a lot of complications when compared to e.g. the Linux version, since most Linux distributions already feature some kind of a local resolver by default.
->
-> Cheers,
-> Domi
->
->
->> 09.11.2020 dátummal, 23:46 időpontban Yves Goergen <yves.goergen@gmail.com> írta:
->>
->> ﻿Hello,
->>
->> I've already used WireGuard to connect to private networks and it's
->> quite easy once you figure out how to set it up. (Most tutorials are
->> outdated and haven't been updated, new ones haven't been written.) One
->> thing that's really missing however is DNS support. All I can do now
->> is connect to IP addresses. Names are not resolvable on the other
->> side. If I add the "DNS" directive to my client configuration, it
->> replaces the local DNS resolver and *all* lookups go to that server
->> instead. This isn't working either because I'm on two local networks
->> and each has its own local DNS server that can only resolve its own
->> local names (and forward the rest to the internet).
->>
->> Specifying both networks' DNS servers also fails because when
->> resolving a name, one of them is chosen at random (and the other one
->> isn't regarded) and then you won't be able to resolve some of the
->> names some of the time. This is also very frustrating. And it wouldn't
->> scale to multiple active tunnels.
->>
->> The solution I've read about is to set up a local DNS forwarder that
->> can be configured so that it uses multiple servers and queries each of
->> them and returns only a positive response. This way it could query
->> both local LAN DNS servers and for local names, only one of them would
->> resolve the name. This is a bit complicated to do if you're not
->> permanently connected to a VPN, or if you move from one local DHCP
->> network to another (like with a laptop). And it requires additional
->> software, setup and configuration, and probably intensive maintenance
->> and care. All of this makes WireGuard a pretty ugly alternative to
->> OpenVPN where all of this already works. Despite all the disadvantages
->> of OpenVPN.
->>
->> I'm asking if it's possible to integrate such a local DNS forwarder
->> into the Windows client application. I imagine it would start up
->> automatically once the first tunnel is activated. And it would replace
->> the local system's DNS server setting for as long as it's active (like
->> the tunnel-configured DNS server already does). And it would query the
->> original locally configured DNS server and all configured DNS servers
->> for the active tunnels. It would then be able to resolve local names
->> and tunnel-remote names without any additional work on the user end.
->> The user wouldn't have to perform many complex tasks upon activating
->> or deactivating a tunnel. This would make WireGuard be as simple and
->> productive as I believe it was intended to be (but isn't yet).
->>
->> This probably stops working as soon as other VPN software is used in
->> parallel, but the current "DNS" setting has the same limitation, it's
->> better than nothing and most of the time, you only run a single VPN
->> software.
->>
->> Please let me know what you think of it.
->>
->> -Yves
+this is a really difficult judgement to make, which comes up every time
+Microsoft EOLs an operating system, because it really often is still heavil=
+y
+used.
+
+My stance is that we as open source developers don't owe anybody anything,
+and if Windows 7 users really care about WireGuard they can create, share
+and maintain a patchset that implements the fixes themselves. You shouldn't=
+
+be the one paying the price (i.e. time spent) because people insist on usin=
+g
+an EOL'd operating system, which presents a security issue in many other
+aspects as well. If they can't do it themselves, they could pay somebody to=
+
+deal with such a patchset, or just keep running the last supported version
+of WireGuard.
+
+In an utilitarian sense, because you're losing time over Windows 7 support,=
+
+everyone else is negatively affected, because it's time you could spend on
+aspects of WireGuard everyone benefits from, and not only those running an
+EOL'd operating system.
+
+To put it shortly, I'm completely in support of sunsetting Windows 7
+support, or even just keeping the Windows-7-changes in the next release for=
+
+one last time and then immediately dropping them right afterwards in the
+git-master. I'm not sure what you exactly mean with sunsetting, which is wh=
+y
+I've given the above "drastic" proposal in case sunsetting means dealing
+with this nonsense for another year or something.
+
+With best regards
+
+Laslo Hunhold
+
+
+-- 
+L'absence de virus dans ce courrier =C3=A9lectronique a =C3=A9t=C3=A9 v=C3=
+=A9rifi=C3=A9e par le logiciel antivirus Avast.
+https://www.avast.com/antivirus
+
