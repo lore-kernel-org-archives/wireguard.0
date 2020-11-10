@@ -7,73 +7,67 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 159D2C388F7
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 10 Nov 2020 09:24:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C692C388F7
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 10 Nov 2020 10:48:12 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 07CD120781
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 10 Nov 2020 09:24:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 407AA205CB
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 10 Nov 2020 10:48:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Axi42+Og"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 07CD120781
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P6F9/aJO"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 407AA205CB
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fd71524a;
-	Tue, 10 Nov 2020 09:20:21 +0000 (UTC)
-Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com
- [2607:f8b0:4864:20::42b])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 8263e35f
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5b7ee294;
+	Tue, 10 Nov 2020 10:44:28 +0000 (UTC)
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com
+ [2a00:1450:4864:20::236])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f7f86964
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 10 Nov 2020 09:20:20 +0000 (UTC)
-Received: by mail-pf1-x42b.google.com with SMTP id q5so7892335pfk.6
- for <wireguard@lists.zx2c4.com>; Tue, 10 Nov 2020 01:24:00 -0800 (PST)
+ Tue, 10 Nov 2020 10:44:25 +0000 (UTC)
+Received: by mail-lj1-x236.google.com with SMTP id l10so14131916lji.4
+ for <wireguard@lists.zx2c4.com>; Tue, 10 Nov 2020 02:48:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=content-transfer-encoding:from:mime-version:subject:date:message-id
- :references:cc:in-reply-to:to;
- bh=AG0IZtikyNoKidLBi4Nlq9b3ai9jUEXyY83jS2uIdh4=;
- b=Axi42+Ogi+HKgS0ZJxVZ502s1psvMPDg5QX8sLdkxTmR8f/0+xMjIQ29iGDxPhuuKx
- OHlUdrZhNDYy28kMdmO7Vy5ZBxorRBQYKBjWKzXLB7hRgX1TjBuZZbu886+fF54sxejX
- s35ESdY/FgPfNZ44BhDrFQJdXUIrCWiFdsydSrRhTcbBv8fZR/1TpHR93GpdpMn6TIrs
- NxYhUJfw339BAYf3JHHz02DQ++YDo98fqEemQr6x/7azVTwBwz9iAAJwD1Gm3U/NQN7r
- 7nLFUuCUN9rLuh+gg5KMMgFkXnewicoeY6aw3sAwfOG37P99gWNcyw6d3k6jmtuITu/V
- pmdA==
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :content-transfer-encoding;
+ bh=I9/4dohZ4XpNp1S2eKeazQ+oj98GQh2ficZYh6OT6Zc=;
+ b=P6F9/aJObccD3cvBAh18cusVafzY0LH0WX/uQPfqQvnYWnklasJHBOUvVyLFPyegoy
+ aPjYOJasuBR/ghbseWEYYPJtpAvgt9vyeMMwFgExFsTxDpXZLgUrIfVC9kCsOEu23qab
+ HyIa5LzHmXGZnMZPOwIcKkUI8VJkE6tfxrPAMIevb+RSz/mnZQdCPQKFIrme800nisy5
+ YWosoEP8EaS8DjyJoxW52hM13wKOjtmRohi4r+4KquusrCLdYBmJ8Kb8BNhtVjgssDc/
+ 6X7XFQY5Yp2fPduW1ZC1U4fiNtMRCKfjLmqdXBx9oRJV6uzKpHaM2gaWse1+tPGEkMO1
+ +nIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:content-transfer-encoding:from:mime-version
- :subject:date:message-id:references:cc:in-reply-to:to;
- bh=AG0IZtikyNoKidLBi4Nlq9b3ai9jUEXyY83jS2uIdh4=;
- b=Dcu7Zzo13zrZ1Xvrcn4LI1CwV5/wdMn1m+w5+Em4i8mzkG9uIfUcRg5Hm2uGpvlfSI
- E42pCk3Xemn3FSgtSrxNbXjYkRJK+FpPi/VRhr9aync+rIC9ZeYzP+DADz+sGTq080F5
- u5I6UA941ZblIjKJosY5yNPRsJSZbm0OsKKHjoqym5py4Xf8UZz+qEeM3O0iR8lvQg7v
- MuEeJxE+cskHX0MC2x5NcVD75VlQYMRVnXjvzihmvkwXag13ID1/09SNDi/TYC9TmRfO
- KFkO/ogOK67KOw97wvbII8s2RghkY0Hswo6zjPztzNqh0i0ocP7GMWrStZH2MwrVV6qL
- XMog==
-X-Gm-Message-State: AOAM530vvFrqonf/lONa6avCdMxxG5zFhlUgW5OwbLr4LTLlEjxKrfa8
- WcY8eahHngXFasFO+t065ho=
-X-Google-Smtp-Source: ABdhPJyBd4Eo7Wj7lTObmIxYKxt8/5FOI77SIhAVGPmWkngxjoOXbXcrYIGnHIWH+OofYdPy3ViMTw==
-X-Received: by 2002:a62:de44:0:b029:18a:ae59:4d74 with SMTP id
- h65-20020a62de440000b029018aae594d74mr16706334pfg.72.1605000239971; 
- Tue, 10 Nov 2020 01:23:59 -0800 (PST)
-Received: from [192.168.1.224] ([157.245.162.40])
- by smtp.gmail.com with ESMTPSA id j13sm13324760pfd.97.2020.11.10.01.23.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Nov 2020 01:23:59 -0800 (PST)
-Content-Type: text/plain; charset=utf-8
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:content-transfer-encoding;
+ bh=I9/4dohZ4XpNp1S2eKeazQ+oj98GQh2ficZYh6OT6Zc=;
+ b=MyLSEOvegOWv6fz2+8S7Elmo1o89wqO/ev6tz78ATzETzZSwzhXbDxhvC4HBEfdZYZ
+ usTuUYjyB3eFI444kiCpfJkxhUHLiYxOTwE5vyHPQVFagNMnRA+BrbMuWBMCWgoIuMtI
+ 0mEn7egwY3zxv9Puvm/z7S41DOCjFJXMYyE6HSrhx/rUCU2bOEd/iqUSbXinYXwBv+Fz
+ qEKl15Yv+e1DQc4uwEpFa4e+BRD/EBzGTLmsLE90V96SZJMqHPgwTGR1JsP1qc7akbjT
+ T9BDy/wmLATdwwHQYEPB2vrKwR8OXuZX2sSOSybGAFC5MO13qdTB+mwWDkkZPEMMGkpl
+ vG/w==
+X-Gm-Message-State: AOAM530kO90RJeuFjO87yATRqHMoaObmLQW+Si7w6cesZUccOEzrkr+U
+ qOd1cCQZGmkFc7s73KEpHhoex+z6swswmyE0NwytDI/q
+X-Google-Smtp-Source: ABdhPJyPVM9AFvajaT3UBFiwTjttBPvRK6IFIIhfL3db3sikq1N0VWS3Hh29EVQ6XO3SeIhrnbIyo6vcTprBhx3Cnpw=
+X-Received: by 2002:a2e:9842:: with SMTP id e2mr31744ljj.373.1605005284417;
+ Tue, 10 Nov 2020 02:48:04 -0800 (PST)
+MIME-Version: 1.0
+References: <CADJb3qRk2nuvQdyF1+=9yf84annmJ+nyapdokFx1o-WcVfvfKQ@mail.gmail.com>
+ <A64A6CAC-E8CA-41AB-8CCD-E9E379591C91@tomcsanyi.net>
+ <CADJb3qTGhm8a=aAA8_6ZgEHHFyBZyOch_GRBkC1p4yym28fN-Q@mail.gmail.com>
+In-Reply-To: <CADJb3qTGhm8a=aAA8_6ZgEHHFyBZyOch_GRBkC1p4yym28fN-Q@mail.gmail.com>
+From: Yves Goergen <yves.goergen@gmail.com>
+Date: Tue, 10 Nov 2020 11:47:53 +0100
+Message-ID: <CADJb3qSukdQkGYdbG3TvLccwZ4SxvWGO2VML7rsjDKaRD6FzaQ@mail.gmail.com>
+Subject: Fwd: Add local DNS forwarder to Windows client
+To: wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-From: Mo Balaa <buddybalaa@gmail.com>
-Mime-Version: 1.0 (1.0)
-Subject: Re: Transient Connection Issue
-Date: Tue, 10 Nov 2020 03:23:57 -0600
-Message-Id: <0A5C340C-6B05-4C75-9F0F-B72A56D55FBB@gmail.com>
-References: <589074B2-A2F2-4B87-AA27-0B60704A5798@tomcsanyi.net>
-Cc: Ashish Madeti <ashish@provakil.com>, wireguard@lists.zx2c4.com,
- Pulkit Anand <pulkit@provakil.com>
-In-Reply-To: <589074B2-A2F2-4B87-AA27-0B60704A5798@tomcsanyi.net>
-To: "Tomcsanyi, Domonkos" <domi@tomcsanyi.net>
-X-Mailer: iPad Mail (18A8395)
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -88,60 +82,124 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Check your MTU across your paths. In my experience, transient connection iss=
-ues are due to MTU oversize.=20
+Oops, Google Mail cannot reply to all including the mailing list? Why
+can't we have a normal web forum here?
 
 
-> On Nov 10, 2020, at 2:20 AM, Tomcsanyi, Domonkos <domi@tomcsanyi.net> wrot=
-e:
->=20
-> =EF=BB=BFHi Ashish,
->=20
-> With the amount of information given it is very hard to comment anything m=
-eaningful.
-> Have you gone through standard network connectivity issue investigation st=
-eps?
-> E.g.: does ping work? Do you have correct routes setup? What does wg show t=
-ell during downtime? What does tcpdump shows on the wire?
->=20
+---------- Forwarded message ---------
+Von: Yves Goergen <yves.goergen@gmail.com>
+Date: Di., 10. Nov. 2020 um 11:45 Uhr
+Subject: Re: Add local DNS forwarder to Windows client
+To: Tomcsanyi, Domonkos <domi@tomcsanyi.net>
+
+
+Hello Domi,
+
+It's not quite that simple. I'll have to find a DNS proxy that does
+what is required to make this scenario work. There is no
+hostname/domain pattern because all hosts on a LAN have no dot in
+them, just names alone. And nobody knows what names are valid in a
+certain network, so all have to be tried. Only one of them should
+resolve for a local name. All of them might resolve for global names.
+If all are equal, that's fine. If not, we have a problem anyway.
+
+But which DNS servers to query depends on what VPN connections are
+active. Only the WG client knows that because it's managing the
+connections/tunnels. A separate DNS proxy would need to query the WG
+state and also know what DNS servers can be found in each tunnel. This
+would best be configured in the tunnel configuration. Anything else
+makes it complicated and error-prone.
+
+I really can't imagine why DNS resolution should be very specific.
+Nobody uses DNS in local networks? Do you access all your LAN machines
+by their IP address? If not, why would you want to do it over a VPN?
+This is basically what you're suggesting.
+
+Imagine you have tunnels to two separate local networks active. How
+would you set things up, on Windows or Linux, to resolve local host
+names from both remote LANs as well as the internet in your default
+browser? Internet names should prefer the local DNS resolver, not go
+through any potentially slow VPN.
+
+-Yves
+
+Am Di., 10. Nov. 2020 um 09:14 Uhr schrieb Tomcsanyi, Domonkos
+<domi@tomcsanyi.net>:
+>
+> Hello Yves,
+>
+> I am by no means a person with authority to make such a decision, but you=
+r usecase seems to be so specific I would not imagine it would make sense t=
+o blow up the size and complexity of the Windows wg with a local DNS forwar=
+der.
+> I think it is way better if people just install a local DNS resolver/forw=
+arder on their own. There a ton of choices available, from simply python sc=
+ripts to large scale servers. You could easily configure any of these to di=
+stinguish which DNS server to ask based on the TLD portion of your local do=
+main or whatever other distinguisher you have.
+> Then the only thing you need to do is tell your system (either via wg or =
+by other means) to use the local resolver and the case is solved :).
+> Also I am pretty sure one of the main philosophies behind wg is to be the=
+ same as much as possible on all platforms. Adding a DNS resolver would aga=
+in mean a lot of complications when compared to e.g. the Linux version, sin=
+ce most Linux distributions already feature some kind of a local resolver b=
+y default.
+>
 > Cheers,
 > Domi
->=20
->=20
->> 10.11.2020 d=C3=A1tummal, 0:21 id=C5=91pontban Ashish Madeti <ashish@prov=
-akil.com> =C3=ADrta:
->>=20
->> =EF=BB=BFHi All
->>=20
->> Background: I am using Wireguard VPN to secure intra-server
->> communications among my 5-6 ubuntu servers sitting in different data
->> centers.
->>=20
->> Today, we had a downtime of around 15 minutes because the server
->> running nginx was not able to connect to the web-application server
->> using the wireguard interface [0]. I ascertained that it was not a
->> connection issue between nginx server and web-application server by
->> trying to connect to web-application server via its public IP, which
->> worked [1]. I even tried restarting wireguard service [2] on both
->> nginx and web-application server but to no avail.
->> So, before investigating further, I decided to first route all the
->> traffic to a failover server (which was also a part of the VPN). It
->> took me around 5-10 minutes to pull the latest configuration and
->> application changes onto the failover server and then route all
->> traffic to it. Once our site was up, I again tried connecting to the
->> original web-application server from nginx server, using curl, but
->> this time it worked fine.
->>=20
->> Can anybody help me understand the problem or anything I should try if
->> it happens again?
->>=20
->> Please let me know if you need any more information.
->>=20
->> [0] Tried via curl. curl 10.0.0.10:8080. Received the error
->> 'Connection timed out'
->> [1] curl w.x.y.z:8080 returned the html content as expected.
->> [2] sudo service wg-quick@wg0 restart
->>=20
->> Regards
->> --=20
->> Ashish Madeti
+>
+>
+> > 09.11.2020 d=C3=A1tummal, 23:46 id=C5=91pontban Yves Goergen <yves.goer=
+gen@gmail.com> =C3=ADrta:
+> >
+> > =EF=BB=BFHello,
+> >
+> > I've already used WireGuard to connect to private networks and it's
+> > quite easy once you figure out how to set it up. (Most tutorials are
+> > outdated and haven't been updated, new ones haven't been written.) One
+> > thing that's really missing however is DNS support. All I can do now
+> > is connect to IP addresses. Names are not resolvable on the other
+> > side. If I add the "DNS" directive to my client configuration, it
+> > replaces the local DNS resolver and *all* lookups go to that server
+> > instead. This isn't working either because I'm on two local networks
+> > and each has its own local DNS server that can only resolve its own
+> > local names (and forward the rest to the internet).
+> >
+> > Specifying both networks' DNS servers also fails because when
+> > resolving a name, one of them is chosen at random (and the other one
+> > isn't regarded) and then you won't be able to resolve some of the
+> > names some of the time. This is also very frustrating. And it wouldn't
+> > scale to multiple active tunnels.
+> >
+> > The solution I've read about is to set up a local DNS forwarder that
+> > can be configured so that it uses multiple servers and queries each of
+> > them and returns only a positive response. This way it could query
+> > both local LAN DNS servers and for local names, only one of them would
+> > resolve the name. This is a bit complicated to do if you're not
+> > permanently connected to a VPN, or if you move from one local DHCP
+> > network to another (like with a laptop). And it requires additional
+> > software, setup and configuration, and probably intensive maintenance
+> > and care. All of this makes WireGuard a pretty ugly alternative to
+> > OpenVPN where all of this already works. Despite all the disadvantages
+> > of OpenVPN.
+> >
+> > I'm asking if it's possible to integrate such a local DNS forwarder
+> > into the Windows client application. I imagine it would start up
+> > automatically once the first tunnel is activated. And it would replace
+> > the local system's DNS server setting for as long as it's active (like
+> > the tunnel-configured DNS server already does). And it would query the
+> > original locally configured DNS server and all configured DNS servers
+> > for the active tunnels. It would then be able to resolve local names
+> > and tunnel-remote names without any additional work on the user end.
+> > The user wouldn't have to perform many complex tasks upon activating
+> > or deactivating a tunnel. This would make WireGuard be as simple and
+> > productive as I believe it was intended to be (but isn't yet).
+> >
+> > This probably stops working as soon as other VPN software is used in
+> > parallel, but the current "DNS" setting has the same limitation, it's
+> > better than nothing and most of the time, you only run a single VPN
+> > software.
+> >
+> > Please let me know what you think of it.
+> >
+> > -Yves
