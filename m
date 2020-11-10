@@ -7,78 +7,64 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28DFBC388F7
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 10 Nov 2020 13:04:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 27125C388F7
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 10 Nov 2020 13:05:35 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 5608F2064B
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 10 Nov 2020 13:04:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 65A1F2064B
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 10 Nov 2020 13:05:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YFYAhuj6"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 5608F2064B
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MTlIS1y9"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 65A1F2064B
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8cb9706e;
-	Tue, 10 Nov 2020 12:59:04 +0000 (UTC)
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com
- [2a00:1450:4864:20::329])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 762d7167
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 725e8cc8;
+	Tue, 10 Nov 2020 12:59:05 +0000 (UTC)
+Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com
+ [2607:f8b0:4864:20::82f])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 894d34b6
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 10 Nov 2020 12:52:25 +0000 (UTC)
-Received: by mail-wm1-x329.google.com with SMTP id 19so1355095wmf.1
- for <wireguard@lists.zx2c4.com>; Tue, 10 Nov 2020 04:56:07 -0800 (PST)
+ Tue, 10 Nov 2020 12:54:24 +0000 (UTC)
+Received: by mail-qt1-x82f.google.com with SMTP id t5so8422547qtp.2
+ for <wireguard@lists.zx2c4.com>; Tue, 10 Nov 2020 04:58:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:to:references:in-reply-to:subject:date:message-id:mime-version
- :content-transfer-encoding:thread-index:content-language;
- bh=sOkrzrBqofO8imR4FzlYg8eIPyrCSDq0JQa1aw0XnFQ=;
- b=YFYAhuj63TKLN7W3+bx7wm3je5lVj4FQ/PEWB65iszZ5b9eZitmQENkcaQg7lFiAvV
- IG5a+Tmkp0KvARTvZuqnZW6x96EwMOf2l96SZr+LddsbWHC85WkHjBmEBfAHfB1tTdsh
- a2sYK4Ut3S+r6PlwHlF5AEzT2agECtdJ4J9Fu9QTaC+p3C4qv8aZRp/fCl0yrkZXXSB0
- 4CU8eDPvl1AnOda0DIPd6Nr0HGPxE0moFJCG8THiXzbwoKY5BL9wGYNt9tb8JD1XPbsJ
- kt0M+vl6D+4BqgDMkh3F3v+Lgh/EDs3yZWRQWHMtiWFvCsecydESl7yDHDP2BQEqsy30
- wUVw==
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=YDboq6OTgyyg6Ut1gweBXJttt7B4AjRoe4qYddIg2qc=;
+ b=MTlIS1y90u1/37DcVtQ20nfps/LMDmIqn7zAgE3zg6Jq7vXg5HcLEsw7/T6amCunaz
+ J9/tzrUWCMb/DlM/hiOff65EieHhzPUP7jeTJpfzm1JHg3efkVpOygLhD2XlMPlDQkqY
+ rLR8V3IoIew8pqbOYFOu9aGTfELRk2l5bBQ5auDwOI9XgSIVp9jGSiMUkL0ETquOD5tX
+ lZFRp7jGBpAREy1IjE/7/oNRwrmZUmRvx3mcU+r+lJ5VDyS8bElu20SffA1jNzbT3qdt
+ uARZXq4ywgT9WGtkSBIVowDc3u+TYpUlyyM/csvZL0RXp2fX8WWjy33g0O4AEzP3Nd4a
+ MNPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:references:in-reply-to:subject:date
- :message-id:mime-version:content-transfer-encoding:thread-index
- :content-language;
- bh=sOkrzrBqofO8imR4FzlYg8eIPyrCSDq0JQa1aw0XnFQ=;
- b=HaojMlqNxIE1lD7OfAF7+0BliWxX7cDrlmJ/+LkMedKTdwg7ooFs66Hjz+CjHpm/rq
- 8rWzY9ioaxlC/OuVamhwyDDKLm8RZL3+s1asouYQpjExVTO9CFDyeS510DUcVXYuMrny
- mht5dluQPo2dq22+LCKv56drJXygeP/BMODNtHNftMk9fSUe75O7P17J8N1KP2bbRQ3/
- akaQ+UFkn1NJpfE+q2voweOso92H2E2Y27QJyChJAyv1VUO6VX79NDloOIkdF8PnMwj7
- POdo3omPxo3eJKmw+kSq6MqnKsZBDdv6/fiuQ6/hzr60Lq86wdq2BEB7ZX94CK8vgudw
- YwFA==
-X-Gm-Message-State: AOAM530A5GIJMV1mYjZWsvETi3M15CBnIYslY+XOCgnjCmvsf2wV4a3l
- TXbwrtID48LZ/OExQZX9PL1ICbHBFKfgOg==
-X-Google-Smtp-Source: ABdhPJybAmf/Xln9Rp5DS4TMqdTbNZ+6U0x+Lpw0JxHGnFQvggWheLbZ2B/Rvah37JGshntiNvbPRg==
-X-Received: by 2002:a1c:80cb:: with SMTP id b194mr4617986wmd.73.1605012966044; 
- Tue, 10 Nov 2020 04:56:06 -0800 (PST)
-Received: from TICTACPC2 ([2a02:120b:2c7d:320:84a2:f5df:5eb4:2a22])
- by smtp.gmail.com with ESMTPSA id g138sm2827798wme.39.2020.11.10.04.56.05
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 10 Nov 2020 04:56:05 -0800 (PST)
-From: <samuel.progin@gmail.com>
-To: <wireguard@lists.zx2c4.com>
-References: <CAHmME9rW1e+rRc8q+-_eLR=U9OTn+Sn84ECJtGFY=Hjg8kzfEQ@mail.gmail.com>
- <20201110134743.1615fcf4@frign.de>
-In-Reply-To: <20201110134743.1615fcf4@frign.de>
-Subject: RE: Should we sunset Windows 7 support?
-Date: Tue, 10 Nov 2020 13:56:06 +0100
-Message-ID: <00fa01d6b760$da95c480$8fc14d80$@gmail.com>
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=YDboq6OTgyyg6Ut1gweBXJttt7B4AjRoe4qYddIg2qc=;
+ b=PwRmrN8mdyshhzRgEMzpyx5B7ktmBhnPp5ctknEyGiH9pohPazlg6dpQevFmzxKYWO
+ tPMtGvuSWAod3hxH4YwFJAh5KvhIlNoreosV+mK8Bz3Tu6qvo/TDStH3tqOIR26OC5wr
+ VNJAYj47FenBslcjU5vWJbuE8NsM5PIXDT1UXsdfBZw7HkI/Hq6tfU+gJpeFK02+94z9
+ OyN6S1A9iKYIZQWZbINOoQ/1ms16DtiougUX78zV8sEMHhgrCKBZsjQjtU6UW88qlCvs
+ KwbWXaEqZRQgBrdNEm2a9IG1y8g9ED7DSBki8Wh8VEe1UFvDEXhguqGfhLZcGw1M2QNa
+ ooeA==
+X-Gm-Message-State: AOAM531Rr063KA1vPexIaQYXs4HGH/HnwYjl1BuAqtcRM7023iatJOzX
+ 7PlKNWy7nmMccOCPWWLNeLG1DPm4Z2nPqwIRQPEoEJOG
+X-Google-Smtp-Source: ABdhPJz2C8AIEWtDyQbqQrUc5F8sLWkdf2EYu4kQFfNxiv9hT/LR5qqHmk7nRJjkOS//aD2iyD0vdFvbihRIwSLvOQY=
+X-Received: by 2002:ac8:4e14:: with SMTP id c20mr18311092qtw.5.1605013085564; 
+ Tue, 10 Nov 2020 04:58:05 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQGiIb/2UHAuS8Fc7FjKD9QRhcCEUwJbQa6fqhej6jA=
-Content-Language: fr-ch
-X-Antivirus: Avast (VPS 201109-4, 09.11.2020), Outbound message
-X-Antivirus-Status: Clean
+References: <CAHmME9rW1e+rRc8q+-_eLR=U9OTn+Sn84ECJtGFY=Hjg8kzfEQ@mail.gmail.com>
+In-Reply-To: <CAHmME9rW1e+rRc8q+-_eLR=U9OTn+Sn84ECJtGFY=Hjg8kzfEQ@mail.gmail.com>
+From: Isaac Boukris <iboukris@gmail.com>
+Date: Tue, 10 Nov 2020 13:57:54 +0100
+Message-ID: <CAC-fF8Q8VV7Y1-xPfU7XAfAsGddANfuB8i1oC7uYP9MJQix6yg@mail.gmail.com>
+Subject: Re: Should we sunset Windows 7 support?
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 X-Mailman-Approved-At: Tue, 10 Nov 2020 13:58:56 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -94,92 +80,43 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Dear all,
+Hello,
 
-FWIW, Microsoft sells extended support (Windows 7 ESU) to corporate
-customers using Pro or Enterprise editions. It can be extended until Jan
-10th 2023.
+New to the list :)
 
-https://docs.microsoft.com/en-us/troubleshoot/windows-client/windows-7-eos-=
-f
-aq/windows-7-extended-security-updates-faq
-
-Kind regards.
-
-Samuel
-
------Original Message-----
-From: WireGuard <wireguard-bounces@lists.zx2c4.com> On Behalf Of Laslo
-Hunhold
-Sent: mardi, 10 novembre 2020 13:48
-To: wireguard@lists.zx2c4.com
-Subject: Re: Should we sunset Windows 7 support?
-
-On Tue, 10 Nov 2020 13:27:20 +0100
-"Jason A. Donenfeld" <Jason@zx2c4.com> wrote:
-
-Dear Jason,
-
-> Windows 7 has been EOL'd by Microsoft since January of this year. It 
-> is no longer receiving security updates or fixes. This email is to get 
-> the conversation started about doing the same with WireGuard for 
+On Tue, Nov 10, 2020 at 1:30 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+>
+> Hi,
+>
+> Windows 7 has been EOL'd by Microsoft since January of this year. It
+> is no longer receiving security updates or fixes. This email is to get
+> the conversation started about doing the same with WireGuard for
 > Windows.
-> [...] Do we really want to keep maintaining gross stuff like this? It 
-> makes me uncomfortable to have kludges like that sitting around in the 
-> code. Shouldn't I write an auto-downloader that then checks hashes? 
-> Shouldn't I build this into the installer? Shouldn't I....
-> waste tons of time supporting Windows 7 better?
-> 
+>
+> Supporting Windows 7 is an ongoing maintenance burden. For example, we
+> use SHA2 signatures instead of SHA1 signatures for our drivers, which
+> is not something we want to compromise on, and as a result Windows 7
+> users must have KB2921916 installed. But Microsoft never supplied
+> KB2921916 via Windows Update and it removed all Windows 7 hotfixes
+> from its webpage last year. So in order to keep supporting this, we're
+> forced to add clunky disgusting code like this:
+> https://git.zx2c4.com/wireguard-windows/commit/?id=b63957dc830e39c94844d2f0d32ba29575991e44
+> Keen readers will wince at all the layering violations there. Do we
+> really want to keep maintaining gross stuff like this? It makes me
+> uncomfortable to have kludges like that sitting around in the code.
+> Shouldn't I write an auto-downloader that then checks hashes?
+> Shouldn't I build this into the installer? Shouldn't I.... waste tons
+> of time supporting Windows 7 better?
+>
 > Probably not.
-> 
-> But I know so many users are still using Windows 7. I'd like to hear 
-> from you to understand why, in order to assess when is the right 
+>
+> But I know so many users are still using Windows 7. I'd like to hear
+> from you to understand why, in order to assess when is the right
 > moment to sunset our Windows 7 support.
-> 
-> So, if you care for Windows 7, please pipe up! We're not going to 
-> remove support for it overnight, and we're not prepared yet to 
-> announce any sort of formal deprecation plan, but the world is moving 
-> on at some point.
 
-this is a really difficult judgement to make, which comes up every time
-Microsoft EOLs an operating system, because it really often is still heavil=
-y
-used.
+I've had some experience in the past (~5 years ago) with VPN on ATMs,
+and we had to support Windows XP at the time since the ATM software
+didn't support anything else and was very slow to get updated (several
+vendors).
 
-My stance is that we as open source developers don't owe anybody anything,
-and if Windows 7 users really care about WireGuard they can create, share
-and maintain a patchset that implements the fixes themselves. You shouldn't=
-
-be the one paying the price (i.e. time spent) because people insist on usin=
-g
-an EOL'd operating system, which presents a security issue in many other
-aspects as well. If they can't do it themselves, they could pay somebody to=
-
-deal with such a patchset, or just keep running the last supported version
-of WireGuard.
-
-In an utilitarian sense, because you're losing time over Windows 7 support,=
-
-everyone else is negatively affected, because it's time you could spend on
-aspects of WireGuard everyone benefits from, and not only those running an
-EOL'd operating system.
-
-To put it shortly, I'm completely in support of sunsetting Windows 7
-support, or even just keeping the Windows-7-changes in the next release for=
-
-one last time and then immediately dropping them right afterwards in the
-git-master. I'm not sure what you exactly mean with sunsetting, which is wh=
-y
-I've given the above "drastic" proposal in case sunsetting means dealing
-with this nonsense for another year or something.
-
-With best regards
-
-Laslo Hunhold
-
-
--- 
-L'absence de virus dans ce courrier =C3=A9lectronique a =C3=A9t=C3=A9 v=C3=
-=A9rifi=C3=A9e par le logiciel antivirus Avast.
-https://www.avast.com/antivirus
-
+Regards.
