@@ -2,41 +2,73 @@ Return-Path: <SRS0=x2E1=EQ=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA9A0C388F7
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 10 Nov 2020 14:21:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 141A5C388F7
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 10 Nov 2020 15:39:17 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 47560207D3
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 10 Nov 2020 14:20:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 47560207D3
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=romanrm.net
+	by mail.kernel.org (Postfix) with ESMTPS id 072C22068D
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 10 Nov 2020 15:39:15 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MHTnxqhC"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 072C22068D
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6e660ff4;
-	Tue, 10 Nov 2020 14:17:16 +0000 (UTC)
-Received: from rin.romanrm.net (rin.romanrm.net [51.158.148.128])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id bf757651
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4442fc66;
+	Tue, 10 Nov 2020 15:35:05 +0000 (UTC)
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com
+ [2a00:1450:4864:20::12a])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id cd67287d
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 10 Nov 2020 14:17:14 +0000 (UTC)
-Received: from natsu (unknown [IPv6:fd39::e99e:8f1b:cfc9:ccb8])
- by rin.romanrm.net (Postfix) with SMTP id 23E3F7D9
- for <wireguard@lists.zx2c4.com>; Tue, 10 Nov 2020 14:20:55 +0000 (UTC)
-Date: Tue, 10 Nov 2020 19:20:55 +0500
-From: Roman Mamedov <rm@romanrm.net>
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: No longer compiles on 5.4.76
-Message-ID: <20201110192055.1ab28462@natsu>
-In-Reply-To: <20201110185656.541102fe@natsu>
-References: <20201110185656.541102fe@natsu>
+ Tue, 10 Nov 2020 15:35:02 +0000 (UTC)
+Received: by mail-lf1-x12a.google.com with SMTP id e27so18176085lfn.7
+ for <wireguard@lists.zx2c4.com>; Tue, 10 Nov 2020 07:38:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=8C1dIYZEJ8xiWs6uXvwXgmFmSNlC1GkzhHHvluai6NE=;
+ b=MHTnxqhCJUXqdavYJd/GZ89vad89R4gsnctUHkQhPlHgYBoZNG5UnmGA9msU04fsL1
+ Z3ATspe0Ib70xxLhUfqUpu6ilbx12rIBs3dyacGp/e36khudMz26J+N3p9tfCVGm63lc
+ m4U6zVLB8jDN3c6KEf3LJ9lwx0QopHv9PMouztVXEAkJntfSURvcp25Bg0tEdS/Ra/NP
+ 2OqVU51lejM9PBd+YaIf1I/H3kyhTvAx0ktNlZXKRBZhgewkpvE9unpI9ctohULt0XRS
+ E5KoVoxaHXWFTc5ZQ0+n6uDTl3Qykz4Ny0IqmdW9N5/y1RqqC46bWRAvlIhMWyi6WYPy
+ CfIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=8C1dIYZEJ8xiWs6uXvwXgmFmSNlC1GkzhHHvluai6NE=;
+ b=McF3tGicSD2he31ZNNX5ZiKdbnVD4swJmQJtW0mh8Sm5ex4md3+EUmElqW2C9VuTb4
+ 7h/XWrgsrB4yYO9T8BtEZ6yInCejleQJuOF9eHekVt4a0h8qwJ1XKSIOAsDufwyiReQe
+ rvzcCC7Cl68DUYnKf+7Uj6xlm8FXGp3Ivr1DiuDmOcaTPHmD6EENvmycF1Dd5hbnwaBl
+ 3KjESylEEo9LwhwkBQO9BCd9zUemK2MUXtFCo+qKgj+wF1SpxLVDqCWK2m26OuSpkbzw
+ O3OkFejlmkBnseoTFslGgR/ca5/64MYI1zAx4ABOXsQDmmvb5RMMzqSnp/H3I/vHvZqJ
+ cJGQ==
+X-Gm-Message-State: AOAM533XizfqpegLmmrLcTFbpxc23OTk5TFBRDy4vEW6DKD/zIOifSD+
+ OuqUpdLmb10AOOAL4cHN+u+BepJlqGnJjt9iBWI=
+X-Google-Smtp-Source: ABdhPJy+oOWPxNF7vRVr4QGXFI+QYJI1ov4frGA48uuZ2qx8iGMTLAp9iWuHl35Q1TAGh4ZHmiHAJJQ31ScKcUwRLUc=
+X-Received: by 2002:a19:f00b:: with SMTP id p11mr7413078lfc.585.1605022718907; 
+ Tue, 10 Nov 2020 07:38:38 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+References: <CADJb3qRk2nuvQdyF1+=9yf84annmJ+nyapdokFx1o-WcVfvfKQ@mail.gmail.com>
+ <A64A6CAC-E8CA-41AB-8CCD-E9E379591C91@tomcsanyi.net>
+ <d62f54e7-cb5f-7baf-9320-19903b7c5d51@pcfreak.de>
+In-Reply-To: <d62f54e7-cb5f-7baf-9320-19903b7c5d51@pcfreak.de>
+From: Yves Goergen <yves.goergen@gmail.com>
+Date: Tue, 10 Nov 2020 16:38:28 +0100
+Message-ID: <CADJb3qRapO=3-fuyeS6iC8EnM34TxTxpZBr1uyVhhTmfjgOmwA@mail.gmail.com>
+Subject: Re: Add local DNS forwarder to Windows client
+To: Der PCFreak <mailinglists@pcfreak.de>
+Cc: wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -51,172 +83,125 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Tue, 10 Nov 2020 18:56:56 +0500
-Roman Mamedov <rm@romanrm.net> wrote:
+I just read through the 'upstream_servers' section of the Deadwood DNS
+resolver. And it doesn't seem to do what I need. I'll have to specify
+a fixed DNS server for a fixed name suffix. This is not possible on
+LANs where there are no suffixes, as I already described. Setting
+multiple upstreams for the same '.' suffix again results in a lookup
+in one of them, not both.
 
-> Hello,
-> 
-> Building kernel 5.4.76 with WireGuard v1.0.20200908 fails for me now with:
-> 
->   AS [M]  net/wireguard/crypto/zinc/chacha20/chacha20-x86_64.o
-> In file included from <command-line>:
-> ././net/wireguard/compat/compat-asm.h:44: warning: "SYM_FUNC_START" redefined
->  #define SYM_FUNC_START ENTRY
->  
-> In file included from ././net/wireguard/compat/compat-asm.h:9,
->                  from <command-line>:
-> ./include/linux/linkage.h:218: note: this is the location of the previous definition
->  #define SYM_FUNC_START(name)    \
->  
-> In file included from <command-line>:
-> ././net/wireguard/compat/compat-asm.h:45: warning: "SYM_FUNC_END" redefined
->  #define SYM_FUNC_END ENDPROC
->  
-> In file included from ././net/wireguard/compat/compat-asm.h:9,
->                  from <command-line>:
-> ./include/linux/linkage.h:265: note: this is the location of the previous definition
->  #define SYM_FUNC_END(name)    \
->  
-> net/wireguard/crypto/zinc/chacha20/chacha20-x86_64.S: Assembler messages:
-> net/wireguard/crypto/zinc/chacha20/chacha20-x86_64.S:123: Error: invalid character '(' in mnemonic
-> net/wireguard/crypto/zinc/chacha20/chacha20-x86_64.S:185: Error: invalid character '(' in mnemonic
-> net/wireguard/crypto/zinc/chacha20/chacha20-x86_64.S:187: Error: invalid character '(' in mnemonic
-> net/wireguard/crypto/zinc/chacha20/chacha20-x86_64.S:319: Error: invalid character '(' in mnemonic
-> net/wireguard/crypto/zinc/chacha20/chacha20-x86_64.S:1016: Error: invalid character '(' in mnemonic
-> net/wireguard/crypto/zinc/chacha20/chacha20-x86_64.S:1616: Error: invalid character '(' in mnemonic
-> net/wireguard/crypto/zinc/chacha20/chacha20-x86_64.S:1620: Error: invalid character '(' in mnemonic
-> net/wireguard/crypto/zinc/chacha20/chacha20-x86_64.S:1810: Error: invalid character '(' in mnemonic
-> net/wireguard/crypto/zinc/chacha20/chacha20-x86_64.S:1812: Error: invalid character '(' in mnemonic
-> net/wireguard/crypto/zinc/chacha20/chacha20-x86_64.S:1959: Error: invalid character '(' in mnemonic
->   CC [M]  drivers/gpu/drm/nouveau/nvkm/subdev/mmu/gp10b.o
-> scripts/Makefile.build:348: recipe for target 'net/wireguard/crypto/zinc/chacha20/chacha20-x86_64.o' failed
-> make[3]: *** [net/wireguard/crypto/zinc/chacha20/chacha20-x86_64.o] Error 1
-> scripts/Makefile.build:500: recipe for target 'net/wireguard' failed
-> make[2]: *** [net/wireguard] Error 2
+This is not a solution to my problem. And I still refuse to believe
+that my problem is exotic. Every home LAN has this.
 
-Seems related to:
-
-commit 840d8c9b3e5f51d1005256e6c63eab4f81cbebfb
-Author: Jiri Slaby <jirislaby@kernel.org>
-Date:   Fri Oct 11 13:50:41 2019 +0200
-
-    linkage: Introduce new macros for assembler symbols
-    
-    commit ffedeeb780dc554eff3d3b16e6a462a26a41d7ec upstream.
-    
-    Introduce new C macros for annotations of functions and data in
-    assembly. There is a long-standing mess in macros like ENTRY, END,
-    ENDPROC and similar. They are used in different manners and sometimes
-    incorrectly.
-    
-    So introduce macros with clear use to annotate assembly as follows:
-    
-    a) Support macros for the ones below
-       SYM_T_FUNC -- type used by assembler to mark functions
-       SYM_T_OBJECT -- type used by assembler to mark data
-       SYM_T_NONE -- type used by assembler to mark entries of unknown type
-    
-       They are defined as STT_FUNC, STT_OBJECT, and STT_NOTYPE
-       respectively. According to the gas manual, this is the most portable
-       way. I am not sure about other assemblers, so this can be switched
-       back to %function and %object if this turns into a problem.
-       Architectures can also override them by something like ", @function"
-       if they need.
-    
-       SYM_A_ALIGN, SYM_A_NONE -- align the symbol?
-       SYM_L_GLOBAL, SYM_L_WEAK, SYM_L_LOCAL -- linkage of symbols
-    
-    b) Mostly internal annotations, used by the ones below
-       SYM_ENTRY -- use only if you have to (for non-paired symbols)
-       SYM_START -- use only if you have to (for paired symbols)
-       SYM_END -- use only if you have to (for paired symbols)
-    
-    c) Annotations for code
-       SYM_INNER_LABEL_ALIGN -- only for labels in the middle of code
-       SYM_INNER_LABEL -- only for labels in the middle of code
-    
-       SYM_FUNC_START_LOCAL_ALIAS -- use where there are two local names for
-            one function
-       SYM_FUNC_START_ALIAS -- use where there are two global names for one
-            function
-       SYM_FUNC_END_ALIAS -- the end of LOCAL_ALIASed or ALIASed function
-    
-       SYM_FUNC_START -- use for global functions
-       SYM_FUNC_START_NOALIGN -- use for global functions, w/o alignment
-       SYM_FUNC_START_LOCAL -- use for local functions
-       SYM_FUNC_START_LOCAL_NOALIGN -- use for local functions, w/o
-            alignment
-       SYM_FUNC_START_WEAK -- use for weak functions
-       SYM_FUNC_START_WEAK_NOALIGN -- use for weak functions, w/o alignment
-       SYM_FUNC_END -- the end of SYM_FUNC_START_LOCAL, SYM_FUNC_START,
-            SYM_FUNC_START_WEAK, ...
-    
-       For functions with special (non-C) calling conventions:
-       SYM_CODE_START -- use for non-C (special) functions
-       SYM_CODE_START_NOALIGN -- use for non-C (special) functions, w/o
-            alignment
-       SYM_CODE_START_LOCAL -- use for local non-C (special) functions
-       SYM_CODE_START_LOCAL_NOALIGN -- use for local non-C (special)
-            functions, w/o alignment
-       SYM_CODE_END -- the end of SYM_CODE_START_LOCAL or SYM_CODE_START
-    
-    d) For data
-       SYM_DATA_START -- global data symbol
-       SYM_DATA_START_LOCAL -- local data symbol
-       SYM_DATA_END -- the end of the SYM_DATA_START symbol
-       SYM_DATA_END_LABEL -- the labeled end of SYM_DATA_START symbol
-       SYM_DATA -- start+end wrapper around simple global data
-       SYM_DATA_LOCAL -- start+end wrapper around simple local data
-    
-    ==========
-    
-    The macros allow to pair starts and ends of functions and mark functions
-    correctly in the output ELF objects.
-    
-    All users of the old macros in x86 are converted to use these in further
-    patches.
-    
-    Signed-off-by: Jiri Slaby <jslaby@suse.cz>
-    Signed-off-by: Borislav Petkov <bp@suse.de>
-    Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-    Cc: Andrew Morton <akpm@linux-foundation.org>
-    Cc: Andrey Ryabinin <aryabinin@virtuozzo.com>
-    Cc: Boris Ostrovsky <boris.ostrovsky@oracle.com>
-    Cc: "H. Peter Anvin" <hpa@zytor.com>
-    Cc: Ingo Molnar <mingo@kernel.org>
-    Cc: Jonathan Corbet <corbet@lwn.net>
-    Cc: Josh Poimboeuf <jpoimboe@redhat.com>
-    Cc: Juergen Gross <jgross@suse.com>
-    Cc: Len Brown <len.brown@intel.com>
-    Cc: Linus Torvalds <torvalds@linux-foundation.org>
-    Cc: linux-arch@vger.kernel.org
-    Cc: linux-doc@vger.kernel.org
-    Cc: linux-kernel@vger.kernel.org
-    Cc: linux-pm@vger.kernel.org
-    Cc: Mark Rutland <mark.rutland@arm.com>
-    Cc: Pavel Machek <pavel@ucw.cz>
-    Cc: Peter Zijlstra <a.p.zijlstra@chello.nl>
-    Cc: Thomas Gleixner <tglx@linutronix.de>
-    Cc: Will Deacon <will@kernel.org>
-    Cc: x86-ml <x86@kernel.org>
-    Cc: xen-devel@lists.xenproject.org
-    Link: https://lkml.kernel.org/r/20191011115108.12392-2-jslaby@suse.cz
-    Cc: Jian Cai <jiancai@google.com>
-    Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-
-
----------------
-It appears the following will fix it, applied and restarted my build now.
-
---- a/src/compat/compat-asm.h	2020-11-10 19:11:15.526802518 +0500
-+++ b/src/compat/compat-asm.h	2020-11-10 19:11:21.678802669 +0500
-@@ -40,7 +40,7 @@
- #undef pull
- #endif
- 
--#if LINUX_VERSION_CODE < KERNEL_VERSION(5, 5, 0)
-+#if LINUX_VERSION_CODE < KERNEL_VERSION(5, 4, 76)
- #define SYM_FUNC_START ENTRY
- #define SYM_FUNC_END ENDPROC
- #endif
-
+Am Di., 10. Nov. 2020 um 14:06 Uhr schrieb Der PCFreak
+<mailinglists@pcfreak.de>:
+>
+> Hi,
+>
+> concerning local DNS forwarder.
+>
+> I am in an environment where I need to resolve public DNS names to local
+> IPs for specific hosts and additionally public DNS for the rest.
+> In Windows XP it was possible to just stop the DNS cache service and set
+> 2 DNS servers and everything worked.
+> Newer versions of Windows starting with Windows 7 do only connect to the
+> second DNS if connecting (not querying) the first fails.
+> So if your first DNS is up but has no reply for your query, Windows will
+> just add that fqdn to the negative cache and no longer
+> query the DNS for a specific time or until you delete the cache with
+> ipconfig /flushdns.
+>
+> All of the above can be fixed using a local DNS forwarder.
+>
+> I use DeadWood on my machine for years now.
+> https://maradns.samiam.org/deadwood/doc/FAQ.html
+>
+> I just point my DNS to 127.0.0.1 (which is the deadwood service) and
+> configure Deadwood a little bit. It basically let's me
+> exactly specify which hosts to resolve how and can have something
+> similiar to a HOSTS entry, too.
+>
+> As Domi wrote I would encourage you to tryout a local DNS resolver, too.
+>
+> Regards
+>
+> Peter
+>
+> On 10.11.2020 09:14, Tomcsanyi, Domonkos wrote:
+> > Hello Yves,
+> >
+> > I am by no means a person with authority to make such a decision, but y=
+our usecase seems to be so specific I would not imagine it would make sense=
+ to blow up the size and complexity of the Windows wg with a local DNS forw=
+arder.
+> > I think it is way better if people just install a local DNS resolver/fo=
+rwarder on their own. There a ton of choices available, from simply python =
+scripts to large scale servers. You could easily configure any of these to =
+distinguish which DNS server to ask based on the TLD portion of your local =
+domain or whatever other distinguisher you have.
+> > Then the only thing you need to do is tell your system (either via wg o=
+r by other means) to use the local resolver and the case is solved :).
+> > Also I am pretty sure one of the main philosophies behind wg is to be t=
+he same as much as possible on all platforms. Adding a DNS resolver would a=
+gain mean a lot of complications when compared to e.g. the Linux version, s=
+ince most Linux distributions already feature some kind of a local resolver=
+ by default.
+> >
+> > Cheers,
+> > Domi
+> >
+> >
+> >> 09.11.2020 d=C3=A1tummal, 23:46 id=C5=91pontban Yves Goergen <yves.goe=
+rgen@gmail.com> =C3=ADrta:
+> >>
+> >> =EF=BB=BFHello,
+> >>
+> >> I've already used WireGuard to connect to private networks and it's
+> >> quite easy once you figure out how to set it up. (Most tutorials are
+> >> outdated and haven't been updated, new ones haven't been written.) One
+> >> thing that's really missing however is DNS support. All I can do now
+> >> is connect to IP addresses. Names are not resolvable on the other
+> >> side. If I add the "DNS" directive to my client configuration, it
+> >> replaces the local DNS resolver and *all* lookups go to that server
+> >> instead. This isn't working either because I'm on two local networks
+> >> and each has its own local DNS server that can only resolve its own
+> >> local names (and forward the rest to the internet).
+> >>
+> >> Specifying both networks' DNS servers also fails because when
+> >> resolving a name, one of them is chosen at random (and the other one
+> >> isn't regarded) and then you won't be able to resolve some of the
+> >> names some of the time. This is also very frustrating. And it wouldn't
+> >> scale to multiple active tunnels.
+> >>
+> >> The solution I've read about is to set up a local DNS forwarder that
+> >> can be configured so that it uses multiple servers and queries each of
+> >> them and returns only a positive response. This way it could query
+> >> both local LAN DNS servers and for local names, only one of them would
+> >> resolve the name. This is a bit complicated to do if you're not
+> >> permanently connected to a VPN, or if you move from one local DHCP
+> >> network to another (like with a laptop). And it requires additional
+> >> software, setup and configuration, and probably intensive maintenance
+> >> and care. All of this makes WireGuard a pretty ugly alternative to
+> >> OpenVPN where all of this already works. Despite all the disadvantages
+> >> of OpenVPN.
+> >>
+> >> I'm asking if it's possible to integrate such a local DNS forwarder
+> >> into the Windows client application. I imagine it would start up
+> >> automatically once the first tunnel is activated. And it would replace
+> >> the local system's DNS server setting for as long as it's active (like
+> >> the tunnel-configured DNS server already does). And it would query the
+> >> original locally configured DNS server and all configured DNS servers
+> >> for the active tunnels. It would then be able to resolve local names
+> >> and tunnel-remote names without any additional work on the user end.
+> >> The user wouldn't have to perform many complex tasks upon activating
+> >> or deactivating a tunnel. This would make WireGuard be as simple and
+> >> productive as I believe it was intended to be (but isn't yet).
+> >>
+> >> This probably stops working as soon as other VPN software is used in
+> >> parallel, but the current "DNS" setting has the same limitation, it's
+> >> better than nothing and most of the time, you only run a single VPN
+> >> software.
+> >>
+> >> Please let me know what you think of it.
+> >>
+> >> -Yves
