@@ -2,48 +2,45 @@ Return-Path: <SRS0=sOGU=ER=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+X-Spam-Status: No, score=-1.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FAKE_REPLY_A1,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97672C388F9
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 11 Nov 2020 09:50:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 533AAC388F9
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 11 Nov 2020 11:31:13 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 3D25820637
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 11 Nov 2020 09:50:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 541B92074B
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 11 Nov 2020 11:31:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="DqLXC+Ms"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 3D25820637
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="ngBCW8oN"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 541B92074B
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=web.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 69237124;
-	Wed, 11 Nov 2020 09:46:56 +0000 (UTC)
-Received: from mout.web.de (mout.web.de [212.227.15.4])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7d1b166c
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 931badbe;
+	Wed, 11 Nov 2020 11:27:21 +0000 (UTC)
+Received: from mout.web.de (mout.web.de [212.227.15.3])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 581eb453
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 11 Nov 2020 09:46:53 +0000 (UTC)
+ Wed, 11 Nov 2020 11:27:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
- s=dbaedf251592; t=1605088240;
- bh=3RTcZAMJI3hdbkzeu21bb04fX9vyYftL7SC4vA8yWcM=;
- h=X-UI-Sender-Class:Subject:To:References:From:Date:In-Reply-To;
- b=DqLXC+Ms9ekQhdmgO2X8yHs+P1X6WqE7c5Kafv9tjMuLMLmhn/BbUvVCxp91BaMlP
- 5QUbmLINIO8FG7eF3TznTOC9CnH/061fYRmBItMvrCoKSmb736jD8T6JwFFrHxFInh
- 34QaCcshKsbp7vSSydofnENgG6SXLLEfc5YIgKnU=
+ s=dbaedf251592; t=1605094265;
+ bh=A4dq2PAJiYVBuJ4vzaw2Hx0aKEDBD1aKkD2JnBCK/4g=;
+ h=X-UI-Sender-Class:To:From:Subject:Date;
+ b=ngBCW8oNmPqNAScVP9+HzQ0vJXKRLCh9gmIa+230RVjyv/3OytfPLtzo0rp/mE2Gz
+ c/MADLk2QZmdluUVdqeJM4zgUSo0iwdj5Ny5+MBSEOUQX4pPiDO/1wbom3uMoT75CR
+ LvB0C6+uFP+4s5lqoh5AZGxEMEoACsdRUdoTrXsw=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
 Received: from [192.168.10.34] ([77.21.105.134]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MaHSb-1kqpVN1Hwj-00WETb; Wed, 11
- Nov 2020 10:50:40 +0100
-Subject: Re: Actual plans for Windows client: PostUp/PreDown possible?
-To: Simon Rozman <simon@rozman.si>,
- "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
-References: <b2a38e9f-9e79-b821-b80c-4cff284f8f6b@web.de>
- <B14F0F93-B5E5-4224-A49B-F53E7A4B105B@rozman.si>
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MG9DE-1kXMHN2EbU-00GcuM for
+ <wireguard@lists.zx2c4.com>; Wed, 11 Nov 2020 12:31:05 +0100
+To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
 From: Stefan Puch <s.puch@web.de>
+Subject: Re: Add local DNS forwarder to Windows client
 Autocrypt: addr=s.puch@web.de; prefer-encrypt=mutual; keydata=
  mQINBFHLAR8BEADbbhLjSpY+pc+hWuQuwrisfoDrnxVfI4A+egjZ0RFF8hkBci83XeBj8IQH
  /Ix2ZCUPkL5RDN+I1Ji3aY9NYLfE8QvQBC+WoDivfMh1ajH8RUV9B/vnbNcxERJRB+iT+RTY
@@ -86,33 +83,32 @@ Autocrypt: addr=s.puch@web.de; prefer-encrypt=mutual; keydata=
  ae1IVgFoJkdsY0MMAtgZcfBlOB82jRopOzrnDO56dTEb4yMIQ1IcOopHoGJE9vzyp8eAXfvb
  aE2JD2olrYpcL6IrcTyRKRxLB4jRlF+dVqk+2g72/FXsp8AFUB7Nb4f/5/9DvjMa4rvHOIKj
  UtxlDUJbTegwlzcMd/i8fgPEzztG/KOhzonpaHrWe5/Ay6KKITkKkGI=
-Message-ID: <b75d1ae6-9c37-99ec-1ef2-1166df108be6@web.de>
-Date: Wed, 11 Nov 2020 10:50:39 +0100
+Message-ID: <09450cbd-ae78-bf1a-a9ba-364f20731b7d@web.de>
+Date: Wed, 11 Nov 2020 12:31:04 +0100
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101
  Thunderbird/68.12.1
 MIME-Version: 1.0
-In-Reply-To: <B14F0F93-B5E5-4224-A49B-F53E7A4B105B@rozman.si>
 Content-Type: text/plain; charset=utf-8
-Content-Language: de-DE
+Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1://4tRiqL3EqHryMro5uDqm8RECRIu/huBR3W71LO90rivOhop1m
- ovwJGj0ai1TxE4ijj7pX1fdOyIxQAbTQg+ixvw5Bi8VoZ4h51BQHKsLuPkw3xJ7vwo00IGb
- V2ITB6MAc+2+Pye2BXd4gfmHyL9Ffi6wpHcjdD4HzewLHdR18kznJ4gsNsrkpsqaFp2HqDb
- V9dojxImu+3rt+nXlGdBQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:cAxqiWxg1JE=:wkzNZG5SSvHxFxZZih2kuq
- l4iN8SzVfMNHlIQNcCWpE1arc6dEg3jW4/LA7umSelpOZ83yLgwHypqjWyaT3KYYYujgiddFG
- LJqJ9GHNhYYeTIXBEtLzGzlulHZOPVosiCMHMcnoQmhAPDSnxJxivmrgokLlMbVuaijC1593R
- HCavpMq/0BiCn+P6IjoQ2+ee7U8HgW43lNnzXh45b9JnfX34/+5QBXaBy4cX4hi4Zrvj2oVdC
- WPLndLjL7cMUZlJzFDa4rdyjdFwVI5AztxLYUw6U8bVEQ0LnspOThH9nMUCQYTITsDHj8hxLE
- yP0vTAy4MypE3yTbQzZHDVkQ09mA9ZmZwwm0qqVop1dl7U9w7wwPJX8H1yQGyWKxJ/xfFW9Yj
- /R/KmPuSmpc+voQJCtstCtUhio2cZidZnhvG1JqOLke8epah9HTmMrzt++pEJrXl0We8pJ8OZ
- DbxFnH3pB80N+r6CDamBlfecyoSRnnVp2dl7nqdMjXIUOs528P86HZvA85HRWB6I2F+2xGTiY
- SdGmy3Pl1bDj91ZgGCjYlTFBi0XhMt4xP8q+HsME4UiQzrH1W4iQ3RSqo31FaYRobW3SLjlXC
- l77j60840Bk4St1h4o2gp8ZutybnhjDrAOEanq00bkVOGPEKjFqif2MF6C0x5g5B9TfCk1NnE
- +GTmoitDL0o8YRLHifnqMS7hU7hZVkNn4Vx/B6gxp9TFGMtl+OMhkiqQXvTPNzGhLSsiECWFO
- CHoicMJeKS1yLGye0fV2o0gubYObma78LrTjVWm8vm52CzsnuvXc55gfTPuGjkrASpCjJJ1Zo
- /xG0g2iVih+cPdifENIAQ2v1+zHMNQQWpL3Fpk/kVc5D81eFH0Z+Y8h9uBM2qpEh3nC57GTk3
- HBSd6HkZ5GB0nzJ8PF8Q==
+X-Provags-ID: V03:K1:nHJ6Jc/sWY4LziAVssa0quaJwKPtodoZAKIm72pcLhM5iBwy55G
+ j86liVQze3M2uxyokU40OW4vNb8O9cHB2N7SpTC70gALkg7si99S4xpG57a3DYWMlieOGRu
+ IdgPea6q8HQJQY0WCwz4gXZelAh/GQQ/vcHnF2Q8ajzt6pNQrBjAh8t14RKOA+hk70ynm0y
+ IAvgGQBMLSDARlubD3OlA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:t6e70lO8MUs=:l2R/GBcawOf+0nuQYMn9oX
+ ZzcnXiKbIN6L8NxromF6pQn+3TJGLvuiuPR22Z/kKh2B0pKQTLCEC2gemLvc7BZyx2NmfeuT0
+ ajXIm8ivgH9btWiSnFsFMVBi6m8WitqAfAfk7S8KIPqNZ5+VZJ7oppwb6Tx5pSc1h35/OQk/a
+ Za6IywdH6DjDlgjn8pfUN4t/D1XFPjEBL7oAx9+gEQ8QX6d+U5CHef8nBwhhl1jyGK+1dC2ln
+ 7EWlPENBRbNGLhp0NhihwNP88Tn1I9CQ6g/QnHnHfSoPb8u/fWEx4apmcGcIxgGwmr3hbAjxH
+ ErBlrIKNmXjGlybsmxC1OXBdT48wvvAv/87NP/808M429cmrFhJd/ToSP1goXQsicwRDOd3RK
+ OlVExYjmUMebOOjTulJhBHSpO0dk7iX7Vh9+UBp3NFMLTmE48Qe21R3OIqguBNxR1Vo4Db3XM
+ Fkv8G7DDqzhAdakrII58bE3izHrHPICC3mzB5orbs8XzOxoV9MuT1NdusdyDaIBnsfk7AyF9v
+ nYs1cuTscKUAZ3IqRqMakBiYgODWMYxyaAoMLs3+nOgoObAdnWOfL57K+BsgaOF5zC2cE8ScW
+ Rim2OIDEJ5xNldhsUWuIPcWBgyUqwdMvkkaSLUQ4VfnlbIj1LvKSZjURXsPIvK2gyzUF1gUz8
+ LtCf4WNOAdOT32zSIr7G/y7w3y5OyrYLIb8f2SL8/wUQHpoenVNeut52SyBDD5y9MrEEnahvp
+ Xiir0nUBZ9Ojtfea2wm2LtPNy5jg65F6WpI4yzZLoO779RD2gRV9pGi795DpbrNhEAb5DP/bd
+ AVfuknPHm1+wl+pWiB23FfzxNiZOQqUdx3BRvvcmSk33tTKycexUjRGOQdADB/7mIfrHlUONN
+ +mLz8P1mk2aeO5ooEyuw==
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -127,92 +123,90 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi, thanks for stepping in.
+Hi Yves,
 
-While I like your suggested "always-on" solution for fixed desktop PCs I d=
-on't
-like the "work-around" for client laptops. A Task Scheduler which is tryin=
-g
-every 3 minute to set a wiregurad tunnel when you are sitting in a train u=
-sing a
-mobile connecting is nothing I'd like to see. I think there are also other
-scenarios where you just want to "click Connect button" on demand. E.g. wh=
-en
-your company has multiple locations and you don't want (or cannot) use mul=
-tiple
-VPN connections a the same time you will always have the "somewhat broken"
-network drives in the windows explorer too, since they weren't disconnecte=
-d
-within a PreDown script.
+i can reassure you, the problem is not exotic. I had exact the same questi=
+on in
+mind when thinking whether I should move from OpenVPN to Wireguard (I'd li=
+ke to).
 
-Another problem (which I skipped so far) is related in point 4. of your
-suggestion and as I see this a also discussed within another thread here o=
-n the
-mailinglist. While a simple network drive can of cause be setp to a fixed =
-IP
-adress to drive z: using fixed adresse is IMHO not a good solution.
-Like Yves Goergen pointed out in the thread "Add local DNS forwarder to Wi=
-ndows
-client" I'd like an option to add the remote DNS server to the serach list=
- so
-that that I don't have to keep IP adresses in mind. But I think this discu=
-ssion
-should be shifted to the other thread.
+For all people working in home office therse days where they're using some=
+ kind
+of SOHO router (e.g. Speedport, Fritz!Box, what ever) I like to "push" the=
+m the
+companies DNS server for the time they are connected without forcing them =
+to
+install additional software / python sript, modifying hosts file with stat=
+ic
+IPs. Although OpenVPN has many disadvantages, the way it is possible to ju=
+st
+push a search list or name server is very comfortable.
+
+My experiences with tutorial are exactly the same as yours and I (as a non
+expert) would like to ask whats the intended solution on windows systems t=
+o
+include a companies remote DNS server for the (limited) time period connec=
+ted to
+a VPN by leaving the local DNS (mostly handled by the SOHO routers) untouc=
+hed?
+
+Maybe I missed something, but adding the "DNS" directive to the client
+configuration has exactly the behavior Yves elaborated on and so far I did=
+n't
+find an alternative solution.
 
 Kind regards
 Stefan
 
-Am 11.11.2020 um 06:45 schrieb Simon Rozman:
-> Hi!
+> Hello,
 >
-> WireGuard for Windows and OpenVPN are fundamentally different. Consider =
-WireGuard on Windows as an "always-on" VPN. Once configured by admin, it i=
-s just always there, and users don't need to explicitly connect or disconn=
-ect. Trust me, this is something your users will grow to love - no searchi=
-ng for a GUI to click Connect button when all you want is to quickly view =
-a business document on Z:.
+> I've already used WireGuard to connect to private networks and it's
+> quite easy once you figure out how to set it up. (Most tutorials are
+> outdated and haven't been updated, new ones haven't been written.) One
+> thing that's really missing however is DNS support. All I can do now
+> is connect to IP addresses. Names are not resolvable on the other
+> side. If I add the "DNS" directive to my client configuration, it
+> replaces the local DNS resolver and *all* lookups go to that server
+> instead. This isn't working either because I'm on two local networks
+> and each has its own local DNS server that can only resolve its own
+> local names (and forward the rest to the internet).
 >
-> Think differently.
+> Specifying both networks' DNS servers also fails because when
+> resolving a name, one of them is chosen at random (and the other one
+> isn't regarded) and then you won't be able to resolve some of the
+> names some of the time. This is also very frustrating. And it wouldn't
+> scale to multiple active tunnels.
 >
-> These are my recommendations for your use-case:
+> The solution I've read about is to set up a local DNS forwarder that
+> can be configured so that it uses multiple servers and queries each of
+> them and returns only a positive response. This way it could query
+> both local LAN DNS servers and for local names, only one of them would
+> resolve the name. This is a bit complicated to do if you're not
+> permanently connected to a VPN, or if you move from one local DHCP
+> network to another (like with a laptop). And it requires additional
+> software, setup and configuration, and probably intensive maintenance
+> and care. All of this makes WireGuard a pretty ugly alternative to
+> OpenVPN where all of this already works. Despite all the disadvantages
+> of OpenVPN.
 >
-> 1. Configure the WireGuard tunnel at the company endpoint. Use specific =
-port rather than random.
+> I'm asking if it's possible to integrate such a local DNS forwarder
+> into the Windows client application. I imagine it would start up
+> automatically once the first tunnel is activated. And it would replace
+> the local system's DNS server setting for as long as it's active (like
+> the tunnel-configured DNS server already does). And it would query the
+> original locally configured DNS server and all configured DNS servers
+> for the active tunnels. It would then be able to resolve local names
+> and tunnel-remote names without any additional work on the user end.
+> The user wouldn't have to perform many complex tasks upon activating
+> or deactivating a tunnel. This would make WireGuard be as simple and
+> productive as I believe it was intended to be (but isn't yet).
 >
-> 2. Configure WireGuard tunnel on client computers and leave it active at=
- all times.
+> This probably stops working as soon as other VPN software is used in
+> parallel, but the current "DNS" setting has the same limitation, it's
+> better than nothing and most of the time, you only run a single VPN
+> software.
 >
-> 3. Instruct users to connect \\10.0.0.1\data as the network drive Z: and=
- choose Reconnect on logon to make it persistent. (I am pushing a logon-sc=
-ript to do it in my deployment.) Why users? Because, seldomly users discon=
-nect the network drive by accident, and it pays off they know how to recon=
-nect it.
+> Please let me know what you think of it.
 >
-> 4. Don't add DNS line to the WireGuard tunnel config. Otherwise, WireGua=
-rd blocks all other DNS servers and users will not be able to access their=
- home LAN by hostnames.
->
-> 5. On client laptops that roam in and out of the network where your comp=
-any endpoint resides, the tunnel company endpoint will auto-switch from pu=
-blic IP to local IP. Then you put your laptop to sleep and go home. When r=
-esuming at home, the WireGuard tunnel will still try to contact the compan=
-y endpoint by local IP and the tunnel traffic will stall.
->
-> To mitigate this, I make a task in Task Scheduler to run "wg.exe set <yo=
-ur tunnel name> peer <company endpoint pubkey> endpoint <company endpoint =
-public IP>:<company endpoint port>" command every 3 minutes.
->
-> This resets the tunnel endpoint to its public IP. The tunnel traffic is =
-restored after leaving company network in no later than 3 minutes. The cli=
-ent endpoint roaming is handled by WireGuard.
->
-> As this scheduled task is the same for all clients, once configured and =
-tested, it can be exported and imported on other computers (I deploy it us=
-ing Group Policy).
->
->
-> And that's about it. Your users will always have their Z: drive there. N=
-o need for PostUp/PreDown.
->
-> Best regards,
-> Simon
+> -Yves
+
