@@ -2,70 +2,80 @@ Return-Path: <SRS0=sOGU=ER=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C2CFC388F9
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 11 Nov 2020 05:46:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B477BC4742C
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 11 Nov 2020 07:36:38 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id B967A2220B
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 11 Nov 2020 05:46:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 478C020659
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 11 Nov 2020 07:36:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=rozman.si header.i=@rozman.si header.b="qEHS1frm"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org B967A2220B
-Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=rozman.si
+	dkim=pass (1024-bit key) header.d=pcfreak.de header.i=@pcfreak.de header.b="Y1NrSO/2"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 478C020659
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=pcfreak.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4d03ee3d;
-	Wed, 11 Nov 2020 05:41:48 +0000 (UTC)
-Received: from krn.amebis.si (krn.amebis.si [93.103.235.207])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a58110ac
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 254b4c8b;
+	Wed, 11 Nov 2020 07:32:45 +0000 (UTC)
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com
+ [2a00:1450:4864:20::530])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 533aa2f3
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 11 Nov 2020 05:41:45 +0000 (UTC)
-Received: by krn.amebis.si (Postfix, from userid 982)
- id 5256618E87AD; Wed, 11 Nov 2020 06:45:31 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rozman.si;
- s=default; t=1605073531;
- bh=IfqPgcSQVMwCsvvSN8aHOL3LoOYM5MJxuWDpwa37uGU=;
- h=From:To:Subject:Date:References:In-Reply-To:From;
- b=qEHS1frmWTGA/KkcmgirE3yZpA9c1sygkwqK6Yr5tK/EKayglD/2+rtFw4tbhRfYq
- BBNOOgGhbZPuTWHAQxIw98HD0v/0cTMwhHJBLAk8xmAmTjZe3apt4CwSmMcOlWSaee
- 1NU9YdR1IiFmwm0XabjTniuqIq7MfJiZI9i/qFZw=
-Received: from Konj.amebis.doma (konj.amebis.doma [IPv6:2a01:260:4101:1464::4])
- by krn.amebis.si (Postfix) with ESMTPS id 4BC5318E87AB;
- Wed, 11 Nov 2020 06:45:29 +0100 (CET)
-Received: from Konj.amebis.doma (2a01:260:4101:1464::4) by Konj.amebis.doma
- (2a01:260:4101:1464::4) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.659.4; Wed, 11 Nov 2020
- 06:45:29 +0100
-Received: from Konj.amebis.doma ([fe80::545:cd17:7444:be04]) by
- Konj.amebis.doma ([fe80::545:cd17:7444:be04%9]) with mapi id 15.02.0659.007;
- Wed, 11 Nov 2020 06:45:29 +0100
-From: Simon Rozman <simon@rozman.si>
-To: Stefan Puch <s.puch@web.de>, "wireguard@lists.zx2c4.com"
- <wireguard@lists.zx2c4.com>
-Subject: Re: Actual plans for Windows client: PostUp/PreDown possible?
-Thread-Topic: Actual plans for Windows client: PostUp/PreDown possible?
-Thread-Index: AQHWt2KYv/neyyhZRUi8YHTPROFywanCbPIA
-Date: Wed, 11 Nov 2020 05:45:28 +0000
-Message-ID: <B14F0F93-B5E5-4224-A49B-F53E7A4B105B@rozman.si>
-References: <b2a38e9f-9e79-b821-b80c-4cff284f8f6b@web.de>
-In-Reply-To: <b2a38e9f-9e79-b821-b80c-4cff284f8f6b@web.de>
-Accept-Language: en-GB, sl-SI, en-US
-Content-Language: en-GB
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Microsoft-MacOutlook/16.42.20101102
-x-originating-ip: [2a01:260:4101:1464::1]
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <C0F871C3A4F2B04388CCBC8B23603FEB@amebis.si>
-Content-Transfer-Encoding: base64
+ Wed, 11 Nov 2020 07:32:42 +0000 (UTC)
+Received: by mail-ed1-x530.google.com with SMTP id ay21so1261502edb.2
+ for <wireguard@lists.zx2c4.com>; Tue, 10 Nov 2020 23:36:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pcfreak.de; s=google;
+ h=subject:references:from:to:message-id:date:user-agent:mime-version
+ :in-reply-to:content-transfer-encoding:content-language;
+ bh=TkSLPdtDhYoQPk+buzMhUINuajch2BimMHc3qb5nL2Y=;
+ b=Y1NrSO/2zLX/iwJI77ZB+u4i+aLG6i9/zMSZMaDWHdotPrzSdVyZo2yPq/V7csin+M
+ 7zT4wMFYvDIaeCE/B1B/xoPTf608rl7YJgtZuMk4UZJQsn7cRQVqv11eEyxqKUIUS+Pi
+ LuAkzb7wCClrGZi/6nLn7ppiOUPExwkRdsIQs=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:subject:references:from:to:message-id:date
+ :user-agent:mime-version:in-reply-to:content-transfer-encoding
+ :content-language;
+ bh=TkSLPdtDhYoQPk+buzMhUINuajch2BimMHc3qb5nL2Y=;
+ b=KGuvEJ+eUoyWKydrqRGjL15f6/kykvc8P1m1gtW9fHDtK/jgm77Axasq1YcV1kx1Cu
+ xs0OH0fC6aZyFOTDrjlv5PTpNgvKzI3QTZkEEDkS0buWMijfHgZ5DLSlET2/ljnv/UXu
+ 6QuBjHnqCsg6LhagR4HsJPUYrmErNW3XRkOc18Qc5XZxs+S8K/Pk70D9tNHxT+J5HUS3
+ huLqUk7YbvG4pG7GY/jwc3a77XcRA0AUL4CeUG+W52TtmhaL36cFazcEJgwUsTHru57w
+ CT2Mh4dPx94jrndUVCw6ZaVPx5e4zmEv95XkyYoqbWKVqR7YdsoSRwUZiNn93eb2LHKA
+ d2Aw==
+X-Gm-Message-State: AOAM532gr+PnAB0sbHQ496pkMQ3FPGk0JSSkDe+uBePKc1rR6O8wGfYA
+ OLWFWNhCE3+TFZVOklrC2LzKZnrN0R1sVA==
+X-Google-Smtp-Source: ABdhPJzt4m258Na3dEzgGkLzMufJqNVBOCL7y5DVSnUk70jA8Tqlzp0KaP5iIRIK8kLOUeu3j63KWA==
+X-Received: by 2002:a05:6402:1042:: with SMTP id
+ e2mr25838400edu.320.1605080187468; 
+ Tue, 10 Nov 2020 23:36:27 -0800 (PST)
+Received: from [10.110.180.53] (inetpop1.witron.de. [195.243.201.20])
+ by smtp.googlemail.com with ESMTPSA id zm12sm492329ejb.62.2020.11.10.23.36.26
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 10 Nov 2020 23:36:27 -0800 (PST)
+Subject: Re: Add local DNS forwarder to Windows client
+References: <CADJb3qRk2nuvQdyF1+=9yf84annmJ+nyapdokFx1o-WcVfvfKQ@mail.gmail.com>
+ <A64A6CAC-E8CA-41AB-8CCD-E9E379591C91@tomcsanyi.net>
+ <d62f54e7-cb5f-7baf-9320-19903b7c5d51@pcfreak.de>
+ <CADJb3qRapO=3-fuyeS6iC8EnM34TxTxpZBr1uyVhhTmfjgOmwA@mail.gmail.com>
+From: Der PCFreak <mailinglists@pcfreak.de>
+To: wireguard@lists.zx2c4.com
+Message-ID: <5304da30-317a-6041-00d2-257089099f79@pcfreak.de>
+Date: Wed, 11 Nov 2020 08:36:26 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.4.2
 MIME-Version: 1.0
+In-Reply-To: <CADJb3qRapO=3-fuyeS6iC8EnM34TxTxpZBr1uyVhhTmfjgOmwA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -80,85 +90,154 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-SGkhDQoNCldpcmVHdWFyZCBmb3IgV2luZG93cyBhbmQgT3BlblZQTiBhcmUgZnVuZGFtZW50YWxs
-eSBkaWZmZXJlbnQuIENvbnNpZGVyIFdpcmVHdWFyZCBvbiBXaW5kb3dzIGFzIGFuICJhbHdheXMt
-b24iIFZQTi4gT25jZSBjb25maWd1cmVkIGJ5IGFkbWluLCBpdCBpcyBqdXN0IGFsd2F5cyB0aGVy
-ZSwgYW5kIHVzZXJzIGRvbid0IG5lZWQgdG8gZXhwbGljaXRseSBjb25uZWN0IG9yIGRpc2Nvbm5l
-Y3QuIFRydXN0IG1lLCB0aGlzIGlzIHNvbWV0aGluZyB5b3VyIHVzZXJzIHdpbGwgZ3JvdyB0byBs
-b3ZlIC0gbm8gc2VhcmNoaW5nIGZvciBhIEdVSSB0byBjbGljayBDb25uZWN0IGJ1dHRvbiB3aGVu
-IGFsbCB5b3Ugd2FudCBpcyB0byBxdWlja2x5IHZpZXcgYSBidXNpbmVzcyBkb2N1bWVudCBvbiBa
-Oi4NCg0KVGhpbmsgZGlmZmVyZW50bHkuDQoNClRoZXNlIGFyZSBteSByZWNvbW1lbmRhdGlvbnMg
-Zm9yIHlvdXIgdXNlLWNhc2U6DQoNCjEuIENvbmZpZ3VyZSB0aGUgV2lyZUd1YXJkIHR1bm5lbCBh
-dCB0aGUgY29tcGFueSBlbmRwb2ludC4gVXNlIHNwZWNpZmljIHBvcnQgcmF0aGVyIHRoYW4gcmFu
-ZG9tLg0KDQoyLiBDb25maWd1cmUgV2lyZUd1YXJkIHR1bm5lbCBvbiBjbGllbnQgY29tcHV0ZXJz
-IGFuZCBsZWF2ZSBpdCBhY3RpdmUgYXQgYWxsIHRpbWVzLg0KDQozLiBJbnN0cnVjdCB1c2VycyB0
-byBjb25uZWN0IFxcMTAuMC4wLjFcZGF0YSBhcyB0aGUgbmV0d29yayBkcml2ZSBaOiBhbmQgY2hv
-b3NlIFJlY29ubmVjdCBvbiBsb2dvbiB0byBtYWtlIGl0IHBlcnNpc3RlbnQuIChJIGFtIHB1c2hp
-bmcgYSBsb2dvbi1zY3JpcHQgdG8gZG8gaXQgaW4gbXkgZGVwbG95bWVudC4pIFdoeSB1c2Vycz8g
-QmVjYXVzZSwgc2VsZG9tbHkgdXNlcnMgZGlzY29ubmVjdCB0aGUgbmV0d29yayBkcml2ZSBieSBh
-Y2NpZGVudCwgYW5kIGl0IHBheXMgb2ZmIHRoZXkga25vdyBob3cgdG8gcmVjb25uZWN0IGl0Lg0K
-DQo0LiBEb24ndCBhZGQgRE5TIGxpbmUgdG8gdGhlIFdpcmVHdWFyZCB0dW5uZWwgY29uZmlnLiBP
-dGhlcndpc2UsIFdpcmVHdWFyZCBibG9ja3MgYWxsIG90aGVyIEROUyBzZXJ2ZXJzIGFuZCB1c2Vy
-cyB3aWxsIG5vdCBiZSBhYmxlIHRvIGFjY2VzcyB0aGVpciBob21lIExBTiBieSBob3N0bmFtZXMu
-DQoNCjUuIE9uIGNsaWVudCBsYXB0b3BzIHRoYXQgcm9hbSBpbiBhbmQgb3V0IG9mIHRoZSBuZXR3
-b3JrIHdoZXJlIHlvdXIgY29tcGFueSBlbmRwb2ludCByZXNpZGVzLCB0aGUgdHVubmVsIGNvbXBh
-bnkgZW5kcG9pbnQgd2lsbCBhdXRvLXN3aXRjaCBmcm9tIHB1YmxpYyBJUCB0byBsb2NhbCBJUC4g
-VGhlbiB5b3UgcHV0IHlvdXIgbGFwdG9wIHRvIHNsZWVwIGFuZCBnbyBob21lLiBXaGVuIHJlc3Vt
-aW5nIGF0IGhvbWUsIHRoZSBXaXJlR3VhcmQgdHVubmVsIHdpbGwgc3RpbGwgdHJ5IHRvIGNvbnRh
-Y3QgdGhlIGNvbXBhbnkgZW5kcG9pbnQgYnkgbG9jYWwgSVAgYW5kIHRoZSB0dW5uZWwgdHJhZmZp
-YyB3aWxsIHN0YWxsLg0KDQpUbyBtaXRpZ2F0ZSB0aGlzLCBJIG1ha2UgYSB0YXNrIGluIFRhc2sg
-U2NoZWR1bGVyIHRvIHJ1biAid2cuZXhlIHNldCA8eW91ciB0dW5uZWwgbmFtZT4gcGVlciA8Y29t
-cGFueSBlbmRwb2ludCBwdWJrZXk+IGVuZHBvaW50IDxjb21wYW55IGVuZHBvaW50IHB1YmxpYyBJ
-UD46PGNvbXBhbnkgZW5kcG9pbnQgcG9ydD4iIGNvbW1hbmQgZXZlcnkgMyBtaW51dGVzLg0KDQpU
-aGlzIHJlc2V0cyB0aGUgdHVubmVsIGVuZHBvaW50IHRvIGl0cyBwdWJsaWMgSVAuIFRoZSB0dW5u
-ZWwgdHJhZmZpYyBpcyByZXN0b3JlZCBhZnRlciBsZWF2aW5nIGNvbXBhbnkgbmV0d29yayBpbiBu
-byBsYXRlciB0aGFuIDMgbWludXRlcy4gVGhlIGNsaWVudCBlbmRwb2ludCByb2FtaW5nIGlzIGhh
-bmRsZWQgYnkgV2lyZUd1YXJkLg0KDQpBcyB0aGlzIHNjaGVkdWxlZCB0YXNrIGlzIHRoZSBzYW1l
-IGZvciBhbGwgY2xpZW50cywgb25jZSBjb25maWd1cmVkIGFuZCB0ZXN0ZWQsIGl0IGNhbiBiZSBl
-eHBvcnRlZCBhbmQgaW1wb3J0ZWQgb24gb3RoZXIgY29tcHV0ZXJzIChJIGRlcGxveSBpdCB1c2lu
-ZyBHcm91cCBQb2xpY3kpLg0KDQoNCkFuZCB0aGF0J3MgYWJvdXQgaXQuIFlvdXIgdXNlcnMgd2ls
-bCBhbHdheXMgaGF2ZSB0aGVpciBaOiBkcml2ZSB0aGVyZS4gTm8gbmVlZCBmb3IgUG9zdFVwL1By
-ZURvd24uDQoNCkJlc3QgcmVnYXJkcywNClNpbW9uDQoNCg0K77u/LS0tLS1PcmlnaW5hbCBNZXNz
-YWdlLS0tLS0NCkZyb206IFdpcmVHdWFyZCA8d2lyZWd1YXJkLWJvdW5jZXNAbGlzdHMuengyYzQu
-Y29tPiBvbiBiZWhhbGYgb2YgU3RlZmFuIFB1Y2ggPHMucHVjaEB3ZWIuZGU+DQpEYXRlOiBUdWVz
-ZGF5LCAxMCBOb3ZlbWJlciAyMDIwIGF0IDE0LjA4DQpUbzogIndpcmVndWFyZEBsaXN0cy56eDJj
-NC5jb20iIDx3aXJlZ3VhcmRAbGlzdHMuengyYzQuY29tPg0KU3ViamVjdDogQWN0dWFsIHBsYW5z
-IGZvciBXaW5kb3dzIGNsaWVudDogUG9zdFVwL1ByZURvd24gcG9zc2libGU/DQoNCiAgICBIZWxs
-byENCg0KICAgIEnigJlkIGxpa2UgdG8gcmFpc2UgdGhlIHF1ZXN0aW9uIHJlZ2FyZGluZyBhbiBv
-cHRpb24gZm9yIFBvc3RVcC9QcmVEb3duIHdpdGggdGhlDQogICAgV2luZG93cyBjbGllbnQgYWdh
-aW4sIHdoaWNoIHdhcyAodG8gbXkgcmVzZWFyY2gpIGZpcnN0IGRpc2N1c3NlZCBoZXJlIG9uIHRo
-ZQ0KICAgIG1haWxpbmcgbGlzdCBhdCB0aGUgYmVnaW5uaW5nIG9mIERlY2VtYmVyIDIwMTkgYnkg
-UsOpbWkgYW5kIEphc29uIEEuDQoNCiAgICBJIHRob3VnaHQgYWJvdXQgc3dpdGNoaW5nIG91ciBP
-cGVuVlBOIHNldHVwIHRvIHRoZSBtb2Rlcm4gV2lyZWd1YXJkIGFuZCBzdGFydGVkDQogICAgcmVh
-ZGluZyBpZiBhbGwgbXkgcmVxdWlyZW1lbnRzIGNvdWxkIGJlIGZ1bGZpbGxlZC4gU28gZmFyIEkg
-aGF2ZSBzb21lIHVzZXJzIHdpdGgNCiAgICBubyBhZG1pbmlzdHJhdGl2ZSBwcml2aWxlZ2VzIG9u
-IHRoZWlyIFdpbmRvd3MgY29tcHV0ZXIgd2hlbiB0aGV5IHdhbnQgdG8gY29ubmVjdA0KICAgIHRv
-IGEgcmVtb3RlIHNlcnZlciBpbiBvcmRlciB0byBhY2Nlc3Mgc29tZSBzaGFyZWQgc3BhY2UgKFNh
-bWJhIGZpbGVzeXN0ZW0pLg0KICAgIEN1cnJlbnRseSB0aGUgdXNlcnMgYXJlIHVzaW5nIE9wZW5W
-UE4sIHdoaWNoIGhhcyBhIGJhY2tncm91bmQgc2VydmljZSBydW5uaW5nDQogICAgd2l0aCBhZG1p
-biByaWdodHMgKFdpbmRvd3Mgc2VydmljZSkuIFRodXMgdGhlIHVzZXJzIGNhbiBzaW1wbHkgdXNl
-IGEgc2hvcnRjdXQgb24NCiAgICB0aGUgZGVza3RvcCB0byB0aGUgT3BlblZQTi1HVUkgaW5jbHVk
-aW5nIGFuIGFwcHJvcHJpYXRlIGNvbmZpZy1maWxlIHRvIGNvbm5lY3QNCiAgICB0byB0aGUgcmVt
-b3RlIHNlcnZlci4gQWZ0ZXIgdGhlIHR1bm5lbCBpcyBlc3RhYmxpc2hlZCBPcGVuVlBOIHVzZXMg
-dGhlDQogICAgKG9wdGlvbmFsKSBzb2x1dGlvbiB0byBwbGFjZSBhIGJhdGNoIGZpbGUgd2l0aGlu
-IHRoZSB1c2Vyc3BhY2UNCiAgICAoJVVTRVJQUk9GSUxFJVxPcGVuVlBOXGNvbmZpZykgYXMgQ09O
-RklHLU5BTUVfdXAuYmF0IC8gQ09ORklHLU5BTUVfZG93bi5iYXQNCiAgICB3aGVyZSBzb21lIHN0
-dWZmIGNhbiBiZSBwbGFjZWQgdG8gbW91bnQgYSBTYW1iYSBmaWxlc3lzdGVtIGFmdGVyIHRoZSBj
-b25uZWN0aW5nDQogICAgYW5kIHR1bm5lbCBhcmUgZXN0YWJsaXNoZWQgKG5ldCB1c2UgejogXFwx
-MC4wLjAuMVxkYXRhKSBhbmQgdG8gdW5tb3VudCBiZWZvcmUNCiAgICB0aGUgdHVubmVsIGlzIGRp
-c2Nvbm5lY3RlZC4NCg0KICAgIEnigJl2ZSBzZWVuIHRoZSBjb25jZXJucyBmcm9tIEphc29uIEEu
-IGFib3V0IHNwcmVhZGluZyBtYWx3YXJlIGFuZCB0aGUgaGludCB0aGF0DQogICAg4oCcTGludXgg
-Y29tbWFuZCBsaW5lIHVzZXJzIGNhbiBnZW5lcmFsbHkgYmUgdHJ1c3RlZCB0byBjaGVjayB0aGUg
-Y29uZmlnIGZpbGVzDQogICAgdGhleSdyZSB3cml0aW5nIGludG8gL2V0Yy93aXJlZ3VhcmTigJ0u
-IEZyb20gbXkgcG9pbnQgb2YgdmlldyB0aGUgc2FtZSBob2xkcyB3aXRoDQogICAgdGhlIHNvbHV0
-aW9uIHByb3ZpZGVkIGZyb20gT3BlblZQTiB0byB1c2UgdGhlIGJhdGNoIGZpbGVzLCB3aGljaCBh
-cmUgb3B0aW9uYWwsDQogICAgY2FuIGJlIGNoZWNrZWQgYnkgdGhlIHVzZXIgYW5kIGhhdmUgdG8g
-YmUgZXhwbGljaXRseSBkZWZpbmVkIGZvciBlYWNoIFZQTiBwcm9maWxlLg0KDQogICAgTG9va2lu
-ZyBpbnRvIHRoZSBXaW5kb3dzIHNwZWNpZmljIHRvZG8gbGlzdCBvbiB0aGUgV2lyZWd1YXJkIGhv
-bWVwYWdlIEkgZGlkbuKAmXQNCiAgICBmaW5kIGFueSBjb21tZW50cyBpZiB0aGlzIHdpbGwgYmUg
-Y29uc2lkZXJlZCBmb3IgbGF0ZXIgdmVyc2lvbnMgb2YgdGhlIHdpbmRvd3MNCiAgICBjbGllbnQs
-IGlmIHRoZXJlIHdpbGwgb3Igd29u4oCZdCBiZSBhIHNvbHV0aW9uIGxpa2UgdGhpcy4NCg0KICAg
-IE1heWJlIEkgaGF2ZSBtaXNzZWQgc29tZXRoaW5nLCBzbyBteSBxdWVzdGlvbiB3b3VsZCBiZSwg
-aWYgc29tZW9uZSBjYW4gdGVsbCBtZQ0KICAgIHNvbWV0aGluZyBhYm91dCB0aGUgY3VycmVudCBz
-dGF0dXMgb3IgYSBwb3NzaWJsZSBpbXBsZW1lbnRhdGlvbj8NCg0KICAgIEtpbmQgcmVnYXJkcw0K
-ICAgIFN0ZWZhbg0KDQo=
+Hi,
+
+you are wrong!
+
+For example, my dwood3rc.txt (only partially) file looks like this:
+
+upstream_servers = 
+{}                                                         # Initialize 
+dictionary variable
+upstream_servers["internal."]="192.168.178.1, 192.168.178.2, 
+192.168.178.3"   # local DNS servers for all fqdns.internal
+upstream_servers["."]="9.9.9.9, 
+8.8.8.8"                                      # for others Quad Nine, 
+Google, WITRON Firewall
+root_servers = {}
+# manual entries (similar to /etc/hosts)
+# pointing to specific DNS servers for specific hostnames to resolve
+root_servers["host1.separate.domain."]="10.11.12.13"           # resolve 
+host1.separate.domain via DNS 10.11.12.13
+bind_address="0.0.0.0"
+# The IPs allowed to connect and use the cache
+recursive_acl = "127.0.0.1/16, 192.168.178.0/24"
+
+filter_rfc1918 = 0
+reject_mx = 0
+# please make sure you have 1 empty line at the end of the configuration 
+file
+
+So you can exactly do what you told is not possible. Make sure you don't 
+forget the dots "." at the end of the names!
+
+- resolve specific hosts via specifix DNS
+- resolve specific subdomain via specific DNS
+- resolve all others (.) via upstream server e.g. google DNS
+
+So what else you need?
+
+Regards
+
+Peter
+
+
+On 10.11.2020 16:38, Yves Goergen wrote:
+> I just read through the 'upstream_servers' section of the Deadwood DNS
+> resolver. And it doesn't seem to do what I need. I'll have to specify
+> a fixed DNS server for a fixed name suffix. This is not possible on
+> LANs where there are no suffixes, as I already described. Setting
+> multiple upstreams for the same '.' suffix again results in a lookup
+> in one of them, not both.
+>
+> This is not a solution to my problem. And I still refuse to believe
+> that my problem is exotic. Every home LAN has this.
+>
+> Am Di., 10. Nov. 2020 um 14:06 Uhr schrieb Der PCFreak
+> <mailinglists@pcfreak.de>:
+>> Hi,
+>>
+>> concerning local DNS forwarder.
+>>
+>> I am in an environment where I need to resolve public DNS names to local
+>> IPs for specific hosts and additionally public DNS for the rest.
+>> In Windows XP it was possible to just stop the DNS cache service and set
+>> 2 DNS servers and everything worked.
+>> Newer versions of Windows starting with Windows 7 do only connect to the
+>> second DNS if connecting (not querying) the first fails.
+>> So if your first DNS is up but has no reply for your query, Windows will
+>> just add that fqdn to the negative cache and no longer
+>> query the DNS for a specific time or until you delete the cache with
+>> ipconfig /flushdns.
+>>
+>> All of the above can be fixed using a local DNS forwarder.
+>>
+>> I use DeadWood on my machine for years now.
+>> https://maradns.samiam.org/deadwood/doc/FAQ.html
+>>
+>> I just point my DNS to 127.0.0.1 (which is the deadwood service) and
+>> configure Deadwood a little bit. It basically let's me
+>> exactly specify which hosts to resolve how and can have something
+>> similiar to a HOSTS entry, too.
+>>
+>> As Domi wrote I would encourage you to tryout a local DNS resolver, too.
+>>
+>> Regards
+>>
+>> Peter
+>>
+>> On 10.11.2020 09:14, Tomcsanyi, Domonkos wrote:
+>>> Hello Yves,
+>>>
+>>> I am by no means a person with authority to make such a decision, but your usecase seems to be so specific I would not imagine it would make sense to blow up the size and complexity of the Windows wg with a local DNS forwarder.
+>>> I think it is way better if people just install a local DNS resolver/forwarder on their own. There a ton of choices available, from simply python scripts to large scale servers. You could easily configure any of these to distinguish which DNS server to ask based on the TLD portion of your local domain or whatever other distinguisher you have.
+>>> Then the only thing you need to do is tell your system (either via wg or by other means) to use the local resolver and the case is solved :).
+>>> Also I am pretty sure one of the main philosophies behind wg is to be the same as much as possible on all platforms. Adding a DNS resolver would again mean a lot of complications when compared to e.g. the Linux version, since most Linux distributions already feature some kind of a local resolver by default.
+>>>
+>>> Cheers,
+>>> Domi
+>>>
+>>>
+>>>> 09.11.2020 dátummal, 23:46 időpontban Yves Goergen <yves.goergen@gmail.com> írta:
+>>>>
+>>>> ﻿Hello,
+>>>>
+>>>> I've already used WireGuard to connect to private networks and it's
+>>>> quite easy once you figure out how to set it up. (Most tutorials are
+>>>> outdated and haven't been updated, new ones haven't been written.) One
+>>>> thing that's really missing however is DNS support. All I can do now
+>>>> is connect to IP addresses. Names are not resolvable on the other
+>>>> side. If I add the "DNS" directive to my client configuration, it
+>>>> replaces the local DNS resolver and *all* lookups go to that server
+>>>> instead. This isn't working either because I'm on two local networks
+>>>> and each has its own local DNS server that can only resolve its own
+>>>> local names (and forward the rest to the internet).
+>>>>
+>>>> Specifying both networks' DNS servers also fails because when
+>>>> resolving a name, one of them is chosen at random (and the other one
+>>>> isn't regarded) and then you won't be able to resolve some of the
+>>>> names some of the time. This is also very frustrating. And it wouldn't
+>>>> scale to multiple active tunnels.
+>>>>
+>>>> The solution I've read about is to set up a local DNS forwarder that
+>>>> can be configured so that it uses multiple servers and queries each of
+>>>> them and returns only a positive response. This way it could query
+>>>> both local LAN DNS servers and for local names, only one of them would
+>>>> resolve the name. This is a bit complicated to do if you're not
+>>>> permanently connected to a VPN, or if you move from one local DHCP
+>>>> network to another (like with a laptop). And it requires additional
+>>>> software, setup and configuration, and probably intensive maintenance
+>>>> and care. All of this makes WireGuard a pretty ugly alternative to
+>>>> OpenVPN where all of this already works. Despite all the disadvantages
+>>>> of OpenVPN.
+>>>>
+>>>> I'm asking if it's possible to integrate such a local DNS forwarder
+>>>> into the Windows client application. I imagine it would start up
+>>>> automatically once the first tunnel is activated. And it would replace
+>>>> the local system's DNS server setting for as long as it's active (like
+>>>> the tunnel-configured DNS server already does). And it would query the
+>>>> original locally configured DNS server and all configured DNS servers
+>>>> for the active tunnels. It would then be able to resolve local names
+>>>> and tunnel-remote names without any additional work on the user end.
+>>>> The user wouldn't have to perform many complex tasks upon activating
+>>>> or deactivating a tunnel. This would make WireGuard be as simple and
+>>>> productive as I believe it was intended to be (but isn't yet).
+>>>>
+>>>> This probably stops working as soon as other VPN software is used in
+>>>> parallel, but the current "DNS" setting has the same limitation, it's
+>>>> better than nothing and most of the time, you only run a single VPN
+>>>> software.
+>>>>
+>>>> Please let me know what you think of it.
+>>>>
+>>>> -Yves
