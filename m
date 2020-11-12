@@ -2,63 +2,54 @@ Return-Path: <SRS0=GTIq=ES=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.0 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 898F1C2D0E4
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Nov 2020 23:35:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E785BC5519F
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Nov 2020 23:35:48 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id D96C5216C4
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Nov 2020 23:35:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 8495A216FD
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Nov 2020 23:35:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=trivini.no header.i=@trivini.no header.b="fEc9kjbu"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org D96C5216C4
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=trivini.no
+	dkim=pass (2048-bit key) header.d=werehub.org header.i=@werehub.org header.b="k5QU49jH"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 8495A216FD
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=werehub.org
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 84eca94d;
-	Thu, 12 Nov 2020 23:31:43 +0000 (UTC)
-Received: from redskapet.trivini.no (redskapet.trivini.no [2001:67c:29f4::51])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2308be3e
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d35921fe;
+	Thu, 12 Nov 2020 23:31:45 +0000 (UTC)
+Received: from mail.werehub.org (mail.werehub.org [2a02:8304:29:420::205])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 74ef955d
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 12 Nov 2020 08:59:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=trivini.no; 
- s=20190719;
- h=In-Reply-To:Content-Transfer-Encoding:Content-Type:
- MIME-Version:References:Message-ID:Subject:To:From:Date:Sender:Reply-To:Cc:
- Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
- List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=ndHUbxNIxNJwngUdX+mzo76y0yw0nbO7ofGYw31Gddw=; b=fEc9kjbu3k/2yf9XF0Z1WiGoqn
- LhmztfDdpZhNz8nUEOapxl/MpAAuVAyOQ5xpRzAqUxPAp1z47ORzpTQmAaaeX7IsQQYsU3qr1f0xl
- Ciw2zCZaQdXGq/JlpH5dcM1VYYlsSIoWcyg+2b65TBhpep6CLU6G9cjtyBBdg6F5V3I0=;
-Received: from berge by redskapet.trivini.no with local (Exim 4.92)
- (envelope-from <berge@trivini.no>) id 1kd8Vd-0002uV-9E
- for wireguard@lists.zx2c4.com; Thu, 12 Nov 2020 10:03:13 +0100
-Date: Thu, 12 Nov 2020 10:03:13 +0100
-From: Berge Schwebs =?utf-8?Q?Bj=C3=B8rlo?= <berge@trivini.no>
+ Thu, 12 Nov 2020 15:15:02 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon)
+ with ESMTPSA id D6B3240384
+ for <wireguard@lists.zx2c4.com>; Thu, 12 Nov 2020 16:18:50 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=werehub.org; s=mailcow;
+ t=1605194333; h=from:subject:date:message-id:to:mime-version:content-type:
+ content-transfer-encoding; bh=SOvYNlyvoA4UceeiaTm2Q90hkiOfe7LyA4cIHuTSJyA=;
+ b=k5QU49jHrnf9xbLdDvBrbKdt/E2o/fY8jUTU+0FnoqShrhIIm2nXKVCvUcfzzdc+tYaHp0
+ 3+GPrvdW9uvMrmv/lEs1iCJooqp9xTEJNkqIcUzX3djuqN7yoYGF14AIuZTfr2da4uWVZ/
+ hU3bWl5re7Fwl1x2WaiMOjfg3g/CUJnd8PqHGkDuZegce/34Zcx6mTHjfe5z5uajPhv2o4
+ 4hwtlqHolk+hBJG4fCwoANAwRAOQPyTlJMX0Ss8sLhngJa1bvkEds5ip69MQUHHfWnVKnf
+ Bd0hKiozR5+GYlPViS9wffnEtcVJMncIWwYnXQsTFO7fnUK4vmIf1FGW3hebaw==
 To: wireguard@lists.zx2c4.com
-Subject: Re: Should we sunset Windows 7 support?
-Message-ID: <20201112090313.GB3500@trivini.no>
-References: <CAHmME9rW1e+rRc8q+-_eLR=U9OTn+Sn84ECJtGFY=Hjg8kzfEQ@mail.gmail.com>
- <K17360-33.1605029899@spamhaus.org>
- <CAHmME9pmKxGYmxxs0pLt=zt2igy6aR-g5xsB=2Zew6oWVY0Z3w@mail.gmail.com>
- <CABtXGiCs1fS3FHAwHL1zohuL1BfDhY7GhZhtLFfiqS2aJstr3g@mail.gmail.com>
+From: vh217@werehub.org
+Subject: Using WireGuard on Windows as non-admin - proper solution?
+Message-ID: <3415567b-5441-f3b1-7a38-f0bae3a14cfc@werehub.org>
+Date: Thu, 12 Nov 2020 16:18:42 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.4.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABtXGiCs1fS3FHAwHL1zohuL1BfDhY7GhZhtLFfiqS2aJstr3g@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: berge@trivini.no
-X-SA-Exim-Scanned: No (on redskapet.trivini.no);
- SAEximRunCond expanded to false
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-Last-TLS-Session-Version: TLSv1.3
 X-Mailman-Approved-At: Fri, 13 Nov 2020 00:31:41 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -74,30 +65,54 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Thu, Nov 12, 2020 at 09:46:32AM +0100, Phillip McMahon wrote:
-> Take a look here
-> 
-> https://gs.statcounter.com/os-version-market-share/windows/desktop/worldwide
-> 
-> Would seem to suggest Windows 7 is in decline but still represents
-> around 25% of OS footprint out there.
+Hello,
 
-I read 16% from that graph, but that's still considerable.
+I've been wondering about using WireGuard on Windows as a non-admin user.
 
-The Wikimedia stats might also provide some insight:
+I have seen Jason's reply in this regard [1] and I understand the 
+rationale. This however effectively means that WireGuard can't be 
+directly used on company-issued machines where users who need to connect 
+to company servers are usually not given administrator rights.
 
-https://analytics.wikimedia.org/dashboards/browsers/#desktop-site-by-os/os-family-and-major-hierarchical-view
+So I would like to open up two discussion points:
+1) Is this use case something WireGuard was even meant for? I.e. should 
+we even try to bend wg to be able to do this kind of stuff?
+2) If the answer is yes, what would be the least hacky/workaround-ey way 
+to do it?
 
-The last 30 days, 8.5% of the Wikimedia "desktop sites" (ie. not mobile)
-visits were from Windows 7, which in turn is 12% of their Windows clients
-visits.
+I found a couple solutions on the Internet to this problem [2], [3] but 
+both of them seem to be kind of complicated for setting up with dozens 
+of clients.
 
-I imagine Wikimedia stats are pretty geographically biased, since its by far
-biggest chunks of content is in either English or other European languages.
+In my mind there are two ways about the solution:
+1) Somehow allow the user to be able to perform this one administrative 
+task.
+2) Since wg is essentially quiet when not being used, leave the wg 
+tunnel on at all times. (aka "fire [up] and forget")
 
-Cheers,
--Berge
+The 1) is more or less covered in the solutions in [2] and [3] so that 
+doesn't seem like a way if we want something easy.
+That leaves us with 2) which seems to work fine, although we've run into 
+an issue with overlapping routes, i.e. if the remote company LAN is 
+something like 192.168.1.0/24 and wg server 172.17.1.1 and the wg adds a 
+route "192.168.1.0/24 via 172.17.1.1" then when the client is physically 
+present in the company their LAN stops working. This could probably be 
+easily fixed by setting up route metric as a PostUp, though my 
+Windows-route-fu is weak in this one.
 
--- 
-Berge Schwebs Bjørlo
-Try SCE to AUX.
+Any input on this would be greatly appreciated, since the info on the 
+Internet seems to be rather scattered around.
+
+Also, if anyone has an idea on how to modify the route metric in the 
+PostUp, I think that might be an elegant solution to this.
+
+Thanks!
+
+Viktor
+
+[1] https://www.mail-archive.com/wireguard@lists.zx2c4.com/msg04292.html
+[2] 
+https://www.reddit.com/r/WireGuard/comments/frizel/solution_managing_wireguard_on_windows_as_a/
+[3] https://www.henrychang.ca/how-to-setup-wireguard-vpn-server-on-windows/
+
+
