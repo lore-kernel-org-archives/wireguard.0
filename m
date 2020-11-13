@@ -2,65 +2,76 @@ Return-Path: <SRS0=pWoz=ET=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2C7FC2D0E4
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 13 Nov 2020 02:16:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6BEDC2D0E4
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 13 Nov 2020 02:57:57 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 912D920936
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 13 Nov 2020 02:16:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id C3E9F20B80
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 13 Nov 2020 02:57:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="LgWofYA3"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 912D920936
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sXP6LUOg"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org C3E9F20B80
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f59ef270;
-	Fri, 13 Nov 2020 02:12:22 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 13f74e2b
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4ac227de;
+	Fri, 13 Nov 2020 02:53:38 +0000 (UTC)
+Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com
+ [2607:f8b0:4864:20::d36])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 18c78856
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 13 Nov 2020 02:12:19 +0000 (UTC)
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 13a5ef82
- for <wireguard@lists.zx2c4.com>;
- Fri, 13 Nov 2020 02:13:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=OjLN259BHYX9+3B1a0XvyHiMCp0=; b=LgWofY
- A3v+678KrF6GPHnFeGcHUoarkBfeIYaWYTSIdsezF1S3OXJqr7jEPNXTygMYsHed
- cvPEFPH0E3LmKG0KNJRLg+IT5Os4L0pYb+QxbeLmeWZCxch1UBRJyO5u2JwdF1Vi
- dK51+K2lzBC4TDqPoKd5vIxzxddp/pp1lq8ULMVBFwsoilsjQFS/A3kLCzkptAQx
- HNC3D1pSMSY5uBrKKPHrtLN3+iMi8tbdfn4edyKikyxg7kgKWTdlFyCJD3RXizj5
- yRhvhenpbOhzlHaJSRqkIo1yomOFI8eML6fBOFTNc9mnqjHLXtmdyI72qQaNFNIB
- Oo3NniqAXb82uu8Q==
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id a0866f33
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Fri, 13 Nov 2020 02:13:04 +0000 (UTC)
-Received: by mail-yb1-f172.google.com with SMTP id k65so7322704ybk.5
- for <wireguard@lists.zx2c4.com>; Thu, 12 Nov 2020 18:16:20 -0800 (PST)
-X-Gm-Message-State: AOAM531WungC1bTyARxm30r0ocvbsLjWNpFvykEEHnJ0EmM8ZgjuQpP4
- p/o+iFHCV41hwpGdjpnicdjfjOpM8pUTNl2SO2g=
-X-Google-Smtp-Source: ABdhPJzfbzli7Ml/JUouLw7Hyv+Johg+il3QWRs9o0hAtMtd3003cePtbYG/wz9rbYm5xtFQpB6Z1u/NuCcelLaA6AE=
-X-Received: by 2002:a25:6f83:: with SMTP id k125mr3573560ybc.123.1605233779511; 
- Thu, 12 Nov 2020 18:16:19 -0800 (PST)
+ Fri, 13 Nov 2020 02:53:36 +0000 (UTC)
+Received: by mail-io1-xd36.google.com with SMTP id u21so8294369iol.12
+ for <wireguard@lists.zx2c4.com>; Thu, 12 Nov 2020 18:57:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:reply-to:from:date:message-id
+ :subject:to:cc:content-transfer-encoding;
+ bh=TzzYCXINiS2SCTOrP7lvZoJLxJngPTi/sD3uZCslVoQ=;
+ b=sXP6LUOgvgauluutKbDvxiR0Iw1XO7wCzKWmyPh/cKCiETUnUMY1Jw7QM4it5J7eK3
+ c6Dl5OyBE8PDiPoPUznND7F7GVRKb5MLVQA59NKnuFgeYHsp2Vml4MJb3P0qNxdUDErv
+ AID/9ZpsCM7FGP8Pt7IyATknIOfyk5K2Qvc4J7lXPZQK20S2PoD5caV2K4CYCykmJtQf
+ ySDHMivtTJYXlPmTlrtL6J8znmMizvm8wbvaPziXtL6ufqxHTQNrrFTn0Vji3hEp1dj4
+ DcOozXUq7jNV+28ZTRFgRdArzlG162LjCMxsqEackPft9XGkclyoOlYyEw7/Zr3MJ6ow
+ 0JDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
+ :from:date:message-id:subject:to:cc:content-transfer-encoding;
+ bh=TzzYCXINiS2SCTOrP7lvZoJLxJngPTi/sD3uZCslVoQ=;
+ b=hmaKL1MHDwAtKWlRNt5XShc09xKUsDgHPXk+QPVbA8ja7Sg6tSIQ04kKCiu0vi1T4h
+ P7AMru4d/bQTDoPTxFp1Chr8USQLpfK3vUi3YK98PGYTjWapkhFgkhfF3zgd+NZWAkCu
+ jSPx5JMqI8TNHd8zLHkO2vw7YTOTYms4KXHk1wHNhTZ5Fj13gEwJMY/EZ2oILpDU7Pry
+ olGvv4loq8sdc5Fjr3rKWNAlLou8t2SFEzFQAmLDd7B5NG5f6AmWdKxOxTiQ4vOBxY3e
+ A0x4Zll2cKbshoxzuvn9r9pMmEEahvK7urQq0gJLz4CXQySpVFO0q3eHFY+Zlc1f52Nu
+ 1gKw==
+X-Gm-Message-State: AOAM532E4JoRzoi+OLri5fdHHvx2Lhj9HNmA9SdBJkt5Y8Nl+jYC/ucI
+ 6QjC7xh+6zperFE9lLLvUc1eMu7b34Bdd/j2y38zRDUNe/c=
+X-Google-Smtp-Source: ABdhPJxBDxUoa/zfl7yoahQfAV8BE69yOQMEtcKN/wjl9NPS63XGtAol4D4YxDIeznCBnMWajVsIAMQnkNAk2f4PgRA=
+X-Received: by 2002:a05:6602:2dd3:: with SMTP id
+ l19mr242728iow.124.1605236258336; 
+ Thu, 12 Nov 2020 18:57:38 -0800 (PST)
 MIME-Version: 1.0
-References: <3415567b-5441-f3b1-7a38-f0bae3a14cfc@werehub.org>
-In-Reply-To: <3415567b-5441-f3b1-7a38-f0bae3a14cfc@werehub.org>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 13 Nov 2020 03:16:08 +0100
-X-Gmail-Original-Message-ID: <CAHmME9p6FoUsFou0LkeUZt4Ba1K4ycuA6f8X4c6Kt8-jzkAH7A@mail.gmail.com>
-Message-ID: <CAHmME9p6FoUsFou0LkeUZt4Ba1K4ycuA6f8X4c6Kt8-jzkAH7A@mail.gmail.com>
-Subject: Re: Using WireGuard on Windows as non-admin - proper solution?
-To: vh217@werehub.org
+References: <CAHmME9rW1e+rRc8q+-_eLR=U9OTn+Sn84ECJtGFY=Hjg8kzfEQ@mail.gmail.com>
+ <K17360-33.1605029899@spamhaus.org>
+ <CAHmME9pmKxGYmxxs0pLt=zt2igy6aR-g5xsB=2Zew6oWVY0Z3w@mail.gmail.com>
+ <CABtXGiCs1fS3FHAwHL1zohuL1BfDhY7GhZhtLFfiqS2aJstr3g@mail.gmail.com>
+ <20201112090313.GB3500@trivini.no>
+In-Reply-To: <20201112090313.GB3500@trivini.no>
+From: Jeffrey Walton <noloader@gmail.com>
+Date: Thu, 12 Nov 2020 21:56:59 -0500
+Message-ID: <CAH8yC8=azrpN=EOP9XsTDe2NwmqQquSpEuqidtS2rVFw8x+5Ew@mail.gmail.com>
+Subject: Re: Should we sunset Windows 7 support?
+To: =?UTF-8?Q?Berge_Schwebs_Bj=C3=B8rlo?= <berge@trivini.no>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -72,28 +83,36 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
+Reply-To: noloader@gmail.com
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Viktor,
+On Thu, Nov 12, 2020 at 6:36 PM Berge Schwebs Bj=C3=B8rlo <berge@trivini.no=
+> wrote:
+>
+> On Thu, Nov 12, 2020 at 09:46:32AM +0100, Phillip McMahon wrote:
+> > Take a look here
+> >
+> > https://gs.statcounter.com/os-version-market-share/windows/desktop/worl=
+dwide
+> >
+> > Would seem to suggest Windows 7 is in decline but still represents
+> > around 25% of OS footprint out there.
+>
+> I read 16% from that graph, but that's still considerable.
 
-I am actually interested in solving this. I took an initial stab at it
-here, but I'm not super comfortable with the implementation or the
-security implications:
-https://git.zx2c4.com/wireguard-windows/commit/?h=jd/unprivd-knob
+My bad, try this:
+https://www.netmarketshare.com/operating-system-market-share.aspx?options=
+=3D%7B%22filter%22%3A%7B%22%24and%22%3A%5B%7B%22deviceType%22%3A%7B%22%24in=
+%22%3A%5B%22Desktop%2Flaptop%22%5D%7D%7D%5D%7D%2C%22dateLabel%22%3A%22Trend=
+%22%2C%22attributes%22%3A%22share%22%2C%22group%22%3A%22platformVersion%22%=
+2C%22sort%22%3A%7B%22share%22%3A-1%7D%2C%22id%22%3A%22platformsDesktopVersi=
+ons%22%2C%22dateInterval%22%3A%22Monthly%22%2C%22dateStart%22%3A%222019-11%=
+22%2C%22dateEnd%22%3A%222020-10%22%2C%22segments%22%3A%22-1000%22%7D
 
-Aside from doing this from within our existing UI, the general
-solution using the service-based building blocks is to simply allow
-users to start and stop services that begin with "WireGuardTunnel$".
-So the flow is something like:
+I tried to trim the long URL but it lost detail.
 
-1. wireguard /installtunnelservice  path\to\sometunnel.conf.
-2. Change the ACLs on WireGuardTunnel$sometunnel to fit your user.
-3. Have the user use `net start` and `net stop`, or similar, to
-control whether the service is up or down.
+The view with the long URL selected "Operating Systems" =E2=86=92 "Desktop
+Versions" in the left side bar.
 
-That's not super pretty, but it should work, and it is automatable.
-Meanwhile, I'll keep thinking about various ways to do this in a more
-"first-party" way.
-
-Jason
+Jeff
