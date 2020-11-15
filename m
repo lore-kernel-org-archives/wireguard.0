@@ -2,83 +2,95 @@ Return-Path: <SRS0=FGbH=EV=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A0EE4C55ABD
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 15 Nov 2020 21:43:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4626DC2D0E4
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 15 Nov 2020 22:46:09 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id B083D2242E
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 15 Nov 2020 21:43:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id EB84B22384
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 15 Nov 2020 22:46:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=tomcsanyi-net.20150623.gappssmtp.com header.i=@tomcsanyi-net.20150623.gappssmtp.com header.b="o/PjDCOT"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org B083D2242E
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=tomcsanyi.net
+	dkim=pass (2048-bit key) header.d=su.se header.i=@su.se header.b="BkOqSpaU"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org EB84B22384
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=su.se
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 374e4e31;
-	Sun, 15 Nov 2020 21:38:55 +0000 (UTC)
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com
- [2a00:1450:4864:20::42c])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 437ee773
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id be229cce;
+	Sun, 15 Nov 2020 22:41:31 +0000 (UTC)
+Received: from mail-prod-route02.it.su.se (mail-prod-route02.it.su.se
+ [2001:6b0:5:1212:250:56ff:fe94:4d39])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c4afa2d1
+ (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 15 Nov 2020 21:38:52 +0000 (UTC)
-Received: by mail-wr1-x42c.google.com with SMTP id l1so16668836wrb.9
- for <wireguard@lists.zx2c4.com>; Sun, 15 Nov 2020 13:43:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tomcsanyi-net.20150623.gappssmtp.com; s=20150623;
- h=mime-version:subject:from:in-reply-to:date:cc
- :content-transfer-encoding:message-id:references:to;
- bh=XhB0hS1mOL5Hp9zalc1CGVy6kr+KAJR1yGKdImL2O9c=;
- b=o/PjDCOTdc1ZmmEjmCB6GjvUV42c53sseUnjusb8BJNwfyA0B5rmObBYx1gMV+7Qwz
- aIEMzgRPzFYu33qmPNkk6y7w8JyrCC1SQTqkDPOVZWtkTzTpoRlHcAEzkFg/4dXmMyuZ
- KBzIYdFeAFqv6vNdqB6SPOEHPkCPpkJoufI5Hvaz8J6kBrscPPP/Mivfz3MMhvoiobKT
- y1qcOwBaRXAXjTfSf4TtSlBvv1zQGXmh6vzbDb5+sGpnTvikzF3lE7oKL2H16v4FMq5S
- pFbiljYhv6Cwvcdje0mSWQDzhwKnb5SDFc1mI1Da0q/tUzUZpR6rLefU92Mm9kLqxZJe
- miFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
- :content-transfer-encoding:message-id:references:to;
- bh=XhB0hS1mOL5Hp9zalc1CGVy6kr+KAJR1yGKdImL2O9c=;
- b=NMsgaZRVxcPcjIxgohUPAT8IAUySNdtuENO9q7ZHqQdRfmwrSAj/qd09AipweVeek1
- p79ZukD0js+miBVPn8WqQyHvFEk8x2/koffNtJdK01tW4tAseER3pbXNjDBnqPMP3bIj
- wrUACzJ+ib9OWIfJUb7HaC3i4HkfWgFPSmHpcHYSOpLzLEKZoXJ9l/FSvcP0jNKYOXPu
- I66hjApoqKuZg6bAu9CogkbuwafRMM6e7kZRmgihk0h3GluE9uQVbJuoMNhYg/H/D6OZ
- IUdV+thX17txseucTL9EWsckWtNqRgyS8PqlREG4lextO/pSgejqvp6v5zYrMGuIsfun
- 8GMg==
-X-Gm-Message-State: AOAM533luWZC5JpI3s3BIB4MMRdOowXyFW5sum3Zqh90CL4suczpXt6r
- nOpWOB2GLyqhM3YxucxbNr/axw==
-X-Google-Smtp-Source: ABdhPJwOFxGXFbD3VqOcre5pFOJWRCrcUk6+lPE6Ym9sc4S2SYD+B50/SGQKqTth0raVs1HVQXvJmw==
-X-Received: by 2002:adf:e541:: with SMTP id z1mr15806413wrm.389.1605476594704; 
- Sun, 15 Nov 2020 13:43:14 -0800 (PST)
-Received: from 10.10.15.3 (tomcsanyi.net. [185.82.232.18])
- by smtp.gmail.com with ESMTPSA id a15sm19913059wrn.75.2020.11.15.13.43.13
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Sun, 15 Nov 2020 13:43:14 -0800 (PST)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.17\))
-Subject: Re: Add local DNS forwarder to Windows client
-From: =?utf-8?Q?=22Tomcs=C3=A1nyi=2C_Domonkos=22?= <domi@tomcsanyi.net>
-In-Reply-To: <CADJb3qTCed6GvshAmqOuVV-T9Pk7g6gs=KgHPGFSP7e9J8aMig@mail.gmail.com>
-Date: Sun, 15 Nov 2020 22:43:10 +0100
-Cc: Lech Perczak <lech.perczak@gmail.com>,
- wireguard@lists.zx2c4.com
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <70447B8A-8AF7-419A-863E-BA29DAABFE53@tomcsanyi.net>
-References: <CADJb3qRk2nuvQdyF1+=9yf84annmJ+nyapdokFx1o-WcVfvfKQ@mail.gmail.com>
- <A64A6CAC-E8CA-41AB-8CCD-E9E379591C91@tomcsanyi.net>
- <d62f54e7-cb5f-7baf-9320-19903b7c5d51@pcfreak.de>
- <CADJb3qRapO=3-fuyeS6iC8EnM34TxTxpZBr1uyVhhTmfjgOmwA@mail.gmail.com>
- <55dea4e3-0499-2b23-6bef-4ebd67b3d905@gmail.com>
- <CADJb3qTCed6GvshAmqOuVV-T9Pk7g6gs=KgHPGFSP7e9J8aMig@mail.gmail.com>
-To: Yves Goergen <yves.goergen@gmail.com>
-X-Mailer: Apple Mail (2.3445.104.17)
+ Sun, 15 Nov 2020 15:24:11 +0000 (UTC)
+Received: from e-mailfilter02.sunet.se (e-mailfilter02.sunet.se
+ [IPv6:2001:6b0:8:2::202])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by mail-prod-route02.it.su.se (Postfix) with ESMTPS id 4CYx1V5MqyzxkF;
+ Sun, 15 Nov 2020 16:28:30 +0100 (CET)
+Received: from smtp.su.se (mail-prod-smtp03.it.su.se
+ [IPv6:2001:6b0:5:131:250:56ff:fe94:f91])
+ by e-mailfilter02.sunet.se (8.14.4/8.14.4/Debian-8+deb8u2) with ESMTP id
+ 0AFFSSAi010141
+ (version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Sun, 15 Nov 2020 16:28:29 +0100
+Received: from ebox-prod-srv13.win.su.se (ebox-prod-srv13.win.su.se
+ [IPv6:2001:6b0:5:1162:f071:3d85:b2d0:c2f6])
+ by smtp.su.se (Postfix) with ESMTPS id 4CYx1S425kzxcw;
+ Sun, 15 Nov 2020 16:28:28 +0100 (CET)
+Received: from EBOX-PROD-SRV15.win.su.se (2001:6b0:5:1162:85f3:6da2:459d:88c7)
+ by ebox-prod-srv13.win.su.se (2001:6b0:5:1162:f071:3d85:b2d0:c2f6)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2106.2; Sun, 15 Nov
+ 2020 16:28:28 +0100
+Received: from EBOX-PROD-SRV15.win.su.se ([fe80::85f3:6da2:459d:88c7]) by
+ EBOX-PROD-SRV15.win.su.se ([fe80::85f3:6da2:459d:88c7%2]) with mapi id
+ 15.01.2106.002; Sun, 15 Nov 2020 16:28:28 +0100
+From: Patrik Holmqvist <patrik.holmqvist@su.se>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>, "vh217@werehub.org"
+ <vh217@werehub.org>
+CC: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Subject: RE: Using WireGuard on Windows as non-admin - proper solution?
+Thread-Topic: Using WireGuard on Windows as non-admin - proper solution?
+Thread-Index: AQHWuUytyfF/TNfZ4UmGDpBws/KDu6nFQogAgAQILDA=
+Date: Sun, 15 Nov 2020 15:28:27 +0000
+Message-ID: <665e0a8610984d938ab013ec2aac8517@su.se>
+References: <3415567b-5441-f3b1-7a38-f0bae3a14cfc@werehub.org>
+ <CAHmME9p6FoUsFou0LkeUZt4Ba1K4ycuA6f8X4c6Kt8-jzkAH7A@mail.gmail.com>
+In-Reply-To: <CAHmME9p6FoUsFou0LkeUZt4Ba1K4ycuA6f8X4c6Kt8-jzkAH7A@mail.gmail.com>
+Accept-Language: sv-SE, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [130.237.154.250]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-Bayes-Prob: 0.9999 (Score 5, tokens from: outbound, outbound-su-se:default,
+ su-se:default, base:default, @@RPTN)
+X-CanIt-Geo: ip=2001:6b0:5:131:250:56ff:fe94:f91; country=SE; latitude=59.3247;
+ longitude=18.0560; http://maps.google.com/maps?q=59.3247,18.0560&z=6
+X-CanItPRO-Stream: outbound-su-se:outbound (inherits from
+ outbound-su-se:default, su-se:default, base:default)
+X-Canit-Stats-ID: 0a3QDst9X - 124c5a42bc46 - 20201115
+X-CanIt-Archive-Cluster: PfMRe/vJWMiXwM2YIH5BVExnUnw
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=su.se; h=from:to:cc
+ :subject:date:message-id:references:in-reply-to:content-type
+ :content-transfer-encoding:mime-version; s=canit-v2; bh=ppREQGgY
+ 5tipaZghlGynVM38JAq8r7eLo33LCtuR7QA=; b=BkOqSpaU+JfOY7ni9ulhgWbq
+ tofx5Jplx0qoG38oYLwwu8gtfrmTsxtIYe8VAsbFRXkbTvDPLasSHAM65/+AIYiT
+ gBxDRkaM19NibByiy3Kw6feUtNpRWcChTkbP9Zt69YHZ2/wXRADpgSDlEkXCxUx8
+ muIV1BNL005DSbfm0NfzMNy8OEjTgH0H6jqFwKPeo4UaKJKM/DqchrGBjMQZ/bOb
+ ClHAvyrJWOKq8mg99qDZAWUmDT/xFeX2DvuzUi1O7IB+A2xA17eYR/903oIqL43B
+ ew9NbiPJaBjmRBLHwaK0k0oDYAqjM+GtnBlJpoNVxkt6EjgFsfB4CpXU7EXn7g==
+X-Scanned-By: CanIt (www . roaringpenguin . com)
+X-Mailman-Approved-At: Sun, 15 Nov 2020 23:41:29 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -93,89 +105,132 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Yves,
-
-I'm still thinking you should not integrate your DNS so strong with =
-Wireguard. What is the exact issue of setting the DNS parameter of each =
-tunnel to localhost and running your own resolver/forwarder locally?
-A quick google search shows a ton of options for such software. I really =
-don't want this to feel like an advertisment, but e.g. MaraDNS (with Lua =
-plugin(s) to customize things) or Technitium DNS seems to be a good =
-start.
-Once you have your DNS resolver set up correctly just use Wireguard to =
-automatically point your machine to the local resolver if a tunnel is up =
-and that's it.
-
-Am I not seeing something obvious here?
-
-Cheers,
-Domi
-
-> 2020. nov. 15. d=C3=A1tummal, 19:42 id=C5=91pontban Yves Goergen =
-<yves.goergen@gmail.com> =C3=ADrta:
->=20
-> I still cannot see how the suggested measures solve the root problem.
->=20
-> I, too, think of FritzBox or Speedport or EasyBox when I think of a
-> home LAN. These DSL routers are also often used in small offices. So
-> for this part, small offices and private home networks use the same
-> technology. Larger companies surely have more money to spend. The
-> mentioned router models probably make up half of all internet users in
-> Germany. Other models (like TP-Link) don't include a DNS server for
-> DHCP'd local hosts and are almost unusable for home LANs. If you use a
-> router of that kind you have problems before thinking of VPN.
->=20
-> None of these networks offer a DNS suffix. And if they do (FritzBox),
-> it's fixed to ".local". Everywhere. I tried to change it but it's not
-> possible, confirmed by AVM support. Now you may want to call LANs
-> managed by a FritzBox unprofessional. And to a certain point I can
-> follow you. But unprofessional or not, it's the reality that a whole
-> lot of people live in. Now and for the foreseeable future. I wouldn't
-> want to spend extra work to set up a different custom-made router in
-> all of my networks just so that the limited WireGuard capabilities
-> solve my problems. Using OpenVPN is a lot easier then.
->=20
-> This reality includes host names like "pc1" and "pc2" in one LAN and
-> "pc3" and "pc4" in the other LAN. If I'm in one of these LANs and want
-> to connect to the other, I need name resolution with both routers to
-> be able to use names in the LAN I'm currently in and at the same time
-> names in the LAN I'm connected to. No single existing DNS server could
-> ever do that because the two routers don't know each other.
->=20
-> I haven't mentioned public names yet. In this simple scenario, both
-> routers could resolve internet names, but the local router is
-> preferred because it's faster.
->=20
-> As far as I understand things, I need this specific solution, and it's
-> almost impossible to built that without tight integration with a
-> WireGuard client:
->=20
-> * A local DNS proxy on the tunnel client end
-> * that registers itself as the new default DNS server for as long as a
-> tunnel is active
-> * and forwards all DNS queries to *all* of the connected tunnels' DNS
-> (if specified) and also the previous system's DNS server
-> * and responds with the first positive answer that comes in.
-> * This proxy adapts to all active tunnels and
-> * stops and unregisters when the last tunnel is closed.
->=20
-> None of the suggested solutions provide these features. All of them
-> assume that I have host names with a distinguishable name suffix (not
-> the case, not changeable) and that I can reconfigure DNS proxy
-> configuration upon activating and deactivating a tunnel (not
-> practical).
->=20
-> While I understand that WireGuard (the tunnel tech) is intended to be
-> simple, I consider this feature necessary on a higher level for normal
-> network operation. Make things as simple as possible, but no simpler!
-> And in this case, it's just a client GUI that already provides several
-> comfort features outside of the core tunnel scope. A DNS proxy would
-> well fit in this.
->=20
-> And yes, this causes more network traffic than necessary in an ideal
-> world. But I'm looking for a solution in the existing world, and it's
-> only DNS packets, no OS image downloads. Make it correct, and fast; in
-> that order.
->=20
-> -Yves
-
+SGkhDQoNCldlIChTdG9ja2hvbG0gVW5pdmVyc2l0eSkgYXJlIGFsc28gaW50ZXJlc3RlZCBpbiBh
+IHZlcnNpb24gdGhhdCBkb2VzIG5vdCByZXF1aXJlIGxvY2FsIGFkbWluaXN0cmF0b3IgcGVybWlz
+c2lvbnMgdG8gc3RhcnQgdGhlIGFwcGxpY2F0aW9uIGFuZCBoYW5kbGUgdHVubmVsIGNvbmZpZ3Vy
+YXRpb24uDQpXZSBhcmUgY3VycmVudGx5IGV2YWx1YXRpbmcgV2lyZUd1YXJkIGFzIGEgVlBOIHNv
+bHV0aW9uIGZvciBvdXIgZW1wbG95ZWVzIChhbmQgbWF5YmUgc3R1ZGVudHMgaW4gdGhlIGZ1dHVy
+ZSkgc2luY2Ugd2UgYXJlIG5vdCByZWFsbHkgaGFwcHkgd2l0aCBvdXIgY3VycmVudCBzb2x1dGlv
+bi4NCg0KVW5mb3J0dW5hdGVseSB3ZSByYW4gaW50byBhbiBpc3N1ZSB0aGF0IGhhcyBiZWVuIGRp
+c2N1c3NlZCBvbiB0aGlzIGxpc3QgYmVmb3JlLCB0aGF0IFdpcmVHdWFyZCBmb3IgV2luZG93cyBy
+ZXF1aXJlcyB0aGUgdXNlciB0byBiZSBMb2NhbCBBZG1pbiBvbiB0aGUgbWFjaGluZSBpbiBvcmRl
+ciB0byBzdGFydCB0aGUgYXBwbGljYXRpb24uDQoNCldlIGFyZSBub3QgdmVyeSBrZWVuIG9uIG1h
+a2luZyBhbGwgb3VyIHVzZXJzIExvY2FsIEFkbWluIG9uIHRoZWlyIG1hbmFnZWQgbWFjaGluZXMs
+IGFuZCB3ZSB0aGluayB3ZSBzaGFyZSB0aGF0IHdpdGggbW9zdCBsYXJnZXIgZW50ZXJwcmlzZSBl
+bnZpcm9ubWVudHMgc2luY2UgaXQgZ29lcyBhZ2FpbnN0IGJlc3Qgc2VjdXJpdHkgcHJhY3RpY2Vz
+IFswXSBbMV0uIFdlIHRob3VnaHQgdGhhdCB0aGUgYnVpbHRpbiBncm91cCAiTmV0d29yayBDb25m
+aWd1cmF0aW9uIE9wZXJhdG9ycyIgY291bGQgYmUgYSBnb29kIGFsdGVybmF0aXZlIHRvIExvY2Fs
+IEFkbWluIGFzIHRvIHdobyBhcmUgYWxsb3dlZCB0byBtYW5hZ2UgV2lyZUd1YXJkLiBTbyB3ZSBk
+ZWNpZGVkIHRvIHRyeSBpdCBvdXQgYW5kIHBhdGNoZWQgdGhlIGNvZGUsIHNlZSBkaWZmIGJlbG93
+LiAoVGhpcyB3YXMganVzdCB0byB0ZXN0IHRoZSBjb25jZXB0LiBXZSBkbyBub3QgY2xhaW0gdGhh
+dCB0aGlzIGlzIGEgZ29vZCBzb2x1dGlvbiwgYnV0IGl0IHdhcyB3aGF0IHdlIG1hbmFnZWQgdG8g
+cHJvZHVjZWQgd2l0aCBsaW1pdGVkIHRpbWUgYW5kIGtub3dsZWRnZSkNCg0KRnJvbSBvdXIgdGVz
+dCBpdCBzZWVtcyB0byB3b3JrLCB0aGUgdXNlcnMgaW4gdGhlIE5DTyBncm91cCBhcmUgZnVsbHkg
+YWxsb3dlZCB0byBtYW5hZ2UgdGhlIHR1bm5lbHMuIFRoZSBpbnN0YWxsYXRpb24gaXMgb2YgY291
+cnNlIHJlcXVpcmVkIHRvIGJlIGRvbmUgYnkgYSBMb2NhbCBBZG1pbiBvciBhcyBpbiBvdXIgc2V0
+dXAgYnkgU0NDTSBbMl0uIA0KDQpEbyB5b3UgdGhpbmsgeW91IGNvdWxkIGltcGxlbWVudCBzb21l
+dGhpbmcgbGlrZSB0aGlzIHRvIHRoZSB1cHN0cmVhbSB2ZXJzaW9uIG9mIFdpcmVHdWFyZCBpbiBv
+cmRlciB0byBhbGxvdyBsYXJnZXIgb3JnYW5pemF0aW9ucyB0byBlYXNpZXIgcm9sbCBvdXQgV2ly
+ZUd1YXJkIGluIGEgbW9yZSBzZWxlY3RpdmUgbWFubmVyPyBXZSBhcmUgYWxzbyBmaW5lIHdpdGgg
+cmVtb3ZpbmcgdGhlIHJlcXVpcmVtZW50IHRvIGJlIGEgbWVtYmVyIG9mIGFueSBwYXJ0aWN1bGFy
+IGdyb3VwIGlmIHRoYXQgY291bGQgYmUgYWNoaWV2ZWQuDQoNClswXSBodHRwczovL2RvY3MubWlj
+cm9zb2Z0LmNvbS9lbi11cy93aW5kb3dzLXNlcnZlci9pZGVudGl0eS9hZC1kcy9wbGFuL3NlY3Vy
+aXR5LWJlc3QtcHJhY3RpY2VzL2ltcGxlbWVudGluZy1sZWFzdC1wcml2aWxlZ2UtYWRtaW5pc3Ry
+YXRpdmUtbW9kZWxzDQpbMV0gaHR0cHM6Ly93d3cuYmxlZXBpbmdjb21wdXRlci5jb20vbmV3cy9t
+aWNyb3NvZnQvcmVtb3ZpbmctdXNlci1hZG1pbi1yaWdodHMtbWl0aWdhdGVzLTk0LXBlcmNlbnQt
+b2YtYWxsLWNyaXRpY2FsLW1pY3Jvc29mdC12dWxuZXJhYmlsaXRpZXMvDQpbMl0gaHR0cHM6Ly9l
+bi53aWtpcGVkaWEub3JnL3dpa2kvTWljcm9zb2Z0X1N5c3RlbV9DZW50ZXJfQ29uZmlndXJhdGlv
+bl9NYW5hZ2VyDQoNCkJlc3QgcmVnYXJkcyBhbmQgdGhhbmsgeW91IGZvciBhbGwgdGhlIGZpbmUg
+d29yayB3aXRoIHRoaXMgZ3JlYXQgcHJvZHVjdCENCg0KLS0NClBhdHJpaw0KDQotLS0NCmVsZXZh
+dGUvbWVtYmVyc2hpcC5nbyB8IDI0ICsrKysrKysrKysrKysrKysrKystLS0tLQ0KbWFpbi5nbyAg
+ICAgICAgICAgICAgIHwgIDIgKysNCjIgZmlsZXMgY2hhbmdlZCwgMjEgaW5zZXJ0aW9ucygrKSwg
+NSBkZWxldGlvbnMoLSkNCg0KZGlmZiAtLWdpdCBhL2VsZXZhdGUvbWVtYmVyc2hpcC5nbyBiL2Vs
+ZXZhdGUvbWVtYmVyc2hpcC5nbw0KaW5kZXggMDdjMmVmNjkuLmMxZmRjYjdiIDEwMDY0NA0KLS0t
+IGEvZWxldmF0ZS9tZW1iZXJzaGlwLmdvDQorKysgYi9lbGV2YXRlL21lbWJlcnNoaXAuZ28NCkBA
+IC0xNCwxNCArMTQsMjggQEAgZnVuYyBpc0FkbWluKHRva2VuIHdpbmRvd3MuVG9rZW4pIGJvb2wg
+ew0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICBpZiBlcnIgIT0gbmlsIHsNCiAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICByZXR1cm4g
+ZmFsc2UNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfQ0KLSAgICAgICAgICAgICAgICAg
+ICAgICAgICAgIHZhciBjaGVja2FibGVUb2tlbiB3aW5kb3dzLlRva2VuDQotICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgZXJyID0gd2luZG93cy5EdXBsaWNhdGVUb2tlbkV4KHRva2VuLCB3aW5k
+b3dzLlRPS0VOX1FVRVJZfHdpbmRvd3MuVE9LRU5fSU1QRVJTT05BVEUsIG5pbCwgd2luZG93cy5T
+ZWN1cml0eUlkZW50aWZpY2F0aW9uLCB3aW5kb3dzLlRva2VuSW1wZXJzb25hdGlvbiwgJmNoZWNr
+YWJsZVRva2VuKQ0KKyAgICAgICAgICAgICAgICAgICAgICAgICAgYnVpbHRpbk5ldHdvcmtPcGVy
+YXRvcnNHcm91cCwgZXJyIDo9IHdpbmRvd3MuQ3JlYXRlV2VsbEtub3duU2lkKHdpbmRvd3MuV2lu
+QnVpbHRpbk5ldHdvcmtDb25maWd1cmF0aW9uT3BlcmF0b3JzU2lkKQ0KICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICBpZiBlcnIgIT0gbmlsIHsNCiAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICByZXR1cm4gZmFsc2UNCiAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgfQ0KLSAgICAgICAgICAgICAgICAgICAgICAgICAgIGRlZmVyIGNo
+ZWNrYWJsZVRva2VuLkNsb3NlKCkNCi0gICAgICAgICAgICAgICAgICAgICAgICAgICBpc0FkbWlu
+LCBlcnIgOj0gY2hlY2thYmxlVG9rZW4uSXNNZW1iZXIoYnVpbHRpbkFkbWluc0dyb3VwKQ0KLSAg
+ICAgICAgICAgICAgICAgICAgICAgICAgIHJldHVybiBpc0FkbWluICYmIGVyciA9PSBuaWwNCisg
+ICAgICAgICAgICAgICAgICAgICAgICAgIHZhciBjaGVja2FibGVBZG1pblRva2VuIHdpbmRvd3Mu
+VG9rZW4NCisgICAgICAgICAgICAgICAgICAgICAgICAgIHZhciBjaGVja2FibGVOZXR3b3JrT3Bl
+cmF0b3JzVG9rZW4gd2luZG93cy5Ub2tlbg0KKyAgICAgICAgICAgICAgICAgICAgICAgICAgZGVm
+ZXIgY2hlY2thYmxlQWRtaW5Ub2tlbi5DbG9zZSgpDQorICAgICAgICAgICAgICAgICAgICAgICAg
+ICBkZWZlciBjaGVja2FibGVOZXR3b3JrT3BlcmF0b3JzVG9rZW4uQ2xvc2UoKQ0KKyAgICAgICAg
+ICAgICAgICAgICAgICAgICAgZXJyID0gd2luZG93cy5EdXBsaWNhdGVUb2tlbkV4KHRva2VuLCB3
+aW5kb3dzLlRPS0VOX1FVRVJZfHdpbmRvd3MuVE9LRU5fSU1QRVJTT05BVEUsIG5pbCwgd2luZG93
+cy5TZWN1cml0eUlkZW50aWZpY2F0aW9uLCB3aW5kb3dzLlRva2VuSW1wZXJzb25hdGlvbiwgJmNo
+ZWNrYWJsZUFkbWluVG9rZW4pDQorICAgICAgICAgICAgICAgICAgICAgICAgICBpZiBlcnIgIT0g
+bmlsIHsNCisgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgcmV0dXJuIGZhbHNlDQorICAgICAgICAgICAgICAgICAgICAgICAgICB9DQorICAgICAg
+ICAgICAgICAgICAgICAgICAgICBlcnIgPSB3aW5kb3dzLkR1cGxpY2F0ZVRva2VuRXgodG9rZW4s
+IHdpbmRvd3MuVE9LRU5fUVVFUll8d2luZG93cy5UT0tFTl9JTVBFUlNPTkFURSwgbmlsLCB3aW5k
+b3dzLlNlY3VyaXR5SWRlbnRpZmljYXRpb24sIHdpbmRvd3MuVG9rZW5JbXBlcnNvbmF0aW9uLCAm
+Y2hlY2thYmxlTmV0d29ya09wZXJhdG9yc1Rva2VuKQ0KKyAgICAgICAgICAgICAgICAgICAgICAg
+ICAgaWYgZXJyICE9IG5pbCB7DQorICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgIHJldHVybiBmYWxzZQ0KKyAgICAgICAgICAgICAgICAgICAgICAg
+ICAgfQ0KKyAgICAgICAgICAgICAgICAgICAgICAgICAgaXNBZG1pbiwgZXJyIDo9IGNoZWNrYWJs
+ZUFkbWluVG9rZW4uSXNNZW1iZXIoYnVpbHRpbkFkbWluc0dyb3VwKQ0KKyAgICAgICAgICAgICAg
+ICAgICAgICAgICAgaXNOZXR3b3JrT3BlcmF0b3IsIGVyciA6PSBjaGVja2FibGVOZXR3b3JrT3Bl
+cmF0b3JzVG9rZW4uSXNNZW1iZXIoYnVpbHRpbk5ldHdvcmtPcGVyYXRvcnNHcm91cCkNCisgICAg
+ICAgICAgICAgICAgICAgICAgICAgIGlmIGlzQWRtaW4gfHwgaXNOZXR3b3JrT3BlcmF0b3Igew0K
+KyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBy
+ZXR1cm4gdHJ1ZSAmJiBlcnIgPT0gbmlsDQorICAgICAgICAgICAgICAgICAgICAgICAgICB9DQor
+ICAgICAgICAgICAgICAgICAgICAgICAgICByZXR1cm4gZmFsc2UgJiYgZXJyID09IG5pbA0KfQ0K
+DQpmdW5jIFRva2VuSXNFbGV2YXRlZE9yRWxldmF0YWJsZSh0b2tlbiB3aW5kb3dzLlRva2VuKSBi
+b29sIHsNCmRpZmYgLS1naXQgYS9tYWluLmdvIGIvbWFpbi5nbw0KaW5kZXggNzlkZmNkZmMuLmU4
+YTQ4ZThlIDEwMDY0NA0KLS0tIGEvbWFpbi5nbw0KKysrIGIvbWFpbi5nbw0KQEAgLTc4LDYgKzc4
+LDcgQEAgZnVuYyBjaGVja0ZvckFkbWluR3JvdXAoKSB7DQogICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgIH0NCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgZGVmZXIgcHJvY2Vzc1Rva2Vu
+LkNsb3NlKCkNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgaWYgIWVsZXZhdGUuVG9rZW5J
+c0VsZXZhdGVkT3JFbGV2YXRhYmxlKHByb2Nlc3NUb2tlbikgew0KKyAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAvLyBUT0RPIExvZ2ljIGZvciBt
+dWx0aXBsZSBncm91cHMgbmVlZHMgdG8gYmUgYWRkZWQgZm9yIHRoZSBjb3JyZWN0IGVycm9yIG1l
+c3NhZ2UgdG8gYmUgZGlzcGxheWVkDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgZmF0YWxmKCJXaXJlR3VhcmQgbWF5IG9ubHkgYmUgdXNl
+ZCBieSB1c2VycyB3aG8gYXJlIGEgbWVtYmVyIG9mIHRoZSBCdWlsdGluICVzIGdyb3VwLiIsIGVs
+ZXZhdGUuQWRtaW5Hcm91cE5hbWUoKSkNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfQ0K
+fQ0KQEAgLTg1LDYgKzg2LDcgQEAgZnVuYyBjaGVja0ZvckFkbWluR3JvdXAoKSB7DQpmdW5jIGNo
+ZWNrRm9yQWRtaW5EZXNrdG9wKCkgew0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICBhZG1p
+bkRlc2t0b3AsIGVyciA6PSBlbGV2YXRlLklzQWRtaW5EZXNrdG9wKCkNCiAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgaWYgIWFkbWluRGVza3RvcCAmJiBlcnIgPT0gbmlsIHsNCisgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLy8gVE9ETyBM
+b2dpYyBmb3IgbXVsdGlwbGUgZ3JvdXBzIG5lZWRzIHRvIGJlIGFkZGVkIGZvciB0aGUgY29ycmVj
+dCBlcnJvciBtZXNzYWdlIHRvIGJlIGRpc3BsYXllZA0KICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGZhdGFsZigiV2lyZUd1YXJkIGlzIHJ1
+bm5pbmcsIGJ1dCB0aGUgVUkgaXMgb25seSBhY2Nlc3NpYmxlIGZyb20gZGVza3RvcHMgb2YgdGhl
+IEJ1aWx0aW4gJXMgZ3JvdXAuIiwgZWxldmF0ZS5BZG1pbkdyb3VwTmFtZSgpKQ0KICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICB9DQp9DQotLSANCjIuMjAuMQ0KDQotLS0tLU9yaWdpbmFsIE1l
+c3NhZ2UtLS0tLQ0KRnJvbTogV2lyZUd1YXJkIDx3aXJlZ3VhcmQtYm91bmNlc0BsaXN0cy56eDJj
+NC5jb20+IE9uIEJlaGFsZiBPZiBKYXNvbiBBLiBEb25lbmZlbGQNClNlbnQ6IGRlbiAxMyBub3Zl
+bWJlciAyMDIwIDAzOjE2DQpUbzogdmgyMTdAd2VyZWh1Yi5vcmcNCkNjOiBXaXJlR3VhcmQgbWFp
+bGluZyBsaXN0IDx3aXJlZ3VhcmRAbGlzdHMuengyYzQuY29tPg0KU3ViamVjdDogUmU6IFVzaW5n
+IFdpcmVHdWFyZCBvbiBXaW5kb3dzIGFzIG5vbi1hZG1pbiAtIHByb3BlciBzb2x1dGlvbj8NCg0K
+SGkgVmlrdG9yLA0KDQpJIGFtIGFjdHVhbGx5IGludGVyZXN0ZWQgaW4gc29sdmluZyB0aGlzLiBJ
+IHRvb2sgYW4gaW5pdGlhbCBzdGFiIGF0IGl0IGhlcmUsIGJ1dCBJJ20gbm90IHN1cGVyIGNvbWZv
+cnRhYmxlIHdpdGggdGhlIGltcGxlbWVudGF0aW9uIG9yIHRoZSBzZWN1cml0eSBpbXBsaWNhdGlv
+bnM6DQpodHRwczovL2dpdC56eDJjNC5jb20vd2lyZWd1YXJkLXdpbmRvd3MvY29tbWl0Lz9oPWpk
+L3VucHJpdmQta25vYg0KDQpBc2lkZSBmcm9tIGRvaW5nIHRoaXMgZnJvbSB3aXRoaW4gb3VyIGV4
+aXN0aW5nIFVJLCB0aGUgZ2VuZXJhbCBzb2x1dGlvbiB1c2luZyB0aGUgc2VydmljZS1iYXNlZCBi
+dWlsZGluZyBibG9ja3MgaXMgdG8gc2ltcGx5IGFsbG93IHVzZXJzIHRvIHN0YXJ0IGFuZCBzdG9w
+IHNlcnZpY2VzIHRoYXQgYmVnaW4gd2l0aCAiV2lyZUd1YXJkVHVubmVsJCIuDQpTbyB0aGUgZmxv
+dyBpcyBzb21ldGhpbmcgbGlrZToNCg0KMS4gd2lyZWd1YXJkIC9pbnN0YWxsdHVubmVsc2Vydmlj
+ZSAgcGF0aFx0b1xzb21ldHVubmVsLmNvbmYuDQoyLiBDaGFuZ2UgdGhlIEFDTHMgb24gV2lyZUd1
+YXJkVHVubmVsJHNvbWV0dW5uZWwgdG8gZml0IHlvdXIgdXNlci4NCjMuIEhhdmUgdGhlIHVzZXIg
+dXNlIGBuZXQgc3RhcnRgIGFuZCBgbmV0IHN0b3BgLCBvciBzaW1pbGFyLCB0byBjb250cm9sIHdo
+ZXRoZXIgdGhlIHNlcnZpY2UgaXMgdXAgb3IgZG93bi4NCg0KVGhhdCdzIG5vdCBzdXBlciBwcmV0
+dHksIGJ1dCBpdCBzaG91bGQgd29yaywgYW5kIGl0IGlzIGF1dG9tYXRhYmxlLg0KTWVhbndoaWxl
+LCBJJ2xsIGtlZXAgdGhpbmtpbmcgYWJvdXQgdmFyaW91cyB3YXlzIHRvIGRvIHRoaXMgaW4gYSBt
+b3JlICJmaXJzdC1wYXJ0eSIgd2F5Lg0KDQpKYXNvbg0K
