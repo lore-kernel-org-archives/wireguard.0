@@ -7,58 +7,59 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F3321C5519F
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 18 Nov 2020 13:24:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A39EEC63697
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 18 Nov 2020 13:29:41 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 12B1120DD4
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 18 Nov 2020 13:24:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 80FC6241A6
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 18 Nov 2020 13:29:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="U95yfMme"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 12B1120DD4
+	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="Zn/94kFO"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 80FC6241A6
 Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0fa77964;
-	Wed, 18 Nov 2020 13:18:51 +0000 (UTC)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2193c93d;
+	Wed, 18 Nov 2020 13:24:28 +0000 (UTC)
 Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6637ac12
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 0a635b58
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 18 Nov 2020 13:18:48 +0000 (UTC)
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6b6eca08
+ Wed, 18 Nov 2020 13:24:25 +0000 (UTC)
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 797ad215
  for <wireguard@lists.zx2c4.com>;
- Wed, 18 Nov 2020 13:19:34 +0000 (UTC)
+ Wed, 18 Nov 2020 13:25:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
  :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=iTGWXsRX6d/7MMsQdrUY+1Biwmc=; b=U95yfM
- meqdiq4c+Vfc29VnfrgTkcA7l78tJlBCIGfS+GUeLdNO1fzBOV4dxm2FH4LMP/Vn
- P55N44OQ6w7HzIXOQY0tx+IZLPBIxMPDMJcQNkHHU0x+Sz/7utjm03YaMHXFkuVM
- u6GDKVEYaTLToY8WgW4zeg6vwvUa9Zn4Zt7eSuVVer67hzXvBCMj8yQgwLwNx0c4
- UANLpwpY0HplXd4Set+BURLVj3+o042qfHa4eXLf6oz7c07DX3iSry+tAeMOcI7I
- 9jE1cNVY+3voF8tpQcc5wYxxak/MdbeylhvryxhHP3d4jCwh7axFjnrYlovIIu2Z
- 84/rJdNMdpy7R3DQ==
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 83721464
+ :content-type; s=mail; bh=p8eGBW4OIlwQCVLwgvRRsmXSHno=; b=Zn/94k
+ FOgtcc94NIPXDrzmFNVcsW/4znR62lvjNVW3l3NlVnQE2C6hQ64hAewfU/44S+1h
+ HWCEuDUlCQnrdoxCuU5o9nZNmT+6QNTzdCf/Ax37Jt0Dpc9sYLJtrRCHFgKRlQLA
+ u4dG66CQCRNGROIdKDOdCs+8cNT3q1ZdlbzMjaJBZ1sP7Qm4bBqQgbnioflV79hM
+ d5KgE0T03hDk5YWVlnnbrX50Q8LGX3uZQOOnNWEIHWgIuUnMuj9w6uYiKw3uSr5y
+ alMBai7rQD+MoCXPiFLTqjbTVA4fQJ90aDDmOfEwxvenpIN0GmNY5Ww/nJtxlFX/
+ uENBPac7Gu5yYt9g==
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 5660e3df
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 18 Nov 2020 13:19:34 +0000 (UTC)
-Received: by mail-yb1-f178.google.com with SMTP id l14so1666781ybq.3
- for <wireguard@lists.zx2c4.com>; Wed, 18 Nov 2020 05:23:32 -0800 (PST)
-X-Gm-Message-State: AOAM533joSxH1D4f3P9zQA/vXBMXMDTFZieAmdSilIbrBL/xHHu74tP7
- 3ljmangBgrB3ujtMhynQQeBn5MwA8BATixvCdeM=
-X-Google-Smtp-Source: ABdhPJz0AsU4n9opXhPR+mz9dx8bIvVZqh20flO6HMAfx0CNyB4SGzpPrBwgknSBkmfSly7cTciEQhNPrdJ9j5cVf/k=
-X-Received: by 2002:a25:4943:: with SMTP id w64mr5545081yba.178.1605705811973; 
- Wed, 18 Nov 2020 05:23:31 -0800 (PST)
+ Wed, 18 Nov 2020 13:25:11 +0000 (UTC)
+Received: by mail-yb1-f182.google.com with SMTP id d1so1650714ybr.10
+ for <wireguard@lists.zx2c4.com>; Wed, 18 Nov 2020 05:29:09 -0800 (PST)
+X-Gm-Message-State: AOAM531WKtcSVBJxWDk4TaPVjfJPncgvUcXsFMoDtg1+7KHryKiKsRNd
+ yWzRkbovnJfAH5FVcCj2tv82ao3VZbPIGLh2+zI=
+X-Google-Smtp-Source: ABdhPJw3JvsJO8rRBTan9cVHX2nRuq+XIok+4pQhTlo2rjXvGobcQSvhUqdNtpHcYkSY82xpNem0yA9/OpeszrjeMFs=
+X-Received: by 2002:a25:5084:: with SMTP id e126mr8561393ybb.239.1605706148773; 
+ Wed, 18 Nov 2020 05:29:08 -0800 (PST)
 MIME-Version: 1.0
-References: <5fb519a8.1c69fb81.9867a.7fef@mx.google.com>
-In-Reply-To: <5fb519a8.1c69fb81.9867a.7fef@mx.google.com>
+References: <28bb854e-da5f-34dd-5c20-37b7517b7861@gmail.com>
+ <CAHmME9q3PPtjFwX5tJ_PwvekajC++Kn_ejdkxCBc=iaOHTgBpg@mail.gmail.com>
+In-Reply-To: <CAHmME9q3PPtjFwX5tJ_PwvekajC++Kn_ejdkxCBc=iaOHTgBpg@mail.gmail.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 18 Nov 2020 14:23:21 +0100
-X-Gmail-Original-Message-ID: <CAHmME9p7p=+Z7PRVQvPd3tHA-mz70fx1m_LMdeHrT58etGzb5w@mail.gmail.com>
-Message-ID: <CAHmME9p7p=+Z7PRVQvPd3tHA-mz70fx1m_LMdeHrT58etGzb5w@mail.gmail.com>
-Subject: Re: [PATCH] device: add write queue mutex for peer
-To: liuhaichao@bytedance.com
+Date: Wed, 18 Nov 2020 14:28:57 +0100
+X-Gmail-Original-Message-ID: <CAHmME9qHFdMO9qmnDKOTWohvySHP9vkAA84xvXLYVy+GXbb3DA@mail.gmail.com>
+Message-ID: <CAHmME9qHFdMO9qmnDKOTWohvySHP9vkAA84xvXLYVy+GXbb3DA@mail.gmail.com>
+Subject: Re: Wireguard client 0.2.1 on Windows 7.
+To: bdgregory@gmail.com
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -75,6 +76,8 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Thanks! Applied.
+With no further info from you, it's hard to know how to proceed. I'll
+be releasing this fix in the next version hoping it's sufficient for
+you:
 
-https://git.zx2c4.com/wireguard-go/commit/?id=913f68ce3820801e045632cb05c6f11e0df50b47
+https://git.zx2c4.com/wireguard-windows/commit/?id=4a45e2fcc0cf0884bc82268c1c15af2fe477d5be
