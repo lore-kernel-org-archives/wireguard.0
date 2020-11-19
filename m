@@ -2,62 +2,64 @@ Return-Path: <SRS0=zozX=E2=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C6A3C388F9
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 20 Nov 2020 01:26:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A208C63777
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 20 Nov 2020 07:43:32 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 4CD9522254
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 20 Nov 2020 01:26:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 0007822256
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 20 Nov 2020 07:43:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=molgaard.org header.i=@molgaard.org header.b="FmV/G0Zs"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 4CD9522254
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=molgaard.org
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=lavabit.com header.i=@lavabit.com header.b="gI4uQexc"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 0007822256
+Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=lavabit.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 26aef7ab;
-	Fri, 20 Nov 2020 01:21:15 +0000 (UTC)
-Received: from mail3.molgaard.org (mail3.molgaard.org [2a01:4f8:c2c:dd63::1])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f3d3981e
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dbe85a84;
+	Fri, 20 Nov 2020 07:38:05 +0000 (UTC)
+Received: from lavabit.com (66-38.147.122.lavabit.com [38.147.122.66])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d4753758
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 20 Nov 2020 01:21:13 +0000 (UTC)
-Received: from localhost (localhost [127.0.0.1])
- by mail3.molgaard.org (Postfix) with ESMTP id C34523EE27
- for <wireguard@lists.zx2c4.com>; Fri, 20 Nov 2020 02:26:06 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at mail3.molgaard.org
-Received: from mail3.molgaard.org ([127.0.0.1])
- by localhost (mail3.molgaard.org [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id dNzKakqKDhVX for <wireguard@lists.zx2c4.com>;
- Fri, 20 Nov 2020 02:26:05 +0100 (CET)
-Received: from [192.168.1.2] (3e6b00d8.rev.stofanet.dk [62.107.0.216])
- by mail3.molgaard.org (Postfix) with ESMTPSA id A93D53EA8C
- for <wireguard@lists.zx2c4.com>; Fri, 20 Nov 2020 02:26:05 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=molgaard.org; s=mail;
- t=1605835565; bh=MIq9nga15HmXxecuImsYo0QKTXu50+/lp9HeOFj++uA=;
- h=To:From:Subject:Date:From;
- b=FmV/G0ZsuRonRFrP1vkDsHfCL6Pw9orqHyR/o5Y//mVxgob3J3M37E6szhp8A73HS
- WzceHykymY9AZmtLgl2Gvmu6njNZbNbLcGfTaNLg+KWLcyQu98FvF9Li+ui0H6Tay6
- GOpvHzfsuGSxq2KchmqC965HOuGA+arOIgwEMt1xFI7gl4VQ8+j9T7qn4SBrW68lyY
- lXdBoHnZdOYpXTkElzxBrnR4iVTtDkePgO3xlBwLI8oPjJWTTNWq4xJUEndYf/07Qn
- B1RRn7TwC+brQ5g5P5u4s7GEM3qrbV5sFR+PzMfRtq0TXjQF9HqbHghwf0/Elr3JAZ
- ikB9PiD5/qweQ==
+ Thu, 19 Nov 2020 17:11:15 +0000 (UTC)
+Received: from localhost.localdomain (lavabit.com [136.33.194.23])
+ by lavabit.com with ESMTP id VEX8I3C17C36
+ for <wireguard@lists.zx2c4.com>; Thu, 19 Nov 2020 11:16:08 -0600
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lavabit.com; s=bazinga;
+ t=1605806168; bh=VZweGTmFhDp+OWzAcmN5LgacftsvP5E4D2h+dRTxbO4=;
+ h=Subject:To:References:From:Message-ID:Disposition-Notification-To:
+ Date:User-Agent:MIME-Version:In-Reply-To:Content-Type;
+ b=gI4uQexcP4tY37K8Md+iBHRg5/rkuxe71iz2uqcHCr6MVlDhWwutufcGXNELcwZqA
+ r2Av0wz2FYdVcXUAPOoAJ/9D3W1bWSQAq1H0yEmiI927fTKN7b0D6c4qxv7D4mGQh8
+ KMk9XUI9nh6vXPbKOLxxwpkkQkltYLiEEEJnypcsJs+Fik2tEajkbS/mxtXwH1Gqlg
+ F2VBKUiJrkyVIPTs+Bx8VAlH4wsHYqtSZvYKt1L6E4jsdDMuH4TEB7+cMxbzkRWm/1
+ QajHWZwbdbOYYpKgN6sosiwaRYL1WQvB1VGjDxCbbTCfqZKrhxCSZ3G4vIlmk4VUCo
+ z1JRQIWQ9eTJw==
+Subject: Re: Should we sunset Windows 7 support?
 To: wireguard@lists.zx2c4.com
-From: =?UTF-8?Q?Sune_M=c3=b8lgaard?= <sune@molgaard.org>
-Subject: MacOS DNS Search Domain
-Message-ID: <d1e3a201-8fcd-3448-f958-5fd4518f0101@molgaard.org>
-Date: Fri, 20 Nov 2020 02:26:03 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+References: <CAHmME9rW1e+rRc8q+-_eLR=U9OTn+Sn84ECJtGFY=Hjg8kzfEQ@mail.gmail.com>
+ <K17360-33.1605029899@spamhaus.org>
+ <CAHmME9pmKxGYmxxs0pLt=zt2igy6aR-g5xsB=2Zew6oWVY0Z3w@mail.gmail.com>
+ <CABtXGiCs1fS3FHAwHL1zohuL1BfDhY7GhZhtLFfiqS2aJstr3g@mail.gmail.com>
+ <20201112090313.GB3500@trivini.no>
+ <CAH8yC8=azrpN=EOP9XsTDe2NwmqQquSpEuqidtS2rVFw8x+5Ew@mail.gmail.com>
+ <CAHmME9rZHaDRRk2-c9kzhUapTRiVxybkwS2Ung_HgSCAVyOw4Q@mail.gmail.com>
+From: akloster <akloster@lavabit.com>
+Message-ID: <5dc5657d-271d-0951-9eba-8cb302c6d5bb@lavabit.com>
+Date: Thu, 19 Nov 2020 11:16:07 -0600
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAHmME9rZHaDRRk2-c9kzhUapTRiVxybkwS2Ung_HgSCAVyOw4Q@mail.gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="IzRMtngEVAnqFpTFjbcVmr8tpuAt9Ho4X"
+X-Mailman-Approved-At: Fri, 20 Nov 2020 08:38:04 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -72,47 +74,61 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi all,
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--IzRMtngEVAnqFpTFjbcVmr8tpuAt9Ho4X
+Content-Type: multipart/mixed; boundary="ES5JJijxp6MwTKfjzMGmuOktl17zY4Mod";
+ protected-headers="v1"
+From: akloster <akloster@lavabit.com>
+To: wireguard@lists.zx2c4.com
+Message-ID: <5dc5657d-271d-0951-9eba-8cb302c6d5bb@lavabit.com>
+Subject: Re: Should we sunset Windows 7 support?
+References: <CAHmME9rW1e+rRc8q+-_eLR=U9OTn+Sn84ECJtGFY=Hjg8kzfEQ@mail.gmail.com>
+ <K17360-33.1605029899@spamhaus.org>
+ <CAHmME9pmKxGYmxxs0pLt=zt2igy6aR-g5xsB=2Zew6oWVY0Z3w@mail.gmail.com>
+ <CABtXGiCs1fS3FHAwHL1zohuL1BfDhY7GhZhtLFfiqS2aJstr3g@mail.gmail.com>
+ <20201112090313.GB3500@trivini.no>
+ <CAH8yC8=azrpN=EOP9XsTDe2NwmqQquSpEuqidtS2rVFw8x+5Ew@mail.gmail.com>
+ <CAHmME9rZHaDRRk2-c9kzhUapTRiVxybkwS2Ung_HgSCAVyOw4Q@mail.gmail.com>
+In-Reply-To: <CAHmME9rZHaDRRk2-c9kzhUapTRiVxybkwS2Ung_HgSCAVyOw4Q@mail.gmail.com>
 
-Being in the process of deploying, and being very happy with both
-answers to questions, and, generally, performance, ease of
-administration etc., I seem to be facing a slight problem.
+--ES5JJijxp6MwTKfjzMGmuOktl17zY4Mod
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
 
-Using wg-quick, via SystemD, on Linux, I can have multiple, in my case
-two, "DNS =" entries in my client config, one with an IP address of the
-DNS server to utilise, and the second with a domain name, to be applied
-as the "DNS Search Domain".
+unsubscribe
 
-This works as expected.
+On 11/19/20 10:59 AM, Jason A. Donenfeld wrote:
+> So, the emphatic takeaway here seems to be that we're not going to
+> suddenly ditch 25% of people. So, the recent v0.2.y series released
+> has amped up support for Windows 7, including automatic detection of
+> KB2921916.
+>
+> We'll revisit the discussion in some amount of time if the market
+> share seems to be decreasing.
+>
+> I did notice, in the course of using Windows 7 to develop for it, that
+> every once in a while, the whole screen will fill up with a notice
+> saying WARNING, WINDOWS 7 IS EOL'D or something to that extent. We'll
+> see what effect that has.
+>
+> Jason
 
-Under MacOS, using the GUI client from the app store, "DNS =" entries
-with domain names are not accepted (is this a bug or expected
-behaviour?), but I have found suggestions to issue `networksetup
--setsearchdomain XX YOUR-SEARCH.DOMAIN`
-(https://www.reddit.com/r/WireGuard/comments/dlh65m/resolving_search_domains_on_a_mac/).
 
-Substituting the correct entries for XX and YOUR-SEARCH.DOMAIN with
-correct values work, inasmuch as `networksetup -getsearchdomain XX`
-indicates that the correct DNS Search Domain is set correctly for the
-interface, but it does not, however, seem to work IRL, meaning that
-requests to a mere hostname, as opposed to an FQDN, within the search
-domain result in lookup failures.
+--ES5JJijxp6MwTKfjzMGmuOktl17zY4Mod--
 
-First of all, I would like to know if anyone knows how to make DNS
-Search Domain work in conjunction with MacOS.
+--IzRMtngEVAnqFpTFjbcVmr8tpuAt9Ho4X
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
 
-Secondly, I would like to pose the question of whether there is a bug,
-code- or documentation-wise regarding how to make it work, and, thirdly,
-I would like to ask if the official, MacOS, GUI client could,
-conceivably, be made to accept "DNS =" entries with domain names, making
-them work like wg-quick on Linux, meaning setting those entries as DNS
-Search Domains.
+-----BEGIN PGP SIGNATURE-----
 
-Best regards,
+wnsEABYIACMWIQSziGFxYPys/Hd74z++t9q7cUbBcgUCX7aoVwUDAAAAAAAKCRC+t9q7cUbBcowG
+AQCEPW7wO/obfAoAip6H5Cc10nfcTJU+oF6OEdFidb477QD8CwfiFky+4+fnHNygBKiAraU4/ZGD
+JrXofkLPE15fGgg=
+=j4v2
+-----END PGP SIGNATURE-----
 
-Sune Mølgaard
+--IzRMtngEVAnqFpTFjbcVmr8tpuAt9Ho4X--
 
--- 
-How many observe Christ's birthday! How few, his precepts! O! 'tis
-easier to keep holidays than commandments.
-- Benjamin Franklin
