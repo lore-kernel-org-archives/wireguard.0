@@ -2,64 +2,75 @@ Return-Path: <SRS0=uuIP=E5=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB87FC63697
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 23 Nov 2020 16:51:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D163DC2D0E4
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 23 Nov 2020 17:01:24 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id ECF2E20717
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 23 Nov 2020 16:51:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id CBC9220727
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 23 Nov 2020 17:01:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="3QFwh2Is"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org ECF2E20717
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XVEZRacQ"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org CBC9220727
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cd1ca644;
-	Mon, 23 Nov 2020 16:45:40 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a500d595
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2f4d13a1;
+	Mon, 23 Nov 2020 16:55:46 +0000 (UTC)
+Received: from mail-yb1-xb42.google.com (mail-yb1-xb42.google.com
+ [2607:f8b0:4864:20::b42])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4034c375
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 23 Nov 2020 16:45:38 +0000 (UTC)
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c79bbb97
- for <wireguard@lists.zx2c4.com>;
- Mon, 23 Nov 2020 16:46:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=pGbsBH6cFC0u3ytiQT5yJc8ibUY=; b=3QFwh2
- IsX2KGClWHQ7i63YtcNAET4EBycOj85DFnUtXjSgeQsSYaIyMQvS7bzNkbNcUChL
- kmcjB+iDkwFuNPWKK8FytytvtdIWTd5SJWp11h5f+qdmIxAy3PytCgE6Dhzy//D5
- xfIbIR5l2n/1/NT+pJcPa21X4M76A3nsn4ztGhRDPFdduej6gKw+CWONAqE9mBCO
- 62c3ZHBysgV/B0FwsA0rOJvIZbbRUuutkeSMZl+hETdsYohHwKsSe2gapEZmxB0P
- KW/Y0m5QzMgOMfoH3jVkTfwkOghn5ZaIsMaLzCr1s9S5NLjhDTSWWCb3RPFtlMTz
- CP9m8gffPEC9ME6Q==
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id e8188502
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Mon, 23 Nov 2020 16:46:24 +0000 (UTC)
-Received: by mail-yb1-f170.google.com with SMTP id r127so12779203yba.10
- for <wireguard@lists.zx2c4.com>; Mon, 23 Nov 2020 08:51:02 -0800 (PST)
-X-Gm-Message-State: AOAM533vB61/+dkfV0M2RJPfQNXj6MYjZYseEL72wQi2VStCIRhwVgAG
- s9lQZW/mjgwddh0PgSkcLsu48eFUqS0JkFDXSgM=
-X-Google-Smtp-Source: ABdhPJxY2VgUYhljwTfd71UsBHjtjhpUPOmGFm+aXfB+wLFdDda2AN0j0n7IOPsnYUFFdW4Q4wWJD8PTcfxenKo2iwY=
-X-Received: by 2002:a25:5084:: with SMTP id e126mr488756ybb.239.1606150261812; 
- Mon, 23 Nov 2020 08:51:01 -0800 (PST)
+ Mon, 23 Nov 2020 16:55:44 +0000 (UTC)
+Received: by mail-yb1-xb42.google.com with SMTP id g15so16559671ybq.6
+ for <wireguard@lists.zx2c4.com>; Mon, 23 Nov 2020 09:01:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=C8oS1tqNv7f6RkxFUUnN8Th7AIx+SIEYLcj7Qp63p9k=;
+ b=XVEZRacQJCq6PUcwiSqBhTCNm6nCGyDfUWju1rcXBbeqoud9rcUoA0tOMYCMzB16+A
+ Tf2nyNR3t/IgTmwCIQB3ypyJX49r6P9OYc4rr8O0GyP+kH9GvVo57h25AzM2IpNdBJCI
+ 6VLJdQ/PQ4UkU3N4pmDXYYgizJ5Pfla+w5/9goVU/6MpEicrzk67JRLBr0Cie208jhlC
+ H98JkfQHihT+nzvH+TLNNG0iXU+4+bFV34QO7OZ83KC7AUou7iPn0+Or7kQLOKk4QbqZ
+ u31mLbMWS6fVKYWBJpOVY66yIIwTk5i1l6O01w6Kg0HE6F0Pd/kbjjmGlUCXMvB2VIHC
+ l2kw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=C8oS1tqNv7f6RkxFUUnN8Th7AIx+SIEYLcj7Qp63p9k=;
+ b=i4+N6bnTIv9Fh/Zptc0BF3AQjhyZ376KZFROc8Y/AFO/H7fmEUG4UQZfhSodasiIlp
+ 4Jg8G9IxLb8MtB0vxfGK9Oufl/iyYZGSi7Kdv3MlPgQOL9Wco8sGpLOaucb4jYqPU8ag
+ UJIrVvvAeuNGQyHxlTihF1pxst32eQMid5WYeRQMErOo05xWxyImJYaIIc5Vdh1emQWZ
+ wvvRvisw+5nyXvt2rkPhjlAjJmP7D2V14Zeq78WtAURK5GLCwdEVxdS1EbPZxmVPFFwA
+ zIMf3Nh7IkVYVOmP7iZzV4fRna+RyBxpInF7gFY1UmoIMqvKFMZCkD0RE++/Im8wACE8
+ OhaA==
+X-Gm-Message-State: AOAM530Y21sJq0ksDmdLAWtvWLUlwx+IFF6MzPZsOUEpnHOup8hb7tw7
+ Mr0gWPYsIOaS5K3CbVly+smbAn4KQzswuey3O4w=
+X-Google-Smtp-Source: ABdhPJw65A04SBNaDefIkuI5vF2SMl8iYxkpxXq0HO2LbpXElojOUQFFbXitA0Vl7O8rkXXIAYbjyBqND8UiNocLcps=
+X-Received: by 2002:a25:2e0d:: with SMTP id u13mr381510ybu.247.1606150868581; 
+ Mon, 23 Nov 2020 09:01:08 -0800 (PST)
 MIME-Version: 1.0
-References: <CACnYWReJC+Ff8G+uWLW6i=rsR1w=O-6aDFBG-yd__ZuuRh83CA@mail.gmail.com>
-In-Reply-To: <CACnYWReJC+Ff8G+uWLW6i=rsR1w=O-6aDFBG-yd__ZuuRh83CA@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 23 Nov 2020 17:50:51 +0100
-X-Gmail-Original-Message-ID: <CAHmME9qyVb7kuj+VYAaQRqZ-i_Mptr6_2BGGoz+wf5Ke4WXUMw@mail.gmail.com>
-Message-ID: <CAHmME9qyVb7kuj+VYAaQRqZ-i_Mptr6_2BGGoz+wf5Ke4WXUMw@mail.gmail.com>
-Subject: Re: WSL2 and Wireguard
-To: Ruben Di Battista <rubendibattista@gmail.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+References: <20201121194339.52290-1-masahiroy@kernel.org>
+ <CANiq72nL7yxGj-Q6aOxG68967g_fB6=hDED0mTBrZ_SjC=U-Pg@mail.gmail.com>
+ <CAK7LNARjU5HTcTjJG1-sQTJBFqohC1O8aAvFs3Hn_sXscH_pdg@mail.gmail.com>
+In-Reply-To: <CAK7LNARjU5HTcTjJG1-sQTJBFqohC1O8aAvFs3Hn_sXscH_pdg@mail.gmail.com>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Mon, 23 Nov 2020 18:00:57 +0100
+Message-ID: <CANiq72mcJMRqV+YZbQtLTCR37ydD=8yFjFzg5ZYMmtH5pK1sEQ@mail.gmail.com>
+Subject: Re: [PATCH] compiler_attribute: remove CONFIG_ENABLE_MUST_CHECK
+To: Masahiro Yamada <masahiroy@kernel.org>
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, Shuah Khan <shuah@kernel.org>, 
+ linux-kernel <linux-kernel@vger.kernel.org>, 
+ "open list:KERNEL SELFTEST FRAMEWORK" <linux-kselftest@vger.kernel.org>, 
+ Network Development <netdev@vger.kernel.org>, wireguard@lists.zx2c4.com, 
+ clang-built-linux <clang-built-linux@googlegroups.com>, 
+ Nick Desaulniers <ndesaulniers@google.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -75,40 +86,19 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Ruben,
-
-On Mon, Nov 23, 2020 at 5:43 PM Ruben Di Battista
-<rubendibattista@gmail.com> wrote:
+On Mon, Nov 23, 2020 at 4:37 AM Masahiro Yamada <masahiroy@kernel.org> wrote:
 >
-> Hello,
+> I can move it to compiler_attribute.h
 >
-> I'm experiencing a problem with Wireguard and WSL2. If I activate my
-> tunnel and then I ping a machine on the VPN IP range from WSL2, I
-> don't get any response.
+> This attribute is supported by gcc, clang, and icc.
+> https://godbolt.org/z/ehd6so
 >
-> However, if after activating Wireguard, I ping from cmd or PowerShell,
-> I successfully get the ping back and I'm able then also to ping from
-> WSL2.
+> I can send v2.
 >
-> I'm not sure if this is related to Wireguard or WSL2, In any case I
-> reported the bug here: https://github.com/microsoft/WSL/issues/5810
->
-> Is it a problem of my machine, a problem from WSL2 or Windows Wireguard?
+> I do not mind renaming, but it should be done in a separate patch.
 
-That's pretty weird. I've seen a few related bugs like that, where it
-seems like WSL will drop packets that don't meet some unusual stateful
-criteria. I don't know if they're trying to do some kind of connection
-tracking, or if the routing logic is partially broken for NdisMediumIP
-devices.
+Of course -- sorry, I didn't mean we had to do them now, i.e. we can
+do the move and the rename later on, if you prefer.
 
-I assume you're experiencing this using the latest WireGuard 0.3 [1]?
-
-To answer your direct question, though, I think this might be a WSL
-problem rather than a WireGuard problem. If that Github issue doesn't
-get any attention after some time, I can try to reverse engineer the
-hyper-v networking drivers to see what's going on, but as always with
-that kind of thing, no guarantees on its success.
-
-Jason
-
-[1] https://lists.zx2c4.com/pipermail/wireguard/2020-November/006075.html
+Cheers,
+Miguel
