@@ -8,75 +8,77 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BBF0C2D0E4
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 23 Nov 2020 14:44:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2888CC2D0E4
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 23 Nov 2020 15:51:50 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id B23F12075A
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 23 Nov 2020 14:44:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 31496208B8
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 23 Nov 2020 15:51:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ag7LAB7P"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org B23F12075A
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jSduxh4M"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 31496208B8
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a7b78abd;
-	Mon, 23 Nov 2020 14:38:52 +0000 (UTC)
-Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com
- [2607:f8b0:4864:20::52e])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 300b68f3
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e4c348ea;
+	Mon, 23 Nov 2020 15:46:23 +0000 (UTC)
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com
+ [2a00:1450:4864:20::42b])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 8b58612a
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 23 Nov 2020 14:38:50 +0000 (UTC)
-Received: by mail-pg1-x52e.google.com with SMTP id 34so14436962pgp.10
- for <wireguard@lists.zx2c4.com>; Mon, 23 Nov 2020 06:44:14 -0800 (PST)
+ Mon, 23 Nov 2020 14:51:54 +0000 (UTC)
+Received: by mail-wr1-x42b.google.com with SMTP id e7so1351159wrv.6
+ for <wireguard@lists.zx2c4.com>; Mon, 23 Nov 2020 06:57:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=subject:from:to:references:message-id:date:user-agent:mime-version
- :in-reply-to:content-language:content-transfer-encoding;
- bh=VTBea6WI0Om7Mx4us9QAnAIIFOAUO6CWzcEk6S20FuY=;
- b=Ag7LAB7Py+W6zSI7VXhdLBjaMHelGLKoCXc+ffY+gqp1h5/6JvV41vUGi90FoCiy1C
- 3vHnI6gXGdHfP7OZg6tUVeAANKFbq6UftaSMjpIP+zIipP5OvGMQXf4rUUtyRqDvgI8x
- I+XqqAR62Aba6c/LB2CVnQhC8ho765y/ZrX3RGsbXvFB9Voime1vQA0zgCi0oZINZ0et
- wA6hT8gXPs/Qp0/DQq5X4YaYnN34wW+909O4DJs0qYIV2QNKlx5nOI6xI1ZpkPBu3xx4
- vlBSE8LdrJ9TWDdDI0pp5qkd43XRAg00Hvp1k/uPkK6Pl0kCZnNaut7qUYuJs4978c62
- 3ECA==
+ h=subject:to:cc:references:from:message-id:date:user-agent
+ :mime-version:in-reply-to:content-transfer-encoding:content-language;
+ bh=7oL7z5pqQuy+CVTAFJy+fDPmuwVNOOZ528T5TnOq4O8=;
+ b=jSduxh4MeQItLG3pBct/8QDC3oCgC59J1B0041CLKh4vLELwIrNpeosKHJdE63A2Sl
+ O0j0pjKYc8Fb6WKXGEoUdAhLDoI2MgRMNY5Gms1npsnJgbpSfZHg7rRnBwECbwPUlOLA
+ qbrmk4AvNaRmOy4ylRPSDRhckZbmWknBXZhxXPTIzFQHBIVvI6NfDwvXLSWIT8u6mNNl
+ Ibd72xKt90hpo7n+RZl0eatYj7ZPtyfRwpM9vu30dODik2iwRd+R/0hmdxsc7qdoYia3
+ QtRxzkIwcyYkjgeSxTkDYT4p0P/QmemOYYAhHgbQRQu4fpeNGN2B+98sMv1GeHGjMqIi
+ IfHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:from:to:references:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=VTBea6WI0Om7Mx4us9QAnAIIFOAUO6CWzcEk6S20FuY=;
- b=PPKPi9ZZmaEmZPKjanLDKKxOfWYd5DX44h9ihUw7YdZZLAcwaErJ+QDUU6cFUWanki
- oTdeaqCnLiuwG0Zmcy1weUrTyubbF7RfNQjh30KFY0953ktl4ZpMZNWa2xKKexvtMTMa
- UOpXxS8JHWriMu11xOoMRYvdjM21UiYA6xn8ZVFpRbNf9PoCCfPjcqvQNX0dBzUWiDdf
- 6BSZJMyE5ykoB87bMEo9+c5Vgmdy/9K673KJLPB/LBQqGToynq49nWLt/ZaHDMXvm/LA
- 6PJfhlRzJYQS/NgiqH4615byp2Et3qf1pYUPr3R9FJ08TE17clXFVkBG6NOa9yvfcYBq
- PWhg==
-X-Gm-Message-State: AOAM532up7NdVdruggdToHtUwYznoV4f0Lq2AJ4SF7pBxqEBXaxCjk5C
- 5Xc0pvHKJ6MWWea7PdnaNif9ZC5Z5W4=
-X-Google-Smtp-Source: ABdhPJyNZW/rlZvq1B8JAEoZoq9/5aqc1Ofz1PlSbb4i2bLE7Xn+CjPPl0FWZaSIk+FQhzVEvI9edw==
-X-Received: by 2002:a62:2ac2:0:b029:18c:25ff:d68 with SMTP id
- q185-20020a622ac20000b029018c25ff0d68mr26068020pfq.64.1606142653617; 
- Mon, 23 Nov 2020 06:44:13 -0800 (PST)
-Received: from mua.localhost (99-7-172-215.lightspeed.snmtca.sbcglobal.net.
- [99.7.172.215])
- by smtp.gmail.com with ESMTPSA id c19sm12323319pfp.1.2020.11.23.06.44.12
+ h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-transfer-encoding
+ :content-language;
+ bh=7oL7z5pqQuy+CVTAFJy+fDPmuwVNOOZ528T5TnOq4O8=;
+ b=Qs9FTt7RTP4ZmM0SmSUOrP+LWgbLfSVo3dup988dytzAo32pRUXOW6bsFGQsJt83sh
+ kc302WOrLnnPxEDqDtpYUAN8pKGyw+vGz+j8LS+jJozm0/nCRXR0bJYmju1t74sMsibm
+ IFh1w5BPAbXXMh9bdh39fiyrUD6hnOUNA9LELmxT2HrcCe/ln1nRKyt2e+NMudMTs4uy
+ gfNj0vVTHEKwxgsPnxtfxhbdm+GTGewbDAlsmrZKkczAmlvZMqCPsZbXhsf7GjIp4/dA
+ MYqbfB/dc/vOZ+CRjjoqcM+U4zwq4JECoA0qMiiZItHP+Y6mS3cOcR2SuOGuq5OO8pje
+ 3b7g==
+X-Gm-Message-State: AOAM532rQ6p1hWBX0SWGOr9SLgicznTKCg4rgrhnTXnnyYOCBqOJ0wWg
+ S+PYNDgA861jY8OaccFRoMjj0tWnaGZVKA==
+X-Google-Smtp-Source: ABdhPJwj7L+qG6l8W7jAM+Hg1hhdPkBGim23KE20BqaeRDxc+FL0coLgh7ZY4kyL7Bs3vWLZ/Yr9VA==
+X-Received: by 2002:adf:a549:: with SMTP id j9mr31241494wrb.199.1606143436257; 
+ Mon, 23 Nov 2020 06:57:16 -0800 (PST)
+Received: from [10.34.12.4] ([88.226.111.236])
+ by smtp.gmail.com with ESMTPSA id p19sm22198736wrg.18.2020.11.23.06.57.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 23 Nov 2020 06:44:13 -0800 (PST)
-Subject: Re: Using wg-quick without having it set routes
-From: PGNet Dev <pgnet.dev@gmail.com>
-To: nikolai@lusan.id.au, wireguard@lists.zx2c4.com
-References: <6492535965d6a99ee429384b762b29b8631e2ec5.camel@lusan.id.au>
-Message-ID: <5304d1a7-315c-5a98-71af-aeacf15aa293@gmail.com>
-Date: Mon, 23 Nov 2020 06:44:12 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.5.0
+ Mon, 23 Nov 2020 06:57:15 -0800 (PST)
+Subject: Re: Using WireGuard on Windows as non-admin - proper solution?
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+References: <3415567b-5441-f3b1-7a38-f0bae3a14cfc@werehub.org>
+ <CAHmME9riWVidRXjORFebv+UF3GyG1Hv+OrDhf4njvhGyQNw=4A@mail.gmail.com>
+ <CAHmME9pg02FefvzTR_jESKbM_a=_NQHhkrPFPC5bXbSGDjQ1sg@mail.gmail.com>
+From: Fatih USTA <fatihusta86@gmail.com>
+Message-ID: <ecb89ed6-085d-8671-c00f-a42bc61496dc@gmail.com>
+Date: Mon, 23 Nov 2020 17:57:14 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-In-Reply-To: <6492535965d6a99ee429384b762b29b8631e2ec5.camel@lusan.id.au>
+In-Reply-To: <CAHmME9pg02FefvzTR_jESKbM_a=_NQHhkrPFPC5bXbSGDjQ1sg@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-Mailman-Approved-At: Mon, 23 Nov 2020 16:46:21 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -91,34 +93,29 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On 11/21/20 4:59 AM, Nikolai Lusan wrote:
-> Hi,
-> 
-> I have recently started using wireguard as a VPN between my home
-> network[s] and my external servers. In addition to this I have been
-> deploying it on other machines I would like to have connected to my
-> network via VPN (mostly friends who I want to have access to my
-> internal network, and me to their machines for remote admin/trouble
-> shoothing).
-> 
-> I am running Debian and had set things up using
-> /etc/network/interfaces.d/ files. I was wanting move to use wg-quick
-> with systemd - trying to bring up newly created interfaces on the main
-> server/termination point using wg-quick leads to wg trying to create
-> routes for all IP ranges in "AllowedIPs". I would like to be able to
-> _not_ have this happen, is it possible? Or should I just stick with the
-> interfaces.d file method and "auto wg[0-N]"?
-> 
+Hi,
 
+I have an idea but I'm not sure if this is a correct and safe solution.
 
-You can disable auto-route generation with
+When you want to install an application, you must obtain permission from 
+UAC. If you have permission for the first installation, you can install 
+everything.
 
-	Table = off
+Idea is here.
+In the first installation, we will install wg-net-service with pipe 
+socket with the "system" account. This service will handle network 
+options (add / remove route, dns, etc.).
+Wireguard uses this service via the pipe socket for communication when 
+the tunnel is up or down. So you don't need any permission.
 
+Regards.
 
-e.g.,
+Fatih USTA
 
-	Disable (auto) routing for Wireguard
-	 https://shibumi.dev/posts/disable-routing-for-wireguard/
-
-Of course, any required routing is then your responsibility ...
+On 22.11.2020 15:55, Jason A. Donenfeld wrote:
+> This too is a work in progress, but should give some idea of what's coming:
+>
+> https://git.zx2c4.com/wireguard-windows/about/enterprise.md
+>
+> Does it seem like this set of capabilities is suitable for what you
+> have in mind?
