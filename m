@@ -2,81 +2,47 @@ Return-Path: <SRS0=uuIP=E5=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5ECDCC63697
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 23 Nov 2020 21:23:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E7BECC388F9
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 23 Nov 2020 21:23:42 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 16B4C206D4
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 23 Nov 2020 21:23:35 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=westermo.com header.i=@westermo.com header.b="BGPQ+98O"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 16B4C206D4
-Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=westermo.com
+	by mail.kernel.org (Postfix) with ESMTPS id 21B94206D4
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 23 Nov 2020 21:23:41 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 21B94206D4
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=max.pm
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 383de108;
-	Mon, 23 Nov 2020 21:18:08 +0000 (UTC)
-Received: from mx07-0057a101.pphosted.com (mx07-0057a101.pphosted.com
- [205.220.184.10])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 421021ca
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fc212e94;
+	Mon, 23 Nov 2020 21:18:15 +0000 (UTC)
+Received: from hergenrother.uberspace.de (hergenrother.uberspace.de
+ [185.26.156.204])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d4045097
  (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sun, 8 Nov 2020 21:57:05 +0000 (UTC)
-Received: from pps.filterd (m0214197.ppops.net [127.0.0.1])
- by mx07-0057a101.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 0A8Lw8Lq022065
- for <wireguard@lists.zx2c4.com>; Sun, 8 Nov 2020 23:00:33 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=westermo.com;
- h=to : from : subject
- : message-id : date : mime-version : content-type :
- content-transfer-encoding; s=12052020;
- bh=YAr/geCHBNViuDfYzrHvHVHoB2VqjnvzusOdah+lm2c=;
- b=BGPQ+98OGCcrAoPoLFgcwdsVll2VRMYQZlQPEubvKm3mOi/j4oleoUCtvolWb8RvePO5
- YzrWDPcb37P3wLPdvtx5NIQdSMT6Sl1tHVZIXJiWEIpurDu592IyVd3yCwYq02ELSqSd
- 5ZSunbMEHu4F9fyKZrxHoGBY5e9yfnGThYEAUK9aZ8M7Jl9Izk5FNHvIMB0I37+QDWHs
- +ikEQosB2Zn/eY3wKa5l6g8prwPnZYd5cNuTxGG7scO2YOgoMffc5fvwkyCTc0u2BNIE
- cxWyUn4neXOV+KGQZiM+yH3AZqpwe2E5vw0m5Rz5TxtMoybJb4tfAaXIv2FsT+NcaC4h uQ== 
-Received: from mail.beijerelectronics.com ([195.67.87.132])
- by mx07-0057a101.pphosted.com with ESMTP id 34ngtg1bk6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=NOT)
- for <wireguard@lists.zx2c4.com>; Sun, 08 Nov 2020 23:00:33 +0100
-Received: from wsests-s0004.westermo.com (192.168.10.12) by
- EX02GLOBAL.beijerelectronics.com (10.101.10.26) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
- 15.1.1847.3; Sun, 8 Nov 2020 23:00:32 +0100
-Received: from [10.0.11.179] (172.29.100.2) by wsests-s0004.westermo.com
- (192.168.10.12) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.1847.3; Sun, 8 Nov
- 2020 23:00:31 +0100
-To: <wireguard@lists.zx2c4.com>
-From: Matthias May <matthias.may@westermo.com>
-Autocrypt: addr=matthias.may@westermo.com; keydata=
- mDMEX4AtKhYJKwYBBAHaRw8BAQdA2IyjGBS2NbuL0F3NsiMsHp16B5GiXHP9BfSgRcI4rgK0
- KE1hdHRoaWFzIE1heSA8bWF0dGhpYXMubWF5QHdlc3Rlcm1vLmNvbT6IlgQTFggAPhYhBHfj
- Ao2HgnGv7h0n/d92tgRTPA2+BQJfgC0qAhsDBQkJZgGABQsJCAcCBhUKCQgLAgQWAgMBAh4B
- AheAAAoJEN92tgRTPA2+J/YBANR7Q1w436MVMDaIOmnxP9FimzEpsHorYNQfe8fp4cjPAP9v
- Ccg5Qd3odmd0orodCB6qXqLwOHexh+N60F8I0TuTBbg4BF+ALSoSCisGAQQBl1UBBQEBB0CU
- u0gESJr6GFA6GopcHFxtL/WH7nalrP2NoCGTFWdXWgMBCAeIfgQYFggAJhYhBHfjAo2HgnGv
- 7h0n/d92tgRTPA2+BQJfgC0qAhsMBQkJZgGAAAoJEN92tgRTPA2+IQoA/2Vg2VE+hB5i4MOI
- PWGsf80E9zA0Cv/489ps7HaHFuSzAQCm8MVuy6EsMIBXQ84nTb0anpfLHCQMsRNMuW/GkELh CA==
-Subject: "roaming" between source ports does not work
-Message-ID: <d8f3a1a9-1f5e-ce1e-06c7-5aab45396d97@westermo.com>
-Date: Sun, 8 Nov 2020 23:00:30 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 23 Nov 2020 16:57:35 +0000 (UTC)
+Received: (qmail 371 invoked from network); 23 Nov 2020 17:02:57 -0000
+Received: from localhost (HELO localhost) (127.0.0.1)
+ by hergenrother.uberspace.de with SMTP; 23 Nov 2020 17:02:57 -0000
+Date: Mon, 23 Nov 2020 18:02:55 +0100
+From: "Max R. P. Grossmann" <m@max.pm>
+To: Hendrik Friedel <hendrik@friedels.name>
+Cc: wireguard@lists.zx2c4.com
+Subject: Re: Connection works, ping does not
+Message-ID: <20201123170255.joa7zsjvztukjxd4@desktop42>
+X-PGP-PK: mDMEXiQ2gxYJKwYBBAHaRw8BAQdAe486pBdti/gJHMqGnKAgX+5K2CiYJGZ6ONHAG8Q31ni0Hk1heCBSLiBQLiBHcm9zc21hbm4gPG1AbWF4LnBtPoiQBBMWCAA4FiEEoJqS/FAV7oYacJhRGZmGHBY2upsFAl4kNoMCGwMFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQGZmGHBY2upuk5AD9FArDm6+U2sD5O0PrXUxFQdsPKo7u/yeUAfdVafBIP6EBAMRUTzGsv72kVW/ZCZzzePW+rYFIXT23HHYB5NY+D5UOuDgEXiQ2gxIKKwYBBAGXVQEFAQEHQMRFCdiwQ/SkphEslSmg2TNp8vDM9QkYYrLB0LJ2zEpZAwEIB4h4BBgWCAAgFiEEoJqS/FAV7oYacJhRGZmGHBY2upsFAl4kNoMCGwwACgkQGZmGHBY2upuBtwEA9Sx9td+orI+VHu9QfrV0qw8unIS1MWQi+94PeKYGYH0BAO9Kr/xs0GTjB/1zaeQwC5zo7NvMJjeMlAFlSuGdJgkB
+References: <embf875782-3b93-421c-bb54-3c3566b671bb@desktop-g0r648m>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [172.29.100.2]
-X-ClientProxiedBy: wsevst-s0023.westermo.com (192.168.130.120) To
- wsests-s0004.westermo.com (192.168.10.12)
-X-Mailman-Approved-At: Mon, 23 Nov 2020 22:18:06 +0100
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="qswx72rotbymcdxw"
+Content-Disposition: inline
+In-Reply-To: <embf875782-3b93-421c-bb54-3c3566b671bb@desktop-g0r648m>
+User-Agent: NeoMutt/20201120
+X-Mailman-Approved-At: Mon, 23 Nov 2020 22:18:07 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -91,99 +57,154 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi
 
-== Premise
-* I've recently implemented support for wireguard in our LTE-router.
+--qswx72rotbymcdxw
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: Connection works, ping does not
+MIME-Version: 1.0
 
-== Source Environment
-* The basis is OpenWRT.
-* Used versions:
-* On the client/initiator:
- * wg
-  * 1.0.20200908
-  * ad33b2d2267a37e0f65c97e65e7d4d926d5aef7d530c251b63fbf919048eead9
- * wg-tools
-  * 1.0.20200827
-  * 51bc85e33a5b3cf353786ae64b0f1216d7a871447f058b6137f793eb0f53b7fd
-* On the server/responder:
- * Debian stretch (9.13), installed from repository
- * deb http://deb.debian.org/debian/ unstable main
- * # wg --version
- * wireguard-tools v1.0.20200827
- * I don't really know what the version of the build dkms is
+Hi Hendrik,
 
-== Issue
-* We've implemented an automated test that seems to have a problem.
- * Each night, the device is configured to connect to the debian box.
-  * This works fine the first time.
-  * However it doesn't work anymore after this first time.
+Could it be that some kind of firewall is restricting UDP traffic to your o=
+ther server?
 
-== Observerion
-When the "client" connects the first time, wg-output on the "server"
-looks like this:
-> interface: wg1
->   public key: 7GxCG4m+6Kf4wjJ9vbQaGFASLGXLB5ddPWgBYw4gOk8=
+E.g. could you try to run `mtr --udp [other server's public IP address]` on=
+ your computer (while disabling your other WireGuard connection, if applica=
+ble) and report back whether there is any kind of packet loss?
+
+If not, you may wish to check whether the port on the machine is reachable,=
+ e.g. by running `nc -v -l -u -p 12345` on your server and then executing `=
+echo test | nc -u [server's IP] 12345`, to check whether the message arrive=
+s at the server.
+
+Best,
+
+Max
+
+On 20/11/22 07:39pm, Hendrik Friedel wrote:
+> Hello,
+>=20
+> (I posted this a while ago, but it never appeared on the list; if the lis=
+t is the wrong place for this question, please let me know; I would appreci=
+ate a hint for a more appropriate place)
+>=20
+> I am using wireguard to connect two machines.
+> My local server is connected  to the internet via a router. I am using th=
+eis Server also for connecting other devices (e.g. mobile phones) to my hom=
+e network. This works great.
+>=20
+> But when connecting to another server (both debian 10), I only get a succ=
+essful connection, but no ping.
+> *My server:*
+>=20
+> wg show
+> interface: wgnet0
+>   public key: xxxxx=3D
 >   private key: (hidden)
->   listening port: 51821
->
-> peer: fizBdi/YkdzFLaq6Hnq+OZaGmbJBYC15QSP1Mik/EFU=
->   endpoint: 172.29.42.230:38442
->   allowed ips: 10.0.41.3/32
->   latest handshake: 44 seconds ago
->   transfer: 8.01 MiB received, 7.96 MiB sent
-
-and on the "client:
-> interface: wg1
->   public key: fizBdi/YkdzFLaq6Hnq+OZaGmbJBYC15QSP1Mik/EFU=
+>   listening port: 51820
+>=20
+> peer: sdfsdfsdfsdfsdfsdf=3D
+>   endpoint: 109.41.64.83:15167
+>   allowed ips: 10.192.122.2/32
+>   latest handshake: 1 minute, 7 seconds ago
+>   transfer: 10.95 MiB received, 40.35 MiB sent
+>=20
+> peer: yyyy=3D
+>   endpoint: 185.22.142.254:51380
+>   allowed ips: 10.192.122.3/32
+>   transfer: 0 B received, 5.20 KiB sent
+>=20
+> peer: yyyy=3D
+>   endpoint: 93.214.229.137:64119
+>   allowed ips: 10.192.122.4/32
+>=20
+> peer: yyyy=3D
+>   endpoint: 93.214.225.116:49819
+>   allowed ips: 10.192.122.5/32
+>=20
+> peer: yyyy=3D
+>   allowed ips: 10.192.122.6/32
+>=20
+> peer: yyyy=3D
+>   allowed ips: 10.192.122.7/32
+>=20
+>=20
+> more /etc/wireguard/wgnet0.conf
+> [Interface]
+> Address =3D 10.192.122.1/24
+> SaveConfig =3D true
+> PostUp =3D iptables -A FORWARD -i wgnet0 -j ACCEPT; iptables -A FORWARD -=
+o wgnet0 -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+> PostDown =3D iptables -D FORWARD -i wgnet0 -j ACCEPT; iptables -D FORWARD=
+ -o wgnet0 -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
+> ListenPort =3D 51820
+> PrivateKey =3D aaa=3D
+>=20
+> [Peer]
+> PublicKey =3D yyyy=3D
+> AllowedIPs =3D 10.192.122.2/32
+> Endpoint =3D 123.41.67.233:18314
+>=20
+> [Peer]
+> PublicKey =3D xxx=3D
+> AllowedIPs =3D 10.192.122.3/32
+> Endpoint =3D 123.22.142.254:51380
+>=20
+>=20
+>=20
+>=20
+>=20
+> ip route
+> default via 192.168.177.1 dev eth0 proto static
+> 10.192.122.0/24 dev wgnet0 proto kernel scope link src 10.192.122.1
+>=20
+> and the other side/server:
+>=20
+> interface: wgnet0
+>   public key: xxxxx=3D
 >   private key: (hidden)
->   listening port: 38442
->
-> peer: 7GxCG4m+6Kf4wjJ9vbQaGFASLGXLB5ddPWgBYw4gOk8=
->   endpoint: 172.29.60.13:51821
->   allowed ips: 10.0.41.0/24
->   latest handshake: 1 minute, 3 seconds ago
->   transfer: 187.06 KiB received, 189.96 KiB sent
+>   listening port: 54004
+>   fwmark: 0xca6c
+>=20
+> peer: yyyyy=3D
+>   endpoint: [2003:cb:aaa:bbb:9ec7:a6ff:fefd:3a6d]:51820
+>   allowed ips: 0.0.0.0/0
+>   transfer: 0 B received, 2.75 KiB sent
+>   persistent keepalive: every 25 seconds
+>=20
+>=20
+>=20
+>   more wgnet0.conf
+> [Interface]
+> Address =3D 10.192.122.3/32
+> PrivateKey =3D xxxxx=3D
+>=20
+> [Peer]
+> PublicKey =3D yyyyy=3D
+> Endpoint =3D v.myfritz.net:51820
+> AllowedIPs =3D 0.0.0.0/0
+> PersistentKeepalive =3D 25
+>=20
+> It seems to me, that the connection is successfully established , but dat=
+a is only transmitted in one direction.
+>=20
+> How can I find the reason?
+>=20
+> Regards,
+> Hendrik
+>=20
 
-Ports and IPs match, everything works.
+--qswx72rotbymcdxw
+Content-Type: application/pgp-signature; name="signature.asc"
 
-However on the second run of the test:
-On the "server" still:
-> peer: fizBdi/YkdzFLaq6Hnq+OZaGmbJBYC15QSP1Mik/EFU=
->   endpoint: 172.29.42.230:38442
->   allowed ips: 10.0.41.3/32
->   latest handshake: 4 minutes, 52 seconds ago
->   transfer: 8.05 MiB received, 7.99 MiB sent
+-----BEGIN PGP SIGNATURE-----
 
-But the "client" shows:
-> interface: wg1
->   public key: fizBdi/YkdzFLaq6Hnq+OZaGmbJBYC15QSP1Mik/EFU=
->   private key: (hidden)
->   listening port: 47858
+iHUEABYIAB0WIQSgmpL8UBXuhhpwmFEZmYYcFja6mwUCX7vrPwAKCRAZmYYcFja6
+m76gAQDuzcw8dEPB9sc4jmzUxY2bySJ9DZUIgKRVXNL0s1d+8AD+KS3GKU/juHkG
++Jk8u4L09BRnsF+H3m7iJVzLKmCo5wM=
+=oPba
+-----END PGP SIGNATURE-----
 
-The client device has been restarted in between.
-
-Since the listen-port is set to 0, it obviously has now a new,
-different, source-port.
-The server doesn't pick this up.
-Since peers may roam between IPs, i was under the impression, that it
-would also roam between ports.
-
-
-Is this working as intended?
-If yes: How should the configuration look like to support clients doing
-a power-cycle?
-
-
-I'm aware, that i could set a static port on the client, but this won't
-work when going through NAT with port-scrambling.
-So i don't really have control over the source-port of the connection
-anyway.
-I suppose this would also apply when a router/firewall inbetween has
-some aggressive killing of states where the keepalive is not fast
-enough, and source-port scrambling is done.
-
-But the main usecase i'm looking at here is: restart of a device.
-
-BR
-Matthias
+--qswx72rotbymcdxw--
