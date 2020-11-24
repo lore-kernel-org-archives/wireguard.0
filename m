@@ -2,67 +2,124 @@ Return-Path: <SRS0=pGg3=E7=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 21455C56202
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 25 Nov 2020 11:46:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B7342C56202
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 25 Nov 2020 12:30:16 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id EE953206D9
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 25 Nov 2020 11:46:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 99EBF206E5
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 25 Nov 2020 12:30:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="xSXN15oZ"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org EE953206D9
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	dkim=pass (1024-bit key) header.d=FourPeaksLandscape.onmicrosoft.com header.i=@FourPeaksLandscape.onmicrosoft.com header.b="al+IjefL"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 99EBF206E5
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=fourpeakslandscape.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 22a29ab6;
-	Wed, 25 Nov 2020 11:40:12 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id dfbbd182
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9c83e035;
+	Wed, 25 Nov 2020 12:24:19 +0000 (UTC)
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com
+ (mail-mw2nam10on2120.outbound.protection.outlook.com [40.107.94.120])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b8aff892
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 25 Nov 2020 11:40:10 +0000 (UTC)
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6d9213a7
- for <wireguard@lists.zx2c4.com>;
- Wed, 25 Nov 2020 11:40:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=HUPYhR4dj8UQ2CsYiwFhL5OL+LE=; b=xSXN15
- oZ9vdQff0l2q8cOYz5YbSvW7lKA0xLJdrFPSio695XYO2FW3j6ZsI3gHhy4jrVIQ
- Z/ih6Ig5dAT22BbgWCAnh5fOy61b56CnxrwTulSDBP+HKmbmW/wuzbyJs1FsxoBg
- KboGFWTN/hpSk03Cun8GJoQXYxlw05EUmvHjHMxDcF7xcjNC/KE7CMbd5jjwxb3C
- x6rcMYZ8U2XL+qBHUGEW7gye/wkAdTakrLsUkchuNQzUn0xUQGfwwtIimqjRiYhD
- VspN0l1aBrYjcVPQ0HARfkXQKIVdB7Hz0qdg4ZoLYQtnL59+wHsEzBt9LwseLEVV
- lxzjAPr4h+Vo5a2w==
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id e842de5a
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Wed, 25 Nov 2020 11:40:56 +0000 (UTC)
-Received: by mail-qk1-f177.google.com with SMTP id x25so2525323qkj.3
- for <wireguard@lists.zx2c4.com>; Wed, 25 Nov 2020 03:45:48 -0800 (PST)
-X-Gm-Message-State: AOAM531xpiUj6DdLH0geRO7UoKSPf2kI9AeKlNLZK96EkuIyi26Hp9xi
- lA+V8aKMZt0d+pYJWYIUJLI3Pp1zQaRFw/idnXE=
-X-Google-Smtp-Source: ABdhPJz52VMnlHLjqgB86UURc3DBizi8qVpIqC8EdVROJTsbJI6xb4K21r9S66HRQnD2j3wZCX5B4WMs2cusJWb7wlo=
-X-Received: by 2002:a25:d047:: with SMTP id h68mr3332345ybg.49.1606304748190; 
- Wed, 25 Nov 2020 03:45:48 -0800 (PST)
+ Tue, 24 Nov 2020 21:58:40 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=BOFEDuvCyh46mFeIqWKt110WbEIJpGMYFAq+cvM5n0G8WYyTz+4M+4NpmGJdygg1vFxoRCOza6J0/b1NBVn1UEG8wRzxr/lG/Anu15WX/1ZkIPBtQiDg8WJ0y0U7I9HN7ubkXub6/yUysd3Ter4+8hu1p66CU7yxcHnsDDX747rg4Z+zMu6TOF7wY3eeLpQ1FND5E2qvpv0n/jHHawiJKuMu1MVYBiGFrs/7A7fBv9i+sAy76U+DHBx/i5K95QVL6r4Z6+qz0srlp8UrZoZb7EsZi+RdTuyGOp+9E5MdAZyzG4OUMriNs/C1qTt3vePyJPafuHKduUHdyDTxCVPXqA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ysgxtaRy8+k6htIGv7tVKc+WEX09jGAafm25zvj0X5I=;
+ b=RFif/SODaERNdKwfaWLWnqhyanurWP0M6w46wmAXIK0zfEMgoD/oJNoAAweYp9LfoFeFimCU8rznsiQ6lAofvP0HlhtK/8qErhPVNLm2Ov5V/8CNCu3q4jedDEQszq/Q8xeqMk5o8Izp6VxeXX6Wu2L75I9Mnzoln4ZekUHwKGK1gB6fMWuCckfO4sE9zxtpkXMs5v2E58waMYFnTMfJ9I1D6CZS7NRmptXQvBRkFwQpUI7A14bffwfAVHqEHx543qJ4bhTcTFlLUHl2PcTzTAF+PNoLY8cwzoKCFGFfQIn2bGdcZUBkPdH6YtQLKg8cPtShX2lupdtVH3ZnYSxxcA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=fourpeakslandscape.com; dmarc=pass action=none
+ header.from=fourpeakslandscape.com; dkim=pass
+ header.d=fourpeakslandscape.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=FourPeaksLandscape.onmicrosoft.com;
+ s=selector2-FourPeaksLandscape-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ysgxtaRy8+k6htIGv7tVKc+WEX09jGAafm25zvj0X5I=;
+ b=al+IjefLNmjBIEjhcYaxXDe/xEzg8DxdvO1IzmlsmRCeXlZFibsNsWGUk+g77amVjXn/lzLVOnmM67lnBCoqcDsBUSIZB2dGjZ10ybI4fSYeV2vpjN4+KiCtKuRALNAMQz/FMlqzr0jqWT+NTdSBbu8oqv++bzZ1ziMkTk4QRXA=
+Received: from BY5PR17MB3617.namprd17.prod.outlook.com (2603:10b6:a03:1c0::27)
+ by BYAPR17MB3048.namprd17.prod.outlook.com (2603:10b6:a03:ee::16)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3589.22; Tue, 24 Nov
+ 2020 22:04:10 +0000
+Received: from BY5PR17MB3617.namprd17.prod.outlook.com
+ ([fe80::bcb1:a8df:cbb6:ab6d]) by BY5PR17MB3617.namprd17.prod.outlook.com
+ ([fe80::bcb1:a8df:cbb6:ab6d%4]) with mapi id 15.20.3611.021; Tue, 24 Nov 2020
+ 22:04:10 +0000
+From: Dennis IT SysAdmin <it@fourpeakslandscape.com>
+To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+Subject: WireGuard 0.3.1 Potential Bug #AddConf
+Thread-Topic: WireGuard 0.3.1 Potential Bug #AddConf
+Thread-Index: AQHWwqqjAGBgxYHu2k+yf6sweM1hiqnX1Xlc
+Date: Tue, 24 Nov 2020 22:04:10 +0000
+Message-ID: <BY5PR17MB36173DFB2D19C80A9798729EA9FB0@BY5PR17MB3617.namprd17.prod.outlook.com>
+References: <BY5PR17MB36175E4EB9A88CE42A2D1D86A9FB0@BY5PR17MB3617.namprd17.prod.outlook.com>
+In-Reply-To: <BY5PR17MB36175E4EB9A88CE42A2D1D86A9FB0@BY5PR17MB3617.namprd17.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: lists.zx2c4.com; dkim=none (message not signed)
+ header.d=none;lists.zx2c4.com; dmarc=none action=none
+ header.from=fourpeakslandscape.com;
+x-originating-ip: [70.177.6.89]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 827fad40-af48-47f7-3d26-08d890c4df42
+x-ms-traffictypediagnostic: BYAPR17MB3048:
+x-microsoft-antispam-prvs: <BYAPR17MB3048F0D7812D609E3250B985A9FB0@BYAPR17MB3048.namprd17.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:8273;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: W5xZk0Bsz95zf5ojFWn2RRPxpqeQ1k2h30IJkeplaex0cSCEoohONDC/tTkUrbRhLIfwa3td8nG6Bl7Z1Hv3gE7MucKRqwdS6Zv6t+NEI4Hf4yLXEE4cdLb39/QDv8BWuYrpkVfUeJDhw51L2yqlHq2NgB2yhWuIp9bmJZcbshaAXGwIbjffs3tJ+1606aoFaIFE8HKS3cLqnAdeLJNfeesFd7QXOQc0exLC6FVJxW2D71V2b16Oxec8vhWSbz11bt4QyHHNQ8FW66BfsTEoOaaIAs8bJjDnLTHpfhecI4beNryLx+EhhzUXetrqOJInN411IeZ+NsTDkcFC2t08i9HpkiQyMv3M/uqTZDNYPUXWoak9T68KBe3MAxWN8OUC
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BY5PR17MB3617.namprd17.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(366004)(376002)(346002)(39830400003)(396003)(136003)(2906002)(33656002)(6916009)(76116006)(2940100002)(66946007)(66476007)(52536014)(478600001)(66446008)(66556008)(64756008)(71200400001)(26005)(6506007)(8676002)(5660300002)(9686003)(7696005)(86362001)(186003)(316002)(55016002)(83380400001)(8936002)(460985005);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata: =?utf-8?B?UmlVVmowZS9abHExazE4QU03QzBQU3NRV2xINzMxanRBdEVTb0llUkZ3bGlG?=
+ =?utf-8?B?dTZaZy94c2JJczNoN0pUMXNGc1ArV0RUK3NPWmlGZ2hFdmFSN25KUi9kUm83?=
+ =?utf-8?B?RkljVnVtM2ZKZUg2VzYrWXZkUktxdXRyRGcxb2h1L2dpVjNJWktSRnptMTNo?=
+ =?utf-8?B?VjdVeEE3Wk5sTmN0azBCeTVIM3NzbUUzMFUrM2k3OUptb2VKU3RtbFBXOFBM?=
+ =?utf-8?B?TitTa2JHOERTc2FLd0dKVitUU2p4VmVJbWhmU2ZuU1NpOVEzVmdud2wrU21Z?=
+ =?utf-8?B?ckFHNW4ybTdOb2xkODB1RnhucFd2dW1BWUpwVzNhR01pU1I5UmdId0xFVk5h?=
+ =?utf-8?B?ZytZRFd5dGkzMU5oMEhqdUF4OHV0eWFSRVJ0YXV6anFySFFETmF3R3VyRkd4?=
+ =?utf-8?B?UVFMNUE3YVIzOHdtcHp2WHZpWkRQL2tWZjF1a2F1S3EyM3ZBRit3S3lXT2RO?=
+ =?utf-8?B?NmpkdmlVWXZoYzB4ZnRrVk1PSGxVUEN2Z3hZeUFUZXc5RU9OMytXYnM0ZHNB?=
+ =?utf-8?B?Nk8zZDA1aFZ3M3ZEeVlFQm9Pc0NkQ3FIN3hOaUU3YzR1UXI5YlBjaHNyNW9M?=
+ =?utf-8?B?M3grMGo5cWdValFkWlFtMnFVRG4wZW9MQzRoVG1xS0FBQWxicEdOaDBEV2g3?=
+ =?utf-8?B?WFVvcnF0Qmg4RzhqK1Zuc3pMckV4TGNTcEdSeFljRnkvd2tqWUhLY0VZcTlC?=
+ =?utf-8?B?UTBKbC91anBhZWw5ajZ6OHYzK0tHTjQ1T1k5Zmxod3ZXcFR1YjZFejI3RklK?=
+ =?utf-8?B?NVg5b2dGMS9GV0tUWUhhSjRhZ0RNKzNPdWttNHpPaVJQSXNGU2REY1g5TzlY?=
+ =?utf-8?B?TEFKTXlVdkg4SEJYU1MzVW9lU0FVeDhOSDlMRU5CUHhMUURNR3lEekV0em1v?=
+ =?utf-8?B?a0dXUENIbUN4M0ZFOEc3alM3QStWVzdHY040QkI0eTlJeWRtUU5DN003WlNk?=
+ =?utf-8?B?QzIvcDFJVjZvL2c2Z3RaN1FTSFQ1U2F2YVdJODl2VXREd20xa3N0OU9pU3JG?=
+ =?utf-8?B?Zkg4T1FjRzI5Z094ZXE0NDJ5UlZwTXNPVzQ4K0VNSW5qY29aeHdicVNRSFA3?=
+ =?utf-8?B?Y1BJcUJmeXNKNmcvb3ZkdEdGSlhhNlRFUHV2d1E3OFlaU1U1aXhkUDdhTkRX?=
+ =?utf-8?B?OU5FOU1tT292dXVDY2RhWm9hQXExUnNWa01pWng4MjViM3ZnNGtDME1UL0Rh?=
+ =?utf-8?B?WkprMW1sajJYVG12ZkFnVTlFcE9CMHJuSDdrelZqQU9WVTFySFRzNG9ZUmIv?=
+ =?utf-8?B?SmRYVzZONE9LelpPV3FrOEFoWEtlQ2JEenQ3QVowUHZOUVdDdmkwTWh1R1lt?=
+ =?utf-8?Q?1xq93sRarPQmc=3D?=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <CAHmME9qAjqF-p=AHrzpmO+KnFjSADMkqpYmOn+TRY9q04aBFMQ@mail.gmail.com>
- <C7C6HAUS055X.339KNR4ZAROGW@enhorning>
- <CAHmME9rp_nDjP6d_yki4LPP2pr1BejWcD7FQ5-A9MXZ9ORxZvg@mail.gmail.com>
-In-Reply-To: <CAHmME9rp_nDjP6d_yki4LPP2pr1BejWcD7FQ5-A9MXZ9ORxZvg@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 25 Nov 2020 12:45:37 +0100
-X-Gmail-Original-Message-ID: <CAHmME9oMFQtePYt37+4eyOn23mwHwP2UGxQi=SaJk9J3p1zCpw@mail.gmail.com>
-Message-ID: <CAHmME9oMFQtePYt37+4eyOn23mwHwP2UGxQi=SaJk9J3p1zCpw@mail.gmail.com>
-Subject: Re: Using WireGuard on Windows as non-admin - proper solution?
-To: Riccardo Paolo Bestetti <pbl@bestov.io>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: multipart/mixed; boundary="000000000000ead86c05b4ecf722"
+X-OriginatorOrg: fourpeakslandscape.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BY5PR17MB3617.namprd17.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 827fad40-af48-47f7-3d26-08d890c4df42
+X-MS-Exchange-CrossTenant-originalarrivaltime: 24 Nov 2020 22:04:10.4846 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: f86d598a-53c7-4611-9718-2bbe7841079b
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: nvz5Piw0eiNWfN9gNXdgwkBs7+0eShBO39WnPIGczI8hzjHgaqALcXgas+PWws5cNoVPdQCckpvwxCQUPI+GJwP62e+oq4SAHI+drzGad9E=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR17MB3048
+X-Mailman-Approved-At: Wed, 25 Nov 2020 13:24:18 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -77,131 +134,26 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---000000000000ead86c05b4ecf722
-Content-Type: text/plain; charset="UTF-8"
-
-On Wed, Nov 25, 2020 at 11:30 AM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
->
-> On 11/25/20, Riccardo Paolo Bestetti <pbl@bestov.io> wrote:
-> > On Wed Nov 25, 2020 at 2:08 AM CET, Jason A. Donenfeld wrote:
-> >> Hi Riccardo,
-> >>
-> >> Interesting consideration. I didn't know that.
-> > I didn't know that either until I tried to deploy WireGuard on a laptop
-> > yesterday! It seems not to be documented anywhere.
-> >
-> > The group has been around since Windows XP afaik, however I have no idea
-> > whether the associated licesing chicanery has also been around that long.
-> >
-> >>
-> >> Can you not add that group manually need be?
-> > I'm not an expert on Windows, but a quick lookup on the net suggests you
-> > cannot create a local group with a specific SID.
->
-> I'm not convinced this is the case. We're talking about a local group.
-> Surely there's some on-disk representation of available groups and
-> associations, no? This line of inquiry needs to be fully exhausted
-> before we even consider alternatives.
->
-> Has Microsoft documented this limitation?
-
-Well, I made Network Configuration Operators work just fine on Windows
-10 Home edition. Here are the steps I followed, which I'm sure I could
-compress into a single powershell script or executable need be:
-
-1. Download psexec from the sysinternals page:
-https://docs.microsoft.com/en-us/sysinternals/downloads/psexec
-2. Download nco.reg from the attachment in this email.
-3. Open up an administrator console and type `psexec -i -s regedit`.
-4. Choose File->Import and select the nco.reg file.
-5. Add your user to the group like usual (e.g. `Add-LocalGroupMember
--Group "Network Configuration Operators" -Member MrDerp`).
-
-I've confirmed that this works fine with the limited operator ui on
-WireGuard for Windows 0.3.1.
-
-Jason
-
---000000000000ead86c05b4ecf722
-Content-Type: text/x-ms-regedit; charset="UTF-16LE"; name="nco.reg"
-Content-Disposition: attachment; filename="nco.reg"
-Content-Transfer-Encoding: base64
-Content-ID: <f_khxccl6a0>
-X-Attachment-Id: f_khxccl6a0
-
-//5XAGkAbgBkAG8AdwBzACAAUgBlAGcAaQBzAHQAcgB5ACAARQBkAGkAdABvAHIAIABWAGUAcgBz
-AGkAbwBuACAANQAuADAAMAANAAoADQAKAFsASABLAEUAWQBfAEwATwBDAEEATABfAE0AQQBDAEgA
-SQBOAEUAXABTAEEATQBcAFMAQQBNAFwARABvAG0AYQBpAG4AcwBcAEIAdQBpAGwAdABpAG4AXABB
-AGwAaQBhAHMAZQBzAFwAMAAwADAAMAAwADIAMgBDAF0ADQAKACIAQwAiAD0AaABlAHgAOgAyAGMA
-LAAwADIALAAwADAALAAwADAALAAwADAALAAwADAALAAwADAALAAwADAALABlADgALAAwADAALAAw
-ADAALAAwADAALAAwADMALAAwADAALAAwADEALAAwADAALABlADgALAAwADAALAAwADAALAAwADAA
-LAAzAGUALAAwADAALAAwADAALABcAA0ACgAgACAAMAAwACwAMAAwACwAMAAwACwAMAAwACwAMAAw
-ACwAMgA4ACwAMAAxACwAMAAwACwAMAAwACwAZAA4ACwAMAAwACwAMAAwACwAMAAwACwAMAAwACwA
-MAAwACwAMAAwACwAMAAwACwAMAAwACwAMAAyACwAMAAwACwAMAAwACwAMQBjACwAMAAwACwAMAAw
-ACwAMAAwACwAXAANAAoAIAAgADAAMQAsADAAMAAsADAAMAAsADAAMAAsADAAMQAsADAAMAAsADEA
-NAAsADgAMAAsAGMAOAAsADAAMAAsADAAMAAsADAAMAAsAGQAOAAsADAAMAAsADAAMAAsADAAMAAs
-ADEANAAsADAAMAAsADAAMAAsADAAMAAsADQANAAsADAAMAAsADAAMAAsADAAMAAsADAAMgAsAFwA
-DQAKACAAIAAwADAALAAzADAALAAwADAALAAwADIALAAwADAALAAwADAALAAwADAALAAwADIALABj
-ADAALAAxADQALAAwADAALAAxADMALAAwADAALAAwADUALAAwADEALAAwADEALAAwADEALAAwADAA
-LAAwADAALAAwADAALAAwADAALAAwADAALAAwADEALAAwADAALAAwADAALABcAA0ACgAgACAAMAAw
-ACwAMAAwACwAMAAyACwAYwAwACwAMQA0ACwAMAAwACwAZgBmACwAZgBmACwAMQBmACwAMAAwACwA
-MAAxACwAMAAxACwAMAAwACwAMAAwACwAMAAwACwAMAAwACwAMAAwACwAMAA1ACwAMAA3ACwAMAAw
-ACwAMAAwACwAMAAwACwAMAAyACwAMAAwACwAOAA0ACwAXAANAAoAIAAgADAAMAAsADAANAAsADAA
-MAAsADAAMAAsADAAMAAsADAAMAAsADAAMAAsADEANAAsADAAMAAsADAAYwAsADAAMAAsADAAMgAs
-ADAAMAAsADAAMQAsADAAMQAsADAAMAAsADAAMAAsADAAMAAsADAAMAAsADAAMAAsADAAMQAsADAA
-MAAsADAAMAAsADAAMAAsADAAMAAsAFwADQAKACAAIAAwADAALAAwADAALAAxADgALAAwADAALAAx
-AGYALAAwADAALAAwAGYALAAwADAALAAwADEALAAwADIALAAwADAALAAwADAALAAwADAALAAwADAA
-LAAwADAALAAwADUALAAyADAALAAwADAALAAwADAALAAwADAALAAyADAALAAwADIALAAwADAALAAw
-ADAALAAwADAALABcAA0ACgAgACAAMAAwACwAMQA4ACwAMAAwACwAMQBmACwAMAAwACwAMABmACwA
-MAAwACwAMAAxACwAMAAyACwAMAAwACwAMAAwACwAMAAwACwAMAAwACwAMAAwACwAMAA1ACwAMgAw
-ACwAMAAwACwAMAAwACwAMAAwACwAMgA0ACwAMAAyACwAMAAwACwAMAAwACwAMAAwACwAMAAwACwA
-XAANAAoAIAAgADMAOAAsADAAMAAsADAAYwAsADAAMAAsADAAMgAsADAAMAAsADAAMQAsADAAYQAs
-ADAAMAAsADAAMAAsADAAMAAsADAAMAAsADAAMAAsADAAZgAsADAAMwAsADAAMAAsADAAMAAsADAA
-MAAsADAAMAAsADAANAAsADAAMAAsADAAMAAsAGQAZQAsAGEAMgAsADIAOAAsAFwADQAKACAAIAA2
-ADcALAAyADEALAAzAGUALABkADIALABhAGYALAAxADkALABhAGQALAA1AGQALAA3ADkALABiADAA
-LABjADEALAAwADcALAAyADkALAAyADcALAA1ADYALABmAGMALAAyADAALABkADgALABhAGQALAA2
-ADYALABmADYALAAxADAALABmADIALAA2ADgALABmAGEALABcAA0ACgAgACAAZABmACwAMgBhACwA
-ZgA4ACwAMABmACwAMAAxACwAMAAyACwAMAAwACwAMAAwACwAMAAwACwAMAAwACwAMAAwACwAMAA1
-ACwAMgAwACwAMAAwACwAMAAwACwAMAAwACwAMgAwACwAMAAyACwAMAAwACwAMAAwACwAMAAxACwA
-MAAyACwAMAAwACwAMAAwACwAMAAwACwAXAANAAoAIAAgADAAMAAsADAAMAAsADAANQAsADIAMAAs
-ADAAMAAsADAAMAAsADAAMAAsADIAMAAsADAAMgAsADAAMAAsADAAMAAsADQAZQAsADAAMAAsADYA
-NQAsADAAMAAsADcANAAsADAAMAAsADcANwAsADAAMAAsADYAZgAsADAAMAAsADcAMgAsADAAMAAs
-ADYAYgAsADAAMAAsAFwADQAKACAAIAAyADAALAAwADAALAA0ADMALAAwADAALAA2AGYALAAwADAA
-LAA2AGUALAAwADAALAA2ADYALAAwADAALAA2ADkALAAwADAALAA2ADcALAAwADAALAA3ADUALAAw
-ADAALAA3ADIALAAwADAALAA2ADEALAAwADAALAA3ADQALAAwADAALAA2ADkALAAwADAALAA2AGYA
-LABcAA0ACgAgACAAMAAwACwANgBlACwAMAAwACwAMgAwACwAMAAwACwANABmACwAMAAwACwANwAw
-ACwAMAAwACwANgA1ACwAMAAwACwANwAyACwAMAAwACwANgAxACwAMAAwACwANwA0ACwAMAAwACwA
-NgBmACwAMAAwACwANwAyACwAMAAwACwANwAzACwAMAAwACwAMAAwACwAMAAwACwAXAANAAoAIAAg
-ADQAZAAsADAAMAAsADYANQAsADAAMAAsADYAZAAsADAAMAAsADYAMgAsADAAMAAsADYANQAsADAA
-MAAsADcAMgAsADAAMAAsADcAMwAsADAAMAAsADIAMAAsADAAMAAsADYAOQAsADAAMAAsADYAZQAs
-ADAAMAAsADIAMAAsADAAMAAsADcANAAsADAAMAAsADYAOAAsAFwADQAKACAAIAAwADAALAA2ADkA
-LAAwADAALAA3ADMALAAwADAALAAyADAALAAwADAALAA2ADcALAAwADAALAA3ADIALAAwADAALAA2
-AGYALAAwADAALAA3ADUALAAwADAALAA3ADAALAAwADAALAAyADAALAAwADAALAA2ADMALAAwADAA
-LAA2ADEALAAwADAALAA2AGUALAAwADAALABcAA0ACgAgACAAMgAwACwAMAAwACwANgA4ACwAMAAw
-ACwANgAxACwAMAAwACwANwA2ACwAMAAwACwANgA1ACwAMAAwACwAMgAwACwAMAAwACwANwAzACwA
-MAAwACwANgBmACwAMAAwACwANgBkACwAMAAwACwANgA1ACwAMAAwACwAMgAwACwAMAAwACwANgAx
-ACwAMAAwACwANgA0ACwAXAANAAoAIAAgADAAMAAsADYAZAAsADAAMAAsADYAOQAsADAAMAAsADYA
-ZQAsADAAMAAsADYAOQAsADAAMAAsADcAMwAsADAAMAAsADcANAAsADAAMAAsADcAMgAsADAAMAAs
-ADYAMQAsADAAMAAsADcANAAsADAAMAAsADYAOQAsADAAMAAsADcANgAsADAAMAAsADYANQAsADAA
-MAAsAFwADQAKACAAIAAyADAALAAwADAALAA3ADAALAAwADAALAA3ADIALAAwADAALAA2ADkALAAw
-ADAALAA3ADYALAAwADAALAA2ADkALAAwADAALAA2AGMALAAwADAALAA2ADUALAAwADAALAA2ADcA
-LAAwADAALAA2ADUALAAwADAALAA3ADMALAAwADAALAAyADAALAAwADAALAA3ADQALABcAA0ACgAg
-ACAAMAAwACwANgBmACwAMAAwACwAMgAwACwAMAAwACwANgBkACwAMAAwACwANgAxACwAMAAwACwA
-NgBlACwAMAAwACwANgAxACwAMAAwACwANgA3ACwAMAAwACwANgA1ACwAMAAwACwAMgAwACwAMAAw
-ACwANgAzACwAMAAwACwANgBmACwAMAAwACwANgBlACwAMAAwACwAXAANAAoAIAAgADYANgAsADAA
-MAAsADYAOQAsADAAMAAsADYANwAsADAAMAAsADcANQAsADAAMAAsADcAMgAsADAAMAAsADYAMQAs
-ADAAMAAsADcANAAsADAAMAAsADYAOQAsADAAMAAsADYAZgAsADAAMAAsADYAZQAsADAAMAAsADIA
-MAAsADAAMAAsADYAZgAsADAAMAAsADYANgAsAFwADQAKACAAIAAwADAALAAyADAALAAwADAALAA2
-AGUALAAwADAALAA2ADUALAAwADAALAA3ADQALAAwADAALAA3ADcALAAwADAALAA2AGYALAAwADAA
-LAA3ADIALAAwADAALAA2AGIALAAwADAALAA2ADkALAAwADAALAA2AGUALAAwADAALAA2ADcALAAw
-ADAALAAyADAALAAwADAALABcAA0ACgAgACAANgA2ACwAMAAwACwANgA1ACwAMAAwACwANgAxACwA
-MAAwACwANwA0ACwAMAAwACwANwA1ACwAMAAwACwANwAyACwAMAAwACwANgA1ACwAMAAwACwANwAz
-ACwAMAAwACwAMAAxACwAMAA1ACwAMAAwACwAMAAwACwAMAAwACwAMAAwACwAMAAwACwAMAA1ACwA
-MQA1ACwAXAANAAoAIAAgADAAMAAsADAAMAAsADAAMAAsAGEAOAAsADkAMwAsAGQAMQAsADQANgAs
-ADEANgAsAGYAZQAsADgAOQAsAGEANwAsADUANgAsAGUAYwAsADkANgAsADkANwAsAGUAZAAsADAA
-MwAsADAAMAAsADAAMAANAAoADQAKAFsASABLAEUAWQBfAEwATwBDAEEATABfAE0AQQBDAEgASQBO
-AEUAXABTAEEATQBcAFMAQQBNAFwARABvAG0AYQBpAG4AcwBcAEIAdQBpAGwAdABpAG4AXABBAGwA
-aQBhAHMAZQBzAFwATgBhAG0AZQBzAFwATgBlAHQAdwBvAHIAawAgAEMAbwBuAGYAaQBnAHUAcgBh
-AHQAaQBvAG4AIABPAHAAZQByAGEAdABvAHIAcwBdAA0ACgBAAD0AaABlAHgAKAAyADIAYwApADoA
-DQAKAA0ACgA=
---000000000000ead86c05b4ecf722--
+CldoaWxlIHNldHRpbmcgdXAgdGhlIFZQTiBhbmQgYWxzbyB3b3JraW5nIG9uIGNyZWF0aW5nIGEg
+cG93ZXJzaGVsbCBtb2R1bGUgZm9yIHNldHVwLCBJIHdlbnQgdGhyb3VnaCB0byB0ZXN0IHRoZSBj
+b21wb25lbnRzIGluIHdnLmV4ZSwgYW5kIEkgbm90aWNlZCBhbiBpc3N1ZSB3aXRoIGFkZGNvbmYg
+d2hpY2ggaXMgc3VwcG9zZWQgdG8gYWxsb3cgYXBwZW5kaW5nIHRvIGEgY3VycmVudCBjb25maWd1
+cmF0aW9uOgoKU2V2ZXJhbCBzY2VuYXJpb3MgdGVzdGVkLQoKCgoKV2luZG93cyAoIFVuZGVyIGFu
+IGFkbWluIChub3Qgc3lzdGVtKSBhY2NvdW50IHdoZXJlIGNvbmZpZyB3YXMgY3JlYXRlZCAobm90
+IGNyZWF0ZWQgdXNpbmcgc3lzdGVtIGFjY291bnQpOgpbCgpQUyBDOlxQcm9ncmFtIEZpbGVzXFdp
+cmVHdWFyZD4gICAgICB3ZyBhZGRjb25mIFdpcmVHdWFyZCAnQzpcUHJvZ3JhbSBGaWxlc1xXaXJl
+R3VhcmRcRGF0YVxDb25maWd1cmF0aW9uc1xXaXJlR3VhcmRWUE4uY29uZi5kcGFwaScKCmZvcGVu
+OiBQZXJtaXNzaW9uIGRlbmllZAoKXQoKCgpXaW5kb3dzICggVW5kZXIgU1lTVEVNIGFjY291bnQg
+d2hlcmUgY29uZmlnIHdhcyBOT1QgY3JlYXRlZCAodXNpbmcgUFNUb29scyB0byBnZXQgaW50byBT
+WVNURU0gZW52aXJvbm1lbnQpOgpbCgpQUyBDOlxQcm9ncmFtIEZpbGVzXFdpcmVHdWFyZD4gICAg
+d2cgYWRkY29uZiBXaXJlR3VhcmQgJ0M6XFByb2dyYW0gRmlsZXNcV2lyZUd1YXJkXERhdGFcQ29u
+ZmlndXJhdGlvbnNcV2lyZUd1YXJkVlBOLmNvbmYuZHBhcGkn4oCLIAoKTGluZSB1bnJlY29nbml6
+ZWQ6IGABJwpDb25maWd1cmF0aW9uIHBhcnNpbmcgZXJyb3IKCl0KCgoKRGViaWFuU2VydmVyICgg
+VW5kZXIgU1UgYWNjb3VudCB3aGVyZSBjb25maWcgd2FzIGNyZWF0ZWQgJiB1bmRlciBVU0VSIGFj
+Y291bnQgd2hlcmUgY29uZmlnIHdhcyBOT1QgY3JlYXRlZCAtIFNhbWUgcmVzdWx0ICk6CgpbCnJv
+b3RAdW5peDovaG9tZS9zeXN0ZW0jICAgICB3ZyBhZGRjb25mIFdpcmVHdWFyZCAvZXRjL3dpcmVn
+dWFyZC93ZzAuY29uZiAKCkxpbmUgdW5yZWNvZ25pemVkOiBgQWRkcmVzcz0xNzIuMTAuMTAuMS8y
+NCcKQ29uZmlndXJhdGlvbiBwYXJzaW5nIGVycm9yCgpdCgoKCgoKCgoKCgoKCgoKClRoYW5rcywK
+CkRlbm5pcyBGYWlywqDCoHzCoMKgSS5UIFN5c3RlbXMgQWRtaW4KRm91ciBQZWFrcyBMYW5kc2Nh
+cGUgTWFuYWdlbWVudApwOsKgNDgwLTk2Ny0wMzc2wqDCoHzCoMKgZjrCoDQ4MC05NjctMDQwNgpt
+OsKgNDgwLTMxOS01MzQ1CmU6wqBpdEBmb3VycGVha3NsYW5kc2NhcGUuY29tCgo=
