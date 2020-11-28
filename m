@@ -2,79 +2,69 @@ Return-Path: <SRS0=qAD6=FD=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AD790C5519F
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 29 Nov 2020 20:59:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A479BC3E8C5
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 29 Nov 2020 21:02:11 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id D15E620786
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 29 Nov 2020 20:59:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id D3EF0207BC
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 29 Nov 2020 21:02:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="NGXJIKjK"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org D15E620786
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="UYB/19e5"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org D3EF0207BC
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=web.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 33415a45;
-	Sun, 29 Nov 2020 20:53:02 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 09d78192
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a98cf1b9;
+	Sun, 29 Nov 2020 20:55:41 +0000 (UTC)
+Received: from mout.web.de (mout.web.de [212.227.17.11])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id cd88fe21
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 29 Nov 2020 20:53:00 +0000 (UTC)
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c989039d
- for <wireguard@lists.zx2c4.com>;
- Sun, 29 Nov 2020 20:53:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=exISuVE640FE1OXHTVhrnP+SlQA=; b=NGXJIK
- jKHicUNWNk1uVr4czj38n2/75PhAtFVtfSIJ2ac7xwPt7F9nR2yJY5Z9xEuDTHpR
- YRxq80S3ZxtPrlcmGGTPnqjWEX9sdcqV1SytAA81ZOX6OA3AxxwlNL71bWXAqFOF
- mu9fPC+dUvqetdKB6goYyNHhOKOToY2mhIEJCO73SVID80TlXtZNU89AuDQ67Gon
- FBQXtAQJt/34LZTonCbQIGqMV6FNE2uQHWMMeA3qLKqQcyjtek8iK2dUWB7KQ1HN
- lxnPwweYi05TKVxhnPE69wK8D0nLRKnVvH/8VsqZSlR88CDwfuqhkpvKBPlnZTJQ
- uM/a7Dpm3vbrvJ6A==
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id afaf8534
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Sun, 29 Nov 2020 20:53:45 +0000 (UTC)
-Received: by mail-yb1-f173.google.com with SMTP id 2so9554220ybc.12
- for <wireguard@lists.zx2c4.com>; Sun, 29 Nov 2020 12:59:12 -0800 (PST)
-X-Gm-Message-State: AOAM5320Ex4dtnam9oqSqceq4nmU6lOefki/NpBPMGOY9HprbSJKx6jG
- 24U/D4s3DWdPekPEE1WF0i5eT0S61yP5y4wlnOk=
-X-Google-Smtp-Source: ABdhPJxdEiaKlG8ZF+Wxk90sRhOWsn0qZLZv49QUoEnuvHOzLanausodWd8yNp7EAJpy1LhyC8JNn4nYr2CShkytZ8E=
-X-Received: by 2002:a25:df05:: with SMTP id w5mr37882003ybg.20.1606683551572; 
- Sun, 29 Nov 2020 12:59:11 -0800 (PST)
+ Sat, 28 Nov 2020 16:58:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+ s=dbaedf251592; t=1606583048;
+ bh=+2mbJ5zKkq0gCDAPaOtGGZgtvawRHtKo0ZYTjy0JVh0=;
+ h=X-UI-Sender-Class:From:To:Subject:Date;
+ b=UYB/19e5vR9jL393G9qqZ8JrbGgDvMtsb6IQXSxFsf8TekLbJsHkmiaxgSR3UyIbm
+ znjsI+PpOvWarVCdEVG3YaAYjOQ8qj4mFdgSVN0bmUm8dsI6LaTyN28Bl26HVxIyjW
+ MyAOituVAyfYz3Nq+94orQIJylK8Uu9/Pp9TSRIc=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [159.253.115.28] ([159.253.115.28]) by web-mail.web.de
+ (3c-app-webde-bap18.server.lan [172.19.172.18]) (via HTTP); Sat, 28 Nov
+ 2020 18:04:08 +0100
 MIME-Version: 1.0
-References: <CAHmME9oMFQtePYt37+4eyOn23mwHwP2UGxQi=SaJk9J3p1zCpw@mail.gmail.com>
- <C7CEJYWC3YU7.2DQYKR91NB6CP@enhorning>
- <8bf9e364f87bd0018dabca03dcc8c19b@mail.gmail.com>
- <CAHmME9pdDDjVWmxGdh42tJy2KbxT7ZSj9PEsjEyHRMwZpora+A@mail.gmail.com>
- <d9dc454a-15fd-a547-8d0f-b7916818c3de@maidenheadbridge.com>
- <CAHmME9q_UbmfVyd9hH5+b1n6pE=mOgZdKMcyF=AFf2Nm0QHumg@mail.gmail.com>
- <3b4f9ec2-2f50-25c9-0e27-7ca0d2f16943@maidenheadbridge.com>
- <CAHmME9pP4u5-HjZcdj0SAymGmoG36kA0sbcvRo7=mr8XZ-RXHA@mail.gmail.com>
- <CABtXGiD7Q4904nit3C=A12AnJh0rmLeW3skhPoWXEYdP2mLTXw@mail.gmail.com>
- <CAHmME9ohy8Tfko=hO3jLDCJ92X6LQmYoCyTmCgH9N0R5EdPw5g@mail.gmail.com>
- <CABtXGiDREy3K00JLQfuCmu3hTrKnorBd0VrL5kKEL4_x3Lc1jA@mail.gmail.com>
- <CAHmME9o6MdOW=ODPH=Ksh5urUJaaE5Y8HPwkdL7F-_3XCa1KJQ@mail.gmail.com>
- <CABtXGiAK_T0sVPPq_aXLs_fnPG=A9bKZrN-oj7dZa4Wb2j0_Eg@mail.gmail.com>
-In-Reply-To: <CABtXGiAK_T0sVPPq_aXLs_fnPG=A9bKZrN-oj7dZa4Wb2j0_Eg@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sun, 29 Nov 2020 21:59:00 +0100
-X-Gmail-Original-Message-ID: <CAHmME9qAmJt7C7KefU9m-9NkqdmkkGWY34YFwNT0Qm-N_1Tkxw@mail.gmail.com>
-Message-ID: <CAHmME9qAmJt7C7KefU9m-9NkqdmkkGWY34YFwNT0Qm-N_1Tkxw@mail.gmail.com>
-Subject: Re: Using WireGuard on Windows as non-admin - proper solution?
-To: Phillip McMahon <phillip.mcmahon@gmail.com>
-Cc: Adrian Larsen <alarsen@maidenheadbridge.com>, 
- Clint Dovholuk <clint.dovholuk@netfoundry.io>,
- Riccardo Paolo Bestetti <pbl@bestov.io>, 
- WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+Message-ID: <trinity-8b39e676-4010-4d53-9bc2-9ca84bcf3a85-1606583048495@3c-app-webde-bap18>
+From: Henning Ryll <henning.ryll@web.de>
+To: wireguard@lists.zx2c4.com
+Subject: wireguard on multi user windows ?
+Content-Type: text/plain; charset=UTF-8
+Date: Sat, 28 Nov 2020 18:04:08 +0100
+Importance: normal
+Sensitivity: Normal
+X-Priority: 3
+X-Provags-ID: V03:K1:EJtH/SmlFHhWghi3tRBU8HuMIKth2NKi9dx11nLEMOkZWSWrf0P7reRI3So9iXAS+GfQN
+ MHiIeCcoEGVhAG7A6QLSXW40Kg/yhaE/fhf26zsfNKrOsfr7VXfuGqTbnHVkkt1ifs8EyXlhJMCT
+ 5xZ+eppspqGTmGiF+J8J6PYIT8ZDmThF6c+hGaLhsIj1alJwdMXrIyU5QAnvt+q4w5VHXqoqKOG1
+ us4MaiY+bX+y6BV7G8VlPSe6hE07UK067dEFRCHpHvfd6PPBRXD2sJpQXdvOohQM36L3IOSF9x8j
+ Tk=
+X-UI-Out-Filterresults: notjunk:1;V03:K0:FHmMqIFiUYo=:53WrCnwxqAiXQHH6FgzNcf
+ Vtrg7kKbma2eWVn3F2BjYSa0FCV59TA1C+SqNb/4M5LqREkx/aC6dt4nVgMxQK+cRzb2WF90p
+ EEFMLBzNTCYjbTcLs3J1ZUzfFTYoT/WoDYR7vAPgJTbXHMIBGydYMFS+BcdyFM2E5ZvTFIQUa
+ YUxYUcyDhW2JOzY0LNIX+zwLCDBpCwO8xswEbB4q+DKbECLopfXudVWtWALiynfCZ0VWTTR+l
+ 3/M/RItoTnai34k4Rp1lT4x3SY/iCdp32JOc4wDd44DqdaqF1yUA8rMRwsTKhoAMAOCdE9iuf
+ 3wpZl4N6x1G8zjvYkQOV+Uv9IP7GCG37C3aCc5cisEGuApL/q2PIrzg7A0rX45SsHtx+0U/7R
+ 8Y9BohgDwYHMSj2WkQ71FQJwg65zrVNQ/6ZCVE787FxwymiZPiNrpmNWhIrEqMqvbc0oQVV33
+ zRGPylPHQlIFVsdI94n2laVLJ0XV8yep65lJGUj6KkRLxDd/0P7bmm4/7O5mjpmBUldeEXUK3
+ 0F4/ttTpoTHWtTd/a6dIQvWiOep7ErwR9GLuDdqnJdwT4gCmoBMPx6nEJLnPYPCbSGwuuMfUS
+ uvUtEqa3COxP8=
+Content-Transfer-Encoding: quoted-printable
+X-Mailman-Approved-At: Sun, 29 Nov 2020 21:55:40 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -89,18 +79,32 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Sun, Nov 29, 2020 at 8:44 PM Phillip McMahon
-<phillip.mcmahon@gmail.com> wrote:
-> Won't drag this already long and confusing thread out. Not challenging
-> the current implementation, just the notion that any other suggestion
-> is a dead end and the topic is closed.
+Hello,
 
-Alright. Well, if you do think of good reasons why NCO is not a good
-match for unpriv'd WireGuard control, please let me know. The whole
-basis of going that route is the apparent intuition that these two
-types of things, network modification and tunnel up/down, are one and
-the same. But if you have in mind a way where the analogy breaks down,
-that'd be very interesting to learn and would potentially be grounds
-for changing course.
+I'm looking for a (more or less) secure solution of installing and running=
+ wireguard.
 
-Jason
+In our family we have only one notebook running win10/64.
+Since this is the only device with internet access it has to be reliable a=
+s possible. So we are running 4 accounts.
+admin, father, mother, son. Of course only the admin has admin rights. But=
+ all users have operator rights because the notebook is taken to different=
+ locations i.e. at school, to friends, during holiday.
+
+I'm running OpenVPN to do my homework with this notebook too. And because =
+my openvpn.p12 file is protected by a password my family can not use it be=
+cause the did not know my password. Even if they have physical access to i=
+t.
+
+But with wireguard there is no such protection. And with the new wireguard=
+ for windows the key files have been moved.
+And as far as i undertstud everybody in the operator group can start the w=
+ireguard tunnel.
+But my chief will be very very unhappy if this will occur ....
+
+How to install wireguard on a multiuser system. And only the owner of a ke=
+yfile can run his tunnel?
+Other users may be able to run other tunnels.
+Or is wireguard still unuseable for me and I have to stay at OpenVPN?
+
+Henning
