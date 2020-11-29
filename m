@@ -2,59 +2,82 @@ Return-Path: <SRS0=qAD6=FD=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FDA1C3E8C5
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 29 Nov 2020 15:42:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68917C3E8C5
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 29 Nov 2020 17:45:46 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 0FF1B2080C
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 29 Nov 2020 15:42:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 0FF1B2080C
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=friedels.name
+	by mail.kernel.org (Postfix) with ESMTPS id 948CD20659
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 29 Nov 2020 17:45:45 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sVGlzsm8"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 948CD20659
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b843e425;
-	Sun, 29 Nov 2020 15:36:24 +0000 (UTC)
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.187])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id acdfea25
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 148f4ec4;
+	Sun, 29 Nov 2020 17:39:32 +0000 (UTC)
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com
+ [2a00:1450:4864:20::22b])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4b8bbcb6
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 29 Nov 2020 15:36:22 +0000 (UTC)
-Received: from [192.168.177.20] ([91.56.68.139]) by mrelayeu.kundenserver.de
- (mreue010 [213.165.67.97]) with ESMTPSA (Nemesis) id
- 1Mq2za-1kMlfM2g4Y-00n5sn; Sun, 29 Nov 2020 16:42:26 +0100
-From: "Hendrik Friedel" <hendrik@friedels.name>
-To: nikolai@lusan.id.au, wireguard@lists.zx2c4.com
-Subject: Re[6]: Connection works, ping does not
-Date: Sun, 29 Nov 2020 15:42:24 +0000
-Message-Id: <em812a7fbc-63b1-4186-92f7-3c651c6087be@ryzen>
-In-Reply-To: <109669cd65b1ffd860fa293ebeea23432a89f63d.camel@lusan.id.au>
-References: <embf875782-3b93-421c-bb54-3c3566b671bb@desktop-g0r648m>
- <20201123170255.joa7zsjvztukjxd4@desktop42>
- <emb79b6386-4a15-4186-aebf-9a21540c6055@desktop-g0r648m>
- <em1f4c294f-4708-4a7c-b268-300b1b5df65d@desktop-g0r648m>
- <em0d8407bb-2467-41ad-9d4d-5db6dabbe1c6@desktop-g0r648m>
- <109669cd65b1ffd860fa293ebeea23432a89f63d.camel@lusan.id.au>
-User-Agent: eM_Client/8.0.3385.0
-Mime-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:oa8A3TEkCZ7quB/xNEcbGdahT422Rv5VS8bV2qEBVNse6V7n2Kv
- 9USB1h61nWpeo7+jbvXPVvigFZUvwW+Y8fHlHVko2jYrF60y73B0wkDuQCv7yQ4X4dCyk/T
- +bF8ZQ8VrZaAT6nVHg6dXbE2aRKd77MUiGAFWtM18J4tPrQJ5mPu0JBp3QJQQ0YTbzXCvJq
- Gjdtnp6GCRsP7rL4FrzQg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:93oTF6uTdAA=:5WU7V19Qhw1GmlIocUdM2Y
- MKnYNkcMpIO0AxHgpsM9wgTBjnVjjLG5VxxS3XyeZJGefuMFFgQnH3wDTzcD2ef44hOUF8yCn
- eM4KTddkxuZ724UBc2R9rbE0o6Njkew2UlGlJHMTqK5VZcfFHd9YSiTeqi/OOZ+KP1xz5/9ub
- EvglBrEqm+dm++yID9UdwCfK3wRnUk7YrbqUPia/kOAnzfOnHUxCxpZEq6gJkPBDbM4F7mI2U
- JCKKkhYGzuGZxo5xwu9mkfWQK+lwi9rCUtKI0GFiF1QEKEH2TuEeSZBxzy37NrTtRcFBi4CC9
- t28y+AxG6XBu3VepaFTYsIcico709mNjORQJNvB1T3SN/P2RLd7lSKI1mbqZGTUrpjViK+mbC
- K4kKBx6xeEsFojNYhwGsQx9SE5Nxlzo/kOGeF2NQNmTpYysfhq69BZLhbtyyvvq41OtVFyecK
- 5kJLP0MCiQ==
+ Sun, 29 Nov 2020 13:34:29 +0000 (UTC)
+Received: by mail-lj1-x22b.google.com with SMTP id i17so12640559ljd.3
+ for <wireguard@lists.zx2c4.com>; Sun, 29 Nov 2020 05:40:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=eYTyuzt9UvVcj7AkLpN0QS2LWQcsmTpK3KHOYB9ueno=;
+ b=sVGlzsm8ECHdmvzsXzUgdqoDpPM8nb4phm3uDE5rK360DNemq8pIqT7PLFLs8U1iAR
+ LfW/24JpmLSbTNYBjy2MdHR7zhd0nPvfUr7q3SPfLkUn7lzpazduDtPhpDupIeptS/W+
+ NCrpx8/6c7l5+WY4WpnB0r8IPVCCf1eXMcktnkIMdk3pkx19mCN1UdxEdrMGd0TTnMyG
+ vN7Ba8lugmqrlBlozLrI2AcItvR6r+0Z0UVumlWp7Bk83A1LI1bmgYYf0Dix2iciSkYT
+ qDDcJh/qq/ytwnkDlr1y0AUHvKrb6mCUo1u/JNprtOWopKvoRRWBmFRGvMqTRxAMOQfs
+ tbRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=eYTyuzt9UvVcj7AkLpN0QS2LWQcsmTpK3KHOYB9ueno=;
+ b=HBaJNRF7Jgbls8PBr+8Ev1s7mhy7DQn9o+eVqfGKBZH7nI75gGywV0QLTqiSC4DFuh
+ 3+7G6lNJokplO6wtjEIxBjYc1mFl5iWOW1z8p+FH1E/DZninpUNu/Z6mUD9q3Q1xvDV+
+ DlKOsoNoBwOIHi5b+IReF5dXWwJENMqvKWyWCBwwH9Bqtwcql317l3gvICHT+4uk671i
+ UVRUcMudR3JTGpUizeFSbMGR5Dqwag2kW45pjUEDQF8MI3XWs/X8/W4S6FVPt+b+m3sq
+ yWdvKlIuYmnkTuic8iJmmTDJ47rGjGap2P3vszjba1BH9RCUHcK5w0UJCjN9zomipV7T
+ aW9A==
+X-Gm-Message-State: AOAM532j5ynrayeMaPsZ0uAZdQGFklaB/kMqgJcrDmdbQvd8O77vH+qV
+ MZC8iLGMtw/H/hdNaLTZwQWmKPlJX99ZRSURrrQ=
+X-Google-Smtp-Source: ABdhPJwfVU1Y0hTSV/Hd9n8aYfSSuluOHyTti8RA9lfVEPVqQosmKzqCAJf3yCwq82m6fh6cPgw0kJuHyucCX6ToJhk=
+X-Received: by 2002:a2e:a376:: with SMTP id i22mr7797821ljn.217.1606657238124; 
+ Sun, 29 Nov 2020 05:40:38 -0800 (PST)
+MIME-Version: 1.0
+References: <CAHmME9oMFQtePYt37+4eyOn23mwHwP2UGxQi=SaJk9J3p1zCpw@mail.gmail.com>
+ <C7CEJYWC3YU7.2DQYKR91NB6CP@enhorning>
+ <8bf9e364f87bd0018dabca03dcc8c19b@mail.gmail.com>
+ <CAHmME9pdDDjVWmxGdh42tJy2KbxT7ZSj9PEsjEyHRMwZpora+A@mail.gmail.com>
+ <d9dc454a-15fd-a547-8d0f-b7916818c3de@maidenheadbridge.com>
+ <CAHmME9q_UbmfVyd9hH5+b1n6pE=mOgZdKMcyF=AFf2Nm0QHumg@mail.gmail.com>
+ <3b4f9ec2-2f50-25c9-0e27-7ca0d2f16943@maidenheadbridge.com>
+ <CAHmME9pP4u5-HjZcdj0SAymGmoG36kA0sbcvRo7=mr8XZ-RXHA@mail.gmail.com>
+ <CABtXGiD7Q4904nit3C=A12AnJh0rmLeW3skhPoWXEYdP2mLTXw@mail.gmail.com>
+ <CAHmME9ohy8Tfko=hO3jLDCJ92X6LQmYoCyTmCgH9N0R5EdPw5g@mail.gmail.com>
+In-Reply-To: <CAHmME9ohy8Tfko=hO3jLDCJ92X6LQmYoCyTmCgH9N0R5EdPw5g@mail.gmail.com>
+From: Phillip McMahon <phillip.mcmahon@gmail.com>
+Date: Sun, 29 Nov 2020 14:40:03 +0100
+Message-ID: <CABtXGiDREy3K00JLQfuCmu3hTrKnorBd0VrL5kKEL4_x3Lc1jA@mail.gmail.com>
+Subject: Re: Using WireGuard on Windows as non-admin - proper solution?
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: Adrian Larsen <alarsen@maidenheadbridge.com>, 
+ Clint Dovholuk <clint.dovholuk@netfoundry.io>,
+ Riccardo Paolo Bestetti <pbl@bestov.io>, 
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailman-Approved-At: Sun, 29 Nov 2020 18:39:31 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -66,51 +89,56 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Reply-To: Hendrik Friedel <hendrik@friedels.name>
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello,
+Hi Jason,
 
-yes, I did that, thanks.
-With that, I created the output posted before.
+I have been following the wider thread and maybe I misunderstood but
+believe the solution requires some registry tweaks and membership to
+the Network Operators Group, along with Windows Home requiring the
+creation of a group not officially supported on that platform. Correct
+or not?
 
-Regards,
-Hendrik
+It was with all the in mind that I wrote the two points.
 
------- Originalnachricht ------
-Von: "Nikolai Lusan" <nikolai@lusan.id.au>
-An: wireguard@lists.zx2c4.com
-Gesendet: 29.11.2020 15:20:31
-Betreff: Re: Re[4]: Connection works, ping does not
+"The topic is closed and the discussion over". Seems a little over the
+top Jason. A year ago you concluded there would never be a solution
+for Windows outside of full admin. End of discussion. Now we have
+something that isn't full admin. Clearly times and positions can
+change. But you might still not be at the final version, you might
+want to incorporate a little more of the experience of your members to
+get there.
 
->-----BEGIN PGP SIGNED MESSAGE-----
->Hash: SHA512
+Phill
+
+On Sun, 29 Nov 2020 at 13:50, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
 >
->On Sat, 2020-11-28 at 16:50 +0000, Hendrik Friedel wrote:
+> On Sun, Nov 29, 2020 at 1:09 PM Phillip McMahon
+> <phillip.mcmahon@gmail.com> wrote:
 > >
-> > in the mail below the mtr results as picture, as "mtr" opens a GUI
+> > Interesting thread to follow.
+> >
+> > My larger concern here is that without an officially provided method
+> > to run wg as non-admin on supported Windows platforms the following
+> > may happen
 >
->To keep mtr in the terminal you need to use 'mtr -t' or for ipv6 only
->'mtr -t6' :)
+> Maybe you should keep following the thread? There _is_ an officially
+> provided method, and it has been released, and you can go to
+> wireguard.com/install/ to download it and read all about it in the
+> release notes posted to this list. This topic is closed and the
+> discussion over.
 >
->- --
->Nikolai Lusan <nikolai@lusan.id.au>
->-----BEGIN PGP SIGNATURE-----
->
->iQIzBAEBCgAdFiEEVfd4GW6z4nsBxdLo4ZaDRV2VL6QFAl/Dri8ACgkQ4ZaDRV2V
->L6TjJg/+K5tHU3bUOvf/PxBp+8QjJEwiEiYJ42ffWJaKtXWIi4YLMUHNCicicFV9
->eNO3cIZXKdp3YQtoSAtP8PNswVgaud2NO7/JBTyul1fYnFwuZBVsOgjdgztJ4wCo
->ds4WmgBs1yVoyHDlmalAjEi0cK5idLNtt0JEzpMbmL/luAXZqpXbkxm2vSsE8QPT
->j7nZAM+BGgDApkqeCFsblUGgv4c68tMHL6SJUH3XoLL5EE0KSC3eQFzWpypSyomW
->E6oiHGfDnC7dEIrnfS1NnoI0J3UQF1S9+IGpdf6xOIZwhSqTVCc2fl1Wy43KXfgi
->yd4n5+VQ6BbIrw1JXdadk5Rt/O0qhk8TWCtUPM/1W3U0wL3UCY0D9fwY9G46bkdi
->eyH1qgr/YCKr07ZCvQwpy4Y8ZUVQkTuadaaGzAl8TUAgfLzwUZLbTg2jnBBfuTG0
->CYG98RxCwfdmOTalzwsYw5CoMULTzzl0DUjB7izOlVQwhnmNXFNEBp3E3Ybql1b6
->xb3UteD/ziHQ1x/bskQvXZ3EFWm976yqNcR9qZWHSLVLleGknPfztzgfwZWSJwYV
->NA/aOz9maQCnUHDsQtNBI62K9IOckoFJ7lW3JUZaakVj72wLvXsXU8SLUK5jI6RQ
->NfMt4mv1n4tQzBiHAdbz5kyTYKuWVXwtj120a7VRjKfbAam+fiM=3D
->=3De7gK
->-----END PGP SIGNATURE-----
->
+> Then Adrian Larsen decided to jump in and request a totally unrelated
+> feature, rather than starting a new thread for that. I indulged, and
+> here we are.
 
+
+
+-- 
+Use this contact page to send me encrypted messages and files
+
+https://flowcrypt.com/me/phillipmcmahon
+
+P.S. Drowning in email? Try SaneBox and take back control:
+http://sanebox.com/t/old3m. I love it.
