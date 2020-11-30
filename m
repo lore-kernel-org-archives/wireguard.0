@@ -1,68 +1,82 @@
-Return-Path: <SRS0=qAD6=FD=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=v8Vx=FE=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CF62C64E7B
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 29 Nov 2020 21:02:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11CEBC64E7B
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 30 Nov 2020 01:04:42 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id A489C20809
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 29 Nov 2020 21:02:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTPS id 1E7D220757
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 30 Nov 2020 01:04:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FjNCBWKx"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A489C20809
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WU2glR0T"
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 1E7D220757
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8e3af3b5;
-	Sun, 29 Nov 2020 20:55:43 +0000 (UTC)
-Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com
- [2607:f8b0:4864:20::32d])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2a350665
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b526f69a;
+	Mon, 30 Nov 2020 00:58:14 +0000 (UTC)
+Received: from mail-qv1-xf41.google.com (mail-qv1-xf41.google.com
+ [2607:f8b0:4864:20::f41])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 3706b1da
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 29 Nov 2020 20:47:08 +0000 (UTC)
-Received: by mail-ot1-x32d.google.com with SMTP id y24so9501321otk.3
- for <wireguard@lists.zx2c4.com>; Sun, 29 Nov 2020 12:53:21 -0800 (PST)
+ Mon, 30 Nov 2020 00:58:10 +0000 (UTC)
+Received: by mail-qv1-xf41.google.com with SMTP id p12so4868036qvj.13
+ for <wireguard@lists.zx2c4.com>; Sun, 29 Nov 2020 17:04:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=ek3Mr9hCHPW0He1tcQhTdEtlqAhc0ofGT2VsRDOJKLI=;
- b=FjNCBWKxqqwAMBffr1MMEre8SzV6YmZlu6bGep0xmVEC2Jo90ZcCrWXGDDldETrGLr
- bqB9/8/VJZc7FsV2zDGrI3aFG6baLYyo/54mWBzamd0uGBtyjDB+0CWGd862J7sPemLb
- jSv/ZgH0DsCmQCch4/lAkO2kmxD+G1FYzSLForBpdBoxcybaADWE5rrbODMze7/YywkH
- h9BkjeOMNi+rlhjZ0sLlR/GB5FRXTgrPb4dWGYRH9BbBcLyXZs8mkmnWw7CGGkhYTgZd
- 8aJIcgFBVC4yNYOn4xdGWYAX3S6thl26iVGOpQFNVN1L7v/w20Usk1hsUzPQfsvZ8lNx
- IV7w==
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to;
+ bh=9w+jIogOsKRBrpA0BOG2mGKZgZW7G/tIHqRWbeWWJW4=;
+ b=WU2glR0TsgL7F4/RiVfuwal0YDkOeqqQo1eMszLAWLO0V78Iff5/n64/V+Tel6qT40
+ 0VZPZwJwnsbjpw844pzMgW2hYIqwz9mbmNNEs6O9eqV7TWRrdnQvvljYsI+oAgmSfU9d
+ JIxDowmXVsOG4M50gjV44mXjYipYLj/9fbmyh2K14okhPO2JuJkIbpuUnR81GPub6sfc
+ rlIoxazGL6HuV4KMjGROkoGEtAMmm7Vc+Pc82fuAAMqnezRvuWTfJB0nD/O/ozmK1le2
+ 0iQc4nSTPnFUJ+egMZNoYLZ/ZHipkw5XcHC1btQ4QFt9SCnPc6sbU8WpdjVCohjcBAA6
+ sP4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=ek3Mr9hCHPW0He1tcQhTdEtlqAhc0ofGT2VsRDOJKLI=;
- b=VavcvswJ0BCusSGO4JcSFPLyt7Ln3Vy7PMxdAa/UJxoij8vhj13o89SEuzMQfgLF6F
- y4pcIBcHHHKTSLERxV7lDOaCnYBK6k0laWIHBSmLSBooYalxiWfvNZdTybRLM74r0vPU
- 4D57bVm+mV663y0QyzgNb3a0V6ab9Le/sXyS25WaI0o8gTIPH6DopAAQfzuADpYjP74/
- Si3latIIlwZZjojymPkZ6xO+UDbkHy4A/3ncYn9ePXiylipUPQWzzvXpVrKF/P3BTY+V
- KPAbR43YsqfXIQjemYABvxo+T74cj9UfG/5l0IXxbRV0MRV+5+ctrTVL5l+maOsOhc1p
- 1E1Q==
-X-Gm-Message-State: AOAM532paxVJQhZ6oHxc+I97t128FEPDVfvtwcCMhdU40dZcAOC8FzyT
- hCtzyEi0B5hwSUu8Qwjita0XPS743GJ5XrBQohVImZTrgnL5GA==
-X-Google-Smtp-Source: ABdhPJwbP2X04L2wUcW8/ecMBTRS4H7cU7esbaWNjtuFtfb8soit8zOLmXCHDUwkd6iS6zsmusbAYFTkCnrFmcrcic0=
-X-Received: by 2002:a05:6830:4032:: with SMTP id
- i18mr9705857ots.345.1606683200822; 
- Sun, 29 Nov 2020 12:53:20 -0800 (PST)
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=9w+jIogOsKRBrpA0BOG2mGKZgZW7G/tIHqRWbeWWJW4=;
+ b=AjCXurLJ7AmnKJqXeqsprr4q0RItqKZS4sUfsKbE9DvpDrZsNXNum4xLv45UAmRuF9
+ rDfHsyWkJ2oUzo0DlVzA+IRfK9bA47Bqqve/HN/K7evFYDMKIoiwdftr5VZfuccBo7sM
+ t4B8czM7KzFPUHJkQHN9rwIObV0TfLcLNEwO+p53piGAjW0B1BOJHyV8LB9ZN6P1v2ct
+ MUlDQFpKgQJpHRv6X6CDlsz5UCUQ2arJ9mSgxzHcAlnqIve3pVRsZU/IoZ7KEVD5tcUE
+ 8/JhDkgdkeid8VYLoNoUgO2S9FljihdOvbYbjGapt8011SMrODhxjA4fYTdw6XeIqw6y
+ 8n+w==
+X-Gm-Message-State: AOAM533rwXKlqk5JcUIOYPbgJdduvBChRqUIl33hf4riOUo8FpKgFIKG
+ 3jsK3l97yBEcUiPUFLO1cV8=
+X-Google-Smtp-Source: ABdhPJxNBQJpDe6Q+07RcfAa9BO9KXU9uK23WXodIbLjKY85NBzOpU1EHUFfTEHywAlwGfo76xkVUw==
+X-Received: by 2002:a0c:fe04:: with SMTP id x4mr17013047qvr.61.1606698264424; 
+ Sun, 29 Nov 2020 17:04:24 -0800 (PST)
+Received: from ubuntu-m3-large-x86 ([2604:1380:45f1:1d00::1])
+ by smtp.gmail.com with ESMTPSA id e19sm14025778qtp.83.2020.11.29.17.04.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 29 Nov 2020 17:04:23 -0800 (PST)
+Date: Sun, 29 Nov 2020 18:04:22 -0700
+From: Nathan Chancellor <natechancellor@gmail.com>
+To: Masahiro Yamada <masahiroy@kernel.org>
+Cc: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>,
+ "Jason A . Donenfeld" <Jason@zx2c4.com>,
+ Nick Desaulniers <ndesaulniers@google.com>,
+ Shuah Khan <shuah@kernel.org>, clang-built-linux@googlegroups.com,
+ linux-kernel@vger.kernel.org, linux-kselftest@vger.kernel.org,
+ netdev@vger.kernel.org, wireguard@lists.zx2c4.com
+Subject: Re: [PATCH v3] Compiler Attributes: remove CONFIG_ENABLE_MUST_CHECK
+Message-ID: <20201130010422.GA1956616@ubuntu-m3-large-x86>
+References: <20201128193335.219395-1-masahiroy@kernel.org>
 MIME-Version: 1.0
-From: Justin McAfee <justinamcafee@gmail.com>
-Date: Sun, 29 Nov 2020 14:53:14 -0600
-Message-ID: <CAFf4X80AwvFEaA5R9DYC9MxCLwh4j-fevZW1+eobTJiMT2Xfzg@mail.gmail.com>
-Subject: Android Notification Panel Removed in Android 10
-To: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
-X-Mailman-Approved-At: Sun, 29 Nov 2020 21:55:40 +0100
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201128193335.219395-1-masahiroy@kernel.org>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -77,30 +91,26 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-It appears that myself and others have noticed that Android 10 has
-removed the VPN status and connection details from the top-down
-notifications UI.
+On Sun, Nov 29, 2020 at 04:33:35AM +0900, Masahiro Yamada wrote:
+> Revert commit cebc04ba9aeb ("add CONFIG_ENABLE_MUST_CHECK").
+> 
+> A lot of warn_unused_result warnings existed in 2006, but until now
+> they have been fixed thanks to people doing allmodconfig tests.
+> 
+> Our goal is to always enable __must_check where appropriate, so this
+> CONFIG option is no longer needed.
+> 
+> I see a lot of defconfig (arch/*/configs/*_defconfig) files having:
+> 
+>     # CONFIG_ENABLE_MUST_CHECK is not set
+> 
+> I did not touch them for now since it would be a big churn. If arch
+> maintainers want to clean them up, please go ahead.
+> 
+> While I was here, I also moved __must_check to compiler_attributes.h
+> from compiler_types.h
+> 
+> Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+> Acked-by: Jason A. Donenfeld <Jason@zx2c4.com>
 
-If a VPN is active, the Key icon appears, but pulling down the
-Notifications bar shows nothing.
-
-This used to be a quick and easy way to verify WG connectivity, active
-tunnel, and amount of bandwidth utilized.
-
-This can still be accomplished but is done by long pressing the
-wireguard toggle in the quick settings (or opening the wireguard
-application) then selecting the active tunnel and viewing the transfer
-details on the bottom.
-
-I'm sure this will come up again, but wanted to share with you all.
-
-Thanks for all the work Jason, et al. put into this project. Its
-greatly appreciated.
-
-
-- AV
-
-"but in your hearts honor Christ the Lord as holy, always being
-prepared to make a defense to anyone who asks you for a reason for the
-hope that is in you; yet do it with gentleness and respect,"
-1 Peter 3:15
+Acked-by: Nathan Chancellor <natechancellor@gmail.com>
