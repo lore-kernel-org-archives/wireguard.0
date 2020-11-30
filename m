@@ -2,73 +2,89 @@ Return-Path: <SRS0=K6Kf=FG=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5B6AC64E7C
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  2 Dec 2020 12:50:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A98CC64E7B
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  2 Dec 2020 13:38:23 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id E7B592222C
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  2 Dec 2020 12:50:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org E7B592222C
+	by mail.kernel.org (Postfix) with ESMTPS id 6A7FE221FB
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  2 Dec 2020 13:38:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 6A7FE221FB
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cd9360db;
-	Wed, 2 Dec 2020 12:44:11 +0000 (UTC)
-Received: from mail-yb1-xb43.google.com (mail-yb1-xb43.google.com
- [2607:f8b0:4864:20::b43])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 3996c3b9
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 50186807;
+	Wed, 2 Dec 2020 13:31:19 +0000 (UTC)
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com
+ [2a00:1450:4864:20::32c])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 082358d9
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 2 Dec 2020 12:44:08 +0000 (UTC)
-Received: by mail-yb1-xb43.google.com with SMTP id 10so1482983ybx.9
- for <wireguard@lists.zx2c4.com>; Wed, 02 Dec 2020 04:50:41 -0800 (PST)
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 30 Nov 2020 12:41:25 +0000 (UTC)
+Received: by mail-wm1-x32c.google.com with SMTP id a6so4851906wmc.2
+ for <wireguard@lists.zx2c4.com>; Mon, 30 Nov 2020 04:47:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=wZOsnLsRD15EE78n8bQEf+aUkvjzCWrGeOD2j6m7n7M=;
- b=Pz5K1LSqrNHi9j26JaHRbiUG9fIgZ88xbsQOpQuqNaY6to0gMZKA3gZJQkUb0wH5DZ
- m49l97B/Sqo285TY12ocrdpvuF1+g3C5wyRcsbz5oUmKsqn2e3S3KkpISid+6Jy9TPZJ
- Yhi5380lJNF1O7HhBn1xvlehBO23pu1N+bhGYtju8XUuq3mjQtYO7rQGT3bt/wyhJYu2
- nmqwt7PmuQulhc96znbjOdtX+q3UrUnUYeqP4ZRdx3XdbsSwYDKeQGZVsWKY8+j3ePUW
- 6FnR5bBGkAJxjBXXLZqpT5MNdDiJQM0xvHspl+LDp7RWfzuVkEt8IC16/vlbOKXzJ2tq
- tkiA==
+ h=subject:to:references:from:message-id:date:user-agent:mime-version
+ :in-reply-to:content-transfer-encoding:content-language;
+ bh=JsqUxGNII6hSenvy4yB84zlEgJYkyBFf6YpwKSjf6kg=;
+ b=PmaoPSy53jBuG7dJLDl387jafjgd/cLZDx3ougkUyKNTzpv4bqg5kTScvYeiWbsaUM
+ vG376LK9wmSyDFuxwEAxm3TtnWwNZ/p4UNyKDyjWK6A7bEOB5zO81q3w25beZYui/HFx
+ xkmmtGYbzaxA4E4OZvJ+JvbLHzBx4FM95vJ1P/5aAklPpb2eX42nb8LRpIs9kxGTlsyc
+ 5pN4/WU/C/XtnRySkgCeXOvATezVpnWKOgWqAqZe+N/t3fro6vB+BdGltDBVCCuaxCtY
+ KfskPWIirsXavClCeAjQ6KPtVvZ3QekCz0ODxMup7N1uX6NAArmuSGx4mDQZmH+oVUVn
+ p+SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=wZOsnLsRD15EE78n8bQEf+aUkvjzCWrGeOD2j6m7n7M=;
- b=ZC27E/hECm4LQI6JY7LpVQ18UZ8hAQ0l8t4xCVkCCOlIVkHqcMGYIprEsiIWakeKmS
- t/KCe5lftVpQS1Gq2I5DV47Df7wiIoy2JynArwoukC5Lb6fcLWdJQiVIt43QFTf4hyrS
- Dew94i7fu3WiY2aoGCEVgQogn0jOHSS0tuwdzMTL5Jyr3k7Q3q7j7epOY91h5LhF/19j
- uu8ObQ5+Ajhl2uohzcp3/NDhe12n45fDhaO/bljFnDpPpvhBO0XuvrADocrziS4eZKoK
- nYX3QlNttxXux2WnOlu6+EJYKHga0OqA+1XobzZ7ULCX7+GInXDiXtMv0lydoWGLrUda
- Bd9Q==
-X-Gm-Message-State: AOAM530uaw13OX54DMG8yvtMa7SJFhHEHuiFAwpJSn9zkLYODuLohfjJ
- PrQC2XmcxRbiB902u+BAURmnRKMac+E9FpcmxsQ=
-X-Google-Smtp-Source: ABdhPJz8aVFXdWixZUHiWQB00VKrKgXW70L2NcuTpGtmUg1BcqQkFiV8/vapf4IM/PFZ+z2SfEViZMUjxnQAlGcdtd8=
-X-Received: by 2002:a25:df55:: with SMTP id w82mr3065596ybg.135.1606913441319; 
- Wed, 02 Dec 2020 04:50:41 -0800 (PST)
+ h=x-gm-message-state:subject:to:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-transfer-encoding
+ :content-language;
+ bh=JsqUxGNII6hSenvy4yB84zlEgJYkyBFf6YpwKSjf6kg=;
+ b=N5bD9KjCa+j9LyuUQ1HdnYOpAlbP9fikVq2DTUOdcfE5tVrIHh504TC7t95icvY03x
+ 1Ck4P/0tG1/kN8bBs2RGGmPv57W66Qg/4F5XFaLsucf+ln53NJ0vhNBZaPXKox08lU3i
+ t5d8pWXN10phuLiC5NE7nreJmvD6XRVxmmJf++otu0ZfqLXiszsh0KMFG6snQh3JLtgf
+ VeZROPOKr8pC649pY6EixxK0JLftP8C5M/3D9jMZ7WpBh4zwiTmiuUhaDjdG4W4BD9zc
+ 3bspd1lQS2yFgZXsuxjZ88XMcU8LRrRHIuohOPY64q5xOo/JWmwJUp9kX6l4mZdxcCB3
+ /POQ==
+X-Gm-Message-State: AOAM533+rtBuCun7s/L17hv3Vmq+m6COWcdll4gWA/63UCc/vwb61c+/
+ HDN78/9XwJnAb/TJeY/IS+bZSFdTs+2E1E5l
+X-Google-Smtp-Source: ABdhPJw7hTeN2cePHx8w8w4xNjcDjZ3GqTc6R6vCgdYL06SrlczmTOu4kernhOkwfwugneko4m2DPA==
+X-Received: by 2002:a1c:c90b:: with SMTP id f11mr3141780wmb.47.1606740461752; 
+ Mon, 30 Nov 2020 04:47:41 -0800 (PST)
+Received: from [192.168.25.215] ([2.25.87.112])
+ by smtp.gmail.com with ESMTPSA id r1sm27060526wra.97.2020.11.30.04.47.40
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 30 Nov 2020 04:47:41 -0800 (PST)
+Subject: Probable Heresy ;-)
+To: wireguard@lists.zx2c4.com
+References: <CAHmME9oMFQtePYt37+4eyOn23mwHwP2UGxQi=SaJk9J3p1zCpw@mail.gmail.com>
+ <C7CEJYWC3YU7.2DQYKR91NB6CP@enhorning>
+ <8bf9e364f87bd0018dabca03dcc8c19b@mail.gmail.com>
+ <CAHmME9pdDDjVWmxGdh42tJy2KbxT7ZSj9PEsjEyHRMwZpora+A@mail.gmail.com>
+ <d9dc454a-15fd-a547-8d0f-b7916818c3de@maidenheadbridge.com>
+ <CAHmME9q_UbmfVyd9hH5+b1n6pE=mOgZdKMcyF=AFf2Nm0QHumg@mail.gmail.com>
+ <3b4f9ec2-2f50-25c9-0e27-7ca0d2f16943@maidenheadbridge.com>
+ <CAHmME9pP4u5-HjZcdj0SAymGmoG36kA0sbcvRo7=mr8XZ-RXHA@mail.gmail.com>
+ <CABtXGiD7Q4904nit3C=A12AnJh0rmLeW3skhPoWXEYdP2mLTXw@mail.gmail.com>
+ <CAHmME9ohy8Tfko=hO3jLDCJ92X6LQmYoCyTmCgH9N0R5EdPw5g@mail.gmail.com>
+ <CABtXGiDREy3K00JLQfuCmu3hTrKnorBd0VrL5kKEL4_x3Lc1jA@mail.gmail.com>
+ <CAHmME9o6MdOW=ODPH=Ksh5urUJaaE5Y8HPwkdL7F-_3XCa1KJQ@mail.gmail.com>
+From: Peter Whisker <peter.whisker@gmail.com>
+Message-ID: <b80d2dd8-0423-20ea-eea4-6d7c45a7ff83@gmail.com>
+Date: Mon, 30 Nov 2020 12:47:40 +0000
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.0
 MIME-Version: 1.0
-References: <20201128193335.219395-1-masahiroy@kernel.org>
-In-Reply-To: <20201128193335.219395-1-masahiroy@kernel.org>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Wed, 2 Dec 2020 13:50:30 +0100
-Message-ID: <CANiq72=WanQ0sqL14D3Keu0hT3L5GXBSV-znU5C9hhC1gjs=wA@mail.gmail.com>
-Subject: Re: [PATCH v3] Compiler Attributes: remove CONFIG_ENABLE_MUST_CHECK
-To: Masahiro Yamada <masahiroy@kernel.org>
-Cc: "Jason A . Donenfeld" <Jason@zx2c4.com>,
- Nathan Chancellor <natechancellor@gmail.com>, 
- Nick Desaulniers <ndesaulniers@google.com>, Shuah Khan <shuah@kernel.org>, 
- clang-built-linux <clang-built-linux@googlegroups.com>, 
- linux-kernel <linux-kernel@vger.kernel.org>, 
- "open list:KERNEL SELFTEST FRAMEWORK" <linux-kselftest@vger.kernel.org>, 
- Network Development <netdev@vger.kernel.org>, wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAHmME9o6MdOW=ODPH=Ksh5urUJaaE5Y8HPwkdL7F-_3XCa1KJQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
+X-Mailman-Approved-At: Wed, 02 Dec 2020 14:31:19 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -83,34 +99,26 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Sat, Nov 28, 2020 at 8:34 PM Masahiro Yamada <masahiroy@kernel.org> wrote:
->
-> Revert commit cebc04ba9aeb ("add CONFIG_ENABLE_MUST_CHECK").
->
-> A lot of warn_unused_result warnings existed in 2006, but until now
-> they have been fixed thanks to people doing allmodconfig tests.
->
-> Our goal is to always enable __must_check where appropriate, so this
-> CONFIG option is no longer needed.
->
-> I see a lot of defconfig (arch/*/configs/*_defconfig) files having:
->
->     # CONFIG_ENABLE_MUST_CHECK is not set
->
-> I did not touch them for now since it would be a big churn. If arch
-> maintainers want to clean them up, please go ahead.
->
-> While I was here, I also moved __must_check to compiler_attributes.h
-> from compiler_types.h
->
-> Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-> Acked-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Hi
 
-Picked this new version with the Acks etc., plus I moved it within
-compiler_attributes.h to keep it sorted (it's sorted by the second
-column, rather than the first).
+I expect to be shot down regarding this suggestion, but has there been 
+any thought given to adding and optionally allowing enabing of lz4-v2 
+compression of the plaintext payload before Wireguard encryption?
 
-Thanks a lot!
+The reason I ask is that I was doing some tests recently and was 
+horrified to find that OpenVPN with it's lz4-v2 switched on seriously 
+outperformed Wireguard by about 50% in my test case. Obviously YMMV 
+depending on the data stream.
 
-Cheers,
-Miguel
+I believe that lz4-v2 is very fast and has no overhead in incompressible 
+packets. I realise that there have been some attacks on compressed 
+encrypted data (eg the CRIME and BReACH attacks on TLS) but I don't know 
+if they apply here.
+
+Just wondering if there is a reason why it has not been done?
+
+Regards
+
+Peter
+
+
