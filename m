@@ -2,78 +2,45 @@ Return-Path: <SRS0=v8Vx=FE=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-23.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5ED9C63777
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 30 Nov 2020 18:16:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EE3F4C63777
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 30 Nov 2020 18:38:12 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id AFC85206F9
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 30 Nov 2020 18:16:37 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="IYOlgdTZ"
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org AFC85206F9
-Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=google.com
+	by mail.kernel.org (Postfix) with ESMTPS id E5F0520725
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 30 Nov 2020 18:38:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org E5F0520725
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=bestov.io
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 09278ba0;
-	Mon, 30 Nov 2020 18:10:16 +0000 (UTC)
-Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com
- [2607:f8b0:4864:20::642])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ad58dff3
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 499d2435;
+	Mon, 30 Nov 2020 18:31:50 +0000 (UTC)
+Received: from relay3-d.mail.gandi.net (relay3-d.mail.gandi.net
+ [217.70.183.195])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 86361f65
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 30 Nov 2020 18:10:12 +0000 (UTC)
-Received: by mail-pl1-x642.google.com with SMTP id bj5so6939334plb.4
- for <wireguard@lists.zx2c4.com>; Mon, 30 Nov 2020 10:16:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=GNY/70CAQC3eXUNKhqPKEV6KDBxfhoyyaZSVMFjGEY8=;
- b=IYOlgdTZd++fVWTYletOkoUT3ndMy448aAtQuAIXDNftZRVE+GdVf3fPiPCMKskPDE
- sEktxLJpNMGGz7Oxbfz18HSeFME8OUGXj8f6WRq3b9UI9lgCYn9U8IaSQuJt8MrwQvtz
- dJIi93LLvWtJlbJZPKnlStHRhPV1Jxs+vthk1vqmGEkhG1mnbfkMWVrMj9B+m/1akesX
- D0rJ2Nl4fQ/uZ6C4E2nQ+G2pxRRwj5RgM0mIvCQAAKh0oJpQyPk3xPaTi1nWLR+9/cUX
- 2Ww78lpiLdcwg+xLAvUSMXCQ736Yu435e9wGr9Vy77yHpB0TSBBHjKlKvcfqoOrPlhxS
- 7XKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=GNY/70CAQC3eXUNKhqPKEV6KDBxfhoyyaZSVMFjGEY8=;
- b=m0ocfTkT3FTw36mCerOrAFAPVLpajKcIMgPRz8B1AZ882ZNsnmpvGNJtwe1P7rvjwJ
- KMhyihMcoElG7Xb387an4g9wiPL6GOLoqK3eZrvLSubg+7lBHvqqcTCMkuq8VAGOpJ++
- mUZEw+Ra4nV7gb1tabdLna1pyMYt/5D+OaY+0sNTdmV6rdPHTDJdhX6yJH8ZliW9atXP
- 49FuDAV+ihXbdbjE/nAEDB4sXUhxEBLjGrBF8hQ7bdjS1bkG8GKN/81hfzpFRpTnE+9W
- 4RdeoXkgkP7cCAcl4OYVfo8RTi8NF2coodkpnVoFeomSWRkegZVilZZo1x+9GOJZT5F5
- TvSg==
-X-Gm-Message-State: AOAM5332zmLVOqkwa81aq+9iIpE3Xl+AfyD593AMHyODAvHsV/9rds24
- 5APtM3YvZZmlfL6B10BvrJk6tHvC2Kqs5xIRaQEiUw==
-X-Google-Smtp-Source: ABdhPJy8erv8/hCViVdBtcoO2Edpvc+flTtuVg1A4WD1itTSnPNxQkMkIAmbHOrLQ7mMhIFOJtuWXXvXhR/xwXw3JDY=
-X-Received: by 2002:a17:902:e901:b029:d8:e727:2595 with SMTP id
- k1-20020a170902e901b02900d8e7272595mr19843120pld.56.1606760191169; Mon, 30
- Nov 2020 10:16:31 -0800 (PST)
-MIME-Version: 1.0
-References: <20201128193335.219395-1-masahiroy@kernel.org>
-In-Reply-To: <20201128193335.219395-1-masahiroy@kernel.org>
-From: Nick Desaulniers <ndesaulniers@google.com>
-Date: Mon, 30 Nov 2020 10:16:20 -0800
-Message-ID: <CAKwvOd=azwa6m84Nyu+EVksmTRnQfd3PRe8gDBmx9vYVs1D_hQ@mail.gmail.com>
-Subject: Re: [PATCH v3] Compiler Attributes: remove CONFIG_ENABLE_MUST_CHECK
-To: Masahiro Yamada <masahiroy@kernel.org>
-Cc: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>, 
- "Jason A . Donenfeld" <Jason@zx2c4.com>,
- Nathan Chancellor <natechancellor@gmail.com>, 
- Shuah Khan <shuah@kernel.org>,
- clang-built-linux <clang-built-linux@googlegroups.com>, 
- LKML <linux-kernel@vger.kernel.org>, 
- "open list:KERNEL SELFTEST FRAMEWORK" <linux-kselftest@vger.kernel.org>, 
- Network Development <netdev@vger.kernel.org>, wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+ Mon, 30 Nov 2020 18:31:48 +0000 (UTC)
+X-Originating-IP: 79.52.27.94
+Received: from localhost (host-79-52-27-94.retail.telecomitalia.it
+ [79.52.27.94]) (Authenticated sender: pbl@bestov.io)
+ by relay3-d.mail.gandi.net (Postfix) with ESMTPSA id 6698560005;
+ Mon, 30 Nov 2020 18:38:06 +0000 (UTC)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Cc: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
+Subject: Re: Using WireGuard on Windows as non-admin - proper solution?
+From: "Riccardo Paolo Bestetti" <pbl@bestov.io>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>, "Phillip McMahon"
+ <phillip.mcmahon@gmail.com>
+Date: Mon, 30 Nov 2020 19:34:43 +0100
+Message-Id: <C7GTC7H55W80.1Q5G2J8EJOFZ4@enhorning>
+In-Reply-To: <CAHmME9qAmJt7C7KefU9m-9NkqdmkkGWY34YFwNT0Qm-N_1Tkxw@mail.gmail.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -88,114 +55,22 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Sat, Nov 28, 2020 at 11:34 AM Masahiro Yamada <masahiroy@kernel.org> wrote:
->
-> Revert commit cebc04ba9aeb ("add CONFIG_ENABLE_MUST_CHECK").
->
-> A lot of warn_unused_result warnings existed in 2006, but until now
-> they have been fixed thanks to people doing allmodconfig tests.
->
-> Our goal is to always enable __must_check where appropriate, so this
-> CONFIG option is no longer needed.
->
-> I see a lot of defconfig (arch/*/configs/*_defconfig) files having:
->
->     # CONFIG_ENABLE_MUST_CHECK is not set
->
-> I did not touch them for now since it would be a big churn. If arch
-> maintainers want to clean them up, please go ahead.
->
-> While I was here, I also moved __must_check to compiler_attributes.h
-> from compiler_types.h
->
-> Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-> Acked-by: Jason A. Donenfeld <Jason@zx2c4.com>
+On Sun Nov 29, 2020 at 9:59 PM CET, Jason A. Donenfeld wrote:
+> Alright. Well, if you do think of good reasons why NCO is not a good
+> match for unpriv'd WireGuard control, please let me know. The whole
+> basis of going that route is the apparent intuition that these two
+> types of things, network modification and tunnel up/down, are one and
+> the same. But if you have in mind a way where the analogy breaks down,
+I had actually never thought about this specifically before this
+discussion, but after deploying v0.3 I realized that network
+modification and tunnel up/down are /not/ one and the same!
 
-Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+It makes sense that an employee, or even I when running as a non-admin,
+would be able to up/down interfaces; but not create, modify or delete
+them. It's the same with software: a standard user cannot install it or
+uninstall it, but [s]he can use it.
 
-> ---
->
-> Changes in v3:
->   - Fix a typo
->
-> Changes in v2:
->   - Move __must_check to compiler_attributes.h
->
->  include/linux/compiler_attributes.h                 | 7 +++++++
->  include/linux/compiler_types.h                      | 6 ------
->  lib/Kconfig.debug                                   | 8 --------
->  tools/testing/selftests/wireguard/qemu/debug.config | 1 -
->  4 files changed, 7 insertions(+), 15 deletions(-)
->
-> diff --git a/include/linux/compiler_attributes.h b/include/linux/compiler_attributes.h
-> index b2a3f4f641a7..5f3b7edad1a7 100644
-> --- a/include/linux/compiler_attributes.h
-> +++ b/include/linux/compiler_attributes.h
-> @@ -171,6 +171,13 @@
->   */
->  #define __mode(x)                       __attribute__((__mode__(x)))
->
-> +/*
-> + *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-warn_005funused_005fresult-function-attribute
-> + * clang: https://clang.llvm.org/docs/AttributeReference.html#nodiscard-warn-unused-result
-> + *
-> + */
-> +#define __must_check                    __attribute__((__warn_unused_result__))
-> +
->  /*
->   * Optional: only supported since gcc >= 7
->   *
-> diff --git a/include/linux/compiler_types.h b/include/linux/compiler_types.h
-> index ac3fa37a84f9..7ef20d1a6c28 100644
-> --- a/include/linux/compiler_types.h
-> +++ b/include/linux/compiler_types.h
-> @@ -110,12 +110,6 @@ struct ftrace_likely_data {
->         unsigned long                   constant;
->  };
->
-> -#ifdef CONFIG_ENABLE_MUST_CHECK
-> -#define __must_check           __attribute__((__warn_unused_result__))
-> -#else
-> -#define __must_check
-> -#endif
-> -
->  #if defined(CC_USING_HOTPATCH)
->  #define notrace                        __attribute__((hotpatch(0, 0)))
->  #elif defined(CC_USING_PATCHABLE_FUNCTION_ENTRY)
-> diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-> index c789b39ed527..cb8ef4fd0d02 100644
-> --- a/lib/Kconfig.debug
-> +++ b/lib/Kconfig.debug
-> @@ -286,14 +286,6 @@ config GDB_SCRIPTS
->
->  endif # DEBUG_INFO
->
-> -config ENABLE_MUST_CHECK
-> -       bool "Enable __must_check logic"
-> -       default y
-> -       help
-> -         Enable the __must_check logic in the kernel build.  Disable this to
-> -         suppress the "warning: ignoring return value of 'foo', declared with
-> -         attribute warn_unused_result" messages.
-> -
->  config FRAME_WARN
->         int "Warn for stack frames larger than"
->         range 0 8192
-> diff --git a/tools/testing/selftests/wireguard/qemu/debug.config b/tools/testing/selftests/wireguard/qemu/debug.config
-> index b50c2085c1ac..fe07d97df9fa 100644
-> --- a/tools/testing/selftests/wireguard/qemu/debug.config
-> +++ b/tools/testing/selftests/wireguard/qemu/debug.config
-> @@ -1,5 +1,4 @@
->  CONFIG_LOCALVERSION="-debug"
-> -CONFIG_ENABLE_MUST_CHECK=y
->  CONFIG_FRAME_POINTER=y
->  CONFIG_STACK_VALIDATION=y
->  CONFIG_DEBUG_KERNEL=y
-> --
-> 2.27.0
->
+I think this model really works well. I'm happy with it.
 
+Riccardo
 
--- 
-Thanks,
-~Nick Desaulniers
