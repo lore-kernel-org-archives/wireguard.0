@@ -2,62 +2,71 @@ Return-Path: <SRS0=K6Kf=FG=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9403BC64E7B
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  2 Dec 2020 14:06:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 72820C64E7C
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  2 Dec 2020 18:16:39 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 83E5220705
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  2 Dec 2020 14:06:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 83E5220705
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id 5ACD8205F4
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  2 Dec 2020 18:16:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 5ACD8205F4
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=tailscale.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5d5b2ecb;
-	Wed, 2 Dec 2020 13:58:59 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4a2f82a6
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 22482ba2;
+	Wed, 2 Dec 2020 18:10:01 +0000 (UTC)
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com
+ [2a00:1450:4864:20::236])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 8464d490
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 2 Dec 2020 13:58:57 +0000 (UTC)
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 691d2147
- for <wireguard@lists.zx2c4.com>; Wed, 2 Dec 2020 13:59:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to
- :content-type; s=mail; bh=Lty8xfsCVeVsWeRXjvHuHYuUWOU=; b=s2vF0+
- A27UweVQy/uvHXAsgFKs1ZUPO7CZcmCQF35JfkJ/dkdnrIm4ldyvkucHvqr0ZWBh
- lCbIQd4lJzEQbxUZ0LTs1YCFOW3hIBHu3l40kbjpDBDPGFChneNKk0xIBjMT0ZIN
- 4vGRhO8R35GXKdMNMlSxU2k5VK3Effn9wONPoSjUJePr3A12JIol6gqYZ+6SaqM7
- PoQHlNqR+Nlfn3x6Djf3ZDsWbGsayB210XKNxQCMi0ADNREa/MjzLDaLVqErEHkF
- u8DxST525rnEQvYnSG0lph888MmVqkFpj5kgeJjXeklwqKhHhTw+vpZ/ZcVNSj6z
- 3dWKvEexo/a9q0WQ==
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 7398e873
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 2 Dec 2020 13:59:43 +0000 (UTC)
-Received: by mail-yb1-f178.google.com with SMTP id 10so1692865ybx.9
- for <wireguard@lists.zx2c4.com>; Wed, 02 Dec 2020 06:05:31 -0800 (PST)
-X-Gm-Message-State: AOAM5335asqPWYaW7Qu2r/wjvGujGHm9T4ebBvkb2UO9w8pmFtujLlp/
- r/WaNsZFdpVqHInQCwn7vlLyU3rDtB/IZqEVi4I=
-X-Google-Smtp-Source: ABdhPJwEwRHJOOR/7fFsLoW2k3gbIyPj0DHEaWOEm3omtOfiwnk1N6HZaz2Hx1Eav/wLAwkMSMWww9q5v1QEb/lT09A=
-X-Received: by 2002:a25:d215:: with SMTP id j21mr2992992ybg.279.1606917930117; 
- Wed, 02 Dec 2020 06:05:30 -0800 (PST)
+ for <wireguard@lists.zx2c4.com>; Wed, 2 Dec 2020 14:11:03 +0000 (UTC)
+Received: by mail-lj1-x236.google.com with SMTP id z1so3923146ljn.4
+ for <wireguard@lists.zx2c4.com>; Wed, 02 Dec 2020 06:17:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=tailscale.com; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=ghmrq4yePq3OvfFuJt7bD4d0qOcT5Lf4eNYZhV2gijY=;
+ b=AJB1FwOCIejsaj21dwlaNk7CucfaeJ6Dn8dYugkilBOmrVZRSFeSWH2qsgPp0Xnf3/
+ lCMRw/YJYRrQHjW7V2CkWGoUZhVb7L3Dm3j/LxBNpFKeXOMXU2aKXz+s17xOxtGxo7Vl
+ hMxpToEvxIA1r/JnjthLg6FrgBrQRHyt5PkkRHKyCYUQ3l/lVBlDOcVG/TjAB/ECVzJQ
+ k8G0isiIPa6JJCuLoyCUikOJnJUW5Bc0MuE6BTihNwVFo22BJcflK1gjnPhbqGD9lRZU
+ X04jAEtPIa5hGWlNKDoBdE48Ko4dfKp3/47yZpeuZ7CE6kDd15copZEttNjf/6WTFoFQ
+ evDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=ghmrq4yePq3OvfFuJt7bD4d0qOcT5Lf4eNYZhV2gijY=;
+ b=SgvbmV5v9O3HhrZeklCCrEY0ZUn7LFI+Gk/S4RQQIifyQUoMbA+I938KYRKJqKOkwB
+ dP61u0cWoDn9iAvahAm1dwmEqxzG9LCvNh661xEY7EChja02v9jsZfgnY8kkmGG2Qfuw
+ yvO5dO6xXXbFTL7+mCh6DuqV2StbylhvY1B8kQoarojg98VCPxd4FSpyHHMua2yc04EY
+ c7yydF+2lXOdRt3oD6UuDbT4cQXn1BIza9ahlP9AQnLDpAySMSUggZvh6cMAJGWQI8hb
+ nnTy12P18yKjFfs4vLvibriIyNUH767++AVigEgJn4TZIKpTWXGYpzmjY0NSfcAcEI4f
+ NCDQ==
+X-Gm-Message-State: AOAM531v/S03HEc6okrggAtBiSIJlePICnNpllr5WmrlK+LkjZ+CKFhu
+ loJAqZPMVdNyIiCEikQQqzHkHlYNWzhvAHTNnTWxHA==
+X-Google-Smtp-Source: ABdhPJw2E1U2DMQ9L+GYVOcJ4MUvg9b13Cc+7IzKTjF7K5q70Xm7sltngIse1IXDhGj1bqk/ZsKZ6N4VZJUoSh0NrHc=
+X-Received: by 2002:a05:651c:3cf:: with SMTP id
+ f15mr1284122ljp.118.1606918656313; 
+ Wed, 02 Dec 2020 06:17:36 -0800 (PST)
 MIME-Version: 1.0
-References: <CAMy1ncKmBmWcnsyD0Mg9SGGMpYsHpbH+nGTMtx4Kkx0kF4V_VQ@mail.gmail.com>
- <CAHmME9rqKvkJn_=DJrvTOQhp8Q1pQobYBHivYXDerawF5UFdjg@mail.gmail.com>
- <CAMy1ncJtqYE6GQY4pQfq7=hw05SMRceC=unAQgGXcnLX=SAcQQ@mail.gmail.com>
-In-Reply-To: <CAMy1ncJtqYE6GQY4pQfq7=hw05SMRceC=unAQgGXcnLX=SAcQQ@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 2 Dec 2020 15:05:19 +0100
-X-Gmail-Original-Message-ID: <CAHmME9rtbJ6cMVheCmQqAeyvwtZU-_4xkTP2fdoffWWAZm7DwA@mail.gmail.com>
-Message-ID: <CAHmME9rtbJ6cMVheCmQqAeyvwtZU-_4xkTP2fdoffWWAZm7DwA@mail.gmail.com>
-Subject: Re: [PATCH] Use localtime in inf2cat
-To: Stefan Rinkes <stefan.rinkes@gmail.com>, 
- WireGuard mailing list <wireguard@lists.zx2c4.com>
+References: <9f61c27c-3cae-3283-30e0-ce99fe73a305@al2klimov.de>
+ <1d429a71-415e-2623-e0b5-34cca394ae9c@astro.ucla.edu>
+In-Reply-To: <1d429a71-415e-2623-e0b5-34cca394ae9c@astro.ucla.edu>
+From: David Crawshaw <crawshaw@tailscale.com>
+Date: Wed, 2 Dec 2020 09:17:25 -0500
+Message-ID: <CANdrats9wwABmNEnP4SVQPZF5KitahcAQitWR1-_8GV9pSCwoA@mail.gmail.com>
+Subject: Re: MacOS: DNS setting has no effect if the tunnel is not the default
+ gw
+To: Chris Johnson <johnsonc@astro.ucla.edu>
+Cc: wireguard@lists.zx2c4.com, 
+ "Alexander A. Klimov" <grandmaster@al2klimov.de>
 Content-Type: text/plain; charset="UTF-8"
+X-Mailman-Approved-At: Wed, 02 Dec 2020 19:09:59 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -72,15 +81,44 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Wed, Dec 2, 2020 at 3:02 PM Stefan Rinkes <stefan.rinkes@gmail.com> wrote:
+On Wed, Dec 2, 2020 at 8:48 AM Chris Johnson <johnsonc@astro.ucla.edu> wrote:
 >
-> Hey,
+> I am now running into this problem. I'm still running Mojave (10.14.6),
+> if that makes any difference.
 >
-> Sure! Attached the patch including the signed-off line.
+> If AllowedIPs is everything, then /etc/resolv.conf is modified with the
+> remote DNS server.
+> If AllowedIPs is a remote private network(s), then /etc/resolv.conf
+> remains untouched, and DNS is local ISP.
 >
-> Greetz
-> Stefan
+> Did you ever find a solution or workaround? I do not want all of my
+> traffic to go through this tunnel, but I *do* want DNS to resolve for
+> those private subnet hosts.
 
-Thanks! Applied:
+I believe this behavior has changed in macOS 11 (Big Sur), and
+resolv.conf is updated even if you don't set a default route through
+the tunnel. I could not find any Apple API that can change this on
+earlier versions of macOS.
 
-https://git.zx2c4.com/wintun/commit/?id=dd337577185f2d5cf76df2e14b833acf52923817
+
+> Cheers,
+>
+> Chris
+>
+> On 2020/10/31 07:38, Alexander A. Klimov wrote:
+> > Hello there!
+> >
+> > I have two almost identical tunnels. The only difference:
+> >
+> > -AllowedIPs=0.0.0.0/0, ::/0
+> > +AllowedIPs=192.168.234.153/32, 64:ff9b::192.168.234.153/128,
+> > 192.168.234.186/32, 64:ff9b::192.168.234.186/128
+> >
+> > The first one's setting DNS=192.168.234.153 has an effect, the second
+> > one's not.
+> >
+> > Has anyone seen this problem, too?
+> > Does anyone even know how to workaround it?
+> >
+> > Best,
+> > AK
