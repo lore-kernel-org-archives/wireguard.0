@@ -2,60 +2,71 @@ Return-Path: <SRS0=iyUg=FL=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_20,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CA7FC4361B
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  7 Dec 2020 15:13:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 810ABC4361B
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  7 Dec 2020 23:52:12 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 7BACD2370D
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  7 Dec 2020 15:13:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 7BACD2370D
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id 811D323A21
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  7 Dec 2020 23:52:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 811D323A21
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=yoshimi.ch
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 327f39d9;
-	Mon, 7 Dec 2020 15:06:02 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d50bb430
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 7 Dec 2020 15:05:59 +0000 (UTC)
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6938a0c3
- for <wireguard@lists.zx2c4.com>; Mon, 7 Dec 2020 15:06:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=BU1Z1hY0yNQgJfCwTwnSVi2iDOk=; b=lA/oLR
- wfvGs2p0iTcy74x4FzBCXLXRCFioO+EMJ5qzWl1Niz98/YbeB6kAApFBPk/Otq3M
- 68P1sFO82hiTQZMR5izeCUPao/SG6zJT9QFlX9AkLCxqqc9SZg7/O4suQKL4Fvm8
- WfaG6vJVuxKN7sea1CQr+cRF2m/G1Y686DQWzkPzIhk+9rK2ekLKtLza52s+8rP1
- qyUOLnvAfh9QxD0B+7LMuyE2lJuurSIPbkJCXev1eBIzvxQgjxqhoQrtggv87fUu
- Owya4/Y+G+k4BLpTBpdPUGz29f2Rc3zcowUGguCmnrmbkIvg6HK7LWUjsCd8eCN1
- KPtGna79Ad9YjnAg==
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 34823b53
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 7 Dec 2020 15:06:45 +0000 (UTC)
-Received: by mail-yb1-f175.google.com with SMTP id t33so13292645ybd.0
- for <wireguard@lists.zx2c4.com>; Mon, 07 Dec 2020 07:13:12 -0800 (PST)
-X-Gm-Message-State: AOAM530I9LLoAfUv5xhjhUIgbJmev2G0lvoIkEB2tfTarREUtWuL+3ZT
- MyR92Hz9CZ7hWF8C8vezVBx9dEQJKGSGTeTNCfc=
-X-Google-Smtp-Source: ABdhPJyRiBGDGMRUhknqxoT/r6SKtwPuI6LJDmHrx/vKF2aZ0P8bp/DaE+arGt09qytLJZ2tJOAZm/RehwSpUXw+2VI=
-X-Received: by 2002:a25:4744:: with SMTP id u65mr16200468yba.239.1607353992076; 
- Mon, 07 Dec 2020 07:13:12 -0800 (PST)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bd430d8c;
+	Mon, 7 Dec 2020 23:44:27 +0000 (UTC)
+Received: from mail-gateway-shared13.cyon.net (mail-gateway-shared13.cyon.net
+ [194.126.200.66])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 02b6719b
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Mon, 7 Dec 2020 14:34:00 +0000 (UTC)
+Received: from s026.cyon.net ([149.126.4.35])
+ by mail-gateway-shared13.cyon.net with esmtpsa
+ (TLS1.2:ECDHE-RSA-AES256-GCM-SHA384:256) (Exim)
+ (envelope-from <lists@yoshimi.ch>) id 1kmHhI-0007Vu-BM
+ for wireguard@lists.zx2c4.com; Mon, 07 Dec 2020 15:41:12 +0100
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=yoshimi.ch; 
+ s=default;
+ h=Content-Transfer-Encoding:Content-Type:In-Reply-To:MIME-Version
+ :Date:Message-ID:From:Subject:References:To:Sender:Reply-To:Cc:Content-ID:
+ Content-Description; bh=meMSfgf5W9rtun/V3bXBLL8c2XXehGJ5twscu4TkfG8=; b=loj6b
+ VYMVYjzUvAlGOZpL1lJKLIH0Js7KydlHd+tONnkllDbLH9dpAq7L7Y1W0RXbczwjS7H2xpeR1Anng
+ KpJZgMyj+jxSyvvlCWq7BVSAiU0rgDxluyxMoTcr4vJDHlaa7qSP5WJpPnm7Lz2kRf2YzNsK6JWEe
+ CmrRfWsHjjhd2gVFkP3nMBjfFSLjSz0hHx8W6jwbdYMCQ1LGLwNIvWbkNyrPCNJ0KqNp0EzwmOVe6
+ q4KTCE/CZuWVa3MxjLvaDJXgJvqXJy4FpmO4F5dsHWMhCNsI8gkfQPl/uWdCzANDL9yI5Hp8VjPhK
+ pnSfU526sQHwdyZ+GnzYA1MJGGMdw==;
+Received: from [10.20.10.230] (port=53354 helo=mail.cyon.ch)
+ by s026.cyon.net with esmtpa (Exim 4.93)
+ (envelope-from <lists@yoshimi.ch>) id 1kmHhH-001yH0-6r
+ for wireguard@lists.zx2c4.com; Mon, 07 Dec 2020 15:41:03 +0100
+To: wireguard@lists.zx2c4.com
+References: <d1e3a201-8fcd-3448-f958-5fd4518f0101@molgaard.org>
+Subject: Re: MacOS DNS Search Domain
+From: Yoshimi Takano <lists@yoshimi.ch>
+Message-ID: <e32baf86-4ef1-eed9-4daa-575e3786f6f2@yoshimi.ch>
+Date: Mon, 7 Dec 2020 15:41:02 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-References: <bc1cd9b4-daac-4877-65a6-3fcf2ceeb980@53c70r.de>
-In-Reply-To: <bc1cd9b4-daac-4877-65a6-3fcf2ceeb980@53c70r.de>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 7 Dec 2020 16:13:01 +0100
-X-Gmail-Original-Message-ID: <CAHmME9rYpMx4g5R4Z5hwzdmCshNBVkLQEedWEd82Jot5nJw2pQ@mail.gmail.com>
-Message-ID: <CAHmME9rYpMx4g5R4Z5hwzdmCshNBVkLQEedWEd82Jot5nJw2pQ@mail.gmail.com>
-Subject: Re: Progress on resolvectl DNS fail
-To: Silvan Nagl <mail@53c70r.de>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <d1e3a201-8fcd-3448-f958-5fd4518f0101@molgaard.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
+X-AntiAbuse: This header was added to track abuse,
+ please include it with any abuse report
+X-AntiAbuse: Primary Hostname - s026.cyon.net
+X-AntiAbuse: Original Domain - lists.zx2c4.com
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - yoshimi.ch
+X-Get-Message-Sender-Via: s026.cyon.net: authenticated_id: lists@yoshimi.ch
+X-Authenticated-Sender: s026.cyon.net: lists@yoshimi.ch
+X-OutGoing-Spam-Status: No, score=-1.1
+X-Mailman-Approved-At: Tue, 08 Dec 2020 00:44:26 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -70,5 +81,21 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Looks like this is now fixed:
-https://bodhi.fedoraproject.org/updates/FEDORA-2020-7851982ff6
+Hello
+
+I just wanted to mention that I ran in to the same issue.
+
+The MacOS client rejects DNS settings containing non-IP hostnames such as
+
+DNS = 1.2.3.4, example.search.domain.com
+
+with the error "Interface’s DNS servers must be a list of 
+comma-separated IP addresses".
+
+According to the wg-quick man page, non-IP hostnames (to be interpreted 
+as search domains) are allowed for the DNS setting.
+
+The Windows client accepts these fine.
+
+Best regards
+   Yoshimi
