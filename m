@@ -1,64 +1,41 @@
-Return-Path: <SRS0=qhJm=FN=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=osqO=FO=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DC5DC4361B
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  9 Dec 2020 03:19:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5EAF2C433FE
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 10 Dec 2020 09:24:35 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 7A55B2071C
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  9 Dec 2020 03:19:00 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 7A55B2071C
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=signal11.com
+	by mail.kernel.org (Postfix) with ESMTPS id 46C262343B
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 10 Dec 2020 09:24:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 46C262343B
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=unstable.cc
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e05d2ffb;
-	Wed, 9 Dec 2020 03:11:33 +0000 (UTC)
-Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com
- [2607:f8b0:4864:20::d32])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4b8bb36f
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 9 Dec 2020 03:11:31 +0000 (UTC)
-Received: by mail-io1-xd32.google.com with SMTP id n14so146811iom.10
- for <wireguard@lists.zx2c4.com>; Tue, 08 Dec 2020 19:18:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=signal11-com.20150623.gappssmtp.com; s=20150623;
- h=mime-version:from:date:message-id:subject:to;
- bh=t9+ChstUTf02E2uWyUTK4atwyPPib5FOyvV3uv1ClZg=;
- b=Sy90H+lcJ5RUc5+NgxRn7OP2Y889hxWjF2tdGcse84X66neg3fsy/hjGsFzecjH9xV
- ZSel063Fd9dN6skI3bW7WXs6UfJU7MhPEIcGUCE4HcqCVaIblbp83k2HpFJBDt4HJ6E1
- TdhiKUn1swrE3e7imbhi0SYgFPZ6Ex6GETLJowrlhhodJGLkSc4UCEYJ6GOUI8FLTMcZ
- j2wFj3wOPKnSFFgn7vJAZxaWMYVtmTViBwWFS/CDu5G5sPrYW+zRsEwumhgfRwQxpsCx
- +xGLOwxwfKAn4HCvOjkY2Pu+nUwJPyJPwgf3lQvREN9Hgg3J+PPBZszreSemXYikBl+S
- 5grQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=t9+ChstUTf02E2uWyUTK4atwyPPib5FOyvV3uv1ClZg=;
- b=e9RIuDJv6E3au/ioEW56RYJrobonYQzRRJdaDXp5XsMuU5NNCzS6tmXBtintevL1KH
- MJGY1cxdfXmAeIuRZpcpX92FdZ4I3S0HaJbJ9PxmGBZICMbad3HxX4nwfRr6JCjfEcVP
- kpNNwH3QsHvFkxsRC0ywQ+FT8nking7A02GdZaCQT18OnpZWPyPoMzcklFnzjZCW3H8l
- AuAPQpqf7R9wwzt1RsaJDVGX9YCv0tUd/DAKCneTjCVgwAibsFqJ6EIyrx5k6S+3oOPA
- t7CjVBLwCrfHrzioGsV/CPBNiSIebwSQdQDpi0bNSc8QUZpbsivRCwB+D672VyLpsmpv
- qslg==
-X-Gm-Message-State: AOAM531Wv92L34jpwGf5qdDnykDEG9SdMr8W9hLgluFur3DgOSIW4ERC
- xMnDif7VxyH6zYnactpU9UUUsh3E5+GCOGe489KsmO69mzWwCg==
-X-Google-Smtp-Source: ABdhPJzMf9xnK+itGiJ2r0Eu5ClvDP9//0VSfsNcxHb8wJYcCArItnmVViQXM2HGwCUteTizqHK0F9ll14NsHgGQ5UU=
-X-Received: by 2002:a05:6638:d4e:: with SMTP id
- d14mr518968jak.26.1607483936061; 
- Tue, 08 Dec 2020 19:18:56 -0800 (PST)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5445da4b;
+	Thu, 10 Dec 2020 09:16:57 +0000 (UTC)
+Received: from s2.neomailbox.net (s2.neomailbox.net [5.148.176.60])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 96500895
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 10 Dec 2020 09:16:55 +0000 (UTC)
+From: Antonio Quartulli <a@unstable.cc>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>, Jakub Kicinski <kuba@kernel.org>,
+ wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Cc: Antonio Quartulli <a@unstable.cc>
+Subject: [PATCH] wireguard: avoid double unlikely() notation when using
+ IS_ERR()
+Date: Thu, 10 Dec 2020 09:55:05 +0100
+Message-Id: <20201210085505.21575-1-a@unstable.cc>
 MIME-Version: 1.0
-From: Adam Weiss <adam@signal11.com>
-Date: Tue, 8 Dec 2020 22:18:45 -0500
-Message-ID: <CAFVoEQSmozd-6h7isSX04h8L3ZiRjv_xBmAiYVHNwyU3uoDz5w@mail.gmail.com>
-Subject: Key Management / Rotation and Monitoring
-To: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -73,28 +50,54 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi All,
+The definition of IS_ERR() already applies the unlikely() notation
+when checking the error status of the passed pointer. For this
+reason there is no need to have the same notation outside of
+IS_ERR() itself.
 
-I've been following some recent threads regarding real life
-deployments of WireGuard and it got me thinking about key management,
-rotation and monitoring.  Due to the seamless support for roaming
-built into WireGuard these concerns are greater than typical setups as
-a stolen key can be used seamlessly alongside its legitimate user.
+Clean up code by removing redundant notation.
 
-In the interest of understanding best practices for secure deployment
-of WireGuard and possibly identifying use cases for another project
-that could aim to solve these issues, I'm curious:
+Signed-off-by: Antonio Quartulli <a@unstable.cc>
+---
+ drivers/net/wireguard/device.c | 2 +-
+ drivers/net/wireguard/socket.c | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-1) What are people doing to get keys onto their endpoints?
+diff --git a/drivers/net/wireguard/device.c b/drivers/net/wireguard/device.c
+index a3ed49cd95c3..cd51a2afa28e 100644
+--- a/drivers/net/wireguard/device.c
++++ b/drivers/net/wireguard/device.c
+@@ -157,7 +157,7 @@ static netdev_tx_t wg_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	} else {
+ 		struct sk_buff *segs = skb_gso_segment(skb, 0);
+ 
+-		if (unlikely(IS_ERR(segs))) {
++		if (IS_ERR(segs)) {
+ 			ret = PTR_ERR(segs);
+ 			goto err_peer;
+ 		}
+diff --git a/drivers/net/wireguard/socket.c b/drivers/net/wireguard/socket.c
+index c33e2c81635f..e9c35130846c 100644
+--- a/drivers/net/wireguard/socket.c
++++ b/drivers/net/wireguard/socket.c
+@@ -71,7 +71,7 @@ static int send4(struct wg_device *wg, struct sk_buff *skb,
+ 				ip_rt_put(rt);
+ 			rt = ip_route_output_flow(sock_net(sock), &fl, sock);
+ 		}
+-		if (unlikely(IS_ERR(rt))) {
++		if (IS_ERR(rt)) {
+ 			ret = PTR_ERR(rt);
+ 			net_dbg_ratelimited("%s: No route to %pISpfsc, error %d\n",
+ 					    wg->dev->name, &endpoint->addr, ret);
+@@ -138,7 +138,7 @@ static int send6(struct wg_device *wg, struct sk_buff *skb,
+ 		}
+ 		dst = ipv6_stub->ipv6_dst_lookup_flow(sock_net(sock), sock, &fl,
+ 						      NULL);
+-		if (unlikely(IS_ERR(dst))) {
++		if (IS_ERR(dst)) {
+ 			ret = PTR_ERR(dst);
+ 			net_dbg_ratelimited("%s: No route to %pISpfsc, error %d\n",
+ 					    wg->dev->name, &endpoint->addr, ret);
+-- 
+2.29.2
 
-2) What are people doing to rotate those keys regularly?
-
-3) What sorts of monitoring have people constructed to try and detect
-multiple users of the same key (I'm not sure how possible this is
-today with the current WG releases, it's been a while since I've
-looked closely at the project so please forgive me if this question is
-nonsensical at this time).
-
-Looking forward to any responses.
-
---adam
