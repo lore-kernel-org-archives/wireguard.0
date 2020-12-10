@@ -2,40 +2,65 @@ Return-Path: <SRS0=osqO=FO=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5EAF2C433FE
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 10 Dec 2020 09:24:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A7D92C433FE
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 10 Dec 2020 09:37:51 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 46C262343B
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 10 Dec 2020 09:24:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 46C262343B
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=unstable.cc
+	by mail.kernel.org (Postfix) with ESMTPS id C4AF823B70
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 10 Dec 2020 09:37:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org C4AF823B70
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5445da4b;
-	Thu, 10 Dec 2020 09:16:57 +0000 (UTC)
-Received: from s2.neomailbox.net (s2.neomailbox.net [5.148.176.60])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 96500895
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2afc5f5e;
+	Thu, 10 Dec 2020 09:29:58 +0000 (UTC)
+Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4a364142
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 10 Dec 2020 09:16:55 +0000 (UTC)
-From: Antonio Quartulli <a@unstable.cc>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>, Jakub Kicinski <kuba@kernel.org>,
- wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Cc: Antonio Quartulli <a@unstable.cc>
-Subject: [PATCH] wireguard: avoid double unlikely() notation when using
- IS_ERR()
-Date: Thu, 10 Dec 2020 09:55:05 +0100
-Message-Id: <20201210085505.21575-1-a@unstable.cc>
+ Thu, 10 Dec 2020 09:29:55 +0000 (UTC)
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 27e3b41c
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 10 Dec 2020 09:30:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :references:in-reply-to:from:date:message-id:subject:to:cc
+ :content-type; s=mail; bh=wNxKzdrmCn9Tgs9JwbJfdXjq2Ho=; b=xzv75Z
+ ySrK/0Vd63ZNpGMFv+h6ZAT/zHevAiSrIbiNmf2G2+EcwEXhK6K/WDxET8pkU7ge
+ n95tmiNVBQnSIE0QkUZFPpeYSmM6AgiRQ7lPylK0pO6AnXKtGQ3k5y3WOlqDF0kk
+ Jo+G6Rb4IF/p0qmcPssiD14nA2ZI7+n8jDfJrOBDHBpsma+TNxVlTgv+xm+yTQP6
+ X7a1vLrWdjoC4jCzkH90Rvb6vrD86E1MvylkjVLTItSEPI+eBRfeN0vHAPqYodn8
+ OgXi4aHVj8saAH5Fj0yEnL2z0aNUtxWCAf492oC/LNo3eMNWVJvgeIqcBVX6wdvH
+ u1V3hSnJpnrME6EA==
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 83e67765
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 10 Dec 2020 09:30:41 +0000 (UTC)
+Received: by mail-yb1-f176.google.com with SMTP id u203so4136258ybb.2
+ for <wireguard@lists.zx2c4.com>; Thu, 10 Dec 2020 01:37:30 -0800 (PST)
+X-Gm-Message-State: AOAM530rm6vavK32JG0ZnQCzIFewKUe8MtG9teMrp1N1aSyLaWh0hFOr
+ kFvkffkNBYdNGRdFMBOlLvtz03iql2L4lEB/USs=
+X-Google-Smtp-Source: ABdhPJwV4bxZCCxe3IwlIdqjIMwelMkb0qJWuwVeqTBtEJWsuHOYaUQbIeEcknjClta/jPpJwyPbz/jwiEKh1Jqj8fk=
+X-Received: by 2002:a25:df05:: with SMTP id w5mr10743072ybg.20.1607593049638; 
+ Thu, 10 Dec 2020 01:37:29 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20201210085505.21575-1-a@unstable.cc>
+In-Reply-To: <20201210085505.21575-1-a@unstable.cc>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 10 Dec 2020 10:37:18 +0100
+X-Gmail-Original-Message-ID: <CAHmME9pOZRtzqBELQTG6tONiWxJJU8KQhSxWST2T_ReCX3ZNYQ@mail.gmail.com>
+Message-ID: <CAHmME9pOZRtzqBELQTG6tONiWxJJU8KQhSxWST2T_ReCX3ZNYQ@mail.gmail.com>
+Subject: Re: [PATCH] wireguard: avoid double unlikely() notation when using
+ IS_ERR()
+To: Antonio Quartulli <a@unstable.cc>
+Cc: Jakub Kicinski <kuba@kernel.org>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>, 
+ Netdev <netdev@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -50,54 +75,18 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-The definition of IS_ERR() already applies the unlikely() notation
-when checking the error status of the passed pointer. For this
-reason there is no need to have the same notation outside of
-IS_ERR() itself.
+On Thu, Dec 10, 2020 at 9:56 AM Antonio Quartulli <a@unstable.cc> wrote:
+>
+> The definition of IS_ERR() already applies the unlikely() notation
+> when checking the error status of the passed pointer. For this
+> reason there is no need to have the same notation outside of
+> IS_ERR() itself.
+>
+> Clean up code by removing redundant notation.
 
-Clean up code by removing redundant notation.
+Thanks for the patch. I can confirm this doesn't change the codgen at all.
 
-Signed-off-by: Antonio Quartulli <a@unstable.cc>
----
- drivers/net/wireguard/device.c | 2 +-
- drivers/net/wireguard/socket.c | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+I've queued this up in wireguard's staging tree, and I'll push it back
+out as part of the next series.
 
-diff --git a/drivers/net/wireguard/device.c b/drivers/net/wireguard/device.c
-index a3ed49cd95c3..cd51a2afa28e 100644
---- a/drivers/net/wireguard/device.c
-+++ b/drivers/net/wireguard/device.c
-@@ -157,7 +157,7 @@ static netdev_tx_t wg_xmit(struct sk_buff *skb, struct net_device *dev)
- 	} else {
- 		struct sk_buff *segs = skb_gso_segment(skb, 0);
- 
--		if (unlikely(IS_ERR(segs))) {
-+		if (IS_ERR(segs)) {
- 			ret = PTR_ERR(segs);
- 			goto err_peer;
- 		}
-diff --git a/drivers/net/wireguard/socket.c b/drivers/net/wireguard/socket.c
-index c33e2c81635f..e9c35130846c 100644
---- a/drivers/net/wireguard/socket.c
-+++ b/drivers/net/wireguard/socket.c
-@@ -71,7 +71,7 @@ static int send4(struct wg_device *wg, struct sk_buff *skb,
- 				ip_rt_put(rt);
- 			rt = ip_route_output_flow(sock_net(sock), &fl, sock);
- 		}
--		if (unlikely(IS_ERR(rt))) {
-+		if (IS_ERR(rt)) {
- 			ret = PTR_ERR(rt);
- 			net_dbg_ratelimited("%s: No route to %pISpfsc, error %d\n",
- 					    wg->dev->name, &endpoint->addr, ret);
-@@ -138,7 +138,7 @@ static int send6(struct wg_device *wg, struct sk_buff *skb,
- 		}
- 		dst = ipv6_stub->ipv6_dst_lookup_flow(sock_net(sock), sock, &fl,
- 						      NULL);
--		if (unlikely(IS_ERR(dst))) {
-+		if (IS_ERR(dst)) {
- 			ret = PTR_ERR(dst);
- 			net_dbg_ratelimited("%s: No route to %pISpfsc, error %d\n",
- 					    wg->dev->name, &endpoint->addr, ret);
--- 
-2.29.2
-
+Jason
