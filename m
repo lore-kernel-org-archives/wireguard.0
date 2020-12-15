@@ -2,74 +2,58 @@ Return-Path: <SRS0=s0AX=FT=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FA9BC2BB48
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 15 Dec 2020 00:33:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F1F2C4361B
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 15 Dec 2020 16:07:06 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 6671522258
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 15 Dec 2020 00:33:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 6671522258
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	by mail.kernel.org (Postfix) with ESMTPS id 287F6224F4
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 15 Dec 2020 16:07:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 287F6224F4
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ec275dcb;
-	Tue, 15 Dec 2020 00:24:32 +0000 (UTC)
-Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com
- [2607:f8b0:4864:20::542])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 65c31b22
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 95603ba0;
+	Tue, 15 Dec 2020 15:58:30 +0000 (UTC)
+Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d75f4e35
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 14 Dec 2020 03:08:53 +0000 (UTC)
-Received: by mail-pg1-x542.google.com with SMTP id f17so11538921pge.6
- for <wireguard@lists.zx2c4.com>; Sun, 13 Dec 2020 19:16:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=+Y4ZR25CDWrFjyeuCoS4dcQmYfG5u2bNucQUd5/A8YY=;
- b=H3XeuiT6futa/vBpPop8eW/Xsygjx5WNQcff9Jj6rU0aPDdL3ddk7ZQKc/2P0wVEYb
- Qu6wE4SKNZZNMOspJd0kQhbFKv5BtvE2D/YCMzIPsD/uoLmDo4ep6L/uSlqY1rXqNt52
- 71zJGUlkN3Z9vWZQ5lSvK2Dn2OI3ywqxB7+jfrMiim1JWX+GkWbBYOK1gTsn8TfxwFX8
- 9hquEWOGhCdTDJtjOB/EyaRoWkoMO0TTq0UpEWN/FL8jHf28R26h9ICWOMtGYIxMHyk1
- j7XSgD0s2YsOVl1LbG02K/9510j82YMEYNKSKE2euAm3BmNtyFQieWmg+duQNyt7GHvc
- aDWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=+Y4ZR25CDWrFjyeuCoS4dcQmYfG5u2bNucQUd5/A8YY=;
- b=TNgaFFSa5vCdow+jGCgtJfJ+koF6R8Hu+ZIsTtcILcDRjKVicfDg5hWt3SdYS7bYeV
- U7KIM3icq03jFTZ6KnG1E7MvTnLZQ7cRZTXy43H3h43/s6oZUjCKFiJ/zxcWTJiYxuXH
- YC2iESUfxO8Re+jEroiNmQRlUOmTWcFKhjQIbJ/mCEp81pGjIDHSplQncd2LP220b02g
- z8RwVqa0PAebVfllQ7HsjpqYxwM16+pQZaChDQsMCRwmLF+TVsNnDXRfQp5s6tX/sFcz
- mcrdvCy5s/7Iogp26ckm2/Gdz63gx7AITdA1JGEp8YlEdHKK5DcReil2psSXUt9RcRk8
- GxLg==
-X-Gm-Message-State: AOAM530Ej2LuZmX2IK9Y/xWCDO0UT1P81qX/9Y/hIaDjRGISgk0FA2vl
- mIflrtSReISOxRw2XpuaLl3Oz5G1LeD3tJh6bQs=
-X-Google-Smtp-Source: ABdhPJx83hrmq0sJp3bdgCiX+hExfCM1SAtXpkPq0lPpYaypZchK0xVYe/lkAFNbb0o3LUwewFxvWp6bmSQBQMEG8/E=
-X-Received: by 2002:a62:e30c:0:b029:19d:932b:a1e2 with SMTP id
- g12-20020a62e30c0000b029019d932ba1e2mr21493105pfh.78.1607915816979; Sun, 13
- Dec 2020 19:16:56 -0800 (PST)
+ Tue, 15 Dec 2020 15:58:28 +0000 (UTC)
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9c7f5135
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 15 Dec 2020 15:59:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :from:date:message-id:subject:to:content-type; s=mail; bh=ZNFqGJ
+ axGLb3Nxe1F6asScoLfps=; b=JQ/tyDy3dhr5zAGe2rDZF26TRfHybMYrOhgf/b
+ cJfIqEOumZXw+VLY8ZNnMsHn3CI/DKbQJtfFKZidwhZbID5NjlZqx271g2NylLJw
+ CJsSKdA4KwEjgir5RHsbUNIGPBmBV0yWHdyAw06dmMdmr9js6wZK7sm2onMYlckS
+ lhkeXeNOJYD/AbSRClQz55X4+GFadEeedTaUjiUcEWWPUjCzCznLwihDQYxuRYo7
+ v24GtpzFwcGxvVJTb2nmOT9vXaG/9El05hzmkGCOR9+apiqeFgdRSXmmwkZsdF3c
+ /ipIr7yEM8+KupxZP06YJzTjEBbbxhX+wMaFhJKb+xkxtXfA==
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id f41fa07e
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 15 Dec 2020 15:59:14 +0000 (UTC)
+Received: by mail-yb1-f177.google.com with SMTP id v67so19456284ybi.1
+ for <wireguard@lists.zx2c4.com>; Tue, 15 Dec 2020 08:06:44 -0800 (PST)
+X-Gm-Message-State: AOAM530KIqAyv9juJ8iHWAuHOAAPZ68nKLiML72JP0Icn7buuQRK8Au8
+ e4MOWbV1zf7FpObq5QorDS3OF6Ez/7Pa0z57Jtk=
+X-Google-Smtp-Source: ABdhPJwlwZ7nLa/JL/QoNyBba0VmIY6312MzB/H088IAf8R48ti+mwNg3GT3Ck55rQrXJF9r/KBsjQqx48lFvq77a9o=
+X-Received: by 2002:a5b:78d:: with SMTP id b13mr43493835ybq.123.1608048404351; 
+ Tue, 15 Dec 2020 08:06:44 -0800 (PST)
 MIME-Version: 1.0
-References: <20201210235412.85721-1-ajstiles@gmail.com>
- <X9am5M94oX00YKU4@latitude>
-In-Reply-To: <X9am5M94oX00YKU4@latitude>
-From: Adam Stiles <ajstiles@gmail.com>
-Date: Sun, 13 Dec 2020 19:16:46 -0800
-Message-ID: <CAB5G8p8Y7+TcjBQYWQy+kZMjD=-qv0WoY+vn0dp5A_6FkSGDQw@mail.gmail.com>
-Subject: Re: [PATCH wireguard-apple] Update SPDX-License-Identifier tags from
- GPL-2.0 to MIT
-To: =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-Cc: wireguard@lists.zx2c4.com
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Tue, 15 Dec 2020 17:06:33 +0100
+X-Gmail-Original-Message-ID: <CAHmME9ozv2UAe8NOUaBGDfQpohYS+SLY+Zix8A-q3dt8AKao+w@mail.gmail.com>
+Message-ID: <CAHmME9ozv2UAe8NOUaBGDfQpohYS+SLY+Zix8A-q3dt8AKao+w@mail.gmail.com>
+Subject: [ANNOUNCE] WireGuardKit for iOS and macOS Released
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailman-Approved-At: Tue, 15 Dec 2020 01:24:32 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -84,58 +68,48 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Jonathan,
+Hi folks,
 
-Thanks for looking at the patch. In retrospect, I should have asked
-about this before I submitted it. I wasn't intending a re-license.
-Rather, I assumed those SPDX identifiers were missed when repo was
-converted from GPL to MIT a couple of years ago. Apologies,
+For the last several weeks, Andrej from Mullvad has been working hard
+at modularizing the wireguard-apple repository, which contains the
+code we use to build WireGuard for macOS and WireGuard for iOS. The
+end result is WireGuardKit, an open source Swift PM package that
+anybody can use to easily build macOS and iOS applications that
+incorporate WireGuard tunnels. Instructions on usage are available
+here:
 
-Adam
+https://git.zx2c4.com/wireguard-apple/about/#wireguardkit-integration
 
+Users of WireGuardKit will be able to instantiate a WireGuardAdapter
+inside of their PacketTunnelProvider network extension. The one that
+ships with WireGuard for macOS and iOS should serve as a simple
+reference of ~125 lines of boiler plate code:
 
-On Sun, Dec 13, 2020 at 3:42 PM Jonathan Neusch=C3=A4fer
-<j.neuschaefer@gmx.net> wrote:
->
-> Hi,
->
-> a little drive-by review, since I happened to see the patch.
-> In case I misunderstood something, I apologise in advance.
->
-> On Thu, Dec 10, 2020 at 03:54:12PM -0800, Adam Stiles wrote:
-> > Signed-off-by: Adam Stiles <ajstiles@gmail.com>
-> > ---
-> >  Sources/WireGuardApp/UI/macOS/View/highlighter.c | 2 +-
-> >  Sources/WireGuardApp/UI/macOS/View/highlighter.h | 2 +-
-> >  Sources/WireGuardKitC/key.c                      | 2 +-
-> >  Sources/WireGuardKitC/key.h                      | 2 +-
-> >  Sources/WireGuardKitC/x25519.c                   | 2 +-
-> >  Sources/WireGuardKitGo/Makefile                  | 2 +-
-> >  Sources/WireGuardKitGo/wireguard.h               | 2 +-
-> >  7 files changed, 7 insertions(+), 7 deletions(-)
-> >
-> > diff --git a/Sources/WireGuardApp/UI/macOS/View/highlighter.c b/Sources=
-/WireGuardApp/UI/macOS/View/highlighter.c
-> > index e0d4e04..55fabfd 100644
-> > --- a/Sources/WireGuardApp/UI/macOS/View/highlighter.c
-> > +++ b/Sources/WireGuardApp/UI/macOS/View/highlighter.c
-> > @@ -1,4 +1,4 @@
-> > -// SPDX-License-Identifier: GPL-2.0
-> > +// SPDX-License-Identifier: MIT
->
-> AFAIUI, such a change expresses a relicensing of the code, and it should
-> (IMHO) be made clear in the commit message that this is the case.
->
-> All authors of the code must agree to a relicensing. It would be nice
-> to see the list of authors in the commit message, along with a
-> confirmation that all agreed to relicense the code to MIT.
->
-> > -/* SPDX-License-Identifier: GPL-2.0+
-> > +/* SPDX-License-Identifier: MIT+
->
-> I think MIT+ is an editing error. It's not on the official SPDX license
-> identifier list, in any case.
->
->
-> Best regards,
-> Jonathan Neusch=C3=A4fer
+https://git.zx2c4.com/wireguard-apple/tree/Sources/WireGuardNetworkExtension/PacketTunnelProvider.swift
+
+All of the heavy lifting has moved into the WireGuardKit, so that
+application writers do not need to concern themselves with low-level
+networking details.
+
+In general, the WireGuardKit project has been a great example of
+positive collaboration between the WireGuard open source project and
+an industry stakeholder. As Mullvad's mobile apps depend on WireGuard,
+putting the development time into improving our upstream code so that
+their downstream code can more easily consume it, as well as
+contributing fixes and improvements in their downstream code back
+upstream, not only makes things easier for Mullvad, but also brings
+shared improvements to everyone else across the WireGuard ecosystem.
+
+As more developers begin to use WireGuardKit, we're very interested to
+hear feedback, particularly about missing features or APIs that might
+be useful.
+
+Enjoy!
+Jason
+
+PS: Today we've also sent new versions of the WireGuard app up to the
+App Store approval process for iOS and macOS, with a bunch of
+performance improvements and also support for Apple Silicon. Who knows
+how long it will take for Apple to approve it -- we've experienced
+wait times between 1 day and over 1 month -- but keep your eyes peeled
+for the update.
