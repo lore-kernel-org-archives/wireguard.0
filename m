@@ -2,64 +2,62 @@ Return-Path: <SRS0=K437=FV=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C887FC4361B
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 17 Dec 2020 17:37:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 476F0C4361B
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 17 Dec 2020 18:06:23 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id F205B23426
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 17 Dec 2020 17:37:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org F205B23426
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=capeyron.fr
+	by mail.kernel.org (Postfix) with ESMTPS id 918D32376F
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 17 Dec 2020 18:06:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 918D32376F
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 92e6fcfd;
-	Thu, 17 Dec 2020 17:27:23 +0000 (UTC)
-Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com
- [2607:f8b0:4864:20::82a])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 45963e9c
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dc2ee4df;
+	Thu, 17 Dec 2020 17:57:22 +0000 (UTC)
+Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 8d67be14
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 17 Dec 2020 15:11:13 +0000 (UTC)
-Received: by mail-qt1-x82a.google.com with SMTP id v5so11055250qtv.7
- for <wireguard@lists.zx2c4.com>; Thu, 17 Dec 2020 07:19:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=capeyron.fr; s=google;
- h=mime-version:from:date:message-id:subject:to
- :content-transfer-encoding;
- bh=Q5UlWIbnJXVkJ8srp5+Pz/54Ap2vggg3hVA2eoXafSU=;
- b=HfqEuYDxaoOHxZLhuyzx6l7Qh1elrAfzDqBEY5N6IiWmbDPDLQFnTQwPw16RSdiM3d
- IxY8nFNJwOaPztw0oawNmsecpW+m85qbffMd0zGYC+RNXfmuDPVL+W+XiC8JitZJ/kjz
- XeBFrXHzd2D8j0i/tCrT/nzJiaEXAt5tATA6U=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to
- :content-transfer-encoding;
- bh=Q5UlWIbnJXVkJ8srp5+Pz/54Ap2vggg3hVA2eoXafSU=;
- b=GQXiqXcAraClmkQ1boIp/rlW/Uv4GuQkiTIodM5KNVHG5nRUQJFPj0B8QU2PC/oYsU
- Vt5P8KfhKSrXcZkf0AF7ReU0Wa6KpnbGhHbZBPQ02u96+X916Sd1lwf0P9ixNGtFt2ar
- x5FvjID/vDV/xrHnBZ+ZpMdRpQlZQGRGE67YBVUtUpqll2wbnUUh9hVqIAN85MEZ+9zV
- QaWDU3FjvheGUHtuneKtymUWTChFTgyu53wErKgzOQBTMp+EnL9d3FfWIgA8qV84gA8e
- IFmmZ6sZnNfSG7A8LbJVr0EAsltn5Op7FZ6mHbsKEG595+TotbaWwVDKdfcrkpxNHbqY
- q7og==
-X-Gm-Message-State: AOAM5339jNiVjB1KCVBbGDmye3S0HYeNWdmYC0ME8oHjGe2Ekgw+ueY/
- /8QttjKkK7Ui3jQrUbIM8pZiwJsVzzEmC2GaaDwydOthPH911YvU
-X-Google-Smtp-Source: ABdhPJzcqFTJcN0/WwvLGObMe0lv3jmXA7ZMtjFVze0QG4qKQT/HN9JADWBcZYSs6qOJo0XqfLHJcE9EqXqdKIUydpk=
-X-Received: by 2002:ac8:5d53:: with SMTP id g19mr48359871qtx.354.1608218384114; 
- Thu, 17 Dec 2020 07:19:44 -0800 (PST)
+ Thu, 17 Dec 2020 17:57:19 +0000 (UTC)
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3f75b737
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 17 Dec 2020 17:58:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :references:in-reply-to:from:date:message-id:subject:to:cc
+ :content-type; s=mail; bh=jmHVMV3oOX+22mGpO9U53RGeE8Q=; b=Kblumu
+ FF47dEKiz115eX9uGz3i+LmN4e8LJSyaVv973OP0LGrcpZAdp79gaGpKI4i5iWgY
+ U5Cbv3iNdMaK+UGrlGbolz0mlcoNNW8vwA23VgG5Wh+pVeGQGsqJ7LogCwJaCfE1
+ MBWvyaWPp6SIzuu6Pc6ahZQZIDV3FakMZTVIY0KSH2bz7eoKxszg94P0OMkBwOZT
+ H8tN525LENPw5GSe0U/9aNItQ7MjcuaF+pQJ7NgJQmy8SaQ0hI5v5LIOSwU31iJf
+ PygTp8JyzdhoGwZakrhWq8m8IXFBBHmXuMMJhrGwaRndPgktG2CdStb25bZkTWOv
+ /n2554PSAUJ/JnNg==
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 5a7cc05c
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 17 Dec 2020 17:58:05 +0000 (UTC)
+Received: by mail-yb1-f182.google.com with SMTP id j17so26680802ybt.9
+ for <wireguard@lists.zx2c4.com>; Thu, 17 Dec 2020 10:05:52 -0800 (PST)
+X-Gm-Message-State: AOAM532gm+bCrMVdcubXA7wBiLJm/shC5nMEwFZR5Ji3AMlZRT4QJbQ0
+ D8q+VZcCGMVKnuOnfs7S/G8OPRD5Cy4wVKfEVaM=
+X-Google-Smtp-Source: ABdhPJypNI7gFMQYyF0J+Z2+vBhlll+P9+6aopPoMGGEcbsrGAzNVri99TOh6CKlaE2U6oQwr8/7iVsjZ++g3EElyjw=
+X-Received: by 2002:a25:938a:: with SMTP id a10mr464775ybm.49.1608228351637;
+ Thu, 17 Dec 2020 10:05:51 -0800 (PST)
 MIME-Version: 1.0
-From: Nicolas CAPEYRON <nicolas@capeyron.fr>
-Date: Thu, 17 Dec 2020 16:19:33 +0100
-Message-ID: <CAAhtBmOeq4vd=7MTJL_Qib-erwvMFJthTN+QnA0K_ykXk-G-Yw@mail.gmail.com>
-Subject: Re: WireGuard on macOS stopped working after 1.0.10 update
-To: wireguard@lists.zx2c4.com
+References: <0c6e326e-139c-012b-fb47-95cc85560485@blackberry.com>
+In-Reply-To: <0c6e326e-139c-012b-fb47-95cc85560485@blackberry.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 17 Dec 2020 19:05:40 +0100
+X-Gmail-Original-Message-ID: <CAHmME9oRUm_D7QSA+zFB8cHW9OQZ-rq4pmDGY1G86VbcUBZaEA@mail.gmail.com>
+Message-ID: <CAHmME9oRUm_D7QSA+zFB8cHW9OQZ-rq4pmDGY1G86VbcUBZaEA@mail.gmail.com>
+Subject: Re: Unexpected error re-initializing Wintun 0.9.2
+To: Brad Spencer <bspencer@blackberry.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailman-Approved-At: Thu, 17 Dec 2020 18:27:22 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -74,12 +72,23 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Thanks a lot !
-Save my day !
+Hi Brad,
 
-Wireguard 1.0.10 on macos is a lot faster !
+Thanks for the clear bug report and reproducer. I've never actually
+seen anybody use the iso646.h operators before in real code... First
+time for everything I guess!
 
---=20
-Nicolas CAPEYRON
-Conseil en h=C3=A9bergement, architecture infra web
-06 26 12 27 17 - https://www.sysadminbadass.com
+It looks like the issue is that on each iteration of that loop, you're
+calling LoadLibrary and FreeLibrary. Instead, only call LoadLibrary
+once per process. Then you won't face this issue.
+
+I've written a patch, however, to support the pathological library
+reloading pattern in that example, though:
+https://git.zx2c4.com/wintun/commit/?id=7710ff187b5079d9f2573608b6cb33b15262b2b8
+This will be part of 0.10.1 or 0.11, whichever comes first. But, I'd
+really recommend only calling LoadLibrary once per process, regardless
+of that fix.
+
+Thanks again for the report.
+
+Jason
