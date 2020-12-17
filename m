@@ -2,65 +2,63 @@ Return-Path: <SRS0=K437=FV=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C6303C4361B
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 17 Dec 2020 18:30:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AA9DC4361B
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 17 Dec 2020 21:54:05 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 3373E2389F
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 17 Dec 2020 18:30:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 3373E2389F
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=blackberry.com
+	by mail.kernel.org (Postfix) with ESMTPS id AEB792388E
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 17 Dec 2020 21:54:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org AEB792388E
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id efe11f04;
-	Thu, 17 Dec 2020 18:22:14 +0000 (UTC)
-Received: from smtp-pc10.blackberry.com (smtp-pc10.blackberry.com
- [74.82.81.42])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id de2fbd63
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 61624554;
+	Thu, 17 Dec 2020 21:45:29 +0000 (UTC)
+Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d7fe254c
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 17 Dec 2020 18:22:12 +0000 (UTC)
-Received: from pps.filterd (mhs400cnc.rim.net [127.0.0.1])
- by mhs400cnc.rim.net (8.16.0.43/8.16.0.43) with SMTP id 0BHIQtc3083679;
- Thu, 17 Dec 2020 13:30:43 -0500
-Received: from mhs300cnc.rim.net (mhs300cnc.rim.net [10.3.24.129])
- by mhs400cnc.rim.net with ESMTP id 35g9yqgd53-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 17 Dec 2020 13:30:42 -0500
-Received: from pps.filterd (mhs300cnc.rim.net [127.0.0.1])
- by mhs300cnc.rim.net (8.16.0.43/8.16.0.43) with SMTP id 0BHIQYWl030399;
- Thu, 17 Dec 2020 13:30:42 -0500
-Received: from [10.242.25.74] (ci0700000002091.rim.net [10.242.25.74])
- by mhs300cnc.rim.net with ESMTP id 35dca8828f-1;
- Thu, 17 Dec 2020 13:30:42 -0500
-Subject: Re: Unexpected error re-initializing Wintun 0.9.2
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-References: <0c6e326e-139c-012b-fb47-95cc85560485@blackberry.com>
- <CAHmME9oRUm_D7QSA+zFB8cHW9OQZ-rq4pmDGY1G86VbcUBZaEA@mail.gmail.com>
-From: Brad Spencer <bspencer@blackberry.com>
-Message-ID: <652c9044-ecee-5392-b7d1-fe581c882514@blackberry.com>
-Date: Thu, 17 Dec 2020 14:30:41 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.5.1
+ Thu, 17 Dec 2020 21:45:27 +0000 (UTC)
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 39dc59c9
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 17 Dec 2020 21:46:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :references:in-reply-to:from:date:message-id:subject:to
+ :content-type; s=mail; bh=x/bAv3FYev6ju+AEsLO3yD5vUmk=; b=SINxR8
+ UnkUM+XJQmPK8Hd+RJaVyi47Q5S2CMZW4olHRT70F2pu3CzkObA9bioqAMf4HlME
+ agtt5uj5cppMAIzl8F7jpCA6dPicSZ+f8GV4R7uh7mfPVey9+TZ5YbGBuG0hc1rz
+ Cdrvth9I2RrCq96U2sjw23e8MwZQH8ZE6lJww8h7/1XfClAy7Pq7yXnBLp+ajUcE
+ gm3Rq493JgnaBS6wUwh7oQloOLZzUr+iYZ5zvvTNLhDj8oyL9HX/6XILX4TrfxKq
+ nfptSEGwjnR2lr9o8ihYT4dYS8S3mBts8xjZHyyGYYpH2mZMePUanU0tdWQkh1Z/
+ 2sd7zg4uspLU94dg==
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 409e501e
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 17 Dec 2020 21:46:13 +0000 (UTC)
+Received: by mail-yb1-f172.google.com with SMTP id d37so101201ybi.4
+ for <wireguard@lists.zx2c4.com>; Thu, 17 Dec 2020 13:54:00 -0800 (PST)
+X-Gm-Message-State: AOAM530CMfZJCHDvTeBFQbrI9+tuCrqpC8kWdIkJkRNdysvyr7RMw5fn
+ aiAR/KlHLTEOgICdNihI/UzY3D69jHtQ9AGWr88=
+X-Google-Smtp-Source: ABdhPJzCijuhFPukeAievlj4TUnNEdD31wZN4VXnhnl96QazUm3+DpbaqEVbbq6qqdJDGdXtznx2715jV9o6jG247gg=
+X-Received: by 2002:a25:2054:: with SMTP id g81mr1945258ybg.178.1608242040242; 
+ Thu, 17 Dec 2020 13:54:00 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9oRUm_D7QSA+zFB8cHW9OQZ-rq4pmDGY1G86VbcUBZaEA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.343, 18.0.737
- definitions=2020-12-17_13:2020-12-15,
- 2020-12-17 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 bulkscore=0
- spamscore=0 suspectscore=0 mlxlogscore=760 mlxscore=0 malwarescore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2009150000 definitions=main-2012170126
+References: <A9F23E70-C8AA-4C54-99E4-63E2E40FE0FA@glenn.id.au>
+ <CAHmME9pzNQeEdDnvu8mXFnYHgNibuqSLi5viAtYjDrF0wbEMoQ@mail.gmail.com>
+In-Reply-To: <CAHmME9pzNQeEdDnvu8mXFnYHgNibuqSLi5viAtYjDrF0wbEMoQ@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 17 Dec 2020 22:53:49 +0100
+X-Gmail-Original-Message-ID: <CAHmME9qCRWXMVjuz6g6M0wMvhj9v90sTkHNOFCr+Jht-rUNFoQ@mail.gmail.com>
+Message-ID: <CAHmME9qCRWXMVjuz6g6M0wMvhj9v90sTkHNOFCr+Jht-rUNFoQ@mail.gmail.com>
+Subject: Re: WireGuard on macOS stopped working after 1.0.10 update
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -75,15 +73,37 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Thanks!  That makes sense.  I didn't pick up on the fact that we were 
-loading and unloading the library, or its significance.  I agree that 
-there is no reason to do so.  I think we just ended up with that pattern 
-as a natural step in our migration from the pre-0.9 API.
+Hi list,
 
-BTW, I know it's unusual, but we find that the word "not" stands out 
-more clearly than a lone "!" character.  I guess a few slipped in to the 
-test program. :)
+To provide an update on this issue:
 
--- 
-Brad Spencer
+On Thu, Dec 17, 2020 at 2:43 AM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+> I'm really very sorry about this regression. I fixed it earlier today
+> already here: https://git.zx2c4.com/wireguard-apple/commit/?id=20bdf46792905de8862ae7641e50e0f9f99ec946
+> but now we're stuck having to wait for Apple's review of the fix. This
+> is as frustrating for me as it is for you.
 
+The macOS update went through, and version 1.0.11 is now available
+from the App Store. In my tests, this fixes the issue, but some
+confirmation from list subscribers is always helpful.
+
+However, they rejected the iOS update, due to the link in the version
+info window to https://www.wireguard.com/donations/ that we've had on
+there for two years. You can see their rejection here:
+https://data.zx2c4.com/apple-asks-me-to-remove-donation-link-from-app.png
+https://data.zx2c4.com/the-screenshot-that-apple-provided.png
+
+Not wanting to hold up getting this fix deployed, I quickly removed
+the link and resubmitted to the App Store:
+https://git.zx2c4.com/wireguard-apple/commit/?id=a4fc0f64b8bca8afae5abab37b81ba0b45836975
+
+So now the process of getting that fix deployed on iOS starts from the
+beginning again. It could take another 24 hours. It could take a full
+month. The process is opaque, and try as I may, I don't know what else
+I can do to get the fix out faster.
+
+And again, I'm really very sorry about the regression in the code, and
+that we didn't catch it earlier. I hope the update gets deployed to
+you all sooner rather than later.
+
+Jason
