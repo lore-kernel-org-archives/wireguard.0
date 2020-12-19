@@ -2,65 +2,76 @@ Return-Path: <SRS0=qzPy=FX=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0AB95C4361B
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 19 Dec 2020 18:18:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40DFDC4361B
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 19 Dec 2020 18:49:02 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 580692389F
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 19 Dec 2020 18:18:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 580692389F
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id 7020C239EB
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 19 Dec 2020 18:49:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 7020C239EB
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id be8886bf;
-	Sat, 19 Dec 2020 18:08:03 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6ac4166c
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ddcf9a31;
+	Sat, 19 Dec 2020 18:40:00 +0000 (UTC)
+Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com
+ [2607:f8b0:4864:20::d2b])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id dca597fb
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sat, 19 Dec 2020 18:08:00 +0000 (UTC)
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0eff5db0
- for <wireguard@lists.zx2c4.com>;
- Sat, 19 Dec 2020 18:08:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=JGZGJuuQ/IeZBuFaIkAfgPMjhy4=; b=gxzzEk
- j8OytKo9bBfhJxRDBh4Ckh/gk9OYrKFZnidS/w6W6SUwka7aMDha6LmifqalkMr4
- TWVEX8Jt8QiEq8428lqs/oopKEkkifJdAbdhOeqPxJ/r+ZdkM3HjkXGM8dFxPk0l
- vHiHxSsm9r89MD8z3ZVLLIOIqtWBdrZ2PX75BbqbuwGsEmdTnkGADLI++ZWXxzE4
- HMRrUpODTeuZEyf35LNrEoBxHe4dNFQJ+4D06XBewM918Xc4cLAKVJAYBqbTmWpN
- L23BalPLcm+v2CgD7FdMP68a5QDsw0NR9JGvHY1aCvNUDZhXjPqNw0aNatdRUu94
- Pf+ez0h0134hmjbA==
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id c35a4ccc
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Sat, 19 Dec 2020 18:08:46 +0000 (UTC)
-Received: by mail-yb1-f177.google.com with SMTP id w135so5029635ybg.13
- for <wireguard@lists.zx2c4.com>; Sat, 19 Dec 2020 10:16:48 -0800 (PST)
-X-Gm-Message-State: AOAM530nVYPpCIe0IObsfCFPObNXMyO0dzDDp17pMKbNT4vswbVLwWub
- oPFQO/vQpXpnAnX74DY5CtwZsDuoTTBgvnY0NXw=
-X-Google-Smtp-Source: ABdhPJxxjOD8+toICRZxZLwiQtmrv7K/U0K7WbIgNTten9sBdViajvtS/e5QriD7s88S/lF7vBME5o2o9P9BRIHRyeo=
-X-Received: by 2002:a25:2cd6:: with SMTP id
- s205mr13096541ybs.279.1608401807814; 
- Sat, 19 Dec 2020 10:16:47 -0800 (PST)
+ Sat, 19 Dec 2020 18:39:57 +0000 (UTC)
+Received: by mail-io1-xd2b.google.com with SMTP id i18so5247787ioa.1
+ for <wireguard@lists.zx2c4.com>; Sat, 19 Dec 2020 10:48:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=Oiwbc08BTbF43yzfLrXV5WApIcuC2I8Nuo02/mzNNqI=;
+ b=TeBi40awI0ZtZIe8K+NSGV9NAEDPXu+eWRlHygwPYAD83sXV5gt+HUAHAvIAMhNOPD
+ X33RacyrM3C07erveDyPJn/aLVYVTfRAPRSdOKUEcheEvQXACNJ/dRfObWRdiR2l3zvY
+ 4TvnUFi50NYKmC6Najga3ZCL/rUAfQ8XycfrhHLBFgG2DPCJVfE9Ym4ASqt8T+fl5rvv
+ YLbQljTKie4BOKSQ+4YAYKRLeiO57hx4XyHLOs5cdLL91OgEizkesKXWTRRqhefEYHdj
+ +2CXFYic5SpugdCkhPR8tNgW4uMw8VXq9qA85SJnG3ZSW+xRLfTlJEMDpBkVCH9bfhhA
+ 48OQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=Oiwbc08BTbF43yzfLrXV5WApIcuC2I8Nuo02/mzNNqI=;
+ b=WGhR+r9mGORhYPsUXb91LqqJsk7wOp8DoBxLqswgpp0uin3qKZlTYfXy2dU+buzjC/
+ QVpY0wHqt5n7IKHpOUYNOooQlv8+9EjVwjFDj+m9Jn7T8R+h5qQTL3kaeiDT2YwYoHr8
+ 2vti5Q/qS432/iZFIhw8KJorkeI4FtLIea/gQeXH2y6ft5M/5OTsVVWoEjsoAYAN1OZz
+ /M/pJekmapnObd/a6IwdextMSVgFT3K64SJXNBAR6axb+MLflXGWtPQYg+OvRg2YdASP
+ iB1RMXFEnFl60c9jSvEBRJzMT11LP9EWr0n8O0P5sconSONcbXuFxvMVrHCxOj/un6VE
+ bjeA==
+X-Gm-Message-State: AOAM530q+66CQ81wAoF/iwrHlXfHm60Q8m4nfV4owlX2Tl6RffDIV+Fq
+ kq/KWjIqjDEx7aJl0vb/gEvCRteFtLyw+WkNuU8=
+X-Google-Smtp-Source: ABdhPJzxU7nY76UkhcXj+js7eqQYBmyg09+Ogrbztto4vXzNNdQbCFNBro2AuxLqQqRbN/jmtsGMadJelqai29NmJ+4=
+X-Received: by 2002:a05:6602:2c41:: with SMTP id
+ x1mr9050337iov.125.1608403725598; 
+ Sat, 19 Dec 2020 10:48:45 -0800 (PST)
 MIME-Version: 1.0
-References: <90c10d21558d31825a56aac48692b080@essd.nl>
- <CAHmME9qmYATYk2oV0T3OmnE4J1uTy49p09gyuRHdrGNZHKsejg@mail.gmail.com>
- <9c5569cf88048c3ceb343340e68d7564@essd.nl>
-In-Reply-To: <9c5569cf88048c3ceb343340e68d7564@essd.nl>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sat, 19 Dec 2020 19:16:37 +0100
-X-Gmail-Original-Message-ID: <CAHmME9pjcBFBQM67iTOjG+HLH8OnMUhxNOX2rne2umiNW9bHew@mail.gmail.com>
-Message-ID: <CAHmME9pjcBFBQM67iTOjG+HLH8OnMUhxNOX2rne2umiNW9bHew@mail.gmail.com>
-Subject: Re: "BUG: scheduling while atomic" on 5.4 kernels with PREEMPT_RT
-To: Erik Schuitema <erik@essd.nl>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+References: <CAA6-MF-fXL58SWcr6ct+iKLutObvM7xNoRTUW=iwfXUjcPsUGQ@mail.gmail.com>
+ <CAHmME9offZGOgySFGF-uzKCQ_NFwGQAy06HCE4=3iuwqprMc=A@mail.gmail.com>
+ <ruafXiXluY0DZUNuLCh3Pzrxpk8CIkHqfrDjsnZ1IOfobylVKP0wc8w_lfT4JlpTbIC1nZ3mjeGb4t2fYfOBEqARrKvZ1_cHIlXBatZKZlU=@protonmail.ch>
+ <CAHmME9oA9iibjYJpkO6COjNkK=h3qTBfH0X95JCuFbACNdxzGA@mail.gmail.com>
+ <C1A15065-7B91-437F-8B83-FF2EB10DD33E@kloenk.de>
+In-Reply-To: <C1A15065-7B91-437F-8B83-FF2EB10DD33E@kloenk.de>
+From: Janne Johansson <icepic.dz@gmail.com>
+Date: Sat, 19 Dec 2020 19:48:34 +0100
+Message-ID: <CAA6-MF_ABTnarK6886G_SSxnpcqF6zcspDvzYfzR=O_f8uk_ug@mail.gmail.com>
+Subject: Re: MacOS and wg 1.0.11 issues (for me)
+To: Finn Behrens <me@kloenk.de>
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ Laura Smith <n5d9xq3ti233xiyif2vp@protonmail.ch>, 
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -75,21 +86,18 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Erik,
+Den l=C3=B6r 19 dec. 2020 kl 12:56 skrev Finn Behrens <me@kloenk.de>:
+> I see problems regarding DNS resolution when setting a DNS entry into the=
+ config. But pinging my wg hosts via ipv4 addresses in the tunnel works. Di=
+d Janne set a IP address or a hostname for DNS?
+> Not sure why my system does not work when setting a dns, but as I don=E2=
+=80=99t use that feature I did not debug it yet.
+>
 
-So far as I can tell, upstream is fine with this. I'd encourage you to
-move to the newer LTS, 5.10. The compat stuff has always been pretty
-meh. It was an important step in getting WireGuard bootstrapped, of
-course, but just look at this horror:
+I set ips on my DNS config, and it prevents the tunnel from
+activating, which is easily seen on the gui since no data ever gets
+"received" and no data after the initial handshake gets sent no matter
+how much I ping.
 
-https://git.zx2c4.com/wireguard-linux-compat/tree/src/compat/compat.h
-
-I'll keep it working as people need, but folks should really really
-move to the new LTS, now that it's out.
-
-I've also backported upstream commit-by-commit to 5.4 (and android
-4.19), for stable kernels, as used by Oracle, SUSE, Google, and so on:
-https://git.zx2c4.com/wireguard-linux/log/?h=backport-5.4.y
-This too is much preferable to using the compat stuff.
-
-Jason
+--=20
+May the most significant bit of your life be positive.
