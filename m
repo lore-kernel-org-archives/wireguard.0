@@ -2,63 +2,70 @@ Return-Path: <SRS0=TH/E=FY=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E4C18C4361B
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 20 Dec 2020 21:11:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D6F2CC4361B
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 20 Dec 2020 22:54:43 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 37CB922273
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 20 Dec 2020 21:11:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 37CB922273
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id 05F3C22CBB
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 20 Dec 2020 22:54:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 05F3C22CBB
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4258a230;
-	Sun, 20 Dec 2020 21:02:16 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 357bf404
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ec8e7bc8;
+	Sun, 20 Dec 2020 22:45:44 +0000 (UTC)
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com
+ [2a00:1450:4864:20::629])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id aae21478
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 20 Dec 2020 21:02:15 +0000 (UTC)
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c97d60ef
- for <wireguard@lists.zx2c4.com>;
- Sun, 20 Dec 2020 21:03:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=zmDED1Y+07Jzv5N5n9KH6ZmggEQ=; b=TlHwmD
- ZGs0AMG7W1B76oAS2fgJDNIKPKU1NDV3KZFmW4eTpQ80UZWQToQ1V0vBUVcT4VA0
- MMtunVyFA0qtfWpTaFVq85TjuNN/xgiylil0Am72aNbMjUi8q75nHqi2T2l8l2jV
- W5nR1jb1b9tJHczXi8NC2DYpQRfhLzx/gioVYh04RMpFrdA1hWEENNqN+f2CKuX7
- ABLF1jERPlpKPDwac55aUOflyQ6/E00ZzSR9njSirczWd2C8UAYETH8M9D6696DD
- p7CdU68yZEDgNgaQkep/ONBvl9x75Sc9xT3QNnYPOa/DH669E2xXIggj2izFo8bz
- DnCBi5ftlTW2Lupw==
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 02461d07
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Sun, 20 Dec 2020 21:03:00 +0000 (UTC)
-Received: by mail-yb1-f182.google.com with SMTP id j17so7139329ybt.9
- for <wireguard@lists.zx2c4.com>; Sun, 20 Dec 2020 13:11:11 -0800 (PST)
-X-Gm-Message-State: AOAM5315Tm11SE2z5rYNYEU7Vdn8Zssz7mPJYOUMGvVuTwmUlTPD6JSJ
- RXVfqIlEgzvl3/l1ycD6d03vhjgT1Nwn1P4lenQ=
-X-Google-Smtp-Source: ABdhPJzwDxy3f0LzIY+2Z+AQrvE7snpg47zmrQJtcuWWdaZy2pS0N6uFr10oKvcfkZu+YsLadEXVlHGoUZbqIsmdbjg=
-X-Received: by 2002:a25:4845:: with SMTP id v66mr15227490yba.178.1608498670933; 
- Sun, 20 Dec 2020 13:11:10 -0800 (PST)
+ Sun, 20 Dec 2020 22:45:41 +0000 (UTC)
+Received: by mail-ej1-x629.google.com with SMTP id g20so10976302ejb.1
+ for <wireguard@lists.zx2c4.com>; Sun, 20 Dec 2020 14:54:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=CkUdFQL9wTy5eVddbtblAdpoMySIjvJH2/4TCpnWDYw=;
+ b=mlrRLK1HsyUYpmtKQO5hZ7jK9l/ohEobbUKnT9ywxExc8wWj5g9+vOaBI9JKGh/qV3
+ n1faYGPEGUMsGxTdXNNlGtWpTE/7FqFXd5pE6JTxL76nSG84w6Q/jeqYqpyaAzk/olSt
+ Uig1Lew8K4M9jhdrpmEhnQOKavaemkC351DW4GJ/bXtwmuF20bmKtneF4LrZ5bseFD5N
+ HVB2TjwOQFJo1K4TF7uBBSX7A4dbYh1IQXCX53Xmu1JiUJ6R4IiuEJAqzu2ifeF1ljwc
+ qaWagGIGV/eApESGUprlAlFrNLSfuMoMLKqOiaU+qng9ZgldDL9nRuC9j2ngmuaGm73a
+ WFjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=CkUdFQL9wTy5eVddbtblAdpoMySIjvJH2/4TCpnWDYw=;
+ b=Zxhw2EHx7S6X2ZHWHJtWqwJTmwyHbLbd3M0JzSLy3eGtQOOyrC/tZYYUbnrEQxQSI1
+ qA0Y4PwRrShXoWjIOAR18ghyBE4RMpYI44CUPTMnAKpSmmjQiFB6rOC76viocL3aN0cK
+ vT++2Jm7vcQKkK8bXHKRdz3RTief6D7iK3cUjJ3sWCjxhDnOvC892nv5faw6zQOD1BMh
+ 3BJhXVBs1lZ/JcV1cGTrVaA4rfsDKQTBUPpgtjwd8H1N2HSVaiF/Xjfn86CizqOP9fFx
+ /OuGQNqCn30PHXZ7gxGF+SahdFWs2vOP/4T+q+v/H5b2btBmiiY0GV/goLq2l7YvoNO5
+ VZcw==
+X-Gm-Message-State: AOAM5315TUVrjVA5JHGzAHZLCgBBSm5CfaRKRzCINR+QGgYQEEUDcAba
+ 2vd/kCe8wodE9XOPA3dPNevPqgsG9ABslANPi6k=
+X-Google-Smtp-Source: ABdhPJyyxWaNbwpS09ArdttQuf9u1W8a+7gjDzEjjLiJVTUBwJLU3NBmJ465hLs63yRqen1EV/J2sftVxMElk+7b0A4=
+X-Received: by 2002:a17:906:814a:: with SMTP id
+ z10mr12906125ejw.96.1608504875637; 
+ Sun, 20 Dec 2020 14:54:35 -0800 (PST)
 MIME-Version: 1.0
-References: <000000000000e13e2905b6e830bb@google.com>
-In-Reply-To: <000000000000e13e2905b6e830bb@google.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sun, 20 Dec 2020 22:11:00 +0100
-X-Gmail-Original-Message-ID: <CAHmME9qwbB7kbD=1sg_81=82vO07XMV7GyqBcCoC=zwM-v47HQ@mail.gmail.com>
-Message-ID: <CAHmME9qwbB7kbD=1sg_81=82vO07XMV7GyqBcCoC=zwM-v47HQ@mail.gmail.com>
-Subject: Re: UBSAN: object-size-mismatch in wg_xmit
-To: Netdev <netdev@vger.kernel.org>
-Cc: syzkaller-bugs@googlegroups.com, 
- WireGuard mailing list <wireguard@lists.zx2c4.com>,
- Eric Dumazet <edumazet@google.com>
+References: <CAF-5T9H9wiZZ7qT_r5PYhj0q6cHogdjXQx38PDQ3QXXm3SftJg@mail.gmail.com>
+ <CAHmME9p6U_11+caCpxtaQd=b8OhGf51sW+CH1fRDpALNcyM4MQ@mail.gmail.com>
+ <CAF-5T9EZ34sRrs=o8KiKUBbbUxLbbyZ0_RfOJLOpHcW4n_DbEw@mail.gmail.com>
+ <75011a3f-c143-d88e-c5c9-b13fd5999e3e@westermo.com>
+In-Reply-To: <75011a3f-c143-d88e-c5c9-b13fd5999e3e@westermo.com>
+From: Ronan Lucio <ronanlucio@gmail.com>
+Date: Mon, 21 Dec 2020 11:54:24 +1300
+Message-ID: <CAF-5T9FRtAGnZ9aPReLn83kCJgwmkijSBvutoJkyoxYcLEHhhQ@mail.gmail.com>
+Subject: Re: Default route on windows
+To: Matthias May <matthias.may@westermo.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -74,71 +81,28 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hmm, on first glance, I'm not sure I'm seeing the bug:
+Hi Matthias,
 
-On Sun, Dec 20, 2020 at 5:54 PM syzbot
-<syzbot+8f90d005ab2d22342b6d@syzkaller.appspotmail.com> wrote:
-> UBSAN: object-size-mismatch in ./include/linux/skbuff.h:2021:28
-> member access within address 0000000085889cc2 with insufficient space
-> for an object of type 'struct sk_buff'
->  __skb_queue_before include/linux/skbuff.h:2021 [inline]
->  __skb_queue_tail include/linux/skbuff.h:2054 [inline]
->  wg_xmit+0x45d/0xdf0 drivers/net/wireguard/device.c:182
+I'm not sure I got your point, but I don't think so.
+I'll have to do some additional tests and will got back later with
+more detailed data.
 
-The code in question is:
+Thanks,
+Ronan
 
-        struct sk_buff_head packets;
-        __skb_queue_head_init(&packets);
-...
-        skb_list_walk_safe(skb, skb, next) {
-               skb_mark_not_on_list(skb);
-
-               skb = skb_share_check(skb, GFP_ATOMIC);
-               if (unlikely(!skb))
-                       continue;
-...
-               __skb_queue_tail(&packets, skb);
-       }
-
-We're in a netdev's xmit function, so nothing else should have skb at
-that point. Given the warning is about "member access", I assume it's
-the next->prev dereference here:
-
-static inline void __skb_queue_before(struct sk_buff_head *list,
-                                     struct sk_buff *next,
-                                     struct sk_buff *newsk)
-{
-       __skb_insert(newsk, next->prev, next, list);
-}
-
-So where is "next" coming from that UBSAN would complain about
-object-size-mismatch?
-
-static inline void __skb_queue_tail(struct sk_buff_head *list,
-                                  struct sk_buff *newsk)
-{
-       __skb_queue_before(list, (struct sk_buff *)list, newsk);
-}
-
-It comes from casting "list" into an sk_buff. While this might be some
-CFI-violating polymorphism, I can't see why this cast would actually
-be a problem in practice. The top of sk_buff is intentionally the same
-as sk_buff_head:
-
-struct sk_buff_head {
-       struct sk_buff  *next;
-       struct sk_buff  *prev;
-...
-struct sk_buff {
-       union {
-               struct {
-                       struct sk_buff          *next;
-                       struct sk_buff          *prev;
-...
-
-I'd suspect, "oh maybe it's just a clang 11 bug", but syzbot says it
-can't reproduce. So that makes me a little more nervous.
-
-Does anybody see something I've missed?
-
-Jason
+On Mon, Dec 21, 2020 at 10:19 AM Matthias May <matthias.may@westermo.com> wrote:
+>
+> On 20/12/2020 19:18, Ronan Lucio wrote:
+> > Hi Jason,
+> >
+> > I did it, but in this case, I got no Internet access
+> >
+> > On Sun, Dec 20, 2020 at 1:21 AM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+> >>
+> >> Add 0.0.0.0/0 to your AllowedIPs.
+>
+> What is your remote end?
+> Does it forward your traffic, and NAT it towards the internet?
+>
+> BR
+> Matthias
