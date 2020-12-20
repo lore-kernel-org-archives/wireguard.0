@@ -1,84 +1,76 @@
-Return-Path: <SRS0=oxb/=FZ=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=uYrD=F2=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 59BD7C433DB
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 21 Dec 2020 13:51:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5F0CC433DB
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 22 Dec 2020 15:34:14 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id C59E822BED
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 21 Dec 2020 13:51:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org C59E822BED
+	by mail.kernel.org (Postfix) with ESMTPS id B99D723105
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 22 Dec 2020 15:34:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org B99D723105
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fbbd90f6;
-	Mon, 21 Dec 2020 13:42:27 +0000 (UTC)
-Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com
- [2607:f8b0:4864:20::b32])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7b5a449a
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b593cf7e;
+	Tue, 22 Dec 2020 15:25:01 +0000 (UTC)
+Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com
+ [2607:f8b0:4864:20::729])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 111db590
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 21 Dec 2020 13:42:25 +0000 (UTC)
-Received: by mail-yb1-xb32.google.com with SMTP id k78so8826055ybf.12
- for <wireguard@lists.zx2c4.com>; Mon, 21 Dec 2020 05:51:28 -0800 (PST)
+ Sun, 20 Dec 2020 19:12:55 +0000 (UTC)
+Received: by mail-qk1-x729.google.com with SMTP id v126so2612736qkd.11
+ for <wireguard@lists.zx2c4.com>; Sun, 20 Dec 2020 11:21:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=22WfrYqwVdHV4R9eUfnFdyTLajoJ14FZuqG4/EZXiBg=;
- b=hEivyO3LAqfRO7APVQNvlx80TFpDZAMkK9Tfh8FYVr3fN0r/Zk+/pTNRHJNqfX1Ct0
- udvsyN91BPHDXD/1xV5fOmoQXDojvukiY7WDXkv2hJYxTCCluvIQXhBE1aRpleBk3uzE
- VDbqoOyZB2Bv4dBgzgCt/hA/p+6aplEP1Vo+7xlN4cBMRUVlau+dGJhlfiEgpKRtA4cS
- XUymUTFtgedYJDbbbYFoXaK4w8RWfQzQvhN6FHjkuebPSQdWz9/VN9yv7CXEJPuznwlC
- 0nFe7HJ2BD6vznil1FyQlsC2LNB3nbdHlxiuKWBJEDXu2cuSDqA0xLGqvjuHxU4sXU0Y
- bQqw==
+ h=date:from:to:subject:message-id:mime-version:content-disposition;
+ bh=DP1hhlO4POtAHEDO8Z40GnTEulacV5nYEMloexJEDxo=;
+ b=dGBVVWGcKyEneyg4M3NyR1RjxMu9VmHyjwfLrsVTUpwDbNL4u6HvueApZPqLolkGLU
+ LctVOK/XTut/3Mc1YDxkNMyAB6cNDCBIpIEo741EnmVrAl6q8p8iZ09TxPtDgqP0pRgG
+ USoSLuzUiTggglbphUv2gJ2lOyHtqzsS1JR9JDRQDxbU/ZZQTosOSZBWpaPpNTn1DUSo
+ LQBwlkEOVBgTGKNJd+qwqBmG9f1EYFIcoPjtIT1Vt1fmnhqBUlYXq4ws35anr5JKC9qj
+ oHlv+M0SvdIGRPtkDrykUGI/hOZj3gqjo16iyXwYdgoCD5dZ2sK9rN29BP9aLS6FxpIA
+ ELpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=22WfrYqwVdHV4R9eUfnFdyTLajoJ14FZuqG4/EZXiBg=;
- b=mzklpFJxq5IryzOgv9FH1iGfsv60C2TxOulJaFk6aCggpYAix+P6off4RJdu7aeiAM
- RRZObHIL1h+HOM6vbRd1XaeIvpOrpRAtJcJ6ZyWUlsMabkYjQxvg5zbVtLDkB4KX2ljU
- Io6dIe+NciK6EUqatU+wPTbixXd6LsEnMa9puFCatUDAOJy1WR2cvj6dMYVLTMff3O3B
- 27fKsaKCwT0S+l+yAzy16UumhX9qRgRO7KVzcfM7Qryle1zQ3AKrDxjErDd1l96hfGrD
- gmgAQ4Kpk+X359LyB26Aa71vt6X/D+BtCofyCvHnTvEQ6IrQHubrQoTxZpRjtuYDY2rL
- Xqqg==
-X-Gm-Message-State: AOAM530b/JNjb0IrVngSavVw0duTPMaKZqc1T0iRFUtxVbz7CXzDdDc4
- 3suQ5PgBPc5oPQaixh1l2HUQZvoObLKmhrv9XZ0=
-X-Google-Smtp-Source: ABdhPJxcWxnUc+rwQRDI3Z0RTTF/LyrVAt5D2vgqWNNDeUaVA4VaKDcfByXRkjUfG6dWy5TDydUbKo8m1BZtu1WNZkM=
-X-Received: by 2002:a5b:949:: with SMTP id x9mr22811402ybq.33.1608558687798;
- Mon, 21 Dec 2020 05:51:27 -0800 (PST)
+ h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+ :content-disposition;
+ bh=DP1hhlO4POtAHEDO8Z40GnTEulacV5nYEMloexJEDxo=;
+ b=ZEx6v9+LM93eI2yhcVaKRAubcY58Gm0b6sLFlW/gojDoW6OK+if6Sa/JETWfrFjMKV
+ qSOB3pM1Itk/6YBK9OHd4aDcSAyVcVBcFYf/Qm22vVmk0/kxvAgZvqoZWeXpD9jpI+qn
+ vsv4r6yb5m6+ov3mrvGFnPtvlAUu0CA8WAA1wO4hUM06ogPhNslcWabWjq1ho0kzhqI1
+ H96tyBJQp3p2Jz5Wh+W9UP6iPp2DPVa0+jzZvZwdwon2ac2U5iDR3n49jjKxwWOA+BqB
+ 3B9wSQJFS3GwoMZR0H/hO90K6r7/R/8v24Sj4ThPNyo1Cj0uiuJUdIPZlEX2yKeCvnrb
+ h/Jg==
+X-Gm-Message-State: AOAM533Xub6cHPngJ4ccvH63B520BM0R13w/9IiaFIb2LO5o9Q8LguXz
+ zgyqt982sAO29DhPANLwZ6lwlmtfPO0=
+X-Google-Smtp-Source: ABdhPJy7jNC83+v52TMl73dVLfd+0lwDHDl7RvG5e+K0fg4vKPrqm4QhptelD4Bp4mSNA1jNDXZBhQ==
+X-Received: by 2002:a05:620a:22a5:: with SMTP id
+ p5mr14688754qkh.69.1608492111233; 
+ Sun, 20 Dec 2020 11:21:51 -0800 (PST)
+Received: from p51.localdomain
+ (bras-base-mtrlpq4706w-grc-15-174-88-167-102.dsl.bell.ca. [174.88.167.102])
+ by smtp.gmail.com with ESMTPSA id f5sm3488707qto.67.2020.12.20.11.21.50
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 20 Dec 2020 11:21:50 -0800 (PST)
+Received: by p51.localdomain (Postfix, from userid 1000)
+ id C13701EB8001; Sun, 20 Dec 2020 14:21:49 -0500 (EST)
+Date: Sun, 20 Dec 2020 14:21:49 -0500
+From: jrun <darwinskernel@gmail.com>
+To: wireguard@lists.zx2c4.com
+Subject: wg trunk (TM) traffic isolation: VRF vs netns
+Message-ID: <20201220192149.bojbghrxm6g3yq7q@p51>
 MIME-Version: 1.0
-References: <20201128193335.219395-1-masahiroy@kernel.org>
- <20201212161831.GA28098@roeck-us.net>
- <CANiq72=e9Csgpcu3MdLGB77dL_QBn6PpqoG215YUHZLNCUGP0w@mail.gmail.com>
- <8f645b94-80e5-529c-7b6a-d9b8d8c9685e@roeck-us.net>
- <CANiq72kML=UmMLyKcorYwOhp2oqjfz7_+JN=EmPp05AapHbFSg@mail.gmail.com>
- <X9YwXZvjSWANm4wR@kroah.com>
- <CANiq72=UzRTkh6bcNSjE-kSgBJYX12+zQUYphZ1GcY-7kNxaLA@mail.gmail.com>
- <CAK7LNARXa1CQSFJjcqN7Y_8dZ1CSGqjoeox3oGAS_3=4QrHs9g@mail.gmail.com>
- <55261f67-deb5-4089-5548-62bc091016ec@roeck-us.net>
-In-Reply-To: <55261f67-deb5-4089-5548-62bc091016ec@roeck-us.net>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Mon, 21 Dec 2020 14:51:17 +0100
-Message-ID: <CANiq72mQ=5JpMh1OZfJo6dypF0KHSUp9Umd_5qwATxEMgO5OmQ@mail.gmail.com>
-Subject: Re: [PATCH v3] Compiler Attributes: remove CONFIG_ENABLE_MUST_CHECK
-To: Guenter Roeck <linux@roeck-us.net>
-Cc: Masahiro Yamada <masahiroy@kernel.org>,
- Greg KH <gregkh@linuxfoundation.org>, 
- "Jason A . Donenfeld" <Jason@zx2c4.com>,
- Nathan Chancellor <natechancellor@gmail.com>, 
- Nick Desaulniers <ndesaulniers@google.com>, Shuah Khan <shuah@kernel.org>, 
- clang-built-linux <clang-built-linux@googlegroups.com>, 
- linux-kernel <linux-kernel@vger.kernel.org>, 
- "open list:KERNEL SELFTEST FRAMEWORK" <linux-kselftest@vger.kernel.org>, 
- Network Development <netdev@vger.kernel.org>, wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+X-Mailman-Approved-At: Tue, 22 Dec 2020 16:24:59 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -93,14 +85,38 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Mon, Dec 21, 2020 at 11:02 AM Guenter Roeck <linux@roeck-us.net> wrote:
->
-> On 12/20/20 10:18 PM, Masahiro Yamada wrote:
-> With a change like this, I'd have expected that there is a coccinelle
-> script or similar to ensure that claims made in the commit message
-> are true.
 
-It is only a warning -- the compiler already tells us what is wrong.
+hello,
 
-Cheers,
-Miguel
+my use case is, if possible, is to provide vpn to friends and family and also
+peering with other wg nodes (work etc). this obviously needs traffic isolation
+and i have though about it for a while but don't have definitive answer.
+
+1. on way i thought of doing is to have a point-to-point (dedicated wg interface
+for each user) solution.
+
+2. the other is to group interfaces based on the category of users (think friends
+vs family vs even work).
+
+they both probably need writing up something for set-up and tear-down each of
+interfaces which should be fine but both would need a way of isolating traffic;
+either between indivitual user's interface or between group interfaces. there is
+also the question of ACL'ing the site-to-site traffic for each group and/or
+user.
+
+for this i've looked into VRF and netns; this has been brought up before
+here and other place but i don't seem to be able to read the conclusion:
+https://lists.zx2c4.com/pipermail/wireguard/2017-September/001706.html
+
+from outside it looks like cumulus devs like their VRF, and wireguard devs lean
+recommend using netns
+
+https://www.wireguard.com/netns/
+
+that^ link is not a solution for me but i can think of ways to use netns for
+my case.
+
+
+thoughts?
+
+- jrun
