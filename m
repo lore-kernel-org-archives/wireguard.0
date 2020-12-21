@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C1155C433E0
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 21 Dec 2020 13:51:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 59BD7C433DB
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 21 Dec 2020 13:51:46 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 241802222A
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 21 Dec 2020 13:51:44 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 241802222A
+	by mail.kernel.org (Postfix) with ESMTPS id C59E822BED
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 21 Dec 2020 13:51:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org C59E822BED
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 18a4ef3e;
-	Mon, 21 Dec 2020 13:42:15 +0000 (UTC)
-Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com
- [2607:f8b0:4864:20::b36])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 56ffc04f
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fbbd90f6;
+	Mon, 21 Dec 2020 13:42:27 +0000 (UTC)
+Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com
+ [2607:f8b0:4864:20::b32])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7b5a449a
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 21 Dec 2020 13:42:13 +0000 (UTC)
-Received: by mail-yb1-xb36.google.com with SMTP id x2so8821976ybt.11
- for <wireguard@lists.zx2c4.com>; Mon, 21 Dec 2020 05:51:16 -0800 (PST)
+ Mon, 21 Dec 2020 13:42:25 +0000 (UTC)
+Received: by mail-yb1-xb32.google.com with SMTP id k78so8826055ybf.12
+ for <wireguard@lists.zx2c4.com>; Mon, 21 Dec 2020 05:51:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=mHgLaGHkyXcabO8xIkwlWJDr0MLBnIf8/qlkiv3QkXo=;
- b=F1s3IZItQhZW8oKY8yQAFhMb+5YpQSaWkdzriG2F1JWsUb8om7K0UcjMwvEToL3a8X
- vPB/icFWCy3T7WJ2+UaDJlBHkeU8xx3cwO/ZQdZ+XhfiGCcRjnlwavdFlACH+szE6Xdr
- 2J/YXkVXHD1ghNJm7VBM0OZf+4J6O4Scu5uPRxvV4hzEiD8fKqP7E1hidDSO8MMpn5jX
- GhZhDq0dYQcIjJOjXs1eSktSFHugLxz9zJM3KlIupNe2UY1m6L5AErmaW1KaWIaVv+dP
- oFfmbitNFCQ1KQH0muFAqoRKjTt35L5jRMwlLBMv3emwPuhHmwmHgUgGx7sB5IvW3uz1
- xHvQ==
+ :cc; bh=22WfrYqwVdHV4R9eUfnFdyTLajoJ14FZuqG4/EZXiBg=;
+ b=hEivyO3LAqfRO7APVQNvlx80TFpDZAMkK9Tfh8FYVr3fN0r/Zk+/pTNRHJNqfX1Ct0
+ udvsyN91BPHDXD/1xV5fOmoQXDojvukiY7WDXkv2hJYxTCCluvIQXhBE1aRpleBk3uzE
+ VDbqoOyZB2Bv4dBgzgCt/hA/p+6aplEP1Vo+7xlN4cBMRUVlau+dGJhlfiEgpKRtA4cS
+ XUymUTFtgedYJDbbbYFoXaK4w8RWfQzQvhN6FHjkuebPSQdWz9/VN9yv7CXEJPuznwlC
+ 0nFe7HJ2BD6vznil1FyQlsC2LNB3nbdHlxiuKWBJEDXu2cuSDqA0xLGqvjuHxU4sXU0Y
+ bQqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=mHgLaGHkyXcabO8xIkwlWJDr0MLBnIf8/qlkiv3QkXo=;
- b=LfTToEMVeOU2KmF1OdV8+Tfs/Mw2JloKdffMHJnh1QI6meT1JTlGEb7Z0KlHix5bth
- LpFZF/MHKh0yKyeozYxOUz5kgzVpBtcTmAravWntTsZsknOB0jw8RPNzoiNsOs88/iW4
- BhipCN0CryaNL9ToByUncXSxHXZg6gH5xgx3ndczgKYl3C4SxxpFVhrFwWwU99rbIuR+
- MqX7dpfaKuxInPxW2E9x6KxZZsUsamRECcvdFrWRt3+/iO9DPIrn5dq4ZMqewzyE+WcP
- nl/3wl9Wd8sx3AS+OqIihQjevcYEpT/vb2HfibGzBXvYVJ0kwcvGxTM3XvAWkBJiOs7D
- uIMA==
-X-Gm-Message-State: AOAM532wh3WyrKzjrD8vNkeZqHs7XJmV3Kshup+sS8DCd4ubhnABo0pH
- +3CrxsdAp6j3f8e+mwF5Dngi8M53whYTADfSr9g=
-X-Google-Smtp-Source: ABdhPJyHPXD2WoRee0gLQTCh8E0/Ceo8vhSHe7ZKLTkLXezBU+vPi6psE0EHYE1zYhtBw5l7l2aL3OvVEYweBA+zdHM=
-X-Received: by 2002:a25:40d:: with SMTP id 13mr23258507ybe.422.1608558675780; 
- Mon, 21 Dec 2020 05:51:15 -0800 (PST)
+ bh=22WfrYqwVdHV4R9eUfnFdyTLajoJ14FZuqG4/EZXiBg=;
+ b=mzklpFJxq5IryzOgv9FH1iGfsv60C2TxOulJaFk6aCggpYAix+P6off4RJdu7aeiAM
+ RRZObHIL1h+HOM6vbRd1XaeIvpOrpRAtJcJ6ZyWUlsMabkYjQxvg5zbVtLDkB4KX2ljU
+ Io6dIe+NciK6EUqatU+wPTbixXd6LsEnMa9puFCatUDAOJy1WR2cvj6dMYVLTMff3O3B
+ 27fKsaKCwT0S+l+yAzy16UumhX9qRgRO7KVzcfM7Qryle1zQ3AKrDxjErDd1l96hfGrD
+ gmgAQ4Kpk+X359LyB26Aa71vt6X/D+BtCofyCvHnTvEQ6IrQHubrQoTxZpRjtuYDY2rL
+ Xqqg==
+X-Gm-Message-State: AOAM530b/JNjb0IrVngSavVw0duTPMaKZqc1T0iRFUtxVbz7CXzDdDc4
+ 3suQ5PgBPc5oPQaixh1l2HUQZvoObLKmhrv9XZ0=
+X-Google-Smtp-Source: ABdhPJxcWxnUc+rwQRDI3Z0RTTF/LyrVAt5D2vgqWNNDeUaVA4VaKDcfByXRkjUfG6dWy5TDydUbKo8m1BZtu1WNZkM=
+X-Received: by 2002:a5b:949:: with SMTP id x9mr22811402ybq.33.1608558687798;
+ Mon, 21 Dec 2020 05:51:27 -0800 (PST)
 MIME-Version: 1.0
 References: <20201128193335.219395-1-masahiroy@kernel.org>
  <20201212161831.GA28098@roeck-us.net>
@@ -62,13 +62,15 @@ References: <20201128193335.219395-1-masahiroy@kernel.org>
  <X9YwXZvjSWANm4wR@kroah.com>
  <CANiq72=UzRTkh6bcNSjE-kSgBJYX12+zQUYphZ1GcY-7kNxaLA@mail.gmail.com>
  <CAK7LNARXa1CQSFJjcqN7Y_8dZ1CSGqjoeox3oGAS_3=4QrHs9g@mail.gmail.com>
-In-Reply-To: <CAK7LNARXa1CQSFJjcqN7Y_8dZ1CSGqjoeox3oGAS_3=4QrHs9g@mail.gmail.com>
+ <55261f67-deb5-4089-5548-62bc091016ec@roeck-us.net>
+In-Reply-To: <55261f67-deb5-4089-5548-62bc091016ec@roeck-us.net>
 From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Mon, 21 Dec 2020 14:51:05 +0100
-Message-ID: <CANiq72m5_mc=Cq1gkMtO6UTo+x91aE7+UBDYJQLazmTh4RbntA@mail.gmail.com>
+Date: Mon, 21 Dec 2020 14:51:17 +0100
+Message-ID: <CANiq72mQ=5JpMh1OZfJo6dypF0KHSUp9Umd_5qwATxEMgO5OmQ@mail.gmail.com>
 Subject: Re: [PATCH v3] Compiler Attributes: remove CONFIG_ENABLE_MUST_CHECK
-To: Masahiro Yamada <masahiroy@kernel.org>
-Cc: Greg KH <gregkh@linuxfoundation.org>, Guenter Roeck <linux@roeck-us.net>, 
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: Masahiro Yamada <masahiroy@kernel.org>,
+ Greg KH <gregkh@linuxfoundation.org>, 
  "Jason A . Donenfeld" <Jason@zx2c4.com>,
  Nathan Chancellor <natechancellor@gmail.com>, 
  Nick Desaulniers <ndesaulniers@google.com>, Shuah Khan <shuah@kernel.org>, 
@@ -91,28 +93,14 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Mon, Dec 21, 2020 at 7:20 AM Masahiro Yamada <masahiroy@kernel.org> wrote:
+On Mon, Dec 21, 2020 at 11:02 AM Guenter Roeck <linux@roeck-us.net> wrote:
 >
-> Sorry for the delay.
+> On 12/20/20 10:18 PM, Masahiro Yamada wrote:
+> With a change like this, I'd have expected that there is a coccinelle
+> script or similar to ensure that claims made in the commit message
+> are true.
 
-No problem!
-
-> Now I sent out the fix for lantiq_etop.c
->
-> https://lore.kernel.org/patchwork/patch/1355595/
-
-I saw it, thanks for the Cc!
-
-> The reason of the complication was
-> I was trying to merge the following patch in the same development cycle:
-> https://patchwork.kernel.org/project/linux-kbuild/patch/20201117104736.24997-1-olaf@aepfle.de/
-
-Ah, then that explains why Guenter's had an error instead of a warning.
-
-> Tomorrow's linux-next should be OK
-> and, you can send my patch in this merge window.
-
-Thanks!
+It is only a warning -- the compiler already tells us what is wrong.
 
 Cheers,
 Miguel
