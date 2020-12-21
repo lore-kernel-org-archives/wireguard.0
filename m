@@ -2,59 +2,70 @@ Return-Path: <SRS0=oxb/=FZ=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F39CC433DB
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 21 Dec 2020 00:24:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A6C1C433E0
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 21 Dec 2020 00:51:42 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 5BCA922C9C
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 21 Dec 2020 00:24:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 5BCA922C9C
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=labrat.space
+	by mail.kernel.org (Postfix) with ESMTPS id 624A621D7F
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 21 Dec 2020 00:51:41 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 624A621D7F
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ea42c145;
-	Mon, 21 Dec 2020 00:15:35 +0000 (UTC)
-Received: from mariecurie.labrat.space (mariecurie.labrat.space
- [116.203.185.229])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 66cde38d
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3331cbf4;
+	Mon, 21 Dec 2020 00:42:30 +0000 (UTC)
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com
+ [2a00:1450:4864:20::62d])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 9d27e334
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 21 Dec 2020 00:15:32 +0000 (UTC)
-Received: from labrat.space (adsl-178-38-56-54.adslplus.ch [178.38.56.54])
- by mariecurie.labrat.space (Postfix) with ESMTPSA id 8D5351524839;
- Mon, 21 Dec 2020 01:24:07 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=labrat.space;
- s=201904; t=1608510247;
- bh=3xr3xBIKIqX+oXtcZx7a/4h0EP5BCAE0wXu4zk1LJ48=; l=601;
- h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
- Content-Type:Content-Disposition:In-Reply-To:From:To:CC:Date:
- Subject:Content-Type:Content-Disposition:Reply-To:In-Reply-To:
- MIME-Version:Message-ID:References;
- b=htO6XCSe+qKMM2ZrA5Nf9ThAJ0/qNFGOkL5n368Kl1kFWdbzJG/tHAgpskhbv0lYb
- 7lE+3ITz5MYexx6gtmKldSf+w2X9pBeYStCSOiQ2NkmTzCDXbj1H8vk7vTqtDAvG9h
- tMEfY3ygIsl4lQvISxBwJ2Bqj2jHxUr33wui9RmZm8ZfFCZ4stEwo2aYzgGB4snrW0
- AmZWOGXm3absbCMpu6OLGsRJeYcf8XxCv4VM1+Pg+69OUDQEPwGqfIQzgYRMWYeo+5
- 966J//i41foXP4o5/oFcpaWgYJWnDhUM98WanTto/FmDOxx2cxN6i9BnKCDkXCgfts
- YRfhNbVU3Vegw==
-Date: Mon, 21 Dec 2020 01:24:24 +0100
-From: Reto <reto@labrat.space>
-To: Ronan Lucio <ronanlucio@gmail.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: Best practices for adding hosts
-Message-ID: <20201221002424.imjfxu55bthvrmlg@feather.localdomain>
-Mail-Followup-To: Ronan Lucio <ronanlucio@gmail.com>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>
-References: <CAF-5T9FDVTqPGsS=FcMMyWy2W6O1w7ShdhEEsGUAaQ+fnTMnVg@mail.gmail.com>
+ Mon, 21 Dec 2020 00:42:28 +0000 (UTC)
+Received: by mail-ej1-x62d.google.com with SMTP id ce23so11138893ejb.8
+ for <wireguard@lists.zx2c4.com>; Sun, 20 Dec 2020 16:51:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :content-transfer-encoding;
+ bh=3vIpQV0RqUXvI6zc39Qj00Ye3INZwA+g01RjN2bH7Ic=;
+ b=MBz64Any4EvKIIPzKH84nvB3AQtIpPy1hqq2Byi5xU/0wnNR93m2R931tIGf/G/lju
+ wBh8LwXzeiIikec70iLgO+piDoiCqyRkhsq44v6O4PvX886JJpFSGpiMo5DjiS+37sEX
+ BVjtdHgCqA0MjKa3sFaYn2OMUCIfL14t2s9pMCPiKHf2EPK5GbYx6TJuz+R04H2ahZOy
+ rvwHNde4IXUwJGHubu5b3DKlU8gPk1g+b66vE2QMQYjrv6vuTRUuoXirdmNpEcCchrRY
+ prKrdJjE892T/kOrWZpQLGble9hlTvxgd4rPL2qybNdWsaJ13oBVvCDp/FzL8ljIhAbJ
+ zi1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:content-transfer-encoding;
+ bh=3vIpQV0RqUXvI6zc39Qj00Ye3INZwA+g01RjN2bH7Ic=;
+ b=RI7BOji7wzwrZjF/Rhn6LmwsCylc6UaoCXKuA0q8BHxItDRjQi9mH6Owopo/ruUW4r
+ 6vZh7A5LU577vDMqnVjpshn+O7fqg6Lxg+Y3FkSQbXuBaZROVtT4aMApng3hd7siD9tn
+ me4q2Ym9EgqsoFVaJmBgxfnuBb8i1INwMr2g1eve2E5TFrIFPb82rnfaKfrrQetFuvn/
+ jwyL6BImeHDhyrioO+WJ9WEk3aINZ7cuURP8k/ClgpQ3DOKpD9Q3RRpBRXAHS9cLHKOP
+ QgPGMll/ALYAtxmMeli+dN8ic30jNxF3FX98OlmZjGk2VcOsEopoT6SOMlsrI+61rSiM
+ jOJg==
+X-Gm-Message-State: AOAM533ePfb9wDMRp/YeMc8UR2b8ukTKLxZ/iaS4VADv93ZEvlvjLWNZ
+ qZ1wjNMrhU6fCO+avhl1rBSdHWmNZb5PMzZW6unSf2poTQ0=
+X-Google-Smtp-Source: ABdhPJyn9mQXteMK+9N/+3EFCBLnCTHhi51skmm2EOMkRMois1Y5L4aERwE3dCJkJ02kMCeux+S0bi443UexpLzQozk=
+X-Received: by 2002:a17:906:3a98:: with SMTP id
+ y24mr12901855ejd.436.1608511885810; 
+ Sun, 20 Dec 2020 16:51:25 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAF-5T9FDVTqPGsS=FcMMyWy2W6O1w7ShdhEEsGUAaQ+fnTMnVg@mail.gmail.com>
+References: <CAF-5T9FDVTqPGsS=FcMMyWy2W6O1w7ShdhEEsGUAaQ+fnTMnVg@mail.gmail.com>
+ <9B2F58B7-92A3-425E-9B28-DF715B5B5503@tomcsanyi.net>
+In-Reply-To: <9B2F58B7-92A3-425E-9B28-DF715B5B5503@tomcsanyi.net>
+From: Ronan Lucio <ronanlucio@gmail.com>
+Date: Mon, 21 Dec 2020 13:51:14 +1300
+Message-ID: <CAF-5T9GDLTTrcgmGcT=YaLbUmEHSmNyE6_X6Xcvof3bcc6HXEg@mail.gmail.com>
+Subject: Re: Best practices for adding hosts
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -69,21 +80,56 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Mon, Dec 21, 2020 at 12:09:40PM +1300, Ronan Lucio wrote:
-> I have a wireguard VPN server, and it's working gracefully, thanks for that.
-> I'd like to ask you how can I add more peers without having to restart wg.
+Hi Domi,
 
-`man wg`... set / setconf / addconf depending on your specific usecase.
+Right, it's not on the latest version. Actually, I used to run the
+system version, so I can set it to automate unattended-updated.
+Anyway, no problem updating it... ;-)
 
-Also, `man wg-quick`
+I tried executing it manually and got this:
 
-```
-The strip command is useful for reloading configuration files without disrupting active sessions:
-# wg syncconf wgnet0 <(wg-quick strip wgnet0)
-```
+    $ sudo wg syncconf wg0 <(exec /usr/bin/wg-quick strip wg0)>
+    -bash: syntax error near unexpected token `newline'
 
-As well as: https://git.zx2c4.com/wireguard-tools/commit/?id=a66219fa107e1bf0a03ebbbc405879c1f0a826c5
+Any clue?
 
+Thank you,
+Ronan
 
-Cheers,
-Reto
+On Mon, Dec 21, 2020 at 1:01 PM Tomcsanyi, Domonkos <domi@tomcsanyi.net> wr=
+ote:
+>
+> Hi Ronan,
+>
+> There should be a reload option, check the changelog from August this yea=
+r:
+>
+> https://lists.zx2c4.com/pipermail/wireguard/2020-August/005780.html
+>
+> Maybe you are not running the latest version? In that case just take the =
+command from the patch and run it manually.
+>
+> Kind regards,
+> Domi
+>
+>
+> 21.12.2020 d=C3=A1tummal, 0:11 id=C5=91pontban Ronan Lucio <ronanlucio@gm=
+ail.com> =C3=ADrta:
+>
+> =EF=BB=BFHi,
+>
+> I have a wireguard VPN server, and it's working gracefully, thanks for th=
+at.
+> I'd like to ask you how can I add more peers without having to restart wg=
+.
+>
+> So far I use to add new peers to the "wg0.conf" file and execute a
+> "systemctl restart wg-quick@wg0".
+> The problem is all peers go down when I do it, and there's no
+> "systemctl reload" option.
+>
+> If possible, I'd like to keep all configs on config files, so it's
+> possible to automate configuration via ansible.
+>
+> Thanks,
+> Ronan
