@@ -1,54 +1,70 @@
-Return-Path: <SRS0=8OhL=F4=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=IEsR=F5=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CB376C433DB
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 24 Dec 2020 23:31:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06957C433DB
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 25 Dec 2020 14:43:02 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 19A5D22795
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 24 Dec 2020 23:31:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 19A5D22795
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id 2195C22255
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 25 Dec 2020 14:43:00 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 2195C22255
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e44748b1;
-	Thu, 24 Dec 2020 23:21:33 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id df476ea1
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0c25fc10;
+	Fri, 25 Dec 2020 14:33:25 +0000 (UTC)
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com
+ [2607:f8b0:4864:20::102f])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id cb5093ed
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 24 Dec 2020 23:21:32 +0000 (UTC)
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1b7c2a09;
- Thu, 24 Dec 2020 23:22:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=date:from:to
- :cc:subject:message-id:references:mime-version:content-type
- :in-reply-to; s=mail; bh=sLE35t45WiHT3Ttt5Opxvpd1SA4=; b=XrZP4AH
- gA9/Yu92lFy8dXfo05h41ZYKwrNPuDtLkXK8cgOz8VINXP3yl2zMrEdATlbtuEwv
- hfo687pigqTqQXUgHJZxa+5oIe4PMkbTW3ZKf9axf+X1epU+TEGvezFioEqh7wdU
- LEghpVJExCKgaNSLNgktjhB4idOPaa5WY8jIiqHGIdQLAyNP94G7LLvxpX+N5X2I
- ykeZZc2Q9hQGnh1NF12ccvyzybI+Jj5dH4E5pqfQtjVKshScRkdeyPPoPna3OjXQ
- LbPcFCLBV0/bN8qvbXMHB3pyw6QoQDLQuWfEz9zE8utFvcEjfWX7vmYRnlyutlmL
- crCGlhZMQ6hlxHQ==
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 29af2665
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Thu, 24 Dec 2020 23:22:17 +0000 (UTC)
-Date: Fri, 25 Dec 2020 00:30:57 +0100
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+ Thu, 24 Dec 2020 23:32:43 +0000 (UTC)
+Received: by mail-pj1-x102f.google.com with SMTP id hk16so1841588pjb.4
+ for <wireguard@lists.zx2c4.com>; Thu, 24 Dec 2020 15:42:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=ny4ppm3IuCSLd7xYoQTbxWNSPdZbi3nA8JNISqNrJd0=;
+ b=uD9CEjGJuxNjmY+TOyI5l3k4hBNEvSSlRE6Q2g58pqKgrpL9JnLBfIRq8puieyjil4
+ sIiE/pCO4qvu8kxlR/oLmVzX3u0C9O8fuMZbagJcwr4haPNRkYPuTja6osxGDkd6ub0l
+ HV0cyCZE+S6Kw74EWqPRBRPkFaq3mdf7xkuaVGhOXZ/4hGl6aknvmrTp4wkFbYlddxkD
+ DVbOPISsEijmxvXmhkipD+ResKfdXXA15A0ipjLVy1ynnIgsQV/YN7AWIRTzTLWCBnct
+ cWt1qnH7Cj1kelGMkYxK8WFL8RMrJQNvMQduzVENeMsU7K5y9WZ+bFXS36eDExhL5OrK
+ iY3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=ny4ppm3IuCSLd7xYoQTbxWNSPdZbi3nA8JNISqNrJd0=;
+ b=JZXNIfaN8I6BsU6A2K76JMKIT6sGYYbsQiT5ofvzlVl61QaDf/ZD18/HhMvqx3xpwS
+ yUch12YRqnjMWlR0ziQxdG8KeNN0GJnsRypJRO9UCvoDZPZh6DGPuMvfo2MBy3/uuaD8
+ DntrwXr+g3ds3ghiRl4+lk80nUbJ+9rX/k8grEmvAsc8j9k784mAU4gD0OQHZAx5orKy
+ dz46emvvjTTJn0DiVY/YuUL0hlFNSV++/Kj8UBAAwNo3UvOc56YvsHVXrc12jnUZ2CY2
+ iOos1cAgkyEHvfN8gM+B5YIbQtAJtn2Ny0QPIS2QB9XKSONWhgq7/7J1lPbKAmeZ1DgN
+ fPNw==
+X-Gm-Message-State: AOAM531WnPfBJomv0hatC98MVpbBUG7Et3QYvlgQCOh5QHh0bpGQ1azO
+ 4DWwd7Dt6R3Lbn3p9DULC5MSHdMT6oCjP+G5uxbL3Trwml7OLQ==
+X-Google-Smtp-Source: ABdhPJyqvoc+dODVaVKCNc2PhTe0JKTNw6CkiP47JlTfirh2lakJESUCI1m+eVe6DjszQsbunyI4QgAvBdle9r5iREU=
+X-Received: by 2002:a17:902:c144:b029:dc:292e:a8a1 with SMTP id
+ 4-20020a170902c144b02900dc292ea8a1mr31014012plj.13.1608853331007; Thu, 24 Dec
+ 2020 15:42:11 -0800 (PST)
+MIME-Version: 1.0
+References: <87k0t75h3e.fsf@ungleich.ch>
+In-Reply-To: <87k0t75h3e.fsf@ungleich.ch>
+From: Adam Stiles <ajstiles@gmail.com>
+Date: Thu, 24 Dec 2020 15:42:00 -0800
+Message-ID: <CAB5G8p9nCdxkikyubjfjJ4bB4+9LXNrEbCN+ONfZn28g26WE0Q@mail.gmail.com>
+Subject: Re: How to verify a wireguard public key?
 To: Nico Schottelius <nico.schottelius@ungleich.ch>
 Cc: wireguard@lists.zx2c4.com
-Subject: Re: How to verify a wireguard public key?
-Message-ID: <X+UkseUOEY1sVDEe@zx2c4.com>
-References: <87k0t75h3e.fsf@ungleich.ch>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87k0t75h3e.fsf@ungleich.ch>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailman-Approved-At: Fri, 25 Dec 2020 15:33:24 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -63,27 +79,56 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-It's probably wisest to ignore differences between public keys and
-private keys and set aside any structure they might have by virtue of
-being related to elliptic curves, and instead just regard them as
-32-byte strings encoded in base64. Not 31 bytes or 33 bytes, but exactly
-32. This matters, because 32 does not divide evenly by .75, so there's a
-padding character and the penultimate character does not include the
-whole base64 alphabet. 43 base64 chars can represent up to 258bits,
-which is more than 256bits. So, you can either validate this with a
-base64 parser and checking that it returns exactly 32 bytes, or you can
-match against this simple regex:
+Hi Nico,
 
-^[A-Za-z0-9+/]{42}[A|E|I|M|Q|U|Y|c|g|k|o|s|w|4|8|0]=$
+WireGuard uses Curve25519 keys. A Curve25519 secret key is a random 32
+byte value with a few special bits flipped, and a public key is
+calculated from a secret key.
 
-You can convince yourself that's correct by running this for a while and
-seeing that it never fails:
+There's some good info here (https://cr.yp.to/ecdh.html), including
+this questions and answer:
 
-while true; do [[ $(head -c 32 /dev/urandom | base64) =~ ^[A-Za-z0-9+/]{42}[A|E|I|M|Q|U|Y|c|g|k|o|s|w|4|8|0]=$ ]] || echo "FAILURE"; done
+"How do I validate Curve25519 public keys?"
 
-The endings are valid because those are the only ones that don't end in
-01, 10, or 11, so that the string doesn't exceed 256 bits. And again we
-can have bash bruteforce those for us:
+"Don't. The Curve25519 function was carefully designed to allow all
+32-byte strings as Diffie-Hellman public keys."
 
-for i in {A..Z} {a..z} {0..9} + /; do a="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA$i="; [[ $(echo $a|base64 -d|base64) == $a ]] && echo -n $i; done; echo
-AEIMQUYcgkosw048
+I just saw Jason's response, and so this is a bit redundant, but the
+reference above is a good one.
+
+Best,
+
+Adam
+
+
+On Thu, Dec 24, 2020 at 3:21 PM Nico Schottelius
+<nico.schottelius@ungleich.ch> wrote:
+>
+>
+> Good morning,
+>
+> I am currently extending uncloud [0] to support wireguard tunnels and
+> keys. At the moment it is not entirely clear how to verify that a
+> certain string is a valid wireguard key.
+>
+> I first tried checking that it is valid base64, but not all base64
+> strings are valid wireguard keys.
+>
+> Then I tried using `echo $key | wg pubkey && echo ok` - which seems to
+> check the key format, however the intended behaviour here is misused.
+>
+> Does anyone have a pointer on how to reliably identify wireguard public
+> keys?
+>
+> Is the wireguard key always 32 bytes when decoded from base64? Tests
+> with a number of public keys seems to indicate that.
+>
+> Best regards,
+>
+> Nico
+>
+>
+> [0] https://code.ungleich.ch/uncloud/uncloud
+>
+> --
+> Modern, affordable, Swiss Virtual Machines. Visit www.datacenterlight.ch
