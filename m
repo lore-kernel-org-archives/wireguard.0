@@ -6,48 +6,49 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F076C433DB
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 24 Dec 2020 23:19:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB376C433DB
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 24 Dec 2020 23:31:35 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 85A0D225AA
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 24 Dec 2020 23:19:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 85A0D225AA
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=ungleich.ch
+	by mail.kernel.org (Postfix) with ESMTPS id 19A5D22795
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 24 Dec 2020 23:31:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 19A5D22795
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0e1e9cbd;
-	Thu, 24 Dec 2020 23:09:39 +0000 (UTC)
-Received: from smtp.ungleich.ch (smtp.ungleich.ch
- [2a0a:e5c0:0:2:400:b3ff:fe39:7956])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 8611cd70
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e44748b1;
+	Thu, 24 Dec 2020 23:21:33 +0000 (UTC)
+Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id df476ea1
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 24 Dec 2020 15:51:19 +0000 (UTC)
-Received: from bridge.localdomain (localhost [IPv6:::1])
- by smtp.ungleich.ch (Postfix) with ESMTP id E36B622724
- for <wireguard@lists.zx2c4.com>; Thu, 24 Dec 2020 17:00:43 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ungleich.ch; s=mail;
- t=1608825643; bh=EijtTkgGmAIzIf01s0fSaw+JNR4n/x7bcfqvg+/nNuk=;
- h=From:To:Subject:Date:From;
- b=oUJHKnIdK3cy17dTS8l0Eg+RWpj0iaXv8xEXT705ZqvIdh9Dz+w0w9ySdSzj9+3Vt
- dQuohi2FuONdqW32TfiUbtngxnjdsko2/4XzB6QNYggZG75yza6mUrALtmnDgecord
- v2TDv863icl0QEK7aPszaRYPlmercefcKrxavAjrejKszObey2Ghj1KyxTHCp6pdLF
- oalz8npt5G6UfkYPzeUrpD8V/9YIKUXIIrWWztexP4beoi8c5vsa3ntSxUgEw6QG6y
- 9/awRWMyqFVlamui24e4mAzLWGOOS79DwqrgdN7HupH+CQMGAallHELX+Hz28s4lRg
- nDd233cJvw5Qw==
-Received: by bridge.localdomain (Postfix, from userid 1000)
- id 668371A6EA51; Thu, 24 Dec 2020 17:00:53 +0100 (CET)
-User-agent: mu4e 1.4.13; emacs 27.1
-From: Nico Schottelius <nico.schottelius@ungleich.ch>
-To: wireguard@lists.zx2c4.com
-Subject: How to verify a wireguard public key?
-Date: Thu, 24 Dec 2020 17:00:53 +0100
-Message-ID: <87k0t75h3e.fsf@ungleich.ch>
+ Thu, 24 Dec 2020 23:21:32 +0000 (UTC)
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1b7c2a09;
+ Thu, 24 Dec 2020 23:22:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=date:from:to
+ :cc:subject:message-id:references:mime-version:content-type
+ :in-reply-to; s=mail; bh=sLE35t45WiHT3Ttt5Opxvpd1SA4=; b=XrZP4AH
+ gA9/Yu92lFy8dXfo05h41ZYKwrNPuDtLkXK8cgOz8VINXP3yl2zMrEdATlbtuEwv
+ hfo687pigqTqQXUgHJZxa+5oIe4PMkbTW3ZKf9axf+X1epU+TEGvezFioEqh7wdU
+ LEghpVJExCKgaNSLNgktjhB4idOPaa5WY8jIiqHGIdQLAyNP94G7LLvxpX+N5X2I
+ ykeZZc2Q9hQGnh1NF12ccvyzybI+Jj5dH4E5pqfQtjVKshScRkdeyPPoPna3OjXQ
+ LbPcFCLBV0/bN8qvbXMHB3pyw6QoQDLQuWfEz9zE8utFvcEjfWX7vmYRnlyutlmL
+ crCGlhZMQ6hlxHQ==
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 29af2665
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
+ Thu, 24 Dec 2020 23:22:17 +0000 (UTC)
+Date: Fri, 25 Dec 2020 00:30:57 +0100
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: Nico Schottelius <nico.schottelius@ungleich.ch>
+Cc: wireguard@lists.zx2c4.com
+Subject: Re: How to verify a wireguard public key?
+Message-ID: <X+UkseUOEY1sVDEe@zx2c4.com>
+References: <87k0t75h3e.fsf@ungleich.ch>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Mailman-Approved-At: Fri, 25 Dec 2020 00:09:37 +0100
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87k0t75h3e.fsf@ungleich.ch>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -62,31 +63,27 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
+It's probably wisest to ignore differences between public keys and
+private keys and set aside any structure they might have by virtue of
+being related to elliptic curves, and instead just regard them as
+32-byte strings encoded in base64. Not 31 bytes or 33 bytes, but exactly
+32. This matters, because 32 does not divide evenly by .75, so there's a
+padding character and the penultimate character does not include the
+whole base64 alphabet. 43 base64 chars can represent up to 258bits,
+which is more than 256bits. So, you can either validate this with a
+base64 parser and checking that it returns exactly 32 bytes, or you can
+match against this simple regex:
 
-Good morning,
+^[A-Za-z0-9+/]{42}[A|E|I|M|Q|U|Y|c|g|k|o|s|w|4|8|0]=$
 
-I am currently extending uncloud [0] to support wireguard tunnels and
-keys. At the moment it is not entirely clear how to verify that a
-certain string is a valid wireguard key.
+You can convince yourself that's correct by running this for a while and
+seeing that it never fails:
 
-I first tried checking that it is valid base64, but not all base64
-strings are valid wireguard keys.
+while true; do [[ $(head -c 32 /dev/urandom | base64) =~ ^[A-Za-z0-9+/]{42}[A|E|I|M|Q|U|Y|c|g|k|o|s|w|4|8|0]=$ ]] || echo "FAILURE"; done
 
-Then I tried using `echo $key | wg pubkey && echo ok` - which seems to
-check the key format, however the intended behaviour here is misused.
+The endings are valid because those are the only ones that don't end in
+01, 10, or 11, so that the string doesn't exceed 256 bits. And again we
+can have bash bruteforce those for us:
 
-Does anyone have a pointer on how to reliably identify wireguard public
-keys?
-
-Is the wireguard key always 32 bytes when decoded from base64? Tests
-with a number of public keys seems to indicate that.
-
-Best regards,
-
-Nico
-
-
-[0] https://code.ungleich.ch/uncloud/uncloud
-
---
-Modern, affordable, Swiss Virtual Machines. Visit www.datacenterlight.ch
+for i in {A..Z} {a..z} {0..9} + /; do a="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA$i="; [[ $(echo $a|base64 -d|base64) == $a ]] && echo -n $i; done; echo
+AEIMQUYcgkosw048
