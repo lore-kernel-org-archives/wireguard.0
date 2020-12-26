@@ -2,55 +2,70 @@ Return-Path: <SRS0=HI6M=F6=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.7 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DBC88C433E0
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 26 Dec 2020 08:10:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F057EC433DB
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 26 Dec 2020 09:04:23 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id DA22E20809
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 26 Dec 2020 08:10:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org DA22E20809
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=ungleich.ch
+	by mail.kernel.org (Postfix) with ESMTPS id 0C6DB221E9
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 26 Dec 2020 09:04:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 0C6DB221E9
+Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=urlichs.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3adac726;
-	Sat, 26 Dec 2020 08:00:12 +0000 (UTC)
-Received: from smtp.ungleich.ch (mx.ungleich.ch [185.203.112.16])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 93f676e1
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Sat, 26 Dec 2020 08:00:10 +0000 (UTC)
-Received: from bridge.localdomain (localhost [IPv6:::1])
- by smtp.ungleich.ch (Postfix) with ESMTP id 2FE4520E0B;
- Sat, 26 Dec 2020 09:09:48 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ungleich.ch; s=mail;
- t=1608970188; bh=qZYt4jHlYcLEj091O4wOyb0ZVVErNx/HdVxBKqeE/Yc=;
- h=References:From:To:Cc:Subject:In-reply-to:Date:From;
- b=EytfrHR8a1mhoQRVUkGIVyu9RUwujmpuXn84ktJv8t3a7H4mukknycPcAbrbAEhlT
- ZJGE0rg030+4ecfJsabKdWynqYUrkP/kjK3P1OhHgTqeIrRwrhnPfShCpuwrQQvtea
- sIjBOPOEEt2WwNAdt5xUTHRwHwKF5+yYzUGKkSMSAyNtbS+Wghn03N/rGfKvNzRUZK
- p2MGUoWCwj5Gqee82txf/Xf8C7z+3bzD9kINGmOry0+8LznXzT6qG9obBEre9lvHJK
- uFxtGbHBWs1mh2i/11xrzKEljqgwlBe3zqohHRpyYmONNNG/JxT19ySOHCUBnz8tp7
- 1BifMK34hYyfA==
-Received: by bridge.localdomain (Postfix, from userid 1000)
- id A0D331A6EA51; Sat, 26 Dec 2020 09:09:56 +0100 (CET)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 04587e89;
+	Sat, 26 Dec 2020 08:54:41 +0000 (UTC)
+Received: from netz.smurf.noris.de (dispatch.smurf.noris.de
+ [2001:780:107:b::b])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 9016fadc
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.Com>;
+ Sat, 26 Dec 2020 08:54:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=urlichs.de; 
+ s=20160512;
+ h=Content-Type:In-Reply-To:MIME-Version:Date:Message-ID:Subject:
+ From:References:Cc:To:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive;
+ bh=raSLxgaEwl0l4KH9Ky7s70Z+Dqx6e/4a47CPUqot2ro=; b=SanX5pwX2Q43TXWUEqToYKINMG
+ dpl7jR5VVzjHxbgeWRI+u30z2sm26IdLt8RpPjpiu+c3BJGAYrqUA1ksslqnezS5osfn3p2XVM/xD
+ zfanwRRiuPR9ZjVDd2fdj9+ziPkrhiBR3bfziABOfBFr08eWDfklJIZ8v2G4s8C/2/kRY5rYW9SCp
+ IEwUD6N56UR1AKd33mV+HwekxKNP4fDWs2dsjqUgiY8xZp+HButGAYSdMoL72J/HHazXaTkA1ySRJ
+ 3F3IhM8wsP+x51CgNHjt+NDDxYNj/Szz+kOfTV3o8bm7eU88ScwpJrUTxmdb+UDwx0uuZrodd6bP0
+ CnaANcGun/wWFKLIg3R8/DWKTORviYg6O/qZe5c4iKSoL11pUzcuCfTyr3jGh3n7uCsCLBwSxIiUG
+ a6GAR5cKc0AxwGqK4PMjn+q9IYWmnfJpDaIApW81LFULw5suO+Y80HAb0lZW9K2YcnfHt5hQMA4Iz
+ CJTBr88vyPbkS+mUYEtIO6b2/blfV780WRyOC6DPIPwghlik5+cj5KujpwKdOqo4uzYSzCg2q3ptD
+ 9FJCJbeg/gI3t+sTgmP51eJOitL/m5Ce39VhHqqgn8/Dk6ndayaFYWgLA7yp7s/g+OIcU242YKCDE
+ HPMhgcl/cn6DCr8Qkt/3aGPJ8WZGcNPV9Ad5DZVY4=;
+Received: from asi.s.smurf.noris.de ([2001:780:107:200::a])
+ by mail.vm.smurf.noris.de with esmtpsa
+ (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim 4.92)
+ (envelope-from <matthias@urlichs.de>)
+ id 1kt5To-0008Ym-G1; Sat, 26 Dec 2020 10:03:16 +0100
+To: Nico Schottelius <nico.schottelius@ungleich.ch>
+Cc: wireguard@lists.zx2c4.com
 References: <87k0t75h3e.fsf@ungleich.ch>
  <CAB5G8p9nCdxkikyubjfjJ4bB4+9LXNrEbCN+ONfZn28g26WE0Q@mail.gmail.com>
  <dfec7de6-8f7d-4e89-4e90-3865aa6b7d04@urlichs.de>
-User-agent: mu4e 1.4.13; emacs 27.1
-From: Nico Schottelius <nico.schottelius@ungleich.ch>
-To: Matthias Urlichs <matthias@urlichs.de>
-Cc: wireguard@lists.zx2c4.com
+ <875z4p56p7.fsf@ungleich.ch>
+From: Matthias Urlichs <matthias@urlichs.de>
 Subject: Re: How to verify a wireguard public key?
-In-reply-to: <dfec7de6-8f7d-4e89-4e90-3865aa6b7d04@urlichs.de>
-Date: Sat, 26 Dec 2020 09:09:56 +0100
-Message-ID: <875z4p56p7.fsf@ungleich.ch>
+Message-ID: <e1b1c0f0-9262-6612-6d05-8b0f255752fb@urlichs.de>
+Date: Sat, 26 Dec 2020 10:03:13 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.1
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <875z4p56p7.fsf@ungleich.ch>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="EmUADzlDInwDaalX0QtNMwyvEPtmJ8qeI"
+X-Smurf-Spam-Score: 0.0 (/)
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -65,25 +80,64 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--EmUADzlDInwDaalX0QtNMwyvEPtmJ8qeI
+Content-Type: multipart/mixed; boundary="lUmrm9e9oAzgbpSW86CJV9pJrONaBft3j";
+ protected-headers="v1"
+From: Matthias Urlichs <matthias@urlichs.de>
+To: Nico Schottelius <nico.schottelius@ungleich.ch>
+Cc: wireguard@lists.zx2c4.com
+Message-ID: <e1b1c0f0-9262-6612-6d05-8b0f255752fb@urlichs.de>
+Subject: Re: How to verify a wireguard public key?
+References: <87k0t75h3e.fsf@ungleich.ch>
+ <CAB5G8p9nCdxkikyubjfjJ4bB4+9LXNrEbCN+ONfZn28g26WE0Q@mail.gmail.com>
+ <dfec7de6-8f7d-4e89-4e90-3865aa6b7d04@urlichs.de>
+ <875z4p56p7.fsf@ungleich.ch>
+In-Reply-To: <875z4p56p7.fsf@ungleich.ch>
 
-Matthias Urlichs <matthias@urlichs.de> writes:
+--lUmrm9e9oAzgbpSW86CJV9pJrONaBft3j
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+Content-Language: de-DE
 
-> On 25.12.20 00:42, Adam Stiles wrote:
->> "How do I validate Curve25519 public keys?"
->
-> You send a handshake packet to the owner of the corresponding private
-> key and observe whether it accepted it.
->
-> The question is, why do you think you need a different/additional way
-> of verifying the public key?
+On 26.12.20 09:09, Nico Schottelius wrote:
+> That answer is easy: if you add an incorrect key to your wgX.conf, wg
+> setconf will complain and not apply it. And if you are providing
+> automated VPNs... well, then this is something you do want to prevent.
 
-That answer is easy: if you add an incorrect key to your wgX.conf, wg
-setconf will complain and not apply it. And if you are providing
-automated VPNs... well, then this is something you do want to prevent.
+Umm, sure, but then the question is why an incorrect key would be sent=20
+through your automated VPN deployment in the first place. And if it=20
+passes the length check but is still corrupted then that's a worse=20
+failure mode than "wg setconf" complaining, 'cause at least you'd notice =
 
-Cheers,
+the latter immediately.
 
-Nico
+--=20
+-- Matthias Urlichs
 
---
-Modern, affordable, Swiss Virtual Machines. Visit www.datacenterlight.ch
+
+
+--lUmrm9e9oAzgbpSW86CJV9pJrONaBft3j--
+
+--EmUADzlDInwDaalX0QtNMwyvEPtmJ8qeI
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
+
+-----BEGIN PGP SIGNATURE-----
+
+wsF5BAABCAAjFiEENzGcEL8EYxehRDgJ+GyybHbBwWUFAl/m/FEFAwAAAAAACgkQ+GyybHbBwWW2
+og//c5z1tqZXdypx7Q1PPCs4njzz63yESS1Suk6egLfVuwCYLsnY5S2DBCnmTc6nFNeidATNJ7NF
+uoXOt2we9ukJsh1vJZHYTz+yXOQBLJxny9pVey06QXMAPsae3kTIA9MIUhjpC3Ti/JhKJlI+H9/6
+trPvPWWhulw5dWQ1Pu2k8AJBdEV4vwJ/RZQk4Q/sEEmR7xbSnN6ILMFpNhnuwhYUYE5TxeKB69L4
+ByrPs15TgXkWphriT4iYSUZNnS8Xb+sQSdPVt0B3/fCn4OXObB/hMQGs86Q6oseXglZfc0/gTPu3
+kj5QvKSo5+EpjqOONSsw2j4m2HOOtQ1WWkFPSkGy3HIsK5t/mk7WsBC/Ba0ug7BwMwemg51LjBWh
+eH1VGLHvw3pP4vL7Ee8d4hYn+8qhsVzXFRKOP5j+GsSRdI/C8U4/l74ZZdLdjwQX21z3HF6zEtVn
+Xq3E6229qo084g0LH+30/0M7JaJLQ2wxD2+4JFdVXBpVvE0J8U+hkDRVli7rFgh+zQNMJ1rWaAAI
+n8cydzktNcBaFp6daMbHIduTTIrdYMW8Gc02Z1uE3m/1GbqP3+phFEYbCUNbsd9z3nqxChhetsNL
+M7Lhyo47tIZazA0Wl/AXGz2IfkLuorsf7j6Mhpp36FMaCPS6GzCvvUBBuXQXViS/2ewhoawUt/za
+1vA=
+=hqq+
+-----END PGP SIGNATURE-----
+
+--EmUADzlDInwDaalX0QtNMwyvEPtmJ8qeI--
