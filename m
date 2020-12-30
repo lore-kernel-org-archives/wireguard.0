@@ -2,77 +2,63 @@ Return-Path: <SRS0=dquF=GC=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77C01C433DB
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 30 Dec 2020 09:29:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 044DDC433DB
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 30 Dec 2020 12:39:45 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 208B420791
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 30 Dec 2020 09:29:18 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 208B420791
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=sager.me.uk
+	by mail.kernel.org (Postfix) with ESMTPS id 3E43120715
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 30 Dec 2020 12:39:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 3E43120715
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 901cda62;
-	Wed, 30 Dec 2020 09:19:06 +0000 (UTC)
-Received: from mail267c50.megamailservers.eu (mail1457c50.megamailservers.eu
- [91.136.14.57])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4f1d63ce
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256:NO)
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 32df2d0b;
+	Wed, 30 Dec 2020 12:29:30 +0000 (UTC)
+Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2c42828c
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 30 Dec 2020 09:19:04 +0000 (UTC)
-X-Authenticated-User: sagermail@sager.me.uk
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=megamailservers.eu;
- s=maildub; t=1609320553;
- bh=aiHpNk9cpJoxjUULNADzfyaFBPUfLfyfQbD6AxTZxTs=;
- h=Subject:To:References:From:Date:In-Reply-To:From;
- b=I1wMHzRxAENgZ+zRddKfA/twmvh2QFDV4EBMnFz8z/IyFXLGx1dJt1HhnAecVZ4VM
- qWjsLmi1IMHECUUZa0rgwZLQmNOmh15/+fCxP6g6msU122/beco1/cIXwNMmMKdtXz
- SYTHiWyebdfw8eQG4oiEzE5eusM26ipaah1EK4bE=
-Feedback-ID: john@sager.me.u
-Received: from mainserver.wc (97.83.2.81.in-addr.arpa [81.2.83.97])
- (authenticated bits=0)
- by mail267c50.megamailservers.eu (8.14.9/8.13.1) with ESMTP id 0BU9TB4a003033
- (version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO)
- for <wireguard@lists.zx2c4.com>; Wed, 30 Dec 2020 09:29:13 +0000
-Received: from
- 2.4.d.9.3.d.5.2.1.f.d.d.2.0.9.6.0.0.0.0.3.e.b.c.0.b.8.0.1.0.0.2.ip6.arpa
- ([2001:8b0:cbe3:0:6902:ddf1:25d3:9d42])
- by mainserver.wc with esmtp (Exim 4.93)
- (envelope-from <john@sager.me.uk>) id 1kuXn5-0040Fb-DY
- for wireguard@lists.zx2c4.com; Wed, 30 Dec 2020 09:29:11 +0000
-Subject: Re: wg-crypt-wg0 process
-To: wireguard@lists.zx2c4.com
-References: <d56b4194-2b74-b440-c102-3b379daa8194@gmail.com>
-From: John Sager <john@sager.me.uk>
-Message-ID: <2e16043e-ddd2-c583-820c-73e476c2eaea@sager.me.uk>
-Date: Wed, 30 Dec 2020 09:29:11 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+ Wed, 30 Dec 2020 12:29:28 +0000 (UTC)
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 96307980
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 30 Dec 2020 12:30:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
+ :references:in-reply-to:from:date:message-id:subject:to:cc
+ :content-type; s=mail; bh=DRvKx1JOp86Sg2wzMfT7xlVo2kk=; b=e6i6Za
+ qBKb+E/gZ567M3RGDvR/Mus8Ati8OLhKr9WOhwEbTRRqO0GgYeJyV4PO95EgdGhK
+ ++dsI0L/etgH3d0/KzKcmourHdJfPsbVtbt1WuePU8UaR7BhWj4sJlJOjqWCNgPn
+ Uw87nhw7xT3tHEkAPF5u/8KehaOBR2gS1PlYR4jcUz6gNZs5D/254zH2ID5QskLA
+ HZNX+sMsMJ025q1vV36vldxorOhZ7ZWLFu4lH8N7movj7ZnCoQOT7PudiDLdgfoK
+ Skbi0lSopVQkEmXouGs58w2RrFWD4HLpyZwZ2UUQPOJkblT4+liZpE+91BXXmTrt
+ iPT9fj6zXnYSCJGg==
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id c6b2a8cd
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 30 Dec 2020 12:30:14 +0000 (UTC)
+Received: by mail-yb1-f179.google.com with SMTP id r63so7886870ybf.5
+ for <wireguard@lists.zx2c4.com>; Wed, 30 Dec 2020 04:39:40 -0800 (PST)
+X-Gm-Message-State: AOAM5303im/Y19PxxGv7rPGi/L92p4DYjt+ABwGiHdOsn1GoAF0TceeJ
+ 5e5OBn6x79T/o8MMHgVoHRcNhm7gXgsg26C+Ie8=
+X-Google-Smtp-Source: ABdhPJxVhJKPTt2+mQwwtrjhm2tlBeeEy4Ve40KqMOumavGG6MgypVzBWHPuh/a6isty0C4UT9VE/0aGF4JT/Z5NXZA=
+X-Received: by 2002:a25:4744:: with SMTP id u65mr81479869yba.239.1609331979967; 
+ Wed, 30 Dec 2020 04:39:39 -0800 (PST)
 MIME-Version: 1.0
+References: <d56b4194-2b74-b440-c102-3b379daa8194@gmail.com>
 In-Reply-To: <d56b4194-2b74-b440-c102-3b379daa8194@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
-X-CTCH-RefID: str=0001.0A742F1D.5FEC4869.0023:SCFSTAT79219218, ss=1, re=-4.000,
- recu=0.000, reip=0.000, cl=1, cld=1, fgs=0
-X-CTCH-VOD: Unknown
-X-CTCH-Spam: Unknown
-X-CTCH-Score: -4.000
-X-CTCH-Rules: 
-X-CTCH-Flags: 0
-X-CTCH-ScoreCust: 0.000
-X-CSC: 0
-X-CHA: v=2.3 cv=arrM9hRV c=1 sm=1 tr=0 a=dws6IJh5fU+Ftmrx3Eq8JA==:117
- a=dws6IJh5fU+Ftmrx3Eq8JA==:17 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=zTNgK-yGK50A:10 a=YBwOTgHewPRH2o07jF8A:9 a=_JQHZ0YQ79PmpNgR:21
- a=QEXdDO2ut3YA:10
-X-Origin-Country: GB
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 30 Dec 2020 13:39:28 +0100
+X-Gmail-Original-Message-ID: <CAHmME9oORiNMN6EyAWOy3Fxzo33etkQxQtQbKdPqw_fWdw9wtw@mail.gmail.com>
+Message-ID: <CAHmME9oORiNMN6EyAWOy3Fxzo33etkQxQtQbKdPqw_fWdw9wtw@mail.gmail.com>
+Subject: Re: wg-crypt-wg0 process
+To: Fatih USTA <fatihusta86@gmail.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -87,106 +73,112 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-The posted script works for me, Xubuntu 20.04 kernel 5.4.0-38-generic 
-x86_64. The first time I ran it, it deleted both [wg-crypt-wg0] instances 
-but left one kworker process: [kworker/0:0-wg-crypt-wg0]. I then ran it 
-again and no wg kernel processes were left.
+Hi Fatih,
 
-regards,
+Thanks for the report and the detailed test case. From what I can see,
+this behavior presents itself both with the explicit ip link del and
+without. When running with debugging enabled, I can see this in dmesg:
 
-John
+[558758.361056] wireguard: wg0: Keypair 244 destroyed for peer 21
+[558758.546649] wireguard: wg0: Peer 21 (10.150.150.2:51820) destroyed
+[558758.563317] wireguard: wg0: Interface destroyed
+[558758.567803] wireguard: wg0: Keypair 243 destroyed for peer 22
+[558758.733287] wireguard: wg0: Peer 22 (10.150.150.1:51820) destroyed
+[558758.749991] wireguard: wg0: Interface destroyed
 
-On 30/12/2020 08:19, Fatih USTA wrote:
-> Hi
-> 
-> I'm playing wireguard with the namespace. I think I caught a litle problem.
-> 
-> If I delete netns directly, everything is removed, but wg-crypt-wg0 process 
-> is still alive.
-> 
-> root      8127  0.0  0.0      0     0 ?        S<   07:26 0:00 [wg-crypt-wg0]
-> root      8143  0.0  0.0      0     0 ?        S<   07:26 0:00 [wg-crypt-wg0]
-> root      8449  0.0  0.0      0     0 ?        S<   07:26 0:00 [wg-crypt-wg0]
-> root      8454  0.0  0.0      0     0 ?        S<   07:26 0:00 [wg-crypt-wg0]
-> 
-> If I delete first wireguard interface from the netns, everthing works fine.
-> 
-> wg_version:        1.0.20201221
-> kernel_version:       3.16.85-1
-> 
-> #!/bin/bash
-> 
-> case $1 in
->      remove)
->          ip link del dev bridge0 || { echo "Please add first."; exit 1; }
->          ip link del dev veth1
->          ip link del dev veth2
->          #ip netns exec ns1 ip link del dev wg0
->          #ip netns exec ns2 ip link del dev wg0
->          ip netns del ns1
->          ip netns del ns2
->          iptables -D FORWARD -i bridge0 -o bridge0 -j ACCEPT
->          rm -f /tmp/private-ns1 /tmp/private-ns2 /tmp/public-ns1 
-> /tmp/public-ns2
->      ;;
->      add)
->          ip link add name bridge0 type bridge || { echo "Please remove 
-> first."; exit 1; }
->          ip link set dev bridge0 up
-> 
->          ip netns add ns1
->          ip netns add ns2
->          ip link add name veth1 type veth peer name eth0 netns ns1
->          ip link add name veth2 type veth peer name eth0 netns ns2
->          ip link set dev veth1 up master bridge0
->          ip link set dev veth2 up master bridge0
-> 
->          ip netns exec ns1 ip link set dev lo up
->          ip netns exec ns1 ip link set dev eth0 up
->          ip netns exec ns1 ip addr add 10.150.150.1/24 dev eth0
-> 
->          ip netns exec ns2 ip link set dev lo up
->          ip netns exec ns2 ip link set dev eth0 up
->          ip netns exec ns2 ip addr add 10.150.150.2/24 dev eth0
-> 
->          ( umask 0077;
->            wg genkey | \
->            tee /tmp/private-ns1 | \
->            wg pubkey > /tmp/public-ns1
-> 
->            wg genkey | \
->            tee /tmp/private-ns2 | \
->            wg pubkey > /tmp/public-ns2
->          )
-> 
->          ip netns exec ns1 ip link add name wg0 type wireguard
->          ip netns exec ns1 ip addr add 172.16.1.1/24 dev wg0
-> 
->          ip netns exec ns2 ip link add name wg0 type wireguard
->          ip netns exec ns2 ip addr add 172.16.1.2/24 dev wg0
-> 
->          ip netns exec ns1 wg set wg0 private-key /tmp/private-ns1 
-> listen-port 51820
->          ip netns exec ns1 ip link set wg0 up
-> 
->          ip netns exec ns2 wg set wg0 private-key /tmp/private-ns2 
-> listen-port 51820
->          ip netns exec ns2 ip link set wg0 up
-> 
->          ip netns exec ns1 wg set wg0 peer "$(</tmp/public-ns2)" allowed-ips 
-> 172.16.1.0/24 endpoint 10.150.150.2:51820
->          ip netns exec ns2 wg set wg0 peer "$(</tmp/public-ns1)" allowed-ips 
-> 172.16.1.0/24 endpoint 10.150.150.1:51820
-> 
->          iptables -I FORWARD -i bridge0 -o bridge0 -j ACCEPT
-> 
->          ip netns exec ns1 wg
->          ip netns exec ns2 wg
->          ip netns exec ns1 ping -i 0.3 -c 2 172.16.1.2 &>/dev/null && \
->                            echo -e "\n\nWorked" || \
->                            echo -e "\n\nFailed"
->      ;;
->      *)echo "$(basename $0) add|remove" ;;
-> esac
-> 
-> 
+The fact that I see "Interface destroyed" for both interfaces means
+that wg_destruct() is being called, which includes these calls:
+
+        destroy_workqueue(wg->handshake_receive_wq);
+        destroy_workqueue(wg->handshake_send_wq);
+        destroy_workqueue(wg->packet_crypt_wq);
+
+In doing so, the output of ps changes from:
+
+$ ps aux|grep wg0
+root      200479  0.0  0.0      0     0 ?        I    13:06   0:00
+[kworker/0:2-wg-crypt-wg0]
+root      201226  0.0  0.0      0     0 ?        I    13:08   0:00
+[kworker/1:4-wg-crypt-wg0]
+root      201476  0.0  0.0      0     0 ?        I<   13:11   0:00
+[wg-crypt-wg0]
+root      201484  0.0  0.0      0     0 ?        I<   13:11   0:00
+[wg-crypt-wg0]
+
+to:
+
+$ ps aux|grep wg0
+root      200479  0.0  0.0      0     0 ?        I    13:06   0:00
+[kworker/0:2-wg-crypt-wg0]
+root      201226  0.0  0.0      0     0 ?        I    13:08   0:00
+[kworker/1:4-wg-crypt-wg0]
+
+What I suspect is happening is that destroying the workqueue does not
+actually destroy the kthreads that they were using, so that they can
+be reused (and eventually relabeled) by other drivers. Looking at the
+stack of those indicates this is probably the case:
+
+$ cat /proc/200479/stack
+[<0>] worker_thread+0xba/0x3c0
+[<0>] kthread+0x114/0x130
+[<0>] ret_from_fork+0x1f/0x30
+
+So it's just hanging out there idle waiting to be scheduled by
+something new. In fact, while I was writing this email, that worker
+already seems to have been reclaimed by another driver:
+
+$ cat /proc/200479/comm
+kworker/0:2-events
+
+Now it's called "events".
+
+This is happening because the kthread isn't actually destroyed, and
+task->comm is being hijacked. In proc_task_name we have:
+
+        if (p->flags & PF_WQ_WORKER)
+               wq_worker_comm(tcomm, sizeof(tcomm), p);
+       else
+               __get_task_comm(tcomm, sizeof(tcomm), p);
+
+That top condition holds for workqueue workers, and wq_worker_comm
+winds up scnprintf'ing the current worker description in there:
+
+                        /*
+                        * ->desc tracks information (wq name or
+                        * set_worker_desc()) for the latest execution.  If
+                        * current, prepend '+', otherwise '-'.
+                        */
+                       if (worker->desc[0] != '\0') {
+                               if (worker->current_work)
+                                       scnprintf(buf + off, size - off, "+%s",
+                                                 worker->desc);
+                               else
+                                       scnprintf(buf + off, size - off, "-%s",
+                                                 worker->desc);
+
+But worker->desc isn't set until process_one_work is called:
+
+        /*
+        * Record wq name for cmdline and debug reporting, may get
+        * overridden through set_worker_desc().
+        */
+       strscpy(worker->desc, pwq->wq->name, WORKER_DESC_LEN);
+
+And it's never unset after the work is done and it's waiting idle in
+worker_thread for the scheduler to reschedule it and eventually call
+process_one_work on a new work unit.
+
+It would be easy to just null out that string after the work is done
+with something like:
+
+        worker->current_func(work);
+        worker->desc[0] = '\0';
+
+But I guess this has never sufficiently bothered anyone before. I
+suppose I could submit a patch and see how it's received. But it also
+looks like the scnprintf above in wq_worker_comm distinguishes these
+cases anyway. If there's a + it means that the work is active and if
+there's a - it means that it's an old leftover thread. So maybe this
+is fine as-is?
+
+Jason
