@@ -2,57 +2,78 @@ Return-Path: <SRS0=i/Df=GF=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 09F2EC433DB
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  2 Jan 2021 14:37:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9006EC433DB
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  2 Jan 2021 15:34:34 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 2EB232076D
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  2 Jan 2021 14:37:24 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 2EB232076D
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id 924B1206F4
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  2 Jan 2021 15:34:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 924B1206F4
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=dsander.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 263d2b75;
-	Sat, 2 Jan 2021 14:26:47 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id accd9586
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 35c83b1f;
+	Sat, 2 Jan 2021 15:23:44 +0000 (UTC)
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com
+ [2a00:1450:4864:20::536])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 14e08270
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sat, 2 Jan 2021 14:26:45 +0000 (UTC)
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6bd4da82
- for <wireguard@lists.zx2c4.com>; Sat, 2 Jan 2021 14:27:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :from:date:message-id:subject:to:cc:content-type; s=mail; bh=mXb
- 2SLb9+vRvp1RyISvNb3u+knw=; b=aVuYaJb1BTrVU9CTmz3WmIWgQKljKy3GBqR
- x3IUwXvLdq//U3s6RoTkU3FYlrmYvRNap4DHWO3RyraTk61DYlUbv24XwDyVFGDP
- t1sgB7ZtFL0F6zB1bLcmhW0CB5+UGv1PyKwgp15BSYg+WwoeDdBMEa7JU8ygPccJ
- nGyWytSCpmOgWps7G+4a6VN4whFG0EDA7Rl7cnAT7SY7T7C1oPaP9IPl1Urv02Ti
- un3hkSp9/Jpyv7xsCpLHSlAUZNjM5JGbisTg/qvRmlk6adLbMauReqSuFSJCvRqK
- xC5ItKMKNViVidRavjZye5nsAr+JCCGONsd90i1iYqBNxEizJ7g==
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 53f630d8
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sat, 2 Jan 2021 14:27:31 +0000 (UTC)
-Received: by mail-yb1-f170.google.com with SMTP id x2so21707586ybt.11
- for <wireguard@lists.zx2c4.com>; Sat, 02 Jan 2021 06:37:20 -0800 (PST)
-X-Gm-Message-State: AOAM531nJnhMGYapbT/BcL4uSs5iAARFcPM5DzE9BxT7rlWB4IKLt15R
- zHvrSlRmt8sk2KfNeocsF2npkHpl6oTokZmcNGM=
-X-Google-Smtp-Source: ABdhPJzVwczrZmBotSkMTwqzCXxCkmrRDVl9EfMst42SInt1HGHzJQcRZMtLn7lF6es9LvnIX4BfgSPL3/WDCmfy6Jk=
-X-Received: by 2002:a25:2cd6:: with SMTP id
- s205mr92855456ybs.279.1609598240455; 
- Sat, 02 Jan 2021 06:37:20 -0800 (PST)
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 30 Dec 2020 17:31:45 +0000 (UTC)
+Received: by mail-ed1-x536.google.com with SMTP id h16so16062370edt.7
+ for <wireguard@lists.zx2c4.com>; Wed, 30 Dec 2020 09:41:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=dsander-de.20150623.gappssmtp.com; s=20150623;
+ h=sender:from:subject:to:message-id:date:user-agent:mime-version
+ :content-language:content-transfer-encoding;
+ bh=E2zKuqPkPyTLYlCU82jHzjVPJkm/5K7TYTbOrOmJtQA=;
+ b=0s3f9Zc2TRrtVqeGMWCZfc1W7k88Sx3Q7/rVNMXwdMStzTpfmkVykItbQDXADuotOE
+ 1aZt4Hh9dO+LHSLhN7Ce5RYlo8E5JOHzyAJuZKMci7xtUgMk4AW7K9TETR9un7L0rjjS
+ hfxHJiROVKTg2CZO6l9msZAwwpJqwzcxHR8f0S79HBNoBdat7C+Ovgjn9NKqLXoFwBeU
+ TgQ4jhdTfwfs0DkfnM4k2Yk+g/nHL3ld/2bd5wVYUZ0Q9UbQ7JKDC2LTFXDiFQsJMa+H
+ dQVyq9GOp+MQVJ1jvZtmRITmTqlumL0t2SkFK+bJYN3ETqJH1OgVwS24EXhqzCLf6YJe
+ EhUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:sender:from:subject:to:message-id:date
+ :user-agent:mime-version:content-language:content-transfer-encoding;
+ bh=E2zKuqPkPyTLYlCU82jHzjVPJkm/5K7TYTbOrOmJtQA=;
+ b=fOF2/IgaLSCjC44OleHy8dSD/RlEzpXwwnveXkZpElOANSqZdXwFzm2McRTGgUIdFN
+ E4Uz1eituVn1h3IMoibLNlI/bwSBkBppcCNs8MxXQzC11LUhnLoxK6aQUkujH90hZdGo
+ BgTvNLgxT1TbLFQbgfaRKx6xsaObFDxUfjPpmggA9rUWbrpCQ7ZUJwifqzlyBMj1lqIL
+ rIj7CY2spZBEpt3W9VPwGslVJqe9sxfayMu3yY+lvAXeSVTXZ0llcpUzKdlAWNm8MuI0
+ IEIkxO/wuaRg0Lfr5fJc2gtLCXtz4VOTChJDbpq6d4Bz4cwKw2H/dWVr7LNb/f/YWL4Y
+ VNyQ==
+X-Gm-Message-State: AOAM533l3boXHDpsAu/f4Ky24jqeXHx4kmNlgsCV8sTLeK2UdnOlqQhP
+ cVIg2oEvqIlN8RfxGXJ5SYub5ubMMA4HYOnq
+X-Google-Smtp-Source: ABdhPJxK+xqxhZNL9o5PJy8VtIV+J7iPDMZco7T15i3jqpXEuUB3Myi2cOMoMN/g9W92enY8ecc/FA==
+X-Received: by 2002:a05:6402:1352:: with SMTP id
+ y18mr51786546edw.178.1609350116993; 
+ Wed, 30 Dec 2020 09:41:56 -0800 (PST)
+Received: from [192.168.1.235] ([185.251.102.202])
+ by smtp.gmail.com with ESMTPSA id u19sm19406980ejg.16.2020.12.30.09.41.55
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 30 Dec 2020 09:41:55 -0800 (PST)
+From: Dominik Sander <mail@dsander.de>
+X-Google-Original-From: Dominik Sander <wireguard@dsander.de>
+Subject: Responses send by wireguard always use the default route
+To: wireguard@lists.zx2c4.com
+Message-ID: <201bd244-743e-ab52-55bb-798a1d75309e@dsander.de>
+Date: Wed, 30 Dec 2020 18:41:56 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.0
 MIME-Version: 1.0
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sat, 2 Jan 2021 15:37:09 +0100
-X-Gmail-Original-Message-ID: <CAHmME9oGiqbq1LtGtV=-wUu7K4OajdQO+6RiEZFw9jP73zpJ2Q@mail.gmail.com>
-Message-ID: <CAHmME9oGiqbq1LtGtV=-wUu7K4OajdQO+6RiEZFw9jP73zpJ2Q@mail.gmail.com>
-Subject: Continued use of `wg-quick save` and SaveConfig=true?
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Cc: Mira Ressel <aranea@aixah.de>, A Jones <aaronmdjones@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Mailman-Approved-At: Sat, 02 Jan 2021 16:23:43 +0100
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -67,36 +88,50 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
+Hi!
 
-I was thinking recently that most people have switched from a model of
-updating the runtime configuration and then reading that back into a
-config file, to editing the config file and then syncing that with the
-runtime config. In other words, people have moved from doing:
+I would like to confirm if the behavior I am seeing is intended or if my
+use case should be supported without additional configuration.
 
-# wg set wg0 peer ... allowed-ips ...
-# wg-quick save wg0
+When wireguard is configured on a server that has multiple network
+interfaces the response is always send through the route with the lowest
+metric, even when the connection was initiated via a different interface.
 
-To doing:
+The Wireguard server is exposed via my router, port 13377 is forwarded
+to 192.168.1.246, the peer is connecting via an external IP:
 
-# vim /etc/wireguard/wg0.conf
-# wg syncconf wg0 <(wg-quick strip wg0)
+# ip route
+default via 10.0.0.1 dev eth1 proto dhcp src 10.0.0.171 metric 50
+default via 192.168.1.1 dev eth0 proto dhcp src 192.168.1.246 metric 100
+10.0.0.0/24 dev eth1 proto kernel scope link src 10.0.0.171 metric 50
+10.0.0.1 dev eth1 proto dhcp scope link src 10.0.0.171 metric 50
+192.168.1.0/24 dev eth0 proto kernel scope link src 192.168.1.246 metric 100
+192.168.1.1 dev eth0 proto dhcp scope link src 192.168.1.246 metric 100
 
-I think this is mostly a positive change too in terms of reliability.
-Reading back the runtime configuration was always a bit hit or miss,
-and I suspect that more times than not people have been confused by
-SaveConfig=true.
+# tcpdump -i any -vn "(host 80.xxx.xxx.xxx or src port 13377 or dst port 13377)"
+tcpdump: listening on any, link-type LINUX_SLL (Linux cooked v1), capture size 262144 bytes
+14:13:08.767409 IP (tos 0x0, ttl 50, id 12125, offset 0, flags [none], proto UDP (17), length 176)
+    80.xxx.xxx.xxx.17819 > 192.168.1.246.13377: UDP, length 148
+14:13:08.768076 IP (tos 0x88, ttl 64, id 180, offset 0, flags [none], proto UDP (17), length 120)
+    10.0.0.171.13377 > .xxx.xxx.xxx.17819: UDP, length 92
 
-That raises the question: are there good uses left for SaveConfig=true
-and `wg-quick save` that warrant keeping the feature around?
-Temporarily caching a roamed endpoint IP, perhaps, but how helpful is
-that?
+Because the response is send from the "wrong" IP address the router does not know
+how to forward it and the client never is properly connected.
 
-I haven't thought too deeply about this in order to be wedded to one
-outcome over the other yet, but seeing some confusion today, again, in
-#wireguard over the feature made me wonder.
+I was wondering if the IP/interface of the request could also be used for the response,
+to remove the need for policy based routing or iptable rules.
 
-Any opinions on this? Any one on this list actively use this feature
-and see replacements for it (e.g. syncconf) as clearly inferior?
+The actual use case is wireguard on a OpenWRT router which has multiple WAN interfaces.
+The WAN with the lowest metric is not the interface that should be used for wireguard
+because it has better download speed, the wireguard WAN has better upload speed.
 
-Jason
+Fore reference a thread discussing the problem on GitHub [1] and on the OpenWRT Forum [2].
+
+Thanks for creating/working on wireguard!
+
+Kind regards,
+
+Dominik
+
+[1] https://github.com/openwrt/packages/issues/9538
+[2] https://forum.openwrt.org/t/wireguard-server-can-only-successfully-be-used-via-one-wan-interface/83374
