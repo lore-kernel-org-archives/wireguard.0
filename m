@@ -1,81 +1,68 @@
-Return-Path: <SRS0=5StT=GD=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=i/Df=GF=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 868C3C433DB
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 31 Dec 2020 05:47:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7694CC433DB
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  2 Jan 2021 08:28:38 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id ABDF82222D
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 31 Dec 2020 05:47:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org ABDF82222D
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	by mail.kernel.org (Postfix) with ESMTPS id 4E21C22241
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  2 Jan 2021 08:28:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 4E21C22241
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=pregonetwork.net
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ab12de8c;
-	Thu, 31 Dec 2020 05:37:17 +0000 (UTC)
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com
- [2a00:1450:4864:20::635])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ab8f7a77
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7aa9eeea;
+	Sat, 2 Jan 2021 08:17:05 +0000 (UTC)
+Received: from jeremyp3.stolon.network (jeremyp3.stolon.network
+ [2a00:5880:1401:77:f4d5::1])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 22f389db
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Thu, 31 Dec 2020 05:37:14 +0000 (UTC)
-Received: by mail-ej1-x635.google.com with SMTP id qw4so24293432ejb.12
- for <wireguard@lists.zx2c4.com>; Wed, 30 Dec 2020 21:47:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=subject:to:cc:references:from:message-id:date:user-agent
- :mime-version:in-reply-to:content-transfer-encoding:content-language;
- bh=LTVWk/JXvWmTiCK8Ij9O2rNPgqJjcwCWf93RbT/Lmi4=;
- b=G1QRvxqPCkA8+5bW9J2YCo3cGDmAhDe7fcHFcCD87+uPDF7S2fB8F2gKJnU+rN9G+Z
- QqFJ2M7n96cx8/bHSvQW1YkVYPQasJF46kg4QVqn6DBpzwFgdTJk7Pk2eloacn3dG3te
- LIzYGBi5Caz6EQJ1Gy8ZxCCP4mZbjqNLPE5dbva72Nj9HKwCpiejVOT0fIlo86t3x6cF
- ZiIT1794tdL2nZ5tLvntox4AdD45kXQ0fJl/CrLz7uj0irmPg07CnfRMgdJveZ8RhfSl
- uKiilOZJY6lY6DBb7iZLEuDWGJf4bI55R1/FVzFXxl5YQ4aLc3lVAiFY5dQpJJoHnm/l
- wZRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:cc:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-transfer-encoding
- :content-language;
- bh=LTVWk/JXvWmTiCK8Ij9O2rNPgqJjcwCWf93RbT/Lmi4=;
- b=ILbR2mzsCEzk84t3PSGupKtXwMHg0xBmNSb6OCPWDkCUaBNDvO/oykz+H2C/Pe0hw/
- DqZZt+v8W4gcIIO1ouJ7h84Jh8fPcD53NmqOji+iBMZB0c5+OOQtK0uJ8ehOYE2rIYnc
- amTDS6PF3f4PsVC9hdiVGr64EMm9SdtyMdIdH64sjo3jewkIitPD9sINugpB6nby11nq
- gWkFz1QOD9Ifg3vm5Y3Jggf5ojV762hs+j6LWgcgQfZgmzsVXufh8q5mzocbqcOGAZjE
- yNS7SUOrFzITPyyDdC2TZJADOsjaA7Lsk8bn8EKQsfKjFQ3XaXzPLRtdnf2bVBmAxXyT
- mpIA==
-X-Gm-Message-State: AOAM532Z5r51SAwu+LoeCNidutvuZUBepO0jqNnP4XDRVwgx7BFYCEVb
- k4iB6eUecsnjxWbHxJu9pLE=
-X-Google-Smtp-Source: ABdhPJzDnwkQTEPUj4+sPkkGAxR6s36ohFaV8n1ZD5mr5cOtfw56LfobC9Z7Y5cFrsyQGKnU3vgr5w==
-X-Received: by 2002:a17:906:7f11:: with SMTP id
- d17mr51417771ejr.534.1609393650208; 
- Wed, 30 Dec 2020 21:47:30 -0800 (PST)
-Received: from [10.34.12.4] ([81.215.239.150])
- by smtp.gmail.com with ESMTPSA id k3sm26165653eds.87.2020.12.30.21.47.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 30 Dec 2020 21:47:29 -0800 (PST)
-Subject: Re: wg-crypt-wg0 process
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
- LKML <linux-kernel@vger.kernel.org>
-References: <d56b4194-2b74-b440-c102-3b379daa8194@gmail.com>
- <CAHmME9oORiNMN6EyAWOy3Fxzo33etkQxQtQbKdPqw_fWdw9wtw@mail.gmail.com>
-From: Fatih USTA <fatihusta86@gmail.com>
-Message-ID: <73b49753-da23-eef3-890b-92e85278d882@gmail.com>
-Date: Thu, 31 Dec 2020 08:47:28 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+ for <wireguard@lists.zx2c4.com>; Sat, 2 Jan 2021 08:17:02 +0000 (UTC)
+Received: from jeremyp3.stolon.network (localhost [127.0.0.1])
+ by jeremyp3.stolon.network (OpenSMTPD) with ESMTP id f0474b85;
+ Sat, 2 Jan 2021 09:27:32 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pregonetwork.net; h=
+ subject:from:to:references:message-id:date:mime-version
+ :in-reply-to:content-type:content-transfer-encoding; s=postfix;
+ bh=6PePjXXqcV8jXsbhAQ3/xJoq5dc=; b=Rb50PBCRC69rCE/W85QKn6EAm2RD
+ AKLDz8yl5M3wH72It22t3ybCyrVXpEqL19Rq3CZpa7d8JgSC1kFSz9BG5FZqZhwd
+ uNFlgUNDBAEbyjGjL9QT7y+Dw4mAYib4hY6+qnPShx84K9X8sX+b2R2UNUlFlfRw
+ Bc8qmUuep6/sBJoUEHSBO8doGu3fdIXyu8cnvj6a3ibg1e9FChF/ZK/Ki27PaDDx
+ Pm8+11ux/qmexnt7vTLNDPU+opG9Ua57844bdrS12Ja4zWRlTSNB9kI2TKp2q6ew
+ 8k7N1rBjwpVzh3y19OsGe1/zz9I5bnNoBjIqTL/SwcPkbZ04V3qeT9RBIQ==
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pregonetwork.net; h=subject
+ :from:to:references:message-id:date:mime-version:in-reply-to
+ :content-type:content-transfer-encoding; q=dns; s=postfix; b=dk7
+ L9ObZFoSWPMVOZiomhd/EmT4DCIFb+0HfL9tbfnzfbM/FHjENFxM4MwsMx956Vpy
+ R5EyEBV108IzQLTKphyog5qJJvaMFiKzSSJKZbDWgjYScG6srJpw5FJMY4v5DH0n
+ 0YDZFYMi5k9pnHOuLJlkSvHFBg/vTzH5Y2FLl5HFobHSVpFofTy9QwyV2KpQNlZ5
+ uXxH8XxqN7fLhz4zche1KihSg0OXngZbP7l5sm+WaX4i9eqspdhbwahH/4CckA4n
+ IHg2VSm+5WLQUtJlbz8FmeAY0qz89PV7P9xU5BQ7O7p8rFNTZ0FH3DO+YdIgex2Q
+ u0TxrCKd0jcopmcEiHA==
+Received: from [192.168.80.10] (backupmail.domain.tld [10.4.4.2])
+ by jeremyp3.stolon.network (OpenSMTPD) with ESMTPSA id 4ada1a0e
+ (TLSv1.2:ECDHE-RSA-CHACHA20-POLY1305:256:NO); 
+ Sat, 2 Jan 2021 09:27:31 +0100 (CET)
+Subject: Re: wireguard android don't prefer IPV6 endpoint
+From: =?UTF-8?B?SsOpcsOpbXkgUHJlZ28=?= <jeremy@pregonetwork.net>
+To: wireguard@lists.zx2c4.com, team@wireguard.com
+References: <ead64d0f-af1e-8d5c-3d87-ed14902c5e1e@pregonetwork.net>
+Message-ID: <64137c2f-266a-1a06-9130-e8b42ecd4edf@pregonetwork.net>
+Date: Sat, 2 Jan 2021 09:27:30 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9oORiNMN6EyAWOy3Fxzo33etkQxQtQbKdPqw_fWdw9wtw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+In-Reply-To: <ead64d0f-af1e-8d5c-3d87-ed14902c5e1e@pregonetwork.net>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Content-Language: fr
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -90,121 +77,34 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Jason,
+I confirm the same problem in wifi
 
-Thanks for the detailed research and explanation.That's ok for me.
+Le 27/12/2020 à 07:02, Jérémy Prego a écrit :
+> hello,
+>
+> I've always encountered a bug with android wireguard when using an ipv4
+> / ipv6 endpoint.
+>
+> I tested with two phones:
+> Huawei p10 lite android 8.0 emui 8
+> Xiaomi poco m3 android 10.0 miui 12
+>
+> When i'm in LTE (not yet been able to test in wifi), wireguard connects
+> to the endpoint in ipv4 and not in ipv6, and i don't understand why it
+> is doing that.
+> However, chrome, for example, does use ipv6 by default and not ipv4.
+>
+> My phone does recover an ipv6 in 2a01: cb1a ........ / 64 and not an
+> ipv6 type fc00 / fd00 / fe80 ...
+> I also specify that if I only have an AAAA record, the tunnel works fine
+> in ipv6. but suddenly, I can no longer connect to wifi which only have ipv4.
+>
+> I would like wireguard to favor ipv6 when it is available, and otherwise
+> switch to ipv4.
+>
+> Is it possible ?
+>
+> Thanks,
+>
+> Jerem
 
-Regards.
-
-Fatih USTA
-
-On 30.12.2020 15:39, Jason A. Donenfeld wrote:
-> Hi Fatih,
->
-> Thanks for the report and the detailed test case. From what I can see,
-> this behavior presents itself both with the explicit ip link del and
-> without. When running with debugging enabled, I can see this in dmesg:
->
-> [558758.361056] wireguard: wg0: Keypair 244 destroyed for peer 21
-> [558758.546649] wireguard: wg0: Peer 21 (10.150.150.2:51820) destroyed
-> [558758.563317] wireguard: wg0: Interface destroyed
-> [558758.567803] wireguard: wg0: Keypair 243 destroyed for peer 22
-> [558758.733287] wireguard: wg0: Peer 22 (10.150.150.1:51820) destroyed
-> [558758.749991] wireguard: wg0: Interface destroyed
->
-> The fact that I see "Interface destroyed" for both interfaces means
-> that wg_destruct() is being called, which includes these calls:
->
->          destroy_workqueue(wg->handshake_receive_wq);
->          destroy_workqueue(wg->handshake_send_wq);
->          destroy_workqueue(wg->packet_crypt_wq);
->
-> In doing so, the output of ps changes from:
->
-> $ ps aux|grep wg0
-> root      200479  0.0  0.0      0     0 ?        I    13:06   0:00
-> [kworker/0:2-wg-crypt-wg0]
-> root      201226  0.0  0.0      0     0 ?        I    13:08   0:00
-> [kworker/1:4-wg-crypt-wg0]
-> root      201476  0.0  0.0      0     0 ?        I<   13:11   0:00
-> [wg-crypt-wg0]
-> root      201484  0.0  0.0      0     0 ?        I<   13:11   0:00
-> [wg-crypt-wg0]
->
-> to:
->
-> $ ps aux|grep wg0
-> root      200479  0.0  0.0      0     0 ?        I    13:06   0:00
-> [kworker/0:2-wg-crypt-wg0]
-> root      201226  0.0  0.0      0     0 ?        I    13:08   0:00
-> [kworker/1:4-wg-crypt-wg0]
->
-> What I suspect is happening is that destroying the workqueue does not
-> actually destroy the kthreads that they were using, so that they can
-> be reused (and eventually relabeled) by other drivers. Looking at the
-> stack of those indicates this is probably the case:
->
-> $ cat /proc/200479/stack
-> [<0>] worker_thread+0xba/0x3c0
-> [<0>] kthread+0x114/0x130
-> [<0>] ret_from_fork+0x1f/0x30
->
-> So it's just hanging out there idle waiting to be scheduled by
-> something new. In fact, while I was writing this email, that worker
-> already seems to have been reclaimed by another driver:
->
-> $ cat /proc/200479/comm
-> kworker/0:2-events
->
-> Now it's called "events".
->
-> This is happening because the kthread isn't actually destroyed, and
-> task->comm is being hijacked. In proc_task_name we have:
->
->          if (p->flags & PF_WQ_WORKER)
->                 wq_worker_comm(tcomm, sizeof(tcomm), p);
->         else
->                 __get_task_comm(tcomm, sizeof(tcomm), p);
->
-> That top condition holds for workqueue workers, and wq_worker_comm
-> winds up scnprintf'ing the current worker description in there:
->
->                          /*
->                          * ->desc tracks information (wq name or
->                          * set_worker_desc()) for the latest execution.  If
->                          * current, prepend '+', otherwise '-'.
->                          */
->                         if (worker->desc[0] != '\0') {
->                                 if (worker->current_work)
->                                         scnprintf(buf + off, size - off, "+%s",
->                                                   worker->desc);
->                                 else
->                                         scnprintf(buf + off, size - off, "-%s",
->                                                   worker->desc);
->
-> But worker->desc isn't set until process_one_work is called:
->
->          /*
->          * Record wq name for cmdline and debug reporting, may get
->          * overridden through set_worker_desc().
->          */
->         strscpy(worker->desc, pwq->wq->name, WORKER_DESC_LEN);
->
-> And it's never unset after the work is done and it's waiting idle in
-> worker_thread for the scheduler to reschedule it and eventually call
-> process_one_work on a new work unit.
->
-> It would be easy to just null out that string after the work is done
-> with something like:
->
->          worker->current_func(work);
->          worker->desc[0] = '\0';
->
-> But I guess this has never sufficiently bothered anyone before. I
-> suppose I could submit a patch and see how it's received. But it also
-> looks like the scnprintf above in wq_worker_comm distinguishes these
-> cases anyway. If there's a + it means that the work is active and if
-> there's a - it means that it's an old leftover thread. So maybe this
-> is fine as-is?
->
-> Jason
