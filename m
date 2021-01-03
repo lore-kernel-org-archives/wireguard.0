@@ -2,57 +2,69 @@ Return-Path: <SRS0=V5dh=GG=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FF20C433DB
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  3 Jan 2021 13:49:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 60719C433DB
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  3 Jan 2021 15:50:45 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 715072080D
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  3 Jan 2021 13:49:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 715072080D
-Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=msfjarvis.dev
+	by mail.kernel.org (Postfix) with ESMTPS id 577D520795
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  3 Jan 2021 15:50:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 577D520795
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=pregonetwork.net
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4f4cee30;
-	Sun, 3 Jan 2021 13:37:40 +0000 (UTC)
-Received: from sendmail.purelymail.com (sendmail.purelymail.com
- [34.202.193.197])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 525b7d5a
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a4d94a49;
+	Sun, 3 Jan 2021 15:39:43 +0000 (UTC)
+Received: from jeremyp3.stolon.network (jeremyp3.stolon.network
+ [89.234.146.135])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 017c0ce1
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sun, 3 Jan 2021 13:37:37 +0000 (UTC)
-DKIM-Signature: a=rsa-sha256;
- b=gTXYcVmPtbDVG40TH3mZjtXCq/WpjjENmHLWvwMXhSrsCiIWaDsyMHlIovOLMi88x4aqH9wXUIHcNfZULTo4jt8wU8gLHSQipR/nhDkef2Hg8EsKntdHfCl76jwAptmpK2OZHb0zcaz49qJKPcttEYv9WkpIrTDDz4HWvZRlgkzcYeyiKQm1TBw8AiZtVPqoo4S2WFrrQiwVmAFotkf51SENJqaU1+VwVHRC/owfpc8OxlSwx0QgcyILHRbGmfbQlvuUsUSX85O3jyrGjueFL4bipRLz/A0qAUNofXQzTSqf1xU89BINNatVxYvzkCz3YBrVu0YPpBGJG80hJgVwSw==;
- s=purelymail2; d=msfjarvis.dev; v=1;
- bh=gz15uuczCCWSLwrcDW0jm0LZLw3pEu69nrp9JtbreRA=; h=Received:From:To; 
-DKIM-Signature: a=rsa-sha256;
- b=Orn7ekApukYSz9c9Jm1jomlJxIFFz8H5W4Qb5Hxbyd4eUyf0srlPX6qNABQ1Ef18VTvwZ/1zz0ageiIUg9WDJXXaf9fgjzcFw5Kay4zZojRvRpOStV5U6tF6U/fdEhMixd+v9rhCJ1zonJVH4uxopo9oZqTx+Syp/0kXHTNk8t3OANgDXrBOEj0AgNybF4Z8HyxjhbFUKK6wblW5pCBi8o/OZxzoPLYTa072sCRRGV1nltnROw1PIXm/bH0x89+srh/2P01evzki4Q+M8ZpP/P35Vp7zpKr8Cc6Dlr6eojrI6vNeVqQEY4Fuey+pED6mNEwUoqQn2wxXTnXjuHJxlg==;
- s=purelymail2; d=purelymail.com; v=1;
- bh=gz15uuczCCWSLwrcDW0jm0LZLw3pEu69nrp9JtbreRA=;
- h=Feedback-ID:Received:From:To; 
-Feedback-ID: 322:138:null:purelymail
-X-Pm-Original-To: wireguard@lists.zx2c4.com
-Received: by ip-172-30-0-124.ec2.internal (JAMES SMTP Server ) with ESMTPA ID
- 1438416940; Sun, 03 Jan 2021 13:48:00 +0000 (UTC)
-MIME-Version: 1.0
-Date: Sun, 03 Jan 2021 13:48:00 +0000
-From: Harsh Shandilya <me@msfjarvis.dev>
-To: =?UTF-8?Q?J=C3=A9r=C3=A9my_Prego?= <jeremy@pregonetwork.net>
+ for <wireguard@lists.zx2c4.com>; Sun, 3 Jan 2021 15:39:41 +0000 (UTC)
+Received: from jeremyp3.stolon.network (localhost [127.0.0.1])
+ by jeremyp3.stolon.network (OpenSMTPD) with ESMTP id 2f3707aa;
+ Sun, 3 Jan 2021 16:50:22 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pregonetwork.net; h=
+ subject:to:cc:references:from:message-id:date:mime-version
+ :in-reply-to:content-type:content-transfer-encoding; s=postfix;
+ bh=dlsivwnQ/qOXHraQJ+wX64FgMtY=; b=bD5k0m0EaXF4cseNPFJfJAfPBTxH
+ WKqdlm62yaCWHVtlMsIYe7RUxllVN/AXe1pTSZdeJNN6j+q3tLyQUCtbED1WleN1
+ 1TJ4tBPJ8oHvX2wYZN4fSVMVg+menT+xLPLbxtljr7BVPO80yYygBuJf4JAlnZRl
+ +Xwbn9yATpEqyBzqV/W/l1t3qYcYqXiRjTvLZ3Nrfkl/pIaGJNG3QnnTEnSm3wuM
+ M+bYE4S9Le7aEn+pBR2l6O/xwyMghsTjhlPB2rVAw2gnOmTd2yv+3tldbf5Gr1S1
+ keREbueHQo6r5CBOZ3/cNsIbhEImeBaCb2Zz3E0PXKEIHKfSTBL+95MDKA==
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pregonetwork.net; h=subject
+ :to:cc:references:from:message-id:date:mime-version:in-reply-to
+ :content-type:content-transfer-encoding; q=dns; s=postfix; b=LtK
+ ff1/Ip46P+iRGROPeddwY4kZ4rvg9c2zpybd0FYNyFxIjqqU6z1s9JdD4W4A7Rpz
+ A+6TFjMgDESpr01pOopQ9bX/A47zhFHqsGX8Eak7bEZ0avBbRQVkcfFg+5ERaBPl
+ BKT1niQiqnN5iyzJ38gokzgxsXwoU6SnXFn6wP1qI8geqw2XvDAJ+ut3UgNTpAwy
+ ltNjYTUWttJIhvsZErYQdkUnH0qMV60rpinD7PhcL8BODGWmBF7K8/g5nXVlK5vR
+ ih6+TCTnkTnq5xl29Dno0n0nlh7h1ksjN/jQT6Gm0VlFGkdgSuN5mg5HMZFr4o2h
+ OlvRhKIUS2kY8jh8qog==
+Received: from [192.168.80.10] (backupmail.domain.tld [10.4.4.2])
+ by jeremyp3.stolon.network (OpenSMTPD) with ESMTPSA id e31f0de0
+ (TLSv1.2:ECDHE-RSA-CHACHA20-POLY1305:256:NO); 
+ Sun, 3 Jan 2021 16:50:22 +0100 (CET)
+Subject: Re: Wireguard Android: the application is stopped unexpectedly
+To: Harsh Shandilya <me@msfjarvis.dev>
 Cc: wireguard@lists.zx2c4.com, team@wireguard.com
-Subject: Re: wireguard android don't prefer IPV6 endpoint
-In-Reply-To: <64137c2f-266a-1a06-9130-e8b42ecd4edf@pregonetwork.net>
-References: <ead64d0f-af1e-8d5c-3d87-ed14902c5e1e@pregonetwork.net>
- <64137c2f-266a-1a06-9130-e8b42ecd4edf@pregonetwork.net>
-User-Agent: Purely Mail via Roundcube/1.4.7
-Message-ID: <37dc844baef3dd8540df172318dafa21@msfjarvis.dev>
-X-Sender: me@msfjarvis.dev
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
+References: <85807215-9af1-ed2d-d96c-9c3c4a41ad2c@pregonetwork.net>
+ <2eb5a0785205119f1ec1d82bcef84e80@msfjarvis.dev>
+From: =?UTF-8?B?SsOpcsOpbXkgUHJlZ28=?= <jeremy@pregonetwork.net>
+Message-ID: <9a398613-e032-74e7-61cb-784ed1c2957b@pregonetwork.net>
+Date: Sun, 3 Jan 2021 16:50:21 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
+MIME-Version: 1.0
+In-Reply-To: <2eb5a0785205119f1ec1d82bcef84e80@msfjarvis.dev>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Content-Language: fr
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -67,53 +79,54 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hey J=C3=A9r=C3=A9my,
+hello,
 
-On 2021-01-02 08:27, J=C3=A9r=C3=A9my Prego wrote:
-> I confirm the same problem in wifi
->=20
-> Le 27/12/2020 =C3=A0 07:02, J=C3=A9r=C3=A9my Prego a =C3=A9crit=C2=A0:
->> hello,
->>=20
->> I've always encountered a bug with android wireguard when using an=20
->> ipv4
->> / ipv6 endpoint.
->>=20
->> I tested with two phones:
->> Huawei p10 lite android 8.0 emui 8
->> Xiaomi poco m3 android 10.0 miui 12
->>=20
->> When i'm in LTE (not yet been able to test in wifi), wireguard=20
->> connects
->> to the endpoint in ipv4 and not in ipv6, and i don't understand why it
->> is doing that.
+thanks for the reply
 
-The WireGuard Android client is designed to prefer IPv4 over IPv6 as of=20
-now=20
-(https://git.zx2c4.com/wireguard-android/tree/tunnel/src/main/java/com/wire=
-guard/config/InetEndpoint.java#n97).=20
-This may or may not change in the future, and we'll announce here if it=20
-does.
+réponse inline:
+Le 03/01/2021 à 14:43, Harsh Shandilya a écrit :
+> I'm rather confident that this is MIUI's doing, because I have a
+> Samsung phone that has been running the same WireGuard client for 14
+> days straight without failing or being force closed.
+on my old p10 lite phone, wireguard worked without any issues
 
->> However, chrome, for example, does use ipv6 by default and not ipv4.
->>=20
->> My phone does recover an ipv6 in 2a01: cb1a ........ / 64 and not an
->> ipv6 type fc00 / fd00 / fe80 ...
->> I also specify that if I only have an AAAA record, the tunnel works=20
->> fine
->> in ipv6. but suddenly, I can no longer connect to wifi which only have=
-=20
->> ipv4.
->>=20
->> I would like wireguard to favor ipv6 when it is available, and=20
->> otherwise
->> switch to ipv4.
->>=20
->> Is it possible ?
->>=20
->> Thanks,
->>=20
+> Is there a possibility that a new MIUI "optimisation" showed up that
+> you did not disable yet?
+i dont think i have disabled all miui optimization i found on the
+internet. the strangest thing is that it can work for several days and
+end up stopping ... suddenly I don't know how I can get more information
+to know if it comes from miui or from the wireguard
+
+Jerem
+Le 03/01/2021 à 14:43, Harsh Shandilya a écrit :
+> Hey Jérémy,
+>
+> On 2021-01-02 11:39, Jérémy Prego wrote:
+>> hello and happy new year,
+>>
+>> I have a problem with the wireguard application on my Xiaomi poco m3
+>> (Android 10 / miui 12.0.5). I have set all the correct permissions so
+>> that the application is not killed by miui, but it always ends up
+>> stopping anyway.
+>> In the attached log, I see some errors when stopping the application,
+>> around 11:30 am
+>
+> The auditd lines are harmless, and the app itself seems to have no
+> information as to why its being killed. There are no crashes, and no
+> fatal errors being logged. I'm rather confident that this is MIUI's
+> doing, because I have a Samsung phone that has been running the same
+> WireGuard client for 14 days straight without failing or being force
+> closed. Is there a possibility that a new MIUI "optimisation" showed
+> up that you did not disable yet? I don't believe the reason for your
+> issue is a bug in the app.
+>
+>>
+>> I remain available if you need more information
+>>
+>> thanks,
+>>
 >> Jerem
+>
+> Cheers,
+> Harsh
 
-Cheers,
-Harsh
