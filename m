@@ -2,67 +2,63 @@ Return-Path: <SRS0=t67z=GH=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B1B1C433DB
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 Jan 2021 13:40:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2109BC433E0
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 Jan 2021 16:17:00 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 8FA3A207B1
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 Jan 2021 13:40:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 8FA3A207B1
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	by mail.kernel.org (Postfix) with ESMTPS id 0CBAE221F1
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 Jan 2021 16:16:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 0CBAE221F1
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=de-vri.es
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 10d1b84c;
-	Mon, 4 Jan 2021 13:28:12 +0000 (UTC)
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com
- [2a00:1450:4864:20::52f])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f6cd26f2
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4580d80b;
+	Mon, 4 Jan 2021 16:05:39 +0000 (UTC)
+Received: from mx1.de-vri.es (mx1.de-vri.es [2a01:7c8:aab4:33e::4])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f42ed6e9
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 4 Jan 2021 13:28:10 +0000 (UTC)
-Received: by mail-ed1-x52f.google.com with SMTP id c7so27361171edv.6
- for <wireguard@lists.zx2c4.com>; Mon, 04 Jan 2021 05:39:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=Nrav1kR773dg/LaP1RkWLKUuQ81XJzhtYOxzGdoCS/g=;
- b=brywKm+rEcUJPwGhqmrn4N0PTrwnXNOwGDmUOlygK+yr+IPHp67FtozZImbO7FoPh5
- fXOpnAIXRnJQnSuza6Ao8RFa5vKCxkH/mvWE8ie8O0kyqMvcIP/Bg4vhBFFp1K1IGMwW
- +jzp0X6U6TYI56kCP+7z8Y+eQUo8z7Md0QvX1sXgkwvT0feG8yc8ereksDXM6GRopufr
- EglDD6mvu++iOyyazQ5OrdaDMyPBJvSkRtl45aBaG9pWeqAoxLw0lCkP0NvgGljXV9+Y
- eaGZR0dWGsAMjB3vEeSVzQKLTcySCI9Df++FWJJnlxU2UH7XgqKctALkWQHJ/bgHZxcP
- qEpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=Nrav1kR773dg/LaP1RkWLKUuQ81XJzhtYOxzGdoCS/g=;
- b=f8uHdCJXcSn7E4VXq2gllk9G6cS5uDCvt3nweqhQroFArhvB0H0kLxmsy2XKPWWRL+
- s6yURIdIexiDfkPTN+CWNP6oX/q4Ik5Pwbk4FE3DHQ3IAK8BvS/2hSWS2qbpltek6EyV
- 8oUG4BZkHy6lsUzI5d481gKBvDCXliHBm+BFfM9T57oYuSQIHS27G2kNyvtBOxxZLllU
- AE3RjZ+nNVEhySMdbvA7ULORv4Ksk9fQHa/PBYVVnfLIEHwZqbGKhLWvlk90YomU3AO3
- NJIUHPfdvyWoPXebWmbuvKhLQURmhTX8U6iE7CdZBk26aOhvb0ljhWmeexPOHp7iw5QX
- Of2g==
-X-Gm-Message-State: AOAM533YIZZsKO+TsVW4KQpMlu+rJ7DUcXk53r9O+HSuB+xIgZvZFOwm
- 3+wUchHEoHSZkfz8Ha8selDhqGkfjo0eduOxPXXPtDcB8xY=
-X-Google-Smtp-Source: ABdhPJw7OOV+/KhAJOX25HeO+CeFSBu/lxloHQMtgyrPSsd4aYhqvtbCEKt7eh8h868ZN+bsWkTfjEZ+pu/G8eXp4NI=
-X-Received: by 2002:a05:6402:318f:: with SMTP id
- di15mr71171950edb.237.1609767539244; 
- Mon, 04 Jan 2021 05:38:59 -0800 (PST)
+ for <wireguard@lists.zx2c4.com>; Mon, 4 Jan 2021 16:05:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=de-vri.es; s=voyager; 
+ t=1609776985;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=I2DckzgXiiHFEQKjFgIZ6F81CtSnWDJi77vLp5tp9i0=;
+ b=D5AbD99ECxvg/EpE2wtRl0VTETetkXlPciM0vRZDvbWMQpHxfEwIMFL/HVD3uYgtF7mCb8
+ Yb7VfnxSaY7uyvTv5c9Pr0pWbp/fPFoFfNSIfFqmqsOLKIamFkw+5TTVDiZ/O/JaupLbOa
+ wF4x1yUXyfX6srDVyY/A+Zw3pK6NSjgcxoCrHiu/vqKo2m3l5blK77GWDJLGntXgnWU4En
+ ecxY9CofJnyT4ycVK1BUc/tZ31lsAAN8rdPpPpudV+4T/gXebeAXOeQ2L1qM6m05+peZkp
+ MvI8qd3NXqDBBGv1qt9VJAz0Asrufs6u20SXfuVP4DAhMOs1F/qVftza8feMIDf75bkuOb
+ +qEpGNWzJ8Fg49ox2LsXMrUWmYYZ+w1FkyIkfj8+7BQWCq8Ecqmu9j5R0woeUinxyCWeJn
+ 4vJS+N8e+PZXUtR87fy3zQhpx21HyuJWwxarErZUcesFdaNVI+AvCIF47Wa5eVQbrvCusF
+ ErLYHvKa7AH+HqePq5PQsyTFVtfyFpwLR5tlW9AI9T0thO7eD+di7JCoRKewVyhsLNKX4S
+ GylO4ayEu+uW6DllvWJ6Dt2E/0DvVaAzz14ih2q0CHIuyMWC7B6cF7YdJkCeFERFF+Inzy
+ 0f0qqk3TF8wLCZMxC8IlYNf6pX7kMy6vFVFq9yTZXowBNonhb7zFE=
+Received: from [10.13.1.1] (83-86-162-32.cable.dynamic.v4.ziggo.nl
+ [83.86.162.32]) by voyager (OpenSMTPD) with ESMTPSA id d33f4283
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Mon, 4 Jan 2021 16:16:25 +0000 (UTC)
+Subject: Re: Continued use of `wg-quick save` and SaveConfig=true?
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+References: <CAHmME9oGiqbq1LtGtV=-wUu7K4OajdQO+6RiEZFw9jP73zpJ2Q@mail.gmail.com>
+ <20210103195942.GA23975@server>
+From: Maarten de Vries <maarten@de-vri.es>
+Message-ID: <0619d9f4-c79a-a10d-cdc2-2c08a70d596f@de-vri.es>
+Date: Mon, 4 Jan 2021 17:16:24 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.0
 MIME-Version: 1.0
-References: <20210103215441.GA24251@server>
-In-Reply-To: <20210103215441.GA24251@server>
-From: Henning Reich <henning.reich@gmail.com>
-Date: Mon, 4 Jan 2021 14:38:23 +0100
-Message-ID: <CAOAVeL3EodpJ9YS5TsPgq0vPhCGX-W1eueASTV+SPZ9NJA0TKQ@mail.gmail.com>
-Subject: Re: WG default routing
-To: Chris Osicki <wg@osk.ch>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20210103195942.GA23975@server>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -77,32 +73,60 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
-you can control the traffic is routed with the AllowedIPs option. If
-you use 0.0.0.0/0, all traffic is routed through the wireguard tunnel.
-If you just allow for example 10.10.10.10/32 only 10.10.10.10 is
-allowed. 10.10.0.0/16,192.168.1.0/24 will allow
-10.10.0.0-10.10.254.254 and 192.168.1.0-192.168.1.254 and so on...
+On 03-01-2021 20:59, Chris Osicki wrote:
+> On Sat, Jan 02, 2021 at 03:37:09PM +0100, Jason A. Donenfeld wrote:
+>> Hi,
+>>
+>> I was thinking recently that most people have switched from a model of
+>> updating the runtime configuration and then reading that back into a
+>> config file, to editing the config file and then syncing that with the
+>> runtime config. In other words, people have moved from doing:
+>>
+>> # wg set wg0 peer ... allowed-ips ...
+>> # wg-quick save wg0
+>>
+>> To doing:
+>>
+>> # vim /etc/wireguard/wg0.conf
+>> # wg syncconf wg0 <(wg-quick strip wg0)
+>>
+>> I think this is mostly a positive change too in terms of reliability.
+>> Reading back the runtime configuration was always a bit hit or miss,
+>> and I suspect that more times than not people have been confused by
+>> SaveConfig=true.
+>>
+>> That raises the question: are there good uses left for SaveConfig=true
+>> and `wg-quick save` that warrant keeping the feature around?
+>> Temporarily caching a roamed endpoint IP, perhaps, but how helpful is
+>> that?
+>>
+>> I haven't thought too deeply about this in order to be wedded to one
+>> outcome over the other yet, but seeing some confusion today, again, in
+>> #wireguard over the feature made me wonder.
+>>
+>> Any opinions on this? Any one on this list actively use this feature
+>> and see replacements for it (e.g. syncconf) as clearly inferior?
+>>
+>> Jason
+> Hi Jason
+>
+> Being an old fashioned Unix admin, ~30 years spent in this job, I vote for the traditional way of doing it:
+> change the config file and let the application reread it.
+> I think the KISS principle is still valid ;-)
 
-I use
-[Peer]
-PublicKey = xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-AllowedIPs = 172.16.16.0/24,10.10.0.0/16,10.0.0.0/16
-Endpoint = 123.123.123.123:12346
-PersistentKeepalive=30
+I totally agree. Reloading the config file is much nicer :)
 
-Am Mo., 4. Jan. 2021 um 13:40 Uhr schrieb Chris Osicki <wg@osk.ch>:
->
-> Hi
->
-> I am quite new to wireguard, moving after years of OpenVPN, and found it simple and _really good_.
-> One thing, however, makes me wonder. Why WG tries always to take over all my routing?
-> My first try was with wg-quick, and noticed all my traffic went through the WG-VPN connection.
-> It escapes me why. What is the idea behind this policy?
->
-> On my Linux boxes it's not a problem, I don't have to use wg-quick and with few lines of bash in a script I have what I need. I have root.
-> On my Android devices I don't have root, and I cannot change anything in routing etc.
-> Why don't you provide an option to specify which net to route which way?
->
-> Regards,
-> Chris
+I also don't need to save roaming endpoints. All WireGuard tunnels I use 
+have at-least one side with a fixed endpoint. And if that's not the case 
+I imagine you probably need a more complicated solution than wg-quick.
+
+
+> Thanks for the excellent software, Jason!
+
+I also totally agree with this. WireGuard has made my life a lot easier :)
+
+
+Regards,
+
+Maarten
+
