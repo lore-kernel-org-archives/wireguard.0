@@ -2,62 +2,66 @@ Return-Path: <SRS0=t67z=GH=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 42F09C433E0
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 Jan 2021 12:47:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B1B1C433DB
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 Jan 2021 13:40:08 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 779B321D93
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 Jan 2021 12:47:53 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 779B321D93
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id 8FA3A207B1
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 Jan 2021 13:40:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 8FA3A207B1
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 56fe4e23;
-	Mon, 4 Jan 2021 12:36:34 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [192.95.5.64])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id eb53ba31
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 10d1b84c;
+	Mon, 4 Jan 2021 13:28:12 +0000 (UTC)
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com
+ [2a00:1450:4864:20::52f])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f6cd26f2
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 4 Jan 2021 12:36:32 +0000 (UTC)
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0da913b4
- for <wireguard@lists.zx2c4.com>; Mon, 4 Jan 2021 12:37:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
- :references:in-reply-to:from:date:message-id:subject:to:cc
- :content-type; s=mail; bh=SJtgQU8a9GNBkuLGXiU9ERu5Xoc=; b=PxQCwQ
- JzFC1j0I0UWC/oEo1O7SKi4JJDGEDMXX7hW6UZid/1MBMaoSUB87eCuKT+CeiJEc
- 4KOZ1p0c4pcaw7KHAN6Gl1d9a/WWmfUi1QFGneuR+LdmLqqkKfXgUo0YILF+ghMC
- dzqiey5X6O6WiEo8B5/75eGQmQnL+fl1Vzm86yhA5ORfV7PnAiWFikbM1k1IoPul
- tAe54Jv+N17Yw33ym0yV+CA84IFid9FCGmMzunEwn3JeTpKRLsjwSUlILytUjJxv
- fzVfmiNlhk6MrNjtusy2pSoYi/Hj0u2STgzQHdf/LeeeiFOla8z0WcaJtYXKPJvu
- UJ/CGBtaDWmiEeQQ==
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 65488888
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 4 Jan 2021 12:37:17 +0000 (UTC)
-Received: by mail-yb1-f177.google.com with SMTP id f6so25842385ybq.13
- for <wireguard@lists.zx2c4.com>; Mon, 04 Jan 2021 04:47:22 -0800 (PST)
-X-Gm-Message-State: AOAM530NvKWAg/B5BENWUnXC0Tc+Wfm98yyY2AnL0afCy0SGl6Jbm//K
- JNO6V7qd1RcKLwPpHFcFZXPYDoRiZC7Ddva0JvI=
-X-Google-Smtp-Source: ABdhPJxBVinGQzOkSSBDp6kMXhJhb5e9YTT9Dieoc3DWmyWTvqN6+Xmxr7mTAFjVpHY4oBqj4cBcriMsViS39rxjCjw=
-X-Received: by 2002:a25:938a:: with SMTP id a10mr99006814ybm.49.1609764442085; 
- Mon, 04 Jan 2021 04:47:22 -0800 (PST)
+ for <wireguard@lists.zx2c4.com>; Mon, 4 Jan 2021 13:28:10 +0000 (UTC)
+Received: by mail-ed1-x52f.google.com with SMTP id c7so27361171edv.6
+ for <wireguard@lists.zx2c4.com>; Mon, 04 Jan 2021 05:39:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=Nrav1kR773dg/LaP1RkWLKUuQ81XJzhtYOxzGdoCS/g=;
+ b=brywKm+rEcUJPwGhqmrn4N0PTrwnXNOwGDmUOlygK+yr+IPHp67FtozZImbO7FoPh5
+ fXOpnAIXRnJQnSuza6Ao8RFa5vKCxkH/mvWE8ie8O0kyqMvcIP/Bg4vhBFFp1K1IGMwW
+ +jzp0X6U6TYI56kCP+7z8Y+eQUo8z7Md0QvX1sXgkwvT0feG8yc8ereksDXM6GRopufr
+ EglDD6mvu++iOyyazQ5OrdaDMyPBJvSkRtl45aBaG9pWeqAoxLw0lCkP0NvgGljXV9+Y
+ eaGZR0dWGsAMjB3vEeSVzQKLTcySCI9Df++FWJJnlxU2UH7XgqKctALkWQHJ/bgHZxcP
+ qEpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=Nrav1kR773dg/LaP1RkWLKUuQ81XJzhtYOxzGdoCS/g=;
+ b=f8uHdCJXcSn7E4VXq2gllk9G6cS5uDCvt3nweqhQroFArhvB0H0kLxmsy2XKPWWRL+
+ s6yURIdIexiDfkPTN+CWNP6oX/q4Ik5Pwbk4FE3DHQ3IAK8BvS/2hSWS2qbpltek6EyV
+ 8oUG4BZkHy6lsUzI5d481gKBvDCXliHBm+BFfM9T57oYuSQIHS27G2kNyvtBOxxZLllU
+ AE3RjZ+nNVEhySMdbvA7ULORv4Ksk9fQHa/PBYVVnfLIEHwZqbGKhLWvlk90YomU3AO3
+ NJIUHPfdvyWoPXebWmbuvKhLQURmhTX8U6iE7CdZBk26aOhvb0ljhWmeexPOHp7iw5QX
+ Of2g==
+X-Gm-Message-State: AOAM533YIZZsKO+TsVW4KQpMlu+rJ7DUcXk53r9O+HSuB+xIgZvZFOwm
+ 3+wUchHEoHSZkfz8Ha8selDhqGkfjo0eduOxPXXPtDcB8xY=
+X-Google-Smtp-Source: ABdhPJw7OOV+/KhAJOX25HeO+CeFSBu/lxloHQMtgyrPSsd4aYhqvtbCEKt7eh8h868ZN+bsWkTfjEZ+pu/G8eXp4NI=
+X-Received: by 2002:a05:6402:318f:: with SMTP id
+ di15mr71171950edb.237.1609767539244; 
+ Mon, 04 Jan 2021 05:38:59 -0800 (PST)
 MIME-Version: 1.0
-References: <a79af0c5-ad54-2b17-964b-9e7891064335@53c70r.de>
- <176cafeade8.27b6.fd5e59abeac6319e4fe4e8192ea7d08d@solidadmin.com>
-In-Reply-To: <176cafeade8.27b6.fd5e59abeac6319e4fe4e8192ea7d08d@solidadmin.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 4 Jan 2021 13:47:11 +0100
-X-Gmail-Original-Message-ID: <CAHmME9pzOrvHX2bVcHVHh44_j1P_bYaz+o-wCnjnEgxoMeZCyA@mail.gmail.com>
-Message-ID: <CAHmME9pzOrvHX2bVcHVHh44_j1P_bYaz+o-wCnjnEgxoMeZCyA@mail.gmail.com>
-Subject: Re: Wireguard not available for CentOS Stream
-To: Joe Doss <joe@solidadmin.com>
-Cc: Silvan Nagl <mail@53c70r.de>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>, 
- Neal Gompa <ngompa13@gmail.com>
+References: <20210103215441.GA24251@server>
+In-Reply-To: <20210103215441.GA24251@server>
+From: Henning Reich <henning.reich@gmail.com>
+Date: Mon, 4 Jan 2021 14:38:23 +0100
+Message-ID: <CAOAVeL3EodpJ9YS5TsPgq0vPhCGX-W1eueASTV+SPZ9NJA0TKQ@mail.gmail.com>
+Subject: Re: WG default routing
+To: Chris Osicki <wg@osk.ch>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -73,36 +77,32 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Mon, Jan 4, 2021 at 2:24 AM Joe Doss <joe@solidadmin.com> wrote:
+Hi,
+you can control the traffic is routed with the AllowedIPs option. If
+you use 0.0.0.0/0, all traffic is routed through the wireguard tunnel.
+If you just allow for example 10.10.10.10/32 only 10.10.10.10 is
+allowed. 10.10.0.0/16,192.168.1.0/24 will allow
+10.10.0.0-10.10.254.254 and 192.168.1.0-192.168.1.254 and so on...
+
+I use
+[Peer]
+PublicKey = xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+AllowedIPs = 172.16.16.0/24,10.10.0.0/16,10.0.0.0/16
+Endpoint = 123.123.123.123:12346
+PersistentKeepalive=30
+
+Am Mo., 4. Jan. 2021 um 13:40 Uhr schrieb Chris Osicki <wg@osk.ch>:
 >
-> https://copr.fedorainfracloud.org/coprs/jdoss/wireguard/
+> Hi
 >
-> The official DKMS install method for CentOS has a Stream repo enabled. It
-> should work fine. Let us know if you have any issues.
-
-It's actually presently broken. I've fixed it in the master branch with:
-https://git.zx2c4.com/wireguard-linux-compat/commit/?id=f7f55464a156e1181fa76d9c7e2fc0d495f2357e
-
-But Red Hat still has not fixed other bugs that will enable our CI to
-continue, and I won't release for RHEL alone until the CI is green.
-You can cherry pick that into your dkms package if you need. I wrote
-Red Hat a patch and sent it, but there's been no updated kernel yet.
-
-More generally, I'm on the fence about how much I actually want to
-support CentOS Stream. CentOS non-Stream is annoying, because it's
-developed behind closed doors and is extremely slow to fix things, but
-at least the changes are gradual and it's easy to keep up with, by
-virtue of rarely changing. In contrast, CentOS Stream is fast moving,
-and extremely unstable, with builds frequently breaking. This would be
-fine and I would prefer it, since it means we can in theory get things
-fixed reasonably fast, but actually, Stream is still developed behind
-closed doors, with no visibility about what's going on, no
-communication from RH on when fixes are coming out, no regular or
-reliable release schedule, no releases for months sometimes, and just
-a bugzilla blackbox that forces all reports to be private/secret. So,
-unstable+secretive development makes developing for CentOS Stream
-nearly as fun as developing for macOS, which is to say, not very fun.
-
-Anyway, as soon as they drop a new kernel and the CI is green again,
-I'll release. Or they ignored my patch and the CI will still be red.
-We'll see!
+> I am quite new to wireguard, moving after years of OpenVPN, and found it simple and _really good_.
+> One thing, however, makes me wonder. Why WG tries always to take over all my routing?
+> My first try was with wg-quick, and noticed all my traffic went through the WG-VPN connection.
+> It escapes me why. What is the idea behind this policy?
+>
+> On my Linux boxes it's not a problem, I don't have to use wg-quick and with few lines of bash in a script I have what I need. I have root.
+> On my Android devices I don't have root, and I cannot change anything in routing etc.
+> Why don't you provide an option to specify which net to route which way?
+>
+> Regards,
+> Chris
