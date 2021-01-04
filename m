@@ -2,56 +2,79 @@ Return-Path: <SRS0=t67z=GH=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49233C433E6
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 Jan 2021 17:53:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3EA3EC433E0
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 Jan 2021 18:41:51 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 6FB502074A
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 Jan 2021 17:53:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 6FB502074A
-Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=msfjarvis.dev
+	by mail.kernel.org (Postfix) with ESMTPS id 8A0612076D
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 Jan 2021 18:41:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 8A0612076D
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=maidenheadbridge.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e16e93d0;
-	Mon, 4 Jan 2021 17:42:30 +0000 (UTC)
-Received: from sendmail.purelymail.com (sendmail.purelymail.com
- [34.202.193.197])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 0522d917
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5747927d;
+	Mon, 4 Jan 2021 18:30:30 +0000 (UTC)
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com
+ [2a00:1450:4864:20::435])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6cac90ec
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 4 Jan 2021 17:42:27 +0000 (UTC)
-DKIM-Signature: a=rsa-sha256;
- b=QjuVOWyuo4r/UVFmrGegI3crGmCWKH6d5JQtnLPJwIP2EtxA3pD+WdbtQEaZ27mQSIWEjT1rUIQKIzF63hLn5i2KRSWoiuh+8WTQqtaAo1ngSn4vBHEPXOk8hiASS2Fb5vHfp0wAz0dGhPH915SS8NEjRCiuEIDZ/NJK2THIa80072lbEBx3pmhCvtXjF2lwUweF2QEmTWNi/aXHiItYZ4QtX01dQ7dpHtu581h4X80AXQJwOZZ12sWKwqxicJhsm8/Zk8lJ05OEhmU4RzeruQT0m8Qgop1ClqIQrI+wEU7r6qfvk2ELJMMUSR0Ya3BDQxGxsP0Vnu1E73AaaPatlQ==;
- s=purelymail2; d=msfjarvis.dev; v=1;
- bh=AkppmuqHRJPEkWvkggApTI/BWFlSpf/54CuaQwisCS0=; h=Received:From:To; 
-DKIM-Signature: a=rsa-sha256;
- b=DTN245E/8jNLSSofMUUbsnpQWsnbrricK2WpmtrpgtnwSDVQvLaR+tmKm7VP6I3+cAhdZJW/VeLzp/u1JsCdC5biqB8sJeIFIGppUlvRFHAf4zwI0n0QdHNEwhX3cNf/5/eh4MwwxBmhBGWfkxJCHALZcMNISUSsSzZlGyqMz2wfYckbdDR4MsUgdPM2UwAWdYr+1NyKj0VO3vYA77ROOyvrK4IFCR/jEBfYrDV7AUNsOYjbI8Bhjpq8yLgLg5deQmnP7uShaiOgRPWeGN8huzO6WEwDzqPupjlI4Uiq+M2Pz8nyE4sLN+uY7zsclZ7nV0f9w6ZwrzHuQnmwwguHkA==;
- s=purelymail2; d=purelymail.com; v=1;
- bh=AkppmuqHRJPEkWvkggApTI/BWFlSpf/54CuaQwisCS0=;
- h=Feedback-ID:Received:From:To; 
-Feedback-ID: 322:138:null:purelymail
-X-Pm-Original-To: wireguard@lists.zx2c4.com
-Received: by ip-172-30-0-247.ec2.internal (JAMES SMTP Server ) with ESMTPA ID
- -2079322213; Mon, 04 Jan 2021 17:53:12 +0000 (UTC)
+ for <wireguard@lists.zx2c4.com>; Mon, 4 Jan 2021 18:30:27 +0000 (UTC)
+Received: by mail-wr1-x435.google.com with SMTP id i9so33193679wrc.4
+ for <wireguard@lists.zx2c4.com>; Mon, 04 Jan 2021 10:41:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=maidenheadbridge-com.20150623.gappssmtp.com; s=20150623;
+ h=subject:to:references:from:message-id:date:user-agent:mime-version
+ :in-reply-to:content-transfer-encoding:content-language;
+ bh=z5/7mNgNqWGGYU0PsuubZIVAapetEX5B6vMB0gO4Tug=;
+ b=T4h6vD5lL5iSaXQyiH7EYrw7Qs4MnGRDEYeMBw6gqN+otrH/YQk5a4CshxKap/RQqo
+ iuJnunEwgsCZW8TdoN/ma1vF4Qm6/X8ZL97ydp3In5sG9lGxTo7w5tiXEEEROzfmgNzJ
+ vPzRNiONzzfkKVlizd77+neKuvhyFzzSfezElqxKautmfuiYmkV2t1tAzCc0cX9RCSvt
+ LYQj7tHKVAXucb1vTmq4IJfGH6JE2MJ+x8W12kcvnUYwtwxGgnSJyB/164VyPsdIllsB
+ GqgEBoxlFrgboR7qNnklUKDEyHNsDCUtyWedbnF34fi0jbguv3WrXRltTNm0z9cXBRRR
+ s7aA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:subject:to:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-transfer-encoding
+ :content-language;
+ bh=z5/7mNgNqWGGYU0PsuubZIVAapetEX5B6vMB0gO4Tug=;
+ b=fz2GMO7D7vvn/MCG8FiLHOAS5c9slWYn9CRmrzEy+u7uxNHLGjS8TGuL6AHTyfAxUe
+ 6M3B+nWx8gfmqJAe5pSlTDFSBZShtMleuTCVnakE7XGu8Jhebj+WWXL/noy4mTgucWqn
+ VzVGEs4BmYIuzLK9JGqvNqKT03xyQbq4XU8NzUtngYNFZK0bMYwvp3B7piibAWUW6Atl
+ S1FER6Snynt7S7lWVoeq2yOy/XsJ/yqZim4TX/b1B+Qo59B3lrCdIh2gvo0HHeiOTsaV
+ n45xDsodZveM47x3UunzWSxiVMlB26cN8TlIR4bpiREQQZfa4Rp/U5smT7jvwNvxOJdU
+ H6XQ==
+X-Gm-Message-State: AOAM532wD1etkt9q8ZDc5uvYgqZ643C00w6GzrtL0LLsFqoQIA4TBTdU
+ SlhppdqkIXzDCLBD7PGQ1vxUVmN/2eIgKyIx
+X-Google-Smtp-Source: ABdhPJyMPKJ16P3zozBsUkDk9Q7Htmrau+Q9Fj2YZ5AcJICvv8hIc2pm5/Z8hihUk4Mtm8xKQufYmA==
+X-Received: by 2002:a5d:4704:: with SMTP id y4mr80518184wrq.358.1609785679150; 
+ Mon, 04 Jan 2021 10:41:19 -0800 (PST)
+Received: from [192.168.1.140] (82-68-6-78.dsl.in-addr.zen.co.uk. [82.68.6.78])
+ by smtp.gmail.com with ESMTPSA id g184sm340431wma.16.2021.01.04.10.41.17
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 04 Jan 2021 10:41:18 -0800 (PST)
+Subject: Re: Continued use of `wg-quick save` and SaveConfig=true?
+To: wireguard@lists.zx2c4.com
+References: <CAHmME9oGiqbq1LtGtV=-wUu7K4OajdQO+6RiEZFw9jP73zpJ2Q@mail.gmail.com>
+ <20210103195942.GA23975@server>
+ <0619d9f4-c79a-a10d-cdc2-2c08a70d596f@de-vri.es>
+From: Adrian Larsen <alarsen@maidenheadbridge.com>
+Message-ID: <edc99d2b-74f6-f165-993c-4901ddd9fd99@maidenheadbridge.com>
+Date: Mon, 4 Jan 2021 18:41:17 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Date: Mon, 04 Jan 2021 17:53:11 +0000
-From: Harsh Shandilya <me@msfjarvis.dev>
-To: Adam Irr <adam.irr@outlook.com>, Jason <Jason@zx2c4.com>
-Cc: wireguard@lists.zx2c4.com
-Subject: Re: [PATCH] wg-quick: Android: Use ip link to set MTU
-In-Reply-To: <DM5PR0701MB3670A1B8ADEF9BC7C8E06FEE92D30@DM5PR0701MB3670.namprd07.prod.outlook.com>
-References: <DM5PR0701MB3670A1B8ADEF9BC7C8E06FEE92D30@DM5PR0701MB3670.namprd07.prod.outlook.com>
-User-Agent: Purely Mail via Roundcube/1.4.7
-Message-ID: <375e4f5117985cc3d71fbd786e5ab3f1@msfjarvis.dev>
-X-Sender: me@msfjarvis.dev
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+In-Reply-To: <0619d9f4-c79a-a10d-cdc2-2c08a70d596f@de-vri.es>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -66,64 +89,90 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hey Adam,
+Hi Jason,
 
-On 2021-01-03 05:59, Adam Irr wrote:
-> The ndc command used didn't work on my Nvidia Shield (rooted with a
-> custom-built kernel). The ip link command does work. I have only
-> tested this on an Nvidia Shield (Android TV - Version 9.0 Pie).
-> 
-> I couldn't find a lot of documentation on ndc so it's possible my
-> device/kernel is misconfigured. If you suspect this is the case, let
-> me know.
+1) From a manual operation point of view, I feel more comfortable if an 
+Operator uses:
 
-You couldn't find documentation because there isn't any, it's 
-effectively "private API" and Google has broken it time and again. It is 
-rather curious that you're running into this issue though, since we've 
-had the NDC code in place since before Android 9 came out and went 
-through breaking changes in every cycle without these specific 
-invocations failing. The last ndc related problem we had was with the 
-Android 11 release, where a similar fix[1] was implemented.
+# wg set wg0 peer ... allowed-ips ...
+# wg-quick save wg0
 
-I've Cc'ed Jason for reviewing this change, but I'm decidedly curious as 
-to why just the Nvidia SHIELD seems to need it.
+rather than editing manually the config file.
 
-> 
-> Signed-off-by: Adam Irr <adam.irr@outlook.com>
-> ---
->  src/wg-quick/android.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/src/wg-quick/android.c b/src/wg-quick/android.c
-> index 326efa9..941c7b8 100644
-> --- a/src/wg-quick/android.c
-> +++ b/src/wg-quick/android.c
-> @@ -995,7 +995,7 @@ static void set_mtu(const char *iface, unsigned int 
-> mtu)
->         int endpoint_mtu, next_mtu;
-> 
->         if (mtu) {
-> -               cndc("interface setmtu %s %u", iface, mtu);
-> +               cmd("ip link set dev %s mtu %d", iface, mtu);
->                 return;
->         }
-> 
-> @@ -1016,7 +1016,7 @@ static void set_mtu(const char *iface, unsigned 
-> int mtu)
->                         endpoint_mtu = next_mtu;
->         }
-> 
-> -       cndc("interface setmtu %s %d", iface, endpoint_mtu - 80);
-> +       cmd("ip link set dev %s mtu %d", iface, endpoint_mtu - 80);
->  }
-> 
->  static void add_route(const char *iface, unsigned int netid, const 
-> char *route)
-> --
-> 2.25.1
+In case the Wire Guard is running multiple peers with production 
+traffic, I think an Operator can do less damage using the commands if 
+something goes wrong.
 
-Cheers,
-Harsh
+2) From automation point of view, still I think that is easy to use the 
+commands (on an script):
 
-1: 
-https://git.zx2c4.com/wireguard-tools/commit/?id=9a0d65e2afbd6e418c883e0de8555b4fac29f1d5
+# wg set wg0 peer ... allowed-ips ...
+# wg-quick save wg0
+
+rather than using "sed" or "awk" to modify the config file.
+
+My 2 cents.
+
+Adrian
+
+On 04/01/2021 16:16, Maarten de Vries wrote:
+> On 03-01-2021 20:59, Chris Osicki wrote:
+>> On Sat, Jan 02, 2021 at 03:37:09PM +0100, Jason A. Donenfeld wrote:
+>>> Hi,
+>>>
+>>> I was thinking recently that most people have switched from a model of
+>>> updating the runtime configuration and then reading that back into a
+>>> config file, to editing the config file and then syncing that with the
+>>> runtime config. In other words, people have moved from doing:
+>>>
+>>> # wg set wg0 peer ... allowed-ips ...
+>>> # wg-quick save wg0
+>>>
+>>> To doing:
+>>>
+>>> # vim /etc/wireguard/wg0.conf
+>>> # wg syncconf wg0 <(wg-quick strip wg0)
+>>>
+>>> I think this is mostly a positive change too in terms of reliability.
+>>> Reading back the runtime configuration was always a bit hit or miss,
+>>> and I suspect that more times than not people have been confused by
+>>> SaveConfig=true.
+>>>
+>>> That raises the question: are there good uses left for SaveConfig=true
+>>> and `wg-quick save` that warrant keeping the feature around?
+>>> Temporarily caching a roamed endpoint IP, perhaps, but how helpful is
+>>> that?
+>>>
+>>> I haven't thought too deeply about this in order to be wedded to one
+>>> outcome over the other yet, but seeing some confusion today, again, in
+>>> #wireguard over the feature made me wonder.
+>>>
+>>> Any opinions on this? Any one on this list actively use this feature
+>>> and see replacements for it (e.g. syncconf) as clearly inferior?
+>>>
+>>> Jason
+>> Hi Jason
+>>
+>> Being an old fashioned Unix admin, ~30 years spent in this job, I 
+>> vote for the traditional way of doing it:
+>> change the config file and let the application reread it.
+>> I think the KISS principle is still valid ;-)
+>
+> I totally agree. Reloading the config file is much nicer :)
+>
+> I also don't need to save roaming endpoints. All WireGuard tunnels I 
+> use have at-least one side with a fixed endpoint. And if that's not 
+> the case I imagine you probably need a more complicated solution than 
+> wg-quick.
+>
+>
+>> Thanks for the excellent software, Jason!
+>
+> I also totally agree with this. WireGuard has made my life a lot 
+> easier :)
+>
+>
+> Regards,
+>
+> Maarten
+>
