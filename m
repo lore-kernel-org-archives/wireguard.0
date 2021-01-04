@@ -2,65 +2,69 @@ Return-Path: <SRS0=t67z=GH=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2513EC433DB
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 Jan 2021 21:05:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5770BC433DB
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 Jan 2021 21:56:46 +0000 (UTC)
 Received: from krantz.zx2c4.com (krantz.zx2c4.com [192.95.5.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 58451207B0
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 Jan 2021 21:05:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 58451207B0
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=de-vri.es
+	by mail.kernel.org (Postfix) with ESMTPS id 9C6B12225E
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  4 Jan 2021 21:56:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 9C6B12225E
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 903e065d;
-	Mon, 4 Jan 2021 20:54:12 +0000 (UTC)
-Received: from mx1.de-vri.es (voyager.de-vri.es [149.210.162.205])
- by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 109a620f
+	by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9d55f5d0;
+	Mon, 4 Jan 2021 21:44:54 +0000 (UTC)
+Received: from mail-il1-x133.google.com (mail-il1-x133.google.com
+ [2607:f8b0:4864:20::133])
+ by krantz.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 97aa5395
  (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 4 Jan 2021 20:54:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=de-vri.es; s=voyager; 
- t=1609794301;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=WHJSSK+fz6tbvyHshApeQ0ZeSkju5pxW8qBD4TTqZl4=;
- b=Ty0fvjvEm0Aw4Wx6lLhD9imfldU+tufk0a+D7pickzE3nnIuSVoIpO+SKpvdDh09k3rUmc
- iv6/poxn6FwtJZcI5CCuy5P6brwFmIICGbNrIPeicCt1fScmkYKd9Iqv+4qvxTdn4G+c5M
- QwTVAqEgTGcsGxVzjOpCJzsJlKg6RQ5b9GLvD2O02EVv6Nyl8oJvX609cHygINfdxq5K+/
- LtIcvCyZ+qj/yp/82i4jXB9ivEVJV3IC0Uo/UcP+1CHg5Qy8J90jWeGYqSvVyVMZlH/ntg
- w/q8IEcjGLwTYE/1th7TwkH2iAi5SaOMij5XmqM1qjjqF/nkLSmXsQYOBI/akEZ89z0Ymr
- 4vOk8JLrwZVZImaYLuR5wDm/E1pj6myyLMh2T63qBlMRNk5b2cQEayX2ZBfqTQ1cJ8jHIv
- LD86894KDsa/3b6HN6WK2Qw6WU876NgG8BLTiu+VG3zmhRvHXVGSi7WskLWxKALRcLZ5uy
- H+7KpfxEUkTuF+vsYtFDGOxHg4FeiJrQ/GC2qlskawGZ3STdPKBv75FTrb8aimDRGnKNbS
- UhRADnNuJgtlp7KNR38R0FQH3Tku3g7jmyw2NthVzAeaM8BNaY3v80i6olLJZ3b7zjDBZy
- rnioeQ6XFcDmHkN++yi8jrqt8qOziQE1GNzEVNFGCfS2yG0xO2JKM=
-Received: from [10.13.1.1] (83-86-162-32.cable.dynamic.v4.ziggo.nl
- [83.86.162.32]) by voyager (OpenSMTPD) with ESMTPSA id 2456e8d6
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 4 Jan 2021 21:05:01 +0000 (UTC)
-Subject: Re: Continued use of `wg-quick save` and SaveConfig=true?
-To: wireguard@lists.zx2c4.com
-References: <CAHmME9oGiqbq1LtGtV=-wUu7K4OajdQO+6RiEZFw9jP73zpJ2Q@mail.gmail.com>
- <20210103195942.GA23975@server>
- <0619d9f4-c79a-a10d-cdc2-2c08a70d596f@de-vri.es>
- <edc99d2b-74f6-f165-993c-4901ddd9fd99@maidenheadbridge.com>
-From: Maarten de Vries <maarten@de-vri.es>
-Message-ID: <da590a57-f605-07a0-de90-319e7e163786@de-vri.es>
-Date: Mon, 4 Jan 2021 22:05:01 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.0
+ for <wireguard@lists.zx2c4.com>; Mon, 4 Jan 2021 21:44:51 +0000 (UTC)
+Received: by mail-il1-x133.google.com with SMTP id q1so26773383ilt.6
+ for <wireguard@lists.zx2c4.com>; Mon, 04 Jan 2021 13:55:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:reply-to:from:date:message-id
+ :subject:to:cc;
+ bh=EF9Oj6eckIaskbw4tFbG2bw+f0fQtzJHWW5KpMbtvvU=;
+ b=dE3fnJloBG+I6ud69WeCBVen1PRuVS9nJ3D4shWry1P4BFIN+pj+gfDbyVBZw0M4Md
+ 37CvQYyIVjCSvR19uSwfEDUC9C9m1Z2txVIa9RIXszVvXVyP0t5FO5IblzquQ2WelWc2
+ uayucKCPH/ljpAB/wX6Rp66ecFU0santzdIzt8RjUA54r3W/UOqUqTJK6ucxSY87aXho
+ iCszgyoU5eWdRBzjAZTOQC3+Gx1UEByPSeMuA2LIU4dmd/W5bOah6ucdrXN/pWQL7+6R
+ Yz/d6aT2lF7HGOfL2sNbYW5UKThmWP0Z4K2NbSkDJm8PQAxWTPXHGtL8GuqIivQXYNKN
+ n1cQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
+ :from:date:message-id:subject:to:cc;
+ bh=EF9Oj6eckIaskbw4tFbG2bw+f0fQtzJHWW5KpMbtvvU=;
+ b=TLUc8DMDkLTdf78Zuh6wrhh8etFcrzGN7ytG1rsnIWVztKY2xQdxiuGT5wcmqzOFj1
+ hWJ3YZJ0QzUN2plLUcKLbIe5WASVRTAjK25NLdCiskgDHJTXEB9fDjtlLTkK83d3n2N1
+ zeLisfvAnmtdEEpw9mivjoFYOfFuBJVx0ysf4ssTf309pfyOs4e3JyvpA2Qr4Oij59qI
+ vt8/P0w4/rsU2Y7hJ7wfsFHMz/RT3FPtgZYwOsCzojKdCQUb2tLom750+NVvGH9RPQdb
+ tqO5p7a3rmvGAuLUFakIQYxkcNxLBxIGZ0yrEjhWr0i9AA7vQSUZP39+oum85UGjTBhH
+ HKKg==
+X-Gm-Message-State: AOAM533KrTCw1n6wx2LF2VsxU9yx2WmEU0J1axszW73Qfn8NvRRwcx++
+ 8zWYWjiLP3nNLSVP1TN7Y4aOUyJlIJO6EBUFZdKE5jHhQ/U=
+X-Google-Smtp-Source: ABdhPJwmHNKLjJlJxFw58cDE6kkwD2vnxETv/40ThXvA8sDUxWwDyiwYwE1BnnnOn7ubhCrfLLxTRQw35fzFxCcn9vY=
+X-Received: by 2002:a92:8495:: with SMTP id y21mr71233057ilk.55.1609797345291; 
+ Mon, 04 Jan 2021 13:55:45 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <edc99d2b-74f6-f165-993c-4901ddd9fd99@maidenheadbridge.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+References: <a79af0c5-ad54-2b17-964b-9e7891064335@53c70r.de>
+ <176cafeade8.27b6.fd5e59abeac6319e4fe4e8192ea7d08d@solidadmin.com>
+ <CAHmME9pzOrvHX2bVcHVHh44_j1P_bYaz+o-wCnjnEgxoMeZCyA@mail.gmail.com>
+In-Reply-To: <CAHmME9pzOrvHX2bVcHVHh44_j1P_bYaz+o-wCnjnEgxoMeZCyA@mail.gmail.com>
+From: Jeffrey Walton <noloader@gmail.com>
+Date: Mon, 4 Jan 2021 16:55:14 -0500
+Message-ID: <CAH8yC8n-fC8MJxR7cA+otkqRyDZwhR7wz2Ni+-YTAgiKz7CRHA@mail.gmail.com>
+Subject: Re: Wireguard not available for CentOS Stream
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -72,126 +76,54 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
+Reply-To: noloader@gmail.com
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-
-On 04-01-2021 19:41, Adrian Larsen wrote:
-> Hi Jason,
+On Mon, Jan 4, 2021 at 7:48 AM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
 >
-> 1) From a manual operation point of view, I feel more comfortable if 
-> an Operator uses:
+> On Mon, Jan 4, 2021 at 2:24 AM Joe Doss <joe@solidadmin.com> wrote:
+> >
+> > https://copr.fedorainfracloud.org/coprs/jdoss/wireguard/
+> >
+> > The official DKMS install method for CentOS has a Stream repo enabled. It
+> > should work fine. Let us know if you have any issues.
 >
-> # wg set wg0 peer ... allowed-ips ...
-> # wg-quick save wg0
+> It's actually presently broken. I've fixed it in the master branch with:
+> https://git.zx2c4.com/wireguard-linux-compat/commit/?id=f7f55464a156e1181fa76d9c7e2fc0d495f2357e
 >
-> rather than editing manually the config file.
+> But Red Hat still has not fixed other bugs that will enable our CI to
+> continue, and I won't release for RHEL alone until the CI is green.
+> You can cherry pick that into your dkms package if you need. I wrote
+> Red Hat a patch and sent it, but there's been no updated kernel yet.
 >
-> In case the Wire Guard is running multiple peers with production 
-> traffic, I think an Operator can do less damage using the commands if 
-> something goes wrong.
+> More generally, I'm on the fence about how much I actually want to
+> support CentOS Stream. CentOS non-Stream is annoying, because it's
+> developed behind closed doors and is extremely slow to fix things, but
+> at least the changes are gradual and it's easy to keep up with, by
+> virtue of rarely changing. In contrast, CentOS Stream is fast moving,
+> and extremely unstable, with builds frequently breaking. This would be
+> fine and I would prefer it, since it means we can in theory get things
+> fixed reasonably fast, but actually, Stream is still developed behind
+> closed doors, with no visibility about what's going on, no
+> communication from RH on when fixes are coming out, no regular or
+> reliable release schedule, no releases for months sometimes, and just
+> a bugzilla blackbox that forces all reports to be private/secret. So,
+> unstable+secretive development makes developing for CentOS Stream
+> nearly as fun as developing for macOS, which is to say, not very fun.
 
+From an admin and developer perspective I find Fedora Server a real
+gem. Speaking from experience, I would much rather work on Fedora than
+CentOS or Red Hat.  Fedora Server comes with the latest stable tools
+and does not need things like Software Collections (SCL) to get a
+modern Apache, Python or PHP.
 
-Another solution could be to have a command line tool that modifies the 
-configuration file. Kinda like `wg set` except for a config file instead 
-of a live interface. Would tooling like that alleviate your concerns of 
-an operator messing up the configuration file?
+Every year or so Fedora Server needs a DNF System Upgrade
+(https://docs.fedoraproject.org/en-US/quick-docs/dnf-system-upgrade/),
+which is like a Ubuntu dist-upgrade. I've not had one go bad since I
+started using it back around F12 or F15.
 
+If Wireguard needs to make a Red Hat-family recommendation, I think it
+would be wise to consider Fedora Server.
 
->
-> 2) From automation point of view, still I think that is easy to use 
-> the commands (on an script):
->
-> # wg set wg0 peer ... allowed-ips ...
-> # wg-quick save wg0
->
-> rather than using "sed" or "awk" to modify the config file.
-
-
-Yeah, sed and awk aren't necessarily the nicest solutions. Although they 
-would work fine in practice. But maybe a tool as mentioned above  could 
-solve this. Even just a script as pretty front-end to the right sed/awk 
-commands could be useful here.
-
-For automation, (re-)applying a config file does have an important 
-advantage over `wg set ... && wg-quick save ...`: you can be sure that 
-all changes are applied, even if the tunnel was temporarily gone for 
-some reason. Worst case, the changes are kept in the config file and 
-applied when the interface is created again.
-
-If you try to do `wg set ... && wg-quick save ...` while the WireGuard 
-interface doesn't exist, the changes are lost. (Or you have to fall back 
-to modifying the config file by hand, but we didn't want that.)
-
-This advantage may not matter for your application, I can't really know 
-that. I suppose that depends on the kind of changes that are made to the 
-configuration at runtime.
-
--- Maarten
-
->
-> My 2 cents.
->
-> Adrian
->
-> On 04/01/2021 16:16, Maarten de Vries wrote:
->> On 03-01-2021 20:59, Chris Osicki wrote:
->>> On Sat, Jan 02, 2021 at 03:37:09PM +0100, Jason A. Donenfeld wrote:
->>>> Hi,
->>>>
->>>> I was thinking recently that most people have switched from a model of
->>>> updating the runtime configuration and then reading that back into a
->>>> config file, to editing the config file and then syncing that with the
->>>> runtime config. In other words, people have moved from doing:
->>>>
->>>> # wg set wg0 peer ... allowed-ips ...
->>>> # wg-quick save wg0
->>>>
->>>> To doing:
->>>>
->>>> # vim /etc/wireguard/wg0.conf
->>>> # wg syncconf wg0 <(wg-quick strip wg0)
->>>>
->>>> I think this is mostly a positive change too in terms of reliability.
->>>> Reading back the runtime configuration was always a bit hit or miss,
->>>> and I suspect that more times than not people have been confused by
->>>> SaveConfig=true.
->>>>
->>>> That raises the question: are there good uses left for SaveConfig=true
->>>> and `wg-quick save` that warrant keeping the feature around?
->>>> Temporarily caching a roamed endpoint IP, perhaps, but how helpful is
->>>> that?
->>>>
->>>> I haven't thought too deeply about this in order to be wedded to one
->>>> outcome over the other yet, but seeing some confusion today, again, in
->>>> #wireguard over the feature made me wonder.
->>>>
->>>> Any opinions on this? Any one on this list actively use this feature
->>>> and see replacements for it (e.g. syncconf) as clearly inferior?
->>>>
->>>> Jason
->>> Hi Jason
->>>
->>> Being an old fashioned Unix admin, ~30 years spent in this job, I 
->>> vote for the traditional way of doing it:
->>> change the config file and let the application reread it.
->>> I think the KISS principle is still valid ;-)
->>
->> I totally agree. Reloading the config file is much nicer :)
->>
->> I also don't need to save roaming endpoints. All WireGuard tunnels I 
->> use have at-least one side with a fixed endpoint. And if that's not 
->> the case I imagine you probably need a more complicated solution than 
->> wg-quick.
->>
->>
->>> Thanks for the excellent software, Jason!
->>
->> I also totally agree with this. WireGuard has made my life a lot 
->> easier :)
->>
->>
->> Regards,
->>
->> Maarten
->>
+Jeff
