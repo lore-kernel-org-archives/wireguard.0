@@ -2,75 +2,54 @@ Return-Path: <SRS0=XdmQ=GI=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C7D15C433E0
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  5 Jan 2021 18:35:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B92BC433DB
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  5 Jan 2021 20:12:18 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id CBC2822D5A
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  5 Jan 2021 18:35:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org CBC2822D5A
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=solidadmin.com
+	by mail.kernel.org (Postfix) with ESMTPS id 2F05F22D5A
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  5 Jan 2021 20:12:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 2F05F22D5A
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=osk.ch
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7dce052a;
-	Tue, 5 Jan 2021 18:35:30 +0000 (UTC)
-Received: from srv.inf7.email (srv.inf7.email [64.225.52.57])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 752e289a
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Tue, 5 Jan 2021 18:35:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=solidadmin.com; s=default; h=Content-Transfer-Encoding:Content-Type:
- In-Reply-To:MIME-Version:Date:Message-ID:Subject:From:References:To:Sender:
- Reply-To:Cc:Content-ID:Content-Description:Resent-Date:Resent-From:
- Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
- List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=9uo6X6jTS+LikmlbdtDi69tznIncYHbnVaUs7zsSaqA=; b=SYC5twbowDIUlU+hLQzvBZNe9a
- K6t8mrFCM4dO+HCtgYyGFl2LYopwD/WeHWEpO/oNa4n48pH/nuUSpVc5yTUPubvUWrWz11HvrRnxo
- B30QN6H9Eve02wNzdWQt4ekhKCi0p2f6IdyB8LWZgngEDfIVazqdsjomoDqs3i48wo9/oCSVZ9KG5
- j+edx1/WjNR3ZwxULA9xStgKbcLj2JYE0fSXYp30VypixmGn8oOB8tUracXloqOfAHW12CNQmat1Y
- 5a4/rKJ5jG0QU4pbq7H1xLUHIn+8NihkxwZBuB4znY/5/NaT2GJZHdwS9HCpDVCYqfCXWKdOVRZbs
- Oms9OkGQ==;
-Received: from c-73-45-55-209.hsd1.il.comcast.net ([73.45.55.209]:46398
- helo=[192.168.1.100])
- by srv.inf7.email with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.93) (envelope-from <joe@solidadmin.com>) id 1kwrB1-001Hgc-OX
- for wireguard@lists.zx2c4.com; Tue, 05 Jan 2021 18:35:27 +0000
-To: wireguard@lists.zx2c4.com
-References: <a79af0c5-ad54-2b17-964b-9e7891064335@53c70r.de>
- <176cafeade8.27b6.fd5e59abeac6319e4fe4e8192ea7d08d@solidadmin.com>
- <CAHmME9pzOrvHX2bVcHVHh44_j1P_bYaz+o-wCnjnEgxoMeZCyA@mail.gmail.com>
- <CAH8yC8n-fC8MJxR7cA+otkqRyDZwhR7wz2Ni+-YTAgiKz7CRHA@mail.gmail.com>
- <VE1PR08MB5837188C79F58A014916E123A0D10@VE1PR08MB5837.eurprd08.prod.outlook.com>
-From: Joe Doss <joe@solidadmin.com>
-Organization: SolidAdmin
-Subject: Re: Wireguard not available for CentOS Stream
-Message-ID: <0dc9aaac-d92f-fbaa-21e0-3a92c246480e@solidadmin.com>
-Date: Tue, 5 Jan 2021 12:35:27 -0600
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.0
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f70e7319;
+	Tue, 5 Jan 2021 20:12:14 +0000 (UTC)
+Received: from mail.osk.ch (dynamic.wline.6rd.res.cust.swisscom.ch
+ [2a02:1205:5052:8220:20f:feff:fe92:5373])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 5df5f1fb
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Tue, 5 Jan 2021 20:12:13 +0000 (UTC)
+Received: from server.osk.ch (localhost [127.0.0.1])
+ by mail.osk.ch (8.14.4/8.14.4/Debian-8+deb8u2) with ESMTP id 105KCDmx031303;
+ Tue, 5 Jan 2021 21:12:13 +0100
+Received: (from osk@localhost)
+ by server.osk.ch (8.14.4/8.14.4/Submit) id 105KCCcK031302;
+ Tue, 5 Jan 2021 21:12:12 +0100
+X-Authentication-Warning: server.osk.ch: osk set sender to wg@osk.ch using -f
+Date: Tue, 5 Jan 2021 21:12:12 +0100
+From: Chris Osicki <wg@osk.ch>
+To: Gijs Conijn <egc112@outlook.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Subject: Re: WG default routing
+Message-ID: <20210105201212.GA31054@server>
+References: <20210103215441.GA24251@server>
+ <AM7P191MB088330591C4788BAEA9591888FD20@AM7P191MB0883.EURP191.PROD.OUTLOOK.COM>
 MIME-Version: 1.0
-In-Reply-To: <VE1PR08MB5837188C79F58A014916E123A0D10@VE1PR08MB5837.eurprd08.prod.outlook.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-AntiAbuse: This header was added to track abuse,
- please include it with any abuse report
-X-AntiAbuse: Primary Hostname - srv.inf7.email
-X-AntiAbuse: Original Domain - lists.zx2c4.com
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - solidadmin.com
-X-Get-Message-Sender-Via: srv.inf7.email: authenticated_id:
- jdoss@solidadmin.com
-X-Authenticated-Sender: srv.inf7.email: jdoss@solidadmin.com
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <AM7P191MB088330591C4788BAEA9591888FD20@AM7P191MB0883.EURP191.PROD.OUTLOOK.COM>
+X-message-flag: Using Microsoft software might be a security risk
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Greylist: inspected by milter-greylist-4.5.11 (mail.osk.ch [127.0.0.1]);
+ Tue, 05 Jan 2021 21:12:13 +0100 (CET) for IP:'127.0.0.1'
+ DOMAIN:'localhost' HELO:'server.osk.ch' FROM:'wg@osk.ch' RCPT:''
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.11
+ (mail.osk.ch [127.0.0.1]); Tue, 05 Jan 2021 21:12:13 +0100 (CET)
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -85,36 +64,40 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On 1/5/21 5:25 AM, Jonathan Aquilina wrote:
-> Is Fedora a rolling release so to speak? I remember they used to call
-> fedora the bleeding edge distro not really geared for production
-> environments is that still accurate. I have only used it as a work
-> station desktop with KDE installed.
+On Mon, Jan 04, 2021 at 01:22:31PM +0000, Gijs Conijn wrote:
+> That is what I am using the allowed IP's for
+> I only want to route via the tunnel to my home LAN so I enter the WG subnet and the home LAN subnet in allowed IP's
+> (As I understood Allowed IP's are not only Allowed but also routed via the  tunnel)
+> 
+> Regards, Erik 
+> DDWRT WireGuard user
+> 
+> -----Oorspronkelijk bericht-----
+> Van: WireGuard <wireguard-bounces@lists.zx2c4.com> Namens Chris Osicki
+> Verzonden: zondag 3 januari 2021 22:55
+> Aan: WireGuard mailing list <wireguard@lists.zx2c4.com>
+> Onderwerp: WG default routing
+> 
+> Hi
+> 
+> I am quite new to wireguard, moving after years of OpenVPN, and found it simple and _really good_.
+> One thing, however, makes me wonder. Why WG tries always to take over all my routing?
+> My first try was with wg-quick, and noticed all my traffic went through the WG-VPN connection.
+> It escapes me why. What is the idea behind this policy?
+> 
+> On my Linux boxes it's not a problem, I don't have to use wg-quick and with few lines of bash in a script I have what I need. I have root.
+> On my Android devices I don't have root, and I cannot change anything in routing etc.
+> Why don't you provide an option to specify which net to route which way?
+> 
+> Regards,
+> Chris
+> 
 
-It has a release about every 6 months [1], so I wouldn't call it a
-rolling release. You can use DNF System Upgrade to move up to the next
-release pretty easily with a bit of downtime.
+Hi
 
-I have used Fedora a lot in production and I find that it works great. I
-don't consider it bleeding edge at all unless you run Fedora Rawhide
-[2]. If you are looking for a rolling release Fedora, checkout Fedora
-CoreOS [3], but that comes with some changes on how you use it since it
-is a container-focused operating system.
+As far as I can see after few tests, AllowedIPs config file option has nothing to do with routing and I hope 
+it will stay like this. It is just a filter and the next question arise: why this? Don't we have iptables/nftables?
+Or is it for non Unix-like systems?
 
-The kernel that ships in Fedora has WireGuard included and the
-wireguard-tools package is in the main repo. IMO if you want to use a
-Red Hat variant of Linux with WireGuard, Fedora Server, Fedora Cloud
-[4], or Fedora CoreOS are your best choices. I use Fedora Server at home
-and Fedora CoreOS at work with WireGuard everyday.
-
-Joe
-
-
-[1] https://fedoraproject.org/wiki/Releases
-[2] https://fedoraproject.org/wiki/Releases/Rawhide
-[3] https://getfedora.org/en/coreos?stream=stable
-[4] https://alt.fedoraproject.org/cloud/
-
--- 
-Joe Doss
-joe@solidadmin.com
+Regards,
+Chris
