@@ -2,74 +2,73 @@ Return-Path: <SRS0=PSWY=GK=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4388BC433DB
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  7 Jan 2021 19:09:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 56A54C433E0
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  7 Jan 2021 21:56:42 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 271DC23432
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  7 Jan 2021 19:09:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 271DC23432
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	by mail.kernel.org (Postfix) with ESMTPS id 57F1723435
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  7 Jan 2021 21:56:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 57F1723435
+Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=zealid.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4c34c64a;
-	Thu, 7 Jan 2021 19:07:00 +0000 (UTC)
-Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com
- [2607:f8b0:4864:20::d2a])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d8ba784f
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6806e914;
+	Thu, 7 Jan 2021 21:55:12 +0000 (UTC)
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com
+ [2a00:1450:4864:20::42e])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id cadd3929
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Thu, 7 Jan 2021 19:06:59 +0000 (UTC)
-Received: by mail-io1-xd2a.google.com with SMTP id w18so7228823iot.0
- for <wireguard@lists.zx2c4.com>; Thu, 07 Jan 2021 11:06:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:reply-to:from:date:message-id
- :subject:to:cc;
- bh=corjf3KyOH0H4DhYt4w4crTghb0GmphbSRrLqyirvV0=;
- b=IBpo3R63XB37DuR2koRK8HAIlEx7Ghma/mHckO6c4DOgvBi+cFTLPPYt64nl6XaCgz
- 6JWF1JZYEM+SqnDbIcuIozquxakbETZmGfStwnpVyFHQWW+2P5NRm+oY636ctU81JPJk
- oPUDYPPCM14aLmd1P4iJiGl9rOaXajO4XgixdXU0yw61lpn0Wo9G5qgDXCqArxbqGAxv
- b+iPV53RtkPqGv+ReP6b+Tu9CnL9qfsWpHSlA/eEaH3VerIOFEXnT6dR4S85GinV3E1Z
- hQffPvnojZtxyoSxSTnVxW/2pFNrsESNGpZTyomyOpM4TmAOrUOaU/s0R9tdKiEqr2N0
- cHdQ==
+ for <wireguard@lists.zx2c4.com>; Wed, 6 Jan 2021 16:46:43 +0000 (UTC)
+Received: by mail-wr1-x42e.google.com with SMTP id w5so2986632wrm.11
+ for <wireguard@lists.zx2c4.com>; Wed, 06 Jan 2021 08:46:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zealid.com; s=google;
+ h=from:content-transfer-encoding:mime-version:subject:message-id:date
+ :to; bh=f+K1ZZjgZmxIpCHBiPWWZ6ibNt2e4gUSBkXNO2Vb0Ow=;
+ b=T34BVKaLHJCaTuuxZBgGaKhQCRa3hYC95/Vy3i+O2g5JbdOM0r/W8+HykbrcssBd/5
+ j3bl+YPgrdnet3B2afwYo3R/5AZHCYRWTKzUHMbJY9rueZrIYxX+qcPTqqducr1S4Cba
+ sFCD+dnBq6w34NEKr4jE64ieeM9JSgQmYoArzUvqxHFHOExLpS6vuX5y5XvFmd0+NuwZ
+ VlzKWwt/yUpaDCWA0S35KR9urvtwHFNbIMwvZz0nUz8LGOomC8hkVOnRmJBBNQO9cTW6
+ GF1+uuLIrpIgRlRMfvzZU5GMfniwniLzTIdVpOgKg4SHLZiSTKX/pqYUW47jvrquB0Vu
+ pF4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
- :from:date:message-id:subject:to:cc;
- bh=corjf3KyOH0H4DhYt4w4crTghb0GmphbSRrLqyirvV0=;
- b=P/7MsLUt0cZXP9T0y0j5SdHwEijDGRvOFPMovPXd/YzuAZnZhb52neT/X+XAd7sEj2
- nWJVDDi3/NCfdXBg0tyceuzFvC8ZmWQG7N2vMoSgaTXwVyhuzvTMeY+qgc9eIPeqVMF3
- S55Nv2OrGSqw+93yDHt+Pu3pfwWsAbIo8wbv92KQhr9xMAcbxmm5lvBzxcVX4GFkDV17
- T9OcCHUh6wmwnDEfzoyasQ9AFFQQOtprVcf5XB7+b5iu0O1jS5heu7hUlU0aBC7fzEqe
- ogIJCQWdKoStcdZc1htjwFyuO7LQNhConIs3OMRhwoYt7OyKD/WFe3ONviBjGkOtnd3I
- BMmw==
-X-Gm-Message-State: AOAM531uirjf+RlLitK3Lw0KKzP4SwW44cxoMjbj2Xy+o0WhSTEKwf7L
- Mb14jS9Y2QU/o6r7LipEU1poOgLX3wPvKpi/9BSTxbNejDM=
-X-Google-Smtp-Source: ABdhPJzaLi3Zpw+BSKeksQ4L7oOZoLWSgaZJMuSMy9fPzZdZ9nP+8yHHGhbonuVWlDKJgEwefb2n1iMVFYG26mz7Oq8=
-X-Received: by 2002:a05:6638:c8:: with SMTP id w8mr9222254jao.75.1610046417764; 
- Thu, 07 Jan 2021 11:06:57 -0800 (PST)
-MIME-Version: 1.0
-References: <000000000000e13e2905b6e830bb@google.com>
- <CAHmME9qwbB7kbD=1sg_81=82vO07XMV7GyqBcCoC=zwM-v47HQ@mail.gmail.com>
- <CACT4Y+ac8oFk1Sink0a6VLUiCENTOXgzqmkuHgQLcS2HhJeq=g@mail.gmail.com>
- <CAHmME9q0HMz+nERjoT-TQ8_6bcAFUNVHDEeXQAennUrrifKESw@mail.gmail.com>
- <CACT4Y+bKvf5paRS4X1QrcKZWfvtUi6ShP4i3y5NukRpQj0p1+Q@mail.gmail.com>
- <CAHmME9oOeMLARNsxzW0dvNT7Qz-EieeBSJP6Me5BWvjheEVysw@mail.gmail.com>
-In-Reply-To: <CAHmME9oOeMLARNsxzW0dvNT7Qz-EieeBSJP6Me5BWvjheEVysw@mail.gmail.com>
-From: Jeffrey Walton <noloader@gmail.com>
-Date: Thu, 7 Jan 2021 14:06:42 -0500
-Message-ID: <CAH8yC8na1pNcGPBrfuBwyNbfC4JjOOo_xHODAkbjs1j-1h0+2A@mail.gmail.com>
-Subject: Re: UBSAN: object-size-mismatch in wg_xmit
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: Netdev <netdev@vger.kernel.org>, 
- syzkaller-bugs <syzkaller-bugs@googlegroups.com>, 
- WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+ h=x-gm-message-state:from:content-transfer-encoding:mime-version
+ :subject:message-id:date:to;
+ bh=f+K1ZZjgZmxIpCHBiPWWZ6ibNt2e4gUSBkXNO2Vb0Ow=;
+ b=PDdRwx5V87eqhenNJi6h8XNaezi6B4DrxnZrT1lgMQ/klQ8e9L1hA8vtP2uNrN6vSG
+ p4XxOxM2Vj1x8Kx6LRMMqRqg/xdqha78XjcfGOKv+MKxTwbUW7kvkENNUgKKwa2wyLB6
+ qJW4UMKmcwWNO1Mcj9vHd4kM1QgeN7M4LJfX+VPu1FhBfLZCUor1h/PkgJhCU4kHGM8+
+ RWxuaCp6aoDlPI2ZdK3nMVmZ4WpmW6Nxqwir/OwORNfon559wu28zFy9cUjBw8Ww7eXS
+ OhE5I6wJVgavRTawt+zMw13bxoxEmVBj6SgZPpv6DBrp+AmHilskys8PMoaNNLtQMdqR
+ GPRA==
+X-Gm-Message-State: AOAM531/PdLPjRvp0cd941tue31DBMFu35sdiPLn41VFf7XkUWvsv8c0
+ LSSO/diZCIgOG0Or/17dkb2FDI3f7Vs3tQ==
+X-Google-Smtp-Source: ABdhPJy38R9873T4MNeDZsouzZKI8BIgp4PkJi4gcu8Tc8dJc9xjZZsdsw1plK5OtKNFukjHP63PGA==
+X-Received: by 2002:a05:6000:1188:: with SMTP id
+ g8mr5265823wrx.111.1609951602301; 
+ Wed, 06 Jan 2021 08:46:42 -0800 (PST)
+Received: from [10.77.8.8] ([79.142.127.170])
+ by smtp.gmail.com with ESMTPSA id w189sm3691127wmg.31.2021.01.06.08.46.41
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Wed, 06 Jan 2021 08:46:41 -0800 (PST)
+From: Dmitrij Gusev <dmitrij.gusev@zealid.com>
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.40.0.2.32\))
+Subject: macOS wireguard client: traffic to wireguard interface self IP
+ travels through VPN server
+Message-Id: <5A7F7841-4B7F-4E7A-AB39-32EC787D14E0@zealid.com>
+Date: Wed, 6 Jan 2021 18:46:40 +0200
+To: wireguard@lists.zx2c4.com
+X-Mailer: Apple Mail (2.3654.40.0.2.32)
+X-Mailman-Approved-At: Thu, 07 Jan 2021 21:55:11 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -81,32 +80,44 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Reply-To: noloader@gmail.com
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Thu, Jan 7, 2021 at 2:03 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
->
-> On Thu, Jan 7, 2021 at 1:22 PM Dmitry Vyukov <dvyukov@google.com> wrote:
-> >
-> > On Mon, Dec 21, 2020 at 12:23 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
-> > >
-> > > ...
-> >
-> > These UBSAN checks were just enabled recently.
-> > It's indeed super easy to trigger: 133083 VMs were crashed on this already:
-> > https://syzkaller.appspot.com/bug?extid=8f90d005ab2d22342b6d
-> > So it's one of the top crashers by now.
->
-> Ahh, makes sense. So it is easily reproducible after all.
->
-> You're still of the opinion that it's a false positive, right? I
-> shouldn't spend more cycles on this?
+Hello.
+We just started to use the WireGuard VPN in our company.
+Thanks for the great software!
 
-You might consider making a test build with -fno-lto in case LTO is
-mucking things up.
+I discovered, that while using the macOS wireguard client a traffic to =
+the wireguard interface self IP travels through VPN server.
 
-Google Posts Patches So The Linux Kernel Can Be LTO-Optimized By
-Clang, https://www.phoronix.com/scan.php?page=news_item&px=Linux-Kernel-Clang-LTO-Patches
+So for example if I ping wireguard interface self IP from macOS machine =
+- both echo-request and echo-reply goes through WireGuard VPN server=E2=80=
+=99s nftables =E2=80=9Cforward" chain.
+Normally this kind of traffic is expected to travel locally.
 
-Jeff
+Is it a bug in the WireGuard macOS client or is it related to macOS =
+network (tunnel) stack glitches?
+Are you already aware of a such behaviour?
+
+macOS Big Sur version 11.1
+WireGuard app version 1.0.12 (22)
+
+macOS wireguard config looks like this:
+[Interface]
+PrivateKey =3D <PRIV KEY>
+Address =3D 10.0.0.5/24
+DNS =3D 10.1.0.53, example.local
+
+[Peer]
+PublicKey =3D <PUB KEY>
+AllowedIPs =3D 0.0.0.0/0
+Endpoint =3D vpn-srv.example.com:28283
+PersistentKeepalive =3D 20
+
+Thanks,
+Dmitrij Gusev
+System Architect
+dmitrij.gusev@zealid.com
++370 6330 5550
+ZealiD
+
