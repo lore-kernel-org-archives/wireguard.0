@@ -2,106 +2,78 @@ Return-Path: <SRS0=PSWY=GK=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-10.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65A7EC433DB
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  7 Jan 2021 21:56:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A12B1C433E6
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  7 Jan 2021 21:56:44 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 9F75723435
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  7 Jan 2021 21:56:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 9F75723435
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.ibm.com
+	by mail.kernel.org (Postfix) with ESMTPS id 9BD0923435
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  7 Jan 2021 21:56:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 9BD0923435
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=dsander.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b6eb5037;
-	Thu, 7 Jan 2021 21:55:15 +0000 (UTC)
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8bde2620
- for <wireguard@lists.zx2c4.com>; Thu, 7 Jan 2021 17:01:44 +0000 (UTC)
-Received: from pps.filterd (m0098413.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 107H1dHT125554; Thu, 7 Jan 2021 12:01:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=subject : to : cc :
- references : from : message-id : date : mime-version : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=g/07yt6F6iI0Q4WiX8eb4mDvryw79jBaT6FXa8eHMws=;
- b=gAjCbjlYdTTq0XaGaKimgU/Nz9+1MrvpWVpsx7F+pVxKonNHA/wWnfXCUHGACjssubXi
- awU0KfP85g9Wu65uhRbU6DItw/MgxHt4/lxS/xLGBsdHVmVaGlAS8Doiz2KSdxX1paMQ
- Zpf5Lx4tARAtIyv9yso3Fvdoh536gtO95oUZ8wz8hc0Uv15RFXFLHLRQpvp/9Y9GK6b+
- MD6kGhWh3j3a4FMfEQuCYZwAlOb26VjJKh6EbBZsu2lMBgjMuQ6LYHE2k/B1jitaK5GG
- 0aa+qaUM2JrcWw1mLMUBMnycujB4l/RWrqH8RzgDyNVnzgITSEP56+jtDEyB2hZJ1fGU Tw== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0b-001b2d01.pphosted.com with ESMTP id 35x5dxa20r-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 07 Jan 2021 12:01:40 -0500
-Received: from m0098413.ppops.net (m0098413.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 107H1bOp125453;
- Thu, 7 Jan 2021 12:01:40 -0500
-Received: from ppma05fra.de.ibm.com (6c.4a.5195.ip4.static.sl-reverse.com
- [149.81.74.108])
- by mx0b-001b2d01.pphosted.com with ESMTP id 35x5dxa1ve-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 07 Jan 2021 12:01:40 -0500
-Received: from pps.filterd (ppma05fra.de.ibm.com [127.0.0.1])
- by ppma05fra.de.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 107GcNek024585;
- Thu, 7 Jan 2021 17:01:22 GMT
-Received: from b06cxnps4075.portsmouth.uk.ibm.com
- (d06relay12.portsmouth.uk.ibm.com [9.149.109.197])
- by ppma05fra.de.ibm.com with ESMTP id 35tgf8amx7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 07 Jan 2021 17:01:22 +0000
-Received: from d06av25.portsmouth.uk.ibm.com (d06av25.portsmouth.uk.ibm.com
- [9.149.105.61])
- by b06cxnps4075.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 107H1KVQ22872364
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 7 Jan 2021 17:01:20 GMT
-Received: from d06av25.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6377F11C054;
- Thu,  7 Jan 2021 17:01:20 +0000 (GMT)
-Received: from d06av25.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1F70C11C04C;
- Thu,  7 Jan 2021 17:01:20 +0000 (GMT)
-Received: from [9.145.66.183] (unknown [9.145.66.183])
- by d06av25.portsmouth.uk.ibm.com (Postfix) with ESMTP;
- Thu,  7 Jan 2021 17:01:20 +0000 (GMT)
-Subject: Re: UBSAN: object-size-mismatch in wg_xmit
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>, Dmitry Vyukov <dvyukov@google.com>
-Cc: Kees Cook <keescook@google.com>, Netdev <netdev@vger.kernel.org>,
- syzkaller-bugs <syzkaller-bugs@googlegroups.com>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>,
- Eric Dumazet <edumazet@google.com>
-References: <000000000000e13e2905b6e830bb@google.com>
- <CAHmME9qwbB7kbD=1sg_81=82vO07XMV7GyqBcCoC=zwM-v47HQ@mail.gmail.com>
- <CACT4Y+ac8oFk1Sink0a6VLUiCENTOXgzqmkuHgQLcS2HhJeq=g@mail.gmail.com>
- <CAHmME9q0HMz+nERjoT-TQ8_6bcAFUNVHDEeXQAennUrrifKESw@mail.gmail.com>
-From: Julian Wiedmann <jwi@linux.ibm.com>
-Message-ID: <68452c93-de95-aaa6-3cac-d868a202ea6f@linux.ibm.com>
-Date: Thu, 7 Jan 2021 18:01:19 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.5.0
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 62087bef;
+	Thu, 7 Jan 2021 21:55:16 +0000 (UTC)
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com
+ [2a00:1450:4864:20::42c])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 72a92594
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Thu, 7 Jan 2021 21:33:45 +0000 (UTC)
+Received: by mail-wr1-x42c.google.com with SMTP id d26so6988080wrb.12
+ for <wireguard@lists.zx2c4.com>; Thu, 07 Jan 2021 13:33:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=dsander-de.20150623.gappssmtp.com; s=20150623;
+ h=subject:to:references:from:message-id:date:user-agent:mime-version
+ :in-reply-to:content-language:content-transfer-encoding;
+ bh=GSZziYpN/fqe0HTL9JEmBZa5WNYUdofjpRtC/YQ13OA=;
+ b=L6oApV8dpwUKKeFQkWrRH8DeNyNiNwsLG/8Dhz45SIxB6DdOmTmHxftjpLGHiX/Rcd
+ KqtH0YozFAS2VAH/MbLPqB06LUDIZq0Cs0fuyMmlsmhT3Oe/wr1Jfug5gUAq0DXckIWR
+ ttNq9Nl/M3RipaWTv/P1zKEVRMNzxbFLcE+bwsEiorVOvzB6EcqlfTLicII7HFyRT952
+ +N/eaMgrnNVf1YMVKx5sEF7jVsf2jni2jVZDEEzEl5qjy1Xj7GwaYeL9tjGjyRbQdC9x
+ x3k9bKzbLoO/kBuloTkfklSkFJN2Z91+1tBEA6Ni0RTFvEQq3k5ms/qz9RCDnVheFJ72
+ 3NNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:subject:to:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=GSZziYpN/fqe0HTL9JEmBZa5WNYUdofjpRtC/YQ13OA=;
+ b=FZ5j9QJS+7O0GRy6dg6LGc1IJq/vD+PmJetvS1Dkz8ZJHgIkK4+K3QRWXrPZw2mnsr
+ u2XfEUKp10ZFasLe76IqQsNfGrSCdN20NuV9VXMxkVjIKrc5ev9k54UVT3HUmI4PlEAR
+ wEFMIzQ1sHB348S2cwof8XK+eYz2Ze3+9jjIgVxWMHNXGpYg1qznqbFQMZcN/zGc+b5u
+ XAKvlP8t7paJ9y+6YZ+jPhsJ55F+Xi1RaBitZKUHkWAF83GE0o9dmbhD1xqbscNpZyit
+ UVPmbs+9mT7RXn3DLRDU7SGfaEFnX+OS50LVUv2tPcST/YcpUmeszdmZnNBmXoDUru56
+ 5q1A==
+X-Gm-Message-State: AOAM532xaPLF2j2uhODneDEaQd5vsOKUYMywc5obRocAdNEonMSdwPfP
+ 7ygPDwR2lZkXXq36986p6sdprrZpmCGyUwjI
+X-Google-Smtp-Source: ABdhPJyLtwLNJWoPGUbWAhFDi1VVioE8sgxFznxa49AsheDdxf435lrxXrwCEHKa33gSouGOZf1oUQ==
+X-Received: by 2002:a5d:69c2:: with SMTP id s2mr555692wrw.36.1610055224728;
+ Thu, 07 Jan 2021 13:33:44 -0800 (PST)
+Received: from Dominiks-MBP.lan ([185.251.102.202])
+ by smtp.googlemail.com with ESMTPSA id h16sm9337307wmb.41.2021.01.07.13.33.43
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 07 Jan 2021 13:33:44 -0800 (PST)
+Subject: Re: Responses send by wireguard always use the default route
+To: wireguard@lists.zx2c4.com
+References: <201bd244-743e-ab52-55bb-798a1d75309e@dsander.de>
+ <CAJJxGdHrrpr+NPXztZz+QBy=g+E=oOEQsW6Qh9eKGuFiVXN+Mg@mail.gmail.com>
+From: Dominik Sander <mail@dsander.de>
+Message-ID: <09551513-c315-20ab-9f2c-93a6d8814920@dsander.de>
+Date: Thu, 7 Jan 2021 22:33:43 +0100
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1b3pre)
+ Gecko/20081204 Thunderbird/3.0b1 Mnenhy/0.7.6.0
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9q0HMz+nERjoT-TQ8_6bcAFUNVHDEeXQAennUrrifKESw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <CAJJxGdHrrpr+NPXztZz+QBy=g+E=oOEQsW6Qh9eKGuFiVXN+Mg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.343, 18.0.737
- definitions=2021-01-07_07:2021-01-07,
- 2021-01-07 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 malwarescore=0
- mlxlogscore=999 spamscore=0 mlxscore=0 lowpriorityscore=0 bulkscore=0
- priorityscore=1501 adultscore=0 suspectscore=0 clxscore=1011
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2009150000 definitions=main-2101070098
 X-Mailman-Approved-At: Thu, 07 Jan 2021 21:55:11 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -117,23 +89,90 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On 21.12.20 12:23, Jason A. Donenfeld wrote:
-> Hi Dmitry,
+Thank you for confirming that this is working as intended.
+
+regards,
+
+Dominik
+
+On 02/01/2021 20:54, David Kerr wrote:
+> This is expected behavior... outbound packets follow routing table
+> rules to select the "best" interface to send from.  You can use
+> iptables to mark packets coming in from one interface and then set up
+> an ip routing table to make sure that replies to traffic on an
+> incoming interface go back out on the same interface.  Search for that
+> on google for suggested solutions.  By way of an example, here is what
+> I have on my router to make sure that any traffic coming in on wg0 to
+> my local network(s) is sent back out over wg0.
 > 
-
-...
-
-> fall on the border of a mapping? Is UBSAN non-deterministic as an
-> optimization? Or is there actually some mysterious UaF happening with
-> my usage of skbs that I shouldn't overlook?
+> # iptables -t mangle -S | grep restore-mark
+> -A PREROUTING -j CONNMARK --restore-mark --nfmask 0xffffffff --ctmask 0xffffffff
+> -A OUTPUT -j CONNMARK --restore-mark --nfmask 0xffffffff --ctmask 0xffffffff
+> # iptables -t mangle -S | grep WG0
+> -N PREROUTING_WG0
+> -A PREROUTING -i wg0 -j PREROUTING_WG0
+> -A PREROUTING_WG0 -m state --state NEW -j MARK --set-xmark 0x4/0x4
+> -A PREROUTING_WG0 -m state --state NEW -j CONNMARK --save-mark
+> --nfmask 0xffffffff --ctmask 0xffffffff
+> # ip rule
+> 0: from all lookup local
+> 1000: from 192.168.1.1/24 fwmark 0x4/0x4 lookup 300
+> 1001: from all to <redacted> lookup 51820
+> 32766: from all lookup main
+> 32767: from all lookup default
+> # ip route show table 300
+> default dev wg0 scope link
 > 
-
-One oddity is that wg_xmit() returns negative errnos, rather than a
-netdev_tx_t (ie. NETDEV_TX_OK or NETDEV_TX_BUSY).
-
-Any chance that the stack mis-interprets one of those custom errnos
-as NETDEV_TX_BUSY, and thus believes that it still owns the skb?
-
-> Jason
+> David.
 > 
+> 
+> On Sat, Jan 2, 2021 at 10:34 AM Dominik Sander <mail@dsander.de> wrote:
+>>
+>> Hi!
+>>
+>> I would like to confirm if the behavior I am seeing is intended or if my
+>> use case should be supported without additional configuration.
+>>
+>> When wireguard is configured on a server that has multiple network
+>> interfaces the response is always send through the route with the lowest
+>> metric, even when the connection was initiated via a different interface.
+>>
+>> The Wireguard server is exposed via my router, port 13377 is forwarded
+>> to 192.168.1.246, the peer is connecting via an external IP:
+>>
+>> # ip route
+>> default via 10.0.0.1 dev eth1 proto dhcp src 10.0.0.171 metric 50
+>> default via 192.168.1.1 dev eth0 proto dhcp src 192.168.1.246 metric 100
+>> 10.0.0.0/24 dev eth1 proto kernel scope link src 10.0.0.171 metric 50
+>> 10.0.0.1 dev eth1 proto dhcp scope link src 10.0.0.171 metric 50
+>> 192.168.1.0/24 dev eth0 proto kernel scope link src 192.168.1.246 metric 100
+>> 192.168.1.1 dev eth0 proto dhcp scope link src 192.168.1.246 metric 100
+>>
+>> # tcpdump -i any -vn "(host 80.xxx.xxx.xxx or src port 13377 or dst port 13377)"
+>> tcpdump: listening on any, link-type LINUX_SLL (Linux cooked v1), capture size 262144 bytes
+>> 14:13:08.767409 IP (tos 0x0, ttl 50, id 12125, offset 0, flags [none], proto UDP (17), length 176)
+>>      80.xxx.xxx.xxx.17819 > 192.168.1.246.13377: UDP, length 148
+>> 14:13:08.768076 IP (tos 0x88, ttl 64, id 180, offset 0, flags [none], proto UDP (17), length 120)
+>>      10.0.0.171.13377 > .xxx.xxx.xxx.17819: UDP, length 92
+>>
+>> Because the response is send from the "wrong" IP address the router does not know
+>> how to forward it and the client never is properly connected.
+>>
+>> I was wondering if the IP/interface of the request could also be used for the response,
+>> to remove the need for policy based routing or iptable rules.
+>>
+>> The actual use case is wireguard on a OpenWRT router which has multiple WAN interfaces.
+>> The WAN with the lowest metric is not the interface that should be used for wireguard
+>> because it has better download speed, the wireguard WAN has better upload speed.
+>>
+>> Fore reference a thread discussing the problem on GitHub [1] and on the OpenWRT Forum [2].
+>>
+>> Thanks for creating/working on wireguard!
+>>
+>> Kind regards,
+>>
+>> Dominik
+>>
+>> [1] https://github.com/openwrt/packages/issues/9538
+>> [2] https://forum.openwrt.org/t/wireguard-server-can-only-successfully-be-used-via-one-wan-interface/83374
 
