@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-13.6 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 82C78C433DB
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  8 Jan 2021 09:31:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1291EC433E0
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  8 Jan 2021 09:36:42 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 3A3DC22BE8
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  8 Jan 2021 09:31:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 3A3DC22BE8
+	by mail.kernel.org (Postfix) with ESMTPS id E78B923383
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  8 Jan 2021 09:36:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org E78B923383
 Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=google.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b2db1c93;
-	Fri, 8 Jan 2021 09:31:15 +0000 (UTC)
-Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com
- [2607:f8b0:4864:20::72d])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7e888ca8
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2fb8e885;
+	Fri, 8 Jan 2021 09:33:34 +0000 (UTC)
+Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com
+ [2607:f8b0:4864:20::72a])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ff69f96e
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Fri, 8 Jan 2021 09:31:12 +0000 (UTC)
-Received: by mail-qk1-x72d.google.com with SMTP id z11so7926615qkj.7
- for <wireguard@lists.zx2c4.com>; Fri, 08 Jan 2021 01:31:12 -0800 (PST)
+ for <wireguard@lists.zx2c4.com>; Fri, 8 Jan 2021 09:33:32 +0000 (UTC)
+Received: by mail-qk1-x72a.google.com with SMTP id 186so7960009qkj.3
+ for <wireguard@lists.zx2c4.com>; Fri, 08 Jan 2021 01:33:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=p7CNbpBSPccH1hb+rOXFyKre6l57s8q4kN69whC0CUA=;
- b=PON5AO4eW+/ghJflh3LQZgs+WZ1EHC8Nd8E5KV6f7ayftxXjHqEHs6PKdb1TI0TOK5
- kfunV287GgnbbyLZvvIS01QjckF31wMDtwwuzCp75UWrks3NetMTeQ/wKM8BLfRlvGOE
- dFbgjgMMVYvTwRi3pMmTwJtptWfgygzKs5L1ucjdzBUaQJd1n2xMx8cDXMAtTQBqDupb
- e09zd1igFfl0RvpZd8AMA/PN3tB4s5QtfRiZh32JbdmM0/zhJLDQo7csEpAjFIotKHn1
- hgk74uKVpjtM69HDGSPgt21JiuKPrd1jF0GBKCftPSm66QCmNDIr7ahta/yWtPrYoKPW
- KgiA==
+ :cc; bh=PnLbusFPw0NqkYaHXS7jwwZf+CC6BlEDfblZZAjXZmc=;
+ b=EiBwMyvADldbeeFFxd7qdO/JeI9YJxmiB/3XltO54PGT472GgYmaCBo7qmcebT4h1n
+ bDBFVu0K/N7UpktoNxNwYewCXwYV+Fu3MNtmafhcCjapYKDrlK5SaYOE1wU7CNG5L3XG
+ /w4MdA5Jm2jHUIbk3py1Q1rNJbPYQTEzUNVTrwLj1mPOdd1QctK+P7SmlRGX3kdFEfz2
+ VdAj9ZD1Y9W2VfMxbekDvMu76cF1bG9l2KqGypVYuCk/0Ca3LD6eTol2/zIz8ZEq3XB9
+ CGip9DcjXHs3p7qJN4WWrPDon/HJYCLrPyR6vVErKNAOqOH3aWR2lg9hMGAEmGGHs28c
+ ksOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=p7CNbpBSPccH1hb+rOXFyKre6l57s8q4kN69whC0CUA=;
- b=QURMgvo5co2QJOiIwD1fH+vmGMhPvYUhQLAT2OB0omDzxfs0rhOo2faZjDxlt3MgIT
- nIeBXe7xrDBGrTuO49JSwoV9gPlIJCbYtgxKwzLuN+HOtd/C0ePTusbqCAgLUS3NKyfp
- tuxj4gcUhGaMSlrAxMxQb8Bn4cBYG0FOB62biQT/3LN6rhXW4mt3Asua5NlOE76Sq/Eo
- YE/rhTWTgdvsX15DTWCXeI95KYyuF+jveSYQMF/YaGORF6efOV28E2X/HKXiL2yjHEEQ
- A0fqkwGito6aBcRqSOqfFwkPHhAmX9k0cnc0Nr2rVqYOKJpqkRhXd+ftVSZ3pMysOkjL
- g9GA==
-X-Gm-Message-State: AOAM532+tCoIbcoC2TZ0yRzyWWxRe+Klnvkd9tpUpH+Kvqn+V7mF5v94
- kfouRizMF9EyZ8CMhQDRqEHzkDJXB5nnKuaTBZ1UIA==
-X-Google-Smtp-Source: ABdhPJzJO/zSnwxBxdr6K/8eZS9L3nj3Q2d85+ingXlR4tERBrTXG+6G2mop1D0cvjTAZ0IPyaaqZ+6JpZeI5+Dd2rI=
+ bh=PnLbusFPw0NqkYaHXS7jwwZf+CC6BlEDfblZZAjXZmc=;
+ b=UgZm35fyLPeH9MK62ys79H4GdIO3/JHdkD4sK44JZzH39lLZjwR0b5fMe1PVgAA+Wn
+ ESdi4L8vodxJxdvWCo5+sq3H41XyyJj9WDPV8C/vDijyHMx33n9GQs0edzEQ3B/bNOUX
+ vdAkOZB2LVehZzp6CO/ujiOD4I0aIQtul4kWoy1ObfvmBdxgZP4AI+jui+ZDiLdY8itj
+ 2Y6v6zXFgXWStAAbGz98OluaWyQbSc1HFM5H5frwqcuoZu99SZD29o62k9cir24C+9u3
+ Vy7/54wJLe0XkY4QdX6LxijRK0pGV0uznpL8FPwfek0sr3/qbbSPhV1KdHQGl1jiDKCD
+ TAJA==
+X-Gm-Message-State: AOAM533kVp0Fmh6YecZql843ywTQ7kxYH7e4PlnzAPbxiavThQz0vTbv
+ kGSLdjBtcwTuomQZbLu0WiiUEb4+QL3d0mu9WwJlBA==
+X-Google-Smtp-Source: ABdhPJwoR7gUITNVyUOAEyZRNWl7p5el7UTrmj/K02apfnRIgeVk0q5jElVkY1Q+z4CE+Pb2RUb0XwiJc695IHluFnw=
 X-Received: by 2002:a05:620a:983:: with SMTP id
- x3mr3065038qkx.231.1610098271104; 
- Fri, 08 Jan 2021 01:31:11 -0800 (PST)
+ x3mr3074511qkx.231.1610098410717; 
+ Fri, 08 Jan 2021 01:33:30 -0800 (PST)
 MIME-Version: 1.0
 References: <000000000000e13e2905b6e830bb@google.com>
  <CAHmME9qwbB7kbD=1sg_81=82vO07XMV7GyqBcCoC=zwM-v47HQ@mail.gmail.com>
@@ -60,16 +60,16 @@ References: <000000000000e13e2905b6e830bb@google.com>
  <CAHmME9q0HMz+nERjoT-TQ8_6bcAFUNVHDEeXQAennUrrifKESw@mail.gmail.com>
  <CACT4Y+bKvf5paRS4X1QrcKZWfvtUi6ShP4i3y5NukRpQj0p1+Q@mail.gmail.com>
  <CAHmME9oOeMLARNsxzW0dvNT7Qz-EieeBSJP6Me5BWvjheEVysw@mail.gmail.com>
-In-Reply-To: <CAHmME9oOeMLARNsxzW0dvNT7Qz-EieeBSJP6Me5BWvjheEVysw@mail.gmail.com>
+ <CAH8yC8na1pNcGPBrfuBwyNbfC4JjOOo_xHODAkbjs1j-1h0+2A@mail.gmail.com>
+In-Reply-To: <CAH8yC8na1pNcGPBrfuBwyNbfC4JjOOo_xHODAkbjs1j-1h0+2A@mail.gmail.com>
 From: Dmitry Vyukov <dvyukov@google.com>
-Date: Fri, 8 Jan 2021 10:30:59 +0100
-Message-ID: <CACT4Y+Y9H4xB_4sS9Hu6e+u=tmYXcw6PFB0LY4FRuGQ6HCywrA@mail.gmail.com>
+Date: Fri, 8 Jan 2021 10:33:19 +0100
+Message-ID: <CACT4Y+ZRfQkPYoO+cgygsTLFLSbnyPRqHw3mVdVDg6zVAs4s2A@mail.gmail.com>
 Subject: Re: UBSAN: object-size-mismatch in wg_xmit
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: Kees Cook <keescook@google.com>, Netdev <netdev@vger.kernel.org>, 
+To: noloader@gmail.com
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, Netdev <netdev@vger.kernel.org>, 
  syzkaller-bugs <syzkaller-bugs@googlegroups.com>, 
- WireGuard mailing list <wireguard@lists.zx2c4.com>,
- Eric Dumazet <edumazet@google.com>
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -85,62 +85,34 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Thu, Jan 7, 2021 at 8:00 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
-> > >
-> > > Hi Dmitry,
-> > >
-> > > On Mon, Dec 21, 2020 at 10:14 AM Dmitry Vyukov <dvyukov@google.com> wrote:
-> > > > Hi Jason,
-> > > >
-> > > > Thanks for looking into this.
-> > > >
-> > > > Reading clang docs for ubsan:
-> > > >
-> > > > https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html
-> > > > -fsanitize=object-size: An attempt to potentially use bytes which the
-> > > > optimizer can determine are not part of the object being accessed.
-> > > > This will also detect some types of undefined behavior that may not
-> > > > directly access memory, but are provably incorrect given the size of
-> > > > the objects involved, such as invalid downcasts and calling methods on
-> > > > invalid pointers. These checks are made in terms of
-> > > > __builtin_object_size, and consequently may be able to detect more
-> > > > problems at higher optimization levels.
-> > > >
-> > > > From skimming though your description this seems to fall into
-> > > > "provably incorrect given the size of the objects involved".
-> > > > I guess it's one of these cases which trigger undefined behavior and
-> > > > compiler can e.g. remove all of this code assuming it will be never
-> > > > called at runtime and any branches leading to it will always branch in
-> > > > other directions, or something.
-> > >
-> > > Right that sort of makes sense, and I can imagine that in more general
-> > > cases the struct casting could lead to UB. But what has me scratching
-> > > my head is that syzbot couldn't reproduce. The cast happens every
-> > > time. What about that one time was special? Did the address happen to
-> > > fall on the border of a mapping? Is UBSAN non-deterministic as an
-> > > optimization? Or is there actually some mysterious UaF happening with
-> > > my usage of skbs that I shouldn't overlook?
+On Thu, Jan 7, 2021 at 8:06 PM Jeffrey Walton <noloader@gmail.com> wrote:
+>
+> On Thu, Jan 7, 2021 at 2:03 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
 > >
-> > These UBSAN checks were just enabled recently.
-> > It's indeed super easy to trigger: 133083 VMs were crashed on this already:
-> > https://syzkaller.appspot.com/bug?extid=8f90d005ab2d22342b6d
-> > So it's one of the top crashers by now.
+> > On Thu, Jan 7, 2021 at 1:22 PM Dmitry Vyukov <dvyukov@google.com> wrote:
+> > >
+> > > On Mon, Dec 21, 2020 at 12:23 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+> > > >
+> > > > ...
+> > >
+> > > These UBSAN checks were just enabled recently.
+> > > It's indeed super easy to trigger: 133083 VMs were crashed on this already:
+> > > https://syzkaller.appspot.com/bug?extid=8f90d005ab2d22342b6d
+> > > So it's one of the top crashers by now.
+> >
+> > Ahh, makes sense. So it is easily reproducible after all.
+> >
+> > You're still of the opinion that it's a false positive, right? I
+> > shouldn't spend more cycles on this?
 >
-> Ahh, makes sense. So it is easily reproducible after all.
+> You might consider making a test build with -fno-lto in case LTO is
+> mucking things up.
 >
-> You're still of the opinion that it's a false positive, right? I
-> shouldn't spend more cycles on this?
+> Google Posts Patches So The Linux Kernel Can Be LTO-Optimized By
+> Clang, https://www.phoronix.com/scan.php?page=news_item&px=Linux-Kernel-Clang-LTO-Patches
 
-No, I am not saying this is a false positive. I think it's an
-undefined behavior.
-Either way, we need to resolve this one way or another to unblock
-testing the rest of the kernel, if not with a fix to wg, then with a
-fix to ubsan, or disable this check for kernel if kernel community
-decides we want to use and keep this type of C undefined behavior in
-the code base intentionally.
-So far I see only 2 "UBSAN: object-size-mismatch" reports on the dashboard:
-https://syzkaller.appspot.com/upstream
-So cleaning them up looks doable. Is there a way to restructure the
-code to not invoke undefined behavior?
-Kees, do you have any suggestions on how to proceed? This seems to
-stop testing of the whole kernel at the moment.
+Hi Jeff,
+
+Are these patches upstream now?
+syzbot doesn't enable LTO intentionally, nor I see CONFIG_LTO in the
+provided config.
