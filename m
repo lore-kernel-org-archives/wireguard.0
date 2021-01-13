@@ -1,82 +1,86 @@
-Return-Path: <SRS0=J4Yg=GQ=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=Ms3O=GR=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 80C27C433DB
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 13 Jan 2021 17:04:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F0B18C433DB
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 14 Jan 2021 10:36:14 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 7D6E32310F
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 13 Jan 2021 17:04:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 7D6E32310F
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	by mail.kernel.org (Postfix) with ESMTPS id 42BA223A01
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 14 Jan 2021 10:36:12 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 42BA223A01
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=sec.uni-passau.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5825b281;
-	Wed, 13 Jan 2021 17:04:45 +0000 (UTC)
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com
- [2a00:1450:4864:20::42a])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 56b79967
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 745bb604;
+	Thu, 14 Jan 2021 10:36:10 +0000 (UTC)
+Received: from tom.rz.uni-passau.de (tom.rz.uni-passau.de [132.231.51.4])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 5a32060f
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 13 Jan 2021 15:13:21 +0000 (UTC)
-Received: by mail-wr1-x42a.google.com with SMTP id i9so2503891wrc.4
- for <wireguard@lists.zx2c4.com>; Wed, 13 Jan 2021 07:13:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=subject:from:to:references:message-id:date:user-agent:mime-version
- :in-reply-to:content-transfer-encoding:content-language;
- bh=4HQhGasRzUutZ5SWj8MTCHgFQPOwpnkuvtoD03mpfGQ=;
- b=aFsp1AUh9h9aNieycsOI6qtik0aeCtWGPCeOvQchU9l9YGbzwDjo2/o0A1ogqyNeHF
- awbMF/YeQcvAkpauq2D5SUHg6XX9/1HPGdEEVR9rCk+4BWDwzFI9jc+6nxCf5+g6VWuo
- FPEbYYotB9HtmKaRZtTrmBHJOjRNjlSPTFnjnLbPHPRPc9Kif+5wf0y2txP+7+yYt3nu
- whYuXrOPTk0GxF/dOapu3819bVe+xcTwKJ+GIZ+MsW5vo3WSmrcKmAOQLX6MkHKzg8wR
- Su7arlPLz2pI/l8klYJDnuGIZxGdWwv5hMW9fuu5FfsFQh9CzIkpg9hcYytYHtk+cAqW
- IcyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:from:to:references:message-id:date
- :user-agent:mime-version:in-reply-to:content-transfer-encoding
- :content-language;
- bh=4HQhGasRzUutZ5SWj8MTCHgFQPOwpnkuvtoD03mpfGQ=;
- b=sP+uI5elXgdRfuDCaCb7/vKO0ghivi02F/dphFxSEhNUq1IXw+K3xqR59UMNB0+klb
- jyvGIwz5LItHoBisATwC+KkTJV9mGYV0M8hSodZCuvV3PIwoRvRXuWpamJh3EMKegLnw
- YXpjlecI0Wawn1rT862dJRLqiA2D3z/VbpNHcl2ffrAJThU/H7KCIEdw8lQpjw4yf8Mr
- N6tu3k5or68297lJsMcd3LOhJIsvjLs+0a0Dl53m7hkD5huUNbP0quJASvm1cK4aQNja
- Xm/Y/M6LJffx0jMhQxqU2NqUP38blQtN/mVINBdRc9Yc1tcV6hxlvlc87MmS0PFhB93a
- CLjg==
-X-Gm-Message-State: AOAM530qT3Wap3a6IaPeNtcq2IR1AIUX7lqaShLWF6pdUSqM/+D499PN
- 9NQnwNh7fCvxnt5Uc/slMM3VxbDknyCAyw==
-X-Google-Smtp-Source: ABdhPJxp36l8uLa9gdu3cGSFQJ4Y4EIESmh8FgweSUrQXMS1zHDmuEbi5dwfQagvZnBKM6pySfXoaQ==
-X-Received: by 2002:a5d:44c8:: with SMTP id z8mr1617313wrr.366.1610550801217; 
- Wed, 13 Jan 2021 07:13:21 -0800 (PST)
-Received: from [192.168.25.202] ([91.110.152.239])
- by smtp.gmail.com with ESMTPSA id b127sm3576999wmc.45.2021.01.13.07.13.20
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 13 Jan 2021 07:13:20 -0800 (PST)
-Subject: Re: Problems with Windows client over PulseSecure VPN
-From: Peter Whisker <peter.whisker@gmail.com>
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-References: <9f621ce6-ec3d-0641-c359-756d0ad36f65@gmail.com>
- <6a01b182-a98f-1736-676f-d0811f6de086@gmail.com>
- <CAHmME9ojL5JxWh5Vn_RsBB8baLabhFvotAuSoQ61fJeht=2qEA@mail.gmail.com>
- <2dc629e2-93c9-4ed9-ea57-4318c8b62a73@gmail.com>
-Message-ID: <397bedc7-3913-08bb-a6f3-691d9fab663c@gmail.com>
-Date: Wed, 13 Jan 2021 15:13:19 +0000
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.1
+ Wed, 13 Jan 2021 20:19:26 +0000 (UTC)
+Received: from puremessage.rz.uni-passau.de (puremessage.rz.uni-passau.de
+ [132.231.51.54])
+ by tom.rz.uni-passau.de (Postfix) with ESMTP id B0C4612465F10
+ for <wireguard@lists.zx2c4.com>; Wed, 13 Jan 2021 21:19:26 +0100 (CET)
+Received: from puremessage.rz.uni-passau.de (localhost.localdomain [127.0.0.1])
+ by localhost (Email Security Appliance) with SMTP id 994A610708D_FFF55CEB
+ for <wireguard@lists.zx2c4.com>; Wed, 13 Jan 2021 20:19:26 +0000 (GMT)
+Received: from tom.rz.uni-passau.de (tom.rz.uni-passau.de [132.231.51.4])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (Client did not present a certificate)
+ by puremessage.rz.uni-passau.de (Sophos Email Appliance) with ESMTPS id
+ 9304D104794_FFF55CEF
+ for <wireguard@lists.zx2c4.com>; Wed, 13 Jan 2021 20:19:26 +0000 (GMT)
+Received: from localhost (localhost [127.0.0.1])
+ by tom.rz.uni-passau.de (Postfix) with ESMTP id 775B412465F0E
+ for <wireguard@lists.zx2c4.com>; Wed, 13 Jan 2021 21:19:26 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uni-passau.de;
+ s=up-2020-11-19; t=1610569166;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=idrSKHRvl8JEd6ovLnf9aDdhapzFaMeCcW4+zOuNw/4=;
+ b=5Ud/zBJhCIoNsDZP7KpGRz0p1BxUjmaYLQVob+YL8V3gRhZQaCTLXrsIzPXX2KOmnRIwvm
+ v5qagEPoYAygKPywTBAVFHEHlUCwdfuDjJjiqT8wrXLZQ4Yo37vGiiA7Wp+t7BNPJJwx0I
+ Xps0Y+so1ZThcttdYShNanuEbTheVSM=
+Received: from [132.231.11.13] (helo=smith.sec.uni-passau.de)
+ by mail.uni-passau.de with ESMTPS (eXpurgate 4.15.1)
+ (envelope-from <jp@sec.uni-passau.de>)
+ id 5fff55ce-0ace-84e733040019-84e70b0dbaea-3
+ for <wireguard@lists.zx2c4.com>; Wed, 13 Jan 2021 21:19:26 +0100
+Received: from smith.sec.uni-passau.de (2002:84e7:b0d::84e7:b0d) by
+ smith.sec.uni-passau.de (2002:84e7:b0d::84e7:b0d) with Microsoft SMTP Server
+ (TLS) id 15.0.1497.2; Wed, 13 Jan 2021 21:14:47 +0100
+Received: from smith.sec.uni-passau.de ([fe80::55d2:6c14:41:dff9]) by
+ smith.sec.uni-passau.de ([fe80::55d2:6c14:41:dff9%12]) with mapi id
+ 15.00.1497.010; Wed, 13 Jan 2021 21:14:47 +0100
+From: "Posegga, Joachim" <jp@sec.uni-passau.de>
+To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+Subject: Multiple Clients behind NAT
+Thread-Topic: Multiple Clients behind NAT
+Thread-Index: Adbp5qcbzZNoNe2aTgWHRjfnTxvB3g==
+Date: Wed, 13 Jan 2021 20:14:46 +0000
+Message-ID: <f785012b2c5a49c7ba7f48f40b6ce62f@smith.sec.uni-passau.de>
+Accept-Language: de-DE, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [132.231.11.34]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-In-Reply-To: <2dc629e2-93c9-4ed9-ea57-4318c8b62a73@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
-X-Mailman-Approved-At: Wed, 13 Jan 2021 17:04:44 +0000
+X-purgate-ID: 151291::1610569166-00000ACE-AA141904/0/0
+X-purgate-type: clean
+X-purgate-size: 1192
+X-purgate-Ad: Categorized by eleven eXpurgate (R) http://www.eleven.de
+X-Mailman-Approved-At: Thu, 14 Jan 2021 10:36:08 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -91,46 +95,19 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi
-
-I have managed to work around the issue caused by Wireguard sending 
-packets via default route interface even though the route to the peer is 
-over a different interface (the issue caused by IP_UNICAST_IF). My 
-Wireguard peer is down a corporate Pulse Secure tunnel.
-
-I use a PreUp and PostDown script as follows:
-
-PreUp
-=====
-
-for /f "tokens=3" %%a in ('route print -4 0.0.0.0^| find "0.0.0.0"') do 
-if not defined ip set ip=%%a
-route add 0.0.0.0 mask 128.0.0.0 %ip% METRIC 1
-route add 128.0.0.0 mask 128.0.0.0 %ip% METRIC 1
-route delete 0.0.0.0 mask 0.0.0.0
-
-PostDown
-========
-
-for /f "tokens=3" %%a in ('route print -4 0.0.0.0^| find "0.0.0.0"') do 
-if not defined ip set ip=%%a
-route add 0.0.0.0 mask 0.0.0.0 %ip% METRIC 1
-route delete 0.0.0.0 mask 128.0.0.0
-route delete 128.0.0.0 mask 128.0.0.0
-
-This replaces the /0 default route by two /1 routes before bringing up 
-the WireGuard interface. Traffic to the peer then gets sent down the 
-correct route (why is this different from having a default route?). When 
-the WireGuard instance is closed, it recreates the default route and 
-removes the two /1 routes.
-
-Is there a way this could be done better in the Wireguard executable (I 
-am currently using 0.3.4).
-
-Thanks
-
-Peter
-
-On 26/11/2020 13:11, Jason A. Donenfeld wrote:
->> Is PulseSecure not setting up a /0 route? If so, then this is a known
->> issue with the lack of policy routing on Windows.
+RGVhciBhbGwsDQoNCkkgYW0gdHJ5aW5nIHRvIGNvbm5lY3QgbXVsdGlwbGUgd2lyZWd1YXJkIGNs
+aWVudHMgYmVoaW5kIHRoZSBzYW1lIE5BVC1HYXRld2F5IHRvIGEgTWlrcm90aWsgIHNlcnZlciB3
+aXRoIGEgcHVibGljIElQLiBJIGFtIG5vdCB5ZXQgc3VyZSB3aGVyZSBleGFjdGx5IHRoZSBwcm9i
+bGVtIGlzLCBidXQgaXQgc2VlbXMgdGhhdCBvbmx5IG9uZSBjbGllbnQgYXQgYSB0aW1lIGNhbiBl
+c3RhYmxpc2ggYSB0dW5uZWwuIA0KDQpJcyB0aGlzIGEga25vd24gcHJvYmxlbSBkdWUgdG8gdGhl
+IFVEUCB0cmFuc3BvcnQsIG9yIHNob3VsZCBtdWx0aXBsZSBjbGllbnRzIGJlaGluZCBhIE5BVCB3
+b3JrIGluIHByaW5jaXBsZT8gDQoNCkkgdW5kZXJzdGFuZCBmcm9tIHRoZSBkb2N1bWVudGF0aW9u
+IHRoYXQgdGhlIHNlcnZlciBsb29rcyBhdCB0aGUgcHVibGljIGtleSBvZiB0aGUgaW5jb21pbmcg
+cGFja2V0IGFuZCBpZGVudGlmaWVzIHRoZSBjbGllbnQuIFRoZSByZXNwb25zZSBzZW50IGJhY2sg
+ZnJvbSB0aGUgc2VydmVyIHRoZW4gYXJyaXZlcyBhdCB0aGUgTkFUIGdhdGV3YXksIGFuZCBpdCBz
+aG91bGQgbWFwIHRoZSB0YXJnZXQgcG9ydCB0byB0aGUgY29ycmVjdCBjbGllbnQgYW5kIGZvcndh
+cmQgaXQuIEhvd2V2ZXIsIEkgYW0gbm90IHZlcnkgZmFtaWxpYXIgd2l0aCBVRFAgb3ZlciBOQVQs
+IHNvIEkgYW0gd29uZGVyaW5nIGlmIHRoaXMgdXN1YWxseSB3b3JrcyB3aXRob3V0IHByb2JsZW1z
+LiBJZiB0aGlzIGlzIHRoZSBjYXNlLCBJIHdvdWxkIGtub3cgdGhhdCB0aGUgcHJvYmxlbSBpcyBt
+b3N0IGxpa2VseSBvbiB0aGUgc2lkZSBvZiB0aGUgTWlrcm90aWsgc2VydmVyLg0KDQpUaGFua3Ms
+DQoJSm9hY2hpbS4NCg==
