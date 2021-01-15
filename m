@@ -2,71 +2,71 @@ Return-Path: <SRS0=/ntC=GS=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF867C433E9
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 15 Jan 2021 08:13:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD59CC433DB
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 15 Jan 2021 10:32:43 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id D5F9B2220B
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 15 Jan 2021 08:12:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org D5F9B2220B
+	by mail.kernel.org (Postfix) with ESMTPS id 8B769235F9
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 15 Jan 2021 10:32:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 8B769235F9
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9aced7e3;
-	Fri, 15 Jan 2021 08:12:57 +0000 (UTC)
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com
- [2a00:1450:4864:20::52b])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f575a6cd
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4acd2f52;
+	Fri, 15 Jan 2021 10:32:39 +0000 (UTC)
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com
+ [2a00:1450:4864:20::22d])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 68620e4b
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 15 Jan 2021 08:12:54 +0000 (UTC)
-Received: by mail-ed1-x52b.google.com with SMTP id h16so8555631edt.7
- for <wireguard@lists.zx2c4.com>; Fri, 15 Jan 2021 00:12:54 -0800 (PST)
+ Fri, 15 Jan 2021 10:32:36 +0000 (UTC)
+Received: by mail-lj1-x22d.google.com with SMTP id m10so9849392lji.1
+ for <wireguard@lists.zx2c4.com>; Fri, 15 Jan 2021 02:32:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=/KDRdTLv6cvRUv652PsxF8N926ZFBRugtlETZnPTzFU=;
- b=A8/Uc3nDXxIJPm5PhhQefDNOFJkWwDrLKk73GAvGjr2+tCJyMwH0i8tFw8mNM0EbeB
- OPZpGbpLw6A+XmsnQR5e4PglAdw9apeXkvGWvzUhfaBcYNXKyH7eOOp5jm10jEgMYDiI
- pRusSP53UeQz7xAJBHsz7y1A0KJ2KaVBP4ElUrgBL6Zh0fImrVfsjrelFu45jzHcAWSu
- nQh2f9GAVZ5FOR5Vboj2FRRj8jMQOYJR+EyTw7NbYxBK3sYoz3AkR2GmZR3OPs0fdxQp
- 6FRTYMpbK1363Tm9qV4ycVFhcA7dBu0/mXXsaddgJ0yM5ov+N/gaDoE5/bpk1k0v/nDN
- k9jw==
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+ bh=JUlrsQAE5d6EE/EQQalYY07cG/WBZ21p1VxQLTK3IDI=;
+ b=e1qdWwLRXWFF9vK8zpMFGdmQCbbBtU6OEnl98HSFyw3iKZ2F7jZziW0WV1cd37V1Kp
+ f/rrir2u3ZYHWUvB6QUjnJ6JSkmFoASQqpaII7rZc5S3hgoVR6leipXA9am/1TAtraTH
+ UuPsgze1OLz7swiVCt71h8ovN8YBWcige/CAQDfQAhPZ/52VDOQxMNKq0LPbODt30PiJ
+ 852KCPnKMjwmjr6KCMF+ZrcjPbVgQh+TIv2iIcqyhEQ3tkUP3b2cTmOA0EEG8m/oPLle
+ tKV+bHDIM4TJPdp7g/MAsihBniLGsdk+knvoVhmEY3bokGHCBXdBdrIkhZIaVSuEw912
+ pzeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=/KDRdTLv6cvRUv652PsxF8N926ZFBRugtlETZnPTzFU=;
- b=t4SIgn5liNgBa9t4EGGTjhP/g8apCNnXvAMIRKgRlyaoYo42an8ShMZw43vI946QQ3
- YlL361u/6tRUt6aDOzVDQHLCIyUSoVYbPOQxevWF3uPJY26gzGHTTXQSK/vpN+SN5TOc
- jD6YxZ3PPdHZTFviliSNou5i4xO0Ilqlcf3VWURKcR45Aruy/J/OzRnVYh6g4HglT9pN
- ljQaMV36KT4H4yAMFFy3Gnw7jGEnfWxndkcwkZu/f+QBH1rNoEoZV7c4XSlO3nrK1vcz
- vWS91EiLGgOEovlQfRrJVZWj7CUamTPaDKum5JLLaBJ5srwslrxcd0HKMQz4bOGPI9DI
- BA/w==
-X-Gm-Message-State: AOAM531HQ03Jrzo5lVFoSK2b+0yxFhTVk9ccnsR06Froo4Nzr6JEX6dR
- hVCPIgDfeBnzVvEBemBSv0exDFyibFnDZfkVVEQ=
-X-Google-Smtp-Source: ABdhPJxeENkf0GmKz6sCA174KisWrL0em4x/8KZGFZR/ilxS61sVbhR6+1Dgwqqypj1AB661ZozbQ6y1J8CiZM2dLKU=
-X-Received: by 2002:a05:6402:4389:: with SMTP id
- o9mr7750016edc.164.1610698374142; 
- Fri, 15 Jan 2021 00:12:54 -0800 (PST)
+ :message-id:subject:to;
+ bh=JUlrsQAE5d6EE/EQQalYY07cG/WBZ21p1VxQLTK3IDI=;
+ b=eosHQVe2AwNFHRpATLWDMhA5PBzYucfzyKpeDXHAgAKm5sFY53NbzKaw/fF6k8Eswu
+ oHTJDchVxlLbJios86XQX75iUitGdR4esWem0QSQP6NSwowRCdVUrqRGINsLOWbkZ4TM
+ /GGrzf6gA3kRktJBRnI08pcZncEjHqescqNweJDYBGMKxar3Sw7nTS/fr9MF2LJpd0Cf
+ +c7Vld4QFQOZU+uk/7lvVVBZXpZAW13Evoq7dPIDpRe7qqvF+0BilmaolNeTD1IefRy2
+ 9S4nvsP2Zet4icsfeEcQ/niQatrJXpHBVVP+v2T/c2Yc2PbZaTvFA80XwFQod6PY97Kf
+ KKvQ==
+X-Gm-Message-State: AOAM53359sMGVwXcEPT+i9tAq3fNbEcg0lOFGTnMI/HujQPNeUfoI8qb
+ J2zILXLxhD15Wk/1hPwOixuHzYuBgqBaUaG9SuLe3EflkO4=
+X-Google-Smtp-Source: ABdhPJxs1FOIOITeWlwjBelCLZ9n7GE6WgSmHT8XBmpw6K8abrdXPSHP0SG9AE2LXlXBvjRqkTL4EZ9C24CPd8AcSd0=
+X-Received: by 2002:a2e:361a:: with SMTP id d26mr5098799lja.115.1610706756107; 
+ Fri, 15 Jan 2021 02:32:36 -0800 (PST)
 MIME-Version: 1.0
-References: <X/8aDfdkod+rCPqK@zx2c4.com>
- <33997a3d-591e-9aa3-92fe-a06a4d3c5b26@gmail.com>
-In-Reply-To: <33997a3d-591e-9aa3-92fe-a06a4d3c5b26@gmail.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Fri, 15 Jan 2021 12:12:42 +0400
-Message-ID: <CAJ+F1CJY6YU86bu1CMewcJ-tY0v8Y2Kf3JJB8X6puM4f-+=vhw@mail.gmail.com>
-Subject: Re: Userspace Networking Stack + WireGuard + Go
-To: Julian Orth <ju.orth@gmail.com>
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, wireguard@lists.zx2c4.com
+References: <9f621ce6-ec3d-0641-c359-756d0ad36f65@gmail.com>
+ <6a01b182-a98f-1736-676f-d0811f6de086@gmail.com>
+ <CAHmME9ojL5JxWh5Vn_RsBB8baLabhFvotAuSoQ61fJeht=2qEA@mail.gmail.com>
+ <2dc629e2-93c9-4ed9-ea57-4318c8b62a73@gmail.com>
+ <397bedc7-3913-08bb-a6f3-691d9fab663c@gmail.com>
+ <CAN5wt5r9rQpYcCkshBimOARoAxx7T529oUw6RSNnr4q3_y_31g@mail.gmail.com>
+In-Reply-To: <CAN5wt5r9rQpYcCkshBimOARoAxx7T529oUw6RSNnr4q3_y_31g@mail.gmail.com>
+From: Christopher Ng <facboy@gmail.com>
+Date: Fri, 15 Jan 2021 10:32:24 +0000
+Message-ID: <CAN5wt5ojzay9uEjubrrivd6vZqOGNJ40M25ELzOYTK42zozijQ@mail.gmail.com>
+Subject: Fwd: Problems with Windows client over PulseSecure VPN
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -81,35 +81,118 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Julian
-
-On Wed, Jan 13, 2021 at 8:28 PM Julian Orth <ju.orth@gmail.com> wrote:
->
-> On 13/01/2021 17.04, Jason A. Donenfeld wrote:
->
->  > Even if you're unprivileged and want a WireGuard interface for just a
->  > single application that's bound to the lifetime of that application,
->  > you can still use WireGuard's normal kernel interface inside of a user
->  > namespace + a network namespace, and get a private process-specific
->  > WireGuard interface.
->
-> That's what my patches from back in 2018 were trying to accomplish.
-> Unless I've missed something since, I do not see how what you're
-> describing would work.  Unless you also
->
-> - create a TUN device in the network namespace
-> - add a default route through that TUN device
-> - manually route all traffic between the init network namespace and your
->    network namespace.
->
-> Is that what you meant or is there a simpler way?
+---------- Forwarded message ---------
+From: Christopher Ng <facboy@gmail.com>
+Date: Fri, 15 Jan 2021 at 09:46
+Subject: Re: Problems with Windows client over PulseSecure VPN
+To: Peter Whisker <peter.whisker@gmail.com>
 
 
-I am not a network admin, but I agree. Setting up this kind of user
-network namespace isn't trivial and requires some privileges. It would
-be nice if the kernel or some services provided a simpler way. (fwiw,
-some time ago I did some experimental/research work for VM &
-containers at https://gitlab.freedesktop.org/elmarco/vnet)
+i fixed this in my local build by disabling the binding in
+defaultroutemonitor.go.  tbh i'm not sure what it's for, i found an
+old discussion (about linux) about not binding to only one interface,
+so i'm not sure why Windows binds to one interface.
 
---=20
-Marc-Andr=C3=A9 Lureau
+diff --git a/tunnel/defaultroutemonitor.go b/tunnel/defaultroutemonitor.go
+index 6ee95129..12456332 100644
+--- a/tunnel/defaultroutemonitor.go
++++ b/tunnel/defaultroutemonitor.go
+@@ -6,12 +6,10 @@
+ package tunnel
+
+ import (
+-       "log"
+        "sync"
+        "time"
+
+        "golang.org/x/sys/windows"
+-       "golang.zx2c4.com/wireguard/conn"
+        "golang.zx2c4.com/wireguard/device"
+        "golang.zx2c4.com/wireguard/tun"
+        "golang.zx2c4.com/wireguard/windows/tunnel/winipcfg"
+@@ -50,18 +48,22 @@ func bindSocketRoute(family
+winipcfg.AddressFamily, device *device.Device, ourLU
+        }
+        *lastLUID = luid
+        *lastIndex = index
+-       blackhole := blackholeWhenLoop && index == 0
+-       bind, _ := device.Bind().(conn.BindSocketToInterface)
+-       if bind == nil {
+-               return nil
+-       }
+-       if family == windows.AF_INET {
+-               log.Printf("Binding v4 socket to interface %d
+(blackhole=%v)", index, blackhole)
+-               return bind.BindSocketToInterface4(index, blackhole)
+-       } else if family == windows.AF_INET6 {
+-               log.Printf("Binding v6 socket to interface %d
+(blackhole=%v)", index, blackhole)
+-               return bind.BindSocketToInterface6(index, blackhole)
+-       }
++       // disable this because if my peers are on different
+interfaces...well i don't know how it can work.  i can't
++       // bind the socket to only one of them
++       /*
++               blackhole := blackholeWhenLoop && index == 0
++               bind, _ := device.Bind().(conn.BindSocketToInterface)
++               if bind == nil {
++                       return nil
++               }
++               if family == windows.AF_INET {
++                       log.Printf("Binding v4 socket to interface %d
+(blackhole=%v)", index, blackhole)
++                       return bind.BindSocketToInterface4(index, blackhole)
++               } else if family == windows.AF_INET6 {
++                       log.Printf("Binding v6 socket to interface %d
+(blackhole=%v)", index, blackhole)
++                       return bind.BindSocketToInterface6(index, blackhole)
++               }
++       */
+        return nil
+ }
+
+On Wed, 13 Jan 2021 at 17:06, Peter Whisker <peter.whisker@gmail.com> wrote:
+>
+> Hi
+>
+> I have managed to work around the issue caused by Wireguard sending
+> packets via default route interface even though the route to the peer is
+> over a different interface (the issue caused by IP_UNICAST_IF). My
+> Wireguard peer is down a corporate Pulse Secure tunnel.
+>
+> I use a PreUp and PostDown script as follows:
+>
+> PreUp
+> =====
+>
+> for /f "tokens=3" %%a in ('route print -4 0.0.0.0^| find "0.0.0.0"') do
+> if not defined ip set ip=%%a
+> route add 0.0.0.0 mask 128.0.0.0 %ip% METRIC 1
+> route add 128.0.0.0 mask 128.0.0.0 %ip% METRIC 1
+> route delete 0.0.0.0 mask 0.0.0.0
+>
+> PostDown
+> ========
+>
+> for /f "tokens=3" %%a in ('route print -4 0.0.0.0^| find "0.0.0.0"') do
+> if not defined ip set ip=%%a
+> route add 0.0.0.0 mask 0.0.0.0 %ip% METRIC 1
+> route delete 0.0.0.0 mask 128.0.0.0
+> route delete 128.0.0.0 mask 128.0.0.0
+>
+> This replaces the /0 default route by two /1 routes before bringing up
+> the WireGuard interface. Traffic to the peer then gets sent down the
+> correct route (why is this different from having a default route?). When
+> the WireGuard instance is closed, it recreates the default route and
+> removes the two /1 routes.
+>
+> Is there a way this could be done better in the Wireguard executable (I
+> am currently using 0.3.4).
+>
+> Thanks
+>
+> Peter
+>
+> On 26/11/2020 13:11, Jason A. Donenfeld wrote:
+> >> Is PulseSecure not setting up a /0 route? If so, then this is a known
+> >> issue with the lack of policy routing on Windows.
