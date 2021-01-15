@@ -1,60 +1,90 @@
-Return-Path: <SRS0=AI80=GT=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=6TfW=GY=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E5CAC433DB
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 16 Jan 2021 01:51:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 18946C433E0
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 21 Jan 2021 13:40:49 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id B273723A52
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 16 Jan 2021 01:51:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org B273723A52
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=lotz.li
+	by mail.kernel.org (Postfix) with ESMTPS id 3810823877
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 21 Jan 2021 13:40:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 3810823877
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=sec.uni-passau.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f69df85a;
-	Sat, 16 Jan 2021 01:51:41 +0000 (UTC)
-Received: from mail.dr-lotz.de (mail.dr-lotz.de [5.9.59.78])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ec7f9f3e
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8298fc93;
+	Thu, 21 Jan 2021 13:40:44 +0000 (UTC)
+Received: from tom.rz.uni-passau.de (tom.rz.uni-passau.de [132.231.51.4])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 8ad38587
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sat, 16 Jan 2021 01:51:39 +0000 (UTC)
+ Fri, 15 Jan 2021 19:54:23 +0000 (UTC)
+Received: from puremessage.rz.uni-passau.de (puremessage.rz.uni-passau.de
+ [132.231.51.54])
+ by tom.rz.uni-passau.de (Postfix) with ESMTP id 6BF0E124A71C3;
+ Fri, 15 Jan 2021 20:54:23 +0100 (CET)
+Received: from puremessage.rz.uni-passau.de (localhost.localdomain [127.0.0.1])
+ by localhost (Email Security Appliance) with SMTP id 5396D10709C_01F2EFB;
+ Fri, 15 Jan 2021 19:54:23 +0000 (GMT)
+Received: from tom.rz.uni-passau.de (tom.rz.uni-passau.de [132.231.51.4])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (Client did not present a certificate)
+ by puremessage.rz.uni-passau.de (Sophos Email Appliance) with ESMTPS id
+ 36FA6104794_01F2EFF; Fri, 15 Jan 2021 19:54:23 +0000 (GMT)
 Received: from localhost (localhost [127.0.0.1])
- by mail.dr-lotz.de (Postfix) with ESMTP id 891395AE25;
- Sat, 16 Jan 2021 02:51:38 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at mail.dr-lotz.de
-Received: from mail.dr-lotz.de ([127.0.0.1])
- by localhost (mail.dr-lotz.de [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id n8A8sh35H3MV; Sat, 16 Jan 2021 02:51:36 +0100 (CET)
-Received: from [192.168.42.35] (ipb21b6623.dynamic.kabel-deutschland.de
- [178.27.102.35])
- by mail.dr-lotz.de (Postfix) with ESMTPSA id 804F25AE24;
- Sat, 16 Jan 2021 02:51:35 +0100 (CET)
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: kernel test robot <lkp@intel.com>, "David S. Miller"
- <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>,
- Netdev <netdev@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
-References: <20210109210056.160597-1-linus@lotz.li>
- <20210115195353.11483-1-linus@lotz.li>
- <CAHmME9rny0bc2JA1_9_A=_3OuPnEvqJyK7UMwsL+x=yTHRoBTQ@mail.gmail.com>
-From: Linus Lotz <linus@lotz.li>
-Subject: Re: [PATCH v2] wireguard: netlink: add multicast notification for
- peer changes
-Message-ID: <836460e7-3b72-d0f5-d174-fe666cb2c935@lotz.li>
-Date: Sat, 16 Jan 2021 02:51:34 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.0
-MIME-Version: 1.0
-In-Reply-To: <CAHmME9rny0bc2JA1_9_A=_3OuPnEvqJyK7UMwsL+x=yTHRoBTQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
+ by tom.rz.uni-passau.de (Postfix) with ESMTP id 30F21124A71C2;
+ Fri, 15 Jan 2021 20:54:23 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uni-passau.de;
+ s=up-2020-11-19; t=1610740463;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=S/wiFEeSQrhysfguHpVv+CfRnHt001ca4723yD8fKAY=;
+ b=kMB4561EZAgfmPLw4y4fa4fBFNXv5zy7gppieq/f3pmVPUGJ9jwMo5kU+7QlU6ynAJAMgV
+ LmTr83gvmfjn32nUTDvSoo6kH324SplDeH8L55E8DpshAYIpCqjGWha7aAPLQmO2gj+ANI
+ BOgY/cVbEwztulTNlxO6aMqus/qo9KI=
+Received: from [132.231.11.13] (helo=smith.sec.uni-passau.de)
+ by mail.uni-passau.de with ESMTPS (eXpurgate 4.15.1)
+ (envelope-from <jp@sec.uni-passau.de>)
+ id 6001f2ed-0ace-84e733040019-84e70b0db448-3
+ for <multiple-recipients>; Fri, 15 Jan 2021 20:54:23 +0100
+Received: from smith.sec.uni-passau.de (2002:84e7:b0d::84e7:b0d) by
+ smith.sec.uni-passau.de (2002:84e7:b0d::84e7:b0d) with Microsoft SMTP Server
+ (TLS) id 15.0.1497.2; Fri, 15 Jan 2021 20:49:42 +0100
+Received: from smith.sec.uni-passau.de ([fe80::55d2:6c14:41:dff9]) by
+ smith.sec.uni-passau.de ([fe80::55d2:6c14:41:dff9%12]) with mapi id
+ 15.00.1497.010; Fri, 15 Jan 2021 20:49:42 +0100
+From: "Posegga, Joachim" <jp@sec.uni-passau.de>
+To: Riccardo Paolo Bestetti <pbl@bestov.io>, Maarten de Vries
+ <maarten@de-vri.es>, "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+Subject: RE: Multiple Clients behind NAT
+Thread-Topic: Multiple Clients behind NAT
+Thread-Index: Adbp5qcbzZNoNe2aTgWHRjfnTxvB3gAqQCqAACxuzQAAAhphgAAK8e4w
+Date: Fri, 15 Jan 2021 19:49:42 +0000
+Message-ID: <992cc9f1fb1b4f06ad27bc0a0005033d@smith.sec.uni-passau.de>
+References: <275695ad-bc63-01a6-18d0-6e9f410ec352@de-vri.es>
+ <C8JU1RTQOKUE.3NQU5QRW2L5VI@enhorning>
+In-Reply-To: <C8JU1RTQOKUE.3NQU5QRW2L5VI@enhorning>
+Accept-Language: de-DE, en-US
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [132.231.11.30]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-purgate-ID: 151291::1610740463-00000ACE-CAA05560/0/0
+X-purgate-type: clean
+X-purgate-size: 1980
+X-purgate-Ad: Categorized by eleven eXpurgate (R) http://www.eleven.de
+X-Mailman-Approved-At: Thu, 21 Jan 2021 00:19:16 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -69,16 +99,29 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Jason,
-No worries, thanks!
-
-Linus
-
-> Hey Linus,
-> 
-> My email server has been firewalled from vger.kernel.org until today,
-> so I didn't see the original until this v2 was sent today. My
-> apologies. I'll review this first thing on Monday.
-> 
-> Jason
-> 
+VGhhbmtzIGZvciBhbGwgd2hvIHJlc3BvbmRlZC4gVGhlIHNldHVwIGlzIGhhcmQgdG8gZGVidWcs
+IHNpbmNlIHRoZSBjbGllbnRzIGJlaGluZCBOQVQgYXJlIG9uIHRoZSBvdGhlciBzaWRlIG9mIHRo
+ZSBnbG9iZSBhbmQgSSBhbSBjb25maWd1cmluZyBhbmQgZGVidWdnaW5nIHZpYSBMYXllciA4IDst
+KS4NCg0KTWVhbndoaWxlIEkgY3JlYXRlZCB0aGUgY2xpZW50IGNvbmZpZ3VyYXRpb25zIGFuZCBj
+b25maWd1cmVkIHRoZSBNaWtyb3RpayBzZXJ2ZXIgZnJvbSBzY3JhdGNoIGFnYWluLCBpdCBub3cg
+cHJvdmlkZXMgYSBzZXBlcmF0ZSB3aXJlZ3VhcmQgaW50ZXJmYWNlIGZvciBlYWNoIGNsaWVudDsg
+ZWFjaCBjbGllbnQgbm93IHVzZXMgYSBkaWZmZXJlbnQgdGFyZ2V0IHBvcnQgb24gdGhlIHNlcnZl
+ci4gSSBoYXZlIHNvbWUgZG91YnRzIGlmIHRoaXMgcmVhbGx5IGFkZHJlc3NlcyB0aGUgc291cmNl
+IG9mIHRoZSBwcm9ibGVtLCBhbmQgaXQgaXMgY2VydGFpbmx5IG5vdCB2ZXJ5IGVsZWdhbnQsIGJ1
+dCBpdCBkb2VzIHRoZSB0cmljayBmb3Igbm93LiBUaGUgTWlrcm90aWsgaW1wbGVtZW50YXRpb24g
+aXMgc3RpbGwgYSBiZXRhLCBzbyB5b3UgY2Fubm90IGV4cGVjdCBhIHN0YWJsZSBzZXJ2ZXIuDQoN
+CkJlc3QsDQoJSm9hY2hpbS4NCg0KLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCkZyb206IFJp
+Y2NhcmRvIFBhb2xvIEJlc3RldHRpIFttYWlsdG86cGJsQGJlc3Rvdi5pb10gDQpTZW50OiBGcmlk
+YXksIDE1IEphbnVhcnksIDIwMjEgMTY6MjINClRvOiBNYWFydGVuIGRlIFZyaWVzOyBQb3NlZ2dh
+LCBKb2FjaGltOyB3aXJlZ3VhcmRAbGlzdHMuengyYzQuY29tDQpTdWJqZWN0OiBSZTogTXVsdGlw
+bGUgQ2xpZW50cyBiZWhpbmQgTkFUDQoNCk9uIEZyaSBKYW4gMTUsIDIwMjEgYXQgMzoyMSBQTSBD
+RVQsIE1hYXJ0ZW4gZGUgVnJpZXMgd3JvdGU6DQo+IFdpcmVHdWFyZCBkb2Vzbid0IGhhdmUgdG8g
+dXNlIHRoZSBzYW1lIGxvY2FsIHBvcnQgZm9yIGFsbCBjbGllbnRzLiBJbg0KPiBmYWN0LCBpZiB5
+b3UgZG9uJ3QgZ2l2ZSBhIExpc3RlblBvcnQgZXhwbGljaXRseSwgYW4gZXBoZW1lcmFsIHBvcnQg
+aXMNCj4gYXNzaWduZWQuIFRoaXMgY291bGQgdGhlb3JldGljYWxseSBzdGlsbCBjb25mbGljdCBi
+ZXR3ZWVuIGNsaWVudHMgb24NClRoaXMgaXMgY29ycmVjdC4gSSBtaXN0YWtlbmx5IHRob3VnaHQg
+dGhhdCwgYnkgZGVmYXVsdCwgV2lyZUd1YXJkIHVzZWQNCnRoZSB0YXJnZXQgcG9ydCBhcyBhIHNv
+dXJjZSBwb3J0IGFzIHdlbGwgKHdoZW4gYXZhaWxhYmxlKS4gRXBoZW1lcmFsDQptYWtlcyBtb3Jl
+IHNlbnNlICYgaXMgYWxzbyB3aGF0IHJlYWxseSBoYXBwZW5zLg0KDQpTbyB5ZXMsIEpvYWNoaW0g
+c2hvdWxkIGJvdGggZml4IHRoZSBOQVQgYW5kIGRyb3AgTGlzdGVuUG9ydCBmcm9tIGhpcw0KY2xp
+ZW50cy4NCg0KUmljY2FyZG8NCg0K
