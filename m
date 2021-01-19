@@ -8,59 +8,59 @@ X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F37C0C433E0
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 24 Jan 2021 16:30:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9656C433E6
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 24 Jan 2021 16:30:49 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 129AA206BE
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 24 Jan 2021 16:30:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 129AA206BE
+	by mail.kernel.org (Postfix) with ESMTPS id 28F56206BE
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 24 Jan 2021 16:30:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 28F56206BE
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7d0aec10;
-	Sun, 24 Jan 2021 16:24:14 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 67601771;
+	Sun, 24 Jan 2021 16:24:19 +0000 (UTC)
 Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com
  [2a00:1450:4864:20::32d])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 252321d4
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 22c977b3
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 21 Jan 2021 14:01:56 +0000 (UTC)
-Received: by mail-wm1-x32d.google.com with SMTP id j18so1533187wmi.3
- for <wireguard@lists.zx2c4.com>; Thu, 21 Jan 2021 06:01:56 -0800 (PST)
+ Thu, 21 Jan 2021 17:38:49 +0000 (UTC)
+Received: by mail-wm1-x32d.google.com with SMTP id u14so2237573wmq.4
+ for <wireguard@lists.zx2c4.com>; Thu, 21 Jan 2021 09:38:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=subject:to:references:from:message-id:date:user-agent:mime-version
  :in-reply-to:content-transfer-encoding:content-language;
- bh=S2QjNgVRjcdJcJdYaZdu8nlbALIgLUParY4qfPVGYaE=;
- b=i6bPSXvwiJLa2JpT8oC55d90SFia1GrQdfCYRfedJv28DiETOg5ax/JrqF8A6b/aMt
- Lw4uyoahPpfxXdX2t31wAavoDw8fjpOGWITnGha6W7r/+tt+9UpK0RQseeA8iYqmFGks
- lWZZA51DS7FfkBgknB95FHuwVbV6J09YrgwaUQxNI8Uqkli4EpkdPqCm1hV6zEotUX4I
- qI6E70OvZPOmsuBEwkzES+LTR0QsTAKAEPzsjeK9oXTukFCWRV8+VcQkKqWKU1hvD3a4
- WF8UyUEx/hgXtQGc/ofjuBUmktpDkDEbS31tDhzv1RUoYtbis+Io2J5t/t/F6PVf2orj
- TxPg==
+ bh=cicIXhaili0pAaiJ76oVFYmVnqjPY1zyrqXC8aXmkck=;
+ b=skyFkdBKjMB+ABhkxzPhIl3mgYlNRlFclCETqxp4HI77VoIyq//WT/S9YTFuO3Esiy
+ 252o0bWgsw2B0/uEFRnoNbR70EEsVbhi71ogSjyPvrIxppCHGLaUnUHU0v34K/VP9VVy
+ YIJEyhvPmZ7DlFNIZOMuo19a8wtP1EG8vcmtl0frRUZlyOsUBQhva1c/UO+IHGznxOHp
+ 8Ol2yVywPHVakbudn0ygdkGRHVlmaAubVjcxISn5YnIO9kg97eVxhGKbAgKNrn412A/z
+ KtpGWT3rLUtsVxaWlufZKNkv1pIWLslJr5apKnXqica1NEhWsMRCMDcYIFGNX54dfYeY
+ rBrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:subject:to:references:from:message-id:date
  :user-agent:mime-version:in-reply-to:content-transfer-encoding
  :content-language;
- bh=S2QjNgVRjcdJcJdYaZdu8nlbALIgLUParY4qfPVGYaE=;
- b=IUaU+2mbUSvcnD2psWre8IBOGB5ipLvJ6KcA8BDrfQdCqiP23UWB3NQftyFp9fmNbk
- 8G3TdOH5faHS9No2Z/A1OnjgE+rpNxoCQ7lEhHAIVCQ3ApblSK0SB9pdHnBK7bZZ9bH4
- PhbF0o1qsIK3hGSwIcMDXbMJ84wm3P4CE01MGMZF0zM4FMSttWgy5IMOCf5ZbKyn0jZQ
- hKstBUYZJAtRxiYro6U8rlzjQ65T0XxhhuIlfvVZS1mKgfTFTqTCFKp2VN8Y6Stbjmv1
- oXbLEpAWw79KMQ2cSVlNUyI+4/AjA8PUrTjU8a9JhSbg27AM2xEya7L4a6F0Y0ky7HvK
- +SWA==
-X-Gm-Message-State: AOAM530ZtYQCyV5f4yJcommMSQNFlaRqlxJz7jP5aNHybVmEIouug56A
- /PPEod7tpXVTFzbqVR1sUbZQVjYZQeI=
-X-Google-Smtp-Source: ABdhPJxJpyiTQsNPN+qVWdlhrzaocUIPYhCIkV+LKJWuKCNnj0aRcBcHfkoz6cFk+02JHuL498FVVA==
-X-Received: by 2002:a1c:4986:: with SMTP id w128mr3452271wma.89.1611052796589; 
- Tue, 19 Jan 2021 02:39:56 -0800 (PST)
+ bh=cicIXhaili0pAaiJ76oVFYmVnqjPY1zyrqXC8aXmkck=;
+ b=XZLiveh16EoaIV6Z08yP/Xzb+nuvJLsEzSEbE0Ai+bMWgak0es2ilWiAVYthWv7FpP
+ Seo/ex9YU8UO797u72sTyB/lrSYJcNS/cKXSfGHJXGu3IbcRDc5jBcI3N+bH/lKTNle2
+ I+ZQA40ez/c4u4bDjA1PLm+iYReuqRn7qPuWFj5bLhKF2qFR5OjJCo5d6a3BuU+3pQeQ
+ K/XOIzGezszSEFE9ZdAKXDAJWSbjE0xJ9jmlgMDw7HYbbnVlqI7nP3LjCq8wigwTP+2/
+ e9BicNHAv8BqQ6iN05t3QUmv2/xRWq3P8NRUmdR3Qsvt67sFDDfYI5VmeT0LjRZBZU8H
+ da9Q==
+X-Gm-Message-State: AOAM531cLvr8GPKPMERPCVM3rEmD19sSiHewpK+PHPuhbMtmZfHse9xH
+ AZG0x2QB/zMjyq5cZgDCj+XIVXhv06E=
+X-Google-Smtp-Source: ABdhPJyifSsLD/s7H55INz3Iz+Y/DCHCrPrrBnvjqe9V7OXxoIA2jqDZtaVLdaM78ppv4rWWSMrrlQ==
+X-Received: by 2002:a1c:40d6:: with SMTP id n205mr3096408wma.0.1611046425456; 
+ Tue, 19 Jan 2021 00:53:45 -0800 (PST)
 Received: from [192.168.25.202] ([91.110.152.239])
- by smtp.gmail.com with ESMTPSA id p15sm35578148wrt.15.2021.01.19.02.39.55
+ by smtp.gmail.com with ESMTPSA id o9sm2143207wrw.81.2021.01.19.00.53.44
  for <wireguard@lists.zx2c4.com>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 19 Jan 2021 02:39:55 -0800 (PST)
+ Tue, 19 Jan 2021 00:53:44 -0800 (PST)
 Subject: Re: Fwd: Problems with Windows client over PulseSecure VPN
 To: wireguard@lists.zx2c4.com
 References: <9f621ce6-ec3d-0641-c359-756d0ad36f65@gmail.com>
@@ -71,8 +71,8 @@ References: <9f621ce6-ec3d-0641-c359-756d0ad36f65@gmail.com>
  <CAN5wt5r9rQpYcCkshBimOARoAxx7T529oUw6RSNnr4q3_y_31g@mail.gmail.com>
  <CAN5wt5ojzay9uEjubrrivd6vZqOGNJ40M25ELzOYTK42zozijQ@mail.gmail.com>
 From: Peter Whisker <peter.whisker@gmail.com>
-Message-ID: <1a18b8f5-3c98-24c5-a0ce-90515a8528ae@gmail.com>
-Date: Tue, 19 Jan 2021 10:39:55 +0000
+Message-ID: <fd327c99-b672-4d68-7298-72550f52a806@gmail.com>
+Date: Tue, 19 Jan 2021 08:53:43 +0000
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.6.1
 MIME-Version: 1.0
@@ -97,13 +97,13 @@ Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
 Hi
 
-I built Wireguard with the change you made below and confirm it fixes 
-the longstanding problem I had - I can now connect to a peer over the 
-PulseSecure tunnel and even simultaneously connect to another peer over 
-the default route (with the MultipleSimultaneousTunnels=1 registry entry).
+Thanks, maybe the powers-that-be would consider your change to be a fix 
+and accept it into the next release? I guess by removing the default 
+route I am causing the bind to fail as it doesn't know which interface 
+to bind to which has the same result as removing the bind. The bit of 
+code you removed certainly causes problems!
 
-Is there a reason this fix can not be adopted?
-
+Thanks
 Peter
 
 On 15/01/2021 10:32, Christopher Ng wrote:
