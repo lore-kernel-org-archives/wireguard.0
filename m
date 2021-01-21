@@ -2,84 +2,66 @@ Return-Path: <SRS0=FNV9=G3=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9656C433E6
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 24 Jan 2021 16:30:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD424C433DB
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 24 Jan 2021 16:30:50 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 28F56206BE
+	by mail.kernel.org (Postfix) with ESMTPS id 1F0D0206BE
 	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 24 Jan 2021 16:30:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 28F56206BE
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 1F0D0206BE
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=prosimo.io
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 67601771;
-	Sun, 24 Jan 2021 16:24:19 +0000 (UTC)
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com
- [2a00:1450:4864:20::32d])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 22c977b3
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 783c2c3f;
+	Sun, 24 Jan 2021 16:24:22 +0000 (UTC)
+Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com
+ [2607:f8b0:4864:20::82f])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 8f430ed7
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 21 Jan 2021 17:38:49 +0000 (UTC)
-Received: by mail-wm1-x32d.google.com with SMTP id u14so2237573wmq.4
- for <wireguard@lists.zx2c4.com>; Thu, 21 Jan 2021 09:38:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=subject:to:references:from:message-id:date:user-agent:mime-version
- :in-reply-to:content-transfer-encoding:content-language;
- bh=cicIXhaili0pAaiJ76oVFYmVnqjPY1zyrqXC8aXmkck=;
- b=skyFkdBKjMB+ABhkxzPhIl3mgYlNRlFclCETqxp4HI77VoIyq//WT/S9YTFuO3Esiy
- 252o0bWgsw2B0/uEFRnoNbR70EEsVbhi71ogSjyPvrIxppCHGLaUnUHU0v34K/VP9VVy
- YIJEyhvPmZ7DlFNIZOMuo19a8wtP1EG8vcmtl0frRUZlyOsUBQhva1c/UO+IHGznxOHp
- 8Ol2yVywPHVakbudn0ygdkGRHVlmaAubVjcxISn5YnIO9kg97eVxhGKbAgKNrn412A/z
- KtpGWT3rLUtsVxaWlufZKNkv1pIWLslJr5apKnXqica1NEhWsMRCMDcYIFGNX54dfYeY
- rBrA==
+ Thu, 21 Jan 2021 18:39:02 +0000 (UTC)
+Received: by mail-qt1-x82f.google.com with SMTP id z9so2285706qtv.6
+ for <wireguard@lists.zx2c4.com>; Thu, 21 Jan 2021 10:39:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=prosimo-io.20150623.gappssmtp.com; s=20150623;
+ h=mime-version:from:date:message-id:subject:to
+ :content-transfer-encoding;
+ bh=EAFb+NmINGrzy6a8QmT9a2+MI3UqvG1NiTph7AIte2E=;
+ b=OfD1dKy3Lc4sfku0FlMY+bO/PMWPm+qNrJO26qGvJnOWrO4p+iN9GXRX5/v0EDxaNi
+ Di+pU/rC/axDHVX8O0kxyEwZL/Ubwq0JTukMviKOHV1u4XtwAgUDSTshvBW3BMNSAiE8
+ 7zSNmfU5XNDJA+ztICUa90qHRNq5x0XXipG6Ec48OSZSgDYJZUirdn4oiFDXmzftFCAn
+ HmpYOGuyIyrTlXLCaIz6x7fs0xSss5csLcbNFCeuCQr+GXQAKyMTqMWmvoIBWuC1ONpD
+ C9wdheZMKYXCK6d2Ca3jOe/swyQWq2eswtMLX6CTPtwpz7ShvYELcmupiqTSSQk9Mojx
+ Uenw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-transfer-encoding
- :content-language;
- bh=cicIXhaili0pAaiJ76oVFYmVnqjPY1zyrqXC8aXmkck=;
- b=XZLiveh16EoaIV6Z08yP/Xzb+nuvJLsEzSEbE0Ai+bMWgak0es2ilWiAVYthWv7FpP
- Seo/ex9YU8UO797u72sTyB/lrSYJcNS/cKXSfGHJXGu3IbcRDc5jBcI3N+bH/lKTNle2
- I+ZQA40ez/c4u4bDjA1PLm+iYReuqRn7qPuWFj5bLhKF2qFR5OjJCo5d6a3BuU+3pQeQ
- K/XOIzGezszSEFE9ZdAKXDAJWSbjE0xJ9jmlgMDw7HYbbnVlqI7nP3LjCq8wigwTP+2/
- e9BicNHAv8BqQ6iN05t3QUmv2/xRWq3P8NRUmdR3Qsvt67sFDDfYI5VmeT0LjRZBZU8H
- da9Q==
-X-Gm-Message-State: AOAM531cLvr8GPKPMERPCVM3rEmD19sSiHewpK+PHPuhbMtmZfHse9xH
- AZG0x2QB/zMjyq5cZgDCj+XIVXhv06E=
-X-Google-Smtp-Source: ABdhPJyifSsLD/s7H55INz3Iz+Y/DCHCrPrrBnvjqe9V7OXxoIA2jqDZtaVLdaM78ppv4rWWSMrrlQ==
-X-Received: by 2002:a1c:40d6:: with SMTP id n205mr3096408wma.0.1611046425456; 
- Tue, 19 Jan 2021 00:53:45 -0800 (PST)
-Received: from [192.168.25.202] ([91.110.152.239])
- by smtp.gmail.com with ESMTPSA id o9sm2143207wrw.81.2021.01.19.00.53.44
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 19 Jan 2021 00:53:44 -0800 (PST)
-Subject: Re: Fwd: Problems with Windows client over PulseSecure VPN
-To: wireguard@lists.zx2c4.com
-References: <9f621ce6-ec3d-0641-c359-756d0ad36f65@gmail.com>
- <6a01b182-a98f-1736-676f-d0811f6de086@gmail.com>
- <CAHmME9ojL5JxWh5Vn_RsBB8baLabhFvotAuSoQ61fJeht=2qEA@mail.gmail.com>
- <2dc629e2-93c9-4ed9-ea57-4318c8b62a73@gmail.com>
- <397bedc7-3913-08bb-a6f3-691d9fab663c@gmail.com>
- <CAN5wt5r9rQpYcCkshBimOARoAxx7T529oUw6RSNnr4q3_y_31g@mail.gmail.com>
- <CAN5wt5ojzay9uEjubrrivd6vZqOGNJ40M25ELzOYTK42zozijQ@mail.gmail.com>
-From: Peter Whisker <peter.whisker@gmail.com>
-Message-ID: <fd327c99-b672-4d68-7298-72550f52a806@gmail.com>
-Date: Tue, 19 Jan 2021 08:53:43 +0000
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.1
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+ :content-transfer-encoding;
+ bh=EAFb+NmINGrzy6a8QmT9a2+MI3UqvG1NiTph7AIte2E=;
+ b=MuNi+Mk7KscgZLI83Dt0vleMY22G3OnGDtJppe+TfA2AcKnZH0FEWwYmfSC8ebZX3x
+ B49VDBBvyViPBje/XwPc1R9+vuSTWvxsYYsbN8t1IfCIs97G3EzqkGE8qmHHCLEzZ/uK
+ cL+RAqasWWKxg7rxiwXYYIAPSKQL46GRKuIBjjh9W62uXcLhI58GIPkIty3sdlKlr8Zq
+ gyvA8fzdcDJM0EDrRuNNU7E3APaA70qNNsthU96xbRsgruE/gAGs3L14kpcclIYXBbRB
+ jj+rgmNzqv1TW57HdpT2B3WVVe2j0kVLegESpCkSGjYPyOHAymmYktbfoYpF6tic13qC
+ EqvQ==
+X-Gm-Message-State: AOAM533r9sQRjzCB3n3APiE2HAr6SiVkiiW+13twc29QGRfQOx9qXM04
+ 1unOksYlnNRNklSAne2wvbsgZi9Z05PuuELn2+003IY3YXwDrUAx
+X-Google-Smtp-Source: ABdhPJw+IRyYGfxJk4gZfJ/4kB2/O94ZJiexU1/6bpKfIAnp9lAoYkOT4ZdQX/V8rMEXBbGo3mWL3TfGnHIltlpXTBs=
+X-Received: by 2002:ac8:dc5:: with SMTP id t5mr991980qti.246.1611254340970;
+ Thu, 21 Jan 2021 10:39:00 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CAN5wt5ojzay9uEjubrrivd6vZqOGNJ40M25ELzOYTK42zozijQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
+From: Manikandan Thiagarajan <tmani@prosimo.io>
+Date: Thu, 21 Jan 2021 10:38:50 -0800
+Message-ID: <CAJV1VRBLdBwD=bud-M7LmcFUiHfHdNa3iNbBFzJzj+4GNpPSRQ@mail.gmail.com>
+Subject: Windows Tunnl.dll fails to start as a service.
+To: wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Mailman-Approved-At: Sun, 24 Jan 2021 16:24:12 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -95,129 +77,227 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi
+I am working on a project where I create Wireguard tunnels on demand
+and tear down the tunnel whenever it is not needed anymore. I have
+been using the tunnel.dll and start/stop the tunnel service from
+another windows service. Almost always the service doesn=E2=80=99t start in
+one try. So I have to keep trying in a loop until the service finally
+starts.
 
-Thanks, maybe the powers-that-be would consider your change to be a fix 
-and accept it into the next release? I guess by removing the default 
-route I am causing the bind to fail as it doesn't know which interface 
-to bind to which has the same result as removing the bind. The bit of 
-code you removed certainly causes problems!
+My main() function looks like below
+if (argc > 2 && !wcscmp(argv[1], L"/service"))
+{
+      WireGuardTunnelService(argv[2]);
+      return 0;
+}
+Create service call
+hService =3D CreateService(
+            hServiceManager,
+            m_serviceName.c_str(),
+            m_serviceName.c_str(),
+            SC_MANAGER_ALL_ACCESS,
+            SERVICE_WIN32_OWN_PROCESS,
+            SERVICE_DEMAND_START,
+            SERVICE_ERROR_NORMAL,
+            path.c_str(),
+            NULL,
+            NULL,
+            depends, // =E2=80=9CNsi=E2=80=9D
+            NULL,
+            NULL);
+I use windows Services API such as CreateService(). StartService(),
+and QueryServiceStatusEx() to start the tunnel service. I start a
+thread that monitors the service state changes after creating and
+starting the service the thread restarts the service when it fails to
+start. The service state changes from SERVICE_START_PENDING to
+SERVICE_STOPPED when it fails to start.
 
-Thanks
-Peter
+Wintun Driver Version: 0.8
+Wireguard version 0.1.1
 
-On 15/01/2021 10:32, Christopher Ng wrote:
-> ---------- Forwarded message ---------
-> From: Christopher Ng <facboy@gmail.com>
-> Date: Fri, 15 Jan 2021 at 09:46
-> Subject: Re: Problems with Windows client over PulseSecure VPN
-> To: Peter Whisker <peter.whisker@gmail.com>
->
->
-> i fixed this in my local build by disabling the binding in
-> defaultroutemonitor.go.  tbh i'm not sure what it's for, i found an
-> old discussion (about linux) about not binding to only one interface,
-> so i'm not sure why Windows binds to one interface.
->
-> diff --git a/tunnel/defaultroutemonitor.go b/tunnel/defaultroutemonitor.go
-> index 6ee95129..12456332 100644
-> --- a/tunnel/defaultroutemonitor.go
-> +++ b/tunnel/defaultroutemonitor.go
-> @@ -6,12 +6,10 @@
->   package tunnel
->
->   import (
-> -       "log"
->          "sync"
->          "time"
->
->          "golang.org/x/sys/windows"
-> -       "golang.zx2c4.com/wireguard/conn"
->          "golang.zx2c4.com/wireguard/device"
->          "golang.zx2c4.com/wireguard/tun"
->          "golang.zx2c4.com/wireguard/windows/tunnel/winipcfg"
-> @@ -50,18 +48,22 @@ func bindSocketRoute(family
-> winipcfg.AddressFamily, device *device.Device, ourLU
->          }
->          *lastLUID = luid
->          *lastIndex = index
-> -       blackhole := blackholeWhenLoop && index == 0
-> -       bind, _ := device.Bind().(conn.BindSocketToInterface)
-> -       if bind == nil {
-> -               return nil
-> -       }
-> -       if family == windows.AF_INET {
-> -               log.Printf("Binding v4 socket to interface %d
-> (blackhole=%v)", index, blackhole)
-> -               return bind.BindSocketToInterface4(index, blackhole)
-> -       } else if family == windows.AF_INET6 {
-> -               log.Printf("Binding v6 socket to interface %d
-> (blackhole=%v)", index, blackhole)
-> -               return bind.BindSocketToInterface6(index, blackhole)
-> -       }
-> +       // disable this because if my peers are on different
-> interfaces...well i don't know how it can work.  i can't
-> +       // bind the socket to only one of them
-> +       /*
-> +               blackhole := blackholeWhenLoop && index == 0
-> +               bind, _ := device.Bind().(conn.BindSocketToInterface)
-> +               if bind == nil {
-> +                       return nil
-> +               }
-> +               if family == windows.AF_INET {
-> +                       log.Printf("Binding v4 socket to interface %d
-> (blackhole=%v)", index, blackhole)
-> +                       return bind.BindSocketToInterface4(index, blackhole)
-> +               } else if family == windows.AF_INET6 {
-> +                       log.Printf("Binding v6 socket to interface %d
-> (blackhole=%v)", index, blackhole)
-> +                       return bind.BindSocketToInterface6(index, blackhole)
-> +               }
-> +       */
->          return nil
->   }
->
-> On Wed, 13 Jan 2021 at 17:06, Peter Whisker <peter.whisker@gmail.com> wrote:
->> Hi
->>
->> I have managed to work around the issue caused by Wireguard sending
->> packets via default route interface even though the route to the peer is
->> over a different interface (the issue caused by IP_UNICAST_IF). My
->> Wireguard peer is down a corporate Pulse Secure tunnel.
->>
->> I use a PreUp and PostDown script as follows:
->>
->> PreUp
->> =====
->>
->> for /f "tokens=3" %%a in ('route print -4 0.0.0.0^| find "0.0.0.0"') do
->> if not defined ip set ip=%%a
->> route add 0.0.0.0 mask 128.0.0.0 %ip% METRIC 1
->> route add 128.0.0.0 mask 128.0.0.0 %ip% METRIC 1
->> route delete 0.0.0.0 mask 0.0.0.0
->>
->> PostDown
->> ========
->>
->> for /f "tokens=3" %%a in ('route print -4 0.0.0.0^| find "0.0.0.0"') do
->> if not defined ip set ip=%%a
->> route add 0.0.0.0 mask 0.0.0.0 %ip% METRIC 1
->> route delete 0.0.0.0 mask 128.0.0.0
->> route delete 128.0.0.0 mask 128.0.0.0
->>
->> This replaces the /0 default route by two /1 routes before bringing up
->> the WireGuard interface. Traffic to the peer then gets sent down the
->> correct route (why is this different from having a default route?). When
->> the WireGuard instance is closed, it recreates the default route and
->> removes the two /1 routes.
->>
->> Is there a way this could be done better in the Wireguard executable (I
->> am currently using 0.3.4).
->>
->> Thanks
->>
->> Peter
->>
->> On 26/11/2020 13:11, Jason A. Donenfeld wrote:
->>>> Is PulseSecure not setting up a /0 route? If so, then this is a known
->>>> issue with the lack of policy routing on Windows.
+Windows Event viewer Logs:
+Log Name:      System
+Source:        Service Control Manager
+Date:          1/21/2021 9:41:23 AM
+Event ID:      7034
+Task Category: None
+Level:         Error
+Keywords:      Classic
+User:          N/A
+Computer:      MANI-WIN10-TEST
+Description:
+The ProsimoTunnel_if_cbc2a056dfdc25f7 service terminated unexpectedly.
+It has done this 2 time(s).
+Event Xml:
+<Event xmlns=3D"http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name=3D"Service Control Manager"
+Guid=3D"{555908d1-a6d7-4695-8e1e-26931d2012f4}" EventSourceName=3D"Service
+Control Manager" />
+    <EventID Qualifiers=3D"49152">7034</EventID>
+    <Version>0</Version>
+    <Level>2</Level>
+    <Task>0</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x8080000000000000</Keywords>
+    <TimeCreated SystemTime=3D"2021-01-21T17:41:23.8109732Z" />
+    <EventRecordID>35946</EventRecordID>
+    <Correlation />
+    <Execution ProcessID=3D"660" ThreadID=3D"6064" />
+    <Channel>System</Channel>
+    <Computer>MANI-WIN10-TEST</Computer>
+    <Security />
+  </System>
+  <EventData>
+    <Data Name=3D"param1">ProsimoTunnel_if_cbc2a056dfdc25f7</Data>
+    <Data Name=3D"param2">2</Data>
+    <Binary>500072006F00730069006D006F00540075006E006E0065006C005F006900660=
+05F0063006200630032006100300035003600640066006400630032003500660037000000</=
+Binary>
+  </EventData>
+</Event>
+
+Log Name:      System
+Source:        Service Control Manager
+Date:          1/21/2021 9:41:25 AM
+Event ID:      7024
+Task Category: None
+Level:         Error
+Keywords:      Classic
+User:          N/A
+Computer:      MANI-WIN10-TEST
+Description:
+The ProsimoTunnel_if_cbc2a056dfdc25f7 service terminated with the
+following service-specific error:
+The system cannot find the path specified.
+Event Xml:
+<Event xmlns=3D"http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name=3D"Service Control Manager"
+Guid=3D"{555908d1-a6d7-4695-8e1e-26931d2012f4}" EventSourceName=3D"Service
+Control Manager" />
+    <EventID Qualifiers=3D"49152">7024</EventID>
+    <Version>0</Version>
+    <Level>2</Level>
+    <Task>0</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x8080000000000000</Keywords>
+    <TimeCreated SystemTime=3D"2021-01-21T17:41:25.8331194Z" />
+    <EventRecordID>35950</EventRecordID>
+    <Correlation />
+    <Execution ProcessID=3D"660" ThreadID=3D"1540" />
+    <Channel>System</Channel>
+    <Computer>MANI-WIN10-TEST</Computer>
+    <Security />
+  </System>
+  <EventData>
+    <Data Name=3D"param1">ProsimoTunnel_if_cbc2a056dfdc25f7</Data>
+    <Data Name=3D"param2">%%3</Data>
+    <Binary>500072006F00730069006D006F00540075006E006E0065006C005F006900660=
+05F0063006200630032006100300035003600640066006400630032003500660037000000</=
+Binary>
+  </EventData>
+</Event>
+
+Wireguard Logs:
+2021-01-21 10:04:20.107655: [TUN] [if_1ea7d00c23a616b1] Starting
+WireGuard/0.1.1 (Windows 10.0.19041; amd64)
+2021-01-21 10:04:20.108582: [TUN] [if_1ea7d00c23a616b1] Watching
+network interfaces
+2021-01-21 10:04:20.111915: [TUN] [if_1ea7d00c23a616b1] Resolving DNS names
+2021-01-21 10:04:20.181831: [TUN] [if_1ea7d00c23a616b1] Creating
+Wintun interface
+2021-01-21 10:04:20.896480: [TUN] [if_1ea7d00c23a616b1] Using
+Wintun/0.8 (NDIS 6.83)
+2021-01-21 10:04:20.909065: [TUN] [if_1ea7d00c23a616b1] Enabling firewall r=
+ules
+2021-01-21 10:04:22.126556: [TUN] [if_1ea7d00c23a616b1] Starting
+WireGuard/0.1.1 (Windows 10.0.19041; amd64)
+2021-01-21 10:04:22.127580: [TUN] [if_1ea7d00c23a616b1] Watching
+network interfaces
+2021-01-21 10:04:22.128604: [TUN] [if_1ea7d00c23a616b1] Resolving DNS names
+2021-01-21 10:04:22.135234: [TUN] [if_1ea7d00c23a616b1] Creating
+Wintun interface
+2021-01-21 10:04:24.156638: [TUN] [if_1ea7d00c23a616b1] Starting
+WireGuard/0.1.1 (Windows 10.0.19041; amd64)
+2021-01-21 10:04:24.159365: [TUN] [if_1ea7d00c23a616b1] Watching
+network interfaces
+2021-01-21 10:04:24.159365: [TUN] [if_1ea7d00c23a616b1] Resolving DNS names
+2021-01-21 10:04:24.165375: [TUN] [if_1ea7d00c23a616b1] Creating
+Wintun interface
+2021-01-21 10:04:24.616820: [TUN] [if_1ea7d00c23a616b1] Unable to
+create Wintun interface: Error registering rings: Error listing NDIS
+interfaces: no interfaces found
+2021-01-21 10:04:24.634348: [TUN] [if_1ea7d00c23a616b1] Shutting down
+2021-01-21 10:04:26.180594: [TUN] [if_1ea7d00c23a616b1] Starting
+WireGuard/0.1.1 (Windows 10.0.19041; amd64)
+2021-01-21 10:04:26.181124: [TUN] [if_1ea7d00c23a616b1] Watching
+network interfaces
+2021-01-21 10:04:26.182501: [TUN] [if_1ea7d00c23a616b1] Resolving DNS names
+2021-01-21 10:04:26.247809: [TUN] [if_1ea7d00c23a616b1] Creating
+Wintun interface
+2021-01-21 10:04:27.594789: [TUN] [if_1ea7d00c23a616b1] Using
+Wintun/0.8 (NDIS 6.83)
+2021-01-21 10:04:27.697064: [TUN] [if_1ea7d00c23a616b1] Enabling firewall r=
+ules
+2021-01-21 10:04:27.439705: [TUN] [if_1ea7d00c23a616b1] Dropping privileges
+2021-01-21 10:04:27.554834: [TUN] [if_1ea7d00c23a616b1] Creating
+interface instance
+2021-01-21 10:04:27.668048: [TUN] [if_1ea7d00c23a616b1] Routine: event
+worker - started
+2021-01-21 10:04:28.840433: [TUN] [if_1ea7d00c23a616b1] Routine:
+encryption worker - started
+2021-01-21 10:04:29.390799: [TUN] [if_1ea7d00c23a616b1] Routine:
+decryption worker - started
+2021-01-21 10:04:29.695953: [TUN] [if_1ea7d00c23a616b1] Routine:
+handshake worker - started
+2021-01-21 10:04:29.116133: [TUN] [if_1ea7d00c23a616b1] Routine: TUN
+reader - started
+2021-01-21 10:04:29.188358: [TUN] [if_1ea7d00c23a616b1] Setting
+interface configuration
+2021-01-21 10:04:29.204949: [TUN] [if_1ea7d00c23a616b1] UAPI: Updating
+private key
+2021-01-21 10:04:29.216665: [TUN] [if_1ea7d00c23a616b1] UAPI: Removing all =
+peers
+2021-01-21 10:04:29.237024: [TUN] [if_1ea7d00c23a616b1] UAPI:
+Transition to peer configuration
+2021-01-21 10:04:29.239373: [TUN] [if_1ea7d00c23a616b1]
+peer(m6bQ.RKxw) - UAPI: Created
+2021-01-21 10:04:29.240579: [TUN] [if_1ea7d00c23a616b1]
+peer(m6bQ.RKxw) - UAPI: Updating endpoint
+2021-01-21 10:04:29.242548: [TUN] [if_1ea7d00c23a616b1]
+peer(m6bQ.RKxw) - UAPI: Updating persistent keepalive interval
+2021-01-21 10:04:29.243066: [TUN] [if_1ea7d00c23a616b1]
+peer(m6bQ.RKxw) - UAPI: Removing all allowedips
+2021-01-21 10:04:29.248889: [TUN] [if_1ea7d00c23a616b1]
+peer(m6bQ.RKxw) - UAPI: Adding allowedip
+2021-01-21 10:04:29.253095: [TUN] [if_1ea7d00c23a616b1] Bringing peers up
+2021-01-21 10:04:29.256190: [TUN] [if_1ea7d00c23a616b1] Routine:
+receive incoming IPv6 - started
+2021-01-21 10:04:29.260585: [TUN] [if_1ea7d00c23a616b1] Routine:
+receive incoming IPv4 - started
+2021-01-21 10:04:29.263610: [TUN] [if_1ea7d00c23a616b1] UDP bind has
+been updated
+2021-01-21 10:04:29.266180: [TUN] [if_1ea7d00c23a616b1] peer(m6bQ.Rxw)
+- Starting...
+2021-01-21 10:04:29.267507: [TUN] [if_1ea7d00c23a616b1]
+peer(m6bQ.RKxw) - Routine: sequential receiver - started
+2021-01-21 10:04:29.268329: [TUN] [if_1ea7d00c23a616b1]
+peer(m6bQ.RKxw) - Routine: nonce worker - started
+2021-01-21 10:04:29.269543: [TUN] [if_1ea7d00c23a616b1]
+peer(m6bQ.RKxw) - Routine: sequential sender - started
+2021-01-21 10:04:29.269543: [TUN] [if_1ea7d00c23a616b1] Monitoring
+default v4 routes
+2021-01-21 10:04:29.269543: [TUN] [if_1ea7d00c23a616b1] Binding v4
+socket to interface 49 (blackhole=3Dfalse)
+2021-01-21 10:04:29.271167: [TUN] [if_1ea7d00c23a616b1] Setting device
+v4 addresses
+2021-01-21 10:04:29.520194: [TUN] [if_1ea7d00c23a616b1] Monitoring
+default v6 routes
+2021-01-21 10:04:29.520194: [TUN] [if_1ea7d00c23a616b1] Binding v6
+socket to interface 49 (blackhole=3Dfalse)
+2021-01-21 10:04:29.521131: [TUN] [if_1ea7d00c23a616b1] Setting device
+v6 addresses
+2021-01-21 10:04:29.753887: [TUN] [if_1ea7d00c23a616b1] Listening for
+UAPI requests
+2021-01-21 10:04:29.753887: [TUN] [if_1ea7d00c23a616b1] Startup complete
