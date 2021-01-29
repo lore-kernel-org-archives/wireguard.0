@@ -2,60 +2,50 @@ Return-Path: <SRS0=P56g=HA=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CDDA1C433DB
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 29 Jan 2021 00:23:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 689A3C433DB
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 29 Jan 2021 00:39:33 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 86AB064D9E
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 29 Jan 2021 00:23:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 86AB064D9E
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id 6678461481
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 29 Jan 2021 00:39:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 6678461481
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=pineview.net
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 75561c5d;
-	Fri, 29 Jan 2021 00:23:43 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [104.131.123.232])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2386296c
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dd70d973;
+	Fri, 29 Jan 2021 00:39:27 +0000 (UTC)
+Received: from mail.pineview.net (mail.pineview.net [203.33.246.11])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2f85abb5
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 29 Jan 2021 00:23:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1611879818;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Hj+wXykF/qybVOKaEWVLNJES5c9WB0qH1NNMO/C83Vs=;
- b=dPToHqWo8Lb09lOumd1bRRgp0ObBYEErjfeymcAN/QkJAZCunZgi2UodAhoT/oOVfV+99C
- wJLe8ltSWR9fAKmnAxcHNtsIDTVeWU2aRS5ES3zdR/OcWSsgHNvNiAWHN0DAGdD0Hw6qim
- yvzoBGri4a32rTAazFLKUtvtT7rW0Qs=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id ed112242
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Fri, 29 Jan 2021 00:23:38 +0000 (UTC)
-Received: by mail-io1-f53.google.com with SMTP id d81so7556153iof.3
- for <wireguard@lists.zx2c4.com>; Thu, 28 Jan 2021 16:23:38 -0800 (PST)
-X-Gm-Message-State: AOAM5322pLbcL61lblyilFIXvmqH/iWeAGfpAWIwS4rjVok5ALFhP6yk
- aeZaNXs1eE+V6F3BJgMqZUSKA9AAklfKDNAiq00=
-X-Google-Smtp-Source: ABdhPJzPQqMlTGKnbjXstnZ5cdiQWOaHAght+/vwuII7t+91xK8eA8dq06lPGM6O4LqiWWUNmXv0yTkY9HiVC9/cceA=
-X-Received: by 2002:a02:cf8c:: with SMTP id w12mr1532283jar.84.1611879817447; 
- Thu, 28 Jan 2021 16:23:37 -0800 (PST)
-MIME-Version: 1.0
-References: <CALaUSuuB=+ZDTsTaVs-pswd6fsu6CvZgO4b76HPGQZmwxssN0w@mail.gmail.com>
-In-Reply-To: <CALaUSuuB=+ZDTsTaVs-pswd6fsu6CvZgO4b76HPGQZmwxssN0w@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 29 Jan 2021 01:23:25 +0100
-X-Gmail-Original-Message-ID: <CAHmME9q5a1MVUQU3Hr=T32pjoW-=Hz+KyoBvvKgLgwQwWNoCYw@mail.gmail.com>
-Message-ID: <CAHmME9q5a1MVUQU3Hr=T32pjoW-=Hz+KyoBvvKgLgwQwWNoCYw@mail.gmail.com>
+ Fri, 29 Jan 2021 00:39:25 +0000 (UTC)
+Received: from abovetime.pineview.net (abovetime.pineview.net [203.33.246.37])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
+ (No client certificate requested)
+ by mail.pineview.net (Postfix) with ESMTPSA id 26C0E800B9;
+ Fri, 29 Jan 2021 11:09:21 +1030 (ACDT)
 Subject: Re: WireGuard for Windows tunnel deactivation after prolonged
  resolution failure during startup
-To: Joshua Sjoding <joshua.sjoding@scjalliance.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ Joshua Sjoding <joshua.sjoding@scjalliance.com>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+References: <CALaUSuuB=+ZDTsTaVs-pswd6fsu6CvZgO4b76HPGQZmwxssN0w@mail.gmail.com>
+ <CAHmME9q5a1MVUQU3Hr=T32pjoW-=Hz+KyoBvvKgLgwQwWNoCYw@mail.gmail.com>
+From: Mike O'Connor <mike@pineview.net>
+Message-ID: <af71a4b2-989a-da04-2fa6-9467ec58997f@pineview.net>
+Date: Fri, 29 Jan 2021 11:09:20 +1030
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.6.1
+MIME-Version: 1.0
+In-Reply-To: <CAHmME9q5a1MVUQU3Hr=T32pjoW-=Hz+KyoBvvKgLgwQwWNoCYw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -70,24 +60,45 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Joshua,
+Hi Jason
 
-Thanks for the bug report. Windows is usually all about heuristics.
-Here's the current algorithm:
+I'm not a windows users so can not test, but it seems to me that 
+Microsoft have API's to indicate the network status.
 
-- If the system has booted within the last 4 minutes, it retries 40
-times. Otherwise it retries 10 times.
-- If the resolution fails with a temporary error, or if it fails with
-a permanent error but there's no available internet connection, then
-we sleep for 4 seconds and try again.
-- If we try the 40 or 10 times over the 160 or 40 seconds and don't
-succeed, then we fail and shut down the service.
+This to indicate if there is a connection
+https://docs.microsoft.com/en-us/windows/win32/api/wininet/nf-wininet-internetgetconnectedstate
+This to indicate if there is route-able service. It seem this is 
+deprecated for windows 10.
+https://docs.microsoft.com/en-us/windows/win32/api/wininet/nf-wininet-internetcheckconnectiona
+There is reference to a win10 version, in the notes.
 
-It sounds like that set of heuristics isn't working out so great for
-your use case. How long do those computers usually take to obtain an
-Internet connection? If you could run some estimates on that, and come
-up with some reasonable length of time ("not more than 3 minutes" for
-example) then maybe we could just double that and make it the new
-timeout? Or maybe you have a different idea?
+Not sure if this helps
 
-Jason
+Cheers
+Mike
+
+
+On 29/1/21 10:53 am, Jason A. Donenfeld wrote:
+> Hi Joshua,
+>
+> Thanks for the bug report. Windows is usually all about heuristics.
+> Here's the current algorithm:
+>
+> - If the system has booted within the last 4 minutes, it retries 40
+> times. Otherwise it retries 10 times.
+> - If the resolution fails with a temporary error, or if it fails with
+> a permanent error but there's no available internet connection, then
+> we sleep for 4 seconds and try again.
+> - If we try the 40 or 10 times over the 160 or 40 seconds and don't
+> succeed, then we fail and shut down the service.
+>
+> It sounds like that set of heuristics isn't working out so great for
+> your use case. How long do those computers usually take to obtain an
+> Internet connection? If you could run some estimates on that, and come
+> up with some reasonable length of time ("not more than 3 minutes" for
+> example) then maybe we could just double that and make it the new
+> timeout? Or maybe you have a different idea?
+>
+> Jason
+
+
