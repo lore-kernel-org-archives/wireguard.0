@@ -2,68 +2,76 @@ Return-Path: <SRS0=P56g=HA=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 16487C433DB
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 29 Jan 2021 01:05:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C4B8C433E0
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 29 Jan 2021 11:40:15 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 21B3F64DF1
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 29 Jan 2021 01:05:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 21B3F64DF1
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=scjalliance.com
+	by mail.kernel.org (Postfix) with ESMTPS id 5E6EC65062
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 29 Jan 2021 11:40:12 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 5E6EC65062
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=mullvad.net
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e74df4fb;
-	Fri, 29 Jan 2021 01:02:19 +0000 (UTC)
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com
- [2607:f8b0:4864:20::1032])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c92fa154
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 123331c8;
+	Fri, 29 Jan 2021 11:40:10 +0000 (UTC)
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com
+ [2a00:1450:4864:20::435])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 62481228
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 29 Jan 2021 01:02:18 +0000 (UTC)
-Received: by mail-pj1-x1032.google.com with SMTP id u4so5425239pjn.4
- for <wireguard@lists.zx2c4.com>; Thu, 28 Jan 2021 17:02:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=scjalliance.com; s=g5;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=AuhaQpPngPsUD+m7ijA4PkPWpqKPvtKfBrYPiVL6YRg=;
- b=ZFIUCtOKOEWSJl053h45SOVhzZl3n+Ewb1K8KyxJuQgCRli3ftvGr1qjKGvv8wAy3A
- KwEDPLA3pVrAJggVpjFZqRcN4e4RqUqV0hah6AjDJfWMPCdDmY6vfKQ1Bv/qKv9v0itx
- UqukuE2U+R3JhhJwv/M2mco1gpv0V5UdDjpbQ=
+ Fri, 29 Jan 2021 11:40:08 +0000 (UTC)
+Received: by mail-wr1-x435.google.com with SMTP id 6so8512303wri.3
+ for <wireguard@lists.zx2c4.com>; Fri, 29 Jan 2021 03:40:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mullvad-net.20150623.gappssmtp.com; s=20150623;
+ h=from:content-transfer-encoding:mime-version:subject:message-id
+ :references:to:date;
+ bh=tmIp+l//0KRdI1IJKfTx52ej2+90ZpuXItmVtQaRVKI=;
+ b=FTRptavxebGBoMDdLTNg4r16sGvqppJYXF8A6m+onWeePUrJaINZzYtSUg5wNPC/UT
+ 7hR24oPtecCNmBSd7JvmffXbmac2fcbj2XJ4yfGs8uAmdlyENqhWskKzMIv3KZvrqwjk
+ j+s6L1IPvYi2MJkl+qvm7/NZbvX3/QG0m7XzaSfdmrN1ySqtlLYKUo8BdpUcZI/eeo1k
+ DYZsS7b9zB5XdRciya7AQGiaZ6diOJsiMc46nhDc+PuN8dtOBLOgS/iyxuHhcUUH3jm4
+ E9jxG/6gP8UPwiGGHd5pLyULxH6kuSWfUzsBTkWrakP8hwIgjg3vMT0iKMmY/7WFL+YG
+ RsQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=AuhaQpPngPsUD+m7ijA4PkPWpqKPvtKfBrYPiVL6YRg=;
- b=G2zuCMnrAGLHEIAKYexlNoDRehGFtnrMkg6kTa9tD21MIBvvtgNxsTtK8xCqtXAbEe
- ngJ+xsA/uzW6eP/2VM12gppnfpkN7SOafQ1kRKvgDUspQMyMt+eMVJcLjGf60gVQ1DRZ
- usj3au8um/f9tzqDf85ZWbSbRJXxIHCzjwr89W0G8mcpOtr2v5r+74U5xNSLLw/UJLmq
- J0FVE2yzbSnU5aDVhvqKHsM/xPwgqcfbvp5vFfVI3xLAk2hcgTR2v2TJWu/H9HAOYcqP
- 8rgxdn2XcWxz4vA+tO3ZZ06iLhh5Q0OFruqOm3X+4qr/E00A6X4qwBMCLx5dTS/04rze
- XcfA==
-X-Gm-Message-State: AOAM531w2NH6DOGrta7X+VAAAIxvWDHb2K/zyxrPXMU1p3+6orbSXm4R
- TcA5LOk2rUlLqemEKfO1fvH4BfZFHd6t7tuIa25x8qVyiJyR4syw
-X-Google-Smtp-Source: ABdhPJzvxdVxGqor2NK52bwMChMciq6pnMoC9Bq4Y4ca4gXHk8mc6OutJdkebUaE0BIYTJjPANjYjgqGMXwNnzIXQp8=
-X-Received: by 2002:a17:902:b18c:b029:da:fc41:baf8 with SMTP id
- s12-20020a170902b18cb02900dafc41baf8mr2043554plr.58.1611882135716; Thu, 28
- Jan 2021 17:02:15 -0800 (PST)
-MIME-Version: 1.0
-References: <CALaUSuuB=+ZDTsTaVs-pswd6fsu6CvZgO4b76HPGQZmwxssN0w@mail.gmail.com>
- <CAHmME9q5a1MVUQU3Hr=T32pjoW-=Hz+KyoBvvKgLgwQwWNoCYw@mail.gmail.com>
- <af71a4b2-989a-da04-2fa6-9467ec58997f@pineview.net>
-In-Reply-To: <af71a4b2-989a-da04-2fa6-9467ec58997f@pineview.net>
-From: Joshua Sjoding <joshua.sjoding@scjalliance.com>
-Date: Thu, 28 Jan 2021 17:02:04 -0800
-Message-ID: <CALaUSusBmLSAE3rYavFtEW5Bp+KoRVLfKFXga7Po+46KSGPbhg@mail.gmail.com>
-Subject: Re: WireGuard for Windows tunnel deactivation after prolonged
- resolution failure during startup
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+ h=x-gm-message-state:from:content-transfer-encoding:mime-version
+ :subject:message-id:references:to:date;
+ bh=tmIp+l//0KRdI1IJKfTx52ej2+90ZpuXItmVtQaRVKI=;
+ b=ArgPt35P2SkiNSe3LFD4kksEAtaaJMqxZLhPbUsJVA93lS81XPX60HTJRoyMLKo3kV
+ 04hFJdG7DjwuNEX5Vj33tlxUTdeuQ8y/m9jNWHKbvqesWZmSZc3kwkzOZkgUIblLNxOa
+ FBcHn1rmcuausTOOFcIu0uWzI25RqzJoOGRdZCf9ztq78YYERBv4p47tSlxlvUfGARO4
+ yQ8hnkTYK8E29oQJHsRyGAjCA8qp4ZYQFKc7HpUgdtpdEctU8tIZgkYJi6DQPhLr2W2H
+ 50jSOLVQhwJeqwSgOSGuTvzFhCNg5Mgevgo1tzwcfteJaV0uBKJj4PYo4dOMValcDk48
+ UTdA==
+X-Gm-Message-State: AOAM5309wYUfbASwfERhzfl5GH8MRM49H6Rb7iC1ZpJXUIN3ngQ0flqa
+ oUas9gWSGKXXmp+ciCc45sPHhVLukNKgQg==
+X-Google-Smtp-Source: ABdhPJxetbr29DphAqhNXrC89HhRsINqAY7RwObrvTZrcqdQy/fg+MESdgKUOX5t5rimDymo9wi91A==
+X-Received: by 2002:a05:6000:104:: with SMTP id
+ o4mr4001733wrx.419.1611920408317; 
+ Fri, 29 Jan 2021 03:40:08 -0800 (PST)
+Received: from [10.71.26.223] ([194.99.104.12])
+ by smtp.gmail.com with ESMTPSA id l7sm9955486wmg.41.2021.01.29.03.40.07
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Fri, 29 Jan 2021 03:40:07 -0800 (PST)
+From: Andrej Mihajlov <and@mullvad.net>
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.40.0.2.32\))
+Subject: =?utf-8?B?RndkOiBnaXQt0LTQvtGB0YLRg9C/INC6INC40YHRhdC+0LTQvdC4?=
+ =?utf-8?B?0LrQsNC8IHdpcmVnYXJk?=
+Message-Id: <7AF992B0-CE75-4581-A358-C1C46A252AE1@mullvad.net>
+References: <op.0xy15fx8e0eir2@imac-hack.local>
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Date: Fri, 29 Jan 2021 12:40:06 +0100
+X-Mailer: Apple Mail (2.3654.40.0.2.32)
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -78,87 +86,35 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Someone could power the laptop up but wait hours before they connect
-it to their hotspot. For scenarios like that the current algorithm
-seems insufficient.
-
-My preference would be to listen for network changes while in a failed
-state, then re-run the existing algorithm whenever a network
-connect/disconnect occurs. This wouldn't cover cases where the
-upstream ISP is having trouble, but it would probably be a big
-improvement for us.
-
-The best way to detect network changes on Windows is open for debate.
-We've had great success with scheduled tasks that listen for events
-10000 (connect) and 10001 (disconnect) in the
-"Microsoft-Windows-NetworkProfile/Operational log" event log:
-
-<QueryList><Query Id='1'><Select
-Path='Microsoft-Windows-NetworkProfile/Operational'>*[System[(EventID=10000
-or EventID=10001)]]</Select></Query></QueryList>
-
-I don't know if that's helpful. There probably are better ways to
-detect network changes, that's just what I've got off the cuff.
-
-Joshua Sjoding
-SCJ Alliance
-IT Specialist
-www.scjalliance.com
 
 
-Joshua Sjoding
-SCJ Alliance
-IT Specialist
-o. 360.352.1465, ext. 134
-www.scjalliance.com
+> Begin forwarded message:
+>=20
+> From: langry <eulangry@gmail.com>
+> Subject: git-=D0=B4=D0=BE=D1=81=D1=82=D1=83=D0=BF =D0=BA =
+=D0=B8=D1=81=D1=85=D0=BE=D0=B4=D0=BD=D0=B8=D0=BA=D0=B0=D0=BC wiregard
+> Date: 29 January 2021 at 09:06:40 CET
+> To: and@mullvad.net
+>=20
+> =D0=94=D0=BE=D0=B1=D1=80=D1=8B=D0=B9 =D0=B4=D0=B5=D0=BD=D1=8C, =
+=D0=90=D0=BD=D0=B4=D1=80=D0=B5=D0=B9.
+>=20
+> =D0=9D=D0=B5 =D0=BC=D0=BE=D0=B3=D1=83 =D0=BF=D1=80=D0=BE=D0=B1=D0=B8=D1=82=
+=D1=8C=D1=81=D1=8F =D0=BA =D0=B8=D1=81=D1=85=D0=BE=D0=B4=D0=BD=D0=B8=D0=BA=
+=D0=B0=D0=BC =D0=BF=D0=BE =D0=B2=D0=B0=D1=88=D0=B5=D0=B9 =
+=D0=B8=D0=BD=D1=81=D1=82=D1=80=D1=83=D0=BA=D1=86=D0=B8=D0=B8: =
+https://git.zx2c4.com/wireguard-apple/about/
+>=20
+> "fatal: unable to access 'https://git.zx2c4.com/wireguard-apple/': =
+error:14077410:SSL routines:SSL23_GET_SERVER_HELLO:sslv3 alert handshake =
+failure"
+>=20
+> =D0=9F=D1=8B=D1=82=D0=B0=D1=8E=D1=81=D1=8C =D1=81=D0=BE=D0=B1=D1=80=D0=B0=
+=D1=82=D1=8C =D0=BF=D0=BE=D0=B4 =D1=81=D1=82=D0=B0=D1=80=D1=8B=D0=B5 =
+=D0=BC=D0=B0=D0=BA=D0=B8 =D0=B2=D0=B5=D1=80=D1=81=D0=B8=D0=B9 =
+10.6=E2=80=9310.9=E2=80=A6 =D0=B8=D0=BB=D0=B8 =D0=B7=D1=80=D1=8F =
+=D1=82=D1=80=D0=B0=D1=87=D1=83 =D0=B2=D1=80=D0=B5=D0=BC=D1=8F?
+>=20
+> --=20
+> =D0=95=D0=B2=D0=B3=D0=B5=D0=BD=D0=B8=D0=B9
 
-This communication may contain privileged or other confidential
-information. If you have received it in error, please advise the
-sender by reply email and immediately delete the message and any
-attachments without copying or disclosing the contents. Thank you.
-
-
-On Thu, Jan 28, 2021 at 4:39 PM Mike O'Connor <mike@pineview.net> wrote:
->
-> Hi Jason
->
-> I'm not a windows users so can not test, but it seems to me that
-> Microsoft have API's to indicate the network status.
->
-> This to indicate if there is a connection
-> https://docs.microsoft.com/en-us/windows/win32/api/wininet/nf-wininet-internetgetconnectedstate
-> This to indicate if there is route-able service. It seem this is
-> deprecated for windows 10.
-> https://docs.microsoft.com/en-us/windows/win32/api/wininet/nf-wininet-internetcheckconnectiona
-> There is reference to a win10 version, in the notes.
->
-> Not sure if this helps
->
-> Cheers
-> Mike
->
->
-> On 29/1/21 10:53 am, Jason A. Donenfeld wrote:
-> > Hi Joshua,
-> >
-> > Thanks for the bug report. Windows is usually all about heuristics.
-> > Here's the current algorithm:
-> >
-> > - If the system has booted within the last 4 minutes, it retries 40
-> > times. Otherwise it retries 10 times.
-> > - If the resolution fails with a temporary error, or if it fails with
-> > a permanent error but there's no available internet connection, then
-> > we sleep for 4 seconds and try again.
-> > - If we try the 40 or 10 times over the 160 or 40 seconds and don't
-> > succeed, then we fail and shut down the service.
-> >
-> > It sounds like that set of heuristics isn't working out so great for
-> > your use case. How long do those computers usually take to obtain an
-> > Internet connection? If you could run some estimates on that, and come
-> > up with some reasonable length of time ("not more than 3 minutes" for
-> > example) then maybe we could just double that and make it the new
-> > timeout? Or maybe you have a different idea?
-> >
-> > Jason
->
->
