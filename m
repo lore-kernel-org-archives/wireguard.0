@@ -1,65 +1,60 @@
-Return-Path: <SRS0=0rhS=G7=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=P56g=HA=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 21FD8C433E0
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 28 Jan 2021 23:24:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CDDA1C433DB
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 29 Jan 2021 00:23:47 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id EC6D564DF4
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 28 Jan 2021 23:24:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org EC6D564DF4
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=prosimo.io
+	by mail.kernel.org (Postfix) with ESMTPS id 86AB064D9E
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 29 Jan 2021 00:23:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 86AB064D9E
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fa8a139d;
-	Thu, 28 Jan 2021 23:24:15 +0000 (UTC)
-Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com
- [2607:f8b0:4864:20::f2c])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id fbb4ccd1
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 75561c5d;
+	Fri, 29 Jan 2021 00:23:43 +0000 (UTC)
+Received: from mail.zx2c4.com (mail.zx2c4.com [104.131.123.232])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2386296c
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 28 Jan 2021 23:24:14 +0000 (UTC)
-Received: by mail-qv1-xf2c.google.com with SMTP id n14so3685151qvg.5
- for <wireguard@lists.zx2c4.com>; Thu, 28 Jan 2021 15:24:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=prosimo-io.20150623.gappssmtp.com; s=20150623;
- h=mime-version:from:date:message-id:subject:to;
- bh=OFXtkdULyAs6sA4ap7564a9E0+Xdzibe1p6SjA47hGI=;
- b=tewDZsnzDJ+C5fGT9iO16TuzRSXQB0TzvAqnxvXG63/HL29puHyNahfuO4SzpuX/7U
- 0I3ljkyBA/TRkcKdKBO/mP8DuvZZa0CE62gTEuDjcmDNZ15dCMhQFi682kdTmYDYfDoW
- rGl7UHBD1J/s7vD7Q/FkrcnMqB8s4ZjEYI66qfTHzkl+Wa7dMQr4heMTKGbJqCL9re3n
- r9myF+TH2q2aso9YrFIPXA8o7MPXjvBR6l50zMP1G4OdblS0SrwJYnHbIMFplFu+1vkQ
- 2ATpHM+hX5pht8rXU6EtQZzw6ydmoV2dY4T1FDivQoXyYVps/wiuOZLV5fFO7SLuhpT9
- VziQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=OFXtkdULyAs6sA4ap7564a9E0+Xdzibe1p6SjA47hGI=;
- b=UyALpwyqE1zjj8fmNIr8GryXJzhjUEpLtSK7FTyxtu4tz+PPqHJhHyuIFQKPzmrlVP
- ZegtfK/PQhdz5VOjTDLHV2yBG5m15rPIKCO+IEVjR4vJWCZ7yNpyohs++7JvIDhKUrt3
- wnvSxiztCcaHAEgDhBWp3dNlwEaTFX9MSRPdCjSzcfGQc980k60bV0xYsqS2zeBNgON7
- UTdsJmPiDCGHPpdqAALP02oUBgmqc8wA6Pdw166CRGXjV2+cJ88prbdz7n6TCnKp/aV8
- SCNNmsBsRhTtDqfFBzy4TPd80F2Qsu5rKWhTpnGnSOBrxmIHG2h+H/7vobx0MIkB8R40
- hkiQ==
-X-Gm-Message-State: AOAM531616GcImESUtTSV0fAkhhMNQXk6YdRwqhbChlkjqGqWWXvnW10
- 3YBYVdwf8x9V/RPOyXEQk3Nx+ew3uvF6QGADDx2tniDPXmH1jStd
-X-Google-Smtp-Source: ABdhPJzK+zItV0zR4N5M1Xis5wFspimpeKO0IbBAxIQQk97RlaJdQ9cbtxRdTpq3yjnOdGuMnBIs0BQHIKpMnqgEVhA=
-X-Received: by 2002:a05:6214:b2b:: with SMTP id
- w11mr1955268qvj.27.1611876252728; 
- Thu, 28 Jan 2021 15:24:12 -0800 (PST)
+ Fri, 29 Jan 2021 00:23:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1611879818;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Hj+wXykF/qybVOKaEWVLNJES5c9WB0qH1NNMO/C83Vs=;
+ b=dPToHqWo8Lb09lOumd1bRRgp0ObBYEErjfeymcAN/QkJAZCunZgi2UodAhoT/oOVfV+99C
+ wJLe8ltSWR9fAKmnAxcHNtsIDTVeWU2aRS5ES3zdR/OcWSsgHNvNiAWHN0DAGdD0Hw6qim
+ yvzoBGri4a32rTAazFLKUtvtT7rW0Qs=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id ed112242
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Fri, 29 Jan 2021 00:23:38 +0000 (UTC)
+Received: by mail-io1-f53.google.com with SMTP id d81so7556153iof.3
+ for <wireguard@lists.zx2c4.com>; Thu, 28 Jan 2021 16:23:38 -0800 (PST)
+X-Gm-Message-State: AOAM5322pLbcL61lblyilFIXvmqH/iWeAGfpAWIwS4rjVok5ALFhP6yk
+ aeZaNXs1eE+V6F3BJgMqZUSKA9AAklfKDNAiq00=
+X-Google-Smtp-Source: ABdhPJzPQqMlTGKnbjXstnZ5cdiQWOaHAght+/vwuII7t+91xK8eA8dq06lPGM6O4LqiWWUNmXv0yTkY9HiVC9/cceA=
+X-Received: by 2002:a02:cf8c:: with SMTP id w12mr1532283jar.84.1611879817447; 
+ Thu, 28 Jan 2021 16:23:37 -0800 (PST)
 MIME-Version: 1.0
-From: Manikandan Thiagarajan <tmani@prosimo.io>
-Date: Thu, 28 Jan 2021 15:24:02 -0800
-Message-ID: <CAJV1VRDbW+LWhy_zA5VqvdiVc_-S28M5Lv1L30j9JGC5ZcTKfg@mail.gmail.com>
-Subject: [Windows] Unable to build latest wireguard missing
- i686-w64-mingw32-windres
-To: wireguard@lists.zx2c4.com
+References: <CALaUSuuB=+ZDTsTaVs-pswd6fsu6CvZgO4b76HPGQZmwxssN0w@mail.gmail.com>
+In-Reply-To: <CALaUSuuB=+ZDTsTaVs-pswd6fsu6CvZgO4b76HPGQZmwxssN0w@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Fri, 29 Jan 2021 01:23:25 +0100
+X-Gmail-Original-Message-ID: <CAHmME9q5a1MVUQU3Hr=T32pjoW-=Hz+KyoBvvKgLgwQwWNoCYw@mail.gmail.com>
+Message-ID: <CAHmME9q5a1MVUQU3Hr=T32pjoW-=Hz+KyoBvvKgLgwQwWNoCYw@mail.gmail.com>
+Subject: Re: WireGuard for Windows tunnel deactivation after prolonged
+ resolution failure during startup
+To: Joshua Sjoding <joshua.sjoding@scjalliance.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -75,40 +70,24 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
+Hi Joshua,
 
-I am trying to update Wireguard to latest version on windows but could
-not build because of missing dependencies i686-w64-mingw32-windres.
-I can't go back to older commit such as 0.3.4 (a5102ca - version:
-bump) because of go mod has reference to unknown revision
-76ef01985b1c.
-Please suggest how to fix either one of these issues. I can use either
-of these commits.
+Thanks for the bug report. Windows is usually all about heuristics.
+Here's the current algorithm:
 
-Building off of commit 5f420f6 - manager: pipeline UAPI requests
-'i686-w64-mingw32-windres' is not recognized as an internal or external command,
-operable program or batch file.
-[-] Failed with error #1.
+- If the system has booted within the last 4 minutes, it retries 40
+times. Otherwise it retries 10 times.
+- If the resolution fails with a temporary error, or if it fails with
+a permanent error but there's no available internet connection, then
+we sleep for 4 seconds and try again.
+- If we try the 40 or 10 times over the 160 or 40 seconds and don't
+succeed, then we fail and shut down the service.
 
-Building off of commit a5102ca - version: bump
-[+] Building library x86
-get "golang.zx2c4.com/wireguard/windows": found meta tag
-get.metaImport{Prefix:"golang.zx2c4.com/wireguard/windows", VCS:"git",
-RepoRoot:"https://git.zx2c4.com/wireguard-windows"} at
-//golang.zx2c4.com/wireguard/windows?go-get=1
-go: golang.zx2c4.com/wireguard/windows@v0.0.0-20201130211600-76ef01985b1c:
-invalid version: unknown revision 76ef01985b1c
-[-] Failed with error #1.
-[+] Rendering icons
-[+] Assembling resources x86
-[+] Building program x86
-get "golang.zx2c4.com/wireguard/windows": found meta tag
-get.metaImport{Prefix:"golang.zx2c4.com/wireguard/windows", VCS:"git",
-RepoRoot:"https://git.zx2c4.com/wireguard-windows"} at
-//golang.zx2c4.com/wireguard/windows?go-get=1
-go: golang.zx2c4.com/wireguard/windows@v0.0.0-20201130211600-76ef01985b1c:
-invalid version: unknown revision 76ef01985b1c
-[-] Failed with error #1
+It sounds like that set of heuristics isn't working out so great for
+your use case. How long do those computers usually take to obtain an
+Internet connection? If you could run some estimates on that, and come
+up with some reasonable length of time ("not more than 3 minutes" for
+example) then maybe we could just double that and make it the new
+timeout? Or maybe you have a different idea?
 
-Thanks,
-Mani
+Jason
