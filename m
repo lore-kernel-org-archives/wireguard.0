@@ -2,60 +2,60 @@ Return-Path: <SRS0=gJ+C=HM=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24180C433E0
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 10 Feb 2021 14:02:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 50672C433E0
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 10 Feb 2021 14:43:34 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 3398460C3F
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 10 Feb 2021 14:02:24 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 3398460C3F
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=blackberry.com
+	by mail.kernel.org (Postfix) with ESMTPS id 38A1964D87
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 10 Feb 2021 14:43:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 38A1964D87
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 03469424;
-	Wed, 10 Feb 2021 14:02:23 +0000 (UTC)
-Received: from smtp-pc10.blackberry.com (smtp-pc10.blackberry.com
- [74.82.81.42])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e518c9e5
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cbbd4905;
+	Wed, 10 Feb 2021 14:43:30 +0000 (UTC)
+Received: from mail.zx2c4.com (mail.zx2c4.com [104.131.123.232])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7bbb22b6
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 10 Feb 2021 14:02:20 +0000 (UTC)
-Received: from pps.filterd (mhs400cnc.rim.net [127.0.0.1])
- by mhs400cnc.rim.net (8.16.0.43/8.16.0.43) with SMTP id 11AE16td102709
- for <wireguard@lists.zx2c4.com>; Wed, 10 Feb 2021 09:02:17 -0500
-Received: from mhs300cnc.rim.net (mhs300cnc.rim.net [10.3.24.129])
- by mhs400cnc.rim.net with ESMTP id 36mf69852n-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <wireguard@lists.zx2c4.com>; Wed, 10 Feb 2021 09:02:17 -0500
-Received: from pps.filterd (mhs300cnc.rim.net [127.0.0.1])
- by mhs300cnc.rim.net (8.16.0.43/8.16.0.43) with SMTP id 11ADuw5L025640
- for <wireguard@lists.zx2c4.com>; Wed, 10 Feb 2021 09:02:15 -0500
-Received: from [10.242.11.39] (ci0600000000525.rim.net [10.242.11.39])
- by mhs300cnc.rim.net with ESMTP id 36j9j6rauk-1
- for <wireguard@lists.zx2c4.com>; Wed, 10 Feb 2021 09:02:15 -0500
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-From: Brad Spencer <bspencer@blackberry.com>
-Subject: [Wintun] DEPENDENTLOADFLAG for wintun.dll?
-Message-ID: <6c752624-1195-ec77-c16a-9fd438cb11ae@blackberry.com>
-Date: Wed, 10 Feb 2021 10:02:14 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.7.1
+ Wed, 10 Feb 2021 14:43:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1612968204;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=eSLTpwwsVwgWsPcJFnQQegMGHH75BCj9IxvJWfQd4o0=;
+ b=fUAKEpvmE8qoro+EJU/3W3Jvl+ZKbpxjcfQgk9zYRfoysYbvUfTDP3M653SRz2f7WdBVnS
+ sS7G+iLVFHke/RYkXmSMDT/sJ+btxKQZR/d7yPRtQDV9398WgknDHiQa/d4KizO0K3S3mh
+ 4t1PK57QXbtNLBZ+WFpN+r9HYHixxkA=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 65b73e5f
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 10 Feb 2021 14:43:24 +0000 (UTC)
+Received: by mail-yb1-f179.google.com with SMTP id y128so2204897ybf.10
+ for <wireguard@lists.zx2c4.com>; Wed, 10 Feb 2021 06:43:24 -0800 (PST)
+X-Gm-Message-State: AOAM533q02d7gr65SRDVrG8YiVm6BBYoCkDv0NbbHPJ5swUHlYshubZQ
+ WSL69ngCDTy9gXvJUM1L/dk6rjPgTu0n5t2P6nU=
+X-Google-Smtp-Source: ABdhPJx41XgivqxyecV81XzUiOU+3TBDp0dYXwEFW8f6cXUoOc1z3pwFnl0Gwlyn5vksFNCxTv2JrKQUAYs4SokCb90=
+X-Received: by 2002:a25:3387:: with SMTP id z129mr4970293ybz.239.1612968204192; 
+ Wed, 10 Feb 2021 06:43:24 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-CA
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.369, 18.0.737
- definitions=2021-02-10_05:2021-02-10,
- 2021-02-10 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 spamscore=0
- mlxlogscore=279 mlxscore=0 bulkscore=0 suspectscore=0 phishscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2009150000 definitions=main-2102100134
+References: <6c752624-1195-ec77-c16a-9fd438cb11ae@blackberry.com>
+In-Reply-To: <6c752624-1195-ec77-c16a-9fd438cb11ae@blackberry.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 10 Feb 2021 15:43:13 +0100
+X-Gmail-Original-Message-ID: <CAHmME9o97YiTK6rjOmfE3G5BPaBzM_bdfiOBEGoBHbrDRzf9uA@mail.gmail.com>
+Message-ID: <CAHmME9o97YiTK6rjOmfE3G5BPaBzM_bdfiOBEGoBHbrDRzf9uA@mail.gmail.com>
+Subject: Re: [Wintun] DEPENDENTLOADFLAG for wintun.dll?
+To: Brad Spencer <bspencer@blackberry.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ Stefan Kanthak <stefan.kanthak@nexgo.de>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -70,15 +70,31 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Would it make sense to link the official wintun.dll with the MSVC 
-linker's -DEPENDENTLOADFLAG:0x800 option?
+Hi Brad,
 
-https://docs.microsoft.com/en-us/cpp/build/reference/dependentloadflag
+On Wed, Feb 10, 2021 at 3:04 PM Brad Spencer <bspencer@blackberry.com> wrote:
+>
+> Would it make sense to link the official wintun.dll with the MSVC
+> linker's -DEPENDENTLOADFLAG:0x800 option?
+>
+> https://docs.microsoft.com/en-us/cpp/build/reference/dependentloadflag
+>
+> Doing so restricts the search path for immediate dependencies to the
+> %windows%\system32\ directory, and I think all of the DLLs Wintun needs
+> are there.
 
-Doing so restricts the search path for immediate dependencies to the 
-%windows%\system32\ directory, and I think all of the DLLs Wintun needs 
-are there.
+That flag is a bit of a can of worms, which I haven't been too
+inclined to open. See:
+https://skanthak.homepage.t-online.de/snafu.html
 
--- 
-Brad Spencer
+Instead, wintun.dll uses delay loading for all DLLs except for
+kernel32.dll and ntdll.dll, and then forces the delay loader hook
+through LoadLibraryEx. See:
+https://git.zx2c4.com/wintun/tree/api/entry.c#n25 You can see this in
+action by putting wintun.dll into depends:
+https://data.zx2c4.com/depends-for-wintun-dll-feb-2021.png
 
+(CCing Stefan, in case he's curious. The DLLs in question are
+https://www.wintun.net/builds/wintun-0.10.1.zip )
+
+Jason
