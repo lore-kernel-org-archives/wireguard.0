@@ -1,58 +1,70 @@
-Return-Path: <SRS0=1inu=HO=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=kgOq=HR=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_20,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E3B2BC433E0
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 12 Feb 2021 16:50:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EDCF1C433E0
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 15 Feb 2021 17:59:23 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id CD18964E42
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 12 Feb 2021 16:50:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org CD18964E42
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id B82C564DEB
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 15 Feb 2021 17:59:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org B82C564DEB
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=openziti.org
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1c6fba60;
-	Fri, 12 Feb 2021 16:50:52 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [104.131.123.232])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 00565abb
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 88a15842;
+	Mon, 15 Feb 2021 17:59:20 +0000 (UTC)
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com
+ [209.85.216.44])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 1ff7c81a
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 12 Feb 2021 16:50:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1613148647;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type;
- bh=2EMZ+rG4G4lOebt2pe1qRJJR3zAzFuhxyduZ9SXVnN0=;
- b=peyyyMKRm/49OrAlX3YqNqP8w9jIXaPFKLE8xGPG5sYUEOKV+GnOXdmlRRLLwutle7EO+d
- m8jDKS3PkLzp8PWVJ/BJ0YoY4Ku9yBz3o6Ec/2ND9731kblmfTI3iXbSOZypkc0DxW6BRs
- fIrrhe13ziPsq5QMZEn/OpOxtND23MU=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 2ec91d4b
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Fri, 12 Feb 2021 16:50:47 +0000 (UTC)
-Received: by mail-yb1-f180.google.com with SMTP id x19so86480ybe.0
- for <wireguard@lists.zx2c4.com>; Fri, 12 Feb 2021 08:50:47 -0800 (PST)
-X-Gm-Message-State: AOAM532lZ+Ml21KKwq971RMCrWZo0Hb7UHNCoT5NRr7ESXhYDUNG5lHv
- CzO3rc8Vq4QFysT1XOrWIOfjZdHZa8eczUg4iR0=
-X-Google-Smtp-Source: ABdhPJwHJ5LjM/zfNxn59WLSVz9NZySaFgjuH8FL3b4azkANa2hMMC4in6HfeNc/q+gSt1GMv7aQGKs0GXou/M5hSrY=
-X-Received: by 2002:a25:b74c:: with SMTP id e12mr5511427ybm.20.1613148647045; 
- Fri, 12 Feb 2021 08:50:47 -0800 (PST)
+ Mon, 15 Feb 2021 13:32:57 +0000 (UTC)
+Received: by mail-pj1-f44.google.com with SMTP id z9so3929687pjl.5
+ for <wireguard@lists.zx2c4.com>; Mon, 15 Feb 2021 05:32:56 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:mime-version:thread-index:date:message-id
+ :subject:to;
+ bh=3QVI07sEfvfDepnXF/rD9AS8gSUmMYVB4U8Ly0ZZROA=;
+ b=oObFQjZ1SDa391xbDbuNwCX2PrrxcEV9bmtrXUB1frpZxutv7x39+7gvmojgQ9aPD4
+ wImQ+eG/4560hxYFEAOX6D5ikIjzZ38cfyvLCLujoWX7LeaKQ8WKsT38VmYODLMQ9leO
+ LCISr6FtI4vn4MW4W8NWCM8ZBLAHAuRo0KyhAsBXM0cVxD4YYZOueEKIcK9QTW7ubnXh
+ Mqzt4JDMLlwcYz/HKFuTxLkwiOGSSZeKK6oETU75NMs/R8g2mjz6wztjNRQcaEuBNn4Y
+ //TztwSkE+MDiHIpAeBR4W1bC1QLqN0jLsWAWwUwq49Raea17WJOKRTB0MZV2tVSHAFg
+ z59A==
+X-Gm-Message-State: AOAM530Jcg6/dfJG3oZWKFdp5V/Dkoh5FNQQgH5M6qAW/Juo/XtlRChl
+ ddvYab6mnCipvytQoAaPg2FncebfPyNchA==
+X-Google-Smtp-Source: ABdhPJwTKoEPPIQprVxhQcktOScI4N7mGRYWALtOZMXNCmUZZsL0RfnPiCWcO52hwxBwkLacUQ1/Pw==
+X-Received: by 2002:a17:90a:6383:: with SMTP id
+ f3mr15659580pjj.14.1613395975056; 
+ Mon, 15 Feb 2021 05:32:55 -0800 (PST)
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com.
+ [209.85.210.174])
+ by smtp.gmail.com with ESMTPSA id y23sm16062687pfo.50.2021.02.15.05.32.54
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 15 Feb 2021 05:32:54 -0800 (PST)
+Received: by mail-pf1-f174.google.com with SMTP id q20so4182534pfu.8
+ for <wireguard@lists.zx2c4.com>; Mon, 15 Feb 2021 05:32:54 -0800 (PST)
+X-Received: by 2002:a65:5ac9:: with SMTP id d9mr14671305pgt.74.1613395974376; 
+ Mon, 15 Feb 2021 05:32:54 -0800 (PST)
+From: Clint Dovholuk <clint@openziti.org>
 MIME-Version: 1.0
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 12 Feb 2021 17:50:36 +0100
-X-Gmail-Original-Message-ID: <CAHmME9pVX7AOFuPD8kZZ8nptFS7ZwL78POj-Ch1qHyCpLYJr8A@mail.gmail.com>
-Message-ID: <CAHmME9pVX7AOFuPD8kZZ8nptFS7ZwL78POj-Ch1qHyCpLYJr8A@mail.gmail.com>
-Subject: com.wireguard.android:tunnel moved to Maven Central
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AdcDnlGep04h1fznQEi+3bekU6B5bw==
+Date: Mon, 15 Feb 2021 08:32:52 -0500
+X-Gmail-Original-Message-ID: <b17cf1b329499660a7f242671b8f8114@mail.gmail.com>
+Message-ID: <b17cf1b329499660a7f242671b8f8114@mail.gmail.com>
+Subject: Wintun changelog?
 To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Cc: Harsh Shandilya <me@msfjarvis.dev>
 Content-Type: text/plain; charset="UTF-8"
+X-Mailman-Approved-At: Mon, 15 Feb 2021 17:59:19 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -67,35 +79,19 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
+This is not a wireguard issue/question, this is one for wintun. Is there a
+changelog for Wintun itself? We're using wintun and we're seeing some
+strange behavior in windows around DHCP somehow not working. The individual
+reports that turning our software off (which closes the wintun
+session/removes the adapter) 'fixes the problem' but an ipconfig /all taken
+before this action shows the user having no valid IPv4 address. They have
+the 169.*.*.* assigned IP.  Our software doesn't/shouldn't interfere with
+DHCP at all and I doubt wintun would but I did notice we used wintun 0.10.0
+and 0.10.1 is out.
 
-Ahead of JCenter shutting down, com.wireguard.android:tunnel has moved
-to Maven Central:
-https://search.maven.org/artifact/com.wireguard.android/tunnel
+I was wondering if there's a changelog somewhere that I didn't find - I
+checked all the regular places but just didn't locate it. Hopefully I didn't
+miss it. I expect to read the commit log to determine the changes in
+between.
 
-If you previously had in your Gradle:
-
-repositories {
-    ...
-    jcenter()
-}
-
-You can now replace that with:
-
-repositories {
-    ...
-    mavenCentral()
-    jcenter()
-}
-
-Or simply remove the jcenter() line if it's no longer needed by other
-dependencies you might have.
-
-More information about com.wireguard.android:tunnel is available at:
-https://git.zx2c4.com/wireguard-android/about/#embedding
-
-Information about integrating WireGuard into other platforms is available at:
-https://www.wireguard.com/embedding/
-
-Thanks,
-Jason
+Thanks
