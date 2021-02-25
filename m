@@ -2,57 +2,58 @@ Return-Path: <SRS0=9XF/=H3=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,TVD_SPACE_RATIO,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C21D3C433E0
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 25 Feb 2021 11:23:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD6BAC433E6
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 25 Feb 2021 11:33:19 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 8740E64F10
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 25 Feb 2021 11:23:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 8740E64F10
+	by mail.kernel.org (Postfix) with ESMTPS id ADDA864EBD
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 25 Feb 2021 11:33:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org ADDA864EBD
 Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6c1d2d84;
-	Thu, 25 Feb 2021 11:23:45 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9d1b9aa2;
+	Thu, 25 Feb 2021 11:30:11 +0000 (UTC)
 Received: from mail.zx2c4.com (mail.zx2c4.com [104.131.123.232])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 5f042f80
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 24b7f54f
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 25 Feb 2021 11:23:42 +0000 (UTC)
+ Thu, 25 Feb 2021 11:30:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1614252219;
+ t=1614252606;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=IKTqnxsmKvPLR53RC3CUw5teiR5gu4GfoSby6teb/HE=;
- b=deMLbJYn4EwQar7v0CVWcOOMFwaJmWwpxBajPeBStlnT47QGcZNbVEXOi/kXPa2W3W7xSO
- JG2qruqwXA1vbRATbH1UNZ0UAQ8e0HA+0w1ZgntdSajib51BqBSN+T7NijmP4Vap2f4Ghe
- D9/f/majlLwT7lghxAh7Qv3Eff1yP6w=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 52174327
+ bh=v6Dqdy8iUsdbrdEmeON+8+43rAZWtYEnLZQkEASltI0=;
+ b=gpL+eKl975+kJ48qxZu5zA/fyQVKkUEcZMzi6A4nkN17YK1B7neYrFefwGtyIWxkJlYJHL
+ IDnxDwKvC/In6kxnO4bXRnBuaJGgAuwmm2wAcVp8rXeLFBC+v8TZQYjcPo4l5iEW1xCZOp
+ Xz1nVTSqDlbadgMR1npYEsQpFPLNXAM=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 78c90dc1
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 25 Feb 2021 11:23:39 +0000 (UTC)
-Received: by mail-yb1-f180.google.com with SMTP id x19so5081755ybe.0
- for <wireguard@lists.zx2c4.com>; Thu, 25 Feb 2021 03:23:39 -0800 (PST)
-X-Gm-Message-State: AOAM532ZUEKPw7b5J1fyGGPCXEGZeOi+z090AbhxLXwYV1ilrFqrjQmW
- YnwSkxaC55lq/oAPLxPLPp00n/QKK7iwlb2clxs=
-X-Google-Smtp-Source: ABdhPJx3bYeLF2PdZ6Tdk7zOkF8DjIhz/gT9VwGu/nlLA9ZaUvT4S8doCen8V8M4gV7qLEMV2lTGZnN+6oy5QzvGTUI=
-X-Received: by 2002:a25:8712:: with SMTP id a18mr3318198ybl.306.1614252218879; 
- Thu, 25 Feb 2021 03:23:38 -0800 (PST)
+ Thu, 25 Feb 2021 11:30:06 +0000 (UTC)
+Received: by mail-yb1-f180.google.com with SMTP id c131so5065163ybf.7
+ for <wireguard@lists.zx2c4.com>; Thu, 25 Feb 2021 03:30:06 -0800 (PST)
+X-Gm-Message-State: AOAM532w8f5y0L/O0zALu1x2g8odnG9JjEW34L3T8Wt6XBveFPOB2D/B
+ acZ/h2vNWX7tTgFeeKHZ2EXK/CEe6D19nIO33Yw=
+X-Google-Smtp-Source: ABdhPJw7R3EJ372xZN/13kcVprfyNM7R8ZkrssUTmUfiStKw21wr0R7o0RLp25VghAklUPinQEq+R1gQs0tkYmzVQxY=
+X-Received: by 2002:a25:5289:: with SMTP id g131mr3441938ybb.178.1614252606147; 
+ Thu, 25 Feb 2021 03:30:06 -0800 (PST)
 MIME-Version: 1.0
-References: <27D86318-AED9-49EC-94EE-1FFC806533DC@wandera.com>
-In-Reply-To: <27D86318-AED9-49EC-94EE-1FFC806533DC@wandera.com>
+References: <F332C4E6-0559-4BE0-8AF6-3AD942C01FAC@wandera.com>
+ <CAHmME9qyD4ZDoT9dyb-cdQ319jjTHYXhhXbcdFphU8+pSKdWiw@mail.gmail.com>
+In-Reply-To: <CAHmME9qyD4ZDoT9dyb-cdQ319jjTHYXhhXbcdFphU8+pSKdWiw@mail.gmail.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 25 Feb 2021 12:23:28 +0100
-X-Gmail-Original-Message-ID: <CAHmME9oOKvMqvSw_CrjhiWU+R60AEVxLYzoaC8W7F7D5vWgWvA@mail.gmail.com>
-Message-ID: <CAHmME9oOKvMqvSw_CrjhiWU+R60AEVxLYzoaC8W7F7D5vWgWvA@mail.gmail.com>
-Subject: Re: Handshake state collision between parralel RoutineHandshake
- threads
+Date: Thu, 25 Feb 2021 12:29:55 +0100
+X-Gmail-Original-Message-ID: <CAHmME9rJo5BzJDJubvVr_+0ra=hVkYv9Cvd_p_+TBcrr92KstQ@mail.gmail.com>
+Message-ID: <CAHmME9rJo5BzJDJubvVr_+0ra=hVkYv9Cvd_p_+TBcrr92KstQ@mail.gmail.com>
+Subject: Re: Patch: initialise device.peers.empty
 To: Laura Zelenku <laura.zelenku@wandera.com>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
@@ -70,13 +71,5 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Laura,
-
-I'm not sure this is actually a problem. The latest handshake message
-should probably win the race. I don't see state machine or data
-corruption here, but just one handshake interrupting another, which is
-par for the course with WireGuard.
-
-Or have I overlooked something important in the state machine implementation?
-
-Jason
+Fixed differently here:
+https://git.zx2c4.com/wireguard-go/commit/?id=355fed440bd066b8aa32e63e04c7f92e7a097d88
