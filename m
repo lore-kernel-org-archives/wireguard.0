@@ -1,73 +1,58 @@
-Return-Path: <SRS0=MYpk=IB=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=j5R+=IC=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	PDS_BAD_THREAD_QP_64,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 052DCC433E0
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  3 Mar 2021 12:04:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 223F7C433DB
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  4 Mar 2021 08:59:01 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 4F3E7601FA
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  3 Mar 2021 12:04:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 4F3E7601FA
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=dresearch-fe.de
+	by mail.kernel.org (Postfix) with ESMTPS id 0E8AF64F11
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  4 Mar 2021 08:58:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 0E8AF64F11
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=lindenberg.one
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 65bea9a7;
-	Wed, 3 Mar 2021 12:01:30 +0000 (UTC)
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com
- [2607:f8b0:4864:20::229])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id cb47e431
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cd8a985c;
+	Thu, 4 Mar 2021 08:58:57 +0000 (UTC)
+Received: from mailarchive.lindenberg.one (mailarchive.lindenberg.one
+ [5.45.107.185])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 342a36fb
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 3 Mar 2021 12:01:28 +0000 (UTC)
-Received: by mail-oi1-x229.google.com with SMTP id m25so12632033oie.12
- for <wireguard@lists.zx2c4.com>; Wed, 03 Mar 2021 04:01:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=dresearch-fe-de.20150623.gappssmtp.com; s=20150623;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=ULCVPshbtMh8yfRW9eB/8Q1p83VUscpPYJYlhVxXff4=;
- b=RvjZPjqPiQmYcF/qthOmpd9O6fey+TLyWVD57J4ucri82ylW90ydAUHJ8PkYvQc8Za
- M7WUgsXdR+v9fFxxXQBO0A1v4PWQVK6G2bOVQbO39wKBAj9+gOJIVcNrFv/B8zmn63KT
- tY9d7f8QQfKuC8nYh3Tl0X1vpzHl9xAMOTVZkKO0BtyD1tDfmSoQ67ZM4Yq8bueoZymF
- o3rIkSNTUanoQ9ddEPqNnUbuxeKooFa97XtO28JGtH6IkSirY8ga+kEeblh2Xy0f5Zgf
- kDbbKV0ZgBRtrMJCkIj4laDXDbvsA+a2IyDoN5NGkt+gIhFDJhRcyac0ZCHyo1ANWJRa
- iwvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=ULCVPshbtMh8yfRW9eB/8Q1p83VUscpPYJYlhVxXff4=;
- b=Vep8Acj7QSEuaAH+RvhgAiCdg22C/k2KB7AryMNOxIKvZfQaBXtk4YHCVVEz2Jbwak
- ZBAGJOWRgcMEess2e3mz8c1N6ZEazzWXC9ZT/FRDceLhpAsCyJ5kkXSKuk5Z5NLmfR6Y
- 0LrGiuQQ95hPuatLpt/4/NF0eUe5ljZLOLQtKaAfSEkleB0SawC45gg2DS+swnNsXifY
- +NwILR8g9vDDaVgTWynIHrLel2DlQinRtjZ8IizNGt/mPgkM7YODZbd2tuidiXAUGFbF
- HvuEyH0OBfG37bwzFe0DE8ppQji7aHwQ1hq0d+JkyixvZZnoMhnaeWOvxYxl3fTS9mBK
- rtOA==
-X-Gm-Message-State: AOAM531861AvYhOjb5aPYBtrqJ2R+jmjLYYzOEsUUE0t4NSYqXE9FYtu
- qXJIBEOqpy8fRYS41Or7XiHTXbA2qh2bkOwjrlhlfc57cOpskA==
-X-Google-Smtp-Source: ABdhPJwKczDTKmKdLsmX8fR6l27AbYtkTXcyjfa4ZUmTOqRlH1eRjGpvRdq5EdvJFvmj1Fy4oWpBo6gwV6DQjs9jzNo=
-X-Received: by 2002:a05:6808:56b:: with SMTP id
- j11mr6761557oig.159.1614772887202; 
- Wed, 03 Mar 2021 04:01:27 -0800 (PST)
+ for <wireguard@lists.zx2c4.com>; Thu, 4 Mar 2021 08:58:55 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon)
+ with ESMTPA id C9805E0776
+ for <wireguard@lists.zx2c4.com>; Thu,  4 Mar 2021 09:58:53 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lindenberg.one;
+ s=dkim180429; t=1614848333;
+ h=from:subject:date:message-id:to:mime-version:content-type:
+ content-transfer-encoding:in-reply-to:references;
+ bh=Sm4+ziKQhjk7pgj19nmdhkGBZh7frFrNNGg+poHzDLM=;
+ b=25ug9ySaETk/29bxqH7qeMkX3zGTAVFNG+osD2g3Vt/rA1IT0Z5EKPdGbRthKFStP928ZJ
+ kOouIuNhbTgcn19ietS4C/GIMcel854bMt72b5rOlTGOiRjsgfQ+7/qjxwioxW8OUi9mj9
+ /co0ZWig2hEoo1wyq1udIXVuF8tbPV8wV/BzNHZdA99LqmLRCRyC/ozGOUo0FdPUEQ/eP3
+ 8jzHt6MHf4H/nqChgucYXmXBG8U0AT2hma/7EEKjyrMAeMluIOhR4+RV5XB7/7Xaiom4V0
+ /VagdnSrsbndvbN5z/sfhqdo09X3bOL4z2Z1Xu05yXQsDp9mr/pg47nEtvt3Sw==
+From: "Joachim Lindenberg" <joachim@lindenberg.one>
+To: <wireguard@lists.zx2c4.com>
+References: <03ff01d70bbb$953d4750$bfb7d5f0$@lindenberg.one>
+ <20210302171021.GA65777@chocolatine.org>
+In-Reply-To: <20210302171021.GA65777@chocolatine.org>
+Subject: AW: best way for redundancy?
+Date: Thu, 4 Mar 2021 09:58:53 +0100
+Message-ID: <005701d710d4$9a398110$ceac8330$@lindenberg.one>
 MIME-Version: 1.0
-References: <9f621ce6-ec3d-0641-c359-756d0ad36f65@gmail.com>
- <6a01b182-a98f-1736-676f-d0811f6de086@gmail.com>
- <CAHmME9qtPLOTaY3UzyCY1C6guVZXvJjXHeFwT8=94d=Zpjj=Tw@mail.gmail.com>
-In-Reply-To: <CAHmME9qtPLOTaY3UzyCY1C6guVZXvJjXHeFwT8=94d=Zpjj=Tw@mail.gmail.com>
-From: Heiko Kendziorra <kendziorra@dresearch-fe.de>
-Date: Wed, 3 Mar 2021 13:01:16 +0100
-Message-ID: <CAA4ESQ25R2RDo9Pr5z+-i8+i-0_d_aGGJb0At+4ba0n1=cv0aQ@mail.gmail.com>
-Subject: Re: Problems with Windows client over PulseSecure VPN
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: Peter Whisker <peter.whisker@gmail.com>, 
- WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+	charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
+Thread-Index: AQF4FSdeDm9qPLT8jXzNLlFCWdnXmQEFKVwDqylPh8A=
+Content-Language: en-de
+X-Last-TLS-Session-Version: None
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -82,59 +67,71 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Jakson,
-your hint  helped for my Problem:
-https://lists.zx2c4.com/pipermail/wireguard/2021-February/006431.html
+I probably should share some more details about my use case and also why =
+I am hesitating to use OpenBSD/OpnSense etc.
+All my VPN-routers are actually virtual machines. One is a virtual =
+private server from a hoster that provides an external static IPv4 =
+address, the others are Ubuntu VMs running on Hyper-V 2019. When I check =
+support of OpenBSD/OpnSense on Hyper-V it looks like this is not really =
+granted, basically works, but... and CARP apparently requires special =
+configuration and cooperation of network drivers. And then I =
+haven=C2=B4t found good documentation on how to configure CARP with =
+wireguard.=20
 
-Thanks a lot!
+Thus I tried something else... Until this week, the router of one =
+network was on a mobile machine, which occasionally was really on the =
+road - and the connectivity was of course broken then. There is another =
+host available in the same network that can host a VM, but that host is =
+not running 7*24 for power and noise reasons. That actually suggested a =
+fail over scenario to me. What I configured right now is the following: =
+I "partitioned" that network logically into two groups of VPN-clients. =
+One group is the host and all VMs on the power-saving-host, the other =
+group is the rest. Via DHCP or static routes, each group now uses =
+different routers (part of the respective group) for their respective =
+wireguard tunnel to the other networks. On the other side of the tunnel, =
+network ranges in AllowedIPs are used to address the respective peer (I =
+didn=C2=B4t dare to have these overlap so far).
 
-Am Mi., 3. M=C3=A4rz 2021 um 11:59 Uhr schrieb Jason A. Donenfeld <Jason@zx=
-2c4.com>:
->
-> Hey Peter,
->
-> I had a strange idea for how to fix this without requiring
-> recompilation or removal of that code.
->
-> 1) Enable DangerousScriptExecution:
-> https://git.zx2c4.com/wireguard-windows/about/docs/adminregistry.md#hklms=
-oftwarewireguarddangerousscriptexecution
->
-> 2) Add a PostUp line to your [Interface] section:
->
-> PostUp =3D wg set %WIREGUARD_TUNNEL_NAME% listen-port 0
->
-> 3) Try it and tell me if it works?
->
-> Regards,
-> Jason
+That is not really a general high-availability scenario, as essentially =
+I optimized for the expected outages. I am still wondering whether =
+wireguard can support a more general approach without the complexity =
+introduced by CARP. My gut feeling is that the roaming capabilities of =
+wireguard should actually support that very well.
 
+Thanks, Joachim
 
 
---=20
-Mit freundlichen Gr=C3=BC=C3=9Fen =E2=80=A2 With best regards
-Heiko Kendziorra
----------------------------------------------------------------------------=
---------
-Heiko Kendziorra
-Softwareentwicklung =E2=80=A2 Software Development
 
-DResearch Fahrzeugelektronik GmbH
-Tor 2, Aufgang R (R03.020)
-Wolfener Stra=C3=9Fe 36
-12681 Berlin
+-----Urspr=C3=BCngliche Nachricht-----
+Von: WireGuard <wireguard-bounces@lists.zx2c4.com> Im Auftrag von =
+Nicolai
+Gesendet: Tuesday, 2 March 2021 18:10
+An: wireguard@lists.zx2c4.com
+Betreff: Re: best way for redundancy?
 
-Phone: +49 (30) 515 932 - 265
-Fax:     +49 (30) 515 932 - 77
+On Thu, Feb 25, 2021 at 10:17:06PM +0100, Joachim Lindenberg wrote:
 
-Mail:  kendziorra@dresearch-fe.de
-Web: www.dresearch-fe.de
+> I do have a wireguard VPN that connects multiple sites. Unfortunately=20
+> some routers are not available all the time, causing network =
+disruption.
+> I'd like to improve connectivity via redundancy, i.e. add multiple=20
+> routers that connect the networks.
 
-General Management  =E2=80=A2 Gesch=C3=A4ftsf=C3=BChrung: Dr. Michael Weber=
-, Marc-Oliver Brammann
-Amtsgericht Berlin Charlottenburg; HRB 130120; Ust.-IDNr. DE273952058
+> What are the options to do that using wireguard? Can I have multiple=20
+> peers with different keys and endpoint but same Allowed IPs? Will=20
+> wireguard select the one available?
 
-Kunden Support/Customer support:
-Mail: support@dresearch-fe.de
-Hotline +49 (30) 515 932 112, Mo. - Do. 10:00 Uhr - 16:00 Uhr,
-Freitags von 10:00 bis 13:00 Uhr
+In the future I want a similar setup: multiple routers for each network =
+each seamlessly handling WireGuard when necessary.  I haven't put any =
+effort into this yet, but my general plan is to use CARP on OpenBSD, =
+with WireGuard sharing keys.  (I know you want distinct keys, so I =
+waited to respond until others had a chance.)  Anyway the routers in
+City1 would share City1Keys, routers in City2 would share City2Keys, =
+etc.  When City1Router1 is unavailable, City1Router2 would grab the IP =
+address and be able to immediately speak WireGuard to the other =
+locations without anyone noticing.
+
+https://www.openbsd.org/faq/pf/carp.html
+
+Nicolai
+
