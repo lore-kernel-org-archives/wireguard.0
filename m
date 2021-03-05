@@ -1,48 +1,59 @@
-Return-Path: <SRS0=j5R+=IC=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=gfF6=ID=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_05,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BEF43C433E0
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  4 Mar 2021 18:36:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58C24C433DB
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  5 Mar 2021 21:37:42 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id AD6F664F67
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  4 Mar 2021 18:36:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org AD6F664F67
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=syseleven.de
+	by mail.kernel.org (Postfix) with ESMTPS id 2F2D7650A6
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  5 Mar 2021 21:37:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 2F2D7650A6
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fd5fa52c;
-	Thu, 4 Mar 2021 18:36:11 +0000 (UTC)
-Received: from smtp01.syseleven.net (smtp01.syseleven.net [77.247.83.123])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7cf0c9b9
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Thu, 4 Mar 2021 18:36:09 +0000 (UTC)
-Received: from 127.0.0.1 (localhost [127.0.0.1])
- by smtp01.syseleven.net (Postfix) with ESMTPSA id 7833957E386E
- for <wireguard@lists.zx2c4.com>; Thu,  4 Mar 2021 19:30:23 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=syseleven.de;
- s=2015n001; t=1614882624;
- bh=6V8sTqGbObbptBsBV3xd6f2BFSoi1pD2oBda5VEgkOI=;
- h=From:To:Subject:Date:From;
- b=CR+cbayO8PRrnUkMctT2J+ypYC2R9uN8nh41hB1bt4wuVSGNi9rcIqBPpRyD1Z2KP
- xEp9UfiWMMvD1wcodl4Kv2nxUSqe3UXpdKwjX5ZD0rOX+t9Cz2INNNibnE8WPqEbA6
- ObO1KIpGR8WjPD/z0JK6hYayJ71vA+GV0G1ng4I0=
-From: Benedikt Braunger <b.braunger@syseleven.de>
-To: wireguard@lists.zx2c4.com
-Subject: [PATCH] added ipv6_dst_lookup_flow define for VZ7 kernels
-Date: Thu,  4 Mar 2021 19:30:18 +0100
-Message-Id: <20210304183018.42658-1-b.braunger@syseleven.de>
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c67a177a;
+	Fri, 5 Mar 2021 21:37:38 +0000 (UTC)
+Received: from mail.zx2c4.com (mail.zx2c4.com [104.131.123.232])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b9271a3b
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Fri, 5 Mar 2021 21:37:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1614980253;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=lHuXjtnGIwA8Zzr3bT7RPQh03xIe4TvMRJ0gk9Qtcas=;
+ b=PPoGkFx+XYBEenNuY1mNLX4Y0GjVO57Lg+s2F7DHHE64dojV7wmDUYaFLkGyKB+MHXwyK8
+ nLhRPWP26UIm09SKhTlUT1YLns5kSgKVdYb6PQMH/ZwQShtZ3McCEM+MyVJh724CLetc6e
+ rpYFi/ZPBqfRZk5Nk7oelx9zS+nf/Bw=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id f4383664
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Fri, 5 Mar 2021 21:37:32 +0000 (UTC)
+Received: by mail-yb1-f182.google.com with SMTP id x19so3479522ybe.0
+ for <wireguard@lists.zx2c4.com>; Fri, 05 Mar 2021 13:37:32 -0800 (PST)
+X-Gm-Message-State: AOAM533Ro/wgz4J5tiTBXK9QotMFkF2Uxs2zVNsjeK/KtO0gCcbSQ5rl
+ /KtjWvijjAcTyWYCunHHhtXGnB//KvewEWqPitw=
+X-Google-Smtp-Source: ABdhPJz/OYelVenlJOsSdIM00gUd5OMzoZNd99zWrYXW6aGjL1+Np4duKpnpT60YC71XvCpRP/4n+J7fI3TJdCVJguQ=
+X-Received: by 2002:a25:4d02:: with SMTP id a2mr15375154ybb.49.1614980252284; 
+ Fri, 05 Mar 2021 13:37:32 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Virus-Scanned: clamav-milter 0.100.3 at milter01.syseleven.net
-X-Virus-Status: Clean
+References: <20200514093520.10370-1-fe@dev.tdt.de>
+In-Reply-To: <20200514093520.10370-1-fe@dev.tdt.de>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Fri, 5 Mar 2021 14:37:21 -0700
+X-Gmail-Original-Message-ID: <CAHmME9oduEULEHT3kEy_ZNNNTtv8DKztn4XRc7HaLSe3GXKuvw@mail.gmail.com>
+Message-ID: <CAHmME9oduEULEHT3kEy_ZNNNTtv8DKztn4XRc7HaLSe3GXKuvw@mail.gmail.com>
+Subject: Re: [PATCH] wireguard-tools: fix version indicator
+To: Florian Eckert <fe@dev.tdt.de>
+Cc: Eckert.Florian@googlemail.com, 
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -57,45 +68,4 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This patch adds an additional check for OpenVZ / Virtuozzo 7 custom
-kernels to ensure ipv6_dst_lookup_flow is defined.
-It also splits the very long version checking into multiple lines for
-better reading.
-
-Signed-off-by: Benedikt Braunger <b.braunger@syseleven.de>
----
-Since the error mentioned in "Wireguard DKMS build on OpenVZ 7" still
-occures, I searched for a way to check if the module is compiled on 
-a VZ kernel. This patch works for me, I tested on Virtuozzo 7 and 
-plain CentOS 7. Can compile on both without error and the module is
-loadable.
-Probably Virtuozzo will backuport ipv6_dst_lookup_flow some day but
-they can't (or don't want to) tell me when.
-If so one can compare VZVERSION to the current one to ensure the definition
-for older verions.
-
- src/compat/compat.h | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
-
-diff --git a/src/compat/compat.h b/src/compat/compat.h
-index 3e8e005..7700e7b 100644
---- a/src/compat/compat.h
-+++ b/src/compat/compat.h
-@@ -91,7 +91,13 @@
- 
- #if LINUX_VERSION_CODE < KERNEL_VERSION(3, 17, 0) && LINUX_VERSION_CODE >= KERNEL_VERSION(3, 16, 83)
- #define ipv6_dst_lookup_flow(a, b, c, d) ipv6_dst_lookup_flow(b, c, d)
--#elif (LINUX_VERSION_CODE < KERNEL_VERSION(5, 4, 5) && LINUX_VERSION_CODE >= KERNEL_VERSION(5, 4, 0)) || (LINUX_VERSION_CODE < KERNEL_VERSION(5, 3, 18) && LINUX_VERSION_CODE >= KERNEL_VERSION(4, 20, 0) && !defined(ISUBUNTU1904)) || (!defined(ISRHEL8) && !defined(ISDEBIAN) && !defined(ISUBUNTU1804) && LINUX_VERSION_CODE < KERNEL_VERSION(4, 19, 119) && LINUX_VERSION_CODE >= KERNEL_VERSION(4, 15, 0)) || (LINUX_VERSION_CODE < KERNEL_VERSION(4, 14, 181) && LINUX_VERSION_CODE >= KERNEL_VERSION(4, 10, 0)) || (LINUX_VERSION_CODE < KERNEL_VERSION(4, 9, 224) && LINUX_VERSION_CODE >= KERNEL_VERSION(4, 5, 0)) || (LINUX_VERSION_CODE < KERNEL_VERSION(4, 4, 224) && !defined(ISUBUNTU1604) && !defined(ISRHEL7))
-+#elif (LINUX_VERSION_CODE < KERNEL_VERSION(5, 4, 5) && LINUX_VERSION_CODE >= KERNEL_VERSION(5, 4, 0))\
-+  || (LINUX_VERSION_CODE < KERNEL_VERSION(5, 3, 18) && LINUX_VERSION_CODE >= KERNEL_VERSION(4, 20, 0) && !defined(ISUBUNTU1904))\
-+  || (!defined(ISRHEL8) && !defined(ISDEBIAN) && !defined(ISUBUNTU1804) && LINUX_VERSION_CODE < KERNEL_VERSION(4, 19, 119) && LINUX_VERSION_CODE >= KERNEL_VERSION(4, 15, 0))\
-+  || (LINUX_VERSION_CODE < KERNEL_VERSION(4, 14, 181) && LINUX_VERSION_CODE >= KERNEL_VERSION(4, 10, 0))\
-+  || (LINUX_VERSION_CODE < KERNEL_VERSION(4, 9, 224) && LINUX_VERSION_CODE >= KERNEL_VERSION(4, 5, 0))\
-+  || (LINUX_VERSION_CODE < KERNEL_VERSION(4, 4, 224) && !defined(ISUBUNTU1604) && !defined(ISRHEL7))\
-+  || (LINUX_VERSION_CODE == KERNEL_VERSION(3, 10, 0) && defined(ISRHEL7) && defined(VZVERSION))
- #define ipv6_dst_lookup_flow(a, b, c, d) ipv6_dst_lookup(a, b, &dst, c) + (void *)0 ?: dst
- #endif
- 
--- 
-2.25.1
-
+Applied, thanks.
