@@ -2,65 +2,64 @@ Return-Path: <SRS0=93XJ=IF=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BF6BC433E0
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  7 Mar 2021 17:23:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B33C3C433DB
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  7 Mar 2021 17:23:30 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 9BA5B64F94
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  7 Mar 2021 17:23:28 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 9BA5B64F94
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	by mail.kernel.org (Postfix) with ESMTPS id B5DC664F94
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  7 Mar 2021 17:23:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org B5DC664F94
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=vlaicu.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f1900d24;
-	Sun, 7 Mar 2021 17:20:45 +0000 (UTC)
-Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com
- [2607:f8b0:4864:20::d2e])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 48b69e2e
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a85f231d;
+	Sun, 7 Mar 2021 17:20:54 +0000 (UTC)
+Received: from mail-il1-x135.google.com (mail-il1-x135.google.com
+ [2607:f8b0:4864:20::135])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id bb7ebbb5
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Tue, 23 Feb 2021 23:24:37 +0000 (UTC)
-Received: by mail-io1-xd2e.google.com with SMTP id p16so72405ioj.4
- for <wireguard@lists.zx2c4.com>; Tue, 23 Feb 2021 15:24:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ for <wireguard@lists.zx2c4.com>; Sat, 6 Mar 2021 19:13:17 +0000 (UTC)
+Received: by mail-il1-x135.google.com with SMTP id b5so5171924ilq.10
+ for <wireguard@lists.zx2c4.com>; Sat, 06 Mar 2021 11:13:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=vlaicu-com.20150623.gappssmtp.com; s=20150623;
  h=mime-version:from:date:message-id:subject:to;
- bh=+6fNoivN0megZqPEGTcGhqX8JHqJ0E8kv1zYsF4rNDk=;
- b=Ag/q0HJnpUE3GOMXKGxxI6GKCjwDy6y1RE+grCHxLBKVi4VuqHO33Jxc0IzAoJH2s4
- ySzvgZJNfeK/3SmAK3Y4q0lU5fKhggd0Aj1SGS3ibZO5ZU0/gRmJze11mHFxEGJEmP1n
- pziGsqyhVHrAO+0wSXAY2YohoF8ABJhZI7axG2XKPVgYaS5his8tTEwJeqaVtd0iVcVd
- 2rtS85/q67wY0co7fvND5H9KUhKNCiXdC6KZwxXJg0RBIvFRKNbjNHzTCtOFYwE3awFN
- /71sWBs91N1RW1BuqpWIsa/5Gp1znnJhtObWDPcKA0LELV2TfjsseN8aEY0+EWt0gZp2
- NEZA==
+ bh=Ccy315KIMnbM/ObWmun7C8mldbgHoRaHkMJfxSa+JiM=;
+ b=kchEnJ+qqRvcJ4UL0JCf04z/YMoUhVGeCA3gaJUui61H2A7Mpv1DilAHE8J5Ecm1mi
+ VXOhKoWHxOKMTKastjcJ7y8Nh/z0vsetdGW1dswgm+Gg/JYH7IaaCt1hencYnaQV78xR
+ UnUh53jf+TLbqQ6oz1Lfy1eOgPGNQFKo24ervaxnQKewoYhoMV4APolehaocy6qDyPw6
+ cMV35UD3Jz7eo5B/C8rRN//dIM/eMbHWQ7bZK7e0mqCMi987LV29LFAyr0cndfah6ev6
+ 3Mf/f6p2qx1wOswPel3v7kktBKzERifQ1y2MgUe5lJXTqqEom7/5DQTIWBWs9BLXiccy
+ 99RA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=+6fNoivN0megZqPEGTcGhqX8JHqJ0E8kv1zYsF4rNDk=;
- b=fnS+3uube8/a9l8Ih5hZNwFYuTxPF7fzTIt1SVNmJckxkBr3oxkzefq8vhegakb4ER
- MegJnQ1XWApT+WAXVtzd40iMwJZ/jBLM0SHWYMPa/0mvceZ96FD5TqZ64IAUELNeLiDZ
- fR/h6eqXnvB2h6t8kFnhHw6E8jyD1MwHEVGeNM+xvqGWfM6J5Dql9tLDVauePQZQb6eq
- /KXxYj+REEHykC5suqSWkMTwvllSxnYBT6zuNs4AZiKHlpKlK27tS2Il7C1smo/r3YTJ
- +R6ZmUchnhKXcLYpag/Z9UJVM8P4U/NpBtHwdL0uC0m5XwzSrPH9djaYzyshtG8zbCj+
- Nh9A==
-X-Gm-Message-State: AOAM532u1XfdDZ6Z5BApT7WaxyHI0Tp+b0VFI1utA3bZ/p7PbC4oEjaL
- 7/c6rCb+iUf/hjEXKlovqZ7NrNKLQHT9YPDv2MPDOqe5sbc=
-X-Google-Smtp-Source: ABdhPJyItpY+EKyqJOMlTG0GPporpxD8AwmSC5JO1dDaUGMPrqjfEqDd97ivF999Rto2CU02qbDDqdTqzwfqhclex7o=
-X-Received: by 2002:a05:6638:44e:: with SMTP id
- r14mr11799847jap.138.1614122676405; 
- Tue, 23 Feb 2021 15:24:36 -0800 (PST)
+ bh=Ccy315KIMnbM/ObWmun7C8mldbgHoRaHkMJfxSa+JiM=;
+ b=MCti0CwTGUkANhMqfbIxGG/HEALHmNnxd6VF6esO9cIrcxmRGr/TI72ph295oVtvaX
+ 0gwDpPVdT+h/PlIIJflsX5JGJx/3uG4g2mwF224MfSydd4EbZgE/gF3i8ymK4CGdssfp
+ /SbuT45DUZkRSehWLZ6ccRWB42ZIZOm2O55/eKpuj5ek+gaRfUTsp9CFqqJUCgHB8QTV
+ PDGDTf+yrXPP8M8+DN7gub41Dw01AkbG7OWBDeRdTrrN9ie33hm+DqSgPlse8JxwJwsq
+ xUDiXvX1cNhOqMbNsHAoyMNV6s2Fl22ES4TPVsvz5IDGbXsRpe1l4d8etEI/iCS+LTkH
+ 05RQ==
+X-Gm-Message-State: AOAM530xlNM8LJ8ZeaAdvtEmYAh8xyz+PIh9bXRGxjnhvJuwBz0hjjHQ
+ gcLmTVchPOfv4YgYOr8kkVE3bG1rLlvS8OKT9UaBi6JXKbw=
+X-Google-Smtp-Source: ABdhPJyzDOayxDTB9Shn8Me9XHfU2LBiM0C2ea1OWgOSkSsUL1MLdlhru7JFEN5QuxYXwSl+Pv1YdFG0UNv+/7071XM=
+X-Received: by 2002:a05:6e02:2199:: with SMTP id
+ j25mr14036894ila.18.1615057995759; 
+ Sat, 06 Mar 2021 11:13:15 -0800 (PST)
 MIME-Version: 1.0
-From: Peter Truman <peter.truman@gmail.com>
-Date: Tue, 23 Feb 2021 23:24:25 +0000
-Message-ID: <CAGJxn5oGmfp-vDPw7A6kTb0vtUMDRyaBhamQn1XqWoUyDrv+_g@mail.gmail.com>
-Subject: Hairpin/interface change...
+From: Florin Vlaicu <florin@vlaicu.com>
+Date: Sat, 6 Mar 2021 21:12:40 +0200
+Message-ID: <CAGpywxMdXntKVgEi45zXHGGmnHXeBk4Tiy-c4CkXOF4e9_Oz1w@mail.gmail.com>
+Subject: Routing issue
 To: wireguard@lists.zx2c4.com
 Content-Type: text/plain; charset="UTF-8"
-X-Mailman-Approved-At: Sun, 07 Mar 2021 17:20:43 +0000
+X-Mailman-Approved-At: Sun, 07 Mar 2021 17:20:53 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -75,17 +74,16 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
+I am running a server in a container that uses a macvlan interface to
+have a static IP address in my local LAN. Then from my router I DNAT
+to that IP address.
+If I stop the container and then start it on another host (with the
+exact same configuration) existing tunnels will fail, but new ones
+will work.
+If I just restart the container (or even reboot the host) the existing
+tunnels will come back up.
+Is there something I can change on the clients to not have to restart
+the tunnel?
 
-I'll no doubt be shot for asking, but having just switched routers to
-one which appears not to want to support hairpin, everything I had
-running has keeled over (yay).
-
-I have setup internal DNS to point to the internal WG address, as well
-as having a valid external one, but wireguard (Android) won't survive
-an interface change (mobile to wifi and vice versa) - as I think it
-tries the previously remembered IP.
-
-Is there anyway to set an option for "crappy router" to force a DNS
-lookup on an interface change? (or does the Android device DNS cache
-break that?)
+Thanks,
+Florin
