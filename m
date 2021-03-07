@@ -8,65 +8,66 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C6C1C433DB
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  7 Mar 2021 16:23:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 415BEC433E0
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  7 Mar 2021 16:23:23 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 599E0650F3
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  7 Mar 2021 16:23:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 599E0650F3
+	by mail.kernel.org (Postfix) with ESMTPS id 69798650F3
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  7 Mar 2021 16:23:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 69798650F3
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1d4914b1;
-	Sun, 7 Mar 2021 16:20:28 +0000 (UTC)
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com
- [2a00:1450:4864:20::530])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 9bb76a69
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fcbfe374;
+	Sun, 7 Mar 2021 16:21:34 +0000 (UTC)
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com
+ [2a00:1450:4864:20::62a])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 742600dc
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sun, 7 Mar 2021 16:20:26 +0000 (UTC)
-Received: by mail-ed1-x530.google.com with SMTP id b7so11071291edz.8
- for <wireguard@lists.zx2c4.com>; Sun, 07 Mar 2021 08:20:26 -0800 (PST)
+ for <wireguard@lists.zx2c4.com>; Sun, 7 Mar 2021 16:21:33 +0000 (UTC)
+Received: by mail-ej1-x62a.google.com with SMTP id jt13so15298574ejb.0
+ for <wireguard@lists.zx2c4.com>; Sun, 07 Mar 2021 08:21:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=from:to:subject:date:message-id:in-reply-to:references:mime-version
  :content-transfer-encoding;
- bh=dlse/4L2Bfn34RIgqsdVIbI+ed+YMzNd90h7t475ALo=;
- b=Dm/8MfiCSIIMaqkSTJbFc43JaleDHj+OltTdIr7GiCJfo2WNrJ9yKbDnoxX1Jflzma
- p1Dsw9TgscurMQFptfXHc6UMbJdySEsZrL8x1f24lqdAM/9luGbaQ8Lknmdtf+3hjL9v
- J41G6+vkGcwJJZu89Xh9Jevrn0b9Ah7+lAEbMDdO0vYTnSxZFc1qlFgK/Ax1Wvi3gjao
- T0Fzbc6VaGOr1BIwDWqcQqEhIsMbVJpKwcp0P0+/jeRdcWtmLt/aeV8XcBpmGwLSj/mX
- pCVbBHgpgrQ8V9liNXHOovIZaMzdp+wtpD4ZvpPa90NrXXY4x72pNcYumVPDrCOf/mX8
- u7EA==
+ bh=OtFkax3dv3qIpThBbsNCV+tELe98R6D47ESd88qk9Lk=;
+ b=I9uqNhir23nfPV/looSRyzd2ze4JLBUB9n/46kuTtwklygxrPMe8yqlGCMYjbVopPq
+ 06hAJwTMt6c8Drap6lr5/N1V/N2SwtYRl0EIjuLq9hPYCp9AeAKSd3CY55KYSmhSR9lJ
+ hYZu75wGmgFsXpcLRMzDSccMpiEiIysbZw9ryhW3LZ5ubIBMGfbw49KJaJd/TDBlC8/l
+ 0UiVuMzsUfDoq0OTxedGHoiOXA7WvFFagpZPDIwGHVt7rQFAItl4n5Z7iw3LCZqWHHYV
+ JCriMolcCC2MZKEbCIaO7X4dCZRW+Hz0+XMp3YY+BfI+PAHdnA7kgvZ2CbYd5Gci0WYr
+ /odw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
  :references:mime-version:content-transfer-encoding;
- bh=dlse/4L2Bfn34RIgqsdVIbI+ed+YMzNd90h7t475ALo=;
- b=qVMQq7OqBv0Ob5Ei8mmvpDsjXkpiAOMWxHrXn5w+dfLOcyrxg89KzX1mQfHGKNTq9E
- K/x828tUewuw84tBcP9a6RBuZSKOHbGJGeHnHPkzeZ/k+3/tCvK8dCY+BnU0ZxorhXMt
- CZ8reAN3WcXvOg4hembUd+vmd+lDfpM9VoqZ5xYPO67BnphlITBY/5taycS5CqBe2CwN
- MZb3qXCNTNfDnqb/pfNs/Lgo0CrI7PVHPiQ8J/2VkWf29hBRqchg7HPiqYv1o/lxmjmi
- pkMPVwgO8rv1t0MONPeg3kQR4krPN4UH0AR/scIdP2CmoQrGTDG67syhGVzeroRt3evw
- jjEQ==
-X-Gm-Message-State: AOAM531w3wPp1lgzDmRK0xbL2e6jI7zy/Hp5PDL4WYGg17tx2YdL3nZ9
- twggq5jf7Y1g17oeWCl01dtBSW8a9YQ=
-X-Google-Smtp-Source: ABdhPJyetgFri76qVK/FkDR3DZMO9ouSfD6uBZOBc+VDxo9IxYd+Qt65IvDtmjZKiS7C1HWIf2VdAg==
-X-Received: by 2002:aa7:d686:: with SMTP id d6mr18807498edr.146.1615134026080; 
- Sun, 07 Mar 2021 08:20:26 -0800 (PST)
+ bh=OtFkax3dv3qIpThBbsNCV+tELe98R6D47ESd88qk9Lk=;
+ b=dZZar/7/mUCcS9HWrkdaThQUlu3DLabkgR6MoUtR0wNVQ2FT5hdkxlihw2PIoG32ar
+ 0OHRJ4oNA4khJ6DA+vsklzGNlSihn92dg1bF6JE/br13eOHRsm/EHM3LOKgVwfHuDU35
+ p7FKYPfS3PqkE874pRWv1wCOAW6D/mYniy9PL91sVagf5ijKF0CG/4A7a9MMqixQz/kT
+ qRVTsSwFRWLY3DUaAW9AF5fQIyyPWSe4NY00BONoQ40/oas6gz2MHxFYlc2S80+u7kqh
+ ZWqbpmC970TBKxy3SWhrnhmXFW3Ak2SqQdkxU94pH0pLg7bRO/QnCqZWzn04nFEYNf9x
+ 8FDQ==
+X-Gm-Message-State: AOAM53080SKMOHdJt5nRcIjNqCLVvBHIxbjV3fzCXVT0aeuUYJaGD6Dw
+ 25d8p/u0p34oAqwqjCK9bMWkLhHbJsY=
+X-Google-Smtp-Source: ABdhPJyomJr/3B+O6aKazOaYYP+b1UhE7HJQtwzblkKaSldux4DJ/8IfCGeYeRo8VOUj//JVZrqsRA==
+X-Received: by 2002:a17:906:1448:: with SMTP id
+ q8mr11267907ejc.449.1615134092826; 
+ Sun, 07 Mar 2021 08:21:32 -0800 (PST)
 Received: from kay-hp.lan ([79.140.120.198])
- by smtp.gmail.com with ESMTPSA id d19sm5594364edr.45.2021.03.07.08.20.25
+ by smtp.gmail.com with ESMTPSA id v9sm5084249ejd.92.2021.03.07.08.21.32
  for <wireguard@lists.zx2c4.com>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 07 Mar 2021 08:20:25 -0800 (PST)
+ Sun, 07 Mar 2021 08:21:32 -0800 (PST)
 From: kayrus <kay.diam@gmail.com>
 To: wireguard@lists.zx2c4.com
-Subject: [PATCH] Windows: add convertInterfaceIndexToLUID syscall
-Date: Sun,  7 Mar 2021 17:20:24 +0100
-Message-Id: <20210307162024.1153144-1-kay.diam@gmail.com>
+Subject: [PATCH] FreeBSD default tun name patch
+Date: Sun,  7 Mar 2021 17:21:31 +0100
+Message-Id: <20210307162131.1153348-1-kay.diam@gmail.com>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210306095820.1039294-1-kay.diam@gmail.com>
-References: <20210306095820.1039294-1-kay.diam@gmail.com>
+In-Reply-To: <20210306094705.1037746-1-kay.diam@gmail.com>
+References: <20210306094705.1037746-1-kay.diam@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -83,86 +84,59 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This change can be used to easily get an access to any interface by name, e.g.
-
-iface, err := net.InterfaceByName(name)
-if err ! nil {
-	return err
-}
-
-luid, err := winipcfg.LUIDFromIndex(uint32(iface.Index))
-if err != nil {
-	return err
-}
+This change allows to omit the tun interface name setting in FreeBSD. When name
+is not set, kernel automatically picks up the tun name and index.
 
 Signed-off-by: kayrus <kay.diam@gmail.com>
 ---
- tunnel/winipcfg/luid.go              | 11 +++++++++++
- tunnel/winipcfg/winipcfg.go          |  1 +
- tunnel/winipcfg/zwinipcfg_windows.go |  9 +++++++++
- 3 files changed, 21 insertions(+)
+ tun/tun_freebsd.go | 34 ++++++++++++++++++----------------
+ 1 file changed, 18 insertions(+), 16 deletions(-)
 
-diff --git a/tunnel/winipcfg/luid.go b/tunnel/winipcfg/luid.go
-index efdf1ba4..02ba65b4 100644
---- a/tunnel/winipcfg/luid.go
-+++ b/tunnel/winipcfg/luid.go
-@@ -63,6 +63,17 @@ func LUIDFromGUID(guid *windows.GUID) (LUID, error) {
- 	return luid, nil
- }
+diff --git a/tun/tun_freebsd.go b/tun/tun_freebsd.go
+index 12b44da..1883aad 100644
+--- a/tun/tun_freebsd.go
++++ b/tun/tun_freebsd.go
+@@ -346,22 +346,24 @@ func CreateTUN(name string, mtu int) (Device, error) {
+ 		return nil, fmt.Errorf("Unable to set nd6 flags for %s: %w", assignedName, errno)
+ 	}
  
-+// LUIDFromIndex function converts a local index for a network interface to the locally unique identifier (LUID) for the interface.
-+// https://docs.microsoft.com/en-us/windows/desktop/api/netioapi/nf-netioapi-convertinterfaceindextoluid
-+func LUIDFromIndex(index uint32) (LUID, error) {
-+	var luid LUID
-+	err := convertInterfaceIndexToLUID(index, &luid)
-+	if err != nil {
-+		return 0, err
-+	}
-+	return luid, nil
-+}
-+
- // IPAddress method returns MibUnicastIPAddressRow struct that matches to provided 'ip' argument. Corresponds to GetUnicastIpAddressEntry
- // (https://docs.microsoft.com/en-us/windows/desktop/api/netioapi/nf-netioapi-getunicastipaddressentry)
- func (luid LUID) IPAddress(ip net.IP) (*MibUnicastIPAddressRow, error) {
-diff --git a/tunnel/winipcfg/winipcfg.go b/tunnel/winipcfg/winipcfg.go
-index 54040a1c..dd09d3a0 100644
---- a/tunnel/winipcfg/winipcfg.go
-+++ b/tunnel/winipcfg/winipcfg.go
-@@ -30,6 +30,7 @@ import (
- //sys	getIfTable2Ex(level MibIfEntryLevel, table **mibIfTable2) (ret error) = iphlpapi.GetIfTable2Ex
- //sys	convertInterfaceLUIDToGUID(interfaceLUID *LUID, interfaceGUID *windows.GUID) (ret error) = iphlpapi.ConvertInterfaceLuidToGuid
- //sys	convertInterfaceGUIDToLUID(interfaceGUID *windows.GUID, interfaceLUID *LUID) (ret error) = iphlpapi.ConvertInterfaceGuidToLuid
-+//sys	convertInterfaceIndexToLUID(interfaceIndex uint32, interfaceLUID *LUID) (ret error) = iphlpapi.ConvertInterfaceIndexToLuid
+-	// Rename the interface
+-	var newnp [unix.IFNAMSIZ]byte
+-	copy(newnp[:], name)
+-	var ifr ifreq_ptr
+-	copy(ifr.Name[:], assignedName)
+-	ifr.Data = uintptr(unsafe.Pointer(&newnp[0]))
+-	_, _, errno = unix.Syscall(
+-		unix.SYS_IOCTL,
+-		uintptr(confd),
+-		uintptr(unix.SIOCSIFNAME),
+-		uintptr(unsafe.Pointer(&ifr)),
+-	)
+-	if errno != 0 {
+-		tunFile.Close()
+-		tunDestroy(assignedName)
+-		return nil, fmt.Errorf("Failed to rename %s to %s: %w", assignedName, name, errno)
++	if name != "" {
++		// Rename the interface
++		var newnp [unix.IFNAMSIZ]byte
++		copy(newnp[:], name)
++		var ifr ifreq_ptr
++		copy(ifr.Name[:], assignedName)
++		ifr.Data = uintptr(unsafe.Pointer(&newnp[0]))
++		_, _, errno = unix.Syscall(
++			unix.SYS_IOCTL,
++			uintptr(confd),
++			uintptr(unix.SIOCSIFNAME),
++			uintptr(unsafe.Pointer(&ifr)),
++		)
++		if errno != 0 {
++			tunFile.Close()
++			tunDestroy(assignedName)
++			return nil, fmt.Errorf("Failed to rename %s to %s: %w", assignedName, name, errno)
++		}
+ 	}
  
- // GetAdaptersAddresses function retrieves the addresses associated with the adapters on the local computer.
- // https://docs.microsoft.com/en-us/windows/desktop/api/iphlpapi/nf-iphlpapi-getadaptersaddresses
-diff --git a/tunnel/winipcfg/zwinipcfg_windows.go b/tunnel/winipcfg/zwinipcfg_windows.go
-index c4bf3b00..ac89fec1 100644
---- a/tunnel/winipcfg/zwinipcfg_windows.go
-+++ b/tunnel/winipcfg/zwinipcfg_windows.go
-@@ -42,6 +42,7 @@ var (
- 
- 	procCancelMibChangeNotify2          = modiphlpapi.NewProc("CancelMibChangeNotify2")
- 	procConvertInterfaceGuidToLuid      = modiphlpapi.NewProc("ConvertInterfaceGuidToLuid")
-+	procConvertInterfaceIndexToLuid     = modiphlpapi.NewProc("ConvertInterfaceIndexToLuid")
- 	procConvertInterfaceLuidToGuid      = modiphlpapi.NewProc("ConvertInterfaceLuidToGuid")
- 	procCreateAnycastIpAddressEntry     = modiphlpapi.NewProc("CreateAnycastIpAddressEntry")
- 	procCreateIpForwardEntry2           = modiphlpapi.NewProc("CreateIpForwardEntry2")
-@@ -88,6 +89,14 @@ func convertInterfaceGUIDToLUID(interfaceGUID *windows.GUID, interfaceLUID *LUID
- 	return
- }
- 
-+func convertInterfaceIndexToLUID(interfaceIndex uint32, interfaceLUID *LUID) (ret error) {
-+	r0, _, _ := syscall.Syscall(procConvertInterfaceIndexToLuid.Addr(), 2, uintptr(interfaceIndex), uintptr(unsafe.Pointer(interfaceLUID)), 0)
-+	if r0 != 0 {
-+		ret = syscall.Errno(r0)
-+	}
-+	return
-+}
-+
- func convertInterfaceLUIDToGUID(interfaceLUID *LUID, interfaceGUID *windows.GUID) (ret error) {
- 	r0, _, _ := syscall.Syscall(procConvertInterfaceLuidToGuid.Addr(), 2, uintptr(unsafe.Pointer(interfaceLUID)), uintptr(unsafe.Pointer(interfaceGUID)), 0)
- 	if r0 != 0 {
+ 	return CreateTUNFromFile(tunFile, mtu)
 -- 
 2.25.1
 
