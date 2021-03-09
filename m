@@ -2,71 +2,74 @@ Return-Path: <SRS0=TBPu=IH=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C7F8C433E0
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  9 Mar 2021 00:17:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FB4CC433DB
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  9 Mar 2021 15:02:54 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 10CE0614A7
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  9 Mar 2021 00:17:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 10CE0614A7
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=freebsd.org
+	by mail.kernel.org (Postfix) with ESMTPS id 83E62650C9
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  9 Mar 2021 15:02:53 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 83E62650C9
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=wandera.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f78e19f2;
-	Tue, 9 Mar 2021 00:17:32 +0000 (UTC)
-Received: from mx2.freebsd.org (mx2.freebsd.org [2610:1c1:1:606c::19:2])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d8cee0aa
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 738e7c28;
+	Tue, 9 Mar 2021 15:02:51 +0000 (UTC)
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com
+ [2a00:1450:4864:20::432])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 35ab5b26
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 8 Mar 2021 15:02:38 +0000 (UTC)
-Received: from mx1.freebsd.org (mx1.freebsd.org [IPv6:2610:1c1:1:606c::19:1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits)
- client-signature RSA-PSS (4096 bits))
- (Client CN "mx1.freebsd.org", Issuer "R3" (verified OK))
- by mx2.freebsd.org (Postfix) with ESMTPS id 1F13A873AE
- for <wireguard@lists.zx2c4.com>; Mon,  8 Mar 2021 15:02:37 +0000 (UTC)
- (envelope-from kevans@freebsd.org)
-Received: from smtp.freebsd.org (smtp.freebsd.org
- [IPv6:2610:1c1:1:606c::24b:4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
- client-signature RSA-PSS (4096 bits) client-digest SHA256)
- (Client CN "smtp.freebsd.org", Issuer "R3" (verified OK))
- by mx1.freebsd.org (Postfix) with ESMTPS id 4DvM5T04YYz4ldL
- for <wireguard@lists.zx2c4.com>; Mon,  8 Mar 2021 15:02:37 +0000 (UTC)
- (envelope-from kevans@freebsd.org)
-Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com
- [209.85.222.172])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (Client CN "smtp.gmail.com", Issuer "GTS CA 1O1" (verified OK))
- (Authenticated sender: kevans)
- by smtp.freebsd.org (Postfix) with ESMTPSA id E8BE2BB08
- for <wireguard@lists.zx2c4.com>; Mon,  8 Mar 2021 15:02:36 +0000 (UTC)
- (envelope-from kevans@freebsd.org)
-Received: by mail-qk1-f172.google.com with SMTP id 130so9464060qkh.11
- for <wireguard@lists.zx2c4.com>; Mon, 08 Mar 2021 07:02:36 -0800 (PST)
-X-Gm-Message-State: AOAM532L4TgsJSLPxZu6XQ1xkEb/m1eik3REdpKYvmrgzSfCQcn74Q7Z
- vHnPFx0MhYeE1IU1qLZ2WpIMtDBIoKeD7dKxIoc=
-X-Google-Smtp-Source: ABdhPJyXWlWqslrYqWkdOK6AYMpkJUE+nrAh0nNwwdY7QYenhqapiW4jLLen5ny/iN8j9g924olR0E51cDh9r3gL2og=
-X-Received: by 2002:a37:886:: with SMTP id 128mr21961661qki.430.1615215756448; 
- Mon, 08 Mar 2021 07:02:36 -0800 (PST)
-MIME-Version: 1.0
-References: <20210306094705.1037746-1-kay.diam@gmail.com>
-In-Reply-To: <20210306094705.1037746-1-kay.diam@gmail.com>
-From: Kyle Evans <kevans@freebsd.org>
-Date: Mon, 8 Mar 2021 09:02:20 -0600
-X-Gmail-Original-Message-ID: <CACNAnaF8zOv0DPS7gSQTACcP9qUBa4PWV+bOeozOPZ1tDk2rvw@mail.gmail.com>
-Message-ID: <CACNAnaF8zOv0DPS7gSQTACcP9qUBa4PWV+bOeozOPZ1tDk2rvw@mail.gmail.com>
-Subject: Re: [PATCH] FreeBSD default tun name patch
-To: kayrus <kay.diam@gmail.com>
-Cc: wireguard@lists.zx2c4.com
+ for <wireguard@lists.zx2c4.com>; Tue, 9 Mar 2021 15:02:45 +0000 (UTC)
+Received: by mail-wr1-x432.google.com with SMTP id l12so16232365wry.2
+ for <wireguard@lists.zx2c4.com>; Tue, 09 Mar 2021 07:02:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wandera.com; s=google;
+ h=from:mime-version:subject:message-id:date:to
+ :content-transfer-encoding;
+ bh=jjSmlnZcIpU5VPnApaeZ+PLBX5pWdcuyyhveojUF2qw=;
+ b=eYHs1U6wxC+58dC3ZOPIPw72aR9ctvhIqDcaUtFv6m/BeLPhw5XCLW/cj/D/PWRufv
+ Rsqmv/MOZIuZsIZAqcfjiTmtFxEryyQs0Qpq0FaElGBAnmNBxDVsuLFPcWqQ7KB+NGjT
+ GuQTde4LmANPjTWvZJxDzyYU35mJDF1H7/SwnnkJ6wupubK9uAW78qEfHPSs/0p/bpng
+ 8niD5ezvHm48LieWnuas/mscyZXI/vCyCcnLRfKpJ3/+dQgAgK5FCH8Qf+J7WaD++Q8k
+ mxxfhoKPNnumR5vXCSpqVG8W7q7t7T3//WxxpyZmi6tK5alj8edKtNfAY9ktUEwAypFP
+ ofAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:mime-version:subject:message-id:date:to
+ :content-transfer-encoding;
+ bh=jjSmlnZcIpU5VPnApaeZ+PLBX5pWdcuyyhveojUF2qw=;
+ b=FPZll6azxsmy4VkoKvmNz2Djt/6B3okzLS16q7PJuWmteKVgDanRFT0/WZ3epqkNpt
+ QA9qzZx9Jq4cUDXkYtunODXS6XhbyNWC7y4NmQMM5Om4YEYP0r8OJbPXB/uqe/Y3tj4g
+ 4J4VEnkcEzsfZMBsc4gM7Au6bbS3TB0jwaKRb5HhxQ22srNq1xckd4cEOT9GtAJSSmeC
+ Lgyf6EwzzZuXJfOD668q6b8cjhdfCjG9oonC/flfYWWeKtdSG2egrZ2TL2mloReEdogZ
+ Ged1gramFdei6TvJ5x8dzzXIGicR5aCADykae/n9p/tdrBU+yy35jGBbjWlb+JRWK0wm
+ GNFA==
+X-Gm-Message-State: AOAM5329p+spymTf9VE1hYAUveeUk+NcwXvMORxa4vJERKYnIx2aOmPP
+ PAz0LMF/pYfsov38DO7OYhHgkG6wpaeCiKBd/J5vaDDTAQObZ2r1r+r04oijIKdugrmRlyNam2F
+ jEn+RZGALOKWWIv2O1ceipBvXhklBwgudPoG5JYQIMZRoHy7yhbPwklF0BK/56sGOwtPxpoWIsh
+ k6sNCkAeg9
+X-Google-Smtp-Source: ABdhPJx8IKhZ9b9+sjONeRnU6aytkUhd+yUK//+HYtxYMOLE3YJIjS97CxqGr5Cd9JF+pWi5cOxAFQ==
+X-Received: by 2002:adf:a3d3:: with SMTP id m19mr29274744wrb.24.1615302163997; 
+ Tue, 09 Mar 2021 07:02:43 -0800 (PST)
+Received: from [10.255.240.33]
+ (ec2-54-246-181-160.eu-west-1.compute.amazonaws.com. [54.246.181.160])
+ by smtp.gmail.com with ESMTPSA id y205sm4976367wmc.18.2021.03.09.07.02.42
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Tue, 09 Mar 2021 07:02:43 -0800 (PST)
+From: Laura Zelenku <laura.zelenku@wandera.com>
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.1\))
+Subject: [PATCH] device: revert pipelining UAPI requests
+Message-Id: <038632B3-A3F3-4FC6-8242-265A42F89F1F@wandera.com>
+Date: Tue, 9 Mar 2021 16:02:41 +0100
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+X-Mailer: Apple Mail (2.3608.120.23.2.1)
 Content-Type: text/plain; charset="UTF-8"
-X-Mailman-Approved-At: Tue, 09 Mar 2021 00:17:31 +0000
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -81,73 +84,118 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Sun, Mar 7, 2021 at 9:45 AM kayrus <kay.diam@gmail.com> wrote:
->
-> This change allows to omit the tun interface name setting in FreeBSD. When name
-> is not set, kernel automatically picks up the tun name and index.
-> ---
->  tun/tun_freebsd.go | 34 ++++++++++++++++++----------------
->  1 file changed, 18 insertions(+), 16 deletions(-)
->
+Hello devs,
+there is an issue when using wg-quick tool and wg tool bellow from wireguar=
+d-tools repository (version v1.0.20210223). I=E2=80=99m running: wg-quick u=
+p operation with config file in /etc/wireguard/ directory. Get operations a=
+re ok. Processed without a problem. But for Set operation the processing wi=
+ll stuck on "buffered.ReadString('\n=E2=80=99)=E2=80=9D (in the second run =
+of for loop cycle, after set command is processed in first for loop cycle) =
+because bufio.Scanner will read everything from the socket.
+Please revert till proper fix is ready.
 
-Hi,
+thanks
+Laura
 
-I'm a little confused by what's going on here -- folks are wanting to
-use the assigned name from the tuntap cloner, or is it just a desire
-to not require that a new name be specified? The latter seems
-incompatible with how the Linux counterpart works, but perhaps Linux
-doesn't assign a name/unit when opening /dev/net/tun like we do.
+Signed-off-by: Laura Zelenku <laura.zelenku@wandera.com>
+---
+ device/uapi.go | 64 +++++++++++++++++++++-----------------------------
+ 1 file changed, 27 insertions(+), 37 deletions(-)
 
-Thanks,
+diff --git a/device/uapi.go b/device/uapi.go
+index 659af0a..9fab911 100644
+--- a/device/uapi.go
++++ b/device/uapi.go
+@@ -414,44 +414,34 @@ func (device *Device) IpcHandle(socket net.Conn) {
+                return bufio.NewReadWriter(reader, writer)
+        }(socket)
+=20
+-       for {
+-               op, err :=3D buffered.ReadString('\n')
+-               if err !=3D nil {
+-                       return
+-               }
++       defer buffered.Flush()
+=20
+-               // handle operation
+-               switch op {
+-               case "set=3D1\n":
+-                       err =3D device.IpcSetOperation(buffered.Reader)
+-               case "get=3D1\n":
+-                       var nextByte byte
+-                       nextByte, err =3D buffered.ReadByte()
+-                       if err !=3D nil {
+-                               return
+-                       }
+-                       if nextByte !=3D '\n' {
+-                               err =3D ipcErrorf(ipc.IpcErrorInvalid, "tra=
+iling character in UAPI get: %q", nextByte)
+-                               break
+-                       }
+-                       err =3D device.IpcGetOperation(buffered.Writer)
+-               default:
+-                       device.log.Errorf("invalid UAPI operation: %v", op)
+-                       return
+-               }
++       op, err :=3D buffered.ReadString('\n')
++       if err !=3D nil {
++               return
++       }
+=20
+-               // write status
+-               var status *IPCError
+-               if err !=3D nil && !errors.As(err, &status) {
+-                       // shouldn't happen
+-                       status =3D ipcErrorf(ipc.IpcErrorUnknown, "other UA=
+PI error: %w", err)
+-               }
+-               if status !=3D nil {
+-                       device.log.Errorf("%v", status)
+-                       fmt.Fprintf(buffered, "errno=3D%d\n\n", status.Erro=
+rCode())
+-               } else {
+-                       fmt.Fprintf(buffered, "errno=3D0\n\n")
+-               }
+-               buffered.Flush()
++       // handle operation
++       switch op {
++       case "set=3D1\n":
++               err =3D device.IpcSetOperation(buffered.Reader)
++       case "get=3D1\n":
++               err =3D device.IpcGetOperation(buffered.Writer)
++       default:
++               device.log.Errorf("invalid UAPI operation: %v", op)
++               return
++       }
++
++       // write status
++       var status *IPCError
++       if err !=3D nil && !errors.As(err, &status) {
++               // shouldn't happen
++               status =3D ipcErrorf(ipc.IpcErrorUnknown, "other UAPI error=
+: %w", err)
++       }
++       if status !=3D nil {
++               device.log.Errorf("%v", status)
++               fmt.Fprintf(buffered, "errno=3D%d\n\n", status.ErrorCode())
++       } else {
++               fmt.Fprintf(buffered, "errno=3D0\n\n")
+        }
+ }
+--=20
+2.28.0
 
-Kyle Evans
 
 
-> diff --git a/tun/tun_freebsd.go b/tun/tun_freebsd.go
-> index 12b44da..1883aad 100644
-> --- a/tun/tun_freebsd.go
-> +++ b/tun/tun_freebsd.go
-> @@ -346,22 +346,24 @@ func CreateTUN(name string, mtu int) (Device, error) {
->                 return nil, fmt.Errorf("Unable to set nd6 flags for %s: %w", assignedName, errno)
->         }
->
-> -       // Rename the interface
-> -       var newnp [unix.IFNAMSIZ]byte
-> -       copy(newnp[:], name)
-> -       var ifr ifreq_ptr
-> -       copy(ifr.Name[:], assignedName)
-> -       ifr.Data = uintptr(unsafe.Pointer(&newnp[0]))
-> -       _, _, errno = unix.Syscall(
-> -               unix.SYS_IOCTL,
-> -               uintptr(confd),
-> -               uintptr(unix.SIOCSIFNAME),
-> -               uintptr(unsafe.Pointer(&ifr)),
-> -       )
-> -       if errno != 0 {
-> -               tunFile.Close()
-> -               tunDestroy(assignedName)
-> -               return nil, fmt.Errorf("Failed to rename %s to %s: %w", assignedName, name, errno)
-> +       if name != "" {
-> +               // Rename the interface
-> +               var newnp [unix.IFNAMSIZ]byte
-> +               copy(newnp[:], name)
-> +               var ifr ifreq_ptr
-> +               copy(ifr.Name[:], assignedName)
-> +               ifr.Data = uintptr(unsafe.Pointer(&newnp[0]))
-> +               _, _, errno = unix.Syscall(
-> +                       unix.SYS_IOCTL,
-> +                       uintptr(confd),
-> +                       uintptr(unix.SIOCSIFNAME),
-> +                       uintptr(unsafe.Pointer(&ifr)),
-> +               )
-> +               if errno != 0 {
-> +                       tunFile.Close()
-> +                       tunDestroy(assignedName)
-> +                       return nil, fmt.Errorf("Failed to rename %s to %s: %w", assignedName, name, errno)
-> +               }
->         }
->
->         return CreateTUNFromFile(tunFile, mtu)
-> --
-> 2.25.1
->
+
+
+--=20
+*IMPORTANT NOTICE*: This email, its attachments and any rights attaching=20
+hereto are confidential and intended exclusively for the person to whom the=
+=20
+email is addressed. If you are not the intended recipient, do not read,=20
+copy, disclose or use the contents in any way. Wandera accepts no liability=
+=20
+for any loss, damage or consequence resulting directly or indirectly from=
+=20
+the use of this email and attachments.
