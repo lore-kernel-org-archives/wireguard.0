@@ -2,62 +2,68 @@ Return-Path: <SRS0=TBPu=IH=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 229D0C433DB
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  9 Mar 2021 16:35:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 56C03C433E0
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  9 Mar 2021 21:08:14 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 3520065237
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  9 Mar 2021 16:35:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 3520065237
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id 35BD565256
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  9 Mar 2021 21:08:12 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 35BD565256
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=freebsd.org
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id feab6db8;
-	Tue, 9 Mar 2021 16:33:51 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [104.131.123.232])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 38358bbc
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c199aa68;
+	Tue, 9 Mar 2021 21:05:05 +0000 (UTC)
+Received: from mx2.freebsd.org (mx2.freebsd.org [96.47.72.81])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 17cd2ac2
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Tue, 9 Mar 2021 16:33:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1615307623;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=piA/us82ibo/dpAl7HH3GQIsWaCI7kQ8KMn2v7TIm94=;
- b=fd9fKNem+g1gg+Kmhi5eq7oFKs5RpB3kBJJMZaYlNTxUEbEfQtDyD7mdbMS6eNVpAHLF7f
- L58tkFsYOqEHt5/nYGAn6LJ1WQuUmoqxzoIeD12USmGzflHPkAY6ZMVzS8jCOaJT9as4bx
- JFbKpxnsD9KH9mnPgiFYrmU7AtdvQbY=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 4e665cd8
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Tue, 9 Mar 2021 16:33:43 +0000 (UTC)
-Received: by mail-yb1-f170.google.com with SMTP id 133so14589712ybd.5
- for <wireguard@lists.zx2c4.com>; Tue, 09 Mar 2021 08:33:43 -0800 (PST)
-X-Gm-Message-State: AOAM533wNhjIvjCiKvXyX878eqpf3KP5AnAp53mqNYd1fPH/yLQ+HEeE
- /O9uTvzaaDvJfEXzMmI/fxjEun+vywaPSCzSQ+Q=
-X-Google-Smtp-Source: ABdhPJxGY3Xr2L9idzlHlRbkTsE2qUeA7+Hao16T+yWab4z1duUcZlyVG+K/dAK8lAPYFSj8RSBRYW0ZHnws7dGFBp8=
-X-Received: by 2002:a25:c090:: with SMTP id
- c138mr41180372ybf.279.1615307623123; 
- Tue, 09 Mar 2021 08:33:43 -0800 (PST)
+ for <wireguard@lists.zx2c4.com>; Tue, 9 Mar 2021 21:05:04 +0000 (UTC)
+Received: from mx1.freebsd.org (mx1.freebsd.org [96.47.72.80])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits)
+ client-signature RSA-PSS (4096 bits))
+ (Client CN "mx1.freebsd.org", Issuer "R3" (verified OK))
+ by mx2.freebsd.org (Postfix) with ESMTPS id E2AF89A200
+ for <wireguard@lists.zx2c4.com>; Tue,  9 Mar 2021 21:05:02 +0000 (UTC)
+ (envelope-from kevans@freebsd.org)
+Received: from smtp.freebsd.org (smtp.freebsd.org
+ [IPv6:2610:1c1:1:606c::24b:4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
+ client-signature RSA-PSS (4096 bits) client-digest SHA256)
+ (Client CN "smtp.freebsd.org", Issuer "R3" (verified OK))
+ by mx1.freebsd.org (Postfix) with ESMTPS id 4Dw75B5pR9z3GP9
+ for <wireguard@lists.zx2c4.com>; Tue,  9 Mar 2021 21:05:02 +0000 (UTC)
+ (envelope-from kevans@freebsd.org)
+Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com
+ [209.85.222.170])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (Client CN "smtp.gmail.com", Issuer "GTS CA 1O1" (verified OK))
+ (Authenticated sender: kevans)
+ by smtp.freebsd.org (Postfix) with ESMTPSA id B5DD329C51
+ for <wireguard@lists.zx2c4.com>; Tue,  9 Mar 2021 21:05:02 +0000 (UTC)
+ (envelope-from kevans@freebsd.org)
+Received: by mail-qk1-f170.google.com with SMTP id x10so14603176qkm.8
+ for <wireguard@lists.zx2c4.com>; Tue, 09 Mar 2021 13:05:02 -0800 (PST)
+X-Gm-Message-State: AOAM530eQkkXoqXxo4Oc+O51kGDDOhsNr70E2sI0Ws5BZj1rJDWgXrdA
+ YhpAXZ0G1ZD0Ijb6cOiCzmsPbsmKyKXmtdaeVM8=
+X-Google-Smtp-Source: ABdhPJy3KUiEVsZlhmudV/sSPaTpE4KjgWyFwT/FejncCQ/OGQ9xEuxzdLD1BTRn8vTuCfwNBuQMkr9ebujUYdCZeGg=
+X-Received: by 2002:a37:886:: with SMTP id 128mr29003845qki.430.1615323902262; 
+ Tue, 09 Mar 2021 13:05:02 -0800 (PST)
 MIME-Version: 1.0
-References: <038632B3-A3F3-4FC6-8242-265A42F89F1F@wandera.com>
- <CAHmME9rakmzN2ndkXchvcRXONjfk4ikJScWCSEYzNR8+1ow03w@mail.gmail.com>
- <3A2A1B3E-75FB-4CCA-A7B9-FC7C02B7E9DB@wandera.com>
-In-Reply-To: <3A2A1B3E-75FB-4CCA-A7B9-FC7C02B7E9DB@wandera.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 9 Mar 2021 09:33:32 -0700
-X-Gmail-Original-Message-ID: <CAHmME9qkgbE0E9ApGzMoDeVr289JrrZ42Uyba1hQGNc22VSCMg@mail.gmail.com>
-Message-ID: <CAHmME9qkgbE0E9ApGzMoDeVr289JrrZ42Uyba1hQGNc22VSCMg@mail.gmail.com>
-Subject: Re: [PATCH] device: revert pipelining UAPI requests
-To: Laura Zelenku <laura.zelenku@wandera.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: Kyle Evans <kevans@freebsd.org>
+Date: Tue, 9 Mar 2021 15:04:51 -0600
+X-Gmail-Original-Message-ID: <CACNAnaHUO_GvqQd3BJ2i4Wh45L=0g-LSxJg11G_dEa3UKK6GUw@mail.gmail.com>
+Message-ID: <CACNAnaHUO_GvqQd3BJ2i4Wh45L=0g-LSxJg11G_dEa3UKK6GUw@mail.gmail.com>
+Subject: FreeBSD/wireguard-tools
+To: wireguard@lists.zx2c4.com
+Cc: =?UTF-8?Q?Bernhard_Fr=C3=B6hlich?= <decke@freebsd.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -72,22 +78,46 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Tue, Mar 9, 2021 at 9:30 AM Laura Zelenku <laura.zelenku@wandera.com> wr=
-ote:
->
-> Hi Jason,
-> I=E2=80=99m just using =E2=80=9Cwg-quick up wg0=E2=80=9D command on Linux=
- env with NO kernel module, just userspace implementation.
-> My config file looks like:
-> [Interface]
-> PrivateKey =3D =E2=80=A6.mEw=3D
+Hello!
 
-Change your private key. No need to mess with partial exposures.
+I'll start off with a slight overview of where we're at from a base
+system perspective: in November, an if_wg port from OpenBSD to FreeBSD
+landed in our development branch, along with updates to ifconfig(8) to
+manage it for the time being. We've committed a number of fixes and
+improvements since then[0][1], and we will be shipping that in the
+upcoming release of FreeBSD 13.0[2].
 
-> In the command output you can see that "wg setconf wg0 /dev/fd/63=E2=80=
-=9D stucked and no following commands (set IP address, set MTU, =E2=80=A6) =
-are processed.
+The only outstanding issue(s) that I'm aware of (please correct me if
+I'm mistaken) are the following:
 
-What's the output of `wg --version`?
+(1) wireguard-tools doesn't currently support FreeBSD/if_wg, but there
+is a  branch (mm/freebsd) that generally does. There are further fixes
+to this from the fine folks over at Netgate, see [3]. As a FreeBSD
+developer, what can I do to help us move forward together?
 
-Jason
+(2) There's a preference for using wg(8) for configuration, but we
+can't currently include it in base due to licensing. We've got plenty
+of precedent for dual-licensed material in base, so if that's a route
+that works then I'd like to go ahead and start that discussion.
+
+From our standpoint, any of: BSD2, BSD3, MIT, ISC licenses can go in
+undisputed, choices outside of that require red, yellow, and sometimes
+even purple tape.
+
+These are the points that I'd like to start discussing, at least; we
+can punt #2 on a little further down the road, though I would like to
+have some plan in place to hopefully be able to include it in base for
+FreeBSD 13.1 and the integrated version of wg(8) in ports for testing
+much sooner.
+
+I appreciate your time and efforts in providing the excellent
+WireGuard ecosystem.
+
+Thanks,
+
+Kyle Evans
+
+[0] https://cgit.freebsd.org/src/log/sys/dev/if_wg
+[1] https://cgit.freebsd.org/src/log/sbin/ifconfig
+[2] https://www.freebsd.org/releases/13.0R/schedule/
+[3] https://github.com/pfsense/wireguard-tools/commits/master
