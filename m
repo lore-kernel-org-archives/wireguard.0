@@ -2,60 +2,59 @@ Return-Path: <SRS0=TBPu=IH=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FROM_WEBSITE,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C40BFC433DB
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  9 Mar 2021 21:08:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8EEFC433E0
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  9 Mar 2021 21:25:52 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id DE25E65256
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  9 Mar 2021 21:08:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org DE25E65256
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=diyism.com
+	by mail.kernel.org (Postfix) with ESMTPS id E44456527D
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  9 Mar 2021 21:25:51 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org E44456527D
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cec6d70b;
-	Tue, 9 Mar 2021 21:05:26 +0000 (UTC)
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com
- [2a00:1450:4864:20::532])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id af2d47c7
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3e4a18ff;
+	Tue, 9 Mar 2021 21:23:39 +0000 (UTC)
+Received: from mail.zx2c4.com (mail.zx2c4.com [104.131.123.232])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b59f984f
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Tue, 9 Mar 2021 13:45:08 +0000 (UTC)
-Received: by mail-ed1-x532.google.com with SMTP id d13so20246307edp.4
- for <wireguard@lists.zx2c4.com>; Tue, 09 Mar 2021 05:45:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=diyism.com; s=google;
- h=mime-version:from:date:message-id:subject:to;
- bh=vXaYSj/1XMNoSa0FtidgBcZ6E2DxJJQPnvi3b+vPjH4=;
- b=H/IWYgzUNxUxDeAtjDQQL5ACD9OK03RoC/Ye8ZVbbEY8d6a6SW+0VxIcqSUMFw2NVr
- HhuKHPt+68xKBbVZCYfhey8ETNWQjb5VAI7gwbGampFJmV5VJIYn1i5tiyUcsvd/O0tW
- hDzEGU7qv0nm7Oy1bkHzhMK+o+mWzZulFZQsQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=vXaYSj/1XMNoSa0FtidgBcZ6E2DxJJQPnvi3b+vPjH4=;
- b=UtFX1rckAHcvr3Fs+qB6h7OFDTfvwHrbzkx3U7XF2Bkm321cUttTMMpTfBrHwkpyB6
- KxE1hFApsk1uRZ0k0kv4CSBtD9avsOps6npQWoMy0mLSWbROewF5jIpszj1uy7oGJg1/
- 0qmi7aEhTlMCGuLrCaEgfXweyXqk7pQIyQyLG9PwFDxq9ObtoodWnLwY8HGLOfR6QCHF
- vLQuZ7EMjp664pzV7wKthIXG2yHz8T81ljzUD7xLk9nsLCbBg+rHGIzJ2jmR1OVvU6O0
- rcssM4WkshSLsbaZsFX0i10XttZHcrFXsYAsUndWUKHrxQkQrfU7EkMSutvVIW0VucQK
- RqkA==
-X-Gm-Message-State: AOAM5336CBu1S34jZ3qkcL252zwfIvOJHBtghrAcjlm9ycPyQ2WoRHrh
- chMbO5/1BJbOS2tJ7cKWI5G6S1yweBxhML6Z6aZ0w6SnChsDuIeb
-X-Google-Smtp-Source: ABdhPJwTgDlaR9ylebPZ8+Mj7n6ZJhltYvfUeFmoInyNUfnTN2teR4zi78Y1fkl+WFtLbquvdOKarmLfibVFH7pBVns=
-X-Received: by 2002:aa7:cb8f:: with SMTP id r15mr4269798edt.130.1615297508066; 
- Tue, 09 Mar 2021 05:45:08 -0800 (PST)
+ for <wireguard@lists.zx2c4.com>; Tue, 9 Mar 2021 21:23:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1615325014;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZeOrEEoJZEzodD25mtDI/GQmTAkh4a9P2eXxABJ7aKY=;
+ b=WqF8CyC3PQJLA6AljVZeNhfayQX+zenZ1YsTRKRhYLSqsYu3z7w6xOXzWCJviV02rCoUvY
+ f+PCw9WSxCUFmCs1pUewg1JJhGViLdll/NgQoYrd2BfB7UA77GELkRL8C9D03iWfyaxQC8
+ p2faE3dQdyaJQo8hXIbq9Ey4dcvKTJQ=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id d3836b3b
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Tue, 9 Mar 2021 21:23:33 +0000 (UTC)
+Received: by mail-yb1-f175.google.com with SMTP id d9so15536455ybq.1
+ for <wireguard@lists.zx2c4.com>; Tue, 09 Mar 2021 13:23:33 -0800 (PST)
+X-Gm-Message-State: AOAM532OegxZ1GLDAC1MZNcQsVKwK04dTx+SEy70jHDyj/RjzkviJc0k
+ fhLG8jEu3tGRLCleZQN2fZ9Up1GkYdBa4Fsgl0w=
+X-Google-Smtp-Source: ABdhPJz0fUBLUwlfCX4ETyu6wR212MSveG8tdZ3Bn25hxHVqJhstm+MduTdxXsoz2l6p8y9RvbziUM6Nk27dGSm1aH0=
+X-Received: by 2002:a25:4d02:: with SMTP id a2mr39960891ybb.49.1615325013248; 
+ Tue, 09 Mar 2021 13:23:33 -0800 (PST)
 MIME-Version: 1.0
-From: "KeXianbin(http://diyism.com)" <kexianbin@diyism.com>
-Date: Tue, 9 Mar 2021 21:44:56 +0800
-Message-ID: <CAKVinOUJVEyxfT-bOhUe4gZb7yUN_=xwun13pnt+iDZus=LRXQ@mail.gmail.com>
-Subject: Any possibility to run wireguard-go with android vpnservice?
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+References: <CACNAnaHUO_GvqQd3BJ2i4Wh45L=0g-LSxJg11G_dEa3UKK6GUw@mail.gmail.com>
+In-Reply-To: <CACNAnaHUO_GvqQd3BJ2i4Wh45L=0g-LSxJg11G_dEa3UKK6GUw@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Tue, 9 Mar 2021 14:23:22 -0700
+X-Gmail-Original-Message-ID: <CAHmME9pQGWUo=Q0ohXUkXapS7rZ1qbP+GFHkDDOD2hp5VSD+Pw@mail.gmail.com>
+Message-ID: <CAHmME9pQGWUo=Q0ohXUkXapS7rZ1qbP+GFHkDDOD2hp5VSD+Pw@mail.gmail.com>
+Subject: Re: FreeBSD/wireguard-tools
+To: kevans@freebsd.org
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ =?UTF-8?Q?Bernhard_Fr=C3=B6hlich?= <decke@freebsd.org>, 
+ Matt Dunwoodie <ncon@noconroy.net>
 Content-Type: text/plain; charset="UTF-8"
-X-Mailman-Approved-At: Tue, 09 Mar 2021 21:05:22 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -70,59 +69,52 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Sorry for bothering,
-I'm trying to run wireguard-go with android vpnservice:
+Hi Kyle,
 
-first, I started a vpnservice and got the fd integer:
+Thanks for getting in touch. So far as I can tell, Matt Macy never
+finished either the port of wireguard-tools or the port of the actual
+kernel module from OpenBSD. I'm CCng Matt Dunwoodie, who has started
+working through the kernel module finding issues. There was that awful
+error in 25519 (lack of scalar clamping) that somebody emailed me
+about a while ago. I don't know if that was ever fixed but I was quite
+surprised that got committed. I got the impression from trying to work
+with Matt Macy that there wasn't too much interest in collaboration.
+Your email is a very welcome change.
 
-vpnConn=builder.establish();
-int fd=vpnConn.getFd();
+I see the path forward for FreeBSD having a functional WireGuard
+implementation as something like this:
 
-The key icon showed on the right-top corner of android phone and the
-fd  value is 114.
+1. We work out kinks in the kernel module crypto and state machine. I
+need to sync with Matt Dunwoodie on his findings there. Maybe we can
+send patches ourselves, but maybe it'd be best to just have a
+screensharing call where we walk through this together, and after the
+call you can code/commit the problems that we identify from
+discussion? A similar undertaking has been on my todo list for a
+veryverylongtimenow for NetBSD, but that implementation is much, much
+further behind, while in contrast I think with FreeBSD we're a lot
+closer to things being where they should, and a lot of it will be a
+simple matter of syncing the OpenBSD code. So if you're willing to
+work with us, I think that's something we can get done together in a
+week or faster.
 
-then, I modify tun_linux.go of wireguard-go:
-func CreateUnmonitoredTUNFromFD1(fd int) (Device, error) {
-    err := unix.SetNonblock(fd, true)
-    if err != nil {
-        return nil, err
-    }
-    file := os.NewFile(uintptr(fd), "/dev/tun")
-    tun := &NativeTun{
-        tunFile: file,
-        events:  make(chan Event, 5),
-        errors:  make(chan error, 5),
-        nopi:    true,
-    }
-    //name, err := tun.Name()
-    if err != nil {
-        return nil, err
-    }
-    return tun, nil
-}
+2. We fix/simplify the kernel module's IPC interface to just be a
+simple get/set, like every other implementation of WireGuard.
 
-and modify main.go :
+3. We write support for that IPC protocol as "ipc-freebsd.h" in
+wireguard-tools. Maybe we'll start with Macy's code, but he never
+incorporated the feedback I provided on that, so perhaps you'd like to
+start over. Whatever you please there is fine with me.
 
-    tun, err := func() (tun.Device, error) {
-        tunFdStr := os.Getenv(ENV_WG_TUN_FD)
-        if tunFdStr == "" {
-            return tun.CreateTUN(interfaceName, device.DefaultMTU)
-        }
-        fd, err := strconv.Atoi(tunFdStr);
-        return tun.CreateUnmonitoredTUNFromFD1(fd);
+4. I relicense the tools as MIT. I've previously started on getting
+this done, and the only blocker was the embedded libmnl, which is LGPL
+and out of my control. But I think there are two reasons why this is
+not a real impediment: 1) I've been in touch with the author there,
+and I think he'll MIT it if poke again, and 2) that's only for Linux
+anyway, so you wouldn't need that file *at all* on FreeBSD.
 
-But when I run this in android directory /local/data/tmp:
+Does that seem like a good plan? And if so, are you the right contact
+with whom to work on it? And what's the FreeBSD release schedule like?
+How long do we have to fix this?
 
-WG_TUN_FD=114 ./wireguard-go wg0
-
-It gives me: Failed to create TUN device: bad file descriptor
-
-
-It seems that my try is nonsense,
-but is there any possibility to run wireguard-go with vpn service
-without gomobile jni?
-
-
-Thanks.
-
-Malcolm Ke
+Talk soon,
+Jason
