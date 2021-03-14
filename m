@@ -2,63 +2,62 @@ Return-Path: <SRS0=wF/V=IM=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5F8DC433DB
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 14 Mar 2021 17:05:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 134BFC433DB
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 14 Mar 2021 19:01:47 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id ECCB064E7A
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 14 Mar 2021 17:05:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org ECCB064E7A
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	by mail.kernel.org (Postfix) with ESMTPS id 59B0864EBE
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 14 Mar 2021 19:01:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 59B0864EBE
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=kapsi.fi
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 86695f3d;
-	Sun, 14 Mar 2021 17:05:50 +0000 (UTC)
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com
- [2a00:1450:4864:20::22f])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2c11e188
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4c6dc45b;
+	Sun, 14 Mar 2021 19:01:43 +0000 (UTC)
+Received: from mail.kapsi.fi (mail.kapsi.fi [2001:67c:1be8::25])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 24c56817
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 14 Mar 2021 17:05:48 +0000 (UTC)
-Received: by mail-lj1-x22f.google.com with SMTP id z8so13439899ljm.12
- for <wireguard@lists.zx2c4.com>; Sun, 14 Mar 2021 10:05:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=oDHnx3ObBOLK6ylk2u6leL4++vIYUkDDrMqpe6Fnoa4=;
- b=asmowZEoDc2djioytryhFIHu4EBpDEKUrWxwKBLSiPbRLo6dZHe8rVvnFSmO4hi9HK
- oLHt//8YDV/FYeWkzPhX1K0fEFn+zeqWZjr41pka/sgMLy2Dlrq88ICrpeiJ3box4cnq
- cv+M4x3hdeccOUmRyFUzlAQqmrPv9rh2w9JDrsw1i4E6NnG7lhDJyJ10wDYhybJEdrco
- fjBmae7IbHsXYbOayCZ/1BAYP4+BMmCvCZrhDE24k0SzGnwMAV2Sopb9P5bQ4UrP4u2T
- ipiJXOEVWLr3IT92/oJ2uxR1mLKkqs+HcNc+KuCqIHUnBLA6vYUZrsIJrG75EifyDQR/
- mqog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=oDHnx3ObBOLK6ylk2u6leL4++vIYUkDDrMqpe6Fnoa4=;
- b=Ns6yGORGJRmkeBLu/PupAO9PCMHcjGW963jaOodhKkHuDbdt0u72a5i43L9AWtM5EG
- C129faVZQLUWMDa6h/k51JmQ8EZGsIDEKLRbFR+cP1nB3j6kLTQJvhIIptAUFHElOEmY
- NRae/uhayXDqOUqHE1tA7P1UtZaFdx8/oR4rEzJ9luDSM4SVVWznqgPWi703kB/pGS8I
- GQnvlGeZoEcLWXri6PmCcEaZ5WoidbyFvYl/l/W9j9zkl6BIiRYFIM+G8dJUSZ8L3JEz
- C0KFR5db1KoHmWo0rwR2Z7JdY3ANFj345dtdshHVBS0syI75uysSXWGykp5sZh+t8Q7W
- 0tqA==
-X-Gm-Message-State: AOAM532QjvaLJ6e7UuLTQR3j/0qf2ml/NWF5Fr8gSEn2Xvtu3oAWXNSF
- S/Gou63Ca6kzPLIZSneffjWLXCD9yYHffFL+oaVs2VjMM74=
-X-Google-Smtp-Source: ABdhPJwloDXXnvCWDv6Mc0T5Z64TzMJh+TgwutRLrGA0q6B+9tlTLW6Qef7qjYzJj3JUD/Hyt5HOCi9fIxPaWDMEPKg=
-X-Received: by 2002:a2e:86c8:: with SMTP id n8mr8558746ljj.409.1615741547723; 
- Sun, 14 Mar 2021 10:05:47 -0700 (PDT)
+ Sun, 14 Mar 2021 19:01:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=kapsi.fi;
+ s=20161220; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:
+ MIME-Version:Date:Message-ID:From:References:To:Subject:Sender:Reply-To:Cc:
+ Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+ Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+ List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=vyY1eaH1z+g188gbnLasPnlZSELbtMzj380Sukwq+z8=; b=egbAMzbHz8th1uS9UZRThaPLA4
+ vMnQmHU73FOM6cZrlaqw0sl5ZSiu+dN9hSdN9tMOgb7gB5BPHZE/Gz2+2iyQ5VbwLTnQ7VProS33H
+ Np2OlkxnBu047VOGSmH1c8H7QC1wnyBKOpxB6+KTGiuzRSpHXI7xxbiYAd+YbHpQj9CWV/tbz0NBV
+ uPGTYRH/suNsKjw5u8dZcOrfPgGODcrjOUC+7HyFzeXfDQwsVIXum/t7vrWZlagX6gsT3z8RTZgJZ
+ KRp2lfLSAbTKHyS3r0awbW6FulbbSK3hKPUXunHcf4N9ACeI3aiyHaI10swaaJmBbI1IK1DR3wc+W
+ 8Uz/Rv8g==;
+Received: from [2001:67c:1104:fa0:64ee:b0de:8333:7c61]
+ by mail.kapsi.fi with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.89) (envelope-from <samip537@kapsi.fi>) id 1lLVzh-0002Ve-I0
+ for wireguard@lists.zx2c4.com; Sun, 14 Mar 2021 21:01:41 +0200
+Subject: Re: Wireguard on EdgeRouter and using specified VRF and/or routing
+ table
+To: wireguard@lists.zx2c4.com
+References: <8036163fba8a8c7cdea2af0fcac4eb07@kapsi.fi>
+From: =?UTF-8?Q?Skyler_M=c3=a4ntysaari?= <samip537@kapsi.fi>
+Message-ID: <4cb69d55-c577-10d4-2692-f6ebaaba5f1d@kapsi.fi>
+Date: Sun, 14 Mar 2021 21:01:40 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-From: kay <kay.diam@gmail.com>
-Date: Sun, 14 Mar 2021 18:05:11 +0100
-Message-ID: <CANaOheZKnxp98ERbCP-jptVtjuDDSc-ZqmWmAnX-vU=SM8D2LQ@mail.gmail.com>
-Subject: A go package for a fine-grained tunnels configuration
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <8036163fba8a8c7cdea2af0fcac4eb07@kapsi.fi>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-SA-Exim-Connect-IP: 2001:67c:1104:fa0:64ee:b0de:8333:7c61
+X-SA-Exim-Mail-From: samip537@kapsi.fi
+X-SA-Exim-Scanned: No (on mail.kapsi.fi); SAEximRunCond expanded to false
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -73,17 +72,23 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Everyone,
+Hi,
 
-I'm developing a package for the fine-grained tunnel configuration in
-different OS's, e.g. IP address, routes, DNSsettings.
+Could somone help me with this? Last I sent this, I got no replies.
 
-It already supports Windows, Linux and FreeBSD (+macOS with an os.Exec
-dependency to run networksetup for DNS configuration, need help for a
-native support without os.Exec).
-
-I hope you can find it useful and contribute to improving it.
-
-https://github.com/kayrus/tuncfg
-
-Regards,
+On 27/01/2021 9.45, Skyler Mäntysaari wrote:
+> Hi there,
+>
+> I have a use case where I'm running Bird (BGP daemon) on a EdgeRouter, 
+> and then having PTP links via Wireguard for the BGP sessions but I 
+> need some help on how to set the wireguard interface to use specified 
+> routing table and/or vrf?
+>
+> I want it to use kernel routing table 1 aswell as specific VRF, and I 
+> have set the "route-allowed-ips" to false, as I don't want it to 
+> generate it's own routing table.
+>
+> For reference: Kernel version is 4.9.79.
+>
+> Best regards,
+> Skyler Mäntysaari
