@@ -7,58 +7,68 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B1D0C433DB
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 16 Mar 2021 13:36:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 62C90C433E6
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 16 Mar 2021 13:36:43 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 314F964FE0
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 16 Mar 2021 13:36:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 314F964FE0
+	by mail.kernel.org (Postfix) with ESMTPS id 587EB64FE0
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 16 Mar 2021 13:36:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 587EB64FE0
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d2a6aea0;
-	Tue, 16 Mar 2021 13:36:39 +0000 (UTC)
-Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com
- [2607:f8b0:4864:20::52d])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a1ea9a3d
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dbba32d4;
+	Tue, 16 Mar 2021 13:36:42 +0000 (UTC)
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com
+ [2607:f8b0:4864:20::1030])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ec7e2ff6
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 15 Mar 2021 20:49:51 +0000 (UTC)
-Received: by mail-pg1-x52d.google.com with SMTP id 16so14761833pgo.13
- for <wireguard@lists.zx2c4.com>; Mon, 15 Mar 2021 13:49:50 -0700 (PDT)
+ Mon, 15 Mar 2021 22:52:41 +0000 (UTC)
+Received: by mail-pj1-x1030.google.com with SMTP id
+ kr3-20020a17090b4903b02900c096fc01deso378829pjb.4
+ for <wireguard@lists.zx2c4.com>; Mon, 15 Mar 2021 15:52:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=bNyytrOBBRZsLvUxjcZwHhhC83/UUG5lv5nmOJQdPto=;
- b=JaPwxj8YGAqAHOEQ475t685Vvh+HgDTwF/1EA5eDeFEs1hejWm8ARCMAtStSmkTqxf
- fRKtNYwoJH+jJqRZPHxh1W1y+JPA3r1ad8IGoVtIMWF80+9j/fEIddzrEZsU9n+Ec8vd
- lx0oYBfRXFFdFy6iltYg0r6DzANeaUh3ma8VNrPxsHt/hfQlhAWqwTSGruofakJRapWd
- N+J5nOtE3Fh/quRmX8FAvBv3xQhYBvBZLzIH3a9do9ZFIcTxHmA+buq3lozm9ocxKtsY
- UeKdiHkl0+DgW/XcStUA4C35//DFLzixe6yScs8zzQEH4G8PY3zRXgKCDJ9cJt3ijd7+
- hTUQ==
+ h=content-transfer-encoding:from:mime-version:date:subject:message-id
+ :to; bh=CeZmgcMvsUSW2K5/jbMZTmRXVO+bbf9e/jMqVe2wpGc=;
+ b=qg7RW8fcUnGjkjKNp82gLx0QKkD+A4V6rAhnqF8jnR6u0AYxA0Ck4z+SzQW1QKdIT8
+ U0+F3202Uo915n2pdyIkHnvIRWsoyVgo3qOqsvTTOeouxb8KQiOAEPSpR+K4i9mrmzqI
+ bOcs+7dhifQAFpNoADfdZKaAdNKALdEBJgb1ecfUXVqykieVoVbLqyADAZsCTj+I9lt2
+ 2iPdOjiUfwsu/vZBix17WviGs23c0ntDt4FhHosw43REQ34DYXgfMLScUZAVBbTZE3El
+ GqBUx04s+o8/H/pBIweTdiR5hZ96z/Em2pScYULtTnt+slTi0PuVvmQSrtbDHZvA5UWL
+ 7IPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=bNyytrOBBRZsLvUxjcZwHhhC83/UUG5lv5nmOJQdPto=;
- b=qW7re9kUzn456EA2DZG/Bs+ir0enUccjyPI++XxZvAB2SShY+RO83UJlsb74aIkIQZ
- dACkYAUXh1/dFlDqhokFqWhi1d2hgyIHas4nfgsktDroJzZbJ1OFBKRZ50YTYheaoE3H
- 9MD0Jgw2EL0JSJoB3q39GQkoDx7YHgSyq6gnhwXefAwI3BWYzYbmlnuEAhgikHtTuaSx
- WTHFaoMLLn/j5xyGGAzNRl/37NoBg0IX8IzGvyPGnb6DkGQBgCAMN0Ht2nTXKPPJ8HRo
- fKaHTyO7TX4n2ATWkx91WTHC+tXEvYDhKMQfooKROVg7TukaiMoIEQedA6nr+w3HBAYk
- /sBA==
-X-Gm-Message-State: AOAM531k+yHmyk5a+ZeWwfzr2rFJ/yUHaaqUn6doonCEm96Tws39aBRV
- AhAfzhEC3Dpfx5G/9NbrqYs42RYilXmFTd+03YH3GN49mWw=
-X-Google-Smtp-Source: ABdhPJzracy+rHxokNNnHVqUSZ380E9cWDqVbxOF16p6KQUjwtwbGHHtk8IdLmfq+dunDs8anDEcCxHL2rkKpucSDOQ=
-X-Received: by 2002:a63:2009:: with SMTP id g9mr792002pgg.219.1615841389357;
- Mon, 15 Mar 2021 13:49:49 -0700 (PDT)
-MIME-Version: 1.0
-From: Tim <timstartuptim@gmail.com>
-Date: Mon, 15 Mar 2021 15:49:36 -0500
-Message-ID: <CABmZ64yKVBO0jz68qOeQfZ+cxwn0JcfOy9=pKNP1AjLDDUAg9Q@mail.gmail.com>
-Subject: Wireguard Windows client/exe - disable creation of routes
+ h=x-gm-message-state:content-transfer-encoding:from:mime-version:date
+ :subject:message-id:to;
+ bh=CeZmgcMvsUSW2K5/jbMZTmRXVO+bbf9e/jMqVe2wpGc=;
+ b=bcVntWcpCloD81LKMcT3du4Sf6u3SX4y+Vwe84jvDSGzy//By6cmfLbYB+L61QhmaF
+ gwxABPCSWja74hzEtO1Y5OEP+Es475Aw9ZxS2hXnheooAoQyLfU7LcMxAotq/URdaTfR
+ HqVHecl3YoX0jd7n0PS/bYViQH6sk9mXU2b84EzQlZdsHTXeTZMq5jnE5v+6NsxYC6tl
+ lslfkVkIs20fB7oBTfJbADIGnlw+61p3RLXQcElCKHXjNi9Gkg5BzwUaWD7MliVs0fGr
+ pnDmvovyZPtX3zQCxD2gb61Us9hhA6swGqUnr9ffqQ1J+iy/wyJ3bC6k41sAzJHJZztb
+ AnBQ==
+X-Gm-Message-State: AOAM533U/fRJdp7T/O1mIXsfRoW5sP41Uajx2tyeEEO+iTi+/AEt0tRA
+ +SLuwKQeVZpqG++YKZADxlxc+qM+qk0=
+X-Google-Smtp-Source: ABdhPJz8iGzFtfwfv2MFf581RbJHX0y2vomiTezC6bY1RODO1Kc8Z47OHkNFx5Be6IgcfnEL/IzG+w==
+X-Received: by 2002:a17:903:30c3:b029:e6:5008:f7a7 with SMTP id
+ s3-20020a17090330c3b02900e65008f7a7mr13660318plc.73.1615848759240; 
+ Mon, 15 Mar 2021 15:52:39 -0700 (PDT)
+Received: from [10.78.6.105] (89.208.241.197.16clouds.com. [89.208.241.197])
+ by smtp.gmail.com with ESMTPSA id d7sm14041179pfh.73.2021.03.15.15.52.38
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 15 Mar 2021 15:52:38 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+From: Daniel Yu <leptonyu@gmail.com>
+Mime-Version: 1.0 (1.0)
+Date: Tue, 16 Mar 2021 06:52:36 +0800
+Subject: Is iOS testlight available?
+Message-Id: <A7D1188B-A61E-4167-8BBF-A06F2AF3F1F8@gmail.com>
 To: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+X-Mailer: iPhone Mail (18D52)
 X-Mailman-Approved-At: Tue, 16 Mar 2021 13:36:37 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -74,19 +84,7 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Does anybody know how one can use the Wireguard Windows
-client/executables to establish a connection but not have the
-client/executables modify the Windows routing tables.  Functionality
-similar to the "Table = off" in the linux WG but using the Wireguard
-Windows executables (wg.exe/wireguard.exe)?
+Hi,
+   My ios version is outdated with TestFlight.
 
-My goal is to use the existing executables but to handle route
-creation on my own.
-
-I've tried "Table = off" but it does not work.  Nor does a cursory
-examination of the source code.  Though this seems to be something
-basic, so I imagine I am missing how to do it.
-
-Any idea?
-
-Thanks in advance for your help!
+Thanks
