@@ -2,75 +2,67 @@ Return-Path: <SRS0=bERg=IP=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1456DC433DB
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Mar 2021 12:56:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F033C433E0
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Mar 2021 12:56:11 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id EF9D464F67
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Mar 2021 12:56:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org EF9D464F67
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=wandera.com
+	by mail.kernel.org (Postfix) with ESMTPS id 42D7E64F67
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Mar 2021 12:56:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 42D7E64F67
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=freebsd.org
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c6f18056;
-	Wed, 17 Mar 2021 12:53:26 +0000 (UTC)
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com
- [2a00:1450:4864:20::630])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4502b525
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id eedb17c0;
+	Wed, 17 Mar 2021 12:53:35 +0000 (UTC)
+Received: from mx2.freebsd.org (mx2.freebsd.org [2610:1c1:1:606c::19:2])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 28e0c59c
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 17 Mar 2021 12:53:24 +0000 (UTC)
-Received: by mail-ej1-x630.google.com with SMTP id p7so2426208eju.6
- for <wireguard@lists.zx2c4.com>; Wed, 17 Mar 2021 05:53:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wandera.com; s=google;
- h=mime-version:subject:from:in-reply-to:date:cc:message-id:references
- :to; bh=IZTS/kMVSu6im9iw2qHuPITbqHRcc4rou3gOktWyQHc=;
- b=XsFT6OTnK3znqhk/DlZxc7QQ4vMwSbq72RWQYRIOjTXADEy1yy2Hbzm5idgHFTt/RE
- 04/NJg13wMY/NawIXPVMI2VWu40D9x9yJwjksvTJoPgdIUgXGG4v6lir96MnEZaJwVml
- X4QQNI9LTD8q61X22IKCBwGC4/3Zx5oYf5C0nsCUsYwQwYk495WTYlwlhr/1H1pEIbQT
- 1wTL9enaH399VFpUpx6mnm2QwowDk7epN/Q0lWGKx0MUgDxIZZSLh2ge2N1NL6Msd6Nq
- m6jYP6NYtXAwEiXfFNQe9IR9qrjqOD4SrayZm1HuZetTRd+5WhXvmkYEVjqoANWOc0gy
- KnIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
- :message-id:references:to;
- bh=IZTS/kMVSu6im9iw2qHuPITbqHRcc4rou3gOktWyQHc=;
- b=tYpKfowUM5KQiIj3mF7K5YVe9YWeBOj5xyeqrQW/fPUTUSaCQHDSGg76UU1WhAeisV
- ocDI4R2TRs34TaZsNu9bVziJWAbWdSSVymAztGijqyfYxtt1oUf/0vX0lpEvOPRXO4JL
- tjh8hWclwVV+ZPdGAbvPZZbGNR5R8Iu/Kr6rCayxmsnmVF8Fo6idKzOWBZGBUww/UIlA
- UWMqpsrssDGx4KbVwK6uNIDXJbEmbFcWTisPYq7M1J0TMoj66cmMR+ZVs3RoSbHVm6bU
- Xl1B6OfEDIfFaJVdMiy5SZY3VATOhgS1A0JhyOPijTdNqOBTV9/OaaUjlSzFnHldtCt8
- 3CnA==
-X-Gm-Message-State: AOAM530Abnv7kCKbaMpzlbSlKEYF5177Ldw6NrT7abPqUwfGb3GN0+Kf
- gc7oxneu9UuyqCymmJtervsRljMfXnRIo+ryjkuy0vMGOOX9UY3OcY2S97oi3FwRYUXv1kmn3I+
- ppztN1RrgNT77uZKGXC2nZVya
-X-Google-Smtp-Source: ABdhPJy6PshJzdbQkU3k83wU0Mpsah3+xHdkrudcDcD/U44nqwXHvZol0q7zpYc8eybkCXrilG8cBg==
-X-Received: by 2002:a17:906:7c48:: with SMTP id
- g8mr35603029ejp.138.1615985604019; 
- Wed, 17 Mar 2021 05:53:24 -0700 (PDT)
-Received: from ?IPv6:fddd:dddd:1000:0:9a12:47ec:bb66:3813?
- (ec2-18-130-213-235.eu-west-2.compute.amazonaws.com. [18.130.213.235])
- by smtp.gmail.com with ESMTPSA id d5sm7027433ejc.98.2021.03.17.05.53.23
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Wed, 17 Mar 2021 05:53:23 -0700 (PDT)
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.60.0.2.21\))
-Subject: Re: [PATCH] Respect WG protocol reserved bytes
-From: Laura Zelenku <laura.zelenku@wandera.com>
-In-Reply-To: <f5126d40-4ea7-193a-93dd-ab816af3bb7e@aaronmdjones.net>
-Date: Wed, 17 Mar 2021 13:53:22 +0100
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Message-Id: <2240E688-898B-4F74-B954-0754464F6352@wandera.com>
-References: <9C811F88-FD21-47D0-B3FE-A14FD5BC1816@wandera.com>
- <f5126d40-4ea7-193a-93dd-ab816af3bb7e@aaronmdjones.net>
-To: Aaron Jones <me@aaronmdjones.net>
-X-Mailer: Apple Mail (2.3654.60.0.2.21)
-Content-Type: text/plain; charset="ISO-8859-1"
+ Wed, 17 Mar 2021 12:53:34 +0000 (UTC)
+Received: from mx1.freebsd.org (mx1.freebsd.org [96.47.72.80])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits)
+ client-signature RSA-PSS (4096 bits))
+ (Client CN "mx1.freebsd.org", Issuer "R3" (verified OK))
+ by mx2.freebsd.org (Postfix) with ESMTPS id DF65073AF7
+ for <wireguard@lists.zx2c4.com>; Wed, 17 Mar 2021 12:53:32 +0000 (UTC)
+ (envelope-from gbe@freebsd.org)
+Received: from smtp.freebsd.org (smtp.freebsd.org
+ [IPv6:2610:1c1:1:606c::24b:4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
+ client-signature RSA-PSS (4096 bits) client-digest SHA256)
+ (Client CN "smtp.freebsd.org", Issuer "R3" (verified OK))
+ by mx1.freebsd.org (Postfix) with ESMTPS id 4F0qpN5jL3z3kSW;
+ Wed, 17 Mar 2021 12:53:32 +0000 (UTC) (envelope-from gbe@freebsd.org)
+Received: from localhost (p200300d5d740b9c039e609000b7e9f1f.dip0.t-ipconnect.de
+ [IPv6:2003:d5:d740:b9c0:39e6:900:b7e:9f1f])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (Client did not present a certificate) (Authenticated sender: gbe)
+ by smtp.freebsd.org (Postfix) with ESMTPSA id 41861206B3;
+ Wed, 17 Mar 2021 12:53:32 +0000 (UTC) (envelope-from gbe@freebsd.org)
+Date: Wed, 17 Mar 2021 13:53:28 +0100
+From: Gordon Bergling <gbe@freebsd.org>
+To: Kyle Evans <kevans@freebsd.org>
+Cc: freebsd-arch@freebsd.org, FreeBSD Hackers <freebsd-hackers@freebsd.org>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
+Subject: Re: Removing WireGuard Support From FreeBSD Base
+Message-ID: <YFH7yIJ9OImHUwYO@lion.0xfce3.net>
+References: <CACNAnaHR9Li0wPOjmwRk7jG76-AESoTt0QrrG_UVTrev38N=bQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="RTChV5aF75eiVAKG"
+Content-Disposition: inline
+In-Reply-To: <CACNAnaHR9Li0wPOjmwRk7jG76-AESoTt0QrrG_UVTrev38N=bQ@mail.gmail.com>
+X-Url: <https://www.gordons-perspective.com/>
+X-Operating-System: FreeBSD 12.2-STABLE amd64
+X-Host-Uptime: 1:47PM  up 2 days, 19:32, 4 users, load averages: 0.26, 0.27,
+ 0.25
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -85,40 +77,104 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-If the client send some data in reserved bytes you will have logs full of errors because the message gets type from 4 bytes instead of 1 byte (like it is in protocol description).
-I would like implementation respects protocol - https://www.wireguard.com/papers/wireguard.pdf . Yes, in our project we use reserved bytes.
 
-I know that when there are zeros in reserved bytes, everything is correct. But if you receive some non-zero value in reserved bytes?
+--RTChV5aF75eiVAKG
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Laura
+I am not sure, if the removal is a great idea, a removal from
+releng/13 and stable/13 - possibly yes, but from main?
 
-> On 17. 3. 2021, at 13:35, Aaron Jones <me@aaronmdjones.net> wrote:
-> 
-> On 17/03/2021 07:55, Laura Zelenku wrote:
->> Packet that respects WG protocol contains Type on first byte followed by
->> three reserved bytes. Because wireguard-go implementation uses element
->> pools it is required to make sure that reserved bytes are cleared for
->> outgoing traffic (can get dirty by "bad" clients). Clearing reserved
->> bytes is also for backwards compatibility.
-> 
-> Encoding the message type as a little-endian 32-bit integer already
-> takes care of setting the reserved bytes to zero; e.g. for a packet of
-> message type 1 (handshake initiation), its little-endian 32-bit encoding
-> is the following sequence of bytes: [ 0x01 0x00 0x00 0x00 ].
-> 
-> This is also the approach used for checking message types on the
-> receiving end, so packets whose reserved bytes are non-zero are already
-> discarded as being those of unknown types of message.
-> 
-> Regards,
-> Aaron Jones
-> 
+This is still -CURRENT and -CURRENT should be central place for development,
+even if we have phabricator for review.
 
+If the complete backout is happening, please don't forget the manual
+page. I have spend a lot of time on it, while OpenBSD made a good
+template.
 
--- 
-*IMPORTANT NOTICE*: This email, its attachments and any rights attaching 
-hereto are confidential and intended exclusively for the person to whom the 
-email is addressed. If you are not the intended recipient, do not read, 
-copy, disclose or use the contents in any way. Wandera accepts no liability 
-for any loss, damage or consequence resulting directly or indirectly from 
-the use of this email and attachments.
+--Gordon
+
+On Tue, Mar 16, 2021 at 11:48:56AM -0500, Kyle Evans wrote:
+> Hi,
+>=20
+> You may have recently noticed some chatter around the internet about
+> FreeBSD's in-kernel WireGuard implementation, and the work we've done
+> on it in the last week.  You may have also noticed additional chatter
+> afterwards with regards to the original implementation.  I'd like to give
+> some context and information with regards to the current situation, as
+> well as provide some insight into the future as one of the developers
+> involved.
+>=20
+> With regard to the original implementation, this will be my only
+> commentary on the matter. I'm a developer, and I'm passionate
+> about the work that I do- often to a fault. I've said some things that
+> I regret; the accusations that Scott Long alluded to in an e-mail on Free=
+BSD
+> mailing lists were indeed made by me, and his phrasing of what I
+> said was much kinder than it could have been. These were mistakes,
+> and I'm going to own that. However, my personal belief is that neither
+> Netgate, pfSense, nor the original developer deserved the level of
+> scorn and criticism that they've received in the past days from both the
+> press and the community at large.
+>=20
+> In the next day or so, I will be committing a removal of all WireGuard
+> related bits from our 'main' branch, including the work that I recently
+> committed. It will be followed up by a removal of the implementation
+> from stable/13, and we will seek appropriate approval to remove it
+> from releng/13.0 as well. Please, do not be concerned by any of this;
+> this is being done with mutual support from all parties.
+>=20
+> Did the original implementation have issues? Yes, it did. Are we
+> certain that our new version -doesn't- have issues? I believe it
+> doesn't, but it hasn't been through thorough enough review. We hacked
+> on this for a week, and we all reviewed each others' work in the
+> process. The problem is that this work, in particular, is a driver with f=
+airly
+> severe security implications. Review by "three developers working
+> and beating on it" is not the higher bar that we should be
+> holding this to. While I believed I was doing what's right for the
+> community, it's become clear that what's right for the community is
+> to take a step back and do this the right way.
+>=20
+> Note that we're not dropping this effort. We will continue iterating
+> on this out-of-tree, and we will go through the proper review
+> channels. Folks will be unhappy in the interim because we're removing
+> it right now, but in the end we will have a better FreeBSD because of
+> it. There will be a kernel module available in ports at some point,
+> but not before it's ready.
+>=20
+> Moving forward, myself, members of Netgate, and members of the larger
+> community *are* working together on strictly technical details. I urge
+> anyone with an interest in reviewing the driver to also get in touch with=
+ me.
+> Please, let's move forward as a community on this.
+>=20
+> Thank you,
+>=20
+> Kyle Evans
+> _______________________________________________
+> freebsd-arch@freebsd.org mailing list
+> https://lists.freebsd.org/mailman/listinfo/freebsd-arch
+> To unsubscribe, send any mail to "freebsd-arch-unsubscribe@freebsd.org"
+
+--=20
+
+--RTChV5aF75eiVAKG
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQGTBAEBCgB9FiEEYbWI0KY5X7yH/Fy4OQX2V8rP09wFAmBR+8hfFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDYx
+QjU4OEQwQTYzOTVGQkM4N0ZDNUNCODM5MDVGNjU3Q0FDRkQzREMACgkQOQX2V8rP
+09zmrQgAnsfgJ6vHWxHkAKQMmjsBu+/D0Zn9h3riJZmY79pC53/kEcfFIm4n45Gv
+XDvbP5b4wrNSKYtLBJJuskJXY0OPHlNxDESoduEN2FIUy1ffxTj7eQKdP9FtdPj4
+PRMtAcF/95IfGc/wUNRQcOsMW5LZq1md0uLqBM6YqKYCIILPfvBFxtOPUMsifWNK
+hdfK8pHu0qUwAZUKLtKKF86SA67a/L874n2roKZazzNFzT0rqVNIxdr1T5qAtpk3
+GkXaVDEVF25wo8IX4jIRvCXs6tjHqw9KdWc4bxX6WmsB0eelaJuuok4j4KN+oEkE
+cz+huqPlxvOOWm+QOO4DKRrwAOwxWQ==
+=2JqR
+-----END PGP SIGNATURE-----
+
+--RTChV5aF75eiVAKG--
