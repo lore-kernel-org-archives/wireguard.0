@@ -2,62 +2,51 @@ Return-Path: <SRS0=bERg=IP=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FDE1C433E0
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Mar 2021 18:34:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67F04C433E0
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Mar 2021 19:55:52 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 050EA64F4F
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Mar 2021 18:34:22 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 050EA64F4F
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id 7C5D164F65
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 17 Mar 2021 19:55:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 7C5D164F65
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=harz.behrens.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0025a5b1;
-	Wed, 17 Mar 2021 18:34:21 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [104.131.123.232])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 1946d692
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9bd0b24f;
+	Wed, 17 Mar 2021 19:55:48 +0000 (UTC)
+Received: from post.behrens.de (post.behrens.de [2a01:170:1023::1:2])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id bfea059e
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 17 Mar 2021 18:34:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1616006053;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=cjjMrT2xYrXsJqkFDsqRf8ReOoXS7j5fb6T1uzcyYzo=;
- b=qD+wxZr0oG+EVJ2pLqjWPun4ZHqCcYx9K2kTdzstNi342qoMRUPGHsGRYue6lNccWvzWG7
- sVJcgyoi0wI6jl9YpkSb+aWvz1LV/QkaTmD/9zp/D05mZw2h9JCmUZWDgdN4vWwlM8V/mC
- bPWxTnP+Oxda7A2CdgnDExyQXIR39S4=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id bfb82197
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Wed, 17 Mar 2021 18:34:13 +0000 (UTC)
-Received: by mail-yb1-f175.google.com with SMTP id p186so41582015ybg.2
- for <wireguard@lists.zx2c4.com>; Wed, 17 Mar 2021 11:34:13 -0700 (PDT)
-X-Gm-Message-State: AOAM533ChDzBM5fbwXcPTY2KMNWwZA2X4J9AI1hANkLWXzGXeLHvePRa
- 6Rf8SPSi2BFsEfU3EkRt7qEcWsbSU9Lbe2xcirM=
-X-Google-Smtp-Source: ABdhPJy2yTWXhL8i2ug5YvbJreL+NPFVFbQolWZ4rFVa1KmLQtXZ777TJ9LzTUGPdsAGPYCcn4aUXuX9ypsIt4lCZ5k=
-X-Received: by 2002:a25:38c5:: with SMTP id f188mr6186822yba.178.1616006052690; 
- Wed, 17 Mar 2021 11:34:12 -0700 (PDT)
-MIME-Version: 1.0
+ Wed, 17 Mar 2021 19:29:14 +0000 (UTC)
+Received: from [IPv6:2a01:170:1023:0:4d11:ef77:adf9:d62d]
+ ([IPv6:2a01:170:1023:0:4d11:ef77:adf9:d62d]) (authenticated bits=0)
+ by post.behrens.de (8.16.1/8.16.1) with ESMTPSA(MSP) id 12HJTD4F030533
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO cn=);
+ Wed, 17 Mar 2021 20:29:13 +0100 (CET)
+ (envelope-from frank@harz.behrens.de)
+Subject: Wireguard for FreeBSD without iflib
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 References: <CACNAnaHR9Li0wPOjmwRk7jG76-AESoTt0QrrG_UVTrev38N=bQ@mail.gmail.com>
  <YFH7yIJ9OImHUwYO@lion.0xfce3.net>
-In-Reply-To: <YFH7yIJ9OImHUwYO@lion.0xfce3.net>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 17 Mar 2021 12:34:02 -0600
-X-Gmail-Original-Message-ID: <CAHmME9pqVfzWVsuTrC2eovbWTVeTSX086ZM6DSOK1ejPjkV3uQ@mail.gmail.com>
-Message-ID: <CAHmME9pqVfzWVsuTrC2eovbWTVeTSX086ZM6DSOK1ejPjkV3uQ@mail.gmail.com>
-Subject: Re: Removing WireGuard Support From FreeBSD Base
-To: Gordon Bergling <gbe@freebsd.org>
-Cc: Kyle Evans <kevans@freebsd.org>, freebsd-arch@freebsd.org, 
- FreeBSD Hackers <freebsd-hackers@freebsd.org>, 
- WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+ <CAHmME9pqVfzWVsuTrC2eovbWTVeTSX086ZM6DSOK1ejPjkV3uQ@mail.gmail.com>
+From: Frank Behrens <frank@harz.behrens.de>
+Message-ID: <4621c1df-1fd0-489a-8a7d-b1731ae6626c@harz.behrens.de>
+Date: Wed, 17 Mar 2021 20:29:12 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.0
+MIME-Version: 1.0
+In-Reply-To: <CAHmME9pqVfzWVsuTrC2eovbWTVeTSX086ZM6DSOK1ejPjkV3uQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: de-DE
+X-Mailman-Approved-At: Wed, 17 Mar 2021 19:55:47 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -72,38 +61,25 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Gordon,
+Hello Jason,
 
-On Wed, Mar 17, 2021 at 6:53 AM Gordon Bergling <gbe@freebsd.org> wrote:
-> I am not sure, if the removal is a great idea, a removal from
-> releng/13 and stable/13 - possibly yes, but from main?
->
-> This is still -CURRENT and -CURRENT should be central place for development,
-> even if we have phabricator for review.
+I read your messages from the last days in the freebsd lists.
+In the version before removal from freebsd and in your current 
+repository at https://git.zx2c4.com/wireguard-freebsd/ I see a problem.
+I can't load the module, because I get the error:
+Mar 17 20:07:53 <kern.crit> moon kernel: link_elf_obj: symbol 
+qgroup_if_io_tqg undefined
+Mar 17 20:07:53 <kern.crit> moon kernel: linker_load_file: 
+/usr/local/src/wg/src/if_wg.ko - unsupported file type
 
-It looks like Kyle has gone ahead with the revert anyway, so
-development is now happening at:
+I guess that is caused my the fact, that I do not have iflib in the 
+kernel and you have only a TASKQGROUP_DECLARE(if_io_tqg) in the source 
+and not TASKQGROUP_DEFINE(..).
 
-https://git.zx2c4.com/wireguard-freebsd/
+Kind regards,
+    Frank
+-- 
 
-And there are now regular snapshot releases:
+Frank Behrens
+Osterwieck, Germany
 
-https://lists.zx2c4.com/pipermail/wireguard/2021-March/006518.html
-
-As for your objections, and the question of what -CURRENT should or
-shouldn't be used for, I really have no idea as a community outsider.
-But I do look forward to submitting it for proper inclusion in
--CURRENT after a few more cycles of development and refinement.
-There's also the crypto question that I'd welcome some feedback on:
-
-https://lists.freebsd.org/pipermail/freebsd-hackers/2021-March/057076.html
-
-> If the complete backout is happening, please don't forget the manual
-> page. I have spend a lot of time on it, while OpenBSD made a good
-> template.
-
-Thanks for bringing this up; I had actually forgotten about that. Do
-you want to re-add it and keep that current as we develop? If you
-email me your SSH key, you can just commit it directly.
-
-Jason
