@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4AA80C433DB
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 19 Mar 2021 14:06:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 53EAAC433DB
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 19 Mar 2021 14:08:23 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 2F03A64DE8
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 19 Mar 2021 14:06:48 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 2F03A64DE8
+	by mail.kernel.org (Postfix) with ESMTPS id 2E40A64EF6
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 19 Mar 2021 14:08:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 2E40A64EF6
 Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=lostca.se
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 89ac37af;
-	Fri, 19 Mar 2021 14:04:51 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 749da573;
+	Fri, 19 Mar 2021 14:04:52 +0000 (UTC)
 Received: from aloka.lostca.se (aloka.lostca.se [178.63.46.202])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2eab1317
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6e6ff12f
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 18 Mar 2021 20:28:42 +0000 (UTC)
+ Thu, 18 Mar 2021 20:31:10 +0000 (UTC)
 Received: from aloka.lostca.se (aloka [127.0.0.1])
- by aloka.lostca.se (Postfix) with ESMTP id 24F181585
- for <wireguard@lists.zx2c4.com>; Thu, 18 Mar 2021 20:28:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=lostca.se; h=from:to
- :subject:message-id:date:mime-version:content-type; s=howrah;
- bh=EPeSODd6WvY7EHm/uBIYWCa3M1I=; b=f43S9TywVpMeTcNY/0kQH0VmmJOJ
- /c9fE4ZVcbxQofuhNgszv86bTUInHam1x6lcSvh9Yug8fvT96l8vnzYQpKAMP9wY
- RxPfrWfVwINmkmqUQcFIBiegcFSsGwZOHs9hxX7tj1/N0ryxjaHSGx4DZndoogBu
- YvmfntyvimgtYT4=
+ by aloka.lostca.se (Postfix) with ESMTP id E97B71591
+ for <wireguard@lists.zx2c4.com>; Thu, 18 Mar 2021 20:31:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=lostca.se; h=from:subject
+ :to:message-id:date:mime-version:content-type; s=howrah; bh=66K+
+ cdvtWAA3YL+AnRxQV07Hao0=; b=JJR6kk5aZbDUstERiEA5vCCgiQfEIHeyasj7
+ VAEPjBu3J1lkDVbnuEAIXoIkeBmJDiw7+CKbvT5hzjeOisAJMh5/Nu0yEhDV1fVG
+ 2XOzO00qjx1+h8YWCStuHP6gBNwUHDH7mBYr6i93iJVslr5nrV8vUA3bRVI7RjAb
+ C7xQJhs=
 Received: from chateau.d.if (unknown [123.136.206.40])
  (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange X25519 server-signature RSA-PSS (3072 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (3072 bits))
  (No client certificate requested) (Authenticated sender: abbe)
- by aloka.lostca.se (Postfix) with ESMTPSA id C687C1584
- for <wireguard@lists.zx2c4.com>; Thu, 18 Mar 2021 20:28:41 +0000 (UTC)
+ by aloka.lostca.se (Postfix) with ESMTPSA id 93AEF1590
+ for <wireguard@lists.zx2c4.com>; Thu, 18 Mar 2021 20:31:09 +0000 (UTC)
 From: Ashish <ashish.is@lostca.se>
-To: wireguard@lists.zx2c4.com
 Subject: Unable to serve TCP connections over wireguard interface on FreeBSD
  13.0-RC2
-Message-ID: <e1a14dfa-014c-7740-6205-75cd96933dba@lostca.se>
-Date: Fri, 19 Mar 2021 01:58:38 +0530
+To: wireguard@lists.zx2c4.com
+Message-ID: <2c955be3-7360-cf8c-ad2f-ec1c382242ad@lostca.se>
+Date: Fri, 19 Mar 2021 02:01:07 +0530
 User-Agent: Mozilla/5.0 (X11; FreeBSD amd64; rv:78.0) Gecko/20100101
  Thunderbird/78.7.1
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
  protocol="application/pgp-signature";
- boundary="DgCyEmz1jj4PwHJHp6WNcXLvV0hX6dYwF"
+ boundary="7673azxMpQ51pm9FVQtiVBgkkkzr1SD9W"
 X-Mailman-Approved-At: Fri, 19 Mar 2021 14:04:49 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -68,19 +68,22 @@ Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
 This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---DgCyEmz1jj4PwHJHp6WNcXLvV0hX6dYwF
-Content-Type: multipart/mixed; boundary="cUPaiHeK5WO9jlStFqhF9X6idK3QpgvKo";
+--7673azxMpQ51pm9FVQtiVBgkkkzr1SD9W
+Content-Type: multipart/mixed; boundary="wBODFTgv6SZlVGRefyS5BOwsNBNMGgmUr";
  protected-headers="v1"
 From: Ashish <ashish.is@lostca.se>
 To: wireguard@lists.zx2c4.com
-Message-ID: <e1a14dfa-014c-7740-6205-75cd96933dba@lostca.se>
+Message-ID: <2c955be3-7360-cf8c-ad2f-ec1c382242ad@lostca.se>
 Subject: Unable to serve TCP connections over wireguard interface on FreeBSD
  13.0-RC2
 
---cUPaiHeK5WO9jlStFqhF9X6idK3QpgvKo
+--wBODFTgv6SZlVGRefyS5BOwsNBNMGgmUr
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
+
+
+[apologies, in case you receive duplicate messages]
 
 Hi,
 
@@ -184,14 +187,9 @@ length 30
 =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
 
 
-
-
 The tunnel is configured using `wg-quick'. The firewalls are unloaded
-for this testing.
- I have made sure to delete the if_wg.ko shipped with FreeBSD, and
-rebooted the host before trying this.
-
-
+for this testing. I have made sure to delete the if_wg.ko shipped with
+FreeBSD, and rebooted the host before trying this.
 
 And ofcourse, if I switch to userspace Go implementation, everything
 works as expected, keeping rest of the configuration same, and with
@@ -202,27 +200,27 @@ Thanks!
 Ashish
 
 
---cUPaiHeK5WO9jlStFqhF9X6idK3QpgvKo--
+--wBODFTgv6SZlVGRefyS5BOwsNBNMGgmUr--
 
---DgCyEmz1jj4PwHJHp6WNcXLvV0hX6dYwF
+--7673azxMpQ51pm9FVQtiVBgkkkzr1SD9W
 Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
 Content-Description: OpenPGP digital signature
 Content-Disposition: attachment; filename="OpenPGP_signature"
 
 -----BEGIN PGP SIGNATURE-----
 
-wsF5BAABCAAjFiEE9oLNzDncD+rhFiC2x0bPqedPpLAFAmBTt/cFAwAAAAAACgkQx0bPqedPpLBw
-gA//V7XkUwtPRLzaGr68/fM5tpmtg4dG+K4na1hcYdG+YiaxVQ3P2jPJ7UJNq4OaDoz9UFZhPzHo
-ucmBzeUCQudm+eXcjw/2onKO5hLJphszK5mKwKHGtfu++m/Cmgzpb1VSiNwzD5ixTQHYSvvO3yHa
-HSsqFLx4FH6aofITdYTVCbrElsztDu5pSoNtLAd9ndtEuZ3H1bUW8YOctyp12KiQfKhFZ39kALr6
-FtJBYHnlk7vz9ZC6Aw1v8ZmLtB1s6xZGLG/mU65l+SqNBR7jfPV1fJe0nF+zpGVcTcjTnvAdBoHv
-T7ylGMEAw54QHt7RBWcGxxuRHHCdDw+DbOwjenwEUL2cdjFkcDLEjIsoPJneUtabsgGNKPtaCJqp
-nUOE2kHPSOPY3pHSHcb5ATvY7XHbK6HX1XS//TwZSnbd27H2VCcf0AF5g/syxJd3nHeaelde9CNy
-oVZ8pl2Pvcg+6KjQiuSwo/353zpW91wKLYcg4/AVJcJAf6zmj6yL1LkVMnsJlWIr0RUQnjDHd+61
-1rgQ4PIr/0bedJ1x3wzFfFkBNaQpE1yHYYrhwqyQD8eERfatnNRhgxEM2GwMxuZO5gdyc4LcjZjD
-m5a9hGhJFM27N9agWfY54N8xQWwNLhbcSDnR14fJQl6wKI3Kf5XHRL7nTsmmKkPyOqMXUfJK0SEH
-lUs=
-=RZVI
+wsF5BAABCAAjFiEE9oLNzDncD+rhFiC2x0bPqedPpLAFAmBTuIsFAwAAAAAACgkQx0bPqedPpLBw
+bhAArFy+LF0TAIF8nVLGBkmIiS5/U3cWLSpYxumbvMAdDqpBngQ4eodmxeiUXUHN7sIaIgJp05F0
+f/28AOJfnKusWg0LvO3T3iL/WHXLssQ5Y2a1GmH1rRUZf5kWQfCDUkaeS1EMymG6trCUJ6trqzPu
+AeLuhxE+atUAgD8vVlAVYDKv9ajBaK7nzpSqPn51dYWNr1gWvu1Mj4PM1u+1DZrBtD+Vxs9LyoAp
+3n2MY4ryZr70ssTnWtVgGQLWxOi+1Hq1iw9XlXcIOcCWhrp9SClRlheDOnOBcLO7EPzGe4ZK5wPs
+SC0/NHq8SzkGxM2Gm29hTMNvCGrYdbtZgDzVMVRT9u+p6ForiY5jsFr14/MRohcbSTUas2xqM14n
+ebBI4KruckXvP9l3yMQSiL26gcnkYB3MR5OOlfuq8D+bNZaYyW8u8XvH+OXJjNr1dmjx2T/d/uKA
+ylKdNVoOJh2aczUF/eGj8eXLGhMEZ8QFwY8Ixdu9f+LxIRmYIlFUjl6sHwH+pMIxnRg29JP0KSGR
+LC3Xdtyg9N4amoGsd6P4LFOnXYLNXWy0o8Aa8znGwEuEA24P9McNY3ecPpGN1rnV30HIb5zOpa6M
+w2rd+HrRfBiUnmnMCbBcnWH8bfaCJ+CgAVqH34I++DY4tNcHO0Xt1pIrXs4OxyxJCF9/F6XCD/RE
+oE0=
+=uPqS
 -----END PGP SIGNATURE-----
 
---DgCyEmz1jj4PwHJHp6WNcXLvV0hX6dYwF--
+--7673azxMpQ51pm9FVQtiVBgkkkzr1SD9W--
