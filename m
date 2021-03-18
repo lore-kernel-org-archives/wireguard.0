@@ -2,74 +2,74 @@ Return-Path: <SRS0=a6UP=IR=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D20CC433E0
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 19 Mar 2021 13:38:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C1A6AC433E0
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 19 Mar 2021 14:04:05 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 50B0564F68
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 19 Mar 2021 13:38:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 50B0564F68
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=freebsd.org
+	by mail.kernel.org (Postfix) with ESMTPS id B614F64DE8
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 19 Mar 2021 14:04:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org B614F64DE8
+Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=jacobs.co.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7ea02e23;
-	Fri, 19 Mar 2021 13:38:21 +0000 (UTC)
-Received: from mx2.freebsd.org (mx2.freebsd.org [96.47.72.81])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4b1f6725
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b1936ed7;
+	Fri, 19 Mar 2021 14:04:03 +0000 (UTC)
+Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com
+ [2607:f8b0:4864:20::82b])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c32bc4c2
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 19 Mar 2021 13:38:20 +0000 (UTC)
-Received: from mx1.freebsd.org (mx1.freebsd.org [IPv6:2610:1c1:1:606c::19:1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits)
- client-signature RSA-PSS (4096 bits))
- (Client CN "mx1.freebsd.org", Issuer "R3" (verified OK))
- by mx2.freebsd.org (Postfix) with ESMTPS id 1DCB5789B1
- for <wireguard@lists.zx2c4.com>; Fri, 19 Mar 2021 13:38:19 +0000 (UTC)
- (envelope-from kevans@freebsd.org)
-Received: from smtp.freebsd.org (smtp.freebsd.org [96.47.72.83])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
- client-signature RSA-PSS (4096 bits) client-digest SHA256)
- (Client CN "smtp.freebsd.org", Issuer "R3" (verified OK))
- by mx1.freebsd.org (Postfix) with ESMTPS id 4F24j701svz4n50
- for <wireguard@lists.zx2c4.com>; Fri, 19 Mar 2021 13:38:19 +0000 (UTC)
- (envelope-from kevans@freebsd.org)
-Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com
- [209.85.219.42])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (Client CN "smtp.gmail.com", Issuer "GTS CA 1O1" (verified OK))
- (Authenticated sender: kevans)
- by smtp.freebsd.org (Postfix) with ESMTPSA id E295880E8
- for <wireguard@lists.zx2c4.com>; Fri, 19 Mar 2021 13:38:18 +0000 (UTC)
- (envelope-from kevans@freebsd.org)
-Received: by mail-qv1-f42.google.com with SMTP id x27so4998346qvd.2
- for <wireguard@lists.zx2c4.com>; Fri, 19 Mar 2021 06:38:18 -0700 (PDT)
-X-Gm-Message-State: AOAM532AKFwkgHMEvHbrpcMK7DWRDgeI5B2DdrLXmFsYeE91fRnG3xiK
- S/BymEVmXnzxCBFI8OMZkV+S0MYe5aWawGxbpxM=
-X-Google-Smtp-Source: ABdhPJx52wMJ8NEjo0OBimEKngDLDwi26SUgxQNp8uzYTlQhWmxdtAYl6MOzjS8knJn5iyvA1O9it/ZKHnWJXa5Mmic=
-X-Received: by 2002:a05:6214:1424:: with SMTP id
- o4mr9378434qvx.34.1616161098568; 
- Fri, 19 Mar 2021 06:38:18 -0700 (PDT)
-MIME-Version: 1.0
-References: <YE9zWanlutKYTlKL@zx2c4.com>
- <CACNAnaFsDK7moCr1j1GYLcEdR_UYE=My7vgKB6VLnFaNzKAzOw@mail.gmail.com>
-In-Reply-To: <CACNAnaFsDK7moCr1j1GYLcEdR_UYE=My7vgKB6VLnFaNzKAzOw@mail.gmail.com>
-From: Kyle Evans <kevans@freebsd.org>
-Date: Fri, 19 Mar 2021 08:38:05 -0500
-X-Gmail-Original-Message-ID: <CACNAnaFzNhjB6OopJakOvN2=63iACe+kHWp+oy3Gf2wM3jkcFQ@mail.gmail.com>
-Message-ID: <CACNAnaFzNhjB6OopJakOvN2=63iACe+kHWp+oy3Gf2wM3jkcFQ@mail.gmail.com>
-Subject: =?UTF-8?Q?Re=3A_=5BANNOUNCE=5D_WireGuard_for_FreeBSD_in_development_?=
- =?UTF-8?Q?for_13=2Ey_=E2=80=93_and_a_note_of_how_we_got_here?=
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+ Thu, 18 Mar 2021 18:49:58 +0000 (UTC)
+Received: by mail-qt1-x82b.google.com with SMTP id m7so4854737qtq.11
+ for <wireguard@lists.zx2c4.com>; Thu, 18 Mar 2021 11:49:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=jacobs.co.com; s=google;
+ h=from:content-transfer-encoding:mime-version:subject:message-id:date
+ :to; bh=GS1EhIQAvVYNWioxWyAHu99MbNNmB1cXV+bFVM0SebQ=;
+ b=dta/sdqSx7VWlOoVZmoLgWIVtnmyKhUgdF4wn45WFcZqqEWDTsnT3Mb6JtkMxXMIoc
+ IKBNPf87ZmZg45LVDzjbW0BV+JJ0DCGDrLNYFf9CZcz3/wl+Glz/iPW4g/aQ+MOfnQgW
+ juDKJsjyB2NBVeov1V5+qrEGu+OXqKhnZfSh5MPqCd6ssCRggGjYTJfBwOfDZTt1emHE
+ y/ps3KHm41OchbC3tZibkk3+sVhIBFnzzIHnKIqsxY/P/5FXAsl1vBFvEajYIFWt141r
+ s7H9Gwl0zWGBm6wDA3mfjAKGzP35yNoF/XJjiLdOp0Ml9NqV4y4qVhf7aPUMKiB6V03I
+ kctQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:content-transfer-encoding:mime-version
+ :subject:message-id:date:to;
+ bh=GS1EhIQAvVYNWioxWyAHu99MbNNmB1cXV+bFVM0SebQ=;
+ b=R0LzGP1z69GpsL0+nJaxA62uPRHL0FK4mbgEbNsgyv6PAQMj43Ww7EY8A6lVjrhtO2
+ 3epUxCdzJ6RjN8TayYLOBpkHdiTb4Y99AW7j55Et9oMLBE9w2KwO64Laeg0R0vTFXx87
+ ZNBymyH414D2Cuqp1FbfOwfFMpUohbWY7cuOazBB5Sc7S5VS3vJUoYs9KiYbWfrauAJ3
+ 5mdjLwID1aR7QHrL/a7oBX7IUfJ0TaeZyVJutZ7IjgWmbAg8cEUzkLcIi4bLX26peAWh
+ OAk34N5aqfBrjL4tH4XDSegoGGoLYBDsaOy69IliRhJBmNI2PGI9U0uGXqE0K3jgJCva
+ 1SMg==
+X-Gm-Message-State: AOAM531kGxGdeN1xmeWBczYBDY34C9V00hMwf38C71p4lXXLJ9F/EDB2
+ CRRx8KV+xeyJA27SJNeKKNG3wET1qSBQFnsN
+X-Google-Smtp-Source: ABdhPJzVRTInc+yiZAm7b8drbPLNeczwlVU3qpQedoDXQMNHj6C4e4fJ1tY78dXuVwCmfKtuxF4L5Q==
+X-Received: by 2002:a05:622a:1744:: with SMTP id
+ l4mr5134290qtk.75.1616093397256; 
+ Thu, 18 Mar 2021 11:49:57 -0700 (PDT)
+Received: from macbookprowifijohn.home.arpa ([71.69.146.18])
+ by smtp.gmail.com with ESMTPSA id x36sm2091508qte.1.2021.03.18.11.49.56
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Thu, 18 Mar 2021 11:49:56 -0700 (PDT)
+From: John Jacobs <john@jacobs.co.com>
+Content-Type: text/plain;
+	charset=utf-8
 Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.60.0.2.21\))
+Subject: Re: Removing WireGuard Support From FreeBSD Base
+Message-Id: <E3CBD3D4-F383-4921-8539-517A6AA25732@jacobs.co.com>
+Date: Thu, 18 Mar 2021 14:49:53 -0400
+To: wireguard@lists.zx2c4.com
+X-Mailer: Apple Mail (2.3654.60.0.2.21)
+X-Mailman-Approved-At: Fri, 19 Mar 2021 14:04:01 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -84,95 +84,11 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Fri, Mar 19, 2021 at 8:03 AM Kyle Evans <kevans@freebsd.org> wrote:
->
-> On Mon, Mar 15, 2021 at 9:47 AM Jason A. Donenfeld <Jason@zx2c4.com> wrot=
-e:
-> >
-> > Hi everybody,
-> >
-> > [... snip ...]
-> >
-> > The first step was assessing the current state of the code the previous
-> > developer had dumped into the tree. It was not pretty. I imagined
-> > strange Internet voices jeering, =E2=80=9Cthis is what gives C a bad na=
-me!=E2=80=9D
->
-> This was a highly unnecessary jab.
->
-> > There were random sleeps added to =E2=80=9Cfix=E2=80=9D race conditions
->
-> This is true.
->
-> > validation functions that just returned true
->
-> I looked back at the history here just now, and I count one,
-> wg_allowedip_valid, that pretty much got ripped out anyways.
->
-> > catastrophic cryptographic vulnerabilities
-> > whole parts of the protocol unimplemented
->
-> I'm not qualified to speak about these two, which are perhaps the
-> worst from the public's perspective.
->
-> > kernel panics
->
-> These are true.
->
-> > security bypasses
-> > overflows
->
-> I only recall one of each.
->
-> > random printf statements deep in crypto code
->
-> This is true.
->
-> > the most spectacular buffer overflows
->
-> English is a crappy language, but this sounds like you're advertising
-> more than one.  There was one, and for the record to anyone watching to
-> dispel "the word on the street" that it's potentially an RCE: based on wh=
-at's
-> happening I cannot imagine how you could usefully turn it into an RCE.
-> Local privileged execution, 100%, but looking at it further, you've got t=
-o be
-> pretty skilled to make it before killing the kernel elsewhere.
->
-
-Ah, I have to clarify this one; I suspect if you're acting as a wg
-gateway, it's possible. It
-still doesn't look like an easy one to exploit.
-
-> > and the whole litany of awful things that go wrong when people aren=E2=
-=80=99t
-> > careful when they write C.
->
-> This is an exceedingly broad statement, and it would have been good to pr=
-ovide
-> some pointers to these.
->
-> > [...]
->
-> You know that I don't appreciate how you handled this initial communicati=
-on,
-> as I've told you a number of times. Now that I look at the history again,=
- I'm
-> even more disappointed in how you handled this because there are some
-> pretty broad statements in here and language that could go either way.
->
-> I've additionally recommended, as a developer and not in any kind of offi=
-cial
-> capacity, that we can't include if_wg in any future version of base.  We =
-cannot
-> have our users being put at the risk of this kind of publicity if we
-> can't get security
-> advisories issued in time. Ports is a fine place, where security issues c=
-an be
-> addressed expeditiously and more in line with how the WireGuard project c=
-hooses
-> to handle them.
->
-> Thanks,
->
-> Kyle Evans
+Kyle, you (and others) have been put in a position you never should have =
+been put in. You have earned respect from someone who could not be any =
+more outside the community of core FreeBSD developers for behaving like =
+an adult and publicly sharing your introspection. I=E2=80=99m sorry if =
+this is seen as an inappropriate comment from an outsider, but I felt it =
+important to say that the way you have conducted yourself over the past =
+few days has been noticed, noted and appreciated. As a consumer of =
+FreeBSD I move forward with my belief in the product stronger than ever.=
