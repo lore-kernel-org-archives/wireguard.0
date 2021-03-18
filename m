@@ -2,74 +2,51 @@ Return-Path: <SRS0=a6UP=IR=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C1A6AC433E0
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 19 Mar 2021 14:04:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 26E4AC433E0
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 19 Mar 2021 14:06:46 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id B614F64DE8
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 19 Mar 2021 14:04:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org B614F64DE8
-Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=jacobs.co.com
+	by mail.kernel.org (Postfix) with ESMTPS id 401A064EF6
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 19 Mar 2021 14:06:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 401A064EF6
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=evilham.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b1936ed7;
-	Fri, 19 Mar 2021 14:04:03 +0000 (UTC)
-Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com
- [2607:f8b0:4864:20::82b])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c32bc4c2
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 33b30803;
+	Fri, 19 Mar 2021 14:04:21 +0000 (UTC)
+Received: from yggdrasil.evilham.com (yggdrasil.evilham.com [46.19.33.155])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 25840a5c
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 18 Mar 2021 18:49:58 +0000 (UTC)
-Received: by mail-qt1-x82b.google.com with SMTP id m7so4854737qtq.11
- for <wireguard@lists.zx2c4.com>; Thu, 18 Mar 2021 11:49:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=jacobs.co.com; s=google;
- h=from:content-transfer-encoding:mime-version:subject:message-id:date
- :to; bh=GS1EhIQAvVYNWioxWyAHu99MbNNmB1cXV+bFVM0SebQ=;
- b=dta/sdqSx7VWlOoVZmoLgWIVtnmyKhUgdF4wn45WFcZqqEWDTsnT3Mb6JtkMxXMIoc
- IKBNPf87ZmZg45LVDzjbW0BV+JJ0DCGDrLNYFf9CZcz3/wl+Glz/iPW4g/aQ+MOfnQgW
- juDKJsjyB2NBVeov1V5+qrEGu+OXqKhnZfSh5MPqCd6ssCRggGjYTJfBwOfDZTt1emHE
- y/ps3KHm41OchbC3tZibkk3+sVhIBFnzzIHnKIqsxY/P/5FXAsl1vBFvEajYIFWt141r
- s7H9Gwl0zWGBm6wDA3mfjAKGzP35yNoF/XJjiLdOp0Ml9NqV4y4qVhf7aPUMKiB6V03I
- kctQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:from:content-transfer-encoding:mime-version
- :subject:message-id:date:to;
- bh=GS1EhIQAvVYNWioxWyAHu99MbNNmB1cXV+bFVM0SebQ=;
- b=R0LzGP1z69GpsL0+nJaxA62uPRHL0FK4mbgEbNsgyv6PAQMj43Ww7EY8A6lVjrhtO2
- 3epUxCdzJ6RjN8TayYLOBpkHdiTb4Y99AW7j55Et9oMLBE9w2KwO64Laeg0R0vTFXx87
- ZNBymyH414D2Cuqp1FbfOwfFMpUohbWY7cuOazBB5Sc7S5VS3vJUoYs9KiYbWfrauAJ3
- 5mdjLwID1aR7QHrL/a7oBX7IUfJ0TaeZyVJutZ7IjgWmbAg8cEUzkLcIi4bLX26peAWh
- OAk34N5aqfBrjL4tH4XDSegoGGoLYBDsaOy69IliRhJBmNI2PGI9U0uGXqE0K3jgJCva
- 1SMg==
-X-Gm-Message-State: AOAM531kGxGdeN1xmeWBczYBDY34C9V00hMwf38C71p4lXXLJ9F/EDB2
- CRRx8KV+xeyJA27SJNeKKNG3wET1qSBQFnsN
-X-Google-Smtp-Source: ABdhPJzVRTInc+yiZAm7b8drbPLNeczwlVU3qpQedoDXQMNHj6C4e4fJ1tY78dXuVwCmfKtuxF4L5Q==
-X-Received: by 2002:a05:622a:1744:: with SMTP id
- l4mr5134290qtk.75.1616093397256; 
- Thu, 18 Mar 2021 11:49:57 -0700 (PDT)
-Received: from macbookprowifijohn.home.arpa ([71.69.146.18])
- by smtp.gmail.com with ESMTPSA id x36sm2091508qte.1.2021.03.18.11.49.56
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 18 Mar 2021 11:49:56 -0700 (PDT)
-From: John Jacobs <john@jacobs.co.com>
-Content-Type: text/plain;
-	charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.60.0.2.21\))
-Subject: Re: Removing WireGuard Support From FreeBSD Base
-Message-Id: <E3CBD3D4-F383-4921-8539-517A6AA25732@jacobs.co.com>
-Date: Thu, 18 Mar 2021 14:49:53 -0400
+ Thu, 18 Mar 2021 21:02:21 +0000 (UTC)
+Received: from yggdrasil.evilham.com (localhost [IPv6:::1])
+ by yggdrasil.evilham.com (Postfix) with ESMTP id 4F1fbw63DvzHnS
+ for <wireguard@lists.zx2c4.com>; Thu, 18 Mar 2021 22:02:20 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=evilham.com; h=from:to
+ :subject:date:message-id:mime-version:content-type; s=mail; bh=w
+ GxFSf2/Ms50iWHc3jSwmyufOpM=; b=Ybd8og4rzWKXR8YCCLUSAmOGjBXCLVblo
+ 3t3yo2NaH15wRijc8oCGe1IvsmXbcOqplujy/rV0RAY8r7XuFb7u7EwAsq4eU4z5
+ 2sl0OkqWR3LsjyMm+7W6g6+ZnViJFlMzikYjCAwe33Qw1v/N5UFIwVdvjjvZ5I9Y
+ +cnRlS1aQ4=
+Received: from yggdrasil.evilham.com (unknown [IPv6:2a0a:e5c1:121:1::1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by yggdrasil.evilham.com (Postfix) with ESMTPSA id 4F1fbw2CNYzHnR
+ for <wireguard@lists.zx2c4.com>; Thu, 18 Mar 2021 22:02:20 +0100 (CET)
+From: Evilham <contact@evilham.com>
 To: wireguard@lists.zx2c4.com
-X-Mailer: Apple Mail (2.3654.60.0.2.21)
-X-Mailman-Approved-At: Fri, 19 Mar 2021 14:04:01 +0000
+Subject: [PATCH] Fix build on FreeBSD 13 after removal from base
+Date: Thu, 18 Mar 2021 22:02:19 +0100
+Message-ID: <75ddd07a-8d31-4938-8480-540f1996c9ad@yggdrasil.evilham.com>
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed
+X-Mailman-Approved-At: Fri, 19 Mar 2021 14:04:20 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -84,11 +61,62 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Kyle, you (and others) have been put in a position you never should have =
-been put in. You have earned respect from someone who could not be any =
-more outside the community of core FreeBSD developers for behaving like =
-an adult and publicly sharing your introspection. I=E2=80=99m sorry if =
-this is seen as an inappropriate comment from an outsider, but I felt it =
-important to say that the way you have conducted yourself over the past =
-few days has been noticed, noted and appreciated. As a consumer of =
-FreeBSD I move forward with my belief in the product stronger than ever.=
+\o Hello,
+
+noticed that after if_wg removal from stable/13 following patch is 
+needed for compiling the module.
+
+I'm currently lacking a 14/CURRENT machine to assert that the 
+module compiles with these changes, but from checking the branch, 
+it looks like these definitions are there already, I wouldn't 
+think versions pre-13 should be affected by this.
+
+Cheers and thank you for the efforts and... handling of things.
+
+---
+ src/compat.h | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/src/compat.h b/src/compat.h
+index 6126e26..bc29c01 100644
+--- a/src/compat.h
++++ b/src/compat.h
+@@ -7,6 +7,9 @@
+  */
+
+ #include <sys/param.h>
++#if __FreeBSD_version < 1400000
++#include <sys/smp.h>
++#include <sys/gtaskqueue.h>
+ #if __FreeBSD_version < 1300000
+ #define VIMAGE
+
+@@ -18,8 +21,6 @@
+ #include <sys/malloc.h>
+ #include <sys/proc.h>
+ #include <sys/lock.h>
+-#include <sys/smp.h>
+-#include <sys/gtaskqueue.h>
+ #include <sys/socketvar.h>
+ #include <sys/protosw.h>
+ #include <net/vnet.h>
+@@ -39,6 +40,7 @@
+
+ #undef atomic_load_ptr
+ #define atomic_load_ptr(p) (*(volatile __typeof(*p) *)(p))
++#endif /* __FreeBSD_version < 1300000 */
+
+ struct taskqgroup_cpu {
+ 	LIST_HEAD(, grouptask)	tgc_tasks;
+@@ -67,7 +69,7 @@ static inline void taskqgroup_drain_all(struct 
+taskqgroup *tqg)
+ 		gtaskqueue_drain_all(q);
+ 	}
+ }
+-#endif
++#endif /* __FreeBSD_version < 1400000 */
+
+ #if __FreeBSD_version < 1202000
+ static inline uint32_t arc4random_uniform(uint32_t bound)
+--
+2.30.1
