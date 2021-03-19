@@ -6,57 +6,57 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9692EC433C1
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 19 Mar 2021 17:38:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F5F1C433DB
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 19 Mar 2021 17:38:48 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id BAFD56192A
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 19 Mar 2021 17:38:44 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org BAFD56192A
+	by mail.kernel.org (Postfix) with ESMTPS id 6FBDD6192A
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 19 Mar 2021 17:38:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 6FBDD6192A
 Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d181c642;
-	Fri, 19 Mar 2021 17:38:42 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 778fa517;
+	Fri, 19 Mar 2021 17:38:46 +0000 (UTC)
 Received: from mail.zx2c4.com (mail.zx2c4.com [104.131.123.232])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a2ebe70f
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d8f25061
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 19 Mar 2021 17:35:47 +0000 (UTC)
+ Fri, 19 Mar 2021 17:38:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1616175344;
+ t=1616175517;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=8BbOybg0wDqq73oNtkQYeu8UDUnkPv8v6Ntov3tXI5c=;
- b=IYEPIWiit/USdaJ9YNUZmMbv9h7o1/0pC0E9t+NgHfxQSStH7+obmySSk/05MCoqZgcheA
- BrF7M69IpTWGoYhrjhl/OTNbu5vawYfGyWM64MoievPSF5ZURtecPBp3Gu6P/04Q4j5+Zc
- sGUDdQ3ihy2Q44z5SY6K0yXgvEkKOOM=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 6cdebab2
+ bh=6vPV1pPvqYyOnKrSV/KAbcGM6t//yxO9TU7z0dVWjKc=;
+ b=dalO+Wu5ZcClzFYNtKgaMHagy+PbM00L0Vxo6pka51Zaka+vJd/XwIs7fYNxJFV/139p38
+ 912Kvh3tI30ZRO6JsJ7/9uNTG0CXVV6lvXRSxEvLIC8YwizlayoGxaWWglsoL40grS3gfK
+ uaJsraZB1fWAHJlPML5gpTLUIGHomlA=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 77b37b88
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 19 Mar 2021 17:35:44 +0000 (UTC)
-Received: by mail-yb1-f181.google.com with SMTP id h82so7032884ybc.13
- for <wireguard@lists.zx2c4.com>; Fri, 19 Mar 2021 10:35:44 -0700 (PDT)
-X-Gm-Message-State: AOAM532e0ENJ24E15KgulY86r7tEEybXWcLW65H0P0001Ug1F0WiDNy4
- Azc1z815jx1YeDzTZ8X6T+CLTRnHxgp5KO2spfs=
-X-Google-Smtp-Source: ABdhPJzx+Z8/aBwwi2ZsaCKpeaXpjVl7pzSlaf3Q/5Xx9OkDQUnRw62DkqXqpG871skP9L7JsHdThIWQeB5nONXCx1w=
-X-Received: by 2002:a25:4d02:: with SMTP id a2mr7397040ybb.49.1616175344031;
- Fri, 19 Mar 2021 10:35:44 -0700 (PDT)
+ Fri, 19 Mar 2021 17:38:36 +0000 (UTC)
+Received: by mail-yb1-f179.google.com with SMTP id 133so7080750ybd.5
+ for <wireguard@lists.zx2c4.com>; Fri, 19 Mar 2021 10:38:36 -0700 (PDT)
+X-Gm-Message-State: AOAM531bX7glRbySps2s8TO3UxSnUxSYxZNO0LR0R3I3H348Y5WsOt8t
+ 9wnrfCqXSBZLjZNUIsjPLD4HE317crP+NU5NyC0=
+X-Google-Smtp-Source: ABdhPJxsNKGcAg8T8GtyrKGxKlv0WajB2e7OMTqKSb8kIDO35uSfPP6s5fC5F8Veiv5L+n003j86ZsniP02L7KYEHdw=
+X-Received: by 2002:a25:8712:: with SMTP id a18mr8046750ybl.306.1616175516581; 
+ Fri, 19 Mar 2021 10:38:36 -0700 (PDT)
 MIME-Version: 1.0
 References: <6aa0fd33-4c0d-557f-f7f5-5f5406b3a273@harz.behrens.de>
 In-Reply-To: <6aa0fd33-4c0d-557f-f7f5-5f5406b3a273@harz.behrens.de>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 19 Mar 2021 11:35:33 -0600
-X-Gmail-Original-Message-ID: <CAHmME9q6dO1X+Gt3hY4kQxsQ4DqeaJGxoT8qkaAe-0s_WCrVrA@mail.gmail.com>
-Message-ID: <CAHmME9q6dO1X+Gt3hY4kQxsQ4DqeaJGxoT8qkaAe-0s_WCrVrA@mail.gmail.com>
+Date: Fri, 19 Mar 2021 11:38:25 -0600
+X-Gmail-Original-Message-ID: <CAHmME9qB6SSuLagNV3gvVscxLJm=TuFoqk9eb1E0iFhHtohigw@mail.gmail.com>
+Message-ID: <CAHmME9qB6SSuLagNV3gvVscxLJm=TuFoqk9eb1E0iFhHtohigw@mail.gmail.com>
 Subject: Re: [PATCH] freebsd: Implement selection of FIB (routing table) for
  tunneled packets
 To: Frank Behrens <frank@harz.behrens.de>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
-X-Mailman-Approved-At: Fri, 19 Mar 2021 17:38:42 +0000
+X-Mailman-Approved-At: Fri, 19 Mar 2021 17:38:45 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -71,13 +71,14 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hey Frank,
+Hi again,
 
-Thanks for the patch. That looks terrific. One question, though:
+As well, you can now do:
 
-Right now we have the `wg set wg0 fwmark ...` mapped to
-SO_USER_COOKIE, as I'm sure you saw there. But maybe FIB would be a
-better thing to use for that? We could adjust wireguard-go to do the
-same with the tuntap ioctl.
+git push git@git.zx2c4.com:wireguard-freebsd master:fb/whatever-you-want
+
+In other words, you have push access to all branches beginning with fb/ .
+
+Poke me on IRC (I'm zx2c4) there if you want to chat about dev.
 
 Jason
