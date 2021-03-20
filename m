@@ -2,54 +2,51 @@ Return-Path: <SRS0=v6vS=IS=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MISSING_HEADERS,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93D15C433C1
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 20 Mar 2021 12:44:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C663C433DB
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 20 Mar 2021 17:14:54 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 4812F6196A
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 20 Mar 2021 12:44:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 4812F6196A
-Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=protonmail.com
+	by mail.kernel.org (Postfix) with ESMTPS id EFF7A61940
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 20 Mar 2021 17:14:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org EFF7A61940
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=harz.behrens.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 48ea66f8;
-	Sat, 20 Mar 2021 12:44:14 +0000 (UTC)
-Received: from mail-40135.protonmail.ch (mail-40135.protonmail.ch
- [185.70.40.135])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4937e1a2
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9df308b7;
+	Sat, 20 Mar 2021 17:14:51 +0000 (UTC)
+Received: from post.behrens.de (post.behrens.de [2a01:170:1023::1:2])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d22dcfca
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sat, 20 Mar 2021 05:39:23 +0000 (UTC)
-Date: Sat, 20 Mar 2021 05:39:12 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
- s=protonmail; t=1616218762;
- bh=e8VeMBFAdSHGCqF08xbBju7B31FseUBaRkR3DTq2Dlw=;
- h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
- b=O3CaDe7Q8VqjxUGwWjfTSQEElTHYzpG4JZJiqt2ZJOgKf/EQYt4pWKhH9p0Yv9pO9
- UpcgUDJQSgGwtGcMpJnJW8nkCA7WvUbN50NvLT0Rj41Bw/bo2QNXt2ThLLJFXpOxlC
- nvk/J/GtlsJIARW0iGpfZNIBxPUCSErIYL+MTyrI=
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-From: Bradley Saulteaux <bradsoto@protonmail.com>
-Cc: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
-Subject: Re: Wireguard Windows ARM64 Build 21327
-Message-ID: <LPfKC3Tqkdr8gYTfUyIox24RcE7O3rmYx4FbE-Js2TAQDlLFY-nEaj2PBum1YoZjv6oHyhPGQRDVOL0wNE2wD7BildydzjZ2d0qNVA8WhAs=@protonmail.com>
-In-Reply-To: <CAHmME9qvh8PBGX-0mrnHDhxMF_+Do0JzjUf0L+hJkeiNfViqCw@mail.gmail.com>
-References: <nrcRMSny-jv34qB41pOjVZQJVY7-l1J7yFQ_bO740PasFTOqt9uNp8H8EctftDLEcNgOrxmydh8KJ3ZuTlS3FjmE2abkWJAXhmQTYhtnQlk=@protonmail.com>
- <CAHmME9q5HJ0QJMzqGBPjr-c4YSBcn3=JWjJB6BRAQtvzb02t6A@mail.gmail.com>
- <kvwelbya-mAZJ2wfpt2vqF1O0GE7BwijqjtQjshHnNMooW7y_J8W6BgMKM65sGgZEWZQx7Zr4uejYiDkfL07ckiwZKqt2DR7BNrnJtXUsHs=@protonmail.com>
- <CAHmME9qvexiP9ZFLMJfFEQEnaYHFZkPWmBUBwzdTs7Zov1poCA@mail.gmail.com>
- <CAHmME9qvh8PBGX-0mrnHDhxMF_+Do0JzjUf0L+hJkeiNfViqCw@mail.gmail.com>
+ Sat, 20 Mar 2021 17:05:34 +0000 (UTC)
+Received: from [IPv6:2a01:170:1023:0:e4fd:185a:e44b:e82c]
+ ([IPv6:2a01:170:1023:0:e4fd:185a:e44b:e82c]) (authenticated bits=0)
+ by post.behrens.de (8.16.1/8.16.1) with ESMTPSA(MSP) id 12KH5W0C062178
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO cn=)
+ for <wireguard@lists.zx2c4.com>; Sat, 20 Mar 2021 18:05:32 +0100 (CET)
+ (envelope-from frank@harz.behrens.de)
+From: Frank Behrens <frank@harz.behrens.de>
+Subject: Re: [PATCH] freebsd: Implement selection of FIB (routing table) for
+ tunneled packets
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+References: <6aa0fd33-4c0d-557f-f7f5-5f5406b3a273@harz.behrens.de>
+ <CAHmME9q6dO1X+Gt3hY4kQxsQ4DqeaJGxoT8qkaAe-0s_WCrVrA@mail.gmail.com>
+Message-ID: <ee43587f-8e17-add1-6b28-174639d126f8@harz.behrens.de>
+Date: Sat, 20 Mar 2021 18:05:32 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Mailman-Approved-At: Sat, 20 Mar 2021 12:44:12 +0000
+In-Reply-To: <CAHmME9q6dO1X+Gt3hY4kQxsQ4DqeaJGxoT8qkaAe-0s_WCrVrA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: de-DE
+X-Mailman-Approved-At: Sat, 20 Mar 2021 17:14:49 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -61,33 +58,43 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Reply-To: Bradley Saulteaux <bradsoto@protonmail.com>
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Thank you very much!
+Hi Jason,
 
-=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90 Original Me=
-ssage =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90
-On Friday, March 19, 2021 8:33 PM, Jason A. Donenfeld <Jason@zx2c4.com> wro=
-te:
+thanks for your response.
 
-> Hi Bradley,
->
-> The hardware I ordered finally came and I was able to reproduce and
-> then fix the bug, which was in the Go runtime.
->
-> The bug report I filed is here: https://github.com/golang/go/issues/45138
->
-> As of writing, the fix I've submitted is here:
-> https://go-review.googlesource.com/c/go/+/303273/
-> But that fix could wind up being wrong and replaced with something
-> else. Either way, as soon as that or something else is merged, I'll
-> cut a new release with the fix in it.
->
-> Thanks again for the report.
->
-> Regards,
-> Jason
+Am 19.03.2021 schrieb Jason A. Donenfeld:
+> In other words, you have push access to all branches beginning with fb/ .
+That works, thanks. Meanwhile I pushed my branch to fb/fib.
 
+> Right now we have the `wg set wg0 fwmark ...` mapped to
+> SO_USER_COOKIE, as I'm sure you saw there. But maybe FIB would be a
+> better thing to use for that? We could adjust wireguard-go to do the
+> same with the tuntap ioctl.
+I believe we have different, orthogonal things:
+
+1. The selection of routing table (fib) for received, decrypted packets.
+-> Already implemented in wg_deliver_in() #2098 and controlled
+by "ifconfig wg0 fib 1"
+
+2. The selection of routing table for outgoing, encrypted packets.
+-> That is addressed by my patch and controlled by
+"ifconfig wg0 tunnelfib 1". Maybe wg(8) should receive also
+an option for that purpose, if other OS use equivalent functions.
+
+3. The setting of special marks, useable in packet filter/firewall
+processing. I guess, that is the meaning for "wg.. fwmark". I'm not
+sure, how best to implement that for FreeBSD. For ipfw(4) there is some
+functionality using socket cookies, as already implemented. For pf(4)
+packet filter the documentation mentions mbuf_tags(9). Apparently
+we need some input from a FreeBSD packet filter developer.
+
+Kind regards,
+     Frank
+
+-- 
+Frank Behrens
+Osterwieck, Germany
 
