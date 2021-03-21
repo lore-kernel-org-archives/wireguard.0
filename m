@@ -1,58 +1,55 @@
-Return-Path: <SRS0=P94j=IT=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=HpKU=IU=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A86BC433DB
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 21 Mar 2021 05:21:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E5C1C433DB
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 22 Mar 2021 04:06:06 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id D10D561926
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 21 Mar 2021 05:21:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org D10D561926
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=opnsense.org
+	by mail.kernel.org (Postfix) with ESMTPS id D27E361967
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 22 Mar 2021 04:06:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org D27E361967
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=reldeif.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6379817a;
-	Sun, 21 Mar 2021 05:19:38 +0000 (UTC)
-Received: from mail.opnsense.org (mail.opnsense.org [81.171.24.236])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 93d456d0
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8d9aea98;
+	Mon, 22 Mar 2021 04:05:51 +0000 (UTC)
+Received: from mail.reldeif.de (mail.reldeif.de [62.113.206.78])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b028dcb2
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sat, 20 Mar 2021 18:59:17 +0000 (UTC)
-Received: from localhost (mail.opnsense.org [127.0.0.1])
- by mail.opnsense.org (Postfix) with ESMTP id 4BFF21503F3;
- Sat, 20 Mar 2021 19:59:17 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at mail.opnsense.org
-Received: from mail.opnsense.org ([127.0.0.1])
- by localhost (mail.opnsense.org [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id meY5WZsBK0Dm; Sat, 20 Mar 2021 19:59:17 +0100 (CET)
-Content-Type: text/plain;
-	charset=us-ascii
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=opnsense.org; s=dkim;
- t=1616266757; bh=eD8/hxKswE7B73z3BWMzU9F5Gqze98Az+7WqJAvfkLA=;
- h=Subject:From:In-Reply-To:Date:Cc:References:To:From;
- b=p1ZbHqC+DMurRJ73UoOO1GTjXp7HrMC4vaZpza7TkwohE/BwpSrdQ+rEn7B6IQIzo
- b90wxnixNTVjJ4tY09+RCBqyyNqf/hTc6oCpibq/iiCncLUqtIcqd8WNAsT4/wTvGx
- Exrv1U+o8Glwem0vvDZgMtvSOXkyPZjx+S8sktwg=
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.4\))
-Subject: Re: [PATCH] freebsd: Implement selection of FIB (routing table) for
- tunneled packets
-From: Franco Fichtner <franco@opnsense.org>
-In-Reply-To: <ee43587f-8e17-add1-6b28-174639d126f8@harz.behrens.de>
-Date: Sat, 20 Mar 2021 19:59:16 +0100
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Transfer-Encoding: 7bit
-Message-Id: <B71D1758-3EDE-4844-99FC-7D6BD125D0ED@opnsense.org>
-References: <6aa0fd33-4c0d-557f-f7f5-5f5406b3a273@harz.behrens.de>
- <CAHmME9q6dO1X+Gt3hY4kQxsQ4DqeaJGxoT8qkaAe-0s_WCrVrA@mail.gmail.com>
- <ee43587f-8e17-add1-6b28-174639d126f8@harz.behrens.de>
-To: Frank Behrens <frank@harz.behrens.de>
-X-Mailman-Approved-At: Sun, 21 Mar 2021 05:19:36 +0000
+ Sun, 21 Mar 2021 21:24:53 +0000 (UTC)
+Received: from [192.168.2.193]
+ (dslb-188-099-197-081.188.099.pools.vodafone-ip.de [188.99.197.81])
+ by mail.reldeif.de (Postfix) with ESMTPSA id CE61C40154
+ for <wireguard@lists.zx2c4.com>; Sun, 21 Mar 2021 22:24:52 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=reldeif.de;
+ s=2019010301; t=1616361893;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=PAOryCvOBr4//k0QxZ5CosutJ/WKM1quX/uim/6pdRw=;
+ b=s/Z9Ckiv0LBnOtqCHg0q+wH050IJKFJGSqEaTmZ5SGlH8N2+d3kP8MXv8/OAjNZIzjP9ey
+ +MlpnAfZAigSUbGCy2LzFSCQxUke7mbf4Ntr7TBNZXW0cXLGjQSsFm7+TVDnVd4UrD6Wou
+ FbcOl3+SUbZd9DdVwHqLZ2y6VODWHbA=
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: =?UTF-8?Q?Bj=c3=b6rn_Fiedler?= <bjoern@reldeif.de>
+Subject: Android/GoBackend: Wrong Src IP
+Message-ID: <a2b1d031-029c-d71b-ff59-e7d1442af6a7@reldeif.de>
+Date: Sun, 21 Mar 2021 22:24:52 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: de-DE
+X-Mailman-Approved-At: Mon, 22 Mar 2021 04:05:50 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -67,25 +64,97 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Frank,
+Hi,
 
-> On 20. Mar 2021, at 6:05 PM, Frank Behrens <frank@harz.behrens.de> wrote:
-> 
-> 3. The setting of special marks, useable in packet filter/firewall
-> processing. I guess, that is the meaning for "wg.. fwmark". I'm not
-> sure, how best to implement that for FreeBSD. For ipfw(4) there is some
-> functionality using socket cookies, as already implemented. For pf(4)
-> packet filter the documentation mentions mbuf_tags(9). Apparently
-> we need some input from a FreeBSD packet filter developer.
-
-In pf(4) the tags are stored using mtag and that's reachable through
-the kernel only for direct tagging (normally it matches through ruleset
-and applies tags to packets in fly-by), although it is difficult to look
-up the tag name to tag integer from static functions inside pf_ioctl.c
-and keeping the index in sync with the tags that could change when the
-ruleset changes, see pf_tag_packet() in pf.c for low level tagging using
-the tag integer translated from the tag name during the last ruleset apply.
+I'd like to report some kind of behavior from which I think it is a bug of the Android App with go backend.
 
 
-Cheers,
-Franco
+The Scenario:
+My android phone should participate in two private networks with distinct IP ranges, subnets and clients. As the android app is restricted to one interface at a time, the single config contains the settings for both private nets.
+
+Server A:
+[Interface]
+Address = 10.14.0.221/24
+ListenPort = 56345
+PrivateKey = ...
+
+[Peer]
+AllowedIPs = 10.14.0.13
+PublicKey = ...
+
+
+Server B:
+[Interface]
+Address = 10.200.200.2/24
+ListenPort = 37699
+PrivateKey = ...
+
+[Peer]
+PublicKey = ...
+AllowedIPs = 10.200.200.13/32
+
+
+
+Android phone:
+[Interface]
+PrivateKey = ...
+Address = 10.200.200.13/24
+Address = 10.14.0.13/24
+ListenPort = 6677
+
+
+[Peer]
+AllowedIPs = 10.200.200.0/24
+Endpoint = server_a.example.com:56345
+PublicKey = ...
+
+
+[Peer]
+AllowedIPs = 10.14.0.0/24
+Endpoint = server_b.example.com:37699
+PublicKey = ...
+
+
+
+The Problem:
+Issue a `ping 10.200.200.2` via termux works as expected.
+Issue a `ping 10.14.0.221` via termux results in 100% packet loss.
+
+
+The ip address assignment and routing tables of my phone seem to be as I would expect them
+$ ip route
+10.14.0.0/24 dev tun0 proto kernel scope link src 10.14.0.13
+10.200.200.0/24 dev tun0 proto kernel scope link src 10.200.200.13
+192.168.2.0/24 dev wlan0 proto kernel scope link src 192.168.2.151
+
+$ ip address  show tun0
+42: tun0: <POINTOPOINT,UP,LOWER_UP> mtu 1280 qdisc pfifo_fast state UNKNOWN group default qlen 500
+     link/none
+     inet 10.200.200.13/24 scope global tun0
+        valid_lft forever preferred_lft forever
+     inet 10.14.0.13/24 scope global tun0:1
+        valid_lft forever preferred_lft forever
+     inet6 fe80::ee0a:a411:b6b2:a911/64 scope link stable-privacy
+        valid_lft forever preferred_lft forever
+
+
+The kernel logs from server A shows the problem:
+[309387.725202] wireguard: wg0: Packet has unallowed src IP (10.200.200.13) from peer 13 (192.168.2.151:6677)
+
+It seems as if the wrong address is used as source addres by the android app or go backend. I've tested the same config on a linux machine using the wireguard-go userspace implementation but it worked correctly. Hence I would assume it is some kind of interworking problem of the android components.
+Switching the two addresses in the interface section results in the same behaviour but inverted. It always uses the first address as source address.
+The problem is not limited to ping but seems to affect all apps and protocols (tested http, ssh, ping).
+
+App version:
+WireGuard for Android v1.0.20210211
+Go userspace backend v0.0.20201118
+Installed via google play
+
+Android 10 QKQ1.191215.002
+Kernel 4.14.117-perf-ge9e6b4f
+
+
+If you need more infos or my help for reproducing, let me know.
+
+Thank you in advance,
+Björn
