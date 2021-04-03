@@ -2,55 +2,71 @@ Return-Path: <SRS0=ZwbF=JD=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_2 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 44EFDC433B4
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  6 Apr 2021 11:29:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CCD5C433ED
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  6 Apr 2021 21:46:52 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id E2DB96124C
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  6 Apr 2021 11:29:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org E2DB96124C
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
+	by mail.kernel.org (Postfix) with ESMTPS id 32501613D0
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  6 Apr 2021 21:46:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 32501613D0
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=mail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9653f6fe;
-	Tue, 6 Apr 2021 11:29:51 +0000 (UTC)
-Received: from desiato.infradead.org (desiato.infradead.org
- [2001:8b0:10b:1:d65d:64ff:fe57:4e05])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id be1309c2
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8699c639;
+	Tue, 6 Apr 2021 21:46:49 +0000 (UTC)
+Received: from mout.gmx.com (mout.gmx.com [74.208.4.200])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c00d416d
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Tue, 6 Apr 2021 11:29:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=desiato.20200630; h=Mime-Version:Content-Type:Date:Cc:To:
- From:Subject:Message-ID:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
- Content-Description:In-Reply-To:References;
- bh=8xL+8G+r6GV90DPY/eISthhnjYv2mgCCmcaiLDqcT7A=; b=plCZYbfOzbgMsEZS3sl7+snPYN
- 8aO4+q2XswOavz1BxQU6fehLB7v6cWeKEuOvT8ahUwBx/upTIxBPg5t0+fnGle1YYqkVLs1RKYGOF
- qflhNJmNRIXzrSDRrqnOG343GIFWGWj/5Yq+GlmjNAciaKDvetC3LlLhKe+DR3IWCwrAQW3vOI0TA
- eBzp6/DtzHFY9C7eMvGUKG4UHBc2S66ge9IRc3Eood+MauqSDVCpIwCXyflyoEYzyHuq3Xf7zvSHq
- PXYLFQDvOaLQacbJ+5i02Jn/W0QBu07qaCrWWfeELEW/9yj3ijVODJkZ3LLaYzM9FX/X2MM4TT926
- 6R9Fka0g==;
-Received: from dyn-234.woodhou.se ([90.155.92.234])
- by desiato.infradead.org with esmtpsa (Exim 4.94 #2 (Red Hat Linux))
- id 1lTjtz-002KF0-Ag; Tue, 06 Apr 2021 11:29:47 +0000
-Message-ID: <e166447dac58ecaa73bf3f6a2b9bece6a01bf5cd.camel@infradead.org>
-Subject: Duplicate IP address, and permissions problems on Windows
-From: David Woodhouse <dwmw2@infradead.org>
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Cc: Daniel Lenski <dlenski@gmail.com>
-Date: Tue, 06 Apr 2021 12:29:47 +0100
-Content-Type: multipart/signed; micalg="sha-256";
- protocol="application/x-pkcs7-signature";
- boundary="=-QQkFqNwM1japslpxUh2U"
-X-Mailer: Evolution 3.28.5-0ubuntu0.18.04.2 
-Mime-Version: 1.0
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
- desiato.infradead.org. See http://www.infradead.org/rpr.html
+ for <wireguard@lists.zx2c4.com>; Sat, 3 Apr 2021 04:27:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mail.com;
+ s=dbd5af2cbaf7; t=1617424060;
+ bh=LL8lrtqf2mKGawo+A62blf5KNLBfH2I/F+80aiVLq4c=;
+ h=X-UI-Sender-Class:From:To:Subject:Date;
+ b=5bsP7COF1SK/ZE22VaEFH9sW6GKXE2goKKyURW+QMIhRC8x+HfqmBQAG08EKUTjyp
+ VZE7yQTbHqkrDI0d1bgHtR2AZxRfKZxeRl6FbIFyMeQ8xYZBfNWCS0M4X6TMQ85B/L
+ OKfG+ROEECOqvwZB5csxLPHfhbf04wnbjU+KcAdg=
+X-UI-Sender-Class: 214d933f-fd2f-45c7-a636-f5d79ae31a79
+Received: from [158.51.113.115] ([158.51.113.115]) by web-mail.mail.com
+ (3c-app-mailcom-lxa15.server.lan [10.76.45.16]) (via HTTP); Sat, 3 Apr 2021
+ 06:27:40 +0200
+MIME-Version: 1.0
+Message-ID: <trinity-3510980c-c0ee-4d02-bcf5-8b7d2a708cda-1617424060455@3c-app-mailcom-lxa15>
+From: Giovanni Francesco <thelinuxguy@mail.com>
+To: wireguard@lists.zx2c4.com
+Subject: NAT to NAT peers - 'EndPoint' IP data sharing among peers of the
+ same key?
+Content-Type: text/plain; charset=UTF-8
+Date: Sat, 3 Apr 2021 06:27:40 +0200
+Importance: normal
+Sensitivity: Normal
+X-Priority: 3
+X-Provags-ID: V03:K1:eZww06VwCWs5Abz8bQ3Km06YWjOW3JwzsTwKJ8Yz0YzMwvpgHLyGUEAgVbMkFfA+IF9rY
+ 93oOxECAtn663fmChQ1/GJa2jQqs13jh48pMH6yob7q2P4zpEmc6oS50nPb2Xd7GZgWbgGjiKJnN
+ 2vTgENnabTuIwfKYpXJE3pAAZL20Vg7iUPa+ARCyUQQl7IH3fh6FEXV+hMSEl/zgmhZo4N//jCCM
+ qkiC750cecgR2EoweDJEbvHZkuW2U8sKMrIytDe2mhLXjU/Pmi0xT5qh+Ih70OC20iN9TBCLnYCe
+ eA=
+X-UI-Out-Filterresults: notjunk:1;V03:K0:BeEgpkBP3dw=:1BNi93mjnJ1+FZAa/gt/aV
+ cBptf235kYHCTR/2KireXACq6pYvxl9TlY0Lf2E8LMf87UnmvRIAjjYQAnn5CMz+vAU0LOQRI
+ zqNX62tYnE6Am4c/djHxzZBsTHYP/59GtnSMiWoH7jkH3WPp2nYrbEPr52GhbVTyNIFFzsOx/
+ DWPnVG3rhBQjJ4QY7H6KnDbC7EcqJSvDYSRXNxAylFezayFBi5G5dZ9jR23Tt5pd8BzYxMvV4
+ H8H+4LUwWGinUgj7e4BHnA7+pA2YI25HKQ/mM8otBqs9rITyQYyeJ8s+uyHzsIhZ3SlCnDf2Z
+ VdqF76gPVD0kdE40fjmVdKJ9wx7F4kVsvVnCUY14ZFVv6gd5VmXT7Rzbnz6gVChBcWTYkxhD9
+ 87YM4W1pimuPpqZ181gmk8b+c/eFSBdlDAK2M1NKxtIWlPHbgSKKgMD/LCRDpTmwErR2J3oYB
+ jSx9JPYEWyuLoKwSXF6uOyCgoO6xvjHTbLAXXaMRS1F1SqTElZ3ZmfrjwCieCvcmDWVi3oole
+ VNBSuC7kX2kxOZjjGzJ7OhLZGmI2AOMluecVGB4oisVWjqjsi4WHlkL77xH2W6eMvnv7ALsfh
+ xRAxEj+1/B2ZwL9qzXw/D3sa2H2zq8xnNqc7TIB4srzzrgB2lYgw60bg4J/5aODqdivpNhtNT
+ 1GBmldibsRpJI6TpvrT+SeAME99oHB1DpLFcSXyUbJsbYYo9o6U/GOm7kKMAgcyq9rN7Lm9rQ
+ AO0sfGQLR+5+u1MnAa8m1XyMLPqqbJIyNqChHD7IVkoG6RaqDbsRyKrs2WU+u+mhhEu1E8M8s
+ l2mZVNtaMGfMRLdACAGder4eOEJCFo2HNArvnrEyvIr7n4rO82woml+3VD0zg+ZVMXsTrxeJa
+ OpMfvSM9vdSm+foZTqI8pqqHXLu3OiLagXFnfiRgpSTBirPK3pqGyDSRH4hWsh
+Content-Transfer-Encoding: quoted-printable
+X-Mailman-Approved-At: Tue, 06 Apr 2021 21:46:47 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -65,150 +81,26 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
+Hi, I am looking to understand if "EndPoint" IP data may be shared among p=
+eers within the tunnel?
 
---=-QQkFqNwM1japslpxUh2U
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+The question may sound confusing, let me explain my setup.
 
-I'm looking at porting the Windows build of OpenConnect=C2=B9 to use Wintun
-instead of the OpenVPN TAP-Windows driver.
+I have a static IPv4 wireguard server (let's call it "A" peer) which has t=
+wo downstream WG clients peers "B" and "C" on remote networks with dynamic=
+ WAN IPs (roaming).
+In my current configuration all my clients "B" and "C" have a single peer =
+"A" - therefore all traffic must always go to "A" - "A" is in a datacenter=
+ in another country.
 
-The Wintun example.c shows how to add a Legacy IP address using
-CreateUnicastIpAddressEntry(), and I tried to do it that way.
+"B" and "C" have dynamic every changing IP "EndPoint" information, in my c=
+urrent setup this is not a problem because "A" is a static host.
 
-But it doesn't always work. When I reconnect to the VPN using Wintun
-after connecting to the same VPN using TAP-Windows, the Legacy IP
-address remains associated with the other adapter despite it being
-*down*. Even though CreateUnicastIpAddressEntry() returns success.
+If "B" and "C" are connected to "A" - is it possible for me to make B and =
+C peers of eachother without "EndPoint" ?
+In other words, if B public key is a peer of C and vise versa would its co=
+nnection to "A" share the IP addresses ("EndPoint" or where to go) downstr=
+eam to "B" and "C" so they can establish direct connectivity or would traf=
+fic always need to continue to traverse via "A"?
 
-I ended up writing something to iterate over the table returned by
-GetUnicastIpAddressTable() and *remove* the address from every other
-adapter:
-https://gitlab.com/openconnect/openconnect/-/commit/60d1f092e35#71552d5f529=
-101dd4a1be98f9ac9afffc3c5c9d1_0_141
-
-Is it expected that this is necessary? Do we have similar problems if
-the IP address is set by invoking 'netsh interface ip set address'?
-
-
-The second issue I have on Windows is permissions. With TAP-Windows the
-user had to install the adapter with elevated permissions, but could
-run the VPN client in their user account. Using Wintun that doesn't
-seem to work, and Administrator privileges are required. What is the
-"correct" way of handling that? Are the elevated privileges only needed
-to *create* the Wintun adapter, and can it be used without them after
-the driver is already loaded?
-
-This doesn't seem to be covered by the documentation or example code.
-
---=20
-dwmw2
-=C2=B9 OpenConnect is the open source client for the various proprietary SS=
-L
-  VPNs =E2=80=94 Cisco AnyConnect, Juniper/Pulse Secure, GlobalProtect, F5,
-  Fortinet, etc.: https://www.infradead.org/openconnect/
-
-
-
-
-
---=-QQkFqNwM1japslpxUh2U
-Content-Type: application/x-pkcs7-signature; name="smime.p7s"
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Transfer-Encoding: base64
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCECow
-ggUcMIIEBKADAgECAhEA4rtJSHkq7AnpxKUY8ZlYZjANBgkqhkiG9w0BAQsFADCBlzELMAkGA1UE
-BhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEaMBgG
-A1UEChMRQ09NT0RPIENBIExpbWl0ZWQxPTA7BgNVBAMTNENPTU9ETyBSU0EgQ2xpZW50IEF1dGhl
-bnRpY2F0aW9uIGFuZCBTZWN1cmUgRW1haWwgQ0EwHhcNMTkwMTAyMDAwMDAwWhcNMjIwMTAxMjM1
-OTU5WjAkMSIwIAYJKoZIhvcNAQkBFhNkd213MkBpbmZyYWRlYWQub3JnMIIBIjANBgkqhkiG9w0B
-AQEFAAOCAQ8AMIIBCgKCAQEAsv3wObLTCbUA7GJqKj9vHGf+Fa+tpkO+ZRVve9EpNsMsfXhvFpb8
-RgL8vD+L133wK6csYoDU7zKiAo92FMUWaY1Hy6HqvVr9oevfTV3xhB5rQO1RHJoAfkvhy+wpjo7Q
-cXuzkOpibq2YurVStHAiGqAOMGMXhcVGqPuGhcVcVzVUjsvEzAV9Po9K2rpZ52FE4rDkpDK1pBK+
-uOAyOkgIg/cD8Kugav5tyapydeWMZRJQH1vMQ6OVT24CyAn2yXm2NgTQMS1mpzStP2ioPtTnszIQ
-Ih7ASVzhV6csHb8Yrkx8mgllOyrt9Y2kWRRJFm/FPRNEurOeNV6lnYAXOymVJwIDAQABo4IB0zCC
-Ac8wHwYDVR0jBBgwFoAUgq9sjPjF/pZhfOgfPStxSF7Ei8AwHQYDVR0OBBYEFLfuNf820LvaT4AK
-xrGK3EKx1DE7MA4GA1UdDwEB/wQEAwIFoDAMBgNVHRMBAf8EAjAAMB0GA1UdJQQWMBQGCCsGAQUF
-BwMEBggrBgEFBQcDAjBGBgNVHSAEPzA9MDsGDCsGAQQBsjEBAgEDBTArMCkGCCsGAQUFBwIBFh1o
-dHRwczovL3NlY3VyZS5jb21vZG8ubmV0L0NQUzBaBgNVHR8EUzBRME+gTaBLhklodHRwOi8vY3Js
-LmNvbW9kb2NhLmNvbS9DT01PRE9SU0FDbGllbnRBdXRoZW50aWNhdGlvbmFuZFNlY3VyZUVtYWls
-Q0EuY3JsMIGLBggrBgEFBQcBAQR/MH0wVQYIKwYBBQUHMAKGSWh0dHA6Ly9jcnQuY29tb2RvY2Eu
-Y29tL0NPTU9ET1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1haWxDQS5jcnQwJAYI
-KwYBBQUHMAGGGGh0dHA6Ly9vY3NwLmNvbW9kb2NhLmNvbTAeBgNVHREEFzAVgRNkd213MkBpbmZy
-YWRlYWQub3JnMA0GCSqGSIb3DQEBCwUAA4IBAQALbSykFusvvVkSIWttcEeifOGGKs7Wx2f5f45b
-nv2ghcxK5URjUvCnJhg+soxOMoQLG6+nbhzzb2rLTdRVGbvjZH0fOOzq0LShq0EXsqnJbbuwJhK+
-PnBtqX5O23PMHutP1l88AtVN+Rb72oSvnD+dK6708JqqUx2MAFLMevrhJRXLjKb2Mm+/8XBpEw+B
-7DisN4TMlLB/d55WnT9UPNHmQ+3KFL7QrTO8hYExkU849g58Dn3Nw3oCbMUgny81ocrLlB2Z5fFG
-Qu1AdNiBA+kg/UxzyJZpFbKfCITd5yX49bOriL692aMVDyqUvh8fP+T99PqorH4cIJP6OxSTdxKM
-MIIFHDCCBASgAwIBAgIRAOK7SUh5KuwJ6cSlGPGZWGYwDQYJKoZIhvcNAQELBQAwgZcxCzAJBgNV
-BAYTAkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNVBAcTB1NhbGZvcmQxGjAY
-BgNVBAoTEUNPTU9ETyBDQSBMaW1pdGVkMT0wOwYDVQQDEzRDT01PRE8gUlNBIENsaWVudCBBdXRo
-ZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMB4XDTE5MDEwMjAwMDAwMFoXDTIyMDEwMTIz
-NTk1OVowJDEiMCAGCSqGSIb3DQEJARYTZHdtdzJAaW5mcmFkZWFkLm9yZzCCASIwDQYJKoZIhvcN
-AQEBBQADggEPADCCAQoCggEBALL98Dmy0wm1AOxiaio/bxxn/hWvraZDvmUVb3vRKTbDLH14bxaW
-/EYC/Lw/i9d98CunLGKA1O8yogKPdhTFFmmNR8uh6r1a/aHr301d8YQea0DtURyaAH5L4cvsKY6O
-0HF7s5DqYm6tmLq1UrRwIhqgDjBjF4XFRqj7hoXFXFc1VI7LxMwFfT6PStq6WedhROKw5KQytaQS
-vrjgMjpICIP3A/CroGr+bcmqcnXljGUSUB9bzEOjlU9uAsgJ9sl5tjYE0DEtZqc0rT9oqD7U57My
-ECIewElc4VenLB2/GK5MfJoJZTsq7fWNpFkUSRZvxT0TRLqznjVepZ2AFzsplScCAwEAAaOCAdMw
-ggHPMB8GA1UdIwQYMBaAFIKvbIz4xf6WYXzoHz0rcUhexIvAMB0GA1UdDgQWBBS37jX/NtC72k+A
-CsaxitxCsdQxOzAOBgNVHQ8BAf8EBAMCBaAwDAYDVR0TAQH/BAIwADAdBgNVHSUEFjAUBggrBgEF
-BQcDBAYIKwYBBQUHAwIwRgYDVR0gBD8wPTA7BgwrBgEEAbIxAQIBAwUwKzApBggrBgEFBQcCARYd
-aHR0cHM6Ly9zZWN1cmUuY29tb2RvLm5ldC9DUFMwWgYDVR0fBFMwUTBPoE2gS4ZJaHR0cDovL2Ny
-bC5jb21vZG9jYS5jb20vQ09NT0RPUlNBQ2xpZW50QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFp
-bENBLmNybDCBiwYIKwYBBQUHAQEEfzB9MFUGCCsGAQUFBzAChklodHRwOi8vY3J0LmNvbW9kb2Nh
-LmNvbS9DT01PRE9SU0FDbGllbnRBdXRoZW50aWNhdGlvbmFuZFNlY3VyZUVtYWlsQ0EuY3J0MCQG
-CCsGAQUFBzABhhhodHRwOi8vb2NzcC5jb21vZG9jYS5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5m
-cmFkZWFkLm9yZzANBgkqhkiG9w0BAQsFAAOCAQEAC20spBbrL71ZEiFrbXBHonzhhirO1sdn+X+O
-W579oIXMSuVEY1LwpyYYPrKMTjKECxuvp24c829qy03UVRm742R9Hzjs6tC0oatBF7KpyW27sCYS
-vj5wbal+TttzzB7rT9ZfPALVTfkW+9qEr5w/nSuu9PCaqlMdjABSzHr64SUVy4ym9jJvv/FwaRMP
-gew4rDeEzJSwf3eeVp0/VDzR5kPtyhS+0K0zvIWBMZFPOPYOfA59zcN6AmzFIJ8vNaHKy5QdmeXx
-RkLtQHTYgQPpIP1Mc8iWaRWynwiE3ecl+PWzq4i+vdmjFQ8qlL4fHz/k/fT6qKx+HCCT+jsUk3cS
-jDCCBeYwggPOoAMCAQICEGqb4Tg7/ytrnwHV2binUlYwDQYJKoZIhvcNAQEMBQAwgYUxCzAJBgNV
-BAYTAkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNVBAcTB1NhbGZvcmQxGjAY
-BgNVBAoTEUNPTU9ETyBDQSBMaW1pdGVkMSswKQYDVQQDEyJDT01PRE8gUlNBIENlcnRpZmljYXRp
-b24gQXV0aG9yaXR5MB4XDTEzMDExMDAwMDAwMFoXDTI4MDEwOTIzNTk1OVowgZcxCzAJBgNVBAYT
-AkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNVBAcTB1NhbGZvcmQxGjAYBgNV
-BAoTEUNPTU9ETyBDQSBMaW1pdGVkMT0wOwYDVQQDEzRDT01PRE8gUlNBIENsaWVudCBBdXRoZW50
-aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
-AQEAvrOeV6wodnVAFsc4A5jTxhh2IVDzJXkLTLWg0X06WD6cpzEup/Y0dtmEatrQPTRI5Or1u6zf
-+bGBSyD9aH95dDSmeny1nxdlYCeXIoymMv6pQHJGNcIDpFDIMypVpVSRsivlJTRENf+RKwrB6vcf
-WlP8dSsE3Rfywq09N0ZfxcBa39V0wsGtkGWC+eQKiz4pBZYKjrc5NOpG9qrxpZxyb4o4yNNwTqza
-aPpGRqXB7IMjtf7tTmU2jqPMLxFNe1VXj9XB1rHvbRikw8lBoNoSWY66nJN/VCJv5ym6Q0mdCbDK
-CMPybTjoNCQuelc0IAaO4nLUXk0BOSxSxt8kCvsUtQIDAQABo4IBPDCCATgwHwYDVR0jBBgwFoAU
-u69+Aj36pvE8hI6t7jiY7NkyMtQwHQYDVR0OBBYEFIKvbIz4xf6WYXzoHz0rcUhexIvAMA4GA1Ud
-DwEB/wQEAwIBhjASBgNVHRMBAf8ECDAGAQH/AgEAMBEGA1UdIAQKMAgwBgYEVR0gADBMBgNVHR8E
-RTBDMEGgP6A9hjtodHRwOi8vY3JsLmNvbW9kb2NhLmNvbS9DT01PRE9SU0FDZXJ0aWZpY2F0aW9u
-QXV0aG9yaXR5LmNybDBxBggrBgEFBQcBAQRlMGMwOwYIKwYBBQUHMAKGL2h0dHA6Ly9jcnQuY29t
-b2RvY2EuY29tL0NPTU9ET1JTQUFkZFRydXN0Q0EuY3J0MCQGCCsGAQUFBzABhhhodHRwOi8vb2Nz
-cC5jb21vZG9jYS5jb20wDQYJKoZIhvcNAQEMBQADggIBAHhcsoEoNE887l9Wzp+XVuyPomsX9vP2
-SQgG1NgvNc3fQP7TcePo7EIMERoh42awGGsma65u/ITse2hKZHzT0CBxhuhb6txM1n/y78e/4ZOs
-0j8CGpfb+SJA3GaBQ+394k+z3ZByWPQedXLL1OdK8aRINTsjk/H5Ns77zwbjOKkDamxlpZ4TKSDM
-KVmU/PUWNMKSTvtlenlxBhh7ETrN543j/Q6qqgCWgWuMAXijnRglp9fyadqGOncjZjaaSOGTTFB+
-E2pvOUtY+hPebuPtTbq7vODqzCM6ryEhNhzf+enm0zlpXK7q332nXttNtjv7VFNYG+I31gnMrwfH
-M5tdhYF/8v5UY5g2xANPECTQdu9vWPoqNSGDt87b3gXb1AiGGaI06vzgkejL580ul+9hz9D0S0U4
-jkhJiA7EuTecP/CFtR72uYRBcunwwH3fciPjviDDAI9SnC/2aPY8ydehzuZutLbZdRJ5PDEJM/1t
-yZR2niOYihZ+FCbtf3D9mB12D4ln9icgc7CwaxpNSCPt8i/GqK2HsOgkL3VYnwtx7cJUmpvVdZ4o
-gnzgXtgtdk3ShrtOS1iAN2ZBXFiRmjVzmehoMof06r1xub+85hFQzVxZx5/bRaTKTlL8YXLI8nAb
-R9HWdFqzcOoB/hxfEyIQpx9/s81rgzdEZOofSlZHynoSMYIDyjCCA8YCAQEwga0wgZcxCzAJBgNV
-BAYTAkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNVBAcTB1NhbGZvcmQxGjAY
-BgNVBAoTEUNPTU9ETyBDQSBMaW1pdGVkMT0wOwYDVQQDEzRDT01PRE8gUlNBIENsaWVudCBBdXRo
-ZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEA4rtJSHkq7AnpxKUY8ZlYZjANBglghkgB
-ZQMEAgEFAKCCAe0wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMjEw
-NDA2MTEyOTQ3WjAvBgkqhkiG9w0BCQQxIgQg0v+yfWKBpjzMe01PYqyh7ioUU6IEILw1ysPI/T4H
-jHcwgb4GCSsGAQQBgjcQBDGBsDCBrTCBlzELMAkGA1UEBhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIg
-TWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEaMBgGA1UEChMRQ09NT0RPIENBIExpbWl0ZWQx
-PTA7BgNVBAMTNENPTU9ETyBSU0EgQ2xpZW50IEF1dGhlbnRpY2F0aW9uIGFuZCBTZWN1cmUgRW1h
-aWwgQ0ECEQDiu0lIeSrsCenEpRjxmVhmMIHABgsqhkiG9w0BCRACCzGBsKCBrTCBlzELMAkGA1UE
-BhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEaMBgG
-A1UEChMRQ09NT0RPIENBIExpbWl0ZWQxPTA7BgNVBAMTNENPTU9ETyBSU0EgQ2xpZW50IEF1dGhl
-bnRpY2F0aW9uIGFuZCBTZWN1cmUgRW1haWwgQ0ECEQDiu0lIeSrsCenEpRjxmVhmMA0GCSqGSIb3
-DQEBAQUABIIBAJR9frYnjCqQdxWzL4ol9TnEs8V/hNp1lRnqIkPPIeJo335b7O0pu+vwQv5qT2qP
-Ku9Ol3tsKKYOxxBGmDZ3r7UPQje1981fvpmtKynvVhjpxhw3VqsDN3V4r/Cpaffj437MLBdSMqdL
-13PBQfJbBpUxnMzgwl66VQTFAAbLXaw2bc59bSvzmAnsIgMMtA8B/uiu49+7XyqOkNybmU0XVRkn
-Q6G2TgU7iymJygejkJ/8K2jSkTGPSsgytrBls8Kl3vJ+Het4mm1RFeFMj5g9TkKMsu97Lm7MoBJj
-WXqPB/dgUI1Fa/hSgd216U8lQBSi5KYzi4wa5G6BJnrFJvo3It4AAAAAAAA=
-
-
---=-QQkFqNwM1japslpxUh2U--
-
+Thanks!
