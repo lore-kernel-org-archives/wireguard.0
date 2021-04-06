@@ -7,49 +7,46 @@ X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_INVALID,
 	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_2 autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 53B60C433B4
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  6 Apr 2021 09:53:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 44EFDC433B4
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  6 Apr 2021 11:29:54 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 4B38D613C8
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  6 Apr 2021 09:53:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 4B38D613C8
+	by mail.kernel.org (Postfix) with ESMTPS id E2DB96124C
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  6 Apr 2021 11:29:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org E2DB96124C
 Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8b484afb;
-	Tue, 6 Apr 2021 09:51:59 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9653f6fe;
+	Tue, 6 Apr 2021 11:29:51 +0000 (UTC)
 Received: from desiato.infradead.org (desiato.infradead.org
  [2001:8b0:10b:1:d65d:64ff:fe57:4e05])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7909a4c1
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id be1309c2
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Tue, 6 Apr 2021 09:51:56 +0000 (UTC)
+ for <wireguard@lists.zx2c4.com>; Tue, 6 Apr 2021 11:29:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=desiato.20200630; h=Mime-Version:Content-Type:References:
- In-Reply-To:Date:To:From:Subject:Message-ID:Sender:Reply-To:Cc:
- Content-Transfer-Encoding:Content-ID:Content-Description;
- bh=AL5pGw8KBK0O2W6Fx550iRc03d9GcE2A5RghOzCDE5c=; b=DcJNxLLEillsl5bSvONQfycNiq
- hHc3QYPtJhzU2ptyTSkV37rfYPPabZG5JkAyGDqYLMeQtg1o7c9FU/UV687XKrEzaFhZAVGK75lBN
- wUdIrULpQcAxlhpYvIOsX+F4xjuTU0MhyZEoLM96xjsn/KxHAiMquofK6hAM+zlbG3OML08dw0FDI
- tJ5Cqu5K/NgAzlIZo93Dt/+58eS65gQOQccftpwn4FuQ2Ppkc8nr8JX7goUxXvtS58s1T27ZOm+cg
- AYon22YPmS3y55u4SuflL6HikZpLscbq9sXezChewNPwktca2+eDlSI1LW933eBTr740UYJEXIpqN
- T7FH1RJw==;
-Received: from dyn-234.woodhou.se ([90.155.92.234]
- helo=u3832b3a9db3152.infradead.org)
+ d=infradead.org; s=desiato.20200630; h=Mime-Version:Content-Type:Date:Cc:To:
+ From:Subject:Message-ID:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+ Content-Description:In-Reply-To:References;
+ bh=8xL+8G+r6GV90DPY/eISthhnjYv2mgCCmcaiLDqcT7A=; b=plCZYbfOzbgMsEZS3sl7+snPYN
+ 8aO4+q2XswOavz1BxQU6fehLB7v6cWeKEuOvT8ahUwBx/upTIxBPg5t0+fnGle1YYqkVLs1RKYGOF
+ qflhNJmNRIXzrSDRrqnOG343GIFWGWj/5Yq+GlmjNAciaKDvetC3LlLhKe+DR3IWCwrAQW3vOI0TA
+ eBzp6/DtzHFY9C7eMvGUKG4UHBc2S66ge9IRc3Eood+MauqSDVCpIwCXyflyoEYzyHuq3Xf7zvSHq
+ PXYLFQDvOaLQacbJ+5i02Jn/W0QBu07qaCrWWfeELEW/9yj3ijVODJkZ3LLaYzM9FX/X2MM4TT926
+ 6R9Fka0g==;
+Received: from dyn-234.woodhou.se ([90.155.92.234])
  by desiato.infradead.org with esmtpsa (Exim 4.94 #2 (Red Hat Linux))
- id 1lTiNH-0025Xi-1Z; Tue, 06 Apr 2021 09:51:55 +0000
-Message-ID: <a34b4bf4a6910e7438351eee360a421e6d15aa79.camel@infradead.org>
-Subject: Re: A go package for a fine-grained tunnels configuration
+ id 1lTjtz-002KF0-Ag; Tue, 06 Apr 2021 11:29:47 +0000
+Message-ID: <e166447dac58ecaa73bf3f6a2b9bece6a01bf5cd.camel@infradead.org>
+Subject: Duplicate IP address, and permissions problems on Windows
 From: David Woodhouse <dwmw2@infradead.org>
-To: kay <kay.diam@gmail.com>, WireGuard mailing list
- <wireguard@lists.zx2c4.com>
-Date: Tue, 06 Apr 2021 10:51:54 +0100
-In-Reply-To: <CANaOheZKnxp98ERbCP-jptVtjuDDSc-ZqmWmAnX-vU=SM8D2LQ@mail.gmail.com>
-References: <CANaOheZKnxp98ERbCP-jptVtjuDDSc-ZqmWmAnX-vU=SM8D2LQ@mail.gmail.com>
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Cc: Daniel Lenski <dlenski@gmail.com>
+Date: Tue, 06 Apr 2021 12:29:47 +0100
 Content-Type: multipart/signed; micalg="sha-256";
  protocol="application/x-pkcs7-signature";
- boundary="=-vLYbUUdjcvu4yrH3562U"
+ boundary="=-QQkFqNwM1japslpxUh2U"
 X-Mailer: Evolution 3.28.5-0ubuntu0.18.04.2 
 Mime-Version: 1.0
 X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
@@ -69,36 +66,53 @@ Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
 
---=-vLYbUUdjcvu4yrH3562U
+--=-QQkFqNwM1japslpxUh2U
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, 2021-03-14 at 18:05 +0100, kay wrote:
-> Hi Everyone,
->=20
-> I'm developing a package for the fine-grained tunnel configuration in
-> different OS's, e.g. IP address, routes, DNSsettings.
->=20
-> It already supports Windows, Linux and FreeBSD (+macOS with an os.Exec
-> dependency to run networksetup for DNS configuration, need help for a
-> native support without os.Exec).
->=20
-> I hope you can find it useful and contribute to improving it.
->=20
-> https://github.com/kayrus/tuncfg
+I'm looking at porting the Windows build of OpenConnect=C2=B9 to use Wintun
+instead of the OpenVPN TAP-Windows driver.
 
-That looks interesting. Is there any chance it could be used with
-OpenConnect in place of a vpnc-script? It would be invoked as a
-separate executable with the address, routing, DNS information in
-environment variables.
+The Wintun example.c shows how to add a Legacy IP address using
+CreateUnicastIpAddressEntry(), and I tried to do it that way.
 
-There may be some accumulated platform knowledge in the canonical
-vpnc-script at http://git.infradead.org/users/dwmw2/vpnc-scripts.git/
-that would be useful in tuncfg too?
+But it doesn't always work. When I reconnect to the VPN using Wintun
+after connecting to the same VPN using TAP-Windows, the Legacy IP
+address remains associated with the other adapter despite it being
+*down*. Even though CreateUnicastIpAddressEntry() returns success.
+
+I ended up writing something to iterate over the table returned by
+GetUnicastIpAddressTable() and *remove* the address from every other
+adapter:
+https://gitlab.com/openconnect/openconnect/-/commit/60d1f092e35#71552d5f529=
+101dd4a1be98f9ac9afffc3c5c9d1_0_141
+
+Is it expected that this is necessary? Do we have similar problems if
+the IP address is set by invoking 'netsh interface ip set address'?
 
 
+The second issue I have on Windows is permissions. With TAP-Windows the
+user had to install the adapter with elevated permissions, but could
+run the VPN client in their user account. Using Wintun that doesn't
+seem to work, and Administrator privileges are required. What is the
+"correct" way of handling that? Are the elevated privileges only needed
+to *create* the Wintun adapter, and can it be used without them after
+the driver is already loaded?
 
---=-vLYbUUdjcvu4yrH3562U
+This doesn't seem to be covered by the documentation or example code.
+
+--=20
+dwmw2
+=C2=B9 OpenConnect is the open source client for the various proprietary SS=
+L
+  VPNs =E2=80=94 Cisco AnyConnect, Juniper/Pulse Secure, GlobalProtect, F5,
+  Fortinet, etc.: https://www.infradead.org/openconnect/
+
+
+
+
+
+--=-QQkFqNwM1japslpxUh2U
 Content-Type: application/x-pkcs7-signature; name="smime.p7s"
 Content-Disposition: attachment; filename="smime.p7s"
 Content-Transfer-Encoding: base64
@@ -181,20 +195,20 @@ BAYTAkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNVBAcTB1NhbGZvcmQxGjAY
 BgNVBAoTEUNPTU9ETyBDQSBMaW1pdGVkMT0wOwYDVQQDEzRDT01PRE8gUlNBIENsaWVudCBBdXRo
 ZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEA4rtJSHkq7AnpxKUY8ZlYZjANBglghkgB
 ZQMEAgEFAKCCAe0wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMjEw
-NDA2MDk1MTU0WjAvBgkqhkiG9w0BCQQxIgQgLoWBTGe2R3rvJhcJdQXZtyUra3uhHjY4QtK9KO6L
-4Bowgb4GCSsGAQQBgjcQBDGBsDCBrTCBlzELMAkGA1UEBhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIg
+NDA2MTEyOTQ3WjAvBgkqhkiG9w0BCQQxIgQg0v+yfWKBpjzMe01PYqyh7ioUU6IEILw1ysPI/T4H
+jHcwgb4GCSsGAQQBgjcQBDGBsDCBrTCBlzELMAkGA1UEBhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIg
 TWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEaMBgGA1UEChMRQ09NT0RPIENBIExpbWl0ZWQx
 PTA7BgNVBAMTNENPTU9ETyBSU0EgQ2xpZW50IEF1dGhlbnRpY2F0aW9uIGFuZCBTZWN1cmUgRW1h
 aWwgQ0ECEQDiu0lIeSrsCenEpRjxmVhmMIHABgsqhkiG9w0BCRACCzGBsKCBrTCBlzELMAkGA1UE
 BhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEaMBgG
 A1UEChMRQ09NT0RPIENBIExpbWl0ZWQxPTA7BgNVBAMTNENPTU9ETyBSU0EgQ2xpZW50IEF1dGhl
 bnRpY2F0aW9uIGFuZCBTZWN1cmUgRW1haWwgQ0ECEQDiu0lIeSrsCenEpRjxmVhmMA0GCSqGSIb3
-DQEBAQUABIIBAKifIFEEZS6d8WLl29chfrvp5JL1sVJWoY/7oUj9YQB0zbPPtUUZj8GTn/CyGWVa
-hU7trVzrQSJcGAuZiTrWvblPoY/7D/F3AJCKdp7vSOlLTzOj7eYa8Tyd5wKrMcXATISz9L1kdGmy
-h86Aykyp+g2xN5uPMG+IBUzAxMdvZspL33txXKm8LpoInV/AYfap4j2iEviZwQUt6Gjj2bXQWoP6
-YdplkEiHBQIGpc8Y5s9f0ezgYS56HS0Ux7oThy1vvnNabxvDC/FfFcmMeqOBYcm8spix1A1V4R6e
-wiDP5Hq4Co07Te0RuycMTXIRnhSxDYrp6HGEZunz149oD1NSt58AAAAAAAA=
+DQEBAQUABIIBAJR9frYnjCqQdxWzL4ol9TnEs8V/hNp1lRnqIkPPIeJo335b7O0pu+vwQv5qT2qP
+Ku9Ol3tsKKYOxxBGmDZ3r7UPQje1981fvpmtKynvVhjpxhw3VqsDN3V4r/Cpaffj437MLBdSMqdL
+13PBQfJbBpUxnMzgwl66VQTFAAbLXaw2bc59bSvzmAnsIgMMtA8B/uiu49+7XyqOkNybmU0XVRkn
+Q6G2TgU7iymJygejkJ/8K2jSkTGPSsgytrBls8Kl3vJ+Het4mm1RFeFMj5g9TkKMsu97Lm7MoBJj
+WXqPB/dgUI1Fa/hSgd216U8lQBSi5KYzi4wa5G6BJnrFJvo3It4AAAAAAAA=
 
 
---=-vLYbUUdjcvu4yrH3562U--
+--=-QQkFqNwM1japslpxUh2U--
 
