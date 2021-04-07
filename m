@@ -2,69 +2,61 @@ Return-Path: <SRS0=evAC=JE=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B94B0C433B4
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  7 Apr 2021 06:31:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CEA1C433ED
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  7 Apr 2021 07:53:03 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 95975613A9
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  7 Apr 2021 06:31:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 95975613A9
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	by mail.kernel.org (Postfix) with ESMTPS id 851AD606A5
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  7 Apr 2021 07:53:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 851AD606A5
+Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=glemt.net
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fc580a5c;
-	Wed, 7 Apr 2021 06:31:45 +0000 (UTC)
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com
- [2a00:1450:4864:20::12d])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7131ceea
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b6e00cdd;
+	Wed, 7 Apr 2021 07:50:34 +0000 (UTC)
+Received: from smtp.domeneshop.no (smtp.domeneshop.no [2a01:5b40:0:3005::1])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ff36a590
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 7 Apr 2021 06:31:44 +0000 (UTC)
-Received: by mail-lf1-x12d.google.com with SMTP id d12so26642298lfv.11
- for <wireguard@lists.zx2c4.com>; Tue, 06 Apr 2021 23:31:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=tyftpCBihtYVKz1YYpCXLBpojDyjKdBQGdGR5VAklU4=;
- b=GB1tm2nLWBKWqwPLA9JvmfpqcZxMrfNu9Molpr3eku6kU/VadlvCkZ5k2wrqX8z/7u
- hVQ8VNMPRfsGVToiAIf/AwyPUxRE6ok2ny+plgaco1IVjcTujR60TrGldF6HA+3qfU0I
- zpzSCDCQpIY/iHRxTzdZLtuSCpDAFK7WhIrBrfOt+/TkEBt77C3YO/Qi+ZW9Qmd/RANF
- 7GG/pwg+f3oOWOMyUZQSN7stolVW7ekjUfS56RnEG9jf9IUo7fVF4W2/mMAFMG8i0JTX
- zFSq9xVLKvf65kkpEWPSf1aX93RJvD9/ql64kC1jppdlfSKrU8mNxGJ3Ipk+ViB179PB
- fgIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=tyftpCBihtYVKz1YYpCXLBpojDyjKdBQGdGR5VAklU4=;
- b=arMyaT5WBqSn3i06ZPrahp4/3FnE9EVVaNT7nmkNh4e5aSre0Lw9WrUBm+62IWlzwA
- tEMUFxJXSpzSczMVUlBmgzoym/3cpDAwYF9HiGkq7EGNR6X3Eu4VXZGjbpgrF5QFr97C
- g/z4c+fY80KvbrpOjUY7fNx4OISXzBrWgF3eS4M3yAYbHaNWJtGCPcf+cL0FTN1AE9wH
- IIpcdlfZBFjH60ONEY/J23LKu8t2FIf6IDlZp0+wbVHPxqSxQ994dKOqMupyQM4w6f/P
- KUt4vpq9kFH1oP1gk2dkVDdg0rlZ1RgbA6A99OMH8vAk2V3XlpGyP7MtI0rh39PLEygi
- I88w==
-X-Gm-Message-State: AOAM532a6K/quaY5POCjcy0SiBicx+jY4dOLhK6K8IO1tr4pdiWysfVL
- 0wFLJafU2C9JeJNPUQj9srwMz1I6TrHomhNBaP0=
-X-Google-Smtp-Source: ABdhPJx4ga+FhgdRadHYk5cy74DQjXePhW+yE81SV6DJWaIOuPni4OHprbigi2uHLR7Zf7ZCqarCJx2FStHJvkTj82M=
-X-Received: by 2002:a05:6512:1084:: with SMTP id
- j4mr1438429lfg.194.1617777103775; 
- Tue, 06 Apr 2021 23:31:43 -0700 (PDT)
+ for <wireguard@lists.zx2c4.com>; Wed, 7 Apr 2021 07:50:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=glemt.net; 
+ s=ds20209;
+ h=Content-Transfer-Encoding:Content-Type:In-Reply-To:MIME-Version
+ :Date:Message-ID:From:References:To:Subject:Sender:Reply-To:Cc:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive;
+ bh=G4sE26bu8Smbs5m5pvKAzOEQcEhKmCGLc7+mVHBl2fI=; b=CE4sBcH4kHGd1XdZwYCuYvQJRU
+ FagFZxxXJ1eBj6CEMaBJxvbRBJroZkSH0oxne2KURGq2AJbnKPxu+U+QlareUAiyxQKxbgIBk9Wd4
+ DD+8GZOBtkADEKYyzuIUf7pAUhEG7uUD4f70/IW6l3qf3J8CHCqdCuI8QDVQgGuYaa//C3CjT9/zI
+ odS6CwoNF0+0tIjVVCV17ka5l5/XU4M7lDIjHwMhZGtL0n1OGBCIsk/6kpRaGmyoVxnngqgUQfQim
+ tM4V3L8XlOa4AW2wS3WJqCs3Fdo23r9Qk2ZqR7OmHQ77UFN+F42kEBcdI8qWairSM1F1/e2xDWLJ1
+ 8fK8fWhw==;
+Received: from cm-84.209.6.139.getinternet.no ([84.209.6.139]:43140
+ helo=[192.168.1.70])
+ by smtp.domeneshop.no with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <olemd@glemt.net>) id 1lU2xL-0006nl-VN
+ for wireguard@lists.zx2c4.com; Wed, 07 Apr 2021 09:50:31 +0200
+Subject: Re: NAT to NAT peers - 'EndPoint' IP data sharing among peers of the
+ same key?
+To: wireguard@lists.zx2c4.com
+References: <trinity-3510980c-c0ee-4d02-bcf5-8b7d2a708cda-1617424060455@3c-app-mailcom-lxa15>
+ <20210407031540.6fbd6789@natsu>
+From: Ole-Morten Duesund <olemd@glemt.net>
+Message-ID: <69faf92d-4c03-8255-d816-3e6cac5d0bb9@glemt.net>
+Date: Wed, 7 Apr 2021 09:50:31 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.1
 MIME-Version: 1.0
-References: <CANaOheZKnxp98ERbCP-jptVtjuDDSc-ZqmWmAnX-vU=SM8D2LQ@mail.gmail.com>
- <a34b4bf4a6910e7438351eee360a421e6d15aa79.camel@infradead.org>
-In-Reply-To: <a34b4bf4a6910e7438351eee360a421e6d15aa79.camel@infradead.org>
-From: kay <kay.diam@gmail.com>
-Date: Wed, 7 Apr 2021 08:31:08 +0200
-Message-ID: <CANaOheawQLTSWejhEC20FwVKPyE62DpRCvVB-Bun2y2hMC49Cw@mail.gmail.com>
-Subject: Re: A go package for a fine-grained tunnels configuration
-To: David Woodhouse <dwmw2@infradead.org>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20210407031540.6fbd6789@natsu>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -79,32 +71,31 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-You can create a dedicated executable if you wish. Currently I use it
-only as a package for certain projects.
+On 07.04.2021 00:15, Roman Mamedov wrote:
 
-On Tue, Apr 6, 2021 at 11:51 AM David Woodhouse <dwmw2@infradead.org> wrote:
+> On Sat, 3 Apr 2021 06:27:40 +0200
+> Giovanni Francesco <thelinuxguy@mail.com> wrote:
 >
-> On Sun, 2021-03-14 at 18:05 +0100, kay wrote:
-> > Hi Everyone,
-> >
-> > I'm developing a package for the fine-grained tunnel configuration in
-> > different OS's, e.g. IP address, routes, DNSsettings.
-> >
-> > It already supports Windows, Linux and FreeBSD (+macOS with an os.Exec
-> > dependency to run networksetup for DNS configuration, need help for a
-> > native support without os.Exec).
-> >
-> > I hope you can find it useful and contribute to improving it.
-> >
-> > https://github.com/kayrus/tuncfg
+>> Hi, I am looking to understand if "EndPoint" IP data may be shared among peers within the tunnel?
+>>
+>> The question may sound confusing, let me explain my setup.
+>>
+>> I have a static IPv4 wireguard server (let's call it "A" peer) which has two downstream WG clients peers "B" and "C" on remote networks with dynamic WAN IPs (roaming).
+>> In my current configuration all my clients "B" and "C" have a single peer "A" - therefore all traffic must always go to "A" - "A" is in a datacenter in another country.
+>>
+>> "B" and "C" have dynamic every changing IP "EndPoint" information, in my current setup this is not a problem because "A" is a static host.
+>>
+>> If "B" and "C" are connected to "A" - is it possible for me to make B and C peers of eachother without "EndPoint" ?
+>> In other words, if B public key is a peer of C and vise versa would its connection to "A" share the IP addresses ("EndPoint" or where to go) downstream to "B" and "C" so they can establish direct connectivity or would traffic always need to continue to traverse via "A"?
+> No, peer A will not tell peer B the current IP/port of peer C.
 >
-> That looks interesting. Is there any chance it could be used with
-> OpenConnect in place of a vpnc-script? It would be invoked as a
-> separate executable with the address, routing, DNS information in
-> environment variables.
->
-> There may be some accumulated platform knowledge in the canonical
-> vpnc-script at http://git.infradead.org/users/dwmw2/vpnc-scripts.git/
-> that would be useful in tuncfg too?
->
->
+> Check out other tools, for instance Tinc can do this, but not WG.
+
+There is also https://tailscale.com/blog/how-tailscale-works/ which does 
+a bunch of magic to overcome NAT-problems.
+
+My experience is that it works absolutely stunningly well.
+
+
+- OM
+
