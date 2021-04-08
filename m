@@ -2,61 +2,58 @@ Return-Path: <SRS0=g8VQ=JF=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.0 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_2 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E160C433B4
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  8 Apr 2021 17:10:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FE5BC433B4
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  8 Apr 2021 23:15:05 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 4374D610CC
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  8 Apr 2021 17:10:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 4374D610CC
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
+	by mail.kernel.org (Postfix) with ESMTPS id 44C15610E6
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  8 Apr 2021 23:15:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 44C15610E6
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e3ebc8e7;
-	Thu, 8 Apr 2021 17:10:23 +0000 (UTC)
-Received: from desiato.infradead.org (desiato.infradead.org
- [2001:8b0:10b:1:d65d:64ff:fe57:4e05])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 1fad5fa4
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8524e4a3;
+	Thu, 8 Apr 2021 23:13:55 +0000 (UTC)
+Received: from mail.zx2c4.com (mail.zx2c4.com [104.131.123.232])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2f44e009
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Thu, 8 Apr 2021 17:10:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=desiato.20200630; h=Mime-Version:Content-Type:References:
- In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
- Content-Transfer-Encoding:Content-ID:Content-Description;
- bh=kGkngEqQ/+881LoOH3774Xn7LJ85jj7dIGzCLptAQxQ=; b=dhuDCWQq8E9xmIHoxKZMCjRd3R
- 9dYiVMh5jdYn8nyYdbWcOI+KGPQBVb9/sslInGXg+8WrkIbSKS5o1iP3Ofj1DnK5WuAaJLDb3Fj3E
- /9d8Qj80VUIlFsb8DRSVEcIubwQcnXyOLoF9gk1/JT8t200ANveBd3hCUrcgoPU6t1pOMaIy8LbLX
- TO5v2FGsldCjKK+32a6ZVKP2w9cWcIREtWV9oRwoVaJybHdCUvGOkVgi+OMda3DqlHKeKCC6q9hoJ
- HZHOLLiypFODfGh8OXJxrS/S/NxOiqaE/0PT/TtNX4BYyVOSs8BdvZbIEEydrFr8KKKDI3KdBnXoI
- Q/3Iesdw==;
-Received: from dyn-234.woodhou.se ([90.155.92.234]
- helo=u3832b3a9db3152.infradead.org)
- by desiato.infradead.org with esmtpsa (Exim 4.94 #2 (Red Hat Linux))
- id 1lUYAe-008k7w-34; Thu, 08 Apr 2021 17:10:20 +0000
-Message-ID: <1f5dfe333c4e8d228773241cffadc9913d7829c7.camel@infradead.org>
-Subject: Re: Allowing space for packet headers in Wintun Tx/Rx
-From: David Woodhouse <dwmw2@infradead.org>
-To: Daniel Lenski <dlenski@gmail.com>
+ for <wireguard@lists.zx2c4.com>; Thu, 8 Apr 2021 23:13:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1617923630;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=3HQsBFWd5MX4UAhP8puz1WL5qjU+36TQDyz43f0hYvA=;
+ b=EGssYTYKVBkuFwXbfyLGwpdlkJzsiGMmJCGA+nrfZm7+Ej7Kx6DMP2zR354/39lu/Px6ak
+ U1th2bsDQvIKcJQJLaiVPmKo/snqtumL2vQhzgSxrNim1gHq/BsZrVhtJG34vld8AIGn9W
+ xJp5tmGQg+90xB6k/l2AXw2MdsXjpyo=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 6480b523
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Thu, 8 Apr 2021 23:13:50 +0000 (UTC)
+Received: by mail-yb1-f169.google.com with SMTP id n12so4522593ybf.8
+ for <wireguard@lists.zx2c4.com>; Thu, 08 Apr 2021 16:13:50 -0700 (PDT)
+X-Gm-Message-State: AOAM531PDP3RkUrUbm0fmZTbhhrkykzt43ltznZmYgSZyLw9ksxzAsxA
+ ZUdZdo7bP+Qb+8v8F1VM17G19PRXu/hPt7MpBis=
+X-Google-Smtp-Source: ABdhPJx4+Z8J0cAVjCD1u5l/WYQ4IQupvGr6Iz7CkF4x47vMNy2mnNVQEdphQDv0IcpWg5GG8CF3hdose6EgF/ExaEY=
+X-Received: by 2002:a25:4154:: with SMTP id o81mr15620388yba.239.1617923630260; 
+ Thu, 08 Apr 2021 16:13:50 -0700 (PDT)
+MIME-Version: 1.0
+References: <CALaUSusmdvz2XAT6c24023dZroTwVPKr0k7S+y6YVAXW1-ubJw@mail.gmail.com>
+In-Reply-To: <CALaUSusmdvz2XAT6c24023dZroTwVPKr0k7S+y6YVAXW1-ubJw@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 8 Apr 2021 17:13:39 -0600
+X-Gmail-Original-Message-ID: <CAHmME9qYHttPgwranGbUS4ijQOde96Je-f2VAM94LMvsNqSfVw@mail.gmail.com>
+Message-ID: <CAHmME9qYHttPgwranGbUS4ijQOde96Je-f2VAM94LMvsNqSfVw@mail.gmail.com>
+Subject: Re: WireGuard for Windows "cq is corrupt" panic in rio_windows.go
+ after insufficient buffer space
+To: Joshua Sjoding <joshua.sjoding@scjalliance.com>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Date: Thu, 08 Apr 2021 18:10:19 +0100
-In-Reply-To: <CAOw_LSHbJ-SwNc8nqFC0KDrY+ah25gfLNyYQf83mb9sSO9=R8A@mail.gmail.com>
-References: <6e259ab359c7f93f8f1119df0ba7b285cd4f53d1.camel@infradead.org>
- <CAOw_LSHa5aERnm8etcBywJV4QmW_9BesXvBYSvjKPVZ=a+whXg@mail.gmail.com>
- <26fc1c68fa495407b5c4c46a56abdb5dfe639280.camel@infradead.org>
- <CAOw_LSHbJ-SwNc8nqFC0KDrY+ah25gfLNyYQf83mb9sSO9=R8A@mail.gmail.com>
-Content-Type: multipart/signed; micalg="sha-256";
- protocol="application/x-pkcs7-signature";
- boundary="=-IPJt60f/PKARL0Uh4u+D"
-X-Mailer: Evolution 3.28.5-0ubuntu0.18.04.2 
-Mime-Version: 1.0
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
- desiato.infradead.org. See http://www.infradead.org/rpr.html
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -71,151 +68,13 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
+Hi Joshua,
 
---=-IPJt60f/PKARL0Uh4u+D
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Thanks for the log. It seems like Windows' Registered I/O extensions
+still are causing issues...
 
-On Thu, 2021-04-08 at 09:42 -0700, Daniel Lenski wrote:
-> On Thu, Apr 8, 2021 at 7:37 AM David Woodhouse <dwmw2@infradead.org> wrot=
-e:
-> >  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> >  PPP over DTLS
-> >  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> >=20
-> > We just added support for the PPP-based protocols (Fortinet, F5) and
-> > I'm not sure we even know what the DTLS-based version looks like on the
-> > wire, do we? If the header is 4 bytes or fewer, the same nasty trick
-> > works that I suggest for Cisco DTLS above. And a PPP header even with
-> > accomp and pfcomp *would* fit in 4 bytes. For the TCP transports we
-> > have an additional framing but I'm hoping those aren't there in DTLS?
-> >=20
-> > If we do need a header larger than 4 bytes, then we are forced to do
-> > things properly by adding support in the kernel driver instead of just
-> > abusing the existing header while we know the kernel isn't looking at
-> > it.
->=20
-> This is probably too much "inside baseball" for the non-(OpenConnect
-> developers) here, but I *have* confirmed that the PPP-over-DTLS
-> encapsulation is identical to the PPP-over-TLS encapsulation for the 2
-> PPP-based protocols that we support already. Both F5 and Fortinet
-> essentially opted for the thinnest veneer of UDP-ization possible for
-> their protocols.
+Is the log that you sent me "complete"? I'm asking because it appears
+there are only 2032 WSAENOBUFS lines, rather than the 2048 or 2047 or
+2049 that I'd expect to see.
 
-Ok, so that's the PPP header plus either 6 bytes for Fortinet or 4
-bytes for F5? The important part for the purpose of this conversation
-is "more than four".
-
-> The tl;dr for OpenConnect is that we really would need support for
-> arbitrary head/tail space in order not to have to do *any* memcpy.
-
-Right. I'm almost relieved at that, since it's certainly a lot *nicer*
-to do it that way than any of the hacks I just described.
-
-We can extend the TUN_PACKET header structure to have Headroom and
-Tailroom fields, then add a new ioctl which enables the new TUN_PACKET
-format and sets the headroom/tailroom to be used in the Rx ring.
-Implementing that should be relatively simple and unintrusive; the
-trickiest part of it is maintaining backward compatibility with the
-existing TUN_PACKET structure.
-
---=-IPJt60f/PKARL0Uh4u+D
-Content-Type: application/x-pkcs7-signature; name="smime.p7s"
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Transfer-Encoding: base64
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCECow
-ggUcMIIEBKADAgECAhEA4rtJSHkq7AnpxKUY8ZlYZjANBgkqhkiG9w0BAQsFADCBlzELMAkGA1UE
-BhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEaMBgG
-A1UEChMRQ09NT0RPIENBIExpbWl0ZWQxPTA7BgNVBAMTNENPTU9ETyBSU0EgQ2xpZW50IEF1dGhl
-bnRpY2F0aW9uIGFuZCBTZWN1cmUgRW1haWwgQ0EwHhcNMTkwMTAyMDAwMDAwWhcNMjIwMTAxMjM1
-OTU5WjAkMSIwIAYJKoZIhvcNAQkBFhNkd213MkBpbmZyYWRlYWQub3JnMIIBIjANBgkqhkiG9w0B
-AQEFAAOCAQ8AMIIBCgKCAQEAsv3wObLTCbUA7GJqKj9vHGf+Fa+tpkO+ZRVve9EpNsMsfXhvFpb8
-RgL8vD+L133wK6csYoDU7zKiAo92FMUWaY1Hy6HqvVr9oevfTV3xhB5rQO1RHJoAfkvhy+wpjo7Q
-cXuzkOpibq2YurVStHAiGqAOMGMXhcVGqPuGhcVcVzVUjsvEzAV9Po9K2rpZ52FE4rDkpDK1pBK+
-uOAyOkgIg/cD8Kugav5tyapydeWMZRJQH1vMQ6OVT24CyAn2yXm2NgTQMS1mpzStP2ioPtTnszIQ
-Ih7ASVzhV6csHb8Yrkx8mgllOyrt9Y2kWRRJFm/FPRNEurOeNV6lnYAXOymVJwIDAQABo4IB0zCC
-Ac8wHwYDVR0jBBgwFoAUgq9sjPjF/pZhfOgfPStxSF7Ei8AwHQYDVR0OBBYEFLfuNf820LvaT4AK
-xrGK3EKx1DE7MA4GA1UdDwEB/wQEAwIFoDAMBgNVHRMBAf8EAjAAMB0GA1UdJQQWMBQGCCsGAQUF
-BwMEBggrBgEFBQcDAjBGBgNVHSAEPzA9MDsGDCsGAQQBsjEBAgEDBTArMCkGCCsGAQUFBwIBFh1o
-dHRwczovL3NlY3VyZS5jb21vZG8ubmV0L0NQUzBaBgNVHR8EUzBRME+gTaBLhklodHRwOi8vY3Js
-LmNvbW9kb2NhLmNvbS9DT01PRE9SU0FDbGllbnRBdXRoZW50aWNhdGlvbmFuZFNlY3VyZUVtYWls
-Q0EuY3JsMIGLBggrBgEFBQcBAQR/MH0wVQYIKwYBBQUHMAKGSWh0dHA6Ly9jcnQuY29tb2RvY2Eu
-Y29tL0NPTU9ET1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1haWxDQS5jcnQwJAYI
-KwYBBQUHMAGGGGh0dHA6Ly9vY3NwLmNvbW9kb2NhLmNvbTAeBgNVHREEFzAVgRNkd213MkBpbmZy
-YWRlYWQub3JnMA0GCSqGSIb3DQEBCwUAA4IBAQALbSykFusvvVkSIWttcEeifOGGKs7Wx2f5f45b
-nv2ghcxK5URjUvCnJhg+soxOMoQLG6+nbhzzb2rLTdRVGbvjZH0fOOzq0LShq0EXsqnJbbuwJhK+
-PnBtqX5O23PMHutP1l88AtVN+Rb72oSvnD+dK6708JqqUx2MAFLMevrhJRXLjKb2Mm+/8XBpEw+B
-7DisN4TMlLB/d55WnT9UPNHmQ+3KFL7QrTO8hYExkU849g58Dn3Nw3oCbMUgny81ocrLlB2Z5fFG
-Qu1AdNiBA+kg/UxzyJZpFbKfCITd5yX49bOriL692aMVDyqUvh8fP+T99PqorH4cIJP6OxSTdxKM
-MIIFHDCCBASgAwIBAgIRAOK7SUh5KuwJ6cSlGPGZWGYwDQYJKoZIhvcNAQELBQAwgZcxCzAJBgNV
-BAYTAkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNVBAcTB1NhbGZvcmQxGjAY
-BgNVBAoTEUNPTU9ETyBDQSBMaW1pdGVkMT0wOwYDVQQDEzRDT01PRE8gUlNBIENsaWVudCBBdXRo
-ZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMB4XDTE5MDEwMjAwMDAwMFoXDTIyMDEwMTIz
-NTk1OVowJDEiMCAGCSqGSIb3DQEJARYTZHdtdzJAaW5mcmFkZWFkLm9yZzCCASIwDQYJKoZIhvcN
-AQEBBQADggEPADCCAQoCggEBALL98Dmy0wm1AOxiaio/bxxn/hWvraZDvmUVb3vRKTbDLH14bxaW
-/EYC/Lw/i9d98CunLGKA1O8yogKPdhTFFmmNR8uh6r1a/aHr301d8YQea0DtURyaAH5L4cvsKY6O
-0HF7s5DqYm6tmLq1UrRwIhqgDjBjF4XFRqj7hoXFXFc1VI7LxMwFfT6PStq6WedhROKw5KQytaQS
-vrjgMjpICIP3A/CroGr+bcmqcnXljGUSUB9bzEOjlU9uAsgJ9sl5tjYE0DEtZqc0rT9oqD7U57My
-ECIewElc4VenLB2/GK5MfJoJZTsq7fWNpFkUSRZvxT0TRLqznjVepZ2AFzsplScCAwEAAaOCAdMw
-ggHPMB8GA1UdIwQYMBaAFIKvbIz4xf6WYXzoHz0rcUhexIvAMB0GA1UdDgQWBBS37jX/NtC72k+A
-CsaxitxCsdQxOzAOBgNVHQ8BAf8EBAMCBaAwDAYDVR0TAQH/BAIwADAdBgNVHSUEFjAUBggrBgEF
-BQcDBAYIKwYBBQUHAwIwRgYDVR0gBD8wPTA7BgwrBgEEAbIxAQIBAwUwKzApBggrBgEFBQcCARYd
-aHR0cHM6Ly9zZWN1cmUuY29tb2RvLm5ldC9DUFMwWgYDVR0fBFMwUTBPoE2gS4ZJaHR0cDovL2Ny
-bC5jb21vZG9jYS5jb20vQ09NT0RPUlNBQ2xpZW50QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFp
-bENBLmNybDCBiwYIKwYBBQUHAQEEfzB9MFUGCCsGAQUFBzAChklodHRwOi8vY3J0LmNvbW9kb2Nh
-LmNvbS9DT01PRE9SU0FDbGllbnRBdXRoZW50aWNhdGlvbmFuZFNlY3VyZUVtYWlsQ0EuY3J0MCQG
-CCsGAQUFBzABhhhodHRwOi8vb2NzcC5jb21vZG9jYS5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5m
-cmFkZWFkLm9yZzANBgkqhkiG9w0BAQsFAAOCAQEAC20spBbrL71ZEiFrbXBHonzhhirO1sdn+X+O
-W579oIXMSuVEY1LwpyYYPrKMTjKECxuvp24c829qy03UVRm742R9Hzjs6tC0oatBF7KpyW27sCYS
-vj5wbal+TttzzB7rT9ZfPALVTfkW+9qEr5w/nSuu9PCaqlMdjABSzHr64SUVy4ym9jJvv/FwaRMP
-gew4rDeEzJSwf3eeVp0/VDzR5kPtyhS+0K0zvIWBMZFPOPYOfA59zcN6AmzFIJ8vNaHKy5QdmeXx
-RkLtQHTYgQPpIP1Mc8iWaRWynwiE3ecl+PWzq4i+vdmjFQ8qlL4fHz/k/fT6qKx+HCCT+jsUk3cS
-jDCCBeYwggPOoAMCAQICEGqb4Tg7/ytrnwHV2binUlYwDQYJKoZIhvcNAQEMBQAwgYUxCzAJBgNV
-BAYTAkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNVBAcTB1NhbGZvcmQxGjAY
-BgNVBAoTEUNPTU9ETyBDQSBMaW1pdGVkMSswKQYDVQQDEyJDT01PRE8gUlNBIENlcnRpZmljYXRp
-b24gQXV0aG9yaXR5MB4XDTEzMDExMDAwMDAwMFoXDTI4MDEwOTIzNTk1OVowgZcxCzAJBgNVBAYT
-AkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNVBAcTB1NhbGZvcmQxGjAYBgNV
-BAoTEUNPTU9ETyBDQSBMaW1pdGVkMT0wOwYDVQQDEzRDT01PRE8gUlNBIENsaWVudCBBdXRoZW50
-aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
-AQEAvrOeV6wodnVAFsc4A5jTxhh2IVDzJXkLTLWg0X06WD6cpzEup/Y0dtmEatrQPTRI5Or1u6zf
-+bGBSyD9aH95dDSmeny1nxdlYCeXIoymMv6pQHJGNcIDpFDIMypVpVSRsivlJTRENf+RKwrB6vcf
-WlP8dSsE3Rfywq09N0ZfxcBa39V0wsGtkGWC+eQKiz4pBZYKjrc5NOpG9qrxpZxyb4o4yNNwTqza
-aPpGRqXB7IMjtf7tTmU2jqPMLxFNe1VXj9XB1rHvbRikw8lBoNoSWY66nJN/VCJv5ym6Q0mdCbDK
-CMPybTjoNCQuelc0IAaO4nLUXk0BOSxSxt8kCvsUtQIDAQABo4IBPDCCATgwHwYDVR0jBBgwFoAU
-u69+Aj36pvE8hI6t7jiY7NkyMtQwHQYDVR0OBBYEFIKvbIz4xf6WYXzoHz0rcUhexIvAMA4GA1Ud
-DwEB/wQEAwIBhjASBgNVHRMBAf8ECDAGAQH/AgEAMBEGA1UdIAQKMAgwBgYEVR0gADBMBgNVHR8E
-RTBDMEGgP6A9hjtodHRwOi8vY3JsLmNvbW9kb2NhLmNvbS9DT01PRE9SU0FDZXJ0aWZpY2F0aW9u
-QXV0aG9yaXR5LmNybDBxBggrBgEFBQcBAQRlMGMwOwYIKwYBBQUHMAKGL2h0dHA6Ly9jcnQuY29t
-b2RvY2EuY29tL0NPTU9ET1JTQUFkZFRydXN0Q0EuY3J0MCQGCCsGAQUFBzABhhhodHRwOi8vb2Nz
-cC5jb21vZG9jYS5jb20wDQYJKoZIhvcNAQEMBQADggIBAHhcsoEoNE887l9Wzp+XVuyPomsX9vP2
-SQgG1NgvNc3fQP7TcePo7EIMERoh42awGGsma65u/ITse2hKZHzT0CBxhuhb6txM1n/y78e/4ZOs
-0j8CGpfb+SJA3GaBQ+394k+z3ZByWPQedXLL1OdK8aRINTsjk/H5Ns77zwbjOKkDamxlpZ4TKSDM
-KVmU/PUWNMKSTvtlenlxBhh7ETrN543j/Q6qqgCWgWuMAXijnRglp9fyadqGOncjZjaaSOGTTFB+
-E2pvOUtY+hPebuPtTbq7vODqzCM6ryEhNhzf+enm0zlpXK7q332nXttNtjv7VFNYG+I31gnMrwfH
-M5tdhYF/8v5UY5g2xANPECTQdu9vWPoqNSGDt87b3gXb1AiGGaI06vzgkejL580ul+9hz9D0S0U4
-jkhJiA7EuTecP/CFtR72uYRBcunwwH3fciPjviDDAI9SnC/2aPY8ydehzuZutLbZdRJ5PDEJM/1t
-yZR2niOYihZ+FCbtf3D9mB12D4ln9icgc7CwaxpNSCPt8i/GqK2HsOgkL3VYnwtx7cJUmpvVdZ4o
-gnzgXtgtdk3ShrtOS1iAN2ZBXFiRmjVzmehoMof06r1xub+85hFQzVxZx5/bRaTKTlL8YXLI8nAb
-R9HWdFqzcOoB/hxfEyIQpx9/s81rgzdEZOofSlZHynoSMYIDyjCCA8YCAQEwga0wgZcxCzAJBgNV
-BAYTAkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNVBAcTB1NhbGZvcmQxGjAY
-BgNVBAoTEUNPTU9ETyBDQSBMaW1pdGVkMT0wOwYDVQQDEzRDT01PRE8gUlNBIENsaWVudCBBdXRo
-ZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEA4rtJSHkq7AnpxKUY8ZlYZjANBglghkgB
-ZQMEAgEFAKCCAe0wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMjEw
-NDA4MTcxMDE5WjAvBgkqhkiG9w0BCQQxIgQgc9UAtOmVN+QamBokYmD4LDy91yb0SH5PASFjs0uo
-sVYwgb4GCSsGAQQBgjcQBDGBsDCBrTCBlzELMAkGA1UEBhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIg
-TWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEaMBgGA1UEChMRQ09NT0RPIENBIExpbWl0ZWQx
-PTA7BgNVBAMTNENPTU9ETyBSU0EgQ2xpZW50IEF1dGhlbnRpY2F0aW9uIGFuZCBTZWN1cmUgRW1h
-aWwgQ0ECEQDiu0lIeSrsCenEpRjxmVhmMIHABgsqhkiG9w0BCRACCzGBsKCBrTCBlzELMAkGA1UE
-BhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEaMBgG
-A1UEChMRQ09NT0RPIENBIExpbWl0ZWQxPTA7BgNVBAMTNENPTU9ETyBSU0EgQ2xpZW50IEF1dGhl
-bnRpY2F0aW9uIGFuZCBTZWN1cmUgRW1haWwgQ0ECEQDiu0lIeSrsCenEpRjxmVhmMA0GCSqGSIb3
-DQEBAQUABIIBADAl4jaOrlDYXI/v8Hv7CntBGRvoLGRJBaLB6brepSQw3fv5CA5whIpwNA4CT1Yt
-TkIyPbv7MWkfW9O7ClZHcFMT1XY28QuZ0ayK95oxl9mb4iyS89xnKMIJUmBXbHlUBD2eCVVb88Nx
-GKFci5H2FB4P9mpmbSyRfOuXvBcsw3DNjHoZGQEbtxTcpE95u6acNJnz8029Z22CvsY9HJK0zQfB
-4TsIAqK9oIU4YR/qpPwxEYVszkISty3hqva/0pRwAd0JeFsUBRSvo4tsKOUI9bFfDYVTEn2l5zHG
-C9AsOeVUxh8kA9ocJlvtVdmCQEiZsZifpDEDTRBTYiqY+ntgi48AAAAAAAA=
-
-
---=-IPJt60f/PKARL0Uh4u+D--
-
+Jason
