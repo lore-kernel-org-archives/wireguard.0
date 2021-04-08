@@ -2,53 +2,56 @@ Return-Path: <SRS0=g8VQ=JF=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.0 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_2 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_2 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CEC1CC433B4
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  8 Apr 2021 14:37:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 387D1C43460
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  8 Apr 2021 16:59:32 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id D10BB60FF1
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  8 Apr 2021 14:37:22 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org D10BB60FF1
+	by mail.kernel.org (Postfix) with ESMTPS id 5121060FDB
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  8 Apr 2021 16:59:31 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 5121060FDB
 Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f6d7f808;
-	Thu, 8 Apr 2021 14:37:21 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7879e908;
+	Thu, 8 Apr 2021 16:59:29 +0000 (UTC)
 Received: from desiato.infradead.org (desiato.infradead.org
  [2001:8b0:10b:1:d65d:64ff:fe57:4e05])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d887ffe5
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id dbbb1a8f
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Thu, 8 Apr 2021 14:37:17 +0000 (UTC)
+ for <wireguard@lists.zx2c4.com>; Thu, 8 Apr 2021 16:59:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=infradead.org; s=desiato.20200630; h=Mime-Version:Content-Type:References:
  In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
  Content-Transfer-Encoding:Content-ID:Content-Description;
- bh=4iDPbiXpUUYHY7GfRAKKjkX/ZggoMtF5verDaj8fJC0=; b=qmIP3gDgyk30BnOX3JZZmqOJ9c
- NBOBh2eSpxU+NAS6f6it1hGVZloX5sXtBrwQkH+symx9RF0Ej8irTtN89eXnl0oTf7ZA/sKbpaD+7
- 24dIB7SeLnHhu+GmEJpHw3iDTIzyuHcgMdoDhbkZIdQv4aR+7DBSAiegc9QxPVAp1EUOtnOXLp65J
- D2KvqTnpJwcs02//VTqpBLwptnuT/yc4UED3HxlpCsksJUddbWhv8Rj+1UI1nEicHS7GnbUAAhBZf
- hUXi0LWjQZEJjMcE8FWvLOSCnfaeHFT2m1oe3xBl8aP6h7cu5gUKjt4KvlLDqP+nBUJi8U2V6UHh9
- 1xiZJBtA==;
-Received: from dyn-234.woodhou.se ([90.155.92.234])
+ bh=BxyeBs7x1owUHF9kWygS4rn0MVaFjO3NwBN6MzUfNvc=; b=UDF5t0i7leBTBm5DnGBDVdEI4V
+ sudBV+8528ixVBmt9q6w8rJFaTb3QmQZ05NmP/rf9Y506YidDIqIsb/tU6y3DcfLlNh7UEJAb0QxZ
+ dIMPHAjBjDpmXgiKleboKQZ/CPRFLpjC7BgtsIvCPhir8qWsug8KzPJSnd6d/venIz2MMvHkdyeXY
+ tLXMfer8u6ywoH+1+tDqD+qFG9i1llTuf6sb25/eG+bGIojAUC/CCeaWh8DHz5IhEqBVGCzus9s9f
+ 5RygAf+Yg2Xjt9uP8usD1bnu337khreJdAxVs2ivffjaWSV/b6soy3r+JMiTc2ZT1qmCJJjaDwI/Y
+ d1NmBrvA==;
+Received: from dyn-234.woodhou.se ([90.155.92.234]
+ helo=u3832b3a9db3152.infradead.org)
  by desiato.infradead.org with esmtpsa (Exim 4.94 #2 (Red Hat Linux))
- id 1lUVmV-008GY1-NX; Thu, 08 Apr 2021 14:37:16 +0000
-Message-ID: <26fc1c68fa495407b5c4c46a56abdb5dfe639280.camel@infradead.org>
-Subject: Re: Allowing space for packet headers in Wintun Tx/Rx
+ id 1lUY03-008i1s-Np; Thu, 08 Apr 2021 16:59:23 +0000
+Message-ID: <432300ddb79fffb1586ccac6852fade4c2d47db0.camel@infradead.org>
+Subject: Re: Duplicate IP address, and permissions problems on Windows
 From: David Woodhouse <dwmw2@infradead.org>
-To: Daniel Lenski <dlenski@gmail.com>
+To: Daniel Lenski <dlenski@gmail.com>, "Jason A. Donenfeld" <Jason@zx2c4.com>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Date: Thu, 08 Apr 2021 15:37:15 +0100
-In-Reply-To: <CAOw_LSHa5aERnm8etcBywJV4QmW_9BesXvBYSvjKPVZ=a+whXg@mail.gmail.com>
-References: <6e259ab359c7f93f8f1119df0ba7b285cd4f53d1.camel@infradead.org>
- <CAOw_LSHa5aERnm8etcBywJV4QmW_9BesXvBYSvjKPVZ=a+whXg@mail.gmail.com>
+Date: Thu, 08 Apr 2021 17:59:23 +0100
+In-Reply-To: <CAOw_LSEasJuHDPXGkVQnYh_aHd+nOY53D0LRUXuH+pN45ynz2w@mail.gmail.com>
+References: <e166447dac58ecaa73bf3f6a2b9bece6a01bf5cd.camel@infradead.org>
+ <CAHmME9q-qw=sCxz6Fije+ENQTY2-GdS4bZLSakuh+6Eze4LR3w@mail.gmail.com>
+ <CAOw_LSEasJuHDPXGkVQnYh_aHd+nOY53D0LRUXuH+pN45ynz2w@mail.gmail.com>
 Content-Type: multipart/signed; micalg="sha-256";
  protocol="application/x-pkcs7-signature";
- boundary="=-j9MqDXlLfH2+Cq9qTFZE"
+ boundary="=-/JNQJmRuKaiPs2aiYpGT"
 X-Mailer: Evolution 3.28.5-0ubuntu0.18.04.2 
 Mime-Version: 1.0
 X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
@@ -68,163 +71,66 @@ Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
 
---=-j9MqDXlLfH2+Cq9qTFZE
+--=-/JNQJmRuKaiPs2aiYpGT
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, 2021-04-07 at 16:15 -0700, Daniel Lenski wrote:
-> On Wed, Apr 7, 2021 at 4:49 AM David Woodhouse <dwmw2@infradead.org> wrot=
-e:
-> > If WintunSendPacket took an additional 'offset' argument to disregard a
-> > certain number of bytes at the beginning of the buffer, that would
-> > probably suffice. Or is it possible to simply add to the pointer
-> > returned by WintunAllocateSendPacket()?
+On Wed, 2021-04-07 at 16:00 -0700, Daniel Lenski wrote:
+> Following David's initial implementation, I wrote something for
+> OpenConnect that's pretty much the same as yours:
+> https://gitlab.com/openconnect/openconnect/-/compare/5e6e9b850756157164f8=
+3cd4fedafb747fbbd50f...0bca5b32ac478b5d03b6e88f96bf29c6556610a5
 >=20
-> To expand on this possibility a little bit, I had proposed kludging a
-> =E2=80=9Cshift=E2=80=9D into the allocation for the outgoing packet:
+> 1. Uses GetAdaptersAddresses to list all the addresses
+> 2. If/when it finds a clashing address, it uses
+> GetUnicastIpAddressTable to determine the up/down state of the other
+> interface
+> 3. Only delete the address from the other interface if it's non-UP.
 >=20
->     /* Always use this instead for an outgoing packet, instead of
->      * malloc(sizeof(struct pkt) + payload_len */
->     BYTE *tun_pkt =3D WintunAllocateSendPacket(
->         vpninfo->wintun_session,
->         paylod_len                 /* packet payload size */
->         + sizeof(struct pkt)     /* OpenConnect's internal packet header =
-size */
->     );
+> I was also annoyed that the GetAdaptersAddresses return structure
+> doesn't provide the adapter state, and that I had to go for this
+> convoluted O(n^2) design.
 >=20
->     /* Then after we build and populate the outgoing packet, just tell
->      * Wintun to send from an offset that's NOT at the beginning of the
->      * buffer it allocated for us. No memcpy! */
->     WintunSendPacket(vpninfo->wintun_session, tun_pkt + sizeof(struct pkt=
-));
->=20
-> The concern here is that Wintun may not have been written with this
-> possibility in mind, and might not always like sending from an address
-> other than the exact start of a buffer it's allocated for us.
+> I guess this reassures me that there isn't an obviously-better way to
+> do it.
 
-If we have to, we could probably ditch a lot of what's in the DLL's
-api/session.c and manage the ring for ourselves; the fundamental
-limitation right now is how the kernel driver itself handles the shared
-ring.
+Hm, your description doesn't match the code I see at that link.
 
-It uses a TUN_PACKET header which is basically just a 'ULONG Size'
-followed immediately by the data. To allow the application to process
-packets out-of-order, the *userspace* part sets the top bit of ->Size
-to manage ownership between the DLL and the application, but the kernel
-side doesn't see that because it's removed by the time the DLL bumps
-the ring tail to allow the kernel to see the packet.
+You're using GetAdaptersAddresses() which gives you the UP/DOWN status
+as well as the addresses, and you iterate over those. The loop is
 
-For OpenConnect I think it's reasonable to declare that we don't care
-about optimising the TCP fallback data path; it's the UDP data path
-that we really want to be zero-copy, decrypting directly into the tun
-ring and encrypting directly from it.
+ =E2=88=80 adapter, =E2=88=80 Unicast address on that adapter:
+     Check if it's our Legacy IP or IPv6 address.
 
-Let's take a look at the protocols we need to support...
-=20
- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=20
- Cisco DTLS
- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+That isn't O(n=C2=B2), is it? It's still O(n) of the total number of unicas=
+t
+addresses in the system?
 
-Cisco DTLS has only a single byte of header, for the packet type.
+Once you've found an address which needs to be removed, you're *then*
+using GetUnicastIpAddressTable() and searching through the results to
+find the appropriate MIB_UNICASTIPADDRESS_ROW that you need to pass to
+DeleteUnicastIpAddressEntry().
 
-So for VPN=E2=86=92tun traffic we could actually just receive the packet (w=
-ith
-gnutls_record_recv() or ssl_read()) directly into the TUN ring, with
-the first byte *overwriting* the MSB of the Size field of the
-TUN_HEADER.
-
-If it's a packet type of anything other than AC_PKT_DATA we'd then
-handle it immediately (as we do now) and end up re-using the same
-location in the ring next time. If it's AC_PKT_DATA we just reinstate
-the Size field of the header and bump the ring Tail to let the kernel
-see it. If it wasn't for the fact that we need to allocate the full
-possible MTU and then reduce the actual packet size once we see it,
-this would even be compatible with the existing ring management in
-wintun.dll. It's certainly compatible with the kernel driver.
-
-For tun=E2=86=92VPN traffic we can do something similar, abusing that top b=
-yte
-of the Size field. And this *would* be compatible with the existing
-DLL, since we know that byte is going to be zero (which is AC_PKT_DATA)
-anyway. (Here's where it would be nice to have gnutls_record_sendv() or
-SSL_writev() methods which do scatter/gather, but we don't).
-
-The bare minimum we need from Wintun here is a function that would
-resize the last allocated send packet. As long as nothing has been
-allocated *after* it, we could reduce its size and adjust
-Session->Receive.Tail accordingly.
-
- =3D=3D=3D
- ESP
- =3D=3D=3D
-
-For ESP we do our own encrypt/decrypt operations directly and don't
-need a header. But we do actually need a *tail*, since the packet is
-padded to the crypto block size and has a 'next header' field in the
-final encrypted byte, e.g:
-
-   DD DD DD DD DD DD DD DD  DD DD DD DD DD DD DD DD
-   DD DD DD 01 02 03 04 05  06 07 08 09 0a 0b 0b 29
-            <........... padding ..........>  =E2=86=91  =E2=86=91
-                                         padlen  next_hdr
- =20
-So, much as with Cisco DTLS for VPN=E2=86=92tun traffic we'd want to alloca=
-te
-*more* space in the Wintun ring than we actually need, then shrink the
-Size field later to match precisely the size of the packet. Which again
-is compatible with the kernel driver but not with the ring management
-currently in api/session.c.
-
-For tun=E2=86=92VPN traffic it's a little more complex as we ideally want t=
-he
-kernel driver to leave space *after* the packet, for us to append the
-tail bytes without scribbling over the subsequent packet in the ring.
-
-But it isn't the end of the world; we can encrypt *most* of the packet
-directly from the tun ring, and we only need to copy *less* than a
-single crypto block (those first three DD DD DD bytes in the final line
-of the above example) into a buffer elsewhere to handle the padding
-etc.
+Does *every* field in the MIB_UNICASTIPADDRESS_ROW have to be filled
+in, or is it just the Address, InterfaceLuid and InterfaceIndex? Can't
+we get those from the table we get back from GetAdaptersAddresses()?
 
 
- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
- PPP over DTLS
- =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Alternatively, can't we start with GetUnicastIpAddressTable() as my
+original code did, and if we want to check whether an interface is down
+before we steal the address from it, use GetIfEntry2() to find out?
 
-We just added support for the PPP-based protocols (Fortinet, F5) and
-I'm not sure we even know what the DTLS-based version looks like on the
-wire, do we? If the header is 4 bytes or fewer, the same nasty trick
-works that I suggest for Cisco DTLS above. And a PPP header even with
-accomp and pfcomp *would* fit in 4 bytes. For the TCP transports we
-have an additional framing but I'm hoping those aren't there in DTLS?
-
-If we do need a header larger than 4 bytes, then we are forced to do
-things properly by adding support in the kernel driver instead of just
-abusing the existing header while we know the kernel isn't looking at
-it.
+Using GetIfEntry2() is probably a saner way to find the InterfaceIndex
+for the Wintun itself, which I was dredging the registry for manually.
 
 
+I'd like to be consistent about clearing the 'conflicting' addresses
+and setting the address on the Wintun interface. Whatever we do in
+OpenConnect for Legacy IP we should also do for IPv6. It looks like
+you're clearing the conflicting addresses for both families, but we
+still aren't *setting* the IPv6 address from the C code?=20
 
-So, what do we want, and what's the bare minimum we actually *need*
-from Wintun to be able to avoid those memcpys?=20
-
-The bare minimum is either exposing enough of the TUN_SESSION to let us
-manage the rings for ourselves, or a function which can resize the
-*last* allocated packet from the Tx ring before we call
-WintunSendPacket() on it. That's purely userspace in wintun.dll.
-
-The next request would be to expand the TUN_HEADER to include head/tail
-space, and a parameter in the TUN_REGISTER_RINGS structure which
-configures the amount of head/tail space to leave between received
-packets. That's a change in the kernel API and is more complex to
-manage, and as noted we *could* live without it for now although it's
-kind of ugly, still involves *some* copying at the tail of outbound ESP
-packets, and depends on those PPP headers not exceeding the 4 bytes
-that are currently available for us to abuse :)
-
-
-
---=-j9MqDXlLfH2+Cq9qTFZE
+--=-/JNQJmRuKaiPs2aiYpGT
 Content-Type: application/x-pkcs7-signature; name="smime.p7s"
 Content-Disposition: attachment; filename="smime.p7s"
 Content-Transfer-Encoding: base64
@@ -307,20 +213,20 @@ BAYTAkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNVBAcTB1NhbGZvcmQxGjAY
 BgNVBAoTEUNPTU9ETyBDQSBMaW1pdGVkMT0wOwYDVQQDEzRDT01PRE8gUlNBIENsaWVudCBBdXRo
 ZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEA4rtJSHkq7AnpxKUY8ZlYZjANBglghkgB
 ZQMEAgEFAKCCAe0wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMjEw
-NDA4MTQzNzE1WjAvBgkqhkiG9w0BCQQxIgQgiNJlsQZxaROCLpKghIux66Z/Bdm92qJFeEZfZ+qa
-OnQwgb4GCSsGAQQBgjcQBDGBsDCBrTCBlzELMAkGA1UEBhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIg
+NDA4MTY1OTIzWjAvBgkqhkiG9w0BCQQxIgQgP3ipGjUZgQKUGkwApkyWoZFFLFOmRQEV0b6nW9TB
+DiYwgb4GCSsGAQQBgjcQBDGBsDCBrTCBlzELMAkGA1UEBhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIg
 TWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEaMBgGA1UEChMRQ09NT0RPIENBIExpbWl0ZWQx
 PTA7BgNVBAMTNENPTU9ETyBSU0EgQ2xpZW50IEF1dGhlbnRpY2F0aW9uIGFuZCBTZWN1cmUgRW1h
 aWwgQ0ECEQDiu0lIeSrsCenEpRjxmVhmMIHABgsqhkiG9w0BCRACCzGBsKCBrTCBlzELMAkGA1UE
 BhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEaMBgG
 A1UEChMRQ09NT0RPIENBIExpbWl0ZWQxPTA7BgNVBAMTNENPTU9ETyBSU0EgQ2xpZW50IEF1dGhl
 bnRpY2F0aW9uIGFuZCBTZWN1cmUgRW1haWwgQ0ECEQDiu0lIeSrsCenEpRjxmVhmMA0GCSqGSIb3
-DQEBAQUABIIBAG8o28XUYelS5zxV1AtyAefYoYne5veD83w8SLtyEiz+oQA9aF6ffm9q+/O4fFJA
-kbWkUCJ98nv6Dntuk1JBL3o4OlQUcrPGUgl6pSxXwxcswakfhyEUWCquJepH6Xe7yw6Cbi4qsa2R
-1rD27RR+EKnpMkvB3jVO0LnMg5y//o8fsCtMRZ5//MGbBS5NisU00ACtWlIcbRhNWZj9+w5vUBur
-AZJZ7yTYNBv8mCeaLq16alpoKpRrUfetenOIYdbnvaUM5L/MG+QSI5tJTXgtUg7jSf9/7qy0ECIm
-DNWLMRftcMVAVw3SKgPoHq5BevZc12pLJzv2haNI5ZnI3KwFbDAAAAAAAAA=
+DQEBAQUABIIBADCZP32S/lasvl5AOklQjxMgP3Y4rGGTTL3GlQIJKo1bRz65spOQlIC502gcDKFx
+OIScN7yiyFKodhe4wfOCE8PfqP7sD62rYjJgN8Vcmti1mg0fnGNpEZjnN5c3LPwRtKkMmxjV7ThK
+RDM9D8arx0IXUKTOVvIVgI394LyXR6lLgSrSjbYBSD//CwNvLju50EDGiy/ETJ0iVK9HgcOSB5O7
+h9GV8ei52q6G/635WXtI5cYDEMzS9TatEZm91l6NYKQ6BbpF35FaZnLnf8L3gLIb9JYgzrHVaCaK
+V2xcFnrvi0VEUDN07mytFtFYQ7yq1qwP1av9G3txbScibLG3SGYAAAAAAAA=
 
 
---=-j9MqDXlLfH2+Cq9qTFZE--
+--=-/JNQJmRuKaiPs2aiYpGT--
 
