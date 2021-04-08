@@ -2,56 +2,57 @@ Return-Path: <SRS0=g8VQ=JF=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_2 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.0 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_2 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 387D1C43460
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  8 Apr 2021 16:59:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E160C433B4
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  8 Apr 2021 17:10:26 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 5121060FDB
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  8 Apr 2021 16:59:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 5121060FDB
+	by mail.kernel.org (Postfix) with ESMTPS id 4374D610CC
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  8 Apr 2021 17:10:25 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 4374D610CC
 Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7879e908;
-	Thu, 8 Apr 2021 16:59:29 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e3ebc8e7;
+	Thu, 8 Apr 2021 17:10:23 +0000 (UTC)
 Received: from desiato.infradead.org (desiato.infradead.org
  [2001:8b0:10b:1:d65d:64ff:fe57:4e05])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id dbbb1a8f
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 1fad5fa4
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Thu, 8 Apr 2021 16:59:25 +0000 (UTC)
+ for <wireguard@lists.zx2c4.com>; Thu, 8 Apr 2021 17:10:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=infradead.org; s=desiato.20200630; h=Mime-Version:Content-Type:References:
  In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
  Content-Transfer-Encoding:Content-ID:Content-Description;
- bh=BxyeBs7x1owUHF9kWygS4rn0MVaFjO3NwBN6MzUfNvc=; b=UDF5t0i7leBTBm5DnGBDVdEI4V
- sudBV+8528ixVBmt9q6w8rJFaTb3QmQZ05NmP/rf9Y506YidDIqIsb/tU6y3DcfLlNh7UEJAb0QxZ
- dIMPHAjBjDpmXgiKleboKQZ/CPRFLpjC7BgtsIvCPhir8qWsug8KzPJSnd6d/venIz2MMvHkdyeXY
- tLXMfer8u6ywoH+1+tDqD+qFG9i1llTuf6sb25/eG+bGIojAUC/CCeaWh8DHz5IhEqBVGCzus9s9f
- 5RygAf+Yg2Xjt9uP8usD1bnu337khreJdAxVs2ivffjaWSV/b6soy3r+JMiTc2ZT1qmCJJjaDwI/Y
- d1NmBrvA==;
+ bh=kGkngEqQ/+881LoOH3774Xn7LJ85jj7dIGzCLptAQxQ=; b=dhuDCWQq8E9xmIHoxKZMCjRd3R
+ 9dYiVMh5jdYn8nyYdbWcOI+KGPQBVb9/sslInGXg+8WrkIbSKS5o1iP3Ofj1DnK5WuAaJLDb3Fj3E
+ /9d8Qj80VUIlFsb8DRSVEcIubwQcnXyOLoF9gk1/JT8t200ANveBd3hCUrcgoPU6t1pOMaIy8LbLX
+ TO5v2FGsldCjKK+32a6ZVKP2w9cWcIREtWV9oRwoVaJybHdCUvGOkVgi+OMda3DqlHKeKCC6q9hoJ
+ HZHOLLiypFODfGh8OXJxrS/S/NxOiqaE/0PT/TtNX4BYyVOSs8BdvZbIEEydrFr8KKKDI3KdBnXoI
+ Q/3Iesdw==;
 Received: from dyn-234.woodhou.se ([90.155.92.234]
  helo=u3832b3a9db3152.infradead.org)
  by desiato.infradead.org with esmtpsa (Exim 4.94 #2 (Red Hat Linux))
- id 1lUY03-008i1s-Np; Thu, 08 Apr 2021 16:59:23 +0000
-Message-ID: <432300ddb79fffb1586ccac6852fade4c2d47db0.camel@infradead.org>
-Subject: Re: Duplicate IP address, and permissions problems on Windows
+ id 1lUYAe-008k7w-34; Thu, 08 Apr 2021 17:10:20 +0000
+Message-ID: <1f5dfe333c4e8d228773241cffadc9913d7829c7.camel@infradead.org>
+Subject: Re: Allowing space for packet headers in Wintun Tx/Rx
 From: David Woodhouse <dwmw2@infradead.org>
-To: Daniel Lenski <dlenski@gmail.com>, "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: Daniel Lenski <dlenski@gmail.com>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Date: Thu, 08 Apr 2021 17:59:23 +0100
-In-Reply-To: <CAOw_LSEasJuHDPXGkVQnYh_aHd+nOY53D0LRUXuH+pN45ynz2w@mail.gmail.com>
-References: <e166447dac58ecaa73bf3f6a2b9bece6a01bf5cd.camel@infradead.org>
- <CAHmME9q-qw=sCxz6Fije+ENQTY2-GdS4bZLSakuh+6Eze4LR3w@mail.gmail.com>
- <CAOw_LSEasJuHDPXGkVQnYh_aHd+nOY53D0LRUXuH+pN45ynz2w@mail.gmail.com>
+Date: Thu, 08 Apr 2021 18:10:19 +0100
+In-Reply-To: <CAOw_LSHbJ-SwNc8nqFC0KDrY+ah25gfLNyYQf83mb9sSO9=R8A@mail.gmail.com>
+References: <6e259ab359c7f93f8f1119df0ba7b285cd4f53d1.camel@infradead.org>
+ <CAOw_LSHa5aERnm8etcBywJV4QmW_9BesXvBYSvjKPVZ=a+whXg@mail.gmail.com>
+ <26fc1c68fa495407b5c4c46a56abdb5dfe639280.camel@infradead.org>
+ <CAOw_LSHbJ-SwNc8nqFC0KDrY+ah25gfLNyYQf83mb9sSO9=R8A@mail.gmail.com>
 Content-Type: multipart/signed; micalg="sha-256";
  protocol="application/x-pkcs7-signature";
- boundary="=-/JNQJmRuKaiPs2aiYpGT"
+ boundary="=-IPJt60f/PKARL0Uh4u+D"
 X-Mailer: Evolution 3.28.5-0ubuntu0.18.04.2 
 Mime-Version: 1.0
 X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
@@ -71,66 +72,54 @@ Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
 
---=-/JNQJmRuKaiPs2aiYpGT
+--=-IPJt60f/PKARL0Uh4u+D
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, 2021-04-07 at 16:00 -0700, Daniel Lenski wrote:
-> Following David's initial implementation, I wrote something for
-> OpenConnect that's pretty much the same as yours:
-> https://gitlab.com/openconnect/openconnect/-/compare/5e6e9b850756157164f8=
-3cd4fedafb747fbbd50f...0bca5b32ac478b5d03b6e88f96bf29c6556610a5
+On Thu, 2021-04-08 at 09:42 -0700, Daniel Lenski wrote:
+> On Thu, Apr 8, 2021 at 7:37 AM David Woodhouse <dwmw2@infradead.org> wrot=
+e:
+> >  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> >  PPP over DTLS
+> >  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> >=20
+> > We just added support for the PPP-based protocols (Fortinet, F5) and
+> > I'm not sure we even know what the DTLS-based version looks like on the
+> > wire, do we? If the header is 4 bytes or fewer, the same nasty trick
+> > works that I suggest for Cisco DTLS above. And a PPP header even with
+> > accomp and pfcomp *would* fit in 4 bytes. For the TCP transports we
+> > have an additional framing but I'm hoping those aren't there in DTLS?
+> >=20
+> > If we do need a header larger than 4 bytes, then we are forced to do
+> > things properly by adding support in the kernel driver instead of just
+> > abusing the existing header while we know the kernel isn't looking at
+> > it.
 >=20
-> 1. Uses GetAdaptersAddresses to list all the addresses
-> 2. If/when it finds a clashing address, it uses
-> GetUnicastIpAddressTable to determine the up/down state of the other
-> interface
-> 3. Only delete the address from the other interface if it's non-UP.
->=20
-> I was also annoyed that the GetAdaptersAddresses return structure
-> doesn't provide the adapter state, and that I had to go for this
-> convoluted O(n^2) design.
->=20
-> I guess this reassures me that there isn't an obviously-better way to
-> do it.
+> This is probably too much "inside baseball" for the non-(OpenConnect
+> developers) here, but I *have* confirmed that the PPP-over-DTLS
+> encapsulation is identical to the PPP-over-TLS encapsulation for the 2
+> PPP-based protocols that we support already. Both F5 and Fortinet
+> essentially opted for the thinnest veneer of UDP-ization possible for
+> their protocols.
 
-Hm, your description doesn't match the code I see at that link.
+Ok, so that's the PPP header plus either 6 bytes for Fortinet or 4
+bytes for F5? The important part for the purpose of this conversation
+is "more than four".
 
-You're using GetAdaptersAddresses() which gives you the UP/DOWN status
-as well as the addresses, and you iterate over those. The loop is
+> The tl;dr for OpenConnect is that we really would need support for
+> arbitrary head/tail space in order not to have to do *any* memcpy.
 
- =E2=88=80 adapter, =E2=88=80 Unicast address on that adapter:
-     Check if it's our Legacy IP or IPv6 address.
+Right. I'm almost relieved at that, since it's certainly a lot *nicer*
+to do it that way than any of the hacks I just described.
 
-That isn't O(n=C2=B2), is it? It's still O(n) of the total number of unicas=
-t
-addresses in the system?
+We can extend the TUN_PACKET header structure to have Headroom and
+Tailroom fields, then add a new ioctl which enables the new TUN_PACKET
+format and sets the headroom/tailroom to be used in the Rx ring.
+Implementing that should be relatively simple and unintrusive; the
+trickiest part of it is maintaining backward compatibility with the
+existing TUN_PACKET structure.
 
-Once you've found an address which needs to be removed, you're *then*
-using GetUnicastIpAddressTable() and searching through the results to
-find the appropriate MIB_UNICASTIPADDRESS_ROW that you need to pass to
-DeleteUnicastIpAddressEntry().
-
-Does *every* field in the MIB_UNICASTIPADDRESS_ROW have to be filled
-in, or is it just the Address, InterfaceLuid and InterfaceIndex? Can't
-we get those from the table we get back from GetAdaptersAddresses()?
-
-
-Alternatively, can't we start with GetUnicastIpAddressTable() as my
-original code did, and if we want to check whether an interface is down
-before we steal the address from it, use GetIfEntry2() to find out?
-
-Using GetIfEntry2() is probably a saner way to find the InterfaceIndex
-for the Wintun itself, which I was dredging the registry for manually.
-
-
-I'd like to be consistent about clearing the 'conflicting' addresses
-and setting the address on the Wintun interface. Whatever we do in
-OpenConnect for Legacy IP we should also do for IPv6. It looks like
-you're clearing the conflicting addresses for both families, but we
-still aren't *setting* the IPv6 address from the C code?=20
-
---=-/JNQJmRuKaiPs2aiYpGT
+--=-IPJt60f/PKARL0Uh4u+D
 Content-Type: application/x-pkcs7-signature; name="smime.p7s"
 Content-Disposition: attachment; filename="smime.p7s"
 Content-Transfer-Encoding: base64
@@ -213,20 +202,20 @@ BAYTAkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNVBAcTB1NhbGZvcmQxGjAY
 BgNVBAoTEUNPTU9ETyBDQSBMaW1pdGVkMT0wOwYDVQQDEzRDT01PRE8gUlNBIENsaWVudCBBdXRo
 ZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEA4rtJSHkq7AnpxKUY8ZlYZjANBglghkgB
 ZQMEAgEFAKCCAe0wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMjEw
-NDA4MTY1OTIzWjAvBgkqhkiG9w0BCQQxIgQgP3ipGjUZgQKUGkwApkyWoZFFLFOmRQEV0b6nW9TB
-DiYwgb4GCSsGAQQBgjcQBDGBsDCBrTCBlzELMAkGA1UEBhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIg
+NDA4MTcxMDE5WjAvBgkqhkiG9w0BCQQxIgQgc9UAtOmVN+QamBokYmD4LDy91yb0SH5PASFjs0uo
+sVYwgb4GCSsGAQQBgjcQBDGBsDCBrTCBlzELMAkGA1UEBhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIg
 TWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEaMBgGA1UEChMRQ09NT0RPIENBIExpbWl0ZWQx
 PTA7BgNVBAMTNENPTU9ETyBSU0EgQ2xpZW50IEF1dGhlbnRpY2F0aW9uIGFuZCBTZWN1cmUgRW1h
 aWwgQ0ECEQDiu0lIeSrsCenEpRjxmVhmMIHABgsqhkiG9w0BCRACCzGBsKCBrTCBlzELMAkGA1UE
 BhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEaMBgG
 A1UEChMRQ09NT0RPIENBIExpbWl0ZWQxPTA7BgNVBAMTNENPTU9ETyBSU0EgQ2xpZW50IEF1dGhl
 bnRpY2F0aW9uIGFuZCBTZWN1cmUgRW1haWwgQ0ECEQDiu0lIeSrsCenEpRjxmVhmMA0GCSqGSIb3
-DQEBAQUABIIBADCZP32S/lasvl5AOklQjxMgP3Y4rGGTTL3GlQIJKo1bRz65spOQlIC502gcDKFx
-OIScN7yiyFKodhe4wfOCE8PfqP7sD62rYjJgN8Vcmti1mg0fnGNpEZjnN5c3LPwRtKkMmxjV7ThK
-RDM9D8arx0IXUKTOVvIVgI394LyXR6lLgSrSjbYBSD//CwNvLju50EDGiy/ETJ0iVK9HgcOSB5O7
-h9GV8ei52q6G/635WXtI5cYDEMzS9TatEZm91l6NYKQ6BbpF35FaZnLnf8L3gLIb9JYgzrHVaCaK
-V2xcFnrvi0VEUDN07mytFtFYQ7yq1qwP1av9G3txbScibLG3SGYAAAAAAAA=
+DQEBAQUABIIBADAl4jaOrlDYXI/v8Hv7CntBGRvoLGRJBaLB6brepSQw3fv5CA5whIpwNA4CT1Yt
+TkIyPbv7MWkfW9O7ClZHcFMT1XY28QuZ0ayK95oxl9mb4iyS89xnKMIJUmBXbHlUBD2eCVVb88Nx
+GKFci5H2FB4P9mpmbSyRfOuXvBcsw3DNjHoZGQEbtxTcpE95u6acNJnz8029Z22CvsY9HJK0zQfB
+4TsIAqK9oIU4YR/qpPwxEYVszkISty3hqva/0pRwAd0JeFsUBRSvo4tsKOUI9bFfDYVTEn2l5zHG
+C9AsOeVUxh8kA9ocJlvtVdmCQEiZsZifpDEDTRBTYiqY+ntgi48AAAAAAAA=
 
 
---=-/JNQJmRuKaiPs2aiYpGT--
+--=-IPJt60f/PKARL0Uh4u+D--
 
