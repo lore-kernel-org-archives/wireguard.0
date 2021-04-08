@@ -7,61 +7,66 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B18AC43460
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 10 Apr 2021 14:30:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C307C433B4
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 10 Apr 2021 14:30:23 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id BDBA5610A3
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 10 Apr 2021 14:30:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org BDBA5610A3
+	by mail.kernel.org (Postfix) with ESMTPS id CDB646115B
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 10 Apr 2021 14:30:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org CDB646115B
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2d9e1dc3;
-	Sat, 10 Apr 2021 14:27:31 +0000 (UTC)
-Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com
- [2607:f8b0:4864:20::22e])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7e59c363
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b423a08d;
+	Sat, 10 Apr 2021 14:27:32 +0000 (UTC)
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com
+ [2607:f8b0:4864:20::32e])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ad5473a8
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 7 Apr 2021 23:16:22 +0000 (UTC)
-Received: by mail-oi1-x22e.google.com with SMTP id m13so206508oiw.13
- for <wireguard@lists.zx2c4.com>; Wed, 07 Apr 2021 16:16:22 -0700 (PDT)
+ for <wireguard@lists.zx2c4.com>; Thu, 8 Apr 2021 16:10:23 +0000 (UTC)
+Received: by mail-ot1-x32e.google.com with SMTP id
+ s16-20020a0568301490b02901b83efc84a0so2773274otq.10
+ for <wireguard@lists.zx2c4.com>; Thu, 08 Apr 2021 09:10:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
  :cc:content-transfer-encoding;
- bh=lO7BmywneQmRVVlT5P3lCPZ7ZgctVRqNZ1oB9DXwYMM=;
- b=WO0bGmGPmiwEYZZc2gPlKzcsqQU99rQSihzZEI5MVrn+Gq4Vno6WjHZCEB2gztG4ED
- lsUHSXVhgv8Ahv13gL0aRmY5DdMwgTX3X0iiwH306XLB81r968PxgBhk/rmf/QHpP3yv
- FJ8kMmBJfjZDV3nYzjZMQgMqm+vFbKtLxg0t/FaSdf3U+sp33oLAyFoR4aM3rGw9v/gT
- DE+nwZkji6LFegaU6PVJkXcUNri9P/trbarcvu/IbTV75eIz1XbPxXeuHrrvA7/titCI
- X6rhJCUPDp+nJn6pwnGUCudKQNwWwwme/wF1W09OxWTB1Gk7DB9r3IL4NvliShkMij5o
- sbFg==
+ bh=A/V94MPcmgB8OZ6LImbCA+uEP2l9ZKfdlX+v2UiJmxM=;
+ b=gHEa0UrmqrCU7GDp8T6NcbF+I2wQ3P+TGDdDbm+P7MZcnARMuwNVWB+qtCLqRg3ZUC
+ qE/8TGkt+7tXOAO99OlgH4UPPIuuFxaWLHUMpyqlFGPZIxf36Lm40UxaetO81NJSakEq
+ a1J1NgI766RlW8d98rK1fM4ooYVsMghzxKnoz+t/IO61/9DXmTXuWNEO5fIS8aDOvlVj
+ qt4ThyBDXwpj83B8k4N1QW+G/phbvuM5cV9CJImrhGGqq1wiMwMLg8yXDdCwBLl9hRpC
+ +yfTkz9I0Sj+HSWOBmmvFyYPnLbMW8AnKMVwv5WRS+3Zo9Ae4Nfa1PLDRmEzbkx+xXys
+ 7X7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc:content-transfer-encoding;
- bh=lO7BmywneQmRVVlT5P3lCPZ7ZgctVRqNZ1oB9DXwYMM=;
- b=b/A5aUeIdlWAO4CHNJeWZZ2Wo+YfjeQwxxO9Z1NoyCrrj83Y6dIUtMM25rtOoYzG1i
- bf7jjm+nnws3EETXvktu8P8B6mzrVY5TUSYAXdvgZ05NZkZ3QbGNBMaRUrTIL6qRvHXG
- JCDDMmfTo5fmcJPS4YY1bFcn5VTMY9UY/XXqtTqUGFMGoTUnoFW0sRaQoI9J0Do7VLBC
- wHSTdea7MuRtKoXlFuLJwiRsH3XVm37wy2wpYywuVNO9bnjNLimFbbUn7yGHAJr9i5gz
- ZaQLb8ozKKl4JSu5yyNDnNwTSm7+IDTrKD5qyjWij3S6uPQp1vyOjjFMa+BdstbyZORY
- Cewg==
-X-Gm-Message-State: AOAM533jE8bYQAEoIgA/y0LLUO5OKlkBzzHsGJFcWf5J8Tjf8M83RnsN
- pHtm/2xu05+ygO/anug3cWMSXrG/Qab0n9dazH0=
-X-Google-Smtp-Source: ABdhPJxXLG8EEjLdmSfyVMJHTRyCRteut5+agbpVxCNs3BGDsy0EHsA0sz1aHHPbsSyN8FL3HvUErepGziMQkPSYrFI=
-X-Received: by 2002:aca:a8cd:: with SMTP id r196mr4052109oie.108.1617837381250; 
- Wed, 07 Apr 2021 16:16:21 -0700 (PDT)
+ bh=A/V94MPcmgB8OZ6LImbCA+uEP2l9ZKfdlX+v2UiJmxM=;
+ b=Yp07SG+czjTgpA6AVHhnkORJd1xyv6tu0L8hKVipNy4u1P6+6hOXxUp/YIQ66i7wnN
+ pNsWWnHKnbm1T7rWc+gqP5fHg8kt3VrV8TFJED91j9nX8oGJtFwhAFTbDmmLplame9Sr
+ O4DRcjceGZLrL3cg7Epgn06ke3oKxFBAecVuoB3s4G39YTArh9pZFL4ZZ90cUGCliFHt
+ m4CQf9tbSj44gfDhhe/ywyCB4T5cxKSrF/pRF0nRLiOlzMKTo6GJVEr0PWC7tBGUGpC2
+ wRl8zicLe9N/tBAAOaI0a/J1eQVI1gE0l4bKKgi2eC5Z3pXmaiROo5+6g+U98Wrspr/Y
+ 9zmQ==
+X-Gm-Message-State: AOAM532nLJfZ3MKk8RLwVUKntfo2dWdE2v9vU25yDTeY8Ddd13BWfMky
+ QucKIE42RqUmb9icoCWtG9xevpR3vAgipMMYHPc=
+X-Google-Smtp-Source: ABdhPJxoGSqLXpWPl/t/SIzH+txaboZP+3uRDf9rDbPAY8sb1aCLMm1Lzld+hU4LVoaPe74hLJgazxcVZfKiDUQ8uek=
+X-Received: by 2002:a9d:7481:: with SMTP id t1mr8438173otk.208.1617898222061; 
+ Thu, 08 Apr 2021 09:10:22 -0700 (PDT)
 MIME-Version: 1.0
-References: <6e259ab359c7f93f8f1119df0ba7b285cd4f53d1.camel@infradead.org>
-In-Reply-To: <6e259ab359c7f93f8f1119df0ba7b285cd4f53d1.camel@infradead.org>
+References: <e166447dac58ecaa73bf3f6a2b9bece6a01bf5cd.camel@infradead.org>
+ <CAHmME9q-qw=sCxz6Fije+ENQTY2-GdS4bZLSakuh+6Eze4LR3w@mail.gmail.com>
+ <CAOw_LSEasJuHDPXGkVQnYh_aHd+nOY53D0LRUXuH+pN45ynz2w@mail.gmail.com>
+ <5D336E0F-1A42-4692-8597-6A035C4FA699@infradead.org>
+In-Reply-To: <5D336E0F-1A42-4692-8597-6A035C4FA699@infradead.org>
 From: Daniel Lenski <dlenski@gmail.com>
-Date: Wed, 7 Apr 2021 16:15:45 -0700
-Message-ID: <CAOw_LSHa5aERnm8etcBywJV4QmW_9BesXvBYSvjKPVZ=a+whXg@mail.gmail.com>
-Subject: Re: Allowing space for packet headers in Wintun Tx/Rx
+Date: Thu, 8 Apr 2021 09:09:46 -0700
+Message-ID: <CAOw_LSF_8x6zyDuus0dyJRnSADmf1DSPWjOBsN2-ddp+eTpUrg@mail.gmail.com>
+Subject: Re: Duplicate IP address, and permissions problems on Windows
 To: David Woodhouse <dwmw2@infradead.org>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 X-Mailman-Approved-At: Sat, 10 Apr 2021 14:27:25 +0000
@@ -79,33 +84,31 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Wed, Apr 7, 2021 at 4:49 AM David Woodhouse <dwmw2@infradead.org> wrote:
-> If WintunSendPacket took an additional 'offset' argument to disregard a
-> certain number of bytes at the beginning of the buffer, that would
-> probably suffice. Or is it possible to simply add to the pointer
-> returned by WintunAllocateSendPacket()?
+On Thu, Apr 8, 2021 at 1:46 AM David Woodhouse <dwmw2@infradead.org> wrote:
+> Unless netsh will do it for us when we ask *it* to set the IP address? Op=
+enConnect doesn't normally bother itself with administrivia like setting IP=
+ addresses; its job is to pass packets.
 
-To expand on this possibility a little bit, I had proposed kludging a
-=E2=80=9Cshift=E2=80=9D into the allocation for the outgoing packet:
+I'm afraid not. I tried playing around with various documented and
+undocumented options to netsh, and did not found a way to get it to
+set an IP address which is a duplicate of another adapter's address.
+That's puzzling since it IS POSSIBLE to set a duplicate IP address
+(conflicting with a down adapter) via the Control Panel GUI.
 
-    /* Always use this instead for an outgoing packet, instead of
-     * malloc(sizeof(struct pkt) + payload_len */
-    BYTE *tun_pkt =3D WintunAllocateSendPacket(
-        vpninfo->wintun_session,
-        paylod_len                 /* packet payload size */
-        + sizeof(struct pkt)     /* OpenConnect's internal packet header si=
-ze */
-    );
+I gave up and asked for any hints on StackExchange:
+https://serverfault.com/questions/1059221/using-netsh-interface-ip-set-addr=
+ess-to-override-another-adapters-address
 
-    /* Then after we build and populate the outgoing packet, just tell
-     * Wintun to send from an offset that's NOT at the beginning of the
-     * buffer it allocated for us. No memcpy! */
-    WintunSendPacket(vpninfo->wintun_session, tun_pkt + sizeof(struct pkt))=
-;
+> I preserved it in the first cut of Wintun support because the existing vp=
+nc-script for Windows actually depends on it... but purely for waiting for =
+the interface to come up. Can we ditch that, let the script set the address=
+ for us, and forget we ever saw that O(n=C2=B2) code because netsh handles =
+the conflicting interfaces for us?
 
-The concern here is that Wintun may not have been written with this
-possibility in mind, and might not always like sending from an address
-other than the exact start of a buffer it's allocated for us.
+One way we could move this IP-reclaiming code out of OpenConnect
+itself would be to make the script do it. However, this would still be
+an O(n^2) loop, and it would involve parsing the text output of netsh
+or similar=E2=80=A6 which will get pretty ugly very fast.
 
-Thanks,
-Dan
+(Either that or someone figures out a/the magical option that allows
+netsh to handle this itself.)
