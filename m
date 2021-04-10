@@ -2,50 +2,77 @@ Return-Path: <SRS0=07kU=JH=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DECF9C433ED
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 10 Apr 2021 16:13:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BE8EAC433B4
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 10 Apr 2021 18:32:45 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 063F2601FF
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 10 Apr 2021 16:13:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 063F2601FF
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=lonnie.abelbeck.com
+	by mail.kernel.org (Postfix) with ESMTPS id E052961056
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 10 Apr 2021 18:32:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org E052961056
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a07474b9;
-	Sat, 10 Apr 2021 16:13:00 +0000 (UTC)
-Received: from ibughas.pair.com (ibughas.pair.com [209.68.5.177])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 06d76c76
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 153668df;
+	Sat, 10 Apr 2021 18:32:43 +0000 (UTC)
+Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com
+ [2607:f8b0:4864:20::230])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 36af0591
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sat, 10 Apr 2021 16:12:58 +0000 (UTC)
-Received: from ibughas.pair.com (localhost [127.0.0.1])
- by ibughas.pair.com (Postfix) with ESMTP id 4D6DB1E3067;
- Sat, 10 Apr 2021 12:12:57 -0400 (EDT)
-Received: from [10.4.1.148] (wsip-70-184-211-81.om.om.cox.net [70.184.211.81])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256
- bits)) (No client certificate requested)
- by ibughas.pair.com (Postfix) with ESMTPSA id 2C7F41E3064;
- Sat, 10 Apr 2021 12:12:57 -0400 (EDT)
-Content-Type: text/plain;
-	charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.17\))
-Subject: Re: T-Mobile 4G/5G CGNAT vs WireGuard tunnel jitter
-From: Lonnie Abelbeck <lists@lonnie.abelbeck.com>
-In-Reply-To: <20210410205951.14f93435@natsu>
-Date: Sat, 10 Apr 2021 11:12:56 -0500
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+ Sat, 10 Apr 2021 18:32:41 +0000 (UTC)
+Received: by mail-oi1-x230.google.com with SMTP id x2so9317595oiv.2
+ for <wireguard@lists.zx2c4.com>; Sat, 10 Apr 2021 11:32:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=K/UuR9fklDPlpKMVidWddU3rDAvpigUsp3oW1nPCNvE=;
+ b=QaxDpZsLJ3ZS9413wig2sRrewiOi93WSjZGJ3wxoUaLy9ZcdiKSChrUA8EQnSLRfuF
+ DD+w3sxdO4JtRIvU8avXI7c7r8U+3YGUD6Nv/cUQqUXx6PrlGnF9D77+dOFCPS5Uh3oN
+ scT/udNWN1xxyW1pGc/sylqDtLMQEHEYeSoA85zB74svSEcjyjvxYYVFBjMa80hVHnaK
+ /OkVRBcoYqye970pYMnFBkZKCthgOk9F4waUEJ755VjNB1EjSMo9bN7V9bculRctdSYi
+ 0dB9XHuHCVJFF+VK5ezP4lNSGlhcvMUGUv/1t7sYJxdiOWhINq7kVo2s7yHFKi0itRdR
+ 4wIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=K/UuR9fklDPlpKMVidWddU3rDAvpigUsp3oW1nPCNvE=;
+ b=T0QbxC08xqoPdFfRu5QV3C4Yb4ClJRL4WFmXGytS52LtgEAFBU4C3YVGvSaRqg0dx3
+ szxIhRUYEJdN9mUNBmzmxLNqaOT78AUvZ4+zBDc/bpwx5HI/++zRjgh/aF84x20r/878
+ HK4bCHld0Nv/GDTijoOCLU4tnVED6Ytv9yzsDQxfa/VYRWkl3D6mWN11jIK3kcQ1BhT3
+ djeBkcL4FklQMRTfNSWeAGm3D4Gfzo5fPOH22/G4BcaHVTc/1rvn7y/xAUluF0GLXTip
+ 81upR5BqnsNOI4sCd6+eK5mupkUjEB0GH+LyG+FvL4HLkFkwaO//Nop/VF622k6thRzw
+ Wkrw==
+X-Gm-Message-State: AOAM532b1+kykqL3sdyVzAyqHbear/xWdd3d8GYQWuN6d35MGROeHHAn
+ G+JAVeg4UL9XoVYYQhcySCqEcQ/E0FP9XVCWzj0=
+X-Google-Smtp-Source: ABdhPJyWCi5dmjyrZQv9yvzgpf1oWJmo8Q3Ci2ljFNQluVDbFaZf0atdkBTt4URa2uVrtyP39M6N/bIE0wbQ8s/qkZQ=
+X-Received: by 2002:a05:6808:148b:: with SMTP id
+ e11mr4718397oiw.108.1618079559841; 
+ Sat, 10 Apr 2021 11:32:39 -0700 (PDT)
+MIME-Version: 1.0
+References: <6e259ab359c7f93f8f1119df0ba7b285cd4f53d1.camel@infradead.org>
+ <CAOw_LSHa5aERnm8etcBywJV4QmW_9BesXvBYSvjKPVZ=a+whXg@mail.gmail.com>
+ <26fc1c68fa495407b5c4c46a56abdb5dfe639280.camel@infradead.org>
+ <CAOw_LSHbJ-SwNc8nqFC0KDrY+ah25gfLNyYQf83mb9sSO9=R8A@mail.gmail.com>
+ <1f5dfe333c4e8d228773241cffadc9913d7829c7.camel@infradead.org>
+ <a1bee48639cb40299118c53d4fa8fe7a@rozman.si>
+ <fb3e80d74068cd8464c44f1cb435b71d1170c659.camel@infradead.org>
+In-Reply-To: <fb3e80d74068cd8464c44f1cb435b71d1170c659.camel@infradead.org>
+From: Daniel Lenski <dlenski@gmail.com>
+Date: Sat, 10 Apr 2021 11:32:03 -0700
+Message-ID: <CAOw_LSGV8V9aLg-UdN4SE5s5o7NFfeyH+Q+mWMrvrBYp06aT=w@mail.gmail.com>
+Subject: Re: Allowing space for packet headers in Wintun Tx/Rx
+To: David Woodhouse <dwmw2@infradead.org>
+Cc: Simon Rozman <simon@rozman.si>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <15541873-A1D6-417E-A3B7-121DE0D90F22@lonnie.abelbeck.com>
-References: <0BDB7408-22AC-4643-975E-1B5AC3AFADD9@lonnie.abelbeck.com>
- <20210410205951.14f93435@natsu>
-To: Roman Mamedov <rm@romanrm.net>
-X-Mailer: Apple Mail (2.3445.104.17)
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -60,32 +87,57 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
+On Sat, Apr 10, 2021 at 7:35 AM David Woodhouse <dwmw2@infradead.org> wrote=
+:
+> On Sat, 2021-04-10 at 13:38 +0000, Simon Rozman wrote:
+> > Hi David,This is my proposal:
+> > https://git.zx2c4.com/wintun/commit/?id=3Deebd6aea4f75551f6e847a1d4fff8=
+57450bac6e9
+> > Awaiting review and zx2c4 approval.
+> > Regards, Simon
+>
+>
+> Looks good to me; thanks. Just need to work out how to cross-build it
+> (I can muster up a Windows VM for testing, but *building* on it is
+> beyond my tolerance of Windows for now).
 
++1 to all that.
 
-> On Apr 10, 2021, at 10:59 AM, Roman Mamedov <rm@romanrm.net> wrote:
->=20
-> On Sat, 10 Apr 2021 10:27:23 -0500
-> Lonnie Abelbeck <lists@lonnie.abelbeck.com> wrote:
->=20
->> I have been testing the T-Mobile Home Internet (4G/5G fixed wireless) =
-service to a Linode VM via WireGuard.
->>=20
->> The TMHI service uses CGNAT plus an additional NAT in their =
-modem/gateway with a MTU of 1420, so WireGuard is configured with a 1340 =
-MTU.
->=20
-> Do they provide IPv6? I see mentions that yes, but with incoming =
-connections
-> blocked. Might still work for WG.
+> We'll also need to be able to WintunAllocateSendPacket() of the full
+> possible MTU, then receive and decrypt into that, and send only the
+> actual size of the packet we received.
+>
+> A per-packet tail would have let us do that, but I agree that we don't
+> want to expand the TUN_PACKET header if we can avoid doing so.
+>
+> Perhaps a WintunShrinkAndSendPacket() =E2=80=94 which can only *shrink*, =
+of
+> course, and which can only be used on the *last* packet allocated,
+> checking that its tail *is* the Session->Receive.Tail before adjusting
+> the latter accordingly.
 
-Hi Roman,
+In addition to the use case for chopping ESP trailers and
+less-than-full-size packets, OpenConnect has the case of "PPP packets
+in HDLC-like framing" which need to be "un-HDLC-ed" in a way that can
+only cause them to shrink.
+(https://gitlab.com/openconnect/openconnect/blob/master/ppp.c#L102-158)
 
-TMHI uses IPv6 for their CGNAT, but AFAIK their current firmware does =
-not support IPv6 on the ethernet ports (I disable their WiFi).
+There are two cases worth considering where the packet size could
+actually *expand*:
 
-But if (when) they support IPv6, establishing the WireGuard tunnel over =
-IPv6 would be great, and back to a 1420 MTU for WireGuard.
+1) Some VPN protocols support compression of the tunneled packets. It
+would be bad behavior to use this to stuff a packet of >(advertised
+MTU) bytes in <(advertised MTU) bytes, but it wouldn't surprise me if
+it exists in the wild. We now deal with receipt of
+larger-than-expected-MTU packets in OpenConnect in a relatively
+uniform way: allocate MAX(mtu, 16384) bytes for packets coming from
+the VPN (if using TLS transport) or MAX(mtu, 2048) if using DTLS.
+2) Some VPN protocols concatenate multiple packets into a single
+aggregate on the wire. On Linux we can decrypt, truncate, and send to
+the tunnel interface without further copying.
 
-Lonnie
+Case (1) can be handled with overallocate-and-shrink. Case (2) is
+pretty rare among the protocols that OpenConnect supports, so fallback
+to memcpy seems fine.
 
-
+Dan
