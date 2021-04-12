@@ -2,65 +2,65 @@ Return-Path: <SRS0=b8ma=JJ=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_05,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5208C433B4
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 12 Apr 2021 17:34:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 07F93C433B4
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 12 Apr 2021 17:52:49 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 05C746121F
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 12 Apr 2021 17:34:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 05C746121F
+	by mail.kernel.org (Postfix) with ESMTPS id CBB6761241
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 12 Apr 2021 17:52:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org CBB6761241
 Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3b35ef4d;
-	Mon, 12 Apr 2021 17:32:05 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 82a1e6b1;
+	Mon, 12 Apr 2021 17:50:45 +0000 (UTC)
 Received: from mail.zx2c4.com (mail.zx2c4.com [104.131.123.232])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 72b5cdd5
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2c8e78e3
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 12 Apr 2021 17:32:03 +0000 (UTC)
+ Mon, 12 Apr 2021 17:50:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1618248720;
+ t=1618249839;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=aejHCnS0rPEJLCrpiasX6aVFRgAYEnCBb1SFfE4fQN0=;
- b=ROGwCTpZpNqD441oCxVLYPgU5JYk2FKU47ZU1DS4++mMfuCahCS+0UvY1ni4+6u+fDtEvf
- 0zU9KLkBCu9Xv1V0pUWuffuzOk2GNSuqjfXCwE4Jk5LkJmx7lpeApzy3iflXs1XlN8Df14
- ge8VfqMbkZzERk7I5Kd3ew1URAxUGoI=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 477ba23c
+ bh=JFGrhkVaZBwYap/fKB2ciYIcRd2L8lZiUGKaa/mVkAM=;
+ b=Jx4G1TZl+kInSngZX2PsByxktRauj5rS/iVWrfwrOeYr14Vuvy/kHbvZXVOiSE9VH8BsV/
+ Oc5h8T3Fwp1koU0ed0+g6tc4rH7qBuIV61E6V4XmQbjla00umrYzP6/zs5KbyL/Rh7us63
+ f6jAhCFacha4qtFtqyxvMFh7mrwq5Qs=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 7b7d97aa
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 12 Apr 2021 17:32:00 +0000 (UTC)
-Received: by mail-yb1-f171.google.com with SMTP id n12so15024244ybf.8
- for <wireguard@lists.zx2c4.com>; Mon, 12 Apr 2021 10:32:00 -0700 (PDT)
-X-Gm-Message-State: AOAM533JN7s4nyJhuiikmIz+IE41flhYEn6tpKg5mbX9aGvbe83KJE2x
- CQYpE32IFIkYpGVEWjNznH6SHdzWrubhWBwvtLI=
-X-Google-Smtp-Source: ABdhPJx/gRIBrTQnpFE1VHpjdwnBGu8+e/VhtVpZZ2TuD6olG8j7cNz9xX9qs4/WDfInJRwBHK6C9Oj9CAXhP8HV2tA=
-X-Received: by 2002:a25:c985:: with SMTP id z127mr40936036ybf.20.1618248719729; 
- Mon, 12 Apr 2021 10:31:59 -0700 (PDT)
+ Mon, 12 Apr 2021 17:50:39 +0000 (UTC)
+Received: by mail-yb1-f176.google.com with SMTP id l9so15161356ybm.0
+ for <wireguard@lists.zx2c4.com>; Mon, 12 Apr 2021 10:50:39 -0700 (PDT)
+X-Gm-Message-State: AOAM532Ra7EEEQvqzYnO80J1izY5XczspvMi3H+khWfM/51O0mdp/vlK
+ sxp5QDvljLxna4r/a0SLf50/OsPVrdXqn4RcvcA=
+X-Google-Smtp-Source: ABdhPJzjLwqlgq1ceFTtdPLvrBkeHTcfRrA4bkvzthJoMVzZBnm/NzeJ+15R4uv8sLtJbTwcFWO0oE+wyQWfxNF2rIE=
+X-Received: by 2002:a25:cc3:: with SMTP id 186mr38817450ybm.178.1618249839037; 
+ Mon, 12 Apr 2021 10:50:39 -0700 (PDT)
 MIME-Version: 1.0
-References: <CALaUSusmdvz2XAT6c24023dZroTwVPKr0k7S+y6YVAXW1-ubJw@mail.gmail.com>
- <CAHmME9qYHttPgwranGbUS4ijQOde96Je-f2VAM94LMvsNqSfVw@mail.gmail.com>
- <CALaUSutUZSCEdLjkire-cJAymWU34r57yB=rJvYoUO+AdxF9wQ@mail.gmail.com>
- <CAHmME9rPV3r9iTBR97e-5D97ffUqqt_30PXkszBssAuO2azNmg@mail.gmail.com>
- <CAHmME9o_yJkAtoVQ58WBYDJwuD2Q3QntaYaGpOA63VFG8CO9fA@mail.gmail.com>
- <3e55e6c9-6446-3e8f-20bd-87986ad5f4ac@gmail.com>
-In-Reply-To: <3e55e6c9-6446-3e8f-20bd-87986ad5f4ac@gmail.com>
+References: <e166447dac58ecaa73bf3f6a2b9bece6a01bf5cd.camel@infradead.org>
+ <CAHmME9q-qw=sCxz6Fije+ENQTY2-GdS4bZLSakuh+6Eze4LR3w@mail.gmail.com>
+ <e8f0a880ccdca6b252a5b45ebdc54f83ee3fae57.camel@infradead.org>
+ <CAOw_LSFfwppgyEN12ttuFMoBpsjCzoUcr5hH5ABxzEs1FhaMpQ@mail.gmail.com>
+In-Reply-To: <CAOw_LSFfwppgyEN12ttuFMoBpsjCzoUcr5hH5ABxzEs1FhaMpQ@mail.gmail.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 12 Apr 2021 11:31:48 -0600
-X-Gmail-Original-Message-ID: <CAHmME9qUXd1iFAbrMfEedaF9C300Tz8e_-B72=hBvEGrmd7cNg@mail.gmail.com>
-Message-ID: <CAHmME9qUXd1iFAbrMfEedaF9C300Tz8e_-B72=hBvEGrmd7cNg@mail.gmail.com>
-Subject: Re: WireGuard for Windows crash "panic: ring is full" since release
- of 0.3.10
-To: Peter Whisker <peter.whisker@gmail.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Date: Mon, 12 Apr 2021 11:50:28 -0600
+X-Gmail-Original-Message-ID: <CAHmME9qyfHYOjrmXeV-QKpGtF5z+ChA_Xdo8g4ufP0-OqnE0Gg@mail.gmail.com>
+Message-ID: <CAHmME9qyfHYOjrmXeV-QKpGtF5z+ChA_Xdo8g4ufP0-OqnE0Gg@mail.gmail.com>
+Subject: Re: Duplicate IP address, and permissions problems on Windows
+To: Daniel Lenski <dlenski@gmail.com>
+Cc: David Woodhouse <dwmw2@infradead.org>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -75,8 +75,38 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Peter,
+On Wed, Apr 7, 2021 at 5:05 PM Daniel Lenski <dlenski@gmail.com> wrote:
+>
+> On Wed, Apr 7, 2021 at 1:18 AM David Woodhouse <dwmw2@infradead.org> wrot=
+e:
+> >
+> > On Tue, 2021-04-06 at 18:17 -0600, Jason A. Donenfeld wrote:
+> > > With regards to permissions, you must be Local System, which is
+> > > already the case if you're running inside a service. If you'd like to
+> > > run as a mere Administrator process, you can steal a token with a
+> > > technique like https://git.zx2c4.com/wireguard-tools/tree/src/ipc-uap=
+i-windows.h#n14
+> > > or https://git.zx2c4.com/wireguard-windows/tree/elevate/doas.go#n30
+> >
+> > Great, thanks!
+> >
+> > Is there a list of precisely which operations require such privileges?
+> > Is it only *creating* an adapter? Or only if doing so requires the
+> > kernel driver to be loaded for the first time?
+> >
+>
+> I'm a little confused by this. In my testing of our recent builds of
+> OpenConnect on Windows 2012 R2 with wintun-0.10.2=E2=80=A6
+>
+> Running as Administrator *has been* sufficient to allow OpenConnect to
+> open the Wintun adapters, as well as to configure them with "netsh",
+> etc.
+>
+> Is there some additional environment we should be testing in, where
+> Administrator may *not* be sufficient?
 
-Please let me know if updating to 0.3.11 fixes the issue.
+Oh, sorry, you're right. Administrator _is_ sufficient for this,
+because the code I mentioned above to do automatic elevation is part
+of wintun.dll. Sorry for the confusion.
 
 Jason
