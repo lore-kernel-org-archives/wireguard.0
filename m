@@ -1,71 +1,70 @@
-Return-Path: <SRS0=j77k=JK=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=Tjnm=JL=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63182C433ED
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 13 Apr 2021 22:09:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 37B9BC433ED
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 14 Apr 2021 09:40:45 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 78C4361220
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 13 Apr 2021 22:09:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 78C4361220
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id 4E28061220
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 14 Apr 2021 09:40:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 4E28061220
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ee390806;
-	Tue, 13 Apr 2021 22:09:17 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [104.131.123.232])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f45837df
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d37d5d83;
+	Wed, 14 Apr 2021 09:40:42 +0000 (UTC)
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com
+ [2a00:1450:4864:20::132])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6ac1a3a5
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 13 Apr 2021 22:09:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1618351752;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=nUXLO71XYamrEcvNslGHZ+W/+eNu3IzxJMlrHxuFDMc=;
- b=QLNtWMnJ4y6Xbr4AaF7xBiHF2bAgpA3HSqIaRheqfGZ+blt+XnjUtt/2eqzZrzPVDMyCM6
- prmZ9naLYleQC2fPIL2DzS6f/uIRS7p2zWYzaBmbCm0ch/XmVPpfKG0iLdT5fAi7Wc6O3S
- nJ4N5ZNo4cgvcKtjuyaFjh9ZLQnhIiE=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 8b8c130d
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Tue, 13 Apr 2021 22:09:12 +0000 (UTC)
-Received: by mail-yb1-f178.google.com with SMTP id 82so19880360yby.7
- for <wireguard@lists.zx2c4.com>; Tue, 13 Apr 2021 15:09:12 -0700 (PDT)
-X-Gm-Message-State: AOAM533ZGtbJXkpWNQ0q4JG5jsmwg/r5ZjFC9D3c9jcSLZXkQPb2I29+
- m/4HQ0bwjKmXKTwMURy4UZbFRlksPv98t+2By7E=
-X-Google-Smtp-Source: ABdhPJzP90jsqqRW+G86DnMixZaAdAPTMLzEiRTixFXFje3xrp6cIgRqPVZ2WQnS3FbvhxVEWg87IJNrtWikoj9NI70=
-X-Received: by 2002:a25:be09:: with SMTP id h9mr20483928ybk.239.1618351751786; 
- Tue, 13 Apr 2021 15:09:11 -0700 (PDT)
+ Wed, 14 Apr 2021 09:40:40 +0000 (UTC)
+Received: by mail-lf1-x132.google.com with SMTP id f17so25079556lfu.7
+ for <wireguard@lists.zx2c4.com>; Wed, 14 Apr 2021 02:40:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=TtL10AMkryRcNm3ZBhU3qT+6AEmVlnv1csOd2NZIknU=;
+ b=jcacOV4erKfqkxX+RFlGHeEjSYTxZFhY0iZvkpHLWQ/CcRZWWP0fT/9bEu6pIKNZLZ
+ kLbf6xX9MXnrMw8b/oFlxoQFTwySHxj+qk/1z8jWsqDTj+hv3l0vguYRxw4cnFW5S4q8
+ oe086HamFokIEzMXTlWBJrA6ZVXkdxEL/pltrLCkEH6n+tskTxvsH17ofx2bgxpK8580
+ qTkhHd1bs64RuFhlCDrszoIH29xFsnIH/TqdsQdwbQovBAMJ1NAx2MY/5qc7e6fJRZDf
+ qyGTbqlEXXr4q/B4sToFlhILe6X95FyWYTG9RTfjW9uBVWb//KZ2uCunDrizX/ni5ArR
+ tZUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=TtL10AMkryRcNm3ZBhU3qT+6AEmVlnv1csOd2NZIknU=;
+ b=Pp9LTynsvQIz7I5ZbTTScpAauzRHVEmJ2e9Polw5AZRNUnFg2ShT/cBZIvk+vm4qwI
+ n96wEIqA8LiPeqgAkpwjg7/GsPC1wiz94ss0pgjwh20dudkUgFakPDlwwHQkhLLCO6x6
+ 80euKKxHvgeCKIi67R5wUut2phKBf/b36AppUnh8MPntX0NVQNdnpVTHabUiaQZtChez
+ TVSeiU4N5inFD6po9QHxyLFmQqrff6sTypBMf6lqc6lap1uaBGluj8lxWbZ72lOoBZiG
+ 6vqcNl1+SdDxCz9a/z01DJtV1JsPgbkLNKgRp1smJ0TvB7Vdn1CaWq8N/WseI4xG4eMD
+ CHCw==
+X-Gm-Message-State: AOAM531xjH7d7OUyjMLesN+VWbPmT7TA4qYEu5nFK2ymYWRVQLQzrhAR
+ whKPpPDSHuWwn9mc47kGfDb2MzBKEnqwekKW6BxKEy+fPOKtEA==
+X-Google-Smtp-Source: ABdhPJxR81Dn+GubVnFhsBKBydJ0uHsftzEFRITEBOXGIFze/JRc5yLAqPg300pTQsE7myWftOHwvyQNiLQ8isfsSlU=
+X-Received: by 2002:a19:58a:: with SMTP id 132mr26673893lff.520.1618393240431; 
+ Wed, 14 Apr 2021 02:40:40 -0700 (PDT)
 MIME-Version: 1.0
-References: <6e259ab359c7f93f8f1119df0ba7b285cd4f53d1.camel@infradead.org>
- <CAOw_LSHa5aERnm8etcBywJV4QmW_9BesXvBYSvjKPVZ=a+whXg@mail.gmail.com>
- <26fc1c68fa495407b5c4c46a56abdb5dfe639280.camel@infradead.org>
- <CAOw_LSHbJ-SwNc8nqFC0KDrY+ah25gfLNyYQf83mb9sSO9=R8A@mail.gmail.com>
- <1f5dfe333c4e8d228773241cffadc9913d7829c7.camel@infradead.org>
- <a1bee48639cb40299118c53d4fa8fe7a@rozman.si>
- <fb3e80d74068cd8464c44f1cb435b71d1170c659.camel@infradead.org>
- <CAOw_LSGV8V9aLg-UdN4SE5s5o7NFfeyH+Q+mWMrvrBYp06aT=w@mail.gmail.com>
- <9940aef2c1064fc785b51ac860020a18@rozman.si>
- <38E774FD-16C8-4788-8C31-634A7AA4248A@infradead.org>
- <CAHmME9okm3CTc0Q9sEdQksaGuDS4DV3ceczQX+aSDH-K9R9YOA@mail.gmail.com>
-In-Reply-To: <CAHmME9okm3CTc0Q9sEdQksaGuDS4DV3ceczQX+aSDH-K9R9YOA@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 13 Apr 2021 16:09:01 -0600
-X-Gmail-Original-Message-ID: <CAHmME9pupX_RtsfNEA0N4bSG44rQNzGYyt4cDWXMK495Bu43Dw@mail.gmail.com>
-Message-ID: <CAHmME9pupX_RtsfNEA0N4bSG44rQNzGYyt4cDWXMK495Bu43Dw@mail.gmail.com>
-Subject: Re: Allowing space for packet headers in Wintun Tx/Rx
-To: David Woodhouse <dwmw2@infradead.org>
-Cc: Simon Rozman <simon@rozman.si>, Daniel Lenski <dlenski@gmail.com>, 
- WireGuard mailing list <wireguard@lists.zx2c4.com>
+References: <9f621ce6-ec3d-0641-c359-756d0ad36f65@gmail.com>
+ <6a01b182-a98f-1736-676f-d0811f6de086@gmail.com>
+ <CAHmME9qtPLOTaY3UzyCY1C6guVZXvJjXHeFwT8=94d=Zpjj=Tw@mail.gmail.com>
+ <CAN5wt5poiJbOAfe+_VQpu=+6V8dLDiFDVyhUFNbad5NEd9YFfA@mail.gmail.com>
+In-Reply-To: <CAN5wt5poiJbOAfe+_VQpu=+6V8dLDiFDVyhUFNbad5NEd9YFfA@mail.gmail.com>
+From: Christopher Ng <facboy@gmail.com>
+Date: Wed, 14 Apr 2021 10:40:28 +0100
+Message-ID: <CAN5wt5qce9+b8okeKyH4j_U2kUrL5i=_UJ2VupNSJLR2NN5oRQ@mail.gmail.com>
+Subject: Re: Problems with Windows client over PulseSecure VPN
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -81,22 +80,36 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Mon, Apr 12, 2021 at 11:03 AM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
-> Sorry I'm a bit late to this thread. I'm happy to see there's a
-> prototype for benchmarking, though I do wonder if this is a bit of
-> overeager optimization? That is, why is this necessary and does it
-> actually help?
->
-> By returning packets back to the Wintun ring later, more of the ring
-> winds up being used, which in turn means more cache misses as it spans
-> additional cache lines. In other words, it seems like this might be
-> comparing the performance of memcpy+cache no-memcpy+cachemiss. Which
-> is better, and is it actually measurable? Is it possible that adding
-> this functionality actually has zero measurable impact on performance?
-> Given the complexity this adds, it'd be nice to see some numbers to
-> help make the argument, or perhaps reasoning that's more sophisticated
-> than my own napkin thoughts here.
+not sure why this happens on my machine, but changing the command to
 
-I've moved these improvements to this branch while we wait for
-additional argumentation:
-https://git.zx2c4.com/wintun/log/?h=sr/api-improvements
+PostUp = powershell -Command "& {Start-Process -FilePath \"c:\program
+files\wireguard\wg.exe\" -ArgumentList \"set my-tunnel listen-port
+0\"}"
+
+works for me and doesn't hang the Wireguard UI
+
+On Tue, 23 Mar 2021 at 11:01, Christopher Ng <facboy@gmail.com> wrote:
+>
+> this sort of works for me too, the only problem is 'wg set' never
+> returns (even on the CLI) so the tunnel activation hangs in
+> 'activating' waiting for it to return, which it never does.  this is
+> on 0.3.9 in windows
+>
+> On Wed, 3 Mar 2021 at 10:56, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+> >
+> > Hey Peter,
+> >
+> > I had a strange idea for how to fix this without requiring
+> > recompilation or removal of that code.
+> >
+> > 1) Enable DangerousScriptExecution:
+> > https://git.zx2c4.com/wireguard-windows/about/docs/adminregistry.md#hklmsoftwarewireguarddangerousscriptexecution
+> >
+> > 2) Add a PostUp line to your [Interface] section:
+> >
+> > PostUp = wg set %WIREGUARD_TUNNEL_NAME% listen-port 0
+> >
+> > 3) Try it and tell me if it works?
+> >
+> > Regards,
+> > Jason
