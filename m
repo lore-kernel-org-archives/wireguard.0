@@ -2,48 +2,60 @@ Return-Path: <SRS0=S5mX=JM=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EA697C433B4
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 15 Apr 2021 13:45:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 73C77C433ED
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 15 Apr 2021 15:53:30 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 68B6061008
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 15 Apr 2021 13:45:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 68B6061008
-Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=toke.dk
+	by mail.kernel.org (Postfix) with ESMTPS id A9988610EA
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 15 Apr 2021 15:53:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A9988610EA
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=ewol.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cbe1eadc;
-	Thu, 15 Apr 2021 13:45:18 +0000 (UTC)
-Received: from mail.toke.dk (mail.toke.dk [45.145.95.4])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6ab405b9
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2015c38f;
+	Thu, 15 Apr 2021 15:53:27 +0000 (UTC)
+Received: from jax4mhob25.registeredsite.com (jax4mhob25.registeredsite.com
+ [64.69.218.113])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 937ecd2d
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 15 Apr 2021 13:45:15 +0000 (UTC)
-From: =?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=toke.dk; s=20161023;
- t=1618494314; bh=Os2SQVQskkU5mGVl0JLN8W35tkLDxZPgc6vg+q4YJVc=;
- h=From:To:Cc:Subject:Date:From;
- b=l88IkRuX3xAv8UhkXp3VXzOUaAaJqV4z7QaHYD+ajgYwghpztViIoFyoY9g7c8Lee
- EYBLa3Dl1+8EeXPT+HP4Caf1xhkCVQdPY2zn7lgKxDxtttvkq9aioGiew73qMk55Zy
- AKG04Bm7Xr7aVCiyMGAHTQ0p3ywtLo+KTk8VcBkpvjtlnAUJXU346ibQyIMPb1B3PJ
- geNqFZwD2Idx3c2GRlyIDXe9PIHAry6Qt0U5tt32Q1avLgISEbVD/TpXE7ogaQ4D29
- dXepWDHITpqPz6x68BpjL7sygKgAp3cOFBaaPKNT1K1rhY2IdpGNRII+sTlT+uL90W
- Jy7z+cP6zAELg==
-To: bird-users@network.cz
-Cc: =?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
- wireguard@lists.zx2c4.com, Stefan Haller <stefan.haller@stha.de>
-Subject: [PATCH] babel: Drop check for IF_MULTICAST interface flag
-Date: Thu, 15 Apr 2021 15:44:50 +0200
-Message-Id: <20210415134450.197661-1-toke@toke.dk>
+ Thu, 15 Apr 2021 14:02:20 +0000 (UTC)
+Received: from mailpod.hostingplatform.com ([10.30.71.85])
+ by jax4mhob25.registeredsite.com (8.14.4/8.14.4) with ESMTP id 13FE2HlM139854
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL)
+ for <wireguard@lists.zx2c4.com>; Thu, 15 Apr 2021 10:02:18 -0400
+Received: (qmail 7380 invoked by uid 0); 15 Apr 2021 14:02:17 -0000
+X-TCPREMOTEIP: 208.85.15.155
+X-Authenticated-UID: sbrown@opensat.com
+Received: from unknown (HELO 155-15-85-208.altiusbb.net)
+ (sbrown@opensat.com@208.85.15.155)
+ by 0 with ESMTPA; 15 Apr 2021 14:02:17 -0000
+Received: from localhost (localhost [127.0.0.1])
+ by 155-15-85-208.altiusbb.net (Postfix) with ESMTP id B403715668C0
+ for <wireguard@lists.zx2c4.com>; Thu, 15 Apr 2021 10:02:16 -0400 (EDT)
+X-Virus-Scanned: Debian amavisd-new at ewol.com
+Received: from 155-15-85-208.altiusbb.net ([127.0.0.1])
+ by localhost (fl-server.ewol.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id GrxC_gqqI_2G for <wireguard@lists.zx2c4.com>;
+ Thu, 15 Apr 2021 10:02:14 -0400 (EDT)
+Received: from [192.168.1.226] (unknown [192.168.1.226])
+ by 155-15-85-208.altiusbb.net (Postfix) with ESMTP id BC9B415668B2
+ for <wireguard@lists.zx2c4.com>; Thu, 15 Apr 2021 10:02:14 -0400 (EDT)
+Message-ID: <7a8e0f8f25c43effb17b01e6344678ba9c6462a6.camel@ewol.com>
+Subject: Keep alive being sent when PersistentKeepalive = 0
+From: Steve Brown <sbrown@ewol.com>
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Date: Thu, 15 Apr 2021 10:02:14 -0400
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.38.1-1 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
+X-Mailman-Approved-At: Thu, 15 Apr 2021 15:53:26 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -58,50 +70,22 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-The babel protocol code was checking interfaces for the IF_MULTICAST flag
-and refusing to run if this isn't present. However, there are cases where
-this flag doesn't correspond to the actual capability of sending multicast
-packets. For instance, Wireguard interfaces on FreeBSD doesn't set the
-required flags, but Babel will run just fine over such an interface given
-the right configuration.
+I have no PersistentKeepalive set, but the peer gets sent a keep alive
+every 60 seconds anyway.
 
-Since we're also checking for the presence of a link-local addresses right
-below the flag check, we don't really need it. So let's just drop the check
-and trust that users will only configure Babel on interfaces that can
-handle the traffic.
+This is verified by the both the wireguard log on the sending side and
+firewall log on the receiving side. The peer is nat'd and sends its own
+keep alive every 15 seconds. 
 
-Reported-by: Stefan Haller <stefan.haller@stha.de>
-Signed-off-by: Toke Høiland-Jørgensen <toke@toke.dk>
----
- proto/babel/babel.c | 8 --------
- 1 file changed, 8 deletions(-)
+wg showconf <intf> doesn't show a keep alive value for the peer.
 
-diff --git a/proto/babel/babel.c b/proto/babel/babel.c
-index 4b6b9d7f9f6f..297b86b06a46 100644
---- a/proto/babel/babel.c
-+++ b/proto/babel/babel.c
-@@ -1658,10 +1658,6 @@ babel_if_notify(struct proto *P, unsigned flags, struct iface *iface)
-     if (!(iface->flags & IF_UP))
-       return;
- 
--    /* We only speak multicast */
--    if (!(iface->flags & IF_MULTICAST))
--      return;
--
-     /* Ignore ifaces without link-local address */
-     if (!iface->llv6)
-       return;
-@@ -1736,10 +1732,6 @@ babel_reconfigure_ifaces(struct babel_proto *p, struct babel_config *cf)
-     if (!(iface->flags & IF_UP))
-       continue;
- 
--    /* Ignore non-multicast ifaces */
--    if (!(iface->flags & IF_MULTICAST))
--      continue;
--
-     /* Ignore ifaces without link-local address */
-     if (!iface->llv6)
-       continue;
--- 
-2.31.1
+This isn't a problem other than a little noise in the log. The packet
+gets dumped by the peer's firewall.
+
+I'm running openwrt with kernel 5.10.23.
+
+Steve
+
+
+
 
