@@ -4,61 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A58DC433ED
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 15 Apr 2021 17:23:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9B35C433B4
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 15 Apr 2021 17:53:20 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 1C1E961074
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 15 Apr 2021 17:23:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 1C1E961074
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id 2528461132
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 15 Apr 2021 17:53:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 2528461132
+Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=toke.dk
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 974c9508;
-	Thu, 15 Apr 2021 17:23:14 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [104.131.123.232])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id de75143d
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8d7181bf;
+	Thu, 15 Apr 2021 17:53:18 +0000 (UTC)
+Received: from mail.toke.dk (mail.toke.dk [45.145.95.4])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 33591c4e
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 15 Apr 2021 17:23:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1618507389;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=WNX2l0HZBURP6GpuwZqIQ44t21J5kLEpl6C4NVl8F1c=;
- b=PNdoqHRAUal59NC6qlF6L+sNdAjxt7cxjRDJcUcdunDWh5fl3quqpiITc65zsQAVOkDUgY
- PH/OFoO+DZjkz+NM+fTtqmYOh//RbVJ6i8ISpf3TiVY7HjiC9C1x6Zq/+me9goLX91IPeJ
- POwIK0nk8KVrDupUVdAWyuwsOoJCrco=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id f999b809
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Thu, 15 Apr 2021 17:23:08 +0000 (UTC)
-Received: by mail-yb1-f175.google.com with SMTP id g38so26986603ybi.12
- for <wireguard@lists.zx2c4.com>; Thu, 15 Apr 2021 10:23:08 -0700 (PDT)
-X-Gm-Message-State: AOAM530o42Smg706bAtdEpcaAzpWQo9uwkgDdu15BspDrMrubGuA1wCu
- W9xnEka5yjg3bsVonFwDBfhVQEKU0/nGhwy4rkE=
-X-Google-Smtp-Source: ABdhPJwF4k6BCYlY1Yb+L+xLHRpiRT9jqG+vtm8QnvTRX2SYekHX4+1mKGNL2+fC5RPHXU1U2dDyyzUvNJsGU2fXOp8=
-X-Received: by 2002:a25:aa14:: with SMTP id s20mr6165718ybi.306.1618507388264; 
- Thu, 15 Apr 2021 10:23:08 -0700 (PDT)
-MIME-Version: 1.0
+ Thu, 15 Apr 2021 17:53:16 +0000 (UTC)
+From: Toke =?utf-8?Q?H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=toke.dk; s=20161023;
+ t=1618509195; bh=51TTsnz3wEVCPAiyrTnhDtdWCf7ndcuhK0WzK1rBtX0=;
+ h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+ b=ocoBPum8+lD6mqsyPngRB9PIjLGFB0fki8YaCHR2yvC6+RsaV59qmAVwdHsug8Kyh
+ LER2A6Nx2Uc8iacj/E786Ko2POp9FuQNipWwx2QQVOjKywbxh9mq62wb8qcjBc3DLK
+ ZrsW2SFNnS2psjFunm2fZjaAWaYkYowg1zlZKgcr0hjcCI/42K/gg6qeFdGPMHn0lE
+ GApwbZclecNFG/Sue0MPKqPQwxyjXNAXsdX9QB4QYZ6dWZDFXAWJFRdknps3G3zBUL
+ fT+e8D+ePhBv5OHogrV0AWwnRY8nLVkXH9jTesQFAFSx8wRwhKKQhae+PkI9gARdXf
+ ANqBvhHpDlpWg==
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>, Stefan Haller
+ <stefan.haller@stha.de>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Subject: Re: FreeBSD if_wg POINTTOPOINT and MULTICAST behaviour
+In-Reply-To: <CAHmME9pxnh6MFdQGQCWRX6aNJu=rM-SyVY1jLb6EurgNNhwJSg@mail.gmail.com>
 References: <9afe6dc9-5c53-4c25-b09f-5b4cf6ff8046@stha.de>
  <CAHmME9rAzGauYJuq4Qpn561f1YrYTaSN1mj2HB2Kdhgd2QJs9A@mail.gmail.com>
  <87371254-15f1-494b-8740-38071d7f7d68@stha.de> <874kg8ldjn.fsf@toke.dk>
  <7be52421-db0d-4971-99b0-ce76307d1a33@stha.de>
-In-Reply-To: <7be52421-db0d-4971-99b0-ce76307d1a33@stha.de>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 15 Apr 2021 11:22:57 -0600
-X-Gmail-Original-Message-ID: <CAHmME9pxnh6MFdQGQCWRX6aNJu=rM-SyVY1jLb6EurgNNhwJSg@mail.gmail.com>
-Message-ID: <CAHmME9pxnh6MFdQGQCWRX6aNJu=rM-SyVY1jLb6EurgNNhwJSg@mail.gmail.com>
-Subject: Re: FreeBSD if_wg POINTTOPOINT and MULTICAST behaviour
-To: Stefan Haller <stefan.haller@stha.de>
-Cc: =?UTF-8?B?VG9rZSBIw7hpbGFuZC1Kw7hyZ2Vuc2Vu?= <toke@toke.dk>, 
- WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+ <CAHmME9pxnh6MFdQGQCWRX6aNJu=rM-SyVY1jLb6EurgNNhwJSg@mail.gmail.com>
+Date: Thu, 15 Apr 2021 19:53:14 +0200
+X-Clacks-Overhead: GNU Terry Pratchett
+Message-ID: <87sg3rigdx.fsf@toke.dk>
+MIME-Version: 1.0
+Content-Type: text/plain
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -73,31 +64,38 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Stefan,
+"Jason A. Donenfeld" <Jason@zx2c4.com> writes:
 
-Sounds like Toke has come up with the optimal solution, so I think
-I'll drop the "link1" patch/hack.
+> Hi Stefan,
+>
+> Sounds like Toke has come up with the optimal solution, so I think
+> I'll drop the "link1" patch/hack.
+>
+> One thing I was wondering though, mostly for my own curiosity, is what
+> config you're using that shows the problem, and how does the problem
+> manifest?
+>
+> I just put this in bird.conf:
+>
+> router id 192.168.88.2;
+> protocol babel {
+>        interface "wg0" {
+>                type wired;
+>                port 1234;
+>        };
+> };
+>
+> And then I ran:
+>
+> # pkg install bird2
+> # bird -d -c bird.conf
+>
+> And I didn't see any troubling error messages. But maybe it's more
+> subtle than that?
 
-One thing I was wondering though, mostly for my own curiosity, is what
-config you're using that shows the problem, and how does the problem
-manifest?
+I think it would just silently ignore the interface; does it say
+anything about running on it? You could also see if there's any traffic,
+there should be UDP packets with dest port 6696 appearing if it does
+run...
 
-I just put this in bird.conf:
-
-router id 192.168.88.2;
-protocol babel {
-       interface "wg0" {
-               type wired;
-               port 1234;
-       };
-};
-
-And then I ran:
-
-# pkg install bird2
-# bird -d -c bird.conf
-
-And I didn't see any troubling error messages. But maybe it's more
-subtle than that?
-
-Jason
+-Toke
