@@ -2,64 +2,59 @@ Return-Path: <SRS0=xHST=JO=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 41BABC433B4
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 17 Apr 2021 00:10:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CEB9CC433ED
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 17 Apr 2021 13:10:21 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 19B84610A6
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 17 Apr 2021 00:10:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 19B84610A6
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=poisk.co.ua
+	by mail.kernel.org (Postfix) with ESMTPS id 94D0B610A6
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 17 Apr 2021 13:10:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 94D0B610A6
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=harz.behrens.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7bec2ac9;
-	Sat, 17 Apr 2021 00:10:14 +0000 (UTC)
-Received: from srv.itcontrol.com.ua (srv.itcontrol.com.ua [194.79.11.91])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id fc5925e2
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 57b3be4e;
+	Sat, 17 Apr 2021 13:08:32 +0000 (UTC)
+Received: from post.behrens.de (post.behrens.de [2a01:170:1023::1:2])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id fbb53df1
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 16 Apr 2021 07:49:42 +0000 (UTC)
-Received: from srv.itcontrol.com.ua (localhost [127.0.0.1])
- by srv.itcontrol.com.ua (Postfix) with ESMTP id 4FM7dx5Csxz3FWB
- for <wireguard@lists.zx2c4.com>; Fri, 16 Apr 2021 10:49:41 +0300 (EEST)
-Authentication-Results: srv.itcontrol.com.ua (amavisd-new);
- dkim=pass (1024-bit key) reason="pass (just generated, assumed good)"
- header.d=itcontrol.com.ua
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=itcontrol.com.ua;
- h=content-language:content-transfer-encoding:content-type
- :content-type:mime-version:user-agent:date:date:message-id
- :organization:subject:subject:from:from:to; s=dkim; t=
- 1618559381; x=1621151382; bh=Ne3klBRt0biZ0HKyNYRt6j7dNuCNeE5MHcB
- /LaATl+M=; b=uREZRlAQ/5ohicYAG0nq9xgTSkKPL8f079HXQW8OC7vgpLYyJLT
- L4HQE3/rzcWnD+WWeyWQAQBgpSRlIeG+yypeWE+hNJ4s5I5/If2LMYpDxt+N07/V
- vIA9/1Dzn53Ndbd6O+/g9gUFYznLhJiVu7XkPhzyph/57xX4+HrCq4IQ=
-X-Virus-Scanned: Debian amavisd-new at 
-Received: from srv.itcontrol.com.ua ([127.0.0.1])
- by srv.itcontrol.com.ua (srv.itcontrol.com.ua [127.0.0.1]) (amavisd-new,
- port 10026)
- with ESMTP id cRc7Uk92h1xO for <wireguard@lists.zx2c4.com>;
- Fri, 16 Apr 2021 10:49:41 +0300 (EEST)
-Received: from [10.3.3.58] (backup.sed.poisk [194.79.11.90])
- by srv.itcontrol.com.ua (Postfix) with ESMTPSA id 4FM7dx2m37z3FW7
- for <wireguard@lists.zx2c4.com>; Fri, 16 Apr 2021 10:49:41 +0300 (EEST)
-To: wireguard@lists.zx2c4.com
-From: =?UTF-8?B?0KDQvtC80LDQvSDQodGC0YDQvtCz0LDQvdC+0LI=?= <rostma@poisk.co.ua>
-Subject: Wireguard speed
-Organization: =?UTF-8?B?0KfQnyDQndCf0KQgItCf0L7QuNGB0Loi?=
-Message-ID: <0d460501-14a1-370f-554e-f6d19bf55329@poisk.co.ua>
-Date: Fri, 16 Apr 2021 10:49:40 +0300
+ Sat, 17 Apr 2021 13:08:28 +0000 (UTC)
+Received: from [IPv6:2a01:170:1023:0:8d20:ee4:c417:bc88]
+ ([IPv6:2a01:170:1023:0:8d20:ee4:c417:bc88]) (authenticated bits=0)
+ by post.behrens.de (8.16.1/8.16.1) with ESMTPSA(MSP) id 13HD8Pca058606
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO cn=);
+ Sat, 17 Apr 2021 15:08:26 +0200 (CEST)
+ (envelope-from frank@harz.behrens.de)
+Subject: Re: [PATCH] freebsd: Implement selection of FIB (routing table) for
+ tunneled packets
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+References: <6aa0fd33-4c0d-557f-f7f5-5f5406b3a273@harz.behrens.de>
+ <CAHmME9q6dO1X+Gt3hY4kQxsQ4DqeaJGxoT8qkaAe-0s_WCrVrA@mail.gmail.com>
+ <ee43587f-8e17-add1-6b28-174639d126f8@harz.behrens.de>
+ <CAHmME9qaMcd0R1zvFy+ZyW4a1vmX1bE_Rxf4WFgau4UTdEi7hQ@mail.gmail.com>
+ <CAHmME9r13tPji0Guw3_Q8k4grh046RkSccPLbEVAasKQ=BNkVw@mail.gmail.com>
+ <89952f1f-5296-7f87-9345-0f5c087ee3ae@harz.behrens.de>
+ <a5cdf813-3cf6-b5e6-d497-78980c681958@harz.behrens.de>
+ <CAHmME9rCzvFGv3=ZwurVMnax0RzKQr2mTCAgqT9EY8MEbJ24Ng@mail.gmail.com>
+ <9a60aab2-788e-ba1d-96ac-cf6d08bf4bd1@harz.behrens.de>
+ <CAHmME9r9_gykGRebWvw5mAaxqqo1i_ZncfQeR7AxhaR_C4S5vg@mail.gmail.com>
+From: Frank Behrens <frank@harz.behrens.de>
+Message-ID: <d5904ed8-ee49-690d-3bc6-b0afc2cb28fc@harz.behrens.de>
+Date: Sat, 17 Apr 2021 15:08:25 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.9.1
+ Thunderbird/78.9.0
 MIME-Version: 1.0
+In-Reply-To: <CAHmME9r9_gykGRebWvw5mAaxqqo1i_ZncfQeR7AxhaR_C4S5vg@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: de-DE
 Content-Transfer-Encoding: 7bit
-Content-Language: ru
-X-Mailman-Approved-At: Sat, 17 Apr 2021 00:10:13 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -74,29 +69,20 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Help with speed in the wireguard vpn.
-There are 2 routers linksys with openwrt 19.07.7. And the wireguard 
-tunnel between them.
-If the link between the Wan of both routers is 1 gigabit/s, then the 
-speed inside the tunnel is 300-370 Mb/s, which I think is good. I 
-understand that these are simple routers, not servers.
-This is done for the test.
-In real life, the speed between the feasts will be limited to 100 Mb/s.
-I decided to do a test and lowered the speed on the switch ports 
-(routers connected through a gigabit switch) to 100 Mb/s. After that, 
-the speed between routers through wg is 30-40 Mb/s. Processors on 
-routers are loaded at 25-25%. Once I am on a channel in 100 Mb/s. 
-received speeds between routers 85-90 Mb/s. So such speeds are possible 
-on the wireguard.
+Hi Jason!
 
-After that, something went wrong with the electricity and the routers 
-were rebooted. I didn't have time to save the settings.
+Am 13.04.2021 um 04:57 schrieb Jason A. Donenfeld:
+> Can you let me know if this fixes the issue?
+> 
+> https://git.zx2c4.com/wireguard-freebsd/commit/?id=cdb18ebf44a5babb57cddccd6b33e9f19cfdf365
 
- From memory, I set everything up again, but now I can't achieve high 
-speeds...
-I measure iperf3 installed on the routers themselves.
+It looks better, but a little too much optimized. ;-)
 
-How can I get ~ 80-90 Mb/s again via 100 Mb/s channel?
-I will be grateful for any help in setting the speed wireguard
+The fix is in https://git.zx2c4.com/wireguard-freebsd/log/?h=fb/fib3
 
-p.s Forgive my English. I do not know him well and use a translator
+Best regards,
+   Frank
+
+-- 
+Frank Behrens
+Osterwieck, Germany
