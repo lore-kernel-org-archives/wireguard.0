@@ -1,50 +1,46 @@
-Return-Path: <SRS0=oIpX=JQ=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=fSJ2=JR=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DA1DC433ED
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 19 Apr 2021 22:27:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 94C37C433B4
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 20 Apr 2021 04:52:27 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id EDDE160FDC
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 19 Apr 2021 22:27:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org EDDE160FDC
-Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=toke.dk
+	by mail.kernel.org (Postfix) with ESMTPS id B85AF613AE
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 20 Apr 2021 04:52:25 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org B85AF613AE
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=crfreenet.org
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 64170299;
-	Mon, 19 Apr 2021 22:27:02 +0000 (UTC)
-Received: from mail.toke.dk (mail.toke.dk [45.145.95.4])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 8ae629f6
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 55cb0ff5;
+	Tue, 20 Apr 2021 04:52:23 +0000 (UTC)
+Received: from mail.crfreenet.org (varda.crfreenet.org [185.133.240.16])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0350db21
  for <wireguard@lists.zx2c4.com>;
- Mon, 19 Apr 2021 22:26:57 +0000 (UTC)
-From: =?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=toke.dk; s=20161023;
- t=1618871216; bh=rZFoQJ5q2I+dTUlHjdzdqzp4Q1eDbZr6vSw1MR+pE1A=;
- h=From:To:Cc:Subject:Date:From;
- b=l9JYQjD722NM+jKOvl0FcxzzlTQSS8rYu9zBvyJYm16tcvXPr25rigSyubDRPifGI
- vEmUOXKcSGa8ec1AZrSgQfDjuJ3I7Ca879mEtja/gDZYgQ7kp14/zlqR/LIFztn/oS
- V93/AGQfw/LWmYUCXqHD8Tu/OLN7XFWXrgFs2rC2tzGmwpWroNF4Uax8d8n/Jk11Ll
- xOMXKCz25sU+tY+A45q5okGZmwD+jogdlcAb28Us2TuX3DkeHz7HiyYQKO7wQrykgO
- D402fozzIZiWDnIdcDJ09nAlt06isOYwCSOzm1MOdXacRsPcueWC+s2rl5XPp+7A7D
- i2Q1eHungIpfA==
-To: bird-users@network.cz
-Cc: =?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
- wireguard@lists.zx2c4.com, Stefan Haller <stefan.haller@stha.de>
-Subject: [PATCH] sysdep/bsd: propagate OS-level IFF_MULTICAST to internal
- IF_MULTICAST flag
-Date: Tue, 20 Apr 2021 00:26:53 +0200
-Message-Id: <20210419222653.55983-1-toke@toke.dk>
+ Mon, 19 Apr 2021 13:04:06 +0000 (UTC)
+Received: from feanor (slizka.chapadla.cz [93.99.228.74])
+ by mail.crfreenet.org (Postfix) with ESMTP id A41E6112A90;
+ Mon, 19 Apr 2021 15:04:04 +0200 (CEST)
+Date: Mon, 19 Apr 2021 15:03:54 +0200
+From: Ondrej Zajicek <santiago@crfreenet.org>
+To: Toke =?iso-8859-1?Q?H=F8iland-J=F8rgensen?= <toke@toke.dk>
+Cc: bird-users@network.cz, wireguard@lists.zx2c4.com,
+ Stefan Haller <stefan.haller@stha.de>
+Subject: Re: [PATCH] babel: Drop check for IF_MULTICAST interface flag
+Message-ID: <YH1/umkXjyZ0AjqO@feanor.crfreenet.org>
+References: <20210415134450.197661-1-toke@toke.dk>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20210415134450.197661-1-toke@toke.dk>
+X-Operating-System: Debian GNU/Linux
+X-Mailman-Approved-At: Tue, 20 Apr 2021 04:52:21 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -59,31 +55,28 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-The BSD code did not propagate the OS-level IFF_MULTICAST flag to the
-Bird-internal IF_MULTICAST flag, which causes problems with Wireguard
-interfaces on FreeBSD. The Linux sysdep code does propagate the flag
-already, so just copy over the same check and flag update.
+On Thu, Apr 15, 2021 at 03:44:50PM +0200, Toke H=F8iland-J=F8rgensen wrote:
+> The babel protocol code was checking interfaces for the IF_MULTICAST flag
+> and refusing to run if this isn't present. However, there are cases where
+> this flag doesn't correspond to the actual capability of sending multicast
+> packets. For instance, Wireguard interfaces on FreeBSD doesn't set the
+> required flags, but Babel will run just fine over such an interface given
+> the right configuration.
 
-Tested-by: Stefan Haller <stefan.haller@stha.de>
-Signed-off-by: Toke Høiland-Jørgensen <toke@toke.dk>
----
- sysdep/bsd/krt-sock.c | 3 +++
- 1 file changed, 3 insertions(+)
+Hi
 
-diff --git a/sysdep/bsd/krt-sock.c b/sysdep/bsd/krt-sock.c
-index c2faa23dd44f..cd89544063c7 100644
---- a/sysdep/bsd/krt-sock.c
-+++ b/sysdep/bsd/krt-sock.c
-@@ -665,6 +665,9 @@ krt_read_ifinfo(struct ks_msg *msg, int scan)
-   else
-     f.flags |= IF_MULTIACCESS;      /* NBMA */
- 
-+  if (fl & IFF_MULTICAST)
-+    f.flags |= IF_MULTICAST;
-+
-   iface = if_update(&f);
- 
-   if (!scan)
--- 
-2.31.1
+Is there a reason why to disregard the IF_MULTICAST flag? This seems to me
+more like a bug in FreeBSD Wireguard implementation that should be fixed
+there. Is this flag properly checked on Linux, or is there some reason why
+the flag is missing?
 
+Routing protocols in BIRD generally follow this flag (and perhaps use it
+to switch to unicast-only mode), so i do not see why Babel should behave
+differently.
+
+--=20
+Elen sila lumenn' omentielvo
+
+Ondrej 'Santiago' Zajicek (email: santiago@crfreenet.org)
+OpenPGP encrypted e-mails preferred (KeyID 0x11DEADC3, wwwkeys.pgp.net)
+"To err is human -- to blame it on a computer is even more so."
