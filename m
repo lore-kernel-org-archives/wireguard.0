@@ -1,74 +1,53 @@
-Return-Path: <SRS0=xHST=JO=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=oIpX=JQ=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A2FFBC433B4
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 17 Apr 2021 16:49:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 01111C43470
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 19 Apr 2021 13:55:31 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id B41B46120F
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat, 17 Apr 2021 16:49:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org B41B46120F
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id 38D80611CE
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 19 Apr 2021 13:55:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 38D80611CE
+Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=toke.dk
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3034d48c;
-	Sat, 17 Apr 2021 16:49:29 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [104.131.123.232])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2e16d285
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c19a5da7;
+	Mon, 19 Apr 2021 13:55:27 +0000 (UTC)
+Received: from mail.toke.dk (mail.toke.dk [2a0c:4d80:42:2001::664])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id da83f216
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sat, 17 Apr 2021 16:49:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1618678159;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=nUJ37Aemkw4Xr87SqbzIBZ7BF2+GsZwoTTXqQESfdO0=;
- b=THfLjzsYviUMNWLjWjLIzAPo4plfcXmaWRrYlpA7hfvrHMZfM+08QgDrtx0jggxmFnW0cg
- Ik9VltcOY+xENlzPyyX7VXfAPyoF9DOV9Ot5Y885Ot486tkBSfDp7us1Qz6kogahae0AaA
- XZPOnhlHlZYhzJz1x1SFcEMDciAtVDU=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 6f01a7a1
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Sat, 17 Apr 2021 16:49:19 +0000 (UTC)
-Received: by mail-yb1-f176.google.com with SMTP id v72so12958317ybe.11
- for <wireguard@lists.zx2c4.com>; Sat, 17 Apr 2021 09:49:19 -0700 (PDT)
-X-Gm-Message-State: AOAM533bgeV10+Q9oDpftm3RgBBVZCQlbHk7CdQUzujAKMoewUyJZ3ZB
- aIZCKwhWxzRJfp3/om445Yuy9FDhQ6Ah1/Gar30=
-X-Google-Smtp-Source: ABdhPJxJgfqkQy7FnsxDiEXsQaTDxdHBJQ9hw5S4TNkTe1mxVU1bf9NZD4DN2ETfg+244zIgCm1wf3l1FcMvU9vXS+c=
-X-Received: by 2002:a5b:5c6:: with SMTP id w6mr6368181ybp.279.1618678159188;
- Sat, 17 Apr 2021 09:49:19 -0700 (PDT)
+ Mon, 19 Apr 2021 13:55:19 +0000 (UTC)
+From: Toke =?utf-8?Q?H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=toke.dk; s=20161023;
+ t=1618840518; bh=7G0dgVtVdveuS7r6IaAyUFQoEVDSpDTMP6cPbWflC+o=;
+ h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+ b=qjO/npdplENUh+HcPp1YqA+o7I6mrmh8njOXRRfjrMfTIKBrs/1oN4pC5T8P5idlI
+ 6GaT1Wb7gzii2p8un4h7wfwp17wNcdE9t9nNXkxF/ri+RXKXrqPkGtXp6TsBwOyjjH
+ UGAXq4ud/IkuJ+nMb2sWYijXmDbz0LKdK5w90iK/56L0P7FufxTyh4lD7ONnWkQtZ8
+ vykFrCxNkHH1u37zoRUJTMuphWMW99sY5+D0f8MHSOabha8fzvUXpG3+/FvzkMPAUQ
+ nCpI9AWaSKOkTZt5F5/+M2v4qYHdgMNEjLtHyNhO1nJwrTyGatJYiS1ltDQtd1JGc7
+ BuR5bPxtFQOUg==
+To: Ondrej Zajicek <santiago@crfreenet.org>
+Cc: bird-users@network.cz, wireguard@lists.zx2c4.com, Stefan Haller
+ <stefan.haller@stha.de>
+Subject: Re: [PATCH] babel: Drop check for IF_MULTICAST interface flag
+In-Reply-To: <YH1/umkXjyZ0AjqO@feanor.crfreenet.org>
+References: <20210415134450.197661-1-toke@toke.dk>
+ <YH1/umkXjyZ0AjqO@feanor.crfreenet.org>
+Date: Mon, 19 Apr 2021 15:55:18 +0200
+X-Clacks-Overhead: GNU Terry Pratchett
+Message-ID: <87y2degz09.fsf@toke.dk>
 MIME-Version: 1.0
-References: <6aa0fd33-4c0d-557f-f7f5-5f5406b3a273@harz.behrens.de>
- <CAHmME9q6dO1X+Gt3hY4kQxsQ4DqeaJGxoT8qkaAe-0s_WCrVrA@mail.gmail.com>
- <ee43587f-8e17-add1-6b28-174639d126f8@harz.behrens.de>
- <CAHmME9qaMcd0R1zvFy+ZyW4a1vmX1bE_Rxf4WFgau4UTdEi7hQ@mail.gmail.com>
- <CAHmME9r13tPji0Guw3_Q8k4grh046RkSccPLbEVAasKQ=BNkVw@mail.gmail.com>
- <89952f1f-5296-7f87-9345-0f5c087ee3ae@harz.behrens.de>
- <a5cdf813-3cf6-b5e6-d497-78980c681958@harz.behrens.de>
- <CAHmME9rCzvFGv3=ZwurVMnax0RzKQr2mTCAgqT9EY8MEbJ24Ng@mail.gmail.com>
- <9a60aab2-788e-ba1d-96ac-cf6d08bf4bd1@harz.behrens.de>
- <CAHmME9r9_gykGRebWvw5mAaxqqo1i_ZncfQeR7AxhaR_C4S5vg@mail.gmail.com>
- <d5904ed8-ee49-690d-3bc6-b0afc2cb28fc@harz.behrens.de>
- <CAHmME9r=EDav2CmWLXSOcaUadzk-+N89GMCMA6xuqim5EcWDHA@mail.gmail.com>
- <3d610bc1-84c9-1ad5-a366-3c8b77efb858@harz.behrens.de>
-In-Reply-To: <3d610bc1-84c9-1ad5-a366-3c8b77efb858@harz.behrens.de>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sat, 17 Apr 2021 10:49:08 -0600
-X-Gmail-Original-Message-ID: <CAHmME9qu+3GpQtq78kZ4T9LAVAMqvoVjWChCqNT0Pn9BB29adg@mail.gmail.com>
-Message-ID: <CAHmME9qu+3GpQtq78kZ4T9LAVAMqvoVjWChCqNT0Pn9BB29adg@mail.gmail.com>
-Subject: Re: [PATCH] freebsd: Implement selection of FIB (routing table) for
- tunneled packets
-To: Frank Behrens <frank@harz.behrens.de>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -83,27 +62,50 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Frank,
+Ondrej Zajicek <santiago@crfreenet.org> writes:
 
-On Sat, Apr 17, 2021 at 9:23 AM Frank Behrens <frank@harz.behrens.de> wrote:
+> On Thu, Apr 15, 2021 at 03:44:50PM +0200, Toke H=C3=B8iland-J=C3=B8rgense=
+n wrote:
+>> The babel protocol code was checking interfaces for the IF_MULTICAST flag
+>> and refusing to run if this isn't present. However, there are cases where
+>> this flag doesn't correspond to the actual capability of sending multica=
+st
+>> packets. For instance, Wireguard interfaces on FreeBSD doesn't set the
+>> required flags, but Babel will run just fine over such an interface given
+>> the right configuration.
 >
+> Hi
 >
-> Am 17.04.2021 um 17:00 schrieb Jason A. Donenfeld:
-> > Does this actually fix or change anything? Don't new sockets have
-> > fib==0 right out of the gate already?
->
-> New sockets inherit the fib from the current process. If you create
-> the wg interface from a process with different fib, that fib will also
-> be used for this socket. Probably the difference in code is not very
-> important for the case of a system default boot. But that may vary
-> for jails/vnets with different default fibs.
->
-> In my test case the sequence
->  > setfib 1 ifconfig wg0 create ....
->  > ifconfig wg0 tunnelfib 0
-> failed.
+> Is there a reason why to disregard the IF_MULTICAST flag? This seems to me
+> more like a bug in FreeBSD Wireguard implementation that should be fixed
+> there. Is this flag properly checked on Linux, or is there some reason why
+> the flag is missing?
 
-Ahh, interesting. I applied your patch. Thanks for the persistence in
-getting this feature working well.
+We did fix Wireguard - see:
+https://git.zx2c4.com/wireguard-freebsd/patch/?id=3Da7a84a17faf784857f076e3=
+7aa4818f6b6c12a95
 
-Jason
+However, that didn't help, Babel still refused to use the interface.
+Looking at krt-sock.c, the IF_MULTICAST flag is only set on
+IFF_POINTOPOINT or IFF_BROADCAST on bsd. The Linux code (in netlink.c)
+has a further:
+
+      if (fl & IFF_MULTICAST)
+	f.flags |=3D IF_MULTICAST;
+
+beneath the other flag checks, so maybe that's really what's missing on
+the BSD side?
+
+> Routing protocols in BIRD generally follow this flag (and perhaps use
+> it to switch to unicast-only mode), so i do not see why Babel should
+> behave differently.
+
+Yeah, I do believe I originally copied that check from one of the other
+protocols. I can see how it makes sense to check the flag and change
+operation mode based on it, but given that Babel doesn't do that it just
+seems kinda redundant? If the interface *actually* is unable to send
+multicast packets, the subsequent socket operation is going to fail, and
+at least that produces an error message instead of just silently
+ignoring the interface like that flag check does :)
+
+-Toke
