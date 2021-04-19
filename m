@@ -2,45 +2,49 @@ Return-Path: <SRS0=fSJ2=JR=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DE38C43460
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 20 Apr 2021 04:52:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A70EC433B4
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 20 Apr 2021 04:52:31 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id C5B3E613AE
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 20 Apr 2021 04:52:27 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org C5B3E613AE
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=crfreenet.org
+	by mail.kernel.org (Postfix) with ESMTPS id BFF35613AE
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 20 Apr 2021 04:52:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org BFF35613AE
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=physik.uni-regensburg.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1684966d;
-	Tue, 20 Apr 2021 04:52:26 +0000 (UTC)
-Received: from mail.crfreenet.org (varda.crfreenet.org [185.133.240.16])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8452861d
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 66bbfc63;
+	Tue, 20 Apr 2021 04:52:27 +0000 (UTC)
+Received: from mx2.uni-regensburg.de (mx2.uni-regensburg.de
+ [2001:638:a05:137:165:0:3:bdf8])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 62b16d86
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 19 Apr 2021 16:33:09 +0000 (UTC)
-Received: from feanor (slizka.chapadla.cz [93.99.228.74])
- by mail.crfreenet.org (Postfix) with ESMTP id 33221112C89;
- Mon, 19 Apr 2021 18:33:09 +0200 (CEST)
-Date: Mon, 19 Apr 2021 18:32:59 +0200
-From: Ondrej Zajicek <santiago@crfreenet.org>
-To: Toke =?iso-8859-1?Q?H=F8iland-J=F8rgensen?= <toke@toke.dk>
-Cc: bird-users@network.cz, wireguard@lists.zx2c4.com,
- Stefan Haller <stefan.haller@stha.de>
-Subject: Re: [PATCH] babel: Drop check for IF_MULTICAST interface flag
-Message-ID: <YH2wux4jIJuD4RS2@feanor.crfreenet.org>
-References: <20210415134450.197661-1-toke@toke.dk>
- <YH1/umkXjyZ0AjqO@feanor.crfreenet.org> <87y2degz09.fsf@toke.dk>
+ Mon, 19 Apr 2021 20:58:09 +0000 (UTC)
+Received: from mx2.uni-regensburg.de (localhost [127.0.0.1])
+ by localhost (Postfix) with SMTP id D6C21600004E;
+ Mon, 19 Apr 2021 22:51:32 +0200 (CEST)
+Received: from smtp1.uni-regensburg.de (smtp1.uni-regensburg.de
+ [194.94.157.129])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (Client CN "smtp.uni-regensburg.de",
+ Issuer "DFN-Verein Global Issuing CA" (not verified))
+ by mx2.uni-regensburg.de (Postfix) with ESMTPS id C0003600004D;
+ Mon, 19 Apr 2021 22:51:32 +0200 (CEST)
+From: Peter Georg <peter.georg@physik.uni-regensburg.de>
+To: wireguard@lists.zx2c4.com
+Cc: Peter Georg <peter.georg@physik.uni-regensburg.de>
+Subject: [PATCH compat] Update and improve detection of CentOS Stream 8
+Date: Mon, 19 Apr 2021 22:51:25 +0200
+Message-Id: <20210419205125.2835077-1-peter.georg@physik.uni-regensburg.de>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <87y2degz09.fsf@toke.dk>
-X-Operating-System: Debian GNU/Linux
+Content-Transfer-Encoding: 8bit
 X-Mailman-Approved-At: Tue, 20 Apr 2021 04:52:21 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -56,53 +60,43 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Mon, Apr 19, 2021 at 03:55:18PM +0200, Toke H=F8iland-J=F8rgensen wrote:
-> Ondrej Zajicek <santiago@crfreenet.org> writes:
->=20
-> > Is there a reason why to disregard the IF_MULTICAST flag? This seems to=
- me
-> > more like a bug in FreeBSD Wireguard implementation that should be fixed
-> > there. Is this flag properly checked on Linux, or is there some reason =
-why
-> > the flag is missing?
->=20
-> We did fix Wireguard - see:
-> https://git.zx2c4.com/wireguard-freebsd/patch/?id=3Da7a84a17faf784857f076=
-e37aa4818f6b6c12a95
->=20
-> However, that didn't help, Babel still refused to use the interface.
-> Looking at krt-sock.c, the IF_MULTICAST flag is only set on
-> IFF_POINTOPOINT or IFF_BROADCAST on bsd. The Linux code (in netlink.c)
-> has a further:
->=20
->       if (fl & IFF_MULTICAST)
-> 	f.flags |=3D IF_MULTICAST;
->=20
-> beneath the other flag checks, so maybe that's really what's missing on
-> the BSD side?
+CentOS Stream 8 by now (4.18.0-301.1.el8) reports RHEL_MINOR=5. The
+current RHEL 8 minor release is still 3. RHEL 8.4 is in beta. Replace
+equal comparison by greater equal to (hopefully) be a little bit more
+future proof.
 
-Yes, it is likely that it is an issue in sysdep/bsd code.
+Signed-off-by: Peter Georg <peter.georg@physik.uni-regensburg.de>
+---
+ src/compat/compat-asm.h | 2 +-
+ src/compat/compat.h     | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
+diff --git a/src/compat/compat-asm.h b/src/compat/compat-asm.h
+index 7067afd..fde21da 100644
+--- a/src/compat/compat-asm.h
++++ b/src/compat/compat-asm.h
+@@ -15,7 +15,7 @@
+ #define ISRHEL7
+ #elif RHEL_MAJOR == 8
+ #define ISRHEL8
+-#if RHEL_MINOR == 4
++#if RHEL_MINOR >= 4
+ #define ISCENTOS8S
+ #endif
+ #endif
+diff --git a/src/compat/compat.h b/src/compat/compat.h
+index 0227204..26a6d7e 100644
+--- a/src/compat/compat.h
++++ b/src/compat/compat.h
+@@ -16,7 +16,7 @@
+ #define ISRHEL7
+ #elif RHEL_MAJOR == 8
+ #define ISRHEL8
+-#if RHEL_MINOR == 4
++#if RHEL_MINOR >= 4
+ #define ISCENTOS8S
+ #endif
+ #endif
+-- 
+2.31.1
 
-> > Routing protocols in BIRD generally follow this flag (and perhaps use
-> > it to switch to unicast-only mode), so i do not see why Babel should
-> > behave differently.
->=20
-> Yeah, I do believe I originally copied that check from one of the other
-> protocols. I can see how it makes sense to check the flag and change
-> operation mode based on it, but given that Babel doesn't do that it just
-> seems kinda redundant? If the interface *actually* is unable to send
-> multicast packets, the subsequent socket operation is going to fail, and
-> at least that produces an error message instead of just silently
-> ignoring the interface like that flag check does :)
-
-Well, i am OK with generating a warning in cases of non-matching interface
-type, instead of ignoring it silently. (In contrast to iface down or missing
-lladdr, which should be silent, as it may correct later.)
-
---=20
-Elen sila lumenn' omentielvo
-
-Ondrej 'Santiago' Zajicek (email: santiago@crfreenet.org)
-OpenPGP encrypted e-mails preferred (KeyID 0x11DEADC3, wwwkeys.pgp.net)
-"To err is human -- to blame it on a computer is even more so."
