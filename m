@@ -2,65 +2,90 @@ Return-Path: <SRS0=Dn24=J2=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6671C433ED
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 29 Apr 2021 01:58:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C9CFC43460
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 29 Apr 2021 15:56:12 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id C3D9C61419
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 29 Apr 2021 01:58:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org C3D9C61419
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=limelogic.be
+	by mail.kernel.org (Postfix) with ESMTPS id 0255661446
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 29 Apr 2021 15:56:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 0255661446
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=radarcs.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8c9cf27d;
-	Thu, 29 Apr 2021 01:56:14 +0000 (UTC)
-Received: from mail.calldesk.be (mail.calldesk.be [212.166.55.180])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 038fa30b
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 387f0156;
+	Thu, 29 Apr 2021 15:54:13 +0000 (UTC)
+Received: from mx1.radarcs.com (mx1.radarcs.com [185.158.24.27])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id bbfafe84
  (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 28 Apr 2021 15:24:22 +0000 (UTC)
-Received: from localhost (localhost [127.0.0.1])
- by mail.calldesk.be (Postfix) with ESMTP id 0E84D600BF
- for <wireguard@lists.zx2c4.com>; Wed, 28 Apr 2021 17:24:22 +0200 (CEST)
-Received: from mail.calldesk.be ([127.0.0.1])
- by localhost (pan.limelogic.be [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id ppXpWjPg2MMZ for <wireguard@lists.zx2c4.com>;
- Wed, 28 Apr 2021 17:24:22 +0200 (CEST)
-Received: from flouff.lpl.grp (flouff.lpl.grp [10.74.1.15])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (No client certificate requested)
- by mail.calldesk.be (Postfix) with ESMTPS id 010C1600AF
- for <wireguard@lists.zx2c4.com>; Wed, 28 Apr 2021 17:24:22 +0200 (CEST)
-Received: from flouff.lpl.grp (10.74.1.15) by flouff.lpl.grp (10.74.1.15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.2; Wed, 28 Apr
- 2021 17:24:21 +0200
-Received: from flouff.lpl.grp ([fe80::84ec:c7b4:b019:55f6]) by flouff.lpl.grp
- ([fe80::84ec:c7b4:b019:55f6%3]) with mapi id 15.01.2176.012;
- Wed, 28 Apr 2021 17:24:21 +0200
-From: Jean Cardona <Jean.Cardona@limelogic.be>
+ Thu, 29 Apr 2021 10:30:06 +0000 (UTC)
+Received: from mx1.radarcs.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EED9AFE060
+ for <wireguard@lists.zx2c4.com>; Thu, 29 Apr 2021 12:30:05 +0200 (CEST)
+Received: from mx1.radarcs.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E34C9FE05F
+ for <wireguard@lists.zx2c4.com>; Thu, 29 Apr 2021 12:30:05 +0200 (CEST)
+Received: from atdcvsem001.dmz.radarservices.net (unknown [100.64.45.50])
+ by mx1.radarcs.com (Postfix) with ESMTPS
+ for <wireguard@lists.zx2c4.com>; Thu, 29 Apr 2021 12:30:05 +0200 (CEST)
+Received: from bc-hq-sv-ex01.base-camp.lan (unknown [10.114.81.14])
+ by atdcvsem001.dmz.radarservices.net (Postfix) with ESMTPS
+ for <wireguard@lists.zx2c4.com>; Thu, 29 Apr 2021 12:30:05 +0200 (CEST)
+Received: from bc-hq-sv-ex01.base-camp.lan (10.114.81.14) by
+ bc-hq-sv-ex01.base-camp.lan (10.114.81.14) with Microsoft SMTP Server (TLS)
+ id 15.0.1497.2; Thu, 29 Apr 2021 12:30:04 +0200
+Received: from bc-hq-sv-ex01.base-camp.lan ([fe80::e8aa:8cf2:537d:9aac]) by
+ bc-hq-sv-ex01.base-camp.lan ([fe80::e8aa:8cf2:537d:9aac%12]) with mapi id
+ 15.00.1497.015; Thu, 29 Apr 2021 12:30:04 +0200
+From: Raoul Bhatia <raoul.bhatia@radarcs.com>
 To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
-Subject: Wireguard for windows: routes are added even if remote server not
- reachable
-Thread-Topic: Wireguard for windows: routes are added even if remote server
- not reachable
-Thread-Index: Adc8QcCRil4z7PJeRqGJr4CUongBjA==
-Date: Wed, 28 Apr 2021 15:24:21 +0000
-Message-ID: <eaf535ec1f0c48649e1a24878e0c18e1@limelogic.be>
-Accept-Language: fr-FR, fr-BE, en-US
-Content-Language: fr-FR
+CC: Velimir Iveljic <velimir.iveljic@radarcs.com>
+Subject: Wireguard connection lost between peers
+Thread-Topic: Wireguard connection lost between peers
+Thread-Index: AQHXPOKd+/hch2SNGkC9pIMppFNa6Q==
+Date: Thu, 29 Apr 2021 10:30:04 +0000
+Message-ID: <655D0D0D-4650-4A45-864E-5BDC6C5A76AE@radarcs.com>
+Accept-Language: en-GB, de-AT, en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-x-originating-ip: [192.168.195.200]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+user-agent: Microsoft-MacOutlook/16.48.21041102
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [172.20.21.26]
+X-SM-outgoing: yes
+Content-Language: en-GB
 MIME-Version: 1.0
-X-Mailman-Approved-At: Thu, 29 Apr 2021 01:56:13 +0000
+Content-Type: multipart/signed; protocol="application/pkcs7-signature";
+ micalg="sha-512"; boundary="----D70984263B16611E9258E728384C218A"
+X-SM-smarthost: outbound-trendmicro.local
+X-TM-AS-GCONF: 00
+X-TM-AS-Product-Ver: IMSVA-9.1.0.1960-8.6.0.1013-26120.007
+X-TM-AS-Result: No--4.419-5.0-31-10
+X-imss-scan-details: No--4.419-5.0-31-10
+X-TM-AS-User-Approved-Sender: No
+X-TMASE-Version: IMSVA-9.1.0.1960-8.6.1013-26120.007
+X-TMASE-Result: 10--4.418600-10.000000
+X-TMASE-MatchedRID: VGfQASkmiVDtSLKqBxR9ZZr5ykm9NtIcuBkg4mMSwl3ULFWeoMfdNaqG
+ sEpEhDcqq47FBBs7iqQurf6ngptdvdV1zud4ns3ok3rl+MaNgxD+NefZIdSZXCeVy568en3Wg7c
+ fJQw9FserLIIv7em00Gx1JjumHb+6xPWanCBMR8nE4i/j+gqDIH4KN5L14WbcHfgwng1QZ1Lvlb
+ adXyMpHxdIFF587OUJ4IPj3XSmbmsbmtufEF4P0SqRJ4M9q7OvF430d3dMHkZLIy6IPbYWF3P41
+ aRFCNo275C5gp4Fi9B9H7jaVSoagC2p+z1Qmk4n/fF9WezHG8lwm7Nn/lGhVuRN1GEcQ+WVR38G
+ 84X958CDefyXDwaGu82d08sKQnx4IkzJoP2DD5fviU6inwt533kamQDZ6bhfUx4Up3qvMKc/5bo
+ wgIF6xqwi3p3/PpAqO57kc3q/hwxTjltgCWrGuCxkBbXpQ5eLK7VOL9908cEaVuuTY4OGg4/3CY
+ cWSKhYVcWXValGwBZL0nvpq6X86KWHqPLDLatpiVJZi91I9JiByxVkfd04JI4iwAQuovtY5sZTw
+ YHfBM5XqOuuiPqJQskIjnK+krn4jrFE/BBOzi+seLhOr9XBOptcYV58cc5iO3tmMk8BUiIrIZT9
+ OcC9sq2jBDzYM4+XVUOm2DdnnCK0fTvTiDmGeUV4CvmC4hgm/soTtcgqC3w52X8YwVUEW6GnrT7
+ qNXMhFmbCgVUnDIBboui1cyFejuqXDbz6GdxnNJlyngnIQcF+S5m2/8VLmlZFa90AW3ziiQy4MG
+ /9StnBa6VG2+9jFIxs8UDyWt614q/qiSojqLdXS830kRtVI4zHo47z5Aa+VURCm9hPfaqzYX+p/
+ b3l/sQZIm+j5jS3TaOqFlQ3dh8yTjajrvXn0qLEnilsc807ZJtYA8/wcO09W4IV83wVUvcSuY6m
+ A2sQ4N/xSxZp7ohI+WYNIFmYnanGhEECTS3tbK6iklEXSelWXGvUUmKP2w==
+X-TMASE-SNAP-Result: 1.821001.0001-0-1-12:0,22:0,33:0,34:0-0
+X-Mailman-Approved-At: Thu, 29 Apr 2021 15:54:10 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -75,19 +100,202 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello,=20
+This is an S/MIME signed message
 
-When wireguard on windows cannot reach the server, it still sets up the rou=
-tes defined in allowedIPs, with a very large priority because the windows w=
-ireguard virtual interface is configured as a 100GB interface.
-This is an issue for us, because when one of our user is in the office, the=
- VPN cannot connect but windows still tries to use it to reach some interna=
-l subnets and those subnets are thus unreachable.
+------D70984263B16611E9258E728384C218A
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-version: 1.0
+Content-ID: <6174A9A0DD614147AB4DB6E50A974FFB@base-camp.cc>
 
-Is there a way to remove the routes if the VPN cannot come up?
+RGVhciBMaXN0LA0KDQpXZSBhcmUgZXhwZXJpZW5jaW5nIHVudXN1YWwgaXNzdWUgd2hlcmUgV2ly
+ZUd1YXJkIGNvbm5lY3Rpdml0eSBiZXR3ZWVuIHBlZXJzIHN1ZGRlbmx5IHN0b3BzIHdvcmtpbmcu
+DQpUaGUgY29ubmVjdGlvbiBpdHNlbGYgc2VlbSB0byBiZSB1cCwgYnV0IHRoZSBwZWVycyBjYW5u
+b3QgY29tbXVuaWNhdGUgdG8gZWFjaCBvdGhlciAobW9yZSBkZXRhaWxzIGJlbG93KS4NCkFueSBp
+bnNpZ2h0IHdvdWxkIGJlIGdyZWF0bHkgYXBwcmVjaWF0ZWQuDQoNClNvZnR3YXJlIHZlcnNpb25z
+Og0KLSBEZWJpYW4gU3RyZXRjaCA0LjkuMC0xMS1hbWQ2NCAoNC45LjE4OS0zK2RlYjl1MikNCi0g
+TFhDIHZlcnNpb246IDIuMC43DQotIFdpcmVndWFyZDogMS4wLjIwMjEwMTI0IChmcm9tIGJ1c3Rl
+ci1iYWNrcG9ydHMpDQogDQpFbnZpcm9ubWVudDoNCkEgRGViaWFuIGhvc3Qgc2VydmVzIGFzIExY
+QyBoeXBlcnZpc29yIGZvciB1bnByaXZpbGVkZ2VkIGNvbnRhaW5lcnMuDQpXaXJlR3VhcmQgaXMg
+dXNlZCBhcyBhIG5ldHdvcmsgbGF5ZXIgZm9yIHRoZSBjb250YWluZXJzLCB3aGljaCBtZWFucyBv
+biB0aGUgaG9zdCB3ZSBjcmVhdGUgcGh5c2ljYWwgV0cgaW50ZXJmYWNlIGZvciBlYWNoIGNvbnRh
+aW5lci4NCkluc2lkZSB0aGUgY29udGFpbmVycywgd2UgcnVuIGEgZGlzdHJpYnV0ZWQgY2x1c3Rl
+ciB3aGljaCBpcyBzcGFubmluZyBtdWx0aXBsZSBjb250YWluZXJzIG9uIG11bHRpcGxlIHBoeXNp
+Y2FsIHNlcnZlcnMgaW50ZXJjb25uZWN0ZWQgdmlhIDEwRyBsaW5rcyAoaS5lLiA2IHBoeXNpY2Fs
+IHNlcnZlcnMgdy8gOC0xMCBjb250YWluZXJzIGVhY2gpLg0KU28gdGhlIG5ldHdvcmsgbG9hZCBj
+YW4gZ2V0IGNvbXBhcmF0aXZlbHkgaGlnaCwgb24gYXZlcmFnZSA1MDBNYml0L3Mgd2l0aCBwZWFr
+cyBvZiB+M0diaXQvcy4NCiANClByb2JsZW0gZGVzY3JpcHRpb246DQpUaGUgb3V0bGluZWQgc2V0
+dXAgd29ya3MgZmluZSBpbiBtb3N0IGNhc2VzLg0KT2NjYXNpb25hbGx5LCBob3dldmVyLCBvbmUg
+Y29udGFpbmVyIGNvbXBsZXRlbHkgbG9zZXMgY29ubmVjdGl2aXR5LCBhbmQgaXMgbm90IHJlYWNo
+YWJsZSBfZXZlbl8gZnJvbSB0aGUgdW5kZXJseWluZyBob3N0Lg0KV2UgY2Fubm90IGRpc3Rpbmd1
+aXNoIHdoYXQgaXMgdGhlIHRyaWdnZXIgZm9yIHRoaXMgdG8gaGFwcGVuLCBidXQgd2Ugb2JzZXJ2
+ZWQgaXQgaGFwcGVuaW5nIHdoZW4gdGhlIG5ldHdvcmsgdHJhZmZpYyBpcyBoaWdoLg0KTk9URTog
+V2UgYWxzbyBoYWQgdGhpcyBzaW1pbGFyIChzYW1lPykgaXNzdWUgYmV0d2VlbiB0d28gcGh5c2lj
+YWwgaG9zdHMuDQoNClNvIGZhciB3ZSBpZGVudGlmaWVkIHR3byB3YXlzIHRvIHJlc3RvcmUgdGhl
+IHNlcnZpY2U6DQoxLiBSZXN0YXJ0IHdnLXF1aWNrQHdnMCBzZXJ2aWNlIG9uIHRoZSBob3N0LCB3
+aGljaCBpcyBfbm90XyBzdXN0YWluYWJsZSBiZWNhdXNlIHRoaXMgcmVzZXRzIHRoZSBjb25uZWN0
+aXZpdHkgb2YgYWxsIGNvbnRhaW5lcnMsIGltcGFjdGluZyB0aGUgY2x1c3Rlci4NCjIuIER1bXAg
+dGhlIFdHIGNvbmYsIG1hbnVhbGx5IHJlbW92ZSB0aGUgdW5yZWFjaGFibGUgcGVlciBwdWJsaWMg
+a2V5IGZyb20gdGhlIGludGVyZmFjZSwgYW5kIHRoZW4gcmUtc3luYyB0aGUgZHVtcGVkIGNvbmYu
+DQotLS0gU05JUCAtLS0NCiQgd2ctcXVpY2sgc3RyaXAgd2cwID4gd2cwX3BlZXJzDQokIHdnIHNo
+b3cgd2cwIGR1bXANCiQgd2cgc2V0IHdnMCBwZWVyICRQRUVSX1BVQl9LRVkgcmVtb3ZlDQokIHdn
+IHN5bmNjb25mIHdnMCB3ZzBfcGVlcnMNCi0tLSBTTklQIC0tLQ0KIA0KQWRkaXRpb25hbCBub3Rl
+czoNCjEuIFdlIGRpZG4ndCBtYW5hZ2UgdG8gcmVwcm9kdWNlIHRoZSBpc3N1ZSB1bnRpbCBub3cg
+aW4gYSB0ZXN0IGVudmlyb25tZW50Lg0KMi4gV2UgY2Fubm90IGVhc2lseSB1cGdyYWRlIHRoZSB2
+ZXJzaW9ucyB0aGF0IHdlIHJ1biBpbiBwcm9kdWN0aW9uLg0KMy4gV2Ugc3VzcGVjdGVkIHRoYXQg
+dGltZSBzZXR0aW5ncyBvbiB0aGUgaG9zdCBjb3VsZCBiZSB0aGUgaXNzdWUsIHNvIHdlIG1hZGUg
+c3VyZSB0aW1lc3luY2QgaXMgY29uZmlndXJlZCBwcm9wZXJseS4gIFdlIG9ic2VydmUgdGhpcyBp
+c3N1ZSBsZXNzIGZyZXF1ZW50bHksIGJ1dCBpdCBpcyBub3QgZnVsbHkgZ29uZS4gDQo0LiBUaGUg
+ZHluYW1pYyBrZXJuZWwgbG9nIGRvZXNuJ3QgcHJvdmlkZSBtdWNoIGluZm9ybWF0aW9uIG90aGVy
+IHRoYW4gc2VuZC9yZWNlaXZlIGhhbmRzaGFrZSByZXF1ZXN0LCBrZWVwYWxpdmUgcGFja2V0cyBh
+bmQgcmUtY3JlYXRpbmcga2V5cGFpcnMuDQogDQpXaXJlR3VhcmQgbW9kdWxlIHZlcnNpb24NCi0t
+LQ0KZmlsZW5hbWU6IC9saWIvbW9kdWxlcy80LjkuMC0xMS1hbWQ2NC91cGRhdGVzL2RrbXMvd2ly
+ZWd1YXJkLmtvDQppbnRyZWU6IFkNCmFsaWFzOiBuZXQtcGYtMTYtcHJvdG8tMTYtZmFtaWx5LXdp
+cmVndWFyZA0KYWxpYXM6IHJ0bmwtbGluay13aXJlZ3VhcmQNCnZlcnNpb246IDEuMC4yMDIxMDEy
+NA0KYXV0aG9yOiBKYXNvbiBBLiBEb25lbmZlbGQgPEphc29uQHp4MmM0LmNvbT4NCmRlc2NyaXB0
+aW9uOiBXaXJlR3VhcmQgc2VjdXJlIG5ldHdvcmsgdHVubmVsDQpsaWNlbnNlOiBHUEwgdjINCnNy
+Y3ZlcnNpb246IDUwN0JFMjNBNzM2OEYwMTZBRUJBRjk0DQpkZXBlbmRzOiB1ZHBfdHVubmVsLGlw
+Nl91ZHBfdHVubmVsDQpyZXRwb2xpbmU6IFkNCnZlcm1hZ2ljOiA0LjkuMC0xMS1hbWQ2NCBTTVAg
+bW9kX3VubG9hZCBtb2R2ZXJzaW9ucw0KLS0tDQoNCioqIElzc3VlIHdhcyBhbHNvIG9ic2VydmVk
+IG9uIChub3cgZGVjb21pc3Npb25lZCkgaG9zdCBEZWJpYW4gNC45LjAtMTQtYW1kNjQgKDQuOS4y
+NDYtMikgd2l0aCBXaXJlZ3VhcmQgbW9kdWxlICgxLjAuMjAyMTAxMjQpDQoNCkFueSBpbnNpZ2h0
+IHdvdWxkIGJlIGFwcHJlY2lhdGVkLiAgSGFwcHkgdG8gc2hhcmUgbW9yZSBkZWJ1ZyBpbmZvcm1h
+dGlvbiBhcyByZXF1ZXN0ZWQgLyBvZmZsaW5lLg0KDQpUaGFua3MsDQpSYW91bA0KUFMuIFBsZWFz
+ZSByZXBseSB0byBtZSAvIHJlcGx5IGFsbCwgYXMgSSBhbSBjdXJyZW50bHkgbm90IHN1YnNjcmli
+ZWQgdG8gdGhlIG1haWxpbmcgbGlzdC4NCg0K
 
-Best regards,=20
+------D70984263B16611E9258E728384C218A
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
 
---=20
-Jean Cardona
+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
+p8Qd7A/XqIsTHrPRFotA3A9TbwE97OhktZfbg7yoqMCEOFheAxQr5sow7wCy6xM5
+GZJHKiEA5XLNwjFiDsxWKv93xGOMmMJveNe1tszpfR8zppEFKv7RUtb07Jz+TUxq
+UuGFdmK7uWjmUmP8wSGRkl0Z2NyA0RnjSRZXAg4ZRIWrKckv+sZtawqh9vf/a2E1
+FSaUlAJpJV1p971ea4LZkAwG+UMFIknrNtAgWmMQ4zgh1X8WK0GKRnryZ+ik0Loe
+fyQndZiUSS1WxFQzkZ1i+dVf3lupFZiclFPBgOkJFxW0G4ApMqHQrxOnAgMBAAGj
+ggKWMIICkjAOBgNVHQ8BAf8EBAMCAQYwEgYDVR0TAQH/BAgwBgEB/wIBADAdBgNV
+HQ4EFgQU8MejMpG168q1WHcVp06+Gl1hQyUwHwYDVR0jBBgwFoAUF6DNweRBtjpb
+O8tFnb0cwpj6hlgwgf8GA1UdHwSB9zCB9DBHoEWgQ4ZBaHR0cDovL2NybC5zd2lz
+c3NpZ24ubmV0LzE3QTBDREMxRTQ0MUI2M0E1QjNCQ0I0NTlEQkQxQ0MyOThGQTg2
+NTgwgaiggaWggaKGgZ9sZGFwOi8vZGlyZWN0b3J5LnN3aXNzc2lnbi5uZXQvQ049
+MTdBMENEQzFFNDQxQjYzQTVCM0JDQjQ1OURCRDFDQzI5OEZBODY1OCUyQ089U3dp
+c3NTaWduJTJDQz1DSD9jZXJ0aWZpY2F0ZVJldm9jYXRpb25MaXN0P2Jhc2U/b2Jq
+ZWN0Q2xhc3M9Y1JMRGlzdHJpYnV0aW9uUG9pbnQwYQYDVR0gBFowWDBWBglghXQB
+WQEDAQYwSTBHBggrBgEFBQcCARY7aHR0cDovL3JlcG9zaXRvcnkuc3dpc3NzaWdu
+LmNvbS9Td2lzc1NpZ24tU2lsdmVyLUNQLUNQUy5wZGYwgcYGCCsGAQUFBwEBBIG5
+MIG2MGQGCCsGAQUFBzAChlhodHRwOi8vc3dpc3NzaWduLm5ldC9jZ2ktYmluL2F1
+dGhvcml0eS9kb3dubG9hZC8xN0EwQ0RDMUU0NDFCNjNBNUIzQkNCNDU5REJEMUND
+Mjk4RkE4NjU4ME4GCCsGAQUFBzABhkJodHRwOi8vb2NzcC5zd2lzc3NpZ24ubmV0
+LzE3QTBDREMxRTQ0MUI2M0E1QjNCQ0I0NTlEQkQxQ0MyOThGQTg2NTgwDQYJKoZI
+hvcNAQELBQADggIBAMN5p1e3e61RaPVEjEGVKAF8dNY7arxt76fXTTmZHWiNygjZ
+0HGxGTWTb4LGHEm4Ue5M+WwKb9il+/77MF4A0pSrxBJRuqqKq2rdGdcrSvcWsmtR
+z3RbKaJz3pf+2E8gIX1pDLBQ5Y1YjIAu5Rcc3WN6qu8F+cNpnuSMcWJcQu468s3g
+Eu+LXOnOUygy7JULGVSiIY36f1CnT7wZe7JrjCk/dz7KI8dpWkGdfWYxb3pxedqp
+ZTrrf9cQ1QtfVBl8zjclJIRQ0K9ANMJfkuJ6kfMvQkcbnzxC+9lfpbxwRY7voDmQ
+9aF4bNfAZ1kZ4QDeXPx46E/du6yRLnKL/OpHb0MovLu5jpS++lDdUJMbTBi2dv/D
+RwpZtM1tVdhqtl/JL8GUNj6+rkA1BiDt4AJMLTRFDkOvovTYkBXl0MCbRECuPI+T
+UbyZaHNpe3VYmbfUBE/f8YJxER17/BMdd2VVY9dScnzdMUeGp5XYrCZxPSPmEjv0
+f5qWhv4r6qDzJg11xhaMMSDnEUeh56lqsKWygR7cPdCh427V8GamHH3XkohNAAcL
+cedz53PkVGVp/DeN8R5vcO6nbLNSRWdZ1gVIsSHplyjZ2fS0pqBnIza8YEcOXCh/
+XZOKMbqNMTYUx3pCnW8gwWwq+BYPatkAlDK7PVWxxcOhDbF5d1Qd4DOCfu7qMIIH
+UTCCBjmgAwIBAgIUFfW61sNzyrx30L16mEqKBJtRV8owDQYJKoZIhvcNAQELBQAw
+VjELMAkGA1UEBhMCQ0gxFTATBgNVBAoTDFN3aXNzU2lnbiBBRzEwMC4GA1UEAxMn
+U3dpc3NTaWduIFBlcnNvbmFsIFNpbHZlciBDQSAyMDE0IC0gRzIyMB4XDTIwMDcz
+MTIwMDUwMVoXDTIxMDczMTIwMDUwMVowgZExCzAJBgNVBAYTAkFUMS0wKwYDVQQK
+EyRSYWRhclNlcnZpY2VzIFNtYXJ0IElULVNlY3VyaXR5IEdtYkgxJzAlBgkqhkiG
+9w0BCQEWGHJhb3VsLmJoYXRpYUByYWRhcmNzLmNvbTEqMCgGA1UEAxMhU2VjdXJl
+IE1haWw6IFNFUFBtYWlsIENlcnRpZmljYXRlMIICIjANBgkqhkiG9w0BAQEFAAOC
+Ag8AMIICCgKCAgEAx0amy3Ub2v6YiIJ3MAt9R0hnXo4bdKEnVxfzA9vuwMWRUPrs
+NnpB9c0pujZosUbTsRbkmOscaWZpI2kNXNrDXfB4g5rQQkUvzUrisaImozvqd1Fs
+rQhMMvQ7PSJVyNqA/x0otAor6rDyCgiYSbSZRsvQhNks6P9m8X12j6oVyDoyeIqT
+FT9qPNFMznA3C42lZUyCFdTVgqcRJd45tWdY20UlAnDf0nRa3rIjxjHjKxC9JkvC
+vNduFvzVSpn5HLUhP+l/BA8To1qLWpeOdmYdW0dNHWAQUtVU7DY940G2EEEcHqQF
+80zF/URlicAIF4M5+O13jTaVdmSK537v7DnmKkrFJVlP3uQ1C6nqhwsG7IjySnML
+2qbtj6/zeHSlqW6HZraOf4Se7tPzlQ53uO22JAnOLuzUJhMFEaQ4HXhjg/W3PyfQ
+XiWj/y+B1Tfn6bQTl7US+ZcHPcBNMzfwnXLUczxHyDmTLgTwgeXzZRfDisIjV3/L
+49heQ3DKolYU6B9ShZsiGmQDkQ2E1i3/3TFpXIGEW3zeAeeT3TYxy6pCJYd+hCaI
+YcAg1gwjzgWMH2IU+Js/fQh0pdrXLmY2KUmcW89KYaClHmbt/mXzH53HTeDrFuvJ
+nsj4t0I71QmRRIhXk9VL52vFADCnK9NWa2hKsE9fle03il4pNit+/dtNXUECAwEA
+AaOCAtkwggLVMCMGA1UdEQQcMBqBGHJhb3VsLmJoYXRpYUByYWRhcmNzLmNvbTAO
+BgNVHQ8BAf8EBAMCBLAwEwYDVR0lBAwwCgYIKwYBBQUHAwQwHQYDVR0OBBYEFEWv
+CBno4Znbc1oBfJnzza4hBnfJMB8GA1UdIwQYMBaAFPDHozKRtevKtVh3FadOvhpd
+YUMlMIH/BgNVHR8EgfcwgfQwR6BFoEOGQWh0dHA6Ly9jcmwuc3dpc3NzaWduLm5l
+dC9GMEM3QTMzMjkxQjVFQkNBQjU1ODc3MTVBNzRFQkUxQTVENjE0MzI1MIGooIGl
+oIGihoGfbGRhcDovL2RpcmVjdG9yeS5zd2lzc3NpZ24ubmV0L0NOPUYwQzdBMzMy
+OTFCNUVCQ0FCNTU4NzcxNUE3NEVCRTFBNUQ2MTQzMjUlMkNPPVN3aXNzU2lnbiUy
+Q0M9Q0g/Y2VydGlmaWNhdGVSZXZvY2F0aW9uTGlzdD9iYXNlP29iamVjdENsYXNz
+PWNSTERpc3RyaWJ1dGlvblBvaW50MGsGA1UdIARkMGIwVgYJYIV0AVkBAwEMMEkw
+RwYIKwYBBQUHAgEWO2h0dHA6Ly9yZXBvc2l0b3J5LnN3aXNzc2lnbi5jb20vU3dp
+c3NTaWduLVNpbHZlci1DUC1DUFMucGRmMAgGBgQAj3oBAzCB2QYIKwYBBQUHAQEE
+gcwwgckwZAYIKwYBBQUHMAKGWGh0dHA6Ly9zd2lzc3NpZ24ubmV0L2NnaS1iaW4v
+YXV0aG9yaXR5L2Rvd25sb2FkL0YwQzdBMzMyOTFCNUVCQ0FCNTU4NzcxNUE3NEVC
+RTFBNUQ2MTQzMjUwYQYIKwYBBQUHMAGGVWh0dHA6Ly9zaWx2ZXItcGVyc29uYWwt
+ZzIub2NzcC5zd2lzc3NpZ24ubmV0L0YwQzdBMzMyOTFCNUVCQ0FCNTU4NzcxNUE3
+NEVCRTFBNUQ2MTQzMjUwDQYJKoZIhvcNAQELBQADggEBAGw0zyt3yz2mXPWQ3f1D
+lTNmHhIb74MxTK5rFiQ9GAQBebjxEzSEWSbo6aJn9Xj0IduuslayqvsZW+u0wbnn
++eB/0xpwd3+afjKqGYigmALIm7+Mb3VxN9v7aT6/8n01yXFvVz4eM4IPWpjcBRQ6
+w2Itd6UxeK+wyFCCp9JUk7AcdD7XkgC2AgrdOojG3fvpP+7iuzcSzL51mSZxUgAE
+LAtX9IqYOUKPwgeTdR6QTwIWbgmhjXRY9++OcS0BfYpWDrxU4SLCzI8FjKePrv9z
+JsEdJg/WyO4NBMI1b6762AYdiEK8Y2VN4+EbsIa/jLDLBcSwO3AfXJc0UjBFAp6k
+dJAxggOfMIIDmwIBATBuMFYxCzAJBgNVBAYTAkNIMRUwEwYDVQQKEwxTd2lzc1Np
+Z24gQUcxMDAuBgNVBAMTJ1N3aXNzU2lnbiBQZXJzb25hbCBTaWx2ZXIgQ0EgMjAx
+NCAtIEcyMgIUFfW61sNzyrx30L16mEqKBJtRV8owCwYJYIZIAWUDBAIDoIIBBDAY
+BgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0yMTA0Mjkx
+MDMwMDVaME8GCSqGSIb3DQEJBDFCBEAFF3RwxNaX/tVPwYjmZw6DvHS/0rc397pa
+uoHpG0rw0wa88BAk3TSeEjsTNIRZkmc+TH1Z0OraN5RZuPy2MroRMHkGCSqGSIb3
+DQEJDzFsMGowCwYJYIZIAWUDBAEqMAsGCWCGSAFlAwQBFjALBglghkgBZQMEAQIw
+CgYIKoZIhvcNAwcwDgYIKoZIhvcNAwICAgCAMA0GCCqGSIb3DQMCAgFAMAcGBSsO
+AwIHMA0GCCqGSIb3DQMCAgEoMA0GCSqGSIb3DQEBAQUABIICAMaxjpwmqi3mvCrC
+66OgLrVUU0h7zx6ggD+7OlAl2nZRtFHYoTlam3J8TXGFW226CmJpZiCjMbfK+KJ3
+WXt2XXmzbGaYXakNOY3MAYlBJHpC2UAZE4r42jNhshE9crWC4cdB6jc+PCrZHq9D
+iI/I9Z4SSThWyXyZOU5+lGnAaa173J6kCDOjQ9QybL5FFx/mCijgkqnzMoTeoesA
+394TRe7u8hgjxDFc+lOMwKrRfCq/lzwdggxMzM/TVe1xzxldBXToMoZ7XmAzdaK7
+bdXB6mffQqTD8b2cM6awV44DD4A92J5D3ODZUKgtaZ/MXxZUsiXPB4s5WyP1YMP2
+gFbKn9FeNjnsBVmiC5Vk+eUketaBkN0nA00NuYTvZ4L9Q4IHM5k4BTuIRzaCCbCJ
+O1RM3G44WpAORj4umtsGcXKqelFvurCIzC0f2dm82j4D7GBwk8v3j5UCULucQAgS
+t1NtQwjgP+5ken+iGxoHz+wLYKcpFhWgXGkQhQtaQ1BK5KM5ddIgBqWyZiYPzgjN
+u5UmWXpwQS6Pg4RY5/Hq6AbHYtpU2CvIy8c0ucoKxdRIhAqFJ6C+Is1tr/J6fjsE
+r+bCdsxZ3bcuNg09i4YTvJMUsA4lKxs/ZM5KXfkmJVM/Fdhefq2ZpMZTAQ3j9Yhf
+Mrxl+w+Prt9iuurAWwq9/34TMoh1
+
+------D70984263B16611E9258E728384C218A--
 
