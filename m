@@ -2,64 +2,41 @@ Return-Path: <SRS0=NC//=J5=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8F32C433B4
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  2 May 2021 11:17:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 56109C433B4
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  2 May 2021 11:45:52 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id AFAC361208
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  2 May 2021 11:17:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org AFAC361208
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	by mail.kernel.org (Postfix) with ESMTPS id 4252661244
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  2 May 2021 11:45:51 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 4252661244
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=romanrm.net
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d0b395a9;
-	Sun, 2 May 2021 11:17:38 +0000 (UTC)
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com
- [2a00:1450:4864:20::236])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 1fc15271
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 021de985;
+	Sun, 2 May 2021 11:43:48 +0000 (UTC)
+Received: from rin.romanrm.net (rin.romanrm.net [51.158.148.128])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 9d12d312
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sat, 1 May 2021 04:20:10 +0000 (UTC)
-Received: by mail-lj1-x236.google.com with SMTP id a36so572679ljq.8
- for <wireguard@lists.zx2c4.com>; Fri, 30 Apr 2021 21:20:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=3UkLN3oDj7LBExFmfftc6VlkS7rnKSiEboqdrM3HZus=;
- b=kkDL4/EHlSdqq2XV/whcKDG8J4N9eCQS5a085mg4igl3ZKPrQZWaedtJx7u3fxKCrJ
- gpJyyYZG2Q/3FTI+vlp4vuwGabyv3s4mELJQNv+FNZnMJjUUJ5dL3GRKqc8jLykDVRuM
- mT/+tMSuKZq4yV4SSviHSS1i8lPScYWprA5X90NONqlY7g4tz3c5LKb+eTFp5GZYWBEN
- dXddU0ZhzMm+qteZQbUr+8V1gZRHcjqS0ORZYuZ8gTWlbRdFMG1RWGkgd2jq2BPUFI0h
- sczRfRtiNq9XqQUM4PmQ10ep+w22IKg2+TztwBfuKypiDnFJrW5n703XCRL/W5uV9UOa
- YRLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=3UkLN3oDj7LBExFmfftc6VlkS7rnKSiEboqdrM3HZus=;
- b=RMM3ROh8JardYb7ozdx5Hckuczu8JYzTnc+RSiH8eOYBVDVGHvwXdg+z5YZ9kUD9uV
- 56qu0nBTzqPNcdV7c7wE9/E7W/qI0516XFe9ireZ3jYcdaVxY0ryVHtMweiMlwQNXYk2
- BbKCEArLssF8eKIr5o7e4+yVXYl4Cjruh8DOOa47U4aCyljgA6Un8sNax1eAeDv+4LL2
- jLUjs2GA3AlKkAm7BEq5Ov4WMjgRmzq4WuelS9KAlTiy736A1K6Rjea/ql3yEHyWf7ED
- MIIhsvb8NlK+kIaXO702WF43rtUTtRS5Jeyk3ddIhBhXtG3ORn5OSt4OCRBjHaR/TS3J
- DgYQ==
-X-Gm-Message-State: AOAM533XoPFdnY1I/gL4R//kn3GCexWUZzpgPRR1blmXjFhUxhFUGD8m
- XnVehXteVOq+rqTW561kUC7HQs7fUy8wM/EzYhKc7vGIQIY=
-X-Google-Smtp-Source: ABdhPJwlbPVLkaxNeMNf+qc1efc7D+siBmvQ6WamsTvcNUj2iLfs1XiKwMYEDiIOKqKm7GaaY56VyFbZWtboGZrmTro=
-X-Received: by 2002:a2e:8e71:: with SMTP id t17mr2540286ljk.54.1619842809593; 
- Fri, 30 Apr 2021 21:20:09 -0700 (PDT)
+ for <wireguard@lists.zx2c4.com>; Sun, 2 May 2021 11:43:46 +0000 (UTC)
+Received: from natsu (natsu2.home.romanrm.net [IPv6:fd39::e99e:8f1b:cfc9:ccb8])
+ by rin.romanrm.net (Postfix) with SMTP id B0D65627;
+ Sun,  2 May 2021 11:43:45 +0000 (UTC)
+Date: Sun, 2 May 2021 16:43:44 +0500
+From: Roman Mamedov <rm@romanrm.net>
+To: Nico Schottelius <nico.schottelius@ungleich.ch>
+Cc: wireguard@lists.zx2c4.com
+Subject: Re: Multiple Keys per Peer
+Message-ID: <20210502164344.039fe960@natsu>
+In-Reply-To: <87wnshs8jf.fsf@ungleich.ch>
+References: <87wnshs8jf.fsf@ungleich.ch>
 MIME-Version: 1.0
-From: Vivekvardhan Jilkara <jilkara.vivekvardhan35@gmail.com>
-Date: Sat, 1 May 2021 09:49:58 +0530
-Message-ID: <CAKTTC6mqQGt8_X-TEhmSZu9QbEJGqHRXSPd7RjNi3ixqfudqpg@mail.gmail.com>
-Subject: Why there are no API exposed to connect or disconnect the network
- interface
-To: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
-X-Mailman-Approved-At: Sun, 02 May 2021 11:17:37 +0000
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -74,38 +51,54 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi team,
+On Sun, 02 May 2021 13:02:28 +0200
+Nico Schottelius <nico.schottelius@ungleich.ch> wrote:
 
-I have been going through the wireguard-windows module to understand
-its usage for one of my requirements.
+> when running a lot of VPN connections using wireguard, there are some
+> questions we see quite often from users, two of which I'd like to
+> discuss here:
+> 
+> Multiple keys per Peer
+> ----------------------
+> 
+> Users often ask for sharing their connection with multiple
+> devices. The obvious solution is for users to setup their own VPN
+> endpoint with the first key and then reshare themselves. However, this
+> is not feasible in many end user situations.
 
-My requirement is as follows.
-1. Create the virtual network interface/ network tunnel. This I can
-achieve by calling, CreateTun
-2. Eventually, based on some trigger points, I want to open this
-created tunnel and then do the
-connection/disconnection(OpenSession/CloseSession).
+The prime and the most straightforward solution is to give each user multiple
+keys, and let them connect from each endpoint as an independent Peer.
 
-Following are my queries.
+The rest of what you propose appears to be a set of bizarre hacks because
+you don't want to do the above, because "(reasons)". Maybe start with
+detailing those reasons first, or reconsidering if they are *really* that
+important and unsurmountable :)
 
-1. Like the CreatTun method, I expected a method called
-GetTun(string), which would simply call the OpenAdapter method(in the
-wintun package) and return the instance of the device.
-Is there any reason for not providing this?
+> Conceptually I see it problematic to assign multiple keys per Peer as
+> the routing from outside ("where should this packet go to"?) might
+> become ambiguous. One counter option would be to allow a peer to signal
+> that it uses a certain part of the AllowedIPs. In comparison to layer 2
+> networks, I see two approaches: 1) a bit similar to ARP/NDP, client
+> addresses are learned 2) similar to dhcp-pd, clients "requesting" (in
+> this context more: announcing) that they use a certain sub-range.
+> 
+> Protocol wise I'd imagine this to be rather simple:
+> 
+> side a: I want to use 2001:db8:a:b::/64
+> side b:
+>      - checking your allowed IPs covers that prefix -> no ignore
+>      - checking whether the amount of sub routes is not exceeded
+>      - and/or checking whether the sub-prefix length is of minimum size
+>      (especially import for IPv6)
+>      - yes: adjust routing table, insert more specific route
+>      (with/without confirm probably should be modeld in tamarin)
+> 
+> What are your thoughts about an extension of wireguard with this?
+> 
+> If there are other suggestions to allow users to decide themselves how
+> to split a range, let's say a /48 IPv6 network, without setting up their
+> own redistribution node, I'd also be interested in hearing that.
 
-2. In the device interface(in tun package), the APIs that are provided
-are operating on the adapter against the tunnel.
-I thought, if this interface would have had APIs, something called
-StartSession and EndSession, using those APIs I could have connected
-or disconnected the connection for that tunnel.
-Is there any reason for not providing these?
-
-Also, I am doubting whether the expectations that I set are incorrect. If YES,
-I request you to help me to understand the reason AND
-please guide me if there is any way to achieve the above requirements
-without these APIs being expected.
-
-Thanks in advance.
-
-Regards,
-Vivekvardhan.
+-- 
+With respect,
+Roman
