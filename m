@@ -7,40 +7,55 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F8BEC433B4
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  3 May 2021 08:01:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F708C433B4
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  3 May 2021 13:04:51 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 04339610C9
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  3 May 2021 08:01:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 04339610C9
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id DF5F661183
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  3 May 2021 13:04:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org DF5F661183
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=manojav.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bc207632;
-	Mon, 3 May 2021 08:01:13 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [104.131.123.232])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f828996d
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 56d74132;
+	Mon, 3 May 2021 13:02:31 +0000 (UTC)
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com
+ [2a00:1450:4864:20::130])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 3504d8a7
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 3 May 2021 08:01:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1620028867;
- h=from:from:reply-to:subject:subject:date:date:to:to:cc:
- mime-version:mime-version:content-type:content-type;
- bh=iX9KDsxvwBpT/r2Fyp00TUCi9HOZugm4g7BK8+xxek0=;
- b=cRv71IbB3sI3nr174U6vfuVy40sE8jd5f6psdAbVnxsFU/JKi+kGPP4MU7UO40DNVQENib
- gRnkl2918/WAeiSIBDdQw7QXZM343vTTfQ2/OgwzLg1zXfeD7LH4MEuUWV+n6wjkk/SFTD
- Ier4/fdNTbhxUZK1aiWUnE4Aw/tDoOg=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 55e46b7e
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 3 May 2021 08:01:07 +0000 (UTC)
-Date: Mon, 03 May 2021 10:01:04 +0200
-To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: [ANNOUNCE] wireguard-freebsd snapshot v0.0.20210502 is available
+ for <wireguard@lists.zx2c4.com>; Sun, 2 May 2021 21:44:30 +0000 (UTC)
+Received: by mail-lf1-x130.google.com with SMTP id x19so5304793lfa.2
+ for <wireguard@lists.zx2c4.com>; Sun, 02 May 2021 14:44:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manojav.com; s=google;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=c1+zQZbFBZbySLRZmQbdyvoK3tCSxwar5EqHbYvXtQQ=;
+ b=aUDRdyHZKDAr4bPNWm1TLYMexMdStMYRDaL11X7nS7GCgphh7D3NM4FaXkOs2rzV0n
+ 7apAEq5vynjFgJt3+c7iTS8XUcIM8/JauMB76smgaIsVess8qnVVUHLW2HNk5GT61Nxv
+ 5l1+f36n57aiUFiEhX6RNVMu/eDwLryPbsqaM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=c1+zQZbFBZbySLRZmQbdyvoK3tCSxwar5EqHbYvXtQQ=;
+ b=gSMzNhzaogNJOyTvt3WVO1UksZqA7DtyZ6NR+zni1hSkkA7Cdb34fRoBz5JQrA9nye
+ CJq9e+2V1Yo9Z/LdIQCZ9X7f9Fz0SLswA13S8+xbnvdxDIauJsWjEAJMIUeghjqOJDkR
+ A8AcQp3vPvfBcu8CxzmrL2Dpg+2qyl17JRhxxxyiJYbd5KwD675NmHejx3C5cWI7qEKe
+ XX1pXT/cwLBMJjU238Qsfz0M/iTAyceHGdzOJmwIh3Lsy5rWZBebVS2gPpIGVPeYDgEh
+ sRK/NmIDqcI6lCFgXcU/ujkBBVmoiSJGuxGNnS33gNq0kW+jSaqaIx5/LG0t74LPjI94
+ /31A==
+X-Gm-Message-State: AOAM530Hd3B2/xhK5wciz6Iuur08H/6B8vpYlc3JTmhs4hZ//PzXgqB6
+ e2THy/ZVCTQ8ugkkpB47lepv2aNoaUXI9MuOivDuViXwbmsyqw==
+X-Google-Smtp-Source: ABdhPJzUU+DBGbkeX+gw5wOYwpk45Sil1BZPOZjAWvvcgs8dsyHoqvufBy6ZWS9kPyLh0YGUuXOj81tscYA1r41h9WI=
+X-Received: by 2002:a19:8c09:: with SMTP id o9mr11060710lfd.560.1619991869624; 
+ Sun, 02 May 2021 14:44:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+From: Manojav Sridhar <manojav@manojav.com>
+Date: Sun, 2 May 2021 17:44:04 -0400
+Message-ID: <CAGaAVNVPhaXnRyS8TaNddNEGJqGBcW=5cWyb1c=vV0yeOovwqQ@mail.gmail.com>
+Subject: kp's and mem corruption?
+To: wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
+X-Mailman-Approved-At: Mon, 03 May 2021 13:02:30 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -54,66 +69,51 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
-Message-ID: <8eea14e403acaa00@lists.zx2c4.com>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi Jason,
 
-Hi,
+Great work on the Freebsd kmod so far!
 
-An experimental snapshot, v0.0.20210502, of WireGuard for FreeBSD has been
-been tagged in the git repository.
+Couple of issues to report. I am running the wireguard-kmod-0.0.20210428
+snapshot on my pfsense router. I am working with the pfSense-pkg-Wireguard
+effort in building the WG package. Admittedly I am mostly testing and
+providing some UI code. However I have come across 2 errors. First one  is
+a KP that happened sometime today.
 
-At this time this code is new, unvetted, possibly buggy, and should be
-considered "experimental". It might contain security issues. We gladly
-welcome your testing and bug reports, but do keep in mind that this code
-is new, so some caution should be exercised at the moment for using it
-in mission critical environments.
+FreeBSD pfsense 12.2-STABLE FreeBSD 12.2-STABLE
+1b709158e581(RELENG_2_5_0) pfSense  amd64
 
-== Changes ==
+Here is the stack trace from the KP https://pastebin.com/4bjdzYas
 
-  * if_wg: defragment mbufs early on
-  * if_wg: ensure packet is not shared before writing
-  
-  These should improve performance and make sure everything works with functions
-  like sendfile(2).
-  
-  * if_wg: return to m temporary variable style
-  * if_wg: pad packets properly
-  * if_wg: don't memcpy data for no reason
-  * if_wg: don't double increment error counter
-  * wg_cookie: zero before init in selftest for witness
-  * wg_noise: cleanup counter algorithm
-  
-  Various small correctness fixes.
-
-This snapshot contains commits from: Jason A. Donenfeld.
-
-The source repository is available at the usual location:
-  git clone https://git.zx2c4.com/wireguard-freebsd
-
-This snapshot is available in compressed tarball form:
-  https://git.zx2c4.com/wireguard-freebsd/snapshot/wireguard-freebsd-0.0.20210502.tar.xz
-  SHA2-256: cd59a0a711308083e40ac5e7e26abc63c8b1f4615a9d66f73f2398388b8e7b9b
-
-Thank you,
-Jason Donenfeld
+db:0:kdb.enter.default> bt
+Tracing pid 0 tid 100402 td 0xfffff800c67b6740
+kdb_enter() at kdb_enter+0x37/frame 0xfffffe004d02c4b0
+vpanic() at vpanic+0x197/frame 0xfffffe004d02c500
+panic() at panic+0x43/frame 0xfffffe004d02c560
+trap_fatal() at trap_fatal+0x391/frame 0xfffffe004d02c5c0
+trap() at trap+0x67/frame 0xfffffe004d02c6d0
+calltrap() at calltrap+0x8/frame 0xfffffe004d02c6d0
+--- trap 0x9, rip = 0xffffffff840fd580, rsp = 0xfffffe004d02c7a0, rbp =
+0xfffffe004d02c7e0 ---
+noise_remote_index_insert() at noise_remote_index_insert+0xb0/frame
+0xfffffe004d02c7e0
+noise_consume_initiation() at noise_consume_initiation+0x6bb/frame
+0xfffffe004d02ca10
+wg_softc_handshake_receive() at wg_softc_handshake_receive+0x27a/frame
+0xfffffe004d02cb20
+gtaskqueue_run_locked() at gtaskqueue_run_locked+0x121/frame
+0xfffffe004d02cb80
+gtaskqueue_thread_loop() at gtaskqueue_thread_loop+0xb6/frame
+0xfffffe004d02cbb0
+fork_exit() at fork_exit+0x7e/frame 0xfffffe004d02cbf0
+fork_trampoline() at fork_trampoline+0xe/frame 0xfffffe004d02cbf0
 
 
------BEGIN PGP SIGNATURE-----
+Second issue is that I am seeing memory silent corruption where the pfSense
+UI stops responding and serves up invalid files. Reboot fixes it. I have
+NOT noticed this issue with the 0415 snapshot; this happened both in the
+0424 and 0428 snapshots. While I cannot definitively say its wg related,
+that is the only bit changing on the boxes.
 
-iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAmCPrbAQHGphc29uQHp4
-MmM0LmNvbQAKCRBJ/HASpd4DroPhEADWbUA86iVDtnAdXgVLuaZfc+5gXYJQv8GV
-EzOECSES5iG4PAVXqZHjeTcY+mj5HxTRmNUz00ci1eVeZISFojr41084dm8/pv6y
-Er5LFxHXLDJRIT6o2ODadE1pxKE7ada/PgicLlUgX9gYg5VPGqoYAKrnrEBBOnmF
-/9PRSsHYTGdw7kPXBfOZDafjJfrnYe/NXg7QCjwl/Fi1T3+omtbCSsxIs11XGuzf
-3EjXoEVgGRRRtY0ibvO13tqEb1Q8KUVe4SHFIe2Hbbc/X9ZI6RKADzIqaqTMsxHa
-sV2jTh4XpOZcy9tf2yi0M/r6pwO+GJ/DqqKqWeWLapHInQS/TIPmj0P0fpQ8aNtz
-nr0Z++DQXJxnVuiT226mpcAI8z6YMw5JNO/mGUhnNney7lz9vQA8i6MGBwZlC4po
-trP/QxtBgwT/zPy6lb7Bhgtl3M5OnuHzFB9nsSKfsfilsWqAmX4lbdJ6DfJ0hLtZ
-1WNH7uWt623HpL3KmFgA9ACdpZGh5zBqF8E7pHl7F+XVWT4BSIrUdEb4vEPVi4PV
-VeQUPmob5lbhghvEOi8F+uzflflOMdO5Z0W0iVqIST1AZywnrKqBRId5l6+sGXCf
-ZxuMLlv/KM+3nF7Xol9iEuksg4NnPr+QVxrn1chDcUkDb8nZDtVxDLd627ojQBZD
-miKJ6+4Z/g==
-=rFq4
------END PGP SIGNATURE-----
+Thanks
+Manoj
