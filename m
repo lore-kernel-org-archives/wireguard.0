@@ -7,55 +7,53 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F708C433B4
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  3 May 2021 13:04:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 62D1EC433B4
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  3 May 2021 13:09:27 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id DF5F661183
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  3 May 2021 13:04:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org DF5F661183
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=manojav.com
+	by mail.kernel.org (Postfix) with ESMTPS id 38425611AC
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  3 May 2021 13:09:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 38425611AC
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 56d74132;
-	Mon, 3 May 2021 13:02:31 +0000 (UTC)
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com
- [2a00:1450:4864:20::130])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 3504d8a7
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 68228a46;
+	Mon, 3 May 2021 13:07:33 +0000 (UTC)
+Received: from mail.zx2c4.com (mail.zx2c4.com [104.131.123.232])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 0ce3ea3c
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sun, 2 May 2021 21:44:30 +0000 (UTC)
-Received: by mail-lf1-x130.google.com with SMTP id x19so5304793lfa.2
- for <wireguard@lists.zx2c4.com>; Sun, 02 May 2021 14:44:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manojav.com; s=google;
- h=mime-version:from:date:message-id:subject:to;
- bh=c1+zQZbFBZbySLRZmQbdyvoK3tCSxwar5EqHbYvXtQQ=;
- b=aUDRdyHZKDAr4bPNWm1TLYMexMdStMYRDaL11X7nS7GCgphh7D3NM4FaXkOs2rzV0n
- 7apAEq5vynjFgJt3+c7iTS8XUcIM8/JauMB76smgaIsVess8qnVVUHLW2HNk5GT61Nxv
- 5l1+f36n57aiUFiEhX6RNVMu/eDwLryPbsqaM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=c1+zQZbFBZbySLRZmQbdyvoK3tCSxwar5EqHbYvXtQQ=;
- b=gSMzNhzaogNJOyTvt3WVO1UksZqA7DtyZ6NR+zni1hSkkA7Cdb34fRoBz5JQrA9nye
- CJq9e+2V1Yo9Z/LdIQCZ9X7f9Fz0SLswA13S8+xbnvdxDIauJsWjEAJMIUeghjqOJDkR
- A8AcQp3vPvfBcu8CxzmrL2Dpg+2qyl17JRhxxxyiJYbd5KwD675NmHejx3C5cWI7qEKe
- XX1pXT/cwLBMJjU238Qsfz0M/iTAyceHGdzOJmwIh3Lsy5rWZBebVS2gPpIGVPeYDgEh
- sRK/NmIDqcI6lCFgXcU/ujkBBVmoiSJGuxGNnS33gNq0kW+jSaqaIx5/LG0t74LPjI94
- /31A==
-X-Gm-Message-State: AOAM530Hd3B2/xhK5wciz6Iuur08H/6B8vpYlc3JTmhs4hZ//PzXgqB6
- e2THy/ZVCTQ8ugkkpB47lepv2aNoaUXI9MuOivDuViXwbmsyqw==
-X-Google-Smtp-Source: ABdhPJzUU+DBGbkeX+gw5wOYwpk45Sil1BZPOZjAWvvcgs8dsyHoqvufBy6ZWS9kPyLh0YGUuXOj81tscYA1r41h9WI=
-X-Received: by 2002:a19:8c09:: with SMTP id o9mr11060710lfd.560.1619991869624; 
- Sun, 02 May 2021 14:44:29 -0700 (PDT)
+ for <wireguard@lists.zx2c4.com>; Mon, 3 May 2021 13:07:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1620047247;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=E+IMRw/x99/IATtumsgNOast84dqEuP8PvWa9xhPsEY=;
+ b=bJc4KeG39vU7S8CkjFGX7sFHF22bnql+qG06LLZg/HUpeC++P1DETm8u65gpHEJHlxLTkX
+ 0HAJJac6vWXqPBv5f8NyCdJLP+DqkJ5MOsI1U/ZooyGmZYraTO+aC6BaXkg4YrZwGa8I/k
+ hDdr9dUjpYfmIz66AssaO13j7TBJqpE=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 3417b77e
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Mon, 3 May 2021 13:07:26 +0000 (UTC)
+Received: by mail-yb1-f173.google.com with SMTP id p126so7430872yba.1
+ for <wireguard@lists.zx2c4.com>; Mon, 03 May 2021 06:07:26 -0700 (PDT)
+X-Gm-Message-State: AOAM531JhdQYtaOO6Jx78gNK+DP3WxIeY8dpbBM84Ylc+pXzkWFPLwhz
+ eLgUtAtX5PRtoxanHmeghnvfk/uTURXy47Ka6os=
+X-Google-Smtp-Source: ABdhPJxYndVWl00WJ/V8w/NSnU8KHS7e3GTdS/I/BtlBw+dMsrrfb+gpUcDS8e6yO/y/O3XKs7/X/0lp63BDdTOt2yk=
+X-Received: by 2002:a25:abaa:: with SMTP id v39mr28818869ybi.20.1620047246452; 
+ Mon, 03 May 2021 06:07:26 -0700 (PDT)
 MIME-Version: 1.0
-From: Manojav Sridhar <manojav@manojav.com>
-Date: Sun, 2 May 2021 17:44:04 -0400
-Message-ID: <CAGaAVNVPhaXnRyS8TaNddNEGJqGBcW=5cWyb1c=vV0yeOovwqQ@mail.gmail.com>
-Subject: kp's and mem corruption?
-To: wireguard@lists.zx2c4.com
+References: <CAGaAVNVPhaXnRyS8TaNddNEGJqGBcW=5cWyb1c=vV0yeOovwqQ@mail.gmail.com>
+In-Reply-To: <CAGaAVNVPhaXnRyS8TaNddNEGJqGBcW=5cWyb1c=vV0yeOovwqQ@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Mon, 3 May 2021 15:07:15 +0200
+X-Gmail-Original-Message-ID: <CAHmME9o+aSX5f_KZ9UKWNdKUwpjnMU3iKn1e8bBdTvsDCqfceg@mail.gmail.com>
+Message-ID: <CAHmME9o+aSX5f_KZ9UKWNdKUwpjnMU3iKn1e8bBdTvsDCqfceg@mail.gmail.com>
+Subject: Re: kp's and mem corruption?
+To: Manojav Sridhar <manojav@manojav.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
-X-Mailman-Approved-At: Mon, 03 May 2021 13:02:30 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -70,50 +68,26 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Jason,
+Hi Manojav,
 
-Great work on the Freebsd kmod so far!
+On Mon, May 3, 2021 at 3:05 PM Manojav Sridhar <manojav@manojav.com> wrote:
+> --- trap 0x9, rip = 0xffffffff840fd580, rsp = 0xfffffe004d02c7a0, rbp =
+> 0xfffffe004d02c7e0 ---
+> noise_remote_index_insert() at noise_remote_index_insert+0xb0/frame
+> 0xfffffe004d02c7e0
+> noise_consume_initiation() at noise_consume_initiation+0x6bb/frame
+> 0xfffffe004d02ca10
+> wg_softc_handshake_receive() at wg_softc_handshake_receive+0x27a/frame
+> 0xfffffe004d02cb20
 
-Couple of issues to report. I am running the wireguard-kmod-0.0.20210428
-snapshot on my pfsense router. I am working with the pfSense-pkg-Wireguard
-effort in building the WG package. Admittedly I am mostly testing and
-providing some UI code. However I have come across 2 errors. First one  is
-a KP that happened sometime today.
+Do you know how to reproduce this? Do you have the symbol file
+anywhere? Otherwise, do you think you could send me (off list) your
+if_wg.ko file that produced this stack trace? Then I can put it into
+the disassembler.
 
-FreeBSD pfsense 12.2-STABLE FreeBSD 12.2-STABLE
-1b709158e581(RELENG_2_5_0) pfSense  amd64
+> Second issue is that I am seeing memory silent corruption where the pfSense
+> UI stops responding and serves up invalid files.
 
-Here is the stack trace from the KP https://pastebin.com/4bjdzYas
+Fixed in https://lists.zx2c4.com/pipermail/wireguard/2021-May/006694.html .
 
-db:0:kdb.enter.default> bt
-Tracing pid 0 tid 100402 td 0xfffff800c67b6740
-kdb_enter() at kdb_enter+0x37/frame 0xfffffe004d02c4b0
-vpanic() at vpanic+0x197/frame 0xfffffe004d02c500
-panic() at panic+0x43/frame 0xfffffe004d02c560
-trap_fatal() at trap_fatal+0x391/frame 0xfffffe004d02c5c0
-trap() at trap+0x67/frame 0xfffffe004d02c6d0
-calltrap() at calltrap+0x8/frame 0xfffffe004d02c6d0
---- trap 0x9, rip = 0xffffffff840fd580, rsp = 0xfffffe004d02c7a0, rbp =
-0xfffffe004d02c7e0 ---
-noise_remote_index_insert() at noise_remote_index_insert+0xb0/frame
-0xfffffe004d02c7e0
-noise_consume_initiation() at noise_consume_initiation+0x6bb/frame
-0xfffffe004d02ca10
-wg_softc_handshake_receive() at wg_softc_handshake_receive+0x27a/frame
-0xfffffe004d02cb20
-gtaskqueue_run_locked() at gtaskqueue_run_locked+0x121/frame
-0xfffffe004d02cb80
-gtaskqueue_thread_loop() at gtaskqueue_thread_loop+0xb6/frame
-0xfffffe004d02cbb0
-fork_exit() at fork_exit+0x7e/frame 0xfffffe004d02cbf0
-fork_trampoline() at fork_trampoline+0xe/frame 0xfffffe004d02cbf0
-
-
-Second issue is that I am seeing memory silent corruption where the pfSense
-UI stops responding and serves up invalid files. Reboot fixes it. I have
-NOT noticed this issue with the 0415 snapshot; this happened both in the
-0424 and 0428 snapshots. While I cannot definitively say its wg related,
-that is the only bit changing on the boxes.
-
-Thanks
-Manoj
+Jason
