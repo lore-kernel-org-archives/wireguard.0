@@ -7,48 +7,42 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A2FD0C433ED
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  3 May 2021 15:39:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E2176C43460
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  3 May 2021 15:39:53 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 8E54C61159
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  3 May 2021 15:39:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 8E54C61159
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=manojav.com
+	by mail.kernel.org (Postfix) with ESMTPS id B221D61159
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  3 May 2021 15:39:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org B221D61159
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 315282a1;
-	Mon, 3 May 2021 15:35:13 +0000 (UTC)
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com
- [2a00:1450:4864:20::134])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id e10f02c3
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 92f6711d;
+	Mon, 3 May 2021 15:35:17 +0000 (UTC)
+Received: from mail.zx2c4.com (mail.zx2c4.com [104.131.123.232])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 44c98667
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 3 May 2021 15:35:08 +0000 (UTC)
-Received: by mail-lf1-x134.google.com with SMTP id 12so8628574lfq.13
- for <wireguard@lists.zx2c4.com>; Mon, 03 May 2021 08:35:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manojav.com; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=wyT7xQsis1dK9kqn2v5iUTeVEaV9akGC9QDrGmjYml8=;
- b=jyrEZ8ePARfjZyPAwgCG/Vp3qupRPIcKwoVaucJXv+SboM5PWNIJ7Cq23HXhKj6elS
- 1ctWKzBoszJEXnGw0ei3RvlVV8DBL3NGV+/Ua7x1oqVf+rRIA5liIG/sBc5nCv13g6KD
- u1HQi77aP6yO91+vtS3yBnaGIr5+zoDpNquvM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=wyT7xQsis1dK9kqn2v5iUTeVEaV9akGC9QDrGmjYml8=;
- b=s22NHbqqN1by8CekXjaH/sOoYLDi9RDQUX8w3YBMzpXrMiTudml9jqMEB77RqS5ex6
- mXLCVYn4d/LebTtBmvhG2v4YSiGFKb6Kwuu1u46qDV+fZ4fO8lfn+I9k0E3979iTsYbh
- MO9q/QabKDPauebDUBRr5SxjXC/6sHVgA/SmJ5eN7cUyy+Tw6XZjWd7shgmB9FSDmo47
- wO6QAXVTaAi4G4OQWampvIoY7UP8mm774rK/xOsptc7IJFFrr76t6PKE7qqOn+Gd0NO8
- OLZDcdYeKAgfMnBg9XN3hdY35lpK07gSYwXRRY1/YvQHEgQyg0T3uKCMF89nplrFOKrm
- XDrg==
-X-Gm-Message-State: AOAM531lpRF3icMS/80Iagstb3+PB6GnUrkiB7w6Tt8iC/8ptflrW7AT
- Ss2rqodONYXy0tYPMfvJAAGymas0JKKPmWxFXKFkHg==
-X-Google-Smtp-Source: ABdhPJw8/lxbRh2y4z5RgI0TmJxc1eVo8jTnae+bt4LTikK7pGWUFdzjbD6UTNuca7dOpfLEgAd08+3UVAIqHgICfc8=
-X-Received: by 2002:a19:7119:: with SMTP id m25mr13304063lfc.511.1620056107859; 
- Mon, 03 May 2021 08:35:07 -0700 (PDT)
+ for <wireguard@lists.zx2c4.com>; Mon, 3 May 2021 15:35:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1620056113;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=si0b55cviO9QJLZqlim4x/t6N1HRaglGig5IDC0gGfY=;
+ b=OBEO7EPpswBfi+sxZrEjnVwOWfaBsbNPfxB1Lq1UIf6wbkB8zbKurjWjz0pVPyIfPmA2C+
+ mF1vAciouwP5wXfzvYzEbH1AngvFTmo7/tLiEKm0PswZdJ9W6LpKmYrL3o+61kAG8p0yR4
+ GCcWSWkMrhxS0x1cLjfhFt0+DzjfcP4=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id b94d6143
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Mon, 3 May 2021 15:35:13 +0000 (UTC)
+Received: by mail-yb1-f177.google.com with SMTP id 15so8109480ybc.0
+ for <wireguard@lists.zx2c4.com>; Mon, 03 May 2021 08:35:12 -0700 (PDT)
+X-Gm-Message-State: AOAM532sMoHq2iIOt5AX9qggHKCYuVfI4ApPN5vQX9FIIAikEdLfqMyJ
+ QgUBPJpRNb9p+LvAGgWWCqjBiGpTnCCTOMkcM5g=
+X-Google-Smtp-Source: ABdhPJxtyTUywmDpa4cNPeMbDl9WtGHLG5WXsgFPeBL8dD8a/jKiq6bkdiEfAs0/jiR97OGOga0x4uTAu+XQDNNfrHM=
+X-Received: by 2002:a25:2c47:: with SMTP id s68mr18214403ybs.123.1620056112649; 
+ Mon, 03 May 2021 08:35:12 -0700 (PDT)
 MIME-Version: 1.0
 References: <CAGaAVNVPhaXnRyS8TaNddNEGJqGBcW=5cWyb1c=vV0yeOovwqQ@mail.gmail.com>
  <CAHmME9o+aSX5f_KZ9UKWNdKUwpjnMU3iKn1e8bBdTvsDCqfceg@mail.gmail.com>
@@ -57,11 +51,12 @@ References: <CAGaAVNVPhaXnRyS8TaNddNEGJqGBcW=5cWyb1c=vV0yeOovwqQ@mail.gmail.com>
  <CAHmME9rLSSaaREtMPh9OYuO-oe363KF-VJcpQQHr8=54oDiAiA@mail.gmail.com>
  <CAGaAVNUyrQEppHMmTZe_WyohDPEopyupB2iaTj45peeq5qU9vg@mail.gmail.com>
 In-Reply-To: <CAGaAVNUyrQEppHMmTZe_WyohDPEopyupB2iaTj45peeq5qU9vg@mail.gmail.com>
-From: Manojav Sridhar <manojav@manojav.com>
-Date: Mon, 3 May 2021 11:34:41 -0400
-Message-ID: <CAGaAVNUQ1+R7MtUYm2Not1J+pWkkKxQw384RYxAkjCsAuiigFg@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Mon, 3 May 2021 17:35:01 +0200
+X-Gmail-Original-Message-ID: <CAHmME9qLmvt7wRSucwZuV5R6y1xOYxhy_UO_GANu2t6-tOY_zQ@mail.gmail.com>
+Message-ID: <CAHmME9qLmvt7wRSucwZuV5R6y1xOYxhy_UO_GANu2t6-tOY_zQ@mail.gmail.com>
 Subject: Re: kp's and mem corruption?
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: Manojav Sridhar <manojav@manojav.com>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
  Christian McDonald <rcmcdonald91@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
@@ -79,29 +74,15 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Just happened! so yeah that was it on the trigger. Once Cmac builds
-the ko for me I  will test it again!
-
-Again thanks so much!
-
-On Mon, May 3, 2021 at 11:32 AM Manojav Sridhar <manojav@manojav.com> wrote:
+On Mon, May 3, 2021 at 5:33 PM Manojav Sridhar <manojav@manojav.com> wrote:
 >
 > Ah. Understood. I am not set up to build for freebsd yet ko. But I can
 > leave it running on my test box for a bit.
->
-> On Mon, May 3, 2021 at 11:31 AM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
-> >
-> > On Mon, May 3, 2021 at 5:27 PM Manojav Sridhar <manojav@manojav.com> wrote:
-> > > I tried the bash script on both bare metal box and virtualbox pfsense
-> > > box. both ran for a few minutes okay. How long does it take to happen?
-> > > I am testing with the 0428 snapshot.
-> >
-> > Try changing in wg_noise.c:
-> >
-> > #define HT_INDEX_SIZE (1 << 13)
-> >
-> > to
-> >
-> > #define HT_INDEX_SIZE (1 << 3)
-> >
-> > And then you'll see it hit pretty quickly.
+
+Ah, don't worry about it. The trigger was sufficient for my purposes,
+but it doesn't need to be reproduced elsewhere necessarily. However,
+if you do wind up seeing this same bug again, using the latest master
+branch that contains the fix, please let me know, since that'd
+indicate I've done something wrong.
+
+Jason
