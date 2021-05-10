@@ -2,60 +2,69 @@ Return-Path: <SRS0=I1qK=KF=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_20,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_05,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_NONE
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D882DC433B4
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 10 May 2021 09:06:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19411C433B4
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 10 May 2021 11:23:47 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 97E6460232
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 10 May 2021 09:06:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 97E6460232
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id F034360D07
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 10 May 2021 11:23:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org F034360D07
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=openziti.org
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a3a46a09;
-	Mon, 10 May 2021 09:06:44 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [104.131.123.232])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id bd169ea3
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e715e23f;
+	Mon, 10 May 2021 11:21:33 +0000 (UTC)
+Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com
+ [209.85.216.45])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 58d8dc35
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 10 May 2021 09:06:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1620637600;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=YSE2Sb3YYyOYM1CFXXTNRJKrtXDLERYQJtkl6Trvhxc=;
- b=e1mM/+h/BtS7AeA1/qpOIyzks6KxPVlSc9YT/M0nE0rEpPA57+8sjzbjXSZmnJIkDRGUuq
- em48cNcCrDAAewcCw7Y9pM348hKtG9Wb0VSqsXt8f0HKLqU0VGD3+1naP+A8jQcel7GIY7
- 7r8ur3BT0J10VDVlHxgofWgbNvMHOYw=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 77e33b94
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Mon, 10 May 2021 09:06:40 +0000 (UTC)
-Received: by mail-yb1-f182.google.com with SMTP id v39so20695253ybd.4
- for <wireguard@lists.zx2c4.com>; Mon, 10 May 2021 02:06:39 -0700 (PDT)
-X-Gm-Message-State: AOAM530p4tmBD7oHcVIR4hrxx+7VPrpuhyilCCXBzgt4f3lGpTMq+OcJ
- Ys1GGjdqlTFYdDhJ5ecOiThUsm8c4a+zN0686Ak=
-X-Google-Smtp-Source: ABdhPJw1KPW424O+BWMdlqGAM/pLBD0GDGEklzHYFCMcoTOSGVJoTyPundxycN4tvIyblBocWNQ/84DxTizpH5tsyIQ=
-X-Received: by 2002:a5b:5c6:: with SMTP id w6mr31381959ybp.279.1620637599281; 
- Mon, 10 May 2021 02:06:39 -0700 (PDT)
+ Mon, 10 May 2021 11:21:31 +0000 (UTC)
+Received: by mail-pj1-f45.google.com with SMTP id
+ gq14-20020a17090b104eb029015be008ab0fso9863253pjb.1
+ for <wireguard@lists.zx2c4.com>; Mon, 10 May 2021 04:21:31 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:mime-version:thread-index:date:message-id
+ :subject:to;
+ bh=J4ZnVg4ttpapVwgc1qMxIKCRztTlNVlnFYi8xQiuz2I=;
+ b=Mta8UJosL13/cI90HLzwyVwaX03nhEEF9VJ1HwCM07GB3NFQVGBsmX4WnOuvfl9Qo7
+ MojFDmDTgGuiCWGh42ymRXLbtnJ6pQUyZkHT4yd88Mr9yFkuwBiD8E6kMChYOsbnOsPD
+ bsob0FVwZts8NZRDCeapOvg+SmTUPOXQrkQ5hJuFS7EHjcP2Cb9mLW04gpppZ3XjTnSJ
+ YVTCXEb/iA0RTVic9u6JjWOX+VAPTGELrd5sGxUNtVoidAdnVeMnmJwk93Q+FLdPRUom
+ ypkm+E+95MnVAp9b44iOiwXPGMbPDNPO6H0qD+gKHVS+gC/0hQJduWJ81LNg6/yp0kb1
+ r0TQ==
+X-Gm-Message-State: AOAM532trsI0PTKErkPUmVtZGfZS3etox8AUqz+K0DWMsMXyQ4oFTR3U
+ klTEAkF1Knqy7i/o4UVwDIck9NaESh8+Jg==
+X-Google-Smtp-Source: ABdhPJxWkfrQfi0uC1b2ldvYD/CE+w/2txLcR53kwatAmnb/cWrDyWqCeTS/t9tBSwScpFj8CCvv1A==
+X-Received: by 2002:a17:90a:e643:: with SMTP id
+ ep3mr40059035pjb.194.1620645689947; 
+ Mon, 10 May 2021 04:21:29 -0700 (PDT)
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com.
+ [209.85.214.180])
+ by smtp.gmail.com with ESMTPSA id ge4sm11155640pjb.4.2021.05.10.04.21.29
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 10 May 2021 04:21:29 -0700 (PDT)
+Received: by mail-pl1-f180.google.com with SMTP id t21so8979472plo.2
+ for <wireguard@lists.zx2c4.com>; Mon, 10 May 2021 04:21:29 -0700 (PDT)
+X-Received: by 2002:a17:90a:a892:: with SMTP id
+ h18mr27158840pjq.195.1620645689466; 
+ Mon, 10 May 2021 04:21:29 -0700 (PDT)
+From: Clint Dovholuk <clint@openziti.org>
 MIME-Version: 1.0
-References: <000b01d743f5$815d8fc0$8418af40$@glosol.com>
- <CAHmME9pb=1Qh4=0cOj6cm-4L0tfSTj7FknyXduh53i=NySbJVw@mail.gmail.com>
- <000401d74418$ffecc590$ffc650b0$@glosol.com>
-In-Reply-To: <000401d74418$ffecc590$ffc650b0$@glosol.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 10 May 2021 11:06:28 +0200
-X-Gmail-Original-Message-ID: <CAHmME9o2wOEuXYcc=PakWhZ=wmGBWAe3rjckUR3hQ_=mGXuxVQ@mail.gmail.com>
-Message-ID: <CAHmME9o2wOEuXYcc=PakWhZ=wmGBWAe3rjckUR3hQ_=mGXuxVQ@mail.gmail.com>
-Subject: Re: Wintun - Requested GUID is already in use error on Windows 10
-To: Piotr Sobczak <piotrs@glosol.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AddFjfvk2gla4apQRnmm8Bszx4qDIw==
+Date: Mon, 10 May 2021 07:21:27 -0400
+X-Gmail-Original-Message-ID: <2b73e539c3f0ae11bb68e2a7410a52b4@mail.gmail.com>
+Message-ID: <2b73e539c3f0ae11bb68e2a7410a52b4@mail.gmail.com>
+Subject: mechanism for wintun updates
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -71,8 +80,19 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Thanks for the report. I think I understand what's going on. This will fix it:
+Hi,
 
-https://git.zx2c4.com/wintun/commit/?id=28888d254be9b499ac6a4b7f1c704cf46cca88f6
+I keep looking at the website for the latest wintun release - I see it's
+up to 0.10.5 now (last time I had checked was 0.10.3). Is there some way
+to provide some meta data/link to 'the latest' so that we can monitor
+wintun for updates, try them out and take 'the latest'?
 
-In the interim, you can just delete those windscribe interfaces I guess.
+I don't care what the mechanism is, ideally it is something I could
+automate but even an email to this list that a release was put out would
+be better.
+
+If something like this exists already I'd love to be educated about it -
+if it's out there I've just not found it yet.
+
+Thanks
+-Clint
