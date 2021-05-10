@@ -1,45 +1,62 @@
-Return-Path: <SRS0=U1SX=KE=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=I1qK=KF=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_20,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 624DFC433ED
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  9 May 2021 07:52:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D882DC433B4
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 10 May 2021 09:06:47 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id E0924610A0
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  9 May 2021 07:52:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org E0924610A0
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=romanrm.net
+	by mail.kernel.org (Postfix) with ESMTPS id 97E6460232
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 10 May 2021 09:06:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 97E6460232
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ec07a563;
-	Sun, 9 May 2021 07:52:39 +0000 (UTC)
-Received: from rin.romanrm.net (rin.romanrm.net [51.158.148.128])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4ac6a139
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a3a46a09;
+	Mon, 10 May 2021 09:06:44 +0000 (UTC)
+Received: from mail.zx2c4.com (mail.zx2c4.com [104.131.123.232])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id bd169ea3
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sun, 9 May 2021 07:52:37 +0000 (UTC)
-Received: from natsu (natsu2.home.romanrm.net [IPv6:fd39::e99e:8f1b:cfc9:ccb8])
- by rin.romanrm.net (Postfix) with SMTP id CFF749F;
- Sun,  9 May 2021 07:52:36 +0000 (UTC)
-Date: Sun, 9 May 2021 12:52:36 +0500
-From: Roman Mamedov <rm@romanrm.net>
-To: lejeczek <peljasz@yahoo.co.uk>
-Cc: wireguard@lists.zx2c4.com
-Subject: Re: secondary IP on wg0 fails
-Message-ID: <20210509125236.17dd99aa@natsu>
-In-Reply-To: <eb229853-cc10-88bd-06bb-82bbab73cfe1@yahoo.co.uk>
-References: <204f6e7b-d594-c2c0-5242-1643055065c3.ref@yahoo.co.uk>
- <204f6e7b-d594-c2c0-5242-1643055065c3@yahoo.co.uk>
- <20210508215039.31f32aae@natsu>
- <eb229853-cc10-88bd-06bb-82bbab73cfe1@yahoo.co.uk>
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 10 May 2021 09:06:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1620637600;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=YSE2Sb3YYyOYM1CFXXTNRJKrtXDLERYQJtkl6Trvhxc=;
+ b=e1mM/+h/BtS7AeA1/qpOIyzks6KxPVlSc9YT/M0nE0rEpPA57+8sjzbjXSZmnJIkDRGUuq
+ em48cNcCrDAAewcCw7Y9pM348hKtG9Wb0VSqsXt8f0HKLqU0VGD3+1naP+A8jQcel7GIY7
+ 7r8ur3BT0J10VDVlHxgofWgbNvMHOYw=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 77e33b94
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 10 May 2021 09:06:40 +0000 (UTC)
+Received: by mail-yb1-f182.google.com with SMTP id v39so20695253ybd.4
+ for <wireguard@lists.zx2c4.com>; Mon, 10 May 2021 02:06:39 -0700 (PDT)
+X-Gm-Message-State: AOAM530p4tmBD7oHcVIR4hrxx+7VPrpuhyilCCXBzgt4f3lGpTMq+OcJ
+ Ys1GGjdqlTFYdDhJ5ecOiThUsm8c4a+zN0686Ak=
+X-Google-Smtp-Source: ABdhPJw1KPW424O+BWMdlqGAM/pLBD0GDGEklzHYFCMcoTOSGVJoTyPundxycN4tvIyblBocWNQ/84DxTizpH5tsyIQ=
+X-Received: by 2002:a5b:5c6:: with SMTP id w6mr31381959ybp.279.1620637599281; 
+ Mon, 10 May 2021 02:06:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+References: <000b01d743f5$815d8fc0$8418af40$@glosol.com>
+ <CAHmME9pb=1Qh4=0cOj6cm-4L0tfSTj7FknyXduh53i=NySbJVw@mail.gmail.com>
+ <000401d74418$ffecc590$ffc650b0$@glosol.com>
+In-Reply-To: <000401d74418$ffecc590$ffc650b0$@glosol.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Mon, 10 May 2021 11:06:28 +0200
+X-Gmail-Original-Message-ID: <CAHmME9o2wOEuXYcc=PakWhZ=wmGBWAe3rjckUR3hQ_=mGXuxVQ@mail.gmail.com>
+Message-ID: <CAHmME9o2wOEuXYcc=PakWhZ=wmGBWAe3rjckUR3hQ_=mGXuxVQ@mail.gmail.com>
+Subject: Re: Wintun - Requested GUID is already in use error on Windows 10
+To: Piotr Sobczak <piotrs@glosol.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -54,32 +71,8 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Sat, 8 May 2021 19:49:06 +0100
-lejeczek <peljasz@yahoo.co.uk> wrote:
+Thanks for the report. I think I understand what's going on. This will fix it:
 
-> > Also remember that sets of AllowedIPs should be unique within the network,
-> > i.e. can't have the same AllowedIPs or ranges listed for multiple nodes at the
-> > same time. Setting it to the same /24 on all nodes will not work.
-> >
-> > If still not clear, better post your complete config (without keys).
-> >
-> It's the same single subnet 10.0.0.0/24 and to reiterate - 
-> wg0's "primary" IPs can all ping each other.
-> All nodes have, respectively:
-> eg. node-B
-> [peer]
-> ...
-> AllowedIPs = 10.0.0.1/32, 10.0.0.226/32
-> Endpoint = 10.1.1.223:51851
-> 
-> [peer]
-> ...
-> AllowedIPs = 10.0.0.3/32, 10.0.0.226/32
-> Endpoint = 10.1.1.225:51853
+https://git.zx2c4.com/wintun/commit/?id=28888d254be9b499ac6a4b7f1c704cf46cca88f6
 
-See above for "Also remember...", you cannot have 10.0.0.226/32 added to
-multiple peers as AllowedIPs at the same time.
-
--- 
-With respect,
-Roman
+In the interim, you can just delete those windscribe interfaces I guess.
