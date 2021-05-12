@@ -1,75 +1,85 @@
-Return-Path: <SRS0=uc8W=KG=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=cPsn=KH=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BAB7C433ED
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 11 May 2021 18:07:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BFFA4C433ED
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 12 May 2021 20:15:19 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 22AF061625
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 11 May 2021 18:07:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 22AF061625
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=glosol.com
+	by mail.kernel.org (Postfix) with ESMTPS id 843CF613FB
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 12 May 2021 20:15:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 843CF613FB
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=radarcs.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5fcfb6a4;
-	Tue, 11 May 2021 18:07:25 +0000 (UTC)
-Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com
- [209.85.160.173])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 0d6d9da4
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c2e173c3;
+	Wed, 12 May 2021 20:15:16 +0000 (UTC)
+Received: from mx1.radarcs.com (mx1.radarcs.com [185.158.24.27])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b25c6244
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 11 May 2021 18:07:24 +0000 (UTC)
-Received: by mail-qt1-f173.google.com with SMTP id j11so15250340qtn.12
- for <wireguard@lists.zx2c4.com>; Tue, 11 May 2021 11:07:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=3r9RI/QUHULx22UxdSWTEwJu4XFm7tbnN6VVOtF5kKg=;
- b=XwdNo11Vh5wirkF7VluDxZCOtMFoYFk6l0hZe4l1n8kgJTVTY2h2z8N3qIO15h6fKv
- PeYukJSdICcihMumDcAKI47FyibeOKTwrtaPgmLQACk9r7g3a3yKNR7M2WU17H83xaK/
- gOQsQ4NAme17rJmmZJkCIoGDmPgC7CU8fbmSwJEehG/9hSYMkwbY1R1pYpstknQtWmL3
- HG3LDLexmserwo9Ulx9oAXSmxp23jcpY5lml2ulHL8YFPVRB6SRipG+iHKYCAoPcOZTY
- a7X4OEHtmSy0Ma6J7BgGON7m1rc+3M5IwHBByG9OoWRveKXF5QP8Qt7oWJH/D8zOZKOr
- 6cIg==
-X-Gm-Message-State: AOAM533n65wt70OgrawO/+Z7J2cPkW8bIbVgbYYYx5MyRIpMC+k/9J7y
- OW0X0x9pzxLuA04/MA2lWtgPhGNr9VxZAg==
-X-Google-Smtp-Source: ABdhPJyi1cqns0hwJDHSW8RfvPdBLG0m3zUbBGxaA3lt3rWa+5hUsNhYAS4AzGHcvDzUd8I7xy38dw==
-X-Received: by 2002:ac8:7cb3:: with SMTP id z19mr11621067qtv.22.1620756443431; 
- Tue, 11 May 2021 11:07:23 -0700 (PDT)
-Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com.
- [209.85.219.178])
- by smtp.gmail.com with ESMTPSA id m205sm7188626qke.2.2021.05.11.11.07.23
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 May 2021 11:07:23 -0700 (PDT)
-Received: by mail-yb1-f178.google.com with SMTP id r8so27510259ybb.9
- for <wireguard@lists.zx2c4.com>; Tue, 11 May 2021 11:07:23 -0700 (PDT)
-X-Received: by 2002:a5b:386:: with SMTP id k6mr40909660ybp.235.1620756442858; 
- Tue, 11 May 2021 11:07:22 -0700 (PDT)
-MIME-Version: 1.0
-References: <000b01d743f5$815d8fc0$8418af40$@glosol.com>
- <CAHmME9pb=1Qh4=0cOj6cm-4L0tfSTj7FknyXduh53i=NySbJVw@mail.gmail.com>
- <000401d74418$ffecc590$ffc650b0$@glosol.com>
- <CAHmME9o2wOEuXYcc=PakWhZ=wmGBWAe3rjckUR3hQ_=mGXuxVQ@mail.gmail.com>
- <CAHmME9r9jjSDfHnHWTAG1Z2iG99x5TwS6A4EnwBzsgc_i49G-g@mail.gmail.com>
- <CAN=LpF3OJgsD-4cH7cgds9ZVo8GPwQK7HvvoyAr_nx3mx31G5A@mail.gmail.com>
- <CAHmME9pmkP_Hw8ZJOMRCdPahbbbmVL5LX+aYBum_uMSE-ZXmvw@mail.gmail.com>
-In-Reply-To: <CAHmME9pmkP_Hw8ZJOMRCdPahbbbmVL5LX+aYBum_uMSE-ZXmvw@mail.gmail.com>
-From: Piotr Sobczak <piotrs@glosol.com>
-Date: Tue, 11 May 2021 20:07:10 +0200
-X-Gmail-Original-Message-ID: <CAN=LpF1+gNusjR0+pDEQ7JBq7Ud4vzT_27dpu2xS+7NbF4m5Wg@mail.gmail.com>
-Message-ID: <CAN=LpF1+gNusjR0+pDEQ7JBq7Ud4vzT_27dpu2xS+7NbF4m5Wg@mail.gmail.com>
-Subject: Re: Wintun - Requested GUID is already in use error on Windows 10
+ Wed, 12 May 2021 05:19:50 +0000 (UTC)
+Received: from mx1.radarcs.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 70AC3FE060;
+ Wed, 12 May 2021 07:19:50 +0200 (CEST)
+Received: from mx1.radarcs.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 64F0BFE05F;
+ Wed, 12 May 2021 07:19:50 +0200 (CEST)
+Received: from atdcvsem001.dmz.radarservices.net (unknown [100.64.45.50])
+ by mx1.radarcs.com (Postfix) with ESMTPS;
+ Wed, 12 May 2021 07:19:50 +0200 (CEST)
+Received: from bc-hq-sv-ex01.base-camp.lan (unknown [10.114.81.14])
+ by atdcvsem001.dmz.radarservices.net (Postfix) with ESMTPS;
+ Wed, 12 May 2021 07:19:49 +0200 (CEST)
+Received: from bc-hq-sv-ex01.base-camp.lan (10.114.81.14) by
+ bc-hq-sv-ex01.base-camp.lan (10.114.81.14) with Microsoft SMTP Server (TLS)
+ id 15.0.1497.2; Wed, 12 May 2021 07:19:49 +0200
+Received: from bc-hq-sv-ex01.base-camp.lan ([fe80::e8aa:8cf2:537d:9aac]) by
+ bc-hq-sv-ex01.base-camp.lan ([fe80::e8aa:8cf2:537d:9aac%12]) with mapi id
+ 15.00.1497.015; Wed, 12 May 2021 07:19:49 +0200
+From: Raoul Bhatia <raoul.bhatia@radarcs.com>
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+CC: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+Subject: Re: Wireguard connection lost between peers
+Thread-Topic: Wireguard connection lost between peers
+Thread-Index: AQHXRu5tGbISP6k5HUut4KUd/SZGSA==
+Date: Wed, 12 May 2021 05:19:48 +0000
+Message-ID: <1CCB5519-611B-4377-97A9-0F9179E3C6F2@radarcs.com>
+Accept-Language: en-GB, de-AT, en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Microsoft-MacOutlook/16.49.21050901
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [100.64.244.2]
+X-SM-outgoing: yes
+Content-Language: en-GB
+MIME-Version: 1.0
+Content-Type: multipart/signed; protocol="application/pkcs7-signature";
+ micalg="sha-512"; boundary="----6EFF357A1E4D2F58CDC5CEDB4D5757CC"
+X-SM-smarthost: outbound-trendmicro.local
+X-TM-AS-GCONF: 00
+X-TM-AS-Product-Ver: IMSVA-9.1.0.1960-8.6.0.1013-26152.002
+X-TM-AS-Result: No--5.659-5.0-31-10
+X-imss-scan-details: No--5.659-5.0-31-10
+X-TM-AS-User-Approved-Sender: No
+X-TMASE-Version: IMSVA-9.1.0.1960-8.6.1013-26152.002
+X-TMASE-Result: 10--5.659200-10.000000
+X-TMASE-MatchedRID: byfwvk+IcRkCZ+J6A+ig7vRUId35VCIeo14v+1uPCQc8dZ+c+A1zGyMt
+ e9ne/qVQcdBQzl/1Fy8jbE0tjdL8cW+wPepi4kmkceYqa6xdCsQjmtmWxqcghUQHBcwog2HoD1o
+ RKWO4wLCb0vbxK6KD+LnMStfbKJC7sKJhEY/IrgwM4vXj8NEd0GVHNkCQpEYNNWO9z3c712RQMs
+ IK6mOQuyDWy+O0WnFVNWri8ZQHmUBdInhzedP5B6Ew/TzXjY3EnXkxoptXpC++AI6u+HhJmsDX+
+ fl9+xmHCW4o82Dp/CO5Ylf3xk4v4oaw96TXEsdWNVHkqlpj6VV+Cga/b/3dcV318NhKb3jls+Gb
+ dNi+FiLw9a6h0l9RV2Mod0XDpTpLtnbpuMSzvAaDGx/OQ1GV8jEQ95Dw5W+GanE1Ybb9x4Vjd29
+ 6LywDo2u5XqFPzjITgYg2FYeqs8djS42xpt/61tVXMgkpqcbZGldU7J7Mzw/d6DiXdRWIgJ6oP1
+ a0mRIj
+X-TMASE-SNAP-Result: 1.821001.0001-0-1-12:0,22:0,33:0,34:0-0
+X-Mailman-Approved-At: Wed, 12 May 2021 20:15:14 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -84,22 +94,175 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Jason,
+This is an S/MIME signed message
 
-It worked. I replied to your other email with the full log as you requested.
+------6EFF357A1E4D2F58CDC5CEDB4D5757CC
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-version: 1.0
+Content-ID: <66CAECED1149D046A343BB56A05769ED@base-camp.cc>
 
-Thank you for your help with this!
+SGkgSmFzb24NCg0KQXBvbG9naWVzIGZvciB0YWtpbmcgc29tZSB0aW1lIHRvIGdldCBiYWNrIHRv
+IHlvdS4NCldlIHRyaWVkIHRvIHZlcmlmeSBhIGZldyB0aGluZ3MgYW5kIHRvIHNlZSBpZiB3ZSBz
+cG90IGFueXRoaW5nIHVudXN1YWwsDQphbmQgd2FpdGVkIGZvciBhIGZldyBtb3IgaW5zdGFuY2Vz
+IHRvIGhhcHBlbiB0byBnZXQgc3VmZmljaWVudCByaWdodCBkYXRhLg0KDQo+IFRoYXQncyBzdXJw
+cmlzaW5nIGJlaGF2aW9yLiBUaGFua3MgZm9yIGRlYnVnZ2luZyBpdC4gQ2FuIHlvdSBzZWUgaWYN
+Cj4geW91IGNhbiByZXByb2R1Y2Ugd2l0aCBkeW5hbWljIGxvZ2dpbmcgZW5hYmxlZD8gVGhhdCds
+bCBnaXZlIHNvbWUNCj4gdXNlZnVsIGluZm9ybWF0aW9uIGluIGRtZXNnOg0KPg0KPiAgICAgICAg
+ICAgICMgbW9kcHJvYmUgd2lyZWd1YXJkICYmIGVjaG8gbW9kdWxlIHdpcmVndWFyZCArcCA+DQo+
+IC9zeXMva2VybmVsL2RlYnVnL2R5bmFtaWNfZGVidWcvY29udHJvbA0KDQpJIGRpZCBlbmFibGUg
+dGhlIGRlYnVnIGNvbnRyb2wgYW5kIGFsc28gc2V0DQogIHN5c2N0bCAtdyBuZXQuY29yZS5tZXNz
+YWdlX2Nvc3Q9MA0KYW5kIGhhdmUgZXh0cmFjdGVkIGEgc2FtcGxlIG9mIHRoZSBpc3N1ZS4NClBs
+ZWFzZSBmaW5kIGl0IGhlcmUgaHR0cHM6Ly9uZW0zZC5uZXQvd2lyZWd1YXJkXzIwMjEwNTEyYS50
+eHQNCg0KRnJvbSBteSBvYnNlcnZhdGlvbiwgaXQgaXMgYWx3YXlzIHRoZSBmb2xsb3dpbmcgc3lt
+cHRvbXM6DQoxLiBFdmVyeXRoaW5nIGlzIFdPUktJTkc6DQpMWEMgY29udGFpbmVyIGQxLWggc2Vu
+ZHMgaGFuZHNoYWtlIGluaXRpYXRpb24uDQpIb3N0IHdnMCByZWNlaXZlcywgcmUtY3JlYXRlcyBr
+ZXlwYWlyLCBhbnN3ZXJzDQpkMS1oIHJlY2VpdmVzLCByZS1jcmVhdGVzIGtleXBhaXIsIHNlbmRz
+IGtlZXBhbGl2ZQ0Kd2cwIHJlY2VpdmVzIGtlZXBhbGl2ZQ0KZXRjLg0KDQoNCjIuIFNvbWV3aGVu
+IGl0IEJSRUFLUw0KZDEtaCBzdG9wcHMgaGVhcmluZyBiYWNrIGFmdGVyIDE1IHNlY29uZHMuDQpJ
+bml0aWFsaXphdGlvbiBsb29wIGxpa2UgbWVudGlvbmVkIGFib3ZlDQpkMS1oIHN0b3BwcyBoZWFy
+aW5nIGJhY2sgYWZ0ZXIgMTUgc2Vjb25kcy4NCmV0Yy4NCg0KQXMgbWVudGlvbmVkLCB0aGUgcmVz
+b2x1dGlvbiBpcyB0byBkdW1wIHRoZSBjb25maWcsIA0KcmVtb3ZlIHRoZSBwZWVyLCBhbmQgc3lu
+Y2NvbmYgdG8gcmVzdG9yZS4NClRoaXMgdGltZSwgIEkgdXNlZCAibnNlbnRlciAtbiIgdG8gYXBw
+bHkgdGhpcyBwcm9jZWR1cmUgdG8gdGhlDQp1bnByaXZpbGVnZWQgY29udGFpbmVyIGludGVyZmFj
+ZSBkMS1oLg0KDQpMYXN0bHksIHdlIGFsc28gc2F3IHNpbWlsYXIgYmVoYXZpb3IgZXZlbiBiZXR3
+ZWVuIDIgcGh5c2ljYWwgaG9zdHMuDQpJIHdpbGwgdHJ5IHRvIGdhdGhlciBzaW1pbGFyIGRlYnVn
+IGluZm9ybWF0aW9uLg0KDQpQbGVhc2UgbGV0IG1lIGtub3cgaWYgZnVydGhlciBpbmZvcm1hdGlv
+biBpcyBuZWVkZWQgdG8NCmJldHRlciB1bmRlcnN0YW5kIHRoZSBwcm9ibGVtLg0KDQpSYW91bA0K
+DQo=
 
-Piotr
+------6EFF357A1E4D2F58CDC5CEDB4D5757CC
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
 
-On Tue, May 11, 2021 at 7:54 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
->
-> Hi Piotr,
->
-> Thanks for the feedback. I sent you a message offlist with a custom
-> build containing
-> https://git.zx2c4.com/wintun/commit/?id=479bbdc50a45ca9ae62ac15a1ee7445a6cbbe42a
-> . Waiting for your feedback on it.
->
-> Thanks,
-> Jason
+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
+p8Qd7A/XqIsTHrPRFotA3A9TbwE97OhktZfbg7yoqMCEOFheAxQr5sow7wCy6xM5
+GZJHKiEA5XLNwjFiDsxWKv93xGOMmMJveNe1tszpfR8zppEFKv7RUtb07Jz+TUxq
+UuGFdmK7uWjmUmP8wSGRkl0Z2NyA0RnjSRZXAg4ZRIWrKckv+sZtawqh9vf/a2E1
+FSaUlAJpJV1p971ea4LZkAwG+UMFIknrNtAgWmMQ4zgh1X8WK0GKRnryZ+ik0Loe
+fyQndZiUSS1WxFQzkZ1i+dVf3lupFZiclFPBgOkJFxW0G4ApMqHQrxOnAgMBAAGj
+ggKWMIICkjAOBgNVHQ8BAf8EBAMCAQYwEgYDVR0TAQH/BAgwBgEB/wIBADAdBgNV
+HQ4EFgQU8MejMpG168q1WHcVp06+Gl1hQyUwHwYDVR0jBBgwFoAUF6DNweRBtjpb
+O8tFnb0cwpj6hlgwgf8GA1UdHwSB9zCB9DBHoEWgQ4ZBaHR0cDovL2NybC5zd2lz
+c3NpZ24ubmV0LzE3QTBDREMxRTQ0MUI2M0E1QjNCQ0I0NTlEQkQxQ0MyOThGQTg2
+NTgwgaiggaWggaKGgZ9sZGFwOi8vZGlyZWN0b3J5LnN3aXNzc2lnbi5uZXQvQ049
+MTdBMENEQzFFNDQxQjYzQTVCM0JDQjQ1OURCRDFDQzI5OEZBODY1OCUyQ089U3dp
+c3NTaWduJTJDQz1DSD9jZXJ0aWZpY2F0ZVJldm9jYXRpb25MaXN0P2Jhc2U/b2Jq
+ZWN0Q2xhc3M9Y1JMRGlzdHJpYnV0aW9uUG9pbnQwYQYDVR0gBFowWDBWBglghXQB
+WQEDAQYwSTBHBggrBgEFBQcCARY7aHR0cDovL3JlcG9zaXRvcnkuc3dpc3NzaWdu
+LmNvbS9Td2lzc1NpZ24tU2lsdmVyLUNQLUNQUy5wZGYwgcYGCCsGAQUFBwEBBIG5
+MIG2MGQGCCsGAQUFBzAChlhodHRwOi8vc3dpc3NzaWduLm5ldC9jZ2ktYmluL2F1
+dGhvcml0eS9kb3dubG9hZC8xN0EwQ0RDMUU0NDFCNjNBNUIzQkNCNDU5REJEMUND
+Mjk4RkE4NjU4ME4GCCsGAQUFBzABhkJodHRwOi8vb2NzcC5zd2lzc3NpZ24ubmV0
+LzE3QTBDREMxRTQ0MUI2M0E1QjNCQ0I0NTlEQkQxQ0MyOThGQTg2NTgwDQYJKoZI
+hvcNAQELBQADggIBAMN5p1e3e61RaPVEjEGVKAF8dNY7arxt76fXTTmZHWiNygjZ
+0HGxGTWTb4LGHEm4Ue5M+WwKb9il+/77MF4A0pSrxBJRuqqKq2rdGdcrSvcWsmtR
+z3RbKaJz3pf+2E8gIX1pDLBQ5Y1YjIAu5Rcc3WN6qu8F+cNpnuSMcWJcQu468s3g
+Eu+LXOnOUygy7JULGVSiIY36f1CnT7wZe7JrjCk/dz7KI8dpWkGdfWYxb3pxedqp
+ZTrrf9cQ1QtfVBl8zjclJIRQ0K9ANMJfkuJ6kfMvQkcbnzxC+9lfpbxwRY7voDmQ
+9aF4bNfAZ1kZ4QDeXPx46E/du6yRLnKL/OpHb0MovLu5jpS++lDdUJMbTBi2dv/D
+RwpZtM1tVdhqtl/JL8GUNj6+rkA1BiDt4AJMLTRFDkOvovTYkBXl0MCbRECuPI+T
+UbyZaHNpe3VYmbfUBE/f8YJxER17/BMdd2VVY9dScnzdMUeGp5XYrCZxPSPmEjv0
+f5qWhv4r6qDzJg11xhaMMSDnEUeh56lqsKWygR7cPdCh427V8GamHH3XkohNAAcL
+cedz53PkVGVp/DeN8R5vcO6nbLNSRWdZ1gVIsSHplyjZ2fS0pqBnIza8YEcOXCh/
+XZOKMbqNMTYUx3pCnW8gwWwq+BYPatkAlDK7PVWxxcOhDbF5d1Qd4DOCfu7qMIIH
+UTCCBjmgAwIBAgIUFfW61sNzyrx30L16mEqKBJtRV8owDQYJKoZIhvcNAQELBQAw
+VjELMAkGA1UEBhMCQ0gxFTATBgNVBAoTDFN3aXNzU2lnbiBBRzEwMC4GA1UEAxMn
+U3dpc3NTaWduIFBlcnNvbmFsIFNpbHZlciBDQSAyMDE0IC0gRzIyMB4XDTIwMDcz
+MTIwMDUwMVoXDTIxMDczMTIwMDUwMVowgZExCzAJBgNVBAYTAkFUMS0wKwYDVQQK
+EyRSYWRhclNlcnZpY2VzIFNtYXJ0IElULVNlY3VyaXR5IEdtYkgxJzAlBgkqhkiG
+9w0BCQEWGHJhb3VsLmJoYXRpYUByYWRhcmNzLmNvbTEqMCgGA1UEAxMhU2VjdXJl
+IE1haWw6IFNFUFBtYWlsIENlcnRpZmljYXRlMIICIjANBgkqhkiG9w0BAQEFAAOC
+Ag8AMIICCgKCAgEAx0amy3Ub2v6YiIJ3MAt9R0hnXo4bdKEnVxfzA9vuwMWRUPrs
+NnpB9c0pujZosUbTsRbkmOscaWZpI2kNXNrDXfB4g5rQQkUvzUrisaImozvqd1Fs
+rQhMMvQ7PSJVyNqA/x0otAor6rDyCgiYSbSZRsvQhNks6P9m8X12j6oVyDoyeIqT
+FT9qPNFMznA3C42lZUyCFdTVgqcRJd45tWdY20UlAnDf0nRa3rIjxjHjKxC9JkvC
+vNduFvzVSpn5HLUhP+l/BA8To1qLWpeOdmYdW0dNHWAQUtVU7DY940G2EEEcHqQF
+80zF/URlicAIF4M5+O13jTaVdmSK537v7DnmKkrFJVlP3uQ1C6nqhwsG7IjySnML
+2qbtj6/zeHSlqW6HZraOf4Se7tPzlQ53uO22JAnOLuzUJhMFEaQ4HXhjg/W3PyfQ
+XiWj/y+B1Tfn6bQTl7US+ZcHPcBNMzfwnXLUczxHyDmTLgTwgeXzZRfDisIjV3/L
+49heQ3DKolYU6B9ShZsiGmQDkQ2E1i3/3TFpXIGEW3zeAeeT3TYxy6pCJYd+hCaI
+YcAg1gwjzgWMH2IU+Js/fQh0pdrXLmY2KUmcW89KYaClHmbt/mXzH53HTeDrFuvJ
+nsj4t0I71QmRRIhXk9VL52vFADCnK9NWa2hKsE9fle03il4pNit+/dtNXUECAwEA
+AaOCAtkwggLVMCMGA1UdEQQcMBqBGHJhb3VsLmJoYXRpYUByYWRhcmNzLmNvbTAO
+BgNVHQ8BAf8EBAMCBLAwEwYDVR0lBAwwCgYIKwYBBQUHAwQwHQYDVR0OBBYEFEWv
+CBno4Znbc1oBfJnzza4hBnfJMB8GA1UdIwQYMBaAFPDHozKRtevKtVh3FadOvhpd
+YUMlMIH/BgNVHR8EgfcwgfQwR6BFoEOGQWh0dHA6Ly9jcmwuc3dpc3NzaWduLm5l
+dC9GMEM3QTMzMjkxQjVFQkNBQjU1ODc3MTVBNzRFQkUxQTVENjE0MzI1MIGooIGl
+oIGihoGfbGRhcDovL2RpcmVjdG9yeS5zd2lzc3NpZ24ubmV0L0NOPUYwQzdBMzMy
+OTFCNUVCQ0FCNTU4NzcxNUE3NEVCRTFBNUQ2MTQzMjUlMkNPPVN3aXNzU2lnbiUy
+Q0M9Q0g/Y2VydGlmaWNhdGVSZXZvY2F0aW9uTGlzdD9iYXNlP29iamVjdENsYXNz
+PWNSTERpc3RyaWJ1dGlvblBvaW50MGsGA1UdIARkMGIwVgYJYIV0AVkBAwEMMEkw
+RwYIKwYBBQUHAgEWO2h0dHA6Ly9yZXBvc2l0b3J5LnN3aXNzc2lnbi5jb20vU3dp
+c3NTaWduLVNpbHZlci1DUC1DUFMucGRmMAgGBgQAj3oBAzCB2QYIKwYBBQUHAQEE
+gcwwgckwZAYIKwYBBQUHMAKGWGh0dHA6Ly9zd2lzc3NpZ24ubmV0L2NnaS1iaW4v
+YXV0aG9yaXR5L2Rvd25sb2FkL0YwQzdBMzMyOTFCNUVCQ0FCNTU4NzcxNUE3NEVC
+RTFBNUQ2MTQzMjUwYQYIKwYBBQUHMAGGVWh0dHA6Ly9zaWx2ZXItcGVyc29uYWwt
+ZzIub2NzcC5zd2lzc3NpZ24ubmV0L0YwQzdBMzMyOTFCNUVCQ0FCNTU4NzcxNUE3
+NEVCRTFBNUQ2MTQzMjUwDQYJKoZIhvcNAQELBQADggEBAGw0zyt3yz2mXPWQ3f1D
+lTNmHhIb74MxTK5rFiQ9GAQBebjxEzSEWSbo6aJn9Xj0IduuslayqvsZW+u0wbnn
++eB/0xpwd3+afjKqGYigmALIm7+Mb3VxN9v7aT6/8n01yXFvVz4eM4IPWpjcBRQ6
+w2Itd6UxeK+wyFCCp9JUk7AcdD7XkgC2AgrdOojG3fvpP+7iuzcSzL51mSZxUgAE
+LAtX9IqYOUKPwgeTdR6QTwIWbgmhjXRY9++OcS0BfYpWDrxU4SLCzI8FjKePrv9z
+JsEdJg/WyO4NBMI1b6762AYdiEK8Y2VN4+EbsIa/jLDLBcSwO3AfXJc0UjBFAp6k
+dJAxggOfMIIDmwIBATBuMFYxCzAJBgNVBAYTAkNIMRUwEwYDVQQKEwxTd2lzc1Np
+Z24gQUcxMDAuBgNVBAMTJ1N3aXNzU2lnbiBQZXJzb25hbCBTaWx2ZXIgQ0EgMjAx
+NCAtIEcyMgIUFfW61sNzyrx30L16mEqKBJtRV8owCwYJYIZIAWUDBAIDoIIBBDAY
+BgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0yMTA1MTIw
+NTE5NTBaME8GCSqGSIb3DQEJBDFCBECFtNbfPfd+DfbKkxoLecqhxoRx/8JX+60n
+GD7EZU1imZkjrMN1nFEgupYvmDCf+DRxUrUvSb07FjTh2mqZqE5FMHkGCSqGSIb3
+DQEJDzFsMGowCwYJYIZIAWUDBAEqMAsGCWCGSAFlAwQBFjALBglghkgBZQMEAQIw
+CgYIKoZIhvcNAwcwDgYIKoZIhvcNAwICAgCAMA0GCCqGSIb3DQMCAgFAMAcGBSsO
+AwIHMA0GCCqGSIb3DQMCAgEoMA0GCSqGSIb3DQEBAQUABIICAKACdjCxqYIqNJKm
+bLnMB5Se4agITq10AsJ2Zj8hldjkVy3pLdrHMs+JEfLaDEzzsrlnd6dXYdHqotAW
+pO2arIUICw6VzqvMAX2A8awBL3OrA/YwThbv5mOZ0oelNgUNybE350942VVo8OLR
+KasQzYdgqcsFMqcLBFuiJUyuBAUwUVLvv1wLYDk8RhxmbD6/FkM20Aag6RtLwQB1
+UMKd5cRO1FeNVXkzrsIbhnjMcSeT5vK3+xHXzREmcM+YdYvlISUg5xqg6cyCHZHa
+XqkI7DgXpPj+ZfuSjfeq0+c0TIzBGyquzrQY+CrOpCV61YPqswY8aLb1Gn2IV3in
+9DSaiIdWwevfFV03A+tPsr8DuurnirurU5QlAy+XbqtOgYDuBO5Vdz6SQRM/L6bK
+V5zdqYzxgk1iruW3GwszJsOGuXTzD/Kvxhhou6wK6imC++nTqmDqw4JqRvPfnBG0
+gDhXlKa3aoqREaCNTvZZ+OHy/T7lrT68YdgYCIiO/a0NC22oQh2zllbqErecR56z
+n7z1DEFe+XXDqqWpu5bl7Mt/aF/QbjQyBvVMtxWTLtEX+DqNgp9MKvul4Z7yPHKE
+ipcYHVEUpSeJbEi53W7fw9g713MDh0B1ktncALUIHKSU4Grh0QH+iA3ewskeJwbn
+pOa50nmR04FUUtR7TYoOPXAJDWFz
+
+------6EFF357A1E4D2F58CDC5CEDB4D5757CC--
+
