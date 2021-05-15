@@ -2,60 +2,64 @@ Return-Path: <SRS0=pvJ2=KM=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF389C433ED
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 17 May 2021 15:07:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 05971C43461
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 17 May 2021 15:21:57 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id DF69B610CD
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 17 May 2021 15:07:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org DF69B610CD
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id 190CD610CB
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 17 May 2021 15:21:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 190CD610CB
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 5e9aade9;
-	Mon, 17 May 2021 15:07:31 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [104.131.123.232])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 717a0315
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9363be08;
+	Mon, 17 May 2021 15:21:54 +0000 (UTC)
+Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com
+ [2607:f8b0:4864:20::b2e])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d6038971
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 17 May 2021 15:07:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1621264043;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=bq3B2H6AF5dfcEbdwP4p9oVzonQcHYXPPlWtty2wJ9U=;
- b=FOm2EH/7o1zObhWSGXOjIy8S+KSwhP/y49mpLVVGnqiTSiQV/0t15EEJLq3oHa3eeard/x
- iZGqmJ/P32Vn9qdJnef+tX6GxtI+nQjXPMh4NeD5SEhRm9tRxyG5t2E44DcdjePPsW8VkL
- J8M4o6EjUpVOrxiv66IPzLnFXVslMuw=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id efed56c6
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Mon, 17 May 2021 15:07:23 +0000 (UTC)
-Received: by mail-yb1-f179.google.com with SMTP id q144so9056907ybq.0
- for <wireguard@lists.zx2c4.com>; Mon, 17 May 2021 08:07:23 -0700 (PDT)
-X-Gm-Message-State: AOAM533AMnYO1oJdj9Nq5fLpareLFQZutQtTeH39b0aSZXDog6RLY3GP
- 0Euskr2BtbNfPVbqvBqQpK1O9KvV9NKjcCG0hvU=
-X-Google-Smtp-Source: ABdhPJxijHx6jUZa6f4kTCd0Av2lCcIgTiPPLfBuy3B6tM3LHUIW3OojN/00Sizc5GyiRy7J3C2BtOPWg652tnYzdqM=
-X-Received: by 2002:a25:bb89:: with SMTP id y9mr386455ybg.456.1621264042990;
- Mon, 17 May 2021 08:07:22 -0700 (PDT)
+ Sat, 15 May 2021 17:37:29 +0000 (UTC)
+Received: by mail-yb1-xb2e.google.com with SMTP id e190so3099107ybb.10
+ for <wireguard@lists.zx2c4.com>; Sat, 15 May 2021 10:37:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=svSEnE+f84KIPgTXskpETN0rKvJ4eY2nul2qGBYVDck=;
+ b=kLSil8p9mgorP6ifHzQpwYNB5y2tdXGXuUyMFkEghBSjX9E6WfPu/aDJGzdQ0QjkXF
+ O3e9endy1lfpOM8ShbjPaW0rA85r4YxzBoNE/m4DPTJOYOIqZNoxC1UhmYxBGJN20c67
+ c3xJzi6+/8QTtb67bP3RsmIO2bV3wqeAdMN9SYQ6M+Cwo5Yz9EBQOzObHwmzj2lIN7WG
+ Y1V1ovK/5xCMeNybtwAG0I+9bDANe9j+paEzxuL9SEcdGNWEmVJ0QFOTsXq+1mrCQVxv
+ LOUHUi6uWNkNlUYfAl35ZV2egfDHm1ib+m/uWnC0rHmKTYi4bJxmhyjs8YM7JN4P1UgR
+ f0cg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=svSEnE+f84KIPgTXskpETN0rKvJ4eY2nul2qGBYVDck=;
+ b=P0xMtEpUN63sohioLLpeGl2Kq4rCPSKsEeKG02iVm8pf/GE/NyIbmnRK9KFGvuNv5V
+ OrpKWE8erbXhM77WvIzfnNViKVRO9tgxC4FgYWU9qPAGe1XxY3cyKHCLX4zjfuYa2q/T
+ XjHAQ0fTxr+g/3TOwjFJzOMxjeCWxWJzUkgOTyuDtazQMIRP7bOeZZpmamc5GI4wXyIB
+ v7eGUPOzxavtSMiBveITDZ7a9kODGZvGfU6M+KG6G1RVMSwMw9sv3pAhC0UiJClaFAZ0
+ jAnduH5Dk47LhiBM+95bt1qsjZcSYRmOeZKQH1nFtd0wmNfu2Qr6Kh5qGMSHa8HG2HB2
+ rSSg==
+X-Gm-Message-State: AOAM533i0CNAjBJN24NyBULMcLVpiO27L3UY12p1gZ3NtfbE0t21+N4B
+ +sVxVduwaNk1QeXVKCq36Ye5i/68HKu3gJltOEM5sTcN0uU=
+X-Google-Smtp-Source: ABdhPJwxP31ZkobI3hc39/iHBaStT+I8QZ161Wvh63K7TJz/wi3i59ypR7c7F5bWv1oCE0Yi3bXIfbt7q75pZPrrIZQ=
+X-Received: by 2002:a25:a147:: with SMTP id z65mr72357224ybh.104.1621100248032; 
+ Sat, 15 May 2021 10:37:28 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAONL4-+8aiE3tKUn04rp8Zjc=j8vRO56OxLk5k0MoE5aqtURbA@mail.gmail.com>
-In-Reply-To: <CAONL4-+8aiE3tKUn04rp8Zjc=j8vRO56OxLk5k0MoE5aqtURbA@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 17 May 2021 17:07:12 +0200
-X-Gmail-Original-Message-ID: <CAHmME9pDQCKGR+bkDREd47y9nXr2Bs-kKOgnmjN6AoP2PddRug@mail.gmail.com>
-Message-ID: <CAHmME9pDQCKGR+bkDREd47y9nXr2Bs-kKOgnmjN6AoP2PddRug@mail.gmail.com>
-Subject: Re: wireguard.exe no MessageBox option?
-To: Andrew Burkett <burkett.andrew@gmail.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: Michael Wu <michael.apply@gmail.com>
+Date: Sun, 16 May 2021 01:36:33 +0800
+Message-ID: <CAOYRf2F9q-yWwUjoSe01pO1TaeGcF5vGqt8unmowoRJ3iCTP6w@mail.gmail.com>
+Subject: Bug report: Policy routed packets are dropped by wireguard
+To: wireguard@lists.zx2c4.com
 Content-Type: text/plain; charset="UTF-8"
+X-Mailman-Approved-At: Mon, 17 May 2021 15:21:51 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -70,21 +74,71 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Andrew,
+Hello,
 
-It's a bit tricky, because UI apps are treated differently than
-console apps: cmd.exe won't wait for them to complete, and they get
-empty stdio handles. But I've used the latter property to detect
-what's up and hopefully achieve some kind of compromise. Let me know
-if this commit does the trick:
+I'd like to confirm that the following problem seemed to be a bug, and
+not configuration error:
+https://lists.zx2c4.com/pipermail/wireguard/2019-September/004545.html
+(Content dupated at the end of this email for easier reference)
 
-https://git.zx2c4.com/wireguard-windows/commit/?id=ed59b1b2e834b6d35b11bab63551b21bc60d7f35
+On system 1 (kernel 4.15), everything worked as expected. However, on
+system 2 (kernel 5.4), the issue described above is observed.
 
-Basically, if stderr is available, logs go there. Otherwise if stdout
-is available, logs go there. Otherwise errors show in a message box.
+Regards,
+Michael
 
-So this should allow you to do things like:
 
-wireguard /installtunnelservice ... 2>C:\path\to\log.txt
+[System 1]:
+Ubuntu 18.04.5 LTS
+4.15.0-128-generic #131-Ubuntu SMP Wed Dec 9 06:57:35 UTC 2020 x86_64
+x86_64 x86_64 GNU/Linux
 
-Jason
+[System 2]:
+Ubuntu 20.04.2 LTS
+5.4.0-73-generic #82-Ubuntu SMP Wed Apr 14 17:39:42 UTC 2021 x86_64
+x86_64 x86_64 GNU/Linux
+
+[Policy routed packets are dropped by wireguard]
+Original mail: https://lists.zx2c4.com/pipermail/wireguard/2019-September/004545.html
+
+Hello!
+
+I'm looking for technical advice.
+Currently I'm trying to pass marked sessions through wireguard VPN network.
+
+Marking is done by cgroups classid matching:
+> iptables -A OUTPUT -m cgroup --cgroup 3735928559 -j MARK --set-xmark 0x1c3/0xffffffff
+
+The only route in the `vpn` table is default routing through wg0:
+> ip route add default dev wg0 table vpn
+
+Routing rule is pretty simple:
+> ip rule add fwmark 451 table vpn
+
+Now I pass some packets on the interface:
+> cgexec -g net_cls:vpn ping 10.0.1.1
+
+I see packets reaching interface but dropped in the driver:
+> tcpdump -i wg0 host 10.0.1.1
+> ...
+> 6 packets dropped by interface
+
+Value in 4th column (TX drop) is increasing in the `/proc/net/dev` for wg0.
+
+If I add route to default routing table and do ping without assigning
+cgroup to the process then all is perfectly fine.
+> ip route add 10.0.1.0/24 dev wg0
+
+> ping 10.0.1.1
+> PING 10.0.1.1 (10.0.1.1) 56(84) bytes of data.
+> 64 bytes from 10.0.1.1: icmp_seq=1 ttl=64 time=46.1 ms
+
+Is it some kind of a bug of misconfiguration?
+
+> uname -r
+> 5.2.1-gentoo
+
+Installed Gentoo package atom.
+> =net-vpn/wireguard-0.0.20190913
+
+Thanks for any help!
