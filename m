@@ -2,63 +2,57 @@ Return-Path: <SRS0=pvJ2=KM=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 05971C43461
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 17 May 2021 15:21:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A9C0C4360C
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 17 May 2021 15:21:58 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 190CD610CB
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 17 May 2021 15:21:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 190CD610CB
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	by mail.kernel.org (Postfix) with ESMTPS id A40A5610CB
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 17 May 2021 15:21:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A40A5610CB
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=online.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9363be08;
-	Mon, 17 May 2021 15:21:54 +0000 (UTC)
-Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com
- [2607:f8b0:4864:20::b2e])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d6038971
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b11e1b0c;
+	Mon, 17 May 2021 15:21:57 +0000 (UTC)
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.130])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 771fada2
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sat, 15 May 2021 17:37:29 +0000 (UTC)
-Received: by mail-yb1-xb2e.google.com with SMTP id e190so3099107ybb.10
- for <wireguard@lists.zx2c4.com>; Sat, 15 May 2021 10:37:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=svSEnE+f84KIPgTXskpETN0rKvJ4eY2nul2qGBYVDck=;
- b=kLSil8p9mgorP6ifHzQpwYNB5y2tdXGXuUyMFkEghBSjX9E6WfPu/aDJGzdQ0QjkXF
- O3e9endy1lfpOM8ShbjPaW0rA85r4YxzBoNE/m4DPTJOYOIqZNoxC1UhmYxBGJN20c67
- c3xJzi6+/8QTtb67bP3RsmIO2bV3wqeAdMN9SYQ6M+Cwo5Yz9EBQOzObHwmzj2lIN7WG
- Y1V1ovK/5xCMeNybtwAG0I+9bDANe9j+paEzxuL9SEcdGNWEmVJ0QFOTsXq+1mrCQVxv
- LOUHUi6uWNkNlUYfAl35ZV2egfDHm1ib+m/uWnC0rHmKTYi4bJxmhyjs8YM7JN4P1UgR
- f0cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=svSEnE+f84KIPgTXskpETN0rKvJ4eY2nul2qGBYVDck=;
- b=P0xMtEpUN63sohioLLpeGl2Kq4rCPSKsEeKG02iVm8pf/GE/NyIbmnRK9KFGvuNv5V
- OrpKWE8erbXhM77WvIzfnNViKVRO9tgxC4FgYWU9qPAGe1XxY3cyKHCLX4zjfuYa2q/T
- XjHAQ0fTxr+g/3TOwjFJzOMxjeCWxWJzUkgOTyuDtazQMIRP7bOeZZpmamc5GI4wXyIB
- v7eGUPOzxavtSMiBveITDZ7a9kODGZvGfU6M+KG6G1RVMSwMw9sv3pAhC0UiJClaFAZ0
- jAnduH5Dk47LhiBM+95bt1qsjZcSYRmOeZKQH1nFtd0wmNfu2Qr6Kh5qGMSHa8HG2HB2
- rSSg==
-X-Gm-Message-State: AOAM533i0CNAjBJN24NyBULMcLVpiO27L3UY12p1gZ3NtfbE0t21+N4B
- +sVxVduwaNk1QeXVKCq36Ye5i/68HKu3gJltOEM5sTcN0uU=
-X-Google-Smtp-Source: ABdhPJwxP31ZkobI3hc39/iHBaStT+I8QZ161Wvh63K7TJz/wi3i59ypR7c7F5bWv1oCE0Yi3bXIfbt7q75pZPrrIZQ=
-X-Received: by 2002:a25:a147:: with SMTP id z65mr72357224ybh.104.1621100248032; 
- Sat, 15 May 2021 10:37:28 -0700 (PDT)
-MIME-Version: 1.0
-From: Michael Wu <michael.apply@gmail.com>
-Date: Sun, 16 May 2021 01:36:33 +0800
-Message-ID: <CAOYRf2F9q-yWwUjoSe01pO1TaeGcF5vGqt8unmowoRJ3iCTP6w@mail.gmail.com>
-Subject: Bug report: Policy routed packets are dropped by wireguard
+ Sun, 16 May 2021 12:07:14 +0000 (UTC)
+Received: from [192.168.0.214] ([95.222.31.178]) by mrelayeu.kundenserver.de
+ (mreue011 [212.227.15.167]) with ESMTPSA (Nemesis) id
+ 1M4K2r-1lhyZH0WdF-000MHe for <wireguard@lists.zx2c4.com>; Sun, 16 May 2021
+ 14:07:14 +0200
 To: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+From: Max Schulze <max.schulze@online.de>
+Subject: wireguard-windows: Tunnel shown as active but never completed
+ handshake
+Message-ID: <cf987cbc-a5d7-106b-7dc3-382ced7bc5d0@online.de>
+Date: Sun, 16 May 2021 14:07:13 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-Provags-ID: V03:K1:BM9QtcgtNqhIiIzjvcb8ZMG2SioiRg1WyTkBbOQPZhA+pcZIEJt
+ sf8wo17CMbZo5g1t+iuPC+kQqPbIijcj1J1DJgxe4JYFjT7+HKuD79EF8XbYZZOrQxU5Xp5
+ m/CrhKl0ZEtfcJRuYBTcsejnk4abGl6jARJHjxHDZZx4exfD/WTRE6LtowL6visrFBCWeGb
+ F6TDkLFbWKV27L+cmbO8g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:w6GXNnvyRG8=:IQmNWUbi3HxwYxMVEfNTvg
+ Dog2/aG8kz2nysTEkYqKBN1AKBgbldfwEyff8sESk0CSNPpWI8toCVnLPfUpNA+g0KtVz6Rff
+ ZXte41aibhsOIyI9t7YdnHgf268FJ+Uwi8arWCyb0lfRwDgeBJ/q0OYctKnG5D2Ig4OM2oS4Q
+ fh7HbRaC4g89s5XpiIccUMXK1oFaw1+tqk6yOd36Nl9AkJyL1VmxoqqGhdQ3Sp3oIEZ/btqw8
+ zUj2E3RIGB8dqxltOcmMROJOtrpk8lPCQ4TPfYZXJGHPhB3LDL49HipF/GG3vXvAso2xwDz+z
+ PCrQ+YuxI9fiWmqR6DFTlfgdTxJqKRwg56o5YcSUkvRJvxq7OS2Ojt14rkY3wn87X5LcyZldz
+ XDk7Frr2f7//5RagROG4fkoNEcTRetCXBOl4Q5cXSfNzFTUTtZ/Lg7oAfDNtCtrJxxv0JrwXM
+ SZ36l1eUkwW37uPO+IGcx39YjjUjCxkyo/GHByrE4wPYwLVDCV8S1zHa4JdzfI92qgxChheJt
+ qdbN3giOU6p6B56AaUnDUA=
 X-Mailman-Approved-At: Mon, 17 May 2021 15:21:51 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -74,71 +68,349 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello,
-
-I'd like to confirm that the following problem seemed to be a bug, and
-not configuration error:
-https://lists.zx2c4.com/pipermail/wireguard/2019-September/004545.html
-(Content dupated at the end of this email for easier reference)
-
-On system 1 (kernel 4.15), everything worked as expected. However, on
-system 2 (kernel 5.4), the issue described above is observed.
-
-Regards,
-Michael
+I am puzzled that the wireguard management UI shows "active", even 
+though the tunnel is not established.
 
 
-[System 1]:
-Ubuntu 18.04.5 LTS
-4.15.0-128-generic #131-Ubuntu SMP Wed Dec 9 06:57:35 UTC 2020 x86_64
-x86_64 x86_64 GNU/Linux
+I know for sure the peer is reachable via ping, but does not have 
+wireguard running. I am reproducing an issue where the peer went down 
+but the tunnel on the client kept being displayed as "active".
 
-[System 2]:
-Ubuntu 20.04.2 LTS
-5.4.0-73-generic #82-Ubuntu SMP Wed Apr 14 17:39:42 UTC 2021 x86_64
-x86_64 x86_64 GNU/Linux
 
-[Policy routed packets are dropped by wireguard]
-Original mail: https://lists.zx2c4.com/pipermail/wireguard/2019-September/004545.html
+Wouldn't it be better to show 'tunnel up - handshake in progress' or 
+something similar and only switch to 'active' once there has been an 
+handshake?
 
-Hello!
 
-I'm looking for technical advice.
-Currently I'm trying to pass marked sessions through wireguard VPN network.
+Can I provide more debug info?
 
-Marking is done by cgroups classid matching:
-> iptables -A OUTPUT -m cgroup --cgroup 3735928559 -j MARK --set-xmark 0x1c3/0xffffffff
 
-The only route in the `vpn` table is default routing through wg0:
-> ip route add default dev wg0 table vpn
+Note: the wintun errors are there even when it works - I might report a 
+separate Issue for them...
 
-Routing rule is pretty simple:
-> ip rule add fwmark 451 table vpn
 
-Now I pass some packets on the interface:
-> cgexec -g net_cls:vpn ping 10.0.1.1
+Best regards,
 
-I see packets reaching interface but dropped in the driver:
-> tcpdump -i wg0 host 10.0.1.1
-> ...
-> 6 packets dropped by interface
+max
 
-Value in 4th column (TX drop) is increasing in the `/proc/net/dev` for wg0.
 
-If I add route to default routing table and do ping without assigning
-cgroup to the process then all is perfectly fine.
-> ip route add 10.0.1.0/24 dev wg0
 
-> ping 10.0.1.1
-> PING 10.0.1.1 (10.0.1.1) 56(84) bytes of data.
-> 64 bytes from 10.0.1.1: icmp_seq=1 ttl=64 time=46.1 ms
+C:\Windows\system32>wg
+interface: <>
+   public key: QhK<scrambled>0=
+   private key: (hidden)
+   listening port: 65170
 
-Is it some kind of a bug of misconfiguration?
+peer: 9npne1<scrambled>CDg=
+   endpoint: 192.168.3.184:51820
+   allowed ips: 192.168.223.0/24
+   transfer: 0 B received, 10.12 KiB sent
+   persistent keepalive: every 20 seconds
 
-> uname -r
-> 5.2.1-gentoo
 
-Installed Gentoo package atom.
-> =net-vpn/wireguard-0.0.20190913
+2021-05-15 18:34:53.501802: [MGR] [Wintun] WintunEnumAdapters: Failed to 
+create adapter 2276 data
+2021-05-16 13:48:04.114000: [TUN] [<>] Starting WireGuard/0.3.14 
+(Windows 6.1.7601; amd64)
+2021-05-16 13:48:04.114000: [TUN] [<>] Watching network interfaces
+2021-05-16 13:48:04.114000: [TUN] [<>] Resolving DNS names
+2021-05-16 13:48:04.114000: [TUN] [<>] Creating Wintun interface
+2021-05-16 13:48:04.114000: [TUN] [<>] [Wintun] 
+GetNetCfgInstanceIdFromDevInfo: Opening adapter 2276 device registry key 
+failed: Der angeforderte Geräteregistrierungsschlüssel ist nicht 
+vorhanden. (Code 0xE0000204)
+2021-05-16 13:48:04.114000: [TUN] [<>] [Wintun] CreateAdapter: Creating 
+adapter
+2021-05-16 13:48:04.198000: [TUN] [<>] [Wintun] SelectDriver: Using 
+existing driver 0.11
+2021-05-16 13:48:04.660000: [TUN] [<>] Using Wintun/0.11
+2021-05-16 13:48:04.660000: [TUN] [<>] Enabling firewall rules
+2021-05-16 13:48:04.670000: [TUN] [<>] Dropping privileges
+2021-05-16 13:48:04.670000: [TUN] [<>] Creating interface instance
+2021-05-16 13:48:04.680000: [TUN] [<>] Setting interface configuration
+2021-05-16 13:48:04.680000: [TUN] [<>] UAPI: Updating private key
+2021-05-16 13:48:04.680000: [TUN] [<>] UAPI: Removing all peers
+2021-05-16 13:48:04.680000: [TUN] [<>] peer(9npn…+CDg) - UAPI: Created
+2021-05-16 13:48:04.680000: [TUN] [<>] peer(9npn…+CDg) - UAPI: Updating 
+endpoint
+2021-05-16 13:48:04.680000: [TUN] [<>] peer(9npn…+CDg) - UAPI: Updating 
+persistent keepalive interval
+2021-05-16 13:48:04.680000: [TUN] [<>] peer(9npn…+CDg) - UAPI: Removing 
+all allowedips
+2021-05-16 13:48:04.680000: [TUN] [<>] peer(9npn…+CDg) - UAPI: Adding 
+allowedip
+2021-05-16 13:48:04.680000: [TUN] [<>] Bringing peers up
+2021-05-16 13:48:04.681000: [TUN] [<>] UDP bind has been updated
+2021-05-16 13:48:04.681000: [TUN] [<>] peer(9npn…+CDg) - Starting
+2021-05-16 13:48:04.681000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+keepalive packet
+2021-05-16 13:48:04.681000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:48:04.681000: [TUN] [<>] peer(9npn…+CDg) - Routine: 
+sequential receiver - started
+2021-05-16 13:48:04.681000: [TUN] [<>] Routine: encryption worker 1 - 
+started
+2021-05-16 13:48:04.681000: [TUN] [<>] Routine: decryption worker 1 - 
+started
+2021-05-16 13:48:04.681000: [TUN] [<>] Routine: handshake worker 1 - started
+2021-05-16 13:48:04.681000: [TUN] [<>] Routine: encryption worker 2 - 
+started
+2021-05-16 13:48:04.681000: [TUN] [<>] Routine: decryption worker 2 - 
+started
+2021-05-16 13:48:04.681000: [TUN] [<>] Routine: handshake worker 2 - started
+2021-05-16 13:48:04.681000: [TUN] [<>] Routine: encryption worker 3 - 
+started
+2021-05-16 13:48:04.681000: [TUN] [<>] Routine: decryption worker 3 - 
+started
+2021-05-16 13:48:04.681000: [TUN] [<>] Routine: handshake worker 3 - started
+2021-05-16 13:48:04.681000: [TUN] [<>] Routine: encryption worker 4 - 
+started
+2021-05-16 13:48:04.681000: [TUN] [<>] Routine: decryption worker 4 - 
+started
+2021-05-16 13:48:04.681000: [TUN] [<>] Routine: handshake worker 4 - started
+2021-05-16 13:48:04.681000: [TUN] [<>] Routine: TUN reader - started
+2021-05-16 13:48:04.687000: [TUN] [<>] Routine: event worker - started
+2021-05-16 13:48:04.687000: [TUN] [<>] Interface state was Down, 
+requested Up, now Up
+2021-05-16 13:48:04.687000: [TUN] [<>] Monitoring default v4 routes
+2021-05-16 13:48:04.687000: [TUN] [<>] Binding v4 socket to interface 11 
+(blackhole=false)
+2021-05-16 13:48:04.689000: [TUN] [<>] Routine: receive incoming v6 - 
+started
+2021-05-16 13:48:04.689000: [TUN] [<>] Routine: receive incoming v4 - 
+started
+2021-05-16 13:48:04.689000: [TUN] [<>] peer(9npn…+CDg) - Routine: 
+sequential sender - started
+2021-05-16 13:48:04.691000: [TUN] [<>] Setting device v4 addresses
+2021-05-16 13:48:04.752000: [TUN] [<>] Monitoring default v6 routes
+2021-05-16 13:48:04.752000: [TUN] [<>] Binding v6 socket to interface 0 
+(blackhole=false)
+2021-05-16 13:48:04.752000: [TUN] [<>] Setting device v6 addresses
+2021-05-16 13:48:04.822000: [TUN] [<>] Listening for UAPI requests
+2021-05-16 13:48:04.822000: [TUN] [<>] Startup complete
+2021-05-16 13:48:09.957000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 2)
+2021-05-16 13:48:09.957000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:48:13.991000: [MGR] [Wintun] CreateAdapterData: Opening 
+adapter 2276 device registry key failed: Der angeforderte 
+Geräteregistrierungsschlüssel ist nicht vorhanden. (Code 0xE0000204)
+2021-05-16 13:48:13.991000: [MGR] [Wintun] WintunEnumAdapters: Failed to 
+create adapter 2276 data
+2021-05-16 13:48:15.126000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 2)
+2021-05-16 13:48:15.126000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:48:20.407000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 2)
+2021-05-16 13:48:20.407000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:48:25.584000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 2)
+2021-05-16 13:48:25.584000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:48:30.842000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 2)
+2021-05-16 13:48:30.842000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:48:36.044000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:48:41.132000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 2)
+2021-05-16 13:48:41.132000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:48:46.324000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:48:51.464000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 2)
+2021-05-16 13:48:51.464000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:48:56.605000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 2)
+2021-05-16 13:48:56.605000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:49:01.854000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:49:06.975000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:49:12.056000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 2)
+2021-05-16 13:49:12.056000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:49:17.165000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 2)
+2021-05-16 13:49:17.165000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:49:22.242000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 2)
+2021-05-16 13:49:22.242000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:49:27.340000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 2)
+2021-05-16 13:49:27.340000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:49:32.355000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 3)
+2021-05-16 13:49:32.355000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:49:37.450000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 2)
+2021-05-16 13:49:37.450000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:49:42.531000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 2)
+2021-05-16 13:49:42.531000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:49:47.840000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 2)
+2021-05-16 13:49:47.840000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:49:53.065000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 2)
+2021-05-16 13:49:53.065000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:49:58.275000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:50:03.341000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 2)
+2021-05-16 13:50:03.341000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:50:08.626000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 2)
+2021-05-16 13:50:08.626000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:50:13.946000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 3)
+2021-05-16 13:50:13.946000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:50:19.156000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 4)
+2021-05-16 13:50:19.156000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:50:24.287000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 5)
+2021-05-16 13:50:24.287000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:50:29.350000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 6)
+2021-05-16 13:50:29.350000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:50:34.640000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 7)
+2021-05-16 13:50:34.640000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:50:39.912000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 8)
+2021-05-16 13:50:39.912000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:50:45.153000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 9)
+2021-05-16 13:50:45.153000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:50:50.245000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 10)
+2021-05-16 13:50:50.245000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:50:55.309000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 11)
+2021-05-16 13:50:55.309000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:51:00.553000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 12)
+2021-05-16 13:51:00.553000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:51:05.714000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 13)
+2021-05-16 13:51:05.714000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:51:10.835000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 14)
+2021-05-16 13:51:10.835000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:51:15.996000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 15)
+2021-05-16 13:51:15.996000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:51:21.221000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 16)
+2021-05-16 13:51:21.221000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:51:26.417000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 17)
+2021-05-16 13:51:26.417000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:51:31.673000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 2)
+2021-05-16 13:51:31.673000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:51:36.739000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 3)
+2021-05-16 13:51:36.739000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:51:41.796000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 4)
+2021-05-16 13:51:41.796000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:51:46.865000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 2)
+2021-05-16 13:51:46.865000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:51:51.969000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 3)
+2021-05-16 13:51:51.969000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:51:57.275000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 4)
+2021-05-16 13:51:57.275000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:52:02.465000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 5)
+2021-05-16 13:52:02.465000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:52:07.777000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 6)
+2021-05-16 13:52:07.777000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:52:12.994000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 7)
+2021-05-16 13:52:12.994000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:52:18.219000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 8)
+2021-05-16 13:52:18.219000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:52:23.398000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 9)
+2021-05-16 13:52:23.398000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:52:28.674000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 10)
+2021-05-16 13:52:28.674000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:52:33.856000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 11)
+2021-05-16 13:52:33.856000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:52:39.128000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 12)
+2021-05-16 13:52:39.128000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:52:44.265000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 13)
+2021-05-16 13:52:44.265000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:52:49.490000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 14)
+2021-05-16 13:52:49.490000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:52:54.761000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 15)
+2021-05-16 13:52:54.761000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:52:59.766000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
+2021-05-16 13:53:04.937000: [TUN] [<>] peer(9npn…+CDg) - Handshake did 
+not complete after 5 seconds, retrying (try 2)
+2021-05-16 13:53:04.937000: [TUN] [<>] peer(9npn…+CDg) - Sending 
+handshake initiation
 
-Thanks for any help!
