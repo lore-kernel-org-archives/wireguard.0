@@ -2,71 +2,69 @@ Return-Path: <SRS0=pvJ2=KM=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 922F4C43617
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 17 May 2021 15:22:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 05525C433B4
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 17 May 2021 15:27:28 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id C6D7D611B0
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 17 May 2021 15:22:00 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org C6D7D611B0
+	by mail.kernel.org (Postfix) with ESMTPS id 53DA061004
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 17 May 2021 15:27:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 53DA061004
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e9e34dae;
-	Mon, 17 May 2021 15:22:00 +0000 (UTC)
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com
- [2607:f8b0:4864:20::102e])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 40303aa2
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 25a56eab;
+	Mon, 17 May 2021 15:22:01 +0000 (UTC)
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com
+ [2607:f8b0:4864:20::42d])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f127192f
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 17 May 2021 08:17:46 +0000 (UTC)
-Received: by mail-pj1-x102e.google.com with SMTP id
- cu11-20020a17090afa8bb029015d5d5d2175so2420195pjb.3
- for <wireguard@lists.zx2c4.com>; Mon, 17 May 2021 01:17:45 -0700 (PDT)
+ Mon, 17 May 2021 09:11:06 +0000 (UTC)
+Received: by mail-pf1-x42d.google.com with SMTP id s19so2251016pfe.8
+ for <wireguard@lists.zx2c4.com>; Mon, 17 May 2021 02:11:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=from:to:cc:subject:date:message-id:mime-version
  :content-transfer-encoding;
- bh=JPVXV5rkpmusT9GGUEjwOzn8WfiRWJBQO/NMGCKWpME=;
- b=ZbtQQlWamd/enBPVov07CvXW5PeiPEPayslWgV9jkDLuIeqcs5YcY6KFGu6iqPOkpA
- 6yg5ehHAHdQkBfMIxlHFaqVgibeJd5QftfpsXroo9+zyfj8w9J6kGNWWne/9BR/y+5Lj
- F52phjjxck93bZa4NeVFZRCX2wnGud6c/Gu5s9InFSH6uMa7Kvi06OX9nM3FdPjgMaB4
- 6eJNZUY0HMvqRUVr1+aRT/MlRnxryto4qKYVBQ7azh1JWxhzGirOBxx41VDDwUkaZLg2
- FIpqY3job/gPtH4R4u3kR4uQme8a2R1DHCujxc70VOTt/hseqpjYxvvCW91yrGLqj/jo
- K9XA==
+ bh=PjjjE71AfPUwf/ZypjvqVcfufjxakCDFUlRWj2bBDD0=;
+ b=nhwidPbc2DLWgOgt6WMG/Een70fyRiTQX0RSfSq+m5vKanWgXRPaEr857tp8VH54EZ
+ tBiOhfCWG3d7BzwyHeEeq3LGqnVDl9arI3Ac9iO3N6zt2OFaopsbeZhCXDC1bGkGrXqN
+ uRYN28C5qbqGgzS0rX6ZHEqj9veiwoSSkILGMZlHT4kcT76gCmRuf4JBgGhCFA0CNPW3
+ ec2zh5I6rQrlM6NPYBWbI3SK4qFSV0lcl3/clMzqvTJGtfPUh0PZwMRwPdY9RayLqwsD
+ uOFlTegqoyLZLM+gkQHPutshlWd/UAe6/ftIs5Zv0WcC+plLjyzgCeBQctl+THLscgIt
+ fylg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
  :content-transfer-encoding;
- bh=JPVXV5rkpmusT9GGUEjwOzn8WfiRWJBQO/NMGCKWpME=;
- b=DoecYk26uqr0grELep+VgtKAMK4ic/U3Far1FksM7O95SVmh4bNhdfUdw4Y2pR1V5/
- xdghHfq4fPZWpSoN6s7V/93NAMDBZ369m4guwDDZbAv6OXaph9oYkjXMl3JqK4SDCJP2
- FnS5GCddIfAPgAqLK7L+3w+ZdYUkg7AKMbQ7Ne1oYWEffyt4CpJGy2SAC86DitDRpPUC
- 7DL8jIrHsCETsl4FYDWQHqEJ2eGOWQdBOmuVnA1gCZWK0GJ3BEEo+21/4hGZxNrGy5Wb
- fZiPrfOQhmeh0R+sCDOpmPI147+2p9DOo2uN2xZwABTI5bFIK1+dD7mX5HeBMCIj37g8
- QVpA==
-X-Gm-Message-State: AOAM5327ZsUVCGb2cQ7kI6j8XmgozkQRJtKOxBAyti0/n0N43SJJiokL
- ATsRhCKGLo19ZhAVLhyf1JDlZl+qCBLrQg==
-X-Google-Smtp-Source: ABdhPJzgRAz1UzmbdiZBiTdgpxUGaz9I3Ps2f44u6xhrcsUDmb101KvjLD1R5F+AMSVW8b5xQuuyCQ==
-X-Received: by 2002:a17:903:1ca:b029:ee:5aa3:c077 with SMTP id
- e10-20020a17090301cab02900ee5aa3c077mr59301877plh.51.1621239464183; 
- Mon, 17 May 2021 01:17:44 -0700 (PDT)
+ bh=PjjjE71AfPUwf/ZypjvqVcfufjxakCDFUlRWj2bBDD0=;
+ b=fm8aiaAuoQqaol0qbBMRp31Yk4B99Kh9bvOa1lO+xNAyPS0baxcDQP+djWNgpiAHGf
+ l6zvg1mNqd0jjEoSKF+jQ5l4v8BJr7XHvGQVjb0sg4djPee8nq5E+3u5W1MRS1n3yH6s
+ A4SoIIawflH+2rFjYlKkgOXlUW7GdLh/gOJRQRr45pqNfueJPNHeUVtSc3lmfjC/nCHQ
+ ofq4ASMconOHx+kPrsW3dPdmt90j6KXToO4dhT6ArlOI1ciuWv0iJtdER11iluyG7bVe
+ 2lP2Izcglyybc+Aoe9TcmA+YzBDF72Q7mI6NJhCKUfZ1cp8LCAPPKoW3qwyo5e+oA3AJ
+ spDQ==
+X-Gm-Message-State: AOAM531zs1kVzUzVGGnGS5JM3ASGVo3FsWkZ2CdENBOn13pnPU2Ty2RF
+ rRuA/lFXiCHoq7MkC4zDOWrHSUOePyc4uw==
+X-Google-Smtp-Source: ABdhPJwFKpZO38Yio2IK3eMQ0mTxvQL/CVSOpoUPi36/ucSwGtuNIqrgJCJiWv2nYzMxoli0Vg1j9A==
+X-Received: by 2002:a63:e105:: with SMTP id z5mr40752343pgh.321.1621242664446; 
+ Mon, 17 May 2021 02:11:04 -0700 (PDT)
 Received: from Leo-laptop-t470s.redhat.com ([209.132.188.80])
- by smtp.gmail.com with ESMTPSA id n27sm9543246pfv.142.2021.05.17.01.17.42
+ by smtp.gmail.com with ESMTPSA id t14sm9142310pfg.168.2021.05.17.02.11.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 May 2021 01:17:43 -0700 (PDT)
+ Mon, 17 May 2021 02:11:04 -0700 (PDT)
 From: Hangbin Liu <liuhangbin@gmail.com>
 To: wireguard@lists.zx2c4.com
 Cc: "Jason A . Donenfeld" <Jason@zx2c4.com>, Hangbin Liu <liuhangbin@gmail.com>
-Subject: [PATCH RESEND wireguard-tools] contrib/launchd: fix xml syntax error
-Date: Mon, 17 May 2021 16:17:30 +0800
-Message-Id: <20210517081730.868755-1-liuhangbin@gmail.com>
+Subject: [PATCH wireguard-tools] src/show: remove dead offset check code
+Date: Mon, 17 May 2021 17:10:53 +0800
+Message-Id: <20210517091053.886157-1-liuhangbin@gmail.com>
 X-Mailer: git-send-email 2.26.3
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -85,30 +83,27 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-The current plist xml gets error "DOCTYPE improperly terminated" with xml
-syntax checker[1]. The example in apple doc[2] also doesn't have semicolon
-at the end of DOCTYPE line.
+At first the offset will always be 0. So the check of offset ? ", " : ""
+is useless.
 
-[1] https://www.w3schools.com/xml/xml_validator.asp
-[2] https://opensource.apple.com/source/launchd/launchd-257/launchd/doc/HOWTO.html
-
-Fixes: b30e74b5956a ("wg-quick: darwin: support being called from launchd")
 Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
 ---
- contrib/launchd/com.wireguard.wg0.plist | 2 +-
+ src/show.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/contrib/launchd/com.wireguard.wg0.plist b/contrib/launchd/com.wireguard.wg0.plist
-index 9fc0141..ea1eab6 100644
---- a/contrib/launchd/com.wireguard.wg0.plist
-+++ b/contrib/launchd/com.wireguard.wg0.plist
-@@ -1,5 +1,5 @@
- <?xml version="1.0" encoding="UTF-8"?>
--<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd";>
-+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
- <plist version="1.0">
- <dict>
-   <key>Label</key>
+diff --git a/src/show.c b/src/show.c
+index 761858b..83d4d6b 100644
+--- a/src/show.c
++++ b/src/show.c
+@@ -141,7 +141,7 @@ static size_t pretty_time(char *buf, const size_t len, unsigned long long left)
+ 	seconds = left % 60;
+ 
+ 	if (years)
+-		offset += snprintf(buf + offset, len - offset, "%s%llu " TERMINAL_FG_CYAN "year%s" TERMINAL_RESET, offset ? ", " : "", years, years == 1 ? "" : "s");
++		offset = snprintf(buf, len, "%llu " TERMINAL_FG_CYAN "year%s" TERMINAL_RESET, years, years == 1 ? "" : "s");
+ 	if (days)
+ 		offset += snprintf(buf + offset, len - offset, "%s%llu " TERMINAL_FG_CYAN  "day%s" TERMINAL_RESET, offset ? ", " : "", days, days == 1 ? "" : "s");
+ 	if (hours)
 -- 
 2.26.3
 
