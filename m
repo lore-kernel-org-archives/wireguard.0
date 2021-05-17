@@ -8,64 +8,65 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72014C43611
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 17 May 2021 15:22:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 922F4C43617
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 17 May 2021 15:22:01 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id A9E646109F
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 17 May 2021 15:21:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A9E646109F
+	by mail.kernel.org (Postfix) with ESMTPS id C6D7D611B0
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 17 May 2021 15:22:00 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org C6D7D611B0
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e741e3f8;
-	Mon, 17 May 2021 15:21:58 +0000 (UTC)
-Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com
- [2607:f8b0:4864:20::42e])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 5723c72c
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e9e34dae;
+	Mon, 17 May 2021 15:22:00 +0000 (UTC)
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com
+ [2607:f8b0:4864:20::102e])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 40303aa2
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 17 May 2021 03:35:55 +0000 (UTC)
-Received: by mail-pf1-x42e.google.com with SMTP id k19so4026894pfu.5
- for <wireguard@lists.zx2c4.com>; Sun, 16 May 2021 20:35:55 -0700 (PDT)
+ Mon, 17 May 2021 08:17:46 +0000 (UTC)
+Received: by mail-pj1-x102e.google.com with SMTP id
+ cu11-20020a17090afa8bb029015d5d5d2175so2420195pjb.3
+ for <wireguard@lists.zx2c4.com>; Mon, 17 May 2021 01:17:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=from:to:cc:subject:date:message-id:mime-version
  :content-transfer-encoding;
  bh=JPVXV5rkpmusT9GGUEjwOzn8WfiRWJBQO/NMGCKWpME=;
- b=FcGmcVBYBBkg9wxMVkJrGGaL1G1g5gMJPKx2hnvlioi3xhQa/NsGOzvJVx9Z4l4O5I
- J80TWbbdS8O1nNj3Q68vQnIsuYoeZ+sSYArmCD7QJOXxPKvhFGbS4BeWVfig6hN4RNw0
- y9q3w+Q8AZhsvpnZ24JSFb3yR0y+PoO9IPP87jMRO7GgUgLLIB8Y0pno/aGwvqJ77Fj7
- K1GwvcBanT7brOXQQQtt/faI56SJQQ89y3hfwCkFqdWioR/k3x5eOqStzaMN6w3IESH1
- DGfCSTLkYtFydb8ZbPvgbvL0pTfuTdNqZsz+T0nL5WxHVpLvD6t2aKFzVNuOC2zpAfLs
- mkPA==
+ b=ZbtQQlWamd/enBPVov07CvXW5PeiPEPayslWgV9jkDLuIeqcs5YcY6KFGu6iqPOkpA
+ 6yg5ehHAHdQkBfMIxlHFaqVgibeJd5QftfpsXroo9+zyfj8w9J6kGNWWne/9BR/y+5Lj
+ F52phjjxck93bZa4NeVFZRCX2wnGud6c/Gu5s9InFSH6uMa7Kvi06OX9nM3FdPjgMaB4
+ 6eJNZUY0HMvqRUVr1+aRT/MlRnxryto4qKYVBQ7azh1JWxhzGirOBxx41VDDwUkaZLg2
+ FIpqY3job/gPtH4R4u3kR4uQme8a2R1DHCujxc70VOTt/hseqpjYxvvCW91yrGLqj/jo
+ K9XA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
  :content-transfer-encoding;
  bh=JPVXV5rkpmusT9GGUEjwOzn8WfiRWJBQO/NMGCKWpME=;
- b=uK1hNXcOZq+gz4B5SZdDnQw8CMwzDs7rpUdOJ05N8RrJ2FvAHb5Zjw+fxmrJA+QmiD
- bYh/93R+IilElXHeLDoB0oKt4jUdqSJXr5aKvaH6kU6eLrGDDkKOjRudI5MwZyikTLYZ
- gAbThHgP8a5NgjKX37FCi6DR9+jh1nESJ6o4T+YDJaNf4/agCHAqXt7H+A0nV1rE3RXu
- IpGot6HkTT3MslGLK8XQfdeg3LlDhthR+TVB/f/Uy2mmGWLrQUsnPze6HxjL2bC9/vWW
- gtURlT2akl3TJI6GajW0WgRmB+mBTmscNxjWoTXjAsw9IC7jPyKNU6RPMBc6cNtmUJI6
- 0kGQ==
-X-Gm-Message-State: AOAM5329uspWiXTmr+QsScidjIHldRfdhYtH6NtO+qJvnz2hwkludkWo
- 3dnysIhc8YDk9ZUuB0tuGgrYt5iP/ia9MA==
-X-Google-Smtp-Source: ABdhPJyxqal6QUUO+MNMOzaUq1tOgPCm/ygR9XqPXKQsczFUggHILYHqH5VYKXutAX8hg1cNG2toTg==
-X-Received: by 2002:a17:902:b713:b029:ef:b031:2a9c with SMTP id
- d19-20020a170902b713b02900efb0312a9cmr16533964pls.22.1621222176860; 
- Sun, 16 May 2021 20:29:36 -0700 (PDT)
+ b=DoecYk26uqr0grELep+VgtKAMK4ic/U3Far1FksM7O95SVmh4bNhdfUdw4Y2pR1V5/
+ xdghHfq4fPZWpSoN6s7V/93NAMDBZ369m4guwDDZbAv6OXaph9oYkjXMl3JqK4SDCJP2
+ FnS5GCddIfAPgAqLK7L+3w+ZdYUkg7AKMbQ7Ne1oYWEffyt4CpJGy2SAC86DitDRpPUC
+ 7DL8jIrHsCETsl4FYDWQHqEJ2eGOWQdBOmuVnA1gCZWK0GJ3BEEo+21/4hGZxNrGy5Wb
+ fZiPrfOQhmeh0R+sCDOpmPI147+2p9DOo2uN2xZwABTI5bFIK1+dD7mX5HeBMCIj37g8
+ QVpA==
+X-Gm-Message-State: AOAM5327ZsUVCGb2cQ7kI6j8XmgozkQRJtKOxBAyti0/n0N43SJJiokL
+ ATsRhCKGLo19ZhAVLhyf1JDlZl+qCBLrQg==
+X-Google-Smtp-Source: ABdhPJzgRAz1UzmbdiZBiTdgpxUGaz9I3Ps2f44u6xhrcsUDmb101KvjLD1R5F+AMSVW8b5xQuuyCQ==
+X-Received: by 2002:a17:903:1ca:b029:ee:5aa3:c077 with SMTP id
+ e10-20020a17090301cab02900ee5aa3c077mr59301877plh.51.1621239464183; 
+ Mon, 17 May 2021 01:17:44 -0700 (PDT)
 Received: from Leo-laptop-t470s.redhat.com ([209.132.188.80])
- by smtp.gmail.com with ESMTPSA id k9sm9463649pgq.27.2021.05.16.20.29.35
+ by smtp.gmail.com with ESMTPSA id n27sm9543246pfv.142.2021.05.17.01.17.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 16 May 2021 20:29:36 -0700 (PDT)
+ Mon, 17 May 2021 01:17:43 -0700 (PDT)
 From: Hangbin Liu <liuhangbin@gmail.com>
 To: wireguard@lists.zx2c4.com
-Cc: Hangbin Liu <liuhangbin@gmail.com>
-Subject: [PATCH] contrib/launchd: fix xml syntax error
-Date: Mon, 17 May 2021 11:29:23 +0800
-Message-Id: <20210517032923.786658-1-liuhangbin@gmail.com>
+Cc: "Jason A . Donenfeld" <Jason@zx2c4.com>, Hangbin Liu <liuhangbin@gmail.com>
+Subject: [PATCH RESEND wireguard-tools] contrib/launchd: fix xml syntax error
+Date: Mon, 17 May 2021 16:17:30 +0800
+Message-Id: <20210517081730.868755-1-liuhangbin@gmail.com>
 X-Mailer: git-send-email 2.26.3
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
