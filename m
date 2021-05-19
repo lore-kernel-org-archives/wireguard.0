@@ -2,42 +2,73 @@ Return-Path: <SRS0=r1yQ=KO=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+X-Spam-Status: No, score=-13.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 79D6EC433ED
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 May 2021 18:43:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D1112C433B4
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 May 2021 19:51:38 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 274B261059
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 May 2021 18:43:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 274B261059
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=romanrm.net
+	by mail.kernel.org (Postfix) with ESMTPS id 0310A6100C
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 19 May 2021 19:51:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 0310A6100C
+Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=google.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 01e24cf9;
-	Wed, 19 May 2021 18:43:12 +0000 (UTC)
-Received: from rin.romanrm.net (rin.romanrm.net [51.158.148.128])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b884d993
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 764a636f;
+	Wed, 19 May 2021 19:49:09 +0000 (UTC)
+Received: from mail-qv1-xf34.google.com (mail-qv1-xf34.google.com
+ [2607:f8b0:4864:20::f34])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 52dde8ea
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 19 May 2021 18:43:11 +0000 (UTC)
-Received: from natsu (natsu2.home.romanrm.net [IPv6:fd39::e99e:8f1b:cfc9:ccb8])
- by rin.romanrm.net (Postfix) with SMTP id B812F1C5;
- Wed, 19 May 2021 18:43:10 +0000 (UTC)
-Date: Wed, 19 May 2021 23:43:10 +0500
-From: Roman Mamedov <rm@romanrm.net>
-To: Vicente Bergas <vicencb@gmail.com>
-Cc: wireguard@lists.zx2c4.com
-Subject: Re: lost connection on dynamic IP
-Message-ID: <20210519234310.66ea294e@natsu>
-In-Reply-To: <CAAMcf8BeGzUppFzfc2hF9KvpfU1DfSpncYv4AaK5Qf8_+fC-Rw@mail.gmail.com>
-References: <CAAMcf8BeGzUppFzfc2hF9KvpfU1DfSpncYv4AaK5Qf8_+fC-Rw@mail.gmail.com>
+ Wed, 19 May 2021 19:49:08 +0000 (UTC)
+Received: by mail-qv1-xf34.google.com with SMTP id e8so4178747qvp.7
+ for <wireguard@lists.zx2c4.com>; Wed, 19 May 2021 12:49:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=x553GgwQKaofcNpaBiACRQKsb0OQqbXpuDWI9o8R+5o=;
+ b=U2JOCePyF9dZ1bAQjvBXDA2RVqSJKE5ggujFUiWY6ZL1Csp7DB2UoVUu4gLSoaUqsI
+ o3XVqKkCW8Yc50rKjUXDy2p5DrY4kBclF02LosDjULEBVOYxE2pPKaSy/rHxOBV7mqGe
+ WcEWN0QynP53FeyLp/H3s7YUzRl1mxqRKhn3Q8wj33fZdtuUzScdp6JkSc+2aJBARGjn
+ sTzoeTtyVm/WlmOEwg3DxV321RqlzK8Rdzu2tQ0TkUC5FlEDeOEgrK61yLp3d3n9SO7l
+ 1H3pXKr0/UiCyqnPPpDJ4TaHjmX1W0TkWX/773/IdGkTYKt6hQOUudqp7ToOeC+QGzLl
+ VGAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=x553GgwQKaofcNpaBiACRQKsb0OQqbXpuDWI9o8R+5o=;
+ b=XlpNi5lR+CDE1nht2+FWBv4BCnFcgHBntNJPagc4YUPtG9c91DqdKb4cVSn40vEogD
+ aLI9UmjNWAM/Y2YSiHFFSKfMonJHVCKNKDq5bxRByFhiEFTshKnWlgMFS1uLx8fkLDoo
+ 2jbubr4gVWjvAT5v8i7CWj+WSE7hvGvFv2jhd74Y++v2khMJzy7A7NS9bzyrzU+Q+aT0
+ zhBGo9+sQY+ltJON02Xw70fmhDJSH3qIVa4B2rT1AUx1Bm9CqicY6TqjhFW3OV8moIwX
+ PDFFGDvDlX2UONUoT5qZ4EIzQZSQBMyDNSJuQ0py7+8Bf+LANJNWtu1GrGLkUeJGjsEw
+ FkFQ==
+X-Gm-Message-State: AOAM5321+pgCrmgkTGRe8uN83kPXdec9bkdU8/g+2+UhKdx+kkRrbql9
+ oBWnD+U0Vm4sLuGp2jIUofv8mEGvXTZ8YbeBSHuPJw==
+X-Google-Smtp-Source: ABdhPJyBY3kKYWcls4L2Vfe7GKCY8SDCqG2snzu+sRtfz1Lp2Jexzz+rhM9XdRkDpl+n8C0HPHxtJeX6kFmDYVk2cmE=
+X-Received: by 2002:a0c:f883:: with SMTP id u3mr1179641qvn.44.1621453746524;
+ Wed, 19 May 2021 12:49:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+References: <0000000000003687bd05c2b2401d@google.com>
+In-Reply-To: <0000000000003687bd05c2b2401d@google.com>
+From: Dmitry Vyukov <dvyukov@google.com>
+Date: Wed, 19 May 2021 21:48:55 +0200
+Message-ID: <CACT4Y+YJDGFN4q-aTPritnjjHEXiFovOm9eO6Ay4xC1YOa5z3w@mail.gmail.com>
+Subject: Re: [syzbot] BUG: MAX_LOCKDEP_KEYS too low! (2)
+To: syzbot <syzbot+a70a6358abd2c3f9550f@syzkaller.appspotmail.com>, 
+ Peter Zijlstra <peterz@infradead.org>,
+ Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, David Miller <davem@davemloft.net>,
+ Jakub Kicinski <kuba@kernel.org>, LKML <linux-kernel@vger.kernel.org>, 
+ netdev <netdev@vger.kernel.org>,
+ syzkaller-bugs <syzkaller-bugs@googlegroups.com>, 
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -52,31 +83,167 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Tue, 18 May 2021 13:22:31 +0200
-Vicente Bergas <vicencb@gmail.com> wrote:
-
-> A server connected to the Internet through an ISP that provides a
-> dynamic IP with NAT.
-
-If it's NAT, then your server has no dedicated public IP? What do you update
-to DNS, IP of the ISP's NAT pool (shared IP with many other customers)?
-
-> I think the issue happens when the ISP on the server side shuts down
-> the Internet connection for more than 1 hour! Then, it is restored
-> with a new IP.
-> inadyn detects the new IP and updates the DNS.
-> At this point the Internet connection is operational again, but the
-> client remains disconnected until rebooted.
+On Wed, May 19, 2021 at 7:35 PM syzbot
+<syzbot+a70a6358abd2c3f9550f@syzkaller.appspotmail.com> wrote:
 >
-> Is this scenario expected to work due to the "Built-in Roaming" ?
+> Hello,
+>
+> syzbot found the following issue on:
+>
+> HEAD commit:    b81ac784 net: cdc_eem: fix URL to CDC EEM 1.0 spec
+> git tree:       net
+> console output: https://syzkaller.appspot.com/x/log.txt?x=15a257c3d00000
+> kernel config:  https://syzkaller.appspot.com/x/.config?x=5b86a12e0d1933b5
+> dashboard link: https://syzkaller.appspot.com/bug?extid=a70a6358abd2c3f9550f
+>
+> Unfortunately, I don't have any reproducer for this issue yet.
+>
+> IMPORTANT: if you fix the issue, please add the following tag to the commit:
+> Reported-by: syzbot+a70a6358abd2c3f9550f@syzkaller.appspotmail.com
+>
+> BUG: MAX_LOCKDEP_KEYS too low!
 
-It might work, helped by PersistentKeepalive, and as long as the server and the
-client don't change their IPs/ports *at the same time*. To protect against
-that, or to improve resiliency in general (and assuming there's actually no NAT
-at the server side after all), your client should resolve the DNS record for
-the server periodically, and in case the IP changed, call "wg set [interface]
-peer [key] endpoint [IP:port]".
 
--- 
-With respect,
-Roman
+What config controls this? I don't see "MAX_LOCKDEP_KEYS too low" in
+any of the config descriptions...
+Here is what syzbot used:
+
+CONFIG_LOCKDEP=y
+CONFIG_LOCKDEP_BITS=16
+CONFIG_LOCKDEP_CHAINS_BITS=17
+CONFIG_LOCKDEP_STACK_TRACE_BITS=20
+CONFIG_LOCKDEP_STACK_TRACE_HASH_BITS=14
+CONFIG_LOCKDEP_CIRCULAR_QUEUE_BITS=12
+
+We already bumped most of these.
+The log contains dump of the lockdep debug files, is there any offender?
+
+Also looking at the log I noticed a memory safety bug in lockdep implementation:
+
+[ 2023.605505][ T6807]
+==================================================================
+[ 2023.613589][ T6807] BUG: KASAN: global-out-of-bounds in
+print_name+0x1b0/0x1d0
+[ 2023.624553][ T6807] Read of size 8 at addr ffffffff90225cb0 by task cat/6807
+[ 2023.631765][ T6807]
+[ 2023.634096][ T6807] CPU: 1 PID: 6807 Comm: cat Not tainted
+5.12.0-syzkaller #0
+[ 2023.641488][ T6807] Hardware name: Google Google Compute
+Engine/Google Compute Engine, BIOS Google 01/01/2011
+[ 2023.651745][ T6807] Call Trace:
+[ 2023.655031][ T6807]  dump_stack+0x141/0x1d7
+[ 2023.659375][ T6807]  ? print_name+0x1b0/0x1d0
+[ 2023.663890][ T6807]  print_address_description.constprop.0.cold+0x5/0x2f8
+[ 2023.670895][ T6807]  ? print_name+0x1b0/0x1d0
+[ 2023.675413][ T6807]  ? print_name+0x1b0/0x1d0
+[ 2023.679948][ T6807]  kasan_report.cold+0x7c/0xd8
+[ 2023.684725][ T6807]  ? print_name+0x1b0/0x1d0
+[ 2023.689248][ T6807]  print_name+0x1b0/0x1d0
+[ 2023.694196][ T6807]  ? lockdep_stats_show+0xa20/0xa20
+[ 2023.699940][ T6807]  ? seq_file_path+0x30/0x30
+[ 2023.704721][ T6807]  ? mutex_lock_io_nested+0xf70/0xf70
+[ 2023.710118][ T6807]  ? lock_acquire+0x58a/0x740
+[ 2023.715156][ T6807]  ? kasan_unpoison+0x3c/0x60
+[ 2023.719843][ T6807]  lc_show+0x10a/0x210
+[ 2023.723924][ T6807]  seq_read_iter+0xb66/0x1220
+[ 2023.728617][ T6807]  proc_reg_read_iter+0x1fb/0x2d0
+[ 2023.733651][ T6807]  new_sync_read+0x41e/0x6e0
+[ 2023.738272][ T6807]  ? ksys_lseek+0x1b0/0x1b0
+[ 2023.742784][ T6807]  ? lock_acquire+0x58a/0x740
+[ 2023.747563][ T6807]  vfs_read+0x35c/0x570
+[ 2023.751737][ T6807]  ksys_read+0x12d/0x250
+[ 2023.756003][ T6807]  ? vfs_write+0xa30/0xa30
+[ 2023.760429][ T6807]  ? syscall_enter_from_user_mode+0x27/0x70
+[ 2023.766335][ T6807]  do_syscall_64+0x3a/0xb0
+[ 2023.770764][ T6807]  entry_SYSCALL_64_after_hwframe+0x44/0xae
+[ 2023.776685][ T6807] RIP: 0033:0x7f99856e2910
+[ 2023.781104][ T6807] Code: b6 fe ff ff 48 8d 3d 0f be 08 00 48 83 ec
+08 e8 06 db 01 00 66 0f 1f 44 00 00 83 3d f9 2d 2c 00 00 75 10 b8 00
+00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 31 c3 48 83 ec 08 e8 de 9b 01 00
+48 89 04 24
+[ 2023.800719][ T6807] RSP: 002b:00007ffee7328628 EFLAGS: 00000246
+ORIG_RAX: 0000000000000000
+[ 2023.809169][ T6807] RAX: ffffffffffffffda RBX: 0000000000020000
+RCX: 00007f99856e2910
+[ 2023.817150][ T6807] RDX: 0000000000020000 RSI: 0000564290b2a000
+RDI: 0000000000000003
+[ 2023.825123][ T6807] RBP: 0000564290b2a000 R08: 0000000000000003
+R09: 0000000000021010
+[ 2023.833107][ T6807] R10: 0000000000000002 R11: 0000000000000246
+R12: 0000564290b2a000
+[ 2023.841091][ T6807] R13: 0000000000000003 R14: 0000000000020000
+R15: 0000000000001000
+[ 2023.849074][ T6807]
+[ 2023.851408][ T6807] The buggy address belongs to the variable:
+[ 2023.857388][ T6807]  lock_classes_in_use+0x410/0x420
+[ 2023.862510][ T6807]
+[ 2023.864826][ T6807] Memory state around the buggy address:
+[ 2023.870450][ T6807]  ffffffff90225b80: 00 00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00
+[ 2023.878511][ T6807]  ffffffff90225c00: 00 00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00
+[ 2023.886572][ T6807] >ffffffff90225c80: 00 00 00 00 f9 f9 f9 f9 00
+00 00 00 00 00 00 00
+[ 2023.894628][ T6807]                                      ^
+[ 2023.900256][ T6807]  ffffffff90225d00: 00 00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00
+[ 2023.908317][ T6807]  ffffffff90225d80: 00 00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00
+[ 2023.916377][ T6807]
+==================================================================
+
+
+
+
+
+> turning off the locking correctness validator.
+> CPU: 0 PID: 5917 Comm: syz-executor.4 Not tainted 5.12.0-syzkaller #0
+> Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
+> Call Trace:
+>  __dump_stack lib/dump_stack.c:79 [inline]
+>  dump_stack+0x141/0x1d7 lib/dump_stack.c:120
+>  register_lock_class.cold+0x14/0x19 kernel/locking/lockdep.c:1281
+>  __lock_acquire+0x102/0x5230 kernel/locking/lockdep.c:4781
+>  lock_acquire kernel/locking/lockdep.c:5512 [inline]
+>  lock_acquire+0x1ab/0x740 kernel/locking/lockdep.c:5477
+>  flush_workqueue+0x110/0x13e0 kernel/workqueue.c:2786
+>  drain_workqueue+0x1a5/0x3c0 kernel/workqueue.c:2951
+>  destroy_workqueue+0x71/0x800 kernel/workqueue.c:4382
+>  alloc_workqueue+0xc40/0xef0 kernel/workqueue.c:4343
+>  wg_newlink+0x43d/0x9e0 drivers/net/wireguard/device.c:335
+>  __rtnl_newlink+0x1062/0x1710 net/core/rtnetlink.c:3452
+>  rtnl_newlink+0x64/0xa0 net/core/rtnetlink.c:3500
+>  rtnetlink_rcv_msg+0x44e/0xad0 net/core/rtnetlink.c:5562
+>  netlink_rcv_skb+0x153/0x420 net/netlink/af_netlink.c:2502
+>  netlink_unicast_kernel net/netlink/af_netlink.c:1312 [inline]
+>  netlink_unicast+0x533/0x7d0 net/netlink/af_netlink.c:1338
+>  netlink_sendmsg+0x856/0xd90 net/netlink/af_netlink.c:1927
+>  sock_sendmsg_nosec net/socket.c:654 [inline]
+>  sock_sendmsg+0xcf/0x120 net/socket.c:674
+>  ____sys_sendmsg+0x6e8/0x810 net/socket.c:2350
+>  ___sys_sendmsg+0xf3/0x170 net/socket.c:2404
+>  __sys_sendmsg+0xe5/0x1b0 net/socket.c:2433
+>  do_syscall_64+0x3a/0xb0 arch/x86/entry/common.c:47
+>  entry_SYSCALL_64_after_hwframe+0x44/0xae
+> RIP: 0033:0x4665d9
+> Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 bc ff ff ff f7 d8 64 89 01 48
+> RSP: 002b:00007fb25febe188 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
+> RAX: ffffffffffffffda RBX: 000000000056c0b0 RCX: 00000000004665d9
+> RDX: 0000000000000000 RSI: 0000000020000080 RDI: 0000000000000005
+> RBP: 00000000004bfcb9 R08: 0000000000000000 R09: 0000000000000000
+> R10: 0000000000000000 R11: 0000000000000246 R12: 000000000056c0b0
+> R13: 00007fff30a5021f R14: 00007fb25febe300 R15: 0000000000022000
+>
+>
+> ---
+> This report is generated by a bot. It may contain errors.
+> See https://goo.gl/tpsmEJ for more information about syzbot.
+> syzbot engineers can be reached at syzkaller@googlegroups.com.
+>
+> syzbot will keep track of this issue. See:
+> https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
+>
+> --
+> You received this message because you are subscribed to the Google Groups "syzkaller-bugs" group.
+> To unsubscribe from this group and stop receiving emails from it, send an email to syzkaller-bugs+unsubscribe@googlegroups.com.
+> To view this discussion on the web visit https://groups.google.com/d/msgid/syzkaller-bugs/0000000000003687bd05c2b2401d%40google.com.
