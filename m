@@ -2,70 +2,66 @@ Return-Path: <SRS0=veHU=KP=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 962C7C433B4
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 20 May 2021 13:49:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 90772C433ED
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 20 May 2021 13:49:09 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id A03C9611AB
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 20 May 2021 13:49:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A03C9611AB
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	by mail.kernel.org (Postfix) with ESMTPS id 677BE611AB
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 20 May 2021 13:49:08 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 677BE611AB
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=i-love.sakura.ne.jp
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c5be7841;
-	Thu, 20 May 2021 13:49:04 +0000 (UTC)
-Received: from mail-il1-x136.google.com (mail-il1-x136.google.com
- [2607:f8b0:4864:20::136])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a2e8e18a
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ebafc2ea;
+	Thu, 20 May 2021 13:49:07 +0000 (UTC)
+Received: from www262.sakura.ne.jp (www262.sakura.ne.jp [202.181.97.72])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id af8db543
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 19 May 2021 22:28:21 +0000 (UTC)
-Received: by mail-il1-x136.google.com with SMTP id z1so13629825ils.0
- for <wireguard@lists.zx2c4.com>; Wed, 19 May 2021 15:28:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=uj9d3a8i8cl+CZV4mep8MzzaVGnZwapnaf4X+DW0wM4=;
- b=Q2Up4s/Qfui45dEDDo8LYCSthgdNDTjuL357HoZ0a6P/RPcVaW8kbIx45DkdcU9zBX
- cY0tNdEy/0Wg8N0mykM9FEjkjRQTH36FlcX+gPl+oOppx2B79cpVBqhR6TPv4zCpvlE2
- flu2eu2LRfevM6JSc6Rn4dZF1xSLYmbziQmKjz0Icgciu4BjA4BVNV/d7fD9QwnB4dxW
- x0B8zIAswR+5O79Qj/qplOFTySTMIGe+aOz93Skgl3XHDUsZ1cRz7skw9JU/Fa1d2uHQ
- TWIWlZ7hkH0EOhwfbh8hO/YzoYUoVh13jWwK6cDnZE7gn/R70luw7WHUdqAeeOj7tUCz
- 1WgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=uj9d3a8i8cl+CZV4mep8MzzaVGnZwapnaf4X+DW0wM4=;
- b=AFlYCvjHp/PbLV37ZZ0/REV4dXMUoMlanA3QfMvllzOdYIp1yPOPtzA5hF0vLWiSdM
- n9Fmd12QuhIg8v7meTIWvJjAT7FYyd2ph8CJjty11uubKeqKhjjGRNQ3/0IHCbcYmbL5
- XZk4qKM0ssqjenW5cubh4qdO9kbtJBXBvK0dEbcqyGAtPUUqTe6OsU6tIzXbSVnmP74Y
- XIj+lUiP5+un+0qPUMo7jW7BfUaIoibBHLx98tMm5gCrAQbs8F4dY8lwfHgvImR833te
- 40/9eJc5NI0cRxOUZwgrFIqzqkeNzJtjkGYY+NfjrCaDmK/f0v85v+gD41Q5KuYa5/aK
- 2r2Q==
-X-Gm-Message-State: AOAM5303wHQhR+4NlKaEqQCApA7UA4vvGqB2QgY4S49tPPM+mVwuQRzW
- FASgsO6P7DIV/z1snhDe2OO2aP4ZrKU6YW8dUtR6EG1Nxwuckw==
-X-Google-Smtp-Source: ABdhPJztmAJ2nOCsj02seoDOALC9u3fyMggE6TmB4IgLB/yk4RVSr/KQpWM8Dui4kZoKnHiNeKopNHUzeyJjeXlEwGI=
-X-Received: by 2002:a92:c52d:: with SMTP id m13mr1228766ili.191.1621463299847; 
- Wed, 19 May 2021 15:28:19 -0700 (PDT)
+ Thu, 20 May 2021 05:02:48 +0000 (UTC)
+Received: from fsav107.sakura.ne.jp (fsav107.sakura.ne.jp [27.133.134.234])
+ by www262.sakura.ne.jp (8.15.2/8.15.2) with ESMTP id 14K5228p049599;
+ Thu, 20 May 2021 14:02:02 +0900 (JST)
+ (envelope-from penguin-kernel@i-love.sakura.ne.jp)
+Received: from www262.sakura.ne.jp (202.181.97.72)
+ by fsav107.sakura.ne.jp (F-Secure/fsigk_smtp/550/fsav107.sakura.ne.jp);
+ Thu, 20 May 2021 14:02:02 +0900 (JST)
+X-Virus-Status: clean(F-Secure/fsigk_smtp/550/fsav107.sakura.ne.jp)
+Received: from [192.168.1.9] (M106072142033.v4.enabler.ne.jp [106.72.142.33])
+ (authenticated bits=0)
+ by www262.sakura.ne.jp (8.15.2/8.15.2) with ESMTPSA id 14K522Xq049596
+ (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NO);
+ Thu, 20 May 2021 14:02:02 +0900 (JST)
+ (envelope-from penguin-kernel@i-love.sakura.ne.jp)
+Subject: Re: [syzbot] BUG: MAX_LOCKDEP_KEYS too low! (2)
+To: Dmitry Vyukov <dvyukov@google.com>, Randy Dunlap <rdunlap@infradead.org>, 
+ David Miller <davem@davemloft.net>
+Cc: syzbot <syzbot+a70a6358abd2c3f9550f@syzkaller.appspotmail.com>,
+ Peter Zijlstra <peterz@infradead.org>, "Jason A. Donenfeld"
+ <Jason@zx2c4.com>,
+ Jakub Kicinski <kuba@kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+ netdev <netdev@vger.kernel.org>,
+ syzkaller-bugs <syzkaller-bugs@googlegroups.com>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
+References: <0000000000003687bd05c2b2401d@google.com>
+ <CACT4Y+YJDGFN4q-aTPritnjjHEXiFovOm9eO6Ay4xC1YOa5z3w@mail.gmail.com>
+ <c545268c-fe62-883c-4c46-974b3bb3cea1@infradead.org>
+ <CACT4Y+aEtYPAdrU7KkE303yDw__QiG7m1tWVJewV8C_Mt9=1qg@mail.gmail.com>
+From: Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>
+Message-ID: <208cd812-214f-ef2f-26ec-cc7a73953885@i-love.sakura.ne.jp>
+Date: Thu, 20 May 2021 14:02:00 +0900
+User-Agent: Mozilla/5.0 (Windows NT 6.3; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.1
 MIME-Version: 1.0
-References: <CAAMcf8BeGzUppFzfc2hF9KvpfU1DfSpncYv4AaK5Qf8_+fC-Rw@mail.gmail.com>
- <20210519234310.66ea294e@natsu>
-In-Reply-To: <20210519234310.66ea294e@natsu>
-From: Vicente Bergas <vicencb@gmail.com>
-Date: Thu, 20 May 2021 00:28:08 +0200
-Message-ID: <CAAMcf8A9isAqhsXLHw1=8A6pyeDeXBPUan6s7_11_tDXJmg-jw@mail.gmail.com>
-Subject: Re: lost connection on dynamic IP
-To: Roman Mamedov <rm@romanrm.net>
-Cc: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CACT4Y+aEtYPAdrU7KkE303yDw__QiG7m1tWVJewV8C_Mt9=1qg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-Mailman-Approved-At: Thu, 20 May 2021 13:49:03 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -81,60 +77,50 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello Roman,
+On 2021/05/20 5:09, Dmitry Vyukov wrote:
+> On Wed, May 19, 2021 at 9:58 PM Randy Dunlap <rdunlap@infradead.org> wrote:
+>>
+>> On 5/19/21 12:48 PM, Dmitry Vyukov wrote:
+>>> On Wed, May 19, 2021 at 7:35 PM syzbot
+>>> <syzbot+a70a6358abd2c3f9550f@syzkaller.appspotmail.com> wrote:
+>>>>
+>>>> Hello,
+>>>>
+>>>> syzbot found the following issue on:
+>>>>
+>>>> HEAD commit:    b81ac784 net: cdc_eem: fix URL to CDC EEM 1.0 spec
+>>>> git tree:       net
+>>>> console output: https://syzkaller.appspot.com/x/log.txt?x=15a257c3d00000
+>>>> kernel config:  https://syzkaller.appspot.com/x/.config?x=5b86a12e0d1933b5
+>>>> dashboard link: https://syzkaller.appspot.com/bug?extid=a70a6358abd2c3f9550f
+>>>>
+>>>> Unfortunately, I don't have any reproducer for this issue yet.
+>>>>
+>>>> IMPORTANT: if you fix the issue, please add the following tag to the commit:
+>>>> Reported-by: syzbot+a70a6358abd2c3f9550f@syzkaller.appspotmail.com
+>>>>
+>>>> BUG: MAX_LOCKDEP_KEYS too low!
+>>>
+>>
+>> include/linux/lockdep.h
+>>
+>> #define MAX_LOCKDEP_KEYS_BITS           13
+>> #define MAX_LOCKDEP_KEYS                (1UL << MAX_LOCKDEP_KEYS_BITS)
+> 
+> Ouch, so it's not configurable yet :(
 
-On Wed, May 19, 2021 at 8:43 PM Roman Mamedov <rm@romanrm.net> wrote:
->
-> On Tue, 18 May 2021 13:22:31 +0200
-> Vicente Bergas <vicencb@gmail.com> wrote:
->
-> > A server connected to the Internet through an ISP that provides a
-> > dynamic IP with NAT.
->
-> If it's NAT, then your server has no dedicated public IP? What do you upd=
-ate
-> to DNS, IP of the ISP's NAT pool (shared IP with many other customers)?
+I didn't try to make this value configurable, for
 
-There is a public IP assigned to the router. The IP is dynamic, so, it
-can change from time to time, but, once assigned, it is exclusive to
-the router.
-There is no carrier-grade NAT.
-I've configured the router to forward the wireguard port to the
-server, so, it is like the server is directly connected to the
-Internet.
-I think the PersistentKeepalive on the server side is not required. Is it?
+> Unless, of course, we identify the offender that produced thousands of
+> lock classes in the log and fix it.
 
-On the client side, instead, the router has no port forwarded and
-also, i think, there is CGNAT. That is the reason PersistentKeepalive
-is present.
+number of currently active locks should decrease over time.
+If this message is printed, increasing this value unlikely helps.
 
-> > I think the issue happens when the ISP on the server side shuts down
-> > the Internet connection for more than 1 hour! Then, it is restored
-> > with a new IP.
-> > inadyn detects the new IP and updates the DNS.
-> > At this point the Internet connection is operational again, but the
-> > client remains disconnected until rebooted.
-> >
-> > Is this scenario expected to work due to the "Built-in Roaming" ?
->
-> It might work, helped by PersistentKeepalive, and as long as the server a=
-nd the
-> client don't change their IPs/ports *at the same time*. To protect agains=
-t
-> that, or to improve resiliency in general (and assuming there's actually =
-no NAT
-> at the server side after all), your client should resolve the DNS record =
-for
-> the server periodically, and in case the IP changed, call "wg set [interf=
-ace]
-> peer [key] endpoint [IP:port]".
+We have https://lkml.kernel.org/r/c099ad52-0c2c-b886-bae2-c64bd8626452@ozlabs.ru
+which seems to be unresolved.
 
-So, what do you mean is that wireguard does a single DNS resolution at
-the beginning and further DNS resolutions need to be done elsewere. Is
-that correct?
+Regarding this report, cleanup of bonding device is too slow to catch up to
+creation of bonding device?
 
-> With respect,
-> Roman
-
-Regards,
-  Vicen=C3=A7.
+We might need to throttle creation of BPF, bonding etc. which involve WQ operation for clean up ?
