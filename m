@@ -1,64 +1,82 @@
-Return-Path: <SRS0=w0hv=KV=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=m5DG=KW=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_05,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5825DC47082
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 26 May 2021 16:06:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E212C4707F
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 27 May 2021 09:24:45 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 6F795610CE
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 26 May 2021 16:06:56 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 6F795610CE
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id A8374613EC
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 27 May 2021 09:24:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A8374613EC
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 68a6adcb;
-	Wed, 26 May 2021 16:06:54 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [104.131.123.232])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b8b91d0a
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d6101de0;
+	Thu, 27 May 2021 09:22:27 +0000 (UTC)
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com
+ [2a00:1450:4864:20::634])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 80e8b3ab
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 26 May 2021 16:06:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1622045209;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=iqu/7DOqgCicoqwS285zS/QoNzzkv1/2QiS3Qlv4tpg=;
- b=UluxpPJ/MkVmXCqjQ5DKNflzmCUmasLZKckszDtGGJrmeu4uUTUGHwuFmbH4JRi4E0JoNd
- x2IOT5nfXvjnla4lGoTJ3Sazv70A2reqb5Ysh9/k7fDnTDbEdqxH0WV2G93Bj565DejVg1
- VrtpsC89eO6XQG8yEVBW/Ye9c2OqV3Q=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id e9e63445
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Wed, 26 May 2021 16:06:49 +0000 (UTC)
-Received: by mail-yb1-f177.google.com with SMTP id r8so2757098ybb.9
- for <wireguard@lists.zx2c4.com>; Wed, 26 May 2021 09:06:49 -0700 (PDT)
-X-Gm-Message-State: AOAM533VE8DLSZSN2YvojnepaFlnyjRkw94Qfvr7c/FRq9GFWD1K4HPQ
- IBj0gL0BlmptJ5uw3Wl5s16YJOplQqxd9d+soOs=
-X-Google-Smtp-Source: ABdhPJxtHIySthlo2YJGqg3e6Lk1JAeJ/aHUlPZrvwPwoWSYkudvlII8yB9ouu0VlZNGQsnEUdQs55hbX43hdENOuRY=
-X-Received: by 2002:a5b:5c6:: with SMTP id w6mr50469279ybp.279.1622045208763; 
- Wed, 26 May 2021 09:06:48 -0700 (PDT)
+ Thu, 27 May 2021 09:22:25 +0000 (UTC)
+Received: by mail-ej1-x634.google.com with SMTP id e12so479810ejt.3
+ for <wireguard@lists.zx2c4.com>; Thu, 27 May 2021 02:22:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=subject:to:cc:references:from:message-id:date:user-agent
+ :mime-version:in-reply-to:content-language:content-transfer-encoding;
+ bh=pEMMFzHcb33SgCbZVrTDwRMX0x3ahqizemAotew7xR4=;
+ b=CDiPoDpmNO3t1B/GMhjmcFvM+wpdIrF4WPGz16HDS8hbZ93oYvfPpP5DER3qhcqbpA
+ YtJm++LvT/hNl1kF+U+/6RjkMnBuDDjW4TiYMq0o3BrYxh8WF3/xCajJNbOlhh9bi8Bl
+ 0goJ0PHcPT3ZLEabDDNRYWQIQgB0wnFMKtZU3gf8cJfe0vdEDRybExDh6+8tkdR9+ej7
+ /Si59XdVzpRDdARownKjS2RgMbG93qrT1v++HNcuRPtT9UVP/z0VY9pXySkZFt3SGI4B
+ AE9OKOq0aaAfZqvO4cWB5LotxDixYxvPYiqyOXEq8psMx6NDkg6Mk+R1SRtMBCtAYh+L
+ 5y7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=pEMMFzHcb33SgCbZVrTDwRMX0x3ahqizemAotew7xR4=;
+ b=PD/3MveC8H9ROotmtG8sLzVevoGvfykbFZQdlK7imIMNvJWok9+jh3kx7MRrj4KT00
+ EAsGL0zYqcwlCZVfkGqT7Ycnf1V0v124c/dpNGg/f8aLHDGkLvI0ZFXfHcaiA9RDqNN/
+ 3oc6/Nk34ZjgsLdswofzHrJygbffq2D/8601RJorDzNKeJzQN08M7yejS8/ZxOwq9fE5
+ 6IdANIIai/D0iwoGQ2gsj7tJq9mbIus/llLD0vcoxqTpEG4UlLX9a+QFe+J7QGwEffpM
+ OxHjNzhNtN/f9Pv+Jlvfm1Cprs6Lx8vgBph+bs8wKp9L5x21OWLFKZmUyqQpJlD9395P
+ m2zQ==
+X-Gm-Message-State: AOAM530IxuB6UwgJu7HHPUhYp4LmU4BjdyngTVo2P5Cmz/7Gt+wz1adQ
+ 6FXRBLK9k98Y9Z5crFs13M9RS6VSy2Q=
+X-Google-Smtp-Source: ABdhPJwOa6khrBpD8g15zbG6nxCJneapcWVsxm81XWaJk4X6I/13YoeZX9mOmD1bwowgdQ/JU7UK2w==
+X-Received: by 2002:a17:907:ea0:: with SMTP id
+ ho32mr2748790ejc.396.1622107345467; 
+ Thu, 27 May 2021 02:22:25 -0700 (PDT)
+Received: from ?IPv6:2a02:810d:d40:2317:2ef0:5dff:fe0a:a2d5?
+ ([2a02:810d:d40:2317:2ef0:5dff:fe0a:a2d5])
+ by smtp.gmail.com with ESMTPSA id l8sm782772edt.69.2021.05.27.02.22.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 27 May 2021 02:22:25 -0700 (PDT)
+Subject: Re: wireguard windows socket binds to device
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+References: <bd20cfa0-9cc4-83fb-ec53-e2e84923c485@gmail.com>
+ <CAHmME9qBwT1HAz389nvAHWUFa1rWEC3thA+vMcGjQ_=vg3AsTg@mail.gmail.com>
+From: Andre Naujoks <nautsch2@gmail.com>
+Message-ID: <c002e093-8699-621d-35b0-28c1439836ee@gmail.com>
+Date: Thu, 27 May 2021 11:22:23 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.2
 MIME-Version: 1.0
-References: <Vi69GDdtlT6JOff7GBHQU7rUExHN6badu-eM7C611Xa91MM_S8tGkmt4OVpjDSLSH2Kag1jS8VUlCIXdXjiMI6uKHot-v2KGXTBi8oK-CC8=@postermail.com>
- <CAHmME9rT5HgrC5wP-V5sLkz_qwkRFPdEJKhPTEaXr-L6Qq697w@mail.gmail.com>
- <bLrNvJdSf_UdV1e-d8nQ_4dNnzP0I7DhX2NPIFkVs93k7herY4-36gEJDPhcST5F_Z-A2F0aTPxU-Di4p9R3FgynPsVH-4jAtR2lfTZnRJs=@postermail.com>
- <CAHmME9p1Kp5zsh-QX0VDD70q--_QtoXOiuBxWC-h9uTpq=_TFw@mail.gmail.com>
-In-Reply-To: <CAHmME9p1Kp5zsh-QX0VDD70q--_QtoXOiuBxWC-h9uTpq=_TFw@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 26 May 2021 18:06:38 +0200
-X-Gmail-Original-Message-ID: <CAHmME9rbTxxCO_geLHD1=WP7yXb1auo0Pc9wtRBrGnzaoY4cnA@mail.gmail.com>
-Message-ID: <CAHmME9rbTxxCO_geLHD1=WP7yXb1auo0Pc9wtRBrGnzaoY4cnA@mail.gmail.com>
-Subject: Re: wireguard-android: tunnel not working after reboot
-To: lists.zx2c4.com.486782@postermail.com
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
- Harsh Shandilya <me@msfjarvis.dev>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAHmME9qBwT1HAz389nvAHWUFa1rWEC3thA+vMcGjQ_=vg3AsTg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -73,5 +91,28 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Kind of terrible (for the reasons mentioned within), but:
-https://git.zx2c4.com/wireguard-android/commit/?id=d139fd0c5cabe2db496e78477fdf57142ce97a36
+Am 26.05.21 um 16:37 schrieb Jason A. Donenfeld:
+> This might help:
+> https://lists.zx2c4.com/pipermail/wireguard/2021-March/006442.html
+> 
+
+Hi.
+
+Thanks for the answer.
+
+The registry keys were not present, so I added them manually. That and 
+the PostUp script seem to have done the trick.
+
+For now, I see this as a viable workaround. Thank you for that.
+
+I still see this as a bug though. I read the reasoning behind it in the 
+other mail 
+(https://lore.kernel.org/wireguard/CAHmME9rXV2_YG3fGMErDeTjfHeNKhDC2cCYA6Kw93n9A328QpQ@mail.gmail.com/).
+
+Maybe only use the IP_UNICAST_IF to the default route if AllowedIPs is 
+0.0.0.0/0 and/or ::/0? For all other cases it seems unnecessary (errors 
+in those cases would be configuration problems on the users side) and in 
+some cases (i.e. mine, the non-default-route case) just wrong.
+
+Thanks again and best Regards
+   Andre
