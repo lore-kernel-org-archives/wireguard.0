@@ -1,92 +1,49 @@
-Return-Path: <SRS0=1tT1=KZ=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=EcsN=K2=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB178C47091
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 30 May 2021 15:28:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 00A51C47082
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 31 May 2021 07:49:55 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id B89A361001
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 30 May 2021 15:28:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org B89A361001
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=radarcs.com
+	by mail.kernel.org (Postfix) with ESMTPS id BE6C361278
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 31 May 2021 07:49:53 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org BE6C361278
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 556bcc9d;
-	Sun, 30 May 2021 15:28:00 +0000 (UTC)
-Received: from mx1.radarcs.com (mx1.radarcs.com [185.158.24.27])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 33e0490a
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Sun, 30 May 2021 13:20:38 +0000 (UTC)
-Received: from mx1.radarcs.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D4CFAFE060;
- Sun, 30 May 2021 15:20:22 +0200 (CEST)
-Received: from mx1.radarcs.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C91FBFE05F;
- Sun, 30 May 2021 15:20:22 +0200 (CEST)
-Received: from atdcvsem001.dmz.radarservices.net (unknown [100.64.45.50])
- by mx1.radarcs.com (Postfix) with ESMTPS;
- Sun, 30 May 2021 15:20:22 +0200 (CEST)
-Received: from bc-hq-sv-ex01.base-camp.lan (unknown [10.114.81.14])
- by atdcvsem001.dmz.radarservices.net (Postfix) with ESMTPS;
- Sun, 30 May 2021 15:20:22 +0200 (CEST)
-Received: from bc-hq-sv-ex01.base-camp.lan (10.114.81.14) by
- bc-hq-sv-ex01.base-camp.lan (10.114.81.14) with Microsoft SMTP Server (TLS)
- id 15.0.1497.18; Sun, 30 May 2021 15:20:21 +0200
-Received: from bc-hq-sv-ex01.base-camp.lan ([fe80::e8aa:8cf2:537d:9aac]) by
- bc-hq-sv-ex01.base-camp.lan ([fe80::e8aa:8cf2:537d:9aac%12]) with mapi id
- 15.00.1497.018; Sun, 30 May 2021 15:20:21 +0200
-From: Raoul Bhatia <raoul.bhatia@radarcs.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>, "wireguard@lists.zx2c4.com"
- <wireguard@lists.zx2c4.com>
-Subject: Re: Wireguard connection lost between peers
-Thread-Topic: Wireguard connection lost between peers
-Thread-Index: AQHXRu5tGbISP6k5HUut4KUd/SZGSKr8HziA
-Date: Sun, 30 May 2021 13:20:21 +0000
-Message-ID: <31839237-F1FE-4760-82B1-7C01E93753E1@radarcs.com>
-References: <1CCB5519-611B-4377-97A9-0F9179E3C6F2@radarcs.com>
-In-Reply-To: <1CCB5519-611B-4377-97A9-0F9179E3C6F2@radarcs.com>
-Accept-Language: en-GB, de-AT, en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Microsoft-MacOutlook/16.49.21050901
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [100.64.244.2]
-X-SM-outgoing: yes
-Content-Language: en-GB
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 14fda69e;
+	Mon, 31 May 2021 07:49:51 +0000 (UTC)
+Received: from mail.zx2c4.com (mail.zx2c4.com [104.131.123.232])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7d2e0ce1
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO); 
+ Mon, 31 May 2021 07:49:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1622447383;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type;
+ bh=3nKPg9fm+/y2WHqfpj1ZOs7Xdegu+P2c6+SRSPrzJ9Y=;
+ b=HZQOF5AV88L7n2QZLcI5xq9fNhxJhU1Wy7SGBXpMeQojCqpiT9iDcRg3Kcz9NMAWFbZqC/
+ JnDN+OlN6bCW3HHsYpUgNscTGv5BfK5UE1bj4fuhJxWiVteKmE50aiTjnz+8TmBi8hsLPK
+ 9eO6S2hLPE5BkWyqX9FjUPfAur1k4LM=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id c2cafe54
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO); 
+ Mon, 31 May 2021 07:49:43 +0000 (UTC)
+Date: Mon, 31 May 2021 09:49:40 +0200
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: wireguard@lists.zx2c4.com, cgit@lists.zx2c4.com,
+ password-store@lists.zx2c4.com
+Subject: IRC channels #wireguard, #cgit, and #pass open on Libera.Chat
+Message-ID: <YLSVFMi9oGKzfUGk@zx2c4.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pkcs7-signature";
- micalg="sha-512"; boundary="----DB9A976FA4276F0737B977DC9838EA01"
-X-SM-smarthost: outbound-trendmicro.local
-X-TM-AS-GCONF: 00
-X-TM-AS-Product-Ver: IMSVA-9.1.0.1960-8.6.0.1013-26190.000
-X-TM-AS-Result: No--17.067-5.0-31-10
-X-imss-scan-details: No--17.067-5.0-31-10
-X-TM-AS-User-Approved-Sender: No
-X-TMASE-Version: IMSVA-9.1.0.1960-8.6.1013-26190.000
-X-TMASE-Result: 10--17.066700-10.000000
-X-TMASE-MatchedRID: 8HTFlOrbAtFm/Emu61OWavrNPkGWAHDfuSNyZKeaiD4jQVhmUJBUfIeJ
- YOXLUjeP++qMujDziQ33b89IqOQeAFlvsI8BowVJFvAJe/W5wA9+tO36GYDlsh9W4auM/sn07t4
- dojVOmerrHtl+fPgn72AFUihLAj7NzpZHJKyNyF2a+cpJvTbSHLKjhMmuBk9F4KKCbqX/Ma+wP0
- EaLtIArv7i0ax84S5yybAb3gY1w12EjCTHFO72QrxygpRxo469ghZKmuN2x5tn/jJ42bYwqt2gi
- q5xRdMLZRUjkVFROF5XftdBxLPa/NL78yzpqVMHNVHkqlpj6VUxXH/dlhvLv+tVpQO2kRrXmaDi
- aptlYbw4RrsfXnMuZeHPYUUXef6kKwu8+9jRtCiENWFO9FGfqLqoFakaELIgrySb0bZ0W2i3IO6
- qx5330wL9BaowFAVDZs7nAWjw82YCGM1WjhlczMmR5yDJkPg4Pw8st9LJ22/1FNU5pHs+BHG9F+
- cXkylinEwQ8IYl7MTSns/DIrEI0QqwLN+7YWFlkwgo9duuWhfr1pL7v/NuPzQLwOnySRO1aUXs6
- FguVy3m5y219LWN6R3tg73jgC2KJSAy2CM8TbHylEfNwb6iLQ73P4/aDCIF0AWKUvQ4UnVPH2OE
- h/+ebCa3Kw5LNgA9oWjx8y7f3IkQRV4jIylHiaEw/TzXjY3EnXkxoptXpC++AI6u+HhJmsDX+fl
- 9+xmHCW4o82Dp/CO5Ylf3xk4v4jrtiAEf6B6yj0drvddoWET348e2CE/wYgVNW/+MlH4crcmmD7
- /hK18VR7DQWX/WkYGsNX5eg/aORjjVhf+j/woXfF+EQiYcZsLeaN9zSPdm+W9PgkrCH1GpygCGK
- FPC+FP0N2y0rqdqj0KdfgyX59aTj5ThGTBDflVZv2gd+7bO+yl0Z1V2ktM=
-X-TMASE-SNAP-Result: 1.821001.0001-0-1-12:0,22:0,33:0,34:0-0
-X-Mailman-Approved-At: Sun, 30 May 2021 15:27:59 +0000
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -101,220 +58,77 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This is an S/MIME signed message
+Hi,
 
-------DB9A976FA4276F0737B977DC9838EA01
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-MIME-version: 1.0
-Content-ID: <897193CB8BD87747891DFFDC6DFCB990@base-camp.cc>
+The IRC channels #wireguard, #cgit, and #pass will now be on Libera.Chat in
+official capacity. This means that you can now connect with other users and
+developers of these projects by pointing your IRC client at:
 
-KEFwcG9sb2dpZXMgZm9yIHRvcCBwb3N0aW5nOyBteSBjdXJyZW50IGVtYWlsIGNsaWVudCBpcyBu
-b3QgbWFpbGluZyBsaXN0IGZyaWVuZGx5KQ0KDQpIaSBKYXNvbiBhbmQgY29tbXVuaXR5LA0KDQpX
-ZSBhcmUgY29udGludWluZyB0byBvYnNlcnZlIHRoZSBtZW50aW9uZWQgYmVoYXZpb3INCmFuZCBp
-dCBzZWVtcyB0aGF0IHRoZSBlcnJvciB3ZSBhcmUgc2VlaW5nIGlzIG1vc3RseSB0cmlnZ2VyZWQN
-CmR1cmluZyBoaWdoKGVyKSBsb2FkIHNpdHVhdGlvbnMgaS5lLiA1MDBNYml0LTIwMDBNYml0IGFu
-ZCBhcyB3ZSBtb3ZlDQphcm91bmQgMjAwR0IrIGNodW5rcyBvZiBkYXRhIHZpYSBUQ1Agb3ZlciBX
-aXJlR3VhcmQuDQpVbnRpbCBub3csIHdlIG1hbmFnZWQgdG8ga2VlcCB0aGluZ3MgbW9yZSBzdGFi
-bGUgYnV0DQp0aGVuIGFnYWluIGZhY2VkIGFuIG91dGFnZS4NCg0KDQoNCk9ic2VydmF0aW9uczoN
-CkEuIENvbm5lY3Rpdml0eSBpcyBtb3JlIGxpa2VseSB0byBicmVhayBiZXR3ZWVuIHRoZSBzYW1l
-IGNvbXBvbmVudHMsIGkuZS4NCkkgc2F3IHRoZSBzYW1lIGNvbnRhaW5lciBmYWlsIDEtMnggcGVy
-IGRheSB3aXRoaW4gYSB3ZWVrIG9mIG1vbml0b3JpbmcgWzFdOw0KSSBzZWUgdGhlIGlzc3VlIG1v
-cmUgb2Z0ZW4gYmV0d2VlbiB0aGUgX3NhbWVfIHBoeXNpY2FsIGhvc3RzIG9mIHRoZSBjbHVzdGVy
-DQooaG93ZXZlciwgdGhlc2UgYXJlIHRoZSBtb3JlIHRyYWZmaWMgaGVhdnkgb25lcykNCg0KDQoN
-CkIuIEkndmUgYWxzbyBzZWVuIGFuIGludGVyZXN0aW5nIGJlaGF2aW9yIHdoZXJlIEkgaGFkIHRv
-DQpyZXNldCBhIGNvbm5lY3Rpb24gMnggYmV0d2VlbiAyIHBoeXNpY2FsIHNlcnZlcnMNCndpdGhp
-biBhIHNob3J0IGFtb3VudCBvZiB0aW1lIGFuZCBmaXJzdCBmcm9tIG5vZGUyIGFuZCB0aGVuIGZy
-b20gbm9kZTEuDQoNClBsZWFzZSBmaW5kIHRoZSByZWxhdGVkIGNvbmZpZyBzbmlwcGV0cyBhbmQg
-DQpqb3VybmFsY3RsIC1rIG1lc3NhZ2VzIChmaWx0ZXJlZCBmb3IgdGhlIHBlZXJzKSBoZXJlOg0K
-KiBodHRwczovL25lbTNkLm5ldC9ub2RlMS50eHQNCiogaHR0cHM6Ly9uZW0zZC5uZXQvbm9kZTIu
-dHh0DQoNCkFwcHJveCB0aW1lbGluZSBvZiBldmVudHM6DQoxLiAwNS8yNiBPbmUgY29udGFpbmVy
-IGZhaWxlZCBvbiBub2RlMiBhbmQgd2FzIHJlY292ZXJlZCBmcm9tIHRoZSBob3N0IFsxXQ0KMi4g
-MDUvMjYgQWxtb3N0IGV4YWN0bHkgMSw1aCBsYXRlciwgdGhlIGNvbm5lY3Rpb24gYmV0d2VlbiBu
-b2RlMiBhbmQgbm9kZTENCiAgICAgICAgICAgICAgICBicm9rZSB3aXRoICJzdG9wcGVkIGhlYXJp
-bmcgYmFjayBhZnRlciAxNSBzZWNvbmRzIg0KMy4gMDUvMjcgMDYuMDJoIG9uIG5vZGUyIEkgbWFu
-dWFsbHkgdXNlZCBwZWVyIHJlbW92ZSBub2RlMS9zeW5jY29uZg0KICAgICAgICAgICAgICAgIHRv
-IHJlLWVzdGFibGlzaCB0aGUgY29ubmVjdGlvbg0KNC4gMDUvMjcgMDYuMjVoIG9uIG5vZGUxIGxv
-Z2dlZCAic3RvcHBlZCBoZWFyaW5nIGJhY2sgYWZ0ZXIgMTUgc2Vjb25kcyINCjUuIDA1LzI3IDA2
-LjMxaCBvbiBub2RlMSBJIHVzZWQgcGVlciByZW1vdmUgbm9kZTIvc3luY2NvbmYNCiAgICAgICAg
-ICAgICAgICB0byByZS1lc3RhYmxpc2ggdGhlIGNvbm5lY3Rpb24NCg0KQWZ0ZXJ3YXJkcywgdGhp
-bmdzIHdvcmtlZCBzbW9vdGggYWdhaW4uDQoNCi0gLSAtIC0gLSAtIC0gLSAtIC0gLSAtIC0gLSAt
-IC0gLSAtIC0gLSAtIC0gLSAtIC0gLSAtIC0gLSAtIC0gLSAtIC0gLSAtDQpFbnZpcm9ubWVudDoN
-CkRlYmlhbiA5IHdpdGgga2VybmVsIGZyb20gcGFja2FnZSBhbmQgd2lyZWd1YXJkIGZyb20gYnVz
-dGVyLWJhY2twb3J0cw0KDQokIHVuYW1lIC1yIC12IC1tIC1vDQo0LjkuMC0xMS1hbWQ2NCAjMSBT
-TVAgRGViaWFuIDQuOS4xODktMytkZWI5dTIgKDIwMTktMTEtMTEpIHg4Nl82NCBHTlUvTGludXgN
-Cg0KJCBtb2RpbmZvIHdpcmVndWFyZA0KZmlsZW5hbWU6ICAgICAgIC9saWIvbW9kdWxlcy80Ljku
-MC0xMS1hbWQ2NC91cGRhdGVzL2RrbXMvd2lyZWd1YXJkLmtvDQppbnRyZWU6ICAgICAgICAgWQ0K
-YWxpYXM6ICAgICAgICAgIG5ldC1wZi0xNi1wcm90by0xNi1mYW1pbHktd2lyZWd1YXJkDQphbGlh
-czogICAgICAgICAgcnRubC1saW5rLXdpcmVndWFyZA0KdmVyc2lvbjogICAgICAgIDEuMC4yMDIx
-MDEyNA0KYXV0aG9yOiAgICAgICAgIEphc29uIEEuIERvbmVuZmVsZCA8SmFzb25AengyYzQuY29t
-Pg0KZGVzY3JpcHRpb246ICAgIFdpcmVHdWFyZCBzZWN1cmUgbmV0d29yayB0dW5uZWwNCmxpY2Vu
-c2U6ICAgICAgICBHUEwgdjINCnNyY3ZlcnNpb246ICAgICA1MDdCRTIzQTczNjhGMDE2QUVCQUY5
-NA0KZGVwZW5kczogICAgICAgIHVkcF90dW5uZWwsaXA2X3VkcF90dW5uZWwNCnJldHBvbGluZTog
-ICAgICBZDQp2ZXJtYWdpYzogICAgICAgNC45LjAtMTEtYW1kNjQgU01QIG1vZF91bmxvYWQgbW9k
-dmVyc2lvbnMNCg0KVGhhbmtzLA0KUmFvdWwNCg0KWzFdIEkgY3JlYXRlZCBhIHNtYWxsIGNyb25q
-b2IgdGhhdCBjaGVja3MgaG9zdC9jb250YWluZXIgY29ubmVjdGl2dHkgdmlhIGljbXAvcGluZw0K
-YW5kIGluaXRpYXRlcyB0aGUgd2cgZHVtcC9wZWVyIHJlbW92ZS9zeW5jY29uZiByZWNvdmVyeSBw
-cm9jZWR1cmUgaW4gY2FzZSBvZiBhbiBlcnJvci4NCg0KT24gMTIuMDUuMjEsIDA3OjE5LCAiUmFv
-dWwgQmhhdGlhIiA8cmFvdWwuYmhhdGlhQHJhZGFyY3MuY29tPiB3cm90ZToNCj4gWy4uLl0NCj4+
-IFRoYXQncyBzdXJwcmlzaW5nIGJlaGF2aW9yLiBUaGFua3MgZm9yIGRlYnVnZ2luZyBpdC4gQ2Fu
-IHlvdSBzZWUgaWYNCj4+IHlvdSBjYW4gcmVwcm9kdWNlIHdpdGggZHluYW1pYyBsb2dnaW5nIGVu
-YWJsZWQ/IFRoYXQnbGwgZ2l2ZSBzb21lDQo+PiB1c2VmdWwgaW5mb3JtYXRpb24gaW4gZG1lc2c6
-DQo+Pg0KPj4gICAgICAgICAgICAjIG1vZHByb2JlIHdpcmVndWFyZCAmJiBlY2hvIG1vZHVsZSB3
-aXJlZ3VhcmQgK3AgPg0KPj4gL3N5cy9rZXJuZWwvZGVidWcvZHluYW1pY19kZWJ1Zy9jb250cm9s
-DQo+IA0KPiBJIGRpZCBlbmFibGUgdGhlIGRlYnVnIGNvbnRyb2wgYW5kIGFsc28gc2V0DQo+ICAg
-c3lzY3RsIC13IG5ldC5jb3JlLm1lc3NhZ2VfY29zdD0wDQo+IGFuZCBoYXZlIGV4dHJhY3RlZCBh
-IHNhbXBsZSBvZiB0aGUgaXNzdWUuDQo+IFBsZWFzZSBmaW5kIGl0IGhlcmUgaHR0cHM6Ly9uZW0z
-ZC5uZXQvd2lyZWd1YXJkXzIwMjEwNTEyYS50eHQNCj4gDQo+IEZyb20gbXkgb2JzZXJ2YXRpb24s
-IGl0IGlzIGFsd2F5cyB0aGUgZm9sbG93aW5nIHN5bXB0b21zOg0KPiAxLiBFdmVyeXRoaW5nIGlz
-IFdPUktJTkc6DQo+IExYQyBjb250YWluZXIgZDEtaCBzZW5kcyBoYW5kc2hha2UgaW5pdGlhdGlv
-bi4NCj4gSG9zdCB3ZzAgcmVjZWl2ZXMsIHJlLWNyZWF0ZXMga2V5cGFpciwgYW5zd2Vycw0KPiBk
-MS1oIHJlY2VpdmVzLCByZS1jcmVhdGVzIGtleXBhaXIsIHNlbmRzIGtlZXBhbGl2ZQ0KPiB3ZzAg
-cmVjZWl2ZXMga2VlcGFsaXZlDQo+IGV0Yy4NCj4gDQo+IA0KPiAyLiBTb21ld2hlbiBpdCBCUkVB
-S1MNCj4gZDEtaCBzdG9wcHMgaGVhcmluZyBiYWNrIGFmdGVyIDE1IHNlY29uZHMuDQo+IEluaXRp
-YWxpemF0aW9uIGxvb3AgbGlrZSBtZW50aW9uZWQgYWJvdmUNCj4gZDEtaCBzdG9wcHMgaGVhcmlu
-ZyBiYWNrIGFmdGVyIDE1IHNlY29uZHMuDQo+IGV0Yy4NCj4gDQo+IEFzIG1lbnRpb25lZCwgdGhl
-IHJlc29sdXRpb24gaXMgdG8gZHVtcCB0aGUgY29uZmlnLCANCj4gcmVtb3ZlIHRoZSBwZWVyLCBh
-bmQgc3luY2NvbmYgdG8gcmVzdG9yZS4NCj4gVGhpcyB0aW1lLCAgSSB1c2VkICJuc2VudGVyIC1u
-IiB0byBhcHBseSB0aGlzIHByb2NlZHVyZSB0byB0aGUNCj4gdW5wcml2aWxlZ2VkIGNvbnRhaW5l
-ciBpbnRlcmZhY2UgZDEtaC4NCj4gDQo+IExhc3RseSwgd2UgYWxzbyBzYXcgc2ltaWxhciBiZWhh
-dmlvciBldmVuIGJldHdlZW4gMiBwaHlzaWNhbCBob3N0cy4NCj4gSSB3aWxsIHRyeSB0byBnYXRo
-ZXIgc2ltaWxhciBkZWJ1ZyBpbmZvcm1hdGlvbi4NCj4gDQo+IFBsZWFzZSBsZXQgbWUga25vdyBp
-ZiBmdXJ0aGVyIGluZm9ybWF0aW9uIGlzIG5lZWRlZCB0bw0KPiBiZXR0ZXIgdW5kZXJzdGFuZCB0
-aGUgcHJvYmxlbS4NCg0K
+    Server: irc.libera.chat
+    Port: 6697 with TLS (aka "ssl" or "secure port")
+    Channel: #wireguard, #cgit, and #pass
 
-------DB9A976FA4276F0737B977DC9838EA01
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
+On Weechat:
 
-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
-p8Qd7A/XqIsTHrPRFotA3A9TbwE97OhktZfbg7yoqMCEOFheAxQr5sow7wCy6xM5
-GZJHKiEA5XLNwjFiDsxWKv93xGOMmMJveNe1tszpfR8zppEFKv7RUtb07Jz+TUxq
-UuGFdmK7uWjmUmP8wSGRkl0Z2NyA0RnjSRZXAg4ZRIWrKckv+sZtawqh9vf/a2E1
-FSaUlAJpJV1p971ea4LZkAwG+UMFIknrNtAgWmMQ4zgh1X8WK0GKRnryZ+ik0Loe
-fyQndZiUSS1WxFQzkZ1i+dVf3lupFZiclFPBgOkJFxW0G4ApMqHQrxOnAgMBAAGj
-ggKWMIICkjAOBgNVHQ8BAf8EBAMCAQYwEgYDVR0TAQH/BAgwBgEB/wIBADAdBgNV
-HQ4EFgQU8MejMpG168q1WHcVp06+Gl1hQyUwHwYDVR0jBBgwFoAUF6DNweRBtjpb
-O8tFnb0cwpj6hlgwgf8GA1UdHwSB9zCB9DBHoEWgQ4ZBaHR0cDovL2NybC5zd2lz
-c3NpZ24ubmV0LzE3QTBDREMxRTQ0MUI2M0E1QjNCQ0I0NTlEQkQxQ0MyOThGQTg2
-NTgwgaiggaWggaKGgZ9sZGFwOi8vZGlyZWN0b3J5LnN3aXNzc2lnbi5uZXQvQ049
-MTdBMENEQzFFNDQxQjYzQTVCM0JDQjQ1OURCRDFDQzI5OEZBODY1OCUyQ089U3dp
-c3NTaWduJTJDQz1DSD9jZXJ0aWZpY2F0ZVJldm9jYXRpb25MaXN0P2Jhc2U/b2Jq
-ZWN0Q2xhc3M9Y1JMRGlzdHJpYnV0aW9uUG9pbnQwYQYDVR0gBFowWDBWBglghXQB
-WQEDAQYwSTBHBggrBgEFBQcCARY7aHR0cDovL3JlcG9zaXRvcnkuc3dpc3NzaWdu
-LmNvbS9Td2lzc1NpZ24tU2lsdmVyLUNQLUNQUy5wZGYwgcYGCCsGAQUFBwEBBIG5
-MIG2MGQGCCsGAQUFBzAChlhodHRwOi8vc3dpc3NzaWduLm5ldC9jZ2ktYmluL2F1
-dGhvcml0eS9kb3dubG9hZC8xN0EwQ0RDMUU0NDFCNjNBNUIzQkNCNDU5REJEMUND
-Mjk4RkE4NjU4ME4GCCsGAQUFBzABhkJodHRwOi8vb2NzcC5zd2lzc3NpZ24ubmV0
-LzE3QTBDREMxRTQ0MUI2M0E1QjNCQ0I0NTlEQkQxQ0MyOThGQTg2NTgwDQYJKoZI
-hvcNAQELBQADggIBAMN5p1e3e61RaPVEjEGVKAF8dNY7arxt76fXTTmZHWiNygjZ
-0HGxGTWTb4LGHEm4Ue5M+WwKb9il+/77MF4A0pSrxBJRuqqKq2rdGdcrSvcWsmtR
-z3RbKaJz3pf+2E8gIX1pDLBQ5Y1YjIAu5Rcc3WN6qu8F+cNpnuSMcWJcQu468s3g
-Eu+LXOnOUygy7JULGVSiIY36f1CnT7wZe7JrjCk/dz7KI8dpWkGdfWYxb3pxedqp
-ZTrrf9cQ1QtfVBl8zjclJIRQ0K9ANMJfkuJ6kfMvQkcbnzxC+9lfpbxwRY7voDmQ
-9aF4bNfAZ1kZ4QDeXPx46E/du6yRLnKL/OpHb0MovLu5jpS++lDdUJMbTBi2dv/D
-RwpZtM1tVdhqtl/JL8GUNj6+rkA1BiDt4AJMLTRFDkOvovTYkBXl0MCbRECuPI+T
-UbyZaHNpe3VYmbfUBE/f8YJxER17/BMdd2VVY9dScnzdMUeGp5XYrCZxPSPmEjv0
-f5qWhv4r6qDzJg11xhaMMSDnEUeh56lqsKWygR7cPdCh427V8GamHH3XkohNAAcL
-cedz53PkVGVp/DeN8R5vcO6nbLNSRWdZ1gVIsSHplyjZ2fS0pqBnIza8YEcOXCh/
-XZOKMbqNMTYUx3pCnW8gwWwq+BYPatkAlDK7PVWxxcOhDbF5d1Qd4DOCfu7qMIIH
-UTCCBjmgAwIBAgIUFfW61sNzyrx30L16mEqKBJtRV8owDQYJKoZIhvcNAQELBQAw
-VjELMAkGA1UEBhMCQ0gxFTATBgNVBAoTDFN3aXNzU2lnbiBBRzEwMC4GA1UEAxMn
-U3dpc3NTaWduIFBlcnNvbmFsIFNpbHZlciBDQSAyMDE0IC0gRzIyMB4XDTIwMDcz
-MTIwMDUwMVoXDTIxMDczMTIwMDUwMVowgZExCzAJBgNVBAYTAkFUMS0wKwYDVQQK
-EyRSYWRhclNlcnZpY2VzIFNtYXJ0IElULVNlY3VyaXR5IEdtYkgxJzAlBgkqhkiG
-9w0BCQEWGHJhb3VsLmJoYXRpYUByYWRhcmNzLmNvbTEqMCgGA1UEAxMhU2VjdXJl
-IE1haWw6IFNFUFBtYWlsIENlcnRpZmljYXRlMIICIjANBgkqhkiG9w0BAQEFAAOC
-Ag8AMIICCgKCAgEAx0amy3Ub2v6YiIJ3MAt9R0hnXo4bdKEnVxfzA9vuwMWRUPrs
-NnpB9c0pujZosUbTsRbkmOscaWZpI2kNXNrDXfB4g5rQQkUvzUrisaImozvqd1Fs
-rQhMMvQ7PSJVyNqA/x0otAor6rDyCgiYSbSZRsvQhNks6P9m8X12j6oVyDoyeIqT
-FT9qPNFMznA3C42lZUyCFdTVgqcRJd45tWdY20UlAnDf0nRa3rIjxjHjKxC9JkvC
-vNduFvzVSpn5HLUhP+l/BA8To1qLWpeOdmYdW0dNHWAQUtVU7DY940G2EEEcHqQF
-80zF/URlicAIF4M5+O13jTaVdmSK537v7DnmKkrFJVlP3uQ1C6nqhwsG7IjySnML
-2qbtj6/zeHSlqW6HZraOf4Se7tPzlQ53uO22JAnOLuzUJhMFEaQ4HXhjg/W3PyfQ
-XiWj/y+B1Tfn6bQTl7US+ZcHPcBNMzfwnXLUczxHyDmTLgTwgeXzZRfDisIjV3/L
-49heQ3DKolYU6B9ShZsiGmQDkQ2E1i3/3TFpXIGEW3zeAeeT3TYxy6pCJYd+hCaI
-YcAg1gwjzgWMH2IU+Js/fQh0pdrXLmY2KUmcW89KYaClHmbt/mXzH53HTeDrFuvJ
-nsj4t0I71QmRRIhXk9VL52vFADCnK9NWa2hKsE9fle03il4pNit+/dtNXUECAwEA
-AaOCAtkwggLVMCMGA1UdEQQcMBqBGHJhb3VsLmJoYXRpYUByYWRhcmNzLmNvbTAO
-BgNVHQ8BAf8EBAMCBLAwEwYDVR0lBAwwCgYIKwYBBQUHAwQwHQYDVR0OBBYEFEWv
-CBno4Znbc1oBfJnzza4hBnfJMB8GA1UdIwQYMBaAFPDHozKRtevKtVh3FadOvhpd
-YUMlMIH/BgNVHR8EgfcwgfQwR6BFoEOGQWh0dHA6Ly9jcmwuc3dpc3NzaWduLm5l
-dC9GMEM3QTMzMjkxQjVFQkNBQjU1ODc3MTVBNzRFQkUxQTVENjE0MzI1MIGooIGl
-oIGihoGfbGRhcDovL2RpcmVjdG9yeS5zd2lzc3NpZ24ubmV0L0NOPUYwQzdBMzMy
-OTFCNUVCQ0FCNTU4NzcxNUE3NEVCRTFBNUQ2MTQzMjUlMkNPPVN3aXNzU2lnbiUy
-Q0M9Q0g/Y2VydGlmaWNhdGVSZXZvY2F0aW9uTGlzdD9iYXNlP29iamVjdENsYXNz
-PWNSTERpc3RyaWJ1dGlvblBvaW50MGsGA1UdIARkMGIwVgYJYIV0AVkBAwEMMEkw
-RwYIKwYBBQUHAgEWO2h0dHA6Ly9yZXBvc2l0b3J5LnN3aXNzc2lnbi5jb20vU3dp
-c3NTaWduLVNpbHZlci1DUC1DUFMucGRmMAgGBgQAj3oBAzCB2QYIKwYBBQUHAQEE
-gcwwgckwZAYIKwYBBQUHMAKGWGh0dHA6Ly9zd2lzc3NpZ24ubmV0L2NnaS1iaW4v
-YXV0aG9yaXR5L2Rvd25sb2FkL0YwQzdBMzMyOTFCNUVCQ0FCNTU4NzcxNUE3NEVC
-RTFBNUQ2MTQzMjUwYQYIKwYBBQUHMAGGVWh0dHA6Ly9zaWx2ZXItcGVyc29uYWwt
-ZzIub2NzcC5zd2lzc3NpZ24ubmV0L0YwQzdBMzMyOTFCNUVCQ0FCNTU4NzcxNUE3
-NEVCRTFBNUQ2MTQzMjUwDQYJKoZIhvcNAQELBQADggEBAGw0zyt3yz2mXPWQ3f1D
-lTNmHhIb74MxTK5rFiQ9GAQBebjxEzSEWSbo6aJn9Xj0IduuslayqvsZW+u0wbnn
-+eB/0xpwd3+afjKqGYigmALIm7+Mb3VxN9v7aT6/8n01yXFvVz4eM4IPWpjcBRQ6
-w2Itd6UxeK+wyFCCp9JUk7AcdD7XkgC2AgrdOojG3fvpP+7iuzcSzL51mSZxUgAE
-LAtX9IqYOUKPwgeTdR6QTwIWbgmhjXRY9++OcS0BfYpWDrxU4SLCzI8FjKePrv9z
-JsEdJg/WyO4NBMI1b6762AYdiEK8Y2VN4+EbsIa/jLDLBcSwO3AfXJc0UjBFAp6k
-dJAxggOfMIIDmwIBATBuMFYxCzAJBgNVBAYTAkNIMRUwEwYDVQQKEwxTd2lzc1Np
-Z24gQUcxMDAuBgNVBAMTJ1N3aXNzU2lnbiBQZXJzb25hbCBTaWx2ZXIgQ0EgMjAx
-NCAtIEcyMgIUFfW61sNzyrx30L16mEqKBJtRV8owCwYJYIZIAWUDBAIDoIIBBDAY
-BgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0yMTA1MzAx
-MzIwMjJaME8GCSqGSIb3DQEJBDFCBED+dEspHOxuVOLgM8SsYmW1j5XhKQjFnAMc
-piwjNxMlsjDZThqqrxJRYEJijw7yDE5njBGJbdtKZlMcM0jWgat+MHkGCSqGSIb3
-DQEJDzFsMGowCwYJYIZIAWUDBAEqMAsGCWCGSAFlAwQBFjALBglghkgBZQMEAQIw
-CgYIKoZIhvcNAwcwDgYIKoZIhvcNAwICAgCAMA0GCCqGSIb3DQMCAgFAMAcGBSsO
-AwIHMA0GCCqGSIb3DQMCAgEoMA0GCSqGSIb3DQEBAQUABIICABLoiTRq4U7uU9lb
-Dva6l1CVgKXVRZa5xujwsI34BDkoIZbPlAJLaggM0ryUNB3pRoQj8YfNfY2xEhkm
-ABcyMLP4cvRZg47cdydh/DeDTYlsE+DW6MC3HY47jbyYoacgFyB7GFJ656E4bm38
-+5aJmMfe5tgkRzwUElTdvQvlW6NsVPxhvLqO1jB8/+RbM8yCyn8bOWs0RQ/n1AGw
-+vqgCVifyKiHx1k8AvkA2JN0GPMpaBgyPSVprmDXwiJkQIbgieq4UnEuaydoe8SM
-txtryMZ0Xp0DEn2q53U9vU8+Q6f8MrOMeLXAt+3qGeuH6y/r6p/E9JfMG+jPrec+
-S1J6fZidByVXZGx57Zn9OCq9ypD7+I7FeDgCvj+SnxuKrHQ21lvV+wwn8Q341kqh
-uVviF5x03UHepob2ER8qO37IGU27IDDKEQcs3dIhR69YmXAo62waGZdplLrXcqm7
-8i74qOygEX9ywdeTzb0NSofXeF8T4FG71x0VYvVdQNgJt2BPVrIuF7GQkqcsz5Ny
-FbV7cQ+T6X6r/NM7/6+xrCEWZch6ae/Ni0Ob+RPoNziZQnaFUQ+XZ/3fNo1CwAeN
-1B7wKsRylgrqMRt86s8/hhYGGbtf/jc7naNyMlaEUMqKvByjNVllQA3FQ4YedWQ5
-+BS47ZXCMYnU6q/7patkIy3XQSSx
+    /server add libera irc.libera.chat/6697 -ssl -autoconnect -autojoin=#wireguard,#cgit,#pass
+    /save
+    /connect libera
 
-------DB9A976FA4276F0737B977DC9838EA01--
+On irssi:
 
+    /network add libera
+    /channel add -auto #wireguard libera
+    /channel add -auto #cgit libera
+    /channel add -auto #pass libera
+    /server add -network libera -auto -tls irc.libera.chat 6697
+    /save
+    /connect libera
+
+Users who want to simply pop online ephemerally to ask a quick question can
+also use the web interface: <https://web.libera.chat/#wireguard>. Though do
+note that the community generally appreciates it when people maintain a more
+continuous presence logged in ("idling"). For folks who want to connect to IRC
+longer term, but don't want to futz around with overly technical things,
+services like IRCCloud.com (paid) and Matrix.org (free) offer a way of staying
+connected to IRC networks from your web browser and mobile phone.
+
+With large swaths of the free software community recently departing our old
+home of freenode, the choice was between the new Libera.Chat IRC network, the
+venerable OFTC IRC network, and something newfangled like Slack, Discord,
+Mattermost, Rocket.Chat, Zulip, or `ncat -l -k --chat`. This choice was not
+easy.
+
+The primary advantage of the newer platforms is their broader accessibility to
+less technical users and expanded feature sets. Their disadvantage is that
+they are standalone/siloed tools, which don't promote cross-pollination
+between our community and other communities. In contrast, the primary
+advantage of IRC in general over the more recent communication tools is the
+community around IRC. Somebody hanging out over in #archlinux asking a
+question about WireGuard is easily referred to #wireguard for additional
+troubleshooting, and vice versa. And different types of users and developers
+frequently meet and share ideas. It is a commons of sorts. There are
+additional differences between the platforms (with keywords like "javascript"
+or "licensing" or "curmudgeonly"), but this distinction between being part
+of the larger community and free software ecosystem, and not, strikes me as a
+critical basis of decision.
+
+In deciding between Libera.Chat and OFTC, the decision was a bit harder, but
+ultimately was made with the same principle in mind. OFTC is old and stable,
+having apparently few governance issues over a long history. In contrast,
+Libera.Chat is brand new and was created by a group of volunteers that, while
+having an impressive history of running freenode successfully for many years,
+have just emerged from a highly publicized conflict. However, Libera.Chat
+hosts a significantly larger portion of the free software community than OFTC.
+Seeing that our motivation for remaining on IRC in the first place is
+community, going with the larger network makes most sense, even if it does not
+yet have a proven track record of stability.
+
+I hope that rationale makes sense. See you all in the new channels.
+
+Thanks,
+Jason
+
+
+PS: WireGuard community members, enthusiasts, contributors, and developers can
+now request a "wireguard/tunneler/{nick}" cloak from Mira (mira), Aaron
+(amdj), or me (zx2c4). Shoot one of us a message on IRC and we'll set it up.
