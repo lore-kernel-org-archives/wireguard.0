@@ -2,71 +2,75 @@ Return-Path: <SRS0=nrw4=K4=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D50FFC47083
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  2 Jun 2021 06:36:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D7ADC47083
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  2 Jun 2021 07:23:18 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id CC8B96128A
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  2 Jun 2021 06:36:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org CC8B96128A
+	by mail.kernel.org (Postfix) with ESMTPS id 36FC76101B
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  2 Jun 2021 07:23:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 36FC76101B
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 95611f11;
-	Wed, 2 Jun 2021 06:36:18 +0000 (UTC)
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com
- [2a00:1450:4864:20::633])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 016002f8
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a18befcf;
+	Wed, 2 Jun 2021 07:23:15 +0000 (UTC)
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com
+ [2a00:1450:4864:20::631])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4cedbae8
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 2 Jun 2021 06:36:16 +0000 (UTC)
-Received: by mail-ej1-x633.google.com with SMTP id k7so2127311ejv.12
- for <wireguard@lists.zx2c4.com>; Tue, 01 Jun 2021 23:36:16 -0700 (PDT)
+ for <wireguard@lists.zx2c4.com>; Wed, 2 Jun 2021 07:23:13 +0000 (UTC)
+Received: by mail-ej1-x631.google.com with SMTP id g20so2448834ejt.0
+ for <wireguard@lists.zx2c4.com>; Wed, 02 Jun 2021 00:23:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=to:from:subject:message-id:date:user-agent:mime-version
- :content-language:content-transfer-encoding;
- bh=banHVpXFVndhVbaD17wCvCqfKzy0oRntlOCG2RxdZzI=;
- b=RaegX6ugVzUvhYcEvG9UNUTF7iJidvrgXsKADuB4gUsLlNwJC4j7ADW1tseEb/PVyd
- OpgX2HagKgV++vRfs5UCXKJ2ue+d9rdjD/P1ArYv9f23Cnr8uELrE9htahbxKN54kgfo
- DI9LZYDPI6SfMME55u5dvMGmGmekyl5e0wGQkQttqExWJRGZRH5NHPPHWjmaQhHe3tR0
- OCq54DWzCQRDnSQzlqTuY5YRyJfMt8JH6DzYGvdW9rVywKI2L8Qjw6svcIMmuckPyBBw
- LJjLhwiIsgYEyP0Ew79nOUVv8BYS4QYXo+U8uSpWMqCvTuYcz9x+HfUfLFoRZKIrnllH
- kBPw==
+ h=subject:from:to:references:message-id:date:user-agent:mime-version
+ :in-reply-to:content-language:content-transfer-encoding;
+ bh=rfyB9xw2OLznDiyOvv7DR58C4Q98kqxLF2k4Q/X3Xcc=;
+ b=hzs8p19HzBspsLF8hWSF9SWNtUAiL/Kxd7RW+i+le3Pz7oHkuEl8KR/G+drgbu97Gw
+ FMkhYj79RtlAWVKYAJCjAfproqHP7Y7ojagBLt1HrmR8+WeLpdL+Wajr+R3QibHE0U2N
+ F9J3qZryWaNoYdLZBeod03l8JuvYXtOks9y9mC7WihOVOC7myEicLgZu6SY6q5jkEFgT
+ fy/BW+rtc0B4L0bpGbAzU4NoHb/astaZBrG/CdRvT7dXl/sARiLhP4HlHuFHUjZCl8m6
+ b2u8FiI5pWCS/VoKi5Wqr2RilzaejUj2baQfNHdB0lUKcBGDEM0izEdpXjnDNQegpul2
+ 8atw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:to:from:subject:message-id:date:user-agent
- :mime-version:content-language:content-transfer-encoding;
- bh=banHVpXFVndhVbaD17wCvCqfKzy0oRntlOCG2RxdZzI=;
- b=IYn8oCKHX3sd+sNVMm1aebdp5kDM/HhW5qbSjo3nECo9lHerbtq3UJzD07VH18UYI8
- oyYQqbvqSe/cGFsw2yuUCTvSc17JSska87WH7vpsyrHlaXfiljtUz+BbKqebFP2hV4vC
- B8CCW4XGMcIMvPqmIgrtubzuxjY65OP0oS2YRPGsapZI0OqDD4EBId8TjZcCgNNJGtB8
- BWGa7heRaHLZNwLe94pxJFVyBVD7h0z1zQyC1ljXR0YQT/B0e61Q5r0oNwl+3n+nuE5G
- 0IsfHppcIdm9ahDNC3zrJdJRXNkhLdo0XlTRynIlchnL4EJA8H9EyshKZK+fxDG7Y38c
- U11w==
-X-Gm-Message-State: AOAM531wMItI5DvWj9gN0BYPgkxo3vClyFxLXcSr3lwDN3YR32w6rOH+
- C0wC0Op85ufgLS+vLGeKOGuKq3TB2QMTLA==
-X-Google-Smtp-Source: ABdhPJwus7GrM4+I/B3UUNN5Ea4jLYOv1QGmho3o1S0NYq1t6vcTzEP6l0Dj97NhW9OC0wurLZnFIw==
-X-Received: by 2002:a17:906:d1d1:: with SMTP id
- bs17mr33081431ejb.492.1622615776054; 
- Tue, 01 Jun 2021 23:36:16 -0700 (PDT)
+ h=x-gm-message-state:subject:from:to:references:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=rfyB9xw2OLznDiyOvv7DR58C4Q98kqxLF2k4Q/X3Xcc=;
+ b=tadjHVQDW0/1Q9HKuyS45gBv6ufcsXQA4EwgU0W+So7kzMI2IgaY8OXJNlzbQHhSQV
+ Voj1rrD2qAximi4jlzfQzgXzC0DehHAOwHO+obZ1Pc1FNcNzkAzqqW4EP8iDis/A9Tnl
+ d67z+jq+s/MfS8cWt1JOXdOg0ia8Lk6SSxRQ0yZD2TZ5Rl8em3YxnFSk6pCW517c/ygf
+ 57ASrg489LxzTGEISqmgqo29Ygd+8EKPnsp2FdVDQJFQvSYckSrQCYsgErMrcK3wmsZx
+ qCCPukI/tiYENqViDy0YcUQRxjDVvgkxBEKjFo5OAO5Z0W52dSoxTk70uCJaer5Tm7M0
+ dTxA==
+X-Gm-Message-State: AOAM531q4CycXGpu8BMFLNLnFTbEU49wtGYNUQRuOd/hLhRSdOsLvywA
+ 4L4vXejCLJOUFBaRsCb9zpEC+G3LCuYbgA==
+X-Google-Smtp-Source: ABdhPJyz74nMZUgLXGL/is1Opt67OqwSt6a60P/AhWYBUOB2u9yE4OOKKPVlurhboL/71I2ZRhXhiQ==
+X-Received: by 2002:a17:906:af7b:: with SMTP id
+ os27mr18311413ejb.154.1622618593410; 
+ Wed, 02 Jun 2021 00:23:13 -0700 (PDT)
 Received: from hal.home ([86.126.22.60])
- by smtp.gmail.com with ESMTPSA id d15sm676676edu.86.2021.06.01.23.36.15
+ by smtp.gmail.com with ESMTPSA id p15sm742182edr.50.2021.06.02.00.23.12
  for <wireguard@lists.zx2c4.com>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 01 Jun 2021 23:36:15 -0700 (PDT)
-To: wireguard@lists.zx2c4.com
+ Wed, 02 Jun 2021 00:23:13 -0700 (PDT)
+Subject: Re: tunnel no longer established :: how to debug? - solved
 From: Adrian Sevcenco <adrian.sev@gmail.com>
-Subject: tunnel no longer established :: how to debug?
-Message-ID: <ef038c91-f2bd-9e05-f49a-c1700a0f25af@gmail.com>
-Date: Wed, 2 Jun 2021 09:36:14 +0300
+To: wireguard@lists.zx2c4.com
+References: <ef038c91-f2bd-9e05-f49a-c1700a0f25af@gmail.com>
+Message-ID: <fa6a0663-22b0-01c1-ec29-3586e5e803e5@gmail.com>
+Date: Wed, 2 Jun 2021 10:23:12 +0300
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.10.1
 MIME-Version: 1.0
+In-Reply-To: <ef038c91-f2bd-9e05-f49a-c1700a0f25af@gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -84,15 +88,21 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi! After a change of connection point (the same ISP but different location, but with the same wireless, and end-points)
-the tunnel no longer is established. Nothing in the wg configuration is changed ...
-from the "client" machine to the "server" end-point i can do:
-root@hal: ~ # nc -u -vz sev.HHHHHH 43333
-Ncat: Version 7.80 ( https://nmap.org/ncat )
-Ncat: Connected to HHH.HHH.HHH.HHH:43333.
-Ncat: UDP packet sent successfully
-Ncat: 1 bytes sent, 0 bytes received in 2.01 seconds.
+On 6/2/21 9:36 AM, Adrian Sevcenco wrote:
+> Hi! After a change of connection point (the same ISP but different location, but with the same wireless, and end-points)
+> the tunnel no longer is established. Nothing in the wg configuration is changed ...
+> from the "client" machine to the "server" end-point i can do:
+> root@hal: ~ # nc -u -vz sev.HHHHHH 43333
+> Ncat: Version 7.80 ( https://nmap.org/ncat )
+> Ncat: Connected to HHH.HHH.HHH.HHH:43333.
+> Ncat: UDP packet sent successfully
+> Ncat: 1 bytes sent, 0 bytes received in 2.01 seconds.
+> 
+> How can i debug further to see why the connection is not established?
+i apologize for the noise! the problem was a typo on the server configuration
+where a peer was defined also with it's endpoint (dynamic) dns name.
+this worked fine as long that name was resolving correctly but as soon as this
+failed the connection could no longer be established.
 
-How can i debug further to see why the connection is not established?
-Thanks a lot!
+Thanks!
 Adrian
