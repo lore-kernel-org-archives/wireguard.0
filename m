@@ -2,45 +2,57 @@ Return-Path: <SRS0=nrw4=K4=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_20,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 06D97C47083
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  2 Jun 2021 12:11:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0460FC4708F
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  2 Jun 2021 14:45:54 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 9FB0661168
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  2 Jun 2021 12:11:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 9FB0661168
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=clodo.it
+	by mail.kernel.org (Postfix) with ESMTPS id 2D5FF61369
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  2 Jun 2021 14:45:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 2D5FF61369
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4282c7eb;
-	Wed, 2 Jun 2021 12:11:14 +0000 (UTC)
-Received: from clodo.it (ec2-52-29-208-32.eu-central-1.compute.amazonaws.com
- [52.29.208.32])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b318dfd9
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id aa29087a;
+	Wed, 2 Jun 2021 14:45:51 +0000 (UTC)
+Received: from mail.zx2c4.com (mail.zx2c4.com [104.131.123.232])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 44b93d2e
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 2 Jun 2021 12:11:12 +0000 (UTC)
-Received: from [10.123.0.130] (ip-85-42.sn2.clouditalia.com [83.211.85.42])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by clodo.it (Postfix) with ESMTPSA id 2AD9460444
- for <wireguard@lists.zx2c4.com>; Wed,  2 Jun 2021 12:11:12 +0000 (UTC)
-To: wireguard@lists.zx2c4.com
-From: Fabrizio Carimati <wireguard@clodo.it>
-Subject: Windows embeddable-dll-service, avoid default routes
-Message-ID: <d9aba275-727e-9028-e42c-01cd0a059e20@clodo.it>
-Date: Wed, 2 Jun 2021 14:11:12 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.10.2
+ for <wireguard@lists.zx2c4.com>; Wed, 2 Jun 2021 14:45:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1622645146;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=XdUQ0+HHgOrHQ/xs6VwpQMdAxbL7etKbYN+st4Zwv+Y=;
+ b=e8kXqQVv/J1MZINLp2oEzTd1y51aFVakHST6mUXQdGJVQLYrOl0na5TpiN7IJflAkRrCG7
+ n0s3EPr64dm/LqXLrccrPqcXW9zPQQo8OgkNFNz+GGQxD2PfAlafIQKgQA7/mFzQzAU+0G
+ U4lzS71mpXgzbT2A/F7S1RBA5BqYhHk=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 84ff711e
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Wed, 2 Jun 2021 14:45:46 +0000 (UTC)
+Received: by mail-yb1-f175.google.com with SMTP id b13so4196659ybk.4
+ for <wireguard@lists.zx2c4.com>; Wed, 02 Jun 2021 07:45:46 -0700 (PDT)
+X-Gm-Message-State: AOAM531zq/0BmsDp8cCsyuFiFOqpsYUa75cERza5QPeIHD2W+1x85wc5
+ mD/jrnreYI9Z6IpdK8oFlU3Z+AxfR5SGTJm/RSM=
+X-Google-Smtp-Source: ABdhPJxIkIIJLMFvvlG79XugWTgkrAaWMAyVdthBULwvX6bHGgw40Lga57QL5E5IZqDaKTxMziRRun6zii2PH8U3Tsk=
+X-Received: by 2002:a25:f206:: with SMTP id i6mr45803231ybe.123.1622645145477; 
+ Wed, 02 Jun 2021 07:45:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Language: it
-Content-Transfer-Encoding: 7bit
+References: <d9aba275-727e-9028-e42c-01cd0a059e20@clodo.it>
+In-Reply-To: <d9aba275-727e-9028-e42c-01cd0a059e20@clodo.it>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 2 Jun 2021 16:45:34 +0200
+X-Gmail-Original-Message-ID: <CAHmME9p7qAR=Gpw_G0C0QU3J56M4VozYstfqAtge_qF1dh8hxg@mail.gmail.com>
+Message-ID: <CAHmME9p7qAR=Gpw_G0C0QU3J56M4VozYstfqAtge_qF1dh8hxg@mail.gmail.com>
+Subject: Re: Windows embeddable-dll-service, avoid default routes
+To: wireguard@clodo.it
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -55,13 +67,5 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-I need to open a tunnel without route all traffic, only specific
-multiple subnets.
-Under Linux or macOS, i use 0.0.0.0/0 as AllowedIPs and after i create
-my specific routes (i don't use wg-quick).
-It's correct that routes are outside the scope of WireGuard, imho.
-
-But embeddable-dll-service create a 0.0.0.0/0 metric 0 route, how i can
-avoid it (apart remove it after...)?
-
-Thanks
+If you don't want 0.0.0.0/0, then don't specify it in your AllowedIPs.
+Instead put your more specific routes there.
