@@ -1,4 +1,4 @@
-Return-Path: <SRS0=c5tI=K5=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=ObIi=LA=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
@@ -6,42 +6,53 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C6741C47096
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  3 Jun 2021 19:40:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 66B33C47096
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  6 Jun 2021 09:13:57 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id A97A3613EE
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  3 Jun 2021 19:40:48 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org A97A3613EE
-Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=53c70r.de
+	by mail.kernel.org (Postfix) with ESMTPS id 257CD6135A
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  6 Jun 2021 09:13:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 257CD6135A
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6d5bae30;
-	Thu, 3 Jun 2021 19:40:47 +0000 (UTC)
-Received: from 53c70r.de (53c70r.de [45.142.177.54])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 9ea0f74a
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ea43e1bd;
+	Sun, 6 Jun 2021 09:13:54 +0000 (UTC)
+Received: from mail.zx2c4.com (mail.zx2c4.com [104.131.123.232])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 147f4c5d
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Thu, 3 Jun 2021 19:40:46 +0000 (UTC)
-Subject: Re: WireGuard responses a Handshake Initiation packet with another
- Handshake Initiation instead of Handshake Response
-DKIM-Filter: OpenDKIM Filter v2.11.0 53c70r.de CD2CB43401B
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=53c70r.de; s=mail;
- t=1622749246; bh=KPXM7UR7rEOshkhJPycuyQY9UJzDl8WK1mrcbEjCDzo=;
- h=Subject:From:To:References:Date:In-Reply-To:From;
- b=KF49b4AUwXhL8taqPcwiti7TNP3DaLPJFkTXLTmtqYhyF4V1gz8BprcJn/YHsJBG7
- iNgV+nODdnLi1VYBRTO1H94lPeFgKexUlwkCuX2eXLvBADGQk0DcuheXTeNY3dYbYF
- FfjxIh1okX1Bfrw6wxKDvldClbORbPfmUoG9u0SY=
-From: Silvan Nagl <mail@53c70r.de>
-To: wireguard@lists.zx2c4.com
-References: <CA+O7g7c-XunYp0J+XWMQDEyCb=3vahgX2JaPEM-CYThvt6Ltig@53c70r.de>
- <852812b5-9210-5c70-7cef-d673967d568a@53c70r.de>
-Message-ID: <c6c6f40b-25e8-8430-ff3b-3baa51414147@53c70r.de>
-Date: Thu, 3 Jun 2021 21:40:42 +0200
-In-Reply-To: <852812b5-9210-5c70-7cef-d673967d568a@53c70r.de>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+ for <wireguard@lists.zx2c4.com>; Sun, 6 Jun 2021 09:13:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1622970828;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+ bh=aNbkdlEby8LgnJIllhi/OP0rzeGNi3rbhQHOjphXU1c=;
+ b=hAncwdQ4dl/I78DjUCusqYrGL6vbfCk3+HGy6UyZaJe5GO82wqp717yw7cNMTMHVC4Lv1a
+ 2mJAczzjrlqMqKsRh9o0k9ogjhA1vvx2jA/cFedbMeEGhrXNHOPXdPjg9f+nioa/4bmLrj
+ MHNI0B3JJFF7rI7GVkbMd4O4BRc7gLE=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 769e3e9c
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Sun, 6 Jun 2021 09:13:48 +0000 (UTC)
+Received: by mail-yb1-f173.google.com with SMTP id q21so20341640ybg.8
+ for <wireguard@lists.zx2c4.com>; Sun, 06 Jun 2021 02:13:48 -0700 (PDT)
+X-Gm-Message-State: AOAM531mKPU1qZsRz3zUn4DdIEJIzDEkzPuPtO/Wal3LBfWvsEww4S03
+ GUMjCDueYL/+rzc1aqONrNCeEgNtjMW1qA9rz5g=
+X-Google-Smtp-Source: ABdhPJw0q+lZqmfE3x+Vri7670v9nLGrbtEfIhdBawl7aGyfp4LRzgWreGLo8zRGutBJbY0AvtIE+ioQ0G/RtY9H+mM=
+X-Received: by 2002:a25:bdd3:: with SMTP id g19mr17472024ybk.20.1622970827402; 
+ Sun, 06 Jun 2021 02:13:47 -0700 (PDT)
+MIME-Version: 1.0
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Sun, 6 Jun 2021 11:13:36 +0200
+X-Gmail-Original-Message-ID: <CAHmME9rNnBiNvBstb7MPwK-7AmAN0sOfnhdR=eeLrowWcKxaaQ@mail.gmail.com>
+Message-ID: <CAHmME9rNnBiNvBstb7MPwK-7AmAN0sOfnhdR=eeLrowWcKxaaQ@mail.gmail.com>
+Subject: potentially disallowing IP fragmentation on wg packets, and handling
+ routing loops better
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Cc: Roman Mamedov <rm@romanrm.net>, zrm <zrm@trustiosity.com>, 
+ StarBrilliant <coder@poorlab.com>,
+ Baptiste Jonglez <baptiste@bitsofnetworks.org>, Joe Holden <jwh@zorins.us>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -56,41 +67,55 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-actually it was reproducible on my 4w old setup.
-after updating both it ain't reproducible anymore.
-openwrt: Quintus Build@2021.05.23 / LuCI openwrt-21.02 branch 
-git-21.136.64332-53c572a
-fedora_server: 5.12.8-300.fc34.x86_64
+Hi,
 
-On 03.06.2021 21:30, Silvan Nagl wrote:
-> Reproducible:
->
-> Client_a <-> Gateway_a <-> Internet <-> Server_b
->
-> When Gateway_a changes its WAN-IP Client_a loses connection.
-> Capture files show the state after the IP change.
->
-> On 6/3/21 8:43 AM, Arınç ÜNAL wrote:
->> I tried wg syncconf wg0 <(wg-quick strip wg0) without success.
->>
->> Only restarting wireguard by systemctl restart wg-quick@wg0 makes it
->> respond with a Handshake Response packet.
->>
->> This happens really rarely and especially on OpenWrt 19.07 as a client.
->>
->> Other clients can handshake properly while the server fails to
->> complete the handshake for the OpenWrt device.
->>
->> Packet Captures on boths sides are in the attachments.
->>
->> Server:
->> 5.9.0-0.bpo.5-amd64 #1 SMP Debian 5.9.15-1~bpo10+1 (2020-12-31) x86_64 GNU/Linux
->> wireguard-tools v1.0.20210223 - https://git.zx2c4.com/wireguard-tools/
->> wireguard-dkms/buster-backports,now 1.0.20210219-1~bpo10+1
->>
->> Client:
->> 4.14.221 #0 SMP Mon Feb 15 15:22:37 2021 armv7l GNU/Linux
->> wireguard-tools v1.0.20191226 - https://git.zx2c4.com/wireguard-tools/
->> kmod-wireguard 4.14.221+1.0.20200611-2
->>
->> Arınç Ü.
+WireGuard is an encrypted point-to-multipoint tunnel, where onion
+layering of packets via a single interface or multiple is a useful
+feature. This makes handling routing loops very hard to manage and
+detect. I'm considering changing and simplifying loop mitigation to a
+different strategy, but not without some discussion of its
+implications.
+
+Specifically the change would be to not allow IP fragmentation of the
+encrypted UDP packets. This way, in the case of a loop, eventually the
+packet size exceeds MTU, and it gets dropped: dumb and effective.
+Depending on how this discussion goes, a compromise would be to not
+allow fragmentation, but only for forwarded and kernel-generated
+packets, not not for locally generated userspace packets. That's more
+complex and I don't like it as much as just disallowing IP
+fragmentation all together.
+
+Pros:
+- It solves the routing loop problem very simply.
+- Usually when people are fragmenting packets like that, things become
+very, very slow anyway, and it'd be better to just stop working
+entirely, so that people adjust their MTU.
+- Is anybody actually relying on this?
+
+Cons:
+- Maybe people are running
+wireguard-over-gre-over-vxlan-over-l2tp-over-pppoe-over-god-knows-what-else,
+and this reduces the MTU to below 1280, yet they still want to put
+IPv6 through wireguard, and are willing to accept the performance
+implications.
+- Some people don't know how to fix their MTUs, and breaking rather
+than just becoming really slow isn't the best outcome there, maybe.
+- Maybe people are relying on this?
+
+Before anybody asks: we're not going to add a knob for this, simply by
+virtue of this being a decision with pros and cons. Please don't bring
+that up.
+
+I'd be very interested in opinions about this. Are there additional
+pros and cons? I know the matter has come up a few times on the list,
+mostly with people _wanting_ fragmentation (I've CCd a few people from
+those threads - Roman, I expect you to vigorously argue the
+pro-fragmentation stance ;-). but I'm not convinced the outcome of
+those threads was correct, other than, "yea, that's easy enough to
+enable." But on the other hand, maybe the cons are real enough we
+should rethink this.
+
+Please let me know thoughts and ideas.
+
+Thanks,
+Jason
