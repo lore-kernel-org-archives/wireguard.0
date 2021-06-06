@@ -2,63 +2,54 @@ Return-Path: <SRS0=3dEh=LB=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3396DC47094
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  7 Jun 2021 12:52:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C3C1C47095
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  7 Jun 2021 14:13:38 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 4EE6B611C0
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  7 Jun 2021 12:52:27 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 4EE6B611C0
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id 1C47E61029
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  7 Jun 2021 14:13:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 1C47E61029
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=zorins.us
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9cb4ba7a;
-	Mon, 7 Jun 2021 12:52:25 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [104.131.123.232])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 5462a256
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cac2dd51;
+	Mon, 7 Jun 2021 14:13:35 +0000 (UTC)
+Received: from de01.edge.zorins.net (<unknown> [2607:5300:203:17b5::2])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 26d02096
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 7 Jun 2021 12:52:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1623070338;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=p+cDFGAIoxUbbxYFATevPYXsPOxzoLoEaP0fDixxkj8=;
- b=R3hhd8pJfP7pt+lPDqqKl5QMPq5SicMrWA8UjRbjUyHO0SuQVhbjciT3JXMS8lsKCxIb+I
- t1i7zD6qWJY++0Fm1avO0XyY1ExG/RFEwIte77YRH6rtU5iNEOHqdv0QEG+vAvVPXawqGv
- P6FSO2SO22GEU1i/JYe7hX/i/F1o3gc=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 3668f3a2
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 7 Jun 2021 12:52:18 +0000 (UTC)
-Received: by mail-yb1-f170.google.com with SMTP id m9so18296989ybo.5
- for <wireguard@lists.zx2c4.com>; Mon, 07 Jun 2021 05:52:18 -0700 (PDT)
-X-Gm-Message-State: AOAM530780MA2n3wSn11bE/YBjruiIuUN9Q3nwDsyex/mItZm+8KWT9O
- csgzBs74zCwu2nekGhQHePyt+NjZnvNq9Z7vMY0=
-X-Google-Smtp-Source: ABdhPJy46PJrWW/B1w3e9YKqQCwkj2BcXz736QURJ9K0490EYiF/9qnf3SfKEjFl6B81GaRdFK1TxkvWZWaAvY4O/o4=
-X-Received: by 2002:a25:389:: with SMTP id 131mr24192574ybd.306.1623070334028; 
- Mon, 07 Jun 2021 05:52:14 -0700 (PDT)
+ for <wireguard@lists.zx2c4.com>; Sun, 6 Jun 2021 22:34:04 +0000 (UTC)
+Received: from w6nzwbfjyoxbcejp6cjb4n3l6iupddqf3jk7y6s67fa7e4l6w2djuuqd.onion
+ (mx2.tor1 [100.66.17.138])
+ by de01.edge.zorins.net (Postfix) with ESMTP id 4Fyrrq1pHcz4WGg;
+ Sun,  6 Jun 2021 22:34:03 +0000 (UTC)
+Received: from [100.99.43.152] (unknown [88.103.227.174])
+ (Authenticated sender: jwh@zorins.us)
+ by w6nzwbfjyoxbcejp6cjb4n3l6iupddqf3jk7y6s67fa7e4l6w2djuuqd.onion (Postfix)
+ with ESMTPA id 4Fyrrg6fPvzJGT; Sun,  6 Jun 2021 22:33:55 +0000 (UTC)
+To: Roman Mamedov <rm@romanrm.net>, "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ zrm <zrm@trustiosity.com>, StarBrilliant <coder@poorlab.com>,
+ Baptiste Jonglez <baptiste@bitsofnetworks.org>
+References: <CAHmME9rNnBiNvBstb7MPwK-7AmAN0sOfnhdR=eeLrowWcKxaaQ@mail.gmail.com>
+ <20210607000318.4d36b9cb@natsu>
+From: Joe Holden <jwh@zorins.us>
+Subject: Re: potentially disallowing IP fragmentation on wg packets, and
+ handling routing loops better
+Message-ID: <0cac2d72-debd-bff6-2404-6b3aabbdeb0d@zorins.us>
+Date: Mon, 7 Jun 2021 00:33:54 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Received: by 2002:a05:7110:474d:b029:ce:da65:f582 with HTTP; Mon, 7 Jun 2021
- 05:52:13 -0700 (PDT)
-In-Reply-To: <CADTMz0Jo+oOhhK60ug=agXyWL3SRA1oOyXJh49bor5-EG2ibqg@mail.gmail.com>
-References: <CADTMz0+OmW5n1JSD6pLA-_2=aRHeuhYLdQ6BCwjHg07vrPc+vA@mail.gmail.com>
- <CAHmME9poc+xPG_WfX1vYTSc9JPrSkMpWGR=rTGspOVsKyYfCpA@mail.gmail.com>
- <CADTMz0KSq7Kj6SzTptTt=Uy5EEGkCRhbZXzZfPeeJ6Vu8134uQ@mail.gmail.com>
- <CAHmME9qK7xwQgcxvj4PquxUxk0jh_cejsrGMtnn70o1FDof2ig@mail.gmail.com>
- <CADTMz0Jo+oOhhK60ug=agXyWL3SRA1oOyXJh49bor5-EG2ibqg@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 7 Jun 2021 14:52:13 +0200
-X-Gmail-Original-Message-ID: <CAHmME9o6RhPmojbA4nTRA4GqFXVstEsmmfUj8SqmaJSvGsmmWQ@mail.gmail.com>
-Message-ID: <CAHmME9o6RhPmojbA4nTRA4GqFXVstEsmmfUj8SqmaJSvGsmmWQ@mail.gmail.com>
-Subject: Re: Certain private keys being mangled by wg on FreeBSD
-To: Christian McDonald <rcmcdonald91@gmail.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20210607000318.4d36b9cb@natsu>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
+X-Mailman-Approved-At: Mon, 07 Jun 2021 14:13:34 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -73,19 +64,59 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On 6/7/21, Christian McDonald <rcmcdonald91@gmail.com> wrote:
-> One byproduct of this exercise was some code that I whipped
-> up that can at least detect a clamped vs unclamped key. This might
-> prove useful for informing a user of what is going on and thus
-> eliminating this class of erroneous bug report entirely.
+On 2021-06-06 21:03, Roman Mamedov wrote:
+> On Sun, 6 Jun 2021 11:13:36 +0200
+> "Jason A. Donenfeld" <Jason@zx2c4.com> wrote:
+> 
+>> Specifically the change would be to not allow IP fragmentation of the
+>> encrypted UDP packets. This way, in the case of a loop, eventually the
+>> packet size exceeds MTU, and it gets dropped: dumb and effective.
+>> Depending on how this discussion goes, a compromise would be to not
+>> allow fragmentation, but only for forwarded and kernel-generated
+>> packets, not not for locally generated userspace packets. That's more
+>> complex and I don't like it as much as just disallowing IP
+>> fragmentation all together.
+>>
+>> Pros:
+>> - It solves the routing loop problem very simply.
+> 
+> Doesn't TTL already solve this?
+> 
+>> - Maybe people are running
+>> wireguard-over-gre-over-vxlan-over-l2tp-over-pppoe-over-god-knows-what-else,
+>> and this reduces the MTU to below 1280, yet they still want to put
+>> IPv6 through wireguard, and are willing to accept the performance
+>> implications.
+> 
+> Not only that. Sometimes transparent bridging of 1500 MTU LANs is required.
+> 
+> VXLAN does not allow tunnel endpoints to produce fragmented VXLAN packets.
+> 
+> With WG we can fragment them one level lower, *and* gain a higher efficiency
+> compared to hypothetical VXLAN's fragmentation, due to less header overhead on
+> 2nd and further packets in a chain.
+> 
+> It would be unfortunate if this will become no longer possible.
+> 
+> It appears to me that people who might need to transparently join multiple
+> Ethernet LANs due to legacy network topologies they have to work with, weird
+> requirements, various legacy software etc, would outnumber those who even run
+> WG over WG at all, let alone getting themselves into a routing loop that way.
+> 
+All of the above, really - not allowing "full" sized frames over WG
+breaks a huge number of use cases - even simple ones, because regardless
+of how much it's wished to be true, in reality pmtu isn't very useful
+and doesn't work for many cases even in an environment where it isn't
+completely broken by firewalls/misconfiguration.
 
-I'd recommend *not* introducing users to weird ideas like clamping or
-key transformation. While learning new concepts and bit masking in PHP
-is undoubtedly fun, those concerns shouldn't be user-facing. There's
-nothing wrong or dangerous about unclamped scalars passed to a proper
-25519 implementation, because the implementation will clamp on input.
-Throwing an "X-vs-unX" distinction to users will just result in
-pointless fear mongering nonsense. Instead just communicate the
-identity of an interface by its public key, rather than its private
-key. If you're not willing to hide or mask private keys (which you
-really should), then at least deemphasize them?
+A [probably common] simple example is where there are 1500 byte speakers
+on either side of a WG link (e.g. the internet, or some satellite site)
+- having a <1500 byte link in the middle will break many applications,
+in particular especially UDP based protocols.
+
+Unfortunately the better solution is likely to make it configurable, or
+allow fragmentation for forwarded traffic (since the host already knows
+the mtu, this solves the problem without requiring any user config) -
+although understandably you don't want to add more complexity
+
+thanks
