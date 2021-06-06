@@ -2,64 +2,56 @@ Return-Path: <SRS0=ObIi=LA=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CB09C47096
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  6 Jun 2021 14:30:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C41CAC47096
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  6 Jun 2021 15:09:20 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 35A336142A
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  6 Jun 2021 14:30:22 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 35A336142A
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	by mail.kernel.org (Postfix) with ESMTPS id F34F661408
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  6 Jun 2021 15:09:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org F34F661408
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2bb7aff4;
-	Sun, 6 Jun 2021 14:28:15 +0000 (UTC)
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com
- [2607:f8b0:4864:20::435])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 8b7b5d32
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cf9c95a3;
+	Sun, 6 Jun 2021 15:09:18 +0000 (UTC)
+Received: from mail.zx2c4.com (mail.zx2c4.com [104.131.123.232])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 251dfcce
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sun, 6 Jun 2021 14:28:13 +0000 (UTC)
-Received: by mail-pf1-x435.google.com with SMTP id u126so7157971pfu.13
- for <wireguard@lists.zx2c4.com>; Sun, 06 Jun 2021 07:28:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to:cc;
- bh=yFGnl0wVMJE5lPdpKqOxzY6fZxnqgZcqGe+bk7kdp58=;
- b=RwQItaz/oGHnffevU1/D1TzuSnkdFfTIO78taCkBL6/vLhuDWUi768lwSur3C1ahjm
- 2ZtuloUCZYdTV033XB3cbdgx7mN0fh2RrCuwMnq1Kss7l0dP8KWCch0ZMYw9h/VXXNy6
- nyC2iPv0RQJGnrg4C3cnOySp+OSqdX6pZ18VcbDQ0slf92ZSJSc/xIhTIYGoXYMrTgso
- qm5yjOlwQhy4wTw5xSqnsCMBEI2JjVSvMKE5BQ4Ixs36fuWCkDJ9MZ+J5KohMUQLcpW7
- N4pDODhJ7g8iqSeHoy1cNK2cO+UF01kmkwwhxaKbT28yjXivOFtk++sg/fshcUPhEh8p
- KS6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
- bh=yFGnl0wVMJE5lPdpKqOxzY6fZxnqgZcqGe+bk7kdp58=;
- b=QZUAPf7tx5QdOU2qKELyu27Zv9rk9mCU99fGkwjztwKHxwjYLcr35ikhn0d6Gokdox
- motyuI6CGznqDkCfU99HCs2LC6cu5icDWCdNLOqZ7nSQ8Awde0kyLCs4jG6T8JTrtM18
- h7IGxoROmXCf2BkOB/Xyqnn9q3vAIo9SBqp4iCOE/iQkKEZZGTgunP5TvOQ/ogydh+Gu
- RfpaFEmHLDNr2uBJEyK+/tpc2NyTqjKMOx6y5dNUrxs17qYmVDSDmcOFJeL80PBmecka
- dc/dTrlQU9R29HwIQd9J1JYJVo/C9bS8wo7SBG73jop55M/xttcXhbOt3aHXn9+ZiALJ
- gnTQ==
-X-Gm-Message-State: AOAM530kLggP51OVrgl0aM2dAenkzYpJxw2YKj+MrZrDbiNp8y8o6WvW
- UDa8w5Y1mWFa07NWja0ep4oQ1WBRQFU/DdhfnQr2l3rL/oaw4g==
-X-Google-Smtp-Source: ABdhPJwmorHhql7T6Y3ouD9z+j+Jz/v/jBI0xUO2wa/5KaJvsbg0nmU4K8KOwa7ZQ2wjrj7xsHAVF0rlIBx4tOgaqwQ=
-X-Received: by 2002:a62:6d07:0:b029:2e9:1e3c:ad54 with SMTP id
- i7-20020a626d070000b02902e91e3cad54mr13295555pfc.46.1622989691351; Sun, 06
- Jun 2021 07:28:11 -0700 (PDT)
+ for <wireguard@lists.zx2c4.com>; Sun, 6 Jun 2021 15:09:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1622992152;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=dn2xsiAMafYVM3eKCoNacpC9RiU/AvKXCjccIgKUEl4=;
+ b=X2i1Gnp4rj97J++45rhgGW/HPkxCpYT8Gporf1zoaxELtkhUFmuZ2Mv+A3gfq20dNpDFIq
+ /vOxbcPK/C+POCwSY4pi+4Nu9bdOq8g297y5NPvb0eN5qyF6aertWSuubzj8gLwQ+DX+f1
+ 3RQjw9vX45ShQcgSG19ddCR+YifILGA=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id dcf2f251
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Sun, 6 Jun 2021 15:09:12 +0000 (UTC)
+Received: by mail-yb1-f172.google.com with SMTP id i6so6467896ybm.1
+ for <wireguard@lists.zx2c4.com>; Sun, 06 Jun 2021 08:09:12 -0700 (PDT)
+X-Gm-Message-State: AOAM530vuarqk+/5dc5wxoaSQjBAJ/0P0VD2k7ZAVmwdmMEoXGVi18Gs
+ ecFZHva7Jcd/S0Ui9C5zW6B+/WVMmP+42BfppsQ=
+X-Google-Smtp-Source: ABdhPJyr9mE2rdjEa44vJtKvsXRBwF3vvINpxCx5vsLd2TrdviqTDuhtP1e3c33b9ZDJ/b2ETybJNiBIDu6vbp9oOwA=
+X-Received: by 2002:a25:389:: with SMTP id 131mr18302214ybd.306.1622992151745; 
+ Sun, 06 Jun 2021 08:09:11 -0700 (PDT)
 MIME-Version: 1.0
-From: Christian McDonald <rcmcdonald91@gmail.com>
-Date: Sun, 6 Jun 2021 10:27:59 -0400
-Message-ID: <CADTMz0+OmW5n1JSD6pLA-_2=aRHeuhYLdQ6BCwjHg07vrPc+vA@mail.gmail.com>
-Subject: Certain private keys being mangled by wg on FreeBSD
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: wireguard@lists.zx2c4.com
+References: <CADTMz0+OmW5n1JSD6pLA-_2=aRHeuhYLdQ6BCwjHg07vrPc+vA@mail.gmail.com>
+In-Reply-To: <CADTMz0+OmW5n1JSD6pLA-_2=aRHeuhYLdQ6BCwjHg07vrPc+vA@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Sun, 6 Jun 2021 17:09:01 +0200
+X-Gmail-Original-Message-ID: <CAHmME9poc+xPG_WfX1vYTSc9JPrSkMpWGR=rTGspOVsKyYfCpA@mail.gmail.com>
+Message-ID: <CAHmME9poc+xPG_WfX1vYTSc9JPrSkMpWGR=rTGspOVsKyYfCpA@mail.gmail.com>
+Subject: Re: Certain private keys being mangled by wg on FreeBSD
+To: Christian McDonald <rcmcdonald91@gmail.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -75,27 +67,16 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Jason,
+It looks like whatever is generating those private keys is not
+clamping them. Specifically, all private keys should undergo this
+transformation:
 
-I've got an interesting case here. I've got what appears to be a few
-private keys provided by Mullvad that are being mangled by wg(8) on
-FreeBSD12.2 (pfSense 2.5.1+).
+        key[0] &= 248;
+        key[31] = (key[31] & 127) | 64;
 
-Private key ```Lm0BA4UyPilHH5qnXCfr6Lw8ynecOPor88tljLy3ALk=``` ...
-becomes ```KG0BA4UyPilHH5qnXCfr6Lw8ynecOPor88tljLy3AHk=``` on wg
-showconf
+In your case, your `Lm` prefix (first byte: 0x2c) is being anded with
+248, and thus turns into KG (first byte: 0x28).
 
-another example is ```zQwldrChCYP3P2fZeTtHmj3c/88hxM+TaLIq1mJ28ZY=``` turns into
-```yAwldrChCYP3P2fZeTtHmj3c/88hxM+TaLIq1mJ28VY=```
-
-
-I must have just gotten lucky with the keys Mullvad provided to me, as
-those worked and continue to work fine for me.
-
-ref : https://github.com/theonemcdonald/pfSense-pkg-WireGuard/issues/105
-
-Best,
-
---
-R. Christian McDonald
-E: rcmcdonald91@gmail.com
+The kernel properly clamps the keys on input, though, in case
+generators forget to clamp them. So what you're seeing is correct
+behavior.
