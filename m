@@ -2,62 +2,78 @@ Return-Path: <SRS0=oHCC=LC=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 081EAC47082
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  8 Jun 2021 10:59:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40D97C4743E
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  8 Jun 2021 10:59:38 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 1150C61285
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  8 Jun 2021 10:59:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 1150C61285
+	by mail.kernel.org (Postfix) with ESMTPS id 39E756127A
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  8 Jun 2021 10:59:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 39E756127A
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ccd744dc;
-	Tue, 8 Jun 2021 10:57:23 +0000 (UTC)
-Received: from mail-ua1-x933.google.com (mail-ua1-x933.google.com
- [2607:f8b0:4864:20::933])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 9c61b632
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f95c2e22;
+	Tue, 8 Jun 2021 10:57:25 +0000 (UTC)
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com
+ [2a00:1450:4864:20::331])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 5c7cb2f4
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 7 Jun 2021 16:02:27 +0000 (UTC)
-Received: by mail-ua1-x933.google.com with SMTP id d13so9299286uav.5
- for <wireguard@lists.zx2c4.com>; Mon, 07 Jun 2021 09:02:27 -0700 (PDT)
+ for <wireguard@lists.zx2c4.com>; Mon, 7 Jun 2021 19:18:00 +0000 (UTC)
+Received: by mail-wm1-x331.google.com with SMTP id
+ h22-20020a05600c3516b02901a826f84095so315862wmq.5
+ for <wireguard@lists.zx2c4.com>; Mon, 07 Jun 2021 12:18:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=8TH/BWQThYiPzEVLEMXIWkjuSjreo1jBP/MYpxibwFg=;
- b=tpcKUfy7EcWw9uUOj8PDLN1BM9saK1ZOcpA+tpOB/BBhg0poW1x1dA35y8YJqzriAD
- 7FMwP50RMvaabrNtxO3RKTHakPMz+25bM+MtvXNs+mnnkBkBWVk15dAX8QzsLvoHcWt3
- 0UyITrTbtbKOM+/9lx+QQSgVWfLrdM1U+YuzL8NhEvSpL9GI8LNpM7wN85+3yIZyVbtz
- t66tVMlYQQgHNX1i7EAUhnI4nHUAMZ6xRth6XDpQ6sHyovEu4vqn6ENl6hpW6krJGnGk
- Sz5kqKGR6v5lLszeqXassdjE8fqQbrzz3YcfAyQAmZl2jqsPrvPaWdWNpautOJ13jKjV
- hBYw==
+ h=from:subject:to:references:in-reply-to:message-id:date:user-agent
+ :mime-version:content-transfer-encoding:content-language;
+ bh=MarO5aDoiA+jM++PU/sc/Ex4dzy0P9Q18ztq8zU6tzs=;
+ b=MuRIMMhkpnjTfrhWGvjLsq+2gm0ar81IBcZWYFVFU7wR0/DI0UiDbF3a9HBenTP6X8
+ Oy/zoiSNp/aYImKiQ9cV3nGtc58SDj+k2+eoUcjYC7BWXWMbScVsGOaOoFrApsVlnpyv
+ 65+Y2nEzFPwhZMFuuv7LqrWRAUdvSDKiJHjLhNMSDFH3tcojnrZrqi5pri44AVGeJk3C
+ +4ydPKJY7Kjup8gpkBy41PDdReinezDBMw0jNShcOL8bbTXIBKCBCJ62BQIg/pC9qoV3
+ 5qr8Ll7A2J2HRztR8/z/O4S/KRxBT6M9pQNAgykgSKABNrvmN08lxCOo/SpjEdEcgB1f
+ zKig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=8TH/BWQThYiPzEVLEMXIWkjuSjreo1jBP/MYpxibwFg=;
- b=oLJN9Xi6BgoRvuOzknya5aAqNMCPJTGfH3T+Fdv85DagDerYtICB6KEF3yLfzeydag
- yX+OY0JmsCqGRC52tQkuAFDuJH7zDOGkCGG+51XPnBff5pA7g0x1ZckmLVScT+nQgW8C
- 2V6IQx2oPYjAN99LthcDiJ3ByrFF49BzSlSABpAZhZep3As3LCxvWRVQZO3BIck64KPe
- KE62IYgfTX/0Hn3RGMPseJj0q2oLWymRBJI7d40sEpPW6gwRP2jnOA/Wdpw9i6vR4HX0
- 7XRg9FdLf8peGp/wSKcNviwVCIREqCY0T8xyjVuMIUVQ4Y5al4Q718+Ym/JrbLhT1m9m
- iCVA==
-X-Gm-Message-State: AOAM531h20HqEWuvgcaoB6C5/YcbOx1pb92vQUTUZaAxxh+K92gzK3qr
- 4TKLVhG2FY8B1TqMnXIGqKRmMhdGiF8qb3IQZ/l/CiUlqVU=
-X-Google-Smtp-Source: ABdhPJwHbkjRaHP7hz0ZoKst7uc77mCW218GoZcQ8lFAPCEL7goc9aM79jsFYMDV6OErbeh36FVv7PUlFXaxIdFv1Ew=
-X-Received: by 2002:ab0:3a1:: with SMTP id 30mr10225254uau.94.1623081746194;
- Mon, 07 Jun 2021 09:02:26 -0700 (PDT)
-MIME-Version: 1.0
-From: zhengmian hu <huzhengmian@gmail.com>
-Date: Mon, 7 Jun 2021 12:02:16 -0400
-Message-ID: <CAAntei_4-bdocSED1vNkG94oe0AL33RVA6s1w5DT2Q13NLH=7Q@mail.gmail.com>
-Subject: Cannot use localhost as endpoint for wireguard-windows
+ h=x-gm-message-state:from:subject:to:references:in-reply-to
+ :message-id:date:user-agent:mime-version:content-transfer-encoding
+ :content-language;
+ bh=MarO5aDoiA+jM++PU/sc/Ex4dzy0P9Q18ztq8zU6tzs=;
+ b=PI1J3rZi6Be95pfnCLs+/3uK7egMoFKUs1n+Bw5UuUgPka+0SVpT5jZuuAptci8Bt7
+ 5r4jlx2BegYM4lrYsnT7iY2DgmyHPkawsM22Zt+SWKceDRGjPXmA30cC0PCA+zN1H/Hp
+ s87TF57uEfsn9qNEONC7FGBmtISmP32ihX9YqKxmBTbxXHw3DHu3qeOueWy+a5ivqGnb
+ HSHVKaqp4Gcj/Ube9OPsmhLdNv9OpjvAaLTwuaEwppXRs9TmHXstBxFCSK9UJkKExxjp
+ NTBNHNbQs+6EqIBDfHA7BQqauQMst/0PJyh09N52qtIRvEV3M9BzEn6TSpFQSuZqamEi
+ i6gA==
+X-Gm-Message-State: AOAM533zGXiE8e3i6rVeNkT9r76EBebeShzo4/BFOHNmMJ1Xp9TZj+0k
+ zMuFteGtCAMhrIpRjrzRtfkHvxgmmJ+L7A==
+X-Google-Smtp-Source: ABdhPJypOn4CIv3vHtDOPL4nQd9xMI0I8tPJBwPVe4JL3LUhLExMgdP+EzCis7XcsMLfR3UvfLLGMw==
+X-Received: by 2002:a05:600c:1c1b:: with SMTP id
+ j27mr18794442wms.133.1623093479703; 
+ Mon, 07 Jun 2021 12:17:59 -0700 (PDT)
+Received: from khjkh.local (tigger2014.plus.com. [31.125.127.13])
+ by smtp.gmail.com with ESMTPSA id u2sm16887552wrn.38.2021.06.07.12.17.59
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 07 Jun 2021 12:17:59 -0700 (PDT)
+From: ben edmunds <tigger2014g@gmail.com>
+Subject: Re: Certain private keys being mangled by wg on FreeBSD
 To: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+References: <CAHmME9o6RhPmojbA4nTRA4GqFXVstEsmmfUj8SqmaJSvGsmmWQ@mail.gmail.com>
+In-Reply-To: <CAHmME9o6RhPmojbA4nTRA4GqFXVstEsmmfUj8SqmaJSvGsmmWQ@mail.gmail.com>
+Message-ID: <e8baa2e1-78e4-1b02-940a-b8058f86a6cc@gmail.com>
+Date: Mon, 7 Jun 2021 20:17:58 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.11.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
 X-Mailman-Approved-At: Tue, 08 Jun 2021 10:57:21 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -73,28 +89,36 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-I might encounter the same problem as
-https://lists.zx2c4.com/pipermail/wireguard/2020-August/005801.html
-When endpoint is set as 127.0.0.1:51820, the log shows like follows:
+The issue here for pfSense is that the private key will be viewable just 
+like it is within native wireguard clients in the peer config options 
+and needs to be viewable here for admin and debug purposes.
 
-[TUN] [xxx] peer(xxx) Received handshake response
-[TUN] [xxx] peer(xxx) - Retrying handshake because we stopped hearing
-back after 15 seconds.
-[TUN] [xxx] peer(xxx) - Sending handshake initiation
-[TUN] [xxx] peer(xxx) - Handshake did not complete after 5 seconds,
-retrying (try 2)
-[TUN] [xxx] peer(xxx) - Sending handshake initiation
-[TUN] [xxx] peer(xxx) - Handshake did not complete after 5 seconds,
-retrying (try 4)
-...
 
-In Wireshark, I can see that only the first handshake initiation
-package is sent. There are no following packages even if the log shows
-"Sending handshake initiation".
+With regards to clamping and hiding this from users its tricky as it 
+leads to red heroin issues as people debug the tunnels via showcase for 
+example and will see a different key to which they entered in the UI. So 
+the only logical option is to:
 
-However, when I use another ip of the local computer for the endpoint,
-e.g. 192.168.1.2, everything works fine.
+1) inform the admin that the key has been clamped
 
-Is it a known bug of wireguard-windows? Is there any existing formal
-description on the scope of this bug? Is there any way to bypass this
-problem?
+2) show the admin the clamped key which they can see whilst debugging.
+
+
+By not showing this to the user to avoid confusion we actually would 
+create confusion in this scenario as the kernel module is performing the 
+clamping but the user would have no knowledge of this and leads to 
+issues being opened that are a non issue. The aim is not to show the 
+users anything about clamping unless the key needs to be clamped as it 
+was not clamped already.
+
+I belive it is key to remember that pfSense is not an end user 
+application/tool and designed to be used by admins & network engineers 
+so should be considered power users who are capable of being exposed to 
+more information.
+
+
+Regards
+
+Tigger2014
+
+
