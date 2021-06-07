@@ -2,54 +2,49 @@ Return-Path: <SRS0=3dEh=LB=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C3C1C47095
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  7 Jun 2021 14:13:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6CCD8C47082
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  7 Jun 2021 18:50:43 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 1C47E61029
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  7 Jun 2021 14:13:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 1C47E61029
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=zorins.us
+	by mail.kernel.org (Postfix) with ESMTPS id 075D9610A1
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  7 Jun 2021 18:50:41 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 075D9610A1
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=romanrm.net
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cac2dd51;
-	Mon, 7 Jun 2021 14:13:35 +0000 (UTC)
-Received: from de01.edge.zorins.net (<unknown> [2607:5300:203:17b5::2])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 26d02096
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2e81039a;
+	Mon, 7 Jun 2021 18:50:40 +0000 (UTC)
+Received: from rin.romanrm.net (rin.romanrm.net [2001:bc8:2dd2:1000::1])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4e211196
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sun, 6 Jun 2021 22:34:04 +0000 (UTC)
-Received: from w6nzwbfjyoxbcejp6cjb4n3l6iupddqf3jk7y6s67fa7e4l6w2djuuqd.onion
- (mx2.tor1 [100.66.17.138])
- by de01.edge.zorins.net (Postfix) with ESMTP id 4Fyrrq1pHcz4WGg;
- Sun,  6 Jun 2021 22:34:03 +0000 (UTC)
-Received: from [100.99.43.152] (unknown [88.103.227.174])
- (Authenticated sender: jwh@zorins.us)
- by w6nzwbfjyoxbcejp6cjb4n3l6iupddqf3jk7y6s67fa7e4l6w2djuuqd.onion (Postfix)
- with ESMTPA id 4Fyrrg6fPvzJGT; Sun,  6 Jun 2021 22:33:55 +0000 (UTC)
-To: Roman Mamedov <rm@romanrm.net>, "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
- zrm <zrm@trustiosity.com>, StarBrilliant <coder@poorlab.com>,
- Baptiste Jonglez <baptiste@bitsofnetworks.org>
-References: <CAHmME9rNnBiNvBstb7MPwK-7AmAN0sOfnhdR=eeLrowWcKxaaQ@mail.gmail.com>
- <20210607000318.4d36b9cb@natsu>
-From: Joe Holden <jwh@zorins.us>
+ for <wireguard@lists.zx2c4.com>; Mon, 7 Jun 2021 18:50:36 +0000 (UTC)
+Received: from natsu (natsu2.home.romanrm.net [IPv6:fd39::e99e:8f1b:cfc9:ccb8])
+ by rin.romanrm.net (Postfix) with SMTP id CC98F6B1;
+ Mon,  7 Jun 2021 18:50:34 +0000 (UTC)
+Date: Mon, 7 Jun 2021 23:50:34 +0500
+From: Roman Mamedov <rm@romanrm.net>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>, zrm
+ <zrm@trustiosity.com>, StarBrilliant <coder@poorlab.com>, Baptiste Jonglez
+ <baptiste@bitsofnetworks.org>, Joe Holden <jwh@zorins.us>, Nico Schottelius
+ <nico.schottelius@ungleich.ch>, Vasili Pupkin <diggest@gmail.com>,
+ peter@fiberdirekt.se
 Subject: Re: potentially disallowing IP fragmentation on wg packets, and
  handling routing loops better
-Message-ID: <0cac2d72-debd-bff6-2404-6b3aabbdeb0d@zorins.us>
-Date: Mon, 7 Jun 2021 00:33:54 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+Message-ID: <20210607235034.024e6c6b@natsu>
+In-Reply-To: <20210607164617.6bf015d1@natsu>
+References: <CAHmME9rNnBiNvBstb7MPwK-7AmAN0sOfnhdR=eeLrowWcKxaaQ@mail.gmail.com>
+ <CAHmME9rj9M=5G6oh+ZKQjekxWFp-5sF4MWux2==2V4X2UtYkag@mail.gmail.com>
+ <20210607161313.764eb5d6@natsu> <YL4CjhvPcQ+/qtG1@zx2c4.com>
+ <20210607164617.6bf015d1@natsu>
 MIME-Version: 1.0
-In-Reply-To: <20210607000318.4d36b9cb@natsu>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
-X-Mailman-Approved-At: Mon, 07 Jun 2021 14:13:34 +0000
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -64,59 +59,56 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On 2021-06-06 21:03, Roman Mamedov wrote:
-> On Sun, 6 Jun 2021 11:13:36 +0200
+On Mon, 7 Jun 2021 16:46:17 +0500
+Roman Mamedov <rm@romanrm.net> wrote:
+
+> On Mon, 7 Jun 2021 13:27:10 +0200
 > "Jason A. Donenfeld" <Jason@zx2c4.com> wrote:
 > 
->> Specifically the change would be to not allow IP fragmentation of the
->> encrypted UDP packets. This way, in the case of a loop, eventually the
->> packet size exceeds MTU, and it gets dropped: dumb and effective.
->> Depending on how this discussion goes, a compromise would be to not
->> allow fragmentation, but only for forwarded and kernel-generated
->> packets, not not for locally generated userspace packets. That's more
->> complex and I don't like it as much as just disallowing IP
->> fragmentation all together.
->>
->> Pros:
->> - It solves the routing loop problem very simply.
+> > Can you walk me through your use case a bit more, so I can wrap my mind
+> > around the requirements?
+> > 
+> > ingress --plain--> wireguard --wireguard[plain]--> vxlan --vxlan[wireguard[plain]]--> egress
 > 
-> Doesn't TTL already solve this?
+> Not sure I understand your scheme correctly. In any case, the path of a
+> packet would be...
 > 
->> - Maybe people are running
->> wireguard-over-gre-over-vxlan-over-l2tp-over-pppoe-over-god-knows-what-else,
->> and this reduces the MTU to below 1280, yet they still want to put
->> IPv6 through wireguard, and are willing to accept the performance
->> implications.
+> On peer 1:
 > 
-> Not only that. Sometimes transparent bridging of 1500 MTU LANs is required.
+> * plain Ethernet -> wrapped into VXLAN -> encrypted into WireGuard
 > 
-> VXLAN does not allow tunnel endpoints to produce fragmented VXLAN packets.
+> On peer 2:
 > 
-> With WG we can fragment them one level lower, *and* gain a higher efficiency
-> compared to hypothetical VXLAN's fragmentation, due to less header overhead on
-> 2nd and further packets in a chain.
+> * decrypted from WireGuard -> unwrapped from VXLAN -> plain Ethernet
 > 
-> It would be unfortunate if this will become no longer possible.
+> > So my question is, why can't you set wireguard's MTU to 80 bytes less
+> > than vxlan's MTU? What's preventing that or making it infeasible?
 > 
-> It appears to me that people who might need to transparently join multiple
-> Ethernet LANs due to legacy network topologies they have to work with, weird
-> requirements, various legacy software etc, would outnumber those who even run
-> WG over WG at all, let alone getting themselves into a routing loop that way.
+> To transparently bridge two Ethernet LANs, a VXLAN interface needs to join an
+> L2 bridge. All interfaces that are members of a bridge must have the same MTU.
 > 
-All of the above, really - not allowing "full" sized frames over WG
-breaks a huge number of use cases - even simple ones, because regardless
-of how much it's wished to be true, in reality pmtu isn't very useful
-and doesn't work for many cases even in an environment where it isn't
-completely broken by firewalls/misconfiguration.
+> As such, br0 members on both sides:
+>   eth0 (MTU 1500)
+>   vx0 (MTU 1500)
+> 
+> VXLAN transports full L2 frames encapsulating them into UDP. To fit the
+> full 1500-byte packet and accounting for VXLAN and related IP overheads,
+> the resulting packet size is 1574 bytes.
+> 
+> So this same host that just generated the 1574-byte encapsulated VXLAN packet
+> with something it received via its eth0 port, now needs to send it further to
+> its WG peer(s). For this to succeed, the in-tunnel WG MTU needs to be 1574 or
+> more, not 1412 or 1420, as VXLAN itself can't be fragmented[1]; or even if it
+> could, that would mean a much worse overhead ratio than currently.
+> 
+> [1] https://datatracker.ietf.org/doc/html/rfc7348#section-4.3
 
-A [probably common] simple example is where there are 1500 byte speakers
-on either side of a WG link (e.g. the internet, or some satellite site)
-- having a <1500 byte link in the middle will break many applications,
-in particular especially UDP based protocols.
+In case you are not convinced by this case, would you consider at least
+allowing fragmentation when WG's in-tunnel MTU is set to >=1500? Because this
+is the user effectively saying "yes I know this is not gonna fit in one
+packet, I want to rely on WG packets being fragmented", but without the need
+for extra knobs.
 
-Unfortunately the better solution is likely to make it configurable, or
-allow fragmentation for forwarded traffic (since the host already knows
-the mtu, this solves the problem without requiring any user config) -
-although understandably you don't want to add more complexity
-
-thanks
+-- 
+With respect,
+Roman
