@@ -2,47 +2,58 @@ Return-Path: <SRS0=3dEh=LB=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF5BEC47095
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  7 Jun 2021 11:19:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19744C47094
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  7 Jun 2021 11:19:21 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 8A3B161078
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  7 Jun 2021 11:19:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 8A3B161078
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=romanrm.net
+	by mail.kernel.org (Postfix) with ESMTPS id 2B92A6101A
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  7 Jun 2021 11:19:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 2B92A6101A
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=ungleich.ch
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a732def9;
-	Mon, 7 Jun 2021 11:13:18 +0000 (UTC)
-Received: from rin.romanrm.net (rin.romanrm.net [2001:bc8:2dd2:1000::1])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4000be10
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 7 Jun 2021 11:13:17 +0000 (UTC)
-Received: from natsu (natsu2.home.romanrm.net [IPv6:fd39::e99e:8f1b:cfc9:ccb8])
- by rin.romanrm.net (Postfix) with SMTP id 64FF91EF;
- Mon,  7 Jun 2021 11:13:14 +0000 (UTC)
-Date: Mon, 7 Jun 2021 16:13:13 +0500
-From: Roman Mamedov <rm@romanrm.net>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>, zrm
- <zrm@trustiosity.com>, StarBrilliant <coder@poorlab.com>, Baptiste Jonglez
- <baptiste@bitsofnetworks.org>, Joe Holden <jwh@zorins.us>, Nico Schottelius
- <nico.schottelius@ungleich.ch>, Vasili Pupkin <diggest@gmail.com>,
- peter@fiberdirekt.se
-Subject: Re: potentially disallowing IP fragmentation on wg packets, and
- handling routing loops better
-Message-ID: <20210607161313.764eb5d6@natsu>
-In-Reply-To: <CAHmME9rj9M=5G6oh+ZKQjekxWFp-5sF4MWux2==2V4X2UtYkag@mail.gmail.com>
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c13e0e2f;
+	Mon, 7 Jun 2021 11:18:04 +0000 (UTC)
+Received: from smtp.ungleich.ch (mx.ungleich.ch [185.203.112.16])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 59d0960f
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Mon, 7 Jun 2021 11:18:03 +0000 (UTC)
+Received: from nb3.localdomain (localhost [IPv6:::1])
+ by smtp.ungleich.ch (Postfix) with ESMTP id 3E42C1FFDC;
+ Mon,  7 Jun 2021 13:18:03 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ungleich.ch; s=mail;
+ t=1623064683; bh=pM7goAGYBN6bnW9H3kWmefOYdKItBU8pOdsdaq+QuYw=;
+ h=References:From:To:Cc:Subject:In-reply-to:Date:From;
+ b=C1LiIKS60KXM57LhjxiEeMOPnKs2vJcnO9FKoY3AYww/7H1ZPbA3y7AzK5DKfEXj9
+ lLVE+bQGnymQoBvblN9RltyBUpRKzjwFPggZnSfID4q0JXfo3Ua9IsWO619NUO0eIS
+ 4OJcxyNZ2xgxXSxHdz14DUnWhlAcjrzKdfjTkVPDCch15g3OtrWISe4lSxqr3QBYfQ
+ cHjo5YzxL7x8DxuXxBXgiOWIHOlF0ZKZ7xXW7BQnu/nfS8Hj2jDLZfr7v6ca7bn1vk
+ BhKFoWtFzg7+mC7149ACoZq5yBhhuL8rhrH/fb0hCRKpGk2g51s9yi2LWvXgGnLcTn
+ 780RdpVTJFfOw==
+Received: by nb3.localdomain (Postfix, from userid 1000)
+ id 1C89E14C4153; Mon,  7 Jun 2021 13:18:35 +0200 (CEST)
 References: <CAHmME9rNnBiNvBstb7MPwK-7AmAN0sOfnhdR=eeLrowWcKxaaQ@mail.gmail.com>
  <CAHmME9rj9M=5G6oh+ZKQjekxWFp-5sF4MWux2==2V4X2UtYkag@mail.gmail.com>
+User-agent: mu4e 1.4.15; emacs 27.2
+From: Nico Schottelius <nico.schottelius@ungleich.ch>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>, Roman Mamedov
+ <rm@romanrm.net>, zrm <zrm@trustiosity.com>, StarBrilliant
+ <coder@poorlab.com>, Baptiste Jonglez <baptiste@bitsofnetworks.org>, Joe
+ Holden <jwh@zorins.us>, Nico Schottelius <nico.schottelius@ungleich.ch>,
+ Vasili Pupkin <diggest@gmail.com>, peter@fiberdirekt.se
+Subject: Re: potentially disallowing IP fragmentation on wg packets, and
+ handling routing loops better
+In-reply-to: <CAHmME9rj9M=5G6oh+ZKQjekxWFp-5sF4MWux2==2V4X2UtYkag@mail.gmail.com>
+Date: Mon, 07 Jun 2021 13:18:35 +0200
+Message-ID: <87fsxtvs6s.fsf@ungleich.ch>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -57,8 +68,34 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Mon, 7 Jun 2021 11:34:21 +0200
-"Jason A. Donenfeld" <Jason@zx2c4.com> wrote:
+
+Hey Jason,
+
+
+Jason A. Donenfeld <Jason@zx2c4.com> writes:
+
+> Hey folks,
+>
+> There seems to be a bit of confusion about *which* stage of
+> fragmentation would be affected by the proposal, so I drew some
+> diagrams to help illustrate what I'm talking about. Please take a
+> look:
+>
+> https://data.zx2c4.com/potential-wg-fragmentation-proposal.png
+
+I love the math: 2792 = 1420 + 1420 = 1500 + 1500
+
+Joke aside, ...
+
+> 1) Ingress fragmentation would not be affected by this and is not
+> relevant for this discussion. This is the case in which a computer
+> gets a packet for forwarding out of the wireguard interface, and it's
+> larger than the interface's mtu, so the computer fragments it before
+> passing it onto that interface. I'm not suggesting any change in this
+> behavior.
+
+I believe this is something wireguard cannot influence *anyway* as the
+sending side can send any sized packet towards us.
 
 > 2) Local egress fragmentation WOULD be affected by this and is the
 > most relevant thing in this discussion. In this case, a packet that
@@ -70,32 +107,40 @@ On Mon, 7 Jun 2021 11:34:21 +0200
 > drew would be for the administrator to decrease the MTU of the
 > wireguard interface to 1412.
 
-In the L2 tunneling scenario the large VXLAN packets are generated locally, as
-it will be common for the same host (aka "the router") to be both a WG peer
-and a VXLAN VTEP, so it is going to be affected.
+So how does that behave in the situation that the upstream interface or
+routes change? Let's say WG MTU = 1412, original PMTU = 1500, decreases
+to 1420. Would that reduce the WG mtu automatically to 1332? I guess
+not. So what happens with packets arrive with size = 1420?
 
-> So, of those concerned about this, which concerns are actually about
-> (2) and (3)? Of those, which ones are about (2)? If you have concerns
-> specifically about (2) that couldn't be fixed with reasonable system
-> administration, I'd like to hear why and what the setup is that leads
-> to that situation.
+> 3) Path egress fragmentation COULD be affected by this, but doesn't
+> have to be. In this case, we simply set "don't fragment" on encrypted
+> egress packets, which means they won't be fragmented by other
+> computers along the path.
 
-My described case is being able to transparently bridge two Ethernet LANs.
+That's true, but then it would be required to fragment them locally,
+wouldn't it?
 
-Hopefully the answer isn't "you don't really need to do that" or "apply
-reasonable system administration and set up routing instead".
+I'm trying to wrap my head around this in comparison to IPv6/IPv4: In
+the IPv6 world we don't have fragmentation on the path, it's always
+client based. In the IPv4 world routers can dis/re-assemble packets on
+the way.
 
-> As an aside, Roman asked about TTL. When tunneling, the outer packet
-> header always must take the new TTL of the route to the tunnel
-> endpoint, and not do anything with the potentially much smaller inner
-> TTL.
+If I understand it correctly, you are somewhat suggestion that wireguard
+behaves a bit like an IPv6 router, albeit for both the v6 and the v4
+world. Is that comparison making sense somehow?
 
-As far as I can see the inner TTL is not smaller than usual on WG tunnels (64).
-You could inherit it to the outside of the tunnel, like GRE does:
-https://serverfault.com/questions/827239/gre-tunnel-ttl-number
-But of course that's leaking a tiny bit of information about the encrypted
-tunnel, dunno how critical that would be.
+I think it would be easier to understand, if there was a demo case, a
+sample tunnel that rejects packets, if fragmentation is needed. What
+would be the appropriate ICMP message for an IPv4 packet that does not
+include the DF bit?
 
--- 
-With respect,
-Roman
+So far, I'm not fully convinced the approach is a smart way, especially
+not when it comes to handling network debugging and given that we do
+already have a TTL that should be a loop prevention as well.
+
+Best regards,
+
+Nico
+
+--
+Sustainable and modern Infrastructures by ungleich.ch
