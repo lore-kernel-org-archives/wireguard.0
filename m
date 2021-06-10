@@ -1,83 +1,75 @@
-Return-Path: <SRS0=+4rF=LD=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=GgA3=LE=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31B08C48BCD
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  9 Jun 2021 23:27:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8114FC47094
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 10 Jun 2021 11:45:19 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 312FD613DF
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  9 Jun 2021 23:27:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 312FD613DF
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	by mail.kernel.org (Postfix) with ESMTPS id 48E39613F1
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 10 Jun 2021 11:45:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 48E39613F1
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=mullvad.net
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cdf5153b;
-	Wed, 9 Jun 2021 23:27:02 +0000 (UTC)
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com
- [2a00:1450:4864:20::12a])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c18c19ee
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9a67575c;
+	Thu, 10 Jun 2021 11:44:49 +0000 (UTC)
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com
+ [2a00:1450:4864:20::635])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a18a747a
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 9 Jun 2021 23:27:00 +0000 (UTC)
-Received: by mail-lf1-x12a.google.com with SMTP id f30so40760218lfj.1
- for <wireguard@lists.zx2c4.com>; Wed, 09 Jun 2021 16:27:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=subject:to:cc:references:from:message-id:date:user-agent
- :mime-version:in-reply-to:content-transfer-encoding:content-language;
- bh=1ecWwVpxGxlSSGlu1U265iqJGX74iQy1ANSIpjiWDKs=;
- b=lZhYlPbNNAFsdjHPLakxTOULMTJYZacHjICrZ8dnNalsC/G0vVH8ZNV3smk+gBgF4E
- GdaoyzyNJ+sQx7SgMP3vSzconVSkU0GK7qIlS0VOC9uVpVwb2qlxJ67ZHbPJVFqaBhsN
- wHVNqvfCt8G4aTek5yousbVlZCYVUYd8NssgnaeEA8xEnbILdCg0O1LIGj38suy0dYIk
- pN1YxKzdfv15gvwHNY3+y6pI5d76f/XrtTkBeJP0QeXlzpJNRa10NhtL7Q4Ir6fQkh3b
- VLbWmotoT92tZn82oa6WvF9pdB0rGMxGZAgn/+K0IuRS2KKQx8sOSOcBWAy19QwsT45M
- U0Xw==
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 10 Jun 2021 11:44:48 +0000 (UTC)
+Received: by mail-ej1-x635.google.com with SMTP id og14so38362005ejc.5
+ for <wireguard@lists.zx2c4.com>; Thu, 10 Jun 2021 04:44:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mullvad-net.20150623.gappssmtp.com; s=20150623;
+ h=from:content-transfer-encoding:mime-version:subject:message-id:date
+ :to; bh=tRDR1dY9O2rZi6TIj3e6Dxa+46Ccy/Lap0M/cSXWT4k=;
+ b=i8xm0OLYs4lHFJJqWeA3OkxZyPknIihsY3iUcHyTXnfw3xtc1ygylJxt38u8LvCuu7
+ kTK4jgykMiIwejeB9bswZzhHgzgGZArR1hP7fze5lE0HctDoHrCW6LLWuMdq6dFuOQs6
+ Z6emUbDXNZrYIGAh7yvE9Gjo9Xaq27v9FD/vovrdrc8H6yEsrA2jNqSipvoWzTdpnlnK
+ IAs31/5vEqGct8kbRZRxgJYmiGgHT/nfbJqztSHTyHN4xB+G2jGOwCwlCqnvXG7y/sAO
+ iVJ8bHH7RFslBT4zgxr+knZjqKQ+B8aN7WRC+ka3cW7lorSIfFFp/Xh+5ryO3Y2rRml0
+ 8pOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:cc:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-transfer-encoding
- :content-language;
- bh=1ecWwVpxGxlSSGlu1U265iqJGX74iQy1ANSIpjiWDKs=;
- b=bgpaXShETgh9BSd8nnzUnOzExz3qTytDiW+9kfr4wvGoS3ZLvFX40UmJtV16FM2Ktx
- b1haMcAZ5syzFzIWzJq9J55K6mgvbRPFD7DprPA1Q1ScQY7cZ9kBIvPGoxr7aX9FXt2A
- iJnF4G6E2dGE1qyYIltX5KowKpOpXNDZeYjc0RyNvps/SfWOk3Z6TqHwimU3xocqiI6v
- cWaNyfXkulz8waebBW4PlL1nE6G5WVRJkaojA1+moltfTs79zwnl6i+I5YXYPfqwU5Eu
- VV3PddDFaTVm0L1qKGFhLSWLOkvMt2OWckEkpb7ZihYaW9qYcwOCLUrPs+Ewwpn2gnwy
- 0K3A==
-X-Gm-Message-State: AOAM532taOYkvDt/ykoJ4ayQ/u128IZM3383N9bqlibriOMo9z3TZn3p
- slAAHBVcjN7r+3OGTIaFR0g=
-X-Google-Smtp-Source: ABdhPJxdsDH8obyJ8bFf3DdUipnIKSYGMxLrWa2OGy26WApw2PQZFiwSiClUfkKuvBNtIA6/yXSVAQ==
-X-Received: by 2002:a19:514:: with SMTP id 20mr68752lff.472.1623281220085;
- Wed, 09 Jun 2021 16:27:00 -0700 (PDT)
-Received: from [10.10.18.210] ([45.15.16.60])
- by smtp.gmail.com with ESMTPSA id u14sm120592lft.164.2021.06.09.16.26.58
+ h=x-gm-message-state:from:content-transfer-encoding:mime-version
+ :subject:message-id:date:to;
+ bh=tRDR1dY9O2rZi6TIj3e6Dxa+46Ccy/Lap0M/cSXWT4k=;
+ b=FGm8mRwVvRIS5STr6KUHQp2kxs4ABlcswWiDPX1wvfBVFPIXXf5WKhPoZQqk2oWTZ4
+ CqeIYj0W5ES+1dIhGVOcJQbz6aM8NcMmg9Yycy69EnFkyLKJQvblofjE+MP10+xAq8rv
+ Fa8eAFj94JhJ6xtw/cRJEsG5noSdzYPE68llrpjMq4Sh1Z5Zvn+jJ6zqcZXhAQXYXPa6
+ lE8xRmPfyAxCn3BXLiOUK327l1ZMEnpK4zhjATak/OkdTVmGGbdhX5YG9cKyBvRn5ucl
+ xFyYmUFiM2IUvZ1t5ieWIIep+EYlAxfi+avizXJc8Ex/WphRU73fdKmtbxCcSTX49JdX
+ Qz0A==
+X-Gm-Message-State: AOAM533mlDF2xLwE/9jC2HCvx2qVmb+jiGD25/A5WlvRSkhnUOnvU7Hz
+ hz2rUtNmkMXcMAl+bxWOjEyn6S72mvh5YA==
+X-Google-Smtp-Source: ABdhPJwY88H8JMplCoqOs1HhCRGQRLbc/0eUjNl7ctdqjplMT6QeoeYx4fdj+2LyeoxIMvTqMQ2DAw==
+X-Received: by 2002:a17:906:e4b:: with SMTP id
+ q11mr4013417eji.404.1623325487774; 
+ Thu, 10 Jun 2021 04:44:47 -0700 (PDT)
+Received: from smtpclient.apple (87.119.154.76.ipv4.telemach.net.
+ [87.119.154.76])
+ by smtp.gmail.com with ESMTPSA id p10sm940092ejc.14.2021.06.10.04.44.46
+ for <wireguard@lists.zx2c4.com>
  (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Wed, 09 Jun 2021 16:26:59 -0700 (PDT)
-Subject: Re: potentially disallowing IP fragmentation on wg packets, and
- handling routing loops better
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>
-Cc: Roman Mamedov <rm@romanrm.net>, zrm <zrm@trustiosity.com>,
- StarBrilliant <coder@poorlab.com>,
- Baptiste Jonglez <baptiste@bitsofnetworks.org>, Joe Holden <jwh@zorins.us>,
- Nico Schottelius <nico.schottelius@ungleich.ch>, peter@fiberdirekt.se
-References: <CAHmME9rNnBiNvBstb7MPwK-7AmAN0sOfnhdR=eeLrowWcKxaaQ@mail.gmail.com>
- <CAHmME9rj9M=5G6oh+ZKQjekxWFp-5sF4MWux2==2V4X2UtYkag@mail.gmail.com>
-From: Vasili Pupkin <diggest@gmail.com>
-Message-ID: <b97044e2-10e1-0891-9715-5d4970b88451@gmail.com>
-Date: Thu, 10 Jun 2021 02:26:49 +0300
-User-Agent: Mozilla/5.0 (Windows NT 5.2; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
-MIME-Version: 1.0
-In-Reply-To: <CAHmME9rj9M=5G6oh+ZKQjekxWFp-5sF4MWux2==2V4X2UtYkag@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+ Thu, 10 Jun 2021 04:44:47 -0700 (PDT)
+From: Andrej Mihajlov <and@mullvad.net>
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.100.0.2.22\))
+Subject: WireGuard is broken on iOS 15 beta
+Message-Id: <760B19F6-17E7-4276-B2E2-DFE07AB19323@mullvad.net>
+Date: Thu, 10 Jun 2021 13:44:45 +0200
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+X-Mailer: Apple Mail (2.3654.100.0.2.22)
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -94,78 +86,15 @@ Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
 Hi,
 
-Talking about my example with chained VPNs. It is a misconfiguration but 
-not intentional, and no responsible administrator can solve this because 
-client really has no way to tell a VPN provider what MTU he needs. 
-Technically VP providers can make such interface for clients but none of 
-four VPN providers I've tried during the last three years has this. 
-Usually VPN providers just use a default ?wg-quick? MTU in their server 
-configs.
+Just though to give you heads up. iOS 15 beta is out and it looks like =
+the old way of obtaining the tunnel device descriptor is no longer =
+working as the internal structure of NEPacketFlow has changed. It=E2=80=99=
+s been a ticking bomb form the start as with any private API that is =
+subject to change without a warning.=20
 
-On the client side it is (2 local egress fragmentation), client knows 
-both of the MTU values, but on the server side it already needs (3 path 
-egress fragmentation). If I understand the terminology correctly. For a 
-packet on the route: remote host -> VPN provider 1 -> VPN provider 2 -> 
-client. An unecrypted packet comes form remote host, the VPN provider 1 
-just sends a bigger encrypted packet to the VPN provider 2 and even if 
-it responds with ICMP Fragmentation Needed to the VPN provider 1, it 
-will be ignored and would not be repeated in the unecrypted channel to 
-remote host. So the remote host will never know why the packet was 
-dropped and it will slow down PMTUD. How difficult it is and what 
-security implications it will have if WireGuard do capture ICMP 
-Fragmentation Needed responses and repeat them in unencrypted channel?
+In the short term, researching what Apple changed and looking for a =
+quick fix for that. Longer term I believe we should have a better =
+integration between wireguard-go and Network extension on iOS.
 
-
-On 07.06.2021 12:34, Jason A. Donenfeld wrote:
-> Hey folks,
->
-> There seems to be a bit of confusion about *which* stage of
-> fragmentation would be affected by the proposal, so I drew some
-> diagrams to help illustrate what I'm talking about. Please take a
-> look:
->
-> https://data.zx2c4.com/potential-wg-fragmentation-proposal.png
->
-> 1) Ingress fragmentation would not be affected by this and is not
-> relevant for this discussion. This is the case in which a computer
-> gets a packet for forwarding out of the wireguard interface, and it's
-> larger than the interface's mtu, so the computer fragments it before
-> passing it onto that interface. I'm not suggesting any change in this
-> behavior.
->
-> 2) Local egress fragmentation WOULD be affected by this and is the
-> most relevant thing in this discussion. In this case, a packet that
-> gets encrypted and winds up being larger than the mtu of the interface
-> that the encrypted packet will go out of gets fragmented. In this
-> case, we could likely respond with an ICMP packet or similar in-path
-> error. But keep in mind this whole situation is local: it usually will
-> only happen out of misconfiguration. The best fix for the diagram I
-> drew would be for the administrator to decrease the MTU of the
-> wireguard interface to 1412.
->
-> 3) Path egress fragmentation COULD be affected by this, but doesn't
-> have to be. In this case, we simply set "don't fragment" on encrypted
-> egress packets, which means they won't be fragmented by other
-> computers along the path.
->
-> So, of those concerned about this, which concerns are actually about
-> (2) and (3)? Of those, which ones are about (2)? If you have concerns
-> specifically about (2) that couldn't be fixed with reasonable system
-> administration, I'd like to hear why and what the setup is that leads
-> to that situation.
->
-> As an aside, Roman asked about TTL. When tunneling, the outer packet
-> header always must take the new TTL of the route to the tunnel
-> endpoint, and not do anything with the potentially much smaller inner
-> TTL. So with tunneling, you can't quite rely on the TTL to drop to
-> zero as you'd wish. Hence, I'm interested in using the natural packet
-> size expansion instead.
->
-> Thanks for the discussion so far. I'm very interested to read
-> clarifying points about applicability to case (2) (and to a lesser
-> extent, about case (3)).
->
-> Thanks,
-> Jason
->
-
+Cheers,
+Andrej Mihajlov=
