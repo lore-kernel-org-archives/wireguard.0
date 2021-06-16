@@ -6,49 +6,75 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 41807C48BDF
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 18 Jun 2021 12:24:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 174B2C48BDF
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 18 Jun 2021 15:24:22 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 4265E613E9
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 18 Jun 2021 12:24:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 4265E613E9
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=freenetproject.org
+	by mail.kernel.org (Postfix) with ESMTPS id AE72B613BD
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 18 Jun 2021 15:24:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org AE72B613BD
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=mullvad.net
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a641c718;
-	Fri, 18 Jun 2021 12:24:55 +0000 (UTC)
-Received: from a4-4.smtp-out.eu-west-1.amazonses.com
- (a4-4.smtp-out.eu-west-1.amazonses.com [54.240.4.4])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 9cc6aaae
- (TLSv1.2:ECDHE-ECDSA-AES256-SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a438dbfd;
+	Fri, 18 Jun 2021 15:24:18 +0000 (UTC)
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com
+ [2a00:1450:4864:20::536])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 5caa38b4
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 17 Jun 2021 07:55:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
- s=uku4taia5b5tsbglxyj6zym32efj7xqv; d=amazonses.com; t=1623916510;
- h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:Content-Type:MIME-Version:Content-Transfer-Encoding:Feedback-ID;
- bh=6M0rtbOfiHAzBuH+SuRwoKx0NK91kUYtqUDWTe0YKhI=;
- b=ALzVxNuq0ivLtsIiSRx3ZAlXaUXtjyiYapvdBHvpWmnZbfvfryAzDKSartDM4Iq0
- GBhIonlCsgy2XqnkLxb+P2GKgWO4UQoJCYyARRor63vWZB9esA71TFe4/+vkLIj99Rt
- sL6nFLjVUJ9UCYu69NHd+qe8bYyXFdP6jtPb3ZJg=
-Message-ID: <0102017a18f77a7e-85cc3154-dbac-4a9f-a0c5-acba247919a6-000000@eu-west-1.amazonses.com>
-Subject: Re: passing-through TOS/DSCP marking
-From: Florent Daigniere <nextgens@freenetproject.org>
-To: Toke =?ISO-8859-1?Q?H=F8iland-J=F8rgensen?= <toke@toke.dk>, Daniel Golle
- <daniel@makrotopia.org>, "Jason A. Donenfeld" <Jason@zx2c4.com>
+ Wed, 16 Jun 2021 13:25:52 +0000 (UTC)
+Received: by mail-ed1-x536.google.com with SMTP id s15so2645766edt.13
+ for <wireguard@lists.zx2c4.com>; Wed, 16 Jun 2021 06:25:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mullvad-net.20150623.gappssmtp.com; s=20150623;
+ h=mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=5dCXizjOTRXAeDSyD6C86/v6D3Z2qH3loQc6y9gecmc=;
+ b=D1noSHvAy1/sVe7LSanvt73LwXFUZGX27Xxro2XIOAJfYXU2gDLejcygnCuOESFyUQ
+ lfPD6TCIimraJVk+GlUJbjaOC1sbQEOnlUSebY9UCuqFyyJk4sut0eUFaLUXMKuf6b6S
+ 6top+eHJluukaAR9mez3KlFfM2K8NHd7mk0c+KUXz9jggRwkdo+B/5tDvDUoSBdudQ6i
+ N9TEvjz1QDOaHhG/5kgCgI9DSJE5VCqE7vhiWGjStitCaGUpzVLPkMRvKb3wlnSChRvt
+ 0S95JOfHlEV1qODHXajuzagk1hytxbyrDRMMiRkr11eOPE8+vHHz6DxIuUPt1Kgpak8e
+ +WOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=5dCXizjOTRXAeDSyD6C86/v6D3Z2qH3loQc6y9gecmc=;
+ b=aBK3jX5CvlVkxtNTF5mC8NP5NCa6XTdEdqFdXNs/oCzwshpDQLD550DS/h//gBM27o
+ RdQLNSRoKDMCEg9DbSTMvdY46KRrd9q5nBWfgMNqbhxutFyKBfeAPfYQiX6sLD06uhx/
+ M9eKBkxjz4rWNWxejCncnu+74Ul4j5pa3fcEaDF+LuQx2eUleD//vGqTX+WchhWZ3631
+ bITuHgCJpSByTFMwCUIQGsG52Ze2q03aS8xDu6bc97BvG//lJ1aJthHYomdkV4qP13gq
+ H0zTDWExpenaT5tByXwWAwmvJxxftkiF+cC76TJXWoTWag/WRxk9RIILvD4qnnLSjLgI
+ JfeA==
+X-Gm-Message-State: AOAM533luMP7b7YRqNryEdKaHS3p259k+hGABQO7bOs+0Le+hckYpfOT
+ U4ukJLoHPKbSRaB1fEjk9XYXCtbSgGb92Q==
+X-Google-Smtp-Source: ABdhPJzEoV6sRg3oeuB582/NheDinSY4eMCM1u4MRceMvTO3DUMd9eYsbMYiQQ4KuhVPnwWo43vvuQ==
+X-Received: by 2002:a05:6402:4387:: with SMTP id
+ o7mr2122720edc.319.1623849951844; 
+ Wed, 16 Jun 2021 06:25:51 -0700 (PDT)
+Received: from smtpclient.apple (87.119.154.76.ipv4.telemach.net.
+ [87.119.154.76])
+ by smtp.gmail.com with ESMTPSA id m16sm1607175ejr.74.2021.06.16.06.25.50
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Wed, 16 Jun 2021 06:25:50 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.100.0.2.22\))
+Subject: Re: WireGuard is broken on iOS 15 beta
+From: Andrej Mihajlov <and@mullvad.net>
+In-Reply-To: <CAHmME9pKnJouF-Vf20y+1w_TUs1vj1bpOggd+dgm8epfN+8-MA@mail.gmail.com>
+Date: Wed, 16 Jun 2021 15:25:47 +0200
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Date: Thu, 17 Jun 2021 07:55:09 +0000
-In-Reply-To: <87v96dpepz.fsf@toke.dk>
-References: <YMn7qQ/7s/CciRNy@makrotopia.org>
- <CAHmME9omR=NXkJj-AJviWhcDDY=X9vQbLxn5WbeamUGhVWHhJw@mail.gmail.com>
- <YMpPnKhUuTHNU1Q0@makrotopia.org> <87v96dpepz.fsf@toke.dk>
-Content-Type: text/plain; charset="UTF-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Feedback-ID: 1.eu-west-1.pdg62YgwzwxEqxeEXyLJB4Hk3i4AYkez1He1VuR521Q=:AmazonSES
-X-SES-Outgoing: 2021.06.17-54.240.4.4
-X-Mailman-Approved-At: Fri, 18 Jun 2021 12:24:54 +0000
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <A28ECC96-A28E-425E-90E3-E3C4D1B2E3E2@mullvad.net>
+References: <760B19F6-17E7-4276-B2E2-DFE07AB19323@mullvad.net>
+ <CAHmME9pKnJouF-Vf20y+1w_TUs1vj1bpOggd+dgm8epfN+8-MA@mail.gmail.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+X-Mailer: Apple Mail (2.3654.100.0.2.22)
+X-Mailman-Approved-At: Fri, 18 Jun 2021 15:24:16 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -63,71 +89,49 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Thu, 2021-06-17 at 01:33 +0200, Toke Høiland-Jørgensen wrote:
-> Daniel Golle <daniel@makrotopia.org> writes:
-> 
-> > Hi Jason,
-> > 
-> > On Wed, Jun 16, 2021 at 06:28:12PM +0200, Jason A. Donenfeld wrote:
-> > > WireGuard does not copy the inner DSCP mark to the outside, aside
-> > > from
-> > > the ECN bits, in order to avoid a data leak.
-> > 
-> > That's a very valid argument.
-> > 
-> > However, from my experience now, Wireguard is not suitable for
-> > VoIP/RTP
-> > data (minimize-delay) being sent through the same tunnel as TCP bulk
-> > (maximize-throughput) traffic in bandwidth constraint and/or high-
-> > latency
-> > environments, as that ruins the VoIP calls to the degree of not
-> > being
-> > understandable. ECN helps quite a bit when it comes to avoid packet
-> > drops
-> > for TCP traffic, but that's not enough to avoid high jitter and
-> > drops for
-> > RTP/UDP traffic at the same time.
-> > 
-> > I thought about ways to improve that and wonder what you would
-> > suggest.
-> > My ideas are:
-> >  * have different tunnels depending on inner DSCP bits and mark them
-> >    accordingly on the outside.
-> >    => we already got multiple tunnels and that would double the
-> > number.
-> > 
-> >  * mark outer packets with DSCP bits based on their size.
-> >    VoIP RTP/UDP packets are typically "medium sized" while TCP
-> > packets
-> >    typically max out the MTU.
-> >    => we would not leak information, but that assumption may not
-> > always
-> >       be true
-> > 
-> >  * patch wireguard kernel code to allow preserving inner DSCP bits.
-> >    => even only having 2 differentl classes of traffic (critical vs.
-> >       bulk) would already help a lot...
-> > 
-> > 
-> > What do you think? Any other ideas?
-> 
-> Can you share a few more details about the network setup? I.e., where
-> is
-> the bottleneck link that requires this special treatment?
+It was less about performance but more about security. Just wanted to =
+share some good news!
 
-I can tell you about mine. WiFi in a congested environment: "voip on
-mobile phones". WMM/802.11e uses the diffserv markings; most commercial
-APs will do the right thing provided packets are marked appropriately.
+A little bit of background story:
 
-At the time I have sent patches (back in 2019) for both the golang and
-linux implementation that turned it on by default. I believe that
-Russell Strong further improved upon them by adding a knob (20190318 on
-this mailing list).
+There was an article a little while ago that highlighted a traffic leak, =
+when connections established before the VPN would continue going through =
+the primary interface outside of the tunnel:=20
+https://protonvpn.com/blog/apple-ios-vulnerability-disclosure/
 
-Earlier this month I was approached by a NGO that was trying to do voip
-over satlinks in between ships... there too, any solution has to involve
-DSCP markings.
+Then at some point around iOS 14.2, Apple introduced a kill-switch to =
+address that issue (via VPN configuration flag).=20
 
-Florent
+However it never really worked with WireGuard as the tunnel would always =
+fail to establish the connection with peers. There is a thread on Apple =
+forums with some of Apple engineers trying to figure out what=E2=80=99s =
+going on:
+https://developer.apple.com/forums/thread/653116
 
+
+Now it=E2=80=99s too early to say, but I just ran WireGuard with kill =
+switch enabled on iOS 15 beta and the tunnel is magically up and =
+running, which was still broken on iOS 14.3. I am going to test it on =
+iOS 14.4 today too. So it looks like Apple did something to fix their =
+SDK to make the kill switch work.
+
+Potential low effort improvement for WG, in practice it looks as such:
+
+let protocolConfig =3D NETunnelProviderProtocol()
+if #available(iOS 15.0, *) {
+    protocolConfig.includeAllNetworks =3D true // kill-switch
+    protocolConfig.excludeLocalNetworks =3D true // enable LAN =
+networking
+}
+
+Cheers,
+Andrej
+
+> On 10 Jun 2021, at 13:51, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+>=20
+> Patches with a proper performance comparison of the two techniques in
+> the description would be appreciated.
+>=20
+> Thanks,
+> Jason
 
