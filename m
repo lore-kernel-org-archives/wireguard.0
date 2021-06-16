@@ -3,41 +3,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	UNPARSEABLE_RELAY autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 59A08C48BE5
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 16 Jun 2021 14:29:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E40FC48BE8
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 16 Jun 2021 14:29:17 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 617F26101A
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 16 Jun 2021 14:29:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 617F26101A
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=makrotopia.org
+	by mail.kernel.org (Postfix) with ESMTPS id 91BE96101A
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 16 Jun 2021 14:29:15 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 91BE96101A
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=afaics.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a742785c;
-	Wed, 16 Jun 2021 14:26:46 +0000 (UTC)
-Received: from fudo.makrotopia.org (fudo.makrotopia.org [2a07:2ec0:3002::71])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 241f4f02
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e79be443;
+	Wed, 16 Jun 2021 14:27:07 +0000 (UTC)
+Received: from outgoing.selfhost.de (mordac.selfhost.de [82.98.82.6])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ba98ea1a
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 16 Jun 2021 13:25:07 +0000 (UTC)
-Received: from local
- by fudo.makrotopia.org with esmtpsa (TLS1.3:TLS_AES_256_GCM_SHA384:256)
- (Exim 4.94.2) (envelope-from <daniel@makrotopia.org>)
- id 1ltVXW-00035w-2q
- for wireguard@lists.zx2c4.com; Wed, 16 Jun 2021 15:25:06 +0200
-Date: Wed, 16 Jun 2021 15:24:57 +0200
-From: Daniel Golle <daniel@makrotopia.org>
+ Wed, 16 Jun 2021 13:30:30 +0000 (UTC)
+Received: (qmail 31378 invoked from network); 16 Jun 2021 13:30:29 -0000
+Received: from unknown (HELO mailhost.afaics.de)
+ (postmaster@xqrsonfo.mail.selfhost.de@87.160.250.28)
+ by mailout.selfhost.de with ESMTPA; 16 Jun 2021 13:30:29 -0000
+Received: from localhost (mailhost.afaics.de [local])
+ by mailhost.afaics.de (OpenSMTPD) with ESMTPA id b31f51aa;
+ Wed, 16 Jun 2021 13:30:28 +0000 (UTC)
+From: Harald Dunkel <harri@afaics.de>
 To: wireguard@lists.zx2c4.com
-Subject: passing-through TOS/DSCP marking
-Message-ID: <YMn7qQ/7s/CciRNy@makrotopia.org>
+Cc: 
+Subject: running wireguard company-wide?
+Date: Wed, 16 Jun 2021 15:30:28 +0200
+Message-ID: <87tulyos23.fsf@sylvester.afaics.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-X-Mailman-Approved-At: Wed, 16 Jun 2021 14:26:45 +0000
+Content-Type: text/plain
+X-Mailman-Approved-At: Wed, 16 Jun 2021 14:27:05 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -52,28 +54,15 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi everyone,
+Hi folks,
 
-First of all, I'm sorry if this topic has been dealt with before and I've
-just not been able to find the answer in the archives.
+how can I bind the private key to a specific host, eg. an office
+Macbook? Esp on MacOS the private key is in plain sight in the
+wireguard GUI, making it easy to reuse it for other, unintended
+purposes.
 
-I'm currently helping to setup a bunch of Wireguard links for a
-non-profit humanitarian organization (using OpenWrt, ie. using the Linux
-implementation on both ends). As these tunnels are carrying a diverse mix
-of data, including VoIP, I was wondering if Wireguard passes-through the
-TOS/DSCP marking of tunneled packages to the outer package's headers,
-similar to what the 'passtos' option of OpenVPN is doing.
+For private installations this might be OK, but for a company-wide
+deployment this is a major headache.
 
-I would assume this is true by default, but I haven't found any
-information about it, and as VoIP performance under load isn't as great
-as I was expecting, I'm now writing to you here, hoping for a meaningful
-answer which will preserve me from having to read the actual code...
-
-
-Thank you for all the great work!
-
-
-Best regards
-
-
-Daniel
+Every helpful hint is highly appreciated
+Harri
