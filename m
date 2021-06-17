@@ -2,122 +2,49 @@ Return-Path: <SRS0=yhX4=LL=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	PDS_BAD_THREAD_QP_64,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A5D2C2B9F4
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 17 Jun 2021 03:59:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 15310C2B9F4
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 17 Jun 2021 09:45:08 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 6508F6117A
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 17 Jun 2021 03:59:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 6508F6117A
-Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=eagleeyet.net
+	by mail.kernel.org (Postfix) with ESMTPS id 249A0613DB
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 17 Jun 2021 09:45:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 249A0613DB
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=makrotopia.org
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e7b7c9bc;
-	Thu, 17 Jun 2021 03:59:41 +0000 (UTC)
-Received: from EUR02-VE1-obe.outbound.protection.outlook.com
- (mail-eopbgr20066.outbound.protection.outlook.com [40.107.2.66])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 92755772
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 01c2e4ab;
+	Thu, 17 Jun 2021 09:43:28 +0000 (UTC)
+Received: from fudo.makrotopia.org (fudo.makrotopia.org [2a07:2ec0:3002::71])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a39f31de
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 17 Jun 2021 03:59:39 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Vd9y5pjzQirXUsHy0tWedyjV7VcrbI0URNkMmFWsm8VLzw8Qg+C74ElZuq3DVjAYPiMEej0+RQqlkwEA8WQBbl5BdDp2L64nk8UYzW3s0ylw4wLpfAZUdpp2j0vUJhlSxpxpbJjkAMlPFUXv17v6oGCzuAr9JU2E/6BKa9Py/2A4ZKG1ZlomNsJTxcY8q9lpjuZtg8qE6MFMaZltrxVhOUv1QKaFIDw3kJOwykBBiVOCPnWHHIvf1WJ8uxNpdR3/pvlKRoWBhmyinzzDGikh5bJsr3Ip9Q+/jaiQa7S2oHl3fo/+Sz2+2tcjB0YEnks2UoK+AZc4/Nzj38v5OkvK3g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=QSyyNALd1D6yhh50c5ra+nkbrVJBVesFudmUGoiAhB8=;
- b=RO0fxQwD2c0uRt6ZsihfvD9ODw8D9bMvasLTnjjla7BvTULsbi+9Hv3+CgRe4lc1NGaq0kStgPhugLOjxiVQYYwakovxJh7ibFhUHjD9jOc5GDfCQt0jvNEeDFoSQUMoWRTKBVl7ej9DwJODWXlaYxgragMj0E8V6npUYrxZt5VO5mTdFltxG9dsW+MjyP4rfLhJR/5w8iI+zHNGU78ZeIx51jH+uceuKaXgKSBWfQHqyvquZlLN8oZMeWHObhwVi2IhImGbia+2RjxiDYwynTNA328ZQgXgOhWOG25w8qs3dHbAt0o6FLiJCQdHpY76huhJ8zlEw1T+yRxPgM/U2w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=eagleeyet.net; dmarc=pass action=none
- header.from=eagleeyet.net; dkim=pass header.d=eagleeyet.net; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=eagleeyet.net;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=QSyyNALd1D6yhh50c5ra+nkbrVJBVesFudmUGoiAhB8=;
- b=d7MVK3wqixn4fgN8nbkeLTJyeFdZxZs5dPkoWp+Kuqsbr48eVehf+JYCIx+uHkWcmWK/z2uuXxNwJUryZTtO4J8V63jlj0uF0uRPLYzqlcrs8C+reljbiYk88mnuofBgQfeQiT958hUW/JWDOrmmtnqJll88ggwQiqpwwZMcYsdzP5f/COesfYfF9/nIlL9W2qtGEJjXrRlISVl2iAkkbx/rnFC/xuSuYCSpR40S9tro8Gj90X12UzrpK388HeyUnKET/LzGucssMTqWOirMRmRXrRYf6BF1AcoL9laFhswiz31TWOGXu862Nfnm/rUrcaTkjh8wnXHp4mFLmyK/Og==
-Received: from VE1PR08MB5837.eurprd08.prod.outlook.com (2603:10a6:800:1a9::23)
- by VE1PR08MB5792.eurprd08.prod.outlook.com (2603:10a6:800:1a6::11)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4242.19; Thu, 17 Jun
- 2021 03:59:37 +0000
-Received: from VE1PR08MB5837.eurprd08.prod.outlook.com
- ([fe80::28d2:a931:af4c:85b7]) by VE1PR08MB5837.eurprd08.prod.outlook.com
- ([fe80::28d2:a931:af4c:85b7%8]) with mapi id 15.20.4219.025; Thu, 17 Jun 2021
- 03:59:37 +0000
-From: Jonathan Aquilina <jaquilina@eagleeyet.net>
-To: Harald Dunkel <harri@afaics.de>, "wireguard@lists.zx2c4.com"
- <wireguard@lists.zx2c4.com>
-Subject: RE: running wireguard company-wide?
-Thread-Topic: running wireguard company-wide?
-Thread-Index: AQHXYrxVELstAK5hbE+nOTm7ZuSlMqsXlDBQ
-Date: Thu, 17 Jun 2021 03:59:16 +0000
-Deferred-Delivery: Thu, 17 Jun 2021 03:59:00 +0000
-Message-ID: <VE1PR08MB5837FD84EE88B521E94A6F21A00E9@VE1PR08MB5837.eurprd08.prod.outlook.com>
-References: <87tulyos23.fsf@sylvester.afaics.de>
-In-Reply-To: <87tulyos23.fsf@sylvester.afaics.de>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: afaics.de; dkim=none (message not signed)
- header.d=none;afaics.de; dmarc=none action=none header.from=eagleeyet.net;
-x-originating-ip: [195.158.94.198]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: e79a3edc-da18-47c3-52cf-08d93144536e
-x-ms-traffictypediagnostic: VE1PR08MB5792:
-x-microsoft-antispam-prvs: <VE1PR08MB57924402C47A11CA550D9DA1A00E9@VE1PR08MB5792.eurprd08.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:8882;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: Y2CVOmcN8QkBA8CMIWFyG78XzR28jwoe9U0DIx6nojP00A4r9/ziTtK8M+CwB75wdgL81eSDJ0bXelqDyBra1vzXOa5nKY9UBx0UWi9g8I9zFxbpvNwNwQ7gnS6/7nAgXNBtkeg/PUZbdcz1KpHHzb4U8jP8VhMIcmEF+yLb/AoMv31eiyBHjRYxVe40BoY8iTpWsbZruiQlOAmYyhvtBpfrPrlV+j4+02YVDLa0Zwykj8D1ntm83g/0eoLI5Xi3CfMNYmZ7EPEbdV5Ywi2hh8wUKLO69cwCDq+KAFOiQxSn802UbR7t1OmZnqzzGalIHy37IO5odLM9rdQawQBs+ZVQVjQPoWQnwg37sZ2RJM+ncXiyAvrZGPM1dSKle2p4AnPxJJbp1fOPmrsrhePdYxk31dRohnC0/8fAiIy7M0G9KyUjTEJ3Vw4eamD2Fdk4wMPo1ZT9X5p+cZsqNJi34K/L+mJOwEEMPaMPegjEt7b3WWt/o3CRfL9uYN03gEdZgP0c0IF9JyHLefv4YKyQxnxexkkf07fyqptPEwsEzbmzGr46kUvdVBjERULXyPlv86YWi8devc/7mKQpVrkG8icWla7XvjPF3/ZXm3Bt+9A=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:VE1PR08MB5837.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(4636009)(39830400003)(396003)(346002)(136003)(376002)(366004)(8676002)(83380400001)(33656002)(71200400001)(66946007)(86362001)(2906002)(8936002)(55016002)(122000001)(76116006)(38100700002)(9686003)(4744005)(66476007)(186003)(6666004)(316002)(110136005)(66556008)(66446008)(64756008)(5660300002)(7696005)(6506007)(53546011)(52536014)(26005)(478600001)(3480700007);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?hyGAYgVE2UZU3ISQ7gfGjTFTGfi4WFF4UY8uk3S1AeHq2bDsTIOUIxZplBXf?=
- =?us-ascii?Q?TFRoj81Lt0FVltqKxzg+5yTewcACwjU4H+y6Bv1h/PFJ7dj71RAPGvhDVI23?=
- =?us-ascii?Q?HBEeUjmpiNT7ASPGGWIC3BVTQsnpGrSsuh5+NBaDKxl5X1nWDYNl09D+w6XG?=
- =?us-ascii?Q?nT1DOgVxIIoVxZ4HHzZ+o160xS4jYvJt5Qmh2mj6vZZZd+5v+Svjw9YsbtH3?=
- =?us-ascii?Q?rL/h2sI80DfYt7eCJsK05tjl57k4iSSmqXuNIQNjLhst2t0ziUPd2J2DfKbK?=
- =?us-ascii?Q?5UNj3VY8/6lnZ3JVN09tNewRiMbUBA4Hkeh6Kba3GRv7gqBboucJi8RzATR3?=
- =?us-ascii?Q?8YWs35z+izvbVYkrhiNpXJ4B+tmvqcT/Ypik2TNhYwyUQaGVDzkNRCmkZb0z?=
- =?us-ascii?Q?OL9UdyQSTUVxfkY02zP0/BQskybbWSsghy3YqJmfWjO/jr5/85lCrucx7XKx?=
- =?us-ascii?Q?SY4TUHzn/o8uzfHb+TKgMFScvt48hm3EV0mjP0jXCuVXNAac15sMEsjgfWe4?=
- =?us-ascii?Q?BSqSweyW75S504TbF34izNuROKosFhI2fsJXM3zmr/oGFNuu5E4jfofET4vL?=
- =?us-ascii?Q?k5IoZw87chbMUYczwdXNtcsAMO+LAV+vpGcqxvps0nCMmr+IqqeVhQvm59iA?=
- =?us-ascii?Q?jhIMAP4T8uJDXED0EbuEQEtIHoEHr6CwtOBhkmzw2hDJR16Lmu0TzZL3FByZ?=
- =?us-ascii?Q?GZmsPgX6pMMhUQs8+jTmOw7wUoCC6TgKFX3QvpHkX8tKpkafo5SdpPIcW8Jg?=
- =?us-ascii?Q?93qkRDckIhcEUjrEfFXfYqf07ICAjBBOcWjEDsK2vHXVtzfSiw/Hz+Qo6/ld?=
- =?us-ascii?Q?uylyHtUc9mEcGyyhRnuOSC+nhZXMBqdFW0FMEroMpz0JEK1sZeBxHF3ZZp9P?=
- =?us-ascii?Q?0kXXiJ4FdgWsNSFx5kqHEKZ0bBykkXISnNko5cg0Qhs9qcWghqq8nmjrmDIW?=
- =?us-ascii?Q?gRdhOlsbGylIcTKZYD3tFRXj6NI6SGVRkzJMOn3IfHSv/gdDukNaSqR8rjJe?=
- =?us-ascii?Q?hc3aYzNIylPiHTFGCAcgAbLfVMxVYEn1JQmTDkhmM+xV+yx3yBkfsAaign4M?=
- =?us-ascii?Q?sooiu5iH1D3q/Yzg0JQC5pm+RrRV+1LfjDqKGK3F493VloS/i7IqEuH3iN0m?=
- =?us-ascii?Q?U+OHEzwoNnwHmULbYmvPQ+FIOCzrHZJoqW53WxrjSBE2RTV0BRiAc2+IHU2p?=
- =?us-ascii?Q?pmLrPijBNs/ZXB8+jaBXXIkBro6Gwq0eBPKQ+31YF5X4AXNgWjmy8el9MARJ?=
- =?us-ascii?Q?xyuK3bilUidASP1q+bGcE5WbKZy6gtPCw8+3EgUrHkURkc68gyJiNAEaOW0S?=
- =?us-ascii?Q?Xttc+hAwBTcmTDrRLYSeaxkj?=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ Thu, 17 Jun 2021 09:43:27 +0000 (UTC)
+Received: from local
+ by fudo.makrotopia.org with esmtpsa (TLS1.3:TLS_AES_256_GCM_SHA384:256)
+ (Exim 4.94.2) (envelope-from <daniel@makrotopia.org>)
+ id 1ltoYT-0007Vb-AE; Thu, 17 Jun 2021 11:43:21 +0200
+Date: Thu, 17 Jun 2021 11:41:02 +0200
+From: Daniel Golle <daniel@makrotopia.org>
+To: Florent Daigniere <nextgens@freenetproject.org>
+Cc: Toke =?iso-8859-1?Q?H=F8iland-J=F8rgensen?= <toke@toke.dk>,
+ "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
+Subject: Re: passing-through TOS/DSCP marking
+Message-ID: <YMsYrpAm/29Q91GX@makrotopia.org>
+References: <YMn7qQ/7s/CciRNy@makrotopia.org>
+ <CAHmME9omR=NXkJj-AJviWhcDDY=X9vQbLxn5WbeamUGhVWHhJw@mail.gmail.com>
+ <YMpPnKhUuTHNU1Q0@makrotopia.org> <87v96dpepz.fsf@toke.dk>
+ <0102017a18f77a7e-85cc3154-dbac-4a9f-a0c5-acba247919a6-000000@eu-west-1.amazonses.com>
 MIME-Version: 1.0
-X-OriginatorOrg: eagleeyet.net
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: VE1PR08MB5837.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e79a3edc-da18-47c3-52cf-08d93144536e
-X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Jun 2021 03:59:37.5329 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 689fcbc3-edb4-45aa-9f50-cf9ecb3e505a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: d6Yc879Dgir7Lb8jpGYsxxII8JMh2ZBSSzn8e3OUV9yJLcfKEdgyn+pw/rjoPtFGqBBd2/FpKVVEuej/e8FbXQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: VE1PR08MB5792
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <0102017a18f77a7e-85cc3154-dbac-4a9f-a0c5-acba247919a6-000000@eu-west-1.amazonses.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -132,32 +59,104 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi all,
+Hi Florent,
 
-Just a long time follower of this list and very curious to try wireguard wh=
-en I get the chance.
+On Thu, Jun 17, 2021 at 07:55:09AM +0000, Florent Daigniere wrote:
+> On Thu, 2021-06-17 at 01:33 +0200, Toke Høiland-Jørgensen wrote:
+> > Daniel Golle <daniel@makrotopia.org> writes:
+> > 
+> > > Hi Jason,
+> > > 
+> > > On Wed, Jun 16, 2021 at 06:28:12PM +0200, Jason A. Donenfeld wrote:
+> > > > WireGuard does not copy the inner DSCP mark to the outside, aside
+> > > > from
+> > > > the ECN bits, in order to avoid a data leak.
+> > > 
+> > > That's a very valid argument.
+> > > 
+> > > However, from my experience now, Wireguard is not suitable for
+> > > VoIP/RTP
+> > > data (minimize-delay) being sent through the same tunnel as TCP bulk
+> > > (maximize-throughput) traffic in bandwidth constraint and/or high-
+> > > latency
+> > > environments, as that ruins the VoIP calls to the degree of not
+> > > being
+> > > understandable. ECN helps quite a bit when it comes to avoid packet
+> > > drops
+> > > for TCP traffic, but that's not enough to avoid high jitter and
+> > > drops for
+> > > RTP/UDP traffic at the same time.
+> > > 
+> > > I thought about ways to improve that and wonder what you would
+> > > suggest.
+> > > My ideas are:
+> > >  * have different tunnels depending on inner DSCP bits and mark them
+> > >    accordingly on the outside.
+> > >    => we already got multiple tunnels and that would double the
+> > > number.
+> > > 
+> > >  * mark outer packets with DSCP bits based on their size.
+> > >    VoIP RTP/UDP packets are typically "medium sized" while TCP
+> > > packets
+> > >    typically max out the MTU.
+> > >    => we would not leak information, but that assumption may not
+> > > always
+> > >       be true
+> > > 
+> > >  * patch wireguard kernel code to allow preserving inner DSCP bits.
+> > >    => even only having 2 differentl classes of traffic (critical vs.
+> > >       bulk) would already help a lot...
+> > > 
+> > > 
+> > > What do you think? Any other ideas?
+> > 
+> > Can you share a few more details about the network setup? I.e., where
+> > is
+> > the bottleneck link that requires this special treatment?
+> 
+> I can tell you about mine. WiFi in a congested environment: "voip on
+> mobile phones". WMM/802.11e uses the diffserv markings; most commercial
+> APs will do the right thing provided packets are marked appropriately.
+> 
+> At the time I have sent patches (back in 2019) for both the golang and
+> linux implementation that turned it on by default. I believe that
+> Russell Strong further improved upon them by adding a knob (20190318 on
+> this mailing list).
 
-On a Mac you have a keychain where you can store keys passwords certs, is t=
-here a reason why wireguard cannot take advantage of the keychain functiona=
-lity?
+Thank you very much for the hint!
+This patch is exactly what I was looking for:
+https://lists.zx2c4.com/pipermail/wireguard/2019-March/004026.html
 
-Regards,
-Jonathan
+Unfortunately it has not received a great amount of feedback back then.
+I'll try forward-porting and deploying it now, because to me it looks
+like the best solution money can buy :)
 
------Original Message-----
-From: WireGuard <wireguard-bounces@lists.zx2c4.com> On Behalf Of Harald Dun=
-kel
-Sent: 16 June 2021 15:30
-To: wireguard@lists.zx2c4.com
-Subject: running wireguard company-wide?
 
-Hi folks,
+> 
+> Earlier this month I was approached by a NGO that was trying to do voip
+> over satlinks in between ships... there too, any solution has to involve
+> DSCP markings.
 
-how can I bind the private key to a specific host, eg. an office Macbook? E=
-sp on MacOS the private key is in plain sight in the wireguard GUI, making =
-it easy to reuse it for other, unintended purposes.
+This is quite exactly the scenario I'm working on :)
 
-For private installations this might be OK, but for a company-wide deployme=
-nt this is a major headache.
+Also here, we got multiple uplinks (2x VSAT, 1x 3G/4G/5G, 1x auxilary,
+e.g. WiFi client during shipyard times). All those uplinks are often
+congested and we can't do anything about their buffer bloat and as all of
+them rely on a shared medium, the total amount of available bandwidth
+varies quite a bit, which makes it hard to setup meaningful shaping. I
+did setup cake qdisc on the upstream links with generously estimated
+bandwidth settings, and that did not help a lot.
+However, all of those proprietary black-boxes do seem to care about the
+DSCP markings and that seems to be the way forward.
 
-Every helpful hint is highly appreciated Harri
+
+Thank you!
+
+
+Daniel
+
+
+> 
+> Florent
+> 
+> 
