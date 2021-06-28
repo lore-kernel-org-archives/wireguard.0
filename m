@@ -2,55 +2,49 @@ Return-Path: <SRS0=UgTS=M7=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6788CC4338F
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  8 Aug 2021 22:35:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CE70AC4338F
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  8 Aug 2021 22:59:00 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 4F89860C40
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  8 Aug 2021 22:35:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 4F89860C40
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id 9840E60F42
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  8 Aug 2021 22:58:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 9840E60F42
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=ut1.org
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 30c2947e;
-	Sun, 8 Aug 2021 22:33:32 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [104.131.123.232])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 1c0a15cb
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sun, 8 Aug 2021 22:33:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1628462005;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type;
- bh=7ChRPMLHNYlIRXd7vMirDEWdSisTA3BZIsnFzVQUyaM=;
- b=M3+gELFIbquqL7NIDYIFMzMQfplA11e7bnz53k2gZ4ga0Bl/cZMOk2OvapLL7sSMaLvAAS
- ArmI669i/8yNCUbtLXnznssHldY9tPVmsLrFchKNL0tARorYY819UdiweGAvJR6e9MQMAA
- cjeMT/nFKgVO/sflKjvxQd2IWfln8/A=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id c4b205af
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sun, 8 Aug 2021 22:33:25 +0000 (UTC)
-Received: by mail-yb1-f169.google.com with SMTP id p145so26061963ybg.6
- for <wireguard@lists.zx2c4.com>; Sun, 08 Aug 2021 15:33:24 -0700 (PDT)
-X-Gm-Message-State: AOAM530ZSGRWc6DKRzdZu4zNkLPJQQ09igflguu95H/Ld/jHfZRLaUxt
- DZChjadzXCQLV4vVYCiQYSWyRJGXeLDk3H7btqk=
-X-Google-Smtp-Source: ABdhPJzVmdz7Qs+OStWw3rVxxHypXsamYYS37M/GVjTP42xJ8oromEjtQPr1BLt7cMaVDLMaPUZjom9WNi99dmBp4uE=
-X-Received: by 2002:a25:18a:: with SMTP id 132mr26457685ybb.123.1628462004093; 
- Sun, 08 Aug 2021 15:33:24 -0700 (PDT)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c5f5dc9e;
+	Sun, 8 Aug 2021 22:56:16 +0000 (UTC)
+Received: from vidar.ut-capitole.fr (vidar-alt-1.ut-capitole.fr
+ [193.49.48.246])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 0c40d071
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 28 Jun 2021 13:44:57 +0000 (UTC)
+Received: from [10.26.2.40] (a19600.ut-capitole.fr [10.26.2.40])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested) (Authenticated sender: bandry)
+ by vidar.ut-capitole.fr (Postfix) with ESMTPSA id F00F640C0981
+ for <wireguard@lists.zx2c4.com>; Mon, 28 Jun 2021 15:44:56 +0200 (CEST)
+Subject: Windows Client - Issue with Tray Icon
+References: <437b77e7-7e63-74c4-4447-713eccd42b59@ut-capitole.fr>
+To: wireguard@lists.zx2c4.com
+From: Bruno UT1 <bandry@ut1.org>
+X-Forwarded-Message-Id: <437b77e7-7e63-74c4-4447-713eccd42b59@ut-capitole.fr>
+Message-ID: <7587bd77-a81c-0488-90b5-eac7ed98a3db@ut1.org>
+Date: Mon, 28 Jun 2021 15:44:56 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 9 Aug 2021 00:33:13 +0200
-X-Gmail-Original-Message-ID: <CAHmME9q_9frZ+EQ4_sq_aEoFn3sU01LcW25RysWj0mas4po47Q@mail.gmail.com>
-Message-ID: <CAHmME9q_9frZ+EQ4_sq_aEoFn3sU01LcW25RysWj0mas4po47Q@mail.gmail.com>
-Subject: another thread on montonic counter alternatives
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Cc: Karolin Varner <karo@cupdev.net>, noise <noise@moderncrypto.org>, 
- =?UTF-8?B?SXZhbiBMYWLDoXRo?= <labo@labo.rs>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <437b77e7-7e63-74c4-4447-713eccd42b59@ut-capitole.fr>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: fr
+X-Mailman-Approved-At: Sun, 08 Aug 2021 22:56:14 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -65,64 +59,34 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi folks,
+Hi Wireguard Community!
 
-We've had this discussion a few times in various forms, but it's come
-up again recently, with Karolin Varner (CC'd) emailing me with some
-fresh enthusiasm about the problem space, so I thought this might be
-something worth discussing again, perhaps this time with some input
-from the Noise mailing list.
+I think I found a small bug with Wireguard Windows Client. I made tests 
+with version 0.3.14, 0.3.15 and 0.3.16 with the same behavior.
 
-NoiseIK is 1-RTT, so WireGuard sticks a timestamp in the first message
-to prevent replay attacks. Responders reject packets with timestamps
-that are larger than the last one received. If a responder reboots,
-there's subsequently no session to disrupt with a replay anyway, so
-it's not an issue. Generally this works well, provided initiators have
-a reliable monotonic counter. Generally timestamps are considered
-reliable-enough monotonic counters. Issues with this begin from two
-angles:
+My users are not administrators, so the registry key LimitedOperatorUI 
+is set to 1.
 
-Angle 1) Embedded devices without a battery powered RTC that want to
-use WireGuard to bootstrap have a chicken & egg problem.
-Angle 2) Initiators that are using the old, crusty, and insecure NTP
-protocol can have their time hijacked.
+I made a script with wireguard.exe /installtunnelservice to 
+automatically open the tunnel on some conditions. The script runs as 
+administrator.
 
-Angle 2 presents some interesting possibilities. An adversary who sets
-somebody's time backwards can prevent them from connecting until their
-time is set right again. Adversaries who set somebody's time forward,
-say, to the maximum TAI64N value, and then subsequently have an
-initiator send an initiation message, can then render that initiator's
-static private key forever useless, since that future timestamp can
-always be replayed, and will always set the responder's greatest-yet
-value to that maximum. So, if your NTP is hijacked, your key is
-forever DoS'd.
+When the script starts, the tunnel is opened and the status is Active in 
+the main Window but the stays off on the tray.
 
-We've talked about a few solutions before to this. They all have
-various pitfalls.
+If the computer reboot, everything is back to normal but I can't force a 
+reboot.
 
-Idea 0) Insist people don't use NTP but rather some authenticated
-alternative. Insist people have battery-powered RTCs.
+Without the reboot, if the user try to activate the tunnel from the tray 
+in fact the already opened tunnel is closed. After that, the tray has 
+the good status again, but it disturbs the users.
 
-Idea 1) Store a monotonic counter on disk, and just increment it by 1,
-or even some random value bounded far below the limit, on each
-handshake. The downside is this relies on storage that doesn't wear
-out and is always available.
+It's probably the fact that two distinct users are involved. Is there a 
+possibility to synchronize the status?
 
-Idea 2) For a given system boot, store in memory the time of the first
-handshake, and then increment that timestamp by 1 on each handshake.
-The problem is figuring out when to sample that initial golden
-timestamp. And it doesn't actually solve Angle 2, because that initial
-golden timestamp still might wind up NTP sync'd at some point.
+Thank you for this great VPN,
 
-Idea 3) Insist people who must use NTP disable large jumps. This has
-the same issue as Idea 2, in that the bootstrapping timestamp is still
-an issue.
+Regards.
 
-Idea 4) Require the responder to also have a synchronized clock and
-reject handshakes that are too far into the future. This might
-alleviate Angle 2 to a large degree but it causes big issues for Angle
-1, potentially.
+Bruno
 
-Other clever ideas?
-
-Jason
