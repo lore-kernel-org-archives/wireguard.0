@@ -1,58 +1,50 @@
-Return-Path: <SRS0=kL7G=L5=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=oMkR=L6=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A7F9AC07E99
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Jul 2021 21:20:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B4210C07E96
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  6 Jul 2021 07:01:35 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 0AE4761976
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  5 Jul 2021 21:20:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 0AE4761976
-Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=toke.dk
+	by mail.kernel.org (Postfix) with ESMTPS id D446C61973
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  6 Jul 2021 07:01:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org D446C61973
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=freenetproject.org
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9902f9e8;
-	Mon, 5 Jul 2021 21:20:44 +0000 (UTC)
-Received: from mail.toke.dk (mail.toke.dk [2a0c:4d80:42:2001::664])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id fdb55ffa
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 5 Jul 2021 21:20:42 +0000 (UTC)
-From: Toke =?utf-8?Q?H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=toke.dk; s=20161023;
- t=1625520041; bh=SPBU7iJONzqqqmzK99gOmCWW8VojiePzwVa/vvgI0hg=;
- h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
- b=QM35+qFaDV9FX+Jin0yCRxIfY5wfGrUZbIsyr+VUSM/MaiWuklsRYZi2rqiMOT1v6
- vJNnFZx3MlmE4uGys7rytIwcp05KFu9fJBPhEjAZRZSNz5XwWJAgYrDPXegsekuPQK
- yd2fnufBjaswkXVlLoTcVy9uJH783f/RlimYKWLxZcYNoFplHlVB7SGQg+6AwY1c+o
- 08CZtDnKB8Ph1VNtGHbR5LTYzgU8SMGaztoJ78X+33Rf4Iveszp0BAS9zkTrP4XiLn
- OPOiMsrwmth+pfOmkpMKJ26Gs8mYyPogkEl+s0w/1Bv4c2lDViq/Smm9xTsscXXP2o
- BnOcNReTI35KQ==
-To: Daniel Golle <daniel@makrotopia.org>
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, Florent Daigniere
- <nextgens@freenetproject.org>, WireGuard mailing list
- <wireguard@lists.zx2c4.com>
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1faf08e6;
+	Tue, 6 Jul 2021 07:00:16 +0000 (UTC)
+Received: from a4-15.smtp-out.eu-west-1.amazonses.com
+ (a4-15.smtp-out.eu-west-1.amazonses.com [54.240.4.15])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 3cdc09c0
+ (TLSv1.2:ECDHE-ECDSA-AES256-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Tue, 6 Jul 2021 07:00:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+ s=uku4taia5b5tsbglxyj6zym32efj7xqv; d=amazonses.com; t=1625554814;
+ h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:Content-Type:MIME-Version:Content-Transfer-Encoding:Feedback-ID;
+ bh=owgb/5vJUCiJmxbtlssLxa87k51zJWEEzt/0YPctqKM=;
+ b=igOsoW+G6k08/ydvuCbLIfxa3NAYi1Mm0jxlyu1vLuYmU1N5bdtEU/2UmsAfiT1n
+ O8OX95CjzZOnXA6x6KwMbv63vvOXiuhAMk3KdN1Eec3EuTgPkIW4Hq+l/doN7rcwUYg
+ sZ0JacLMqpCWrxWfd0On01M702hEM4eRaWdbg1WU=
+Message-ID: <0102017a7a9e0329-2cf98ec6-3874-4f0e-80f0-663792b43e3b-000000@eu-west-1.amazonses.com>
 Subject: Re: passing-through TOS/DSCP marking
-In-Reply-To: <YONAyApKnaECA5RB@makrotopia.org>
-References: <877disdre0.fsf@toke.dk>
- <CAHmME9qnqixzDKegMprkT8xNXHfbrhGZfwAROp6vjrQLJEo87g@mail.gmail.com>
- <YNCHs1wKWEoNxUyX@makrotopia.org> <877dinths3.fsf@toke.dk>
- <YNyopHsKX2m5HSRr@makrotopia.org> <87h7hf139u.fsf@toke.dk>
- <YOHCdnZoAKBhNIF8@makrotopia.org> <87zgv0yefe.fsf@toke.dk>
- <YOMtyz6GJdjJ4xuy@makrotopia.org> <87v95oy9wh.fsf@toke.dk>
- <YONAyApKnaECA5RB@makrotopia.org>
-Date: Mon, 05 Jul 2021 23:20:40 +0200
-X-Clacks-Overhead: GNU Terry Pratchett
-Message-ID: <87pmvwxxsn.fsf@toke.dk>
+From: Florent Daigniere <nextgens@freenetproject.org>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Date: Tue, 6 Jul 2021 07:00:14 +0000
+In-Reply-To: <CAHmME9omR=NXkJj-AJviWhcDDY=X9vQbLxn5WbeamUGhVWHhJw@mail.gmail.com>
+References: <YMn7qQ/7s/CciRNy@makrotopia.org>
+ <CAHmME9omR=NXkJj-AJviWhcDDY=X9vQbLxn5WbeamUGhVWHhJw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7bit
+Feedback-ID: 1.eu-west-1.pdg62YgwzwxEqxeEXyLJB4Hk3i4AYkez1He1VuR521Q=:AmazonSES
+X-SES-Outgoing: 2021.07.06-54.240.4.15
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -67,163 +59,30 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Daniel Golle <daniel@makrotopia.org> writes:
+On Wed, 2021-06-16 at 18:28 +0200, Jason A. Donenfeld wrote:
+> WireGuard does not copy the inner DSCP mark to the outside, aside from
+> the ECN bits, in order to avoid a data leak.
+> 
+> Jason
 
-> Hi Toke,
->
-> On Mon, Jul 05, 2021 at 06:59:10PM +0200, Toke H=C3=B8iland-J=C3=B8rgense=
-n wrote:
->> Daniel Golle <daniel@makrotopia.org> writes:
->> > ...
->> >> The only potential operational issue with using it on multiple wg
->> >> interfaces is if they share IP space; because in that case you might
->> >> have packets from different tunnels ending up with identical hashes,
->> >> confusing the egress side. Fixing this would require the outer BPF
->> >> program to know about wg endpoint addresses and map the packets back =
-to
->> >> their inner ifindexes using that. But as long as the wireguard tunnels
->> >> are using different IP subnets (or mostly forwarding traffic without =
-the
->> >> inner addresses as sources or destinations), the hash collision
->> >> probability should not be bigger than just traffic on a single tunnel=
-, I
->> >> suppose.
->> >>=20
->> >> One particular thing to watch out for here is IPv6 link-local traffic;
->> >> sine wg doesn't generate link-local addresses automatically, they are
->> >> commonly configured with (the same) static address (like fe80::1 or
->> >> fe80::2), which would make link-local traffic identical across wg
->> >> interfaces. But this is only used for particular setups (I use it for
->> >> running Babel over wg, for instance), just make sure it won't be an
->> >> issue for your deployment scenario :)
->> >
->> > All this is good to know, but from what I can see now shouldn't be
->> > a problem in our deployment -- it's multiple wireguard links which are
->> > (using fwmark and ip rules) routed over several uplinks. We then use
->> > mwan3 to balance most of the gateway traffic accross the available
->> > wireguard interfaces, using MASQ/SNAT on each tunnel which has a
->> > unique transfer network assigned, and no IPv6 at all.
->> > Hence it should be ok to go under the restrictions you described.
->>=20
->> Alright, so the wireguard-to-physical interfaces is always many-to-one?
->> I.e., each wireguard interface is always routed out the same physical
->> interface, but there may be multiple wg interfaces sharing the same
->> uplink?
->
-> Well, on the access concentrator in the datacentre this is the case:
-> All wireguard tunnels are using the same interface.
->
-> On the remote system there are *many* tunnels to the same access
-> concentrator, each routed over a different uplink interface.
-> So there it's a 1:1 mapping, each wgX has it's distinct ethX.
-> (and there the current solution already works fine)
+Hi Jason,
 
-Alright. The important thing here is that no single wg interface splits
-its traffic over multiple uplinks, so that's all fine :)
+Is there any room for revisiting this design decision? We are talking
+about 6 bits of metadata per packet here...
 
->> I'm asking because in that case it does make sense to keep separate
->> instances of the whole setup per physical interface to limit hash
->> collisions; otherwise, the lookup table could also be made global and
->> shared between all physical interfaces, so you'd avoid having to specify
->> the relationship explicitly...
->>=20
->> >> >  * Once a wireguard interface goes down, one cannot unload the
->> >> >    remaining program on the upstream interface, as
->> >> >    preserve-dscp wg0 eth0 --unload
->> >> >    would fail in case of 'wg0' having gone missing.
->> >> >    What do you suggest to do in this case?
->> >>=20
->> >> Just fixing the userspace utility to deal with this case properly as
->> >> well is probably the easiest. How are you thinking you'd deploy this?
->> >> Via ifup hooks on openwrt, or something different?
->> >
->> > Yes, I use ifup hooks configured in an init script for procd and have
->> > it tied to the wireguard config sections in /etc/config/network:
->> >
->> > https://git.openwrt.org/?p=3Dopenwrt/staging/dangole.git;a=3Dblob;f=3D=
-package/network/utils/bpf-examples/files/wireguard-preserve-dscp.init;h=3Df=
-1e5e25e663308e057285e2bd8e3bcb9560bdd54;hb=3D5923a78d74be3f05e734b0be0a832a=
-87be8d369b#l56
->> >
->> > Passing multiple inner interfaces to one call to the to-be-modified
->> > preserve-dscp tool could be achieved by some shell magic dealing with
->> > the configuration...
->>=20
->> Not necessary: it's perfectly fine to attach them one at a time.
->
-> So assume we changed the userspace tool to accept multiple inner
-> interfaces, let's say we called:
-> preserve-dscp wg0 wg1 wg2 eth0
->
-> And then, at some later point in time we want to add 'wg3'.
-> So calling
-> preserve-dscp wg0 wg1 wg2 wg3 eth0
-> could just work without interrupting ongoing service on wg0..wg2?
-> That would definitely require the userspace tool to track some local
-> state and store it in /var/lib/foo/...? Or am I getting something
-> wrong here?
+Which realistic threats are we trying to protect against?
 
-Not necessarily; we can extract the information we need from the kernel:
+The solutions that don't involve code changes all have significant
+drawbacks:
+- awesome BPF-based magic will be Linux only
+- multiple tunnels are not always practical and arguably worse traffic
+correlation-wise.
 
-The whole thing works by having one BPF program that extracts the DSCP
-value on the wg interface and puts it into a map, keyed by the packet
-hash; and then the other program on the physical interface reads that
-same map and looks up packet hashes in it. So what this means it that
-the critical thing is that the two BPF programs share the same map, or
-the information won't be there.
+I still use a patched wireguard to protect traffic from a voip app on an
+android handset using wifi here... and while I have a solution that's
+good enough for my requirements, I do think that the community would
+benefit from having something that works better out of the box (and on
+all platforms).
 
-In other words, when loading the DSCP-parsing program on a second wg
-interface, the essential bit is that it ends up using the same map as
-the already-loaded program on the physical interface. Either by loading
-a second copy of the BPF program and re-using the existing map, or by
-just attaching the same program to multiple interfaces.
+Florent
 
-As for how we find the map (or program) to attach to the second
-interface, we can either "pin" the reference in a special bpffs and load
-it from there, or we can use the kernel introspection APIs to discover
-which map ID is currently used by the program on the physical interface,
-and then open that map by ID (if just reusing the map), or iterate
-through existing BPF programs looking for one which uses this map, then
-attaching that to a second interface. Using bpffs is slightly more
-convenient (doesn't require iterating programs), but has the drawback
-that it adds a dependency on the bpffs itself, and that it needs an
-explicit removal step (unlinking the pinned reference).
-
-No matter which mechanism is used, the loading of the parsing program on
-a second wg interface is completely transparent to any program already
-running: it'll just be another source of data going into the map that
-the physical interface program can then read. Think of it as multiple
-clients writing to the same database: as long as they agree on which
-database they're using, clients can come and go without interfering with
-each other.
-
->> > We will have to restart the filter for all inner interfaces in case of
->> > one being added or removed, right?
->>=20
->> Nope, that's no necessary either. We can just re-attach the same filter
->> program to each additional interface.
->
-> So given the above example, I could then just call
-> preserve-dscp wg3 eth0
-> to add eth3 while wg0..wg2 keep working?
-
-Yup, see above.
-
->> > And maybe I'll come up with some state tracking so orphaned filters can
->> > be removed after configuration changes...
->>=20
->> The userspace loader could be made to detect this and automatically
->> clean up the program on the physical interface after the last internal
->> interface goes away. At least as long as we can rely on an ifdown hook
->> this will be fairly straight-forward (just requires a lock to not be
->> racy). Detecting it after interfaces are automatically removed from the
->> kernel is a bit more cumbersome as it would require some way to trigger
->> the garbage collection.
->
-> I'll look into that and how we are intending to handle that in
-> general in OpenWrt. John was working on that I believe, I'll ask him
-> first.
-
-OK, cool.
-
--Toke
