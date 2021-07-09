@@ -7,37 +7,37 @@ X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_INVALID,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
 	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ECA01C07E96
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  9 Jul 2021 02:44:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C29D0C07E96
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  9 Jul 2021 02:44:33 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 2B6D66135D
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  9 Jul 2021 02:44:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 2B6D66135D
+	by mail.kernel.org (Postfix) with ESMTPS id 222D4613B2
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  9 Jul 2021 02:44:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 222D4613B2
 Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 66f348ca;
-	Fri, 9 Jul 2021 02:44:25 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 042f10e6;
+	Fri, 9 Jul 2021 02:44:32 +0000 (UTC)
 Received: from bombadil.infradead.org (bombadil.infradead.org
  [2607:7c80:54:e::133])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 9bea1363
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 8c186aa2
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Fri, 9 Jul 2021 02:44:23 +0000 (UTC)
+ for <wireguard@lists.zx2c4.com>; Fri, 9 Jul 2021 02:44:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
  MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Sender
  :Reply-To:Content-Type:Content-ID:Content-Description;
- bh=XLs0dU/umlmVJr2tRgK8KYmEUhW7ohG91bXIJa9Tj1M=; b=kjL+VIkF20my9OSTzm5HRHwwcY
- YfRI+owG6ttcXbSNtKLtAHGrPLJFPfAzQeyGZIbpgawdCuU9TFZeKVr4TtM8ucR4cMhg0zVBCw99y
- xp9wtWkH2hCzex5P5ASltXJpw4epf3W1EVUQh9fxhqsnGTsyGBHzb48OAmOljFAvlYj9XQgGgM3mr
- 8mbrE+UYnVFnJVJfDpnCVOHUFz9Kgj+pyYwa2uVFpQw3iWifcv6ALqAczHj3eA7easVG0oVFMDmBK
- iej0Z0JaZl3VZmSYcoqREAcNjwU+ROjv8MDWzaBEW4piPwJst/JxlYoo1egSU29vAyvTK8W6OWJ2P
- QDj+GDkw==;
+ bh=d+8/yiZu3L6P8B8KGhlE8N/aoGjld+tQjqmLrEW8N7I=; b=2upCU0SvCtNVlT5M+Ewo4m8Xk7
+ w3Tc6jfNlf9YWdPluWHekPTO6s0p3hgDWxCG19jcsqNLu6SbLdiFBSpvqQGltufSQNIxLgNcS2WlM
+ rgM6IAakdgAgHU7ZHoo/oqyfz9ocgEG+MF7r45nScZP9cXFBHAHfDkJIdsHxkMJpHNb5sYjpc2MbM
+ QraSo4ox+vT07/iJiZECgNAkT6VZwNgq+eAmW714EW1sA4f06itWeCS8ALaIn/3wc9U3bhaRek5Ta
+ g9jNFDz+nB9qcPjV3bzdhE0HZFzTPEdU5RG/lcg7nS5IwBM3aYlfeuLlcYmG3E/RYYlWfrwp3PEJe
+ rJj174cA==;
 Received: from [2601:1c0:6280:3f0::aefb] (helo=bombadil.infradead.org)
  by bombadil.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
- id 1m1g5Q-000Wlc-U2; Fri, 09 Jul 2021 02:17:53 +0000
+ id 1m1g5Q-000Wlc-3d; Fri, 09 Jul 2021 02:17:52 +0000
 From: Randy Dunlap <rdunlap@infradead.org>
 To: linux-kernel@vger.kernel.org
 Cc: Randy Dunlap <rdunlap@infradead.org>,
@@ -53,10 +53,10 @@ Cc: Randy Dunlap <rdunlap@infradead.org>,
  "David S. Miller" <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>,
  Martin Schiller <ms@dev.tdt.de>, linux-x25@vger.kernel.org,
  wireguard@lists.zx2c4.com
-Subject: [PATCH 4/6] MOST: cdev: rename 'mod_init' & 'mod_exit' functions to
+Subject: [PATCH 3/6] lib: crypto: rename 'mod_init' & 'mod_exit' functions to
  be module-specific
-Date: Thu,  8 Jul 2021 19:17:45 -0700
-Message-Id: <20210709021747.32737-5-rdunlap@infradead.org>
+Date: Thu,  8 Jul 2021 19:17:44 -0700
+Message-Id: <20210709021747.32737-4-rdunlap@infradead.org>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <20210709021747.32737-1-rdunlap@infradead.org>
 References: <20210709021747.32737-1-rdunlap@infradead.org>
@@ -85,40 +85,94 @@ This is helpful for debugging and in determining how long certain
 module_init calls take to execute.
 
 Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Christian Gromm <christian.gromm@microchip.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: linux-crypto@vger.kernel.org
+Cc: Jason A. Donenfeld <Jason@zx2c4.com>
 ---
- drivers/most/most_cdev.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ lib/crypto/blake2s.c          |    8 ++++----
+ lib/crypto/chacha20poly1305.c |    8 ++++----
+ lib/crypto/curve25519.c       |    8 ++++----
+ 3 files changed, 12 insertions(+), 12 deletions(-)
 
---- linux-next-20210708.orig/drivers/most/most_cdev.c
-+++ linux-next-20210708/drivers/most/most_cdev.c
-@@ -486,7 +486,7 @@ static struct cdev_component comp = {
- 	},
- };
+--- linux-next-20210708.orig/lib/crypto/blake2s.c
++++ linux-next-20210708/lib/crypto/blake2s.c
+@@ -73,7 +73,7 @@ void blake2s256_hmac(u8 *out, const u8 *
+ }
+ EXPORT_SYMBOL(blake2s256_hmac);
  
 -static int __init mod_init(void)
-+static int __init most_cdev_init(void)
++static int __init blake2s_mod_init(void)
  {
- 	int err;
- 
-@@ -518,7 +518,7 @@ dest_ida:
- 	return err;
+ 	if (!IS_ENABLED(CONFIG_CRYPTO_MANAGER_DISABLE_TESTS) &&
+ 	    WARN_ON(!blake2s_selftest()))
+@@ -81,12 +81,12 @@ static int __init mod_init(void)
+ 	return 0;
  }
  
 -static void __exit mod_exit(void)
-+static void __exit most_cdev_exit(void)
++static void __exit blake2s_mod_exit(void)
  {
- 	struct comp_channel *c, *tmp;
- 
-@@ -534,8 +534,8 @@ static void __exit mod_exit(void)
- 	class_destroy(comp.class);
  }
  
 -module_init(mod_init);
 -module_exit(mod_exit);
-+module_init(most_cdev_init);
-+module_exit(most_cdev_exit);
- MODULE_AUTHOR("Christian Gromm <christian.gromm@microchip.com>");
- MODULE_LICENSE("GPL");
- MODULE_DESCRIPTION("character device component for mostcore");
++module_init(blake2s_mod_init);
++module_exit(blake2s_mod_exit);
+ MODULE_LICENSE("GPL v2");
+ MODULE_DESCRIPTION("BLAKE2s hash function");
+ MODULE_AUTHOR("Jason A. Donenfeld <Jason@zx2c4.com>");
+--- linux-next-20210708.orig/lib/crypto/chacha20poly1305.c
++++ linux-next-20210708/lib/crypto/chacha20poly1305.c
+@@ -354,7 +354,7 @@ bool chacha20poly1305_decrypt_sg_inplace
+ }
+ EXPORT_SYMBOL(chacha20poly1305_decrypt_sg_inplace);
+ 
+-static int __init mod_init(void)
++static int __init chacha20poly1305_init(void)
+ {
+ 	if (!IS_ENABLED(CONFIG_CRYPTO_MANAGER_DISABLE_TESTS) &&
+ 	    WARN_ON(!chacha20poly1305_selftest()))
+@@ -362,12 +362,12 @@ static int __init mod_init(void)
+ 	return 0;
+ }
+ 
+-static void __exit mod_exit(void)
++static void __exit chacha20poly1305_exit(void)
+ {
+ }
+ 
+-module_init(mod_init);
+-module_exit(mod_exit);
++module_init(chacha20poly1305_init);
++module_exit(chacha20poly1305_exit);
+ MODULE_LICENSE("GPL v2");
+ MODULE_DESCRIPTION("ChaCha20Poly1305 AEAD construction");
+ MODULE_AUTHOR("Jason A. Donenfeld <Jason@zx2c4.com>");
+--- linux-next-20210708.orig/lib/crypto/curve25519.c
++++ linux-next-20210708/lib/crypto/curve25519.c
+@@ -13,7 +13,7 @@
+ #include <linux/module.h>
+ #include <linux/init.h>
+ 
+-static int __init mod_init(void)
++static int __init curve25519_init(void)
+ {
+ 	if (!IS_ENABLED(CONFIG_CRYPTO_MANAGER_DISABLE_TESTS) &&
+ 	    WARN_ON(!curve25519_selftest()))
+@@ -21,12 +21,12 @@ static int __init mod_init(void)
+ 	return 0;
+ }
+ 
+-static void __exit mod_exit(void)
++static void __exit curve25519_exit(void)
+ {
+ }
+ 
+-module_init(mod_init);
+-module_exit(mod_exit);
++module_init(curve25519_init);
++module_exit(curve25519_exit);
+ 
+ MODULE_LICENSE("GPL v2");
+ MODULE_DESCRIPTION("Curve25519 scalar multiplication");
