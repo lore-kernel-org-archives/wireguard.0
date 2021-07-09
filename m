@@ -2,77 +2,97 @@ Return-Path: <SRS0=V78u=MZ=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C1FCC4338F
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  2 Aug 2021 13:18:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 56C5EC432BE
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  2 Aug 2021 13:18:57 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id BCBA160E97
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  2 Aug 2021 13:18:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org BCBA160E97
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=grsecurity.net
+	by mail.kernel.org (Postfix) with ESMTPS id B0D9360F6D
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  2 Aug 2021 13:18:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org B0D9360F6D
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=outlook.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8f60650f;
-	Mon, 2 Aug 2021 13:14:17 +0000 (UTC)
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com
- [2a00:1450:4864:20::32e])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 3a62fc14
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Tue, 6 Jul 2021 13:35:35 +0000 (UTC)
-Received: by mail-wm1-x32e.google.com with SMTP id
- j16-20020a05600c1c10b0290204b096b0caso2283797wms.1
- for <wireguard@lists.zx2c4.com>; Tue, 06 Jul 2021 06:35:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=grsecurity.net; s=grsec;
- h=from:to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding;
- bh=77jFAi9uoJVAXtr4MNedcW+ZDrnJD4Mo5ETNFDRdXn8=;
- b=AH25Q2hksOgzawyCGRofV+x5URJQyzTxgl3JHxv4lOr07Y1HFcreDn4C5EjpZXUTdF
- ztV553NZiE8e1E3JvYxOtQRlSXgZhGvma0E0d9NkwRaYUPq34vpTSFSJLA4nTaQnI/xV
- G+Pf07nBKLPuJE0n0qm9G6CSspZVq0qZTP0Ts1mCrCW3IMIONtQNtO8UhLVLK7BTLGoM
- vB0mIp4Pr9gas0j2Qv+/xCX9rEk1viGGguO2DjZvbc9uBW/57Lo4v+GxHjrUn/cElkR7
- yIRA6ar+v4I8MmypheYIqFYvbIxNwAKYSUYcTCNo82tKvEwaReNoBgnoRtPM1DTWiC04
- iSJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
- :references:mime-version:content-transfer-encoding;
- bh=77jFAi9uoJVAXtr4MNedcW+ZDrnJD4Mo5ETNFDRdXn8=;
- b=Ll/SwqrlbKcWN9IU7LJz0I/jpXr4AJvDPMb9HNqyKGFDl3M3FuBoilcrCQTO5pcKOW
- O2fd7O8//3NTmw3HZhAlyQnUDd8VDBP7NX51tFw/M16K5+iMxPJ1O7PR/axuUUFEnsWm
- SD8gs9LRJfg2IXuLvkghhYerneggHSowf0YKH3sB0Lm5nRd6SBosrQKzadEOpUfYVLEA
- 5OPo1CuV/Xd/TmHZD6MW+ukOMreL7Kh1qsaxuBqHFpJrwD9XOp+8gorYL+4m97CtAdCI
- +xAe7d/a9i2r4HnUwyMgWrlzv0JoajUj9DrUuqtUyKlLMIiqGjryWl1vB/8/sPO3+Mj/
- cPrg==
-X-Gm-Message-State: AOAM531mMQRC25KeEJGZXvUengl1ehlUtvnHO1bP7ZoT2SQLsk2JAb2t
- 6QtUTcn49EjZMPi/8k6dqfYG4fRtbNMA+V+Nl34=
-X-Google-Smtp-Source: ABdhPJwz+SMk2Lgfo4h/JtNo+w/nEE6spKTYejZaWCCS8pbtMCM3dVsqQtI76JOfOXfENvAw1aR0dw==
-X-Received: by 2002:a1c:9a97:: with SMTP id c145mr778110wme.42.1625578039601; 
- Tue, 06 Jul 2021 06:27:19 -0700 (PDT)
-Received: from bell.fritz.box
- (p200300f6af0ea300f5eebaf01242eb9f.dip0.t-ipconnect.de.
- [2003:f6:af0e:a300:f5ee:baf0:1242:eb9f])
- by smtp.gmail.com with ESMTPSA id c7sm16927769wrs.23.2021.07.06.06.27.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Jul 2021 06:27:19 -0700 (PDT)
-From: Mathias Krause <minipli@grsecurity.net>
-To: "Jason A . Donenfeld" <Jason@zx2c4.com>
-Cc: wireguard@lists.zx2c4.com,
-	Mathias Krause <minipli@grsecurity.net>
-Subject: [PATCH 1/2] compat: better grsecurity compatibility
-Date: Tue,  6 Jul 2021 15:27:13 +0200
-Message-Id: <20210706132714.8220-2-minipli@grsecurity.net>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20210706132714.8220-1-minipli@grsecurity.net>
-References: <20210706132714.8220-1-minipli@grsecurity.net>
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a35ea886;
+	Mon, 2 Aug 2021 13:14:18 +0000 (UTC)
+Received: from NAM10-BN7-obe.outbound.protection.outlook.com
+ (mail-bn7nam10olkn2052.outbound.protection.outlook.com [40.92.40.52])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id e0b5f449
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Fri, 9 Jul 2021 05:48:09 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=d3NETBuHAo+4EWH+1naEMt23xbCOGt4wfFH0SWwFEUqUwIQ0Vt4fDvlhElKrpnPhlfqF1Ej6oRhRpzs0VETMYB/vEq3Zmgfe3pRxvI4TVl+GX9YUSn+Lx0lgt6yOn1Jowb0keMYwHrb5lTqautMRWoTUR97W8OWRmieux2ODUuhVBJZi5e4FUwbxoNJRq3ZKMrA2LaI4q1r7BaKjXds/XVu5AUUJw4qjs/eIH+U4vMAKC+V9UPGyTwVKDq6JNMzrvR47UToG7ozHs3TFRG/soQvTooJaETDaZyh2fU6ys1nrAb8NrPBKmu0M25/EQLfUsVyOdgCqvmgH66QLZiFHaQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=pGQt4hFWkociciM5QlPwxi+c3TaxMzg91SC0pYGilXg=;
+ b=kkf4D08YiqI2tdXhEnzPGYyPSHmRiIQrTdZFDqn2jgiNIYGKAgrpEQS6FNG5C8ly9wAPoTPX2OIJJDcat+75n/NoJ2hfKgRREpkGy5uMSvkVG2SEclgXNbIGvD49uMYVfPosPjhe6HWDyLlocn26fWTy9/txgvQQjMx372Og0XijU8IOZt3o7SdmEhi14Az2pXxFR5jxkIuynb7qT6wa9MmBxrIwh015s5aRJ2Yqy00+otjwdpEuiV1wXKz2yZuEFFjTmXm8qyV8PQA9dQKoJst/4DqF0CnD1iX45+5TOT24fEGuToSCUs5GPxOBWXKgqVvp1lUDc3BVF0NJJFztyA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=pGQt4hFWkociciM5QlPwxi+c3TaxMzg91SC0pYGilXg=;
+ b=H6sK0DUW5SzI8Mizz5+uS8WZQal4+e/B22/dEwn8UAyPZb3pp8plBc3zDfweJy1WvODcTQMy54+3Ri+t3iKUrP4Ax3OEIqLFzn6lF9WvaJCQUu9TGXA82gwRpYA6Z0Z/U24DCErDI3awGJmsc5OdXPpQJoDycRTxqvBfTYvcf5PgNJVl0VCW1VbtvhN0XumnIEEC9GaS1cXmhvV0mB0t5byWe0C6yeJG9brtziQZ+qGECIQOiNqtyujyIxUDDV4MM0f9BLKwOIn0aLZNNwmNkn6xLggkj1Oa0N6KfIpkwSsxugIK3jRSa21JCRef/rf1mVI2eCdmbhOOr5RtgZnrVQ==
+Received: from BN7NAM10FT040.eop-nam10.prod.protection.outlook.com
+ (2a01:111:e400:7e8f::43) by
+ BN7NAM10HT046.eop-nam10.prod.protection.outlook.com (2a01:111:e400:7e8f::452)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4308.20; Fri, 9 Jul
+ 2021 05:48:07 +0000
+Received: from DS7PR07MB7591.namprd07.prod.outlook.com
+ (2a01:111:e400:7e8f::48) by BN7NAM10FT040.mail.protection.outlook.com
+ (2a01:111:e400:7e8f::238) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4308.20 via Frontend
+ Transport; Fri, 9 Jul 2021 05:48:07 +0000
+Received: from DS7PR07MB7591.namprd07.prod.outlook.com
+ ([fe80::3071:6cd1:89d6:e7cd]) by DS7PR07MB7591.namprd07.prod.outlook.com
+ ([fe80::3071:6cd1:89d6:e7cd%7]) with mapi id 15.20.4308.023; Fri, 9 Jul 2021
+ 05:48:07 +0000
+From: matt spaethe <mspaethe@outlook.com>
+To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+Subject: wireguard command line, dumplog and GUI pop-up in 0.3.16
+Thread-Topic: wireguard command line, dumplog and GUI pop-up in 0.3.16
+Thread-Index: Add0hSMgimWruSSvQcGnAqKkW01LsgAAEpBQ
+Date: Fri, 9 Jul 2021 05:48:07 +0000
+Message-ID: <DS7PR07MB759127E1827ED9A3CBB69D43CF189@DS7PR07MB7591.namprd07.prod.outlook.com>
+References: <DS7PR07MB7591F166B9EC0B30DB10D5B0CF189@DS7PR07MB7591.namprd07.prod.outlook.com>
+In-Reply-To: <DS7PR07MB7591F166B9EC0B30DB10D5B0CF189@DS7PR07MB7591.namprd07.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-incomingtopheadermarker: OriginalChecksum:E203F24D9F84C9A50111DCA851FA78F2C33E99C8ECDF6F253AEC946E6D37222C;
+ UpperCasedChecksum:D563BE5406EF2B7F90BE9D5E7BEC7CC60F00D1FEA24D377679423AA85D5B7437;
+ SizeAsReceived:6878; Count:43
+x-tmn: [PiX9V9N4q+iWkWIRXyKT0aadIalOmtst]
+x-ms-publictraffictype: Email
+x-incomingheadercount: 43
+x-eopattributedmessage: 0
+x-ms-office365-filtering-correlation-id: be10c4e0-a675-4d8f-5a75-08d9429d20ed
+x-ms-traffictypediagnostic: BN7NAM10HT046:
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: eC9nEU5dSki0LepcugePzqM6UsJOkxa0jJye2zKTN9t6Dz7p6HF9QqCODNb4VdMkXIcKKmjkT27iOWbp3Yay7af2Na7fA9m19FCqeCY3Sxyr0QOo4i1NYuFZLPfg+uF5ZLqvYVy/T/sMiH0E45IhrpkL6l7NUJnSHwDiApaZT9pBTpu0LYC/efYDA20jkYgEmcyJyIs/5b/Ji+5QwVIdQ9CZwqXXTGE54jAEKrk9d5pCCrRcvJKgQsOhQYNM4ivFupF2EqA+BbN99QYJPjgXB9SdiXzzuSjRIMcjeZW7SyoF73vZ/NgEvAfH64OIdkKHPQj2079JLQZD4LBTeEYYwge6plvQDCoV/08GKKkKrBVdSbbAhsjmCyPWRWei1dmRu8uMhf2LlDhSwOAlqQEssa4ZctpMo7AWDLRSB4w5IU3loVp3p9S6Bsz/bRNVjPLa
+x-ms-exchange-antispam-messagedata: sT+ZMa6rU6ydyFUP7TE7+sTs0eWvkdgo2VN/ZW7/fDb0PjteFXe5sw0Zds4Ja/0OGPPTHcRxmYN3QDAChnjuzQC+JV8yWg5Z9gA7pMUengymotnZPjKL4rEF578qOnAVJvjxNQpd1Gy1NYH3eoFjBg==
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-AuthSource: BN7NAM10FT040.eop-nam10.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: be10c4e0-a675-4d8f-5a75-08d9429d20ed
+X-MS-Exchange-CrossTenant-originalarrivaltime: 09 Jul 2021 05:48:07.8265 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Internet
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN7NAM10HT046
 X-Mailman-Approved-At: Mon, 02 Aug 2021 13:14:07 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -88,72 +108,21 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-grsecurity kernels tend to carry additional backports and changes, like
-commit b60b87fc2996 ("netlink: add ethernet address policy types") or
-the SYM_FUNC_* changes. RAP nowadays hooks the latter, therefore no
-diversion to RAP_ENTRY is needed any more.
+Hi,
 
-Instead of relying on the kernel version test, also test for the macros
-we're about to define to not already be defined to account for these
-additional changes in the grsecurity patch without breaking
-compatibility to the older public ones.
+I installed wireguard 0.3.16 as a tunnel on Windows 10 IoT.=A0 When I attem=
+pt to dump the log buffer to file, I get a pop up about usage of wireguard =
+command line.=A0 I then verified that I can still perform /dumplog on a sec=
+ond machine with 0.3.14.
 
-Also test for CONFIG_PAX instead of RAP_PLUGIN for the timer API related
-changes as these don't depend on the RAP plugin to be enabled but just a
-PaX/grsecurity patch to be applied. While there is no preprocessor knob
-for the latter, use CONFIG_PAX as this will likely be enabled in every
-kernel that uses the patch.
+I then went to a third machine with 0.3.14 and /dumplog worked successfully=
+.=A0 I then upgraded to 0.3.16 from inside WireGuard Manager on this machin=
+e.=A0 In the same Windows shell, the command 'wireguard /dumplog log.txt' r=
+esults in a pop up about command line usage.
 
-Signed-off-by: Mathias Krause <minipli@grsecurity.net>
----
- src/compat/compat-asm.h | 4 ++--
- src/compat/compat.h     | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+I've been trying to run without Manager because I don't want users accident=
+ly shutting down the wireguard tunnel.=A0 So to look at logs, I use the com=
+mand line option /dumplog.
 
-diff --git a/src/compat/compat-asm.h b/src/compat/compat-asm.h
-index fde21dabba4f..5bfdb9410933 100644
---- a/src/compat/compat-asm.h
-+++ b/src/compat/compat-asm.h
-@@ -22,7 +22,7 @@
- #endif
- 
- /* PaX compatibility */
--#if defined(RAP_PLUGIN)
-+#if defined(RAP_PLUGIN) && defined(RAP_ENTRY)
- #undef ENTRY
- #define ENTRY RAP_ENTRY
- #endif
-@@ -51,7 +51,7 @@
- #undef pull
- #endif
- 
--#if LINUX_VERSION_CODE < KERNEL_VERSION(5, 4, 76) && !defined(ISCENTOS8S)
-+#if LINUX_VERSION_CODE < KERNEL_VERSION(5, 4, 76) && !defined(ISCENTOS8S) && !defined(SYM_FUNC_START)
- #define SYM_FUNC_START ENTRY
- #define SYM_FUNC_END ENDPROC
- #endif
-diff --git a/src/compat/compat.h b/src/compat/compat.h
-index b2041327d85c..da6912d871fa 100644
---- a/src/compat/compat.h
-+++ b/src/compat/compat.h
-@@ -830,7 +830,7 @@ static inline void skb_mark_not_on_list(struct sk_buff *skb)
- }
- #endif
- 
--#if LINUX_VERSION_CODE < KERNEL_VERSION(4, 20, 0) && !defined(ISRHEL8)
-+#if LINUX_VERSION_CODE < KERNEL_VERSION(4, 20, 0) && !defined(ISRHEL8) && !defined(NLA_POLICY_EXACT_LEN)
- #define NLA_POLICY_EXACT_LEN(_len) { .type = NLA_UNSPEC, .len = _len }
- #endif
- #if LINUX_VERSION_CODE < KERNEL_VERSION(5, 2, 0) && !defined(ISRHEL8)
-@@ -1127,7 +1127,7 @@ static const struct header_ops ip_tunnel_header_ops = { .parse_protocol = ip_tun
- #undef __read_mostly
- #define __read_mostly
- #endif
--#if (defined(RAP_PLUGIN) || defined(CONFIG_CFI_CLANG)) && LINUX_VERSION_CODE < KERNEL_VERSION(4, 15, 0)
-+#if (defined(CONFIG_PAX) || defined(CONFIG_CFI_CLANG)) && LINUX_VERSION_CODE < KERNEL_VERSION(4, 15, 0)
- #include <linux/timer.h>
- #define wg_expired_retransmit_handshake(a) wg_expired_retransmit_handshake(unsigned long timer)
- #define wg_expired_send_keepalive(a) wg_expired_send_keepalive(unsigned long timer)
--- 
-2.20.1
-
+Thank you,
+Matt
