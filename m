@@ -7,37 +7,37 @@ X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_INVALID,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
 	autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C29D0C07E96
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  9 Jul 2021 02:44:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E752FC07E96
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  9 Jul 2021 02:52:59 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 222D4613B2
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  9 Jul 2021 02:44:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 222D4613B2
+	by mail.kernel.org (Postfix) with ESMTPS id 0CC3961417
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  9 Jul 2021 02:52:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 0CC3961417
 Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 042f10e6;
-	Fri, 9 Jul 2021 02:44:32 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dd5daa56;
+	Fri, 9 Jul 2021 02:46:56 +0000 (UTC)
 Received: from bombadil.infradead.org (bombadil.infradead.org
  [2607:7c80:54:e::133])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 8c186aa2
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7ce629ee
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Fri, 9 Jul 2021 02:44:30 +0000 (UTC)
+ for <wireguard@lists.zx2c4.com>; Fri, 9 Jul 2021 02:46:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
  MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Sender
  :Reply-To:Content-Type:Content-ID:Content-Description;
- bh=d+8/yiZu3L6P8B8KGhlE8N/aoGjld+tQjqmLrEW8N7I=; b=2upCU0SvCtNVlT5M+Ewo4m8Xk7
- w3Tc6jfNlf9YWdPluWHekPTO6s0p3hgDWxCG19jcsqNLu6SbLdiFBSpvqQGltufSQNIxLgNcS2WlM
- rgM6IAakdgAgHU7ZHoo/oqyfz9ocgEG+MF7r45nScZP9cXFBHAHfDkJIdsHxkMJpHNb5sYjpc2MbM
- QraSo4ox+vT07/iJiZECgNAkT6VZwNgq+eAmW714EW1sA4f06itWeCS8ALaIn/3wc9U3bhaRek5Ta
- g9jNFDz+nB9qcPjV3bzdhE0HZFzTPEdU5RG/lcg7nS5IwBM3aYlfeuLlcYmG3E/RYYlWfrwp3PEJe
- rJj174cA==;
+ bh=x7QZanWZcKkawjfPahmWtQD2CPePP3+4rcUNQHuRxpg=; b=aCy+v5kuB4XnuQBR5G1+fQlOpY
+ 5ZJUKHxtINpvFjnZ/rERZlQBy+HtbZIMDIM7J22BrwGuHhFuroar3uavBcj4znO85UxP1QepswOFp
+ jj6xIvAeAD9IsF2KyjptvuS12OwjWvZK3AWPeo59u6tnsX52TQ9iSWGSOuy6wiGufWQ3Q0f7pVBA7
+ 6ofB3ZNozRi1GKHi1LqkAa4DsnZOW9MIBj5pGbjPZvxyaLwYZUelaYncZODhqi1bhN2VRALpNlFBo
+ WkvXgNOw6a0HHq1+ZN5YAas5oGsmURC4x/lTu8KeoydKMQ+qrVN+wUaBAgbnLPwb4VM7itjCsLTjP
+ 9NNNS07g==;
 Received: from [2601:1c0:6280:3f0::aefb] (helo=bombadil.infradead.org)
  by bombadil.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
- id 1m1g5Q-000Wlc-3d; Fri, 09 Jul 2021 02:17:52 +0000
+ id 1m1g5O-000Wlc-G2; Fri, 09 Jul 2021 02:17:50 +0000
 From: Randy Dunlap <rdunlap@infradead.org>
 To: linux-kernel@vger.kernel.org
 Cc: Randy Dunlap <rdunlap@infradead.org>,
@@ -52,11 +52,11 @@ Cc: Randy Dunlap <rdunlap@infradead.org>,
  Krzysztof Halasa <khc@pm.waw.pl>, netdev@vger.kernel.org,
  "David S. Miller" <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>,
  Martin Schiller <ms@dev.tdt.de>, linux-x25@vger.kernel.org,
- wireguard@lists.zx2c4.com
-Subject: [PATCH 3/6] lib: crypto: rename 'mod_init' & 'mod_exit' functions to
+ wireguard@lists.zx2c4.com, patches@armlinux.org.uk
+Subject: [PATCH 1/6] arm: crypto: rename 'mod_init' & 'mod_exit' functions to
  be module-specific
-Date: Thu,  8 Jul 2021 19:17:44 -0700
-Message-Id: <20210709021747.32737-4-rdunlap@infradead.org>
+Date: Thu,  8 Jul 2021 19:17:42 -0700
+Message-Id: <20210709021747.32737-2-rdunlap@infradead.org>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <20210709021747.32737-1-rdunlap@infradead.org>
 References: <20210709021747.32737-1-rdunlap@infradead.org>
@@ -85,94 +85,40 @@ This is helpful for debugging and in determining how long certain
 module_init calls take to execute.
 
 Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Herbert Xu <herbert@gondor.apana.org.au>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: linux-crypto@vger.kernel.org
 Cc: Jason A. Donenfeld <Jason@zx2c4.com>
+Cc: Russell King <linux@armlinux.org.uk>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: patches@armlinux.org.uk
 ---
- lib/crypto/blake2s.c          |    8 ++++----
- lib/crypto/chacha20poly1305.c |    8 ++++----
- lib/crypto/curve25519.c       |    8 ++++----
- 3 files changed, 12 insertions(+), 12 deletions(-)
+ arch/arm/crypto/curve25519-glue.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- linux-next-20210708.orig/lib/crypto/blake2s.c
-+++ linux-next-20210708/lib/crypto/blake2s.c
-@@ -73,7 +73,7 @@ void blake2s256_hmac(u8 *out, const u8 *
- }
- EXPORT_SYMBOL(blake2s256_hmac);
+--- linux-next-20210708.orig/arch/arm/crypto/curve25519-glue.c
++++ linux-next-20210708/arch/arm/crypto/curve25519-glue.c
+@@ -112,7 +112,7 @@ static struct kpp_alg curve25519_alg = {
+ 	.max_size		= curve25519_max_size,
+ };
  
 -static int __init mod_init(void)
-+static int __init blake2s_mod_init(void)
++static int __init arm_curve25519_init(void)
  {
- 	if (!IS_ENABLED(CONFIG_CRYPTO_MANAGER_DISABLE_TESTS) &&
- 	    WARN_ON(!blake2s_selftest()))
-@@ -81,12 +81,12 @@ static int __init mod_init(void)
+ 	if (elf_hwcap & HWCAP_NEON) {
+ 		static_branch_enable(&have_neon);
+@@ -122,14 +122,14 @@ static int __init mod_init(void)
  	return 0;
  }
  
 -static void __exit mod_exit(void)
-+static void __exit blake2s_mod_exit(void)
++static void __exit arm_curve25519_exit(void)
  {
+ 	if (IS_REACHABLE(CONFIG_CRYPTO_KPP) && elf_hwcap & HWCAP_NEON)
+ 		crypto_unregister_kpp(&curve25519_alg);
  }
  
 -module_init(mod_init);
 -module_exit(mod_exit);
-+module_init(blake2s_mod_init);
-+module_exit(blake2s_mod_exit);
- MODULE_LICENSE("GPL v2");
- MODULE_DESCRIPTION("BLAKE2s hash function");
- MODULE_AUTHOR("Jason A. Donenfeld <Jason@zx2c4.com>");
---- linux-next-20210708.orig/lib/crypto/chacha20poly1305.c
-+++ linux-next-20210708/lib/crypto/chacha20poly1305.c
-@@ -354,7 +354,7 @@ bool chacha20poly1305_decrypt_sg_inplace
- }
- EXPORT_SYMBOL(chacha20poly1305_decrypt_sg_inplace);
++module_init(arm_curve25519_init);
++module_exit(arm_curve25519_exit);
  
--static int __init mod_init(void)
-+static int __init chacha20poly1305_init(void)
- {
- 	if (!IS_ENABLED(CONFIG_CRYPTO_MANAGER_DISABLE_TESTS) &&
- 	    WARN_ON(!chacha20poly1305_selftest()))
-@@ -362,12 +362,12 @@ static int __init mod_init(void)
- 	return 0;
- }
- 
--static void __exit mod_exit(void)
-+static void __exit chacha20poly1305_exit(void)
- {
- }
- 
--module_init(mod_init);
--module_exit(mod_exit);
-+module_init(chacha20poly1305_init);
-+module_exit(chacha20poly1305_exit);
- MODULE_LICENSE("GPL v2");
- MODULE_DESCRIPTION("ChaCha20Poly1305 AEAD construction");
- MODULE_AUTHOR("Jason A. Donenfeld <Jason@zx2c4.com>");
---- linux-next-20210708.orig/lib/crypto/curve25519.c
-+++ linux-next-20210708/lib/crypto/curve25519.c
-@@ -13,7 +13,7 @@
- #include <linux/module.h>
- #include <linux/init.h>
- 
--static int __init mod_init(void)
-+static int __init curve25519_init(void)
- {
- 	if (!IS_ENABLED(CONFIG_CRYPTO_MANAGER_DISABLE_TESTS) &&
- 	    WARN_ON(!curve25519_selftest()))
-@@ -21,12 +21,12 @@ static int __init mod_init(void)
- 	return 0;
- }
- 
--static void __exit mod_exit(void)
-+static void __exit curve25519_exit(void)
- {
- }
- 
--module_init(mod_init);
--module_exit(mod_exit);
-+module_init(curve25519_init);
-+module_exit(curve25519_exit);
- 
- MODULE_LICENSE("GPL v2");
- MODULE_DESCRIPTION("Curve25519 scalar multiplication");
+ MODULE_ALIAS_CRYPTO("curve25519");
+ MODULE_ALIAS_CRYPTO("curve25519-neon");
