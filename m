@@ -2,43 +2,85 @@ Return-Path: <SRS0=q2lx=MG=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 17A29C07E9A
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 14 Jul 2021 09:56:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 33D32C12002
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 14 Jul 2021 22:10:05 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 84EC26115A
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 14 Jul 2021 09:56:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 84EC26115A
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=spam-free.eu
+	by mail.kernel.org (Postfix) with ESMTPS id 4F03360FF1
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 14 Jul 2021 22:10:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mail.kernel.org 4F03360FF1
+Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=ericlight.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=wireguard-bounces@lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cc9c53d7;
-	Wed, 14 Jul 2021 09:54:43 +0000 (UTC)
-Received: from s2.spam-free.eu (s2.spam-free.eu [195.5.121.125])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c608ba5b
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 54079379;
+	Wed, 14 Jul 2021 22:10:02 +0000 (UTC)
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com
+ [66.111.4.29])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d1cd1056
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 14 Jul 2021 09:54:43 +0000 (UTC)
-Received: from [192.168.129.136]
- (dslb-094-220-252-156.094.220.pools.vodafone-ip.de [94.220.252.156])
- by s2.spam-free.eu (Postfix) with ESMTPSA id A2D291C3204
- for <wireguard@lists.zx2c4.com>; Wed, 14 Jul 2021 11:54:42 +0200 (CEST)
-From: Chris <wireguard@spam-free.eu>
-Subject: wg-quick with default route fails on nfs root filesystem
-To: wireguard <wireguard@lists.zx2c4.com>
-Message-ID: <e4fef9da-ee7f-d1db-036e-b294785d9ee8@spam-free.eu>
-Date: Wed, 14 Jul 2021 11:54:42 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: de-DE
+ Wed, 14 Jul 2021 22:10:00 +0000 (UTC)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+ by mailout.nyi.internal (Postfix) with ESMTP id E0DE35C0121
+ for <wireguard@lists.zx2c4.com>; Wed, 14 Jul 2021 18:09:58 -0400 (EDT)
+Received: from imap7 ([10.202.2.57])
+ by compute2.internal (MEProxy); Wed, 14 Jul 2021 18:09:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ericlight.com;
+ h=mime-version:message-id:in-reply-to:references:date:from:to
+ :subject:content-type; s=fm3; bh=CFh05AcV905r4AwCqy0CPYzMV6xpg1q
+ VpUeTHwLjjOw=; b=o8paAxev17J+xY67gSmQw//IKGV0CnzAjySvC5MK0DTfdpx
+ KHKgtjow4FW/qz0co1XZyQBUTIyrCxCzwv+mjv4ths+h3ZNuyJ3ca0eltbJL3yG7
+ QqG7EImWIf7TLEx4Vj860fOK3IA4WGPPT1AjEv8KC2xU47+39+kdPa0Q6prpb+3M
+ 5p3Gf8ELqKSvBuJZkt7NtfkLFtLV0jT4aBc6TEQz++idCgJNx3TOd+XI/GnElhiL
+ F+XwPafuRNLWFuraFFSaHTNWjmyToKDTp5onjXi7ct5KXaVkvwX1k7YZ1iZW7R4+
+ 6hp+czD8Ulr9nQRLMLsrI5S1D5a3t6RS49rU2hQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=CFh05A
+ cV905r4AwCqy0CPYzMV6xpg1qVpUeTHwLjjOw=; b=jRD9cDGQHE8hDsHDHhKNLf
+ r7eTQm2w/T9qTnbjOOSS5lfRx+0ib98TuD5OFlUPQcCst4iP9iKgQUFhzDQXBecU
+ 6ngMybnInS1acAxqd8cFJAauYQ/QFROkLCpsLEJwSAHP37mFXK5+fQjjDRgj5Hz4
+ 3SVtzjOx5q+9E6vdNQIYglRAtoO7er2UkGzf5sexbt8T7fdoSWrmDBfRf6Diz+hT
+ MEgnQkj/iCkBCPdwUSjfcMrWjdYNGL/QATed613gvgINF4LQwBNvX8O0knb31jqX
+ e72FJspIpItSjc/AWG41d6FFileFWVUC5keJmAd9r6A4OahAbeLFmoQKDBDhxw8g
+ ==
+X-ME-Sender: <xms:tmDvYFxMhawrMU-_YtEsv-oxNWgwaC5J3j4b-Y4YAP-gsOghnupvJQ>
+ <xme:tmDvYFRHIqwx8pSpuvOYP9b_eesxhEKbm6iBt5YLaeP-kWZGlyIZxYzU-3B5TIeZx
+ sY8f_MQ5AXVGrcocw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrudelgdeftdcutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkjghffffhvffutgesthdtre
+ dtreertdenucfhrhhomhepfdfgrhhitgcunfhighhhthdfuceovghrihgtsegvrhhitghl
+ ihhghhhtrdgtohhmqeenucggtffrrghtthgvrhhnpeevudeutdevleeiveehheejleelud
+ egffdvkeeghfehkeehfeevhfdthfduleehueenucffohhmrghinhepshgvnhhtvghntgdr
+ vghsnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepvg
+ hrihgtsegvrhhitghlihhghhhtrdgtohhm
+X-ME-Proxy: <xmx:tmDvYPUufqezzGiYDRU6mRzfTYrZlyV8XjwrxbcopelCD5FdUkBBiQ>
+ <xmx:tmDvYHiIqbP1fQ6t9EOmonbmDEfMt6nOFkFHOCJm2_b2hsNNBHnGsg>
+ <xmx:tmDvYHCvruoMQlTJv6oVxWQhkuh_O5gDjqzndtdY7Na4ZimYz-DvGA>
+ <xmx:tmDvYKM6dmcPPw_S5EBBg6SvhG1ceQ_R7Wrin-qOUk3qjkxcEU6aag>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 424573607C4; Wed, 14 Jul 2021 18:09:58 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.5.0-alpha0-533-gf73e617b8a-fm-20210712.002-gf73e617b
+Mime-Version: 1.0
+Message-Id: <d994accd-d1a9-4f9a-bbf9-d6b99036b177@www.fastmail.com>
+In-Reply-To: <e8e94195-b1f0-df62-4393-929f20f762a3@spam-free.eu>
+References: <mailman.0.1601114111.20018.wireguard@lists.zx2c4.com>
+ <296f17d0-3f0b-6021-7bb3-4b4bf576f6c7@spam-free.eu>
+ <e8e94195-b1f0-df62-4393-929f20f762a3@spam-free.eu>
+Date: Thu, 15 Jul 2021 10:09:36 +1200
+From: "Eric Light" <eric@ericlight.com>
+To: wireguard@lists.zx2c4.com
+Subject: Re: Android: more than one tunnel
+Content-Type: text/plain
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -53,52 +95,32 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-When wg-quick detects a default route through the tunnel it does this through a 
-new routing table with a default route.
-However not to destroy the existing non-default routes these will looked up and 
-used first. This results in the follwing policy rule entries:
-(The priority numers may be different from system to system)
+Hi Chris!
 
-32764:    from all lookup main suppress_prefixlength 0
-32765:    not from all fwmark 0xca6c lookup 51820
+I don't have any experience with the Android implementation specifically... but most likely, your two tunnels have overlapping AllowedIPs ranges.  When this happens, bringing up the second interface will override the routing created by the first interface.
 
-It is very important of course, that the suppress_prefix rule comes first in the 
-list, before
-the second rule introduces the new default route (preventig the wireguard 
-traffic through it's own tunnel).
+Most commonly, this happens when someone configures both interfaces with AllowedIPs = 0.0.0.0/0.  To fix this problem, make sure there's no overlap of AllowedIPs in your tunnel definitions.
 
-The way to archive this is done by the following command sequence:
+I hope this helps  :)
 
-ip -4 rule add not fwmark 51820 table 51820
-ip -4 rule add table main suppress_prefixlength 0
+(my apologies if the problem is something Android-specific that I don't know about)
 
-The sequence of the commands is important as the latter command gets the higher 
-priority (lower numer).
+E
 
-BUT:
-In case your root filesystem needs the local network, the second command will 
-not be reached as the
-first command (setting the new default route) kills the root filesystem and the 
-system stalls!!!!!!
+--------------------------------------------
+Q: Why is this email five sentences or less?
+A: http://five.sentenc.es
 
-One possible solution:
-Instead of adding the suppress_prefixlength 0 command secondly it must be first.
-The you must find the priority of that rule and the add the default route with 
-the same priority.
-A rule with same priority will be added AFTER the other rules.
-
-Example:
-ip -4 rule add table main suppress_prefixlength 0
-PRIO=$(ip rule list from all|grep suppress_prefixlength|sed -e 
-'{s/^\(.*\)\:.*/\1/;q}')
-ip -4 rule add not fwmark 51820 table 51820 priority $PRIO
-
-This will lead to the correct sequence:
-32765:    from all lookup main suppress_prefixlength 0
-32765:    not from all fwmark 0xca6c lookup 51820
-(Note the same priority number)
-
-There are probably better ways to cirumvent cutting off the root filesystem.
-
-Chris
-
+On Wed, 14 Jul 2021, at 17:49, Chris wrote:
+> I have two distinct tunnels defined on Android.
+> However, I can only toggle between the two. I cannot have both activated at the 
+> same time.
+> I need both connections.
+> Am I missing anything?
+> Why not several tunnels with several wg servers???
+> Why is this being prevented?
+> 
+> BR
+> Chris
+> 
+> 
