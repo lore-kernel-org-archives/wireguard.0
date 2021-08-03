@@ -1,49 +1,84 @@
-Return-Path: <SRS0=V78u=MZ=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=PVHX=M2=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F2EC5C4338F
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  2 Aug 2021 17:27:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 154F0C432BE
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  3 Aug 2021 08:59:34 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id F046960F9C
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  2 Aug 2021 17:27:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org F046960F9C
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id 24C5E60EB9
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  3 Aug 2021 08:59:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 24C5E60EB9
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 65ec39f8;
-	Mon, 2 Aug 2021 17:27:49 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [104.131.123.232])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f634c78c
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 896f1011;
+	Tue, 3 Aug 2021 08:57:20 +0000 (UTC)
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com
+ [2a00:1450:4864:20::335])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 37831b0e
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 2 Aug 2021 17:27:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1627925262;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type;
- bh=M35r3RPrIVNahgzasol2nz3xaMJkyZsiR9EavJomvzI=;
- b=RTrFTLEBAzAnG5DtzfHOWePo84QR+wZbs9LSCPclag0NGI2gJIRMgh+WqdDeW5Abxis/ah
- weY6/2uo+ZMQcI5R8j41vzJ6ebki2Qcxqc3nLLNPgqd3Jp/kbyDeqRo/B4TdUratKZl6LT
- vej+NwJFtntVnQIut5L2UPPZkrTR1Pc=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 6168f6cb
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Mon, 2 Aug 2021 17:27:41 +0000 (UTC)
-Date: Mon, 2 Aug 2021 19:27:37 +0200
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: wireguard@lists.zx2c4.com
-Subject: [ANNOUNCE] WireGuardNT, a high-performance WireGuard implementation
- for the Windows kernel
-Message-ID: <YQgrCfqIL2SWfF6G@zx2c4.com>
+ for <wireguard@lists.zx2c4.com>; Tue, 3 Aug 2021 08:57:16 +0000 (UTC)
+Received: by mail-wm1-x335.google.com with SMTP id
+ e25-20020a05600c4b99b0290253418ba0fbso1652473wmp.1
+ for <wireguard@lists.zx2c4.com>; Tue, 03 Aug 2021 01:57:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=subject:to:cc:references:from:message-id:date:user-agent
+ :mime-version:in-reply-to:content-transfer-encoding:content-language;
+ bh=zFzLMmG2pM1vNLnYKSrARrw2h+MU0I4UPuq8McFnbdY=;
+ b=sv6nAzL7T8Jd0Zm1AHJZXdaiGcLB0jy30LP/8YBKrRTPlmiBYodtNI3YHWYBo0gtw9
+ n25AoBNU32/PmGIOdY4i+8qbMuTgy1x7FRr8f0AqteNCYXB0sD8/6ZO5TLqRBCYP9kXw
+ zsYxXM60U1ppXpEdQwemjGcq4gyyNq5vUJilMoEOq+UFXbVG/vieHQbW2iRmgKR6nWOX
+ SwiVtBDycgdXPyu5LEyd2qNLU3iZtMxPRDzr60epKgGCnpzdWVxjSJXw1lEzVdHWAT2M
+ C7ONE9d1Q9SWQWO6MEyclbtAp8haA1bPXLnpApb4ZV+3AJX06jIyfNWZXnGteS2RRnQD
+ nuVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-transfer-encoding
+ :content-language;
+ bh=zFzLMmG2pM1vNLnYKSrARrw2h+MU0I4UPuq8McFnbdY=;
+ b=k6jZRXF+LkbXC560sVDdfqQfrahRK6dkacOI6Z+DkDYU0kw3JMk8gG6Bq+RHWaMGiy
+ ddtO/Vr3aIS7IJwaApcK/+OYXKG1HcitIwjGlLZA7DahAw+2XYJsnw7fj30XMQzBoWGu
+ zNso8wqWIQ4L5Qgu7HpKsd51lB3HfhtCIlBH2cvlRpsSt+Jz74XWkoAUV5A2ROeWnNrN
+ 12ze2Z+L+WxnQaf2nkG9RbMyebm2T4mYKxaFGVaauL/6FLFKw2Evm002pNp+pKwNiIvn
+ yv7R/CCu8uTNtWhuPXDVD248uZFaEAI/Pnl6c2ngfRvE3jZBTIairxuWwuQd1p7VOBrG
+ KNyg==
+X-Gm-Message-State: AOAM533tA8CMge0GLDVvRtl6YjzGXerbD1/1q7tfouAYdTae4A0Pj5Lf
+ g2s2/R0jx/Cw/Vy8/mgWPgChNmUQ6PqoWA==
+X-Google-Smtp-Source: ABdhPJz7pUTIVdFg4Ql5KjxjpuZs+0+e4u0stGydfzT6L4WfI1GnsLK9MefIxv9FfQT3UvQVgsrQFA==
+X-Received: by 2002:a05:600c:154b:: with SMTP id
+ f11mr3164707wmg.116.1627981036210; 
+ Tue, 03 Aug 2021 01:57:16 -0700 (PDT)
+Received: from [192.168.25.202] ([31.127.152.180])
+ by smtp.gmail.com with ESMTPSA id w4sm1939889wrm.24.2021.08.03.01.57.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 03 Aug 2021 01:57:15 -0700 (PDT)
+Subject: Re: Problems with Windows client over PulseSecure VPN
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ Heiko Kendziorra <kendziorra@dresearch-fe.de>,
+ Christopher Ng <facboy@gmail.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+References: <9f621ce6-ec3d-0641-c359-756d0ad36f65@gmail.com>
+ <6a01b182-a98f-1736-676f-d0811f6de086@gmail.com>
+ <CAHmME9qtPLOTaY3UzyCY1C6guVZXvJjXHeFwT8=94d=Zpjj=Tw@mail.gmail.com>
+ <CAHmME9r5kecTj1iBGyqjvNRKsHZPRrXmN+fDXkaX3y==VPoMqA@mail.gmail.com>
+From: Peter Whisker <peter.whisker@gmail.com>
+Message-ID: <4ff6b3ed-66c0-82d4-1641-44849ca390ef@gmail.com>
+Date: Tue, 3 Aug 2021 09:57:14 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+In-Reply-To: <CAHmME9r5kecTj1iBGyqjvNRKsHZPRrXmN+fDXkaX3y==VPoMqA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -58,129 +93,102 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hey everyone,
+Hi Jason and team
 
-After many months of work, Simon and I are pleased to announce the WireGuardNT
-project, a native port of WireGuard to the Windows kernel. This has been a
-monumental undertaking, and if you've noticed that I haven't read emails in
-about two months, now you know why.
+Thank you all for this amazing effort! I upgraded to v0.4 this morning 
+and thought I should give it a go.
 
-WireGuardNT, lower-cased as "wireguard-nt" like the other repos, began as a
-port of the Linux codebase, so that we could benefit from the analysis and
-scrutiny that that code has already received. After the initial porting
-efforts there succeeded, the NT codebase quickly diverged to fit well with
-native NTisms and NDIS (Windows networking stack) APIs. The end result is a
-deeply integrated and highly performant implementation of WireGuard for the NT
-kernel, that makes use of the full gamut of NT kernel and NDIS capabilities.
-You can read about the project and look at its source code here:
+I set DWORD "ExperimentalKernelDriver = 1" in the registry. My simple 
+"normal" tunnel which goes directly and not via PulseSecure works fine. :)
 
-    https://git.zx2c4.com/wireguard-nt/about/
+I removed the "PostUp = wg set %WIREGUARD_TUNNEL_NAME% listen-port 0" 
+from my configs which go via the PulseSecure tunnel however traffic does 
+not flow, the received byte counter remains at zero although the tunnel 
+allegedly becomes "Activated" - see the log below.
 
-For the Windows platform, this project is a big deal to me, as it marks the
-graduation of WireGuard to being a serious operating system component, meant
-for more serious usage. It's also a rather significant open source release, as
-there generally isn't so much (though there is some) open source crypto-NIC
-driver code already out there that does this kind of thing while pulling
-together various kernel capabilities in the process.
+Regards
 
-To frame what WireGuardNT is, a bit of background for how WireGuard on Windows
-_currently_ works, prior to this, might be in store. We currently have a
-cross-platform Go codebase, called wireguard-go, which uses a generic TUN
-driver we developed called Wintun (see wintun.net for info). The
-implementation lives in userspace, and shepherds packets to and from the
-Wintun interface. WireGuardNT will (eventually) replace that, placing all of
-the WireGuard protocol implementation directly into the networking stack for
-deeper integration, in the same way that it's done currently on Linux,
-OpenBSD, and FreeBSD.
+Peter
 
-With the old wireguard-go/Wintun implementation, the fact of being in
-userspace means that for each RX UDP packet that arrives in the kernel from
-the NIC and gets put in a UDP socket buffer, there's a context switch to
-userspace to receive it, and then a trip through the Go scheduler to decrypt
-it, and then it's written to Wintun's ring buffer, where it is then processed
-upon the next context switch. For TX, things happen in reverse: userspace
-sends a packet, and there's a context switch to the kernel to hand it off to
-Wintun, which places it into a ring buffer, and then there's another context
-switch to userspace, and a trip through the Go scheduler to encrypt it, and
-then it's sent through a socket, which involves another context switch to send
-it. All of the ring buffers -- Wintun's rings and Winsock's RIO rings --
-amortize context switches as much as possible and make this decently fast, but
-all and all it still constitutes overhead and latency. WireGuardNT gets rid of
-all of that.
+2021-08-03 09:52:13.130462: [TUN] [mini-deb2] Starting WireGuard/0.4 
+(Windows 10.0.19042; amd64)
+2021-08-03 09:52:13.130462: [TUN] [mini-deb2] Watching network interfaces
+2021-08-03 09:52:13.134477: [TUN] [mini-deb2] Resolving DNS names
+2021-08-03 09:52:13.144960: [TUN] [mini-deb2] Creating network adapter
+2021-08-03 09:52:13.150857: [TUN] [mini-deb2] WireGuardCreateAdapter: 
+Creating adapter
+2021-08-03 09:52:13.357365: [TUN] [mini-deb2] SelectDriver: Using 
+existing driver 0.1
+2021-08-03 09:52:13.986764: [TUN] [mini-deb2] Using WireGuardNT/0.1
+2021-08-03 09:52:13.990466: [TUN] [mini-deb2] Enabling firewall rules
+2021-08-03 09:52:13.990984: [TUN] [mini-deb2] Interface created
+2021-08-03 09:52:13.994159: [TUN] [mini-deb2] Dropping privileges
+2021-08-03 09:52:13.995190: [TUN] [mini-deb2] Peer 1 created
+2021-08-03 09:52:13.997778: [TUN] [mini-deb2] Monitoring MTU of default 
+v4 routes
+2021-08-03 09:52:13.998285: [TUN] [mini-deb2] Sending keepalive packet 
+to peer 1 (158.234.90.60:51820)
+2021-08-03 09:52:13.998285: [TUN] [mini-deb2] Sending handshake 
+initiation to peer 1 (158.234.90.60:51820)
+2021-08-03 09:52:13.998285: [TUN] [mini-deb2] Interface up
+2021-08-03 09:52:14.009369: [TUN] [mini-deb2] Setting device v4 addresses
+2021-08-03 09:52:14.012575: [TUN] [mini-deb2] Monitoring MTU of default 
+v6 routes
+2021-08-03 09:52:14.012575: [TUN] [mini-deb2] Setting device v6 addresses
+2021-08-03 09:52:14.017056: [TUN] [mini-deb2] Startup complete
+2021-08-03 09:52:19.001078: [TUN] [mini-deb2] Sending handshake 
+initiation to peer 1 (158.234.90.60:51820)
+2021-08-03 09:52:24.162600: [TUN] [mini-deb2] Handshake for peer 1 
+(158.234.90.60:51820) did not complete after 5 seconds, retrying (try 2)
+2021-08-03 09:52:24.162600: [TUN] [mini-deb2] Sending handshake 
+initiation to peer 1 (158.234.90.60:51820)
+2021-08-03 09:52:29.276205: [TUN] [mini-deb2] Handshake for peer 1 
+(158.234.90.60:51820) did not complete after 5 seconds, retrying (try 2)
+2021-08-03 09:52:29.276205: [TUN] [mini-deb2] Sending handshake 
+initiation to peer 1 (158.234.90.60:51820)
+2021-08-03 09:52:34.380120: [TUN] [mini-deb2] Handshake for peer 1 
+(158.234.90.60:51820) did not complete after 5 seconds, retrying (try 3)
+2021-08-03 09:52:34.380120: [TUN] [mini-deb2] Sending handshake 
+initiation to peer 1 (158.234.90.60:51820)
+2021-08-03 09:52:39.412842: [TUN] [mini-deb2] Handshake for peer 1 
+(158.234.90.60:51820) did not complete after 5 seconds, retrying (try 4)
+2021-08-03 09:52:39.412842: [TUN] [mini-deb2] Sending handshake 
+initiation to peer 1 (158.234.90.60:51820)
+2021-08-03 09:52:44.441204: [TUN] [mini-deb2] Handshake for peer 1 
+(158.234.90.60:51820) did not complete after 5 seconds, retrying (try 5)
+2021-08-03 09:52:44.443407: [TUN] [mini-deb2] Sending handshake 
+initiation to peer 1 (158.234.90.60:51820)
+2021-08-03 09:52:49.471250: [TUN] [mini-deb2] Handshake for peer 1 
+(158.234.90.60:51820) did not complete after 5 seconds, retrying (try 6)
+2021-08-03 09:52:49.471250: [TUN] [mini-deb2] Sending handshake 
+initiation to peer 1 (158.234.90.60:51820)
 
-While performance is quite good right now (~7.5Gbps TX on my small test box),
-not a lot of effort has yet been spent on optimizing it, and there's still a
-lot more performance to eek out of it, I suspect, especially as we learn more
-about NT's scheduler and threading model particulars. Yet, by simply being in
-the kernel, we significantly reduce latency and do away with the context
-switch problems of wireguard-go/Wintun.
 
-Most Windows users, however, don't really care what happens beyond 1Gbps, and
-this is where things get interesting. Windows users with an Ethernet
-connection generally haven't had much trouble getting close to 1Gbps or so
-with the old slow wireguard-go/Wintun, but over WiFi, those same users would
-commonly see massive slowdowns. With the significantly decreased latency of
-WireGuardNT, it appears that these slowdowns are no more. Jonathan Tooker
-reported to me that, on his system with an Intel AC9560 WiFi card, he gets
-~600Mbps without WireGuard, ~600Mbps with wireguard-go/Wintun over Ethernet,
-~95Mbps with wireguard-go/Wintun over WiFi, and ~600Mbps with WireGuardNT over
-WiFi.  In other words, the WiFi performance hit from wireguard-go/Wintun has
-evaporated when using WireGuardNT. Power consumption, and hence battery usage,
-should be lower too.
 
-And of course, on the multigig throughput side of things, Windows Server users
-will no doubt benefit.
-
-The project is still at its early stages, and for now (August 2021; if you're
-reading this in the future this might not apply) this should be considered
-"experimental". There's a decent amount of new code on which I'd like to spend
-a bit more time scrutinizing and analyzing. And hopefully by putting the code
-online in an "earlier" stage of development, others might be interested in
-studying the source and reporting bugs in it.
-
-Nonetheless, experimental or not, we still need people to test this and help
-shake out issues. To that end, WireGuardNT is now available in the ordinary
-WireGuard for Windows client -- https://www.wireguard.com/install/ -- with the
-0.4.z series, in addition to having full support of the venerable wg(8)
-utility, but currently (August 2021; if you're reading this in the future this
-might not apply) it is behind a manually set registry knob. There will be
-three phases of the 0.4.z series:
-
-  Phase 1) WireGuardNT is hidden behind the "ExperimentalKernelDriver"
-           registry knob. If you don't manually tinker around to enable it,
-           the client will continue to use wireguard-go/Wintun like before.
-
-  Phase 2) WireGuardNT is enabled by default and is no longer hidden.
-           However, in case there are late-stage problems that cause
-           downtime for existing infrastructure, there'll be a new hidden
-           knob called "UseUserspaceImplementation" that goes back to
-           using wireguard-go/Wintun like before.
-
-  Phase 3) WireGuardNT is enabled, and wireguard-go/Wintun is removed from
-           the client. [Do note: as projects and codebases, both Wintun and
-           wireguard-go will continue to be maintained, as they have
-           applications and uses outside of our WireGuard client, and Wintun
-           has uses outside of WireGuard in general.]
-
-The leap between each phase is rather large, and I'll update this thread when
-each one happens. Moving from 1 to 2 will happen when things seem okay for
-general consumption and from 2 to 3 when we're reasonably sure there's the
-same level of stability. Since we don't include any telemetry in the client, a
-lot of this assessment will be a matter of you, mailing list readers, sending
-bug reports or not sending bug reports. And of course, having testers during
-the unstable phase 1 will be a great boon. Instructions on enabling these
-knobs can be found in the usual place:
-
-    https://git.zx2c4.com/wireguard-windows/about/docs/adminregistry.md
-
-[ If you're reading this email in the future and that page either does not
-  exist or does not contain mention of "ExperimentalKernelDriver" or
-  "UseUserspaceImplementation", then we have already moved to phase 3, as
-  above, and none of this applies any more. ]
-
-So, please do give it a whirl, check out the documentation and code, and let
-me know what you think. I'm looking forward to hearing your thoughts and
-receiving bug reports, experience reports, and overall feedback.
-
-Enjoy!
-Jason
+On 29/07/2021 12:00, Jason A. Donenfeld wrote:
+> Hi Peter, Heiko, Christopher, and others,
+>
+> An update on:
+>
+>> I had a strange idea for how to fix this without requiring
+>> recompilation or removal of that code.
+>>
+>> 1) Enable DangerousScriptExecution:
+>> https://git.zx2c4.com/wireguard-windows/about/docs/adminregistry.md#hklmsoftwarewireguarddangerousscriptexecution
+>>
+>> 2) Add a PostUp line to your [Interface] section:
+>>
+>> PostUp = wg set %WIREGUARD_TUNNEL_NAME% listen-port 0
+> I just wanted to let you know that this problem has been entirely
+> fixed (I think?) in the "WireGuardNT" kernel driver project I've been
+> working on (and haven't yet announced aside from development
+> screenshots on Twitter), and therefore the above steps will no longer
+> be necessary. When that ships as part of the v0.4 series of the normal
+> wireguard-windows client, you won't need the "listen-port 0" hack
+> anymore, as the kernel driver uses a more clever trick than the one
+> used by wireguard-go. So please do watch this mailing list in the next
+> few weeks for an announcement of that project, as I'll be very
+> interested in some real world tests and confirmation of the fix.
+>
+> Thanks,
+> Jason
