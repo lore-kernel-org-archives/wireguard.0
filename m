@@ -4,55 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B9ECC4338F
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  4 Aug 2021 11:15:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EAD92C4338F
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  4 Aug 2021 11:20:36 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id D547E60FC4
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  4 Aug 2021 11:15:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org D547E60FC4
+	by mail.kernel.org (Postfix) with ESMTPS id 3340F60FC4
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  4 Aug 2021 11:20:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 3340F60FC4
 Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1e3a1fd9;
-	Wed, 4 Aug 2021 11:15:48 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 253b28ce;
+	Wed, 4 Aug 2021 11:17:48 +0000 (UTC)
 Received: from mail.zx2c4.com (mail.zx2c4.com [104.131.123.232])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 9b5bfc61
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2fb04aae
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 4 Aug 2021 11:15:46 +0000 (UTC)
+ for <wireguard@lists.zx2c4.com>; Wed, 4 Aug 2021 11:17:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1628075743;
+ t=1628075863;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=t1sCmQGZ2rteTH3YaRHb+unf1CYYwkDya1ccFSTEIic=;
- b=K1T3zWIdtghwyO4c87zitlAK9+SKXJTEJD3+34i/X6rd1nWZDgsLvKJYdknNNfztbh5/v/
- u5Cbhea2Qf049mX7n2HWtTCKBwljUULeFdv60V4rb8EvsUaoxZOCANnusBPmcee18fzhr+
- asNnd6sddMaxcfhqnc3FaaXMvih2ao4=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 7dd9bd03
+ bh=56oBiaPH6GB7wkjkTdc3Ra+pLBPIp1g7LQ9xlzcWOyc=;
+ b=HlnyW88av0IgRxul44Dae9IG6K0kKNWYB7BaotSBCrK/VrwsKEtIHKns36OoUSt8XzgnoZ
+ bs3m/HRuhhSmlcg085cQWT5yOs8huOGI9Gm47txIjWX2wOD0V0UlDmPk9ZB4m7JRqRrKBF
+ LTx4j398Za70r+qafxRSH07bnXHOKio=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id db585c39
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 4 Aug 2021 11:15:43 +0000 (UTC)
-Received: by mail-yb1-f179.google.com with SMTP id z5so1673772ybj.2
- for <wireguard@lists.zx2c4.com>; Wed, 04 Aug 2021 04:15:43 -0700 (PDT)
-X-Gm-Message-State: AOAM5327WLOQCMQBdu94Jb40e9pLR5qAobELj8g3eqFH0C6wjH/DWy22
- Y7p/qYCxkS3ve0mGJ0ZTB7sh7JddJ+aU9V7Ar7c=
-X-Google-Smtp-Source: ABdhPJwuwD6yTLXs2vw4zc+hwLqLeIdCM2OKwjiMwV5quCqUXt/F92eeLCXKJ8hfKPJRRZH/5DDkxxwFnuQWlksTre8=
-X-Received: by 2002:a05:6902:56f:: with SMTP id
- a15mr32939693ybt.456.1628075741889; 
- Wed, 04 Aug 2021 04:15:41 -0700 (PDT)
+ for <wireguard@lists.zx2c4.com>; Wed, 4 Aug 2021 11:17:42 +0000 (UTC)
+Received: by mail-yb1-f172.google.com with SMTP id z128so3400161ybc.10
+ for <wireguard@lists.zx2c4.com>; Wed, 04 Aug 2021 04:17:42 -0700 (PDT)
+X-Gm-Message-State: AOAM530az3nMfgWa+YwjVrYS3cKFN0lzPH2tyCZuGq7Td+4Oy/TNTsqP
+ m1jfWlaMahlTO8bFaI34xyX12NExxkx8qEU8c00=
+X-Google-Smtp-Source: ABdhPJxJt7m45TlNWcXdz5ezyDY+KWQIA0U/lEt+27+6FyFnMpMDAE8HoCORQ/vHBbvCq40eWmOcEpnwTBi6c5OqcyI=
+X-Received: by 2002:a25:a109:: with SMTP id z9mr2945583ybh.279.1628075862101; 
+ Wed, 04 Aug 2021 04:17:42 -0700 (PDT)
 MIME-Version: 1.0
-References: <cfb04d23-8e07-53e6-1fca-2db52693eb84@theoks.net>
-In-Reply-To: <cfb04d23-8e07-53e6-1fca-2db52693eb84@theoks.net>
+References: <CAB5RCdEyyeGdeBrviTTjF3EyrfNWrCsUXqFbW+RUgqjKeDUrNQ@mail.gmail.com>
+ <8282408d-8910-3e8d-2274-ac438380d90b@gmail.com>
+In-Reply-To: <8282408d-8910-3e8d-2274-ac438380d90b@gmail.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 4 Aug 2021 13:15:30 +0200
-X-Gmail-Original-Message-ID: <CAHmME9p0y+5d4ezeiffgaAf1EC_KcZMdc2kKJ_-z1J9Fbh1WOw@mail.gmail.com>
-Message-ID: <CAHmME9p0y+5d4ezeiffgaAf1EC_KcZMdc2kKJ_-z1J9Fbh1WOw@mail.gmail.com>
-Subject: Re: WireGuardNT with a peer with a v6 endpoint address
-To: Darren VanBuren <onekopaka@theoks.net>
+Date: Wed, 4 Aug 2021 13:17:31 +0200
+X-Gmail-Original-Message-ID: <CAHmME9p5gyCssAvxPjvheJGQokgQ_uUHCnt-NVnTnCH7PRGeXg@mail.gmail.com>
+Message-ID: <CAHmME9p5gyCssAvxPjvheJGQokgQ_uUHCnt-NVnTnCH7PRGeXg@mail.gmail.com>
+Subject: Re: WireGuardNT BSOD Windows 10 21H1 Mullvad
+To: Peter Whisker <peter.whisker@gmail.com>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -69,10 +68,16 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Darren,
+On Wed, Aug 4, 2021 at 12:05 PM Peter Whisker <peter.whisker@gmail.com> wrote:
+> Yes, I saw similar BSOD on a workstation I run yesterday but as it is
+> remote it's a nuisance if I have to go and restart it in safe mode to
+> disable the kernel flag. I may get to re-try it later in the week.
 
-Thanks very much for the report. Fixed here:
-https://git.zx2c4.com/wireguard-nt/commit/?id=a48d8a6751e35b6a3bc30062f6021673fccae1c4
-. This will be part of the next build.
+Can you confirm that the BSOD was on 0.4 and not on 0.4.1? It's
+important for me to know whether this is a new bug or just a
+non-contributing "me too" for the old one. If this is a crash on
+0.4.1, can you send me C:\windows\memory.dmp or
+C:\windows\minidump\*.dmp ?
 
+Thanks,
 Jason
