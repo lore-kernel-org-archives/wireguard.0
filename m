@@ -1,67 +1,41 @@
-Return-Path: <SRS0=UgTS=M7=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=nfW+=NA=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 407B4C4338F
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  8 Aug 2021 23:40:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DC5C4C4338F
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  9 Aug 2021 00:04:08 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 48FAB60F0F
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  8 Aug 2021 23:40:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 48FAB60F0F
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	by mail.kernel.org (Postfix) with ESMTPS id 8545360F42
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  9 Aug 2021 00:04:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 8545360F42
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=cupdev.net
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ec20057b;
-	Sun, 8 Aug 2021 23:38:33 +0000 (UTC)
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com
- [2a00:1450:4864:20::229])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ceda773a
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 83b589f8;
+	Mon, 9 Aug 2021 00:04:05 +0000 (UTC)
+Received: from cupdev.net (cupdev.net [2a01:4f9:2a:1861::4464:12])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d96eefe5
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sun, 8 Aug 2021 23:38:29 +0000 (UTC)
-Received: by mail-lj1-x229.google.com with SMTP id y7so10061765ljp.3
- for <wireguard@lists.zx2c4.com>; Sun, 08 Aug 2021 16:38:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=SrazaAjD8ufYKdLwToUuGR4tIZR2rbSot9k/6c56UkY=;
- b=QyGr7ZcRe5/nlYPAT7zcq55PJh/QjgPYT6TKPunTMFAb8ppy+0g5d3BmmnMVgbL+9q
- QDuICMCFeUH/rjKlzAtCDzxJrry+gBJHrmKBosHNAcsG3AI3QdLZf25YNLGLQ4sLrhSD
- c/d9wbadPze8KiEPZNgJQ8ezSbKBc8oheIptTtSkXEykhyMEewcTX+QcHjEdnA0eVlVB
- YN5Q886hpLQKG2VyBY5z7yf+jwm6+h9JeRUdDoRgZbZ20EALYNFvPDracOi2kpGrombd
- 6ierN9xtRXlgVvJcYDwXkj0rmWO/IhOfjlHJSTkK1dCNyoi+ews6p+gzBYCdGEH5rKdy
- VJ7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=SrazaAjD8ufYKdLwToUuGR4tIZR2rbSot9k/6c56UkY=;
- b=hqoOaARjy4tTlwoP1124Ae21z1spaBeVPIut4xU5nOtslGf8C4HSuYzYu39vHfzO4m
- 2saSS1ntbFr8GiEzM+jONhXP191n2muCHHGiWWte3UJxg6pA27ZogT5DvVRBVkCn/jZ+
- vhYx+aXMt13mLkjccYLW9n4mLj7xbpChuFNAIOIV3VeWWCpJscLC3MTArJncMeCvdgzI
- v4K26QV9zEr6fQ76r2R3mAi1NP1vR0BtVLj+tvy8Xz6V6DlCkuWI64jVku0zjf6/cEeX
- +J5xP5ViRt+aaf4sZMRNX+vNh/s/zhePiNarugX8BodBFa/3k1w9TFYiqd/OyB1yxQiW
- xt4Q==
-X-Gm-Message-State: AOAM532SpQTwMG7rrOS4nvc20Clif7hQanHBHVNO7IolohYlB1YiPoyG
- tK0pl1Qzg59qF4qEOTD55sktMNG/BiqU0+oq31A=
-X-Google-Smtp-Source: ABdhPJwkfx2l/+6qGCn9d7Ul/k+8U/Tf1P8TIhFBwuiDIpGWV+EO4iiVdq1tvo6LXb/6hnXCqg1z02RIqyOE+oF1izw=
-X-Received: by 2002:a2e:9acb:: with SMTP id p11mr7493788ljj.120.1628465909269; 
- Sun, 08 Aug 2021 16:38:29 -0700 (PDT)
+ for <wireguard@lists.zx2c4.com>; Sun, 8 Aug 2021 23:19:01 +0000 (UTC)
+To: wireguard@lists.zx2c4.com
+References: <CAHmME9q_9frZ+EQ4_sq_aEoFn3sU01LcW25RysWj0mas4po47Q@mail.gmail.com>
+From: Karolin Varner <karo@cupdev.net>
+Cc: noise@moderncrypto.org, labo@labo.rs
+Subject: Re: another thread on montonic counter alternatives
+Message-ID: <6cd87006-902a-3411-4928-67ec5d1f77e2@cupdev.net>
+Date: Mon, 9 Aug 2021 01:18:59 +0200
 MIME-Version: 1.0
-References: <7388816e-1f87-fa5e-f509-7276a6d3b80d@gmail.com>
-In-Reply-To: <7388816e-1f87-fa5e-f509-7276a6d3b80d@gmail.com>
-From: Phillip McMahon <phillip.mcmahon@gmail.com>
-Date: Mon, 9 Aug 2021 01:37:58 +0200
-Message-ID: <CABtXGiCig_pOKT2dRe5tdwJR5x8BnJO3zwvUYEoy0TMNR62QzQ@mail.gmail.com>
-Subject: Re: ERX wireguard assistance please
-To: Simon McNair <simonmcnair@gmail.com>
-Cc: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAHmME9q_9frZ+EQ4_sq_aEoFn3sU01LcW25RysWj0mas4po47Q@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Mailman-Approved-At: Mon, 09 Aug 2021 00:04:04 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -76,75 +50,47 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Simon,
+Good evening,
 
-I think that query is more for the ubiquity support forum, as you're
-almost certainly going to have to supply your config.boot file etc.
-which is somewhat outside of the pure wg.
+I can see this has been copiously discussed…
 
-Regards,
+On 8/9/21 12:33 AM, Jason A. Donenfeld wrote:
+> Angle 2 presents some interesting possibilities. An adversary who sets
+> somebody's time backwards can prevent them from connecting until their
+> time is set right again. Adversaries who set somebody's time forward,
+> say, to the maximum TAI64N value, and then subsequently have an
+> initiator send an initiation message, can then render that initiator's
+> static private key forever useless, since that future timestamp can
+> always be replayed, and will always set the responder's greatest-yet
+> value to that maximum. So, if your NTP is hijacked, your key is
+> forever DoS'd.
 
-Phill
+In my view this presents a major problem. I don't have data on this, but I think this is a common setup.
+Mine was vulnerable and if you didn't take care to prevent this yours is probably too.
 
-On Mon, 9 Aug 2021 at 01:06, Simon McNair <simonmcnair@gmail.com> wrote:
->
-> Hi,
-> I've searched to try and find the solution to my issue but I'm no expert
-> and I'm not entirely sure what to search for.  I would appreciate your
-> help please.
->
-> In summary, If I connect to my LAN via local WiFi I successfully connect
-> to wireguard:
-> interface: wg0
->    public key: <removed>
->    private key: (hidden)
->    listening port: 12345
->
-> peer: <removed>
->    endpoint: 192.168.100.102:50084
->    allowed ips: 10.250.250.5/32
->    latest handshake: Now
->    transfer: 157.33 KiB received, 536.33 KiB sent
->    persistent keepalive: every 25 seconds
->
-> However if I try and connect via a remote network it fails.  My DDNS is
-> resolving correctly to the correct IP so I can only think that firewall
-> rules or NAT is somehow causing the issue.  Has anyone come across this
-> before please ?
-> I don't know how to monitor my WAN port 12345 for activity, I tried
-> tcpdump -n -v -i wg0 to no real benefit.
->
->
-> The ERX is running v2.0.9-hotfix.2 and
-> e50-v2-v1.0.20210606-v1.0.20210424.deb
->
->
-> High level the infrastructure is:
->
-> LAN: 192.168.100.0/24
-> wg ip : 10.250.250.1/24
-> listen port:12345
-> route-allowed-ips:true
-> peer allowed ip is : 10.250.250.5/32
-> Firewall policy WAN_LOCAL default action drop, rule 2 wireguard
-> destination port 12345, protocol udp, action accept
->
->
-> I would appreciate any help you can provide. The aim is to be able to
-> access resources in the 192.168.100.0/24 subnet using routed ip from the
-> 10.250.250.0/24 transit network.
->
-> My apologies if my syntax or understanding is flawed.
->
-> Regards
->
-> Simon
->
->
+At the very least there should be a bold, red warning on the webpage "do not use WG with NTP".
 
+> Other clever ideas?
 
--- 
-Phillip McMahon
+0) Just send the value of tsmax to the peer? This basically surmounts to falling back to fully interactive but is a minimal change?
+1) Pick a random time stamp/a time stamp based on the peers `MAC(cookie_secret, IP | Port)` and accept that for a single time only. This also basically surmounts to an interactive handshake with minimal changes.
 
-https://flowcrypt.com/me/phillipmcmahon
-https://keys.openpgp.org/vks/v1/by-fingerprint/EA0483D4C864AA7C10994BE6A11E70ADFDA60CF9
+Is changing the protocol an option? Two options for that:
+
+2) Fall back to an interactive handshake using cookies. Define a protocol version two, mandate that in V2 the cookie must be mixed into the handshake hash. Assign a cookie in case of timestamp failure.
+3) Use a stateless responder; forego the timestamp entirely. Instead of storing the handshake state (ck, h, eskr) locally, they could be encrypted with a random key and included in the second message. This way, there is no responder state an attacker could interrupt.
+
+2) is 1-RTT in the normal case and 2-RTT with the attack agains the counter. 3) is always 1-RTT and always interactive but requires a response for replayed old handshakes.
+
+Jason pointed out, that it would be preferable to use a Noise-XK handshake which is a standard fully-interactive handshake but 1.5-RTT. I was assuming 1-RTT-ness was a necessity.
+Of course, coming up with a new handshake is…generally foolish and even though both my proposal technially fit into the noise-IK pattern, noise-XK certainly is more trustworthy.
+
+Noise XK could also be used as a fallback only, but this would considerably increase complexity.
+
+As far as mitigations go:
+
+a) Do not drop handshake state after three minutes, just ratchet the key `MixKey(empty)` so the attack can not disrupt active sessions.
+b) Jason's angle 4 but with a flag. A command line switch "interpret counter as timestamp and reject timestamps off by more than 20m".
+
+Best,
+Karolin
