@@ -2,40 +2,59 @@ Return-Path: <SRS0=nfW+=NA=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_20,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DC5C4C4338F
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  9 Aug 2021 00:04:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 25DE5C4338F
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  9 Aug 2021 00:22:02 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 8545360F42
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  9 Aug 2021 00:04:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 8545360F42
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=cupdev.net
+	by mail.kernel.org (Postfix) with ESMTPS id 3FCCD60E97
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  9 Aug 2021 00:22:00 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 3FCCD60E97
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 83b589f8;
-	Mon, 9 Aug 2021 00:04:05 +0000 (UTC)
-Received: from cupdev.net (cupdev.net [2a01:4f9:2a:1861::4464:12])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d96eefe5
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6b0ef67b;
+	Mon, 9 Aug 2021 00:21:59 +0000 (UTC)
+Received: from mail.zx2c4.com (mail.zx2c4.com [104.131.123.232])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4b2d8e92
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sun, 8 Aug 2021 23:19:01 +0000 (UTC)
-To: wireguard@lists.zx2c4.com
-References: <CAHmME9q_9frZ+EQ4_sq_aEoFn3sU01LcW25RysWj0mas4po47Q@mail.gmail.com>
-From: Karolin Varner <karo@cupdev.net>
-Cc: noise@moderncrypto.org, labo@labo.rs
-Subject: Re: another thread on montonic counter alternatives
-Message-ID: <6cd87006-902a-3411-4928-67ec5d1f77e2@cupdev.net>
-Date: Mon, 9 Aug 2021 01:18:59 +0200
+ for <wireguard@lists.zx2c4.com>; Mon, 9 Aug 2021 00:21:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1628468514;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=OypRvnBunuo1jzMW2PG/yfTtBwikn2DEvL8aa3W72Ps=;
+ b=br85Fd+/uUmNFsDBpPeyv8r90JDJhvzeBJxINDA8TiEnnkSxdQ1GjD1KBwJdVUzOqNds0n
+ B++Ms+IBrVWovMWO4Lr5O8emzoRsABQYgWFaGn3y77Oqbt1Mjc2kFSwbqpEdXvEWS0brXx
+ vrSxhA58OshMmYdF68DmvQUaqO8ivak=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 2c69d960
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Mon, 9 Aug 2021 00:21:54 +0000 (UTC)
+Received: by mail-yb1-f174.google.com with SMTP id s48so26392135ybi.7
+ for <wireguard@lists.zx2c4.com>; Sun, 08 Aug 2021 17:21:54 -0700 (PDT)
+X-Gm-Message-State: AOAM5331XGfhkSe1+lVkZlhCLvZ7y5ycwb3f+6VqN7UYGHqoXw4LNjK4
+ xJ6mNS4vX0lf6SKgO2p+s8oJeCPimEWqgdr0+Ts=
+X-Google-Smtp-Source: ABdhPJzNJV972nOSUMeJWiSHRM0pCnTf1rbm1MEce4MMw069ifiHWZvJbK+1a7O72u46dWYLQbAbd155vpV9YQjlxD4=
+X-Received: by 2002:a25:a109:: with SMTP id z9mr26952735ybh.279.1628468513323; 
+ Sun, 08 Aug 2021 17:21:53 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9q_9frZ+EQ4_sq_aEoFn3sU01LcW25RysWj0mas4po47Q@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Mailman-Approved-At: Mon, 09 Aug 2021 00:04:04 +0000
+References: <437b77e7-7e63-74c4-4447-713eccd42b59@ut-capitole.fr>
+ <7587bd77-a81c-0488-90b5-eac7ed98a3db@ut1.org>
+In-Reply-To: <7587bd77-a81c-0488-90b5-eac7ed98a3db@ut1.org>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Mon, 9 Aug 2021 02:21:42 +0200
+X-Gmail-Original-Message-ID: <CAHmME9qzPuEzhF6PphkBX50EM50iCiMA+9geRQjGz=v=Oi2+nw@mail.gmail.com>
+Message-ID: <CAHmME9qzPuEzhF6PphkBX50EM50iCiMA+9geRQjGz=v=Oi2+nw@mail.gmail.com>
+Subject: Re: Windows Client - Issue with Tray Icon
+To: bandry@ut1.org
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -50,47 +69,9 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Good evening,
+Hi Bruno,
 
-I can see this has been copiously discussed…
+Thanks for the suggestion. Implemented here:
+https://git.zx2c4.com/wireguard-windows/commit/?id=9c230818231d6395c1d4211d78b2f3ea2ed93943
 
-On 8/9/21 12:33 AM, Jason A. Donenfeld wrote:
-> Angle 2 presents some interesting possibilities. An adversary who sets
-> somebody's time backwards can prevent them from connecting until their
-> time is set right again. Adversaries who set somebody's time forward,
-> say, to the maximum TAI64N value, and then subsequently have an
-> initiator send an initiation message, can then render that initiator's
-> static private key forever useless, since that future timestamp can
-> always be replayed, and will always set the responder's greatest-yet
-> value to that maximum. So, if your NTP is hijacked, your key is
-> forever DoS'd.
-
-In my view this presents a major problem. I don't have data on this, but I think this is a common setup.
-Mine was vulnerable and if you didn't take care to prevent this yours is probably too.
-
-At the very least there should be a bold, red warning on the webpage "do not use WG with NTP".
-
-> Other clever ideas?
-
-0) Just send the value of tsmax to the peer? This basically surmounts to falling back to fully interactive but is a minimal change?
-1) Pick a random time stamp/a time stamp based on the peers `MAC(cookie_secret, IP | Port)` and accept that for a single time only. This also basically surmounts to an interactive handshake with minimal changes.
-
-Is changing the protocol an option? Two options for that:
-
-2) Fall back to an interactive handshake using cookies. Define a protocol version two, mandate that in V2 the cookie must be mixed into the handshake hash. Assign a cookie in case of timestamp failure.
-3) Use a stateless responder; forego the timestamp entirely. Instead of storing the handshake state (ck, h, eskr) locally, they could be encrypted with a random key and included in the second message. This way, there is no responder state an attacker could interrupt.
-
-2) is 1-RTT in the normal case and 2-RTT with the attack agains the counter. 3) is always 1-RTT and always interactive but requires a response for replayed old handshakes.
-
-Jason pointed out, that it would be preferable to use a Noise-XK handshake which is a standard fully-interactive handshake but 1.5-RTT. I was assuming 1-RTT-ness was a necessity.
-Of course, coming up with a new handshake is…generally foolish and even though both my proposal technially fit into the noise-IK pattern, noise-XK certainly is more trustworthy.
-
-Noise XK could also be used as a fallback only, but this would considerably increase complexity.
-
-As far as mitigations go:
-
-a) Do not drop handshake state after three minutes, just ratchet the key `MixKey(empty)` so the attack can not disrupt active sessions.
-b) Jason's angle 4 but with a flag. A command line switch "interpret counter as timestamp and reject timestamps off by more than 20m".
-
-Best,
-Karolin
+Jason
