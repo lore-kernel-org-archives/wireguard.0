@@ -1,50 +1,72 @@
-Return-Path: <SRS0=EM+o=NB=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=nWA3=ND=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 23B18C4320A
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 10 Aug 2021 21:13:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9962BC4338F
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Aug 2021 14:31:07 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 1808761073
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 10 Aug 2021 21:13:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 1808761073
-Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=protonmail.ch
+	by mail.kernel.org (Postfix) with ESMTPS id 6BF346108C
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 12 Aug 2021 14:31:05 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 6BF346108C
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=ka-fi.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8add6fb7;
-	Tue, 10 Aug 2021 21:13:12 +0000 (UTC)
-Received: from mail-4317.protonmail.ch (mail-4317.protonmail.ch [185.70.43.17])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a7532e84
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 554bba7e;
+	Thu, 12 Aug 2021 14:31:03 +0000 (UTC)
+Received: from relay.yourmailgateway.de (relay.yourmailgateway.de
+ [188.68.61.106])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a0c6bfc1
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 10 Aug 2021 21:13:09 +0000 (UTC)
-Date: Tue, 10 Aug 2021 21:13:06 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.ch;
- s=protonmail; t=1628629988;
- bh=6aENy3pBub1nFJ+eqa8hlDy0jfcwbgz9PQHy9+KqD8Q=;
- h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
- b=HqDx5XBTz2NcAyyhttw2cCfuwQvg4xG4G1YjY8ktALFM+a7BZc12aJ1A3HWjKOjjK
- +jnElpzw7uVL2spYPZqBuVUfRfwhVDC2CXEuRHyxOEVaKuKbn9vKhKRS6Uet3PhElD
- Q+qGfOro9HTk+jxQATUOXlazjQeZvTi07bKsnlyU=
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-From: Neutron <dotneutron@protonmail.ch>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Subject: Re: [PATCH] embeddable-dll-service: add ability to derive public key
- from private key
-Message-ID: <7-v7jwwWMXai6l5Uqxgo8UjeuKNOvY2FDx4rsGB1yrAHkfDqrGGfoLOIHQuJuTBJ0HIpmxlqTTFJgWqbGDn5eFT-7bLT8D60enB3pVrc-2o=@protonmail.ch>
-In-Reply-To: <CAHmME9oc2yoSjuh+Mkv_ERTLSocoRDF1Lh4M6HrciRPNqRBx7w@mail.gmail.com>
-References: <20210810202936.1537-1-dotneutron@protonmail.ch>
- <CAHmME9oc2yoSjuh+Mkv_ERTLSocoRDF1Lh4M6HrciRPNqRBx7w@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+ Thu, 12 Aug 2021 12:23:27 +0000 (UTC)
+Received: from mors-relay-8405.netcup.net (localhost [127.0.0.1])
+ by mors-relay-8405.netcup.net (Postfix) with ESMTPS id 4Glm7L6xCyz795C
+ for <wireguard@lists.zx2c4.com>; Thu, 12 Aug 2021 14:23:26 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ka-fi.de; s=key2;
+ t=1628771007; bh=pCTNX/ZVPyjMIC2E15PML5l4sLTEPMKjxv3M7ZI1HJg=;
+ h=From:To:Subject:Date:Reply-To:From;
+ b=PeBQnWw+asbpFCXl2jfwpi15Ngm46JWQAnhG/slPnQVXVtWqGr3Hmj4YpO1krzwxl
+ pfOG9acEnYUnvHWh+2ObD2PHDVzwnHFY9mNHP6Bzmr9PCRTVCoK8H3myPQzYibfc44
+ gyfFmYwtubFtgzVJvSg9gVH0y11Pb2om4vPaMYVQu5+EGiPdH80Ip3Mk2VBaq8LLIz
+ Rb3h2Tn0d5YhHZEO5V2mWf5enw+OtDbs0E6rhAAsSKNi8Mfj/e2ErK9QK3ot2FEe9f
+ YQHyjM4+J7Qfqz/r6qDcQLkm9359c9L7WUA4ugxN3lxndwKhP4onN/7PXXkvdacnKr
+ UJYJPBh3kQE9g==
+Received: from policy02-mors.netcup.net (unknown [46.38.225.35])
+ by mors-relay-8405.netcup.net (Postfix) with ESMTPS id 4Glm7L6bCwz78s1
+ for <wireguard@lists.zx2c4.com>; Thu, 12 Aug 2021 14:23:26 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at policy02-mors.netcup.net
+Received: from mx2e48.netcup.net (unknown [10.243.12.53])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by policy02-mors.netcup.net (Postfix) with ESMTPS id 4Glm7L36v0z8t3S
+ for <wireguard@lists.zx2c4.com>; Thu, 12 Aug 2021 14:23:26 +0200 (CEST)
+Received: from [192.168.1.4]
+ (HSI-KBW-078-042-105-127.hsi3.kabel-badenwuerttemberg.de [78.42.105.127])
+ by mx2e48.netcup.net (Postfix) with ESMTPSA id 702C21C005D
+ for <wireguard@lists.zx2c4.com>; Thu, 12 Aug 2021 14:23:25 +0200 (CEST)
+Authentication-Results: mx2e48;
+ spf=pass (sender IP is 78.42.105.127) smtp.mailfrom=wireguard@ka-fi.de
+ smtp.helo=[192.168.1.4]
+Received-SPF: pass (mx2e48: connection is authenticated)
+From: "Kai Fischer" <wireguard@ka-fi.de>
+To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+Subject: Wireguard Android is not working since Android 12 Beta 4 (Pixel 5)
+Date: Thu, 12 Aug 2021 12:23:24 +0000
+Message-Id: <em507732db-ef11-4d52-a054-041c04c32830@renderstation>
+User-Agent: eM_Client/8.2.1224.0
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
+X-PPP-Message-ID: <162877100582.17474.7637826817600498588@mx2e48.netcup.net>
+X-PPP-Vhost: ka-fi.de
+X-NC-CID: AoWuSkoSNqO90zO3HANkmJgcweuTW+phcuN98+XzNp+bIg==
+X-Mailman-Approved-At: Thu, 12 Aug 2021 14:31:02 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -56,27 +78,18 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Reply-To: Neutron <dotneutron@protonmail.ch>
+Reply-To: Kai Fischer <wireguard@ka-fi.de>
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hey,
+I'm not sure if this is a issue on the system side or on the apllication=20
+side.
+Since the newest Android 12 Beta 4 Wireguard is establishing a=20
+connection but not data transfer is possible.
+A ping to the host is also not possible. There's an offical issue here=20
+at the Google Issuetracker:=20
+https://issuetracker.google.com/issues/196271165
 
-I started working on a C# WPF client based on the reference implementation =
-you provided. I made it so the tunnel configurations can be added or edited=
- via a custom form much alike the one of wg-android. Since I'm only storing=
- the private key in the interface section of a config file, I need to be ab=
-le to derive the public key and display it to the user.
+This seems to be an issue with a lot of VPN apps .
+I don't know if it can be fixed on the application side.
 
-As a personal example, I'm using Mullvad's wg configurations to test it. I'=
-m able to export all configurations for their servers, for a given private =
-key. I'm left with the typical wg conf files. When I fill in the details fo=
-r a tunnel configuration in the client I created, I want to be able to writ=
-e in the private key and have it generate the public key automatically. Thi=
-s is the behavior of wg-android.
-
-Adding that method, rebuilding the dll and invoking it from C# worked like =
-a charm, so I thought it might help other people as well. It is a convenien=
-ce method for anyone who wants to create a client of their own.
-
-Neutron
