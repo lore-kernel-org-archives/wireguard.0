@@ -2,84 +2,65 @@ Return-Path: <SRS0=LBMS=NH=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 98FEBC432BE
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 16 Aug 2021 09:53:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 73AADC4338F
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 16 Aug 2021 19:51:59 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 5798261B72
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 16 Aug 2021 09:53:12 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 5798261B72
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=mc.cx
+	by mail.kernel.org (Postfix) with ESMTPS id 676E860FC3
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 16 Aug 2021 19:51:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 676E860FC3
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8e0ddd9e;
-	Mon, 16 Aug 2021 09:53:10 +0000 (UTC)
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com
- [2a00:1450:4864:20::533])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 8ae7a270
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 13111928;
+	Mon, 16 Aug 2021 19:50:49 +0000 (UTC)
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com
+ [2a00:1450:4864:20::22a])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id fd41b408
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sat, 14 Aug 2021 21:37:17 +0000 (UTC)
-Received: by mail-ed1-x533.google.com with SMTP id v2so10182174edq.10
- for <wireguard@lists.zx2c4.com>; Sat, 14 Aug 2021 14:37:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mc-cx.20150623.gappssmtp.com; s=20150623;
- h=from:subject:to:references:message-id:date:user-agent:mime-version
- :in-reply-to:content-transfer-encoding:content-language;
- bh=fguNyvjxRrougu82HCAtRqyu0m/7E9VzmFRftHnKtIE=;
- b=xgGlbdJa2Jk82NhgQYNRZ+3W5ptFJH/pE5FuyZ2lgYO4AEfAuAhiI+KqD1r4SiJ7b7
- IrpgBNhyWODAm5m6KDpKCuQEi74TJEAO9QMK9KeZgAZXgMwVHt468i0JDKGzdk+ZsH3c
- nMWhCi5SEFfvwIH++lntHfWrNOx8RoUzErFCNobpGb42210mogu1/wk9+DI49Mq47QMq
- kICHgUwe0IFpY4gwAFFyHOjryONU1vZmdjbziutUDeIxuQw1d2WX0HXct8zZSkdBBcGr
- m7v2lTV9JwpsRLIzBwchvdTeb5P5Dcn68zyiLUlios6OJxCftvyLqAsr+Le25fmRYy8S
- 4GCA==
+ Mon, 16 Aug 2021 18:59:57 +0000 (UTC)
+Received: by mail-lj1-x22a.google.com with SMTP id n7so28889832ljq.0
+ for <wireguard@lists.zx2c4.com>; Mon, 16 Aug 2021 11:59:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=ND4syPJJryn9R84lx1ApPA45OwTs6UCUOQF5emaogug=;
+ b=s7PL2rcJV6BrS9LNOz9IXrDZTAwjavOs/6vJ5MsJdqkPTeoz4M0LwEHJfjSV3kPVV6
+ sPWgNjRUx/3U2jL0tqS5q54LpYKJj0qiEHOJtKos7a44yGMYVR4R3zhDi9I/vy/BlQbf
+ aUKXCar+ZnQOuSyH6H3qxOAQ3WbgiTtusOEstxYTdKVgRKPnO9MQfCp+HOCkbTOVM2W+
+ eV3qBbSTcWP8nZp3qXiVMFGHZOLo5Ov+z+jLpRWQ4PzhO5v6hcy1eY2VkTJA1OMLI16R
+ AACPU7lhsJXMyHO7z2XErHBedkCNnFstuAqwEen2D/6zd1GDCqks167YDbZskqqwXyKl
+ RZVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:from:subject:to:references:message-id:date
- :user-agent:mime-version:in-reply-to:content-transfer-encoding
- :content-language;
- bh=fguNyvjxRrougu82HCAtRqyu0m/7E9VzmFRftHnKtIE=;
- b=CkrBfP9DCO0aDFkMJBreVOhN7lmoNTi4GduoLipIgYaNzJzhIclDH4Q34pHkkFqwY1
- jkwFhh+lluIYaNPtwRSbsQScQjkeKYodTe5CxHr/xsVprIkB2Z2V47rGqQRuwgnP6KyK
- YVmhmjudhqh1qOmTsyZML5olMisD6kCb7dP/VsGYLckcUK09xJsDW2s71NOikjyHds3l
- 0iNtsyEn6I60syslvT5dehjZETWbSBf+XlAzzuUXJmY6VZRnnTVRabG3vVrMUFoaJb3I
- hwDu8LKD426bwwBSTcw2znlF13LsQuUJ4sqt1z48yYDa2GXBtx8Jl7NRde6EnP3oEVPP
- FgcA==
-X-Gm-Message-State: AOAM531RZ3MgqPA9csfB6afbCEISrwt+I9aj+zTjUlvuXFJ6wM3tlWck
- WrK7KLMum8cJSpiLLw1y2FRBcAjQNrU5EA==
-X-Google-Smtp-Source: ABdhPJxp7RzBOe+zhxOEJCbXu+Vrliothe4WSW27/UcYU08G5cFQx/Jok66GpGd+I1SvzFsXI7teyg==
-X-Received: by 2002:a05:6402:1648:: with SMTP id
- s8mr10690339edx.214.1628977036939; 
- Sat, 14 Aug 2021 14:37:16 -0700 (PDT)
-Received: from [10.10.6.189] (5.186.223.157.dhcp.fibianet.dk. [5.186.223.157])
- by smtp.gmail.com with ESMTPSA id
- w13sm2741319ede.24.2021.08.14.14.37.15
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 14 Aug 2021 14:37:16 -0700 (PDT)
-From: Morten Christensen <mc@mc.cx>
-X-Google-Original-From: Morten Christensen <mc-mail@g.mc.cx>
-Subject: Re: [ANNOUNCE] WireGuardNT, a high-performance WireGuard
- implementation for the Windows kernel
-To: wireguard@lists.zx2c4.com
-References: <YQgrCfqIL2SWfF6G@zx2c4.com>
- <CAHmME9p8WLAzd=W+Z6MKtke5PYb_T6iMbvBFirmCeUQzxycRwQ@mail.gmail.com>
-Message-ID: <3e525055-4170-e893-795f-1c5ec51cdb52@g.mc.cx>
-Date: Sat, 14 Aug 2021 23:37:15 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=ND4syPJJryn9R84lx1ApPA45OwTs6UCUOQF5emaogug=;
+ b=PP6zB5h6P0y3wMuFteLT2g8t5+OMaOptlx2WYJUj9KyhH9MZWLsq+GeabWJPwN+Ujx
+ R6Yj3A02RnHkYLfUuKUe8VcKqm+6+s8efrSFC5TaV+hO726K3hw0WReXj+K45biVi8nG
+ fVbaEd8ibVextPS2a1o5STyr4Ta+7Uxr+eNPnP0lsLHjgXmswwHLL9J0xJ2NmwcUsKa2
+ inhlCcL5oR3hmUN4ZFA7O0tTD3cWpRId8mUXbg7x+K+ZXlZ4YM0inot44AMf9Zu9dWEE
+ LRwGH/yarjFGCx4nIkvODeGcuy8SNnxVwBd6IDED4zEcCnhqEJIjM7zfbJswkKamKH8W
+ yYDQ==
+X-Gm-Message-State: AOAM530U9gCYvLDCnH4DkUnZNuzF52zL/Mk4WDCAw7VWWDtZ5/qW3Owh
+ RvlQkRlc4+3KuOWhrPFIywVDIEambVTgO/niSTMuUecAXw64xQ==
+X-Google-Smtp-Source: ABdhPJx27VbDZc535JXNgV2d09j4y6ZTdU9vF+0R1EbQ4LJjW0pE4dn9zIbKxCVjDssgCfuHOoZlig+zXxCcWvBREkA=
+X-Received: by 2002:a2e:a806:: with SMTP id l6mr94585ljq.91.1629140396412;
+ Mon, 16 Aug 2021 11:59:56 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAHmME9p8WLAzd=W+Z6MKtke5PYb_T6iMbvBFirmCeUQzxycRwQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: da
-X-Mailman-Approved-At: Mon, 16 Aug 2021 09:53:09 +0000
+From: Kacper Michajlow <kasper93@gmail.com>
+Date: Mon, 16 Aug 2021 20:59:46 +0200
+Message-ID: <CABPLASSmgH0WZ=5X0zNtQtOjZKDX4ooPZUAfsa=bMH2nW_QE+Q@mail.gmail.com>
+Subject: [wireguard-windows] Microsoft Store doesn't work when killswitch is
+ enabled.
+To: wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
+X-Mailman-Approved-At: Mon, 16 Aug 2021 19:50:48 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -94,42 +75,25 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Den 13-08-2021 kl. 13:52 skrev Jason A. Donenfeld:
+Hi,
 
-I have used it since first announcement. Not experienced any problems.
+I noticed an issue with Microsoft Store when Wiregaurd tunnel is
+connected. When "killswitch" is enabled, MS Store doesn't work, it
+says that "page could not be loaded". After some troubleshooting it
+looks like the connection is dropped by the firewall (I see it in
+logs). Source is my wg ip, destination is some akamai server, looks
+legit, but it is dropped (both IPv4 and IPv6).
 
---
-Morten Christensen
+Do you have any idea why? Everything else works correctly. Is it some
+UWP app quirk? If I disable "killswitch", traffic goes through the wg
+tunnel and MS Store works, so it looks like the firewall shouldn't
+drop this connection, when killswitch is enabled.
 
-> Hi everyone,
->
-> On Mon, Aug 2, 2021 at 7:28 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
->> Nonetheless, experimental or not, we still need people to test this and help
->> shake out issues. To that end, WireGuardNT is now available in the ordinary
->> WireGuard for Windows client -- https://www.wireguard.com/install/ -- with the
->> 0.4.z series, in addition to having full support of the venerable wg(8)
->> utility, but currently (August 2021; if you're reading this in the future this
->> might not apply) it is behind a manually set registry knob. There will be
->> three phases of the 0.4.z series:
->>
->>    Phase 1) WireGuardNT is hidden behind the "ExperimentalKernelDriver"
->>             registry knob. If you don't manually tinker around to enable it,
->>             the client will continue to use wireguard-go/Wintun like before.
-> After the first few days, bug reports for WireGuardNT have died down
-> considerably. It's hard to tell whether that's a sign that the
-> software is stable or that nobody is using it. So, we're still in
-> phase 1. However, with version 0.4.5 of the client, I've added a
-> checkbox below the "activate" button in order to make the experimental
-> testing more discoverable. I dislike such knobs, but I'd rather have
-> more testing than less, before turning it on by default. Hopefully
-> this will make it easier for alpha testers to give it a spin and
-> report findings. If you have been testing the driver, and it's been
-> working well for you, please write in to say so, simply as a signal
-> that it is being tested. If things stay as quiet as they are now on
-> the bug reporting front, we'll likely move into phase 2 -- enabling
-> WireGuardNT by default, with a registry key to revert to the legacy
-> implementation -- in 2 to 3 weeks.
->
-> Jason
+I searched for similar issues and only found this one
+https://github.com/mullvad/mullvadvpn-app/issues/2845 looks like the
+same symptoms and the guy reported that it works in Windows 11.
+Regardless I would like to understand what is happening, maybe you
+guys have more insight.
 
-
+Best Regards,
+Kacper
