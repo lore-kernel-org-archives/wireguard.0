@@ -2,64 +2,63 @@ Return-Path: <SRS0=byLw=NS=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0298DC43214
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 27 Aug 2021 14:02:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 59DF4C432BE
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 27 Aug 2021 14:02:11 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 13CF760E90
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 27 Aug 2021 14:02:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 13CF760E90
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	by mail.kernel.org (Postfix) with ESMTPS id AD19760F25
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 27 Aug 2021 14:02:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org AD19760F25
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=cn.fujitsu.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fa1e3c0a;
-	Fri, 27 Aug 2021 14:02:05 +0000 (UTC)
-Received: from mail-il1-x130.google.com (mail-il1-x130.google.com
- [2607:f8b0:4864:20::130])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ad0e2a24
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d7233152;
+	Fri, 27 Aug 2021 14:02:06 +0000 (UTC)
+Received: from heian.cn.fujitsu.com (mail.cn.fujitsu.com [183.91.158.132])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 2ca9fa91
  for <wireguard@lists.zx2c4.com>;
- Wed, 25 Aug 2021 19:05:31 +0000 (UTC)
-Received: by mail-il1-x130.google.com with SMTP id x5so617101ill.3
- for <wireguard@lists.zx2c4.com>; Wed, 25 Aug 2021 12:05:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=52hmiqUwL9n+W4dT2mVw/klVkh38abL1SJNTa6jlLn8=;
- b=p1XUnI+qqr0RoYy3ymmbxVoBzNb7BRT+SRL0fmuUtE/5GXTynMHC/vkk+6/ccORfnc
- 04/hrldcPUSFwgskE8fVg0ZEiJ7S6TQlaB6qpOoI6fMkfeINl4+3pXckYWjnIA9GqENn
- bOVuk+CbmB1ReEfxQ3o6AncaPRQYXnHtpb2x01oKBlBluYnNjV+MxwfcCJUtx5esprr9
- p5bFmU4+/YUzKtdm1VHt3YAu9cojOJXcYWaDzpamoSKTZNKKwxle3/kdvLzT8+wsLgZs
- ht+uUwdmrycy8/sWOLQ2pGvqFC1Cf/4i5A8bP5PVs8nZf54mGcxihDgBtVJCy8ljq5pS
- 4Oxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=52hmiqUwL9n+W4dT2mVw/klVkh38abL1SJNTa6jlLn8=;
- b=LeQZvVM4J2WvEpnqvEtsEJVgQsHk5QbcA1KCxpo8Wyf+z/E9jzNEp11xSYQFJ+w4xb
- I77SRJYBl/gpd8+toSygdNzKD990KBe+ehX6qD3v87IPnlgF8g8odQYhi85O6kyH4I1Y
- 4siA0XyXBGacPA6EBcmMsdjcEfu7yPmI6VGFsUyaCuTVqKuSfB6BFyYxlIu1Zeg+RZav
- mzH1YBCxvPkxR8CwiSI1Ml51l4tVtL8OWtgMtXwcocaf8+CLuNz28uPU2umheqfaUauB
- hexdBiin1pNE1GMkxetEUxze5Bn3Gkrns7ZohqujvFu2Tz12lTtLmJr0N62XLLZxpqJq
- 4Nzw==
-X-Gm-Message-State: AOAM530047rYsrbFv2sTEdkF1H2hJeKMg3XSTslOhwNMfTOI552OnNFf
- VRpJzNZ2aivDcCZvKK6v/3N3wl8XeU1bKETqktp5hiCxUQM=
-X-Google-Smtp-Source: ABdhPJymITRhBSqOIlGicLHrtZvtfBYwSD8RCS1yl9AhA4W/kL5TKVvzUSk3Jh91+mjD1CrUy2/83moeFYMqdDLzwA0=
-X-Received: by 2002:a05:6e02:1c2b:: with SMTP id
- m11mr31363258ilh.242.1629918330388; 
- Wed, 25 Aug 2021 12:05:30 -0700 (PDT)
+ Thu, 26 Aug 2021 01:54:28 +0000 (UTC)
+IronPort-HdrOrdr: =?us-ascii?q?A9a23=3APcJ9O6EuGuDjaXxapLqE1MeALOsnbusQ8zAX?=
+ =?us-ascii?q?PiFKOHhom6mj+vxG88506faKslwssR0b+OxoW5PwJE80l6QFgrX5VI3KNGbbUQ?=
+ =?us-ascii?q?CTXeNfBOXZowHIKmnX8+5x8eNaebFiNduYNzNHpPe/zA6mM9tI+rW6zJw=3D?=
+X-IronPort-AV: E=Sophos;i="5.84,352,1620662400"; d="scan'208";a="113479370"
+Received: from unknown (HELO cn.fujitsu.com) ([10.167.33.5])
+ by heian.cn.fujitsu.com with ESMTP; 26 Aug 2021 09:54:25 +0800
+Received: from G08CNEXMBPEKD05.g08.fujitsu.local (unknown [10.167.33.204])
+ by cn.fujitsu.com (Postfix) with ESMTP id DDD494D0D9D5;
+ Thu, 26 Aug 2021 09:54:24 +0800 (CST)
+Received: from G08CNEXJMPEKD02.g08.fujitsu.local (10.167.33.202) by
+ G08CNEXMBPEKD05.g08.fujitsu.local (10.167.33.204) with Microsoft SMTP Server
+ (TLS) id 15.0.1497.23; Thu, 26 Aug 2021 09:54:21 +0800
+Received: from G08CNEXCHPEKD09.g08.fujitsu.local (10.167.33.85) by
+ G08CNEXJMPEKD02.g08.fujitsu.local (10.167.33.202) with Microsoft SMTP Server
+ (TLS) id 15.0.1497.23; Thu, 26 Aug 2021 09:54:19 +0800
+Received: from localhost.localdomain (10.167.225.141) by
+ G08CNEXCHPEKD09.g08.fujitsu.local (10.167.33.209) with Microsoft SMTP Server
+ id 15.0.1497.23 via Frontend Transport; Thu, 26 Aug 2021 09:54:17 +0800
+From: Li Zhijian <lizhijian@cn.fujitsu.com>
+To: <shuah@kernel.org>, <linux-kselftest@vger.kernel.org>
+CC: <philip.li@intel.com>, <linux-kernel@vger.kernel.org>, Li Zhijian
+ <lizhijian@cn.fujitsu.com>, kernel test robot <lkp@intel.com>, "Jason A.
+ Donenfeld" <Jason@zx2c4.com>, Nick Desaulniers <ndesaulniers@google.com>,
+ Masahiro Yamada <masahiroy@kernel.org>, <wireguard@lists.zx2c4.com>,
+ <netdev@vger.kernel.org>, "Rafael J. Wysocki" <rjw@rjwysocki.net>, "Viresh
+ Kumar" <viresh.kumar@linaro.org>, <linux-pm@vger.kernel.org>
+Subject: [PATCH v2 0/3] kselftests: clean configs
+Date: Thu, 26 Aug 2021 09:58:44 +0800
+Message-ID: <20210826015847.7416-1-lizhijian@cn.fujitsu.com>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-From: Gopakumar Choorakkot Edakkunni <gopakumar.c.e@gmail.com>
-Date: Wed, 25 Aug 2021 15:05:19 -0400
-Message-ID: <CABK1yFC+mH4=EzCGd7m20qFykAnwG=hxiAcvVets-HP1=JKA9Q@mail.gmail.com>
-Subject: wireguard-windows: packets dropped in NativeTun Read()
-To: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-yoursite-MailScanner-ID: DDD494D0D9D5.A2F2B
+X-yoursite-MailScanner: Found to be clean
+X-yoursite-MailScanner-From: lizhijian@fujitsu.com
 X-Mailman-Approved-At: Fri, 27 Aug 2021 14:01:58 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -75,24 +74,35 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
+0Day will check if all configs listing under selftests are able to be enabled properly.
 
-I am experimenting with wintun as the choice of my driver for a vpn
-client I am writing on windows. I was very quickly able to get
-bootstrapped using the wireguard-windows repository (thanks!!), I
-created a tunnel and when I use the Read() api (tun_windows.go), I see
-that quite often I am missing packets. How do I know this ? - I run a
-tshark on the tun interface (needs editpcap to convert from ethernet
-to ip format), and then I compare packets there with what I get, and I
-see my read missing packets present in wireshark.
+For the missing configs, it will report something like:
+LKP WARN miss config CONFIG_SYNC= of sync/config
 
-The traffic rate is very low - just regular browsing to websites, no
-major traffic. I am reading from the tun interface from a goroutine, I
-suspected maybe I/O bound reads might be not scheduled enough by go
-scheduler, so I increased the go threads. I thought maybe the ring
-size need to increase so I made it 32Mb etc.. - still no good, I still
-get Rx packets missing. Kind of clueless at this point - any
-pointers/hints/suggestions will be appreciated a lot !!
+CC: kernel test robot <lkp@intel.com>
+CC: "Jason A. Donenfeld" <Jason@zx2c4.com>
+CC: Nick Desaulniers <ndesaulniers@google.com>
+CC: Masahiro Yamada <masahiroy@kernel.org>
+CC: wireguard@lists.zx2c4.com
+CC: netdev@vger.kernel.org
 
-Rgds,
-Gopa.
+CC: "Rafael J. Wysocki" <rjw@rjwysocki.net>
+CC: Viresh Kumar <viresh.kumar@linaro.org>
+CC: linux-pm@vger.kernel.org
+Reported-by: kernel test robot <lkp@intel.com>
+
+Li Zhijian (3):
+  selftests/sync: Remove the deprecated config SYNC
+  selftests/cpufreq: Rename DEBUG_PI_LIST to DEBUG_PLIST
+  selftests/wireguard: Rename DEBUG_PI_LIST to DEBUG_PLIST
+
+ tools/testing/selftests/cpufreq/config              | 2 +-
+ tools/testing/selftests/sync/config                 | 1 -
+ tools/testing/selftests/wireguard/qemu/debug.config | 2 +-
+ 3 files changed, 2 insertions(+), 3 deletions(-)
+
+-- 
+2.31.1
+
+
+
