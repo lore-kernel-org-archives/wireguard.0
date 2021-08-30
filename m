@@ -4,50 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	UNPARSEABLE_RELAY autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26904C432BE
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 30 Aug 2021 17:59:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6316BC432BE
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 30 Aug 2021 18:43:16 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 5C42060698
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 30 Aug 2021 17:59:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 5C42060698
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=romanrm.net
+	by mail.kernel.org (Postfix) with ESMTPS id 7AE7160F3A
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 30 Aug 2021 18:43:15 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 7AE7160F3A
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=emdete.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 98041c28;
-	Mon, 30 Aug 2021 17:59:32 +0000 (UTC)
-Received: from rin.romanrm.net (rin.romanrm.net [2001:bc8:2dd2:1000::1])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 825597f3
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 735bbeba;
+	Mon, 30 Aug 2021 18:43:13 +0000 (UTC)
+Received: from emdete.de (emdete.de [2a01:4f8:140:81c4::2])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6c06d91b
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 30 Aug 2021 17:59:29 +0000 (UTC)
-Received: from natsu (natsu2.home.romanrm.net [IPv6:fd39::e99e:8f1b:cfc9:ccb8])
- by rin.romanrm.net (Postfix) with SMTP id 6B75B28F;
- Mon, 30 Aug 2021 17:59:28 +0000 (UTC)
-Date: Mon, 30 Aug 2021 22:59:27 +0500
-From: Roman Mamedov <rm@romanrm.net>
-To: Daniel <tech@tootai.net>
-Cc: wireguard@lists.zx2c4.com
-Subject: Re: [Warning: DMARC Fail Email] Re: ipv6 connexion fail - ipv4 OK
-Message-ID: <20210830225927.6df90edb@natsu>
-In-Reply-To: <e949b3e2-eab7-fc4c-2b15-8820a2c17374@tootai.net>
-References: <ec8fe61d-06a9-9544-ab2c-3dfc26905d74@tootai.net>
- <e4b50341-6f90-92fe-7728-a518768a1b51@tootai.net>
- <20210827211412.3ed5f170@natsu>
- <3ec547c6-c846-e5be-e276-ace7862f5cb7@tootai.net>
- <34d4341c-98be-b754-af8e-c7097bc21aac@pineview.net>
- <20210828024454.1766744f@natsu>
- <7437f3e0-26ba-5e33-a175-0cf233635b3f@tootai.net>
- <20210830214312.6a332333@natsu>
- <e620ed11-2664-fa06-1497-a0f18facac7e@tootai.net>
- <20210830223836.5384badd@natsu>
- <e949b3e2-eab7-fc4c-2b15-8820a2c17374@tootai.net>
+ Mon, 30 Aug 2021 18:43:10 +0000 (UTC)
+Received: from emdete.de (<unknown> [185.254.75.44])
+ by emdete.de (OpenSMTPD) with ESMTPSA id 8d3127c3
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 30 Aug 2021 18:43:08 +0000 (UTC)
+Received: from localhost (emdete.de [local])
+ by emdete.de (OpenSMTPD) with ESMTPA id 1cd2ba06
+ for <wireguard@lists.zx2c4.com>;
+ Mon, 30 Aug 2021 18:43:03 +0000 (UTC)
+Date: Mon, 30 Aug 2021 20:43:03 +0200
+From: "M. Dietrich" <mdt@emdete.de>
+Subject: Behaviour on MTU problem
+To: wireguard@lists.zx2c4.com
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+User-Agent: astroid/0.16.0 (https://github.com/astroidmail/astroid)
+Message-Id: <1630347517.szy5mrrs16.astroid@morple.none>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -62,19 +56,33 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Mon, 30 Aug 2021 19:44:21 +0200
-Daniel <tech@tootai.net> wrote:
+Hi friends of Wireguard,
 
-> > Do you get WG working at all, between some other two hosts (not involving this
-> > particular server for now)?
-> Yes. Clients are shown on both sides as connected, trafic seems to go 
-> out on each side but other one as received near to nothing.
+i am neither a network guru nor a kernel hacker and after all=20
+i had no time to fully investigate the case. so please read=20
+with a grain of salt.
 
-I mean not just "shown as connected", but have you got actual traffic working
-between any two hosts. Even just forgetting this server for a while. So that
-you can rule out some general issue and concentrate on just the particular
-machine setup.
+i had my notebook in a wifi network lately that seemed to have=20
+some MTU size problems. download worked fine while uploads=20
+blocked for bigger packages. when i set the MTU down to 1200=20
+on the wg interface the same upload worked fine.
 
--- 
-With respect,
-Roman
+this was obviously a problem of that very wifi network and is
+not related to wg at all, the dhcp answer did not even contain=20
+any MTU hints, so 1500 was assumed.
+
+anyway the kernel locked up. commands like `ip` or `wg-quick=20
+down ...` get stuck and ^C oder even a `kill -9 ...` did not=20
+end the processes. any access to the wg interface blocked.
+
+my question is if that scenario (misconfigured MTU size in the=20
+"outer network") is tested and works fine. i know that MTU=20
+size problem lead to lockups (that's why i immediatly came to=20
+that conclusion) but never saw such a hard lockup related to=20
+commands like `ip`.
+
+if my assumption is just stupid let me know. if not i would=20
+further investigate the case, setup a test scenario and burn=20
+some time. what do you think?
+
+best regards, michael
