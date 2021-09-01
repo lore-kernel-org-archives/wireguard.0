@@ -2,56 +2,71 @@ Return-Path: <SRS0=ArOK=NX=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.1 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BB5D1C432BE
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  1 Sep 2021 13:58:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 35EF0C432BE
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  1 Sep 2021 17:46:36 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 18E3A61026
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  1 Sep 2021 13:58:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 18E3A61026
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id EA19861027
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  1 Sep 2021 17:46:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org EA19861027
+Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=tootai.net
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a003c8ae;
-	Wed, 1 Sep 2021 13:55:57 +0000 (UTC)
-Received: from mail.zx2c4.com (mail.zx2c4.com [104.131.123.232])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d22f3b79
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 1 Sep 2021 13:55:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1630504550;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=RxxcCATyAWNsIizcODQvjC43l5pJtie862uQ74GTAAk=;
- b=dKqXGgELXDenbG9UGYeuetQaJd42/eyEslHVwcRZT1wxB1ryJhcfnQ5papkmqiPNL45PZt
- +rSYEntwmNDDMqUj0eHsBUgjV3w3ruCMrOggOJ6MhKhxhDRgTwnWLIsMnYkzXJC9Awnq27
- dwrox118hAVZlvkZSSLIVcWhUexi8Ho=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id bce2ae39
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO); 
- Wed, 1 Sep 2021 13:55:50 +0000 (UTC)
-Date: Wed, 1 Sep 2021 15:55:43 +0200
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Hangbin Liu <liuhangbin@gmail.com>
-Cc: netdev@vger.kernel.org, David Miller <davem@davemloft.net>,
- Xiumei Mu <xmu@redhat.com>,
- Toke =?utf-8?Q?H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
- Paolo Abeni <pabeni@redhat.com>, wireguard@lists.zx2c4.com
-Subject: Re: [PATCH net] wireguard: remove peer cache in netns_pre_exit
-Message-ID: <YS+GX/Y85bch4gMU@zx2c4.com>
-References: <20210901122904.9094-1-liuhangbin@gmail.com>
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 37cdcdb6;
+	Wed, 1 Sep 2021 17:44:52 +0000 (UTC)
+Received: from mail1.tootai.net (mail1.tootai.net [213.239.227.108])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0ffa7d02
+ for <wireguard@lists.zx2c4.com>; Wed, 1 Sep 2021 17:44:48 +0000 (UTC)
+Received: from mail1.tootai.net (localhost [127.0.0.1])
+ by mail1.tootai.net (Postfix) with ESMTP id 0DA5460818BE
+ for <wireguard@lists.zx2c4.com>; Wed,  1 Sep 2021 19:44:48 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=tootai.net; s=mail;
+ t=1630518288; bh=RNh7Gp771j0UIVc8f/6xdFjqdN4+Xv4xJdbmq1TY+Qs=;
+ h=Subject:To:References:From:Date:In-Reply-To:From;
+ b=LYUJhjg0vSAv0Y33d+OG8qBoyJyYvG5P9SZJA5X9JI7aW04gY7qyZg65N7AcoZKDm
+ P4czVl8qj+lMVnf2yfAqvmSjZKJfzwT/txLyunfZqc9C2LdmGfdTf875wpoSfmFULo
+ 11gEbAfdKwfyQSYeUxRrrSO4RmAdQ/xtCuzbL/RI=
+Received: from [IPv6:2a01:729:16e:10::24] (unknown [IPv6:2a01:729:16e:10::24])
+ by mail1.tootai.net (Postfix) with ESMTPA id C52286081880
+ for <wireguard@lists.zx2c4.com>; Wed,  1 Sep 2021 19:44:47 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=tootai.net; s=mail;
+ t=1630518287; bh=RNh7Gp771j0UIVc8f/6xdFjqdN4+Xv4xJdbmq1TY+Qs=;
+ h=Subject:To:References:From:Date:In-Reply-To:From;
+ b=f6o8jieTnfWw0DmkxRxWlVL4AnME81/iZTyjBs7T+6jLUmzHoZDT7VKDGQhXDdfJB
+ T4mvBPYtL93LLtJ9hFgO7Oy2VxJHpuFLmgAAJXOMFAQxXDKsmihzHzZlC7nxvRzOzf
+ MxNCJkb/xJ+DWtSykmayMzTlIVrx98owEXoMe/fY=
+Subject: Re: ipv6 connexion fail - ipv4 OK
+To: wireguard@lists.zx2c4.com
+References: <ec8fe61d-06a9-9544-ab2c-3dfc26905d74@tootai.net>
+ <e4b50341-6f90-92fe-7728-a518768a1b51@tootai.net>
+ <20210827211412.3ed5f170@natsu>
+ <3ec547c6-c846-e5be-e276-ace7862f5cb7@tootai.net>
+ <34d4341c-98be-b754-af8e-c7097bc21aac@pineview.net>
+ <20210828024454.1766744f@natsu>
+ <7437f3e0-26ba-5e33-a175-0cf233635b3f@tootai.net>
+ <20210830214312.6a332333@natsu>
+ <e620ed11-2664-fa06-1497-a0f18facac7e@tootai.net>
+ <20210830223836.5384badd@natsu>
+ <e949b3e2-eab7-fc4c-2b15-8820a2c17374@tootai.net>
+ <20210830225927.6df90edb@natsu>
+ <d7095107-050f-2075-00cb-fdaa86d6daf5@tootai.net>
+From: Daniel <tech@tootai.net>
+Message-ID: <eda71620-a941-e2c1-b7b3-bdc67d53e72b@tootai.net>
+Date: Wed, 1 Sep 2021 19:44:47 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+In-Reply-To: <d7095107-050f-2075-00cb-fdaa86d6daf5@tootai.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20210901122904.9094-1-liuhangbin@gmail.com>
+Content-Language: fr-FR
+X-Virus-Scanned: ClamAV using ClamSMTP
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -66,201 +81,94 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Hangbin,
+Again :)
 
-Thanks for the patch and especially for the test. While I see that
-you've pointed to a real problem, I don't think that this particular way
-of fixing it is correct, because it will cause issues for userspace that
-expects to be able to read back the list of peers for, for example,
-keeping track of the latest endpoint addresses or rx/tx transfer
-quantities.
+Le 31/08/2021 à 19:50, Daniel a écrit :
+> Hi
+>
+> Le 30/08/2021 à 19:59, Roman Mamedov a écrit :
+>> On Mon, 30 Aug 2021 19:44:21 +0200
+>> Daniel <tech@tootai.net> wrote:
+>>
+>>>> Do you get WG working at all, between some other two hosts (not 
+>>>> involving this
+>>>> particular server for now)?
+>>> Yes. Clients are shown on both sides as connected, trafic seems to go
+>>> out on each side but other one as received near to nothing.
+>> I mean not just "shown as connected", but have you got actual traffic 
+>> working
+>> between any two hosts. Even just forgetting this server for a while. 
+>> So that
+>> you can rule out some general issue and concentrate on just the 
+>> particular
+>> machine setup.
+>
+> I went a step further. Server has a /64 on eth0, his address being 
+> .1/64 Interface I gave to wireguard is called wigserver and get .a2/64 
+> as address when up. Now I start the client which is a .24/64 while 
+> tcpdump -ni any udp and port 38194 is running on the server. Output is
+>
+> 19:28:45.790295 eth0  In  IP6 2001:db8:16e:10::24.50012 > 
+> 2001:db8:c2c:7c50::a2.38194: UDP, length 148
+> 19:28:45.790629 eth0  Out IP6 2001:db8:c2c:7c50::a2.38194 > 
+> 2001:db8:16e:10::24.50012: UDP, length 92
+> 19:29:06.572059 eth0  Out IP6 2001:db8:c2c:7c50::1.38194 > 
+> 2001:db8:16e:10::24.50012: UDP, length 148
+> 19:29:11.947969 eth0  Out IP6 2001:db8:c2c:7c50::1.38194 > 
+> 2001:db8:16e:10::24.50012: UDP, length 148
+> 19:29:17.324065 eth0  Out IP6 2001:db8:c2c:7c50::1.38194 > 
+> 2001:db8:16e:10::24.50012: UDP, length 148
+>
+> As you can see, the original request is going to the right IP which 
+> respond with the right source IP (line 1 and 2) From here, all packets 
+> are going out with the IP of eth0 not the one from wigserver which is 
+> .a2/64. The client has "allowed ips = 10.99.98.0/27, ::/0"
+>
+> Remember, no FW involved. Before this test I bring up interfaces 
+> without wireguard configuration and did server/client test like nc -lu 
+> IP PORT on the server while on the client I used nc -u IP PORT 
+> Everything worked well. I also started the client while server was not 
+> running and got the ICMP6 respons "unreachable port" sended to the 
+> client. I also tried to tell to the client to connect to the .1/64 
+> insteed of the .a2/64, didn't work
+>
+> If someone had an idea on what's going on here, would be helpful ;)
 
-I think the real solution here is to simply clear the endpoint src cache
-and consequently the dst_cache. This is slightly complicated by the fact
-that dst_cache releases dsts lazily, so I needed to add a little utility
-function for that, but that was pretty easy to do.
+I continue my investigations and modify client to connect to eth0 ipv6 
+address .1/64 as well that I set debug using # modprobe wireguard && 
+echo module wireguard +p > /sys/kernel/debug/dynamic_debug/control 
+command. I get the same result that when I connect to the .a2/64 IP 
+address from the wireguard server.
 
-Can you take a look at the below patch and let me know if it works for
-you and passes other testing you and Toke might be doing with it? (Also,
-please CC the wireguard mailing list in addition to netdev next time?)
-If the patch looks good to you and works well, I'll include it in the
-next series of wireguard patches I send back out to netdev. I'm back
-from travels next week and will begin working on the next series then.
+Clearly, the first step seems to go well as I see
 
-Regards,
-Jason
+Sep  1 19:00:51 kirsch kernel: [ 3597.830187] wireguard: wigserver: 
+Receiving handshake initiation from peer 1 ([2001:db8:16e:10::24]:42602/0%0)
+Sep  1 19:00:51 kirsch kernel: [ 3597.830193] wireguard: wigserver: 
+Sending handshake response to peer 1 ([2001:db8:16e:10::24]:42602/0%0)
+Sep  1 19:00:51 kirsch kernel: [ 3597.830487] wireguard: wigserver: 
+Keypair 1 created for peer 1
 
----------8<-------------8<-----------------
+but then appear the problem, server did not receive the answer and try 
+again and again and again. Please note that it tell 5s but it is in the 
+same second or so.
 
-From f9984a41eeaebfdcef5aba8a71966b77ba0de8c0 Mon Sep 17 00:00:00 2001
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 1 Sep 2021 14:53:39 +0200
-Subject: [PATCH] wireguard: device: reset peer src endpoint when netns exits
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Sep  1 19:00:52 kirsch kernel: [ 3599.369652] wireguard: wigserver: 
+Handshake for peer 1 ([2001:db8:16e:10::24]:42602/0%0) did not complete 
+after 5 seconds, r
+etrying (try 13)
 
-Each peer's endpoint contains a dst_cache entry that takes a reference
-to another netdev. When the containing namespace exits, we take down the
-socket and prevent future sockets from being created (by setting
-creating_net to NULL), which removes that potential reference on the
-netns. However, it doesn't release references to the netns that a netdev
-cached in dst_cache might be taking, so the netns still might fail to
-exit. Since the socket is gimped anyway, we can simply clear all the
-dst_caches (by way of clearing the endpoint src), which will release all
-references.
+On the client, the answer is sended with the newly ipv6 address from the 
+wireguard interface to the ipv6 address of the server wireguard interface
 
-However, the current dst_cache_reset function only releases those
-references lazily. But it turns out that all of our usages of
-wg_socket_clear_peer_endpoint_src are called from contexts that are not
-exactly high-speed or bottle-necked. For example, when there's
-connection difficulty, or when userspace is reconfiguring the interface.
-And in particular for this patch, when the netns is exiting. So for
-those cases, it makes more sense to call dst_release immediately. For
-that, we add a small helper function to dst_cache.
+19:00:57.309251 IP6 2001:db8:c2c:7c50::24.42602 > 
+2001:db8:c2c:7c50::1.38194: UDP, length 148
 
-This patch also adds a test to netns.sh from Hangbin Liu to ensure this
-doesn't regress.
+and this too, again and again and again.
 
-Test-by: Hangbin Liu <liuhangbin@gmail.com>
-Reported-by: Xiumei Mu <xmu@redhat.com>
-Cc: Hangbin Liu <liuhangbin@gmail.com>
-Cc: Toke Høiland-Jørgensen <toke@redhat.com>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Fixes: 900575aa33a3 ("wireguard: device: avoid circular netns references")
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
----
- drivers/net/wireguard/device.c             |  3 +++
- drivers/net/wireguard/socket.c             |  2 +-
- include/net/dst_cache.h                    | 11 ++++++++++
- net/core/dst_cache.c                       | 19 +++++++++++++++++
- tools/testing/selftests/wireguard/netns.sh | 24 +++++++++++++++++++++-
- 5 files changed, 57 insertions(+), 2 deletions(-)
+Hints ?
 
-diff --git a/drivers/net/wireguard/device.c b/drivers/net/wireguard/device.c
-index 551ddaaaf540..77e64ea6be67 100644
---- a/drivers/net/wireguard/device.c
-+++ b/drivers/net/wireguard/device.c
-@@ -398,6 +398,7 @@ static struct rtnl_link_ops link_ops __read_mostly = {
- static void wg_netns_pre_exit(struct net *net)
- {
- 	struct wg_device *wg;
-+	struct wg_peer *peer;
- 
- 	rtnl_lock();
- 	list_for_each_entry(wg, &device_list, device_list) {
-@@ -407,6 +408,8 @@ static void wg_netns_pre_exit(struct net *net)
- 			mutex_lock(&wg->device_update_lock);
- 			rcu_assign_pointer(wg->creating_net, NULL);
- 			wg_socket_reinit(wg, NULL, NULL);
-+			list_for_each_entry(peer, &wg->peer_list, peer_list)
-+				wg_socket_clear_peer_endpoint_src(peer);
- 			mutex_unlock(&wg->device_update_lock);
- 		}
- 	}
-diff --git a/drivers/net/wireguard/socket.c b/drivers/net/wireguard/socket.c
-index 8c496b747108..6f07b949cb81 100644
---- a/drivers/net/wireguard/socket.c
-+++ b/drivers/net/wireguard/socket.c
-@@ -308,7 +308,7 @@ void wg_socket_clear_peer_endpoint_src(struct wg_peer *peer)
- {
- 	write_lock_bh(&peer->endpoint_lock);
- 	memset(&peer->endpoint.src6, 0, sizeof(peer->endpoint.src6));
--	dst_cache_reset(&peer->endpoint_cache);
-+	dst_cache_reset_now(&peer->endpoint_cache);
- 	write_unlock_bh(&peer->endpoint_lock);
- }
- 
-diff --git a/include/net/dst_cache.h b/include/net/dst_cache.h
-index 67634675e919..df6622a5fe98 100644
---- a/include/net/dst_cache.h
-+++ b/include/net/dst_cache.h
-@@ -79,6 +79,17 @@ static inline void dst_cache_reset(struct dst_cache *dst_cache)
- 	dst_cache->reset_ts = jiffies;
- }
- 
-+/**
-+ *	dst_cache_reset_now - invalidate the cache contents immediately
-+ *	@dst_cache: the cache
-+ *
-+ *	The caller must be sure there are no concurrent users, as this frees
-+ *	all dst_cache users immediately, rather than waiting for the next
-+ *	per-cpu usage like dst_cache_reset does. Most callers should use the
-+ *	higher speed lazily-freed dst_cache_reset function instead.
-+ */
-+void dst_cache_reset_now(struct dst_cache *dst_cache);
-+
- /**
-  *	dst_cache_init - initialize the cache, allocating the required storage
-  *	@dst_cache: the cache
-diff --git a/net/core/dst_cache.c b/net/core/dst_cache.c
-index be74ab4551c2..0ccfd5fa5cb9 100644
---- a/net/core/dst_cache.c
-+++ b/net/core/dst_cache.c
-@@ -162,3 +162,22 @@ void dst_cache_destroy(struct dst_cache *dst_cache)
- 	free_percpu(dst_cache->cache);
- }
- EXPORT_SYMBOL_GPL(dst_cache_destroy);
-+
-+void dst_cache_reset_now(struct dst_cache *dst_cache)
-+{
-+	int i;
-+
-+	if (!dst_cache->cache)
-+		return;
-+
-+	dst_cache->reset_ts = jiffies;
-+	for_each_possible_cpu(i) {
-+		struct dst_cache_pcpu *idst = per_cpu_ptr(dst_cache->cache, i);
-+		struct dst_entry *dst = idst->dst;
-+
-+		idst->cookie = 0;
-+		idst->dst = NULL;
-+		dst_release(dst);
-+	}
-+}
-+EXPORT_SYMBOL_GPL(dst_cache_reset_now);
-diff --git a/tools/testing/selftests/wireguard/netns.sh b/tools/testing/selftests/wireguard/netns.sh
-index 2e5c1630885e..8a9461aa0878 100755
---- a/tools/testing/selftests/wireguard/netns.sh
-+++ b/tools/testing/selftests/wireguard/netns.sh
-@@ -613,6 +613,28 @@ ip0 link set wg0 up
- kill $ncat_pid
- ip0 link del wg0
- 
-+# Ensure that dst_cache references don't outlive netns lifetime
-+ip1 link add dev wg0 type wireguard
-+ip2 link add dev wg0 type wireguard
-+configure_peers
-+ip1 link add veth1 type veth peer name veth2
-+ip1 link set veth2 netns $netns2
-+ip1 addr add fd00:aa::1/64 dev veth1
-+ip2 addr add fd00:aa::2/64 dev veth2
-+ip1 link set veth1 up
-+ip2 link set veth2 up
-+waitiface $netns1 veth1
-+waitiface $netns2 veth2
-+ip1 -6 route add default dev veth1 via fd00:aa::2
-+ip2 -6 route add default dev veth2 via fd00:aa::1
-+n1 wg set wg0 peer "$pub2" endpoint [fd00:aa::2]:2
-+n2 wg set wg0 peer "$pub1" endpoint [fd00:aa::1]:1
-+n1 ping6 -c 1 fd00::2
-+pp ip netns delete $netns1
-+pp ip netns delete $netns2
-+pp ip netns add $netns1
-+pp ip netns add $netns2
-+
- # Ensure there aren't circular reference loops
- ip1 link add wg1 type wireguard
- ip2 link add wg2 type wireguard
-@@ -631,7 +653,7 @@ while read -t 0.1 -r line 2>/dev/null || [[ $? -ne 142 ]]; do
- done < /dev/kmsg
- alldeleted=1
- for object in "${!objects[@]}"; do
--	if [[ ${objects["$object"]} != *createddestroyed ]]; then
-+	if [[ ${objects["$object"]} != *createddestroyed && ${objects["$object"]} != *createdcreateddestroyeddestroyed ]]; then
- 		echo "Error: $object: merely ${objects["$object"]}" >&3
- 		alldeleted=0
- 	fi
+Thanks for your support
+
 -- 
-2.32.0
+Daniel
