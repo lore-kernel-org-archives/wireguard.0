@@ -7,59 +7,57 @@ X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EEB7AC432BE
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  2 Sep 2021 01:21:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D459DC432BE
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  2 Sep 2021 02:11:57 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 2486560200
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  2 Sep 2021 01:21:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 2486560200
+	by mail.kernel.org (Postfix) with ESMTPS id F349D610A8
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  2 Sep 2021 02:11:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org F349D610A8
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 536eb745;
-	Thu, 2 Sep 2021 01:21:12 +0000 (UTC)
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com
- [2607:f8b0:4864:20::1034])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id e2bdcd53
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bd649ff0;
+	Thu, 2 Sep 2021 02:10:49 +0000 (UTC)
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com
+ [2607:f8b0:4864:20::42a])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 5dbcb287
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Thu, 2 Sep 2021 01:21:09 +0000 (UTC)
-Received: by mail-pj1-x1034.google.com with SMTP id
- 28-20020a17090a031cb0290178dcd8a4d1so289638pje.0
- for <wireguard@lists.zx2c4.com>; Wed, 01 Sep 2021 18:21:08 -0700 (PDT)
+ for <wireguard@lists.zx2c4.com>; Thu, 2 Sep 2021 02:10:45 +0000 (UTC)
+Received: by mail-pf1-x42a.google.com with SMTP id 2so425408pfo.8
+ for <wireguard@lists.zx2c4.com>; Wed, 01 Sep 2021 19:10:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
  h=mime-version:references:in-reply-to:reply-to:from:date:message-id
- :subject:to; bh=nl5p0s6QUUbBLVQn5tBsOG2xlBsddFXE9LDcbaLtBNE=;
- b=KPP8l3UDUMFYkWG8SyypRZgmXssISeK+vB9bjk8J7VhCCsuB8mllT6RD13Rja3DBOe
- IGvM23aJchEcsGmrVcw+qq7qkpReoyNF6yX1aPn4RyfJWtoVi0KMtZN97Yekp4RWImFU
- mTeODw7/isZpVLJO+OrV2Z0+5ty5Kgq04UQyj5IqyQZyCCZmrAMuDfEjYGb/sm9k5vPy
- fRl5FQkiTXTtPq67hONT5lgxb6p5yyDicUVVNLqq1oMHD1b56LXAOdiVCzrrs2sP2Kfc
- VvDJ2YcnqUVfjAMNYu1rMzvF1xTDi4IbhIlvFKt8IriKVjY+thukkfK6t7n2wEopM1NP
- 2EMA==
+ :subject:to; bh=nHn8X9t8DufzirGHVWvg3YvnRjyhmJP8cN/Bl6pB5zI=;
+ b=mgYRjQSNperC35GtRq9pAamZSXQPA9iR93z8fzFES9Z+4vcueEWQm769fy0um8pL1S
+ xPB8dMD7VT6A8wACyP/0VmRlZwxYnuZWkfjERlp+eAgvXNSOJqHikxQgV1FaCBEo6pKo
+ IZG2nHW3upfcomwJ7tQhhq0rXt/vbiOO4Cx7BsZ+Q/7OS+zKXW2UMYcisInCpSPVAo5A
+ V7jfAdgZHGMNxa1h0pvE3L5NLVNd8Xful/XbeVZEYvYdPZBk07dqeeALWjndxKyjLajC
+ p7hPio3TIjGKGqd9P3/SVwZvBY0tRazNouNhXXGBtD8sGXsy1EBaXEFUrXMajghj1Zrx
+ 5eMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
  :from:date:message-id:subject:to;
- bh=nl5p0s6QUUbBLVQn5tBsOG2xlBsddFXE9LDcbaLtBNE=;
- b=ShowHvFC5ZE9UmkjvCY62cCE7itOQaZUXMdAVhLMyKDkQvEVUWmc9t9LEXjTeB1sp/
- trp3wEKGQG/xf5V4wHTUTyxQ0KL2vZg9PK4A6yi10igJyxzV1Kp5DQXBC46vW1MFK6iR
- zD+uJfuWjRoLoZmJRulWTFNB4WPkDgh0cebDGiWAfQhQL7pHM9y6jeAOsthRzQcpymEd
- tPFBMgjas36T2XLz1A8hVtivzVeOSgW9HlQCNzpotMtFMHVs0Q2ex4Mfm6OYkfrVVxzr
- khn7b3E5JfsCA1qHzEzF/sJFCpO5sGIonTEij+z5BCj031F/7KaShcFmeIaDhJOlkyjV
- Ek0Q==
-X-Gm-Message-State: AOAM532DddzvK9MKkE/1Bf1XzkB+Fjz+0FWA2RwWVGzpLyquHku4nOtu
- GLYyC6q4d+hDZK3E1BjniYQW9wyUX1ltuR9CR2d4plfV1E0=
-X-Google-Smtp-Source: ABdhPJwNfiJLTnwMaWCdUyAoF3k+heylRiD3/4+uuXwwoov2xXfRioSKg60YDZFLbVBAjMEMimdsANFNzxFQADThSIs=
-X-Received: by 2002:a17:90a:194a:: with SMTP id
- 10mr768247pjh.221.1630545667262; 
- Wed, 01 Sep 2021 18:21:07 -0700 (PDT)
+ bh=nHn8X9t8DufzirGHVWvg3YvnRjyhmJP8cN/Bl6pB5zI=;
+ b=bgArTyqfyihnKteE+hEAz3umYehAqjrrTt4IIuJZxEhOpPBcBYwQLan7/TJfQ0wt2b
+ /Ih77AMwLeBUBsKw7s4f8jvKsWgp2XRF/3s/CNus0jxjNruFT8bwtJNhSCdZ1l8KjSwc
+ gRzdp9Jq+P2L+fh4Ty4/WUKL/2nScuPyUcqXJO35OrGml2h4/TircoA6z9MpKKDRRKw3
+ cFgekYUZt4w7RsGZuGceqs5fcawqgtKQNiL04Gy+gHvTptG/6JguxXI87BR2r67xReYU
+ Gh2PLmBOMZUtiQyBfJnA7yOakAjsUNqZ/7ZnSzIVcAqe7ruhe3siIPecA+00gFyn3vRq
+ bmZg==
+X-Gm-Message-State: AOAM530SZQwtGzDVh/5NFcu0ZSbCmxf4hAIYNB3r2sgLMRTwd25w99pm
+ vnwH7zZYGFRYBd14EEBGzeAXcTkImgS6vrWOlcXa4ISBmdk=
+X-Google-Smtp-Source: ABdhPJyiw/1BO3AAXD+N07CrGvTriW1+5AtgscdqkJYjW9P2b88zIAl/QtjSu3JvE9UitQhj1GYg7rUh7+VZedm+WNc=
+X-Received: by 2002:a63:5c63:: with SMTP id n35mr717224pgm.311.1630548643185; 
+ Wed, 01 Sep 2021 19:10:43 -0700 (PDT)
 MIME-Version: 1.0
 References: <-_8oxop6VI5mP0UY_0vydSMUBInbj0hR4IUPDWshTaRG0-6O9ybfu6kzIAk68XdY9N-LHiVgaiWhNQw6-iYG1cR14pfODj2o5JMStY-75ns=@protonmail.ch>
 In-Reply-To: <-_8oxop6VI5mP0UY_0vydSMUBInbj0hR4IUPDWshTaRG0-6O9ybfu6kzIAk68XdY9N-LHiVgaiWhNQw6-iYG1cR14pfODj2o5JMStY-75ns=@protonmail.ch>
 From: Jeffrey Walton <noloader@gmail.com>
-Date: Wed, 1 Sep 2021 21:20:36 -0400
-Message-ID: <CAH8yC8=T82_UUcWsp3Q6Bv-YgAb2P5rVm-JD7uHRU1+-bmyoOg@mail.gmail.com>
+Date: Wed, 1 Sep 2021 22:10:12 -0400
+Message-ID: <CAH8yC8nHSHg=rNaXRxjX_LdbGZEFBb+gB6TJkMVkw-cRO-nf-g@mail.gmail.com>
 Subject: Re: [wireguard-apple] [iOS] Running WireGuard on a simulator
 To: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
@@ -79,10 +77,7 @@ Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
 On Wed, Sep 1, 2021 at 9:00 PM Neutron <dotneutron@protonmail.ch> wrote:
->
-> I've tried running wireguard-apple on an iOS simulator and encountered some
-> trouble during the compilation of WireGuardKitGo. I did this on an Apple M1,
-> which I thought at first would be the culprit.
+> ...
 >
 > The Go version is "go1.16 darwin/arm64". The build process fails at
 > # runtime/cgo
@@ -100,34 +95,26 @@ On Wed, Sep 1, 2021 at 9:00 PM Neutron <dotneutron@protonmail.ch> wrote:
 > Further head banging lead me to the discovery that
 >
 > xcodebuild -target WireGuardiOS -sdk iphoneos14.5
+>
+> actually builds successfully. I looked through the Makefile and applied some
+> monkey see, monkey do. It turns out I could get it to link by adding
+> GOOS_iphonesimulator := ios.
 
-Yeah, whenever you start seeing problems with missing symbols related
-to exception handlers, you should look at the target SDK. I see it a
-lot when trying to cross compile for Apple WatchOS and AppleTV when
-using the wrong SDK.
+This looks a little odd to me. You should not need ios there because
+the M1 is its own first class platform. About all you should need is,
+ensure '-arch arm64' is used. But I probably do not understand how Go
+does things.
 
-Besides -sdk, other ones to look for are -miphoneos-version-min,
--miphonesimulator-version-min, -mappletvos-version-min,
--mappletvsimulator-version-min, -mwatchos-version-min and
--mwatchsimulator-version-min. If you drop them too low, you will break
-during link with the missing exception handlers.
+Apple uses simulators, which means your high level C code is compiled
+to the host's native instruction set. The host is where the simulator
+runs. On an M1, that means code is compiled to the host's arm64
+instruction set, hence the reason for '-arch arm64'. You still need to
+be aware of a target SDK, but that is a particular detail. The broad
+stroke is '-arch arm64' for the M1.
 
-I think what happens is, the headers mostly work with a lot of
-different targets. But the exception handlers are specific to a
-particular SDK, and you only have a limited range of them installed
-(otherwise, you have to install older versions of Xcode and older
-SDKs).
-
-I don't know how Go affects things. I usually work with native C/C++/ObjC code.
-
-> I don't have an actual iPhone on hand at the moment,
-> so I guess the question is, is the project supposed to
-> work only on real hardware? Was that flag left out
-> intentionally? If so, is there a way to get it to run
-> properly on simulators?
-
-In the past, the network stack was crippled on the simulator. I don't
-know if that's the case nowadays. I think Android is about the same.
-It is hard to test some of this stuff on a simulator or emulator.
+Android uses emulators, which means the high level C code is compiled
+to the target ISA, like x86_64, arm, aarch64 or mips. Then, the ISA
+instructions are interpreted on the host machine. The high level C
+code is not compiled to the emulator's native instruction set.
 
 Jeff
