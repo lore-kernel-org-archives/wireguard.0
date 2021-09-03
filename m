@@ -2,93 +2,70 @@ Return-Path: <SRS0=rqdY=NZ=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D6304C433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  3 Sep 2021 13:10:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA3CDC433FE
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  3 Sep 2021 13:59:38 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 163CE60E52
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  3 Sep 2021 13:10:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 163CE60E52
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=redhat.com
+	by mail.kernel.org (Postfix) with ESMTPS id 77B3761059
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  3 Sep 2021 13:59:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 77B3761059
+Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=tootai.net
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1aef1b51;
-	Fri, 3 Sep 2021 13:10:50 +0000 (UTC)
-Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [216.205.24.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a8595cbb
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Fri, 3 Sep 2021 13:10:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1630674643;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=NdJi3DfTaxZifAGejUa63MN7zsGNDj/aFYim+6FiDeE=;
- b=KnRBAaou3ZxueXK7lY8B0wGlgCHwOaiJcl6GFsUy/pb3ZJvNSfzbcptL9fCYeDSW2hkVli
- Wbv3/fNiiTD3/q+mBnqSqorR7eGbo5YlbL6ZX66/VuTX7CCE+aqaGU7yxiwFB+4tMqPL9Y
- iWJvzxKsf4gzvPj06sQ0XM/Js25IFqU=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-533-1fKPWlHTNg2l6Vaqnd_SYg-1; Fri, 03 Sep 2021 09:10:42 -0400
-X-MC-Unique: 1fKPWlHTNg2l6Vaqnd_SYg-1
-Received: by mail-ed1-f72.google.com with SMTP id
- a23-20020aa7cf17000000b003caffcef4beso2735710edy.5
- for <wireguard@lists.zx2c4.com>; Fri, 03 Sep 2021 06:10:42 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:cc:subject:in-reply-to:references:date
- :message-id:mime-version:content-transfer-encoding;
- bh=NdJi3DfTaxZifAGejUa63MN7zsGNDj/aFYim+6FiDeE=;
- b=jhgc8YHW2SOWwsnRf8CxPnOYTaK+Tb1WsNHIOclIsrgMPkhUjOzMTvAMJpHwOYb+iW
- zrYEnkiNrcL09TzIdwfPRH5l3M7uRbGXX0us9X1Nowxq/s/LKHAOoYUAOiXAtS5q2zqS
- zfbFpBzDLmD5i6al5AkcQnqicqL1tS//W71Zrp+qPHia2tfk5OSqB/zkNpzo0UDWLCXO
- O+Wyf/4Hd5Um2LknK50yKM525m5A8btuy/KujBtdQCyeql78bs+QQ0K4G5dzWhbbUGQO
- +3iUrq5IOoo7kSrbe5DICb+gaw3DRET23xzVqGBCtEDZLC41bi2NewRUdQBCbYwYyN4N
- dUfQ==
-X-Gm-Message-State: AOAM533gvhBqEoXfhYEAlKW8O4F99GasHx9ARoW6767X/vQ076tv3b84
- 11/2kbY8mAuUOJBZO5rEUIp8uw/X6YKbIHhiG0ltJn35GfNgeMb7gmKaN2kyVCl0ga3esRZdYIY
- gAUR3Namg9KZh7lHJvzjw
-X-Received: by 2002:a17:906:e8a:: with SMTP id
- p10mr4064728ejf.265.1630674640604; 
- Fri, 03 Sep 2021 06:10:40 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJwO0dOkNnbHgz/Kkaj0Zn4EuJ+1cwoPQ8XckLrxVQ3MKPnSGddN0iaeoeTNx7y9tONuno2Gcg==
-X-Received: by 2002:a17:906:e8a:: with SMTP id
- p10mr4064625ejf.265.1630674639391; 
- Fri, 03 Sep 2021 06:10:39 -0700 (PDT)
-Received: from alrua-x1.borgediget.toke.dk ([2a0c:4d80:42:443::2])
- by smtp.gmail.com with ESMTPSA id se22sm2782869ejb.32.2021.09.03.06.10.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 03 Sep 2021 06:10:38 -0700 (PDT)
-Received: by alrua-x1.borgediget.toke.dk (Postfix, from userid 1000)
- id F274318016F; Fri,  3 Sep 2021 15:10:37 +0200 (CEST)
-From: Toke =?utf-8?Q?H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>
-To: Hangbin Liu <liuhangbin@gmail.com>
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, netdev@vger.kernel.org, David
- Miller <davem@davemloft.net>, Xiumei Mu <xmu@redhat.com>, Paolo Abeni
- <pabeni@redhat.com>, wireguard@lists.zx2c4.com
-Subject: Re: [PATCH net] wireguard: remove peer cache in netns_pre_exit
-In-Reply-To: <YTISE6AI3y3Le9ww@Laptop-X1>
-References: <20210901122904.9094-1-liuhangbin@gmail.com>
- <YS+GX/Y85bch4gMU@zx2c4.com> <877dfzt040.fsf@toke.dk>
- <YTISE6AI3y3Le9ww@Laptop-X1>
-X-Clacks-Overhead: GNU Terry Pratchett
-Date: Fri, 03 Sep 2021 15:10:37 +0200
-Message-ID: <8735qlst2q.fsf@toke.dk>
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cfd31b61;
+	Fri, 3 Sep 2021 13:59:35 +0000 (UTC)
+Received: from mail1.tootai.net (<unknown> [2a01:4f8:a0:821b::58:14])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id aac586db
+ for <wireguard@lists.zx2c4.com>; Fri, 3 Sep 2021 13:59:34 +0000 (UTC)
+Received: from mail1.tootai.net (localhost [127.0.0.1])
+ by mail1.tootai.net (Postfix) with ESMTP id BA9956081A17
+ for <wireguard@lists.zx2c4.com>; Fri,  3 Sep 2021 15:59:33 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=tootai.net; s=mail;
+ t=1630677573; bh=uckmG2Kdjz3NkgW0PySvVUhemBgO575qHXsb3yxLsgo=;
+ h=Subject:To:References:From:Date:In-Reply-To:From;
+ b=POxii/6f46QwBmuFWw7moPPaF0on87wQjfXA0nvPM/FgGpUG3Ns45pO5gygKbL2iy
+ U2OxK31UaeNCT24URZwDLK+2E/ocn0FO1jyT9Y/r15SAFK//zdbMX0RV1YZKQeCZVc
+ E8g2VO5z+8ASMDStujqcRwx0EsIzVrUwiwOfR/mE=
+Received: from [IPv6:2a01:729:16e:10::24] (unknown [IPv6:2a01:729:16e:10::24])
+ by mail1.tootai.net (Postfix) with ESMTPA id 865596081880
+ for <wireguard@lists.zx2c4.com>; Fri,  3 Sep 2021 15:59:33 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=tootai.net; s=mail;
+ t=1630677573; bh=uckmG2Kdjz3NkgW0PySvVUhemBgO575qHXsb3yxLsgo=;
+ h=Subject:To:References:From:Date:In-Reply-To:From;
+ b=POxii/6f46QwBmuFWw7moPPaF0on87wQjfXA0nvPM/FgGpUG3Ns45pO5gygKbL2iy
+ U2OxK31UaeNCT24URZwDLK+2E/ocn0FO1jyT9Y/r15SAFK//zdbMX0RV1YZKQeCZVc
+ E8g2VO5z+8ASMDStujqcRwx0EsIzVrUwiwOfR/mE=
+Subject: Re: ipv6 connexion fail - ipv4 OK (SOLVED)
+To: wireguard@lists.zx2c4.com
+References: <ec8fe61d-06a9-9544-ab2c-3dfc26905d74@tootai.net>
+ <e4b50341-6f90-92fe-7728-a518768a1b51@tootai.net>
+ <20210827211412.3ed5f170@natsu>
+ <3ec547c6-c846-e5be-e276-ace7862f5cb7@tootai.net>
+ <34d4341c-98be-b754-af8e-c7097bc21aac@pineview.net>
+ <20210828024454.1766744f@natsu>
+ <7437f3e0-26ba-5e33-a175-0cf233635b3f@tootai.net>
+ <20210830214312.6a332333@natsu>
+ <e620ed11-2664-fa06-1497-a0f18facac7e@tootai.net>
+ <20210830223836.5384badd@natsu>
+ <e949b3e2-eab7-fc4c-2b15-8820a2c17374@tootai.net>
+ <20210830225927.6df90edb@natsu>
+From: Daniel <tech@tootai.net>
+Message-ID: <461a963d-c216-b3fc-521d-e45e89ac1191@tootai.net>
+Date: Fri, 3 Sep 2021 15:59:32 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Authentication-Results: relay.mimecast.com;
- auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=toke@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20210830225927.6df90edb@natsu>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: fr-FR
+X-Virus-Scanned: ClamAV using ClamSMTP
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -103,22 +80,33 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hangbin Liu <liuhangbin@gmail.com> writes:
+Hello
 
-> On Thu, Sep 02, 2021 at 06:26:23PM +0200, Toke H=C3=B8iland-J=C3=B8rgense=
-n wrote:
->> Ran this through the same series of tests as the previous patch, and
->> indeed it also seems to resolve the issue, so feel free to add:
->>=20
->> Tested-by: Toke H=C3=B8iland-J=C3=B8rgensen <toke@redhat.com>
+Le 30/08/2021 à 19:59, Roman Mamedov a écrit :
+> On Mon, 30 Aug 2021 19:44:21 +0200
+> Daniel <tech@tootai.net> wrote:
 >
->
-> Thanks Toke for the testing during my PTO. I will try also do the test.
-> Toke has all my reproducer. So please feel free to send the patch if I
-> can't finish the test before next week.
+>>> Do you get WG working at all, between some other two hosts (not involving this
+>>> particular server for now)?
+>> Yes. Clients are shown on both sides as connected, trafic seems to go
+>> out on each side but other one as received near to nothing.
+> I mean not just "shown as connected", but have you got actual traffic working
+> between any two hosts. Even just forgetting this server for a while. So that
+> you can rule out some general issue and concentrate on just the particular
+> machine setup.
 
-You're welcome - yeah, I ran both the scripts you provided me with, and
-Jason's patch fixes the issue in both :)
+I got it.
 
--Toke
+1. you can't use ipv6 IP from the range of /64 (or other) that you 
+connect to. As workaround, I build an ULA/64 network to connect both 
+ends using one ipv6 from the /64 range of the server to connect
+2. once the tunnel is up nothing is shown on wg show until first packet 
+arrive. If you try to ping from server to client -which was my case- you 
+get an error destination address has to be specified. But as soon as the 
+client has send a packet (ping or keepalive), tunnel is open both ways
+3. the MTU I have to use is 1436
 
+Thanks all for your help.
+
+-- 
+Daniel
