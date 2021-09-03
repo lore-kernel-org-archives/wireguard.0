@@ -2,73 +2,66 @@ Return-Path: <SRS0=TPXl=N3=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 11C8CC433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  5 Sep 2021 11:12:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9AB28C433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  5 Sep 2021 11:12:55 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 295EE60F22
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  5 Sep 2021 11:12:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 295EE60F22
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	by mail.kernel.org (Postfix) with ESMTPS id 4C2FA60F14
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  5 Sep 2021 11:12:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 4C2FA60F14
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=wades.im
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 790b5fbe;
-	Sun, 5 Sep 2021 11:12:51 +0000 (UTC)
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com
- [2a00:1450:4864:20::436])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f45bdb17
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0c1f55d5;
+	Sun, 5 Sep 2021 11:12:53 +0000 (UTC)
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com
+ [2a00:1450:4864:20::12e])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 8cddbdd1
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Fri, 3 Sep 2021 07:24:40 +0000 (UTC)
-Received: by mail-wr1-x436.google.com with SMTP id q11so6796590wrr.9
- for <wireguard@lists.zx2c4.com>; Fri, 03 Sep 2021 00:24:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=message-id:date:mime-version:user-agent:content-language:to:from
- :subject:content-transfer-encoding;
- bh=SBKOVM5nheXHvDq7JT0Dhwt+9wu9N/bvd73BkwRRDag=;
- b=ojE+Kxm222fXLPogo7OnJahatU3uHvw0JyCbTM/9HAgFLSB3fl9Z5rB5lN+PJHfrC/
- uzSHZRGfU1XHwpbXqRYdxgfgnOunQ3fmnoHGNi88EjJ5qwuNfxz5ZnR+2nzWEfCO4qZn
- kZYcsqfIG9fcZX5EZEeRFwDBtVI3eMWtGDw6eGROijdq3ELuFEqZuxoPo3mJYiJo33lK
- 1E8ORNrnXO5Gtc0NztlthUZHx3HBAE+LHaKmT/XsLm6coOseCWNncp6nwBCdDfWviCBj
- Usz/f3Zn50CxQAU9niIg7sqnpVbcrKlcemzYKHA/FsWR+l8KapgEGSCq/WnkQ9nnEnrl
- ryZQ==
+ for <wireguard@lists.zx2c4.com>; Fri, 3 Sep 2021 14:57:48 +0000 (UTC)
+Received: by mail-lf1-x12e.google.com with SMTP id t12so12113856lfg.9
+ for <wireguard@lists.zx2c4.com>; Fri, 03 Sep 2021 07:57:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=wades-im.20150623.gappssmtp.com; s=20150623;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+ bh=Ri/WcgPLyRm+pycluTv/bCUVTgFmC6TZWQoE5JOgldU=;
+ b=ksC+b481CglsdxmIKtmepgJAu5Y8OUVacQbeG8J6Pge+hmVA5dHUiyUYJUZa2T8Grb
+ lyAO5L4zgK7FLxym30czwgWr4g+FqW6YuljCW8QYWRoCyne4rYUej29rrF6ruXtaSsGU
+ DIh9UvMxl4fpojWVymvMr9lo9ySk+7SWZDC8SNiS9dwYYJU9LisTEE5jYZ+/8b+S+e4e
+ /nhycJLTr67BXDUH9xSU3XD+rVDhZ8V7SwFCLQYxagjk+CiG5D7TbKa1DAe8LOrA8sd6
+ X/7WidAr3wQFRAWGcOHQlG/ZL/F/FANgsaVhXscDiRlAz749uJE8mAaMEYu+D1nB0lpE
+ QLqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:message-id:date:mime-version:user-agent
- :content-language:to:from:subject:content-transfer-encoding;
- bh=SBKOVM5nheXHvDq7JT0Dhwt+9wu9N/bvd73BkwRRDag=;
- b=IuAQIjK8YMaefknVNiq/EL49Cl8utJulefraRn70NR/SeSOhH4mifU1+1QyAdq+LbH
- FqGuZzghpPwm1T+GuDM4bhEkJ82rt6/RG6sGlsOfWdazCFjs5pHxTR3eiutY4HSqfYNf
- h/X9M8CZEUUsifsQTEK1km2GrdQH9a10U+MwusnmDpU9YfxTjZ8SDHTh1e2yWtpZAD76
- LTktj7DMHg2Pxr415jDBYH4RpOFJgAeHwFAOBPup0PaUP1vJiXc0kau7vLSkgchqlmxQ
- 08p9BsgjS2j8Eej4kdhOi1anzqflS4uBCSJEIFEJa6BZhSPoet0KJ1GlQHfZhmrzi6Fb
- suCQ==
-X-Gm-Message-State: AOAM531aNRiwYgPhiS35Hkkr0vQYy9xingBYO4o8Md2UDQG46kWdy2Hx
- hCwyousDIjhF53Rpi3/SvdFzhy9e9PRk1Q==
-X-Google-Smtp-Source: ABdhPJyrg288kUrjkfEQHeKr+vdDzE++b7Iuc6+SBYjj1OwqznAHy4VPtBj3yx+CPUC7fvzWRcqZWw==
-X-Received: by 2002:a5d:6cb0:: with SMTP id a16mr2318554wra.245.1630653879781; 
- Fri, 03 Sep 2021 00:24:39 -0700 (PDT)
-Received: from [10.0.0.46] ([92.63.55.105])
- by smtp.gmail.com with UTF8SMTPSA id o26sm3509441wmc.17.2021.09.03.00.24.39
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 03 Sep 2021 00:24:39 -0700 (PDT)
-Message-ID: <c538301f-980c-99c9-4857-65867127aba3@gmail.com>
-Date: Fri, 3 Sep 2021 09:24:38 +0200
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to;
+ bh=Ri/WcgPLyRm+pycluTv/bCUVTgFmC6TZWQoE5JOgldU=;
+ b=LbvU37b+5bvKabZAJ9kYky+34c8GWrb5WM1Sv/XLqQTOLcGJ55wxqeYlS1ccwKFVee
+ YcXNaqYiBmKi+br6VIxL/YXHQXnXTAlfohIQpJ/IJUhOdFnmmJ5WZbKrK97qw6nHzJ36
+ llZ1UTS0ElOdwIcaNZq2vyu+yZtNeB3K/q6GkHf1FFru22DMZcMcbLxLbfIbSx3U5dGC
+ Gi/5zWwqIofnkt6Rs8KnNQhQ3zSWNUKMb4rQwHcgCeZjTMImJrSLu4x5lJYznIDyMbZq
+ p9McgR5Rnkk6ccASx/6wMrUhZ4poRVjrG3/7BquG9Zi9IAq3K2FIJVgqLnnc3+5Qy78q
+ nRJA==
+X-Gm-Message-State: AOAM530WKZ009oJKPyznL0VwvWY6nPK4VnBRQTxZ8Hr2KLO8s/m8Zzco
+ Dmk9W4wn5/F1EgPzhdzxJ6VVx8pdAkEV1g3knW6/SjHVks8NGw==
+X-Google-Smtp-Source: ABdhPJzdLKUurN2WfvYBc7yK9C68RMbHTckUb8skvMl4HXGT9+JxCHFY68NVJLRwutiv4Nv/wTzmComVGhi3v5jaLps=
+X-Received: by 2002:a05:6512:304f:: with SMTP id
+ b15mr3028020lfb.462.1630681066884; 
+ Fri, 03 Sep 2021 07:57:46 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.0
-Content-Language: en-US
+References: <03143d09-112a-d28c-f79e-d97c01f7b1d2@sys.casa>
+In-Reply-To: <03143d09-112a-d28c-f79e-d97c01f7b1d2@sys.casa>
+From: Wade Simmons <wade@wades.im>
+Date: Fri, 3 Sep 2021 10:57:36 -0400
+Message-ID: <CAF63tRoz2pRTJe=sJoiZNPW-gqajQObqc2m0HDvwUfBw0v2TAA@mail.gmail.com>
+Subject: Re: Invoking sendmmsg from Go.
 To: wireguard@lists.zx2c4.com
-From: =?UTF-8?B?Vm9qdMSbY2ggS8OhbsSb?= <vojtech.kane@gmail.com>
-Subject: Strange behavior when a peer has the same key as the interface
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="UTF-8"
 X-Mailman-Approved-At: Sun, 05 Sep 2021 11:12:49 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -84,43 +77,17 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello,
+On Wed, Sep 1, 2021 at 9:59 AM john@sys.casa <john@sys.casa> wrote:
+> Given that, I was wondering if anybody knows a way to interface with
+> sendmmsg from Go?
 
-I would like to report a strange behavior of the Wireguard Linux kernel 
-implementation — when you try to create a peer whose public key matches 
-the public key of the interface, the call returns success, but nothing 
-is done.
+As an example, the golang.org/x/net/ipv4 package implements WriteBatch
+using sendmmsg:
 
+- https://pkg.go.dev/golang.org/x/net/ipv4#PacketConn.WriteBatch
 
-I don't have an opinion (and relevant deep understanding of the crypto 
-involved) whether such a call should succeed or not. Especially since 
-it's 99% not what you want. I came across this issue by mistake anyway. 
-However I think an error should be returned when such a peer is rejected.
+You can either use that method, or peek at the source code to see how
+the syscall is called.
 
-
-Steps to reproduce:
-
-`wg genkey > priv`
-
-`wg pubkey > pub < priv`
-
-`ip link add wg type wireguard`
-
-`wg set wg private-key priv`
-
-`wg set wg peer $(cat pub) allowed-ips 1.1.1.1/32`
-
-Observe:
-
-The return code is 0.
-
-`wg show wg` does not print any peer.
-
-
-The same happens when using the wgctrl golang library.
-
-
-Regards,
-
-Vojtěch Káně
-
+-- 
+Wade Simmons
