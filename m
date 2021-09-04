@@ -2,79 +2,72 @@ Return-Path: <SRS0=jLHU=N2=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81803C433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  4 Sep 2021 08:43:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B37F7C433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  4 Sep 2021 16:55:38 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 79EF561051
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  4 Sep 2021 08:43:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 79EF561051
+	by mail.kernel.org (Postfix) with ESMTPS id BB84160F56
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  4 Sep 2021 16:55:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org BB84160F56
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b053169a;
-	Sat, 4 Sep 2021 08:43:18 +0000 (UTC)
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com
- [2607:f8b0:4864:20::535])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 0724cec0
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cd59413a;
+	Sat, 4 Sep 2021 16:55:35 +0000 (UTC)
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com
+ [2a00:1450:4864:20::133])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 6d966b48
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sat, 4 Sep 2021 08:43:16 +0000 (UTC)
-Received: by mail-pg1-x535.google.com with SMTP id 8so1392761pga.7
- for <wireguard@lists.zx2c4.com>; Sat, 04 Sep 2021 01:43:16 -0700 (PDT)
+ for <wireguard@lists.zx2c4.com>; Sat, 4 Sep 2021 16:55:33 +0000 (UTC)
+Received: by mail-lf1-x133.google.com with SMTP id t19so4655477lfe.13
+ for <wireguard@lists.zx2c4.com>; Sat, 04 Sep 2021 09:55:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:content-transfer-encoding:in-reply-to;
- bh=MyZDsyRp8d7Nz/bpQylF+ViUcJxOfrCc2VN9A8K9j44=;
- b=VfGyNHiQt7CEfxMb907l+bs/Lf0V2asD7g5ugz5FxImufjiA0P52dnovdg+2UOALYU
- rty6SmFDzLQ2dof9nCrqV0X8Anl3p9CbPp/WgxSBQR13x4hJSsLJZDufyVf5Ce4kcbC7
- H7uFKpYcbUXNvTKaN3IB+CmStG1cWO+ymcVs/doz+ujVB3Q/w5oL30uu9wj2T+PGf6uR
- NpIEIEp6d3wt+QhUy/T+8mD9vIs0GS7dOsormAn2aDlmjUq/WE8XGtUiuXkDpbe5CBCr
- MZEknnWFhL/NnoiXvap9OlQMamy1DFbW0H3S9ACWpb7Tmd/suTwPgieYCjiT0EpvwGJG
- /+ew==
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :content-transfer-encoding;
+ bh=tzpAuNlmEVCR70dlkxXkgEe81P1DGAPLmor6p+4uVKI=;
+ b=UwKKigSTYxxrUzQsH04Gtc1gPschsAbeJqT8LhIJhjrUL6WqqAy10/vEw2LzEQim+I
+ uYhnYEMlKHIbWhweXADIslRSlzANGc4SzvaC82JoHLWN8yGFH+EW+YtjBUyRDemSOZxH
+ MXwYAizWd+LdhpANpMUzRzg/XbnhBtaH8tpXBdWsfXbEoKSvF9177u4Q4pOiA3Da2oEP
+ 7YDR3wkv4KbHO+DjBNu+PHqq8AnfLR3A9LLB29kFz7LHwZroNG3M2YKcKj92i/BzLBqh
+ yGSCI1jEVUFMts0nxQKjtFpjpEMXmEVKIcQzKMEIiVkt/6sRChvfe9AjRod/BWJCSobd
+ DtPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:content-transfer-encoding
- :in-reply-to;
- bh=MyZDsyRp8d7Nz/bpQylF+ViUcJxOfrCc2VN9A8K9j44=;
- b=pGYIgm5GdWXiBPdw1mK6FfobW809SAcLlO3k5UYR4OqjW1cLDfEdZ5APUNMbv+M4Rb
- pgtPU8MHdjk9LU6s0a1FTRcObrdFmrjjFHcKEPfvZSbboaLIA5BifMmleaQbJpWFiFzD
- HJuDrtczjME0LphlKSarG8VSa95bVoMtjeHfhyIXx9+AHufkkuxvHrm4OaLo//6mnmpE
- NNRjB7m6L+sUaCL0eF1wDWN2aKNPiXazs9Yo7CpFHAs0vPq5ElKbHRFWvJE6IvWwBOoK
- Cp5BTLMjBtgRvgMnZ3YjCD1pIUX68l3iBQFe0c6I9EuJClC5jtSz1DPVt53i1dQdjkt8
- 0x9g==
-X-Gm-Message-State: AOAM533KCFyq/9RkQTa2tUCdVFjpVADocH42Yviw12wT/ItbK6Ts5epv
- +1tdcjgtvow5engIabzwtkY=
-X-Google-Smtp-Source: ABdhPJzT+8yvMGoTBH9a/TuyQ2UQRWeaXd9y0g5hD5S9N9ci4edgz5Ml7WjKJwzsDLs4ngUU0NKaJA==
-X-Received: by 2002:a65:44c6:: with SMTP id g6mr2759899pgs.442.1630744995027; 
- Sat, 04 Sep 2021 01:43:15 -0700 (PDT)
-Received: from Laptop-X1 ([209.132.188.80])
- by smtp.gmail.com with ESMTPSA id y8sm1723365pfe.162.2021.09.04.01.43.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 04 Sep 2021 01:43:14 -0700 (PDT)
-Date: Sat, 4 Sep 2021 16:43:09 +0800
-From: Hangbin Liu <liuhangbin@gmail.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: netdev@vger.kernel.org, David Miller <davem@davemloft.net>,
- Xiumei Mu <xmu@redhat.com>,
- Toke =?iso-8859-1?Q?H=F8iland-J=F8rgensen?= <toke@redhat.com>,
- Paolo Abeni <pabeni@redhat.com>, wireguard@lists.zx2c4.com
-Subject: Re: [PATCH net] wireguard: remove peer cache in netns_pre_exit
-Message-ID: <YTMxnfkJVA8b6lAV@Laptop-X1>
-References: <20210901122904.9094-1-liuhangbin@gmail.com>
- <YS+GX/Y85bch4gMU@zx2c4.com>
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:content-transfer-encoding;
+ bh=tzpAuNlmEVCR70dlkxXkgEe81P1DGAPLmor6p+4uVKI=;
+ b=ehdVq4+rMPHhyyk8vsyJ3PHSqpZ13eluTSA8P+3pJID+3sA8X86uUqulfTFiEaoaMA
+ 9YswheP8FFr9BzoxgEECQ44l2CMzfrXkFfD9WVkaD0V5pNyO6HXv8x00brDhn6f9jDN5
+ Dbdz/5oQIEDMJSgHFTRzgeB613i5qHlTW6wbPEm8hP7+dbZwCPRYjgaxGNVbaOVxTEtC
+ Q9bN3VyzvtUb+r5t7p5/rhfqjPZ4dnPYMn0tkIkw2DZHPeYuwYHWGwsqOE+NnOZtEb/G
+ do9/k108784UBFq67E1UdfE2upR4xsPtZWV0rEIhGBH75crM/Q8Gm+xslMsOTeS2gwh/
+ 4bSA==
+X-Gm-Message-State: AOAM533fyTEZjdkLBRI8QtxhymRdliGFDO/LAOkXuohU2tab6k2899s5
+ sJXTpVdhUg9KvGefR2p+RYpijpMf1+O4hGw+5y58ZH2OiU150jZJ
+X-Google-Smtp-Source: ABdhPJxku/o0NwsoO2YLvWIH+jZ+lm4+maC50dEKyg6AH4A0nk9tbmdkxHnrkGLD4JTiIXEQR6hGjNqMW8epkE9n7n0=
+X-Received: by 2002:a19:494f:: with SMTP id l15mr3321342lfj.572.1630774531965; 
+ Sat, 04 Sep 2021 09:55:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <YS+GX/Y85bch4gMU@zx2c4.com>
+References: <CAECraRrhiAZQfZjSc0Auhby0Z+G0jSfNeapgDnfQ6=NT8p7q5Q@mail.gmail.com>
+ <CAECraRro-ZQrZbxBkQg=o1bnWmf1V4C65D0jkdkt2rMCCe+6bg@mail.gmail.com>
+ <CADGd2Dp0S5_=bPQDnRsamvraJZ5BeVV1eWh98js3wATXodfQcQ@mail.gmail.com>
+ <CAECraRpLYEkAm+g1dg6X9RJLEDx=nOs=gPQvT_CjxwjXSbhDOw@mail.gmail.com>
+ <CAECraRra33vTSb3KW_siHrQx3tLSb-boJUQ1=hVDt5Lo6xXcUw@mail.gmail.com>
+In-Reply-To: <CAECraRra33vTSb3KW_siHrQx3tLSb-boJUQ1=hVDt5Lo6xXcUw@mail.gmail.com>
+From: =?UTF-8?B?2K3Yp9mF2K8g2LXYp9io2LE=?= <hsaber@gmail.com>
+Date: Sat, 4 Sep 2021 21:25:15 +0430
+Message-ID: <CAECraRpgfySdLsk_HtW8NSph3B==oX_2fdbJrOnS9vn3MWokwg@mail.gmail.com>
+Subject: =?UTF-8?Q?Re=3A_Unexpected_experience_of_site=2Dto=2Dsite_wireguard_?=
+ =?UTF-8?Q?tunneling=E2=80=8F=E2=80=8F?=
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -89,213 +82,504 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Wed, Sep 01, 2021 at 03:55:43PM +0200, Jason A. Donenfeld wrote:
-> Hi Hangbin,
-> 
-> Thanks for the patch and especially for the test. While I see that
-> you've pointed to a real problem, I don't think that this particular way
-> of fixing it is correct, because it will cause issues for userspace that
-> expects to be able to read back the list of peers for, for example,
-> keeping track of the latest endpoint addresses or rx/tx transfer
-> quantities.
-> 
-> I think the real solution here is to simply clear the endpoint src cache
-> and consequently the dst_cache. This is slightly complicated by the fact
-> that dst_cache releases dsts lazily, so I needed to add a little utility
-> function for that, but that was pretty easy to do.
-> 
-> Can you take a look at the below patch and let me know if it works for
-> you and passes other testing you and Toke might be doing with it? (Also,
-> please CC the wireguard mailing list in addition to netdev next time?)
-> If the patch looks good to you and works well, I'll include it in the
-> next series of wireguard patches I send back out to netdev. I'm back
-> from travels next week and will begin working on the next series then.
+UPDATE:
+During the outage, I ran a simple test to check if both sides have
+access to each other's specified UDP ports, then I found something
+interesting:
+Some 148 bytes length packets are transferred between parties which I
+can't recognize what are them.
+By the way here I copy my test results.
+Anybody can spot what's going on here?
+The middle-node host name which runs wg1 is ir-pp and the exit-note
+(to free internet) which runs wg2 is sf-do:
+(these two parts happened at the same time and are copied from 2
+different servers):
 
-Hi Jason,
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+root@ir-pp:~# nc -u sf-do 50840
+123456
+1234
+12
+^C
+root@ir-pp:~# tcpdump 'port 50841'
+dropped privs to tcpdump
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on eth0, link-type EN10MB (Ethernet), capture size 262144 bytes
+20:56:57.607342 IP ir-pp.50841 > sf-do.50840: UDP, length 148
+20:57:01.042471 IP sf-do.43161 > ir-pp.50841: UDP, length 3
+20:57:02.361827 IP ir-pp.50841 > sf-do.50840: UDP, length 148
+20:57:03.635754 IP sf-do.43161 > ir-pp.50841: UDP, length 5
+20:57:06.740922 IP sf-do.43161 > ir-pp.50841: UDP, length 7
+20:57:07.552305 IP ir-pp.50841 > sf-do.50840: UDP, length 148
+^C
+6 packets captured
+15 packets received by filter
+0 packets dropped by kernel
+root@ir-pp:~#
 
-I tested your patch on both physical and virtual machines. All works fine.
 
-So please feel free to add
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+root@sf-do:~# tcpdump 'port 50840'
+dropped privs to tcpdump
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on eth0, link-type EN10MB (Ethernet), capture size 262144 bytes
+20:56:09.126958 IP sf-do.50840 > ir-pp.50841: UDP, length 148
+20:56:14.758974 IP sf-do.50840 > ir-pp.50841: UDP, length 148
+20:56:18.222814 IP ir-pp.38136 > sf-do.50840: UDP, length 7
+20:56:20.391041 IP sf-do.50840 > ir-pp.50841: UDP, length 148
+20:56:22.307488 IP ir-pp.38136 > sf-do.50840: UDP, length 5
+20:56:24.702590 IP ir-pp.38136 > sf-do.50840: UDP, length 3
+20:56:25.510985 IP sf-do.50840 > ir-pp.50841: UDP, length 148
+20:56:30.630917 IP sf-do.50840 > ir-pp.50841: UDP, length 148
+20:56:35.750965 IP sf-do.50840 > ir-pp.50841: UDP, length 148
+^C
+9 packets captured
+9 packets received by filter
+0 packets dropped by kernel
+root@sf-do:~# nc -u ir-pp 50841
+12
+1234
+123456
+^C
+root@sf-do:~#
 
-Tested-by: Hangbin Liu <liuhangbin@gmail.com>
-
-Thanks
-Hangbin
-> 
-> Regards,
-> Jason
-> 
-> ---------8<-------------8<-----------------
-> 
-> From f9984a41eeaebfdcef5aba8a71966b77ba0de8c0 Mon Sep 17 00:00:00 2001
-> From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-> Date: Wed, 1 Sep 2021 14:53:39 +0200
-> Subject: [PATCH] wireguard: device: reset peer src endpoint when netns exits
-> MIME-Version: 1.0
-> Content-Type: text/plain; charset=UTF-8
-> Content-Transfer-Encoding: 8bit
-> 
-> Each peer's endpoint contains a dst_cache entry that takes a reference
-> to another netdev. When the containing namespace exits, we take down the
-> socket and prevent future sockets from being created (by setting
-> creating_net to NULL), which removes that potential reference on the
-> netns. However, it doesn't release references to the netns that a netdev
-> cached in dst_cache might be taking, so the netns still might fail to
-> exit. Since the socket is gimped anyway, we can simply clear all the
-> dst_caches (by way of clearing the endpoint src), which will release all
-> references.
-> 
-> However, the current dst_cache_reset function only releases those
-> references lazily. But it turns out that all of our usages of
-> wg_socket_clear_peer_endpoint_src are called from contexts that are not
-> exactly high-speed or bottle-necked. For example, when there's
-> connection difficulty, or when userspace is reconfiguring the interface.
-> And in particular for this patch, when the netns is exiting. So for
-> those cases, it makes more sense to call dst_release immediately. For
-> that, we add a small helper function to dst_cache.
-> 
-> This patch also adds a test to netns.sh from Hangbin Liu to ensure this
-> doesn't regress.
-> 
-> Test-by: Hangbin Liu <liuhangbin@gmail.com>
-> Reported-by: Xiumei Mu <xmu@redhat.com>
-> Cc: Hangbin Liu <liuhangbin@gmail.com>
-> Cc: Toke Høiland-Jørgensen <toke@redhat.com>
-> Cc: Paolo Abeni <pabeni@redhat.com>
-> Fixes: 900575aa33a3 ("wireguard: device: avoid circular netns references")
-> Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-> ---
->  drivers/net/wireguard/device.c             |  3 +++
->  drivers/net/wireguard/socket.c             |  2 +-
->  include/net/dst_cache.h                    | 11 ++++++++++
->  net/core/dst_cache.c                       | 19 +++++++++++++++++
->  tools/testing/selftests/wireguard/netns.sh | 24 +++++++++++++++++++++-
->  5 files changed, 57 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/net/wireguard/device.c b/drivers/net/wireguard/device.c
-> index 551ddaaaf540..77e64ea6be67 100644
-> --- a/drivers/net/wireguard/device.c
-> +++ b/drivers/net/wireguard/device.c
-> @@ -398,6 +398,7 @@ static struct rtnl_link_ops link_ops __read_mostly = {
->  static void wg_netns_pre_exit(struct net *net)
->  {
->  	struct wg_device *wg;
-> +	struct wg_peer *peer;
->  
->  	rtnl_lock();
->  	list_for_each_entry(wg, &device_list, device_list) {
-> @@ -407,6 +408,8 @@ static void wg_netns_pre_exit(struct net *net)
->  			mutex_lock(&wg->device_update_lock);
->  			rcu_assign_pointer(wg->creating_net, NULL);
->  			wg_socket_reinit(wg, NULL, NULL);
-> +			list_for_each_entry(peer, &wg->peer_list, peer_list)
-> +				wg_socket_clear_peer_endpoint_src(peer);
->  			mutex_unlock(&wg->device_update_lock);
->  		}
->  	}
-> diff --git a/drivers/net/wireguard/socket.c b/drivers/net/wireguard/socket.c
-> index 8c496b747108..6f07b949cb81 100644
-> --- a/drivers/net/wireguard/socket.c
-> +++ b/drivers/net/wireguard/socket.c
-> @@ -308,7 +308,7 @@ void wg_socket_clear_peer_endpoint_src(struct wg_peer *peer)
->  {
->  	write_lock_bh(&peer->endpoint_lock);
->  	memset(&peer->endpoint.src6, 0, sizeof(peer->endpoint.src6));
-> -	dst_cache_reset(&peer->endpoint_cache);
-> +	dst_cache_reset_now(&peer->endpoint_cache);
->  	write_unlock_bh(&peer->endpoint_lock);
->  }
->  
-> diff --git a/include/net/dst_cache.h b/include/net/dst_cache.h
-> index 67634675e919..df6622a5fe98 100644
-> --- a/include/net/dst_cache.h
-> +++ b/include/net/dst_cache.h
-> @@ -79,6 +79,17 @@ static inline void dst_cache_reset(struct dst_cache *dst_cache)
->  	dst_cache->reset_ts = jiffies;
->  }
->  
-> +/**
-> + *	dst_cache_reset_now - invalidate the cache contents immediately
-> + *	@dst_cache: the cache
-> + *
-> + *	The caller must be sure there are no concurrent users, as this frees
-> + *	all dst_cache users immediately, rather than waiting for the next
-> + *	per-cpu usage like dst_cache_reset does. Most callers should use the
-> + *	higher speed lazily-freed dst_cache_reset function instead.
-> + */
-> +void dst_cache_reset_now(struct dst_cache *dst_cache);
-> +
->  /**
->   *	dst_cache_init - initialize the cache, allocating the required storage
->   *	@dst_cache: the cache
-> diff --git a/net/core/dst_cache.c b/net/core/dst_cache.c
-> index be74ab4551c2..0ccfd5fa5cb9 100644
-> --- a/net/core/dst_cache.c
-> +++ b/net/core/dst_cache.c
-> @@ -162,3 +162,22 @@ void dst_cache_destroy(struct dst_cache *dst_cache)
->  	free_percpu(dst_cache->cache);
->  }
->  EXPORT_SYMBOL_GPL(dst_cache_destroy);
-> +
-> +void dst_cache_reset_now(struct dst_cache *dst_cache)
-> +{
-> +	int i;
-> +
-> +	if (!dst_cache->cache)
-> +		return;
-> +
-> +	dst_cache->reset_ts = jiffies;
-> +	for_each_possible_cpu(i) {
-> +		struct dst_cache_pcpu *idst = per_cpu_ptr(dst_cache->cache, i);
-> +		struct dst_entry *dst = idst->dst;
-> +
-> +		idst->cookie = 0;
-> +		idst->dst = NULL;
-> +		dst_release(dst);
-> +	}
-> +}
-> +EXPORT_SYMBOL_GPL(dst_cache_reset_now);
-> diff --git a/tools/testing/selftests/wireguard/netns.sh b/tools/testing/selftests/wireguard/netns.sh
-> index 2e5c1630885e..8a9461aa0878 100755
-> --- a/tools/testing/selftests/wireguard/netns.sh
-> +++ b/tools/testing/selftests/wireguard/netns.sh
-> @@ -613,6 +613,28 @@ ip0 link set wg0 up
->  kill $ncat_pid
->  ip0 link del wg0
->  
-> +# Ensure that dst_cache references don't outlive netns lifetime
-> +ip1 link add dev wg0 type wireguard
-> +ip2 link add dev wg0 type wireguard
-> +configure_peers
-> +ip1 link add veth1 type veth peer name veth2
-> +ip1 link set veth2 netns $netns2
-> +ip1 addr add fd00:aa::1/64 dev veth1
-> +ip2 addr add fd00:aa::2/64 dev veth2
-> +ip1 link set veth1 up
-> +ip2 link set veth2 up
-> +waitiface $netns1 veth1
-> +waitiface $netns2 veth2
-> +ip1 -6 route add default dev veth1 via fd00:aa::2
-> +ip2 -6 route add default dev veth2 via fd00:aa::1
-> +n1 wg set wg0 peer "$pub2" endpoint [fd00:aa::2]:2
-> +n2 wg set wg0 peer "$pub1" endpoint [fd00:aa::1]:1
-> +n1 ping6 -c 1 fd00::2
-> +pp ip netns delete $netns1
-> +pp ip netns delete $netns2
-> +pp ip netns add $netns1
-> +pp ip netns add $netns2
-> +
->  # Ensure there aren't circular reference loops
->  ip1 link add wg1 type wireguard
->  ip2 link add wg2 type wireguard
-> @@ -631,7 +653,7 @@ while read -t 0.1 -r line 2>/dev/null || [[ $? -ne 142 ]]; do
->  done < /dev/kmsg
->  alldeleted=1
->  for object in "${!objects[@]}"; do
-> -	if [[ ${objects["$object"]} != *createddestroyed ]]; then
-> +	if [[ ${objects["$object"]} != *createddestroyed && ${objects["$object"]} != *createdcreateddestroyeddestroyed ]]; then
->  		echo "Error: $object: merely ${objects["$object"]}" >&3
->  		alldeleted=0
->  	fi
-> -- 
-> 2.32.0
+=E2=80=AB=D8=AD=D8=A7=D9=85=D8=AF =D8=B5=D8=A7=D8=A8=D8=B1 <=E2=80=AAhsaber=
+@gmail.com=E2=80=AC=E2=80=8F> =D8=AF=D8=B1 =D8=AA=D8=A7=D8=B1=DB=8C=D8=AE =
+=D8=AC=D9=85=D8=B9=D9=87 =DB=B3 =D8=B3=D9=BE=D8=AA=D8=A7=D9=85=D8=A8=D8=B1 =
+=DB=B2=DB=B0=DB=B2=DB=B1 =D8=B3=D8=A7=D8=B9=D8=AA =DB=B8:=DB=B3=DB=B9 =D9=
+=86=D9=88=D8=B4=D8=AA:=E2=80=AC
+>
+> Hi again,
+> Something new happened which makes me more confused.
+> I wrote a small shell-script to check the connection between wg1 and
+> wg2, so whenever it drops, the script restarts the wg1 and everything
+> comes back.
+> Yes yes I don't like this way of addressing issues, but what could I
+> do if no meaningful debug information exists, and I predict that it
+> might be a bug of Wireguard itself?
+> BTW this system worked fine and the anti-censorship VPN chain was up
+> and running till this morning.
+> The connection went down at 7:49 and didn't come back with
+> auto-restart. The process of restarting continued for about 6 minutes,
+> and at last at 7:55 it came back.
+> During the outage I checked both sides and everything seemed fine.
+> Sides could ping the public ip of each other, their wg udp ports were
+> accessible to each other, and even handshake seemed to be finished
+> correctly (using wg-show command) but peers couldn't ping each other.
+> And the most confusing part is everything came back to life without
+> any action from my side. Just after 6 minutes of continuously
+> restarting the wg1 interface!
+> Isn't there a bug? Somebody please help me to debug this problem and
+> find the cause.
+>
+> Here I bring you my shell-script code, and then its related log:
+>
+> -------------------------
+> #!/bin/bash
+>
+> exec >>/var/log/wg-ping 2>&1
+> while true
+> do
+>         connection=3D$(ping -c 1 10.10.10.1)
+>         time=3D$(date +%H:%M)
+>         seconds=3D$(date +%S)
+>         seconds=3D${seconds#0}
+>         if [[ "$connection" !=3D *"icmp"* ]]; then
+>           echo " "
+>           date
+>           wg-quick down wg1
+>           echo " "
+>           wg-quick up wg1
+>           connection=3D$(ping -c 1 10.10.10.1)
+>           time=3D$(date +%T)
+>           if [[ "$connection" !=3D *"icmp"* ]]; then
+>             echo "$time ERROR"
+>           else
+>             echo "$time OK"
+>             echo " "
+>           fi
+>         elif [[ $seconds -lt 5  ]]; then
+>           echo "$time OK"
+>         fi
+>         sleep 5
+> done
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> Sample log of simply restarting the wg1 which makes everything fine
+> (and happens every few hours):
+> -----------------------
+> 01:17 OK
+> 01:18 OK
+> 01:19 OK
+> 01:20 OK
+> 01:21 OK
+> 01:22 OK
+> 01:23 OK
+> 01:24 OK
+> 01:25 OK
+> 01:26 OK
+>
+> Fri Sep  3 01:26:41 +0430 2021
+> [#] ip route del default dev wg1 table middle
+> [#] ip rule del iif wg0 lookup middle
+> [#] ip link delete dev wg1
+>
+> [#] ip link add wg1 type wireguard
+> [#] wg setconf wg1 /dev/fd/63
+> [#] ip -4 address add 10.10.10.2/32 dev wg1
+> [#] ip link set mtu 1420 up dev wg1
+> [#] ip -4 route add 10.10.10.1/32 dev wg1
+> [#] ip route add default dev wg1 table middle
+> [#] ip rule add iif wg0 lookup middle
+> [#] wg set wg1 peer <public key> allowed-ips 0.0.0.0/0
+> 01:26:42 OK
+>
+> 01:27 OK
+> 01:28 OK
+> 01:30 OK
+> 01:31 OK
+> 01:32 OK
+> 01:33 OK
+> 01:34 OK
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D
+> And the log for the confusing situation I explained:
+> -----------------------
+> 07:45 OK
+> 07:46 OK
+> 07:47 OK
+> 07:48 OK
+> 07:49 OK
+>
+> Fri Sep  3 07:49:42 +0430 2021
+> [#] ip route del default dev wg1 table middle
+> [#] ip rule del iif wg0 lookup middle
+> [#] ip link delete dev wg1
+>
+> [#] ip link add wg1 type wireguard
+> [#] wg setconf wg1 /dev/fd/63
+> [#] ip -4 address add 10.10.10.2/32 dev wg1
+> [#] ip link set mtu 1420 up dev wg1
+> [#] ip -4 route add 10.10.10.1/32 dev wg1
+> [#] ip route add default dev wg1 table middle
+> [#] ip rule add iif wg0 lookup middle
+> [#] wg set wg1 peer <public key> allowed-ips 0.0.0.0/0
+> 07:49:53 ERROR
+>
+> Fri Sep  3 07:50:08 +0430 2021
+> [#] ip route del default dev wg1 table middle
+> [#] ip rule del iif wg0 lookup middle
+> [#] ip link delete dev wg1
+>
+> [#] ip link add wg1 type wireguard
+> [#] wg setconf wg1 /dev/fd/63
+> [#] ip -4 address add 10.10.10.2/32 dev wg1
+> [#] ip link set mtu 1420 up dev wg1
+> [#] ip -4 route add 10.10.10.1/32 dev wg1
+> [#] ip route add default dev wg1 table middle
+> [#] ip rule add iif wg0 lookup middle
+> [#] wg set wg1 peer <public key> allowed-ips 0.0.0.0/0
+> 07:50:18 ERROR
+>
+> =3D=3D=3D=3D=3D=3D
+> LOTS OF RETRY LOGS CROPPED
+> =3D=3D=3D=3D=3D=3D
+>
+> Fri Sep  3 07:55:13 +0430 2021
+> [#] ip route del default dev wg1 table middle
+> [#] ip rule del iif wg0 lookup middle
+> [#] ip link delete dev wg1
+>
+> [#] ip link add wg1 type wireguard
+> [#] wg setconf wg1 /dev/fd/63
+> [#] ip -4 address add 10.10.10.2/32 dev wg1
+> [#] ip link set mtu 1420 up dev wg1
+> [#] ip -4 route add 10.10.10.1/32 dev wg1
+> [#] ip route add default dev wg1 table middle
+> [#] ip rule add iif wg0 lookup middle
+> [#] wg set wg1 peer <public key> allowed-ips 0.0.0.0/0
+> 07:55:23 ERROR
+>
+> Fri Sep  3 07:55:38 +0430 2021
+> [#] ip route del default dev wg1 table middle
+> [#] ip rule del iif wg0 lookup middle
+> [#] ip link delete dev wg1
+>
+> [#] ip link add wg1 type wireguard
+> [#] wg setconf wg1 /dev/fd/63
+> [#] ip -4 address add 10.10.10.2/32 dev wg1
+> [#] ip link set mtu 1420 up dev wg1
+> [#] ip -4 route add 10.10.10.1/32 dev wg1
+> [#] ip route add default dev wg1 table middle
+> [#] ip rule add iif wg0 lookup middle
+> [#] wg set wg1 peer <public key> allowed-ips 0.0.0.0/0
+> 07:55:39 OK
+>
+> 07:56 OK
+> 07:57 OK
+> 07:58 OK
+> 07:59 OK
+> 08:00 OK
+> ---------------------------------------
+>
+>
+>
+> =E2=80=AB=D8=AD=D8=A7=D9=85=D8=AF =D8=B5=D8=A7=D8=A8=D8=B1 <=E2=80=AAhsab=
+er@gmail.com=E2=80=AC=E2=80=8F> =D8=AF=D8=B1 =D8=AA=D8=A7=D8=B1=DB=8C=D8=AE=
+ =D9=BE=D9=86=D8=AC=D8=B4=D9=86=D8=A8=D9=87 =DB=B2 =D8=B3=D9=BE=D8=AA=D8=A7=
+=D9=85=D8=A8=D8=B1 =DB=B2=DB=B0=DB=B2=DB=B1 =D8=B3=D8=A7=D8=B9=D8=AA
+> =DB=B8:=DB=B4=DB=B7 =D9=86=D9=88=D8=B4=D8=AA:=E2=80=AC
+> >
+> > -Thanks for reply.
+> > For test reasons, I turned the firewall off on my middle-node server.
+> > But I can't understand how this issue may be related to firewall,
+> > because most of the time it works (and to me it means firewall is Ok),
+> > but sometime for some unknown reason it stops working, which when I
+> > restart the wg1 interface with this command everything comes back to
+> > life:
+> > wg-quick down wg1 && wg-quick up wg1
+> >
+> > BTW here it is the firewall status of middle-node:
+> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > =E2=97=8F firewalld.service - firewalld - dynamic firewall daemon
+> >    Loaded: loaded (/usr/lib/systemd/system/firewalld.service;
+> > disabled; vendor preset: enabled)
+> >    Active: inactive (dead)
+> >      Docs: man:firewalld(1)
+> > -----------------------------------
+> > Chain INPUT (policy ACCEPT)
+> > target     prot opt source               destination
+> >
+> > Chain FORWARD (policy ACCEPT)
+> > target     prot opt source               destination
+> >
+> > Chain OUTPUT (policy ACCEPT)
+> > target     prot opt source               destination
+> > -----------------------------------
+> >
+> > And the firewall status of exit-node:
+> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > Unit firewalld.service could not be found.
+> > ---------------------------
+> > Chain INPUT (policy ACCEPT)
+> > target     prot opt source               destination
+> > ACCEPT     udp  --  0.0.0.0/0            0.0.0.0/0            udp dpt:5=
+0842
+> > ACCEPT     udp  --  0.0.0.0/0            0.0.0.0/0            udp dpt:5=
+3
+> >
+> > Chain FORWARD (policy ACCEPT)
+> > target     prot opt source               destination
+> > ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0
+> > ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0
+> >
+> > Chain OUTPUT (policy ACCEPT)
+> > target     prot opt source               destination
+> > ---------------------
+> > Regards
+> >
+> > =E2=80=AB=E2=80=AAJohn Lauro=E2=80=AC=E2=80=8F <=E2=80=AAjohnalauro@gma=
+il.com=E2=80=AC=E2=80=8F> =D8=AF=D8=B1 =D8=AA=D8=A7=D8=B1=DB=8C=D8=AE =DA=
+=86=D9=87=D8=A7=D8=B1=D8=B4=D9=86=D8=A8=D9=87 =DB=B1 =D8=B3=D9=BE=D8=AA=D8=
+=A7=D9=85=D8=A8=D8=B1
+> > =DB=B2=DB=B0=DB=B2=DB=B1 =D8=B3=D8=A7=D8=B9=D8=AA =DB=B2=DB=B1:=DB=B5=
+=DB=B1 =D9=86=D9=88=D8=B4=D8=AA:=E2=80=AC
+> > >
+> > > Just a guess, but I would be suspicious about connection tracking cau=
+sing the issue.  What are your firewall rules?
+> > >
+> > > =E2=80=AAOn Wed, Sep 1, 2021 at 9:51 AM =E2=80=AB=D8=AD=D8=A7=D9=85=
+=D8=AF =D8=B5=D8=A7=D8=A8=D8=B1=E2=80=AC=E2=80=8E <hsaber@gmail.com> wrote:=
+=E2=80=AC
+> > >>
+> > >> Dear friends,
+> > >> I have configured 3 wireguard interfaces on 2 servers to act as a
+> > >> chained VPN for me (to bypass the internet censorship in my country)=
+,
+> > >> with this schema:
+> > >>
+> > >> client -- wg0 on middle-node -- wg1 on middle node -- wg2 on exit no=
+de
+> > >> (to free internet)
+> > >>
+> > >> Everything works fine, but after a while, the connection between wg1
+> > >> and wg2 drops and I can't find the reason. The connection comes back
+> > >> to action by simply switching the wg1 down and up again using
+> > >> wg-quick. And the amazing behaviour is that sometimes the connection
+> > >> comes back to work automatically  after some random time passes,
+> > >> without any actions from my side (sometimes after a few tens of
+> > >> minutes, sometimes after a few hours).
+> > >> When the wg1-wg2 connection is not working, anything else between 2
+> > >> servers (middle-node and exit-node) works fine. I mean I can ping th=
+e
+> > >> public IP of each server from another part, but the local wireguard =
+ip
+> > >> of none of them are accessible.
+> > >>
+> > >> I tried to monitor the situation and read the logs but couldn't find
+> > >> what is happening here, so please help!
+> > >>
+> > >> The configuration:
+> > >> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > >>
+> > >> client (my mobile phone):
+> > >> -------------------------------------------
+> > >> [Interface]
+> > >> Address =3D 10.10.20.2/32
+> > >> PrivateKey =3D  <private key of client>
+> > >> DNS =3D 10.10.10.1
+> > >>
+> > >> ### Middle Node
+> > >> [Peer]
+> > >> PublicKey =3D  <public key of wg0>
+> > >> PresharedKey =3D  <preshared key>
+> > >> AllowedIPs =3D 0.0.0.0/0
+> > >> Endpoint =3D middle-node:50842
+> > >> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > >>
+> > >> wg0 (in middle-node server):
+> > >> -------------------------------------------
+> > >> [Interface]
+> > >> Address =3D 10.10.20.1/24
+> > >> ListenPort =3D 50842
+> > >> PrivateKey =3D  <private key of wg0>
+> > >>
+> > >> ### Client
+> > >> [Peer]
+> > >> PublicKey =3D  <public key of client>
+> > >> PresharedKey =3D  <preshared key>
+> > >> AllowedIPs =3D 10.10.20.2/32
+> > >> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > >>
+> > >> wg1 (again in middle-node server):
+> > >> -------------------------------------------
+> > >> [Interface]
+> > >> Address =3D 10.10.10.2/32
+> > >> PrivateKey =3D  <private key of wg1>
+> > >>
+> > >> PostUp =3D ip route add default dev wg1 table middle
+> > >> PostUp =3D ip rule add iif wg0 lookup middle
+> > >> PostUp =3D wg set wg1 peer <publickey of wg2 (in exit-node)> allowed=
+-ips 0.0.0.0/0
+> > >>
+> > >> PreDown =3D ip route del default dev wg1 table middle
+> > >> PreDown =3D ip rule del iif wg0 lookup middle
+> > >>
+> > >> ### Exit Node
+> > >> [Peer]
+> > >> PublicKey =3D  <publickey of wg2 (in exit-node)>
+> > >> PresharedKey =3D  <preshared key>
+> > >> AllowedIPs =3D 10.10.10.1/32
+> > >> Endpoint =3D exit-node:50842
+> > >> PersistentKeepalive =3D 25
+> > >> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > >>
+> > >> wg2 (in exit-node server):
+> > >> -------------------------------------------
+> > >> [Interface]
+> > >> Address =3D 10.10.10.1/24
+> > >> ListenPort =3D 50842
+> > >> PrivateKey =3D  <private key of wg2>
+> > >>
+> > >> PostUp   =3D iptables -A FORWARD -i eth0 -o wg2 -j ACCEPT
+> > >> PostUp   =3D iptables -A FORWARD -i wg2 -j ACCEPT
+> > >> PostUp   =3D iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+> > >>
+> > >> PostDown =3D iptables -D FORWARD -i eth0 -o wg2 -j ACCEPT
+> > >> PostDown =3D iptables -D FORWARD -i wg2 -j ACCEPT
+> > >> PostDown =3D iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
+> > >>
+> > >> ### Middle Node
+> > >> [Peer]
+> > >> PublicKey =3D  <publickey of wg1 (in middle-node)>
+> > >> PresharedKey =3D  <preshared key>
+> > >> AllowedIPs =3D 10.0.0.0/8
+> > >> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > >> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > >> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > >>
+> > >> Sample log of dmesg when the wg1-wg2 connection is not working:
+> > >> -------------------------------------------
+> > >> [Wed Sep  1 11:19:32 2021] wireguard: wg1: Sending keepalive packet =
+to
+> > >> peer 12 (~exit-node-ip~:50842)
+> > >> [Wed Sep  1 11:19:44 2021] wireguard: wg0: Sending keepalive packet =
+to
+> > >> peer 8 (~client-ip~:65323)
+> > >> [Wed Sep  1 11:19:44 2021] wireguard: wg1: Receiving keepalive packe=
+t
+> > >> from peer 12 (~exit-node-ip~:50842)
+> > >> [Wed Sep  1 11:20:09 2021] wireguard: wg0: Receiving handshake
+> > >> initiation from peer 8 (~client-ip~:65323)
+> > >> [Wed Sep  1 11:20:09 2021] wireguard: wg0: Sending handshake respons=
+e
+> > >> to peer 8 (~client-ip~:65323)
+> > >> [Wed Sep  1 11:20:09 2021] wireguard: wg0: Keypair 2867 destroyed fo=
+r peer 8
+> > >> [Wed Sep  1 11:20:09 2021] wireguard: wg0: Keypair 2871 created for =
+peer 8
+> > >> [Wed Sep  1 11:20:09 2021] wireguard: wg0: Receiving keepalive packe=
+t
+> > >> from peer 8 (~client-ip~:65323)
+> > >> [Wed Sep  1 11:21:19 2021] wireguard: wg0: Sending keepalive packet =
+to
+> > >> peer 8 (~client-ip~:65323)
+> > >> [Wed Sep  1 11:21:24 2021] wireguard: wg1: Retrying handshake with
+> > >> peer 12 (~exit-node-ip~:50842) because we stopped hearing back after
+> > >> 15 seconds
+> > >> [Wed Sep  1 11:21:24 2021] wireguard: wg1: Sending handshake
+> > >> initiation to peer 12 (~exit-node-ip~:50842)
+> > >> [Wed Sep  1 11:21:30 2021] wireguard: wg1: Handshake for peer 12
+> > >> (~exit-node-ip~:50842) did not complete after 5 seconds, retrying (t=
+ry
+> > >> 2)
+> > >> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > >>
+> > >> Sample log of dmesg when the wg1-wg2 connection is coming back using
+> > >> manual restart:
+> > >> -------------------------------------------
+> > >> [Wed Sep  1 11:45:52 2021] wireguard: wg1: Sending handshake
+> > >> initiation to peer 12 (~exit-node-ip~:50842)
+> > >> [Wed Sep  1 11:45:52 2021] wireguard: wg0: Sending keepalive packet =
+to
+> > >> peer 8 (~client-ip~:2335)
+> > >> [Wed Sep  1 11:45:58 2021] wireguard: wg1: Handshake for peer 12
+> > >> (~exit-node-ip~:50842) did not complete after 5 seconds, retrying (t=
+ry
+> > >> 3)
+> > >> [Wed Sep  1 11:45:58 2021] wireguard: wg1: Sending handshake
+> > >> initiation to peer 12 (~exit-node-ip~:50842)
+> > >> [Wed Sep  1 11:45:58 2021] wireguard: wg1: Keypair 2878 destroyed fo=
+r peer 12
+> > >> [Wed Sep  1 11:45:58 2021] wireguard: wg1: Peer 12
+> > >> (~exit-node-ip~:50842) destroyed
+> > >> [Wed Sep  1 11:45:58 2021] wireguard: wg1: Interface destroyed
+> > >> [Wed Sep  1 11:45:58 2021] wireguard: wg1: Interface created
+> > >> [Wed Sep  1 11:45:58 2021] wireguard: wg1: Peer 13 created
+> > >> [Wed Sep  1 11:45:58 2021] wireguard: wg1: Sending keepalive packet =
+to
+> > >> peer 13 (~exit-node-ip~:50842)
+> > >> [Wed Sep  1 11:45:58 2021] wireguard: wg1: Sending handshake
+> > >> initiation to peer 13 (~exit-node-ip~:50842)
+> > >> [Wed Sep  1 11:45:58 2021] wireguard: wg1: Receiving handshake
+> > >> response from peer 13 (~exit-node-ip~:50842)
+> > >> [Wed Sep  1 11:45:58 2021] wireguard: wg1: Keypair 2881 created for =
+peer 13
+> > >> [Wed Sep  1 11:46:12 2021] wireguard: wg0: Receiving keepalive packe=
+t
+> > >> from peer 8 (~client-ip~:2335)
+> > >> [Wed Sep  1 11:46:14 2021] wireguard: wg1: Receiving keepalive packe=
+t
+> > >> from peer 13 (~exit-node-ip~:50842)
+> > >> [Wed Sep  1 11:46:27 2021] wireguard: wg0: Sending keepalive packet =
+to
+> > >> peer 8 (~client-ip~:2335)
+> > >> [Wed Sep  1 11:46:28 2021] wireguard: wg1: Receiving keepalive packe=
+t
+> > >> from peer 13 (~exit-node-ip~:50842)
+> > >> [Wed Sep  1 11:46:52 2021] wireguard: wg1: Receiving keepalive packe=
+t
+> > >> from peer 13 (~exit-node-ip~:50842)
+> > >>
+> > >>
+> > >> Thanks in advance for your kind help
