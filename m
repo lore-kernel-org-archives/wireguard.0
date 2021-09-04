@@ -2,63 +2,70 @@ Return-Path: <SRS0=TPXl=N3=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=0.2 required=3.0 tests=BAYES_20,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A219AC4332F
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  5 Sep 2021 11:12:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6860DC433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  5 Sep 2021 11:18:30 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id E693B60F22
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  5 Sep 2021 11:12:56 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org E693B60F22
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	by mail.kernel.org (Postfix) with ESMTPS id 836ED608FB
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  5 Sep 2021 11:18:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 836ED608FB
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=z3ntu.xyz
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6d243217;
-	Sun, 5 Sep 2021 11:12:55 +0000 (UTC)
-Received: from mail-il1-x133.google.com (mail-il1-x133.google.com
- [2607:f8b0:4864:20::133])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 43709950
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d436abad;
+	Sun, 5 Sep 2021 11:16:51 +0000 (UTC)
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 5adb1f7f
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Fri, 3 Sep 2021 23:08:05 +0000 (UTC)
-Received: by mail-il1-x133.google.com with SMTP id j15so564694ila.1
- for <wireguard@lists.zx2c4.com>; Fri, 03 Sep 2021 16:08:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:from:date:message-id:subject:to;
- bh=ax+41KFU+FtwwIlpI/+w/HBU8ARbC+foUhtk0lVJWeA=;
- b=F+CvT28EKzw3b/8lN9zNLAcnwDLnyDR84Y2vfq2vWh5g8qLRg/lZp5D/Gck0lxgTf9
- Y70fsB/tmhkBX9mVkkZJr6eCK2kYT46sn4XmlMm9mJd+/IwvZuE77djalrz4aPBuUKM5
- Un1gWo8RvBO/VGhTjaFHSUSTwXP+/ndn4eHRPq6r8GCvLBg1P0O6d78PbyyJxJIiTpvO
- /Yqt/hh/SC6MNGaCQCY2h5BhmILlAIxaWxAX8DR7mk1uxNrp/PMq43oE/aX9bNN+iAgx
- hO9J3Urx+/tgshl0icUL4faZGwKqRnEv9q08M+hY2B/aeTxDpiBi0gvqiWW7kAT0CGKC
- 7zhw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=ax+41KFU+FtwwIlpI/+w/HBU8ARbC+foUhtk0lVJWeA=;
- b=FXdRfkjibmYpoz+TBUao9dd/sdJAuiWeAsWwd4H9i6VadUFOCbGSvusYERgSYN645o
- bC4oLiU+vKjZGsamUTxBUSLkT6PJJ7RFQaWX31txJHyUcNuEqocyddLf5578P1eREjV3
- mUUjfNFLJQOqHwU8Q4gAWr+3+MG/Qy7oqll+98mXKfQXK4deb/xkCeAIy8l2ZTQ6URlX
- 5SjcdNVfscf2tIF8veq2roq2CH8t9ThDZKrhoklxiKzFsXBps/Gn4FDtrcei41X1jyx1
- EnD4Uay86nqjWGGK1L/PZ9xJdC74zx+hR9Y/sOt3MpcSws7FCXa60Ku5uW0zhsc3R79Y
- bQrg==
-X-Gm-Message-State: AOAM5303qPM3eclbUukT2fuDFuyKvrMyoZcTmvU/F/kvR6e10BXUU/OU
- SnvWi0s9tyXjS1SD3KLSznts3qnEUzflyDVKbwzr5WtdVIk=
-X-Google-Smtp-Source: ABdhPJyzc3w66tsY6t9HJM1U7y1jwg1kiHpWP/P9j7Pixa0mwAMtli93Nws/K66PHhYOs+qvPfnuaTyt5Tojp/h2MGM=
-X-Received: by 2002:a92:8702:: with SMTP id m2mr905830ild.250.1630710483556;
- Fri, 03 Sep 2021 16:08:03 -0700 (PDT)
-MIME-Version: 1.0
-From: Veerabhushan Hatte <vkhatte@gmail.com>
-Date: Fri, 3 Sep 2021 16:07:52 -0700
-Message-ID: <CAC6DygdBVsk2Sa3LFLLs5WdOUUOi1Vs0+v6gXV7d+h-noy8v1A@mail.gmail.com>
-Subject: Unable to load wintun library for Windows
+ for <wireguard@lists.zx2c4.com>; Sat, 4 Sep 2021 11:47:08 +0000 (UTC)
+Received: from [127.0.0.1] (ip-213-127-63-121.ip.prioritytelecom.net
+ [213.127.63.121])
+ by mail.z3ntu.xyz (Postfix) with ESMTPSA id C1DD2C8D1B
+ for <wireguard@lists.zx2c4.com>; Sat,  4 Sep 2021 11:47:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
+ t=1630756027; bh=qN2CKfToQaSpSSu3gvGzgcuExaSbGC40+5gAAbtsbu0=;
+ h=Date:From:To:Subject;
+ b=USFcEMmR/XYLE0/gXDYe5GM2jvesJYIAb0S4qLJfO+VQF1gHR686jsB0TQ6NwibwS
+ j7RTzRq+okcxwUQqsOaqAuTDAlGN9i/5ElIJX7PpUxhdrPlfifbfzlRJrRwztoMJlB
+ 8fmZHM+3xDvPIt5yYnuHsbTUVyMn5za5HtpbepNs=
+Date: Sat, 04 Sep 2021 13:46:54 +0200
+From: Luca Weiss <luca@z3ntu.xyz>
 To: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
-X-Mailman-Approved-At: Sun, 05 Sep 2021 11:12:49 +0000
+Subject: build.wireguard.com down
+User-Agent: K-9 Mail for Android
+Message-ID: <1126168D-D01E-48E8-B3F4-308F16666C61@z3ntu.xyz>
+MIME-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Autocrypt: addr=luca@z3ntu.xyz; keydata=
+ mQINBFgc0/QBEACzBE9TBfe+O2TARphhmhVgMd2zo3lkvjWdohb9mg9+NvUq7swQR2l8davgwaTN
+ VwDUA9jdzfjp4GShf0VFnqqFGouEc3OMeuHFdtjG4RoYGW+XvEoAcTWgY6glANmMZMi33D+2wnQQ
+ Qziie3LMTQ7Tlpk8at8Ck4ShmmGTmek9LNFq1eHs3IHK5eH0fDA/rYvPxFMmwbHRDjdwtXjZlXBC
+ nxEXK8CJkNG58G+RbtPU0I8Iu02TDOkr9x6KwLT1lJmq03wCkuQEXrDAzo6kkeAMhzWBtBtxTB1M
+ byOZqNlbzEtxOTK9iA74U6POyN//876ESQ87LicFS4mgoyHL0Vt7ro9CSH7Imzv96Ae8HDZqIcBy
+ Bn9YMBswjy4JOsC9JP/oDhr71y40nnrVvgx4ZesJM0PL9J1JYQWJQ22GoinnDwSB11Re51OYsK+l
+ xEqph38N+AjcNYm+l85O/l+BkkULC+0kHWG6wQCv67KyeYCJJhNqJucXj2gXXaKyv2ltWPwHgK6w
+ OAtN9QbimcYV2PUgfx6hl5r7buwc3tefp9ccmtoLq74mgrKiLurHqa4pKCa1uqfhBEN5/Os5tMrX
+ IGa2sRvKHK0Pn7iyJQyuclyOp4r9W+QUw2DENm4n6ovkl7rfriL6ibBgVLcnexdG/8LZRaWFV96G
+ YY3VCcRlz8SCwQARAQABtBtMdWNhIFdlaXNzIDxsdWNhQHozbnR1Lnh5ej6JAlQEEwEIAD4CGy8F
+ CwkIBwIGFQgJCgsCBBYCAwECHgECF4AWIQS9BNokyXG41YeyuNf69pz2zS0CzQUCX5CaYAUJCVT5
+ 7AAKCRD69pz2zS0Cze7SD/0Xnvid+b9qeqAoXZeAqju1sXlv1BU8dNvA7AlDOQejNOAOO64DB8Ye
+ r6AWu5Wcizo0KHEGPKmgJaAcjUac9MqFdLfhImsnUKEC6cjVeIJE5fynkNibtucQQFWO6nQMMF/3
+ DmmfFOVeY70dhUzprvR8iYHyehh2yytQ7X7y83DSC89GpWq5hHJX41M3M0g006mPSNQvd79XXXVe
+ RM7CUg6Ny3f3nThD7oa6SjLPF3hvYnhg1QTZk2zF3P0IeK+GiXI6RrogNBrCSKr2u3jW1QwiFJu1
+ RI8TFgYdxMFyckUDpLZbsgEOsss07ffROQm7i+tVVlUQH7RM9TWVxA7jCMkFYtiE4V0WrTowcuk+
+ 28g/L/SKC+wrhAV/s98+CghS7u7A/xhamXGMdcW2ZQEUkvTBJULe6343bM1RkiYDKbfra1p8/rww
+ TH5G3mtoCf8in7VlfNEcjf00oBHHtoz3xZtIRRf7QaW7XOz9vQaMV0YcmGhZzFd/tbWI9R74gwqD
+ Zf9Qtt5P4ptKBYH7yKqvl1wuncTDrIcltMgSfeP9Z6yt+EkMz08XvZwC6OboozEmM+zd7jbCcjom
+ o3XNYUDvgBPZq+nWzOGFH8KdPHnLHbso2DZf5StxKdYXH8WWyJkQqLW+BYCiGxTLfjyFofEUoTdY
+ 2bEWznuNRPmsKWeqEkzxyA==
+X-Mailman-Approved-At: Sun, 05 Sep 2021 11:16:50 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -73,14 +80,11 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi All,
+Hey all,
 
-We are trying to use wintun DLL to create SSL tunnel. I copied
-wintun.dll into c:\Windows\system32\ and tried the example provided to
-load the library (LoadLibraryExW(wintun.dll,...)). I am unable to load
-library and I am getting error 126 for LoadLibraryEXW.
+It seems that build=2Ewireguard=2Ecom is down which is hosting the distros=
+=2Etxt used by the android_kernel_wireguard script and also used by the mai=
+n homepage (distros=2Ejson there)=2E
 
-How do I solve this issue?
-
-Thanks,
-Veera
+Regards
+Luca
