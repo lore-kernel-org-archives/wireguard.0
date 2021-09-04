@@ -1,71 +1,80 @@
-Return-Path: <SRS0=rqdY=NZ=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=jLHU=N2=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.9 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA3CDC433FE
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  3 Sep 2021 13:59:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 81803C433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  4 Sep 2021 08:43:21 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 77B3761059
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  3 Sep 2021 13:59:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 77B3761059
-Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=tootai.net
+	by mail.kernel.org (Postfix) with ESMTPS id 79EF561051
+	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  4 Sep 2021 08:43:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 79EF561051
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cfd31b61;
-	Fri, 3 Sep 2021 13:59:35 +0000 (UTC)
-Received: from mail1.tootai.net (<unknown> [2a01:4f8:a0:821b::58:14])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id aac586db
- for <wireguard@lists.zx2c4.com>; Fri, 3 Sep 2021 13:59:34 +0000 (UTC)
-Received: from mail1.tootai.net (localhost [127.0.0.1])
- by mail1.tootai.net (Postfix) with ESMTP id BA9956081A17
- for <wireguard@lists.zx2c4.com>; Fri,  3 Sep 2021 15:59:33 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=tootai.net; s=mail;
- t=1630677573; bh=uckmG2Kdjz3NkgW0PySvVUhemBgO575qHXsb3yxLsgo=;
- h=Subject:To:References:From:Date:In-Reply-To:From;
- b=POxii/6f46QwBmuFWw7moPPaF0on87wQjfXA0nvPM/FgGpUG3Ns45pO5gygKbL2iy
- U2OxK31UaeNCT24URZwDLK+2E/ocn0FO1jyT9Y/r15SAFK//zdbMX0RV1YZKQeCZVc
- E8g2VO5z+8ASMDStujqcRwx0EsIzVrUwiwOfR/mE=
-Received: from [IPv6:2a01:729:16e:10::24] (unknown [IPv6:2a01:729:16e:10::24])
- by mail1.tootai.net (Postfix) with ESMTPA id 865596081880
- for <wireguard@lists.zx2c4.com>; Fri,  3 Sep 2021 15:59:33 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=tootai.net; s=mail;
- t=1630677573; bh=uckmG2Kdjz3NkgW0PySvVUhemBgO575qHXsb3yxLsgo=;
- h=Subject:To:References:From:Date:In-Reply-To:From;
- b=POxii/6f46QwBmuFWw7moPPaF0on87wQjfXA0nvPM/FgGpUG3Ns45pO5gygKbL2iy
- U2OxK31UaeNCT24URZwDLK+2E/ocn0FO1jyT9Y/r15SAFK//zdbMX0RV1YZKQeCZVc
- E8g2VO5z+8ASMDStujqcRwx0EsIzVrUwiwOfR/mE=
-Subject: Re: ipv6 connexion fail - ipv4 OK (SOLVED)
-To: wireguard@lists.zx2c4.com
-References: <ec8fe61d-06a9-9544-ab2c-3dfc26905d74@tootai.net>
- <e4b50341-6f90-92fe-7728-a518768a1b51@tootai.net>
- <20210827211412.3ed5f170@natsu>
- <3ec547c6-c846-e5be-e276-ace7862f5cb7@tootai.net>
- <34d4341c-98be-b754-af8e-c7097bc21aac@pineview.net>
- <20210828024454.1766744f@natsu>
- <7437f3e0-26ba-5e33-a175-0cf233635b3f@tootai.net>
- <20210830214312.6a332333@natsu>
- <e620ed11-2664-fa06-1497-a0f18facac7e@tootai.net>
- <20210830223836.5384badd@natsu>
- <e949b3e2-eab7-fc4c-2b15-8820a2c17374@tootai.net>
- <20210830225927.6df90edb@natsu>
-From: Daniel <tech@tootai.net>
-Message-ID: <461a963d-c216-b3fc-521d-e45e89ac1191@tootai.net>
-Date: Fri, 3 Sep 2021 15:59:32 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b053169a;
+	Sat, 4 Sep 2021 08:43:18 +0000 (UTC)
+Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com
+ [2607:f8b0:4864:20::535])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 0724cec0
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Sat, 4 Sep 2021 08:43:16 +0000 (UTC)
+Received: by mail-pg1-x535.google.com with SMTP id 8so1392761pga.7
+ for <wireguard@lists.zx2c4.com>; Sat, 04 Sep 2021 01:43:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:content-transfer-encoding:in-reply-to;
+ bh=MyZDsyRp8d7Nz/bpQylF+ViUcJxOfrCc2VN9A8K9j44=;
+ b=VfGyNHiQt7CEfxMb907l+bs/Lf0V2asD7g5ugz5FxImufjiA0P52dnovdg+2UOALYU
+ rty6SmFDzLQ2dof9nCrqV0X8Anl3p9CbPp/WgxSBQR13x4hJSsLJZDufyVf5Ce4kcbC7
+ H7uFKpYcbUXNvTKaN3IB+CmStG1cWO+ymcVs/doz+ujVB3Q/w5oL30uu9wj2T+PGf6uR
+ NpIEIEp6d3wt+QhUy/T+8mD9vIs0GS7dOsormAn2aDlmjUq/WE8XGtUiuXkDpbe5CBCr
+ MZEknnWFhL/NnoiXvap9OlQMamy1DFbW0H3S9ACWpb7Tmd/suTwPgieYCjiT0EpvwGJG
+ /+ew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:content-transfer-encoding
+ :in-reply-to;
+ bh=MyZDsyRp8d7Nz/bpQylF+ViUcJxOfrCc2VN9A8K9j44=;
+ b=pGYIgm5GdWXiBPdw1mK6FfobW809SAcLlO3k5UYR4OqjW1cLDfEdZ5APUNMbv+M4Rb
+ pgtPU8MHdjk9LU6s0a1FTRcObrdFmrjjFHcKEPfvZSbboaLIA5BifMmleaQbJpWFiFzD
+ HJuDrtczjME0LphlKSarG8VSa95bVoMtjeHfhyIXx9+AHufkkuxvHrm4OaLo//6mnmpE
+ NNRjB7m6L+sUaCL0eF1wDWN2aKNPiXazs9Yo7CpFHAs0vPq5ElKbHRFWvJE6IvWwBOoK
+ Cp5BTLMjBtgRvgMnZ3YjCD1pIUX68l3iBQFe0c6I9EuJClC5jtSz1DPVt53i1dQdjkt8
+ 0x9g==
+X-Gm-Message-State: AOAM533KCFyq/9RkQTa2tUCdVFjpVADocH42Yviw12wT/ItbK6Ts5epv
+ +1tdcjgtvow5engIabzwtkY=
+X-Google-Smtp-Source: ABdhPJzT+8yvMGoTBH9a/TuyQ2UQRWeaXd9y0g5hD5S9N9ci4edgz5Ml7WjKJwzsDLs4ngUU0NKaJA==
+X-Received: by 2002:a65:44c6:: with SMTP id g6mr2759899pgs.442.1630744995027; 
+ Sat, 04 Sep 2021 01:43:15 -0700 (PDT)
+Received: from Laptop-X1 ([209.132.188.80])
+ by smtp.gmail.com with ESMTPSA id y8sm1723365pfe.162.2021.09.04.01.43.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 04 Sep 2021 01:43:14 -0700 (PDT)
+Date: Sat, 4 Sep 2021 16:43:09 +0800
+From: Hangbin Liu <liuhangbin@gmail.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: netdev@vger.kernel.org, David Miller <davem@davemloft.net>,
+ Xiumei Mu <xmu@redhat.com>,
+ Toke =?iso-8859-1?Q?H=F8iland-J=F8rgensen?= <toke@redhat.com>,
+ Paolo Abeni <pabeni@redhat.com>, wireguard@lists.zx2c4.com
+Subject: Re: [PATCH net] wireguard: remove peer cache in netns_pre_exit
+Message-ID: <YTMxnfkJVA8b6lAV@Laptop-X1>
+References: <20210901122904.9094-1-liuhangbin@gmail.com>
+ <YS+GX/Y85bch4gMU@zx2c4.com>
 MIME-Version: 1.0
-In-Reply-To: <20210830225927.6df90edb@natsu>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Content-Language: fr-FR
-X-Virus-Scanned: ClamAV using ClamSMTP
+In-Reply-To: <YS+GX/Y85bch4gMU@zx2c4.com>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -80,33 +89,213 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello
+On Wed, Sep 01, 2021 at 03:55:43PM +0200, Jason A. Donenfeld wrote:
+> Hi Hangbin,
+> 
+> Thanks for the patch and especially for the test. While I see that
+> you've pointed to a real problem, I don't think that this particular way
+> of fixing it is correct, because it will cause issues for userspace that
+> expects to be able to read back the list of peers for, for example,
+> keeping track of the latest endpoint addresses or rx/tx transfer
+> quantities.
+> 
+> I think the real solution here is to simply clear the endpoint src cache
+> and consequently the dst_cache. This is slightly complicated by the fact
+> that dst_cache releases dsts lazily, so I needed to add a little utility
+> function for that, but that was pretty easy to do.
+> 
+> Can you take a look at the below patch and let me know if it works for
+> you and passes other testing you and Toke might be doing with it? (Also,
+> please CC the wireguard mailing list in addition to netdev next time?)
+> If the patch looks good to you and works well, I'll include it in the
+> next series of wireguard patches I send back out to netdev. I'm back
+> from travels next week and will begin working on the next series then.
 
-Le 30/08/2021 Ã  19:59, Roman Mamedov a Ã©critÂ :
-> On Mon, 30 Aug 2021 19:44:21 +0200
-> Daniel <tech@tootai.net> wrote:
->
->>> Do you get WG working at all, between some other two hosts (not involving this
->>> particular server for now)?
->> Yes. Clients are shown on both sides as connected, trafic seems to go
->> out on each side but other one as received near to nothing.
-> I mean not just "shown as connected", but have you got actual traffic working
-> between any two hosts. Even just forgetting this server for a while. So that
-> you can rule out some general issue and concentrate on just the particular
-> machine setup.
+Hi Jason,
 
-I got it.
+I tested your patch on both physical and virtual machines. All works fine.
 
-1. you can't use ipv6 IP from the range of /64 (or other) that you 
-connect to. As workaround, I build an ULA/64 network to connect both 
-ends using one ipv6 from the /64 range of the server to connect
-2. once the tunnel is up nothing is shown on wg show until first packet 
-arrive. If you try to ping from server to client -which was my case- you 
-get an error destination address has to be specified. But as soon as the 
-client has send a packet (ping or keepalive), tunnel is open both ways
-3. the MTU I have to use is 1436
+So please feel free to add
 
-Thanks all for your help.
+Tested-by: Hangbin Liu <liuhangbin@gmail.com>
 
--- 
-Daniel
+Thanks
+Hangbin
+> 
+> Regards,
+> Jason
+> 
+> ---------8<-------------8<-----------------
+> 
+> From f9984a41eeaebfdcef5aba8a71966b77ba0de8c0 Mon Sep 17 00:00:00 2001
+> From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+> Date: Wed, 1 Sep 2021 14:53:39 +0200
+> Subject: [PATCH] wireguard: device: reset peer src endpoint when netns exits
+> MIME-Version: 1.0
+> Content-Type: text/plain; charset=UTF-8
+> Content-Transfer-Encoding: 8bit
+> 
+> Each peer's endpoint contains a dst_cache entry that takes a reference
+> to another netdev. When the containing namespace exits, we take down the
+> socket and prevent future sockets from being created (by setting
+> creating_net to NULL), which removes that potential reference on the
+> netns. However, it doesn't release references to the netns that a netdev
+> cached in dst_cache might be taking, so the netns still might fail to
+> exit. Since the socket is gimped anyway, we can simply clear all the
+> dst_caches (by way of clearing the endpoint src), which will release all
+> references.
+> 
+> However, the current dst_cache_reset function only releases those
+> references lazily. But it turns out that all of our usages of
+> wg_socket_clear_peer_endpoint_src are called from contexts that are not
+> exactly high-speed or bottle-necked. For example, when there's
+> connection difficulty, or when userspace is reconfiguring the interface.
+> And in particular for this patch, when the netns is exiting. So for
+> those cases, it makes more sense to call dst_release immediately. For
+> that, we add a small helper function to dst_cache.
+> 
+> This patch also adds a test to netns.sh from Hangbin Liu to ensure this
+> doesn't regress.
+> 
+> Test-by: Hangbin Liu <liuhangbin@gmail.com>
+> Reported-by: Xiumei Mu <xmu@redhat.com>
+> Cc: Hangbin Liu <liuhangbin@gmail.com>
+> Cc: Toke Høiland-Jørgensen <toke@redhat.com>
+> Cc: Paolo Abeni <pabeni@redhat.com>
+> Fixes: 900575aa33a3 ("wireguard: device: avoid circular netns references")
+> Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+> ---
+>  drivers/net/wireguard/device.c             |  3 +++
+>  drivers/net/wireguard/socket.c             |  2 +-
+>  include/net/dst_cache.h                    | 11 ++++++++++
+>  net/core/dst_cache.c                       | 19 +++++++++++++++++
+>  tools/testing/selftests/wireguard/netns.sh | 24 +++++++++++++++++++++-
+>  5 files changed, 57 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/net/wireguard/device.c b/drivers/net/wireguard/device.c
+> index 551ddaaaf540..77e64ea6be67 100644
+> --- a/drivers/net/wireguard/device.c
+> +++ b/drivers/net/wireguard/device.c
+> @@ -398,6 +398,7 @@ static struct rtnl_link_ops link_ops __read_mostly = {
+>  static void wg_netns_pre_exit(struct net *net)
+>  {
+>  	struct wg_device *wg;
+> +	struct wg_peer *peer;
+>  
+>  	rtnl_lock();
+>  	list_for_each_entry(wg, &device_list, device_list) {
+> @@ -407,6 +408,8 @@ static void wg_netns_pre_exit(struct net *net)
+>  			mutex_lock(&wg->device_update_lock);
+>  			rcu_assign_pointer(wg->creating_net, NULL);
+>  			wg_socket_reinit(wg, NULL, NULL);
+> +			list_for_each_entry(peer, &wg->peer_list, peer_list)
+> +				wg_socket_clear_peer_endpoint_src(peer);
+>  			mutex_unlock(&wg->device_update_lock);
+>  		}
+>  	}
+> diff --git a/drivers/net/wireguard/socket.c b/drivers/net/wireguard/socket.c
+> index 8c496b747108..6f07b949cb81 100644
+> --- a/drivers/net/wireguard/socket.c
+> +++ b/drivers/net/wireguard/socket.c
+> @@ -308,7 +308,7 @@ void wg_socket_clear_peer_endpoint_src(struct wg_peer *peer)
+>  {
+>  	write_lock_bh(&peer->endpoint_lock);
+>  	memset(&peer->endpoint.src6, 0, sizeof(peer->endpoint.src6));
+> -	dst_cache_reset(&peer->endpoint_cache);
+> +	dst_cache_reset_now(&peer->endpoint_cache);
+>  	write_unlock_bh(&peer->endpoint_lock);
+>  }
+>  
+> diff --git a/include/net/dst_cache.h b/include/net/dst_cache.h
+> index 67634675e919..df6622a5fe98 100644
+> --- a/include/net/dst_cache.h
+> +++ b/include/net/dst_cache.h
+> @@ -79,6 +79,17 @@ static inline void dst_cache_reset(struct dst_cache *dst_cache)
+>  	dst_cache->reset_ts = jiffies;
+>  }
+>  
+> +/**
+> + *	dst_cache_reset_now - invalidate the cache contents immediately
+> + *	@dst_cache: the cache
+> + *
+> + *	The caller must be sure there are no concurrent users, as this frees
+> + *	all dst_cache users immediately, rather than waiting for the next
+> + *	per-cpu usage like dst_cache_reset does. Most callers should use the
+> + *	higher speed lazily-freed dst_cache_reset function instead.
+> + */
+> +void dst_cache_reset_now(struct dst_cache *dst_cache);
+> +
+>  /**
+>   *	dst_cache_init - initialize the cache, allocating the required storage
+>   *	@dst_cache: the cache
+> diff --git a/net/core/dst_cache.c b/net/core/dst_cache.c
+> index be74ab4551c2..0ccfd5fa5cb9 100644
+> --- a/net/core/dst_cache.c
+> +++ b/net/core/dst_cache.c
+> @@ -162,3 +162,22 @@ void dst_cache_destroy(struct dst_cache *dst_cache)
+>  	free_percpu(dst_cache->cache);
+>  }
+>  EXPORT_SYMBOL_GPL(dst_cache_destroy);
+> +
+> +void dst_cache_reset_now(struct dst_cache *dst_cache)
+> +{
+> +	int i;
+> +
+> +	if (!dst_cache->cache)
+> +		return;
+> +
+> +	dst_cache->reset_ts = jiffies;
+> +	for_each_possible_cpu(i) {
+> +		struct dst_cache_pcpu *idst = per_cpu_ptr(dst_cache->cache, i);
+> +		struct dst_entry *dst = idst->dst;
+> +
+> +		idst->cookie = 0;
+> +		idst->dst = NULL;
+> +		dst_release(dst);
+> +	}
+> +}
+> +EXPORT_SYMBOL_GPL(dst_cache_reset_now);
+> diff --git a/tools/testing/selftests/wireguard/netns.sh b/tools/testing/selftests/wireguard/netns.sh
+> index 2e5c1630885e..8a9461aa0878 100755
+> --- a/tools/testing/selftests/wireguard/netns.sh
+> +++ b/tools/testing/selftests/wireguard/netns.sh
+> @@ -613,6 +613,28 @@ ip0 link set wg0 up
+>  kill $ncat_pid
+>  ip0 link del wg0
+>  
+> +# Ensure that dst_cache references don't outlive netns lifetime
+> +ip1 link add dev wg0 type wireguard
+> +ip2 link add dev wg0 type wireguard
+> +configure_peers
+> +ip1 link add veth1 type veth peer name veth2
+> +ip1 link set veth2 netns $netns2
+> +ip1 addr add fd00:aa::1/64 dev veth1
+> +ip2 addr add fd00:aa::2/64 dev veth2
+> +ip1 link set veth1 up
+> +ip2 link set veth2 up
+> +waitiface $netns1 veth1
+> +waitiface $netns2 veth2
+> +ip1 -6 route add default dev veth1 via fd00:aa::2
+> +ip2 -6 route add default dev veth2 via fd00:aa::1
+> +n1 wg set wg0 peer "$pub2" endpoint [fd00:aa::2]:2
+> +n2 wg set wg0 peer "$pub1" endpoint [fd00:aa::1]:1
+> +n1 ping6 -c 1 fd00::2
+> +pp ip netns delete $netns1
+> +pp ip netns delete $netns2
+> +pp ip netns add $netns1
+> +pp ip netns add $netns2
+> +
+>  # Ensure there aren't circular reference loops
+>  ip1 link add wg1 type wireguard
+>  ip2 link add wg2 type wireguard
+> @@ -631,7 +653,7 @@ while read -t 0.1 -r line 2>/dev/null || [[ $? -ne 142 ]]; do
+>  done < /dev/kmsg
+>  alldeleted=1
+>  for object in "${!objects[@]}"; do
+> -	if [[ ${objects["$object"]} != *createddestroyed ]]; then
+> +	if [[ ${objects["$object"]} != *createddestroyed && ${objects["$object"]} != *createdcreateddestroyeddestroyed ]]; then
+>  		echo "Error: $object: merely ${objects["$object"]}" >&3
+>  		alldeleted=0
+>  	fi
+> -- 
+> 2.32.0
