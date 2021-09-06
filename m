@@ -1,67 +1,64 @@
-Return-Path: <SRS0=TPXl=N3=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=0dHh=N4=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6633C433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  5 Sep 2021 20:56:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6444C433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  6 Sep 2021 11:49:54 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id B933560F5E
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun,  5 Sep 2021 20:56:56 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org B933560F5E
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id C613360F14
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  6 Sep 2021 11:49:53 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org C613360F14
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e097393f;
-	Sun, 5 Sep 2021 20:54:29 +0000 (UTC)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 3940428d
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sun, 5 Sep 2021 20:54:27 +0000 (UTC)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id E445860F5E
- for <wireguard@lists.zx2c4.com>; Sun,  5 Sep 2021 20:54:24 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="DhHDC5es"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1630875263;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ao1vxBwZ4lcuhxKWIbu3bPrXtvHhGLszT3lEE5seSmk=;
- b=DhHDC5es7BnIQbZu/krG9nf980rpYnwMUmruorkbTlHSJDRD6zkxlEgWmHs40zvJ+w4qBz
- p0IYGlNsGdRWVt3P0zR8GgMICQ5cEG1ZD7to4NIpkaAp/4I5pIdaVoghfDmk46Mwjo4q87
- xFt1KymWX0s0NQkyGkdV4DvrYJqpCCA=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 5354e83a
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f74dbccf;
+	Mon, 6 Sep 2021 11:49:51 +0000 (UTC)
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com
+ [2a00:1450:4864:20::52d])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id e4b27da9
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sun, 5 Sep 2021 20:54:23 +0000 (UTC)
-Received: by mail-yb1-f170.google.com with SMTP id e131so9514432ybb.7
- for <wireguard@lists.zx2c4.com>; Sun, 05 Sep 2021 13:54:23 -0700 (PDT)
-X-Gm-Message-State: AOAM532wgVqnOtKjVrusGmn9mQjAJ8KB0Pl43vfSdX/SAuJaZLpglTgC
- Al17SHoyAAodvOAZAcINav9EV0G1Gu3cPjSBMSc=
-X-Google-Smtp-Source: ABdhPJzyNZAx1saGIBMdGgSgYuvPFfxuqngI1cR17ckSm+befpqQj0q5BPY9KywU1/ZF1aDfiiTDWazyeFMuUKKFfSs=
-X-Received: by 2002:a5b:783:: with SMTP id b3mr11846139ybq.328.1630875262524; 
- Sun, 05 Sep 2021 13:54:22 -0700 (PDT)
+ for <wireguard@lists.zx2c4.com>; Mon, 6 Sep 2021 11:49:49 +0000 (UTC)
+Received: by mail-ed1-x52d.google.com with SMTP id g22so9149220edy.12
+ for <wireguard@lists.zx2c4.com>; Mon, 06 Sep 2021 04:49:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=bgavMaB1QB0I3Vem8nI9ARSL3eQ52vEhAox6un6rYp8=;
+ b=Cmd1/lFWsGxNRHL5OlvBOszMbMzTlXLfuTDE3voztiuxcsvE/M4pKGyLIu2EDlAu6z
+ ETE1bErUzrkCcmAblzqtv4oxvWIfa8G1HL8zwl1VYORlewOhInC5W4T/Do2ZOmPQCmp2
+ xVmKTbO0zsR303fisSOUVF9LBTRty9tKG5Raf2nM5tZdJAjEukqDyYdriD+hxg9MdDAg
+ BJJnnzhldbww4hWCf0VFAGpBuUk0toMlsbbX5v3Cw/zoqB79UTEs/FwB9P7Z5zES/QQH
+ 4kwhfHuNOwBzt7O2WebEAtmOnKAGYDuaPrvDAVoSSBLJnNI+JgTqWDFvFTqwx+0vDBwX
+ zX7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=bgavMaB1QB0I3Vem8nI9ARSL3eQ52vEhAox6un6rYp8=;
+ b=d1iSz5trFg+Tv0hyEB/kZ7M8JX/QogAUsDHlCjv+atYAjndTp7HoeMhB1+6lzSVPSd
+ jzrQHSowcU0j+j/JDMsTcUrcg2ZLOVQ1nBedXj1+wKicpS/XIDU3xtw7pHAM5AuThCpW
+ wlAkNiU6iTApMgbJAJQzAZNY5efr72+01n3NRYRAcrJEkuPOYUCKK89x7RWZmpMpiDhw
+ 9upov7IeWUnYgXQfhgSDj2Ie344nGBzNncTg+q/gJ3A1DC9t+9znp0MNjkocoJ3YwLN9
+ Qr4mk+SxA54maSAyMG4BoYHnkEXzbHzDVCSIzY0lzVhxLczCvSvlFSHrrY1FkQ13jSlY
+ wVEA==
+X-Gm-Message-State: AOAM533qn3a0FhJMH4fw5jk4zQDdm92F67wXcpaF2pDhEtz5BmHAoOIq
+ sZj6D0//Kdw8UW1S+TsWcca9S5lvg2FeNi9iZjDDBnok9rb8hg==
+X-Google-Smtp-Source: ABdhPJzA7bPfad3eqPgGgfwTZ7GV0bzCdlNsFtFDaC16OP7qEEsyb8tfEX6bp4u6cnLs/kjsZ2z4Caw0l4wb/6KPfrg=
+X-Received: by 2002:aa7:da56:: with SMTP id w22mr12945764eds.89.1630928989117; 
+ Mon, 06 Sep 2021 04:49:49 -0700 (PDT)
 MIME-Version: 1.0
-References: <c538301f-980c-99c9-4857-65867127aba3@gmail.com>
- <CAHmME9p0hTuYXar6LN2GyjF64k62z9vcokOE6La6eW-H06NVow@mail.gmail.com>
- <57e7c370-026a-1456-496f-cf069d392772@gmail.com>
-In-Reply-To: <57e7c370-026a-1456-496f-cf069d392772@gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Sun, 5 Sep 2021 22:54:11 +0200
-X-Gmail-Original-Message-ID: <CAHmME9q=XVvkj8dPGKdzEFSXg2thisDMkUWqXHGtAfmW2==ZRA@mail.gmail.com>
-Message-ID: <CAHmME9q=XVvkj8dPGKdzEFSXg2thisDMkUWqXHGtAfmW2==ZRA@mail.gmail.com>
-Subject: Re: Strange behavior when a peer has the same key as the interface
-To: =?UTF-8?B?Vm9qdMSbY2ggS8OhbsSb?= <vojtech.kane@gmail.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: Hiroshi Shirosaki <h.shirosaki@gmail.com>
+Date: Mon, 6 Sep 2021 20:49:37 +0900
+Message-ID: <CAOWZXk1LsG_kr3JD8kTkY1U1pp4uq5Vc3DR29hX_Af+XD=QDBA@mail.gmail.com>
+Subject: Wireguard Windows tunnel editing does not draw correctly with
+ vertical scroll down
+To: wireguard@lists.zx2c4.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -76,22 +73,46 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Sun, Sep 5, 2021 at 10:27 PM Vojt=C4=9Bch K=C3=A1n=C4=9B <vojtech.kane@g=
-mail.com> wrote:
->
-> > This is by design across all implementations, so that multiple peers ca=
-n share the same stanzas after the [Interface] section.
-> Does that mean it's unfixable in the meaning you cannot detect it and
-> return appropriate error?
->
->
-> While being clearly my mistake, it took me multiple hours to understand
-> the problem instead of simply getting `cannot set peer foo as it already
-> is a public key of interface bar`.
->
+Hi,
 
-It sounds like we really need to document that in more obvious places,
-like wg(8), as that kind of confusion indeed must have been really
-frustrating.
+When I edit my tunnel setting that has multiple peers and input keys
+with vertical scroll down,
+the inputted characters are not shown correctly.
+It looks like the old contents remain.
 
-Jason
+Without vertical scroll down the inputted characters are shown correctly.
+
+It seems EM_SETCHARFORMAT and RedrawWindow don't play nicely together.
+
+I use Wireguard-windows amd64 0.4.5.
+
+I've found that adding window hide/show around EM_SETCHARFORMAT seems
+to fix the redraw issue.
+Here is a patch.
+
+diff --git a/ui/syntax/syntaxedit.go b/ui/syntax/syntaxedit.go
+index 42f6e7b7..7b88271a 100644
+--- a/ui/syntax/syntaxedit.go
++++ b/ui/syntax/syntaxedit.go
+@@ -247,6 +247,8 @@ func (se *SyntaxEdit) highlightText() error {
+  win.SendMessage(hWnd, win.EM_SETBKGNDCOLOR, 0, uintptr(bgColor))
+  numSpans := len(spans)
+  foundPrivateKey := false
++ // Workaround to redraw correctly with vertical scroll down
++ win.ShowWindow(hWnd, win.SW_HIDE)
+  for i := range spans {
+  span := &spans[i]
+  if numSpans <= 2048 {
+@@ -262,6 +264,7 @@ func (se *SyntaxEdit) highlightText() error {
+  foundPrivateKey = true
+  }
+  }
++ win.ShowWindow(hWnd, win.SW_SHOW)
+  win.SendMessage(hWnd, win.EM_SETSCROLLPOS, 0,
+uintptr(unsafe.Pointer(&origScroll)))
+  win.SendMessage(hWnd, win.EM_EXSETSEL, 0,
+uintptr(unsafe.Pointer(&origSelection)))
+  win.SendMessage(hWnd, win.EM_HIDESELECTION, win.FALSE, 0)
+
+-- 
+Hiroshi Shirosaki
