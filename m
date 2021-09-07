@@ -1,57 +1,68 @@
-Return-Path: <SRS0=0dHh=N4=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=U3rm=N5=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.2 required=3.0 tests=BAYES_05,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED42BC433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  6 Sep 2021 15:51:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 096B3C433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  7 Sep 2021 16:51:40 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 94D20600CC
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon,  6 Sep 2021 15:51:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 94D20600CC
-Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=tootai.net
+	by mail.kernel.org (Postfix) with ESMTPS id DC6D5610A3
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  7 Sep 2021 16:51:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org DC6D5610A3
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9954edb2;
-	Mon, 6 Sep 2021 15:51:15 +0000 (UTC)
-Received: from mail1.tootai.net (mail1.tootai.net [213.239.227.108])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b0c027ea
- for <wireguard@lists.zx2c4.com>; Mon, 6 Sep 2021 15:51:09 +0000 (UTC)
-Received: from mail1.tootai.net (localhost [127.0.0.1])
- by mail1.tootai.net (Postfix) with ESMTP id 14FD160818A8
- for <wireguard@lists.zx2c4.com>; Mon,  6 Sep 2021 17:51:09 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=tootai.net; s=mail;
- t=1630943469; bh=tDtiSf30YVOq0KoiZUAxwHJ9HWmieRTsn8J9Jtujj2g=;
- h=To:From:Subject:Date:From;
- b=hPz3rBugHRKN4GwirW7iZvkv+YlMJ94T8mwkhNe8limkk88n1TSbRjL/YuqOkFoD2
- 410K7fe1MzxhO3S2c8UkAqqBfT/b5m1dkEzvxXkDdnTbpwmPOd79xU/vUiKNjGJqHf
- 9gmAkrizHUWP+ZUHeN9Ia1LNuTaGtlrYtb/esDns=
-Received: from [IPv6:2a01:729:16e:10::24] (unknown [IPv6:2a01:729:16e:10::24])
- by mail1.tootai.net (Postfix) with ESMTPA id D2D1A6081880
- for <wireguard@lists.zx2c4.com>; Mon,  6 Sep 2021 17:51:08 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=tootai.net; s=mail;
- t=1630943468; bh=tDtiSf30YVOq0KoiZUAxwHJ9HWmieRTsn8J9Jtujj2g=;
- h=To:From:Subject:Date:From;
- b=f3UXB5NSLTqocGP0lt5qtFJ7qwvHbpG7ItJxYR/fnQ3T43snRf3N74/0BFl79fhRf
- oqxVcyr21Jf9fdhCNXkj2P+7ulalgWFqbQfz65/sUmUQD+rwrajfUa+2+O7QgfuUzN
- 7Z1J/UNo5BlP+H52uhlH8DJU5B0T0P9/9jwFYhno=
-To: wireguard@lists.zx2c4.com
-From: Daniel <tech@tootai.net>
-Subject: WG ipv6tunnel - ipv4 and ipv6 issues
-Message-ID: <e490b0c3-ef5f-2725-e1a5-5cdc1b10da2e@tootai.net>
-Date: Mon, 6 Sep 2021 17:51:08 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 53af49f8;
+	Tue, 7 Sep 2021 16:50:21 +0000 (UTC)
+Received: from mail-il1-x133.google.com (mail-il1-x133.google.com
+ [2607:f8b0:4864:20::133])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 13ed0f87
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Tue, 7 Sep 2021 16:50:19 +0000 (UTC)
+Received: by mail-il1-x133.google.com with SMTP id b4so10711152ilr.11
+ for <wireguard@lists.zx2c4.com>; Tue, 07 Sep 2021 09:50:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=30P+AvgWPaILRbnAsd/xLE+D1RebpJWHCIXjesGzGeM=;
+ b=LiwGMwgrcMcaR0BEqBudGT8tUrOvOFf8NUFO4SEy6nQubVxzzqyImohfWyrwX09Bn0
+ eYSnLU7JiHmLBf9sjOt6vvT1QH58sEZt+55UibI9PsuFu9HwZJYhCCYCrrIIIGm+Hz7/
+ 5kKpNYTa32lDYX4MqfYsQ6qfAxxIvyqqOKFtHNAXbKCECWDV/clcYAx4X+Blza4oCagD
+ Z2JQt3BQ2CylIOSwZJILw+qzZtx3Z/wVPR7xgbl9Aphy2mtfuxobGVjvcS01VChZzUp9
+ WnMgssZQFhbxHwy23huxIJMX8OxoeiQY3FbB9/ifsYal9G/oiJPTxWZ7nTBJZ5cLVKvd
+ aRdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=30P+AvgWPaILRbnAsd/xLE+D1RebpJWHCIXjesGzGeM=;
+ b=M94Tz4tRvyQmcImk25SOdd6KnzBA3GQ8RVbz52ODwgfhH75Xu2VIWGMg9pnBRweFW1
+ JHVzejqv6qTAseZWzdqcSK6ex3tfPQ8/YaXc8wzPNGvL8sOZqRbJVTEIzZWGMJvEm2Fq
+ fdt9KqKghowZ3jhUa6XybOIqKU3gGR/XWd5eaLFd1Ee1waWNrB3xpDqg+yfB+AThRvlH
+ A6ZDNoYORDe27dQgNZ3xn+EnSvYGwXgqd+AsVvC0/MdPJh28Ly8LbrwnxXeg8Bhb1unP
+ z2MWpaNEBjzya45ArA1fWSK5sXONy/garWulzehM02ryI++A9jXvFjRiTnFjRAv6ivcL
+ h6nQ==
+X-Gm-Message-State: AOAM533MDmbx0K7aXulVLLserEnE9JvXqafuGfl8GED7tz/bVPaiPKh5
+ sLwT71egV0AIjDRWChag7R3Y7x2dq3kNhWoGXl/J7Fgu
+X-Google-Smtp-Source: ABdhPJzStd+1OyikPkvSA992ugegv1dBT7YXc8QIQDiEEiDabjzfppfs3LzXikWGuLc1JGwhRB8jEMvjoPMUonSA144=
+X-Received: by 2002:a92:8702:: with SMTP id m2mr12303601ild.250.1631033418358; 
+ Tue, 07 Sep 2021 09:50:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: fr-FR
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: ClamAV using ClamSMTP
+References: <CAC6DygdBVsk2Sa3LFLLs5WdOUUOi1Vs0+v6gXV7d+h-noy8v1A@mail.gmail.com>
+ <CAHmME9qH9T3O04YG+DMdq79BgkUBxSTzHfgfL5m0CaymvGJ3LQ@mail.gmail.com>
+In-Reply-To: <CAHmME9qH9T3O04YG+DMdq79BgkUBxSTzHfgfL5m0CaymvGJ3LQ@mail.gmail.com>
+From: Veerabhushan Hatte <vkhatte@gmail.com>
+Date: Tue, 7 Sep 2021 09:50:07 -0700
+Message-ID: <CAC6DygcvH2HB+2PjipYkDTsQ=G+FahHnYTSkzvW+T72MiYcuDw@mail.gmail.com>
+Subject: Re: Unable to load wintun library for Windows
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -66,39 +77,15 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi list,
+Hi Jason,
 
-I setup a wg connection using only ipv6 addresses for wg IFACE. One end 
-is fd99:1234:beef:cafe::10:1/64 -named S1- other one being 
-fd99:1234:beef:cafe::70:1/64 -named S2- Each end can ping or ssh to the 
-other one.
+Thanks for the help. I copied wintun.dll into same directory where exe
+file is located and library loaded library successfully.
 
-1. I would like to pass ipv4 traffic inside so I add on S1
+Thanks,
+Veera
 
-sudo ip r add 10.0.70.0/24 via inet6 fd99:1234:beef:cafe::70:1 dev wig0
-
-Destination server has a virbr0 bridge (kvm libvirt) with 2 addresses: 
-10.0.70.1/32 and fd99:1234:beef:cafe::70:ff1/120
-
- From S1 I can ping or ssh the ipv6 address from virbr0 but get no 
-answer when pinging or ssh the ipv4 address despite the fact that 
-wig0@S2 get's the original traffic (tcpdump -ni wig0)
-
-2. VMs from server S2 have ipv6 addresses like 
-fd99:1234:beef:cafe::70:ff1[2-9]/120 They can ping S2 and virbr0 ipv6 
-addresses but are not reachable from S1 nor they can ping ipv6 endpoints 
-behind S1 (network fd53:9b48:337:8b38::/64) despite the fact that route 
-exist
-
-fd53:9b48:337:8b38::/64 via fd99:1234:beef:cafe::10:1 dev wig0 metric 
-1024 pref medium
-
-and there is no problem from S2. From iptables vue wig0 is accepted in 
-INPUT, FORWARD and OUTPUT on S2. Both servers are running Debian11 with 
-5.10 kernel.
-
-What am I missing here ?
-
-
--- 
-Daniel
+On Sun, Sep 5, 2021 at 6:22 AM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+>
+> Copy it to "C:\Program Files\Something" and execute your exe from
+> there too. Never copy files into C:\windows\system32.
