@@ -1,4 +1,4 @@
-Return-Path: <SRS0=hu3I=OJ=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=I+33=OK=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
@@ -7,83 +7,59 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A3D8C433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 19 Sep 2021 02:16:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57191C433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 20 Sep 2021 17:48:45 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 81F0B60F92
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 19 Sep 2021 02:16:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 81F0B60F92
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=outlook.com
+	by mail.kernel.org (Postfix) with ESMTPS id 4F4D56136F
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 20 Sep 2021 17:48:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 4F4D56136F
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 529161a8;
-	Sun, 19 Sep 2021 02:16:40 +0000 (UTC)
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com
- (mail-co1nam11olkn2062.outbound.protection.outlook.com [40.92.18.62])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 522bd4cc
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a475e9c6;
+	Mon, 20 Sep 2021 17:48:42 +0000 (UTC)
+Received: from mail-ua1-x933.google.com (mail-ua1-x933.google.com
+ [2607:f8b0:4864:20::933])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 53082f61
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 19 Sep 2021 00:42:44 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Ekoio4xbbHtz3Geg8j8CuMj39UWIvVb7FtZCGlgttLKwywTyIjgUfpkEMyFdDFtHeXOyDVQemwwPDpfpFzd1/opPpdP17+B6QMaPY09gJUbepCS+tyUzD8T78ZfXmdEmCJJD7s/777YpRLtJhD+t0eSZKmwnpDxXbrest/XweEGf/lzM537Ljk+uG8qJAP3oBca3hfRHbQigCj3f6Qmu3lyMiUja05aBvvk8EcGU+1hAmVLtDmamxY9C7ApOx2SjgwpzggWDl31Z5pe8UcKJ4sGLu6SPvlzNGoZq7m0Cz9pVsetZgBVPwsTZyMzGYz23rrwjGCNPtdmkIMbVzpMZSQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version; 
- bh=NRvfnRkvnccv3cZnHQbhUc+zCLHwo1Avkyi4PDHolh4=;
- b=Hhw0Yh5YCQDsYxRQ9g36aaDQHpB09TvvNsYlKKVDcPh07hhP+VegWMcT834UoOKa2umb8bbefbKD/OjC45VF47SQeBS9kj/u6d+J1mLKx3yWLbpnUVZ+JEdPU8nT8Ml0E9hdvxXIvBLxkEb6HedJZYdw1U20NcsepQo2lNYKGWElKP1iFk0VkOtJuHBt5YEYT63aYe0UKS7f5k2hydnSZIli90/xbrcXSf5MtIszfDQSsLUFqt+tSRDpdQAiyQTMHKNi2Os8agDeJx/MAiGmguHRVeGZHvQeDxUzUw35qgvw/Es8ovzsEWELikD1pTf1ijYa+c7yxhZbWxdEBcRGOw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=NRvfnRkvnccv3cZnHQbhUc+zCLHwo1Avkyi4PDHolh4=;
- b=WMxau4d75o/ZTaJLtfWo2mJV5UuWev7r+Hd5kxcQAcM/oErEeLwEutwKeBEEgOw2u58jV4TYuoGv3flnRNMz5G4oNtVKcokckGeJf+8+nB5SVlJbaoiiJFOm1t+scKuWtnErTKFoiGhaELoRDAeyvZRnKPrYelii4LIdvLA25Gf0wHEuuDW23yaEm7CJ0ZHiLd1BYXl5eespF7JdLJVpoYtQB48CSZmhatXZR8had2/JtjygkVagdWScpFf6lr2p9eUvjoJmFW6FLVdOrtZc0/hhh/CpU/lRxlddgPNy7O9wDjlfnxX++2jLgA5HOfcJ5cSmTAk40EGd5IABCMhq8A==
-Received: from BN7PR13MB2226.namprd13.prod.outlook.com (2603:10b6:406:b5::33)
- by BN6PR13MB1089.namprd13.prod.outlook.com (2603:10b6:404:6b::21)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4544.7; Sun, 19 Sep
- 2021 00:42:41 +0000
-Received: from BN7PR13MB2226.namprd13.prod.outlook.com
- ([fe80::c9ab:bd6f:675a:d472]) by BN7PR13MB2226.namprd13.prod.outlook.com
- ([fe80::c9ab:bd6f:675a:d472%3]) with mapi id 15.20.4544.011; Sun, 19 Sep 2021
- 00:42:41 +0000
-From: Jeff L <strangebrew114@outlook.com>
-To: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
-Subject: Android 12 kernel module
-Thread-Topic: Android 12 kernel module
-Thread-Index: AQHXrO8CvGpZWwI5j0GdO9cG2ohoGQ==
-Date: Sun, 19 Sep 2021 00:42:41 +0000
-Message-ID: <BN7PR13MB22265FBFBE4E7132F8EA6D5992DF9@BN7PR13MB2226.namprd13.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-suggested_attachment_session_id: e3ead8ee-18b1-f43d-22c5-f51bf76704e3
-x-tmn: [jfjt2Jw7jG7N+tb/Ahcm7MjyAJRGqxyG]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: b67ab064-3444-4161-264d-08d97b06634a
-x-ms-traffictypediagnostic: BN6PR13MB1089:
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: LHmACekfttJK9PiLDVtSLqaUaq3h1W6qW+WbwQ0H28k7CpXyB0X8Zb2YlKOxpaDbCQicNeOKxJLtgE7EUM+Rcc7csph9Gr3uCmJRO7OaoNO3fOmXNwoeD27Opjs2Kc9RPTcRsDQHN4ea5DFDauRWxU/V2a84km6EtRBygKYkZJtCn9gcwYSgi31s3Q1iwSlI4KFD0BjBz29q3ATXqmSNRSN7I8b6Vk31DJUqCeZq07G249Lc8Mpx9nStzL66De6g8ysVfd+W+HEemkDErx6JJWyFof9JEiIEFvXR21NWW5zzJuEuVyG7HrUX9JOkJWl44cxmapTbOqJFcp+SqoBkYEvDywJ25nqGnfZP3F5fSGs4WDNoWHBLsZKxdd9nCLXk396613EEVvLAHxagHU4AseW0rd8vKVqOHyujVQ4Cs+8q1SKJZdnOlLPRLWhY0u3Q
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: SZ62axR6RXPI5f4Hkr2qT5C5oJavq1bYS2eT/RgqTw2iqYDZFF8qA546MNXATzYC3RZecFyMB3I8/Kafgby0NDpC9+NjfJeB3K8Kmd7m51HFS1vhgXmOJ2avdr28gfAO+n2n+eSuAxOEcqpN5N7vIw==
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ Mon, 20 Sep 2021 17:48:38 +0000 (UTC)
+Received: by mail-ua1-x933.google.com with SMTP id f24so11688419uav.8
+ for <wireguard@lists.zx2c4.com>; Mon, 20 Sep 2021 10:48:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=s8Qo57/qlNk8AvUc4Jl2wa3nns5l009KaV2SwaqfP2Q=;
+ b=a0hnfmGwqWNy0ovM5vDw77wYJ3k9bUymJiHhMBNPRZNN7JSNKkYxg91kPkFuPvs6h/
+ WGihhXzdWTCNezDPbbq+rdkpoEGkz+9wAweuSpRThqKQDihHG0tgUx7jpOhPMeLgUugh
+ iIwkxrlx6SDIOakzqGdMUsN+XYEBcB9Ovskv6Dh+16y7jCEldJ/YPsFhL49/ydocLZ2F
+ Vd7jgciZxdrLwk4Wa0+AqSW2HiByn9IhHzXtFQbCXZ0QrZIRoiQA+8DJ8X/xC+hjsgnn
+ +H3kIcI6nTy5vdSvk4jfuT/yttRS5RNsFovgorf3t28NCpYqQnyKgf16IUGjGTbmR2Dt
+ xrxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=s8Qo57/qlNk8AvUc4Jl2wa3nns5l009KaV2SwaqfP2Q=;
+ b=5dEi9AHGr7EskCb8P3J4oG7TJcID1HwFZJPNUkrMQoA4YZM0NZUY076X32V3BZzJUI
+ MTti1aoF9ZLYMv+Q4jGa8TNmye3dJjK+4JcwnUb/3S4cS14BK4MSUlz2uJR5DrNAQS7F
+ Nqm0Xjsp50KJ01yrA3GCNTiwLOUIBQffQjoAlVWyEujyUCJXAbPP5a6I5o1UQvaoutpY
+ Onqwpel6WWQSL65mKK2dTIdTcQQGF10UEEs5IhJvsW0Fm6Cko8HdOhd05sxv0+Wyk0hE
+ Hnpn/guvAIoA/72bzdqxJCdiakhy8+uGKmwKugP57cK1ePbwWUL5aMQ2OpdDLVxcJ0ZK
+ b1sw==
+X-Gm-Message-State: AOAM531cIUe5HxFEqepg6XNeH8cpttO/tilrfqiYxkzpOzhj11tHmvDf
+ U8eBBGAD5mbE4j6me5OflmuXOXQEDbE3I+m5TukEYXN3L9A=
+X-Google-Smtp-Source: ABdhPJwqighANwQUejEj8iT1bMr6GnON0Y47lc126A+iYz8elRB4W6ZxZUK64ygJDYNS7DJMbTnPgjuAZIPmqod01JA=
+X-Received: by 2002:ab0:3184:: with SMTP id d4mr5577716uan.19.1632160116958;
+ Mon, 20 Sep 2021 10:48:36 -0700 (PDT)
 MIME-Version: 1.0
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BN7PR13MB2226.namprd13.prod.outlook.com
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: b67ab064-3444-4161-264d-08d97b06634a
-X-MS-Exchange-CrossTenant-originalarrivaltime: 19 Sep 2021 00:42:41.4960 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN6PR13MB1089
-X-Mailman-Approved-At: Sun, 19 Sep 2021 02:16:39 +0000
+From: Devanath S <s.devanath@gmail.com>
+Date: Mon, 20 Sep 2021 10:48:25 -0700
+Message-ID: <CADjMg7XK3t21phcS-FfcGXGE_Nc+Sw5b4Ln0-OsN5Lp0GPf8CQ@mail.gmail.com>
+Subject: wireguard-go on container-optimized os on GCP
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ "Jason A. Donenfeld" <Jason@zx2c4.com>, Matt Layher <mdlayher@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -98,11 +74,49 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-4oCLSSByZWNhbGwgcmVhZGluZyBsYXN0IHllYXIgdGhhdCB0aGUga2VybmVsIG1vZHVsZSBoYWQg
-bWFkZSBpdCBpbnRvIEFuZHJvaWQgMTIuICBJJ20gY3VycmVudGx5IHVzaW5nIGJldGEgNSwgd2l0
-aCB0aGUgV2lyZWd1YXJkIGFwcCwgYnV0IGl0IHN0aWxsIHJlcG9ydHMgdGhhdCBpdCdzIHVzaW5n
-IHRoZSBHbyB1c2Vyc3BhY2UgYmFja2VuZCBpbiB0aGUgYXBwLiAKCkRvZXMgdGhpcyBtZWFuIHRo
-YXQgdGhlIGtlcm5lbCBtb2R1bGUgaXNuJ3QgYWN0aXZlPyAgV2hhdCdzIHRoZSBzdGF0dXMgb2Yg
-dGhlIGtlcm5lbCBtb2R1bGUgc3VwcG9ydCBpbiBBbmRyb2lkIDEyPyAgRG9lcyBzdXBwb3J0IG5l
-ZWQgdG8gYmUgYWRkZWQgdG8gdGhlIGFwcCwgb3IgYXJlIHRoZXJlIG90aGVyIGJhcnJpZXJzIHRv
-IGdldHRpbmcgaXQgd29ya2luZz8=
+Hi All,
+
+I am trying to run wireguard-go (using
+"golang.zx2c4.com/wireguard/wgctrl" for configure) on
+container-optimized os on GCP and I am facing the below issue. The
+same works on ubuntu/centos etc
+
+1) Wireguard device creation and tunnel gets created as required. It
+works as expected
+2) When the admin wants to delete the wg tunnel interface and recreate
+the wg interface.  It gives error "err device or resource busy"
+
+=> To create the tunnel device
+tun.CreateTUN(deviceName, mtu).
+device.NewDevice(tun, deviceLogger)
+=>To delete the tunnel device
+func (device *Device) Close()  which is probably calling
+tun.tunFile.Close(), to close the FD
+
+----Snippet of the logs, while closing the device and creating again
+
+^[[0m^[[1;33m[22:04:47 2021/09/09 +0000] [WARN] LIsten_WG_API:
+userspace wireguard device API interface closed, error while accepting
+connection, err:fd closed
+
+^[[0m[22:04:47 2021/09/09 +0000] [INFO] .Close: closed userspace
+wireguard API interface and device
+
+^[[0m[22:04:47 2021/09/09 +0000] [INFO] CreateWg: create userspace
+wireguard device wg1
+
+^[[0m^[[0;31m[22:04:47 2021/09/09 +0000] [EROR] CreateUSWG: userspace
+tunnel interface creation failed, device name wg1, err device or
+resource busy
+
+^[[0m^[[0;31m[22:04:47 2021/09/09 +0000] [EROR] CreateWgfailed to
+create wg1: device or resource busy
+
+^[[0m^[[0;31m[22:04:47 2021/09/09 +0000] [EROR]new Config:device or
+resource busy
+
+
+Plz let me know if I am missing something.
+
+Regards,
+Dev
