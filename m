@@ -7,69 +7,59 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4F08C433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 22 Sep 2021 04:17:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CCBB2C433FE
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 22 Sep 2021 04:17:08 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 06C4160EFF
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 22 Sep 2021 04:17:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 06C4160EFF
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	by mail.kernel.org (Postfix) with ESMTPS id 0D02360EFF
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 22 Sep 2021 04:17:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 0D02360EFF
+Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=icloud.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id df3ba111;
-	Wed, 22 Sep 2021 04:14:39 +0000 (UTC)
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com
- [2a00:1450:4864:20::534])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id eb44599c
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 64cfd87a;
+	Wed, 22 Sep 2021 04:14:40 +0000 (UTC)
+Received: from st43p00im-zteg10071901.me.com (st43p00im-zteg10071901.me.com
+ [17.58.63.169])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 37fb790a
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 21 Sep 2021 10:55:14 +0000 (UTC)
-Received: by mail-ed1-x534.google.com with SMTP id co2so26262769edb.8
- for <wireguard@lists.zx2c4.com>; Tue, 21 Sep 2021 03:55:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=from:content-transfer-encoding:mime-version:subject:message-id:date
- :to; bh=uZh101CpNtSl5byhLd0JvRoR4i7Ew2cCvh9txEuyEeA=;
- b=h7BRvaH/Ymk5gju19gR/Q5Jo3UGVQv977sJWcyllliy4diy8Kn1Eu8DunC2C5ffuSm
- TEnK0tbi0HtwiCdpLjnIQmcSMs3uq9j0De/m7+fVhtLS/vq4EddfjaC/Ui1hSESlqluq
- k0uOX2lfkyQ6e1kSblcGOGXxsglICW64lkuxEQ6Gg17zibThyS0931WYY791kCynWiGs
- H1yaNo2Q+rgmw5M/ea9VxwJOwCE0imcPxJvMi6+Ja/ET90rp4PfwXiWpzBBEuvxMQUCi
- CWMNDPnW1RBMYIjoQd40/Oo57cM9LTbLQseMoEMInabJJX9V4XvdJS2NBv+DD/ihlnf2
- BE8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:from:content-transfer-encoding:mime-version
- :subject:message-id:date:to;
- bh=uZh101CpNtSl5byhLd0JvRoR4i7Ew2cCvh9txEuyEeA=;
- b=8DC1ay9YEb/A//0JgGFsoPUpRGZQ0QoJtiNwYzCrifoIiWu2kX+Ph2mpxL32lL1FJs
- MwTnWqngSqodS73n49eIpJibd8QQ1uQG7sJnMbo959USh3jD+wDBL1HriBC+hEDYJ9MO
- pQhyq0As9StDbfy625KdJXYH4VLF+C5coMI6MD8AII1dWYku3nqYZyCofa6nx8Per1RS
- YiXs6EdHjs8LwQ637JMWnrCA6ZlF1PuoAN5aIytC+099ykraLfnVk6T0exhXM7krADSS
- 7hvIu/iNV8KtfCXo+DOIy/+zi7QIwET/Es7rEgnPpCxvEcPGZi0ryxRmWea+CxbpZZG9
- /o1Q==
-X-Gm-Message-State: AOAM531zOcHHWxW0mCwGOjUPPr/KLANIzkUwm+sEabcMRMYHNfaYCnCk
- uYJX/E8GIuqduIJmsn3lvr1Y0eGp0f0O6Q==
-X-Google-Smtp-Source: ABdhPJx+/ORA2tw41qtkLwIbu6ElhcyfG7MPnUoClCda67ifeYUfmMRn/rAD4sxhOaQNK7+9wLNxaw==
-X-Received: by 2002:a05:6402:21da:: with SMTP id
- bi26mr26074194edb.252.1632221711794; 
- Tue, 21 Sep 2021 03:55:11 -0700 (PDT)
-Received: from smtpclient.apple ([188.252.198.230])
- by smtp.gmail.com with ESMTPSA id w9sm8193885edr.20.2021.09.21.03.55.11
- for <wireguard@lists.zx2c4.com>
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 21 Sep 2021 03:55:11 -0700 (PDT)
-From: Juraj Hilje <juraj.hilje@gmail.com>
+ Tue, 21 Sep 2021 11:16:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
+ s=1a1hai; t=1632223001;
+ bh=iscXbm2rWU1WL8FTqrzEBDOHF1yJDDKucGBtMvdiuHk=;
+ h=From:Content-Type:Mime-Version:Subject:Date:To:Message-Id;
+ b=EoG0iceD3FLZAg842fWiF2ecbBGtTj/qkdw3RxRod19FpLsHV1bo10Y/LudgyJ/yS
+ PqFJCk6tkPQsgmanV/JYI5/N4mW2BTXIY6P6Io5arIVd+lHtZ6ewtNhls3qUSP3gzD
+ Im0RUZjw+4rGJoKs7P3534adyUM4mxpKpAomtugxrXhn5s8f2//1PcqePm3MFbD/Hc
+ alGj5n65FB44yvi7nHbU7wEGv0vV6BaD/LMtdIRMf+3vgFOelH+gr0td/3976nNS8r
+ H53sb0BA/jqp3E/qj2h6nLDutlr9QvnradQEcjFlQAG6iujZm2pz+1VDUuMUenGpgn
+ KZJBYsZfg46xQ==
+Received: from smtpclient.apple (unknown [2.222.11.82])
+ by st43p00im-zteg10071901.me.com (Postfix) with ESMTPSA id CA321D80DBA
+ for <wireguard@lists.zx2c4.com>; Tue, 21 Sep 2021 11:16:40 +0000 (UTC)
+From: Chi Wing Wong <hklbj@icloud.com>
 Content-Type: text/plain;
 	charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
-Subject: [wireguard-apple] [iOS] Changing network fails with
- includeAllNetworks (Kill Switch)
-Message-Id: <B3A4A27C-1FBF-4098-B38F-9F87F8C115B5@gmail.com>
-Date: Tue, 21 Sep 2021 12:55:09 +0200
+Subject: Re: Error to compile Wireguard for SUSE LES 15 SP3
+Date: Tue, 21 Sep 2021 12:16:39 +0100
+References: <204FE162-0DEE-47E2-B345-0DFB5FE20325@icloud.com>
 To: wireguard@lists.zx2c4.com
+In-Reply-To: <204FE162-0DEE-47E2-B345-0DFB5FE20325@icloud.com>
+Message-Id: <A98A7E01-FC85-45C0-9ACD-A02A60866F65@icloud.com>
 X-Mailer: Apple Mail (2.3654.120.0.1.13)
+X-Proofpoint-Virus-Version: =?UTF-8?Q?vendor=3Dfsecure_engine=3D1.1.170-22c6f66c430a71ce266a39bfe25bc?=
+ =?UTF-8?Q?2903e8d5c8f:6.0.391,18.0.790,17.0.607.475.0000000_definitions?=
+ =?UTF-8?Q?=3D2021-09-20=5F11:2021-09-20=5F01,2021-09-20=5F11,2020-04-07?=
+ =?UTF-8?Q?=5F01_signatures=3D0?=
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ clxscore=1015
+ suspectscore=0 spamscore=0 adultscore=0 malwarescore=0 mlxlogscore=999
+ phishscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2109210071
 X-Mailman-Approved-At: Wed, 22 Sep 2021 04:14:37 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -85,37 +75,103 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-If NETunnelProviderProtocol is configured with includeAllNetworks=3Dtrue =
-(Kill Switch), when network change is detected the device connectivity =
-goes offline instead of routing VPN tunnel traffic through a new =
-network.
 
-Here are some logs from the moment of this event:
-2021-09-20 12:07:26.735453: [NET] Network change detected with =
-unsatisfied route and interface order [en0, utun4, pdp_ip0]
-2021-09-20 12:07:26.736186: [NET] Connectivity offline, pausing backend.
-2021-09-20 12:07:26.736732: [NET] Device closing
-2021-09-20 12:07:26.737503: [NET] Routine: TUN reader - stopped
-2021-09-20 12:07:26.738970: [NET] Routine: event worker - stopped
-2021-09-20 12:07:26.739613: [NET] Routine: receive incoming v4 - stopped
-2021-09-20 12:07:26.742070: [NET] Routine: receive incoming v6 - stopped
-2021-09-20 12:07:26.746712: [NET] peer(eN1f=E2=80=A6Oymc) - Stopping
-2021-09-20 12:07:26.751550: [NET] peer(eN1f=E2=80=A6Oymc) - Routine: =
-sequential receiver - stopped
-2021-09-20 12:07:26.751597: [NET] peer(eN1f=E2=80=A6Oymc) - Routine: =
-sequential sender - stopped
-2021-09-20 12:07:26.753433: [NET] Device closed
-2021-09-20 12:07:26.754097: [NET] Routine: decryption worker 5 - stopped
+> Hi,
+>=20
+> I am new to wireguard and tried to install via compiling the latest =
+version (from git) of Wireguard-Linux-compat for my SUSE Linux =
+Enterprise server 15 SP3. However, there are 2 errors prompted during =
+compiling. I have checked the mail archive mentioned about similar =
+issue. However, I could not find the mentioned patch to resolve the =
+error. Could you share any reference for me to tackle it? Many Thanks.
+>=20
+>=20
+> In file included from <command-line>:0:0:
+> /home/optionmaker/wireguard-linux-compat/src/compat/compat.h:1036:20: =
+error: redefinition of =E2=80=98skb_reset_redirect=E2=80=99
+>  static inline void skb_reset_redirect(struct sk_buff *skb)
+>                     ^~~~~~~~~~~~~~~~~~
+> In file included from =
+/home/optionmaker/wireguard-linux-compat/src/compat/compat.h:870:0,
+>                  from <command-line>:0:
+> /usr/src/linux-5.3.18-59.19/include/linux/skbuff.h:4543:20: note: =
+previous definition of =E2=80=98skb_reset_redirect=E2=80=99 was h
+> ere
+>  static inline void skb_reset_redirect(struct sk_buff *skb)
+>                     ^~~~~~~~~~~~~~~~~~
+> In file included from =
+/home/optionmaker/wireguard-linux-compat/src/compat/compat.h:870:0,
+>                  from <command-line>:0:
+> /usr/src/linux-5.3.18-59.19/include/linux/skbuff.h:4543:20: note: =
+previous definition of =E2=80=98skb_reset_redirect=E2=80=99 was h
+> ere
+>  static inline void skb_reset_redirect(struct sk_buff *skb)
+>=20
+>=20
+>=20
+> /home/optionmaker/wireguard-linux-compat/src/compat/compat.h: At top =
+level:
+> /home/optionmaker/wireguard-linux-compat/src/compat/compat.h:1065:22: =
+error: static declaration of =E2=80=98ip_tunnel_parse
+> _protocol=E2=80=99 follows non-static declaration
+>  static inline __be16 ip_tunnel_parse_protocol(const struct sk_buff =
+*skb)
+>                       ^~~~~~~~~~~~~~~~~~~~~~~~
+> In file included from =
+/usr/src/linux-5.3.18-59.19/include/net/gre.h:6:0,
+>                  from =
+/usr/src/linux-5.3.18-59.19/include/linux/netfilter/nf_conntrack_proto_gre=
+.h:5,
+>                  from =
+/usr/src/linux-5.3.18-59.19/include/net/netfilter/nf_conntrack.h:23,
+>                  from =
+/home/optionmaker/wireguard-linux-compat/src/compat/compat.h:947,
+>                  from <command-line>:0:
+> /usr/src/linux-5.3.18-59.19/include/net/ip_tunnels.h:294:8: note: =
+previous declaration of =E2=80=98ip_tunnel_parse_protocol
+> =E2=80=99 was here
+>  __be16 ip_tunnel_parse_protocol(const struct sk_buff *skb);
+>         ^~~~~~~~~~~~~~~~~~~~~~~~
+> In file included from =
+/usr/src/linux-5.3.18-59.19/include/net/gre.h:6:0,
+>                  from =
+/usr/src/linux-5.3.18-59.19/include/linux/netfilter/nf_conntrack_proto_gre=
+.h:5,
+>                  from =
+/usr/src/linux-5.3.18-59.19/include/net/netfilter/nf_conntrack.h:23,
+>                  from =
+/home/optionmaker/wireguard-linux-compat/src/compat/compat.h:947,
+>                  from <command-line>:0:
+> /usr/src/linux-5.3.18-59.19/include/net/ip_tunnels.h:294:8: note: =
+previous declaration of =E2=80=98ip_tunnel_parse_protocol
+> =E2=80=99 was here
+>  __be16 ip_tunnel_parse_protocol(const struct sk_buff *skb);
+>=20
+>=20
+>=20
+> In file included from <command-line>:0:0:
+> /home/optionmaker/wireguard-linux-compat/src/compat/compat.h:1078:32: =
+error: static declaration of =E2=80=98ip_tunnel_heade
+> r_ops=E2=80=99 follows non-static declaration
+>  static const struct header_ops ip_tunnel_header_ops =3D { =
+.parse_protocol =3D ip_tunnel_parse_protocol };
+>                                 ^~~~~~~~~~~~~~~~~~~~
+> In file included from =
+/usr/src/linux-5.3.18-59.19/include/net/gre.h:6:0,
+>                  from =
+/usr/src/linux-5.3.18-59.19/include/linux/netfilter/nf_conntrack_proto_gre=
+.h:5,
+>                  from =
+/usr/src/linux-5.3.18-59.19/include/net/netfilter/nf_conntrack.h:23,
+>                  from =
+/home/optionmaker/wireguard-linux-compat/src/compat/compat.h:947,
+>                  from <command-line>:0:
+> /usr/src/linux-5.3.18-59.19/include/net/ip_tunnels.h:293:32: note: =
+previous declaration of =E2=80=98ip_tunnel_header_ops=E2=80=99 w
+> as here
+>  extern const struct header_ops ip_tunnel_header_ops;
+>=20
+>=20
+> Regards,
+> Wing
 
-Tested on devices: iOS 14.8, iPadOS 15
-WireGuardKit: 79aeb0be0d0aa3f6c8bd24309aaa8dcf03216fb4
-
-More info on includeAllNetworks option:
-=
-https://developer.apple.com/documentation/networkextension/nevpnprotocol/3=
-131931-includeallnetworks
-
-Can someone confirm this issue or point to a possible workaround?
-Thanks!
-
-Juraj H.=
