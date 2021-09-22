@@ -2,66 +2,69 @@ Return-Path: <SRS0=SfGb=OM=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_20,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E015C433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 22 Sep 2021 19:00:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AF594C433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 22 Sep 2021 19:32:35 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 585FC61153
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 22 Sep 2021 19:00:27 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 585FC61153
+	by mail.kernel.org (Postfix) with ESMTPS id AB4BE61038
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 22 Sep 2021 19:32:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org AB4BE61038
 Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1b594b32;
-	Wed, 22 Sep 2021 18:58:14 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id dcea1398;
+	Wed, 22 Sep 2021 19:28:56 +0000 (UTC)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 5c5dcb4a
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 250f020b
  (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 22 Sep 2021 18:58:12 +0000 (UTC)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 02CDE61153
- for <wireguard@lists.zx2c4.com>; Wed, 22 Sep 2021 18:58:09 +0000 (UTC)
+ Wed, 22 Sep 2021 19:28:52 +0000 (UTC)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 8331260FE8
+ for <wireguard@lists.zx2c4.com>; Wed, 22 Sep 2021 19:28:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
  dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="Op+ZjyyN"
+ header.b="HGs/yvRb"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1632337088;
+ t=1632338929;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=+4hGDQN5vKna3djYJO/H1OvWibFOO0pgjxJZuSlp+CQ=;
- b=Op+ZjyyNdQh7lj5E+ru0kLFycPTOhYzWHXt/FNaHpsNKPzBMi2rncd+cm+RbozoGY8s6R0
- G1mfdjy0YOFAsIs3bxxTRkiCuTul5YQ4SmXoFowaL8XQsHEd6KPmaX6LWC7nweoJu5kM9D
- pkuOkCB3c4Vsh69bm08GU7Vjk3ck+B8=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 96ba7c78
+ bh=S3Y/LcLvs9NfSZvWvOuP2IAQfbokDtvkAXgaY58ewHc=;
+ b=HGs/yvRbmfzU8laXIesWL++DM/tWXg0t/FN+vXvgM6Xj9KnD0r2GrDpcdXsq9xXoOB+aJ3
+ Qbh0ZJaqhb25GwOcb3/Tdx7bbvqFe0S7CsS1ZvQw7IjkkW03HWcqd3ieZ+bVw5h1cvGM1P
+ vG6+i8Zns9YbFiVpkfzGDWVhPyht6EQ=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 1a52b99a
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 22 Sep 2021 18:58:08 +0000 (UTC)
-Received: by mail-qk1-f173.google.com with SMTP id f130so13278264qke.6
- for <wireguard@lists.zx2c4.com>; Wed, 22 Sep 2021 11:58:08 -0700 (PDT)
-X-Gm-Message-State: AOAM533Z3P7MjVawTK/Um78/aJjlRR0l2HuRBTubtgOmsadjnktZTzjx
- 8ygCLiY+bESVEIowivM8Qy+NkrM6cbG0g0jKLo8=
-X-Google-Smtp-Source: ABdhPJy6kQtG4nSShHhWPeLIztG53buQl9DJe3mOHmiiNpFXwZPrNJdJVVNDQutDkdU7/lVB50pOSBEpQgEJWVd7i/g=
-X-Received: by 2002:a25:d442:: with SMTP id m63mr790198ybf.79.1632337088175;
- Wed, 22 Sep 2021 11:58:08 -0700 (PDT)
+ Wed, 22 Sep 2021 19:28:49 +0000 (UTC)
+Received: by mail-qk1-f171.google.com with SMTP id f130so13607000qke.6
+ for <wireguard@lists.zx2c4.com>; Wed, 22 Sep 2021 12:28:48 -0700 (PDT)
+X-Gm-Message-State: AOAM5317mueXeSk9NY/kwUZqMLk5J6G1b/QYMn51jMhTgmw9S9hTV6ph
+ zdRquhAzrvbRu0bQio++OTnnmzkqzY9pzx8Uils=
+X-Google-Smtp-Source: ABdhPJwnKMDE0r81RqzSzKAqnDNCiCH+YSlGMeiNRxzqUcWqGVQWomFkvV3gyvlXLPz0v+oiZJRn00LD8XkjfMnecQo=
+X-Received: by 2002:a25:d442:: with SMTP id m63mr938544ybf.79.1632338927793;
+ Wed, 22 Sep 2021 12:28:47 -0700 (PDT)
 MIME-Version: 1.0
-References: <e0d4dcbb-b0c8-1214-ff0c-c856d168d67f@physik.uni-bonn.de>
- <CAHmME9pgz6PiXdFqcRw90EafHK-Jq9RfcgLUZaJ1ARrtdnjG0w@mail.gmail.com>
- <ddf37ac0-0d04-ad84-73c7-b334655c066c@physik.uni-bonn.de>
-In-Reply-To: <ddf37ac0-0d04-ad84-73c7-b334655c066c@physik.uni-bonn.de>
+References: <95105bdf-8442-4c7c-dcc8-719b0784bced@attglobal.net>
+ <CAHmME9qQZMb4ajHKHY8w-b8_9BNv8YM9YKyNO9U9RH0_thrCPw@mail.gmail.com>
+ <49d1235b-1ed8-68f6-33bf-574ac0ad40e0@anatoli.ws>
+ <CAHmME9q58QCUEY7vqhX767wPtqCPr23gmXgSS_bvbfvNZva=SQ@mail.gmail.com>
+ <96bcc87f-7de1-05a4-641a-27ffac7b052d@attglobal.net>
+ <DA133F84-7C21-4234-97DB-FFEDF79D1607@gmail.com>
+In-Reply-To: <DA133F84-7C21-4234-97DB-FFEDF79D1607@gmail.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 22 Sep 2021 12:57:57 -0600
-X-Gmail-Original-Message-ID: <CAHmME9rP1a5XPtHp10_M5=w_ozGysOPYAk-PJ5hhZUCRXCJmQg@mail.gmail.com>
-Message-ID: <CAHmME9rP1a5XPtHp10_M5=w_ozGysOPYAk-PJ5hhZUCRXCJmQg@mail.gmail.com>
-Subject: Re: Windows stuck in boot after WireGuard update (switch to
- WireGuardNT?)
-To: Oliver Freyermuth <freyermuth@physik.uni-bonn.de>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Date: Wed, 22 Sep 2021 13:28:36 -0600
+X-Gmail-Original-Message-ID: <CAHmME9p69qDGUJnbHVsqH_vx8mf=dNY3-sQ-7APhOG85xxLYWA@mail.gmail.com>
+Message-ID: <CAHmME9p69qDGUJnbHVsqH_vx8mf=dNY3-sQ-7APhOG85xxLYWA@mail.gmail.com>
+Subject: Re: WireGuard Configurations Gone After iOS 15 Upgrade
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Cc: Eddie <stunnel@attglobal.net>, Anatoli <me@anatoli.ws>, 
+ Roopesh Chander S <roop@roopc.net>, Miguel Arroz <miguel.arroz@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -77,9 +80,15 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Oliver,
+Hi all,
 
-Could you send the wireguard application log, as well as any other
-logs you find? Also \windows\inf\setupapi.*.log would help.
+I've got a new build submitted to the App Store, and so now we wait
+for Apple's review.
+
+I do not understand the root cause or how it might resolve itself yet,
+because I haven't been able to reproduce. But I've removed the
+ridiculous code that deletes network profiles when the keychain can't
+be opened. My hope is that the open failure is transient, and so this
+fix will be sufficient to unwedge it. I guess we'll see...
 
 Jason
