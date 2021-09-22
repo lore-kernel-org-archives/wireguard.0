@@ -2,50 +2,77 @@ Return-Path: <SRS0=SfGb=OM=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0AE2BC433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 22 Sep 2021 00:30:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E649DC433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 22 Sep 2021 00:45:29 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 2CB0B60F9E
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 22 Sep 2021 00:30:56 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 2CB0B60F9E
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=attglobal.net
+	by mail.kernel.org (Postfix) with ESMTPS id 04350611C6
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 22 Sep 2021 00:45:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 04350611C6
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6ba76954;
-	Wed, 22 Sep 2021 00:28:48 +0000 (UTC)
-Received: from p-impout005.msg.pkvw.co.charter.net
- (p-impout005aa.msg.pkvw.co.charter.net [47.43.26.136])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 25b3c4f3
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1b7bbba9;
+	Wed, 22 Sep 2021 00:45:27 +0000 (UTC)
+Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com
+ [2607:f8b0:4864:20::530])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id fab19e0c
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 22 Sep 2021 00:28:45 +0000 (UTC)
-Received: from [192.168.0.3] ([108.184.10.226]) by cmsmtp with ESMTP
- id Sq7umimGMEP0uSq7vmNlM9; Wed, 22 Sep 2021 00:28:43 +0000
-X-Authority-Analysis: v=2.4 cv=d+AwdTvE c=1 sm=1 tr=0 ts=614a78bb
- a=x8oosPCBN5qOUqq8BNRqNA==:117 a=x8oosPCBN5qOUqq8BNRqNA==:17
- a=IkcTkHD0fZMA:10 a=UjH9h7NRxypSX1w-nq0A:9 a=QEXdDO2ut3YA:10
+ Wed, 22 Sep 2021 00:45:22 +0000 (UTC)
+Received: by mail-pg1-x530.google.com with SMTP id h3so847308pgb.7
+ for <wireguard@lists.zx2c4.com>; Tue, 21 Sep 2021 17:45:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=J/z25Zynnvm8PDO5rwG0YUEem1Db1moFKpgzctQR59w=;
+ b=JZ/p8o7yOdMWpzG8v68bcX56NABHOG+onbZoLanh0YFswgd81ehuZpVm9M+3WSCrSQ
+ B4gIP8zlKRBz8EewpC3iKjNUwRZWdOqmef1IAIfJ3AzCDbt3lpPtdqW5QVx4VGlcwZ0V
+ xmYzs9ZNdjYnrJGPG66BCso3eunG8nr0m8yUe7jPyS4xLFsC9gDzAjNbPa48+gvLu8Kh
+ Vi9rCO+JrY5hjO224sAtTnoqI6NvZgurtcpGxqgBpGelFz25KnOFbbGPtMokY4XzT2fb
+ C0Rnh2Ap3dUE47wPUth5rWDgePoYOHtlwpqEr3d0EQauuJTVkM/4usx/Gf+2jYq3RrxT
+ wDVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=J/z25Zynnvm8PDO5rwG0YUEem1Db1moFKpgzctQR59w=;
+ b=E6Hlj9FP2qv4DzPARLCkin3YzOdM2hjyOIZd2X6rRC30RAS2pcm0BQStM97qylYIuf
+ Yz7YbkOtR/UpFEFAT3PpTt2PC3VMX+xAdHKqac3DJnGM4WOY1Nauf/6vjWPU47MQTLEj
+ bLThB+mx6fgmFdXhKS3SgSeHZdrc/JTulIq/W0LrrQ68gJvODcQTA4HZmyHFk4yqOZDO
+ ddzrvH7D/8MEr58zrcntNIn2PjWX1PBo2hee+gss0I86FdtReeUTg5z11pZ7hXrA+AuF
+ YiAqIfIxW0Yw+D2oBeQL8rT8/d2LxMN4HyNhMq8VX80khycjqFZ5CteTHD9KRWz+ah3X
+ flfg==
+X-Gm-Message-State: AOAM530UR/lRWFx9DxdOOOfYZzOaDqWh+Cr797L5hW7GCZ3UQZKyA7Mv
+ NN0hslBteKvdShAxrJohYPqKGiqFLmU=
+X-Google-Smtp-Source: ABdhPJyZElPa7ky7ePwrle3LUqcjZFquLe00HjD7rhrWpi5QBGhujSZPIlBs/Lpgeholzl4wqMzzmw==
+X-Received: by 2002:a63:24a:: with SMTP id 71mr5669500pgc.285.1632271521189;
+ Tue, 21 Sep 2021 17:45:21 -0700 (PDT)
+Received: from smtpclient.apple (216-19-179-128.dyn.novuscom.net.
+ [216.19.179.128])
+ by smtp.gmail.com with ESMTPSA id ga24sm3577745pjb.41.2021.09.21.17.45.20
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Tue, 21 Sep 2021 17:45:20 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
 Subject: Re: WireGuard Configurations Gone After iOS 15 Upgrade
-To: wireguard@lists.zx2c4.com
+From: Miguel Arroz <miguel.arroz@gmail.com>
+In-Reply-To: <4634569d-1f93-3544-90be-c989dd32752b@attglobal.net>
+Date: Tue, 21 Sep 2021 17:45:20 -0700
+Cc: wireguard@lists.zx2c4.com
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <257B7EB1-D01F-418E-AE16-F01822BF25B3@gmail.com>
 References: <95105bdf-8442-4c7c-dcc8-719b0784bced@attglobal.net>
-From: Eddie <stunnel@attglobal.net>
-X-Clacks-Overhead: GNU Terry Pratchett
-Message-ID: <4634569d-1f93-3544-90be-c989dd32752b@attglobal.net>
-Date: Tue, 21 Sep 2021 17:28:41 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
-MIME-Version: 1.0
-In-Reply-To: <95105bdf-8442-4c7c-dcc8-719b0784bced@attglobal.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CMAE-Envelope: MS4xfKH/II3l/iGFgErjHVsF1naz3uWmxb5efsaAguG59iovV8D5ttDbvoYq1nwumfh16Ej+Auf/aujVOkySLblkXfCY1tcwe9XLIGn5TE7+c4dMKo9YwL+E
- 7diG0n+qbF4Y/8s/HlOHoVOXagPEbw8b4bNXTTrej3cBOQs1Lhv4QJLAPNCDZ2psV35oXRK5HfFVEp98Zs+W4eDZ9Wh92r8UA+E=
+ <4634569d-1f93-3544-90be-c989dd32752b@attglobal.net>
+To: stunnel@attglobal.net
+X-Mailer: Apple Mail (2.3654.120.0.1.13)
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -57,23 +84,37 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Reply-To: stunnel@attglobal.net
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On 9/21/2021 5:23 PM, Eddie wrote:
-> Title says it all.  On both iPhone and iPad.
->
-> The configuration names still show, with the slider, but trying to 
-> activate gives:  Activation failure.  Unable to retrieve tunnel 
-> information from the saved configuration.
->
-> Selecting a tunnel name doesn't show any configuration.
->
+Hi,
+
+  I=E2=80=99m seeing the same problem in the app, but the tunnel does =
+work. Its on-demand flag is set, so maybe the network extension is able =
+to find the item in the keychain, but the app is not.
+
+  Regards,
+
+Miguel Arroz
+
+ =20
+
+> On Sep 21, 2021, at 5:28 PM, Eddie <stunnel@attglobal.net> wrote:
+>=20
+> On 9/21/2021 5:23 PM, Eddie wrote:
+>> Title says it all.  On both iPhone and iPad.
+>>=20
+>> The configuration names still show, with the slider, but trying to =
+activate gives:  Activation failure.  Unable to retrieve tunnel =
+information from the saved configuration.
+>>=20
+>> Selecting a tunnel name doesn't show any configuration.
+>>=20
+>> Cheers.
+>=20
+> Quick update.
+>=20
+> The log shows:  [APP] Unable to open config from keychain:- 25300
+>=20
 > Cheers.
 
-Quick update.
-
-The log shows:  [APP] Unable to open config from keychain:- 25300
-
-Cheers.
