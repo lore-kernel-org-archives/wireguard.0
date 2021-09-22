@@ -2,68 +2,77 @@ Return-Path: <SRS0=SfGb=OM=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9F59C433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 22 Sep 2021 05:21:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 30DF4C433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 22 Sep 2021 08:55:17 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 15A076105A
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 22 Sep 2021 05:21:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 15A076105A
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id 40A076135A
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 22 Sep 2021 08:55:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 40A076135A
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7eb6de08;
-	Wed, 22 Sep 2021 05:17:35 +0000 (UTC)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id bd9cd743
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Wed, 22 Sep 2021 05:17:32 +0000 (UTC)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 5425D610A1
- for <wireguard@lists.zx2c4.com>; Wed, 22 Sep 2021 05:17:30 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="agWZcGds"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1632287848;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=DWMGUsfkcu3mGfdiUf4/bGoY8Azi6jE20/PDU8ceQlo=;
- b=agWZcGdsmCFo/4eT7pRg0ZaPhO0pmXNXjjC4UljBdFMpznFv6yXIL5XRs8kM/KKUCMURXC
- Tnt8XD05gMJXdNLw/oGL3vnr1kAa8sqJkXlTESgvHoXKaVNgoD5BOukKjBgBtLAXmbHfkM
- ecxJqYilWott8kKk9PQddvylEiZaSyI=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 1087dc12
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 65b4e368;
+	Wed, 22 Sep 2021 08:55:14 +0000 (UTC)
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com
+ [2a00:1450:4864:20::429])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b1362f36
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 22 Sep 2021 05:17:28 +0000 (UTC)
-Received: by mail-qk1-f175.google.com with SMTP id 138so5374187qko.10
- for <wireguard@lists.zx2c4.com>; Tue, 21 Sep 2021 22:17:27 -0700 (PDT)
-X-Gm-Message-State: AOAM5322df3IH1IIgbvqQNrl20tlkvRWsV9XzS3Ypqs+bM6qgB4yrZKY
- OjF6AlBzfY7XjzUSSbWFXEVdaJ67BK0VJqZ7snA=
-X-Google-Smtp-Source: ABdhPJwRoDFKG1hzcaxbg+u6HXC+bIzzJccc9/EZAWf+M2MOkNUUiz0FtgeSMLKFcjzuT/c59n/qKDdLU5pYq860NxU=
-X-Received: by 2002:a5b:d48:: with SMTP id f8mr40570372ybr.449.1632287847382; 
- Tue, 21 Sep 2021 22:17:27 -0700 (PDT)
-MIME-Version: 1.0
-References: <95105bdf-8442-4c7c-dcc8-719b0784bced@attglobal.net>
- <CAHmME9qQZMb4ajHKHY8w-b8_9BNv8YM9YKyNO9U9RH0_thrCPw@mail.gmail.com>
- <49d1235b-1ed8-68f6-33bf-574ac0ad40e0@anatoli.ws>
- <CAHmME9q58QCUEY7vqhX767wPtqCPr23gmXgSS_bvbfvNZva=SQ@mail.gmail.com>
-In-Reply-To: <CAHmME9q58QCUEY7vqhX767wPtqCPr23gmXgSS_bvbfvNZva=SQ@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 21 Sep 2021 23:17:16 -0600
-X-Gmail-Original-Message-ID: <CAHmME9p1GcTVfFNH67o1xKxTw6VF=ioqBOAnWjES4Hn15GE2JA@mail.gmail.com>
-Message-ID: <CAHmME9p1GcTVfFNH67o1xKxTw6VF=ioqBOAnWjES4Hn15GE2JA@mail.gmail.com>
-Subject: Re: WireGuard Configurations Gone After iOS 15 Upgrade
-To: Anatoli <me@anatoli.ws>, Eddie <stunnel@attglobal.net>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
- Roopesh Chander S <roop@roopc.net>
-Content-Type: text/plain; charset="UTF-8"
+ Wed, 22 Sep 2021 08:55:10 +0000 (UTC)
+Received: by mail-wr1-x429.google.com with SMTP id u15so4552300wru.6
+ for <wireguard@lists.zx2c4.com>; Wed, 22 Sep 2021 01:55:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=19LmEqkQdGzfizRmOF7UG/vPyeqd/XbX9vK9V6BA9cM=;
+ b=fmU+1XSFBL7KtkbNfTshjWOUalPqTcom7udONhAyTrsVdnY/qjdFH8dr2XnV9NNAFH
+ 1VGCkk1AwqkIa04lZWRV6aYU7A62vCm0nvgK5maQWtaDQWosD7tbDCrBG5FIDel+L8pz
+ p7QfwsrF56QEYbiiJfn69ylhEUqTIXlR4a5VIMnaHfBKPRox+Kk2SUCmKcMVNka7Sp84
+ E/tlvMeHXktgC7AzgQyWqHU2tf3GtdLJLbDKtBWfrotgt/XzDBUwVpJne4KX8HKNPdJY
+ pZVY8wYc1XhWZYQBzZYBiL0441ZpFjRdpsL107u2dX2w7bn9WaVBVkz6PA/x6zL4qKCE
+ tuhQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=19LmEqkQdGzfizRmOF7UG/vPyeqd/XbX9vK9V6BA9cM=;
+ b=zHaqyDLNCS30RO/h9lUPvIP0SX7NZEAHOCONhDHN7/wiVtDMH7HPeDJvmnGTQRBXhc
+ LCd2zcpZUkyHMc174hC2XeB7S5/w2sPyeJrfLJaIZHYqd7nc2zhSysvO+23UZFWigEq6
+ 6kxWD9Rb1NzHPO4Sx7WJjd+7955xyvzfygrnXf3nr6fdjHs/lhVd1i3dCTJcnvUwOcH8
+ 3c1P4HswoQDcEbIV6dos+jKbO+svH5tgVl9T5v2KVzJt1qv3zqeMg+2YsAMna6YmIbLJ
+ JsYDSIU9VBti2Zd6UmfMo2JXLTcjrcxaKAzaK/nGJHmdyI+l5KTiWEejKDUap/wCEjKA
+ Yx4Q==
+X-Gm-Message-State: AOAM531IU59+1cS1LFNk5cDyADoJwqMUzHtnekP8uKg1Rq3aBQSVAlK4
+ jsYukmjfxU8GOdICybuNMnU=
+X-Google-Smtp-Source: ABdhPJybM79AIZKeNrP1Al/K8O6K7xgyPUPATomrrOTzmJ2nI22xSveYdYEXAzTiejj8PUb8s3UgEw==
+X-Received: by 2002:a7b:c5c7:: with SMTP id n7mr9213902wmk.5.1632300910054;
+ Wed, 22 Sep 2021 01:55:10 -0700 (PDT)
+Received: from smtpclient.apple ([188.252.198.230])
+ by smtp.gmail.com with ESMTPSA id h15sm1471061wrc.19.2021.09.22.01.55.08
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Wed, 22 Sep 2021 01:55:09 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
+Subject: Re: [wireguard-apple] [iOS] Changing network fails with
+ includeAllNetworks (Kill Switch)
+From: Juraj Hilje <juraj.hilje@gmail.com>
+In-Reply-To: <5569D8DF-A7E8-4A13-BA6B-913785819E4E@mullvad.net>
+Date: Wed, 22 Sep 2021 10:55:07 +0200
+Cc: wireguard@lists.zx2c4.com
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <CB84BD03-DB8A-4855-94CC-898100C0B97E@gmail.com>
+References: <B3A4A27C-1FBF-4098-B38F-9F87F8C115B5@gmail.com>
+ <5569D8DF-A7E8-4A13-BA6B-913785819E4E@mullvad.net>
+To: Andrej Mihajlov <and@mullvad.net>
+X-Mailer: Apple Mail (2.3654.120.0.1.13)
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -78,21 +87,68 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Tue, Sep 21, 2021 at 10:50 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
-> 2. When the app can't open a keychain item, it deletes the VPN
-> profile? Or does it just gray it out? If it's deleting it, that's
-> wrong; it ought to just remain disabled until it's readable again.
+Hey Andrej, thanks for the response!
 
-This is now fixed with https://w-g.pw/l/dteZ
+I've tested on iOS 14.8 and iOS 15.0 (public release), and even with the =
+patch (b244febfdf3069dd4e8db2d31f0368d5474d7616) i still have the same =
+issue on my end.
 
-> 1. Something goes wrong with the keychain from 14->15 and the app
-> loses authorization.
+I will test the new iOS 15.1 Beta later today and let you know how it =
+goes.
 
-This I still have no idea about, as I can't reproduce the issue. It
-would be useful to know if it's transient, and so the fix to (2) above
-basically handles the issue by not blowing away the VPN profile. If
-somebody's got a reliable reproduction rig and can build this in
-xcode, I'd be interested in feedback here on what's in the master
-branch.
+Juraj H.
 
-Jason
+> On 22.09.2021., at 10:08, Andrej Mihajlov <and@mullvad.net> wrote:
+>=20
+> Have you tried on the most recent beta? I think it works over there, =
+but requires some tweaks to the network monitor code in WireGuard. I had =
+a patch somewhere here but haven=E2=80=99t spent much time testing it:
+>=20
+> =
+https://git.zx2c4.com/wireguard-apple/commit/?h=3Dam/enable-include-all-ne=
+tworks&id=3Db244febfdf3069dd4e8db2d31f0368d5474d7616
+>=20
+> Waiting for the final release of iOS 15.
+>=20
+>> On 21 Sep 2021, at 12:55, Juraj Hilje <juraj.hilje@gmail.com> wrote:
+>>=20
+>> If NETunnelProviderProtocol is configured with =
+includeAllNetworks=3Dtrue (Kill Switch), when network change is detected =
+the device connectivity goes offline instead of routing VPN tunnel =
+traffic through a new network.
+>>=20
+>> Here are some logs from the moment of this event:
+>> 2021-09-20 12:07:26.735453: [NET] Network change detected with =
+unsatisfied route and interface order [en0, utun4, pdp_ip0]
+>> 2021-09-20 12:07:26.736186: [NET] Connectivity offline, pausing =
+backend.
+>> 2021-09-20 12:07:26.736732: [NET] Device closing
+>> 2021-09-20 12:07:26.737503: [NET] Routine: TUN reader - stopped
+>> 2021-09-20 12:07:26.738970: [NET] Routine: event worker - stopped
+>> 2021-09-20 12:07:26.739613: [NET] Routine: receive incoming v4 - =
+stopped
+>> 2021-09-20 12:07:26.742070: [NET] Routine: receive incoming v6 - =
+stopped
+>> 2021-09-20 12:07:26.746712: [NET] peer(eN1f=E2=80=A6Oymc) - Stopping
+>> 2021-09-20 12:07:26.751550: [NET] peer(eN1f=E2=80=A6Oymc) - Routine: =
+sequential receiver - stopped
+>> 2021-09-20 12:07:26.751597: [NET] peer(eN1f=E2=80=A6Oymc) - Routine: =
+sequential sender - stopped
+>> 2021-09-20 12:07:26.753433: [NET] Device closed
+>> 2021-09-20 12:07:26.754097: [NET] Routine: decryption worker 5 - =
+stopped
+>>=20
+>> Tested on devices: iOS 14.8, iPadOS 15
+>> WireGuardKit: 79aeb0be0d0aa3f6c8bd24309aaa8dcf03216fb4
+>>=20
+>> More info on includeAllNetworks option:
+>> =
+https://developer.apple.com/documentation/networkextension/nevpnprotocol/3=
+131931-includeallnetworks
+>>=20
+>> Can someone confirm this issue or point to a possible workaround?
+>> Thanks!
+>>=20
+>> Juraj H.
+>=20
+
