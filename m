@@ -2,58 +2,53 @@ Return-Path: <SRS0=SfGb=OM=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_20,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4106BC433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 22 Sep 2021 19:58:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AFD63C433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 22 Sep 2021 22:15:50 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 3BB1661168
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 22 Sep 2021 19:58:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 3BB1661168
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	by mail.kernel.org (Postfix) with ESMTPS id B5D0B6103C
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 22 Sep 2021 22:15:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org B5D0B6103C
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7e457c04;
-	Wed, 22 Sep 2021 19:58:28 +0000 (UTC)
-Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com
- [2607:f8b0:4864:20::531])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id edb4c34c
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3f494238;
+	Wed, 22 Sep 2021 22:15:47 +0000 (UTC)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 7cb0f67f
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 22 Sep 2021 22:15:45 +0000 (UTC)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 9F19F61107
+ for <wireguard@lists.zx2c4.com>; Wed, 22 Sep 2021 22:15:43 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="ilonjeJu"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1632348940;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=t6BzCZOiHfE1dZ2/UaFGaBvXxlMrq9BMXAMyPWkIwgU=;
+ b=ilonjeJuTGj4fsURO9y9ChI4PY97nZirq8cVJee+VGzvmxlTbdkk/2f3mBwK8uuOtHF9m5
+ uB9DwsitRtj1MJwZXCD9Mj5fjzixCBAF6CjiBmi71FD0gmxpQnpuMfJbkzp0sxzzJ/r+SP
+ KSGOFSYw/Qn+B6XMMI3pQ59a2lp5kIo=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id a173f348
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 22 Sep 2021 19:58:25 +0000 (UTC)
-Received: by mail-pg1-x531.google.com with SMTP id q68so3875064pga.9
- for <wireguard@lists.zx2c4.com>; Wed, 22 Sep 2021 12:58:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:references:in-reply-to:reply-to:from:date:message-id
- :subject:to:cc;
- bh=D5J/Jh1t1DZ+/TIfPFTz0kFM04x13zJxzZAkRj6baAQ=;
- b=fCArcACjwadz4bD92W/CjUTqB17eGuSZ5CL4isi7rKwDd+XEQANt4kRhFlgZOFVQq0
- T5JnGwlUuaCrpVIOpCAJ0Tct3WXTLZF2P9DgYacHYVioQ9KhLCdsEABKkxFCzNkMHCLT
- dQ1/9Zv/RScxnzgGKItxEUOihsROfwQa2j1jo69+/Yb/0QI/N7C49Wvmf0o7vgncWlLI
- bvGtA3Ar0hrPlDefYO9RPKG+2zjOCRhDgz0AtKGvDHorXvtmmM0ErkDozUl/t+hsbmva
- CUWXCeDv11uAyagCD2pr3/fHXOdkgrqSPsMB6ZOy4e+uH9RdE/Ftbl01mboZnwdqavjt
- lYQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
- :from:date:message-id:subject:to:cc;
- bh=D5J/Jh1t1DZ+/TIfPFTz0kFM04x13zJxzZAkRj6baAQ=;
- b=nth2W50eS7Tt4TXOaP0eijXMU7w6gs/xVE9ioPHcnTHfHgBV2xqMW/fWFTqOJVZ4/x
- S0CHs6tOvReZXLeW3xJcacHuxptm//F6expUZSDNzE+MVHw6W8lvnn/zuAPY+K1NWZzw
- 1BRA8EwlRLwEWfH+jfWtvFNa4N5NOimvFlwBbZouaVQgluyW+Q/UOF7IY17JbRw0/wqq
- hYqStcgyqoRkPW434AFubPwB/JgTswDNe/9J8ooBaN23/lIOtnhZ9SPSXd+acYQQTk7X
- u6+Sc92IaiVZ9Wie9Ofma8MO6TkaG07mkeepdgRXAQP9x7Z3ZoMdmVmOXL2zm3BXlwo1
- TfTg==
-X-Gm-Message-State: AOAM531Qy2BDVxy9mjmxdUMsI7MkOEGhoSphesi8RLKhnf9QpeKAqRky
- rdRf12G1ga0P0iCO3skgtTNOojR1wmgMbCl9/44=
-X-Google-Smtp-Source: ABdhPJxbo5uElPshe3g8Bbl24M/Ld3zAJpjRZaTl3l6M3MhXQ//V39eo6+83pGoKMJt/4zkCPU1zdg7IfIcgKmuQDEE=
-X-Received: by 2002:a63:b046:: with SMTP id z6mr655615pgo.106.1632340703559;
- Wed, 22 Sep 2021 12:58:23 -0700 (PDT)
+ Wed, 22 Sep 2021 22:15:40 +0000 (UTC)
+Received: by mail-qk1-f170.google.com with SMTP id t4so14998642qkb.9
+ for <wireguard@lists.zx2c4.com>; Wed, 22 Sep 2021 15:15:40 -0700 (PDT)
+X-Gm-Message-State: AOAM531PxZn6TszNnik1Pr3V70tFSnCC90UqLIeypOj71U8z+7K7eotv
+ wlP9ut/IeLxJiwxNtw/ZxVyVK1WGE3KKks/bM2k=
+X-Google-Smtp-Source: ABdhPJxFakC2qSk/th80TL80WL17NcB6jSaMXF7mpw7B7trfPB7V4tAPe1D5CidWULNVhKMM/VyZBImxYBZeeskxXNs=
+X-Received: by 2002:a25:3214:: with SMTP id y20mr1709668yby.416.1632348939296; 
+ Wed, 22 Sep 2021 15:15:39 -0700 (PDT)
 MIME-Version: 1.0
 References: <95105bdf-8442-4c7c-dcc8-719b0784bced@attglobal.net>
  <CAHmME9qQZMb4ajHKHY8w-b8_9BNv8YM9YKyNO9U9RH0_thrCPw@mail.gmail.com>
@@ -63,12 +58,14 @@ References: <95105bdf-8442-4c7c-dcc8-719b0784bced@attglobal.net>
  <DA133F84-7C21-4234-97DB-FFEDF79D1607@gmail.com>
  <CAHmME9p69qDGUJnbHVsqH_vx8mf=dNY3-sQ-7APhOG85xxLYWA@mail.gmail.com>
 In-Reply-To: <CAHmME9p69qDGUJnbHVsqH_vx8mf=dNY3-sQ-7APhOG85xxLYWA@mail.gmail.com>
-From: Jeffrey Walton <noloader@gmail.com>
-Date: Wed, 22 Sep 2021 15:58:01 -0400
-Message-ID: <CAH8yC8mG6TR76jJOh5fiz7hgCPEkxAZDqGM3L5DTEkwRMU8xpw@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 22 Sep 2021 16:15:28 -0600
+X-Gmail-Original-Message-ID: <CAHmME9rQY8OU3jbXnB=OroBvudO1KCXL3vL6ESuEgZoMSRqVLw@mail.gmail.com>
+Message-ID: <CAHmME9rQY8OU3jbXnB=OroBvudO1KCXL3vL6ESuEgZoMSRqVLw@mail.gmail.com>
 Subject: Re: WireGuard Configurations Gone After iOS 15 Upgrade
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Cc: Eddie <stunnel@attglobal.net>, Anatoli <me@anatoli.ws>, 
+ Roopesh Chander S <roop@roopc.net>, Miguel Arroz <miguel.arroz@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -81,30 +78,12 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
-Reply-To: noloader@gmail.com
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Wed, Sep 22, 2021 at 3:31 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
->
-> Hi all,
->
-> I've got a new build submitted to the App Store, and so now we wait
-> for Apple's review.
->
-> I do not understand the root cause or how it might resolve itself yet,
-> because I haven't been able to reproduce. But I've removed the
-> ridiculous code that deletes network profiles when the keychain can't
-> be opened. My hope is that the open failure is transient, and so this
-> fix will be sufficient to unwedge it. I guess we'll see...
+Hi again,
 
-I recall reading a report last night... An app lost access to its
-keychain items after an iOS 15 upgrade. The workaround was to "Enable
-iCloud Keychain".
+A new app has been released for both iOS and macOS. Please test it out
+and let me know how it goes.
 
-I don't think that's a good idea, however. You don't want your secrets
-leaving your security boundary and moving to Apple's cloud. In fact, I
-stopped using Apple devices back around iOS 6 when Apple integrated
-the keychain into their cloud services.
-
-Jeff
+Jason
