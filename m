@@ -2,63 +2,73 @@ Return-Path: <SRS0=SfGb=OM=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.0 required=3.0 tests=BAYES_50,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 80E43C433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 22 Sep 2021 13:30:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FF8EC433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 22 Sep 2021 14:01:45 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 9D09B611B0
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 22 Sep 2021 13:30:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 9D09B611B0
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=physik.uni-bonn.de
+	by mail.kernel.org (Postfix) with ESMTPS id 0D3A860230
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 22 Sep 2021 14:01:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 0D3A860230
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 66e24674;
-	Wed, 22 Sep 2021 13:27:21 +0000 (UTC)
-Received: from mail.uni-bonn.de (mail.uni-bonn.de [131.220.15.113])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id eb46590b
- (TLSv1.2:ECDHE-ECDSA-AES256-SHA:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id bb7e9486;
+	Wed, 22 Sep 2021 13:59:31 +0000 (UTC)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 9b5fb9bf
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 22 Sep 2021 10:09:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=physik.uni-bonn.de; s=mail; 
- bh=ehsVW9+ldDAVGHRPAAfEBu4jRxH6YVXwu70H788TIr0=;
- h=Content-Transfer-Encoding:Content-Language:Content-Type:MIME-Version:Date:
- Message-ID:Subject:From:To; b=dKvikD+0IO0DpIf9PO3ryhLWAP3LichFemqbkh7JebP/fta
- eOueQvFFepSuSCYzc9RdYyAXDSl3LQWS2urtnsRh8PWb3/opJgxT2+seaXkxGOgSyBoUkQcHoeVHY
- jmY4GsIYkYlpLIjt8IEpkKx901m0uDQP5gunm/veIBqO7HE=
-Received: from [131.220.15.217] (HELO uni-bonn.de)
- by uni-bonn.de (CommuniGate Pro SMTP 6.3.7k)
- with ESMTP id 213492790 for wireguard@lists.zx2c4.com;
- Wed, 22 Sep 2021 12:09:06 +0200
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=physik.uni-bonn.de; s=mail; 
- bh=ehsVW9+ldDAVGHRPAAfEBu4jRxH6YVXwu70H788TIr0=;
- h=Content-Transfer-Encoding:Content-Language:Content-Type:MIME-Version:Date:
- Message-ID:Subject:From:To; b=dKvikD+0IO0DpIf9PO3ryhLWAP3LichFemqbkh7JebP/fta
- eOueQvFFepSuSCYzc9RdYyAXDSl3LQWS2urtnsRh8PWb3/opJgxT2+seaXkxGOgSyBoUkQcHoeVHY
- jmY4GsIYkYlpLIjt8IEpkKx901m0uDQP5gunm/veIBqO7HE=
-Received: from [131.220.161.21] (account freyermuth@physik.uni-bonn.de
- [131.220.161.21] verified)
- by uni-bonn.de (CommuniGate Pro SMTP 6.3.7k)
- with ESMTPSA id 16114115; Wed, 22 Sep 2021 12:09:06 +0200
-To: wireguard@lists.zx2c4.com, team@wireguard.com
-From: Oliver Freyermuth <freyermuth@physik.uni-bonn.de>
-Subject: Windows stuck in boot after WireGuard update (switch to WireGuardNT?)
-Message-ID: <e0d4dcbb-b0c8-1214-ff0c-c856d168d67f@physik.uni-bonn.de>
-Date: Wed, 22 Sep 2021 12:09:06 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+ Wed, 22 Sep 2021 13:59:29 +0000 (UTC)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 3A44D6120F
+ for <wireguard@lists.zx2c4.com>; Wed, 22 Sep 2021 13:59:27 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="U7SIMeUp"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1632319164;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=G2c8985asDk2bvFnNF0Tg5nBbA/U6LmumBedx3fCYCY=;
+ b=U7SIMeUpyQaG2CoH7M+PpuTENiXTEcUK1XvvUT6mj0RSzET7qg0MCzqOfgQ1IupNQpgC9g
+ rIHRDAuDNGVG0e4Nch+mf5V7fX1z+6gKf9Oe4eQ5dJ7chZexojrFe8DWv5abLk6bMqCX+9
+ CmzU9sSL8tXkNxotTVFmav0Xq9XPKyA=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id b3c70324
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 22 Sep 2021 13:59:24 +0000 (UTC)
+Received: by mail-qk1-f179.google.com with SMTP id 194so9632161qkj.11
+ for <wireguard@lists.zx2c4.com>; Wed, 22 Sep 2021 06:59:24 -0700 (PDT)
+X-Gm-Message-State: AOAM53187nMuwn4uD0YS8Q+2paj83ABYFZ6hKGKBageIZIU1qIMNHBWN
+ lC915ZeOC+/5RUnG/wbWcr060m0jKEwrVmwDMs0=
+X-Google-Smtp-Source: ABdhPJz9/sK4XniNH4bNLTBlAaJx4qRUpcLvZSmZz1WpDV5t5jMT0x+jyBRpdAfwtprOhK8yyXkfKEzeCWUf6Id9d5I=
+X-Received: by 2002:a25:3214:: with SMTP id y20mr45318852yby.416.1632319163057; 
+ Wed, 22 Sep 2021 06:59:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
-X-Mailman-Approved-At: Wed, 22 Sep 2021 13:27:16 +0000
+Received: by 2002:a05:7110:61c1:b0:fa:e5:57f7 with HTTP; Wed, 22 Sep 2021
+ 06:59:22 -0700 (PDT)
+In-Reply-To: <CAMaqUZ2dTaOJ3oPex0pQxBM9njHA7rW5Hb69MvG645n+ya_jhQ@mail.gmail.com>
+References: <95105bdf-8442-4c7c-dcc8-719b0784bced@attglobal.net>
+ <CAHmME9qQZMb4ajHKHY8w-b8_9BNv8YM9YKyNO9U9RH0_thrCPw@mail.gmail.com>
+ <49d1235b-1ed8-68f6-33bf-574ac0ad40e0@anatoli.ws>
+ <CAHmME9q58QCUEY7vqhX767wPtqCPr23gmXgSS_bvbfvNZva=SQ@mail.gmail.com>
+ <CAHmME9p1GcTVfFNH67o1xKxTw6VF=ioqBOAnWjES4Hn15GE2JA@mail.gmail.com>
+ <CAMaqUZ2dTaOJ3oPex0pQxBM9njHA7rW5Hb69MvG645n+ya_jhQ@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 22 Sep 2021 07:59:22 -0600
+X-Gmail-Original-Message-ID: <CAHmME9pVUPkbaGDFjxJdUhFqatv7hxkyyOQ7W26LkLnyJqUebA@mail.gmail.com>
+Message-ID: <CAHmME9pVUPkbaGDFjxJdUhFqatv7hxkyyOQ7W26LkLnyJqUebA@mail.gmail.com>
+Subject: Re: WireGuard Configurations Gone After iOS 15 Upgrade
+To: Reid Rankin <reidrankin@gmail.com>
+Cc: Anatoli <me@anatoli.ws>, Eddie <stunnel@attglobal.net>,
+ patate.cosmique@pm.me, Roopesh Chander S <roop@roopc.net>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -73,55 +83,11 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Dear Jason,
+Hi Reid,
 
-we have observed two cases (laptops, one running Windows 10 Enterprise, the other Windows 10 Pro 2009)
-in which Windows got stuck during boot (during the "rotating dots", which keep rotating forever).
+Thanks for the confirmation. Do you think you (and whoever else is
+experiencing this) could send me the logs from the app? You can send
+them off list if you're worried about private data in there.
 
-This has been observed end of last week for one laptop, and just today for the other affected laptop.
-Both systems have installed WireGuard updates "as they were released", i.e. both were running 0.4.9 when the error occured.
-Both laptops use BitLocker disk encryption (but I suppose this is not part of the issue).
-While both machines are shut down and started up daily, both may not have seen a full reboot until the error occured (thanks to Windows fast startup).
-
-I could revive the systems and pinpoint the issue down to WireGuard as follows:
-- Start in "safe mode".
-   Note that "safe mode with network drivers" will also get stuck.
-- Login with an admin account, and in Device manager, disable or uninstall the following two network adapters:
-     WireGuard Tunnel
-     Microsoft Kernel Debug Network Adapter (is this also pulled in via WireGuard?)
-
-After that, the laptops reboot fine again, and strangely enough, WireGuard is usable right away (using the WireGuard NT driver).
-I tried to provoke the issue when the laptops were in my hand, by enabling / disabling WireGuard, rebooting, shutting down and starting up,
-installing all Windows updates which were available, but to no avail.
-
-However, once I returned the first laptop back to the user, it has shown the same issue again ~24 hours later (still running WireGuard 0.4.9).
-Of course, since these are laptops, they see many connection state changes, in case this may be a trigger of the issue.
-
-To further pinpoint the issue, I have used:
-  reg add HKLM\Software\WireGuard /v UseUserspaceImplementation /t REG_DWORD /d 1 /f
-on one of the two laptops, to check if this prevents reappearance of the issue (I ran that only now, so no feedback by the user yet).
-
-Since both are in heavy use by the respective users, I can sadly not keep them for long to do more detailed debugging,
-and I have not yet managed to reproduce such an issue with any of our test machines (which are however not laptops).
-I've also net yet managed to trigger this on my own Windows 10 laptop, so this may be some kind of very evasive / rare issue.
-
-
-Does this kind of issue ring any bells?
-
-
-Cheers,
-	Oliver
-
-PS: I am not (yet) subscribed to the list, so pleace CC me in replies. Thanks!
-
-
--- 
-Oliver Freyermuth
-Universität Bonn
-Physikalisches Institut, Raum 1.047
-Nußallee 12
-53115 Bonn
---
-Tel.: +49 228 73 2367
-Fax:  +49 228 73 7869
---
+Thanks,
+Jason
