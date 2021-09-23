@@ -4,50 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 911C8C433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 23 Sep 2021 14:43:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A9DCFC433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 23 Sep 2021 15:54:39 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id A2EA1610C9
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 23 Sep 2021 14:43:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org A2EA1610C9
-Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=anatoli.ws
+	by mail.kernel.org (Postfix) with ESMTPS id B260E60E9B
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 23 Sep 2021 15:54:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org B260E60E9B
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ad9ef167;
-	Thu, 23 Sep 2021 14:43:23 +0000 (UTC)
-Received: from out-mx.anatoli.ws (out-mx.anatoli.ws [177.54.157.124])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c93a89a7
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 33f83324;
+	Thu, 23 Sep 2021 15:54:37 +0000 (UTC)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2dab8882
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 23 Sep 2021 14:43:20 +0000 (UTC)
-Received: from [192.168.0.1] (unknown [192.168.0.1])
- by out-mx.oprbox.com (Postfix) with ESMTPSA id 1F0641E00BCA;
- Thu, 23 Sep 2021 14:41:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=anatoli.ws;
- s=vnptcm0lqn; t=1632408120;
- bh=RgHi4aOiJo9hXkGLk6zU1Ojn476SFinsmFRD/DqhyIg=;
- h=From:Subject:Date:References:Cc:In-Reply-To:To;
- b=Terh46j4m/YsR35dzwFC5X1DINBs+wc/uZHJugdCTAG4aVPNONgl1oCljIlcw0/2c
- QrkJIpCUGBcZ97K9peT5D8WmKuRrGE469Zqh3Z2QPk40ZWE/yHXW865Wty4I4oonKi
- qzUqvWMd7Kcmo3g6W+T93y/hEI2aEbHf9EDwoPYanbbeaf58gJdjUgJt7wgDk3iv7q
- DJiHxWRBhUFMfvIvQSCEJsqS9ZwM6pjXLJt1xbJOCP5keU8akG/HeEyAiOrZrdh6XE
- 0T1svf/Zaec3OPEAbSGZ2RcGyCn+ahtHsQODOYzJfohxxsr2HkBYTB2dtNA4ULdISs
- 6ruZYOYN0iZpg==
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Anatoli <me@anatoli.ws>
-Mime-Version: 1.0
-Subject: Re: WireGuard Configurations Gone After iOS 15 Upgrade
-Date: Thu, 23 Sep 2021 11:41:58 -0300
-Message-Id: <F238DB7D-1876-4821-ABC2-4FCF029FBB2B@anatoli.ws>
-References: <CAHmME9oKfJJfnrKeXcaHeb-oa+JZ+OgnxLVny==uSgwa5c5sKA@mail.gmail.com>
+ Thu, 23 Sep 2021 15:54:35 +0000 (UTC)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 6926461050
+ for <wireguard@lists.zx2c4.com>; Thu, 23 Sep 2021 15:54:33 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="aX3aje+u"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1632412472;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZYkFaWggWuaK4Q9+PU8kLmtuaeSfYV9LWVNn9JxpNNA=;
+ b=aX3aje+uJ/zdSx+ZQLw+KxjnA0gcFLwcH6gjq4seBkx5xMFk6PEtTVhGTxeMCVl49Raxq5
+ Un8+gBLHaMTKYp9ThfuU0SBJWUKeh//puX0luJp6pS0G2ii9KH/IKnHhzg5Lud0zRinWoV
+ qL+k/5WaIw+EExIdDWCRFAVuHuDNNr0=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id c595bfab
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 23 Sep 2021 15:54:32 +0000 (UTC)
+Received: by mail-qk1-f169.google.com with SMTP id m7so6788934qke.8
+ for <wireguard@lists.zx2c4.com>; Thu, 23 Sep 2021 08:54:31 -0700 (PDT)
+X-Gm-Message-State: AOAM530h7QS5Y+Rds7rN1QA0Z7vgWRmTlRnoQjqkB6JuL7SQIa8mBnc7
+ vyxM4ZLIe29EHb3OT4tGyw6mkxVuGGsGlcip448=
+X-Google-Smtp-Source: ABdhPJxrbskW2VBBDZ32MtTg04a7rpKlnEV4YC19zJYvVx0/WryK72+Q+qf4AsQzSNcYmRw4R3C1PU1x2sGU0yUfJl8=
+X-Received: by 2002:a25:3214:: with SMTP id y20mr6620612yby.416.1632412471422; 
+ Thu, 23 Sep 2021 08:54:31 -0700 (PDT)
+MIME-Version: 1.0
+References: <20210923100513.1452-1-tklauser@distanz.ch>
+In-Reply-To: <20210923100513.1452-1-tklauser@distanz.ch>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 23 Sep 2021 09:54:20 -0600
+X-Gmail-Original-Message-ID: <CAHmME9rzGKO51oh5UBvPV+qn7J8yAXbQHsWXh-k+r1BkCHfVTw@mail.gmail.com>
+Message-ID: <CAHmME9rzGKO51oh5UBvPV+qn7J8yAXbQHsWXh-k+r1BkCHfVTw@mail.gmail.com>
+Subject: Re: [PATCH wireguard-go] tun: avoid leaking sock fd in CreateTUN
+ error cases
+To: Tobias Klauser <tklauser@distanz.ch>
 Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-In-Reply-To: <CAHmME9oKfJJfnrKeXcaHeb-oa+JZ+OgnxLVny==uSgwa5c5sKA@mail.gmail.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -62,18 +75,4 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Great! Thanks for a quick solution!
-
-Please let us know in this thread when the update is in the AppStore.
-
-> On 23 Sep 2021, at 01:14, Jason A. Donenfeld <Jason@zx2c4.com> wrote:
->=20
-> =EF=BB=BFHi,
->=20
-> Fixed! https://git.zx2c4.com/wireguard-apple/commit/?id=3D03a59ff38e96fb3b=
-b5dde2f15fe42198d1dfb995
->=20
-> Thank you to everyone in this thread who helped get to the bottom of this.=
-
->=20
-> Jason
+Applied, thanks! I'm curious: is this a bug you ran into somewhere?
