@@ -1,71 +1,74 @@
-Return-Path: <SRS0=SfGb=OM=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=9kqO=ON=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92CACC433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 22 Sep 2021 23:54:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E68B1C433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 23 Sep 2021 01:34:47 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 89F34611C4
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 22 Sep 2021 23:54:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 89F34611C4
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=meshify.app
+	by mail.kernel.org (Postfix) with ESMTPS id BC86461130
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 23 Sep 2021 01:34:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org BC86461130
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 9df99671;
-	Wed, 22 Sep 2021 23:54:15 +0000 (UTC)
-Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com
- [2607:f8b0:4864:20::72a])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 66995d5d
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 07799c24;
+	Thu, 23 Sep 2021 01:34:44 +0000 (UTC)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 62f6187b
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Thu, 23 Sep 2021 01:34:41 +0000 (UTC)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id DCBA1611CA
+ for <wireguard@lists.zx2c4.com>; Thu, 23 Sep 2021 01:34:38 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="pCQKqXMH"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1632360875;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=3HL83HwSoAWLz7V+Uqx5wwxRHg0+6vFhXaJxClDwVjQ=;
+ b=pCQKqXMH4J5P8Uj/hcsSG2fYGGjixNMkX/mrwCAQyOEK3Fps2H+sucbQnDKVktf3ZuPb/W
+ HdL7sdqVNL8hox+cN8bbr55ddYZb2GhVtBcuVIodajSGrzwC8g8E5WiQT2sbQSr0o2dSiS
+ i51rUSROzO7MfMtAm8Tfh8SYM4L1SnU=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 967d2381
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 22 Sep 2021 23:54:11 +0000 (UTC)
-Received: by mail-qk1-x72a.google.com with SMTP id q81so12266595qke.5
- for <wireguard@lists.zx2c4.com>; Wed, 22 Sep 2021 16:54:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=meshify-app.20210112.gappssmtp.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=+2iyyQRLW5LEuptildtk0lIePL6MnegWQKpIQCR9uYU=;
- b=RN4uYQ/OgZRt5xqT55jN8qMgoySXW7AzF8AFdoTQ3jariNRfJrm7iHFUWGeQKJ0VyB
- yVUDD92aL2iF2Q0GkwYkwRnlwhbzgEOeP4wRFyrYod8uH51oFO/FreGRxFM/EG+Z2iSP
- un7TrnT58UaA+co14biJLGBok7AIaYqBzF7O7OFZevDC3AljPKUz+KBAtOqoEzZH5B2m
- ikP2HDiCHed0IR6WIifGUPJS4tpLuqyAUGmrDdNNLF8B9P34zQX0eCnoHmnlNbrTVt2p
- N++Ngd5GFkkhXg4KhsmOHyD/5lcn2KVnFV6tvXdn9F0Dwx6iR/G35LfpbuJIBfC9OJVU
- nMVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=+2iyyQRLW5LEuptildtk0lIePL6MnegWQKpIQCR9uYU=;
- b=TRZqQoFdFEN8Z//jTpOZuzeUDM7EpAI01Qw5Ezxb2lZbUWN7dw9jbhvsTNgDZOcO3r
- wpriT2bSOPRFeJ3w1A0alFwqzvy3Wum4nI44kid+YoXJody982EKjTZshnZazoyne/4C
- YRoCEVdNrP/JojWXrzwMxp1n9XRFey3qtwF2ursExByvYudRA8joOlCCZ9NSJgGGanpd
- b7zocvwWm4xKfuGc3+dpRBj6J1djZrSu52yiaLZs6dXiqB5CQveuq+JHtYDYoh/+cr/5
- G+2gM0g3DdJKWaznpWisVprUMBlOl6J6f4ZR7JQEW2rhTIVkMnWn19OtajRoye4cGoNu
- 8ciA==
-X-Gm-Message-State: AOAM53159ARD5l3sOclEx6hVNSZtxZpfnNuqfu4YeoX1g0iojZvz5vsT
- q7+9NOgfWA9OroXjyfSgiJu5Vkj9a0B7pDHtU16SAw==
-X-Google-Smtp-Source: ABdhPJxkVVJKqEjn97HzwWGCa2RWw4C+hq2gE/kWXKHmV6B/u6XSMW58df+5NM8r4imNfbypx1TBgLmeegJW+t83DZM=
-X-Received: by 2002:a37:2d04:: with SMTP id t4mr2093532qkh.160.1632354850584; 
- Wed, 22 Sep 2021 16:54:10 -0700 (PDT)
+ Thu, 23 Sep 2021 01:34:35 +0000 (UTC)
+Received: by mail-qk1-f174.google.com with SMTP id b65so16244172qkc.13
+ for <wireguard@lists.zx2c4.com>; Wed, 22 Sep 2021 18:34:34 -0700 (PDT)
+X-Gm-Message-State: AOAM533UEErOy7ph2b38CSG/IJsAsDZU53+Msm8M4KSUK09KlPxaKIzo
+ h8mSA/QucFkhTLgK54nK9VwfJlXFdlJi3MONU7k=
+X-Google-Smtp-Source: ABdhPJwbjmfgU4jZPi32SK43JXy+g1setGbYCF5RIizX+6MYzLrN63TFe15wjeAco53lDtX57yhbrIVb9ywIk4KAZ0c=
+X-Received: by 2002:a25:854c:: with SMTP id f12mr1866708ybn.95.1632360873409; 
+ Wed, 22 Sep 2021 18:34:33 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAHmME9p69qDGUJnbHVsqH_vx8mf=dNY3-sQ-7APhOG85xxLYWA@mail.gmail.com>
- <B096024B-E199-462E-978C-73B2C1D4C8D2@anatoli.ws>
- <CAHmME9pjuin565o4Ckmj2rHEhO9bAd4uaGarMA9SAMmP=85_wQ@mail.gmail.com>
- <23be4054-af4f-b9a2-c01f-6e6dc33096a4@anatoli.ws>
-In-Reply-To: <23be4054-af4f-b9a2-c01f-6e6dc33096a4@anatoli.ws>
-From: Alan Graham <alan@meshify.app>
-Date: Wed, 22 Sep 2021 16:53:59 -0700
-Message-ID: <CAMeHLtyiG_nKz2BAi+_bD4HBZu-CCVb8N7nqBn6H42rZ5QKv0w@mail.gmail.com>
+References: <95105bdf-8442-4c7c-dcc8-719b0784bced@attglobal.net>
+ <CAHmME9qQZMb4ajHKHY8w-b8_9BNv8YM9YKyNO9U9RH0_thrCPw@mail.gmail.com>
+ <49d1235b-1ed8-68f6-33bf-574ac0ad40e0@anatoli.ws>
+ <CAHmME9q58QCUEY7vqhX767wPtqCPr23gmXgSS_bvbfvNZva=SQ@mail.gmail.com>
+ <96bcc87f-7de1-05a4-641a-27ffac7b052d@attglobal.net>
+ <DA133F84-7C21-4234-97DB-FFEDF79D1607@gmail.com>
+ <CAHmME9p69qDGUJnbHVsqH_vx8mf=dNY3-sQ-7APhOG85xxLYWA@mail.gmail.com>
+ <CAHmME9rQY8OU3jbXnB=OroBvudO1KCXL3vL6ESuEgZoMSRqVLw@mail.gmail.com>
+In-Reply-To: <CAHmME9rQY8OU3jbXnB=OroBvudO1KCXL3vL6ESuEgZoMSRqVLw@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 22 Sep 2021 19:34:22 -0600
+X-Gmail-Original-Message-ID: <CAHmME9reWG3UiHQm1fBvyQUoUF5_oJv6YiBGaOE2AUgLt-nK3w@mail.gmail.com>
+Message-ID: <CAHmME9reWG3UiHQm1fBvyQUoUF5_oJv6YiBGaOE2AUgLt-nK3w@mail.gmail.com>
 Subject: Re: WireGuard Configurations Gone After iOS 15 Upgrade
-To: Anatoli <me@anatoli.ws>
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
- WireGuard mailing list <wireguard@lists.zx2c4.com>
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Cc: Eddie <stunnel@attglobal.net>, Anatoli <me@anatoli.ws>, 
+ Roopesh Chander S <roop@roopc.net>, Miguel Arroz <miguel.arroz@gmail.com>,
+ Alan Graham <alan@meshify.app>, oss@jacobwilder.org
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -81,42 +84,27 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
+Hey folks,
 
-I have an iOS 15 iPhone 12 Pro Max with three tunnels configured.  The
-upgrade from 14 to 15 busted the configs as described.  I deleted and
-recreated one of the tunnels and it worked fine.  I updated to today's
-bits (which appear to have been released in record time).  The tunnel
-that I deleted and recreated is still working fine.  The other two
-tunnels now have red backgrounds and I can no longer click them to see
-the (empty) details like I could in the older build.  Trying to
-activate it does not work (it does not, however, rapidly switch
-between on and off).  It looks like I can delete them by swiping left
-to reveal a delete button, but I can leave them in their current state
-for more testing.  I did not have on-demand turned on for any of the
-tunnels so I cannot speak to that partially working state.  I have
-iCloud keychain on, so that doesn't appear to be a fix/workaround.  I
-also have an iPad that I haven't upgraded yet, so I should be able to
-test the upgrade path, but I'm not sure these bits resolve the
-problem.
+Small update: I've managed to update a fresh 14 device to 15 using the
+latest build, and things are broken still.
 
-Best regards,
-Alan
+On the plus side:
+- The new build no longer deletes VPN profiles when the corresponding
+keychain references are unresolvable, so if there's any chance of
+recovery in a next build, it won't ruin those chances.
+- Now that I can reproduce it, I can hammer away at trying to fix this directly.
 
-On Wed, Sep 22, 2021 at 4:26 PM Anatoli <me@anatoli.ws> wrote:
->
-> Sorry, I replied before I've got your mail about the new version.
->
-> This is how the old version was behaving. Haven't tested yet the new version.
-> I'll test it and report today or tomorrow.
->
->
-> On 22/9/21 19:26, Jason A. Donenfeld wrote:
-> > On Wed, Sep 22, 2021 at 4:24 PM Anatoli <me@anatoli.ws> wrote:
-> >>
-> >> I can confirm that recreating the tunnel from scratch does work. So the problem is that the tunnel settings become corrupted when iOS is upgraded from 13.x / 14.x to 15.0.
-> >
-> > What are you testing? The new version of the app or the old one? Does
-> > the new one corrupt settings or only the old one? Precision is
-> > important here.
-> >
+On the minus side:
+- The fact that a keychain reference goes stale during an update from
+14 to 15 sounds solidly like an Apple bug, rather than any sort of API
+misuse.
+- I'm skeptical that there'll be a workaround, and if there is, it
+will probably be pretty ugly.
+
+If anyone knows the SecItem APIs well, the file in question is:
+https://git.zx2c4.com/wireguard-apple/tree/Sources/Shared/Keychain.swift
+
+So, I guess I'll jump into this in full force now. Here we go...
+
+Jason
