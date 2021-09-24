@@ -2,64 +2,69 @@ Return-Path: <SRS0=2DBL=OO=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6656FC433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Sep 2021 06:17:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FF9EC433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Sep 2021 08:06:02 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 755856124C
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Sep 2021 06:17:12 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 755856124C
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id E7C5D60F3A
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Sep 2021 08:06:00 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org E7C5D60F3A
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=meshify.app
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 85e2e84d;
-	Fri, 24 Sep 2021 06:14:44 +0000 (UTC)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id bb312090
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Fri, 24 Sep 2021 06:14:40 +0000 (UTC)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 6537061241
- for <wireguard@lists.zx2c4.com>; Fri, 24 Sep 2021 06:14:38 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="pDISSvAC"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1632464077;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Zw/UURRmC56Tiy/Ib7UX78cHBhYi5S+6vl/K+J6cKx4=;
- b=pDISSvACB05nvbWok9K1XfGtWtEfe7a8ghuMe3WhJ8diqzrL/lyPyzHgf/2We5EBls520Q
- v17uSqQJMNc1JsMPwIIg4bnza2vtoHr9TAJedEAbr5o0nCRrlU3UIjaejSsneZ9Ia20iDg
- sr9/f8D77xii6QFy0lBw4ZQqlTUYkHk=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 3f9c3df0
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8293a2c9;
+	Fri, 24 Sep 2021 08:05:58 +0000 (UTC)
+Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com
+ [2607:f8b0:4864:20::831])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a64bbaa8
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 24 Sep 2021 06:14:37 +0000 (UTC)
-Received: by mail-yb1-f170.google.com with SMTP id z5so3475571ybj.2
- for <wireguard@lists.zx2c4.com>; Thu, 23 Sep 2021 23:14:37 -0700 (PDT)
-X-Gm-Message-State: AOAM530mN+GMxg73mPM5yGHrsesSFJxFqirL5dd0qwxajd9UZrqT79Yl
- 3a7A8RrS3D8T3C8ESv3Dkar0qVsxon2OcdpUOek=
-X-Google-Smtp-Source: ABdhPJy7K433QwUJJQ4K1Tvdrbt0yL8GaEGgT0zFPoqNYka1S35J1aifrPxcy86MYHAMbjsx/ZjJNwGCUvDl0s7fysY=
-X-Received: by 2002:a25:d442:: with SMTP id m63mr10351588ybf.79.1632464076492; 
- Thu, 23 Sep 2021 23:14:36 -0700 (PDT)
+ Fri, 24 Sep 2021 08:05:54 +0000 (UTC)
+Received: by mail-qt1-x831.google.com with SMTP id e16so6127555qts.4
+ for <wireguard@lists.zx2c4.com>; Fri, 24 Sep 2021 01:05:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=meshify-app.20210112.gappssmtp.com; s=20210112;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=j+Y/f6kCrkj+kRKR6fqnGO2FkjE+jtSYxRjZQ2MlQZ0=;
+ b=zDWG5jOmPoBNYIwZ2wrUMGx76zMyqXKU0y+oa986yOChrB0F5uJ7U6KGY/yun5DQG/
+ ZqgwffJsGLXaEqSMi3VK8lU7mIg3b6c3IFZ8qwYQWeGC9zzhPw1QFZZSSU8Kft78NUKS
+ gVSKUYwsC2Y8uuTJV67jCKsqauJkTGSxMEn+c8TQqdfVnGBf0/vSmv3S9f05MWL3CExZ
+ w0j9x2G/+ZGuXTCxn4Yu5BVpKdy/E1RSHa65EtpAJUxcT+Y3p+13iKidwmW8qponUEQR
+ d74Aptw9Fld1bzq3jBWauLbcvncnatPhuyEDfcIobFf7tKul6bYfNbwVs9YdpIq3OxNH
+ Ohow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=j+Y/f6kCrkj+kRKR6fqnGO2FkjE+jtSYxRjZQ2MlQZ0=;
+ b=ExcOtgHnM9u48wohe1qftXpv2ogCGrU2+1PmHgKzznImPi2WnI8OQmHIuR4joNchea
+ 4VkYNMVKcyzEPB8H8T34aOBaN66wedahmqmWu6jcwBHmezVvMb/JP9Tq+RF4XbsDOvim
+ r+66nLJKKmLXJc0E/o0DIjyzabbyo5cUhotczdn9C4WRBSikdWNFaZEgVugFPNPzD7Mm
+ siLbmt2sG3+0bXFYUDrBvbSrh7XFsWsY+7h8OyDKxAVu+Cxo2WaxjCZxK/5lqhIEK7sU
+ FT2pDKnqzKCu/wUHWUYUOdodhdh6A0RWL6EK9X1xGm8t6EofjWS0wc9EKAS4rQWPKO5H
+ jrBQ==
+X-Gm-Message-State: AOAM5312orUjg2NGC9txrvsU2o7rVobRvKjMjKvLrWqmSEn+6PRlh8xc
+ sIunsitSHpSmbXodrfOv1ekW29mrGTesU7MrECOkrrkXhr+HmQ==
+X-Google-Smtp-Source: ABdhPJwFOso8F3qAIHFOvciteGiygLBxTE1fruMu1CLQ7xcNHP0yrSU/XIXOYTlBRmrRK9TRoYGCa7CB+p9Bg642xVA=
+X-Received: by 2002:ac8:7594:: with SMTP id s20mr2780027qtq.158.1632470753334; 
+ Fri, 24 Sep 2021 01:05:53 -0700 (PDT)
 MIME-Version: 1.0
-References: <e0d4dcbb-b0c8-1214-ff0c-c856d168d67f@physik.uni-bonn.de>
-In-Reply-To: <e0d4dcbb-b0c8-1214-ff0c-c856d168d67f@physik.uni-bonn.de>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 24 Sep 2021 00:14:25 -0600
-X-Gmail-Original-Message-ID: <CAHmME9o_490d9W85=A6xUFktvKuvCAsmqb2T80BNsVY8BRfd0w@mail.gmail.com>
-Message-ID: <CAHmME9o_490d9W85=A6xUFktvKuvCAsmqb2T80BNsVY8BRfd0w@mail.gmail.com>
-Subject: Re: Windows stuck in boot after WireGuard update (switch to
- WireGuardNT?)
-To: Oliver Freyermuth <freyermuth@physik.uni-bonn.de>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+References: <CAHmME9oKfJJfnrKeXcaHeb-oa+JZ+OgnxLVny==uSgwa5c5sKA@mail.gmail.com>
+ <F238DB7D-1876-4821-ABC2-4FCF029FBB2B@anatoli.ws>
+ <CAHmME9orYEOFa-33XvYs==XHjsUrxTn2BtOaVySwFuxS+oj+MQ@mail.gmail.com>
+ <CAHmME9oH6s=x0W+aBvGumTtJ9=bj+a9SBy0TQxXv8ZtU-pnDBA@mail.gmail.com>
+In-Reply-To: <CAHmME9oH6s=x0W+aBvGumTtJ9=bj+a9SBy0TQxXv8ZtU-pnDBA@mail.gmail.com>
+From: Alan Graham <alan@meshify.app>
+Date: Fri, 24 Sep 2021 01:05:41 -0700
+Message-ID: <CAMeHLtwod6gk5Y5Dg4W2nX1AN=EWa-crixmR=ZpBd0e=vw5AqA@mail.gmail.com>
+Subject: Re: WireGuard Configurations Gone After iOS 15 Upgrade
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: Anatoli <me@anatoli.ws>, WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -75,16 +80,21 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Oliver,
+I can confirm that upgrading wireguard, and then upgrading to iOS 15
+works flawlessly with the released bits.
 
-These came out on Tuesday, which might correspond with your timeline:
-https://support.microsoft.com/en-us/topic/september-21-2021-kb5005624-os-build-18363-1830-preview-b2a3af81-696b-4d59-8d7b-a05389407bb8
-https://support.microsoft.com/en-us/topic/september-21-2021-kb5005625-os-build-17763-2210-preview-5ae2f63d-a9ce-49dd-a5e6-e05b90dc1cd8
+Best wishes,
+Alan
 
-Is it possible that you installed either of these immediately before
-the problem began? Post hoc ergo propter hoc, of course, but if you,
-Joshua, and a third private reporter of this bug all have the same
-correlation, that's interesting...
-
-Thanks,
-Jason
+On Thu, Sep 23, 2021 at 7:27 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+>
+> On Thu, Sep 23, 2021 at 11:26 AM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+> >
+> > On Thu, Sep 23, 2021 at 8:42 AM Anatoli <me@anatoli.ws> wrote:
+> > > Please let us know in this thread when the update is in the AppStore.
+> >
+> > Indeed I will. It's been in the "waiting for review" state for about
+> > 13 hours. So hopefully that'll change somewhat soonish.
+>
+> This has been released now. I'll send out an email in a new thread
+> announcing this.
