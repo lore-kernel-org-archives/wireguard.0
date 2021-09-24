@@ -2,68 +2,67 @@ Return-Path: <SRS0=2DBL=OO=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CA59C433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Sep 2021 00:21:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06180C433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Sep 2021 00:23:57 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 283EC61152
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Sep 2021 00:21:28 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 283EC61152
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	by mail.kernel.org (Postfix) with ESMTPS id 2259A61152
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Sep 2021 00:23:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 2259A61152
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c5c6d6cf;
-	Fri, 24 Sep 2021 00:21:27 +0000 (UTC)
-Received: from mail-vs1-xe33.google.com (mail-vs1-xe33.google.com
- [2607:f8b0:4864:20::e33])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 78d7ebdc
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6a5defaa;
+	Fri, 24 Sep 2021 00:22:03 +0000 (UTC)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id cc546142
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Fri, 24 Sep 2021 00:21:59 +0000 (UTC)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id E47FF60F6B
+ for <wireguard@lists.zx2c4.com>; Fri, 24 Sep 2021 00:21:56 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="Y3me3Vfn"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1632442915;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=XcJ0ejLiCg3d9qeOfTlE9JSEqxmmwt+BLYQhbNLAoxw=;
+ b=Y3me3VfncqhpiI4ix2T56+mBjJDp8w7AhLXehnWOAPeGqpDbr05aBtJZ4hQPJ8OSkPdrCE
+ 6xWTiJ1eGzQ2eh2tG8Rey9WcQfu1Z40CDpPYmmy/gulaHy8RQVSXpTPPTKCEe8JdifqQk3
+ MI66Tmo9TA+EKY0RFy0UAsfMtPPDDM0=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 58ed6ceb
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 23 Sep 2021 22:23:53 +0000 (UTC)
-Received: by mail-vs1-xe33.google.com with SMTP id z62so8117191vsz.9
- for <wireguard@lists.zx2c4.com>; Thu, 23 Sep 2021 15:23:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:from:date:message-id:subject:to
- :content-transfer-encoding;
- bh=9FGJa+wg7rJWb0vDEZ8MjDRavF6pODd/jDV9irEWdPg=;
- b=OxLqmG/OVeAqvKNXAfV3IOxGfBSJGTM72iyEDp1yrgEPmsHdvznQXvDoU2tWSBjrOL
- cbQI9HF4BULpG+jrRPC6fqiHKwMlxskxQBb3SYEh9ro3bgfQ7XF2kgcnTsvNFO966Jyh
- Tfla7UElg0QyeYmWZgvxPLtSF4mI5G54NHK/u1zJA8tHaLbG1vahH4RWRmEu+aGWrxyB
- y7rUDOIKQSw6FxMreEQVgjRPZPCaUCMjglRMe60bEFSVHm/fHuzUJZgNfmuSM6QqlUWP
- E9YJKT/jEkQQ7o0jNjUlB3OxD/LB0+/2uQrlNCFEUdqtFmW4SnXWmnz8WG5rNq+ggc2j
- /nmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to
- :content-transfer-encoding;
- bh=9FGJa+wg7rJWb0vDEZ8MjDRavF6pODd/jDV9irEWdPg=;
- b=PdKRmcoNLKRgbstpRcdtRNnyZ9TQMrjRyHbJfTElLbXgruOENlLvVGWDV8ktssUsDp
- 9WiIs0HenHvYOEnN0JW+wD0HBdIJdSq1hrbdq+NYtFwkBMdzD/Mk0Iv/qcjAQJO+PyMO
- h3knrAU8/OhNj24ZJiFpsatUr/qXTZp/HmkH/oc494HaXTA0yDJN/hvXUeDLtbeJT9pg
- drOARJe3fTGaLEiJvuDPk0Z8oLXCut2KtH2JSteBD+AaSVaHkS4qSoFQm7ygw9KLloeF
- xmL9h8438gVIWoQGO/vZtnASCFqUyrLBeYdWg717OY0grSdBrpQA5VqUTEhpnpqQrTs3
- xkLg==
-X-Gm-Message-State: AOAM5310if2LpOeGCiLV5EW01qlXUwTVVQszWPyLc8FlRhlCenQ8BnoT
- bRllZUOhZ6X5bXVQWGDDNzIS8+A865nYXfX+Qn6o6ZUGwSs=
-X-Google-Smtp-Source: ABdhPJyacOv8ZYdLO9+o7p7UMYRlxrF+67hzop2kIWZUI+NdkS7TPThf51kQ9SVE98r9MHHug1ZN8jTPb6qhT345uSk=
-X-Received: by 2002:a05:6102:528:: with SMTP id
- m8mr6912050vsa.43.1632435832390; 
- Thu, 23 Sep 2021 15:23:52 -0700 (PDT)
+ Fri, 24 Sep 2021 00:21:55 +0000 (UTC)
+Received: by mail-yb1-f182.google.com with SMTP id i12so2058009ybq.9
+ for <wireguard@lists.zx2c4.com>; Thu, 23 Sep 2021 17:21:55 -0700 (PDT)
+X-Gm-Message-State: AOAM532dPVLCIStwpSVPVd1eg+zoIYYymIDhy+op1vWIPsLCtW8RJwK/
+ EvTVt3pVVbsaIsBm80o4u4scGR/zk0Ik++kF+g8=
+X-Google-Smtp-Source: ABdhPJw1I61AzG4JOQcP8mThH+doQKdQkNh6WdYhPFgXswD2il4SzKlkeNbwblr2iCeM/Uj6CC/kGp9BS5RSfm3LtI4=
+X-Received: by 2002:a5b:d48:: with SMTP id f8mr8692245ybr.449.1632442914995;
+ Thu, 23 Sep 2021 17:21:54 -0700 (PDT)
 MIME-Version: 1.0
-From: =?UTF-8?Q?Maciej_Le=C5=9Bniewski?= <leshniack@gmail.com>
-Date: Fri, 24 Sep 2021 00:23:41 +0200
-Message-ID: <CAKF6ahaqcCYg5zrnM=uRzdmgLhui5CD-JhaiXvsMrOGkSbdF0g@mail.gmail.com>
-Subject: wireguard-apple: overriding on-demand status
-To: wireguard@lists.zx2c4.com
+References: <e0d4dcbb-b0c8-1214-ff0c-c856d168d67f@physik.uni-bonn.de>
+ <CAHmME9pgz6PiXdFqcRw90EafHK-Jq9RfcgLUZaJ1ARrtdnjG0w@mail.gmail.com>
+ <ddf37ac0-0d04-ad84-73c7-b334655c066c@physik.uni-bonn.de>
+In-Reply-To: <ddf37ac0-0d04-ad84-73c7-b334655c066c@physik.uni-bonn.de>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 23 Sep 2021 18:21:44 -0600
+X-Gmail-Original-Message-ID: <CAHmME9ojB6wt13NyoZhuGm0KHq1eJ2oyvurUGA8vwUkHtxTsuQ@mail.gmail.com>
+Message-ID: <CAHmME9ojB6wt13NyoZhuGm0KHq1eJ2oyvurUGA8vwUkHtxTsuQ@mail.gmail.com>
+Subject: Re: Windows stuck in boot after WireGuard update (switch to
+ WireGuardNT?)
+To: Oliver Freyermuth <freyermuth@physik.uni-bonn.de>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailman-Approved-At: Fri, 24 Sep 2021 00:21:25 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -78,29 +77,22 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello,
+Hi Oliver,
 
-firstly, thank you for the amazing job and the on-demand feature.
+On Wed, Sep 22, 2021 at 8:02 AM Oliver Freyermuth
+<freyermuth@physik.uni-bonn.de> wrote:
+> I tried to boot one of the machines with boot/startup logging (I'm not sure this is the correct English translation, it is one of the options next to safe mode in the WinRE),
+> and ntbootlog.txt ended during network driver loading.
 
-Question: What if I'd like to override the exclusions and enable my
-tunnel in on-demand mode just for a while (wireguard-apple
-v1.0.14-25)? Do I have to edit the tunnel profile?
+If you're able to supply the ntbootlog.txt and any other logs on the
+system (setupapi log, wireguard log, event logs, and so on), that
+would be much appreciated. I'm still a bit puzzled about this report
+and I'd like to get to the bottom of it.
 
-Explanation: I'd like to have an auto-(de)activation when network
-changes, according to the rules, but still be able to override this
-behavior. So the on-demand rules should be reapplied every time when
-network changes, but after that I still should be able to turn on/off
-the tunnel manually.
+Jason
 
-For me, the controls looks a bit over engineered right now. I think
-that two switches would be better =E2=80=93 the main switch should stay as =
-it
-was before, but should also allow to turn on/off the tunnel regardless
-of the on-demand settings. And, additionally, a second switch (in the
-details view) that allows to enable/disable the on-demand function.
-
-Maybe it may cause some issues that I don't see, especially in a
-multi-tunnel scenario. Anyway, please consider it.
-
-Regards,
-Maciej Le=C5=9Bniewski
+-- 
+Jason A. Donenfeld
+Deep Space Explorer
+fr: +33 6 51 90 82 66
+us: +1 513 476 1200
