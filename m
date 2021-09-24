@@ -6,62 +6,59 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B309DC433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Sep 2021 02:17:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C073C433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Sep 2021 02:25:56 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id ACB4A60F70
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Sep 2021 02:17:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org ACB4A60F70
+	by mail.kernel.org (Postfix) with ESMTPS id 704BB61108
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 24 Sep 2021 02:25:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 704BB61108
 Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d5da251f;
-	Fri, 24 Sep 2021 02:17:30 +0000 (UTC)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c79a64f4;
+	Fri, 24 Sep 2021 02:24:29 +0000 (UTC)
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 8eb88be6
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 694889f3
  (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 24 Sep 2021 02:17:26 +0000 (UTC)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 2A3C461039
- for <wireguard@lists.zx2c4.com>; Fri, 24 Sep 2021 02:17:20 +0000 (UTC)
+ Fri, 24 Sep 2021 02:24:25 +0000 (UTC)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id C78D1610F7
+ for <wireguard@lists.zx2c4.com>; Fri, 24 Sep 2021 02:24:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
  dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="VTnVqkLW"
+ header.b="LQxJtfUY"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1632449837;
+ t=1632450243;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=d8HCrnfSUaEkQ5FaJMLsSK1qy1TFYEIWHf+etIysqWg=;
- b=VTnVqkLWTR/272dheA9LzeKtdxLq/23+4e3N0UHbP0wJa0Wut50Q4CSq4hid9lkkmlcf5n
- JrPgDZ3TqWTtWPfYvorTX7SyF5EPdw5HYZBF9IiTtnzU/Qxf0ee5hF3lC/+JjpiY7XuqZI
- hrcBXjKcCD+2EvVNGkslifdq3unzCbY=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id ecc22a81
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=U1Z/jE8frpgs7iGlcbpfobGDjkK/wn5sqPyj0vXEH10=;
+ b=LQxJtfUYPfw4bJRfEwCFUX6hA1D+BTtIwUhMAL2pPAiuA4KAjpYK28l1IiA3KpPKWd5J86
+ UDzldEiVvxLQet93g+tAmvGjv3cwQ8BcFIYwMRZfA1b3y6ujPTi8E/ALHK0oPZP+cJ85dr
+ 3xI2sSlSn1AvboGMwbdW6sQxi9ZJkxA=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 217a0d94
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 24 Sep 2021 02:17:17 +0000 (UTC)
-Received: by mail-yb1-f181.google.com with SMTP id i12so2503796ybq.9
- for <wireguard@lists.zx2c4.com>; Thu, 23 Sep 2021 19:17:17 -0700 (PDT)
-X-Gm-Message-State: AOAM531U3IH8fMvzplscn6w+V+s40lFS5RES7ByYsTMk/5TnVtPvjdXS
- 4jQjJ3dnxd9BEaHtJ0h1KKHVd8KBHmU/MwKETms=
-X-Google-Smtp-Source: ABdhPJxImL2Xm/yQYFQds3ybE/3bwwVMsuDoCQeqGDZNMqtOmkRzOWqzZhk1FMPnIWfet0Jj8cRm5fxO4tMtHNIcPJg=
-X-Received: by 2002:a25:3214:: with SMTP id y20mr9556064yby.416.1632449836574; 
- Thu, 23 Sep 2021 19:17:16 -0700 (PDT)
+ Fri, 24 Sep 2021 02:24:03 +0000 (UTC)
+Received: by mail-yb1-f172.google.com with SMTP id b82so1733229ybg.1
+ for <wireguard@lists.zx2c4.com>; Thu, 23 Sep 2021 19:24:03 -0700 (PDT)
+X-Gm-Message-State: AOAM533y4mdF6YunbIj4Dlb+MqRccuNnAqfWfQVMOM0sdyp6MwkYzbKK
+ oKnpERfusr/Ecv1jU9TyBGCSPLV0wSFb0lO9aPQ=
+X-Google-Smtp-Source: ABdhPJxvYxMw3to8j8gVLVCL4+jrFEhY1dfY6bJIEUL/7DGVzLbEGp4fImp/FhXw7FuaPiB7MkP57b78I9XmeakQvRU=
+X-Received: by 2002:a5b:d48:: with SMTP id f8mr9194411ybr.449.1632450242688;
+ Thu, 23 Sep 2021 19:24:02 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAHmME9oKfJJfnrKeXcaHeb-oa+JZ+OgnxLVny==uSgwa5c5sKA@mail.gmail.com>
- <F238DB7D-1876-4821-ABC2-4FCF029FBB2B@anatoli.ws>
- <CAHmME9orYEOFa-33XvYs==XHjsUrxTn2BtOaVySwFuxS+oj+MQ@mail.gmail.com>
-In-Reply-To: <CAHmME9orYEOFa-33XvYs==XHjsUrxTn2BtOaVySwFuxS+oj+MQ@mail.gmail.com>
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 23 Sep 2021 20:17:04 -0600
-X-Gmail-Original-Message-ID: <CAHmME9oH6s=x0W+aBvGumTtJ9=bj+a9SBy0TQxXv8ZtU-pnDBA@mail.gmail.com>
-Message-ID: <CAHmME9oH6s=x0W+aBvGumTtJ9=bj+a9SBy0TQxXv8ZtU-pnDBA@mail.gmail.com>
-Subject: Re: WireGuard Configurations Gone After iOS 15 Upgrade
-To: Anatoli <me@anatoli.ws>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Date: Thu, 23 Sep 2021 20:23:51 -0600
+X-Gmail-Original-Message-ID: <CAHmME9p9XxAhh4WgZgRiMRFxahp2wabPr-KuW=AdVQyRsHaD+A@mail.gmail.com>
+Message-ID: <CAHmME9p9XxAhh4WgZgRiMRFxahp2wabPr-KuW=AdVQyRsHaD+A@mail.gmail.com>
+Subject: [WARNING - iOS 15] Update WireGuard to >=1.0.15-26 *before* updating
+ to iOS 15
+To: WireGuard mailing list <wireguard@lists.zx2c4.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -76,13 +73,19 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Thu, Sep 23, 2021 at 11:26 AM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
->
-> On Thu, Sep 23, 2021 at 8:42 AM Anatoli <me@anatoli.ws> wrote:
-> > Please let us know in this thread when the update is in the AppStore.
->
-> Indeed I will. It's been in the "waiting for review" state for about
-> 13 hours. So hopefully that'll change somewhat soonish.
+Hello list,
 
-This has been released now. I'll send out an email in a new thread
-announcing this.
+Due to buggy changes Apple has made to the Keychain on iOS 15, older
+versions of WireGuard on iOS will *eat your VPN configurations* when
+upgrading to iOS 15. This has been fixed by [1], which is now
+available as of version =E2=89=A51.0.15-26. If you are still on iOS 14, bef=
+ore
+updating to iOS 15, please remember to update the WireGuard app to
+this latest version in the App Store.
+
+Sorry for the hassle.
+
+Jason
+
+[1] https://git.zx2c4.com/wireguard-apple/commit/?id=3D03a59ff38e96fb3bb5dd=
+e2f15fe42198d1dfb995
