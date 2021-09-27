@@ -2,60 +2,86 @@ Return-Path: <SRS0=S6z6=OR=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4E4FC433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 27 Sep 2021 16:22:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB45EC433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 27 Sep 2021 16:37:47 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 7C2C760F39
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 27 Sep 2021 16:22:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 7C2C760F39
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id CD0C061074
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 27 Sep 2021 16:37:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org CD0C061074
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=poorlab.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0a22555b;
-	Mon, 27 Sep 2021 16:21:23 +0000 (UTC)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2e943d8e
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Mon, 27 Sep 2021 16:21:19 +0000 (UTC)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id E0B9661041
- for <wireguard@lists.zx2c4.com>; Mon, 27 Sep 2021 16:21:16 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="UM3eV71y"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1632759675;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=OhNJM2hhzI/62nOILT9qpFQqJeUvqICfBJj0TwODcL4=;
- b=UM3eV71yAkTn6r0GyMEMLPtuBTD7Ulk+KCJoXuA9NeWCpkggerwEo2bdDr7r8sD2/noGX9
- x4QO9TywvX5Npwa1T6BTiL4bZv9CpTh6yD/AaiUJjLtp6aFBJ2KW9ftxz0mzI3xkZVKLBj
- ClE9U/TtgQ5TaPmOaGW19v+Iteh9HaU=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 96a4373d
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b23efef4;
+	Mon, 27 Sep 2021 16:37:45 +0000 (UTC)
+Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com
+ [64.147.123.25])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id be9db0b4
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 27 Sep 2021 16:21:15 +0000 (UTC)
-Received: by mail-yb1-f173.google.com with SMTP id r1so25166503ybo.10
- for <wireguard@lists.zx2c4.com>; Mon, 27 Sep 2021 09:21:15 -0700 (PDT)
-X-Gm-Message-State: AOAM5331r7NXeRKB4czwUjYO1nBa1EUFMNRi6X+WWE06EDfnuhq5otoG
- +qvj1PCXJoV4rcVaJG6C/lbxwRXtlckTrs6YX4Y=
-X-Google-Smtp-Source: ABdhPJy6derQUtEiobL5Bp7UDvevgAiWcDUkfw17JYn3VqtUWb0JDNjbsy0/dcPG0sflvWX4PqYn8QXDCMhD5afQDDY=
-X-Received: by 2002:a25:854c:: with SMTP id f12mr759398ybn.95.1632759674602;
- Mon, 27 Sep 2021 09:21:14 -0700 (PDT)
-MIME-Version: 1.0
+ Mon, 27 Sep 2021 16:37:42 +0000 (UTC)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailout.west.internal (Postfix) with ESMTP id E75403200681;
+ Mon, 27 Sep 2021 12:37:39 -0400 (EDT)
+Received: from imap46 ([10.202.2.96])
+ by compute3.internal (MEProxy); Mon, 27 Sep 2021 12:37:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=poorlab.com; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type:content-transfer-encoding; s=fm2; bh=j4qTM
+ NYlPRVLrxq3YyVP1Dp+tYwOlRq1DsUXwhwIwjA=; b=gioTaUh+MKcearr7ynVkQ
+ NRv6ABOxP54BaoHouHmHpfthGeLgzoqYcOcYp7F3CQPHgsvMMD+xfyfdQldogE4+
+ XocZrERdNvVFFTJEbMh+oiL0ttvjGIdmMHtGiu3oUWZOJBiviiXlkHr1/j50FNP+
+ DNGp2PAaXMOwTO4V8ObP58CYyfEVteu6RB5BGzN/5hmpPbX9GFIUPyePXq5IwmrF
+ wEY7XdzLW1X4tFCgq5hILnsds9W0i8ATNSQFMSfd340IdvGaT/d/NtEUnMGOWFG9
+ wwF4WI2nHDRZMQsBytcBsI4aI3QBnT3HmiOhSp1V6El/4G/YQVuSn0pVKWVXBfT9
+ g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-transfer-encoding:content-type
+ :date:from:in-reply-to:message-id:mime-version:references
+ :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm3; bh=j4qTMNYlPRVLrxq3YyVP1Dp+tYwOlRq1DsUXwhwIw
+ jA=; b=uL7jUdLIufiWzOuWMvEPeL4Md/8whfI34i0g21bN9r1jyDNZeM2Q2dwbU
+ bbcYTlAkPIKMroHWjR8l54JUHKbQgEc6QytwctcNa6asfGVB5f94LT6049msyqBJ
+ mQT2eJ71W8FJDePMEqQxuVya2r6jOqUmXuzKN7jHUTWmNx15XEVJg2WusoPqSP4M
+ 8EATpsZdqAd1Nz1/7t//x+/POYR5MONDNyDWXXQFLL2WSLz/C6R3nz6EsxebWprq
+ uiQrOuW0bv3dMwPDpM9jqt3NEdOSIEwV098j1Js4vaIaQtCDYPpIRt9QjEXrraKb
+ i1woAHGJ84rBtjm3w4Qja+EuXb/ww==
+X-ME-Sender: <xms:UvNRYTHF3U81KEZSRzL_HhwHXdEYnrE0h2nCZwAEHDyz9GWhR1Yl8A>
+ <xme:UvNRYQUYuc-Q4bcnufNCu5Csv4VWurhbFAYBWBjdonuRJTr51gSm86TWXQNNs2TEM
+ eQBj7T3zDkmTaCP8VU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrudejkedguddttdcutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+ necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+ enucfjughrpefofgggkfgjfhffhffvufgtgfesthhqredtreerjeenucfhrhhomhepufht
+ rghruehrihhllhhirghnthcuoegtohguvghrsehpohhorhhlrggsrdgtohhmqeenucggtf
+ frrghtthgvrhhnpeffgeetfedvueetlefhvedttdeihefgtdethfegueetheeugfekuedv
+ ffejieevhfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
+ hmpegtohguvghrsehpohhorhhlrggsrdgtohhm
+X-ME-Proxy: <xmx:UvNRYVIQYC-6B8GIq3ZfZ4QpNTNfewm-5OAkJWo1Gp8KJ5088Xm_Lg>
+ <xmx:UvNRYRELDOehPp2ekGsbi9LB5w3L0IBuazxS6A9RyPeQOD-L4Cdk9Q>
+ <xmx:UvNRYZXAAWCll9QGOD7_7hWDMAS6M3y1SvpRi0ffjalW6Yzzpb2rmg>
+ <xmx:U_NRYYBmRMCjP9tefgo4UuO36iOJYgsqPS3rXpluRIRm_nGXJe4hyw>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id E29F51EE0074; Mon, 27 Sep 2021 12:37:38 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.5.0-alpha0-1303-gb2406efd75-fm-20210922.002-gb2406efd
+Mime-Version: 1.0
+Message-Id: <f69bd6c2-0b56-47b7-b793-835791b4e585@www.fastmail.com>
+In-Reply-To: <87tui6yozj.fsf@ungleich.ch>
 References: <XhEJRjPvvlk57PFUWApI0RPX2-dCuDbQ9RYxw9Y5GxzMs8YEpwVc4U-fR3avC-NT1X2UlBNQerMkOxgqrue_EEOtyZR18V329KuKev_i3aE=@protonmail.com>
-In-Reply-To: <XhEJRjPvvlk57PFUWApI0RPX2-dCuDbQ9RYxw9Y5GxzMs8YEpwVc4U-fR3avC-NT1X2UlBNQerMkOxgqrue_EEOtyZR18V329KuKev_i3aE=@protonmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 27 Sep 2021 10:21:03 -0600
-X-Gmail-Original-Message-ID: <CAHmME9rDj9dDGSY0E6ZtE88vObS5Hjd=ocpt3hz1gfVAkaxPgg@mail.gmail.com>
-Message-ID: <CAHmME9rDj9dDGSY0E6ZtE88vObS5Hjd=ocpt3hz1gfVAkaxPgg@mail.gmail.com>
+ <877df2d5px.fsf@ungleich.ch> <20210927071130.GA13681@wolff.to>
+ <20210927123439.7a551913@nvm> <20210927091435.GA10234@wolff.to>
+ <20210927143628.36c2ceab@nvm> <20210927102157.GA23755@wolff.to>
+ <d071a9ed-a1cf-4b4c-85ba-8a918a6e331a@www.fastmail.com>
+ <87tui6yozj.fsf@ungleich.ch>
+Date: Mon, 27 Sep 2021 16:37:18 +0000
+From: StarBrilliant <coder@poorlab.com>
+To: "Nico Schottelius" <nico.schottelius@ungleich.ch>
+Cc: wireguard@lists.zx2c4.com
 Subject: Re: WireGuard with obfuscation support
-To: el3xyz <el3xyz@protonmail.com>
-Cc: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -70,65 +96,59 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hey Evgeny,
+On Mon, Sep 27, 2021, at 15:59, Nico Schottelius wrote:
+>=20
+> StarBrilliant <coder@poorlab.com> writes:
+>=20
+> > On Mon, Sep 27, 2021, at 10:21, Bruno Wolff III wrote:
+> >> If your ISP is blocking your Wireguard traffic call them up and com=
+plain.
+> >
+> > All ISPs in China is blocking Wireguard traffic. If you call any of
+> > them up, you will end up in jail. There was a case where one user su=
+ed
+> > their ISP for blocking Google, and got prosecuted until disappear in
+> > public.
+> > [...]
+>=20
+> I'm not sure how much wireguard depends on the IP/UDP layers, but
+> assuming it only uses it for payload, maybe it makes sense to
+> wrap wireguard into HTTP, HTTPS, SMTP (+TLS), IMAP(S) or even DNS
+> (slow). I am aware that there is a variety of tools out there that
+> handle some of the tunnel ideas.
+>=20
+> Given that all of these approaches are actually rather trivial to
+> implement, is there any easy way to grab the outgoing wireguard packets
+> without the need of creating n artifical local UDP endpoints?
+>=20
 
-There are some neat aspects of the approach here. Encrypting using the
-pubkey has the nice effect of making packets look like noise while
-also being sufficiently peer-linked that it might not be super
-feasible to detect (though still possible I suppose).
+For your first question: There have been multiple success stories for pl=
+uggable obfuscation layers: One from Tor Project, another from V2Ray. Th=
+ey proved even if any single obfuscation is not mature, as long as new o=
+bfuscation plugins emerge way way faster than their statistical model tr=
+aining speed, this cat-and-mouse game can win. So no worries about this =
+question.
 
-I don't think we'd merge something like this into wireguard-itself,
-unfortunately. Obfuscation is a bit of a cat and mouse game, and were
-we to bake a handful of methods into wireguard, much focus would be
-spent on detecting those, and then the whole thing would be moot.
+For the second question: This is very important because current Wireguar=
+d has huge pain with obfuscation plugins.
+* Firstly, Wireguard cannot bind to localhost only. Using iptables to re=
+strict access does not avoid port number wasting.
+* Second, Wireguard can't use Unix socket for transport -- there are onl=
+y 65535 UDP ports, it is not economic to waste a dozen of them just for =
+connecting to an obfuscation plugin located at localhost.
+* Last but not least, Wireguard relies on certain end-to-end features: I=
+f the a fragmented IP packet arrives, which is a feature that some obfus=
+cation plugin relies on, Wireguard's kernel implementation will behave s=
+trangely. Also Wireguard needs to know the endpoint IP address to perfor=
+m roaming.
 
-From my own obfuscation projects, I've found the most effective
-techniques involve mimicry of other explicitly-allowed protocols,
-rather than just turning packets into noise, and mimicking the related
-packet timing and length relations of those protocols too. It's
-possible to do this in part using Markov chains, but also for your
-likely use case, you may be able to just code logic for fake tcp +
-http -looking sessions, or perhaps quic in the future.
+Previously we prefer to patch the Go version because the above three iss=
+ues are almost impossible to solve in kernel space. But the Wireguard up=
+stream is going to deprecate the Go version on Linux platforms, which wo=
+uld not be a good news for the obfuscation world.
 
-But your likely use case is also not likely to be the same as others'
-use cases for obfuscation. For example, while much obfuscation focuses
-on censorship resistance, there's another corner that focuses on IDS
-evasion, like hiding inside of Kerberos or RDP or even resembling
-SIGTRAN packets. And even in the censorship resistance space, there
-are often important tradeoffs to be made between performance and
-detection: do you want your connection to be as speedy as possible, or
-do you want to ensure that you won't be detected? What are the
-repercussions of failure for each case? And moreover, what about when
-targeted traffic shaping is used in connection with DPI or related
-heuristics? In that case, a popular technique appears to be adding FEC
-to packets. And so on and so forth.
-
-This all is to say that the obfuscation game is a big rabbit hole of
-sorts, and there's unlikely to be one solution for the many
-applications of it.
-
-For that reason, as I've written on this list before, I think
-obfuscation ought to be in a layer above wireguard, not within it. You
-can do this by setting the endpoint to be a localhost udp port, or
-better, by writing a netfilter module or using something like NFQUEUE
-to do it in userspace. While there's a lot of enthusiasm for
-"pluggable transports" and such, I actually don't think it's a bad
-idea to violate the layering distinction and borrow things like peer
-public keys when that makes for a potentially slicker system.
-
-For example, I could imagine a netfilter plugin that specifically
-attaches to a wireguard interface, and uses config information from it
-to do per-peer obfuscation, so that additional identities don't need
-to be configured. An admin would run `iptables -t mangle -A OUTPUT -m
-evgeny_wg_thing --out-iface wg0 -j EVGENYS_COOL_OBFS_THING_OUT &&
-iptables -t mangle -A INPUT -m evgeny_wg_thing --in-iface wg0 -j
-EVGENYS_COOL_OBFS_THING_IN` and then presto, everything would work
-with no additional configuration.
-
-Splitting out your ideas into something that runs adjacent to
-wireguard but works intimately with it might require a little bit more
-work in the short term, but I think long term that will lead to a more
-sound design, and it could grow and morph all sorts of interesting
-different modes.
-
-Jason
+If Wireguard supports listening onto a Unix socket and plugin protocols =
+like =E2=80=9CHAProxy protocol=E2=80=9D, or =E2=80=9CTor FTE protocol=E2=
+=80=9D or =E2=80=9CShadowsocks SIP003 protocol=E2=80=9D (not sure which =
+can work with UDP), then obfuscation plugins can happily work with Wireg=
+uard.
