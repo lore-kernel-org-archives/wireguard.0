@@ -2,65 +2,77 @@ Return-Path: <SRS0=89gA=OS=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CE6CC433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 28 Sep 2021 03:30:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 48CF0C433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 28 Sep 2021 11:04:11 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 2084260FC0
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 28 Sep 2021 03:30:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 2084260FC0
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	by mail.kernel.org (Postfix) with ESMTPS id 4872D6108F
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 28 Sep 2021 11:04:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 4872D6108F
+Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=mullvad.net
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a1f9be0f;
-	Tue, 28 Sep 2021 03:28:11 +0000 (UTC)
-Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com
- [2607:f8b0:4864:20::b29])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ab628451
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 1f25c236;
+	Tue, 28 Sep 2021 11:04:08 +0000 (UTC)
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com
+ [2a00:1450:4864:20::532])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id e0bdfb01
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 28 Sep 2021 03:28:07 +0000 (UTC)
-Received: by mail-yb1-xb29.google.com with SMTP id u32so7991738ybd.9
- for <wireguard@lists.zx2c4.com>; Mon, 27 Sep 2021 20:28:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=RiLP08FsZBUk+hWO/2M+gq118BWhjglrDtGcyjcLYZg=;
- b=NmGk5Lw5EOaYWFM7N7E3gGogGPSxpA3ggQ/sgi6HrDoQve8fssajfEU1wpDmEcOJJk
- d+Cc7OfX/V95KcldC+nX74z7+HOEIGOBYotn9F6sSvkvUt87E0+HdEko/+vYKuugEFFL
- SyGmBKSRiP3M1+55ZqA8g/YfQf4DxvNamXlz0zzDU5vOHtn2clRpBmYxb3I774m7oTiG
- lG4nijiuXcI3BLEocBxJImeV5z86+EuOxS++FgeODMplgAiXnoZtln/IW5th21CqvS2p
- ch9koVK27O8EOGIVn/fs5Our4ZpB5XLtSBnzJ4ZO7uKiacm4Fge2pSZ0KWtAuLJk1SDk
- iOZA==
+ Tue, 28 Sep 2021 11:04:06 +0000 (UTC)
+Received: by mail-ed1-x532.google.com with SMTP id g8so81647931edt.7
+ for <wireguard@lists.zx2c4.com>; Tue, 28 Sep 2021 04:04:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mullvad.net; s=july2021;
+ h=mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=+58hf9yZQ8OLPBkW0CKca9itHETn71hfPtLe3q3TaDQ=;
+ b=GvMNVTJWrF/UCKZLKkVMxMKevgc9pE79zJW0+NqkQl3qeVaB9wzZw/9btZWjeULw1U
+ im9YtkXW1BrU+fPVYx0x7qoONGjGdChoEyM4+G2M2/jbyqFEIXnIkEqGN0NFkxI8+S1v
+ 8UNygGpOGRUJyvHeftwv9PZ5KB3bEpCqMfGpx6VGkVk6Va5J4wceu4VmDhO1M8FgEeg/
+ gexmqIGLDIgNimmNALsVmckVl4lHqI83tIxOhGCgxZQ2L/nRRQ5lxbF/XFOmfRMF/dMC
+ 5vVyRBz0qOqn+OCYh+MJNduP0DgeKalJTxiaxKYmw7glEBRLaDisnOgz5Z/Av9f/D73r
+ qYvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=RiLP08FsZBUk+hWO/2M+gq118BWhjglrDtGcyjcLYZg=;
- b=rXDr5Q7sUzpihp+Cc+Keooz7REGXQQ9ABREtPr1447Wt4NRwfczK19HHdjrGn4p+wo
- Vma4eRkuVmlis9KYkPmlsGwn2pTrK9QdMCmAOpfUNJ3MKYHBkOEMAdY+sqX0GzxtB9HE
- 9+YcTO4I6CwYnAElD2oPfDjymRiohLatpD4VqJg08Fih8nuRFsxjXcD5i3taHZmmJDsV
- Qr8i0ocs0P+/zHIymIYfJ8xhc/hUykFS5ByxRnWiMYxUnVbLbJSHfmIQsy87LwdtQvp6
- ja4v42HQlYQB9LpLdrMZrfOv09j8xLqMwxmjwV2LPcfjWNQRzq4p8RG82YxRZ2VaWlUB
- RylA==
-X-Gm-Message-State: AOAM531FSYxloLkCaRRlFq+0TXm3kxJQUaV2GH/o6e/iAeZKl16I8xj7
- XF3+MiIjBW2wFfstyvGRnfNvD7Q06as6usjaMSc=
-X-Google-Smtp-Source: ABdhPJwSPhW9ae7dgYmz4ku03bVZmlDul9/+i/Io4gAHOAW5aIH0uUpjt/qoDPEREFo+Dl5V/XtZb6ZT4iCZ/bZsp1o=
-X-Received: by 2002:a25:3b04:: with SMTP id i4mr4162689yba.524.1632799686518; 
- Mon, 27 Sep 2021 20:28:06 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210928031938.17902-1-xiyou.wangcong@gmail.com>
- <CAHmME9rbfBHUnoifdQV6pOp8MHwowEp7ooOhV-JSJmanRzksLA@mail.gmail.com>
-In-Reply-To: <CAHmME9rbfBHUnoifdQV6pOp8MHwowEp7ooOhV-JSJmanRzksLA@mail.gmail.com>
-From: Cong Wang <xiyou.wangcong@gmail.com>
-Date: Mon, 27 Sep 2021 20:27:55 -0700
-Message-ID: <CAM_iQpV-JKrk8vaHDeD0pXaheN0APUxH5Lp+mGCM=_yZQ1hd4w@mail.gmail.com>
-Subject: Re: [Patch net] wireguard: preserve skb->mark on ingress side
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: Netdev <netdev@vger.kernel.org>, 
- WireGuard mailing list <wireguard@lists.zx2c4.com>,
- Cong Wang <cong.wang@bytedance.com>, Peilin Ye <peilin.ye@bytedance.com>
-Content-Type: text/plain; charset="UTF-8"
+ h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=+58hf9yZQ8OLPBkW0CKca9itHETn71hfPtLe3q3TaDQ=;
+ b=Bartwj3Mr6AGQm1weoZg/YFATCu74uBqcwMFE9r1mHxj0dXphOKk2D0D51rRHI+L3b
+ EG16Exs+Tt9Q2wkU6D7oMSktwhYfIoL4EgbYYKZ+jj8+R6l8pZNgPX2Wxq3CbC4sbDYU
+ dmenkb2G6olULGs7kTjjaZJjEn372+r6Q1VaSy1qIp0XpKa4HOZTeK7OdbKV2yrNDqNQ
+ euJn4cyXDi/MCF2HA21KJLBB5tIHwR5ZivT4tletRdz/jE+G2Z5WIIZJ+lByDhqi7sog
+ f2MSeJL4uzfCSyuW5kX+sheY+e4nzm1liz6n596vAv4muDpTeg66Vxb/SkpFNZKDLAEv
+ JCyw==
+X-Gm-Message-State: AOAM532JOmaQInvTBxZxwOpxk27s72Sb1lGyuw/B5mpuBUEFwGta8z0F
+ QRASywotH+Eh2VugkeoItBh/Dg==
+X-Google-Smtp-Source: ABdhPJwhMv4IN3EZf+fzikKfNanNQ64kIW1NlVFEQUxU6M+y5eJkjSTMD27Pg7zsxqqXRk2cGlsdZw==
+X-Received: by 2002:a50:8206:: with SMTP id 6mr6887176edf.220.1632827042057;
+ Tue, 28 Sep 2021 04:04:02 -0700 (PDT)
+Received: from smtpclient.apple (tm.82.192.62.129.dc.telemach.net.
+ [82.192.62.129])
+ by smtp.gmail.com with ESMTPSA id jl12sm10160094ejc.120.2021.09.28.04.04.01
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Tue, 28 Sep 2021 04:04:01 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.100.0.2.22\))
+Subject: Re: [wireguard-apple] [iOS] Changing network fails with
+ includeAllNetworks (Kill Switch)
+From: Andrej Mihajlov <and@mullvad.net>
+In-Reply-To: <E65FFE7D-9BCC-4EEF-9CF0-FA46CE6B9096@gmail.com>
+Date: Tue, 28 Sep 2021 13:03:59 +0200
+Cc: wireguard@lists.zx2c4.com
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <85F39D56-E800-4EAE-B159-85335D150A4A@mullvad.net>
+References: <B3A4A27C-1FBF-4098-B38F-9F87F8C115B5@gmail.com>
+ <5569D8DF-A7E8-4A13-BA6B-913785819E4E@mullvad.net>
+ <CB84BD03-DB8A-4855-94CC-898100C0B97E@gmail.com>
+ <9D47F45A-59C7-4FB0-A9F8-2F13A1D4AB1A@mullvad.net>
+ <E65FFE7D-9BCC-4EEF-9CF0-FA46CE6B9096@gmail.com>
+To: Juraj Hilje <juraj.hilje@gmail.com>
+X-Mailer: Apple Mail (2.3654.100.0.2.22)
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -75,24 +87,120 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Mon, Sep 27, 2021 at 8:22 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
->
-> Hi Cong,
->
-> I'm not so sure this makes sense, as the inner packet is in fact
-> totally different. If you want to distinguish the ingress interface,
+Hi,
 
-The contents are definitely different, but skb itself is the same.
+I can confirm that it behaves correctly on iOS 15 (tested on iPhone 12) =
+and iOS 15.1 beta (tested on iPhone 7). Tested by toggling =
+cellular/wi-fi and airplane mode on both devices and network monitor =
+seems to be functioning properly.=20
 
-Please also take a look at other tunnels, they all preserve this
-in similar ways, that is, comparing net namespaces. Any reason
-why wireguard is so different from other tunnels?
+I haven=E2=80=99t tested this patch on iOS 14.8, but I had previously =
+tested it on iOS 14.5 (IIRC) and it didn=E2=80=99t work there, that's =
+why this patch is scoped to iOS 15+.
 
-> can't you just use `iptables -i wg0` or `ip rule add ... iif wg0`?
->
+I am running the "am/enable-include-all-networks" branch which has the =
+following changeset:
+=
+https://git.zx2c4.com/wireguard-apple/commit/?id=3D07bc66e7b181fb2068d457b=
+31c1fdd05bdd2214a&id2=3D58e94f077329f6c7b96ec069243495d4e649fe36
 
-My bad, I forgot to mention we run eBPF on egress side, where
-skb->dev is already set to egress device (a non-wireguard device),
-and of course skb_iif has been cleared even earlier.
+Cheers,
+Andrej
 
-Thanks.
+> On 22 Sep 2021, at 15:26, Juraj Hilje <juraj.hilje@gmail.com> wrote:
+>=20
+> Hi Andrej,
+>=20
+> I've tested on iOS/iPadOS 15.1 Beta, and it looks like the issue is =
+fixed there.
+> Let me know if you can confirm the same on your end.
+>=20
+> Cheers,
+> Juraj H.
+>=20
+>> On 22.09.2021., at 10:59, Andrej Mihajlov <and@mullvad.net> wrote:
+>>=20
+>> Hi Juraj,
+>>=20
+>> Installing iOS 15 right now. I am gonna test it today too.=20
+>>=20
+>> What stands out to me that, while you have multiple interfaces =
+available, the network monitor still says that the network is =
+unsatisfied. Very odd.
+>>=20
+>> Cheers,
+>> Andrej
+>>=20
+>>> On 22 Sep 2021, at 10:55, Juraj Hilje <juraj.hilje@gmail.com> wrote:
+>>>=20
+>>> Hey Andrej, thanks for the response!
+>>>=20
+>>> I've tested on iOS 14.8 and iOS 15.0 (public release), and even with =
+the patch (b244febfdf3069dd4e8db2d31f0368d5474d7616) i still have the =
+same issue on my end.
+>>>=20
+>>> I will test the new iOS 15.1 Beta later today and let you know how =
+it goes.
+>>>=20
+>>> Juraj H.
+>>>=20
+>>>> On 22.09.2021., at 10:08, Andrej Mihajlov <and@mullvad.net> wrote:
+>>>>=20
+>>>> Have you tried on the most recent beta? I think it works over =
+there, but requires some tweaks to the network monitor code in =
+WireGuard. I had a patch somewhere here but haven=E2=80=99t spent much =
+time testing it:
+>>>>=20
+>>>> =
+https://git.zx2c4.com/wireguard-apple/commit/?h=3Dam/enable-include-all-ne=
+tworks&id=3Db244febfdf3069dd4e8db2d31f0368d5474d7616
+>>>>=20
+>>>> Waiting for the final release of iOS 15.
+>>>>=20
+>>>>> On 21 Sep 2021, at 12:55, Juraj Hilje <juraj.hilje@gmail.com> =
+wrote:
+>>>>>=20
+>>>>> If NETunnelProviderProtocol is configured with =
+includeAllNetworks=3Dtrue (Kill Switch), when network change is detected =
+the device connectivity goes offline instead of routing VPN tunnel =
+traffic through a new network.
+>>>>>=20
+>>>>> Here are some logs from the moment of this event:
+>>>>> 2021-09-20 12:07:26.735453: [NET] Network change detected with =
+unsatisfied route and interface order [en0, utun4, pdp_ip0]
+>>>>> 2021-09-20 12:07:26.736186: [NET] Connectivity offline, pausing =
+backend.
+>>>>> 2021-09-20 12:07:26.736732: [NET] Device closing
+>>>>> 2021-09-20 12:07:26.737503: [NET] Routine: TUN reader - stopped
+>>>>> 2021-09-20 12:07:26.738970: [NET] Routine: event worker - stopped
+>>>>> 2021-09-20 12:07:26.739613: [NET] Routine: receive incoming v4 - =
+stopped
+>>>>> 2021-09-20 12:07:26.742070: [NET] Routine: receive incoming v6 - =
+stopped
+>>>>> 2021-09-20 12:07:26.746712: [NET] peer(eN1f=E2=80=A6Oymc) - =
+Stopping
+>>>>> 2021-09-20 12:07:26.751550: [NET] peer(eN1f=E2=80=A6Oymc) - =
+Routine: sequential receiver - stopped
+>>>>> 2021-09-20 12:07:26.751597: [NET] peer(eN1f=E2=80=A6Oymc) - =
+Routine: sequential sender - stopped
+>>>>> 2021-09-20 12:07:26.753433: [NET] Device closed
+>>>>> 2021-09-20 12:07:26.754097: [NET] Routine: decryption worker 5 - =
+stopped
+>>>>>=20
+>>>>> Tested on devices: iOS 14.8, iPadOS 15
+>>>>> WireGuardKit: 79aeb0be0d0aa3f6c8bd24309aaa8dcf03216fb4
+>>>>>=20
+>>>>> More info on includeAllNetworks option:
+>>>>> =
+https://developer.apple.com/documentation/networkextension/nevpnprotocol/3=
+131931-includeallnetworks
+>>>>>=20
+>>>>> Can someone confirm this issue or point to a possible workaround?
+>>>>> Thanks!
+>>>>>=20
+>>>>> Juraj H.
+>>>>=20
+>>>=20
+>>=20
+>=20
+
