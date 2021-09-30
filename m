@@ -2,79 +2,53 @@ Return-Path: <SRS0=sRyP=OU=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B27EBC433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 30 Sep 2021 10:53:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E67CBC433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 30 Sep 2021 11:04:44 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id DEACB613CD
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 30 Sep 2021 10:53:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org DEACB613CD
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=lochnair.net
+	by mail.kernel.org (Postfix) with ESMTPS id E6A7D615E5
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 30 Sep 2021 11:04:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org E6A7D615E5
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=coppint.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id aa1a6ca3;
-	Thu, 30 Sep 2021 10:53:54 +0000 (UTC)
-Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com
- [64.147.123.19])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c6d37399
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6eeb25c6;
+	Thu, 30 Sep 2021 11:01:49 +0000 (UTC)
+Received: from mail01.coppint.com (mail01.coppint.com [212.129.15.236])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2d98d19c
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 30 Sep 2021 10:53:52 +0000 (UTC)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
- by mailout.west.internal (Postfix) with ESMTP id 2A99932007CF;
- Thu, 30 Sep 2021 06:53:50 -0400 (EDT)
-Received: from imap3 ([10.202.2.53])
- by compute1.internal (MEProxy); Thu, 30 Sep 2021 06:53:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lochnair.net; h=
- mime-version:message-id:in-reply-to:references:date:from:to
- :subject:content-type; s=fm1; bh=N+QVyuzic7Nx8S2XgpFMOc8RqpTZgLc
- NZf2EgylvROs=; b=JL7TpLxNqE5byYz3PPWXzXiJvp4dtYP5xGxCUAs2cxJ9Aqk
- JxLGKPri9bOYBC45CY7Pngq2DItM90M8TzInjzNEyBuPZLNNiHSLfcwRe2kIi7kF
- 8gnq3DyHecQwIR6TkW+n+4Ujj7ohjuDuw4C1zpqchuFDIKN436EfTo1f6uYkAQPJ
- YisuciBk4ohfI5nW/kEVcAUm45RH2zOE46LT+mow84WlyN8JaVzRdUoUyvQ4UfPZ
- MVcpzTWOvNtCuapWcfNsAz0G+LOObIL6L+vpmPafllJ3fZBdc7+hl1HtEV21ah6+
- 9NPGKLknWQy2IvEnSgNbxMAjyqqb9ptZr9Ta6XA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=N+QVyu
- zic7Nx8S2XgpFMOc8RqpTZgLcNZf2EgylvROs=; b=LZz3jBIh9OjJJj7GoDDsS8
- 0a8mj4ipIIAqhKZkZxkN/sr6s+IiWCRfk5jzMCjIFaGnZPcIQ3gUuTuEwFGjJPLC
- EIvGYnBQcPfSWrNFjkkjhlduvdjwYAELgdgkTBhkYimFuWFvYALkC1ipx7btI/WS
- WVXAwte7ZZ3Wj5jUs3CPVqgUTxK2wpE8b/H+cyPxwmzNT9TvXFBOhYmFMfTNV6VL
- AM+nackestkIvGaD6crWmIV/H4iGgJ4hOkZNYPAQDnz1nFoLMscymLEHbhrRHjHo
- Yw0PrSaFfJHyUFfiUxZ7oaItl0oSeq4S9mLZ7SNLxTJvbd3BeqwC8zJRHMLKdkyw
- ==
-X-ME-Sender: <xms:PZdVYTtvT7S3dQo-BrGDADUI3pFzK7cDABt8hDcMbIZGHf2dEZxUQA>
- <xme:PZdVYUd6GyCf4EeQdyZmcUyhxaRv25a3wS2b7BmtHA_hgJ96XjSQk6RN731yfVOUw
- lxnHnljMLU_i9-yMA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrudekgedgfeefucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdfpihhl
- shcutehnughrvggrshcuufhvvggvfdcuoehmvgeslhhotghhnhgrihhrrdhnvghtqeenuc
- ggtffrrghtthgvrhhnpeffkeeutedvudeggfduheeuvefftdfhgeevvefgfefhgfduheev
- hfetkefhfedvffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfh
- hrohhmpehmvgeslhhotghhnhgrihhrrdhnvght
-X-ME-Proxy: <xmx:PZdVYWwyY57Pdpx5lZmDdcLrt2EmFCVwOsCiaYypLFyzJW6RQ8iT6g>
- <xmx:PZdVYSPs_Pdx3B4cwfenN8wPCJ0lqrV-uJ8Zna_TVJnOlOqcN7F4EA>
- <xmx:PZdVYT_BXxlhvUItMoIEo76YUDpAxcfplbW4CPqt50qgrMY7XmiOjQ>
- <xmx:PZdVYQIPhGmUd24CzcVJv5u_8BS-oaOzn1vVN1AF3fct-WOrlM2KiQ>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 82B12420089; Thu, 30 Sep 2021 06:53:49 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.5.0-alpha0-1322-g921842b88a-fm-20210929.001-g921842b8
-Mime-Version: 1.0
-Message-Id: <ac93f873-83fd-43b1-a247-f7df94cf0c36@www.fastmail.com>
-In-Reply-To: <0fd0ed22-732c-0ea5-5067-538dc0842869@coppint.com>
-References: <0fd0ed22-732c-0ea5-5067-538dc0842869@coppint.com>
-Date: Thu, 30 Sep 2021 12:53:29 +0200
-From: "Nils Andreas Svee" <me@lochnair.net>
-To: "Florent B." <florent@coppint.com>,
- "WireGuard mailing list" <wireguard@lists.zx2c4.com>
+ Thu, 30 Sep 2021 11:01:48 +0000 (UTC)
+Received: from localhost (localhost [127.0.0.1])
+ by mail01.coppint.com (Mail server) with ESMTP id 256161C710F;
+ Thu, 30 Sep 2021 13:01:48 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at mail01.coppint.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=coppint.com; s=dkim;
+ t=1632999699; bh=ryX67rseG7dgvdefETd3fXKanSaJo6twZ3T2knANEwE=;
+ h=Subject:To:From:Message-ID:Date:MIME-Version:
+ Content-Transfer-Encoding;
+ b=JGzmBwm33JjUn5BKNzhXMXejlQKro3wf3LNCn4c0wU2rY9Wvw6Asj2uBkh1IDXSi1
+ liAWqOwY3wrlcL31pJmqf53J/AYHuUCNkaBl/gixCjCQAYnG67NrO6257fg/sZJ6ir
+ bYSEWQ2sLkTfUNgbX24EfCZTTW961pmL4p2Ld+c9wwOmc5tVokztJW3PAzN+2JfkD+
+ /4OR3f7ARSy6iDDqfPmsvDvAV2kWwksGNZ28pGh9XeZQVZxzB/SdblZovJ0bLhE5EV
+ 2myvu4r+YaGi2XD6TitspFLFiErfqvZMwfdo16EmijfcPtjnZAkT1QBAYPnXhrTZUN
+ ca0ShfX7WXsrw==
 Subject: Re: Enable Wireguard only for specific user
-Content-Type: text/plain
+To: Nils Andreas Svee <me@lochnair.net>,
+ WireGuard mailing list <wireguard@lists.zx2c4.com>
+References: <0fd0ed22-732c-0ea5-5067-538dc0842869@coppint.com>
+ <ac93f873-83fd-43b1-a247-f7df94cf0c36@www.fastmail.com>
+From: "Florent B." <florent@coppint.com>
+Message-ID: <906dc97b-d6e9-63a1-3a6a-65bd36d5671b@coppint.com>
+Date: Thu, 30 Sep 2021 13:01:38 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
+MIME-Version: 1.0
+In-Reply-To: <ac93f873-83fd-43b1-a247-f7df94cf0c36@www.fastmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: fr
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -91,34 +65,46 @@ Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
 Hi,
 
-What I've had success with is using policy-based routing, selecting the routing table to use based on UID's.
-You create a new routing table for the WireGuard VPN and add a rule directing that users traffic to that table.
+Thank you it works very well matching my excluded user and using "lookup 
+main" ;)
 
-Using commands you can do this to route traffic from the user with UID 1000 to table 500.
-> ip rule add pref 20 uidrange 1000-1000 lookup 500
+ > ip rule add pref 20 uidrange 1001-1001 lookup main
 
-You can also do this in systemd-networkd if you're using that. Not sure about other network managers.
+I though it was more difficult and didn't know that "uid matching" in 
+"ip rule".
 
-Best Regards
-Nils
+Thanks
 
-On Thu, Sep 30, 2021, at 12:40, Florent B. wrote:
-> Hi list,
+Le 30/09/2021 à 12:53, Nils Andreas Svee a écrit :
+> Hi,
 >
-> On a Linux system (Ubuntu), I would like to enable Wireguard VPN only 
-> for a single user on my system.
+> What I've had success with is using policy-based routing, selecting the routing table to use based on UID's.
+> You create a new routing table for the WireGuard VPN and add a rule directing that users traffic to that table.
 >
-> Currently by default, every packet of every user is getting though 
-> Wireguard.
+> Using commands you can do this to route traffic from the user with UID 1000 to table 500.
+>> ip rule add pref 20 uidrange 1000-1000 lookup 500
+> You can also do this in systemd-networkd if you're using that. Not sure about other network managers.
 >
-> How can I do to route packets only for 1 user ?
+> Best Regards
+> Nils
 >
-> I think I have to play with packets marking (wg show wg0 fwmark / 
-> iptables owner/mark module), I tried some commands but was unable to 
-> success.
->
-> Can someone help please ?
->
-> Thank you.
->
-> Florent
+> On Thu, Sep 30, 2021, at 12:40, Florent B. wrote:
+>> Hi list,
+>>
+>> On a Linux system (Ubuntu), I would like to enable Wireguard VPN only
+>> for a single user on my system.
+>>
+>> Currently by default, every packet of every user is getting though
+>> Wireguard.
+>>
+>> How can I do to route packets only for 1 user ?
+>>
+>> I think I have to play with packets marking (wg show wg0 fwmark /
+>> iptables owner/mark module), I tried some commands but was unable to
+>> success.
+>>
+>> Can someone help please ?
+>>
+>> Thank you.
+>>
+>> Florent
