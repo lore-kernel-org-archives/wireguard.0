@@ -1,71 +1,82 @@
-Return-Path: <SRS0=nAhE=O3=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=G6+c=O4=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 71B11C433FE
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  7 Oct 2021 23:35:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5584AC433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  8 Oct 2021 14:56:01 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 91FE461374
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  7 Oct 2021 23:35:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 91FE461374
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id 0657060F9E
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  8 Oct 2021 14:55:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 0657060F9E
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=aaronmdjones.net
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 7b629194;
-	Thu, 7 Oct 2021 23:35:54 +0000 (UTC)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a42eff35
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Thu, 7 Oct 2021 23:35:51 +0000 (UTC)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 629E461381
- for <wireguard@lists.zx2c4.com>; Thu,  7 Oct 2021 23:35:49 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="RUzdsbYa"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1633649746;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=jSFXdb3dCEV/+otUCcWhxrbJx0O/xk3ksXelWc8GCHA=;
- b=RUzdsbYa/kU2nCMqNszqFy+8cF2tgW0eLhg1MTPVa3Ywf5Vv5J83kllLuFUAnKu/NejsQc
- G6//91butDI0XEjU1OamZav9CtcavLGVEfKUKJKdgpogU/f6r03M+hJ8XaPza6zfVBFHDW
- R6jYnNAnSj93Xz9H3DQcp6SynbTdW34=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id c05702fd
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f9a55b2a;
+	Fri, 8 Oct 2021 14:55:58 +0000 (UTC)
+Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com
+ [64.147.123.21])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 66148f18
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Thu, 7 Oct 2021 23:35:46 +0000 (UTC)
-Received: by mail-yb1-f173.google.com with SMTP id v195so17208167ybb.0
- for <wireguard@lists.zx2c4.com>; Thu, 07 Oct 2021 16:35:46 -0700 (PDT)
-X-Gm-Message-State: AOAM5301DH1zZwh1RoA70qWy1tMTqFYL1tpYykwccFNLI6Xxmod7qUjU
- gjNcqPvrfnpIsa576DEfl55JtJ+Kd/KfxYfgpH0=
-X-Google-Smtp-Source: ABdhPJxGOaPqdmXnMKteeXPYCYoYHQy0fRwkT370hL6PpT2zDsVJI0toiBC97KTBOOWRCAG7Y59+cGuMIaAezlq8Kgg=
-X-Received: by 2002:a25:bd03:: with SMTP id f3mr7719479ybk.412.1633649744563; 
- Thu, 07 Oct 2021 16:35:44 -0700 (PDT)
+ for <wireguard@lists.zx2c4.com>; Fri, 8 Oct 2021 14:55:56 +0000 (UTC)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+ by mailout.west.internal (Postfix) with ESMTP id 2A8353200927;
+ Fri,  8 Oct 2021 10:55:54 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute6.internal (MEProxy); Fri, 08 Oct 2021 10:55:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ aaronmdjones.net; h=subject:to:references:cc:from:message-id
+ :date:mime-version:in-reply-to:content-type; s=fm2; bh=EwNik5Rpp
+ eAzCEOc/06BURkW1Jag/XLj2GAvOrYVpj8=; b=Ictom9ztmkCVEkGtmj+yhUxwW
+ BoZvpKe3G6+Dkh3cMMrXGF2DmC6vlWCHEDySMDaduRgmNoMp7bGPMoLzxSwqFfs3
+ /uy9FfLEToGCYzEPySroXmt7pZVk4J+BdZGmphZeBuuw5zNM6uvWiPrh3SK848BK
+ FWC/Z3cumjEdkACZbx/UqjyMGHnJaT2cMfQq59qeR9PnaLWekv1TWFbc8mdfn49Z
+ 7L05MNSXj/v621ttPtGWqMViWO2O5murTk25m18Tn3VPfEBKksHEwfsA6dnHYx0x
+ oC0DczoK6xcILofdg2yvKS7q5N76RHKLXk0RQAnWXf5yKEY1lpeoeuw/K7gLA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=EwNik5
+ RppeAzCEOc/06BURkW1Jag/XLj2GAvOrYVpj8=; b=ed3xMNJyIFgfzn/ZHKE9RY
+ LfkudEzy/0pNycLJH8ospMhJMagjGvgYFqZYeg3qDo/x4r4nHxl0/O+hjIIT0JrB
+ f03i1d6TIti4AROgGlRdUHGnu4qZ8Bj036nzwteN1FaVikQspYXuINo2Lr/qUQRg
+ wWrmHBdAkdE0kMuWBBjvXCl83SBPinDHmVbCvKHwc0auC2oyAZEeikqhvJAi1Ezp
+ 0B4H4OapX74zLNCM4+M7LjY5lTNQpN4nyXGh5eAbhXWU2NqwINjt+2AwRm0NB0ar
+ dr7C06m8Q/nYPYFf+1A/9cyLEXjce+1a7h867B8W2F7x9da2qF04a+OhOVdx8KQA
+ ==
+X-ME-Sender: <xms:-VtgYdN__8h6r6h8S4GyFcDvJb8zKMasUsOF-0LJTKRqDj4O7Qg0cw>
+ <xme:-VtgYf8aGzrNfmUITIZzIGFyvCenspE5RHz24gCCHFzhoBi-d6BBBjJY2DYKQvb0z
+ XmxYR6OZnvDMlfflnE>
+X-ME-Received: <xmr:-VtgYcTwPxQlL5fYaeWX74SKiQTtxlMSMIAj6Ui5GYyL0a1IBMKbYs6JnKnHB9r1q8FI2C6glDZrky7u1MZEgHpe__eRBalE54SxlqsRbDDqPxEzJ6c>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrvddttddgkedtucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucenucfjughrpefuvfhfhffkffgfgggjtgesghdtre
+ fotdefjeenucfhrhhomheptegrrhhonhculfhonhgvshcuoehmvgesrggrrhhonhhmughj
+ ohhnvghsrdhnvghtqeenucggtffrrghtthgvrhhnpefhvdejueeiteevkeffjeethfeite
+ dvledvgeehgffhfefhueduieffteevhfffueenucffohhmrghinhepfihirhgvghhurghr
+ ugdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
+ hmpehmvgesrggrrhhonhhmughjohhnvghsrdhnvght
+X-ME-Proxy: <xmx:-VtgYZsHHUPCUVy955QxumzRvIq0GDlv40AzmnDdB9BOuK4gq7pg2g>
+ <xmx:-VtgYVdDWVFEN81k0GWROh5CB8Ihc0M4qVM3GeVkiyG9NexbMmSc6g>
+ <xmx:-VtgYV1ynNxddcdRgvK0H43s9_a5iGp53bMTYuE7njg24L3TZri1pQ>
+ <xmx:-VtgYVniaAOiXm8XarEo_WgNE6KbK49rhuGjBMhAxEL1BbMlT7sRUw>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 8 Oct 2021 10:55:52 -0400 (EDT)
+Subject: Re: performance: multiple clients on one interface?
+To: wireguard@lists.zx2c4.com
+References: <a208c85e-4835-cb77-003c-a040544ec968@moenia.de>
+Cc: uxDWzco-wg@moenia.de
+From: Aaron Jones <me@aaronmdjones.net>
+Message-ID: <b53d4f44-b094-a5dd-14cf-55b846b17661@aaronmdjones.net>
+Date: Fri, 8 Oct 2021 14:55:45 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 MIME-Version: 1.0
-References: <CAHmME9rW1e+rRc8q+-_eLR=U9OTn+Sn84ECJtGFY=Hjg8kzfEQ@mail.gmail.com>
- <K17360-33.1605029899@spamhaus.org>
- <CAHmME9pmKxGYmxxs0pLt=zt2igy6aR-g5xsB=2Zew6oWVY0Z3w@mail.gmail.com>
- <CABtXGiCs1fS3FHAwHL1zohuL1BfDhY7GhZhtLFfiqS2aJstr3g@mail.gmail.com>
- <20201112090313.GB3500@trivini.no>
- <CAH8yC8=azrpN=EOP9XsTDe2NwmqQquSpEuqidtS2rVFw8x+5Ew@mail.gmail.com>
- <CAHmME9rZHaDRRk2-c9kzhUapTRiVxybkwS2Ung_HgSCAVyOw4Q@mail.gmail.com>
-In-Reply-To: <CAHmME9rZHaDRRk2-c9kzhUapTRiVxybkwS2Ung_HgSCAVyOw4Q@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 7 Oct 2021 17:35:33 -0600
-X-Gmail-Original-Message-ID: <CAHmME9rZeksrVkbn1qOAFEtKs4F872N07EJNU5iHXSsGLi_TSg@mail.gmail.com>
-Message-ID: <CAHmME9rZeksrVkbn1qOAFEtKs4F872N07EJNU5iHXSsGLi_TSg@mail.gmail.com>
-Subject: Re: Should we sunset Windows 7 support?
-To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Cc: Jeffrey Walton <noloader@gmail.com>,
- =?UTF-8?Q?Berge_Schwebs_Bj=C3=B8rlo?= <berge@trivini.no>, 
- Laslo Hunhold <dev@frign.de>, Panagiotis Kalogiratos <nodens@abnormalfreq.com>,
- Neal Gompa <ngompa13@gmail.com>, 
- Phillip McMahon <phillip.mcmahon@gmail.com>, Roman Mamedov <rm@romanrm.net>, 
- Reiner Karlsberg <karlsberg@softart-ge.com>, samuel.progin@gmail.com, 
- paul.montgomery@netprotect.com
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <a208c85e-4835-cb77-003c-a040544ec968@moenia.de>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="QODSHWtC0BLSMaqBfxfJUJHOIiBujuMdC"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -80,44 +91,64 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hey again,
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--QODSHWtC0BLSMaqBfxfJUJHOIiBujuMdC
+Content-Type: multipart/mixed; boundary="D57mjKUUOZ7OPeKAkmXJobcF2VJiclILI";
+ protected-headers="v1"
+From: Aaron Jones <me@aaronmdjones.net>
+To: wireguard@lists.zx2c4.com
+Cc: uxDWzco-wg@moenia.de
+Message-ID: <b53d4f44-b094-a5dd-14cf-55b846b17661@aaronmdjones.net>
+Subject: Re: performance: multiple clients on one interface?
+References: <a208c85e-4835-cb77-003c-a040544ec968@moenia.de>
+In-Reply-To: <a208c85e-4835-cb77-003c-a040544ec968@moenia.de>
 
-About a year later, WireGuard on Windows keeps becoming more advanced
-and integrated into the operating system, with better service
-notifications, high speed multi-packet transmission, device arrival
-notifications, software device management, and so on... the common
-theme being that these are all made possible by Windows 8+ APIs. So
-we're now carrying well over 1000 lines of Windows 7 compatibility
-code, polyfills, and sometimes outright reimplementations. This is
-nobody's idea of fun, and having lots of extra code (that receives
-less and less testing) is usually a recipe for things to go wrong. The
-added burden of Windows 7 slows progress on newer platforms.
+--D57mjKUUOZ7OPeKAkmXJobcF2VJiclILI
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: quoted-printable
 
-So I really would like to sunset Windows 7 support at some point. The
-party cannot go on forever.
+On 05/10/2021 08:39, uxDWzco-wg@moenia.de wrote:
+> using same port for all connections means, that for receiving encrypted=
 
-However, according to [1], Windows 7 still makes up about 15% of
-Windows installs. And I know for a fact that some pretty large
-WireGuard deployments are running on Windows 7 boxes, sometimes
-installed inside of ATMs... Whether or not that's a good idea, it is
-happening. What to do?
+> packets every configured key must be tried, until the right one is
+> found, or is this wrong?
 
-My current thinking is to follow the Chromium project, or at least
-watch attentively and see the fallout from their decision. After a 6
-month extension due to the pandemic, Google is set to retire Windows 7
-support in Chrome on January 15, 2022, which is exactly 100 days from
-now. There are still some open questions, though: will Microsoft
-follow by sunsetting Windows 7 support for Edge, or will they keep it
-on life support even longer? Will Mozilla follow Chromium's decision
-as well? Is tracking Chromium's decision sensible? It might be: web
-standards tend to move awfully fast these days, and without an up to
-date web browser, will Windows 7 users upgrade to Windows 11 [or
-Linux]? It might not: the most important Windows 7 holdouts may well
-be embedded machines that don't care about browsers anyway?
+Incorrect. The handshake establishes sender and receiver indexes; these
+are reproduced in data packets so that the receiver does one hash table
+lookup to determine the decryption key.
 
-If anybody's thinking on this has evolved, I'd love to hear thoughts.
+This is documented on https://www.wireguard.com/protocol/
 
-Thanks,
-Jason
+> so: how many connections are reasonable for a single device, without
+> running in to trouble due to the time trying all the keys?
 
-[1] https://gs.statcounter.com/windows-version-market-share/desktop/worldwide/
+Up to 1,048,576 peers per interface are supported, limited only by
+bandwidth and kernel memory.
+
+
+--D57mjKUUOZ7OPeKAkmXJobcF2VJiclILI--
+
+--QODSHWtC0BLSMaqBfxfJUJHOIiBujuMdC
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEUh8K0NtYMbn+mJWCVjfoBb/oPSQFAmFgW/EACgkQVjfoBb/o
+PSRZHxAAs5ZlVy6VwwmurPcxzHI6ceXFFXFYXKLNPgT0RWRID2QK395PtoxbwDhc
+fbGNkp5IcJPuL84FHMkcBLf+yyquf3Zp5w7/+JU+CxuDk2A6X0cuBfMxcfORyCx/
+1PhjJXUp+7o5gpET19lLXFAq+nKKV2DZ+9u1d56cmdb92Sg9/XqsILcNZe3lr1FZ
+sJL/ZiKekLheBk5Ud490wWPROVIGqTQihxorR/hcn0TWUt/zCxGq5cHkRo7uUgdM
+rMxlhcGTaCkKYuiv6ad35CXOwBuEdc9cKs2/jucojJDdx/AAaTYM67DLbEgLADOU
+vktBhe0eHNJSlHW0MQcTfIBWfR1opRLUGNdK3w3m3a1nY2AHMM31Aok/G6tFg4+t
+XZYzvQJ7+gPGnZgwF+dvRYRmsZ1FZtlN1/y1ZyfRxEVrRHhlg1WE/faRKjuDoGbr
+vE4y/cJkLuTbZTxXls2/ZCK0S/FIMVkWaLcAD9F30L6rGk0VU2H6N2eM4XgHwCr2
+4J+9r1p2Gm2iKtswvurBlnVkoh855TIlNCbSdU3JVYCsK2E15xJ/zS/Qnb5/Rj19
+XbWPT4AM6YfIfFLX+tFIkL+oo0jxWMv8DCIOTnPBPFmFhKvgLoB/0uGcaNsgsRFL
+YYhQsXPMa6z64jduAI2a1Loxd9HnQK5sgsp0jTjCzrF3gz+CMjo=
+=nu6X
+-----END PGP SIGNATURE-----
+
+--QODSHWtC0BLSMaqBfxfJUJHOIiBujuMdC--
