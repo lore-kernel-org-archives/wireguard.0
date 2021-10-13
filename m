@@ -2,62 +2,81 @@ Return-Path: <SRS0=+Ywq=PB=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B718C433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 13 Oct 2021 00:19:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67C7EC433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 13 Oct 2021 00:30:16 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 7B80160724
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 13 Oct 2021 00:19:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 7B80160724
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id AC7ED60C4B
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 13 Oct 2021 00:30:15 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org AC7ED60C4B
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a3645431;
-	Wed, 13 Oct 2021 00:13:34 +0000 (UTC)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b123158c
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Wed, 13 Oct 2021 00:13:32 +0000 (UTC)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id B80F7604DA
- for <wireguard@lists.zx2c4.com>; Wed, 13 Oct 2021 00:13:30 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="P/enJ430"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1634084009;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=uwFWFLNvxJhniqmknouH/9WYU6RbuOWIp15gvlHbcpU=;
- b=P/enJ430Xz8rb3BaVJI6WLGskKU8pTaokB86HEKefTuxJcgh0TpqkoxOp81JmP0TbHV9se
- 7082W8iOG4JkxcMBcka9ja+4g+lyWj088hjn668Pggu1iu0aezqcBd/5BflL0XQVzVAGRh
- 2RMEedFAwbuS5cWhTW5xzShx4ISHB7w=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id e5efae1e
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 533231dc;
+	Wed, 13 Oct 2021 00:30:14 +0000 (UTC)
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com
+ [2607:f8b0:4864:20::629])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 5cb165ec
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 13 Oct 2021 00:13:29 +0000 (UTC)
-Received: by mail-yb1-f175.google.com with SMTP id s4so2196864ybs.8
- for <wireguard@lists.zx2c4.com>; Tue, 12 Oct 2021 17:13:28 -0700 (PDT)
-X-Gm-Message-State: AOAM533dzIae3x9XwbuXSzmKDVA8B3/ncxkvHsNLwu4B80NjIncone/P
- cLH0AyiEPwQVs592+l3acI9APVVv2wDiqvqyty4=
-X-Google-Smtp-Source: ABdhPJyaiz0hWUCAzrz+xwE4UzgMZURWa8BZiG7TQCE8KCzOQgblBC4kCxI3GVA49Iee/NGQezfmKExQHUvFBlf9CHU=
-X-Received: by 2002:a25:854c:: with SMTP id f12mr30376446ybn.95.1634084007865; 
- Tue, 12 Oct 2021 17:13:27 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a05:7110:61c1:b0:fa:e5:57f7 with HTTP; Tue, 12 Oct 2021
- 17:13:27 -0700 (PDT)
-In-Reply-To: <CABGW2bUxOaOBuChZTS4w7+3OX0WNvypjYc-+cSNgQO-zWQHaFw@mail.gmail.com>
-References: <CABGW2bUxOaOBuChZTS4w7+3OX0WNvypjYc-+cSNgQO-zWQHaFw@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 12 Oct 2021 18:13:27 -0600
-X-Gmail-Original-Message-ID: <CAHmME9rd7uKcbKY0dXKLOPKVdxqrULOOCMvtjgFiaXK1ki1KHA@mail.gmail.com>
-Message-ID: <CAHmME9rd7uKcbKY0dXKLOPKVdxqrULOOCMvtjgFiaXK1ki1KHA@mail.gmail.com>
+ Wed, 13 Oct 2021 00:30:12 +0000 (UTC)
+Received: by mail-pl1-x629.google.com with SMTP id x4so640017pln.5
+ for <wireguard@lists.zx2c4.com>; Tue, 12 Oct 2021 17:30:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=from:to:cc:subject:thread-topic:thread-index:date:message-id
+ :references:in-reply-to:accept-language:content-language
+ :content-transfer-encoding:mime-version;
+ bh=bKmEZ0i0ALw25uKMPCGTmrxqAZyvuH9499IYDkeDa3o=;
+ b=Tv1pNpoTIscjgUjYC2qarSl8P8SS+7irZus/+2Vy0dDXopDW1Le+6p4IZGtigkKQRz
+ PRiMO1HwY5paIdiJAqQQgmyirn6rQ4kX6CnRMk4ri1zgF2YxqQ8NV54Ay1IaBFyoYRvZ
+ DaeEngdtBZu+qNxms5fu8j7efmW49ae+DLVthV+EiwBTT3ex/xNojRYJ2zffCuh+/EHy
+ aISxMKWTOIzgWAtK0lUVKemae+Ey3jiSI884E5xtt2tkpk0n0o4LXMi/0OxCq3KHZlaJ
+ 9ESTVGughvIzRG4N+gTO/c32LgxDI5QU7nJ4PjdcZqDaubOHZGo7AMV+2lOBdMTEUX69
+ CwgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:from:to:cc:subject:thread-topic:thread-index
+ :date:message-id:references:in-reply-to:accept-language
+ :content-language:content-transfer-encoding:mime-version;
+ bh=bKmEZ0i0ALw25uKMPCGTmrxqAZyvuH9499IYDkeDa3o=;
+ b=O+ceRY9iyLtAAyvYszYkpbEYFeVv4kA9qfLjhiovYUGq7+bi2AcB1SUPyWe+pq7FLm
+ M9t9jmyyJPCfDcs1dp6phRj/yAHKCnRxSMgqCfMmMxqwdc6ukqvBFxI0U26nsWbjlJWW
+ POIa3ZtLDPux1FOeLkcCkZBfsT/aZop2nEieyAKXtO0FsS4axlKzDAyMZSJlPV6isMEV
+ KG2I1uwRD+uKzy8rxrjrfHpU6sWDWAdUxNHPueWot3qTw2Q5WGp1pfhmNFlQPQ22mMfx
+ Ff1TwSY6eZcWGbqHiqUSxEXf4uAhUW3n/+Ua+5KH8nuFtBjBcEtevzj2SUXQorObPRyP
+ sU8Q==
+X-Gm-Message-State: AOAM533Vr91OG8qioyO8hzHqSBGE9ay4SMjsjs+PxTxwrMkmqPFVDg0Y
+ w5gieMZ5paf3LcEja3/IqSShC/WHY7LqmQ==
+X-Google-Smtp-Source: ABdhPJyTmVIsVQ5H/RCMaRzYbLrqBOjCveVsvdztwjyBGsZXsnCGrcMja1tQ5YFRVpMUsPM45pKoig==
+X-Received: by 2002:a17:90a:1649:: with SMTP id x9mr85536pje.34.1634085010568; 
+ Tue, 12 Oct 2021 17:30:10 -0700 (PDT)
+Received: from MW2PR18MB2251.namprd18.prod.outlook.com ([2603:1036:908:3::5])
+ by smtp.gmail.com with ESMTPSA id
+ c27sm12836480pgb.89.2021.10.12.17.30.09
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Tue, 12 Oct 2021 17:30:10 -0700 (PDT)
+From: Scott Bonar <sbonar@gmail.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+CC: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
 Subject: Re: Wintun.dll (amd64) GetProcAddress failure
-To: Scott Bonar <sbonar@gmail.com>
-Cc: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
+Thread-Topic: Wintun.dll (amd64) GetProcAddress failure
+Thread-Index: AXdneXdh7sZtlrNMaD+wM5wU6MKuK0FpTEx1vqVVolM=
+X-MS-Exchange-MessageSentRepresentingType: 1
+Date: Wed, 13 Oct 2021 00:30:08 +0000
+Message-ID: <MW2PR18MB225138007844015EDBF28F8CADB79@MW2PR18MB2251.namprd18.prod.outlook.com>
+References: <CABGW2bUxOaOBuChZTS4w7+3OX0WNvypjYc-+cSNgQO-zWQHaFw@mail.gmail.com>
+ <CAHmME9rd7uKcbKY0dXKLOPKVdxqrULOOCMvtjgFiaXK1ki1KHA@mail.gmail.com>
+In-Reply-To: <CAHmME9rd7uKcbKY0dXKLOPKVdxqrULOOCMvtjgFiaXK1ki1KHA@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-Exchange-Organization-SCL: -1
+X-MS-TNEF-Correlator: 
+X-MS-Exchange-Organization-RecordReviewCfmType: 0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -72,6 +91,13 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-If you're using the just-releases Wintun 0.14, make sure you're using
-the wintun.h from that release, alongside the InitializeWintun
-function from example.c.
+VGhhbmtzLiAgSSBkb27igJl0IGtub3cgd2hhdCB2ZXJzaW9uIG9mIGV4YW1wbGUuYyBhbmQgd2lu
+dHVuLmggSSB3YXMgbG9va2luZyBhdCB2ZXJzZSB3aGF0IGNvbWVzIGluIHRoZSByZWxlYXNlIHpp
+cC4NCkJ1dCB0aGV5IGFyZSBmb3Igc3VyZSBkaWZmZXJlbnQuICBOb3cgdGhhdCBJIGhhdmUgdGhl
+IGNvcnJlY3QgZmlsZXMgdGhpbmdzIGFwcGVhciB0byB3b3JrIGJldHRlciBhbmQgSeKAmW0gbm90
+IGdvaW5nIHRvIGV2ZW4NClRyeSBhbmQgdHJhY2sgZG93biB3aGF0IHZlcnNpb24gSSB3YXMgbG9v
+a2luZyBhdC4NCg0K77u/T24gMTAvMTIvMjEsIDY6MTMgUE0sICJKYXNvbiBBLiBEb25lbmZlbGQi
+IDxKYXNvbkB6eDJjNC5jb20+IHdyb3RlOg0KDQogICAgSWYgeW91J3JlIHVzaW5nIHRoZSBqdXN0
+LXJlbGVhc2VzIFdpbnR1biAwLjE0LCBtYWtlIHN1cmUgeW91J3JlIHVzaW5nDQogICAgdGhlIHdp
+bnR1bi5oIGZyb20gdGhhdCByZWxlYXNlLCBhbG9uZ3NpZGUgdGhlIEluaXRpYWxpemVXaW50dW4N
+CiAgICBmdW5jdGlvbiBmcm9tIGV4YW1wbGUuYy4NCg==
