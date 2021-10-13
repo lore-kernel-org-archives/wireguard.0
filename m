@@ -2,59 +2,62 @@ Return-Path: <SRS0=+Ywq=PB=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F798C433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 13 Oct 2021 00:09:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B718C433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 13 Oct 2021 00:19:58 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id DE1E860ED4
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 13 Oct 2021 00:09:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org DE1E860ED4
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	by mail.kernel.org (Postfix) with ESMTPS id 7B80160724
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 13 Oct 2021 00:19:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 7B80160724
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id cc24972d;
-	Wed, 13 Oct 2021 00:08:02 +0000 (UTC)
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com
- [2a00:1450:4864:20::529])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 3f1bf326
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a3645431;
+	Wed, 13 Oct 2021 00:13:34 +0000 (UTC)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id b123158c
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 13 Oct 2021 00:13:32 +0000 (UTC)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id B80F7604DA
+ for <wireguard@lists.zx2c4.com>; Wed, 13 Oct 2021 00:13:30 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="P/enJ430"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1634084009;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=uwFWFLNvxJhniqmknouH/9WYU6RbuOWIp15gvlHbcpU=;
+ b=P/enJ430Xz8rb3BaVJI6WLGskKU8pTaokB86HEKefTuxJcgh0TpqkoxOp81JmP0TbHV9se
+ 7082W8iOG4JkxcMBcka9ja+4g+lyWj088hjn668Pggu1iu0aezqcBd/5BflL0XQVzVAGRh
+ 2RMEedFAwbuS5cWhTW5xzShx4ISHB7w=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id e5efae1e
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 12 Oct 2021 23:59:54 +0000 (UTC)
-Received: by mail-ed1-x529.google.com with SMTP id p13so2855711edw.0
- for <wireguard@lists.zx2c4.com>; Tue, 12 Oct 2021 16:59:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:from:date:message-id:subject:to;
- bh=ZJ1BUIP6qogFEfescTQUVVNYAB0p1PgUuZZ0DDCA958=;
- b=XdnB8CHVeZA1qqMxR1318t91NhcVzM5PSednxYangjz2kaaGUjMlLz55Y5XA/9eglN
- Kq0uinfultp+Acm6/Aaa2nl57dlmk666yCl0vdlw4Fdjpv5os7M1xEuqL/QliCbJwFIe
- /Q7g2AtVO90QvXSQ3M0lCDIN0kPAAYdreMwWiyPkfNUNyuxJcdBWNMSdZi3xRDNxPUoe
- BnAwiHtZuAS3xPCekk4gzLMQM+pOD1jGhPYWZVFvsIyzl9QtOSv50vDsXR2Af8h88SwX
- 4TpJaz4q8PvkOhW3reHoZtfVZrzI10MVzy5F7s5F+wyhk1aBDP4/W0TSNsBqtYrgcRtB
- +VNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=ZJ1BUIP6qogFEfescTQUVVNYAB0p1PgUuZZ0DDCA958=;
- b=ckVl3x1Ve1jIGEG52gMYsMbSJOI6xWb5/9MUtj87jg5A8FFn7/rnIyg+YGLrogKRXY
- TGEdptIXK+advUs98gVF/3vl9q6vdpii+Gp5RcLKjwTItdiQ0YoBkcGERf1IHPQ8r8kJ
- 2lZUNrpYzqiAzieBRMQnmoHVOpViXHEBk3TPv7Rlu+TpUVsIqp2FayNLTzslgUrY04wj
- HEI08BCtKx3CmczwL+AM/pHSy7ZCrZe7Qy/9JggVdODYcHXhaxYJSqHkzXclUmQNOv/C
- JopBpUl3+pM5SlttYP+SKgq69NPZaxRqmyr/ckJquyBQ1Efql/LOwawxkYWdhHniIlVL
- aPHA==
-X-Gm-Message-State: AOAM531Kj0dl3EIhLYiLF/L+Mhh0wcKH7SyX/czTmhaVVt9KAkSw6jTE
- IRRQMrr09vzQLtRsJ4YcjJKf2ReQ05UGkxm3s623y7hbFb4VJA==
-X-Google-Smtp-Source: ABdhPJw4CJ6cgHQCYlPMrQQfHEIPswvNykoYpKns5kE6c9n5qQMNorCsxINiNmr0JwpBhNXTy6WfinmTVOLKF7JDvuw=
-X-Received: by 2002:a50:8dcb:: with SMTP id s11mr4281578edh.143.1634083193877; 
- Tue, 12 Oct 2021 16:59:53 -0700 (PDT)
+ Wed, 13 Oct 2021 00:13:29 +0000 (UTC)
+Received: by mail-yb1-f175.google.com with SMTP id s4so2196864ybs.8
+ for <wireguard@lists.zx2c4.com>; Tue, 12 Oct 2021 17:13:28 -0700 (PDT)
+X-Gm-Message-State: AOAM533dzIae3x9XwbuXSzmKDVA8B3/ncxkvHsNLwu4B80NjIncone/P
+ cLH0AyiEPwQVs592+l3acI9APVVv2wDiqvqyty4=
+X-Google-Smtp-Source: ABdhPJyaiz0hWUCAzrz+xwE4UzgMZURWa8BZiG7TQCE8KCzOQgblBC4kCxI3GVA49Iee/NGQezfmKExQHUvFBlf9CHU=
+X-Received: by 2002:a25:854c:: with SMTP id f12mr30376446ybn.95.1634084007865; 
+ Tue, 12 Oct 2021 17:13:27 -0700 (PDT)
 MIME-Version: 1.0
-From: Scott Bonar <sbonar@gmail.com>
-Date: Tue, 12 Oct 2021 17:59:43 -0600
-Message-ID: <CABGW2bUxOaOBuChZTS4w7+3OX0WNvypjYc-+cSNgQO-zWQHaFw@mail.gmail.com>
-Subject: Wintun.dll (amd64) GetProcAddress failure
-To: wireguard@lists.zx2c4.com
+Received: by 2002:a05:7110:61c1:b0:fa:e5:57f7 with HTTP; Tue, 12 Oct 2021
+ 17:13:27 -0700 (PDT)
+In-Reply-To: <CABGW2bUxOaOBuChZTS4w7+3OX0WNvypjYc-+cSNgQO-zWQHaFw@mail.gmail.com>
+References: <CABGW2bUxOaOBuChZTS4w7+3OX0WNvypjYc-+cSNgQO-zWQHaFw@mail.gmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Tue, 12 Oct 2021 18:13:27 -0600
+X-Gmail-Original-Message-ID: <CAHmME9rd7uKcbKY0dXKLOPKVdxqrULOOCMvtjgFiaXK1ki1KHA@mail.gmail.com>
+Message-ID: <CAHmME9rd7uKcbKY0dXKLOPKVdxqrULOOCMvtjgFiaXK1ki1KHA@mail.gmail.com>
+Subject: Re: Wintun.dll (amd64) GetProcAddress failure
+To: Scott Bonar <sbonar@gmail.com>
+Cc: wireguard@lists.zx2c4.com
 Content-Type: text/plain; charset="UTF-8"
-X-Mailman-Approved-At: Wed, 13 Oct 2021 00:08:01 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -69,10 +72,6 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-I will be the first to admit I maybe doing something wrong, but the
-DLL loads just fine, however when I try to init the API functions the
-only one that is successful is WintunCreateAdapter.
-All other calls to GetProcAddress() return NULL and LastError is
-coming back as 0.  Any help would be appreciated.
-
-Thanks
+If you're using the just-releases Wintun 0.14, make sure you're using
+the wintun.h from that release, alongside the InitializeWintun
+function from example.c.
