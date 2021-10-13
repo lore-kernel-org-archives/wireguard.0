@@ -2,82 +2,54 @@ Return-Path: <SRS0=+Ywq=PB=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 84A7FC433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 13 Oct 2021 02:08:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13E34C433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 13 Oct 2021 12:00:05 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 6D62E60E78
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 13 Oct 2021 02:08:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 6D62E60E78
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=aaronmdjones.net
+	by mail.kernel.org (Postfix) with ESMTPS id 33CB260273
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 13 Oct 2021 12:00:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 33CB260273
+Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=eutampieri.eu
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d8cfd5fb;
-	Wed, 13 Oct 2021 02:08:48 +0000 (UTC)
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
- [66.111.4.25])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 518616c9
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d0263563;
+	Wed, 13 Oct 2021 12:00:02 +0000 (UTC)
+Received: from mail.eutampieri.eu (mail.eutampieri.eu
+ [2001:41d0:701:1100::183])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 16263bff
  for <wireguard@lists.zx2c4.com>;
- Wed, 13 Oct 2021 02:08:46 +0000 (UTC)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
- by mailout.nyi.internal (Postfix) with ESMTP id 8304D5C0156;
- Tue, 12 Oct 2021 22:08:45 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute6.internal (MEProxy); Tue, 12 Oct 2021 22:08:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- aaronmdjones.net; h=subject:to:references:cc:from:message-id
- :date:mime-version:in-reply-to:content-type; s=fm2; bh=LvNHYlkM4
- Yqo0Qmz1btuPLagsL67GxavNMhuDl9y95Y=; b=F5x9RvmCbhl9P7rQqyYRyIA9j
- z00JaNsRqTiMCEFmNEwUDDRzeBF9FjVOEozPKaBtgg2tiBLFAvMGXPj8m7NmeRgP
- a+b7xHHzubmBqS1cgGZjTxItB5hDCR1pFxPoFFsBb67gUp08IpYChfckDGr0J6ew
- gNUGRU1+rS/G0gp1wc89bn24tsupdUM4GUPePXcNr0eu/Lfyd4MS7FLZ85N+Btvk
- GIlfUl5TSr6uDWI1J5y8mWY+tnsSQvXwXLm0ImHlx2HYaLCqR26u1TdTRhW6J5ZP
- 7MdLptbwnFRxCD2kSIPCDfupyv02TC04Py/gXL2vxTVbRVUYtKQYDILIbU0nw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=LvNHYl
- kM4Yqo0Qmz1btuPLagsL67GxavNMhuDl9y95Y=; b=LeC3VMfA3AF4r1yyOA2gK0
- lF3pgwegMy2p/xROwazg/abVyvRXz1C1sj4qtcJ6B2cC6ioGDcyeQPj1dCoiloUo
- 1hSmMr9wx71dcEgAJcOwJtBmNI1xZQee09/+PAJyT3dOc1Q1Nf7GKmKU/cqWSPKH
- vyh8TglcW5GUu92vI18VXMIKupuSD95oNxJansL549TCkWYmvADCUvXFj3Csql5T
- eylnOdld29K37eWL4vfEtlLPX4U89UeL7uQXJ81BPz/r5BueZtFCyNJgoVTYp1c/
- l5FTb+GzmijHtxzMOW6msdPDMYo/PbuZgNMZr6U6mdfPcWXpTnAyxEfMgsXl0FKg
- ==
-X-ME-Sender: <xms:rT9mYT2B0YQBorztrspID5NFkrg-dTLPu8pBMohvaEAbUZ_JOLnDRw>
- <xme:rT9mYSHxghk1zUqP6FxrPl00QdoL631_n81V1QGEd26jLqL82uea-fi6OjnFc8xat
- Pis--xe0aFVgH6Gy7Q>
-X-ME-Received: <xmr:rT9mYT6pMGFPMjpUyOvrjObOsUq03sTt-XGgX_FNeF34vnPy5tvSF068PKOT8vM9HfVOlLP7mO_pfL_KPv4TRqXhNOr_Gs0UKgiGjkvPXap8pXPSjD0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrvddtledghedvucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepuffvfhfhkffffgggjggtsehgtderofdtfeejnecuhfhrohhmpeetrghrohhn
- ucflohhnvghsuceomhgvsegrrghrohhnmhgujhhonhgvshdrnhgvtheqnecuggftrfgrth
- htvghrnhepveekkeeiieeugfegfffhtdegffettdekkeefteeihfevgeetieeiffetteef
- jedvnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepmh
- gvsegrrghrohhnmhgujhhonhgvshdrnhgvth
-X-ME-Proxy: <xmx:rT9mYY0v0Se4id-zTiRM4rQZ9dcvtMVaGq8yjzK2yVDTWJMx5IDU7g>
- <xmx:rT9mYWGxCT0fQLVycG9wwSfboga_ErCZyQDG4PACuxNItiWt2Wyh_g>
- <xmx:rT9mYZ9I0NbhWANSy5wyL3u13Fcl7mg0DAWIr51aLlmZca-15Yka0g>
- <xmx:rT9mYRNwpuDNVNUEJmDWqUgewFwXtlti3zi1ZHtM1beBW_R5N4lMBg>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 12 Oct 2021 22:08:44 -0400 (EDT)
-Subject: Re: Keepalive packets transmitted by default
+ Wed, 13 Oct 2021 11:02:38 +0000 (UTC)
+Received: by mail.eutampieri.eu (Postfix, from userid 128)
+ id 8FEC13E928; Wed, 13 Oct 2021 13:02:38 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=eutampieri.eu;
+ s=mail; t=1634122958;
+ bh=wjedUfKh2TKxVLrG7GpkYMlUj99+E2zYVEMS9PnLyog=;
+ h=From:Subject:Date:To:From;
+ b=NpwiOz3RO98U/ONtYyIAL1J+tyumPf6SyQh5v+mKpCEQPmq6OC07vBu3ObIaB6I+O
+ I+jTvwr7RFLdjab/Iq89kyeEghLJnBHpJ/DLspO+c1Oh3RqETgXqsIWKXrDdOXA6Xw
+ VupeOh2fa4D/b9GfCCzQy9RlSPGKjP24hgyd3a5w=
+Received: from smtpclient.apple (unknown [10.2.14.3])
+ by mail.eutampieri.eu (Postfix) with ESMTPSA id DDF7B3E8DA
+ for <wireguard@lists.zx2c4.com>; Wed, 13 Oct 2021 13:02:37 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=eutampieri.eu;
+ s=mail; t=1634122957;
+ bh=wjedUfKh2TKxVLrG7GpkYMlUj99+E2zYVEMS9PnLyog=;
+ h=From:Subject:Date:To:From;
+ b=ceTBHSnZ1kPoBX4XVitWs/oCuYJqsBKw01/3Gh1Cj0qktFL23Z4p8uTzJaMKurA5+
+ 7U64LFfVB8khdUWaxN6O/NOCrlOKdfc7niOeDLWZId2HFzLSdi1P/yD4p7xDY5mToE
+ XMejy0FRNED1WCc2RA5eRpv8cBHvpo7bGL0qgfyU=
+From: Eugenio Tampieri <eugenio@eutampieri.eu>
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
+Subject: wireguard-apple localization
+Message-Id: <83B7BA7B-85A0-4461-B4E5-91EA33BBF2C4@eutampieri.eu>
+Date: Wed, 13 Oct 2021 13:02:36 +0200
 To: wireguard@lists.zx2c4.com
-References: <DM5PR1201MB0012B195C77099DA856C713CC5B69@DM5PR1201MB0012.namprd12.prod.outlook.com>
-Cc: Gert Mertes <gmertes@outlook.be>
-From: Aaron Jones <me@aaronmdjones.net>
-Message-ID: <21958b52-894e-cb79-d831-159d7fda04e6@aaronmdjones.net>
-Date: Wed, 13 Oct 2021 02:08:40 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
-MIME-Version: 1.0
-In-Reply-To: <DM5PR1201MB0012B195C77099DA856C713CC5B69@DM5PR1201MB0012.namprd12.prod.outlook.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="8swxHzdIMIa1mULq1rnWcSbbD4i78uFc8"
+X-Mailer: Apple Mail (2.3654.120.0.1.13)
+X-Mailman-Approved-At: Wed, 13 Oct 2021 12:00:00 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -92,71 +64,15 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---8swxHzdIMIa1mULq1rnWcSbbD4i78uFc8
-Content-Type: multipart/mixed; boundary="Oy89wASoHoZXYeTzT4byqbFvYIRhUojN4";
- protected-headers="v1"
-From: Aaron Jones <me@aaronmdjones.net>
-To: wireguard@lists.zx2c4.com
-Cc: Gert Mertes <gmertes@outlook.be>
-Message-ID: <21958b52-894e-cb79-d831-159d7fda04e6@aaronmdjones.net>
-Subject: Re: Keepalive packets transmitted by default
-References: <DM5PR1201MB0012B195C77099DA856C713CC5B69@DM5PR1201MB0012.namprd12.prod.outlook.com>
-In-Reply-To: <DM5PR1201MB0012B195C77099DA856C713CC5B69@DM5PR1201MB0012.namprd12.prod.outlook.com>
+Hello,
 
---Oy89wASoHoZXYeTzT4byqbFvYIRhUojN4
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: quoted-printable
+I=E2=80=99d like to provide a new set of localized strings in Italian, =
+since the current one is quite broken, with a few strings missing and =
+others not exactly correct.
+I=E2=80=99ve noticed that the repo tries to sync the localized strings =
+with an online platform and I was wondering what=E2=80=99s the best way =
+to contribute.
 
-On 12/10/2021 13:52, Gert Mertes wrote:
-> Hi,
->
-> My Windows client (0.4.11) will still sporadically send (and receive)
-> keepalive packets over an idle tunnel, even though PersistentKeepalive
-> is not set in the config of any peer in the tunnel. Explicitly setting
-> it to 0 also has the same result. I=E2=80=99m wondering if (i) the abov=
-e is
-> expected behaviour and (ii) is it possible to completely disable
-> keepalive packets?
->
-> Thanks,
-> Gert
+Regards,
 
-This is the expected behaviour, and it is not possible to disable it.
-
-It's occurring because there is a unidirectional data transfer happening
-(e.g. UDP), and the other side is responding with the keepalive because
-it hasn't already done so recently (like it would with e.g. a TCP ACK)
-and has nothing to send.
-
-The reasons are described in sections 6.2 and 6.5 of the WireGuard
-whitepaper.
-
-
-
---Oy89wASoHoZXYeTzT4byqbFvYIRhUojN4--
-
---8swxHzdIMIa1mULq1rnWcSbbD4i78uFc8
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEUh8K0NtYMbn+mJWCVjfoBb/oPSQFAmFmP6gACgkQVjfoBb/o
-PSSNQw//bsMBYv0GGHG2SoAcEVuzxIlhgKTRznhHCzmTJo+pGvRU8TsMDOWFa8jf
-zj3Mdm8S87Xyr26HBMVE5z25aHPqqZqChlQnP8hAgBZZvocSCPRxHMl97NofXCR4
-aThT40jkHMt7OnXdnN6MedsusCLdv9loGzauGDmsCYUdewLxJk+lTxVksF9KD2+I
-tlL5ay+CZ3G6fEO3DfiqGhyL9GUR3fI5I2sXG5F9Qv2/7I6LH6k7yuUS/XQSyHxR
-gI/F/ZkrWK0BRokeYNZvDwDo5EMr7gTwmlAjImtqb6+lIGGmgWdb26Ehwphdnd2S
-eXqkbnoH4isddvnpla8pcXyuP9i1931u6z16GmdrjraCSQe/td5/m2rmjauyz9fK
-SCPVBg4Oy8qLcA1nik/3r7aRpjGpCPEO/fnB3zsWpXBuu/EVHdyREud8D6FNKCzi
-GtpZuJb6AmVGY98GHUn5NCm3FNy7IQXWMba+1ibnJdU2NrhBLVlKMivxS8qh0Eys
-px+wdbt7y/gyaFwsRJFIcSf5GIKjTyBLxNoJDj5A8S29vY4djggCPSyTOBvMZ4V2
-UYArsApH6QuwOePzEmzPNUdQ+xpTYGUvmdTNLjJGZ6ZJiQvdtMZNibIVY1RBiv+j
-GHuvvUGnhjivfcI5lmlwbfxHIiQfmv7tPtL42+pfFyp17/pPN7E=
-=eOgp
------END PGP SIGNATURE-----
-
---8swxHzdIMIa1mULq1rnWcSbbD4i78uFc8--
+Eugenio Tampieri=
