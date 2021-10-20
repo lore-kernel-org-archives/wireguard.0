@@ -2,72 +2,61 @@ Return-Path: <SRS0=38ps=PI=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A2FAC433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 20 Oct 2021 06:23:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EC467C433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 20 Oct 2021 06:47:36 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 3687D6115A
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 20 Oct 2021 06:23:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 3687D6115A
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	by mail.kernel.org (Postfix) with ESMTPS id 07DC961074
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 20 Oct 2021 06:47:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 07DC961074
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 0f78a5ee;
-	Wed, 20 Oct 2021 06:21:07 +0000 (UTC)
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com
- [2a00:1450:4864:20::32d])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ddbc9861
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b5241bcc;
+	Wed, 20 Oct 2021 06:47:34 +0000 (UTC)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id cbea754c
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Wed, 20 Oct 2021 06:47:33 +0000 (UTC)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id F26EE60F12
+ for <wireguard@lists.zx2c4.com>; Wed, 20 Oct 2021 06:47:30 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="Cdu+eLAl"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1634712449;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=B7pG/ApSMcrIpOKL16l5ItSOpbRJljB470b0SrgLsUc=;
+ b=Cdu+eLAltakmkKEIOKnyiv725GQbd6/KPVfO4qOEue3eTLIbRtH6z0H1nzQ+Tf1NrIMAtU
+ UU3oqKB3f/D5MAk+3ejCAN/wRkvLw+1OUEezRWQKjhq7a6ty5r3yLGXshKtNLKHMQrfKeq
+ O1yWUFedohrseOxS2qomh3FtVCaRe5E=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 9d9f5c23
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 19 Oct 2021 12:18:44 +0000 (UTC)
-Received: by mail-wm1-x32d.google.com with SMTP id
- b189-20020a1c1bc6000000b0030da052dd4fso2838562wmb.3
- for <wireguard@lists.zx2c4.com>; Tue, 19 Oct 2021 05:18:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=content-transfer-encoding:from:mime-version:subject:date:message-id
- :references:cc:in-reply-to:to;
- bh=HD++/zPXcnUmn2kRtnPtFpAfRsxiNm8lqSjbkuFbU4Y=;
- b=MMQZu1KtwMKVSADPmGhPffCNINDgpxK2nQFV51XxlQsoT+O8TqtJFUYglXSatGnEnG
- iW4LSJDkoVDrz1ug7mCqnstkBE0KVDt+pTj/04bgp3QiVHHr+q/QbvdopvQAps8fgqAD
- eUgcL2zF0JnW9JUGyKxOJziLr4OlLWEzfd9mwghVoWZPabP6VJEpQYf2RaYJpqglc9AZ
- wE2n9WBNFC/ksxI/NcaE0Wg5EpUDB3IQ77ZMxMc2p0d0HKtvZPdHvWfdRC00OehH5rtQ
- BH8ziX8cR7ezsNdYtRjKuZg5Lrf+CXL3nsPoEzM7gtNdRmTS1+LoynluSaMrQCn9dZTT
- Thew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:content-transfer-encoding:from:mime-version
- :subject:date:message-id:references:cc:in-reply-to:to;
- bh=HD++/zPXcnUmn2kRtnPtFpAfRsxiNm8lqSjbkuFbU4Y=;
- b=irhMjLBpvfbuuYmYWd/2OBIF2eME2R1T4LacdZdZbJtjS4UHxWA5mZaob7jDMnVm5a
- EANyW1kaQO/Y3VdgJnfSF3xSaFm9LHhxoN8mgIG29297Nb3J/sV+TFitrDHGYzvXH3yU
- eRSYRCMUPn6xLDrLho5JJgT7uRgmrl40YyeduzSF3oPzObFBadPsc99Erdv1AKUmyESR
- q5IYGJlRarV2QXtWutII7++6/C4Y/ubgodPkFp/a2myfrEtIXg2gtd3wqWTxRWPVcJ6C
- WwHpdGR+ws+KUjd/pM+a7CJ6z5q3Bb4cpbtjuhtIJ6gAd38LhtOgRRCKgbN887V+gYY3
- olYA==
-X-Gm-Message-State: AOAM530UiE1BoynRPwiWdY/3IJXtgjoNbgUKg/unhab2TarUv0i7v/Xt
- ZOCOY0YIH4DUZydsf0U7wE8ptPAlojQllw==
-X-Google-Smtp-Source: ABdhPJzjvBNq7L+aSY4r4nLGAbVhbJQMho3FZx4Ijb72iApspigLImJkVEPC1Enu6lvoly+N4YIN0Q==
-X-Received: by 2002:a7b:ce8d:: with SMTP id q13mr5571619wmj.103.1634645923748; 
- Tue, 19 Oct 2021 05:18:43 -0700 (PDT)
-Received: from smtpclient.apple (82-132-228-119.dab.02.net. [82.132.228.119])
- by smtp.gmail.com with ESMTPSA id
- w5sm14887221wra.87.2021.10.19.05.18.43
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 19 Oct 2021 05:18:43 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: CW <optionmaker@gmail.com>
-Mime-Version: 1.0 (1.0)
-Subject: Re: Build wireguard-linux-compat on SLES15 (s390x)
-Date: Tue, 19 Oct 2021 13:18:40 +0100
-Message-Id: <F0E5BD71-BEA5-4DB5-A8F0-C51EF048A2CD@gmail.com>
-References: <YW6ljZ3yvGsv9Njq@falared>
-Cc: wireguard@lists.zx2c4.com
-In-Reply-To: <YW6ljZ3yvGsv9Njq@falared>
-To: faustin@fala.red
-X-Mailer: iPhone Mail (19A348)
-X-Mailman-Approved-At: Wed, 20 Oct 2021 06:21:06 +0000
+ Wed, 20 Oct 2021 06:47:29 +0000 (UTC)
+Received: by mail-yb1-f174.google.com with SMTP id i84so8829236ybc.12
+ for <wireguard@lists.zx2c4.com>; Tue, 19 Oct 2021 23:47:29 -0700 (PDT)
+X-Gm-Message-State: AOAM533996dmFPX2+B00pFOLVYpeIdeR4+k9Xgu1muYSvJE0mEUxRwBh
+ ikyG3iUsjvqlnHUkN6HDj0KaL8IyJQX2Bm2/2W4=
+X-Google-Smtp-Source: ABdhPJwZfoRYFtDSWKWUGPN0WghyxV2Z6E4/A/aCvQlgvxNzhM/InOp9dHIO2AfWeMtRK1l+U3b83M0KBRQ2EvaRpes=
+X-Received: by 2002:a25:d047:: with SMTP id h68mr39926016ybg.416.1634712448713; 
+ Tue, 19 Oct 2021 23:47:28 -0700 (PDT)
+MIME-Version: 1.0
+References: <PUlmptu_AouCBnZfF_b_qSr6iE0vwNlZcQ_cB0u6vFmJ4i5zhrYhKm6LCU5z7-0VU36m-8CsjgP2pkdpymQ9B0oPyZIkvVlb3_4tjYAzN5o=@protonmail.com>
+ <XcnYGCQFb8CjcIVfX4jdbb9vwXO0M2pth9Laor075LAPBtKtgQnb-D-NbmvnhEZL-BJfsTIR8V78CAVgJkcy7iN3WUecL78NssgR53axTEo=@protonmail.com>
+In-Reply-To: <XcnYGCQFb8CjcIVfX4jdbb9vwXO0M2pth9Laor075LAPBtKtgQnb-D-NbmvnhEZL-BJfsTIR8V78CAVgJkcy7iN3WUecL78NssgR53axTEo=@protonmail.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 20 Oct 2021 00:47:18 -0600
+X-Gmail-Original-Message-ID: <CAHmME9qXEj8zeSrv5nww4eavuCpRHoMqF-dm8i9Z-1aR3WwFSw@mail.gmail.com>
+Message-ID: <CAHmME9qXEj8zeSrv5nww4eavuCpRHoMqF-dm8i9Z-1aR3WwFSw@mail.gmail.com>
+Subject: Re: Access violation exception on windows
+To: Mindaugas Veblauskas <mindaugas.veblauskas@protonmail.com>
+Cc: "wireguard@lists.zx2c4.com" <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -82,28 +71,12 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
-If I didn=E2=80=99t remember wrong, wg should be included in kernel with 15s=
-p3.
+Thanks for the reminder.
 
+Fixed here: https://github.com/golang/sys/commit/0ec99a608a1b8e24d6a2554b64f4208e8e5caae7
+With a followup here waiting to be merged:
+https://go-review.googlesource.com/c/sys/+/357250
 
-Sent from my iPhone
+The process now continues until NtTerminateProcess.
 
-
-> On 19 Oct 2021, at 12:05, Faustin Lammler <faustin@fala.red> wrote:
->=20
-> =EF=BB=BFHi!
->=20
-> FYI,
-> I have managed to build wireguard by removing the #define.
-> https://git.zx2c4.com/wireguard-linux-compat/tree/src/compat/compat.h#n859=
-
->=20
-> I am not a C dev, so I am not sure what the implications are but I
-> understand that it's a kind of debugging structure and it's also not
-> defined on CENTOS8 so, I guess it should be OK.
->=20
-> Cheers!
->=20
-> --
-> Faustin
+Jason
