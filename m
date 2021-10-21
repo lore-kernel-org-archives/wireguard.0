@@ -2,63 +2,74 @@ Return-Path: <SRS0=eD45=PN=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70DE2C433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 25 Oct 2021 15:55:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 562C3C433FE
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 25 Oct 2021 15:55:11 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id A2D9860E75
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 25 Oct 2021 15:55:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org A2D9860E75
-Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=idndx.com
+	by mail.kernel.org (Postfix) with ESMTPS id 9CFBA60E75
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 25 Oct 2021 15:55:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 9CFBA60E75
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=suse.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6422d91d;
-	Mon, 25 Oct 2021 15:51:41 +0000 (UTC)
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com
- [2607:f8b0:4864:20::1033])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2f43dd97
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id b6c66045;
+	Mon, 25 Oct 2021 15:52:12 +0000 (UTC)
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 608eb2b7
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 21 Oct 2021 10:08:41 +0000 (UTC)
-Received: by mail-pj1-x1033.google.com with SMTP id
- a15-20020a17090a688f00b001a132a1679bso2761211pjd.0
- for <wireguard@lists.zx2c4.com>; Thu, 21 Oct 2021 03:08:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=idndx.com; s=google20201016;
- h=mime-version:from:date:message-id:subject:to;
- bh=s2ST1ME2C+3mxe9iVq+JmMxTCqQzi7vURBxURudbW7s=;
- b=gEPPKCBUHXrV+ilFfLa+JyAsU97W6KaDlxDYXUGwAY8fUULZUjJC/XD2EvUNR+Gy3/
- 7E+Do1bLCz3bC9Zqt7gHqew/XsvAolgrIq32Am4aaZZcDJIV9K8UaqWGd0U7fC2/Rqf0
- y07eya0hnbfqRZkfXDkzoAS8p/iZk8rwR1iS9PR5/v7AlaHiBD8sTJDE87K1wURvX7NL
- HQhsQX22Lb2hIjCGwvWpYwgxAq9o5I3wAoLELessJRt0sUz1nHbDDOzbaHZfYhI+pUMi
- tiFGuHhVcBFzq3G7S9j7xAUtCaWb9D87Xv8omj2bqT7d5McWvgN3Prl4TALV0gtIeWLQ
- twlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=s2ST1ME2C+3mxe9iVq+JmMxTCqQzi7vURBxURudbW7s=;
- b=1PlbSXamdYvCIagF/CmK2ZPF5w9WbiJQIlNHZvvu4LXw0TUyMxewRLxmkeaNniHwIA
- 60PArsW1I0VCRc+q0JBGhpet0n5Umz7mclMBz08VDx1j9GdT69lsiB6Ad9Qfbqvla7wB
- nI/tcsIh/uxRtb83u80F67vcvEiCOGMnFNOaLC/G3YhWd3j+0ggmPLAVjtbTD4C0qMRs
- 8qgGbp6rSt3Onoc5hxtSOlWImdbZ3E85U0fCYH/vCEhAtg2mzb2uYdBAH9g3K7g773EK
- 8tccKs/jxptlhJXHlBOcGqI5VzcckNLhIoB3/OHrDswrMk6DScnA64qznoIWKT/fAUnk
- WV6w==
-X-Gm-Message-State: AOAM531eOFcN549vqdt0/ONL2mkNaArEi+Flot36Xs9z6riV7hWaeD02
- FHkVxKX2fTmz81+dPOkoQ1cKrjkCdCftqNt0dJFOEKsAOEPa
-X-Google-Smtp-Source: ABdhPJxr+/LvSDm3s5QKAriqtSnbTL4jPWRaDwqUiCiHo/rwp/3ui+njaqVMHvpxXL+GqBiGviPqM/hSGEzIl/OO0h8=
-X-Received: by 2002:a17:90b:1649:: with SMTP id
- il9mr5453770pjb.167.1634810919530; 
- Thu, 21 Oct 2021 03:08:39 -0700 (PDT)
+ Thu, 21 Oct 2021 12:37:13 +0000 (UTC)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 868AE1FD4F;
+ Thu, 21 Oct 2021 12:37:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1634819833; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Np8kYZ20rw6yGLe2w7ZwsAh4OKPraEEOMIxOlg87KPE=;
+ b=ot1WKH3szUP+Zwe2ssmXm8tXDPsq/ZbihdJxOdU6OvcG2VYrz4k2JEQId9PPmwPJ7kNniv
+ f7KcO9NpVc+ls9LOqhFISgTJDTvQbeodecN4QMtJT/psFNTRb4kbzGrhhKbnWtJbDtha9v
+ e2WGQUT9M7XND31cQ6KbW27oWi79Ilk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1634819833;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Np8kYZ20rw6yGLe2w7ZwsAh4OKPraEEOMIxOlg87KPE=;
+ b=kGN8w1egTyoZBU+Hmx2xGUm3JC62MjrNxAo9yoWdLvj5g8xUChYIpDnPZxDxDae6S/qvsY
+ Owg0PW01wh0vNDDA==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+ (No client certificate requested)
+ by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 75B2413AA1;
+ Thu, 21 Oct 2021 12:37:13 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+ by imap2.suse-dmz.suse.de with ESMTPSA id WhqTHPlecWEKCAAAMHmgww
+ (envelope-from <dwagner@suse.de>); Thu, 21 Oct 2021 12:37:13 +0000
+Date: Thu, 21 Oct 2021 14:37:13 +0200
+From: Daniel Wagner <dwagner@suse.de>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: daniel.wagner@suse.com, WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ faustin@fala.red
+Subject: Re: Build wireguard-linux-compat on SLES15 (s390x)
+Message-ID: <20211021123713.a5l6uwfbkx2wxx7j@carbon.lan>
+References: <YWFuczOf1dM3B4Pt@falared> <YW6ljZ3yvGsv9Njq@falared>
+ <CAHmME9off=sXrL0hjkGvOgJUtJx6oCvhdAycHT=bTQfUtQjO=w@mail.gmail.com>
+ <YW/awIN8jqUF0DPk@falared>
+ <CAHmME9oL7UNWKbX3ZF-U_O+a9Kwn9gwsexzDQo9gngjhEdgc8Q@mail.gmail.com>
 MIME-Version: 1.0
-From: Datong Sun <dndx@idndx.com>
-Date: Thu, 21 Oct 2021 18:08:22 +0800
-Message-ID: <CAC=S+V8EsFWv0Y6TfzgiqNok04B87hcTdzk_WZ1mqexMQpBR2w@mail.gmail.com>
-Subject: [TOOLS-ANN] Phantun - Run WireGuard over obfuscated TCP connections
- without the penalty of UDP over TCP (alternative to udp2raw)
-To: wireguard@lists.zx2c4.com
-Content-Type: text/plain; charset="UTF-8"
-X-Mailman-Approved-At: Mon, 25 Oct 2021 15:51:40 +0000
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAHmME9oL7UNWKbX3ZF-U_O+a9Kwn9gwsexzDQo9gngjhEdgc8Q@mail.gmail.com>
+X-Mailman-Approved-At: Mon, 25 Oct 2021 15:52:11 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -73,47 +84,79 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi everyone,
+Hi,
 
-Apologize in advance if you have already saw my posting in the
-WireGuard subreddit. I am posting here again in a hope more people
-would find Phantun to be useful for their WireGuard setup and attract
-more contributors.
+On Wed, Oct 20, 2021 at 11:56:49AM -0600, Jason A. Donenfeld wrote:
+> Do you think you could chime in here regarding the apparent absence of
+> wireguard on s390x? The thread began as a discussion of building it
+> yourself there, but I'm wondering why it isn't already there, seeing
+> as it's on the other archs.
 
-I would like to share a tool that I developed for converting UDP based
-connections to fake TCP connections in case UDP is unavailable or
-throttled. I have been running the tool with multiple WireGuard setup
-for a while and it has been very stable.
+Sure, let me try to figure out what's happening. I usually try to stay
+away from them the distro making business, so it's a bit of a closed
+book for me.
 
-Note that I primarily developed Phantun to work with WireGuard in a
-UDP restricted environment, but it will work with any other UDP based
-protocol as well.
+> On Wed, Oct 20, 2021 at 3:01 AM Faustin Lammler <faustin@fala.red> wrote:
+> >
+> > Hi Jason!
+> >
+> > "Jason A. Donenfeld" <Jason@zx2c4.com>,
+> > 19/10/2021 – 17:51:01 (-0600):
+> >
+> > > Isn't WireGuard already in the SLES kernel?
+> >
+> > My understanding is that it should, that's why I was surprised to have
+> > to build it. But apparently not.
+> >
+> > This may be related to a specific kernel from IBM LinuxONE cloud
+> > infrastructure?
+> >
+> > | $ uname -r
+> > | 5.3.18-24.86-default
 
-The project is called Phantun. Source code, binary releases and
-detailed README are available at: https://github.com/dndx/phantun
+This is SLE15-SP2 and the corresponding branch has the patches and the
+s390x config does have CONFIG_WIREGUARD=m. So this looks good.
 
-In comparison to udp2raw, Phantun was designed to solve some of the
-performance issues that I encountered while using udp2raw. In
-particular, Phantun is able to utilize multiple CPU cores
-simultaneously and have a more predictable MTU overhead, while having
-a much leaner codebase and focus only on protocol obfuscation.
+  https://github.com/openSUSE/kernel-source/tree/SLE15-SP2/patches.suse
 
-Note that this is very different from UDP in TCP which could cause
-significant performance penalty because of TCP retransmission and
-congestion controls. Phantun simply replaces the UDP header from
-WireGuard to TCP header with some sequence number mangling and ACKing
-so packets will be regarded by NAT devices and L4 firewalls as valid
-packets of a TCP stream. Therefore, all of the desirable properties of
-UDP such as or of order delivery are fully preserved. It also means
-this protocol will only work between two Phantun instances and will
-not work if the other end is a real TCP stack (e.g. when going through
-L7 or SOCKS5 proxies).
+grep for bsc#1169021 to see the list.
 
-Please share your feedback and feel free to contribute!
+> > But again, my knowledge of SLES is very limited (and s390x architecture
+> > even more) so I don't have any idea why this was needed.
+> >
+> > I'll be happy to help you if you need me to do some tests on the
+> > machine.
 
-Best regards,
-Datong
+I see the module is marked as not supported in supported.conf. After
+looking at our spec file, I think the modules is packaged into the
+kernel-extra rpm. At it might be that you need to enable the not
+supported modules explicitly:
 
--- 
-Datong Sun
-dndx@idndx.com
+from https://github.com/openSUSE/kernel-source/blob/master/rpm/kernel-binary.spec.in
+
+%if 0%{?sle_version} >= 150000
+    # By default, loading unsupported modules is disabled on SLE through
+    # /etc/modprobe.d/10-unsupported-modules.conf from the suse-module-tools
+    # package.
+    # modules in kernel-$flavor-extra don't have the supported flag set,
+    # yet loading them should be possible if the package is installed.
+    # CAUTION PACKAGERS: The file content below must not change between
+    # kernel versions, otherwise file conflicts might arise with
+    # multiversion(kernel).
+
+    mkdir -p %buildroot/etc/modprobe.d
+    cat >%buildroot/etc/modprobe.d/20-kernel-%{build_flavor}-extra.conf <<EOF
+# This file overrides the default from 10-unsupported-modules.conf.
+# This is necessary to load kernel modules from the
+# kernel-%{build_flavor}-extra package.
+#
+# WARNING: loading unsupported modules may compromise SLE support.
+# Please read the comments in 10-unsupported-modules.conf.
+allow_unsupported_modules 1
+EOF
+    echo "%%dir /etc/modprobe.d" >> %my_builddir/kernel-extra.files
+    echo '%%config(noreplace) /etc/modprobe.d/20-kernel-%{build_flavor}-extra.conf' >> %my_builddir/kernel-extra.files
+%endif
+
+HTH,
+Daniel
