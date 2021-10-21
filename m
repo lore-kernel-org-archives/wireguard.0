@@ -2,48 +2,51 @@ Return-Path: <SRS0=KwQm=PJ=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F1B06C433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 21 Oct 2021 08:10:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 115B4C433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 21 Oct 2021 08:52:42 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id A8524611CB
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 21 Oct 2021 08:10:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org A8524611CB
-Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=smar.fi
+	by mail.kernel.org (Postfix) with ESMTPS id 259E2610C8
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 21 Oct 2021 08:52:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 259E2610C8
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=fala.red
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d0eac8e6;
-	Thu, 21 Oct 2021 08:07:51 +0000 (UTC)
-Received: from airi.smar.fi (airi.smar.fi [95.216.48.100])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 09481128
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 06f2f501;
+	Thu, 21 Oct 2021 08:52:39 +0000 (UTC)
+Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net
+ [217.70.183.197])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id d6293af0
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Thu, 21 Oct 2021 08:07:50 +0000 (UTC)
-Received: from marie.localnet (marie.smar.fi [IPv6:2a01:4f9:2a:64d:2000::30])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (Client did not present a certificate)
- by airi.smar.fi (Postfix) with ESMTPSA id A483BDBF05;
- Thu, 21 Oct 2021 11:07:48 +0300 (EEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=smar.fi; s=mail;
- t=1634803668; bh=LU+Jv0EuaobabhFd8CbVqAM1a5z9xqP1IP7ueJWyraQ=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=WvLQEju5mvZ2NCRcgFlrHS1JV9yNknxgY5Dbbdueo57aLAEPa8hohAxG3QYi5u+de
- 2/3R9BRDqiP3FCb146aj8w0YiMDVMfrDxe+NVjuti03Wo+xttoPHVwU3PytVQtLQDh
- D6w5gdKSdngBB5QtnjQKghrT3tBCRodfIusRNnc4=
-From: Samu Voutilainen <wireguard@smar.fi>
+ Thu, 21 Oct 2021 08:52:38 +0000 (UTC)
+Received: (Authenticated sender: faustin@fala.red)
+ by relay5-d.mail.gandi.net (Postfix) with ESMTPSA id A34AE1C0002
+ for <wireguard@lists.zx2c4.com>; Thu, 21 Oct 2021 08:52:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fala.red; s=gm1;
+ t=1634806357; h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=wjvV1qKwHnwFdgwtoR37zbQyoT3r7HuNgInvBfk0HgY=;
+ b=j6FkyjslThUoBkT0LWTvveSGTF30lWJ+8bVqztYsxjZ3JlJ8UR17jC3n7hbmMdqQ6eUx7D
+ npv1/9Vnn1fsk0WqJo93m2OTw6tYseE2ro+7gqY5fRMUDfBvn+kraWxsGmzC2eTpONu5ZL
+ NKfKTo3aXEw3SH/JPAtweuyV4dSAyCep7Sk6FBZcJkt6m3Q/MqRdZOL5oGawqT6ICSoGo0
+ T5zs3XbNdrT6QFf40d/Ub27b1qx1qrPYCh/eBWfNqpM01rCGc+1sicrvLVv0zo/0QK10Vn
+ XoEduJ228ysJZrNT6YqTqf2SN9bvBHbOgv8jESAIomBiuw5BPYMNPQMiQ3bCDA==
+Date: Thu, 21 Oct 2021 10:52:36 +0200
+From: Faustin Lammler <faustin@fala.red>
 To: WireGuard mailing list <wireguard@lists.zx2c4.com>
-Cc: faustin@fala.red
 Subject: Re: Build wireguard-linux-compat on SLES15 (s390x)
-Date: Thu, 21 Oct 2021 11:07:44 +0300
-Message-ID: <4688156.31r3eYUQgx@marie>
-In-Reply-To: <YXEaXIkYfcSPO+tR@falared>
+Message-ID: <YXEqVJkZ3rJiWHZU@falared>
 References: <YWFuczOf1dM3B4Pt@falared> <2505087.Lt9SDvczpP@marie>
- <YXEaXIkYfcSPO+tR@falared>
+ <YXEaXIkYfcSPO+tR@falared> <4688156.31r3eYUQgx@marie>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="nextPart4351787.LvFx2qVVIh";
- micalg="pgp-sha256"; protocol="application/pgp-signature"
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="fSsghWwp3+GfyrjR"
+Content-Disposition: inline
+In-Reply-To: <4688156.31r3eYUQgx@marie>
+User-Agent: Mutt/2.1.3 (987dde4c) (2021-09-10)
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -55,58 +58,60 @@ List-Post: <mailto:wireguard@lists.zx2c4.com>
 List-Help: <mailto:wireguard-request@lists.zx2c4.com?subject=help>
 List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
  <mailto:wireguard-request@lists.zx2c4.com?subject=subscribe>
+Reply-To: faustin@fala.red
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
---nextPart4351787.LvFx2qVVIh
+
+--fSsghWwp3+GfyrjR
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="UTF-8"
 
-=46austin Lammler kirjoitti torstaina 21. lokakuuta 2021 10.44.28 EEST:
-> Samu Voutilainen <wireguard@smar.fi>,
+Hi Samu!
+
+Samu Voutilainen <wireguard@smar.fi>,
+21/10/2021 =E2=80=93 11:07:44 (+0300):
+
+> kernel-default-base is kind of minimal version of default kernel, usable =
+in=20
+> certain virtualization setups, for example.=20
 >=20
-> 20/10/2021 =E2=80=93 19:25:49 (+0300):
-> > At least on x86_64 SLE, the module is in kernel-*-extra package, for
-> > example in kernel-default-extra.
+> Actually it looks like in SLE-15-SP3 wireguard.ko is in kernel-default ra=
+ther=20
+> in -extra. That was case in SP2.
 >=20
-> Zypper does show kernel-default-extra but:
-> | kernel-default-base | The Standard Kernel - base modules | package
->=20
-> That is not installed, maybe this is where the wireguard module is?
+> $ rpm -ql kernel-default | ag wireguard.ko
+> /lib/modules/5.3.18-59.27-default/kernel/drivers/net/wireguard/wireguard.=
+ko.xz
+Ok, thanks you.
 
-kernel-default-base is kind of minimal version of default kernel, usable in=
-=20
-certain virtualization setups, for example.=20
+> If the module is not present, maybe it is not compiled for s390x. Maybe S=
+USE=E2=80=99s=20
+> support could enlighten why such choice has been made?
+I believe that Jason already asked Daniel to check for it.
 
-Actually it looks like in SLE-15-SP3 wireguard.ko is in kernel-default rath=
-er=20
-in -extra. That was case in SP2.
+--=20
+Faustin
 
-$ rpm -ql kernel-default | ag wireguard.ko
-/lib/modules/5.3.18-59.27-default/kernel/drivers/net/wireguard/wireguard.ko=
-=2Exz
-
-If the module is not present, maybe it is not compiled for s390x. Maybe SUS=
-E=E2=80=99s=20
-support could enlighten why such choice has been made?
---nextPart4351787.LvFx2qVVIh
+--fSsghWwp3+GfyrjR
 Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part.
-Content-Transfer-Encoding: 7Bit
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCAAdFiEEzQiQ+Sk/d1O26r4vtNtW2rUdxQ0FAmFxH9AACgkQtNtW2rUd
-xQ2RAQgAo0YrEIh4QVywNIL8fL02u9dEq6NyQzerOkdXGa0iaIV5uMs2jLRYCCt2
-H8HbgNvn1sHa4kPWsovkm/O6CIL0AlIj/xnR1VpX9Y7Jk4kw7APGTHiAkO5gP/qS
-WQeMcnAcBVayFPxbcF3i+dq+mIwtcgmTqERR5LX/QklPUX7OuLGr+reArNYgcUfb
-wtl9Mu3vMLjgb2Fxc83LoJ+z1mg1oR+4otYtqcNSu/ufZEWk2+AKVta0t69PfH0f
-+zjW1OGJ+Sn1k34QODuTZgvszYCkNNlBu13gmr4/kvisTKZ5XzbVc9GCjJZi5yL6
-M3udQbmq95KGi0C+v9aMKg0LE0BalA==
-=f5Tg
+iQIzBAEBCAAdFiEE9lK80RqoiXXwEEilOQovJ4MqXHkFAmFxKlQACgkQOQovJ4Mq
+XHlOkQ/5AfwMc8sU6Cap99uvEMerK8/QSGJwtL54zaMMKD1iF9pV9P/qgAbGvtvx
+56GKn3kO9Xo3QJ/WEV8pbZy9KgagwPCumkFhX2TtHPjqfWg5mjYEwbX20c/fGgks
+16mYbe5pwFDJ8tWSYziGZDl/z5cID2E8/rhN7HvH+hrvNqwPJ40NGv/xDHrWYW18
+tm107RNLFjcu+2sV577arV0MZsiiYdYZ8XVOV202rmBvR4x5a35h2tkkH/fhQ/0X
+QT8oDvAi8KV+YnQsGdwkI+TxCgZVtfMsIfxgFAuI3b6Kk7UaQdUi4huk4FPDJR+0
+4wnvE3fw5naNYQAcxKE7SGodle8BLbIMcMpD1L4OzS2yOJVCVZbdB8gD+FeBLO78
+KJElw3TSZwbAYj14gTfjRBclKQvMneYhK/l7P3TjfYfwLY7x7oeTzMS6jFoBXxlE
+ai06SZNNtC4LN6viM74cFpss1eHY38+QiUGva1g07uYuhBgKcDHgLADRhuxHVQRA
+eLbG43Zpd/gnaCP9/DUrXjw+PqqbR+OK69o3gsEbzEGYq4fl40XSW/B4kk+7Bi4S
+5T9pbO6TCSkopfsi5A7J44FxmHqkrxGqp/5tdjzNzieNznAbXCoKQe/0TIUpVbyG
+7fc/K8aD0LcH8wtcvLBibDR1vnNAiDCn1rQdUHpOehhzlvrMvoE=
+=NPjC
 -----END PGP SIGNATURE-----
 
---nextPart4351787.LvFx2qVVIh--
-
-
-
+--fSsghWwp3+GfyrjR--
