@@ -1,61 +1,60 @@
-Return-Path: <SRS0=eD45=PN=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=ix1r=PO=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 38CECC433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 25 Oct 2021 16:01:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 369FAC433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 26 Oct 2021 09:05:46 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 845C260EB1
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 25 Oct 2021 16:01:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 845C260EB1
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id 1CEFF60D07
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 26 Oct 2021 09:05:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 1CEFF60D07
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id a771583b;
-	Mon, 25 Oct 2021 15:59:42 +0000 (UTC)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id f6e51ccb
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Mon, 25 Oct 2021 15:59:40 +0000 (UTC)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id E780060E75
- for <wireguard@lists.zx2c4.com>; Mon, 25 Oct 2021 15:59:37 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="fWLz8ZZM"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1635177575;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=SyY1vD88xtRkFqBwSytgWicnVi8PbU5iNfd7Z2pntfU=;
- b=fWLz8ZZMr1uwGQUwT3Aj9OMATriSaFX3BbS/zuDYyUEBhSoXHPECK+oDIZWL35TbabkTUt
- hceaaB4m8uYJD8/XJAt7iuxJY43+ItFbiMtI7kQY3Et22C+DbXjbrAphzzeq0aa8IMUHGJ
- EX8OVGfj3iKRv3i9vSe/yCAHHUMMO9M=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 131a92a1
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 17a1a818;
+	Tue, 26 Oct 2021 09:05:43 +0000 (UTC)
+Received: from mail-ua1-x92d.google.com (mail-ua1-x92d.google.com
+ [2607:f8b0:4864:20::92d])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 1e100aef
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 25 Oct 2021 15:59:35 +0000 (UTC)
-Received: by mail-yb1-f180.google.com with SMTP id m63so27165919ybf.7
- for <wireguard@lists.zx2c4.com>; Mon, 25 Oct 2021 08:59:35 -0700 (PDT)
-X-Gm-Message-State: AOAM530Vj+c67HYV89f7kzwRRANRx5wI6D0LOebjdlQCGSxCzvZL1uB7
- qEq8aA0XwEOv8vmBBFKU5D9n16zQqlQjrAUXwb4=
-X-Google-Smtp-Source: ABdhPJyV9H5X6IqVrDxQocsMMuaUZmyD8UbjmxhpZrS9amA8WF0M4/3GdlxKBf78bmAvdvwo1kbpVLzyZMLdVT4wJ7Y=
-X-Received: by 2002:a25:e790:: with SMTP id e138mr19359601ybh.62.1635177573896; 
- Mon, 25 Oct 2021 08:59:33 -0700 (PDT)
+ Mon, 25 Oct 2021 17:17:21 +0000 (UTC)
+Received: by mail-ua1-x92d.google.com with SMTP id k28so19361678uaa.10
+ for <wireguard@lists.zx2c4.com>; Mon, 25 Oct 2021 10:17:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=qFQ/KL37W7zQJf6B9uuwI1gF8Ak1UEaG/+KYAIndAzo=;
+ b=oA96+S8+GyjamjxUMI1NucQUYyoqNAAS7LXZbF0dugwE/EY9596Bggo1aWIwbquauO
+ iSqxZxIhOnr8g4d8BogyYTVxC3lZmPT9S4qO0cHIIfNS8XTsRCQk9tNcecXRiqRmUzqY
+ D7dhX7M0a+ohyxoMDV3jB20v2V4xsMVNIampTPC3qelgMr4hns0Jm+4sMa5YV6DD6auc
+ nTnTdliHKUZ0JTlRNP81B83bS8bRoHpIYQKovnl7LefwkeI24BEwGToszeS8jvdhb+19
+ 8tqE5p5y5WNhGri8On6FRujLgJznNQ0QbGwweH2OmcFp1fptvTlUbgel29fd6+XdSobX
+ CzHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=qFQ/KL37W7zQJf6B9uuwI1gF8Ak1UEaG/+KYAIndAzo=;
+ b=eh8LqZ47ZHU1wFmQmkULyZ+qz6m663jq0D3Kkj/M0yIkz4/J0P8EHGcVKvMs/7Rj9t
+ u0wJFOTgJJDjbaKorMDYCNuHvYlc3al1vjuD3o7TmodS0/C1lz26FB9+aJTF6vEN1/Db
+ pnq3YRH102A4kzFIJuIvFtAprchZo9zVSJLIGKvLtB7e7AoILd0UbKBrEFYgVSOHNgEU
+ DLzJ6RQwC0IiH7pmwsu4vdAJ+lT7/4+OsJWMzLjzcUoMDQjY0krgqMy8cK4EjXXzmtCe
+ uI3V/iI+37pZveV1am5TpwCgw+3wpzdTMI3EYcvcyRiEqTud+FBDgexUBQtu9E8klQVo
+ 8nlA==
+X-Gm-Message-State: AOAM5322iXruCN6Hc1vnHZaYKoaK8nMjTclzrDGy80HrvE24gEG6zTE9
+ UtI3gml2DiNrbwZpjOOIHeUVYD9ITdtb0kpC+A/HGAjLivo=
+X-Google-Smtp-Source: ABdhPJwMESjQZ7qKK/52e+EDo2C7ZmvquzTRv2GgfP0bwfdag8/1fiy1wUmmUzWL5YTUXmAwt17X4ZFXQFOTQgpbX8g=
+X-Received: by 2002:a9f:3e47:: with SMTP id c7mr16472237uaj.1.1635182239504;
+ Mon, 25 Oct 2021 10:17:19 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAEAeJWyPEhWgPQXEbJ=26G2FvK0xzyvmQ4reakdFpCt8wgpGPg@mail.gmail.com>
-In-Reply-To: <CAEAeJWyPEhWgPQXEbJ=26G2FvK0xzyvmQ4reakdFpCt8wgpGPg@mail.gmail.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Mon, 25 Oct 2021 17:59:23 +0200
-X-Gmail-Original-Message-ID: <CAHmME9qt5xSXKKWgpFZ=1kGBDrK-4MUHT4931b9bgeTVy-Rsog@mail.gmail.com>
-Message-ID: <CAHmME9qt5xSXKKWgpFZ=1kGBDrK-4MUHT4931b9bgeTVy-Rsog@mail.gmail.com>
-Subject: Re: wireguard-go no longer builds with go1.16 ?
-To: Adam Bliss <abliss@gmail.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+From: Ryan Roosa <ryanroosa@gmail.com>
+Date: Mon, 25 Oct 2021 13:17:09 -0400
+Message-ID: <CABOEyuLiu96_KxEH5sdGLaE5-s9e8F_c0a1PKHSnFcMKp5YHow@mail.gmail.com>
+Subject: wireguard-freebsd handshaking issue upon underlying WAN
+To: wireguard@lists.zx2c4.com
 Content-Type: text/plain; charset="UTF-8"
+X-Mailman-Approved-At: Tue, 26 Oct 2021 09:05:42 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -70,6 +69,51 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Thanks for the report:
+Hello,
+First off, I want to say thank you for the FreeBSD kernel module work
+as it is greatly appreciated by myself and many others running *sense
+firewalls :)
 
-https://git.zx2c4.com/wireguard-go/commit/?id=828a885a7140e1fe23a684e4a8126cfd978ca0c8
+Generally wireguard-freebsd (wireguard-kmod 0.0.20210606_1) is running
+quite well in my experience however, there is one issue which I have
+been able to reproduce consistently: when the underlying WAN
+connection that a tunnel is using is disrupted for the span of time
+amounting to two missed handshake attempts (~4-5 minutes giving the ~2
+minute average of handshake attempts), the tunnel will never handshake
+again upon subsequent WAN restoration. This is the case even if one
+resets the tunnel with 'wg-quick down ; wg-quick up' or restarts the
+underlying OS (tried with both the latest stable versions of pfSense
+and OPNSense community). For reference I am using a keep alive value
+of 30 seconds in this scenario.
+
+The only thing I've been able to do to get an existing tunnel
+configuration handshaking with a peer endpoint again after its
+Internet connection has been disrupted (outside of a complete removal
+and rebuild) is to arbitrarily change the configured tunnel's
+listening port (ex. 51820 to 51821 etc.). Upon saving and application
+of the port change, the tunnel then handshakes with the peer endpoint
+again immediately.
+
+Given the symptom, it seems there may be some issue surrounding tunnel
+handshaking resiliency when the underlying WAN drops out unexpectedly
+for an extended period. If there is any way to look into this to
+improve upon it so that after a 5+ minute internet outage a tunnel
+could resume handshaking on its own without manual intervention, this
+would be greatly appreciated.
+
+I've got a 'bandaid' script running every 5 minutes currently which
+checks the peer's handshake age and then changes the tunnel listen
+port arbitrarily to restore connectivity then changes it back after 5
+minutes of successful handshaking but obviously this is less than
+ideal. As an additional data point I found if I switched the port and
+tried to switch it back before another 5 minutes had passed, it would
+stop handshaking again so there seems to be something special around
+the 5 minute number regarding handshakes. Not sure if this is helpful
+or not but thought I would include it.
+
+Thank you in advance for looking into this and if there is any
+additional information I can provide which may be of assistance I
+would be happy to provide it.
+
+Cheers,
+Ryan Roosa
