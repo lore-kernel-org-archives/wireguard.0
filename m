@@ -1,70 +1,65 @@
-Return-Path: <SRS0=ix1r=PO=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=fXWi=PP=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DF39C433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 26 Oct 2021 10:06:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4577CC433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 27 Oct 2021 23:45:49 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 9260B61039
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 26 Oct 2021 10:06:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 9260B61039
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id 2752261073
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 27 Oct 2021 23:45:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 2752261073
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 07a4cefe;
-	Tue, 26 Oct 2021 10:06:13 +0000 (UTC)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 0d513942
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Tue, 26 Oct 2021 10:06:12 +0000 (UTC)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 0A43360F9D
- for <wireguard@lists.zx2c4.com>; Tue, 26 Oct 2021 10:06:09 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="FXafdz5N"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1635242768;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=pUvZnwjptTGqHp/zC0M3atDClZlvKRM3I6WHczyv2vw=;
- b=FXafdz5NBTXe0B2wqX2vYPbtoScYEriD7KNpqoxJeKntZWHL/ldyTGD2bILqJQEd/DPNP1
- WaNyOoa0mWj9IJSfS/a9WrfMUsTU3Vyt0Pz7ajOkW+fXL69UUXYOtKArQzTa50le7mRAgf
- eh6rNyVO0UAvAoVR7u1oHlebovE5Uak=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id de394915
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6e24a35f;
+	Wed, 27 Oct 2021 23:45:46 +0000 (UTC)
+Received: from mail-ua1-x930.google.com (mail-ua1-x930.google.com
+ [2607:f8b0:4864:20::930])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id bae31d3a
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 26 Oct 2021 10:06:08 +0000 (UTC)
-Received: by mail-yb1-f180.google.com with SMTP id y80so15513949ybe.12
- for <wireguard@lists.zx2c4.com>; Tue, 26 Oct 2021 03:06:08 -0700 (PDT)
-X-Gm-Message-State: AOAM532pMSgTMvLFXdZGWgP3yO9QieIBAd6E66pBcGhxAQoXZS9Th/OL
- NEZz9dJjO2GtwySuA6ZO1fBZ4JJwCtrMu/5hyTA=
-X-Google-Smtp-Source: ABdhPJziCh51XFGm2HLwPDvzcesN+KCxtlkAgx1M3tngiaY8vOqb69mTBlqrlwMURO1ALBhG/O1y09tnfGQ2g72/vOc=
-X-Received: by 2002:a25:3cd:: with SMTP id 196mr23438956ybd.95.1635242768205; 
- Tue, 26 Oct 2021 03:06:08 -0700 (PDT)
+ Wed, 27 Oct 2021 23:45:45 +0000 (UTC)
+Received: by mail-ua1-x930.google.com with SMTP id u9so8141644uac.8
+ for <wireguard@lists.zx2c4.com>; Wed, 27 Oct 2021 16:45:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=KMG3iaaFaZmGFkEt2QBUdqpTxjGPeoaytDpkwL1zHkg=;
+ b=o6W0Hcrj0HhO/aq/Ny6Tc6o3Py3QNlEzdOjc+gcng14nE6GIDp3iuMCmg03ZgMFOrd
+ +8lI9pzWI1yJZsnPEJ2zgUGNkT8uKOYVOBJS4i3kUd9oEU86Y9zAFyfUadNijmYx2hE3
+ B9lDk+6gHK8hQKXDtgTCYuhsgnNR8IwQakW/Zdn1rIS6kq7FW+zgPsYsOP7NPJ2Q6f17
+ gYghNZ4OkCkvYWsHBNLZrBeusxvh5O+5DByAL9F143hTv+6oUQgtXbIaPJt+1D0XocW9
+ Eh0k/xm78RNz3X9k+bjTXIAJTi3sEfBcUWhrmJwQywKNhEs8KZcxWelw2NqTe2LlIpN/
+ v7pA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=KMG3iaaFaZmGFkEt2QBUdqpTxjGPeoaytDpkwL1zHkg=;
+ b=QB0PIoq8H2nxq5869uV2fTDSpZfQtYN4E1HR+JQ8sC78siE6oBelPERgBrRyFf1usK
+ Rzc6qYNuYdKDB0BanaLh4p1YJCNtihIG0Atr/bmug2WTfBqZjvHv1JpxXDrdEqkL5zKK
+ rQUqNhV/1a04e1MEIgVss+eP0TCaqh7szGhMksqXaBPBniZX5KMJc7saKHZA0zBbdRBp
+ I3+4xXQaRaViDq418ckPMVE8+T2gNNmYejx7TSK9PsYo2zGxwlfW0n2flPoIjGHPteJc
+ 4AIoDpEe7y2WtQT/syEU19ylBUc270DzVu2zOPZRKXILD3hse4/ga3F6z6UDl82wCVaQ
+ kstw==
+X-Gm-Message-State: AOAM5312agADhp9w+TC6Veb59ipgGpdNi8ZVvRcmlQh6SgUpVKN9hdpH
+ VQB9sMLl4mqjMLmxs8F323UFOMBrtCx6qTMp0HE=
+X-Google-Smtp-Source: ABdhPJx13NwepQZA0i9Kcbh8+duV+9yal7hT2hE00eThnrVGo3obb16yx1qUy3NhMO47Fl0vNjTV0qmb6xdfgGRWlfc=
+X-Received: by 2002:a05:6102:3a72:: with SMTP id
+ bf18mr796774vsb.22.1635378343728; 
+ Wed, 27 Oct 2021 16:45:43 -0700 (PDT)
 MIME-Version: 1.0
-References: <SA1PR05MB79668D58D886BB8D36F558FE99B29@SA1PR05MB7966.namprd05.prod.outlook.com>
- <CAHmME9pu=syh5zkig=e1KFQKMvCYfu6e+BhKENdwZARCrpss7Q@mail.gmail.com>
- <PH0PR05MB7962AD22BE333E844C0A79B799B69@PH0PR05MB7962.namprd05.prod.outlook.com>
- <CAHmME9pgbxyAxgBAfgLMVquzmPC9fiBzjWhQ5zJV+3bR2aR9dQ@mail.gmail.com>
- <PH0PR05MB79623EC9C12B4AE732B04E9299B79@PH0PR05MB7962.namprd05.prod.outlook.com>
- <CAHmME9q3j=2HG-4v5tpHRM9DCKpw+5iSMyzu30jAUHS1r=eDHw@mail.gmail.com>
- <PH0PR05MB79629688EB84BF07A2AEF54F99B89@PH0PR05MB7962.namprd05.prod.outlook.com>
- <CAHmME9rMPgJ3E82nLoXyFYDT7DyjkLsdV3ange9sd_Qm+1-BNw@mail.gmail.com>
- <PH0PR05MB79620040C1298C80677C4BF999B89@PH0PR05MB7962.namprd05.prod.outlook.com>
- <CAHmME9q9VB7eEsZCFUqo8XG7qj1pe2RwgLezJEHueF4_AjmA4A@mail.gmail.com>
- <PH0PR05MB7962AD9044A813DE82AE796A99B99@PH0PR05MB7962.namprd05.prod.outlook.com>
-In-Reply-To: <PH0PR05MB7962AD9044A813DE82AE796A99B99@PH0PR05MB7962.namprd05.prod.outlook.com>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 26 Oct 2021 12:05:57 +0200
-X-Gmail-Original-Message-ID: <CAHmME9qU7MMZd9RbmemvveTs9SDs48wCOUUp8AXwrvk29c-pMg@mail.gmail.com>
-Message-ID: <CAHmME9qU7MMZd9RbmemvveTs9SDs48wCOUUp8AXwrvk29c-pMg@mail.gmail.com>
-Subject: Re: Windows Log Output to Event Viewer or Text File
-To: Frank Wayne <frank.wayne@northwestern.edu>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+References: <CABOEyuLiu96_KxEH5sdGLaE5-s9e8F_c0a1PKHSnFcMKp5YHow@mail.gmail.com>
+ <CAHmME9oPi=LvdcZC-FA+SvyxEmcRULtNB8hAQZoCAX=kQycTXA@mail.gmail.com>
+In-Reply-To: <CAHmME9oPi=LvdcZC-FA+SvyxEmcRULtNB8hAQZoCAX=kQycTXA@mail.gmail.com>
+From: Ryan Roosa <ryanroosa@gmail.com>
+Date: Wed, 27 Oct 2021 19:45:33 -0400
+Message-ID: <CABOEyuJidG_u8SFGnhV6aw5y7PHVhaW_diDrpdMMHfOE4fHRWA@mail.gmail.com>
+Subject: Re: wireguard-freebsd handshaking issue upon underlying WAN
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ Kyle Evans <kevans@freebsd.org>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -80,7 +75,24 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-`wireguard /dumplog /tail | select` should now work in 0.5.1. Let me
-know how that goes with your log ingestor.
+Hi Jason,
+Thank you very much for this! I received word from the OPNSense team
+that the referenced snapshot should be made available in OPNSense
+21.7.5. I will test and provide feedback just as soon as I can get on
+the aforementioned OPNSense release which includes the fix.
 
-Jason
+Cheers,
+-Ryan
+
+On Tue, Oct 26, 2021 at 5:29 AM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+>
+> Hi Ryan,
+>
+> Thanks for the report. Kyle saw your reddit post earlier and tracked
+> this down, I think/hope, to a bug in the state machine cranking. I
+> committed the fix here -- https://w-g.pw/l/yQTw -- which will be part
+> of the next snapshot. Hopefully that will fix the issue, but if it
+> doesn't, please do update this thread so we can keep searching.
+>
+> Regards,
+> Jason
