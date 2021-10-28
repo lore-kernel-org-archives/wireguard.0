@@ -2,62 +2,47 @@ Return-Path: <SRS0=4XTf=PR=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B12FAC433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 29 Oct 2021 14:27:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 840C1C433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 29 Oct 2021 14:30:03 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 7F10F61175
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 29 Oct 2021 14:27:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 7F10F61175
-Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
+	by mail.kernel.org (Postfix) with ESMTPS id A16DC60FC0
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 29 Oct 2021 14:30:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org A16DC60FC0
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=baywinds.org
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6ab271e0;
-	Fri, 29 Oct 2021 14:27:35 +0000 (UTC)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c0f2ab19
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 98b23c3a;
+	Fri, 29 Oct 2021 14:28:29 +0000 (UTC)
+Received: from baywinds.org (50-196-187-248-static.hfc.comcastbusiness.net
+ [50.196.187.248])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 01a636fe
  (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 29 Oct 2021 14:27:33 +0000 (UTC)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 5960660FC0
- for <wireguard@lists.zx2c4.com>; Fri, 29 Oct 2021 14:27:31 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
- dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
- header.b="h5pbQNL/"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
- t=1635517650;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=QnWkyN6KGUfNiy5qk93ywFf1HQovAYF4w85+8oNqIOw=;
- b=h5pbQNL/W0oxByC5nvKmb9PSHqsXw1BVkB3Vy7zcnlpyiayS4KdCQHCK08qaZkRGeHRh35
- JperHsXpJ0gcLgexSqp5qMRq9SjEGACqdoeE2kTKivTsvwh5mZ6hZPtTJI2H36ao4oSwuJ
- b6PcKfJzQcKenUpetv/UoUr1xG23Cko=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 94030090
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Fri, 29 Oct 2021 14:27:29 +0000 (UTC)
-Received: by mail-yb1-f176.google.com with SMTP id a129so11545771yba.10
- for <wireguard@lists.zx2c4.com>; Fri, 29 Oct 2021 07:27:29 -0700 (PDT)
-X-Gm-Message-State: AOAM533p66Z3mfb3R7ffKya89fVYTlGPfPR5F35o5N9YCp2ly05K67I4
- UlwaEurVgJpPvnp2pguU8hyqYloLM5UORui17Jw=
-X-Google-Smtp-Source: ABdhPJzppDmksYWOAYQDlFsf24rGw4CsBIkDXLIIUOvgUCnYvBmovuZkegEbO8TM7O5PotQ+r833GzYmOzoln94qAhc=
-X-Received: by 2002:a25:ba0f:: with SMTP id t15mr12765514ybg.62.1635517648595; 
- Fri, 29 Oct 2021 07:27:28 -0700 (PDT)
+ Thu, 28 Oct 2021 09:58:38 +0000 (UTC)
+Received: from [192.0.2.130] (rr-iii [192.0.2.130])
+ by baywinds.org (8.14.4/8.14.4) with ESMTP id 19S9wYbs027524
+ for <wireguard@lists.zx2c4.com>; Thu, 28 Oct 2021 02:58:35 -0700
+Subject: Re: Split DNS for macOS
+To: wireguard@lists.zx2c4.com
+References: <20211028071638.88001-1-stephen@slarew.net>
+From: Bruce Ferrell <bferrell@baywinds.org>
+Message-ID: <0e80daf1-b4c2-b177-28ca-79e6575a339c@baywinds.org>
+Date: Thu, 28 Oct 2021 02:58:34 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.11.0
 MIME-Version: 1.0
-References: <1635469664-1708957-1-git-send-email-jiasheng@iscas.ac.cn>
-In-Reply-To: <1635469664-1708957-1-git-send-email-jiasheng@iscas.ac.cn>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Fri, 29 Oct 2021 16:27:17 +0200
-X-Gmail-Original-Message-ID: <CAHmME9p9EA0qCw2ha_X9HR7NWSt1Zam4+srYHCs=-U4LvQiJdA@mail.gmail.com>
-Message-ID: <CAHmME9p9EA0qCw2ha_X9HR7NWSt1Zam4+srYHCs=-U4LvQiJdA@mail.gmail.com>
-Subject: Re: [PATCH] wireguard: queueing: Fix implicit type conversion
-To: jiasheng@iscas.ac.cn
-Cc: David Miller <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>, 
- WireGuard mailing list <wireguard@lists.zx2c4.com>,
- Netdev <netdev@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20211028071638.88001-1-stephen@slarew.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-Greylist: inspected by milter-greylist-4.6.4 (baywinds.org [192.0.2.134]);
+ Thu, 28 Oct 2021 02:58:35 -0700 (PDT) for IP:'192.0.2.130'
+ DOMAIN:'rr-iii' HELO:'[192.0.2.130]' FROM:'bferrell@baywinds.org' RCPT:''
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.6.4
+ (baywinds.org [192.0.2.134]); Thu, 28 Oct 2021 02:58:35 -0700 (PDT)
+X-Mailman-Approved-At: Fri, 29 Oct 2021 14:28:28 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -72,21 +57,64 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-On Fri, Oct 29, 2021 at 3:08 AM Jiasheng Jiang <jiasheng@iscas.ac.cn> wrote:
-> It is universally accepted that the implicit type conversion is
-> terrible.
+On 10/28/21 12:16 AM, Stephen Larew wrote:
+> For many months now, I have been running a patched WireGuard macOS app
+> that enables a split DNS configuration. I would like to try to upstream
+> my patches for split DNS.
+>
+> There has been some interest in this patch:
+> - "Mac APP DNS Search Domain" thread from July and August 2021 [1]
+> - A commenter on my GitHub fork of wireguard-apple.
+>
+> What is split DNS? It allows sending DNS queries to a specific server
+> based on the domain name. Systemd-resolved calls it a routing domain.
+> Apple's Network Extension framework calls it a match domain.  Split DNS
+> is especially useful for internal DNS servers.
+>
+> For example, if corp.example.com is a routing domain for the DNS server
+> at 192.0.2.1 (only accessible over WireGuard), then
+> server.corp.example.com is resolved using 192.0.2.1 while
+> www.example.com is resolved using some other DNS resolver (depending on
+> the other network settings in macOS).
+>
+> The proposed patch adds new syntax to the wg-quick DNS= line.
+> Specifically, a tilde prefixed domain is treated as a routing domain.
+> Multiple routing domains can be added.
+>
+> Limitations:
+> - Needs modifications to iOS UI to work on iOS.
+> - Only matching routing domains are sent to the DNS servers specified in
+>    the DNS= config line.  No separate fallback catch-all DNS server can
+>    be set.
+> - Routing/match domains are also included in the list of search domains.
+>    This could be changed with the matchDomainsNoSearch API, but lacking
+>    more UI or config file changes to expose this option to the user, I
+>    went with the default.
+>
+> [1] https://lore.kernel.org/wireguard/20210810074232.aah5ktq5yzysaaey@SvensMacBookAir-2.local/T/
+> [2] https://github.com/slarew/wireguard-apple/commit/6ebc356d9e11ab91443e06de5e89f1af57fcdff8
 
-I'm not so sure about this, but either way, I think this needs a bit
-more justification and analysis to merge. cpumask_weight returns an
-unsigned, for example, and is used as a modulo operand later in the
-function. It looks like nr_cpumask_bits is also unsigned. And so on.
-So you're really trading one implicit type conversion package for
-another. If you're swapping these around, why? It can't be because,
-"it is universally accepted that the implicit type conversion is
-terrible," since you're adding more of it in a different form. Is your
-set of implicit type conversions semantically more proper? If so,
-please describe that. Alternatively, is there a way to harmonize
-everything into one type? Is there a minimal set of casts that enables
-that?
+That seems to be a redefinition of the existing definition of split DNS.
 
-Jason
+Most usually, split DNS is done at the DNS server and different zones are served to the resolver based on various criteria... Usually the origination IP of the query;  If the query 
+comes from a client on your LAN, or a particular subnet, the contents of a particular, private, zone are returned.  If the query comes from, say the internet,  a public zone is 
+returned.
+
+YOUR description, is how DNS works in general... Except  your patch also seems to either bypass the resolver libraries or wedge itself in front of them The system resolver 
+libraries well tested and understood and they handle the following very nicely.
+
+There is the issue of what happens with large DNS responses.  Any DNS response over 512 bytes UDP fails and is required to be retried as a TCP query, which can handle the large 
+response.  It's late and I'm too tired to look it up, but there IS an RFC for this.
+
+It's a little known issue, but I've seen it when working with other VPN products that ignored/didn't understand the behavior. The results weren't pretty and really embarrassing.
+
+Systemd has a bad habit of re-inventing the wheel... Badly. Eventually it get's sorted, but is that really progress? In the long haul, "move fast and break things" is a MAJOR pita 
+for the vast majority of us.  But some like it.
+
+For some real fun, look into DHCPCD.  It faithfully implements a particular RFC.  In some networking environments using VPNs, it breaks routing horribly.... But it meets the RFC.  
+You'll find it in Raspbian by default, and most other Debian derived distros.  I automatically rip it out and replace it with the also available ISC DHCP client.  That one is fully 
+compatible with Windows, OS X, iOS, and every android and smart device I could test it with.  A DHCP server configured to be compatible with DHCPCD broke all of the previously named.
+
+I'm giving this opinion away for free, so it's worth what you paid for it.
+
+
