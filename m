@@ -1,66 +1,46 @@
-Return-Path: <SRS0=fXWi=PP=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=MnxW=PQ=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4577CC433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 27 Oct 2021 23:45:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CE61C433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 28 Oct 2021 07:25:41 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 2752261073
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed, 27 Oct 2021 23:45:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 2752261073
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	by mail.kernel.org (Postfix) with ESMTPS id 1C3F860F39
+	for <zx2c4-wireguard@archiver.kernel.org>; Thu, 28 Oct 2021 07:25:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 1C3F860F39
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=slarew.net
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 6e24a35f;
-	Wed, 27 Oct 2021 23:45:46 +0000 (UTC)
-Received: from mail-ua1-x930.google.com (mail-ua1-x930.google.com
- [2607:f8b0:4864:20::930])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id bae31d3a
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 3f4caf76;
+	Thu, 28 Oct 2021 07:25:38 +0000 (UTC)
+Received: from mr85p00im-ztdg06011201.me.com (mr85p00im-ztdg06011201.me.com
+ [17.58.23.181])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 130698ce
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Wed, 27 Oct 2021 23:45:45 +0000 (UTC)
-Received: by mail-ua1-x930.google.com with SMTP id u9so8141644uac.8
- for <wireguard@lists.zx2c4.com>; Wed, 27 Oct 2021 16:45:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=KMG3iaaFaZmGFkEt2QBUdqpTxjGPeoaytDpkwL1zHkg=;
- b=o6W0Hcrj0HhO/aq/Ny6Tc6o3Py3QNlEzdOjc+gcng14nE6GIDp3iuMCmg03ZgMFOrd
- +8lI9pzWI1yJZsnPEJ2zgUGNkT8uKOYVOBJS4i3kUd9oEU86Y9zAFyfUadNijmYx2hE3
- B9lDk+6gHK8hQKXDtgTCYuhsgnNR8IwQakW/Zdn1rIS6kq7FW+zgPsYsOP7NPJ2Q6f17
- gYghNZ4OkCkvYWsHBNLZrBeusxvh5O+5DByAL9F143hTv+6oUQgtXbIaPJt+1D0XocW9
- Eh0k/xm78RNz3X9k+bjTXIAJTi3sEfBcUWhrmJwQywKNhEs8KZcxWelw2NqTe2LlIpN/
- v7pA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=KMG3iaaFaZmGFkEt2QBUdqpTxjGPeoaytDpkwL1zHkg=;
- b=QB0PIoq8H2nxq5869uV2fTDSpZfQtYN4E1HR+JQ8sC78siE6oBelPERgBrRyFf1usK
- Rzc6qYNuYdKDB0BanaLh4p1YJCNtihIG0Atr/bmug2WTfBqZjvHv1JpxXDrdEqkL5zKK
- rQUqNhV/1a04e1MEIgVss+eP0TCaqh7szGhMksqXaBPBniZX5KMJc7saKHZA0zBbdRBp
- I3+4xXQaRaViDq418ckPMVE8+T2gNNmYejx7TSK9PsYo2zGxwlfW0n2flPoIjGHPteJc
- 4AIoDpEe7y2WtQT/syEU19ylBUc270DzVu2zOPZRKXILD3hse4/ga3F6z6UDl82wCVaQ
- kstw==
-X-Gm-Message-State: AOAM5312agADhp9w+TC6Veb59ipgGpdNi8ZVvRcmlQh6SgUpVKN9hdpH
- VQB9sMLl4mqjMLmxs8F323UFOMBrtCx6qTMp0HE=
-X-Google-Smtp-Source: ABdhPJx13NwepQZA0i9Kcbh8+duV+9yal7hT2hE00eThnrVGo3obb16yx1qUy3NhMO47Fl0vNjTV0qmb6xdfgGRWlfc=
-X-Received: by 2002:a05:6102:3a72:: with SMTP id
- bf18mr796774vsb.22.1635378343728; 
- Wed, 27 Oct 2021 16:45:43 -0700 (PDT)
+ Thu, 28 Oct 2021 07:25:36 +0000 (UTC)
+Received: from hilbert.lan (ip68-8-45-126.sd.sd.cox.net [68.8.45.126])
+ by mr85p00im-ztdg06011201.me.com (Postfix) with ESMTPSA id BA572400834
+ for <wireguard@lists.zx2c4.com>; Thu, 28 Oct 2021 07:16:43 +0000 (UTC)
+From: Stephen Larew <stephen@slarew.net>
+To: wireguard@lists.zx2c4.com
+Subject: Split DNS for macOS
+Date: Thu, 28 Oct 2021 00:16:37 -0700
+Message-Id: <20211028071638.88001-1-stephen@slarew.net>
+X-Mailer: git-send-email 2.30.1 (Apple Git-130)
 MIME-Version: 1.0
-References: <CABOEyuLiu96_KxEH5sdGLaE5-s9e8F_c0a1PKHSnFcMKp5YHow@mail.gmail.com>
- <CAHmME9oPi=LvdcZC-FA+SvyxEmcRULtNB8hAQZoCAX=kQycTXA@mail.gmail.com>
-In-Reply-To: <CAHmME9oPi=LvdcZC-FA+SvyxEmcRULtNB8hAQZoCAX=kQycTXA@mail.gmail.com>
-From: Ryan Roosa <ryanroosa@gmail.com>
-Date: Wed, 27 Oct 2021 19:45:33 -0400
-Message-ID: <CABOEyuJidG_u8SFGnhV6aw5y7PHVhaW_diDrpdMMHfOE4fHRWA@mail.gmail.com>
-Subject: Re: wireguard-freebsd handshaking issue upon underlying WAN
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
- Kyle Evans <kevans@freebsd.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: =?UTF-8?Q?vendor=3Dfsecure_engine=3D1.1.170-22c6f66c430a71ce266a39bfe25bc?=
+ =?UTF-8?Q?2903e8d5c8f:6.0.425,18.0.790,17.0.607.475.0000000_definitions?=
+ =?UTF-8?Q?=3D2021-10-27=5F07:2021-10-25=5F02,2021-10-27=5F07,2020-04-07?=
+ =?UTF-8?Q?=5F01_signatures=3D0?=
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ mlxscore=0 bulkscore=0
+ clxscore=1030 spamscore=0 phishscore=0 malwarescore=0 suspectscore=0
+ mlxlogscore=893 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2110280036
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -75,24 +55,40 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi Jason,
-Thank you very much for this! I received word from the OPNSense team
-that the referenced snapshot should be made available in OPNSense
-21.7.5. I will test and provide feedback just as soon as I can get on
-the aforementioned OPNSense release which includes the fix.
+For many months now, I have been running a patched WireGuard macOS app
+that enables a split DNS configuration. I would like to try to upstream
+my patches for split DNS.
 
-Cheers,
--Ryan
+There has been some interest in this patch:
+- "Mac APP DNS Search Domain" thread from July and August 2021 [1]
+- A commenter on my GitHub fork of wireguard-apple.
 
-On Tue, Oct 26, 2021 at 5:29 AM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
->
-> Hi Ryan,
->
-> Thanks for the report. Kyle saw your reddit post earlier and tracked
-> this down, I think/hope, to a bug in the state machine cranking. I
-> committed the fix here -- https://w-g.pw/l/yQTw -- which will be part
-> of the next snapshot. Hopefully that will fix the issue, but if it
-> doesn't, please do update this thread so we can keep searching.
->
-> Regards,
-> Jason
+What is split DNS? It allows sending DNS queries to a specific server
+based on the domain name. Systemd-resolved calls it a routing domain.
+Apple's Network Extension framework calls it a match domain.  Split DNS
+is especially useful for internal DNS servers.
+
+For example, if corp.example.com is a routing domain for the DNS server
+at 192.0.2.1 (only accessible over WireGuard), then
+server.corp.example.com is resolved using 192.0.2.1 while
+www.example.com is resolved using some other DNS resolver (depending on
+the other network settings in macOS).
+
+The proposed patch adds new syntax to the wg-quick DNS= line.
+Specifically, a tilde prefixed domain is treated as a routing domain.
+Multiple routing domains can be added.
+
+Limitations:
+- Needs modifications to iOS UI to work on iOS.
+- Only matching routing domains are sent to the DNS servers specified in
+  the DNS= config line.  No separate fallback catch-all DNS server can
+  be set.
+- Routing/match domains are also included in the list of search domains.
+  This could be changed with the matchDomainsNoSearch API, but lacking
+  more UI or config file changes to expose this option to the user, I
+  went with the default.
+
+[1] https://lore.kernel.org/wireguard/20210810074232.aah5ktq5yzysaaey@SvensMacBookAir-2.local/T/
+[2] https://github.com/slarew/wireguard-apple/commit/6ebc356d9e11ab91443e06de5e89f1af57fcdff8
+
+
