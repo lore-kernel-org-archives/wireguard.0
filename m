@@ -2,54 +2,69 @@ Return-Path: <SRS0=4XTf=PR=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF383C433FE
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 29 Oct 2021 14:30:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 02DE8C433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 29 Oct 2021 14:30:06 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id B09D660FC0
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 29 Oct 2021 14:30:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org B09D660FC0
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+	by mail.kernel.org (Postfix) with ESMTPS id 2D44560FC0
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 29 Oct 2021 14:30:05 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 2D44560FC0
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 810cd669;
-	Fri, 29 Oct 2021 14:28:30 +0000 (UTC)
-Received: from cstnet.cn (smtp23.cstnet.cn [159.226.251.23])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 19db6766
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id c0438bd0;
+	Fri, 29 Oct 2021 14:28:31 +0000 (UTC)
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com
+ [2a00:1450:4864:20::333])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 10ad142d
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 29 Oct 2021 01:07:52 +0000 (UTC)
-Received: from localhost.localdomain (unknown [124.16.138.128])
- by APP-03 (Coremail) with SMTP id rQCowAAnLKhhSXthZAFaBQ--.31789S2;
- Fri, 29 Oct 2021 09:07:45 +0800 (CST)
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-To: Jason@zx2c4.com,
-	davem@davemloft.net,
-	kuba@kernel.org
-Cc: wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org, Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Subject: [PATCH] wireguard: queueing: Fix implicit type conversion
-Date: Fri, 29 Oct 2021 01:07:44 +0000
-Message-Id: <1635469664-1708957-1-git-send-email-jiasheng@iscas.ac.cn>
-X-Mailer: git-send-email 2.7.4
-X-CM-TRANSID: rQCowAAnLKhhSXthZAFaBQ--.31789S2
-X-Coremail-Antispam: 1UD129KBjvdXoWrKFyUWFyxJF1rZr4rXr1fJFb_yoWkAwb_Cw
- n7Wr12gryj9FyI9w13XrWFva4Sgay8X3yxWay8KrZrZw12qrWfX3s5XFyqqr1kG3yfAF17
- ZF1Dtr1Sv342gjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
- 9fnUUIcSsGvfJTRUUUbckFF20E14v26r4j6ryUM7CY07I20VC2zVCF04k26cxKx2IYs7xG
- 6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8w
- A2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Cr0_
- Gr1UM28EF7xvwVC2z280aVAFwI0_Cr0_Gr1UM28EF7xvwVC2z280aVCY1x0267AKxVW8Jr
- 0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj
- 6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr
- 0_Gr1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7MxkIecxEwVAFwVWk
- MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr
- 0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc40Y0x0E
- wIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVWUJV
- W8JwCI42IY6xAIw20EY4v20xvaj40_WFyUJVCq3wCI42IY6I8E87Iv67AKxVWUJVW8JwCI
- 42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x0JUHpB-UUUUU=
-X-Originating-IP: [124.16.138.128]
-X-CM-SenderInfo: pmld2xxhqjqxpvfd2hldfou0/
+ Fri, 29 Oct 2021 13:59:26 +0000 (UTC)
+Received: by mail-wm1-x333.google.com with SMTP id
+ c71-20020a1c9a4a000000b0032cdcc8cbafso4803415wme.3
+ for <wireguard@lists.zx2c4.com>; Fri, 29 Oct 2021 06:59:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=from:content-transfer-encoding:mime-version:subject:message-id:date
+ :to; bh=aki9e9FOtPJidP6Yp2biilfx59Ioidn+p9u14WTVXtc=;
+ b=SmUxG6lJRHrCfgfx8ZTVOtQhQvHazEPbpzcCe3y/DN9eYLzAZLp/doixcdg/lwWT5w
+ u/nBXEXJytbhf08f0NzsPOiCaZNDuesXyLSl4kttVepguxcyiI3+jFjol8PvmSlzOXAg
+ En3oKsbStywMIZpFkSlx/Y82KlkYDxT9Sv3+pj6u0g/vLoJxrRRXtibDaisiF5CHlytR
+ O/9lTR9obM9qHgbmoEG5EfU59iPIsabDVOI1V6fJR8KeObEih6Ps7jlGJlt6SvQYJULB
+ JUuubRvlh/EZw7kjjq+97AC/DnuGUhObxMSXWMks81/ACQaOlTFyWJZAMwAoslaMOFYw
+ uMBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:from:content-transfer-encoding:mime-version
+ :subject:message-id:date:to;
+ bh=aki9e9FOtPJidP6Yp2biilfx59Ioidn+p9u14WTVXtc=;
+ b=6MW68/bPadb3GNIFY2mu8HyAAWBXz8fpc59z9a5JXKn7GXlsO/1W22bE2dlwk47DQn
+ XcBihU8FKhF1QpZ2YCrsbijj1M9/5uqs3hE1X3YJjXFP0bDZaXDFZ/jzSBgD/Qc8Yxms
+ agGHb0EX9rp5xT4/Wr8tDMXGT/i51JdwZ2Gh7WGSGoWGKFTRjkBwR7OFl8mP2W1rWnkX
+ d4c8oOiOsVn6Rikzec2wfz6xTUEwaGpFqWrCqKwAfQKmWSjhV4tPsbyOwremd4D3NLXS
+ sWCXQrUoq4xe9BswVFRNSOiLdib9e/SfZZTV8eDYLA/DfoOt+3SEtwV/IVemazJ/m6Js
+ xsKg==
+X-Gm-Message-State: AOAM531nPuzX+iGjeDNomTN/KIWasSknRD8eB0NxmQF5jOmB6ZAJ6f4C
+ 9oaSMCaYnh80RtGPNoNrdH+4sc/KdpVzDQ==
+X-Google-Smtp-Source: ABdhPJz+Hi05PJ6reYKRpMTNiEor35sDMXtqL8jFfanlzV49GfR1f0D+GWHe780d0NrhqvZh7mEQMA==
+X-Received: by 2002:a05:600c:17d4:: with SMTP id
+ y20mr16492405wmo.113.1635515965732; 
+ Fri, 29 Oct 2021 06:59:25 -0700 (PDT)
+Received: from smtpclient.apple ([94.198.41.218])
+ by smtp.gmail.com with ESMTPSA id s3sm8694048wmh.30.2021.10.29.06.59.25
+ for <wireguard@lists.zx2c4.com>
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Fri, 29 Oct 2021 06:59:25 -0700 (PDT)
+From: Igor Bozin <igorbzin@gmail.com>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
+Subject: Support for M1 MacBook Simulators
+Message-Id: <18206D0A-EA19-4230-AAEC-8D52BE66A1C7@gmail.com>
+Date: Fri, 29 Oct 2021 15:59:23 +0200
+To: wireguard@lists.zx2c4.com
+X-Mailer: Apple Mail (2.3654.120.0.1.13)
 X-Mailman-Approved-At: Fri, 29 Oct 2021 14:28:28 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -65,35 +80,20 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-The parameter 'cpu' is defined as unsigned int.
-However in the cpumask_next() it is implicitly type conversed
-to int.
-It is universally accepted that the implicit type conversion is
-terrible.
-Also, having the good programming custom will set an example for
-others.
-Thus, it might be better to change the type of 'cpu' from
-unsigned int to int.
+Hello,
 
-Fixes: e7096c1 ("net: WireGuard secure network tunnel")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
----
- drivers/net/wireguard/queueing.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I am trying to build a project which contains a dependency on WireGuard =
+through a Swift package.
+The laptop I am running on (M1 MacBook) can't build the project, because =
+libwg-go can't be compiled for the arm64 architecture for iPhone =
+simulators.=20
+I am aware that Network Extensions functionality doesn't work on =
+simulators, but not making the binaries available for simulators makes =
+it impossible to test other features of the App in any project that =
+WireGuard is part of.
+Are there any plans to support simulator architectures as well, or any =
+other workarounds for this?
 
-diff --git a/drivers/net/wireguard/queueing.h b/drivers/net/wireguard/queueing.h
-index 4ef2944..64f397f 100644
---- a/drivers/net/wireguard/queueing.h
-+++ b/drivers/net/wireguard/queueing.h
-@@ -106,7 +106,7 @@ static inline void wg_reset_packet(struct sk_buff *skb, bool encapsulating)
- 
- static inline int wg_cpumask_choose_online(int *stored_cpu, unsigned int id)
- {
--	unsigned int cpu = *stored_cpu, cpu_index, i;
-+	int cpu = *stored_cpu, cpu_index, i;
- 
- 	if (unlikely(cpu == nr_cpumask_bits ||
- 		     !cpumask_test_cpu(cpu, cpu_online_mask))) {
--- 
-2.7.4
+Best regards,
 
+Igor=
