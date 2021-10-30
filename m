@@ -2,50 +2,59 @@ Return-Path: <SRS0=+otM=PW=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E296DC4332F
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  3 Nov 2021 10:57:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14F14C433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  3 Nov 2021 10:57:09 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 2B26861076
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  3 Nov 2021 10:57:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 2B26861076
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=chil.at
+	by mail.kernel.org (Postfix) with ESMTPS id 335AE6103B
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  3 Nov 2021 10:57:08 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 335AE6103B
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=ct.de
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 40a9ab50;
-	Wed, 3 Nov 2021 10:53:27 +0000 (UTC)
-Received: from mail.onetrix.net (eleanor.onetrix.net [86.59.13.171])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a7f3f97a
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Tue, 2 Nov 2021 22:16:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=chil.at;
- s=default; 
- h=Content-Transfer-Encoding:Content-Type:Subject:From:To:MIME-Version:Date:Message-ID;
- bh=52UVwJ+XR5lwxKnfA1FYHHhfQlh+WFimpG4wH31nxEU=; 
- b=LieWrgW94D4zt7+dp/ooCB4dOBuMegG3EmSkHBFA2aRlrD2AXM/a8KGpmvtZGty2lvVxe8+D7mcUtwSW5WEhCk+pEo8ek1izsy5iBWZw5uwO275JnB+HZRzzpQ0nBA58FVSIhv9Htp795F8RfNmPpaHmsFzA+PHaMJOVmCxXos0=;
-Received: from [10.5.44.225] (port=10296 helo=mail.onetrix.net)
- by mail.onetrix.net with esmtps (TLSv1:DHE-RSA-AES256-SHA:256)
- (Exim 4.82_1-5b7a7c0-XX) (envelope-from <mail@chil.at>)
- id 1mi24N-0005ql-19
- for wireguard@lists.zx2c4.com; Tue, 02 Nov 2021 23:15:51 +0100
-Received: from [10.242.2.2] (10.5.44.244) by mail.onetrix.net (10.5.44.225)
- with Microsoft SMTP Server (TLS) id 14.1.438.0; Tue, 2 Nov 2021 23:15:50
- +0100
-X-CTCH-RefID: str=0001.0A682F2A.6181B897.004B, ss=1, re=0.000, recu=0.000,
- reip=0.000, cl=1, cld=1, fgs=0
-Message-ID: <2b2f3fe4-ca37-84ad-1418-c57f5d13e32b@chil.at>
-Date: Tue, 2 Nov 2021 23:15:50 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.2.1
-To: <wireguard@lists.zx2c4.com>
-Content-Language: de-AT
-From: Christoph Loesch <wireguard-mail@chil.at>
-Subject: WireGuard connection without interface-address / linknet
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.5.44.244]
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 32851442;
+	Wed, 3 Nov 2021 10:53:22 +0000 (UTC)
+Received: from relay.heise.de (relay.heise.de [2a00:e68:14:800::19:19])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a9c9ee57
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Sat, 30 Oct 2021 21:01:00 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.20.0.1.32\))
+Subject: Re: Split DNS for macOS
+From: Dusan Zivadinovic <dz@ct.de>
+In-Reply-To: <E3607380-8E46-42CC-80B5-BB38F206E9BC@slarew.net>
+Date: Sat, 30 Oct 2021 23:00:38 +0200
+Cc: wireguard@lists.zx2c4.com
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <C824C50B-843C-4C77-B7C3-62E850B73CB0@ct.de>
+References: <20211028071638.88001-1-stephen@slarew.net>
+ <0e80daf1-b4c2-b177-28ca-79e6575a339c@baywinds.org>
+ <ED3FB4B3-96AD-4B98-86EC-D9F7999A530F@slarew.net>
+ <K25247-14.1635527002@spamhaus.org>
+ <E3607380-8E46-42CC-80B5-BB38F206E9BC@slarew.net>
+To: Stephen Larew <stephen@slarew.net>
+X-Mailer: Apple Mail (2.3693.20.0.1.32)
+X-TMScanToken: 453c0e49fdd1e337ceb918501f8f6e0666bed1e4
+X-TMASE-Version: DDEI-3.5-8.6.1018-26500.003
+X-TMASE-Result: 10--1.619500-10.000000
+X-TMASE-MatchedRID: IeZYkn8zfFpWWOy3obJL+2vDT+wC7pqFElLH7tCb90oZSz1vvG+0mqvo
+ lbfO7oa0btAD8fpuJtMcDCbCSEq3lNaZz6pl1Mhet6hFzXOwpPlBSY6kx+M18WBSbru26cn6Mdd
+ NDcMzD2fH2iVVnOYNp5lkW/4zIRSNQ8+LSipOfwTxryc2N+6fmvg/s23WPBIpIFWQH/JudNjGXS
+ 36jTcV+ggXkgFGwPXCK+5FmIUWylR0AdYYTJWxRN5x7RpGJf1aDvc/j9oMIgX5+tteD5RzhbBXu
+ d9Ra+w0UjwC4PXX8Bo8aQofJD94ANtn1etZCRwy2cOr5oNmMZle8fEpBZ2EVMGx/mq3jiNnMEGU
+ YlC3/bftazGGarT1BAEh8ANbLEbyJmkDHQnMKB5v+/LIBBauP8TGavmGo0vWMYkmNIO7+hYRtaG
+ eRi2iOsUKZFvJm5zfhyqLaa4EBlv4miWUEaTQPnpRh12Siy9rQR7lWMXPA1vyN+XEEoySvtGvJV
+ PfEl1Ikx8DrRF4EzWM2L7lMaFHZZ7ghrpuj+9iGKC1HVmafmMoOyQJh7uOKBHfiujuTbedKKi9X
+ IZVdsWnbai5eMzQpa3z9JIf5dPSRQL375LzcCsD2WXLXdz+ARMDsAIXSN0DevFaYkHe0Bht/S8J
+ 0TkT+RnO3iVn8eXNmEw+qTWEPMhDl7IQyR6OyXbqbYm4qoGdAajW+EL+laMINpIFnbd6mr9Uo8X
+ uHy63XYU84yyHWCuTox1acdgQnzVbiUNfabi0WTWEh5N2a9Fj0mUvAvV2DYawFn5SbGtbAMJcHO
+ zzDuNafXC1NMQQtTUJ6kuOBFQ8XhIgqyFXxJeeAiCmPx4NwFkMvWAuahr8trNGq+WQEvSrusVRy
+ 4an8WBOE3yqmaU2F5iXm5LZACA=
+X-TMASE-SNAP-Result: 1.821001.0001-0-1-22:0,33:0,34:0-0
+X-TMASE-INERTIA: 0-0;;;;
 X-Mailman-Approved-At: Wed, 03 Nov 2021 10:53:18 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -61,58 +70,180 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
+Hi list,
 
-I am using WireGuard on an OpenWRT VM as server for clients basically to reach the server's internal LAN at 10.5.44.0/24
+I would appreciate that, its a usefull feature.
 
-As clients I currently use different WireGuard implementations like:
-- Ubiquiti EdgeRouter (EdgeOS v2 based on Debian/stretch) with package from: https://github.com/WireGuard/wireguard-vyatta-ubnt/releases
-- Mikrotik RouterOS v7.1 with Mikrotik own (at the moment beta) implementation
-- Windows 10 Client using https://download.wireguard.com/windows-client/wireguard-installer.exe
+Think of connecting to multiple remote VPN peers simultaneously,
+and use different DNSes for certain domains in each VPN connection.
 
-Server config looks like this:
+Just as an example, the iOS app DNSCloak also sports a split DNS =
+function.
 
-config interface 'wg0'
-         option proto 'wireguard'
-         option private_key 'cNT...8Hc='
-         option listen_port '51820'
-         list addresses '172.27.0.1/16'
-config wireguard_wg0
-         option description 'router-test'
-         option public_key 'qT5...YGo='
-         option preshared_key 'Dle...ozI='
-         option persistent_keepalive '25'
-         option route_allowed_ips '1'
-         list allowed_ips '172.27.34.28/32'
-         list allowed_ips '10.34.28.0/24'
+regards,
 
-Client config looks like this:
+Dusan
 
-[Interface]
-PrivateKey = mDk...uVs=
-Address = 172.27.34.28
-[Peer]
-PublicKey = 1sy...IkU=
-PresharedKey = Dle...ozI=
-AllowedIPs = 172.27.0.1/32,10.5.44.0/24
-Endpoint = server.mydomain.at:51820
-PersistentKeepalive = 25
-
-Clients should just be able to reach the server's 10.5.44.0/24 subnet and this subnet should be able to reach clients at (in this one example) 10.34.28.0/24
-Now this works all well as expected but I would like to omit using the 172.27.* addresses/linknet if possible because I dont really need/use this as it is only defined for the WireGuard tunnel itself.
-
-On the EdgeRouter this also works perfectly fine if I remove the 172.27.* address on both sides. It is still possible to reach the other end repestively.
-On the Mikrotik device and on the Windows client (using exact same configuration) it does not work as soon as I remove just the 172.27. address/linknet from configuration.
-(I didn't test other clients yet)
-
-I guess on the EdgeRouter this works because I set: set interfaces wireguard wg0 **route-allowed-ips true** - so the corresponding routes are added.
-The Mikrotik device and the Windows client do not offer such an option, so those routes have to be added manually I guess?
-But why does that work "out of the box" as soon as I add any linknet (172.27.* in my example) for the tunnel itself to the configuration?
-
-Is this a fault in the implementation and I should file a bug report or is that expected that way?
-
-(it's not a big issue using the linknet, I am just curious and would like avoid using it if it is not neccessarily required)
-
-Thanks for any thoughts and kind regards,
-Christoph
+> Am 29.10.2021 um 23:07 schrieb Stephen Larew <stephen@slarew.net>:
+>=20
+>> On Oct 29, 2021, at 10:03, Andrew Fried <afried@spamteq.com> wrote:
+>>=20
+>>> On Oct 29, 2021, at 08:33, Stephen Larew <stephen@slarew.net> wrote:
+>>>=20
+>>>> On Oct 28, 2021, at 02:58, Bruce Ferrell <bferrell@baywinds.org> =
+wrote:
+>>>>=20
+>>>> On 10/28/21 12:16 AM, Stephen Larew wrote:
+>>>>> For many months now, I have been running a patched WireGuard macOS =
+app
+>>>>> that enables a split DNS configuration. I would like to try to =
+upstream
+>>>>> my patches for split DNS.
+>>>>>=20
+>>>>> There has been some interest in this patch:
+>>>>> - "Mac APP DNS Search Domain" thread from July and August 2021 [1]
+>>>>> - A commenter on my GitHub fork of wireguard-apple.
+>>>>>=20
+>>>>> What is split DNS? It allows sending DNS queries to a specific =
+server
+>>>>> based on the domain name. Systemd-resolved calls it a routing =
+domain.
+>>>>> Apple's Network Extension framework calls it a match domain.  =
+Split DNS
+>>>>> is especially useful for internal DNS servers.
+>>>>>=20
+>>>>> For example, if corp.example.com is a routing domain for the DNS =
+server
+>>>>> at 192.0.2.1 (only accessible over WireGuard), then
+>>>>> server.corp.example.com is resolved using 192.0.2.1 while
+>>>>> www.example.com is resolved using some other DNS resolver =
+(depending on
+>>>>> the other network settings in macOS).
+>>>>>=20
+>>>>> The proposed patch adds new syntax to the wg-quick DNS=3D line.
+>>>>> Specifically, a tilde prefixed domain is treated as a routing =
+domain.
+>>>>> Multiple routing domains can be added.
+>>>>>=20
+>>>>> Limitations:
+>>>>> - Needs modifications to iOS UI to work on iOS.
+>>>>> - Only matching routing domains are sent to the DNS servers =
+specified in
+>>>>> the DNS=3D config line.  No separate fallback catch-all DNS server =
+can
+>>>>> be set.
+>>>>> - Routing/match domains are also included in the list of search =
+domains.
+>>>>> This could be changed with the matchDomainsNoSearch API, but =
+lacking
+>>>>> more UI or config file changes to expose this option to the user, =
+I
+>>>>> went with the default.
+>>>>>=20
+>>>>> [1] =
+https://lore.kernel.org/wireguard/20210810074232.aah5ktq5yzysaaey@SvensMac=
+BookAir-2.local/T/
+>>>>> [2] =
+https://github.com/slarew/wireguard-apple/commit/6ebc356d9e11ab91443e06de5=
+e89f1af57fcdff8
+>>>>=20
+>>>> That seems to be a redefinition of the existing definition of split =
+DNS.
+>>>>=20
+>>>> Most usually, split DNS is done at the DNS server and different =
+zones are served to the resolver based on various criteria... Usually =
+the origination IP of the query;  If the query comes from a client on =
+your LAN, or a particular subnet, the contents of a particular, private, =
+zone are returned.  If the query comes from, say the internet,  a public =
+zone is returned.
+>>>>=20
+>>>> YOUR description, is how DNS works in general... Except  your patch =
+also seems to either bypass the resolver libraries or wedge itself in =
+front of them The system resolver libraries well tested and understood =
+and they handle the following very nicely.
+>>>>=20
+>>>> There is the issue of what happens with large DNS responses.  Any =
+DNS response over 512 bytes UDP fails and is required to be retried as a =
+TCP query, which can handle the large response.  It's late and I'm too =
+tired to look it up, but there IS an RFC for this.
+>>>>=20
+>>>> It's a little known issue, but I've seen it when working with other =
+VPN products that ignored/didn't understand the behavior. The results =
+weren't pretty and really embarrassing.
+>>>>=20
+>>>> Systemd has a bad habit of re-inventing the wheel... Badly. =
+Eventually it get's sorted, but is that really progress? In the long =
+haul, "move fast and break things" is a MAJOR pita for the vast majority =
+of us.  But some like it.
+>>>>=20
+>>>> For some real fun, look into DHCPCD.  It faithfully implements a =
+particular RFC.  In some networking environments using VPNs, it breaks =
+routing horribly.... But it meets the RFC.  You'll find it in Raspbian =
+by default, and most other Debian derived distros.  I automatically rip =
+it out and replace it with the also available ISC DHCP client.  That one =
+is fully compatible with Windows, OS X, iOS, and every android and smart =
+device I could test it with.  A DHCP server configured to be compatible =
+with DHCPCD broke all of the previously named.
+>>>>=20
+>>>> I'm giving this opinion away for free, so it's worth what you paid =
+for it.
+>>>=20
+>>> Regardless of naming or definitions, I think the ability for a =
+*local device* to route DNS queries to different DNS servers based on =
+domain matching criteria is certainly useful. It=E2=80=99s not always =
+possible or desirable to control and configure an upstream DNS server. =
+Hence, this patch enables the local device to do split DNS.
+>>>=20
+>>> To be clear, this patch does not bypass or wedge around anything. In =
+fact, it configures the native macOS DNS settings in the appropriate =
+manner to effect a split DNS configuration.
+>>>=20
+>>> As a result of controlling the native macOS DNS resolution logic, =
+any feature, absent or present, in the macOS DNS resolver libraries =
+should be unaffected. This includes the large DNS response and TCP =
+behavior. I do not expect the small/large UDP/TCP DNS features to change =
+behavior when using a split DNS configuration as proposed in this patch.
+>>>=20
+>>> -Stephen
+>>=20
+>> Hi Stephen,
+>>=20
+>> A better solution to your problem would be to deploy DNSDIST:
+>> 	https://dnsdist.org/
+>>=20
+>> I for one would hope that esoteric requests that address a solution =
+for less than 1% of the users would be rejected with the overall goal of =
+preventing feature creep and bloat.
+>>=20
+>> Andrew
+>=20
+> DNSDIST may allow (I have not tried) one to create a split DNS =
+scenario, but it is an extra piece of software that would need to be =
+discovered, installed, configured, and maintained by a user or system =
+administrator. I do not believe it would properly integrate with the =
+macOS DNS resolution machinery. I do not believe it is a better solution =
+to the problem.
+>=20
+> As I understand it, under some circumstances, the Tailscale macOS app =
+also implements split DNS in roughly the same manner as done in my =
+patch. Namely, the tailscale app appears to use the Network Extension =
+APIs to directly integrate with the macOS DNS resolution machinery. =
+Perhaps the relevant difference is that tailscale approaches =
+configuration differently (not based on wg-quick) than the WireGuard =
+macOS app.
+>=20
+> I do not have statistics or polling on who desires this split DNS =
+feature. I have received private and public requests to upstream the =
+feature. Tailscale also implements split DNS; presumable customers =
+demand it. I suspect if the feature was available to users of the =
+WireGuard app, then it would be used with precision to great effect. =
+Users who do not need this split DNS feature do not lose any previous =
+functionality in the macOS WireGuard app.
+>=20
+> Personally, my one hesitation with this patch is that, as currently =
+implemented, a new syntax is added to the wg-quick config file (tilde =
+prefixed route/match domains). My patch does not address compatibility =
+issues nor does it add documentation to wg-quick for the new syntax.
+>=20
+> -Stephen
 
