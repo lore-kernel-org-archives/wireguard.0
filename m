@@ -2,51 +2,55 @@ Return-Path: <SRS0=+otM=PW=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3545EC433FE
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8B59C433F5
 	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  3 Nov 2021 10:57:10 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 48D556103B
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  3 Nov 2021 10:57:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 48D556103B
-Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=deze.org
+	by mail.kernel.org (Postfix) with ESMTPS id 6736761076
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  3 Nov 2021 10:57:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 6736761076
+Authentication-Results: mail.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=rcsnetwork.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d2a58988;
-	Wed, 3 Nov 2021 10:53:24 +0000 (UTC)
-Received: from tampoco.espindola.nl (tampoco.espindola.nl [149.210.133.191])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a72c5113
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 8c5ddd55;
+	Wed, 3 Nov 2021 10:53:25 +0000 (UTC)
+Received: from rcsnetwork.com (rcsnetwork.com [107.175.134.219])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 9c4c8adc
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Sun, 31 Oct 2021 18:41:52 +0000 (UTC)
-Received: from [192.168.68.249] (drawbridge.espindola.nl [62.251.122.20])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (Client did not present a certificate)
- (Authenticated sender: frank-deze)
- by tampoco.espindola.nl (Postfix) with ESMTPSA id 7A26D3C01A5
- for <wireguard@lists.zx2c4.com>; Sun, 31 Oct 2021 19:41:51 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=deze.org; s=default;
- t=1635705711; bh=SV2ajjkdRQ/nUFUSAyhtAoony8GOEGbaq6MOY087CXQ=;
- h=Date:To:From:Subject;
- b=jPxcqxA/VbsZFdlepNYYMFrbQQ06qEviQ6t50aL8wTq0ahtBVcM8ji7ygMcRnevnd
- a28dhT/pNf1Fll5O5IZEbu07Cu5m+VfhZqIvpUsqMiTsAT0IzF4o7sx4s2EBjQFtIf
- vggHyxgOIjO5m4x2YRLknvwp9Lh5Z3Ue+cf0Nrw9OE2/ksYN1DCXD56Cp6vsVH7A9M
- Vv6uaLFTf1wY/SSv07q9bGQMwd5xmxKvGAqvGU9girBcsiau9tIi1YxVM5uKEQX+jb
- cxHzT1Sqx2NDM75dvgJZfYM1td2ZrPn1v32jEylMogaHfAGUzTlctDRtuKZ5ZmKu26
- 2ZgaUFE4t6ABA==
-Message-ID: <cfddc41d-0768-af1a-d527-d2bccd5cfd56@deze.org>
-Date: Sun, 31 Oct 2021 19:41:50 +0100
+ for <wireguard@lists.zx2c4.com>; Tue, 2 Nov 2021 18:07:09 +0000 (UTC)
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com
+ [209.85.208.52]) by rcsnetwork.com (Postfix) with ESMTPSA id 2FAFE12D
+ for <wireguard@lists.zx2c4.com>; Tue,  2 Nov 2021 14:07:08 -0400 (EDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 rcsnetwork.com 2FAFE12D
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rcsnetwork.com;
+ s=2020; t=1635876428;
+ bh=vHFW3l5qOF4lozW2tLhaJrGHV2WRmb9tyS41otaR048=;
+ h=References:In-Reply-To:From:Date:Subject:To:From;
+ b=E15tRTDBLtpY8QngWGHCT/jHxTG6dnwzX+QQ8JoVx80xvrMXnyBXC5ALOIm46jmKV
+ VeewRJmT0r65gqv72cip94HRpDLfJnkXYMuc6CMnOelnM8ynEcG5UV/Jt9aHyJu9W7
+ XD31k/UbmGRqpcNk8Wz0CetfKurQ1X5+KGAmDLHcIX+iTaNRpsl//jlgaFEwzlmfRw
+ AKRXLaA/pk/Xa+ZaeO5A9+Gd05fneeFrosjvKYsvBM/GBMnRA17ORE7Ggkc1y3lM3Y
+ UtvjuTJQah65xQCbQ9ro1iNpZf/jyhWVpEmdC5AjtkjDF2Bi8gN5uis5umut05g5Nh
+ e31PndqXNRwTw==
+Received: by mail-ed1-f52.google.com with SMTP id r4so581847edi.5
+ for <wireguard@lists.zx2c4.com>; Tue, 02 Nov 2021 11:07:08 -0700 (PDT)
+X-Gm-Message-State: AOAM531ts3didKWfBSBnJRNi9OTeSRCUFo/wv3kshWKAqLUesFip0dma
+ 2LAH1VSXIAKKg9NVwXT8/iu+lJ/35LcZ+c+qY4U=
+X-Google-Smtp-Source: ABdhPJzgjd+YvNsX+I5QaCzvt8sADwy1oTPOb12Go/o07E4Hk7XevwLBNTSTZNYJWuL8KOg/GpLn1H4WTJjNiuIszgc=
+X-Received: by 2002:a17:907:2627:: with SMTP id
+ aq7mr37954593ejc.483.1635876427144; 
+ Tue, 02 Nov 2021 11:07:07 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.2.1
+References: <CAHFBhiah1NgozmGWtTgvZEfhyxDNA0EySiZao+fsK-Z9_1QLpQ@mail.gmail.com>
+In-Reply-To: <CAHFBhiah1NgozmGWtTgvZEfhyxDNA0EySiZao+fsK-Z9_1QLpQ@mail.gmail.com>
+From: am2@rcsnetwork.com
+Date: Tue, 2 Nov 2021 14:06:55 -0400
+X-Gmail-Original-Message-ID: <CAHFBhibg_LDeUZ=96d2u=7kh2py0zC5Abp_L0S7Krd2xptZOyQ@mail.gmail.com>
+Message-ID: <CAHFBhibg_LDeUZ=96d2u=7kh2py0zC5Abp_L0S7Krd2xptZOyQ@mail.gmail.com>
+Subject: the format of the specified network name is invalid
 To: wireguard@lists.zx2c4.com
-Content-Language: en-US
-From: Frank Volf <frank@deze.org>
-Subject: Wireguard on FreeBSD - a few questions
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="UTF-8"
 X-Mailman-Approved-At: Wed, 03 Nov 2021 10:53:18 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -62,41 +66,10 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-
-Hi,
-
-This weekend I installed Wireguard on FreeBSD 13.0 and until now 
-everything seems to work fine (I use the kernel module).
-Installation and configuration was easy and connecting with the Android 
-app works great as well.
-
-I do have a few questions.
-
-1) Is it possible on FreeBSD to enable some kind of logging? I did made 
-a small configuration error with my first client and it was hard to find 
-the error, because there does not seem to be any logging at all.  Some 
-logging information would be appreciated and probably wold have pointed 
-me faster to the fact that I needed to switch two keys in my config.
-
-2) I noticed that Wireguard uses a wildcard to listen to all IP 
-addresses on my multi-homed machine on his dedicated UDP port. I would 
-prefer if Wireguard would only bind to the specific IP address on the 
-outside interface that is designated for that use. Is this possible?
-
-3) Final question: is it possible on the server side to restrict the 
-destinations that clients can connect to it? I know, that I can set the 
-AllowedIPs on the client side to restrict that, but that setting can be 
-changed at the client side. It would be nice if I could restrict 
-destinations at the server side (so client X can only connect to an IP 
-address of an internal server that it needs access to but nothing else). 
-I can probably use a state full packet filtering firewall for this, but 
-it would it be possible to configure this on the Wireguard server side 
-as well?
-
-That said, I'm pleased with the first test results of Wireguard on 
-FreeBSD and hopefully it keeps on running fine. Great product!
-
-Kind regards,
-
-Frank
-
+Ever since the last update to the windows client, I receive the
+following error when trying to start a tunnel: "the format of the
+specified network name is invalid" I can connect using the android
+client and the windows client worked fine before the last update so
+I'm pretty sure it has something to do with the windows client    Has
+anyone else encountered this or know of a solution?  Wireguard is
+basically unusable from this client at the moment.
