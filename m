@@ -2,52 +2,43 @@ Return-Path: <SRS0=+otM=PW=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73601C433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  3 Nov 2021 20:55:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 28E19C433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  3 Nov 2021 21:34:33 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 5B82F6109F
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  3 Nov 2021 20:55:07 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 5B82F6109F
-Authentication-Results: mail.kernel.org; dmarc=fail (p=reject dis=none) header.from=deze.org
+	by mail.kernel.org (Postfix) with ESMTPS id 0444560F9D
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  3 Nov 2021 21:34:31 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 0444560F9D
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=spamteq.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e202bec9;
-	Wed, 3 Nov 2021 20:52:43 +0000 (UTC)
-Received: from tampoco.espindola.nl (tampoco.espindola.nl [149.210.133.191])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4f6d542b
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id eaaa812a;
+	Wed, 3 Nov 2021 21:34:30 +0000 (UTC)
+Received: from mail-out2.spamhaus.org (mail-out2.spamhaus.org
+ [193.190.148.132])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 40fa7506
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 3 Nov 2021 20:52:41 +0000 (UTC)
-Received: from [192.168.68.249] (drawbridge.espindola.nl [62.251.122.20])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (Client did not present a certificate)
- (Authenticated sender: frank-deze)
- by tampoco.espindola.nl (Postfix) with ESMTPSA id 2C4E33C01A5;
- Wed,  3 Nov 2021 21:52:41 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=deze.org; s=default;
- t=1635972761; bh=0NdtzNeCVvt9q1JezqoATHKikCmDn4VwMnrHISJC1VQ=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=rsoQGOPDAXOl/l4wdqdc89x6jY2np/zeGKxXl4j7uTqKlVzsb1TH2mahGL83qf9cl
- 97p5PRPUNd/1yXeq9KWeddSHur/udmVlX5piV35F3aoxBmkdLXb0hc1Cx7IrNPPJy+
- tGhrgPWyLy4gZ1BhJ9eUvRKQJuXvscvuPWnMT1XTPurMiFqtFC4auFZBFPQczsaw8P
- dCqJmjP0D5aARFK+tshxnqCcMPMu4kzDVry1z1XoTa91sytRERb8QLpafcFY0d07rx
- d79SSI84g3gghAIi+sC6AnGQcpAa2d51i4hAuL1d7qT9JKHDkhJ+WZq7RJhEaO0JFo
- 1RvGKqffHCiFQ==
-Message-ID: <3b364170-7a7e-d9aa-d365-fe0ce3390acd@deze.org>
-Date: Wed, 3 Nov 2021 21:52:40 +0100
+ for <wireguard@lists.zx2c4.com>; Wed, 3 Nov 2021 21:34:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=spamteq.com;
+ s=dkim2018; t=1635975267;
+ bh=xuc7IQ2QcYcdibVuJlAwNy+Pw1fbspIdGRmoPNA7aFI=;
+ h=Date:Subject:To:From:From:Subject:Date:To:Cc;
+ b=oxuvPR+MwUt5Yi8oatz9ltIpdIk+x/QVXLqSsW0Gy8qS8Oep3D4GYBLqJg0DrSa8c
+ dm/7/zaq/epb7Q1Fjl/lI5Fw77+cIBodhPYtieSckXUWicxh841JxUqqy852NtDciJ
+ Tn37JzEQJqgisW9wDlr9jGb4Vlgas5X1oNwXRmT3ohpShdO6plOUILLlTbxYZHfhCU
+ IsEqFlLcqGT94XIFmufiP8Yzil60pr/EbjbqW18ORR221ANnYGjTW3A4XW4gusRA3n
+ QiAmNzeVLPifvQGNZEq5gYlqsWAEYU59L0/J75dguwaVas4gA1sGpwzMwCgO5xI5gv
+ /1w0yBgIKuksw==
+Message-ID: <K17663-81.1635975267@spamhaus.org>
+Date: Wed, 3 Nov 2021 21:34:27 +0000
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.2.1
-Subject: Re: Wireguard on FreeBSD - a few questions
+Subject: Re: Split DNS for macOS
 Content-Language: en-US
-To: Kyle Evans <kevans@freebsd.org>
-Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
-References: <cfddc41d-0768-af1a-d527-d2bccd5cfd56@deze.org>
- <CACNAnaE8DrntMR0RifxNzijLWfBXNHxm2poSY-DewOQszP-XqQ@mail.gmail.com>
-From: Frank Volf <frank@deze.org>
-In-Reply-To: <CACNAnaE8DrntMR0RifxNzijLWfBXNHxm2poSY-DewOQszP-XqQ@mail.gmail.com>
+To: wireguard@lists.zx2c4.com
+References: <CAHsVW7N2JA25KXDRM0ghNrn-9BZpuqY0OMHX4WTi7hmXjS9nGA@mail.gmail.com>
+From: Andrew Fried <afried@spamteq.com>
+In-Reply-To: <CAHsVW7N2JA25KXDRM0ghNrn-9BZpuqY0OMHX4WTi7hmXjS9nGA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-BeenThere: wireguard@lists.zx2c4.com
@@ -64,35 +55,103 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
+Hi Matty,
 
-Hi Kyle,
->> 1) Is it possible on FreeBSD to enable some kind of logging? I did made
->> a small configuration error with my first client and it was hard to find
->> the error, because there does not seem to be any logging at all.  Some
->> logging information would be appreciated and probably wold have pointed
->> me faster to the fact that I needed to switch two keys in my config.
->>
-> If you set 'debug' on the interface (`ifconfig wg0 debug`) then it'll
-> write some useful bits to syslog for your perusal.
+I understand exactly what you're trying to accomplish and agree that 
+split dns can be challenging, especially with multiple VPN gateways.
 
-O.k. good to know this. It would be even better if this was documented, 
-I think a if_wg manual page for FreeBSD would be appropriate.
+My point is that what you're describing is a DNS issue, not a 
+firewall/vpn/routing issue.  As such, I think there's more eloquent way 
+to solve DNS related issues.
 
->> 2) I noticed that Wireguard uses a wildcard to listen to all IP
->> addresses on my multi-homed machine on his dedicated UDP port. I would
->> prefer if Wireguard would only bind to the specific IP address on the
->> outside interface that is designated for that use. Is this possible?
+The old fashioned way is to add exceptions to the equivalent of the 
+/etc/host file.  Not ideal, doesn't scale well and pretty static, but if 
+you're relying on just a few private host mappings it works pretty well.
 
-I think it is useful if you could bind Wireguard  to use/listen on a 
-specific IP address, instead of the wildcard.
-For example, for my tests I used a secondary (alias) IP address on a 
-server as the entry point for Wireguard tunnels.
-However, if the server starts a session to the client (or tries to check 
-if the client is still alive), it uses the primary interface address 
-instead.
-Binding it to a specific IP address would solve this.
+The second and more palatable solution is to have the internal 
+nameservers running software that supports views - such that queries for 
+xxxx.example.com that originate from private address space return 
+different answers than if the query originated from public space.
 
-Kind regards,
+A third option would be set the internal recursives up as forwarders 
+that only respond authoritatively for your private "mydomain.internet" 
+and forward all other requests to nameservers capable of public recursion.
 
-Frank
+There's the dnsdist solution, which is an advanced dns proxy server 
+capable of routing requests to different recursives based on the domain 
+name.  DNSDIST does a lot of other stuff as well, but the heart of is 
+intelligent proxying.  In our racks we use DNSDIST to distribute around 
+a million DNS queries per minute and it works flawlessly.
 
+Basically, what I'm suggesting is that DNS servers handle DNS and 
+wireguard handle routing/transport.  Adding VPN functionality to a 
+nameserver or dns capabilities to Wireguard adds complexities that can 
+be better handled elsewhere.
+
+What makes Wireguard so good is that it does one thing and does it 
+really, really well.
+
+Andrew
+
+
+On 10/29/21 5:06 PM, Matty Driessen wrote:
+> Hello Andrew,
+> 
+> I just want to chime in here and say that I think the current
+> implementation of search domains is simply not working the way it
+> should on the MacOS client.
+> 
+> My use case is pretty common, an internal DNS server that has entries
+> for internal servers. I defined a search domain in the WireGuard
+> configuration; DNS = 10.13.13.1 mydomain.internal. The search domain
+> is for convenience, so I can just use the servername instead of
+> servername.mydomain.internal. Now this works fine when I route all the
+> traffic through the VPN (AllowedIPs = 0.0.0.0/0) but the search domain
+> is completely ignored when I only route the traffic I need to
+> (AllowedIPs = 10.13.13.0/24 192.168.0.0/24).
+> 
+> I don't think this is a configuration error on my side. The DNS
+> responds fine when using servername.mydomain.internal. This problem is
+> even mentioned in the "WireGuard macOS & iOS TODO List"
+> 9. matchDomains=[“”] doesn’t do what the documentation says.
+> Specifically, DNS servers are not used if allowed IPs isn’t 0.0.0.0/0.
+> 
+> The description isn't 100% accurate (or outdated), the DNS server is
+> used but the search domain isn't being set on the primary resolver.
+> Some have solved this issue by adding the search domains to the list
+> of matchDomains; dnsSettings.matchDomains = [""] +
+> dnsSettings.searchDomains. But that way the DNS server specified in
+> WireGuard is still the primary resolver for all DNS queries.
+> 
+> Here is a link on how OpenVPN handles this and I think it's how it
+> should work when not using AllowedIPs 0.0.0.0/0.
+> https://openvpn.net/faq/how-does-ios-interpret-pushed-dns-servers-and-search-domains/
+> On a split-tunnel, where redirect-gateway is not pushed by the server,
+> and at least one pushed DNS server is present:
+> - route all DNS requests through pushed DNS server(s) if no added
+> search domains.
+> - route DNS requests for added search domains only, if at least one
+> added search domain.
+> 
+> Yours sincerely,
+> Matty
+> 
+> --
+> 
+> Hi Stephen,
+> 
+> A better solution to your problem would be to deploy DNSDIST:
+>          https://dnsdist.org/
+> 
+> I for one would hope that esoteric requests that address a solution
+> for less than 1% of the users would be rejected with the overall goal
+> of preventing feature creep and bloat.
+> 
+> Andrew
+> 
+
+-- 
+Andrew Fried
+afried@spamteq.com
++1.703.667.4050 Office
++1.703.362.0067 Mobile
