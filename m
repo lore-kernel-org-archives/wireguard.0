@@ -2,52 +2,59 @@ Return-Path: <SRS0=+otM=PW=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FB91C433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  3 Nov 2021 16:03:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DF9AC433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  3 Nov 2021 16:18:48 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 836DB60E05
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  3 Nov 2021 16:03:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 836DB60E05
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=chil.at
+	by mail.kernel.org (Postfix) with ESMTPS id DCA27610E5
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  3 Nov 2021 16:18:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org DCA27610E5
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 226c420e;
-	Wed, 3 Nov 2021 16:03:32 +0000 (UTC)
-Received: from mail.onetrix.net (eleanor.onetrix.net [86.59.13.171])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 2575b77e
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id ead2d958;
+	Wed, 3 Nov 2021 16:18:46 +0000 (UTC)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 85afa6a2
  (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Wed, 3 Nov 2021 16:03:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=chil.at;
- s=default; 
- h=Content-Transfer-Encoding:Content-Type:In-Reply-To:Subject:From:References:To:MIME-Version:Date:Message-ID;
- bh=m6bEBiY+z7wOo+zuxpPbpCp8tygpGaUsPc0iVWANGDg=; 
- b=DXURSeECN7XDFsi/zGBsqVfdxnsIdvAQ+ld1vGerqYneX7vGY7kw0c9t8y47VpCcrlrHuO+ChxeKcKSly2zeydr9r81EdJWfHYtQ2/PhnBtpAvyfomdQWPuqthyBs+O5BVN16LbwtWq55yskzyJs1/NrZYTdyxQCqMPwIsiZKRY=;
-Received: from [10.5.44.225] (port=11606 helo=mail.onetrix.net)
- by mail.onetrix.net with esmtps (TLSv1:DHE-RSA-AES256-SHA:256)
- (Exim 4.82_1-5b7a7c0-XX) (envelope-from <mail@chil.at>)
- id 1miIjX-0005CY-2W
- for wireguard@lists.zx2c4.com; Wed, 03 Nov 2021 17:03:28 +0100
-Received: from [172.22.0.123] (193.238.156.229) by mail.onetrix.net
- (10.5.44.225) with Microsoft SMTP Server (TLS) id 14.1.438.0; Wed, 3 Nov 2021
- 17:03:24 +0100
-X-CTCH-RefID: str=0001.0A682F27.6182B2D0.0028, ss=1, re=0.000, recu=0.000,
- reip=0.000, cl=1, cld=1, fgs=0
-Message-ID: <ddc62364-6764-3662-5d76-f720a4a375ff@chil.at>
-Date: Wed, 3 Nov 2021 17:03:25 +0100
+ for <wireguard@lists.zx2c4.com>; Wed, 3 Nov 2021 16:18:44 +0000 (UTC)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id C1644610FC
+ for <wireguard@lists.zx2c4.com>; Wed,  3 Nov 2021 16:18:42 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="iI1WyqIJ"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1635956320;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=rVUPe2zjlX411SkgnoaIIl1LzQ/EGJx0m5rKUjo+H8c=;
+ b=iI1WyqIJBgAwzJ2+NXreH5cWmo4dLIyQJYIPhysytBUO4ZeBbbZ51fonRTjEBcsjci26nB
+ 73KFWSxXWsuxMxLduDzCHoN+XSBGt1q1ktmSJC7WDCprr4ck3+yZ2ANSZemhEzFgRH0Lhf
+ wbxBypP2bwUT2Q8z9bmxFBNLJlf47Dc=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id f1e211d1
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Wed, 3 Nov 2021 16:18:40 +0000 (UTC)
+Received: by mail-yb1-f177.google.com with SMTP id a129so7611935yba.10
+ for <wireguard@lists.zx2c4.com>; Wed, 03 Nov 2021 09:18:40 -0700 (PDT)
+X-Gm-Message-State: AOAM531+GkwWG/0oaAm8PVO4N7aDCMbiPJlzoDUaCMza+IXHAq/v/DXc
+ Ay4dyOVOpMLgwEnIrQXfLrcrWpoglYQvGmQRZp0=
+X-Google-Smtp-Source: ABdhPJxgIggwkNVrcrk5c2qy//fojUg3l5OXw/ly9mJWW0GPAsGXs3Fl3ELHQtwaFCoftjlKDLcllwr6oLOteoIGSMA=
+X-Received: by 2002:a25:ba0f:: with SMTP id t15mr51099063ybg.62.1635956319833; 
+ Wed, 03 Nov 2021 09:18:39 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.2.1
-Content-Language: de-AT
-To: <wireguard@lists.zx2c4.com>
 References: <1da52141-2cca-9ebb-e415-af471b14e74e@chil.at>
-From: Christoph Loesch <wireguard-mail@chil.at>
+ <ddc62364-6764-3662-5d76-f720a4a375ff@chil.at>
+In-Reply-To: <ddc62364-6764-3662-5d76-f720a4a375ff@chil.at>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Wed, 3 Nov 2021 17:18:28 +0100
+X-Gmail-Original-Message-ID: <CAHmME9pDZ30wAYYgEe3TNp8pwiEW4TF0Lj=oxsaEsvvoQNGQwA@mail.gmail.com>
+Message-ID: <CAHmME9pDZ30wAYYgEe3TNp8pwiEW4TF0Lj=oxsaEsvvoQNGQwA@mail.gmail.com>
 Subject: Re: WireGuard connection without interface-address / linknet
-In-Reply-To: <1da52141-2cca-9ebb-e415-af471b14e74e@chil.at>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [193.238.156.229]
+To: Christoph Loesch <wireguard-mail@chil.at>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -62,78 +69,6 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi,
+Fixed, thanks.
 
-regarding the Windows Client I got a good hint in the chat from user another| who told me to look at the routing table.
-
-There I figured out the differences:
-- if an address is configured, the Windows Client sets the correct routes from defined AllowedIPs to reach the remote subnets.
-- if *no address* is configured in [Interface] then not a single route is set from AllowedIPs but it sets routes for APIPA 169.254.* subnet.
-
-Version information:
-App version: 0.5.1
-Driver version: 0.10.1
-Go version: 1.17.2
-Operating System: Windows 10.0.19043
-Architecture: amd64
-
-Kind regards,
-Christoph
-
-Am 03.11.2021 um 14:45 schrieb Christoph Loesch:
-> Hi,
->
-> (mail resent without URLs, because it got filtered by moderation)
->
-> I am using WireGuard on an OpenWRT VM as server for clients basically to reach the server's internal LAN at 10.5.44.0/24
->
-> As clients I currently use different WireGuard implementations like:
-> - Ubiquiti EdgeRouter (EdgeOS v2 based on Debian/stretch) with package from github/WireGuard/wireguard-vyatta-ubnt
-> - Mikrotik RouterOS v7.1 with Mikrotik own (at the moment beta) implementation
-> - Windows 10 Client from wireguard website
->
-> Server config looks like this:
->
-> config interface 'wg0'
->         option proto 'wireguard'
->         option private_key 'cNT...8Hc='
->         option listen_port '51820'
->         list addresses '172.27.0.1/16'
-> config wireguard_wg0
->         option description 'router-test'
->         option public_key 'qT5...YGo='
->         option preshared_key 'Dle...ozI='
->         option persistent_keepalive '25'
->         option route_allowed_ips '1'
->         list allowed_ips '172.27.34.28/32'
->         list allowed_ips '10.34.28.0/24'
->
-> Client config looks like this:
->
-> [Interface]
-> PrivateKey = mDk...uVs=
-> Address = 172.27.34.28
-> [Peer]
-> PublicKey = 1sy...IkU=
-> PresharedKey = Dle...ozI=
-> AllowedIPs = 172.27.0.1/32,10.5.44.0/24
-> Endpoint = server.mydomain.at:51820
-> PersistentKeepalive = 25
->
-> Clients should just be able to reach the server's 10.5.44.0/24 subnet and this subnet should be able to reach clients at (in this one example) 10.34.28.0/24
-> Now this works all well as expected but I would like to omit using the 172.27.* addresses/linknet if possible because I dont really need/use this as it is only defined for the WireGuard tunnel itself.
->
-> On the EdgeRouter this also works perfectly fine if I remove the 172.27.* address on both sides. It is still possible to reach the other end repestively.
-> On the Mikrotik device and on the Windows client (using exact same configuration) it does not work as soon as I remove just the 172.27. address/linknet from configuration.
-> (I didn't test other clients yet)
->
-> I guess on the EdgeRouter this works because I set: set interfaces wireguard wg0 **route-allowed-ips true** - so the corresponding routes are added.
-> The Mikrotik device and the Windows client do not offer such an option, so those routes have to be added manually I guess?
-> But why does that work "out of the box" as soon as I add any linknet (172.27.* in my example) for the tunnel itself to the configuration?
->
-> Is this a fault in the implementation and I should file a bug report or is that expected that way?
->
-> (it's not a big issue using the linknet, I am just curious and would like avoid using it if it is not neccessarily required)
->
-> Thanks for any thoughts and kind regards,
-> Christoph
+https://git.zx2c4.com/wireguard-windows/commit/?id=46da2d426aa79725abafdfb615f623ef1d2d9aa2
