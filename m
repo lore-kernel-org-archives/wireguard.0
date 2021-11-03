@@ -2,59 +2,67 @@ Return-Path: <SRS0=+otM=PW=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 14F14C433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  3 Nov 2021 10:57:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB21BC433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  3 Nov 2021 10:57:12 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 335AE6103B
-	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  3 Nov 2021 10:57:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 335AE6103B
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=ct.de
+	by mail.kernel.org (Postfix) with ESMTPS id 27DE56103B
+	for <zx2c4-wireguard@archiver.kernel.org>; Wed,  3 Nov 2021 10:57:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 27DE56103B
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 32851442;
-	Wed, 3 Nov 2021 10:53:22 +0000 (UTC)
-Received: from relay.heise.de (relay.heise.de [2a00:e68:14:800::19:19])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id a9c9ee57
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id fb5cd925;
+	Wed, 3 Nov 2021 10:53:28 +0000 (UTC)
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com
+ [2607:f8b0:4864:20::434])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ecd0e218
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>;
- Sat, 30 Oct 2021 21:01:00 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.20.0.1.32\))
-Subject: Re: Split DNS for macOS
-From: Dusan Zivadinovic <dz@ct.de>
-In-Reply-To: <E3607380-8E46-42CC-80B5-BB38F206E9BC@slarew.net>
-Date: Sat, 30 Oct 2021 23:00:38 +0200
-Cc: wireguard@lists.zx2c4.com
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <C824C50B-843C-4C77-B7C3-62E850B73CB0@ct.de>
+ for <wireguard@lists.zx2c4.com>; Wed, 3 Nov 2021 09:43:06 +0000 (UTC)
+Received: by mail-pf1-x434.google.com with SMTP id x64so1740978pfd.6
+ for <wireguard@lists.zx2c4.com>; Wed, 03 Nov 2021 02:43:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :content-transfer-encoding;
+ bh=sU7tswqjjo/tSwXzRbs4bvSDtAtaNCPwhburiT/fH4s=;
+ b=RYl9wzH++A3xbGeII4/kIyVaLe/QCCfHYtrY14JVjNaHHVBo9L/XsI1a2oIIHfSSlq
+ U+iT1Ml0PcB9vSUvAtZyfvA8MW3hIWzVlBnGdVyKQpLr5Sc5e+XjrKw5SwdtX3ycDQCL
+ qzPAixlVME51PuGYDGgdvj5dbk5quhzGN7bqgxhszw8/2wHmpSWqbmNQKaT6smS8Enlp
+ jt5cu6vA037G25PbX64KTH4xnfFk5fOUHCWL0fxaluzmArfkehHmoc85Rs+eBZz4LDpA
+ 4y6z2kU+8plTa3OhnIe9lwZKtBuy3cfYKquDa73SSBsp3tw0ejQ/IUyXiyZKW5K7rqXv
+ xktw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:content-transfer-encoding;
+ bh=sU7tswqjjo/tSwXzRbs4bvSDtAtaNCPwhburiT/fH4s=;
+ b=uTY35IJ9QBxf1GY3ruFptwkcTIASHI6tSGKAJzr/XA3MHwZ5sqApwCgfKQizxXTYjl
+ t4EY6c7/rqS91+FXiThbWidLgsza0ME0VunoNuY3bsKLRRqnzLE9U2XPAZy8GyL90+Ph
+ rX/3XRM500klJjun4hSS2wxvHSSV65LX/T/O6cyrlNP7yUNujXEVvK/WgCOsY3FWsG4F
+ 06MIKugXDI6zOQ1LNLZeFUJ3kj8wS1j7DV80DMIZropxgk/JK19Jc6/3ZT1IcZpKP+zP
+ f6K2K8WWtdlg0MufYXHyyCzq0/83scu/yV7dn5XKJA9Xj8H/ATsM9XISOG0HI/Q4ZN2w
+ YU7w==
+X-Gm-Message-State: AOAM533oWe5s+DKckMV9TuJj8MLX4dTDIKw88m/yVcHihAqTNUARqX/A
+ UdF1iolGoLBHUOGR3Qv3Rdfvy3FoqKW1NRDt9bcoGfu7tDw=
+X-Google-Smtp-Source: ABdhPJyy6CzpOF34VTanLfOzKODy5aJLi7m0HTO3xE2gn0krwBdp1TbIYf3l2tCoDsDvcxVPOyPoAIQ4qPF1uv8Ud+I=
+X-Received: by 2002:a65:6792:: with SMTP id e18mr16067386pgr.318.1635932583931; 
+ Wed, 03 Nov 2021 02:43:03 -0700 (PDT)
+MIME-Version: 1.0
 References: <20211028071638.88001-1-stephen@slarew.net>
  <0e80daf1-b4c2-b177-28ca-79e6575a339c@baywinds.org>
  <ED3FB4B3-96AD-4B98-86EC-D9F7999A530F@slarew.net>
  <K25247-14.1635527002@spamhaus.org>
  <E3607380-8E46-42CC-80B5-BB38F206E9BC@slarew.net>
-To: Stephen Larew <stephen@slarew.net>
-X-Mailer: Apple Mail (2.3693.20.0.1.32)
-X-TMScanToken: 453c0e49fdd1e337ceb918501f8f6e0666bed1e4
-X-TMASE-Version: DDEI-3.5-8.6.1018-26500.003
-X-TMASE-Result: 10--1.619500-10.000000
-X-TMASE-MatchedRID: IeZYkn8zfFpWWOy3obJL+2vDT+wC7pqFElLH7tCb90oZSz1vvG+0mqvo
- lbfO7oa0btAD8fpuJtMcDCbCSEq3lNaZz6pl1Mhet6hFzXOwpPlBSY6kx+M18WBSbru26cn6Mdd
- NDcMzD2fH2iVVnOYNp5lkW/4zIRSNQ8+LSipOfwTxryc2N+6fmvg/s23WPBIpIFWQH/JudNjGXS
- 36jTcV+ggXkgFGwPXCK+5FmIUWylR0AdYYTJWxRN5x7RpGJf1aDvc/j9oMIgX5+tteD5RzhbBXu
- d9Ra+w0UjwC4PXX8Bo8aQofJD94ANtn1etZCRwy2cOr5oNmMZle8fEpBZ2EVMGx/mq3jiNnMEGU
- YlC3/bftazGGarT1BAEh8ANbLEbyJmkDHQnMKB5v+/LIBBauP8TGavmGo0vWMYkmNIO7+hYRtaG
- eRi2iOsUKZFvJm5zfhyqLaa4EBlv4miWUEaTQPnpRh12Siy9rQR7lWMXPA1vyN+XEEoySvtGvJV
- PfEl1Ikx8DrRF4EzWM2L7lMaFHZZ7ghrpuj+9iGKC1HVmafmMoOyQJh7uOKBHfiujuTbedKKi9X
- IZVdsWnbai5eMzQpa3z9JIf5dPSRQL375LzcCsD2WXLXdz+ARMDsAIXSN0DevFaYkHe0Bht/S8J
- 0TkT+RnO3iVn8eXNmEw+qTWEPMhDl7IQyR6OyXbqbYm4qoGdAajW+EL+laMINpIFnbd6mr9Uo8X
- uHy63XYU84yyHWCuTox1acdgQnzVbiUNfabi0WTWEh5N2a9Fj0mUvAvV2DYawFn5SbGtbAMJcHO
- zzDuNafXC1NMQQtTUJ6kuOBFQ8XhIgqyFXxJeeAiCmPx4NwFkMvWAuahr8trNGq+WQEvSrusVRy
- 4an8WBOE3yqmaU2F5iXm5LZACA=
-X-TMASE-SNAP-Result: 1.821001.0001-0-1-22:0,33:0,34:0-0
-X-TMASE-INERTIA: 0-0;;;;
+ <54f3f2a6-7c58-dc42-56bd-fffe74bc3a18@aixigo.com>
+In-Reply-To: <54f3f2a6-7c58-dc42-56bd-fffe74bc3a18@aixigo.com>
+From: Matty Driessen <mhp.driessen@gmail.com>
+Date: Wed, 3 Nov 2021 10:42:52 +0100
+Message-ID: <CAHsVW7N0EYtUegNd278fFigGv6oucE5+NbkuScKNGnHfaOau5Q@mail.gmail.com>
+Subject: Re: Split DNS for macOS
+To: wireguard@lists.zx2c4.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Mailman-Approved-At: Wed, 03 Nov 2021 10:53:18 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
@@ -70,180 +78,232 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hi list,
+Hello,
 
-I would appreciate that, its a usefull feature.
+I just want to chime in here and say that I think the current
+implementation of search domains is simply not working the way it
+should on the MacOS client.
 
-Think of connecting to multiple remote VPN peers simultaneously,
-and use different DNSes for certain domains in each VPN connection.
+My use case is pretty common, an internal DNS server that has entries
+for internal servers. I defined a search domain in the WireGuard
+configuration; DNS =3D 10.13.13.1 mydomain.internal. The search domain
+is for convenience, so I can just use the servername instead of
+servername.mydomain.internal. Now this works fine when I route all the
+traffic through the VPN (AllowedIPs =3D 0.0.0.0/0) but the search domain
+is completely ignored when I only route the traffic I need to
+(AllowedIPs =3D 10.13.13.0/24 192.168.0.0/24).
 
-Just as an example, the iOS app DNSCloak also sports a split DNS =
-function.
+I don't think this is a configuration error on my side. The DNS
+responds fine when using servername.mydomain.internal. This problem is
+even mentioned in the "WireGuard macOS & iOS TODO List"
+9. matchDomains=3D[=E2=80=9C=E2=80=9D] doesn=E2=80=99t do what the document=
+ation says.
+Specifically, DNS servers are not used if allowed IPs isn=E2=80=99t 0.0.0.0=
+/0.
 
-regards,
+The description isn't 100% accurate (or outdated), the DNS server is
+used but the search domain isn't being set on the primary resolver.
+Some have solved this issue by adding the search domains to the list
+of matchDomains; dnsSettings.matchDomains =3D [""] +
+dnsSettings.searchDomains. But that way the DNS server specified in
+WireGuard is still the primary resolver for all DNS queries.
 
-Dusan
+Here is a link on how OpenVPN handles this and I think it's how it
+should work when not using AllowedIPs 0.0.0.0/0.
 
-> Am 29.10.2021 um 23:07 schrieb Stephen Larew <stephen@slarew.net>:
->=20
->> On Oct 29, 2021, at 10:03, Andrew Fried <afried@spamteq.com> wrote:
->>=20
->>> On Oct 29, 2021, at 08:33, Stephen Larew <stephen@slarew.net> wrote:
->>>=20
->>>> On Oct 28, 2021, at 02:58, Bruce Ferrell <bferrell@baywinds.org> =
-wrote:
->>>>=20
->>>> On 10/28/21 12:16 AM, Stephen Larew wrote:
->>>>> For many months now, I have been running a patched WireGuard macOS =
+https://openvpn.net/faq/how-does-ios-interpret-pushed-dns-servers-and-searc=
+h-domains/
+On a split-tunnel, where redirect-gateway is not pushed by the server,
+and at least one pushed DNS server is present:
+- route all DNS requests through pushed DNS server(s) if no added
+search domains.
+- route DNS requests for added search domains only, if at least one
+added search domain.
+
+Regards,
+Matty
+
+On Wed, Nov 3, 2021 at 10:20 AM Harald Dunkel <harald.dunkel@aixigo.com> wr=
+ote:
+>
+> Hi folks,
+>
+> I really like this patch. Currently DNS on MacOS is unable to resolve
+> both my local DNS names and the domain in the office in parallel, if
+> Wireguard is enabled. I have to use somehost.local to fall back to
+> zeroconf for my LAN as a workaround, which is pretty annoying.
+>
+> My suggestion would be to set SupplementalMatchDomains instead(!) of
+> SearchDomains, using the current config file syntax without '~'. Since
+> SupplementalMatchDomainsNoSearch is disabled by default, setting
+> SupplementalMatchDomains is sufficient to configure both lists. See
+>
+> https://developer.apple.com/business/documentation/Configuration-Profile-=
+Reference.pdf
+>
+> This has to be verified, of course.
+>
+>
+> Regards
+> Harri
+>
+>
+>
+> On 2021-10-29 23:07:38, Stephen Larew wrote:
+> >> On Oct 29, 2021, at 10:03, Andrew Fried <afried@spamteq.com> wrote:
+> >>
+> >>> On Oct 29, 2021, at 08:33, Stephen Larew <stephen@slarew.net> wrote:
+> >>>
+> >>>> On Oct 28, 2021, at 02:58, Bruce Ferrell <bferrell@baywinds.org> wro=
+te:
+> >>>>
+> >>>> On 10/28/21 12:16 AM, Stephen Larew wrote:
+> >>>>> For many months now, I have been running a patched WireGuard macOS =
 app
->>>>> that enables a split DNS configuration. I would like to try to =
-upstream
->>>>> my patches for split DNS.
->>>>>=20
->>>>> There has been some interest in this patch:
->>>>> - "Mac APP DNS Search Domain" thread from July and August 2021 [1]
->>>>> - A commenter on my GitHub fork of wireguard-apple.
->>>>>=20
->>>>> What is split DNS? It allows sending DNS queries to a specific =
-server
->>>>> based on the domain name. Systemd-resolved calls it a routing =
-domain.
->>>>> Apple's Network Extension framework calls it a match domain.  =
-Split DNS
->>>>> is especially useful for internal DNS servers.
->>>>>=20
->>>>> For example, if corp.example.com is a routing domain for the DNS =
-server
->>>>> at 192.0.2.1 (only accessible over WireGuard), then
->>>>> server.corp.example.com is resolved using 192.0.2.1 while
->>>>> www.example.com is resolved using some other DNS resolver =
-(depending on
->>>>> the other network settings in macOS).
->>>>>=20
->>>>> The proposed patch adds new syntax to the wg-quick DNS=3D line.
->>>>> Specifically, a tilde prefixed domain is treated as a routing =
-domain.
->>>>> Multiple routing domains can be added.
->>>>>=20
->>>>> Limitations:
->>>>> - Needs modifications to iOS UI to work on iOS.
->>>>> - Only matching routing domains are sent to the DNS servers =
-specified in
->>>>> the DNS=3D config line.  No separate fallback catch-all DNS server =
-can
->>>>> be set.
->>>>> - Routing/match domains are also included in the list of search =
-domains.
->>>>> This could be changed with the matchDomainsNoSearch API, but =
-lacking
->>>>> more UI or config file changes to expose this option to the user, =
-I
->>>>> went with the default.
->>>>>=20
->>>>> [1] =
-https://lore.kernel.org/wireguard/20210810074232.aah5ktq5yzysaaey@SvensMac=
-BookAir-2.local/T/
->>>>> [2] =
-https://github.com/slarew/wireguard-apple/commit/6ebc356d9e11ab91443e06de5=
-e89f1af57fcdff8
->>>>=20
->>>> That seems to be a redefinition of the existing definition of split =
+> >>>>> that enables a split DNS configuration. I would like to try to upst=
+ream
+> >>>>> my patches for split DNS.
+> >>>>>
+> >>>>> There has been some interest in this patch:
+> >>>>> - "Mac APP DNS Search Domain" thread from July and August 2021 [1]
+> >>>>> - A commenter on my GitHub fork of wireguard-apple.
+> >>>>>
+> >>>>> What is split DNS? It allows sending DNS queries to a specific serv=
+er
+> >>>>> based on the domain name. Systemd-resolved calls it a routing domai=
+n.
+> >>>>> Apple's Network Extension framework calls it a match domain.  Split=
+ DNS
+> >>>>> is especially useful for internal DNS servers.
+> >>>>>
+> >>>>> For example, if corp.example.com is a routing domain for the DNS se=
+rver
+> >>>>> at 192.0.2.1 (only accessible over WireGuard), then
+> >>>>> server.corp.example.com is resolved using 192.0.2.1 while
+> >>>>> www.example.com is resolved using some other DNS resolver (dependin=
+g on
+> >>>>> the other network settings in macOS).
+> >>>>>
+> >>>>> The proposed patch adds new syntax to the wg-quick DNS=3D line.
+> >>>>> Specifically, a tilde prefixed domain is treated as a routing domai=
+n.
+> >>>>> Multiple routing domains can be added.
+> >>>>>
+> >>>>> Limitations:
+> >>>>> - Needs modifications to iOS UI to work on iOS.
+> >>>>> - Only matching routing domains are sent to the DNS servers specifi=
+ed in
+> >>>>>   the DNS=3D config line.  No separate fallback catch-all DNS serve=
+r can
+> >>>>>   be set.
+> >>>>> - Routing/match domains are also included in the list of search dom=
+ains.
+> >>>>>   This could be changed with the matchDomainsNoSearch API, but lack=
+ing
+> >>>>>   more UI or config file changes to expose this option to the user,=
+ I
+> >>>>>   went with the default.
+> >>>>>
+> >>>>> [1] https://lore.kernel.org/wireguard/20210810074232.aah5ktq5yzysaa=
+ey@SvensMacBookAir-2.local/T/
+> >>>>> [2] https://github.com/slarew/wireguard-apple/commit/6ebc356d9e11ab=
+91443e06de5e89f1af57fcdff8
+> >>>>
+> >>>> That seems to be a redefinition of the existing definition of split =
 DNS.
->>>>=20
->>>> Most usually, split DNS is done at the DNS server and different =
-zones are served to the resolver based on various criteria... Usually =
-the origination IP of the query;  If the query comes from a client on =
-your LAN, or a particular subnet, the contents of a particular, private, =
-zone are returned.  If the query comes from, say the internet,  a public =
-zone is returned.
->>>>=20
->>>> YOUR description, is how DNS works in general... Except  your patch =
-also seems to either bypass the resolver libraries or wedge itself in =
-front of them The system resolver libraries well tested and understood =
-and they handle the following very nicely.
->>>>=20
->>>> There is the issue of what happens with large DNS responses.  Any =
-DNS response over 512 bytes UDP fails and is required to be retried as a =
-TCP query, which can handle the large response.  It's late and I'm too =
-tired to look it up, but there IS an RFC for this.
->>>>=20
->>>> It's a little known issue, but I've seen it when working with other =
-VPN products that ignored/didn't understand the behavior. The results =
-weren't pretty and really embarrassing.
->>>>=20
->>>> Systemd has a bad habit of re-inventing the wheel... Badly. =
-Eventually it get's sorted, but is that really progress? In the long =
-haul, "move fast and break things" is a MAJOR pita for the vast majority =
-of us.  But some like it.
->>>>=20
->>>> For some real fun, look into DHCPCD.  It faithfully implements a =
-particular RFC.  In some networking environments using VPNs, it breaks =
-routing horribly.... But it meets the RFC.  You'll find it in Raspbian =
-by default, and most other Debian derived distros.  I automatically rip =
-it out and replace it with the also available ISC DHCP client.  That one =
-is fully compatible with Windows, OS X, iOS, and every android and smart =
-device I could test it with.  A DHCP server configured to be compatible =
-with DHCPCD broke all of the previously named.
->>>>=20
->>>> I'm giving this opinion away for free, so it's worth what you paid =
-for it.
->>>=20
->>> Regardless of naming or definitions, I think the ability for a =
-*local device* to route DNS queries to different DNS servers based on =
-domain matching criteria is certainly useful. It=E2=80=99s not always =
-possible or desirable to control and configure an upstream DNS server. =
-Hence, this patch enables the local device to do split DNS.
->>>=20
->>> To be clear, this patch does not bypass or wedge around anything. In =
-fact, it configures the native macOS DNS settings in the appropriate =
-manner to effect a split DNS configuration.
->>>=20
->>> As a result of controlling the native macOS DNS resolution logic, =
-any feature, absent or present, in the macOS DNS resolver libraries =
-should be unaffected. This includes the large DNS response and TCP =
-behavior. I do not expect the small/large UDP/TCP DNS features to change =
-behavior when using a split DNS configuration as proposed in this patch.
->>>=20
->>> -Stephen
->>=20
->> Hi Stephen,
->>=20
->> A better solution to your problem would be to deploy DNSDIST:
->> 	https://dnsdist.org/
->>=20
->> I for one would hope that esoteric requests that address a solution =
-for less than 1% of the users would be rejected with the overall goal of =
-preventing feature creep and bloat.
->>=20
->> Andrew
->=20
-> DNSDIST may allow (I have not tried) one to create a split DNS =
-scenario, but it is an extra piece of software that would need to be =
-discovered, installed, configured, and maintained by a user or system =
-administrator. I do not believe it would properly integrate with the =
-macOS DNS resolution machinery. I do not believe it is a better solution =
-to the problem.
->=20
-> As I understand it, under some circumstances, the Tailscale macOS app =
-also implements split DNS in roughly the same manner as done in my =
-patch. Namely, the tailscale app appears to use the Network Extension =
-APIs to directly integrate with the macOS DNS resolution machinery. =
-Perhaps the relevant difference is that tailscale approaches =
-configuration differently (not based on wg-quick) than the WireGuard =
-macOS app.
->=20
-> I do not have statistics or polling on who desires this split DNS =
-feature. I have received private and public requests to upstream the =
-feature. Tailscale also implements split DNS; presumable customers =
-demand it. I suspect if the feature was available to users of the =
-WireGuard app, then it would be used with precision to great effect. =
-Users who do not need this split DNS feature do not lose any previous =
-functionality in the macOS WireGuard app.
->=20
-> Personally, my one hesitation with this patch is that, as currently =
-implemented, a new syntax is added to the wg-quick config file (tilde =
-prefixed route/match domains). My patch does not address compatibility =
-issues nor does it add documentation to wg-quick for the new syntax.
->=20
-> -Stephen
-
+> >>>>
+> >>>> Most usually, split DNS is done at the DNS server and different zone=
+s are served to the resolver based on various criteria... Usually the origi=
+nation IP of the query;  If the query comes from a client on your LAN, or a=
+ particular subnet, the contents of a particular, private, zone are returne=
+d.  If the query comes from, say the internet,  a public zone is returned.
+> >>>>
+> >>>> YOUR description, is how DNS works in general... Except  your patch =
+also seems to either bypass the resolver libraries or wedge itself in front=
+ of them The system resolver libraries well tested and understood and they =
+handle the following very nicely.
+> >>>>
+> >>>> There is the issue of what happens with large DNS responses.  Any DN=
+S response over 512 bytes UDP fails and is required to be retried as a TCP =
+query, which can handle the large response.  It's late and I'm too tired to=
+ look it up, but there IS an RFC for this.
+> >>>>
+> >>>> It's a little known issue, but I've seen it when working with other =
+VPN products that ignored/didn't understand the behavior. The results weren=
+'t pretty and really embarrassing.
+> >>>>
+> >>>> Systemd has a bad habit of re-inventing the wheel... Badly. Eventual=
+ly it get's sorted, but is that really progress? In the long haul, "move fa=
+st and break things" is a MAJOR pita for the vast majority of us.  But some=
+ like it.
+> >>>>
+> >>>> For some real fun, look into DHCPCD.  It faithfully implements a par=
+ticular RFC.  In some networking environments using VPNs, it breaks routing=
+ horribly.... But it meets the RFC.  You'll find it in Raspbian by default,=
+ and most other Debian derived distros.  I automatically rip it out and rep=
+lace it with the also available ISC DHCP client.  That one is fully compati=
+ble with Windows, OS X, iOS, and every android and smart device I could tes=
+t it with.  A DHCP server configured to be compatible with DHCPCD broke all=
+ of the previously named.
+> >>>>
+> >>>> I'm giving this opinion away for free, so it's worth what you paid f=
+or it.
+> >>>
+> >>> Regardless of naming or definitions, I think the ability for a *local=
+ device* to route DNS queries to different DNS servers based on domain matc=
+hing criteria is certainly useful. It=E2=80=99s not always possible or desi=
+rable to control and configure an upstream DNS server. Hence, this patch en=
+ables the local device to do split DNS.
+> >>>
+> >>> To be clear, this patch does not bypass or wedge around anything. In =
+fact, it configures the native macOS DNS settings in the appropriate manner=
+ to effect a split DNS configuration.
+> >>>
+> >>> As a result of controlling the native macOS DNS resolution logic, any=
+ feature, absent or present, in the macOS DNS resolver libraries should be =
+unaffected. This includes the large DNS response and TCP behavior. I do not=
+ expect the small/large UDP/TCP DNS features to change behavior when using =
+a split DNS configuration as proposed in this patch.
+> >>>
+> >>> -Stephen
+> >>
+> >> Hi Stephen,
+> >>
+> >> A better solution to your problem would be to deploy DNSDIST:
+> >>      https://dnsdist.org/
+> >>
+> >> I for one would hope that esoteric requests that address a solution fo=
+r less than 1% of the users would be rejected with the overall goal of prev=
+enting feature creep and bloat.
+> >>
+> >> Andrew
+> >
+> > DNSDIST may allow (I have not tried) one to create a split DNS scenario=
+, but it is an extra piece of software that would need to be discovered, in=
+stalled, configured, and maintained by a user or system administrator. I do=
+ not believe it would properly integrate with the macOS DNS resolution mach=
+inery. I do not believe it is a better solution to the problem.
+> >
+> > As I understand it, under some circumstances, the Tailscale macOS app a=
+lso implements split DNS in roughly the same manner as done in my patch. Na=
+mely, the tailscale app appears to use the Network Extension APIs to direct=
+ly integrate with the macOS DNS resolution machinery. Perhaps the relevant =
+difference is that tailscale approaches configuration differently (not base=
+d on wg-quick) than the WireGuard macOS app.
+> >
+> > I do not have statistics or polling on who desires this split DNS featu=
+re. I have received private and public requests to upstream the feature. Ta=
+ilscale also implements split DNS; presumable customers demand it. I suspec=
+t if the feature was available to users of the WireGuard app, then it would=
+ be used with precision to great effect. Users who do not need this split D=
+NS feature do not lose any previous functionality in the macOS WireGuard ap=
+p.
+> >
+> > Personally, my one hesitation with this patch is that, as currently imp=
+lemented, a new syntax is added to the wg-quick config file (tilde prefixed=
+ route/match domains). My patch does not address compatibility issues nor d=
+oes it add documentation to wg-quick for the new syntax.
+> >
+> > -Stephen
+> >
+>
