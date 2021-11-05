@@ -1,72 +1,47 @@
-Return-Path: <SRS0=I9o6=PX=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=1SvS=PY=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 10E5CC433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  4 Nov 2021 11:14:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67A45C433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  5 Nov 2021 14:42:37 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 405B7611C9
-	for <zx2c4-wireguard@archiver.kernel.org>; Thu,  4 Nov 2021 11:14:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 405B7611C9
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+	by mail.kernel.org (Postfix) with ESMTPS id 3BE466120A
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri,  5 Nov 2021 14:42:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 3BE466120A
+Authentication-Results: mail.kernel.org; dmarc=pass (p=none dis=none) header.from=zx2c4.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id d56bc0fc;
-	Thu, 4 Nov 2021 11:14:19 +0000 (UTC)
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com
- [2a00:1450:4864:20::533])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 4b71aea6
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 4407ddf2;
+	Fri, 5 Nov 2021 14:42:34 +0000 (UTC)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id 569b978d
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Fri, 5 Nov 2021 14:42:32 +0000 (UTC)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 6137A6120A
+ for <wireguard@lists.zx2c4.com>; Fri,  5 Nov 2021 14:42:30 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="FTnErqra"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1636123349;
+ h=from:from:reply-to:subject:subject:date:date:to:to:cc:
+ mime-version:mime-version:content-type:content-type;
+ bh=V3k2EK67C/wfqS9m4W9OK6VYMvrirHV1SJ4esZ4JmTc=;
+ b=FTnErqragXqwXhxYhgZqZs69HcPhJ2dkH/zI6DMuD4reZSnfPHHsrCA4MpTiF2RfsfSwK4
+ h4nlez9sZvqljQl0igujmKEqxzZ33xetYxzXGnQW+0w4n2MGAG8eusNifqn3h3/d4+WRRD
+ wVaf6UV/DgXClXUbifichvAlLndOCDY=
+Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id f69c6807
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Thu, 4 Nov 2021 11:14:16 +0000 (UTC)
-Received: by mail-ed1-x533.google.com with SMTP id f4so19794438edx.12
- for <wireguard@lists.zx2c4.com>; Thu, 04 Nov 2021 04:14:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:subject:from:in-reply-to:date:cc
- :content-transfer-encoding:message-id:references:to;
- bh=sMwSedsFGyJ72ib242P0T8cOQK1/jbGteCErWMKQLok=;
- b=GI96V6M2WlZTkr8xV4UqFKkqOuwvkeZdfOiPbncecGTi2itwmwqOc0fY73v6V3QTM1
- 3GKXJCczDRz/qboZLCFqzo01hcQ3sy4p1hGEDrgk7VqauE82UK46vWwBV2AiKGyk/1qp
- NAO8gCvHDXowoo8q7duFxtT8I9IxswqYCEUBJl1uGMSwxPyao8hPqXizUxA5yW+WqcNK
- RimZGfdK3maQKsYRFpzz1UIG4Ane5J+bkrikKgiKw3lvs2rVm5IPPWrAQCMiIpYzKG2l
- noIpeTs+zvItJW2dn7kt4nxAzGM1CrC5h8jNjPn0O2ILDTPDhpXqIFuJIoKC1YpRJtsZ
- kjZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
- :content-transfer-encoding:message-id:references:to;
- bh=sMwSedsFGyJ72ib242P0T8cOQK1/jbGteCErWMKQLok=;
- b=uZNcdwCyPRPUHt8L4GkqhYgNrC6oXOT07tT1l2QH2ikOMl97P2328XEhBOPOXCeBR4
- NYkUnq3hIDbDbYvGMjDohZjx/MxHmp5VEflHhR5QncEUK4nq+dzJvnGPqTbO4Z2ZmYcP
- P1hzLJ9Ik4jgJxc87K5e6zG44zbX2tsrZQtwLF4RTOOLot/LyYLKTBkd6zngvVFFJCqw
- CVdITfvy50YFxQl6Wt23JnEOZwOoRU461bUsDkP4D6htEcjkf76LgTRhZE6wAgTh0IV0
- GAcFNrHUmS1Wu4zSs74tzALIaHxgCCyF6GMv9sFdHLHqcLf67YXrIbFuzMizBMOLRHRF
- GteQ==
-X-Gm-Message-State: AOAM531FrlH9KVwaHdN+dvhbCxvKGJCMMnB654D3KYzVRJpMdn94oLJI
- vdjVx6XZ5cgsVcYjFN6ZdlJGqFf8TP5N5A==
-X-Google-Smtp-Source: ABdhPJz0kvRvSyFvIEm+rv2mWU2onSID8uk6xF31iYGmQBsciJwqlNUxfNFCHSafFKsCiMB8F8+4TQ==
-X-Received: by 2002:a17:906:9f21:: with SMTP id
- fy33mr61885690ejc.567.1636024456489; 
- Thu, 04 Nov 2021 04:14:16 -0700 (PDT)
-Received: from smtpclient.apple ([94.198.41.210])
- by smtp.gmail.com with ESMTPSA id bx27sm2664060edb.7.2021.11.04.04.14.16
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 04 Nov 2021 04:14:16 -0700 (PDT)
-Content-Type: text/plain;
-	charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.20.0.1.32\))
-Subject: Re: Support for M1 MacBook Simulators
-From: Igor Bozin <igorbzin@gmail.com>
-In-Reply-To: <re37dSyY_rXzrSL5DCMtppy1I37FlAT-pqCZjPdPpw8CHDxX3Nn3xeVECxTBMRFJBk-XEINrSbXY4KvWEtfii8GbwxZPNg7CZgCW-3asMus=@protonmail.ch>
-Date: Thu, 4 Nov 2021 12:14:15 +0100
-Cc: wireguard@lists.zx2c4.com
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <5F19BC44-58DD-4391-AB17-239B4F980816@gmail.com>
-References: <18206D0A-EA19-4230-AAEC-8D52BE66A1C7@gmail.com>
- <re37dSyY_rXzrSL5DCMtppy1I37FlAT-pqCZjPdPpw8CHDxX3Nn3xeVECxTBMRFJBk-XEINrSbXY4KvWEtfii8GbwxZPNg7CZgCW-3asMus=@protonmail.ch>
-To: Neutron <dotneutron@protonmail.ch>
-X-Mailer: Apple Mail (2.3693.20.0.1.32)
+ for <wireguard@lists.zx2c4.com>; Fri, 5 Nov 2021 14:42:28 +0000 (UTC)
+Date: Fri, 05 Nov 2021 15:42:26 +0100
+To: "WireGuard mailing list" <wireguard@lists.zx2c4.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: [ANNOUNCE] wireguard-freebsd snapshot v0.0.20211105 is available
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Message-Id: <20211105144230.6137A6120A@mail.kernel.org>
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -81,48 +56,62 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello David and Neutron,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-my setup is following: I have added the WG library as a SPM dependency =
-to my project and followed all steps as described in the Github readme =
-from wireguard:
+Hi,
 
-https://github.com/WireGuard/wireguard-apple
+An experimental snapshot, v0.0.20211105, of WireGuard for FreeBSD has been
+been tagged in the git repository.
 
-What I am trying to do is to build a framework which has some other =
-functionality on top and wrap WG within that framework. I can build just =
-fine for iOS arm64 and iPhone simulator x86_64 architectures.
+At this time this code is new, unvetted, possibly buggy, and should be
+considered "experimental". It might contain security issues. We gladly
+welcome your testing and bug reports, but do keep in mind that this code
+is new, so some caution should be exercised at the moment for using it
+in mission critical environments.
 
-When I try to do the steps you described in the linked message, to build =
-a framework for arm64 iPhone simulator, I still get the following error =
-when I try to build the project with an arm64 simulator target:
+== Changes ==
 
-=
-/Users/igorbozin/Projects/cyan-internetprotectionsdk-ios/InternetProtectio=
-nApp.xcodeproj Building for iOS Simulator, but the linked library =
-'libwg-go.a' was built for iOS.
+  * compat: taskqueue draining was backported to stable/13
+  
+  Compilation should resume working with the latest stable/13.
+  
+  * if_wg: bump keepalive timers unconditionally on send
+  
+  Important fix to the timer state machine, which matches behavior on Linux and
+  elsewhere.
+  
+  * if_wg: protect in6_mask2len with INET6
+  
+  Fix compilation on 12 with !INET6.
+
+This snapshot contains commits from: Jason A. Donenfeld.
+
+The source repository is available at the usual location:
+  git clone https://git.zx2c4.com/wireguard-freebsd
+
+This snapshot is available in compressed tarball form:
+  https://git.zx2c4.com/wireguard-freebsd/snapshot/wireguard-freebsd-0.0.20211105.tar.xz
+  SHA2-256: 454f2cf15329ccf40da15f8df61f8d70bb6d382efdfe4a5899ca16474f91903f
+
+Thank you,
+Jason Donenfeld
 
 
-Is there a way to modify the makefile, so I can build a version of =
-libwg-go.a for arm64 iPhone simulators?
+-----BEGIN PGP SIGNATURE-----
 
-Best regards,
-
-Igor
-
-> On 29.10.2021, at 17:24, Neutron <dotneutron@protonmail.ch> wrote:
->=20
-> Hey Igor,
->=20
-> I believe I encountered this in the past.
-> https://lists.zx2c4.com/pipermail/wireguard/2021-September/007001.html
->=20
-> I'm not sure what your exact setup is since you mentioned it's a =
-separate project presumably depending on WireGuardKit, but I can build =
-libwg-go for arm64 just fine using the trick I mentioned in the linked =
-thread. Just add this flag to Sources/WireGuardKitGo/Makefile.
-> GOOS_iphonesimulator :=3D ios
->=20
-> Hope it helps.
->=20
-
+iQJEBAEBCAAuFiEEq5lC5tSkz8NBJiCnSfxwEqXeA64FAmGFQrYQHGphc29uQHp4
+MmM0LmNvbQAKCRBJ/HASpd4DrucXD/9cnVv050l3zzSKriaIBnrZfVgUVfKtZWmg
+KVmc/tKViFph1Mnx+n8EAHAf05n93v7J9b65l7syb7OUnv8IseoG16Iw38erbEsu
+kkaF1BK9lJ4pLjBKtAcTnzwipm8aXf6Ge+HPwzRO30mOL11DnD1gbLqrFwIKQHUC
+HI7K0Bv+6t54t17vnaVvO51JJME4NpRDQ0zqIMROROGIRYJLbnivZRHcIxN4lQuJ
+IlY8Bzj3dyzYKJqdB6mvAm2XShGx4265Qo6uo31Qyuo8SJVXFnb5WEnc30Aw1tHc
+Fi3cqWnia84TW/X+PyH3wHhRjC4JJNms7qpIvE4GN5uil6Z2sqfOF7WxkVAhiSX9
+RltirnHuw8KELsomYmje2wDcDE//Yxucj9cV0/qOqCzhvgiuggNlIIRdQHkbVhsm
+RAAh6N9fcFWxWQTfXbWqToFVOImzPBS7r1ewYZbT8VFvp41CtSArio+yc5feVbei
+s78KMWPhJWX5s9cxXoyeJAL9YJAaeUvGvB1d0590+N8iC/jQwJrvViCd5fqlzXLe
+7x6Ge02ekkYsWc+MubfEm1zFYGMrTxmCRfElIZz48BweuzMtOQRzRlGQQR88NyUx
+vt71YDb8xSC1/zIeQdlfOgvqvtcPDC9ZkneHxWOV39Iwc7W9KfopXOTUVgfC4NEs
+oDs2uLmsSQ==
+=Q4TN
+-----END PGP SIGNATURE-----
