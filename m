@@ -1,53 +1,65 @@
-Return-Path: <SRS0=nQDx=PZ=lists.zx2c4.com=wireguard-bounces@kernel.org>
+Return-Path: <SRS0=2IG6=P4=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C54B6C433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  6 Nov 2021 17:23:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3483DC433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  9 Nov 2021 17:19:35 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id D46F360E90
-	for <zx2c4-wireguard@archiver.kernel.org>; Sat,  6 Nov 2021 17:23:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org D46F360E90
-Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=chil.at
+	by mail.kernel.org (Postfix) with ESMTPS id 100B961027
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue,  9 Nov 2021 17:19:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 100B961027
+Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id f65ffd27;
-	Sat, 6 Nov 2021 17:21:12 +0000 (UTC)
-Received: from mail.onetrix.net (eleanor.onetrix.net [86.59.13.171])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id ea0d879a
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
- for <wireguard@lists.zx2c4.com>; Sat, 6 Nov 2021 17:21:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=chil.at;
- s=default; 
- h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:References:To:Subject:MIME-Version:Date:Message-ID;
- bh=8Wchyx1ixbMAxRsoV5De5iGXRLdqbRq0nYlnLP8Dsqk=; 
- b=jeRsdgSp4ibfVFIpYcZjmFBZNY+75ppdZQ9x3xcYFxmchRQ6mrMvemhFjAGlLMMhnlr9/Yb8aD1Iu+ZIvZBlO11SFsIe73zb5g7GW9FjN5fmhqI6V4HeP753cNggF4XHWJAXI7sYAeEzR80fYj2iD9IfqQezONAdCSbSStCV+Ng=;
-Received: from [10.5.44.225] (port=24502 helo=mail.onetrix.net)
- by mail.onetrix.net with esmtps (TLSv1:DHE-RSA-AES256-SHA:256)
- (Exim 4.82_1-5b7a7c0-XX) (envelope-from <mail@chil.at>)
- id 1mjPNG-0005PK-0G; Sat, 06 Nov 2021 18:21:02 +0100
-Received: from [172.22.0.123] (193.238.156.229) by mail.onetrix.net
- (10.5.44.225) with Microsoft SMTP Server (TLS) id 14.1.438.0; Sat, 6 Nov 2021
- 18:21:01 +0100
-X-CTCH-RefID: str=0001.0A682F21.6186B97E.001F, ss=1, re=0.000, recu=0.000,
- reip=0.000, cl=1, cld=1, fgs=0
-Message-ID: <04d29715-a3d5-59b4-11bc-5b2b932937a9@chil.at>
-Date: Sat, 6 Nov 2021 18:21:00 +0100
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 865391a7;
+	Tue, 9 Nov 2021 17:19:32 +0000 (UTC)
+Received: from mail-vk1-xa30.google.com (mail-vk1-xa30.google.com
+ [2607:f8b0:4864:20::a30])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id e6934c82
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>; Tue, 9 Nov 2021 17:19:30 +0000 (UTC)
+Received: by mail-vk1-xa30.google.com with SMTP id t127so10377491vke.13
+ for <wireguard@lists.zx2c4.com>; Tue, 09 Nov 2021 09:19:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=/E7IlnjWccK52bx3VI1iEPX4CN+uGuTUS7qGhyPiE/w=;
+ b=o6pN8KFI+jFnqsr702PliA5lK8uzh998Dva9Rj8AQXO3S0VGuay/nv2qlJU0w8XC0a
+ Xt6GSgybKK1IYog6Hy4deXmDjLsSXCHPhE54B524WI2rtxbYXOSqv8I6yMIJ07v6TCtm
+ RMVF2P7wGKB0AFVRlS802ULBmc1aAEpWHHeurChoeI8v6R22Y8MjwcjCKbQ3DH5vXExW
+ Slt0tAciFmRRjXO8TZcPUZzl6e0nb93vZ4VQoks48e7GzlesZ8cv8XHTBB7OevWHvTJx
+ T9Ny69QZA5+CqQulk5hts7ir1ScNP7ZJuq2BpLAMu3g0W9uu+VdppzYzOPvoEOTH2dBa
+ qh3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=/E7IlnjWccK52bx3VI1iEPX4CN+uGuTUS7qGhyPiE/w=;
+ b=knETuhLRw/QhaOnULTZ+NH/7m292JJdL1GCoj9WJVETKSh0JLajYfR2Beb+BkxPqao
+ 8MrPc4xlDhWdqg0xARYwGrOwUJqFv/oMUc2Z6OylBUr3yUtPaoq6K52mTJLiMfXEFhE9
+ sL3Cc8j91zAy2odV9Vob10JlIVD5iixbpWo00qIO04vCcC161IjyL36T6e/apxYVDuEQ
+ jg6f3IqHTnxRX2bxD0lSN1LvjT3Qd7/9USGtTPiMUiOiOZp6KaIHDeWJ054jHFJ8Ow1N
+ 7+etrD6KlgPYU9sQwRuQ2EeSNe2c921gjgzIh2VoyJYHWzx6TTZ2RA25DRCOw1WEedVE
+ c0og==
+X-Gm-Message-State: AOAM532yEiq4oSYhYsrbJPgmw+hTIkQIp4OljMWoAdSe3CyFdxpausRZ
+ my1cL/Bf+Bz2jFlQ8gqoTrMXrCsAMTyeIrnhPNzvog15tB4=
+X-Google-Smtp-Source: ABdhPJzyWSsQOX5BIPP/UIpA9YAQiKSQSen2DOE45cexdNBfWs48H3mIN2LAt8zoz11my4wqU9c/iQXYFOLjOvw6Nzc=
+X-Received: by 2002:a1f:20c2:: with SMTP id g185mr12511362vkg.25.1636478364964; 
+ Tue, 09 Nov 2021 09:19:24 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.2.1
-Subject: Re: Android app: length of name
-Content-Language: de-AT
-To: Aaron Jones <me@aaronmdjones.net>, <wireguard@lists.zx2c4.com>
-References: <6b07934f-f0ce-5909-0595-3d50bc2a7c3a@chil.at>
- <1c7c517e-f0ee-8d02-75e1-5db2d92268f0@aaronmdjones.net>
-From: Christoph Loesch <wireguard-mail@chil.at>
-In-Reply-To: <1c7c517e-f0ee-8d02-75e1-5db2d92268f0@aaronmdjones.net>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [193.238.156.229]
+References: <CABOEyuLiu96_KxEH5sdGLaE5-s9e8F_c0a1PKHSnFcMKp5YHow@mail.gmail.com>
+ <CAHmME9oPi=LvdcZC-FA+SvyxEmcRULtNB8hAQZoCAX=kQycTXA@mail.gmail.com>
+ <CABOEyuJidG_u8SFGnhV6aw5y7PHVhaW_diDrpdMMHfOE4fHRWA@mail.gmail.com>
+In-Reply-To: <CABOEyuJidG_u8SFGnhV6aw5y7PHVhaW_diDrpdMMHfOE4fHRWA@mail.gmail.com>
+From: Ryan Roosa <ryanroosa@gmail.com>
+Date: Tue, 9 Nov 2021 12:19:14 -0500
+Message-ID: <CABOEyuKT7ebroX2yRU9xixDVCBmJV15Hy1vh-nUwrmdGjX6=QQ@mail.gmail.com>
+Subject: Re: wireguard-freebsd handshaking issue upon underlying WAN
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>,
+ Kyle Evans <kevans@freebsd.org>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -62,32 +74,37 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
+Just wanted to provide some feedback that pfSense development
+snapshots of 2.6.0 running WireGuard package v0.1.5_2 include the fix
+and there I have validated that removing WAN connectivity at various
+intervals up to 10 minutes no longer impacts subsequent handshaking
+once the connection is restored. I have not yet tested on OPNSense but
+I imagine the results will match once I do (if not I will reach out).
+Thanks to everyone for their efforts on resolving this one, I really
+appreciate it.
 
-Am 06.11.2021 um 17:54 schrieb Aaron Jones:
-> On 06/11/2021 13:22, Christoph Loesch wrote:
->> Hi,
->>
->> in the android app the name is limited to 15 characters.
->>
->> Does that have a specific reason?
->> Is it possible to allow a longer name like e.g. 32 characters?
->>
->> On importing a file the error "Invalid name" could be more specific
->> to that. Because I had to struggle with the file name until I found
->> out it is just a limitation of the length.
->>
->> Kind regards,
->> Christoph
-> The network name determines the interface name, and on Linux, the
-> length of an interface name (e.g. "eth0") is limited to 15 characters.
+-Ryan
+
+On Wed, Oct 27, 2021 at 7:45 PM Ryan Roosa <ryanroosa@gmail.com> wrote:
 >
-> Regards,
-> Aaron Jones
+> Hi Jason,
+> Thank you very much for this! I received word from the OPNSense team
+> that the referenced snapshot should be made available in OPNSense
+> 21.7.5. I will test and provide feedback just as soon as I can get on
+> the aforementioned OPNSense release which includes the fix.
 >
-Oh, I didn't know that, thanks, that explains the limitation.
-
-Then I would suggest to note the limitation of 15 characters in the error message on config import, if possible.
-
-Kind regards,
-Christoph
-
+> Cheers,
+> -Ryan
+>
+> On Tue, Oct 26, 2021 at 5:29 AM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+> >
+> > Hi Ryan,
+> >
+> > Thanks for the report. Kyle saw your reddit post earlier and tracked
+> > this down, I think/hope, to a bug in the state machine cranking. I
+> > committed the fix here -- https://w-g.pw/l/yQTw -- which will be part
+> > of the next snapshot. Hopefully that will fix the issue, but if it
+> > doesn't, please do update this thread so we can keep searching.
+> >
+> > Regards,
+> > Jason
