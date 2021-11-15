@@ -2,49 +2,44 @@ Return-Path: <SRS0=+2x1=QC=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7134EC433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 15 Nov 2021 15:42:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 615BAC433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 15 Nov 2021 16:00:44 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id 4174C61B5E
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 15 Nov 2021 15:42:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 4174C61B5E
-Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=at.anteris.net
+	by mail.kernel.org (Postfix) with ESMTPS id 3358461B95
+	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 15 Nov 2021 16:00:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 3358461B95
+Authentication-Results: mail.kernel.org; dmarc=none (p=none dis=none) header.from=sdn.clinic
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id 906767b3;
-	Mon, 15 Nov 2021 15:42:09 +0000 (UTC)
-Received: from brahe.magma-soft.at (brahe.magma-soft.at [46.4.26.84])
- by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id c3e30b01
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTP id e898fcad;
+	Mon, 15 Nov 2021 15:58:00 +0000 (UTC)
+Received: from mail.rfc2324.org (mail.rfc2324.org [2a01:a700:4621:867::10])
+ by lists.zx2c4.com (ZX2C4 Mail Server) with ESMTPS id bc521c21
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 12 Nov 2021 07:14:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed;
- d=magma-soft.at; s=default; h=To:From:Subject:Message-ID:Date:
- User-Agent:MIME-Version:Content-Type:Content-Transfer-Encoding:
- Content-Language; bh=t0LgSOyDWFqwc8058roSvZIymmE=; b=GS0g2gAb/qp
- qY2eUd3vVyzzGG6ouqpDaVHeo50hdWMpkWwqUvF2OApwgqfoV1lAbNqVA3ke5QRz
- McqlVk97HMrn9WUvcQXLv5pea1aqFRsGA5xFffppsa7lWJO25Kodb8Jz0Sh5QSRA
- FnxkRNsdpeG2Iu75TbltOngu4njX5JMA=
-Received: (qmail 12265 invoked from network); 12 Nov 2021 07:14:48 -0000
-Received: from unknown (HELO [172.30.1.86])
- (jorge@at.anteris.net@[83.164.143.62])
- (envelope-sender <jorge-wg@at.anteris.net>)
- by brahe.magma-soft.at (qmail-ldap-1.03) with TLS_AES_128_GCM_SHA256 encrypted
- SMTP for <wireguard@lists.zx2c4.com>; 12 Nov 2021 07:14:48 -0000
+ Mon, 15 Nov 2021 15:57:59 +0000 (UTC)
+Received: from [2a01:a700:4621:a020:1b57:3829:d7fb:af17]
+ by mail.rfc2324.org with esmtpsa rfc2324.org Mailserver
+ id 1mmeMo-0006Co-EC
+ for <wireguard@lists.zx2c4.com>; Mon, 15 Nov 2021 16:57:58 +0100
 To: wireguard@lists.zx2c4.com
-From: Georg Lehner <jorge-wg@at.anteris.net>
-Subject: Wireguard setup tool
-Message-ID: <37ef73aa-4244-9ee7-e2b8-d1738a8d3e78@at.anteris.net>
-Date: Fri, 12 Nov 2021 08:14:48 +0100
+From: Maximilian Wilhelm <max@sdn.clinic>
+Organization: SDN Clinic
+Message-ID: <d1c0a3e8-c461-3d70-e23f-fceac21cbd43@sdn.clinic>
+Date: Mon, 15 Nov 2021 16:57:58 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+ Thunderbird/78.13.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-Mailman-Approved-At: Mon, 15 Nov 2021 15:42:07 +0000
+Content-Language: de-DE
+Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 2a01:a700:4621:a020:1b57:3829:d7fb:af17
+X-SA-Exim-Mail-From: max@sdn.clinic
+Subject: [PATCH 0/1] Add support to send/receive tunnel packets via Linux VRFs
+X-SA-Exim-Version: 4.2.1 (built Tue, 02 Aug 2016 21:08:31 +0000)
+X-SA-Exim-Scanned: Yes (on mail.rfc2324.org)
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -59,36 +54,49 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello,
+Hi,
 
-Thank's for Wireguard, way cool!
+this patch adds support to bind the listening/sending UDP sockets to a
+specific network interface on Linux to allow sending/receiving encrypted
+tunnel packets via a given VRF.
 
-I'd like to share a setup tool I'm using:
+The motivation behind this is to put any external interface(s) of a host
+into a VRF (e.g. "vrf_external") and have the rest of the interface in the
+main VRF, so all tools and services can be used normally and can't directly
+reach/leak to the Internet.  This way different island can be connected
+easily and securely without the fear of leaking any communication into the
+Internet.  See my blog article on VRF support for OpenVPN [0] for a more
+detailed description.
 
-   https://at.magma-soft.at/darcs/wgsetup/
+Using VRFs is much simpler than setting up Network Namespaces, shoving
+interfaces around and having to care about which processes should run
+where.
 
-You'll find wgsetup, a shell script, and a README.md file there.
+This patch is very similar to the patch "Basic support for binding the
+transport socket to a device" sent in June this year, but adds two more
+settings in send4() and send6() without VRF support didn't work for me.
 
-wgsetup fetches configuration information for a peer via https:// from a 
-.well-known location.
+I'm unsure wether it would be better to use the name "bind_dev" within
+the kernel or clearly denote that an ifindex is used, as it is now.
 
-A node using wgsetup can only "see" configuration information for peers 
-in the same "realm". A realm shares a common secret which has to be 
-distributed out-of-band.
+The user-space part of this change is available as a PR to the 
+wireguard-linux
+repo on GitHub [1], but can be sent as patches to the list as well.
 
-When wgsetup sets up a connection to a peer it prints out shell 
-executable peer configuration instructions for the case when the node is 
-not reachable via https://, e.g. because they hide behind a NAT.
+Best
+Max
 
-Connections are always configured with pre shared keys, which are never 
-disclosed by wgsetup.
+[0] https://blog.sdn.clinic/2018/12/openvpn-and-vrfs/
+[1] https://github.com/WireGuard/wireguard-tools/pull/12
 
-wgsetup requires a POSIX shell, gpg, some tools of the Gnu Coreutils and 
-curl.  Current use is on Debian Linux, I'll be happy to receive feedback 
-and adapt it to other environments.
+Maximilian Wilhelm (1):
+   wireguard: Add support to bind socket(s) to device
 
-Best Regards,
+  drivers/net/wireguard/device.h  |  1 +
+  drivers/net/wireguard/netlink.c |  7 ++++++-
+  drivers/net/wireguard/socket.c  | 13 +++++++++++++
+  include/uapi/linux/wireguard.h  |  2 ++
+  4 files changed, 22 insertions(+), 1 deletion(-)
 
-   Georg
-
-
+-- 
+2.20.1
