@@ -4,94 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05856C4321E
-	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 21 Nov 2021 00:31:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 419DEC433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Sun, 21 Nov 2021 07:26:38 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 09fced8f;
-	Sun, 21 Nov 2021 00:31:58 +0000 (UTC)
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com
- [2607:f8b0:4864:20::633])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id a0c6a26b
- (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 0ad6f693;
+	Sun, 21 Nov 2021 07:24:26 +0000 (UTC)
+Received: from gn213.whpservers.com (gn213mail.whpservers.com [69.65.24.74])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 7fd038ef
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Sun, 21 Nov 2021 00:31:54 +0000 (UTC)
-Received: by mail-pl1-x633.google.com with SMTP id u17so10992457plg.9
- for <wireguard@lists.zx2c4.com>; Sat, 20 Nov 2021 16:31:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=chromium.org; s=google;
- h=from:to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding;
- bh=ziSoN8dNTceS+AEUygeTrOZSFAzOgkmX+sW8rsZZX2w=;
- b=K2jrqp914UOf51IOtnx+ES8SuLk84CXMFaJ6goSwfc+PK5+O8tuf52wIHCBXzOUYNr
- Qafjbc08V1SmTxzjKePvB4ra4AmSvGL6+45zFxMD+H+yqURo0YK6ksgOIdKa12x8AgKg
- Qc7iLfBbBG+eEXRPkrB+nQWJsdecnAvL9J6ts=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
- :references:mime-version:content-transfer-encoding;
- bh=ziSoN8dNTceS+AEUygeTrOZSFAzOgkmX+sW8rsZZX2w=;
- b=nZm76nLuLO8z3a20vMuLR8e0PxElcbqP5G6DpBADJY5HbfT/vUdPShcP9lFS22jZ/7
- yUZYRlsKh7MoX9KRLGft+4vNx3vnJrb5ii0lbOO3vytVP3/54kZ11c+Mhw+RsqNQxr4S
- UGMUZjgRAiN/nyyI7fHR6zlRwcMJD7R22FlN2MATGAp1a8iLFh6IB8jwnZRWZhAnQCcp
- po1JlAu5PXXlsGemALMsBKSM7aqBTq+PpimCaHocIRDsHo7gQKL9ea1lnERAzhGu41Is
- 8riVrivCrLBpCUjlNNpcl3ukt8z+1MKcuQqfTviqRmgy9p3bhylyu5ifOsCVwJdYh6sI
- KqPw==
-X-Gm-Message-State: AOAM531g9EDZhH1wZ42JaPPfy8f3shjk0SjDcOYr2BUGv1KQbxbvgcTU
- iWrXmqCuoGjS5TPTUVRp6+Y4qA==
-X-Google-Smtp-Source: ABdhPJwtMZ92/dYN7hihllIt1ACZWTsLct1CuRYKNAiK29ayUtRZdAjrEg0xA/gTSg8nQ+4Yc3eRPA==
-X-Received: by 2002:a17:90b:4c44:: with SMTP id
- np4mr15742633pjb.195.1637454712968; 
- Sat, 20 Nov 2021 16:31:52 -0800 (PST)
-Received: from www.outflux.net (smtp.outflux.net. [198.145.64.163])
- by smtp.gmail.com with ESMTPSA id s16sm4126910pfu.109.2021.11.20.16.31.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 20 Nov 2021 16:31:52 -0800 (PST)
-From: Kees Cook <keescook@chromium.org>
-To: Jakub Kicinski <kuba@kernel.org>
-Cc: Kees Cook <keescook@chromium.org>,
- "Gustavo A . R . Silva" <gustavoars@kernel.org>,
- "Jason A . Donenfeld" <Jason@zx2c4.com>,
- "David S. Miller" <davem@davemloft.net>,
- Jonathan Lemon <jonathan.lemon@gmail.com>,
- Alexander Lobakin <alobakin@pm.me>, Jakub Sitnicki <jakub@cloudflare.com>,
- Marco Elver <elver@google.com>, Willem de Bruijn <willemb@google.com>,
- Alexei Starovoitov <ast@kernel.org>,
- Daniel Borkmann <daniel@iogearbox.net>,
- Andrii Nakryiko <andrii@kernel.org>, Martin KaFai Lau <kafai@fb.com>,
- Song Liu <songliubraving@fb.com>, Yonghong Song <yhs@fb.com>,
- John Fastabend <john.fastabend@gmail.com>, KP Singh <kpsingh@kernel.org>,
- Nathan Chancellor <nathan@kernel.org>,
- Nick Desaulniers <ndesaulniers@google.com>,
- Eric Dumazet <edumazet@google.com>, Cong Wang <cong.wang@bytedance.com>,
- Paolo Abeni <pabeni@redhat.com>, Talal Ahmad <talalahmad@google.com>,
- Kevin Hao <haokexin@gmail.com>,
- Ilias Apalodimas <ilias.apalodimas@linaro.org>,
- Vasily Averin <vvs@virtuozzo.com>, linux-kernel@vger.kernel.org,
- wireguard@lists.zx2c4.com, netdev@vger.kernel.org, bpf@vger.kernel.org,
- llvm@lists.linux.dev, linux-hardening@vger.kernel.org
-Subject: [PATCH v2 net-next 2/2] skbuff: Switch structure bounds to
- struct_group()
-Date: Sat, 20 Nov 2021 16:31:49 -0800
-Message-Id: <20211121003149.28397-3-keescook@chromium.org>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20211121003149.28397-1-keescook@chromium.org>
-References: <20211121003149.28397-1-keescook@chromium.org>
+ Fri, 19 Nov 2021 15:33:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=peterhyman.com; s=default; h=Content-Transfer-Encoding:Content-Type:
+ MIME-Version:Message-ID:Subject:To:From:Date:Sender:Reply-To:Cc:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+ List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=Gsk/tOIgue+cp3DgIc/qg4d66jzZBSAX78LQthIluXQ=; b=VI956Nd1rIlIGeRNO8R2J+CDyH
+ 2adlwzxOcVDtxBb6zVPVBKgXJVHS0pZ24w7ZgaQ63UPPmkgmIZQ3/Vic82MFordFYY/aJY2h8NAdO
+ 0BY9QNwpdZ+0vddIh3YFuslPusCEXlU2vYbwBCOLago3fFZAvN34vPBY5+65PzoPR7bFX7Q5XxSP4
+ GLeeTnQ3GLNU7bKaNlI56ggwTloPsihsiayETFSnPvKQKOxlDJmPet6dKe5HwAJb73A937gQEXpzB
+ HUq3kW/wj3e4DnibeCXk7vN/Ai0069VblXAe6gf1d6s9iVWhXYuZQBfQrxp95d4mrEwxFlaMGdgHp
+ PsDTcXtg==;
+Received: from 208-73-101-10.fttp.usinternet.com ([208.73.101.10]:53648
+ helo=tommyv.localhost)
+ by gn213.whpservers.com with esmtpsa (TLS1.2) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
+ (envelope-from <pete@peterhyman.com>) id 1mo5tI-00CNR3-HL
+ for wireguard@lists.zx2c4.com; Fri, 19 Nov 2021 09:33:40 -0600
+Date: Fri, 19 Nov 2021 09:33:34 -0600
+From: Peter Hyman <pete@peterhyman.com>
+To: wireguard@lists.zx2c4.com
+Subject: [PATCH] Improvements to wg-quick output for linux.bash.
+Message-ID: <20211119093334.3428f3ee@tommyv.localhost>
+X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.30; x86_64-slackware-linux-gnu)
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4078; h=from:subject;
- bh=GSZPhgjWW3B9MzgyBC2UjZ6Pa5ou1yWYffBCU3Ae8jA=;
- b=owEBbQKS/ZANAwAKAYly9N/cbcAmAcsmYgBhmZN01fgOnpPDIcoXNed116FooNZAuWH2eq6S2dJy
- IKvF8u2JAjMEAAEKAB0WIQSlw/aPIp3WD3I+bhOJcvTf3G3AJgUCYZmTdAAKCRCJcvTf3G3AJpHoEA
- Ch0DB7A1NdB6ZjJfCYrbvm+IHUj6kHrbk6J4qKihWmzX5YmKOmCNROTiYQK7EoSvv9FBFZYQSGCYEv
- pmgvsTW8a5BosVEKtNI3ccV8WS6sak1hPxXfgabUzNiuhsatQdgdhICdfXRg1rjwpkUTmyT145OqIm
- 4VE0LEE2LXLsxN2jVJNSDm1uJ7P3YUsRmD/2vvfqdVwlfx/yQTUK8xQ/wTZDzz2ZW6P35EP/fwXTp/
- 3ia72u+3vvHfP3GdOK6jA6dd1Bc7mtp4aP20yIlsG5PqbSjvBcgAm664u6df648QAAq3qXErO0XNhy
- 9sKjihs72YDfrUEyYAyGik+N4+GDq+FpmO9M59geeCeM4aZnAwVMy97JrHNy3XoE/SRk3xs2yFgfBL
- ReNlS9sO7l2WgPb+bNCA+fqNxvvf+bOwNRddnUxbmVidk50A33WWBp2gVAw88uNzXfGENjlL7EyHia
- ztp0fpngFJlI1+Y3gJHPV5Y8Sdbzfz6njlzrqYh4Zr/NdW1+4KILvtunZohUA7y2isAvBnUJ7fjvWW
- jf+tWy6YAP217qnnrj7I97SHaepBUtc9K35GfDk07FPBick+BENiVwLVgjNa5oMobveBZ18PEXUXd4
- GOR8VPxhzRdawreEtuNJ67AwvQvaTzEZ0z4JbT6lOAkU+D7wp7FKyn6UVfBA==
-X-Developer-Key: i=keescook@chromium.org; a=openpgp;
- fpr=A5C3F68F229DD60F723E6E138972F4DFDC6DC026
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: base64
+X-AntiAbuse: This header was added to track abuse,
+ please include it with any abuse report
+X-AntiAbuse: Primary Hostname - gn213.whpservers.com
+X-AntiAbuse: Original Domain - lists.zx2c4.com
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - peterhyman.com
+X-Get-Message-Sender-Via: gn213.whpservers.com: authenticated_id:
+ pete@peterhyman.com
+X-Authenticated-Sender: gn213.whpservers.com: pete@peterhyman.com
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Mailman-Approved-At: Sun, 21 Nov 2021 07:24:25 +0000
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -106,110 +68,52 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-In preparation for FORTIFY_SOURCE performing compile-time and run-time
-field bounds checking for memcpy(), memmove(), and memset(), avoid
-intentionally writing across neighboring fields.
-
-Replace the existing empty member position markers "headers_start" and
-"headers_end" with a struct_group(). This will allow memcpy() and sizeof()
-to more easily reason about sizes, and improve readability.
-
-"pahole" shows no size nor member offset changes to struct sk_buff.
-"objdump -d" shows no object code changes (outside of WARNs affected by
-source line number changes).
-
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Reviewed-by: Jason A. Donenfeld <Jason@zx2c4.com> # drivers/net/wireguard/*
-Link: https://lore.kernel.org/lkml/20210728035006.GD35706@embeddedor
----
- drivers/net/wireguard/queueing.h |  4 +---
- include/linux/skbuff.h           | 10 +++-------
- net/core/skbuff.c                | 14 +++++---------
- 3 files changed, 9 insertions(+), 19 deletions(-)
-
-diff --git a/drivers/net/wireguard/queueing.h b/drivers/net/wireguard/queueing.h
-index 4ef2944a68bc..52da5e963003 100644
---- a/drivers/net/wireguard/queueing.h
-+++ b/drivers/net/wireguard/queueing.h
-@@ -79,9 +79,7 @@ static inline void wg_reset_packet(struct sk_buff *skb, bool encapsulating)
- 	u8 sw_hash = skb->sw_hash;
- 	u32 hash = skb->hash;
- 	skb_scrub_packet(skb, true);
--	memset(&skb->headers_start, 0,
--	       offsetof(struct sk_buff, headers_end) -
--		       offsetof(struct sk_buff, headers_start));
-+	memset(&skb->headers, 0, sizeof(skb->headers));
- 	if (encapsulating) {
- 		skb->l4_hash = l4_hash;
- 		skb->sw_hash = sw_hash;
-diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
-index 0bce88ac799a..b474e5bd71cf 100644
---- a/include/linux/skbuff.h
-+++ b/include/linux/skbuff.h
-@@ -808,12 +808,10 @@ struct sk_buff {
- 	__u8			active_extensions;
- #endif
- 
--	/* fields enclosed in headers_start/headers_end are copied
-+	/* Fields enclosed in headers group are copied
- 	 * using a single memcpy() in __copy_skb_header()
- 	 */
--	/* private: */
--	__u32			headers_start[0];
--	/* public: */
-+	struct_group(headers,
- 
- 	/* private: */
- 	__u8			__pkt_type_offset[0];
-@@ -918,9 +916,7 @@ struct sk_buff {
- 	u64			kcov_handle;
- #endif
- 
--	/* private: */
--	__u32			headers_end[0];
--	/* public: */
-+	); /* end headers group */
- 
- 	/* These elements must be at the end, see alloc_skb() for details.  */
- 	sk_buff_data_t		tail;
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index ba2f38246f07..3a42b2a3a571 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -992,12 +992,10 @@ void napi_consume_skb(struct sk_buff *skb, int budget)
- }
- EXPORT_SYMBOL(napi_consume_skb);
- 
--/* Make sure a field is enclosed inside headers_start/headers_end section */
-+/* Make sure a field is contained by headers group */
- #define CHECK_SKB_FIELD(field) \
--	BUILD_BUG_ON(offsetof(struct sk_buff, field) <		\
--		     offsetof(struct sk_buff, headers_start));	\
--	BUILD_BUG_ON(offsetof(struct sk_buff, field) >		\
--		     offsetof(struct sk_buff, headers_end));	\
-+	BUILD_BUG_ON(offsetof(struct sk_buff, field) !=		\
-+		     offsetof(struct sk_buff, headers.field));	\
- 
- static void __copy_skb_header(struct sk_buff *new, const struct sk_buff *old)
- {
-@@ -1009,14 +1007,12 @@ static void __copy_skb_header(struct sk_buff *new, const struct sk_buff *old)
- 	__skb_ext_copy(new, old);
- 	__nf_copy(new, old, false);
- 
--	/* Note : this field could be in headers_start/headers_end section
-+	/* Note : this field could be in the headers group.
- 	 * It is not yet because we do not want to have a 16 bit hole
- 	 */
- 	new->queue_mapping = old->queue_mapping;
- 
--	memcpy(&new->headers_start, &old->headers_start,
--	       offsetof(struct sk_buff, headers_end) -
--	       offsetof(struct sk_buff, headers_start));
-+	memcpy(&new->headers, &old->headers, sizeof(new->headers));
- 	CHECK_SKB_FIELD(protocol);
- 	CHECK_SKB_FIELD(csum);
- 	CHECK_SKB_FIELD(hash);
--- 
-2.30.2
-
+LS0tLS1CRUdJTiBQR1AgU0lHTkVEIE1FU1NBR0UtLS0tLQ0KSGFzaDogUklQRU1EMTYwDQoNCg0K
+LSBGcm9tIGM2NzVjMTczYThiMDA4YmQyODUzZmRlODY4OGY0ZGEzNDI3MWFlMTggTW9uIFNlcCAx
+NyAwMDowMDowMCAyMDAxDQpGcm9tOiBQZXRlciBIeW1hbiA8cGV0ZUBwZXRlcmh5bWFuLmNvbT4N
+CkRhdGU6IEZyaSwgMTkgTm92IDIwMjEgMDg6MzA6MjkgLTA2MDANClN1YmplY3Q6IFtQQVRDSF0g
+SW1wcm92ZW1lbnRzIHRvIHdnLXF1aWNrIG91dHB1dCBmb3IgbGludXguYmFzaC4NCg0KUmVwbGFj
+ZWQgdXNlIG9mICc8KGVjaG8gJHZhciknIGZvciAnd2cgc2V0Y29uZiAtZicgYW5kICduZnQgLWYn
+IGNvbW1hbmRzLg0KVXNlIG9mICc8KGVjaG8gJHZhciknIG9ic2N1cmVkIGFjdHVhbCBpbnB1dCB0
+byAnd2cnIGFuZCAnbmZ0JyBjb21tYW5kcw0KYW5kIHJlcGxhY2VkIHdpdGggL2Rldi9mZC82MyB3
+aGljaCBqdXN0IGluZGljYXRlcyBwaXBlZCBpbnB1dC4NCkFmdGVyIHRoaXMgY29tbWl0LCBvdXRw
+dXQgd2lsbCByZWZsZWN0IGFjdHVhbCBjb21tYW5kcyBmb3IgJ25mdCcNCmFuZCB3aWxsIGVjaG8g
+dGhlIGNvbmZpZyBwYXJhbWV0ZXJzIGJlaW5nIHJlYWQgYnkgJ3dnIHNldGNvbmYnLg0KQ29uZmln
+IHBhcmFtZXRlcnMgd2lsbCBhbHNvIGhpZGUgUHJpdmF0ZSBhbmQgUHJlc2hhcmVkIGtleXMgbGlr
+ZQ0KdGhlICd3ZycgY29tbWFuZC4NCg0KQmVmb3JlDQo9PT09PT0NClsjXSB3ZyBzZXRjb25mIHdn
+MCAvZGV2L2ZkLzYzDQpbI10gbmZ0IC1mIC9kZXYvZmQvNjMNCg0KQWZ0ZXINCj09PT09DQpbI10g
+d2cgc2V0Y29uZiB3ZzAgL2Rldi9mZC82Mw0Kd2cgY29uZmlndXJhdGlvbg0KW0ludGVyZmFjZV0N
+ClByaXZhdGVLZXkgPSAoaGlkZGVuKQ0KTGlzdGVuUG9ydCA9IDUxODIwDQoNCltQZWVyXQ0KUHVi
+bGljS2V5ID0geHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eD0NClBy
+ZXNoYXJlZEtleSA9IChoaWRkZW4pDQpBbGxvd2VkSVBzID0gMC4wLjAuMC8wDQpFbmRwb2ludCA9
+IHh4eC54eHgueHh4Lnh4eDo1MTgyMA0KUGVyc2lzdGVudEtlZXBhbGl2ZSA9IDI1DQoNClsjXSBu
+ZnQgZGVsZXRlIHRhYmxlIGlwIHdnLXF1aWNrLXdnMA0KDQpTaWduZWQtb2ZmLWJ5OiBQZXRlciBI
+eW1hbiA8cGV0ZUBwZXRlcmh5bWFuLmNvbT4NCi0gLS0tDQogc3JjL3dnLXF1aWNrL2xpbnV4LmJh
+c2ggfCA3ICsrKysrLS0NCiAxIGZpbGUgY2hhbmdlZCwgNSBpbnNlcnRpb25zKCspLCAyIGRlbGV0
+aW9ucygtKQ0KDQpkaWZmIC0tZ2l0IGEvc3JjL3dnLXF1aWNrL2xpbnV4LmJhc2ggYi9zcmMvd2ct
+cXVpY2svbGludXguYmFzaA0KaW5kZXggZTRkNGM0Zi4uZjRmNzI5OCAxMDA3NTUNCi0gLS0tIGEv
+c3JjL3dnLXF1aWNrL2xpbnV4LmJhc2gNCisrKyBiL3NyYy93Zy1xdWljay9saW51eC5iYXNoDQpA
+QCAtMTkyLDcgKzE5Miw3IEBAIHJlbW92ZV9maXJld2FsbCgpIHsNCiAJCXdoaWxlIHJlYWQgLXIg
+dGFibGU7IGRvDQogCQkJW1sgJHRhYmxlID09ICoiIHdnLXF1aWNrLSRJTlRFUkZBQ0UiIF1dICYm
+IHByaW50ZiAtdiBuZnRjbWQgJyVzZGVsZXRlICVzXG4nICIkbmZ0Y21kIiAiJHRhYmxlIg0KIAkJ
+ZG9uZSA8IDwobmZ0IGxpc3QgdGFibGVzIDI+L2Rldi9udWxsKQ0KLSAtCQlbWyAteiAkbmZ0Y21k
+IF1dIHx8IGNtZCBuZnQgLWYgPChlY2hvIC1uICIkbmZ0Y21kIikNCisJCVtbIC16ICRuZnRjbWQg
+XV0gfHwgY21kIG5mdCAiJG5mdGNtZCINCiAJZmkNCiAJaWYgdHlwZSAtcCBpcHRhYmxlcyA+L2Rl
+di9udWxsOyB0aGVuDQogCQlsb2NhbCBsaW5lIGlwdGFibGVzIGZvdW5kIHJlc3RvcmUNCkBAIC0y
+MzksNyArMjM5LDcgQEAgYWRkX2RlZmF1bHQoKSB7DQogCXByaW50ZiAtdiBuZnRjbWQgJyVzYWRk
+IHJ1bGUgJXMgJXMgcHJlbWFuZ2xlIG1ldGEgbDRwcm90byB1ZHAgbWV0YSBtYXJrIHNldCBjdCBt
+YXJrIFxuJyAiJG5mdGNtZCIgIiRwZiIgIiRuZnRhYmxlIg0KIAlbWyAkcHJvdG8gPT0gLTQgXV0g
+JiYgY21kIHN5c2N0bCAtcSBuZXQuaXB2NC5jb25mLmFsbC5zcmNfdmFsaWRfbWFyaz0xDQogCWlm
+IHR5cGUgLXAgbmZ0ID4vZGV2L251bGw7IHRoZW4NCi0gLQkJY21kIG5mdCAtZiA8KGVjaG8gLW4g
+IiRuZnRjbWQiKQ0KKwkJY21kIG5mdCAiJG5mdGNtZCINCiAJZWxzZQ0KIAkJZWNobyAtbiAiJHJl
+c3RvcmUiIHwgY21kICRpcHRhYmxlcy1yZXN0b3JlIC1uDQogCWZpDQpAQCAtMjQ4LDcgKzI0OCwx
+MCBAQCBhZGRfZGVmYXVsdCgpIHsNCiB9DQogDQogc2V0X2NvbmZpZygpIHsNCisJbG9jYWwgV0df
+Q09ORklHVE1QDQorCVdHX0NPTkZJR1RNUD0kKGVjaG8gIndnIGNvbmZpZ3VyYXRpb25cbiRXR19D
+T05GSUciIHwgc2VkIC1lICdzL1woUHJpdmF0ZUtleSA9IFx8UHJlc2hhcmVkS2V5ID0gXCkuKiQv
+XDEoaGlkZGVuKS8nKQ0KIAljbWQgd2cgc2V0Y29uZiAiJElOVEVSRkFDRSIgPChlY2hvICIkV0df
+Q09ORklHIikNCisJZWNobyAtZSAiJFdHX0NPTkZJR1RNUCINCiB9DQogDQogc2F2ZV9jb25maWco
+KSB7DQotIC0tIA0KMi4zNC4wDQoNCg0KLSAtLSANClBldGVyIEh5bWFuDQpHUEc6IDB4NDY3RkJG
+N0QNCi0tLS0tQkVHSU4gUEdQIFNJR05BVFVSRS0tLS0tDQoNCmlFWUVBUkVEQUFZRkFtR1h3ODRB
+Q2drUVRUZkdMVVovdjMwNzlnQ2d2eDJaQ2JCZm1GSDJGUWJTWEFsMmxoUHkNCnN2TUFtd2F2MkVm
+a1l3SjJqTGdCbTB3czVqNklRVVJjDQo9THMrUw0KLS0tLS1FTkQgUEdQIFNJR05BVFVSRS0tLS0t
+DQo=
