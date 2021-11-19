@@ -2,56 +2,56 @@ Return-Path: <SRS0=kH4x=QG=lists.zx2c4.com=wireguard-bounces@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A5C58C433EF
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 19 Nov 2021 16:27:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 582D5C433EF
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 19 Nov 2021 18:28:54 +0000 (UTC)
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.kernel.org (Postfix) with ESMTPS id C4A8761B1E
-	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 19 Nov 2021 16:27:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org C4A8761B1E
+	by mail.kernel.org (Postfix) with ESMTPS id 7890A60EBD
+	for <zx2c4-wireguard@archiver.kernel.org>; Fri, 19 Nov 2021 18:28:53 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 mail.kernel.org 7890A60EBD
 Authentication-Results: mail.kernel.org; dmarc=fail (p=none dis=none) header.from=chromium.org
 Authentication-Results: mail.kernel.org; spf=pass smtp.mailfrom=lists.zx2c4.com
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 01da686b;
-	Fri, 19 Nov 2021 16:24:25 +0000 (UTC)
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com
- [2607:f8b0:4864:20::630])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 47f280c7
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 680556c6;
+	Fri, 19 Nov 2021 18:26:25 +0000 (UTC)
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com
+ [2607:f8b0:4864:20::632])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id a14fba2a
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Fri, 19 Nov 2021 16:24:23 +0000 (UTC)
-Received: by mail-pl1-x630.google.com with SMTP id p18so8467657plf.13
- for <wireguard@lists.zx2c4.com>; Fri, 19 Nov 2021 08:24:23 -0800 (PST)
+ Fri, 19 Nov 2021 18:26:23 +0000 (UTC)
+Received: by mail-pl1-x632.google.com with SMTP id o14so8761197plg.5
+ for <wireguard@lists.zx2c4.com>; Fri, 19 Nov 2021 10:26:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=chromium.org; s=google;
  h=date:from:to:cc:subject:message-id:references:mime-version
  :content-disposition:in-reply-to;
- bh=qui87OY5Jed4+H9Eeo8B5vVSCb7VatAB11Im4YTYJRU=;
- b=llELplFVoWfVosynWC9z829rWucL2lgjibfYGe7Wjc/w2c39KJ8ALIgzVb0vwI6zZs
- klS0Tvi8i7jIVaOU/DYlIxm4ulh1KGfEbnWjdpRELoTVhMAe8ybvt8t8GoASncsmKlw0
- Z/HweGsovgW4dQ/GBFXje/nE/Uos0iqCW7s3g=
+ bh=9DlGTN7Qf7Ih3sgz22eokhwuPXp2v1jWtJCK8cZnkjw=;
+ b=a/NGcBNkciMHrO1NIuWo4GADEyiNdWAldzXFAihYFgTQrxCfIyMR1wLZDX+9jTIsEh
+ J3p0Fzgr0kMN7+TNMAbZIyoKFNksnJs1M0LjMp/vB423igsRP3uDUi8MJG4n3cNDj+jL
+ Hj8kwJHSLjjEGWB/uzGO/Nimqb6n7KOQ1lsO4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:date:from:to:cc:subject:message-id:references
  :mime-version:content-disposition:in-reply-to;
- bh=qui87OY5Jed4+H9Eeo8B5vVSCb7VatAB11Im4YTYJRU=;
- b=J9DPj8izhVoAh/GNb7OcBM3zdDHwi+J8gG6PTL9jgRZbluHr3EvLGcRjAnhBQmPdiQ
- 8b67dwC+3aih91Cw6LqbftGI+S2Y7MVH5CBc/zyLiKAiv+K+01PkpVMRX2bHlbcjAKYf
- 2ILiffL5He9cs0Qv2ao44keEkZkNocgi8FysvwmD4SMt2UWJBq8ZI2B13gQ8pqVS33Tk
- 81YpPahy89lfqcNBTtHWCHRl8bf7u3T78YXWxvVHtgCrCYilvczd2WyW8KgXovHhGSuA
- sBTLh3XVbAV2b28BTRxDAuwujtoqkDAHfOCvuMkZQSsSHufFz/Vl2jfqZNlbirjZHXnt
- 0TvA==
-X-Gm-Message-State: AOAM532uSHe1PZ48S1h0vBK/l1bg3VNDXHY3LYHY455VZ2mEDuJ051JA
- RQdHQ43dptcDyOG5ASBg+OIMgg==
-X-Google-Smtp-Source: ABdhPJzOSTnQ3rV6Qyg1u/LKfX0KBy8F72q5HyeDuG/FkYat7OxNw9TLTL+XNHEUVXP48WDRb6uSuQ==
-X-Received: by 2002:a17:90b:1c02:: with SMTP id
- oc2mr990156pjb.65.1637339061491; 
- Fri, 19 Nov 2021 08:24:21 -0800 (PST)
+ bh=9DlGTN7Qf7Ih3sgz22eokhwuPXp2v1jWtJCK8cZnkjw=;
+ b=dwz/FBzRH6Ll8xbzchvYDR1okxaTE1BdyuIj+E1IROoU7pKj8rHwN6flti9E/uG3mg
+ WZ8ssJWnORlPT2Qf2HEjO6+oHH9rgSIaApH3T3Mh1i+TR7HDXi5u4BLWL8i2qeXeh7s8
+ 3FhEfhcGJ+8eFtqfItwiDsYMza8I0H+B0dE2E8sKjV49lJsVik+gx3LK90854zjVVa0+
+ S5tHn7MzL1ma9sWFQVuJ5kkBKpbPAOwtVyAZeyLq2GljmSj7SFvskoNhzfn5vipzPvqy
+ bdeYwfDQCeVx7lTp1xhm2Erc3MbDjHUhCEjE96UMJ2at2Tu5o7NCuqspashtqpkUApC8
+ 1k1Q==
+X-Gm-Message-State: AOAM530GlPzrx9BzLn2otkaKpVbZ2CMXQFQ3tjfuHrvFP670pMwa77Un
+ Jw1Pd8Q55vZx4csgwkESmtnlAQ==
+X-Google-Smtp-Source: ABdhPJyOqQz8idH7cSV5BVRoiuqwbUEIYSGwMWy267I6HNSSKZ43xmLMBY94sDQSjeEi7DfAgmWbiw==
+X-Received: by 2002:a17:90a:ac0b:: with SMTP id
+ o11mr2032931pjq.143.1637346381329; 
+ Fri, 19 Nov 2021 10:26:21 -0800 (PST)
 Received: from www.outflux.net (smtp.outflux.net. [198.145.64.163])
- by smtp.gmail.com with ESMTPSA id u22sm144313pfi.187.2021.11.19.08.24.21
+ by smtp.gmail.com with ESMTPSA id p19sm375250pfo.92.2021.11.19.10.26.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 19 Nov 2021 08:24:21 -0800 (PST)
-Date: Fri, 19 Nov 2021 08:24:20 -0800
+ Fri, 19 Nov 2021 10:26:21 -0800 (PST)
+Date: Fri, 19 Nov 2021 10:26:19 -0800
 From: Kees Cook <keescook@chromium.org>
 To: Jakub Kicinski <kuba@kernel.org>
 Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
@@ -69,7 +69,7 @@ Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,
  wireguard@lists.zx2c4.com, netdev@vger.kernel.org,
  linux-hardening@vger.kernel.org
 Subject: Re: [PATCH] skbuff: Switch structure bounds to struct_group()
-Message-ID: <202111190821.8147EF796B@keescook>
+Message-ID: <202111191015.509A0BD@keescook>
 References: <20211118183615.1281978-1-keescook@chromium.org>
  <20211118231355.7a39d22f@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
 MIME-Version: 1.0
@@ -108,15 +108,13 @@ On Thu, Nov 18, 2021 at 11:13:55PM -0800, Jakub Kicinski wrote:
 > 
 > include/linux/skbuff.h:851:1: warning: directive in macro's argument list
 
-Oh my, I see it[1]. I will get that fixed. This smells like a missing
-header or something weird. I have a dim memory of fixing this warning
-long ago when evolving this series.
-
-Thanks!
+Hrm, I can't reproduce this, using several GCC versions and net-next. What
+compiler version[1] and base commit[2] were used here?
 
 -Kees
 
-[1] https://patchwork.kernel.org/project/netdevbpf/patch/20211118183615.1281978-1-keescook@chromium.org/
+[1] https://github.com/kuba-moo/nipa/pull/10
+[2] https://github.com/kuba-moo/nipa/pull/11
 
 -- 
 Kees Cook
