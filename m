@@ -4,53 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE709C4332F
-	for <zx2c4-wireguard@archiver.kernel.org>; Mon, 22 Nov 2021 15:40:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23E24C433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 23 Nov 2021 09:59:32 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 1641e4e2;
-	Mon, 22 Nov 2021 15:40:13 +0000 (UTC)
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id d27c60a3
- (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 1e9ba663;
+	Tue, 23 Nov 2021 09:59:31 +0000 (UTC)
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.135])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id cbd8efd7
+ (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Mon, 22 Nov 2021 15:40:11 +0000 (UTC)
-Received: by mail.kernel.org (Postfix) with ESMTPS id 4EADC60273;
- Mon, 22 Nov 2021 15:40:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1637595609;
- bh=cZfewvS5PAlcJFDY0Eq/GWJt9fC6OHF87EZvnel4SM8=;
- h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
- b=fMkWVy/mTr0j7q3xu3b26dtnE550OSHSUJAQH/chzdvoT2iDzsA8ajZjHcleXe89z
- lQFvcRoKRinudp9oKSG3V3zh+isSAjBi8zr73/JCmMnv77dxZ0fpG2Mp8fgaYVDYD0
- GFeVzCxUTQC8cK/ETd5jWXJZWC/WbCaf2vnrQX4w8rcDG4xoFnik3zuvWsQ2xAs7MK
- whuafjatQiXzTc8pmPpSSCI5yh6u4iAHFbaMUHrYjAgNv6nkPrlN9fmdfAksdvxxOn
- f/mU5WraWhUr5GjoSRGhqWC+oX/QiFh3mP9nFrSyLBLwL29iWpHKwRqWr9uMvR5MRz
- MBKb1ZfwYFaPw==
-Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain
- [127.0.0.1])
- by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 3F250609D9;
- Mon, 22 Nov 2021 15:40:09 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+ Tue, 23 Nov 2021 09:59:27 +0000 (UTC)
+Received: from [192.168.0.31] ([95.222.31.133]) by mrelayeu.kundenserver.de
+ (mreue011 [212.227.15.167]) with ESMTPSA (Nemesis) id
+ 1Mt7Ll-1mVrGQ0p45-00tPpY for <wireguard@lists.zx2c4.com>; Tue, 23 Nov 2021
+ 10:59:27 +0100
+To: wireguard@lists.zx2c4.com
+From: Max Schulze <max.schulze@online.de>
+Subject: [PATCH] wireguard-tools: contrib/reresolve-dns script for Windows
+ Powershell
+Message-ID: <68de8cb8-81ce-1f51-22fd-9ef20b24f693@online.de>
+Date: Tue, 23 Nov 2021 10:59:26 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2 net-next 0/2] skbuff: Switch structure bounds to
- struct_group()
-From: patchwork-bot+netdevbpf@kernel.org
-Message-Id: <163759560925.30526.865099452539818028.git-patchwork-notify@kernel.org>
-Date: Mon, 22 Nov 2021 15:40:09 +0000
-References: <20211121003149.28397-1-keescook@chromium.org>
-In-Reply-To: <20211121003149.28397-1-keescook@chromium.org>
-To: Kees Cook <keescook@chromium.org>
-Cc: kuba@kernel.org, davem@davemloft.net, jonathan.lemon@gmail.com,
- alobakin@pm.me, jakub@cloudflare.com, elver@google.com, willemb@google.com,
- gustavoars@kernel.org, Jason@zx2c4.com, ast@kernel.org, daniel@iogearbox.net, 
- andrii@kernel.org, kafai@fb.com, songliubraving@fb.com, yhs@fb.com,
- john.fastabend@gmail.com, kpsingh@kernel.org, nathan@kernel.org,
- ndesaulniers@google.com, edumazet@google.com, cong.wang@bytedance.com,
- pabeni@redhat.com, talalahmad@google.com, haokexin@gmail.com,
- ilias.apalodimas@linaro.org, vvs@virtuozzo.com, linux-kernel@vger.kernel.org, 
- wireguard@lists.zx2c4.com, netdev@vger.kernel.org, bpf@vger.kernel.org,
- llvm@lists.linux.dev, linux-hardening@vger.kernel.org
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K1:889EgkFChjrGmjqsMNYaktrImW9+Z61ITa23S3wVZjAmoddo9oX
+ QZEEm/fpCAGC98tzmpXG4gl8DM/wgC/TXRvsEWv3+iq0o6g0ETXt7p6w0+Y4hXzVLnsrc/7
+ Loe8qjLiztPRnqEbkxBQbbGHcTuU9U71GvixMT1v+1JYhZ69rMFzyjt8FwktXwOC/uxwluY
+ BDDJWiqtqdKu/qxI10bFA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Hplblp9Mm3Q=:m+evrZ2RpTsMBpdvy2Fvt5
+ 8NRdBNL/o+72jo07+R60dHrCcijP8Nqkm6thniWzbeFAK3OTaf2glwN7pOfKxfn7haJz6F6yW
+ zzDEDfpEFP7X/VSM8kusvhzlbvgrgrxRwKHHEoBDPAcuu5ctlcCqYk2VjcQe0hVVJ5EtyznyG
+ XmVuR1Ze+86v7GLdQLQNSe2XxJwAGFhrut0OkqSGPePfR/26oy5XhkxlOcCLscpayJ7Ha3QAq
+ DsXmTDUhQvMsIqs5/AMttdOlKbpdLa3WjhUHJJdsF1FYOsehyCKCQ0Pj73Aes2e/mlE3KVE4+
+ /s8A0R2dhMODa2NvrT6kYJTA0hTcOFdWXqCkvy+RwNCH1rhiKbjgdZ4zlaBbpCoi4lTCXs9Ls
+ nNPF2mdYcoIMeKpIoDXmMkw3o9+KHxdPTKc6vj2cuS2G81+vzm+nL0nxCN/R8EIh/jPAY+04Z
+ 7afXGzrKzRKsq+MhNr6QhCWPxy9Mx6BqGL/CLWKKfeUTai1rjq2+j0C5cjRwlz5ecbKYsbVy2
+ F22yue66OCz9fTo3UNDFEkwJ9ihFCxwCFV7hvqIbBKNa/79776VygfPckpj43cELhG+PQgeA0
+ h86GOxEdNUmUQU4znAHQpvVauB9xNKuSfw4jcore/gMzRhbLZ403gBu0lWPEaho0IIgv6kyBc
+ vqRfV2l5JOi9Np0Zztxb0B7hbvrD3U08VHB16GVcwB972BsOEn1mN1gCO/Mdn8SOi7AC8q6y5
+ JWUgE0e/ASzNj07h
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -65,31 +60,172 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Hello:
+This is a script I use on windows for dynamic DNS endpoints ("servers").
 
-This series was applied to netdev/net-next.git (master)
-by David S. Miller <davem@davemloft.net>:
+The big upside is that it supports multiple configurations and does not 
+need hard-coded endpoints or "ping-endpoints".
 
-On Sat, 20 Nov 2021 16:31:47 -0800 you wrote:
-> Hi,
-> 
-> This is a pair of patches to add struct_group() to struct sk_buff. The
-> first is needed to work around sparse-specific complaints, and is new
-> for v2. The second patch is the same as originally sent as v1.
-> 
-> -Kees
-> 
-> [...]
+I would like to apply to get it included into wireguard-tools.
 
-Here is the summary with links:
-  - [v2,net-next,1/2] skbuff: Move conditional preprocessor directives out of struct sk_buff
-    https://git.kernel.org/netdev/net-next/c/fba84957e2e2
-  - [v2,net-next,2/2] skbuff: Switch structure bounds to struct_group()
-    https://git.kernel.org/netdev/net-next/c/03f61041c179
+I have tested this in win7 and win10. You might add it to the task 
+scheduler and run this every 3 minutes or so.
 
-You are awesome, thank you!
+Some care has to be taken as to know which user is running the script. 
+The encrypted dpapi-binary file can only be read by the same user that 
+created/saved the tunnels, i.e. \system.
+
+To make it easy to maintain this patch, I have tried to stick it as 
+close to the linux version as possible. Jason, feel free to modify the 
+copyright header as appropriate.
+
+I am in no way the powershell guru, this is more trial-and-error.
+
+
+NB: Why the limit to 15 chars in the Interface name? Mine had more, thus 
+setting the arbitrary (?) limit to 18 chars.
+
+
+Signed-off-by: Max Schulze <max.schulze@online.de>
+---
+  contrib/reresolve-dns/reresolve-dns.ps1 | 57 +++++++++++++++++++++++++
+  1 file changed, 57 insertions(+)
+  create mode 100644 contrib/reresolve-dns/reresolve-dns.ps1
+
+diff --git a/contrib/reresolve-dns/reresolve-dns.ps1 
+b/contrib/reresolve-dns/reresolve-dns.ps1
+new file mode 100644
+index 0000000..951eb33
+--- /dev/null
++++ b/contrib/reresolve-dns/reresolve-dns.ps1
+@@ -0,0 +1,57 @@
++# SPDX-License-Identifier: GPL-2.0
+
++#
+
++# Copyright (C) 2021 Max Schulze. All Rights Reserved.
+
++# near-literal Translation of the linux version by Jason A. Donenfeld
+
++
+
++# to decrypt the dpapi Credentials, you have to be the same user as the 
+wireguard tunnel service, i.e. "nt authority\system", check with "whoami"
+
++# this script might be called by task scheduler as
+
++#  powershell -NoProfile -NoLogo -NonInteractive -ExecutionPolicy 
+Bypass -Command "Get-ChildItem -File 'c:\program 
+Files\wireguard\data\configurations\*.dpapi'  | foreach {& C:\<path to 
+script>\wireguard_reresolve-dns.ps1 $_.FullName}"
+
++# if you want to try it in cmd, remember to elevate the user, i.e. with 
+psexec from sysutils
+
++#  psexec -s -i powershell -NoPr...
+
++
+
++Set-StrictMode -Version 3
+
++Add-Type -AssemblyName System.Security
+
++
+
++Set-Variable CONFIG_FILE -Value $args[0].ToString().Trim('"')
+
++
+
++$byteCrypted = ((Get-Content -LiteralPath $CONFIG_FILE -Encoding Byte 
+-ReadCount 0))
+
++
+
++$config = 
+[System.Security.Cryptography.ProtectedData]::Unprotect($byteCrypted,$null,[System.Security.Cryptography.DataProtectionScope]::LocalMachine)
+
++
+
++$config = [System.Text.UTF8Encoding]::UTF8.GetString($config)
+
++
+
++Set-Variable Interface -Option Constant -Value $(if ($CONFIG_FILE 
+-match '.?([a-zA-Z0-9_=+.-]{1,18})\.conf.dpapi$') { $matches[1] } else { 
+$null })
+
++
+
++function process_peer () {
+
++  if (-not $PEER_SECTION -or ($PUBLIC_KEY -eq $null) -or ($ENDPOINT -eq 
+$null)) { return }
+
++  if (-not ((& wg show "$INTERFACE" latest-handshakes) -replace 
+$PUBLIC_KEY -match ('[0-9]+'))) { return }
+
++  if (((Get-Date) - (New-Object -Type DateTime -ArgumentList 
+1970,1,1,0,0,0,0).AddSeconds($matches[0]).ToLocalTime()).TotalSeconds 
+-le 135) { return }
+
++  (& wg set "$INTERFACE" peer "$PUBLIC_KEY" endpoint "$ENDPOINT")
+
++  reset_peer_section
+
++}
+
++
+
++function reset_peer_section () {
+
++  Set-Variable PEER_SECTION -Value $null
+
++  Set-Variable PUBLIC_KEY -Value $null
+
++  Set-Variable ENDPOINT -Value $null
+
++}
+
++
+
++reset_peer_section
+
++Set-Variable PEER_SECTION -Value $null
+
++
+
++foreach ($line in 
+$config.Split([Environment]::NewLine,[StringSplitOptions]::RemoveEmptyEntries)) 
+{
+
++  if ($line.Trim().length -gt 0) {
+
++    $stripped = $line.Trim() -ireplace '\#.*'
+
++    $key = $stripped -ireplace '=.*'; $key = $key.Trim()
+
++    $val = $stripped -ireplace '^.*?='; $val = $val.Trim()
+
++    if ($key -match '\[.*') { process_peer; reset_peer_section; }
+
++    if ($key -eq '[Peer]') { $PEER_SECTION = $true }
+
++    if ($PEER_SECTION) {
+
++      switch ($key) {
+
++        "PublicKey" { $PUBLIC_KEY = $val; continue; }
+
++        "Endpoint" { $ENDPOINT = $val; continue; }
+
++      }
+
++    }
+
++  }
+
++}
+
++process_peer
+
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+2.33.1
