@@ -4,41 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.zx2c4.com (lists.zx2c4.com [165.227.139.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88907C433F5
-	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 23 Nov 2021 20:41:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8268C433F5
+	for <zx2c4-wireguard@archiver.kernel.org>; Tue, 23 Nov 2021 21:01:48 +0000 (UTC)
 Received: 
-	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 241743c5;
-	Tue, 23 Nov 2021 20:41:34 +0000 (UTC)
-Received: from zeus.servers.mnus.de (zeus.servers.mnus.de
- [2a01:4f8:c0c:4339::1])
- by lists.zx2c4.com (OpenSMTPD) with ESMTPS id dfc3414e
+	by lists.zx2c4.com (OpenSMTPD) with ESMTP id 2a6247e0;
+	Tue, 23 Nov 2021 21:01:46 +0000 (UTC)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ by lists.zx2c4.com (OpenSMTPD) with ESMTPS id 678ed3f5
+ (TLSv1.2:ECDHE-ECDSA-AES256-GCM-SHA384:256:NO)
+ for <wireguard@lists.zx2c4.com>;
+ Tue, 23 Nov 2021 21:01:44 +0000 (UTC)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 8439960FC3
+ for <wireguard@lists.zx2c4.com>; Tue, 23 Nov 2021 21:01:42 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+ dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com
+ header.b="BTI3MOjz"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105; 
+ t=1637701301;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=71hGbIgf9jPmFCJrYpiBhfS6SQLhdhuV9iY6vEBE+FQ=;
+ b=BTI3MOjzTXyB1l2Ac39p+JVf/X4qNt+Msr7Zn5qOCvY5xLuDGMMK7Bg/JzpNcl9Cj242ZA
+ HGfKtm+a6rhAmIWzQE/YNe27E+WTaS3VDraNQs4RFrFKiFjUGwxwbTVOKbesyXE3yJ6qJV
+ UvXK5NQqoaQ+xKeefXuiBBo8ujWGxbk=
+Received: by mail.zx2c4.com (OpenSMTPD) with ESMTPSA id 1aa8f6df
  (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO)
  for <wireguard@lists.zx2c4.com>;
- Tue, 23 Nov 2021 19:06:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mnus.de;
- s=mnus.de-helios; t=1637694370;
- bh=709W7UZzdXhE683wblNBNo2H76Bpdg1oL5M4IcUiabo=;
- h=From:To:Cc:Subject:Date;
- b=e7IhL6ejtwaBBukReVNII0vXJRp2YHdnHfReGf1XR3hA+vK3FNWUw1Mjh3IU+pSV8
- mC5/IxUgQxLAGoGk8dH5VhgKkFFOjk2UxV8FkVqEZB7Qo0yWu8GaExz0IqNvszfNmn
- mIQKQiwR9WoIHIj8OMEa1DB1T078vSTgvj3eDNX6Ce+oX9l1RDV5tPaeFpEq1W4bYS
- OI4tYja2HOTTbnpOHcThi+5liw5IacgY67rdaD66uUCQu9oL8Ya7zgAyWBK6o1xzDg
- MnAgTOunjLGoYfAzTd2GXFxQO+Zqz6k7IDVP4t7h8t20y7FKZkmvyVx+7DyVxtAueW
- swBY9BaHXzWrxh4QD/opQgLT9D8/hbl1liUtF3XVf0Ya8peL6ZPYuoJiy+O+0PqWfY
- lcWEwz/2OoGtBUd49eazS50BmtYFgpQhJgBBARFeBR/k6MnKQx6z/qimVkwuw/9ZoD
- c1j0ubLwXGyZneAN7esWlbVeH3OuZtVqzyi01BKUSEZmjRuE/GJEbUqNnZ+zDRmdBn
- bUYgrGFvqIHDU6D/YwiDeZup3w/e6y8Kq7MXnItvra0kIkvkjFVH7YhdXHwWHlv4Ez
- 6dckuIOQGQauo5Z3tbhNWYj+UOeYTpQli45XL6wuYJgQnWOXMOPr7PpWMGms8tHdME
- N+kvYkQgGxr4D1c64F6w3e7Y=
-From: Thomas Renoth <minus@mnus.de>
-To: wireguard@lists.zx2c4.com
-Cc: Thomas Renoth <minus@mnus.de>
-Subject: [PATCH wireguard-go] conn: linux: fix incorrect endpoint address
-Date: Tue, 23 Nov 2021 20:03:32 +0100
-Message-Id: <20211123190331.101346-1-minus@mnus.de>
+ Tue, 23 Nov 2021 21:01:41 +0000 (UTC)
+Received: by mail-yb1-f174.google.com with SMTP id 131so1009290ybc.7
+ for <wireguard@lists.zx2c4.com>; Tue, 23 Nov 2021 13:01:41 -0800 (PST)
+X-Gm-Message-State: AOAM530iJC84S1AdwKzhaxjX5BHmxPG7UN8XMhFhdnFjpqT0WEA6xhTM
+ SWvVF65lXQO8eSdqZf6RP0kVBHnbB9x+Yds6ARM=
+X-Google-Smtp-Source: ABdhPJwZALqbab31n4Ab8OyOPfqc5Eph3vLNvHs2VP2rlpMl/uffWaP/3EuBlwWr2ep7e/zP0AALp9L7QSoiHu/wTG4=
+X-Received: by 2002:a05:6902:568:: with SMTP id
+ a8mr9442312ybt.472.1637701300049; 
+ Tue, 23 Nov 2021 13:01:40 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Mailman-Approved-At: Tue, 23 Nov 2021 20:41:31 +0000
+References: <20211123190331.101346-1-minus@mnus.de>
+In-Reply-To: <20211123190331.101346-1-minus@mnus.de>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Tue, 23 Nov 2021 22:01:29 +0100
+X-Gmail-Original-Message-ID: <CAHmME9pEf9=6C3eAXfanftBt4LJ4viRszQc5oG3Jt9H7Fxd68A@mail.gmail.com>
+Message-ID: <CAHmME9pEf9=6C3eAXfanftBt4LJ4viRszQc5oG3Jt9H7Fxd68A@mail.gmail.com>
+Subject: Re: [PATCH wireguard-go] conn: linux: fix incorrect endpoint address
+To: Thomas Renoth <minus@mnus.de>
+Cc: WireGuard mailing list <wireguard@lists.zx2c4.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: wireguard@lists.zx2c4.com
 X-Mailman-Version: 2.1.30rc1
 Precedence: list
@@ -53,26 +65,6 @@ List-Subscribe: <https://lists.zx2c4.com/mailman/listinfo/wireguard>,
 Errors-To: wireguard-bounces@lists.zx2c4.com
 Sender: "WireGuard" <wireguard-bounces@lists.zx2c4.com>
 
-Signed-off-by: Thomas Renoth <minus@mnus.de>
----
-`wg show` just shows 0.0.0.0:<port> for peer endpoints currently.
+Thank you for catching this regression!
 
- conn/bind_linux.go | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/conn/bind_linux.go b/conn/bind_linux.go
-index 975a6ab..da0670a 100644
---- a/conn/bind_linux.go
-+++ b/conn/bind_linux.go
-@@ -275,7 +275,7 @@ func (end *LinuxSocketEndpoint) SrcIP() netip.Addr {
- 
- func (end *LinuxSocketEndpoint) DstIP() netip.Addr {
- 	if !end.isV6 {
--		return netip.AddrFrom4(end.src4().Src)
-+		return netip.AddrFrom4(end.dst4().Addr)
- 	} else {
- 		return netip.AddrFrom16(end.dst6().Addr)
- 	}
--- 
-2.34.0
-
+Jason
